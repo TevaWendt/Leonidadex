@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page introuvable — Leonidakit</title>
+<meta name="description" content="Cette page n'existe pas ou plus sur Leonidakit.">
+<meta name="robots" content="noindex, follow">
+<meta name="theme-color" content="#FDFBF7">
+<meta name="color-scheme" content="light">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%231A1A1E'/%3E%3Ccircle cx='32' cy='28' r='16' fill='%23F5A524'/%3E%3Crect x='10' y='30' width='44' height='3' fill='%231A1A1E'/%3E%3Crect x='10' y='37' width='44' height='4' fill='%231A1A1E'/%3E%3Crect x='10' y='45' width='44' height='5' fill='%231A1A1E'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<style>
+  .e404{
+    min-height:calc(100vh - 210px);
+    display:flex; align-items:center; padding:40px 0 70px;
+  }
+  .e404-in{
+    display:grid; grid-template-columns:1.05fr .95fr; gap:52px; align-items:center; width:100%;
+  }
+  .e404-code{
+    font-size:clamp(4.5rem, 13vw, 9rem); font-weight:900; line-height:.88;
+    letter-spacing:-0.05em; color:var(--ink); position:relative; display:inline-block;
+  }
+  .e404-code::after{
+    content:''; position:absolute; left:0; right:0; bottom:.1em; height:.16em; z-index:-1;
+    background:linear-gradient(90deg, var(--amber), var(--coral));
+    transform:scaleX(0); transform-origin:left;
+    animation:swipe .55s cubic-bezier(.4,0,.2,1) .35s forwards;
+  }
+  .e404 h1{
+    font-size:clamp(1.5rem, 3.4vw, 2.2rem); font-weight:900;
+    letter-spacing:-0.03em; line-height:1.12; margin-top:16px; max-width:18ch;
+  }
+  .e404 .lede{margin-top:14px; color:var(--ink-soft); font-size:1.03rem; max-width:46ch;}
+  .e404-search{margin-top:26px; max-width:440px; position:relative;}
+  .e404-links{display:flex; flex-wrap:wrap; gap:9px; margin-top:22px;}
+  .e404-links a{
+    border:1px solid var(--rule); border-radius:100px; padding:8px 16px;
+    font-size:.9rem; font-weight:600; color:var(--ink-soft); background:#fff;
+    transition:border-color .15s, color .15s, transform .15s;
+  }
+  .e404-links a:hover{border-color:var(--ink); color:var(--ink); transform:translateY(-2px);}
+  .e404-links a.primary{background:var(--coral); color:#fff; border-color:var(--ink); box-shadow:3px 3px 0 var(--ink);}
+  .e404-links a.primary:hover{transform:translate(-2px,-2px); box-shadow:5px 5px 0 var(--ink); color:#fff;}
+
+  .e404-art{width:100%; height:auto; display:block;}
+  .e404-art .sign{animation:tilt 5s ease-in-out infinite alternate; transform-origin:200px 300px;}
+  @keyframes tilt{ from{transform:rotate(-1.2deg);} to{transform:rotate(1.2deg);} }
+
+  @media (max-width:860px){
+    .e404-in{grid-template-columns:1fr; gap:30px;}
+    .e404-art{max-width:300px; margin:0 auto;}
+    .e404{padding:24px 0 50px; min-height:0;}
+  }
+</style>
+</head>
+<body>
+
+<a class="skip" href="#main">Aller au contenu</a>
+<div class="sunset"></div>
+
+<header>
+  <div class="shell head-in">
+    <a href="/" class="brand">Leonida<span>kit</span></a>
+    <nav id="nav">
+      <ul>
+        <li><a href="/carte.html">Carte</a></li>
+        <li><a href="/vehicules.html">Véhicules</a></li>
+        <li><a href="/armes.html">Armes</a></li>
+        <li><a href="/collectibles.html">Collectibles</a></li>
+        <li><a href="/progression.html">Progression</a></li>
+      </ul>
+    </nav>
+    <button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="main" class="e404 shell">
+  <div class="e404-in">
+
+    <div>
+      <span class="e404-code">404</span>
+      <h1>Cette route ne mène nulle part.</h1>
+      <p class="lede">La page que tu cherches n'existe pas, a changé d'adresse, ou n'a pas encore été écrite.</p>
+
+      <div class="e404-search searchwrap">
+        <div class="searchbar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+            <circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/>
+          </svg>
+          <input type="search" id="q" placeholder="Chercher un véhicule, un lieu, un outil" aria-label="Rechercher sur le site" autocomplete="off">
+        </div>
+        <div class="suggest" id="suggest" role="listbox" aria-label="Suggestions"></div>
+      </div>
+
+      <div class="e404-links">
+        <a class="primary" href="/">Retour à l'accueil</a>
+        <a href="/vehicules.html">Véhicules</a>
+        <a href="/carte.html">Carte</a>
+        <a href="/contact.html">Signaler le lien cassé</a>
+      </div>
+    </div>
+
+    <svg class="e404-art" viewBox="0 0 400 380" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="sky404" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#F5A524" stop-opacity=".55"/>
+          <stop offset="100%" stop-color="#E8452C" stop-opacity=".2"/>
+        </linearGradient>
+      </defs>
+
+      <!-- ciel -->
+      <rect x="0" y="0" width="400" height="290" rx="8" fill="url(#sky404)"/>
+      <circle cx="290" cy="96" r="46" fill="#F5A524" opacity=".6"/>
+      <g fill="#FDFBF7" opacity=".85">
+        <rect x="230" y="112" width="120" height="5"/>
+        <rect x="230" y="124" width="120" height="7"/>
+        <rect x="230" y="139" width="120" height="9"/>
+      </g>
+
+      <!-- horizon lointain -->
+      <g fill="#1A1A1E" opacity=".22">
+        <rect x="18" y="180" width="20" height="60"/>
+        <rect x="46" y="160" width="14" height="80"/>
+        <rect x="68" y="196" width="26" height="44"/>
+        <rect x="104" y="172" width="16" height="68"/>
+        <rect x="352" y="186" width="22" height="54"/>
+      </g>
+
+      <!-- route -->
+      <path d="M0,290 L400,290 L400,380 L0,380 Z" fill="#1A1A1E"/>
+      <path d="M170,290 L230,290 L300,380 L100,380 Z" fill="#2A2A31"/>
+      <g fill="#FDFBF7" opacity=".8">
+        <rect x="196" y="298" width="8" height="18"/>
+        <rect x="194" y="326" width="12" height="22"/>
+        <rect x="190" y="358" width="18" height="22"/>
+      </g>
+
+      <!-- panneau -->
+      <g class="sign">
+        <rect x="194" y="196" width="9" height="104" fill="#1A1A1E"/>
+        <rect x="118" y="150" width="164" height="58" rx="5" fill="#FDFBF7" stroke="#1A1A1E" stroke-width="5"/>
+        <rect x="132" y="166" width="94" height="9" rx="4" fill="#1A1A1E" opacity=".2"/>
+        <rect x="132" y="183" width="62" height="9" rx="4" fill="#1A1A1E" opacity=".2"/>
+        <path d="M244,168 L268,192 M268,168 L244,192" stroke="#E8452C" stroke-width="7" stroke-linecap="round"/>
+      </g>
+    </svg>
+
+  </div>
+</main>
+
+<footer>
+  <svg class="foot-art" viewBox="0 0 1200 150" preserveAspectRatio="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+    <defs><linearGradient id="fsky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F5A524" stop-opacity=".28"/>
+      <stop offset="100%" stop-color="#E8452C" stop-opacity=".14"/>
+    </linearGradient></defs>
+    <rect width="1200" height="150" fill="url(#fsky)"/>
+    <circle cx="980" cy="86" r="44" fill="#F5A524" opacity=".4"/>
+    <g fill="#1A1A1E" opacity=".82">
+      <rect x="40" y="86" width="34" height="64"/><rect x="84" y="58" width="24" height="92"/>
+      <rect x="118" y="100" width="42" height="50"/><rect x="172" y="70" width="22" height="80"/>
+      <rect x="204" y="110" width="46" height="40"/><rect x="262" y="80" width="28" height="70"/>
+      <rect x="300" y="46" width="20" height="104"/><rect x="332" y="96" width="38" height="54"/>
+      <rect x="382" y="72" width="26" height="78"/><rect x="420" y="106" width="44" height="44"/>
+      <rect x="476" y="64" width="22" height="86"/><rect x="510" y="92" width="34" height="58"/>
+      <rect x="556" y="112" width="40" height="38"/><rect x="608" y="76" width="24" height="74"/>
+      <rect x="644" y="102" width="36" height="48"/><rect x="692" y="60" width="20" height="90"/>
+      <rect x="724" y="98" width="42" height="52"/><rect x="778" y="84" width="26" height="66"/>
+      <rect x="816" y="114" width="38" height="36"/><rect x="866" y="74" width="22" height="76"/>
+      <rect x="900" y="104" width="34" height="46"/><rect x="1044" y="90" width="30" height="60"/>
+      <rect x="1084" y="66" width="22" height="84"/><rect x="1118" y="108" width="42" height="42"/>
+    </g>
+    <g stroke="#1A1A1E" stroke-width="2" opacity=".2">
+      <line x1="0" y1="132" x2="1200" y2="132"/><line x1="0" y1="142" x2="1200" y2="142"/>
+    </g>
+  </svg>
+
+  <div class="shell">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <span class="brand">Leonida<span>kit</span></span>
+        <p>Carte, fiches et outils pour GTA VI. Mis à jour en continu à partir du 19 novembre 2026.</p>
+      </div>
+      <div class="foot-cols">
+        <div><h4>Contenu</h4>
+          <nav><a href="/carte.html">Carte</a><a href="/vehicules.html">Véhicules</a><a href="/armes.html">Armes</a><a href="/collectibles.html">Collectibles</a></nav>
+        </div>
+        <div><h4>Outils</h4>
+          <nav><a href="/progression.html">Progression</a><a href="/calculateurs.html">Calculateurs</a></nav>
+        </div>
+        <div><h4>Le site</h4>
+          <nav><a href="/a-propos.html">À propos</a><a href="/contact.html">Contact</a><a href="/mentions-legales.html">Mentions légales</a></nav>
+        </div>
+      </div>
+    </div>
+    <p class="legal">Leonidakit est un site indépendant réalisé par un joueur. Il n'est ni affilié à Rockstar Games et Take-Two Interactive, ni approuvé ou sponsorisé par eux. Grand Theft Auto est une marque déposée de Take-Two Interactive.</p>
+  </div>
+</footer>
+
+<script src="/search-index.js"></script>
+<script src="/app.js"></script>
+</body>
+</html>
