@@ -165,27 +165,38 @@ const el = id => document.getElementById(id);
   }, {threshold:.15});
   document.querySelectorAll('.reveal').forEach(function(n){ io.observe(n); });
 
-  /* inscription à la lettre d'information via Brevo */
-  const BREVO_FORM = "https://affd58b3.sibforms.com/serve/MUIFAGl8Xa98HjJAIW5cWUXzqoMy9tZMLQ1C1lyg7T2D0nPKLA1LarVopcF1d_g_ZvBDB8rxufQRDXnIWA3fGPuxEhSFzvfjMnVFsGoFyp3ly2S8W8GXh2Z6u03CV3GCl-8Xn8HhF1GxxpmCJBt7wY40N9A8G7DTFx4fQm_96FJpF6HuHEzwWQNHTLNJ99Y0iDaJFqgyNxoUvfW_LA==";
+  /* inscription à la lettre d'information, envoi direct vers Brevo */
+  const signupForm = el('signup');
+  if(signupForm){
+    const mailField = el('mail');
+    const subBtn    = el('sub');
+    const note      = el('signup-note');
 
-  const subBtn = el('sub'), mailField = el('mail');
-  if(subBtn && mailField){
-    function subscribe(){
+    function say(text, cls){
+      note.textContent = text;
+      note.className = 'signup-note ' + (cls || '');
+    }
+
+    signupForm.addEventListener('submit', function(e){
       const v = mailField.value.trim();
-      if(!v || !v.includes('@') || !v.includes('.')){
-        subBtn.textContent = 'Adresse invalide';
+
+      if(!v || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)){
+        e.preventDefault();
+        say("Cette adresse ne semble pas valide.", 'ko');
         mailField.focus();
-        setTimeout(function(){ subBtn.textContent = 'Me prévenir'; }, 2200);
         return;
       }
-      const url = BREVO_FORM + (BREVO_FORM.includes('?') ? '&' : '?')
-                + 'EMAIL=' + encodeURIComponent(v);
-      window.open(url, '_blank', 'noopener');
-      subBtn.textContent = 'Confirme dans l\'onglet';
-      setTimeout(function(){ subBtn.textContent = 'Me prévenir'; }, 4000);
-    }
-    subBtn.addEventListener('click', subscribe);
-    mailField.addEventListener('keydown', function(e){
-      if(e.key === 'Enter'){ e.preventDefault(); subscribe(); }
+
+      /* le formulaire part vraiment vers Brevo, dans le cadre invisible */
+      subBtn.disabled = true;
+      subBtn.textContent = 'Envoi…';
+      say("", '');
+
+      setTimeout(function(){
+        say("C'est noté. Un mail de confirmation vient de partir, clique sur le lien pour valider.", 'ok');
+        subBtn.disabled = false;
+        subBtn.textContent = 'Me prévenir';
+        signupForm.reset();
+      }, 1200);
     });
   }

@@ -210,10 +210,16 @@
   <div class="shell reveal">
     <h2>Sois prévenu quand les outils ouvrent</h2>
     <p>Un mail le jour où la carte se remplit, et rien d'autre. Pas de rumeurs, pas de newsletter hebdomadaire. Un lien de confirmation te sera envoyé pour valider l'inscription.</p>
-    <div class="form">
-      <input type="email" id="mail" placeholder="ton adresse mail" aria-label="Adresse mail">
-      <button type="button" id="sub">Me prévenir</button>
-    </div>
+    <form class="form" id="signup" method="POST" target="brevo-sink"
+          action="https://affd58b3.sibforms.com/serve/MUIFAGl8Xa98HjJAIW5cWUXzqoMy9tZMLQ1C1lyg7T2D0nPKLA1LarVopcF1d_g_ZvBDB8rxufQRDXnIWA3fGPuxEhSFzvfjMnVFsGoFyp3ly2S8W8GXh2Z6u03CV3GCl-8Xn8HhF1GxxpmCJBt7wY40N9A8G7DTFx4fQm_96FJpF6HuHEzwWQNHTLNJ99Y0iDaJFqgyNxoUvfW_LA==">
+      <input type="email" id="mail" name="EMAIL" placeholder="ton adresse mail" aria-label="Adresse mail" required autocomplete="email">
+      <button type="submit" id="sub">Me prévenir</button>
+      <input type="text" name="email_address_check" value="" tabindex="-1" aria-hidden="true" class="trap">
+      <input type="hidden" name="locale" value="fr">
+    </form>
+    <p class="signup-note" id="signup-note" role="status"></p>
+    <p class="signup-legal">En t'inscrivant, tu acceptes de recevoir ce mail. Ton adresse n'est utilisée que pour ça et n'est transmise à personne. Désinscription possible à tout moment.</p>
+    <iframe name="brevo-sink" title="Traitement de l'inscription" class="sink" tabindex="-1"></iframe>
   </div>
 </section>
 
