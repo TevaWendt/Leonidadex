@@ -1187,3 +1187,45 @@ body.map-full-on{overflow:hidden;}
 /* calques du fond de carte */
 .map-layers{margin-bottom:4px;}
 .map-layers + .map-filters{margin-top:16px;}
+
+/* ============================================================
+   CARTE — système de fiabilité
+   ============================================================ */
+.map-trust{margin-bottom:18px; padding-bottom:16px; border-bottom:1px solid var(--rule);}
+.map-only{
+  width:100%; cursor:pointer; font-family:inherit; font-size:.84rem; font-weight:800;
+  background:var(--ink); color:var(--paper); border:2px solid var(--ink);
+  border-radius:6px; padding:9px; margin-bottom:11px; transition:background .15s;
+}
+.map-only:hover{background:#2C2A34;}
+.map-only.on{background:var(--coral); border-color:var(--coral);}
+
+.fl-st{align-items:center; gap:8px; padding:5px 0;}
+.fl-st em{font-style:normal; font-size:.75rem; color:var(--ink-soft); opacity:.8;}
+.st-chip{
+  font-size:.68rem; font-weight:800; letter-spacing:.02em;
+  border-radius:100px; padding:2px 9px; flex-shrink:0;
+}
+.st-chip--officiel{background:#1A1A1E; color:var(--paper);}
+.st-chip--vu{background:#F3D8A8; color:#6B4A12; border:1px solid #DFBE84;}
+.st-chip--spec{background:#FADFD9; color:#9B2E19; border:1px dashed #E8452C;}
+
+/* différenciation visuelle des marqueurs */
+.mk.st-officiel .mk-dot{box-shadow:0 2px 5px rgba(0,0,0,.3), 0 0 0 4px rgba(26,26,30,.16);}
+.mk.st-vu .mk-dot{border-style:solid; opacity:.92;}
+.mk.st-spec .mk-dot{border-style:dashed; opacity:.8;}
+.mk.st-spec .mk-lbl{font-style:italic; opacity:.85;}
+.mk.st-officiel .mk-lbl{border-left:3px solid var(--ink);}
+
+/* panneau : badge et métadonnées */
+.mp-st{
+  display:inline-block; margin-top:7px; font-size:.68rem; font-weight:800;
+  border-radius:100px; padding:3px 10px; cursor:help;
+}
+.mp-st--officiel{background:#1A1A1E; color:var(--paper);}
+.mp-st--vu{background:#F3D8A8; color:#6B4A12;}
+.mp-st--spec{background:#FADFD9; color:#9B2E19; border:1px dashed #E8452C;}
+.mp-meta{margin-top:12px; padding-top:10px; border-top:1px solid var(--rule); display:flex; flex-direction:column; gap:6px;}
+.mp-meta div{display:flex; justify-content:space-between; gap:12px; font-size:.76rem;}
+.mp-meta span{color:var(--ink-soft); flex-shrink:0;}
+.mp-meta b{text-align:right; font-weight:700;}

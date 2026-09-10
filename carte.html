@@ -134,10 +134,10 @@
     <p class="lede">Déplace, zoome, filtre, coche ce que tu as trouvé. Mesure la distance entre deux points et le temps de trajet selon le véhicule.</p>
 
     <div class="vstats rise">
-      <div class="vstat"><span class="n" data-count="10">0</span><span class="l">lieux placés</span></div>
-      <div class="vstat"><span class="n" data-count="6">0</span><span class="l">régions</span></div>
+      <div class="vstat"><span class="n" data-count="20">0</span><span class="l">lieux référencés</span></div>
+      <div class="vstat"><span class="n" data-count="11">0</span><span class="l">nommés par Rockstar</span></div>
       <div class="vstat"><span class="n" data-count="7">0</span><span class="l">modes de trajet</span></div>
-      <div class="vstat"><span class="n" data-count="8">0</span><span class="l">catégories de marqueurs</span></div>
+      <div class="vstat"><span class="n" data-count="8">0</span><span class="l">catégories</span></div>
     </div>
   </div>
 </section>
@@ -202,6 +202,14 @@
         <button type="button" class="map-ruler-reset" id="map-ruler-reset">Recommencer</button>
       </div>
 
+      <div class="map-trust">
+        <p class="map-side-h">Fiabilité</p>
+        <button type="button" class="map-only" id="map-only-officiel">Uniquement l'officiel</button>
+        <label class="fl fl-st"><input type="checkbox" class="map-statut" data-st="officiel" checked><span class="st-chip st-chip--officiel">Officiel</span><em>Nommé par Rockstar</em></label>
+        <label class="fl fl-st"><input type="checkbox" class="map-statut" data-st="vu" checked><span class="st-chip st-chip--vu">Aperçu</span><em>Vu dans un trailer</em></label>
+        <label class="fl fl-st"><input type="checkbox" class="map-statut" data-st="spec" checked><span class="st-chip st-chip--spec">Supposé</span><em>Reconstruction</em></label>
+      </div>
+
       <div class="map-layers">
         <p class="map-side-h">Calques</p>
         <label class="fl"><input type="checkbox" class="map-layer" data-layer="lyr-county" checked><span class="fl-dot" style="background:#3E3B47"></span>Limites de comtés</label>
@@ -214,14 +222,14 @@
 
       <div class="map-filters">
         <p class="map-side-h">Marqueurs</p>
-      <label class="fl"><input type="checkbox" class="map-filter" data-cat="region" checked><span class="fl-dot" style="background:#E8452C"></span>Régions</label>
-      <label class="fl"><input type="checkbox" class="map-filter" data-cat="ville" checked><span class="fl-dot" style="background:#F5A524"></span>Villes</label>
-      <label class="fl"><input type="checkbox" class="map-filter" data-cat="collectible" checked><span class="fl-dot" style="background:#C2452C"></span>Collectibles</label>
-      <label class="fl"><input type="checkbox" class="map-filter" data-cat="planque" checked><span class="fl-dot" style="background:#D96A2C"></span>Planques</label>
-      <label class="fl"><input type="checkbox" class="map-filter" data-cat="magasin" checked><span class="fl-dot" style="background:#B5762A"></span>Magasins</label>
-      <label class="fl"><input type="checkbox" class="map-filter" data-cat="garage" checked><span class="fl-dot" style="background:#A85B33"></span>Garages</label>
-      <label class="fl"><input type="checkbox" class="map-filter" data-cat="mission" checked><span class="fl-dot" style="background:#CE4B33"></span>Missions</label>
-      <label class="fl"><input type="checkbox" class="map-filter" data-cat="essence" checked><span class="fl-dot" style="background:#D93F2A"></span>Stations-service</label>
+        <label class="fl"><input type="checkbox" class="map-filter" data-cat="region" checked><span class="fl-dot" style="background:#E8452C"></span>Régions</label>
+        <label class="fl"><input type="checkbox" class="map-filter" data-cat="ville" checked><span class="fl-dot" style="background:#F5A524"></span>Villes</label>
+        <label class="fl"><input type="checkbox" class="map-filter" data-cat="quartier" checked><span class="fl-dot" style="background:#D96A2C"></span>Quartiers</label>
+        <label class="fl"><input type="checkbox" class="map-filter" data-cat="comte" checked><span class="fl-dot" style="background:#8A6A45"></span>Comtés</label>
+        <label class="fl"><input type="checkbox" class="map-filter" data-cat="lieu" checked><span class="fl-dot" style="background:#B5762A"></span>Lieux notables</label>
+        <label class="fl"><input type="checkbox" class="map-filter" data-cat="collectible" checked><span class="fl-dot" style="background:#C2452C"></span>Collectibles</label>
+        <label class="fl"><input type="checkbox" class="map-filter" data-cat="planque" checked><span class="fl-dot" style="background:#A85B33"></span>Planques</label>
+        <label class="fl"><input type="checkbox" class="map-filter" data-cat="mission" checked><span class="fl-dot" style="background:#CE4B33"></span>Missions</label>
       </div>
 
       <p class="map-note">Fond de carte provisoire. Le tracé réel et les emplacements seront ajoutés après la sortie du jeu, à partir de sources légitimes.</p>
