@@ -31,11 +31,11 @@
   const shell   = document.querySelector('.map-shell');
 
   /* ---- dimensions du monde, en unités de carte ---- */
-  const W = 4000, H = 4600;
+  const W = 5200, H = 6000;
 
   /* échelle provisoire : 1 unité de carte = 2,4 mètres dans le jeu.
      À recaler avec les vraies distances après le 19 novembre. */
-  const METRES_PAR_UNITE = 2.4;
+  const METRES_PAR_UNITE = 2.2;
 
   /* vitesses provisoires, en mètres par seconde */
   const VITESSES = [
@@ -69,72 +69,115 @@
 
   /* ---- catégories ---- */
   const CATS = {
-    region:      { nom:'Régions',         col:'#E8452C' },
-    ville:       { nom:'Villes',          col:'#F5A524' },
-    quartier:    { nom:'Quartiers',       col:'#D96A2C' },
-    comte:       { nom:'Comtés',          col:'#8A6A45' },
-    lieu:        { nom:'Lieux notables',  col:'#B5762A' },
-    collectible: { nom:'Collectibles',    col:'#C2452C' },
-    planque:     { nom:'Planques',        col:'#A85B33' },
-    mission:     { nom:'Missions',        col:'#CE4B33' }
+    region:      { nom:'Régions',            col:'#E8452C' },
+    ville:       { nom:'Villes',             col:'#F5A524' },
+    quartier:    { nom:'Quartiers',          col:'#D96A2C' },
+    comte:       { nom:'Comtés',             col:'#8A6A45' },
+    batiment:    { nom:'Bâtiments identifiés',col:'#5B4E8C' },
+    transport:   { nom:'Transports',         col:'#2F6F8F' },
+    nature:      { nom:'Nature et relief',   col:'#4C7A50' },
+    lieu:        { nom:'Lieux notables',     col:'#B5762A' },
+    collectible: { nom:'Collectibles',       col:'#C2452C' },
+    planque:     { nom:'Planques',           col:'#A85B33' },
+    mission:     { nom:'Missions',           col:'#CE4B33' }
   };
 
   /* ---- points confirmés par Rockstar ----
      Positions approximatives, à recaler sur le fond définitif. */
   const POINTS = [
-    /* ---------- régions officielles ---------- */
-    { id:'vice-city', n:'Vice City', c:'ville', x:2620, y:3160, s:'officiel', src:'SITE',
-      d:"La métropole de Leonida et le cœur du jeu. Rockstar la présente comme la capitale ensoleillée et festive du pays. C'est la ville la plus dense jamais construite par le studio." },
-    { id:'leonida-keys', n:'Leonida Keys', c:'region', x:1560, y:4230, s:'officiel', src:'SITE',
-      d:"Archipel tropical au sud de l'État, relié par de longues routes construites au-dessus de l'eau. Plongée, pêche, navigation et contrebande." },
-    { id:'grassrivers', n:'Grassrivers', c:'region', x:2020, y:3430, s:'officiel', src:'SITE',
-      d:"La grande zone humide de Leonida. Végétation dense, visibilité réduite, hydroglisseurs et alligators. Un terrain idéal pour ce qui doit rester discret." },
-    { id:'port-gellhorn', n:'Port Gellhorn', c:'ville', x:400, y:1290, s:'officiel', src:'SITE',
-      d:"Ville côtière qui a connu des jours meilleurs. Motels bon marché, attractions fermées, commerces de bord de route et économie souterraine." },
-    { id:'ambrosia', n:'Ambrosia', c:'region', x:2670, y:1960, s:'officiel', src:'SITE',
-      d:"Comté rural et industriel. Rockstar y situe la raffinerie de sucre Allied Crystal, qui fournit les emplois, tandis que le gang de motards local fournit à peu près tout le reste." },
-    { id:'mount-kalaga', n:'Mount Kalaga National Park', c:'region', x:2700, y:940, s:'officiel', src:'SITE',
-      d:"Parc national à la frontière nord de l'État, construit autour de la chasse, de la pêche et des pistes tout-terrain. Rockstar décrit dans son arrière-pays une population qui vit volontairement loin du regard des autorités." },
+    /* ============ RÉGIONS OFFICIELLES ============ */
+    { id:'vice-city', n:'Vice City', c:'ville', x:3560, y:4180, s:'officiel', src:'SITE', z:0,
+      d:"La métropole de Leonida et le cœur du jeu. Rockstar la présente comme la capitale ensoleillée et festive du pays, et comme la ville la plus dense jamais construite par le studio." },
+    { id:'leonida-keys', n:'Leonida Keys', c:'region', x:2200, y:5560, s:'officiel', src:'SITE', z:0,
+      d:"Archipel tropical au sud de l'État, relié par de longues routes au-dessus de l'eau. Plongée, pêche, navigation et contrebande." },
+    { id:'grassrivers', n:'Grassrivers', c:'region', x:2700, y:4700, s:'officiel', src:'SITE', z:0,
+      d:"La grande zone humide de Leonida. Végétation dense, visibilité réduite, hydroglisseurs et alligators." },
+    { id:'port-gellhorn', n:'Port Gellhorn', c:'ville', x:640, y:1380, s:'officiel', src:'SITE', z:0,
+      d:"Ville côtière qui a connu des jours meilleurs. Motels bon marché, attractions fermées et économie souterraine." },
+    { id:'ambrosia', n:'Ambrosia', c:'region', x:3520, y:2660, s:'officiel', src:'SITE', z:0,
+      d:"Comté rural et industriel. La raffinerie Allied Crystal fournit les emplois, le gang de motards local fournit à peu près tout le reste." },
+    { id:'mount-kalaga', n:'Mount Kalaga National Park', c:'region', x:3480, y:1220, s:'officiel', src:'SITE', z:0,
+      d:"Parc national à la frontière nord, construit autour de la chasse, de la pêche et des pistes tout-terrain. Dans son arrière-pays, une population qui vit volontairement loin des autorités." },
 
-    /* ---------- lieux nommés par Rockstar ---------- */
-    { id:'vice-beach', n:'Vice Beach', c:'quartier', x:2860, y:3060, s:'officiel', src:'T1',
-      d:"Le front de mer de Vice City, seule sous-région de la ville confirmée à ce jour." },
-    { id:'ocean-beach', n:'Ocean Beach', c:'quartier', x:2800, y:3260, s:'officiel', src:'SITE',
-      d:"Quartier de Vice City nommé par Rockstar, reconnaissable à ses hôtels art déco aux teintes pastel." },
-    { id:'little-cuba', n:'Little Cuba', c:'quartier', x:2520, y:3300, s:'officiel', src:'SITE',
-      d:"Quartier de Vice City nommé par Rockstar, connu pour ses boulangeries. L'un des deux seuls quartiers officiellement nommés." },
-    { id:'key-lento', n:'Key Lento', c:'quartier', x:1700, y:4130, s:'officiel', src:'T2',
-      d:"Île nommée dans l'archipel des Leonida Keys." },
-    { id:'allied-crystal', n:'Raffinerie Allied Crystal', c:'lieu', x:2760, y:2020, s:'officiel', src:'SITE',
-      d:"Raffinerie de sucre d'Ambrosia, citée par Rockstar comme le principal employeur de la région." },
+    /* ============ VICE CITY : QUARTIERS ============ */
+    { id:'ocean-beach', n:'Ocean Beach', c:'quartier', x:3900, y:4300, s:'officiel', src:'SITE', p:'vice-city', z:1,
+      d:"Quartier nommé par Rockstar : hôtels art déco pastel, sable blanc, promenade bordée de palmiers. C'est la scène d'ouverture du premier trailer." },
+    { id:'little-cuba', n:'Little Cuba', c:'quartier', x:3400, y:4360, s:'officiel', src:'SITE', p:'vice-city', z:1,
+      d:"Quartier nommé par Rockstar, connu pour ses boulangeries et sa culture cubano-américaine." },
+    { id:'vice-beach', n:'Vice Beach', c:'quartier', x:3940, y:4060, s:'officiel', src:'T1', p:'vice-city', z:1,
+      d:"Île-barrière reliée au continent par une chaussée. Seule sous-région de Vice City confirmée par les supports officiels." },
+    { id:'south-beach', n:'South Beach', c:'quartier', x:3920, y:4180, s:'vu', src:'T1', p:'vice-city', z:1,
+      d:"Bande de front de mer où se concentrent bars et hôtels illuminés au néon. Plusieurs plans nocturnes des trailers en proviennent." },
+    { id:'downtown', n:'Downtown', c:'quartier', x:3560, y:4120, s:'vu', src:'T2', p:'vice-city', z:1,
+      d:"Le centre financier : tours de verre et autoroutes surélevées, visibles dans les plans aériens du second trailer." },
+    { id:'stockyard', n:'Stockyard', c:'quartier', x:3460, y:3980, s:'vu', src:'T1', p:'vice-city', z:1,
+      d:"Quartier d'entrepôts reconvertis, couverts de fresques. Un rassemblement automobile s'y déroule dans le premier trailer." },
+    { id:'vc-port', n:'Port de Vice City', c:'transport', x:3640, y:4460, s:'vu', src:'T1', p:'vice-city', z:1,
+      d:"Zone portuaire industrielle : conteneurs, entrepôts et ponts, aperçue dans les deux trailers." },
+    { id:'marina', n:'Marina', c:'quartier', x:3780, y:4440, s:'vu', src:'T2', p:'vice-city', z:1,
+      d:"Secteur résidentiel aisé au bord de l'eau : bateaux, jet-skis et propriétés de luxe." },
+    { id:'vcia', n:'Aéroport international', c:'transport', x:3300, y:4240, s:'vu', src:'T2', p:'vice-city', z:1,
+      d:"Principal aéroport de la ville, identifié par le train VCIA aperçu dans le second trailer." },
+    { id:'causeway', n:'Chaussée de Vice Beach', c:'transport', x:3760, y:4150, s:'vu', src:'T1', p:'vice-city', z:1,
+      d:"Pont-chaussée reliant le continent à l'île de Vice Beach, avec péage à l'entrée." },
 
-    /* ---------- lieux aperçus dans les supports officiels ---------- */
-    { id:'waning-sands', n:'Waning Sands', c:'ville', x:2000, y:2550, s:'vu', src:'T1',
-      d:"Zone de banlieue étendue : voies rapides, centres commerciaux et vastes parkings. Nommée dans les supports officiels sans description publiée." },
-    { id:'hamlet', n:'Hamlet', c:'ville', x:1880, y:3900, s:'vu', src:'T1',
+    /* ============ VICE CITY : BÂTIMENTS IDENTIFIÉS ============ */
+    { id:'galina-opera', n:'Galina Ballet Opera House', c:'batiment', x:3580, y:4090, s:'vu', src:'T2', p:'downtown', z:2,
+      d:"Opéra à la silhouette anguleuse et au parvis animé, rapproché par les observateurs de l'Adrienne Arsht Center." },
+    { id:'sahara-arena', n:'Sahara Arena', c:'batiment', x:3620, y:4160, s:'vu', src:'T2', p:'downtown', z:2,
+      d:"Salle omnisports au bord de l'eau, domicile des Vice City Narcos. Forme rapprochée de la Kaseya Center." },
+    { id:'twin-towers', n:'Tours jumelles', c:'batiment', x:3540, y:4140, s:'vu', src:'T2', p:'downtown', z:2,
+      d:"Double tour reliée par un toit ajouré, rapprochée du 500 Brickell." },
+    { id:'autograph-flight', n:'Autograph Flight Support', c:'batiment', x:3280, y:4270, s:'vu', src:'T2', p:'vcia', z:2,
+      d:"Terminal d'aviation privée au toit débordant et à la façade vitrée incurvée." },
+    { id:'tisha-wocka', n:'Tisha-Wocka Flea Market', c:'lieu', x:3900, y:4230, s:'vu', src:'T1', p:'south-beach', z:2,
+      d:"Marché aux puces nommé dans les supports officiels, près de South Beach." },
+    { id:'ptt-youngin', n:'PTT YOUNGIN$', c:'lieu', x:3440, y:4340, s:'officiel', src:'SITE', p:'little-cuba', z:2,
+      d:"Boutique de biens illicites, lieu d'une mission exclusive à l'Édition Ultime." },
+    { id:'penthouse', n:'Penthouse de Vice Beach', c:'batiment', x:3960, y:4020, s:'vu', src:'T1', p:'vice-beach', z:2,
+      d:"Terrasse de luxe avec piscine privée et douche extérieure, rapprochée de la Trésor Tower." },
+    { id:'jade-condos', n:'Tours ondulées', c:'batiment', x:3970, y:3960, s:'vu', src:'T1', p:'vice-beach', z:2,
+      d:"Immeubles à la façade en vagues, visibles dans la skyline de Vice Beach." },
+
+    /* ============ AUTRES VILLES ============ */
+    { id:'waning-sands', n:'Waning Sands', c:'ville', x:2760, y:3460, s:'vu', src:'T1', z:0,
+      d:"Banlieue tentaculaire : voies rapides, centres commerciaux et vastes parkings." },
+    { id:'hamlet', n:'Hamlet', c:'ville', x:2560, y:5080, s:'vu', src:'T1', z:0,
       d:"Localité nommée dans le premier trailer, dans une scène de rue résidentielle." },
-    { id:'vice-dale', n:'Comté de Vice-Dale', c:'comte', x:2480, y:2830, s:'vu', src:'T1',
-      d:"Comté déduit du marquage Vice-Dale Police Department visible sur un véhicule de police." },
-    { id:'leonard-county', n:'Comté de Leonard', c:'comte', x:1700, y:2250, s:'vu', src:'T1',
-      d:"Comté identifié par le bureau du shérif du comté de Leonard. Contient notamment Waning Sands." },
-    { id:'kelly-county', n:'Comté de Kelly', c:'comte', x:900, y:1800, s:'vu', src:'T1',
-      d:"Comté nommé sur un panneau routier. L'une des zones les moins documentées de Leonida." },
-    { id:'vcia', n:'Aéroport international de Vice City', c:'lieu', x:2400, y:3020, s:'vu', src:'T2',
-      d:"Aéroport identifié par le train VCIA aperçu dans le second trailer. Position provisoire." },
+    { id:'key-lento', n:'Key Lento', c:'quartier', x:2480, y:5480, s:'officiel', src:'T2', p:'leonida-keys', z:1,
+      d:"Île nommée dans l'archipel des Leonida Keys." },
 
-    /* ---------- reconstructions communautaires ---------- */
-    { id:'mariana-county', n:'Comté de Mariana', c:'comte', x:1900, y:3560, s:'spec', src:'COMM',
-      d:"Comté avancé par la communauté pour la zone des Grassrivers et des Keys. Non confirmé par Rockstar." },
-    { id:'gloriana', n:'Gloriana', c:'region', x:1500, y:1100, s:'spec', src:'COMM',
-      d:"Nom aperçu sur des plaques d'immatriculation dans le second trailer. Rockstar n'a jamais annoncé qu'il s'agissait d'une région explorable. Position purement hypothétique." },
-    { id:'grand-lac', n:'Grand lac intérieur', c:'lieu', x:2390, y:2310, s:'spec', src:'COMM',
-      d:"Étendue d'eau centrale déduite des images. Ni son nom ni ses contours ne sont confirmés." }
+    /* ============ LIEUX NOTABLES ============ */
+    { id:'allied-crystal', n:'Raffinerie Allied Crystal', c:'lieu', x:3620, y:2720, s:'officiel', src:'SITE', p:'ambrosia', z:1,
+      d:"Raffinerie de sucre citée par Rockstar comme le principal employeur d'Ambrosia." },
+    { id:'state-prison', n:'Pénitencier d\'État', c:'lieu', x:3260, y:2340, s:'vu', src:'T1', z:0,
+      d:"Prison d'État d'où Lucia sort au début de l'histoire. Rapprochée de la Florida State Prison. Nom exact non confirmé." },
+    { id:'tv-tower', n:'Tour de télévision', c:'batiment', x:1400, y:1160, s:'spec', src:'COMM', z:0,
+      d:"Hypothèse communautaire d'une très haute antenne, inspirée de la tour WTVY. Non confirmée." },
+
+    /* ============ COMTÉS ============ */
+    { id:'vice-dale', n:'Comté de Vice-Dale', c:'comte', x:3400, y:3820, s:'vu', src:'T1', z:0,
+      d:"Déduit du marquage Vice-Dale Police Department sur un véhicule de police." },
+    { id:'leonard-county', n:'Comté de Leonard', c:'comte', x:2500, y:3100, s:'vu', src:'T1', z:0,
+      d:"Identifié par le bureau du shérif du comté de Leonard. Contient Waning Sands." },
+    { id:'kelly-county', n:'Comté de Kelly', c:'comte', x:1200, y:2000, s:'vu', src:'T1', z:0,
+      d:"Nommé sur un panneau routier. L'une des zones les moins documentées." },
+    { id:'mariana-county', n:'Comté de Mariana', c:'comte', x:2500, y:4900, s:'spec', src:'COMM', z:0,
+      d:"Comté avancé par la communauté pour la zone des Grassrivers. Non confirmé." },
+
+    /* ============ NATURE ============ */
+    { id:'grand-lac', n:'Grand lac intérieur', c:'nature', x:3200, y:3700, s:'spec', src:'COMM', z:0,
+      d:"Étendue d'eau centrale déduite des images. Ni son nom ni ses contours ne sont confirmés." },
+    { id:'kalaga-summit', n:'Sommet du Kalaga', c:'nature', x:3480, y:1120, s:'spec', src:'COMM', p:'mount-kalaga', z:1,
+      d:"Point culminant supposé du parc national." },
+    { id:'gloriana', n:'Gloriana', c:'region', x:1900, y:900, s:'spec', src:'COMM', z:0,
+      d:"Nom aperçu sur des plaques d'immatriculation. Rockstar n'a jamais annoncé qu'il s'agissait d'une région explorable." }
   ];
 
   /* ============================================================
      ÉTAT
      ============================================================ */
-  let scale = 0.28, minS = 0.14, maxS = 2.4;
+  let scale = 0.21, minS = 0.10, maxS = 3.0;
   let tx = 0, ty = 0;
   let found = {};
   let visible = {};
@@ -143,6 +186,24 @@
 
   Object.keys(CATS).forEach(k => visible[k] = true);
   let visStatut = { officiel:true, vu:true, spec:true };
+
+  /* niveau de zoom minimal pour voir chaque profondeur de la hiérarchie */
+  const ZOOM_NIVEAU = [0, 0.42, 0.85];
+  let expanded = {};      /* parents dépliés manuellement */
+
+  function niveauVisible(p){
+    if(!p.z) return true;
+    if(scale >= ZOOM_NIVEAU[p.z]) return true;
+    /* un enfant reste visible si son parent est déplié */
+    let cur = p;
+    while(cur && cur.p){
+      if(expanded[cur.p]) return true;
+      cur = POINTS.find(x => x.id === cur.p);
+    }
+    return false;
+  }
+
+  function enfants(id){ return POINTS.filter(x => x.p === id); }
 
   try{
     found = JSON.parse(localStorage.getItem('lk_map_found') || '{}');
@@ -168,7 +229,7 @@
   let clTimer = null;
   function clusterSoon(){
     clearTimeout(clTimer);
-    clTimer = setTimeout(cluster, 90);
+    clTimer = setTimeout(refreshVisibility, 90);
   }
 
   /* ---- barre d'échelle ---- */
@@ -245,14 +306,17 @@
     POINTS.forEach(function(p){
       const el = document.createElement('button');
       el.type = 'button';
-      el.className = 'mk mk--' + p.c + ' st-' + p.s + (found[p.id] ? ' is-found' : '');
+      const kids = enfants(p.id).length;
+      el.className = 'mk mk--' + p.c + ' st-' + p.s + ' z' + (p.z||0)
+                   + (found[p.id] ? ' is-found' : '') + (kids ? ' has-kids' : '');
       el.style.left = p.x + 'px';
       el.style.top  = p.y + 'px';
       el.dataset.id = p.id;
       el.dataset.cat = p.c;
       el.dataset.st = p.s;
       el.setAttribute('aria-label', p.n);
-      el.innerHTML = '<span class="mk-dot"></span><span class="mk-lbl">' + p.n + '</span>';
+      el.innerHTML = '<span class="mk-dot">' + (kids ? '<i>' + kids + '</i>' : '') + '</span>'
+                   + '<span class="mk-lbl">' + p.n + '</span>';
       el.addEventListener('click', function(ev){
         ev.stopPropagation();
         if(rulerOn){
@@ -269,7 +333,8 @@
 
   function refreshVisibility(){
     layer.querySelectorAll('.mk').forEach(function(el){
-      el.hidden = !(visible[el.dataset.cat] && visStatut[el.dataset.st]);
+      const p = POINTS.find(x => x.id === el.dataset.id);
+      el.hidden = !(p && visible[p.c] && visStatut[p.s] && niveauVisible(p));
     });
     cluster();
   }
@@ -284,14 +349,15 @@
   function cluster(){
     layer.querySelectorAll('.cl').forEach(el => el.remove());
 
-    const actifs = POINTS.filter(p => visible[p.c] && visStatut[p.s]);
+    const actifs = POINTS.filter(p => visible[p.c] && visStatut[p.s] && niveauVisible(p));
     /* taille de case en unités de carte : ~64 px à l'écran */
     const taille = 64 / scale;
 
     /* au-delà d'un certain zoom, plus de regroupement */
     if(scale > 0.55 || actifs.length < 12){
       layer.querySelectorAll('.mk').forEach(function(el){
-        if(visible[el.dataset.cat] && visStatut[el.dataset.st]) el.hidden = false;
+        const p = POINTS.find(x => x.id === el.dataset.id);
+        if(p && visible[p.c] && visStatut[p.s] && niveauVisible(p)) el.hidden = false;
       });
       return;
     }
@@ -364,10 +430,41 @@
         '<div><span>Source</span><b>' + SOURCES[p.src] + '</b></div>' +
         '<div><span>Position</span><b>' + p.x + ' · ' + p.y + '</b></div>' +
       '</div>' +
+      (function(){
+        const kids = enfants(p.id);
+        const parent = p.p ? POINTS.find(x => x.id === p.p) : null;
+        let h = '';
+        if(parent){
+          h += '<button type="button" class="mp-link" data-goto="' + parent.id + '">' +
+               '&larr; ' + parent.n + '</button>';
+        }
+        if(kids.length){
+          h += '<div class="mp-kids"><p class="mp-kids-h">Contient ' + kids.length +
+               (kids.length > 1 ? ' lieux' : ' lieu') + '</p>' +
+               kids.map(function(k){
+                 return '<button type="button" class="mp-kid" data-goto="' + k.id + '">' +
+                        '<span class="mp-kid-dot" style="background:' + CATS[k.c].col + '"></span>' +
+                        k.n + '<em class="mp-kid-st mp-kid-st--' + k.s + '">' + STATUTS[k.s].court + '</em>' +
+                        '</button>';
+               }).join('') + '</div>';
+        }
+        return h;
+      })() +
       '<button type="button" class="mp-btn' + (isFound ? ' on' : '') + '" id="mp-toggle">' +
         (isFound ? 'Repéré' : 'Marquer comme repéré') +
       '</button>';
     panel.classList.add('open');
+
+    /* déplier ce lieu : ses enfants deviennent visibles quel que soit le zoom */
+    expanded[p.id] = true;
+    refreshVisibility();
+
+    panelIn.querySelectorAll('[data-goto]').forEach(function(b){
+      b.addEventListener('click', function(){
+        const t = POINTS.find(x => x.id === b.dataset.goto);
+        if(t) goTo(t, Math.max(scale, ZOOM_NIVEAU[t.z || 0] + 0.1));
+      });
+    });
 
     document.getElementById('mp-toggle').addEventListener('click', function(){
       found[p.id] = !found[p.id];
@@ -503,7 +600,7 @@
   if(zoomOut) zoomOut.addEventListener('click', function(){
     const r = stage.getBoundingClientRect(); zoomAt(r.width/2, r.height/2, 0.74);
   });
-  if(resetBt) resetBt.addEventListener('click', function(){ scale = 0.28; center(); });
+  if(resetBt) resetBt.addEventListener('click', function(){ scale = 0.21; center(); });
 
   if(fullBt && shell){
     fullBt.addEventListener('click', function(){
@@ -547,6 +644,48 @@
       refreshVisibility();
     });
   }
+
+  /* ============================================================
+     ARBORESCENCE DES LIEUX
+     ============================================================ */
+  const tree = document.getElementById('map-tree');
+  function buildTree(){
+    if(!tree) return;
+    const racines = POINTS.filter(p => !p.p);
+    function node(p, depth){
+      const kids = enfants(p.id);
+      const st = STATUTS[p.s];
+      let h = '<li class="tr-item tr-d' + depth + (kids.length ? ' has-kids' : '') + '">' +
+              '<div class="tr-row">' +
+              (kids.length ? '<button type="button" class="tr-tog" aria-label="Déplier">›</button>' : '<span class="tr-sp"></span>') +
+              '<button type="button" class="tr-go" data-goto="' + p.id + '">' +
+              '<span class="tr-dot" style="background:' + CATS[p.c].col + '"></span>' +
+              '<span class="tr-n">' + p.n + '</span>' +
+              '<em class="tr-st tr-st--' + p.s + '">' + st.court + '</em>' +
+              '</button></div>';
+      if(kids.length){
+        h += '<ul class="tr-kids" hidden>' + kids.map(k => node(k, depth + 1)).join('') + '</ul>';
+      }
+      return h + '</li>';
+    }
+    tree.innerHTML = '<ul class="tr-root">' + racines.map(p => node(p, 0)).join('') + '</ul>';
+
+    tree.querySelectorAll('.tr-tog').forEach(function(b){
+      b.addEventListener('click', function(){
+        const ul = b.closest('.tr-item').querySelector(':scope > .tr-kids');
+        if(!ul) return;
+        ul.hidden = !ul.hidden;
+        b.classList.toggle('open', !ul.hidden);
+      });
+    });
+    tree.querySelectorAll('.tr-go').forEach(function(b){
+      b.addEventListener('click', function(){
+        const t = POINTS.find(x => x.id === b.dataset.goto);
+        if(t) goTo(t, Math.max(0.5, ZOOM_NIVEAU[t.z || 0] + 0.15));
+      });
+    });
+  }
+  buildTree();
 
   /* ============================================================
      CALQUES DU FOND

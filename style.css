@@ -960,14 +960,14 @@ table.spec td.unknown{font-weight:400; color:var(--ink-soft); font-style:italic;
 
 /* ---- scène ---- */
 .map-stage{
-  position:relative; overflow:hidden; height:min(74vh, 700px);
-  background:#BFD8DE; border:2px solid var(--ink); border-radius:10px;
+  position:relative; overflow:hidden; height:min(78vh, 760px);
+  background:#3F8DBF; border:2px solid var(--ink); border-radius:10px;
   box-shadow:5px 5px 0 rgba(26,26,30,.14);
   cursor:grab; touch-action:none; user-select:none;
 }
 .map-stage.grabbing{cursor:grabbing;}
 .map-stage.picking{cursor:crosshair;}
-.map-world{position:absolute; top:0; left:0; width:4000px; height:4600px; transform-origin:0 0;}
+.map-world{position:absolute; top:0; left:0; width:5200px; height:6000px; transform-origin:0 0;}
 .map-bg, .map-line{position:absolute; inset:0; width:100%; height:100%; display:block;}
 .map-line{pointer-events:none;}
 .map-markers{position:absolute; inset:0;}
@@ -1278,3 +1278,66 @@ body.map-full-on{overflow:hidden;}
 .map-copy:hover{border-color:var(--ink); color:var(--ink);}
 
 @media (max-width:900px){ .map-coord-wrap{display:none;} }
+
+/* ============================================================
+   CARTE — hiérarchie et arborescence
+   ============================================================ */
+.mk-dot i{
+  position:absolute; top:-7px; right:-9px; font-style:normal;
+  min-width:17px; height:17px; padding:0 4px; border-radius:100px;
+  background:var(--ink); color:var(--paper); font-size:.62rem; font-weight:900;
+  display:flex; align-items:center; justify-content:center; line-height:1;
+  border:1.5px solid var(--paper);
+}
+.mk-dot{position:relative;}
+.mk.z1 .mk-dot{width:15px; height:15px; border-width:2.5px;}
+.mk.z1 .mk-lbl{font-size:.66rem;}
+.mk.z2 .mk-dot{width:12px; height:12px; border-width:2px;}
+.mk.z2 .mk-lbl{font-size:.6rem; padding:1px 5px;}
+.mk--batiment .mk-dot{border-radius:3px;}
+.mk--transport .mk-dot{border-radius:3px; transform:rotate(45deg);}
+
+.mp-link{
+  display:inline-block; margin-top:8px; cursor:pointer; font-family:inherit;
+  font-size:.76rem; font-weight:700; color:var(--coral);
+  background:none; border:none; padding:0; text-decoration:underline; text-underline-offset:3px;
+}
+.mp-kids{margin-top:11px; padding-top:9px; border-top:1px solid var(--rule);}
+.mp-kids-h{font-size:.7rem; font-weight:800; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.06em; margin-bottom:5px;}
+.mp-kid{
+  display:flex; align-items:center; gap:8px; width:100%; cursor:pointer;
+  font-family:inherit; font-size:.82rem; font-weight:600; color:var(--ink); text-align:left;
+  background:none; border:none; padding:5px 0;
+}
+.mp-kid:hover{color:var(--coral);}
+.mp-kid-dot{width:8px; height:8px; border-radius:50%; flex-shrink:0;}
+.mp-kid-st{margin-left:auto; font-style:normal; font-size:.62rem; font-weight:800; border-radius:100px; padding:1px 7px; flex-shrink:0;}
+.mp-kid-st--officiel{background:#1A1A1E; color:var(--paper);}
+.mp-kid-st--vu{background:#F3D8A8; color:#6B4A12;}
+.mp-kid-st--spec{background:#FADFD9; color:#9B2E19;}
+
+.map-treewrap{margin-bottom:16px; padding-bottom:14px; border-bottom:1px solid var(--rule);}
+.map-tree{max-height:260px; overflow-y:auto; scrollbar-width:thin;}
+.map-tree ul{list-style:none;}
+.tr-kids{margin-left:18px; border-left:1.5px solid var(--rule); padding-left:6px;}
+.tr-row{display:flex; align-items:center; gap:3px;}
+.tr-tog{
+  width:20px; height:20px; flex-shrink:0; cursor:pointer; border:none; background:none;
+  font-size:1rem; font-weight:900; color:var(--ink-soft); transition:transform .15s; line-height:1;
+}
+.tr-tog.open{transform:rotate(90deg);}
+.tr-sp{width:20px; flex-shrink:0;}
+.tr-go{
+  display:flex; align-items:center; gap:7px; flex:1; min-width:0; cursor:pointer;
+  font-family:inherit; font-size:.82rem; font-weight:600; color:var(--ink); text-align:left;
+  background:none; border:none; padding:5px 4px; border-radius:4px;
+}
+.tr-go:hover{background:var(--paper-2);}
+.tr-dot{width:8px; height:8px; border-radius:50%; flex-shrink:0;}
+.tr-n{overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.tr-st{margin-left:auto; font-style:normal; font-size:.58rem; font-weight:800; border-radius:100px; padding:1px 6px; flex-shrink:0;}
+.tr-st--officiel{background:#1A1A1E; color:var(--paper);}
+.tr-st--vu{background:#F3D8A8; color:#6B4A12;}
+.tr-st--spec{background:#FADFD9; color:#9B2E19;}
+.tr-d1 .tr-go{font-size:.78rem;}
+.tr-d2 .tr-go{font-size:.74rem; font-weight:500;}
