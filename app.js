@@ -290,6 +290,10 @@ const el = id => document.getElementById(id);
       document.querySelector('.vfilters').scrollIntoView({behavior:'smooth', block:'start'});
     }
   }
-  fromHash();
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', fromHash);
+  } else {
+    fromHash();
+  }
   window.addEventListener('hashchange', fromHash);
 })();
