@@ -818,48 +818,58 @@ table.spec td.unknown{font-weight:400; color:var(--ink-soft); font-style:italic;
 
 
 /* ============================================================
-   REPÈRES LATÉRAUX — un motif par côté, écrans larges
+   REPÈRES LATÉRAUX — ancrés au contenu, un motif par côté
    ============================================================ */
-.rail{
-  position:fixed; top:0; bottom:0; width:74px; z-index:5;
-  pointer-events:none; display:none;
-}
-.rail--l{left:0;}
-.rail--r{right:0;}
+.has-rails{position:relative;}
 
-/* trait vertical avec dégradé chaud */
-.rail-line{
-  position:absolute; top:12%; bottom:12%; width:2px;
-  background:linear-gradient(180deg,
-    transparent 0%, var(--rule) 12%, var(--rule) 34%,
-    var(--amber) 46%, var(--coral) 54%,
-    var(--rule) 66%, var(--rule) 88%, transparent 100%);
-  background-size:100% 260%;
-  animation:railDrift 18s ease-in-out infinite alternate;
+.rail{
+  position:absolute; top:34px; bottom:34px; width:52px;
+  z-index:2; pointer-events:none; display:none;
 }
-.rail--l .rail-line{left:34px;}
-.rail--r .rail-line{right:34px;}
-@keyframes railDrift{
-  from{background-position:0 12%;}
-  to{background-position:0 88%;}
+.rail--l{left:7vw;}
+.rail--r{right:7vw;}
+
+/* rail vertical */
+.rail-line{
+  position:absolute; top:0; bottom:0; left:50%; width:3px;
+  margin-left:-1.5px; border-radius:3px;
+  background:linear-gradient(180deg,
+    transparent 0%, var(--rule) 5%, var(--rule) 95%, transparent 100%);
+}
+
+/* halo qui parcourt le rail */
+.rail-line::after{
+  content:''; position:absolute; left:-4px; width:11px; height:110px;
+  border-radius:11px;
+  background:linear-gradient(180deg, transparent, var(--amber), var(--coral), transparent);
+  filter:blur(1px);
+  animation:railTravel 11s cubic-bezier(.45,0,.55,1) infinite alternate;
+}
+@keyframes railTravel{
+  from{top:-4%;}
+  to{top:96%;}
 }
 
 /* graduations */
-.rail-ticks{position:absolute; top:12%; bottom:12%; display:flex; flex-direction:column; justify-content:space-between;}
-.rail--l .rail-ticks{left:26px;}
-.rail--r .rail-ticks{right:26px;}
-.rail-ticks i{display:block; width:9px; height:1px; background:var(--rule);}
-.rail-ticks i:nth-child(4n+1){width:16px; background:var(--ink-soft); opacity:.45;}
-
-/* libellé vertical */
-.rail-txt{
-  position:absolute; top:50%; font-size:.64rem; font-weight:800;
-  letter-spacing:.42em; text-transform:uppercase;
-  color:var(--ink-soft); opacity:.42; white-space:nowrap;
-  background:var(--paper); padding:14px 0;
+.rail-ticks{
+  position:absolute; top:0; bottom:0;
+  display:flex; flex-direction:column; justify-content:space-between;
 }
-.rail--l .rail-txt{left:26px; writing-mode:vertical-rl; transform:translateY(-50%) rotate(180deg);}
-.rail--r .rail-txt{right:26px; writing-mode:vertical-rl; transform:translateY(-50%);}
+.rail--l .rail-ticks{left:0;}
+.rail--r .rail-ticks{right:0;}
+.rail-ticks i{display:block; width:11px; height:1px; background:var(--rule);}
+.rail-ticks i:nth-child(4n+1){width:22px; background:var(--ink-soft); opacity:.4;}
 
-@media (min-width:1320px){ .rail{display:block;} }
-@media (prefers-reduced-motion: reduce){ .rail-line{animation:none;} }
+/* libellé vertical, au centre du rail */
+.rail-txt{
+  position:absolute; top:50%; left:50%; font-size:.68rem; font-weight:800;
+  letter-spacing:.46em; text-transform:uppercase;
+  color:var(--ink-soft); opacity:.5; white-space:nowrap;
+  background:var(--paper); padding:18px 0;
+}
+.rail--l .rail-txt{writing-mode:vertical-rl; transform:translate(-50%,-50%) rotate(180deg);}
+.rail--r .rail-txt{writing-mode:vertical-rl; transform:translate(-50%,-50%);}
+
+@media (min-width:1400px){ .rail{display:block;} }
+@media (min-width:1750px){ .rail--l{left:9vw;} .rail--r{right:9vw;} }
+@media (prefers-reduced-motion: reduce){ .rail-line::after{animation:none; top:44%;} }
