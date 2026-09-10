@@ -167,13 +167,22 @@ const el = id => document.getElementById(id);
     });
   }
 
-  /* apparitions au défilement */
-  const io = new IntersectionObserver(function(entries){
-    entries.forEach(function(en,i){
-      if(en.isIntersecting){ setTimeout(function(){ en.target.classList.add('in'); }, i*70); io.unobserve(en.target); }
-    });
-  }, {threshold:.15});
-  document.querySelectorAll('.reveal').forEach(function(n){ io.observe(n); });
+  /* apparitions au défilement, sur toutes les pages */
+  (function(){
+    const nodes = document.querySelectorAll('.reveal, .rise');
+    if(!nodes.length) return;
+
+    const io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(!en.isIntersecting) return;
+        const d = parseInt(en.target.dataset.delay || '0', 10);
+        setTimeout(function(){ en.target.classList.add('in'); }, d);
+        io.unobserve(en.target);
+      });
+    }, {threshold:.12, rootMargin:'0px 0px -40px 0px'});
+
+    nodes.forEach(function(n){ io.observe(n); });
+  })();
 
   /* inscription à la lettre d'information, envoi direct vers Brevo */
   const signupForm = el('signup');
@@ -219,6 +228,12 @@ const el = id => document.getElementById(id);
   if(!grid) return;
 
   const cards   = Array.from(grid.querySelectorAll('.veh-card'));
+
+  /* apparition en cascade des cartes, par vagues de colonne */
+  cards.forEach(function(c, i){
+    c.classList.add('rise');
+    c.dataset.delay = String((i % 12) * 45);
+  });
   const input   = document.getElementById('vq');
   const clearBt = document.getElementById('vclear');
   const chips   = Array.from(document.querySelectorAll('.chip-filter'));
@@ -237,7 +252,7 @@ const el = id => document.getElementById(id);
       const okTxt = !q || norm(card.dataset.search).includes(q);
       const show = okCat && okTxt;
       card.hidden = !show;
-      if(show) shown++;
+      if(show){ card.classList.add('in'); shown++; }
     });
     countEl.innerHTML = '<strong>' + shown + '</strong> ' + (shown > 1 ? 'véhicules' : 'véhicule');
     emptyEl.hidden = shown > 0;

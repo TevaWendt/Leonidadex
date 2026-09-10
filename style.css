@@ -795,3 +795,24 @@ table.spec td.unknown{font-weight:400; color:var(--ink-soft); font-style:italic;
   .head-in{flex-wrap:wrap; row-gap:10px;}
   .brand{margin-right:auto;}
 }
+
+/* ============================================================
+   APPARITIONS AU DÉFILEMENT — généralisées
+   ============================================================ */
+.rise{
+  opacity:0; transform:translateY(22px);
+  transition:opacity .5s cubic-bezier(.2,.7,.3,1), transform .5s cubic-bezier(.2,.7,.3,1);
+  will-change:opacity, transform;
+}
+.rise.in{opacity:1; transform:none;}
+
+/* les cartes véhicules gardent leur transformation au survol une fois révélées */
+.veh-card.rise{transition:opacity .5s cubic-bezier(.2,.7,.3,1), transform .5s cubic-bezier(.2,.7,.3,1);}
+.veh-card.rise.in{transition:transform .18s cubic-bezier(.3,.85,.4,1), box-shadow .18s;}
+
+/* le filtrage ne doit pas rejouer l'animation */
+.veh-grid.filtering .veh-card{transition:none;}
+
+@media (prefers-reduced-motion: reduce){
+  .rise{opacity:1 !important; transform:none !important;}
+}
