@@ -1183,3 +1183,7 @@ body.map-full-on{overflow:hidden;}
   .reg-grid{grid-template-columns:1fr;}
   .map-facts{margin-bottom:38px;}
 }
+
+/* calques du fond de carte */
+.map-layers{margin-bottom:4px;}
+.map-layers + .map-filters{margin-top:16px;}

@@ -63,22 +63,26 @@
   /* ---- points confirmés par Rockstar ----
      Positions approximatives, à recaler sur le fond définitif. */
   const POINTS = [
-    { id:'vice-city',   n:'Vice City',        c:'ville',  x:1520, y:3180,
-      d:"La grande ville de Leonida, inspirée de Miami. Cœur de l'histoire de Jason et Lucia." },
-    { id:'leonida-keys',n:'Leonida Keys',     c:'region', x:1180, y:4180,
-      d:"Chapelet d'îles tropicales au sud de l'État : bars, plages, bateaux et vie marine." },
-    { id:'grassrivers', n:'Grassrivers',      c:'region', x:2180, y:3520,
-      d:"Vaste zone humide subtropicale, équivalent des Everglades. Chasse, pêche et communautés rurales." },
-    { id:'port-gellhorn',n:'Port Gellhorn',   c:'ville',  x:820,  y:1980,
-      d:"Ville balnéaire fanée de l'ouest de Leonida : motels, attractions désertes et économie en berne." },
-    { id:'ambrosia',    n:'Ambrosia',         c:'region', x:2560, y:2280,
-      d:"Le cœur agricole et sucrier de l'État." },
-    { id:'mount-kalaga',n:'Mount Kalaga',     c:'region', x:2900, y:1180,
-      d:"Parc national des hautes terres, au nord de Leonida." },
-    { id:'vice-beach',  n:'Vice Beach',       c:'ville',  x:1720, y:3080,
-      d:"Le front de mer de Vice City, ses hôtels art déco et sa promenade." },
-    { id:'waning-sands',n:'Waning Sands',     c:'ville',  x:1980, y:2620,
-      d:"Banlieue tentaculaire du comté de Leonard : autoroutes, centres commerciaux et parkings." }
+    { id:'vice-city',    n:'Vice City',      c:'ville',  x:2620, y:3160,
+      d:"La métropole de Leonida, inspirée de Miami. Plages, hôtels art déco, voies rapides et quartiers denses. Cœur de l'histoire de Jason et Lucia." },
+    { id:'vice-beach',   n:'Vice Beach',     c:'ville',  x:2860, y:3060,
+      d:"Le front de mer de Vice City, sa promenade et ses façades art déco." },
+    { id:'leonida-keys', n:'Leonida Keys',   c:'region', x:1560, y:4230,
+      d:"Archipel tropical au sud de l'État, relié par de longues routes au-dessus de l'eau. Bars, plages et contrebande." },
+    { id:'grassrivers',  n:'Grassrivers',    c:'region', x:2020, y:3430,
+      d:"Vaste zone humide inspirée des Everglades. Mangroves, hydroglisseurs, alligators et repaires isolés." },
+    { id:'port-gellhorn',n:'Port Gellhorn',  c:'ville',  x:400,  y:1290,
+      d:"Ville côtière en déclin de l'ouest de Leonida : motels bon marché, attractions fermées et économie souterraine." },
+    { id:'ambrosia',     n:'Ambrosia',       c:'region', x:2670, y:1960,
+      d:"Le versant industriel et sucrier de l'État, ponctué de petites villes et de réseaux criminels locaux." },
+    { id:'mount-kalaga', n:'Mount Kalaga',   c:'region', x:2700, y:940,
+      d:"Parc national du nord de Leonida : forêts, rivières, reliefs et pistes tout-terrain. Chasse et pêche." },
+    { id:'waning-sands', n:'Waning Sands',   c:'ville',  x:2000, y:2550,
+      d:"Banlieue tentaculaire du comté de Leonard : autoroutes, centres commerciaux et vastes parkings." },
+    { id:'lac-central',  n:'Grand lac',      c:'region', x:2390, y:2310,
+      d:"Vaste étendue d'eau intérieure au centre de l'État. Tracé provisoire, position à confirmer." },
+    { id:'kelly',        n:'Comté de Kelly', c:'region', x:900,  y:1800,
+      d:"Comté de l'ouest, autour de Port Gellhorn. L'un des moins documentés à ce jour." }
   ];
 
   /* ============================================================
@@ -466,6 +470,30 @@
     inp.addEventListener('change', function(){
       visible[inp.dataset.cat] = inp.checked;
       refreshVisibility();
+    });
+  });
+
+  /* ============================================================
+     CALQUES DU FOND
+     ============================================================ */
+  const LAYER_KEY = 'lk_map_layers';
+  let layers = {};
+  try{ layers = JSON.parse(localStorage.getItem(LAYER_KEY) || '{}'); }catch(e){ layers = {}; }
+
+  function applyLayer(name, on){
+    document.querySelectorAll('.map-bg .' + name).forEach(function(g){
+      g.style.display = on ? '' : 'none';
+    });
+  }
+
+  document.querySelectorAll('.map-layer').forEach(function(inp){
+    const name = inp.dataset.layer;
+    if(Object.prototype.hasOwnProperty.call(layers, name)) inp.checked = layers[name];
+    applyLayer(name, inp.checked);
+    inp.addEventListener('change', function(){
+      layers[name] = inp.checked;
+      try{ localStorage.setItem(LAYER_KEY, JSON.stringify(layers)); }catch(e){}
+      applyLayer(name, inp.checked);
     });
   });
 
