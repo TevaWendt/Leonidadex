@@ -743,4 +743,208 @@
     if(e.key === '-')                  { const r=stage.getBoundingClientRect(); zoomAt(r.width/2,r.height/2,0.77); }
     if(e.key === 'Escape')             { closePanel(); }
   });
+
+  /* ============================================================
+     INTERFACE PUBLIQUE, pour les modules complémentaires
+     ============================================================ */
+  window.LK_MAP = {
+    layer: layer,
+    panel: panel,
+    panelIn: panelIn,
+    toWorld: toWorld,
+    goTo: goTo,
+    wasDrag: function(){ return moved >= 6; },
+    getFound: function(){ return found; },
+    setFound: function(f){
+      found = f || {}; save();
+      layer.querySelectorAll('.mk').forEach(function(el){
+        el.classList.toggle('is-found', !!found[el.dataset.id]);
+      });
+      refreshProgress();
+    },
+    refresh: refreshVisibility
+  };
+})();
+
+/* ============================================================
+   LEONIDAKIT — outils avancés de la carte
+   Marqueurs personnels, mode édition, export, trajet multi-points
+   ============================================================ */
+(function(){
+  const stage = document.getElementById('map-stage');
+  if(!stage || !window.LK_MAP) return;
+
+  const M = window.LK_MAP;
+
+  /* ---------- 1. MARQUEURS PERSONNELS ---------- */
+  const PERSO_KEY = 'lk_map_perso';
+  let perso = [];
+  try{ perso = JSON.parse(localStorage.getItem(PERSO_KEY) || '[]'); }catch(e){ perso = []; }
+  function savePerso(){ try{ localStorage.setItem(PERSO_KEY, JSON.stringify(perso)); }catch(e){} }
+
+  /* ---------- 2. MODE ÉDITION ---------- */
+  let editOn = false;
+  const editBt   = document.getElementById('map-edit');
+  const editPane = document.getElementById('map-edit-pane');
+  const editList = document.getElementById('map-edit-list');
+  const editCnt  = document.getElementById('map-edit-count');
+
+  function renderPerso(){
+    M.layer.querySelectorAll('.pm').forEach(el => el.remove());
+    perso.forEach(function(p, i){
+      const el = document.createElement('button');
+      el.type = 'button';
+      el.className = 'mk pm';
+      el.style.left = p.x + 'px';
+      el.style.top  = p.y + 'px';
+      el.dataset.i = i;
+      el.setAttribute('aria-label', p.n);
+      el.innerHTML = '<span class="mk-dot pm-dot"></span><span class="mk-lbl">' + esc(p.n) + '</span>';
+      el.addEventListener('click', function(ev){
+        ev.stopPropagation();
+        openPerso(i);
+      });
+      M.layer.appendChild(el);
+    });
+    if(editCnt) editCnt.textContent = perso.length;
+    renderList();
+  }
+
+  function esc(s){
+    return String(s).replace(/[<>&"]/g, function(c){
+      return {'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c];
+    });
+  }
+
+  function openPerso(i){
+    const p = perso[i];
+    M.panelIn.innerHTML =
+      '<p class="mp-cat" style="color:#0B8B84">Marqueur personnel</p>' +
+      '<h3>' + esc(p.n) + '</h3>' +
+      (p.note ? '<p class="mp-d">' + esc(p.note) + '</p>' : '') +
+      '<div class="mp-meta"><div><span>Position</span><b>' + p.x + ' · ' + p.y + '</b></div>' +
+      (p.cat ? '<div><span>Catégorie</span><b>' + esc(p.cat) + '</b></div>' : '') + '</div>' +
+      '<div class="pm-acts">' +
+        '<button type="button" class="mp-btn" id="pm-edit">Modifier</button>' +
+        '<button type="button" class="mp-btn pm-del" id="pm-del">Supprimer</button>' +
+      '</div>';
+    M.panel.classList.add('open');
+
+    document.getElementById('pm-edit').addEventListener('click', function(){
+      const n = prompt('Nom du marqueur', p.n);
+      if(n === null) return;
+      const note = prompt('Note (facultatif)', p.note || '');
+      p.n = n.trim() || p.n;
+      p.note = (note || '').trim();
+      savePerso(); renderPerso(); openPerso(i);
+    });
+    document.getElementById('pm-del').addEventListener('click', function(){
+      if(!confirm('Supprimer ce marqueur ?')) return;
+      perso.splice(i, 1);
+      savePerso(); renderPerso(); M.panel.classList.remove('open');
+    });
+  }
+
+  function renderList(){
+    if(!editList) return;
+    if(!perso.length){
+      editList.innerHTML = '<p class="ed-empty">Aucun marqueur pour l\'instant. Active le mode édition et clique sur la carte.</p>';
+      return;
+    }
+    editList.innerHTML = perso.map(function(p, i){
+      return '<li><button type="button" data-go="' + i + '">' +
+             '<span class="ed-n">' + esc(p.n) + '</span>' +
+             '<span class="ed-c">' + p.x + ' · ' + p.y + '</span></button></li>';
+    }).join('');
+  }
+
+  if(editList){
+    editList.addEventListener('click', function(e){
+      const b = e.target.closest('[data-go]');
+      if(!b) return;
+      const p = perso[parseInt(b.dataset.go, 10)];
+      if(p) M.goTo(p, 0.8);
+    });
+  }
+
+  if(editBt){
+    editBt.addEventListener('click', function(){
+      editOn = !editOn;
+      editBt.classList.toggle('on', editOn);
+      editBt.setAttribute('aria-pressed', editOn);
+      if(editPane) editPane.hidden = !editOn;
+      stage.classList.toggle('editing', editOn);
+      editBt.textContent = editOn ? 'Quitter le mode édition' : 'Ajouter mes marqueurs';
+    });
+  }
+
+  /* pose d'un marqueur au clic, en mode édition */
+  stage.addEventListener('click', function(e){
+    if(!editOn) return;
+    if(e.target.closest('.map-panel, .map-zoom, .pm')) return;
+    if(M.wasDrag()) return;
+    const w = M.toWorld(e.clientX, e.clientY);
+    const n = prompt('Nom du marqueur', 'Nouveau point');
+    if(n === null) return;
+    const note = prompt('Note (facultatif)', '');
+    perso.push({ n: n.trim() || 'Sans nom', note: (note||'').trim(), x: w.x, y: w.y });
+    savePerso(); renderPerso();
+  }, true);
+
+  /* ---------- 3. EXPORT ET IMPORT ---------- */
+  const expBt = document.getElementById('map-export');
+  const impBt = document.getElementById('map-import');
+  const impIn = document.getElementById('map-import-file');
+
+  if(expBt){
+    expBt.addEventListener('click', function(){
+      const data = {
+        version: 1,
+        genere: new Date().toISOString(),
+        marqueurs: perso,
+        repere: M.getFound()
+      };
+      const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'leonidakit-carte-' + new Date().toISOString().slice(0,10) + '.json';
+      a.click();
+      URL.revokeObjectURL(a.href);
+    });
+  }
+
+  if(impBt && impIn){
+    impBt.addEventListener('click', function(){ impIn.click(); });
+    impIn.addEventListener('change', function(){
+      const f = impIn.files[0];
+      if(!f) return;
+      const fr = new FileReader();
+      fr.onload = function(){
+        try{
+          const d = JSON.parse(fr.result);
+          if(Array.isArray(d.marqueurs)){
+            if(perso.length && !confirm('Remplacer tes ' + perso.length + ' marqueurs actuels ?')) return;
+            perso = d.marqueurs; savePerso(); renderPerso();
+          }
+          if(d.repere) M.setFound(d.repere);
+          alert('Import réussi.');
+        }catch(err){ alert("Fichier illisible."); }
+        impIn.value = '';
+      };
+      fr.readAsText(f);
+    });
+  }
+
+  /* ---------- 4. COPIE DES COORDONNÉES ---------- */
+  const copyBt = document.getElementById('map-copy');
+  if(copyBt){
+    copyBt.addEventListener('click', function(){
+      const t = document.getElementById('map-coord').textContent;
+      if(navigator.clipboard) navigator.clipboard.writeText(t);
+      copyBt.textContent = 'Copié';
+      setTimeout(function(){ copyBt.textContent = 'Copier la position'; }, 1600);
+    });
+  }
+
+  renderPerso();
 })();
