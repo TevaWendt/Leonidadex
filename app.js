@@ -115,47 +115,83 @@ const el = id => document.getElementById(id);
     burger.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
   });
 
-  /* recherche, index provisoire à remplacer par la base de données */
-  if(el('q')){
-  const INDEX = [
-    {label:"Carte de Leonida", kind:"Carte"},
-    {label:"Vice City", kind:"Région"},
-    {label:"Leonida Keys", kind:"Région"},
-    {label:"Grassrivers", kind:"Région"},
-    {label:"Port Gellhorn", kind:"Région"},
-    {label:"Ambrosia", kind:"Région"},
-    {label:"Mount Kalaga", kind:"Région"},
-    {label:"Véhicules", kind:"Fiches"},
-    {label:"Armes", kind:"Fiches"},
-    {label:"Collectibles", kind:"Carte"},
-    {label:"Suivi de progression", kind:"Outil"},
-    {label:"Calculateurs", kind:"Outil"}
-  ];
+  /* ---- recherche du site, alimentée par search-index.js ---- */
   const q = el('q'), box = el('suggest');
-  let cur = -1;
-  const norm = s => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
-  q.addEventListener('input', function(e){
-    const v = norm(e.target.value.trim()); cur = -1;
-    if(!v){ box.classList.remove('open'); box.innerHTML=''; return; }
-    const hits = INDEX.filter(i => norm(i.label).includes(v)).slice(0,6);
-    box.innerHTML = hits.length
-      ? hits.map(i => '<a href="#" role="option"><span>'+i.label+'</span><span class="kind">'+i.kind+'</span></a>').join('')
-      : '<div class="none">Rien pour l\'instant. Les fiches arrivent avec le jeu.</div>';
-    box.classList.add('open');
-  });
-  q.addEventListener('keydown', function(e){
-    const items = box.querySelectorAll('a');
-    if(e.key==='ArrowDown' && items.length){ e.preventDefault(); cur=(cur+1)%items.length; }
-    else if(e.key==='ArrowUp' && items.length){ e.preventDefault(); cur=(cur-1+items.length)%items.length; }
-    else if(e.key==='Enter' && cur>=0){ e.preventDefault(); items[cur].click(); return; }
-    else if(e.key==='Escape'){ box.classList.remove('open'); q.blur(); return; }
-    else return;
-    items.forEach(function(n,i){ n.classList.toggle('on', i===cur); });
-  });
-  document.addEventListener('click', function(e){ if(!e.target.closest('.searchwrap')) box.classList.remove('open'); });
-  document.addEventListener('keydown', function(e){ if(e.key==='/' && document.activeElement!==q){ e.preventDefault(); q.focus(); } });
+  if(q && box && window.LK_INDEX){
+    const INDEX = window.LK_INDEX;
+    let cur = -1, hits = [];
 
-  } /* fin recherche */
+    const norm = s => s.toLowerCase().normalize("NFD")
+                       .replace(/[\u0300-\u036f]/g,"")
+                       .replace(/[^a-z0-9]+/g," ").trim();
+
+    function score(entry, v){
+      const s = entry.s, label = norm(entry.l);
+      if(label === v) return 0;
+      if(label.startsWith(v)) return 1;
+      if(s.startsWith(v)) return 2;
+      const words = s.split(" ");
+      for(let i = 0; i < words.length; i++){
+        if(words[i].startsWith(v)) return 3;
+      }
+      if(s.includes(v)) return 4;
+      return -1;
+    }
+
+    function render(raw){
+      const v = norm(raw.trim());
+      cur = -1;
+      if(!v){ box.classList.remove('open'); box.innerHTML = ''; hits = []; return; }
+
+      hits = INDEX
+        .map(e => ({ e: e, r: score(e, v) }))
+        .filter(x => x.r >= 0)
+        .sort((a,b) => a.r - b.r || a.e.l.length - b.e.l.length)
+        .slice(0, 8)
+        .map(x => x.e);
+
+      if(!hits.length){
+        box.innerHTML = '<div class="none">Aucun résultat pour « ' + raw.trim() + ' ».</div>';
+      } else {
+        box.innerHTML = hits.map(function(e){
+          return '<a href="' + e.u + '" role="option">'
+               + '<span>' + e.l + '</span>'
+               + '<span class="kind">' + e.k + '</span></a>';
+        }).join('');
+      }
+      box.classList.add('open');
+    }
+
+    function go(i){
+      if(hits[i]) window.location.href = hits[i].u;
+    }
+
+    q.addEventListener('input', function(e){ render(e.target.value); });
+
+    q.addEventListener('keydown', function(e){
+      const items = box.querySelectorAll('a');
+      if(e.key === 'ArrowDown' && items.length){ e.preventDefault(); cur = (cur + 1) % items.length; }
+      else if(e.key === 'ArrowUp' && items.length){ e.preventDefault(); cur = (cur - 1 + items.length) % items.length; }
+      else if(e.key === 'Enter'){
+        e.preventDefault();
+        go(cur >= 0 ? cur : 0);
+        return;
+      }
+      else if(e.key === 'Escape'){ box.classList.remove('open'); q.blur(); return; }
+      else return;
+      items.forEach(function(n,i){ n.classList.toggle('on', i === cur); });
+      if(items[cur]) items[cur].scrollIntoView({block:'nearest'});
+    });
+
+    q.addEventListener('focus', function(){ if(q.value.trim()) render(q.value); });
+
+    document.addEventListener('click', function(e){
+      if(!e.target.closest('.searchwrap')) box.classList.remove('open');
+    });
+    document.addEventListener('keydown', function(e){
+      if(e.key === '/' && document.activeElement !== q){ e.preventDefault(); q.focus(); }
+    });
+  }
 
   /* apparitions au défilement */
   const io = new IntersectionObserver(function(entries){
@@ -245,9 +281,15 @@ const el = id => document.getElementById(id);
   });
 
   /* filtre via l'ancre : vehicules.html#suv */
-  const hash = location.hash.replace('#','');
-  if(hash){
-    const target = chips.find(c => c.dataset.filter === hash);
-    if(target) target.click();
+  function fromHash(){
+    const h = location.hash.replace('#','');
+    if(!h) return;
+    const target = chips.find(c => c.dataset.filter === h);
+    if(target){
+      target.click();
+      document.querySelector('.vfilters').scrollIntoView({behavior:'smooth', block:'start'});
+    }
   }
+  fromHash();
+  window.addEventListener('hashchange', fromHash);
 })();
