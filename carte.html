@@ -62,10 +62,46 @@
 
 <main id="main">
 
-<section class="page-head shell">
-  <h1>Carte interactive <span class="chip live">En construction</span></h1>
-  <p class="lede">Déplace, zoome, filtre et coche ce que tu as trouvé. Mesure aussi la distance entre deux points et le temps de trajet.</p>
+<section class="vhero">
+  <div class="vhero-bg" aria-hidden="true"></div>
+  <div class="shell vhero-in">
+    <p class="vhero-eyebrow">Outil</p>
+    <h1>Carte de Leonida</h1>
+    <p class="lede">Déplace, zoome, filtre, coche ce que tu as trouvé. Mesure la distance entre deux points et le temps de trajet selon le véhicule.</p>
+
+    <div class="vstats rise">
+      <div class="vstat"><span class="n" data-count="8">0</span><span class="l">lieux confirmés</span></div>
+      <div class="vstat"><span class="n" data-count="6">0</span><span class="l">régions</span></div>
+      <div class="vstat"><span class="n" data-count="7">0</span><span class="l">modes de trajet</span></div>
+      <div class="vstat"><span class="n" data-count="8">0</span><span class="l">catégories de marqueurs</span></div>
+    </div>
+  </div>
 </section>
+
+<div class="fcount">
+  <div class="shell fcount-in">
+    <span class="fcount-lbl">Emplacements réels disponibles dans</span>
+    <span class="fcount-nums" id="fcd">
+      <span class="fcd-box"><b id="fd">—</b><i>j</i></span>
+      <span class="fcd-box"><b id="fh">—</b><i>h</i></span>
+      <span class="fcd-box"><b id="fm">—</b><i>min</i></span>
+      <span class="fcd-box"><b id="fs">—</b><i>s</i></span>
+    </span>
+  </div>
+</div>
+
+<div class="rails-zone">
+
+<div class="rail rail--l" aria-hidden="true">
+  <span class="rail-line"></span>
+  <span class="rail-ticks"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+  <span class="rail-txt">Carte de Leonida</span>
+</div>
+<div class="rail rail--r" aria-hidden="true">
+  <span class="rail-line"></span>
+  <span class="rail-ticks"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+  <span class="rail-txt">19 · 11 · 2026</span>
+</div>
 
 <section class="shell">
   <div class="map-shell rise">
@@ -87,6 +123,7 @@
           <span id="map-prog-txt"><strong>0</strong> / 0 repérés</span>
         </div>
         <div class="map-prog-rail"><span id="map-prog-bar"></span></div>
+        <button type="button" class="map-prog-reset" id="map-prog-reset" hidden>Tout décocher</button>
       </div>
 
       <button type="button" class="map-tool" id="map-ruler" aria-pressed="false">
@@ -178,7 +215,19 @@
             <circle cx="12" cy="12" r="7"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/>
           </svg>
         </button>
+        <button type="button" id="map-full" aria-label="Plein écran" title="Plein écran">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>
+          </svg>
+        </button>
       </div>
+
+      <div class="map-scale" aria-hidden="true">
+        <span class="map-scale-bar" id="map-scale-bar"></span>
+        <span class="map-scale-txt" id="map-scale-txt">—</span>
+      </div>
+
+      <div class="map-coord" id="map-coord" aria-hidden="true">— · —</div>
 
       <div class="map-panel" id="map-panel">
         <button type="button" class="map-close" id="map-close" aria-label="Fermer">&times;</button>
@@ -193,6 +242,7 @@
     <p>Le bouton « Mesurer une distance » permet de choisir deux points et d'obtenir la distance ainsi que le temps de trajet à pied, à vélo, en voiture, en bateau et en avion.</p>
   </div>
 </section>
+</div>
 
 </main>
 

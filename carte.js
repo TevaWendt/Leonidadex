@@ -23,6 +23,12 @@
   const rulerBx = document.getElementById('map-ruler-box');
   const rulerRs = document.getElementById('map-ruler-reset');
   const svgLine = document.getElementById('map-line');
+  const fullBt  = document.getElementById('map-full');
+  const scaleBar= document.getElementById('map-scale-bar');
+  const scaleTxt= document.getElementById('map-scale-txt');
+  const coordBx = document.getElementById('map-coord');
+  const progRs  = document.getElementById('map-prog-reset');
+  const shell   = document.querySelector('.map-shell');
 
   /* ---- dimensions du monde, en unités de carte ---- */
   const W = 4000, H = 4600;
@@ -103,6 +109,54 @@
     if(zoomLbl) zoomLbl.textContent = Math.round(scale * 100) + ' %';
     layer.style.setProperty('--inv', (1 / scale));
     drawLine();
+    updateScaleBar();
+    syncHash();
+    if(typeof cluster === 'function') clusterSoon();
+  }
+
+  let clTimer = null;
+  function clusterSoon(){
+    clearTimeout(clTimer);
+    clTimer = setTimeout(cluster, 90);
+  }
+
+  /* ---- barre d'échelle ---- */
+  function updateScaleBar(){
+    if(!scaleBar) return;
+    const cible = 130;                       /* largeur visée en pixels */
+    const mParPx = METRES_PAR_UNITE / scale;
+    const brut = cible * mParPx;
+    const pas = [10,25,50,100,250,500,1000,2000,5000,10000];
+    let choisi = pas[pas.length-1];
+    for(let i=0;i<pas.length;i++){ if(pas[i] >= brut){ choisi = pas[i]; break; } }
+    scaleBar.style.width = Math.round(choisi / mParPx) + 'px';
+    scaleTxt.textContent = choisi >= 1000
+      ? (choisi/1000).toString().replace('.', ',') + ' km'
+      : choisi + ' m';
+  }
+
+  /* ---- position dans l'adresse, pour partager un lien ---- */
+  let hashTimer = null;
+  function syncHash(){
+    clearTimeout(hashTimer);
+    hashTimer = setTimeout(function(){
+      const r = stage.getBoundingClientRect();
+      const cx = Math.round((r.width/2 - tx) / scale);
+      const cy = Math.round((r.height/2 - ty) / scale);
+      const h = '#' + cx + ',' + cy + ',' + scale.toFixed(2);
+      if(location.hash !== h) history.replaceState(null, '', h);
+    }, 400);
+  }
+
+  function readHash(){
+    const m = location.hash.match(/^#(-?\d+),(-?\d+),([\d.]+)$/);
+    if(!m) return false;
+    scale = Math.min(maxS, Math.max(minS, parseFloat(m[3])));
+    const r = stage.getBoundingClientRect();
+    tx = r.width/2 - parseInt(m[1],10) * scale;
+    ty = r.height/2 - parseInt(m[2],10) * scale;
+    clamp(); applyTransform();
+    return true;
   }
 
   function clamp(){
@@ -165,6 +219,72 @@
     layer.querySelectorAll('.mk').forEach(function(el){
       el.hidden = !visible[el.dataset.cat];
     });
+    cluster();
+  }
+
+  /* ============================================================
+     REGROUPEMENT DES MARQUEURS
+     Au-delà d'un certain nombre de points dans une même case,
+     on affiche une pastille compteur au lieu des marqueurs.
+     ============================================================ */
+  const SEUIL_GROUPE = 2;          /* nb de points par case avant regroupement */
+
+  function cluster(){
+    layer.querySelectorAll('.cl').forEach(el => el.remove());
+
+    const actifs = POINTS.filter(p => visible[p.c]);
+    /* taille de case en unités de carte : ~64 px à l'écran */
+    const taille = 64 / scale;
+
+    /* au-delà d'un certain zoom, plus de regroupement */
+    if(scale > 0.55 || actifs.length < 12){
+      layer.querySelectorAll('.mk').forEach(function(el){
+        if(visible[el.dataset.cat]) el.hidden = false;
+      });
+      return;
+    }
+
+    const cases = new Map();
+    actifs.forEach(function(p){
+      const k = Math.floor(p.x / taille) + ':' + Math.floor(p.y / taille);
+      if(!cases.has(k)) cases.set(k, []);
+      cases.get(k).push(p);
+    });
+
+    cases.forEach(function(grp){
+      const el = layer.querySelector('[data-id="' + grp[0].id + '"]');
+      if(grp.length < SEUIL_GROUPE){
+        if(el) el.hidden = false;
+        return;
+      }
+      /* masquer les marqueurs du groupe */
+      grp.forEach(function(p){
+        const m = layer.querySelector('[data-id="' + p.id + '"]');
+        if(m) m.hidden = true;
+      });
+      /* pastille au barycentre */
+      const cx = grp.reduce((s,p)=>s+p.x,0) / grp.length;
+      const cy = grp.reduce((s,p)=>s+p.y,0) / grp.length;
+      const done = grp.filter(p => found[p.id]).length;
+
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'cl' + (done === grp.length ? ' is-done' : '');
+      b.style.left = cx + 'px';
+      b.style.top  = cy + 'px';
+      b.setAttribute('aria-label', grp.length + ' lieux regroupés');
+      b.innerHTML = '<span class="cl-n">' + grp.length + '</span>';
+      b.addEventListener('click', function(ev){
+        ev.stopPropagation();
+        /* approcher pour éclater le groupe */
+        const r = stage.getBoundingClientRect();
+        scale = Math.min(maxS, 0.8);
+        tx = r.width/2 - cx * scale;
+        ty = r.height/2 - cy * scale;
+        clamp(); applyTransform(); refreshVisibility();
+      });
+      layer.appendChild(b);
+    });
   }
 
   function refreshProgress(){
@@ -173,6 +293,7 @@
     const pct = total ? Math.round(done / total * 100) : 0;
     if(progBar) progBar.style.width = pct + '%';
     if(progTxt) progTxt.innerHTML = '<strong>' + done + '</strong> / ' + total + ' repérés';
+    if(progRs) progRs.hidden = done === 0;
   }
 
   /* ============================================================
@@ -271,6 +392,14 @@
   stage.addEventListener('pointercancel', endPointer);
   stage.addEventListener('pointerleave', endPointer);
 
+  stage.addEventListener('pointermove', function(e){
+    if(!coordBx) return;
+    const r = stage.getBoundingClientRect();
+    const x = Math.round((e.clientX - r.left - tx) / scale);
+    const y = Math.round((e.clientY - r.top  - ty) / scale);
+    coordBx.textContent = x + ' · ' + y;
+  });
+
   stage.addEventListener('wheel', function(e){
     e.preventDefault();
     const r = stage.getBoundingClientRect();
@@ -317,6 +446,18 @@
     const r = stage.getBoundingClientRect(); zoomAt(r.width/2, r.height/2, 0.74);
   });
   if(resetBt) resetBt.addEventListener('click', function(){ scale = 0.28; center(); });
+
+  if(fullBt && shell){
+    fullBt.addEventListener('click', function(){
+      const on = shell.classList.toggle('is-full');
+      document.body.classList.toggle('map-full-on', on);
+      fullBt.setAttribute('aria-label', on ? 'Quitter le plein écran' : 'Plein écran');
+      setTimeout(function(){ clamp(); applyTransform(); }, 60);
+    });
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape' && shell.classList.contains('is-full')) fullBt.click();
+    });
+  }
 
   /* ============================================================
      FILTRES
@@ -479,8 +620,17 @@
   /* ============================================================
      DÉMARRAGE
      ============================================================ */
+  if(progRs){
+    progRs.addEventListener('click', function(){
+      if(!confirm('Décocher tous les lieux repérés ?')) return;
+      found = {}; save();
+      layer.querySelectorAll('.mk').forEach(el => el.classList.remove('is-found'));
+      refreshProgress(); closePanel();
+    });
+  }
+
   buildMarkers();
-  center();
+  if(!readHash()) center();
   window.addEventListener('resize', function(){ clamp(); applyTransform(); });
 
   /* raccourcis clavier */
