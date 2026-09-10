@@ -36,6 +36,7 @@
     { id:'pied',    nom:'À pied',     v: 2.0,  ico:'walk' },
     { id:'course',  nom:'En courant', v: 6.0,  ico:'run'  },
     { id:'velo',    nom:'À vélo',     v: 9.0,  ico:'bike' },
+    { id:'moto',    nom:'En moto',    v: 41.0, ico:'moto' },
     { id:'voiture', nom:'En voiture', v: 33.0, ico:'car'  },
     { id:'bateau',  nom:'En bateau',  v: 22.0, ico:'boat' },
     { id:'avion',   nom:'En avion',   v: 78.0, ico:'plane'}
@@ -148,7 +149,10 @@
       el.innerHTML = '<span class="mk-dot"></span><span class="mk-lbl">' + p.n + '</span>';
       el.addEventListener('click', function(ev){
         ev.stopPropagation();
-        if(rulerOn){ addRulerPoint(p); return; }
+        if(rulerOn){
+          addRulerPoint({ id:p.id, n:p.n, x:p.x, y:p.y, lieu:p.n });
+          return;
+        }
         openPanel(p);
       });
       layer.appendChild(el);
@@ -198,22 +202,25 @@
   }
 
   function closePanel(){ panel.classList.remove('open'); }
-  if(closeBt) closeBt.addEventListener('click', closePanel);
+  if(closeBt) closeBt.addEventListener('click', function(e){ e.stopPropagation(); closePanel(); });
+
+  /* les interactions dans le panneau ne doivent pas atteindre la carte */
+  ['click','pointerdown','pointerup','wheel','dblclick'].forEach(function(ev){
+    panel.addEventListener(ev, function(e){ e.stopPropagation(); });
+  });
 
   /* ============================================================
      DÉPLACEMENT ET ZOOM
      ============================================================ */
-  let dragging = false, lastX = 0, lastY = 0, moved = 0;
+  let dragging = false, lastX = 0, lastY = 0, moved = 0, captured = false;
   const pointers = new Map();
   let pinchDist = 0;
 
   stage.addEventListener('pointerdown', function(e){
     pointers.set(e.pointerId, {x:e.clientX, y:e.clientY});
     if(pointers.size === 1){
-      dragging = true; moved = 0;
+      dragging = true; moved = 0; captured = false;
       lastX = e.clientX; lastY = e.clientY;
-      stage.setPointerCapture(e.pointerId);
-      stage.classList.add('grabbing');
     } else if(pointers.size === 2){
       dragging = false;
       const a = Array.from(pointers.values());
@@ -241,6 +248,12 @@
     if(!dragging) return;
     const dx = e.clientX - lastX, dy = e.clientY - lastY;
     moved += Math.abs(dx) + Math.abs(dy);
+    if(moved > 8 && !captured){
+      captured = true;
+      stage.setPointerCapture(e.pointerId);
+      stage.classList.add('grabbing');
+    }
+    if(!captured) return;
     tx += dx; ty += dy;
     lastX = e.clientX; lastY = e.clientY;
     clamp(); applyTransform();
@@ -250,7 +263,7 @@
     pointers.delete(e.pointerId);
     if(pointers.size < 2) pinchDist = 0;
     if(pointers.size === 0){
-      dragging = false;
+      dragging = false; captured = false;
       stage.classList.remove('grabbing');
     }
   }
@@ -269,8 +282,32 @@
     zoomAt(e.clientX - r.left, e.clientY - r.top, 1.6);
   });
 
-  stage.addEventListener('click', function(){
-    if(moved < 6 && !rulerOn) closePanel();
+  /* conversion écran -> coordonnées de la carte */
+  function toWorld(clientX, clientY){
+    const r = stage.getBoundingClientRect();
+    return {
+      x: Math.round((clientX - r.left - tx) / scale),
+      y: Math.round((clientY - r.top  - ty) / scale)
+    };
+  }
+
+  stage.addEventListener('click', function(e){
+    if(moved >= 6) return;                       /* c'était un glisser */
+    if(e.target.closest('.map-panel, .map-zoom')) return;
+
+    if(rulerOn){
+      const mk = e.target.closest('.mk');
+      if(mk){
+        const p = POINTS.find(x => x.id === mk.dataset.id);
+        if(p) addRulerPoint({ id:p.id, n:p.n, x:p.x, y:p.y, lieu:p.n });
+      } else {
+        const w = toWorld(e.clientX, e.clientY);
+        addRulerPoint({ id:'free-' + w.x + '-' + w.y, n:'Point ' + (rulerPts.length >= 2 ? 'A' : (rulerPts.length ? 'B' : 'A')), x:w.x, y:w.y, free:true });
+      }
+      return;
+    }
+
+    if(!e.target.closest('.mk')) closePanel();
   });
 
   if(zoomIn)  zoomIn.addEventListener('click', function(){
@@ -351,6 +388,7 @@
     run: '<path d="M15 4a2 2 0 1 1-4 0 2 2 0 0 1 4 0M8 21l3-5-2-3 1-4 4 2 2 4M6 12l3-1"/>',
     bike:'<circle cx="6" cy="17" r="3.5"/><circle cx="18" cy="17" r="3.5"/><path d="M6 17l4-8h4l4 8M10 9h5"/>',
     car: '<path d="M4 16v-3l2-5h12l2 5v3M4 16h16M4 16v2M20 16v2"/><circle cx="8" cy="16" r="1.6"/><circle cx="16" cy="16" r="1.6"/>',
+    moto:'<circle cx="5.5" cy="17" r="3.5"/><circle cx="18.5" cy="17" r="3.5"/><path d="M5.5 17l4-6h5l4 6M9 11l-2-3H5M14 8h3"/>',
     boat:'<path d="M4 18h16l-2 3H6zM12 4v11M12 6l7 8H12"/>',
     plane:'<path d="M12 3l2 8 8 3v2l-8-1-1 5 3 2v1l-4-1-4 1v-1l3-2-1-5-8 1v-2l8-3z"/>'
   };
@@ -359,16 +397,19 @@
     if(rulerPts.length < 2){
       rulerBx.innerHTML = '<p class="rl-hint">' +
         (rulerPts.length === 0
-          ? "Clique sur un premier point de la carte."
-          : "Clique sur un second point.") + '</p>';
+          ? "Clique un premier point <b>n'importe où</b> sur la carte, ou directement sur un marqueur."
+          : "Clique maintenant le second point.") + '</p>';
       return;
     }
     const [a, b] = rulerPts;
     const du = Math.hypot(a.x - b.x, a.y - b.y);
     const m = du * METRES_PAR_UNITE;
 
+    const na = a.lieu || (a.x + ' · ' + a.y);
+    const nb = b.lieu || (b.x + ' · ' + b.y);
+
     rulerBx.innerHTML =
-      '<p class="rl-pair">' + a.n + ' <i>→</i> ' + b.n + '</p>' +
+      '<p class="rl-pair"><b>A</b> ' + na + ' <i>→</i> <b>B</b> ' + nb + '</p>' +
       '<p class="rl-dist">' + fmtDist(m) + '</p>' +
       '<ul class="rl-list">' +
       VITESSES.map(function(v){
@@ -390,11 +431,28 @@
 
   function addRulerPoint(p){
     if(rulerPts.length >= 2) rulerPts = [];
+    p.n = 'Point ' + (rulerPts.length === 0 ? 'A' : 'B');
     rulerPts.push(p);
+
     layer.querySelectorAll('.mk').forEach(function(el){
       el.classList.toggle('is-picked', rulerPts.some(r => r.id === el.dataset.id));
     });
+    drawPins();
     renderRuler(); drawLine();
+  }
+
+  /* épingles posées librement sur la carte */
+  function drawPins(){
+    layer.querySelectorAll('.pin').forEach(el => el.remove());
+    rulerPts.forEach(function(p, i){
+      if(!p.free) return;
+      const el = document.createElement('span');
+      el.className = 'pin';
+      el.style.left = p.x + 'px';
+      el.style.top  = p.y + 'px';
+      el.innerHTML = '<span class="pin-dot">' + (i === 0 ? 'A' : 'B') + '</span>';
+      layer.appendChild(el);
+    });
   }
 
   if(rulerBt){
@@ -406,14 +464,14 @@
       stage.classList.toggle('picking', rulerOn);
       if(rulerOn){ closePanel(); renderRuler(); }
       else{
-        rulerPts = []; drawLine();
+        rulerPts = []; drawLine(); drawPins();
         layer.querySelectorAll('.mk').forEach(el => el.classList.remove('is-picked'));
       }
     });
   }
   if(rulerRs){
     rulerRs.addEventListener('click', function(){
-      rulerPts = []; drawLine(); renderRuler();
+      rulerPts = []; drawLine(); drawPins(); renderRuler();
       layer.querySelectorAll('.mk').forEach(el => el.classList.remove('is-picked'));
     });
   }
