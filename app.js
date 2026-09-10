@@ -200,3 +200,54 @@ const el = id => document.getElementById(id);
       }, 1200);
     });
   }
+
+/* ============================================================
+   FILTRAGE DE LA LISTE DES VÉHICULES
+   ============================================================ */
+(function(){
+  const grid = document.getElementById('vgrid');
+  if(!grid) return;
+
+  const cards   = Array.from(grid.querySelectorAll('.veh-card'));
+  const input   = document.getElementById('vq');
+  const chips   = Array.from(document.querySelectorAll('.chip-filter'));
+  const countEl = document.getElementById('vcount');
+  const emptyEl = document.getElementById('vempty');
+
+  let activeCat = 'all';
+  let query = '';
+
+  const norm = s => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+
+  function apply(){
+    const q = norm(query.trim());
+    let shown = 0;
+    cards.forEach(function(card){
+      const okCat = (activeCat === 'all') || (card.dataset.cat === activeCat);
+      const okTxt = !q || norm(card.dataset.search).includes(q);
+      const show = okCat && okTxt;
+      card.hidden = !show;
+      if(show) shown++;
+    });
+    countEl.textContent = shown + (shown > 1 ? ' véhicules' : ' véhicule');
+    emptyEl.hidden = shown > 0;
+  }
+
+  input.addEventListener('input', function(e){ query = e.target.value; apply(); });
+
+  chips.forEach(function(chip){
+    chip.addEventListener('click', function(){
+      chips.forEach(c => c.classList.remove('is-on'));
+      chip.classList.add('is-on');
+      activeCat = chip.dataset.filter;
+      apply();
+    });
+  });
+
+  /* filtre via l'ancre : vehicules.html#suv */
+  const hash = location.hash.replace('#','');
+  if(hash){
+    const target = chips.find(c => c.dataset.filter === hash);
+    if(target) target.click();
+  }
+})();
