@@ -168,10 +168,7 @@ const el = id => document.getElementById(id);
   }
 
   /* apparitions au défilement, sur toutes les pages */
-  (function(){
-    const nodes = document.querySelectorAll('.reveal, .rise');
-    if(!nodes.length) return;
-
+  const LK_reveal = (function(){
     const io = new IntersectionObserver(function(entries){
       entries.forEach(function(en){
         if(!en.isIntersecting) return;
@@ -181,8 +178,24 @@ const el = id => document.getElementById(id);
       });
     }, {threshold:.12, rootMargin:'0px 0px -40px 0px'});
 
-    nodes.forEach(function(n){ io.observe(n); });
+    function scan(){
+      document.querySelectorAll('.reveal:not(.in), .rise:not(.in)').forEach(function(n){
+        io.observe(n);
+      });
+    }
+    scan();
+
+    /* filet de sécurité : si un élément reste invisible après 2,5 s, on l'affiche */
+    setTimeout(function(){
+      document.querySelectorAll('.reveal:not(.in), .rise:not(.in)').forEach(function(n){
+        const r = n.getBoundingClientRect();
+        if(r.top < window.innerHeight && r.bottom > 0) n.classList.add('in');
+      });
+    }, 2500);
+
+    return { scan: scan };
   })();
+  window.LK_reveal = LK_reveal;
 
   /* inscription à la lettre d'information, envoi direct vers Brevo */
   const signupForm = el('signup');
@@ -228,12 +241,8 @@ const el = id => document.getElementById(id);
   if(!grid) return;
 
   const cards   = Array.from(grid.querySelectorAll('.veh-card'));
+  if(window.LK_reveal) window.LK_reveal.scan();
 
-  /* apparition en cascade des cartes, par vagues de colonne */
-  cards.forEach(function(c, i){
-    c.classList.add('rise');
-    c.dataset.delay = String((i % 12) * 45);
-  });
   const input   = document.getElementById('vq');
   const clearBt = document.getElementById('vclear');
   const chips   = Array.from(document.querySelectorAll('.chip-filter'));
