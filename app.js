@@ -170,13 +170,17 @@ const el = id => document.getElementById(id);
   /* apparitions au défilement, sur toutes les pages */
   const LK_reveal = (function(){
     const io = new IntersectionObserver(function(entries){
+      /* décalage progressif à l'intérieur d'une même vague */
+      let k = 0;
       entries.forEach(function(en){
         if(!en.isIntersecting) return;
-        const d = parseInt(en.target.dataset.delay || '0', 10);
+        const own = parseInt(en.target.dataset.delay || '-1', 10);
+        const d = own >= 0 ? own : k * 65;
+        k++;
         setTimeout(function(){ en.target.classList.add('in'); }, d);
         io.unobserve(en.target);
       });
-    }, {threshold:.12, rootMargin:'0px 0px -40px 0px'});
+    }, {threshold:.08, rootMargin:'0px 0px -30px 0px'});
 
     function scan(){
       document.querySelectorAll('.reveal:not(.in), .rise:not(.in)').forEach(function(n){
@@ -191,7 +195,7 @@ const el = id => document.getElementById(id);
         const r = n.getBoundingClientRect();
         if(r.top < window.innerHeight && r.bottom > 0) n.classList.add('in');
       });
-    }, 2500);
+    }, 3200);
 
     return { scan: scan };
   })();
