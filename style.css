@@ -820,7 +820,7 @@ table.spec td.unknown{font-weight:400; color:var(--ink-soft); font-style:italic;
 /* ============================================================
    REPÈRES LATÉRAUX — ancrés au contenu, un motif par côté
    ============================================================ */
-.has-rails{position:relative;}
+.rails-zone{position:relative;}
 
 .rail{
   position:absolute; top:34px; bottom:34px; width:52px;
@@ -839,15 +839,15 @@ table.spec td.unknown{font-weight:400; color:var(--ink-soft); font-style:italic;
 
 /* halo qui parcourt le rail */
 .rail-line::after{
-  content:''; position:absolute; left:-4px; width:11px; height:110px;
+  content:''; position:absolute; left:-4px; width:11px; height:260px;
   border-radius:11px;
   background:linear-gradient(180deg, transparent, var(--amber), var(--coral), transparent);
   filter:blur(1px);
-  animation:railTravel 11s cubic-bezier(.45,0,.55,1) infinite alternate;
+  animation:railTravel 13s cubic-bezier(.45,0,.55,1) infinite alternate;
 }
 @keyframes railTravel{
-  from{top:-4%;}
-  to{top:96%;}
+  from{top:-260px;}
+  to{top:100%;}
 }
 
 /* graduations */
@@ -872,4 +872,4 @@ table.spec td.unknown{font-weight:400; color:var(--ink-soft); font-style:italic;
 
 @media (min-width:1400px){ .rail{display:block;} }
 @media (min-width:1750px){ .rail--l{left:9vw;} .rail--r{right:9vw;} }
-@media (prefers-reduced-motion: reduce){ .rail-line::after{animation:none; top:44%;} }
+@media (prefers-reduced-motion: reduce){ .rail-line::after{animation:none; top:36%;} }
