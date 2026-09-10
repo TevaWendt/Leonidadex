@@ -37,32 +37,6 @@ const el = id => document.getElementById(id);
   const words2 = ["Carte filtrable","Suivi de progression","Fiches véhicules","Emplacements","Calculateurs","Mis à jour en continu"];
   el('mq2').innerHTML = [...words2, ...words2].map(w => '<b>' + w + '</b><i>&#9679;</i>').join('');
 
-  /* vignettes des comtés, illustrations originales */
-  const counties = [
-    {n:"Vice-Dale",  d:"Vice City et sa côte",         b:"#E8452C", c:"#F5A524", k:"city"},
-    {n:"Mariana",    d:"Grassrivers et les Keys",      b:"#D93F2A", c:"#F2B44A", k:"swamp"},
-    {n:"Kelly",      d:"Port Gellhorn et son port",    b:"#C9502F", c:"#F5A524", k:"port"},
-    {n:"Leonard",    d:"Waning Sands et ses banlieues",b:"#E8452C", c:"#F0C46A", k:"rural"},
-    {n:"Ambrosia",   d:"Le cœur sucrier de l'État",    b:"#D96A2C", c:"#F5C978", k:"rural"},
-    {n:"Lummox",     d:"Vers le parc du Mount Kalaga", b:"#C2452C", c:"#EFB964", k:"mount"}
-  ];
-  function shape(k, col){
-    if(k==='city')  return '<rect x="24" y="44" width="16" height="52" fill="'+col+'"/><rect x="48" y="26" width="12" height="70" fill="'+col+'"/><rect x="68" y="54" width="20" height="42" fill="'+col+'"/><rect x="96" y="34" width="12" height="62" fill="'+col+'"/><rect x="116" y="60" width="22" height="36" fill="'+col+'"/>';
-    if(k==='swamp') return '<path d="M0,84 L200,84 L200,96 L0,96Z" fill="'+col+'"/><path d="M28,84 L33,54 L38,84Z" fill="'+col+'"/><path d="M64,84 L70,44 L76,84Z" fill="'+col+'"/><path d="M108,84 L114,60 L120,84Z" fill="'+col+'"/><path d="M152,84 L158,50 L164,84Z" fill="'+col+'"/>';
-    if(k==='port')  return '<rect x="0" y="80" width="200" height="16" fill="'+col+'"/><rect x="26" y="44" width="9" height="36" fill="'+col+'"/><rect x="26" y="40" width="42" height="6" fill="'+col+'"/><rect x="96" y="60" width="32" height="20" fill="'+col+'"/><rect x="134" y="66" width="26" height="14" fill="'+col+'"/>';
-    if(k==='rural') return '<rect x="0" y="82" width="200" height="14" fill="'+col+'"/><path d="M50,82 L50,54 L76,38 L102,54 L102,82Z" fill="'+col+'"/><rect x="134" y="50" width="12" height="32" fill="'+col+'"/>';
-    return '<path d="M0,96 L52,40 L86,74 L120,30 L200,96Z" fill="'+col+'"/>';
-  }
-  el('counties').innerHTML = counties.map(function(x,i){
-    return '<div class="county reveal"><div class="thumb">'
-      + '<svg viewBox="0 0 200 96" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">'
-      + '<defs><linearGradient id="c'+i+'" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="'+x.b+'"/><stop offset="100%" stop-color="'+x.c+'"/></linearGradient></defs>'
-      + '<rect width="200" height="96" fill="url(#c'+i+')"/>'
-      + '<circle cx="164" cy="26" r="16" fill="'+x.c+'" opacity=".5"/>'
-      + shape(x.k, '#1A1A1E') + '</svg></div>'
-      + '<div class="body"><h3>Comté de '+x.n+'</h3><p>'+x.d+'</p></div></div>';
-  }).join('');
-
   /* chiffres clés qui montent à l'apparition */
   const factIO = new IntersectionObserver(function(entries){
     entries.forEach(function(en){
@@ -238,7 +212,7 @@ const el = id => document.getElementById(id);
   }
 
 /* ============================================================
-   FILTRAGE DE LA LISTE DES VÉHICULES
+   PAGE DE LISTE DES VÉHICULES
    ============================================================ */
 (function(){
   const grid = document.getElementById('vgrid');
@@ -246,13 +220,13 @@ const el = id => document.getElementById(id);
 
   const cards   = Array.from(grid.querySelectorAll('.veh-card'));
   const input   = document.getElementById('vq');
+  const clearBt = document.getElementById('vclear');
   const chips   = Array.from(document.querySelectorAll('.chip-filter'));
   const countEl = document.getElementById('vcount');
   const emptyEl = document.getElementById('vempty');
+  const bar     = document.getElementById('vbar');
 
-  let activeCat = 'all';
-  let query = '';
-
+  let activeCat = 'all', query = '';
   const norm = s => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
 
   function apply(){
@@ -265,11 +239,18 @@ const el = id => document.getElementById(id);
       card.hidden = !show;
       if(show) shown++;
     });
-    countEl.textContent = shown + (shown > 1 ? ' véhicules' : ' véhicule');
+    countEl.innerHTML = '<strong>' + shown + '</strong> ' + (shown > 1 ? 'véhicules' : 'véhicule');
     emptyEl.hidden = shown > 0;
+    if(clearBt) clearBt.hidden = !query.trim();
   }
 
   input.addEventListener('input', function(e){ query = e.target.value; apply(); });
+
+  if(clearBt){
+    clearBt.addEventListener('click', function(){
+      input.value = ''; query = ''; apply(); input.focus();
+    });
+  }
 
   chips.forEach(function(chip){
     chip.addEventListener('click', function(){
@@ -277,8 +258,46 @@ const el = id => document.getElementById(id);
       chip.classList.add('is-on');
       activeCat = chip.dataset.filter;
       apply();
+      chip.scrollIntoView({behavior:'smooth', block:'nearest', inline:'center'});
     });
   });
+
+  /* ombre de la barre quand elle colle en haut */
+  if(bar){
+    const sentinel = document.createElement('div');
+    bar.parentNode.insertBefore(sentinel, bar);
+    new IntersectionObserver(function(e){
+      bar.classList.toggle('stuck', !e[0].isIntersecting);
+    }, {threshold:1}).observe(sentinel);
+  }
+
+  /* bandeau défilant de l'en-tête */
+  const strip = document.getElementById('vstrip');
+  if(strip && window.LK_INDEX){
+    const marques = Array.from(new Set(
+      window.LK_INDEX.filter(e => e.u.indexOf('/vehicules/') === 0)
+                     .map(e => e.l.split(' ')[0])
+    )).filter(m => m && m !== 'Marque').sort();
+    const line = marques.map(m => '<b>' + m + '</b><i>&#9679;</i>').join('');
+    strip.innerHTML = line + line;
+  }
+
+  /* statistiques qui montent */
+  const statIO = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(!en.isIntersecting) return;
+      const node = en.target, end = parseInt(node.dataset.count, 10);
+      let n = 0;
+      const step = Math.max(1, Math.round(end / 26));
+      const t = setInterval(function(){
+        n += step;
+        if(n >= end){ n = end; clearInterval(t); }
+        node.textContent = n;
+      }, 32);
+      statIO.unobserve(node);
+    });
+  }, {threshold:.4});
+  document.querySelectorAll('.vstat .n[data-count]').forEach(n => statIO.observe(n));
 
   /* filtre via l'ancre : vehicules.html#suv */
   function fromHash(){
@@ -287,13 +306,34 @@ const el = id => document.getElementById(id);
     const target = chips.find(c => c.dataset.filter === h);
     if(target){
       target.click();
-      document.querySelector('.vfilters').scrollIntoView({behavior:'smooth', block:'start'});
+      const anchor = document.querySelector('.vbar');
+      if(anchor) window.scrollTo({top: anchor.offsetTop - 70, behavior:'smooth'});
     }
   }
   if(document.readyState === 'loading'){
     document.addEventListener('DOMContentLoaded', fromHash);
-  } else {
-    fromHash();
-  }
+  } else { fromHash(); }
   window.addEventListener('hashchange', fromHash);
+})();
+
+/* ============================================================
+   FICHE VÉHICULE : COMPTE À REBOURS
+   ============================================================ */
+(function(){
+  const box = document.getElementById('fcd');
+  if(!box) return;
+  const target = new Date("2026-11-19T00:00:00");
+  const g = id => document.getElementById(id);
+  function tick(){
+    const diff = target - new Date();
+    if(diff <= 0){
+      box.innerHTML = '<span class="fcd-box"><b>Disponible</b></span>';
+      return;
+    }
+    g('fd').textContent = Math.floor(diff/86400000);
+    g('fh').textContent = String(Math.floor(diff/3600000)%24).padStart(2,'0');
+    g('fm').textContent = String(Math.floor(diff/60000)%60).padStart(2,'0');
+    g('fs').textContent = String(Math.floor(diff/1000)%60).padStart(2,'0');
+  }
+  tick(); setInterval(tick, 1000);
 })();

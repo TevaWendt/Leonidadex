@@ -30,7 +30,7 @@
 </head>
 <body>
 
-<a class="skip" href="#outils">Aller au contenu</a>
+<a class="skip" href="#main">Aller au contenu</a>
 <div class="sunset"></div>
 
 <header>
@@ -41,6 +41,7 @@
         <li><a href="carte.html">Carte</a></li>
         <li><a href="vehicules.html">Véhicules</a></li>
         <li><a href="armes.html">Armes</a></li>
+        <li><a href="collectibles.html">Collectibles</a></li>
         <li><a href="progression.html">Progression</a></li>
       </ul>
     </nav>
@@ -49,6 +50,8 @@
     </button>
   </div>
 </header>
+
+<main id="main">
 
 <section class="hero shell">
   <svg class="hero-deco" viewBox="0 0 340 300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
@@ -108,10 +111,10 @@
   <div class="shell status-in">
     <p><strong>Les outils sont prêts, les données arrivent avec le jeu.</strong> GTA VI sort le 19 novembre 2026. Tout ce qui dépend du contenu du jeu se remplit à partir de ce jour-là.</p>
     <div class="clock">
-      <div class="cell"><div class="roll" id="rd"><span>73</span></div><div class="u">jours</div></div>
-      <div class="cell"><div class="roll" id="rh"><span>14</span></div><div class="u">heures</div></div>
-      <div class="cell"><div class="roll" id="rm"><span>02</span></div><div class="u">min</div></div>
-      <div class="cell"><div class="roll" id="rs"><span>18</span></div><div class="u">sec</div></div>
+      <div class="cell"><div class="roll" id="rd"><span>69</span></div><div class="u">jours</div></div>
+      <div class="cell"><div class="roll" id="rh"><span>09</span></div><div class="u">heures</div></div>
+      <div class="cell"><div class="roll" id="rm"><span>54</span></div><div class="u">min</div></div>
+      <div class="cell"><div class="roll" id="rs"><span>20</span></div><div class="u">sec</div></div>
     </div>
   </div>
 </div>
@@ -120,7 +123,7 @@
   <div class="shell facts-in">
     <div class="fact"><div class="big" data-count="6">6</div><div class="lbl">comtés à explorer</div></div>
     <div class="fact"><div class="big" data-count="2">2</div><div class="lbl">personnages jouables</div></div>
-    <div class="fact"><div class="big" data-count="13">13</div><div class="lbl">langues dans le jeu</div></div>
+    <div class="fact"><div class="big" data-count="139">139</div><div class="lbl">fiches véhicules</div></div>
     <div class="fact"><div class="big">RAGE</div><div class="lbl">moteur graphique</div></div>
   </div>
 </div>
@@ -130,7 +133,14 @@
     <h2>L'État de Leonida</h2>
     <p>Six comtés confirmés par Rockstar à ce jour.</p>
   </div>
-  <div class="counties" id="counties"></div>
+  <div class="counties">
+    <div class="county reveal"><div class="thumb"><svg viewBox="0 0 200 96" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="c0" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#E8452C"/><stop offset="100%" stop-color="#F5A524"/></linearGradient></defs><rect width="200" height="96" fill="url(#c0)"/><circle cx="164" cy="26" r="16" fill="#F5A524" opacity=".5"/><rect x="24" y="44" width="16" height="52" fill="#1A1A1E"/><rect x="48" y="26" width="12" height="70" fill="#1A1A1E"/><rect x="68" y="54" width="20" height="42" fill="#1A1A1E"/><rect x="96" y="34" width="12" height="62" fill="#1A1A1E"/><rect x="116" y="60" width="22" height="36" fill="#1A1A1E"/></svg></div><div class="body"><h3>Comté de Vice-Dale</h3><p>Vice City et sa côte</p></div></div>
+    <div class="county reveal"><div class="thumb"><svg viewBox="0 0 200 96" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="c1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#D93F2A"/><stop offset="100%" stop-color="#F2B44A"/></linearGradient></defs><rect width="200" height="96" fill="url(#c1)"/><circle cx="164" cy="26" r="16" fill="#F2B44A" opacity=".5"/><path d="M0,84 L200,84 L200,96 L0,96Z" fill="#1A1A1E"/><path d="M28,84 L33,54 L38,84Z" fill="#1A1A1E"/><path d="M64,84 L70,44 L76,84Z" fill="#1A1A1E"/><path d="M108,84 L114,60 L120,84Z" fill="#1A1A1E"/><path d="M152,84 L158,50 L164,84Z" fill="#1A1A1E"/></svg></div><div class="body"><h3>Comté de Mariana</h3><p>Grassrivers et les Keys</p></div></div>
+    <div class="county reveal"><div class="thumb"><svg viewBox="0 0 200 96" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="c2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#C9502F"/><stop offset="100%" stop-color="#F5A524"/></linearGradient></defs><rect width="200" height="96" fill="url(#c2)"/><circle cx="164" cy="26" r="16" fill="#F5A524" opacity=".5"/><rect x="0" y="80" width="200" height="16" fill="#1A1A1E"/><rect x="26" y="44" width="9" height="36" fill="#1A1A1E"/><rect x="26" y="40" width="42" height="6" fill="#1A1A1E"/><rect x="96" y="60" width="32" height="20" fill="#1A1A1E"/><rect x="134" y="66" width="26" height="14" fill="#1A1A1E"/></svg></div><div class="body"><h3>Comté de Kelly</h3><p>Port Gellhorn et son port</p></div></div>
+    <div class="county reveal"><div class="thumb"><svg viewBox="0 0 200 96" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="c3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#E8452C"/><stop offset="100%" stop-color="#F0C46A"/></linearGradient></defs><rect width="200" height="96" fill="url(#c3)"/><circle cx="164" cy="26" r="16" fill="#F0C46A" opacity=".5"/><rect x="0" y="82" width="200" height="14" fill="#1A1A1E"/><path d="M50,82 L50,54 L76,38 L102,54 L102,82Z" fill="#1A1A1E"/><rect x="134" y="50" width="12" height="32" fill="#1A1A1E"/></svg></div><div class="body"><h3>Comté de Leonard</h3><p>Waning Sands et ses banlieues</p></div></div>
+    <div class="county reveal"><div class="thumb"><svg viewBox="0 0 200 96" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="c4" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#D96A2C"/><stop offset="100%" stop-color="#F5C978"/></linearGradient></defs><rect width="200" height="96" fill="url(#c4)"/><circle cx="164" cy="26" r="16" fill="#F5C978" opacity=".5"/><rect x="0" y="82" width="200" height="14" fill="#1A1A1E"/><path d="M50,82 L50,54 L76,38 L102,54 L102,82Z" fill="#1A1A1E"/><rect x="134" y="50" width="12" height="32" fill="#1A1A1E"/></svg></div><div class="body"><h3>Comté de Ambrosia</h3><p>Le cœur sucrier de l'État</p></div></div>
+    <div class="county reveal"><div class="thumb"><svg viewBox="0 0 200 96" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="c5" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#C2452C"/><stop offset="100%" stop-color="#EFB964"/></linearGradient></defs><rect width="200" height="96" fill="url(#c5)"/><circle cx="164" cy="26" r="16" fill="#EFB964" opacity=".5"/><path d="M0,96 L52,40 L86,74 L120,30 L200,96Z" fill="#1A1A1E"/></svg></div><div class="body"><h3>Comté de Lummox</h3><p>Vers le parc du Mount Kalaga</p></div></div>
+  </div>
 </section>
 
 <div class="marquee rev" aria-hidden="true">
@@ -223,6 +233,7 @@
   </div>
 </section>
 
+</main>
 <footer>
   <svg class="foot-art" viewBox="0 0 1200 150" preserveAspectRatio="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
     <defs>
@@ -274,7 +285,7 @@
       <div class="foot-cols">
         <div>
           <h4>Contenu</h4>
-          <nav><a href="#outils">Carte</a><a href="vehicules.html">Véhicules</a><a href="armes.html">Armes</a><a href="collectibles.html">Collectibles</a></nav>
+          <nav><a href="carte.html">Carte</a><a href="vehicules.html">Véhicules</a><a href="armes.html">Armes</a><a href="collectibles.html">Collectibles</a></nav>
         </div>
         <div>
           <h4>Outils</h4>
