@@ -186,6 +186,7 @@
 
   Object.keys(CATS).forEach(k => visible[k] = true);
   let visStatut = { officiel:true, vu:true, spec:true };
+  let visSource = { SITE:true, T1:true, T2:true, EL:true, SHOT:true, COMM:true };
 
   /* niveau de zoom minimal pour voir chaque profondeur de la hiérarchie */
   const ZOOM_NIVEAU = [0, 0.42, 0.85];
@@ -216,7 +217,7 @@
   /* ============================================================
      RENDU
      ============================================================ */
-  function applyTransform(){
+  let applyTransform = function(){
     world.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + scale + ')';
     if(zoomLbl) zoomLbl.textContent = Math.round(scale * 100) + ' %';
     layer.style.setProperty('--inv', (1 / scale));
@@ -224,7 +225,7 @@
     updateScaleBar();
     syncHash();
     if(typeof cluster === 'function') clusterSoon();
-  }
+  };
 
   let clTimer = null;
   function clusterSoon(){
@@ -261,6 +262,12 @@
   }
 
   function readHash(){
+    /* lien direct vers un lieu : #lieu=vice-city */
+    const l = location.hash.match(/^#lieu=([\w-]+)$/);
+    if(l){
+      const p = POINTS.find(x => x.id === l[1]);
+      if(p){ goTo(p, Math.max(0.6, ZOOM_NIVEAU[p.z || 0] + 0.2)); return true; }
+    }
     const m = location.hash.match(/^#(-?\d+),(-?\d+),([\d.]+)$/);
     if(!m) return false;
     scale = Math.min(maxS, Math.max(minS, parseFloat(m[3])));
@@ -334,7 +341,7 @@
   function refreshVisibility(){
     layer.querySelectorAll('.mk').forEach(function(el){
       const p = POINTS.find(x => x.id === el.dataset.id);
-      el.hidden = !(p && visible[p.c] && visStatut[p.s] && niveauVisible(p));
+      el.hidden = !(p && visible[p.c] && visStatut[p.s] && visSource[p.src] && niveauVisible(p));
     });
     cluster();
   }
@@ -349,7 +356,7 @@
   function cluster(){
     layer.querySelectorAll('.cl').forEach(el => el.remove());
 
-    const actifs = POINTS.filter(p => visible[p.c] && visStatut[p.s] && niveauVisible(p));
+    const actifs = POINTS.filter(p => visible[p.c] && visStatut[p.s] && visSource[p.src] && niveauVisible(p));
     /* taille de case en unités de carte : ~64 px à l'écran */
     const taille = 64 / scale;
 
@@ -357,7 +364,7 @@
     if(scale > 0.55 || actifs.length < 12){
       layer.querySelectorAll('.mk').forEach(function(el){
         const p = POINTS.find(x => x.id === el.dataset.id);
-        if(p && visible[p.c] && visStatut[p.s] && niveauVisible(p)) el.hidden = false;
+        if(p && visible[p.c] && visStatut[p.s] && visSource[p.src] && niveauVisible(p)) el.hidden = false;
       });
       return;
     }
@@ -666,6 +673,13 @@
     });
   });
 
+  document.querySelectorAll('.map-source').forEach(function(inp){
+    inp.addEventListener('change', function(){
+      visSource[inp.dataset.src] = inp.checked;
+      refreshVisibility();
+    });
+  });
+
   document.querySelectorAll('.map-statut').forEach(function(inp){
     inp.addEventListener('change', function(){
       visStatut[inp.dataset.st] = inp.checked;
@@ -729,6 +743,45 @@
   }
   buildTree();
 
+  /* effectifs affichés dans les filtres */
+  (function(){
+    const parCat = {}, parSrc = {}, parSt = {};
+    POINTS.forEach(function(p){
+      parCat[p.c] = (parCat[p.c] || 0) + 1;
+      parSrc[p.src] = (parSrc[p.src] || 0) + 1;
+      parSt[p.s] = (parSt[p.s] || 0) + 1;
+    });
+    document.querySelectorAll('.map-filter').forEach(function(i){
+      const n = parCat[i.dataset.cat] || 0;
+      const lbl = i.closest('label');
+      if(lbl && !lbl.querySelector('.fl-n')){
+        const s = document.createElement('span');
+        s.className = 'fl-n'; s.textContent = n;
+        lbl.appendChild(s);
+      }
+      if(!n && lbl) lbl.classList.add('fl-vide');
+    });
+    document.querySelectorAll('.map-source').forEach(function(i){
+      const n = parSrc[i.dataset.src] || 0;
+      const lbl = i.closest('label');
+      if(lbl && !lbl.querySelector('.fl-n')){
+        const s = document.createElement('span');
+        s.className = 'fl-n'; s.textContent = n;
+        lbl.appendChild(s);
+      }
+      if(!n && lbl) lbl.classList.add('fl-vide');
+    });
+    document.querySelectorAll('.map-statut').forEach(function(i){
+      const n = parSt[i.dataset.st] || 0;
+      const lbl = i.closest('label');
+      if(lbl && !lbl.querySelector('.fl-n')){
+        const s = document.createElement('span');
+        s.className = 'fl-n'; s.textContent = n;
+        lbl.appendChild(s);
+      }
+    });
+  })();
+
   /* ============================================================
      CALQUES DU FOND
      ============================================================ */
@@ -771,7 +824,11 @@
     searchI.addEventListener('input', function(){
       const v = norm(searchI.value.trim());
       if(!v){ sugBox.classList.remove('open'); sugBox.innerHTML=''; return; }
-      const hits = POINTS.filter(p => norm(p.n).includes(v)).slice(0,6);
+      const hits = POINTS.filter(function(p){
+        return norm(p.n).includes(v)
+            || norm(p.d).includes(v)
+            || norm(CATS[p.c].nom).includes(v);
+      }).slice(0,8);
       sugBox.innerHTML = hits.length
         ? hits.map(p => '<button type="button" data-go="'+p.id+'"><span>'+p.n+'</span>'+
             '<span class="kind" style="color:'+CATS[p.c].col+'">'+CATS[p.c].nom+'</span></button>').join('')
@@ -823,19 +880,30 @@
       rulerBx.innerHTML = '<p class="rl-hint">' +
         (rulerPts.length === 0
           ? "Clique un premier point <b>n'importe où</b> sur la carte, ou directement sur un marqueur."
-          : "Clique maintenant le second point.") + '</p>';
+          : "Clique le point suivant. Tu peux enchaîner jusqu'à 10 étapes.") + '</p>';
       return;
     }
-    const [a, b] = rulerPts;
-    const du = Math.hypot(a.x - b.x, a.y - b.y);
+
+    /* distance cumulée sur l'ensemble du trajet */
+    let du = 0;
+    const etapes = [];
+    for(let i = 1; i < rulerPts.length; i++){
+      const seg = Math.hypot(rulerPts[i-1].x - rulerPts[i].x, rulerPts[i-1].y - rulerPts[i].y);
+      du += seg;
+      etapes.push(seg * METRES_PAR_UNITE);
+    }
     const m = du * METRES_PAR_UNITE;
 
-    const na = a.lieu || (a.x + ' · ' + a.y);
-    const nb = b.lieu || (b.x + ' · ' + b.y);
+    const chemin = rulerPts.map(function(p, i){
+      return '<span class="rl-step"><b>' + LETTRES[i] + '</b>' + (p.lieu || (p.x + ' · ' + p.y)) + '</span>';
+    }).join('<i>→</i>');
 
     rulerBx.innerHTML =
-      '<p class="rl-pair"><b>A</b> ' + na + ' <i>→</i> <b>B</b> ' + nb + '</p>' +
+      '<p class="rl-pair">' + chemin + '</p>' +
       '<p class="rl-dist">' + fmtDist(m) + '</p>' +
+      (etapes.length > 1
+        ? '<p class="rl-seg">' + etapes.length + ' segments · le plus long ' + fmtDist(Math.max.apply(null, etapes)) + '</p>'
+        : '') +
       '<ul class="rl-list">' +
       VITESSES.map(function(v){
         return '<li><span class="rl-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
@@ -844,19 +912,20 @@
                '<span class="rl-t">' + fmtDuree(m / v.v) + '</span></li>';
       }).join('') +
       '</ul>' +
-      '<p class="rl-note">Distances et vitesses provisoires, calées sur GTA V. Recalibrées après le 19 novembre 2026.</p>';
+      '<p class="rl-note">Distance à vol d\'oiseau, sans tenir compte des routes ni du relief. Vitesses provisoires calées sur GTA V, recalibrées après le 19 novembre 2026.</p>';
   }
 
   function drawLine(){
     if(!svgLine) return;
     if(rulerPts.length < 2){ svgLine.setAttribute('d',''); return; }
-    const [a,b] = rulerPts;
-    svgLine.setAttribute('d', 'M' + a.x + ',' + a.y + ' L' + b.x + ',' + b.y);
+    svgLine.setAttribute('d',
+      'M' + rulerPts.map(p => p.x + ',' + p.y).join(' L'));
   }
 
+  const LETTRES = 'ABCDEFGHIJ';
   function addRulerPoint(p){
-    if(rulerPts.length >= 2) rulerPts = [];
-    p.n = 'Point ' + (rulerPts.length === 0 ? 'A' : 'B');
+    if(rulerPts.length >= 10) return;
+    p.n = 'Point ' + LETTRES[rulerPts.length];
     rulerPts.push(p);
 
     layer.querySelectorAll('.mk').forEach(function(el){
@@ -875,7 +944,7 @@
       el.className = 'pin';
       el.style.left = p.x + 'px';
       el.style.top  = p.y + 'px';
-      el.innerHTML = '<span class="pin-dot">' + (i === 0 ? 'A' : 'B') + '</span>';
+      el.innerHTML = '<span class="pin-dot">' + LETTRES[i] + '</span>';
       layer.appendChild(el);
     });
   }
@@ -924,6 +993,54 @@
     if(e.key === '-')                  { const r=stage.getBoundingClientRect(); zoomAt(r.width/2,r.height/2,0.77); }
     if(e.key === 'Escape')             { closePanel(); }
   });
+
+  /* ============================================================
+     VUE D'ENSEMBLE
+     ============================================================ */
+  const mini = document.getElementById('map-mini');
+  const miniBox = document.getElementById('map-mini-box');
+  if(mini && miniBox){
+    function majMini(){
+      const r = stage.getBoundingClientRect();
+      const mw = mini.clientWidth, mh = mini.clientHeight;
+      const vx = (-tx / scale) / W, vy = (-ty / scale) / H;
+      const vw = (r.width / scale) / W, vh = (r.height / scale) / H;
+      miniBox.style.left   = Math.max(0, vx * mw) + 'px';
+      miniBox.style.top    = Math.max(0, vy * mh) + 'px';
+      miniBox.style.width  = Math.min(mw, vw * mw) + 'px';
+      miniBox.style.height = Math.min(mh, vh * mh) + 'px';
+    }
+    const oldApply = applyTransform;
+    applyTransform = function(){ oldApply(); majMini(); };
+
+    mini.addEventListener('click', function(e){
+      const b = mini.getBoundingClientRect();
+      const wx = ((e.clientX - b.left) / b.width) * W;
+      const wy = ((e.clientY - b.top) / b.height) * H;
+      const r = stage.getBoundingClientRect();
+      tx = r.width/2 - wx * scale;
+      ty = r.height/2 - wy * scale;
+      clamp(); applyTransform();
+    });
+    majMini();
+  }
+
+  /* ============================================================
+     AIDE ET RACCOURCIS
+     ============================================================ */
+  const helpBt = document.getElementById('map-help');
+  const helpBx = document.getElementById('map-help-box');
+  if(helpBt && helpBx){
+    helpBt.addEventListener('click', function(){
+      const on = helpBx.hidden;
+      helpBx.hidden = !on;
+      helpBt.setAttribute('aria-expanded', on);
+    });
+    helpBx.addEventListener('click', function(e){ e.stopPropagation(); });
+    document.addEventListener('keydown', function(e){
+      if(e.key === '?' ) helpBt.click();
+    });
+  }
 
   /* ============================================================
      INTERFACE PUBLIQUE, pour les modules complémentaires

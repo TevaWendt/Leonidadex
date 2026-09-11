@@ -243,6 +243,16 @@
         <label class="fl fl-st"><input type="checkbox" class="map-statut" data-st="spec" checked><span class="st-chip st-chip--spec">Supposé</span><em>Reconstruction</em></label>
       </div>
 
+      <div class="map-sources">
+        <p class="map-side-h">Révélé par</p>
+        <label class="fl"><input type="checkbox" class="map-source" data-src="SITE" checked><span class="fl-dot" style="background:#1A1A1E"></span>Site officiel</label>
+        <label class="fl"><input type="checkbox" class="map-source" data-src="T1" checked><span class="fl-dot" style="background:#E8452C"></span>Premier trailer</label>
+        <label class="fl"><input type="checkbox" class="map-source" data-src="T2" checked><span class="fl-dot" style="background:#F5A524"></span>Second trailer</label>
+        <label class="fl"><input type="checkbox" class="map-source" data-src="EL" checked><span class="fl-dot" style="background:#5B4E8C"></span>Extended Look</label>
+        <label class="fl"><input type="checkbox" class="map-source" data-src="SHOT" checked><span class="fl-dot" style="background:#2F6F8F"></span>Captures officielles</label>
+        <label class="fl"><input type="checkbox" class="map-source" data-src="COMM" checked><span class="fl-dot" style="background:#8A6A45"></span>Analyse communautaire</label>
+      </div>
+
       <div class="map-layers">
         <p class="map-side-h">Calques</p>
         <label class="fl"><input type="checkbox" class="map-layer" data-layer="lyr-county" checked><span class="fl-dot" style="background:#3E3B47"></span>Limites de comtés</label>
@@ -2040,6 +2050,40 @@
             <path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>
           </svg>
         </button>
+      </div>
+
+      <div class="map-mini" id="map-mini" title="Vue d'ensemble, clique pour te déplacer">
+        <svg viewBox="0 0 5200 6000" preserveAspectRatio="xMidYMid meet" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+          <rect width="5200" height="6000" fill="#5FA8D3"/>
+          <path d="M180 1040C340 940 560 900 820 900C1120 900 1420 920 1700 900C1940 884 2160 860 2380 880C2620 904 2860 960 3100 1010C3380 1068 3660 1100 3900 1170C4120 1234 4300 1350 4400 1520C4500 1690 4520 1900 4500 2100C4480 2300 4440 2500 4420 2700C4400 2900 4400 3100 4420 3300C4440 3520 4460 3740 4440 3960C4420 4180 4340 4400 4200 4600C4060 4800 3880 4980 3660 5120C3440 5260 3200 5340 2960 5340C2740 5340 2540 5260 2420 5100C2300 4940 2260 4740 2200 4540C2140 4340 2060 4160 1940 3990C1820 3820 1680 3670 1580 3500C1480 3330 1440 3140 1420 2950C1400 2760 1400 2570 1360 2380C1320 2190 1240 2010 1100 1860C960 1710 780 1600 600 1500C440 1410 280 1300 180 1160Z" fill="#95CB84"/>
+          <g fill="#95CB84"><ellipse cx="2560" cy="5470" rx="110" ry="42"/><ellipse cx="2200" cy="5650" rx="90" ry="36"/><ellipse cx="1880" cy="5820" rx="66" ry="28"/></g>
+          <path d="M3880 3880C3960 3900 4020 3980 4030 4100C4040 4230 4010 4360 3960 4470L3860 4540C3850 4400 3860 4200 3880 3880Z" fill="#95CB84"/>
+          <circle cx="3560" cy="4180" r="120" fill="#E8452C" opacity=".7"/>
+        </svg>
+        <span class="map-mini-box" id="map-mini-box"></span>
+      </div>
+
+      <button type="button" class="map-help" id="map-help" aria-expanded="false" aria-label="Aide et raccourcis">?</button>
+      <div class="map-help-box" id="map-help-box" hidden>
+        <h4>Se déplacer</h4>
+        <ul>
+          <li><b>Glisser</b> pour déplacer la carte</li>
+          <li><b>Molette</b> ou <b>pincement</b> pour zoomer</li>
+          <li><b>Double-clic</b> pour approcher</li>
+          <li><b>+</b> et <b>&minus;</b> au clavier</li>
+          <li>Clique la <b>vue d'ensemble</b> pour sauter ailleurs</li>
+        </ul>
+        <h4>Marqueurs</h4>
+        <ul>
+          <li>Un marqueur avec un <b>chiffre</b> contient d'autres lieux</li>
+          <li>Les lieux détaillés apparaissent <b>en zoomant</b></li>
+          <li><b>Échap</b> ferme le panneau</li>
+        </ul>
+        <h4>Outils</h4>
+        <ul>
+          <li><b>Mesurer</b> accepte jusqu'à 10 étapes</li>
+          <li><b>?</b> ouvre cette aide</li>
+        </ul>
       </div>
 
       <div class="map-scale" aria-hidden="true">

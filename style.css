@@ -1380,3 +1380,61 @@ body.map-full-on{overflow:hidden;}
 .ed-ren:hover{background:var(--paper-2); color:var(--ink);}
 .ed-del{font-size:1.1rem;}
 .ed-del:hover{background:#FADFD9; color:#9B2E19;}
+
+/* ============================================================
+   CARTE — vue d'ensemble, aide, sources
+   ============================================================ */
+.map-mini{
+  position:absolute; right:12px; bottom:130px; z-index:6;
+  width:104px; height:120px; cursor:pointer; overflow:hidden;
+  background:#5FA8D3; border:2px solid var(--ink); border-radius:7px;
+  box-shadow:3px 3px 0 var(--ink); opacity:.94; transition:opacity .15s;
+}
+.map-mini:hover{opacity:1;}
+.map-mini svg{width:100%; height:100%; display:block;}
+.map-mini-box{
+  position:absolute; border:2px solid var(--coral); border-radius:2px;
+  background:rgba(232,69,44,.16); pointer-events:none;
+  min-width:6px; min-height:6px;
+}
+
+.map-help{
+  position:absolute; right:12px; top:12px; z-index:7;
+  width:30px; height:30px; cursor:pointer; border-radius:50%;
+  background:#fff; border:2px solid var(--ink); color:var(--ink);
+  font-family:inherit; font-size:.95rem; font-weight:900; line-height:1;
+  box-shadow:2px 2px 0 var(--ink);
+}
+.map-help:hover{background:var(--amber);}
+.map-help-box{
+  position:absolute; right:12px; top:50px; z-index:8; width:min(280px, calc(100% - 24px));
+  background:#fff; border:2px solid var(--ink); border-radius:9px;
+  padding:15px 17px; box-shadow:5px 5px 0 var(--ink); max-height:66%; overflow-y:auto;
+}
+.map-help-box h4{font-size:.74rem; font-weight:800; text-transform:uppercase; letter-spacing:.07em; color:var(--coral); margin-bottom:6px;}
+.map-help-box h4 + ul{margin-bottom:12px;}
+.map-help-box ul{list-style:none;}
+.map-help-box li{font-size:.8rem; color:var(--ink-soft); padding:3px 0; line-height:1.45;}
+.map-help-box b{color:var(--ink); font-weight:700;}
+
+.map-sources{margin-bottom:16px; padding-bottom:14px; border-bottom:1px solid var(--rule);}
+.fl-n{
+  margin-left:auto; font-size:.68rem; font-weight:800; color:var(--ink-soft);
+  background:var(--paper-2); border-radius:100px; padding:1px 7px; flex-shrink:0;
+}
+.fl-vide{opacity:.4;}
+.fl{justify-content:flex-start;}
+
+/* itinéraire multi-étapes */
+.rl-step{display:inline-flex; align-items:center; gap:4px;}
+.rl-step b{
+  display:inline-flex; align-items:center; justify-content:center;
+  width:16px; height:16px; border-radius:50%; background:var(--amber);
+  color:var(--ink); font-size:.64rem; font-weight:900; flex-shrink:0;
+}
+.rl-seg{font-size:.74rem; color:var(--ink-soft); margin-top:-6px; margin-bottom:10px;}
+
+@media (max-width:900px){
+  .map-mini{width:78px; height:90px; bottom:120px; right:10px;}
+  .map-help-box{left:10px; right:10px; width:auto;}
+}
