@@ -171,6 +171,7 @@
   <div class="map-shell rise">
 
     <aside class="map-side">
+
       <div class="map-searchwrap">
         <div class="map-search">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
@@ -190,95 +191,120 @@
         <button type="button" class="map-prog-reset" id="map-prog-reset" hidden>Tout décocher</button>
       </div>
 
-      <div class="map-treewrap">
-        <p class="map-side-h">Lieux <span class="ed-badge" id="map-tree-count">37</span></p>
-        <div class="map-tree" id="map-tree"></div>
-      </div>
-
-      <button type="button" class="map-tool" id="map-ruler" aria-pressed="false">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-          <path d="M3 15L15 3l6 6L9 21z"/><path d="M7 11l2 2M10 8l2 2M13 5l2 2"/>
-        </svg>
-        Mesurer une distance
-      </button>
-
-      <div class="map-ruler-wrap" id="map-ruler-wrap" hidden>
-        <div class="map-ruler-box" id="map-ruler-box"></div>
-        <button type="button" class="map-ruler-reset" id="map-ruler-reset">Recommencer</button>
-      </div>
-
-      <div class="map-found">
-        <p class="map-side-h">Lieux repérés <span class="ed-badge" id="map-found-count">0</span></p>
-        <div class="fd-list" id="map-found-list"></div>
-      </div>
-
-      <div class="map-perso">
-        <p class="map-side-h">Mes marqueurs <span class="ed-badge" id="map-edit-count">0</span></p>
-        <button type="button" class="map-tool" id="map-edit" aria-pressed="false">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-            <path d="M12 5v14M5 12h14"/>
-          </svg>
-          Ajouter mes marqueurs
-        </button>
-
-        <p class="ed-help" id="map-edit-pane" hidden>Clique sur la carte pour poser un point. Tu pourras lui donner un nom et une note.</p>
-
-        <ul class="ed-list" id="map-edit-list"></ul>
-
-        <button type="button" class="map-prog-reset" id="map-perso-clear" hidden>Tout supprimer</button>
-
-        <div class="ed-io">
-          <button type="button" id="map-export">Exporter</button>
-          <button type="button" id="map-import">Importer</button>
-          <input type="file" id="map-import-file" accept="application/json" hidden>
+      <details class="ms ms-found" open>
+        <summary>Lieux repérés <span class="ed-badge" id="map-found-count">0</span></summary>
+        <div class="ms-in">
+          <div class="fd-list" id="map-found-list"></div>
         </div>
-        <p class="ed-note">L'export enregistre tes marqueurs et ta progression dans un fichier, à conserver ou à transférer sur un autre appareil.</p>
-      </div>
+      </details>
 
-      <div class="map-trust">
-        <p class="map-side-h">Fiabilité</p>
-        <button type="button" class="map-only" id="map-only-officiel">Uniquement l'officiel</button>
-        <label class="fl fl-st"><input type="checkbox" class="map-statut" data-st="officiel" checked><span class="st-chip st-chip--officiel">Officiel</span><em>Nommé par Rockstar</em></label>
-        <label class="fl fl-st"><input type="checkbox" class="map-statut" data-st="vu" checked><span class="st-chip st-chip--vu">Aperçu</span><em>Vu dans un trailer</em></label>
-        <label class="fl fl-st"><input type="checkbox" class="map-statut" data-st="spec" checked><span class="st-chip st-chip--spec">Supposé</span><em>Reconstruction</em></label>
-      </div>
+      <details class="ms " open>
+        <summary>Tous les lieux <span class="ms-n">37</span></summary>
+        <div class="ms-in">
+          <div class="map-tree" id="map-tree"></div>
+        </div>
+      </details>
 
-      <div class="map-sources">
-        <p class="map-side-h">Révélé par</p>
-        <label class="fl"><input type="checkbox" class="map-source" data-src="SITE" checked><span class="fl-dot" style="background:#1A1A1E"></span>Site officiel</label>
-        <label class="fl"><input type="checkbox" class="map-source" data-src="T1" checked><span class="fl-dot" style="background:#E8452C"></span>Premier trailer</label>
-        <label class="fl"><input type="checkbox" class="map-source" data-src="T2" checked><span class="fl-dot" style="background:#F5A524"></span>Second trailer</label>
-        <label class="fl"><input type="checkbox" class="map-source" data-src="EL" checked><span class="fl-dot" style="background:#5B4E8C"></span>Extended Look</label>
-        <label class="fl"><input type="checkbox" class="map-source" data-src="SHOT" checked><span class="fl-dot" style="background:#2F6F8F"></span>Captures officielles</label>
-        <label class="fl"><input type="checkbox" class="map-source" data-src="COMM" checked><span class="fl-dot" style="background:#8A6A45"></span>Analyse communautaire</label>
-      </div>
+      <details class="ms ">
+        <summary>Mesurer une distance</summary>
+        <div class="ms-in">
+<button type="button" class="map-tool" id="map-ruler" aria-pressed="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <path d="M3 15L15 3l6 6L9 21z"/><path d="M7 11l2 2M10 8l2 2M13 5l2 2"/>
+            </svg>
+            Mesurer une distance
+          </button>
 
-      <div class="map-layers">
-        <p class="map-side-h">Calques</p>
-        <label class="fl"><input type="checkbox" class="map-layer" data-layer="lyr-county" checked><span class="fl-dot" style="background:#3E3B47"></span>Limites de comtés</label>
-        <label class="fl"><input type="checkbox" class="map-layer" data-layer="lyr-label" checked><span class="fl-dot" style="background:#5C5A63"></span>Noms des zones</label>
-        <label class="fl"><input type="checkbox" class="map-layer" data-layer="lyr-road" checked><span class="fl-dot" style="background:#6E6B76"></span>Routes</label>
-        <label class="fl"><input type="checkbox" class="map-layer" data-layer="lyr-spec" checked><span class="fl-dot" style="background:#D8452C"></span>Tracés supposés</label>
-        <label class="fl"><input type="checkbox" class="map-layer" data-layer="lyr-grid"><span class="fl-dot" style="background:#9CC0D6"></span>Grille</label>
-        <label class="fl"><input type="checkbox" class="map-layer" data-layer="lyr-key" checked><span class="fl-dot" style="background:#1A1A1E"></span>Légende</label>
-      </div>
+          <div class="map-ruler-wrap" id="map-ruler-wrap" hidden>
+            <div class="map-ruler-box" id="map-ruler-box"></div>
+            <button type="button" class="map-ruler-reset" id="map-ruler-reset">Recommencer</button>
+          </div>
+        </div>
+      </details>
 
-      <div class="map-filters">
-        <p class="map-side-h">Marqueurs</p>
-        <label class="fl"><input type="checkbox" class="map-filter" data-cat="region" checked><span class="fl-dot" style="background:#E8452C"></span>Régions</label>
-        <label class="fl"><input type="checkbox" class="map-filter" data-cat="ville" checked><span class="fl-dot" style="background:#F5A524"></span>Villes</label>
-        <label class="fl"><input type="checkbox" class="map-filter" data-cat="quartier" checked><span class="fl-dot" style="background:#D96A2C"></span>Quartiers</label>
-        <label class="fl"><input type="checkbox" class="map-filter" data-cat="comte" checked><span class="fl-dot" style="background:#8A6A45"></span>Comtés</label>
-        <label class="fl"><input type="checkbox" class="map-filter" data-cat="batiment" checked><span class="fl-dot" style="background:#5B4E8C"></span>Bâtiments identifiés</label>
-        <label class="fl"><input type="checkbox" class="map-filter" data-cat="transport" checked><span class="fl-dot" style="background:#2F6F8F"></span>Transports</label>
-        <label class="fl"><input type="checkbox" class="map-filter" data-cat="nature" checked><span class="fl-dot" style="background:#4C7A50"></span>Nature et relief</label>
-        <label class="fl"><input type="checkbox" class="map-filter" data-cat="lieu" checked><span class="fl-dot" style="background:#B5762A"></span>Lieux notables</label>
-        <label class="fl"><input type="checkbox" class="map-filter" data-cat="collectible" checked><span class="fl-dot" style="background:#C2452C"></span>Collectibles</label>
-        <label class="fl"><input type="checkbox" class="map-filter" data-cat="planque" checked><span class="fl-dot" style="background:#A85B33"></span>Planques</label>
-        <label class="fl"><input type="checkbox" class="map-filter" data-cat="mission" checked><span class="fl-dot" style="background:#CE4B33"></span>Missions</label>
-      </div>
+      <details class="ms ">
+        <summary>Mes marqueurs <span class="ed-badge" id="map-edit-count">0</span></summary>
+        <div class="ms-in">
 
-      <p class="map-note">Fond de carte provisoire. Le tracé réel et les emplacements seront ajoutés après la sortie du jeu, à partir de sources légitimes.</p>
+          <button type="button" class="map-tool" id="map-edit" aria-pressed="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <path d="M12 5v14M5 12h14"/>
+            </svg>
+            Ajouter mes marqueurs
+          </button>
+
+          <p class="ed-help" id="map-edit-pane" hidden>Clique sur la carte pour poser un point. Tu pourras lui donner un nom et une note.</p>
+
+          <ul class="ed-list" id="map-edit-list"></ul>
+
+          <button type="button" class="map-prog-reset" id="map-perso-clear" hidden>Tout supprimer</button>
+
+          <div class="ed-io">
+            <button type="button" id="map-export">Exporter</button>
+            <button type="button" id="map-import">Importer</button>
+            <input type="file" id="map-import-file" accept="application/json" hidden>
+          </div>
+          <p class="ed-note">L'export enregistre tes marqueurs et ta progression dans un fichier, à conserver ou à transférer sur un autre appareil.</p>
+        </div>
+      </details>
+
+      <details class="ms ">
+        <summary>Fiabilité</summary>
+        <div class="ms-in">
+
+          <button type="button" class="map-only" id="map-only-officiel">Uniquement l'officiel</button>
+          <label class="fl fl-st"><input type="checkbox" class="map-statut" data-st="officiel" checked><span class="st-chip st-chip--officiel">Officiel</span><em>Nommé par Rockstar</em></label>
+          <label class="fl fl-st"><input type="checkbox" class="map-statut" data-st="vu" checked><span class="st-chip st-chip--vu">Aperçu</span><em>Vu dans un trailer</em></label>
+          <label class="fl fl-st"><input type="checkbox" class="map-statut" data-st="spec" checked><span class="st-chip st-chip--spec">Supposé</span><em>Reconstruction</em></label>
+        </div>
+      </details>
+
+      <details class="ms ">
+        <summary>Révélé par</summary>
+        <div class="ms-in">
+
+          <label class="fl"><input type="checkbox" class="map-source" data-src="SITE" checked><span class="fl-dot" style="background:#1A1A1E"></span>Site officiel</label>
+          <label class="fl"><input type="checkbox" class="map-source" data-src="T1" checked><span class="fl-dot" style="background:#E8452C"></span>Premier trailer</label>
+          <label class="fl"><input type="checkbox" class="map-source" data-src="T2" checked><span class="fl-dot" style="background:#F5A524"></span>Second trailer</label>
+          <label class="fl"><input type="checkbox" class="map-source" data-src="EL" checked><span class="fl-dot" style="background:#5B4E8C"></span>Extended Look</label>
+          <label class="fl"><input type="checkbox" class="map-source" data-src="SHOT" checked><span class="fl-dot" style="background:#2F6F8F"></span>Captures officielles</label>
+          <label class="fl"><input type="checkbox" class="map-source" data-src="COMM" checked><span class="fl-dot" style="background:#8A6A45"></span>Analyse communautaire</label>
+        </div>
+      </details>
+
+      <details class="ms ">
+        <summary>Calques du fond</summary>
+        <div class="ms-in">
+
+          <label class="fl"><input type="checkbox" class="map-layer" data-layer="lyr-county" checked><span class="fl-dot" style="background:#3E3B47"></span>Limites de comtés</label>
+          <label class="fl"><input type="checkbox" class="map-layer" data-layer="lyr-label" checked><span class="fl-dot" style="background:#5C5A63"></span>Noms des zones</label>
+          <label class="fl"><input type="checkbox" class="map-layer" data-layer="lyr-road" checked><span class="fl-dot" style="background:#6E6B76"></span>Routes</label>
+          <label class="fl"><input type="checkbox" class="map-layer" data-layer="lyr-spec" checked><span class="fl-dot" style="background:#D8452C"></span>Tracés supposés</label>
+          <label class="fl"><input type="checkbox" class="map-layer" data-layer="lyr-grid"><span class="fl-dot" style="background:#9CC0D6"></span>Grille</label>
+          <label class="fl"><input type="checkbox" class="map-layer" data-layer="lyr-key" checked><span class="fl-dot" style="background:#1A1A1E"></span>Légende</label>
+        </div>
+      </details>
+
+      <details class="ms ">
+        <summary>Types de marqueurs</summary>
+        <div class="ms-in">
+
+          <label class="fl"><input type="checkbox" class="map-filter" data-cat="region" checked><span class="fl-dot" style="background:#E8452C"></span>Régions</label>
+          <label class="fl"><input type="checkbox" class="map-filter" data-cat="ville" checked><span class="fl-dot" style="background:#F5A524"></span>Villes</label>
+          <label class="fl"><input type="checkbox" class="map-filter" data-cat="quartier" checked><span class="fl-dot" style="background:#D96A2C"></span>Quartiers</label>
+          <label class="fl"><input type="checkbox" class="map-filter" data-cat="comte" checked><span class="fl-dot" style="background:#8A6A45"></span>Comtés</label>
+          <label class="fl"><input type="checkbox" class="map-filter" data-cat="batiment" checked><span class="fl-dot" style="background:#5B4E8C"></span>Bâtiments identifiés</label>
+          <label class="fl"><input type="checkbox" class="map-filter" data-cat="transport" checked><span class="fl-dot" style="background:#2F6F8F"></span>Transports</label>
+          <label class="fl"><input type="checkbox" class="map-filter" data-cat="nature" checked><span class="fl-dot" style="background:#4C7A50"></span>Nature et relief</label>
+          <label class="fl"><input type="checkbox" class="map-filter" data-cat="lieu" checked><span class="fl-dot" style="background:#B5762A"></span>Lieux notables</label>
+          <label class="fl"><input type="checkbox" class="map-filter" data-cat="collectible" checked><span class="fl-dot" style="background:#C2452C"></span>Collectibles</label>
+          <label class="fl"><input type="checkbox" class="map-filter" data-cat="planque" checked><span class="fl-dot" style="background:#A85B33"></span>Planques</label>
+          <label class="fl"><input type="checkbox" class="map-filter" data-cat="mission" checked><span class="fl-dot" style="background:#CE4B33"></span>Missions</label>
+        </div>
+      </details>
+
+            <p class="map-note">Fond de carte provisoire. Le tracé réel et les emplacements seront ajoutés après la sortie du jeu, à partir de sources légitimes.</p>
+
     </aside>
 
     <div class="map-stage" id="map-stage">

@@ -428,13 +428,15 @@
 
   function renderFound(){
     if(!fdList) return;
+    const sec = fdList.closest('details');
     const liste = POINTS.filter(p => found[p.id]);
     if(fdCnt) fdCnt.textContent = liste.length;
 
     if(!liste.length){
-      fdList.innerHTML = '<p class="fd-empty">Aucun lieu repéré. Ouvre un marqueur et coche-le.</p>';
+      fdList.innerHTML = '<p class="fd-empty">Aucun lieu repéré pour l\'instant. Ouvre un marqueur sur la carte et coche-le.</p>';
       return;
     }
+    if(sec && !sec.open) sec.open = true;
     fdList.innerHTML = '<ul>' + liste.map(function(p){
       return '<li><button type="button" class="fd-go" data-goto="' + p.id + '">' +
              '<span class="fd-dot" style="background:' + CATS[p.c].col + '"></span>' +
@@ -1105,6 +1107,10 @@
       M.layer.appendChild(el);
     });
     if(editCnt) editCnt.textContent = perso.length;
+    if(perso.length && editList){
+      const s = editList.closest('details');
+      if(s && !s.open) s.open = true;
+    }
     const ca = document.getElementById('map-perso-clear');
     if(ca) ca.hidden = perso.length === 0;
     renderList();
