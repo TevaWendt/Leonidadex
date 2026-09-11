@@ -1476,3 +1476,53 @@ body.map-full-on{overflow:hidden;}
 /* les anciens titres internes disparaissent */
 .ms-in .map-side-h{display:none;}
 .ms-in > div[class^="map-"]{margin:0; padding:0; border:none;}
+
+/* ============================================================
+   CARTE — images, personnages, partage, finitions
+   ============================================================ */
+.mp-img{
+  margin:-17px -19px 13px; border-bottom:2px solid var(--ink);
+  background:var(--paper-2); overflow:hidden; position:relative;
+}
+.mp-img img{width:100%; height:150px; object-fit:cover; display:block;}
+.mp-img figcaption{
+  position:absolute; right:8px; bottom:6px; font-size:.62rem; font-weight:700;
+  color:#fff; background:rgba(26,26,30,.7); border-radius:4px; padding:2px 7px;
+}
+.mp-img--ko img{display:none;}
+.mp-img--ko::after, .mp-img--vide{
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px;
+  height:96px; color:var(--ink-soft); font-size:.72rem; font-weight:700;
+  background:repeating-linear-gradient(135deg, var(--paper-2) 0 10px, #EDE7DA 10px 20px);
+}
+.mp-img--vide svg{width:34px; height:34px; opacity:.6;}
+
+.mp-pers{margin-top:11px; padding-top:9px; border-top:1px solid var(--rule);}
+.mp-pers ul{list-style:none;}
+.mp-pers li{display:flex; flex-direction:column; padding:5px 0; font-size:.8rem;}
+.mp-pers li + li{border-top:1px dashed var(--rule);}
+.mp-pers b{font-weight:800; color:var(--ink);}
+.mp-pers span{color:var(--ink-soft); font-size:.76rem; line-height:1.45;}
+
+.mp-row{display:flex; gap:7px; margin-top:12px; align-items:stretch;}
+.mp-row .mp-btn{flex:1; margin-top:0;}
+.mp-share{
+  width:42px; cursor:pointer; background:var(--paper-2);
+  border:2px solid var(--ink); border-radius:6px; color:var(--ink);
+  display:flex; align-items:center; justify-content:center; transition:background .15s;
+}
+.mp-share svg{width:17px; height:17px;}
+.mp-share:hover{background:var(--rule);}
+.mp-share.ok{background:#2A9D8F; color:#fff; border-color:#2A9D8F;}
+
+/* étiquettes masquées selon le zoom */
+.map-markers.lbl-z1 .mk.z1 .mk-lbl{display:none;}
+.map-markers.lbl-z2 .mk.z2 .mk-lbl{display:none;}
+.mk--activite .mk-dot{border-radius:3px; transform:rotate(45deg);}
+
+/* focus clavier sur les marqueurs */
+.mk:focus-visible .mk-dot{outline:3px solid var(--coral); outline-offset:3px;}
+.mk:focus-visible .mk-lbl{display:inline-block !important;}
+
+/* panneau plus large pour accueillir l'image */
+.map-panel{width:min(320px, calc(100% - 24px)); max-height:calc(100% - 24px); overflow-y:auto;}

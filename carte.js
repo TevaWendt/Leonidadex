@@ -67,6 +67,18 @@
     COMM:  'Analyse communautaire'
   };
 
+  /* ---- personnages officiels ---- */
+  const PERSOS = {
+    jason:  { n:'Jason Duval',      r:"Ancien militaire devenu convoyeur pour des trafiquants des Keys." },
+    lucia:  { n:'Lucia Caminos',    r:"Originaire de Liberty City, sortie du pénitencier de Leonida." },
+    cal:    { n:'Cal Hampton',      r:"Ami de Jason, paranoïaque et complotiste." },
+    boobie: { n:'Boobie Ike',       r:"Patron d'un empire d'affaires à Vice City." },
+    drequan:{ n:"Dre'Quan Priest",  r:"Copropriétaire du label Only Raw Records." },
+    dimez:  { n:'Real Dimez',       r:"Duo musical Bae-Luxe et Roxy, signé chez Only Raw." },
+    raul:   { n:'Raul Bautista',    r:"Braqueur de banques chevronné." },
+    brian:  { n:'Brian Heder',      r:"Trafiquant de longue date des Keys, propriétaire du logement de Jason." }
+  };
+
   /* ---- catégories ---- */
   const CATS = {
     region:      { nom:'Régions',            col:'#E8452C' },
@@ -77,6 +89,7 @@
     transport:   { nom:'Transports',         col:'#2F6F8F' },
     nature:      { nom:'Nature et relief',   col:'#4C7A50' },
     lieu:        { nom:'Lieux notables',     col:'#B5762A' },
+    activite:    { nom:'Activités',          col:'#2A9D8F' },
     collectible: { nom:'Collectibles',       col:'#C2452C' },
     planque:     { nom:'Planques',           col:'#A85B33' },
     mission:     { nom:'Missions',           col:'#CE4B33' }
@@ -86,9 +99,9 @@
      Positions approximatives, à recaler sur le fond définitif. */
   const POINTS = [
     /* ============ RÉGIONS OFFICIELLES ============ */
-    { id:'vice-city', n:'Vice City', c:'ville', x:3560, y:4180, s:'officiel', src:'SITE', z:0,
+    { id:'vice-city', n:'Vice City', c:'ville', x:3560, y:4180, s:'officiel', src:'SITE', z:0, pers:['boobie','drequan','dimez'],
       d:"La métropole de Leonida et le cœur du jeu. Rockstar la présente comme la capitale ensoleillée et festive du pays, et comme la ville la plus dense jamais construite par le studio." },
-    { id:'leonida-keys', n:'Leonida Keys', c:'region', x:2200, y:5560, s:'officiel', src:'SITE', z:0,
+    { id:'leonida-keys', n:'Leonida Keys', c:'region', x:2200, y:5560, s:'officiel', src:'SITE', z:0, pers:['jason','brian'],
       d:"Archipel tropical au sud de l'État, relié par de longues routes au-dessus de l'eau. Plongée, pêche, navigation et contrebande." },
     { id:'grassrivers', n:'Grassrivers', c:'region', x:2700, y:4700, s:'officiel', src:'SITE', z:0,
       d:"La grande zone humide de Leonida. Végétation dense, visibilité réduite, hydroglisseurs et alligators." },
@@ -110,8 +123,8 @@
       d:"Bande de front de mer où se concentrent bars et hôtels illuminés au néon. Plusieurs plans nocturnes des trailers en proviennent." },
     { id:'downtown', n:'Downtown', c:'quartier', x:3560, y:4120, s:'vu', src:'T2', p:'vice-city', z:1,
       d:"Le centre financier : tours de verre et autoroutes surélevées, visibles dans les plans aériens du second trailer." },
-    { id:'stockyard', n:'Stockyard', c:'quartier', x:3460, y:3980, s:'vu', src:'T1', p:'vice-city', z:1,
-      d:"Quartier d'entrepôts reconvertis, couverts de fresques. Un rassemblement automobile s'y déroule dans le premier trailer." },
+    { id:'stockyard', n:'Stockyard', c:'quartier', x:3460, y:3980, s:'officiel', src:'SITE', p:'vice-city', z:1,
+      d:"Quartier d'entrepôts reconvertis, couverts de fresques. Rockstar a confirmé qu'il s'inspire de Wynwood et a fait appel à plus de cinquante artistes de rue pour ses murs. Un rassemblement automobile s'y déroule dans le premier trailer." },
     { id:'vc-port', n:'Port de Vice City', c:'transport', x:3640, y:4460, s:'vu', src:'T1', p:'vice-city', z:1,
       d:"Zone portuaire industrielle : conteneurs, entrepôts et ponts, aperçue dans les deux trailers." },
     { id:'marina', n:'Marina', c:'quartier', x:3780, y:4440, s:'vu', src:'T2', p:'vice-city', z:1,
@@ -150,8 +163,8 @@
     /* ============ LIEUX NOTABLES ============ */
     { id:'allied-crystal', n:'Raffinerie Allied Crystal', c:'lieu', x:3620, y:2720, s:'officiel', src:'SITE', p:'ambrosia', z:1,
       d:"Raffinerie de sucre citée par Rockstar comme le principal employeur d'Ambrosia." },
-    { id:'state-prison', n:'Pénitencier d\'État', c:'lieu', x:3260, y:2340, s:'vu', src:'T1', z:0,
-      d:"Prison d'État d'où Lucia sort au début de l'histoire. Rapprochée de la Florida State Prison. Nom exact non confirmé." },
+    { id:'leonida-penitentiary', n:'Leonida Penitentiary', c:'lieu', x:3260, y:2340, s:'officiel', src:'SITE', z:0, pers:['lucia'],
+      d:"Le pénitencier d'État où Lucia purge sa peine au début de l'histoire, après s'être battue pour sa famille à Liberty City. Nom confirmé par Rockstar. Rapproché de la Florida State Prison." },
     { id:'tv-tower', n:'Tour de télévision', c:'batiment', x:1400, y:1160, s:'spec', src:'COMM', z:0,
       d:"Hypothèse communautaire d'une très haute antenne, inspirée de la tour WTVY. Non confirmée." },
 
@@ -221,6 +234,8 @@
     world.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + scale + ')';
     if(zoomLbl) zoomLbl.textContent = Math.round(scale * 100) + ' %';
     layer.style.setProperty('--inv', (1 / scale));
+    layer.classList.toggle('lbl-z1', scale < 0.55);
+    layer.classList.toggle('lbl-z2', scale < 1.1);
     drawLine();
     updateScaleBar();
     syncHash();
@@ -471,11 +486,27 @@
   function openPanel(p){
     const isFound = !!found[p.id];
     const st = STATUTS[p.s];
+    const img = p.img
+      ? '<figure class="mp-img"><img src="' + p.img + '" alt="' + p.n + '" loading="lazy" ' +
+        'onerror="this.parentNode.classList.add(\'mp-img--ko\')">' +
+        (p.imgSrc ? '<figcaption>' + p.imgSrc + '</figcaption>' : '') + '</figure>'
+      : '<div class="mp-img mp-img--vide" aria-hidden="true">' +
+        '<svg viewBox="0 0 64 64"><rect x="8" y="16" width="48" height="36" rx="4" fill="none" stroke="currentColor" stroke-width="2.5"/>' +
+        '<circle cx="24" cy="30" r="5" fill="currentColor"/><path d="M12 48l14-14 10 10 8-8 12 12" fill="none" stroke="currentColor" stroke-width="2.5"/></svg>' +
+        '<span>Visuel à venir</span></div>';
+
+    const persos = (p.pers || []).map(function(k){
+      const q = PERSOS[k]; if(!q) return '';
+      return '<li><b>' + q.n + '</b><span>' + q.r + '</span></li>';
+    }).join('');
+
     panelIn.innerHTML =
+      img +
       '<p class="mp-cat" style="color:' + CATS[p.c].col + '">' + CATS[p.c].nom + '</p>' +
       '<h3>' + p.n + '</h3>' +
       '<span class="mp-st mp-st--' + p.s + '" title="' + st.d + '">' + st.court + '</span>' +
       '<p class="mp-d">' + p.d + '</p>' +
+      (persos ? '<div class="mp-pers"><p class="mp-kids-h">Personnages liés</p><ul>' + persos + '</ul></div>' : '') +
       '<div class="mp-meta">' +
         '<div><span>Fiabilité</span><b>' + st.nom + '</b></div>' +
         '<div><span>Source</span><b>' + SOURCES[p.src] + '</b></div>' +
@@ -501,10 +532,26 @@
         }
         return h;
       })() +
-      '<button type="button" class="mp-btn' + (isFound ? ' on' : '') + '" id="mp-toggle">' +
-        (isFound ? 'Repéré' : 'Marquer comme repéré') +
-      '</button>';
+      '<div class="mp-row">' +
+        '<button type="button" class="mp-btn' + (isFound ? ' on' : '') + '" id="mp-toggle">' +
+          (isFound ? 'Repéré' : 'Marquer comme repéré') +
+        '</button>' +
+        '<button type="button" class="mp-share" id="mp-share" title="Copier le lien vers ce lieu" aria-label="Copier le lien">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>' +
+        '</button>' +
+      '</div>';
     panel.classList.add('open');
+
+    const shareBt = document.getElementById('mp-share');
+    if(shareBt){
+      shareBt.addEventListener('click', function(e){
+        e.stopPropagation();
+        const url = location.origin + location.pathname + '#lieu=' + p.id;
+        if(navigator.clipboard) navigator.clipboard.writeText(url);
+        shareBt.classList.add('ok');
+        setTimeout(function(){ shareBt.classList.remove('ok'); }, 1500);
+      });
+    }
 
     /* déplier ce lieu : ses enfants deviennent visibles quel que soit le zoom */
     expanded[p.id] = true;
