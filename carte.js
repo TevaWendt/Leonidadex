@@ -1101,6 +1101,7 @@
     toWorld: toWorld,
     goTo: goTo,
     wasDrag: function(){ return moved >= 6; },
+    scale: function(){ return scale; },
     getFound: function(){ return found; },
     setFound: function(f){
       found = f || {}; save();
@@ -1289,10 +1290,11 @@
   if(expBt){
     expBt.addEventListener('click', function(){
       const data = {
-        version: 1,
+        version: 2,
         genere: new Date().toISOString(),
         marqueurs: perso,
-        repere: M.getFound()
+        repere: M.getFound(),
+        traces: M.getDraw ? M.getDraw() : []
       };
       const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
       const a = document.createElement('a');
@@ -1317,6 +1319,7 @@
             perso = d.marqueurs; savePerso(); renderPerso();
           }
           if(d.repere) M.setFound(d.repere);
+          if(d.traces && M.setDraw) M.setDraw(d.traces);
           alert('Import réussi.');
         }catch(err){ alert("Fichier illisible."); }
         impIn.value = '';
@@ -1337,4 +1340,184 @@
   }
 
   renderPerso();
+})();
+
+/* ============================================================
+   OUTILS DE DESSIN — tracés enregistrés en coordonnées de carte
+   ============================================================ */
+(function(){
+  const stage = document.getElementById('map-stage');
+  const M = window.LK_MAP;
+  if(!stage || !M) return;
+
+  const world = document.getElementById('map-world');
+  const svgNS = 'http://www.w3.org/2000/svg';
+
+  /* calque SVG dans le monde : il suit le zoom et le déplacement */
+  const layer = document.createElementNS(svgNS, 'svg');
+  layer.setAttribute('class', 'map-draw');
+  layer.setAttribute('viewBox', '0 0 5200 6000');
+  world.appendChild(layer);
+
+  const KEY = 'lk_map_draw';
+  let strokes = [];
+  let redo = [];
+  try{ strokes = JSON.parse(localStorage.getItem(KEY) || '[]'); }catch(e){ strokes = []; }
+
+  const ui = {
+    on:    document.getElementById('dr-on'),
+    pane:  document.getElementById('dr-pane'),
+    tools: Array.from(document.querySelectorAll('.dr-tool')),
+    cols:  Array.from(document.querySelectorAll('.dr-col')),
+    hex:   document.getElementById('dr-hex'),
+    size:  document.getElementById('dr-size'),
+    sizeV: document.getElementById('dr-size-v'),
+    op:    document.getElementById('dr-op'),
+    opV:   document.getElementById('dr-op-v'),
+    undo:  document.getElementById('dr-undo'),
+    redo:  document.getElementById('dr-redo'),
+    clear: document.getElementById('dr-clear'),
+    count: document.getElementById('dr-count')
+  };
+
+  let mode = false, tool = 'pen', color = '#E8452C', size = 6, opacity = .85;
+  let cur = null, curEl = null, start = null;
+
+  function save(){ try{ localStorage.setItem(KEY, JSON.stringify(strokes)); }catch(e){} }
+
+  function el(tag, attrs){
+    const e = document.createElementNS(svgNS, tag);
+    Object.keys(attrs).forEach(k => e.setAttribute(k, attrs[k]));
+    return e;
+  }
+
+  function render(){
+    layer.innerHTML = '';
+    strokes.forEach(function(s, i){
+      let e;
+      const common = { stroke: s.c, 'stroke-width': s.w, 'stroke-opacity': s.o, fill: 'none',
+                       'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'data-i': i };
+      if(s.t === 'pen'){
+        e = el('path', Object.assign({ d: 'M' + s.p.map(p => p[0] + ',' + p[1]).join(' L') }, common));
+      } else if(s.t === 'line'){
+        e = el('line', Object.assign({ x1:s.a[0], y1:s.a[1], x2:s.b[0], y2:s.b[1] }, common));
+      } else if(s.t === 'rect'){
+        e = el('rect', Object.assign({ x:Math.min(s.a[0],s.b[0]), y:Math.min(s.a[1],s.b[1]),
+              width:Math.abs(s.b[0]-s.a[0]), height:Math.abs(s.b[1]-s.a[1]), rx:6 }, common));
+      } else if(s.t === 'circle'){
+        const r = Math.hypot(s.b[0]-s.a[0], s.b[1]-s.a[1]);
+        e = el('circle', Object.assign({ cx:s.a[0], cy:s.a[1], r:r }, common));
+      }
+      if(e){
+        e.classList.add('dr-stroke');
+        e.addEventListener('click', function(ev){
+          if(!mode || tool !== 'eraser') return;
+          ev.stopPropagation();
+          redo = []; strokes.splice(i, 1); save(); render();
+        });
+        layer.appendChild(e);
+      }
+    });
+    if(ui.count) ui.count.textContent = strokes.length;
+    if(ui.undo) ui.undo.disabled = !strokes.length;
+    if(ui.redo) ui.redo.disabled = !redo.length;
+  }
+
+  /* ---- interaction ---- */
+  stage.addEventListener('pointerdown', function(e){
+    if(!mode || tool === 'eraser') return;
+    if(e.target.closest('.map-panel, .map-zoom, .map-help-box, .map-mini, .dr-bar')) return;
+    e.stopPropagation(); e.preventDefault();
+    const w = M.toWorld(e.clientX, e.clientY);
+    start = [w.x, w.y];
+    if(tool === 'pen'){
+      cur = { t:'pen', c:color, w:size, o:opacity, p:[start] };
+      curEl = el('path', { d:'M'+w.x+','+w.y, stroke:color, 'stroke-width':size, 'stroke-opacity':opacity,
+                           fill:'none', 'stroke-linecap':'round', 'stroke-linejoin':'round' });
+    } else {
+      cur = { t:tool, c:color, w:size, o:opacity, a:start, b:start };
+      curEl = el(tool === 'line' ? 'line' : (tool === 'rect' ? 'rect' : 'circle'),
+                 { stroke:color, 'stroke-width':size, 'stroke-opacity':opacity, fill:'none', 'stroke-linecap':'round' });
+    }
+    layer.appendChild(curEl);
+    stage.setPointerCapture(e.pointerId);
+  }, true);
+
+  stage.addEventListener('pointermove', function(e){
+    if(!mode || !cur) return;
+    e.stopPropagation();
+    const w = M.toWorld(e.clientX, e.clientY);
+    if(cur.t === 'pen'){
+      const last = cur.p[cur.p.length-1];
+      if(Math.hypot(w.x-last[0], w.y-last[1]) < 4 / M.scale()) return;
+      cur.p.push([w.x, w.y]);
+      curEl.setAttribute('d', curEl.getAttribute('d') + ' L' + w.x + ',' + w.y);
+    } else {
+      cur.b = [w.x, w.y];
+      if(cur.t === 'line'){ curEl.setAttribute('x1',cur.a[0]); curEl.setAttribute('y1',cur.a[1]); curEl.setAttribute('x2',w.x); curEl.setAttribute('y2',w.y); }
+      else if(cur.t === 'rect'){ curEl.setAttribute('x',Math.min(cur.a[0],w.x)); curEl.setAttribute('y',Math.min(cur.a[1],w.y)); curEl.setAttribute('width',Math.abs(w.x-cur.a[0])); curEl.setAttribute('height',Math.abs(w.y-cur.a[1])); curEl.setAttribute('rx',6); }
+      else { curEl.setAttribute('cx',cur.a[0]); curEl.setAttribute('cy',cur.a[1]); curEl.setAttribute('r',Math.hypot(w.x-cur.a[0], w.y-cur.a[1])); }
+    }
+  }, true);
+
+  function finish(e){
+    if(!mode || !cur) return;
+    e.stopPropagation();
+    const ok = cur.t === 'pen' ? cur.p.length > 1 : (cur.a[0] !== cur.b[0] || cur.a[1] !== cur.b[1]);
+    if(ok){ strokes.push(cur); redo = []; save(); }
+    cur = null; curEl = null; render();
+  }
+  stage.addEventListener('pointerup', finish, true);
+  stage.addEventListener('pointercancel', finish, true);
+
+  /* ---- palette ---- */
+  if(ui.on){
+    ui.on.addEventListener('click', function(){
+      mode = !mode;
+      ui.on.classList.toggle('on', mode);
+      ui.on.setAttribute('aria-pressed', mode);
+      ui.on.textContent = mode ? 'Arrêter de dessiner' : 'Dessiner sur la carte';
+      if(ui.pane) ui.pane.hidden = !mode;
+      stage.classList.toggle('drawing', mode);
+      layer.classList.toggle('erasing', mode && tool === 'eraser');
+    });
+  }
+  ui.tools.forEach(function(b){
+    b.addEventListener('click', function(){
+      ui.tools.forEach(x => x.classList.remove('on'));
+      b.classList.add('on'); tool = b.dataset.tool;
+      layer.classList.toggle('erasing', tool === 'eraser');
+      stage.classList.toggle('erasing', tool === 'eraser');
+    });
+  });
+  ui.cols.forEach(function(b){
+    b.addEventListener('click', function(){
+      ui.cols.forEach(x => x.classList.remove('on'));
+      b.classList.add('on'); color = b.dataset.col;
+      if(ui.hex) ui.hex.value = color;
+    });
+  });
+  if(ui.hex){
+    ui.hex.addEventListener('input', function(){
+      const v = ui.hex.value.trim();
+      if(/^#[0-9a-fA-F]{6}$/.test(v)){ color = v; ui.cols.forEach(x => x.classList.remove('on')); }
+    });
+  }
+  if(ui.size){ ui.size.addEventListener('input', function(){ size = +ui.size.value; if(ui.sizeV) ui.sizeV.textContent = size; }); }
+  if(ui.op){ ui.op.addEventListener('input', function(){ opacity = ui.op.value/100; if(ui.opV) ui.opV.textContent = ui.op.value + ' %'; }); }
+  if(ui.undo){ ui.undo.addEventListener('click', function(){ if(!strokes.length) return; redo.push(strokes.pop()); save(); render(); }); }
+  if(ui.redo){ ui.redo.addEventListener('click', function(){ if(!redo.length) return; strokes.push(redo.pop()); save(); render(); }); }
+  if(ui.clear){ ui.clear.addEventListener('click', function(){ if(!strokes.length || !confirm('Effacer tous tes tracés ?')) return; strokes = []; redo = []; save(); render(); }); }
+
+  document.addEventListener('keydown', function(e){
+    if(!mode) return;
+    if((e.ctrlKey || e.metaKey) && e.key === 'z'){ e.preventDefault(); if(ui.undo) ui.undo.click(); }
+    if((e.ctrlKey || e.metaKey) && e.key === 'y'){ e.preventDefault(); if(ui.redo) ui.redo.click(); }
+  });
+
+  /* export / import : les tracés voyagent avec le reste */
+  M.getDraw = function(){ return strokes; };
+  M.setDraw = function(s){ strokes = Array.isArray(s) ? s : []; redo = []; save(); render(); };
+
+  render();
 })();

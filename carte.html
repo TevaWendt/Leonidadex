@@ -222,6 +222,41 @@
         </div>
       </details>
 
+      <details class="ms">
+        <summary>Dessiner <span class="ed-badge" id="dr-count">0</span></summary>
+        <div class="ms-in">
+          <button type="button" class="map-tool" id="dr-on" aria-pressed="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 21l3-1 12-12-2-2L4 18zM14 6l2-2 2 2-2 2"/></svg>
+            Dessiner sur la carte
+          </button>
+          <div class="dr-pane" id="dr-pane" hidden>
+            <div class="dr-tools">
+              <button type="button" class="dr-tool on" data-tool="pen" title="Main levée" aria-label="Main levée"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20c4-8 8-10 16-14"/></svg></button>
+              <button type="button" class="dr-tool" data-tool="line" title="Ligne" aria-label="Ligne"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20L20 4"/></svg></button>
+              <button type="button" class="dr-tool" data-tool="rect" title="Rectangle" aria-label="Rectangle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="6" width="16" height="12" rx="2"/></svg></button>
+              <button type="button" class="dr-tool" data-tool="circle" title="Cercle" aria-label="Cercle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/></svg></button>
+              <button type="button" class="dr-tool dr-tool--erase" data-tool="eraser" title="Gomme, clique un tracé" aria-label="Gomme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 21l-4-4 10-10 4 4zM13 7l4-4 4 4-4 4"/></svg></button>
+            </div>
+            <div class="dr-cols">
+              <button type="button" class="dr-col on" data-col="#E8452C" style="background:#E8452C" aria-label="Corail"></button>
+              <button type="button" class="dr-col" data-col="#F5A524" style="background:#F5A524" aria-label="Ambre"></button>
+              <button type="button" class="dr-col" data-col="#1A1A1E" style="background:#1A1A1E" aria-label="Noir"></button>
+              <button type="button" class="dr-col" data-col="#FDFBF7" style="background:#FDFBF7" aria-label="Blanc"></button>
+              <button type="button" class="dr-col" data-col="#2A9D8F" style="background:#2A9D8F" aria-label="Turquoise"></button>
+              <input type="text" class="dr-hex" id="dr-hex" value="#E8452C" maxlength="7" aria-label="Couleur personnalisée">
+            </div>
+            <label class="dr-range"><span>Épaisseur <b id="dr-size-v">6</b></span><input type="range" id="dr-size" min="2" max="24" value="6"></label>
+            <label class="dr-range"><span>Opacité <b id="dr-op-v">85 %</b></span><input type="range" id="dr-op" min="10" max="100" value="85"></label>
+            <div class="dr-acts">
+              <button type="button" id="dr-undo" disabled title="Annuler (Ctrl+Z)">Annuler</button>
+              <button type="button" id="dr-redo" disabled title="Refaire (Ctrl+Y)">Refaire</button>
+              <button type="button" id="dr-clear" class="dr-clear">Tout effacer</button>
+            </div>
+            <p class="ed-note">Tes tracés sont enregistrés sur ton appareil et inclus dans l'export.</p>
+          </div>
+        </div>
+      </details>
+
       <details class="ms ">
         <summary>Mes marqueurs <span class="ed-badge" id="map-edit-count">0</span></summary>
         <div class="ms-in">
@@ -303,7 +338,12 @@
         </div>
       </details>
 
-            <p class="map-note">Fond de carte provisoire. Le tracé réel et les emplacements seront ajoutés après la sortie du jeu, à partir de sources légitimes.</p>
+            <div class="map-credits">
+        <p class="map-side-h">Crédits</p>
+        <p>Fond dessiné et données assemblées pour Leonidakit à partir des supports officiels de Rockstar : trailers, captures, site et Extended Look.</p>
+        <p>Aucun élément issu des fuites. Corrections bienvenues via la page <a href="contact.html">Contact</a>.</p>
+      </div>
+      <p class="map-note">Fond de carte provisoire. Le tracé réel et les emplacements seront ajoutés après la sortie du jeu, à partir de sources légitimes.</p>
 
     </aside>
 
@@ -2111,6 +2151,13 @@
           <li><b>?</b> ouvre cette aide</li>
         </ul>
       </div>
+
+      <svg class="map-compass" viewBox="0 0 80 80" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="40" cy="40" r="36" fill="rgba(253,251,247,.9)" stroke="#1A1A1E" stroke-width="2"/>
+        <path d="M40 8L47 40L40 36L33 40Z" fill="#E8452C"/><path d="M40 72L33 40L40 44L47 40Z" fill="#1A1A1E"/>
+        <path d="M8 40L40 33L36 40L40 47Z" fill="#8B8695"/><path d="M72 40L40 47L44 40L40 33Z" fill="#8B8695"/>
+        <text x="40" y="20" text-anchor="middle" font-family="Archivo,sans-serif" font-size="9" font-weight="900" fill="#1A1A1E">N</text>
+      </svg>
 
       <div class="map-scale" aria-hidden="true">
         <span class="map-scale-bar" id="map-scale-bar"></span>
