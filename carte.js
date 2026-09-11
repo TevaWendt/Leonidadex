@@ -412,6 +412,48 @@
     if(progBar) progBar.style.width = pct + '%';
     if(progTxt) progTxt.innerHTML = '<strong>' + done + '</strong> / ' + total + ' repérés';
     if(progRs) progRs.hidden = done === 0;
+    renderFound();
+  }
+
+  /* ---- liste des lieux repérés ---- */
+  const fdList = document.getElementById('map-found-list');
+  const fdCnt  = document.getElementById('map-found-count');
+
+  function renderFound(){
+    if(!fdList) return;
+    const liste = POINTS.filter(p => found[p.id]);
+    if(fdCnt) fdCnt.textContent = liste.length;
+
+    if(!liste.length){
+      fdList.innerHTML = '<p class="fd-empty">Aucun lieu repéré. Ouvre un marqueur et coche-le.</p>';
+      return;
+    }
+    fdList.innerHTML = '<ul>' + liste.map(function(p){
+      return '<li><button type="button" class="fd-go" data-goto="' + p.id + '">' +
+             '<span class="fd-dot" style="background:' + CATS[p.c].col + '"></span>' +
+             '<span class="fd-n">' + p.n + '</span></button>' +
+             '<button type="button" class="fd-un" data-un="' + p.id + '" ' +
+             'aria-label="Décocher ' + p.n + '" title="Décocher">&times;</button></li>';
+    }).join('') + '</ul>';
+  }
+
+  if(fdList){
+    fdList.addEventListener('click', function(e){
+      const go = e.target.closest('[data-goto]');
+      if(go){
+        const p = POINTS.find(x => x.id === go.dataset.goto);
+        if(p) goTo(p, Math.max(0.5, ZOOM_NIVEAU[p.z || 0] + 0.15));
+        return;
+      }
+      const un = e.target.closest('[data-un]');
+      if(un){
+        delete found[un.dataset.un];
+        save();
+        const mk = layer.querySelector('[data-id="' + un.dataset.un + '"]');
+        if(mk) mk.classList.remove('is-found');
+        refreshProgress();
+      }
+    });
   }
 
   /* ============================================================
@@ -946,6 +988,8 @@
       M.layer.appendChild(el);
     });
     if(editCnt) editCnt.textContent = perso.length;
+    const ca = document.getElementById('map-perso-clear');
+    if(ca) ca.hidden = perso.length === 0;
     renderList();
   }
 
@@ -991,18 +1035,55 @@
       return;
     }
     editList.innerHTML = perso.map(function(p, i){
-      return '<li><button type="button" data-go="' + i + '">' +
+      return '<li>' +
+             '<button type="button" class="ed-go" data-go="' + i + '">' +
+             '<span class="ed-dot"></span>' +
              '<span class="ed-n">' + esc(p.n) + '</span>' +
-             '<span class="ed-c">' + p.x + ' · ' + p.y + '</span></button></li>';
+             '<span class="ed-c">' + p.x + ' · ' + p.y + '</span></button>' +
+             '<button type="button" class="ed-ren" data-ren="' + i + '" ' +
+             'aria-label="Renommer" title="Renommer">&#9998;</button>' +
+             '<button type="button" class="ed-del" data-del="' + i + '" ' +
+             'aria-label="Supprimer" title="Supprimer">&times;</button>' +
+             '</li>';
     }).join('');
   }
 
   if(editList){
     editList.addEventListener('click', function(e){
-      const b = e.target.closest('[data-go]');
-      if(!b) return;
-      const p = perso[parseInt(b.dataset.go, 10)];
-      if(p) M.goTo(p, 0.8);
+      const del = e.target.closest('[data-del]');
+      if(del){
+        const i = parseInt(del.dataset.del, 10);
+        if(!confirm('Supprimer « ' + perso[i].n + ' » ?')) return;
+        perso.splice(i, 1); savePerso(); renderPerso();
+        if(M.panel) M.panel.classList.remove('open');
+        return;
+      }
+      const ren = e.target.closest('[data-ren]');
+      if(ren){
+        const i = parseInt(ren.dataset.ren, 10);
+        const n = prompt('Nom du marqueur', perso[i].n);
+        if(n === null) return;
+        const note = prompt('Note (facultatif)', perso[i].note || '');
+        perso[i].n = n.trim() || perso[i].n;
+        perso[i].note = (note || '').trim();
+        savePerso(); renderPerso();
+        return;
+      }
+      const go = e.target.closest('[data-go]');
+      if(go){
+        const p = perso[parseInt(go.dataset.go, 10)];
+        if(p) M.goTo(p, 0.8);
+      }
+    });
+  }
+
+  /* tout effacer */
+  const clearAll = document.getElementById('map-perso-clear');
+  if(clearAll){
+    clearAll.addEventListener('click', function(){
+      if(!perso.length) return;
+      if(!confirm('Supprimer tes ' + perso.length + ' marqueurs ?')) return;
+      perso = []; savePerso(); renderPerso();
     });
   }
 

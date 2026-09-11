@@ -207,6 +207,11 @@
         <button type="button" class="map-ruler-reset" id="map-ruler-reset">Recommencer</button>
       </div>
 
+      <div class="map-found">
+        <p class="map-side-h">Lieux repérés <span class="ed-badge" id="map-found-count">0</span></p>
+        <div class="fd-list" id="map-found-list"></div>
+      </div>
+
       <div class="map-perso">
         <p class="map-side-h">Mes marqueurs <span class="ed-badge" id="map-edit-count">0</span></p>
         <button type="button" class="map-tool" id="map-edit" aria-pressed="false">
@@ -216,16 +221,18 @@
           Ajouter mes marqueurs
         </button>
 
-        <div class="map-edit-pane" id="map-edit-pane" hidden>
-          <p class="ed-help">Clique sur la carte pour poser un point. Tu pourras lui donner un nom et une note.</p>
-          <ul class="ed-list" id="map-edit-list"></ul>
-          <div class="ed-io">
-            <button type="button" id="map-export">Exporter</button>
-            <button type="button" id="map-import">Importer</button>
-            <input type="file" id="map-import-file" accept="application/json" hidden>
-          </div>
-          <p class="ed-note">L'export enregistre tes marqueurs et ta progression dans un fichier, à conserver ou à transférer sur un autre appareil.</p>
+        <p class="ed-help" id="map-edit-pane" hidden>Clique sur la carte pour poser un point. Tu pourras lui donner un nom et une note.</p>
+
+        <ul class="ed-list" id="map-edit-list"></ul>
+
+        <button type="button" class="map-prog-reset" id="map-perso-clear" hidden>Tout supprimer</button>
+
+        <div class="ed-io">
+          <button type="button" id="map-export">Exporter</button>
+          <button type="button" id="map-import">Importer</button>
+          <input type="file" id="map-import-file" accept="application/json" hidden>
         </div>
+        <p class="ed-note">L'export enregistre tes marqueurs et ta progression dans un fichier, à conserver ou à transférer sur un autre appareil.</p>
       </div>
 
       <div class="map-trust">
