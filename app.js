@@ -365,3 +365,94 @@ const el = id => document.getElementById(id);
   }
   tick(); setInterval(tick, 1000);
 })();
+
+/* ============================================================
+   CONSTRUCTEUR D'ÉQUIPEMENT — règles d'inventaire confirmées
+   ============================================================ */
+(function(){
+  const box = document.getElementById('loadout');
+  if(!box) return;
+
+  const sel = { dos: document.getElementById('lo-dos'), main: document.getElementById('lo-main'), poing: document.getElementById('lo-poing') };
+  const art = { dos: document.getElementById('lo-art-dos'), main: document.getElementById('lo-art-main'), poing: document.getElementById('lo-art-poing') };
+  const verdict = document.getElementById('lo-verdict');
+  const shareBt = document.getElementById('lo-share');
+
+  /* silhouettes récupérées depuis les cartes de la page */
+  const cards = {};
+  document.querySelectorAll('.arm-card').forEach(function(c){
+    const slug = c.getAttribute('href').split('/').pop().replace('.html','');
+    const svg = c.querySelector('.veh-art');
+    cards[slug] = { svg: svg ? svg.outerHTML : '', nom: c.querySelector('h3').textContent, cl: c.dataset.cat };
+  });
+
+  function render(){
+    let longues = 0, visible = false, ok = true, msg = [];
+    ['dos','main','poing'].forEach(function(k){
+      const v = sel[k].value;
+      const c = cards[v];
+      art[k].innerHTML = c ? c.svg : '<span class="lo-empty">Vide</span>';
+      art[k].parentNode.classList.toggle('is-set', !!c);
+      if(k !== 'poing' && v) longues++;
+      if(k === 'main' && v) visible = true;
+    });
+
+    /* même arme aux deux emplacements longs */
+    if(sel.dos.value && sel.dos.value === sel.main.value){
+      ok = false; msg.push("Tu as mis la même arme dans le dos et en main.");
+    }
+    if(longues === 2) msg.push("Deux armes longues : c'est le maximum. Une troisième devra rester dans un véhicule.");
+    if(visible) msg.push("Arme en main visible : les passants s'écartent et la police peut réagir.");
+    if(!sel.dos.value && !sel.main.value && !sel.poing.value) msg = ["Choisis tes armes. Le constructeur vérifie que ton équipement respecte les règles."];
+    else if(ok && msg.length === 0) msg.push("Équipement valide et discret.");
+
+    verdict.className = 'lo-verdict ' + (ok ? (visible ? 'is-warn' : 'is-ok') : 'is-ko');
+    verdict.innerHTML = '<span class="lo-v-ico"></span><p>' + msg.join('<br>') + '</p>';
+    syncHash();
+  }
+
+  function syncHash(){
+    const parts = ['dos','main','poing'].map(k => sel[k].value || '-');
+    const h = '#lo=' + parts.join(',');
+    if(parts.some(p => p !== '-')) history.replaceState(null, '', h);
+  }
+
+  function readHash(){
+    const m = location.hash.match(/^#lo=([^,]*),([^,]*),([^,]*)$/);
+    if(!m) return;
+    ['dos','main','poing'].forEach(function(k, i){
+      const v = m[i+1] === '-' ? '' : m[i+1];
+      if(v && cards[v]) sel[k].value = v;
+    });
+  }
+
+  Object.keys(sel).forEach(function(k){ sel[k].addEventListener('change', render); });
+
+  if(shareBt){
+    shareBt.addEventListener('click', function(){
+      if(navigator.clipboard) navigator.clipboard.writeText(location.href);
+      shareBt.textContent = 'Lien copié';
+      setTimeout(function(){ shareBt.textContent = 'Copier mon équipement'; }, 1600);
+    });
+  }
+
+  readHash();
+  render();
+
+  /* filtres poing / longue sur la grille */
+  const grid = document.getElementById('vgrid');
+  if(grid){
+    let slotF = null;
+    document.querySelectorAll('.chip-slot').forEach(function(b){
+      b.addEventListener('click', function(){
+        const on = b.classList.contains('is-on');
+        document.querySelectorAll('.chip-slot').forEach(x => x.classList.remove('is-on'));
+        slotF = on ? null : b.dataset.slotf;
+        if(!on) b.classList.add('is-on');
+        grid.querySelectorAll('.arm-card').forEach(function(c){
+          c.classList.toggle('slot-hide', !!slotF && c.dataset.slot !== slotF);
+        });
+      });
+    });
+  }
+})();
