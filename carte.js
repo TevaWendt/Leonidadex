@@ -33,9 +33,9 @@
   /* ---- dimensions du monde, en unités de carte ---- */
   const W = 5200, H = 6000;
 
-  /* échelle provisoire : 1 unité de carte = 2,4 mètres dans le jeu.
-     À recaler avec les vraies distances après le 19 novembre. */
-  const METRES_PAR_UNITE = 2.2;
+  /* échelle : le fond v1.0 est calé sur les coordonnées du jeu (voir carte-gtadb.js).
+     À vérifier sur les vraies distances après le 19 novembre. */
+  const METRES_PAR_UNITE = 3.04;   /* 1 unité de carte = 3,04 m, calé sur les coordonnées du jeu */
 
   /* vitesses provisoires, en mètres par seconde */
   const VITESSES = [
@@ -65,7 +65,7 @@
     EL:    'An Extended Look, 27 août 2026',
     SHOT:  'Captures officielles',
     COMM:  'Analyse communautaire',
-    GTADB: 'Communauté gtadb.org'
+    GTADB: 'Bâtiments communautaires'
   };
 
   /* ---- personnages officiels ---- */
@@ -100,91 +100,91 @@
      Positions approximatives, à recaler sur le fond définitif. */
   const POINTS = [
     /* ============ RÉGIONS OFFICIELLES ============ */
-    { id:'vice-city', n:'Vice City', c:'ville', x:3560, y:4180, s:'officiel', src:'SITE', z:0, pers:['boobie','drequan','dimez'],
+    { id:'vice-city', n:'Vice City', c:'ville', x:3517, y:3214, s:'officiel', src:'SITE', z:0, pers:['boobie','drequan','dimez'],
       d:"La métropole de Leonida et le cœur du jeu. Rockstar la présente comme la capitale ensoleillée et festive du pays, et comme la ville la plus dense jamais construite par le studio." },
-    { id:'leonida-keys', n:'Leonida Keys', c:'region', x:2200, y:5560, s:'officiel', src:'SITE', z:0, pers:['jason','brian'],
+    { id:'leonida-keys', n:'Leonida Keys', c:'region', x:2889, y:5404, s:'officiel', src:'SITE', z:0, pers:['jason','brian'],
       d:"Archipel tropical au sud de l'État, relié par de longues routes au-dessus de l'eau. Plongée, pêche, navigation et contrebande." },
-    { id:'grassrivers', n:'Grassrivers', c:'region', x:2700, y:4700, s:'officiel', src:'SITE', z:0,
+    { id:'grassrivers', n:'Grassrivers', c:'region', x:2280, y:4017, s:'officiel', src:'SITE', z:0,
       d:"La grande zone humide de Leonida. Végétation dense, visibilité réduite, hydroglisseurs et alligators." },
-    { id:'port-gellhorn', n:'Port Gellhorn', c:'ville', x:640, y:1380, s:'officiel', src:'SITE', z:0,
+    { id:'port-gellhorn', n:'Port Gellhorn', c:'ville', x:1560, y:1988, s:'officiel', src:'SITE', z:0,
       d:"Ville côtière qui a connu des jours meilleurs. Motels bon marché, attractions fermées et économie souterraine." },
-    { id:'ambrosia', n:'Ambrosia', c:'region', x:3520, y:2660, s:'officiel', src:'SITE', z:0,
+    { id:'ambrosia', n:'Ambrosia', c:'region', x:2805, y:1898, s:'officiel', src:'SITE', z:0,
       d:"Comté rural et industriel. La raffinerie Allied Crystal fournit les emplois, le gang de motards local fournit à peu près tout le reste." },
-    { id:'mount-kalaga', n:'Mount Kalaga National Park', c:'region', x:3480, y:1220, s:'officiel', src:'SITE', z:0,
+    { id:'mount-kalaga', n:'Mount Kalaga National Park', c:'region', x:2692, y:922, s:'officiel', src:'SITE', z:0,
       d:"Parc national à la frontière nord, construit autour de la chasse, de la pêche et des pistes tout-terrain. Dans son arrière-pays, une population qui vit volontairement loin des autorités." },
 
     /* ============ VICE CITY : QUARTIERS ============ */
-    { id:'ocean-beach', n:'Ocean Beach', c:'quartier', x:3900, y:4300, s:'officiel', src:'SITE', p:'vice-city', z:1,
+    { id:'ocean-beach', n:'Ocean Beach', c:'quartier', x:4295, y:2957, s:'officiel', src:'SITE', p:'vice-city', z:1,
       d:"Quartier nommé par Rockstar : hôtels art déco pastel, sable blanc, promenade bordée de palmiers. C'est la scène d'ouverture du premier trailer." },
-    { id:'little-cuba', n:'Little Cuba', c:'quartier', x:3400, y:4360, s:'officiel', src:'SITE', p:'vice-city', z:1,
+    { id:'little-cuba', n:'Little Cuba', c:'quartier', x:3331, y:3170, s:'officiel', src:'SITE', p:'vice-city', z:1,
       d:"Quartier nommé par Rockstar, connu pour ses boulangeries et sa culture cubano-américaine." },
-    { id:'vice-beach', n:'Vice Beach', c:'quartier', x:3940, y:4060, s:'officiel', src:'T1', p:'vice-city', z:1,
+    { id:'vice-beach', n:'Vice Beach', c:'quartier', x:4258, y:2813, s:'officiel', src:'T1', p:'vice-city', z:1,
       d:"Île-barrière reliée au continent par une chaussée. Seule sous-région de Vice City confirmée par les supports officiels." },
-    { id:'south-beach', n:'South Beach', c:'quartier', x:3920, y:4180, s:'vu', src:'T1', p:'vice-city', z:1,
+    { id:'south-beach', n:'South Beach', c:'quartier', x:4295, y:3177, s:'vu', src:'T1', p:'vice-city', z:1,
       d:"Bande de front de mer où se concentrent bars et hôtels illuminés au néon. Plusieurs plans nocturnes des trailers en proviennent." },
-    { id:'downtown', n:'Downtown', c:'quartier', x:3560, y:4120, s:'vu', src:'T2', p:'vice-city', z:1,
+    { id:'downtown', n:'Downtown', c:'quartier', x:3517, y:3214, s:'vu', src:'T2', p:'vice-city', z:1,
       d:"Le centre financier : tours de verre et autoroutes surélevées, visibles dans les plans aériens du second trailer." },
-    { id:'stockyard', n:'Stockyard', c:'quartier', x:3460, y:3980, s:'officiel', src:'SITE', p:'vice-city', z:1,
+    { id:'stockyard', n:'Stockyard', c:'quartier', x:3601, y:2609, s:'officiel', src:'SITE', p:'vice-city', z:1,
       d:"Quartier d'entrepôts reconvertis, couverts de fresques. Rockstar a confirmé qu'il s'inspire de Wynwood et a fait appel à plus de cinquante artistes de rue pour ses murs. Un rassemblement automobile s'y déroule dans le premier trailer." },
-    { id:'vc-port', n:'Port de Vice City', c:'transport', x:3640, y:4460, s:'vu', src:'T1', p:'vice-city', z:1,
+    { id:'vc-port', n:'Port de Vice City', c:'transport', x:3971, y:3358, s:'vu', src:'T1', p:'vice-city', z:1,
       d:"Zone portuaire industrielle : conteneurs, entrepôts et ponts, aperçue dans les deux trailers." },
-    { id:'marina', n:'Marina', c:'quartier', x:3780, y:4440, s:'vu', src:'T2', p:'vice-city', z:1,
+    { id:'marina', n:'Marina', c:'quartier', x:3603, y:2854, s:'vu', src:'T2', p:'vice-city', z:1,
       d:"Secteur résidentiel aisé au bord de l'eau : bateaux, jet-skis et propriétés de luxe." },
-    { id:'vcia', n:'Aéroport international', c:'transport', x:3300, y:4240, s:'vu', src:'T2', p:'vice-city', z:1,
+    { id:'vcia', n:'Aéroport international', c:'transport', x:2960, y:3435, s:'vu', src:'T2', p:'vice-city', z:1,
       d:"Principal aéroport de la ville, identifié par le train VCIA aperçu dans le second trailer." },
-    { id:'causeway', n:'Chaussée de Vice Beach', c:'transport', x:3760, y:4150, s:'vu', src:'T1', p:'vice-city', z:1,
+    { id:'causeway', n:'Chaussée de Vice Beach', c:'transport', x:4058, y:2813, s:'vu', src:'T1', p:'vice-city', z:1,
       d:"Pont-chaussée reliant le continent à l'île de Vice Beach, avec péage à l'entrée." },
 
     /* ============ VICE CITY : BÂTIMENTS IDENTIFIÉS ============ */
-    { id:'galina-opera', n:'Galina Ballet Opera House', c:'batiment', x:3580, y:4090, s:'vu', src:'T2', p:'downtown', z:2,
+    { id:'galina-opera', n:'Galina Ballet Opera House', c:'batiment', x:3557, y:2956, s:'vu', src:'T2', p:'downtown', z:2,
       d:"Opéra à la silhouette anguleuse et au parvis animé, rapproché par les observateurs de l'Adrienne Arsht Center." },
-    { id:'sahara-arena', n:'Sahara Arena', c:'batiment', x:3620, y:4160, s:'vu', src:'T2', p:'downtown', z:2,
+    { id:'sahara-arena', n:'Sahara Arena', c:'batiment', x:3624, y:3053, s:'vu', src:'T2', p:'downtown', z:2,
       d:"Salle omnisports au bord de l'eau, domicile des Vice City Narcos. Forme rapprochée de la Kaseya Center." },
-    { id:'twin-towers', n:'Tours jumelles', c:'batiment', x:3540, y:4140, s:'vu', src:'T2', p:'downtown', z:2,
+    { id:'twin-towers', n:'Tours jumelles', c:'batiment', x:3584, y:3123, s:'vu', src:'T2', p:'downtown', z:2,
       d:"Double tour reliée par un toit ajouré, rapprochée du 500 Brickell." },
-    { id:'autograph-flight', n:'Autograph Flight Support', c:'batiment', x:3280, y:4270, s:'vu', src:'T2', p:'vcia', z:2,
+    { id:'autograph-flight', n:'Autograph Flight Support', c:'batiment', x:2927, y:3231, s:'vu', src:'T2', p:'vcia', z:2,
       d:"Terminal d'aviation privée au toit débordant et à la façade vitrée incurvée." },
-    { id:'tisha-wocka', n:'Tisha-Wocka Flea Market', c:'lieu', x:3900, y:4230, s:'vu', src:'T1', p:'south-beach', z:2,
+    { id:'tisha-wocka', n:'Tisha-Wocka Flea Market', c:'lieu', x:2798, y:2948, s:'vu', src:'T1', p:'south-beach', z:2,
       d:"Marché aux puces nommé dans les supports officiels, près de South Beach." },
-    { id:'ptt-youngin', n:'PTT YOUNGIN$', c:'lieu', x:3440, y:4340, s:'officiel', src:'SITE', p:'little-cuba', z:2,
+    { id:'ptt-youngin', n:'PTT YOUNGIN$', c:'lieu', x:3331, y:3170, s:'officiel', src:'SITE', p:'little-cuba', z:2,
       d:"Boutique de biens illicites, lieu d'une mission exclusive à l'Édition Ultime." },
-    { id:'penthouse', n:'Penthouse de Vice Beach', c:'batiment', x:3960, y:4020, s:'vu', src:'T1', p:'vice-beach', z:2,
+    { id:'penthouse', n:'Penthouse de Vice Beach', c:'batiment', x:4335, y:2807, s:'vu', src:'T1', p:'vice-beach', z:2,
       d:"Terrasse de luxe avec piscine privée et douche extérieure, rapprochée de la Trésor Tower." },
-    { id:'jade-condos', n:'Tours ondulées', c:'batiment', x:3970, y:3960, s:'vu', src:'T1', p:'vice-beach', z:2,
+    { id:'jade-condos', n:'Tours ondulées', c:'batiment', x:4355, y:2697, s:'vu', src:'T1', p:'vice-beach', z:2,
       d:"Immeubles à la façade en vagues, visibles dans la skyline de Vice Beach." },
 
     /* ============ AUTRES VILLES ============ */
-    { id:'waning-sands', n:'Waning Sands', c:'ville', x:2760, y:3460, s:'vu', src:'T1', z:0,
+    { id:'waning-sands', n:'Waning Sands', c:'ville', x:3681, y:1860, s:'vu', src:'T1', z:0,
       d:"Banlieue tentaculaire : voies rapides, centres commerciaux et vastes parkings." },
-    { id:'hamlet', n:'Hamlet', c:'ville', x:2560, y:5080, s:'vu', src:'T1', z:0,
+    { id:'hamlet', n:'Hamlet', c:'ville', x:2832, y:4258, s:'vu', src:'T1', z:0,
       d:"Localité nommée dans le premier trailer, dans une scène de rue résidentielle." },
-    { id:'key-lento', n:'Key Lento', c:'quartier', x:2480, y:5480, s:'officiel', src:'T2', p:'leonida-keys', z:1,
+    { id:'key-lento', n:'Key Lento', c:'quartier', x:2889, y:5144, s:'officiel', src:'T2', p:'leonida-keys', z:1,
       d:"Île nommée dans l'archipel des Leonida Keys." },
 
     /* ============ LIEUX NOTABLES ============ */
-    { id:'allied-crystal', n:'Raffinerie Allied Crystal', c:'lieu', x:3620, y:2720, s:'officiel', src:'SITE', p:'ambrosia', z:1,
+    { id:'allied-crystal', n:'Raffinerie Allied Crystal', c:'lieu', x:2773, y:2004, s:'officiel', src:'SITE', p:'ambrosia', z:1,
       d:"Raffinerie de sucre citée par Rockstar comme le principal employeur d'Ambrosia." },
-    { id:'leonida-penitentiary', n:'Leonida Penitentiary', c:'lieu', x:3260, y:2340, s:'officiel', src:'SITE', z:0, pers:['lucia'],
+    { id:'leonida-penitentiary', n:'Leonida Penitentiary', c:'lieu', x:2805, y:4133, s:'officiel', src:'SITE', z:0, pers:['lucia'],
       d:"Le pénitencier d'État où Lucia purge sa peine au début de l'histoire, après s'être battue pour sa famille à Liberty City. Nom confirmé par Rockstar. Rapproché de la Florida State Prison." },
-    { id:'tv-tower', n:'Tour de télévision', c:'batiment', x:1400, y:1160, s:'spec', src:'COMM', z:0,
+    { id:'tv-tower', n:'Tour de télévision', c:'batiment', x:3365, y:2037, s:'spec', src:'COMM', z:0,
       d:"Hypothèse communautaire d'une très haute antenne, inspirée de la tour WTVY. Non confirmée." },
 
     /* ============ COMTÉS ============ */
-    { id:'vice-dale', n:'Comté de Vice-Dale', c:'comte', x:3400, y:3820, s:'vu', src:'T1', z:0,
+    { id:'vice-dale', n:'Comté de Vice-Dale', c:'comte', x:3431, y:3189, s:'vu', src:'T1', z:0,
       d:"Déduit du marquage Vice-Dale Police Department sur un véhicule de police." },
-    { id:'leonard-county', n:'Comté de Leonard', c:'comte', x:2500, y:3100, s:'vu', src:'T1', z:0,
+    { id:'leonard-county', n:'Comté de Leonard', c:'comte', x:3132, y:1989, s:'vu', src:'T1', z:0,
       d:"Identifié par le bureau du shérif du comté de Leonard. Contient Waning Sands." },
-    { id:'kelly-county', n:'Comté de Kelly', c:'comte', x:1200, y:2000, s:'vu', src:'T1', z:0,
+    { id:'kelly-county', n:'Comté de Kelly', c:'comte', x:1865, y:2298, s:'vu', src:'T1', z:0,
       d:"Nommé sur un panneau routier. L'une des zones les moins documentées." },
-    { id:'mariana-county', n:'Comté de Mariana', c:'comte', x:2500, y:4900, s:'spec', src:'COMM', z:0,
+    { id:'mariana-county', n:'Comté de Mariana', c:'comte', x:2360, y:4317, s:'spec', src:'COMM', z:0,
       d:"Comté avancé par la communauté pour la zone des Grassrivers. Non confirmé." },
 
     /* ============ NATURE ============ */
-    { id:'grand-lac', n:'Grand lac intérieur', c:'nature', x:3200, y:3700, s:'spec', src:'COMM', z:0,
+    { id:'grand-lac', n:'Grand lac intérieur', c:'nature', x:3075, y:1639, s:'spec', src:'COMM', z:0,
       d:"Étendue d'eau centrale déduite des images. Ni son nom ni ses contours ne sont confirmés." },
-    { id:'kalaga-summit', n:'Sommet du Kalaga', c:'nature', x:3480, y:1120, s:'spec', src:'COMM', p:'mount-kalaga', z:1,
+    { id:'kalaga-summit', n:'Sommet du Kalaga', c:'nature', x:2732, y:762, s:'spec', src:'COMM', p:'mount-kalaga', z:1,
       d:"Point culminant supposé du parc national." },
-    { id:'gloriana', n:'Gloriana', c:'region', x:1900, y:900, s:'spec', src:'COMM', z:0,
+    { id:'gloriana', n:'Gloriana', c:'region', x:1765, y:1398, s:'spec', src:'COMM', z:0,
       d:"Nom aperçu sur des plaques d'immatriculation. Rockstar n'a jamais annoncé qu'il s'agissait d'une région explorable." }
   ];
 
@@ -630,8 +630,8 @@
         : VIDE);
     const img2 = '';
     const streetView = p.sv
-      ? '<div><span>Lieu réel</span><b><a href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=' + p.sv +
-        '" target="_blank" rel="noopener">Ouvrir Street View</a></b></div>'
+      ? '<div><span>Lieu réel</span><b><a href="https://www.google.com/maps/search/?api=1&query=' + p.sv +
+        '" target="_blank" rel="noopener">Voir sur Google Maps</a></b></div>'
       : '';
 
     const persos = (p.pers || []).map(function(k){
