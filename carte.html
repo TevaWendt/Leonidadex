@@ -97,6 +97,16 @@ input[type=search]:focus, select:focus {
 .cat input { accent-color: var(--corail); cursor: pointer; }
 .pastille { width: 11px; height: 11px; border-radius: 50%; flex: none; box-shadow: 0 0 0 1px rgba(0,0,0,.18); }
 .cat .nb { margin-left: auto; font-size: 11.5px; color: var(--encre-pale); }
+.cat.secondaire { display: none; }
+.cat.secondaire.deplie { display: flex; }
+
+.voir-plus {
+  width: 100%; margin-top: 6px; padding: 7px;
+  font: inherit; font-size: 12px; font-weight: 500;
+  border: 1px dashed var(--trait); border-radius: 6px;
+  background: transparent; color: var(--corail); cursor: pointer;
+}
+.voir-plus:hover { background: rgba(226,85,61,.06); }
 
 #actions-cat { display: flex; gap: 6px; margin-bottom: 8px; }
 #actions-cat button {
@@ -197,6 +207,16 @@ input[type=search]:focus, select:focus {
 }
 #chargement.parti { display: none; }
 
+#bandeau-calage {
+  position: absolute; top: 0; left: var(--panneau); right: 0; z-index: 1500;
+  display: none; align-items: center; justify-content: center; gap: 10px;
+  padding: 9px 16px; font-size: 13px; text-align: center;
+  background: var(--corail); color: #fff;
+}
+#bandeau-calage.visible { display: flex; }
+#bandeau-calage a { color: #fff; font-weight: 600; text-decoration: underline; }
+@media (max-width: 720px) { #bandeau-calage { left: 0; } }
+
 /* ---------- mobile ---------- */
 @media (max-width: 720px) {
   :root { --panneau: 100%; }
@@ -216,6 +236,10 @@ input[type=search]:focus, select:focus {
 
 <div id="carte"></div>
 <div id="chargement">Chargement de Leonida…</div>
+<div id="bandeau-calage">
+  Les repères ne sont pas encore calés sur cette image.
+  <a href="#calage" onclick="location.reload()">Lancer le calage →</a>
+</div>
 
 <aside id="panneau">
   <header id="entete">
@@ -245,6 +269,7 @@ input[type=search]:focus, select:focus {
       <button type="button" id="tout-decocher">Tout décocher</button>
     </div>
     <div id="liste-cat"></div>
+    <button type="button" id="plus-cat" class="voir-plus"></button>
   </div>
 
   <footer id="credit">
@@ -394,12 +419,29 @@ fond.on("error", () => {
 // Cadre la vue sur l'image et les repères. Si le calage est faux, les repères
 // restent visibles au lieu de disparaître hors cadre.
 function recadrer() {
-  let tout = limites;
-  if (marqueurs.length) {
-    tout = L.latLngBounds(marqueurs.map(m => m.getLatLng())).extend(limites);
+  if (!marqueurs.length) { carte.fitBounds(limites); carte.setMaxBounds(limites.pad(0.5)); return; }
+
+  const pts = marqueurs.map(m => m.getLatLng());
+  const etendueMarqueurs = L.latLngBounds(pts);
+
+  // Diagonale de l'image vs diagonale du nuage de repères, en pixels d'écran
+  // équivalents (via distance(), qui reste comparable ici car même projection).
+  const diagImage = limites.getNorthWest().distanceTo(limites.getSouthEast());
+  const diagMarqueurs = etendueMarqueurs.getNorthWest().distanceTo(etendueMarqueurs.getSouthEast());
+
+  const bandeau = document.getElementById("bandeau-calage");
+  if (diagMarqueurs > diagImage * 2.5) {
+    // Le calage est manifestement faux : les repères sont loin hors de l'image.
+    // On affiche l'île seule plutôt que de zoomer sur un nuage aberrant.
+    bandeau.classList.add("visible");
+    carte.fitBounds(limites.pad(0.05));
+    carte.setMaxBounds(limites.pad(1));
+  } else {
+    bandeau.classList.remove("visible");
+    const tout = etendueMarqueurs.extend(limites);
+    carte.setMaxBounds(tout.pad(0.5));
+    carte.fitBounds(tout.pad(0.05));
   }
-  carte.setMaxBounds(tout.pad(0.5));
-  carte.fitBounds(tout.pad(0.05));
 }
 
 const couche = L.layerGroup().addTo(carte);
@@ -549,10 +591,13 @@ function construireInterface() {
     compte[c] = (compte[c] || 0) + 1;
   });
   const liste = document.getElementById("liste-cat");
-  Object.entries(compte).sort((a, b) => b[1] - a[1]).forEach(([cat, n]) => {
+  const rangs = Object.entries(compte).sort((a, b) => b[1] - a[1]);
+  const SEUIL_VISIBLE = 8; // catégories affichées d'emblée ; le reste se déplie
+
+  rangs.forEach(([cat, n], i) => {
     etat.cats.add(cat);
     const l = document.createElement("label");
-    l.className = "cat";
+    l.className = "cat" + (i >= SEUIL_VISIBLE ? " secondaire" : "");
     l.innerHTML =
       `<input type="checkbox" checked value="${cat}">
        <span class="pastille" style="background:${COULEURS[cat] || COULEURS['sans-categorie']}"></span>
@@ -563,6 +608,23 @@ function construireInterface() {
     });
     liste.appendChild(l);
   });
+
+  const boutonPlus = document.getElementById("plus-cat");
+  const nbSecondaires = rangs.length - SEUIL_VISIBLE;
+  if (nbSecondaires > 0) {
+    const majBouton = (ouvert) =>
+      boutonPlus.textContent = ouvert
+        ? "Voir moins de catégories"
+        : `Voir ${nbSecondaires} catégorie${nbSecondaires > 1 ? "s" : ""} de plus`;
+    majBouton(false);
+    boutonPlus.addEventListener("click", () => {
+      const ouvert = liste.querySelector(".cat.secondaire").classList.toggle("deplie");
+      liste.querySelectorAll(".cat.secondaire").forEach(el => el.classList.toggle("deplie", ouvert));
+      majBouton(ouvert);
+    });
+  } else {
+    boutonPlus.style.display = "none";
+  }
 
   document.getElementById("nb-total").textContent = reperes.length;
 
@@ -583,6 +645,10 @@ function construireInterface() {
       i.checked = on;
       on ? etat.cats.add(i.value) : etat.cats.delete(i.value);
     });
+    if (nbSecondaires > 0) {
+      liste.querySelectorAll(".cat.secondaire").forEach(el => el.classList.add("deplie"));
+      boutonPlus.textContent = "Voir moins de catégories";
+    }
     maj();
   };
   document.getElementById("tout-cocher").addEventListener("click", () => basculerTout(true));
