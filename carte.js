@@ -64,7 +64,8 @@
     T2:    'Second trailer',
     EL:    'An Extended Look, 27 août 2026',
     SHOT:  'Captures officielles',
-    COMM:  'Analyse communautaire'
+    COMM:  'Analyse communautaire',
+    GTADB: 'Communauté gtadb.org'
   };
 
   /* ---- personnages officiels ---- */
@@ -208,10 +209,28 @@
   POINTS.forEach(function(p){ if(p.p){ (KIDS[p.p] = KIDS[p.p] || []).push(p); } });
   function byId(id){ return BY_ID[id]; }
 
+  /* couleurs de la légende appliquées aux points de la carte (style.css n'en
+     définit que pour huit catégories sur douze) + règles d'étiquettes */
+  (function(){
+    const st = document.createElement('style');
+    st.textContent =
+      Object.keys(CATS).map(k => '.map-markers .mk--' + k + ' .mk-dot{background:' + CATS[k].col + ';}').join('') +
+      '.map-markers .mk.lbl-off .mk-lbl{display:none;}' +
+      '.map-markers .mk.lbl-off:hover .mk-lbl{display:inline-block;}' +
+      '.map-markers .mk.is-open .mk-lbl{display:inline-block !important;}' +
+      '.map-markers .mk.lbl-reel .mk-lbl{font-style:italic;font-weight:600;opacity:.9;}' +
+      '.map-markers .cl.cl--min .cl-n{width:24px;height:24px;border-width:2px;font-size:.66rem;' +
+        'background:#7A5C8F;box-shadow:0 1px 4px rgba(0,0,0,.28);}' +
+      '.map-markers .cl.cl--min:hover .cl-n{transform:scale(1.2);}' +
+      '.mp-kids-more{width:100%;margin-top:6px;padding:7px;font:inherit;font-size:.78rem;font-weight:700;' +
+        'border:1px dashed var(--rule,#d9d0c3);border-radius:8px;background:transparent;cursor:pointer;color:inherit;}';
+    document.head.appendChild(st);
+  })();
+
   /* ============================================================
      ÉTAT
      ============================================================ */
-  let scale = 0.21, minS = 0.10, maxS = 3.0;
+  let scale = 0.21, minS = 0.10, maxS = 8.0;
   let tx = 0, ty = 0;
   let found = {};
   let visible = {};
@@ -220,10 +239,10 @@
 
   Object.keys(CATS).forEach(k => visible[k] = true);
   let visStatut = { officiel:true, vu:true, spec:true };
-  let visSource = { SITE:true, T1:true, T2:true, EL:true, SHOT:true, COMM:true };
+  let visSource = { SITE:true, T1:true, T2:true, EL:true, SHOT:true, COMM:true, GTADB:true };
 
   /* niveau de zoom minimal pour voir chaque profondeur de la hiérarchie */
-  const ZOOM_NIVEAU = [0, 0.42, 0.85];
+  const ZOOM_NIVEAU = [0, 0.42, 0.6];
   let expanded = {};      /* parents dépliés manuellement */
 
   function niveauVisible(p){
@@ -346,6 +365,7 @@
      ============================================================ */
   function buildMarkers(){
     layer.innerHTML = '';
+    montes = new Map();
     POINTS.forEach(function(p){
       const el = document.createElement('button');
       el.type = 'button';
@@ -359,8 +379,10 @@
       el.dataset.cat = p.c;
       el.dataset.st = p.s;
       el.setAttribute('aria-label', p.n);
+      const reel = / \(nom (réel|supposé)\)$/.test(p.n);
+      if(reel) el.classList.add('lbl-reel');
       el.innerHTML = '<span class="mk-dot">' + (kids ? '<i>' + kids + '</i>' : '') + '</span>'
-                   + '<span class="mk-lbl">' + p.n + '</span>';
+                   + '<span class="mk-lbl">' + (reel ? p.n.replace(/ \(nom (réel|supposé)\)$/, '') : p.n) + '</span>';
       el.addEventListener('click', function(ev){
         ev.stopPropagation();
         if(rulerOn){
@@ -369,83 +391,166 @@
         }
         openPanel(p);
       });
-      layer.appendChild(el);
+      /* pas encore dans la page : refreshVisibility ne monte que les marqueurs visibles */
     });
     refreshVisibility();
     refreshProgress();
   }
 
-  function refreshVisibility(){
-    layer.querySelectorAll('.mk').forEach(function(el){
-      const p = byId(el.dataset.id);
-      el.hidden = !(p && visible[p.c] && visStatut[p.s] && visSource[p.src] && niveauVisible(p));
-    });
-    cluster();
+  /* ============================================================
+     VISIBILITÉ, REGROUPEMENT ET ÉTIQUETTES
+     Seuls les marqueurs réellement à l'écran sont dans la page :
+     avec plusieurs milliers de lieux, c'est ce qui garde le zoom
+     fluide. Les points trop proches sont regroupés en pastilles à
+     tous les niveaux de zoom, sauf au zoom maximal.
+     ============================================================ */
+  const SEUIL_GROUPE = 2;     /* nb de points par case avant regroupement */
+  const CASE_PX = 34;         /* taille de case à l'écran, en pixels */
+  let montes = new Map();     /* id -> marqueur actuellement dans la page */
+  let ouvertId = null;        /* lieu dont la fiche est ouverte : jamais regroupé */
+
+  function passeFiltres(p){
+    return visible[p.c] && visStatut[p.s] && visSource[p.src] && niveauVisible(p);
   }
 
-  /* ============================================================
-     REGROUPEMENT DES MARQUEURS
-     Au-delà d'un certain nombre de points dans une même case,
-     on affiche une pastille compteur au lieu des marqueurs.
-     ============================================================ */
-  const SEUIL_GROUPE = 2;          /* nb de points par case avant regroupement */
+  function refreshVisibility(){
+    const r = stage.getBoundingClientRect();
+    const marge = 0.6;
+    const x0 = (-tx - r.width  * marge) / scale, x1 = (-tx + r.width  * (1 + marge)) / scale;
+    const y0 = (-ty - r.height * marge) / scale, y1 = (-ty + r.height * (1 + marge)) / scale;
 
-  function cluster(){
-    layer.querySelectorAll('.cl').forEach(el => el.remove());
-
-    const actifs = POINTS.filter(p => visible[p.c] && visStatut[p.s] && visSource[p.src] && niveauVisible(p));
-    /* taille de case en unités de carte : ~64 px à l'écran */
-    const taille = 64 / scale;
-
-    /* au-delà d'un certain zoom, plus de regroupement */
-    if(scale > 0.55 || actifs.length < 12){
-      layer.querySelectorAll('.mk').forEach(function(el){
-        const p = byId(el.dataset.id);
-        if(p && visible[p.c] && visStatut[p.s] && visSource[p.src] && niveauVisible(p)) el.hidden = false;
-      });
-      return;
+    const actifs = [];
+    for(let i = 0; i < POINTS.length; i++){
+      const p = POINTS[i];
+      if(p.x < x0 || p.x > x1 || p.y < y0 || p.y > y1) continue;
+      if(!passeFiltres(p)) continue;
+      actifs.push(p);
     }
 
-    const cases = new Map();
-    actifs.forEach(function(p){
-      const k = Math.floor(p.x / taille) + ':' + Math.floor(p.y / taille);
-      if(!cases.has(k)) cases.set(k, []);
-      cases.get(k).push(p);
-    });
-
-    cases.forEach(function(grp){
-      const el = MK[grp[0].id];
-      if(grp.length < SEUIL_GROUPE){
-        if(el) el.hidden = false;
-        return;
-      }
-      /* masquer les marqueurs du groupe */
-      grp.forEach(function(p){
-        const m = MK[p.id];
-        if(m) m.hidden = true;
+    /* regroupement par case */
+    const seuls = [], groupes = [];
+    const auMax = scale >= maxS * 0.999;
+    if(auMax){
+      actifs.forEach(p => seuls.push(p));
+    } else {
+      const taille = CASE_PX / scale;
+      const cases = new Map();
+      actifs.forEach(function(p){
+        if(p.id === ouvertId){ seuls.push(p); return; }
+        const k = Math.floor(p.x / taille) + ':' + Math.floor(p.y / taille);
+        let g = cases.get(k);
+        if(!g){ g = []; cases.set(k, g); }
+        g.push(p);
       });
-      /* pastille au barycentre */
+      cases.forEach(function(grp){
+        if(grp.length < SEUIL_GROUPE) seuls.push(grp[0]);
+        else groupes.push(grp);
+      });
+    }
+
+    /* montage différentiel : on retire ce qui sort, on ajoute ce qui entre */
+    const voulus = new Set(seuls.map(p => p.id));
+    montes.forEach(function(el, id){
+      if(!voulus.has(id)){ el.remove(); montes.delete(id); }
+    });
+    const frag = document.createDocumentFragment();
+    seuls.forEach(function(p){
+      if(montes.has(p.id)) return;
+      const el = MK[p.id];
+      if(el){ frag.appendChild(el); montes.set(p.id, el); }
+    });
+    layer.appendChild(frag);
+
+    /* pastilles */
+    layer.querySelectorAll('.cl').forEach(el => el.remove());
+    groupes.forEach(function(grp){
       const cx = grp.reduce((s,p)=>s+p.x,0) / grp.length;
       const cy = grp.reduce((s,p)=>s+p.y,0) / grp.length;
       const done = grp.filter(p => found[p.id]).length;
-
+      const majeur = grp.some(p => p.id.indexOf('g-') !== 0 || p.s === 'officiel');
       const b = document.createElement('button');
       b.type = 'button';
-      b.className = 'cl' + (done === grp.length ? ' is-done' : '');
+      b.className = 'cl' + (done === grp.length ? ' is-done' : '') + (majeur ? '' : ' cl--min');
       b.style.left = cx + 'px';
       b.style.top  = cy + 'px';
       b.setAttribute('aria-label', grp.length + ' lieux regroupés');
+      b.title = grp.slice(0, 6).map(p => p.n).join(', ') + (grp.length > 6 ? '…' : '');
       b.innerHTML = '<span class="cl-n">' + grp.length + '</span>';
       b.addEventListener('click', function(ev){
         ev.stopPropagation();
         /* approcher pour éclater le groupe */
-        const r = stage.getBoundingClientRect();
-        scale = Math.min(maxS, 0.8);
-        tx = r.width/2 - cx * scale;
-        ty = r.height/2 - cy * scale;
+        const r2 = stage.getBoundingClientRect();
+        scale = Math.min(maxS, scale * 2.2);
+        tx = r2.width/2 - cx * scale;
+        ty = r2.height/2 - cy * scale;
         clamp(); applyTransform(); refreshVisibility();
       });
       layer.appendChild(b);
+    });
+
+    trierEtiquettes(seuls);
+  }
+  function cluster(){ refreshVisibility(); }
+
+  /* ---- étiquettes : on masque celles qui en chevaucheraient une plus
+     importante (officiel > tes lieux > bâtiments nommés > noms réels) ---- */
+  function prioriteEtiquette(p){
+    if(p.id === ouvertId) return -1;
+    if(p.s === 'officiel') return 0;
+    if(p.id.indexOf('g-') !== 0) return 1;
+    if(/\(nom (réel|supposé)\)$/.test(p.n) || /^Bâtiment L\d+$/.test(p.n)) return 3;
+    return 2;
+  }
+  function trierEtiquettes(seuls){
+    const lblZ1 = scale < 0.55, lblZ2 = scale < 1.1;
+    const cand = [];
+    seuls.forEach(function(p){
+      const el = MK[p.id];
+      if(el) el.classList.toggle('is-open', p.id === ouvertId);
+      const z = p.z || 0;
+      if((z === 1 && lblZ1) || (z === 2 && lblZ2)) return;   /* déjà masquée par style.css */
+      if(prioriteEtiquette(p) === 3 && scale < 3 && p.id !== ouvertId){
+        if(el) el.classList.add('lbl-off');                 /* nom réel ou bâtiment anonyme : survol seulement */
+        return;
+      }
+      cand.push(p);
+    });
+    cand.sort((a, b) => prioriteEtiquette(a) - prioriteEtiquette(b));
+    const gardees = [];
+    const grille = new Map();
+    const cle = (x, y) => Math.floor(x / 120) + ':' + Math.floor(y / 40);
+    cand.forEach(function(p){
+      const z = p.z || 0;
+      const car = z === 2 ? 5.8 : (z === 1 ? 6.4 : 6.9);
+      const w = p.n.length * car + (z === 2 ? 10 : 14), h = z === 2 ? 15 : 18;
+      const rayon = z === 2 ? 6 : (z === 1 ? 7.5 : 9.5);
+      const sx = tx + p.x * scale, sy = ty + p.y * scale;
+      const box = { x0: sx - w/2, x1: sx + w/2, y0: sy + rayon + 4, y1: sy + rayon + 4 + h };
+      let libre = true;
+      const kx0 = Math.floor(box.x0 / 120), kx1 = Math.floor(box.x1 / 120);
+      const ky0 = Math.floor(box.y0 / 40),  ky1 = Math.floor(box.y1 / 40);
+      for(let kx = kx0; kx <= kx1 && libre; kx++){
+        for(let ky = ky0; ky <= ky1 && libre; ky++){
+          const l = grille.get(kx + ':' + ky);
+          if(!l) continue;
+          for(let i = 0; i < l.length; i++){
+            const o = l[i];
+            if(box.x0 < o.x1 && box.x1 > o.x0 && box.y0 < o.y1 && box.y1 > o.y0){ libre = false; break; }
+          }
+        }
+      }
+      const el = MK[p.id];
+      if(!el) return;
+      if(libre || prioriteEtiquette(p) < 0){
+        el.classList.remove('lbl-off');
+        for(let kx = kx0; kx <= kx1; kx++) for(let ky = ky0; ky <= ky1; ky++){
+          const k = kx + ':' + ky;
+          if(!grille.has(k)) grille.set(k, []);
+          grille.get(k).push(box);
+        }
+      } else {
+        el.classList.add('lbl-off');
+      }
     });
   }
 
@@ -506,6 +611,7 @@
      PANNEAU D'INFORMATION
      ============================================================ */
   function openPanel(p){
+    ouvertId = p.id;
     const isFound = !!found[p.id];
     const st = STATUTS[p.s];
     const VIDE = '<div class="mp-img mp-img--vide" aria-hidden="true">' +
@@ -556,14 +662,24 @@
                '&larr; ' + parent.n + '</button>';
         }
         if(kids.length){
+          const LIM = 24;
+          const tries = kids.slice().sort(function(a, b){
+            return prioriteEtiquette(a) - prioriteEtiquette(b) || a.n.localeCompare(b.n, 'fr');
+          });
+          const ligne = function(k){
+            return '<button type="button" class="mp-kid" data-goto="' + k.id + '">' +
+                   '<span class="mp-kid-dot" style="background:' + CATS[k.c].col + '"></span>' +
+                   k.n + '<em class="mp-kid-st mp-kid-st--' + k.s + '">' + STATUTS[k.s].court + '</em>' +
+                   '</button>';
+          };
           h += '<div class="mp-kids"><p class="mp-kids-h">Contient ' + kids.length +
                (kids.length > 1 ? ' lieux' : ' lieu') + '</p>' +
-               kids.map(function(k){
-                 return '<button type="button" class="mp-kid" data-goto="' + k.id + '">' +
-                        '<span class="mp-kid-dot" style="background:' + CATS[k.c].col + '"></span>' +
-                        k.n + '<em class="mp-kid-st mp-kid-st--' + k.s + '">' + STATUTS[k.s].court + '</em>' +
-                        '</button>';
-               }).join('') + '</div>';
+               tries.slice(0, LIM).map(ligne).join('') +
+               (tries.length > LIM
+                 ? '<div id="mp-kids-suite" hidden>' + tries.slice(LIM).map(ligne).join('') + '</div>' +
+                   '<button type="button" class="mp-kids-more" id="mp-kids-more">Afficher les ' + (tries.length - LIM) + ' autres</button>'
+                 : '') +
+               '</div>';
         }
         return h;
       })() +
@@ -616,6 +732,14 @@
     expanded[p.id] = true;
     refreshVisibility();
 
+    const plusBt = document.getElementById('mp-kids-more');
+    if(plusBt){
+      plusBt.addEventListener('click', function(){
+        const suite = document.getElementById('mp-kids-suite');
+        if(suite){ suite.hidden = false; plusBt.remove(); }
+      });
+    }
+
     panelIn.querySelectorAll('[data-goto]').forEach(function(b){
       b.addEventListener('click', function(){
         const t = byId(b.dataset.goto);
@@ -634,7 +758,14 @@
     });
   }
 
-  function closePanel(){ panel.classList.remove('open'); }
+  function closePanel(){
+    panel.classList.remove('open');
+    if(ouvertId || Object.keys(expanded).length){
+      ouvertId = null;
+      expanded = {};          /* ce qui avait été déplié se replie avec la fiche */
+      refreshVisibility();
+    }
+  }
   if(closeBt) closeBt.addEventListener('click', function(e){ e.stopPropagation(); closePanel(); });
 
   /* les interactions dans le panneau ne doivent pas atteindre la carte */
@@ -942,14 +1073,26 @@
     searchI.addEventListener('input', function(){
       const v = norm(searchI.value.trim());
       if(!v){ sugBox.classList.remove('open'); sugBox.innerHTML=''; return; }
-      const hits = POINTS.filter(function(p){
-        return norm(p.n).includes(v)
-            || norm(p.d).includes(v)
-            || norm(CATS[p.c].nom).includes(v);
-      }).slice(0,8);
+      const scores = [];
+      POINTS.forEach(function(p){
+        const n = norm(p.n);
+        let sc;
+        if(n.startsWith(v)) sc = 0;
+        else if(n.includes(v)) sc = 1;
+        else if(norm(CATS[p.c].nom).includes(v)) sc = 2;
+        else if(norm(p.d).includes(v)) sc = 3;
+        else return;
+        scores.push([sc + prioriteEtiquette(p) * 0.1, p]);
+      });
+      scores.sort((a, b) => a[0] - b[0]);
+      const hits = scores.slice(0, 10).map(x => x[1]);
       sugBox.innerHTML = hits.length
-        ? hits.map(p => '<button type="button" data-go="'+p.id+'"><span>'+p.n+'</span>'+
-            '<span class="kind" style="color:'+CATS[p.c].col+'">'+CATS[p.c].nom+'</span></button>').join('')
+        ? hits.map(function(p){
+            const parent = p.p ? byId(p.p) : null;
+            const detail = (p.r ? p.r + ' · ' : '') + (parent ? parent.n + ' · ' : '') + CATS[p.c].nom;
+            return '<button type="button" data-go="'+p.id+'"><span>'+p.n+'</span>'+
+              '<span class="kind" style="color:'+CATS[p.c].col+'">'+detail+'</span></button>';
+          }).join('')
         : '<div class="none">Aucun lieu trouvé.</div>';
       sugBox.classList.add('open');
     });
@@ -1046,7 +1189,7 @@
     p.n = 'Point ' + LETTRES[rulerPts.length];
     rulerPts.push(p);
 
-    layer.querySelectorAll('.mk').forEach(function(el){
+    Object.keys(MK).map(k => MK[k]).forEach(function(el){
       el.classList.toggle('is-picked', rulerPts.some(r => r.id === el.dataset.id));
     });
     drawPins();
@@ -1077,14 +1220,14 @@
       if(rulerOn){ closePanel(); renderRuler(); }
       else{
         rulerPts = []; drawLine(); drawPins();
-        layer.querySelectorAll('.mk').forEach(el => el.classList.remove('is-picked'));
+        Object.keys(MK).map(k => MK[k]).forEach(el => el.classList.remove('is-picked'));
       }
     });
   }
   if(rulerRs){
     rulerRs.addEventListener('click', function(){
       rulerPts = []; drawLine(); drawPins(); renderRuler();
-      layer.querySelectorAll('.mk').forEach(el => el.classList.remove('is-picked'));
+      Object.keys(MK).map(k => MK[k]).forEach(el => el.classList.remove('is-picked'));
     });
   }
 
@@ -1095,7 +1238,7 @@
     progRs.addEventListener('click', function(){
       if(!confirm('Décocher tous les lieux repérés ?')) return;
       found = {}; save();
-      layer.querySelectorAll('.mk').forEach(el => el.classList.remove('is-found'));
+      Object.keys(MK).map(k => MK[k]).forEach(el => el.classList.remove('is-found'));
       refreshProgress(); closePanel();
     });
   }
@@ -1174,7 +1317,7 @@
     getFound: function(){ return found; },
     setFound: function(f){
       found = f || {}; save();
-      layer.querySelectorAll('.mk').forEach(function(el){
+      Object.keys(MK).map(k => MK[k]).forEach(function(el){
         el.classList.toggle('is-found', !!found[el.dataset.id]);
       });
       refreshProgress();
