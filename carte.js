@@ -1141,7 +1141,7 @@
       rulerBx.innerHTML = '<p class="rl-hint">' +
         (rulerPts.length === 0
           ? "Clique un premier point <b>n'importe où</b> sur la carte, ou directement sur un marqueur."
-          : "Clique le point suivant. Tu peux enchaîner jusqu'à 10 étapes.") + '</p>';
+          : "Clique le point suivant. Tu peux enchaîner jusqu'à " + MAX_ETAPES + " étapes.") + '</p>';
       return;
     }
 
@@ -1183,9 +1183,15 @@
       'M' + rulerPts.map(p => p.x + ',' + p.y).join(' L'));
   }
 
-  const LETTRES = 'ABCDEFGHIJ';
+  const MAX_ETAPES = 50;
+  /* A…Z puis AA, AB… */
+  const LETTRES = new Proxy({}, { get: function(_, i){
+    i = Number(i); let n = i, s = '';
+    do { s = String.fromCharCode(65 + n % 26) + s; n = Math.floor(n / 26) - 1; } while(n >= 0);
+    return s;
+  }});
   function addRulerPoint(p){
-    if(rulerPts.length >= 10) return;
+    if(rulerPts.length >= MAX_ETAPES) return;
     p.n = 'Point ' + LETTRES[rulerPts.length];
     rulerPts.push(p);
 
