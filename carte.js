@@ -508,20 +508,21 @@
   function openPanel(p){
     const isFound = !!found[p.id];
     const st = STATUTS[p.s];
-    const img = p.img
-      ? '<figure class="mp-img"><img src="' + p.img + '" alt="' + p.n + '" loading="lazy" ' +
-        'onerror="this.parentNode.classList.add(\'mp-img--ko\')">' +
-        (p.imgSrc ? '<figcaption>' + p.imgSrc + '</figcaption>' : '') + '</figure>'
-      : '<div class="mp-img mp-img--vide" aria-hidden="true">' +
+    const VIDE = '<div class="mp-img mp-img--vide" aria-hidden="true">' +
         '<svg viewBox="0 0 64 64"><rect x="8" y="16" width="48" height="36" rx="4" fill="none" stroke="currentColor" stroke-width="2.5"/>' +
         '<circle cx="24" cy="30" r="5" fill="currentColor"/><path d="M12 48l14-14 10 10 8-8 12 12" fill="none" stroke="currentColor" stroke-width="2.5"/></svg>' +
         '<span>Visuel à venir</span></div>';
 
-    const img2 = p.img2
-      ? '<figure class="mp-img"><img src="' + p.img2 + '" alt="' + p.n + ', lieu réel" loading="lazy" ' +
-        'onerror="this.parentNode.remove()">' +
-        (p.img2Src ? '<figcaption>' + p.img2Src + '</figcaption>' : '') + '</figure>'
-      : '';
+    /* lieux gtadb : deux photos possibles, chargées avant affichage pour
+       éviter tout cadre vide ; sinon, comportement d'origine */
+    const img = p.img2
+      ? '<div id="mp-photos">' + VIDE + '</div>'
+      : (p.img
+        ? '<figure class="mp-img"><img src="' + p.img + '" alt="' + p.n + '" loading="lazy" ' +
+          'onerror="this.parentNode.classList.add(\'mp-img--ko\')">' +
+          (p.imgSrc ? '<figcaption>' + p.imgSrc + '</figcaption>' : '') + '</figure>'
+        : VIDE);
+    const img2 = '';
     const streetView = p.sv
       ? '<div><span>Lieu réel</span><b><a href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=' + p.sv +
         '" target="_blank" rel="noopener">Ouvrir Street View</a></b></div>'
@@ -575,6 +576,30 @@
         '</button>' +
       '</div>';
     panel.classList.add('open');
+
+    if(p.img2){
+      const zone = document.getElementById('mp-photos');
+      const figure = function(src, legende){
+        return '<figure class="mp-img"><img src="' + src + '" alt="' + p.n + '">' +
+               (legende ? '<figcaption>' + legende + '</figcaption>' : '') + '</figure>';
+      };
+      const charger = function(src){
+        return new Promise(function(ok){
+          const im = new Image();
+          im.onload = function(){ ok(true); };
+          im.onerror = function(){ ok(false); };
+          im.src = src;
+        });
+      };
+      Promise.all([charger(p.img), charger(p.img2)]).then(function(r){
+        /* le panneau a pu changer de lieu entre-temps */
+        if(!zone || !zone.isConnected) return;
+        let h = '';
+        if(r[0]) h += figure(p.img, p.imgSrc);
+        if(r[1]) h += figure(p.img2, p.img2Src);
+        if(h) zone.innerHTML = h;
+      });
+    }
 
     const shareBt = document.getElementById('mp-share');
     if(shareBt){
