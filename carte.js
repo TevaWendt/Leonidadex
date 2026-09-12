@@ -187,6 +187,27 @@
       d:"Nom aperçu sur des plaques d'immatriculation. Rockstar n'a jamais annoncé qu'il s'agissait d'une région explorable." }
   ];
 
+  /* ---- bâtiments de la communauté gtadb (CC BY 4.0), voir carte-gtadb.js ---- */
+  if(window.LK_GTADB){
+    (window.LK_GTADB.groupes || []).forEach(function(p){ POINTS.push(p); });
+    (window.LK_GTADB.lieux   || []).forEach(function(p){ POINTS.push(p); });
+    /* photos et Street View ajoutés aux fiches déjà présentes ici */
+    const enr = window.LK_GTADB.enrichit || {};
+    POINTS.forEach(function(p){
+      const x = enr[p.id]; if(!x) return;
+      if(x.img && !p.img){ p.img = x.img; p.imgSrc = x.imgSrc; }
+      if(x.img2){ p.img2 = x.img2; p.img2Src = x.img2Src; }
+      if(x.sv) p.sv = x.sv;
+      if(x.reel) p.reel = x.reel;
+    });
+  }
+
+  /* index : indispensable dès qu'on dépasse quelques centaines de lieux */
+  const BY_ID = {}, KIDS = {}, MK = {};
+  POINTS.forEach(function(p){ BY_ID[p.id] = p; });
+  POINTS.forEach(function(p){ if(p.p){ (KIDS[p.p] = KIDS[p.p] || []).push(p); } });
+  function byId(id){ return BY_ID[id]; }
+
   /* ============================================================
      ÉTAT
      ============================================================ */
@@ -212,12 +233,12 @@
     let cur = p;
     while(cur && cur.p){
       if(expanded[cur.p]) return true;
-      cur = POINTS.find(x => x.id === cur.p);
+      cur = byId(cur.p);
     }
     return false;
   }
 
-  function enfants(id){ return POINTS.filter(x => x.p === id); }
+  function enfants(id){ return KIDS[id] || []; }
 
   try{
     found = JSON.parse(localStorage.getItem('lk_map_found') || '{}');
@@ -280,7 +301,7 @@
     /* lien direct vers un lieu : #lieu=vice-city */
     const l = location.hash.match(/^#lieu=([\w-]+)$/);
     if(l){
-      const p = POINTS.find(x => x.id === l[1]);
+      const p = byId(l[1]);
       if(p){ goTo(p, Math.max(0.6, ZOOM_NIVEAU[p.z || 0] + 0.2)); return true; }
     }
     const m = location.hash.match(/^#(-?\d+),(-?\d+),([\d.]+)$/);
@@ -334,6 +355,7 @@
       el.style.left = p.x + 'px';
       el.style.top  = p.y + 'px';
       el.dataset.id = p.id;
+      MK[p.id] = el;
       el.dataset.cat = p.c;
       el.dataset.st = p.s;
       el.setAttribute('aria-label', p.n);
@@ -355,7 +377,7 @@
 
   function refreshVisibility(){
     layer.querySelectorAll('.mk').forEach(function(el){
-      const p = POINTS.find(x => x.id === el.dataset.id);
+      const p = byId(el.dataset.id);
       el.hidden = !(p && visible[p.c] && visStatut[p.s] && visSource[p.src] && niveauVisible(p));
     });
     cluster();
@@ -378,7 +400,7 @@
     /* au-delà d'un certain zoom, plus de regroupement */
     if(scale > 0.55 || actifs.length < 12){
       layer.querySelectorAll('.mk').forEach(function(el){
-        const p = POINTS.find(x => x.id === el.dataset.id);
+        const p = byId(el.dataset.id);
         if(p && visible[p.c] && visStatut[p.s] && visSource[p.src] && niveauVisible(p)) el.hidden = false;
       });
       return;
@@ -392,14 +414,14 @@
     });
 
     cases.forEach(function(grp){
-      const el = layer.querySelector('[data-id="' + grp[0].id + '"]');
+      const el = MK[grp[0].id];
       if(grp.length < SEUIL_GROUPE){
         if(el) el.hidden = false;
         return;
       }
       /* masquer les marqueurs du groupe */
       grp.forEach(function(p){
-        const m = layer.querySelector('[data-id="' + p.id + '"]');
+        const m = MK[p.id];
         if(m) m.hidden = true;
       });
       /* pastille au barycentre */
@@ -465,7 +487,7 @@
     fdList.addEventListener('click', function(e){
       const go = e.target.closest('[data-goto]');
       if(go){
-        const p = POINTS.find(x => x.id === go.dataset.goto);
+        const p = byId(go.dataset.goto);
         if(p) goTo(p, Math.max(0.5, ZOOM_NIVEAU[p.z || 0] + 0.15));
         return;
       }
@@ -473,7 +495,7 @@
       if(un){
         delete found[un.dataset.un];
         save();
-        const mk = layer.querySelector('[data-id="' + un.dataset.un + '"]');
+        const mk = MK[un.dataset.un];
         if(mk) mk.classList.remove('is-found');
         refreshProgress();
       }
@@ -495,6 +517,16 @@
         '<circle cx="24" cy="30" r="5" fill="currentColor"/><path d="M12 48l14-14 10 10 8-8 12 12" fill="none" stroke="currentColor" stroke-width="2.5"/></svg>' +
         '<span>Visuel à venir</span></div>';
 
+    const img2 = p.img2
+      ? '<figure class="mp-img"><img src="' + p.img2 + '" alt="' + p.n + ', lieu réel" loading="lazy" ' +
+        'onerror="this.parentNode.remove()">' +
+        (p.img2Src ? '<figcaption>' + p.img2Src + '</figcaption>' : '') + '</figure>'
+      : '';
+    const streetView = p.sv
+      ? '<div><span>Lieu réel</span><b><a href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=' + p.sv +
+        '" target="_blank" rel="noopener">Ouvrir Street View</a></b></div>'
+      : '';
+
     const persos = (p.pers || []).map(function(k){
       const q = PERSOS[k]; if(!q) return '';
       return '<li><b>' + q.n + '</b><span>' + q.r + '</span></li>';
@@ -506,15 +538,17 @@
       '<h3>' + p.n + '</h3>' +
       '<span class="mp-st mp-st--' + p.s + '" title="' + st.d + '">' + st.court + '</span>' +
       '<p class="mp-d">' + p.d + '</p>' +
+      img2 +
       (persos ? '<div class="mp-pers"><p class="mp-kids-h">Personnages liés</p><ul>' + persos + '</ul></div>' : '') +
       '<div class="mp-meta">' +
         '<div><span>Fiabilité</span><b>' + st.nom + '</b></div>' +
         '<div><span>Source</span><b>' + SOURCES[p.src] + '</b></div>' +
         '<div><span>Position</span><b>' + p.x + ' · ' + p.y + '</b></div>' +
+        streetView +
       '</div>' +
       (function(){
         const kids = enfants(p.id);
-        const parent = p.p ? POINTS.find(x => x.id === p.p) : null;
+        const parent = p.p ? byId(p.p) : null;
         let h = '';
         if(parent){
           h += '<button type="button" class="mp-link" data-goto="' + parent.id + '">' +
@@ -559,7 +593,7 @@
 
     panelIn.querySelectorAll('[data-goto]').forEach(function(b){
       b.addEventListener('click', function(){
-        const t = POINTS.find(x => x.id === b.dataset.goto);
+        const t = byId(b.dataset.goto);
         if(t) goTo(t, Math.max(scale, ZOOM_NIVEAU[t.z || 0] + 0.1));
       });
     });
@@ -568,7 +602,7 @@
       found[p.id] = !found[p.id];
       if(!found[p.id]) delete found[p.id];
       save();
-      const mk = layer.querySelector('[data-id="' + p.id + '"]');
+      const mk = MK[p.id];
       if(mk) mk.classList.toggle('is-found', !!found[p.id]);
       refreshProgress();
       openPanel(p);
@@ -680,7 +714,7 @@
     if(rulerOn){
       const mk = e.target.closest('.mk');
       if(mk){
-        const p = POINTS.find(x => x.id === mk.dataset.id);
+        const p = byId(mk.dataset.id);
         if(p) addRulerPoint({ id:p.id, n:p.n, x:p.x, y:p.y, lieu:p.n });
       } else {
         const w = toWorld(e.clientX, e.clientY);
@@ -785,12 +819,22 @@
     });
     tree.querySelectorAll('.tr-go').forEach(function(b){
       b.addEventListener('click', function(){
-        const t = POINTS.find(x => x.id === b.dataset.goto);
+        const t = byId(b.dataset.goto);
         if(t) goTo(t, Math.max(0.5, ZOOM_NIVEAU[t.z || 0] + 0.15));
       });
     });
   }
   buildTree();
+
+  /* totaux affichés : bandeau du haut et volet "Tous les lieux" */
+  (function(){
+    const total = POINTS.length;
+    const nommes = POINTS.filter(p => p.s === 'officiel').length;
+    const stats = document.querySelectorAll('.vstat .n[data-count]');
+    if(stats[0]) stats[0].dataset.count = total;
+    if(stats[1]) stats[1].dataset.count = nommes;
+    document.querySelectorAll('.ms-n').forEach(function(n){ n.textContent = total; });
+  })();
 
   /* effectifs affichés dans les filtres */
   (function(){
@@ -888,7 +932,7 @@
     sugBox.addEventListener('click', function(e){
       const b = e.target.closest('[data-go]');
       if(!b) return;
-      const p = POINTS.find(x => x.id === b.dataset.go);
+      const p = byId(b.dataset.go);
       if(p){ goTo(p); sugBox.classList.remove('open'); searchI.value = p.n; }
     });
 
