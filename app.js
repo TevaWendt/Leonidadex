@@ -254,20 +254,23 @@ const el = id => document.getElementById(id);
   const emptyEl = document.getElementById('vempty');
   const bar     = document.getElementById('vbar');
 
-  let activeCat = 'all', query = '';
+  let activeCat = 'all', query = '', activeSt = null, activeSlot = null;
   const norm = s => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+  const motCarte = grid.dataset.mot || 'véhicule';
 
   function apply(){
     const q = norm(query.trim());
     let shown = 0;
     cards.forEach(function(card){
-      const okCat = (activeCat === 'all') || (card.dataset.cat === activeCat);
+      const okCat  = (activeCat === 'all') || (card.dataset.cat === activeCat);
+      const okSt   = !activeSt   || card.dataset.st   === activeSt;
+      const okSlot = !activeSlot || card.dataset.slot === activeSlot;
       const okTxt = !q || norm(card.dataset.search).includes(q);
-      const show = okCat && okTxt;
+      const show = okCat && okTxt && okSt && okSlot;
       card.hidden = !show;
       if(show){ card.classList.add('in'); shown++; }
     });
-    countEl.innerHTML = '<strong>' + shown + '</strong> ' + (shown > 1 ? 'véhicules' : 'véhicule');
+    countEl.innerHTML = '<strong>' + shown + '</strong> ' + motCarte + (shown > 1 ? 's' : '');
     emptyEl.hidden = shown > 0;
     if(clearBt) clearBt.hidden = !query.trim();
   }
@@ -280,15 +283,30 @@ const el = id => document.getElementById(id);
     });
   }
 
-  chips.forEach(function(chip){
+  chips.filter(c => c.dataset.filter).forEach(function(chip){
     chip.addEventListener('click', function(){
-      chips.forEach(c => c.classList.remove('is-on'));
+      chips.forEach(c => { if(c.dataset.filter) c.classList.remove('is-on'); });
       chip.classList.add('is-on');
       activeCat = chip.dataset.filter;
       apply();
       chip.scrollIntoView({behavior:'smooth', block:'nearest', inline:'center'});
     });
   });
+
+  /* filtres secondaires : fiabilité et emplacement, cumulables avec la catégorie */
+  function basculeur(sel, lire, poser){
+    document.querySelectorAll(sel).forEach(function(b){
+      b.addEventListener('click', function(){
+        const deja = b.classList.contains('is-on');
+        document.querySelectorAll(sel).forEach(x => x.classList.remove('is-on'));
+        poser(deja ? null : lire(b));
+        if(!deja) b.classList.add('is-on');
+        apply();
+      });
+    });
+  }
+  basculeur('.chip-st',   b => b.dataset.stf,   v => { activeSt = v; });
+  basculeur('.chip-slot', b => b.dataset.slotf, v => { activeSlot = v; });
 
   /* ombre de la barre quand elle colle en haut */
   if(bar){
@@ -439,20 +457,4 @@ const el = id => document.getElementById(id);
   readHash();
   render();
 
-  /* filtres poing / longue sur la grille */
-  const grid = document.getElementById('vgrid');
-  if(grid){
-    let slotF = null;
-    document.querySelectorAll('.chip-slot').forEach(function(b){
-      b.addEventListener('click', function(){
-        const on = b.classList.contains('is-on');
-        document.querySelectorAll('.chip-slot').forEach(x => x.classList.remove('is-on'));
-        slotF = on ? null : b.dataset.slotf;
-        if(!on) b.classList.add('is-on');
-        grid.querySelectorAll('.arm-card').forEach(function(c){
-          c.classList.toggle('slot-hide', !!slotF && c.dataset.slot !== slotF);
-        });
-      });
-    });
-  }
 })();
