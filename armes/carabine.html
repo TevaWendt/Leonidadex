@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Carabine — GTA VI | Leonidakit</title>
-<meta name="description" content="Carabine dans GTA VI : fusils d&#x27;assaut. Inspiration : AR-15 / M4. Aperçue dans un média officiel (second trailer).">
+<meta name="description" content="Carabine dans GTA VI : fusils d&#x27;assaut. Inspiration : AR-15 / M4. Vue dans un média officiel (Second trailer).">
 <meta property="og:title" content="Carabine — GTA VI | Leonidakit">
-<meta property="og:description" content="Carabine dans GTA VI : fusils d&#x27;assaut. Inspiration : AR-15 / M4. Aperçue dans un média officiel (second trailer).">
+<meta property="og:description" content="Carabine dans GTA VI : fusils d&#x27;assaut. Inspiration : AR-15 / M4. Vue dans un média officiel (Second trailer).">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="fr_FR">
 <meta name="theme-color" content="#FDFBF7">
@@ -43,8 +43,9 @@
 }
 </script>
 <link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../fiches.css">
 </head>
-<body>
+<body data-own="armes">
 
 <a class="skip" href="#main">Aller au contenu</a>
 <div class="sunset"></div>
@@ -92,16 +93,18 @@
       <div class="fhero-txt">
         <p class="fiche-cat">Fusils d&#x27;assaut</p>
         <h1>Carabine</h1>
-        <p class="lede">Carabine dans GTA VI : fusils d&#x27;assaut. Inspiration : AR-15 / M4. Aperçue dans un média officiel (second trailer).</p>
+        <p class="lede">Carabine dans GTA VI : fusils d&#x27;assaut. Inspiration : AR-15 / M4. Vue dans un média officiel (Second trailer).</p>
         <div class="fiche-tags">
           <span class="chip live">Aperçue</span>
           <span class="chip">Second trailer</span>
           <span class="chip">Arme longue</span>
         </div>
+        <div class="fiche-liens"><button type="button" class="own-bt" id="own-bt" data-id="carabine"><span class="ck"></span><span>Ajouter à mon arsenal</span></button><a href="../comparateur.html?type=armes&amp;ids=carabine">Comparer</a></div>
       </div>
-      <div class="fhero-art">
-        <svg class="veh-art" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" style="height:190px"><path d="M6 46h74l8-6h6v10h-8l-4 4H48l-3 12H34l3-12H6z" fill="#1A1A1E"/><rect x="30" y="38" width="36" height="8" fill="#1A1A1E"/><rect x="44" y="52" width="8" height="16" fill="#1A1A1E"/></svg>
-        <p class="fhero-note">Illustration provisoire</p>
+      <div class="fhero-art fhero-art--gal">
+        <div class="gal" data-base="../img/armes/carabine" data-vues="face,profil,detail" data-nom="Carabine"
+             data-art="&lt;svg class=&quot;veh-art&quot; viewBox=&quot;0 0 100 100&quot; preserveAspectRatio=&quot;xMidYMid meet&quot; aria-hidden=&quot;true&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; style=&quot;height:120px&quot;&gt;&lt;path d=&quot;M6 46h74l8-6h6v10h-8l-4 4H48l-3 12H34l3-12H6z&quot; fill=&quot;#1A1A1E&quot;/&gt;&lt;rect x=&quot;30&quot; y=&quot;38&quot; width=&quot;36&quot; height=&quot;8&quot; fill=&quot;#1A1A1E&quot;/&gt;&lt;rect x=&quot;44&quot; y=&quot;52&quot; width=&quot;8&quot; height=&quot;16&quot; fill=&quot;#1A1A1E&quot;/&gt;&lt;/svg&gt;" aria-label="Galerie : Carabine"></div>
+        <p class="gal-note">Vues face, profil et détail. Les images officielles sous plusieurs angles n'existent pas encore : les emplacements se remplissent au fur et à mesure.</p>
       </div>
     </div>
   </div>
@@ -125,8 +128,8 @@
     <h2 class="sec-h">Identité</h2>
     <table class="spec rise">
       <tbody>
-        <tr><th scope="row">Désignation</th><td>Carabine</td></tr>
-        <tr><th scope="row">Nom communiqué par Rockstar</th><td><span class="unknown">Non communiqué à ce jour</span></td></tr>
+        <tr><th scope="row">Nom</th><td>Carabine</td></tr>
+        <tr><th scope="row">Statut</th><td>Vue dans un média officiel</td></tr>
         <tr><th scope="row">Catégorie</th><td><a href="../armes.html#assaut">Fusils d&#x27;assaut</a></td></tr>
         <tr><th scope="row">Emplacement</th><td>Arme longue</td></tr>
         <tr><th scope="row">Portée estimée</th><td>Moyenne à longue</td></tr>
@@ -225,7 +228,9 @@
 </footer>
 
 <script src="../search-index.js"></script>
+<script src="../armes-data.js"></script>
 <script src="../app.js"></script>
+<script src="../fiches.js"></script>
 
 </body>
 </html>
