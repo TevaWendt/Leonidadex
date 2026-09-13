@@ -68,7 +68,7 @@
 .cmp-tray b{font-weight:800;}
 .cmp-tray a{color:#fff;background:#E8452C;padding:7px 12px;border-radius:9px;font-weight:800;text-decoration:none;}
 .cmp-tray button{background:none;border:1px solid rgba(255,255,255,.35);color:#fff;border-radius:8px;padding:6px 9px;cursor:pointer;font:inherit;font-size:.78rem;}
-.cmp-card{position:absolute;top:10px;left:10px;height:30px;padding:0 9px;border-radius:8px;border:2px solid rgba(255,255,255,.85);
+.cmp-card{position:absolute;bottom:10px;left:10px;height:30px;padding:0 9px;border-radius:8px;border:2px solid rgba(255,255,255,.85);
   background:rgba(26,26,30,.55);color:#fff;font:inherit;font-size:.68rem;font-weight:800;cursor:pointer;z-index:3;}
 .cmp-card.on{background:#F5A524;border-color:#F5A524;color:#1A1A1E;}
 .veh-thumb{position:relative;}

@@ -33,6 +33,11 @@
     function lbl(v){ const s = document.createElement('span'); s.className = 'gal-lbl'; s.textContent = VUES_LBL[v] || v; return s; }
 
     gal.appendChild(track);
+    /* aucune image officielle : un seul emplacement, pas de défilement */
+    if(gal.dataset.vide === '1'){
+      track.innerHTML = '<div class="gal-item"><div class="gal-vide">' + art + '<span>Images officielles à venir</span></div></div>';
+      return;
+    }
     const prev = bt('prev', '‹'), next = bt('next', '›');
     gal.appendChild(prev); gal.appendChild(next);
     const dots = document.createElement('div'); dots.className = 'gal-dots';
