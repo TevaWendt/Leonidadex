@@ -112,3 +112,7 @@
   .rail--l{left:calc(50% - 560px - 56px - 52px);}
   .rail--r{right:calc(50% - 560px - 56px - 52px);}
 }
+
+/* ---------- famille réelle, quand aucun modèle unique n'est identifié ---------- */
+.veh-insp--fam{color:var(--ink-soft);}
+.veh-insp--fam span{font-weight:700; color:var(--ink);}

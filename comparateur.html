@@ -105,15 +105,14 @@
           ['Catégorie', a => cat(a)], ['Statut', a => st(a)], ['Source', a => a.src],
           ['Emplacement', a => a.slot === 'longue' ? 'Arme longue' : 'Arme de poing'],
           ['Portée estimée', a => a.portee || '—'], ['Munitions', a => a.mun || '—'],
-          ['Inspiration réelle', a => a.insp || 'Objet du quotidien'],
+          ['Inspiration réelle', a => a.insp || (a.fam ? a.fam + ' <span class="unknown">(famille)</span>' : '—')],
           ['Édition Ultimate', a => a.ue ? 'Oui' : '—'],
           ['Dégâts', () => attendre()], ['Cadence', () => attendre()], ['Précision', () => attendre()]
         ] }
     : { liste: window.LK_VEHICULES || [], cats: window.LK_VEHICULES_CATS || {}, dossier: 'vehicules', mot: 'véhicule',
         champs: [
           ['Constructeur', v => v.marque || 'Non communiqué'], ['Catégorie', v => cat(v)], ['Statut', v => st(v)],
-          ['Source', v => v.src || '—'], ['Inspiration réelle', v => v.insp || 'Non identifiée'],
-          ['Portes', v => v.portes || '—'],
+          ['Source', v => v.src || '—'], ['Inspiration réelle', v => v.insp || (v.fam ? v.fam + ' <span class="unknown">(famille)</span>' : '—')],
           ['Vitesse de pointe', () => attendre()], ['Accélération', () => attendre()], ['Prix', () => attendre()]
         ] };
 
