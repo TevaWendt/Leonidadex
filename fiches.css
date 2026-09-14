@@ -93,3 +93,22 @@
 .veh-thumb--photo{padding:0 !important;overflow:hidden;}
 .veh-thumb--photo .veh-photo{width:100%;height:100%;object-fit:cover;display:block;}
 .veh-thumb--photo .veh-badge{z-index:2;}
+
+/* ============================================================
+   CALIBRAGE DE LA BORDURE LATÉRALE
+   Le rail était positionné en 7vw, sans rapport avec la largeur
+   du contenu : à 1400 px il chevauchait la colonne de 10 px.
+   Il est désormais ancré sur le bord du contenu (shell 1120 px),
+   avec une gouttière constante de 28 px, et n'apparaît que
+   lorsque la place existe réellement.
+   ============================================================ */
+@media (min-width:1400px){ .rail{display:none;} }
+@media (min-width:1512px){
+  .rail{display:block;}
+  .rail--l{left:calc(50% - 560px - 28px - 52px); right:auto;}
+  .rail--r{right:calc(50% - 560px - 28px - 52px); left:auto;}
+}
+@media (min-width:1750px){
+  .rail--l{left:calc(50% - 560px - 56px - 52px);}
+  .rail--r{right:calc(50% - 560px - 56px - 52px);}
+}

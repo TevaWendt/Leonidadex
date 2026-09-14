@@ -17,7 +17,7 @@
     const track = document.createElement('div'); track.className = 'gal-track';
     let i = 0;
 
-    vues.forEach(function(v){
+    vues.forEach(function(v, k){
       const it = document.createElement('div'); it.className = 'gal-item';
       const img = new Image();
       img.alt = (gal.dataset.nom || '') + ' — ' + (VUES_LBL[v] || v);
