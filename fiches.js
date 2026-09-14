@@ -85,6 +85,32 @@
     maj();
   }
 
+  /* ---------------------------------------------------------- photos manquantes
+     Une vignette photo absente laissait l'icône d'image cassée et faussait la
+     hauteur de la carte. On retombe sur la silhouette de la catégorie. */
+  (function(){
+    const photos = document.querySelectorAll('.veh-thumb--photo .veh-photo');
+    if(!photos.length) return;
+    const parCat = {};
+    document.querySelectorAll('.veh-card').forEach(function(c){
+      const cat = c.dataset.cat, svg = c.querySelector('.veh-art');
+      if(cat && svg && !parCat[cat]) parCat[cat] = svg.outerHTML;
+    });
+    photos.forEach(function(img){
+      const repli = function(){
+        const thumb = img.closest('.veh-thumb'); if(!thumb) return;
+        const cat = (img.closest('.veh-card') || {}).dataset ? img.closest('.veh-card').dataset.cat : '';
+        const badge = thumb.querySelector('.veh-badge');
+        thumb.classList.remove('veh-thumb--photo');
+        img.remove();
+        if(parCat[cat] && !thumb.querySelector('.veh-art')) thumb.insertAdjacentHTML('beforeend', parCat[cat]);
+        if(badge) thumb.insertBefore(badge, thumb.firstChild);
+      };
+      if(img.complete && img.naturalWidth === 0) repli();
+      img.addEventListener('error', repli);
+    });
+  })();
+
   /* cartes du hub */
   const grid = document.getElementById('vgrid');
   if(grid){
@@ -172,6 +198,41 @@
       tools.appendChild(b);
     });
   }
+
+  /* ---------------------------------------------------------- photo du modèle réel
+     Alimentée par photos-reelles.js. Si credits-reels.json est absent ou
+     ne contient pas ce véhicule, la section reste telle quelle : la photo
+     est un bonus, jamais une dépendance. */
+  (function(){
+    const sec = document.getElementById('modele-reel');
+    const bt  = document.getElementById('reel-bt');
+    if(!sec || !bt) return;
+    const id = (document.getElementById('own-bt') || {}).dataset;
+    if(!id || !id.id) return;
+    fetch('../credits-reels.json', { cache: 'force-cache' })
+      .then(r => r.ok ? r.json() : null)
+      .then(function(c){
+        const e = c && c[id.id]; if(!e) return;
+        const img = new Image();
+        img.src = '../img/vehicules/' + id.id + '-reel.jpg';
+        img.alt = e.modele || 'Modèle réel';
+        img.loading = 'lazy';
+        img.onerror = function(){ fig.remove(); };
+        const fig = document.createElement('figure');
+        fig.className = 'reel-photo rise';
+        fig.appendChild(img);
+        const cap = document.createElement('figcaption');
+        const lic = e.licenceUrl
+          ? '<a href="' + e.licenceUrl + '" target="_blank" rel="noopener nofollow">' + e.licence + '</a>'
+          : e.licence;
+        cap.innerHTML = '<b>' + (e.modele || '') + '</b> — photo '
+          + (e.page ? '<a href="' + e.page + '" target="_blank" rel="noopener nofollow">' + e.auteur + '</a>' : e.auteur)
+          + ', ' + lic + '. Ce véhicule réel n\'est pas le modèle du jeu, c\'est son inspiration.';
+        fig.appendChild(cap);
+        sec.insertBefore(fig, sec.querySelector('.fiche-liens'));
+      })
+      .catch(function(){});
+  })();
 
   /* ---------------------------------------------------------- fiche : modèle réel
      <a id="reel-bt" href="..." data-nom="Ferrari Testarossa 512 BB"> sur la fiche. */

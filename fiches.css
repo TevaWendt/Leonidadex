@@ -212,12 +212,24 @@
   border:solid #fff; border-width:0 2px 2px 0; transform:rotate(45deg);}
 .veh-tools .cmp-card.on{background:var(--amber); border-color:var(--amber); color:var(--ink);}
 .cmp-ico{font-size:.9rem; line-height:1;}
-.veh-tools .reel-card{color:#6B6874;}
-.veh-tools .reel-card:hover{border-color:var(--coral); color:var(--coral);}
-.reel-ico{font-size:.82rem; line-height:1;}
+
+/* Trois actions ne tiennent pas sur une ligne dans une carte de 234 px :
+   garage et comparer gardent la première, le modèle réel prend la seconde. */
+.veh-tools{flex-wrap:wrap;}
+.veh-tools .own-card,.veh-tools .cmp-card{flex:1 1 0; min-width:0;}
+.veh-tools .reel-card{flex:1 0 100%; min-height:30px; font-size:.7rem; color:#6B6874;
+  background:rgba(26,26,30,.03); border-color:rgba(26,26,30,.12);}
+.veh-tools .reel-card:hover{border-color:var(--coral); color:var(--coral); background:#fff;}
+.veh-tools .reel-card span:last-child{overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.reel-ico{font-size:.78rem; line-height:1; flex:none;}
 .veh-card.is-own .veh-thumb::before{content:''; position:absolute; inset:0; box-shadow:inset 0 0 0 3px var(--coral); pointer-events:none; z-index:2;}
-@media (max-width:420px){ .veh-tools .own-lbl-c{display:none;} .veh-tools .own-card{flex:0 0 42px;}
-  .veh-tools .reel-card span:last-child{display:none;} .veh-tools .reel-card{flex:0 0 40px;} }
+@media (max-width:640px){
+  /* sous 640 px la carte tombe à 155 px : les libellés ne tiennent plus,
+     on garde les icônes et le bouton du modèle réel, seul porteur de sens. */
+  .veh-tools .own-lbl-c{display:none;}
+  .veh-tools .cmp-card span:last-child{display:none;}
+  .veh-tools .own-card,.veh-tools .cmp-card{flex:1 1 0;}
+}
 
 /* bouton modèle réel sur la fiche, même traitement que les actions de fiche */
 .reel-fiche{display:inline-flex; align-items:center; gap:8px; min-height:42px; padding:0 16px;
@@ -237,3 +249,12 @@ section[id], .sec-h[id]{scroll-margin-top:200px;}
 .vtri-wrap select:focus{outline:none; border-color:var(--coral);}
 .sr-only{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap;}
 @media (max-width:640px){ .vtri-wrap{margin-left:0;} }
+
+/* ---------- photo du modèle réel sur la fiche ---------- */
+.reel-photo{margin:16px 0 4px; max-width:640px;}
+.reel-photo img{width:100%; height:auto; display:block; border:2px solid var(--ink);
+  border-radius:12px; box-shadow:4px 4px 0 rgba(26,26,30,.12);}
+.reel-photo figcaption{font-size:.78rem; line-height:1.5; color:var(--ink-soft); margin-top:9px;}
+.reel-photo figcaption b{color:var(--ink);}
+.reel-photo figcaption a{color:var(--ink-soft);}
+.reel-photo figcaption a:hover{color:var(--coral);}
