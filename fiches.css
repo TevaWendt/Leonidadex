@@ -116,3 +116,72 @@
 /* ---------- famille réelle, quand aucun modèle unique n'est identifié ---------- */
 .veh-insp--fam{color:var(--ink-soft);}
 .veh-insp--fam span{font-weight:700; color:var(--ink);}
+
+/* ---------- vignettes de la liste officielle, devenues cliquables ---------- */
+.kit--lien{display:block; text-decoration:none; color:inherit; transition:border-color .15s, transform .15s;}
+.kit--lien:hover{border-color:var(--coral); transform:translateY(-2px);}
+.kit-src{display:block; font-size:.72rem; color:var(--ink-soft); margin-top:4px; opacity:.8;}
+
+/* ============================================================
+   PAGE VÉHICULES RARES
+   ============================================================ */
+.sec-n{display:inline-block; font-size:.72rem; font-weight:800; vertical-align:middle;
+  background:var(--ink); color:#fff; border-radius:20px; padding:2px 9px; margin-left:8px;}
+.rare-grid{display:grid; gap:14px; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); margin-top:16px;}
+.rare-card{display:block; text-decoration:none; color:inherit; background:#fff;
+  border:2px solid var(--ink); border-radius:10px; overflow:hidden;
+  box-shadow:4px 4px 0 rgba(26,26,30,.12); transition:transform .15s, box-shadow .15s;}
+.rare-card:hover{transform:translateY(-3px); box-shadow:6px 8px 0 rgba(26,26,30,.18);}
+.rare-img{aspect-ratio:16/10; background:linear-gradient(140deg,#F5A524,#E8452C); display:flex;
+  align-items:center; justify-content:center;}
+.rare-img img{width:100%; height:100%; object-fit:cover; display:block;}
+.rare-img--vide::after{content:'Image officielle à venir'; font-size:.74rem; font-weight:700;
+  color:#fff; opacity:.85; text-align:center; padding:0 12px;}
+.rare-txt{padding:13px 15px 15px;}
+.rare-txt h3{margin:2px 0 6px; font-size:1.02rem;}
+.rare-txt p{margin:0; font-size:.85rem; color:var(--ink-soft); line-height:1.5;}
+.rare-src{display:block; font-size:.72rem; color:var(--ink-soft); opacity:.8; margin-top:8px;}
+
+/* ============================================================
+   PAGE CLASSEMENT
+   ============================================================ */
+.cl-bar{display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin:18px 0 8px;}
+.cl-bar select{font:inherit; font-size:.9rem; padding:10px 12px; border-radius:9px;
+  border:2px solid var(--rule); background:#fff; min-width:260px; max-width:100%;}
+.cl-bar select:focus{outline:none; border-color:var(--coral);}
+.cl-bar button{font:inherit; font-size:.85rem; font-weight:800; padding:10px 15px; border-radius:9px;
+  border:2px solid var(--ink); background:#fff; cursor:pointer; transition:background .15s, color .15s;}
+.cl-bar button:hover{background:var(--ink); color:#fff;}
+.cl-bar #cl-add{background:var(--ink); color:#fff;}
+.cl-bar #cl-add:hover{background:var(--coral); border-color:var(--coral);}
+.cl-liste{list-style:none; margin:14px 0 0; padding:0; display:flex; flex-direction:column; gap:9px;}
+.cl-item{display:flex; align-items:center; gap:13px; background:#fff; border:2px solid var(--ink);
+  border-radius:10px; padding:9px 13px; cursor:grab; box-shadow:3px 3px 0 rgba(26,26,30,.1);}
+.cl-item.cl-drag{opacity:.45; cursor:grabbing;}
+.cl-rang{font-size:1.3rem; font-weight:900; width:32px; text-align:center; flex:none; color:var(--coral);}
+.cl-img{width:76px; height:48px; border-radius:6px; overflow:hidden; flex:none;
+  background:linear-gradient(140deg,#F5A524,#E8452C);}
+.cl-img img{width:100%; height:100%; object-fit:cover; display:block;}
+.cl-nom{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px;}
+.cl-nom a{font-weight:800; font-size:.98rem; color:var(--ink); text-decoration:none;}
+.cl-nom a:hover{color:var(--coral);}
+.cl-nom em{font-style:normal; font-size:.76rem; color:var(--ink-soft);}
+.cl-actions{display:flex; gap:5px; flex:none;}
+.cl-actions button{width:34px; height:34px; border-radius:8px; border:1px solid rgba(26,26,30,.2);
+  background:#fff; cursor:pointer; font-size:1rem; line-height:1;}
+.cl-actions button:hover{border-color:var(--coral); color:var(--coral);}
+.cl-vide{margin-top:16px; font-size:.9rem; color:var(--ink-soft); font-style:italic;}
+@media (max-width:560px){
+  .cl-img{display:none;}
+  .cl-bar select{min-width:100%;}
+}
+
+/* ---------- bandeau « aller plus loin » ---------- */
+.duo-grid{display:grid; gap:14px; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); margin-top:16px;}
+.duo{display:flex; flex-direction:column; gap:5px; text-decoration:none; color:inherit; background:#fff;
+  border:2px solid var(--ink); border-radius:12px; padding:17px 19px;
+  box-shadow:4px 4px 0 rgba(26,26,30,.12); transition:transform .15s, box-shadow .15s, border-color .15s;}
+.duo:hover{transform:translateY(-3px); box-shadow:6px 8px 0 rgba(26,26,30,.18); border-color:var(--coral);}
+.duo-k{font-size:.68rem; font-weight:800; letter-spacing:.09em; text-transform:uppercase; color:var(--coral);}
+.duo-t{font-size:1.05rem; font-weight:900;}
+.duo-d{font-size:.85rem; line-height:1.55; color:var(--ink-soft);}

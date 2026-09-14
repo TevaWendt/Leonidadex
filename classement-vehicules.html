@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Classement des véhicules de GTA VI : composez votre top 10 — Leonidakit</title>
+<meta name="description" content="Aucun classement de performance n&#x27;est possible avant la sortie. Composez le vôtre : ajoutez vos véhicules préférés, réordonnez-les et partagez le lien.">
+<meta property="og:title" content="Classement des véhicules de GTA VI : composez votre top 10 — Leonidakit">
+<meta property="og:description" content="Aucun classement de performance n&#x27;est possible avant la sortie. Composez le vôtre : ajoutez vos véhicules préférés, réordonnez-les et partagez le lien.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:image" content="https://www.leonidakit.com/img/vehicules/grotti-cheetah-classic-profil.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#FDFBF7">
+<meta name="color-scheme" content="light">
+<link rel="canonical" href="https://www.leonidakit.com/classement-vehicules.html">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%231A1A1E'/%3E%3Ccircle cx='32' cy='28' r='16' fill='%23F5A524'/%3E%3Crect x='10' y='30' width='44' height='3' fill='%231A1A1E'/%3E%3Crect x='10' y='37' width='44' height='4' fill='%231A1A1E'/%3E%3Crect x='10' y='45' width='44' height='5' fill='%231A1A1E'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Véhicules de GTA VI",
+  "description": "139 véhicules confirmés de GTA VI par les trailers et les visuels officiels.",
+  "url": "https://www.leonidakit.com/vehicules.html",
+  "inLanguage": "fr-FR"
+}
+</script>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="fiches.css">
+<style>
+/* ---- ajouts armes & véhicules ---- */
+.veh-st{display:inline-block;font-size:.62rem;font-weight:800;letter-spacing:.04em;
+  text-transform:uppercase;padding:2px 7px;border-radius:20px;margin-bottom:6px;}
+.veh-st--officiel{background:#1A1A1E;color:#fff;}
+.veh-st--vu{background:rgba(181,118,42,.15);color:#8A5A1E;}
+.veh-st--comm{background:rgba(122,92,143,.15);color:#5E4570;}
+.chip-filter.chip-st em{background:rgba(0,0,0,.08);}
+
+.niveaux{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));margin:18px 0 6px;}
+.niveau{border:1px solid rgba(26,26,30,.12);border-radius:12px;padding:15px 16px;background:#fff;}
+.niveau h3{margin:0 0 6px;font-size:.95rem;display:flex;align-items:center;gap:8px;}
+.niveau p{margin:0;font-size:.86rem;line-height:1.55;color:#55525C;}
+.niveau .pip{width:11px;height:11px;border-radius:50%;flex:none;}
+.pip--officiel{background:#1A1A1E;} .pip--vu{background:#B5762A;} .pip--comm{background:#7A5C8F;}
+
+.kpis{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin:16px 0;}
+.kpi{border:1px solid rgba(26,26,30,.12);border-radius:12px;padding:14px 16px;background:#fff;}
+.kpi b{display:block;font-size:1.9rem;font-weight:900;line-height:1;}
+.kpi span{font-size:.78rem;color:#6B6874;display:block;margin-top:5px;}
+
+.marques-grid{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));margin-top:14px;}
+.marque-row{display:flex;align-items:baseline;gap:8px;font-size:.88rem;padding:7px 10px;
+  border-radius:8px;background:rgba(26,26,30,.035);}
+.marque-row b{font-weight:800;} .marque-row span{color:#6B6874;}
+
+.feat-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:14px;}
+.feat{border-left:3px solid #E8452C;padding:2px 0 2px 14px;}
+.feat h3{margin:0 0 5px;font-size:.95rem;}
+.feat p,.feat li{font-size:.87rem;line-height:1.6;color:#55525C;margin:0;}
+.feat ul{margin:0;padding-left:17px;}
+
+.kit-grid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));margin-top:14px;}
+.kit{border:1px solid rgba(26,26,30,.12);border-radius:10px;padding:11px 13px;background:#fff;}
+.kit b{display:block;font-size:.88rem;} .kit span{font-size:.79rem;color:#6B6874;}
+
+.faq-item{border-bottom:1px solid rgba(26,26,30,.1);}
+.faq-item summary{cursor:pointer;padding:14px 2px;font-weight:700;font-size:.95rem;list-style:none;
+  display:flex;justify-content:space-between;align-items:center;gap:12px;}
+.faq-item summary::-webkit-details-marker{display:none;}
+.faq-item summary::after{content:'+';font-size:1.3rem;font-weight:400;color:#E8452C;flex:none;}
+.faq-item[open] summary::after{content:'−';}
+.faq-item p{margin:0 0 14px;font-size:.9rem;line-height:1.65;color:#55525C;}
+.fiche-txt{font-size:.95rem;line-height:1.7;max-width:70ch;}
+section.shell[id]{padding-top:34px;padding-bottom:6px;}
+section.shell[id] .sec-h{margin-bottom:10px;}
+</style>
+</head>
+<body>
+
+<a class="skip" href="#main">Aller au contenu</a>
+<div class="sunset"></div>
+
+<header>
+  <div class="shell head-in">
+    <a href="index.html" class="brand">Leonida<span>kit</span></a>
+    <nav id="nav">
+      <ul>
+        <li><a href="carte.html">Carte</a></li>
+        <li><a href="vehicules.html">Véhicules</a></li>
+        <li><a href="armes.html">Armes</a></li>
+        <li><a href="collectibles.html">Collectibles</a></li>
+        <li><a href="progression.html">Progression</a></li>
+      </ul>
+    </nav>
+    <button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="fhero fhero--muscle">
+  <div class="fhero-bg" aria-hidden="true"></div>
+  <div class="shell">
+    <nav class="crumbs" aria-label="Fil d'Ariane">
+      <a href="index.html">Accueil</a> <span>/</span>
+      <a href="vehicules.html">Véhicules</a> <span>/</span>
+      <span aria-current="page">Classement</span>
+    </nav>
+    <div class="fhero-in">
+      <div class="fhero-txt">
+        <p class="fiche-cat">Véhicules</p>
+        <h1>Votre classement</h1>
+        <p class="lede">Les chiffres n'existent pas encore. Le vôtre, si : dix véhicules, dans l'ordre que vous voulez, partageable en un lien.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="shell reveal" id="outil">
+  <h2 class="sec-h">Composez votre top 10</h2>
+  <p class="fiche-txt">Les performances n'existent pas encore : aucun classement objectif n'est
+  possible avant le 19 novembre 2026. En attendant, voici le vôtre. Ajoutez des véhicules, réordonnez-les
+  par glisser-déposer, et partagez le lien. Tout reste sur votre appareil.</p>
+
+  <div class="cl-bar rise">
+    <select id="cl-sel" aria-label="Ajouter un véhicule au classement">
+      <option value="">— Ajouter un véhicule —</option>
+      <option value="albany-buccaneer">Albany Buccaneer</option><option value="albany-buccaneer-custom">Albany Buccaneer Custom</option><option value="albany-emperor">Albany Emperor</option><option value="albany-manana">Albany Manana</option><option value="albany-primo">Albany Primo</option><option value="albany-primo-custom">Albany Primo Custom</option><option value="albany-v-str">Albany V-STR</option><option value="annis-elegy-retro-custom">Annis Elegy Retro Custom</option><option value="annis-futo">Annis Futo</option><option value="annis-growler">Annis Growler</option><option value="annis-hellion">Annis Hellion</option><option value="btn-delmar">BTN Delmar</option><option value="benefactor-dubsta">Benefactor Dubsta</option><option value="benefactor-schafter-v12">Benefactor Schafter V12</option><option value="bravado-banshee">Bravado Banshee</option><option value="bravado-bison">Bravado Bison</option><option value="bravado-buffalo">Bravado Buffalo</option><option value="bravado-buffalo-stx">Bravado Buffalo STX</option><option value="bravado-buffalo-stx-pursuit">Bravado Buffalo STX Pursuit</option><option value="bravado-dorado">Bravado Dorado</option><option value="bravado-gauntlet-hellfire">Bravado Gauntlet Hellfire</option><option value="bravado-gauntlet-interceptor">Bravado Gauntlet Interceptor</option><option value="bravado-rebel">Bravado Rebel</option><option value="bravado-youga-classic">Bravado Youga Classic</option><option value="brute-boxville">Brute Boxville</option><option value="brute-police-riot">Brute Police Riot</option><option value="buckingham-buzzard">Buckingham Buzzard</option><option value="buckingham-maverick">Buckingham Maverick</option><option value="buckingham-shamal">Buckingham Shamal</option><option value="buckingham-supervolito">Buckingham SuperVolito</option><option value="buckingham-swift">Buckingham Swift</option><option value="canis-mesa">Canis Mesa</option><option value="cheval-vectre">Cheval Vectre</option><option value="crest-kayak">Crest Kayak</option><option value="declasse-burrito">Declasse Burrito</option><option value="declasse-granger">Declasse Granger</option><option value="declasse-granger-3600lx">Declasse Granger 3600LX</option><option value="declasse-impaler-sz">Declasse Impaler SZ</option><option value="declasse-mamba-gt">Declasse Mamba GT</option><option value="declasse-rancher">Declasse Rancher</option><option value="declasse-sabre-turbo">Declasse Sabre Turbo</option><option value="declasse-tulip">Declasse Tulip</option><option value="declasse-tulip-m100">Declasse Tulip M100</option><option value="declasse-vigero-zx-convertible">Declasse Vigero ZX Convertible</option><option value="declasse-walton-l35-stock">Declasse Walton L35 Stock</option><option value="declasse-yosemite-1500">Declasse Yosemite 1500</option><option value="dinka-blista-compact">Dinka Blista Compact</option><option value="dinka-double-t">Dinka Double T</option><option value="dinka-enduro">Dinka Enduro</option><option value="dinka-jetmax">Dinka Jetmax</option><option value="dinka-sugoi">Dinka Sugoi</option><option value="dundreary-landstalker-xl">Dundreary Landstalker XL</option><option value="enus-jubilee">Enus Jubilee</option><option value="enus-paragon-r">Enus Paragon R</option><option value="gallivanter-baller">Gallivanter Baller</option><option value="grotti-carbonizzare">Grotti Carbonizzare</option><option value="grotti-cheetah-classic">Grotti Cheetah &#x27;95</option><option value="grotti-furia">Grotti Furia</option><option value="grotti-itali-gto">Grotti Itali GTO</option><option value="imponte-phoenix">Imponte Phoenix</option><option value="imponte-ruiner">Imponte Ruiner</option><option value="invetero-coquette">Invetero Coquette</option><option value="invetero-coquette-d10">Invetero Coquette D10</option><option value="jobuilt-hauler">JoBuilt Hauler</option><option value="jobuilt-mammatus">JoBuilt Mammatus</option><option value="jobuilt-phantom">JoBuilt Phantom</option><option value="jobuilt-phantom-custom">JoBuilt Phantom Custom</option><option value="karin-asterope-gz">Karin Asterope GZ</option><option value="karin-intruder">Karin Intruder</option><option value="karin-sultan">Karin Sultan</option><option value="mtl-flatbed">MTL Flatbed</option><option value="mtl-packer">MTL Packer</option><option value="maibatsu-penumbra">Maibatsu Penumbra</option><option value="maibatsu-sanchez">Maibatsu Sanchez</option><option value="mammoth-dodo">Mammoth Dodo</option><option value="nagasaki-blazer">Nagasaki Blazer</option><option value="nagasaki-blazer-lifeguard">Nagasaki Blazer Lifeguard</option><option value="nagasaki-dinghy">Nagasaki Dinghy</option><option value="nagasaki-marquis">Nagasaki Marquis</option><option value="nagasaki-outlaw">Nagasaki Outlaw</option><option value="obey-8f-drafter">Obey 8F Drafter</option><option value="obey-tailgater">Obey Tailgater</option><option value="obey-tailgater-s">Obey Tailgater S</option><option value="ocelot-jugular">Ocelot Jugular</option><option value="pegassi-faggio">Pegassi Faggio</option><option value="pegassi-infernus-classic">Pegassi Infernus Classic</option><option value="pegassi-speeder">Pegassi Speeder</option><option value="pegassi-tempesta">Pegassi Tempesta</option><option value="pegassi-toros">Pegassi Toros</option><option value="pegassi-zorrusso">Pegassi Zorrusso</option><option value="pfister-astron">Pfister Astron</option><option value="pfister-comet-retro-custom">Pfister Comet Retro Custom</option><option value="pfister-comet-s2-cabrio">Pfister Comet S2 Cabrio</option><option value="principe-alvino-v1">Principe Alvino V1</option><option value="schyster-deviant">Schyster Deviant</option><option value="schyster-pmp-700">Schyster PMP 700</option><option value="shitzu-pcj-600">Shitzu PCJ-600</option><option value="shitzu-squalo">Shitzu Squalo</option><option value="shitzu-tropic">Shitzu Tropic</option><option value="speedophile-seashark">Speedophile Seashark</option><option value="ubermacht-cypher">Ubermacht Cypher</option><option value="ubermacht-zion">Ubermacht Zion</option><option value="vapid-aleutian">Vapid Aleutian</option><option value="vapid-bobcat-xl">Vapid Bobcat XL</option><option value="vapid-caracara-4x4">Vapid Caracara 4x4</option><option value="vapid-chino">Vapid Chino</option><option value="vapid-chino-custom">Vapid Chino Custom</option><option value="vapid-contender">Vapid Contender</option><option value="vapid-creado">Vapid Creado</option><option value="vapid-dominator">Vapid Dominator</option><option value="vapid-dominator-asp">Vapid Dominator ASP</option><option value="vapid-dominator-buggy">Vapid Dominator Buggy &#x27;67</option><option value="vapid-dominator-gt">Vapid Dominator GT</option><option value="vapid-dominator-gtx">Vapid Dominator GTX</option><option value="vapid-ganado">Vapid Ganado</option><option value="vapid-gauntlet-classic-custom">Vapid Gauntlet Classic Custom</option><option value="vapid-riata-classic">Vapid Riata Classic</option><option value="vapid-sadler">Vapid Sadler</option><option value="vapid-sandking-xl">Vapid Sandking XL</option><option value="vapid-slamvan">Vapid Slamvan</option><option value="vapid-speedo">Vapid Speedo</option><option value="vapid-stanier">Vapid Stanier &#x27;55</option><option value="vapid-tow-truck">Vapid Tow Truck</option><option value="western-sea-sparrow">Western Sea Sparrow</option><option value="western-zombie-chopper">Western Zombie Chopper</option><option value="western-company-duster">Western Company Duster</option><option value="xero-blimp">Xero Blimp</option><option value="zirconium-journey-ii">Zirconium Journey II</option><option value="airboat-09">Airboat 09</option><option value="bmx">BMX</option><option value="coach">Coach</option><option value="cruiser">Cruiser</option><option value="dashound">Dashound</option><option value="lombike">LomBike</option><option value="monorail-de-vice-city">Monorail de Vice City</option><option value="scorcher">Scorcher</option><option value="sirius">Sirius</option><option value="vcia-train">VCIA Train</option><option value="vcmm-train">VCMM Train</option>
+    </select>
+    <button type="button" id="cl-add">Ajouter</button>
+    <button type="button" id="cl-share">Partager mon classement</button>
+    <button type="button" id="cl-raz">Vider</button>
+  </div>
+
+  <ol class="cl-liste rise" id="cl-liste" aria-live="polite"></ol>
+  <p class="cl-vide" id="cl-vide">Votre classement est vide. Choisissez un véhicule ci-dessus pour commencer.</p>
+</section>
+
+<section class="shell reveal" id="attendus">
+  <h2 class="sec-h">Les plus attendus, et pourquoi</h2>
+  <p class="fiche-txt">Notre sélection, assumée comme éditoriale : les véhicules sur lesquels on dispose
+  réellement d'éléments, pas ceux dont on suppose l'existence.</p>
+  <div class="feat-grid rise">
+    <div class="feat"><h3><a href="vehicules/grotti-cheetah-classic.html">Grotti Cheetah '95</a></h3>
+      <p>Quatre vues officielles, intérieur compris, et une silhouette qui est à Miami ce que le taxi
+      jaune est à New York. C'est le véhicule le mieux documenté du jeu à ce jour.</p></div>
+    <div class="feat"><h3><a href="vehicules/vapid-dominator-buggy.html">Vapid Dominator Buggy '67</a></h3>
+      <p>Une Mustang de 67 sur pneus agraires : l'objet qui résume le grand écart de Leonida, entre les
+      tours de Vice City et les marécages du nord.</p></div>
+    <div class="feat"><h3><a href="vehicules/shitzu-squalo.html">Shitzu Squalo</a></h3>
+      <p>La vedette qui donne accès aux Keys, avec quatre captures officielles et une immatriculation
+      lisible. Le bateau devient un moyen de transport à part entière dans cette carte.</p></div>
+    <div class="feat"><h3><a href="vehicules/sirius.html">Sirius</a></h3>
+      <p>Un nom lu sur une aile, une muscle car que personne d'autre ne référence. C'est la trouvaille
+      du kit média officiel.</p></div>
+    <div class="feat"><h3><a href="vehicules/dinka-enduro.html">Dinka Enduro</a></h3>
+      <p>La seule moto nommée par Rockstar, et elle est garée devant la planque de Jason. Difficile de
+      faire plus explicite sur son rôle.</p></div>
+    <div class="feat"><h3><a href="vehicules/vapid-stanier.html">Vapid Stanier '55</a></h3>
+      <p>Quatre vues officielles pour une Fairlane deux tons. Le Vintage Vice City Pack tout entier
+      tient dans cette voiture.</p></div>
+  </div>
+</section>
+
+<section class="shell reveal" id="apres">
+  <h2 class="sec-h">Ce que cette page deviendra</h2>
+  <p class="fiche-txt">À partir du 19 novembre 2026, les statistiques réelles remplaceront les
+  suppositions : vitesse de pointe mesurée, accélération, freinage, prix. Le classement personnel
+  restera, et un classement objectif par catégorie viendra s'ajouter à côté. Nous ne publierons aucun
+  chiffre avant de l'avoir relevé nous-mêmes dans le jeu.</p>
+</section>
+
+
+</main>
+
+<footer>
+  <svg class="foot-art" viewBox="0 0 1200 150" preserveAspectRatio="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+    <defs><linearGradient id="fsky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F5A524" stop-opacity=".28"/>
+      <stop offset="100%" stop-color="#E8452C" stop-opacity=".14"/>
+    </linearGradient></defs>
+    <rect width="1200" height="150" fill="url(#fsky)"/>
+    <circle cx="980" cy="86" r="44" fill="#F5A524" opacity=".4"/>
+    <g fill="#1A1A1E" opacity=".82">
+      <rect x="40" y="86" width="34" height="64"/><rect x="84" y="58" width="24" height="92"/>
+      <rect x="118" y="100" width="42" height="50"/><rect x="172" y="70" width="22" height="80"/>
+      <rect x="204" y="110" width="46" height="40"/><rect x="262" y="80" width="28" height="70"/>
+      <rect x="300" y="46" width="20" height="104"/><rect x="332" y="96" width="38" height="54"/>
+      <rect x="382" y="72" width="26" height="78"/><rect x="420" y="106" width="44" height="44"/>
+      <rect x="476" y="64" width="22" height="86"/><rect x="510" y="92" width="34" height="58"/>
+      <rect x="556" y="112" width="40" height="38"/><rect x="608" y="76" width="24" height="74"/>
+      <rect x="644" y="102" width="36" height="48"/><rect x="692" y="60" width="20" height="90"/>
+      <rect x="724" y="98" width="42" height="52"/><rect x="778" y="84" width="26" height="66"/>
+      <rect x="816" y="114" width="38" height="36"/><rect x="866" y="74" width="22" height="76"/>
+      <rect x="900" y="104" width="34" height="46"/><rect x="1044" y="90" width="30" height="60"/>
+      <rect x="1084" y="66" width="22" height="84"/><rect x="1118" y="108" width="42" height="42"/>
+    </g>
+    <g stroke="#1A1A1E" stroke-width="2" opacity=".2">
+      <line x1="0" y1="132" x2="1200" y2="132"/><line x1="0" y1="142" x2="1200" y2="142"/>
+    </g>
+  </svg>
+
+  <div class="shell">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <span class="brand">Leonida<span>kit</span></span>
+        <p>Carte, fiches et outils pour GTA VI. Mis à jour en continu à partir du 19 novembre 2026.</p>
+      </div>
+      <div class="foot-cols">
+        <div><h4>Contenu</h4>
+          <nav><a href="carte.html">Carte</a><a href="vehicules.html">Véhicules</a><a href="armes.html">Armes</a><a href="collectibles.html">Collectibles</a></nav>
+        </div>
+        <div><h4>Outils</h4>
+          <nav><a href="progression.html">Progression</a><a href="calculateurs.html">Calculateurs</a></nav>
+        </div>
+        <div><h4>Le site</h4>
+          <nav><a href="a-propos.html">À propos</a><a href="contact.html">Contact</a><a href="mentions-legales.html">Mentions légales</a></nav>
+        </div>
+      </div>
+    </div>
+    <p class="legal">Leonidakit est un site indépendant réalisé par un joueur. Il n'est ni affilié à Rockstar Games et Take-Two Interactive, ni approuvé ou sponsorisé par eux. Grand Theft Auto est une marque déposée de Take-Two Interactive.</p>
+  </div>
+</footer>
+
+<script src="vehicules-data.js"></script>
+<script src="app.js"></script>
+<script src="fiches.js"></script>
+<script>
+(function(){
+  'use strict';
+  const V = window.LK_VEHICULES || [], C = window.LK_VEHICULES_CATS || {};
+  const par = {}; V.forEach(v => par[v.id] = v);
+  const KEY = 'lk_classement';
+  const liste = document.getElementById('cl-liste'), vide = document.getElementById('cl-vide');
+  const sel = document.getElementById('cl-sel');
+  let ordre = [];
+
+  function enregistre(){
+    try { return (JSON.parse(localStorage.getItem(KEY) || '[]')).filter(id => par[id]); } catch(e){ return []; }
+  }
+  function partage(){
+    const m = location.hash.match(/^#top=([\w,-]+)$/);
+    return m ? m[1].split(',').filter(id => par[id]).slice(0, 10) : null;
+  }
+  /* Un lien partagé ne doit jamais effacer sans prévenir un classement déjà enregistré. */
+  function appliquerPartage(){
+    const p = partage(); if(!p || !p.length) return false;
+    const mien = enregistre();
+    const memes = mien.length === p.length && mien.every((x, i) => x === p[i]);
+    if(mien.length && !memes && !confirm('Ce lien contient un autre classement. Remplacer le vôtre ?')){
+      history.replaceState(null, '', location.pathname); return false;
+    }
+    ordre = p; ecrire(); history.replaceState(null, '', location.pathname); rendre(); return true;
+  }
+  function ecrire(){ try { localStorage.setItem(KEY, JSON.stringify(ordre)); } catch(e){} }
+
+  function rendre(){
+    liste.innerHTML = '';
+    vide.style.display = ordre.length ? 'none' : 'block';
+    ordre.forEach(function(id, i){
+      const v = par[id]; if(!v) return;
+      const li = document.createElement('li'); li.className = 'cl-item'; li.draggable = true; li.dataset.id = id;
+      const nom = (v.marque ? v.marque + ' ' : '') + v.nom;
+      const img = v.vues ? '<img src="img/vehicules/' + v.id + '-' + v.vues[0] + '.jpg" alt="" loading="lazy">' : '';
+      li.innerHTML = '<span class="cl-rang">' + (i+1) + '</span>' +
+        '<span class="cl-img' + (img ? '' : ' cl-img--vide') + '">' + img + '</span>' +
+        '<span class="cl-nom"><a href="vehicules/' + v.id + '.html">' + nom + '</a>' +
+        '<em>' + (C[v.cat] || '') + '</em></span>' +
+        '<span class="cl-actions">' +
+          '<button type="button" data-up aria-label="Monter">↑</button>' +
+          '<button type="button" data-down aria-label="Descendre">↓</button>' +
+          '<button type="button" data-del aria-label="Retirer">×</button></span>';
+      liste.appendChild(li);
+    });
+    /* le menu n'affiche plus ce qui est déjà classé */
+    Array.from(sel.options).forEach(o => { if(o.value) o.hidden = ordre.indexOf(o.value) >= 0; });
+  }
+
+  function deplacer(i, j){
+    if(j < 0 || j >= ordre.length) return;
+    const x = ordre.splice(i, 1)[0]; ordre.splice(j, 0, x); ecrire(); rendre();
+  }
+
+  liste.addEventListener('click', function(ev){
+    const b = ev.target.closest('button'); if(!b) return;
+    const li = b.closest('.cl-item'); const i = ordre.indexOf(li.dataset.id);
+    if(b.hasAttribute('data-up')) deplacer(i, i-1);
+    else if(b.hasAttribute('data-down')) deplacer(i, i+1);
+    else if(b.hasAttribute('data-del')){ ordre.splice(i, 1); ecrire(); rendre(); }
+  });
+
+  /* glisser-déposer */
+  let src = null;
+  liste.addEventListener('dragstart', e => { const li = e.target.closest('.cl-item'); if(!li) return;
+    src = li.dataset.id; li.classList.add('cl-drag'); e.dataTransfer.effectAllowed = 'move'; });
+  liste.addEventListener('dragend', e => { const li = e.target.closest('.cl-item'); if(li) li.classList.remove('cl-drag'); src = null; });
+  liste.addEventListener('dragover', e => { e.preventDefault();
+    const li = e.target.closest('.cl-item'); if(!li || !src || li.dataset.id === src) return;
+    const i = ordre.indexOf(src), j = ordre.indexOf(li.dataset.id);
+    ordre.splice(j, 0, ordre.splice(i, 1)[0]); ecrire(); rendre();
+    const nv = liste.querySelector('[data-id="' + src + '"]'); if(nv) nv.classList.add('cl-drag'); });
+
+  document.getElementById('cl-add').addEventListener('click', function(){
+    const id = sel.value; if(!id || ordre.indexOf(id) >= 0) return;
+    if(ordre.length >= 10){ this.textContent = 'Dix maximum'; setTimeout(() => this.textContent = 'Ajouter', 1400); return; }
+    ordre.push(id); sel.value = ''; ecrire(); rendre();
+  });
+  document.getElementById('cl-raz').addEventListener('click', function(){
+    if(ordre.length && !confirm('Vider votre classement ?')) return;
+    ordre = []; ecrire(); rendre();
+  });
+  document.getElementById('cl-share').addEventListener('click', function(){
+    if(!ordre.length) return;
+    const url = location.origin + location.pathname + '#top=' + ordre.join(',');
+    if(navigator.clipboard) navigator.clipboard.writeText(url);
+    this.textContent = 'Lien copié'; setTimeout(() => this.textContent = 'Partager mon classement', 1600);
+  });
+
+  ordre = enregistre();
+  rendre();
+  appliquerPartage();
+  /* lien collé alors que la page est déjà ouverte */
+  window.addEventListener('hashchange', appliquerPartage);
+})();
+</script>
+
+</body>
+</html>
