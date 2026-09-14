@@ -29,7 +29,7 @@ function carte(v){
  const inner=t?t.in.replace(/<span class="veh-badge">[^<]*<\/span>/,'<span class="veh-badge">'+CATL[v.cat]+'</span>')
    :'<span class="veh-badge">'+CATL[v.cat]+'</span>'+art(v);
  return '<a class="veh-card rise" href="vehicules/'+v.id+'.html" data-id="'+v.id+'"'
-  +(v.slot?' data-slot="'+v.slot+'"':'')+' data-st="'+v.st+'" data-cat="'+v.cat+'"'
+  +(v.slot?' data-slot="'+v.slot+'"':'')+' data-ed="'+(v.edition==='Pre-Order'?'precommande':v.edition?'ultimate':'standard')+'"'+' data-st="'+v.st+'" data-cat="'+v.cat+'"'
   +(v.reel?' data-reel="'+esc(v.reel)+'" data-reel-nom="'+esc(v.reelNom)+'"':'')
   +' data-search="'+esc(v.search)+'">'
   +'<div class="veh-thumb'+cls+'">'+inner+'</div><div class="veh-body">'
@@ -66,11 +66,17 @@ H=H.replace(/data-stf="officiel">Nommés par Rockstar<em>\d+<\/em>/,'data-stf="o
 H=H.replace(/(<button class="chip-filter chip-st" data-stf="comm">Communautaires<em>\d+<\/em><\/button>)/,
  '$1\n    <span class="chip-sep"></span>\n    '+['americain','japonais','europeen'].map(k=>
   '<button class="chip-filter chip-slot" data-slotf="'+k+'">'+SLOT[k]+'s<em>'+(nSlot[k]||0)+'</em></button>').join('\n    '));
+const nEd={standard:0,ultimate:0,precommande:0};
+V.forEach(v=>nEd[v.edition==='Pre-Order'?'precommande':v.edition?'ultimate':'standard']++);
+const EDL={standard:'Édition standard',ultimate:'Édition Ultimate',precommande:'Bonus de précommande'};
+H=H.replace(/(<button class="chip-filter chip-slot" data-slotf="europeen">[^<]*<em>\d+<\/em><\/button>)/,
+ '$1\n    <span class="chip-sep"></span>\n    '+['standard','ultimate','precommande'].map(k=>
+  '<button class="chip-filter chip-ed" data-edf="'+k+'">'+EDL[k]+'<em>'+nEd[k]+'</em></button>').join('\n    '));
 
 /* styles ajoutés */
 H=H.replace('.chip-filter.chip-st em{background:rgba(0,0,0,.08);}',
  `.chip-filter.chip-st em{background:rgba(0,0,0,.08);}
-.chip-filter.chip-slot em{background:rgba(0,0,0,.08);}
+.chip-filter.chip-slot em{background:rgba(0,0,0,.08);}\n.chip-filter.chip-ed em{background:rgba(0,0,0,.08);}
 .veh-ed{display:inline-flex;align-self:flex-start;font-size:.6rem;font-weight:800;letter-spacing:.05em;
   text-transform:uppercase;padding:2px 8px;border-radius:20px;margin:0 0 7px;
   background:rgba(245,165,36,.2);color:#7A4E0A;}

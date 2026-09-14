@@ -254,7 +254,7 @@ const el = id => document.getElementById(id);
   const emptyEl = document.getElementById('vempty');
   const bar     = document.getElementById('vbar');
 
-  let activeCat = 'all', query = '', activeSt = null, activeSlot = null, tri = '';
+  let activeCat = 'all', query = '', activeSt = null, activeSlot = null, activeEd = null, tri = '';
   const norm = s => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
   const motCarte = grid.dataset.mot || 'véhicule';
   const ordreInitial = cards.slice();
@@ -279,6 +279,7 @@ const el = id => document.getElementById(id);
     if(activeCat !== 'all') p.set('cat', activeCat);
     if(activeSt) p.set('st', activeSt);
     if(activeSlot) p.set('slot', activeSlot);
+    if(activeEd) p.set('ed', activeEd);
     if(query.trim()) p.set('q', query.trim());
     if(tri) p.set('tri', tri);
     const h = p.toString() ? '#' + p.toString() : location.pathname + location.search;
@@ -290,11 +291,13 @@ const el = id => document.getElementById(id);
     const cat = p.get('cat'); if(cat && chips.some(c => c.dataset.filter === cat)) activeCat = cat;
     const st = p.get('st'); if(st && document.querySelector('.chip-st[data-stf="' + st + '"]')) activeSt = st;
     const sl = p.get('slot'); if(sl && document.querySelector('.chip-slot[data-slotf="' + sl + '"]')) activeSlot = sl;
+    const ed = p.get('ed'); if(ed && document.querySelector('.chip-ed[data-edf="' + ed + '"]')) activeEd = ed;
     const q = p.get('q'); if(q){ query = q; input.value = q; }
     const t = p.get('tri'); if(t && triSel && Array.from(triSel.options).some(o => o.value === t)){ tri = t; triSel.value = t; }
     chips.forEach(c => { if(c.dataset.filter) c.classList.toggle('is-on', c.dataset.filter === activeCat); });
     document.querySelectorAll('.chip-st').forEach(c => c.classList.toggle('is-on', c.dataset.stf === activeSt));
     document.querySelectorAll('.chip-slot').forEach(c => c.classList.toggle('is-on', c.dataset.slotf === activeSlot));
+    document.querySelectorAll('.chip-ed').forEach(c => c.classList.toggle('is-on', c.dataset.edf === activeEd));
   }
 
   function apply(){
@@ -305,8 +308,9 @@ const el = id => document.getElementById(id);
       const okCat  = (activeCat === 'all') || (card.dataset.cat === activeCat);
       const okSt   = !activeSt   || card.dataset.st   === activeSt;
       const okSlot = !activeSlot || card.dataset.slot === activeSlot;
+      const okEd   = !activeEd   || card.dataset.ed   === activeEd;
       const okTxt = !q || norm(card.dataset.search).includes(q);
-      const show = okCat && okTxt && okSt && okSlot;
+      const show = okCat && okTxt && okSt && okSlot && okEd;
       card.hidden = !show;
       if(show){ card.classList.add('in'); shown++; }
     });
@@ -353,6 +357,7 @@ const el = id => document.getElementById(id);
   }
   basculeur('.chip-st',   b => b.dataset.stf,   v => { activeSt = v; });
   basculeur('.chip-slot', b => b.dataset.slotf, v => { activeSlot = v; });
+  basculeur('.chip-ed',   b => b.dataset.edf,   v => { activeEd = v; });
   lireEtat();
   apply();
 

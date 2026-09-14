@@ -5,7 +5,9 @@ let V=JSON.parse(fs.readFileSync('releve/v-corrige.json','utf8'));
 const cible=v=>{ const t=v.insp||v.fam; if(!t) return null;
   return t.replace(/;.*$/,'').split(/,| et | and /)[0]
    .replace(/\b(1st|2nd|3rd|4th|5th|first|second|third|fourth|fifth|generation|gen|late|early)\b/gi,'')
-   .replace(/\s+/g,' ').trim(); };
+   .replace(/\b(premi[eè]re|deuxi[eè]me|troisi[eè]me|quatri[eè]me|cinqui[eè]me|sixi[eè]me|septi[eè]me|g[eé]n[eé]ration|anciennement|plusieurs variantes|depuis|pr[eé]par[eé]e?|livr[eé]e|avec des touches de|type|fa[cç]on)\b/gi,'')
+   .replace(/\b(19|20)\d\d-(19|20)?\d\d\b/g,'')
+   .replace(/\s{2,}/g,' ').replace(/\s+,/g,',').trim().replace(/[,\s]+$/,''); };
 V.forEach(v=>{ const c=cible(v);
   if(c){ v.reel='https://www.google.com/search?tbm=isch&q='+encodeURIComponent(c); v.reelNom=c; }
   else { delete v.reel; delete v.reelNom; }
