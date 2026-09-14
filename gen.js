@@ -10,6 +10,7 @@ const ST={officiel:{c:'Officiel',l:'Nommé par Rockstar',d:'Nommé par Rockstar.
  vu:{c:'Aperçu officiel',l:'Vu dans un support officiel',d:'Vu dans un support officiel, sans nom communiqué.'},
  comm:{c:'Communautaire',l:'Identification communautaire',d:'Identification communautaire.'}};
 const SLOT={americain:'Modèle américain',japonais:'Modèle japonais',europeen:'Modèle européen'};
+const SLOTP={americain:'Modèles américains',japonais:'Modèles japonais',europeen:'Modèles européens'};
 const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#x27;');
 const nomC=v=>(v.marque&&v.marque!=='Marque inconnue'?v.marque+' ':'')+v.nom;
 
@@ -63,9 +64,12 @@ H=H.replace(/<button class="chip-filter" data-filter="berline">[\s\S]*?data-filt
 H=H.replace(/data-stf="officiel">Nommés par Rockstar<em>\d+<\/em>/,'data-stf="officiel">Nommés par Rockstar<em>'+nSt.officiel+'</em>')
    .replace(/data-stf="vu">Vus officiellement<em>\d+<\/em>/,'data-stf="vu">Vus officiellement<em>'+nSt.vu+'</em>')
    .replace(/data-stf="comm">Communautaires<em>\d+<\/em>/,'data-stf="comm">Communautaires<em>'+nSt.comm+'</em>');
+/* nettoyage : on retire les chips slot/édition déjà injectées, sinon elles s'empilent à chaque run */
+H=H.replace(/(?:\s*<span class="chip-sep"><\/span>)?(?:\s*<button class="chip-filter chip-(?:slot|ed)"[^>]*>(?:(?!<\/button>)[\s\S])*?<\/button>)+/g,'');
+
 H=H.replace(/(<button class="chip-filter chip-st" data-stf="comm">Communautaires<em>\d+<\/em><\/button>)/,
  '$1\n    <span class="chip-sep"></span>\n    '+['americain','japonais','europeen'].map(k=>
-  '<button class="chip-filter chip-slot" data-slotf="'+k+'">'+SLOT[k]+'s<em>'+(nSlot[k]||0)+'</em></button>').join('\n    '));
+  '<button class="chip-filter chip-slot" data-slotf="'+k+'">'+SLOTP[k]+'<em>'+(nSlot[k]||0)+'</em></button>').join('\n    '));
 const nEd={standard:0,ultimate:0,precommande:0};
 V.forEach(v=>nEd[v.edition==='Pre-Order'?'precommande':v.edition?'ultimate':'standard']++);
 const EDL={standard:'Édition standard',ultimate:'Édition Ultimate',precommande:'Bonus de précommande'};
@@ -73,7 +77,8 @@ H=H.replace(/(<button class="chip-filter chip-slot" data-slotf="europeen">[^<]*<
  '$1\n    <span class="chip-sep"></span>\n    '+['standard','ultimate','precommande'].map(k=>
   '<button class="chip-filter chip-ed" data-edf="'+k+'">'+EDL[k]+'<em>'+nEd[k]+'</em></button>').join('\n    '));
 
-/* styles ajoutés */
+/* styles ajoutés : on purge les copies précédentes avant de réinjecter */
+H=H.replace(/\n\.chip-filter\.chip-slot em\{background:rgba\(0,0,0,\.08\);\}[\s\S]*?\n\.ouvert b\{color:#1A1A1E;\}/g,'');
 H=H.replace('.chip-filter.chip-st em{background:rgba(0,0,0,.08);}',
  `.chip-filter.chip-st em{background:rgba(0,0,0,.08);}
 .chip-filter.chip-slot em{background:rgba(0,0,0,.08);}\n.chip-filter.chip-ed em{background:rgba(0,0,0,.08);}
@@ -104,6 +109,7 @@ const bloc=`
   </div>
 </section>
 `;
+H=H.replace(/\n*<section class="shell reveal" id="a-venir">[\s\S]*?<\/section>\n*/g,'\n');
 H=H.replace('<section class="shell reveal" id="aller-plus-loin">', bloc+'<section class="shell reveal" id="aller-plus-loin">');
 
 /* données structurées */
@@ -119,15 +125,75 @@ H=H.replace(/les 139 modèles recensés/g,'les '+N+' modèles recensés')
    .replace(/139 véhicules confirmés de GTA VI/g,N+' véhicules confirmés de GTA VI')
    .replace(/Nous recensons ici 139 véhicules, dont 9 sont nommés/g,'Nous recensons ici '+N+' véhicules, dont '+nSt.officiel+' sont nommés')
    .replace(/Les 9 véhicules nommés par Rockstar/g,'Les '+nSt.officiel+' véhicules nommés par Rockstar');
+H=H.replace(/\n{3,}/g,'\n\n');
 fs.writeFileSync('vehicules.html',H);
 
 /* ================= FICHES ================= */
+/* variantes de formulation, choisies de façon déterministe sur l'identifiant :
+   une fiche garde toujours la même tournure, mais deux fiches voisines diffèrent */
+const graine=id=>{let h=0;for(let i=0;i<id.length;i++)h=(h*31+id.charCodeAt(i))>>>0;return h;};
+const pioche=(id,sel,liste)=>liste[graine(id+sel)%liste.length];
+
+const V_INSP=[
+ "Rockstar ne confirme jamais ses inspirations : c'est une observation établie à partir des visuels officiels, pas une licence.",
+ "Aucune licence n'est en jeu ici. Le studio ne valide pas ses sources, et ce rapprochement vient de l'observation des visuels publiés.",
+ "Le studio garde le silence sur ses références. Ce rapprochement repose sur la comparaison des images officielles, rien de plus.",
+ "À prendre pour ce que c'est : une lecture des images diffusées. Rockstar n'a jamais commenté ses modèles de départ.",
+ "Personne chez Rockstar n'a confirmé quoi que ce soit. L'identification vient de la comparaison avec les visuels publiés.",
+ "Le studio ne dépose aucune licence et ne nomme aucune référence. Ce rapprochement est une déduction tirée des images.",
+ "Rockstar dessine des répliques, jamais des modèles sous licence, et ne dit pas lesquelles. Ce rapprochement reste une observation.",
+ "Il s'agit d'une comparaison visuelle, pas d'une information officielle : le studio ne commente pas ses inspirations."];
+
+const V_CARTE=[
+ "Notre carte situe déjà les concessions, l'atelier et le circuit. Les points d'apparition précis viendront avec le jeu.",
+ "Les lieux utiles au conducteur sont placés sur la carte : vendeurs, préparateur, piste. Restent les spots de chaque modèle, après le 19 novembre.",
+ "Concessionnaires, garage de préparation et circuit figurent sur notre carte. Où trouver ce véhicule exactement, nous le saurons à la sortie.",
+ "La carte recense les adresses liées à l'automobile. Les emplacements propres à chaque modèle seront relevés une fois le jeu en main.",
+ "Vendeurs, atelier et circuit sont déjà cartographiés. Le détail des apparitions par véhicule suivra le lancement.",
+ "Notre carte couvre les points de vente, l'atelier et la piste. Le repérage véhicule par véhicule commencera le jour de la sortie."];
+
+const V_SANSIMG=[
+ "Aucune image officielle de ce véhicule n'a été publiée. Illustration provisoire.",
+ "Rockstar n'a diffusé aucun visuel de ce modèle. L'illustration ci-dessus est provisoire.",
+ "Pas de visuel officiel pour l'instant : le dessin qui précède tient lieu de substitut.",
+ "Ce véhicule n'a fait l'objet d'aucune image publiée. Illustration temporaire en attendant.",
+ "Faute de visuel diffusé par Rockstar, nous affichons une silhouette provisoire.",
+ "Aucun cliché officiel n'existe à ce jour. L'image est une représentation d'attente."];
+
+const PENDCAT={
+ bateau:["Vitesse de pointe, tenue de mer et comportement dans le clapot.","Prix, ponton de vente et mouillages où le trouver en Leonida.","Coques, teintes, sellerie et équipements de pont."],
+ avion:["Vitesse, plafond, distance de décollage et maniabilité.","Prix, aérodrome de vente et pistes où le croiser.","Livrées, décorations de fuselage et aménagements de cabine."],
+ helicoptere:["Vitesse, taux de montée et stabilité en vol stationnaire.","Prix, hélisurface de vente et toits où le trouver.","Livrées, teintes et équipements de bord."],
+ moto:["Vitesse de pointe, reprise, freinage et stabilité en courbe.","Prix, concessionnaire et rues où la croiser en Leonida.","Guidons, échappements, peintures et pièces moteur."],
+ service:["Vitesse, masse, résistance aux chocs et comportement à vide.","Prix s'il est vendable, sinon les endroits où le récupérer.","Livrées de service, gyrophares et équipements spécifiques."],
+ divers:["Vitesse, tenue de route et comportement propre à cet engin.","Prix, point de vente et endroits où le trouver en Leonida.","Options disponibles, teintes et améliorations."],
+ pickup:["Vitesse de pointe, motricité, franchissement et charge utile.","Prix, concessionnaire et terrains où le repérer.","Suspensions, pneumatiques, pare-chocs et teintes."],
+ suv:["Vitesse de pointe, accélération, freinage et comportement en charge.","Prix, concessionnaire et quartiers où le croiser.","Jantes, teintes, intérieurs et améliorations moteur."],
+ van:["Vitesse, volume utile, masse et stabilité une fois chargé.","Prix, vendeur et zones où le trouver en Leonida.","Marquages, teintes, jantes et aménagements."],
+ berline:["Vitesse de pointe, accélération, freinage et tenue de route.","Prix, concessionnaire et emplacements où la trouver dans Leonida.","Options de garage, livrées, teintes et améliorations."],
+ sport:["Vitesse de pointe, reprise, freinage et agilité en appui.","Prix, concessionnaire et endroits où la voir passer.","Kits carrosserie, appuis aérodynamiques, jantes et teintes."],
+ supercar:["Vitesse maximale, accélération départ arrêté et tenue en virage rapide.","Prix, vitrine de vente et lieux où elle se montre.","Aérodynamique, matériaux, jantes et peintures rares."],
+ muscle:["Vitesse de pointe, couple disponible, freinage et motricité.","Prix, concessionnaire et rues où la surprendre.","Moteurs, échappements, capots, bandes et peintures."]};
+const pend=v=>{const t=PENDCAT[v.cat]||PENDCAT.divers;
+ return ["Performances","Acquisition","Personnalisation"].map((h,i)=>
+  '\n    <div class="pending rise"><div class="pending-top"><h3>'+h+'</h3><span class="pending-tag">À venir</span></div><p>'
+  +esc(t[i])+'</p><div class="pending-bars" aria-hidden="true"><span></span><span></span><span></span></div></div>').join('')+'\n  ';};
+
 const MOD=fs.readFileSync('vehicules/albany-emperor.html','utf8');
 const HEADER=MOD.match(/<a class="skip"[\s\S]*?<main id="main">/)[0];
 const FOOTER=MOD.match(/<footer>[\s\S]*?<\/body>/)[0];
 const FAV=MOD.match(/<link rel="icon"[^>]*>/)[0];
 const CARTE=MOD.match(/<div class="fiche-liens rise">[\s\S]*?<\/div>/)[0];
 const NOTE=MOD.match(/<div class="note-box rise">[\s\S]*?<\/div>/)[0];
+const V_NOTE=[
+ "Les inspirations réelles sont des rapprochements établis à partir des visuels officiels, pas des informations communiquées par Rockstar. Aucune donnée issue de fuites n'est utilisée ici.",
+ "Ce que vous lisez ici vient des visuels publiés par Rockstar, jamais d'une annonce du studio. Rien de ce qui a filtré par des fuites n'entre dans cette base.",
+ "Chaque modèle réel cité est une déduction tirée des images officielles. Le studio ne confirme rien, et nous n'exploitons aucun contenu volé.",
+ "Nos identifications reposent uniquement sur ce que Rockstar a diffusé publiquement. Les fuites, quelles qu'elles soient, restent hors de cette base.",
+ "Les modèles réels indiqués sont le fruit d'une comparaison avec les visuels officiels. Rien ici ne provient d'un code ou d'une vidéo dérobés.",
+ "Tout ce qui figure sur cette fiche a été relevé dans les supports publiés par Rockstar. Aucun élément ne vient des fuites de 2022 ou de 2026."];
+const note=v=>NOTE.replace("Les inspirations réelles sont des rapprochements établis à partir des visuels officiels, pas des informations communiquées par Rockstar. Aucune donnée issue de fuites n'est utilisée ici.",
+  pioche(v.id,'note',V_NOTE));
 const PEND=MOD.match(/<h2 class="sec-h">Ce qui arrive avec le jeu<\/h2>([\s\S]*?)<\/div>\s*<\/section>/)[1];
 const artH=v=>art(v).replace(/style="height:\d+px"/,'style="height:120px"');
 
@@ -145,7 +211,7 @@ function fiche(v,i){
  const panneau=v.reel?`
 <section class="shell reveal" id="modele-reel">
   <h2 class="sec-h">Le modèle réel</h2>
-  <p class="fiche-txt rise">Le rapprochement retenu pour ce véhicule est <strong>${esc(v.insp||v.fam)}</strong>. Rockstar ne confirme jamais ses inspirations : c&#x27;est une observation établie à partir des visuels officiels, pas une licence.</p>
+  <p class="fiche-txt rise">Le rapprochement retenu pour ce véhicule est <strong>${esc(v.insp||v.fam)}</strong>. ${esc(pioche(v.id,'insp',V_INSP))}</p>
   <div class="fiche-liens rise"><a id="reel-bt" href="${esc(v.reel)}" target="_blank" rel="noopener nofollow">Voir ${esc(v.reelNom)} en photo</a><a href="https://fr.wikipedia.org/w/index.php?search=${encodeURIComponent(v.reelNom)}" target="_blank" rel="noopener nofollow">Fiche encyclopédique</a>${v.slot?'<a href="../vehicules.html#slot='+v.slot+'">Autres modèles '+SLOT[v.slot].replace('Modèle ','')+'s</a>':''}</div>
 </section>`:'';
  return `<!DOCTYPE html>
@@ -202,7 +268,7 @@ ${HEADER}
       <div class="fhero-art fhero-art--gal">
         <div class="gal" data-base="../img/vehicules/${v.id}" data-vues="${vues}" data-nom="${esc(nom)}" data-vide="${img?0:1}"
              data-art="${esc(artH(v))}"></div>
-        <p class="gal-note">${img?esc(v.credit||'Captures officielles de Rockstar Games.'):'Aucune image officielle de ce véhicule n&#x27;a été publiée. Illustration provisoire.'}</p>
+        <p class="gal-note">${img?esc(v.credit||'Captures officielles de Rockstar Games.'):esc(pioche(v.id,'img',V_SANSIMG))}</p>
       </div>
     </div>
   </div>
@@ -239,15 +305,15 @@ ${HEADER}
     </table>
   </div>
   <div class="fiche-col reveal">
-    <h2 class="sec-h">Ce qui arrive avec le jeu</h2>${PEND}</div>
+    <h2 class="sec-h">Ce qui arrive avec le jeu</h2>${pend(v)}</div>
 </section>
 <section class="shell reveal" id="carte">
   <h2 class="sec-h">Sur la carte de Leonida</h2>
-  <p class="fiche-txt rise">Concessions, atelier de personnalisation et circuit repérés sur notre carte. Les emplacements exacts de chaque véhicule seront ajoutés après la sortie.</p>
+  <p class="fiche-txt rise">${esc(pioche(v.id,'carte',V_CARTE))}</p>
   ${CARTE}
 </section>
 <section class="shell">
-  ${NOTE}
+  ${note(v)}
 </section>
 <section class="shell reveal">
   <h2 class="rel-title">Autres ${esc(cat.toLowerCase())}</h2>
@@ -270,9 +336,35 @@ ${FOOTER}
 </html>
 `;
 }
+/* redirections : anciens identifiants conservés pour ne pas casser l'indexation */
+let REDIR={};
+try{ REDIR=JSON.parse(fs.readFileSync('releve/redirections.json','utf8')); }catch(e){}
+delete REDIR._commentaire;
 const garder=new Set(V.map(v=>v.id+'.html'));
+Object.keys(REDIR).forEach(k=>garder.add(k+'.html'));
 fs.readdirSync('vehicules').forEach(f=>{ if(f.endsWith('.html')&&!garder.has(f)) fs.unlinkSync('vehicules/'+f); });
 V.forEach((v,i)=>fs.writeFileSync('vehicules/'+v.id+'.html',fiche(v,i)));
+Object.entries(REDIR).forEach(([ancien,cible])=>{
+  const v=V.find(x=>x.id===cible); if(!v){ console.log('redirection ignorée, cible absente : '+cible); return; }
+  const url='/vehicules/'+cible+'.html';
+  fs.writeFileSync('vehicules/'+ancien+'.html',
+`<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>${esc(nomC(v))} — GTA VI | Leonidakit</title>
+<link rel="canonical" href="https://www.leonidakit.com${url}">
+<meta name="robots" content="noindex, follow">
+<meta http-equiv="refresh" content="0; url=${url}">
+<script>location.replace(${JSON.stringify(url)});</script>
+</head>
+<body>
+<p>Cette page a été remplacée. <a href="${url}">Voir la fiche ${esc(nomC(v))}</a>.</p>
+</body>
+</html>
+`);
+});
+console.log('redirections     : '+Object.keys(REDIR).length);
 
 /* index de recherche */
 global.window={}; eval(fs.readFileSync('search-index.js','utf8'));

@@ -241,7 +241,67 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://www.leonidakit.com/vehicules/audi-a7-rs7.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/honda-accord-10.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/mercedes-c-w205.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/chevrolet-impala-10.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/volkswagen-jetta.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/chrysler-lebaron-town-country.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://www.leonidakit.com/vehicules/oceanic.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/buick-regal-6.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/chrysler-sebring-dodge-stratus.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/buick-skylark-6.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/ford-taurus.html</loc>
     <lastmod>2026-09-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -265,13 +325,13 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.leonidakit.com/vehicules/vapid-stanier.html</loc>
+    <loc>https://www.leonidakit.com/vehicules/vapid-stanier-moderne.html</loc>
     <lastmod>2026-09-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.leonidakit.com/vehicules/vulcar-ingot.html</loc>
+    <loc>https://www.leonidakit.com/vehicules/vapid-stanier.html</loc>
     <lastmod>2026-09-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -511,12 +571,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.leonidakit.com/vehicules/sirius.html</loc>
-    <lastmod>2026-09-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://www.leonidakit.com/vehicules/albany-buccaneer.html</loc>
     <lastmod>2026-09-14</lastmod>
     <changefreq>weekly</changefreq>
@@ -613,6 +667,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://www.leonidakit.com/vehicules/sirius.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://www.leonidakit.com/vehicules/schyster-deviant.html</loc>
     <lastmod>2026-09-14</lastmod>
     <changefreq>weekly</changefreq>
@@ -691,7 +751,19 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://www.leonidakit.com/vehicules/albany-cavalcade-xl.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://www.leonidakit.com/vehicules/benefactor-dubsta.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/benefactor-xls.html</loc>
     <lastmod>2026-09-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -716,6 +788,12 @@
   </url>
   <url>
     <loc>https://www.leonidakit.com/vehicules/declasse-seminole-frontier.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/canis-terminus.html</loc>
     <lastmod>2026-09-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -757,6 +835,48 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://www.leonidakit.com/vehicules/karin-vivanite.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/lampadati-novak.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/mammoth-patriot-mil-spec.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/dodge-durango-3.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/ford-explorer-2.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/audi-q7-2.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/toyota-rav4-5.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://www.leonidakit.com/vehicules/pegassi-toros.html</loc>
     <lastmod>2026-09-14</lastmod>
     <changefreq>weekly</changefreq>
@@ -781,6 +901,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://www.leonidakit.com/vehicules/vapid-montagne.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://www.leonidakit.com/vehicules/vapid-riata-classic.html</loc>
     <lastmod>2026-09-14</lastmod>
     <changefreq>weekly</changefreq>
@@ -788,6 +914,12 @@
   </url>
   <url>
     <loc>https://www.leonidakit.com/vehicules/annis-hellion.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/bravado-bison-900-95-monster-truck.html</loc>
     <lastmod>2026-09-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -835,6 +967,36 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://www.leonidakit.com/vehicules/dodge-dakota-convertible.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/ford-f-series-3.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/ram-3500.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/jeep-scrambler-cj8.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/swamp-buggy.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://www.leonidakit.com/vehicules/nagasaki-blazer.html</loc>
     <lastmod>2026-09-14</lastmod>
     <changefreq>weekly</changefreq>
@@ -859,13 +1021,19 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.leonidakit.com/vehicules/vapid-sandking-xl.html</loc>
+    <loc>https://www.leonidakit.com/vehicules/vapid-liberator.html</loc>
     <lastmod>2026-09-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.leonidakit.com/vehicules/coach.html</loc>
+    <loc>https://www.leonidakit.com/vehicules/vapid-reclaimer.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/vapid-sandking-xl.html</loc>
     <lastmod>2026-09-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -877,13 +1045,19 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.leonidakit.com/vehicules/bravado-rumpo.html</loc>
+    <loc>https://www.leonidakit.com/vehicules/bravado-bison-1800.html</loc>
     <lastmod>2026-09-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.leonidakit.com/vehicules/bravado-youga.html</loc>
+    <loc>https://www.leonidakit.com/vehicules/bravado-bison-900-95.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/bravado-rumpo.html</loc>
     <lastmod>2026-09-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -901,12 +1075,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.leonidakit.com/vehicules/brute-camper.html</loc>
-    <lastmod>2026-09-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://www.leonidakit.com/vehicules/vapid-bobcat-xl.html</loc>
     <lastmod>2026-09-14</lastmod>
     <changefreq>weekly</changefreq>
@@ -919,7 +1087,49 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.leonidakit.com/vehicules/vapid-minivan.html</loc>
+    <loc>https://www.leonidakit.com/vehicules/coach.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/ford-econoline-4.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/moocher.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/rexhall-rose-air.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/mercedes-sprinter-2.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/chrysler-town-country.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/ford-transit-4.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/ford-transit-cargo-4.html</loc>
     <lastmod>2026-09-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -1021,12 +1231,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.leonidakit.com/vehicules/buckingham-buzzard.html</loc>
-    <lastmod>2026-09-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://www.leonidakit.com/vehicules/buckingham-maverick.html</loc>
     <lastmod>2026-09-14</lastmod>
     <changefreq>weekly</changefreq>
@@ -1046,6 +1250,18 @@
   </url>
   <url>
     <loc>https://www.leonidakit.com/vehicules/buckingham-swift.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/buckingham-buzzard.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/nagasaki-police-buzzard.html</loc>
     <lastmod>2026-09-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -1123,6 +1339,156 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://www.leonidakit.com/vehicules/lure-predator-l35p.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/lure-predator-l35p-police.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/lure-predator-s23.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/azimut-85.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/azimut-atlantis-45.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/fishing-boat.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/water-taxi.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/bavaria-sr33.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/clarion.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/contender-39st.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/crownline-275-ss.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/crusader-boats-gfy.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/shipyard-de-hoop-brion.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/ferry.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/frauscher-1017-gt.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/highfield-sport-900.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/horizon-power-catamarans-pc60.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/lurssen-73m-coral-ocean.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/cruise-ship.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/rb-s.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/rb-s-ii.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/riva-86-domino.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/sea-ray-350-sundancer.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/sea-doo-rxt-x-300.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/skater-388.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://www.leonidakit.com/vehicules/nagasaki-dinghy.html</loc>
     <lastmod>2026-09-14</lastmod>
     <changefreq>weekly</changefreq>
@@ -1159,7 +1525,13 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.leonidakit.com/vehicules/dashound.html</loc>
+    <loc>https://www.leonidakit.com/vehicules/vortex-airboat.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/bravado-bison-1800-police.html</loc>
     <lastmod>2026-09-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -1178,6 +1550,12 @@
   </url>
   <url>
     <loc>https://www.leonidakit.com/vehicules/bravado-police-cruiser-buffalo.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/brute-ambulance.html</loc>
     <lastmod>2026-09-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -1202,6 +1580,12 @@
   </url>
   <url>
     <loc>https://www.leonidakit.com/vehicules/declasse-sheriff-suv.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/dundreary-police-landstalker-xl.html</loc>
     <lastmod>2026-09-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -1249,7 +1633,31 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://www.leonidakit.com/vehicules/dashound.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/vapid-caracara-lifeguard.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/ford-f-series-flatbed.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://www.leonidakit.com/vehicules/freight-train.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/chevrolet-silverado-6500-hd.html</loc>
     <lastmod>2026-09-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -1267,25 +1675,31 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.leonidakit.com/vehicules/vapid-caracara-lifeguard.html</loc>
-    <lastmod>2026-09-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://www.leonidakit.com/vehicules/vapid-police-cruiser-interceptor.html</loc>
     <lastmod>2026-09-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.leonidakit.com/vehicules/vapid-sadler.html</loc>
+    <loc>https://www.leonidakit.com/vehicules/vapid-police-cruiser-stanier-le.html</loc>
     <lastmod>2026-09-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.leonidakit.com/vehicules/vapid-stanier-le.html</loc>
+    <loc>https://www.leonidakit.com/vehicules/vapid-police-ghost.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/ford-explorer-police.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/vehicules/vapid-sadler.html</loc>
     <lastmod>2026-09-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
