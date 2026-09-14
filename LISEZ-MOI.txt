@@ -1,0 +1,22 @@
+LEONIDAKIT — livraison du 14 septembre 2026, chantier vehicules
+Cette livraison remplace les precedentes. Ne deploie que celle-ci.
+
+AUDIT.md    le rapport d'audit : ce qui a ete corrige, ce qui ne l'a pas
+            ete et pourquoi, ce qu'il reste a faire. A lire en premier.
+
+deployer/   a deposer tel quel dans le depot GitHub TevaWendt/Leonidadex,
+            en ecrasant. Nouveautes dans releve/ :
+              v-corrige.json     la source de verite que final.js relit
+              redirections.json  anciens identifiants a ne pas casser
+              audit-final.js     controle de coherence, a relancer apres
+                                 chaque ajout : node releve/audit-final.js
+              similarite.js      mesure la ressemblance entre fiches
+              croise.js          verifie que chaque texte parle bien du
+                                 modele reel declare dans sa fiche
+
+reprise/    a NE PAS mettre dans le depot. A garder sur ton disque et a
+            joindre a la prochaine conversation avec REPRISE.md.
+
+261 vehicules, plus une page de redirection generee automatiquement.
+Classes Emergency et Off-Road terminees.
+Il reste 29 vehicules a ajouter, pas 109.
