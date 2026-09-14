@@ -156,5 +156,28 @@
       tray.querySelector('a').style.visibility = sel.length >= 2 ? 'visible' : 'hidden';
     }
     if(tray) tray.querySelector('button').addEventListener('click', function(){ sel = []; majSel(); });
+
+    /* ------------------------------------------------------ modèle réel
+       Même principe que Street View sur la carte : aucune image n'est
+       hébergée ici, le bouton ouvre le modèle réel identifié dans un
+       nouvel onglet. Les cartes sans inspiration identifiée n'en ont pas. */
+    cards.forEach(function(c){
+      const url = c.dataset.reel; if(!url) return;
+      const tools = c.querySelector('.veh-tools'); if(!tools) return;
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'reel-card';
+      b.innerHTML = '<span class="reel-ico" aria-hidden="true">↗</span><span>Modèle réel</span>';
+      b.title = 'Voir le ' + (c.dataset.reelNom || 'modèle réel') + ' en photo';
+      b.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation();
+        window.open(url, '_blank', 'noopener'); });
+      tools.appendChild(b);
+    });
+  }
+
+  /* ---------------------------------------------------------- fiche : modèle réel
+     <a id="reel-bt" href="..." data-nom="Ferrari Testarossa 512 BB"> sur la fiche. */
+  const reelBt = document.getElementById('reel-bt');
+  if(reelBt && !reelBt.dataset.pret){
+    reelBt.dataset.pret = '1';
+    reelBt.target = '_blank'; reelBt.rel = 'noopener';
   }
 })();
