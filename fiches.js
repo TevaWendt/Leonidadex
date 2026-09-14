@@ -91,17 +91,21 @@
     const cards = Array.from(grid.querySelectorAll('.veh-card'));
     cards.forEach(function(c){
       const id = c.dataset.id; if(!id) return;
-      const thumb = c.querySelector('.veh-thumb'); if(!thumb) return;
+      const body = c.querySelector('.veh-body'); if(!body) return;
+      /* barre d'actions en pied de carte : l'image reste intacte */
+      let tools = body.querySelector('.veh-tools');
+      if(!tools){ tools = document.createElement('div'); tools.className = 'veh-tools'; body.appendChild(tools); }
       const b = document.createElement('button'); b.type = 'button'; b.className = 'own-card';
-      b.title = 'Marquer comme possédé'; b.setAttribute('aria-label', b.title);
+      b.innerHTML = '<span class="ck"></span><span class="own-lbl-c">' + (type === 'armes' ? 'Arsenal' : 'Garage') + '</span>';
+      b.title = 'Marquer comme possédé'; b.setAttribute('aria-pressed', 'false');
       b.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation();
         if(own[id]) delete own[id]; else own[id] = 1; ecrire(own); majCartes(); });
-      thumb.appendChild(b);
+      tools.appendChild(b);
     });
     function majCartes(){
       let n = 0;
       cards.forEach(function(c){ const on = !!own[c.dataset.id]; c.classList.toggle('is-own', on);
-        const b = c.querySelector('.own-card'); if(b) b.classList.toggle('on', on); if(on) n++; });
+        const b = c.querySelector('.own-card'); if(b){ b.classList.toggle('on', on); b.setAttribute('aria-pressed', on ? 'true' : 'false'); } if(on) n++; });
       const bar = document.getElementById('own-bar');
       if(bar){
         bar.querySelector('b').textContent = n;
@@ -133,16 +137,18 @@
     const tray = document.getElementById('cmp-tray');
     cards.forEach(function(c){
       const id = c.dataset.id; if(!id) return;
-      const thumb = c.querySelector('.veh-thumb'); if(!thumb) return;
-      const b = document.createElement('button'); b.type = 'button'; b.className = 'cmp-card'; b.textContent = 'Comparer';
+      const tools = c.querySelector('.veh-tools'); if(!tools) return;
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'cmp-card';
+      b.innerHTML = '<span class="cmp-ico" aria-hidden="true">⇄</span><span>Comparer</span>';
+      b.setAttribute('aria-pressed', 'false');
       b.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation();
         const k = sel.indexOf(id);
         if(k >= 0) sel.splice(k, 1); else { if(sel.length >= 3){ sel.shift(); } sel.push(id); }
         majSel(); });
-      thumb.appendChild(b);
+      tools.appendChild(b);
     });
     function majSel(){
-      cards.forEach(c => { const b = c.querySelector('.cmp-card'); if(b) b.classList.toggle('on', sel.indexOf(c.dataset.id) >= 0); });
+      cards.forEach(c => { const b = c.querySelector('.cmp-card'); if(b){ const on = sel.indexOf(c.dataset.id) >= 0; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on ? 'true' : 'false'); } });
       if(!tray) return;
       tray.classList.toggle('on', sel.length > 0);
       tray.querySelector('b').textContent = sel.length + ' sélectionné' + (sel.length > 1 ? 's' : '');

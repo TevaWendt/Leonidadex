@@ -321,7 +321,13 @@
     const l = location.hash.match(/^#lieu=([\w-]+)$/);
     if(l){
       const p = byId(l[1]);
-      if(p){ goTo(p, Math.max(0.6, ZOOM_NIVEAU[p.z || 0] + 0.2)); return true; }
+      if(p){
+        goTo(p, Math.max(0.6, ZOOM_NIVEAU[p.z || 0] + 0.2));
+        /* arrivée par lien direct : on amène la carte à l'écran, sinon le panneau
+           s'ouvre sous le pli sur mobile et l'utilisateur ne voit rien */
+        requestAnimationFrame(function(){ stage.scrollIntoView({ block: 'start', behavior: 'instant' in document.documentElement.style ? 'instant' : 'auto' }); });
+        return true;
+      }
     }
     const m = location.hash.match(/^#(-?\d+),(-?\d+),([\d.]+)$/);
     if(!m) return false;

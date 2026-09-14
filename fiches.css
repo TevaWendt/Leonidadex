@@ -21,8 +21,12 @@
   box-shadow:0 2px 8px rgba(0,0,0,.2);display:flex;align-items:center;justify-content:center;}
 .gal-btn:hover{background:#fff;} .gal-btn.prev{left:10px;} .gal-btn.next{right:10px;}
 .gal-dots{display:flex;gap:6px;justify-content:center;margin-top:10px;}
-.gal-dots button{width:26px;height:6px;border-radius:3px;border:none;background:rgba(26,26,30,.15);cursor:pointer;padding:0;}
-.gal-dots button.on{background:#E8452C;}
+/* zone tactile de 32 px, barre visuelle de 6 px : accessible au doigt sans alourdir le dessin */
+.gal-dots button{position:relative;width:32px;height:32px;border:none;background:none;cursor:pointer;padding:0;}
+.gal-dots button::before{content:'';position:absolute;left:3px;right:3px;top:13px;height:6px;border-radius:3px;background:rgba(26,26,30,.15);transition:background .15s;}
+.gal-dots button.on::before{background:#E8452C;}
+.gal-dots button:focus-visible{outline:2px solid #E8452C;outline-offset:2px;border-radius:6px;}
+.gal-dots{margin-top:2px;gap:0;}
 .gal-note{font-size:.78rem;color:#6B6874;margin-top:8px;text-align:center;}
 
 /* ---------- possession (arsenal / garage) ---------- */
@@ -33,11 +37,7 @@
 .own-bt.on .ck{background:#E8452C;border-color:#E8452C;}
 .own-bt.on .ck::after{content:'';position:absolute;left:5px;top:1px;width:5px;height:9px;border:solid #fff;
   border-width:0 2.5px 2.5px 0;transform:rotate(45deg);}
-.own-card{position:absolute;top:10px;right:10px;width:30px;height:30px;border-radius:8px;border:2px solid rgba(255,255,255,.85);
   background:rgba(26,26,30,.55);cursor:pointer;z-index:3;padding:0;}
-.own-card.on{background:#E8452C;border-color:#E8452C;}
-.own-card.on::after{content:'';position:absolute;left:10px;top:5px;width:6px;height:12px;border:solid #fff;
-  border-width:0 2.5px 2.5px 0;transform:rotate(45deg);}
 .veh-card.is-own .veh-thumb::before{content:'';position:absolute;inset:0;box-shadow:inset 0 0 0 3px #E8452C;pointer-events:none;z-index:2;}
 .own-bar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:12px 16px;border-radius:12px;
   background:#fff;border:1px solid rgba(26,26,30,.12);margin:14px 0 6px;}
@@ -68,9 +68,6 @@
 .cmp-tray b{font-weight:800;}
 .cmp-tray a{color:#fff;background:#E8452C;padding:7px 12px;border-radius:9px;font-weight:800;text-decoration:none;}
 .cmp-tray button{background:none;border:1px solid rgba(255,255,255,.35);color:#fff;border-radius:8px;padding:6px 9px;cursor:pointer;font:inherit;font-size:.78rem;}
-.cmp-card{position:absolute;bottom:10px;left:10px;height:30px;padding:0 9px;border-radius:8px;border:2px solid rgba(255,255,255,.85);
-  background:rgba(26,26,30,.55);color:#fff;font:inherit;font-size:.68rem;font-weight:800;cursor:pointer;z-index:3;}
-.cmp-card.on{background:#F5A524;border-color:#F5A524;color:#1A1A1E;}
 .veh-thumb{position:relative;}
 
 /* ---------- fiche : liens utiles ---------- */
@@ -185,3 +182,48 @@
 .duo-k{font-size:.68rem; font-weight:800; letter-spacing:.09em; text-transform:uppercase; color:var(--coral);}
 .duo-t{font-size:1.05rem; font-weight:900;}
 .duo-d{font-size:.85rem; line-height:1.55; color:var(--ink-soft);}
+
+
+/* ============================================================
+   CARTE DU HUB — refonte
+   L'image ne porte plus que le libellé de catégorie. Le statut tient
+   sur une ligne. Les actions (garage, comparer) forment un pied de
+   carte et ne recouvrent jamais rien.
+   ============================================================ */
+.veh-st{display:inline-flex; align-self:flex-start; align-items:center; gap:6px; font-size:.64rem; font-weight:800;
+  letter-spacing:.06em; text-transform:uppercase; padding:3px 9px 3px 7px; border-radius:20px;
+  margin-bottom:7px; white-space:nowrap; max-width:100%; overflow:hidden; text-overflow:ellipsis;}
+.veh-st::before{content:''; width:7px; height:7px; border-radius:50%; flex:none; background:currentColor;}
+.veh-st--officiel{background:var(--ink); color:#fff;}
+.veh-st--vu{background:rgba(181,118,42,.14); color:#8A5A1E;}
+.veh-st--comm{background:rgba(122,92,143,.14); color:#5E4570;}
+
+.veh-body{display:flex; flex-direction:column;}
+.veh-tools{display:flex; gap:6px; margin-top:auto; padding-top:10px; border-top:1px solid rgba(26,26,30,.08);}
+.veh-tools button{flex:1; display:inline-flex; align-items:center; justify-content:center; gap:6px;
+  min-height:34px; padding:0 8px; border-radius:8px; border:1.5px solid rgba(26,26,30,.18);
+  background:#fff; color:var(--ink); font:inherit; font-size:.72rem; font-weight:800; cursor:pointer;
+  transition:border-color .15s, background .15s, color .15s;}
+.veh-tools button:hover{border-color:var(--ink);}
+.veh-tools .ck{width:14px; height:14px; border-radius:4px; border:1.5px solid currentColor; position:relative; flex:none;}
+.veh-tools .own-card.on{background:var(--ink); color:#fff; border-color:var(--ink);}
+.veh-tools .own-card.on .ck{background:var(--coral); border-color:var(--coral);}
+.veh-tools .own-card.on .ck::after{content:''; position:absolute; left:4px; top:1px; width:4px; height:7px;
+  border:solid #fff; border-width:0 2px 2px 0; transform:rotate(45deg);}
+.veh-tools .cmp-card.on{background:var(--amber); border-color:var(--amber); color:var(--ink);}
+.cmp-ico{font-size:.9rem; line-height:1;}
+.veh-card.is-own .veh-thumb::before{content:''; position:absolute; inset:0; box-shadow:inset 0 0 0 3px var(--coral); pointer-events:none; z-index:2;}
+@media (max-width:420px){ .veh-tools .own-lbl-c{display:none;} .veh-tools .own-card{flex:0 0 42px;} }
+
+/* ---------- les ancres ne passent plus sous la barre de filtres collante ---------- */
+section[id], .sec-h[id]{scroll-margin-top:200px;}
+@media (min-width:900px){ section[id], .sec-h[id]{scroll-margin-top:196px;} }
+
+/* ---------- tri des résultats ---------- */
+.vtri-wrap{display:inline-flex; align-items:center; margin-left:auto;}
+.vtri-wrap select{font:inherit; font-size:.82rem; font-weight:700; color:var(--ink); padding:7px 30px 7px 10px;
+  border:2px solid var(--rule); border-radius:8px; background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 4l4 4 4-4' fill='none' stroke='%231A1A1E' stroke-width='1.8'/%3E%3C/svg%3E") no-repeat right 9px center/12px;
+  -webkit-appearance:none; appearance:none; cursor:pointer;}
+.vtri-wrap select:focus{outline:none; border-color:var(--coral);}
+.sr-only{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap;}
+@media (max-width:640px){ .vtri-wrap{margin-left:0;} }
