@@ -293,11 +293,11 @@ ${HEADER}
     <h2 class="sec-h">Identité</h2>
     <table class="spec rise">
       <tbody>
-        <tr><th scope="row">Modèle</th><td>${esc(v.nom)}${v.alias?' <span class="unknown">— anciennement '+esc(v.alias)+'</span>':''}</td></tr>
+        <tr><th scope="row">Modèle</th><td>${esc(v.nom)}${v.alias?' <span class="unknown">(anciennement '+esc(v.alias)+')</span>':''}</td></tr>
         <tr><th scope="row">Constructeur</th><td>${esc(v.marque||'Non identifié')}</td></tr>
         <tr><th scope="row">Statut</th><td>${st.l}</td></tr>
         <tr><th scope="row">Catégorie</th><td><a href="../vehicules.html#cat=${v.cat}">${esc(cat)}</a></td></tr>
-        <tr><th scope="row">Inspiration réelle</th><td>${mod?esc(mod)+' <span class="unknown">— rapprochement communautaire</span>':'<span class="unknown">Non identifiée</span>'}</td></tr>${v.slot?`
+        <tr><th scope="row">Inspiration réelle</th><td>${mod?esc(mod)+' <span class="unknown">(rapprochement communautaire)</span>':'<span class="unknown">Non identifiée</span>'}</td></tr>${v.slot?`
         <tr><th scope="row">Origine du modèle</th><td><a href="../vehicules.html#slot=${v.slot}">${SLOT[v.slot]}</a></td></tr>`:''}${ed?`
         <tr><th scope="row">Disponibilité</th><td><a href="../vehicules-rares.html">${ed}</a></td></tr>`:''}
         <tr><th scope="row">Source</th><td>${esc(v.src||'Rapprochement de la communauté')}</td></tr>
@@ -342,6 +342,8 @@ try{ REDIR=JSON.parse(fs.readFileSync('releve/redirections.json','utf8')); }catc
 delete REDIR._commentaire;
 const garder=new Set(V.map(v=>v.id+'.html'));
 Object.keys(REDIR).forEach(k=>garder.add(k+'.html'));
+try{ const R0=JSON.parse(fs.readFileSync('releve/retraits.json','utf8'));
+     Object.keys(R0).forEach(k=>{ if(k!=='_commentaire') garder.add(k+'.html'); }); }catch(e){}
 fs.readdirSync('vehicules').forEach(f=>{ if(f.endsWith('.html')&&!garder.has(f)) fs.unlinkSync('vehicules/'+f); });
 V.forEach((v,i)=>fs.writeFileSync('vehicules/'+v.id+'.html',fiche(v,i)));
 Object.entries(REDIR).forEach(([ancien,cible])=>{
@@ -365,6 +367,31 @@ Object.entries(REDIR).forEach(([ancien,cible])=>{
 `);
 });
 console.log('redirections     : '+Object.keys(REDIR).length);
+
+/* retraits : fiches sorties de la base, conservées en page d'explication */
+let RETR={};
+try{ RETR=JSON.parse(fs.readFileSync('releve/retraits.json','utf8')); }catch(e){}
+delete RETR._commentaire;
+Object.entries(RETR).forEach(([id,r])=>{
+  fs.writeFileSync('vehicules/'+id+'.html',
+`<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Fiche retiree | Leonidakit</title>
+<link rel="canonical" href="https://www.leonidakit.com/vehicules.html">
+<meta name="robots" content="noindex, follow">
+<meta name="description" content="Cette fiche a ete retiree de la base Leonidakit.">
+</head>
+<body>
+<h1>${esc(r.nom)}</h1>
+<p>Cette fiche a ete retiree de la base. ${esc(r.motif)}</p>
+<p>Leonidakit n'utilise aucune donnee issue d'une fuite. <a href="/vehicules.html">Revenir a la liste des vehicules</a>.</p>
+</body>
+</html>
+`);
+});
+console.log('retraits         : '+Object.keys(RETR).length);
 
 /* index de recherche */
 global.window={}; eval(fs.readFileSync('search-index.js','utf8'));
