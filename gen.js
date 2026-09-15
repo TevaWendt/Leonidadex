@@ -1,4 +1,5 @@
 const fs=require('fs');
+process.chdir(__dirname);
 global.window={}; eval(fs.readFileSync('vehicules-data.js','utf8'));
 const V=window.LK_VEHICULES;
 
@@ -15,7 +16,7 @@ const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'
 const nomC=v=>(v.marque&&v.marque!=='Marque inconnue'?v.marque+' ':'')+v.nom;
 
 /* silhouettes et vignettes existantes */
-const hub0=fs.readFileSync('vehicules.html','utf8');
+const hub0=fs.readFileSync('templates/vehicules.html','utf8');
 const ART_ID={},ART_CAT={},THUMB={};
 let m;const re=/<a class="veh-card rise" href="vehicules\/[^"]+\.html" data-id="([^"]+)"[\s\S]*?<div class="veh-thumb([^"]*)">([\s\S]*?)<\/div><div class="veh-body">/g;
 while((m=re.exec(hub0))!==null){ THUMB[m[1]]={cls:m[2],in:m[3]};
@@ -153,12 +154,10 @@ const V_CARTE=[
  "Notre carte couvre les points de vente, l'atelier et la piste. Le repérage véhicule par véhicule commencera le jour de la sortie."];
 
 const V_SANSIMG=[
- "Aucune image officielle de ce véhicule n'a été publiée. Illustration provisoire.",
- "Rockstar n'a diffusé aucun visuel de ce modèle. L'illustration ci-dessus est provisoire.",
- "Pas de visuel officiel pour l'instant : le dessin qui précède tient lieu de substitut.",
- "Ce véhicule n'a fait l'objet d'aucune image publiée. Illustration temporaire en attendant.",
- "Faute de visuel diffusé par Rockstar, nous affichons une silhouette provisoire.",
- "Aucun cliché officiel n'existe à ce jour. L'image est une représentation d'attente."];
+ "Illustration provisoire : les visuels officiels restent à intégrer à cette fiche.",
+ "Silhouette temporaire en attendant l'intégration des images du véhicule.",
+ "Les images ne sont pas encore disponibles sur cette fiche. Illustration provisoire."];
+
 
 const PENDCAT={
  bateau:["Vitesse de pointe, tenue de mer et comportement dans le clapot.","Prix, ponton de vente et mouillages où le trouver en Leonida.","Coques, teintes, sellerie et équipements de pont."],
@@ -179,11 +178,11 @@ const pend=v=>{const t=PENDCAT[v.cat]||PENDCAT.divers;
   '\n    <div class="pending rise"><div class="pending-top"><h3>'+h+'</h3><span class="pending-tag">À venir</span></div><p>'
   +esc(t[i])+'</p><div class="pending-bars" aria-hidden="true"><span></span><span></span><span></span></div></div>').join('')+'\n  ';};
 
-const MOD=fs.readFileSync('vehicules/albany-emperor.html','utf8');
+const MOD=fs.readFileSync('templates/vehicle-reference.html','utf8');
 const HEADER=MOD.match(/<a class="skip"[\s\S]*?<main id="main">/)[0];
 const FOOTER=MOD.match(/<footer>[\s\S]*?<\/body>/)[0];
 const FAV=MOD.match(/<link rel="icon"[^>]*>/)[0];
-const CARTE=MOD.match(/<div class="fiche-liens rise">[\s\S]*?<\/div>/)[0];
+const CARTE='<div class="fiche-liens rise"><a href="../carte.html#lieu=g-L1610">Vapid Dealership</a><a href="../carte.html#lieu=g-L2375">Rideout Customs</a><a href="../carte.html#lieu=g-L590">Ambrosia Raceway Park</a></div>';
 const NOTE=MOD.match(/<div class="note-box rise">[\s\S]*?<\/div>/)[0];
 const V_NOTE=[
  "Les inspirations réelles sont des rapprochements établis à partir des visuels officiels, pas des informations communiquées par Rockstar. Aucune donnée issue de fuites n'est utilisée ici.",
@@ -194,7 +193,6 @@ const V_NOTE=[
  "Tout ce qui figure sur cette fiche a été relevé dans les supports publiés par Rockstar. Aucun élément ne vient des fuites de 2022 ou de 2026."];
 const note=v=>NOTE.replace("Les inspirations réelles sont des rapprochements établis à partir des visuels officiels, pas des informations communiquées par Rockstar. Aucune donnée issue de fuites n'est utilisée ici.",
   pioche(v.id,'note',V_NOTE));
-const PEND=MOD.match(/<h2 class="sec-h">Ce qui arrive avec le jeu<\/h2>([\s\S]*?)<\/div>\s*<\/section>/)[1];
 const artH=v=>art(v).replace(/style="height:\d+px"/,'style="height:120px"');
 
 function fiche(v,i){
@@ -203,7 +201,8 @@ function fiche(v,i){
  const vois=V.filter(x=>x.cat===v.cat&&x.id!==v.id).slice(0,6);
  const ed=v.edition==='Pre-Order'?'Bonus de précommande':v.edition?'Exclusif à l\u2019édition Ultimate':null;
  const lede=nom+' dans GTA VI : '+cat.toLowerCase()+(mod?'. Inspiration : '+mod:'')+'. '+st.d;
- const img=Array.isArray(v.vues)&&v.vues.length, vues=img?v.vues.join(','):'face,profil,detail';
+ const available=(v.vues||[]).filter(view=>fs.existsSync('img/vehicules/'+v.id+'-'+view+'.jpg'));
+ const img=available.length>0, vues=img?available.join(','):'';
  const tags=['<span class="chip live">'+st.c+'</span>']
   .concat(ed?['<span class="chip">'+ed+'</span>']:[])
   .concat(img?['<span class="chip">Images officielles</span>']:[])
@@ -225,7 +224,7 @@ function fiche(v,i){
 <meta property="og:description" content="${esc(lede)}">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="fr_FR">${img?`
-<meta property="og:image" content="https://www.leonidakit.com/img/vehicules/${v.id}-${v.vues[0]}.jpg">
+<meta property="og:image" content="https://www.leonidakit.com/img/vehicules/${v.id}-${available[0]}.jpg">
 <meta name="twitter:card" content="summary_large_image">`:''}
 <meta name="theme-color" content="#FDFBF7">
 <meta name="color-scheme" content="light">
@@ -338,27 +337,28 @@ ${FOOTER}
 }
 /* redirections : anciens identifiants conservés pour ne pas casser l'indexation */
 let REDIR={};
-try{ REDIR=JSON.parse(fs.readFileSync('releve/redirections.json','utf8')); }catch(e){}
+REDIR=JSON.parse(fs.readFileSync('redirections.json','utf8')); 
 delete REDIR._commentaire;
+const LEGACY=JSON.parse(fs.readFileSync('legacy-pages.json','utf8'));
 const garder=new Set(V.map(v=>v.id+'.html'));
 Object.keys(REDIR).forEach(k=>garder.add(k+'.html'));
-try{ const R0=JSON.parse(fs.readFileSync('releve/retraits.json','utf8'));
+try{ const R0=JSON.parse(fs.readFileSync('retraits.json','utf8'));
      Object.keys(R0).forEach(k=>{ if(k!=='_commentaire') garder.add(k+'.html'); }); }catch(e){}
-fs.readdirSync('vehicules').forEach(f=>{ if(f.endsWith('.html')&&!garder.has(f)) fs.unlinkSync('vehicules/'+f); });
+fs.readdirSync('vehicules').forEach(f=>{ if(f.endsWith('.html')&&!garder.has(f)&&!LEGACY.includes(f)) throw new Error('Fiche orpheline à examiner : '+f); });
 V.forEach((v,i)=>fs.writeFileSync('vehicules/'+v.id+'.html',fiche(v,i)));
 Object.entries(REDIR).forEach(([ancien,cible])=>{
-  const v=V.find(x=>x.id===cible); if(!v){ console.log('redirection ignorée, cible absente : '+cible); return; }
+  const v=V.find(x=>x.id===cible); if(!v)throw new Error('Cible de redirection absente : '+cible);
   const url='/vehicules/'+cible+'.html';
   fs.writeFileSync('vehicules/'+ancien+'.html',
 `<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>${esc(nomC(v))} — GTA VI | Leonidakit</title>
 <link rel="canonical" href="https://www.leonidakit.com${url}">
 <meta name="robots" content="noindex, follow">
 <meta http-equiv="refresh" content="0; url=${url}">
-<script>location.replace(${JSON.stringify(url)});</script>
 </head>
 <body>
 <p>Cette page a été remplacée. <a href="${url}">Voir la fiche ${esc(nomC(v))}</a>.</p>
@@ -370,7 +370,7 @@ console.log('redirections     : '+Object.keys(REDIR).length);
 
 /* retraits : fiches sorties de la base, conservées en page d'explication */
 let RETR={};
-try{ RETR=JSON.parse(fs.readFileSync('releve/retraits.json','utf8')); }catch(e){}
+try{ RETR=JSON.parse(fs.readFileSync('retraits.json','utf8')); }catch(e){}
 delete RETR._commentaire;
 Object.entries(RETR).forEach(([id,r])=>{
   fs.writeFileSync('vehicules/'+id+'.html',
@@ -378,6 +378,7 @@ Object.entries(RETR).forEach(([id,r])=>{
 <html lang="fr">
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Fiche retiree | Leonidakit</title>
 <link rel="canonical" href="https://www.leonidakit.com/vehicules.html">
 <meta name="robots" content="noindex, follow">
@@ -385,7 +386,7 @@ Object.entries(RETR).forEach(([id,r])=>{
 </head>
 <body>
 <h1>${esc(r.nom)}</h1>
-<p>Cette fiche a ete retiree de la base. ${esc(r.motif)}</p>
+<p>Cette fiche a ete retiree de la base. ${esc(r.motif.replace(/GTA Base ne la donne plus que dans la fuite de septembre 2022\./g,'La source conservée dans notre historique ne satisfait plus les critères de cette base.'))}</p>
 <p>Leonidakit n'utilise aucune donnee issue d'une fuite. <a href="/vehicules.html">Revenir a la liste des vehicules</a>.</p>
 </body>
 </html>
@@ -396,17 +397,9 @@ console.log('retraits         : '+Object.keys(RETR).length);
 /* index de recherche */
 global.window={}; eval(fs.readFileSync('search-index.js','utf8'));
 let IDX=window.LK_INDEX.filter(e=>e.u.indexOf('/vehicules/')!==0);
-V.forEach(v=>IDX.push({l:nomC(v),k:'Véhicule',u:'/vehicules/'+v.id+'.html',s:v.id}));
+V.forEach(v=>IDX.push({l:nomC(v),k:'Véhicule',u:'/vehicules/'+v.id+'.html',s:v.search}));
 fs.writeFileSync('search-index.js','/* Index de recherche, généré automatiquement. Ne pas éditer à la main. */\nwindow.LK_INDEX = '+JSON.stringify(IDX)+';\n');
 
-/* sitemaps */
-const d=new Date().toISOString().slice(0,10);
-['sitemap.xml','sitemap-fiches.xml'].forEach(f=>{
-  let s=fs.readFileSync(f,'utf8');
-  s=s.replace(/\s*<url>(?:(?!<\/url>)[\s\S])*?\/vehicules\/[a-z0-9-]+\.html[\s\S]*?<\/url>/g,'');
-  const bloc=V.map(v=>'  <url>\n    <loc>https://www.leonidakit.com/vehicules/'+v.id+'.html</loc>\n    <lastmod>'+d+'</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>0.7</priority>\n  </url>').join('\n');
-  s=s.replace('</urlset>',bloc+'\n</urlset>');
-  fs.writeFileSync(f,s);
-});
 console.log('fiches générées :',V.length);
 console.log('index           :',IDX.length,'entrées');
+require('./scripts/sync-site.cjs');

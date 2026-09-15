@@ -44,16 +44,19 @@
 </script>
 <link rel="stylesheet" href="../style.css">
 <link rel="stylesheet" href="../fiches.css">
+<meta property="og:image" content="https://www.leonidakit.com/img/social-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:url" content="https://www.leonidakit.com/armes/queue-billard.html">
 </head>
 <body data-own="armes">
 
 <a class="skip" href="#main">Aller au contenu</a>
-<div class="sunset"></div>
+<div class="sunset" aria-hidden="true"></div>
 
 <header>
   <div class="shell head-in">
     <a href="../index.html" class="brand">Leonida<span>kit</span></a>
-    <nav id="nav">
+    <nav id="nav" aria-label="Navigation principale">
       <ul>
         <li><a href="../carte.html">Carte</a></li>
         <li><a href="../vehicules.html">Véhicules</a></li>
@@ -102,9 +105,9 @@
         <div class="fiche-liens"><button type="button" class="own-bt" id="own-bt" data-id="queue-billard"><span class="ck"></span><span>Ajouter à mon arsenal</span></button><a href="../comparateur.html?type=armes&amp;ids=queue-billard">Comparer</a></div>
       </div>
       <div class="fhero-art fhero-art--gal">
-        <div class="gal" data-base="../img/armes/queue-billard" data-vues="face,profil,detail" data-nom="Queue de billard"
-             data-art="&lt;svg class=&quot;veh-art&quot; viewBox=&quot;0 0 100 100&quot; preserveAspectRatio=&quot;xMidYMid meet&quot; aria-hidden=&quot;true&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; style=&quot;height:120px&quot;&gt;&lt;path d=&quot;M18 74l6-6 42-42a6 6 0 0 1 8 8L32 76z&quot; fill=&quot;#1A1A1E&quot;/&gt;&lt;/svg&gt;" aria-label="Galerie : Queue de billard"></div>
-        <p class="gal-note">Vues face, profil et détail. Les images officielles sous plusieurs angles n'existent pas encore : les emplacements se remplissent au fur et à mesure.</p>
+        <div class="gal" data-base="../img/armes/queue-billard" data-vues="" data-nom="Queue de billard"
+             data-art="&lt;svg class=&quot;veh-art&quot; viewBox=&quot;0 0 100 100&quot; preserveAspectRatio=&quot;xMidYMid meet&quot; aria-hidden=&quot;true&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; style=&quot;height:120px&quot;&gt;&lt;path d=&quot;M18 74l6-6 42-42a6 6 0 0 1 8 8L32 76z&quot; fill=&quot;#1A1A1E&quot;/&gt;&lt;/svg&gt;" aria-label="Galerie : Queue de billard" data-vide="1"></div>
+        <p class="gal-note">Illustration provisoire : les visuels restent à intégrer à cette fiche.</p>
       </div>
     </div>
   </div>
@@ -211,13 +214,13 @@
         <p>Carte, fiches et outils pour GTA VI. Mis à jour en continu à partir du 19 novembre 2026.</p>
       </div>
       <div class="foot-cols">
-        <div><h4>Contenu</h4>
+        <div><h2>Contenu</h2>
           <nav><a href="../carte.html">Carte</a><a href="../vehicules.html">Véhicules</a><a href="../armes.html">Armes</a><a href="../collectibles.html">Collectibles</a></nav>
         </div>
-        <div><h4>Outils</h4>
+        <div><h2>Outils</h2>
           <nav><a href="../progression.html">Progression</a><a href="../calculateurs.html">Calculateurs</a></nav>
         </div>
-        <div><h4>Le site</h4>
+        <div><h2>Le site</h2>
           <nav><a href="../a-propos.html">À propos</a><a href="../contact.html">Contact</a><a href="../mentions-legales.html">Mentions légales</a></nav>
         </div>
       </div>
@@ -228,6 +231,8 @@
 
 <script src="../search-index.js"></script>
 <script src="../armes-data.js"></script>
+<script src="../assets-manifest.js"></script>
+<script src="../common.js"></script>
 <script src="../app.js"></script>
 <script src="../fiches.js"></script>
 

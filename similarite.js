@@ -1,6 +1,7 @@
 /* Mesure la similarité entre fiches. À relancer après chaque ajout de véhicules.
-   Usage : node releve/similarite.js   (depuis la racine du dépôt) */
+   Usage : node similarite.js   (depuis la racine du dépôt) */
 const fs=require('fs');
+process.chdir(__dirname);
 const fichiers=fs.readdirSync('vehicules').filter(f=>f.endsWith('.html'));
 const mots=f=>{let s=fs.readFileSync('vehicules/'+f,'utf8');
  s=s.replace(/<script[\s\S]*?<\/script>/g,' ').replace(/<style[\s\S]*?<\/style>/g,' ')

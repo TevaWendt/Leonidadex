@@ -1,3 +1,6 @@
+(function(){
+'use strict';
+const esc = window.LK.esc;
 const el = id => document.getElementById(id);
 
   /* --- Éléments propres à la page d'accueil : on sort si absents --- */
@@ -83,89 +86,47 @@ const el = id => document.getElementById(id);
 
   /* menu mobile, présent sur toutes les pages */
   const burger = el('burger'), nav = el('nav');
-  burger.addEventListener('click', function(){
+  if(burger && nav) burger.addEventListener('click', function(){
     const open = nav.classList.toggle('open');
     burger.setAttribute('aria-expanded', open);
     burger.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
   });
 
-  /* ---- recherche du site, alimentée par search-index.js ---- */
-  const q = el('q'), box = el('suggest');
-  if(q && box && window.LK_INDEX){
-    const INDEX = window.LK_INDEX;
+  /* Recherche accessible, utilisable aussi dans les deux formulaires de la 404. */
+  document.querySelectorAll('.searchwrap').forEach(function(wrap){
+    const q = wrap.querySelector('input[type="search"]'), box = wrap.querySelector('.suggest');
+    if(!q || !box || !window.LK_INDEX) return;
+    const norm = s => String(s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,' ').trim();
+    const index = window.LK_INDEX.map(e => ({...e, text:norm(e.s+' '+e.l)}));
     let cur = -1, hits = [];
-
-    const norm = s => s.toLowerCase().normalize("NFD")
-                       .replace(/[\u0300-\u036f]/g,"")
-                       .replace(/[^a-z0-9]+/g," ").trim();
-
-    function score(entry, v){
-      const s = entry.s, label = norm(entry.l);
-      if(label === v) return 0;
-      if(label.startsWith(v)) return 1;
-      if(s.startsWith(v)) return 2;
-      const words = s.split(" ");
-      for(let i = 0; i < words.length; i++){
-        if(words[i].startsWith(v)) return 3;
-      }
-      if(s.includes(v)) return 4;
-      return -1;
+    q.setAttribute('role','combobox'); q.setAttribute('aria-autocomplete','list');
+    q.setAttribute('aria-controls',box.id); q.setAttribute('aria-expanded','false');
+    const close = () => { box.classList.remove('open'); q.setAttribute('aria-expanded','false'); q.removeAttribute('aria-activedescendant'); cur=-1; };
+    function render(){
+      const v=norm(q.value); cur=-1; q.removeAttribute('aria-activedescendant');
+      if(!v){box.innerHTML=''; hits=[]; close(); return;}
+      hits=index.map(e=>({e,rank:norm(e.l)===v?0:norm(e.l).startsWith(v)?1:e.text.includes(v)?2:v.split(' ').every(t=>e.text.includes(t))?3:99})).filter(x=>x.rank<99).sort((a,b)=>a.rank-b.rank||a.e.l.length-b.e.l.length).slice(0,8).map(x=>x.e);
+      box.innerHTML=hits.length?hits.map((e,i)=>'<a id="'+box.id+'-option-'+i+'" href="'+esc(e.u)+'" role="option" aria-selected="false"><span>'+esc(e.l)+'</span><span class="kind">'+esc(e.k)+'</span></a>').join(''):'<div class="none" role="status">Aucun résultat pour « '+esc(q.value.trim())+' ».</div>';
+      box.classList.add('open'); q.setAttribute('aria-expanded','true');
     }
-
-    function render(raw){
-      const v = norm(raw.trim());
-      cur = -1;
-      if(!v){ box.classList.remove('open'); box.innerHTML = ''; hits = []; return; }
-
-      hits = INDEX
-        .map(e => ({ e: e, r: score(e, v) }))
-        .filter(x => x.r >= 0)
-        .sort((a,b) => a.r - b.r || a.e.l.length - b.e.l.length)
-        .slice(0, 8)
-        .map(x => x.e);
-
-      if(!hits.length){
-        box.innerHTML = '<div class="none">Aucun résultat pour « ' + raw.trim() + ' ».</div>';
-      } else {
-        box.innerHTML = hits.map(function(e){
-          return '<a href="' + e.u + '" role="option">'
-               + '<span>' + e.l + '</span>'
-               + '<span class="kind">' + e.k + '</span></a>';
-        }).join('');
-      }
-      box.classList.add('open');
-    }
-
-    function go(i){
-      if(hits[i]) window.location.href = hits[i].u;
-    }
-
-    q.addEventListener('input', function(e){ render(e.target.value); });
-
-    q.addEventListener('keydown', function(e){
-      const items = box.querySelectorAll('a');
-      if(e.key === 'ArrowDown' && items.length){ e.preventDefault(); cur = (cur + 1) % items.length; }
-      else if(e.key === 'ArrowUp' && items.length){ e.preventDefault(); cur = (cur - 1 + items.length) % items.length; }
-      else if(e.key === 'Enter'){
-        e.preventDefault();
-        go(cur >= 0 ? cur : 0);
-        return;
-      }
-      else if(e.key === 'Escape'){ box.classList.remove('open'); q.blur(); return; }
-      else return;
-      items.forEach(function(n,i){ n.classList.toggle('on', i === cur); });
-      if(items[cur]) items[cur].scrollIntoView({block:'nearest'});
+    q.addEventListener('input',render); q.addEventListener('focus',()=>{if(q.value.trim())render();});
+    q.addEventListener('keydown',function(e){
+      const items=Array.from(box.querySelectorAll('a'));
+      if(e.key==='Escape'){close();return;}
+      if(!box.classList.contains('open'))return;
+      if(e.key==='Enter' && hits.length){e.preventDefault(); location.href=hits[Math.max(0,cur)].u;return;}
+      if(!items.length || !['ArrowDown','ArrowUp'].includes(e.key))return;
+      e.preventDefault();cur=(cur+(e.key==='ArrowDown'?1:-1)+items.length)%items.length;
+      items.forEach((n,i)=>{n.classList.toggle('on',i===cur);n.setAttribute('aria-selected',String(i===cur));});
+      q.setAttribute('aria-activedescendant',items[cur].id);items[cur].scrollIntoView({block:'nearest'});
     });
-
-    q.addEventListener('focus', function(){ if(q.value.trim()) render(q.value); });
-
-    document.addEventListener('click', function(e){
-      if(!e.target.closest('.searchwrap')) box.classList.remove('open');
-    });
-    document.addEventListener('keydown', function(e){
-      if(e.key === '/' && document.activeElement !== q){ e.preventDefault(); q.focus(); }
-    });
-  }
+    document.addEventListener('click',e=>{if(!wrap.contains(e.target))close();});
+  });
+  document.addEventListener('keydown',function(e){
+    const editing = e.target.closest('input,textarea,select,[contenteditable="true"]');
+    if(e.key==='/' && !editing && !document.getElementById('vq')){const q=document.getElementById('q');if(q){e.preventDefault();q.focus();}}
+    if(e.key==='Escape' && nav?.classList.contains('open')){nav.classList.remove('open');burger.setAttribute('aria-expanded','false');burger.setAttribute('aria-label','Ouvrir le menu');burger.focus();}
+  });
 
   /* apparitions au défilement, sur toutes les pages */
   const LK_reveal = (function(){
@@ -223,17 +184,8 @@ const el = id => document.getElementById(id);
         return;
       }
 
-      /* le formulaire part vraiment vers Brevo, dans le cadre invisible */
-      subBtn.disabled = true;
-      subBtn.textContent = 'Envoi…';
-      say("", '');
-
-      setTimeout(function(){
-        say("C'est noté. Un mail de confirmation vient de partir, clique sur le lien pour valider.", 'ok');
-        subBtn.disabled = false;
-        subBtn.textContent = 'Me prévenir';
-        signupForm.reset();
-      }, 1200);
+      /* Brevo affiche son résultat réel dans l'onglet courant. */
+      say("Ouverture du formulaire de confirmation…", '');
     });
   }
 
@@ -275,7 +227,8 @@ const el = id => document.getElementById(id);
 
   /* l'état des filtres vit dans l'adresse : une vue filtrée se partage par lien */
   function ecrireEtat(){
-    const p = new URLSearchParams();
+    const p = new URLSearchParams(location.hash.includes('=') ? location.hash.slice(1) : '');
+    ['cat','st','slot','ed','q','tri'].forEach(k=>p.delete(k));
     if(activeCat !== 'all') p.set('cat', activeCat);
     if(activeSt) p.set('st', activeSt);
     if(activeSlot) p.set('slot', activeSlot);
@@ -286,12 +239,14 @@ const el = id => document.getElementById(id);
     if(('#' + p.toString()) !== location.hash && !(p.toString() === '' && !location.hash)) history.replaceState(null, '', h);
   }
   function lireEtat(){
-    if(!location.hash || location.hash.indexOf('=') < 0) return;
+    activeCat='all'; activeSt=null; activeSlot=null; activeEd=null; query=''; tri=''; input.value=''; if(triSel)triSel.value='';
+    if(!location.hash) return;
+    if(!location.hash.includes('=')){ const legacy=chips.find(c=>c.dataset.filter===location.hash.slice(1)); if(legacy)activeCat=legacy.dataset.filter; }
     const p = new URLSearchParams(location.hash.slice(1));
     const cat = p.get('cat'); if(cat && chips.some(c => c.dataset.filter === cat)) activeCat = cat;
-    const st = p.get('st'); if(st && document.querySelector('.chip-st[data-stf="' + st + '"]')) activeSt = st;
-    const sl = p.get('slot'); if(sl && document.querySelector('.chip-slot[data-slotf="' + sl + '"]')) activeSlot = sl;
-    const ed = p.get('ed'); if(ed && document.querySelector('.chip-ed[data-edf="' + ed + '"]')) activeEd = ed;
+    const st = p.get('st'); if(st && chips.some(c=>c.dataset.stf===st)) activeSt = st;
+    const sl = p.get('slot'); if(sl && chips.some(c=>c.dataset.slotf===sl)) activeSlot = sl;
+    const ed = p.get('ed'); if(ed && chips.some(c=>c.dataset.edf===ed)) activeEd = ed;
     const q = p.get('q'); if(q){ query = q; input.value = q; }
     const t = p.get('tri'); if(t && triSel && Array.from(triSel.options).some(o => o.value === t)){ tri = t; triSel.value = t; }
     chips.forEach(c => { if(c.dataset.filter) c.classList.toggle('is-on', c.dataset.filter === activeCat); });
@@ -309,7 +264,7 @@ const el = id => document.getElementById(id);
       const okSt   = !activeSt   || card.dataset.st   === activeSt;
       const okSlot = !activeSlot || card.dataset.slot === activeSlot;
       const okEd   = !activeEd   || card.dataset.ed   === activeEd;
-      const okTxt = !q || norm(card.dataset.search).includes(q);
+      const okTxt = !q || norm(card.dataset.search || '').includes(q);
       const show = okCat && okTxt && okSt && okSlot && okEd;
       card.hidden = !show;
       if(show){ card.classList.add('in'); shown++; }
@@ -317,12 +272,13 @@ const el = id => document.getElementById(id);
     countEl.innerHTML = '<strong>' + shown + '</strong> ' + motCarte + (shown > 1 ? 's' : '');
     emptyEl.hidden = shown > 0;
     if(clearBt) clearBt.hidden = !query.trim();
+    chips.forEach(c=>c.setAttribute('aria-pressed',String(c.classList.contains('is-on'))));
     ecrireEtat();
   }
   if(triSel) triSel.addEventListener('change', function(){ tri = triSel.value; apply(); });
   /* raccourci : la touche / place le curseur dans le filtre */
   document.addEventListener('keydown', function(e){
-    if(e.key === '/' && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)){ e.preventDefault(); input.focus(); }
+    if(e.key === '/' && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName) && !document.activeElement.isContentEditable){ e.preventDefault(); input.focus(); }
   });
 
   input.addEventListener('input', function(e){ query = e.target.value; apply(); });
@@ -401,6 +357,7 @@ const el = id => document.getElementById(id);
   /* filtre via l'ancre : vehicules.html#suv */
   function fromHash(){
     const h = location.hash.replace('#','');
+    if(h.includes('=') || !h){lireEtat(); apply(); return;}
     if(!h) return;
     const target = chips.find(c => c.dataset.filter === h);
     if(target){
@@ -426,7 +383,7 @@ const el = id => document.getElementById(id);
   function tick(){
     const diff = target - new Date();
     if(diff <= 0){
-      box.innerHTML = '<span class="fcd-box"><b>Disponible</b></span>';
+      box.innerHTML = '<span class="fcd-box"><b>Données en cours de mise à jour</b></span>';
       return;
     }
     g('fd').textContent = Math.floor(diff/86400000);
@@ -452,7 +409,7 @@ const el = id => document.getElementById(id);
   /* silhouettes récupérées depuis les cartes de la page */
   const cards = {};
   document.querySelectorAll('.arm-card').forEach(function(c){
-    const slug = c.getAttribute('href').split('/').pop().replace('.html','');
+    const slug = (c.getAttribute('href') || c.querySelector('.veh-link').getAttribute('href')).split('/').pop().replace('.html','');
     const svg = c.querySelector('.veh-art');
     cards[slug] = { svg: svg ? svg.outerHTML : '', nom: c.querySelector('h3').textContent, cl: c.dataset.cat };
   });
@@ -483,31 +440,27 @@ const el = id => document.getElementById(id);
   }
 
   function syncHash(){
-    const parts = ['dos','main','poing'].map(k => sel[k].value || '-');
-    const h = '#lo=' + parts.join(',');
-    if(parts.some(p => p !== '-')) history.replaceState(null, '', h);
+    const parts=['dos','main','poing'].map(k=>sel[k].value||'-');
+    const p=new URLSearchParams(location.hash.slice(1));
+    if(parts.some(v=>v!=='-'))p.set('lo',parts.join(','));else p.delete('lo');
+    history.replaceState(null,'',location.pathname+location.search+(p.size?'#'+p.toString():''));
   }
-
   function readHash(){
-    const m = location.hash.match(/^#lo=([^,]*),([^,]*),([^,]*)$/);
-    if(!m) return;
-    ['dos','main','poing'].forEach(function(k, i){
-      const v = m[i+1] === '-' ? '' : m[i+1];
-      if(v && cards[v]) sel[k].value = v;
-    });
+    const values=(new URLSearchParams(location.hash.slice(1)).get('lo')||'').split(',');
+    ['dos','main','poing'].forEach((k,i)=>{const v=values[i]; if(Array.from(sel[k].options).some(o=>o.value===v))sel[k].value=v;});
   }
 
   Object.keys(sel).forEach(function(k){ sel[k].addEventListener('change', render); });
 
   if(shareBt){
     shareBt.addEventListener('click', function(){
-      if(navigator.clipboard) navigator.clipboard.writeText(location.href);
-      shareBt.textContent = 'Lien copié';
-      setTimeout(function(){ shareBt.textContent = 'Copier mon équipement'; }, 1600);
+      window.LK.copy(location.href,shareBt,'Lien copié');
     });
   }
 
   readHash();
   render();
+
+})();
 
 })();

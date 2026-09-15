@@ -21,7 +21,7 @@ cd <racine du dépôt>
 node photos-reelles.js
 ```
 
-Environ 150 véhicules ont une inspiration précise, comptez 3 à 5 minutes.
+La base courante contient 295 inspirations renseignées. Le temps dépend de Wikimedia et des résultats disponibles.
 Le script est repartable : relancé, il ne retélécharge que ce qui manque.
 
 ```
@@ -37,9 +37,7 @@ node photos-reelles.js grotti-cheetah-classic   un seul véhicule
 | `credits-reels.json` | attribution par véhicule, lu par le site |
 | `photos-a-revoir.txt` | véhicules sans photo libre trouvée |
 
-**Les trois vont sur GitHub**, y compris `credits-reels.json` : sans lui la
-photo ne s'affiche pas, et sans lui l'attribution manquerait, ce qui
-violerait la licence.
+Conservez les photos et `credits-reels.json` avec le projet. Le rapport `photos-a-revoir.txt` reste un outil de travail et n'est pas publié par le build. Vérifiez chaque photo retenue et son attribution avant publication, puis relancez `npm run build`.
 
 ## Corriger un choix
 
@@ -47,7 +45,7 @@ Le script prend la meilleure photo selon un score (taille, cadrage paysage,
 nom du fichier proche du modèle). Il se trompera parfois.
 
 Pour remplacer : déposez votre image en `img/vehicules/<id>-reel.jpg` et
-corrigez l'entrée dans `credits-reels.json`. Le site suit.
+corrigez l'entrée dans `credits-reels.json`. Relancez `npm run build` pour actualiser le manifeste des fichiers disponibles.
 
 ## Ce que le script refuse
 

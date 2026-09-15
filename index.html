@@ -27,16 +27,19 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<meta property="og:image" content="https://www.leonidakit.com/img/social-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:url" content="https://www.leonidakit.com/">
 </head>
 <body>
 
 <a class="skip" href="#main">Aller au contenu</a>
-<div class="sunset"></div>
+<div class="sunset" aria-hidden="true"></div>
 
 <header>
   <div class="shell head-in">
     <a href="index.html" class="brand">Leonida<span>kit</span></a>
-    <nav id="nav">
+    <nav id="nav" aria-label="Navigation principale">
       <ul>
         <li><a href="carte.html">Carte</a></li>
         <li><a href="vehicules.html">Véhicules</a></li>
@@ -109,7 +112,7 @@
 
 <div class="status">
   <div class="shell status-in">
-    <p><strong>Les outils sont prêts, les données arrivent avec le jeu.</strong> GTA VI sort le 19 novembre 2026. Tout ce qui dépend du contenu du jeu se remplit à partir de ce jour-là.</p>
+    <p><strong>La carte et les catalogues sont accessibles. Les autres outils se complètent avec le jeu.</strong> GTA VI sort le 19 novembre 2026. Tout ce qui dépend du contenu du jeu se remplit à partir de ce jour-là.</p>
     <div class="clock">
       <div class="cell"><div class="roll" id="rd"><span>69</span></div><div class="u">jours</div></div>
       <div class="cell"><div class="roll" id="rh"><span>09</span></div><div class="u">heures</div></div>
@@ -121,9 +124,9 @@
 
 <div class="facts">
   <div class="shell facts-in">
-    <div class="fact"><div class="big" data-count="6">6</div><div class="lbl">comtés à explorer</div></div>
+    <div class="fact"><div class="big" data-count="6">6</div><div class="lbl">comtés recensés</div></div>
     <div class="fact"><div class="big" data-count="2">2</div><div class="lbl">personnages jouables</div></div>
-    <div class="fact"><div class="big" data-count="139">139</div><div class="lbl">fiches véhicules</div></div>
+    <div class="fact"><div class="big" data-count="301">301</div><div class="lbl">fiches véhicules</div></div>
     <div class="fact"><div class="big">RAGE</div><div class="lbl">moteur graphique</div></div>
   </div>
 </div>
@@ -131,7 +134,7 @@
 <section class="counties-sec shell">
   <div class="sec-head reveal">
     <h2>L'État de Leonida</h2>
-    <p>Six comtés confirmés par Rockstar à ce jour.</p>
+    <p>Six comtés recensés. Leur niveau de certitude est détaillé sur la carte.</p>
   </div>
   <div class="counties">
     <div class="county reveal"><div class="thumb"><svg viewBox="0 0 200 96" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="c0" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#E8452C"/><stop offset="100%" stop-color="#F5A524"/></linearGradient></defs><rect width="200" height="96" fill="url(#c0)"/><circle cx="164" cy="26" r="16" fill="#F5A524" opacity=".5"/><rect x="24" y="44" width="16" height="52" fill="#1A1A1E"/><rect x="48" y="26" width="12" height="70" fill="#1A1A1E"/><rect x="68" y="54" width="20" height="42" fill="#1A1A1E"/><rect x="96" y="34" width="12" height="62" fill="#1A1A1E"/><rect x="116" y="60" width="22" height="36" fill="#1A1A1E"/></svg></div><div class="body"><h3>Comté de Vice-Dale</h3><p>Vice City et sa côte</p></div></div>
@@ -158,8 +161,8 @@
       <p>Filtres, suivi de ce que tu as trouvé, et calcul de distance entre deux points avec le temps de trajet.</p>
     </a>
     <a class="tool reveal" href="vehicules.html">
-      <h3>Fiches véhicules et armes <span class="chip live">161 fiches</span></h3>
-      <p>139 véhicules, 22 armes, et un constructeur d'équipement fondé sur les règles officielles.</p>
+      <h3>Fiches véhicules et armes <span class="chip live">324 fiches</span></h3>
+      <p>301 véhicules, 23 armes, et un constructeur d'équipement fondé sur les règles officielles.</p>
     </a>
     <a class="tool reveal" href="progression.html">
       <h3>Suivi de progression <span class="chip live">En construction</span></h3>
@@ -220,16 +223,15 @@
   <div class="shell reveal">
     <h2>Sois prévenu quand les outils ouvrent</h2>
     <p>Un mail le jour où la carte se remplit, et rien d'autre. Pas de rumeurs, pas de newsletter hebdomadaire. Un lien de confirmation te sera envoyé pour valider l'inscription.</p>
-    <form class="form" id="signup" method="POST" target="brevo-sink"
+    <form class="form" id="signup" method="POST" target="_self"
           action="https://affd58b3.sibforms.com/serve/MUIFAGl8Xa98HjJAIW5cWUXzqoMy9tZMLQ1C1lyg7T2D0nPKLA1LarVopcF1d_g_ZvBDB8rxufQRDXnIWA3fGPuxEhSFzvfjMnVFsGoFyp3ly2S8W8GXh2Z6u03CV3GCl-8Xn8HhF1GxxpmCJBt7wY40N9A8G7DTFx4fQm_96FJpF6HuHEzwWQNHTLNJ99Y0iDaJFqgyNxoUvfW_LA==">
       <input type="email" id="mail" name="EMAIL" placeholder="ton adresse mail" aria-label="Adresse mail" required autocomplete="email">
       <button type="submit" id="sub">Me prévenir</button>
-      <input type="text" name="email_address_check" value="" tabindex="-1" aria-hidden="true" class="trap">
+      <input type="text" name="email_address_check" value="" tabindex="-1" aria-hidden="true" aria-label="Laisser ce champ vide" class="trap">
       <input type="hidden" name="locale" value="fr">
     </form>
     <p class="signup-note" id="signup-note" role="status"></p>
-    <p class="signup-legal">En t'inscrivant, tu acceptes de recevoir ce mail. Ton adresse n'est utilisée que pour ça et n'est transmise à personne. Désinscription possible à tout moment.</p>
-    <iframe name="brevo-sink" title="Traitement de l'inscription" class="sink" tabindex="-1"></iframe>
+    <p class="signup-legal">En t'inscrivant, tu acceptes de recevoir ce mail. Ton adresse est transmise à Brevo pour gérer cette inscription et l'envoi annoncé. Désinscription possible à tout moment.</p>
   </div>
 </section>
 
@@ -284,15 +286,15 @@
       </div>
       <div class="foot-cols">
         <div>
-          <h4>Contenu</h4>
+          <h2>Contenu</h2>
           <nav><a href="carte.html">Carte</a><a href="vehicules.html">Véhicules</a><a href="armes.html">Armes</a><a href="collectibles.html">Collectibles</a></nav>
         </div>
         <div>
-          <h4>Outils</h4>
+          <h2>Outils</h2>
           <nav><a href="progression.html">Progression</a><a href="calculateurs.html">Calculateurs</a></nav>
         </div>
         <div>
-          <h4>Le site</h4>
+          <h2>Le site</h2>
           <nav><a href="a-propos.html">À propos</a><a href="contact.html">Contact</a><a href="mentions-legales.html">Mentions légales</a></nav>
         </div>
       </div>
@@ -302,6 +304,8 @@
 </footer>
 
 <script src="search-index.js"></script>
+<script src="assets-manifest.js"></script>
+<script src="common.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

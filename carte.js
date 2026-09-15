@@ -4,6 +4,7 @@
    ============================================================ */
 (function(){
   const stage = document.getElementById('map-stage');
+  const esc = window.LK.esc;
   if(!stage) return;
 
   const world   = document.getElementById('map-world');
@@ -203,6 +204,9 @@
     });
   }
 
+  /* Ne demander que les fichiers réellement livrés. Les sources restent intactes. */
+  POINTS.forEach(p=>{['img','img2'].forEach(k=>{if(p[k] && !window.LK.hasAsset(p[k])) delete p[k];});});
+
   /* index : indispensable dès qu'on dépasse quelques centaines de lieux */
   const BY_ID = {}, KIDS = {}, MK = {};
   POINTS.forEach(function(p){ BY_ID[p.id] = p; });
@@ -260,11 +264,11 @@
   function enfants(id){ return KIDS[id] || []; }
 
   try{
-    found = JSON.parse(localStorage.getItem('lk_map_found') || '{}');
+    found = window.LK.read('lk_map_found',{},window.LK.own);
   }catch(e){ found = {}; }
 
   function save(){
-    try{ localStorage.setItem('lk_map_found', JSON.stringify(found)); }catch(e){}
+    window.LK.write('lk_map_found',found);
   }
 
   /* ============================================================
@@ -329,8 +333,8 @@
         return true;
       }
     }
-    const m = location.hash.match(/^#(-?\d+),(-?\d+),([\d.]+)$/);
-    if(!m) return false;
+    const m = location.hash.match(/^#(-?\d+),(-?\d+),(\d+(?:\.\d+)?)$/);
+    if(!m || !m.slice(1).every(x=>Number.isFinite(Number(x)))) return false;
     scale = Math.min(maxS, Math.max(minS, parseFloat(m[3])));
     const r = stage.getBoundingClientRect();
     tx = r.width/2 - parseInt(m[1],10) * scale;
@@ -388,7 +392,7 @@
       const reel = / \(nom (réel|supposé)\)$/.test(p.n);
       if(reel) el.classList.add('lbl-reel');
       el.innerHTML = '<span class="mk-dot">' + (kids ? '<i>' + kids + '</i>' : '') + '</span>'
-                   + '<span class="mk-lbl">' + (reel ? p.n.replace(/ \(nom (réel|supposé)\)$/, '') : p.n) + '</span>';
+                   + '<span class="mk-lbl">' + esc(reel ? p.n.replace(/ \(nom (réel|supposé)\)$/, '') : p.n) + '</span>';
       el.addEventListener('click', function(ev){
         ev.stopPropagation();
         if(rulerOn){
@@ -588,9 +592,9 @@
     fdList.innerHTML = '<ul>' + liste.map(function(p){
       return '<li><button type="button" class="fd-go" data-goto="' + p.id + '">' +
              '<span class="fd-dot" style="background:' + CATS[p.c].col + '"></span>' +
-             '<span class="fd-n">' + p.n + '</span></button>' +
+             '<span class="fd-n">' + esc(p.n) + '</span></button>' +
              '<button type="button" class="fd-un" data-un="' + p.id + '" ' +
-             'aria-label="Décocher ' + p.n + '" title="Décocher">&times;</button></li>';
+             'aria-label="Décocher ' + esc(p.n) + '" title="Décocher">&times;</button></li>';
     }).join('') + '</ul>';
   }
 
@@ -630,9 +634,9 @@
     const img = p.img2
       ? '<div id="mp-photos">' + VIDE + '</div>'
       : (p.img
-        ? '<figure class="mp-img"><img src="' + p.img + '" alt="' + p.n + '" loading="lazy" ' +
-          'onerror="this.parentNode.classList.add(\'mp-img--ko\')">' +
-          (p.imgSrc ? '<figcaption>' + p.imgSrc + '</figcaption>' : '') + '</figure>'
+        ? '<figure class="mp-img"><img src="' + p.img + '" alt="' + esc(p.n) + '" loading="lazy" ' +
+          '>' +
+          (p.imgSrc ? '<figcaption>' + esc(p.imgSrc) + '</figcaption>' : '') + '</figure>'
         : VIDE);
     const img2 = '';
     const streetView = p.sv
@@ -642,15 +646,15 @@
 
     const persos = (p.pers || []).map(function(k){
       const q = PERSOS[k]; if(!q) return '';
-      return '<li><b>' + q.n + '</b><span>' + q.r + '</span></li>';
+      return '<li><b>' + esc(q.n) + '</b><span>' + esc(q.r) + '</span></li>';
     }).join('');
 
     panelIn.innerHTML =
       img +
       '<p class="mp-cat" style="color:' + CATS[p.c].col + '">' + CATS[p.c].nom + '</p>' +
-      '<h3>' + p.n + '</h3>' +
+      '<h3>' + esc(p.n) + '</h3>' +
       '<span class="mp-st mp-st--' + p.s + '" title="' + st.d + '">' + st.court + '</span>' +
-      '<p class="mp-d">' + p.d + '</p>' +
+      '<p class="mp-d">' + esc(p.d) + '</p>' +
       img2 +
       (persos ? '<div class="mp-pers"><p class="mp-kids-h">Personnages liés</p><ul>' + persos + '</ul></div>' : '') +
       '<div class="mp-meta">' +
@@ -665,7 +669,7 @@
         let h = '';
         if(parent){
           h += '<button type="button" class="mp-link" data-goto="' + parent.id + '">' +
-               '&larr; ' + parent.n + '</button>';
+               '&larr; ' + esc(parent.n) + '</button>';
         }
         if(kids.length){
           const LIM = 24;
@@ -675,7 +679,7 @@
           const ligne = function(k){
             return '<button type="button" class="mp-kid" data-goto="' + k.id + '">' +
                    '<span class="mp-kid-dot" style="background:' + CATS[k.c].col + '"></span>' +
-                   k.n + '<em class="mp-kid-st mp-kid-st--' + k.s + '">' + STATUTS[k.s].court + '</em>' +
+                   esc(k.n) + '<em class="mp-kid-st mp-kid-st--' + k.s + '">' + STATUTS[k.s].court + '</em>' +
                    '</button>';
           };
           h += '<div class="mp-kids"><p class="mp-kids-h">Contient ' + kids.length +
@@ -697,15 +701,16 @@
           '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>' +
         '</button>' +
       '</div>';
-    panel.classList.add('open');
+    panel.classList.add('open'); panel.inert=false;
 
     if(p.img2){
       const zone = document.getElementById('mp-photos');
       const figure = function(src, legende){
-        return '<figure class="mp-img"><img src="' + src + '" alt="' + p.n + '">' +
-               (legende ? '<figcaption>' + legende + '</figcaption>' : '') + '</figure>';
+        return '<figure class="mp-img"><img src="' + src + '" alt="' + esc(p.n) + '">' +
+               (legende ? '<figcaption>' + esc(legende) + '</figcaption>' : '') + '</figure>';
       };
       const charger = function(src){
+        if(!src)return Promise.resolve(false);
         return new Promise(function(ok){
           const im = new Image();
           im.onload = function(){ ok(true); };
@@ -728,9 +733,7 @@
       shareBt.addEventListener('click', function(e){
         e.stopPropagation();
         const url = location.origin + location.pathname + '#lieu=' + p.id;
-        if(navigator.clipboard) navigator.clipboard.writeText(url);
-        shareBt.classList.add('ok');
-        setTimeout(function(){ shareBt.classList.remove('ok'); }, 1500);
+        window.LK.copy(url).then(ok=>{if(ok){shareBt.classList.add('ok');setTimeout(()=>shareBt.classList.remove('ok'),1500);}});
       });
     }
 
@@ -765,7 +768,7 @@
   }
 
   function closePanel(){
-    panel.classList.remove('open');
+    panel.classList.remove('open'); panel.inert=true;
     if(ouvertId || Object.keys(expanded).length){
       ouvertId = null;
       expanded = {};          /* ce qui avait été déplié se replie avec la fiche */
@@ -787,6 +790,7 @@
   let pinchDist = 0;
 
   stage.addEventListener('pointerdown', function(e){
+    if(stage.classList.contains('drawing') || e.target.closest('.map-zoom,.map-mini,.map-help,.map-help-box,.map-coord'))return;
     pointers.set(e.pointerId, {x:e.clientX, y:e.clientY});
     if(pointers.size === 1){
       dragging = true; moved = 0; captured = false;
@@ -871,7 +875,7 @@
 
   stage.addEventListener('click', function(e){
     if(moved >= 6) return;                       /* c'était un glisser */
-    if(e.target.closest('.map-panel, .map-zoom')) return;
+    if(stage.classList.contains('drawing') || stage.classList.contains('editing') || e.target.closest('.map-panel,.map-zoom,.map-mini,.map-help,.map-help-box,.map-coord'))return;
 
     if(rulerOn){
       const mk = e.target.closest('.mk');
@@ -961,7 +965,7 @@
               (kids.length ? '<button type="button" class="tr-tog" aria-label="Déplier">›</button>' : '<span class="tr-sp"></span>') +
               '<button type="button" class="tr-go" data-goto="' + p.id + '">' +
               '<span class="tr-dot" style="background:' + CATS[p.c].col + '"></span>' +
-              '<span class="tr-n">' + p.n + '</span>' +
+              '<span class="tr-n">' + esc(p.n) + '</span>' +
               '<em class="tr-st tr-st--' + p.s + '">' + st.court + '</em>' +
               '</button></div>';
       if(kids.length){
@@ -993,8 +997,8 @@
     const total = POINTS.length;
     const nommes = POINTS.filter(p => p.s === 'officiel').length;
     const stats = document.querySelectorAll('.vstat .n[data-count]');
-    if(stats[0]) stats[0].dataset.count = total;
-    if(stats[1]) stats[1].dataset.count = nommes;
+    if(stats[0]) stats[0].dataset.count = stats[0].textContent = total;
+    if(stats[1]) stats[1].dataset.count = stats[1].textContent = nommes;
     document.querySelectorAll('.ms-n').forEach(function(n){ n.textContent = total; });
   })();
 
@@ -1042,7 +1046,7 @@
      ============================================================ */
   const LAYER_KEY = 'lk_map_layers';
   let layers = {};
-  try{ layers = JSON.parse(localStorage.getItem(LAYER_KEY) || '{}'); }catch(e){ layers = {}; }
+  try{ layers = window.LK.read(LAYER_KEY,{},v=>window.LK.record(v)&&Object.values(v).every(x=>typeof x==='boolean')); }catch(e){ layers = {}; }
 
   function applyLayer(name, on){
     document.querySelectorAll('.map-bg .' + name).forEach(function(g){
@@ -1056,7 +1060,7 @@
     applyLayer(name, inp.checked);
     inp.addEventListener('change', function(){
       layers[name] = inp.checked;
-      try{ localStorage.setItem(LAYER_KEY, JSON.stringify(layers)); }catch(e){}
+      window.LK.write(LAYER_KEY,layers);
       applyLayer(name, inp.checked);
     });
   });
@@ -1066,13 +1070,13 @@
      ============================================================ */
   const norm = s => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
 
-  function goTo(p, z){
+  function goTo(p, z, showPanel = true){
     scale = z || 0.7;
     const r = stage.getBoundingClientRect();
     tx = r.width / 2 - p.x * scale;
     ty = r.height / 2 - p.y * scale;
     clamp(); applyTransform();
-    openPanel(p);
+    if(showPanel) openPanel(p);
   }
 
   if(searchI){
@@ -1103,11 +1107,15 @@
       sugBox.classList.add('open');
     });
 
+    searchI.setAttribute('aria-controls','map-sug');searchI.setAttribute('aria-expanded','false');
+    searchI.addEventListener('input',()=>searchI.setAttribute('aria-expanded',String(sugBox.classList.contains('open'))));
+    searchI.addEventListener('keydown',function(e){if(e.key==='Escape'){sugBox.classList.remove('open');searchI.setAttribute('aria-expanded','false');}else if(e.key==='ArrowDown' || e.key==='Enter'){const b=sugBox.querySelector('button');if(b){e.preventDefault();if(e.key==='Enter')b.click();else b.focus();}}});
+    sugBox.addEventListener('keydown',function(e){const buttons=Array.from(sugBox.querySelectorAll('button'));const i=buttons.indexOf(e.target);if(i<0)return;if(e.key==='Escape'){sugBox.classList.remove('open');searchI.setAttribute('aria-expanded','false');searchI.focus();}else if(['ArrowDown','ArrowUp'].includes(e.key)){e.preventDefault();buttons[(i+(e.key==='ArrowDown'?1:-1)+buttons.length)%buttons.length].focus();}});
     sugBox.addEventListener('click', function(e){
       const b = e.target.closest('[data-go]');
       if(!b) return;
       const p = byId(b.dataset.go);
-      if(p){ goTo(p); sugBox.classList.remove('open'); searchI.value = p.n; }
+      if(p){ goTo(p); sugBox.classList.remove('open'); searchI.value = p.n; searchI.setAttribute('aria-expanded','false'); }
     });
 
     document.addEventListener('click', function(e){
@@ -1119,6 +1127,7 @@
      CALCULATEUR DE DISTANCE
      ============================================================ */
   function fmtDuree(sec){
+    sec=Math.round(sec);
     if(sec < 60) return Math.round(sec) + ' s';
     const m = Math.floor(sec / 60), s = Math.round(sec % 60);
     if(m < 60) return m + ' min' + (s ? ' ' + s + ' s' : '');
@@ -1224,6 +1233,7 @@
 
   if(rulerBt){
     rulerBt.addEventListener('click', function(){
+      if(!rulerOn)document.querySelectorAll('#map-edit.on,#dr-on.on').forEach(b=>b.click());
       rulerOn = !rulerOn;
       rulerBt.classList.toggle('on', rulerOn);
       rulerBt.setAttribute('aria-pressed', rulerOn);
@@ -1261,7 +1271,7 @@
 
   /* raccourcis clavier */
   document.addEventListener('keydown', function(e){
-    if(document.activeElement === searchI) return;
+    if(e.target.closest('input,textarea,select,[contenteditable="true"]')) return;
     if(e.key === '+' || e.key === '=') { const r=stage.getBoundingClientRect(); zoomAt(r.width/2,r.height/2,1.3); }
     if(e.key === '-')                  { const r=stage.getBoundingClientRect(); zoomAt(r.width/2,r.height/2,0.77); }
     if(e.key === 'Escape')             { closePanel(); }
@@ -1311,7 +1321,7 @@
     });
     helpBx.addEventListener('click', function(e){ e.stopPropagation(); });
     document.addEventListener('keydown', function(e){
-      if(e.key === '?' ) helpBt.click();
+      if(e.key === '?' && !e.target.closest('input,textarea,select,[contenteditable="true"]')) helpBt.click();
     });
   }
 
@@ -1324,11 +1334,15 @@
     panelIn: panelIn,
     toWorld: toWorld,
     goTo: goTo,
+    centerOn: (p,z)=>goTo(p,z,false),
+    closePanel: closePanel,
     wasDrag: function(){ return moved >= 6; },
     scale: function(){ return scale; },
     getFound: function(){ return found; },
-    setFound: function(f){
-      found = f || {}; save();
+    cleanFound: f=>Object.fromEntries(Object.entries(f).filter(([id])=>Object.hasOwn(BY_ID,id))),
+    setFound: function(f,persist=true){
+      if(!window.LK.own(f))throw new Error('Progression invalide');
+      found = Object.fromEntries(Object.entries(f).filter(([id])=>Object.hasOwn(BY_ID,id))); if(persist)save();
       Object.keys(MK).map(k => MK[k]).forEach(function(el){
         el.classList.toggle('is-found', !!found[el.dataset.id]);
       });
@@ -1351,8 +1365,8 @@
   /* ---------- 1. MARQUEURS PERSONNELS ---------- */
   const PERSO_KEY = 'lk_map_perso';
   let perso = [];
-  try{ perso = JSON.parse(localStorage.getItem(PERSO_KEY) || '[]'); }catch(e){ perso = []; }
-  function savePerso(){ try{ localStorage.setItem(PERSO_KEY, JSON.stringify(perso)); }catch(e){} }
+  try{ perso = window.LK.read(PERSO_KEY,[],window.LK.markers); }catch(e){ perso = []; }
+  function savePerso(){ window.LK.write(PERSO_KEY,perso); }
 
   /* ---------- 2. MODE ÉDITION ---------- */
   let editOn = false;
@@ -1406,20 +1420,20 @@
         '<button type="button" class="mp-btn" id="pm-edit">Modifier</button>' +
         '<button type="button" class="mp-btn pm-del" id="pm-del">Supprimer</button>' +
       '</div>';
-    M.panel.classList.add('open');
+    M.panel.classList.add('open'); M.panel.inert=false;
 
     document.getElementById('pm-edit').addEventListener('click', function(){
       const n = prompt('Nom du marqueur', p.n);
       if(n === null) return;
       const note = prompt('Note (facultatif)', p.note || '');
-      p.n = n.trim() || p.n;
-      p.note = (note || '').trim();
+      p.n = n.trim().slice(0,200) || p.n;
+      p.note = (note || '').trim().slice(0,4000);
       savePerso(); renderPerso(); openPerso(i);
     });
     document.getElementById('pm-del').addEventListener('click', function(){
       if(!confirm('Supprimer ce marqueur ?')) return;
       perso.splice(i, 1);
-      savePerso(); renderPerso(); M.panel.classList.remove('open');
+      savePerso(); renderPerso(); M.panel.classList.remove('open'); M.panel.inert=true;
     });
   }
 
@@ -1450,7 +1464,7 @@
         const i = parseInt(del.dataset.del, 10);
         if(!confirm('Supprimer « ' + perso[i].n + ' » ?')) return;
         perso.splice(i, 1); savePerso(); renderPerso();
-        if(M.panel) M.panel.classList.remove('open');
+        if(M.panel) M.panel.classList.remove('open'); M.panel.inert=true;
         return;
       }
       const ren = e.target.closest('[data-ren]');
@@ -1459,15 +1473,15 @@
         const n = prompt('Nom du marqueur', perso[i].n);
         if(n === null) return;
         const note = prompt('Note (facultatif)', perso[i].note || '');
-        perso[i].n = n.trim() || perso[i].n;
-        perso[i].note = (note || '').trim();
+        perso[i].n = n.trim().slice(0,200) || perso[i].n;
+        perso[i].note = (note || '').trim().slice(0,4000);
         savePerso(); renderPerso();
         return;
       }
       const go = e.target.closest('[data-go]');
       if(go){
         const p = perso[parseInt(go.dataset.go, 10)];
-        if(p) M.goTo(p, 0.8);
+        if(p){M.closePanel(); M.centerOn(p,0.8); openPerso(parseInt(go.dataset.go,10));}
       }
     });
   }
@@ -1478,12 +1492,13 @@
     clearAll.addEventListener('click', function(){
       if(!perso.length) return;
       if(!confirm('Supprimer tes ' + perso.length + ' marqueurs ?')) return;
-      perso = []; savePerso(); renderPerso();
+      perso = []; savePerso(); renderPerso(); M.closePanel();
     });
   }
 
   if(editBt){
     editBt.addEventListener('click', function(){
+      if(!editOn)document.querySelectorAll('#map-ruler.on,#dr-on.on').forEach(b=>b.click());
       editOn = !editOn;
       editBt.classList.toggle('on', editOn);
       editBt.setAttribute('aria-pressed', editOn);
@@ -1495,14 +1510,14 @@
 
   /* pose d'un marqueur au clic, en mode édition */
   stage.addEventListener('click', function(e){
-    if(!editOn) return;
-    if(e.target.closest('.map-panel, .map-zoom, .pm')) return;
+    if(!editOn || stage.classList.contains('drawing')) return;
+    if(e.target.closest('.map-panel, .map-zoom, .pm, .map-mini, .map-help, .map-help-box, .map-coord')) return;
     if(M.wasDrag()) return;
     const w = M.toWorld(e.clientX, e.clientY);
     const n = prompt('Nom du marqueur', 'Nouveau point');
     if(n === null) return;
     const note = prompt('Note (facultatif)', '');
-    perso.push({ n: n.trim() || 'Sans nom', note: (note||'').trim(), x: w.x, y: w.y });
+    perso.push({ n: n.trim().slice(0,200) || 'Sans nom', note: (note||'').trim().slice(0,4000), x: w.x, y: w.y });
     savePerso(); renderPerso();
   }, true);
 
@@ -1534,19 +1549,19 @@
     impIn.addEventListener('change', function(){
       const f = impIn.files[0];
       if(!f) return;
+      if(f.size > 5*1024*1024){alert('Fichier trop volumineux (maximum 5 Mo).'); impIn.value=''; return;}
       const fr = new FileReader();
+      fr.onerror = function(){alert('Lecture du fichier impossible.');impIn.value='';};
       fr.onload = function(){
         try{
-          const d = JSON.parse(fr.result);
-          if(Array.isArray(d.marqueurs)){
-            if(perso.length && !confirm('Remplacer tes ' + perso.length + ' marqueurs actuels ?')) return;
-            perso = d.marqueurs; savePerso(); renderPerso();
-          }
-          if(d.repere) M.setFound(d.repere);
-          if(d.traces && M.setDraw) M.setDraw(d.traces);
-          alert('Import réussi.');
-        }catch(err){ alert("Fichier illisible."); }
-        impIn.value = '';
+          const d = window.LK.mapImport(JSON.parse(fr.result));
+          if((perso.length || Object.keys(M.getFound()).length || M.getDraw?.().length) && !confirm('Remplacer tes marqueurs, lieux repérés et tracés par cette sauvegarde ?')) return;
+          d.repere=M.cleanFound(d.repere);
+          if(!window.LK.writeBatch({lk_map_perso:d.marqueurs,lk_map_found:d.repere,lk_map_draw:d.traces}))throw new Error('Sauvegarde indisponible ; import non appliqué.');
+          perso=d.marqueurs; M.setFound(d.repere,false); if(M.setDraw)M.setDraw(d.traces,false);
+          M.closePanel(); renderPerso(); alert('Import réussi.');
+        }catch(err){alert('Import refusé : '+err.message);}
+        finally {impIn.value='';}
       };
       fr.readAsText(f);
     });
@@ -1557,9 +1572,7 @@
   if(copyBt){
     copyBt.addEventListener('click', function(){
       const t = document.getElementById('map-coord').textContent;
-      if(navigator.clipboard) navigator.clipboard.writeText(t);
-      copyBt.textContent = 'Copié';
-      setTimeout(function(){ copyBt.textContent = 'Copier la position'; }, 1600);
+      window.LK.copy(t,copyBt,'Copié');
     });
   }
 
@@ -1586,7 +1599,7 @@
   const KEY = 'lk_map_draw';
   let strokes = [];
   let redo = [];
-  try{ strokes = JSON.parse(localStorage.getItem(KEY) || '[]'); }catch(e){ strokes = []; }
+  try{ strokes = window.LK.read(KEY,[],window.LK.strokes); }catch(e){ strokes = []; }
 
   const ui = {
     on:    document.getElementById('dr-on'),
@@ -1607,7 +1620,7 @@
   let mode = false, tool = 'pen', color = '#E8452C', size = 6, opacity = .85;
   let cur = null, curEl = null, start = null;
 
-  function save(){ try{ localStorage.setItem(KEY, JSON.stringify(strokes)); }catch(e){} }
+  function save(){ window.LK.write(KEY,strokes); }
 
   function el(tag, attrs){
     const e = document.createElementNS(svgNS, tag);
@@ -1689,6 +1702,7 @@
     e.stopPropagation();
     const ok = cur.t === 'pen' ? cur.p.length > 1 : (cur.a[0] !== cur.b[0] || cur.a[1] !== cur.b[1]);
     if(ok){ strokes.push(cur); redo = []; save(); }
+    if(stage.hasPointerCapture?.(e.pointerId))stage.releasePointerCapture(e.pointerId);
     cur = null; curEl = null; render();
   }
   stage.addEventListener('pointerup', finish, true);
@@ -1697,6 +1711,7 @@
   /* ---- palette ---- */
   if(ui.on){
     ui.on.addEventListener('click', function(){
+      if(!mode)document.querySelectorAll('#map-ruler.on,#map-edit.on').forEach(b=>b.click());
       mode = !mode;
       ui.on.classList.toggle('on', mode);
       ui.on.setAttribute('aria-pressed', mode);
@@ -1704,14 +1719,15 @@
       if(ui.pane) ui.pane.hidden = !mode;
       stage.classList.toggle('drawing', mode);
       layer.classList.toggle('erasing', mode && tool === 'eraser');
+      stage.classList.toggle('erasing', mode && tool === 'eraser');
     });
   }
   ui.tools.forEach(function(b){
     b.addEventListener('click', function(){
       ui.tools.forEach(x => x.classList.remove('on'));
       b.classList.add('on'); tool = b.dataset.tool;
-      layer.classList.toggle('erasing', tool === 'eraser');
-      stage.classList.toggle('erasing', tool === 'eraser');
+      layer.classList.toggle('erasing', mode && tool === 'eraser');
+      stage.classList.toggle('erasing', mode && tool === 'eraser');
     });
   });
   ui.cols.forEach(function(b){
@@ -1734,14 +1750,14 @@
   if(ui.clear){ ui.clear.addEventListener('click', function(){ if(!strokes.length || !confirm('Effacer tous tes tracés ?')) return; strokes = []; redo = []; save(); render(); }); }
 
   document.addEventListener('keydown', function(e){
-    if(!mode) return;
+    if(!mode || e.target.closest('input,textarea,select,[contenteditable="true"]')) return;
     if((e.ctrlKey || e.metaKey) && e.key === 'z'){ e.preventDefault(); if(ui.undo) ui.undo.click(); }
     if((e.ctrlKey || e.metaKey) && e.key === 'y'){ e.preventDefault(); if(ui.redo) ui.redo.click(); }
   });
 
   /* export / import : les tracés voyagent avec le reste */
   M.getDraw = function(){ return strokes; };
-  M.setDraw = function(s){ strokes = Array.isArray(s) ? s : []; redo = []; save(); render(); };
+  M.setDraw = function(s,persist=true){ if(!window.LK.strokes(s))throw new Error('Tracés invalides'); strokes = s; redo = []; if(persist)save(); render(); };
 
   render();
 })();
