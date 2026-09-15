@@ -14,6 +14,7 @@
              photos-a-revoir.txt
    ============================================================ */
 const fs = require('fs');
+process.chdir(__dirname);
 const path = require('path');
 const https = require('https');
 
@@ -24,20 +25,19 @@ const UA = 'Leonidakit/1.0 (https://www.leonidakit.com; contact@leonidakit.com)'
 
 /* licences acceptées : tout ce qui autorise la réutilisation commerciale
    avec attribution. Tout le reste est écarté, sans exception. */
-const LIBRES = [
-  /^cc0/i, /^cc[ -]by([ -]sa)?([ -][\d.]+)?/i, /public domain/i, /^pd[ -]/i,
-  /^attribution([ -]sharealike)?$/i
-];
-const estLibre = l => !!l && LIBRES.some(r => r.test(l.trim()));
+const estLibre = require('./scripts/licenses.cjs');
 
-function get(url) {
+function get(url, redirects = 0) {
+  if(redirects > 5)return Promise.reject(new Error('Trop de redirections'));
+  const parsed = new URL(url);
+  if(parsed.protocol !== 'https:')return Promise.reject(new Error('URL non HTTPS')); 
   return new Promise((ok, ko) => {
     https.get(url, { headers: { 'User-Agent': UA } }, r => {
       if (r.statusCode >= 300 && r.statusCode < 400 && r.headers.location)
-        return get(r.headers.location).then(ok, ko);
+        { r.resume(); return get(new URL(r.headers.location,url).href,redirects+1).then(ok,ko); }
       if (r.statusCode !== 200) return ko(new Error('HTTP ' + r.statusCode));
-      const buf = []; r.on('data', d => buf.push(d)); r.on('end', () => ok(Buffer.concat(buf)));
-    }).on('error', ko);
+      let size=0; const buf = []; r.on('data', d => {size+=d.length;if(size>15*1024*1024){r.destroy(new Error('Fichier trop volumineux'));return;}buf.push(d);});r.on('error',ko); r.on('end', () => ok(Buffer.concat(buf)));
+    }).on('error', ko).setTimeout(20000,function(){this.destroy(new Error('Délai dépassé'));});
   });
 }
 const getJSON = async u => JSON.parse((await get(u)).toString('utf8'));
@@ -112,6 +112,7 @@ function choisir(pages, terme) {
       fs.writeFileSync(dest, await get(c.url));
       credits[v.id] = { fichier:c.fichier, auteur:c.auteur, licence:c.licence,
                         licenceUrl:c.licenceUrl, page:c.page, modele:v.insp };
+      fs.writeFileSync(CREDITS, JSON.stringify(credits,null,1));
       ok++;
       console.log('  ok ' + v.id.padEnd(34) + c.licence.padEnd(14) + c.auteur.slice(0, 40));
       await new Promise(r => setTimeout(r, 350));   /* on reste poli avec Commons */

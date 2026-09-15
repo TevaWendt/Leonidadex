@@ -12,8 +12,13 @@
   const VUES_LBL = { face:'Face', profil:'Profil', arriere:'Arrière', detail:'Détail', interieur:'Intérieur', dessus:'Dessus' };
 
   document.querySelectorAll('.gal').forEach(function(gal){
-    const base = gal.dataset.base, vues = (gal.dataset.vues || 'face,profil').split(',');
+    const base = gal.dataset.base;
+    const vues = (gal.dataset.vues || 'face,profil').split(',').filter(v => window.LK.hasAsset(base+'-'+v+'.jpg'));
     const art = gal.dataset.art || '';
+    if(!vues.length || gal.dataset.vide === '1'){
+      gal.innerHTML='<div class="gal-track"><div class="gal-item"><div class="gal-vide">'+art+'<span>Images officielles à intégrer</span></div></div></div>';
+      return;
+    }
     const track = document.createElement('div'); track.className = 'gal-track';
     let i = 0;
 
@@ -51,7 +56,7 @@
       b.textContent = txt; b.setAttribute('aria-label', cls === 'prev' ? 'Vue précédente' : 'Vue suivante');
       b.addEventListener('click', function(){ go(i + (cls === 'prev' ? -1 : 1)); }); return b; }
     function go(k){ i = (k + vues.length) % vues.length; track.style.transform = 'translateX(-' + (i*100) + '%)';
-      dots.querySelectorAll('button').forEach((d, j) => d.classList.toggle('on', j === i)); }
+      dots.querySelectorAll('button').forEach((d,j)=>{d.classList.toggle('on',j===i);d.setAttribute('aria-current',String(j===i));}); }
     go(0);
 
     gal.tabIndex = 0;
@@ -70,8 +75,8 @@
   const type = document.body.dataset.own;           /* 'armes' | 'vehicules' */
   if(!type) return;
   const KEY = 'lk_own_' + type;
-  const lire = () => { try { return JSON.parse(localStorage.getItem(KEY) || '{}'); } catch(e){ return {}; } };
-  const ecrire = (o) => { try { localStorage.setItem(KEY, JSON.stringify(o)); } catch(e){} };
+  const lire = () => window.LK.read(KEY,{},window.LK.own);
+  const ecrire = o => window.LK.write(KEY,o);
   let own = lire();
   const MOT = type === 'armes' ? ['arme', 'armes', 'arsenal'] : ['véhicule', 'véhicules', 'garage'];
 
@@ -79,7 +84,7 @@
   const bt = document.getElementById('own-bt');
   if(bt){
     const id = bt.dataset.id;
-    const maj = () => { const on = !!own[id]; bt.classList.toggle('on', on);
+    const maj = () => { const on = !!own[id]; bt.classList.toggle('on', on); bt.setAttribute('aria-pressed',String(on));
       bt.querySelector('span:last-child').textContent = on ? 'Dans mon ' + MOT[2] : 'Ajouter à mon ' + MOT[2]; };
     bt.addEventListener('click', function(){ if(own[id]) delete own[id]; else own[id] = 1; ecrire(own); maj(); });
     maj();
@@ -119,11 +124,11 @@
       const id = c.dataset.id; if(!id) return;
       const body = c.querySelector('.veh-body'); if(!body) return;
       /* barre d'actions en pied de carte : l'image reste intacte */
-      let tools = body.querySelector('.veh-tools');
-      if(!tools){ tools = document.createElement('div'); tools.className = 'veh-tools'; body.appendChild(tools); }
+      let tools = c.querySelector('.veh-tools');
+      if(!tools){ tools = document.createElement('div'); tools.className = 'veh-tools'; c.appendChild(tools); }
       const b = document.createElement('button'); b.type = 'button'; b.className = 'own-card';
       b.innerHTML = '<span class="ck"></span><span class="own-lbl-c">' + (type === 'armes' ? 'Arsenal' : 'Garage') + '</span>';
-      b.title = 'Marquer comme possédé'; b.setAttribute('aria-pressed', 'false');
+      b.title = 'Marquer comme possédé'; b.setAttribute('aria-label', (type==='armes'?'Arsenal : ':'Garage : ')+c.querySelector('h3').textContent); b.setAttribute('aria-pressed', 'false');
       b.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation();
         if(own[id]) delete own[id]; else own[id] = 1; ecrire(own); majCartes(); });
       tools.appendChild(b);
@@ -149,13 +154,17 @@
       if(exp) exp.addEventListener('click', function(){
         const ids = Object.keys(own).join(',');
         const url = location.origin + location.pathname + '#' + MOT[2] + '=' + ids;
-        if(navigator.clipboard) navigator.clipboard.writeText(url);
-        exp.textContent = 'Lien copié'; setTimeout(() => exp.textContent = 'Partager', 1600);
+        window.LK.copy(url,exp,'Lien copié');
       });
     }
     /* import depuis un lien partagé */
-    const m = location.hash.match(new RegExp('#' + MOT[2] + '=([\\w,-]+)'));
-    if(m){ m[1].split(',').forEach(id => { own[id] = 1; }); ecrire(own); history.replaceState(null, '', location.pathname); }
+    const hp = new URLSearchParams(location.hash.slice(1));
+    const incoming = hp.get(MOT[2]);
+    if(incoming !== null){
+      const valid = new Set(cards.map(c=>c.dataset.id));
+      incoming.split(',').filter(id=>valid.has(id)).forEach(id=>{own[id]=1;}); ecrire(own);
+      hp.delete(MOT[2]); history.replaceState(null,'',location.pathname+location.search+(hp.size?'#'+hp.toString():''));
+    }
     majCartes();
 
     /* ------------------------------------------------------ sélection pour comparer */
@@ -166,7 +175,7 @@
       const tools = c.querySelector('.veh-tools'); if(!tools) return;
       const b = document.createElement('button'); b.type = 'button'; b.className = 'cmp-card';
       b.innerHTML = '<span class="cmp-ico" aria-hidden="true">⇄</span><span>Comparer</span>';
-      b.setAttribute('aria-pressed', 'false');
+      b.setAttribute('aria-pressed', 'false'); b.setAttribute('aria-label','Comparer : '+c.querySelector('h3').textContent);
       b.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation();
         const k = sel.indexOf(id);
         if(k >= 0) sel.splice(k, 1); else { if(sel.length >= 3){ sel.shift(); } sel.push(id); }
@@ -209,10 +218,12 @@
     if(!sec || !bt) return;
     const id = (document.getElementById('own-bt') || {}).dataset;
     if(!id || !id.id) return;
-    fetch('../credits-reels.json', { cache: 'force-cache' })
+    if(!window.LK.hasAsset('../credits-reels.json')) return;
+    fetch('../credits-reels.json')
       .then(r => r.ok ? r.json() : null)
       .then(function(c){
-        const e = c && c[id.id]; if(!e) return;
+        const e = c && c[id.id]; if(!e || !window.LK.hasAsset('../img/vehicules/'+id.id+'-reel.jpg')) return;
+        const esc = window.LK.esc; const url = window.LK.safeUrl;
         const img = new Image();
         img.src = '../img/vehicules/' + id.id + '-reel.jpg';
         img.alt = e.modele || 'Modèle réel';
@@ -223,11 +234,11 @@
         fig.appendChild(img);
         const cap = document.createElement('figcaption');
         const lic = e.licenceUrl
-          ? '<a href="' + e.licenceUrl + '" target="_blank" rel="noopener nofollow">' + e.licence + '</a>'
-          : e.licence;
-        cap.innerHTML = '<b>' + (e.modele || '') + '</b> — photo '
-          + (e.page ? '<a href="' + e.page + '" target="_blank" rel="noopener nofollow">' + e.auteur + '</a>' : e.auteur)
-          + ', ' + lic + '. Ce véhicule réel n\'est pas le modèle du jeu, c\'est son inspiration.';
+          ? '<a href="' + esc(url(e.licenceUrl)) + '" target="_blank" rel="noopener nofollow">' + esc(e.licence) + '</a>'
+          : esc(e.licence);
+        cap.innerHTML = '<b>' + esc(e.modele || '') + '</b> (photo '
+          + (e.page ? '<a href="' + esc(url(e.page)) + '" target="_blank" rel="noopener nofollow">' + esc(e.auteur) + '</a>' : esc(e.auteur))
+          + ', ' + lic + '). Ce véhicule réel n\'est pas le modèle du jeu, c\'est son inspiration.';
         fig.appendChild(cap);
         sec.insertBefore(fig, sec.querySelector('.fiche-liens'));
       })

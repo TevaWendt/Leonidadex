@@ -1,0 +1,70 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "node build.js",
+  "outputDirectory": "dist",
+  "cleanUrls": false,
+  "redirects": [
+    {
+      "source": "/vehicules/airgator-airboat-09.html",
+      "destination": "/vehicules/airboat-09.html",
+      "permanent": true
+    },
+    {
+      "source": "/armes/pistolet-jason.html",
+      "destination": "/armes/girardi-es9.html",
+      "permanent": true
+    },
+    {
+      "source": "/armes/pistolet-tactique.html",
+      "destination": "/armes/klose-k17.html",
+      "permanent": true
+    },
+    {
+      "source": "/armes/pistolet-compact.html",
+      "destination": "/armes/nipper-38.html",
+      "permanent": true
+    },
+    {
+      "source": "/armes/revolver-357.html",
+      "destination": "/armes/hawk-little-morgan.html",
+      "permanent": true
+    },
+    {
+      "source": "/vehicules/vehicules.html",
+      "destination": "/vehicules.html",
+      "permanent": true
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self' https://affd58b3.sibforms.com"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=()"
+        }
+      ]
+    },
+    {
+      "source": "/photos/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, stale-while-revalidate=86400"
+        }
+      ]
+    }
+  ]
+}

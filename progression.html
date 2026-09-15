@@ -27,16 +27,19 @@
 }
 </script>
 <link rel="stylesheet" href="style.css">
+<meta property="og:image" content="https://www.leonidakit.com/img/social-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:url" content="https://www.leonidakit.com/progression.html">
 </head>
 <body>
 
 <a class="skip" href="#main">Aller au contenu</a>
-<div class="sunset"></div>
+<div class="sunset" aria-hidden="true"></div>
 
 <header>
   <div class="shell head-in">
     <a href="index.html" class="brand">Leonida<span>kit</span></a>
-    <nav id="nav">
+    <nav id="nav" aria-label="Navigation principale">
       <ul>
         <li><a href="carte.html">Carte</a></li>
         <li><a href="vehicules.html">Véhicules</a></li>
@@ -66,25 +69,15 @@
   <p class="lede">Missions, collectibles et succès. Tout est sauvegardé sur ton appareil, sans compte à créer.</p>
 </section>
 
-<section class="shell">
-  <div class="prog-demo rise">
-    <div class="prog-head">
-      <h2>Aperçu du fonctionnement</h2>
-      <p>Voici à quoi ressemblera le suivi. Les catégories réelles seront ajoutées après la sortie.</p>
-    </div>
-    <div class="prog-bar-wrap">
-      <div class="prog-bar"><span style="width:0%"></span></div>
-      <span class="prog-pct">0 %</span>
-    </div>
-    <ul class="prog-list">
-      <li><label><input type="checkbox" disabled> Missions de l'histoire <em>0 / —</em></label></li>
-      <li><label><input type="checkbox" disabled> Collectibles <em>0 / —</em></label></li>
-      <li><label><input type="checkbox" disabled> Planques débloquées <em>0 / —</em></label></li>
-      <li><label><input type="checkbox" disabled> Véhicules possédés <em>0 / —</em></label></li>
-      <li><label><input type="checkbox" disabled> Succès et trophées <em>0 / —</em></label></li>
-    </ul>
-    <p class="note">Le suivi deviendra actif quand les listes seront saisies.</p>
-  </div>
+<section class="shell" id="suivi" aria-label="Suivi sur cet appareil">
+  <h2 class="sec-h">Ton suivi sur cet appareil</h2>
+  <p>Retrouve ici les éléments cochés sur la carte, dans ton garage et dans ton arsenal. Ce suivi ne représente pas le pourcentage de complétion du jeu.</p>
+  <div class="progress-cards">
+<article class="note-box" id="progress-vehicules"><h3>Véhicules possédés</h3><strong>0</strong><progress value="0" max="1" aria-label="Véhicules possédés"></progress><a href="vehicules.html">Ouvrir le suivi</a></article>
+<article class="note-box" id="progress-armes"><h3>Armes possédées</h3><strong>0</strong><progress value="0" max="1" aria-label="Armes possédées"></progress><a href="armes.html">Ouvrir le suivi</a></article>
+<article class="note-box" id="progress-lieux"><h3>Lieux repérés</h3><strong>0</strong><progress value="0" max="1" aria-label="Lieux repérés"></progress><a href="carte.html">Ouvrir le suivi</a></article>
+</div><p class="note">Les missions, collectibles, planques et trophées seront ajoutés lorsque leurs listes seront documentées.</p>
+  <noscript><p>Active JavaScript pour lire le suivi enregistré dans ton navigateur.</p></noscript>
 </section>
 
 </main>
@@ -126,15 +119,15 @@
       </div>
       <div class="foot-cols">
         <div>
-          <h4>Contenu</h4>
+          <h2>Contenu</h2>
           <nav><a href="carte.html">Carte</a><a href="vehicules.html">Véhicules</a><a href="armes.html">Armes</a><a href="collectibles.html">Collectibles</a></nav>
         </div>
         <div>
-          <h4>Outils</h4>
+          <h2>Outils</h2>
           <nav><a href="progression.html">Progression</a><a href="calculateurs.html">Calculateurs</a></nav>
         </div>
         <div>
-          <h4>Le site</h4>
+          <h2>Le site</h2>
           <nav><a href="a-propos.html">À propos</a><a href="contact.html">Contact</a><a href="mentions-legales.html">Mentions légales</a></nav>
         </div>
       </div>
@@ -144,6 +137,10 @@
 </footer>
 
 <script src="search-index.js"></script>
+<script src="assets-manifest.js"></script>
+<script src="common.js"></script>
 <script src="app.js"></script>
+<script src="progression-data.js"></script>
+<script src="progression.js"></script>
 </body>
 </html>

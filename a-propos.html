@@ -27,16 +27,19 @@
 }
 </script>
 <link rel="stylesheet" href="style.css">
+<meta property="og:image" content="https://www.leonidakit.com/img/social-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:url" content="https://www.leonidakit.com/a-propos.html">
 </head>
 <body>
 
 <a class="skip" href="#main">Aller au contenu</a>
-<div class="sunset"></div>
+<div class="sunset" aria-hidden="true"></div>
 
 <header>
   <div class="shell head-in">
     <a href="index.html" class="brand">Leonida<span>kit</span></a>
-    <nav id="nav">
+    <nav id="nav" aria-label="Navigation principale">
       <ul>
         <li><a href="carte.html">Carte</a></li>
         <li><a href="vehicules.html">Véhicules</a></li>
@@ -74,7 +77,7 @@
   <p>Une carte interactive filtrable, un suivi de progression, des fiches courtes sur les véhicules et les armes, et des calculateurs. Le tout gratuit et sans compte à créer.</p>
 
   <h2>Ce que vous n'y trouverez pas</h2>
-  <p>Pas de rumeurs présentées comme des faits, pas de contenu issu de fuites, pas de reprise de captures non autorisées. Quand une information n'est pas confirmée, elle n'est pas publiée.</p>
+  <p>Pas de rumeurs présentées comme des faits, pas de contenu issu de fuites, pas de reprise de captures non autorisées. Les informations officielles et les identifications communautaires sont distinguées par leur statut.</p>
 
   <h2>Les mises à jour</h2>
   <p>Le jeu sort le 19 novembre 2026. La plupart des données n'existeront qu'à partir de cette date. Les outils sont construits d'ici là pour être prêts le jour même.</p>
@@ -122,15 +125,15 @@
       </div>
       <div class="foot-cols">
         <div>
-          <h4>Contenu</h4>
+          <h2>Contenu</h2>
           <nav><a href="carte.html">Carte</a><a href="vehicules.html">Véhicules</a><a href="armes.html">Armes</a><a href="collectibles.html">Collectibles</a></nav>
         </div>
         <div>
-          <h4>Outils</h4>
+          <h2>Outils</h2>
           <nav><a href="progression.html">Progression</a><a href="calculateurs.html">Calculateurs</a></nav>
         </div>
         <div>
-          <h4>Le site</h4>
+          <h2>Le site</h2>
           <nav><a href="a-propos.html">À propos</a><a href="contact.html">Contact</a><a href="mentions-legales.html">Mentions légales</a></nav>
         </div>
       </div>
@@ -140,6 +143,8 @@
 </footer>
 
 <script src="search-index.js"></script>
+<script src="assets-manifest.js"></script>
+<script src="common.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

@@ -1,19 +1,20 @@
 /* ============================================================
    LEONIDAKIT — images : synchronisation disque vers base
-   Usage :  node releve/images.js          (rapport seul)
-            node releve/images.js --ecrire (met à jour v-corrige.json)
+   Usage :  node images.js          (rapport seul)
+            node images.js --ecrire (met à jour v-corrige.json)
 
    Lit img/vehicules/, en déduit le champ « vues » de chaque
    véhicule, et refuse d'écrire tant qu'un crédit obligatoire
    manque. Tu ne touches jamais v-corrige.json à la main.
    ============================================================ */
 const fs = require('fs');
+process.chdir(__dirname);
 const path = require('path');
 
 const VUES = ['face', 'profil', 'arriere', 'interieur', 'detail'];
 const DOSSIER = 'img/vehicules';
-const SOURCE = 'releve/v-corrige.json';
-const CREDITS = 'releve/credits-images.json';
+const SOURCE = 'v-corrige.json';
+const CREDITS = 'credits-images.json';
 
 const ecrire = process.argv.includes('--ecrire');
 const V = JSON.parse(fs.readFileSync(SOURCE, 'utf8'));
@@ -30,15 +31,15 @@ try { fichiers = fs.readdirSync(DOSSIER); }
 catch (e) {
   console.log('Dossier ' + DOSSIER + ' absent. Rien à synchroniser.');
   console.log('Crée-le à la racine du dépôt et dépose les images dedans.');
-  process.exit(0);
 }
+
 
 const trouve = {};       // id -> [vues]
 const orphelins = [];    // fichiers qui ne correspondent à aucun véhicule
 const malNommes = [];    // fichiers hors convention
 
 fichiers.forEach(f => {
-  if (f.startsWith('.')) return;
+  if (f.startsWith('.') || /-reel\.jpg$/.test(f)) return;
   const m = f.match(/^([a-z0-9-]+)-(face|profil|arriere|interieur|detail)\.jpg$/);
   if (!m) { malNommes.push(f); return; }
   const [, id, vue] = m;
@@ -57,6 +58,7 @@ const add = (g, d) => pb.push({ g, d });
 
 Object.keys(trouve).forEach(id => {
   const v = parId[id];
+  if(!credits[id] && !v.credit)add('crédit manquant',id);
   /* une fiche sans vue de profil se remarque tout de suite à l'affichage */
   if (!trouve[id].includes('profil'))
     add('vue profil manquante', id + ' : ' + trouve[id].join(', '));
@@ -88,7 +90,7 @@ console.log('  crédits déclarés             : ' + Object.keys(credits).length
 const g = {};
 pb.forEach(p => (g[p.g] = g[p.g] || []).push(p.d));
 console.log('');
-['vue profil manquante', 'nom hors convention', 'aucun véhicule pour ce fichier',
+['crédit manquant','vue profil manquante', 'nom hors convention', 'aucun véhicule pour ce fichier',
  'déclaré en base, absent du disque', 'écart base / disque'].forEach(k => {
   const x = g[k] || [];
   console.log((x.length ? '✗ ' : '✓ ') + k.padEnd(32) + ' : ' + x.length);
@@ -101,7 +103,7 @@ if (!ecrire) {
   console.log('\nRapport seul. Relance avec --ecrire pour mettre à jour ' + SOURCE + '.');
   process.exit(0);
 }
-const bloquant = (g['nom hors convention'] || []).length;
+const bloquant = ['nom hors convention','aucun véhicule pour ce fichier','crédit manquant'].reduce((n,k)=>n+(g[k]||[]).length,0);
 if (bloquant) {
   console.log('\nÉcriture refusée : ' + bloquant + ' problème(s) bloquant(s) ci-dessus.');
   console.log('Corrige les noms de fichiers et les crédits, puis relance.');
@@ -112,8 +114,8 @@ if (bloquant) {
    perdre ses vues parce que ta copie locale du dossier est incomplète. */
 let modif = 0;
 V.forEach(v => {
-  const vues = trouve[v.id];
-  if (!vues || !vues.length) return;
+  const vues = VUES.filter(vue => (v.vues || []).includes(vue) || (trouve[v.id] || []).includes(vue));
+  if (!trouve[v.id] || !trouve[v.id].length) return;
   const avant = JSON.stringify(v.vues || null) + '|' + (v.credit || '');
   v.vues = vues;
   if (credits[v.id]) v.credit = credits[v.id];

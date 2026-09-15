@@ -1,5 +1,6 @@
 const fs=require('fs');
-let V=JSON.parse(fs.readFileSync('releve/v-corrige.json','utf8'));
+process.chdir(__dirname);
+let V=JSON.parse(fs.readFileSync('v-corrige.json','utf8'));
 
 /* ---------- lien vers le modèle réel, recalculé sur l'inspiration corrigée ---------- */
 const cible=v=>{ const t=v.insp||v.fam; if(!t) return null;
@@ -8,7 +9,7 @@ const cible=v=>{ const t=v.insp||v.fam; if(!t) return null;
    .replace(/\b(premi[eè]re|deuxi[eè]me|troisi[eè]me|quatri[eè]me|cinqui[eè]me|sixi[eè]me|septi[eè]me|g[eé]n[eé]ration|anciennement|plusieurs variantes|depuis|pr[eé]par[eé]e?|livr[eé]e|avec des touches de|type|fa[cç]on)\b/gi,'')
    .replace(/\b(19|20)\d\d-(19|20)?\d\d\b/g,'')
    .replace(/\s{2,}/g,' ').replace(/\s+,/g,',').trim().replace(/[,\s]+$/,''); };
-V.forEach(v=>{ const c=cible(v);
+V.forEach(v=>{ if(Array.isArray(v.vues)){v.vuesDeclarees=v.vues;v.vues=v.vues.filter(view=>fs.existsSync('img/vehicules/'+v.id+'-'+view+'.jpg'));} const c=cible(v);
   if(c){ v.reel='https://www.google.com/search?tbm=isch&q='+encodeURIComponent(c); v.reelNom=c; }
   else { delete v.reel; delete v.reelNom; }
   v.search=[v.marque,v.nom,v.alias,v.insp||v.fam].filter(Boolean).join(' ')
@@ -33,7 +34,7 @@ const tri=V.slice().sort((a,b)=>ORDRE.indexOf(a.cat)-ORDRE.indexOf(b.cat)
 
 fs.writeFileSync('vehicules-data.js',
 `/* ============================================================
-   LEONIDAKIT — véhicules : source de vérité
+   LEONIDAKIT — véhicules : sortie générée depuis v-corrige.json
      st      officiel / vu / comm
      insp    modèle réel, vérifié sur base de référence 13/09/2026
      edition Édition Ultimate ou bonus de précommande
@@ -41,7 +42,7 @@ fs.writeFileSync('vehicules-data.js',
      slot    origine du modèle réel, sert au filtre
    Aucune donnée issue de fuites.
    ============================================================ */
-window.LK_VEHICULES = `+JSON.stringify(tri)+';\n');
+window.LK_VEHICULES = `+JSON.stringify(tri)+';\nwindow.LK_VEHICULES_CATS = '+JSON.stringify(CATL)+';\n');
 
 const n={}; V.forEach(v=>n[v.cat]=(n[v.cat]||0)+1);
 const nSt={officiel:0,vu:0,comm:0}; V.forEach(v=>nSt[v.st]++);
