@@ -1,0 +1,25 @@
+{
+  "redirects": [
+    { "source": "/vehicules/airgator-airboat-09.html", "destination": "/vehicules/airboat-09.html", "permanent": true },
+    { "source": "/vehicules/vehicules.html", "destination": "/vehicules.html", "permanent": true },
+    { "source": "/armes/pistolet-jason.html", "destination": "/armes/girardi-es9.html", "permanent": true },
+    { "source": "/armes/pistolet-tactique.html", "destination": "/armes/klose-k17.html", "permanent": true },
+    { "source": "/armes/pistolet-compact.html", "destination": "/armes/nipper-38.html", "permanent": true },
+    { "source": "/armes/revolver-357.html", "destination": "/armes/hawk-little-morgan.html", "permanent": true }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
+      ]
+    },
+    {
+      "source": "/photos/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=86400, stale-while-revalidate=604800" }
+      ]
+    }
+  ]
+}
