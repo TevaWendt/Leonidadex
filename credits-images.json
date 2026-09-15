@@ -1,0 +1,4 @@
+{
+ "_commentaire": "Credit affiche sous la galerie de chaque fiche. Obligatoire des qu'une photo du modele reel est utilisee : la licence Wikimedia Commons impose auteur + licence. Format : identifiant du vehicule -> texte du credit. Exemple : \"Photo du modele reel : Auteur, CC BY-SA 4.0, via Wikimedia Commons. Images en jeu : Rockstar Games.\"",
+ "_exemple-a-supprimer": "Photo du modèle réel : Nom de l'auteur, CC BY-SA 4.0, via Wikimedia Commons. Images en jeu : Rockstar Games."
+}
