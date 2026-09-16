@@ -12,6 +12,41 @@
   const VUES_LBL = { face:'Face', profil:'Profil', arriere:'Arrière', detail:'Détail', interieur:'Intérieur', dessus:'Dessus' };
 
   document.querySelectorAll('.gal').forEach(function(gal){
+    /* visuels officiels Rockstar déclarés dans la page : galerie prête, sans requête de test */
+    var medias = [];
+    try { medias = gal.dataset.medias ? JSON.parse(gal.dataset.medias) : []; } catch (e) { medias = []; }
+    if (medias.length) {
+      const trk = document.createElement('div'); trk.className = 'gal-track';
+      medias.forEach(function (m) {
+        const it = document.createElement('div'); it.className = 'gal-item';
+        const im = document.createElement('img');
+        im.src = m.s; im.srcset = m.s + ' 480w, ' + m.l + ' 1280w'; im.sizes = '(max-width:700px) 100vw, 520px';
+        im.width = m.w; im.height = m.h; im.decoding = 'async';
+        im.alt = (gal.dataset.nom || '') + ' — ' + m.t + ', capture officielle Rockstar Games';
+        it.appendChild(im);
+        const s = document.createElement('span'); s.className = 'gal-lbl'; s.textContent = m.t; it.appendChild(s);
+        trk.appendChild(it);
+      });
+      gal.appendChild(trk);
+      if (medias.length > 1) {
+        let j = 0;
+        const dts = document.createElement('div'); dts.className = 'gal-dots';
+        const goM = function (k) { j = (k + medias.length) % medias.length; trk.style.transform = 'translateX(-' + (j * 100) + '%)';
+          dts.querySelectorAll('button').forEach(function (d, q) { d.classList.toggle('on', q === j); d.setAttribute('aria-current', String(q === j)); }); };
+        const mk = function (cls, txt) { const b = document.createElement('button'); b.type = 'button'; b.className = 'gal-btn ' + cls; b.textContent = txt;
+          b.setAttribute('aria-label', cls === 'prev' ? 'Vue précédente' : 'Vue suivante'); b.addEventListener('click', function () { goM(j + (cls === 'prev' ? -1 : 1)); }); return b; };
+        gal.appendChild(mk('prev', '‹')); gal.appendChild(mk('next', '›'));
+        medias.forEach(function (_, k) { const d = document.createElement('button'); d.type = 'button'; d.setAttribute('aria-label', 'Vue ' + (k + 1)); d.addEventListener('click', function () { goM(k); }); dts.appendChild(d); });
+        gal.parentNode.insertBefore(dts, gal.nextSibling);
+        goM(0);
+        gal.tabIndex = 0;
+        gal.addEventListener('keydown', function (e) { if (e.key === 'ArrowLeft') { goM(j - 1); e.preventDefault(); } if (e.key === 'ArrowRight') { goM(j + 1); e.preventDefault(); } });
+        let mx = null;
+        gal.addEventListener('pointerdown', function (e) { mx = e.clientX; });
+        gal.addEventListener('pointerup', function (e) { if (mx === null) return; const dx = e.clientX - mx; mx = null; if (Math.abs(dx) > 40) goM(j + (dx < 0 ? 1 : -1)); });
+      }
+      return;
+    }
     const base = gal.dataset.base;
     const vues = (gal.dataset.vues || 'face,profil').split(',').filter(v => window.LK.hasAsset(base+'-'+v+'.jpg'));
     const art = gal.dataset.art || '';
