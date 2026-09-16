@@ -1,0 +1,111 @@
+LEONIDAKIT v7.1 : DÉTAIL DES CHANGEMENTS (16 septembre 2026)
+=============================================================
+
+LES DIX POINTS DEMANDÉS
+-----------------------
+1. Doublon Lieux / État de Leonida
+   La section "L'État de Leonida" de l'accueil affiche les six régions
+   officielles (Vice City, Leonida Keys, Grassrivers, Port Gellhorn, Ambrosia,
+   Mount Kalaga) avec leurs visuels Rockstar, chacune menant à sa fiche. Les
+   vignettes de comtés dessinées ont disparu ; les six comtés restent sur la
+   carte, avec un lien dans le sous-titre. La carte "Lieux" est retirée du bloc
+   "Le monde de Leonida".
+
+2. Cartes Personnages / Entreprises mal centrées
+   "Le monde de Leonida" contient maintenant Personnages, Demeures, Planques
+   et Entreprises, dans une grille centrée à largeur bornée (nouvelles classes
+   .lore-grid--center et .lore-grid--four).
+
+3. Bandeaux défilants sans vide
+   app.js : nouvelle fonction fillTrack. Le contenu est répété jusqu'à ce
+   qu'une moitié de piste dépasse la largeur de l'écran, puis dupliqué pour
+   l'animation à -50 %. Recalculé au redimensionnement. Concerne les deux
+   bandeaux de l'accueil, la frise des régions et le bandeau des marques de la
+   page Véhicules. Mesuré à 1 440 px : moitiés de 2 675, 2 330 et 1 560 px.
+
+4. Navigation haute complète
+   Onze entrées sur les 390 pages : Carte, Véhicules, Armes, Lieux,
+   Personnages, Demeures, Planques, Entreprises, Calculateurs, Progression,
+   Collectibles. Le menu est écrit par outils/sync-site.cjs sur chaque page,
+   avec l'onglet actif calculé depuis le chemin du fichier. La barre "Chercher"
+   des fiches reste visible ; pour que tout tienne sur une ligne, l'en-tête
+   est un peu plus large que le contenu (1 280 px), la barre est alignée sur
+   le menu et apparaît immédiatement (elle héritait d'un décalage et d'une
+   apparition retardée prévus pour l'accueil). Le menu replié s'active dès
+   1 080 px, et dès 1 280 px sur les pages qui ont la barre. Le pied de page
+   reçoit aussi Demeures et Planques.
+
+5. Sections Demeures et Planques
+   Deux nouvelles sections dans outils/editorial.json, générées par
+   outils/lore-gen.js comme les entreprises : demeures.html + demeures/
+   (4 fiches : la maison de Jason dans les Keys, chez Cal Hampton, chez Brian
+   et Lori, Lucia du pénitencier à Vice City) et planques.html + planques/
+   (3 fiches : la planque de Jason, le chantier naval de Brian, le motel du
+   premier trailer). Textes écrits uniquement d'après les présentations
+   officielles de Rockstar (rockstargames.com/VI), relues avant rédaction.
+   Aucune donnée de fuite.
+
+6. Calculateurs mis en avant sur l'accueil
+   Bloc pleine largeur en tête de la section "Les outils" : les trois
+   questions auxquelles les calculateurs répondront, la date, une animation à
+   l'apparition. Les trois autres outils passent sur trois colonnes.
+
+7. Onglet actif erroné (clic sur Lieux → "Véhicules" souligné)
+   Cause : le gabarit des fiches était copié depuis une fiche véhicule, avec
+   sa classe "here" sur Véhicules. Corrigé à la source (lore-gen.js retire la
+   classe copiée) et globalement (sync-site.cjs recalcule l'onglet actif sur
+   toutes les pages).
+
+8. Contenu des fiches enrichi + animations
+   Chaque fiche du monde (29 fiches) reçoit : une accroche, un bloc
+   "À retenir" de 3 à 4 faits, un bloc "En lien" avec les cartes des entités
+   liées (visuel + nom + type), les véhicules associés, et "Sur la carte" avec
+   les lieux repérés (photo de carte quand elle existe). Les liens sont
+   bidirectionnels (une région liste les personnages, demeures et planques qui
+   la citent). Animation d'entrée jouée une fois : texte en cascade, visuel
+   révélé par balayage ; les faits montent à l'apparition. Le tout respecte
+   prefers-reduced-motion.
+
+9. Plus de légendes ni de sources sur les fiches
+   Supprimés : la légende sous chaque image, la ligne "Source : ..." en bas
+   de fiche, la mention de crédit dans l'introduction des hubs et la phrase
+   "Textes rédigés d'après..." sous les grilles. Les crédits restent sur
+   medias.html et dans les mentions légales (obligation de la licence gtadb
+   CC BY 4.0 et usage des visuels Rockstar).
+
+10. Rails décoratifs de la page Armes
+    Ils étaient placés hors de toute zone, donc calés sur la page entière.
+    Ils sont maintenant dans une zone qui va du constructeur d'équipement
+    jusqu'à la fin du contenu. Mesuré : début à 509 px = bas du bandeau
+    "Statistiques et prix disponibles dans", fin = haut du pied de page.
+
+CORRECTION SUPPLÉMENTAIRE
+-------------------------
+- Les cartes Lieux / Personnages / Entreprises de l'accueil affichaient
+  "324 fiches" : le compteur véhicules+armes de sync-site.cjs écrasait tous
+  les "N fiches" de la page. Il ne touche plus que la puce des outils.
+
+FICHIERS TOUCHÉS
+----------------
+- outils/editorial.json : accroches, faits et lieux de carte pour les 22
+  fiches existantes ; sections residences et hideouts.
+- outils/lore-gen.js : réécrit (sections, fiches, hubs, accueil).
+- outils/sync-site.cjs : navigation globale avec onglet actif, dossiers
+  demeures/planques, pied de page, compteur.
+- app.js : fillTrack (bandeaux), loupe repliable de l'en-tête.
+- style.css : bloc "v7.1" en fin de fichier.
+- armes.html : rails déplacés dans une zone dédiée.
+- outils/tests/coverage.test.cjs : les nouveaux dossiers sont couverts.
+- Toutes les pages HTML : menu régénéré.
+
+VÉRIFICATIONS
+-------------
+- Chaîne de génération relancée deux fois : la seconde passe ne change rien
+  (déterministe).
+- outils/verifier.js : 19 497 références vérifiées dans 390 pages, 0 cassée.
+- outils/audit-final.js : six contrôles à zéro.
+- 44 tests jsdom : 44 réussis.
+- Syntaxe contrôlée : tous les .js/.cjs, style.css, fiches.css, tous les .json.
+- Captures d'écran réelles (Chromium via Playwright) à 1 440, 1 200, 1 100 et
+  390 px : accueil, fiches région/demeure/planque, page Armes, menu mobile,
+  recherche repliée puis ouverte. Aucun débordement horizontal sur mobile.

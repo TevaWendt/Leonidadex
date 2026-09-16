@@ -13,7 +13,7 @@ fs.writeFileSync('assets-manifest.js','/* Generated from the files actually ship
 const assetSet=new Set(shipped);
 const available=(file,u)=>{try{const url=new URL(u,'https://www.leonidakit.com/'+file);return url.origin!=='https://www.leonidakit.com'||url.protocol==='data:'||assetSet.has(url.pathname);}catch{return false;}};
 let home=fs.readFileSync('index.html','utf8');home=home.replace(/data-count="\d+">\d+<\/span><span class="label">fiches véhicules/, 'data-count="'+V.length+'">'+V.length+'</span><span class="label">fiches véhicules');
-home=home.replace(/\d+ fiches<\/span>/g,(V.length+A.length)+' fiches</span>').replace(/\d+ véhicules, \d+ armes/g,V.length+' véhicules, '+A.length+' armes');
+home=home.replace(/(class="chip live">)\d+ fiches<\/span>/g,'$1'+(V.length+A.length)+' fiches</span>').replace(/\d+ véhicules, \d+ armes/g,V.length+' véhicules, '+A.length+' armes');
 // Resolve the explicit counter independently of its presentation classes.
 home=home.replace(/(<[^>]+data-count=")\d+("[^>]*>)\d+(<\/[^>]+>\s*<[^>]+>fiches véhicules)/g,'$1'+V.length+'$2'+V.length+'$3');
 home=home.replace('Les outils sont prêts, les données arrivent avec le jeu.','La carte et les catalogues sont accessibles. Les autres outils se complètent avec le jeu.');
@@ -42,7 +42,7 @@ const mapData=JSON.parse(fs.readFileSync(rawPath,'utf8'));
 for(const p of [...mapData.groupes,...mapData.lieux,...Object.values(mapData.enrichit)])for(const key of ['img','img2'])if(p[key]&&!available('carte.html',p[key]))delete p[key];
 fs.writeFileSync('carte-gtadb.js','/* Generated from data/carte-gtadb-source.json. gtadb.org et ses contributeurs, CC BY 4.0; adapté pour Leonidakit. */\nwindow.LK_GTADB = '+JSON.stringify(mapData)+';\n');
 
-const htmlFiles=[...fs.readdirSync('.').filter(x=>x.endsWith('.html')),...['armes','vehicules','lieux','personnages','entreprises'].filter(d=>fs.existsSync(d)).flatMap(d=>fs.readdirSync(d).filter(f=>f.endsWith('.html')).map(f=>d+'/'+f))].sort();
+const htmlFiles=[...fs.readdirSync('.').filter(x=>x.endsWith('.html')),...['armes','vehicules','lieux','personnages','entreprises','demeures','planques'].filter(d=>fs.existsSync(d)).flatMap(d=>fs.readdirSync(d).filter(f=>f.endsWith('.html')).map(f=>d+'/'+f))].sort();
 const canonicals=[];
 for(const file of htmlFiles){let s=fs.readFileSync(file,'utf8');if(file.startsWith('google'))continue;const prefix=file==='404.html'?'/':file.includes('/')?'../':'';
  if(s.includes('app.js')){
@@ -55,7 +55,7 @@ for(const file of htmlFiles){let s=fs.readFileSync(file,'utf8');if(file.startsWi
  // Separate the catalogue link from its possession/comparison buttons.
  s=s.replace(/<a class="([^"]*\bveh-card\b[^"]*)" href="([^"]+)"([^>]*)>([\s\S]*?)<\/a>/g,(_,cls,href,attrs,body)=>'<article class="'+cls+'"'+attrs+'><a class="veh-link" href="'+href+'">'+body+'</a></article>');
  // Avoid known-missing image requests; do not erase source view declarations.
- s=s.replace(/(<h2>Contenu<\/h2>\s*<nav>)(<a href="(\.\.\/)?carte\.html">Carte<\/a>[\s\S]*?)(<\/nav>)/,(m0,a,b,p,c)=>{p=p||'';return b.includes('lieux.html')?m0:a+b+'<a href="'+p+'lieux.html">Lieux</a><a href="'+p+'personnages.html">Personnages</a><a href="'+p+'entreprises.html">Entreprises</a>'+c;});
+ s=s.replace(/(<h2>Contenu<\/h2>\s*<nav>)(<a href="(\.\.\/)?carte\.html">Carte<\/a>[\s\S]*?)(<\/nav>)/,(m0,a,b,p,c)=>{p=p||'';let nb=b;if(!nb.includes('lieux.html'))nb+='<a href="'+p+'lieux.html">Lieux</a><a href="'+p+'personnages.html">Personnages</a><a href="'+p+'entreprises.html">Entreprises</a>';if(!nb.includes('demeures.html'))nb+='<a href="'+p+'demeures.html">Demeures</a><a href="'+p+'planques.html">Planques</a>';return a+nb+c;});
  s=s.replace(/<img\b[^>]*src="([^"]+)"[^>]*>/g,(tag,src)=>available(file,src)?tag:'<span class="image-placeholder">Visuel à intégrer</span>');
  s=s.replace(/<div class="gal"([^>]+)>/g,(tag,attrs)=>{const base=attrs.match(/data-base="([^"]+)"/)?.[1];const vv=attrs.match(/data-vues="([^"]*)"/)?.[1]||'face,profil,detail';const views=vv.split(',').filter(v=>v&&available(file,base+'-'+v+'.jpg'));attrs=attrs.replace(/\sdata-vide="[^"]*"/,'').replace(/data-vues="[^"]*"/,'data-vues="'+views.join(',')+'"');const hasMed=/data-medias="[^"]*[^"\]]/.test(attrs);return '<div class="gal"'+attrs+' data-vide="'+((views.length||hasMed)?0:1)+'">';});
  if(/class="gal"[^>]*data-vide="1"/.test(s)){s=s.replace(/<p class="gal-note">[\s\S]*?<\/p>/,'<p class="gal-note">Illustration provisoire : les visuels restent à intégrer à cette fiche.</p>').replace(/<span class="chip">Images officielles<\/span>/g,'');}
@@ -76,9 +76,15 @@ for(const file of htmlFiles){let s=fs.readFileSync(file,'utf8');if(file.startsWi
  s=s.replace(/(<progress)(?![^>]*aria-label)([^>]*>)/g,'$1 aria-label="Possessions enregistrées"$2');
  s=s.replace('id="map-panel"','id="map-panel" inert').replace('id="map-panel" inert inert','id="map-panel" inert');
  if(canonical&&!/name="robots" content="[^"]*noindex/.test(s)&&!s.includes('http-equiv="refresh"')&&file!=='404.html')canonicals.push(canonical);
+ // Navigation principale : toutes les pages importantes, onglet actif selon la page
+ {const NAV=[['carte','Carte'],['vehicules','Véhicules'],['armes','Armes'],['lieux','Lieux'],['personnages','Personnages'],['demeures','Demeures'],['planques','Planques'],['entreprises','Entreprises'],['calculateurs','Calculateurs'],['progression','Progression'],['collectibles','Collectibles']];
+  const base=file.replace(/\.html$/,'').split('/')[0];
+  const cur=({'comparateur':'vehicules','classement-vehicules':'vehicules','vehicules-rares':'vehicules'})[base]||base;
+  const ul='<ul>\n'+NAV.map(([id,lbl])=>'        <li><a href="'+prefix+id+'.html"'+(id===cur?' class="here"':'')+'>'+lbl+'</a></li>').join('\n')+'\n      </ul>';
+  s=s.replace(/(<nav id="nav" aria-label="Navigation principale">)\s*<ul>[\s\S]*?<\/ul>/,'$1\n      '+ul);}
  fs.writeFileSync(file,s);
 }
-const urls=[...new Set(canonicals)].sort();for(const f of ['sitemap.xml','sitemap-fiches.xml']){const list=f==='sitemap-fiches.xml'?urls.filter(u=>/\/(armes|vehicules|lieux|personnages|entreprises)\//.test(u)):urls;fs.writeFileSync(f,'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+list.map(u=>'  <url><loc>'+esc(u)+'</loc></url>').join('\n')+'\n</urlset>\n');}
+const urls=[...new Set(canonicals)].sort();for(const f of ['sitemap.xml','sitemap-fiches.xml']){const list=f==='sitemap-fiches.xml'?urls.filter(u=>/\/(armes|vehicules|lieux|personnages|entreprises|demeures|planques)\//.test(u)):urls;fs.writeFileSync(f,'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+list.map(u=>'  <url><loc>'+esc(u)+'</loc></url>').join('\n')+'\n</urlset>\n');}
 // Rebuild search terms from current names and aliases; exclude old retired pages.
 let index=data.window.LK_INDEX.filter(e=>!/^\/(vehicules|armes)\//.test(e.u));
 for(const[type,list]of [['vehicules',V],['armes',A]])for(const v of list)index.push({l:name(v),k:type==='vehicules'?'Véhicule':'Arme',u:'/'+type+'/'+v.id+'.html',s:[v.id,v.search,name(v),v.fr,v.alias,v.insp,v.fam].filter(Boolean).join(' ').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase()});
