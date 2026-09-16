@@ -6,9 +6,11 @@ const V=data.window.LK_VEHICULES,A=data.window.LK_ARMES;
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const name=v=>(v.marque&&v.marque!=='Marque inconnue'?v.marque+' ':'')+v.nom;
 const walk=d=>fs.readdirSync(d,{withFileTypes:true}).flatMap(x=>x.isDirectory()?walk(path.join(d,x.name)):[path.join(d,x.name)]);
-const assets=['photos','img'].flatMap(d=>fs.existsSync(d)?walk(d):[]).map(p=>'/'+p.replaceAll('\\','/')).sort();if(fs.existsSync('credits-reels.json'))assets.push('/credits-reels.json');
+const shipped=['photos','img'].flatMap(d=>fs.existsSync(d)?walk(d):[]).map(p=>'/'+p.replaceAll('\\','/')).sort();if(fs.existsSync('credits-reels.json'))shipped.push('/credits-reels.json');
+// Le manifeste chargé par toutes les pages ne liste pas les photos de la carte : elles ne servent qu'à carte.html et carte-gtadb.js est déjà filtré ci-dessous.
+const assets=shipped.filter(p=>!p.startsWith('/photos/'));
 fs.writeFileSync('assets-manifest.js','/* Generated from the files actually shipped. */\nwindow.LK_ASSETS = '+JSON.stringify(assets)+';\n');
-const assetSet=new Set(assets);
+const assetSet=new Set(shipped);
 const available=(file,u)=>{try{const url=new URL(u,'https://www.leonidakit.com/'+file);return url.origin!=='https://www.leonidakit.com'||url.protocol==='data:'||assetSet.has(url.pathname);}catch{return false;}};
 let home=fs.readFileSync('index.html','utf8');home=home.replace(/data-count="\d+">\d+<\/span><span class="label">fiches véhicules/, 'data-count="'+V.length+'">'+V.length+'</span><span class="label">fiches véhicules');
 home=home.replace(/\d+ fiches<\/span>/g,(V.length+A.length)+' fiches</span>').replace(/\d+ véhicules, \d+ armes/g,V.length+' véhicules, '+A.length+' armes');
