@@ -5,7 +5,10 @@ const V=window.LK_VEHICULES;
 const MED=JSON.parse(fs.readFileSync('outils/medias-officiels.json','utf8'));
 const medList=v=>(v.medias||[]).map(id=>MED[id]).filter(Boolean);
 const PERSO_NOM=Object.fromEntries(JSON.parse(fs.readFileSync('outils/editorial.json','utf8')).characters.map(c=>[c.id,c.name]));
-const medAttr=v=>esc(JSON.stringify(medList(v).map(m=>({s:m.variants[0].src,l:(m.variants[1]||m.variants[0]).src,w:m.variants[0].w,h:m.variants[0].h,t:m.titre}))));
+const medAlt=(v,m)=>(v.imageAlts&&v.imageAlts[m.id])||m.alt||(nomC(v)+', '+m.titre+', capture officielle Rockstar Games');
+const medBig=m=>m.variants[1]||m.variants[0];
+const medSrcset=m=>m.variants[0].src+' '+m.variants[0].w+'w, '+medBig(m).src+' '+medBig(m).w+'w';
+const medAttr=v=>esc(JSON.stringify(medList(v).map(m=>({s:m.variants[0].src,l:medBig(m).src,w:m.variants[0].w,h:m.variants[0].h,lw:medBig(m).w,lh:medBig(m).h,t:m.titre,a:medAlt(v,m)}))));
 const CREDIT_RS='Captures officielles © Rockstar Games / Take-Two Interactive, galerie rockstargames.com/VI/media.';
 
 const CATL={berline:'Berlines',sport:'Voitures de sport',supercar:'Supercars',muscle:'Muscle cars',
@@ -35,7 +38,7 @@ function carte(v){
  const t=(t0&&!/image-placeholder|<img\b/.test(t0.in))?t0:null; /* vignette du gabarit sans image manquante */
  const cls=t?t.cls.replace(' veh-thumb--photo',''):' veh-thumb--'+v.cat;
  const meds=medList(v);
- const inner=meds.length?'<span class="veh-badge">'+CATL[v.cat]+'</span><img src="'+meds[0].variants[0].src+'" srcset="'+meds[0].variants[0].src+' 480w, '+(meds[0].variants[1]||meds[0].variants[0]).src+' 1280w" sizes="(max-width:600px) 100vw, 280px" width="'+meds[0].variants[0].w+'" height="'+meds[0].variants[0].h+'" alt="'+esc(v.nom)+', capture officielle Rockstar Games" loading="lazy" decoding="async">'
+ const inner=meds.length?'<span class="veh-badge">'+CATL[v.cat]+'</span><img src="'+meds[0].variants[0].src+'" srcset="'+medSrcset(meds[0])+'" sizes="(max-width:600px) 100vw, 280px" width="'+meds[0].variants[0].w+'" height="'+meds[0].variants[0].h+'" alt="'+esc(medAlt(v,meds[0]))+'" loading="lazy" decoding="async">'
    :t?t.in.replace(/<span class="veh-badge">[^<]*<\/span>/,'<span class="veh-badge">'+CATL[v.cat]+'</span>')
    :'<span class="veh-badge">'+CATL[v.cat]+'</span>'+art(v);
  return '<a class="veh-card rise" href="vehicules/'+v.id+'.html" data-id="'+v.id+'"'
@@ -127,13 +130,13 @@ H=H.replace(/<script type="application\/ld\+json">\{"@context":"https:\/\/schema
   name:'Véhicules de GTA VI recensés par Leonidakit',numberOfItems:N,
   itemListElement:V.map((v,i)=>({'@type':'ListItem',position:i+1,name:nomC(v),
    url:'https://www.leonidakit.com/vehicules/'+v.id+'.html'}))})+'</script>');
-H=H.replace(/les 139 modèles recensés/g,'les '+N+' modèles recensés')
-   .replace(/les 139 modèles confirmés/g,'les '+N+' modèles confirmés')
-   .replace(/Les 139 véhicules confirmés/g,'Les '+N+' véhicules confirmés')
-   .replace(/"numberOfItems": 139/g,'"numberOfItems": '+N)
-   .replace(/139 véhicules confirmés de GTA VI/g,N+' véhicules confirmés de GTA VI')
-   .replace(/Nous recensons ici 139 véhicules, dont 9 sont nommés/g,'Nous recensons ici '+N+' véhicules, dont '+nSt.officiel+' sont nommés')
-   .replace(/Les 9 véhicules nommés par Rockstar/g,'Les '+nSt.officiel+' véhicules nommés par Rockstar');
+H=H.replace(/les \d+ modèles recensés/g,'les '+N+' modèles recensés')
+   .replace(/les \d+ modèles confirmés/g,'les '+N+' modèles recensés')
+   .replace(/Les \d+ véhicules confirmés de GTA VI/g,'Les '+N+' véhicules recensés de GTA VI')
+   .replace(/"numberOfItems": \d+/g,'"numberOfItems": '+N)
+   .replace(/\d+ véhicules confirmés de GTA VI/g,N+' véhicules recensés de GTA VI')
+   .replace(/Nous recensons ici \d+ véhicules, dont \d+ sont nommés/g,'Nous recensons ici '+N+' véhicules, dont '+nSt.officiel+' sont nommés')
+   .replace(/Les \d+ véhicules nommés par Rockstar/g,'Les '+nSt.officiel+' véhicules nommés par Rockstar');
 H=H.replace(/\n{3,}/g,'\n\n');
 fs.writeFileSync('vehicules.html',H);
 
@@ -209,6 +212,8 @@ function fiche(v,i){
  const vois=V.filter(x=>x.cat===v.cat&&x.id!==v.id).slice(0,6);
  const ed=v.edition==='Pre-Order'?'Bonus de précommande':v.edition?'Exclusif à l\u2019édition Ultimate':null;
  const lede=nom+' dans GTA VI : '+cat.toLowerCase()+(mod?'. Inspiration : '+mod:'')+'. '+st.d;
+ /* meta description : les premières phrases du texte de la fiche (160 caractères max), sinon le lede générique */
+ const description=(()=>{const ph=(v.txt||'').split(/(?<=[.!?])\s+/);let d=nom+' dans GTA VI.';let n=0;for(const q of ph){if((d+' '+q).length>165)break;d=d+' '+q;n++;}return n?d:lede;})();
  const available=(v.vues||[]).filter(view=>fs.existsSync('img/vehicules/'+v.id+'-'+view+'.jpg'));
  const meds=medList(v);
  const img=available.length>0, vues=img?available.join(','):'';
@@ -228,9 +233,9 @@ function fiche(v,i){
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>${esc(nom)} — GTA VI | Leonidakit</title>
-<meta name="description" content="${esc(lede)}">
+<meta name="description" content="${esc(description)}">
 <meta property="og:title" content="${esc(nom)} — GTA VI | Leonidakit">
-<meta property="og:description" content="${esc(lede)}">
+<meta property="og:description" content="${esc(description)}">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="fr_FR">${meds.length?`
 <meta property="og:image" content="https://www.leonidakit.com${(meds[0].variants[1]||meds[0].variants[0]).src}">
@@ -277,7 +282,7 @@ ${HEADER}
       </div>
       <div class="fhero-art fhero-art--gal">
         <div class="gal" data-base="../img/vehicules/${v.id}" data-vues="${vues}" data-nom="${esc(nom)}" data-vide="${img?0:1}"${meds.length?` data-medias="${medAttr(v)}"`:''}
-             data-art="${esc(artH(v))}"></div>
+             data-art="${esc(artH(v))}">${meds.length?'<div class="gal-track"><div class="gal-item"><img src="'+meds[0].variants[0].src+'" srcset="'+medSrcset(meds[0])+'" sizes="(max-width:700px) 100vw, 520px" width="'+meds[0].variants[0].w+'" height="'+meds[0].variants[0].h+'" alt="'+esc(medAlt(v,meds[0]))+'" fetchpriority="high" decoding="async"><span class="gal-lbl">'+esc(meds[0].titre)+'</span></div></div>':''}</div>
         <p class="gal-note">${meds.length?CREDIT_RS:img?esc(v.credit||'Captures officielles de Rockstar Games.'):esc(pioche(v.id,'img',V_SANSIMG))}</p>
       </div>
     </div>

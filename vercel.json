@@ -1,4 +1,5 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
   "redirects": [
     {
       "source": "/index.html",
@@ -32,7 +33,27 @@
     },
     {
       "source": "/armes/revolver-357.html",
-      "destination": "/armes/hawk-little-morgan.html",
+      "destination": "/armes/mustang-357.html",
+      "permanent": true
+    },
+    {
+      "source": "/armes/armes/:path*",
+      "destination": "/armes/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/personnages/personnages/:path*",
+      "destination": "/personnages/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/photos/photos/:path*",
+      "destination": "/photos/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/img/officiel/officiel/:path*",
+      "destination": "/img/officiel/:path*",
       "permanent": true
     }
   ],

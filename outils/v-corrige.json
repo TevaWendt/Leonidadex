@@ -297,7 +297,16 @@
   "insp": "Buick LeSabre, Cadillac Eldorado",
   "src": "Captures officielles",
   "search": "albany manana buick lesabre, cadillac eldorado",
-  "txt": "La Manana est un coupé personnel américain des années 70 : deux portes, toit vinyle, banquette avant. Elle a toujours été traitée dans la série comme une voiture de quartier, souvent croisée en version lowrider. Son gabarit démesuré pour deux places résume assez bien l'époque qui l'a produite. Les captures officielles la présentent chez un préparateur, prête pour la peinture."
+  "txt": "La Manana est un coupé personnel américain des années 70 : deux portes, toit vinyle, banquette avant. Elle a toujours été traitée dans la série comme une voiture de quartier, souvent croisée en version lowrider. Son gabarit démesuré pour deux places résume assez bien l'époque qui l'a produite. Les captures officielles la présentent chez un préparateur, prête pour la peinture.",
+  "medias": [
+   "rideout-customs-mod-shop-01",
+   "ultimate-edition-rideout-customs-02",
+   "ultimate-edition-rideout-customs-03"
+  ],
+  "imageAlts": {
+   "ultimate-edition-rideout-customs-02": "Habitacle rouge de la voiture présentée dans la série de captures Rideout Customs",
+   "ultimate-edition-rideout-customs-03": "Coupé jaune surélevé dans l'atelier Rideout Customs, identifié comme une Albany Manana"
+  }
  },
  {
   "id": "albany-v-str",
@@ -379,7 +388,10 @@
   "credit": "Capture officielle Rockstar Games",
   "search": "declasse mamba gt shelby daytona coupe",
   "txt": "La Mamba GT figure parmi les modèles que Rockstar a nommés au catalogue de l'édition Ultimate. Le Shelby Daytona Coupé dont elle reprend l'allure est une voiture de course née d'une contrainte : rendre une Cobra à roues découvertes assez aérodynamique pour tenir la ligne droite des 24 Heures du Mans. Le résultat, avec sa poupe tronquée et son pare-brise incliné, a remporté le championnat du monde en 1965. Six exemplaires seulement ont été construits.",
-  "edition": "Ultimate Edition"
+  "edition": "Ultimate Edition",
+  "medias": [
+   "classic-car-collection-04"
+  ]
  },
  {
   "id": "dinka-blista-compact",
@@ -798,7 +810,13 @@
   "insp": "Chevrolet Impala sixième génération",
   "txt": "L'Impaler de série, sans le kit carrosserie de la SZ. La sixième génération de Chevrolet Impala, celle de la fin des années 70, est une berline immense au toit plat et aux flancs rectilignes, sortie des chaînes par centaines de milliers pour les flottes autant que pour les familles. Les captures officielles la cadrent le long d'un trottoir.",
   "search": "declasse impaler lx chevrolet impala fin des annees 90",
-  "src": "Captures officielles"
+  "src": "Captures officielles",
+  "medias": [
+   "vice-city-09"
+  ],
+  "imageAlts": {
+   "vice-city-09": "Berline bleue au premier plan, sous le viaduc de Vice City dans GTA VI."
+  }
  },
  {
   "id": "declasse-impaler-sz",
@@ -973,7 +991,8 @@
    "67-vapid-dominator-buggy-02",
    "67-vapid-dominator-buggy-03",
    "67-vapid-dominator-buggy-04"
-  ]
+  ],
+  "edition": "Ultimate Edition"
  },
  {
   "id": "vapid-dominator-gt",
@@ -1375,7 +1394,15 @@
   "insp": "Jeep Crew Chief 715 concept",
   "txt": "Tout-terrain à carrosserie découpée et pneus à crampons, conçu pour le hors-piste. Les marécages et les pistes de l'arrière-pays de Leonida lui donnent un usage réel plutôt que décoratif.",
   "search": "canis kamacho jeep crew chief 715 concept",
-  "src": "Captures officielles"
+  "src": "Captures officielles",
+  "medias": [
+   "one-eyed-willie-s-mod-shop-01",
+   "ultimate-edition-one-eyed-willie-03"
+  ],
+  "imageAlts": {
+   "one-eyed-willie-s-mod-shop-01": "Pick-up Canis vert préparé chez One-Eyed Willie dans GTA VI.",
+   "ultimate-edition-one-eyed-willie-03": "Pick-up Canis vert dans l'atelier One-Eyed Willie de GTA VI."
+  }
  },
  {
   "id": "declasse-rancher",
@@ -1529,7 +1556,15 @@
   "insp": "Ford F-150 Raptor deuxième génération",
   "src": "Second trailer",
   "search": "vapid caracara 4x4 ford f-150 raptor deuxieme generation",
-  "txt": "Le Caracara 4x4 transpose le Ford F-150 Raptor, un pick-up conçu pour rouler vite sur piste plutôt que pour franchir lentement. Ses suspensions à grand débattement viennent directement des courses du désert de Baja. Il apparaît dans le second trailer."
+  "txt": "Le Caracara 4x4 transpose le Ford F-150 Raptor, un pick-up conçu pour rouler vite sur piste plutôt que pour franchir lentement. Ses suspensions à grand débattement viennent directement des courses du désert de Baja. Il apparaît dans le second trailer.",
+  "medias": [
+   "trailer-2-caracara-016",
+   "brian-heder-01"
+  ],
+  "imageAlts": {
+   "trailer-2-caracara-016": "Brian Heder devant son pick-up Vapid dans le Trailer 2 officiel de GTA VI.",
+   "brian-heder-01": "Brian Heder au volant de son pick-up dans une capture officielle GTA VI."
+  }
  },
  {
   "id": "vapid-sandking-xl",
@@ -1574,7 +1609,13 @@
   "insp": "Ram 1500 DT",
   "src": "Second trailer",
   "txt": "Version contemporaine du Bison, sur la base du Ram 1500 de génération DT. Calandre monumentale, cabine double, suspension pneumatique en option : le pick-up américain moderne a cessé d'être un outil pour devenir une berline familiale surélevée, et les chiffres de vente lui donnent raison.",
-  "search": "bravado bison 1800 ram 1500 dt"
+  "search": "bravado bison 1800 ram 1500 dt",
+  "medias": [
+   "grassrivers-04"
+  ],
+  "imageAlts": {
+   "grassrivers-04": "Pick-up au premier plan dans une poursuite à travers les marais de Grassrivers, GTA VI."
+  }
  },
  {
   "id": "bravado-bison-900-95",
@@ -1793,7 +1834,13 @@
   "insp": "Generica mostly-naked chopper",
   "txt": "Chopper à fourche très inclinée, guidon haut et roue avant fine. Un style qui vient directement des clubs de motards américains, et qui a sa place sur les longues lignes droites côtières.",
   "search": "lcc avarus generica mostly-naked chopper",
-  "src": "Second trailer"
+  "src": "Second trailer",
+  "medias": [
+   "trailer-2-motorcycle-143"
+  ],
+  "imageAlts": {
+   "trailer-2-motorcycle-143": "Jason conduit une moto rouge, devant un hydravion dans le Trailer 2 officiel de GTA VI."
+  }
  },
  {
   "id": "maibatsu-manchez",
@@ -1804,7 +1851,15 @@
   "insp": "500cc KTM",
   "txt": "Trail légère à roue avant de grand diamètre, aussi à l'aise sur le bitume que sur les chemins. Utile dans les marécages et l'arrière-pays, où les routes s'arrêtent souvent.",
   "search": "maibatsu manchez 500cc ktm",
-  "src": "Captures officielles"
+  "src": "Captures officielles",
+  "medias": [
+   "mount-kalaga-national-park-01",
+   "ptt-youngin-illegal-goods-store"
+  ],
+  "imageAlts": {
+   "mount-kalaga-national-park-01": "Deux motos tout-terrain au Mount Kalaga National Park dans GTA VI.",
+   "ptt-youngin-illegal-goods-store": "Moto tout-terrain décorée dans la boutique PTT YOUNGIN$ de GTA VI."
+  }
  },
  {
   "id": "maibatsu-sanchez",
@@ -1815,7 +1870,13 @@
   "insp": "Yamaha YZ450F 2006-2009",
   "src": "Premier trailer",
   "search": "maibatsu sanchez yamaha yz450f 2006-2009",
-  "txt": "La Sanchez est visible dans les supports officiels sans que Rockstar en communique le nom. La référence retenue pour cette moto est la Yamaha YZ450F des années 2006 à 2009. L'identification et le rapprochement sont communautaires ; la source recensée est le premier trailer."
+  "txt": "La Sanchez est visible dans les supports officiels sans que Rockstar en communique le nom. La référence retenue pour cette moto est la Yamaha YZ450F des années 2006 à 2009. L'identification et le rapprochement sont communautaires ; la source recensée est le premier trailer.",
+  "medias": [
+   "jason-and-lucia-09"
+  ],
+  "imageAlts": {
+   "jason-and-lucia-09": "Jason et Lucia sur une moto jaune identifiée comme Maibatsu Sanchez, poursuivis par la police."
+  }
  },
  {
   "id": "nagasaki-blazer-lifeguard",
@@ -1860,7 +1921,10 @@
   "insp": "Ducati Panigale V2 Sport Bike",
   "src": "Captures officielles",
   "search": "principe alvino v1 ducati panigale v2 sport bike",
-  "txt": "Principe est la marque de motos italiennes de l'univers, dans le registre Ducati. L'Alvino V1 est une sportive à cadre treillis, architecture qui fait la signature visuelle de ces machines autant que leur rigidité. Les captures officielles la présentent sur béquille, carénage intact."
+  "txt": "Principe est la marque de motos italiennes de l'univers, dans le registre Ducati. L'Alvino V1 est une sportive à cadre treillis, architecture qui fait la signature visuelle de ces machines autant que leur rigidité. Les captures officielles la présentent sur béquille, carénage intact.",
+  "medias": [
+   "jason-duval-01"
+  ]
  },
  {
   "id": "shitzu-pcj-600",
@@ -1882,7 +1946,13 @@
   "insp": "Harley-Davidson Night Rod Special",
   "txt": "Cruiser à grosse cylindrée, réservoir bombé et selle basse. Western est la marque Harley de l'univers GTA.",
   "search": "western nightblade harley-davidson night rod special",
-  "src": "Captures officielles"
+  "src": "Captures officielles",
+  "medias": [
+   "electric-fang-tattoo-01"
+  ],
+  "imageAlts": {
+   "electric-fang-tattoo-01": "Deux motos stationnées devant Electric Fang Tattoo dans GTA VI ; cruiser à large pneu arrière à droite."
+  }
  },
  {
   "id": "western-sovereign",
@@ -1893,7 +1963,13 @@
   "insp": "Harley Davidson Road King",
   "txt": "Cruiser chromé à garde-boue enveloppants et pare-brise détachable. La moto de tourisme américaine dans sa version la plus classique.",
   "search": "western sovereign harley davidson road king",
-  "src": "Captures officielles"
+  "src": "Captures officielles",
+  "medias": [
+   "ambrosia-01"
+  ],
+  "imageAlts": {
+   "ambrosia-01": "Groupe de motards circulant à Ambrosia dans GTA VI."
+  }
  },
  {
   "id": "western-zombie-chopper",
@@ -1904,7 +1980,13 @@
   "insp": "Harley Davidson Fat Bob Custom, Iron 883",
   "src": "Second trailer",
   "search": "western zombie chopper harley davidson fat bob custom, iron 883",
-  "txt": "Le Zombie Chopper est une custom américaine à fourche longue, dans la tradition Harley-Davidson Fat Bob Custom et Iron 883. Le chopper est né de la pratique consistant à retirer tout ce qui n'est pas indispensable d'une moto de série, d'où le nom. Le Zombie Chopper est recensé dans le second trailer, sous une identification issue de la communauté."
+  "txt": "Le Zombie Chopper est une custom américaine à fourche longue, dans la tradition Harley-Davidson Fat Bob Custom et Iron 883. Le chopper est né de la pratique consistant à retirer tout ce qui n'est pas indispensable d'une moto de série, d'où le nom. Le Zombie Chopper est recensé dans le second trailer, sous une identification issue de la communauté.",
+  "medias": [
+   "electric-fang-tattoo-01"
+  ],
+  "imageAlts": {
+   "electric-fang-tattoo-01": "Deux motos stationnées devant Electric Fang Tattoo dans GTA VI ; chopper à gauche."
+  }
  },
  {
   "id": "buckingham-buzzard",
@@ -1926,7 +2008,13 @@
   "insp": "Bell 206L Longranger",
   "src": "Captures officielles",
   "search": "buckingham maverick bell 206l longranger",
-  "txt": "Le Maverick passe à l'écran sans que Rockstar en publie le nom. Il reprend l'architecture du Bell 206 JetRanger, l'un des hélicoptères civils les plus produits au monde : cinq places, un seul turbomoteur, une fiabilité qui en a fait l'appareil de référence des chaînes d'information et des services de police."
+  "txt": "Le Maverick passe à l'écran sans que Rockstar en publie le nom. Il reprend l'architecture du Bell 206 JetRanger, l'un des hélicoptères civils les plus produits au monde : cinq places, un seul turbomoteur, une fiabilité qui en a fait l'appareil de référence des chaînes d'information et des services de police.",
+  "medias": [
+   "mount-kalaga-national-park-02"
+  ],
+  "imageAlts": {
+   "mount-kalaga-national-park-02": "Hélicoptère Maverick rouge et blanc en vol devant les collines, avec un passager à la porte ouverte."
+  }
  },
  {
   "id": "buckingham-police-maverick",
@@ -1981,7 +2069,10 @@
   "insp": "Learjet 45",
   "src": "Captures officielles",
   "search": "buckingham shamal learjet 45",
-  "txt": "Rockstar le laisse voir dans ses visuels mais garde son nom pour lui. C'est un jet d'affaires calé sur le Learjet 60 : fuselage étroit, réacteurs en pointe arrière, empennage en T. Le Learjet a défini la catégorie de l'aviation d'affaires dans les années 60, avec une philosophie assumée de chasseur civil."
+  "txt": "Rockstar le laisse voir dans ses visuels mais garde son nom pour lui. C'est un jet d'affaires calé sur le Learjet 60 : fuselage étroit, réacteurs en pointe arrière, empennage en T. Le Learjet a défini la catégorie de l'aviation d'affaires dans les années 60, avec une philosophie assumée de chasseur civil.",
+  "medias": [
+   "vice-city-01"
+  ]
  },
  {
   "id": "jobuilt-mammatus",
@@ -2003,7 +2094,10 @@
   "insp": "De Havilland Canada DHC-2 Beaver",
   "src": "Premier trailer",
   "search": "mammoth dodo de havilland canada dhc-2 beaver",
-  "txt": "Rockstar le montre sans jamais l'appeler par son nom. C'est un hydravion à aile haute calé sur le De Havilland Beaver, avion canadien conçu pour décoller court et se poser sur l'eau. Entre les Keys, les marécages et les innombrables plans d'eau de Leonida, l'usage est évident."
+  "txt": "Rockstar le montre sans jamais l'appeler par son nom. C'est un hydravion à aile haute calé sur le De Havilland Beaver, avion canadien conçu pour décoller court et se poser sur l'eau. Entre les Keys, les marécages et les innombrables plans d'eau de Leonida, l'usage est évident.",
+  "medias": [
+   "leonida-keys-01"
+  ]
  },
  {
   "id": "jet",
@@ -2047,7 +2141,10 @@
   "insp": "Hydroglisseur Diamondback Hunting & Fishing",
   "src": "Captures officielles",
   "search": "airgator airboat 09 diamondback hunting & fishing airboat",
-  "txt": "L'hydroglisseur à hélice aérienne est indissociable des Everglades : coque plate, moteur d'avion en poupe, gradins de sièges surélevés pour la promenade touristique. Il glisse sur quelques centimètres d'eau et traverse les herbiers. Le nom Airgator ne cache pas la référence aux alligators que ces engins vont montrer aux visiteurs."
+  "txt": "L'hydroglisseur à hélice aérienne est indissociable des Everglades : coque plate, moteur d'avion en poupe, gradins de sièges surélevés pour la promenade touristique. Il glisse sur quelques centimètres d'eau et traverse les herbiers. Le nom Airgator ne cache pas la référence aux alligators que ces engins vont montrer aux visiteurs.",
+  "medias": [
+   "grassrivers-01"
+  ]
  },
  {
   "id": "btn-delmar",
@@ -2078,9 +2175,13 @@
   "edition": "Ultimate Edition",
   "medias": [
    "crest-kayak",
-   "jason-s-safehouse-vehicles"
+   "jason-s-safehouse-vehicles",
+   "mount-kalaga-national-park-06"
   ],
-  "perso": "jason"
+  "perso": "jason",
+  "imageAlts": {
+   "mount-kalaga-national-park-06": "Kayak Crest orange sur une rivière sous un pont ferroviaire du Mount Kalaga National Park."
+  }
  },
  {
   "id": "dinka-jetmax",
@@ -2114,7 +2215,13 @@
   "insp": "Contender 25T",
   "src": "Captures officielles",
   "txt": "Bateau de pêche à console centrale, avec portique et tangons. La marque Lure Predator est visible sur les captures officielles, ce qui en fait l'un des rares bateaux nommés du jeu. Sa version en livrée de police existe également.",
-  "search": "lure predator l35p contender 25t"
+  "search": "lure predator l35p contender 25t",
+  "medias": [
+   "leonida-keys-05"
+  ],
+  "imageAlts": {
+   "leonida-keys-05": "Rassemblement de bateaux dans les Leonida Keys, avec une vedette marquée Lure Predator au premier plan."
+  }
  },
  {
   "id": "lure-predator-l35p-police",
@@ -2125,7 +2232,10 @@
   "insp": "Contender 25T",
   "src": "Captures officielles",
   "txt": "Version en livrée des forces de l'ordre du Predator L35P : gyrophares, bandes réfléchissantes, projecteur. La police maritime est une réalité quotidienne dans un État composé d'autant de canaux et de côtes, et elle intervient dans les poursuites sur l'eau.",
-  "search": "lure predator l35p de police contender 25t"
+  "search": "lure predator l35p de police contender 25t",
+  "medias": [
+   "shitzu-squalo-04"
+  ]
  },
  {
   "id": "lure-predator-s23",
@@ -2136,7 +2246,13 @@
   "insp": "Contender 25 Bay",
   "src": "Captures officielles",
   "txt": "Petit bateau de pêche en eaux peu profondes, sept mètres, coque à faible tirant d'eau conçue pour les baies et les mangroves. Le format le plus répandu chez les pêcheurs de Floride, loin des unités hauturières.",
-  "search": "lure predator s23 contender 25 bay"
+  "search": "lure predator s23 contender 25 bay",
+  "medias": [
+   "leonida-keys-05"
+  ],
+  "imageAlts": {
+   "leonida-keys-05": "Rassemblement de bateaux dans les Leonida Keys, avec une vedette marquée Lure Predator au premier plan."
+  }
  },
  {
   "id": "azimut-85",
@@ -2469,7 +2585,13 @@
   "insp": "Hydroglisseur Panther Airboat",
   "src": "Premier trailer",
   "txt": "L'hydroglisseur est la vraie nouveauté nautique de GTA VI : jamais vu dans la série. Coque plate, immense hélice aérienne dans une cage, il glisse sur quelques centimètres d'eau et passe là où aucune coque ne passe. Ce type d'engin est associé aux marécages floridiens. Les conditions de déplacement dans les Grassrivers restent à vérifier dans le jeu.",
-  "search": "vortex airboat hydroglisseur panther airboat"
+  "search": "vortex airboat hydroglisseur panther airboat",
+  "medias": [
+   "grassrivers-03"
+  ],
+  "imageAlts": {
+   "grassrivers-03": "Hydroglisseur vu du dessus parmi des alligators et des plantes aquatiques dans Grassrivers."
+  }
  },
  {
   "id": "dashound",
@@ -2491,7 +2613,15 @@
   "insp": "Dodge Charger Pursuit",
   "src": "Premier trailer",
   "search": "bravado buffalo stx pursuit dodge charger pursuit",
-  "txt": "Version de patrouille de la Buffalo STX : rampe lumineuse, livrée du service, suspension et refroidissement renforcés. Aux États-Unis, les constructeurs vendent effectivement des variantes police homologuées, mécaniquement distinctes des modèles civils. Le premier trailer la lance gyrophares allumés dans une poursuite."
+  "txt": "Version de patrouille de la Buffalo STX : rampe lumineuse, livrée du service, suspension et refroidissement renforcés. Aux États-Unis, les constructeurs vendent effectivement des variantes police homologuées, mécaniquement distinctes des modèles civils. Le premier trailer la lance gyrophares allumés dans une poursuite.",
+  "medias": [
+   "jason-and-lucia-09",
+   "vice-city-06"
+  ],
+  "imageAlts": {
+   "jason-and-lucia-09": "Jason et Lucia sur une moto jaune identifiée comme Maibatsu Sanchez, poursuivis par la police.",
+   "vice-city-06": "Buffalo STX de Vice Beach Police entourée de policiers et de passantes devant l'Ocean View Hotel."
+  }
  },
  {
   "id": "bravado-gauntlet-interceptor",
@@ -2546,7 +2676,13 @@
   "insp": "1996-2002 Chevrolet Express",
   "txt": "Minibus de navette, celui qui relie les terminaux aux parkings et aux hôtels. Un véhicule qu'on ne remarque que dans les aéroports, et Leonida en compte plusieurs.",
   "search": "brute rental shuttle bus 1996-2002 chevrolet express",
-  "src": "Second trailer"
+  "src": "Second trailer",
+  "medias": [
+   "leonida-keys-02"
+  ],
+  "imageAlts": {
+   "leonida-keys-02": "Minibus blanc à droite dans la scène de rue des Leonida Keys dans GTA VI."
+  }
  },
  {
   "id": "declasse-sheriff-suv",
@@ -3062,7 +3198,13 @@
   "st": "vu",
   "insp": "Pride Maxima 3",
   "src": "Captures officielles",
-  "txt": "Le scooter électrique à trois roues des trottoirs et des parkings de supermarché, calqué sur un Pride Maxima 3. Rockstar en a fait un véhicule conduisible sous le nom de Pomazoom, panier avant compris. Les captures officielles le prennent en pleine traversée de parking."
+  "txt": "Le scooter électrique à trois roues des trottoirs et des parkings de supermarché, calqué sur un Pride Maxima 3. Rockstar en a fait un véhicule conduisible sous le nom de Pomazoom, panier avant compris. Les captures officielles le prennent en pleine traversée de parking.",
+  "medias": [
+   "leonida-keys-02"
+  ],
+  "imageAlts": {
+   "leonida-keys-02": "Conducteur d'un scooter de mobilité bleu dans les Leonida Keys, près d'un alligator"
+  }
  },
  {
   "id": "suzuki-gsx-r1000",
@@ -3072,7 +3214,13 @@
   "st": "vu",
   "insp": "Suzuki GSX-R1000",
   "src": "Captures officielles",
-  "txt": "Une sportive japonaise reprise trait pour trait de la Suzuki GSX-R1000, sans nom en jeu ni constructeur fictif à ce stade. C'est le genre de moto qu'on croise en peloton sur les boulevards, à plein régime entre deux files. Les captures officielles la montrent aux côtés de Lucia."
+  "txt": "Une sportive japonaise reprise trait pour trait de la Suzuki GSX-R1000, sans nom en jeu ni constructeur fictif à ce stade. C'est le genre de moto qu'on croise en peloton sur les boulevards, à plein régime entre deux files. Les captures officielles la montrent aux côtés de Lucia.",
+  "medias": [
+   "lucia-caminos-03"
+  ],
+  "imageAlts": {
+   "lucia-caminos-03": "Lucia assise sur une moto jaune, rapprochée d'une Suzuki GSX-R1000"
+  }
  },
  {
   "id": "yamaha-bws-125",
@@ -3282,7 +3430,14 @@
   "st": "vu",
   "insp": "Kellison J4",
   "src": "Captures officielles",
-  "txt": "Une barquette artisanale des années 60 en fibre de verre, construite en petite série par un carrossier californien pour aller courir le week-end. Rockstar ne lui a pas donné de nom en jeu. Les captures officielles la présentent à l'arrêt, capot fermé."
+  "txt": "Une barquette artisanale des années 60 en fibre de verre, construite en petite série par un carrossier californien pour aller courir le week-end. Rockstar ne lui a pas donné de nom en jeu. Les captures officielles la présentent à l'arrêt, capot fermé.",
+  "medias": [
+   "ultimate-edition-02",
+   "classic-car-collection-05"
+  ],
+  "imageAlts": {
+   "ultimate-edition-02": "Jason et Lucia devant le coupé vert rapproché d'un Kellison J4 dans le visuel Ultimate Edition"
+  }
  },
  {
   "id": "grotti-itali-rsx",
@@ -3383,5 +3538,16 @@
   "src": "Extended Look",
   "insp": "Ford Explorer Sport Trac",
   "txt": "Le Ford Explorer Sport Trac, ce SUV à benne courte qui hésite entre le break et le pickup, dans sa version civile. C'est le même châssis que l'exemplaire en livrée de sauveteur, avec une carrosserie de série. L'Extended Look le laisse garé sur un parking de bord de plage."
+ },
+ {
+  "id": "pegassi-faggio-sport",
+  "nom": "Faggio Sport",
+  "marque": "Pegassi",
+  "cat": "moto",
+  "st": "vu",
+  "insp": "Piaggio Zip, Peugeot V-Clic et Kymco Agility 50",
+  "src": "Extended Look",
+  "search": "pegassi faggio sport piaggio zip peugeot v-clic kymco agility 50",
+  "txt": "La version moderne du scooter Pegassi, au dessin anguleux des petits 50 cm³ d'aujourd'hui : carénage plastique, roues pleines, phare intégré au tablier. Loin du charme rétro du Faggio classique, c'est l'engin des livreurs et des lycéens, celui qu'on voit partout dans les rues de Vice City pendant l'Extended Look. Le mot Sport ne promet rien : il ne dépassera pas la file de voitures qu'il remonte."
  }
 ]

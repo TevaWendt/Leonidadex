@@ -1,2 +1,7 @@
 # Fichiers exclus du deploiement Vercel (jamais mis en ligne, restent sur GitHub)
 outils
+node_modules
+**/node_modules
+*.log
+coverage
+.cache

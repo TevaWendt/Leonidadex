@@ -1,0 +1,104 @@
+LEONIDAKIT v7.2 : FUSION SÉLECTIVE DU ZIP « GTA6-site » DANS MAIN (16 septembre 2026)
+=====================================================================================
+
+Base : la branche GitHub main (v7.1). Le ZIP « GTA6-site-weapons-vehicles-optimized »
+avait été construit sur la révision v7 du matin (avant Demeures, Planques, la navigation
+à onze entrées et les bandeaux sans vide) : il a servi de réservoir d'améliorations,
+jamais de nouvelle base. Tout ce qui suit s'ajoute à la v7.1 sans en retirer une ligne.
+
+REPRIS DU ZIP
+-------------
+1. Nettoyage du dépôt : suppression des dossiers copiés par erreur lors d'un envoi
+   (armes/armes/, personnages/personnages/, img/officiel/officiel/, photos/photos/,
+   outils/data/data/, outils/templates/templates/ : 495 fichiers, anciennes versions
+   pré-7.1, référencés nulle part). vercel.json redirige ces anciens chemins vers les
+   bons dossiers (301), au cas où Google en aurait indexé un. .vercelignore complété.
+2. Visuels officiels : 29 nouveaux médias Rockstar (58 WebP en 480 et 1280 px) dans
+   img/officiel/, registre outils/medias-officiels.json passé de 49 à 78 entrées avec
+   un texte alternatif par image. Les 4 photogrammes du trailer 2 ont été recadrés
+   pour retirer les bandes noires du format cinéma (1280 x 576).
+3. Images sur les fiches véhicules : 27 véhicules reçoivent 34 associations d'images
+   officielles, chacune vérifiée sur planche contact (Manana chez Rideout Customs,
+   Kamacho chez One-Eyed Willie, Caracara 4x4 et Avarus du trailer 2, Bison 1800,
+   Manchez, Sanchez, Alvino V1, Nightblade, Zombie Chopper, Sovereign, Maverick,
+   Shamal, Dodo, Airboat 09, Vortex Airboat, kayak, Predator L35P, S23 et police,
+   Buffalo STX Pursuit, minibus de location, scooter de mobilité, GSX-R1000,
+   Kellison J4, Mamba GT, Impaler LX). 36 véhicules ont maintenant une galerie (10 avant).
+4. Images sur les fiches armes : 13 armes reçoivent 15 visuels (carabine, PM à motif
+   tropical, fusil d'assaut, pistolet personnalisé, batte, club de golf, queue de
+   billard, Nipper .38, pistolet-mitrailleur du trailer 2, et les quatre nouvelles).
+   17 armes illustrées (4 avant).
+5. Nouvelles fiches : Pegassi Faggio Sport (Extended Look) ; Mustang .357 (nom gravé
+   sur le revolver de la capture Ambrosia 03, recoupé par PC Gamer, iGeeksBlog et
+   GTABase, hors fuites : statut « nommée par Rockstar », à confirmer sur l'image
+   1920 px), fusil semi-automatique (type M1A, capture Grassrivers 01), lance-grenades
+   (trailer 2), PM à crosse rabattable (visuel Weapon Pattern du Vintage Vice City
+   Pack). Textes écrits dans le ton du site, munitions et portées renseignées.
+   L'ancienne adresse armes/revolver-357.html redirige maintenant vers le Mustang .357
+   (page de redirection et règle 301 de vercel.json, les deux mises à jour).
+6. Photos de la carte : outils/data/carte-gtadb-source.json référençait encore 2 511
+   photos en .jpg alors que les fichiers sont en .webp ; toute régénération vidait
+   carte-gtadb.js de ces photos (la carte et les fiches du monde perdaient leurs
+   vignettes). Références passées en .webp ; un test protège désormais ce point.
+7. Galeries : la première image est écrite dans le HTML (visible sans JavaScript,
+   meilleur LCP, fetchpriority=high), les vues suivantes ne sont demandées qu'à
+   l'affichage ; srcset avec les largeurs réelles ; alt propre à chaque image.
+8. SEO : meta description de chaque fiche véhicule tirée de son texte (232 fiches),
+   au lieu de la phrase générique ; le hub Véhicules annonçait encore « 192 véhicules
+   confirmés » dans sa description et ses données structurées, corrigé (302) ;
+   données structurées Thing sur chaque fiche arme avec la bonne image.
+9. Outils : outils/verifier.js plus complet (srcset, galeries, JSON-LD, canonical,
+   H1 unique, ancres de carte, sitemaps, pages non indexables), adapté aux noms de
+   photos avec virgule ; tests jsdom paramétrés sur les données (plus de nombres
+   codés en dur) et deux tests ajoutés (photos de la carte, galerie statique et
+   chargement différé) : 46 tests.
+
+CONSTRUIT POUR MAIN
+-------------------
+- outils/gen-armes.cjs : les fiches armes et le hub armes.html sont maintenant
+  générés depuis armes-data.js et outils/armes-medias.json, exactement dans la
+  structure v7.1 (validé en régénérant les 23 fiches existantes à l'identique).
+  Chaque fiche arme reçoit en plus la section « Sur la carte de Leonida » avec les
+  trois armureries repérées, comme les concessions sur les fiches véhicules.
+- outils/medias-identifications.json : provenance des 49 associations image / fiche
+  ajoutées (source de l'identification, réserve éventuelle, minutage des trailers).
+- Dominator Buggy '67 rattaché à l'édition Ultimate comme les autres véhicules
+  nommés dans cette présentation (il apparaissait en « édition standard »).
+
+VOLONTAIREMENT IGNORÉ
+---------------------
+- Les 301 descriptions véhicules et 23 contextes armes réécrits par le ZIP : plus
+  courts, formulaires, 194 d'entre eux citent GTABase dans le texte ; les textes de
+  main sont conservés partout.
+- Les liens « sources » cliquables et les légendes sous les images sur les fiches,
+  contraires aux règles fixées en v7.1.
+- Les « décors d'ambiance » (paysages GTA VI étiquetés « visuel du modèle à
+  documenter ») posés sur 261 fiches, et les 13 bandeaux avec crédit sur les pages
+  principales : remplissage sans rapport avec la fiche, design différent.
+- Le noindex sur 31 fiches, la mise à null des munitions et portées, les statuts
+  rétrogradés en « non confirmé », les FAQ et le constructeur d'équipement réécrits
+  au conditionnel, les 19 associations d'images où l'objet n'est qu'un détail de
+  fond (Impaler SZ, Vigero cabriolet, Outlaw, Verus, Sea Sparrow et Bati 801 sur la
+  jaquette, Police Maverick, bus Brute, Police Buzzard, marteau flou du trailer 1,
+  mitrailleuse et fusil à pompe vus sur une télévision, fusil à double canon vu
+  du ciel, fusil à verrou lointain, Tulip sur un artwork).
+- Le schéma WebPage à la place de Vehicle sur les fiches, les rapports et inventaires
+  du ZIP, visuals.css, fiche-visuals.css, decor-pages.cjs, fiche-visuals.cjs.
+
+VÉRIFICATIONS
+-------------
+- Chaîne complète lancée deux fois : seconde passe identique (déterministe).
+- outils/verifier.js : 26 763 références vérifiées dans 395 pages, 0 erreur.
+- outils/audit-final.js : six contrôles à zéro sur 302 véhicules.
+- 46 tests jsdom : 46 réussis.
+- Rendu Chromium (Playwright) à 1 280 et 390 px : fiche Mustang .357, fiche Kamacho,
+  hub Armes, fiche Lance-grenades ; aucune erreur console, aucun débordement
+  horizontal.
+- carte-gtadb.js final strictement identique au fichier en ligne (3 185 photos).
+
+MISE EN LIGNE
+-------------
+Avec GitHub Desktop : remplacer le contenu du dossier local par celui du zip complet
+(en gardant .git), puis valider le commit : les suppressions des dossiers imbriqués
+seront transmises. Ne pas seulement superposer les fichiers, sinon les doublons
+restent dans le dépôt. Aucun package.json, aucune commande de build.

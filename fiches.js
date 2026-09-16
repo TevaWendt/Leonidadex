@@ -17,21 +17,28 @@
     try { medias = gal.dataset.medias ? JSON.parse(gal.dataset.medias) : []; } catch (e) { medias = []; }
     if (medias.length) {
       const trk = document.createElement('div'); trk.className = 'gal-track';
-      medias.forEach(function (m) {
+      /* la première vue est déjà dans le HTML (visible sans JS) ; les suivantes ne sont demandées
+         qu'au moment où on les affiche, pour ne pas charger toute la galerie d'un coup */
+      medias.forEach(function (m, k) {
         const it = document.createElement('div'); it.className = 'gal-item';
         const im = document.createElement('img');
-        im.src = m.s; im.srcset = m.s + ' 480w, ' + m.l + ' 1280w'; im.sizes = '(max-width:700px) 100vw, 520px';
+        im.sizes = '(max-width:700px) 100vw, 520px';
+        im.dataset.src = m.s; im.dataset.srcset = m.s + ' ' + (m.w || 480) + 'w, ' + m.l + ' ' + (m.lw || 1280) + 'w';
+        if (k === 0) { im.srcset = im.dataset.srcset; im.src = m.s; im.fetchPriority = 'high'; }
         im.width = m.w; im.height = m.h; im.decoding = 'async';
-        im.alt = (gal.dataset.nom || '') + ' — ' + m.t + ', capture officielle Rockstar Games';
+        im.alt = m.a || ((gal.dataset.nom || '') + ' — ' + m.t + ', capture officielle Rockstar Games');
         it.appendChild(im);
         const s = document.createElement('span'); s.className = 'gal-lbl'; s.textContent = m.t; it.appendChild(s);
         trk.appendChild(it);
       });
-      gal.appendChild(trk);
+      gal.replaceChildren(trk);
       if (medias.length > 1) {
         let j = 0;
         const dts = document.createElement('div'); dts.className = 'gal-dots';
-        const goM = function (k) { j = (k + medias.length) % medias.length; trk.style.transform = 'translateX(-' + (j * 100) + '%)';
+        const goM = function (k) { j = (k + medias.length) % medias.length;
+          const cur = trk.children[j].querySelector('img');
+          if (cur && !cur.getAttribute('src')) { cur.srcset = cur.dataset.srcset; cur.src = cur.dataset.src; }
+          trk.style.transform = 'translateX(-' + (j * 100) + '%)';
           dts.querySelectorAll('button').forEach(function (d, q) { d.classList.toggle('on', q === j); d.setAttribute('aria-current', String(q === j)); }); };
         const mk = function (cls, txt) { const b = document.createElement('button'); b.type = 'button'; b.className = 'gal-btn ' + cls; b.textContent = txt;
           b.setAttribute('aria-label', cls === 'prev' ? 'Vue précédente' : 'Vue suivante'); b.addEventListener('click', function () { goM(j + (cls === 'prev' ? -1 : 1)); }); return b; };
