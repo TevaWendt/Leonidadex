@@ -4,6 +4,7 @@ global.window={}; eval(fs.readFileSync('vehicules-data.js','utf8'));
 const V=window.LK_VEHICULES;
 const MED=JSON.parse(fs.readFileSync('outils/medias-officiels.json','utf8'));
 const medList=v=>(v.medias||[]).map(id=>MED[id]).filter(Boolean);
+const PERSO_NOM=Object.fromEntries(JSON.parse(fs.readFileSync('outils/editorial.json','utf8')).characters.map(c=>[c.id,c.name]));
 const medAttr=v=>esc(JSON.stringify(medList(v).map(m=>({s:m.variants[0].src,l:(m.variants[1]||m.variants[0]).src,w:m.variants[0].w,h:m.variants[0].h,t:m.titre}))));
 const CREDIT_RS='Captures officielles © Rockstar Games / Take-Two Interactive, galerie rockstargames.com/VI/media.';
 
@@ -272,7 +273,7 @@ ${HEADER}
         <div class="fiche-tags">
           ${tags}
         </div>
-        <div class="fiche-liens"><button type="button" class="own-bt" id="own-bt" data-id="${v.id}"><span class="ck"></span><span>Ajouter à mon garage</span></button><a href="../comparateur.html?type=vehicules&amp;ids=${v.id}">Comparer</a>${v.reel?'<a href="#modele-reel">Le modèle réel</a>':''}</div>
+        <div class="fiche-liens"><button type="button" class="own-bt" id="own-bt" data-id="${v.id}"><span class="ck"></span><span>Ajouter à mon garage</span></button><a href="../comparateur.html?type=vehicules&amp;ids=${v.id}">Comparer</a>${v.reel?'<a href="#modele-reel">Le modèle réel</a>':''}${v.perso?'<a href="../personnages/'+v.perso+'.html">Véhicule de '+esc(PERSO_NOM[v.perso]||v.perso)+'</a>':''}</div>
       </div>
       <div class="fhero-art fhero-art--gal">
         <div class="gal" data-base="../img/vehicules/${v.id}" data-vues="${vues}" data-nom="${esc(nom)}" data-vide="${img?0:1}"${meds.length?` data-medias="${medAttr(v)}"`:''}

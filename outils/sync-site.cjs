@@ -81,6 +81,12 @@ const urls=[...new Set(canonicals)].sort();for(const f of ['sitemap.xml','sitema
 let index=data.window.LK_INDEX.filter(e=>!/^\/(vehicules|armes)\//.test(e.u));
 for(const[type,list]of [['vehicules',V],['armes',A]])for(const v of list)index.push({l:name(v),k:type==='vehicules'?'Véhicule':'Arme',u:'/'+type+'/'+v.id+'.html',s:[v.id,v.search,name(v),v.fr,v.alias,v.insp,v.fam].filter(Boolean).join(' ').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase()});
 if(fs.existsSync('outils/lore-index.json'))index=index.concat(JSON.parse(fs.readFileSync('outils/lore-index.json','utf8')));
+{ /* recherche des lieux : fichier séparé, chargé à la première saisie */
+  const CATL={ville:'Villes',quartier:'Quartiers',comte:'Comtés',region:'Régions',transport:'Transports',nature:'Nature',notable:'Lieux notables',batiment:'Bâtiments',planque:'Planques'};
+  const gnom=Object.fromEntries(mapData.groupes.map(g=>[g.id,g.n]));
+  const lieux=[...mapData.groupes,...mapData.lieux].filter(p=>p.id&&p.n).map(p=>({l:p.n,k:CATL[p.c]||'Lieu',u:'/carte.html#lieu='+encodeURIComponent(p.id),s:(p.n+' '+(p.r||'')+' '+(gnom[p.p]||'')+' '+(CATL[p.c]||'')+' lieu carte').toLowerCase(),w:2}));
+  fs.writeFileSync('search-lieux.js','/* Généré automatiquement : lieux de la carte pour la recherche globale. */\nwindow.LK_INDEX_LIEUX = '+JSON.stringify(lieux)+';\n');
+}
 index=[...new Map(index.map(e=>[e.u,e])).values()];fs.writeFileSync('search-index.js','/* Generated from current data. */\nwindow.LK_INDEX = '+JSON.stringify(index)+';\n');
 const mapSource=fs.readFileSync('carte.js','utf8');const local=vm.runInNewContext('('+mapSource.match(/const POINTS = (\[[\s\S]*?\n  \]);/)[1]+')');
 const allPoints=[...local,...data.window.LK_GTADB.groupes,...data.window.LK_GTADB.lieux];

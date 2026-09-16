@@ -1001,7 +1001,7 @@
   "id": "vapid-ganado",
   "nom": "Ganado '70",
   "marque": "Vapid",
-  "cat": "muscle",
+  "cat": "pickup",
   "st": "vu",
   "insp": "Ford Ranchero 1970, Mercury Cougar 1969-1970",
   "src": "Captures officielles",
@@ -1018,7 +1018,8 @@
   "medias": [
    "ganado-retro-build",
    "jason-s-safehouse-vehicles"
-  ]
+  ],
+  "perso": "jason"
  },
  {
   "id": "vapid-gauntlet-classic-custom",
@@ -1780,7 +1781,8 @@
   "medias": [
    "dinka-enduro-motorcycle",
    "jason-s-safehouse-vehicles"
-  ]
+  ],
+  "perso": "jason"
  },
  {
   "id": "lcc-avarus",
@@ -2077,7 +2079,8 @@
   "medias": [
    "crest-kayak",
    "jason-s-safehouse-vehicles"
-  ]
+  ],
+  "perso": "jason"
  },
  {
   "id": "dinka-jetmax",

@@ -8,6 +8,8 @@ const esc=t=>String(t==null?'':t).replace(/&/g,'&amp;').replace(/"/g,'&quot;').r
 const ED=JSON.parse(fs.readFileSync('outils/editorial.json','utf8'));
 const MED=JSON.parse(fs.readFileSync('outils/medias-officiels.json','utf8'));
 const CREDIT='Capture officielle © Rockstar Games / Take-Two Interactive';
+global.window={};eval(fs.readFileSync('vehicules-data.js','utf8'));const VNOM=Object.fromEntries(window.LK_VEHICULES.map(v=>[v.id,(v.marque?v.marque+' ':'')+v.nom]));const VMED=Object.fromEntries(window.LK_VEHICULES.filter(v=>v.medias).map(v=>[v.id,v.medias]));
+const AMED=JSON.parse(fs.readFileSync('outils/armes-medias.json','utf8'));
 
 /* ---------- gabarit : on reprend le vrai HTML du site ---------- */
 const rootRef=fs.readFileSync('a-propos.html','utf8');
@@ -102,7 +104,7 @@ ${cards}
   <p class="lore-src">Textes rédigés d'après les présentations officielles de Rockstar Games (rockstargames.com/VI). Les positions sur la carte sont communautaires et peuvent changer avec la sortie du jeu.</p>
 </section>`;
   fs.writeFileSync(S.hub+'.html',page({p:'',title:S.title+' — Leonidakit',desc:S.desc,canonical:'/'+S.hub+'.html',ogImg:media(items[0])?(media(items[0]).variants[1]||media(items[0]).variants[0]).src:null,body,crumbs:[['Accueil','/'],[S.label,'/'+S.hub+'.html']]}));
-  index.push({l:S.title,k:S.label,u:'/'+S.hub+'.html',s:(S.title+' '+S.label+' leonida gta vi').toLowerCase()});
+  index.push({l:S.title,k:S.label,u:'/'+S.hub+'.html',s:(S.title+' '+S.label+' leonida gta vi').toLowerCase(),w:1});
 
   /* ---------- fiches ---------- */
   fs.mkdirSync(S.hub,{recursive:true});
@@ -115,7 +117,7 @@ ${cards}
       rel.push(list(x.characters,'Personnages liés à cette région'));
       if(x.relatedPlaces&&x.relatedPlaces.length)rel.push(`<div class="lore-rel"><h2>Lieux cités par Rockstar</h2><ul>${x.relatedPlaces.map(id=>'<li><a href="'+mapHref(id,p)+'">'+esc(id.replace(/-/g,' ').replace(/\b\w/g,c=>c.toUpperCase()))+'</a></li>').join('')}</ul></div>`);
     }
-    if(key==='characters'){rel.push(list(x.places,'Région'));rel.push(list(x.characters,'Personnages liés'));if(x.vehicles)rel.push(`<div class="lore-rel"><h2>Véhicules associés</h2><ul>${x.vehicles.map(id=>'<li><a href="../vehicules/'+id+'.html">'+esc(id)+'</a></li>').join('')}</ul></div>`);}
+    if(key==='characters'){rel.push(list(x.places,'Région'));rel.push(list(x.characters,'Personnages liés'));if(x.vehicles)rel.push(`<div class="lore-rel"><h2>Véhicules associés</h2><ul>${x.vehicles.map(id=>'<li><a href="../vehicules/'+id+'.html">'+esc(VNOM[id]||id)+'</a></li>').join('')}</ul></div>`);}
     if(key==='businesses'){rel.push(list(x.places,'Région'));}
     const links=[];
     if(x.mapId)links.push(`<a href="${mapHref(x.mapId,p)}">Voir sur la carte</a>`);
@@ -136,11 +138,34 @@ ${cards}
   <p class="lore-src">Source : <a href="${esc(x.source||'https://www.rockstargames.com/VI')}" target="_blank" rel="noopener nofollow">rockstargames.com</a>. Les coordonnées de la carte sont communautaires (gtadb.org, CC BY 4.0) et ne sont pas confirmées par Rockstar.</p>
 </section>`;
     fs.writeFileSync(S.hub+'/'+x.id+'.html',page({p,title:x.name+' — GTA VI | Leonidakit',desc:x.description,canonical:'/'+S.hub+'/'+x.id+'.html',ogImg:m?(m.variants[1]||m.variants[0]).src:null,body,crumbs:[['Accueil','/'],[S.label,'/'+S.hub+'.html'],[x.name,'/'+S.hub+'/'+x.id+'.html']]}));
-    index.push({l:x.name,k:S.one,u:'/'+S.hub+'/'+x.id+'.html',s:(x.name+' '+S.one+' '+x.description).toLowerCase()});
+    index.push({l:x.name,k:S.one,u:'/'+S.hub+'/'+x.id+'.html',s:(x.name+' '+S.one+' '+x.description).toLowerCase(),w:1});
   }
   console.log(S.hub+' : '+items.length+' fiches');
 }
 fs.writeFileSync('outils/lore-index.json',JSON.stringify(index));
+
+/* ---------- medias.html : crédits des visuels officiels ---------- */
+{
+  const usage={};
+  const add=(id,lbl,href)=>{(usage[id]=usage[id]||[]).push('<a href="'+href+'">'+esc(lbl)+'</a>');};
+  for(const [vid,ids] of Object.entries(VMED))for(const id of ids)add(id,VNOM[vid]||vid,'vehicules/'+vid+'.html');
+  for(const [aid,ids] of Object.entries(AMED))for(const id of ids)add(id,aid.replace(/-/g,' '),'armes/'+aid+'.html');
+  for(const [k,S] of Object.entries(SECTIONS))for(const x of ED[k])for(const id of (x.media||[]))add(id,x.name,S.hub+'/'+x.id+'.html');
+  const rows=Object.values(MED).map(m=>{const a=m.variants[0];return `<li class="media-row"><img src="${a.src}" width="${a.w}" height="${a.h}" alt="${esc(m.titre)}" loading="lazy" decoding="async"><div><b>${esc(m.titre)}</b><br><span>${esc(m.credit)}</span>${usage[m.id]?'<br><span>Utilisé sur : '+usage[m.id].join(', ')+'</span>':''}<br><a href="${esc(m.source)}" target="_blank" rel="noopener nofollow">Galerie officielle</a></div></li>`;}).join('\n');
+  const body=`<section class="page-head shell">
+  <p class="fiche-cat">Crédits · Visuels officiels</p>
+  <h1>Les visuels officiels utilisés</h1>
+  <p class="lede">${Object.keys(MED).length} captures publiées par Rockstar Games dans la galerie de rockstargames.com/VI, reproduites ici en tant que site de fans, sans modification autre que le redimensionnement. Elles restent la propriété de Rockstar Games et Take-Two Interactive.</p>
+</section>
+<section class="shell">
+  <ul class="media-list">
+${rows}
+  </ul>
+  <p class="lore-src">Les photos de la carte proviennent de gtadb.org et de ses contributeurs (CC BY 4.0), voir les <a href="mentions-legales.html">mentions légales</a>.</p>
+</section>`;
+  fs.writeFileSync('medias.html',page({p:'',title:'Visuels officiels et crédits — Leonidakit',desc:'Liste des '+Object.keys(MED).length+' visuels officiels Rockstar Games utilisés sur Leonidakit, avec leur source et les fiches où ils apparaissent.',canonical:'/medias.html',ogImg:null,body,crumbs:[['Accueil','/'],['Visuels officiels','/medias.html']]}));
+  console.log('medias.html : '+Object.keys(MED).length+' visuels');
+}
 
 /* ---------- accueil : un bloc "Le monde de Leonida" avant "Les outils" ---------- */
 let home=fs.readFileSync('index.html','utf8');

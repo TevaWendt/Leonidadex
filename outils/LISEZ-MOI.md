@@ -9,7 +9,8 @@ source `v-corrige.json`. Ils s'exécutent avec Node.js (aucune dépendance à in
 node outils/final.js         # v-corrige.json -> vehicules-data.js
 node outils/gen.js           # fiches vehicules/, hub, index, sitemaps, compteurs
 node outils/audit-final.js   # contrôles de cohérence (doit afficher six zéros)
-node outils/lore-gen.js      # lieux, personnages, entreprises + bloc accueil, puis resynchronisation
+node outils/lore-gen.js      # lieux, personnages, entreprises, medias.html, bloc accueil, puis resynchronisation
+node outils/verifier.js      # liens, images, scripts : tout doit pointer vers un fichier existant
 ```
 
 `gen.js` enchaîne automatiquement `sync-site.cjs`, qui synchronise les compteurs
