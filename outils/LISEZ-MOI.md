@@ -9,6 +9,7 @@ source `v-corrige.json`. Ils s'exécutent avec Node.js (aucune dépendance à in
 node outils/final.js         # v-corrige.json -> vehicules-data.js
 node outils/gen.js           # fiches vehicules/, hub, index, sitemaps, compteurs
 node outils/audit-final.js   # contrôles de cohérence (doit afficher six zéros)
+node outils/lore-gen.js      # lieux, personnages, entreprises + bloc accueil, puis resynchronisation
 ```
 
 `gen.js` enchaîne automatiquement `sync-site.cjs`, qui synchronise les compteurs
@@ -17,7 +18,9 @@ les sitemaps et les métadonnées sociales de toutes les pages.
 
 | Fichier | Rôle |
 |---|---|
-| `v-corrige.json` | source de vérité des 301 véhicules. Seul fichier à éditer pour corriger un véhicule. |
+| `v-corrige.json` | source de vérité des 301 véhicules. Seul fichier à éditer pour corriger un véhicule. Le champ `medias` liste les visuels officiels (ids de `medias-officiels.json`). |
+| `medias-officiels.json`, `armes-medias.json` | registre des 49 visuels Rockstar (source, crédit, variantes 480/1280) et association aux 4 armes illustrées |
+| `editorial.json`, `lore-gen.js`, `lore-index.json` | textes des régions, personnages et entreprises ; générateur des pages correspondantes ; entrées ajoutées à la recherche |
 | `redirections.json` | ancien identifiant -> nouvel identifiant (page de redirection générée) |
 | `retraits.json` | fiches sorties de la base (page d'explication noindex générée) |
 | `legacy-pages.json` | anciennes fiches conservées sans correspondance certaine |

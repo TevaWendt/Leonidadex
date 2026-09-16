@@ -2,6 +2,10 @@ const fs=require('fs');
 process.chdir(require('path').join(__dirname,'..'));
 global.window={}; eval(fs.readFileSync('vehicules-data.js','utf8'));
 const V=window.LK_VEHICULES;
+const MED=JSON.parse(fs.readFileSync('outils/medias-officiels.json','utf8'));
+const medList=v=>(v.medias||[]).map(id=>MED[id]).filter(Boolean);
+const medAttr=v=>esc(JSON.stringify(medList(v).map(m=>({s:m.variants[0].src,l:(m.variants[1]||m.variants[0]).src,w:m.variants[0].w,h:m.variants[0].h,t:m.titre}))));
+const CREDIT_RS='Captures officielles © Rockstar Games / Take-Two Interactive, galerie rockstargames.com/VI/media.';
 
 const CATL={berline:'Berlines',sport:'Voitures de sport',supercar:'Supercars',muscle:'Muscle cars',
  suv:'SUV et 4x4',pickup:'Pickups et tout-terrain',van:'Vans et cargos',moto:'Deux-roues et quads',
@@ -26,15 +30,18 @@ const art=v=>ART_ID[v.id]||ART_CAT[v.cat]||ART_CAT.sport||'';
 
 /* ================= HUB ================= */
 function carte(v){
- const t=THUMB[v.id];
- const cls=t?t.cls:' veh-thumb--'+v.cat;
- const inner=t?t.in.replace(/<span class="veh-badge">[^<]*<\/span>/,'<span class="veh-badge">'+CATL[v.cat]+'</span>')
+ const t0=THUMB[v.id];
+ const t=(t0&&!/image-placeholder|<img\b/.test(t0.in))?t0:null; /* vignette du gabarit sans image manquante */
+ const cls=t?t.cls.replace(' veh-thumb--photo',''):' veh-thumb--'+v.cat;
+ const meds=medList(v);
+ const inner=meds.length?'<span class="veh-badge">'+CATL[v.cat]+'</span><img src="'+meds[0].variants[0].src+'" srcset="'+meds[0].variants[0].src+' 480w, '+(meds[0].variants[1]||meds[0].variants[0]).src+' 1280w" sizes="(max-width:600px) 100vw, 280px" width="'+meds[0].variants[0].w+'" height="'+meds[0].variants[0].h+'" alt="'+esc(v.nom)+', capture officielle Rockstar Games" loading="lazy" decoding="async">'
+   :t?t.in.replace(/<span class="veh-badge">[^<]*<\/span>/,'<span class="veh-badge">'+CATL[v.cat]+'</span>')
    :'<span class="veh-badge">'+CATL[v.cat]+'</span>'+art(v);
  return '<a class="veh-card rise" href="vehicules/'+v.id+'.html" data-id="'+v.id+'"'
   +(v.slot?' data-slot="'+v.slot+'"':'')+' data-ed="'+(v.edition==='Pre-Order'?'precommande':v.edition?'ultimate':'standard')+'"'+' data-st="'+v.st+'" data-cat="'+v.cat+'"'
   +(v.reel?' data-reel="'+esc(v.reel)+'" data-reel-nom="'+esc(v.reelNom)+'"':'')
   +' data-search="'+esc(v.search)+'">'
-  +'<div class="veh-thumb'+cls+'">'+inner+'</div><div class="veh-body">'
+  +'<div class="veh-thumb'+(meds.length?' veh-thumb--photo':cls)+'">'+inner+'</div><div class="veh-body">'
   +'<span class="veh-st veh-st--'+v.st+'">'+ST[v.st].c+'</span>'
   +(v.edition?'<span class="veh-ed">'+esc(v.edition==='Pre-Order'?'Précommande':'Édition Ultimate')+'</span>':'')
   +'<span class="veh-marque">'+esc(v.marque||'Marque inconnue')+'</span><h3>'+esc(v.nom)+'</h3>'
@@ -202,10 +209,11 @@ function fiche(v,i){
  const ed=v.edition==='Pre-Order'?'Bonus de précommande':v.edition?'Exclusif à l\u2019édition Ultimate':null;
  const lede=nom+' dans GTA VI : '+cat.toLowerCase()+(mod?'. Inspiration : '+mod:'')+'. '+st.d;
  const available=(v.vues||[]).filter(view=>fs.existsSync('img/vehicules/'+v.id+'-'+view+'.jpg'));
+ const meds=medList(v);
  const img=available.length>0, vues=img?available.join(','):'';
  const tags=['<span class="chip live">'+st.c+'</span>']
   .concat(ed?['<span class="chip">'+ed+'</span>']:[])
-  .concat(img?['<span class="chip">Images officielles</span>']:[])
+  .concat((img||meds.length)?['<span class="chip">Images officielles</span>']:[])
   .concat(v.slot?['<span class="chip">'+SLOT[v.slot]+'</span>']:[]).join('\n          ');
  const panneau=v.reel?`
 <section class="shell reveal" id="modele-reel">
@@ -223,7 +231,9 @@ function fiche(v,i){
 <meta property="og:title" content="${esc(nom)} — GTA VI | Leonidakit">
 <meta property="og:description" content="${esc(lede)}">
 <meta property="og:type" content="website">
-<meta property="og:locale" content="fr_FR">${img?`
+<meta property="og:locale" content="fr_FR">${meds.length?`
+<meta property="og:image" content="https://www.leonidakit.com${(meds[0].variants[1]||meds[0].variants[0]).src}">
+<meta name="twitter:card" content="summary_large_image">`:img?`
 <meta property="og:image" content="https://www.leonidakit.com/img/vehicules/${v.id}-${available[0]}.jpg">
 <meta name="twitter:card" content="summary_large_image">`:''}
 <meta name="theme-color" content="#FDFBF7">
@@ -265,9 +275,9 @@ ${HEADER}
         <div class="fiche-liens"><button type="button" class="own-bt" id="own-bt" data-id="${v.id}"><span class="ck"></span><span>Ajouter à mon garage</span></button><a href="../comparateur.html?type=vehicules&amp;ids=${v.id}">Comparer</a>${v.reel?'<a href="#modele-reel">Le modèle réel</a>':''}</div>
       </div>
       <div class="fhero-art fhero-art--gal">
-        <div class="gal" data-base="../img/vehicules/${v.id}" data-vues="${vues}" data-nom="${esc(nom)}" data-vide="${img?0:1}"
+        <div class="gal" data-base="../img/vehicules/${v.id}" data-vues="${vues}" data-nom="${esc(nom)}" data-vide="${img?0:1}"${meds.length?` data-medias="${medAttr(v)}"`:''}
              data-art="${esc(artH(v))}"></div>
-        <p class="gal-note">${img?esc(v.credit||'Captures officielles de Rockstar Games.'):esc(pioche(v.id,'img',V_SANSIMG))}</p>
+        <p class="gal-note">${meds.length?CREDIT_RS:img?esc(v.credit||'Captures officielles de Rockstar Games.'):esc(pioche(v.id,'img',V_SANSIMG))}</p>
       </div>
     </div>
   </div>

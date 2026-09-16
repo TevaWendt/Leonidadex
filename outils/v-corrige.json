@@ -269,7 +269,13 @@
   "credit": "Capture officielle Rockstar Games",
   "search": "vapid stanier '55 1956 ford fairlane club sedan",
   "txt": "La Stanier '55 est l'un des rares véhicules dont Rockstar a publié le nom, dans le Vintage Vice City Pack. Nos captures officielles montrent la carrosserie deux tons jaune et crème, les ailerons arrière, les enjoliveurs à disque et le monogramme cursif sur l'aile. La Ford Fairlane de 1955 dont elle reprend les lignes appartient à cette génération d'après-guerre où l'automobile américaine s'est mise à ressembler à un avion. Un choix logique pour une ville qui cultive sa nostalgie.",
-  "edition": "Pre-Order"
+  "edition": "Pre-Order",
+  "medias": [
+   "55-vapid-stanier-01",
+   "55-vapid-stanier-02",
+   "55-vapid-stanier-03",
+   "55-vapid-stanier-04"
+  ]
  },
  {
   "id": "declasse-stratum",
@@ -447,7 +453,13 @@
   "credit": "Capture officielle Rockstar Games",
   "search": "grotti cheetah '95 ferrari testarossa et 512 bb",
   "txt": "Rockstar donne son nom à la Cheetah '95 au catalogue de l'édition Ultimate, et nos quatre captures officielles montrent la carrosserie blanche à bandes rouges, l'intérieur cuir rouge, les jantes à cinq branches et le monogramme sur la poupe. La Ferrari Testarossa dont elle reprend les codes est devenue, pour toute une génération, l'image même de Miami : ses stries latérales et ses proportions démesurées ont plus fait pour l'imaginaire de la ville que n'importe quelle campagne touristique.",
-  "edition": "Ultimate Edition"
+  "edition": "Ultimate Edition",
+  "medias": [
+   "95-grotti-cheetah-01",
+   "95-grotti-cheetah-02",
+   "95-grotti-cheetah-03",
+   "95-grotti-cheetah-04"
+  ]
  },
  {
   "id": "grotti-itali-gto",
@@ -717,7 +729,10 @@
   "credit": "Capture officielle Rockstar Games",
   "search": "sirius 1970 mercury cougar",
   "txt": "Les captures officielles montrent une muscle car turquoise à bandes dorées, aileron de coffre et jantes à trois branches, avec le nom Sirius lisible en toutes lettres sur l'aile arrière. Ni notre liste précédente ni celle des autres sites ne mentionnaient ce modèle : c'est une découverte issue directement du matériel de Rockstar. La silhouette est celle d'une Mercury Cougar de 1970, la cousine plus chère de la Mustang. Le constructeur n'est pas communiqué.",
-  "edition": "Ultimate Edition"
+  "edition": "Ultimate Edition",
+  "medias": [
+   "classic-car-collection-02"
+  ]
  },
  {
   "id": "albany-buccaneer",
@@ -887,7 +902,10 @@
   "credit": "Capture officielle Rockstar Games",
   "search": "schyster deviant 1972 amc javelin",
   "txt": "Le nom de la Deviant vient de Rockstar, via la présentation de l'édition Ultimate, et notre capture officielle la montre habillée aux couleurs du drapeau américain, avec le monogramme cursif sur la custode et l'intérieur visible par la vitre. L'AMC Javelin dont elle reprend les proportions était l'outsider du marché : produite par un constructeur indépendant bien plus petit que les trois de Détroit, elle a malgré tout remporté le championnat Trans-Am face aux Mustang et aux Camaro.",
-  "edition": "Ultimate Edition"
+  "edition": "Ultimate Edition",
+  "medias": [
+   "classic-car-collection-06"
+  ]
  },
  {
   "id": "vapid-chino",
@@ -949,7 +967,13 @@
   ],
   "credit": "Capture officielle Rockstar Games",
   "search": "vapid dominator buggy '67 ford mustang de 1967, preparee tout-terrain",
-  "txt": "Rockstar a baptisé ce véhicule dans la présentation de l'édition Ultimate, et nos quatre captures officielles le montrent sous tous les angles : carrosserie bleue à bande jaune, numéro 6, pneus agraires, arceau de toit à quatre projecteurs, calandre grillagée derrière un pare-buffle. L'intérieur conserve le volant à trois branches et le compteur d'origine. Une Ford Mustang de 1967 rehaussée et préparée pour la boue : l'objet résume à lui seul la Floride rurale des marécages, à quelques kilomètres des tours de Vice City."
+  "txt": "Rockstar a baptisé ce véhicule dans la présentation de l'édition Ultimate, et nos quatre captures officielles le montrent sous tous les angles : carrosserie bleue à bande jaune, numéro 6, pneus agraires, arceau de toit à quatre projecteurs, calandre grillagée derrière un pare-buffle. L'intérieur conserve le volant à trois branches et le compteur d'origine. Une Ford Mustang de 1967 rehaussée et préparée pour la boue : l'objet résume à lui seul la Floride rurale des marécages, à quelques kilomètres des tours de Vice City.",
+  "medias": [
+   "67-vapid-dominator-buggy-01",
+   "67-vapid-dominator-buggy-02",
+   "67-vapid-dominator-buggy-03",
+   "67-vapid-dominator-buggy-04"
+  ]
  },
  {
   "id": "vapid-dominator-gt",
@@ -990,7 +1014,11 @@
   "search": "vapid ganado creado coupe utilitaire americain des annees 70",
   "txt": "Nos captures officielles montrent ce pick-up coupé jaune à bandes rouges devant la planque de Jason, dans les Keys. Le nom Ganado est lisible sur l'aile et sur le tableau de bord, avec la mention 434ci qui indique la cylindrée en pouces cubes. C'est un coupé utilitaire dans la lignée du Ford Ranchero, et son emplacement dans le matériel de Rockstar suggère qu'il appartient au personnage. Rockstar a depuis rattaché le modèle à Vapid, après l'avoir d'abord présenté sous le nom Creado.",
   "fam": "Coupé utilitaire américain des années 70",
-  "alias": "Creado"
+  "alias": "Creado",
+  "medias": [
+   "ganado-retro-build",
+   "jason-s-safehouse-vehicles"
+  ]
  },
  {
   "id": "vapid-gauntlet-classic-custom",
@@ -1321,7 +1349,10 @@
   "credit": "Capture officielle Rockstar Games",
   "search": "vapid riata classic ford bronco premiere generation",
   "txt": "C'est Rockstar qui nomme la Riata Classic, au détour de l'édition Ultimate, et notre capture officielle en montre le profil : carrosserie crème, bandes latérales dégradées rouge et jaune, pneus tout-terrain, monogramme cursif sur l'aile. Le Ford Bronco de première génération dont elle reprend l'allure était un utilitaire simple, à peine plus qu'un châssis et une caisse, devenu depuis un objet de collection recherché.",
-  "edition": "Ultimate Edition"
+  "edition": "Ultimate Edition",
+  "medias": [
+   "classic-car-collection-03"
+  ]
  },
  {
   "id": "annis-hellion",
@@ -1745,7 +1776,11 @@
   "credit": "Capture officielle Rockstar Games",
   "search": "dinka enduro honda xl 350 et xr 500",
   "txt": "L'Enduro tient son nom de la présentation de l'édition Ultimate signée Rockstar, et notre capture officielle en donne une vue de profil nette : réservoir vert olive au logo Dinka, selle noire usée, garde-boue haut, pneus à crampons, échappement relevé. C'est une trail japonaise des années 80, du type de celles qui servaient autant sur route que sur piste. Une autre capture la montre garée devant la planque de Jason, ce qui suggère qu'elle lui appartient.",
-  "edition": "Ultimate Edition"
+  "edition": "Ultimate Edition",
+  "medias": [
+   "dinka-enduro-motorcycle",
+   "jason-s-safehouse-vehicles"
+  ]
  },
  {
   "id": "lcc-avarus",
@@ -2038,7 +2073,11 @@
   "credit": "Capture officielle Rockstar Games",
   "search": "crest kayak kayak crescent, plusieurs variantes",
   "txt": "Le kayak est nommé par Rockstar, et notre capture officielle le montre en usage au coucher du soleil, avec la marque Crest lisible sur la coque. C'est un kayak de mer de type sit-on-top, embarcation ouverte particulièrement adaptée aux eaux chaudes et peu profondes des Keys. Une autre capture le montre posé devant la planque de Jason.",
-  "edition": "Ultimate Edition"
+  "edition": "Ultimate Edition",
+  "medias": [
+   "crest-kayak",
+   "jason-s-safehouse-vehicles"
+  ]
  },
  {
   "id": "dinka-jetmax",
@@ -2388,7 +2427,13 @@
   "credit": "Capture officielle Rockstar Games",
   "search": "shitzu squalo chris-craft stinger 390x",
   "txt": "Le nom du Squalo apparaît noir sur blanc dans la présentation de l'édition Ultimate, et les captures officielles sont explicites : le logo Shitzu et le nom Squalo sont lisibles sur la coque et le pare-brise. On y voit la livrée à motifs de palmes, le pont teck, les cannes à pêche, une bouteille de plongée et l'immatriculation VB 0522 05. La coque reprend celle du Chris-Craft Stinger 390x, un hors-bord de sport des années 80 dont la silhouette basse et le nez pointu sont indissociables de l'imagerie de Miami.",
-  "edition": "Ultimate Edition"
+  "edition": "Ultimate Edition",
+  "medias": [
+   "shitzu-squalo-01",
+   "shitzu-squalo-02",
+   "shitzu-squalo-03",
+   "shitzu-squalo-04"
+  ]
  },
  {
   "id": "shitzu-tropic",

@@ -1,0 +1,292 @@
+{
+  "regions": [
+    {
+      "id": "vice-city",
+      "name": "Vice City",
+      "description": "Vice City réunit plages, quartiers commerçants et port de croisière. Rockstar cite Ocean Beach, Little Cuba, Tisha-Wocka et VC Port.",
+      "media": [
+        "vice-city-01"
+      ],
+      "source": "https://www.rockstargames.com/VI/only-in-leonida/vice-city",
+      "mapId": "vice-city",
+      "relatedPlaces": [
+        "ocean-beach",
+        "little-cuba",
+        "tisha-wocka",
+        "vc-port"
+      ],
+      "characters": [
+        "boobie",
+        "drequan",
+        "dimez"
+      ]
+    },
+    {
+      "id": "leonida-keys",
+      "name": "Leonida Keys",
+      "description": "Un archipel tropical ouvert sur la mer. La présentation de Jason et Brian situe une partie de leurs activités dans les Keys.",
+      "media": [
+        "leonida-keys-01"
+      ],
+      "source": "https://www.rockstargames.com/VI/only-in-leonida/leonida-keys",
+      "mapId": "leonida-keys",
+      "relatedPlaces": [],
+      "characters": [
+        "jason",
+        "brian",
+        "cal"
+      ]
+    },
+    {
+      "id": "grassrivers",
+      "name": "Grassrivers",
+      "description": "Rockstar décrit une zone de mangroves habitée par des alligators. Les images montrent aussi des hydroglisseurs dans cet environnement marécageux.",
+      "media": [
+        "grassrivers-01"
+      ],
+      "source": "https://www.rockstargames.com/VI/only-in-leonida/grassrivers",
+      "mapId": "grassrivers",
+      "relatedPlaces": [],
+      "characters": []
+    },
+    {
+      "id": "port-gellhorn",
+      "name": "Port Gellhorn",
+      "description": "Cette ancienne destination touristique conserve motels et attractions fermées. Son déclin fait partie de la description officielle publiée par Rockstar.",
+      "media": [
+        "port-gellhorn-01"
+      ],
+      "source": "https://www.rockstargames.com/VI/only-in-leonida/port-gellhorn",
+      "mapId": "port-gellhorn",
+      "relatedPlaces": [],
+      "characters": []
+    },
+    {
+      "id": "ambrosia",
+      "name": "Ambrosia",
+      "description": "Le paysage industriel d’Ambrosia s’organise autour de la raffinerie sucrière Allied Crystal. Rockstar mentionne aussi un gang de motards local.",
+      "media": [
+        "ambrosia-01"
+      ],
+      "source": "https://www.rockstargames.com/VI/only-in-leonida/ambrosia",
+      "mapId": "ambrosia",
+      "relatedPlaces": [
+        "allied-crystal"
+      ],
+      "characters": []
+    },
+    {
+      "id": "mount-kalaga",
+      "name": "Mount Kalaga National Park",
+      "description": "Le parc national apparaît dans les captures officielles : pistes boueuses, reliefs, forêts, animaux et voies d’eau composent les scènes publiées.",
+      "media": [
+        "mount-kalaga-national-park-01"
+      ],
+      "source": "https://www.rockstargames.com/VI/only-in-leonida/kalaga",
+      "mapId": "mount-kalaga",
+      "relatedPlaces": [],
+      "characters": []
+    }
+  ],
+  "characters": [
+    {
+      "id": "jason",
+      "name": "Jason Duval",
+      "description": "Ancien militaire, Jason travaille pour des trafiquants des Keys. Son alliance avec Lucia occupe une place centrale dans la présentation du jeu.",
+      "media": [
+        "jason-duval-01"
+      ],
+      "source": "https://www.rockstargames.com/VI/only-in-leonida/jason",
+      "places": [
+        "leonida-keys"
+      ],
+      "characters": [
+        "lucia",
+        "cal",
+        "brian"
+      ]
+    },
+    {
+      "id": "lucia",
+      "name": "Lucia Caminos",
+      "description": "Lucia sort du pénitencier de Leonida. Après son enfance à Liberty City, elle entend améliorer sa vie et celle de sa famille.",
+      "media": [
+        "lucia-caminos-01"
+      ],
+      "source": "https://www.rockstargames.com/VI/only-in-leonida/lucia",
+      "places": [
+        "leonida-penitentiary"
+      ],
+      "characters": [
+        "jason"
+      ]
+    },
+    {
+      "id": "cal",
+      "name": "Cal Hampton",
+      "description": "Ami de Jason et associé de Brian, Cal écoute les communications des garde-côtes. Rockstar souligne sa méfiance et son goût des théories.",
+      "media": [
+        "cal-hampton-01"
+      ],
+      "source": "https://www.rockstargames.com/VI/only-in-leonida/cal",
+      "places": [
+        "leonida-keys"
+      ],
+      "characters": [
+        "jason",
+        "brian"
+      ]
+    },
+    {
+      "id": "boobie",
+      "name": "Boobie Ike",
+      "description": "Boobie possède des activités à Vice City. Il investit avec Dre’Quan dans Only Raw Records et exploite le club Jack of Hearts.",
+      "media": [
+        "boobie-ike-01"
+      ],
+      "source": "https://www.rockstargames.com/VI/only-in-leonida/boobie",
+      "places": [
+        "vice-city"
+      ],
+      "characters": [
+        "drequan"
+      ]
+    },
+    {
+      "id": "drequan",
+      "name": "Dre’Quan Priest",
+      "description": "Dre’Quan veut réussir dans la musique. Associé à Boobie, il travaille avec Real Dimez chez Only Raw Records.",
+      "media": [
+        "dre-quan-priest-01"
+      ],
+      "source": "https://www.rockstargames.com/VI/only-in-leonida/drequan",
+      "places": [
+        "vice-city"
+      ],
+      "characters": [
+        "boobie",
+        "dimez"
+      ]
+    },
+    {
+      "id": "dimez",
+      "name": "Real Dimez",
+      "description": "Bae-Luxe et Roxy forment Real Dimez. Amies depuis le lycée, elles sont signées chez Only Raw Records et cherchent un nouveau succès.",
+      "media": [
+        "real-dimez-01"
+      ],
+      "source": "https://www.rockstargames.com/VI/only-in-leonida/dimez",
+      "places": [
+        "vice-city"
+      ],
+      "characters": [
+        "drequan"
+      ]
+    },
+    {
+      "id": "raul",
+      "name": "Raul Bautista",
+      "description": "Raul est un braqueur expérimenté qui recrute des partenaires prêts à prendre des risques. Ses ambitions font monter les enjeux pour son équipe.",
+      "media": [
+        "raul-bautista-01"
+      ],
+      "source": "https://www.rockstargames.com/VI/only-in-leonida/raul",
+      "places": [],
+      "characters": []
+    },
+    {
+      "id": "brian",
+      "name": "Brian Heder",
+      "description": "Trafiquant installé dans les Keys, Brian travaille avec Lori. Il héberge Jason dans une propriété en échange de services.",
+      "media": [
+        "brian-heder-01"
+      ],
+      "source": "https://www.rockstargames.com/VI/only-in-leonida/brian",
+      "places": [
+        "leonida-keys"
+      ],
+      "characters": [
+        "jason",
+        "cal"
+      ]
+    }
+  ],
+  "businesses": [
+    {
+      "id": "rideout-customs",
+      "name": "Rideout Customs",
+      "media": [
+        "rideout-customs-mod-shop-01"
+      ],
+      "description": "Atelier de personnalisation automobile présenté dans les médias Ultimate.",
+      "mapId": "g-L2375",
+      "source": "https://www.rockstargames.com/VI/media/screenshots"
+    },
+    {
+      "id": "saras-unisex-salon",
+      "name": "Sara’s Unisex Salon",
+      "media": [
+        "sara-s-unisex-salon-01"
+      ],
+      "description": "Salon présenté dans les médias officiels ; les images montrent coiffure et soins des ongles.",
+      "mapId": "g-L360",
+      "source": "https://www.rockstargames.com/VI/media/screenshots"
+    },
+    {
+      "id": "stock-305",
+      "name": "Stock 305",
+      "media": [
+        "stock-305-clothing-store-01"
+      ],
+      "description": "Boutique de vêtements nommée dans la galerie officielle.",
+      "mapId": "g-L1488",
+      "source": "https://www.rockstargames.com/VI/media/screenshots"
+    },
+    {
+      "id": "electric-fang",
+      "name": "Electric Fang Tattoo",
+      "media": [
+        "electric-fang-tattoo-01"
+      ],
+      "description": "Salon de tatouage de Stockyard présenté avec l’édition Ultimate.",
+      "mapId": "g-L1482",
+      "source": "https://www.rockstargames.com/VI/media/screenshots"
+    },
+    {
+      "id": "one-eyed-willie",
+      "name": "One-Eyed Willie’s",
+      "media": [
+        "one-eyed-willie-s-mod-shop-01"
+      ],
+      "description": "Atelier nommé dans les médias Ultimate. Aucun marqueur exact n’est validé ici.",
+      "mapId": null,
+      "source": "https://www.rockstargames.com/VI/media/screenshots"
+    },
+    {
+      "id": "ptt-youngin",
+      "name": "PTT YOUNGIN$",
+      "media": [
+        "ptt-youngin-illegal-goods-store"
+      ],
+      "description": "Enseigne de biens illicites nommée dans les médias officiels.",
+      "mapId": "ptt-youngin",
+      "source": "https://www.rockstargames.com/VI/media/screenshots"
+    },
+    {
+      "id": "only-raw-records",
+      "name": "Only Raw Records",
+      "media": [],
+      "description": "Label associé à Boobie et Dre’Quan ; Real Dimez y est signé.",
+      "mapId": null,
+      "source": "https://www.rockstargames.com/VI/only-in-leonida/boobie"
+    },
+    {
+      "id": "jack-of-hearts",
+      "name": "Jack of Hearts",
+      "media": [],
+      "description": "Club associé à Boobie Ike dans sa présentation officielle.",
+      "mapId": "g-L172",
+      "source": "https://www.rockstargames.com/VI/only-in-leonida/boobie"
+    }
+  ]
+}

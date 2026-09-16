@@ -40,7 +40,7 @@ const mapData=JSON.parse(fs.readFileSync(rawPath,'utf8'));
 for(const p of [...mapData.groupes,...mapData.lieux,...Object.values(mapData.enrichit)])for(const key of ['img','img2'])if(p[key]&&!available('carte.html',p[key]))delete p[key];
 fs.writeFileSync('carte-gtadb.js','/* Generated from data/carte-gtadb-source.json. gtadb.org et ses contributeurs, CC BY 4.0; adapté pour Leonidakit. */\nwindow.LK_GTADB = '+JSON.stringify(mapData)+';\n');
 
-const htmlFiles=[...fs.readdirSync('.').filter(x=>x.endsWith('.html')),...['armes','vehicules'].flatMap(d=>fs.readdirSync(d).filter(f=>f.endsWith('.html')).map(f=>d+'/'+f))].sort();
+const htmlFiles=[...fs.readdirSync('.').filter(x=>x.endsWith('.html')),...['armes','vehicules','lieux','personnages','entreprises'].filter(d=>fs.existsSync(d)).flatMap(d=>fs.readdirSync(d).filter(f=>f.endsWith('.html')).map(f=>d+'/'+f))].sort();
 const canonicals=[];
 for(const file of htmlFiles){let s=fs.readFileSync(file,'utf8');if(file.startsWith('google'))continue;const prefix=file==='404.html'?'/':file.includes('/')?'../':'';
  if(s.includes('app.js')){
@@ -53,8 +53,9 @@ for(const file of htmlFiles){let s=fs.readFileSync(file,'utf8');if(file.startsWi
  // Separate the catalogue link from its possession/comparison buttons.
  s=s.replace(/<a class="([^"]*\bveh-card\b[^"]*)" href="([^"]+)"([^>]*)>([\s\S]*?)<\/a>/g,(_,cls,href,attrs,body)=>'<article class="'+cls+'"'+attrs+'><a class="veh-link" href="'+href+'">'+body+'</a></article>');
  // Avoid known-missing image requests; do not erase source view declarations.
+ s=s.replace(/(<h2>Contenu<\/h2>\s*<nav>)(<a href="(\.\.\/)?carte\.html">Carte<\/a>[\s\S]*?)(<\/nav>)/,(m0,a,b,p,c)=>{p=p||'';return b.includes('lieux.html')?m0:a+b+'<a href="'+p+'lieux.html">Lieux</a><a href="'+p+'personnages.html">Personnages</a><a href="'+p+'entreprises.html">Entreprises</a>'+c;});
  s=s.replace(/<img\b[^>]*src="([^"]+)"[^>]*>/g,(tag,src)=>available(file,src)?tag:'<span class="image-placeholder">Visuel à intégrer</span>');
- s=s.replace(/<div class="gal"([^>]+)>/g,(tag,attrs)=>{const base=attrs.match(/data-base="([^"]+)"/)?.[1];const vv=attrs.match(/data-vues="([^"]*)"/)?.[1]||'face,profil,detail';const views=vv.split(',').filter(v=>v&&available(file,base+'-'+v+'.jpg'));attrs=attrs.replace(/\sdata-vide="[^"]*"/,'').replace(/data-vues="[^"]*"/,'data-vues="'+views.join(',')+'"');return '<div class="gal"'+attrs+' data-vide="'+(views.length?0:1)+'">';});
+ s=s.replace(/<div class="gal"([^>]+)>/g,(tag,attrs)=>{const base=attrs.match(/data-base="([^"]+)"/)?.[1];const vv=attrs.match(/data-vues="([^"]*)"/)?.[1]||'face,profil,detail';const views=vv.split(',').filter(v=>v&&available(file,base+'-'+v+'.jpg'));attrs=attrs.replace(/\sdata-vide="[^"]*"/,'').replace(/data-vues="[^"]*"/,'data-vues="'+views.join(',')+'"');const hasMed=/data-medias="[^"]*[^"\]]/.test(attrs);return '<div class="gal"'+attrs+' data-vide="'+((views.length||hasMed)?0:1)+'">';});
  if(/class="gal"[^>]*data-vide="1"/.test(s)){s=s.replace(/<p class="gal-note">[\s\S]*?<\/p>/,'<p class="gal-note">Illustration provisoire : les visuels restent à intégrer à cette fiche.</p>').replace(/<span class="chip">Images officielles<\/span>/g,'');}
  s=s.replace(/<meta property="og:image" content="([^"]+)"\s*\/?>/g,(tag,src)=>available(file,src)?tag:'<meta property="og:image" content="https://www.leonidakit.com/img/social-card.png">');
  if(!s.includes('name="robots"') && /^(calculateurs|collectibles)\.html$/.test(file))s=s.replace('</head>','<meta name="robots" content="noindex, follow">\n</head>');
@@ -75,10 +76,11 @@ for(const file of htmlFiles){let s=fs.readFileSync(file,'utf8');if(file.startsWi
  if(canonical&&!/name="robots" content="[^"]*noindex/.test(s)&&!s.includes('http-equiv="refresh"')&&file!=='404.html')canonicals.push(canonical);
  fs.writeFileSync(file,s);
 }
-const urls=[...new Set(canonicals)].sort();for(const f of ['sitemap.xml','sitemap-fiches.xml']){const list=f==='sitemap-fiches.xml'?urls.filter(u=>/\/(armes|vehicules)\//.test(u)):urls;fs.writeFileSync(f,'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+list.map(u=>'  <url><loc>'+esc(u)+'</loc></url>').join('\n')+'\n</urlset>\n');}
+const urls=[...new Set(canonicals)].sort();for(const f of ['sitemap.xml','sitemap-fiches.xml']){const list=f==='sitemap-fiches.xml'?urls.filter(u=>/\/(armes|vehicules|lieux|personnages|entreprises)\//.test(u)):urls;fs.writeFileSync(f,'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+list.map(u=>'  <url><loc>'+esc(u)+'</loc></url>').join('\n')+'\n</urlset>\n');}
 // Rebuild search terms from current names and aliases; exclude old retired pages.
 let index=data.window.LK_INDEX.filter(e=>!/^\/(vehicules|armes)\//.test(e.u));
 for(const[type,list]of [['vehicules',V],['armes',A]])for(const v of list)index.push({l:name(v),k:type==='vehicules'?'Véhicule':'Arme',u:'/'+type+'/'+v.id+'.html',s:[v.id,v.search,name(v),v.fr,v.alias,v.insp,v.fam].filter(Boolean).join(' ').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase()});
+if(fs.existsSync('outils/lore-index.json'))index=index.concat(JSON.parse(fs.readFileSync('outils/lore-index.json','utf8')));
 index=[...new Map(index.map(e=>[e.u,e])).values()];fs.writeFileSync('search-index.js','/* Generated from current data. */\nwindow.LK_INDEX = '+JSON.stringify(index)+';\n');
 const mapSource=fs.readFileSync('carte.js','utf8');const local=vm.runInNewContext('('+mapSource.match(/const POINTS = (\[[\s\S]*?\n  \]);/)[1]+')');
 const allPoints=[...local,...data.window.LK_GTADB.groupes,...data.window.LK_GTADB.lieux];
