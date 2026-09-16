@@ -1614,6 +1614,8 @@ body.map-full-on{overflow:hidden;}
 .lo-art .veh-art path, .lo-art .veh-art rect, .lo-art .veh-art circle{fill:var(--paper);}
 .lo-art .veh-art path[stroke]{stroke:var(--paper);}
 .lo-empty{font-size:.78rem; color:#6E6B79; font-style:italic;}
+.lo-art .lo-photo{max-height:76px; width:auto; max-width:100%; border-radius:6px; object-fit:cover;}
+.lo-nom{font-size:.8rem; color:var(--paper); font-weight:600; text-align:center; padding:0 6px;}
 .lo-side{display:flex; flex-direction:column; gap:12px;}
 .lo-verdict{
   display:flex; gap:11px; align-items:flex-start; background:#25232E;

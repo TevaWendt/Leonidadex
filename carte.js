@@ -204,8 +204,8 @@
     });
   }
 
-  /* Ne demander que les fichiers réellement livrés. Les sources restent intactes. */
-  POINTS.forEach(p=>{['img','img2'].forEach(k=>{if(p[k] && !window.LK.hasAsset(p[k])) delete p[k];});});
+  /* Ne demander que les fichiers réellement livrés. Les photos de la carte (photos/) sont déjà filtrées à la génération de carte-gtadb.js et ne figurent pas dans le manifeste. */
+  POINTS.forEach(p=>{['img','img2'].forEach(k=>{if(p[k] && !/^photos\//.test(p[k]) && !window.LK.hasAsset(p[k])) delete p[k];});});
 
   /* index : indispensable dès qu'on dépasse quelques centaines de lieux */
   const BY_ID = {}, KIDS = {}, MK = {};

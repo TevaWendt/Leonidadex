@@ -434,7 +434,12 @@ const el = id => document.getElementById(id);
   document.querySelectorAll('.arm-card').forEach(function(c){
     const slug = (c.getAttribute('href') || c.querySelector('.veh-link').getAttribute('href')).split('/').pop().replace('.html','');
     const svg = c.querySelector('.veh-art');
-    cards[slug] = { svg: svg ? svg.outerHTML : '', nom: c.querySelector('h3').textContent, cl: c.dataset.cat };
+    /* les armes illustrées par une photo officielle n'ont pas de silhouette : on reprend la photo */
+    const img = svg ? null : c.querySelector('.veh-thumb img');
+    let html = '';
+    if(svg) html = svg.outerHTML;
+    else if(img){ const i = img.cloneNode(false); i.className = 'lo-photo'; i.removeAttribute('sizes'); i.setAttribute('sizes', '160px'); html = i.outerHTML; }
+    cards[slug] = { svg: html, nom: c.querySelector('h3').textContent, cl: c.dataset.cat };
   });
 
   function render(){
@@ -442,7 +447,7 @@ const el = id => document.getElementById(id);
     ['dos','main','poing'].forEach(function(k){
       const v = sel[k].value;
       const c = cards[v];
-      art[k].innerHTML = c ? c.svg : '<span class="lo-empty">Vide</span>';
+      art[k].innerHTML = c ? (c.svg || '<span class="lo-nom">' + c.nom.replace(/[&<>"]/g, function(ch){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch]; }) + '</span>') : '<span class="lo-empty">Vide</span>';
       art[k].parentNode.classList.toggle('is-set', !!c);
       if(k !== 'poing' && v) longues++;
       if(k === 'main' && v) visible = true;
