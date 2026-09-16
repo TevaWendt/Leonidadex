@@ -3,13 +3,30 @@
 const esc = window.LK.esc;
 const el = id => document.getElementById(id);
 
+  /* Bandeaux défilants : une moitié de piste doit couvrir au moins la largeur de l'écran, sinon la boucle
+     laisse un vide. On répète le contenu jusqu'à dépasser l'écran, puis on duplique pour l'animation -50 %. */
+  function fillTrack(track, unit){
+    if(!track || !unit) return;
+    track.innerHTML = '<span class="mq-half">' + unit + '</span>';
+    const half = track.firstChild;
+    let n = 1, guard = 0;
+    while(half.getBoundingClientRect().width < window.innerWidth + 80 && guard < 40){ half.insertAdjacentHTML('beforeend', unit); n++; guard++; }
+    track.insertAdjacentHTML('beforeend', '<span class="mq-half" aria-hidden="true">' + half.innerHTML + '</span>');
+    track.dataset.unit = unit;
+  }
+  let fillTimer = null;
+  window.addEventListener('resize', function(){
+    clearTimeout(fillTimer);
+    fillTimer = setTimeout(function(){ document.querySelectorAll('[data-unit]').forEach(function(t){ fillTrack(t, t.dataset.unit); }); }, 200);
+  });
+
   /* --- Éléments propres à la page d'accueil : on sort si absents --- */
   const isHome = !!el('mq');
 
   if(isHome){
   /* bandeau défilant, dupliqué pour une boucle sans coupure */
   const words = ["19 novembre 2026","Vice City","Leonida Keys","Grassrivers","Port Gellhorn","Ambrosia","Mount Kalaga","PS5 et Xbox Series"];
-  el('mq').innerHTML = [...words, ...words].map(w => '<b>' + w + '</b><i>&#9670;</i>').join('');
+  fillTrack(el('mq'), words.map(w => '<b>' + w + '</b><i>&#9670;</i>').join(''));
 
   /* illustrations originales des régions, aucun visuel du jeu */
   const scenes = [
@@ -28,17 +45,17 @@ const el = id => document.getElementById(id);
     if(s.kind==='rural') return '<rect x="0" y="150" width="260" height="20" fill="'+s.a+'"/><path d="M60,150 L60,110 L96,88 L132,110 L132,150Z" fill="'+s.a+'"/><rect x="176" y="104" width="18" height="46" fill="'+s.a+'"/><rect x="200" y="120" width="14" height="30" fill="'+s.a+'"/>';
     return '<path d="M0,170 L70,80 L120,132 L165,64 L260,170Z" fill="'+s.a+'"/><path d="M150,84 L165,64 L182,86 L166,94Z" fill="'+s.c+'" opacity=".85"/>';
   }
-  el('strip').innerHTML = [...scenes, ...scenes].map(function(s,i){
+  fillTrack(el('strip'), scenes.map(function(s,i){
     return '<div class="card"><svg viewBox="0 0 260 170" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">'
       + '<defs><linearGradient id="g'+i+'" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="'+s.b+'"/><stop offset="72%" stop-color="'+s.c+'"/></linearGradient></defs>'
       + '<rect width="260" height="170" fill="url(#g'+i+')"/>'
       + '<circle cx="200" cy="56" r="26" fill="'+s.c+'" opacity=".5"/>'
       + art(s) + '</svg><span class="cap">'+s.cap+'</span></div>';
-  }).join('');
+  }).join(''));
 
   /* second bandeau, sens inverse */
   const words2 = ["Carte filtrable","Suivi de progression","Fiches véhicules","Emplacements","Calculateurs","Mis à jour en continu"];
-  el('mq2').innerHTML = [...words2, ...words2].map(w => '<b>' + w + '</b><i>&#9679;</i>').join('');
+  fillTrack(el('mq2'), words2.map(w => '<b>' + w + '</b><i>&#9679;</i>').join(''));
 
   /* chiffres clés qui montent à l'apparition */
   const factIO = new IntersectionObserver(function(entries){
@@ -357,7 +374,7 @@ const el = id => document.getElementById(id);
                      .map(e => e.l.split(' ')[0])
     )).filter(m => m && m !== 'Marque').sort();
     const line = marques.map(m => '<b>' + m + '</b><i>&#9679;</i>').join('');
-    strip.innerHTML = line + line;
+    fillTrack(strip, line);
   }
 
   /* statistiques qui montent */
