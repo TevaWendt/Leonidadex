@@ -2,7 +2,7 @@
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('fs'),path=require('path'),vm=require('vm');
 const {JSDOM}=require('jsdom'),{load}=require('./runtime-helper.cjs');
 const root=process.env.SITE_ROOT||path.resolve(__dirname,'../..');
-const pages=[...fs.readdirSync(root).filter(f=>f.endsWith('.html')),...['vehicules','armes','lieux','personnages','entreprises'].flatMap(dir=>fs.readdirSync(path.join(root,dir)).filter(f=>f.endsWith('.html')).map(f=>dir+'/'+f))];
+const pages=[...fs.readdirSync(root).filter(f=>f.endsWith('.html')),...['vehicules','armes','lieux','personnages','entreprises','demeures','planques'].flatMap(dir=>fs.readdirSync(path.join(root,dir)).filter(f=>f.endsWith('.html')).map(f=>dir+'/'+f))];
 const ctx={window:{}};for(const file of ['vehicules-data.js','armes-data.js','carte-gtadb.js','search-index.js','assets-manifest.js','progression-data.js'])vm.runInNewContext(fs.readFileSync(path.join(root,file),'utf8'),ctx);
 const docs=new Map();const errors=[];
 function checkUrl(url,file){if(!url)return;const u=new URL(url,'https://www.leonidakit.com/'+file);if(u.origin!=='https://www.leonidakit.com')return;const rel=decodeURIComponent(u.pathname.slice(1))||'index.html';assert.ok(fs.existsSync(path.join(root,rel)),file+' → '+rel);if(!u.hash)return;if(u.hash.startsWith('#lieu='))assert.ok(ctx.window.LK_PROGRESS_IDS.lieux.includes(u.hash.slice(6)),file+' → '+u.hash);else if(!u.hash.includes('=')&&rel.endsWith('.html')){const d=docs.get(rel);if(d&&!d.getElementById(u.hash.slice(1))){const cat=u.hash.slice(1);assert.ok((rel==='vehicules.html'&&Object.hasOwn(ctx.window.LK_VEHICULES_CATS,cat))||(rel==='armes.html'&&Object.hasOwn(ctx.window.LK_ARMES_CATS,cat)),file+' → '+rel+u.hash);}}}
