@@ -97,15 +97,28 @@ const el = id => document.getElementById(id);
     const q = wrap.querySelector('input[type="search"]'), box = wrap.querySelector('.suggest');
     if(!q || !box || !window.LK_INDEX) return;
     const norm = s => String(s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,' ').trim();
-    const index = window.LK_INDEX.map(e => ({...e, text:norm(e.s+' '+e.l)}));
+    let index = window.LK_INDEX.map(e => ({...e, text:norm(e.s+' '+e.l)}));
     let cur = -1, hits = [];
+    /* les 2 500 lieux de la carte ne sont chargés qu'à la première recherche (fichier séparé) */
+    function fondreLieux(){ if(!window.LK_INDEX_LIEUX || index.lieux) return; index = index.concat(window.LK_INDEX_LIEUX.map(e => ({...e, text:norm(e.s+' '+e.l)}))); index.lieux = true; if(q.value.trim()) render(); }
+    function chargerLieux(){
+      if(window.LK_INDEX_LIEUX){ fondreLieux(); return; }
+      document.addEventListener('lk-lieux', fondreLieux);
+      if(document.getElementById('lk-lieux-js')) return;
+      const ref = document.querySelector('script[src$="search-index.js"]'); if(!ref) return;
+      const s = document.createElement('script'); s.id = 'lk-lieux-js'; s.async = true;
+      s.src = ref.getAttribute('src').replace('search-index.js', 'search-lieux.js');
+      s.onload = function(){ document.dispatchEvent(new Event('lk-lieux')); };
+      document.head.appendChild(s);
+    }
+    q.addEventListener('focus', chargerLieux, {once:true}); q.addEventListener('input', chargerLieux, {once:true});
     q.setAttribute('role','combobox'); q.setAttribute('aria-autocomplete','list');
     q.setAttribute('aria-controls',box.id); q.setAttribute('aria-expanded','false');
     const close = () => { box.classList.remove('open'); q.setAttribute('aria-expanded','false'); q.removeAttribute('aria-activedescendant'); cur=-1; };
     function render(){
       const v=norm(q.value); cur=-1; q.removeAttribute('aria-activedescendant');
       if(!v){box.innerHTML=''; hits=[]; close(); return;}
-      hits=index.map(e=>({e,rank:norm(e.l)===v?0:norm(e.l).startsWith(v)?1:e.text.includes(v)?2:v.split(' ').every(t=>e.text.includes(t))?3:99})).filter(x=>x.rank<99).sort((a,b)=>a.rank-b.rank||a.e.l.length-b.e.l.length).slice(0,8).map(x=>x.e);
+      hits=index.map(e=>({e,rank:norm(e.l)===v?0:norm(e.l).startsWith(v)?1:e.text.includes(v)?2:v.split(' ').every(t=>e.text.includes(t))?3:99})).filter(x=>x.rank<99).sort((a,b)=>a.rank-b.rank||(a.e.w||0)-(b.e.w||0)||a.e.l.length-b.e.l.length).slice(0,8).map(x=>x.e);
       box.innerHTML=hits.length?hits.map((e,i)=>'<a id="'+box.id+'-option-'+i+'" href="'+esc(e.u)+'" role="option" aria-selected="false"><span>'+esc(e.l)+'</span><span class="kind">'+esc(e.k)+'</span></a>').join(''):'<div class="none" role="status">Aucun résultat pour « '+esc(q.value.trim())+' ».</div>';
       box.classList.add('open'); q.setAttribute('aria-expanded','true');
     }
@@ -207,6 +220,10 @@ const el = id => document.getElementById(id);
   const bar     = document.getElementById('vbar');
 
   let activeCat = 'all', query = '', activeSt = null, activeSlot = null, activeEd = null, tri = '';
+  /* la grille s'affiche par lots : moins de travail pour le téléphone, toutes les cartes restent dans la page */
+  const LOT = 48; let limite = LOT, derniereSig = null;
+  let plusBt = document.getElementById('vplus');
+  if(!plusBt && emptyEl){ plusBt = document.createElement('button'); plusBt.type = 'button'; plusBt.id = 'vplus'; plusBt.className = 'vplus'; plusBt.hidden = true; emptyEl.parentNode.insertBefore(plusBt, emptyEl); }
   const norm = s => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
   const motCarte = grid.dataset.mot || 'véhicule';
   const ordreInitial = cards.slice();
@@ -259,6 +276,9 @@ const el = id => document.getElementById(id);
     const q = norm(query.trim());
     let shown = 0;
     trier();
+    const sig = [activeCat, activeSt, activeSlot, activeEd, q, tri].join('|');
+    if(sig !== derniereSig){ derniereSig = sig; limite = LOT; }
+    let rang = 0;
     cards.forEach(function(card){
       const okCat  = (activeCat === 'all') || (card.dataset.cat === activeCat);
       const okSt   = !activeSt   || card.dataset.st   === activeSt;
@@ -266,15 +286,18 @@ const el = id => document.getElementById(id);
       const okEd   = !activeEd   || card.dataset.ed   === activeEd;
       const okTxt = !q || norm(card.dataset.search || '').includes(q);
       const show = okCat && okTxt && okSt && okSlot && okEd;
-      card.hidden = !show;
-      if(show){ card.classList.add('in'); shown++; }
+      if(show) shown++;
+      card.hidden = !show || (rang >= limite);
+      if(show){ rang++; if(!card.hidden) card.classList.add('in'); }
     });
+    if(plusBt){ const reste = shown - Math.min(shown, limite); plusBt.hidden = reste <= 0; plusBt.textContent = 'Afficher ' + Math.min(reste, LOT) + ' de plus (' + reste + ' restant' + (reste > 1 ? 's' : '') + ')'; }
     countEl.innerHTML = '<strong>' + shown + '</strong> ' + motCarte + (shown > 1 ? 's' : '');
     emptyEl.hidden = shown > 0;
     if(clearBt) clearBt.hidden = !query.trim();
     chips.forEach(c=>c.setAttribute('aria-pressed',String(c.classList.contains('is-on'))));
     ecrireEtat();
   }
+  if(plusBt) plusBt.addEventListener('click', function(){ limite += LOT; apply(); });
   if(triSel) triSel.addEventListener('change', function(){ tri = triSel.value; apply(); });
   /* raccourci : la touche / place le curseur dans le filtre */
   document.addEventListener('keydown', function(e){

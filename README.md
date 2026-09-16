@@ -7,10 +7,10 @@ Hébergé sur Vercel, qui publie tel quel le contenu de ce dépôt : **aucune co
 
 | Élément | Rôle |
 |---|---|
-| `index.html`, `carte.html`, `vehicules.html`, `armes.html`, etc. | les pages du site (15 fichiers `.html`) |
+| `index.html`, `carte.html`, `vehicules.html`, `armes.html`, etc. | les pages du site (19 fichiers `.html`, dont `medias.html` : crédits des visuels officiels) |
 | `style.css`, `fiches.css` | les styles |
 | `app.js`, `common.js`, `fiches.js`, `carte.js`, `comparateur.js`, `classement.js`, `progression.js` | le code qui fait fonctionner les pages |
-| `armes-data.js`, `vehicules-data.js`, `carte-gtadb.js`, `search-index.js`, `assets-manifest.js`, `progression-data.js` | les données lues par le site |
+| `armes-data.js`, `vehicules-data.js`, `carte-gtadb.js`, `search-index.js`, `search-lieux.js`, `assets-manifest.js`, `progression-data.js` | les données lues par le site (`search-lieux.js` : les 2 500 lieux de la carte, chargé seulement à la première recherche) |
 | `robots.txt`, `sitemap.xml`, `sitemap-fiches.xml`, `googleea0091a4822a39f7.html` | référencement Google |
 | `vercel.json` | six redirections d'anciennes adresses et deux en-têtes. Pas de build. |
 | `armes/` | 27 fiches armes |
@@ -24,7 +24,7 @@ Hébergé sur Vercel, qui publie tel quel le contenu de ce dépôt : **aucune co
 
 - Ne jamais ajouter de `package.json` ni de commande de build sur Vercel : le site est servi tel quel.
 - Pour corriger un véhicule, modifier `outils/v-corrige.json` puis régénérer (voir `outils/LISEZ-MOI.md`). Ne pas éditer les fiches à la main.
-- Ordre de régénération : `node outils/final.js`, `node outils/gen.js`, `node outils/lore-gen.js`.
+- Ordre de régénération : `node outils/final.js`, `node outils/gen.js`, `node outils/lore-gen.js`, puis `node outils/verifier.js` (contrôle des liens et images).
 - Les visuels officiels Rockstar (`img/officiel/`) sont des médias promotionnels © Rockstar Games / Take-Two, tolérés pour un site de fans ; ils ne sont pas libres de droits.
 - Les fiches armes sont des fichiers HTML maintenus à la main dans `armes/`, avec `armes-data.js` comme base.
 - Aucune donnée issue de fuites. Crédit gtadb.org conservé sur la carte et dans les mentions légales.

@@ -79,6 +79,16 @@
 </div><p class="note">Les missions, collectibles, planques et trophées seront ajoutés lorsque leurs listes seront documentées.</p>
   <noscript><p>Active JavaScript pour lire le suivi enregistré dans ton navigateur.</p></noscript>
 </section>
+<section class="shell" id="sauvegarde" aria-label="Sauvegarde">
+  <h2 class="sec-h">Sauvegarder ou transférer ton suivi</h2>
+  <p class="fiche-txt">Tout ce que tu coches reste dans ce navigateur. Exporte un fichier pour le garder, ou pour le retrouver sur un autre appareil : garage, arsenal, lieux repérés, marqueurs et dessins de la carte, classement.</p>
+  <div class="save-row">
+    <button type="button" id="save-export">Exporter mon suivi</button>
+    <label for="save-import">Importer un fichier</label>
+    <input type="file" id="save-import" accept="application/json,.json" hidden>
+  </div>
+  <p class="save-msg" id="save-msg" aria-live="polite"></p>
+</section>
 
 </main>
 
