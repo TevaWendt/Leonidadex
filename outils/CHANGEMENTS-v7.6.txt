@@ -33,3 +33,13 @@ VÉRIFICATIONS
   officiels au complet).
 - Rendu Chromium : hub Armes avec survol, fiche Carabine (schéma puis aperçus), fiche
   Leonida Keys en cours de défilement. Aucune erreur console, aucun débordement.
+
+COMPLÉMENT v7.6b (même journée)
+- Empreinte de version sur tous les liens vers les feuilles de style et scripts locaux
+  (style.css?v=…, common.js?v=…, calculée dans sync-site.cjs à partir du contenu des
+  fichiers). Après chaque mise en ligne, un navigateur ne peut plus réutiliser un ancien
+  fichier gardé en cache : les changements visuels apparaissent au premier chargement.
+- sync-site.cjs ne réécrit plus la note sous la vignette des fiches armes (elle remplaçait
+  « Schéma indicatif… » par l'ancien texte « Illustration provisoire ») et laisse la
+  puce « Images officielles ».
+- armes.html (hub) vérifié présent dans l'archive avec ses 27 schémas (74 994 octets).

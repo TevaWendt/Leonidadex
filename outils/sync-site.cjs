@@ -1,6 +1,8 @@
 /* Keep static HTML, search, images and sitemaps consistent. No runtime framework. */
 const fs=require('fs'),path=require('path'),vm=require('vm');
 const root=path.resolve(__dirname,'..');process.chdir(root);
+const crypto=require('crypto');
+const STAMP=crypto.createHash('md5').update(fs.readdirSync('.').filter(f=>/\.(css|js)$/.test(f)).sort().map(f=>f+':'+fs.readFileSync(f,'utf8')).join('\n')).digest('hex').slice(0,8);
 const data={window:{}};for(const f of ['vehicules-data.js','armes-data.js','search-index.js','carte-gtadb.js'])vm.runInNewContext(fs.readFileSync(f,'utf8'),data);
 const V=data.window.LK_VEHICULES,A=data.window.LK_ARMES;
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -58,7 +60,7 @@ for(const file of htmlFiles){let s=fs.readFileSync(file,'utf8');if(file.startsWi
  s=s.replace(/(<h2>Contenu<\/h2>\s*<nav>)(<a href="(\.\.\/)?carte\.html">Carte<\/a>[\s\S]*?)(<\/nav>)/,(m0,a,b,p,c)=>{p=p||'';let nb=b;if(!nb.includes('lieux.html'))nb+='<a href="'+p+'lieux.html">Lieux</a><a href="'+p+'personnages.html">Personnages</a><a href="'+p+'entreprises.html">Entreprises</a>';if(!nb.includes('demeures.html'))nb+='<a href="'+p+'demeures.html">Demeures</a><a href="'+p+'planques.html">Planques</a>';return a+nb+c;});
  s=s.replace(/<img\b[^>]*src="([^"]+)"[^>]*>/g,(tag,src)=>available(file,src)?tag:'<span class="image-placeholder">Visuel à intégrer</span>');
  s=s.replace(/<div class="gal"([^>]+)>/g,(tag,attrs)=>{const base=attrs.match(/data-base="([^"]+)"/)?.[1];const vv=attrs.match(/data-vues="([^"]*)"/)?.[1]||'face,profil,detail';const views=vv.split(',').filter(v=>v&&available(file,base+'-'+v+'.jpg'));attrs=attrs.replace(/\sdata-vide="[^"]*"/,'').replace(/data-vues="[^"]*"/,'data-vues="'+views.join(',')+'"');const hasMed=/data-medias="[^"]*[^"\]]/.test(attrs);return '<div class="gal"'+attrs+' data-vide="'+((views.length||hasMed)?0:1)+'">';});
- if(/class="gal"[^>]*data-vide="1"/.test(s)){s=s.replace(/<p class="gal-note">[\s\S]*?<\/p>/,'<p class="gal-note">Illustration provisoire : les visuels restent à intégrer à cette fiche.</p>').replace(/<span class="chip">Images officielles<\/span>/g,'');}
+ if(/class="gal"[^>]*data-vide="1"/.test(s)&&!s.includes('data-vide-txt')){s=s.replace(/<p class="gal-note">[\s\S]*?<\/p>/,'<p class="gal-note">Illustration provisoire : les visuels restent à intégrer à cette fiche.</p>').replace(/<span class="chip">Images officielles<\/span>/g,'');}
  s=s.replace(/<meta property="og:image" content="([^"]+)"\s*\/?>/g,(tag,src)=>available(file,src)?tag:'<meta property="og:image" content="https://www.leonidakit.com/img/social-card.png">');
  if(!s.includes('name="robots"') && /^(calculateurs|collectibles)\.html$/.test(file))s=s.replace('</head>','<meta name="robots" content="noindex, follow">\n</head>');
  if(!s.includes('http-equiv="refresh"')&&!s.includes('name="robots" content="noindex')){
@@ -82,6 +84,8 @@ for(const file of htmlFiles){let s=fs.readFileSync(file,'utf8');if(file.startsWi
   const cur=({'comparateur':'vehicules','classement-vehicules':'vehicules','vehicules-rares':'vehicules'})[base]||base;
   const ul='<ul>\n'+NAV.map(([id,lbl])=>'        <li><a href="'+prefix+id+'.html"'+(id===cur?' class="here"':'')+'>'+lbl+'</a></li>').join('\n')+'\n      </ul>';
   s=s.replace(/(<nav id="nav" aria-label="Navigation principale">)\s*<ul>[\s\S]*?<\/ul>/,'$1\n      '+ul);}
+ // Empreinte de version sur les feuilles de style et scripts locaux : après une mise en ligne, aucun navigateur ne peut réutiliser un ancien fichier en cache.
+ s=s.replace(/((?:href|src)=")((?:\.\.\/)?[a-z0-9-]+\.(?:css|js))(?:\?v=[0-9a-f]+)?(")/g,(m0,a,f,b)=>a+f+'?v='+STAMP+b);
  fs.writeFileSync(file,s);
 }
 const urls=[...new Set(canonicals)].sort();for(const f of ['sitemap.xml','sitemap-fiches.xml']){const list=f==='sitemap-fiches.xml'?urls.filter(u=>/\/(armes|vehicules|lieux|personnages|entreprises|demeures|planques)\//.test(u)):urls;fs.writeFileSync(f,'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+list.map(u=>'  <url><loc>'+esc(u)+'</loc></url>').join('\n')+'\n</urlset>\n');}
