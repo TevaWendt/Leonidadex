@@ -26,6 +26,7 @@
         im.dataset.src = m.s; im.dataset.srcset = m.s + ' ' + (m.w || 480) + 'w, ' + m.l + ' ' + (m.lw || 1280) + 'w';
         if (k === 0) { im.srcset = im.dataset.srcset; im.src = m.s; im.fetchPriority = 'high'; }
         im.width = m.w; im.height = m.h; im.decoding = 'async';
+        if (m.h > m.w) im.classList.add('gal-portrait');
         im.alt = m.a || ((gal.dataset.nom || '') + ' — ' + m.t + ', capture officielle Rockstar Games');
         it.appendChild(im);
         const s = document.createElement('span'); s.className = 'gal-lbl'; s.textContent = m.t; it.appendChild(s);

@@ -1522,5 +1522,1443 @@
     "h": 720
    }
   ]
+ },
+ "ambrosia-02": {
+  "id": "ambrosia-02",
+  "titre": "Ambrosia 02",
+  "source": "https://www.rockstargames.com/VI/media/screenshots",
+  "original": "https://www.rockstargames.com/VI/_next/static/media/Ambrosia_02.0wtqs05ozl.ym.jpg?akim=1&imdensity=1&imwidth=1920",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/ambrosia-02-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/ambrosia-02-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-screenshot"
+ },
+ "ambrosia-04": {
+  "id": "ambrosia-04",
+  "titre": "Ambrosia 04",
+  "source": "https://www.rockstargames.com/VI/media/screenshots",
+  "original": "https://www.rockstargames.com/VI/_next/static/media/Ambrosia_04.0.2cefoguu-tt.jpg?akim=1&imdensity=1&imwidth=1920",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/ambrosia-04-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/ambrosia-04-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-screenshot"
+ },
+ "ambrosia-06": {
+  "id": "ambrosia-06",
+  "titre": "Ambrosia 06",
+  "source": "https://www.rockstargames.com/VI/media/screenshots",
+  "original": "https://www.rockstargames.com/VI/_next/static/media/Ambrosia_06.0j9c7-8nfb_xf.jpg?akim=1&imdensity=1&imwidth=1920",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/ambrosia-06-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/ambrosia-06-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-screenshot"
+ },
+ "boobie-ike-02": {
+  "id": "boobie-ike-02",
+  "titre": "Boobie Ike 02",
+  "source": "https://www.rockstargames.com/VI/media/screenshots",
+  "original": "https://www.rockstargames.com/VI/_next/static/media/Boobie_Ike_02.0sp9mtc.1cdzs.jpg?akim=1&imdensity=1&imwidth=1920",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/boobie-ike-02-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/boobie-ike-02-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-screenshot"
+ },
+ "boobie-ike-03": {
+  "id": "boobie-ike-03",
+  "titre": "Boobie Ike 03",
+  "source": "https://www.rockstargames.com/VI/media/screenshots",
+  "original": "https://www.rockstargames.com/VI/_next/static/media/Boobie_Ike_03.0neka36~z25b5.jpg?akim=1&imdensity=1&imwidth=1920",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/boobie-ike-03-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/boobie-ike-03-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-screenshot"
+ },
+ "brian-heder-02": {
+  "id": "brian-heder-02",
+  "titre": "Brian Heder 02",
+  "source": "https://www.rockstargames.com/VI/media/screenshots",
+  "original": "https://www.rockstargames.com/VI/_next/static/media/Brian_Heder_02.0kmg6iw38f-9o.jpg?akim=1&imdensity=1&imwidth=1920",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/brian-heder-02-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/brian-heder-02-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-screenshot"
+ },
+ "brian-heder-03": {
+  "id": "brian-heder-03",
+  "titre": "Brian Heder 03",
+  "source": "https://www.rockstargames.com/VI/media/screenshots",
+  "original": "https://www.rockstargames.com/VI/_next/static/media/Brian_Heder_03.10ntuqh2h6upf.jpg?akim=1&imdensity=1&imwidth=1920",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/brian-heder-03-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/brian-heder-03-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-screenshot"
+ },
+ "brian-heder-04": {
+  "id": "brian-heder-04",
+  "titre": "Brian Heder 04",
+  "source": "https://www.rockstargames.com/VI/media/screenshots",
+  "original": "https://www.rockstargames.com/VI/_next/static/media/Brian_Heder_04.0z3o0t88jw54l.jpg?akim=1&imdensity=1&imwidth=1920",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/brian-heder-04-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/brian-heder-04-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-screenshot"
+ },
+ "cal-hampton-03": {
+  "id": "cal-hampton-03",
+  "titre": "Cal Hampton 03",
+  "source": "https://www.rockstargames.com/VI/media/screenshots",
+  "original": "https://www.rockstargames.com/VI/_next/static/media/Cal_Hampton_03.0.q68~pt1to9z.jpg?akim=1&imdensity=1&imwidth=1920",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/cal-hampton-03-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/cal-hampton-03-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-screenshot"
+ },
+ "cal-hampton-04": {
+  "id": "cal-hampton-04",
+  "titre": "Cal Hampton 04",
+  "source": "https://www.rockstargames.com/VI/media/screenshots",
+  "original": "https://www.rockstargames.com/VI/_next/static/media/Cal_Hampton_04.0-78dep86yx2q.jpg?akim=1&imdensity=1&imwidth=1920",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/cal-hampton-04-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/cal-hampton-04-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-screenshot"
+ },
+ "dre-quan-priest-02": {
+  "id": "dre-quan-priest-02",
+  "titre": "Dre'Quan Priest 02",
+  "source": "https://www.rockstargames.com/VI/media/screenshots",
+  "original": "https://www.rockstargames.com/VI/_next/static/media/DreQuan_Priest_02.02u69e~nkk3eo.jpg?akim=1&imdensity=1&imwidth=1920",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/dre-quan-priest-02-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/dre-quan-priest-02-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-screenshot"
+ },
+ "dre-quan-priest-03": {
+  "id": "dre-quan-priest-03",
+  "titre": "Dre'Quan Priest 03",
+  "source": "https://www.rockstargames.com/VI/media/screenshots",
+  "original": "https://www.rockstargames.com/VI/_next/static/media/DreQuan_Priest_03.0zbl4i_x_1biu.jpg?akim=1&imdensity=1&imwidth=1920",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/dre-quan-priest-03-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/dre-quan-priest-03-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-screenshot"
+ },
+ "dre-quan-priest-04": {
+  "id": "dre-quan-priest-04",
+  "titre": "Dre'Quan Priest 04",
+  "source": "https://www.rockstargames.com/VI/media/screenshots",
+  "original": "https://www.rockstargames.com/VI/_next/static/media/DreQuan_Priest_04.0n~kj~px_fn8t.jpg?akim=1&imdensity=1&imwidth=1920",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/dre-quan-priest-04-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/dre-quan-priest-04-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-screenshot"
+ },
+ "electric-fang-tattoo-02": {
+  "id": "electric-fang-tattoo-02",
+  "titre": "Electric Fang Tattoo 02",
+  "source": "https://www.rockstargames.com/VI/media/screenshots",
+  "original": "https://www.rockstargames.com/VI/_next/static/media/ULTIMATE_EDITION_ELECTRIC_FANG_02.0a0h59s0zvhgc.jpg?akim=1&imdensity=1&imwidth=1920",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/electric-fang-tattoo-02-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/electric-fang-tattoo-02-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-screenshot"
+ },
+ "electric-fang-tattoo-03": {
+  "id": "electric-fang-tattoo-03",
+  "titre": "Electric Fang Tattoo 03",
+  "source": "https://www.rockstargames.com/VI/media/screenshots",
+  "original": "https://www.rockstargames.com/VI/_next/static/media/ULTIMATE_EDITION_ELECTRIC_FANG_03.0wd4urd9xwy5..jpg?akim=1&imdensity=1&imwidth=1920",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/electric-fang-tattoo-03-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/electric-fang-tattoo-03-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-screenshot"
+ },
+ "electric-fang-tattoo-04": {
+  "id": "electric-fang-tattoo-04",
+  "titre": "Electric Fang Tattoo 04",
+  "source": "https://www.rockstargames.com/VI/media/screenshots",
+  "original": "https://www.rockstargames.com/VI/_next/static/media/ULTIMATE_EDITION_ELECTRIC_FANG_04.0p0qga4w7y5yl.jpg?akim=1&imdensity=1&imwidth=1920",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/electric-fang-tattoo-04-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/electric-fang-tattoo-04-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-screenshot"
+ },
+ "grassrivers-02": {
+  "id": "grassrivers-02",
+  "titre": "Grassrivers 02",
+  "source": "https://www.rockstargames.com/VI/media/screenshots",
+  "original": "https://www.rockstargames.com/VI/_next/static/media/Grassrivers_02.0teqs5xe2pem1.jpg?akim=1&imdensity=1&imwidth=1920",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/grassrivers-02-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/grassrivers-02-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-screenshot"
+ },
+ "grassrivers-05": {
+  "id": "grassrivers-05",
+  "titre": "Grassrivers 05",
+  "source": "https://www.rockstargames.com/VI/media/screenshots",
+  "original": "https://www.rockstargames.com/VI/_next/static/media/Grassrivers_05.0.dx9~67tljry.jpg?akim=1&imdensity=1&imwidth=1920",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/grassrivers-05-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/grassrivers-05-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-screenshot"
+ },
+ "grassrivers-06": {
+  "id": "grassrivers-06",
+  "titre": "Grassrivers 06",
+  "source": "https://www.rockstargames.com/VI/media/screenshots",
+  "original": "https://www.rockstargames.com/VI/_next/static/media/Grassrivers_06.0bdeicllwisnc.jpg?akim=1&imdensity=1&imwidth=1920",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/grassrivers-06-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/grassrivers-06-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-screenshot"
+ },
+ "jason-duval-02": {
+  "id": "jason-duval-02",
+  "titre": "Jason Duval 02",
+  "source": "https://www.rockstargames.com/VI/media/screenshots",
+  "original": "https://www.rockstargames.com/VI/_next/static/media/Jason_Duval_02.1486~7_v40cn..jpg?akim=1&imdensity=1&imwidth=1920",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/jason-duval-02-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/jason-duval-02-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-screenshot"
+ },
+ "jason-duval-03": {
+  "id": "jason-duval-03",
+  "titre": "Jason Duval 03",
+  "source": "https://www.rockstargames.com/VI/media/screenshots",
+  "original": "https://www.rockstargames.com/VI/_next/static/media/Jason_Duval_03.0-1vum7x-3vtp.jpg?akim=1&imdensity=1&imwidth=1920",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/jason-duval-03-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/jason-duval-03-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-screenshot"
+ },
+ "jason-duval-04": {
+  "id": "jason-duval-04",
+  "titre": "Jason Duval 04",
+  "source": "https://www.rockstargames.com/VI/media/screenshots",
+  "original": "https://www.rockstargames.com/VI/_next/static/media/Jason_Duval_04.16d-z2wa2s~bk.jpg?akim=1&imdensity=1&imwidth=1920",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/jason-duval-04-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/jason-duval-04-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-screenshot"
+ },
+ "jason-duval-06": {
+  "id": "jason-duval-06",
+  "titre": "Jason Duval 06",
+  "source": "https://www.rockstargames.com/VI/media/screenshots",
+  "original": "https://www.rockstargames.com/VI/_next/static/media/Jason_Duval_06.086o72llg6~1p.jpg?akim=1&imdensity=1&imwidth=1920",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/jason-duval-06-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/jason-duval-06-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-screenshot"
+ },
+ "leonida-keys-03": {
+  "id": "leonida-keys-03",
+  "titre": "Leonida Keys 03",
+  "source": "https://www.rockstargames.com/VI/media/screenshots",
+  "original": "https://www.rockstargames.com/VI/_next/static/media/Leonida_Keys_03.0v_3~-9ceyixc.jpg?akim=1&imdensity=1&imwidth=1920",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/leonida-keys-03-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/leonida-keys-03-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-screenshot"
+ },
+ "leonida-keys-04": {
+  "id": "leonida-keys-04",
+  "titre": "Leonida Keys 04",
+  "source": "https://www.rockstargames.com/VI/media/screenshots",
+  "original": "https://www.rockstargames.com/VI/_next/static/media/Leonida_Keys_04.0hce1rw1s8pd9.jpg?akim=1&imdensity=1&imwidth=1920",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/leonida-keys-04-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/leonida-keys-04-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-screenshot"
+ },
+ "leonida-keys-06": {
+  "id": "leonida-keys-06",
+  "titre": "Leonida Keys 06",
+  "source": "https://www.rockstargames.com/VI/media/screenshots",
+  "original": "https://www.rockstargames.com/VI/_next/static/media/Leonida_Keys_06.0eapr3hbeyewx.jpg?akim=1&imdensity=1&imwidth=1920",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/leonida-keys-06-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/leonida-keys-06-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-screenshot"
+ },
+ "lucia-caminos-02": {
+  "id": "lucia-caminos-02",
+  "titre": "Lucia Caminos 02",
+  "source": "https://www.rockstargames.com/VI/media/screenshots",
+  "original": "https://www.rockstargames.com/VI/_next/static/media/Lucia_Caminos_02.16n.5umvlu_48.jpg?akim=1&imdensity=1&imwidth=1920",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/lucia-caminos-02-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/lucia-caminos-02-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-screenshot"
+ },
+ "lucia-caminos-04": {
+  "id": "lucia-caminos-04",
+  "titre": "Lucia Caminos 04",
+  "source": "https://www.rockstargames.com/VI/media/screenshots",
+  "original": "https://www.rockstargames.com/VI/_next/static/media/Lucia_Caminos_04.04kb_~4ubn3wn.jpg?akim=1&imdensity=1&imwidth=1920",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/lucia-caminos-04-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/lucia-caminos-04-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-screenshot"
+ },
+ "lucia-caminos-05": {
+  "id": "lucia-caminos-05",
+  "titre": "Lucia Caminos 05",
+  "source": "https://www.rockstargames.com/VI/media/screenshots",
+  "original": "https://www.rockstargames.com/VI/_next/static/media/Lucia_Caminos_05.0i5b7k6a7_w6p.jpg?akim=1&imdensity=1&imwidth=1920",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/lucia-caminos-05-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/lucia-caminos-05-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-screenshot"
+ },
+ "lucia-caminos-06": {
+  "id": "lucia-caminos-06",
+  "titre": "Lucia Caminos 06",
+  "source": "https://www.rockstargames.com/VI/media/screenshots",
+  "original": "https://www.rockstargames.com/VI/_next/static/media/Lucia_Caminos_06.0fxbjfk0jakb3.jpg?akim=1&imdensity=1&imwidth=1920",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/lucia-caminos-06-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/lucia-caminos-06-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-screenshot"
+ },
+ "mount-kalaga-national-park-03": {
+  "id": "mount-kalaga-national-park-03",
+  "titre": "Mount Kalaga National Park 03",
+  "source": "https://www.rockstargames.com/VI/media/screenshots",
+  "original": "https://www.rockstargames.com/VI/_next/static/media/Mount_Kalaga_National_Park_03.037k2s87rwuxc.jpg?akim=1&imdensity=1&imwidth=1920",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/mount-kalaga-national-park-03-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/mount-kalaga-national-park-03-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-screenshot"
+ },
+ "mount-kalaga-national-park-04": {
+  "id": "mount-kalaga-national-park-04",
+  "titre": "Mount Kalaga National Park 04",
+  "source": "https://www.rockstargames.com/VI/media/screenshots",
+  "original": "https://www.rockstargames.com/VI/_next/static/media/Mount_Kalaga_National_Park_04.0e1sxnp1mln2u.jpg?akim=1&imdensity=1&imwidth=1920",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/mount-kalaga-national-park-04-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/mount-kalaga-national-park-04-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-screenshot"
+ },
+ "mount-kalaga-national-park-05": {
+  "id": "mount-kalaga-national-park-05",
+  "titre": "Mount Kalaga National Park 05",
+  "source": "https://www.rockstargames.com/VI/media/screenshots",
+  "original": "https://www.rockstargames.com/VI/_next/static/media/Mount_Kalaga_National_Park_05.0_~vto-o2zxok.jpg?akim=1&imdensity=1&imwidth=1920",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/mount-kalaga-national-park-05-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/mount-kalaga-national-park-05-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-screenshot"
+ },
+ "one-eyed-willie-s-mod-shop-02": {
+  "id": "one-eyed-willie-s-mod-shop-02",
+  "titre": "One-Eyed Willie’s Mod Shop 02",
+  "source": "https://www.rockstargames.com/VI/media/screenshots",
+  "original": "https://www.rockstargames.com/VI/_next/static/media/ULTIMATE_EDITION_ONE_EYED_WILLIE_02.0dgnw_y_1bqao.jpg?akim=1&imdensity=1&imwidth=1920",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/one-eyed-willie-s-mod-shop-02-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/one-eyed-willie-s-mod-shop-02-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-screenshot"
+ },
+ "port-gellhorn-04": {
+  "id": "port-gellhorn-04",
+  "titre": "Port Gellhorn 04",
+  "source": "https://www.rockstargames.com/VI/media/screenshots",
+  "original": "https://www.rockstargames.com/VI/_next/static/media/Port_Gellhorn_04.0hd-7kzfi51q..jpg?akim=1&imdensity=1&imwidth=1920",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/port-gellhorn-04-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/port-gellhorn-04-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-screenshot"
+ },
+ "port-gellhorn-05": {
+  "id": "port-gellhorn-05",
+  "titre": "Port Gellhorn 05",
+  "source": "https://www.rockstargames.com/VI/media/screenshots",
+  "original": "https://www.rockstargames.com/VI/_next/static/media/Port_Gellhorn_05.0nsv0ou54n-t3.jpg?akim=1&imdensity=1&imwidth=1920",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/port-gellhorn-05-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/port-gellhorn-05-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-screenshot"
+ },
+ "port-gellhorn-06": {
+  "id": "port-gellhorn-06",
+  "titre": "Port Gellhorn 06",
+  "source": "https://www.rockstargames.com/VI/media/screenshots",
+  "original": "https://www.rockstargames.com/VI/_next/static/media/Port_Gellhorn_06.13ghhmb440r6e.jpg?akim=1&imdensity=1&imwidth=1920",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/port-gellhorn-06-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/port-gellhorn-06-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-screenshot"
+ },
+ "raul-bautista-03": {
+  "id": "raul-bautista-03",
+  "titre": "Raul Bautista 03",
+  "source": "https://www.rockstargames.com/VI/media/screenshots",
+  "original": "https://www.rockstargames.com/VI/_next/static/media/Raul_Bautista_03.0-x4xbav_6c40.jpg?akim=1&imdensity=1&imwidth=1920",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/raul-bautista-03-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/raul-bautista-03-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-screenshot"
+ },
+ "raul-bautista-04": {
+  "id": "raul-bautista-04",
+  "titre": "Raul Bautista 04",
+  "source": "https://www.rockstargames.com/VI/media/screenshots",
+  "original": "https://www.rockstargames.com/VI/_next/static/media/Raul_Bautista_04.0qx77gyvykvv5.jpg?akim=1&imdensity=1&imwidth=1920",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/raul-bautista-04-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/raul-bautista-04-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-screenshot"
+ },
+ "real-dimez-02": {
+  "id": "real-dimez-02",
+  "titre": "Real Dimez 02",
+  "source": "https://www.rockstargames.com/VI/media/screenshots",
+  "original": "https://www.rockstargames.com/VI/_next/static/media/Real_Dimez_02.1366u9.x.yp0_.jpg?akim=1&imdensity=1&imwidth=1920",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/real-dimez-02-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/real-dimez-02-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-screenshot"
+ },
+ "real-dimez-03": {
+  "id": "real-dimez-03",
+  "titre": "Real Dimez 03",
+  "source": "https://www.rockstargames.com/VI/media/screenshots",
+  "original": "https://www.rockstargames.com/VI/_next/static/media/Real_Dimez_03.02o2si7.op.ye.jpg?akim=1&imdensity=1&imwidth=1920",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/real-dimez-03-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/real-dimez-03-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-screenshot"
+ },
+ "real-dimez-04": {
+  "id": "real-dimez-04",
+  "titre": "Real Dimez 04",
+  "source": "https://www.rockstargames.com/VI/media/screenshots",
+  "original": "https://www.rockstargames.com/VI/_next/static/media/Real_Dimez_04.0wa3vo07lz4e2.jpg?akim=1&imdensity=1&imwidth=1920",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/real-dimez-04-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/real-dimez-04-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-screenshot"
+ },
+ "sara-s-unisex-salon-02": {
+  "id": "sara-s-unisex-salon-02",
+  "titre": "Sara’s Unisex Salon 02",
+  "source": "https://www.rockstargames.com/VI/media/screenshots",
+  "original": "https://www.rockstargames.com/VI/_next/static/media/ULTIMATE_EDITION_SARAS_SALON_02.170lw.lgxdghm.jpg?akim=1&imdensity=1&imwidth=1920",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/sara-s-unisex-salon-02-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/sara-s-unisex-salon-02-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-screenshot"
+ },
+ "sara-s-unisex-salon-03": {
+  "id": "sara-s-unisex-salon-03",
+  "titre": "Sara’s Unisex Salon 03",
+  "source": "https://www.rockstargames.com/VI/media/screenshots",
+  "original": "https://www.rockstargames.com/VI/_next/static/media/ULTIMATE_EDITION_SARAS_SALON_03.0w1t10_u0yv~b.jpg?akim=1&imdensity=1&imwidth=1920",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/sara-s-unisex-salon-03-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/sara-s-unisex-salon-03-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-screenshot"
+ },
+ "stock-305-clothing-store-03": {
+  "id": "stock-305-clothing-store-03",
+  "titre": "Stock 305 Clothing Store 03",
+  "source": "https://www.rockstargames.com/VI/media/screenshots",
+  "original": "https://www.rockstargames.com/VI/_next/static/media/ULTIMATE_EDITION_STOCK_305_03.00wltke54q_n0.jpg?akim=1&imdensity=1&imwidth=1920",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/stock-305-clothing-store-03-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/stock-305-clothing-store-03-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-screenshot"
+ },
+ "stock-305-clothing-store-04": {
+  "id": "stock-305-clothing-store-04",
+  "titre": "Stock 305 Clothing Store 04",
+  "source": "https://www.rockstargames.com/VI/media/screenshots",
+  "original": "https://www.rockstargames.com/VI/_next/static/media/ULTIMATE_EDITION_STOCK_305_04.0ipze9~3u6eok.jpg?akim=1&imdensity=1&imwidth=1920",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/stock-305-clothing-store-04-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/stock-305-clothing-store-04-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-screenshot"
+ },
+ "vice-city-03": {
+  "id": "vice-city-03",
+  "titre": "Vice City 03",
+  "source": "https://www.rockstargames.com/VI/media/screenshots",
+  "original": "https://www.rockstargames.com/VI/_next/static/media/Vice_City_03.0nqz~lrqdmlze.jpg?akim=1&imdensity=1&imwidth=1920",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/vice-city-03-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/vice-city-03-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-screenshot"
+ },
+ "vice-city-05": {
+  "id": "vice-city-05",
+  "titre": "Vice City 05",
+  "source": "https://www.rockstargames.com/VI/media/screenshots",
+  "original": "https://www.rockstargames.com/VI/_next/static/media/Vice_City_05.0~r~o0jzpp4a-.jpg?akim=1&imdensity=1&imwidth=1920",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/vice-city-05-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/vice-city-05-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-screenshot"
+ },
+ "vice-city-08": {
+  "id": "vice-city-08",
+  "titre": "Vice City 08",
+  "source": "https://www.rockstargames.com/VI/media/screenshots",
+  "original": "https://www.rockstargames.com/VI/_next/static/media/Vice_City_08.0bbg_xp4hqdvz.jpg?akim=1&imdensity=1&imwidth=1920",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/vice-city-08-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/vice-city-08-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-screenshot"
+ },
+ "vice-city-10": {
+  "id": "vice-city-10",
+  "titre": "Vice City 10",
+  "source": "https://www.rockstargames.com/VI/media/screenshots",
+  "original": "https://www.rockstargames.com/VI/_next/static/media/Vice_City_10.0f1q-xa_4q8r2.jpg?akim=1&imdensity=1&imwidth=1920",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/vice-city-10-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/vice-city-10-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-screenshot"
+ },
+ "vice-city-11": {
+  "id": "vice-city-11",
+  "titre": "Vice City 11",
+  "source": "https://www.rockstargames.com/VI/media/screenshots",
+  "original": "https://www.rockstargames.com/VI/_next/static/media/Vice_City_11.09paum3g942sc.jpg?akim=1&imdensity=1&imwidth=1920",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/vice-city-11-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/vice-city-11-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-screenshot"
+ },
+ "trailer-1-vehicles-025": {
+  "id": "trailer-1-vehicles-025",
+  "titre": "Trailer 1, 0:25",
+  "source": "https://www.rockstargames.com/VI/media/videos",
+  "original": "https://media-rockstargames-com.akamaized.net/VI/downloads/videos/GTAVI_Trailer_1/GTAVI_Trailer_1.mp4",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/trailer-1-vehicles-025-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/trailer-1-vehicles-025-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-trailer-frame",
+  "timeSeconds": 25,
+  "timePrecision": "Environ une seconde, extraction à une image par seconde"
+ },
+ "trailer-1-vehicles-027": {
+  "id": "trailer-1-vehicles-027",
+  "titre": "Trailer 1, 0:27",
+  "source": "https://www.rockstargames.com/VI/media/videos",
+  "original": "https://media-rockstargames-com.akamaized.net/VI/downloads/videos/GTAVI_Trailer_1/GTAVI_Trailer_1.mp4",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/trailer-1-vehicles-027-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/trailer-1-vehicles-027-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-trailer-frame",
+  "timeSeconds": 27,
+  "timePrecision": "Environ une seconde, extraction à une image par seconde"
+ },
+ "trailer-1-vehicles-028": {
+  "id": "trailer-1-vehicles-028",
+  "titre": "Trailer 1, 0:28",
+  "source": "https://www.rockstargames.com/VI/media/videos",
+  "original": "https://media-rockstargames-com.akamaized.net/VI/downloads/videos/GTAVI_Trailer_1/GTAVI_Trailer_1.mp4",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/trailer-1-vehicles-028-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/trailer-1-vehicles-028-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-trailer-frame",
+  "timeSeconds": 28,
+  "timePrecision": "Environ une seconde, extraction à une image par seconde"
+ },
+ "trailer-1-vehicles-033": {
+  "id": "trailer-1-vehicles-033",
+  "titre": "Trailer 1, 0:33",
+  "source": "https://www.rockstargames.com/VI/media/videos",
+  "original": "https://media-rockstargames-com.akamaized.net/VI/downloads/videos/GTAVI_Trailer_1/GTAVI_Trailer_1.mp4",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/trailer-1-vehicles-033-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/trailer-1-vehicles-033-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-trailer-frame",
+  "timeSeconds": 33,
+  "timePrecision": "Environ une seconde, extraction à une image par seconde"
+ },
+ "trailer-1-vehicles-053": {
+  "id": "trailer-1-vehicles-053",
+  "titre": "Trailer 1, 0:53",
+  "source": "https://www.rockstargames.com/VI/media/videos",
+  "original": "https://media-rockstargames-com.akamaized.net/VI/downloads/videos/GTAVI_Trailer_1/GTAVI_Trailer_1.mp4",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/trailer-1-vehicles-053-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/trailer-1-vehicles-053-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-trailer-frame",
+  "timeSeconds": 53,
+  "timePrecision": "Environ une seconde, extraction à une image par seconde"
+ },
+ "extended-look-coquette-d10": {
+  "id": "extended-look-coquette-d10",
+  "titre": "Extended Look, Coquette D10",
+  "source": "https://www.rockstargames.com/VI/media/videos",
+  "original": "https://media-rockstargames-com.akamaized.net/VI/downloads/videos/GTAVI_An_Extended_Look/GTAVI_An_Extended_Look.mp4",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/extended-look-coquette-d10-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/extended-look-coquette-d10-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-video-frame-mirror",
+  "via": "Copie du média officiel publiée par un site spécialisé, sans filigrane : https://www.gtabase.com/igallery/gta-6-screenshots-trailer/gta6-extendedlook-screen-27-1080.jpg"
+ },
+ "extended-look-sentinel-classic-rear": {
+  "id": "extended-look-sentinel-classic-rear",
+  "titre": "Extended Look, Sentinel Classic",
+  "source": "https://www.rockstargames.com/VI/media/videos",
+  "original": "https://media-rockstargames-com.akamaized.net/VI/downloads/videos/GTAVI_An_Extended_Look/GTAVI_An_Extended_Look.mp4",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/extended-look-sentinel-classic-rear-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/extended-look-sentinel-classic-rear-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-video-frame-mirror",
+  "via": "Copie du média officiel publiée par un site spécialisé, sans filigrane : https://www.gtabase.com/igallery/gta-6-screenshots-trailer/gta6-extendedlook-screen-24-1080.jpg"
+ },
+ "extended-look-sentinel-classic-front": {
+  "id": "extended-look-sentinel-classic-front",
+  "titre": "Extended Look, Sentinel Classic 02",
+  "source": "https://www.rockstargames.com/VI/media/videos",
+  "original": "https://media-rockstargames-com.akamaized.net/VI/downloads/videos/GTAVI_An_Extended_Look/GTAVI_An_Extended_Look.mp4",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/extended-look-sentinel-classic-front-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/extended-look-sentinel-classic-front-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-video-frame-mirror",
+  "via": "Copie du média officiel publiée par un site spécialisé, sans filigrane : https://www.gtabase.com/igallery/gta-6-screenshots-trailer/gta6-extendedlook-screen-71-1080.jpg"
+ },
+ "extended-look-stockade": {
+  "id": "extended-look-stockade",
+  "titre": "Extended Look, Stockade",
+  "source": "https://www.rockstargames.com/VI/media/videos",
+  "original": "https://media-rockstargames-com.akamaized.net/VI/downloads/videos/GTAVI_An_Extended_Look/GTAVI_An_Extended_Look.mp4",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/extended-look-stockade-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/extended-look-stockade-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-video-frame-mirror",
+  "via": "Copie du média officiel publiée par un site spécialisé, sans filigrane : https://www.gtabase.com/igallery/gta-6-screenshots-trailer/gta6-extendedlook-screen-34-1080.jpg"
+ },
+ "cover-art-sea-sparrow": {
+  "id": "cover-art-sea-sparrow",
+  "titre": "Jaquette officielle, Sea Sparrow",
+  "source": "https://www.rockstargames.com/VI/",
+  "original": "https://www.rockstargames.com/VI/",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/cover-art-sea-sparrow-480.webp",
+    "w": 459,
+    "h": 595
+   },
+   {
+    "src": "/img/officiel/cover-art-sea-sparrow-1280.webp",
+    "w": 459,
+    "h": 595
+   }
+  ],
+  "mediaType": "official-artwork-detail",
+  "via": "Copie du média officiel publiée par un site spécialisé, sans filigrane : https://www.gtabase.com/igallery/gta-6-images/gta-6-cover-shard-helicopter-1080.png"
+ },
+ "trailer-1-vehicles-064": {
+  "id": "trailer-1-vehicles-064",
+  "titre": "Trailer 1, 1:04",
+  "source": "https://www.rockstargames.com/VI/media/videos",
+  "original": "https://media-rockstargames-com.akamaized.net/VI/downloads/videos/GTAVI_Trailer_1/GTAVI_Trailer_1.mp4",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/trailer-1-vehicles-064-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/trailer-1-vehicles-064-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-trailer-frame",
+  "timeSeconds": 64,
+  "timePrecision": "Environ une seconde, extraction à une image par seconde"
+ },
+ "trailer-1-vehicles-071": {
+  "id": "trailer-1-vehicles-071",
+  "titre": "Trailer 1, 1:11",
+  "source": "https://www.rockstargames.com/VI/media/videos",
+  "original": "https://media-rockstargames-com.akamaized.net/VI/downloads/videos/GTAVI_Trailer_1/GTAVI_Trailer_1.mp4",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/trailer-1-vehicles-071-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/trailer-1-vehicles-071-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-trailer-frame",
+  "timeSeconds": 71,
+  "timePrecision": "Environ une seconde, extraction à une image par seconde"
+ },
+ "trailer-1-phantom-003": {
+  "id": "trailer-1-phantom-003",
+  "titre": "Trailer 1, 0:03",
+  "source": "https://www.rockstargames.com/VI/media/videos",
+  "original": "https://media-rockstargames-com.akamaized.net/VI/downloads/videos/GTAVI_Trailer_1/GTAVI_Trailer_1.mp4",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/trailer-1-phantom-003-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/trailer-1-phantom-003-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-trailer-frame",
+  "timeSeconds": 3,
+  "timePrecision": "Environ une seconde, extraction à une image par seconde"
+ },
+ "trailer-1-tropic-011": {
+  "id": "trailer-1-tropic-011",
+  "titre": "Trailer 1, 0:11",
+  "source": "https://www.rockstargames.com/VI/media/videos",
+  "original": "https://media-rockstargames-com.akamaized.net/VI/downloads/videos/GTAVI_Trailer_1/GTAVI_Trailer_1.mp4",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/trailer-1-tropic-011-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/trailer-1-tropic-011-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-trailer-frame",
+  "timeSeconds": 11.1,
+  "timePrecision": "Environ 0,2 seconde, extraction à cinq images par seconde"
+ },
+ "trailer-2-seashark-141": {
+  "id": "trailer-2-seashark-141",
+  "titre": "Trailer 2, 2:21",
+  "source": "https://www.rockstargames.com/VI/media/videos",
+  "original": "https://media-rockstargames-com.akamaized.net/VI/downloads/videos/GTAVI_Trailer_2/GTAVI_Trailer_2.mp4",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/trailer-2-seashark-141-480.webp",
+    "w": 480,
+    "h": 216
+   },
+   {
+    "src": "/img/officiel/trailer-2-seashark-141-1280.webp",
+    "w": 1280,
+    "h": 576
+   }
+  ],
+  "mediaType": "official-trailer-frame",
+  "timeSeconds": 141,
+  "timePrecision": "Environ une demi-seconde, extraction à deux images par seconde",
+  "recadrage": "bandes noires du format cinéma retirées (72 px haut et bas)"
+ },
+ "trailer-2-rancher-035": {
+  "id": "trailer-2-rancher-035",
+  "titre": "Trailer 2, 0:35",
+  "source": "https://www.rockstargames.com/VI/media/videos",
+  "original": "https://media-rockstargames-com.akamaized.net/VI/downloads/videos/GTAVI_Trailer_2/GTAVI_Trailer_2.mp4",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/trailer-2-rancher-035-480.webp",
+    "w": 480,
+    "h": 216
+   },
+   {
+    "src": "/img/officiel/trailer-2-rancher-035-1280.webp",
+    "w": 1280,
+    "h": 576
+   }
+  ],
+  "mediaType": "official-trailer-frame",
+  "timeSeconds": 34.5,
+  "timePrecision": "Environ une demi-seconde, extraction à deux images par seconde",
+  "recadrage": "bandes noires du format cinéma retirées (72 px haut et bas)"
+ },
+ "trailer-2-jet-037": {
+  "id": "trailer-2-jet-037",
+  "titre": "Trailer 2, 0:37",
+  "source": "https://www.rockstargames.com/VI/media/videos",
+  "original": "https://media-rockstargames-com.akamaized.net/VI/downloads/videos/GTAVI_Trailer_2/GTAVI_Trailer_2.mp4",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/trailer-2-jet-037-480.webp",
+    "w": 480,
+    "h": 216
+   },
+   {
+    "src": "/img/officiel/trailer-2-jet-037-1280.webp",
+    "w": 1280,
+    "h": 576
+   }
+  ],
+  "mediaType": "official-trailer-frame",
+  "timeSeconds": 37,
+  "timePrecision": "Environ une demi-seconde, extraction à deux images par seconde",
+  "recadrage": "bandes noires du format cinéma retirées (72 px haut et bas)"
+ },
+ "trailer-2-police-riot-119": {
+  "id": "trailer-2-police-riot-119",
+  "titre": "Trailer 2, 1:59",
+  "source": "https://www.rockstargames.com/VI/media/videos",
+  "original": "https://media-rockstargames-com.akamaized.net/VI/downloads/videos/GTAVI_Trailer_2/GTAVI_Trailer_2.mp4",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/trailer-2-police-riot-119-480.webp",
+    "w": 480,
+    "h": 216
+   },
+   {
+    "src": "/img/officiel/trailer-2-police-riot-119-1280.webp",
+    "w": 1280,
+    "h": 576
+   }
+  ],
+  "mediaType": "official-trailer-frame",
+  "timeSeconds": 118.5,
+  "timePrecision": "Environ une demi-seconde, extraction à deux images par seconde",
+  "recadrage": "bandes noires du format cinéma retirées (72 px haut et bas)"
+ },
+ "trailer-2-brian-boatyard-085": {
+  "id": "trailer-2-brian-boatyard-085",
+  "titre": "Trailer 2, 1:25",
+  "source": "https://www.rockstargames.com/VI/media/videos",
+  "original": "https://media-rockstargames-com.akamaized.net/VI/downloads/videos/GTAVI_Trailer_2/GTAVI_Trailer_2.mp4",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/trailer-2-brian-boatyard-085-480.webp",
+    "w": 480,
+    "h": 216
+   },
+   {
+    "src": "/img/officiel/trailer-2-brian-boatyard-085-1280.webp",
+    "w": 1280,
+    "h": 576
+   }
+  ],
+  "mediaType": "official-trailer-frame",
+  "timeSeconds": 85.2,
+  "timePrecision": "Extraction directe à 85,2 secondes dans le fichier MP4",
+  "recadrage": "bandes noires du format cinéma retirées (72 px haut et bas)"
  }
 }

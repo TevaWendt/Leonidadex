@@ -76,3 +76,24 @@ test('Gallery exposes a static image and loads additional slides only on demand'
   try{const gallery=a.d.querySelector('.gal'),images=[...gallery.querySelectorAll('img')];assert.ok(images.length>1);assert.equal(images.filter(x=>x.hasAttribute('src')).length,1);gallery.querySelector('.gal-btn.next').click();assert.equal(images.filter(x=>x.hasAttribute('src')).length,2);for(const img of images.filter(x=>x.hasAttribute('src')))assert.ok(fs.existsSync(path.join(root,new URL(img.src).pathname)));assert.deepEqual(a.errors,[]);}finally{a.close();}
  }
 });
+
+// v7.3 : galeries « En images » des fiches du monde (sans légende, vignettes différées, lien vers la version 1280 px).
+test('Editorial galleries stay caption-free and defer their thumbnails',()=>{
+ const {JSDOM}=require('jsdom');
+ for(const file of ['lieux/vice-city.html','personnages/jason.html','entreprises/electric-fang.html']){
+  const dom=new JSDOM(fs.readFileSync(path.join(root,file),'utf8'));
+  try{const d=dom.window.document,imgs=[...d.querySelectorAll('.lore-gallery img')];assert.ok(imgs.length>1,file);
+   for(const img of imgs){assert.equal(img.getAttribute('loading'),'lazy');assert.ok(img.getAttribute('alt'));assert.ok(+img.getAttribute('width')>0&&+img.getAttribute('height')>0);assert.ok(fs.existsSync(path.join(root,img.getAttribute('src').replace(/^\//,''))),img.getAttribute('src'));
+    const a=img.closest('a');assert.ok(a&&/-1280\.webp$/.test(a.getAttribute('href')));}
+   assert.equal(d.querySelectorAll('.lore-gallery figcaption').length,0);}finally{dom.window.close();}
+ }
+});
+// v7.3 : visuel officiel, alt et dimensions sur les panneaux des régions et des commerces de la carte.
+test('Official region visual, alt and dimensions reach the map panel',withPage('carte.html#lieu=grassrivers',async a=>{await new Promise(r=>setImmediate(r));const img=a.d.querySelector('#map-panel-in img');assert.ok(img);assert.match(img.getAttribute('src'),/img\/officiel\/grassrivers/);assert.ok(+img.getAttribute('width')>0&&+img.getAttribute('height')>0);assert.ok(img.getAttribute('alt').length>5);}));
+// v7.3 : le lien Google Maps n'accepte que des coordonnées réelles ; un panneau sans relevé réel n'en produit aucun.
+test('Map only links Google Maps for real coordinates',async()=>{
+ const links=a=>[...a.d.querySelectorAll('#map-panel-in a')].map(x=>x.getAttribute('href')||'');
+ const okPoint=baseline.window.LK_GTADB.lieux.find(p=>p.sv);assert.ok(okPoint);
+ let a=await load(root,'carte.html#lieu='+okPoint.id);try{await new Promise(r=>setImmediate(r));const gm=links(a).find(h=>h.startsWith('https://www.google.com/maps'));assert.ok(gm,'lien Google Maps attendu pour '+okPoint.id);assert.ok(gm.includes(encodeURIComponent(okPoint.sv)));assert.ok(!links(a).some(h=>/^javascript:/i.test(h)));assert.deepEqual(a.errors,[]);}finally{a.close();}
+ a=await load(root,'carte.html#lieu=vice-city');try{await new Promise(r=>setImmediate(r));assert.ok(!links(a).some(h=>h.startsWith('https://www.google.com/maps')));}finally{a.close();}
+});

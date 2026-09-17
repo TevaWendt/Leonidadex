@@ -197,8 +197,10 @@
     const enr = window.LK_GTADB.enrichit || {};
     POINTS.forEach(function(p){
       const x = enr[p.id]; if(!x) return;
-      if(x.img && !p.img){ p.img = x.img; p.imgSrc = x.imgSrc; }
+      /* un visuel officiel déclaré dans enrichit remplace la photo communautaire du panneau */
+      if(x.img){ p.img = x.img; p.imgSrc = x.imgSrc; }
       if(x.img2){ p.img2 = x.img2; p.img2Src = x.img2Src; }
+      ['imgW','imgH','img2W','img2H','imgAlt','img2Alt'].forEach(function(k){ if(x[k]) p[k] = x[k]; });
       if(x.sv) p.sv = x.sv;
       if(x.reel) p.reel = x.reel;
     });
@@ -634,14 +636,17 @@
     const img = p.img2
       ? '<div id="mp-photos">' + VIDE + '</div>'
       : (p.img
-        ? '<figure class="mp-img"><img src="' + p.img + '" alt="' + esc(p.n) + '" loading="lazy" ' +
-          '>' +
+        ? '<figure class="mp-img"><img src="' + esc(p.img) + '" alt="' + esc(p.imgAlt || p.n) + '" loading="lazy" decoding="async" ' +
+          (p.imgW && p.imgH ? 'width="' + Number(p.imgW) + '" height="' + Number(p.imgH) + '"' : '') + '>' +
           (p.imgSrc ? '<figcaption>' + esc(p.imgSrc) + '</figcaption>' : '') + '</figure>'
         : VIDE);
     const img2 = '';
-    const streetView = p.sv
-      ? '<div><span>Lieu réel</span><b><a href="https://www.google.com/maps/search/?api=1&query=' + p.sv +
-        '" target="_blank" rel="noopener">Voir sur Google Maps</a></b></div>'
+    /* coordonnées réelles uniquement : jamais une position du plan fictif, jamais une valeur non numérique */
+    const svOk = /^-?\d+(?:\.\d+)?,-?\d+(?:\.\d+)?$/.test(String(p.sv || '')) &&
+      Math.abs(Number(String(p.sv).split(',')[0])) <= 90 && Math.abs(Number(String(p.sv).split(',')[1])) <= 180;
+    const streetView = svOk
+      ? '<div><span>Lieu réel</span><b><a href="https://www.google.com/maps/search/?api=1&amp;query=' + encodeURIComponent(p.sv) +
+        '" target="_blank" rel="noopener noreferrer">Voir sur Google Maps</a></b></div>'
       : '';
 
     const persos = (p.pers || []).map(function(k){
@@ -705,8 +710,9 @@
 
     if(p.img2){
       const zone = document.getElementById('mp-photos');
-      const figure = function(src, legende){
-        return '<figure class="mp-img"><img src="' + src + '" alt="' + esc(p.n) + '">' +
+      const figure = function(src, legende, real){
+        const w = real ? p.img2W : p.imgW, h = real ? p.img2H : p.imgH;
+        return '<figure class="mp-img"><img src="' + esc(src) + '" alt="' + esc(real ? (p.img2Alt || 'Lieu réel : ' + (p.reel || p.n)) : (p.imgAlt || p.n)) + '" decoding="async" ' + (w && h ? 'width="' + Number(w) + '" height="' + Number(h) + '"' : '') + '>' +
                (legende ? '<figcaption>' + esc(legende) + '</figcaption>' : '') + '</figure>';
       };
       const charger = function(src){
@@ -723,7 +729,7 @@
         if(!zone || !zone.isConnected) return;
         let h = '';
         if(r[0]) h += figure(p.img, p.imgSrc);
-        if(r[1]) h += figure(p.img2, p.img2Src);
+        if(r[1]) h += figure(p.img2, p.img2Src, true);
         if(h) zone.innerHTML = h;
       });
     }

@@ -22,7 +22,7 @@ const esc=s=>String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>
 const dec=s=>String(s).replace(/&quot;/g,'"').replace(/&#(?:39|x27);/g,"'").replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&');
 const ST={officiel:{chip:'Officielle',l:'Nommée par Rockstar',card:'Officielle'},vu:{chip:'Aperçue',l:'Vue dans un média officiel',card:'Aperçue'}};
 const SLOTL={longue:'Arme longue',poing:'Arme de poing'};
-const CREDIT_RS='Captures officielles © Rockstar Games / Take-Two Interactive, galerie rockstargames.com/VI/media.';
+const CREDIT_RS='Visuels officiels © Rockstar Games / Take-Two Interactive. <a href="../medias.html">Provenance et crédits</a>.';
 const medList=a=>(AM[a.id]||[]).map(id=>MED[id]).filter(m=>m&&m.variants&&m.variants.every(x=>fs.existsSync(x.src.replace(/^\//,''))));
 const medBig=m=>m.variants[1]||m.variants[0];
 const medAlt=(a,m)=>(a.imageAlts&&a.imageAlts[m.id])||m.alt||(a.nom+', '+m.titre+', capture officielle Rockstar Games');
@@ -47,6 +47,8 @@ const NOTE=between(/<section class="shell">\s*<div class="note-box rise">[\s\S]*
 const FOOTER=between(/<footer>[\s\S]*?<\/body>\n<\/html>/);
 
 const lede=a=>{const cat=CATL[a.cat].toLowerCase();return a.nom+' dans GTA VI : '+cat+(a.insp?'. Inspiration : '+a.insp:'')+'. '+ST[a.st].l+' ('+a.src+').';};
+/* meta description : les premières phrases du contexte de l'arme (165 caractères max), sinon le lede générique */
+const description=a=>{const ph=(a.ctx||'').split(/(?<=[.!?])\s+/);let d=a.nom+' dans GTA VI.';let n=0;for(const q of ph){if((d+' '+q).length>165)break;d=d+' '+q;n++;}return n?d:lede(a);};
 const related=a=>{let r=A.filter(x=>x.cat===a.cat&&x.id!==a.id);if(r.length<4)for(const x of A){if(r.length>=6)break;if(x.id!==a.id&&x.slot===a.slot&&!r.includes(x))r.push(x);}return r.slice(0,6);};
 
 function fiche(a,i){
@@ -64,7 +66,7 @@ function fiche(a,i){
   ...(a.portee?[['Portée estimée',esc(a.portee)]]:[]),['Inspiration réelle',insp],...(a.mun?[['Munitions',esc(a.mun)]]:[]),
   ...(a.ue?[['Édition Ultimate','Version exclusive ou mise en avant']]:[]),['Source',esc(a.src)]];
  const gal=`<div class="gal" data-base="../img/armes/${a.id}" data-vues="" data-nom="${esc(a.nom)}"
-             data-art="${esc(art(a,120))}" aria-label="Galerie : ${esc(a.nom)}"${meds.length?' data-medias="'+medAttr(a)+'"':''} data-vide="${meds.length?0:1}">${meds.length?'<div class="gal-track"><div class="gal-item"><img src="'+meds[0].variants[0].src+'" srcset="'+medSrcset(meds[0])+'" sizes="(max-width:700px) 100vw, 520px" width="'+meds[0].variants[0].w+'" height="'+meds[0].variants[0].h+'" alt="'+esc(medAlt(a,meds[0]))+'" fetchpriority="high" decoding="async"><span class="gal-lbl">'+esc(meds[0].titre)+'</span></div></div>':''}</div>`;
+             data-art="${esc(art(a,120))}" aria-label="Galerie : ${esc(a.nom)}"${meds.length?' data-medias="'+medAttr(a)+'"':''} data-vide="${meds.length?0:1}">${meds.length?'<div class="gal-track"><div class="gal-item"><img src="'+meds[0].variants[0].src+'" srcset="'+medSrcset(meds[0])+'" sizes="(max-width:700px) 100vw, 520px" width="'+meds[0].variants[0].w+'" height="'+meds[0].variants[0].h+'"'+(meds[0].variants[0].h>meds[0].variants[0].w?' class="gal-portrait"':'')+' alt="'+esc(medAlt(a,meds[0]))+'" fetchpriority="high" decoding="async"><span class="gal-lbl">'+esc(meds[0].titre)+'</span></div></div>':''}</div>`;
  const rel=related(a).map(x=>'<a class="rel-card" href="'+x.id+'.html"><span class="rel-art">'+art(x,108)+'</span><span class="rel-txt"><span class="rel-marque">'+esc(CATL[x.cat])+'</span><span class="rel-nom">'+esc(x.nom)+'</span></span></a>').join('');
  return `<!DOCTYPE html>
 <html lang="fr">
@@ -72,9 +74,9 @@ function fiche(a,i){
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>${esc(a.nom)} — GTA VI | Leonidakit</title>
-<meta name="description" content="${esc(lede(a))}">
+<meta name="description" content="${esc(description(a))}">
 <meta property="og:title" content="${esc(a.nom)} — GTA VI | Leonidakit">
-<meta property="og:description" content="${esc(lede(a))}">
+<meta property="og:description" content="${esc(description(a))}">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="fr_FR">
 ${HEAD_TOP.replace(/<link rel="canonical" href="[^"]*">/,'<link rel="canonical" href="'+url+'">')}<script type="application/ld+json">
@@ -82,7 +84,7 @@ ${ld}
 </script>
 <link rel="stylesheet" href="../style.css">
 <link rel="stylesheet" href="../fiches.css">
-<script type="application/ld+json">${JSON.stringify({'@context':'https://schema.org','@type':'Thing',name:a.nom,description:lede(a),url,isPartOf:{'@type':'VideoGame',name:'Grand Theft Auto VI'},...(meds.length?{image:['https://www.leonidakit.com'+medBig(meds[0]).src]}:{})})}</script>
+<script type="application/ld+json">${JSON.stringify({'@context':'https://schema.org','@type':'Thing',name:a.nom,description:description(a),url,isPartOf:{'@type':'VideoGame',name:'Grand Theft Auto VI'},...(meds.length?{image:['https://www.leonidakit.com'+medBig(meds[0]).src]}:{})})}</script>
 <meta property="og:image" content="https://www.leonidakit.com${meds.length?medBig(meds[0]).src:'/img/social-card.png'}">
 <meta name="twitter:card" content="summary_large_image">
 <meta property="og:url" content="${url}">

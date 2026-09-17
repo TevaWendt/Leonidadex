@@ -239,7 +239,13 @@
   "insp": "Chrysler 300 deuxième génération",
   "src": "Premier trailer",
   "search": "schyster pmp 700 chrysler 300 deuxieme generation",
-  "txt": "La PMP 700 est une berline de direction avec chauffeur, dans le registre des grandes allemandes allongées. Ce type de véhicule assure les transferts entre l'aéroport et les hôtels de bord de mer, un trafic considérable à Miami. Le premier trailer la cadre de trois quarts arrière, au ralenti dans une file."
+  "txt": "La PMP 700 est une berline de direction avec chauffeur, dans le registre des grandes allemandes allongées. Ce type de véhicule assure les transferts entre l'aéroport et les hôtels de bord de mer, un trafic considérable à Miami. Le premier trailer la cadre de trois quarts arrière, au ralenti dans une file.",
+  "medias": [
+   "trailer-1-vehicles-027"
+  ],
+  "imageAlts": {
+   "trailer-1-vehicles-027": "Grande berline verte au premier plan à droite, premier trailer de GTA VI à 00:27"
+  }
  },
  {
   "id": "vapid-stanier-moderne",
@@ -446,7 +452,13 @@
   "insp": "Ferrari 458 Italia et Aston Martin V12 Zagato",
   "src": "Premier trailer",
   "search": "grotti carbonizzare ferrari 458 italia et aston martin v12 zagato",
-  "txt": "Grotti est le Ferrari de la série, et la Carbonizzare son grand tourisme à moteur avant. La Ferrari F12 qui lui sert de modèle est une voiture de route à part : un V12 atmosphérique de plus de sept cents chevaux, dans une carrosserie sculptée pour canaliser l'air plutôt que pour le fendre. Le premier trailer la fait apparaître le temps d'un passage rapide."
+  "txt": "Grotti est le Ferrari de la série, et la Carbonizzare son grand tourisme à moteur avant. La Ferrari F12 qui lui sert de modèle est une voiture de route à part : un V12 atmosphérique de plus de sept cents chevaux, dans une carrosserie sculptée pour canaliser l'air plutôt que pour le fendre. Le premier trailer la fait apparaître le temps d'un passage rapide.",
+  "medias": [
+   "trailer-1-vehicles-025"
+  ],
+  "imageAlts": {
+   "trailer-1-vehicles-025": "Cabriolet rouge occupé par une passagère debout, premier trailer de GTA VI à 00:25"
+  }
  },
  {
   "id": "grotti-cheetah-classic",
@@ -504,7 +516,13 @@
   "insp": "Chevrolet Corvette C8",
   "src": "Premier trailer",
   "search": "invetero coquette d10 chevrolet corvette c8",
-  "txt": "Version radicalisée de la Coquette, dans l'esprit des Corvette Z06 : voies élargies, appuis aérodynamiques marqués, moteur plus pointu. La Z06 est traditionnellement la déclinaison que Chevrolet destine au circuit tout en la gardant homologuée pour la route. Le premier trailer la fait surgir dans un plan de nuit."
+  "txt": "Version radicalisée de la Coquette, dans l'esprit des Corvette Z06 : voies élargies, appuis aérodynamiques marqués, moteur plus pointu. La Z06 est traditionnellement la déclinaison que Chevrolet destine au circuit tout en la gardant homologuée pour la route. Le premier trailer la fait surgir dans un plan de nuit.",
+  "medias": [
+   "extended-look-coquette-d10"
+  ],
+  "imageAlts": {
+   "extended-look-coquette-d10": "Cabriolet rouge au premier plan à gauche, photogramme de An Extended Look"
+  }
  },
  {
   "id": "annis-futo",
@@ -625,7 +643,13 @@
   "insp": "Porsche 911 Turbo S Cabriolet",
   "src": "Premier trailer",
   "search": "pfister comet s2 cabrio porsche 911 turbo s cabriolet",
-  "txt": "Déclinaison cabriolet de la Comet moderne, sur le modèle des Porsche 911 de type 992. La particularité de la 911 découvrable tient à son architecture : le moteur étant à l'arrière, la rigidité de la caisse souffre moins de la suppression du toit que sur une sportive classique. Le premier trailer la fait rouler capote baissée sur le front de mer."
+  "txt": "Déclinaison cabriolet de la Comet moderne, sur le modèle des Porsche 911 de type 992. La particularité de la 911 découvrable tient à son architecture : le moteur étant à l'arrière, la rigidité de la caisse souffre moins de la suppression du toit que sur une sportive classique. Le premier trailer la fait rouler capote baissée sur le front de mer.",
+  "medias": [
+   "trailer-1-vehicles-033"
+  ],
+  "imageAlts": {
+   "trailer-1-vehicles-033": "Cabriolet turquoise au premier plan à gauche sur le front de mer, premier trailer de GTA VI à 00:33"
+  }
  },
  {
   "id": "annis-growler",
@@ -658,7 +682,15 @@
   "insp": "BMW E30 M3",
   "txt": "La Sentinel est la BMW de l'univers GTA depuis GTA III. La version Classic reprend la silhouette de la E30 des années 80 : capot plat, double optique ronde, custode fine. C'est exactement le genre de coupé allemand qu'on croisait sur Ocean Drive à l'époque que Vice City rejoue.",
   "search": "ubermacht sentinel classic bmw e30 m3",
-  "src": "Extended Look"
+  "src": "Extended Look",
+  "medias": [
+   "extended-look-sentinel-classic-front",
+   "extended-look-sentinel-classic-rear"
+  ],
+  "imageAlts": {
+   "extended-look-sentinel-classic-front": "Cabriolet rouge devant des commerces, photogramme de An Extended Look",
+   "extended-look-sentinel-classic-rear": "Cabriolet rouge vu de l’arrière pendant une séquence de conduite de An Extended Look"
+  }
  },
  {
   "id": "ubermacht-sentinel-xs",
@@ -766,7 +798,13 @@
   "insp": "Ford Fairlane, Buick Riviera",
   "src": "Premier trailer",
   "search": "albany buccaneer custom ford fairlane, buick riviera",
-  "txt": "Version préparée de la Buccaneer, dans le registre lowrider : caisse posée au sol, jantes à rayons, peinture à paillettes. Les grands coupés des années 60 sont les bases historiques de cette culture, précisément parce que leur châssis séparé accepte bien les suspensions hydrauliques. Le premier trailer la saisit sous les néons d'une station-service."
+  "txt": "Version préparée de la Buccaneer, dans le registre lowrider : caisse posée au sol, jantes à rayons, peinture à paillettes. Les grands coupés des années 60 sont les bases historiques de cette culture, précisément parce que leur châssis séparé accepte bien les suspensions hydrauliques. Le premier trailer la saisit sous les néons d'une station-service.",
+  "medias": [
+   "trailer-1-vehicles-028"
+  ],
+  "imageAlts": {
+   "trailer-1-vehicles-028": "Lowrider bleu clair au premier plan à droite, premier trailer de GTA VI à 00:28"
+  }
  },
  {
   "id": "albany-virgo-classic",
@@ -849,7 +887,13 @@
   "insp": "1972 Chevelle Malibu, 1972 Oldsmobile Cutlass Supreme",
   "src": "Premier trailer",
   "search": "declasse tulip 1972 chevelle malibu, 1972 oldsmobile cutlass supreme",
-  "txt": "La Tulip reprend la Chevelle Malibu et l'Oldsmobile Cutlass Supreme de 1972, dernier millésime avant que les normes antipollution ne viennent étrangler les moteurs américains. Ces intermédiaires se sont vendues par millions, ce qui explique qu'on en croise encore partout, souvent dans un état approximatif. C'est la voiture de quartier, pas celle de collectionneur."
+  "txt": "La Tulip reprend la Chevelle Malibu et l'Oldsmobile Cutlass Supreme de 1972, dernier millésime avant que les normes antipollution ne viennent étrangler les moteurs américains. Ces intermédiaires se sont vendues par millions, ce qui explique qu'on en croise encore partout, souvent dans un état approximatif. C'est la voiture de quartier, pas celle de collectionneur.",
+  "medias": [
+   "trailer-1-vehicles-071"
+  ],
+  "imageAlts": {
+   "trailer-1-vehicles-071": "Berline rouge conduite par Jason avec Lucia, vue de profil dans le premier trailer de GTA VI vers 01:11"
+  }
  },
  {
   "id": "declasse-tulip-m100",
@@ -860,7 +904,13 @@
   "insp": "Chevrolet Malibu quatrième génération",
   "src": "Premier trailer",
   "search": "declasse tulip m100 chevrolet malibu quatrieme generation",
-  "txt": "Version préparée de la Tulip, dans l'esprit des muscle cars de quartier : moteur remplacé, suspension revue, esthétique assumée. Le suffixe M100 évoque les codes de châssis que les préparateurs emploient pour désigner leurs bases. Le premier trailer la range contre un pavillon de banlieue."
+  "txt": "Version préparée de la Tulip, dans l'esprit des muscle cars de quartier : moteur remplacé, suspension revue, esthétique assumée. Le suffixe M100 évoque les codes de châssis que les préparateurs emploient pour désigner leurs bases. Le premier trailer la range contre un pavillon de banlieue.",
+  "medias": [
+   "trailer-1-vehicles-028"
+  ],
+  "imageAlts": {
+   "trailer-1-vehicles-028": "Berline rose surélevée au centre, premier trailer de GTA VI à 00:28"
+  }
  },
  {
   "id": "declasse-vigero-zx-convertible",
@@ -1413,7 +1463,13 @@
   "insp": "Chevy Suburban",
   "src": "Captures officielles",
   "search": "declasse rancher chevy suburban",
-  "txt": "Le Rancher est un tout-terrain utilitaire d'ancienne génération, plus proche du matériel agricole que du véhicule de loisir. Dans la série, il est associé aux zones rurales, ce qui colle aux marécages et aux exploitations du nord de Leonida. Présent sur les captures diffusées par Rockstar."
+  "txt": "Le Rancher est un tout-terrain utilitaire d'ancienne génération, plus proche du matériel agricole que du véhicule de loisir. Dans la série, il est associé aux zones rurales, ce qui colle aux marécages et aux exploitations du nord de Leonida. Présent sur les captures diffusées par Rockstar.",
+  "medias": [
+   "trailer-2-rancher-035"
+  ],
+  "imageAlts": {
+   "trailer-2-rancher-035": "Pick-up rouge et blanc, avec deux passagers dans la benne, devant la voiture de Jason sur la voie rapide, second trailer de GTA VI vers 00:35."
+  }
  },
  {
   "id": "declasse-walton-l35-stock",
@@ -1626,7 +1682,13 @@
   "insp": "Dodge Ram deuxième génération",
   "src": "Premier trailer",
   "txt": "Le Bison dans sa version des années 90, calée sur le Dodge Ram de deuxième génération. C'est ce modèle qui a lancé la mode du capot haut et de la calandre en proue de camion, un dessin qui a fait basculer tout le segment. Vingt ans plus tard, on en croise encore partout dans le Sud.",
-  "search": "bravado bison 900 '95 dodge ram deuxieme generation"
+  "search": "bravado bison 900 '95 dodge ram deuxieme generation",
+  "medias": [
+   "trailer-1-vehicles-053"
+  ],
+  "imageAlts": {
+   "trailer-1-vehicles-053": "Pick-up vert et son occupant, premier trailer officiel de GTA VI à 00:53"
+  }
  },
  {
   "id": "bravado-rumpo",
@@ -1637,7 +1699,13 @@
   "insp": "Ford E-Series",
   "txt": "Fourgon à panneaux pleins, sans vitres latérales à l'arrière. Le Rumpo est présent dans la série depuis GTA III et occupe la place du van de service générique.",
   "search": "bravado rumpo ford e-series",
-  "src": "Premier trailer"
+  "src": "Premier trailer",
+  "medias": [
+   "trailer-1-vehicles-064"
+  ],
+  "imageAlts": {
+   "trailer-1-vehicles-064": "Fourgon blanc à gauche de la scène filmée par Weazel News, premier trailer de GTA VI vers 01:04"
+  }
  },
  {
   "id": "bravado-youga-classic",
@@ -2058,7 +2126,13 @@
   "insp": "Sikorsky S-300, anciennement Hughes 300",
   "src": "Premier trailer",
   "search": "western sea sparrow sikorsky s-300, anciennement hughes 300",
-  "txt": "Le Sea Sparrow est un hélicoptère léger monté sur flotteurs. Son inspiration retenue est le Sikorsky S-300, anciennement Hughes 300. La base l'associe au premier trailer, sans nom communiqué ; les flotteurs permettent de le distinguer de la version terrestre."
+  "txt": "Le Sea Sparrow est un hélicoptère léger monté sur flotteurs. Son inspiration retenue est le Sikorsky S-300, anciennement Hughes 300. La base l'associe au premier trailer, sans nom communiqué ; les flotteurs permettent de le distinguer de la version terrestre.",
+  "medias": [
+   "cover-art-sea-sparrow"
+  ],
+  "imageAlts": {
+   "cover-art-sea-sparrow": "Hélicoptère bleu à flotteurs sur une illustration de la jaquette officielle GTA VI"
+  }
  },
  {
   "id": "buckingham-shamal",
@@ -2108,7 +2182,13 @@
   "insp": "Boeing 747-400, 747-8I",
   "txt": "Avion de ligne commercial. Sa présence à l'aéroport international de Vice City est avant tout scénographique, mais la série a toujours fini par les rendre pilotables.",
   "search": "marque inconnue jet boeing 747-400, 747-8i",
-  "src": "Second trailer"
+  "src": "Second trailer",
+  "medias": [
+   "trailer-2-jet-037"
+  ],
+  "imageAlts": {
+   "trailer-2-jet-037": "Avion de ligne à quatre réacteurs au-dessus des panneaux vers VCI Airport, second trailer de GTA VI vers 00:37."
+  }
  },
  {
   "id": "western-company-duster",
@@ -2563,18 +2643,30 @@
   "insp": "Sea Ray 300 Sundancer",
   "src": "Premier trailer",
   "search": "shitzu tropic sea ray 300 sundancer",
-  "txt": "Le Tropic est un cruiser de plaisance à cabine, calé sur le Sea Ray 300 Sundancer. C'est le bateau de famille américain par excellence : assez habitable pour dormir à bord, assez marin pour sortir de la baie, et vendu par milliers sur toute la côte de Floride. Le genre d'embarcation qu'on trouve amarrée derrière les maisons des canaux."
+  "txt": "Le Tropic est un cruiser de plaisance à cabine, calé sur le Sea Ray 300 Sundancer. C'est le bateau de famille américain par excellence : assez habitable pour dormir à bord, assez marin pour sortir de la baie, et vendu par milliers sur toute la côte de Floride. Le genre d'embarcation qu'on trouve amarrée derrière les maisons des canaux.",
+  "medias": [
+   "trailer-1-tropic-011"
+  ],
+  "imageAlts": {
+   "trailer-1-tropic-011": "Bateau de plaisance blanc à cabine, vu du dessus près des dauphins, premier trailer de GTA VI vers 00:11."
+  }
  },
  {
   "id": "speedophile-seashark",
   "nom": "Seashark",
   "marque": "Speedophile",
   "cat": "bateau",
-  "st": "vu",
+  "st": "officiel",
   "insp": "Sea Doo RXT",
   "src": "Second trailer",
   "search": "speedophile seashark sea doo rxt",
-  "txt": "Il figure au catalogue visuel de Rockstar, mais pas à celui des noms. C'est un scooter des mers trois places, calé sur le Sea-Doo GTX : propulsion par turbine, coque en composite, aucune hélice apparente. Le nom de la marque est l'une des blagues les plus directes du catalogue."
+  "txt": "Son nom se lit sur le flanc de la coque dans le second trailer, quand Jason et Lucia traversent la baie dessus à pleine vitesse. C'est un scooter des mers trois places, calé sur le Sea-Doo GTX : propulsion par turbine, coque en composite, aucune hélice apparente. Le nom de la marque est l'une des blagues les plus directes du catalogue.",
+  "medias": [
+   "trailer-2-seashark-141"
+  ],
+  "imageAlts": {
+   "trailer-2-seashark-141": "Jason et Lucia sur un scooter des mers vert ; le nom Seashark est lisible sur la coque, second trailer de GTA VI vers 02:21."
+  }
  },
  {
   "id": "vortex-airboat",
@@ -2665,7 +2757,13 @@
   "insp": "Lenco BEAR",
   "src": "Second trailer",
   "search": "brute police riot lenco bear",
-  "txt": "Le fourgon blindé de maintien de l'ordre se voit à l'image, son appellation reste inconnue. Ces véhicules, souvent issus de surplus militaires reversés aux polices locales, sont devenus un sujet de débat public aux États-Unis. Leur présence dans une ville comme Vice City n'a rien d'anecdotique."
+  "txt": "Le fourgon blindé de maintien de l'ordre se voit à l'image, son appellation reste inconnue. Ces véhicules, souvent issus de surplus militaires reversés aux polices locales, sont devenus un sujet de débat public aux États-Unis. Leur présence dans une ville comme Vice City n'a rien d'anecdotique.",
+  "medias": [
+   "trailer-2-police-riot-119"
+  ],
+  "imageAlts": {
+   "trailer-2-police-riot-119": "Fourgon blindé noir face à Lucia, à gauche de la voiture projetée par l’explosion, second trailer de GTA VI vers 01:59."
+  }
  },
  {
   "id": "brute-rental-shuttle-bus",
@@ -2726,7 +2824,13 @@
   "insp": "Peterbilt 359 EXHD",
   "src": "Premier trailer",
   "search": "jobuilt phantom peterbilt 359 exhd",
-  "txt": "Le Phantom est un tracteur routier à cabine longue, du type de ceux qui traversent les États-Unis d'un océan à l'autre avec une couchette derrière les sièges. Le premier trailer le fait doubler sur une voie rapide."
+  "txt": "Le Phantom est un tracteur routier à cabine longue, du type de ceux qui traversent les États-Unis d'un océan à l'autre avec une couchette derrière les sièges. Le premier trailer le fait doubler sur une voie rapide.",
+  "medias": [
+   "trailer-1-phantom-003"
+  ],
+  "imageAlts": {
+   "trailer-1-phantom-003": "Tracteur routier tirant une remorque Patriot au centre de la voie rapide, premier trailer de GTA VI vers 00:03."
+  }
  },
  {
   "id": "jobuilt-phantom-custom",
@@ -3370,7 +3474,13 @@
   "st": "vu",
   "insp": "International 4700 Series",
   "src": "Extended Look",
-  "txt": "Le fourgon blindé de transport de fonds, bâti sur le même châssis International 4700 que le Benson mais habillé d'une caisse renforcée percée de meurtrières. C'est autant une cible de braquage qu'un véhicule. L'Extended Look le laisse à l'arrêt devant une agence."
+  "txt": "Le fourgon blindé de transport de fonds, bâti sur le même châssis International 4700 que le Benson mais habillé d'une caisse renforcée percée de meurtrières. C'est autant une cible de braquage qu'un véhicule. L'Extended Look le laisse à l'arrêt devant une agence.",
+  "medias": [
+   "extended-look-stockade"
+  ],
+  "imageAlts": {
+   "extended-look-stockade": "Fourgon blindé au centre de la rue, photogramme de An Extended Look"
+  }
  },
  {
   "id": "electric-scooter",

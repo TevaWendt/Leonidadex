@@ -1,0 +1,94 @@
+LEONIDAKIT v7.3 : FUSION SÉLECTIVE DU ZIP « Leonidakit-final » DANS MAIN (17 septembre 2026)
+============================================================================================
+
+Base : la branche GitHub main (v7.2, vérifiée identique à la livraison du 16/09). Le ZIP
+« Leonidakit-final » a été construit sur cette même v7.2 : tout ce qu'il contient est un
+ajout, jamais un retour en arrière de version. Il a servi de réservoir d'améliorations ;
+chaque différence a été comparée au contenu réel et jugée, comme pour la v7.2.
+
+REPRIS DU ZIP
+-------------
+1. Visuels officiels : 70 nouveaux médias Rockstar (140 WebP en 480 et 1280 px), registre
+   outils/medias-officiels.json passé de 78 à 148 entrées, avec un texte alternatif par
+   image. Les 5 photogrammes du trailer 2 sont recadrés sans bandes noires (1280 x 576).
+   Quatre photogrammes de l'Extended Look et la vignette de la jaquette proviennent de
+   copies publiées sans filigrane par un site spécialisé ; leur origine est notée dans le
+   registre (champ via) et la page Médias renvoie vers le média officiel Rockstar.
+2. Véhicules : 18 fiches de plus illustrées (54 au total) : Schyster PMP 700, Grotti
+   Carbonizzare, Invetero Coquette D10, Pfister Comet S2 Cabrio, Übermacht Sentinel
+   Classic (deux vues), Albany Buccaneer Custom, Déclasse Tulip et Tulip M100, Déclasse
+   Rancher, Bravado Bison 900 '95, Bravado Rumpo, Western Sea Sparrow (jaquette),
+   Jet, Shitzu Tropic, Speedophile Seashark, Brute Police Riot, Jobuilt Phantom,
+   Brute Stockade. Chaque association a été vérifiée sur planche contact.
+3. Seashark : statut « nommé par Rockstar », le nom se lit sur le flanc de la coque dans
+   le second trailer (vers 2:21). Dixième nom officiel côté véhicules ; le texte de la
+   fiche a été ajusté en conséquence (il affirmait l'inverse).
+4. Armes : batte (Lucia et sa batte rose chez Electric Fang) et fusil à canon double
+   (le barbu de Grassrivers 06) illustrés : 18 armes sur 27 ont un visuel officiel.
+5. Galeries « En images » sur les fiches du monde : régions (4 à 6 captures), personnages
+   (3 à 6), entreprises, demeures et planques. Grille deux colonnes, une colonne sur
+   mobile, sans légende, vignettes chargées à la demande, clic vers la version 1280 px.
+   La première image de chaque fiche (celle de l'accueil et des hubs) ne change pas.
+6. Illustrations corrigées : chantier naval de Brian avec le photogramme du trailer 2 où
+   l'enseigne « Brian's Boat Works & Marina » est lisible, relié au marqueur de l'atelier
+   (g-L1421) ; maison de Brian illustrée par Brian à son ponton plutôt qu'au volant ;
+   « Lucia, du pénitencier à Vice City » avec Lucia en tenue de détenue ; Starlet Motel
+   illustré par la capture officielle où son enseigne apparaît ; Only Raw Records et
+   Jack of Hearts illustrés (studio de Dre'Quan, Boobie devant l'enseigne du club).
+7. Carte : capture officielle sur le panneau des six régions et de sept commerces
+   (Rideout Customs, Sara's Unisex Salon, Stock 305, Electric Fang Tattoo, PTT YOUNGIN$,
+   Jack of Hearts, atelier de Brian) à la place des vues aériennes floues ; dimensions
+   déclarées sur 1 946 photos de panneau (moins de sauts de mise en page) ; le lien
+   Google Maps n'est produit que pour des coordonnées réelles vérifiées et encodées.
+8. Crédit sous les galeries véhicules et armes : « Visuels officiels © Rockstar Games /
+   Take-Two Interactive. Provenance et crédits », avec lien vers medias.html, dont le
+   texte d'introduction couvre désormais captures, artworks et trailers.
+9. Meta descriptions des fiches armes tirées de leur texte (phrases entières), comme
+   les véhicules depuis la v7.2 ; image verticale (jaquette du Sea Sparrow) affichée
+   entière sur fond sombre au lieu d'être recadrée ; étiquette de galerie bornée en
+   largeur sur mobile.
+10. Outils : l'audit lexical ne lit plus « passe » comme « pas » ni « aérien » comme
+    « rien » (négations en mots entiers) ; trois tests jsdom ajoutés (galeries sans
+    légende et différées, visuel officiel sur un panneau de carte, lien Google Maps
+    limité aux coordonnées réelles) : 49 tests.
+
+VOLONTAIREMENT IGNORÉ
+---------------------
+- Les 10 descriptions véhicules et 3 contextes armes réécrits : plus courts, au
+  conditionnel, avec GTABase cité dans le texte ; les textes de main sont conservés.
+- Les rétrogradations en « À vérifier » : Buzzard, monorail, VCMM Train, pistolet à
+  sélecteur, fusil à pompe, PM compact, Molotov, fumigène, fusil-harpon. Point à garder
+  en tête : pour ces six armes, le ZIP n'a pas retrouvé de visuel officiel probant ;
+  si tu as un doute sur l'une d'elles, c'est le seul champ st à revoir.
+- Le bloc « Sources » sur chaque fiche, les légendes sous les images et la légende
+  changeante sous les galeries, les liens vers gtadb.org sur chacun des 2 474 panneaux,
+  le lien « Rechercher ce lieu dans GTA VI » (Google) sur chaque panneau, les notes
+  d'identification communautaire, la mention « repérage GTADB » sous les photos réelles,
+  la réponse de la FAQ carte réécrite autour de GTADB.
+- Quatre médias : deux photogrammes verticaux flous du trailer 1 (marteau, Ruiner), deux
+  vues de l'intérieur du club de strip-tease (risque pour un site financé par la pub).
+  Trois associations où le véhicule n'est qu'un détail de fond : Primo Custom, Police
+  Maverick, Tulip sur le photogramme flou.
+- L'affichage « cadre complet » des galeries (object-fit contain) qui aurait ajouté des
+  bandes vides sur chaque photo ; les rapports, inventaires et journaux de validation du
+  ZIP ; sources.cjs et le test lié au bloc Sources.
+
+VÉRIFICATIONS
+-------------
+- Chaîne complète : final.js, gen.js, gen-armes.cjs, lore-gen.js, sync-site.cjs ;
+  seconde passe identique.
+- outils/verifier.js : 27 559 références vérifiées dans 395 pages, 0 erreur.
+- outils/audit-final.js : six contrôles à zéro sur 302 véhicules.
+- 49 tests jsdom : 49 réussis.
+- Rendu Chromium (Playwright) à 1 280 et 390 px : fiche Vice City (galerie), panneau
+  carte de Grassrivers, fiche Sea Sparrow (image verticale), fiche Jason sur mobile,
+  planque du chantier de Brian ; aucune erreur console, aucun débordement horizontal.
+- carte-gtadb.js conserve ses 3 184 photos communautaires (la 3 185e, vue aérienne de
+  l'atelier de Brian, est remplacée par le photogramme officiel ; le fichier reste
+  dans photos/).
+
+MISE EN LIGNE
+-------------
+GitHub Desktop, comme pour la v7.2 : remplacer le contenu du dossier local par celui du
+zip complet en gardant .git, puis Commit et Push. Aucune suppression de fichier cette
+fois : l'archive « modifs » suffit aussi (elle se dépose par-dessus le dépôt).

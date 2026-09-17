@@ -2,8 +2,9 @@ const fs=require('fs');
 process.chdir(require('path').join(__dirname,'..'));
 const V=JSON.parse(fs.readFileSync('outils/v-corrige.json','utf8'));
 const P=[]; const add=(g,d)=>P.push({g,d});
-const NEG="(?:aucun\\w*|non|jamais|pas|ne l'a pas|n'a pas|n'est pas|rien)";
-const contreditVu=t=>new RegExp(NEG+"[^.]{0,60}(support|trailer|capture|officiel|confirm|montr\u00e9)","i").test(t);
+// Une négation doit être un mot entier : « passe » et « aérien » ne nient rien.
+const NEG="(?<![\\p{L}\\p{N}_])(?:aucun[\\p{L}]*|non|jamais|pas|ne l'a pas|n'a pas|n'est pas|rien)(?![\\p{L}\\p{N}_])";
+const contreditVu=t=>new RegExp(NEG+"[^.]{0,60}(support|trailer|capture|officiel|confirm|montr\u00e9)","iu").test(t);
 const nieApparition=t=>/(rien ne l.atteste|rien de tel n.a encore été diffusé|rockstar n.a rien publié|n.est.{0,45}(attestée?|apparue?).{0,25}aucun visuel|aucun visuel de Rockstar ne|aucune image diffusée ne l.a|rockstar ne l.a pas encore fait apparaître|absent de tout ce que Rockstar a diffusé)/i.test(t);
 const affirmeVu=t=>/(apparaît|est visible|figure|se repère|on (le|la) (voit|retrouve)|présent sur|passe à l'image|traverse plusieurs plans)[^.]{0,60}(trailer|capture|support|image)/i.test(t);
 const NOMME=['Premier trailer','Second trailer','Captures officielles','Extended Look','Artworks officiels','Édition Ultimate',"Visuel officiel de l'édition Ultimate","Page officielle de l'édition Ultimate"];

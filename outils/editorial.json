@@ -5,7 +5,12 @@
    "name": "Vice City",
    "description": "Vice City réunit plages, quartiers commerçants et port de croisière. Rockstar cite Ocean Beach, Little Cuba, Tisha-Wocka et VC Port.",
    "media": [
-    "vice-city-01"
+    "vice-city-01",
+    "vice-city-03",
+    "vice-city-05",
+    "vice-city-08",
+    "vice-city-10",
+    "vice-city-11"
    ],
    "source": "https://www.rockstargames.com/VI/only-in-leonida/vice-city",
    "mapId": "vice-city",
@@ -37,7 +42,11 @@
    "name": "Leonida Keys",
    "description": "Un archipel tropical ouvert sur la mer. La présentation de Jason et Brian situe une partie de leurs activités dans les Keys.",
    "media": [
-    "leonida-keys-01"
+    "leonida-keys-01",
+    "leonida-keys-03",
+    "leonida-keys-04",
+    "leonida-keys-05",
+    "leonida-keys-06"
    ],
    "source": "https://www.rockstargames.com/VI/only-in-leonida/leonida-keys",
    "mapId": "leonida-keys",
@@ -66,7 +75,11 @@
    "name": "Grassrivers",
    "description": "Rockstar décrit une zone de mangroves habitée par des alligators. Les images montrent aussi des hydroglisseurs dans cet environnement marécageux.",
    "media": [
-    "grassrivers-01"
+    "grassrivers-01",
+    "grassrivers-05",
+    "grassrivers-02",
+    "grassrivers-03",
+    "grassrivers-06"
    ],
    "source": "https://www.rockstargames.com/VI/only-in-leonida/grassrivers",
    "mapId": "grassrivers",
@@ -85,7 +98,10 @@
    "name": "Port Gellhorn",
    "description": "Cette ancienne destination touristique conserve motels et attractions fermées. Son déclin fait partie de la description officielle publiée par Rockstar.",
    "media": [
-    "port-gellhorn-01"
+    "port-gellhorn-01",
+    "port-gellhorn-06",
+    "port-gellhorn-04",
+    "port-gellhorn-05"
    ],
    "source": "https://www.rockstargames.com/VI/only-in-leonida/port-gellhorn",
    "mapId": "port-gellhorn",
@@ -104,7 +120,11 @@
    "name": "Ambrosia",
    "description": "Le paysage industriel d’Ambrosia s’organise autour de la raffinerie sucrière Allied Crystal. Rockstar mentionne aussi un gang de motards local.",
    "media": [
-    "ambrosia-01"
+    "ambrosia-01",
+    "ambrosia-04",
+    "ambrosia-02",
+    "ambrosia-03",
+    "ambrosia-06"
    ],
    "source": "https://www.rockstargames.com/VI/only-in-leonida/ambrosia",
    "mapId": "ambrosia",
@@ -125,7 +145,12 @@
    "name": "Mount Kalaga National Park",
    "description": "Le parc national apparaît dans les captures officielles : pistes boueuses, reliefs, forêts, animaux et voies d’eau composent les scènes publiées.",
    "media": [
-    "mount-kalaga-national-park-01"
+    "mount-kalaga-national-park-01",
+    "mount-kalaga-national-park-04",
+    "mount-kalaga-national-park-02",
+    "mount-kalaga-national-park-03",
+    "mount-kalaga-national-park-05",
+    "mount-kalaga-national-park-06"
    ],
    "source": "https://www.rockstargames.com/VI/only-in-leonida/kalaga",
    "mapId": "mount-kalaga",
@@ -146,7 +171,12 @@
    "name": "Jason Duval",
    "description": "Ancien militaire, Jason travaille pour des trafiquants des Keys. Son alliance avec Lucia occupe une place centrale dans la présentation du jeu.",
    "media": [
-    "jason-duval-01"
+    "jason-duval-01",
+    "jason-duval-02",
+    "jason-duval-03",
+    "jason-duval-04",
+    "jason-duval-05",
+    "jason-duval-06"
    ],
    "source": "https://www.rockstargames.com/VI/only-in-leonida/jason",
    "places": [
@@ -176,7 +206,12 @@
    "name": "Lucia Caminos",
    "description": "Lucia sort du pénitencier de Leonida. Après son enfance à Liberty City, elle entend améliorer sa vie et celle de sa famille.",
    "media": [
-    "lucia-caminos-01"
+    "lucia-caminos-01",
+    "lucia-caminos-02",
+    "lucia-caminos-03",
+    "lucia-caminos-04",
+    "lucia-caminos-05",
+    "lucia-caminos-06"
    ],
    "source": "https://www.rockstargames.com/VI/only-in-leonida/lucia",
    "places": [
@@ -199,7 +234,10 @@
    "name": "Cal Hampton",
    "description": "Ami de Jason et associé de Brian, Cal écoute les communications des garde-côtes. Rockstar souligne sa méfiance et son goût des théories.",
    "media": [
-    "cal-hampton-01"
+    "cal-hampton-01",
+    "cal-hampton-02",
+    "cal-hampton-03",
+    "cal-hampton-04"
    ],
    "source": "https://www.rockstargames.com/VI/only-in-leonida/cal",
    "places": [
@@ -223,7 +261,9 @@
    "name": "Boobie Ike",
    "description": "Boobie possède des activités à Vice City. Il investit avec Dre’Quan dans Only Raw Records et exploite le club Jack of Hearts.",
    "media": [
-    "boobie-ike-01"
+    "boobie-ike-01",
+    "boobie-ike-02",
+    "boobie-ike-03"
    ],
    "source": "https://www.rockstargames.com/VI/only-in-leonida/boobie",
    "places": [
@@ -246,7 +286,10 @@
    "name": "Dre’Quan Priest",
    "description": "Dre’Quan veut réussir dans la musique. Associé à Boobie, il travaille avec Real Dimez chez Only Raw Records.",
    "media": [
-    "dre-quan-priest-01"
+    "dre-quan-priest-01",
+    "dre-quan-priest-02",
+    "dre-quan-priest-03",
+    "dre-quan-priest-04"
    ],
    "source": "https://www.rockstargames.com/VI/only-in-leonida/drequan",
    "places": [
@@ -269,7 +312,10 @@
    "name": "Real Dimez",
    "description": "Bae-Luxe et Roxy forment Real Dimez. Amies depuis le lycée, elles sont signées chez Only Raw Records et cherchent un nouveau succès.",
    "media": [
-    "real-dimez-01"
+    "real-dimez-01",
+    "real-dimez-02",
+    "real-dimez-03",
+    "real-dimez-04"
    ],
    "source": "https://www.rockstargames.com/VI/only-in-leonida/dimez",
    "places": [
@@ -291,7 +337,10 @@
    "name": "Raul Bautista",
    "description": "Raul est un braqueur expérimenté qui recrute des partenaires prêts à prendre des risques. Ses ambitions font monter les enjeux pour son équipe.",
    "media": [
-    "raul-bautista-01"
+    "raul-bautista-01",
+    "raul-bautista-02",
+    "raul-bautista-03",
+    "raul-bautista-04"
    ],
    "source": "https://www.rockstargames.com/VI/only-in-leonida/raul",
    "places": [],
@@ -309,7 +358,10 @@
    "name": "Brian Heder",
    "description": "Trafiquant installé dans les Keys, Brian travaille avec Lori. Il héberge Jason dans une propriété en échange de services.",
    "media": [
-    "brian-heder-01"
+    "brian-heder-01",
+    "brian-heder-02",
+    "brian-heder-03",
+    "brian-heder-04"
    ],
    "source": "https://www.rockstargames.com/VI/only-in-leonida/brian",
    "places": [
@@ -334,7 +386,8 @@
    "id": "rideout-customs",
    "name": "Rideout Customs",
    "media": [
-    "rideout-customs-mod-shop-01"
+    "rideout-customs-mod-shop-01",
+    "ultimate-edition-rideout-customs-03"
    ],
    "description": "Atelier de personnalisation automobile présenté dans les médias Ultimate.",
    "mapId": "g-L2375",
@@ -349,7 +402,9 @@
    "id": "saras-unisex-salon",
    "name": "Sara’s Unisex Salon",
    "media": [
-    "sara-s-unisex-salon-01"
+    "sara-s-unisex-salon-01",
+    "sara-s-unisex-salon-02",
+    "sara-s-unisex-salon-03"
    ],
    "description": "Salon présenté dans les médias officiels ; les images montrent coiffure et soins des ongles.",
    "mapId": "g-L360",
@@ -364,7 +419,9 @@
    "id": "stock-305",
    "name": "Stock 305",
    "media": [
-    "stock-305-clothing-store-01"
+    "stock-305-clothing-store-01",
+    "stock-305-clothing-store-03",
+    "stock-305-clothing-store-04"
    ],
    "description": "Boutique de vêtements nommée dans la galerie officielle.",
    "mapId": "g-L1488",
@@ -379,7 +436,10 @@
    "id": "electric-fang",
    "name": "Electric Fang Tattoo",
    "media": [
-    "electric-fang-tattoo-01"
+    "electric-fang-tattoo-01",
+    "electric-fang-tattoo-02",
+    "electric-fang-tattoo-03",
+    "electric-fang-tattoo-04"
    ],
    "description": "Salon de tatouage de Stockyard présenté avec l’édition Ultimate.",
    "mapId": "g-L1482",
@@ -394,7 +454,9 @@
    "id": "one-eyed-willie",
    "name": "One-Eyed Willie’s",
    "media": [
-    "one-eyed-willie-s-mod-shop-01"
+    "one-eyed-willie-s-mod-shop-01",
+    "one-eyed-willie-s-mod-shop-02",
+    "ultimate-edition-one-eyed-willie-03"
    ],
    "description": "Atelier nommé dans les médias Ultimate. Aucun marqueur exact n’est validé ici.",
    "mapId": null,
@@ -423,7 +485,10 @@
   {
    "id": "only-raw-records",
    "name": "Only Raw Records",
-   "media": [],
+   "media": [
+    "dre-quan-priest-04",
+    "real-dimez-04"
+   ],
    "description": "Label associé à Boobie et Dre’Quan ; Real Dimez y est signé.",
    "mapId": null,
    "source": "https://www.rockstargames.com/VI/only-in-leonida/boobie",
@@ -436,7 +501,9 @@
   {
    "id": "jack-of-hearts",
    "name": "Jack of Hearts",
-   "media": [],
+   "media": [
+    "boobie-ike-02"
+   ],
    "description": "Club associé à Boobie Ike dans sa présentation officielle.",
    "mapId": "g-L172",
    "source": "https://www.rockstargames.com/VI/only-in-leonida/boobie",
@@ -498,13 +565,14 @@
     "leonida-keys"
    ],
    "vehicles": [],
-   "source": "https://www.rockstargames.com/VI/only-in-leonida/cal"
+   "source": "https://www.rockstargames.com/VI/only-in-leonida/cal",
+   "imageAlt": "Cal Hampton devant des installations dans les Keys, capture officielle GTA VI"
   },
   {
    "id": "brian-keys",
    "name": "Chez Brian et Lori",
    "media": [
-    "brian-heder-01"
+    "brian-heder-02"
    ],
    "description": "Brian Heder vit dans les Keys avec Lori, sa troisième épouse. Leur chantier naval sert encore à faire passer de la marchandise, et la sangria de Lori attend Jason de temps en temps.",
    "tagline": "Un beach bum de Leonida, avec la morsure d’un grand requin blanc.",
@@ -528,7 +596,7 @@
    "id": "lucia-avant",
    "name": "Lucia, du pénitencier à Vice City",
    "media": [
-    "lucia-caminos-01"
+    "lucia-caminos-05"
    ],
    "description": "Avant le début de l’histoire, l’adresse de Lucia est le pénitencier de Leonida. Elle en sort par chance et vise la belle vie dont sa mère rêve depuis Liberty City.",
    "tagline": "Fraîchement libérée, décidée à ne plus faire que des coups intelligents.",
@@ -582,16 +650,16 @@
    "id": "chantier-brian",
    "name": "Le chantier naval de Brian",
    "media": [
-    "brian-heder-01"
+    "trailer-2-brian-boatyard-085"
    ],
    "description": "Officiellement un chantier naval dans les Keys, en réalité le point de passage de la marchandise de Brian Heder depuis l’âge d’or de la contrebande.",
    "tagline": "Là où la marchandise passe encore, en toute discrétion.",
    "facts": [
     "Rockstar décrit Brian comme faisant toujours transiter sa marchandise par son chantier naval.",
-    "Repéré sur la carte grâce aux captures des trailers, avec son atelier attenant.",
+    "L'enseigne Brian's Boat Works & Marina se lit au-dessus de la porte de l'atelier dans le second trailer, vers 1:25.",
     "Jason et Cal y travaillent pour Brian."
    ],
-   "mapId": "g-L326",
+   "mapId": "g-L1421",
    "characters": [
     "brian",
     "jason",
@@ -601,12 +669,15 @@
     "leonida-keys"
    ],
    "vehicles": [],
-   "source": "https://www.rockstargames.com/VI/only-in-leonida/brian"
+   "source": "https://www.rockstargames.com/VI/only-in-leonida/brian",
+   "imageAlt": "Atelier de Brian de nuit, avec l’enseigne Brian’s Boat Works & Marina lisible au-dessus de la porte, second trailer de GTA VI vers 01:25."
   },
   {
    "id": "starlet-motel",
    "name": "Le motel du premier trailer",
-   "media": [],
+   "media": [
+    "port-gellhorn-01"
+   ],
    "description": "Le premier trailer montre Jason et Lucia dans une chambre de motel. L’enseigne, lisible dans les captures, a permis de placer l’établissement sur la carte.",
    "tagline": "Une chambre, deux fugitifs, un rideau tiré.",
    "facts": [

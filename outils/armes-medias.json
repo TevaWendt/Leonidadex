@@ -39,7 +39,8 @@
   "grassrivers-01"
  ],
  "batte": [
-  "port-gellhorn-02"
+  "port-gellhorn-02",
+  "electric-fang-tattoo-03"
  ],
  "couteau-cran": [
   "hawk-little-morgan-revolvers-02"
@@ -52,5 +53,8 @@
  ],
  "lance-grenades": [
   "trailer-2-lucia-grenade-launcher"
+ ],
+ "fusil-double": [
+  "grassrivers-06"
  ]
 }

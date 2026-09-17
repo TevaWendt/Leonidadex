@@ -48,13 +48,16 @@ const byId={};for(const k of Object.keys(SECTIONS))for(const x of ED[k])byId[x.i
 const media=x=>(x.media||[]).map(id=>MED[id]).filter(Boolean)[0]||null;
 const GT=JSON.parse(fs.readFileSync('outils/data/carte-gtadb-source.json','utf8'));const GTBY={};for(const q of [...GT.groupes,...GT.lieux])GTBY[q.id]=q;
 /* visuel de secours : la capture de la carte (gtadb, créditée dans les mentions légales) */
-const mapPhoto=id=>{const q=GTBY[id];if(!q||!q.img||!/\.webp$/.test(q.img)||!fs.existsSync(q.img))return null;return {variants:[{src:'/'+q.img,w:960,h:540}],titre:q.n.replace(/&#x27;/g,"'").replace(/&amp;/g,'&')};};
+const mapPhoto=id=>{const q=GTBY[id];if(!q||!q.img||!/\.webp$/.test(q.img)||!fs.existsSync(q.img.replace(/^\//,'')))return null;return {variants:[{src:'/'+q.img.replace(/^\//,''),w:q.imgW||960,h:q.imgH||540}],titre:q.n.replace(/&#x27;/g,"'").replace(/&amp;/g,'&'),alt:q.imgAlt||null};};
 const visual=x=>media(x)||(x.mapId?mapPhoto(x.mapId):null);
 const RELATED=[['regions','Régions'],['characters','Personnages'],['residences','Demeures'],['hideouts','Planques'],['businesses','Entreprises']];
 const gtName=id=>{const q=GTBY[id];return q?q.n.replace(/&#x27;/g,"'").replace(/&amp;/g,'&').replace(/ \(nom réel\)$/,''):id;};
 const LOCAL={'vice-city':'Vice City','leonida-keys':'Leonida Keys','grassrivers':'Grassrivers','port-gellhorn':'Port Gellhorn','ambrosia':'Ambrosia','mount-kalaga':'Mount Kalaga','ocean-beach':'Ocean Beach','little-cuba':'Little Cuba','tisha-wocka':'Tisha-Wocka','vc-port':'VC Port','key-lento':'Key Lento','allied-crystal':'Allied Crystal','leonida-penitentiary':'Pénitencier de Leonida','ptt-youngin':'PTT Youngin$'};
 const placeName=id=>LOCAL[id]||gtName(id);
-const IMG_ALT=(m,x)=>x.name+', capture officielle Rockstar Games';
+const IMG_ALT=(m,x)=>x.imageAlt||m.alt||(x.name+', capture officielle Rockstar Games');
+/* Galerie « En images » : les visuels au-delà du premier, en grille, sans légende (crédits sur medias.html). Chaque vignette ouvre la version 1280 px. */
+const galleryBlock=x=>{const g=(x.media||[]).slice(1).map(id=>MED[id]).filter(Boolean);if(!g.length)return '';
+  return `<section class="shell lore-gallery reveal"><h2 class="sec-h">En images</h2><div class="lore-gallery-grid">${g.map(m=>'<a class="rise" href="'+(m.variants[1]||m.variants[0]).src+'" target="_blank" rel="noopener" aria-label="Agrandir : '+esc(m.titre)+'">'+imgTag(m,m.alt||(x.name+', '+m.titre+', capture officielle Rockstar Games'),false)+'</a>').join('')}</div></section>`;};
 const imgTag=(m,alt,big)=>{if(!m)return '';const a=m.variants[0],b=m.variants[1]||a;
   return '<img src="'+a.src+'" srcset="'+a.src+' '+a.w+'w, '+b.src+' '+b.w+'w" sizes="'+(big?'(max-width:820px) 100vw, 560px':'(max-width:600px) 100vw, 300px')+'" width="'+(big?b.w:a.w)+'" height="'+(big?b.h:a.h)+'" alt="'+esc(alt)+'" loading="'+(big?'eager':'lazy')+'" decoding="async">';};
 const mapHref=(id,p)=>p+'carte.html#lieu='+encodeURIComponent(id);
@@ -158,7 +161,7 @@ ${cards}
 <section class="shell lore-body">
   ${facts}
   ${(relBlocks||vehBlock||mapBlock)?`<div class="lore-related"><h2>En lien</h2>${relBlocks}${vehBlock}${mapBlock}</div>`:''}
-</section>`;
+</section>${galleryBlock(x)}`;
     fs.writeFileSync(S.hub+'/'+x.id+'.html',page({p,title:x.name+' — GTA VI | Leonidakit',desc:x.description,canonical:'/'+S.hub+'/'+x.id+'.html',ogImg:m?(m.variants[1]||m.variants[0]).src:null,body,crumbs:[['Accueil','/'],[S.label,'/'+S.hub+'.html'],[x.name,'/'+S.hub+'/'+x.id+'.html']],hub:S.hub}));
     index.push({l:x.name,k:S.one,u:'/'+S.hub+'/'+x.id+'.html',s:(x.name+' '+S.one+' '+x.description+' '+(x.tagline||'')).toLowerCase(),w:1});
   }
@@ -177,7 +180,7 @@ fs.writeFileSync('outils/lore-index.json',JSON.stringify(index));
   const body=`<section class="page-head shell">
   <p class="fiche-cat">Crédits · Visuels officiels</p>
   <h1>Les visuels officiels utilisés</h1>
-  <p class="lede">${Object.keys(MED).length} captures publiées par Rockstar Games dans la galerie de rockstargames.com/VI, reproduites ici en tant que site de fans, sans modification autre que le redimensionnement. Elles restent la propriété de Rockstar Games et Take-Two Interactive.</p>
+  <p class="lede">${Object.keys(MED).length} visuels provenant des captures, artworks et trailers publiés par Rockstar Games, reproduits ici en tant que site de fans. Les images sont redimensionnées et compressées pour le Web ; les photogrammes des trailers sont recadrés pour retirer les bandes noires du format cinéma. Elles restent la propriété de Rockstar Games et Take-Two Interactive.</p>
 </section>
 <section class="shell">
   <ul class="media-list">

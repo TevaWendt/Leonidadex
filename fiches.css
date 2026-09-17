@@ -15,7 +15,9 @@
 .gal-item .gal-vide svg{width:44px;height:44px;opacity:.35;}
 .gal-item .gal-vide .veh-art{height:120px;width:auto;opacity:.9;}
 .gal-lbl{position:absolute;left:12px;bottom:12px;background:rgba(26,26,30,.85);color:#fff;
-  font-size:.68rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:4px 9px;border-radius:20px;}
+  font-size:.68rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:4px 9px;border-radius:20px;max-width:calc(100% - 24px);}
+/* image plus haute que large (jaquette, artwork vertical) : montrée entière sur fond sombre plutôt que recadrée */
+.gal-item img.gal-portrait{object-fit:contain;background:#1A1A1E;}
 .gal-btn{position:absolute;top:50%;transform:translateY(-50%);width:38px;height:38px;border-radius:50%;
   border:none;background:rgba(255,255,255,.92);color:#1A1A1E;font-size:1.1rem;font-weight:900;cursor:pointer;
   box-shadow:0 2px 8px rgba(0,0,0,.2);display:flex;align-items:center;justify-content:center;}

@@ -21,7 +21,7 @@ les sitemaps et les métadonnées sociales de toutes les pages.
 | Fichier | Rôle |
 |---|---|
 | `v-corrige.json` | source de vérité des 302 véhicules. Seul fichier à éditer pour corriger un véhicule. Le champ `medias` liste les visuels officiels (ids de `medias-officiels.json`). |
-| `medias-officiels.json`, `armes-medias.json`, `medias-identifications.json` | registre des 78 visuels Rockstar (source, crédit, alt, variantes 480/1280), association aux 17 armes illustrées, et provenance de chaque association image / fiche ajoutée en v7.2 |
+| `medias-officiels.json`, `armes-medias.json`, `medias-identifications.json` | registre des 148 visuels Rockstar (source, crédit, alt, variantes 480/1280), association aux 18 armes illustrées, et provenance des associations image / fiche ajoutées en v7.2 |
 | `editorial.json`, `lore-gen.js`, `lore-index.json` | textes des régions, personnages et entreprises ; générateur des pages correspondantes ; entrées ajoutées à la recherche |
 | `redirections.json` | ancien identifiant -> nouvel identifiant (page de redirection générée) |
 | `retraits.json` | fiches sorties de la base (page d'explication noindex générée) |
@@ -33,4 +33,4 @@ les sitemaps et les métadonnées sociales de toutes les pages.
 | `photos-reelles.js`, `licenses.cjs`, `PHOTOS.md` | récupération optionnelle de photos de modèles réels sur Wikimedia Commons, licences libres uniquement |
 | `croise.js`, `similarite.js` | contrôles éditoriaux (alertes lexicales, similarité des textes) |
 | `landmarks-leonidakit.json` | export de référence des lieux, conservé pour la provenance |
-| `tests/` | 46 tests jsdom (voir README racine). Ils vérifient le code et le DOM, pas le rendu visuel. |
+| `tests/` | 49 tests jsdom (voir README racine). Ils vérifient le code et le DOM, pas le rendu visuel. |
