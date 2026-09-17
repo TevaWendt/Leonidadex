@@ -61,7 +61,7 @@ const nSlot={}; V.forEach(v=>{if(v.slot)nSlot[v.slot]=(nSlot[v.slot]||0)+1;});
 const parCat={}; V.forEach(v=>parCat[v.cat]=(parCat[v.cat]||0)+1);
 
 H=H.replace(/(<div class="veh-grid" id="vgrid" data-mot="véhicule">)[\s\S]*?(<\/div>\n\n  <p class="vempty")/,
-  '$1'+V.map(carte).join('')+'$2');
+  '$1'+V.map(carte).join('')+'<i class="veh-spacer" aria-hidden="true"></i>'.repeat(3)+'$2');
 H=H.replace(/<p class="vcount" id="vcount" role="status"><strong>\d+<\/strong>/,
   '<p class="vcount" id="vcount" role="status"><strong>'+N+'</strong>');
 H=H.replace(/<div class="vstat"><span class="n" data-count="\d+">0<\/span><span class="l">véhicules<\/span><\/div>[\s\S]*?<span class="l">inspirations identifiées<\/span><\/div>/,
@@ -320,7 +320,8 @@ ${HEADER}
     </table>
   </div>
   <div class="fiche-col reveal">
-    <h2 class="sec-h">Ce qui arrive avec le jeu</h2>${pend(v)}</div>
+    <h2 class="sec-h">Ce qui arrive avec le jeu</h2>${pend(v)}
+    <div class="pending rise"><div class="pending-top"><h3>Personnalisation</h3><span class="pending-tag">À venir</span></div><p>Peintures, jantes, vitres teintées, pare-chocs, ailerons et intérieur : le prix de chaque option et le niveau requis pour la débloquer, tels qu'affichés chez Rideout Customs.</p><div class="pending-bars" aria-hidden="true"><span></span><span></span><span></span></div></div></div>
 </section>
 <section class="shell reveal" id="carte">
   <h2 class="sec-h">Sur la carte de Leonida</h2>

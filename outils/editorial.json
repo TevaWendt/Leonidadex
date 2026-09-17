@@ -3,7 +3,7 @@
   {
    "id": "vice-city",
    "name": "Vice City",
-   "description": "Vice City réunit plages, quartiers commerçants et port de croisière. Rockstar cite Ocean Beach, Little Cuba, Tisha-Wocka et VC Port.",
+   "description": "Vice City réunit plages, quartiers commerçants, port de croisière et gratte-ciel de Downtown. Rockstar cite Ocean Beach, Little Cuba, Tisha-Wocka et VC Port, et en fait la zone la plus dense et la plus vivante de Leonida.",
    "media": [
     "vice-city-01",
     "vice-city-03",
@@ -35,12 +35,13 @@
    "mapPlaces": [
     "g-L172",
     "g-L120"
-   ]
+   ],
+   "texte": "Métropole tentaculaire du sud de Leonida, Vice City abrite des hôtels art déco aux teintes pastel, des clubs fréquentés par les célébrités et le plus grand port de croisière du monde. Rockstar la présente comme une ville où les habitants, de Little Cuba à Tisha-Wocka, sont toujours prêts à faire la fête. Ocean Beach aligne son sable blanc et ses façades des années 30 ; Downtown dresse ses tours au-dessus de la baie ; VC Port accueille les paquebots. C'est ici que Boobie Ike, Dre'Quan Priest et Real Dimez bâtissent leur empire musical, entre le Jack of Hearts et le studio Only Raw Records. Sur la carte, la ville concentre la majorité des lieux repérés."
   },
   {
    "id": "leonida-keys",
    "name": "Leonida Keys",
-   "description": "Un archipel tropical ouvert sur la mer. La présentation de Jason et Brian situe une partie de leurs activités dans les Keys.",
+   "description": "Un archipel tropical relié par de longues routes au-dessus de l'eau. On y vit de la pêche, des bars de bord de mer et de trafics discrets : Jason y habite dans une propriété de Brian Heder, dont le chantier naval fait encore passer de la marchandise.",
    "media": [
     "leonida-keys-01",
     "leonida-keys-03",
@@ -68,12 +69,13 @@
     "g-L1421",
     "g-L325",
     "g-L328"
-   ]
+   ],
+   "texte": "Les Leonida Keys forment un chapelet d'îles au sud de l'État, reliées par des ponts et des routes construites au-dessus de l'eau. Rockstar y décrit une vie au rythme de la mer, entre pêche, marinas, bars de plage et contrebande occasionnelle, loin de l'agitation de Vice City. C'est là que vit Jason, logé gratuitement dans l'une des propriétés de Brian Heder en échange de quelques services, et que Cal Hampton passe ses journées à écouter les fréquences des garde-côtes. Le chantier naval de Brian, avec son enseigne visible dans le second trailer, sert toujours de point de passage à sa marchandise. Les captures officielles montrent kayaks, hydroglisseurs, scooters des mers et petites marinas le long des routes côtières."
   },
   {
    "id": "grassrivers",
    "name": "Grassrivers",
-   "description": "Rockstar décrit une zone de mangroves habitée par des alligators. Les images montrent aussi des hydroglisseurs dans cet environnement marécageux.",
+   "description": "La plus vaste étendue sauvage subtropicale du pays : mangroves, canaux lents et plaines inondées que l'on parcourt en hydroglisseur. Rockstar en fait le joyau indompté de Leonida, aussi beau que dangereux.",
    "media": [
     "grassrivers-01",
     "grassrivers-05",
@@ -91,12 +93,13 @@
     "Rockstar en fait le joyau indompté de l’État, aussi beau que dangereux.",
     "Chasse, pêche et braconnage y côtoient les unités de protection de la faune."
    ],
-   "mapPlaces": []
+   "mapPlaces": [],
+   "texte": "Grassrivers est l'équivalent des Everglades dans Leonida : une immense zone humide subtropicale faite de mangroves, de canaux lents, de plaines inondées et de cyprès. Rockstar la décrit comme le joyau indompté de l'État, aussi magnifique que dangereux, où les alligators sont l'attraction la plus célèbre et où l'on se déplace surtout en hydroglisseur. Chasse, pêche et braconnage y côtoient les unités de protection de la faune. Les captures officielles y montrent des poursuites dans les marais, des cabanes sur pilotis et des habitants qui posent avec leurs prises devant leur atelier. C'est le terrain des Airboat 09 et Vortex, et une preuve que la carte ne se parcourt pas qu'en voiture."
   },
   {
    "id": "port-gellhorn",
    "name": "Port Gellhorn",
-   "description": "Cette ancienne destination touristique conserve motels et attractions fermées. Son déclin fait partie de la description officielle publiée par Rockstar.",
+   "description": "Ancienne destination de vacances, Port Gellhorn vit aujourd'hui de ce qu'il en reste : motels bon marché, centres commerciaux vides et attractions fermées. Un endroit où se faire oublier et accepter les boulots dont personne ne veut.",
    "media": [
     "port-gellhorn-01",
     "port-gellhorn-06",
@@ -113,12 +116,13 @@
     "Centres commerciaux vides et enseignes éteintes composent son décor nocturne dans les captures.",
     "Real Dimez et le scénario y trouvent une côte oubliée, loin du clinquant de Vice City."
    ],
-   "mapPlaces": []
+   "mapPlaces": [],
+   "texte": "Port Gellhorn a connu son heure de gloire comme station balnéaire ; il n'en reste que les enseignes. Rockstar décrit une ville qui a perdu sa prospérité, avec ses motels bon marché, ses centres commerciaux abandonnés et ses attractions fermées, où l'on peut se faire discret et accepter les boulots que personne d'autre ne veut. Dans les captures officielles, les néons du Starlet Motel et des bars de nuit dominent un décor de commerces de bord de route et de terrains vagues. C'est une côte oubliée, à l'exact opposé du clinquant de Vice City, que Real Dimez et le scénario traversent. Le premier trailer y situe la chambre de motel de Jason et Lucia."
   },
   {
    "id": "ambrosia",
    "name": "Ambrosia",
-   "description": "Le paysage industriel d’Ambrosia s’organise autour de la raffinerie sucrière Allied Crystal. Rockstar mentionne aussi un gang de motards local.",
+   "description": "Le versant agricole et industriel de Leonida, organisé autour de la raffinerie sucrière Allied Crystal. Elle fournit les emplois ; un gang de motards local fournit, selon Rockstar, à peu près tout le reste.",
    "media": [
     "ambrosia-01",
     "ambrosia-04",
@@ -138,12 +142,13 @@
     "Un gang de motards local fournit, selon Rockstar, à peu près tout le reste.",
     "Champs de canne, silos et routes droites : un paysage rural traversé par le scénario."
    ],
-   "mapPlaces": []
+   "mapPlaces": [],
+   "texte": "Ambrosia est le cœur rural et industriel de l'État : champs de canne à sucre, silos, routes droites et cheminées de la raffinerie Allied Crystal qui domine le paysage. Rockstar résume la région d'une phrase : la raffinerie fournit les emplois, le gang de motards local fournit tout le reste. Les captures officielles y montrent des cortèges de motos sur les routes de campagne, des rassemblements de bikers, une motarde brandissant un revolver Mustang .357 et des soirées dans la boue. C'est une Amérique de vieilles valeurs et de vieux moteurs, à l'écart des tours de Vice City, où passent Jason et Lucia au fil de l'histoire."
   },
   {
    "id": "mount-kalaga",
    "name": "Mount Kalaga National Park",
-   "description": "Le parc national apparaît dans les captures officielles : pistes boueuses, reliefs, forêts, animaux et voies d’eau composent les scènes publiées.",
+   "description": "Le parc national du nord de Leonida : forêts, reliefs, rivières et pistes boueuses. Rockstar le présente comme un terrain de chasse, de pêche et de tout-terrain, loin des villes.",
    "media": [
     "mount-kalaga-national-park-01",
     "mount-kalaga-national-park-04",
@@ -162,14 +167,15 @@
     "Reliefs, forêts et voies d’eau : le seul relief marqué du monde de Leonida.",
     "Les captures officielles y montrent motos enduro et quads dans la boue."
    ],
-   "mapPlaces": []
+   "mapPlaces": [],
+   "texte": "Mount Kalaga National Park couvre le nord de l'État, adossé à la frontière. C'est le seul relief marqué de Leonida : forêts de pins, gorges, rivières et voies d'eau qui descendent vers les marais. Rockstar le présente comme l'endroit où l'on vient chasser, pêcher, camper et rouler hors des routes, à l'écart de l'agitation des villes. Les captures officielles y montrent des motos enduro et des quads dans la boue, un hélicoptère au-dessus des crêtes, des chasseurs dans les sous-bois et un kayak sous un pont ferroviaire. Sur la carte, le parc regroupe les pistes tout-terrain et les points d'eau du nord."
   }
  ],
  "characters": [
   {
    "id": "jason",
    "name": "Jason Duval",
-   "description": "Ancien militaire, Jason travaille pour des trafiquants des Keys. Son alliance avec Lucia occupe une place centrale dans la présentation du jeu.",
+   "description": "Ancien militaire élevé parmi les escrocs, Jason travaille pour les trafiquants des Keys, ce qu'il sait faire de mieux. Il voudrait une vie facile ; sa rencontre avec Lucia va tout compliquer.",
    "media": [
     "jason-duval-01",
     "jason-duval-02",
@@ -199,12 +205,13 @@
     "Logé gratuitement par Brian Heder, à condition d’aider aux recouvrements musclés du coin.",
     "Sa rencontre avec Lucia peut être la meilleure ou la pire chose qui lui soit arrivée."
    ],
-   "home": "jason-keys"
+   "home": "jason-keys",
+   "texte": "Jason Duval a grandi entouré d'escrocs et de petits truands. Il a tenté l'armée pour laisser derrière lui une adolescence difficile, avant de se retrouver dans les Leonida Keys à faire ce qu'il sait faire de mieux : travailler pour les trafiquants du coin. Brian Heder le loge gratuitement dans l'une de ses propriétés, à condition qu'il donne un coup de main sur les recouvrements musclés de la région et qu'il passe boire la sangria de Lori. Rockstar le décrit comme quelqu'un qui voudrait une vie facile, mais dont les choses ne cessent de se compliquer. Sa rencontre avec Lucia pourrait être la meilleure ou la pire chose qui lui soit arrivée. Il est l'un des deux personnages jouables, avec Lucia."
   },
   {
    "id": "lucia",
    "name": "Lucia Caminos",
-   "description": "Lucia sort du pénitencier de Leonida. Après son enfance à Liberty City, elle entend améliorer sa vie et celle de sa famille.",
+   "description": "Son père lui a appris à se battre dès qu'elle a su marcher. Se battre pour sa famille l'a envoyée au pénitencier de Leonida ; fraîchement libérée, elle ne veut plus faire que des coups intelligents.",
    "media": [
     "lucia-caminos-01",
     "lucia-caminos-02",
@@ -227,12 +234,13 @@
     "Fraîchement libérée, elle s’en tient à un plan : seulement des coups intelligents désormais.",
     "Une vie avec Jason pourrait être sa porte de sortie."
    ],
-   "home": null
+   "home": null,
+   "texte": "Lucia Caminos a appris à se battre avant de savoir courir : c'est son père qui le lui a enseigné, et la vie l'a mise à l'épreuve depuis. Se battre pour sa famille l'a envoyée au pénitencier de Leonida ; un coup de chance l'en a sortie. Sa mère et elle viennent de Liberty City, et la belle vie de Leonida est leur projet commun : Lucia compte l'obtenir par elle-même. Fraîchement libérée, elle s'en tient à une règle, ne plus faire que des coups intelligents. Une vie avec Jason pourrait être sa porte de sortie. Elle est la première protagoniste jouable de la série, aux côtés de Jason."
   },
   {
    "id": "cal",
    "name": "Cal Hampton",
-   "description": "Ami de Jason et associé de Brian, Cal écoute les communications des garde-côtes. Rockstar souligne sa méfiance et son goût des théories.",
+   "description": "Ami de Jason et associé de Brian, Cal se sent le plus en sécurité chez lui, à écouter les communications des garde-côtes avec quelques bières et des onglets de navigation privée ouverts. Et si tout ce qu'on lit sur internet était vrai ?",
    "media": [
     "cal-hampton-01",
     "cal-hampton-02",
@@ -254,12 +262,13 @@
     "Voit des complots partout, jusque dans les vols d’oiseaux trop bien alignés.",
     "Heureux de son sort dans les Keys, alors que Jason vise plus haut."
    ],
-   "home": "cal-keys"
+   "home": "cal-keys",
+   "texte": "Cal Hampton est l'ami de Jason et l'associé de Brian Heder dans les Keys. Rockstar le décrit comme un homme qui se sent le plus en sécurité chez lui, où il passe ses journées à surveiller les fréquences des garde-côtes, quelques bières à portée de main et des onglets de navigation privée ouverts. Il voit des complots partout, jusque dans les vols d'oiseaux trop bien alignés, et se demande si tout ce qu'on lit sur internet ne serait pas vrai. Heureux de son sort dans les Keys, il n'a pas les ambitions de Jason. Les captures officielles le montrent au mini-golf, à la table de billard et en bouée dans une piscine."
   },
   {
    "id": "boobie",
    "name": "Boobie Ike",
-   "description": "Boobie possède des activités à Vice City. Il investit avec Dre’Quan dans Only Raw Records et exploite le club Jack of Hearts.",
+   "description": "Légende locale de Vice City, Boobie a transformé ses années de rue en empire légal : immobilier, le club Jack of Hearts et le label Only Raw Records, monté avec Dre'Quan. Il ne leur manque qu'un tube.",
    "media": [
     "boobie-ike-01",
     "boobie-ike-02",
@@ -279,12 +288,13 @@
     "Tout sourire, jusqu’au moment de parler affaires.",
     "Son vrai pari, c’est Only Raw Records avec Dre’Quan : il ne leur manque qu’un tube."
    ],
-   "home": null
+   "home": null,
+   "texte": "Boobie Ike est une légende de Vice City, et il se comporte comme telle. Rockstar raconte comment il a converti ses années de rue en un empire légitime : de l'immobilier, un club de strip-tease, le Jack of Hearts, et un studio d'enregistrement. Tout sourire jusqu'au moment de parler affaires, il investit désormais dans la musique avec Dre'Quan Priest au sein d'Only Raw Records, où Real Dimez est signé. Son vrai pari est là : il ne manque au label qu'un tube pour décoller. Les captures officielles le montrent devant l'enseigne du Jack of Hearts et dans son fauteuil, chaîne en or et costume à motifs."
   },
   {
    "id": "drequan",
    "name": "Dre’Quan Priest",
-   "description": "Dre’Quan veut réussir dans la musique. Associé à Boobie, il travaille avec Real Dimez chez Only Raw Records.",
+   "description": "Plus hustler que gangster, Dre'Quan a toujours visé la musique. Il a signé Real Dimez, s'est associé à Boobie dans Only Raw Records et compte bien conquérir toute la scène de Vice City.",
    "media": [
     "dre-quan-priest-01",
     "dre-quan-priest-02",
@@ -305,12 +315,13 @@
     "Il a signé Real Dimez et vise désormais toute la scène de Vice City.",
     "Ses soirées à programmer des artistes dans le club de Boobie pourraient bientôt appartenir au passé."
    ],
-   "home": null
+   "home": null,
+   "texte": "Dre'Quan Priest a toujours été plus hustler que gangster : même lorsqu'il vendait au coin de la rue, percer dans la musique restait l'objectif. Il a signé le duo Real Dimez, s'est associé à Boobie Ike pour fonder Only Raw Records et vise désormais l'ensemble de la scène musicale de Vice City. Ses soirées à programmer des artistes dans le club de Boobie pourraient bientôt appartenir au passé. Rockstar le résume par le nom de son label : Only Raw Records. Les captures officielles le montrent en studio, en boîte de nuit et devant les néons de Vice City."
   },
   {
    "id": "dimez",
    "name": "Real Dimez",
-   "description": "Bae-Luxe et Roxy forment Real Dimez. Amies depuis le lycée, elles sont signées chez Only Raw Records et cherchent un nouveau succès.",
+   "description": "Bae-Luxe et Roxy, amies depuis le lycée, ont transformé leurs rackets en morceaux de rap et en présence en ligne permanente. Signées chez Only Raw Records après un premier succès, elles espèrent que la foudre frappe deux fois.",
    "media": [
     "real-dimez-01",
     "real-dimez-02",
@@ -330,12 +341,13 @@
     "Un premier succès avec le rappeur local DWNPLY les a propulsées.",
     "Cinq ans et beaucoup d’ennuis plus tard, elles sont signées chez Only Raw Records et espèrent que la foudre frappe deux fois."
    ],
-   "home": null
+   "home": null,
+   "texte": "Real Dimez, c'est Bae-Luxe et Roxy, deux amies du lycée qui ont transformé leurs petits trafics en morceaux de rap et en présence en ligne permanente. Un premier succès avec le rappeur local DWNPLY les a propulsées ; cinq ans et beaucoup d'ennuis plus tard, elles sont signées chez Only Raw Records et espèrent que la foudre frappe deux fois. Rockstar les résume ainsi : vidéos virales, refrains viraux. Les captures officielles les montrent en studio, en voiture décapotable et sur scène, dans l'esprit des clips qu'elles enchaînent."
   },
   {
    "id": "raul",
    "name": "Raul Bautista",
-   "description": "Raul est un braqueur expérimenté qui recrute des partenaires prêts à prendre des risques. Ses ambitions font monter les enjeux pour son équipe.",
+   "description": "Braqueur de banques chevronné, Raul recrute des partenaires prêts à prendre les risques qui rapportent le plus. Son imprudence fait monter les enjeux à chaque coup ; son équipe devra suivre ou se retirer.",
    "media": [
     "raul-bautista-01",
     "raul-bautista-02",
@@ -351,12 +363,13 @@
     "Toujours à la recherche de talents prêts à prendre les risques qui rapportent le plus.",
     "Son imprudence fait monter les enjeux à chaque coup ; son équipe devra suivre ou se retirer."
    ],
-   "home": null
+   "home": null,
+   "texte": "Raul Bautista est un braqueur de banques expérimenté qui mise sur la confiance, le charme et la ruse. Rockstar le décrit toujours à la recherche de talents prêts à prendre les risques qui rapportent le plus, et prévient que son imprudence fait monter les enjeux à chaque coup : son équipe devra suivre ou se retirer. L'expérience, ça compte, dit sa présentation officielle. Les captures le montrent au téléphone devant des écrans, au volant d'une voiture avec un pistolet personnalisé, et sur le toit d'un immeuble de Vice City. C'est lui qui fait entrer Jason et Lucia dans les coups les plus ambitieux."
   },
   {
    "id": "brian",
    "name": "Brian Heder",
-   "description": "Trafiquant installé dans les Keys, Brian travaille avec Lori. Il héberge Jason dans une propriété en échange de services.",
+   "description": "Trafiquant à l'ancienne issu de l'âge d'or de la contrebande dans les Keys, Brian fait encore passer sa marchandise par son chantier naval avec Lori, sa troisième épouse. Il héberge Jason contre quelques services.",
    "media": [
     "brian-heder-01",
     "brian-heder-02",
@@ -378,7 +391,8 @@
     "Assez ancien dans le métier pour laisser les autres faire le sale boulot.",
     "Héberge Jason gratuitement, contre un coup de main sur les recouvrements et un passage pour la sangria de Lori."
    ],
-   "home": "brian-keys"
+   "home": "brian-keys",
+   "texte": "Brian Heder est un trafiquant de la vieille école, formé pendant l'âge d'or de la contrebande dans les Keys. Rockstar le décrit comme un beach bum de Leonida avec la morsure d'un grand requin blanc : assez ancien dans le métier pour laisser les autres faire le sale boulot. Il fait toujours passer sa marchandise par son chantier naval, avec Lori, sa troisième épouse. Il laisse Jason vivre gratuitement dans l'une de ses propriétés, à condition qu'il aide aux recouvrements locaux et passe boire la sangria de Lori. Rien de mieux, selon lui, qu'un Mudslide au coucher du soleil. Les captures le montrent au volant de son pick-up Caracara, sur son ponton et en pleine dispute avec Jason."
   }
  ],
  "businesses": [
@@ -389,14 +403,15 @@
     "rideout-customs-mod-shop-01",
     "ultimate-edition-rideout-customs-03"
    ],
-   "description": "Atelier de personnalisation automobile présenté dans les médias Ultimate.",
+   "description": "L'atelier de personnalisation automobile présenté avec l'édition Ultimate : peintures, jantes et intérieurs sur mesure, avec une Manana dorée sur le pont élévateur.",
    "mapId": "g-L2375",
    "source": "https://www.rockstargames.com/VI/media/screenshots",
    "tagline": "L’atelier où les voitures de Leonida changent de peau.",
    "facts": [
     "Atelier de personnalisation présenté dans les visuels de l’édition Ultimate.",
     "Repéré sur la carte grâce aux captures officielles."
-   ]
+   ],
+   "texte": "Rideout Customs est l'atelier de personnalisation automobile que Rockstar présente dans les visuels de l'édition Ultimate. Les captures officielles montrent une Albany Manana à la peinture dorée et aux jantes chromées sur le pont élévateur, un intérieur rouge retapissé et les mécaniciens au travail. L'enseigne annonce le retour de la personnalisation poussée des véhicules : peintures, jantes, intérieurs et finitions. L'atelier est repéré sur la carte de Vice City à partir de ces captures. Les prix et les options seront ajoutés à la sortie du jeu."
   },
   {
    "id": "saras-unisex-salon",
@@ -406,14 +421,15 @@
     "sara-s-unisex-salon-02",
     "sara-s-unisex-salon-03"
    ],
-   "description": "Salon présenté dans les médias officiels ; les images montrent coiffure et soins des ongles.",
+   "description": "Le salon de coiffure et de soins des ongles montré dans la galerie officielle, où Jason passe faire une coupe.",
    "mapId": "g-L360",
    "source": "https://www.rockstargames.com/VI/media/screenshots",
    "tagline": "Coiffure et soins des ongles, pour tout le monde.",
    "facts": [
     "Salon montré dans la galerie officielle.",
     "Repéré sur la carte grâce aux captures officielles."
-   ]
+   ],
+   "texte": "Sara's Unisex Salon est le salon de coiffure et de soins des ongles que Rockstar montre dans sa galerie officielle. Les captures présentent la devanture vitrée, Jason en train de se faire couper les cheveux et une cliente en manucure, signe que les salons de coiffure et de soins reviennent comme dans les épisodes précédents. Le salon est repéré sur la carte de Vice City grâce aux captures officielles. Les coupes disponibles et leurs prix seront documentés après la sortie."
   },
   {
    "id": "stock-305",
@@ -423,14 +439,15 @@
     "stock-305-clothing-store-03",
     "stock-305-clothing-store-04"
    ],
-   "description": "Boutique de vêtements nommée dans la galerie officielle.",
+   "description": "La boutique de vêtements de rue nommée dans la galerie officielle, avec sa façade couverte de graffitis.",
    "mapId": "g-L1488",
    "source": "https://www.rockstargames.com/VI/media/screenshots",
    "tagline": "La boutique de vêtements de la galerie officielle.",
    "facts": [
     "Enseigne nommée par Rockstar dans ses captures.",
     "Repérée sur la carte grâce aux captures officielles."
-   ]
+   ],
+   "texte": "Stock 305 est une boutique de vêtements dont l'enseigne apparaît en toutes lettres dans les captures officielles de Rockstar. Sa façade couverte de graffitis et son intérieur aux murs peints en font l'un des commerces les plus reconnaissables de Vice City ; les images montrent Real Dimez sur le toit d'une voiture devant la boutique et une vendeuse derrière le comptoir. Le nom renvoie à l'indicatif téléphonique de Miami, dont Vice City s'inspire. La boutique est repérée sur la carte grâce aux captures. Son catalogue et ses prix seront ajoutés avec le jeu."
   },
   {
    "id": "electric-fang",
@@ -441,14 +458,15 @@
     "electric-fang-tattoo-03",
     "electric-fang-tattoo-04"
    ],
-   "description": "Salon de tatouage de Stockyard présenté avec l’édition Ultimate.",
+   "description": "Le salon de tatouage de Stockyard, présenté avec l'édition Ultimate, avec son enseigne au loup en néon rouge.",
    "mapId": "g-L1482",
    "source": "https://www.rockstargames.com/VI/media/screenshots",
    "tagline": "Le salon de tatouage de Stockyard.",
    "facts": [
     "Présenté avec l’édition Ultimate.",
     "Situé dans le quartier de Stockyard, à Vice City."
-   ]
+   ],
+   "texte": "Electric Fang Tattoo est le salon de tatouage du quartier de Stockyard, à Vice City, présenté dans les visuels de l'édition Ultimate. Son enseigne, un loup en néon rouge, domine la façade devant laquelle sont garées deux motos. Les captures montrent Jason et Lucia devant le salon, un tatoueur au travail et un client au dos entièrement encré : les tatouages reviennent comme moyen de personnaliser les personnages. Le salon est repéré sur la carte de Vice City à partir de ces captures."
   },
   {
    "id": "one-eyed-willie",
@@ -458,14 +476,15 @@
     "one-eyed-willie-s-mod-shop-02",
     "ultimate-edition-one-eyed-willie-03"
    ],
-   "description": "Atelier nommé dans les médias Ultimate. Aucun marqueur exact n’est validé ici.",
+   "description": "L'atelier de préparation tout-terrain cité dans les visuels de l'édition Ultimate, où un Canis Kamacho vert est remonté de fond en comble.",
    "mapId": null,
    "source": "https://www.rockstargames.com/VI/media/screenshots",
    "tagline": "Un atelier nommé, pas encore localisé.",
    "facts": [
     "Cité dans les visuels de l’édition Ultimate.",
     "Aucune position validée sur la carte pour l’instant."
-   ]
+   ],
+   "texte": "One-Eyed Willie's Mod Shop est un atelier de préparation tout-terrain que Rockstar cite dans les visuels de l'édition Ultimate. Les captures officielles montrent un Canis Kamacho vert fluo sur des pneus à crampons, capot ouvert, en cours de préparation dans un garage encombré d'outils et de pièces. L'atelier illustre la personnalisation des pick-up et des 4x4, en complément des voitures de Rideout Customs. Aucune position n'est encore validée sur la carte pour cet atelier."
   },
   {
    "id": "ptt-youngin",
@@ -473,14 +492,15 @@
    "media": [
     "ptt-youngin-illegal-goods-store"
    ],
-   "description": "Enseigne de biens illicites nommée dans les médias officiels.",
+   "description": "L'enseigne de biens pas tout à fait légaux de Vice City, nommée par Rockstar, avec sa moto tout-terrain décorée en vitrine.",
    "mapId": "ptt-youngin",
    "source": "https://www.rockstargames.com/VI/media/screenshots",
    "tagline": "Des biens pas tout à fait légaux, à Vice City.",
    "facts": [
     "Enseigne nommée dans les médias officiels.",
     "Placée sur la carte de Leonidakit."
-   ]
+   ],
+   "texte": "PTT YOUNGIN$ est l'enseigne de biens illicites que Rockstar nomme dans ses captures officielles. L'image montre une moto tout-terrain décorée exposée devant la boutique, entourée d'une petite foule de jeunes de Vice City, dans une ruelle éclairée au néon. Le commerce illustre l'économie parallèle de la ville, entre revente et petits trafics. Il est placé sur la carte de Leonidakit à partir de cette capture."
   },
   {
    "id": "only-raw-records",
@@ -489,14 +509,15 @@
     "dre-quan-priest-04",
     "real-dimez-04"
    ],
-   "description": "Label associé à Boobie et Dre’Quan ; Real Dimez y est signé.",
+   "description": "Le label fondé par Boobie Ike et Dre'Quan Priest, où Real Dimez est signé. Il ne lui manque qu'un tube.",
    "mapId": null,
    "source": "https://www.rockstargames.com/VI/only-in-leonida/boobie",
    "tagline": "Le label qui cherche son premier tube.",
    "facts": [
     "Fondé par Boobie Ike et Dre’Quan Priest.",
     "Real Dimez y est signé après un premier succès avec DWNPLY."
-   ]
+   ],
+   "texte": "Only Raw Records est le label fondé par Boobie Ike et Dre'Quan Priest à Vice City. Real Dimez y est signé après son premier succès avec le rappeur DWNPLY, et Dre'Quan s'en sert pour viser toute la scène musicale de la ville. L'argent du Jack of Hearts finance le studio, et Rockstar présente ce pari comme le vrai enjeu de Boobie : il ne manque au label qu'un tube pour décoller. Les captures officielles montrent Dre'Quan à la console et Real Dimez derrière le micro."
   },
   {
    "id": "jack-of-hearts",
@@ -504,14 +525,15 @@
    "media": [
     "boobie-ike-02"
    ],
-   "description": "Club associé à Boobie Ike dans sa présentation officielle.",
+   "description": "Le club de strip-tease de Boobie Ike, cité dans sa présentation officielle. L'argent du club finance le studio Only Raw Records.",
    "mapId": "g-L172",
    "source": "https://www.rockstargames.com/VI/only-in-leonida/boobie",
    "tagline": "Le club de Boobie, au cœur de son empire.",
    "facts": [
     "Club de strip-tease de Boobie Ike, cité dans sa présentation officielle.",
     "L’argent du club finance le studio ; repéré sur la carte de Vice City."
-   ]
+   ],
+   "texte": "Le Jack of Hearts est le club de strip-tease de Boobie Ike, au cœur de son empire de Vice City. Rockstar le cite dans la présentation du personnage : les revenus du club financent le label Only Raw Records, et Dre'Quan y programme des artistes. Les captures officielles montrent Boobie devant l'enseigne en néon rouge, dans une rue de nuit. Le club est repéré sur la carte de Vice City à partir de ces captures."
   }
  ],
  "residences": [
@@ -521,7 +543,7 @@
    "media": [
     "jason-s-safehouse-vehicles"
    ],
-   "description": "Une propriété de Brian Heder, prêtée à Jason sans loyer. Le second trailer l’y montre en train de réparer un toit qui fuit avant d’aller encaisser pour Brian.",
+   "description": "Une propriété de Brian Heder, prêtée à Jason sans loyer. Le second trailer l'y montre en train de réparer un toit qui fuit avant d'aller encaisser pour Brian.",
    "tagline": "Logé gratuitement, mais jamais tranquille.",
    "facts": [
     "Appartient à Brian Heder, qui la prête à Jason contre un coup de main sur les recouvrements locaux.",
@@ -541,7 +563,8 @@
     "dinka-enduro",
     "crest-kayak"
    ],
-   "source": "https://www.rockstargames.com/VI/only-in-leonida/jason"
+   "source": "https://www.rockstargames.com/VI/only-in-leonida/jason",
+   "texte": "La maison de Jason se trouve dans les Leonida Keys : une bâtisse sur pilotis au bord de l'eau, qui appartient à Brian Heder et que celui-ci prête à Jason contre un coup de main sur les recouvrements locaux. Le second trailer le montre en train de réparer un toit qui fuit avant de partir encaisser pour Brian. Rockstar la présente aussi comme sa planque : la galerie officielle en montre les véhicules garés devant, le Ganado '70 jaune, la Dinka Enduro et le kayak Crest. C'est le point de départ de la partie de l'histoire jouée dans les Keys."
   },
   {
    "id": "cal-keys",
@@ -566,7 +589,8 @@
    ],
    "vehicles": [],
    "source": "https://www.rockstargames.com/VI/only-in-leonida/cal",
-   "imageAlt": "Cal Hampton devant des installations dans les Keys, capture officielle GTA VI"
+   "imageAlt": "Cal Hampton devant des installations dans les Keys, capture officielle GTA VI",
+   "texte": "Chez Cal Hampton, dans les Keys, tout tourne autour d'un scanner radio et d'un ordinateur. Rockstar décrit un homme qui se sent le plus en sécurité chez lui, à écouter les communications des garde-côtes avec quelques bières à portée de main et des onglets de navigation privée ouverts. Il y est heureux : la marée basse de l'Amérique, selon Rockstar, et ça lui va, alors que Jason vise plus haut. Aucune capture officielle ne montre sa maison elle-même ; les images le présentent au mini-golf, au billard et en bouée dans une piscine."
   },
   {
    "id": "brian-keys",
@@ -590,7 +614,8 @@
     "leonida-keys"
    ],
    "vehicles": [],
-   "source": "https://www.rockstargames.com/VI/only-in-leonida/brian"
+   "source": "https://www.rockstargames.com/VI/only-in-leonida/brian",
+   "texte": "Brian Heder vit dans les Leonida Keys avec Lori, sa troisième épouse, entre son ponton et son chantier naval. Il possède plusieurs propriétés dans l'archipel, dont celle où loge Jason, et fait toujours transiter sa marchandise par le chantier. Jason doit passer régulièrement pour la sangria de Lori : c'est dans le contrat. Les captures officielles montrent Brian accoudé à son ponton, verre à la main, sous les guirlandes d'une marina de nuit. L'adresse exacte de la maison n'est pas publiée ; seul le chantier naval est repéré sur la carte."
   },
   {
    "id": "lucia-avant",
@@ -598,7 +623,7 @@
    "media": [
     "lucia-caminos-05"
    ],
-   "description": "Avant le début de l’histoire, l’adresse de Lucia est le pénitencier de Leonida. Elle en sort par chance et vise la belle vie dont sa mère rêve depuis Liberty City.",
+   "description": "Avant le début de l'histoire, l'adresse de Lucia est le pénitencier de Leonida. Elle en sort par chance et vise la belle vie dont sa mère rêve depuis Liberty City.",
    "tagline": "Fraîchement libérée, décidée à ne plus faire que des coups intelligents.",
    "facts": [
     "Se battre pour sa famille l’a envoyée au pénitencier de Leonida.",
@@ -614,7 +639,8 @@
     "vice-city"
    ],
    "vehicles": [],
-   "source": "https://www.rockstargames.com/VI/only-in-leonida/lucia"
+   "source": "https://www.rockstargames.com/VI/only-in-leonida/lucia",
+   "texte": "Avant le début de l'histoire, l'adresse de Lucia Caminos est le pénitencier de Leonida, où se battre pour sa famille l'a envoyée. Un coup de chance l'en fait sortir ; les captures officielles la montrent en tenue orange, menottée, entre deux gardiens. Sa mère et elle viennent de Liberty City et rêvent de la belle vie de Leonida : Lucia compte l'obtenir par elle-même, en ne faisant plus que des coups intelligents. Une vie avec Jason pourrait être sa porte de sortie. Le pénitencier est repéré sur la carte de Leonida."
   }
  ],
  "hideouts": [
@@ -624,7 +650,7 @@
    "media": [
     "jason-s-safehouse-vehicles"
    ],
-   "description": "C’est le nom que Rockstar donne à la maison de Jason dans sa galerie officielle : une bâtisse des Keys, prêtée par Brian, avec ses véhicules garés devant.",
+   "description": "C'est le nom que Rockstar donne à la maison de Jason dans sa galerie officielle : une bâtisse des Keys, prêtée par Brian, avec ses véhicules garés devant.",
    "tagline": "La seule adresse que Rockstar appelle une planque.",
    "facts": [
     "Visuel officiel intitulé « Jason’s Safehouse Vehicles » dans la galerie de rockstargames.com.",
@@ -644,7 +670,8 @@
     "dinka-enduro",
     "crest-kayak"
    ],
-   "source": "https://www.rockstargames.com/VI/media/screenshots"
+   "source": "https://www.rockstargames.com/VI/media/screenshots",
+   "texte": "La planque de Jason est la seule adresse que Rockstar appelle explicitement une planque : le visuel officiel s'intitule Jason's Safehouse Vehicles dans la galerie de rockstargames.com. Il s'agit de sa maison sur pilotis dans les Keys, prêtée par Brian Heder, devant laquelle sont garés le Ganado '70, la Dinka Enduro et le kayak Crest. C'est là que le second trailer le montre en train de réparer son toit. Le système de planques et de propriétés du jeu sera documenté après la sortie ; pour l'instant, cette maison est le seul lieu de ce type présenté par Rockstar."
   },
   {
    "id": "chantier-brian",
@@ -652,7 +679,7 @@
    "media": [
     "trailer-2-brian-boatyard-085"
    ],
-   "description": "Officiellement un chantier naval dans les Keys, en réalité le point de passage de la marchandise de Brian Heder depuis l’âge d’or de la contrebande.",
+   "description": "Officiellement un chantier naval dans les Keys, en réalité le point de passage de la marchandise de Brian Heder depuis l'âge d'or de la contrebande.",
    "tagline": "Là où la marchandise passe encore, en toute discrétion.",
    "facts": [
     "Rockstar décrit Brian comme faisant toujours transiter sa marchandise par son chantier naval.",
@@ -670,7 +697,8 @@
    ],
    "vehicles": [],
    "source": "https://www.rockstargames.com/VI/only-in-leonida/brian",
-   "imageAlt": "Atelier de Brian de nuit, avec l’enseigne Brian’s Boat Works & Marina lisible au-dessus de la porte, second trailer de GTA VI vers 01:25."
+   "imageAlt": "Atelier de Brian de nuit, avec l’enseigne Brian’s Boat Works & Marina lisible au-dessus de la porte, second trailer de GTA VI vers 01:25.",
+   "texte": "Le chantier naval de Brian Heder se trouve dans les Leonida Keys, au bord de l'eau. Officiellement, on y répare et on y remise des bateaux ; en réalité, Rockstar décrit Brian comme faisant toujours transiter sa marchandise par cet atelier, avec Lori, depuis l'âge d'or de la contrebande. L'enseigne Brian's Boat Works & Marina se lit au-dessus de la porte de l'atelier dans le second trailer, vers 1:25, de nuit, pendant un chargement. Jason et Cal y travaillent pour Brian. Le chantier est repéré sur la carte à partir de cette scène."
   },
   {
    "id": "starlet-motel",
@@ -678,7 +706,7 @@
    "media": [
     "port-gellhorn-01"
    ],
-   "description": "Le premier trailer montre Jason et Lucia dans une chambre de motel. L’enseigne, lisible dans les captures, a permis de placer l’établissement sur la carte.",
+   "description": "Le premier trailer montre Jason et Lucia dans une chambre de motel. L'enseigne, lisible dans les captures, a permis de placer l'établissement sur la carte.",
    "tagline": "Une chambre, deux fugitifs, un rideau tiré.",
    "facts": [
     "Scène du premier trailer de décembre 2023.",
@@ -692,7 +720,8 @@
    ],
    "places": [],
    "vehicles": [],
-   "source": "https://www.rockstargames.com/VI"
+   "source": "https://www.rockstargames.com/VI",
+   "texte": "Le Starlet Motel est le motel du premier trailer, en décembre 2023 : Jason et Lucia y partagent une chambre, rideau tiré, avant de repartir. Son enseigne en néon, lisible dans les captures officielles de Port Gellhorn, a permis de placer l'établissement sur la carte, au bord de la route, entre les palmiers et les commerces de nuit de la ville. Rockstar n'a rien publié d'autre sur cet endroit : rien n'est affirmé au-delà de l'image. Il illustre le type de refuge bon marché que le jeu associe à Port Gellhorn."
   }
  ]
 }

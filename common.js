@@ -59,3 +59,34 @@
   function safeUrl(url) { try { const u = new URL(url,location.href); return ['https:','http:'].includes(u.protocol) ? u.href : ''; } catch (_) { return ''; } }
   window.LK = {esc,record,read,write,writeBatch,own,markers,strokes,mapImport,copy,status,hasAsset,safeUrl};
 })();
+
+/* Fiches du monde : galerie empilée. Chaque image reste collée en haut pendant que la suivante la recouvre ;
+   l'ancienne se floute et s'efface à mesure que la nouvelle devient nette (défilement à la molette, au doigt ou au clavier). */
+(function () {
+  const stack = document.querySelector('.lore-stack');
+  if (!stack || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const slides = Array.from(stack.querySelectorAll('.lore-slide'));
+  if (slides.length < 2) return;
+  let queued = false;
+  function update() {
+    queued = false;
+    const top = parseFloat(getComputedStyle(slides[0]).top) || 96;
+    for (let i = 0; i < slides.length - 1; i++) {
+      const r = slides[i].getBoundingClientRect(), n = slides[i + 1].getBoundingClientRect();
+      const p = Math.min(1, Math.max(0, (top + r.height - n.top) / Math.max(1, r.height)));
+      slides[i].style.setProperty('--p', p.toFixed(3));
+      slides[i].classList.toggle('is-past', p > 0.001);
+    }
+    const vh = window.innerHeight || 800;
+    for (const s of slides) {
+      const r = s.getBoundingClientRect();
+      const e = Math.min(1, Math.max(0, (r.top - top) / Math.max(1, vh * 0.75)));
+      s.style.setProperty('--e', e.toFixed(3));
+      if (e < 0.8) s.classList.add('is-in');
+    }
+  }
+  window.addEventListener('scroll', function () { if (!queued) { queued = true; requestAnimationFrame(update); } }, { passive: true });
+  window.addEventListener('resize', update);
+  slides.forEach(function (s) { s.querySelector('img')?.addEventListener('load', update); });
+  update();
+})();

@@ -1,0 +1,25 @@
+LEONIDAKIT v7.5 : EFFET ROCKSTAR SUR « EN IMAGES » (17 septembre 2026)
+=====================================================================
+Base : v7.4. Aucun fichier supprimé. Portée : uniquement les sections « En images »
+des fiches du monde (régions, personnages, entreprises, demeures, planques).
+
+1. Chaque image reste collée en haut de l'écran pendant que la suivante la recouvre ;
+   l'ancienne se floute, s'efface et recule, la nouvelle se pose (léger zoom qui se
+   stabilise) et devient nette. Molette, doigt ou clavier.
+2. Texte en surimpression sur chaque image, façon rockstargames.com/VI : kicker
+   « GTA VI · Région / Personnage / Entreprise… » en ambre, nom de la fiche en grandes
+   capitales, compteur 01 / 06. Le texte monte en fondu à l'entrée de l'image et
+   disparaît avec elle. Ce n'est pas une légende de source : les crédits restent sur
+   la page Médias.
+3. La galerie reprend toutes les images de la fiche (y compris celle du haut) dès
+   qu'il y en a au moins deux, pour que l'effet existe aussi sur les fiches à deux
+   visuels (Rideout Customs, Only Raw Records…). Une fiche à une seule image n'a pas
+   de section « En images ».
+4. Mobile : les images restent sous l'en-tête (barre de recherche comprise), espacement
+   réduit entre les vues. Grille simple sans animation si l'utilisateur a demandé moins
+   d'animations.
+
+Fichiers : outils/lore-gen.js, common.js, style.css, les 29 fiches du monde, tests.
+Vérifications : verifier.js 27 673 références sans erreur, 52 tests réussis, rendus
+Chromium desktop (Vice City en trois positions de défilement, Rideout Customs) et
+mobile (Jason Duval), aucune erreur console ni débordement.

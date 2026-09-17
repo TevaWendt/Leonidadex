@@ -176,7 +176,7 @@ function card(a){const meds=medList(a);
 const nSt={officiel:0,vu:0};A.forEach(a=>nSt[a.st]++);
 const nSlot={longue:0,poing:0};A.forEach(a=>nSlot[a.slot]++);
 const nCat={};A.forEach(a=>nCat[a.cat]=(nCat[a.cat]||0)+1);
-hub=hub.replace(/(<div class="veh-grid" id="vgrid" data-mot="arme">)[\s\S]*?(<\/div>\s*<p class="vempty")/,'$1'+A.map(card).join('')+'$2');
+hub=hub.replace(/(<div class="veh-grid" id="vgrid" data-mot="arme">)[\s\S]*?(<\/div>\s*<p class="vempty")/,'$1'+A.map(card).join('')+'<i class="veh-spacer" aria-hidden="true"></i>'.repeat(3)+'$2');
 hub=hub.replace(/(<button class="chip-filter is-on" data-filter="all">Tout<em>)\d+(<\/em><\/button>)/,'$1'+A.length+'$2');
 hub=hub.replace(/(<button class="chip-filter is-on" data-filter="all">Tout<em>\d+<\/em><\/button>)[\s\S]*?(\n\s*<span class="chip-sep"><\/span>)/,'$1'+Object.keys(CATL).map(c=>'<button class="chip-filter" data-filter="'+c+'">'+esc(CATL[c])+'<em>'+(nCat[c]||0)+'</em></button>').join('')+'$2');
 hub=hub.replace(/(data-stf="officiel">Nommées par Rockstar<em>)\d+/,'$1'+nSt.officiel).replace(/(data-stf="vu">Vues officiellement<em>)\d+/,'$1'+nSt.vu)

@@ -97,3 +97,24 @@ test('Map only links Google Maps for real coordinates',async()=>{
  let a=await load(root,'carte.html#lieu='+okPoint.id);try{await new Promise(r=>setImmediate(r));const gm=links(a).find(h=>h.startsWith('https://www.google.com/maps'));assert.ok(gm,'lien Google Maps attendu pour '+okPoint.id);assert.ok(gm.includes(encodeURIComponent(okPoint.sv)));assert.ok(!links(a).some(h=>/^javascript:/i.test(h)));assert.deepEqual(a.errors,[]);}finally{a.close();}
  a=await load(root,'carte.html#lieu=vice-city');try{await new Promise(r=>setImmediate(r));assert.ok(!links(a).some(h=>h.startsWith('https://www.google.com/maps')));}finally{a.close();}
 });
+
+// v7.4 : accueil (recherche centrée, calculateurs en tête, bandeau en photos), hubs (espaceurs, FAQ unifiée), fiches du monde (présentation, pile d'images, vignettes de carte)
+test('Home page keeps the reworked sections in order and the region band uses official photos',withPage('index.html',a=>{
+ const ids=['outils','etat','monde'].map(id=>a.d.getElementById(id));assert.ok(ids.every(Boolean));
+ const pos=ids.map(e=>e.compareDocumentPosition(a.d.querySelector('.faq-sec'))&4);assert.ok(pos.every(Boolean),'chaque section précède la FAQ');
+ assert.ok(a.d.getElementById('outils').compareDocumentPosition(a.d.getElementById('etat'))&4,'les calculateurs précèdent les régions');
+ assert.ok(a.d.querySelector('#calc-feature.calc-v2 .calc-tiles li'));
+ const strip=[...a.d.querySelectorAll('#strip img')];assert.ok(strip.length>=6);for(const img of strip)assert.ok(fs.existsSync(path.join(root,new URL(img.src).pathname.slice(1))));
+ assert.ok(a.d.querySelectorAll('.faq-sec details').length>=10);
+ const monde=[...a.d.querySelectorAll('#monde .lore-card img')].map(i=>i.getAttribute('src'));assert.equal(new Set(monde).size,monde.length,'quatre visuels distincts');
+}));
+test('Hub grids end with spacers and share the home FAQ markup',async()=>{
+ for(const file of ['vehicules.html','armes.html']){const a=await load(root,file);try{const grid=a.d.getElementById('vgrid');assert.equal(grid.querySelectorAll('.veh-spacer').length,3);assert.ok(a.d.querySelector('#faq .faq details .ans'));assert.equal(a.d.querySelectorAll('.faq-item').length,0);assert.deepEqual(a.errors,[]);}finally{a.close();}}
+});
+test('World pages expose a presentation text, a stacked gallery and illustrated map cards',()=>{
+ const {JSDOM}=require('jsdom');
+ for(const file of ['lieux/vice-city.html','personnages/brian.html','planques/chantier-brian.html']){const dom=new JSDOM(fs.readFileSync(path.join(root,file),'utf8'));
+  try{const d=dom.window.document;assert.ok(d.querySelector('.lore-texte p').textContent.length>300,file);if(file!=='planques/chantier-brian.html')assert.ok(d.querySelectorAll('.lore-stack .lore-slide img').length>=1,file);assert.equal(d.querySelectorAll('.lore-slide figcaption').length,0);for(const t of d.querySelectorAll('.lore-slide-txt'))assert.match(t.textContent,/GTA VI/);
+   const cards=[...d.querySelectorAll('.lore-mapcard')];if(cards.length)assert.ok(cards.some(c=>c.querySelector('img')),file+' : au moins une vignette de carte illustrée');}finally{dom.window.close();}}
+ const map=fs.readFileSync(path.join(root,'carte.html'),'utf8');assert.equal((map.match(/class="reg reg--link rise"/g)||[]).length,6);
+});

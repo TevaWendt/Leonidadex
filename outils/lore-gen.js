@@ -48,6 +48,8 @@ const byId={};for(const k of Object.keys(SECTIONS))for(const x of ED[k])byId[x.i
 const media=x=>(x.media||[]).map(id=>MED[id]).filter(Boolean)[0]||null;
 const GT=JSON.parse(fs.readFileSync('outils/data/carte-gtadb-source.json','utf8'));const GTBY={};for(const q of [...GT.groupes,...GT.lieux])GTBY[q.id]=q;
 /* visuel de secours : la capture de la carte (gtadb, créditée dans les mentions légales) */
+const ENR=GT.enrichit||{};const LORE_BY_MAP={};for(const k of Object.keys(ED))for(const x of ED[k]){const m=(x.media||[]).map(id=>MED[id]).find(Boolean);if(x.mapId&&m)LORE_BY_MAP[x.mapId]=m;if(k==='regions'&&m)LORE_BY_MAP[x.id]=m;}
+const placeImage=id=>{const e=ENR[id];if(e&&e.img&&/^img\/officiel\//.test(e.img)&&fs.existsSync(e.img))return {variants:[{src:'/'+e.img.replace('-1280.webp','-480.webp'),w:480,h:270}]};const l=LORE_BY_MAP[id];if(l&&l.variants)return l;return mapPhoto(id);};
 const mapPhoto=id=>{const q=GTBY[id];if(!q||!q.img||!/\.webp$/.test(q.img)||!fs.existsSync(q.img.replace(/^\//,'')))return null;return {variants:[{src:'/'+q.img.replace(/^\//,''),w:q.imgW||960,h:q.imgH||540}],titre:q.n.replace(/&#x27;/g,"'").replace(/&amp;/g,'&'),alt:q.imgAlt||null};};
 const visual=x=>media(x)||(x.mapId?mapPhoto(x.mapId):null);
 const RELATED=[['regions','Régions'],['characters','Personnages'],['residences','Demeures'],['hideouts','Planques'],['businesses','Entreprises']];
@@ -56,8 +58,9 @@ const LOCAL={'vice-city':'Vice City','leonida-keys':'Leonida Keys','grassrivers'
 const placeName=id=>LOCAL[id]||gtName(id);
 const IMG_ALT=(m,x)=>x.imageAlt||m.alt||(x.name+', capture officielle Rockstar Games');
 /* Galerie « En images » : les visuels au-delà du premier, en grille, sans légende (crédits sur medias.html). Chaque vignette ouvre la version 1280 px. */
-const galleryBlock=x=>{const g=(x.media||[]).slice(1).map(id=>MED[id]).filter(Boolean);if(!g.length)return '';
-  return `<section class="shell lore-gallery reveal"><h2 class="sec-h">En images</h2><div class="lore-gallery-grid">${g.map(m=>'<a class="rise" href="'+(m.variants[1]||m.variants[0]).src+'" target="_blank" rel="noopener" aria-label="Agrandir : '+esc(m.titre)+'">'+imgTag(m,m.alt||(x.name+', '+m.titre+', capture officielle Rockstar Games'),false)+'</a>').join('')}</div></section>`;};
+const galleryBlock=(x,S)=>{const g=(x.media||[]).map(id=>MED[id]).filter(Boolean);if(g.length<2)return '';
+  const n=g.length,pad=k=>String(k).padStart(2,'0');
+  return `<section class="shell lore-gallery reveal"><h2 class="sec-h">En images</h2><div class="lore-stack">${g.map((m,i)=>'<figure class="lore-slide"><a href="'+(m.variants[1]||m.variants[0]).src+'" target="_blank" rel="noopener" aria-label="Agrandir : '+esc(m.titre)+'">'+imgTag(m,m.alt||(x.name+', '+m.titre+', capture officielle Rockstar Games'),true).replace('loading="eager"','loading="lazy"')+'</a><div class="lore-slide-txt" aria-hidden="true"><span class="lst-k">GTA VI &middot; '+esc(S?S.one:'Leonida')+'</span><strong>'+esc(x.name)+'</strong><em>'+pad(i+1)+' / '+pad(n)+'</em></div></figure>').join('')}</div></section>`;};
 const imgTag=(m,alt,big)=>{if(!m)return '';const a=m.variants[0],b=m.variants[1]||a;
   return '<img src="'+a.src+'" srcset="'+a.src+' '+a.w+'w, '+b.src+' '+b.w+'w" sizes="'+(big?'(max-width:820px) 100vw, 560px':'(max-width:600px) 100vw, 300px')+'" width="'+(big?b.w:a.w)+'" height="'+(big?b.h:a.h)+'" alt="'+esc(alt)+'" loading="'+(big?'eager':'lazy')+'" decoding="async">';};
 const mapHref=(id,p)=>p+'carte.html#lieu='+encodeURIComponent(id);
@@ -108,7 +111,7 @@ ${C.scripts}
 /* ---------- hubs ---------- */
 const index=[];
 const cardOf=(x,S,pfx,extraCls)=>{const m=visual(x);
-  return `<a class="lore-card rise${extraCls||''}" href="${pfx}${S.hub}/${x.id}.html">${m?imgTag(m,IMG_ALT(m,x),false):'<div class="lore-vide">Visuel officiel à venir</div>'}<div class="veh-body"><span class="veh-marque">${esc(S.one)}</span><h3>${esc(x.name)}</h3><p>${esc(x.tagline||x.description)}</p><span class="veh-go">Voir la fiche</span></div></a>`;};
+  return `<a class="lore-card rise${extraCls||''}" href="${pfx}${S.hub}/${x.id}.html">${m?imgTag(m,IMG_ALT(m,x),false):'<div class="lore-vide">Visuel officiel à venir</div>'}<div class="veh-body"><span class="veh-marque">${esc(S.one)}</span><h3>${esc(x.name)}</h3>${x.tagline?'<p class="lore-cardtag">'+esc(x.tagline)+'</p>':''}<p>${esc(x.description)}</p><span class="veh-go">Voir la fiche</span></div></a>`;};
 for(const [key,S] of Object.entries(SECTIONS)){
   const items=ED[key];
   const cards=items.map(x=>cardOf(x,S,'')).join('\n');
@@ -139,7 +142,7 @@ ${cards}
     const vehBlock=(x.vehicles&&x.vehicles.length)?`<div class="lore-rel-group"><h3>Véhicules</h3><ul class="lore-chips">${x.vehicles.map(id=>'<li><a href="../vehicules/'+id+'.html">'+esc(VNOM[id]||id)+'</a></li>').join('')}</ul></div>`:'';
     /* sur la carte : lieu principal + lieux gtadb/local cités, avec la capture de carte quand elle existe */
     const mapIds=[...new Set([].concat(x.mapId?[x.mapId]:[],x.mapPlaces||[],x.relatedPlaces||[]))];
-    const mapBlock=mapIds.length?`<div class="lore-rel-group lore-rel-group--map"><h3>Sur la carte</h3><div class="lore-map">${mapIds.map(id=>{const ph=mapPhoto(id);return '<a class="lore-mapcard" href="'+mapHref(id,p)+'">'+(ph?'<img src="'+ph.variants[0].src+'" width="320" height="180" alt="" loading="lazy" decoding="async">':'<i class="lore-mapvide"></i>')+'<span>'+esc(placeName(id))+'</span></a>';}).join('')}</div></div>`:'';
+    const mapBlock=mapIds.length?`<div class="lore-rel-group lore-rel-group--map"><h3>Sur la carte</h3><div class="lore-map">${mapIds.map(id=>{const ph=placeImage(id);return '<a class="lore-mapcard" href="'+mapHref(id,p)+'">'+(ph?'<img src="'+ph.variants[0].src+'" width="320" height="180" alt="" loading="lazy" decoding="async">':'<i class="lore-mapvide"></i>')+'<span>'+esc(placeName(id))+'</span></a>';}).join('')}</div></div>`:'';
     const facts=(x.facts&&x.facts.length)?`<div class="lore-facts"><h2>À retenir</h2><ul>${x.facts.map(f=>'<li class="rise">'+esc(f)+'</li>').join('')}</ul></div>`:'';
     const links=[];
     if(x.mapId)links.push(`<a href="${mapHref(x.mapId,p)}">Voir sur la carte</a>`);
@@ -159,9 +162,10 @@ ${cards}
   </div>
 </section>
 <section class="shell lore-body">
+  ${x.texte?`<div class="lore-texte reveal"><h2>Présentation</h2><p class="rise">${esc(x.texte)}</p></div>`:''}
   ${facts}
   ${(relBlocks||vehBlock||mapBlock)?`<div class="lore-related"><h2>En lien</h2>${relBlocks}${vehBlock}${mapBlock}</div>`:''}
-</section>${galleryBlock(x)}`;
+</section>${galleryBlock(x,S)}`;
     fs.writeFileSync(S.hub+'/'+x.id+'.html',page({p,title:x.name+' — GTA VI | Leonidakit',desc:x.description,canonical:'/'+S.hub+'/'+x.id+'.html',ogImg:m?(m.variants[1]||m.variants[0]).src:null,body,crumbs:[['Accueil','/'],[S.label,'/'+S.hub+'.html'],[x.name,'/'+S.hub+'/'+x.id+'.html']],hub:S.hub}));
     index.push({l:x.name,k:S.one,u:'/'+S.hub+'/'+x.id+'.html',s:(x.name+' '+S.one+' '+x.description+' '+(x.tagline||'')).toLowerCase(),w:1});
   }
@@ -194,7 +198,7 @@ ${rows}
 
 /* ---------- accueil ---------- */
 let home=fs.readFileSync('index.html','utf8');
-const homeCard=(x,S,sub)=>{const m=visual(x);return `    <a class="lore-card rise" href="${S.hub}/${x.id}.html">${imgTag(m,IMG_ALT(m,x),false)}<div class="veh-body"><span class="veh-marque">${esc(sub||S.one)}</span><h3>${esc(x.name)}</h3><p>${esc(x.tagline||x.description)}</p><span class="veh-go">Voir la fiche</span></div></a>`;};
+const homeCard=(x,S,sub)=>{const m=visual(x);return `    <a class="lore-card rise" href="${S.hub}/${x.id}.html">${imgTag(m,IMG_ALT(m,x),false)}<div class="veh-body"><span class="veh-marque">${esc(sub||S.one)}</span><h3>${esc(x.name)}</h3>${x.tagline?'<p class="lore-cardtag">'+esc(x.tagline)+'</p>':''}<p>${esc(x.description)}</p><span class="veh-go">Voir la fiche</span></div></a>`;};
 
 /* 1. "L'État de Leonida" : les six régions officielles remplacent les vignettes de comtés (les comtés restent sur la carte) */
 const etat=`<section class="counties-sec shell" id="etat">
@@ -210,7 +214,8 @@ if(!/<section class="counties-sec shell"[^>]*>[\s\S]*?<\/section>/.test(home))th
 home=home.replace(/<section class="counties-sec shell"[^>]*>[\s\S]*?<\/section>/,etat);
 
 /* 2. "Le monde de Leonida" : personnages, demeures, planques, entreprises (les lieux sont déjà au-dessus) */
-const hubCard=k=>{const S=SECTIONS[k],x=ED[k][0],m=visual(x);return `    <a class="lore-card rise" href="${S.hub}.html">${imgTag(m,S.title+', capture officielle Rockstar Games',false)}<div class="veh-body"><span class="veh-marque">${ED[k].length} fiches</span><h3>${esc(S.label)}</h3><p>${esc(S.lede)}</p><span class="veh-go">Explorer</span></div></a>`;};
+const HUB_IMG={hideouts:'port-gellhorn-01',businesses:'rideout-customs-mod-shop-01'};
+const hubCard=k=>{const S=SECTIONS[k],x=ED[k][0],m=(HUB_IMG[k]&&MED[HUB_IMG[k]])||visual(x);return `    <a class="lore-card rise" href="${S.hub}.html">${imgTag(m,S.title+', capture officielle Rockstar Games',false)}<div class="veh-body"><span class="veh-marque">${ED[k].length} fiches</span><h3>${esc(S.label)}</h3><p>${esc(S.lede)}</p><span class="veh-go">Explorer</span></div></a>`;};
 const block=`<section class="lore-sec shell" id="monde">
   <div class="sec-head rise"><h2>Le monde de Leonida</h2><p>Personnages, demeures, planques et entreprises présentés par Rockstar, avec leurs visuels officiels.</p></div>
   <div class="lore-grid lore-grid--center lore-grid--four">
@@ -219,7 +224,7 @@ ${['characters','residences','hideouts','businesses'].map(hubCard).join('\n')}
 </section>
 `;
 home=home.replace(/<section class="lore-sec shell" id="monde">[\s\S]*?<\/section>\n/,'');
-home=home.replace(/(<section class="tools-sec shell" id="outils">)/,block+'$1');
+home=home.replace(/(<section class="faq-sec">)/,block+'$1');
 if(!home.includes('id="monde"'))throw new Error("section 'Le monde de Leonida' non insérée");
 
 /* 3. Les outils : les calculateurs passent en tête, en pleine largeur */
@@ -228,21 +233,18 @@ const tools=`<section class="tools-sec shell" id="outils">
     <h2>Les outils</h2>
     <p>Quatre choses, faites correctement.</p>
   </div>
-  <a class="calc-feature reveal" href="calculateurs.html" id="calc-feature">
+  <a class="calc-feature calc-v2 reveal" href="calculateurs.html" id="calc-feature">
     <div class="calc-copy">
       <span class="chip">Le 19 novembre, dès l'ouverture des serveurs</span>
       <h3>Calculateurs</h3>
-      <p>Trois questions que tout le monde se posera dès le premier soir, et auxquelles on répondra avec les vraies formules du jeu, pas avec des estimations.</p>
-      <ul class="calc-q">
-        <li>Combien rapporte vraiment un coup, une fois l'équipe et les frais payés ?</li>
-        <li>Combien de temps pour se payer le véhicule qu'on vise ?</li>
-        <li>Quelle activité rapporte le plus à l'heure de jeu ?</li>
-      </ul>
-      <span class="veh-go">Découvrir les calculateurs</span>
+      <p class="calc-lead">Combien ça rapporte, combien ça coûte, combien de temps il faut. Trois réponses chiffrées dès le premier soir, avec les vraies formules du jeu, pas des estimations.</p>
+      <span class="calc-cta">Découvrir les calculateurs <i aria-hidden="true">&rsaquo;</i></span>
     </div>
-    <div class="calc-art" aria-hidden="true">
-      <div class="calc-screen"><span class="calc-line calc-line--1"></span><span class="calc-line calc-line--2"></span><span class="calc-line calc-line--3"></span><b class="calc-sum">= ?</b></div>
-    </div>
+    <ul class="calc-tiles" aria-hidden="true">
+      <li><b>$</b><strong>Gain d'un coup</strong><span>équipe et frais déduits</span></li>
+      <li><b>&#9201;</b><strong>Temps pour un véhicule</strong><span>selon ce que tu joues</span></li>
+      <li><b>%</b><strong>Rentabilité à l'heure</strong><span>l'activité qui paie le plus</span></li>
+    </ul>
   </a>
   <div class="tools tools--three">
     <a class="tool reveal" href="carte.html">

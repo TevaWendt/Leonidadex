@@ -28,29 +28,17 @@ const el = id => document.getElementById(id);
   const words = ["19 novembre 2026","Vice City","Leonida Keys","Grassrivers","Port Gellhorn","Ambrosia","Mount Kalaga","PS5 et Xbox Series"];
   fillTrack(el('mq'), words.map(w => '<b>' + w + '</b><i>&#9670;</i>').join(''));
 
-  /* illustrations originales des régions, aucun visuel du jeu */
+  /* bandeau des régions : captures officielles Rockstar (les mêmes que les fiches des régions) */
   const scenes = [
-    {cap:"Vice City",     a:"#2B1B4D", b:"#E8452C", c:"#F5A524", kind:"city"},
-    {cap:"Leonida Keys",  a:"#0E3B4D", b:"#E8452C", c:"#F5A524", kind:"sea"},
-    {cap:"Grassrivers",   a:"#1E3A21", b:"#3E7C4A", c:"#F0C46A", kind:"swamp"},
-    {cap:"Port Gellhorn", a:"#332B22", b:"#8A6A45", c:"#F5A524", kind:"port"},
-    {cap:"Ambrosia",      a:"#3A2A16", b:"#B5762A", c:"#F0C46A", kind:"rural"},
-    {cap:"Mount Kalaga",  a:"#1B2B3A", b:"#3B5A73", c:"#E8E2D0", kind:"mount"}
+    {cap:"Vice City",     img:"vice-city-01"},
+    {cap:"Leonida Keys",  img:"leonida-keys-01"},
+    {cap:"Grassrivers",   img:"grassrivers-01"},
+    {cap:"Port Gellhorn", img:"port-gellhorn-01"},
+    {cap:"Ambrosia",      img:"ambrosia-01"},
+    {cap:"Mount Kalaga",  img:"mount-kalaga-national-park-01"}
   ];
-  function art(s){
-    if(s.kind==='city')  return '<rect x="20" y="70" width="26" height="100" fill="'+s.a+'"/><rect x="54" y="45" width="20" height="125" fill="'+s.a+'"/><rect x="82" y="85" width="30" height="85" fill="'+s.a+'"/><rect x="120" y="55" width="18" height="115" fill="'+s.a+'"/><rect x="146" y="95" width="34" height="75" fill="'+s.a+'"/><rect x="188" y="65" width="22" height="105" fill="'+s.a+'"/><rect x="218" y="100" width="30" height="70" fill="'+s.a+'"/>';
-    if(s.kind==='sea')   return '<path d="M0,140 Q65,126 130,140 T260,140 L260,170 L0,170Z" fill="'+s.a+'" opacity=".75"/><path d="M0,152 Q65,141 130,152 T260,152 L260,170 L0,170Z" fill="'+s.a+'"/><rect x="90" y="96" width="6" height="44" fill="'+s.a+'"/><rect x="164" y="96" width="6" height="44" fill="'+s.a+'"/><rect x="70" y="92" width="120" height="7" fill="'+s.a+'"/>';
-    if(s.kind==='swamp') return '<path d="M0,150 L260,150 L260,170 L0,170Z" fill="'+s.a+'"/><path d="M30,150 L36,110 L42,150Z" fill="'+s.a+'"/><path d="M70,150 L78,96 L86,150Z" fill="'+s.a+'"/><path d="M120,150 L128,118 L136,150Z" fill="'+s.a+'"/><path d="M180,150 L188,102 L196,150Z" fill="'+s.a+'"/><path d="M226,150 L232,124 L238,150Z" fill="'+s.a+'"/>';
-    if(s.kind==='port')  return '<rect x="0" y="146" width="260" height="24" fill="'+s.a+'"/><rect x="30" y="96" width="14" height="50" fill="'+s.a+'"/><rect x="30" y="92" width="60" height="8" fill="'+s.a+'"/><rect x="120" y="118" width="44" height="28" fill="'+s.a+'"/><rect x="168" y="126" width="38" height="20" fill="'+s.a+'"/><rect x="120" y="106" width="30" height="12" fill="'+s.a+'"/>';
-    if(s.kind==='rural') return '<rect x="0" y="150" width="260" height="20" fill="'+s.a+'"/><path d="M60,150 L60,110 L96,88 L132,110 L132,150Z" fill="'+s.a+'"/><rect x="176" y="104" width="18" height="46" fill="'+s.a+'"/><rect x="200" y="120" width="14" height="30" fill="'+s.a+'"/>';
-    return '<path d="M0,170 L70,80 L120,132 L165,64 L260,170Z" fill="'+s.a+'"/><path d="M150,84 L165,64 L182,86 L166,94Z" fill="'+s.c+'" opacity=".85"/>';
-  }
-  fillTrack(el('strip'), scenes.map(function(s,i){
-    return '<div class="card"><svg viewBox="0 0 260 170" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">'
-      + '<defs><linearGradient id="g'+i+'" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="'+s.b+'"/><stop offset="72%" stop-color="'+s.c+'"/></linearGradient></defs>'
-      + '<rect width="260" height="170" fill="url(#g'+i+')"/>'
-      + '<circle cx="200" cy="56" r="26" fill="'+s.c+'" opacity=".5"/>'
-      + art(s) + '</svg><span class="cap">'+s.cap+'</span></div>';
+  fillTrack(el('strip'), scenes.map(function(s){
+    return '<div class="card"><img src="/img/officiel/'+s.img+'-480.webp" width="480" height="270" alt="" loading="lazy" decoding="async"><span class="cap">'+s.cap+'</span></div>';
   }).join(''));
 
   /* second bandeau, sens inverse */

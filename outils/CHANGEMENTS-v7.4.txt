@@ -1,0 +1,68 @@
+LEONIDAKIT v7.4 : ACCUEIL, HUBS ET FICHES DU MONDE (17 septembre 2026)
+=====================================================================
+
+Base : v7.3 (à mettre en ligne avant ou avec cette version : l'archive complète
+contient les deux). Aucun fichier supprimé.
+
+ACCUEIL
+-------
+1. Barre de recherche, titre et raccourcis centrés ; le soleil décoratif passe en fond
+   derrière le titre, plus discret.
+2. « Le monde de Leonida » : les quatre cartes tiennent sur une ligne (deux par ligne
+   sur tablette). Planques est maintenant illustré par le Starlet Motel, Entreprises par
+   Rideout Customs : plus de doublon avec Demeures.
+3. Calculateurs redessinés aux couleurs de Leonida (dégradé violet, corail, ambre, titre
+   en capitales, trois tuiles Gain d'un coup / Temps pour un véhicule / Rentabilité à
+   l'heure, bouton d'appel) et remontés juste après les chiffres clés, avant les régions.
+   Le gabarit vit dans outils/lore-gen.js, la régénération le conserve.
+4. Bandeau défilant des régions : les six captures officielles (celles des fiches)
+   remplacent les illustrations en aplats.
+5. FAQ : cinq questions ajoutées (où se passe le jeu, personnages jouables, prix non
+   communiqué, origine des informations, ce qui change le jour de la sortie).
+
+CARTE
+-----
+6. Les six cartes des régions ouvrent la fiche détaillée de la région (lieux/…) et
+   affichent sa capture officielle. Six liens internes de plus vers des pages indexables.
+
+HUBS VÉHICULES ET ARMES
+-----------------------
+7. Cartes alignées : même hauteur de vignette pour les photos et les silhouettes, les
+   corps de carte sont au même niveau sur toute la ligne.
+8. Accordéon au survol : la carte survolée prend 38 % de la ligne, ses voisines se
+   resserrent, la vignette s'agrandit et montre la photo entière sans recadrage.
+   Désactivé sur écran tactile et sous 700 px. Trois espaceurs invisibles en fin de
+   grille gardent la dernière ligne alignée, même après un tri.
+9. FAQ des deux hubs au même gabarit que l'accueil (mêmes cartes blanches à bord noir,
+   même signe +).
+10. Squelette « Personnalisation » sur les 302 fiches véhicules (peintures, jantes,
+    vitres, pare-chocs, ailerons, intérieur : prix de chaque option et niveau requis) ;
+    la carte « Accessoires » des 27 fiches armes devient « Personnalisation et
+    accessoires » avec les mêmes indicateurs. Marqués « À venir », comme le reste.
+
+FICHES DU MONDE (régions, personnages, entreprises, demeures, planques)
+-----------------------------------------------------------------------
+11. Descriptions plus longues sur les cartes des hubs (accroche + description) et
+    section « Présentation » de 5 à 7 phrases sur chaque fiche, écrite d'après les
+    présentations officielles de Rockstar (champ texte d'outils/editorial.json).
+12. « Sur la carte » : les vignettes affichent l'image du lieu lié (capture officielle
+    des régions et commerces, photo de la carte sinon) au lieu du dégradé violet.
+13. Galerie « En images » façon rockstargames.com/VI : chaque image reste collée en haut
+    pendant que la suivante la recouvre ; l'ancienne se floute, s'efface et recule tandis
+    que la nouvelle devient nette. Fonctionne à la molette, au doigt et au clavier ;
+    grille simple si l'utilisateur a demandé moins d'animations. Sans légende.
+
+VÉRIFICATIONS
+-------------
+- verifier.js : 27 593 références dans 395 pages, 0 erreur. Audit : six zéros.
+- 52 tests jsdom (49 + 3) : 52 réussis.
+- Rendu Chromium : accueil (haut, calculateurs, monde), hub véhicules avec survol,
+  hub armes, fiche Vice City en cours de défilement, cartes des régions de carte.html.
+  Aucune erreur console, aucun débordement.
+
+NON FAIT, VOLONTAIREMENT
+------------------------
+- Schémas dessinés par arme et par véhicule (à la place des photos jugées trop centrées
+  sur les personnages et des silhouettes identiques par catégorie) : livraison séparée,
+  c'est un travail de dessin sur 27 armes et 302 véhicules.
+- Jaquette officielle sur l'accueil : voir la réponse dans la conversation.

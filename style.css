@@ -1884,3 +1884,98 @@ header .head-search{flex:0 1 200px; max-width:200px; margin-left:auto; margin-to
 .lore-gallery-grid img{display:block;width:100%;height:auto;border-radius:8px;transition:transform .35s ease}
 .lore-gallery-grid a:hover img,.lore-gallery-grid a:focus-visible img{transform:scale(1.03)}
 @media(max-width:640px){.lore-gallery-grid{grid-template-columns:1fr}}
+
+/* ===================== v7.4 : accueil, hubs, fiches du monde ===================== */
+/* accueil : recherche centrée */
+.hero{text-align:center;}
+.hero h1,.hero .lede,.searchwrap{margin-left:auto;margin-right:auto;}
+.shortcuts{justify-content:center;}
+
+/* accueil : les quatre cartes du monde sur une ligne */
+@media(min-width:960px){.lore-grid--four{grid-template-columns:repeat(4,minmax(0,1fr));}}
+@media(min-width:640px) and (max-width:959px){.lore-grid--four{grid-template-columns:repeat(2,minmax(0,1fr));}}
+.lore-cardtag{font-weight:700;color:var(--ink);margin:0 0 6px;}
+.lore-card .veh-body p{font-size:.88rem;line-height:1.55;}
+
+/* accueil : calculateurs, en couleurs de Leonida */
+.calc-v2{position:relative;overflow:hidden;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);background:linear-gradient(120deg,#2B1B4D 0%,#5A2358 42%,#E8452C 82%,#F5A524 100%);border-color:var(--ink);box-shadow:8px 8px 0 var(--amber);color:#fff;}
+.calc-v2::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,0) 0 18px,rgba(255,255,255,.06) 18px 20px);pointer-events:none;}
+.calc-v2::after{content:'';position:absolute;right:-90px;top:-120px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(245,165,36,.55),rgba(245,165,36,0) 68%);pointer-events:none;}
+.calc-v2>*{position:relative;z-index:1;}
+.calc-v2 .chip{background:rgba(26,26,30,.35);color:#FFE3A6;border-color:rgba(255,227,166,.5);}
+.calc-v2 h3{font-size:clamp(2.2rem,4.4vw,3.4rem);line-height:.95;letter-spacing:-.04em;margin:14px 0 12px;text-transform:uppercase;text-shadow:4px 4px 0 rgba(26,26,30,.45);}
+.calc-v2 .calc-lead{color:rgba(255,255,255,.92);font-size:1.02rem;max-width:46ch;margin:0 0 20px;}
+.calc-cta{display:inline-flex;align-items:center;gap:10px;background:var(--ink);color:#fff;font-weight:800;padding:12px 18px;border-radius:6px;border:2px solid var(--ink);box-shadow:4px 4px 0 var(--amber);transition:transform .15s,box-shadow .15s;}
+.calc-cta i{font-style:normal;font-size:1.4rem;line-height:0;transition:transform .15s;}
+.calc-v2:hover .calc-cta{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--amber);} .calc-v2:hover .calc-cta i{transform:translateX(3px);}
+.calc-v2:hover{box-shadow:12px 12px 0 var(--amber);}
+.calc-tiles{list-style:none;margin:0;padding:0;display:grid;gap:12px;align-self:center;}
+.calc-tiles li{display:grid;grid-template-columns:52px 1fr;grid-template-rows:auto auto;column-gap:14px;align-items:center;background:var(--paper);color:var(--ink);border:2px solid var(--ink);border-radius:8px;padding:12px 16px;box-shadow:4px 4px 0 rgba(26,26,30,.35);transform:translateX(0);transition:transform .25s;}
+.calc-tiles li:nth-child(2){transform:translateX(18px);} .calc-tiles li:nth-child(3){transform:translateX(36px);}
+.calc-v2:hover .calc-tiles li{transform:translateX(0);}
+.calc-tiles b{grid-row:1/3;font-size:1.7rem;font-weight:900;color:#fff;background:linear-gradient(160deg,var(--coral),var(--amber));border-radius:8px;width:52px;height:52px;display:flex;align-items:center;justify-content:center;border:2px solid var(--ink);}
+.calc-tiles strong{font-size:1rem;letter-spacing:-.01em;} .calc-tiles span{font-size:.82rem;color:var(--ink-soft);}
+@media(max-width:780px){.calc-v2{grid-template-columns:1fr;} .calc-tiles li,.calc-tiles li:nth-child(2),.calc-tiles li:nth-child(3){transform:none;}}
+
+/* accueil : bandeau des régions en photos */
+.strip .card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
+.strip .card::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 45%,rgba(0,0,0,.55) 100%);}
+.strip .card .cap{z-index:1;}
+
+/* carte : cartes des régions cliquables */
+.reg--link{display:block;text-decoration:none;color:inherit;}
+.reg-img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:6px;border:2px solid var(--ink);margin-bottom:14px;}
+.reg--link .veh-go{display:inline-flex;margin-top:12px;}
+
+/* hubs véhicules et armes : cartes alignées, la carte survolée s'élargit et ses voisines se resserrent */
+.veh-grid{display:flex;flex-wrap:wrap;gap:11px;}
+.veh-grid .veh-card{flex:1 1 calc(25% - 9px);min-width:172px;max-width:100%;}
+.veh-grid .veh-card,.veh-grid .veh-card.rise.in{transition:flex-grow .38s cubic-bezier(.2,.7,.2,1),transform .18s cubic-bezier(.3,.85,.4,1),box-shadow .18s;}
+.veh-spacer{flex:1 1 calc(25% - 9px);min-width:172px;height:0;padding:0;margin:0;visibility:hidden;}
+.veh-thumb{height:152px;padding:0;transition:height .38s cubic-bezier(.2,.7,.2,1);}
+.veh-thumb .veh-art{height:96px;width:auto;max-width:82%;}
+.veh-thumb--photo img{width:100%;height:100%;aspect-ratio:auto;object-fit:cover;transition:object-fit 0s .1s;}
+@media(hover:hover) and (min-width:700px){
+  .veh-grid .veh-card:hover{flex-grow:2.3;}
+  .veh-grid .veh-card:hover .veh-thumb{height:214px;}
+  .veh-grid .veh-card:hover .veh-thumb--photo img{object-fit:contain;}
+  .veh-grid .veh-card:hover .veh-thumb .veh-art{height:120px;}
+}
+@media(max-width:699px){.veh-grid .veh-card,.veh-spacer{flex-basis:calc(50% - 6px);min-width:140px;} .veh-thumb{height:124px;} .veh-thumb .veh-art{height:76px;}}
+
+/* fiches du monde : présentation, vignettes de carte, galerie empilée façon Rockstar */
+.lore-texte{margin:0 0 28px;} .lore-texte h2{font-size:1.15rem;font-weight:800;letter-spacing:-.02em;margin:0 0 10px;} .lore-texte p{font-size:1rem;line-height:1.75;color:var(--ink);max-width:70ch;}
+.lore-mapcard img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
+.lore-stack{position:relative;}
+.lore-slide{position:sticky;top:96px;margin:0 0 30vh;border:2px solid var(--ink);border-radius:10px;overflow:hidden;background:#1A1A1E;box-shadow:6px 6px 0 rgba(26,26,30,.14);transform-origin:50% 0;will-change:transform,filter,opacity;}
+.lore-slide:last-child{margin-bottom:0;}
+.lore-slide a{display:block;} .lore-slide img{display:block;width:100%;height:auto;}
+.lore-slide.is-past{filter:blur(calc(var(--p,0)*14px));opacity:calc(1 - var(--p,0)*.78);transform:scale(calc(1 - var(--p,0)*.07)) translateY(calc(var(--p,0)*-14px));}
+.lore-slide.is-next{opacity:1;}
+@media(max-width:700px){.lore-slide{top:112px;margin-bottom:30vw;}}
+@media(prefers-reduced-motion:reduce){.lore-stack{display:grid;gap:18px;} .lore-slide{position:static;margin:0;filter:none!important;opacity:1!important;transform:none!important;}}
+/* accueil centré : le soleil passe en fond, derrière le titre, plus discret */
+@media(min-width:900px){.hero-deco{left:50%;right:auto;top:-14px;transform:translateX(-50%);opacity:.32;}}
+/* accordéon des hubs : la carte survolée prend 38 % de la ligne, ses voisines se resserrent ; les espaceurs restent en fin de grille même après un tri */
+.veh-spacer{order:9999;}
+.veh-grid .veh-card,.veh-grid .veh-card.rise.in{transition:flex-basis .38s cubic-bezier(.2,.7,.2,1),transform .18s cubic-bezier(.3,.85,.4,1),box-shadow .18s;}
+@media(hover:hover) and (min-width:700px){
+  .veh-grid:has(.veh-card:hover) .veh-card,.veh-grid:has(.veh-card:hover) .veh-spacer{flex-basis:calc(20.6% - 9px);}
+  .veh-grid:has(.veh-card:hover) .veh-card:hover{flex-basis:calc(38% - 9px);flex-grow:1;}
+}
+/* calculateurs : décalage des tuiles réduit pour rester dans le cadre */
+.calc-tiles{margin-right:26px;}
+.calc-tiles li:nth-child(2){transform:translateX(12px);} .calc-tiles li:nth-child(3){transform:translateX(24px);}
+
+/* v7.5 : « En images » façon rockstargames.com/VI : texte en surimpression qui monte à l'entrée, image qui se pose, ancienne vue floutée */
+.lore-slide a{position:relative;display:block;}
+.lore-slide a::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 40%,rgba(0,0,0,.72) 100%);pointer-events:none;}
+.lore-slide img{transform:scale(calc(1 + var(--e,0)*.07));transition:transform .2s linear;}
+.lore-slide-txt{position:absolute;left:clamp(18px,4%,42px);right:clamp(18px,4%,42px);bottom:clamp(16px,4%,38px);color:#fff;display:flex;flex-direction:column;gap:6px;pointer-events:none;
+  opacity:0;transform:translateY(28px);transition:opacity .6s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1);}
+.lore-slide.is-in .lore-slide-txt{opacity:1;transform:none;}
+.lore-slide-txt .lst-k{font-size:.72rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);}
+.lore-slide-txt strong{font-weight:900;font-size:clamp(1.6rem,4.6vw,3.6rem);line-height:.95;letter-spacing:-.03em;text-transform:uppercase;text-shadow:0 2px 24px rgba(0,0,0,.55);}
+.lore-slide-txt em{font-style:normal;font-size:.78rem;font-weight:700;letter-spacing:.12em;color:rgba(255,255,255,.75);}
+@media(max-width:700px){.lore-slide-txt strong{font-size:1.5rem;}}
+@media(prefers-reduced-motion:reduce){.lore-slide-txt{opacity:1;transform:none;} .lore-slide img{transform:none;}}
