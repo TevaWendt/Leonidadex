@@ -1991,3 +1991,25 @@ header .head-search{flex:0 1 200px; max-width:200px; margin-left:auto; margin-to
 .lore-slide--l img,.lore-slide--r img{transform:scale(calc(1 + var(--e,0)*.05));}
 .lore-slide a{transition:transform .15s linear,opacity .15s linear;}
 @media(prefers-reduced-motion:reduce){.lore-slide a,.lore-slide img{transform:none!important;opacity:1!important;}}
+
+/* v7.7 : « En images » = scène épinglée façon rockstargames.com/VI. Le cadre reste fixe pendant qu'on fait défiler ;
+   chaque nouvelle vue arrive par-dessus la précédente depuis la profondeur, la gauche, la droite ou le bas, et l'ancienne se floute. */
+.lore-stack{position:relative;height:calc((var(--n,2) - 1) * 80vh + min(75vh,760px));margin:0;}
+.lore-stage{position:sticky;top:96px;height:min(75vh,760px);overflow:hidden;border:2px solid var(--ink);border-radius:12px;background:#1A1A1E;box-shadow:8px 8px 0 rgba(26,26,30,.16);}
+.lore-slide,.lore-slide.is-past,.lore-slide.is-in{position:absolute;inset:0;margin:0;border:0;border-radius:0;box-shadow:none;opacity:0;pointer-events:none;will-change:transform,opacity,filter;filter:none;transform:none;}
+.lore-slide.is-active{opacity:1;pointer-events:auto;}
+.lore-slide a,.lore-slide--l a,.lore-slide--r a,.lore-slide--z a{position:absolute;inset:0;height:auto;transform:none;opacity:1;transition:none;}
+.lore-slide img,.lore-slide--l img,.lore-slide--r img,.lore-slide--z img{width:100%;height:100%;object-fit:cover;transform:none;transition:none;}
+.lore-slide-txt{opacity:1;transform:none;transition:none;}
+.lore-slide.is-out{opacity:1;filter:blur(calc(var(--t,0)*16px));transform:scale(calc(1 - var(--t,0)*.08));}
+.lore-slide.is-out .lore-slide-txt{opacity:calc(1 - var(--t,0)*1.6);}
+.lore-slide.is-next{opacity:1;}
+.lore-slide.is-next .lore-slide-txt{opacity:var(--t,0);transform:translateY(calc((1 - var(--t,0))*40px));}
+.lore-slide--l.is-next{transform:translateX(calc((1 - var(--t,0))*-104%));}
+.lore-slide--r.is-next{transform:translateX(calc((1 - var(--t,0))*104%));}
+.lore-slide--b.is-next{transform:translateY(calc((1 - var(--t,0))*104%));}
+.lore-slide--z.is-next{opacity:var(--t,0);transform:scale(calc(1.45 - var(--t,0)*.45));}
+.lore-stage-hint{position:absolute;right:18px;bottom:calc(100% - min(75vh,760px) - 96px);display:none;}
+.lore-stack::after{content:'';position:absolute;left:0;right:0;bottom:0;height:1px;}
+@media(max-width:700px){.lore-stage{top:112px;height:min(62vw,60vh);} .lore-stack{height:calc((var(--n,2) - 1) * 60vh + min(62vw,60vh));}}
+@media(prefers-reduced-motion:reduce){.lore-stack{height:auto;} .lore-stage{position:static;height:auto;overflow:visible;border:0;background:none;box-shadow:none;} .lore-slide{position:static;opacity:1!important;transform:none!important;filter:none!important;margin:0 0 16px;border:2px solid var(--ink);border-radius:10px;overflow:hidden;pointer-events:auto;} .lore-slide a{position:relative;} .lore-slide img{height:auto;}}

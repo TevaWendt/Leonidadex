@@ -60,33 +60,36 @@
   window.LK = {esc,record,read,write,writeBatch,own,markers,strokes,mapImport,copy,status,hasAsset,safeUrl};
 })();
 
-/* Fiches du monde : galerie empilée. Chaque image reste collée en haut pendant que la suivante la recouvre ;
-   l'ancienne se floute et s'efface à mesure que la nouvelle devient nette (défilement à la molette, au doigt ou au clavier). */
+/* Fiches du monde : galerie « En images » épinglée. Le cadre reste fixe le temps de N écrans de défilement ;
+   la progression du défilement choisit la vue affichée (t = avancement de la transition vers la suivante).
+   La vue suivante arrive depuis la profondeur, la gauche, la droite ou le bas (classe lore-slide--z/l/r/b), l'ancienne se floute. */
 (function () {
   const stack = document.querySelector('.lore-stack');
   if (!stack || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const stage = stack.querySelector('.lore-stage');
   const slides = Array.from(stack.querySelectorAll('.lore-slide'));
-  if (slides.length < 2) return;
-  let queued = false;
+  if (!stage || slides.length < 2) return;
+  const N = slides.length;
+  let queued = false, last = -1;
   function update() {
     queued = false;
-    const top = parseFloat(getComputedStyle(slides[0]).top) || 96;
-    for (let i = 0; i < slides.length - 1; i++) {
-      const r = slides[i].getBoundingClientRect(), n = slides[i + 1].getBoundingClientRect();
-      const p = Math.min(1, Math.max(0, (top + r.height - n.top) / Math.max(1, r.height)));
-      slides[i].style.setProperty('--p', p.toFixed(3));
-      slides[i].classList.toggle('is-past', p > 0.001);
-    }
-    const vh = window.innerHeight || 800;
-    for (const s of slides) {
-      const r = s.getBoundingClientRect();
-      const e = Math.min(1, Math.max(0, (r.top - top) / Math.max(1, vh * 0.75)));
-      s.style.setProperty('--e', e.toFixed(3));
-      if (e < 0.8) s.classList.add('is-in');
-    }
+    const rect = stack.getBoundingClientRect();
+    const top = parseFloat(getComputedStyle(stage).top) || 96;
+    const travel = Math.max(1, rect.height - stage.offsetHeight);
+    const p = Math.min(1, Math.max(0, (top - rect.top) / travel));
+    const pos = p * (N - 1), i = Math.min(N - 2, Math.floor(pos)), t = Math.min(1, Math.max(0, pos - i));
+    slides.forEach(function (s, k) {
+      s.classList.remove('is-active', 'is-out', 'is-next');
+      s.style.removeProperty('--t');
+      if (k === i) {
+        if (t < 0.999) { s.classList.add('is-active'); if (t > 0.001) { s.classList.add('is-out'); s.style.setProperty('--t', t.toFixed(3)); } }
+      } else if (k === i + 1) {
+        if (t >= 0.999) s.classList.add('is-active');
+        else if (t > 0.001) { s.classList.add('is-next'); s.style.setProperty('--t', t.toFixed(3)); }
+      }
+    });
   }
   window.addEventListener('scroll', function () { if (!queued) { queued = true; requestAnimationFrame(update); } }, { passive: true });
   window.addEventListener('resize', update);
-  slides.forEach(function (s) { s.querySelector('img')?.addEventListener('load', update); });
   update();
 })();
