@@ -1,0 +1,3 @@
+Archive « modifs » cumulée v7.3 à v7.6 : tous les fichiers modifiés ou ajoutés depuis le dépôt GitHub main du 16/09 (v7.2). Aucune suppression.
+À coller par-dessus le dossier du dépôt (remplacer), puis Commit to main et Push origin.
+Détails : outils/CHANGEMENTS-v7.3.txt à v7.6.txt

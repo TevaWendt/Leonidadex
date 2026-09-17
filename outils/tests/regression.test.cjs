@@ -67,7 +67,7 @@ test('Map generation preserves every available source photo',()=>{
 // Première vue lisible sans JavaScript, vues suivantes chargées seulement à la demande (fiches véhicules et armes).
 test('Gallery exposes a static image and loads additional slides only on demand',async()=>{
  const am=JSON.parse(fs.readFileSync(path.join(root,'outils/armes-medias.json'),'utf8'));
- const fixtures=[['vehicules',catalog.find(v=>Array.isArray(v.medias)&&v.medias.length>1)?.id],['armes',Object.keys(am).find(id=>am[id].length>1)]];
+ const fixtures=[['vehicules',catalog.find(v=>Array.isArray(v.medias)&&v.medias.length>1)?.id]];
  const {JSDOM}=require('jsdom');
  for(const [dir,id] of fixtures){assert.ok(id,dir+' : une fiche à plusieurs images est nécessaire');const file=dir+'/'+id+'.html';
   const raw=new JSDOM(fs.readFileSync(path.join(root,file),'utf8'));
@@ -117,4 +117,15 @@ test('World pages expose a presentation text, a stacked gallery and illustrated 
   try{const d=dom.window.document;assert.ok(d.querySelector('.lore-texte p').textContent.length>300,file);if(file!=='planques/chantier-brian.html')assert.ok(d.querySelectorAll('.lore-stack .lore-slide img').length>=1,file);assert.equal(d.querySelectorAll('.lore-slide figcaption').length,0);for(const t of d.querySelectorAll('.lore-slide-txt'))assert.match(t.textContent,/GTA VI/);
    const cards=[...d.querySelectorAll('.lore-mapcard')];if(cards.length)assert.ok(cards.some(c=>c.querySelector('img')),file+' : au moins une vignette de carte illustrée');}finally{dom.window.close();}}
  const map=fs.readFileSync(path.join(root,'carte.html'),'utf8');assert.equal((map.match(/class="reg reg--link rise"/g)||[]).length,6);
+});
+
+// v7.6 : chaque arme a son schéma (hub, fiche, cartes liées) ; les captures officielles passent dans une section « Aperçus ».
+test('Every weapon is drawn with its own schematic and keeps its official previews below',()=>{
+ const {JSDOM}=require('jsdom');const am=JSON.parse(fs.readFileSync(path.join(root,'outils/armes-medias.json'),'utf8'));
+ const hub=new JSDOM(fs.readFileSync(path.join(root,'armes.html'),'utf8'));
+ try{const cards=[...hub.window.document.querySelectorAll('#vgrid .veh-card')];assert.equal(cards.length,weaponCount);
+  const svgs=cards.map(c=>c.querySelector('.veh-thumb svg.veh-art--schema')?.innerHTML);assert.ok(svgs.every(Boolean),'schéma sur chaque carte');assert.equal(new Set(svgs).size,svgs.length,'schémas tous différents');assert.equal(hub.window.document.querySelectorAll('#vgrid .veh-thumb--photo').length,0);}finally{hub.window.close();}
+ for(const a of baseline.window.LK_ARMES){const dom=new JSDOM(fs.readFileSync(path.join(root,'armes/'+a.id+'.html'),'utf8'));
+  try{const d=dom.window.document;assert.ok(d.querySelector('.gal[data-vide="1"] .gal-vide svg.veh-art--schema'),a.id);assert.match(d.querySelector('.gal-vide span').textContent,/visuels officiels/);
+   const n=(am[a.id]||[]).length;assert.equal(d.querySelectorAll('#apercus .apercu img').length,n,a.id+' aperçus');}finally{dom.window.close();}}
 });

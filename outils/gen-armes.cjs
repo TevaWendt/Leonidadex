@@ -15,6 +15,8 @@ const ctx={window:{}};vm.runInNewContext(fs.readFileSync('armes-data.js','utf8')
 const A=ctx.window.LK_ARMES,CATL=ctx.window.LK_ARMES_CATS;
 const MED=JSON.parse(fs.readFileSync('outils/medias-officiels.json','utf8'));
 const AM=JSON.parse(fs.readFileSync('outils/armes-medias.json','utf8'));
+const {schema}=require('./armes-schemas.cjs');
+const VIDE_TXT='Schéma indicatif du type d\'arme. Les visuels officiels détaillés arriveront avec le jeu.';
 const PERSO_NOM=Object.fromEntries(JSON.parse(fs.readFileSync('outils/editorial.json','utf8')).characters.map(c=>[c.id,c.name.split(' ')[0]]));
 /* armureries repérées sur la carte : mêmes liens sur toutes les fiches, comme les concessions sur les fiches véhicules */
 const CARTE='<section class="shell reveal" id="carte">\n  <h2 class="sec-h">Sur la carte de Leonida</h2>\n  <p class="fiche-txt rise">Les armureries repérées sur notre carte. Les emplacements et prix de chaque arme seront ajoutés après la sortie.</p>\n  <div class="fiche-liens rise"><a href="../carte.html#lieu=g-L1074">Phil&#x27;s Ammu-Nation</a><a href="../carte.html#lieu=g-L1091">Ammu-Nation de Rockridge</a><a href="../carte.html#lieu=g-L298">Pawn &amp; Gun, Port Gellhorn</a></div>\n</section>';
@@ -34,7 +36,7 @@ let hub=fs.readFileSync('armes.html','utf8');
 const ART={};
 for(const m of hub.matchAll(/<article class="veh-card[^>]+data-cat="([^"]+)"[^>]*>([\s\S]*?)<\/article>/g)){const svg=m[2].match(/<svg class="veh-art"[\s\S]*?<\/svg>/);if(svg&&!ART[m[1]])ART[m[1]]=svg[0];}
 for(const a of A)if(!ART[a.cat]&&fs.existsSync('armes/'+a.id+'.html')){const raw=fs.readFileSync('armes/'+a.id+'.html','utf8').match(/data-art="([^"]*)"/);if(raw)ART[a.cat]=dec(raw[1]).replace(/style="height:\d+px"/,'style="height:90px"');}
-const art=(a,h)=>(ART[a.cat]||ART.pistolet||'').replace(/style="height:\d+px"/,'style="height:'+h+'px"');
+const art=(a,h)=>schema(a.id,h)||(ART[a.cat]||ART.pistolet||'').replace(/style="height:\d+px"/,'style="height:'+h+'px"');
 
 /* ---------- gabarit d'une fiche : blocs fixes d'une fiche existante ---------- */
 const BASE=fs.readFileSync('armes/girardi-es9.html','utf8');
@@ -66,7 +68,7 @@ function fiche(a,i){
   ...(a.portee?[['Portée estimée',esc(a.portee)]]:[]),['Inspiration réelle',insp],...(a.mun?[['Munitions',esc(a.mun)]]:[]),
   ...(a.ue?[['Édition Ultimate','Version exclusive ou mise en avant']]:[]),['Source',esc(a.src)]];
  const gal=`<div class="gal" data-base="../img/armes/${a.id}" data-vues="" data-nom="${esc(a.nom)}"
-             data-art="${esc(art(a,120))}" aria-label="Galerie : ${esc(a.nom)}"${meds.length?' data-medias="'+medAttr(a)+'"':''} data-vide="${meds.length?0:1}">${meds.length?'<div class="gal-track"><div class="gal-item"><img src="'+meds[0].variants[0].src+'" srcset="'+medSrcset(meds[0])+'" sizes="(max-width:700px) 100vw, 520px" width="'+meds[0].variants[0].w+'" height="'+meds[0].variants[0].h+'"'+(meds[0].variants[0].h>meds[0].variants[0].w?' class="gal-portrait"':'')+' alt="'+esc(medAlt(a,meds[0]))+'" fetchpriority="high" decoding="async"><span class="gal-lbl">'+esc(meds[0].titre)+'</span></div></div>':''}</div>`;
+             data-art="${esc(art(a,150))}" data-vide-txt="${esc(VIDE_TXT)}" aria-label="Schéma : ${esc(a.nom)}" data-vide="1"><div class="gal-track"><div class="gal-item"><div class="gal-vide">${art(a,150)}<span>${esc(VIDE_TXT)}</span></div></div></div></div>`;
  const rel=related(a).map(x=>'<a class="rel-card" href="'+x.id+'.html"><span class="rel-art">'+art(x,108)+'</span><span class="rel-txt"><span class="rel-marque">'+esc(CATL[x.cat])+'</span><span class="rel-nom">'+esc(x.nom)+'</span></span></a>').join('');
  return `<!DOCTYPE html>
 <html lang="fr">
@@ -115,7 +117,7 @@ ${HEADER}
       </div>
       <div class="fhero-art fhero-art--gal">
         ${gal}
-        <p class="gal-note">${meds.length?CREDIT_RS:'Illustration provisoire : les visuels restent à intégrer à cette fiche.'}</p>
+        <p class="gal-note">${meds.length?'Schéma Leonidakit. '+meds.length+(meds.length>1?' aperçus officiels':' aperçu officiel')+' plus bas sur cette fiche.':'Schéma Leonidakit. Aucun aperçu officiel détaillé pour l\'instant.'}</p>
       </div>
     </div>
   </div>
@@ -140,6 +142,11 @@ ${rows.map(([k,v])=>'        <tr><th scope="row">'+k+'</th><td>'+v+'</td></tr>')
   <h2 class="sec-h">Ce que montrent les supports officiels</h2>
   <p class="fiche-txt rise">${esc(a.ctx)}</p>
 </section>
+${meds.length?`<section class="shell reveal" id="apercus">
+  <h2 class="sec-h">Aperçus dans les supports officiels</h2>
+  <p class="fiche-txt rise">Les captures où cette arme apparaît. Elles montrent la scène plus que l'arme : le schéma ci-dessus reste la référence visuelle tant que Rockstar n'a pas publié de vue détaillée.</p>
+  <div class="lore-gallery-grid rise">${meds.map(m=>'<a class="apercu" href="'+medBig(m).src+'" target="_blank" rel="noopener" aria-label="Agrandir : '+esc(m.titre)+'"><img src="'+m.variants[0].src+'" srcset="'+medSrcset(m)+'" sizes="(max-width:700px) 100vw, 560px" width="'+m.variants[0].w+'" height="'+m.variants[0].h+'" alt="'+esc(medAlt(a,m))+'" loading="lazy" decoding="async"></a>').join('')}</div>
+</section>`:''}
 
 ${CARTE}
 
@@ -171,8 +178,8 @@ A.forEach((a,i)=>fs.writeFileSync('armes/'+a.id+'.html',fiche(a,i)));
 /* ---------- hub : cartes, filtres, sélecteurs, compteurs, ItemList ---------- */
 const search=a=>[a.nom,a.fr,a.insp,CATL[a.cat]].filter(Boolean).join(' ').toLowerCase();
 function card(a){const meds=medList(a);
- const thumb=meds.length?'<img src="'+meds[0].variants[0].src+'" srcset="'+medSrcset(meds[0])+'" sizes="(max-width:600px) 100vw, 280px" width="'+meds[0].variants[0].w+'" height="'+meds[0].variants[0].h+'" alt="'+esc(medAlt(a,meds[0]))+'" loading="lazy" decoding="async">':art(a,90);
- return '<article class="veh-card rise arm-card" data-id="'+a.id+'" data-cat="'+a.cat+'" data-slot="'+a.slot+'" data-st="'+a.st+'" data-search="'+esc(search(a))+'"><a class="veh-link" href="armes/'+a.id+'.html"><div class="veh-thumb veh-thumb--arm veh-thumb--'+(meds.length?'photo':a.cat)+'"><span class="veh-badge">'+esc(CATL[a.cat])+'</span>'+thumb+'<span class="arm-slot arm-slot--'+a.slot+'">'+(a.slot==='longue'?'Longue':'Poing')+'</span></div><div class="veh-body"><span class="veh-st veh-st--'+a.st+'">'+ST[a.st].card+'</span><h3>'+esc(a.nom)+'</h3>'+(a.insp?'<p class="veh-insp">Inspiration&nbsp;: <span>'+esc(a.insp)+'</span></p>':a.fam?'<p class="veh-insp veh-insp--fam">Famille&nbsp;: <span>'+esc(a.fam)+'</span></p>':'')+'<span class="veh-go">Voir la fiche</span></div></a></article>';}
+ const thumb=art(a,90);
+ return '<article class="veh-card rise arm-card" data-id="'+a.id+'" data-cat="'+a.cat+'" data-slot="'+a.slot+'" data-st="'+a.st+'" data-search="'+esc(search(a))+'"><a class="veh-link" href="armes/'+a.id+'.html"><div class="veh-thumb veh-thumb--arm veh-thumb--'+a.cat+'"><span class="veh-badge">'+esc(CATL[a.cat])+'</span>'+thumb+'<span class="arm-slot arm-slot--'+a.slot+'">'+(a.slot==='longue'?'Longue':'Poing')+'</span></div><div class="veh-body"><span class="veh-st veh-st--'+a.st+'">'+ST[a.st].card+'</span><h3>'+esc(a.nom)+'</h3>'+(a.insp?'<p class="veh-insp">Inspiration&nbsp;: <span>'+esc(a.insp)+'</span></p>':a.fam?'<p class="veh-insp veh-insp--fam">Famille&nbsp;: <span>'+esc(a.fam)+'</span></p>':'')+'<span class="veh-go">Voir la fiche</span></div></a></article>';}
 const nSt={officiel:0,vu:0};A.forEach(a=>nSt[a.st]++);
 const nSlot={longue:0,poing:0};A.forEach(a=>nSlot[a.slot]++);
 const nCat={};A.forEach(a=>nCat[a.cat]=(nCat[a.cat]||0)+1);

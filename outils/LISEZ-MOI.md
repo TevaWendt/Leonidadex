@@ -33,4 +33,4 @@ les sitemaps et les métadonnées sociales de toutes les pages.
 | `photos-reelles.js`, `licenses.cjs`, `PHOTOS.md` | récupération optionnelle de photos de modèles réels sur Wikimedia Commons, licences libres uniquement |
 | `croise.js`, `similarite.js` | contrôles éditoriaux (alertes lexicales, similarité des textes) |
 | `landmarks-leonidakit.json` | export de référence des lieux, conservé pour la provenance |
-| `tests/` | 52 tests jsdom (voir README racine). Ils vérifient le code et le DOM, pas le rendu visuel. |
+| `tests/` | 53 tests jsdom (voir README racine). Ils vérifient le code et le DOM, pas le rendu visuel. |

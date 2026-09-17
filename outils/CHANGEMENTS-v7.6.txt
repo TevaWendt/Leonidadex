@@ -1,0 +1,35 @@
+LEONIDAKIT v7.6 : GALERIE ALTERNÉE ET SCHÉMAS DES ARMES (17 septembre 2026)
+==========================================================================
+Base : v7.5. Aucun fichier supprimé.
+
+GALERIE « EN IMAGES »
+1. Les vues n'arrivent plus toutes du bas : la première se pose depuis l'intérieur de
+   l'image (zoom qui se stabilise), la deuxième glisse depuis la gauche, la troisième
+   depuis la droite, puis le cycle reprend. Chaque entrée se fait en fondu ; l'ancienne
+   vue se floute, s'efface et recule comme avant.
+2. Les images occupent les trois quarts de la hauteur de l'écran sur ordinateur (760 px
+   au plus), en cadrage plein. Sur mobile, hauteur naturelle de l'image.
+
+SCHÉMAS DES ARMES (outils/armes-schemas.cjs)
+3. Un schéma dessiné pour chacune des 27 armes, vue de profil, canon à droite, dans le
+   style des silhouettes de véhicules : Beretta 92, Glock 17, Bersa compact, revolvers
+   S&W 629 et Colt Python (bande ventilée), 1911, Glock à sélecteur et chargeur long,
+   fusil juxtaposé, fusil à pompe, Mini Uzi, Škorpion, MP5, PM à crosse repliée, M4, AK,
+   fusil à verrou à lunette, M1A, M249, batte, cran d'arrêt, fer de golf, marteau, queue
+   de billard, cocktail Molotov, grenade fumigène, fusil-harpon, lance-grenades MGL.
+   Tous différents (vérifié par un test), tous indicatifs du type d'arme.
+4. Hub Armes : le schéma remplace la photo sur les 27 cartes, sur le dégradé de la
+   catégorie. Plus aucune photo de personnage, plus aucun doublon entre deux armes.
+5. Fiche arme : le schéma occupe la vignette principale, avec la mention « Schéma
+   indicatif du type d'arme. Les visuels officiels détaillés arriveront avec le jeu. »
+   Les captures officielles où l'arme apparaît ne sont pas perdues : elles passent dans
+   une section « Aperçus dans les supports officiels » plus bas (18 fiches), en grille,
+   clic vers la version 1280 px. Les cartes « Autres armes » utilisent aussi le schéma.
+6. Régénération inchangée : node outils/gen-armes.cjs lit armes-schemas.cjs.
+
+VÉRIFICATIONS
+- verifier.js : 27 591 références dans 395 pages, 0 erreur. 53 tests jsdom réussis
+  (un test ajouté : schéma présent et unique sur chaque carte et chaque fiche, aperçus
+  officiels au complet).
+- Rendu Chromium : hub Armes avec survol, fiche Carabine (schéma puis aperçus), fiche
+  Leonida Keys en cours de défilement. Aucune erreur console, aucun débordement.

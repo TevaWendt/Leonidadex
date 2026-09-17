@@ -59,7 +59,7 @@
     const vues = (gal.dataset.vues || 'face,profil').split(',').filter(v => window.LK.hasAsset(base+'-'+v+'.jpg'));
     const art = gal.dataset.art || '';
     if(!vues.length || gal.dataset.vide === '1'){
-      gal.innerHTML='<div class="gal-track"><div class="gal-item"><div class="gal-vide">'+art+'<span>Images officielles à intégrer</span></div></div></div>';
+      gal.innerHTML='<div class="gal-track"><div class="gal-item"><div class="gal-vide">'+art+'<span>'+(gal.dataset.videTxt||'Images officielles à intégrer')+'</span></div></div></div>';
       return;
     }
     const track = document.createElement('div'); track.className = 'gal-track';

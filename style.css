@@ -1979,3 +1979,15 @@ header .head-search{flex:0 1 200px; max-width:200px; margin-left:auto; margin-to
 .lore-slide-txt em{font-style:normal;font-size:.78rem;font-weight:700;letter-spacing:.12em;color:rgba(255,255,255,.75);}
 @media(max-width:700px){.lore-slide-txt strong{font-size:1.5rem;}}
 @media(prefers-reduced-motion:reduce){.lore-slide-txt{opacity:1;transform:none;} .lore-slide img{transform:none;}}
+
+/* v7.6 : schémas d'armes (hub, fiche, cartes liées) et galerie « En images » alternée */
+.veh-thumb--arm .veh-art--schema{opacity:.96;filter:drop-shadow(0 4px 10px rgba(0,0,0,.25));}
+.gal-vide .veh-art--schema{width:auto;max-width:86%;}
+.apercu{display:block;border:2px solid var(--ink);border-radius:8px;overflow:hidden;background:#1A1A1E;} .apercu img{display:block;width:100%;height:auto;}
+@media(min-width:701px){.lore-slide a{height:min(75vh,760px);} .lore-slide img{width:100%;height:100%;object-fit:cover;}}
+.lore-slide--l a{transform:translateX(calc(var(--e,0)*-9vw));opacity:calc(1 - var(--e,0)*.5);}
+.lore-slide--r a{transform:translateX(calc(var(--e,0)*9vw));opacity:calc(1 - var(--e,0)*.5);}
+.lore-slide--z img{transform:scale(calc(1 + var(--e,0)*.34));} .lore-slide--z a{opacity:calc(1 - var(--e,0)*.55);}
+.lore-slide--l img,.lore-slide--r img{transform:scale(calc(1 + var(--e,0)*.05));}
+.lore-slide a{transition:transform .15s linear,opacity .15s linear;}
+@media(prefers-reduced-motion:reduce){.lore-slide a,.lore-slide img{transform:none!important;opacity:1!important;}}
