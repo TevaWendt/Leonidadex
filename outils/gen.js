@@ -30,12 +30,14 @@ let m;const re=/<a class="veh-card rise" href="vehicules\/[^"]+\.html" data-id="
 while((m=re.exec(hub0))!==null){ THUMB[m[1]]={cls:m[2],in:m[3]};
   const s=m[3].match(/<svg class="veh-art"[\s\S]*?<\/svg>/); if(s){ ART_ID[m[1]]=s[0];
     const v=V.find(x=>x.id===m[1]); if(v&&!ART_CAT[v.cat])ART_CAT[v.cat]=s[0]; } }
-const art=v=>ART_ID[v.id]||ART_CAT[v.cat]||ART_CAT.sport||'';
+const {schema:vehSchema}=require('./vehicules-schemas.cjs');
+const VIDE_TXT='Schéma indicatif du modèle. Les visuels officiels détaillés arriveront avec le jeu.';
+const art=v=>vehSchema(v,90)||ART_ID[v.id]||ART_CAT[v.cat]||ART_CAT.sport||'';
 
 /* ================= HUB ================= */
 function carte(v){
  const t0=THUMB[v.id];
- const t=(t0&&!/image-placeholder|<img\b/.test(t0.in))?t0:null; /* vignette du gabarit sans image manquante */
+ const t=(t0&&!/image-placeholder|<img\b/.test(t0.in)&&!vehSchema(v,90))?t0:null; /* vignette du gabarit, sauf si un schéma propre au véhicule existe */
  const cls=t?t.cls.replace(' veh-thumb--photo',''):' veh-thumb--'+v.cat;
  const meds=medList(v);
  const inner=meds.length?'<span class="veh-badge">'+CATL[v.cat]+'</span><img src="'+meds[0].variants[0].src+'" srcset="'+medSrcset(meds[0])+'" sizes="(max-width:600px) 100vw, 280px" width="'+meds[0].variants[0].w+'" height="'+meds[0].variants[0].h+'" alt="'+esc(medAlt(v,meds[0]))+'" loading="lazy" decoding="async">'
@@ -187,7 +189,7 @@ const PENDCAT={
 const pend=v=>{const t=PENDCAT[v.cat]||PENDCAT.divers;
  return ["Performances","Acquisition","Personnalisation"].map((h,i)=>
   '\n    <div class="pending rise"><div class="pending-top"><h3>'+h+'</h3><span class="pending-tag">À venir</span></div><p>'
-  +esc(t[i])+'</p><div class="pending-bars" aria-hidden="true"><span></span><span></span><span></span></div></div>').join('')+'\n  ';};
+  +esc(t[i]+(i===2?' Pour chaque option : prix, niveau requis pour la débloquer, et atelier où la faire poser (Rideout Customs, One-Eyed Willie\'s).':''))+'</p><div class="pending-bars" aria-hidden="true"><span></span><span></span><span></span></div></div>').join('')+'\n  ';};
 
 const MOD=fs.readFileSync('outils/templates/vehicle-reference.html','utf8');
 const HEADER=MOD.match(/<a class="skip"[\s\S]*?<main id="main">/)[0];
@@ -282,7 +284,7 @@ ${HEADER}
       </div>
       <div class="fhero-art fhero-art--gal">
         <div class="gal" data-base="../img/vehicules/${v.id}" data-vues="${vues}" data-nom="${esc(nom)}" data-vide="${img?0:1}"${meds.length?` data-medias="${medAttr(v)}"`:''}
-             data-art="${esc(artH(v))}">${meds.length?'<div class="gal-track"><div class="gal-item"><img src="'+meds[0].variants[0].src+'" srcset="'+medSrcset(meds[0])+'" sizes="(max-width:700px) 100vw, 520px" width="'+meds[0].variants[0].w+'" height="'+meds[0].variants[0].h+'"'+(meds[0].variants[0].h>meds[0].variants[0].w?' class="gal-portrait"':'')+' alt="'+esc(medAlt(v,meds[0]))+'" fetchpriority="high" decoding="async"><span class="gal-lbl">'+esc(meds[0].titre)+'</span></div></div>':''}</div>
+             data-art="${esc(artH(v))}"${meds.length?'':' data-vide-txt="'+esc(VIDE_TXT)+'"'}>${meds.length?'<div class="gal-track"><div class="gal-item"><img src="'+meds[0].variants[0].src+'" srcset="'+medSrcset(meds[0])+'" sizes="(max-width:700px) 100vw, 520px" width="'+meds[0].variants[0].w+'" height="'+meds[0].variants[0].h+'"'+(meds[0].variants[0].h>meds[0].variants[0].w?' class="gal-portrait"':'')+' alt="'+esc(medAlt(v,meds[0]))+'" fetchpriority="high" decoding="async"><span class="gal-lbl">'+esc(meds[0].titre)+'</span></div></div>':'<div class="gal-track"><div class="gal-item"><div class="gal-vide">'+artH(v)+'<span>'+esc(VIDE_TXT)+'</span></div></div></div>'}</div>
         <p class="gal-note">${meds.length?CREDIT_RS:img?esc(v.credit||'Captures officielles de Rockstar Games.'):esc(pioche(v.id,'img',V_SANSIMG))}</p>
       </div>
     </div>
@@ -320,8 +322,7 @@ ${HEADER}
     </table>
   </div>
   <div class="fiche-col reveal">
-    <h2 class="sec-h">Ce qui arrive avec le jeu</h2>${pend(v)}
-    <div class="pending rise"><div class="pending-top"><h3>Personnalisation</h3><span class="pending-tag">À venir</span></div><p>Peintures, jantes, vitres teintées, pare-chocs, ailerons et intérieur : le prix de chaque option et le niveau requis pour la débloquer, tels qu'affichés chez Rideout Customs.</p><div class="pending-bars" aria-hidden="true"><span></span><span></span><span></span></div></div></div>
+    <h2 class="sec-h">Ce qui arrive avec le jeu</h2>${pend(v)}</div>
 </section>
 <section class="shell reveal" id="carte">
   <h2 class="sec-h">Sur la carte de Leonida</h2>

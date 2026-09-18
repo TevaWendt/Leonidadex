@@ -25,7 +25,7 @@ test('Duplicate long weapon is rejected and an empty loadout clears the link',wi
 test('Comparator validates URL IDs, uses labels and updates empty selection URL',withPage('comparateur.html?type=vehicules&ids=karin-sultan,karin-sultan,constructor',a=>{assert.equal(a.d.querySelectorAll('#cmp-table thead a').length,1);assert.match(a.d.getElementById('cmp-table').textContent,/Voitures de sport/);const s=a.d.querySelector('#cmp-pick select');s.value='';s.dispatchEvent(new a.w.Event('change'));assert.equal(new URLSearchParams(a.w.location.search).has('ids'),false);}));
 test('Ranking accepts newly added vehicles and rejects stale options',withPage('classement-vehicules.html',a=>{assert.ok([...a.d.getElementById('cl-sel').options].some(o=>o.value==='ford-explorer-sport-trac'));change(a,'cl-sel','ford-explorer-sport-trac');click(a,'cl-add');assert.match(a.d.getElementById('cl-liste').textContent,/Explorer Sport Trac/);assert.equal(a.d.querySelector('[value="vapid-sadler"]'),null);}));
 test('Ranking share deduplicates entries',withPage('classement-vehicules.html#top=karin-sultan,karin-sultan,constructor',a=>assert.equal(a.d.querySelectorAll('.cl-item').length,1)));
-test('No gallery requests missing images',withPage('vehicules/karin-sultan.html',a=>{assert.equal(a.requests.length,0);assert.match(a.d.querySelector('.gal').textContent,/intégrer/);assert.equal(a.d.querySelectorAll('#reel-bt').length,1);assert.ok(a.d.querySelector('#carte a[href*="carte.html#lieu="]'));}));
+test('No gallery requests missing images',withPage('vehicules/karin-sultan.html',a=>{assert.equal(a.requests.length,0);assert.match(a.d.querySelector('.gal').textContent,/visuels officiels/);assert.ok(a.d.querySelector('.gal svg.veh-art--schema'));assert.equal(a.d.querySelectorAll('#reel-bt').length,1);assert.ok(a.d.querySelector('#carte a[href*="carte.html#lieu="]'));}));
 test('404 page supports both searches and nested URLs',withPage('404.html',a=>{input(a,'q404','Sultan');assert.match(a.d.getElementById('suggest404').textContent,/Sultan/);},{url:'https://www.leonidakit.com/unknown/nested/route'}));
 test('Clipboard rejection never announces success',withPage('comparateur.html',async a=>{Object.defineProperty(a.w.navigator,'clipboard',{value:{writeText:()=>Promise.reject(new Error('denied'))},configurable:true});click(a,'cmp-share');await new Promise(r=>setImmediate(r));assert.doesNotMatch(a.d.getElementById('cmp-share').textContent,/copié/i);assert.match(a.d.getElementById('lk-status').textContent,/impossible/i);}));
 test('Newsletter does not fabricate a confirmation or use an invisible sink',withPage('index.html',a=>{assert.equal(a.d.querySelector('#signup').target,'_self');assert.equal(a.d.querySelector('iframe[name="brevo-sink"]'),null);const f=a.d.getElementById('signup');input(a,'mail','invalid');const e=new a.w.Event('submit',{cancelable:true});f.dispatchEvent(e);assert.equal(e.defaultPrevented,true);}));
@@ -128,4 +128,16 @@ test('Every weapon is drawn with its own schematic and keeps its official previe
  for(const a of baseline.window.LK_ARMES){const dom=new JSDOM(fs.readFileSync(path.join(root,'armes/'+a.id+'.html'),'utf8'));
   try{const d=dom.window.document;assert.ok(d.querySelector('.gal[data-vide="1"] .gal-vide svg.veh-art--schema'),a.id);assert.match(d.querySelector('.gal-vide span').textContent,/visuels officiels/);
    const n=(am[a.id]||[]).length;assert.equal(d.querySelectorAll('#apercus .apercu img').length,n,a.id+' aperçus');}finally{dom.window.close();}}
+});
+
+// v7.8 : chaque véhicule sans photo a son propre schéma (hub et fiche) ; les 302 schémas sont tous différents.
+test('Every vehicle gets a distinct schematic',()=>{
+ const {schema}=require('../vehicules-schemas.cjs');
+ const svgs=catalog.map(v=>schema(v,90));assert.ok(svgs.every(Boolean));assert.equal(new Set(svgs).size,svgs.length,'schémas tous différents');
+ const {JSDOM}=require('jsdom');const hub=new JSDOM(fs.readFileSync(path.join(root,'vehicules.html'),'utf8'));
+ try{const cards=[...hub.window.document.querySelectorAll('#vgrid .veh-card')];assert.equal(cards.length,catalog.length);
+  const withPhoto=cards.filter(c=>c.querySelector('.veh-thumb--photo img')).length,withSchema=cards.filter(c=>c.querySelector('svg.veh-art--schema')).length;
+  assert.equal(withPhoto+withSchema,catalog.length,'photo ou schéma sur chaque carte');assert.equal(withPhoto,catalog.filter(v=>Array.isArray(v.medias)&&v.medias.length).length);}finally{hub.window.close();}
+ const v=catalog.find(v=>!(v.medias&&v.medias.length));const dom=new JSDOM(fs.readFileSync(path.join(root,'vehicules/'+v.id+'.html'),'utf8'));
+ try{const d=dom.window.document;assert.ok(d.querySelector('.gal .gal-vide svg.veh-art--schema'),v.id);assert.equal(d.querySelectorAll('.pending h3').length,3);assert.match([...d.querySelectorAll('.pending')].pop().textContent,/prix, niveau requis/);}finally{dom.window.close();}
 });

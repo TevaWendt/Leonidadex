@@ -1,0 +1,36 @@
+LEONIDAKIT v7.8 : UN SCHÉMA PAR VÉHICULE (17 septembre 2026)
+============================================================
+Base : v7.7. Aucun fichier supprimé.
+
+1. outils/vehicules-schemas.cjs dessine un profil pour chacun des 302 véhicules. Le type
+   de carrosserie est choisi d'après l'inspiration réelle et la catégorie : berline trois
+   volumes, coupé ou fastback, cabriolet (pare-brise seul, capote repliée), break avec
+   barres de toit, SUV, pick-up simple ou double cabine, van, camping-car, bus urbain,
+   autocar, camion à capot ou à cabine avancée (plateau, benne, bétonnière, ordures,
+   dépanneuse, tracteur, fourgon, ambulance), chariot élévateur, tracteur d'aéroport,
+   pelleteuse, motos (sportive, roadster, enduro, cruiser, chopper, scooter), quad,
+   buggy, swamp buggy, scooter de mobilité, vélos (BMX, plage, électrique, course,
+   VTT), trottinette, monorail, train, métro, bateaux (hors-bord, cabin cruiser, yacht,
+   voilier, console centrale, semi-rigide, scooter des mers, hydroglisseur, kayak,
+   paquebot, ferry, bateau-taxi, catamaran), avions (long-courrier, jet privé, monomoteur,
+   hydravion, bimoteur, biplan, dirigeable) et hélicoptères (léger, moyen, lourd, à
+   flotteurs, d'attaque).
+2. Les proportions (empattement, hauteur de toit, taille des roues), le nombre de rayons
+   et les détails (aileron, aileron de course, barres de toit, gyrophare, enseigne de
+   taxi, bandes de capot, prise d'air, ailerons arrière des années 50, pare-buffle,
+   suspension rehaussée, capote, échappement, ligne de livrée) dépendent de chaque fiche.
+   Un test vérifie que les 302 schémas sont tous différents.
+3. Hub Véhicules : le schéma remplace la silhouette de catégorie sur les 248 cartes sans
+   photo ; les 54 véhicules qui ont une capture officielle la gardent.
+4. Fiche : le schéma occupe la vignette principale des fiches sans photo, avec la mention
+   « Schéma indicatif du modèle. Les visuels officiels détaillés arriveront avec le jeu. »
+   Il sert aussi aux cartes « Autres véhicules ».
+5. Personnalisation : la carte existait déjà dans « Ce qui arrive avec le jeu » (elle
+   avait été doublée en v7.4, corrigé) ; son texte annonce maintenant, pour chaque
+   option, le prix, le niveau requis et l'atelier (Rideout Customs, One-Eyed Willie's).
+
+VÉRIFICATIONS
+- verifier.js : 27 591 références dans 395 pages, 0 erreur. 54 tests réussis (un test
+  ajouté : schéma propre à chaque véhicule, photo ou schéma sur chaque carte, trois cartes
+  « à venir » dont la personnalisation). Rendu Chromium du hub (filtre Muscle, survol)
+  et d'une fiche sans photo ; aucune erreur console, aucun débordement.
