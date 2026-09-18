@@ -1,0 +1,12 @@
+LEONIDAKIT v7.10 : FONDU DIAGONAL SUR « EN IMAGES » (18 septembre 2026)
+=====================================================================
+Base : v7.9. Aucun fichier supprimé. Portée : la galerie « En images » des fiches du monde.
+
+- Chaque nouvelle vue arrive floue et transparente, puis devient nette et opaque à mesure
+  qu'on fait défiler (fondu flou -> net), pendant que la vue précédente se floute et
+  s'efface. La transition est un vrai fondu, plus une simple entrée.
+- Les entrées se font en diagonale : depuis le haut-gauche, le bas-droite, le haut-droite,
+  le bas-gauche, avec une vue sur cinq qui arrive depuis la profondeur. Léger zoom de
+  stabilisation à l'arrivée.
+Fichiers : style.css, outils/lore-gen.js, les 29 fiches du monde.
+Vérifications : verifier.js sans erreur, 54 tests réussis, rendu Chromium en cours de transition.

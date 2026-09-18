@@ -23,12 +23,53 @@ const wheel=(cx,cy,r,spokes=5)=>{let s=C(cx,cy,r)+HC(cx,cy,r*.62,1.6,.6)+C(cx,cy
   return s;};
 const knobby=(cx,cy,r)=>C(cx,cy,r)+HC(cx,cy,r*.55,1.6,.55)+H(Array.from({length:10},(_,i)=>{const a=i/10*Math.PI*2;return `M${rnd(cx+Math.cos(a)*r*.82)} ${rnd(cy+Math.sin(a)*r*.82)}L${rnd(cx+Math.cos(a)*r)} ${rnd(cy+Math.sin(a)*r)}`;}).join(''),2,.5);
 
-/* ---------- voiture générique ----------
-   o : {x0,x1 (arrière/avant), yb (bas caisse), yBelt, yRoof, roofA, roofB (début/fin de toit), yHood, hoodStart,
-        style: notch|fast|hatch|wagon|cabrio|coupe, wr (rayon roue), wa,wb (centres roues), extra: []} */
+/* ---------- voiture : géométrie par époque et par marque ----------
+   o : {x0,x1,yb,yBelt,yRoof,roofA,roofB,yHood,hoodStart,style,wr,wa,wb,doors,era,brand,rim,extra:[]}
+   era : classic50 | land70 | boxy80 | modern90 | modern | luxury | wedge   (forme du toit, des vitres et des feux)
+   brand : signature de calandre et de phares (audi, bmw, mercedes, lexus, honda, toyota, chevrolet, ford, dodge, cadillac, lincoln, buick, pontiac, porsche, ferrari, lamborghini, jaguar, rolls, bentley, tesla, nissan, subaru, mitsubishi, vw, chrysler, generic) */
+const RIMS={
+  spoke:(cx,cy,r,n)=>{let s='';for(let i=0;i<n;i++){const a=i/n*Math.PI*2;s+=H(`M${rnd(cx+Math.cos(a)*r*.2)} ${rnd(cy+Math.sin(a)*r*.2)}L${rnd(cx+Math.cos(a)*r*.6)} ${rnd(cy+Math.sin(a)*r*.6)}`,1.5,.5);}return s;},
+  split:(cx,cy,r,n)=>{let s='';for(let i=0;i<n;i++){const a=i/n*Math.PI*2,d=.09;s+=H(`M${rnd(cx+Math.cos(a-d)*r*.2)} ${rnd(cy+Math.sin(a-d)*r*.2)}L${rnd(cx+Math.cos(a-d)*r*.6)} ${rnd(cy+Math.sin(a-d)*r*.6)}M${rnd(cx+Math.cos(a+d)*r*.2)} ${rnd(cy+Math.sin(a+d)*r*.2)}L${rnd(cx+Math.cos(a+d)*r*.6)} ${rnd(cy+Math.sin(a+d)*r*.6)}`,1.1,.5);}return s;},
+  mesh:(cx,cy,r)=>HC(cx,cy,r*.4,1,.45)+H(`M${cx-r*.5} ${cy}h${r}M${cx} ${cy-r*.5}v${r}M${cx-r*.36} ${cy-r*.36}L${cx+r*.36} ${cy+r*.36}M${cx+r*.36} ${cy-r*.36}L${cx-r*.36} ${cy+r*.36}`,1,.4),
+  disc:(cx,cy,r)=>HC(cx,cy,r*.45,3,.35)+HC(cx,cy,r*.3,1,.4),
+  steel:(cx,cy,r)=>HC(cx,cy,r*.5,4,.3)+`<circle cx="${cx}" cy="${cy}" r="${rnd(r*.28)}" fill="${HL}" fill-opacity=".45"/>`,
+  wire:(cx,cy,r)=>{let s='';for(let i=0;i<14;i++){const a=i/14*Math.PI*2;s+=H(`M${rnd(cx+Math.cos(a)*r*.12)} ${rnd(cy+Math.sin(a)*r*.12)}L${rnd(cx+Math.cos(a+.5)*r*.62)} ${rnd(cy+Math.sin(a+.5)*r*.62)}`,.9,.45);}return s;}
+};
+const wheelR=(cx,cy,r,rim='spoke',n=5,white=false)=>C(cx,cy,r)+HC(cx,cy,r*.66,1.6,.6)+(white?HC(cx,cy,r*.86,2,.7):'')+C(cx,cy,r*.15,HL).replace('fill="'+HL+'"','fill="'+HL+'" fill-opacity=".55"')+(RIMS[rim]||RIMS.spoke)(cx,cy,r,n);
+
+function grille(brand,x1,yHood,yb){const g=[];const top=yHood+7,bot=yb-8,mid=rnd((top+bot)/2);
+  switch(brand){
+    case 'audi':g.push(H(`M${x1-1} ${top}L${x1-1} ${bot-2}`,4,.45),H(`M${x1-3} ${top+4}h-3M${x1-3} ${top+8}h-3M${x1-3} ${top+12}h-3`,1,.5));break;
+    case 'bmw':g.push(HC(x1-2,top+5,3,1.4,.6),HC(x1-2,top+12,3,1.4,.6));break;
+    case 'mercedes':g.push(H(`M${x1-1} ${top}v${bot-top-4}`,3,.4),HC(x1-3,mid,3.2,1.2,.7),H(`M${x1-3} ${mid-3}v6M${x1-6} ${mid+1.5}L${x1} ${mid+1.5}`,1,.7));break;
+    case 'lexus':g.push(H(`M${x1-1} ${top}L${x1-4} ${mid}L${x1-1} ${bot-2}`,2.4,.5));break;
+    case 'honda':g.push(H(`M${x1-1} ${top+3}h-4`,3,.6),H(`M${x1-1} ${top+8}v${bot-top-10}`,2,.35));break;
+    case 'toyota':g.push(H(`M${x1-1} ${mid}v${bot-mid-2}`,4,.4),H(`M${x1-1} ${top+3}h-3`,2,.5));break;
+    case 'chevrolet':g.push(H(`M${x1-1} ${top+2}v5M${x1-1} ${top+10}v${bot-top-12}`,3,.45),H(`M${x1-4} ${top+8}h4`,2,.7));break;
+    case 'ford':g.push(H(`M${x1-1} ${top+2}v${bot-top-4}`,3,.4),HC(x1-3,mid,2.4,1.2,.6));break;
+    case 'dodge':g.push(H(`M${x1-1} ${top+2}v${bot-top-4}M${x1-5} ${mid}h5`,2.4,.5));break;
+    case 'cadillac':g.push(H(`M${x1-1} ${top}v${bot-top}`,2,.5),H(`M${x1-4} ${top+2}v${bot-top-4}`,1,.4));break;
+    case 'lincoln':g.push(H(`M${x1-1} ${top+3}h-6M${x1-1} ${top+7}h-6M${x1-1} ${top+11}h-6`,1.2,.5));break;
+    case 'buick':g.push(H(`M${x1-1} ${top+2}v${bot-top-4}M${x1-3} ${top+3}v${bot-top-6}M${x1-5} ${top+4}v${bot-top-8}`,1,.45));break;
+    case 'pontiac':g.push(H(`M${x1-1} ${top+2}v5M${x1-1} ${top+10}v5`,3,.5));break;
+    case 'porsche':g.push(HC(x1-4,top+2,3.5,1.6,.7),H(`M${x1-2} ${bot-6}h-5`,2,.4));break;
+    case 'ferrari':g.push(H(`M${x1-1} ${bot-8}h-8`,3,.4),H(`M${x1-3} ${top+1}h-6`,1.2,.5));break;
+    case 'lamborghini':g.push(H(`M${x1-1} ${bot-9}L${x1-9} ${bot-9}L${x1-7} ${bot-4}L${x1-1} ${bot-4}Z`,1.2,.5));break;
+    case 'jaguar':g.push(H(`M${x1-1} ${top+1}v${bot-top-2}`,4,.4),HC(x1-3,top+4,2,1,.6));break;
+    case 'rolls':case 'bentley':g.push(H(`M${x1-1} ${top-1}v${bot-top+1}`,5,.5),H(`M${x1-3} ${top+1}v${bot-top-3}M${x1-5} ${top+1}v${bot-top-3}`,.9,.5));break;
+    case 'tesla':g.push(H(`M${x1-2} ${top+3}h-8`,1.4,.4));break;
+    case 'nissan':g.push(H(`M${x1-1} ${top+2}v${bot-top-4}`,2.6,.4),H(`M${x1-1} ${top+3}h-5`,1.4,.5));break;
+    case 'subaru':case 'mitsubishi':g.push(H(`M${x1-1} ${top+2}v${bot-top-4}`,3,.4),H(`M${x1-2} ${top+6}h-5M${x1-2} ${top+10}h-5`,1.4,.5));break;
+    case 'vw':g.push(H(`M${x1-1} ${top+3}h-5M${x1-1} ${top+7}h-5`,1.6,.5),HC(x1-3,top+5,1.5,1,.6));break;
+    case 'chrysler':g.push(H(`M${x1-1} ${top+2}v${bot-top-4}`,2.4,.4),H(`M${x1-4} ${top+5}h3M${x1-4} ${top+9}h3M${x1-4} ${top+13}h3`,1.2,.5));break;
+    default:g.push(H(`M${x1-1} ${top+3}v${bot-top-6}`,2,.35));
+  }
+  return g.join('');}
+
 function car(o,seed){
-  const {x0,x1,yb,yBelt,yRoof,roofA,roofB,yHood,hoodStart,style,wr}=o;
-  const yg=100,wa=o.wa,wb=o.wb;
+  const {x0,x1,yb,yBelt,yRoof,roofA,roofB,yHood,hoodStart,style,wr,era='modern',brand='generic',rim='spoke'}=o;
+  const yg=100,wa=o.wa,wb=o.wb,j=(k,a)=>jit(seed,k,a);
+  const q=era==='classic50'?10:era==='land70'?3:era==='boxy80'?1:era==='modern90'?5:era==='luxury'?6:era==='wedge'?2:6; /* rayon des angles */
   let d;
   if(style==='cabrio'){
     d=`M${x0} ${yb}L${x0+3} ${yBelt}L${roofB-4} ${yBelt-2}L${roofB+2} ${yBelt-3}L${roofA-10} ${yBelt-3}L${roofA} ${yRoof+4}L${hoodStart} ${yBelt-1}L${hoodStart+6} ${yHood}L${x1-6} ${yHood+2}L${x1} ${yb-6}L${x1} ${yb}Z`;
@@ -39,47 +80,71 @@ function car(o,seed){
     d=`M${x0} ${yb}L${x0+2} ${yBelt+3}L${roofB-6} ${yRoof+1}Q${roofB} ${yRoof} ${roofB+4} ${yRoof}L${roofA} ${yRoof}L${hoodStart} ${yBelt-2}L${hoodStart+6} ${yHood}L${x1-5} ${yHood+1}L${x1} ${yb-8}L${x1} ${yb}Z`;
   }else if(style==='fast'){
     d=`M${x0} ${yb}L${x0+2} ${yBelt+1}L${x0+12} ${yBelt-1}L${roofB} ${yRoof}L${roofA} ${yRoof}L${hoodStart} ${yBelt-3}L${hoodStart+8} ${yHood}L${x1-6} ${yHood+1}L${x1} ${yb-7}L${x1} ${yb}Z`;
-  }else{ /* notchback / coupé trois volumes */
-    d=`M${x0} ${yb}L${x0+2} ${yBelt+1}L${roofB+8} ${yBelt-1}L${roofB} ${yRoof+2}Q${roofB-3} ${yRoof} ${roofB-8} ${yRoof}L${roofA} ${yRoof}L${hoodStart} ${yBelt-2}L${hoodStart+7} ${yHood}L${x1-6} ${yHood+1}L${x1} ${yb-7}L${x1} ${yb}Z`;
+  }else if(era==='classic50'){ /* ailes rondes, toit bombé */
+    d=`M${x0} ${yb}L${x0+2} ${yBelt+3}Q${x0+4} ${yBelt-2} ${x0+14} ${yBelt-2}L${roofB+6} ${yBelt-2}Q${roofB} ${yBelt-4} ${roofB} ${yRoof+6}Q${roofB+2} ${yRoof} ${roofB+10} ${yRoof}L${roofA-6} ${yRoof}Q${roofA+2} ${yRoof} ${hoodStart} ${yBelt-2}Q${hoodStart+6} ${yHood+2} ${hoodStart+14} ${yHood+1}L${x1-8} ${yHood+1}Q${x1} ${yHood+2} ${x1} ${yb-8}L${x1} ${yb}Z`;
+  }else if(era==='land70'){ /* long capot, long coffre, toit plat */
+    d=`M${x0} ${yb}L${x0+1} ${yBelt+2}L${roofB+14} ${yBelt-1}L${roofB+4} ${yRoof+3}L${roofB} ${yRoof}L${roofA} ${yRoof}L${hoodStart-2} ${yBelt-1}L${hoodStart+4} ${yHood}L${x1-3} ${yHood}L${x1} ${yb-6}L${x1} ${yb}Z`;
+  }else if(era==='boxy80'){ /* vitres droites, capot plat */
+    d=`M${x0} ${yb}L${x0+2} ${yBelt+2}L${roofB+9} ${yBelt-1}L${roofB+2} ${yRoof+1}L${roofB} ${yRoof}L${roofA} ${yRoof}L${hoodStart+2} ${yBelt-2}L${hoodStart+6} ${yHood}L${x1-4} ${yHood}L${x1} ${yb-6}L${x1} ${yb}Z`;
+  }else{ /* moderne : pare-brise couché, toit qui file vers le coffre */
+    d=`M${x0} ${yb}L${x0+2} ${yBelt+1}L${roofB+10} ${yBelt-2}Q${roofB+2} ${yRoof+4} ${roofB-6} ${yRoof}L${roofA} ${yRoof}Q${hoodStart-2} ${yRoof+2} ${hoodStart+4} ${yBelt-2}L${hoodStart+10} ${yHood}L${x1-6} ${yHood+1}Q${x1} ${yHood+3} ${x1} ${yb-7}L${x1} ${yb}Z`;
   }
   let s=P(d);
-  /* passages de roues */
   s+=`<circle cx="${wa}" cy="${yg-wr}" r="${wr+3}" fill="#FDFBF7" fill-opacity=".14"/><circle cx="${wb}" cy="${yg-wr}" r="${wr+3}" fill="#FDFBF7" fill-opacity=".14"/>`;
-  /* vitrage */
-  if(style!=='cabrio'){
-    const mid=rnd((roofA+roofB)/2);
-    if(style==='wagon'||style==='suv'||style==='van'){
-      s+=G(`M${roofA+2} ${yRoof+3}L${hoodStart+5} ${yBelt}L${mid+2} ${yBelt}L${mid+2} ${yRoof+3}Z`)+G(`M${mid+6} ${yRoof+3}L${mid+6} ${yBelt}L${x0+10} ${yBelt}L${x0+10} ${yRoof+4}Z`);
-      if(style!=='van')s+=H(`M${mid+4} ${yRoof+3}V${yBelt}`,1.2,.4);
-    }else{
-      s+=G(`M${roofA+2} ${yRoof+3}L${hoodStart+4} ${yBelt}L${mid+1} ${yBelt}L${mid+1} ${yRoof+3}Z`);
-      if(o.doors===2)s+=G(`M${mid+5} ${yRoof+3}L${mid+5} ${yBelt}L${roofB+2} ${yBelt}L${roofB-2} ${yRoof+3}Z`);
-      else s+=G(`M${mid+5} ${yRoof+3}L${mid+5} ${yBelt}L${roofB+4} ${yBelt}L${roofB-2} ${yRoof+3}Z`);
-    }
+  /* vitrage : selon l'époque, une, deux ou trois vitres latérales et une lunette */
+  const mid=rnd((roofA+roofB)/2+j('mid',4));
+  if(style==='cabrio'){s+=G(`M${roofA+2} ${yRoof+6}L${hoodStart+4} ${yBelt}L${roofA+9} ${yBelt}Z`);}
+  else if(style==='wagon'||style==='suv'||style==='van'){
+    s+=G(`M${roofA+2} ${yRoof+3}L${hoodStart+5} ${yBelt}L${mid+2} ${yBelt}L${mid+2} ${yRoof+3}Z`)+G(`M${mid+6} ${yRoof+3}L${mid+6} ${yBelt}L${x0+10} ${yBelt}L${x0+10} ${yRoof+4}Z`);
+    if(style!=='van')s+=H(`M${mid+4} ${yRoof+3}V${yBelt}`,1.2,.4);
   }else{
-    s+=G(`M${roofA+2} ${yRoof+6}L${hoodStart+4} ${yBelt}L${roofA+9} ${yBelt}Z`);
+    const ws=era==='boxy80'||era==='land70'?2:era==='classic50'?3:5; /* inclinaison du montant avant */
+    s+=G(`M${roofA+2} ${yRoof+3}L${hoodStart+ws} ${yBelt}L${mid+1} ${yBelt}L${mid+1} ${yRoof+3}Z`);
+    if(o.doors===2)s+=G(`M${mid+5} ${yRoof+3}L${mid+5} ${yBelt}L${roofB+4} ${yBelt}L${roofB-1} ${yRoof+3}Z`);
+    else{s+=G(`M${mid+5} ${yRoof+3}L${mid+5} ${yBelt}L${roofB+8} ${yBelt}L${roofB+1} ${yRoof+3}Z`);
+      if(era==='luxury'||era==='land70')s+=G(`M${roofB+10} ${yBelt}L${roofB+3} ${yRoof+3}L${roofB-2} ${yRoof+4}L${roofB+2} ${yBelt}Z`,.16);}
+    if(era==='land70'||o.vinyl)s+=H(`M${roofB+2} ${yRoof+1}L${mid+1} ${yRoof+1}`,2.2,.35); /* toit vinyle */
+    if(era==='luxury')s+=H(`M${roofA+1} ${yRoof+2}Q${mid} ${yRoof} ${roofB+1} ${yRoof+2}`,1.2,.5);
   }
-  /* ligne de porte, poignée, phares, feux */
-  s+=H(`M${rnd((roofA+roofB)/2)+3} ${yBelt+3}V${yb-4}`,1.2,.35)+H(`M${x0+6} ${yBelt+4}h${Math.max(10,(x1-x0)*.08)}`,2,.45);
-  s+=R(x1-6,yHood+4,5,4).replace(INK,HL)+R(x0,yBelt+3,3,5).replace(INK,HL);
+  /* lignes de caisse et poignées */
+  s+=H(`M${mid+3} ${yBelt+3}V${yb-4}`,1.2,.35);
+  if(o.doors!==2)s+=H(`M${roofB+6} ${yBelt+3}V${yb-4}`,1,.28);
+  const hy=rnd(yBelt+4+j('hy',2));s+=H(`M${mid+6} ${hy}h${era==='classic50'?6:10}`,2,.45)+(o.doors!==2?H(`M${roofB+10} ${hy}h8`,2,.4):'');
+  if(o.charline)s+=H(`M${x0+10} ${rnd(yBelt+9+j('cl',3))}L${x1-14} ${rnd(yBelt+7+j('cl2',3))}`,1.4,.4);
+  if(o.skirt)s+=H(`M${wa+wr+4} ${yb-3}L${wb-wr-4} ${yb-3}`,2.2,.45);
+  /* phares, feux, calandre, pare-chocs */
+  const lightW=era==='classic50'?0:era==='modern'||era==='luxury'||era==='wedge'?7:5;
+  if(era==='classic50')s+=HC(x1-5,yHood+7,3.2,1.6,.8)+HC(x0+5,yBelt+6,2.4,1.4,.7);
+  else{s+=R(x1-lightW-1,yHood+3,lightW,era==='modern'||era==='luxury'?3:4).replace(INK,HL)+R(x0,yBelt+3,era==='modern'?5:3,era==='land70'?4:5).replace(INK,HL);}
+  if(era==='modern'||era==='luxury'||era==='wedge')s+=H(`M${x1-lightW-2} ${yHood+4}h${lightW}`,1,.9);
+  s+=grille(brand,x1,yHood,yb);
+  if(era==='classic50'||era==='land70'||era==='boxy80')s+=H(`M${x1-1} ${yb-5}h-8M${x0+1} ${yb-5}h8`,2.6,.55); /* pare-chocs chromés */
+  /* toit : antenne, aileron de requin, toit ouvrant, barres */
+  if(o.fin)s+=P(`M${roofB+14} ${yRoof}l4 -4h6l-2 4z`);
+  if(o.antenna)s+=H(`M${roofB+18} ${yRoof}l-3 -7`,1.2,.6);
+  if(o.sunroof)s+=H(`M${mid-8} ${yRoof-1}h18`,1.6,.5);
+  /* échappements */
+  const ex=o.exhaust||1;for(let i=0;i<ex;i++)s+=P(`M${x0-4} ${yb-3-i*4}h6v3h-6z`);
   /* roues */
-  s+=(o.knob?knobby(wa,yg-wr,wr)+knobby(wb,yg-wr,wr):wheel(wa,yg-wr,wr,o.spokes||5)+wheel(wb,yg-wr,wr,o.spokes||5));
+  s+=(o.knob?knobby(wa,yg-wr,wr)+knobby(wb,yg-wr,wr):wheelR(wa,yg-wr,wr,rim,o.spokes||5,era==='classic50')+wheelR(wb,yg-wr,wr,rim,o.spokes||5,era==='classic50'));
   /* accessoires */
   for(const e of o.extra||[]){
     if(e==='spoiler')s+=P(`M${x0+2} ${yBelt-6}h20v3h-16l-2 3h-2z`);
     if(e==='wing')s+=P(`M${x0-2} ${yBelt-11}h28v4h-24z`)+P(`M${x0+6} ${yBelt-7}h3v7h-3z`)+P(`M${x0+18} ${yBelt-7}h3v7h-3z`);
     if(e==='rack')s+=P(`M${roofA+4} ${yRoof-5}h${roofB-roofA-8}v3h-${roofB-roofA-8}z`)+P(`M${roofA+8} ${yRoof-2}h3v2h-3z`)+P(`M${roofB-11} ${yRoof-2}h3v2h-3z`);
     if(e==='lightbar')s+=P(`M${roofA+6} ${yRoof-6}h${Math.max(18,roofB-roofA-12)}v5h-${Math.max(18,roofB-roofA-12)}z`)+H(`M${roofA+8} ${yRoof-3}h5M${roofB-10} ${yRoof-3}h5`,2,.8);
-    if(e==='taxi')s+=P(`M${rnd((roofA+roofB)/2)-9} ${yRoof-7}h18v6h-18z`)+H(`M${rnd((roofA+roofB)/2)-5} ${yRoof-4}h10`,1.6,.7);
+    if(e==='taxi')s+=P(`M${mid-9} ${yRoof-7}h18v6h-18z`)+H(`M${mid-5} ${yRoof-4}h10`,1.6,.7);
     if(e==='stripe')s+=H(`M${x0+8} ${yBelt+8}L${x1-8} ${yBelt+8}`,3,.5);
     if(e==='hoodstripe')s+=H(`M${hoodStart+8} ${yHood+2}L${x1-10} ${yHood+3}`,3,.6);
     if(e==='scoop')s+=P(`M${hoodStart+14} ${yHood-4}h16l2 4h-20z`);
     if(e==='fins')s+=P(`M${x0-2} ${yBelt-6}L${x0+18} ${yBelt+1}L${x0+18} ${yBelt+4}L${x0-2} ${yBelt+2}Z`);
-    if(e==='snorkel')s+=P(`M${hoodStart+2} ${yRoof+2}v-${yRoof-yHood+8}h4v${yRoof-yHood+8}z`);
     if(e==='bullbar')s+=P(`M${x1} ${yHood+6}h6v${yb-yHood-10}h-6z`);
-    if(e==='exhaust')s+=P(`M${x0-6} ${yb-2}h8v4h-8z`);
     if(e==='softtop')s+=P(`M${roofB-2} ${yBelt-3}h22v4h-22z`);
     if(e==='lift')s+=P(`M${x0+4} ${yb}h${x1-x0-8}v3h-${x1-x0-8}z`);
+    if(e==='twotone')s+=H(`M${x0+6} ${yBelt+1}L${x1-10} ${yBelt+1}`,4,.3);
+    if(e==='chrome')s+=H(`M${x0+6} ${yb-9}L${x1-8} ${yb-9}`,1.4,.55);
+    if(e==='diffuser')s+=P(`M${x0} ${yb-3}h14l-2 3h-12z`);
+    if(e==='plate')s+=R(x0+1,yb-8,3,4).replace(INK,HL).replace('/>',' fill-opacity=".5"/>');
   }
   return s;
 }
@@ -239,20 +304,43 @@ function excavator(){let s=P('M40 84h100v6h-100z')+P('M46 62L56 46L120 46L128 62
 
 /* ---------- choix du type et des paramètres ---------- */
 const L=s=>String(s||'').toLowerCase();
+const BRANDS=[['audi','audi'],['bmw','bmw'],['mercedes','mercedes'],['brabus','mercedes'],['lexus','lexus'],['honda','honda'],['acura','honda'],['toyota','toyota'],['chevrolet','chevrolet'],['chevy','chevrolet'],['corvette','chevrolet'],['ford','ford'],['shelby','ford'],['dodge','dodge'],['cadillac','cadillac'],['lincoln','lincoln'],['buick','buick'],['pontiac','pontiac'],['oldsmobile','buick'],['amc','pontiac'],['porsche','porsche'],['ferrari','ferrari'],['lamborghini','lamborghini'],['jaguar','jaguar'],['rolls','rolls'],['bentley','bentley'],['tesla','tesla'],['nissan','nissan'],['infiniti','nissan'],['subaru','subaru'],['mitsubishi','mitsubishi'],['eagle','mitsubishi'],['volkswagen','vw'],['chrysler','chrysler'],['mclaren','ferrari'],['italdesign','lamborghini'],['aston','jaguar'],['maserati','ferrari'],['cizeta','lamborghini'],['kellison','ford']];
+const RIM_KINDS=['spoke','split','mesh','disc','wire','steel'];
+function era(ins){
+  const y=(ins.match(/\b(19[5-9]\d|20[0-2]\d)\b/)||[])[1];const n=y?+y:null;
+  if(/années 50|1950|195\d|bel air|fairlane/.test(ins)||(n&&n<1965))return 'classic50';
+  if(/années 60|années 70|196\d|197\d|land yacht|continental|imperial|de ville|riviera|eldorado 1959/.test(ins)||(n&&n<1982))return 'land70';
+  if(/années 80|198\d|199[0-3]|e30|regal|skylark|lebaron|bonneville|crown victoria|fox|génération précédente/.test(ins)||(n&&n<1996))return 'boxy80';
+  if(/199\d|xv30|q45|gs 300|première génération|deuxième génération|new edge|e63|e64|e92|930|964/.test(ins)||(n&&n<2010))return 'modern90';
+  if(/rolls|bentley|wraith|cullinan|continental gt|brabus|escalade|navigator|jubilee|windsor|paragon|classe e allongée|lwb|s-class|panamera|taycan|mercedes|audi|bmw|lexus|infiniti|jaguar/.test(ins))return 'luxury';
+  return 'modern';}
+function brandOf(ins){for(const [k,b] of BRANDS)if(ins.includes(k))return b;return 'generic';}
 function carParams(v,base){
   const seed=v.id,ins=L(v.insp)+' '+L(v.nom)+' '+L(v.marque);
-  const j=(k,a)=>jit(seed,k,a);
+  const j=(k,a)=>jit(seed,k,a),hv=hash(seed);
   const o=Object.assign({x0:22,x1:222,yb:88,yBelt:66,yRoof:44,roofA:150,roofB:80,yHood:60,hoodStart:172,style:'notch',wr:13,doors:4,extra:[]},base);
-  o.wr=rnd(o.wr+j('wr',1.5),1);o.yRoof=rnd(o.yRoof+j('roof',3),1);o.roofA=rnd(o.roofA+j('ra',6),1);o.roofB=rnd(o.roofB+j('rb',6),1);o.yHood=rnd(o.yHood+j('hood',2),1);
-  o.wa=rnd(o.x0+30+j('wa',5),1);o.wb=rnd(o.x1-34+j('wb',5),1);o.spokes=5+(hash(seed)%4);
+  o.era=base.era||era(ins);o.brand=brandOf(ins);o.rim=RIM_KINDS[hv%RIM_KINDS.length];o.spokes=5+(hv>>3)%5;
+  /* proportions par époque */
+  if(o.era==='classic50'){o.x0=Math.min(o.x0,18);o.x1=Math.max(o.x1,226);o.yRoof=Math.max(o.yRoof-2,40);o.wr=Math.min(o.wr,12.5);o.roofB=Math.max(o.roofB,84);o.extra.push('chrome');}
+  if(o.era==='land70'){o.x0=14;o.x1=228;o.yRoof=Math.max(o.yRoof+2,46);o.roofB=Math.max(o.roofB,86);o.roofA=Math.min(o.roofA,144);o.hoodStart=Math.min(o.hoodStart+6,184);o.wr=Math.min(o.wr,12.5);o.extra.push('chrome');}
+  if(o.era==='boxy80'){o.yRoof=Math.max(o.yRoof-1,42);o.hoodStart=o.hoodStart+2;o.extra.push('plate');}
+  if(o.era==='modern'||o.era==='luxury'){o.wr=Math.max(o.wr,13.5);o.yBelt=Math.min(o.yBelt,65);o.fin=hv%2===0;o.antenna=!o.fin&&hv%5===0;o.charline=true;}
+  if(o.era==='luxury'){o.x0=Math.min(o.x0,18);o.x1=Math.max(o.x1,224);o.sunroof=hv%3===0;o.exhaust=2;}
+  if(o.era==='modern90'){o.antenna=hv%3===0;o.charline=hv%2===0;}
+  if(o.era==='wedge'){o.skirt=true;o.exhaust=2;o.extra.push('diffuser');}
+  /* variations propres à la fiche */
+  o.wr=rnd(o.wr+j('wr',1.5),1);o.yRoof=rnd(o.yRoof+j('roof',3),1);o.roofA=rnd(o.roofA+j('ra',7),1);o.roofB=rnd(o.roofB+j('rb',7),1);o.yHood=rnd(o.yHood+j('hood',2.5),1);
+  o.x0=rnd(o.x0+j('x0',4),1);o.x1=rnd(o.x1+j('x1',4),1);o.hoodStart=rnd(o.hoodStart+j('hs',5),1);
+  o.wa=rnd(o.x0+30+j('wa',6),1);o.wb=rnd(o.x1-34+j('wb',6),1);
+  if(hv%7===0)o.extra.push('twotone');if(hv%11===0)o.exhaust=2;if(hv%13===0)o.vinyl=true;
   if(/convertible|cabrio|spyder|roadster|reatta/.test(ins))o.style='cabrio';
   if(/police|pursuit|interceptor|ghost|sheriff|cruiser|lifeguard/.test(ins)&&!/beach/.test(ins))o.extra.push('lightbar');
-  if(/taxi/.test(ins))o.extra.push('taxi');
-  if(/gt-r|type r|\bsti\b|\bevo\b|\brs\d?\b|stingray|\bgto\b|senna|pista|jugular|hellfire|cobra|drafter/.test(ins))o.extra.push('spoiler');
-  if(/demon|cobra r|sti pr|wrx sti|zentorno|veneno|senna|zerouno|sesto/.test(ins))o.extra.push('wing');
+  if(/\btaxi\b/.test(ins))o.extra.push('taxi');
+  if(/gt-r|type r|\bsti\b|\bevo\b|\brs\d?\b|stingray|\bgto\b|senna|pista|jugular|hellfire|cobra|drafter|m3|m2|amg/.test(ins))o.extra.push('spoiler');
+  if(/demon|cobra r|wrx sti|zentorno|veneno|senna|zerouno|sesto|project 8|superfast/.test(ins))o.extra.push('wing');
   if(/1959|eldorado|bel air|fairlane club|1956|1950/.test(ins))o.extra.push('fins');
-  if(/challenger|trans am|firebird|chevelle|cutlass|mustang|camaro|javelin|charger/.test(ins))o.extra.push('hoodstripe');
-  if(/demon|hellcat|srt|gt 500|cobra|1970 challenger|chevelle/.test(ins))o.extra.push('scoop');
+  if(/challenger|trans am|firebird|chevelle|cutlass|mustang|camaro|javelin|charger|cougar/.test(ins))o.extra.push('hoodstripe');
+  if(/demon|hellcat|srt|gt 500|cobra|1970 challenger|chevelle|super sport|impala ss/.test(ins))o.extra.push('scoop');
   if(/lowrider|donk|slamvan|rat rod/.test(ins))o.extra.push('lift');
   return o;}
 
@@ -341,7 +429,7 @@ function pick(v){
     return pickup(o,seed);}
   /* voitures */
   let base={};
-  if(cat==='supercar'||has(/lamborghini|mclaren|sf90|488|senna|zerouno|huracán|aventador|812|458|zagato|testarossa|512|diablo|cizeta|kellison/)){base={style:'fast',yRoof:52,yBelt:70,yHood:66,roofA:132,roofB:70,x0:20,x1:224,wr:13.5,doors:2,extra:[]};}
+  if(cat==='supercar'||has(/lamborghini|mclaren|sf90|488|senna|zerouno|huracán|aventador|812|458|zagato|testarossa|512|diablo|cizeta|kellison/)){base={style:'fast',era:'wedge',yRoof:52,yBelt:70,yHood:66,roofA:132,roofB:70,x0:20,x1:224,wr:13.5,doors:2,extra:[]};}
   else if(cat==='sport'&&has(/911|cayman|corvette|viper|daytona|cr-x|ae86|eclipse|rc f|m2|m3|m6|rs5|continental gt|wraith|mark viii|cle|g35|e-tron|taycan|skyline|talon|sf90/)){base={style:has(/911|cayman|corvette c8|viper|skyline|cr-x/)?'fast':'notch',yRoof:48,yBelt:68,yHood:62,roofA:140,roofB:76,wr:13,doors:2,extra:[]};}
   else if(cat==='muscle'){base={style:has(/mustang|challenger|camaro|trans am|firebird|javelin|cougar/)?'fast':'notch',yRoof:47,yBelt:67,yHood:60,roofA:140,roofB:72,x0:18,x1:224,wr:13,doors:2,extra:[]};if(has(/continental|imperial|impala 1960|bel air|lowrider|1965/)){base.style='notch';base.roofB=64;base.wr=12;}}
   else if(cat==='suv'){base={style:'suv',yRoof:36,yBelt:62,yHood:54,roofA:158,roofB:34,hoodStart:180,x0:22,x1:222,wr:14,doors:4,extra:has(/wrangler|bronco|hummer|g-class|patrol|cherokee xj/)?['rack']:[]};if(has(/wrangler|bronco|hummer|h1|rubicon/)){base.knob=true;base.extra.push('bullbar');}if(has(/evoque|urus|macan|levante|q8|x5|cullinan|escalade|navigator/))base.yRoof=40;}

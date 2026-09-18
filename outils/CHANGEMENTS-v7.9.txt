@@ -1,0 +1,27 @@
+LEONIDAKIT v7.9 : SCHÉMAS DE VOITURES VRAIMENT DISTINCTS (18 septembre 2026)
+============================================================================
+Base : v7.8. Aucun fichier supprimé. Portée : outils/vehicules-schemas.cjs, le hub Véhicules
+et les fiches véhicules sans photo.
+
+Les voitures d'une même catégorie se ressemblaient trop (mêmes lignes, mêmes roues, seules
+les proportions variaient de quelques pixels). Le dessin des voitures est refait :
+1. Époque déduite de l'inspiration (années, génération, modèle) : années 50 (ailes rondes,
+   toit bombé, phares ronds, pneus à flancs blancs, chromes), années 60-70 (long capot, long
+   coffre, toit plat, toit vinyle, chromes), années 80 (vitres droites, capot plat, plaque),
+   années 90-2000, moderne (pare-brise couché, toit filant, phares fins, ligne de caisse,
+   aileron de requin ou antenne), luxe (empattement long, vitre de custode, double
+   échappement, toit ouvrant), supercar (jupes, diffuseur, double échappement).
+2. Signature de marque à l'avant : calandre Audi monobloc, doubles haricots BMW, étoile
+   Mercedes, calandre en sablier Lexus, barre Honda, Toyota, Chevrolet, Ford, Dodge,
+   Cadillac, Lincoln, Buick, Pontiac, phares ronds Porsche, nez bas Ferrari, entrée
+   anguleuse Lamborghini, Jaguar, Rolls-Royce et Bentley, Tesla, Nissan, Subaru,
+   Mitsubishi, Volkswagen, Chrysler.
+3. Six dessins de jantes (rayons, rayons doubles, maille, disque, fils, tôle à enjoliveur),
+   nombre de rayons variable, roues plus grandes sur les modèles récents.
+4. Détails propres à chaque fiche : nombre de vitres et de portes, poignées, ligne de
+   caisse, toit deux tons, toit vinyle, aileron, aileron de course, bandes de capot, prise
+   d'air, ailerons arrière, gyrophare, enseigne de taxi, capote, suspension rehaussée.
+Les 302 schémas restent tous différents (test). Camions, bus, motos, bateaux et aéronefs
+gardent les dessins de la v7.8.
+
+Vérifications : verifier.js 27 591 références sans erreur, 54 tests réussis.

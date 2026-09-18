@@ -2013,3 +2013,12 @@ header .head-search{flex:0 1 200px; max-width:200px; margin-left:auto; margin-to
 .lore-stack::after{content:'';position:absolute;left:0;right:0;bottom:0;height:1px;}
 @media(max-width:700px){.lore-stage{top:112px;height:min(62vw,60vh);} .lore-stack{height:calc((var(--n,2) - 1) * 60vh + min(62vw,60vh));}}
 @media(prefers-reduced-motion:reduce){.lore-stack{height:auto;} .lore-stage{position:static;height:auto;overflow:visible;border:0;background:none;box-shadow:none;} .lore-slide{position:static;opacity:1!important;transform:none!important;filter:none!important;margin:0 0 16px;border:2px solid var(--ink);border-radius:10px;overflow:hidden;pointer-events:auto;} .lore-slide a{position:relative;} .lore-slide img{height:auto;}}
+
+/* v7.10 : chaque vue arrive en diagonale (ou depuis la profondeur), floue et transparente, puis devient nette : fondu flou -> net dans les deux sens */
+.lore-slide.is-next{opacity:var(--t,0);filter:blur(calc((1 - var(--t,0))*16px));}
+.lore-slide--tl.is-next{transform:translate(calc((1 - var(--t,0))*-60%),calc((1 - var(--t,0))*-60%)) scale(calc(.94 + var(--t,0)*.06));}
+.lore-slide--tr.is-next{transform:translate(calc((1 - var(--t,0))*60%),calc((1 - var(--t,0))*-60%)) scale(calc(.94 + var(--t,0)*.06));}
+.lore-slide--bl.is-next{transform:translate(calc((1 - var(--t,0))*-60%),calc((1 - var(--t,0))*60%)) scale(calc(.94 + var(--t,0)*.06));}
+.lore-slide--br.is-next{transform:translate(calc((1 - var(--t,0))*60%),calc((1 - var(--t,0))*60%)) scale(calc(.94 + var(--t,0)*.06));}
+.lore-slide--z.is-next{transform:scale(calc(1.45 - var(--t,0)*.45));}
+.lore-slide.is-out{filter:blur(calc(var(--t,0)*18px));opacity:calc(1 - var(--t,0)*.6);}
