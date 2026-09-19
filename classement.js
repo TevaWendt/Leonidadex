@@ -35,7 +35,7 @@
       const v = par[id]; if(!v) return;
       const li = document.createElement('li'); li.className = 'cl-item'; li.draggable = true; li.dataset.id = id;
       const nom = window.LK.esc((v.marque && v.marque!=='Marque inconnue' ? v.marque + ' ' : '') + v.nom);
-      const img = v.vues?.length && window.LK.hasAsset('img/vehicules/'+v.id+'-'+v.vues[0]+'.jpg') ? '<img src="img/vehicules/' + v.id + '-' + v.vues[0] + '.jpg" alt="" loading="lazy">' : '';
+      const img = v.thumb ? '<img src="' + v.thumb + '" alt="" loading="lazy"' + (/\.svg$/.test(v.thumb) ? ' class="cl-schema"' : '') + '>' : '';
       li.innerHTML = '<span class="cl-rang">' + (i+1) + '</span>' +
         '<span class="cl-img' + (img ? '' : ' cl-img--vide') + '">' + img + '</span>' +
         '<span class="cl-nom"><a href="vehicules/' + v.id + '.html">' + nom + '</a>' +

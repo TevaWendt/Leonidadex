@@ -1,0 +1,41 @@
+LEONIDAKIT v7.12 : COLLECTIBLES, VIGNETTES DU TOP 10, GALERIE (19 septembre 2026)
+================================================================================
+Base : v7.11 (en ligne). Aucun fichier supprimé. Livrée en archive « modifs ».
+
+GALERIE « EN IMAGES »
+1. La vue en place reste nette. Seule la vue qui arrive passe du flou au net, en fondu, en
+   diagonale ou depuis la profondeur, jusqu'à recouvrir la précédente. Puis la suivante fait
+   de même : à tout moment, une image est parfaitement nette.
+2. Cadre plus grand : toute la largeur utile de l'écran (96 %) et 85 % de sa hauteur sur
+   ordinateur. Mobile inchangé.
+
+VIGNETTES
+3. Top 10 (classement-vehicules.html) et Véhicules rares affichaient « Visuel à intégrer » ou
+   « Visuel à venir » : chaque véhicule y montre maintenant sa capture officielle, sinon son
+   schéma. Les 302 schémas existent aussi en fichiers img/schemas/<id>.svg (écrits par gen.js)
+   et vehicules-data.js porte un champ thumb par véhicule.
+
+COLLECTIBLES : FUSION SÉLECTIVE DU ZIP « Leonidadex-collectibles-v2 »
+Le zip est construit sur la v7.10. Repris :
+4. La section complète : collectibles.html (catalogue avec recherche, filtres, tri, grille ou
+   liste ; carnet local avec trouvés, favoris, notes, progression, sauvegarde et import JSON,
+   remise à zéro confirmée ; réponses rapides recherchables et raccourci Alt+K ; recherches
+   nommées et liens de vue partageables ; « Ma sortie » jusqu'à 30 étapes réordonnables ;
+   export CSV et checklist imprimable ; méthode, sources et niveaux de certitude), ses
+   scripts et feuilles de style dédiés, le générateur outils/gen-collectibles.cjs avec son
+   schéma de données, sa documentation et ses 53 tests.
+5. Carte : couche « Sources des collectibles » et marqueurs, uniquement pour un objet à
+   position vérifiée et sourcée (aucun aujourd'hui). Progression : ligne Collectibles reliée
+   au carnet. Le catalogue public reste vide tant que Rockstar n'a rien publié de vérifiable.
+Adapté aux règles du site :
+6. Crédit visible sous la composition d'images retiré, ainsi que dans la visionneuse (les
+   crédits restent sur la page Médias). Tirets cadratins remplacés dans les libellés.
+Écarté :
+7. Son gen.js, qui remettait les fiches véhicules en @type Vehicle (l'erreur « offers,
+   review ou aggregateRating » corrigée en v7.11) et supprimait le test qui l'interdit ; son
+   comparateur.html avec offre gratuite ; ses tests de régression, en retrait sur les nôtres.
+
+VÉRIFICATIONS
+- verifier.js : 27 961 références sans erreur. 109 tests réussis (56 + 53 collectibles).
+- Rendu Chromium : galerie en cours de transition (vue nette + vue floue qui arrive), top 10
+  avec photo et schéma, véhicules rares, page Collectibles ; aucune erreur console.

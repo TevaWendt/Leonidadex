@@ -2022,3 +2022,18 @@ header .head-search{flex:0 1 200px; max-width:200px; margin-left:auto; margin-to
 .lore-slide--br.is-next{transform:translate(calc((1 - var(--t,0))*60%),calc((1 - var(--t,0))*60%)) scale(calc(.94 + var(--t,0)*.06));}
 .lore-slide--z.is-next{transform:scale(calc(1.45 - var(--t,0)*.45));}
 .lore-slide.is-out{filter:blur(calc(var(--t,0)*18px));opacity:calc(1 - var(--t,0)*.6);}
+
+/* v7.12 : vignettes des véhicules rares et du top 10 (photo ou schéma sur dégradé) */
+.rare-img--schema{background:linear-gradient(160deg,var(--coral),var(--amber));} .rare-img--schema img{object-fit:contain;padding:8px 14px;box-sizing:border-box;}
+.cl-img{display:block;} .cl-img img.cl-schema{object-fit:contain;background:linear-gradient(160deg,var(--coral),var(--amber));padding:4px 8px;box-sizing:border-box;}
+/* v7.12 : galerie « En images » plus grande (toute la largeur utile, 85 % de la hauteur) ; la vue en place reste nette,
+   seule la vue qui arrive passe du flou au net avant de la recouvrir */
+.lore-gallery.shell{max-width:min(1600px,96vw);}
+.lore-stage{height:min(85vh,940px);}
+.lore-stack{height:calc((var(--n,2) - 1) * 80vh + min(85vh,940px));}
+.lore-slide.is-out{filter:none;opacity:1;transform:none;}
+.lore-slide.is-out .lore-slide-txt{opacity:calc(1 - var(--t,0)*1.2);}
+.lore-slide.is-next{opacity:var(--t,0);filter:blur(calc((1 - var(--t,0))*22px));}
+@media(max-width:700px){.lore-gallery.shell{max-width:100%;} .lore-stage{height:min(62vw,60vh);} .lore-stack{height:calc((var(--n,2) - 1) * 60vh + min(62vw,60vh));}}
+.cl-img{display:block;width:76px;height:46px;flex:none;border-radius:6px;overflow:hidden;background:#1A1A1E;}
+.cl-img--vide{display:none;}

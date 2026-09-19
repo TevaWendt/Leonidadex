@@ -35,7 +35,7 @@ for(const slot of ['dos','main','poing']){const allowed=A.filter(a=>slot==='poin
 fs.writeFileSync('armes.html',arms);
 
 let ranking=fs.readFileSync('classement-vehicules.html','utf8');ranking=ranking.replace(/(<select[^>]+id="cl-sel"[^>]*>)[\s\S]*?<\/select>/,'$1<option value="">Ajouter un véhicule</option>'+V.map(v=>'<option value="'+v.id+'">'+esc(name(v))+'</option>').join('')+'</select>');fs.writeFileSync('classement-vehicules.html',ranking);
-let rare=fs.readFileSync('vehicules-rares.html','utf8');rare=rare.replace(/(<a class="rare-card rise" href="vehicules\/([^"/]+)\.html">)([\s\S]*?)(<\/a>)/g,(all,open,id,body,end)=>{const v=V.find(x=>x.id===id);if(!v)return all;return open+body.replace(/(<span class="veh-marque">)[\s\S]*?<\/span>/,'$1'+esc(v.marque)+'</span>').replace(/<h3>[\s\S]*?<\/h3>/,'<h3>'+esc(v.nom)+'</h3>').replace(/<p>[\s\S]*?<\/p>/,'<p>'+esc(v.insp||v.fam)+'</p>').replace(/(<span class="rare-src">)[\s\S]*?<\/span>/,'$1'+esc(v.src)+'</span>')+end;});
+let rare=fs.readFileSync('vehicules-rares.html','utf8');rare=rare.replace(/(<a class="rare-card rise" href="vehicules\/([^"/]+)\.html">)([\s\S]*?)(<\/a>)/g,(all,open,id,body,end)=>{const v=V.find(x=>x.id===id);if(!v)return all;return open+body.replace(/<div class="rare-img">[\s\S]*?<\/div>/,'<div class="rare-img'+(/\.svg$/.test(v.thumb||'')?' rare-img--schema':'')+'"><img src="'+(v.thumb||'/img/schemas/'+v.id+'.svg')+'" alt="" loading="lazy" decoding="async"></div>').replace(/(<span class="veh-marque">)[\s\S]*?<\/span>/,'$1'+esc(v.marque)+'</span>').replace(/<h3>[\s\S]*?<\/h3>/,'<h3>'+esc(v.nom)+'</h3>').replace(/<p>[\s\S]*?<\/p>/,'<p>'+esc(v.insp||v.fam)+'</p>').replace(/(<span class="rare-src">)[\s\S]*?<\/span>/,'$1'+esc(v.src)+'</span>')+end;});
 rare=rare.replace('Vus une seule fois','Noms repérés sur les visuels').replace(/mais qui n'apparaissent nulle part ailleurs : ni dans les trailers, ni dans les listes des autres\s+sites\./,"dont l'identification est consignée dans notre base.");fs.writeFileSync('vehicules-rares.html',rare);
 
 const rawPath='outils/data/carte-gtadb-source.json';fs.mkdirSync('outils/data',{recursive:true});
@@ -62,7 +62,7 @@ for(const file of htmlFiles){let s=fs.readFileSync(file,'utf8');if(file.startsWi
  s=s.replace(/<div class="gal"([^>]+)>/g,(tag,attrs)=>{const base=attrs.match(/data-base="([^"]+)"/)?.[1];const vv=attrs.match(/data-vues="([^"]*)"/)?.[1]||'face,profil,detail';const views=vv.split(',').filter(v=>v&&available(file,base+'-'+v+'.jpg'));attrs=attrs.replace(/\sdata-vide="[^"]*"/,'').replace(/data-vues="[^"]*"/,'data-vues="'+views.join(',')+'"');const hasMed=/data-medias="[^"]*[^"\]]/.test(attrs);return '<div class="gal"'+attrs+' data-vide="'+((views.length||hasMed)?0:1)+'">';});
  if(/class="gal"[^>]*data-vide="1"/.test(s)&&!s.includes('data-vide-txt')){s=s.replace(/<p class="gal-note">[\s\S]*?<\/p>/,'<p class="gal-note">Illustration provisoire : les visuels restent à intégrer à cette fiche.</p>').replace(/<span class="chip">Images officielles<\/span>/g,'');}
  s=s.replace(/<meta property="og:image" content="([^"]+)"\s*\/?>/g,(tag,src)=>available(file,src)?tag:'<meta property="og:image" content="https://www.leonidakit.com/img/social-card.png">');
- if(!s.includes('name="robots"') && /^(calculateurs|collectibles)\.html$/.test(file))s=s.replace('</head>','<meta name="robots" content="noindex, follow">\n</head>');
+ if(!s.includes('name="robots"') && /^(calculateurs)\.html$/.test(file))s=s.replace('</head>','<meta name="robots" content="noindex, follow">\n</head>');
  if(!s.includes('http-equiv="refresh"')&&!s.includes('name="robots" content="noindex')){
   if(!s.includes('property="og:image"'))s=s.replace('</head>','<meta property="og:image" content="https://www.leonidakit.com/img/social-card.png">\n</head>');
   if(!s.includes('name="twitter:card"'))s=s.replace('</head>','<meta name="twitter:card" content="summary_large_image">\n</head>');
@@ -108,3 +108,6 @@ const mapCounts=[allPoints.length,allPoints.filter(p=>p.s==='officiel').length,7
 fs.writeFileSync('carte.html',fs.readFileSync('carte.html','utf8').replace(/(<span class="n" data-count=")\d+(">)\d+(<\/span>)/g,(_,a,b,c)=>{const n=mapCounts[mi++];return a+n+b+n+c;}));
 fs.writeFileSync('progression-data.js','/* IDs only; no need to load the full map on this page. */\nwindow.LK_PROGRESS_IDS = '+JSON.stringify({vehicules:V.map(v=>v.id),armes:A.map(v=>v.id),lieux:pointIds})+';\n');
 console.log('Synchronisation : '+htmlFiles.length+' pages, '+assets.length+' assets, '+urls.length+' URL canoniques.');
+
+// Collectibles : le générateur dédié régénère collectibles-data.js, les fiches et sitemap-collectibles.xml à partir d'outils/collectibles.json.
+require('child_process').execFileSync(process.execPath,[path.join(__dirname,'gen-collectibles.cjs')],{stdio:'inherit'});

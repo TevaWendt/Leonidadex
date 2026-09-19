@@ -66,7 +66,8 @@
     EL:    'An Extended Look, 27 août 2026',
     SHOT:  'Captures officielles',
     COMM:  'Analyse communautaire',
-    GTADB: 'Bâtiments communautaires'
+    GTADB: 'Bâtiments communautaires',
+    COLLECTIBLES: 'Sources indiquées dans la fiche du collectible'
   };
 
   /* ---- personnages officiels ---- */
@@ -206,6 +207,43 @@
     });
   }
 
+  /* Les collectibles gardent leurs identifiants et leur suivi propres.
+     Une fiche sans position précise et sourcée ne crée jamais de marqueur. */
+  const collectibleApi = window.LKCollectibles;
+  let collectibleState = collectibleApi ? collectibleApi.getState() : {found:{}, favorites:{}};
+  const collectibleItems = (window.LK_COLLECTIBLES && Array.isArray(window.LK_COLLECTIBLES.items))
+    ? window.LK_COLLECTIBLES.items : [];
+  const collectibleById = new Map();
+  const collectibleStatuses = {
+    confirmed: { nom:'Confirmé officiellement', court:'Confirmé' },
+    established: { nom:'Établi par des sources fiables', court:'Établi' },
+    unconfirmed: { nom:'Information non confirmée', court:'Non confirmé' }
+  };
+  function sourceUrl(value){
+    try{
+      const url = new URL(value);
+      return /^https?:$/.test(url.protocol) && !url.username && !url.password ? url.href : null;
+    }catch(e){ return null; }
+  }
+  collectibleItems.forEach(function(item){
+    if(!item || typeof item.id !== 'string' || !/^[a-z0-9][a-z0-9_-]{0,99}$/i.test(item.id) ||
+       typeof item.slug !== 'string' || !/^[a-z0-9][a-z0-9_-]{0,99}$/i.test(item.slug) ||
+       ['__proto__','constructor','prototype'].includes(item.id) || ['__proto__','constructor','prototype'].includes(item.slug) ||
+       typeof item.name !== 'string' || item.published === false ||
+       !Object.prototype.hasOwnProperty.call(collectibleStatuses, item.status) || collectibleById.has(item.id)) return;
+    collectibleById.set(item.id, item);
+    const c = item.coordinates;
+    if(!c || c.system !== 'leonidakit-v1' || c.verified !== true || !sourceUrl(c.sourceUrl) ||
+       !Number.isFinite(c.x) || !Number.isFinite(c.y) || c.x < 0 || c.x > W || c.y < 0 || c.y > H) return;
+    POINTS.push({ id:'collectible-' + item.id, n:item.name, c:'collectible',
+      x:c.x, y:c.y, z:0, s:item.status === 'confirmed' ? 'officiel' : 'spec',
+      src:'COLLECTIBLES', collectible:item });
+  });
+  function pointStatus(p){ return p.collectible ? collectibleStatuses[p.collectible.status] : STATUTS[p.s]; }
+  function pointFound(p){
+    return p.collectible ? !!(collectibleApi && collectibleApi.isTrackable(p.collectible) && collectibleState.found[p.collectible.id]) : !!found[p.id];
+  }
+
   /* Ne demander que les fichiers réellement livrés. Les photos de la carte (photos/) sont déjà filtrées à la génération de carte-gtadb.js et ne figurent pas dans le manifeste. */
   POINTS.forEach(p=>{['img','img2'].forEach(k=>{if(p[k] && !/^photos\//.test(p[k]) && !window.LK.hasAsset(p[k])) delete p[k];});});
 
@@ -245,7 +283,7 @@
 
   Object.keys(CATS).forEach(k => visible[k] = true);
   let visStatut = { officiel:true, vu:true, spec:true };
-  let visSource = { SITE:true, T1:true, T2:true, EL:true, SHOT:true, COMM:true, GTADB:true };
+  let visSource = { SITE:true, T1:true, T2:true, EL:true, SHOT:true, COMM:true, GTADB:true, COLLECTIBLES:true };
 
   /* niveau de zoom minimal pour voir chaque profondeur de la hiérarchie */
   const ZOOM_NIVEAU = [0, 0.42, 0.6];
@@ -267,6 +305,7 @@
 
   try{
     found = window.LK.read('lk_map_found',{},window.LK.own);
+    found = Object.fromEntries(Object.entries(found).filter(([id]) => !id.startsWith('collectible-')));
   }catch(e){ found = {}; }
 
   function save(){
@@ -311,18 +350,53 @@
 
   /* ---- position dans l'adresse, pour partager un lien ---- */
   let hashTimer = null;
+  let collectibleHash = null;
   function syncHash(){
     clearTimeout(hashTimer);
     hashTimer = setTimeout(function(){
       const r = stage.getBoundingClientRect();
       const cx = Math.round((r.width/2 - tx) / scale);
       const cy = Math.round((r.height/2 - ty) / scale);
-      const h = '#' + cx + ',' + cy + ',' + scale.toFixed(2);
+      const h = collectibleHash ? '#collectible=' + encodeURIComponent(collectibleHash)
+        : '#' + cx + ',' + cy + ',' + scale.toFixed(2);
       if(location.hash !== h) history.replaceState(null, '', h);
     }, 400);
   }
 
   function readHash(){
+    const collectibleLink = location.hash.match(/^#collectible=([^&]+)$/);
+    if(collectibleLink){
+      let id;
+      try{ id = decodeURIComponent(collectibleLink[1]); }catch(e){ return false; }
+      collectibleHash = id;
+      const p = byId('collectible-' + id);
+      if(p && p.collectible){
+        /* Un lien direct rend toujours visible son marqueur, même si un filtre
+           avait été désactivé au cours de la visite. */
+        visible[p.c] = visStatut[p.s] = visSource[p.src] = true;
+        document.querySelectorAll('.map-filter,.map-statut,.map-source').forEach(function(input){
+          if(input.dataset.cat === p.c || input.dataset.st === p.s || input.dataset.src === p.src) input.checked = true;
+        });
+        if(p.s !== 'officiel'){
+          const onlyOfficial = document.getElementById('map-only-officiel');
+          if(onlyOfficial){ onlyOfficial.classList.remove('on'); onlyOfficial.textContent = 'Uniquement l’officiel'; }
+        }
+        goTo(p, 1.1);
+        requestAnimationFrame(function(){ stage.scrollIntoView({ block:'start', behavior:'auto' }); });
+        return true;
+      }
+      const item = collectibleById.get(id);
+      ouvertId = null;
+      panelIn.innerHTML = '<p class="mp-cat">Collectibles</p><h3>' + esc(item ? item.name : 'Collectible indisponible') + '</h3>' +
+        '<p class="mp-d" role="status">' + (item ? 'Aucun emplacement précis et vérifié n’est disponible pour cette fiche.' :
+        'Ce lien ne correspond à aucun collectible publié avec un emplacement vérifié.') + '</p>' +
+        '<a class="mp-link" href="' + (item ? '/collectibles/' + encodeURIComponent(item.slug) + '.html' : '/collectibles.html') + '">' +
+        (item ? 'Consulter la fiche' : 'Consulter les collectibles') + '</a>';
+      panel.classList.add('open'); panel.inert = false;
+      refreshVisibility();
+      return false;
+    }
+    collectibleHash = null;
     /* lien direct vers un lieu : #lieu=vice-city */
     const l = location.hash.match(/^#lieu=([\w-]+)$/);
     if(l){
@@ -383,7 +457,7 @@
       el.type = 'button';
       const kids = enfants(p.id).length;
       el.className = 'mk mk--' + p.c + ' st-' + p.s + ' z' + (p.z||0)
-                   + (found[p.id] ? ' is-found' : '') + (kids ? ' has-kids' : '');
+                   + (pointFound(p) ? ' is-found' : '') + (kids ? ' has-kids' : '');
       el.style.left = p.x + 'px';
       el.style.top  = p.y + 'px';
       el.dataset.id = p.id;
@@ -478,7 +552,7 @@
     groupes.forEach(function(grp){
       const cx = grp.reduce((s,p)=>s+p.x,0) / grp.length;
       const cy = grp.reduce((s,p)=>s+p.y,0) / grp.length;
-      const done = grp.filter(p => found[p.id]).length;
+      const done = grp.filter(pointFound).length;
       const majeur = grp.some(p => p.id.indexOf('g-') !== 0 || p.s === 'officiel');
       const b = document.createElement('button');
       b.type = 'button';
@@ -567,8 +641,9 @@
   }
 
   function refreshProgress(){
-    const total = POINTS.length;
-    const done = POINTS.filter(p => found[p.id]).length;
+    const places = POINTS.filter(p => !p.collectible);
+    const total = places.length;
+    const done = places.filter(p => found[p.id]).length;
     const pct = total ? Math.round(done / total * 100) : 0;
     if(progBar) progBar.style.width = pct + '%';
     if(progTxt) progTxt.innerHTML = '<strong>' + done + '</strong> / ' + total + ' repérés';
@@ -583,7 +658,7 @@
   function renderFound(){
     if(!fdList) return;
     const sec = fdList.closest('details');
-    const liste = POINTS.filter(p => found[p.id]);
+    const liste = POINTS.filter(p => !p.collectible && found[p.id]);
     if(fdCnt) fdCnt.textContent = liste.length;
 
     if(!liste.length){
@@ -624,6 +699,9 @@
      ============================================================ */
   function openPanel(p){
     ouvertId = p.id;
+    collectibleHash = p.collectible ? p.collectible.id : null;
+    syncHash();
+    if(p.collectible){ openCollectiblePanel(p); return; }
     const isFound = !!found[p.id];
     const st = STATUTS[p.s];
     const VIDE = '<div class="mp-img mp-img--vide" aria-hidden="true">' +
@@ -773,8 +851,66 @@
     });
   }
 
+  function openCollectiblePanel(p){
+    const item = p.collectible;
+    const state = collectibleApi ? collectibleApi.getState() : {found:{}, favorites:{}};
+    const isFound = !!state.found[item.id];
+    const favorite = !!state.favorites[item.id];
+    const trackable = !!(collectibleApi && collectibleApi.isTrackable(item));
+    const storage = collectibleApi && typeof collectibleApi.getStorageStatus === 'function' ? collectibleApi.getStorageStatus() : null;
+    const st = pointStatus(p);
+    const itemHref = collectibleApi ? collectibleApi.itemUrl(item) : '/collectibles/' + encodeURIComponent(item.slug) + '.html';
+    const coordinateSource = sourceUrl(item.coordinates.sourceUrl);
+    panelIn.innerHTML = '<p class="mp-cat" style="color:' + CATS.collectible.col + '">Collectible</p>' +
+      '<h3>' + esc(item.name) + '</h3><span class="mp-st mp-st--' + p.s + '">' + esc(st.court) + '</span>' +
+      '<p class="mp-d">' + esc(item.summary || item.description || '') + '</p>' +
+      '<div class="mp-meta"><div><span>Fiabilité</span><b>' + esc(st.nom) + '</b></div>' +
+      '<div><span>Emplacement</span><b>Coordonnées vérifiées</b></div>' +
+      '<div><span>Source de la position</span><b><a href="' + esc(coordinateSource) + '" target="_blank" rel="noopener noreferrer">Consulter la source</a></b></div></div>' +
+      '<a class="mp-link" href="' + esc(itemHref) + '">Voir la fiche du collectible →</a>' +
+      (trackable ? '<button type="button" class="mp-btn' + (isFound ? ' on' : '') + '" id="mp-collectible-found" aria-pressed="' + isFound + '">' +
+        (isFound ? 'Trouvé' : 'Marquer comme trouvé') + '</button>' : '<p class="mp-d">Le suivi de collecte est indisponible pour cette fiche.</p>') +
+      (collectibleApi ? '<button type="button" class="mp-btn' + (favorite ? ' on' : '') + '" id="mp-collectible-favorite" aria-pressed="' + favorite + '">' +
+        (favorite ? 'Retirer des favoris' : 'Ajouter aux favoris') + '</button>' : '') +
+      '<button type="button" class="mp-btn" id="mp-collectible-share">Copier le lien vers ce collectible</button>' +
+      '<p class="mp-d" id="mp-collectible-status" role="status">' + esc(storage ? storage.message : '') + '</p>';
+    panel.classList.add('open'); panel.inert = false;
+    const foundButton = document.getElementById('mp-collectible-found');
+    const favoriteButton = document.getElementById('mp-collectible-favorite');
+    if(foundButton) foundButton.addEventListener('click', function(){
+      collectibleApi.setFound(item.id, !collectibleApi.getState().found[item.id]);
+    });
+    if(favoriteButton) favoriteButton.addEventListener('click', function(){
+      collectibleApi.setFavorite(item.id, !collectibleApi.getState().favorites[item.id]);
+    });
+    document.getElementById('mp-collectible-share').addEventListener('click', function(){
+      window.LK.copy(location.origin + location.pathname + '#collectible=' + encodeURIComponent(item.id)).then(function(ok){
+        const status = document.getElementById('mp-collectible-status');
+        if(status && ouvertId === p.id) status.textContent = ok ? 'Lien copié.' : 'Copie indisponible. Le lien est dans la barre d’adresse.';
+      });
+    });
+    refreshVisibility();
+    syncHash();
+  }
+
+  function refreshCollectibles(){
+    if(collectibleApi) collectibleState = collectibleApi.getState();
+    POINTS.forEach(function(p){
+      if(p.collectible && MK[p.id]) MK[p.id].classList.toggle('is-found', pointFound(p));
+    });
+    const p = ouvertId && byId(ouvertId);
+    if(p && p.collectible){
+      const focusedId = panelIn.contains(document.activeElement) ? document.activeElement.id : null;
+      openCollectiblePanel(p);
+      const button = focusedId && document.getElementById(focusedId);
+      if(button) button.focus({preventScroll:true});
+    }else refreshVisibility();
+  }
+
   function closePanel(){
     panel.classList.remove('open'); panel.inert=true;
+    collectibleHash = null;
+    syncHash();
     if(ouvertId || Object.keys(expanded).length){
       ouvertId = null;
       expanded = {};          /* ce qui avait été déplié se replie avec la fiche */
@@ -965,7 +1101,7 @@
     const racines = POINTS.filter(p => !p.p);
     function node(p, depth){
       const kids = enfants(p.id);
-      const st = STATUTS[p.s];
+      const st = pointStatus(p);
       let h = '<li class="tr-item tr-d' + depth + (kids.length ? ' has-kids' : '') + '">' +
               '<div class="tr-row">' +
               (kids.length ? '<button type="button" class="tr-tog" aria-label="Déplier">›</button>' : '<span class="tr-sp"></span>') +
@@ -1266,13 +1402,16 @@
     progRs.addEventListener('click', function(){
       if(!confirm('Décocher tous les lieux repérés ?')) return;
       found = {}; save();
-      Object.keys(MK).map(k => MK[k]).forEach(el => el.classList.remove('is-found'));
+      Object.keys(MK).forEach(id => { if(!BY_ID[id].collectible) MK[id].classList.remove('is-found'); });
       refreshProgress(); closePanel();
     });
   }
 
   buildMarkers();
   if(!readHash()) center();
+  window.addEventListener('hashchange', readHash);
+  if(collectibleApi && typeof collectibleApi.subscribe === 'function') collectibleApi.subscribe(refreshCollectibles);
+  else window.addEventListener('lk:collectibles-change', refreshCollectibles);
   window.addEventListener('resize', function(){ clamp(); applyTransform(); });
 
   /* raccourcis clavier */
@@ -1345,12 +1484,12 @@
     wasDrag: function(){ return moved >= 6; },
     scale: function(){ return scale; },
     getFound: function(){ return found; },
-    cleanFound: f=>Object.fromEntries(Object.entries(f).filter(([id])=>Object.hasOwn(BY_ID,id))),
+    cleanFound: f=>Object.fromEntries(Object.entries(f).filter(([id])=>Object.hasOwn(BY_ID,id) && !BY_ID[id].collectible)),
     setFound: function(f,persist=true){
       if(!window.LK.own(f))throw new Error('Progression invalide');
-      found = Object.fromEntries(Object.entries(f).filter(([id])=>Object.hasOwn(BY_ID,id))); if(persist)save();
+      found = Object.fromEntries(Object.entries(f).filter(([id])=>Object.hasOwn(BY_ID,id) && !BY_ID[id].collectible)); if(persist)save();
       Object.keys(MK).map(k => MK[k]).forEach(function(el){
-        el.classList.toggle('is-found', !!found[el.dataset.id]);
+        el.classList.toggle('is-found', pointFound(BY_ID[el.dataset.id]));
       });
       refreshProgress();
     },

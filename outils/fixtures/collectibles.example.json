@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-09-18",
+  "sources": [],
+  "categories": [
+    {
+      "id": "exemple-hors-production",
+      "name": "Exemple technique fictif",
+      "description": "Catégorie de démonstration exclue du site public."
+    }
+  ],
+  "items": [
+    {
+      "id": "exemple-ne-pas-publier",
+      "slug": "exemple-ne-pas-publier",
+      "name": "EXEMPLE FICTIF — ne pas publier",
+      "category": "exemple-hors-production",
+      "subcategory": null,
+      "status": "placeholder",
+      "summary": "Ce modèle illustre uniquement le format éditorial. Il ne décrit aucun objet de GTA VI.",
+      "description": null,
+      "image": null,
+      "gallery": [],
+      "region": null,
+      "zone": null,
+      "place": null,
+      "coordinates": null,
+      "difficulty": null,
+      "requirements": [],
+      "availability": null,
+      "reward": null,
+      "quantity": null,
+      "order": null,
+      "tips": [],
+      "hints": [],
+      "notes": [
+        "Remplacer les champs par des informations sourcées avant toute publication."
+      ],
+      "sources": [],
+      "verifiedAt": null,
+      "updatedAt": "2026-09-18",
+      "relatedIds": [],
+      "keywords": [],
+      "seo": {
+        "indexable": false,
+        "description": null
+      },
+      "published": false,
+      "trackable": false
+    }
+  ]
+}

@@ -33,6 +33,9 @@ while((m=re.exec(hub0))!==null){ THUMB[m[1]]={cls:m[2],in:m[3]};
 const {schema:vehSchema}=require('./vehicules-schemas.cjs');
 const VIDE_TXT='Schéma indicatif du modèle. Les visuels officiels détaillés arriveront avec le jeu.';
 const art=v=>vehSchema(v,90)||ART_ID[v.id]||ART_CAT[v.cat]||ART_CAT.sport||'';
+/* img/schemas/<id>.svg : le même schéma en fichier autonome, pour les pages qui chargent une image (top 10, véhicules rares) */
+fs.mkdirSync('img/schemas',{recursive:true});
+for(const v of V){const svg=vehSchema(v,120);if(svg)fs.writeFileSync('img/schemas/'+v.id+'.svg','<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 120">'+svg.replace(/^<svg[^>]*>/,'').replace(/<\/svg>\s*$/,'')+'</svg>');}
 
 /* ================= HUB ================= */
 function carte(v){

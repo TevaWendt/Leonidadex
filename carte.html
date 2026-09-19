@@ -90,7 +90,7 @@
   ]
 }
 </script>
-<link rel="stylesheet" href="style.css?v=c84a12fa">
+<link rel="stylesheet" href="style.css?v=d133e369">
 <meta property="og:image" content="https://www.leonidakit.com/img/social-card.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta property="og:url" content="https://www.leonidakit.com/carte.html">
@@ -193,12 +193,14 @@
 
       <div class="map-prog">
         <div class="map-prog-head">
-          <span>Progression</span>
+          <span>Lieux repérés</span>
           <span id="map-prog-txt"><strong>0</strong> / 0 repérés</span>
         </div>
         <div class="map-prog-rail"><span id="map-prog-bar"></span></div>
         <button type="button" class="map-prog-reset" id="map-prog-reset" hidden>Tout décocher</button>
       </div>
+
+      <p class="map-note">Le <a href="collectibles.html">suivi des collectibles</a> est partagé avec leurs fiches. Seuls les emplacements précis, vérifiés et sourcés apparaissent sur la carte.</p>
 
       <details class="ms ms-found" open>
         <summary>Lieux repérés <span class="ed-badge" id="map-found-count">0</span></summary>
@@ -314,6 +316,7 @@
           <label class="fl"><input type="checkbox" class="map-source" data-src="SHOT" checked><span class="fl-dot" style="background:#2F6F8F"></span>Captures officielles</label>
           <label class="fl"><input type="checkbox" class="map-source" data-src="COMM" checked><span class="fl-dot" style="background:#8A6A45"></span>Analyse communautaire</label>
           <label class="fl"><input type="checkbox" class="map-source" data-src="GTADB" checked><span class="fl-dot" style="background:#7A5C8F"></span>Bâtiments communautaires</label>
+          <label class="fl"><input type="checkbox" class="map-source" data-src="COLLECTIBLES" checked><span class="fl-dot" style="background:#C2452C"></span>Sources des collectibles</label>
         </div>
       </details>
 
@@ -744,11 +747,13 @@
   </div>
 </footer>
 
-<script src="search-index.js?v=c84a12fa"></script>
-<script src="assets-manifest.js?v=c84a12fa"></script>
-<script src="common.js?v=c84a12fa"></script>
-<script src="app.js?v=c84a12fa"></script>
-<script src="carte-gtadb.js?v=c84a12fa"></script>
-<script src="carte.js?v=c84a12fa"></script>
+<script src="search-index.js?v=d133e369"></script>
+<script src="assets-manifest.js?v=d133e369"></script>
+<script src="common.js?v=d133e369"></script>
+<script src="app.js?v=d133e369"></script>
+<script src="carte-gtadb.js?v=d133e369"></script>
+<script src="collectibles-data.js?v=d133e369"></script>
+<script src="collectibles-core.js?v=d133e369"></script>
+<script src="carte.js?v=d133e369"></script>
 </body>
 </html>

@@ -7,6 +7,16 @@
       const row=document.getElementById('progress-'+type);row.querySelector('strong').textContent=done+' / '+total;const bar=row.querySelector('progress');bar.max=total;bar.value=done;
     }
   }
+  function renderCollectibles(){
+    const core=window.LKCollectibles, row=document.getElementById('progress-collectibles');
+    if(!core||!row)return;
+    const items=(window.LK_COLLECTIBLES?.items||[]).filter(item=>core.isTrackable(item));
+    const state=core.getState(),done=items.filter(item=>state.found[item.id]).length;
+    row.querySelector('strong').textContent=items.length?done+' / '+items.length+' documentés':'Collection à documenter';
+    const bar=row.querySelector('progress');bar.hidden=!items.length;bar.max=items.length||1;bar.value=done;
+  }
+  renderCollectibles();window.LKCollectibles?.subscribe(renderCollectibles);
+  window.addEventListener('pageshow',renderCollectibles);
   render();window.addEventListener('storage',render);window.addEventListener('pageshow',render);
 })();
 

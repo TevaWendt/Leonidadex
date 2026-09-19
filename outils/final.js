@@ -29,6 +29,8 @@ const CATL={berline:'Berlines',sport:'Voitures de sport',supercar:'Supercars',mu
  suv:'SUV et 4x4',pickup:'Pickups et tout-terrain',van:'Vans et cargos',moto:'Deux-roues et quads',
  helicoptere:'Hélicoptères',avion:'Avions',bateau:'Bateaux et jet-skis',service:'Service et urgence',divers:'Divers'};
 const ORDRE=Object.keys(CATL);
+const MEDS=(()=>{try{return JSON.parse(fs.readFileSync('outils/medias-officiels.json','utf8'));}catch(e){return {};}})();
+for(const v of V){const m=(v.medias||[]).map(id=>MEDS[id]).find(x=>x&&x.variants);v.thumb=m?m.variants[0].src:'/img/schemas/'+v.id+'.svg';}
 const tri=V.slice().sort((a,b)=>ORDRE.indexOf(a.cat)-ORDRE.indexOf(b.cat)
  ||(a.marque||'').localeCompare(b.marque||'','fr')||a.nom.localeCompare(b.nom,'fr'));
 
