@@ -1,0 +1,31 @@
+LEONIDAKIT v7.14 : COLLECTIBLES ENRICHIS, IMAGES ET EFFETS RÉTRO SUR CHAQUE PAGE (19 septembre 2026)
+====================================================================================================
+Base : v7.13. Aucun fichier supprimé. Livrée en archive « modifs » (cumule v7.12 et v7.13).
+
+COLLECTIBLES
+1. Contenu réel : la seule collection décrite officiellement, la Collection de voitures
+   classiques de l'édition Ultimate (retrouver des voitures abandonnées ou inachevées à
+   travers Leonida et les restaurer, commande de Wyman, collectionneur excentrique et
+   mécanicien local, d'après la page rockstargames.com/VI). Bloc vedette avec la capture
+   de l'atelier et un cadre à dégradé animé, puis cinq cartes photo vers les fiches des
+   modèles vus chez Wyman (Mamba GT, Riata Classic, Sirius, Kellison J4, Deviant).
+2. « Ce que la série a toujours caché » : quatre cartes chiffrées (Vice City, San Andreas,
+   GTA IV, GTA V) qui donnent la grille de lecture, présentées comme des repères de la
+   série et non comme des annonces GTA VI.
+3. « Les familles que le catalogue est prêt à accueillir » : six cartes de squelette
+   (objets cachés, épaves et voitures abandonnées : confirmé, cascades uniques, faune et
+   pêche : aperçu dans les captures, points de vue et photos, récompenses de collection).
+4. Bandeau d'en-tête avec la photo officielle de l'atelier en fond et lignes de balayage
+   rétro ; bande « En attendant, explorer Leonida » (trois cartes photo tactiles vers la
+   carte, les régions et la progression) ; espacement des sections revu.
+
+SUR CHAQUE PAGE PRINCIPALE
+5. Bande « Continuer la visite » : trois cartes photo tactiles (image officielle, titre,
+   sous-titre, pastille flèche, zoom au survol) vers d'autres pages du site, pour garder
+   le visiteur : top 10 (« Pendant que tu composes ton top 10 » : édition Ultimate,
+   véhicules, carte), hubs Véhicules et Armes, Progression, Calculateurs, Comparateur,
+   Véhicules rares, et toutes les pages du monde (hubs et fiches, via lore-gen.js).
+   Composant unique dans style.css (.lk-links), réutilisable.
+
+Vérifications : verifier.js 28 221 références sans erreur, 109 tests réussis, rendus Chromium
+(collectibles en quatre positions, top 10, mobile sans débordement).

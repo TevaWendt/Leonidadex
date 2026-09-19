@@ -66,6 +66,10 @@ const imgTag=(m,alt,big)=>{if(!m)return '';const a=m.variants[0],b=m.variants[1]
 const mapHref=(id,p)=>p+'carte.html#lieu='+encodeURIComponent(id);
 const bc=items=>'<script type="application/ld+json">'+JSON.stringify({"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":items.map((it,i)=>({"@type":"ListItem","position":i+1,"name":it[0],"item":SITE+it[1]}))})+'</script>';
 
+const EXPLORE=pre=>`<section class="shell reveal lk-explore">
+  <h2 class="sec-h">Continuer la visite</h2>
+  <div class="lk-links rise"><a class="lk-link" href="${pre}carte.html"><img src="/img/officiel/leonida-keys-01-480.webp" width="480" height="270" alt="" loading="lazy" decoding="async"><span><b>La carte</b><i>2 547 lieux repérés, à cocher</i></span></a><a class="lk-link" href="${pre}vehicules.html"><img src="/img/officiel/one-eyed-willie-s-mod-shop-01-480.webp" width="480" height="270" alt="" loading="lazy" decoding="async"><span><b>Les 302 véhicules</b><i>Fiches, photos officielles et schémas</i></span></a><a class="lk-link" href="${pre}collectibles.html"><img src="/img/officiel/classic-car-collection-04-480.webp" width="480" height="270" alt="" loading="lazy" decoding="async"><span><b>Collectibles</b><i>La collection de Wyman et le carnet</i></span></a></div>
+</section>`;
 function page({p,title,desc,canonical,ogImg,body,crumbs,hub}){
   const C=p?SUB:ROOT;const header=hub?withHere(C.header,hub):C.header.replace(/ class="here"/g,'');
   return `<!DOCTYPE html>
@@ -99,6 +103,7 @@ ${header}
 
 <main id="main" class="lore-page">
 ${body}
+${EXPLORE(p?'../':'')}
 </main>
 
 ${C.footer}

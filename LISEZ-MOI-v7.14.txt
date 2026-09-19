@@ -1,0 +1,3 @@
+Archive « modifs » v7.14 (contient aussi v7.12 et v7.13) : fichiers modifiés ou ajoutés par rapport à la v7.11 en ligne. Aucune suppression.
+Coller le contenu par-dessus le dossier du dépôt (remplacer, en cochant « Faire ceci pour tous les éléments en conflit »), puis Commit et Push.
+Détail : outils/CHANGEMENTS-v7.12.txt à v7.14.txt

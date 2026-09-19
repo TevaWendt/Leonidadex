@@ -2037,3 +2037,48 @@ header .head-search{flex:0 1 200px; max-width:200px; margin-left:auto; margin-to
 @media(max-width:700px){.lore-gallery.shell{max-width:100%;} .lore-stage{height:min(62vw,60vh);} .lore-stack{height:calc((var(--n,2) - 1) * 60vh + min(62vw,60vh));}}
 .cl-img{display:block;width:76px;height:46px;flex:none;border-radius:6px;overflow:hidden;background:#1A1A1E;}
 .cl-img--vide{display:none;}
+
+/* ===================== v7.14 : composants de marque réutilisables ===================== */
+/* bandeau de hub avec photo officielle en fond, lignes de balayage rétro */
+.vhero--photo .vhero-bg{background-image:linear-gradient(90deg,rgba(253,251,247,.96) 0%,rgba(253,251,247,.82) 45%,rgba(253,251,247,.35) 100%),var(--vhero-img);background-size:cover;background-position:center right;}
+.vhero-scan{position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(26,26,30,0) 0 3px,rgba(26,26,30,.06) 3px 4px);mix-blend-mode:multiply;}
+/* bloc vedette : texte + grande image, cadre à dégradé animé */
+.lk-feature{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:24px;align-items:center;background:#fff;border:2px solid var(--ink);border-radius:14px;padding:22px;box-shadow:6px 6px 0 var(--amber);}
+.lk-feature h3{font-size:clamp(1.4rem,2.6vw,2rem);line-height:1.05;letter-spacing:-.03em;margin:6px 0 12px;}
+.lk-feature p{line-height:1.65;}
+.lk-feature-img{display:block;border:2px solid var(--ink);border-radius:10px;overflow:hidden;background:#1A1A1E;}
+.lk-feature-img img{display:block;width:100%;height:100%;object-fit:cover;aspect-ratio:16/9;transition:transform .5s cubic-bezier(.2,.7,.2,1);}
+.lk-feature-img:hover img{transform:scale(1.04);}
+@media(max-width:800px){.lk-feature{grid-template-columns:1fr;}}
+.lk-retro{padding:5px;border-radius:19px;background:linear-gradient(120deg,var(--coral),var(--amber),#5A2358,var(--coral));background-size:300% 300%;animation:lk-shift 9s linear infinite;}
+.lk-retro .lk-feature{box-shadow:none;}
+.lk-feature .fiche-liens{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px;}
+.lk-feature .fiche-liens a{display:inline-flex;align-items:center;font:800 .88rem 'Archivo',sans-serif;color:var(--ink);background:#fff;border:2px solid var(--ink);border-radius:8px;padding:10px 14px;box-shadow:3px 3px 0 var(--ink);text-decoration:none;transition:transform .15s,box-shadow .15s;}
+.lk-feature .fiche-liens a:first-child{background:var(--ink);color:#fff;box-shadow:3px 3px 0 var(--amber);}
+.lk-feature .fiche-liens a:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--amber);}
+@keyframes lk-shift{0%{background-position:0% 50%}100%{background-position:300% 50%}}
+/* grille de cartes photo (véhicules d'une collection, lieux…) */
+.lk-photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-top:16px;}
+.lk-photo-card{display:block;position:relative;border:2px solid var(--ink);border-radius:10px;overflow:hidden;background:#1A1A1E;box-shadow:4px 4px 0 rgba(26,26,30,.18);text-decoration:none;color:#fff;transition:transform .18s,box-shadow .18s;}
+.lk-photo-card img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;transition:transform .5s cubic-bezier(.2,.7,.2,1);}
+.lk-photo-card:hover{transform:translate(-3px,-3px);box-shadow:7px 7px 0 var(--amber);} .lk-photo-card:hover img{transform:scale(1.06);}
+.lk-photo-txt{position:absolute;left:0;right:0;bottom:0;padding:26px 12px 10px;background:linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.78));display:flex;flex-direction:column;}
+.lk-photo-txt b{font-size:1.02rem;} .lk-photo-txt i{font-style:normal;font-size:.76rem;color:rgba(255,255,255,.78);}
+/* héritage de la série : cartes chiffrées */
+.lk-her-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;}
+@media(max-width:760px){.lk-her-grid{grid-template-columns:1fr;}}
+.lk-her{background:#fff;border:2px solid var(--ink);border-radius:12px;padding:16px 18px;box-shadow:4px 4px 0 rgba(26,26,30,.18);border-left:8px solid var(--coral);}
+.lk-her-k{display:block;font:800 .72rem/1 'Archivo',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--coral);margin-bottom:8px;}
+.lk-her b{display:block;font-family:'JetBrains Mono',monospace;font-size:.95rem;line-height:1.45;margin-bottom:6px;}
+.lk-her p{margin:0;font-size:.92rem;line-height:1.55;color:var(--ink-soft);}
+/* bande « explorer » : trois cartes photo tactiles vers d'autres pages */
+.lk-links{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;}
+@media(max-width:800px){.lk-links{grid-template-columns:1fr;}}
+.lk-link{position:relative;display:block;border:2px solid var(--ink);border-radius:12px;overflow:hidden;background:#1A1A1E;color:#fff;text-decoration:none;box-shadow:4px 4px 0 rgba(26,26,30,.18);transition:transform .18s,box-shadow .18s;}
+.lk-link img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;opacity:.92;transition:transform .5s cubic-bezier(.2,.7,.2,1),opacity .3s;}
+.lk-link span{position:absolute;left:0;right:0;bottom:0;padding:34px 16px 14px;background:linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.82));display:flex;flex-direction:column;gap:3px;}
+.lk-link b{font-size:1.15rem;letter-spacing:-.01em;} .lk-link i{font-style:normal;font-size:.8rem;color:rgba(255,255,255,.8);}
+.lk-link::after{content:'\203A';position:absolute;top:12px;right:14px;width:30px;height:30px;border-radius:50%;background:var(--amber);color:var(--ink);font-weight:900;display:flex;align-items:center;justify-content:center;font-size:1.3rem;transition:transform .2s;}
+.lk-link:hover{transform:translate(-3px,-3px);box-shadow:7px 7px 0 var(--amber);} .lk-link:hover img{transform:scale(1.05);opacity:1;} .lk-link:hover::after{transform:translateX(3px);}
+@media(prefers-reduced-motion:reduce){.lk-retro::before{animation:none;} .lk-link img,.lk-photo-card img,.lk-feature-img img{transition:none;}}
+.lk-explore{margin:48px auto 64px;}
