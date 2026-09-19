@@ -257,9 +257,17 @@ ${FAV}
  {'@type':'ListItem',position:3,name:nom,item:'https://www.leonidakit.com/vehicules/'+v.id+'.html'}]})}</script>
 <link rel="stylesheet" href="../style.css">
 <link rel="stylesheet" href="../fiches.css">
-<script type="application/ld+json">${JSON.stringify({'@context':'https://schema.org','@type':'Vehicle',
- name:nom,brand:{'@type':'Brand',name:v.marque||'Inconnu'},model:v.nom,vehicleConfiguration:cat,
- url:'https://www.leonidakit.com/vehicules/'+v.id+'.html',isPartOf:{'@type':'VideoGame',name:'Grand Theft Auto VI'}})}</script>
+<script type="application/ld+json">${JSON.stringify({'@context':'https://schema.org','@type':'Thing',
+ /* Thing et non Vehicle : Vehicle dérive de Product, et Google exige alors un prix, un avis ou une note.
+    Ces véhicules sont des objets de jeu, pas des produits en vente : aucune de ces données n'existe. */
+ name:nom,description:description,url:'https://www.leonidakit.com/vehicules/'+v.id+'.html',
+ /* Pas d'additionalType Vehicle : Google le rattache à ses extraits de produits et réclame alors offers,
+    review ou aggregateRating. La catégorie du véhicule est donnée plus bas en additionalProperty. */
+ isPartOf:{'@type':'VideoGame',name:'Grand Theft Auto VI'},
+ additionalProperty:[...(v.marque?[{'@type':'PropertyValue',name:'Marque fictive',value:v.marque}]:[]),
+  {'@type':'PropertyValue',name:'Catégorie',value:cat},
+  ...(v.insp?[{'@type':'PropertyValue',name:'Inspiration réelle',value:v.insp}]:[])],
+ ...(meds.length?{image:['https://www.leonidakit.com'+medBig(meds[0]).src]}:{})})}</script>
 </head>
 <body data-own="vehicules">
 ${HEADER}

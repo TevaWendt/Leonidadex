@@ -141,3 +141,26 @@ test('Every vehicle gets a distinct schematic',()=>{
  const v=catalog.find(v=>!(v.medias&&v.medias.length));const dom=new JSDOM(fs.readFileSync(path.join(root,'vehicules/'+v.id+'.html'),'utf8'));
  try{const d=dom.window.document;assert.ok(d.querySelector('.gal .gal-vide svg.veh-art--schema'),v.id);assert.equal(d.querySelectorAll('.pending h3').length,3);assert.match([...d.querySelectorAll('.pending')].pop().textContent,/prix, niveau requis/);}finally{dom.window.close();}
 });
+
+// v7.11 : aucune fiche ne déclare un type dérivé de Product (Google exigerait prix, avis ou note, qui n'existent pas ici).
+test('Structured data avoids Product-derived types',()=>{
+ const bad=/"@type":\s*"(Product|Vehicle|Car|Motorcycle|BusOrCoach|Offer|IndividualProduct|ProductModel)"/;
+ const dirs=['vehicules','armes','lieux','personnages','entreprises','demeures','planques'];
+ const files=[...dirs.flatMap(d=>fs.readdirSync(path.join(root,d)).filter(f=>f.endsWith('.html')).map(f=>d+'/'+f)),'index.html','vehicules.html','armes.html','carte.html'];
+ for(const f of files){const html=fs.readFileSync(path.join(root,f),'utf8');
+  for(const m of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)){
+   const raw=m[1];assert.doesNotThrow(()=>JSON.parse(raw),f+' : JSON-LD invalide');assert.ok(!bad.test(raw),f+' : type dérivé de Product');}}
+});
+
+// v7.11 : aucune page ne doit ressembler à une fiche produit pour Google (Product, Vehicle ou Offer déclencheraient
+// « il faut indiquer offers, review ou aggregateRating » dans les extraits de produits de la Search Console).
+test('No page declares product-like structured data',()=>{
+ const walk=d=>fs.readdirSync(d,{withFileTypes:true}).flatMap(e=>e.name==='outils'||e.name==='node_modules'?[]:e.isDirectory()?walk(path.join(d,e.name)):/\.html$/.test(e.name)?[path.join(d,e.name)]:[]);
+ const bad=[];
+ for(const f of walk(root)){const s=fs.readFileSync(f,'utf8');
+  for(const m of s.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)){
+   const raw=m[1];let data;try{data=JSON.parse(raw);}catch(e){bad.push(f+' : JSON-LD invalide');continue;}
+   const flat=JSON.stringify(data);
+   if(/"@type":"(Product|Vehicle|Offer|IndividualProduct|ProductModel)"/.test(flat)||/schema\.org\/(Product|Vehicle)"/.test(flat))bad.push(path.relative(root,f));}}
+ assert.deepEqual(bad,[],'pages vues comme des produits : '+bad.slice(0,5).join(', '));
+});

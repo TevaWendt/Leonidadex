@@ -1,0 +1,19 @@
+LEONIDAKIT v7.11 : EXTRAITS DE PRODUITS ET FONDU DIAGONAL (18 septembre 2026)
+=============================================================================
+Base : v7.10 (qui contient déjà le fondu diagonal de la galerie). Aucun fichier supprimé.
+
+SEARCH CONSOLE : « Il faut indiquer offers, review ou aggregateRating »
+1. Les fiches véhicules déclaraient additionalType https://schema.org/Vehicle sur leur
+   bloc Thing. Vehicle dérive de Product : Google les rangeait dans ses extraits de
+   produits et réclamait un prix, un avis ou une note, qui n'existent pas pour un objet
+   de jeu non commercialisé. L'additionalType est retiré ; la catégorie du véhicule reste
+   donnée en additionalProperty, et le reste du bloc Thing ne change pas.
+2. Trois anciennes pages de fiches retirées (bravado-youga, brute-camper,
+   vapid-stanier-le), conservées en noindex pour ne pas renvoyer de 404, portaient encore
+   un bloc "@type":"Vehicle" d'avant ce changement : réécrites en Thing.
+3. comparateur.html déclarait une offre gratuite (Offer, price 0) sur son bloc
+   WebApplication : retirée, elle aussi tirait la page vers les extraits de produits.
+4. Nouveau test : aucune page du site ne doit déclarer Product, Vehicle, Offer ni
+   schema.org/Vehicle dans ses données structurées. 56 tests au total.
+
+Vérifications : verifier.js 27 591 références sans erreur, 56 tests réussis.
