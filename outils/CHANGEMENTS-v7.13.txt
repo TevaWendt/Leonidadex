@@ -1,0 +1,30 @@
+LEONIDAKIT v7.13 : COLLECTIBLES AUX COULEURS DU SITE (19 septembre 2026)
+=======================================================================
+Base : v7.12. Aucun fichier supprimé. Livrée en archive « modifs » (cumule la v7.12 si elle
+n'est pas encore en ligne).
+
+La page Collectibles livrée par le zip externe avait sa propre identité (composition de
+polaroids inclinés, tons crème et gris, bandeau d'options, section d'ambiance animée au
+défilement). Elle est réécrite dans le gabarit des hubs du site, sans perdre une fonction.
+
+1. En-tête au gabarit des hubs Véhicules et Armes : bandeau, titre, quatre compteurs
+   (fiches documentées, confirmées par Rockstar, emplacements vérifiés, total inconnu) et
+   compte à rebours de la sortie.
+2. Sections nettement séparées, chacune avec le titre à filet du site, dans l'ordre :
+   Où en est le catalogue (note d'état et trois cartes : déjà en place, à venir, règle),
+   Catalogue (recherche, filtres, résultats), Mon carnet (suivi, sauvegarde, carte),
+   Sorties et exports (recherches nommées, Ma sortie, checklist), Questions fréquentes
+   (au gabarit FAQ du site, avec la recherche de réponse et Alt+K), Méthode et sources.
+3. collectibles-brand.css : bordures noires de 2 px, ombres portées dures, dégradé corail
+   et ambre, puces et boutons du site, champs de saisie, boîtes de dialogue, appliqués à
+   tous les éléments de la section (y compris ceux que les scripts génèrent).
+4. Retirés : la composition d'images inclinées et ses photogrammes, la section
+   « ambiance » et son script de défilement (collectibles-motion.js n'est plus chargé),
+   la barre d'options « mode express / animations » et la réponse rapide qui s'y
+   rapportait, le fil d'Ariane doublon. Le crédit visible reste retiré comme en v7.12.
+5. Rien d'utilitaire n'est perdu : catalogue, filtres, tri, carnet local, sauvegarde et
+   import JSON, recherches nommées, Ma sortie, export CSV, impression, partage de vue,
+   liaison carte et progression. Les 53 tests des collectibles passent inchangés.
+
+Vérifications : verifier.js 27 937 références sans erreur, 109 tests réussis, rendus
+Chromium de chaque section (état, catalogue, carnet, sorties, FAQ, méthode) sans erreur.

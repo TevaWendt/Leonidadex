@@ -1,0 +1,109 @@
+/* ============================================================
+   LEONIDAKIT — collectibles-brand.css
+   Charte du site appliquée à la section Collectibles : bordures ink 2 px, ombres portées
+   dures, dégradé corail / ambre, puces, Archivo partout. Chargée après collectibles.css
+   et collectibles-tools.css, avant collectibles-help.css, elle prime sur leurs couleurs.
+   ============================================================ */
+:root{--col-ink:#1A1A1E;--col-paper:#FDFBF7;--col-line:#1A1A1E;--col-shadow:4px 4px 0 rgba(26,26,30,.18);}
+
+/* ---------- typographie et sections ---------- */
+main .col-eyebrow,main .col-panel-heading .col-eyebrow{font:800 .72rem/1 'Archivo',system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--coral);margin:0 0 8px;}
+main h2:not(.sec-h),main h3{font-family:'Archivo',system-ui,sans-serif;font-weight:900;letter-spacing:-.02em;color:var(--col-ink);}
+main .col-section-head{margin:0 0 14px;}
+main .col-section-head h2{font-size:1.15rem;margin:0;}
+main .col-tag,main .col-local-badge,main .col-help-count{display:inline-flex;align-items:center;background:var(--col-paper);border:2px solid var(--col-ink);border-radius:20px;padding:3px 10px;font:800 .7rem/1 'Archivo',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--col-ink);}
+#etat .col-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:16px;}
+@media(max-width:820px){#etat .col-steps{grid-template-columns:1fr;}}
+
+/* ---------- boutons, champs ---------- */
+main .col-btn,main button.col-btn,main .col-btn-primary,main .col-results-tools button,main .col-tools button:not(.col-link){font:800 .86rem/1 'Archivo',sans-serif;color:var(--col-ink);background:#fff;border:2px solid var(--col-ink);border-radius:8px;padding:10px 14px;box-shadow:3px 3px 0 var(--col-ink);cursor:pointer;transition:transform .15s,box-shadow .15s;text-decoration:none;}
+main .col-btn:hover,main .col-btn-primary:hover,main .col-results-tools button:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--col-ink);}
+main .col-btn:active{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--col-ink);}
+main .col-btn-primary,main .col-btn[data-col-plan]{background:var(--col-ink);color:#fff;box-shadow:3px 3px 0 var(--amber);}
+main .col-btn-primary:hover{box-shadow:5px 5px 0 var(--amber);}
+main .col-btn[disabled],main button[disabled]{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none;}
+main input[type="text"],main input[type="search"],main input[type="url"],main select,main textarea{font:500 .95rem 'Archivo',sans-serif;color:var(--col-ink);background:var(--col-paper);border:2px solid var(--col-ink);border-radius:8px;padding:10px 12px;box-shadow:none;}
+main input:focus-visible,main select:focus-visible,main textarea:focus-visible,main .col-btn:focus-visible{outline:3px solid var(--amber);outline-offset:2px;}
+main .col-checkbox input,main input[type="checkbox"]{accent-color:var(--coral);width:18px;height:18px;}
+main label{font-weight:700;color:var(--col-ink);}
+main .col-text-link,main .col-link{color:var(--coral);font-weight:800;text-decoration:underline;text-underline-offset:3px;}
+
+/* ---------- catalogue ---------- */
+#catalogue .col-filters{background:#fff;border:2px solid var(--col-ink);border-radius:12px;padding:16px;box-shadow:var(--col-shadow);}
+#catalogue .col-filter-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;}
+@media(max-width:900px){#catalogue .col-filter-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media(max-width:560px){#catalogue .col-filter-grid{grid-template-columns:1fr;}}
+#catalogue .col-filter-grid label{display:flex;flex-direction:column;gap:6px;font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;}
+#catalogue .col-search-label{display:flex;align-items:center;gap:10px;margin-bottom:12px;background:var(--col-paper);border:2px solid var(--col-ink);border-radius:8px;padding:0 12px;}
+#catalogue .col-search-label input{border:0;background:none;flex:1;padding:12px 0;}
+#catalogue .col-active-filters{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
+#catalogue .col-active-filters button,#catalogue .col-active-filters span{background:var(--col-paper);border:2px solid var(--col-ink);border-radius:20px;padding:4px 10px;font:700 .78rem 'Archivo',sans-serif;}
+#catalogue .col-results-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:18px 0 10px;font-weight:700;}
+#catalogue .col-results{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;}
+#catalogue .col-results.col-list{grid-template-columns:1fr;}
+#catalogue .col-results article,#catalogue .col-card{background:#fff;border:2px solid var(--col-ink);border-radius:12px;box-shadow:var(--col-shadow);overflow:hidden;}
+#catalogue .col-empty{background:linear-gradient(160deg,var(--coral),var(--amber));border:2px solid var(--col-ink);border-radius:12px;padding:32px 20px;text-align:center;color:#fff;box-shadow:var(--col-shadow);}
+#catalogue .col-empty h3,#catalogue .col-empty p{color:#fff;}
+#catalogue .col-empty .col-empty-icon{display:none;}
+#catalogue .col-empty .col-btn{margin-top:12px;}
+#catalogue .col-pagination{display:flex;gap:8px;justify-content:center;margin-top:16px;}
+
+/* ---------- carnet ---------- */
+#carnet .col-carnet-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:stretch;}
+@media(max-width:900px){#carnet .col-carnet-grid{grid-template-columns:1fr;}}
+#carnet .col-progress-panel,#carnet .col-backup-panel,#carnet .col-map-card{margin:0;background:#fff;border:2px solid var(--col-ink);border-radius:12px;padding:18px;box-shadow:var(--col-shadow);display:flex;flex-direction:column;gap:10px;color:var(--col-ink);text-decoration:none;}
+#carnet .col-map-card{background:var(--col-ink);color:#fff;box-shadow:4px 4px 0 var(--amber);}
+#carnet .col-map-card *{color:#fff;}
+#carnet .col-panel-heading{display:flex;justify-content:space-between;align-items:center;gap:8px;}
+#carnet .col-meter{height:10px;border-radius:6px;background:#E8E4DA;border:2px solid var(--col-ink);overflow:hidden;}
+#carnet .col-meter > *{background:linear-gradient(90deg,var(--coral),var(--amber));height:100%;}
+#carnet .col-progress-panel strong,#carnet .col-progress-panel b{font-family:'JetBrains Mono',monospace;}
+#carnet .col-progress-panel > div:has(#col-percent) b,#carnet #col-percent{font-size:1.6rem;color:var(--coral);}
+#carnet .col-backup-panel > div{display:flex;flex-wrap:wrap;gap:8px;}
+main .col-notice,main .col-feedback{background:var(--col-paper);border-left:4px solid var(--amber);padding:10px 14px;border-radius:0 8px 8px 0;margin:12px 0 0;}
+main .col-warning{border-left-color:var(--coral);}
+
+/* ---------- sorties et exports (outils rendus par le script) ---------- */
+#sorties #col-tools{display:block;margin-top:14px;}
+#sorties .col-tools-heading{display:none;}   /* le titre de section et son texte tiennent ce rôle */
+#sorties .col-tools-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:start;}
+@media(max-width:900px){#sorties .col-tools-grid{grid-template-columns:1fr;}}
+#sorties .col-tools-panel{margin:0;background:#fff;border:2px solid var(--col-ink);border-radius:12px;padding:18px;box-shadow:var(--col-shadow);}
+#sorties .col-tools-panel h2,#sorties .col-tools-panel h3{font-size:1.05rem;margin:0 0 8px;}
+#sorties .col-tools-panel ol,#sorties .col-tools-panel ul{padding-left:18px;}
+#sorties .col-tools-panel li{padding:6px 0;border-bottom:1px dashed rgba(26,26,30,.25);}
+main .col-notice:empty,main .col-feedback:empty,main .col-tools-feedback:empty,main [hidden]{display:none!important;}
+
+/* ---------- questions fréquentes (gabarit .faq du site) ---------- */
+#col-quick-help .col-help-search{display:flex;gap:10px;align-items:end;flex-wrap:wrap;margin:0 0 16px;}
+#col-quick-help .col-help-search label{display:block;font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;}
+#col-quick-help .col-help-search > div{display:flex;gap:8px;flex:1;min-width:260px;}
+#col-quick-help .col-help-search input{flex:1;}
+#col-quick-help .faq{max-width:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
+@media(max-width:820px){#col-quick-help .faq{grid-template-columns:1fr;}}
+#col-quick-help .faq details{margin:0;background:#fff;border:2px solid var(--col-ink);border-radius:10px;box-shadow:var(--col-shadow);}
+#col-quick-help .faq summary{font:800 1rem 'Archivo',sans-serif;padding:14px 44px 14px 16px;cursor:pointer;list-style:none;position:relative;}
+#col-quick-help .faq summary::after{content:'+';position:absolute;right:16px;top:10px;font-size:1.4rem;color:var(--coral);font-weight:900;}
+#col-quick-help .faq details[open] summary::after{content:'\\2013';}
+#col-quick-help .faq details > *:not(summary){padding:0 16px 14px;line-height:1.6;}
+#col-quick-help .col-help-shortcut kbd{border:2px solid var(--col-ink);border-radius:6px;padding:1px 6px;font-family:'JetBrains Mono',monospace;font-size:.8rem;}
+
+/* ---------- méthode et sources ---------- */
+#methode-sources .col-method{margin:0 0 18px;}
+#methode-sources .col-method > div:not(.col-section-head),#methode-sources .col-method article,#methode-sources .col-method-grid > *{background:#fff;border:2px solid var(--col-ink);border-radius:12px;padding:16px;box-shadow:var(--col-shadow);}
+#methode-sources .col-method-grid,#methode-sources .col-method > div:has(> article){display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;}
+@media(max-width:820px){#methode-sources .col-method-grid,#methode-sources .col-method > div:has(> article){grid-template-columns:1fr;}}
+#methode-sources .col-sources{background:var(--col-paper);border:2px solid var(--col-ink);border-radius:12px;padding:18px;box-shadow:var(--col-shadow);}
+#methode-sources .col-sources ul{padding-left:18px;}
+#methode-sources .col-sources a{color:var(--coral);font-weight:700;}
+
+/* ---------- boîtes de dialogue ---------- */
+.col-dialog{border:2px solid var(--col-ink);border-radius:14px;box-shadow:8px 8px 0 var(--amber);padding:22px;font-family:'Archivo',sans-serif;}
+.col-dialog::backdrop{background:rgba(26,26,30,.55);}
+
+/* ---------- neutralisation des tons crème / gris de la feuille d'origine ---------- */
+main [class^="col-"],main [class*=" col-"]{--col-cream:transparent;}
+main .col-status-strip,main .col-overview,main .col-stat{display:none;}
+/* respiration entre les sections, pour s'y retrouver d'un coup d'œil */
+main > section.shell.reveal{margin-top:44px;}
+main > section.shell.reveal + section.shell.reveal{padding-top:8px;}
