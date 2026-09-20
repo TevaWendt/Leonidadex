@@ -2082,3 +2082,73 @@ header .head-search{flex:0 1 200px; max-width:200px; margin-left:auto; margin-to
 .lk-link:hover{transform:translate(-3px,-3px);box-shadow:7px 7px 0 var(--amber);} .lk-link:hover img{transform:scale(1.05);opacity:1;} .lk-link:hover::after{transform:translateX(3px);}
 @media(prefers-reduced-motion:reduce){.lk-retro::before{animation:none;} .lk-link img,.lk-photo-card img,.lk-feature-img img{transition:none;}}
 .lk-explore{margin:48px auto 64px;}
+
+/* ===================== v7.15 : jeu de cartes, vitrine, carnet, rails, espacements ===================== */
+/* espacements généraux : rien de tassé sous le compte à rebours ni entre les blocs */
+.fcount + .shell,.fcount + section,.fcount + .fiche-body{margin-top:44px;}
+.fiche-body{padding-top:32px;}
+.note-box{margin-top:32px;}
+.sec-h{margin-top:0;}
+main > section.shell.reveal{margin-top:52px;}
+main > section.shell.reveal:first-of-type{margin-top:0;}
+.faq details{margin-bottom:12px;}
+/* jeu de cartes : les trois cartes se chevauchent comme dans une main ; celle qu'on survole sort et zoome */
+@media(min-width:900px){
+  .lk-links{display:block;position:relative;height:clamp(360px,50vh,560px);}
+  .lk-link{position:absolute;top:8%;width:46%;height:84%;transform-origin:50% 100%;transition:transform .45s cubic-bezier(.2,.7,.2,1),box-shadow .3s,z-index 0s .2s;}
+  .lk-link img{height:100%;aspect-ratio:auto;}
+  .lk-link:nth-child(1){left:2%;transform:rotate(-7deg) translateY(10px);z-index:1;}
+  .lk-link:nth-child(2){left:27%;transform:rotate(0deg) translateY(-6px);z-index:2;}
+  .lk-link:nth-child(3){left:52%;transform:rotate(7deg) translateY(10px);z-index:1;}
+  .lk-links:hover .lk-link{filter:saturate(.75) brightness(.85);}
+  .lk-links .lk-link:hover{filter:none;transform:rotate(0deg) translateY(-26px) scale(1.08);z-index:5;box-shadow:12px 12px 0 var(--amber);transition-delay:0s;}
+  .lk-link b{font-size:1.5rem;} .lk-link i{font-size:.9rem;}
+}
+/* vitrine : deux cartes superposées, la carte de devant est nette, celle de derrière dépasse ; survol ou clic les échange */
+.lk-flip{position:relative;height:clamp(300px,48vh,520px);margin:18px 0 26px;}
+.lk-flip-card{position:absolute;inset:0;width:64%;max-width:760px;border:2px solid var(--ink);border-radius:14px;overflow:hidden;padding:0;background:#1A1A1E;color:#fff;text-align:left;cursor:pointer;box-shadow:6px 6px 0 rgba(26,26,30,.18);transition:transform .5s cubic-bezier(.2,.7,.2,1),filter .4s,box-shadow .3s;font:inherit;}
+.lk-flip-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.9;}
+.lk-flip-txt{position:absolute;left:0;right:0;bottom:0;padding:60px 24px 22px;background:linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.86));display:flex;flex-direction:column;gap:6px;}
+.lk-flip-txt i{font:800 .72rem/1 'Archivo',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);font-style:normal;}
+.lk-flip-txt b{font-size:clamp(1.2rem,2.4vw,1.7rem);letter-spacing:-.02em;} .lk-flip-txt em{font-style:normal;font-size:.92rem;line-height:1.5;color:rgba(255,255,255,.85);}
+.lk-flip-card:nth-child(1){left:0;transform:rotate(-2deg);z-index:1;}
+.lk-flip-card:nth-child(2){left:auto;right:0;transform:rotate(3deg) translateY(18px);z-index:0;filter:saturate(.6) brightness(.7);}
+.lk-flip-card.is-front{z-index:3;filter:none;transform:rotate(0deg) translateY(0);box-shadow:10px 10px 0 var(--amber);}
+.lk-flip-hint{position:absolute;left:50%;bottom:-24px;transform:translateX(-50%);font:700 .74rem 'Archivo',sans-serif;color:var(--ink-soft);white-space:nowrap;}
+@media(max-width:800px){.lk-flip{height:auto;display:grid;gap:14px;} .lk-flip-card,.lk-flip-card:nth-child(1),.lk-flip-card:nth-child(2){position:relative;width:100%;transform:none;filter:none;aspect-ratio:16/10;} .lk-flip-hint{display:none;}}
+/* étapes des outils */
+.lk-steps{list-style:none;padding:0;margin:14px 0 6px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;}
+@media(max-width:800px){.lk-steps{grid-template-columns:1fr;}}
+.lk-steps li{background:var(--ink);color:#fff;border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:4px;box-shadow:4px 4px 0 var(--amber);}
+.lk-steps b{font-size:1rem;color:var(--amber);} .lk-steps span{font-size:.88rem;line-height:1.5;color:rgba(255,255,255,.88);}
+/* outils : cartes à même hauteur, bandeau coloré, explication en tête */
+#sorties .col-tools-grid{align-items:stretch;}
+#sorties .col-tools-panel{position:relative;padding-top:24px;overflow:hidden;transition:transform .2s,box-shadow .2s;}
+#sorties .col-tools-panel::before{content:'';position:absolute;left:0;right:0;top:0;height:8px;background:linear-gradient(90deg,var(--coral),var(--amber));}
+#sorties .col-tools-panel:nth-child(2)::before{background:linear-gradient(90deg,#5A2358,var(--coral));}
+#sorties .col-tools-panel:nth-child(3)::before{background:linear-gradient(90deg,var(--amber),#2BB3B1);}
+#sorties .col-tools-panel:hover{transform:translate(-3px,-3px);box-shadow:8px 8px 0 var(--amber);}
+#sorties .col-tools-panel-head{display:grid;grid-template-columns:1fr auto;align-items:start;gap:10px;}
+#sorties .col-tools-panel-head h3{grid-column:1;} #sorties .col-tools-panel-head span{grid-column:2;grid-row:1;font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--ink-soft);}
+#sorties .col-tools-what{grid-column:1 / -1;margin:0 0 8px;font-size:.9rem;line-height:1.55;color:var(--ink);}
+/* carnet : bandeau coloré, description d'usage qui monte au survol */
+#carnet .col-carnet-grid > *{position:relative;overflow:hidden;padding-top:26px;transition:transform .2s,box-shadow .2s;}
+#carnet .col-carnet-grid > *::before{content:'';position:absolute;left:0;right:0;top:0;height:8px;background:linear-gradient(90deg,var(--coral),var(--amber));}
+#carnet .col-backup-panel::before{background:linear-gradient(90deg,#5A2358,var(--coral))!important;}
+#carnet .col-map-card::before{background:linear-gradient(90deg,var(--amber),#2BB3B1)!important;}
+#carnet .col-carnet-grid > *:hover{transform:translate(-3px,-3px);box-shadow:8px 8px 0 var(--amber);}
+#carnet .col-carnet-grid > [data-tip]::after{content:attr(data-tip);position:absolute;left:0;right:0;bottom:0;padding:16px 18px 18px;background:var(--ink);color:#fff;font:600 .88rem/1.5 'Archivo',sans-serif;transform:translateY(100%);transition:transform .35s cubic-bezier(.2,.7,.2,1);border-top:3px solid var(--amber);}
+#carnet .col-map-card[data-tip]::after{background:var(--amber);color:var(--ink);}
+#carnet .col-carnet-grid > [data-tip]:hover::after,#carnet .col-carnet-grid > [data-tip]:focus-within::after{transform:translateY(0);}
+#carnet .col-map-card{background:var(--ink) url(/img/officiel/leonida-keys-01-480.webp) center/cover;box-shadow:4px 4px 0 var(--amber);}
+#carnet .col-map-card::before{z-index:1;} #carnet .col-map-card > *{position:relative;z-index:1;text-shadow:0 1px 8px rgba(0,0,0,.7);}
+#carnet .col-map-card{position:relative;} #carnet .col-map-card > span:first-of-type{}
+/* rails animés sur les bords, du compte à rebours au pied de page */
+main{position:relative;}
+.lk-rails{position:absolute;left:0;right:0;bottom:0;pointer-events:none;z-index:0;}
+.lk-rail{position:absolute;top:0;bottom:0;width:10px;background:repeating-linear-gradient(180deg,var(--coral) 0 26px,var(--amber) 26px 52px,#5A2358 52px 78px);background-size:100% 156px;animation:lk-rail 6s linear infinite;border-left:2px solid var(--ink);border-right:2px solid var(--ink);opacity:.85;}
+.lk-rail--l{left:10px;} .lk-rail--r{right:10px;animation-direction:reverse;}
+.lk-rail::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(180deg,rgba(255,255,255,0) 0 22px,rgba(255,255,255,.45) 22px 26px);background-size:100% 78px;animation:lk-rail 3s linear infinite;}
+@keyframes lk-rail{from{background-position:0 0}to{background-position:0 156px}}
+@media(max-width:1320px){.lk-rails{display:none;}}
+@media(prefers-reduced-motion:reduce){.lk-rail,.lk-rail::after{animation:none;} .lk-link,.lk-flip-card{transition:none;}}

@@ -93,3 +93,26 @@
   window.addEventListener('resize', update);
   update();
 })();
+
+/* Vitrine à deux cartes superposées (.lk-flip) : survol ou clic amène l'autre carte devant. */
+(function () {
+  document.querySelectorAll('[data-lk-flip]').forEach(function (box) {
+    const cards = Array.from(box.querySelectorAll('.lk-flip-card'));
+    function front(card) { cards.forEach(function (c) { const on = c === card; c.classList.toggle('is-front', on); c.setAttribute('aria-pressed', on ? 'true' : 'false'); }); }
+    cards.forEach(function (c) {
+      c.addEventListener('click', function () { front(c.classList.contains('is-front') ? cards[(cards.indexOf(c) + 1) % cards.length] : c); });
+      c.addEventListener('mouseenter', function () { if (!c.classList.contains('is-front')) front(c); });
+    });
+  });
+})();
+
+/* Rails animés sur les deux bords, du compte à rebours au pied de page. */
+(function () {
+  const main = document.getElementById('main'), fc = document.querySelector('.fcount');
+  if (!main || !fc || document.querySelector('.lk-rails')) return;
+  const rails = document.createElement('div'); rails.className = 'lk-rails'; rails.setAttribute('aria-hidden', 'true');
+  rails.innerHTML = '<span class="lk-rail lk-rail--l"></span><span class="lk-rail lk-rail--r"></span>';
+  main.appendChild(rails);
+  function place() { const m = main.getBoundingClientRect(), f = fc.getBoundingClientRect(); rails.style.top = Math.max(0, f.bottom - m.top) + 'px'; }
+  window.addEventListener('resize', place); window.addEventListener('load', place); place();
+})();

@@ -1,0 +1,30 @@
+LEONIDAKIT v7.15 : JEU DE CARTES, VITRINE, CARNET, RAILS ANIMÉS (20 septembre 2026)
+==================================================================================
+Base : v7.14. Aucun fichier supprimé. Livrée en archive « modifs » (cumule v7.12 à v7.15).
+
+1. Bande « Continuer la visite » / « En attendant, explorer Leonida » en jeu de cartes :
+   sur ordinateur, les trois cartes se chevauchent comme dans une main (inclinées de -7°,
+   0°, +7°), sur la moitié de la hauteur de l'écran ; la carte survolée sort du jeu, se
+   redresse, zoome et passe devant, les autres s'assombrissent. Empilement simple sur mobile.
+2. Catalogue : vitrine à deux cartes superposées. Devant, « une fiche, à quoi ça ressemble »
+   (Mamba GT chez Wyman : nom, famille, région, emplacement, récompense, statut, case
+   trouvé) ; derrière, « comment chercher » (filtres, tri, grille ou liste, masquer le
+   déjà trouvé). Survol ou clic les échange. Texte d'introduction plus explicite.
+3. Sorties et exports : trois étapes en tête (chercher, préparer, emporter), puis chaque
+   outil explique ce qu'il fait en une phrase (« une recherche, c'est un jeu de filtres
+   enregistré sous un nom », « votre feuille de route pour la prochaine session »,
+   « la liste exportée en CSV ou imprimable »). Cartes à même hauteur, bandeau coloré
+   par carte (corail/ambre, violet/corail, ambre/turquoise), relief au survol.
+4. Mon carnet : mêmes bandeaux, la carte « repères » prend une photo des Keys en fond, et
+   une description d'usage monte du bas de chaque carte au survol ou au clavier.
+5. Rails animés sur les deux bords de chaque page, du compte à rebours au pied de page :
+   bandes corail, ambre et violet qui défilent (sens inverse à droite), avec un liseré
+   clair ; masqués sous 1 320 px pour ne jamais gêner le contenu, immobiles si
+   l'utilisateur a demandé moins d'animations. Posés par common.js sur toute page qui a
+   un compte à rebours.
+6. FAQ : la page Véhicules rares passe au gabarit du site (cartes blanches à bord noir,
+   signe +). Espacements revus : plus rien de tassé sous le compte à rebours, entre les
+   boutons et la note, ni entre les sections.
+
+Vérifications : verifier.js 28 228 références sans erreur, 109 tests réussis, rendus
+Chromium à 1 440 px (vitrine, carnet au survol, outils, jeu de cartes, rails).

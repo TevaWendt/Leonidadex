@@ -26,13 +26,13 @@
   ]
 }
 </script>
-<link rel="stylesheet" href="style.css?v=0954eb94">
+<link rel="stylesheet" href="style.css?v=20bfdf51">
 <meta name="robots" content="index, follow">
 <meta property="og:url" content="https://www.leonidakit.com/collectibles.html">
-<link rel="stylesheet" href="collectibles.css?v=0954eb94">
-<link rel="stylesheet" href="collectibles-tools.css?v=0954eb94">
-<link rel="stylesheet" href="collectibles-brand.css?v=0954eb94">
-<link rel="stylesheet" href="collectibles-help.css?v=0954eb94">
+<link rel="stylesheet" href="collectibles.css?v=20bfdf51">
+<link rel="stylesheet" href="collectibles-tools.css?v=20bfdf51">
+<link rel="stylesheet" href="collectibles-brand.css?v=20bfdf51">
+<link rel="stylesheet" href="collectibles-help.css?v=20bfdf51">
 <meta property="og:image" content="https://www.leonidakit.com/img/social-card.png">
 <meta name="twitter:card" content="summary_large_image">
 </head>
@@ -135,6 +135,12 @@
 
 <section class="shell reveal" id="catalogue">
   <h2 class="sec-h">Catalogue</h2>
+  <p class="fiche-txt">Chaque objet aura sa fiche : ce qu'il est, où il se trouve quand c'est vérifié, ce qu'il rapporte, et son niveau de certitude. Passez d'une carte à l'autre pour voir ce que vous y trouverez.</p>
+  <div class="lk-flip rise" data-lk-flip>
+    <button type="button" class="lk-flip-card is-front" aria-pressed="true"><img src="/img/officiel/classic-car-collection-04-480.webp" srcset="/img/officiel/classic-car-collection-04-480.webp 480w, /img/officiel/classic-car-collection-04-1280.webp 1280w" sizes="(max-width:800px) 100vw, 640px" width="480" height="270" alt="" loading="lazy" decoding="async"><span class="lk-flip-txt"><i>Une fiche, à quoi ça ressemble</i><b>Mamba GT, atelier de Wyman</b><em>Nom, famille, région, emplacement vérifié, récompense, statut, et la case « trouvé » qui alimente votre carnet.</em></span></button>
+    <button type="button" class="lk-flip-card" aria-pressed="false"><img src="/img/officiel/leonida-keys-05-480.webp" srcset="/img/officiel/leonida-keys-05-480.webp 480w, /img/officiel/leonida-keys-05-1280.webp 1280w" sizes="(max-width:800px) 100vw, 640px" width="480" height="270" alt="" loading="lazy" decoding="async"><span class="lk-flip-txt"><i>Comment chercher</i><b>Filtrer, trier, cocher</b><em>Par région, par famille, par statut, par mot-clé. Grille ou liste. Ce que vous avez déjà trouvé peut être masqué d'un clic.</em></span></button>
+    <span class="lk-flip-hint" aria-hidden="true">Cliquez ou survolez pour passer à la carte suivante</span>
+  </div>
     <form id="col-filters" class="col-filters" role="search" aria-label="Rechercher un collectible" data-col-controls hidden>
       <label class="col-search-label" for="col-search"><span class="col-sr-only">Rechercher dans les collectibles</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg><input type="search" id="col-search" name="q" placeholder="Un nom, une région, un indice…" autocomplete="off" maxlength="200"></label>
       <div class="col-filter-grid">
@@ -162,16 +168,21 @@
   <h2 class="sec-h">Mon carnet</h2>
   <p class="fiche-txt">Trouvés, favoris et notes restent sur cet appareil. La sauvegarde JSON les emmène sur un autre.</p>
   <div class="col-carnet-grid rise">
-    <section class="col-progress-panel" id="suivi"><div class="col-panel-heading"><span class="col-eyebrow">MON CARNET</span><span class="col-local-badge">Sur cet appareil</span></div><h2>Chaque trouvaille compte.</h2><div class="col-progress-numbers"><strong id="col-found-count">0</strong><span id="col-trackable-label">objet suivi</span><b id="col-percent">—</b></div><div class="col-meter" id="col-progress-meter" role="progressbar" aria-label="Progression de collection" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="Progression indisponible : aucun collectible suivi"><span id="col-progress-fill"></span></div><p id="col-progress-caption" class="col-muted">Le suivi commencera avec les premières fiches éligibles. Le total du jeu est inconnu.</p><div class="col-notebook-counts"><span><b id="col-favorite-count">0</b> favori</span><span><b id="col-note-count">0</b> note</span></div><div id="col-breakdowns" class="col-breakdowns" hidden></div></section>
-    <section class="col-backup-panel"><h2>Votre collection vous suit.</h2><p>Enregistrez une copie de votre checklist pour la retrouver dans un autre navigateur.</p><div class="col-backup-actions" data-col-controls hidden><button type="button" id="col-export" class="col-btn"><span aria-hidden="true">↓</span> Exporter en JSON</button><button type="button" id="col-import" class="col-btn"><span aria-hidden="true">↑</span> Importer une sauvegarde</button><input type="file" id="col-import-file" accept="application/json,.json" hidden><button type="button" id="col-clear-progress" class="col-text-button">Effacer mon carnet</button></div><p class="col-backup-fine">Sans compte. La progression reste dans ce navigateur. Une importation fusionne vos trouvailles et favoris ; ses notes remplacent celles du même objet.</p></section>
-    <a class="col-map-card" href="carte.html"><svg viewBox="0 0 42 42" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m3 10 11-5 14 5 11-5v27l-11 5-14-5-11 5V10ZM14 5v27m14-22v27"/><circle cx="25" cy="18" r="4"/></svg><div><strong>Prendre ses repères</strong><span>Explorer la carte de Leonida</span></div><b aria-hidden="true">↗</b></a>
+    <section class="col-progress-panel" id="suivi" data-tip="Cochez chaque objet trouvé sur sa fiche : le compteur et la barre suivent votre avancée, favoris et notes compris."><div class="col-panel-heading"><span class="col-eyebrow">MON CARNET</span><span class="col-local-badge">Sur cet appareil</span></div><h2>Chaque trouvaille compte.</h2><div class="col-progress-numbers"><strong id="col-found-count">0</strong><span id="col-trackable-label">objet suivi</span><b id="col-percent">—</b></div><div class="col-meter" id="col-progress-meter" role="progressbar" aria-label="Progression de collection" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="Progression indisponible : aucun collectible suivi"><span id="col-progress-fill"></span></div><p id="col-progress-caption" class="col-muted">Le suivi commencera avec les premières fiches éligibles. Le total du jeu est inconnu.</p><div class="col-notebook-counts"><span><b id="col-favorite-count">0</b> favori</span><span><b id="col-note-count">0</b> note</span></div><div id="col-breakdowns" class="col-breakdowns" hidden></div></section>
+    <section class="col-backup-panel" data-tip="Votre carnet vit dans ce navigateur. Exportez-le en JSON pour le garder ou le rouvrir ailleurs ; l'import fusionne sans écraser."><h2>Votre collection vous suit.</h2><p>Enregistrez une copie de votre checklist pour la retrouver dans un autre navigateur.</p><div class="col-backup-actions" data-col-controls hidden><button type="button" id="col-export" class="col-btn"><span aria-hidden="true">↓</span> Exporter en JSON</button><button type="button" id="col-import" class="col-btn"><span aria-hidden="true">↑</span> Importer une sauvegarde</button><input type="file" id="col-import-file" accept="application/json,.json" hidden><button type="button" id="col-clear-progress" class="col-text-button">Effacer mon carnet</button></div><p class="col-backup-fine">Sans compte. La progression reste dans ce navigateur. Une importation fusionne vos trouvailles et favoris ; ses notes remplacent celles du même objet.</p></section>
+    <a class="col-map-card" data-tip="Chaque objet à position vérifiée aura son marqueur sur la carte de Leonida, à côté des 2 547 lieux déjà repérés." href="carte.html"><svg viewBox="0 0 42 42" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m3 10 11-5 14 5 11-5v27l-11 5-14-5-11 5V10ZM14 5v27m14-22v27"/><circle cx="25" cy="18" r="4"/></svg><div><strong>Prendre ses repères</strong><span>Explorer la carte de Leonida</span></div><b aria-hidden="true">↗</b></a>
   </div>
 <div class="shell"><p id="col-storage-warning" class="col-notice col-warning" role="status" hidden></p><p class="col-feedback" data-col-feedback role="status" aria-live="polite" aria-atomic="true"></p></div>
 </section>
 
 <section class="shell reveal" id="sorties">
   <h2 class="sec-h">Sorties et exports</h2>
-  <p class="fiche-txt">Enregistrez une recherche, préparez l'ordre de votre prochaine session, emportez une checklist.</p>
+  <p class="fiche-txt">Trois outils pour ne pas refaire le même travail à chaque session : garder une recherche, préparer l'ordre de la prochaine sortie, emporter la liste hors du site.</p>
+  <ol class="lk-steps rise">
+    <li><b>1. Chercher</b><span>Filtrez le catalogue, puis enregistrez la vue sous un nom.</span></li>
+    <li><b>2. Préparer</b><span>Ajoutez les objets à votre sortie et rangez-les dans l'ordre du trajet.</span></li>
+    <li><b>3. Emporter</b><span>Exportez la liste en CSV ou imprimez-la, avec ou sans les emplacements précis.</span></li>
+  </ol>
 <div id="col-tools" aria-label="Outils du carnet"></div>
 </section>
 
@@ -264,14 +275,14 @@
   </div>
 </footer>
 
-<script src="search-index.js?v=0954eb94"></script>
-<script src="assets-manifest.js?v=0954eb94"></script>
-<script src="common.js?v=0954eb94"></script>
-<script src="app.js?v=0954eb94"></script>
-<script src="collectibles-data.js?v=0954eb94"></script>
-<script src="collectibles-core.js?v=0954eb94"></script>
-<script src="collectibles.js?v=0954eb94"></script>
-<script src="collectibles-tools.js?v=0954eb94"></script>
-<script src="collectibles-help.js?v=0954eb94"></script>
+<script src="search-index.js?v=20bfdf51"></script>
+<script src="assets-manifest.js?v=20bfdf51"></script>
+<script src="common.js?v=20bfdf51"></script>
+<script src="app.js?v=20bfdf51"></script>
+<script src="collectibles-data.js?v=20bfdf51"></script>
+<script src="collectibles-core.js?v=20bfdf51"></script>
+<script src="collectibles.js?v=20bfdf51"></script>
+<script src="collectibles-tools.js?v=20bfdf51"></script>
+<script src="collectibles-help.js?v=20bfdf51"></script>
 </body>
 </html>
