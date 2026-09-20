@@ -1,0 +1,2 @@
+Archive « modifs » v7.19 (contient aussi v7.12 à v7.18) : fichiers modifiés ou ajoutés par rapport à la v7.11 en ligne. Aucune suppression.
+Coller le contenu par-dessus le dépôt (remplacer, en cochant « Faire ceci pour tous les éléments en conflit »), puis Commit et Push.

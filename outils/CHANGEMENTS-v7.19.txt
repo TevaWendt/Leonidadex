@@ -1,0 +1,21 @@
+LEONIDAKIT v7.19 : ÉTAPE 3, FICHES DU MONDE ENRICHIES (20 septembre 2026)
+=========================================================================
+Base : v7.18. Aucun fichier supprimé. Livrée en archive « modifs » (cumule v7.12 à v7.19).
+
+1. Chacune des 29 fiches du monde (6 régions, 8 personnages, 8 entreprises, 4 demeures,
+   3 planques) reçoit deux textes de plus, en plus de la présentation de la v7.4 :
+   - régions : « Dans les visuels et dans l'histoire » (ce que trailers et captures y
+     montrent, qui y vit) et « Sur le terrain » (comment la région se parcourt, quelles
+     fiches véhicules et armes lui sont reliées, ce que la carte y repère) ;
+   - personnages : « Dans l'histoire » (leurs scènes dans les trailers, leurs relations,
+     leur rôle dans le récit à deux personnages) et « Sur les captures et dans les fiches » ;
+   - entreprises, demeures, planques : « Ce que montrent les visuels » ou « Ce qu'on en
+     sait », puis « Dans le jeu » (ce que ce type de lieu fait traditionnellement dans la
+     série, et ce qui se complétera à la sortie).
+   Tout vient des présentations et visuels officiels ; ce qui relève de la série en général
+   est formulé comme tel. Champs contexte et pratique d'outils/editorial.json.
+2. Volume : le texte éditorial des fiches du monde passe à 39 650 caractères, soit 1 370
+   en moyenne par fiche (hors faits « À retenir », galeries et liens).
+
+Vérifications : verifier.js 28 330 références sans erreur, 152 tests réussis, rendu Chromium
+d'une fiche personnage.

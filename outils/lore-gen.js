@@ -169,6 +169,8 @@ ${cards}
 </section>
 <section class="shell lore-body">
   ${x.texte?`<div class="lore-texte reveal"><h2>Présentation</h2><p class="rise">${esc(x.texte)}</p></div>`:''}
+  ${x.contexte?`<div class="lore-texte reveal"><h2>${{regions:'Dans les visuels et dans l\'histoire',characters:'Dans l\'histoire',businesses:'Ce que montrent les visuels',residences:'Ce qu\'on en sait',hideouts:'Ce qu\'on en sait'}[key]||'Dans l\'histoire'}</h2><p class="rise">${esc(x.contexte)}</p></div>`:''}
+  ${x.pratique?`<div class="lore-texte reveal"><h2>${{regions:'Sur le terrain',characters:'Sur les captures et dans les fiches',businesses:'Dans le jeu',residences:'Dans le jeu',hideouts:'Dans le jeu'}[key]||'Dans le jeu'}</h2><p class="rise">${esc(x.pratique)}</p></div>`:''}
   ${facts}
   ${(relBlocks||vehBlock||mapBlock)?`<div class="lore-related"><h2>En lien</h2>${relBlocks}${vehBlock}${mapBlock}</div>`:''}
 </section>${galleryBlock(x,S)}`;
