@@ -1,0 +1,33 @@
+LEONIDAKIT v7.20 : ÉTAPE 4, LES CALCULATEURS COMME POINT D'ENTRÉE (20 septembre 2026)
+====================================================================================
+Base : v7.19. Aucun fichier supprimé. Livrée en archive « modifs » (cumule v7.12 à v7.20).
+Le moteur, les formules et les six outils de la v7.16 ne changent pas ; cette étape leur
+donne la porte d'entrée, la hiérarchie et les repères demandés par le cahier des charges.
+
+1. « Que veux-tu calculer ? » : une phrase en langage courant suffit. Le bon outil s'ouvre
+   et se préremplit avec les chiffres de la phrase : « j'ai 200 000 $ et 45 min par jour,
+   quand est-ce que j'atteins 2 millions ? » règle le capital, l'objectif et le temps de
+   jeu et ouvre Mon objectif ; « puis-je acheter un Kamacho ? » ouvre Mes achats et lance la
+   recherche du catalogue sur ce nom ; « répartir mon budget » ouvre Mon budget ; « dans quel
+   ordre acheter ? » ouvre Ordre d'achat ; « quand un achat est-il amorti ? » ouvre
+   Rentabilité. Montants compris en k, M, millions ou $, durées en minutes ou heures.
+   Sept questions d'exemple en un clic, et cinq objectifs populaires (100 k à 10 M) qui
+   règlent l'objectif directement.
+2. Hiérarchie évidente : la question d'abord, puis les six outils présentés en cartes
+   numérotées (à quoi chacun répond, en une phrase), puis l'atelier. Plus de vingt boutons
+   identiques : un chemin.
+3. Résultats animés : les valeurs principales glissent d'un chiffre à l'autre quand une
+   saisie change, au lieu de sauter. Désactivé si l'utilisateur a demandé moins
+   d'animations.
+4. Fiabilité affichée : étiquette « calculé sur tes hypothèses, pas sur des données
+   officielles » sur chaque panneau de résultat, et section repliable « D'où viennent les
+   chiffres » avec le statut de chaque donnée (scénarios fictifs, saisies utilisateur,
+   catalogue sans prix, activités non publiées, formules documentées et testées).
+5. Charte : scène de la question en dégradé nuit de Vice City avec lignes de balayage,
+   puces et cartes du site, aucune couleur hors charte, mobile sans débordement.
+6. Test ajouté (153 au total) : la barre de question ouvre l'onglet attendu pour six
+   phrases types et préremplit capital, objectif et minutes ; les six cartes et les cinq
+   objectifs sont présents ; aucune erreur de script.
+
+Vérifications : verifier.js 28 337 références sans erreur, 153 tests réussis, rendus Chromium
+(point d'entrée, routage de sept questions, recherche catalogue depuis une phrase).

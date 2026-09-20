@@ -50,3 +50,31 @@ main .calc-hero,main .calc-mode-bar{display:none;}
 /* graphiques : courbe ambre, aire corail translucide, textes clairs */
 main .calc-chart .path{stroke:var(--amber)!important;} main .calc-chart .area{fill:rgba(232,69,44,.28)!important;} main .calc-chart text{fill:rgba(255,255,255,.75)!important;}
 main .calc-chart .gridline{stroke:rgba(255,255,255,.14)!important;}
+/* ---------- v7.20 : point d'entrée des calculateurs ---------- */
+.lk-ask-stage{position:relative;overflow:hidden;background:linear-gradient(120deg,#2B1B4D 0%,#5A2358 45%,#E8452C 100%);border:2px solid var(--ink);border-radius:14px;padding:22px;box-shadow:8px 8px 0 var(--amber);color:#fff;}
+.lk-ask-stage::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,0) 0 3px,rgba(255,255,255,.05) 3px 4px);pointer-events:none;}
+.lk-ask-stage > *{position:relative;}
+.lk-ask-label{display:block;font:800 .72rem/1 'Archivo',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);margin-bottom:10px;}
+.lk-ask-row{display:flex;gap:10px;flex-wrap:wrap;}
+.lk-ask-row input{flex:1;min-width:240px;font:600 1.05rem 'Archivo',sans-serif;padding:14px 16px;border:2px solid var(--ink)!important;border-radius:10px;background:#fff!important;color:var(--ink);}
+.lk-ask-row button{font:800 .95rem 'Archivo',sans-serif;background:var(--amber);color:var(--ink);border:2px solid var(--ink);border-radius:10px;padding:12px 18px;box-shadow:3px 3px 0 var(--ink);cursor:pointer;transition:transform .15s,box-shadow .15s;}
+.lk-ask-row button:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--ink);}
+.lk-ask-out{margin:10px 0 0;font-weight:700;color:var(--amber);}
+.lk-ask-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;}
+.lk-ask-chips button{font:700 .8rem 'Archivo',sans-serif;background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.45);border-radius:20px;padding:7px 12px;cursor:pointer;transition:background .15s,transform .15s;}
+.lk-ask-chips button:hover{background:var(--amber);color:var(--ink);border-color:var(--ink);transform:translateY(-1px);}
+.lk-goals{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:16px;}
+.lk-goals-k{font:800 .72rem/1 'Archivo',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--coral);margin-right:6px;}
+.lk-goals button{font:800 .88rem 'JetBrains Mono',monospace;background:#fff;color:var(--ink);border:2px solid var(--ink);border-radius:20px;padding:8px 14px;box-shadow:2px 2px 0 var(--ink);cursor:pointer;transition:transform .15s,box-shadow .15s,background .15s;}
+.lk-goals button:hover{background:var(--amber);transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--ink);}
+.lk-tools{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;}
+@media(max-width:900px){.lk-tools{grid-template-columns:repeat(2,minmax(0,1fr));}} @media(max-width:560px){.lk-tools{grid-template-columns:1fr;}}
+.lk-tool{position:relative;display:flex;flex-direction:column;gap:8px;background:#fff;border:2px solid var(--ink);border-radius:12px;padding:44px 18px 18px;box-shadow:4px 4px 0 rgba(26,26,30,.18);text-decoration:none;color:var(--ink);overflow:hidden;transition:transform .18s,box-shadow .18s;}
+.lk-tool::before{content:'';position:absolute;left:0;right:0;top:0;height:8px;background:var(--amber);}
+.lk-tool-n{position:absolute;top:16px;left:18px;font:800 .8rem 'JetBrains Mono',monospace;color:var(--coral);}
+.lk-tool b{font-size:1.1rem;letter-spacing:-.01em;} .lk-tool > span:not(.lk-tool-n){font-size:.9rem;line-height:1.55;color:var(--ink);}
+.lk-tool i{font-style:normal;margin-top:auto;font:800 .84rem 'Archivo',sans-serif;color:var(--coral);}
+.lk-tool i::after{content:' \203A';}
+.lk-tool:hover{transform:translate(-3px,-3px);box-shadow:8px 8px 0 var(--amber);}
+.lk-hyp{display:inline-block;font:800 .68rem/1 'Archivo',sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);background:var(--amber);border-radius:20px;padding:5px 10px;margin:0 0 12px;}
+.lk-src th{width:200px;} .lk-src .chip{margin-right:8px;}
