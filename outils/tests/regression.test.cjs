@@ -139,7 +139,7 @@ test('Every vehicle gets a distinct schematic',()=>{
   const withPhoto=cards.filter(c=>c.querySelector('.veh-thumb--photo img')).length,withSchema=cards.filter(c=>c.querySelector('svg.veh-art--schema')).length;
   assert.equal(withPhoto+withSchema,catalog.length,'photo ou schéma sur chaque carte');assert.equal(withPhoto,catalog.filter(v=>Array.isArray(v.medias)&&v.medias.length).length);}finally{hub.window.close();}
  const v=catalog.find(v=>!(v.medias&&v.medias.length));const dom=new JSDOM(fs.readFileSync(path.join(root,'vehicules/'+v.id+'.html'),'utf8'));
- try{const d=dom.window.document;assert.ok(d.querySelector('.gal .gal-vide svg.veh-art--schema'),v.id);assert.equal(d.querySelectorAll('.pending h3').length,3);assert.match([...d.querySelectorAll('.pending')].pop().textContent,/prix, niveau requis/);}finally{dom.window.close();}
+ try{const d=dom.window.document;assert.ok(d.querySelector('.gal .gal-vide svg.veh-art--schema'),v.id);assert.equal(d.querySelectorAll('.pending h3').length,3);assert.match([...d.querySelectorAll('.pending')].pop().textContent,/prix|Prix/);}finally{dom.window.close();}
 });
 
 // v7.11 : aucune fiche ne déclare un type dérivé de Product (Google exigerait prix, avis ou note, qui n'existent pas ici).

@@ -1,0 +1,34 @@
+LEONIDAKIT v7.18 : ÉTAPE 2, DES FICHES QUI NE SE RESSEMBLENT PLUS (20 septembre 2026)
+====================================================================================
+Base : v7.17. Aucun fichier supprimé. Livrée en archive « modifs » (cumule v7.12 à v7.18).
+
+Le problème : les 302 fiches véhicules et 27 fiches armes partageaient l'essentiel de leur
+texte (mêmes titres, mêmes blocs), avec 200 à 500 caractères propres à chacune. Google les
+classait « explorées, non indexées » : trop semblables entre elles.
+
+1. outils/redaction.cjs rédige pour chaque fiche des paragraphes tirés de ses seuls champs,
+   avec des tournures tirées au sort de façon déterministe (le même identifiant donne
+   toujours le même texte, la régénération est stable) :
+   - un encart « en clair » sous la présentation : catégorie, statut (nommé, aperçu, non
+     confirmé), source (trailer, captures, Extended Look, édition Ultimate, artworks),
+     origine du modèle réel, édition, personnage associé, puis ce qui se complétera ;
+   - une section « ce type de véhicule dans la série » (trois textes par catégorie, 13
+     catégories) et, pour les armes, « ce type d'arme dans la série » (neuf catégories) ;
+   - pour les armes : emplacement (longue ou de poing), munitions, portée, inspiration ;
+   - les titres de sections varient (quatre jeux de titres).
+   Aucun fait ajouté : seules les données de la fiche sont reformulées.
+2. La note « Une erreur sur cette fiche ? » ne variait pas malgré ses six versions (le
+   remplacement dans le gabarit échouait) : corrigé, elle tourne maintenant. La phrase de
+   la carte Personnalisation varie aussi.
+3. Mesure sur les fiches véhicules (phrases partagées par plus de 30 % des fiches comptées
+   comme communes) : texte propre par fiche passé de 1 865 à 2 840 caractères en moyenne,
+   soit 79 % du texte de chaque page contre 66 %. Hors pied de page, plus aucune phrase
+   n'est présente sur plus de 90 % des fiches.
+
+À faire de ton côté après mise en ligne : dans la Search Console, « Inspecter l'URL » puis
+« Demander une indexation » sur trois ou quatre fiches de la liste « explorées, non
+indexées » (lcc-avarus, karin-sultan-rs, grotti-cheetah-classic…) pour accélérer le
+passage de Google ; le reste suivra au prochain crawl.
+
+Vérifications : verifier.js 28 330 références sans erreur, audit six zéros, 152 tests réussis,
+rendu Chromium d'une fiche.

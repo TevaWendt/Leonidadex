@@ -31,6 +31,7 @@ while((m=re.exec(hub0))!==null){ THUMB[m[1]]={cls:m[2],in:m[3]};
   const s=m[3].match(/<svg class="veh-art"[\s\S]*?<\/svg>/); if(s){ ART_ID[m[1]]=s[0];
     const v=V.find(x=>x.id===m[1]); if(v&&!ART_CAT[v.cat])ART_CAT[v.cat]=s[0]; } }
 const {schema:vehSchema}=require('./vehicules-schemas.cjs');
+const RED=require('./redaction.cjs');
 const VIDE_TXT='Schéma indicatif du modèle. Les visuels officiels détaillés arriveront avec le jeu.';
 const art=v=>vehSchema(v,90)||ART_ID[v.id]||ART_CAT[v.cat]||ART_CAT.sport||'';
 /* img/schemas/<id>.svg : le même schéma en fichier autonome, pour les pages qui chargent une image (top 10, véhicules rares) */
@@ -192,7 +193,7 @@ const PENDCAT={
 const pend=v=>{const t=PENDCAT[v.cat]||PENDCAT.divers;
  return ["Performances","Acquisition","Personnalisation"].map((h,i)=>
   '\n    <div class="pending rise"><div class="pending-top"><h3>'+h+'</h3><span class="pending-tag">À venir</span></div><p>'
-  +esc(t[i]+(i===2?' Pour chaque option : prix, niveau requis pour la débloquer, et atelier où la faire poser (Rideout Customs, One-Eyed Willie\'s).':''))+'</p><div class="pending-bars" aria-hidden="true"><span></span><span></span><span></span></div></div>').join('')+'\n  ';};
+  +esc(t[i]+(i===2?' '+pioche(v.id,'perso',['Pour chaque option : prix, niveau requis pour la débloquer, et atelier où la faire poser (Rideout Customs, One-Eyed Willie\'s).','Chaque option viendra avec son prix et le niveau qu\'elle demande, tels qu\'affichés dans les ateliers du jeu.','Le prix de chaque modification et le niveau nécessaire seront relevés chez Rideout Customs et One-Eyed Willie\'s.','Prix et niveau requis de chaque option, relevés atelier par atelier après la sortie.']):''))+'</p><div class="pending-bars" aria-hidden="true"><span></span><span></span><span></span></div></div>').join('')+'\n  ';};
 
 const MOD=fs.readFileSync('outils/templates/vehicle-reference.html','utf8');
 const HEADER=MOD.match(/<a class="skip"[\s\S]*?<main id="main">/)[0];
@@ -207,8 +208,7 @@ const V_NOTE=[
  "Nos identifications reposent uniquement sur ce que Rockstar a diffusé publiquement. Les fuites, quelles qu'elles soient, restent hors de cette base.",
  "Les modèles réels indiqués sont le fruit d'une comparaison avec les visuels officiels. Rien ici ne provient d'un code ou d'une vidéo dérobés.",
  "Tout ce qui figure sur cette fiche a été relevé dans les supports publiés par Rockstar. Aucun élément ne vient des fuites de 2022 ou de 2026."];
-const note=v=>NOTE.replace("Les inspirations réelles sont des rapprochements établis à partir des visuels officiels, pas des informations communiquées par Rockstar. Aucune donnée issue de fuites n'est utilisée ici.",
-  pioche(v.id,'note',V_NOTE));
+const note=v=>NOTE.replace(/(<strong>Une erreur sur cette fiche \?<\/strong> )[\s\S]*?( Si vous avez une correction)/,'$1'+pioche(v.id,'note',V_NOTE)+'$2');
 const artH=v=>art(v).replace(/style="height:\d+px"/,'style="height:120px"');
 
 function fiche(v,i){
@@ -216,6 +216,7 @@ function fiche(v,i){
  const prev=V[(i-1+V.length)%V.length],next=V[(i+1)%V.length];
  const vois=V.filter(x=>x.cat===v.cat&&x.id!==v.id).slice(0,6);
  const ed=v.edition==='Pre-Order'?'Bonus de précommande':v.edition?'Exclusif à l\u2019édition Ultimate':null;
+ const red=RED.vehicule(v,CATL);
  const lede=nom+' dans GTA VI : '+cat.toLowerCase()+(mod?'. Inspiration : '+mod:'')+'. '+st.d;
  /* meta description : les premières phrases du texte de la fiche (160 caractères max), sinon le lede générique */
  const description=(()=>{const ph=(v.txt||'').split(/(?<=[.!?])\s+/);let d=nom+' dans GTA VI.';let n=0;for(const q of ph){if((d+' '+q).length>165)break;d=d+' '+q;n++;}return n?d:lede;})();
@@ -228,7 +229,7 @@ function fiche(v,i){
   .concat(v.slot?['<span class="chip">'+SLOT[v.slot]+'</span>']:[]).join('\n          ');
  const panneau=v.reel?`
 <section class="shell reveal" id="modele-reel">
-  <h2 class="sec-h">Le modèle réel</h2>
+  <h2 class="sec-h">${esc(red.h2[1])}</h2>
   <p class="fiche-txt rise">Le rapprochement retenu pour ce véhicule est <strong>${esc(v.insp||v.fam)}</strong>. ${esc(pioche(v.id,'insp',V_INSP))}</p>
   <div class="fiche-liens rise"><a id="reel-bt" href="${esc(v.reel)}" target="_blank" rel="noopener nofollow">Voir ${esc(v.reelNom)} en photo</a><a href="https://fr.wikipedia.org/w/index.php?search=${encodeURIComponent(v.reelNom)}" target="_blank" rel="noopener nofollow">Fiche encyclopédique</a>${v.slot?'<a href="../vehicules.html#slot='+v.slot+'">Autres modèles '+SLOT[v.slot].replace('Modèle ','')+'s</a>':''}</div>
 </section>`:'';
@@ -313,9 +314,14 @@ ${HEADER}
   </div>
 </div>
 <section class="shell reveal" id="presentation">
-  <h2 class="sec-h">Ce qu'il faut savoir</h2>
+  <h2 class="sec-h">${esc(red.h2[0])}</h2>
   <p class="fiche-txt rise">${esc(v.txt||'')}</p>
+  <div class="fiche-clair rise"><p class="fiche-clair-k">${esc(red.ouverture)}</p><p>${esc(red.p1)}</p><p>${esc(red.p3)}</p></div>
 </section>${panneau}
+<section class="shell reveal" id="categorie">
+  <h2 class="sec-h">${esc(red.h2[2])}</h2>
+  <p class="fiche-txt rise">${esc(red.p2)}</p>
+</section>
 <section class="shell fiche-body">
   <div class="fiche-col reveal">
     <h2 class="sec-h">Identité</h2>

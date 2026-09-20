@@ -16,6 +16,7 @@ const A=ctx.window.LK_ARMES,CATL=ctx.window.LK_ARMES_CATS;
 const MED=JSON.parse(fs.readFileSync('outils/medias-officiels.json','utf8'));
 const AM=JSON.parse(fs.readFileSync('outils/armes-medias.json','utf8'));
 const {schema}=require('./armes-schemas.cjs');
+const RED=require('./redaction.cjs');
 const VIDE_TXT='Schéma indicatif du type d\'arme. Les visuels officiels détaillés arriveront avec le jeu.';
 const PERSO_NOM=Object.fromEntries(JSON.parse(fs.readFileSync('outils/editorial.json','utf8')).characters.map(c=>[c.id,c.name.split(' ')[0]]));
 /* armureries repérées sur la carte : mêmes liens sur toutes les fiches, comme les concessions sur les fiches véhicules */
@@ -55,6 +56,7 @@ const related=a=>{let r=A.filter(x=>x.cat===a.cat&&x.id!==a.id);if(r.length<4)fo
 
 function fiche(a,i){
  const meds=medList(a),cat=CATL[a.cat],st=ST[a.st],url='https://www.leonidakit.com/armes/'+a.id+'.html';
+ const red=RED.arme(a,CATL);
  const prev=A[(i-1+A.length)%A.length],next=A[(i+1)%A.length];
  const ld=JSON.stringify({'@context':'https://schema.org','@type':'BreadcrumbList',itemListElement:[
   {'@type':'ListItem',position:1,name:'Accueil',item:'https://www.leonidakit.com/'},
@@ -139,8 +141,13 @@ ${rows.map(([k,v])=>'        <tr><th scope="row">'+k+'</th><td>'+v+'</td></tr>')
   ${PENDING}
 
 <section class="shell reveal">
-  <h2 class="sec-h">Ce que montrent les supports officiels</h2>
+  <h2 class="sec-h">${esc(red.h2[0])}</h2>
   <p class="fiche-txt rise">${esc(a.ctx)}</p>
+  <div class="fiche-clair rise"><p class="fiche-clair-k">En clair</p><p>${esc(red.p1)}</p><p>${esc(red.p3)}</p></div>
+</section>
+<section class="shell reveal">
+  <h2 class="sec-h">${esc(red.h2[1])}</h2>
+  <p class="fiche-txt rise">${esc(red.p2)}</p>
 </section>
 ${meds.length?`<section class="shell reveal" id="apercus">
   <h2 class="sec-h">Aperçus dans les supports officiels</h2>

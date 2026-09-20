@@ -270,3 +270,7 @@ section[id], .sec-h[id]{scroll-margin-top:200px;}
 .cmp-table caption{text-align:left;padding:12px 0;font-weight:700;}
 
 .cmp-tray a,.cl-bar #cl-add:hover{background:#B93220;}
+/* v7.18 : encart « en clair » propre à chaque fiche */
+.fiche-clair{margin-top:18px;background:#fff;border:2px solid var(--ink);border-left:8px solid var(--amber);border-radius:10px;padding:14px 18px;box-shadow:4px 4px 0 rgba(26,26,30,.14);}
+.fiche-clair-k{font:800 .72rem/1 'Archivo',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--coral);margin:0 0 8px;}
+.fiche-clair p{margin:0 0 8px;line-height:1.6;} .fiche-clair p:last-child{margin-bottom:0;}
