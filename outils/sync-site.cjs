@@ -1,6 +1,8 @@
 /* Keep static HTML, search, images and sitemaps consistent. No runtime framework. */
 const fs=require('fs'),path=require('path'),vm=require('vm');
 const root=path.resolve(__dirname,'..');process.chdir(root);
+// Catalogue du calculateur : projeter les sources avant le calcul de version.
+require('child_process').execFileSync(process.execPath,[path.join(__dirname,'gen-calculateurs-catalogue.cjs')],{stdio:'inherit'});
 const crypto=require('crypto');
 const STAMP=crypto.createHash('md5').update(fs.readdirSync('.').filter(f=>/\.(css|js)$/.test(f)).sort().map(f=>f+':'+fs.readFileSync(f,'utf8')).join('\n')).digest('hex').slice(0,8);
 const data={window:{}};for(const f of ['vehicules-data.js','armes-data.js','search-index.js','carte-gtadb.js'])vm.runInNewContext(fs.readFileSync(f,'utf8'),data);
@@ -62,7 +64,7 @@ for(const file of htmlFiles){let s=fs.readFileSync(file,'utf8');if(file.startsWi
  s=s.replace(/<div class="gal"([^>]+)>/g,(tag,attrs)=>{const base=attrs.match(/data-base="([^"]+)"/)?.[1];const vv=attrs.match(/data-vues="([^"]*)"/)?.[1]||'face,profil,detail';const views=vv.split(',').filter(v=>v&&available(file,base+'-'+v+'.jpg'));attrs=attrs.replace(/\sdata-vide="[^"]*"/,'').replace(/data-vues="[^"]*"/,'data-vues="'+views.join(',')+'"');const hasMed=/data-medias="[^"]*[^"\]]/.test(attrs);return '<div class="gal"'+attrs+' data-vide="'+((views.length||hasMed)?0:1)+'">';});
  if(/class="gal"[^>]*data-vide="1"/.test(s)&&!s.includes('data-vide-txt')){s=s.replace(/<p class="gal-note">[\s\S]*?<\/p>/,'<p class="gal-note">Illustration provisoire : les visuels restent à intégrer à cette fiche.</p>').replace(/<span class="chip">Images officielles<\/span>/g,'');}
  s=s.replace(/<meta property="og:image" content="([^"]+)"\s*\/?>/g,(tag,src)=>available(file,src)?tag:'<meta property="og:image" content="https://www.leonidakit.com/img/social-card.png">');
- if(!s.includes('name="robots"') && /^(calculateurs)\.html$/.test(file))s=s.replace('</head>','<meta name="robots" content="noindex, follow">\n</head>');
+ // Le calculateur est utilisable et indexable depuis la v7.16.
  if(!s.includes('http-equiv="refresh"')&&!s.includes('name="robots" content="noindex')){
   if(!s.includes('property="og:image"'))s=s.replace('</head>','<meta property="og:image" content="https://www.leonidakit.com/img/social-card.png">\n</head>');
   if(!s.includes('name="twitter:card"'))s=s.replace('</head>','<meta name="twitter:card" content="summary_large_image">\n</head>');

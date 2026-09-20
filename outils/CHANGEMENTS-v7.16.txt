@@ -1,0 +1,32 @@
+LEONIDAKIT v7.16 : CALCULATEURS UTILISABLES, AUX COULEURS DU SITE (20 septembre 2026)
+====================================================================================
+Base : v7.15. Aucun fichier supprimé. Livrée en archive « modifs » (cumule v7.12 à v7.16).
+
+FUSION DU ZIP « Leonidakit-calculateur-mise-a-jour » (construit sur la v7.15)
+Repris en entier, le travail est solide : six outils (objectif universel avec caps et
+scénarios, comparaison d'activités avec calcul inverse, rentabilité et seuil
+d'amortissement, achat depuis le catalogue avec coût en temps, budget par poste, ordre
+d'achat comparé), favoris et calculs récents locaux, export et import JSON, lien
+partageable, navigation clavier, mouvement réduit. Moteur documenté (CALCULATEURS-MOTEUR.md,
+CALCULATEURS-DONNEES.md), 33 tests du moteur et 10 tests d'intégration, tous réussis.
+Les scénarios préremplis sont explicitement fictifs ; aucun prix, revenu ou durée officiel
+n'existe encore et la page le dit. calculateurs.html devient indexable et entre au sitemap.
+
+ADAPTÉ À LA CHARTE
+1. L'en-tête « Leonida Financial Club » (fond nuit, vert citron, rose, ticket incliné,
+   crédit visible) est remplacé par l'en-tête des hubs : photo officielle de Vice City en
+   fond avec lignes de balayage, titre, quatre compteurs (6 outils, 3 scénarios, 347 fiches
+   au catalogue, 0 prix officiel), compte à rebours « les vraies valeurs remplacent les
+   exemples dans… », note d'état au gabarit du site. Le crédit visible est retiré.
+2. calculateurs-brand.css : vert citron devenu ambre, olive devenu corail, nuit devenu ink ;
+   onglets en puces du site, cartes blanches à bord noir et ombre dure, panneau de résultat
+   noir à ombre ambre, champs et boutons du site, courbe ambre sur aire corail, jauges en
+   dégradé corail / ambre, bloc éditorial au cadre des blocs vedettes. Largeur alignée sur
+   le reste du site.
+3. Bande « En attendant les formules » (jeu de cartes vers véhicules, carte, progression)
+   et rails animés sur les bords, comme sur les autres pages.
+4. Correctif : le script de parallaxe cherchait l'image du bandeau supprimé (erreur
+   console) ; il ne s'exécute plus que si elle existe.
+
+Vérifications : verifier.js 28 243 références sans erreur, 152 tests réussis (109 + 43),
+rendus Chromium du bandeau et de l'atelier, deux onglets, mobile sans débordement.

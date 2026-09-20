@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Calculateurs GTA VI — Leonidakit</title>
-<meta name="description" content="Calculateurs pour GTA VI : gains, coûts et rentabilité, construits une fois les mécaniques connues.">
+<meta name="description" content="Simule ton objectif financier, compare les activités, calcule la rentabilité et planifie tes achats GTA VI avec tes propres hypothèses.">
 <meta property="og:title" content="Calculateurs GTA VI — Leonidakit">
-<meta property="og:description" content="Calculateurs pour GTA VI : gains, coûts et rentabilité, construits une fois les mécaniques connues.">
+<meta property="og:description" content="Simule ton objectif financier, compare les activités, calcule la rentabilité et planifie tes achats GTA VI avec tes propres hypothèses.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="fr_FR">
 <meta name="theme-color" content="#FDFBF7">
@@ -26,11 +26,15 @@
   ]
 }
 </script>
-<link rel="stylesheet" href="style.css?v=20bfdf51">
-<meta name="robots" content="noindex, follow">
+<link rel="stylesheet" href="style.css?v=14842aaf">
+<link rel="stylesheet" href="calculateurs.css?v=14842aaf">
+<link rel="stylesheet" href="calculateurs-brand.css?v=14842aaf">
+<meta name="robots" content="index, follow">
+<meta property="og:image" content="https://www.leonidakit.com/img/officiel/vice-city-11-1280.webp">
+<meta name="twitter:card" content="summary_large_image">
 <meta property="og:url" content="https://www.leonidakit.com/calculateurs.html">
 </head>
-<body>
+<body class="calculator-page">
 
 <a class="skip" href="#main">Aller au contenu</a>
 <div class="sunset" aria-hidden="true"></div>
@@ -69,29 +73,53 @@
 </header>
 
 <main id="main">
-<section class="page-head shell">
-  <h1>Calculateurs </h1>
-  <p class="lede">Gains, coûts, rentabilité.</p>
-</section>
-
-<section class="shell">
-  <div class="empty rise">
-    <svg viewBox="0 0 80 80" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="40" cy="34" r="20" fill="#F5A524" opacity=".4"/>
-      <rect x="14" y="36" width="52" height="3" fill="#1A1A1E"/>
-      <rect x="14" y="44" width="52" height="4" fill="#1A1A1E"/>
-      <rect x="14" y="54" width="52" height="5" fill="#1A1A1E"/>
-    </svg>
-    <h2>Les calculateurs arrivent avec le jeu</h2>
-    <p>Un calculateur ne vaut que s'il repose sur les vraies formules du jeu. Ils seront construits une fois les mécaniques connues, pas avant.</p>
-    <p class="when">Disponible à partir du <strong>19 novembre 2026</strong></p>
+<section class="vhero vhero--photo" style="--vhero-img:url(/img/officiel/vice-city-08-1280.webp)">
+  <div class="vhero-bg" aria-hidden="true"></div><div class="vhero-scan" aria-hidden="true"></div>
+  <div class="shell vhero-in">
+    <p class="vhero-eyebrow">Outils</p>
+    <h1>Calculateurs</h1>
+    <p class="lede">Ton capital, ton temps de jeu, ton objectif : combien ça rapporte, combien ça coûte, combien de temps il faut. Six outils, des formules visibles, tes chiffres à toi.</p>
+    <div class="vstats rise">
+      <div class="vstat"><span class="n" data-count="6">6</span><span class="l">outils de calcul</span></div>
+      <div class="vstat"><span class="n" data-count="3">3</span><span class="l">scénarios comparés</span></div>
+      <div class="vstat"><span class="n" data-count="347">347</span><span class="l">fiches dans le catalogue</span></div>
+      <div class="vstat"><span class="n">0</span><span class="l">prix officiel, pour l'instant</span></div>
+    </div>
   </div>
 </section>
 
+<div class="fcount"><div class="shell fcount-in">
+  <span class="fcount-lbl">Les vraies valeurs du jeu remplacent les exemples dans</span>
+  <span class="fcount-nums" id="fcd"><span class="fcd-box"><b id="fd">—</b><i>j</i></span><span class="fcd-box"><b id="fh">—</b><i>h</i></span><span class="fcd-box"><b id="fm">—</b><i>min</i></span><span class="fcd-box"><b id="fs">—</b><i>s</i></span></span>
+</div></div>
 
+<div class="shell"><div class="note-box rise"><b>Simulateur en mode manuel.</b> Les montants préremplis sont des exemples fictifs, pas des données officielles GTA VI. Change-les pour simuler ta propre progression ; tout se calcule dans ton navigateur.</div></div>
+
+<section class="calc-shell calc-workspace" id="atelier" aria-labelledby="atelier-title">
+ <div class="calc-section-head"><div><p class="calc-kicker">01 / TON CENTRE DE DÉCISION</p><h2 id="atelier-title">Un objectif. Un plan.</h2></div><div class="calc-actions"><button class="calc-button" id="calc-save">☆ Enregistrer</button><button class="calc-button" id="calc-share">Partager ↗</button></div></div>
+ <div class="calc-tabs" role="tablist" aria-label="Outils de calcul">
+  <button id="tab-goal" role="tab" aria-selected="true" aria-controls="panel-goal" data-tab="goal">01 <span>Mon objectif</span></button>
+  <button id="tab-activities" role="tab" aria-selected="false" aria-controls="panel-activities" tabindex="-1" data-tab="activities">02 <span>Activités & grind</span></button>
+  <button id="tab-roi" role="tab" aria-selected="false" aria-controls="panel-roi" tabindex="-1" data-tab="roi">03 <span>Rentabilité</span></button>
+  <button id="tab-purchase" role="tab" aria-selected="false" aria-controls="panel-purchase" tabindex="-1" data-tab="purchase">04 <span>Mes achats</span></button>
+  <button id="tab-budget" role="tab" aria-selected="false" aria-controls="panel-budget" tabindex="-1" data-tab="budget">05 <span>Mon budget</span></button>
+  <button id="tab-order" role="tab" aria-selected="false" aria-controls="panel-order" tabindex="-1" data-tab="order">06 <span>Ordre d’achat</span></button>
+ </div>
+ <div id="calc-panels"></div>
+ <noscript><p class="calc-warning">Active JavaScript pour utiliser les simulations. Tous les calculs sont effectués dans ton navigateur.</p></noscript>
+ <p id="calc-live" class="calc-sr" role="status" aria-live="polite"></p>
+ <details class="calc-saved"><summary>Mon carnet <span>Favoris & calculs récents, sur cet appareil</span></summary><div class="calc-saved-body"><div id="saved-list"></div><button class="calc-button" id="calc-export">Exporter ma configuration</button><label class="calc-button calc-import">Importer une configuration<input id="calc-import" type="file" accept="application/json,.json"></label><button class="calc-button" id="calc-reset">Réinitialiser les paramètres</button></div></details>
+</section>
+<section class="calc-editorial calc-shell"><div class="calc-editorial-image"><img src="img/officiel/vice-city-06-480.webp" width="480" height="270" alt="La vie nocturne à Vice City" loading="lazy" decoding="async"><span>LEONIDA / AFTER HOURS</span></div><div><p class="calc-kicker">02 / LES CHIFFRES, SANS LE FLOU</p><h2>Ton argent mérite<br>un vrai plan.</h2><p>Compare tes hypothèses, garde une réserve et vois le temps que chaque décision te coûte. Le résultat dépend de tes chiffres : une simulation n’est pas une promesse de gain.</p><a href="#methodes">Comprendre les calculs <span aria-hidden="true">↗</span></a></div></section>
 <section class="shell reveal lk-explore">
   <h2 class="sec-h">En attendant les formules</h2>
   <div class="lk-links rise"><a class="lk-link" href="vehicules.html"><img src="/img/officiel/one-eyed-willie-s-mod-shop-01-480.webp" width="480" height="270" alt="" loading="lazy" decoding="async"><span><b>Les 302 véhicules</b><i>Fiches, photos officielles et schémas</i></span></a><a class="lk-link" href="carte.html"><img src="/img/officiel/leonida-keys-01-480.webp" width="480" height="270" alt="" loading="lazy" decoding="async"><span><b>La carte</b><i>2 547 lieux repérés, à cocher</i></span></a><a class="lk-link" href="progression.html"><img src="/img/officiel/mount-kalaga-national-park-06-480.webp" width="480" height="270" alt="" loading="lazy" decoding="async"><span><b>Ma progression</b><i>Garage, arsenal, repérages et collection</i></span></a></div>
+</section>
+<section class="calc-shell calc-methods" id="methodes"><p class="calc-kicker">03 / EN TOUTE TRANSPARENCE</p><h2>Ce que l’on calcule. Ce que l’on sait.</h2>
+<details><summary>D’où viennent les chiffres ?</summary><p>Les exemples A, B et C sont entièrement fictifs et modifiables. Les noms, images et fiches proviennent des catalogues existants du site. Un véhicule repéré dans une image n’a pas nécessairement un prix ou des performances confirmés. Une valeur inconnue reste inconnue ; aucun tarif GTA Online n’est utilisé comme tarif GTA VI.</p><p>La provenance des médias est détaillée sur la <a href="medias.html">page des crédits</a>. Les informations officielles sont à consulter sur le <a href="https://www.rockstargames.com/VI" target="_blank" rel="noopener noreferrer">site de Rockstar Games</a>.</p></details>
+<details><summary>Comment sont calculés les gains et les sessions ?</summary><p>Gain net par mission = récompense × ta part ÷ 100 − tes frais. Le nombre de joueurs est une contrainte d’accès ; il ne divise pas une seconde fois ta part. Le rendement de long terme inclut préparation et attente. Les missions sont indivisibles, les délais d’attente ne sont pas comptés après la dernière mission d’une session, et l’attente est supposée écoulée avant le jour suivant. Une session correspond à un jour.</p><p>Le mode alternance suit A → B → C, puis recommence, en n’utilisant que les scénarios accessibles à ton groupe. Il ne revendique pas une optimisation globale. Les graphiques de l’objectif montrent une projection lissée entre les étapes ; les résultats de missions restent arrondis à des réalisations entières.</p></details>
+<details><summary>ROI, amortissement et ordres d’achat</summary><p>Investissement = achat + améliorations + frais initiaux. Bénéfice net horaire = revenus horaires − coûts horaires. Amortissement = investissement ÷ bénéfice net horaire. ROI sur la durée choisie = (bénéfice d’exploitation − investissement) ÷ investissement × 100. Exemple : 500 000 $ investis et 75 000 $ nets par heure donnent 6 h 40 d’amortissement.</p><p>Les ordres d’achat supposent un revenu continu constant entre deux achats. Chaque bonus horaire est une hypothèse personnelle, ajoutée uniquement après l’achat. Ni intérêts composés, ni revente, ni rendement passif simultané ne sont supposés. Le budget réservé n’est pas une dépense.</p></details>
+<details><summary>Sauvegarde et partage</summary><p>La configuration et les favoris restent dans ce navigateur, sans compte. Les liens partagés contiennent les hypothèses du calcul dans leur fragment d’URL ; les données du catalogue restent celles de la version du site consultée. L’export JSON sert de copie transférable. En navigation privée ou si le stockage est bloqué, utilise cet export.</p></details>
 </section>
 </main>
 
@@ -149,9 +177,17 @@
   </div>
 </footer>
 
-<script src="search-index.js?v=20bfdf51"></script>
-<script src="assets-manifest.js?v=20bfdf51"></script>
-<script src="common.js?v=20bfdf51"></script>
-<script src="app.js?v=20bfdf51"></script>
+<script src="search-index.js?v=14842aaf"></script>
+<script src="assets-manifest.js?v=14842aaf"></script>
+<script src="common.js?v=14842aaf"></script>
+<script src="app.js?v=14842aaf"></script>
+<script src="vehicules-data.js?v=14842aaf"></script>
+<script src="armes-data.js?v=14842aaf"></script>
+<script src="calculateurs-catalogue.js?v=14842aaf"></script>
+<script src="calculateurs-activites.js?v=14842aaf"></script>
+<script src="calculateurs-data.js?v=14842aaf"></script>
+<script src="calculateurs-engine.js?v=14842aaf"></script>
+<script src="calculateurs-tools.js?v=14842aaf"></script>
+<script src="calculateurs.js?v=14842aaf"></script>
 </body>
 </html>
