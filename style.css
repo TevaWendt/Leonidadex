@@ -2152,3 +2152,52 @@ main{position:relative;}
 @keyframes lk-rail{from{background-position:0 0}to{background-position:0 156px}}
 @media(max-width:1320px){.lk-rails{display:none;}}
 @media(prefers-reduced-motion:reduce){.lk-rail,.lk-rail::after{animation:none;} .lk-link,.lk-flip-card{transition:none;}}
+
+/* ===================== v7.17 : couleurs GTA VI à la place du noir, jeu de cartes rangé, outro, repli ===================== */
+/* bandes sombres de l'accueil et des fiches : dégradé nuit de Vice City (violet, corail) au lieu du noir plat */
+.fcount{background:linear-gradient(100deg,#2B1B4D 0%,#5A2358 55%,#8E2F4C 100%);border-bottom:3px solid var(--amber);}
+.fcd-box{background:rgba(26,26,30,.55);border:1px solid rgba(255,255,255,.18);}
+.facts{background:linear-gradient(120deg,#2B1B4D 0%,#5A2358 60%,#E8452C 130%);}
+/* hubs du monde : colonnes selon le nombre de cartes, jamais de rangée orpheline */
+@media(min-width:960px){.lore-grid--n8,.lore-grid--n4{grid-template-columns:repeat(4,minmax(0,1fr));} .lore-grid--n6,.lore-grid--n3{grid-template-columns:repeat(3,minmax(0,1fr));}}
+@media(min-width:640px) and (max-width:959px){.lore-grid--n8,.lore-grid--n4,.lore-grid--n6{grid-template-columns:repeat(2,minmax(0,1fr));}}
+/* jeu de cartes rangé : trois cartes en éventail régulier sur une scène, chevauchement léger, la carte survolée se lève */
+@media(min-width:900px){
+  .lk-links{display:flex;justify-content:center;align-items:flex-end;gap:0;height:clamp(340px,46vh,520px);padding:22px 0 8px;background:radial-gradient(ellipse at 50% 120%,rgba(245,165,36,.28),rgba(245,165,36,0) 60%);}
+  .lk-link{position:relative;top:auto;left:auto!important;width:36%;height:88%;flex:none;transform-origin:50% 100%;}
+  .lk-link:nth-child(1){transform:rotate(-6deg) translate(6%,4%);z-index:1;}
+  .lk-link:nth-child(2){transform:translateY(-4%);z-index:2;}
+  .lk-link:nth-child(3){transform:rotate(6deg) translate(-6%,4%);z-index:1;}
+  .lk-links:hover .lk-link{filter:saturate(.8) brightness(.9);}
+  .lk-links .lk-link:hover{filter:none;transform:translateY(-8%) scale(1.06);z-index:5;box-shadow:10px 10px 0 var(--amber);}
+}
+/* cartes : une seule barre ambre au lieu des dégradés multicolores, cartes claires au lieu du noir */
+#carnet .col-carnet-grid > *::before,#sorties .col-tools-panel::before,#sorties .col-tools-panel:nth-child(2)::before,#sorties .col-tools-panel:nth-child(3)::before,#carnet .col-backup-panel::before,#carnet .col-map-card::before{background:var(--amber)!important;}
+#carnet .col-map-card{background:#fff url(/img/officiel/leonida-keys-01-480.webp) center/cover;color:#fff;}
+#carnet .col-map-card::after{background:rgba(26,26,30,.55);}
+#carnet .col-carnet-grid > [data-tip]::after{background:var(--amber);color:var(--ink);border-top:2px solid var(--ink);}
+.lk-steps li{background:#fff;color:var(--ink);border:2px solid var(--ink);box-shadow:4px 4px 0 var(--amber);}
+.lk-steps b{color:var(--coral);} .lk-steps span{color:var(--ink);}
+/* outils : même hauteur, l'explication apparaît au survol */
+#sorties .col-tools-grid{grid-auto-rows:1fr;}
+#sorties .col-tools-panel{min-height:300px;}
+#sorties .col-tools-what{position:absolute;left:0;right:0;bottom:0;margin:0;padding:14px 18px;background:var(--amber);color:var(--ink);border-top:2px solid var(--ink);transform:translateY(100%);transition:transform .35s cubic-bezier(.2,.7,.2,1);z-index:2;}
+#sorties .col-tools-panel:hover .col-tools-what,#sorties .col-tools-panel:focus-within .col-tools-what{transform:translateY(0);}
+/* bloc repliable (méthode et sources) au gabarit FAQ */
+.lk-fold{background:#fff;border:2px solid var(--ink);border-radius:12px;box-shadow:4px 4px 0 rgba(26,26,30,.18);}
+.lk-fold summary{cursor:pointer;list-style:none;padding:16px 48px 16px 18px;font:800 1rem 'Archivo',sans-serif;position:relative;}
+.lk-fold summary::-webkit-details-marker{display:none;}
+.lk-fold summary::after{content:'+';position:absolute;right:18px;top:10px;font-size:1.5rem;color:var(--coral);font-weight:900;}
+.lk-fold[open] summary::after{content:'\2013';}
+.lk-fold-body{padding:4px 18px 18px;}
+.lk-fold-body .col-method > div,.lk-fold-body .col-method article,.lk-fold-body .col-sources{box-shadow:none;border-width:1px;}
+/* outro : séparation avec texte avant le pied de page, dégradé coucher de soleil */
+.lk-outro{margin-top:56px;background:linear-gradient(120deg,#2B1B4D 0%,#5A2358 40%,#E8452C 85%,#F5A524 100%);color:#fff;border-top:3px solid var(--ink);border-bottom:3px solid var(--ink);}
+.lk-outro-in{padding:44px 24px;display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:24px;align-items:center;}
+.lk-outro-k{font:800 .72rem/1 'Archivo',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);margin:0 0 8px;grid-column:1/-1;}
+.lk-outro h2{font-size:clamp(1.5rem,3vw,2.3rem);letter-spacing:-.03em;margin:0 0 8px;line-height:1.05;color:#fff;}
+.lk-outro p:not(.lk-outro-k){margin:0;line-height:1.6;color:rgba(255,255,255,.9);}
+.lk-outro-links{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;}
+.lk-outro-links a{display:inline-flex;font:800 .88rem 'Archivo',sans-serif;color:var(--ink);background:var(--amber);border:2px solid var(--ink);border-radius:8px;padding:11px 16px;box-shadow:3px 3px 0 var(--ink);text-decoration:none;transition:transform .15s,box-shadow .15s;}
+.lk-outro-links a:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--ink);}
+@media(max-width:800px){.lk-outro-in{grid-template-columns:1fr;} .lk-outro-links{justify-content:flex-start;}}

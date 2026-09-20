@@ -1,0 +1,29 @@
+LEONIDAKIT v7.17 : ÉTAPE 1 DES CORRECTIONS, HABILLAGE GLOBAL (20 septembre 2026)
+================================================================================
+Base : v7.16. Aucun fichier supprimé. Livrée en archive « modifs » (cumule v7.12 à v7.17).
+Plan convenu en quatre étapes : 1) habillage global (cette livraison), 2) différenciation
+lexicale des fiches pour Google, 3) enrichissement des fiches du monde, 4) refonte des
+calculateurs selon le cahier des charges.
+
+1. Rails animés sur toutes les pages, plus seulement celles qui ont un compte à rebours :
+   accueil, carte, régions, personnages, demeures, planques, entreprises, progression,
+   comparateur, pages du monde. Même rail partout, posé sous le bandeau de la page.
+2. Le noir plat des bandes (compte à rebours, chiffres clés de l'accueil) devient un
+   dégradé nuit de Vice City (violet, prune, corail) liseré d'ambre. Les cartes noires de
+   Collectibles (repères, étapes) passent en clair ou en photo, et les barres multicolores
+   au-dessus des cartes deviennent une seule barre ambre.
+3. Hubs du monde : nombre de colonnes selon le nombre de cartes, plus de rangée orpheline
+   (8 personnages sur deux rangées de 4, 6 régions sur deux rangées de 3, 4 demeures sur une
+   rangée, 3 planques sur une rangée).
+4. Jeu de cartes « Explorer Leonida » / « Continuer la visite » rangé : trois cartes en
+   éventail régulier sur une scène ambrée, chevauchement léger, la carte survolée se lève et
+   passe devant, sans chevauchement brouillon.
+5. Collectibles : les trois outils (recherches, sortie, checklist) à même hauteur, leur
+   explication monte au survol comme sur le carnet ; « Méthode et sources » repliée dans un
+   bloc au gabarit FAQ, fermée par défaut.
+6. Séparation avec texte avant le pied de page (« Et après ? La suite s'écrit le
+   19 novembre 2026 ») sur Collectibles, Véhicules, Armes, Calculateurs, Progression,
+   Top 10, Véhicules rares, Carte et toutes les pages du monde, avec deux liens.
+
+Vérifications : verifier.js 28 330 références sans erreur, 152 tests réussis, rendus
+Chromium (personnages, éventail, outro, outils au survol).

@@ -104,6 +104,7 @@ ${header}
 <main id="main" class="lore-page">
 ${body}
 ${EXPLORE(p?'../':'')}
+<section class="lk-outro" aria-label="Et après"><div class="shell lk-outro-in"><p class="lk-outro-k">Et après ?</p><h2>La suite s'écrit le 19 novembre 2026.</h2><p>Chaque fiche se complète avec le jeu : ce qu'on y trouve, ce qu'on y fait, ce que ça rapporte. Rien d'inventé d'ici là.</p><div class="lk-outro-links"><a href="${p?'../':''}carte.html">Ouvrir la carte</a><a href="${p?'../':''}progression.html">Ma progression</a></div></div></section>
 </main>
 
 ${C.footer}
@@ -126,7 +127,7 @@ for(const [key,S] of Object.entries(SECTIONS)){
   <p class="lede">${esc(S.lede)}</p>
 </section>
 <section class="shell">
-  <div class="lore-grid lore-grid--center">
+  <div class="lore-grid lore-grid--center lore-grid--n${items.length}">
 ${cards}
   </div>
 </section>`;

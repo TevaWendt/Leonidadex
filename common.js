@@ -108,11 +108,12 @@
 
 /* Rails animés sur les deux bords, du compte à rebours au pied de page. */
 (function () {
-  const main = document.getElementById('main'), fc = document.querySelector('.fcount');
-  if (!main || !fc || document.querySelector('.lk-rails')) return;
+  const main = document.getElementById('main');
+  if (!main || document.querySelector('.lk-rails')) return;
+  const fc = document.querySelector('.fcount') || main.querySelector('.vhero, .hero, .fhero, .lore-hero');
   const rails = document.createElement('div'); rails.className = 'lk-rails'; rails.setAttribute('aria-hidden', 'true');
   rails.innerHTML = '<span class="lk-rail lk-rail--l"></span><span class="lk-rail lk-rail--r"></span>';
   main.appendChild(rails);
-  function place() { const m = main.getBoundingClientRect(), f = fc.getBoundingClientRect(); rails.style.top = Math.max(0, f.bottom - m.top) + 'px'; }
+  function place() { const m = main.getBoundingClientRect(); const f = fc ? fc.getBoundingClientRect() : null; rails.style.top = (f ? Math.max(0, f.bottom - m.top) : 0) + 'px'; }
   window.addEventListener('resize', place); window.addEventListener('load', place); place();
 })();
