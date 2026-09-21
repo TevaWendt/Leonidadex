@@ -2201,3 +2201,23 @@ main{position:relative;}
 .lk-outro-links a{display:inline-flex;font:800 .88rem 'Archivo',sans-serif;color:var(--ink);background:var(--amber);border:2px solid var(--ink);border-radius:8px;padding:11px 16px;box-shadow:3px 3px 0 var(--ink);text-decoration:none;transition:transform .15s,box-shadow .15s;}
 .lk-outro-links a:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--ink);}
 @media(max-width:800px){.lk-outro-in{grid-template-columns:1fr;} .lk-outro-links{justify-content:flex-start;}}
+
+/* ===================== v7.21 : rails plus fins, recherche du top 10, cartes ===================== */
+.lk-rail{width:6px;border:0;opacity:1;background:linear-gradient(180deg,var(--coral),var(--amber),#5A2358,var(--coral));background-size:100% 600px;animation:lk-rail 14s linear infinite;box-shadow:0 0 12px rgba(245,165,36,.45);border-radius:3px;}
+.lk-rail--l{left:14px;} .lk-rail--r{right:14px;animation-direction:reverse;}
+.lk-rail::after{background:repeating-linear-gradient(180deg,rgba(255,255,255,0) 0 60px,rgba(255,255,255,.55) 60px 64px);background-size:100% 128px;animation:lk-rail 5s linear infinite;border-radius:3px;}
+@keyframes lk-rail{from{background-position:0 0}to{background-position:0 600px}}
+.rails-zone .rail,.rails-zone .rail-line,.rails-zone .rail-ticks{display:none!important;}
+.cl-q{width:100%;font:600 1rem 'Archivo',sans-serif;padding:12px 14px;border:2px solid var(--ink);border-radius:8px;background:var(--paper);margin-bottom:8px;}
+#cl-sel[size]{height:auto;}
+.chip-own.is-on{background:var(--ink);color:#fff;}
+/* progression : six cartes sur deux rangées de trois, texte d'introduction avec mini-carte */
+.progress-cards--six{grid-template-columns:repeat(3,minmax(0,1fr));}
+@media(max-width:820px){.progress-cards--six{grid-template-columns:1fr;}}
+.lk-prog-intro{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.4fr);gap:22px;align-items:center;margin:18px 0 8px;}
+@media(max-width:800px){.lk-prog-intro{grid-template-columns:1fr;}}
+.lk-prog-intro p{line-height:1.65;margin:0 0 10px;}
+.lk-prog-map{position:relative;border:2px solid var(--ink);border-radius:12px;overflow:hidden;box-shadow:6px 6px 0 var(--amber);background:#1A1A1E;aspect-ratio:4/3;}
+.lk-prog-map img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.7) contrast(1.05);}
+.lk-prog-map::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(26,26,30,0) 0 3px,rgba(26,26,30,.12) 3px 4px),radial-gradient(circle at 50% 50%,rgba(245,165,36,0) 40%,rgba(26,26,30,.55) 100%);}
+.lk-prog-map span{position:absolute;left:14px;bottom:12px;z-index:1;font:900 1.4rem 'Archivo',sans-serif;color:#fff;letter-spacing:-.02em;text-shadow:0 2px 10px rgba(0,0,0,.6);}

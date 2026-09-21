@@ -52,3 +52,15 @@
     r.readAsText(f);
   });
 })();
+
+/* Carnet de collection et calculs enregistrés : compteurs lus dans le navigateur (mêmes clés que les pages Collectibles et Calculateurs). */
+(function () {
+  function count(keys, pick) {
+    for (const k of keys) { try { const raw = localStorage.getItem(k); if (!raw) continue; const d = JSON.parse(raw); const n = pick(d); if (Number.isFinite(n)) return n; } catch (e) {} }
+    return 0;
+  }
+  const carnet = count(['lk_collectibles_v1'], d => { const f = d.found || d.trouves || d.items || d; return Array.isArray(f) ? f.length : (f && typeof f === 'object' ? Object.keys(f).filter(k => f[k]).length : 0); });
+  const calc = count(['lk-calculator-saved-v1'], d => { const s = Array.isArray(d) ? d : (d.saved || d.items || []); return Array.isArray(s) ? s.length : 0; });
+  const a = document.getElementById('progress-carnet-n'), b = document.getElementById('progress-calc-n');
+  if (a) a.textContent = String(carnet); if (b) b.textContent = String(calc);
+})();

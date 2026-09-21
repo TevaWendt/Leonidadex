@@ -70,7 +70,10 @@ const EXPLORE=pre=>`<section class="shell reveal lk-explore">
   <h2 class="sec-h">Continuer la visite</h2>
   <div class="lk-links rise"><a class="lk-link" href="${pre}carte.html"><img src="/img/officiel/leonida-keys-01-480.webp" width="480" height="270" alt="" loading="lazy" decoding="async"><span><b>La carte</b><i>2 547 lieux repérés, à cocher</i></span></a><a class="lk-link" href="${pre}vehicules.html"><img src="/img/officiel/one-eyed-willie-s-mod-shop-01-480.webp" width="480" height="270" alt="" loading="lazy" decoding="async"><span><b>Les 302 véhicules</b><i>Fiches, photos officielles et schémas</i></span></a><a class="lk-link" href="${pre}collectibles.html"><img src="/img/officiel/classic-car-collection-04-480.webp" width="480" height="270" alt="" loading="lazy" decoding="async"><span><b>Collectibles</b><i>La collection de Wyman et le carnet</i></span></a></div>
 </section>`;
-function page({p,title,desc,canonical,ogImg,body,crumbs,hub}){
+const recapOf=(x,S)=>{const f=(x&&x.facts||[]).map(t=>String(t).trim().replace(/\s*[.;]$/,''));if(!f.length)return '';
+  const intro={regions:'Ce qu\'il faut retenir de cette région',characters:'Ce qu\'il faut retenir de ce personnage',businesses:'Ce qu\'il faut retenir de cette adresse',residences:'Ce qu\'il faut retenir de ce lieu',hideouts:'Ce qu\'il faut retenir de ce lieu'}[S]||'À retenir';
+  return `<section class="shell reveal lk-recap"><h2 class="sec-h">${intro}</h2><p class="fiche-txt rise">${esc(f.join('. ')+'.')} ${esc(x.name)} est relié aux fiches voisines ci-dessous : les fiches se complètent avec le jeu, et ce résumé se mettra à jour avec elles.</p></section>`;};
+function page({p,title,desc,canonical,ogImg,body,crumbs,hub,RECAP=''}){
   const C=p?SUB:ROOT;const header=hub?withHere(C.header,hub):C.header.replace(/ class="here"/g,'');
   return `<!DOCTYPE html>
 <html lang="fr">
@@ -103,6 +106,7 @@ ${header}
 
 <main id="main" class="lore-page">
 ${body}
+${RECAP}
 ${EXPLORE(p?'../':'')}
 <section class="lk-outro" aria-label="Et après"><div class="shell lk-outro-in"><p class="lk-outro-k">Et après ?</p><h2>La suite s'écrit le 19 novembre 2026.</h2><p>Chaque fiche se complète avec le jeu : ce qu'on y trouve, ce qu'on y fait, ce que ça rapporte. Rien d'inventé d'ici là.</p><div class="lk-outro-links"><a href="${p?'../':''}carte.html">Ouvrir la carte</a><a href="${p?'../':''}progression.html">Ma progression</a></div></div></section>
 </main>
@@ -174,7 +178,7 @@ ${cards}
   ${facts}
   ${(relBlocks||vehBlock||mapBlock)?`<div class="lore-related"><h2>En lien</h2>${relBlocks}${vehBlock}${mapBlock}</div>`:''}
 </section>${galleryBlock(x,S)}`;
-    fs.writeFileSync(S.hub+'/'+x.id+'.html',page({p,title:x.name+' — GTA VI | Leonidakit',desc:x.description,canonical:'/'+S.hub+'/'+x.id+'.html',ogImg:m?(m.variants[1]||m.variants[0]).src:null,body,crumbs:[['Accueil','/'],[S.label,'/'+S.hub+'.html'],[x.name,'/'+S.hub+'/'+x.id+'.html']],hub:S.hub}));
+    fs.writeFileSync(S.hub+'/'+x.id+'.html',page({p,RECAP:recapOf(x,key),title:x.name+' — GTA VI | Leonidakit',desc:x.description,canonical:'/'+S.hub+'/'+x.id+'.html',ogImg:m?(m.variants[1]||m.variants[0]).src:null,body,crumbs:[['Accueil','/'],[S.label,'/'+S.hub+'.html'],[x.name,'/'+S.hub+'/'+x.id+'.html']],hub:S.hub}));
     index.push({l:x.name,k:S.one,u:'/'+S.hub+'/'+x.id+'.html',s:(x.name+' '+S.one+' '+x.description+' '+(x.tagline||'')).toLowerCase(),w:1});
   }
   console.log(S.hub+' : '+items.length+' fiches');

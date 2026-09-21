@@ -364,6 +364,29 @@
   }
 
   function readHash(){
+    /* plusieurs lieux à la fois : #pins=g-L1074,g-L1091&t=Armureries (liens « voir les armureries », « voir les concessions ») */
+    const multi = location.hash.match(/^#pins=([\w,-]+)(?:&t=([^&]*))?$/);
+    if(multi){
+      const pts = multi[1].split(',').map(byId).filter(Boolean);
+      if(pts.length){
+        let titre = 'Lieux'; try{ titre = decodeURIComponent(multi[2] || 'Lieux'); }catch(e){}
+        pts.forEach(function(p){ visible[p.c] = true; });
+        document.querySelectorAll('.map-filter').forEach(function(input){ if(pts.some(p => p.c === input.dataset.cat)) input.checked = true; });
+        refreshVisibility();
+        ouvertId = null;
+        panelIn.innerHTML = '<p class="mp-cat">' + esc(titre) + '</p><h3>' + pts.length + ' lieu' + (pts.length > 1 ? 'x' : '') + ' sur la carte</h3>' +
+          '<p class="mp-d">Chaque lieu ouvre sa fiche et centre la carte dessus.</p>' +
+          pts.map(function(p){ return '<a class="mp-link" href="#lieu=' + p.id + '">' + esc(p.n) + '</a>'; }).join('');
+        panel.classList.add('open'); panel.inert = false;
+        const cx = pts.reduce((a, p) => a + p.x, 0) / pts.length, cy = pts.reduce((a, p) => a + p.y, 0) / pts.length;
+        const spread = Math.max.apply(null, pts.map(p => Math.hypot(p.x - cx, p.y - cy))) || 1;
+        const r = stage.getBoundingClientRect();
+        scale = Math.max(0.12, Math.min(0.9, Math.min(r.width, r.height) / (spread * 2.6)));
+        tx = r.width / 2 - cx * scale; ty = r.height / 2 - cy * scale; clamp(); applyTransform();
+        requestAnimationFrame(function(){ stage.scrollIntoView({ block:'start', behavior:'auto' }); });
+        return true;
+      }
+    }
     const collectibleLink = location.hash.match(/^#collectible=([^&]+)$/);
     if(collectibleLink){
       let id;

@@ -107,3 +107,11 @@ main .col-status-strip,main .col-overview,main .col-stat{display:none;}
 /* respiration entre les sections, pour s'y retrouver d'un coup d'œil */
 main > section.shell.reveal{margin-top:44px;}
 main > section.shell.reveal + section.shell.reveal{padding-top:8px;}
+/* ---------- v7.21 : carte des repères en photo, outils à même hauteur ---------- */
+#carnet .col-map-card{background:#1A1A1E url(/img/officiel/leonida-keys-01-480.webp) center/cover!important;position:relative;min-height:240px;}
+#carnet .col-map-card::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(26,26,30,.15),rgba(26,26,30,.7));}
+#carnet .col-map-card > *{position:relative;z-index:1;}
+#carnet .col-map-card[data-tip]::after{content:attr(data-tip);background:var(--amber);color:var(--ink);inset:auto 0 0 0;padding:16px 18px 18px;transform:translateY(100%);transition:transform .35s cubic-bezier(.2,.7,.2,1);}
+#carnet .col-map-card[data-tip]:hover::after,#carnet .col-map-card[data-tip]:focus-within::after{transform:translateY(0);}
+#sorties .col-tools-grid{align-items:stretch!important;grid-auto-rows:1fr;}
+#sorties .col-tools-panel{display:flex;flex-direction:column;min-height:340px;}

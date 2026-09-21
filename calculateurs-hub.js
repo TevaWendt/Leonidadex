@@ -139,3 +139,22 @@
   tagHypotheses();
   window.LKCalcHub = { route, parseMoney, parseMinutesPerDay };
 })();
+
+/* Curseur d'objectif : sous le champ « Mon objectif », une réglette de 10 000 $ à 10 000 000 $ (échelle logarithmique),
+   liée dans les deux sens au champ. Bouger la réglette recalcule tout de suite. */
+(function () {
+  const target = document.getElementById('f-goal-target'); if (!target) return;
+  const wrap = document.createElement('div'); wrap.className = 'lk-goal-slider';
+  wrap.innerHTML = '<input type="range" id="lk-goal-range" min="0" max="1000" value="500" aria-label="Régler l\'objectif"><span id="lk-goal-range-v"></span>';
+  (target.closest('label') || target).insertAdjacentElement('afterend', wrap);
+  const range = wrap.querySelector('input'), out = wrap.querySelector('span');
+  const MIN = 10000, MAX = 10000000, L = Math.log(MAX / MIN);
+  const toPos = v => Math.round(Math.log(Math.min(MAX, Math.max(MIN, v)) / MIN) / L * 1000);
+  const toVal = p => { const v = MIN * Math.exp(p / 1000 * L); const step = v >= 1000000 ? 50000 : v >= 100000 ? 10000 : 1000; return Math.round(v / step) * step; };
+  const fmt = n => new Intl.NumberFormat('fr-FR').format(n) + ' $';
+  function fromField() { const v = Number(target.value); if (Number.isFinite(v) && v > 0) { range.value = toPos(v); out.textContent = fmt(v); } }
+  range.addEventListener('input', () => { const v = toVal(Number(range.value)); target.value = v; out.textContent = fmt(v); target.dispatchEvent(new Event('input', { bubbles: true })); });
+  target.addEventListener('input', fromField);
+  new MutationObserver(fromField).observe(target, { attributes: true, attributeFilter: ['value'] });
+  fromField();
+})();

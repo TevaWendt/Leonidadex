@@ -101,3 +101,20 @@
   /* lien collé alors que la page est déjà ouverte */
   window.addEventListener('hashchange', appliquerPartage);
 })();
+
+/* Recherche pour composer le top 10 : le champ filtre la liste déroulante en direct ; Entrée ajoute le premier résultat. */
+(function () {
+  const q = document.getElementById('cl-q'), sel = document.getElementById('cl-sel'), add = document.getElementById('cl-add');
+  if (!q || !sel || !add) return;
+  const all = Array.from(sel.options).map(o => ({ value: o.value, text: o.textContent, norm: o.textContent.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() }));
+  function filtre() {
+    const t = q.value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+    const hits = t ? all.filter(o => o.norm.includes(t)) : all;
+    sel.innerHTML = ''; hits.forEach(o => { const op = document.createElement('option'); op.value = o.value; op.textContent = o.text; sel.appendChild(op); });
+    sel.size = t && hits.length ? Math.min(6, hits.length) : 0;
+    add.textContent = t && hits.length ? 'Ajouter ' + hits[0].text.replace(/\s*\(.*$/, '') : 'Ajouter';
+  }
+  q.addEventListener('input', filtre);
+  q.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); if (sel.options.length) { sel.selectedIndex = 0; add.click(); q.value = ''; filtre(); q.focus(); } } });
+  sel.addEventListener('change', () => { add.textContent = 'Ajouter ' + (sel.options[sel.selectedIndex] || { textContent: '' }).textContent.replace(/\s*\(.*$/, ''); });
+})();

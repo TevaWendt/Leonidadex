@@ -131,8 +131,8 @@ function car(o,seed){
   for(const e of o.extra||[]){
     if(e==='spoiler')s+=P(`M${x0+2} ${yBelt-6}h20v3h-16l-2 3h-2z`);
     if(e==='wing')s+=P(`M${x0-2} ${yBelt-11}h28v4h-24z`)+P(`M${x0+6} ${yBelt-7}h3v7h-3z`)+P(`M${x0+18} ${yBelt-7}h3v7h-3z`);
-    if(e==='rack')s+=P(`M${roofA+4} ${yRoof-5}h${roofB-roofA-8}v3h-${roofB-roofA-8}z`)+P(`M${roofA+8} ${yRoof-2}h3v2h-3z`)+P(`M${roofB-11} ${yRoof-2}h3v2h-3z`);
-    if(e==='lightbar')s+=P(`M${roofA+6} ${yRoof-6}h${Math.max(18,roofB-roofA-12)}v5h-${Math.max(18,roofB-roofA-12)}z`)+H(`M${roofA+8} ${yRoof-3}h5M${roofB-10} ${yRoof-3}h5`,2,.8);
+    if(e==='rack'){const rw=Math.abs(roofA-roofB)-8,rx=Math.min(roofA,roofB)+4;s+=P(`M${rx} ${yRoof-5}h${rw}v3h${-rw}z`)+P(`M${rx+4} ${yRoof-2}h3v2h-3z`)+P(`M${rx+rw-7} ${yRoof-2}h3v2h-3z`);}
+    if(e==='lightbar'){const lw=Math.max(18,Math.abs(roofA-roofB)-12),lx=Math.min(roofA,roofB)+6;s+=P(`M${lx} ${yRoof-6}h${lw}v5h${-lw}z`)+H(`M${lx+2} ${yRoof-3}h5M${lx+lw-7} ${yRoof-3}h5`,2,.8);}
     if(e==='taxi')s+=P(`M${mid-9} ${yRoof-7}h18v6h-18z`)+H(`M${mid-5} ${yRoof-4}h10`,1.6,.7);
     if(e==='stripe')s+=H(`M${x0+8} ${yBelt+8}L${x1-8} ${yBelt+8}`,3,.5);
     if(e==='hoodstripe')s+=H(`M${hoodStart+8} ${yHood+2}L${x1-10} ${yHood+3}`,3,.6);
@@ -140,7 +140,7 @@ function car(o,seed){
     if(e==='fins')s+=P(`M${x0-2} ${yBelt-6}L${x0+18} ${yBelt+1}L${x0+18} ${yBelt+4}L${x0-2} ${yBelt+2}Z`);
     if(e==='bullbar')s+=P(`M${x1} ${yHood+6}h6v${yb-yHood-10}h-6z`);
     if(e==='softtop')s+=P(`M${roofB-2} ${yBelt-3}h22v4h-22z`);
-    if(e==='lift')s+=P(`M${x0+4} ${yb}h${x1-x0-8}v3h-${x1-x0-8}z`);
+    if(e==='lift')s+=P(`M${x0+4} ${yb}h${x1-x0-8}v3h${-(x1-x0-8)}z`);
     if(e==='twotone')s+=H(`M${x0+6} ${yBelt+1}L${x1-10} ${yBelt+1}`,4,.3);
     if(e==='chrome')s+=H(`M${x0+6} ${yb-9}L${x1-8} ${yb-9}`,1.4,.55);
     if(e==='diffuser')s+=P(`M${x0} ${yb-3}h14l-2 3h-12z`);
@@ -157,13 +157,13 @@ function pickup(o,seed){const {x0,x1,yb,yBelt,yRoof,cabA,cabB,yHood,hoodStart,wr
   if(o.crew)s+=H(`M${rnd((cabA+cabB)/2)} ${yRoof+3}V${yBelt}`,1.2,.45);
   s+=R(x1-6,yHood+4,5,4).replace(INK,HL)+R(x0,yBelt+3,3,5).replace(INK,HL);
   for(const e of o.extra||[]){
-    if(e==='lightbar')s+=P(`M${cabA+4} ${yRoof-6}h${cabB-cabA-8}v5h-${cabB-cabA-8}z`);
+    if(e==='lightbar')s+=P(`M${cabA+4} ${yRoof-6}h${cabB-cabA-8}v5h${-(cabB-cabA-8)}z`);
     if(e==='bullbar')s+=P(`M${x1} ${yHood+6}h6v${yb-yHood-10}h-6z`);
-    if(e==='rack')s+=P(`M${cabA+3} ${yRoof-5}h${cabB-cabA-6}v3h-${cabB-cabA-6}z`);
+    if(e==='rack')s+=P(`M${cabA+3} ${yRoof-5}h${cabB-cabA-6}v3h${-(cabB-cabA-6)}z`);
     if(e==='cover')s+=R(x0+1,yBelt-3,cabB-x0,3);
     if(e==='cage')s+=H(`M${x0+6} ${yBelt}L${x0+14} ${yRoof+2}L${cabA-2} ${yRoof+2}`,2.2,.7);
-    if(e==='lift')s+=P(`M${x0+8} ${yb}h${x1-x0-16}v4h-${x1-x0-16}z`);
-    if(e==='lights')s+=P(`M${cabA+6} ${yRoof-4}h${cabB-cabA-12}v3h-${cabB-cabA-12}z`)+H(`M${cabA+9} ${yRoof-2}h3M${cabA+16} ${yRoof-2}h3M${cabB-12} ${yRoof-2}h3`,1.6,.8);
+    if(e==='lift')s+=P(`M${x0+8} ${yb}h${x1-x0-16}v4h${-(x1-x0-16)}z`);
+    if(e==='lights')s+=P(`M${cabA+6} ${yRoof-4}h${cabB-cabA-12}v3h${-(cabB-cabA-12)}z`)+H(`M${cabA+9} ${yRoof-2}h3M${cabA+16} ${yRoof-2}h3M${cabB-12} ${yRoof-2}h3`,1.6,.8);
   }
   s+=(o.knob?knobby(wa,yg-wr,wr)+knobby(wb,yg-wr,wr):wheel(wa,yg-wr,wr,o.spokes||5)+wheel(wb,yg-wr,wr,o.spokes||5));
   return s;}
@@ -185,10 +185,10 @@ function truck(o,seed){ /* camion à cabine avancée ou à capot : kind = box|fl
   if(kind==='garbage')s+=P(`M${bx0} 86L${bx0+6} 42L${bx1-4} 40L${bx1} 86Z`)+P(`M${bx0-8} 60L${bx0+2} 48L${bx0+2} 86L${bx0-8} 86Z`);
   if(kind==='tow')s+=R(bx0+6,76,bx1-bx0-6,10)+P(`M${bx0+10} 76L${bx0+22} 46L${bx0+27} 46L${bx0+18} 76Z`)+H(`M${bx0+22} 47L${bx0+2} 70`,2,.7)+P(`M${bx0-4} 66h10v6h-10z`);
   if(kind==='semi')s+=P(`M${bx1-22} 74h20v10h-20z`);
-  if(kind==='ambulance')s+=P(`M${bx0} 88V40h${bx1-bx0}V88Z`)+H(`M${rnd((bx0+bx1)/2)} 52v18M${rnd((bx0+bx1)/2)-9} 61h18`,4,.85)+P(`M${cabX+4} 30h${cabW-8}v4h-${cabW-8}z`);
+  if(kind==='ambulance')s+=P(`M${bx0} 88V40h${bx1-bx0}V88Z`)+H(`M${rnd((bx0+bx1)/2)} 52v18M${rnd((bx0+bx1)/2)-9} 61h18`,4,.85)+P(`M${cabX+4} 30h${cabW-8}v4h${-(cabW-8)}z`);
   if(kind==='mixer')s+=P(`M${bx0+6} 84L${bx0+4} 56Q${bx0+20} 34 ${bx1-10} 40L${bx1} 84Z`)+H(`M${bx0+12} 56L${bx1-14} 48M${bx0+14} 68L${bx1-12} 62`,1.6,.4);
   if(kind==='forklift'){s='';return forklift(o);}
-  if(o.extra&&o.extra.includes('lightbar'))s+=P(`M${cabX+4} ${hood?36:29}h${cabW-8}v5h-${cabW-8}z`);
+  if(o.extra&&o.extra.includes('lightbar'))s+=P(`M${cabX+4} ${hood?36:29}h${cabW-8}v5h${-(cabW-8)}z`);
   /* roues : deux ou trois essieux */
   const axles=o.axles||2;
   s+=wheel(x1-20,yg-wr,wr,6);
@@ -199,11 +199,11 @@ function truck(o,seed){ /* camion à cabine avancée ou à capot : kind = box|fl
 function bus(o,seed){const {kind,wr}=o,yg=100,x0=14,x1=226;
   let s=P(`M${x0} 88Q${x0} 30 ${x0+8} 30L${x1-8} 30Q${x1} 30 ${x1} 40L${x1} 88Z`);
   const n=kind==='coach'?6:kind==='school'?7:5;const w=(x1-x0-20)/n;
-  for(let i=0;i<n;i++)s+=G(`M${rnd(x0+10+i*w+2)} ${kind==='coach'?40:38}h${rnd(w-4)}v${kind==='coach'?18:22}h-${rnd(w-4)}z`);
+  for(let i=0;i<n;i++)s+=G(`M${rnd(x0+10+i*w+2)} ${kind==='coach'?40:38}h${rnd(w-4)}v${kind==='coach'?18:22}h${-(rnd(w-4))}z`);
   if(kind!=='coach')s+=H(`M${x1-40} 62V88`,1.6,.5)+H(`M${x1-38} 66h-10v20`,1,.35);
   if(kind==='school')s+=P(`M${x1-14} 30h8v-6h-8z`)+P(`M${x0+6} 30h8v-6h-8z`);
-  if(kind==='coach')s+=P(`M${x0+2} 62h${x1-x0-4}v4h-${x1-x0-4}z`,.5);
-  if(kind==='shuttle')s+=P(`M${x0+10} 30h${x1-x0-20}v-4h-${x1-x0-20}z`);
+  if(kind==='coach')s+=P(`M${x0+2} 62h${x1-x0-4}v4h${-(x1-x0-4)}z`,.5);
+  if(kind==='shuttle')s+=P(`M${x0+10} 30h${x1-x0-20}v-4h${-(x1-x0-20)}z`);
   if(kind==='rv')s+=P(`M${x1-40} 30h30v-8h-30z`)+H(`M${x0+20} 70h60`,1.4,.4);
   s+=R(x1-4,70,3,6).replace(INK,HL)+R(x0,70,3,6).replace(INK,HL);
   s+=wheel(x1-36,yg-wr,wr,6)+wheel(x0+40,yg-wr,wr,6);
@@ -259,14 +259,14 @@ function boat(o,seed){const {kind,seed:sd}=o,x0=18,x1=224,yw=88;
   if(kind==='cabin'){s+=hull(66,48,60)+P(`M${x0+30} 66L${x0+36} 38L${x0+110} 34L${x0+128} 52L${x0+140} 66Z`)+G(`M${x0+42} 42L${x0+106} 38L${x0+118} 52L${x0+46} 56Z`)+G(`M${x0+60} 60L${x0+130} 58L${x0+128} 66L${x0+60} 66Z`,.16)+P(`M${x0+60} 36h30v-6h-30z`)+H(`M${x0+16} 74L${x1-24} 70`,1.2,.35);}
   if(kind==='yacht'){s+=P(`M${x0+6} 56L${x0} ${yw-8}Q${x0+8} ${yw} ${x0+18} ${yw}L${x1-24} ${yw}Q${x1-4} ${yw-4} ${x1} 52L${x1-10} 48L${x0+10} 56Z`)+P(`M${x0+20} 56L${x0+24} 40L${x0+140} 34L${x0+160} 56Z`)+P(`M${x0+40} 40L${x0+44} 26L${x0+110} 22L${x0+124} 40Z`)+G(`M${x0+48} 30L${x0+106} 26L${x0+114} 36L${x0+50} 38Z`)+G(`M${x0+30} 46L${x0+136} 40L${x0+140} 50L${x0+32} 52Z`,.18)+H(`M${x0+70} 22L${x0+72} 12`,2,.7)+H(`M${x0+16} 72L${x1-30} 68`,1.2,.35);}
   if(kind==='sail'){s+=P(`M${x0+10} 62L${x0+4} ${yw-6}Q${x0+8} ${yw} ${x0+16} ${yw}L${x1-30} ${yw}Q${x1-8} ${yw-2} ${x1-2} 60L${x0+12} 62Z`)+H('M120 62L120 8',3,.9)+G('M122 12L200 60L122 60Z',.3)+G('M118 16L56 60L118 60Z',.24)+H('M120 8L200 60M120 8L56 60',1.2,.5)+P('M78 54h60v8h-60z');}
-  if(kind==='console'){s+=hull(68,54,62)+P(`M${x0+78} 68L${x0+82} 44L${x0+112} 44L${x0+116} 68Z`)+G(`M${x0+84} 48L${x0+110} 48L${x0+112} 58L${x0+86} 58Z`)+H(`M${x0+80} 44L${x0+82} 34L${x0+114} 34L${x0+114} 44`,2,.7)+P(`M${x0+40} 62h${x0+30}v-4h-${x0+30}z`,.5)+P(`M${x0+2} 60h14v10h-14z`)+H(`M${x0+16} 76L${x1-20} 72`,1.2,.35);}
+  if(kind==='console'){s+=hull(68,54,62)+P(`M${x0+78} 68L${x0+82} 44L${x0+112} 44L${x0+116} 68Z`)+G(`M${x0+84} 48L${x0+110} 48L${x0+112} 58L${x0+86} 58Z`)+H(`M${x0+80} 44L${x0+82} 34L${x0+114} 34L${x0+114} 44`,2,.7)+P(`M${x0+40} 62h${x0+30}v-4h${-(x0+30)}z`,.5)+P(`M${x0+2} 60h14v10h-14z`)+H(`M${x0+16} 76L${x1-20} 72`,1.2,.35);}
   if(kind==='rib'){s+=P(`M${x0+4} 62Q${x0} 72 ${x0+8} ${yw-6}L${x1-30} ${yw-4}Q${x1} ${yw-8} ${x1-4} 62Q${x1-14} 54 ${x1-30} 56L${x0+14} 58Q${x0+4} 58 ${x0+4} 62Z`)+H(`M${x0+10} 64Q${x1-16} 60 ${x1-6} 66`,6,.5)+P(`M${x0+88} 60L${x0+92} 42L${x0+118} 42L${x0+122} 60Z`)+G(`M${x0+94} 46L${x0+116} 46L${x0+118} 56L${x0+96} 56Z`)+P(`M${x0+6} 56h10v10h-10z`);}
   if(kind==='jetski'){s=P('M40 84Q30 84 36 74L60 62Q100 52 150 54L190 60Q206 66 214 80L214 86L60 88Q44 88 40 84Z')+P('M96 58L108 44L146 42L160 56Z')+H('M150 44L172 38M150 44L156 54',2.4,.7)+H('M56 80L200 78',1.4,.4)+P('M104 70h50l6 10h-56z',.85)+G('M108 60h30v6h-30z');}
   if(kind==='airboat'){s=P('M30 80L40 68L180 66L200 80Z')+P('M30 88h176v4h-176z',.7)+H('M50 70L48 50L170 48L172 66',1.4,.45)+P('M150 30h40v44h-40z',.9)+HC(170,52,17,2.4,.75)+H('M170 52L170 35M170 52L185 61M170 52L155 61',2.4,.7)+P('M104 66L108 50L128 50L132 66Z')+P('M108 44h22v6h-22z')+H('M60 66L70 54L100 52',2,.6);}
   if(kind==='kayak'){s=P('M18 74Q60 60 120 60Q180 60 222 74Q180 84 120 84Q60 84 18 74Z')+G('M96 66Q120 62 144 66Q120 76 96 66Z',.3)+H('M60 40L180 92',3,.85)+P('M52 34h14v10h-14z',.9)+P('M176 90h14v10h-14z',.9);}
-  if(kind==='ship'){s+=P(`M${x0} 60L${x0+4} ${yw}L${x1-6} ${yw}L${x1} 56L${x0+8} 60Z`);for(let i=0;i<4;i++)s+=P(`M${x0+16+i*6} ${58-i*10}h${x1-x0-40-i*20}v10h-${x1-x0-40-i*20}z`);for(let k=0;k<3;k++)for(let i=0;i<10;i++)s+=G(`M${x0+24+i*16} ${52-k*10}h8v5h-8z`,.35);s+=P(`M${x0+40} 18h30v10h-30z`)+H(`M${x0+40} 34h${x1-x0-80}`,1,.35);}
-  if(kind==='ferry'){s+=P(`M${x0} 64L${x0+6} ${yw}L${x1-6} ${yw}L${x1} 64Z`)+P(`M${x0+12} 64h${x1-x0-24}v-16h-${x1-x0-24}z`)+P(`M${x0+40} 48h${x1-x0-80}v-14h-${x1-x0-80}z`);for(let i=0;i<9;i++)s+=G(`M${x0+46+i*14} 38h8v6h-8z`,.35);s+=H(`M${x0+16} 58h${x1-x0-32}`,1.4,.4)+P(`M${x0+80} 34h20v-8h-20z`);}
-  if(kind==='taxi'){s+=hull(66,52,60)+P(`M${x0+36} 66L${x0+40} 46L${x0+132} 44L${x0+140} 66Z`)+P(`M${x0+40} 46h${92}v-6h-${92}z`);for(let i=0;i<5;i++)s+=G(`M${x0+46+i*18} 50h12v10h-12z`,.28);}
+  if(kind==='ship'){s+=P(`M${x0} 60L${x0+4} ${yw}L${x1-6} ${yw}L${x1} 56L${x0+8} 60Z`);for(let i=0;i<4;i++)s+=P(`M${x0+16+i*6} ${58-i*10}h${x1-x0-40-i*20}v10h${-(x1-x0-40-i*20)}z`);for(let k=0;k<3;k++)for(let i=0;i<10;i++)s+=G(`M${x0+24+i*16} ${52-k*10}h8v5h-8z`,.35);s+=P(`M${x0+40} 18h30v10h-30z`)+H(`M${x0+40} 34h${x1-x0-80}`,1,.35);}
+  if(kind==='ferry'){s+=P(`M${x0} 64L${x0+6} ${yw}L${x1-6} ${yw}L${x1} 64Z`)+P(`M${x0+12} 64h${x1-x0-24}v-16h${-(x1-x0-24)}z`)+P(`M${x0+40} 48h${x1-x0-80}v-14h${-(x1-x0-80)}z`);for(let i=0;i<9;i++)s+=G(`M${x0+46+i*14} 38h8v6h-8z`,.35);s+=H(`M${x0+16} 58h${x1-x0-32}`,1.4,.4)+P(`M${x0+80} 34h20v-8h-20z`);}
+  if(kind==='taxi'){s+=hull(66,52,60)+P(`M${x0+36} 66L${x0+40} 46L${x0+132} 44L${x0+140} 66Z`)+P(`M${x0+40} 46h${92}v-6h${-(92)}z`);for(let i=0;i<5;i++)s+=G(`M${x0+46+i*18} 50h12v10h-12z`,.28);}
   if(kind==='cat'){s+=P(`M${x0} 78L${x0+6} ${yw}L${x0+50} ${yw}L${x0+56} 78Z`)+P(`M${x1-56} 78L${x1-50} ${yw}L${x1-6} ${yw}L${x1} 78Z`)+P(`M${x0+2} 78L${x0+8} 62L${x1-8} 58L${x1-2} 78Z`)+P(`M${x0+30} 62L${x0+34} 38L${x1-40} 34L${x1-30} 58Z`)+G(`M${x0+40} 42L${x1-46} 38L${x1-40} 52L${x0+42} 54Z`)+P(`M${x0+70} 38h40v-8h-40z`);}
   /* ligne d'eau */
   s+=H(`M6 ${yw+4}Q60 ${yw} 120 ${yw+4}T234 ${yw+4}`,1.6,.35);

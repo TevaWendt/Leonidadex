@@ -26,9 +26,9 @@
   ]
 }
 </script>
-<link rel="stylesheet" href="style.css?v=217e11ba">
-<link rel="stylesheet" href="calculateurs.css?v=217e11ba">
-<link rel="stylesheet" href="calculateurs-brand.css?v=217e11ba">
+<link rel="stylesheet" href="style.css?v=349ee1d6">
+<link rel="stylesheet" href="calculateurs.css?v=349ee1d6">
+<link rel="stylesheet" href="calculateurs-brand.css?v=349ee1d6">
 <meta name="robots" content="index, follow">
 <meta property="og:image" content="https://www.leonidakit.com/img/officiel/vice-city-11-1280.webp">
 <meta name="twitter:card" content="summary_large_image">
@@ -93,6 +93,63 @@
   <span class="fcount-nums" id="fcd"><span class="fcd-box"><b id="fd">—</b><i>j</i></span><span class="fcd-box"><b id="fh">—</b><i>h</i></span><span class="fcd-box"><b id="fm">—</b><i>min</i></span><span class="fcd-box"><b id="fs">—</b><i>s</i></span></span>
 </div></div>
 
+<section class="shell reveal lk-ask" id="que-calculer">
+  <h2 class="sec-h">Que veux-tu calculer ?</h2>
+  <div class="lk-ask-stage rise">
+    <form id="calc-ask" class="lk-ask-form" role="search" autocomplete="off">
+      <label for="calc-ask-input" class="lk-ask-label">Pose ta question, avec tes chiffres</label>
+      <div class="lk-ask-row"><input id="calc-ask-input" type="search" placeholder="Ex. j'ai 200 000 $ et 45 min par jour, quand est-ce que j'atteins 1 million ?" aria-describedby="calc-ask-out"><button type="submit">Trouver l'outil</button></div>
+      <p id="calc-ask-out" class="lk-ask-out" hidden></p>
+    </form>
+    <div class="lk-ask-chips" aria-label="Exemples de questions">
+      <button type="button" data-ask="Combien de temps pour atteindre 1 million avec 1 heure par jour ?">Combien de temps pour 1 million ?</button>
+      <button type="button" data-ask="J'ai 2 heures, combien puis-je gagner ?">J'ai 2 heures, je gagne combien ?</button>
+      <button type="button" data-ask="Quelle activité rapporte le plus par heure ?">Quelle activité rapporte le plus ?</button>
+      <button type="button" data-ask="Puis-je me permettre d'acheter un véhicule à 250000 $ ?">Puis-je acheter ce véhicule ?</button>
+      <button type="button" data-ask="En combien de temps un investissement de 500000 $ est amorti ?">Quand un achat est-il amorti ?</button>
+      <button type="button" data-ask="Comment répartir mon budget entre véhicule, propriété et réserve ?">Répartir mon budget</button>
+      <button type="button" data-ask="Dans quel ordre acheter : véhicule puis propriété, ou l'inverse ?">Dans quel ordre acheter ?</button>
+    </div>
+  </div>
+  <div class="lk-goals rise" aria-label="Objectifs populaires">
+    <span class="lk-goals-k">Objectifs populaires</span>
+    <button type="button" data-goal-preset="100000">100 k $</button><button type="button" data-goal-preset="500000">500 k $</button><button type="button" data-goal-preset="1000000">1 M $</button><button type="button" data-goal-preset="5000000">5 M $</button><button type="button" data-goal-preset="10000000">10 M $</button>
+  </div>
+</section>
+
+<section class="shell reveal" id="outils-calc">
+  <h2 class="sec-h">Six outils, un moteur</h2>
+  <p class="fiche-txt">Chacun répond à une question précise. Tous partagent les mêmes formules et tes mêmes hypothèses : change un chiffre ici, les autres suivent.</p>
+  <div class="lk-tools rise">
+    <a class="lk-tool" href="#atelier" data-open-tab="goal"><span class="lk-tool-n">01</span><b>Mon objectif</b><span>Ton capital, ton temps par jour, ton cap : en combien de jours, avec quel rythme, selon trois scénarios.</span><i>Ouvrir</i></a>
+    <a class="lk-tool" href="#atelier" data-open-tab="activities"><span class="lk-tool-n">02</span><b>Activités et grind</b><span>Compare tes activités en dollars par heure, préparation et attente comprises. Calcul inverse : temps disponible, argent possible.</span><i>Ouvrir</i></a>
+    <a class="lk-tool" href="#atelier" data-open-tab="roi"><span class="lk-tool-n">03</span><b>Rentabilité</b><span>Investissement, revenus, coûts : bénéfice, retour sur investissement, seuil d'amortissement et courbe dans le temps.</span><i>Ouvrir</i></a>
+    <a class="lk-tool" href="#atelier" data-open-tab="purchase"><span class="lk-tool-n">04</span><b>Mes achats</b><span>Un véhicule du catalogue ou un prix libre : part du capital, temps pour le regagner, acheter maintenant ou épargner.</span><i>Ouvrir</i></a>
+    <a class="lk-tool" href="#atelier" data-open-tab="budget"><span class="lk-tool-n">05</span><b>Mon budget</b><span>Répartis une somme entre véhicules, propriétés, équipement et réserve, et vois ce qu'il reste pour ton objectif.</span><i>Ouvrir</i></a>
+    <a class="lk-tool" href="#atelier" data-open-tab="order"><span class="lk-tool-n">06</span><b>Ordre d'achat</b><span>Deux séquences d'achats comparées, avec l'effet de chaque acquisition sur les revenus suivants.</span><i>Ouvrir</i></a>
+  </div>
+</section>
+
+<section class="shell reveal" id="activites-gains">
+  <h2 class="sec-h">Ce que rapporte chaque activité</h2>
+  <p class="fiche-txt">Braquer une banque, une supérette, livrer, courir, pêcher : combien, en combien de temps. Rockstar n'a encore publié aucun chiffre ; le tableau est prêt et se remplira ligne par ligne avec des relevés faits dans le jeu, jamais avec des valeurs de GTA V.</p>
+  <div class="lk-act-wrap rise"><table class="spec lk-act">
+    <thead><tr><th scope="col">Activité</th><th scope="col">Gain</th><th scope="col">Durée</th><th scope="col">Mise de départ</th><th scope="col">Statut</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Braquage de banque</th><td>À relever</td><td>À relever</td><td>À relever</td><td><span class="chip">Non publié</span></td></tr>
+      <tr><th scope="row">Braquage de supérette ou de station</th><td>À relever</td><td>À relever</td><td>À relever</td><td><span class="chip">Non publié</span></td></tr>
+      <tr><th scope="row">Missions de l'histoire</th><td>À relever</td><td>À relever</td><td>Aucune</td><td><span class="chip">Non publié</span></td></tr>
+      <tr><th scope="row">Recouvrements pour Brian Heder</th><td>À relever</td><td>À relever</td><td>Aucune</td><td><span class="chip live">Vu dans le trailer 2</span></td></tr>
+      <tr><th scope="row">Collection de voitures classiques (Wyman)</th><td>À relever</td><td>À relever</td><td>Restauration</td><td><span class="chip live">Confirmé, édition Ultimate</span></td></tr>
+      <tr><th scope="row">Pêche</th><td>À relever</td><td>À relever</td><td>Matériel</td><td><span class="chip live">Vu dans les captures</span></td></tr>
+      <tr><th scope="row">Courses et cascades</th><td>À relever</td><td>À relever</td><td>Véhicule</td><td><span class="chip">Non publié</span></td></tr>
+      <tr><th scope="row">Livraisons et contrebande par la mer</th><td>À relever</td><td>À relever</td><td>Bateau</td><td><span class="chip live">Chantier de Brian, trailer 2</span></td></tr>
+      <tr><th scope="row">Vol et revente de véhicules</th><td>À relever</td><td>À relever</td><td>Aucune</td><td><span class="chip">Non publié</span></td></tr>
+      <tr><th scope="row">Agressions et vols à la tire</th><td>À relever</td><td>À relever</td><td>Aucune</td><td><span class="chip">Non publié</span></td></tr>
+    </tbody></table></div>
+  <p class="note">Chaque ligne aura son gain moyen, sa durée, sa mise de départ et son dollar par heure, avec la source du relevé. L'outil Activités et grind les lira automatiquement dès qu'elles existeront.</p>
+</section>
+
 <div class="shell"><div class="note-box rise"><b>Simulateur en mode manuel.</b> Les montants préremplis sont des exemples fictifs, pas des données officielles GTA VI. Change-les pour simuler ta propre progression ; tout se calcule dans ton navigateur.</div></div>
 
 <section class="calc-shell calc-workspace" id="atelier" aria-labelledby="atelier-title">
@@ -111,6 +168,19 @@
  <details class="calc-saved"><summary>Mon carnet <span>Favoris & calculs récents, sur cet appareil</span></summary><div class="calc-saved-body"><div id="saved-list"></div><button class="calc-button" id="calc-export">Exporter ma configuration</button><label class="calc-button calc-import">Importer une configuration<input id="calc-import" type="file" accept="application/json,.json"></label><button class="calc-button" id="calc-reset">Réinitialiser les paramètres</button></div></details>
 </section>
 <section class="calc-editorial calc-shell"><div class="calc-editorial-image"><img src="img/officiel/vice-city-06-480.webp" width="480" height="270" alt="La vie nocturne à Vice City" loading="lazy" decoding="async"><span>LEONIDA / AFTER HOURS</span></div><div><p class="calc-kicker">02 / LES CHIFFRES, SANS LE FLOU</p><h2>Ton argent mérite<br>un vrai plan.</h2><p>Compare tes hypothèses, garde une réserve et vois le temps que chaque décision te coûte. Le résultat dépend de tes chiffres : une simulation n’est pas une promesse de gain.</p><a href="#methodes">Comprendre les calculs <span aria-hidden="true">↗</span></a></div></section>
+<section class="shell reveal" id="sources-calc">
+  <h2 class="sec-h">D'où viennent les chiffres</h2>
+  <details class="lk-fold rise"><summary>Statut de chaque donnée utilisée par les calculateurs</summary><div class="lk-fold-body">
+    <table class="spec lk-src"><tbody>
+      <tr><th scope="row">Scénarios A, B et C</th><td><span class="chip">Exemples fictifs</span> Récompenses, coûts, durées et attentes choisis pour illustrer le moteur. À remplacer par tes propres valeurs.</td></tr>
+      <tr><th scope="row">Tes saisies</th><td><span class="chip live">Hypothèse utilisateur</span> Capital, objectif, temps de jeu, prix, revenus : tout ce que tu entres est calculé tel quel, jamais présenté comme officiel.</td></tr>
+      <tr><th scope="row">Catalogue véhicules</th><td><span class="chip">À compléter</span> 302 fiches reliées à la base du site, sans prix pour l'instant. Dès qu'un prix officiel existera dans la fiche, l'outil « Mes achats » l'utilisera.</td></tr>
+      <tr><th scope="row">Activités GTA VI</th><td><span class="chip">Non publié</span> Rockstar n'a communiqué ni revenu, ni durée, ni coût d'activité. La liste officielle est vide et le restera tant qu'aucune source vérifiable n'existe.</td></tr>
+      <tr><th scope="row">Formules</th><td><span class="chip live">Documentées</span> Moteur unique (calculateurs-engine.js), formules décrites dans outils/CALCULATEURS-MOTEUR.md, 43 tests automatiques.</td></tr>
+    </tbody></table>
+  </div></details>
+</section>
+
 <section class="shell reveal lk-explore">
   <h2 class="sec-h">En attendant les formules</h2>
   <div class="lk-links rise"><a class="lk-link" href="vehicules.html"><img src="/img/officiel/one-eyed-willie-s-mod-shop-01-480.webp" width="480" height="270" alt="" loading="lazy" decoding="async"><span><b>Les 302 véhicules</b><i>Fiches, photos officielles et schémas</i></span></a><a class="lk-link" href="carte.html"><img src="/img/officiel/leonida-keys-01-480.webp" width="480" height="270" alt="" loading="lazy" decoding="async"><span><b>La carte</b><i>2 547 lieux repérés, à cocher</i></span></a><a class="lk-link" href="progression.html"><img src="/img/officiel/mount-kalaga-national-park-06-480.webp" width="480" height="270" alt="" loading="lazy" decoding="async"><span><b>Ma progression</b><i>Garage, arsenal, repérages et collection</i></span></a></div>
@@ -185,17 +255,18 @@
   </div>
 </footer>
 
-<script src="search-index.js?v=217e11ba"></script>
-<script src="assets-manifest.js?v=217e11ba"></script>
-<script src="common.js?v=217e11ba"></script>
-<script src="app.js?v=217e11ba"></script>
-<script src="vehicules-data.js?v=217e11ba"></script>
-<script src="armes-data.js?v=217e11ba"></script>
-<script src="calculateurs-catalogue.js?v=217e11ba"></script>
-<script src="calculateurs-activites.js?v=217e11ba"></script>
-<script src="calculateurs-data.js?v=217e11ba"></script>
-<script src="calculateurs-engine.js?v=217e11ba"></script>
-<script src="calculateurs-tools.js?v=217e11ba"></script>
-<script src="calculateurs.js?v=217e11ba"></script>
+<script src="search-index.js?v=349ee1d6"></script>
+<script src="assets-manifest.js?v=349ee1d6"></script>
+<script src="common.js?v=349ee1d6"></script>
+<script src="app.js?v=349ee1d6"></script>
+<script src="vehicules-data.js?v=349ee1d6"></script>
+<script src="armes-data.js?v=349ee1d6"></script>
+<script src="calculateurs-catalogue.js?v=349ee1d6"></script>
+<script src="calculateurs-activites.js?v=349ee1d6"></script>
+<script src="calculateurs-data.js?v=349ee1d6"></script>
+<script src="calculateurs-engine.js?v=349ee1d6"></script>
+<script src="calculateurs-tools.js?v=349ee1d6"></script>
+<script src="calculateurs.js?v=349ee1d6"></script>
+<script src="calculateurs-hub.js?v=349ee1d6"></script>
 </body>
 </html>

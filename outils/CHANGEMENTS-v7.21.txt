@@ -1,0 +1,35 @@
+LEONIDAKIT v7.21 : SUIVI VISIBLE, LIENS DE CARTE, RAILS UNIQUES, TOP 10, CALCULATEUR (21 septembre 2026)
+=========================================================================================================
+Base : v7.20. Aucun fichier supprimé. Livrée en archive « modifs » (cumule v7.12 à v7.21).
+
+1. Ce que je possède, visible : depuis Progression, « Ouvrir le suivi » ouvre le hub
+   Véhicules ou Armes filtré sur ce que tu as coché (#own=1). Sur les hubs, une puce
+   « Mon garage » / « Mon arsenal » avec le compte permet de basculer entre tout et ce que
+   tu possèdes ; chaque carte garde sa case cochée ou non.
+2. « Voir les armureries » et « Voir les concessions » ouvrent maintenant la carte centrée
+   sur ces lieux, avec un panneau qui les liste (nouveau lien #pins=id,id&t=Titre dans
+   carte.js, réutilisable pour n'importe quel groupe de lieux).
+3. Rails : un seul rail par bord, plus fin (6 px), dégradé corail, ambre et violet qui
+   défile lentement avec un liseré clair et un halo ; les anciens rails de Carte, Armes et
+   Véhicules sont retirés, plus de doublon.
+4. Top 10 : un champ de recherche filtre la liste en direct ; Entrée ajoute le premier
+   résultat (« cheetah » puis Entrée ajoute la Cheetah '95).
+5. Fiches du monde : paragraphe « Ce qu'il faut retenir » juste avant « Continuer la
+   visite », construit à partir des faits de la fiche.
+6. Calculateur : réglette d'objectif sous le champ « Mon objectif » (10 000 à 10 000 000 $,
+   échelle logarithmique), liée dans les deux sens : la bouger recalcule tout de suite ;
+   champs et résultats plus gros, textes secondaires réduits ; tableau « Ce que rapporte
+   chaque activité » (banque, supérette, missions, recouvrements pour Brian, collection de
+   Wyman, pêche, courses, contrebande, vol de véhicules, agressions) avec statut honnête
+   par ligne, prêt à recevoir les relevés faits dans le jeu.
+7. Progression : six cartes sur deux rangées de trois (plus de carte orpheline), deux
+   cartes de plus (carnet de collection, calculs enregistrés, lues dans le navigateur),
+   texte d'introduction et mini-carte de Leonida à la place du carré noir.
+8. Collectibles : la carte « Prendre ses repères » est en photo (le noir d'origine était
+   rétabli par la feuille de la section), les trois outils sont à même hauteur.
+9. Correctif : cinq schémas de véhicules à barres de toit ou gyrophare produisaient une
+   largeur négative dans le SVG (erreurs console sur le hub) ; corrigé, console propre.
+
+Vérifications : verifier.js 28 341 références sans erreur, 153 tests réussis, parcours
+Chromium (garage filtré, carte des armureries, recherche du top 10, réglette, progression,
+absence d'erreur console sur quatre pages).

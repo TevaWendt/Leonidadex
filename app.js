@@ -220,11 +220,20 @@ const el = id => document.getElementById(id);
   const input   = document.getElementById('vq');
   const clearBt = document.getElementById('vclear');
   const chips   = Array.from(document.querySelectorAll('.chip-filter'));
+  /* puce « Mon garage / Mon arsenal » : n'affiche que ce qu'on a coché, lisible aussi via #own=1 depuis la page Progression */
+  (function(){ const bar = chips[0] && chips[0].parentNode; const type = document.body.dataset.own; if(!bar || !type) return;
+    const b = document.createElement('button'); b.type = 'button'; b.id = 'chip-own'; b.className = 'chip-filter chip-own'; b.dataset.own = '1';
+    b.innerHTML = (type === 'armes' ? 'Mon arsenal' : 'Mon garage') + ' <span class="chip-n" id="chip-own-n"></span>';
+    b.addEventListener('click', function(){ activeOwn = !activeOwn; b.classList.toggle('is-on', activeOwn); ecrireEtat(); apply(); });
+    bar.appendChild(b);
+    const maj = function(){ try{ const o = window.LK.read('lk_own_' + type, {}, window.LK.own); const n = Object.keys(o).filter(k => o[k]).length; const el = document.getElementById('chip-own-n'); if(el) el.textContent = n; }catch(e){} };
+    maj(); window.addEventListener('storage', maj); document.addEventListener('click', function(){ setTimeout(maj, 0); }, true);
+  })();
   const countEl = document.getElementById('vcount');
   const emptyEl = document.getElementById('vempty');
   const bar     = document.getElementById('vbar');
 
-  let activeCat = 'all', query = '', activeSt = null, activeSlot = null, activeEd = null, tri = '';
+  let activeCat = 'all', query = '', activeSt = null, activeSlot = null, activeEd = null, tri = ''; let activeOwn=false;
   /* la grille s'affiche par lots : moins de travail pour le téléphone, toutes les cartes restent dans la page */
   const LOT = 48; let limite = LOT, derniereSig = null;
   let plusBt = document.getElementById('vplus');
@@ -250,7 +259,8 @@ const el = id => document.getElementById(id);
   /* l'état des filtres vit dans l'adresse : une vue filtrée se partage par lien */
   function ecrireEtat(){
     const p = new URLSearchParams(location.hash.includes('=') ? location.hash.slice(1) : '');
-    ['cat','st','slot','ed','q','tri'].forEach(k=>p.delete(k));
+    ['cat','st','slot','ed','q','tri','own'].forEach(k=>p.delete(k));
+    if(activeOwn) p.set('own', '1');
     if(activeCat !== 'all') p.set('cat', activeCat);
     if(activeSt) p.set('st', activeSt);
     if(activeSlot) p.set('slot', activeSlot);
@@ -261,7 +271,7 @@ const el = id => document.getElementById(id);
     if(('#' + p.toString()) !== location.hash && !(p.toString() === '' && !location.hash)) history.replaceState(null, '', h);
   }
   function lireEtat(){
-    activeCat='all'; activeSt=null; activeSlot=null; activeEd=null; query=''; tri=''; input.value=''; if(triSel)triSel.value='';
+    activeCat='all'; activeSt=null; activeSlot=null; activeEd=null; query=''; tri=''; input.value=''; if(triSel)triSel.value=''; activeOwn=false;
     if(!location.hash) return;
     if(!location.hash.includes('=')){ const legacy=chips.find(c=>c.dataset.filter===location.hash.slice(1)); if(legacy)activeCat=legacy.dataset.filter; }
     const p = new URLSearchParams(location.hash.slice(1));
@@ -271,6 +281,7 @@ const el = id => document.getElementById(id);
     const ed = p.get('ed'); if(ed && chips.some(c=>c.dataset.edf===ed)) activeEd = ed;
     const q = p.get('q'); if(q){ query = q; input.value = q; }
     const t = p.get('tri'); if(t && triSel && Array.from(triSel.options).some(o => o.value === t)){ tri = t; triSel.value = t; }
+    activeOwn = p.get('own') === '1'; const ob = document.getElementById('chip-own'); if(ob) ob.classList.toggle('is-on', activeOwn);
     chips.forEach(c => { if(c.dataset.filter) c.classList.toggle('is-on', c.dataset.filter === activeCat); });
     document.querySelectorAll('.chip-st').forEach(c => c.classList.toggle('is-on', c.dataset.stf === activeSt));
     document.querySelectorAll('.chip-slot').forEach(c => c.classList.toggle('is-on', c.dataset.slotf === activeSlot));
@@ -281,7 +292,8 @@ const el = id => document.getElementById(id);
     const q = norm(query.trim());
     let shown = 0;
     trier();
-    const sig = [activeCat, activeSt, activeSlot, activeEd, q, tri].join('|');
+    const ownSet = activeOwn ? (function(){ try{ const t = document.body.dataset.own; const o = t ? window.LK.read('lk_own_' + t, {}, window.LK.own) : {}; return new Set(Object.keys(o).filter(k => o[k])); }catch(e){ return new Set(); } })() : null;
+    const sig = [activeCat, activeSt, activeSlot, activeEd, q, tri, activeOwn ? 'own' : ''].join('|');
     if(sig !== derniereSig){ derniereSig = sig; limite = LOT; }
     let rang = 0;
     cards.forEach(function(card){
@@ -290,7 +302,8 @@ const el = id => document.getElementById(id);
       const okSlot = !activeSlot || card.dataset.slot === activeSlot;
       const okEd   = !activeEd   || card.dataset.ed   === activeEd;
       const okTxt = !q || norm(card.dataset.search || '').includes(q);
-      const show = okCat && okTxt && okSt && okSlot && okEd;
+      const okOwn = !ownSet || ownSet.has(card.dataset.id);
+      const show = okCat && okTxt && okSt && okSlot && okEd && okOwn;
       if(show) shown++;
       card.hidden = !show || (rang >= limite);
       if(show){ rang++; if(!card.hidden) card.classList.add('in'); }
