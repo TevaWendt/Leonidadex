@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Leonidakit — Carte et outils pour GTA VI</title>
-<meta name="description" content="Carte interactive, suivi de progression et fiches pour GTA VI. Une réponse, tout de suite.">
-<meta property="og:title" content="Leonidakit — Carte et outils pour GTA VI">
-<meta property="og:description" content="Carte interactive, suivi de progression et fiches pour GTA VI.">
+<title>Leonidakit — Calculateur GTA VI, carte et outils</title>
+<meta name="description" content="Combien de temps pour ton premier million ? Peux-tu t’offrir cette voiture ? Le calculateur GTA VI répond avec tes chiffres, gratuit et sans compte. Carte, véhicules, armes et lieux de Leonida.">
+<meta property="og:title" content="Leonidakit — Calculateur GTA VI, carte et outils">
+<meta property="og:description" content="Le calculateur GTA VI qui répond avec tes chiffres, gratuit et sans compte. Carte, véhicules, armes et lieux de Leonida.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="fr_FR">
 <meta name="theme-color" content="#FDFBF7">
@@ -20,13 +20,14 @@
   "name":"Leonidakit",
   "url":"https://www.leonidakit.com/",
   "inLanguage":"fr-FR",
-  "description":"Carte interactive, suivi de progression et fiches pour GTA VI."
+  "description":"Calculateur de budget, objectifs et rentabilité sur tes hypothèses, carte interactive et catalogues GTA VI."
 }
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=349ee1d6">
+<link rel="stylesheet" href="style.css?v=959ae019">
+<link rel="stylesheet" href="calculator-entry.css?v=959ae019">
 <meta property="og:image" content="https://www.leonidakit.com/img/social-card.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta property="og:url" content="https://www.leonidakit.com/">
@@ -41,6 +42,7 @@
     <a href="index.html" class="brand">Leonida<span>kit</span></a>
     <nav id="nav" aria-label="Navigation principale">
       <ul>
+        <li><a href="calculateurs.html">Calculateur</a></li>
         <li><a href="carte.html">Carte</a></li>
         <li><a href="vehicules.html">Véhicules</a></li>
         <li><a href="armes.html">Armes</a></li>
@@ -49,7 +51,6 @@
         <li><a href="demeures.html">Demeures</a></li>
         <li><a href="planques.html">Planques</a></li>
         <li><a href="entreprises.html">Entreprises</a></li>
-        <li><a href="calculateurs.html">Calculateurs</a></li>
         <li><a href="progression.html">Progression</a></li>
         <li><a href="collectibles.html">Collectibles</a></li>
       </ul>
@@ -62,53 +63,51 @@
 
 <main id="main">
 
-<section class="hero shell">
-  <svg class="hero-deco" viewBox="0 0 340 300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <linearGradient id="orb" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#F5A524"/>
-        <stop offset="100%" stop-color="#E8452C"/>
-      </linearGradient>
-      <mask id="slats">
-        <rect width="340" height="300" fill="#fff"/>
-        <g fill="#000">
-          <rect x="0" y="150" width="340" height="4"/>
-          <rect x="0" y="164" width="340" height="6"/>
-          <rect x="0" y="182" width="340" height="8"/>
-          <rect x="0" y="204" width="340" height="10"/>
-          <rect x="0" y="230" width="340" height="13"/>
-        </g>
-      </mask>
-    </defs>
-    <circle cx="190" cy="140" r="104" fill="url(#orb)" mask="url(#slats)"/>
-    <g class="rings" stroke="#1A1A1E" fill="none" opacity=".18">
-      <circle cx="190" cy="140" r="126" stroke-width="1.5" stroke-dasharray="3 9"/>
-    </g>
-    <g stroke="#1A1A1E" opacity=".14" stroke-width="1.5">
-      <line x1="40" y1="262" x2="300" y2="262"/>
-      <line x1="70" y1="278" x2="270" y2="278"/>
-    </g>
-  </svg>
-  <h1 id="h1">
-    <span class="w">Une</span> <span class="w">question</span> <span class="w">sur</span> <span class="w hl">GTA&nbsp;VI,</span><br>
-    <span class="w">une</span> <span class="w">réponse.</span>
-  </h1>
-  <p class="lede">Carte interactive, fiches et suivi de progression. Fait pour être ouvert pendant que tu joues, pas pour être lu au calme.</p>
-
+<section class="lk-home-hero" aria-labelledby="h1">
+  <picture class="lk-home-scene" aria-hidden="true">
+    <source media="(max-width: 650px)" srcset="img/officiel/vice-city-08-480.webp">
+    <img src="img/officiel/vice-city-08-1280.webp" width="1280" height="720" alt="" fetchpriority="high" decoding="async">
+  </picture>
+  <div class="shell lk-home-grid">
+    <div class="lk-home-copy">
+      <p class="lk-entry-eyebrow">LEONIDAKIT / LE CALCULATEUR</p>
+      <h1 id="h1">Ton objectif.<br><em>Ton plan de jeu.</em></h1>
+      <p class="lk-home-promise">Dis combien tu as et combien tu veux. On te dit combien de temps il te faut.</p>
+      <p class="lk-home-support">Gratuit et sans compte. Tu écris tes chiffres, le calcul se fait tout seul.</p>
+      <a class="lk-home-discover" href="calculateurs.html#atelier">Voir les 7 calculs possibles <span aria-hidden="true">↗</span></a>
+    </div>
+    <form class="lk-mini" id="lk-mini-form" action="calculateurs.html#atelier" method="get" aria-labelledby="lk-mini-title">
+      <input type="hidden" name="tool" value="goal">
+      <input type="hidden" name="from" value="home">
+      <div class="lk-mini-top"><span class="lk-entry-eyebrow">À TOI DE JOUER</span><span class="lk-mini-label">Exemple à changer</span></div>
+      <h2 id="lk-mini-title">Combien de temps <br>pour mon objectif ?</h2>
+      <div class="lk-mini-fields">
+        <label for="lk-mini-capital"><span class="lk-mini-t">J’ai déjà <span>($)</span></span><input id="lk-mini-capital" name="capital" value="200000" type="text" inputmode="decimal" maxlength="24" required autocomplete="off" aria-describedby="lk-mini-help"><small class="lk-mini-echo" id="lk-mini-echo-capital" aria-hidden="true"></small></label>
+        <label for="lk-mini-target"><span class="lk-mini-t">Je veux avoir <span>($)</span></span><input id="lk-mini-target" name="target" value="1000000" type="text" inputmode="decimal" maxlength="24" required autocomplete="off" aria-describedby="lk-mini-help"><small class="lk-mini-echo" id="lk-mini-echo-target" aria-hidden="true"></small></label>
+        <label class="lk-mini-wide" for="lk-mini-hourly"><span class="lk-mini-t">Je gagne à peu près <span>($ par heure de jeu)</span></span><input id="lk-mini-hourly" name="hourly" value="100000" type="text" inputmode="decimal" maxlength="24" required autocomplete="off" aria-describedby="lk-mini-help"><small class="lk-mini-echo" id="lk-mini-echo-hourly" aria-hidden="true"></small></label>
+      </div>
+      <div class="lk-mini-answer" id="lk-mini-answer" role="status" aria-live="polite" aria-atomic="true"><span>Ta réponse s’affiche ici.</span></div>
+      <p class="lk-mini-error" id="lk-mini-error" role="alert" hidden></p>
+      <button class="lk-entry-button" type="submit">Calculer mon objectif <span aria-hidden="true">↗</span></button>
+      <p class="lk-mini-help" id="lk-mini-help">Les nombres sont des exemples : mets les tiens. Les vrais prix du jeu ne sont pas encore connus.</p>
+      <noscript><p class="lk-mini-help">Active JavaScript pour voir la réponse ici, ou ouvre le calculateur complet.</p></noscript>
+    </form>
+  </div>
+</section>
+<section class="shell lk-intentions" aria-label="Choisir mon calcul">
+  <a href="calculateurs.html?tool=goal&amp;target=1000000&amp;from=home#atelier"><span class="lk-intention-icon" aria-hidden="true">01</span><span><strong>Mon premier million</strong><small>Combien de temps il me faut</small></span><b aria-hidden="true">↗</b></a>
+  <a href="calculateurs.html?tool=purchase&amp;from=home#atelier"><span class="lk-intention-icon" aria-hidden="true">02</span><span><strong>Je veux acheter quelque chose</strong><small>Est-ce que j’ai assez ?</small></span><b aria-hidden="true">↗</b></a>
+  <a href="calculateurs.html?tool=roi&amp;from=home#atelier"><span class="lk-intention-icon" aria-hidden="true">03</span><span><strong>Ça vaut le coup ?</strong><small>Quand mon achat est remboursé</small></span><b aria-hidden="true">↗</b></a>
+  <a href="calculateurs.html?tool=session&amp;minutes=30&amp;from=home#atelier"><span class="lk-intention-icon" aria-hidden="true">04</span><span><strong>J’ai 30 minutes</strong><small>Quoi faire ce soir</small></span><b aria-hidden="true">↗</b></a>
+</section>
+<section class="shell lk-home-search" aria-labelledby="lk-home-search-title">
+  <div><p class="lk-entry-eyebrow">TOUT LE RESTE DU SITE</p><h2 id="lk-home-search-title">Un véhicule, une arme, un lieu ?</h2></div>
   <div class="searchwrap">
     <div class="searchbar">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
-        <circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/>
-      </svg>
-      <input type="search" id="q" placeholder="Cherche un véhicule, une arme, un lieu" aria-label="Rechercher" autocomplete="off">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
+      <input type="search" id="q" placeholder="Chercher un véhicule, une arme, un lieu" aria-label="Rechercher dans les catalogues et la carte" autocomplete="off">
     </div>
     <div class="suggest" id="suggest" role="listbox" aria-label="Suggestions"></div>
-    <div class="shortcuts">
-      <a href="carte.html">Carte de Leonida</a>
-      <a href="carte.html">Vice City</a>
-      <a href="vehicules.html">Véhicules</a>
-      <a href="collectibles.html">Collectibles</a>
-    </div>
   </div>
 </section>
 
@@ -118,7 +117,7 @@
 
 <div class="status">
   <div class="shell status-in">
-    <p><strong>La carte et les catalogues sont accessibles. Les autres outils se complètent avec le jeu.</strong> GTA VI sort le 19 novembre 2026. Tout ce qui dépend du contenu du jeu se remplit à partir de ce jour-là.</p>
+    <p><strong>Le calculateur fonctionne déjà avec tes propres hypothèses. La carte et les catalogues sont accessibles.</strong> GTA VI sort le 19 novembre 2026. Tout ce qui dépend du contenu du jeu se remplit à partir de ce jour-là.</p>
     <div class="clock">
       <div class="cell"><div class="roll" id="rd"><span>69</span></div><div class="u">jours</div></div>
       <div class="cell"><div class="roll" id="rh"><span>09</span></div><div class="u">heures</div></div>
@@ -140,19 +139,19 @@
 <section class="tools-sec shell" id="outils">
   <div class="sec-head reveal">
     <h2>Les outils</h2>
-    <p>Quatre choses, faites correctement.</p>
+    <p>Le calculateur en premier. Le monde de Leonida pour aller plus loin.</p>
   </div>
   <a class="calc-feature calc-v2 reveal" href="calculateurs.html" id="calc-feature">
     <div class="calc-copy">
-      <span class="chip">Le 19 novembre, dès l'ouverture des serveurs</span>
-      <h3>Calculateurs</h3>
-      <p class="calc-lead">Combien ça rapporte, combien ça coûte, combien de temps il faut. Trois réponses chiffrées dès le premier soir, avec les vraies formules du jeu, pas des estimations.</p>
-      <span class="calc-cta">Découvrir les calculateurs <i aria-hidden="true">&rsaquo;</i></span>
+      <span class="chip">Disponible maintenant · gratuit, sans compte</span>
+      <h3>Un objectif. Plusieurs façons d’y arriver.</h3>
+      <p class="calc-lead">Combien de temps pour ton premier million ? Peux-tu t’offrir cette voiture ? Écris tes chiffres, la réponse arrive tout de suite. Les vrais prix du jeu seront ajoutés dès qu’ils seront connus.</p>
+      <span class="calc-cta">Ouvrir le calculateur <i aria-hidden="true">&rsaquo;</i></span>
     </div>
     <ul class="calc-tiles" aria-hidden="true">
-      <li><b>$</b><strong>Gain d'un coup</strong><span>équipe et frais déduits</span></li>
-      <li><b>&#9201;</b><strong>Temps pour un véhicule</strong><span>selon ce que tu joues</span></li>
-      <li><b>%</b><strong>Rentabilité à l'heure</strong><span>l'activité qui paie le plus</span></li>
+      <li><b>$</b><strong>Mon objectif</strong><span>combien de temps il me faut</span></li>
+      <li><b>&#9201;</b><strong>Mon temps de jeu</strong><span>quoi faire en 30 minutes</span></li>
+      <li><b>%</b><strong>Ça vaut le coup ?</strong><span>quand mon achat est remboursé</span></li>
     </ul>
   </a>
   <div class="tools tools--three">
@@ -234,7 +233,7 @@
 <details><summary>Combien de personnages jouables ?</summary><div class="ans">Deux : Jason Duval et Lucia Caminos. C'est la première fois qu'une protagoniste est jouable dans un GTA principal. Les autres personnages présentés par Rockstar (Cal, Boobie, Dre'Quan, Real Dimez, Raul, Brian) gravitent autour d'eux.</div></details>
 <details><summary>Combien coûte GTA VI ?</summary><div class="ans">Rockstar n'a pas communiqué de prix à ce jour. Nous n'affichons aucun chiffre tant qu'il n'est pas officiel ; la fiche des éditions sera mise à jour dès l'annonce.</div></details>
 <details><summary>D'où viennent les informations du site ?</summary><div class="ans">Des supports publiés par Rockstar : les deux trailers, l'Extended Look, la galerie de captures, les pages des personnages et des régions, et les visuels des éditions. Chaque fiche indique son niveau de certitude. Rien ne vient des fuites.</div></details>
-<details><summary>Que se passe-t-il sur le site le jour de la sortie ?</summary><div class="ans">Les calculateurs, les statistiques des fiches, les emplacements de collectibles et le suivi de progression se remplissent à partir du 19 novembre 2026, au fur et à mesure des vérifications en jeu. La carte, les fiches et le constructeur d'équipement sont déjà utilisables.</div></details>
+<details><summary>Que se passe-t-il sur le site le jour de la sortie ?</summary><div class="ans">Le calculateur est utilisable dès maintenant avec des valeurs personnelles. Les prix, récompenses et durées du jeu seront ajoutés lorsqu’ils seront documentés, avec leurs sources. La carte, les fiches et le suivi local restent accessibles.</div></details>
 </div>
   </div>
 </section>
@@ -320,7 +319,7 @@
         </div>
         <div>
           <h2>Outils</h2>
-          <nav><a href="progression.html">Progression</a><a href="calculateurs.html">Calculateurs</a></nav>
+          <nav><a href="progression.html">Progression</a><a href="calculateurs.html">Calculateur</a></nav>
         </div>
         <div>
           <h2>Le site</h2>
@@ -332,9 +331,11 @@
   </div>
 </footer>
 
-<script src="search-index.js?v=349ee1d6"></script>
-<script src="assets-manifest.js?v=349ee1d6"></script>
-<script src="common.js?v=349ee1d6"></script>
-<script src="app.js?v=349ee1d6"></script>
+<script src="search-index.js?v=959ae019"></script>
+<script src="assets-manifest.js?v=959ae019"></script>
+<script src="common.js?v=959ae019"></script>
+<script src="app.js?v=959ae019"></script>
+<script src="calculateurs-engine.js?v=959ae019"></script>
+<script src="calculator-entry.js?v=959ae019"></script>
 </body>
 </html>

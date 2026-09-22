@@ -21,6 +21,13 @@
     const cols=ids.filter(Boolean).map(id=>byId.get(id));
     if(cols.length){const header=table.createTHead().insertRow();let c=document.createElement('th');c.scope='col';c.textContent='Critère';header.appendChild(c);cols.forEach(x=>{const th=document.createElement('th');th.scope='col';const a=document.createElement('a');a.href=type+'/'+x.id+'.html';a.textContent=name(x);th.appendChild(a);header.appendChild(th);});const body=table.createTBody();fields.forEach(([label,get])=>{const row=body.insertRow(),th=document.createElement('th');th.scope='row';th.textContent=label;row.appendChild(th);const vals=cols.map(x=>get(x)||'Non indiqué');const diff=new Set(vals).size>1;vals.forEach(v=>{const td=row.insertCell();td.textContent=v;if(diff)td.className='diff';});});}
     else table.createTBody().insertRow().insertCell().textContent='Choisis au moins une fiche ci-dessus.';
+    const calculator = document.getElementById('cmp-calculator');
+    const calculatorLink = document.getElementById('cmp-calculator-link');
+    if (calculator && calculatorLink) {
+      calculator.hidden = cols.length === 0;
+      const calculatorQuery = new URLSearchParams({ tool: 'purchase', type, ids: ids.filter(Boolean).join(','), from: 'comparateur' });
+      calculatorLink.href = 'calculateurs.html?' + calculatorQuery.toString() + '#atelier';
+    }
     const query=new URLSearchParams({type});if(ids.some(Boolean))query.set('ids',ids.filter(Boolean).join(','));history.replaceState(null,'','comparateur.html?'+query.toString());
   }
   document.getElementById('cmp-share').addEventListener('click',function(){window.LK.copy(location.href,this,'Lien copié');});render();

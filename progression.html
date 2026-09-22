@@ -26,7 +26,8 @@
   ]
 }
 </script>
-<link rel="stylesheet" href="style.css?v=349ee1d6">
+<link rel="stylesheet" href="style.css?v=959ae019">
+<link rel="stylesheet" href="calculator-entry.css?v=959ae019">
 <meta property="og:image" content="https://www.leonidakit.com/img/social-card.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta property="og:url" content="https://www.leonidakit.com/progression.html">
@@ -41,6 +42,7 @@
     <a href="index.html" class="brand">Leonida<span>kit</span></a>
     <nav id="nav" aria-label="Navigation principale">
       <ul>
+        <li><a href="calculateurs.html">Calculateur</a></li>
         <li><a href="carte.html">Carte</a></li>
         <li><a href="vehicules.html">Véhicules</a></li>
         <li><a href="armes.html">Armes</a></li>
@@ -49,8 +51,7 @@
         <li><a href="demeures.html">Demeures</a></li>
         <li><a href="planques.html">Planques</a></li>
         <li><a href="entreprises.html">Entreprises</a></li>
-        <li><a href="calculateurs.html">Calculateurs</a></li>
-        <li><a href="progression.html" class="here">Progression</a></li>
+        <li><a href="progression.html" class="here" aria-current="page">Progression</a></li>
         <li><a href="collectibles.html">Collectibles</a></li>
       </ul>
     </nav>
@@ -90,10 +91,16 @@
 <article class="note-box" id="progress-armes"><h3>Armes possédées</h3><strong>0</strong><progress value="0" max="1" aria-label="Armes possédées"></progress><a href="armes.html#own=1">Ouvrir le suivi</a></article>
 <article class="note-box" id="progress-collectibles"><h3>Collectibles trouvés</h3><strong>Collection à documenter</strong><progress value="0" max="1" aria-label="Collectibles trouvés" hidden></progress><a href="collectibles.html#catalogue">Ouvrir la collection</a></article>
 <article class="note-box" id="progress-carnet"><h3>Carnet de collection</h3><strong id="progress-carnet-n">0</strong><progress value="0" max="1" aria-label="Objets cochés dans le carnet" hidden></progress><a href="collectibles.html#carnet">Ouvrir le carnet</a></article>
-<article class="note-box" id="progress-calc"><h3>Calculs enregistrés</h3><strong id="progress-calc-n">0</strong><progress aria-label="Possessions enregistrées" value="0" max="1" hidden></progress><a href="calculateurs.html#atelier">Ouvrir les calculateurs</a></article>
+<article class="note-box" id="progress-calc"><h3>Calculs enregistrés</h3><strong id="progress-calc-n">0</strong><progress aria-label="Possessions enregistrées" value="0" max="1" hidden></progress><a href="calculateurs.html?from=progression#atelier">Retrouver mes calculs</a></article>
 <article class="note-box" id="progress-lieux"><h3>Lieux repérés</h3><strong>0</strong><progress value="0" max="1" aria-label="Lieux repérés"></progress><a href="carte.html">Ouvrir le suivi</a></article>
 </div><p class="note">Les missions, collectibles, planques et trophées seront ajoutés lorsque leurs listes seront documentées.</p>
   <noscript><p>Active JavaScript pour lire le suivi enregistré dans ton navigateur.</p></noscript>
+</section>
+<section class="shell" aria-labelledby="progress-calculator-title">
+  <div class="lk-entry-card">
+    <div><p class="lk-entry-eyebrow">LE CALCULATEUR</p><h2 id="progress-calculator-title">Et ton prochain objectif ?</h2><p>Dis combien tu as et combien tu joues. Le calculateur te dit en combien de jours tu peux avoir ce que tu veux, et garde tes calculs enregistrés.</p></div>
+    <a class="lk-entry-button" href="calculateurs.html?tool=goal&amp;from=progression#atelier">Calculer mon objectif <span aria-hidden="true">↗</span></a>
+  </div>
 </section>
 <section class="shell" id="sauvegarde" aria-label="Sauvegarde">
   <h2 class="sec-h">Sauvegarder ou transférer ton suivi</h2>
@@ -163,7 +170,7 @@
         </div>
         <div>
           <h2>Outils</h2>
-          <nav><a href="progression.html">Progression</a><a href="calculateurs.html">Calculateurs</a></nav>
+          <nav><a href="progression.html">Progression</a><a href="calculateurs.html">Calculateur</a></nav>
         </div>
         <div>
           <h2>Le site</h2>
@@ -175,13 +182,13 @@
   </div>
 </footer>
 
-<script src="search-index.js?v=349ee1d6"></script>
-<script src="assets-manifest.js?v=349ee1d6"></script>
-<script src="common.js?v=349ee1d6"></script>
-<script src="app.js?v=349ee1d6"></script>
-<script src="progression-data.js?v=349ee1d6"></script>
-<script src="collectibles-data.js?v=349ee1d6"></script>
-<script src="collectibles-core.js?v=349ee1d6"></script>
-<script src="progression.js?v=349ee1d6"></script>
+<script src="search-index.js?v=959ae019"></script>
+<script src="assets-manifest.js?v=959ae019"></script>
+<script src="common.js?v=959ae019"></script>
+<script src="app.js?v=959ae019"></script>
+<script src="progression-data.js?v=959ae019"></script>
+<script src="collectibles-data.js?v=959ae019"></script>
+<script src="collectibles-core.js?v=959ae019"></script>
+<script src="progression.js?v=959ae019"></script>
 </body>
 </html>

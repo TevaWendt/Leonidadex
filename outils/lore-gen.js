@@ -93,6 +93,7 @@ ${C.fav}
 ${C.fonts}
 ${bc(crumbs)}
 <link rel="stylesheet" href="${p}style.css">
+${body.includes('lk-entry-card') ? `<link rel="stylesheet" href="${p}calculator-entry.css">` : ''}
 <meta property="og:image" content="${SITE}${ogImg||'/img/social-card.png'}">
 <meta name="twitter:card" content="summary_large_image">
 <meta property="og:url" content="${SITE}${canonical}">
@@ -158,6 +159,12 @@ ${cards}
     if(x.mapId)links.push(`<a href="${mapHref(x.mapId,p)}">Voir sur la carte</a>`);
     if(key==='regions')links.push(`<a href="${p}vehicules.html">Véhicules</a>`);
     if(x.source)links.push(`<a href="${esc(x.source)}" target="_blank" rel="noopener nofollow">Page officielle</a>`);
+    const calcKind = key === 'businesses' ? 'business' : key === 'residences' ? 'property' : null;
+    const calcTool = calcKind === 'business' ? 'roi' : 'purchase';
+    const calcTitle = calcKind === 'business' ? 'Est-ce que ça vaudrait le coup ?' : 'Combien faudrait-il pour l’avoir ?';
+    const calcDescription = calcKind === 'business' ? 'On ne sait pas encore si ce lieu peut s’acheter dans le jeu. Tu peux quand même écrire tes propres chiffres : ce que ça coûte, ce que ça rapporte, et voir quand ce serait remboursé.' : 'On ne sait pas encore si ce lieu peut s’acheter, ni à quel prix. Écris le prix que tu imagines : le calculateur te dit combien de temps de jeu il te faudrait.';
+    const calcAction = calcKind === 'business' ? 'Faire le calcul' : 'Faire le calcul';
+    const calcBridge = calcKind ? `<section class="shell" aria-labelledby="lore-calculator-title"><div class="lk-entry-card"><div><p class="lk-entry-eyebrow">LE CALCULATEUR</p><h2 id="lore-calculator-title">${calcTitle}</h2><p>${calcDescription}</p></div><a class="lk-entry-button" href="../calculateurs.html?tool=${calcTool}&amp;type=${calcKind}&amp;id=${encodeURIComponent(x.id)}&amp;from=fiche#atelier">${calcAction} <span aria-hidden="true">↗</span></a></div></section>` : '';
     const body=`<section class="page-head shell">
   <nav class="crumbs" aria-label="Fil d'Ariane"><a href="../index.html">Accueil</a> / <a href="../${S.hub}.html">${esc(S.label)}</a> / <span>${esc(x.name)}</span></nav>
   <div class="lore-hero lore-enter">
@@ -171,6 +178,7 @@ ${cards}
     ${m?`<figure class="lore-fig">${imgTag(m,IMG_ALT(m,x),true)}</figure>`:'<figure class="lore-fig"><div class="lore-vide" style="aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;color:#FDFBF7">Visuel officiel à venir</div></figure>'}
   </div>
 </section>
+${calcBridge}
 <section class="shell lore-body">
   ${x.texte?`<div class="lore-texte reveal"><h2>Présentation</h2><p class="rise">${esc(x.texte)}</p></div>`:''}
   ${x.contexte?`<div class="lore-texte reveal"><h2>${{regions:'Dans les visuels et dans l\'histoire',characters:'Dans l\'histoire',businesses:'Ce que montrent les visuels',residences:'Ce qu\'on en sait',hideouts:'Ce qu\'on en sait'}[key]||'Dans l\'histoire'}</h2><p class="rise">${esc(x.contexte)}</p></div>`:''}
@@ -243,19 +251,19 @@ if(!home.includes('id="monde"'))throw new Error("section 'Le monde de Leonida' n
 const tools=`<section class="tools-sec shell" id="outils">
   <div class="sec-head reveal">
     <h2>Les outils</h2>
-    <p>Quatre choses, faites correctement.</p>
+    <p>Le calculateur en premier. Le monde de Leonida pour aller plus loin.</p>
   </div>
   <a class="calc-feature calc-v2 reveal" href="calculateurs.html" id="calc-feature">
     <div class="calc-copy">
-      <span class="chip">Le 19 novembre, dès l'ouverture des serveurs</span>
-      <h3>Calculateurs</h3>
-      <p class="calc-lead">Combien ça rapporte, combien ça coûte, combien de temps il faut. Trois réponses chiffrées dès le premier soir, avec les vraies formules du jeu, pas des estimations.</p>
-      <span class="calc-cta">Découvrir les calculateurs <i aria-hidden="true">&rsaquo;</i></span>
+      <span class="chip">Disponible maintenant · gratuit, sans compte</span>
+      <h3>Un objectif. Plusieurs façons d’y arriver.</h3>
+      <p class="calc-lead">Combien de temps pour ton premier million ? Peux-tu t’offrir cette voiture ? Écris tes chiffres, la réponse arrive tout de suite. Les vrais prix du jeu seront ajoutés dès qu’ils seront connus.</p>
+      <span class="calc-cta">Ouvrir le calculateur <i aria-hidden="true">&rsaquo;</i></span>
     </div>
     <ul class="calc-tiles" aria-hidden="true">
-      <li><b>$</b><strong>Gain d'un coup</strong><span>équipe et frais déduits</span></li>
-      <li><b>&#9201;</b><strong>Temps pour un véhicule</strong><span>selon ce que tu joues</span></li>
-      <li><b>%</b><strong>Rentabilité à l'heure</strong><span>l'activité qui paie le plus</span></li>
+      <li><b>$</b><strong>Mon objectif</strong><span>combien de temps il me faut</span></li>
+      <li><b>&#9201;</b><strong>Mon temps de jeu</strong><span>quoi faire en 30 minutes</span></li>
+      <li><b>%</b><strong>Ça vaut le coup ?</strong><span>quand mon achat est remboursé</span></li>
     </ul>
   </a>
   <div class="tools tools--three">

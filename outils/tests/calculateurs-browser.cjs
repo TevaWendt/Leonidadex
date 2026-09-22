@@ -115,7 +115,7 @@ async function persistenceAndShare(page, context, browser, origin) {
   await page.waitForTimeout(400);
   await page.reload({ waitUntil: 'networkidle' });
   await page.locator('button[data-tab="goal"]').click();
-  check(await page.locator('#f-goal-capital').inputValue() === '271828', 'Current configuration survives reload');
+  check(await page.locator('#f-goal-capital').inputValue().then(v => v.replace(/\s/g, '')) === '271828', 'Current configuration survives reload');
   page.on('dialog', dialog => dialog.accept(dialog.type() === 'prompt' ? 'QA navigateur' : undefined));
   await page.locator('#calc-save').click();
   await page.locator('.calc-saved summary').click();
@@ -125,7 +125,7 @@ async function persistenceAndShare(page, context, browser, origin) {
   check(await page.locator('#saved-list [data-load]').count() > 0, 'Notebook survives reload');
   await page.locator('#f-goal-capital').fill('222222');
   await page.locator('#saved-list [data-load]').first().click();
-  check(await page.locator('#f-goal-capital').inputValue() === '271828', 'Opening a favourite restores its parameters');
+  check(await page.locator('#f-goal-capital').inputValue().then(v => v.replace(/\s/g, '')) === '271828', 'Opening a favourite restores its parameters');
   await context.grantPermissions(['clipboard-read', 'clipboard-write']);
   await page.locator('#calc-share').click();
   let shared = await page.evaluate(async () => { try { return await navigator.clipboard.readText(); } catch { return ''; } });
@@ -137,7 +137,7 @@ async function persistenceAndShare(page, context, browser, origin) {
     const sharedPage = await clean.newPage();
     await sharedPage.goto(shared, { waitUntil: 'networkidle' });
     await sharedPage.locator('button[data-tab="goal"]').click();
-    check(await sharedPage.locator('#f-goal-capital').inputValue() === '271828', 'Shared URL restores configuration in a clean browser context');
+    check(await sharedPage.locator('#f-goal-capital').inputValue().then(v => v.replace(/\s/g, '')) === '271828', 'Shared URL restores configuration in a clean browser context');
     await badNumbers(sharedPage, 'shared configuration');
     await clean.close();
   }
@@ -162,7 +162,7 @@ async function invalidInputs(page) {
   const tabs = await page.locator('button[data-tab]').evaluateAll(buttons => [...new Set(buttons.map(button => button.dataset.tab))]);
   for (const tab of tabs) {
     await page.locator(`button[data-tab="${tab}"]`).first().click();
-    const inputs = page.locator('main input[type="number"]:visible');
+    const inputs = page.locator('main input[data-number]:visible');
     const count = await inputs.count();
     for (let index = 0; index < Math.min(count, 4); index++) {
       const input = inputs.nth(index);
@@ -294,7 +294,7 @@ async function domMain() {
     note('The --dom option tests behaviour in jsdom; the default command remains the full Playwright suite.');
     const page = await create();
     check(page.errors.length === 0, 'Scripts initialize without DOM runtime errors', page.errors.join('; '));
-    check(page.d.querySelectorAll('[role="tabpanel"]').length === 6, 'Six calculators are mounted');
+    check(page.d.querySelectorAll('[role="tabpanel"]').length === 7, 'Seven calculators are mounted');
     check(page.d.querySelector('#f-goal-capital')?.value === '200000', 'Universal calculator starts with labelled example capital');
     check(/hypothèses|fictifs/.test(page.d.querySelector('main').textContent), 'Examples are identified as hypotheses');
     const tabs = [...page.d.querySelectorAll('button[data-tab]')];
@@ -303,7 +303,7 @@ async function domMain() {
       const panel = page.d.getElementById(button.getAttribute('aria-controls'));
       check(button.getAttribute('aria-selected') === 'true' && !panel.hidden && [...page.d.querySelectorAll('[role="tabpanel"]')].filter(el => !el.hidden).length === 1, 'Tab opens exactly one panel: ' + button.dataset.tab);
       sane(page, 'Valid output for ' + button.dataset.tab);
-      const numeric = [...panel.querySelectorAll('input[type="number"]')].slice(0, 4);
+      const numeric = [...panel.querySelectorAll('input[data-number]')].slice(0, 4);
       for (const input of numeric) {
         const original = input.value;
         for (const value of ['', '-1', '0', '0.25', '999999999999999999999']) {
@@ -315,8 +315,8 @@ async function domMain() {
     }
     page.d.querySelector('#tab-goal').click();
     page.d.querySelector('#tab-goal').dispatchEvent(new page.w.KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
-    check(page.d.querySelector('#tab-activities').getAttribute('aria-selected') === 'true', 'ArrowRight activates the next tab');
-    page.d.querySelector('#tab-activities').dispatchEvent(new page.w.KeyboardEvent('keydown', { key: 'End', bubbles: true }));
+    check(page.d.querySelector('#tab-purchase').getAttribute('aria-selected') === 'true', 'ArrowRight activates the next tab');
+    page.d.querySelector('#tab-purchase').dispatchEvent(new page.w.KeyboardEvent('keydown', { key: 'End', bubbles: true }));
     check(page.d.querySelector('#tab-order').getAttribute('aria-selected') === 'true', 'End activates the final tab');
     page.d.querySelector('#tab-goal').click();
     fill(page, '#f-goal-capital', '271828');
@@ -354,7 +354,7 @@ async function domMain() {
     const selected = page.d.querySelector('#vehicle-comparison');
     card.querySelector('[data-compare]').checked = true;
     card.querySelector('[data-compare]').dispatchEvent(new page.w.Event('change', { bubbles: true }));
-    check(/Données insuffisantes/.test(selected.textContent), 'Comparison refuses a price/performance ratio without data');
+    check(/données sont insuffisantes/i.test(selected.textContent), 'Comparison refuses a price/performance ratio without data');
     fill(page, '#catalogue-search', 'Scénario');
     const activityButton = page.d.querySelector('#catalogue-results [data-activity]');
     const activityId = activityButton?.dataset.activity;

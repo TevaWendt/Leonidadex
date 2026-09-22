@@ -9,6 +9,8 @@
   var MINUTES_MAX = 1e6;
   var RESULT_MAX = Number.MAX_SAFE_INTEGER;
   var MAX_MIXED_RUNS = 100000;
+  var SESSION_BEAM_WIDTH = 24;
+  var SESSION_MAX_RUNS = 256;
 
   function fail(shape, reason) { return Object.assign({}, shape, { valid: false, reason: reason }); }
   function finish(result, shape) {
@@ -43,6 +45,17 @@
   function timeTo(target, capital, hourly) { return target <= capital ? 0 : ratio(target - capital, hourly); }
   function safeRunCount(runs) { if (!Number.isSafeInteger(runs) || runs < 0) throw new Error('Le nombre de répétitions dépasse la précision fiable du calculateur.'); }
 
+  // Parse only unambiguous French grouping and French/decimal-point fractions.
+  // This boundary helper never turns a blank or a missing value into zero.
+  function parseLocalizedNumber(input) {
+    var shape = { value: null };
+    if (typeof input === 'number') return Number.isFinite(input) ? finish({ value: input }, shape) : fail(shape, 'Saisissez un nombre fini.');
+    if (typeof input !== 'string' || !input.trim()) return fail(shape, 'Renseignez une valeur numérique.');
+    var text = input.trim();
+    if (!/^[+-]?(?:\d+|\d{1,3}(?:[ \u00a0\u202f]\d{3})+)(?:[,.]\d+)?$/.test(text)) return fail(shape, 'Utilisez un nombre comme 1 250,50, sans unité ni séparateurs ambigus.');
+    return finish({ value: Number(text.replace(/[ \u00a0\u202f]/g, '').replace(',', '.')) }, shape);
+  }
+
   var activityShape = { net: null, activeMinutes: null, cycleMinutes: null, hourly: null, investment: null, paybackRuns: null };
   function activity(input) {
     try {
@@ -61,17 +74,24 @@
     } catch (error) { return fail(activityShape, error.message); }
   }
 
-  var goalShape = { missing: null, runs: null, totalMinutes: null, continuousMinutes: null, sessions: null, days: null, finalCapital: null, hourly: null, investment: null };
+  // In the discrete goal APIs target remains TOTAL capital, reserve included.
+  // reserve protects upfront cash only; callers add it to a spendable goal.
+  var goalShape = { missing: null, runs: null, totalMinutes: null, activeMinutes: null, waitMinutes: null, continuousMinutes: null, sessions: null, days: null, finalCapital: null, hourly: null, investment: null };
   function goal(input) {
     try {
       var p = data(input);
       var capital = money(p.capital, 'le capital');
+      var reserve = money(p.reserve, 'la réserve', 0);
       var target = money(p.target, 'l’objectif');
       var daily = number(p.dailyMinutes, 'le temps quotidien en minutes', 1440, { positive: true });
+      if (reserve > capital && !equal(reserve, capital)) return fail(goalShape, 'La réserve à conserver dépasse votre capital actuel.');
       var a = activity(p.activity);
       if (!a.valid) return fail(goalShape, a.reason);
-      if (target <= capital) return finish({ missing: 0, runs: 0, totalMinutes: 0, continuousMinutes: 0, sessions: 0, days: 0, finalCapital: capital, hourly: a.hourly, investment: 0 }, goalShape);
-      if (capital < a.investment) return fail(goalShape, 'Capital insuffisant pour financer l’investissement initial.');
+      if (target <= capital) return finish({ missing: 0, runs: 0, totalMinutes: 0, activeMinutes: 0, waitMinutes: 0, continuousMinutes: 0, sessions: 0, days: 0, finalCapital: capital, hourly: a.hourly, investment: 0 }, goalShape);
+      var spendable = subtract(capital, reserve);
+      if (spendable < a.investment && !equal(spendable, a.investment)) return fail(goalShape, 'Capital insuffisant pour financer l’investissement initial sans entamer la réserve.');
+      var afterInvestment = subtract(spendable, a.investment);
+      if (afterInvestment < (p.activity.cost || 0) && !equal(afterInvestment, p.activity.cost || 0)) return fail(goalShape, 'Capital insuffisant pour avancer les coûts de la première activité après l’investissement sans entamer la réserve.');
       if (a.net <= 0) return fail(goalShape, 'Un bénéfice net strictement positif est nécessaire pour atteindre cet objectif.');
       if (a.activeMinutes > daily) return fail(goalShape, 'Une activité complète avec sa préparation dépasse votre temps quotidien. Augmentez la durée de session.');
       var cooldown = a.cycleMinutes - a.activeMinutes;
@@ -81,7 +101,7 @@
       var perSession = Math.max(1, floor((daily + cooldown) / a.cycleMinutes));
       var sessions = ceil(runs / perSession);
       if (sessions > 1 && cooldown > 1440 - daily) return fail(goalShape, 'Le délai de relance dépasse la pause entre deux sessions quotidiennes. Ce calendrier nécessite une simulation différente.');
-      return finish({ missing: missing, runs: runs, totalMinutes: runs * a.activeMinutes + (runs - sessions) * cooldown, continuousMinutes: runs * a.activeMinutes + Math.max(0, runs - 1) * cooldown, sessions: sessions, days: sessions, finalCapital: capital - a.investment + runs * a.net, hourly: a.hourly, investment: a.investment }, goalShape);
+      return finish({ missing: missing, runs: runs, totalMinutes: runs * a.activeMinutes + (runs - sessions) * cooldown, activeMinutes: runs * a.activeMinutes, waitMinutes: (runs - sessions) * cooldown, continuousMinutes: runs * a.activeMinutes + Math.max(0, runs - 1) * cooldown, sessions: sessions, days: sessions, finalCapital: capital - a.investment + runs * a.net, hourly: a.hourly, investment: a.investment }, goalShape);
     } catch (error) { return fail(goalShape, error.message); }
   }
 
@@ -90,27 +110,32 @@
     try {
       var p = data(input);
       var capital = money(p.capital, 'le capital');
+      var reserve = money(p.reserve, 'la réserve', 0);
       var target = money(p.target, 'l’objectif');
       var daily = number(p.dailyMinutes, 'le temps quotidien en minutes', 1440, { positive: true });
+      if (reserve > capital && !equal(reserve, capital)) return fail(shape, 'La réserve à conserver dépasse votre capital actuel.');
       if (!Array.isArray(p.activities) || !p.activities.length || p.activities.length > 20) return fail(shape, 'Choisissez de 1 à 20 activités pour la rotation.');
       var activities = p.activities.map(function (entry, index) {
         var a = activity(entry);
         if (!a.valid) throw new Error('Activité ' + (index + 1) + ' : ' + a.reason);
         return Object.assign({}, a, { name: typeof entry.name === 'string' ? entry.name.slice(0, 120) : 'Activité ' + (index + 1), cooldown: a.cycleMinutes - a.activeMinutes });
       });
-      if (target <= capital) return finish({ missing: 0, runs: 0, totalMinutes: 0, continuousMinutes: 0, sessions: 0, days: 0, finalCapital: capital, hourly: null, investment: 0, breakdown: [] }, shape);
+      if (target <= capital) return finish({ missing: 0, runs: 0, totalMinutes: 0, activeMinutes: 0, waitMinutes: 0, continuousMinutes: 0, sessions: 0, days: 0, finalCapital: capital, hourly: null, investment: 0, breakdown: [] }, shape);
       var investment = activities.reduce(function (sum, a) { return sum + a.investment; }, 0);
-      if (capital < investment) return fail(shape, 'Capital insuffisant pour financer les investissements initiaux de la rotation.');
+      var spendable = subtract(capital, reserve);
+      if (spendable < investment && !equal(spendable, investment)) return fail(shape, 'Capital insuffisant pour financer les investissements initiaux de la rotation sans entamer la réserve.');
       if (activities.some(function (a) { return a.net <= 0; })) return fail(shape, 'Chaque activité de cette rotation doit avoir un bénéfice net strictement positif.');
       if (activities.some(function (a) { return a.activeMinutes > daily; })) return fail(shape, 'Une activité de la rotation ne tient pas dans votre session quotidienne.');
       var cash = capital - investment;
       var ready = activities.map(function () { return 0; });
       var continuousReady = ready.slice();
       var counts = ready.slice();
-      var total = 0, continuous = 0, elapsed = 0, sessions = 1, runs = 0;
+      var total = 0, active = 0, waiting = 0, continuous = 0, elapsed = 0, sessions = 1, runs = 0;
       while (cash < target && !equal(cash, target) && runs < MAX_MIXED_RUNS) {
         var index = runs % activities.length;
         var a = activities[index];
+        var startingCash = subtract(cash, reserve);
+        if (startingCash < (p.activities[index].cost || 0) && !equal(startingCash, p.activities[index].cost || 0)) return fail(shape, 'Capital insuffisant pour avancer les coûts de « ' + a.name + ' » avant sa récompense sans entamer la réserve.');
         var wait = Math.max(0, ready[index] - elapsed);
         if (elapsed + wait + a.activeMinutes > daily + Number.EPSILON * daily * 4) {
           if (activities.some(function (item) { return item.cooldown > 1440 - daily; })) return fail(shape, 'Un délai de relance dépasse la pause entre les sessions. Ce calendrier nécessite une simulation différente.');
@@ -121,6 +146,8 @@
         }
         elapsed += wait + a.activeMinutes;
         total += wait + a.activeMinutes;
+        active += a.activeMinutes;
+        waiting += wait;
         ready[index] = elapsed + a.cooldown;
         continuous = Math.max(continuous, continuousReady[index]) + a.activeMinutes;
         continuousReady[index] = continuous + a.cooldown;
@@ -130,7 +157,7 @@
       }
       if (cash < target && !equal(cash, target)) return fail(shape, 'La rotation dépasse 100 000 activités. Réduisez l’objectif ou utilisez le calcul à une activité.');
       if (equal(cash, target)) cash = target;
-      return finish({ missing: target - capital + investment, runs: runs, totalMinutes: total, continuousMinutes: continuous, sessions: sessions, days: sessions, finalCapital: cash, hourly: (cash - capital + investment) * 60 / total, investment: investment, breakdown: activities.map(function (a, index) { return { name: a.name, runs: counts[index], net: counts[index] * a.net }; }) }, shape);
+      return finish({ missing: target - capital + investment, runs: runs, totalMinutes: total, activeMinutes: active, waitMinutes: waiting, continuousMinutes: continuous, sessions: sessions, days: sessions, finalCapital: cash, hourly: (cash - capital + investment) * 60 / total, investment: investment, breakdown: activities.map(function (a, index) { return { name: a.name, runs: counts[index], net: counts[index] * a.net }; }) }, shape);
     } catch (error) { return fail(shape, error.message); }
   }
 
@@ -140,16 +167,133 @@
       var p = data(input);
       var available = minutes(p.minutes, 'le temps disponible');
       var capital = money(p.capital, 'le capital');
+      var reserve = money(p.reserve, 'la réserve', 0);
+      if (reserve > capital && !equal(reserve, capital)) return fail(inverseShape, 'La réserve à conserver dépasse votre capital actuel.');
       var a = activity(p.activity);
       if (!a.valid) return fail(inverseShape, a.reason);
-      if (capital < a.investment) return fail(inverseShape, 'Capital insuffisant pour financer l’investissement initial.');
       var cooldown = a.cycleMinutes - a.activeMinutes;
       var runs = available < a.activeMinutes ? 0 : floor((available + cooldown) / a.cycleMinutes);
       safeRunCount(runs);
+      var spendable = subtract(capital, reserve);
+      if (runs && spendable < a.investment && !equal(spendable, a.investment)) return fail(inverseShape, 'Capital insuffisant pour financer l’investissement initial sans entamer la réserve.');
+      var lowestStartingCash = spendable - a.investment + Math.min(0, (runs - 1) * a.net);
+      if (runs && lowestStartingCash < (p.activity.cost || 0) && !equal(lowestStartingCash, p.activity.cost || 0)) return fail(inverseShape, 'Capital insuffisant pour avancer les coûts de chaque activité sans entamer la réserve. Réduisez les répétitions ou les coûts.');
       var profit = runs ? runs * a.net - a.investment : 0;
       if (capital + profit < 0) return fail(inverseShape, 'Les pertes de cette activité dépasseraient votre capital disponible.');
       return finish({ runs: runs, totalMinutes: runs ? runs * a.activeMinutes + (runs - 1) * cooldown : 0, profit: profit, finalCapital: capital + profit }, inverseShape);
     } catch (error) { return fail(inverseShape, error.message); }
+  }
+
+  /** Continuous personal model: target is usable cash EXCLUDING the protected
+   * reserve. No discrete mission, cooldown, purchase or passive-income rule is
+   * inferred. dailyMinutes is played minutes per day, not wall-clock time. */
+  var continuousShape = { missing: null, availableCapital: null, reserve: null, hourly: null, totalMinutes: null, hours: null, activeMinutes: null, waitMinutes: null, sessions: null, days: null, finalCapital: null };
+  function goalContinuous(input) {
+    try {
+      var p = data(input);
+      var capital = money(p.capital, 'le capital');
+      var reserve = money(p.reserve, 'la réserve', 0);
+      var target = money(p.target, 'l’objectif');
+      var hourly = money(p.hourly, 'le gain net horaire');
+      var daily = number(p.dailyMinutes, 'le temps quotidien en minutes', 1440, { positive: true });
+      if (reserve > capital) return fail(continuousShape, 'La réserve à conserver dépasse votre capital actuel. Réduisez la réserve.');
+      var available = subtract(capital, reserve);
+      var missing = Math.max(0, subtract(target, available));
+      if (missing > 0 && hourly <= 0) return fail(continuousShape, 'Un gain net horaire strictement positif est nécessaire pour atteindre cet objectif.');
+      var hours = missing === 0 ? 0 : missing / hourly;
+      var total = hours * 60;
+      var sessions = total === 0 ? 0 : ceil(total / daily);
+      return finish({ missing: missing, availableCapital: available, reserve: reserve, hourly: hourly, totalMinutes: total, hours: hours, activeMinutes: total, waitMinutes: 0, sessions: sessions, days: sessions, finalCapital: capital + missing }, continuousShape);
+    } catch (error) { return fail(continuousShape, error.message); }
+  }
+
+  /** Deterministic bounded beam search, maximizing final liquid capital.
+   * All costs are paid at START; personal reward is received at END. Investment
+   * is paid once on first use; preparation repeats; cooldown starts at END and
+   * another activity can cover it. No simultaneous active work is permitted.
+   * At most 12 activities, 1440 minutes, 256 runs and 24 retained states/depth.
+   * maxRepeat limits consecutive uses, including after a wait. This is NOT a
+   * proof of a global optimum. A path may stop early if another run loses cash.
+   */
+  var sessionShape = { profit: null, finalCapital: null, reserve: null, investment: null, runs: null, activeMinutes: null, waitMinutes: null, unusedMinutes: null, totalMinutes: null, timeline: [], breakdown: [], method: 'bounded-beam', limited: true, limits: { activities: 12, minutes: 1440, runs: SESSION_MAX_RUNS, beamWidth: SESSION_BEAM_WIDTH }, note: null };
+  function sessionPlan(input) {
+    try {
+      var p = data(input);
+      var capital = money(p.capital, 'le capital');
+      var reserve = money(p.reserve, 'la réserve', 0);
+      var available = number(p.minutes, 'la durée de session en minutes', 1440);
+      var maxRepeat = number(p.maxRepeat, 'les répétitions consécutives maximales', SESSION_MAX_RUNS, { defaultValue: SESSION_MAX_RUNS, positive: true, integer: true });
+      if (reserve > capital) return fail(sessionShape, 'La réserve à conserver dépasse votre capital actuel.');
+      if (!Array.isArray(p.activities) || !p.activities.length || p.activities.length > 12) return fail(sessionShape, 'Choisissez de 1 à 12 activités pour la session.');
+      var activities = p.activities.map(function (entry, index) {
+        var result = activity(entry);
+        if (!result.valid) throw new Error('Activité ' + (index + 1) + ' : ' + result.reason);
+        return Object.assign({}, result, { id: typeof entry.id === 'string' ? entry.id.slice(0, 120) : String(index), name: typeof entry.name === 'string' && entry.name.trim() ? entry.name.trim().slice(0, 120) : 'Activité ' + (index + 1), cost: entry.cost || 0, reward: entry.reward * (entry.share === undefined ? 100 : entry.share) / 100, cooldown: result.cycleMinutes - result.activeMinutes });
+      });
+      var empty = activities.map(function () { return 0; });
+      var initial = { cash: capital, time: 0, active: 0, wait: 0, investment: 0, counts: empty.slice(), ready: empty.slice(), last: -1, streak: 0, runs: 0, path: null };
+      var best = initial;
+      var beam = [initial];
+      var pruned = false;
+      var capped = false;
+      function better(left, right) {
+        if (!equal(left.cash, right.cash)) return left.cash > right.cash;
+        if (!equal(left.time, right.time)) return left.time < right.time;
+        if (!equal(left.investment, right.investment)) return left.investment < right.investment;
+        return left.runs < right.runs;
+      }
+      for (var depth = 0; depth < SESSION_MAX_RUNS && beam.length; depth += 1) {
+        var candidates = [];
+        beam.forEach(function (state) {
+          activities.forEach(function (a, index) {
+            if (a.net <= 0 || (state.last === index && state.streak >= maxRepeat)) return;
+            var start = Math.max(state.time, state.ready[index]);
+            var end = start + a.activeMinutes;
+            if (end > available && !equal(end, available)) return;
+            if (equal(end, available)) end = available;
+            var investment = state.counts[index] === 0 ? a.investment : 0;
+            var upfront = investment + a.cost;
+            var spendable = subtract(state.cash, reserve);
+            if (upfront > spendable && !equal(upfront, spendable)) return;
+            var counts = state.counts.slice();
+            counts[index] += 1;
+            var ready = state.ready.slice();
+            ready[index] = end + a.cooldown;
+            // Recompute from counts to avoid drift over repeated decimal gains.
+            var totalInvestment = state.investment + investment;
+            var cash = capital - totalInvestment + activities.reduce(function (sum, item, i) { return sum + counts[i] * item.net; }, 0);
+            var step = { type: 'activity', index: index, id: a.id, name: a.name, start: start, end: end, waitBefore: start - state.time, investment: investment, cost: a.cost, reward: a.reward, net: a.net, capitalBefore: state.cash, capitalAfter: cash };
+            var candidate = { cash: cash, time: end, active: state.active + a.activeMinutes, wait: state.wait + step.waitBefore, investment: totalInvestment, counts: counts, ready: ready, last: index, streak: state.last === index ? state.streak + 1 : 1, runs: state.runs + 1, path: { step: step, previous: state.path } };
+            if (better(candidate, best)) best = candidate;
+            candidates.push(candidate);
+          });
+        });
+        candidates.sort(function (a, b) {
+          // Reward already earned determines priority; retain earlier paths on
+          // ties to leave more room for subsequent activities. Stable order is
+          // supplied by the input order and the original candidate index.
+          return b.cash - a.cash || a.time - b.time || a.investment - b.investment;
+        });
+        // Different orderings may reach exactly the same future state. Keep
+        // one representative so duplicate paths cannot crowd out alternatives.
+        var unique = [];
+        var seen = new Set();
+        for (var c = 0; c < candidates.length; c += 1) {
+          var candidate = candidates[c];
+          var key = [candidate.time, candidate.last, candidate.streak, candidate.counts.join(','), candidate.ready.join(',')].join('|');
+          if (!seen.has(key)) { seen.add(key); unique.push(candidate); }
+        }
+        if (unique.length > SESSION_BEAM_WIDTH) pruned = true;
+        beam = unique.slice(0, SESSION_BEAM_WIDTH);
+        if (depth === SESSION_MAX_RUNS - 1 && beam.length) capped = true;
+      }
+      var timeline = [];
+      for (var path = best.path; path; path = path.previous) timeline.push(path.step);
+      timeline.reverse();
+      var note = best.runs ? 'Plan réalisable parmi les séquences explorées : gain net de session maximal trouvé, sans garantie d’optimum global.' : 'Aucune séquence profitable retenue. Vérifiez le temps disponible, les coûts à avancer, les investissements et la réserve.';
+      if (capped) note += ' La recherche est limitée à 256 activités par session.';
+      return finish({ profit: subtract(best.cash, capital), finalCapital: best.cash, reserve: reserve, investment: best.investment, runs: best.runs, activeMinutes: best.active, waitMinutes: best.wait, unusedMinutes: Math.max(0, subtract(available, best.time)), totalMinutes: best.time, timeline: timeline, breakdown: activities.map(function (a, index) { return { id: a.id, name: a.name, runs: best.counts[index], net: best.counts[index] * a.net, investment: best.counts[index] ? a.investment : 0 }; }), method: 'bounded-beam', limited: pruned || capped, limits: sessionShape.limits, note: note }, sessionShape);
+    } catch (error) { return fail(sessionShape, error.message); }
   }
 
   var roiShape = { investment: null, netHourly: null, grossProfit: null, operatingProfit: null, netProfit: null, roiPercent: null, paybackHours: null };
@@ -241,5 +385,5 @@
     } catch (error) { return fail(compareShape, error.message); }
   }
 
-  return Object.freeze({ activity: activity, goal: goal, goalMixed: goalMixed, inverse: inverse, roi: roi, purchase: purchase, budget: budget, order: order, compareBuy: compareBuy });
+  return Object.freeze({ activity: activity, goal: goal, goalMixed: goalMixed, inverse: inverse, roi: roi, purchase: purchase, budget: budget, order: order, compareBuy: compareBuy, goalContinuous: goalContinuous, sessionPlan: sessionPlan, parseLocalizedNumber: parseLocalizedNumber });
 }));

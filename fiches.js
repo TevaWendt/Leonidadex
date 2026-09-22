@@ -4,6 +4,22 @@
    ============================================================ */
 (function(){
   'use strict';
+  const calculatorBase = new URL('calculateurs.html', document.currentScript?.src || document.querySelector('script[src*="fiches.js"]')?.src || new URL('/fiches.js', location.href).href);
+  function calculatorLink(type, values, origin) {
+    const url = new URL(calculatorBase);
+    url.searchParams.set('tool', 'purchase');
+    url.searchParams.set('type', type);
+    url.searchParams.set('from', origin);
+    Object.keys(values || {}).forEach(key => url.searchParams.set(key, values[key]));
+    url.hash = 'atelier';
+    return url.href;
+  }
+  function calculatorStyle() {
+    if (document.querySelector('link[data-calculator-entry]')) return;
+    const link = document.createElement('link'); link.rel = 'stylesheet';
+    link.href = new URL('calculator-entry.css?v=20260921', calculatorBase).href;
+    link.dataset.calculatorEntry = 'true'; document.head.appendChild(link);
+  }
 
   /* ---------------------------------------------------------- galerie
      <div class="gal" data-base="img/armes/micro-smg" data-vues="face,profil,arriere,detail">
@@ -131,6 +147,17 @@
       bt.querySelector('span:last-child').textContent = on ? 'Dans mon ' + MOT[2] : 'Ajouter à mon ' + MOT[2]; };
     bt.addEventListener('click', function(){ if(own[id]) delete own[id]; else own[id] = 1; ecrire(own); maj(); });
     maj();
+    if (/^[a-z0-9][a-z0-9-]{0,99}$/.test(id) && !document.getElementById('lk-fiche-calculator')) {
+      calculatorStyle();
+      const card = document.createElement('aside'); card.id = 'lk-fiche-calculator';
+      card.className = 'lk-entry-card lk-fiche-calculator';
+      const eyebrow = document.createElement('p'); eyebrow.className = 'lk-entry-eyebrow'; eyebrow.textContent = 'LE CALCULATEUR';
+      const title = document.createElement('h2'); title.textContent = type === 'armes' ? 'Tu veux cette arme ?' : 'Tu veux ce véhicule ?';
+      const explanation = document.createElement('p'); explanation.textContent = 'Regarde si tu as assez d’argent, et sinon combien de temps de jeu il te faut. Son prix n’est pas encore connu : tu peux écrire celui que tu imagines.';
+      const link = document.createElement('a'); link.className = 'lk-entry-button'; link.href = calculatorLink(type, { id }, 'fiche'); link.textContent = 'Est-ce que je peux l’acheter ? ↗';
+      card.append(eyebrow, title, explanation, link);
+      (bt.closest('.fiche-liens') || bt).insertAdjacentElement('afterend', card);
+    }
   }
 
   /* ---------------------------------------------------------- photos manquantes
@@ -212,7 +239,18 @@
 
     /* ------------------------------------------------------ sélection pour comparer */
     let sel = [];
+    const selectionKey = 'lk-calculator-selection-' + type;
+    try { const previous = JSON.parse(sessionStorage.getItem(selectionKey) || '[]');
+      if (Array.isArray(previous)) sel = [...new Set(previous)].filter(id => cards.some(card => card.dataset.id === id)).slice(0, 3);
+    } catch (e) { /* Selection remains usable when storage is unavailable. */ }
     const tray = document.getElementById('cmp-tray');
+    let calculatorSelection;
+    if (tray) {
+      calculatorStyle();
+      calculatorSelection = document.createElement('a'); calculatorSelection.className = 'lk-selection-calculator';
+      calculatorSelection.textContent = 'Est-ce que je peux les acheter ? ↗'; calculatorSelection.hidden = true;
+      tray.appendChild(calculatorSelection);
+    }
     cards.forEach(function(c){
       const id = c.dataset.id; if(!id) return;
       const tools = c.querySelector('.veh-tools'); if(!tools) return;
@@ -226,6 +264,11 @@
       tools.appendChild(b);
     });
     function majSel(){
+      try { sessionStorage.setItem(selectionKey, JSON.stringify(sel)); } catch (e) { /* Optional persistence. */ }
+      if (calculatorSelection) {
+        calculatorSelection.hidden = !sel.length;
+        calculatorSelection.href = calculatorLink(type, { ids: sel.join(',') }, 'catalogue');
+      }
       cards.forEach(c => { const b = c.querySelector('.cmp-card'); if(b){ const on = sel.indexOf(c.dataset.id) >= 0; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on ? 'true' : 'false'); } });
       if(!tray) return;
       tray.classList.toggle('on', sel.length > 0);
@@ -234,6 +277,7 @@
       tray.querySelector('a').style.visibility = sel.length >= 2 ? 'visible' : 'hidden';
     }
     if(tray) tray.querySelector('button').addEventListener('click', function(){ sel = []; majSel(); });
+    majSel();
 
     /* ------------------------------------------------------ modèle réel
        Même principe que Street View sur la carte : aucune image n'est

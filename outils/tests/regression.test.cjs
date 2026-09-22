@@ -167,11 +167,12 @@ test('No page declares product-like structured data',()=>{
 
 // v7.20 : point d'entrée des calculateurs : une phrase ouvre le bon outil et préremplit les chiffres qu'elle contient.
 test('Calculator question bar routes to the right tool and prefills amounts',withPage('calculateurs.html',a=>{
- const hub=a.w.LKCalcHub;assert.ok(hub,'calculateurs-hub.js chargé');assert.ok(a.d.querySelector('#atelier .lk-hyp'),'étiquette hypothèse au chargement');
+ const hub=a.w.LKCalcHub;assert.ok(hub,'calculateurs-hub.js chargé');assert.match(a.d.querySelector('#goal-results .calc-tag').textContent,/CALCULÉ AVEC TES CHIFFRES/,'étiquette hypothèse au chargement');
  assert.equal(hub.parseMoney('2 millions'),2000000);assert.equal(hub.parseMoney('500k pour une maison'),500000);assert.equal(hub.parseMinutesPerDay('45 min par jour'),45);assert.equal(hub.parseMinutesPerDay('2 heures'),120);
  const cases=[["j'ai 200 000 $ et 45 min par jour, quand est-ce que j'atteins 2 millions ?",'goal'],['Répartir mon budget entre véhicule, propriété et réserve','budget'],["Dans quel ordre acheter : véhicule puis propriété ?",'order'],['Quand un achat est-il amorti ?','roi'],["Quelle activité rapporte le plus par heure ?",'activities'],["Puis-je me permettre d'acheter un véhicule à 250000 $ ?",'purchase']];
  for(const [q,tab] of cases){const r=hub.route(q);assert.equal(r.tab,tab,q);assert.equal(a.d.querySelector('[data-tab][aria-selected="true"]').dataset.tab,tab,'onglet '+tab);}
  assert.equal(a.d.getElementById('f-goal-capital').value,'200000');assert.equal(a.d.getElementById('f-goal-target').value,'2000000');assert.equal(a.d.getElementById('f-goal-dailyMinutes').value,'45');
- assert.equal(a.d.querySelectorAll('.lk-tool').length,6);assert.equal(a.d.querySelectorAll('[data-goal-preset]').length,5);
+ assert.equal(a.d.querySelectorAll('.lk-tool').length,7);assert.equal(a.d.querySelectorAll('[data-goal-preset]').length,5);
+ assert.equal(hub.route('Que faire pendant une session de 30 minutes ?').tab,'session');assert.equal(a.d.getElementById('f-session-minutes').value,'30');
  assert.deepEqual(a.errors,[]);
 }));

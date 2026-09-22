@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Calculateurs GTA VI — Leonidakit</title>
-<meta name="description" content="Simule ton objectif financier, compare les activités, calcule la rentabilité et planifie tes achats GTA VI avec tes propres hypothèses.">
-<meta property="og:title" content="Calculateurs GTA VI — Leonidakit">
-<meta property="og:description" content="Simule ton objectif financier, compare les activités, calcule la rentabilité et planifie tes achats GTA VI avec tes propres hypothèses.">
+<title>Calculateur GTA VI : ton objectif, tes achats, ton temps de jeu — Leonidakit</title>
+<meta name="description" content="Combien de temps pour ton premier million ? Peux-tu t’offrir ce véhicule ? Écris tes chiffres, la réponse arrive tout de suite. Calculateur GTA VI gratuit, sans compte, facile à utiliser.">
+<meta property="og:title" content="Ton objectif. Ton plan de jeu. Calculateur GTA VI Leonidakit">
+<meta property="og:description" content="Combien de temps pour ton premier million ? Peux-tu t’offrir ce véhicule ? Écris tes chiffres, la réponse arrive tout de suite. Calculateur GTA VI gratuit, sans compte, facile à utiliser.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="fr_FR">
 <meta name="theme-color" content="#FDFBF7">
@@ -22,17 +22,18 @@
   "@type":"BreadcrumbList",
   "itemListElement":[
     {"@type":"ListItem","position":1,"name":"Accueil","item":"https://www.leonidakit.com/"},
-    {"@type":"ListItem","position":2,"name":"Calculateurs","item":"https://www.leonidakit.com/calculateurs.html"}
+    {"@type":"ListItem","position":2,"name":"Calculateur","item":"https://www.leonidakit.com/calculateurs.html"}
   ]
 }
 </script>
-<link rel="stylesheet" href="style.css?v=349ee1d6">
-<link rel="stylesheet" href="calculateurs.css?v=349ee1d6">
-<link rel="stylesheet" href="calculateurs-brand.css?v=349ee1d6">
+<link rel="stylesheet" href="style.css?v=959ae019">
+<link rel="stylesheet" href="calculateurs.css?v=959ae019">
+<link rel="stylesheet" href="calculateurs-brand.css?v=959ae019">
 <meta name="robots" content="index, follow">
 <meta property="og:image" content="https://www.leonidakit.com/img/officiel/vice-city-11-1280.webp">
 <meta name="twitter:card" content="summary_large_image">
 <meta property="og:url" content="https://www.leonidakit.com/calculateurs.html">
+<noscript><style>.calculator-page #calc-panels:empty{display:none}</style></noscript>
 </head>
 <body class="calculator-page">
 
@@ -44,6 +45,7 @@
     <a href="index.html" class="brand">Leonida<span>kit</span></a>
     <nav id="nav" aria-label="Navigation principale">
       <ul>
+        <li><a href="calculateurs.html" class="here" aria-current="page">Calculateur</a></li>
         <li><a href="carte.html">Carte</a></li>
         <li><a href="vehicules.html">Véhicules</a></li>
         <li><a href="armes.html">Armes</a></li>
@@ -52,7 +54,6 @@
         <li><a href="demeures.html">Demeures</a></li>
         <li><a href="planques.html">Planques</a></li>
         <li><a href="entreprises.html">Entreprises</a></li>
-        <li><a href="calculateurs.html" class="here">Calculateurs</a></li>
         <li><a href="progression.html">Progression</a></li>
         <li><a href="collectibles.html">Collectibles</a></li>
       </ul>
@@ -73,66 +74,94 @@
 </header>
 
 <main id="main">
-<section class="vhero vhero--photo" style="--vhero-img:url(/img/officiel/vice-city-08-1280.webp)">
-  <div class="vhero-bg" aria-hidden="true"></div><div class="vhero-scan" aria-hidden="true"></div>
-  <div class="shell vhero-in">
-    <p class="vhero-eyebrow">Outils</p>
-    <h1>Calculateurs</h1>
-    <p class="lede">Ton capital, ton temps de jeu, ton objectif : combien ça rapporte, combien ça coûte, combien de temps il faut. Six outils, des formules visibles, tes chiffres à toi.</p>
-    <div class="vstats rise">
-      <div class="vstat"><span class="n" data-count="6">6</span><span class="l">outils de calcul</span></div>
-      <div class="vstat"><span class="n" data-count="3">3</span><span class="l">scénarios comparés</span></div>
-      <div class="vstat"><span class="n" data-count="347">347</span><span class="l">fiches dans le catalogue</span></div>
-      <div class="vstat"><span class="n">0</span><span class="l">prix officiel, pour l'instant</span></div>
+<section class="lk-calc-hero" aria-labelledby="calc-page-title">
+  <div class="calc-shell lk-calc-hero-in">
+    <div class="lk-calc-hero-copy">
+      <p class="calc-kicker">LE CALCULATEUR GTA VI</p>
+      <h1 id="calc-page-title">Ton objectif.<br><em>Ton plan de jeu.</em></h1>
+      <p>Dis combien tu as et combien tu veux.<br class="lk-desktop-break"> On te dit combien de temps il te faut.</p>
+      <div class="lk-hero-meta"><span>Gratuit</span><span>Sans compte</span><span>Réponse tout de suite</span></div>
+    </div>
+    <div class="lk-calc-hero-scene" aria-hidden="true">
+      <img src="img/officiel/vice-city-08-1280.webp" width="1280" height="720" alt="" fetchpriority="high" decoding="async">
+      <div class="lk-scene-lines"></div>
+      <span class="lk-scene-seal">LK<span>PLAN<br>DE JEU</span></span>
     </div>
   </div>
+</section>
+
+<section class="calc-shell lk-ask" id="que-calculer" aria-labelledby="calc-ask-title">
+  <div class="lk-ask-stage">
+    <div class="lk-ask-intro"><p class="calc-kicker">BESOIN D’AIDE ?</p><h2 id="calc-ask-title">Que veux-tu calculer ?</h2></div>
+    <form id="calc-ask" class="lk-ask-form" role="search" autocomplete="off">
+      <label for="calc-ask-input" class="lk-ask-label">Écris ta question avec tes chiffres</label>
+      <div class="lk-ask-row"><input id="calc-ask-input" type="search" maxlength="250" placeholder="J’ai 200 000 $ et je joue 45 min par jour, je veux 1 million" aria-describedby="calc-ask-help calc-ask-out"><button type="submit">Trouver le bon calcul ↗</button></div>
+      <p id="calc-ask-help">Le bon calcul s’ouvre et tes chiffres sont déjà dans les cases.</p>
+      <p id="calc-ask-out" class="lk-ask-out" role="status" hidden></p>
+    </form>
+    <div class="lk-ask-chips" aria-label="Exemples de questions">
+      <button type="button" data-ask="Combien de temps pour atteindre 1 million avec 1 heure par jour ?">Mon premier million ↗</button>
+      <button type="button" data-ask="Puis-je me permettre d’acheter un véhicule à 250000 $ ?">Est-ce que je peux l’acheter ? ↗</button>
+      <button type="button" data-ask="J’ai 30 minutes pour ma session">J’ai 30 minutes ↗</button>
+      <button type="button" data-ask="En combien de temps un investissement de 500000 $ est amorti ?">Ça vaut le coup ? ↗</button>
+    </div>
+    <div class="lk-goals" aria-label="Objectifs populaires"><span class="lk-goals-k">Ou choisis un objectif</span><button type="button" data-goal-preset="100000">100 k $</button><button type="button" data-goal-preset="500000">500 k $</button><button type="button" data-goal-preset="1000000">1 M $</button><button type="button" data-goal-preset="5000000">5 M $</button><button type="button" data-goal-preset="10000000">10 M $</button></div>
+  </div>
+</section>
+
+<section class="calc-shell calc-workspace" id="atelier" aria-labelledby="atelier-title">
+  <div class="calc-section-head">
+    <div><p class="calc-kicker">À TOI DE JOUER</p><h2 id="atelier-title">Choisis ce que tu veux savoir.</h2></div>
+    <div class="calc-actions"><button class="calc-button" id="calc-save" type="button">☆ Enregistrer</button><button class="calc-button" id="calc-share" type="button">Partager ↗</button></div>
+  </div>
+  <div class="calc-tabs" role="tablist" aria-label="Que veux-tu savoir ?">
+    <button id="tab-goal" role="tab" aria-selected="true" aria-controls="panel-goal" data-tab="goal"><span class="calc-tab-icon" aria-hidden="true"><svg class="calc-tab-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.4" fill="currentColor"/></svg></span><span>Mon objectif</span></button>
+    <button id="tab-purchase" role="tab" aria-selected="false" aria-controls="panel-purchase" tabindex="-1" data-tab="purchase"><span class="calc-tab-icon" aria-hidden="true"><svg class="calc-tab-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h2.5l2.2 10.5h10.2L20 7H7"/><circle cx="9.5" cy="19" r="1.6"/><circle cx="17" cy="19" r="1.6"/></svg></span><span>Mes achats</span></button>
+    <button id="tab-session" role="tab" aria-selected="false" aria-controls="panel-session" tabindex="-1" data-tab="session"><span class="calc-tab-icon" aria-hidden="true"><svg class="calc-tab-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/></svg></span><span>Mon temps de jeu</span></button>
+    <button id="tab-budget" role="tab" aria-selected="false" aria-controls="panel-budget" tabindex="-1" data-tab="budget"><span class="calc-tab-icon" aria-hidden="true"><svg class="calc-tab-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v9h9"/><path d="M20.5 15A9 9 0 1 1 9 3.5"/></svg></span><span>Mon budget</span></button>
+    <button id="tab-order" role="tab" aria-selected="false" aria-controls="panel-order" tabindex="-1" data-tab="order"><span class="calc-tab-icon" aria-hidden="true"><svg class="calc-tab-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 6h11M10 12h11M10 18h11"/><path d="M3.5 5.2 5 4.5V8M3.4 11h2.4l-2.4 3h2.6M3.5 16.5h2.2l-1.3 1.4c1 0 1.6.5 1.6 1.2 0 .8-.9 1.2-2.4.8"/></svg></span><span>Quoi acheter d’abord ?</span></button>
+    <button id="tab-roi" role="tab" aria-selected="false" aria-controls="panel-roi" tabindex="-1" data-tab="roi"><span class="calc-tab-icon" aria-hidden="true"><svg class="calc-tab-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l5.5-5.5 4 3.5L20 7"/><path d="M15 7h5v5"/></svg></span><span>Ça vaut le coup ?</span></button>
+    <button id="tab-activities" role="tab" aria-selected="false" aria-controls="panel-activities" tabindex="-1" data-tab="activities"><span class="calc-tab-icon" aria-hidden="true"><svg class="calc-tab-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4.5h6M8.5 10h7M8.5 14h7M8.5 18h4"/></svg></span><span>Mes activités</span></button>
+  </div>
+  <div class="calc-mode-row">
+    <div class="calc-mode-switch" role="group" aria-label="Niveau de détail">
+      <button type="button" data-mode="quick" aria-pressed="true">Simple</button><button type="button" data-mode="guided" aria-pressed="false">Pas à pas</button><button type="button" data-mode="advanced" aria-pressed="false">Expert</button>
+    </div>
+    <p class="calc-data-note"><span aria-hidden="true"></span>Ce sont tes chiffres à toi · les exemples se changent</p>
+  </div>
+  <div id="calc-panels"></div>
+  <noscript><p class="calc-warning">Active JavaScript pour utiliser le calculateur. Tous les calculs se font dans ton navigateur.</p></noscript>
+  <p id="calc-live" class="calc-sr" role="status" aria-live="polite"></p>
+  <div class="calc-plan-toolbar" aria-label="Garder ce calcul">
+    <div class="calc-plan-name"><label for="calc-name">Le nom de mon calcul</label><input id="calc-name" type="text" maxlength="100" placeholder="Mon premier million" autocomplete="off"></div>
+    <button class="calc-button" type="button" id="calc-reference">Garder pour comparer</button><button class="calc-button" type="button" id="calc-print">Imprimer</button><button class="calc-button" type="button" id="calc-undo" hidden>Annuler la remise à zéro</button>
+  </div>
+  <details class="calc-saved"><summary>Mes calculs enregistrés <span>gardés sur cet appareil, sans compte</span></summary><div class="calc-saved-body"><div id="saved-list"></div><div class="calc-carnet-actions"><button class="calc-button" id="calc-export" type="button">Télécharger mon calcul</button><label class="calc-button calc-import">Ouvrir un fichier de calcul<input id="calc-import" type="file" accept="application/json,.json"></label><button class="calc-button" id="calc-reset" type="button">Tout remettre à zéro</button></div></div></details>
+  <p class="calc-print-source">Leonidakit · leonidakit.com/calculateurs.html · Calcul fait avec tes chiffres à toi. Ce n’est pas une promesse de gain.</p>
 </section>
 
 <div class="fcount"><div class="shell fcount-in">
-  <span class="fcount-lbl">Les vraies valeurs du jeu remplacent les exemples dans</span>
-  <span class="fcount-nums" id="fcd"><span class="fcd-box"><b id="fd">—</b><i>j</i></span><span class="fcd-box"><b id="fh">—</b><i>h</i></span><span class="fcd-box"><b id="fm">—</b><i>min</i></span><span class="fcd-box"><b id="fs">—</b><i>s</i></span></span>
+  <span class="fcount-lbl">GTA VI sort dans</span>
+  <span class="fcount-nums" id="fcd"><span class="fcd-box"><b id="fd">…</b><i>j</i></span><span class="fcd-box"><b id="fh">…</b><i>h</i></span><span class="fcd-box"><b id="fm">…</b><i>min</i></span><span class="fcd-box"><b id="fs">…</b><i>s</i></span></span>
+  <span class="fcount-lbl fcount-lbl--after">Dès que les vrais prix sont connus, on les ajoute ici.</span>
 </div></div>
 
-<section class="shell reveal lk-ask" id="que-calculer">
-  <h2 class="sec-h">Que veux-tu calculer ?</h2>
-  <div class="lk-ask-stage rise">
-    <form id="calc-ask" class="lk-ask-form" role="search" autocomplete="off">
-      <label for="calc-ask-input" class="lk-ask-label">Pose ta question, avec tes chiffres</label>
-      <div class="lk-ask-row"><input id="calc-ask-input" type="search" placeholder="Ex. j'ai 200 000 $ et 45 min par jour, quand est-ce que j'atteins 1 million ?" aria-describedby="calc-ask-out"><button type="submit">Trouver l'outil</button></div>
-      <p id="calc-ask-out" class="lk-ask-out" hidden></p>
-    </form>
-    <div class="lk-ask-chips" aria-label="Exemples de questions">
-      <button type="button" data-ask="Combien de temps pour atteindre 1 million avec 1 heure par jour ?">Combien de temps pour 1 million ?</button>
-      <button type="button" data-ask="J'ai 2 heures, combien puis-je gagner ?">J'ai 2 heures, je gagne combien ?</button>
-      <button type="button" data-ask="Quelle activité rapporte le plus par heure ?">Quelle activité rapporte le plus ?</button>
-      <button type="button" data-ask="Puis-je me permettre d'acheter un véhicule à 250000 $ ?">Puis-je acheter ce véhicule ?</button>
-      <button type="button" data-ask="En combien de temps un investissement de 500000 $ est amorti ?">Quand un achat est-il amorti ?</button>
-      <button type="button" data-ask="Comment répartir mon budget entre véhicule, propriété et réserve ?">Répartir mon budget</button>
-      <button type="button" data-ask="Dans quel ordre acheter : véhicule puis propriété, ou l'inverse ?">Dans quel ordre acheter ?</button>
-    </div>
-  </div>
-  <div class="lk-goals rise" aria-label="Objectifs populaires">
-    <span class="lk-goals-k">Objectifs populaires</span>
-    <button type="button" data-goal-preset="100000">100 k $</button><button type="button" data-goal-preset="500000">500 k $</button><button type="button" data-goal-preset="1000000">1 M $</button><button type="button" data-goal-preset="5000000">5 M $</button><button type="button" data-goal-preset="10000000">10 M $</button>
-  </div>
-</section>
-
-<section class="shell reveal" id="outils-calc">
-  <h2 class="sec-h">Six outils, un moteur</h2>
-  <p class="fiche-txt">Chacun répond à une question précise. Tous partagent les mêmes formules et tes mêmes hypothèses : change un chiffre ici, les autres suivent.</p>
-  <div class="lk-tools rise">
-    <a class="lk-tool" href="#atelier" data-open-tab="goal"><span class="lk-tool-n">01</span><b>Mon objectif</b><span>Ton capital, ton temps par jour, ton cap : en combien de jours, avec quel rythme, selon trois scénarios.</span><i>Ouvrir</i></a>
-    <a class="lk-tool" href="#atelier" data-open-tab="activities"><span class="lk-tool-n">02</span><b>Activités et grind</b><span>Compare tes activités en dollars par heure, préparation et attente comprises. Calcul inverse : temps disponible, argent possible.</span><i>Ouvrir</i></a>
-    <a class="lk-tool" href="#atelier" data-open-tab="roi"><span class="lk-tool-n">03</span><b>Rentabilité</b><span>Investissement, revenus, coûts : bénéfice, retour sur investissement, seuil d'amortissement et courbe dans le temps.</span><i>Ouvrir</i></a>
-    <a class="lk-tool" href="#atelier" data-open-tab="purchase"><span class="lk-tool-n">04</span><b>Mes achats</b><span>Un véhicule du catalogue ou un prix libre : part du capital, temps pour le regagner, acheter maintenant ou épargner.</span><i>Ouvrir</i></a>
-    <a class="lk-tool" href="#atelier" data-open-tab="budget"><span class="lk-tool-n">05</span><b>Mon budget</b><span>Répartis une somme entre véhicules, propriétés, équipement et réserve, et vois ce qu'il reste pour ton objectif.</span><i>Ouvrir</i></a>
-    <a class="lk-tool" href="#atelier" data-open-tab="order"><span class="lk-tool-n">06</span><b>Ordre d'achat</b><span>Deux séquences d'achats comparées, avec l'effet de chaque acquisition sur les revenus suivants.</span><i>Ouvrir</i></a>
+<section class="calc-shell lk-tool-guide" id="outils-calc" aria-labelledby="calc-tools-title">
+  <p class="calc-kicker">7 QUESTIONS, 7 CALCULS</p><h2 id="calc-tools-title">À chaque question, son calcul.</h2>
+  <div class="lk-tools">
+    <a class="lk-tool lk-tool--lead" href="#atelier" data-open-tab="goal"><span class="lk-tool-n"><svg class="calc-tab-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.4" fill="currentColor"/></svg><em>01</em></span><b>Combien de temps pour avoir mon argent ?</b><span>Tu écris ce que tu as, ce que tu veux et ce que tu gagnes. On te dit en combien de jours tu y arrives.</span><i>Calculer mon objectif ↗</i></a>
+    <a class="lk-tool" href="#atelier" data-open-tab="purchase"><span class="lk-tool-n"><svg class="calc-tab-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h2.5l2.2 10.5h10.2L20 7H7"/><circle cx="9.5" cy="19" r="1.6"/><circle cx="17" cy="19" r="1.6"/></svg><em>02</em></span><b>Est-ce que je peux l’acheter ?</b><span>Choisis une voiture, une arme ou un lieu du site, ou écris un prix. On te dit s’il te manque de l’argent.</span><i>Préparer mon achat ↗</i></a>
+    <a class="lk-tool" href="#atelier" data-open-tab="session"><span class="lk-tool-n"><svg class="calc-tab-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/></svg><em>03</em></span><b>J’ai 30 minutes : je fais quoi ?</b><span>Tu dis combien de temps tu as. On te propose un programme d’activités qui rentre dedans.</span><i>Préparer mon temps de jeu ↗</i></a>
+    <a class="lk-tool" href="#atelier" data-open-tab="budget"><span class="lk-tool-n"><svg class="calc-tab-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v9h9"/><path d="M20.5 15A9 9 0 1 1 9 3.5"/></svg><em>04</em></span><b>Comment partager mon argent ?</b><span>Tu répartis ton argent entre tes envies, en gardant une partie de côté. On te dit ce qu’il reste.</span><i>Faire mon budget ↗</i></a>
+    <a class="lk-tool" href="#atelier" data-open-tab="order"><span class="lk-tool-n"><svg class="calc-tab-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 6h11M10 12h11M10 18h11"/><path d="M3.5 5.2 5 4.5V8M3.4 11h2.4l-2.4 3h2.6M3.5 16.5h2.2l-1.3 1.4c1 0 1.6.5 1.6 1.2 0 .8-.9 1.2-2.4.8"/></svg><em>05</em></span><b>Quoi acheter d’abord ?</b><span>Trois achats, deux ordres possibles. On te montre l’ordre qui te fait tout avoir le plus vite.</span><i>Comparer les deux ordres ↗</i></a>
+    <a class="lk-tool" href="#atelier" data-open-tab="roi"><span class="lk-tool-n"><svg class="calc-tab-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l5.5-5.5 4 3.5L20 7"/><path d="M15 7h5v5"/></svg><em>06</em></span><b>Est-ce que ça vaut le coup ?</b><span>Un achat qui rapporte de l’argent : on te dit après combien d’heures de jeu il est remboursé.</span><i>Voir quand c’est remboursé ↗</i></a>
+    <a class="lk-tool" href="#atelier" data-open-tab="activities"><span class="lk-tool-n"><svg class="calc-tab-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4.5h6M8.5 10h7M8.5 14h7M8.5 18h4"/></svg><em>07</em></span><b>Quelle activité rapporte le plus ?</b><span>Écris ce que tes missions te rapportent et combien de temps elles durent. On les classe pour toi.</span><i>Comparer mes activités ↗</i></a>
   </div>
 </section>
 
 <section class="shell reveal" id="activites-gains">
   <h2 class="sec-h">Ce que rapporte chaque activité</h2>
-  <p class="fiche-txt">Braquer une banque, une supérette, livrer, courir, pêcher : combien, en combien de temps. Rockstar n'a encore publié aucun chiffre ; le tableau est prêt et se remplira ligne par ligne avec des relevés faits dans le jeu, jamais avec des valeurs de GTA V.</p>
+  <p class="fiche-txt">Braquer une banque, livrer, pêcher, faire des courses : combien ça rapporte, et en combien de temps ? Le jeu n’est pas encore sorti, donc personne ne le sait. Le tableau est prêt : on le remplira ligne par ligne avec de vrais relevés faits dans le jeu, jamais avec les chiffres de GTA V.</p>
   <div class="lk-act-wrap rise"><table class="spec lk-act">
     <thead><tr><th scope="col">Activité</th><th scope="col">Gain</th><th scope="col">Durée</th><th scope="col">Mise de départ</th><th scope="col">Statut</th></tr></thead>
     <tbody>
@@ -147,57 +176,64 @@
       <tr><th scope="row">Vol et revente de véhicules</th><td>À relever</td><td>À relever</td><td>Aucune</td><td><span class="chip">Non publié</span></td></tr>
       <tr><th scope="row">Agressions et vols à la tire</th><td>À relever</td><td>À relever</td><td>Aucune</td><td><span class="chip">Non publié</span></td></tr>
     </tbody></table></div>
-  <p class="note">Chaque ligne aura son gain moyen, sa durée, sa mise de départ et son dollar par heure, avec la source du relevé. L'outil Activités et grind les lira automatiquement dès qu'elles existeront.</p>
+  <p class="note">Chaque ligne aura son gain, sa durée et ce qu’il faut acheter avant de commencer. L’outil « Mes activités » les utilisera tout seul dès qu’elles existeront.</p>
 </section>
 
-<div class="shell"><div class="note-box rise"><b>Simulateur en mode manuel.</b> Les montants préremplis sont des exemples fictifs, pas des données officielles GTA VI. Change-les pour simuler ta propre progression ; tout se calcule dans ton navigateur.</div></div>
-
-<section class="calc-shell calc-workspace" id="atelier" aria-labelledby="atelier-title">
- <div class="calc-section-head"><div><p class="calc-kicker">01 / TON CENTRE DE DÉCISION</p><h2 id="atelier-title">Un objectif. Un plan.</h2></div><div class="calc-actions"><button class="calc-button" id="calc-save">☆ Enregistrer</button><button class="calc-button" id="calc-share">Partager ↗</button></div></div>
- <div class="calc-tabs" role="tablist" aria-label="Outils de calcul">
-  <button id="tab-goal" role="tab" aria-selected="true" aria-controls="panel-goal" data-tab="goal">01 <span>Mon objectif</span></button>
-  <button id="tab-activities" role="tab" aria-selected="false" aria-controls="panel-activities" tabindex="-1" data-tab="activities">02 <span>Activités & grind</span></button>
-  <button id="tab-roi" role="tab" aria-selected="false" aria-controls="panel-roi" tabindex="-1" data-tab="roi">03 <span>Rentabilité</span></button>
-  <button id="tab-purchase" role="tab" aria-selected="false" aria-controls="panel-purchase" tabindex="-1" data-tab="purchase">04 <span>Mes achats</span></button>
-  <button id="tab-budget" role="tab" aria-selected="false" aria-controls="panel-budget" tabindex="-1" data-tab="budget">05 <span>Mon budget</span></button>
-  <button id="tab-order" role="tab" aria-selected="false" aria-controls="panel-order" tabindex="-1" data-tab="order">06 <span>Ordre d’achat</span></button>
- </div>
- <div id="calc-panels"></div>
- <noscript><p class="calc-warning">Active JavaScript pour utiliser les simulations. Tous les calculs sont effectués dans ton navigateur.</p></noscript>
- <p id="calc-live" class="calc-sr" role="status" aria-live="polite"></p>
- <details class="calc-saved"><summary>Mon carnet <span>Favoris & calculs récents, sur cet appareil</span></summary><div class="calc-saved-body"><div id="saved-list"></div><button class="calc-button" id="calc-export">Exporter ma configuration</button><label class="calc-button calc-import">Importer une configuration<input id="calc-import" type="file" accept="application/json,.json"></label><button class="calc-button" id="calc-reset">Réinitialiser les paramètres</button></div></details>
-</section>
-<section class="calc-editorial calc-shell"><div class="calc-editorial-image"><img src="img/officiel/vice-city-06-480.webp" width="480" height="270" alt="La vie nocturne à Vice City" loading="lazy" decoding="async"><span>LEONIDA / AFTER HOURS</span></div><div><p class="calc-kicker">02 / LES CHIFFRES, SANS LE FLOU</p><h2>Ton argent mérite<br>un vrai plan.</h2><p>Compare tes hypothèses, garde une réserve et vois le temps que chaque décision te coûte. Le résultat dépend de tes chiffres : une simulation n’est pas une promesse de gain.</p><a href="#methodes">Comprendre les calculs <span aria-hidden="true">↗</span></a></div></section>
-<section class="shell reveal" id="sources-calc">
-  <h2 class="sec-h">D'où viennent les chiffres</h2>
-  <details class="lk-fold rise"><summary>Statut de chaque donnée utilisée par les calculateurs</summary><div class="lk-fold-body">
-    <table class="spec lk-src"><tbody>
-      <tr><th scope="row">Scénarios A, B et C</th><td><span class="chip">Exemples fictifs</span> Récompenses, coûts, durées et attentes choisis pour illustrer le moteur. À remplacer par tes propres valeurs.</td></tr>
-      <tr><th scope="row">Tes saisies</th><td><span class="chip live">Hypothèse utilisateur</span> Capital, objectif, temps de jeu, prix, revenus : tout ce que tu entres est calculé tel quel, jamais présenté comme officiel.</td></tr>
-      <tr><th scope="row">Catalogue véhicules</th><td><span class="chip">À compléter</span> 302 fiches reliées à la base du site, sans prix pour l'instant. Dès qu'un prix officiel existera dans la fiche, l'outil « Mes achats » l'utilisera.</td></tr>
-      <tr><th scope="row">Activités GTA VI</th><td><span class="chip">Non publié</span> Rockstar n'a communiqué ni revenu, ni durée, ni coût d'activité. La liste officielle est vide et le restera tant qu'aucune source vérifiable n'existe.</td></tr>
-      <tr><th scope="row">Formules</th><td><span class="chip live">Documentées</span> Moteur unique (calculateurs-engine.js), formules décrites dans outils/CALCULATEURS-MOTEUR.md, 43 tests automatiques.</td></tr>
-    </tbody></table>
-  </div></details>
+<section class="calc-editorial calc-shell" aria-labelledby="calc-editorial-title">
+  <div class="calc-editorial-image"><img src="img/officiel/vice-city-06-480.webp" width="480" height="270" alt="La vie nocturne à Vice City" loading="lazy" decoding="async"></div>
+  <div><p class="calc-kicker">JOUE PLUS, CALCULE MOINS</p><h2 id="calc-editorial-title">Ton temps de jeu compte.</h2><p>Une petite partie ce soir, un gros achat ce week-end : regarde ce que chaque choix change pour toi. Enregistre ton calcul, reviens avec tes nouveaux chiffres, et continue.</p><a href="#atelier" data-open-tab="session">Préparer mon temps de jeu <span aria-hidden="true">↗</span></a></div>
 </section>
 
-<section class="shell reveal lk-explore">
-  <h2 class="sec-h">En attendant les formules</h2>
-  <div class="lk-links rise"><a class="lk-link" href="vehicules.html"><img src="/img/officiel/one-eyed-willie-s-mod-shop-01-480.webp" width="480" height="270" alt="" loading="lazy" decoding="async"><span><b>Les 302 véhicules</b><i>Fiches, photos officielles et schémas</i></span></a><a class="lk-link" href="carte.html"><img src="/img/officiel/leonida-keys-01-480.webp" width="480" height="270" alt="" loading="lazy" decoding="async"><span><b>La carte</b><i>2 547 lieux repérés, à cocher</i></span></a><a class="lk-link" href="progression.html"><img src="/img/officiel/mount-kalaga-national-park-06-480.webp" width="480" height="270" alt="" loading="lazy" decoding="async"><span><b>Ma progression</b><i>Garage, arsenal, repérages et collection</i></span></a></div>
-</section>
-<section class="calc-shell calc-methods" id="methodes"><p class="calc-kicker">03 / EN TOUTE TRANSPARENCE</p><h2>Ce que l’on calcule. Ce que l’on sait.</h2>
-<details><summary>D’où viennent les chiffres ?</summary><p>Les exemples A, B et C sont entièrement fictifs et modifiables. Les noms, images et fiches proviennent des catalogues existants du site. Un véhicule repéré dans une image n’a pas nécessairement un prix ou des performances confirmés. Une valeur inconnue reste inconnue ; aucun tarif GTA Online n’est utilisé comme tarif GTA VI.</p><p>La provenance des médias est détaillée sur la <a href="medias.html">page des crédits</a>. Les informations officielles sont à consulter sur le <a href="https://www.rockstargames.com/VI" target="_blank" rel="noopener noreferrer">site de Rockstar Games</a>.</p></details>
-<details><summary>Comment sont calculés les gains et les sessions ?</summary><p>Gain net par mission = récompense × ta part ÷ 100 − tes frais. Le nombre de joueurs est une contrainte d’accès ; il ne divise pas une seconde fois ta part. Le rendement de long terme inclut préparation et attente. Les missions sont indivisibles, les délais d’attente ne sont pas comptés après la dernière mission d’une session, et l’attente est supposée écoulée avant le jour suivant. Une session correspond à un jour.</p><p>Le mode alternance suit A → B → C, puis recommence, en n’utilisant que les scénarios accessibles à ton groupe. Il ne revendique pas une optimisation globale. Les graphiques de l’objectif montrent une projection lissée entre les étapes ; les résultats de missions restent arrondis à des réalisations entières.</p></details>
-<details><summary>ROI, amortissement et ordres d’achat</summary><p>Investissement = achat + améliorations + frais initiaux. Bénéfice net horaire = revenus horaires − coûts horaires. Amortissement = investissement ÷ bénéfice net horaire. ROI sur la durée choisie = (bénéfice d’exploitation − investissement) ÷ investissement × 100. Exemple : 500 000 $ investis et 75 000 $ nets par heure donnent 6 h 40 d’amortissement.</p><p>Les ordres d’achat supposent un revenu continu constant entre deux achats. Chaque bonus horaire est une hypothèse personnelle, ajoutée uniquement après l’achat. Ni intérêts composés, ni revente, ni rendement passif simultané ne sont supposés. Le budget réservé n’est pas une dépense.</p></details>
-<details><summary>Sauvegarde et partage</summary><p>La configuration et les favoris restent dans ce navigateur, sans compte. Les liens partagés contiennent les hypothèses du calcul dans leur fragment d’URL ; les données du catalogue restent celles de la version du site consultée. L’export JSON sert de copie transférable. En navigation privée ou si le stockage est bloqué, utilise cet export.</p></details>
-</section>
-<section class="lk-outro" aria-label="Et après">
-  <div class="shell lk-outro-in">
-    <p class="lk-outro-k">Et après ?</p>
-    <h2>La suite s'écrit le 19 novembre 2026.</h2>
-    <p>Les vraies valeurs remplaceront les exemples le jour de la sortie.</p>
-    <div class="lk-outro-links"><a href="vehicules.html">Le catalogue</a><a href="progression.html">Ma progression</a></div>
+<section class="faq-sec" id="methodes">
+  <div class="shell">
+    <div class="sec-head reveal">
+      <h2>Questions fréquentes</h2>
+      <p>Des réponses courtes, avec des mots simples.</p>
+    </div>
+    <div class="faq rise">
+      <details>
+        <summary>C’est gratuit ? Il faut un compte ?</summary>
+        <div class="ans">Oui, c’est gratuit, et non, il ne faut pas de compte. Tes chiffres restent dans ton navigateur, sur ton appareil. Rien n’est envoyé ailleurs et rien n’est relié à ton compte GTA.</div>
+      </details>
+      <details id="sources-calc">
+        <summary>Ce sont les vrais chiffres du jeu ?</summary>
+        <div class="ans">Pas encore. GTA VI sort le 19 novembre 2026 et Rockstar n’a publié aucun prix ni aucun gain de mission. Les nombres déjà écrits dans les cases sont des exemples : remplace-les par les tiens. Dès que de vrais chiffres seront connus et vérifiés, ils seront ajoutés ici, avec leur source. On n’utilise jamais les chiffres de GTA V ou de GTA Online à la place.</div>
+      </details>
+      <details>
+        <summary>Je ne sais pas combien je gagne par heure. Je fais comment ?</summary>
+        <div class="ans">Dans « Mon objectif », ouvre « Je ne sais pas combien je gagne ». Écris ce que ta dernière mission t’a rapporté et combien de minutes elle a duré. Le calculateur trouve ton gain par heure et le met dans la bonne case.</div>
+      </details>
+      <details>
+        <summary>C’est quoi, « l’argent que je garde de côté » ?</summary>
+        <div class="ans">C’est une somme que tu ne veux pas dépenser, par exemple pour payer des munitions ou des frais de mission. Le calculateur n’y touche jamais : il fait comme si cet argent n’existait pas pour tes achats.</div>
+      </details>
+      <details>
+        <summary>Pourquoi le temps de jeu et le nombre de jours sont différents ?</summary>
+        <div class="ans">Le temps de jeu, c’est le temps passé à jouer en tout, par exemple 8 heures. Le nombre de jours dépend de combien tu joues chaque jour : 8 heures de jeu, c’est 8 jours si tu joues 1 heure par jour, mais 4 jours si tu joues 2 heures.</div>
+      </details>
+      <details>
+        <summary>Que veut dire « remboursé » ?</summary>
+        <div class="ans">Un achat est remboursé quand il t’a rapporté autant d’argent qu’il t’en a coûté. Exemple : tu paies 500 000 $ et ça te rapporte 75 000 $ par heure, tous frais payés. Il est remboursé après 6 h 40 de jeu. Après ça, tout ce qu’il rapporte est du bonus.</div>
+      </details>
+      <details>
+        <summary>Comment retrouver mon calcul plus tard ?</summary>
+        <div class="ans">Donne-lui un nom et clique sur « Enregistrer » : il se range dans « Mes calculs enregistrés », sur cet appareil. « Partager » copie un lien qui rouvre le même calcul chez un ami. Tu peux aussi télécharger un fichier et le rouvrir sur un autre appareil.</div>
+      </details>
+      <details>
+        <summary>Une mission pas finie, ça compte ?</summary>
+        <div class="ans">Non. Le calculateur ne compte que les missions terminées, parce qu’on est payé à la fin. Si une mission dure 46 minutes et que tu as 45 minutes, elle n’entre pas dans ton programme.</div>
+      </details>
+    </div>
+    <div class="lk-glossary rise" aria-labelledby="calc-glossary-title">
+      <h3 id="calc-glossary-title">Les mots compliqués, expliqués simplement</h3>
+      <dl><div><dt>Capital</dt><dd>L’argent que tu as maintenant. Ici on dit « J’ai déjà ».</dd></div><div><dt>Frais</dt><dd>Ce que tu dois payer pour faire une mission : munitions, matériel, part des coéquipiers.</dd></div><div><dt>Gain net, ou bénéfice</dt><dd>Ce qu’il te reste quand tu as payé tes frais. Récompense 100 000 $, frais 20 000 $ : ton gain est de 80 000 $.</dd></div><div><dt>Investissement</dt><dd>Un achat que tu fais pour gagner plus d’argent ensuite, comme une entreprise.</dd></div><div><dt>Amortissement</dt><dd>Le moment où un achat est remboursé : il t’a rapporté autant qu’il t’a coûté.</dd></div><div><dt>ROI</dt><dd>Ce qu’un achat t’a fait gagner, en pourcentage de son prix. 0 % veut dire remboursé, 100 % veut dire qu’il a rapporté deux fois son prix.</dd></div><div><dt>Réserve</dt><dd>L’argent que tu gardes de côté et que tu ne dépenses pas.</dd></div><div><dt>Temps d’attente</dt><dd>Le temps pendant lequel une mission n’est pas encore disponible après l’avoir faite.</dd></div></dl>
+    </div>
   </div>
+</section>
+
+<section class="calc-shell lk-explore" aria-labelledby="calc-explore-title">
+  <p class="calc-kicker">ET APRÈS ?</p><h2 id="calc-explore-title">Continuer la visite</h2>
+  <div class="lk-links"><a class="lk-link" href="vehicules.html"><img src="img/officiel/one-eyed-willie-s-mod-shop-01-480.webp" width="480" height="270" alt="" loading="lazy" decoding="async"><span><b>Les 302 véhicules</b><i>Trouver mon prochain achat ↗</i></span></a><a class="lk-link" href="carte.html"><img src="img/officiel/leonida-keys-01-480.webp" width="480" height="270" alt="" loading="lazy" decoding="async"><span><b>La carte de Leonida</b><i>Explorer les lieux ↗</i></span></a><a class="lk-link" href="progression.html"><img src="img/officiel/mount-kalaga-national-park-06-480.webp" width="480" height="270" alt="" loading="lazy" decoding="async"><span><b>Ma progression</b><i>Voir ce que j’ai déjà ↗</i></span></a></div>
 </section>
 </main>
 
@@ -234,7 +270,7 @@
     <div class="foot-top">
       <div class="foot-brand">
         <span class="brand">Leonida<span>kit</span></span>
-        <p>Carte, fiches et outils pour GTA VI. Mis à jour en continu à partir du 19 novembre 2026.</p>
+        <p>Carte, fiches et outils pour GTA VI. Un projet de fans indépendant de Rockstar Games.</p>
       </div>
       <div class="foot-cols">
         <div>
@@ -243,7 +279,7 @@
         </div>
         <div>
           <h2>Outils</h2>
-          <nav><a href="progression.html">Progression</a><a href="calculateurs.html">Calculateurs</a></nav>
+          <nav><a href="progression.html">Progression</a><a href="calculateurs.html">Calculateur</a></nav>
         </div>
         <div>
           <h2>Le site</h2>
@@ -255,18 +291,19 @@
   </div>
 </footer>
 
-<script src="search-index.js?v=349ee1d6"></script>
-<script src="assets-manifest.js?v=349ee1d6"></script>
-<script src="common.js?v=349ee1d6"></script>
-<script src="app.js?v=349ee1d6"></script>
-<script src="vehicules-data.js?v=349ee1d6"></script>
-<script src="armes-data.js?v=349ee1d6"></script>
-<script src="calculateurs-catalogue.js?v=349ee1d6"></script>
-<script src="calculateurs-activites.js?v=349ee1d6"></script>
-<script src="calculateurs-data.js?v=349ee1d6"></script>
-<script src="calculateurs-engine.js?v=349ee1d6"></script>
-<script src="calculateurs-tools.js?v=349ee1d6"></script>
-<script src="calculateurs.js?v=349ee1d6"></script>
-<script src="calculateurs-hub.js?v=349ee1d6"></script>
+<script src="search-index.js?v=959ae019"></script>
+<script src="assets-manifest.js?v=959ae019"></script>
+<script src="common.js?v=959ae019"></script>
+<script src="app.js?v=959ae019"></script>
+<script src="vehicules-data.js?v=959ae019"></script>
+<script src="armes-data.js?v=959ae019"></script>
+<script src="calculateurs-catalogue.js?v=959ae019"></script>
+<script src="calculateurs-activites.js?v=959ae019"></script>
+<script src="calculateurs-data.js?v=959ae019"></script>
+<script src="calculateurs-engine.js?v=959ae019"></script>
+<script src="calculateurs-tools.js?v=959ae019"></script>
+<script src="calculateurs.js?v=959ae019"></script>
+<script src="calculateurs-hub.js?v=959ae019"></script>
+<script src="calculateurs-simple.js?v=959ae019"></script>
 </body>
 </html>

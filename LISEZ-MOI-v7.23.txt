@@ -1,0 +1,3 @@
+Archive « modifs » v7.23 (contient aussi la v7.22) : fichiers modifiés ou ajoutés par rapport à la v7.21 en ligne. Aucune suppression.
+Coller le contenu par-dessus le dépôt (remplacer, en cochant « Faire ceci pour tous les éléments en conflit »), puis Commit et Push.
+Détail dans outils/CHANGEMENTS-v7.22.txt et outils/CHANGEMENTS-v7.23.txt. Ne pas mettre le ZIP lui-même dans le dépôt.

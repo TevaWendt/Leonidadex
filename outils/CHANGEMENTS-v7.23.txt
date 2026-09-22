@@ -1,0 +1,35 @@
+LEONIDAKIT v7.23 : LES SEPT OUTILS AU MÊME NIVEAU DE SIMPLICITÉ (22 septembre 2026)
+====================================================================================
+Base : v7.21. Contient aussi la v7.22. Aucun fichier supprimé. Archive « modifs ».
+
+1. Chaque outil commence par « MA RÉPONSE » en une phrase, avec les chiffres en gras :
+   - Mes achats : « Oui, tu peux l'acheter maintenant. Il te restera 100 000 $. » ou « Pas encore :
+     il te manque 50 000 $. Avec ce que tu gagnes, ça fait 1 h de jeu. »
+   - Mon temps de jeu : « En 1 h, tu peux gagner 110 000 $ avec 1 mission. Commence par … »
+   - Mon budget : « Oui, tu peux tout acheter. Il te reste 30 000 $. » ou « Non : il te manque … »
+   - Quoi acheter d'abord ? : « Achète d'abord Équipement, puis Investissement, puis Véhicule.
+     Tout est à toi en 1 h 04 de jeu, soit 20 min plus tôt que l'autre ordre. »
+   - Ça vaut le coup ? : « Cet achat est remboursé après 6 h 40 de jeu. » ou « jamais remboursé »
+   - Mes activités : « En 1 h, en refaisant « … », tu gagnes 67 500 $ avec 3 missions. » suivi de
+     « Ce qui rapporte le plus par heure : … ».
+2. Les six autres outils sont découpés en étapes numérotées comme « Mon objectif » : 4 pour les
+   achats, 3 pour le temps de jeu, 3 pour la rentabilité, 2 pour le budget, 4 pour l'ordre d'achat,
+   2 pour les activités. Les cases sont les mêmes qu'avant : rien ne change dans les calculs.
+3. Le mode « Pas à pas » marche dans les sept outils : une question par écran, « Question 2 sur 4 »,
+   barre de progression, Retour / Suivant, Entrée = Suivant, « Voir ma réponse » à la fin. L'endroit
+   où tu en es est gardé par outil.
+4. « Mes activités » est réorganisé : la question d'abord (combien de temps, quelle activité), la
+   réponse à côté, le tableau « Ce que rapportent tes activités » en dessous, et les chiffres de
+   chaque activité dans un volet « Changer les chiffres de mes activités ».
+5. Puces de temps dans « Mes activités » (30 min, 1 h, 2 h, 3 h) ; les puces déjà présentes dans
+   « Mon temps de jeu » (15 à 90 min) montrent maintenant laquelle est choisie.
+6. Toutes les réponses sont dans la même carte sombre « nuit de Vice City » ; le résumé collant sur
+   téléphone suit l'outil ouvert (« 110 000 $ · 1 mission · Voir ma réponse »).
+7. Les cases à cocher des activités sont de grandes lignes tactiles, ambrées quand elles sont cochées.
+8. Nouveau fichier outils/CALCULATEUR-COUVERTURE.md : relecture du brief point par point, avec ce
+   qui est fait, partiel, manquant ou en attente des données du jeu.
+
+Vérifications : 172 tests Node, 142/142 contrôles Chromium (parcours v2), 215/215 (parcours v1 ;
+15 contrôles de saisie portent maintenant sur d'autres cases, les chiffres des activités étant
+dans un volet replié), verifier.js sans erreur, rendus 1440 / 390 px des sept outils en mode Simple
+et Pas à pas sans erreur console. Non testés : Safari, Firefox, appareils réels, lecteur d'écran.

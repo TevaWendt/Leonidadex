@@ -1,0 +1,51 @@
+LEONIDAKIT v7.22 : LE CALCULATEUR, FACILE MÊME À 10 ANS (22 septembre 2026)
+============================================================================
+Base : v7.21. Aucun fichier supprimé. Livrée en archive « modifs » (fichiers modifiés ou ajoutés
+par rapport à la v7.21 en ligne). Reprend le moteur et les sept outils de la livraison ChatGPT du
+21 septembre (calculs vérifiés, plan de session, sauvegarde, partage, entrées depuis les fiches)
+et corrige ce qui n'allait pas : jargon, charte, fonctions de la v7.21 disparues.
+
+1. Mots simples partout. Les cases s'appellent « J'ai déjà », « Je veux avoir », « Je gagne à peu
+   près ($ par heure de jeu) », « Je joue chaque jour ». Les sept calculs sont des questions :
+   Mon objectif, Mes achats (Est-ce que je peux l'acheter ?), Mon temps de jeu (J'ai 30 minutes :
+   je fais quoi ?), Mon budget, Quoi acheter d'abord ?, Ça vaut le coup ?, Mes activités.
+   Capital, ROI, amortissement, trésorerie, hypothèse et scénario ont disparu de l'écran ; un
+   lexique « Les mots compliqués, expliqués simplement » les traduit en bas de page.
+2. La réponse en une phrase : « Il te manque 800 000 $. En jouant 1 h par jour, tu y arrives en
+   8 jours. » Puis le gros chiffre, puis le détail.
+3. Les grands nombres se lisent : « 1 000 000 » avec ses espaces et « = 1 million $ » dessous,
+   sur le calculateur comme sur l'accueil. Une saisie avec virgule n'est jamais réécrite.
+4. « Je ne sais pas combien je gagne » : tu écris ce que ta dernière mission a rapporté et sa
+   durée, le gain par heure se remplit tout seul.
+5. Quatre étapes numérotées avec boutons rapides (100 k à 10 M $ ; 30 min, 1 h, 2 h, 3 h) et
+   la réglette d'objectif de la v7.21, remise.
+6. Mode « Pas à pas » : une question par écran, « Question 2 sur 4 : Combien veux-tu avoir ? »,
+   barre de progression, gros boutons Retour / Suivant, Entrée passe à la suite, dernier bouton
+   « Voir ma réponse ». Les mêmes cases qu'en mode Simple : rien n'est perdu en changeant de mode.
+   Les trois modes s'appellent Simple, Pas à pas, Expert.
+7. Sept gros onglets avec un pictogramme dessiné (cible, panier, horloge, camembert, liste
+   numérotée, courbe, carnet), du plus simple au plus avancé. Sur téléphone, deux par ligne.
+8. Téléphone : un résumé collant en bas (« 8 h de jeu · 8 jours · Voir ma réponse ») tant que
+   la réponse n'est pas à l'écran ; l'atelier vient avant la question ; aucun débordement
+   horizontal de 320 à 1440 px.
+9. Charte : retour à l'encre, au corail, à l'ambre et au dégradé nuit de Vice City ; textes
+   grossis (plus rien sous 12,5 px), cartes à bord encre et filet ambre, ombres dures. Le
+   texte anglais (« MAKE YOUR NEXT MOVE ») et le crédit visible sur l'accueil sont retirés.
+10. Remis de la v7.21 : le compte à rebours (« GTA VI sort dans… Dès que les vrais prix sont
+    connus, on les ajoute ici »), le tableau « Ce que rapporte chaque activité » avec ses
+    statuts honnêtes, la barre « Que veux-tu calculer ? » avant l'atelier.
+11. Règles du site : sept cartes sans orpheline (la première tient deux colonnes), FAQ au
+    gabarit du site (8 questions en mots simples), « Calculateur » en premier dans le menu de
+    toutes les pages avec aria-current.
+12. Points d'entrée simplifiés : accueil (« Dis combien tu as et combien tu veux. On te dit
+    combien de temps il te faut. »), fiches véhicules et armes (« Tu veux ce véhicule ? »),
+    entreprises, demeures, comparateur, progression.
+13. Nouveau fichier calculateurs-simple.js (aucun calcul : lecture des nombres, réglette, aide au
+    gain, pas à pas, résumé collant). Tous les chiffres restent ceux de calculateurs-engine.js.
+
+Vérifications : 172 tests Node réussis (dont 52 du moteur), 142/142 contrôles navigateur
+Chromium (parcours v2), 230/230 contrôles navigateur (parcours v1 : rechargement, lien partagé,
+clavier, 320 à 1440 px), verifier.js 28 375 références sans erreur dans 395 pages, rendus
+1440 / 768 / 390 / 320 px sans erreur console ni débordement, mouvement réduit et impression.
+Non testés : Safari, Firefox, appareils physiques, lecteur d'écran complet.
+Le site en ligne n'a pas été consulté : base = ZIP GitHub v7.21.

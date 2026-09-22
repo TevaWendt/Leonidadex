@@ -81,10 +81,10 @@ for(const file of htmlFiles){let s=fs.readFileSync(file,'utf8');if(file.startsWi
  s=s.replace('id="map-panel"','id="map-panel" inert').replace('id="map-panel" inert inert','id="map-panel" inert');
  if(canonical&&!/name="robots" content="[^"]*noindex/.test(s)&&!s.includes('http-equiv="refresh"')&&file!=='404.html')canonicals.push(canonical);
  // Navigation principale : toutes les pages importantes, onglet actif selon la page
- {const NAV=[['carte','Carte'],['vehicules','Véhicules'],['armes','Armes'],['lieux','Lieux'],['personnages','Personnages'],['demeures','Demeures'],['planques','Planques'],['entreprises','Entreprises'],['calculateurs','Calculateurs'],['progression','Progression'],['collectibles','Collectibles']];
+ {const NAV=[['calculateurs','Calculateur'],['carte','Carte'],['vehicules','Véhicules'],['armes','Armes'],['lieux','Lieux'],['personnages','Personnages'],['demeures','Demeures'],['planques','Planques'],['entreprises','Entreprises'],['progression','Progression'],['collectibles','Collectibles']];
   const base=file.replace(/\.html$/,'').split('/')[0];
   const cur=({'comparateur':'vehicules','classement-vehicules':'vehicules','vehicules-rares':'vehicules'})[base]||base;
-  const ul='<ul>\n'+NAV.map(([id,lbl])=>'        <li><a href="'+prefix+id+'.html"'+(id===cur?' class="here"':'')+'>'+lbl+'</a></li>').join('\n')+'\n      </ul>';
+  const ul='<ul>\n'+NAV.map(([id,lbl])=>'        <li><a href="'+prefix+id+'.html"'+(id===cur?' class="here" aria-current="page"':'')+'>'+lbl+'</a></li>').join('\n')+'\n      </ul>';
   s=s.replace(/(<nav id="nav" aria-label="Navigation principale">)\s*<ul>[\s\S]*?<\/ul>/,'$1\n      '+ul);}
  // Empreinte de version sur les feuilles de style et scripts locaux : après une mise en ligne, aucun navigateur ne peut réutiliser un ancien fichier en cache.
  s=s.replace(/((?:href|src)=")((?:\.\.\/)?[a-z0-9-]+\.(?:css|js))(?:\?v=[0-9a-f]+)?(")/g,(m0,a,f,b)=>a+f+'?v='+STAMP+b);
