@@ -1,4 +1,4 @@
-# Calculateur Leonidakit : maintenance, version du 22 septembre 2026 (v7.23)
+# Calculateur Leonidakit : maintenance, version du 22 septembre 2026 (v7.25)
 
 ## Structure
 
@@ -118,3 +118,11 @@ Règle : un enfant de 10 ans doit pouvoir s'en servir. Concrètement :
 - Chaque rendu de résultat commence par `<p class="calc-answer" data-short="…">` : la phrase complète pour l'écran, le résumé court pour le bandeau collant mobile. Tous les résultats sont dans une carte `.calc-result` (sombre) ; `#order-results` en contient une suivie des deux cartes A / B.
 - `Mes activités` : la question inverse (`inverse.minutes`, `inverse.selected`) est la carte principale ; le tableau reste dans `#activity-results` ; les éditeurs (`.calc-activity-editors`) sont dans `<details class="calc-activity-settings">`. Les identifiants des champs ne changent pas.
 - Puces `data-inverse-minutes` et état `aria-pressed` des puces `data-session-minutes`.
+
+## v7.25 : lot B (logique et connexions)
+
+- `calculateurs-scenario.js` : scénario v3 (`assets` = achats partagés sous clé stable ; `purchase.key`, `roi.key`, `order.keys` les référencent ; `views` = mode par outil, y compris `guided`), `migrate`/`validate` v1 → v3, `evaluate(tool)`, `sensitivity`, `signature`, `metrics`. Aucun calcul en dehors de `calculateurs-engine.js`.
+- `calculateurs-notebooks.js` : un carnet par outil et un carnet de plans, dans `localStorage`, versionnés ; suppression annulable.
+- `calculateurs-workspace.js` : panneaux Ça vaut le coup, Mon budget, Quoi acheter d'abord et Mon plan ; décoration des autres panneaux (champs Expert `.b-expert`, résumé des réglages `.b-mode-summary`, étapes « C'est bon pour cette étape »). Les étapes numérotées (`step()`) rendent le pas à pas de `calculateurs-simple.js` disponible partout.
+- Règle : quand un rendu resynchronise une case partagée, il ne la réécrit que si sa valeur diffère (les saisies françaises « 250 000,50 » sont conservées).
+- Tests : `outils/tests/calculateurs-lot-b.test.cjs`, `calculateurs-lot-b-browser.cjs` (Playwright).

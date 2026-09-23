@@ -223,6 +223,42 @@ window.LK_CALCULATEURS_CATALOGUE = {
       "source": "https://www.rockstargames.com/VI/only-in-leonida/lucia",
       "verifiedAt": null,
       "provenance": "outils/editorial.json#residences/lucia-avant"
+    },
+    {
+      "id": "planque-jason",
+      "type": "hideout",
+      "name": "La planque de Jason",
+      "category": "Planque",
+      "url": "/planques/planque-jason.html",
+      "image": "/img/officiel/jason-s-safehouse-vehicles-480.webp",
+      "status": "source-listed",
+      "source": "https://www.rockstargames.com/VI/media/screenshots",
+      "verifiedAt": null,
+      "provenance": "outils/editorial.json#hideouts/planque-jason"
+    },
+    {
+      "id": "chantier-brian",
+      "type": "hideout",
+      "name": "Le chantier naval de Brian",
+      "category": "Planque",
+      "url": "/planques/chantier-brian.html",
+      "image": "/img/officiel/trailer-2-brian-boatyard-085-480.webp",
+      "status": "source-listed",
+      "source": "https://www.rockstargames.com/VI/only-in-leonida/brian",
+      "verifiedAt": null,
+      "provenance": "outils/editorial.json#hideouts/chantier-brian"
+    },
+    {
+      "id": "starlet-motel",
+      "type": "hideout",
+      "name": "Le motel du premier trailer",
+      "category": "Planque",
+      "url": "/planques/starlet-motel.html",
+      "image": "/img/officiel/port-gellhorn-01-480.webp",
+      "status": "source-listed",
+      "source": "https://www.rockstargames.com/VI",
+      "verifiedAt": null,
+      "provenance": "outils/editorial.json#hideouts/starlet-motel"
     }
   ],
   "weaponImages": {

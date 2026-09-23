@@ -163,7 +163,7 @@ ${cards}
     const calcTool = calcKind === 'business' ? 'roi' : 'purchase';
     const calcTitle = calcKind === 'business' ? 'Est-ce que ça vaudrait le coup ?' : 'Combien faudrait-il pour l’avoir ?';
     const calcDescription = calcKind === 'business' ? 'On ne sait pas encore si ce lieu peut s’acheter dans le jeu. Tu peux quand même écrire tes propres chiffres : ce que ça coûte, ce que ça rapporte, et voir quand ce serait remboursé.' : 'On ne sait pas encore si ce lieu peut s’acheter, ni à quel prix. Écris le prix que tu imagines : le calculateur te dit combien de temps de jeu il te faudrait.';
-    const calcAction = calcKind === 'business' ? 'Faire le calcul' : 'Faire le calcul';
+    const calcAction = calcKind === 'business' ? 'Est-ce que ça vaut le coup ?' : 'Faire le calcul';
     const calcBridge = calcKind ? `<section class="shell" aria-labelledby="lore-calculator-title"><div class="lk-entry-card"><div><p class="lk-entry-eyebrow">LE CALCULATEUR</p><h2 id="lore-calculator-title">${calcTitle}</h2><p>${calcDescription}</p></div><a class="lk-entry-button" href="../calculateurs.html?tool=${calcTool}&amp;type=${calcKind}&amp;id=${encodeURIComponent(x.id)}&amp;from=fiche#atelier">${calcAction} <span aria-hidden="true">↗</span></a></div></section>` : '';
     const body=`<section class="page-head shell">
   <nav class="crumbs" aria-label="Fil d'Ariane"><a href="../index.html">Accueil</a> / <a href="../${S.hub}.html">${esc(S.label)}</a> / <span>${esc(x.name)}</span></nav>

@@ -1,0 +1,43 @@
+LEONIDAKIT v7.25 : LOT B, LOGIQUE ET CONNEXIONS DU CALCULATEUR (23 septembre 2026)
+=================================================================================
+Base : v7.21. Contient aussi v7.22 à v7.24. Aucun fichier supprimé. Archive « modifs ».
+Reprend la logique du « Lot B » de ChatGPT du 23 septembre (construit sur sa propre base) en la
+portant dans la version actuelle : sa logique et ses tests sont gardés, ma page, ma charte, mes mots
+simples, le mode Pas à pas et le lot A sont conservés par-dessus. Quatre nouveaux fichiers :
+calculateurs-scenario.js (scénario commun v3 et migrations), calculateurs-notebooks.js (carnets),
+calculateurs-workspace.js (atelier : achats, rentabilité, ordre, budget, plan), calculateurs-workspace.css.
+calculateurs-tools.js n'est plus chargé (remplacé par l'atelier).
+
+1. Simple, Pas à pas, Expert vraiment différents dans les sept outils : mêmes cases, même moteur.
+   Simple = les 2 à 4 cases essentielles et la phrase de réponse. Expert = en plus : argent de côté,
+   joueurs, frais, améliorations, préparation unique ou répétée, jours joués par semaine, sensibilité
+   -20 / 0 / +20 %, comparaison avec un calcul gardé du carnet, formules et résultats intermédiaires,
+   remise à zéro d'un réglage. Un réglage avancé changé est signalé en Simple.
+2. Mon temps de jeu refait : relié à Mon objectif et à Mes activités. Réponse en une phrase (« En 1 h,
+   tu peux gagner 110 000 $ avec 1 mission. Commence par … »), programme dans l'ordre, ce que la partie
+   fait avancer sur l'objectif (« fait avancer ton objectif de 13,75 %, il te manquera encore 690 000 $,
+   encore 7 parties, soit environ 7 jours »), choix « Je joue seul / à plusieurs », puces 15 à 90 min.
+3. Ça vaut le coup ? relié à un achat : on cherche l'achat dans le site (véhicules, armes, entreprises,
+   demeures, planques), son prix connu se remplit sinon « le prix que tu imagines », on dit comment
+   il rapporte (activités qu'il rend possibles, activités qu'il améliore, ou un chiffre par heure).
+   Boutons depuis Mes achats et depuis les 8 fiches entreprises, avec retour à la fiche.
+4. Quoi acheter d'abord ? avec suggestions en tapant (alias et modèles réels compris, clavier et tactile),
+   sur tout ce qui est achetable sur le site (344 fiches) ; prix partagés avec Mes achats, Ça vaut le
+   coup ? et Mon budget ; on monte, descend, retire (annulable) ; comparaison avec l'ordre inverse et
+   l'ordre des prix croissants.
+5. Un carnet par outil (« Carnet de Mon objectif », « Carnet de Mes achats »…) : enregistrer, mettre à
+   jour, copie, renommer, ouvrir, garder pour comparer, supprimer (annulable). Nouvelle section « Mon
+   plan » (barre sous les sept calculs) qui enchaîne Objectif → Activités → Temps de jeu → Achats →
+   Ordre → Ça vaut le coup → Budget sans ressaisir, avec ses « Mes plans enregistrés ».
+   Les anciens calculs enregistrés (v1 et v2) sont migrés dans les bons carnets.
+6. Corrigés par rapport à la livraison ChatGPT : ses textes (« Revenu net continu estimé ($/h) »,
+   « Horizon d'exploitation », vouvoiement) passés en mots simples dans tous les fichiers, moteur compris ;
+   son mode Comparer avec fenêtre modale remplacé par la comparaison en ligne du lot A ; un bug où
+   changer de mode réécrivait « 250 000,50 » en « 250000.5 » (une case n'est réécrite que si sa valeur
+   change vraiment) ; réponse sombre dans tous les outils ; huit onglets sans orphelin ; débordement à
+   360 px.
+
+Vérifications : 215 tests Node (dont 43 du lot B : migrations, carnets, relecture), 126/126 contrôles
+Chromium du lot B, 142/142 (parcours v2 adapté aux huit onglets, au carnet par outil et à l'export
+version 3) et 184/184 (parcours v1), verifier.js 28 377 références sans erreur, rendus 1 440 / 390 px
+des sept outils, de Mon plan et des carnets. Non testés : Safari, Firefox, appareils réels.

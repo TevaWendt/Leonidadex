@@ -25,6 +25,16 @@
     var statuses = { officiel: 'official', official: 'official', vu: 'observed', observed: 'observed', comm: 'community', community: 'community', manual: 'manual', hypothetical: 'manual', verified: 'verified', confirmed: 'verified', estimated: 'estimated', unverified: 'unverified', 'source-listed': 'source-listed', unknown: 'unknown' };
     return statuses[value] || fallback || 'unknown';
   }
+  var assets = Array.isArray(global.LK_ASSETS) ? new Set(global.LK_ASSETS) : null;
+  function mediaFor(entry, type, fallbackImage) {
+    var available = function (url) { return url && (!assets || assets.has(url)); };
+    var linked = [entry.image, entry.thumb, fallbackImage].map(safeLocal).filter(available);
+    // Le schéma de repli suit le même identifiant que la fiche et le générateur véhicules.
+    var schema = type === 'vehicle' ? '/img/schemas/' + entry.id + '.svg' : null;
+    if (!assets || !assets.has(schema)) schema = null;
+    var image = linked.find(function (url) { return url.indexOf('/img/officiel/') === 0; }) || linked[0] || schema;
+    return { image: image || null, imageFallback: schema !== image ? schema : null };
+  }
   function numericField(entry, name, aliases, integer) {
     var economy = object(entry.economy), selected, selectedKey, containers = [entry, economy];
     for (var i = 0; i < containers.length && selectedKey === undefined; i++) {
@@ -48,30 +58,24 @@
       }
     };
   }
-  var assets = Array.isArray(global.LK_ASSETS) ? new Set(global.LK_ASSETS) : null;
-  function mediaFor(entry, type, fallbackImage) {
-    var available = function (url) { return url && (!assets || assets.has(url)); };
-    var linked = [entry.image, entry.thumb, fallbackImage].map(safeLocal).filter(available);
-    // Le schéma de repli suit le même identifiant que la fiche et le générateur véhicules.
-    var schema = type === 'vehicle' ? '/img/schemas/' + entry.id + '.svg' : null;
-    if (!assets || !assets.has(schema)) schema = null;
-    var image = linked.find(function (url) { return url.indexOf('/img/officiel/') === 0; }) || linked[0] || schema;
-    return { image: image || null, imageFallback: schema !== image ? schema : null };
-  }
   function normalize(entry, type, fallbackImage, fallbackSchema) {
-    var media = mediaFor(entry, type, fallbackImage);
-    var schemaImage = typeof fallbackSchema === 'string' && fallbackSchema.indexOf('<svg ') === 0 ? 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(fallbackSchema) : null;
     if (!entry || !/^[a-z0-9][a-z0-9-]*$/i.test(entry.id || '')) return null;
-    var folders = { vehicle: 'vehicules', weapon: 'armes', property: 'demeures', business: 'entreprises', place: 'lieux' };
+    var folders = { vehicle: 'vehicules', weapon: 'armes', property: 'demeures', business: 'entreprises', place: 'lieux', hideout: 'planques' };
     var price = numericField(entry, 'price', ['price', 'prix', 'prixAchat']);
     var speed = numericField(entry, 'speed', ['speed', 'vitesseMax', 'vitesse']);
     var acceleration = numericField(entry, 'acceleration', ['acceleration']);
     var seats = numericField(entry, 'seats', ['seats', 'places'], true);
+    var media = mediaFor(entry, type, fallbackImage);
+    var schemaImage = typeof fallbackSchema === 'string' && fallbackSchema.indexOf('<svg ') === 0 ? 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(fallbackSchema) : null;
     if (seats.value === 0) { seats.value = null; seats.meta.status = 'unknown'; }
     return {
       id: entry.id, type: type,
       name: text(entry.name || entry.nom, 200) || entry.id,
       brand: text(entry.marque, 100),
+      aliases: [entry.aliases,entry.insp,entry.search].flat().filter(function(v){return typeof v==='string';}).join(' ').slice(0,1500),
+      purchasable: typeof entry.purchasable === 'boolean' ? entry.purchasable : null,
+      purchaseCandidate: entry.purchasable === true || ['vehicle','weapon','business','property','hideout'].includes(type),
+      activityIds: Array.isArray(entry.activityIds) ? entry.activityIds.filter(function(v){return typeof v==='string';}) : [],
       category: text(entry.category || entry.cat, 100) || type,
       image: media.image, imageFallback: media.imageFallback || (media.image ? schemaImage : null), schemaImage: schemaImage,
       url: safeLocal(entry.url) || '/' + folders[type] + '/' + entry.id + '.html',
@@ -89,16 +93,22 @@
     (Array.isArray(global.LK_VEHICULES) ? global.LK_VEHICULES : []).forEach(function (entry) { rows.push(normalize(entry, 'vehicle')); });
     (Array.isArray(global.LK_ARMES) ? global.LK_ARMES : []).forEach(function (entry) { rows.push(normalize(entry, 'weapon', images[entry.id], schemas[entry.id])); });
     (Array.isArray(generated.entries) ? generated.entries : []).forEach(function (entry) {
-      if (['property', 'business', 'place'].indexOf(entry.type) !== -1) rows.push(normalize(entry, entry.type));
+      if (['property', 'business', 'place', 'hideout'].indexOf(entry.type) !== -1) rows.push(normalize(entry, entry.type));
     });
     return rows.filter(Boolean);
   }
+  // Relations économiques : identifiants canoniques uniquement, jamais déduits des catégories.
+  // catalogue.activityIds / activité.purchaseIds : association documentée (effet non présumé).
+  // activité.requiresPurchaseIds : achats devant être marqués possédés pour jouer l’activité.
   function activities() {
     // Absence de table publiée et sourcée : aucun gain fictif ne devient une activité GTA VI.
     return (Array.isArray(global.LK_ACTIVITIES) ? global.LK_ACTIVITIES : []).map(function (entry) {
       if (!entry || !/^[a-z0-9][a-z0-9-]*$/i.test(entry.id || '')) return null;
       var out = {
         id: entry.id, name: text(entry.name || entry.nom, 200) || entry.id,
+        requiresPurchaseIds: Array.isArray(entry.requiresPurchaseIds) ? entry.requiresPurchaseIds.filter(function(v){return typeof v==='string';}) : [],
+        purchaseIds: Array.isArray(entry.purchaseIds) ? entry.purchaseIds.filter(function(v){return typeof v==='string';}) : [],
+        prepOnce: entry.prepOnce === true,
         beginner: typeof entry.beginner === 'boolean' ? entry.beginner : null,
         source: text(entry.source, 1000), status: status(entry.status, 'unverified'),
         verifiedAt: date(entry.verifiedAt), fieldMeta: {}
@@ -112,9 +122,9 @@
     }).filter(Boolean);
   }
   var presets = [
-    { id: 'scenario-a', name: 'Exemple A : missions courtes', reward: 25000, cost: 2500, duration: 12, prep: 3, cooldown: 5, share: 100, investment: 0, players: 1, beginner: true },
-    { id: 'scenario-b', name: 'Exemple B : missions longues', reward: 120000, cost: 10000, duration: 40, prep: 10, cooldown: 10, share: 100, investment: 0, players: 1, beginner: false },
-    { id: 'scenario-c', name: 'Exemple C : avec un achat de départ', reward: 90000, cost: 15000, duration: 45, prep: 15, cooldown: 0, share: 100, investment: 500000, players: 1, beginner: false }
+    { id: 'scenario-a', example: { capital: 200000, minutes: 60 }, name: 'Exemple A : missions courtes', reward: 25000, cost: 2500, duration: 12, prep: 3, cooldown: 5, share: 100, investment: 0, players: 1, beginner: true },
+    { id: 'scenario-b', example: { capital: 200000, minutes: 60 }, name: 'Exemple B : missions longues', reward: 120000, cost: 10000, duration: 40, prep: 10, cooldown: 10, share: 100, investment: 0, players: 1, beginner: false },
+    { id: 'scenario-c', example: { capital: 600000, minutes: 480 }, name: 'Exemple C : avec un achat de départ', reward: 90000, cost: 15000, duration: 45, prep: 15, cooldown: 0, share: 100, investment: 500000, players: 1, beginner: false }
   ].map(function (entry) {
     return Object.freeze(Object.assign(entry, { status: 'manual', source: null, verifiedAt: null, hypothetical: true, note: 'Hypothèses pédagogiques modifiables. Aucun montant ni rythme de GTA VI confirmé.' }));
   });

@@ -616,3 +616,19 @@ body.calculator-page main .is-highlighted{outline:4px solid var(--amber);outline
 @keyframes lk-answer-pulse{0%{outline-color:rgba(245,165,36,0);outline-offset:14px}100%{outline-color:var(--amber);outline-offset:4px}}
 @media(prefers-reduced-motion:no-preference){body.calculator-page main .is-highlighted{animation:lk-answer-pulse .55s ease-out}}
 @media(max-width:700px){body.calculator-page main .calc-play-choices label{flex:1;justify-content:center}}
+/* Lot B : huit onglets sans orphelin, « Mon plan » en barre sous les sept calculs */
+body.calculator-page main .calc-tabs button.calc-tab-plan{grid-column:1/-1;flex-direction:row;justify-content:center;gap:12px;min-height:60px;background:#FFF3DC;border-style:dashed}
+body.calculator-page main .calc-tabs button.calc-tab-plan[aria-selected="true"]{background:linear-gradient(140deg,#2B1B4D,#5A2358);border-style:solid}
+body.calculator-page main .calc-tabs button.calc-tab-plan .calc-tab-icon{width:36px;height:36px}
+body.calculator-page main .calc-tabs button.calc-tab-plan>span:last-child:after{content:" : mes 7 étapes dans l’ordre";font-weight:600}
+body.calculator-page main .b-answer{margin:14px 0 2px;font:600 1.2rem/1.5 'Archivo',sans-serif;color:#fff}
+body.calculator-page main .b-answer b,body.calculator-page main .b-answer strong{font-weight:900;color:var(--amber)}
+@media(max-width:700px){body.calculator-page main .calc-tabs button.calc-tab-plan>span:last-child:after{content:""}}
+@media(max-width:700px){body.calculator-page main .calc-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}body.calculator-page main .calc-tabs button{min-width:0;white-space:normal;overflow-wrap:anywhere}body.calculator-page main .calc-tabs button>span{min-width:0}body.calculator-page main .calc-tabs button.calc-tab-plan{grid-column:1/-1}}
+/* Lot B : résumé des réglages avancés compact ; masqué en Simple / Pas à pas quand rien n'a changé */
+body.calculator-page main .b-mode-summary{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin:0 0 14px;padding:8px 14px;background:#FFF9EC;border:2px dashed var(--amber);border-radius:12px}
+body.calculator-page main .b-mode-summary .calc-note{margin:0;font-size:.92rem}
+body.calculator-page main .b-mode-summary .calc-button{min-height:38px;padding:6px 12px;font-size:.9rem}
+body.calculator-page main #calc-panels:not([data-mode="advanced"]) .b-mode-summary.is-default{display:none}
+body.calculator-page main .b-simple-action{margin-top:14px}
+body.calculator-page main .b-stage-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}

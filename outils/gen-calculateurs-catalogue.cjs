@@ -22,7 +22,8 @@ const entries = [];
 for (const [collection, type, folder, category] of [
   ['regions', 'place', 'lieux', 'Région'],
   ['businesses', 'business', 'entreprises', 'Commerce et entreprise'],
-  ['residences', 'property', 'demeures', 'Demeure']
+  ['residences', 'property', 'demeures', 'Demeure'],
+  ['hideouts', 'hideout', 'planques', 'Planque']
 ]) {
   for (const entry of editorial[collection] || []) {
     if (!/^[a-z0-9][a-z0-9-]*$/.test(entry.id)) throw new Error(`Identifiant invalide dans ${collection}`);
@@ -38,7 +39,7 @@ for (const [collection, type, folder, category] of [
       provenance: `outils/editorial.json#${collection}/${entry.id}`
     };
     // Propager les données économiques futures uniquement quand la source les porte.
-    for (const key of ['price', 'prix', 'economy', 'fieldMeta', 'priceMeta']) {
+    for (const key of ['price', 'prix', 'economy', 'fieldMeta', 'priceMeta', 'aliases', 'purchasable', 'activityIds']) {
       if (Object.prototype.hasOwnProperty.call(entry, key)) item[key] = entry[key];
     }
     entries.push(item);
