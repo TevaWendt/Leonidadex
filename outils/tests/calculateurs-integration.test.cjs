@@ -138,7 +138,7 @@ test('group constraints apply to both forward and inverse planning, and mixed ex
   await page.choose('goal.selected', 'scenario-b');
   await page.choose('inverse.selected', 'scenario-b');
   assert.match(page.node('goal-results').innerHTML, /4 joueurs/);
-  assert.match(page.node('inverse-results').innerHTML, /faisable avec ton nombre de joueurs/);
+  assert.match(page.node('inverse-results').innerHTML, /se joue à \d+ joueurs/);
   assert.equal(metric(page.node('inverse-results'), 'Nombre de missions'), undefined);
   await page.choose('goal.selected', 'mixed');
   assert.equal(metric(page.node('goal-results'), 'Nombre de missions'), '36', 'only the accessible scenario contributes to the rotation');
@@ -223,10 +223,10 @@ test('vehicle comparison preserves source units and does not compute a km/h rati
   checkbox.checked = true;
   await page.dispatch('change', checkbox);
   const html = page.node('vehicle-comparison').innerHTML;
-  assert.match(html, /mph · Estimation/);
-  assert.match(html, /Pas de note quand il manque des données/);
-  assert.match(html, /On ne donne pas de classement/);
+  assert.match(html, /120 mph/);
+  assert.match(html, /Estimation/);
+  assert.match(html, /On ne donne pas de note ni de classement/);
   const speed = Array.from(page.node('vehicle-comparison').querySelectorAll('tbody tr')).find(row => row.querySelector('th').textContent === 'Vitesse');
-  assert.equal(speed.querySelector('td').firstChild.textContent, '120', 'preserve the source measurement without unit conversion');
+  assert.match(speed.querySelector('td').firstChild.textContent, /^120 mph$/, 'preserve the source measurement without unit conversion');
   assert.doesNotMatch(html, /Vitesse \(km\/h\)/);
 });

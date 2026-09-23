@@ -103,7 +103,8 @@ test('Home page keeps the reworked sections in order and the region band uses of
  const ids=['outils','etat','monde'].map(id=>a.d.getElementById(id));assert.ok(ids.every(Boolean));
  const pos=ids.map(e=>e.compareDocumentPosition(a.d.querySelector('.faq-sec'))&4);assert.ok(pos.every(Boolean),'chaque section précède la FAQ');
  assert.ok(a.d.getElementById('outils').compareDocumentPosition(a.d.getElementById('etat'))&4,'les calculateurs précèdent les régions');
- assert.ok(a.d.querySelector('#calc-feature.calc-v2 .calc-tiles li'));
+ assert.ok(!a.d.querySelector('#calc-feature'), 'the calculator card no longer duplicates the hero mini-calculator');
+ assert.ok(a.d.querySelector('.lk-mini') && /GTA/.test(a.d.querySelector('#h1').textContent), 'hero keeps the mini-calculator and the GTA VI title');
  const strip=[...a.d.querySelectorAll('#strip img')];assert.ok(strip.length>=6);for(const img of strip)assert.ok(fs.existsSync(path.join(root,new URL(img.src).pathname.slice(1))));
  assert.ok(a.d.querySelectorAll('.faq-sec details').length>=10);
  const monde=[...a.d.querySelectorAll('#monde .lore-card img')].map(i=>i.getAttribute('src'));assert.equal(new Set(monde).size,monde.length,'quatre visuels distincts');

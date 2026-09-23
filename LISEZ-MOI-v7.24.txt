@@ -1,0 +1,3 @@
+Archive « modifs » v7.24 (contient aussi v7.22 et v7.23) : fichiers modifiés ou ajoutés par rapport à la v7.21 en ligne. Aucune suppression.
+Mise en ligne : dézipper, copier le CONTENU du dossier (pas le dossier) dans le dossier local Leonidadex en remplaçant tout, vérifier dans GitHub Desktop qu'il n'y a aucune suppression, Commit, Push.
+Détail dans outils/CHANGEMENTS-v7.22.txt, v7.23 et v7.24. Ne pas mettre le ZIP lui-même dans le dépôt.

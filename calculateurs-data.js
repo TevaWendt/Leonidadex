@@ -48,7 +48,19 @@
       }
     };
   }
-  function normalize(entry, type, fallbackImage) {
+  var assets = Array.isArray(global.LK_ASSETS) ? new Set(global.LK_ASSETS) : null;
+  function mediaFor(entry, type, fallbackImage) {
+    var available = function (url) { return url && (!assets || assets.has(url)); };
+    var linked = [entry.image, entry.thumb, fallbackImage].map(safeLocal).filter(available);
+    // Le schéma de repli suit le même identifiant que la fiche et le générateur véhicules.
+    var schema = type === 'vehicle' ? '/img/schemas/' + entry.id + '.svg' : null;
+    if (!assets || !assets.has(schema)) schema = null;
+    var image = linked.find(function (url) { return url.indexOf('/img/officiel/') === 0; }) || linked[0] || schema;
+    return { image: image || null, imageFallback: schema !== image ? schema : null };
+  }
+  function normalize(entry, type, fallbackImage, fallbackSchema) {
+    var media = mediaFor(entry, type, fallbackImage);
+    var schemaImage = typeof fallbackSchema === 'string' && fallbackSchema.indexOf('<svg ') === 0 ? 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(fallbackSchema) : null;
     if (!entry || !/^[a-z0-9][a-z0-9-]*$/i.test(entry.id || '')) return null;
     var folders = { vehicle: 'vehicules', weapon: 'armes', property: 'demeures', business: 'entreprises', place: 'lieux' };
     var price = numericField(entry, 'price', ['price', 'prix', 'prixAchat']);
@@ -61,7 +73,7 @@
       name: text(entry.name || entry.nom, 200) || entry.id,
       brand: text(entry.marque, 100),
       category: text(entry.category || entry.cat, 100) || type,
-      image: safeLocal(entry.image) || safeLocal(entry.thumb) || safeLocal(fallbackImage),
+      image: media.image, imageFallback: media.imageFallback || (media.image ? schemaImage : null), schemaImage: schemaImage,
       url: safeLocal(entry.url) || '/' + folders[type] + '/' + entry.id + '.html',
       price: price.value, speed: speed.value, acceleration: acceleration.value, seats: seats.value,
       status: status(entry.status || entry.st),
@@ -72,10 +84,10 @@
     };
   }
   function catalogue() {
-    var generated = object(global.LK_CALCULATEURS_CATALOGUE), images = object(generated.weaponImages);
+    var generated = object(global.LK_CALCULATEURS_CATALOGUE), images = object(generated.weaponImages), schemas = object(generated.weaponSchemas);
     var rows = [];
     (Array.isArray(global.LK_VEHICULES) ? global.LK_VEHICULES : []).forEach(function (entry) { rows.push(normalize(entry, 'vehicle')); });
-    (Array.isArray(global.LK_ARMES) ? global.LK_ARMES : []).forEach(function (entry) { rows.push(normalize(entry, 'weapon', images[entry.id])); });
+    (Array.isArray(global.LK_ARMES) ? global.LK_ARMES : []).forEach(function (entry) { rows.push(normalize(entry, 'weapon', images[entry.id], schemas[entry.id])); });
     (Array.isArray(generated.entries) ? generated.entries : []).forEach(function (entry) {
       if (['property', 'business', 'place'].indexOf(entry.type) !== -1) rows.push(normalize(entry, entry.type));
     });

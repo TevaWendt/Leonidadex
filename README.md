@@ -39,7 +39,7 @@ Hébergé sur Vercel, qui publie tel quel le contenu de ce dépôt : **aucune co
 - Aucune donnée issue de fuites. Crédit gtadb.org conservé sur la carte et dans les mentions légales.
 
 
-## Calculateur : v7.23 (22 septembre 2026)
+## Calculateur : v7.24 (23 septembre 2026)
 
 Le calculateur reste entièrement statique, gratuit et sans compte. Les sept calculs partagent `calculateurs-engine.js`. Les nombres déjà écrits sont des exemples. L’accueil utilise exactement le même moteur que la page complète.
 

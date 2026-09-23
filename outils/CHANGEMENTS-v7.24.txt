@@ -1,0 +1,38 @@
+LEONIDAKIT v7.24 : LOT A, CORRECTIONS VISIBLES (23 septembre 2026)
+==================================================================
+Base : v7.21. Contient aussi v7.22 et v7.23. Aucun fichier supprimé. Archive « modifs ».
+Reprend et corrige le correctif « Lot A » de ChatGPT du 22 septembre (construit sur une base plus
+ancienne) : ce qui était bon est porté dans la version actuelle, le reste est refait.
+
+1. Accueil : plus de doublon. Le grand encart « Le calculateur » de la section « Les outils » est retiré
+   (HTML et générateur lore-gen.js) ; le mini-calculateur de l'en-tête reste et parle au même moteur.
+   Le module GTA VI est de retour en tête : grand titre « GTA VI » (VI en dégradé ambre), phrase d'origine
+   « Une question sur GTA VI, une réponse. », couleurs corail / ambre / nuit de Vice City, photo conservée.
+2. Fond de l'accueil en mouvement, en CSS seulement (aucune vidéo) : zoom lent de la photo, balayage
+   lumineux ambre, lueur coucher de soleil qui respire, lignes de balayage rétro, léger scintillement du
+   « VI ». Tout s'arrête avec « réduire le mouvement ». Rien ne change de taille.
+3. Rails latéraux : ils ne se superposent plus aux blocs pleine largeur (en-tête, bandeaux, compte à
+   rebours, chiffres clés) et passent derrière eux ; ils commencent sous l'en-tête de la page (ou sous le
+   compte à rebours quand il ouvre la page, comme sur les hubs) ; ils sont placés à 24 px du cadre de
+   1 280 px et n'apparaissent qu'à partir de 1 364 px. Sur le calculateur, la règle qui les cachait est
+   retirée : ils sont de retour.
+4. « Continuer la visite » en bas du calculateur : les styles de ChatGPT qui écrasaient le jeu de cartes
+   du site sont retirés ; l'éventail est identique aux autres pages.
+5. Mes achats : chaque fiche du catalogue montre sa vignette (photo officielle, sinon schéma dessiné
+   des véhicules img/schemas/<id>.svg ou des armes via outils/armes-schemas.cjs), avec repli propre si
+   une image manque. 347 fiches ont un visuel.
+6. Comparer : la case « Comparer » est toujours visible sur chaque carte ; dès la première coche, un
+   bandeau « MA COMPARAISON » apparaît sous les cartes avec le compte (« 2 fiches sur 3 »), les fiches
+   choisies (retirables d'un clic) et le tableau « Ce qu'on sait » ; à partir de 2 fiches le bandeau
+   est mis en évidence et amené à l'écran ; les caractéristiques (vitesse, accélération, places) sont
+   dans un tableau séparé réservé aux véhicules ; une valeur inconnue reste « Pas encore connu ».
+7. Mes activités et Mon temps de jeu : choix visible « Je joue : Seul / À plusieurs » avec le nombre de
+   joueurs, partagé avec Mon objectif. Quand une activité coûte trop cher au départ (exemple C : achat de
+   départ de 500 000 $), la réponse le dit clairement : ce qu'il faut payer, ce que tu as, ce qu'il te
+   manque, et quoi faire.
+8. « Voir ma réponse » existe maintenant dans tous les modes, sous les cases de chaque outil : la réponse
+   est amenée à l'écran si besoin et mise en évidence 4 secondes (cadre ambre), avec annonce accessible.
+
+Vérifications : 172 tests Node, 142/142 et 215/215 contrôles Chromium, verifier.js sans erreur, rendus
+1 440 / 1 920 / 390 px (accueil, calculateur, hub Véhicules, Lieux) : rails, éventail, vignettes,
+comparaison, activités. Non testés : Safari, Firefox, appareils réels, lecteur d'écran.

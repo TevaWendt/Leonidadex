@@ -247,25 +247,12 @@ home=home.replace(/<section class="lore-sec shell" id="monde">[\s\S]*?<\/section
 home=home.replace(/(<section class="faq-sec">)/,block+'$1');
 if(!home.includes('id="monde"'))throw new Error("section 'Le monde de Leonida' non insérée");
 
-/* 3. Les outils : les calculateurs passent en tête, en pleine largeur */
+/* 3. Les outils : le calculateur reste dans l’en-tête de l’accueil, pas de doublon ici */
 const tools=`<section class="tools-sec shell" id="outils">
   <div class="sec-head reveal">
     <h2>Les outils</h2>
-    <p>Le calculateur en premier. Le monde de Leonida pour aller plus loin.</p>
+    <p>La carte, les fiches et ton suivi pour explorer Leonida.</p>
   </div>
-  <a class="calc-feature calc-v2 reveal" href="calculateurs.html" id="calc-feature">
-    <div class="calc-copy">
-      <span class="chip">Disponible maintenant · gratuit, sans compte</span>
-      <h3>Un objectif. Plusieurs façons d’y arriver.</h3>
-      <p class="calc-lead">Combien de temps pour ton premier million ? Peux-tu t’offrir cette voiture ? Écris tes chiffres, la réponse arrive tout de suite. Les vrais prix du jeu seront ajoutés dès qu’ils seront connus.</p>
-      <span class="calc-cta">Ouvrir le calculateur <i aria-hidden="true">&rsaquo;</i></span>
-    </div>
-    <ul class="calc-tiles" aria-hidden="true">
-      <li><b>$</b><strong>Mon objectif</strong><span>combien de temps il me faut</span></li>
-      <li><b>&#9201;</b><strong>Mon temps de jeu</strong><span>quoi faire en 30 minutes</span></li>
-      <li><b>%</b><strong>Ça vaut le coup ?</strong><span>quand mon achat est remboursé</span></li>
-    </ul>
-  </a>
   <div class="tools tools--three">
     <a class="tool reveal" href="carte.html">
       <h3>Carte interactive <span class="chip live">En construction</span></h3>

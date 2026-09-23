@@ -99,11 +99,25 @@
     if (step > total) { showResult(); return; }
     stepByTab[activeTab()] = step; wizard(true);
   }
+  var hiTimer = null;
   function showResult() {
     var res = resultOf(activePanel()); if (!res) return;
-    res.scrollIntoView({ block: 'start', behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    /* Même quand la réponse est déjà à l'écran, on la met en évidence 4 secondes. */
+    var r = res.getBoundingClientRect(), top = (document.querySelector('header') ? document.querySelector('header').getBoundingClientRect().bottom : 0) + 12;
+    if (r.top < top || r.bottom > window.innerHeight - 12) res.scrollIntoView({ block: r.height > window.innerHeight - top ? 'start' : 'nearest', behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    res.classList.remove('is-highlighted'); void res.offsetWidth; res.classList.add('is-highlighted');
+    clearTimeout(hiTimer); hiTimer = setTimeout(function () { res.classList.remove('is-highlighted'); }, 4000);
     if (!res.hasAttribute('tabindex')) res.setAttribute('tabindex', '-1');
     res.focus({ preventScroll: true });
+    var live = $('calc-live'), answer = res.querySelector('.calc-answer'); if (live && answer) { live.textContent = ''; setTimeout(function () { live.textContent = 'Réponse : ' + answer.textContent; }, 50); }
+  }
+  /* Un bouton « Voir ma réponse » sous les cases de chaque outil, dans tous les modes (le pas à pas a le sien). */
+  function answerButtons() {
+    panels.querySelectorAll('.calc-steps').forEach(function (box) {
+      var btn = box.nextElementSibling && box.nextElementSibling.classList.contains('calc-show-answer') ? box.nextElementSibling : null;
+      if (!btn) { btn = document.createElement('button'); btn.type = 'button'; btn.className = 'calc-button calc-button-primary calc-show-answer'; btn.dataset.showAnswer = '1'; btn.textContent = 'Voir ma réponse ↓'; box.insertAdjacentElement('afterend', btn); }
+      btn.hidden = guided();
+    });
   }
   /* Sur téléphone, la réponse est sous les cases : un petit résumé reste visible en bas tant qu'on ne la voit pas. */
   var sticky = document.createElement('div'); sticky.className = 'lk-sticky'; sticky.hidden = true;
@@ -126,7 +140,7 @@
     sticky.hidden = !show;
   }
   window.addEventListener('scroll', function () { later(); }, { passive: true });
-  function refresh() { echoes(); slider(); helper(); wizard(false); summary(); }
+  function refresh() { echoes(); slider(); helper(); wizard(false); answerButtons(); summary(); }
   var queued = false;
   function later() { if (queued) return; queued = true; (window.requestAnimationFrame || setTimeout)(function () { queued = false; refresh(); }); }
 
@@ -147,7 +161,7 @@
     }
     if (b.dataset.wiz === 'prev') move(-1);
     else if (b.dataset.wiz === 'next') move(1);
-    if (b.id === 'lk-sticky-go') showResult();
+    if (b.id === 'lk-sticky-go' || b.dataset.showAnswer) showResult();
     if (b.dataset.mode === 'guided') stepByTab = {};
     later();
   });

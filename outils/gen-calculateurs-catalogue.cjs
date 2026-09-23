@@ -44,12 +44,15 @@ for (const [collection, type, folder, category] of [
     entries.push(item);
   }
 }
+const weaponArt = require('./armes-schemas.cjs');
 const weaponImages = Object.fromEntries(Object.entries(weaponMedia).map(([id, ids]) => [id, imageFor(ids)]).filter(([, image]) => image));
 const payload = {
   schemaVersion: 1,
   provenance: ['outils/editorial.json', 'outils/medias-officiels.json', 'outils/armes-medias.json'],
   entries,
-  weaponImages
+  weaponImages,
+  // Réutilise les dessins du hub et des fiches armes, sans liste de médias manuelle.
+  weaponSchemas: Object.fromEntries(weaponArt.ids.map(id => [id, weaponArt.schema(id, 120)]))
 };
 const output = '/* Généré par node outils/gen-calculateurs-catalogue.cjs. Ne pas éditer directement.\n' +
   '   Véhicules et armes sont lus dans leurs sources runtime, sans copie de catalogue. */\n' +

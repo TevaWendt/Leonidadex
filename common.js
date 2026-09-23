@@ -114,6 +114,24 @@
   const rails = document.createElement('div'); rails.className = 'lk-rails'; rails.setAttribute('aria-hidden', 'true');
   rails.innerHTML = '<span class="lk-rail lk-rail--l"></span><span class="lk-rail lk-rail--r"></span>';
   main.appendChild(rails);
-  function place() { const m = main.getBoundingClientRect(); const f = fc ? fc.getBoundingClientRect() : null; rails.style.top = (f ? Math.max(0, f.bottom - m.top) : 0) + 'px'; }
+  /* Les rails commencent sous le premier bloc pleine largeur (en-tête de page ou compte à rebours) et passent
+     derrière tous les blocs pleine largeur suivants (bandeaux, compte à rebours, chiffres clés) : ils ne se
+     superposent qu'aux marges des sections centrées. */
+  function place() {
+    const m = main.getBoundingClientRect(), vw = document.documentElement.clientWidth;
+    const kids = Array.from(main.children).filter(el => el !== rails && el.getBoundingClientRect().height >= 4);
+    const wide = el => el.getBoundingClientRect().width >= vw - 2;
+    let leadEnd = 0, lead = true;
+    for (const el of kids) {
+      if (!wide(el)) { lead = false; continue; }
+      if (lead) leadEnd = el.getBoundingClientRect().bottom - m.top;
+      const cs = getComputedStyle(el); if (cs.position === 'static') el.style.position = 'relative'; if (cs.zIndex === 'auto' || cs.zIndex === '0') el.style.zIndex = '1';
+    }
+    const hero = main.querySelector('.vhero, .hero, .fhero, .lore-hero, .lk-home-hero, .lk-calc-hero');
+    let top = hero ? Math.max(0, hero.getBoundingClientRect().bottom - m.top) : 0;
+    /* Le compte à rebours sert de repère seulement s'il fait partie du bloc pleine largeur d'ouverture (hubs). */
+    if (fc && fc.classList.contains('fcount')) { const fb = fc.getBoundingClientRect().bottom - m.top; if (fb <= leadEnd + 2) top = Math.max(top, fb); }
+    rails.style.top = top + 'px';
+  }
   window.addEventListener('resize', place); window.addEventListener('load', place); place();
 })();

@@ -2101,7 +2101,7 @@ main > section.shell.reveal:first-of-type{margin-top:0;}
   .lk-link:nth-child(2){left:27%;transform:rotate(0deg) translateY(-6px);z-index:2;}
   .lk-link:nth-child(3){left:52%;transform:rotate(7deg) translateY(10px);z-index:1;}
   .lk-links:hover .lk-link{filter:saturate(.75) brightness(.85);}
-  .lk-links .lk-link:hover{filter:none;transform:rotate(0deg) translateY(-26px) scale(1.08);z-index:5;box-shadow:12px 12px 0 var(--amber);transition-delay:0s;}
+  .lk-links .lk-link:is(:hover,:focus-visible){filter:none;transform:rotate(0deg) translateY(-26px) scale(1.08);z-index:5;box-shadow:12px 12px 0 var(--amber);transition-delay:0s;}
   .lk-link b{font-size:1.5rem;} .lk-link i{font-size:.9rem;}
 }
 /* vitrine : deux cartes superposées, la carte de devant est nette, celle de derrière dépasse ; survol ou clic les échange */
@@ -2145,12 +2145,13 @@ main > section.shell.reveal:first-of-type{margin-top:0;}
 #carnet .col-map-card{position:relative;} #carnet .col-map-card > span:first-of-type{}
 /* rails animés sur les bords, du compte à rebours au pied de page */
 main{position:relative;}
-.lk-rails{position:absolute;left:0;right:0;bottom:0;pointer-events:none;z-index:0;}
+/* 1280 px de contenu + 2 × (24 px de marge + 6 px de rail + 12 px de halo). */
+.lk-rails{position:absolute;left:0;right:0;bottom:0;max-width:1340px;margin-inline:auto;pointer-events:none;z-index:0;}
 .lk-rail{position:absolute;top:0;bottom:0;width:10px;background:repeating-linear-gradient(180deg,var(--coral) 0 26px,var(--amber) 26px 52px,#5A2358 52px 78px);background-size:100% 156px;animation:lk-rail 6s linear infinite;border-left:2px solid var(--ink);border-right:2px solid var(--ink);opacity:.85;}
 .lk-rail--l{left:10px;} .lk-rail--r{right:10px;animation-direction:reverse;}
 .lk-rail::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(180deg,rgba(255,255,255,0) 0 22px,rgba(255,255,255,.45) 22px 26px);background-size:100% 78px;animation:lk-rail 3s linear infinite;}
 @keyframes lk-rail{from{background-position:0 0}to{background-position:0 156px}}
-@media(max-width:1320px){.lk-rails{display:none;}}
+@media(max-width:1363.98px){.lk-rails{display:none;}}
 @media(prefers-reduced-motion:reduce){.lk-rail,.lk-rail::after{animation:none;} .lk-link,.lk-flip-card{transition:none;}}
 
 /* ===================== v7.17 : couleurs GTA VI à la place du noir, jeu de cartes rangé, outro, repli ===================== */
@@ -2169,7 +2170,7 @@ main{position:relative;}
   .lk-link:nth-child(2){transform:translateY(-4%);z-index:2;}
   .lk-link:nth-child(3){transform:rotate(6deg) translate(-6%,4%);z-index:1;}
   .lk-links:hover .lk-link{filter:saturate(.8) brightness(.9);}
-  .lk-links .lk-link:hover{filter:none;transform:translateY(-8%) scale(1.06);z-index:5;box-shadow:10px 10px 0 var(--amber);}
+  .lk-links .lk-link:is(:hover,:focus-visible){filter:none;transform:translateY(-8%) scale(1.06);z-index:5;box-shadow:10px 10px 0 var(--amber);}
 }
 /* cartes : une seule barre ambre au lieu des dégradés multicolores, cartes claires au lieu du noir */
 #carnet .col-carnet-grid > *::before,#sorties .col-tools-panel::before,#sorties .col-tools-panel:nth-child(2)::before,#sorties .col-tools-panel:nth-child(3)::before,#carnet .col-backup-panel::before,#carnet .col-map-card::before{background:var(--amber)!important;}
@@ -2204,7 +2205,7 @@ main{position:relative;}
 
 /* ===================== v7.21 : rails plus fins, recherche du top 10, cartes ===================== */
 .lk-rail{width:6px;border:0;opacity:1;background:linear-gradient(180deg,var(--coral),var(--amber),#5A2358,var(--coral));background-size:100% 600px;animation:lk-rail 14s linear infinite;box-shadow:0 0 12px rgba(245,165,36,.45);border-radius:3px;}
-.lk-rail--l{left:14px;} .lk-rail--r{right:14px;animation-direction:reverse;}
+.lk-rail--l{left:0;} .lk-rail--r{right:0;animation-direction:reverse;}
 .lk-rail::after{background:repeating-linear-gradient(180deg,rgba(255,255,255,0) 0 60px,rgba(255,255,255,.55) 60px 64px);background-size:100% 128px;animation:lk-rail 5s linear infinite;border-radius:3px;}
 @keyframes lk-rail{from{background-position:0 0}to{background-position:0 600px}}
 .rails-zone .rail,.rails-zone .rail-line,.rails-zone .rail-ticks{display:none!important;}
@@ -2224,3 +2225,5 @@ main{position:relative;}
 
 /* Le calculateur est le point d’entrée principal de LeonidaKit. */
 #nav a[href$="calculateurs.html"]{font-weight:800}
+
+@media(prefers-reduced-motion:reduce){.lk-rail,.lk-rail::after{animation:none}}
