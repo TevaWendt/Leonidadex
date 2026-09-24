@@ -5,7 +5,7 @@ function create(api){
  const {catalogue,sourceActivities,helpers:h}=api,{$}=api;
  const esc=h.esc,money=h.money,hours=h.hours,field=h.field,stats=h.stats,warning=h.warning;
  const state=()=>api.state(),clone=B.copy;
- const labels={vehicle:'Véhicule',weapon:'Équipement',property:'Demeure',business:'Entreprise',hideout:'Planque',place:'Lieu'};
+ const labels={vehicle:'Véhicule',weapon:'Équipement',property:'Demeure',business:'Entreprise',hideout:'Planque',place:'Lieu',style:'Vêtements et style',customization:'Personnalisation',consumable:'Consommable',ammo:'Munitions',housing:'Logement'};
  const choices=catalogue.filter(x=>x.purchaseCandidate),nf=new Intl.NumberFormat('fr-FR',{maximumFractionDigits:2});
  const notebook=global.LKCalcNotebooks.create({getItem:k=>localStorage.getItem(k),setItem:(k,v)=>localStorage.setItem(k,v)},api.validate,api.notify);
  let budgetCategory=0,orderEditor=null,combo=null,comboIndex=-1,comboRows=[],previousRevision='',lastRemoved=null;

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://leonidakit.com/achats.html</loc></url>
   <url><loc>https://www.leonidakit.com/</loc></url>
   <url><loc>https://www.leonidakit.com/a-propos.html</loc></url>
+  <url><loc>https://www.leonidakit.com/accessoires.html</loc></url>
   <url><loc>https://www.leonidakit.com/armes.html</loc></url>
   <url><loc>https://www.leonidakit.com/armes/batte.html</loc></url>
   <url><loc>https://www.leonidakit.com/armes/carabine.html</loc></url>
@@ -30,6 +32,7 @@
   <url><loc>https://www.leonidakit.com/armes/queue-billard.html</loc></url>
   <url><loc>https://www.leonidakit.com/armes/smg-compact.html</loc></url>
   <url><loc>https://www.leonidakit.com/armes/smg.html</loc></url>
+  <url><loc>https://www.leonidakit.com/bateaux.html</loc></url>
   <url><loc>https://www.leonidakit.com/calculateurs.html</loc></url>
   <url><loc>https://www.leonidakit.com/carte.html</loc></url>
   <url><loc>https://www.leonidakit.com/classement-vehicules.html</loc></url>
@@ -55,8 +58,11 @@
   <url><loc>https://www.leonidakit.com/lieux/mount-kalaga.html</loc></url>
   <url><loc>https://www.leonidakit.com/lieux/port-gellhorn.html</loc></url>
   <url><loc>https://www.leonidakit.com/lieux/vice-city.html</loc></url>
+  <url><loc>https://www.leonidakit.com/logements.html</loc></url>
   <url><loc>https://www.leonidakit.com/medias.html</loc></url>
   <url><loc>https://www.leonidakit.com/mentions-legales.html</loc></url>
+  <url><loc>https://www.leonidakit.com/munitions.html</loc></url>
+  <url><loc>https://www.leonidakit.com/nourriture.html</loc></url>
   <url><loc>https://www.leonidakit.com/personnages.html</loc></url>
   <url><loc>https://www.leonidakit.com/personnages/boobie.html</loc></url>
   <url><loc>https://www.leonidakit.com/personnages/brian.html</loc></url>
@@ -66,11 +72,15 @@
   <url><loc>https://www.leonidakit.com/personnages/jason.html</loc></url>
   <url><loc>https://www.leonidakit.com/personnages/lucia.html</loc></url>
   <url><loc>https://www.leonidakit.com/personnages/raul.html</loc></url>
+  <url><loc>https://www.leonidakit.com/personnalisations.html</loc></url>
   <url><loc>https://www.leonidakit.com/planques.html</loc></url>
   <url><loc>https://www.leonidakit.com/planques/chantier-brian.html</loc></url>
   <url><loc>https://www.leonidakit.com/planques/planque-jason.html</loc></url>
   <url><loc>https://www.leonidakit.com/planques/starlet-motel.html</loc></url>
   <url><loc>https://www.leonidakit.com/progression.html</loc></url>
+  <url><loc>https://www.leonidakit.com/style.html</loc></url>
+  <url><loc>https://www.leonidakit.com/tatouages.html</loc></url>
+  <url><loc>https://www.leonidakit.com/tuto.html</loc></url>
   <url><loc>https://www.leonidakit.com/vehicules-rares.html</loc></url>
   <url><loc>https://www.leonidakit.com/vehicules.html</loc></url>
   <url><loc>https://www.leonidakit.com/vehicules/airboat-09.html</loc></url>
@@ -375,5 +385,6 @@
   <url><loc>https://www.leonidakit.com/vehicules/yamaha-bws-125.html</loc></url>
   <url><loc>https://www.leonidakit.com/vehicules/zirconium-journey-ii.html</loc></url>
   <url><loc>https://www.leonidakit.com/vehicules/zirconium-journey.html</loc></url>
+  <url><loc>https://www.leonidakit.com/vetements.html</loc></url>
   <url><loc>https://www.leonidakit.com/collectibles.html</loc></url>
 </urlset>

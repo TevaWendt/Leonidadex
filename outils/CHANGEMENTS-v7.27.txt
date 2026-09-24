@@ -1,0 +1,41 @@
+LEONIDAKIT v7.27 : LOT D, TUTO, TOUT CE QUI S'ACHÈTE, PROGRESSION V2 (24 septembre 2026)
+=====================================================================================
+Base : v7.21. Contient aussi v7.22 à v7.26. Aucun fichier supprimé. Archive « modifs ».
+La livraison ChatGPT du lot D est arrivée tronquée (140 Mo, plafond à 128 Mio) : ses données et
+générateurs ont été récupérés et portés ; ce qui manquait (progression v2, script et style du Tuto,
+captures) a été refait ici. Toutes ses données restent celles de Rockstar, sans chiffre inventé.
+
+1. Page TUTO (tuto.html, 14 chapitres) : « Tuto » est la 2e entrée du menu, sur toutes les pages
+   (12 entrées, une ligne à partir de 1 280 px avec la police du site). Un chapitre par outil avec
+   la question, ce qu'on voit en Simple et en Expert, trois étapes, une vraie capture du calculateur
+   (ordinateur et téléphone) avec les boutons « Repérer les champs » / « Repérer la réponse », un
+   exemple, la lecture du résultat, l'erreur fréquente et un bouton qui ouvre le bon outil (avec
+   retour au chapitre). Exercice de démarrage calculé avec le vrai moteur. Sommaire qui suit la
+   lecture. Les textes reprennent les libellés exacts du calculateur.
+2. TOUT CE QUI S'ACHÈTE (achats.html) : la liste complète, 15 catégories, chacune avec son statut
+   (recensé sur le site / montré par Rockstar / à confirmer), son compte réel et sa section.
+   Nouvelles sections : Bateaux, Vêtements et style, Personnalisations (contenus décrits par Rockstar :
+   Édition Ultime et Pack Vintage Vice City), bloc Garages dans Planques, et six sections « à
+   confirmer » prêtes à se remplir : Vêtements à l'unité, Accessoires, Tatouages, Nourriture et
+   consommables, Munitions et équipement d'arme, Logements et appartements. Aucun prix n'existe avant
+   la sortie : ce qui est « à confirmer » attend le jeu, rien n'est inventé.
+3. PROGRESSION V2 : pourcentage total sur tout ce qui est recensé (véhicules, armes, lieux,
+   collectibles, contenus documentés) ; les bateaux de l'Édition Ultime comptent une seule fois ; les
+   catégories vides affichent « En attente du jeu » et ne comptent pas. Cases des contenus documentés
+   cochables depuis Progression ou depuis leur section. Export version 2 (cases, carnets du
+   calculateur, marqueurs et dessins de la carte, classement). Import avec aperçu avant d'appliquer :
+   Fusionner, Remplacer ou Annuler ; ancien format accepté ; références inconnues signalées mais
+   gardées ; rubrique abîmée copiée avant remplacement ; tout est annulé si le navigateur refuse
+   d'écrire. Les anciennes cases ne sont jamais réécrites au chargement.
+4. Textes d'introduction sur les hubs Lieux, Demeures, Entreprises, Personnages et Planques.
+5. Calculateur : les nouvelles catégories entrent dans Mes achats (Bateaux, Personnalisations,
+   Garages, avec « le prix que tu imagines ») ; liens vers le Tuto et retour au chapitre.
+6. Pieds de page : Tuto, Tout ce qui s'achète, Bateaux, Vêtements et style, Personnalisations ;
+   index de recherche et sitemap à jour.
+7. Corrigé au passage : mon portage du lot D cassait l'onglet Mes activités (fonction initial()
+   incomplète) ; repris à l'identique de ChatGPT et revérifié.
+
+Vérifications : 229 tests Node (dont 14 de progression v2), 126/126 (lot B), 142/142 (v2) et 184/184
+(v1) contrôles Chromium, verifier.js 31 623 références sans erreur dans 406 pages, menu mesuré avec
+Archivo, rendus 1 440 / 390 px (Tuto, Tout ce qui s'achète, une section à confirmer, Progression)
+sans débordement. Non testés : Safari, Firefox, appareils réels.

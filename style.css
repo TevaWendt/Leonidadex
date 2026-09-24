@@ -2227,3 +2227,25 @@ main{position:relative;}
 #nav a[href$="calculateurs.html"]{font-weight:800}
 
 @media(prefers-reduced-motion:reduce){.lk-rail,.lk-rail::after{animation:none}}
+/* Progression v2 : total, contenus documentés, aperçu d'import */
+.lk-prog-global{margin:24px 0 0;padding:20px 22px;background:linear-gradient(165deg,#2B1B4D 0%,#3B1F57 60%,#5A2358 100%);color:#fff;border:2px solid var(--ink);border-radius:14px;box-shadow:6px 6px 0 var(--amber)}
+.lk-prog-global .calc-kicker{font:800 .78rem 'JetBrains Mono',monospace;letter-spacing:.14em;color:var(--amber);margin:0 0 6px}
+.lk-prog-global strong{display:block;font:900 clamp(2.4rem,5vw,3.6rem)/1 'Archivo',sans-serif;color:#FFE3A6}
+.lk-prog-global progress{display:block;width:100%;height:14px;margin:12px 0;accent-color:var(--amber)}
+.lk-prog-global p:last-child{margin:0;color:#EBDDEE;font-size:.98rem}
+.acq-box .acq-check{display:flex;align-items:center;gap:10px;min-height:40px;margin-top:6px;font-weight:700;color:var(--ink);cursor:pointer}
+.acq-box .acq-check input{width:20px;height:20px;accent-color:var(--coral)}
+.acq-box.is-pending{background:var(--paper-2);border-style:dashed}
+.acq-box.is-pending strong{color:var(--ink-soft)}
+.acq-pending{margin:8px 0;font-size:.92rem;color:var(--ink-soft)}
+.save-preview{margin:18px 0;padding:18px 20px;background:#FFF9EC;border:2px solid var(--ink);border-top:6px solid var(--amber);border-radius:14px}
+.save-preview h3{margin:0 0 8px;font:900 1.15rem 'Archivo',sans-serif;color:var(--ink)}
+.save-preview ul{margin:0 0 10px;padding-left:20px;color:var(--ink)}
+.save-issues{padding:10px 12px;background:#fff;border:2px dashed var(--coral);border-radius:10px;color:var(--ink);font-size:.95rem}
+.save-preview .save-row{margin-top:10px}
+.save-row button.secondary{background:#fff;color:var(--ink)}
+
+.progress-cards--four{grid-template-columns:repeat(4,minmax(0,1fr))}
+.acq-sub{margin:26px 0 0;font:900 1.15rem 'Archivo',sans-serif;color:var(--ink)}
+@media(max-width:900px){.progress-cards--four{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:680px){.progress-cards--four{grid-template-columns:1fr}}

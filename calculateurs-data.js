@@ -60,7 +60,14 @@
   }
   function normalize(entry, type, fallbackImage, fallbackSchema) {
     if (!entry || !/^[a-z0-9][a-z0-9-]*$/i.test(entry.id || '')) return null;
-    var folders = { vehicle: 'vehicules', weapon: 'armes', property: 'demeures', business: 'entreprises', place: 'lieux', hideout: 'planques' };
+    function safeRoute(value) {
+      if (typeof value !== 'string') return null;
+      var parts = value.split('#');
+      if (parts.length > 2 || (parts.length === 2 && !/^[a-z0-9][a-z0-9-]*$/i.test(parts[1]))) return null;
+      var route = safeLocal(parts[0]);
+      return route ? route + (parts.length === 2 ? '#' + parts[1] : '') : null;
+    }
+    var folders = { vehicle: 'vehicules', weapon: 'armes', property: 'demeures', business: 'entreprises', place: 'lieux', hideout: 'planques', style: 'style', customization: 'personnalisations' };
     var price = numericField(entry, 'price', ['price', 'prix', 'prixAchat']);
     var speed = numericField(entry, 'speed', ['speed', 'vitesseMax', 'vitesse']);
     var acceleration = numericField(entry, 'acceleration', ['acceleration']);
@@ -74,11 +81,14 @@
       brand: text(entry.marque, 100),
       aliases: [entry.aliases,entry.insp,entry.search].flat().filter(function(v){return typeof v==='string';}).join(' ').slice(0,1500),
       purchasable: typeof entry.purchasable === 'boolean' ? entry.purchasable : null,
-      purchaseCandidate: entry.purchasable === true || ['vehicle','weapon','business','property','hideout'].includes(type),
+      purchaseCandidate: typeof entry.calculatorCompatible === 'boolean' ? entry.calculatorCompatible : entry.purchasable === true || ['vehicle','weapon','business','property','hideout'].includes(type),
+      acquisition: text(entry.acquisition, 80),
+      acquisitionCondition: text(entry.condition, 300),
+      evidenceLevel: [1,2,3].includes(entry.evidenceLevel) ? entry.evidenceLevel : null,
       activityIds: Array.isArray(entry.activityIds) ? entry.activityIds.filter(function(v){return typeof v==='string';}) : [],
       category: text(entry.category || entry.cat, 100) || type,
       image: media.image, imageFallback: media.imageFallback || (media.image ? schemaImage : null), schemaImage: schemaImage,
-      url: safeLocal(entry.url) || '/' + folders[type] + '/' + entry.id + '.html',
+      url: safeRoute(entry.url) || '/' + folders[type] + '/' + entry.id + '.html',
       price: price.value, speed: speed.value, acceleration: acceleration.value, seats: seats.value,
       status: status(entry.status || entry.st),
       source: text(entry.source || entry.src, 1000),
@@ -94,6 +104,17 @@
     (Array.isArray(global.LK_ARMES) ? global.LK_ARMES : []).forEach(function (entry) { rows.push(normalize(entry, 'weapon', images[entry.id], schemas[entry.id])); });
     (Array.isArray(generated.entries) ? generated.entries : []).forEach(function (entry) {
       if (['property', 'business', 'place', 'hideout'].indexOf(entry.type) !== -1) rows.push(normalize(entry, entry.type));
+    });
+    // Métadonnées d'obtention vérifiées ; les références existantes gardent leur identité.
+    // Les collections non détaillées ne deviennent pas des achats fictifs.
+    (Array.isArray(global.LK_ACQUISITIONS?.items) ? global.LK_ACQUISITIONS.items : []).forEach(function (entry) {
+      if (entry.evidenceLevel !== 1 || entry.calculatorCompatible !== true) return;
+      var at = rows.findIndex(function (row) { return row && row.id === entry.id && row.type === entry.type; });
+      var image = entry.images?.[0]?.variants?.[0]?.src || null;
+      var item = normalize(Object.assign({}, entry, {image:image, category:global.LK_ACQUISITIONS.categories.find(function (c) { return c.id === entry.category; })?.label}), entry.type);
+      if (!item) return;
+      if (at >= 0) rows[at] = Object.assign({}, rows[at], {acquisition:item.acquisition,acquisitionCondition:item.acquisitionCondition,evidenceLevel:item.evidenceLevel,source:item.source,verifiedAt:item.verifiedAt});
+      else rows.push(item);
     });
     return rows.filter(Boolean);
   }

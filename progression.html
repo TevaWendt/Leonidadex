@@ -26,8 +26,8 @@
   ]
 }
 </script>
-<link rel="stylesheet" href="style.css?v=99d01c76">
-<link rel="stylesheet" href="calculator-entry.css?v=99d01c76">
+<link rel="stylesheet" href="style.css?v=cd575d0b">
+<link rel="stylesheet" href="calculator-entry.css?v=cd575d0b">
 <meta property="og:image" content="https://www.leonidakit.com/img/social-card.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta property="og:url" content="https://www.leonidakit.com/progression.html">
@@ -43,6 +43,7 @@
     <nav id="nav" aria-label="Navigation principale">
       <ul>
         <li><a href="calculateurs.html">Calculateur</a></li>
+        <li><a href="tuto.html">Tuto</a></li>
         <li><a href="carte.html">Carte</a></li>
         <li><a href="vehicules.html">Véhicules</a></li>
         <li><a href="armes.html">Armes</a></li>
@@ -95,7 +96,12 @@
 <article class="note-box" id="progress-lieux"><h3>Lieux repérés</h3><strong>0</strong><progress value="0" max="1" aria-label="Lieux repérés"></progress><a href="carte.html">Ouvrir le suivi</a></article>
 </div><p class="note">Les missions, collectibles, planques et trophées seront ajoutés lorsque leurs listes seront documentées.</p>
   <noscript><p>Active JavaScript pour lire le suivi enregistré dans ton navigateur.</p></noscript>
+  <div class="lk-prog-global rise" id="progress-global" aria-live="polite"><p class="calc-kicker">TOUT MON SUIVI</p><strong id="progress-global-value">0 %</strong><progress id="progress-global-bar" value="0" max="100" aria-label="Progression totale"></progress><p id="progress-global-text">Coche des fiches pour faire monter ce pourcentage. Ce suivi est personnel : ce n’est pas la progression officielle du jeu.</p></div>
 </section>
+<section class="shell" id="acquisitions" aria-labelledby="acq-title">
+  <h2 class="sec-h" id="acq-title">Ce qui s’achète : contenus documentés et sections à venir</h2>
+  <p>Les contenus que Rockstar a décrits (bateaux de l’Édition Ultime, personnalisations, garages) se cochent ici ou sur leur section. Les catégories encore vides attendent le jeu : elles ne comptent pas dans le total. <a href="achats.html">Voir tout ce qui s’achète</a>.</p>
+  <div id="acq-cards"></div>
 <section class="shell" aria-labelledby="progress-calculator-title">
   <div class="lk-entry-card">
     <div><p class="lk-entry-eyebrow">LE CALCULATEUR</p><h2 id="progress-calculator-title">Et ton prochain objectif ?</h2><p>Dis combien tu as et combien tu joues. Le calculateur te dit en combien de jours tu peux avoir ce que tu veux, et garde tes calculs enregistrés.</p></div>
@@ -104,11 +110,22 @@
 </section>
 <section class="shell" id="sauvegarde" aria-label="Sauvegarde">
   <h2 class="sec-h">Sauvegarder ou transférer ton suivi</h2>
-  <p class="fiche-txt">Tout ce que tu coches reste dans ce navigateur. Exporte un fichier pour le garder, ou pour le retrouver sur un autre appareil : garage, arsenal, lieux repérés, marqueurs et dessins de la carte, classement.</p>
+  <p class="fiche-txt">Tout ce que tu coches reste dans ce navigateur. Exporte un fichier pour le garder, ou pour le retrouver sur un autre appareil : garage, arsenal, lieux repérés, contenus documentés, carnets du calculateur, marqueurs et dessins de la carte, classement.</p>
   <div class="save-row">
     <button type="button" id="save-export">Exporter mon suivi</button>
     <label for="save-import">Importer un fichier</label>
     <input type="file" id="save-import" accept="application/json,.json" hidden>
+  </div>
+  <div class="save-preview" id="save-preview" hidden>
+    <h3>Avant d’importer, voici ce que contient le fichier</h3>
+    <ul id="save-preview-list"></ul>
+    <p id="save-preview-issues" class="save-issues" hidden></p>
+    <div class="save-row">
+      <button type="button" id="save-merge">Fusionner avec mon suivi</button>
+      <button type="button" id="save-replace">Remplacer mon suivi par le fichier</button>
+      <button type="button" id="save-cancel" class="secondary">Annuler</button>
+    </div>
+    <p class="fiche-txt">« Fusionner » ajoute les cases du fichier aux tiennes. « Remplacer » met le fichier à la place de tes cases, rubrique par rubrique ; ce que le fichier ne contient pas n’est pas touché.</p>
   </div>
   <p class="save-msg" id="save-msg" aria-live="polite"></p>
 </section>
@@ -166,11 +183,11 @@
       <div class="foot-cols">
         <div>
           <h2>Contenu</h2>
-          <nav><a href="carte.html">Carte</a><a href="vehicules.html">Véhicules</a><a href="armes.html">Armes</a><a href="collectibles.html">Collectibles</a><a href="lieux.html">Lieux</a><a href="personnages.html">Personnages</a><a href="entreprises.html">Entreprises</a><a href="demeures.html">Demeures</a><a href="planques.html">Planques</a></nav>
+          <nav><a href="carte.html">Carte</a><a href="vehicules.html">Véhicules</a><a href="armes.html">Armes</a><a href="collectibles.html">Collectibles</a><a href="lieux.html">Lieux</a><a href="personnages.html">Personnages</a><a href="entreprises.html">Entreprises</a><a href="demeures.html">Demeures</a><a href="planques.html">Planques</a><a href="achats.html">Tout ce qui s’achète</a><a href="bateaux.html">Bateaux</a><a href="style.html">Vêtements et style</a><a href="personnalisations.html">Personnalisations</a></nav>
         </div>
         <div>
           <h2>Outils</h2>
-          <nav><a href="progression.html">Progression</a><a href="calculateurs.html">Calculateur</a></nav>
+          <nav><a href="progression.html">Progression</a><a href="calculateurs.html">Calculateur</a><a href="tuto.html">Tuto</a></nav>
         </div>
         <div>
           <h2>Le site</h2>
@@ -182,13 +199,15 @@
   </div>
 </footer>
 
-<script src="search-index.js?v=99d01c76"></script>
-<script src="assets-manifest.js?v=99d01c76"></script>
-<script src="common.js?v=99d01c76"></script>
-<script src="app.js?v=99d01c76"></script>
-<script src="progression-data.js?v=99d01c76"></script>
-<script src="collectibles-data.js?v=99d01c76"></script>
-<script src="collectibles-core.js?v=99d01c76"></script>
-<script src="progression.js?v=99d01c76"></script>
+<script src="search-index.js?v=cd575d0b"></script>
+<script src="assets-manifest.js?v=cd575d0b"></script>
+<script src="common.js?v=cd575d0b"></script>
+<script src="app.js?v=cd575d0b"></script>
+<script src="progression-data.js?v=cd575d0b"></script>
+<script src="collectibles-data.js?v=cd575d0b"></script>
+<script src="collectibles-core.js?v=cd575d0b"></script>
+<script src="acquisitions-data.js?v=cd575d0b"></script>
+<script src="progression-core.js?v=cd575d0b"></script>
+<script src="progression.js?v=cd575d0b"></script>
 </body>
 </html>

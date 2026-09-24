@@ -69,7 +69,13 @@ for(const file of htmlFiles){let s=fs.readFileSync(file,'utf8');if(file.startsWi
   if(!s.includes('property="og:image"'))s=s.replace('</head>','<meta property="og:image" content="https://www.leonidakit.com/img/social-card.png">\n</head>');
   if(!s.includes('name="twitter:card"'))s=s.replace('</head>','<meta name="twitter:card" content="summary_large_image">\n</head>');
  }
- s=s.replace(/<footer[\s\S]*?<\/footer>/g,footer=>footer.replaceAll('<h4>','<h2>').replaceAll('</h4>','</h2>'));
+ s=s.replace(/<footer[\s\S]*?<\/footer>/g,footer=>{
+  footer=footer.replaceAll('<h4>','<h2>').replaceAll('</h4>','</h2>');
+  // Lot D : Tuto et les sections « ce qui s'achète » dans chaque pied de page, une seule fois.
+  footer=footer.replace(/(<a href="((?:\.\.\/|\/)?)planques\.html"[^>]*>Planques<\/a>)(?!<a href="\2achats\.html")/,'$1<a href="$2achats.html">Tout ce qui s’achète</a><a href="$2bateaux.html">Bateaux</a><a href="$2style.html">Vêtements et style</a><a href="$2personnalisations.html">Personnalisations</a>');
+  footer=footer.replace(/(<a href="((?:\.\.\/|\/)?)calculateurs\.html"[^>]*>Calculateur<\/a>)(?!<a href="\2tuto\.html")/,'$1<a href="$2tuto.html">Tuto</a>');
+  return footer;
+ });
  const title=s.match(/<title>([^<]*)<\/title>/)?.[1];const canonical=s.match(/<link rel="canonical" href="([^"]+)"/)?.[1];const description=s.match(/<meta name="description" content="([^"]*)"/)?.[1];
  if(title&&!s.includes('property="og:title"'))s=s.replace('</head>','<meta property="og:title" content="'+title+'">\n</head>');
  if(description&&!s.includes('property="og:description"'))s=s.replace('</head>','<meta property="og:description" content="'+description+'">\n</head>');
@@ -81,7 +87,7 @@ for(const file of htmlFiles){let s=fs.readFileSync(file,'utf8');if(file.startsWi
  s=s.replace('id="map-panel"','id="map-panel" inert').replace('id="map-panel" inert inert','id="map-panel" inert');
  if(canonical&&!/name="robots" content="[^"]*noindex/.test(s)&&!s.includes('http-equiv="refresh"')&&file!=='404.html')canonicals.push(canonical);
  // Navigation principale : toutes les pages importantes, onglet actif selon la page
- {const NAV=[['calculateurs','Calculateur'],['carte','Carte'],['vehicules','Véhicules'],['armes','Armes'],['lieux','Lieux'],['personnages','Personnages'],['demeures','Demeures'],['planques','Planques'],['entreprises','Entreprises'],['progression','Progression'],['collectibles','Collectibles']];
+ {const NAV=[['calculateurs','Calculateur'],['tuto','Tuto'],['carte','Carte'],['vehicules','Véhicules'],['armes','Armes'],['lieux','Lieux'],['personnages','Personnages'],['demeures','Demeures'],['planques','Planques'],['entreprises','Entreprises'],['progression','Progression'],['collectibles','Collectibles']];
   const base=file.replace(/\.html$/,'').split('/')[0];
   const cur=({'comparateur':'vehicules','classement-vehicules':'vehicules','vehicules-rares':'vehicules'})[base]||base;
   const ul='<ul>\n'+NAV.map(([id,lbl])=>'        <li><a href="'+prefix+id+'.html"'+(id===cur?' class="here" aria-current="page"':'')+'>'+lbl+'</a></li>').join('\n')+'\n      </ul>';
@@ -113,3 +119,11 @@ console.log('Synchronisation : '+htmlFiles.length+' pages, '+assets.length+' ass
 
 // Collectibles : le générateur dédié régénère collectibles-data.js, les fiches et sitemap-collectibles.xml à partir d'outils/collectibles.json.
 require('child_process').execFileSync(process.execPath,[path.join(__dirname,'gen-collectibles.cjs')],{stdio:'inherit'});
+
+/* Lot D : pages Tuto, « Tout ce qui s'achète » et sections achetables dans l'index de recherche (gen.js garde le reste). */
+{const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');const root=path.resolve(__dirname,'..'),file=path.join(root,'search-index.js');
+ const ctx={window:{}};vm.runInNewContext(fs.readFileSync(file,'utf8'),ctx);const idx=ctx.window.LK_INDEX||[];
+ const extra=[{l:'Tuto du calculateur',k:'Outil',u:'/tuto.html',s:'tuto tutoriel apprendre calculateur aide'},{l:'Tout ce qui s’achète',k:'Section',u:'/achats.html',s:'achats acheter prix vetements logements munitions nourriture'}];
+ try{const acq=JSON.parse(fs.readFileSync(path.join(root,'outils/acquisitions.json'),'utf8'));for(const c of acq.categories)if(c.id!=='garages')extra.push({l:c.label,k:'Section',u:c.route,s:c.id+' '+c.label.toLowerCase()});}catch(e){}
+ const known=new Set(idx.map(e=>e.u));let added=0;for(const e of extra)if(!known.has(e.u)){idx.push(e);added++;}
+ if(added)fs.writeFileSync(file,'/* Index de recherche, généré automatiquement. Ne pas éditer à la main. */\nwindow.LK_INDEX = '+JSON.stringify(idx)+';\n');}

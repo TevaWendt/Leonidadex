@@ -39,7 +39,7 @@ Hébergé sur Vercel, qui publie tel quel le contenu de ce dépôt : **aucune co
 - Aucune donnée issue de fuites. Crédit gtadb.org conservé sur la carte et dans les mentions légales.
 
 
-## Calculateur : v7.26 (24 septembre 2026)
+## Calculateur : v7.27 (24 septembre 2026)
 
 Le calculateur reste entièrement statique, gratuit et sans compte. Les sept calculs partagent `calculateurs-engine.js`. Les nombres déjà écrits sont des exemples. L’accueil utilise exactement le même moteur que la page complète.
 
@@ -47,4 +47,12 @@ Le calculateur reste entièrement statique, gratuit et sans compte. Les sept cal
 - Tests moteur sans dépendance : `node --test outils/tests/calculateurs-engine.test.cjs`.
 - Parcours navigateur (Playwright + Chromium) : `node outils/tests/calculateurs-v2-browser.cjs` et `node outils/tests/calculateurs-browser.cjs`.
 - Règle éditoriale : sur le calculateur, pas de jargon (capital, ROI, amortissement, trésorerie, hypothèse). On dit « J’ai déjà », « Je veux avoir », « Je gagne à peu près », « remboursé », « l’argent que je garde de côté ». Les mots techniques sont expliqués dans le lexique en bas de page.
+- Lot D : `tuto.html` (généré par `outils/gen-tuto.cjs`), `achats.html` (`outils/gen-achats.cjs`), sections achetables (`outils/gen-acquisitions.cjs` depuis `outils/acquisitions.json`), progression v2 (`progression-core.js`, testé par `outils/tests/lot-d-progression.test.cjs`). Ordre de régénération : final.js, gen.js, gen-armes.cjs, lore-gen.js, gen-acquisitions.cjs, gen-tuto.cjs, gen-achats.cjs, sync-site.cjs, verifier.js. Détail : `outils/LOT-D.md`.
 - Aucun build requis pour Vercel : conserver `index.html`, les dossiers et `vercel.json` à la racine du dépôt.
+
+## Lot D : Tuto, sections achetables, progression v2 (v7.27)
+
+- `tuto.html` est généré par `outils/gen-tuto.cjs` depuis `outils/tuto.json` (huit chapitres d’outils) et `outils/tuto-captures.json` (24 captures dans `img/tuto/`, refaites depuis le calculateur réel). Script `tuto.js`, style `tuto.css`.
+- Les sections achetables viennent d’une seule source, `outils/acquisitions.json` : `outils/gen-acquisitions.cjs` écrit `acquisitions-data.js`, un hub par catégorie et le bloc Garages de `planques.html` ; `outils/gen-achats.cjs` écrit `achats.html` (Tout ce qui s’achète). Une catégorie `pending` est une section « à confirmer », vide et hors total.
+- `progression-core.js` (`LKProgression.create`) : suivi commun, export / import versionné, migration sans réécriture. Tests : `outils/tests/lot-d-progression.test.cjs`.
+- Ordre de régénération : `final.js`, `gen.js`, `gen-armes.cjs`, `lore-gen.js`, `gen-acquisitions.cjs`, `gen-tuto.cjs`, `gen-achats.cjs`, `sync-site.cjs`, puis `audit-final.js` et `verifier.js`.

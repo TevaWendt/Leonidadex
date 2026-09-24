@@ -57,7 +57,7 @@ function validate(raw,initial){
  const s=walk(initial,raw,'scenario');
  if(![...tools,'plan'].includes(s.tab)||!['quick','guided','advanced'].includes(s.mode)||!['continuous','cycles'].includes(s.model))throw Error('Outil ou mode invalide.');
  if(!asset(s,s.purchase.key)||!asset(s,s.roi.key))throw Error('Référence interne d’achat absente. La sauvegarde ne peut pas être restaurée.');
- if(!['all','vehicle','weapon','property','business','place','hideout','activity'].includes(s.catalogue.type)||!['all','known','unknown','manual','official','verified','estimated'].includes(s.catalogue.status)||!['name','price-up','price-down'].includes(s.catalogue.sort))throw Error('Filtre de catalogue incompatible.');
+ if(!['all','vehicle','weapon','property','business','place','hideout','style','customization','activity'].includes(s.catalogue.type)||!['all','known','unknown','manual','official','verified','estimated'].includes(s.catalogue.status)||!['name','price-up','price-down'].includes(s.catalogue.sort))throw Error('Filtre de catalogue incompatible.');
  if(s.activities.some((a,i)=>a.id!==initial.activities[i].id))throw Error('Référence d’activité invalide.');
  if(new Set(s.assets.map(a=>a.key)).size!==s.assets.length||s.assets.some(a=>!a.key||!['none','personal','roi'].includes(a.incomeMode)))throw Error('Références d’achats incompatibles.');
  if(!['estimate','new','improve','continuous'].includes(s.roi.mode)||!['basket','manual'].includes(s.budget.source))throw Error('Modèle de calcul incompatible.');
@@ -128,5 +128,6 @@ function sensitivity(tool,s,source=[]){
 }
 function signature(s){const c=copy(s);delete c.name;delete c.mode;delete c.views;delete c.tab;delete c.catalogue;delete c.completed;return JSON.stringify(c);}
 function referenceWarnings(s,catalogue){const out=[];s.assets.forEach(a=>{if(!a.itemId)return;const item=catalogue.find(x=>x.id===a.itemId);if(!item)out.push(a.name+' : référence absente, hypothèse conservée.');else if(a.referencePrice!==item.price)out.push(item.name+' : le prix de référence a changé ; vérifie ton hypothèse.');});return out;}
-return Object.freeze({copy,tools,names,defaults,validate,migrate,asset,addAsset,activities,eligible,purchase,goal,session,projection,roi,orderInput,budgetInput,evaluate,metrics,sensitivity,signature,referenceWarnings});
+function initial(dataVersion,presets){return defaults({version:2,dataVersion,mode:'quick',model:'continuous',name:'Mon premier million',tab:'goal',goal:{capital:200000,target:1000000,hourly:100000,reserve:0,dailyMinutes:60,players:1,selected:'scenario-a'},activities:presets.map(a=>({id:a.id,name:a.name,reward:a.reward,cost:a.cost,duration:a.duration,prep:a.prep,cooldown:a.cooldown,share:a.share,investment:a.investment,players:a.players,owned:false})),session:{minutes:60,maxRepeat:100,enabled:['scenario-a','scenario-b','scenario-c']},inverse:{minutes:60,selected:'scenario-a'},purchase:{itemId:'',price:100000,hourly:50000,boostHourly:0,capital:200000,target:1000000,reserve:0,extras:0},catalogue:{query:'',type:'all',status:'all',maxPrice:null,sort:'name',favorites:[],compareIds:[],favoritesOnly:false}});}
+return Object.freeze({copy,tools,names,defaults,initial,validate,migrate,asset,addAsset,activities,eligible,purchase,goal,session,projection,roi,orderInput,budgetInput,evaluate,metrics,sensitivity,signature,referenceWarnings});
 });

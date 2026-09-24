@@ -1,4 +1,4 @@
-# Calculateur Leonidakit : couverture du brief « Calculateur Ultime » (v7.26, 24 septembre 2026)
+# Calculateur Leonidakit : couverture du brief « Calculateur Ultime » (v7.27, 24 septembre 2026)
 
 Relecture du brief point par point. Trois états : **fait**, **partiel**, **manquant**. Les manques
 liés à l'absence de données GTA VI (le jeu sort le 19 novembre 2026) sont notés « attend les données ».
@@ -27,7 +27,7 @@ liés à l'absence de données GTA VI (le jeu sort le 19 novembre 2026) sont not
 | §12 Charte, signature, icônes, hiérarchie | fait (v7.22) | encre, corail, ambre, nuit de Vice City, 7 pictogrammes, sceau « LK plan de jeu » |
 | §12 Cartes de partage (aperçu social par calcul) | manquant | pas d'infrastructure de rendu ; l'aperçu social reste celui de la page |
 | §13 Animations : entrée, micro-interactions, mouvement réduit | fait (v7.26) | grammaire commune, parallaxe, apparitions, relief, compteurs, courbes tracées, jauges, néon, mouvement réduit |
-| §14 Microcopy, libellés, unités, erreurs, FAQ, lexique | fait (v7.22) | mots simples, lexique, 8 questions |
+| §14 Microcopy, libellés, unités, erreurs, FAQ, lexique | fait (v7.22) | mots simples, lexique, 8 questions ; Tuto en 14 chapitres (v7.27) |
 | §15 Mobile : pouce, résumé fixe, tableaux, états complets | fait | résumé collant sur les 7 outils (v7.23), 320 à 1440 px sans débordement |
 | §15 WCAG 2.2 AA vérifié en réel | partiel | clavier, focus, contrastes et mouvement réduit testés ; pas de lecteur d'écran |
 | §16 Provenance, statuts, inconnu ≠ zéro, trois couches, versionnement, retour aux références | fait | `calculateurs-data.js`, `outils/CALCULATEURS-DONNEES.md`, « Remettre le vrai prix » |
@@ -41,3 +41,4 @@ liés à l'absence de données GTA VI (le jeu sort le 19 novembre 2026) sont not
 | §22 Safari, Firefox, appareils réels, lecteur d'écran | manquant | non disponibles ici |
 | §24 Livraison : résumé, fichiers, matrice, tests, captures, documentation, benchmark | fait | ce fichier, `CHANGEMENTS-v7.2x.txt`, `CALCULATEUR-V2.md`, dossier de validation, rapport du 21 septembre |
 | Exigence de Téva : utilisable par un enfant de 10 ans | à faire tester | tout est écrit pour ; seul un vrai test avec un enfant le prouvera |
+| Demandes du 23/09 : Tuto, sections achetables complètes, textes des hubs, progression | fait (v7.27) | `tuto.html`, `achats.html` et 15 catégories, intros des hubs, `progression-core.js` |

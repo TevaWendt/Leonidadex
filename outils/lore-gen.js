@@ -1,3 +1,4 @@
+const HUB_NOTES={"lieux": "Ouvre une fiche pour retrouver ses médias et ses repères sur la carte. Les descriptions officielles sont distinguées des localisations communautaires ; la présence d’un lieu ne confirme pas un accès libre dans le jeu.", "demeures": "Retrouve les liens avec les personnages et les lieux voisins. Une demeure montrée ou décrite par Rockstar n’est pas, à elle seule, un logement que le joueur pourra acheter.", "entreprises": "Chaque fiche relie ses visuels aux personnages ou lieux concernés. Les services réservés à une édition sont précisés dans les nouvelles sections Style et Personnalisations ; posséder ou exploiter ces entreprises n’est pas confirmé.", "personnages": "Explore leurs liens et les scènes officielles depuis chaque fiche. Une présence dans l’histoire ne signifie pas que le personnage sera jouable ; les descriptions restent limitées aux informations publiées.", "planques": "Les fiches distinguent ce que l’image montre de ce que le texte officiel confirme. Les garages documentés figurent plus bas avec leurs conditions d’accès ; aucun achat immobilier séparé n’est supposé."};
 /* Génère lieux.html, personnages.html, entreprises.html et les fiches lieux/, personnages/, entreprises/
    à partir de outils/editorial.json et outils/medias-officiels.json, avec l'en-tête, le pied de page
    et les scripts déjà utilisés par le site (copiés depuis a-propos.html et une fiche véhicule).
@@ -28,19 +29,19 @@ const withHere=(header,hub)=>header.replace(/ class="here"/g,'').replace(new Reg
 const SITE='https://www.leonidakit.com';
 const SECTIONS={
   regions:{hub:'lieux',label:'Lieux',one:'Région',title:'Les régions de Leonida',
-    lede:'Six régions présentées par Rockstar, chacune reliée à ses lieux sur la carte et aux personnages qui y évoluent.',
+    lede:"Des Keys aux quartiers de Vice City, découvre les régions présentées par Rockstar et les liens entre leurs paysages, leurs habitants et l’histoire.",
     desc:'Les six régions officielles de GTA VI : Vice City, Leonida Keys, Grassrivers, Port Gellhorn, Ambrosia et Mount Kalaga, avec visuels officiels et liens vers la carte.'},
   characters:{hub:'personnages',label:'Personnages',one:'Personnage',title:'Les personnages de GTA VI',
-    lede:'Les huit personnages présentés par Rockstar, avec leur région, leurs liens entre eux et ce qu’ils cherchent.',
+    lede:"Qui sont Jason, Lucia et les personnes qui croisent leur route ? Ces portraits relient les personnages présentés par Rockstar à leur entourage et aux régions de Leonida.",
     desc:'Jason, Lucia, Cal, Boobie, Dre\u2019Quan, Real Dimez, Raul et Brian : les personnages officiels de GTA VI, avec visuels Rockstar et liens vers les lieux de Leonida.'},
   businesses:{hub:'entreprises',label:'Entreprises',one:'Entreprise',title:'Les entreprises de Leonida',
-    lede:'Commerces et ateliers montrés dans les médias officiels, situés sur la carte quand leur emplacement est connu.',
+    lede:"Ateliers, boutiques, salons et lieux de musique : découvre les adresses qui donnent vie à Leonida et les services que Rockstar a effectivement décrits.",
     desc:'Les entreprises de GTA VI présentées par Rockstar : ateliers, salons, boutiques et studios, avec visuels officiels et position sur la carte de Leonida.'},
   residences:{hub:'demeures',label:'Demeures',one:'Demeure',title:'Les demeures de Leonida',
-    lede:'Où vivent les personnages, d’après ce que Rockstar a montré ou raconté : maisons des Keys, chantier naval, pénitencier.',
+    lede:"Ces fiches rassemblent les lieux associés à la vie des personnages : maisons, hébergements et autres adresses évoquées dans leur parcours.",
     desc:'Les habitations des personnages de GTA VI décrites par Rockstar : la maison de Jason dans les Keys, chez Cal Hampton, chez Brian et Lori, le parcours de Lucia.'},
   hideouts:{hub:'planques',label:'Planques',one:'Planque',title:'Les planques de Leonida',
-    lede:'Les repaires vus dans les trailers et la galerie officielle. La liste s’allongera avec le jeu et votre suivi de progression.',
+    lede:"Retrouve les repaires montrés dans les médias, la planque nommée par Rockstar et les garages décrits avec les bonus de véhicule.",
     desc:'Les planques de GTA VI repérées dans les médias officiels : la planque de Jason dans les Keys, le chantier naval de Brian, le motel du premier trailer.'},
 };
 const byId={};for(const k of Object.keys(SECTIONS))for(const x of ED[k])byId[x.id]=Object.assign({sec:k},x);
@@ -93,6 +94,8 @@ ${C.fav}
 ${C.fonts}
 ${bc(crumbs)}
 <link rel="stylesheet" href="${p}style.css">
+<link rel="stylesheet" href="${p}motion-tokens.css">
+<link rel="stylesheet" href="${p}acquisitions.css">
 ${body.includes('lk-entry-card') ? `<link rel="stylesheet" href="${p}calculator-entry.css">` : ''}
 <meta property="og:image" content="${SITE}${ogImg||'/img/social-card.png'}">
 <meta name="twitter:card" content="summary_large_image">
@@ -130,6 +133,7 @@ for(const [key,S] of Object.entries(SECTIONS)){
   <p class="fiche-cat">${esc(S.label)} · GTA VI</p>
   <h1>${esc(S.title)}</h1>
   <p class="lede">${esc(S.lede)}</p>
+  <p class="d-intro-note">${esc(HUB_NOTES[S.hub]||"")} <a href="tuto.html#sources">Comprendre les statuts</a>.</p>
 </section>
 <section class="shell">
   <div class="lore-grid lore-grid--center lore-grid--n${items.length}">
