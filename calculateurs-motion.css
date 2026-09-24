@@ -1,0 +1,106 @@
+/* Lot C — grammaire commune. Les valeurs finales et la géométrie sont le socle.
+   110 pression / 190 commande / 300 panneau / 620 récit / 12 s ambiance.
+   Déplacements : 2 px carte, 10 px révélation, 14 px scène au maximum. */
+.calculator-page{
+ --c-instant:110ms;--c-fast:190ms;--c-standard:300ms;--c-narrative:620ms;--c-ambient:12s;
+ --c-ease-control:cubic-bezier(.2,.7,.25,1);--c-ease-soft:cubic-bezier(.22,.61,.36,1);--c-ease-result:cubic-bezier(.16,1,.3,1);
+ --c-rise:10px;--c-lift:2px;--c-stagger:35ms;--c-halo:#F5A52433;--c-neon:#F5A524;
+}
+/* Supprime les anciennes entrées concurrentes ; aucun contenu caché en CSS. */
+.calculator-page .calc-panel,.calculator-page .lk-calc-hero-copy,.calculator-page .lk-scene-seal{animation:none}
+.calculator-page .calc-result-pulse{animation:none}
+.calculator-page .lk-calc-hero-in{min-height:304px}
+.calculator-page .c-hero-action{display:inline-flex;align-items:center;gap:28px;margin-top:19px;background:#f7e4b9;color:#271846;border-color:#f7e4b9;text-decoration:none;min-height:43px}
+.calculator-page .c-hero-action:hover{background:#fff0d0}
+.calculator-page .lk-hero-meta{margin-top:15px}
+.calculator-page .lk-calc-hero-scene{pointer-events:none;background:linear-gradient(155deg,#a52d1d,#2b1b4d)}
+.calculator-page .lk-calc-hero-scene img{transform:translate3d(var(--c-scene-x,0px),var(--c-scene-y,0px),0) scale(1.075)}
+.calculator-page .lk-scene-seal{transform:translate3d(calc(var(--c-scene-x,0px) * -1),calc(var(--c-scene-y,0px) * -.4),0) rotate(5deg)}
+.c-scene-grid,.c-scene-glow{position:absolute;inset:0;pointer-events:none;z-index:1}
+.c-scene-grid{inset:53% -12% -38%;opacity:.22;background:linear-gradient(90deg,#f7b64542 1px,transparent 1px),linear-gradient(#f7b23b3b 1px,transparent 1px);background-size:55px 40px;transform:perspective(240px) rotateX(58deg) translateY(calc(var(--c-scene-y,0px) * -.6));transform-origin:center top;mask-image:linear-gradient(transparent,#000000)}
+.c-scene-glow{background:radial-gradient(ellipse at 72% 8%,#f7b6452d,transparent 60%),linear-gradient(115deg,transparent 70%,#f7b23b1f 82%,transparent 90%);transform:translateX(calc(var(--c-scene-x,0px) * -.6));opacity:.7}
+/* Composants interactifs ; les surfaces contenant des champs ne se déplacent pas. */
+.calculator-page :is(.calc-button,.calc-chip,.calc-mode-switch button,.calc-tabs button,.lk-tool,.calc-product,.calc-route,.b-suggestion,.b-notebook-entry,.b-plan-step){transition:background-color var(--c-fast) var(--c-ease-control),border-color var(--c-fast) var(--c-ease-control),box-shadow var(--c-fast) var(--c-ease-control),transform var(--c-fast) var(--c-ease-control)}
+.calculator-page :is(.lk-tool,.calc-product,.calc-route,.b-notebook-entry,.b-plan-step):focus-within{border-color:#b93321;box-shadow:0 0 0 2px var(--c-halo)}
+.calculator-page main :is(button,a,input,select,summary):focus-visible{outline:3px solid #bf3422;outline-offset:4px}
+.calculator-page .calc-tabs button{position:relative}
+.calculator-page .calc-tabs button::after{content:'';position:absolute;bottom:0;left:14px;right:14px;height:3px;background:currentColor;transform:scaleX(0);transition:transform var(--c-fast) var(--c-ease-control);pointer-events:none}
+.calculator-page .calc-tabs button[aria-selected=true]::after{transform:scaleX(1)}
+.calculator-page :is(button,[role=option]):disabled{opacity:.5;cursor:not-allowed;transform:none}
+.calculator-page [aria-invalid=true]{border-color:#ba3321!important;box-shadow:inset 3px 0 #ba3321}
+.calculator-page .b-suggestion[aria-selected=true]{box-shadow:inset 4px 0 #be3421}
+.calculator-page .c-reference-tag{display:inline-block;margin:8px 0;padding:4px 9px;border:1px solid #bf3422;border-radius:4px;color:#9c2b1c;font-size:13.5px;font-weight:700}
+.calculator-page [data-c-stage-state="Terminé"]{border-color:#f59f0a;box-shadow:inset 4px 0 #f59f0a}
+.calculator-page .b-save-state[data-c-dirty=true]{border-left:3px solid #af762f;padding-left:10px}
+@media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+ .calculator-page :is(.lk-tool,.calc-product,.calc-route):hover{transform:translateY(calc(-1 * var(--c-lift)));border-color:#f6ae32;box-shadow:0 7px 18px #2d1c5118}
+ .calculator-page :is(.b-notebook-entry,.b-plan-step):hover{border-color:#f6ae32;box-shadow:0 4px 12px #2d1c510d}
+}
+.calculator-page :is(.calc-button,.calc-chip):active:not(:disabled){transform:translateY(1px);transition-duration:var(--c-instant)}
+@media(hover:none),(pointer:coarse){
+ .calculator-page :is(.lk-tool,.calc-product,.calc-route):hover{transform:none;box-shadow:none}
+ .calculator-page :is(.lk-tool,.calc-product,.calc-route):active{background:#ece8e0;border-color:#bf3422}
+}
+/* Le texte final réserve toute la place ; sa copie visuelle ne participe pas au flux. */
+.calculator-page :is(.calc-result-main,.calc-stat strong,.calc-result-metrics strong,[data-c-number]){font-variant-numeric:tabular-nums}
+.c-number{position:relative;isolation:isolate}
+.c-number .c-final{font:inherit;color:inherit}
+.c-number.c-counting>.c-final{opacity:0}
+.c-rolling{position:absolute;inset:0;pointer-events:none;overflow:hidden;font:inherit;color:inherit;line-height:inherit;letter-spacing:inherit}
+.c-rolling::before{content:attr(data-display);font:inherit;color:inherit}
+.c-number:not(.c-counting)>.c-rolling{display:none}
+/* Jauges : le progress natif conserve sa vraie valeur et son nom accessible. */
+.c-progress-block{margin:22px 0 16px}.c-progress-block label{display:block;font-size:14.5px;line-height:1.6}.c-progress-block strong{font-variant-numeric:tabular-nums}
+.c-progress-block .calc-progress{height:7px;background:#f7b6452b}
+.c-progress-block .calc-progress::-webkit-progress-value{background:#f7b23b;transition:none}
+.c-progress-block .calc-progress::-moz-progress-bar{background:#f7b23b}
+.c-progress-track{position:relative;display:block;overflow:hidden;width:100%;height:7px;margin-top:9px;border-radius:4px;background:#f7b6452b}
+.c-progress-track>.calc-progress{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0}
+.c-progress-fill{display:block;width:100%;height:100%;transform-origin:left center;background:#f6ae32;pointer-events:none}
+.calc-result .c-progress-fill{background:var(--c-neon)}
+.c-progress-note{font-size:14.5px;line-height:1.6}
+.c-payback{border:1px solid #f7b23b60;border-left:3px solid #f7b23b;border-radius:8px;padding:14px 16px;margin:14px 0 20px;background:#f7b23b08}
+.c-payback span,.c-payback small{display:block;font-size:14.5px;line-height:1.6}.c-payback strong{display:block;font-size:24px;line-height:1.5;color:#f7b23b}
+/* Figures sans dépendance : axes, points clavier et tableau de données. */
+.calculator-page .c-chart{margin:22px 0;border:1px solid #f7b64538;border-radius:9px;padding:12px;overflow:hidden}
+.calculator-page .c-chart svg{display:block;width:100%;height:auto;aspect-ratio:600/228;overflow:visible}
+.calculator-page .c-chart svg text{font:16px 'Archivo',sans-serif;fill:#9c2b1c}
+.calculator-page .calc-result .c-chart svg text{fill:#f7b645}
+.calculator-page .c-chart .path{vector-effect:non-scaling-stroke;stroke-linecap:round}
+.c-chart-point{fill:#fffdfa;stroke:#bf3422;stroke-width:2;vector-effect:non-scaling-stroke}.c-chart-key{fill:#bf3422}
+.calc-result .c-chart-point{stroke:#f7b23b;fill:#271846}.calc-result .c-chart-key{fill:#f7b23b}
+.c-chart-point:focus{outline:none;stroke-width:4;fill:#eed59f}
+.c-threshold{stroke:#e2ba7f;stroke-dasharray:5 5;vector-effect:non-scaling-stroke}
+.c-chart figcaption{font-size:14.5px;line-height:1.6;margin:7px 0 12px}
+.c-chart-data summary{font-size:14.5px;cursor:pointer;min-height:32px;padding:6px 0}
+.calculator-page .c-chart-data .calc-table{min-width:260px}
+.calculator-page .calc-result .c-chart-data .calc-table th{background:#2d1c51;color:#e4e0d8}
+.calculator-page .calc-result .c-chart-data .calc-table td{color:#f2efea;border-color:#ffffff24}
+/* Une seule surface sombre reçoit un balayage, uniquement visible à l'écran. */
+.calculator-page .calc-result{border-top-color:#f6ac2b;box-shadow:inset 0 1px #f7b64526}
+.calculator-page .calc-result::after{content:'';position:absolute;inset:0;pointer-events:none;opacity:0;background:linear-gradient(110deg,transparent 42%,#f7b23b0a 47%,#f7b64515 50%,transparent 56%);transform:translateX(-80%)}
+.calculator-page[data-c-motion=full] .calc-result.c-inview::after{animation:c-sweep var(--c-ambient) linear infinite;animation-delay:var(--c-phase,0s)}
+.calculator-page .calc-result.c-complete{border-color:#f7b23b}
+@keyframes c-sweep{0%,75%{opacity:0;transform:translateX(-80%)}82%{opacity:.8}96%,100%{opacity:0;transform:translateX(80%)}}
+@media(max-width:767px){
+ .calculator-page .lk-calc-hero-in{min-height:0}.calculator-page .c-hero-action{font-size:13.5px;margin-top:13px;min-height:40px;padding:9px 12px;gap:16px}
+ .calculator-page .lk-hero-meta{margin-top:12px;font-size:12.5px}.c-scene-grid{opacity:.11}.c-scene-glow{opacity:.35}
+ .calculator-page .c-chart{padding:8px}.calculator-page .c-payback strong{font-size:22px}
+}
+.calculator-page[data-c-motion=light] .lk-calc-hero-scene img,.calculator-page[data-c-motion=off] .lk-calc-hero-scene img{transform:none}
+.calculator-page[data-c-motion=light] .lk-scene-seal,.calculator-page[data-c-motion=off] .lk-scene-seal{transform:rotate(5deg)}
+.calculator-page[data-c-motion=off] main *,.calculator-page[data-c-motion=off] main *::before,.calculator-page[data-c-motion=off] main *::after{animation:none!important;transition:none!important}
+.calculator-page[data-c-motion=light] :is(.lk-rail,.lk-rail::before,.lk-rail::after){animation:none!important}
+@media(prefers-reduced-motion:reduce){
+ .calculator-page .lk-calc-hero-scene img{transform:none}.calculator-page .lk-scene-seal{transform:rotate(5deg)}
+ .calculator-page :is(.lk-tool,.calc-product,.calc-route,.calc-button,.calc-chip):hover,.calculator-page :is(.calc-button,.calc-chip):active{transform:none}
+ .calculator-page .calc-result::after{display:none}
+}
+@media print{.c-rolling,.calc-result::after{display:none!important}.c-number.c-counting>.c-final{opacity:1}.c-progress-track>.calc-progress{opacity:1}.c-progress-fill{display:none}.c-chart-data{display:block!important}.c-chart-data>*{display:block!important}}
+/* Les styles des légendes .calc-stat span ne doivent jamais réduire un compteur. */
+.calculator-page .c-number>.c-final,.calculator-page .c-number>.c-rolling{font:inherit;color:inherit;line-height:inherit;letter-spacing:inherit}
+.calculator-page .c-chart svg{max-width:720px;margin-inline:auto}
+.calculator-page .c-comparison{border-left:3px solid #f6aa26;padding-left:10px;margin-top:16px}
+/* La grille mobile prend sa place immédiatement au passage depuis l’éventail. */
+@media(max-width:899px){.calculator-page .lk-link{transition-property:box-shadow;transition-duration:var(--c-fast)}}
+@media(hover:none),(pointer:coarse){.calculator-page :is(.calc-button,.calc-chip,.calc-mode-switch button,.calc-tabs button):hover{transform:none}}

@@ -1,4 +1,4 @@
-# Calculateur Leonidakit : maintenance, version du 22 septembre 2026 (v7.25)
+# Calculateur Leonidakit : maintenance, version du 22 septembre 2026 (v7.26)
 
 ## Structure
 
@@ -126,3 +126,10 @@ Règle : un enfant de 10 ans doit pouvoir s'en servir. Concrètement :
 - `calculateurs-workspace.js` : panneaux Ça vaut le coup, Mon budget, Quoi acheter d'abord et Mon plan ; décoration des autres panneaux (champs Expert `.b-expert`, résumé des réglages `.b-mode-summary`, étapes « C'est bon pour cette étape »). Les étapes numérotées (`step()`) rendent le pas à pas de `calculateurs-simple.js` disponible partout.
 - Règle : quand un rendu resynchronise une case partagée, il ne la réécrit que si sa valeur diffère (les saisies françaises « 250 000,50 » sont conservées).
 - Tests : `outils/tests/calculateurs-lot-b.test.cjs`, `calculateurs-lot-b-browser.cjs` (Playwright).
+
+## v7.26 : lot C (animations et effets)
+
+- `calculateurs-motion.css` : tokens `--c-instant` (110 ms), `--c-fast` (190), `--c-standard` (300), `--c-narrative` (620), `--c-ambient` (12 s), courbes `--c-ease-*`, `--c-rise` 10 px, `--c-lift` 2 px, `--c-stagger` 35 ms, `--c-halo` / `--c-neon` en ambre. États survol / focus / pression / sélection / erreur / désactivé ; mobile, tactile et `prefers-reduced-motion` gérés dans la feuille.
+- `calculateurs-motion.js` : un seul ordonnanceur `requestAnimationFrame`, observateurs partagés, apparition unique (`.c-inview`), compteurs sur `.calc-result-main`, `.calc-stat strong` et `[data-c-number]` (copie visuelle, valeur réelle dans le DOM), tracé des `.calc-chart .path` et des `.c-chart`, jauges `progress.calc-progress`, parallaxe de `.lk-calc-hero-scene`, transitions des comparaisons `[data-c-comparison]` et des étapes `[data-c-stage]`. Suspendu quand l'onglet est masqué ; nettoyage des éléments retirés.
+- `calculateurs-visuals.js` : `LKCalcVisuals.create(helpers)` → `plot` (courbe d'objectif), `sensitivity`, `roi`, `progress` ; chaque graphique a un tableau des valeurs exactes et des points accessibles au clavier. Aucun calcul : tout vient des résultats du moteur.
+- Règle : aucune animation ne retarde un résultat ni ne déplace une case pendant la saisie.

@@ -1,4 +1,4 @@
-# Calculateur Leonidakit : couverture du brief « Calculateur Ultime » (v7.23, 22 septembre 2026)
+# Calculateur Leonidakit : couverture du brief « Calculateur Ultime » (v7.26, 24 septembre 2026)
 
 Relecture du brief point par point. Trois états : **fait**, **partiel**, **manquant**. Les manques
 liés à l'absence de données GTA VI (le jeu sort le 19 novembre 2026) sont notés « attend les données ».
@@ -20,13 +20,13 @@ liés à l'absence de données GTA VI (le jeu sort le 19 novembre 2026) sont not
 | §7 Contraintes réelles, pas de double comptage, heuristique déclarée | fait | moteur `calculateurs-engine.js`, 52 tests ; limite de recherche affichée dans « Pourquoi ce programme ? » |
 | §8 Recherche tolérante, favoris, récents, filtres combinables avec compteur, chips, réinitialisation, tri séparé, état vide guidé | fait | onglet « Mes achats » |
 | §8 Panneau de filtres mobile avec commande de fermeture | partiel | les filtres sont empilés, pas de panneau repliable |
-| §9 Réponse en une phrase → décision → comparaison → explication | fait (v7.23) | les 7 outils commencent par « MA RÉPONSE » en une phrase |
+| §9 Réponse en une phrase → décision → comparaison → explication | fait (v7.23, v7.25) | les 7 outils commencent par « MA RÉPONSE » en une phrase |
 | §9 Graphiques avec unités, légende, alternative texte | fait | courbe de capital, courbe de remboursement, barres de budget, programme de session |
 | §10 Accueil : promesse, appel principal, mini-calculateur relié au moteur, raccourcis, sans compte, mobile | fait | `calculator-entry.js` réutilise `calculateurs-engine.js` |
 | §11 Cartes contextuelles avec contexte importé et retour à la fiche | fait | `fiches.js`, `lore-gen.js`, `comparateur.js`, `progression.html` |
 | §12 Charte, signature, icônes, hiérarchie | fait (v7.22) | encre, corail, ambre, nuit de Vice City, 7 pictogrammes, sceau « LK plan de jeu » |
 | §12 Cartes de partage (aperçu social par calcul) | manquant | pas d'infrastructure de rendu ; l'aperçu social reste celui de la page |
-| §13 Animations : entrée, micro-interactions, mouvement réduit | partiel | entrée de page, boutons, barre du pas à pas ; pas de mise en évidence des chiffres modifiés ni de tracé progressif des courbes |
+| §13 Animations : entrée, micro-interactions, mouvement réduit | fait (v7.26) | grammaire commune, parallaxe, apparitions, relief, compteurs, courbes tracées, jauges, néon, mouvement réduit |
 | §14 Microcopy, libellés, unités, erreurs, FAQ, lexique | fait (v7.22) | mots simples, lexique, 8 questions |
 | §15 Mobile : pouce, résumé fixe, tableaux, états complets | fait | résumé collant sur les 7 outils (v7.23), 320 à 1440 px sans débordement |
 | §15 WCAG 2.2 AA vérifié en réel | partiel | clavier, focus, contrastes et mouvement réduit testés ; pas de lecteur d'écran |

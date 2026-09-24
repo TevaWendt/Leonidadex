@@ -1,0 +1,34 @@
+LEONIDAKIT v7.26 : LOT C, ANIMATIONS ET EFFETS DU CALCULATEUR (24 septembre 2026)
+===================================================================================
+Base : v7.21. Contient aussi v7.22 à v7.25. Aucun fichier supprimé. Archive « modifs ».
+Reprend le « Lot C » de ChatGPT du 23 septembre (construit sur son lot B) en le portant dans la
+version actuelle : trois nouveaux fichiers, calculateurs-motion.css (grammaire et états), 
+calculateurs-motion.js (apparitions, compteurs, tracés, jauges, parallaxe) et calculateurs-visuals.js
+(courbes SVG accessibles, jauges, tableaux des valeurs exactes). Palette de ChatGPT (mauve, menthe)
+remise dans la charte : ambre, corail, nuit de Vice City.
+
+1. Une grammaire commune : 110 ms pour une pression, 190 ms pour un bouton, 300 ms pour un panneau,
+   620 ms pour un chiffre, une courbe ou une jauge, cycle d'ambiance de 12 s ; apparitions de 10 px
+   maximum, relief de 2 px, décalage de 35 ms plafonné. Les cases ne bougent jamais pendant la saisie.
+2. Scène d'entrée : photo, lignes rétro, grille et lueur en plans superposés, parallaxe borné à 10 px
+   de côté et 14 px de haut, bouton « Ouvrir le calculateur » pour aller droit à l'atelier.
+3. Apparition au défilement, une seule fois, des cartes, outils, entrées de carnet et étapes de plan.
+   Relief au survol, au focus, à la pression et à la sélection ; états d'erreur et désactivé cohérents.
+4. Chiffres qui défilent quand un résultat change (montants, heures, jours, pourcentages, parties),
+   en français ; une nouvelle saisie interrompt le compteur ; le vrai chiffre est dans la page tout de
+   suite, seule une copie visuelle est animée.
+5. Courbes qui se tracent : capital de Mon objectif, sensibilité -20 / 0 / +20 %, remboursement de
+   Ça vaut le coup ? (revenu continu) ; points accessibles au clavier et tableau des valeurs exactes.
+6. Jauges : objectif, temps de jeu utilisé, budget, achat remboursé, étapes du plan (0 à 100 %, dépassement
+   dit en toutes lettres).
+7. Néon ambre et balayage lumineux discrets sur les réponses sombres visibles ; éventail de cartes du
+   lot A conservé.
+8. Mobile et tactile : pas de parallaxe ni de balayage, transitions raccourcies, aucun survol collé après
+   un toucher. « Réduire le mouvement » : scène fixe, résultats, courbes et jauges à leur état final.
+9. Remis au passage : la lecture des grands nombres (« = 200 mille $ », espaces de milliers) perdue lors
+   du portage du lot B.
+
+Vérifications : 215 tests Node, 126/126 (lot B), 142/142 (v2) et 184/184 (v1) contrôles Chromium,
+verifier.js 28 381 références sans erreur, rendus 1 440 / 390 / 360 px, mouvement réduit, apparitions
+vérifiées après défilement (aucun bloc ne reste invisible). Non testés : Safari, Firefox, appareils
+réels, cadence réelle des animations sur téléphone.
