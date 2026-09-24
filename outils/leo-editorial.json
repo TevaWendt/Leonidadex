@@ -1,0 +1,414 @@
+{
+ "schemaVersion": 1,
+ "definitions": [
+  {
+   "id": "recette",
+   "title": "Récompense",
+   "terms": [
+    "recette",
+    "revenu brut",
+    "chiffre d'affaires"
+   ],
+   "text": "C’est l’argent que tu reçois à la fin d’une mission, avant de payer tes frais. Ce n’est pas ce qu’il te reste vraiment."
+  },
+  {
+   "id": "benefice-net",
+   "title": "Gain, ou bénéfice",
+   "terms": [
+    "benefice net",
+    "gain net",
+    "profit net"
+   ],
+   "text": "C’est ce qu’il te reste une fois tes frais payés. Récompense 100 000 $, frais 20 000 $ : ton gain est de 80 000 $."
+  },
+  {
+   "id": "roi",
+   "title": "ROI : ce que rapporte un achat en %",
+   "terms": [
+    "roi",
+    "retour sur investissement"
+   ],
+   "text": "C’est ce qu’un achat t’a fait gagner, en pourcentage de son prix : gagné au final ÷ prix × 100. 0 % veut dire remboursé ; 100 % veut dire qu’il a rapporté deux fois son prix."
+  },
+  {
+   "id": "amortissement",
+   "title": "Amortissement, ou « remboursé »",
+   "terms": [
+    "amortissement",
+    "amortir",
+    "seuil de rentabilite"
+   ],
+   "text": "C’est le moment où un achat t’a rapporté autant qu’il t’a coûté. Dans « Ça vaut le coup ? », le calculateur te dit après combien d’heures de jeu tu y arrives."
+  },
+  {
+   "id": "rendement",
+   "title": "Rendement",
+   "terms": [
+    "rendement",
+    "taux de rendement"
+   ],
+   "text": "C’est ce que rapporte une somme dépensée, sur une durée donnée. Un chiffre par heure de jeu n’est pas un rendement : il faut dire combien de temps tu t’en sers."
+  },
+  {
+   "id": "reserve",
+   "title": "Argent gardé de côté (réserve)",
+   "terms": [
+    "reserve",
+    "capital disponible"
+   ],
+   "text": "C’est la part de ton argent que tu ne veux pas dépenser. Le calculateur n’y touche jamais : il fait comme si cet argent n’existait pas pour tes achats."
+  }
+ ],
+ "faq": [
+  {
+   "id": "prix",
+   "terms": [
+    "prix manque",
+    "prix inconnu",
+    "pas de prix",
+    "prix officiel",
+    "prix absent"
+   ],
+   "source": "/tuto.html#faq",
+   "question": "Pourquoi un prix officiel n’apparaît-il pas ?"
+  },
+  {
+   "id": "modes",
+   "terms": [
+    "simple expert",
+    "mode expert",
+    "mode simple",
+    "meme resultat"
+   ],
+   "source": "/tuto.html#faq",
+   "question": "Pourquoi Simple et Expert donnent le même résultat ?"
+  },
+  {
+   "id": "session",
+   "terms": [
+    "aucune activite",
+    "activite trop longue",
+    "aucune mission"
+   ],
+   "source": "/tuto.html#faq",
+   "question": "Pourquoi aucune activité ne rentre dans mon temps de jeu ?"
+  },
+  {
+   "id": "partage",
+   "terms": [
+    "resultat change",
+    "valeurs partagees",
+    "plusieurs outils"
+   ],
+   "source": "/tuto.html#faq",
+   "question": "Pourquoi mon résultat change dans plusieurs outils ?"
+  },
+  {
+   "id": "progression",
+   "terms": [
+    "plan progression",
+    "sauvegarde console",
+    "synchronise console"
+   ],
+   "source": "/tuto.html#faq",
+   "question": "Quelle différence entre Mon plan et Ma progression ?"
+  },
+  {
+   "id": "export",
+   "terms": [
+    "autre appareil",
+    "exporter",
+    "importer",
+    "export import"
+   ],
+   "source": "/tuto.html#faq",
+   "question": "Comment emporter mes données sur un autre appareil ?"
+  },
+  {
+   "id": "animations",
+   "terms": [
+    "desactiver animation",
+    "mouvement reduit",
+    "arreter animation"
+   ],
+   "source": "/tuto.html#faq",
+   "question": "Les animations peuvent-elles être désactivées ?"
+  },
+  {
+   "id": "carnets",
+   "terms": [
+    "enregistrer",
+    "sauvegarder calcul",
+    "garder calcul",
+    "carnet"
+   ],
+   "source": "/tuto.html#carnets",
+   "selector": "#carnets p:nth-of-type(2)"
+  }
+ ],
+ "categories": [
+  {
+   "id": "vehicle",
+   "label": "Véhicules",
+   "route": "/vehicules.html",
+   "terms": [
+    "vehicule",
+    "vehicules",
+    "voiture",
+    "voitures",
+    "moto",
+    "motos",
+    "bagnole"
+   ]
+  },
+  {
+   "id": "weapon",
+   "label": "Armes",
+   "route": "/armes.html",
+   "terms": [
+    "arme",
+    "armes",
+    "pistolet",
+    "fusil",
+    "flingue"
+   ]
+  },
+  {
+   "id": "place",
+   "label": "Lieux",
+   "route": "/lieux.html",
+   "terms": [
+    "lieu",
+    "lieux",
+    "region",
+    "regions",
+    "endroit",
+    "quartier"
+   ]
+  },
+  {
+   "id": "business",
+   "label": "Entreprises",
+   "route": "/entreprises.html",
+   "terms": [
+    "entreprise",
+    "entreprises",
+    "commerce",
+    "commerces",
+    "atelier"
+   ]
+  },
+  {
+   "id": "property",
+   "label": "Demeures",
+   "route": "/demeures.html",
+   "terms": [
+    "demeure",
+    "demeures",
+    "maison",
+    "maisons",
+    "propriete",
+    "appartement"
+   ]
+  },
+  {
+   "id": "hideout",
+   "label": "Planques",
+   "route": "/planques.html",
+   "terms": [
+    "planque",
+    "planques",
+    "repaire",
+    "garage",
+    "garages"
+   ]
+  },
+  {
+   "id": "character",
+   "label": "Personnages",
+   "route": "/personnages.html",
+   "terms": [
+    "personnage",
+    "personnages",
+    "protagoniste"
+   ]
+  },
+  {
+   "id": "boats",
+   "label": "Bateaux",
+   "route": "/bateaux.html",
+   "terms": [
+    "bateau",
+    "bateaux",
+    "kayak",
+    "embarcation"
+   ]
+  },
+  {
+   "id": "aircraft",
+   "label": "Aéronefs recensés",
+   "route": "/vehicules.html#cat=avion",
+   "terms": [
+    "avion",
+    "avions",
+    "aeronef",
+    "aeronefs"
+   ]
+  },
+  {
+   "id": "helicopter",
+   "label": "Hélicoptères recensés",
+   "route": "/vehicules.html#cat=helico",
+   "terms": [
+    "helicoptere",
+    "helicopteres",
+    "helico"
+   ]
+  },
+  {
+   "id": "style",
+   "label": "Vêtements et style",
+   "route": "/style.html",
+   "terms": [
+    "vetement",
+    "vetements",
+    "style",
+    "coiffure",
+    "tatouage"
+   ]
+  },
+  {
+   "id": "customization",
+   "label": "Personnalisations",
+   "route": "/personnalisations.html",
+   "terms": [
+    "personnalisation",
+    "personnalisations",
+    "amelioration",
+    "tuning"
+   ]
+  },
+  {
+   "id": "collectible",
+   "label": "Collectibles",
+   "route": "/collectibles.html",
+   "terms": [
+    "collectible",
+    "collectibles",
+    "objet a collectionner"
+   ]
+  },
+  {
+   "id": "map",
+   "label": "Carte",
+   "route": "/carte.html",
+   "terms": [
+    "carte",
+    "map"
+   ]
+  },
+  {
+   "id": "progression",
+   "label": "Ma progression",
+   "route": "/progression.html",
+   "terms": [
+    "progression",
+    "cases cochees"
+   ]
+  },
+  {
+   "id": "tutorial",
+   "label": "Tuto",
+   "route": "/tuto.html",
+   "terms": [
+    "tuto",
+    "tutoriel",
+    "guide"
+   ]
+  }
+ ],
+ "tools": [
+  {
+   "id": "goal",
+   "label": "Mon objectif",
+   "terms": [
+    "mon objectif",
+    "objectif",
+    "atteindre",
+    "million",
+    "epargner"
+   ]
+  },
+  {
+   "id": "session",
+   "label": "Mon temps de jeu",
+   "terms": [
+    "mon temps de jeu",
+    "ma session",
+    "ce soir",
+    "session"
+   ]
+  },
+  {
+   "id": "activities",
+   "label": "Mes activités",
+   "terms": [
+    "mes activites",
+    "activites",
+    "comparer les gains",
+    "mission"
+   ]
+  },
+  {
+   "id": "purchase",
+   "label": "Mes achats",
+   "terms": [
+    "mes achats",
+    "acheter",
+    "achat",
+    "pouvoir acheter"
+   ]
+  },
+  {
+   "id": "roi",
+   "label": "Ça vaut le coup ?",
+   "terms": [
+    "ca vaut le coup",
+    "rentabilite",
+    "rentable",
+    "amorti",
+    "amortir"
+   ]
+  },
+  {
+   "id": "order",
+   "label": "Quoi acheter d’abord ?",
+   "terms": [
+    "quoi acheter d'abord",
+    "ordre d'achat",
+    "en premier",
+    "priorite"
+   ]
+  },
+  {
+   "id": "budget",
+   "label": "Mon budget",
+   "terms": [
+    "mon budget",
+    "repartir",
+    "repartition",
+    "enveloppes"
+   ]
+  },
+  {
+   "id": "plan",
+   "label": "Mon plan",
+   "terms": [
+    "mon plan",
+    "mes plans",
+    "plan complet",
+    "plusieurs decisions"
+   ]
+  }
+ ]
+}

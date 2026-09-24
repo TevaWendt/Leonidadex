@@ -1,0 +1,42 @@
+LEONIDAKIT v7.28 : LOT E, LÉO, L'ASSISTANT GRATUIT DU SITE (24 septembre 2026)
+===============================================================================
+Base : v7.21. Contient aussi v7.22 à v7.27. Aucun fichier supprimé. Archive « modifs ».
+Reprend le « Lot E » de ChatGPT (construit sur son lot D) en le portant dans la version actuelle :
+son moteur local, son index et ses tests sont gardés ; ses textes sont passés en mots simples et
+sa palette est remise dans la charte.
+
+1. Un bouton « Léo » flottant sur toutes les pages. Il ouvre un panneau de discussion. Léo répond
+   uniquement avec les données du site : rien n'est envoyé à un service extérieur, rien n'est payant,
+   aucun compte. La discussion reste dans l'onglet et s'efface toute seule après 30 minutes.
+2. Ce que Léo sait faire :
+   - trouver une fiche (véhicule, arme, lieu de la carte, personnage, entreprise, demeure, planque,
+     contenu documenté, collectible) avec son image, sa catégorie, son statut en clair (« Recensé
+     sur le site : vu dans les médias officiels. On ne sait pas encore si ça s'achète. »), et un
+     lien vers la fiche ;
+   - expliquer un mot du calculateur (récompense, gain, ROI, remboursé, rendement, argent gardé de
+     côté) avec les mêmes définitions que le Tuto (glossaire « Les mots du calculateur ») ;
+   - répondre aux questions fréquentes du Tuto, à la date de sortie (avec source et date de
+     vérification) ;
+   - comprendre une phrase avec des chiffres (« J'ai 300 000 $ et je veux 2 millions, je gagne
+     150 000 par heure », « 1,5 million », « 45 min ») et préparer le bon calcul : Mon objectif,
+     Mon temps de jeu, Mes achats, Ça vaut le coup ?, avec les fiches nommées.
+3. Transfert vers le calculateur : Léo montre ce qu'il a compris (« J'ai déjà : 300 000, Je veux
+   avoir : 2 000 000, Je gagne à peu près : 150 000 »), puis « Commencer un nouveau calcul » ou
+   « Compléter mon calcul en cours ». Le calcul en cours est d'abord mis de côté dans Mes plans
+   enregistrés. La réponse s'affiche tout de suite. Une case vide n'est jamais inventée : les
+   réglages (temps de jeu par jour) gardent leur valeur de départ, les faits (prix, gains) restent
+   à écrire ; les activités à faire restent à cocher.
+4. Sécurité et robustesse : entrée limitée à 600 caractères, aucun script ni lien extérieur dans
+   les réponses, liens internes vérifiés à la génération (page et ancre existantes), index généré
+   depuis les données du site (2 906 fiches et lieux, 581 Ko) et chargé seulement à l'ouverture du
+   panneau, stockage d'onglet indisponible géré, fermeture à la touche Échap, tactile.
+5. Charte : ambre, corail, nuit de Vice City, bord encre. Mots simples partout (« Prix pas encore
+   connu : écris celui que tu imagines pour faire le calcul »). Quatre exemples cliquables à
+   l'ouverture.
+6. Régénération : node outils/gen-leo.cjs (après gen-tuto.cjs), puis sync-site.cjs, qui versionne
+   les fichiers de Léo (?v=) pour que chaque mise en ligne soit visible sans vider le cache.
+
+Vérifications : 298 tests Node (dont 69 pour Léo), 126/126, 142/142 et 184/184 contrôles Chromium
+du calculateur avec Léo chargé, parcours réel Léo → calculateur (valeurs appliquées, réponse
+affichée), téléphone 390 px tactile sans débordement, verifier.js 31 626 références sans erreur
+dans 406 pages. Non testés : Safari, Firefox, appareils réels.

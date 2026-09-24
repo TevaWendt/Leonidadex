@@ -13,6 +13,7 @@ const tabNames=B.names;
 const labels={vehicle:'Véhicule',weapon:'Équipement',property:'Demeure',business:'Entreprise',place:'Lieu',hideout:'Planque',style:'Vêtements et style',customization:'Personnalisation',consumable:'Consommable',ammo:'Munitions',housing:'Logement',activity:'Activité'};
 const tutorialParams=new URLSearchParams(location.search),tutorialChapters=['demarrer','modes','objectif','activites','temps','achats','comparateur','ordre','rentabilite','budget','carnets','plan','sources','faq'];
 const tutorialChapter=tutorialParams.get('from')==='tuto'&&tutorialChapters.includes(tutorialParams.get('chapter'))?tutorialParams.get('chapter'):null;
+let leoPending=tutorialParams.has('leo'),leoReturn=tutorialParams.get('from')==='leo'?window.LKLeoLink?.safeReturn(tutorialParams.get('back')):null,leoStoragePresent=false,leoStorageBroken=false;
 const statusLabels={unknown:'À compléter',unverified:'Non confirmé',manual:'Valeur personnelle',official:'Officiel',verified:'Mesuré et vérifié',estimated:'Estimation',observed:'Repéré',community:'Communautaire','source-listed':'Source indiquée'};
 const catalogue=D.catalogue(),sourceActivities=D.activities();
 let fingerprint=2166136261;for(const c of JSON.stringify([catalogue.map(({imageFallback,schemaImage,...entry})=>entry),sourceActivities])){fingerprint^=c.charCodeAt(0);fingerprint=Math.imul(fingerprint,16777619);}
@@ -28,9 +29,9 @@ function step(n,q,inner){return '<div class="calc-step wide" data-step="'+n+'" d
 function selectField(path,label,options){const id='f-'+path.replaceAll('.','-');return '<div class="calc-field wide"><label class="calc-label" for="'+id+'">'+esc(label)+'</label><select id="'+id+'" data-field="'+path+'">'+options+'</select></div>';}
 const option=(v,label,selected)=>'<option value="'+esc(v)+'"'+(v===selected?' selected':'')+'>'+esc(label)+'</option>';
 function validConfig(raw){return B.validate(raw,initial);}
-function loadLocal(){try{const raw=localStorage.getItem('lk-calculator-v1');if(raw)state=validConfig(JSON.parse(raw));}catch{notify('Sauvegarde illisible : le calcul d’exemple reste disponible.');}}
+function loadLocal(){try{const raw=localStorage.getItem('lk-calculator-v1');leoStoragePresent=!!raw;if(raw)state=validConfig(JSON.parse(raw));}catch{leoStorageBroken=true;notify('Sauvegarde illisible : le calcul d’exemple reste disponible.');}}
 function persist(key,value){try{localStorage.setItem(key,JSON.stringify(value));return true;}catch{notify('Sauvegarde sur cet appareil indisponible. Exporte le fichier JSON pour conserver ton plan.');return false;}}
-function saveLocal(){state.dataVersion=dataVersion;try{validConfig(state);}catch{return false;}if(tutorialChapter){const q=new URLSearchParams({from:'tuto',chapter:tutorialChapter,tool:state.tab,mode:state.views[state.tab]==='advanced'?'expert':'simple'});if(tutorialParams.get('focus')==='carnets')q.set('focus','carnets');history.replaceState(null,'',location.pathname+'?'+q+'#atelier');}else if(location.search||location.hash.startsWith('#plan='))history.replaceState(null,'',location.pathname+(location.hash==='#atelier'?'#atelier':''));return persist('lk-calculator-v1',state);}
+function saveLocal(){state.dataVersion=dataVersion;try{validConfig(state);}catch{return false;}if(leoPending)return persist('lk-calculator-v1',state);if(leoReturn){const q=new URLSearchParams({from:'leo',back:leoReturn,tool:state.tab});history.replaceState(null,'',location.pathname+'?'+q+'#atelier');}else if(tutorialChapter){const q=new URLSearchParams({from:'tuto',chapter:tutorialChapter,tool:state.tab,mode:state.views[state.tab]==='advanced'?'expert':'simple'});if(tutorialParams.get('focus')==='carnets')q.set('focus','carnets');history.replaceState(null,'',location.pathname+'?'+q+'#atelier');}else if(location.search||location.hash.startsWith('#plan='))history.replaceState(null,'',location.pathname+(location.hash==='#atelier'?'#atelier':''));return persist('lk-calculator-v1',state);}
 function loadHash(){if(!location.hash.startsWith('#plan='))return false;try{if(location.hash.length>24000)throw Error('Lien trop long : utilise un fichier JSON.');state=validConfig(JSON.parse(decodeURIComponent(location.hash.slice(6))));notify('Calcul partagé ouvert. Tu peux changer tous les chiffres.');return true;}catch(error){notify('Lien invalide : '+error.message);return false;}}
 function importContext(){const q=new URLSearchParams(location.search);if(tabs.includes(q.get('tool')))state.tab=q.get('tool');
  for(const [param,key,max] of [['capital','capital',1e12],['target','target',1e12],['hourly','hourly',1e12],['minutes','dailyMinutes',1440]]){if(q.has(param)){const n=parseNumber(q.get(param));if(n!==null&&n>=0&&n<=max){state.goal[key]=n;if(param==='minutes'&&state.tab==='session')state.session.minutes=n;if(param==='hourly')state.model='continuous';}else notify('Un paramètre de lien invalide a été ignoré.');}}
@@ -40,7 +41,7 @@ function importContext(){const q=new URLSearchParams(location.search);if(tabs.in
  if(id){const item=match(id);if(item){if(!selectItem(item,false))return;if(q.get('tool')==='roi'){state.tab='roi';state.roi.key=state.purchase.key;state.roi.mode='estimate';state.roi.activityIds=[...state.activities,...sourceActivities].filter(a=>item.activityIds.includes(a.id)||a.purchaseIds?.includes(item.id)).map(a=>a.id);}notify(item.name+' est choisi. Écris le prix que tu imagines.');}else notify('Cette fiche n’existe plus dans le catalogue. Recherche un autre élément ou saisis un achat libre.');}
  if(q.has('ids')){state.catalogue.compareIds=q.get('ids').split(',').slice(0,3).map(match).filter(Boolean).map(x=>x.id);state.tab='purchase';if(!state.catalogue.compareIds.length)notify('La sélection partagée ne contient aucune fiche disponible.');}
 }
-loadLocal();const shared=loadHash();if(!shared)importContext();
+loadLocal();const shared=!leoPending&&loadHash();if(!shared&&!leoPending)importContext();
 const activityList=()=>B.activities(state,sourceActivities);
 const findActivity=id=>activityList().find(a=>a.id===id);
 function activityOptions(selected,includeMixed=false){return (!findActivity(selected)&&!(includeMixed&&selected==='mixed')?option(selected,'Activité introuvable : choisis-en une autre',selected):'')+activityList().map(a=>option(a.id,a.name+(a.status==='manual'?' · à moi':' · du site'),selected)).join('')+(includeMixed?option('mixed','Faire mes activités chacune à leur tour',selected):'');}
@@ -222,6 +223,18 @@ document.addEventListener('error',ev=>{const img=ev.target;if(img.tagName!=='IMG
 document.addEventListener('focusout',ev=>{if(ev.target.id==='activity-players')syncActivityContext();});
 window.LKCalculator={openTab,applyGoal(values){for(const k of ['capital','target','hourly','dailyMinutes'])if(Number.isFinite(values[k])){state.goal[k]=values[k];const f=$('f-goal-'+k);if(f)f.value=values[k];}if(values.hourly!==undefined){state.model='continuous';$('f-model').value='continuous';}changed();openTab('goal');},selectItem(id){const item=catalogue.find(x=>x.id===id);if(item)selectItem(item);}};
 emit('open');
+// Léo transmet une intention limitée ; l'état et les carnets restent ceux du calculateur.
+window.LKCalculator.leo={
+ inspect(request){const L=window.LKLeoLink,req=L.validate(request);L.apply(req,state,initial,B,catalogue,'new',sourceActivities);const active=workspace.notebook.active(state.tab);return {request:req,tool:tabNames[req.tool],items:req.items.map(id=>catalogue.find(x=>x.id===id).name),hasCurrent:leoStoragePresent||B.signature(state)!==B.signature(initial),dirty:!active||B.signature(active.config)!==B.signature(state),broken:leoStorageBroken,currentName:state.name};},
+ apply(request,mode){if(leoStorageBroken)throw Error('Ta sauvegarde actuelle est illisible. Elle n’est pas touchée : exporte-la ou remets-la en état avant ce transfert.');const next=window.LKLeoLink.apply(request,state,initial,B,catalogue,mode,sourceActivities);validConfig(next);
+  const hasCurrent=leoStoragePresent||B.signature(state)!==B.signature(initial);
+  if(hasCurrent){const active=workspace.notebook.active('plan');if(!active||!workspace.notebook.lastWriteOk()||B.signature(active.config)!==B.signature(state)){const result=workspace.notebook.save('plan',state,state.name+' (avant Léo)','Copie gardée avant le calcul préparé par Léo.',true);if(!result.persisted)throw Error('Ton calcul en cours n’a pas pu être enregistré. Il reste ouvert : exporte-le avant de réessayer.');}}
+  next.dataVersion=dataVersion;if(!persist('lk-calculator-v1',next))throw Error('Le nouveau calcul n’a pas pu être gardé. Ton calcul en cours reste ouvert.');
+  state=next;leoPending=false;leoStoragePresent=true;leoReturn=window.LKLeoLink.safeReturn(request.back);workspace.resetRevision();mount();saveLocal();notify(hasCurrent?'Calcul préparé. Ton calcul précédent est dans Mes plans enregistrés.':'Calcul préparé. Remplis les cases encore vides.');emit('leo_apply');return {back:leoReturn,tool:state.tab};
+ },
+ keep(){leoPending=false;if(tutorialParams.has('leo'))history.replaceState(null,'',location.pathname+'#atelier');},
+ returnTo:()=>leoReturn
+};
 if(tutorialChapter){const link=$('calc-tuto-return');if(link){link.href='tuto.html#'+tutorialChapter;link.hidden=false;}}
 if(tutorialParams.get('focus')==='carnets'){const section=document.querySelector('.calc-saved');if(section){section.open=true;requestAnimationFrame(()=>{section.scrollIntoView({block:'start',behavior:'auto'});section.querySelector('summary').focus({preventScroll:true});});}}
 })();

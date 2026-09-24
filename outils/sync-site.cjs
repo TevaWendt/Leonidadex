@@ -1,4 +1,11 @@
 /* Keep static HTML, search, images and sitemaps consistent. No runtime framework. */
+/* Lot E : version des fichiers de Léo (chargés dynamiquement, hors empreintes des pages). Doit précéder les empreintes des pages. */
+{const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');const root=path.resolve(__dirname,'..'),read=f=>fs.readFileSync(path.join(root,f),'utf8');
+ const inputs=['leo-index.json','leo-core.js','leo-link.js','leo-ui.js','leo-loader.js','leo-calculator.js','leo.css','calculateurs-engine.js','motion-tokens.css'].filter(f=>fs.existsSync(path.join(root,f)));
+ const norm=t=>t.replace(/\?v=(?:LEO|__LEO_VERSION__|[a-f0-9]{12})/g,'?v=LEO');
+ const version=crypto.createHash('sha256').update(inputs.map(f=>f+'\n'+norm(read(f))).join('\n')).digest('hex').slice(0,12);
+ for(const f of ['common.js','leo-ui.js','leo-loader.js','leo.css'])if(fs.existsSync(path.join(root,f))){const cur=read(f),next=cur.replace(/\?v=(?:LEO|__LEO_VERSION__|[a-f0-9]{12})/g,'?v='+version);if(next!==cur)fs.writeFileSync(path.join(root,f),next);}}
+
 const fs=require('fs'),path=require('path'),vm=require('vm');
 const root=path.resolve(__dirname,'..');process.chdir(root);
 // Catalogue du calculateur : projeter les sources avant le calcul de version.

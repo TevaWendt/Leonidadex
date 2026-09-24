@@ -39,7 +39,7 @@ Hébergé sur Vercel, qui publie tel quel le contenu de ce dépôt : **aucune co
 - Aucune donnée issue de fuites. Crédit gtadb.org conservé sur la carte et dans les mentions légales.
 
 
-## Calculateur : v7.27 (24 septembre 2026)
+## Calculateur : v7.28 (24 septembre 2026)
 
 Le calculateur reste entièrement statique, gratuit et sans compte. Les sept calculs partagent `calculateurs-engine.js`. Les nombres déjà écrits sont des exemples. L’accueil utilise exactement le même moteur que la page complète.
 
@@ -47,7 +47,7 @@ Le calculateur reste entièrement statique, gratuit et sans compte. Les sept cal
 - Tests moteur sans dépendance : `node --test outils/tests/calculateurs-engine.test.cjs`.
 - Parcours navigateur (Playwright + Chromium) : `node outils/tests/calculateurs-v2-browser.cjs` et `node outils/tests/calculateurs-browser.cjs`.
 - Règle éditoriale : sur le calculateur, pas de jargon (capital, ROI, amortissement, trésorerie, hypothèse). On dit « J’ai déjà », « Je veux avoir », « Je gagne à peu près », « remboursé », « l’argent que je garde de côté ». Les mots techniques sont expliqués dans le lexique en bas de page.
-- Lot D : `tuto.html` (généré par `outils/gen-tuto.cjs`), `achats.html` (`outils/gen-achats.cjs`), sections achetables (`outils/gen-acquisitions.cjs` depuis `outils/acquisitions.json`), progression v2 (`progression-core.js`, testé par `outils/tests/lot-d-progression.test.cjs`). Ordre de régénération : final.js, gen.js, gen-armes.cjs, lore-gen.js, gen-acquisitions.cjs, gen-tuto.cjs, gen-achats.cjs, sync-site.cjs, verifier.js. Détail : `outils/LOT-D.md`.
+- Lot D : `tuto.html` (généré par `outils/gen-tuto.cjs`), `achats.html` (`outils/gen-achats.cjs`), sections achetables (`outils/gen-acquisitions.cjs` depuis `outils/acquisitions.json`), progression v2 (`progression-core.js`, testé par `outils/tests/lot-d-progression.test.cjs`). Ordre de régénération : final.js, gen.js, gen-armes.cjs, lore-gen.js, gen-acquisitions.cjs, gen-tuto.cjs, gen-achats.cjs, sync-site.cjs, verifier.js. Détail : `outils/LOT-D.md`. Lot E : Léo, assistant local (`leo-*.js`, `leo.css`, index `leo-index.json` généré par `outils/gen-leo.cjs` depuis `outils/leo-editorial.json` et les données du site ; tests `outils/tests/leo.test.cjs`). Ordre : gen-tuto.cjs puis gen-leo.cjs puis sync-site.cjs. Détail : `outils/LOT_E_MAINTENANCE.md`.
 - Aucun build requis pour Vercel : conserver `index.html`, les dossiers et `vercel.json` à la racine du dépôt.
 
 ## Lot D : Tuto, sections achetables, progression v2 (v7.27)
