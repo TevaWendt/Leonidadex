@@ -41,6 +41,7 @@ function app(options = {}) {
   window.setTimeout = () => 0;
   window.clearTimeout = () => {};
   window.requestAnimationFrame = callback => { callback(); return 0; };
+  window.localStorage.setItem('lk-calc-folds-v1', JSON.stringify({ all: true })); // v7.35 : points dépliés pour lire les contenus
   for (const [key, value] of Object.entries(options.storage || {})) window.localStorage.setItem(key, value);
   for (const [filename, code] of scriptCode) window.eval(code + '\n//# sourceURL=' + filename);
   function node(id) {

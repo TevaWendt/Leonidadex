@@ -1,0 +1,50 @@
+v7.35 — 25 septembre 2026 — ERGONOMIE : DES « GROS POINTS » QUI S’OUVRENT D’UN GESTE, DU MOUVEMENT, DES GRAPHIQUES QUI ACCROCHENT
+(retours sur la v7.34 ; cette archive contient aussi les lots A, B, C, la v7.33 et la v7.34)
+
+Ce qui change pour le joueur
+- Plus de long texte à lire d’une traite. Tout ce qui n’est pas la réponse est rangé dans des points repliés : un numéro,
+  un titre, et l’essentiel déjà dans le titre (« En premier : « Courses » ×9 · 5 parties, 2 étapes », « 70 000 $ gagnés au
+  lieu de 162 000 $ prévus · plans A, B, C… », « Conseillé : dans l’ordre que j’ai donné »). On appuie sur le point : le
+  contenu apparaît (fondu + glissement), calculé à ce moment-là seulement (les plans de secours, les « et si », la courbe…
+  ne sont pas calculés tant qu’on ne les demande pas). « Tout déplier » / « Tout replier » dans l’en-tête du document.
+  L’état ouvert / fermé est gardé sur l’appareil ; il survit à chaque recalcul et au rechargement ; à l’impression tout s’ouvre.
+- Pareil sur les huit calculs : la carte de réponse garde la phrase, les trois chiffres et la prochaine étape ; « Ce qui compte
+  dans ce calcul », le compromis (« Acheter maintenant ou attendre ? ») et « Comment est-ce calculé ? » deviennent des points
+  fermés avec leur résumé dans le titre. « Ton programme, dans l’ordre » de Mon temps de jeu aussi. En mode Expert, « Mes
+  réglages avancés » se lit en quatre points (et si le chiffre bouge de 20 %, comparer avec un calcul gardé, comment est-ce
+  calculé, résultats bruts), le business plan en deux.
+- Du mouvement, sobre : la réponse qui change se signale d’un léger glissement et ses chiffres s’éclairent ; les cartes
+  (phases du programme, plans de secours, missions, achats d’avant, carnets) se soulèvent au survol ; le nœud « objectif
+  atteint » de la frise émet une onde à l’ouverture ; les lettres des plans A/B/C pivotent au survol ; les lignes des tableaux
+  se surlignent ; les boutons répondent au clic. Tout respecte « réduire les animations » du système.
+- Graphiques refaits pour l’œil : fond blanc encadré et ombré (ou verre sombre dans la carte de réponse), trait épais, aire
+  dégradée sous la courbe prévue, points nets à liseré blanc qui grossissent au survol avec une info-bulle (le chiffre exact),
+  axes en noir lisible (plus d’orange fin), ticks nommés (« −20 % · Ton chiffre · +20 % »), légende en pastilles, « À retenir »
+  en encart ambre, largeur pleine sur grand écran, texte agrandi sur mobile.
+- Points modifiables : sur la courbe du plan, un point « réel » se clique → une petite fenêtre permet de corriger le montant et
+  le temps joué, ou de retirer cette partie ; le plan se recalcule. Dans « Et si le chiffre bouge de 20 % ? » (Expert), un clic
+  sur −20 % ou +20 % adopte ce chiffre dans la case du calcul. Au clavier aussi (Entrée / Espace sur un point).
+
+Technique
+- calculateurs-workspace.js : système de points (fold(id,{n,title,teaser,body,open,tone}) avec corps différé, état dans
+  localStorage « lk-calc-folds-v1 » {all, items}, foldify(container,tool) qui transforme hypothèses / details des huit outils
+  sans réécrire chaque rendu, « tout déplier / replier », ouverture forcée à l’impression), pulsation de la réponse, info-bulle
+  des points de graphique (mouseover / focus), fenêtre de correction d’une partie notée (.c-edit), application d’un chiffre
+  de sensibilité (data-c-apply), expert() en points.
+- calculateurs-plan.js : le document est une suite de points avec résumé et corps différé (alternatives, et si, seuils,
+  courbe calculés à l’ouverture) ; en-tête avec Tout déplier / Tout replier ; points réels de la courbe modifiables (edit).
+- calculateurs-visuals.js : aire dégradée (defs + linearGradient), data-tip sur chaque point, points actionnables
+  (data-c-edit / data-c-apply, role=button), xLabels pour les axes nommés, marques de légende distinguées (.c-legend-mark).
+- calculateurs-scenario.js : sensitivity() renvoie aussi path et sourceInput (pour appliquer un chiffre).
+- calculateurs-workspace.css : bloc v7.35 (points, mouvement, graphiques, info-bulle, fenêtre de correction, tableaux Expert,
+  règles passant devant calculateurs-motion.css, réduction des animations, impression).
+- Tuto : chapitres Simple ou Expert ? et Mon business plan mis à jour ; capture du plan avec le premier point ouvert.
+
+Contrôles
+- 6 nouveaux tests (outils/tests/calculateurs-ergonomie-v35.test.cjs) : points fermés par défaut avec résumé, contenu calculé
+  à l’ouverture, état gardé et restauré, tout déplier / replier, points sur les huit calculs et en Expert, aire et info-bulles,
+  point réel modifiable, chiffre de sensibilité appliqué (clic et clavier), impression, signal de réponse. 373/373 au total ;
+  les tests existants déplient tout pour lire les contenus.
+- Régénération complète, verifier.js 0 erreur, balayage Chromium 9 outils × 11 largeurs + business plan (Simple, détails,
+  Expert, fiche) × 11 largeurs sans débordement ni erreur console ; captures 1 280 / 390 px des points fermés et ouverts, de la
+  carte de réponse, de l’Expert et de la courbe avec sa fenêtre de correction.

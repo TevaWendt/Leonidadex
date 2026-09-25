@@ -9,7 +9,8 @@ const initial=B.initial('v34',JSON.parse(JSON.stringify(ctx.window.LKCalcData.pr
 const fire=(p,node,type='input')=>node.dispatchEvent(new p.w.Event(type,{bubbles:true,cancelable:true}));
 const edit=(p,id,value,type='input')=>{const n=p.d.getElementById(id);assert.ok(n,'champ absent : '+id);n.value=value===null?'':String(value);fire(p,n,type);};
 const clickSel=(p,sel)=>{const n=p.d.querySelector(sel);assert.ok(n,'bouton absent : '+sel);fire(p,n,'click');};
-async function page(tool,s=blank(),extra={}){return load(root,'calculateurs.html?tool='+tool,{storage:{'lk-calculator-v1':JSON.stringify(s)},...extra});}
+/* v7.35 : les « gros points » sont repliés par défaut ; ces tests les déplient tous pour lire les contenus. */
+async function page(tool,s=blank(),extra={}){return load(root,'calculateurs.html?tool='+tool,{storage:{'lk-calculator-v1':JSON.stringify(s),'lk-calc-folds-v1':JSON.stringify({all:true}),...(extra.storage||{})},...Object.fromEntries(Object.entries(extra).filter(([k])=>k!=='storage'))});}
 const clean=p=>{assert.deepEqual(p.errors,[]);assert.doesNotMatch(p.d.querySelector('.calc-panel:not([hidden])')?.textContent||'',/NaN|Infinity|undefined|\bnull\b/);p.close();};
 const text=(p,id)=>p.d.getElementById(id).textContent.replace(/\s+/g,' ');
 const stored=p=>JSON.parse(p.w.localStorage.getItem('lk-calculator-v1'));

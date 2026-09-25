@@ -57,6 +57,14 @@ Le calculateur reste entièrement statique, gratuit et sans compte. Les sept cal
 - `progression-core.js` (`LKProgression.create`) : suivi commun, export / import versionné, migration sans réécriture. Tests : `outils/tests/lot-d-progression.test.cjs`.
 - Pour reconstruire le site actuel après un changement du Lot D : `node outils/regenerer.cjs` puis `node outils/verifier.js`.
 
+## Ergonomie : points repliables, mouvement, graphiques (v7.35, 25 septembre 2026)
+
+- `calculateurs-workspace.js` : `fold(id, {n, title, teaser, body, open, tone})` rend un point repliable (`.b-fold`, bouton `[data-fold-head]`, corps `#fold-<id>`), `body` peut être une fonction appelée seulement si le point est ouvert ; état dans `localStorage` `lk-calc-folds-v1` (`{all: true|false|null, items:{id:bool}}`, helpers `foldIsOpen`, `foldSet`, `foldAll`) ; `foldify(container, tool)` transforme après rendu les `.b-assumptions-box` et `<details>` des résultats des huit outils en points (ids `<tool>-assumptions`, `<tool>-d<i>`) et resynchronise l’état des points existants ; `[data-b-fold-all="open|close"]` ; `beforeprint` / `afterprint` forcent tout ouvert ; `pulseAnswers()` (`.calc-answer.is-updated`) ; info-bulle `.c-tip` sur `.c-chart-point` ; `openPointEditor` (`.c-edit`, `[data-c-edit-save|delete|close]`) ; `[data-c-apply="chemin|valeur"]` applique un chiffre via `api.setPath`.
+- `calculateurs-plan.js` : le document est rendu avec `fold` (ids `plan-program`, `plan-alternatives`, `plan-actual`, `plan-start`, `plan-strategy`, `plan-deadline`, `plan-sessions`, `plan-variants`, `plan-thresholds`, `plan-curve`, `plan-calendar`, `plan-method` ; Expert `plan-x-inputs`, `plan-x-raw`) ; les corps coûteux sont différés. Les points réels de la courbe portent `edit:'log:<i>'`.
+- `calculateurs-visuals.js` : `chart()` accepte `area` (aire dégradée sous la première série prévue/hypothèse), `xLabels` (axe nommé), points avec `data-tip`, `edit` → `data-c-edit`, `apply` → `data-c-apply` (role=button) ; `sensitivity(tool, sens, metric, applyPath)`. `calculateurs-scenario.js` : `sensitivity()` renvoie `path` et `sourceInput`.
+- `calculateurs-workspace.css` : bloc v7.35. Les règles de graphiques y sont préfixées `body.calculator-page` pour passer devant `calculateurs-motion.css` (chargé après).
+- Tests : `outils/tests/calculateurs-ergonomie-v35.test.cjs`. Les helpers des autres tests DOM posent `lk-calc-folds-v1 = {all:true}` pour lire les contenus.
+
 ## Business plan mission par mission (v7.34, 25 septembre 2026)
 
 - Moteur (`calculateurs-engine.js`) : `missionPlan(input)` (programme partie par partie : `sessions`, `phases`, `purchases` avec `atSession`, `days`, `finalCash`, `finalUnits`, refus expliqués), `missionAlternatives(input)` (plans A/B/C, `extraPlans`, `results` par id), `missionDeadline(input, jours)` (leviers vérifiés par recalcul), `missionCurve(result)` ; `activity()` expose `units` / `unitsHourly`.

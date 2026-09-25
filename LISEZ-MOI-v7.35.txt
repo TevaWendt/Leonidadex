@@ -1,0 +1,18 @@
+LEONIDAKIT v7.35 — ERGONOMIE (points repliables, mouvement, graphiques) — archive « modifs » (25 septembre 2026)
+
+Base attendue : ton dossier Leonidadex en v7.34 (ou le zip Leonidadex-main (5) = v7.29 : cette archive contient aussi
+les lots A, B, C, la v7.33 et la v7.34). Fichiers ajoutés ou modifiés seulement, chemins exacts depuis la racine. Rien à supprimer.
+
+1. Copie ton dossier actuel (sauvegarde).
+2. Extrais l’archive dans la racine du site, écrase les fichiers homonymes (garde le dossier .git).
+3. Ouvre calculateurs.html :
+   - Mon objectif : la réponse et ses chiffres, puis deux points fermés (« Ce qui compte dans ce calcul », « Comment est-ce
+     calculé ? ») : appuie dessus. Passe en Expert : quatre points, ouvre « Et si le chiffre bouge de 20 % ? » et clique sur
+     le point +20 % du graphique : le chiffre s’applique.
+   - Mon business plan : le document est une suite de points numérotés avec l’essentiel dans chaque titre ; appuie sur le
+     point 1, puis « Tout déplier ». Coche « Afficher plus de détails », ouvre « Ton argent au fil du plan » : clique sur un
+     point réel (après une mise à jour) pour le corriger.
+   - Survole les cartes, les tableaux, les points des graphiques : tout répond, sans en faire trop.
+4. Mets en ligne (aucune commande de build). Les sauvegardes des visiteurs restent lisibles.
+
+Détails : outils/CHANGEMENTS-v7.35.txt, -v7.34 (business plan mission par mission), -v7.33, -v7.32, -v7.31, -v7.30, outils/ETAT_AUDIT.md.
