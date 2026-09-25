@@ -11,7 +11,7 @@ const root=path.resolve(__dirname,'..');process.chdir(root);
 // Catalogue du calculateur : projeter les sources avant le calcul de version.
 require('child_process').execFileSync(process.execPath,[path.join(__dirname,'gen-calculateurs-catalogue.cjs')],{stdio:'inherit'});
 const crypto=require('crypto');
-const STAMP=crypto.createHash('md5').update(fs.readdirSync('.').filter(f=>/\.(css|js)$/.test(f)).sort().map(f=>f+':'+fs.readFileSync(f,'utf8')).join('\n')).digest('hex').slice(0,8);
+// Les empreintes sont calculées après toutes les sorties, fichier par fichier.
 const data={window:{}};for(const f of ['vehicules-data.js','armes-data.js','search-index.js','carte-gtadb.js'])vm.runInNewContext(fs.readFileSync(f,'utf8'),data);
 const V=data.window.LK_VEHICULES,A=data.window.LK_ARMES;
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -76,13 +76,7 @@ for(const file of htmlFiles){let s=fs.readFileSync(file,'utf8');if(file.startsWi
   if(!s.includes('property="og:image"'))s=s.replace('</head>','<meta property="og:image" content="https://www.leonidakit.com/img/social-card.png">\n</head>');
   if(!s.includes('name="twitter:card"'))s=s.replace('</head>','<meta name="twitter:card" content="summary_large_image">\n</head>');
  }
- s=s.replace(/<footer[\s\S]*?<\/footer>/g,footer=>{
-  footer=footer.replaceAll('<h4>','<h2>').replaceAll('</h4>','</h2>');
-  // Lot D : Tuto et les sections « ce qui s'achète » dans chaque pied de page, une seule fois.
-  footer=footer.replace(/(<a href="((?:\.\.\/|\/)?)planques\.html"[^>]*>Planques<\/a>)(?!<a href="\2achats\.html")/,'$1<a href="$2achats.html">Tout ce qui s’achète</a><a href="$2bateaux.html">Bateaux</a><a href="$2style.html">Vêtements et style</a><a href="$2personnalisations.html">Personnalisations</a>');
-  footer=footer.replace(/(<a href="((?:\.\.\/|\/)?)calculateurs\.html"[^>]*>Calculateur<\/a>)(?!<a href="\2tuto\.html")/,'$1<a href="$2tuto.html">Tuto</a>');
-  return footer;
- });
+ s=s.replace(/<footer[\s\S]*?<\/footer>/g,footer=>require('./site-shell.cjs').footer(footer,prefix));
  const title=s.match(/<title>([^<]*)<\/title>/)?.[1];const canonical=s.match(/<link rel="canonical" href="([^"]+)"/)?.[1];const description=s.match(/<meta name="description" content="([^"]*)"/)?.[1];
  if(title&&!s.includes('property="og:title"'))s=s.replace('</head>','<meta property="og:title" content="'+title+'">\n</head>');
  if(description&&!s.includes('property="og:description"'))s=s.replace('</head>','<meta property="og:description" content="'+description+'">\n</head>');
@@ -94,13 +88,7 @@ for(const file of htmlFiles){let s=fs.readFileSync(file,'utf8');if(file.startsWi
  s=s.replace('id="map-panel"','id="map-panel" inert').replace('id="map-panel" inert inert','id="map-panel" inert');
  if(canonical&&!/name="robots" content="[^"]*noindex/.test(s)&&!s.includes('http-equiv="refresh"')&&file!=='404.html')canonicals.push(canonical);
  // Navigation principale : toutes les pages importantes, onglet actif selon la page
- {const NAV=[['calculateurs','Calculateur'],['tuto','Tuto'],['carte','Carte'],['vehicules','Véhicules'],['armes','Armes'],['lieux','Lieux'],['personnages','Personnages'],['demeures','Demeures'],['planques','Planques'],['entreprises','Entreprises'],['progression','Progression'],['collectibles','Collectibles']];
-  const base=file.replace(/\.html$/,'').split('/')[0];
-  const cur=({'comparateur':'vehicules','classement-vehicules':'vehicules','vehicules-rares':'vehicules'})[base]||base;
-  const ul='<ul>\n'+NAV.map(([id,lbl])=>'        <li><a href="'+prefix+id+'.html"'+(id===cur?' class="here" aria-current="page"':'')+'>'+lbl+'</a></li>').join('\n')+'\n      </ul>';
-  s=s.replace(/(<nav id="nav" aria-label="Navigation principale">)\s*<ul>[\s\S]*?<\/ul>/,'$1\n      '+ul);}
- // Empreinte de version sur les feuilles de style et scripts locaux : après une mise en ligne, aucun navigateur ne peut réutiliser un ancien fichier en cache.
- s=s.replace(/((?:href|src)=")((?:\.\.\/)?[a-z0-9-]+\.(?:css|js))(?:\?v=[0-9a-f]+)?(")/g,(m0,a,f,b)=>a+f+'?v='+STAMP+b);
+ {const ul=require('./site-shell.cjs').nav(file,prefix);s=s.replace(/(<nav id="nav" aria-label="Navigation principale">)[\s\S]*?<\/nav>/,'$1'+ul+'</nav>');}
  fs.writeFileSync(file,s);
 }
 const urls=[...new Set(canonicals)].sort();for(const f of ['sitemap.xml','sitemap-fiches.xml']){const list=f==='sitemap-fiches.xml'?urls.filter(u=>/\/(armes|vehicules|lieux|personnages|entreprises|demeures|planques)\//.test(u)):urls;fs.writeFileSync(f,'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+list.map(u=>'  <url><loc>'+esc(u)+'</loc></url>').join('\n')+'\n</urlset>\n');}
@@ -127,10 +115,25 @@ console.log('Synchronisation : '+htmlFiles.length+' pages, '+assets.length+' ass
 // Collectibles : le générateur dédié régénère collectibles-data.js, les fiches et sitemap-collectibles.xml à partir d'outils/collectibles.json.
 require('child_process').execFileSync(process.execPath,[path.join(__dirname,'gen-collectibles.cjs')],{stdio:'inherit'});
 
-/* Lot D : pages Tuto, « Tout ce qui s'achète » et sections achetables dans l'index de recherche (gen.js garde le reste). */
-{const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');const root=path.resolve(__dirname,'..'),file=path.join(root,'search-index.js');
- const ctx={window:{}};vm.runInNewContext(fs.readFileSync(file,'utf8'),ctx);const idx=ctx.window.LK_INDEX||[];
- const extra=[{l:'Tuto du calculateur',k:'Outil',u:'/tuto.html',s:'tuto tutoriel apprendre calculateur aide'},{l:'Tout ce qui s’achète',k:'Section',u:'/achats.html',s:'achats acheter prix vetements logements munitions nourriture'}];
- try{const acq=JSON.parse(fs.readFileSync(path.join(root,'outils/acquisitions.json'),'utf8'));for(const c of acq.categories)if(c.id!=='garages')extra.push({l:c.label,k:'Section',u:c.route,s:c.id+' '+c.label.toLowerCase()});}catch(e){}
- const known=new Set(idx.map(e=>e.u));let added=0;for(const e of extra)if(!known.has(e.u)){idx.push(e);added++;}
- if(added)fs.writeFileSync(file,'/* Index de recherche, généré automatiquement. Ne pas éditer à la main. */\nwindow.LK_INDEX = '+JSON.stringify(idx)+';\n');}
+/* Pages et contenus d'acquisition : les sources remplacent les anciennes entrées. */
+{const ctx={window:{}};vm.runInNewContext(readFile('search-index.js'),ctx);
+ function readFile(file){return fs.readFileSync(path.join(root,file),'utf8');}
+ const extra=[];
+ for(const file of fs.readdirSync(root).filter(f=>f.endsWith('.html')&&!f.startsWith('google')&&f!=='404.html')){
+  const html=readFile(file);if(/http-equiv="refresh"/.test(html))continue; // Le noindex des moteurs externes n’exclut pas la recherche interne.
+  const label=({'a-propos.html':'À propos','contact.html':'Contact','mentions-legales.html':'Mentions et confidentialité','calculateurs.html':'Calculateur : sept outils','tuto.html':'Tuto du calculateur','index.html':'Accueil — Leonidakit'})[file]||html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/)?.[1]?.replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim();
+  if(!label)continue;const desc=html.match(/<meta name="description" content="([^"]*)"/)?.[1]||'';
+  const synonyms=({'tuto.html':'tutoriel aide apprendre','achats.html':'achats acheter acquisitions','a-propos.html':'a propos equipe projet fonctionnement sources','contact.html':'contact erreur correction signalement retrait','style.html':'vetements habits looks coiffures style','personnalisations.html':'customisation ameliorations peinture tuning','medias.html':'credits photos images sources droits'})[file]||'';
+  extra.push({l:label,k:file.includes('calcul')||file==='tuto.html'?'Outil':'Page',u:'/'+file,s:label+' '+desc+' '+synonyms,w:-1});
+ }
+ const acqContext={window:{}};vm.runInNewContext(readFile('acquisitions-data.js'),acqContext);
+ for(const item of acqContext.window.LK_ACQUISITIONS.items){
+  if(item.ref)continue; // L'entité canonique véhicule/arme est déjà indexée.
+  extra.push({l:item.name,k:acqContext.window.LK_ACQUISITIONS.categories.find(c=>c.id===item.category)?.label||'Acquisition',u:item.hubUrl,s:item.name+' '+item.description+' '+item.condition,w:0});
+ }
+ const index=[...new Map([...ctx.window.LK_INDEX,...extra].map(e=>[e.u,e])).values()];
+ fs.writeFileSync(path.join(root,'search-index.js'),'/* Généré depuis les pages, catalogues et acquisitions. */\nwindow.LK_INDEX = '+JSON.stringify(index)+';\n');
+}
+
+// Empreintes finales : ne dépendent pas de l’état antérieur des autres fichiers.
+{const hashes=new Map();for(const file of htmlFiles){let html=fs.readFileSync(file,'utf8');html=html.replace(/((?:href|src)=")([^"?#]+\.(?:css|js))(?:\?v=[a-f0-9]+)?("[^>]*>)/g,(match,start,url,end)=>{if(/^(?:https?:)?\/\//.test(url))return match;const target=url.startsWith('/')?path.join(root,url.slice(1)):path.resolve(root,path.dirname(file),url);if(!fs.existsSync(target))return match;if(!hashes.has(target))hashes.set(target,crypto.createHash('sha256').update(fs.readFileSync(target)).digest('hex').slice(0,12));return start+url+'?v='+hashes.get(target)+end;});fs.writeFileSync(file,html);}}

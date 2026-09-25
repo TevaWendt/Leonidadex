@@ -97,6 +97,9 @@ const el = id => document.getElementById(id);
     burger.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
   });
 
+  const moreMenu=document.querySelector('.nav-more');
+  document.addEventListener('click',e=>{if(moreMenu?.open&&!moreMenu.contains(e.target))moreMenu.open=false;});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&moreMenu?.open){moreMenu.open=false;moreMenu.querySelector('summary').focus();e.stopImmediatePropagation();}});
   /* Recherche accessible, utilisable aussi dans les deux formulaires de la 404. */
   document.querySelectorAll('.searchwrap').forEach(function(wrap){
     const q = wrap.querySelector('input[type="search"]'), box = wrap.querySelector('.suggest');
@@ -104,13 +107,14 @@ const el = id => document.getElementById(id);
     const norm = s => String(s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,' ').trim();
     let index = window.LK_INDEX.map(e => ({...e, text:norm(e.s+' '+e.l)}));
     let cur = -1, hits = [];
+    const nearby=(a,b)=>{if(a.length<5||Math.abs(a.length-b.length)>1)return false;let i=0,j=0,errors=0;while(i<a.length&&j<b.length){if(a[i]===b[j]){i++;j++;continue;}if(++errors>1)return false;if(a.length>=b.length)i++;if(b.length>=a.length)j++;}return errors+(i<a.length||j<b.length?1:0)<=1;};
     /* les 2 500 lieux de la carte ne sont chargés qu'à la première recherche (fichier séparé) */
     function fondreLieux(){ if(!window.LK_INDEX_LIEUX || index.lieux) return; index = index.concat(window.LK_INDEX_LIEUX.map(e => ({...e, text:norm(e.s+' '+e.l)}))); index.lieux = true; if(q.value.trim()) render(); }
     function chargerLieux(){
       if(window.LK_INDEX_LIEUX){ fondreLieux(); return; }
       document.addEventListener('lk-lieux', fondreLieux);
       if(document.getElementById('lk-lieux-js')) return;
-      const ref = document.querySelector('script[src$="search-index.js"]'); if(!ref) return;
+      const ref = Array.from(document.scripts).find(s=>s.src&&new URL(s.src,location.href).pathname.endsWith('/search-index.js')); if(!ref) return;
       const s = document.createElement('script'); s.id = 'lk-lieux-js'; s.async = true;
       s.src = ref.getAttribute('src').replace('search-index.js', 'search-lieux.js');
       s.onload = function(){ document.dispatchEvent(new Event('lk-lieux')); };
@@ -123,7 +127,7 @@ const el = id => document.getElementById(id);
     function render(){
       const v=norm(q.value); cur=-1; q.removeAttribute('aria-activedescendant');
       if(!v){box.innerHTML=''; hits=[]; close(); return;}
-      hits=index.map(e=>({e,rank:norm(e.l)===v?0:norm(e.l).startsWith(v)?1:e.text.includes(v)?2:v.split(' ').every(t=>e.text.includes(t))?3:99})).filter(x=>x.rank<99).sort((a,b)=>a.rank-b.rank||(a.e.w||0)-(b.e.w||0)||a.e.l.length-b.e.l.length).slice(0,8).map(x=>x.e);
+      hits=index.map(e=>({e,rank:norm(e.l)===v?0:norm(e.l).startsWith(v)?1:e.text.includes(v)?2:v.split(' ').every(t=>e.text.includes(t))?3:v.split(' ').every(t=>e.text.includes(t)||e.text.split(' ').some(w=>nearby(t,w)))?4:99})).filter(x=>x.rank<99).sort((a,b)=>a.rank-b.rank||(a.e.w||0)-(b.e.w||0)||a.e.l.length-b.e.l.length).slice(0,8).map(x=>x.e);
       box.innerHTML=hits.length?hits.map((e,i)=>'<a id="'+box.id+'-option-'+i+'" href="'+esc(e.u)+'" role="option" aria-selected="false"><span>'+esc(e.l)+'</span><span class="kind">'+esc(e.k)+'</span></a>').join(''):'<div class="none" role="status">Aucun résultat pour « '+esc(q.value.trim())+' ».</div>';
       box.classList.add('open'); q.setAttribute('aria-expanded','true');
     }

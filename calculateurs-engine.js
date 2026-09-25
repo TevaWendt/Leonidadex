@@ -89,7 +89,7 @@
       if (!a.valid) return fail(goalShape, a.reason);
       if (target <= capital) return finish({ missing: 0, runs: 0, totalMinutes: 0, activeMinutes: 0, waitMinutes: 0, continuousMinutes: 0, sessions: 0, days: 0, finalCapital: capital, hourly: a.hourly, investment: 0 }, goalShape);
       var spendable = subtract(capital, reserve);
-      if (spendable < a.investment && !equal(spendable, a.investment)) return fail(goalShape, 'Capital insuffisant pour financer l’investissement initial sans entamer la réserve.');
+      if (spendable < a.investment && !equal(spendable, a.investment)) return fail(goalShape, 'Pas assez d’argent pour acheter ce qu’il faut avant de commencer, sans toucher à l’argent mis de côté.');
       var afterInvestment = subtract(spendable, a.investment);
       if (afterInvestment < (p.activity.cost || 0) && !equal(afterInvestment, p.activity.cost || 0)) return fail(goalShape, 'Capital insuffisant pour avancer les coûts de la première activité après l’investissement sans entamer la réserve.');
       if (a.net <= 0) return fail(goalShape, 'Un bénéfice net strictement positif est nécessaire pour atteindre cet objectif.');
@@ -101,7 +101,7 @@
       var prepOnce = p.activity.prepOnce ? (p.activity.prep || 0) : 0;
       var perSession = 1 + floor((daily - a.activeMinutes) / (a.cycleMinutes - prepOnce));
       var sessions = ceil(runs / perSession);
-      if (sessions > 1 && cooldown > 1440 - daily) return fail(goalShape, 'Le délai de relance dépasse la pause entre deux sessions quotidiennes. Ce calendrier nécessite une simulation différente.');
+      if (sessions > 1 && cooldown > 1440 - daily) return fail(goalShape, 'L’attente avant de recommencer est plus longue que la pause entre deux parties. Ce cas n’est pas calculé ici.');
       return finish({ missing: missing, runs: runs, totalMinutes: runs * a.activeMinutes - (runs - sessions) * prepOnce + (runs - sessions) * cooldown, activeMinutes: runs * a.activeMinutes - (runs - sessions) * prepOnce, waitMinutes: (runs - sessions) * cooldown, continuousMinutes: runs * a.activeMinutes - Math.max(0,runs - 1) * prepOnce + Math.max(0, runs - 1) * cooldown, sessions: sessions, days: sessions, finalCapital: capital - a.investment + runs * a.net, hourly: a.hourly, investment: a.investment }, goalShape);
     } catch (error) { return fail(goalShape, error.message); }
   }
@@ -124,7 +124,7 @@
       if (target <= capital) return finish({ missing: 0, runs: 0, totalMinutes: 0, activeMinutes: 0, waitMinutes: 0, continuousMinutes: 0, sessions: 0, days: 0, finalCapital: capital, hourly: null, investment: 0, breakdown: [] }, shape);
       var investment = activities.reduce(function (sum, a) { return sum + a.investment; }, 0);
       var spendable = subtract(capital, reserve);
-      if (spendable < investment && !equal(spendable, investment)) return fail(shape, 'Capital insuffisant pour financer les investissements initiaux de la rotation sans entamer la réserve.');
+      if (spendable < investment && !equal(spendable, investment)) return fail(shape, 'Pas assez d’argent pour acheter ce qu’il faut avant de commencer toutes ces activités, sans toucher à l’argent mis de côté.');
       if (activities.some(function (a) { return a.net <= 0; })) return fail(shape, 'Chaque activité de cette rotation doit avoir un bénéfice net strictement positif.');
       if (activities.some(function (a) { return a.activeMinutes > daily; })) return fail(shape, 'Une activité de la rotation ne tient pas dans votre session quotidienne.');
       var cash = capital - investment;
@@ -140,7 +140,7 @@
         var wait = Math.max(0, ready[index] - elapsed);
         var activeDuration = a.activeMinutes - (a.prepOnce && sessionCounts[index] ? a.prep : 0);
         if (elapsed + wait + activeDuration > daily + Number.EPSILON * daily * 4) {
-          if (activities.some(function (item) { return item.cooldown > 1440 - daily; })) return fail(shape, 'Un délai de relance dépasse la pause entre les sessions. Ce calendrier nécessite une simulation différente.');
+          if (activities.some(function (item) { return item.cooldown > 1440 - daily; })) return fail(shape, 'Une attente avant de recommencer est plus longue que la pause entre deux parties. Ce cas n’est pas calculé ici.');
           sessions += 1;
           elapsed = 0;
           ready = ready.map(function () { return 0; });
@@ -178,7 +178,7 @@
       var runs = available < a.activeMinutes ? 0 : 1 + floor((available - a.activeMinutes) / repeatCycle);
       safeRunCount(runs);
       var spendable = subtract(capital, reserve);
-      if (runs && spendable < a.investment && !equal(spendable, a.investment)) return fail(inverseShape, 'Capital insuffisant pour financer l’investissement initial sans entamer la réserve.');
+      if (runs && spendable < a.investment && !equal(spendable, a.investment)) return fail(inverseShape, 'Pas assez d’argent pour acheter ce qu’il faut avant de commencer, sans toucher à l’argent mis de côté.');
       var lowestStartingCash = spendable - a.investment + Math.min(0, (runs - 1) * a.net);
       if (runs && lowestStartingCash < (p.activity.cost || 0) && !equal(lowestStartingCash, p.activity.cost || 0)) return fail(inverseShape, 'Capital insuffisant pour avancer les coûts de chaque activité sans entamer la réserve. Réduisez les répétitions ou les coûts.');
       var profit = runs ? runs * a.net - a.investment : 0;
@@ -197,15 +197,17 @@
       var capital = money(p.capital, 'le capital');
       var reserve = money(p.reserve, 'la réserve', 0);
       var target = money(p.target, 'l’objectif');
-      var hourly = money(p.hourly, 'le gain net horaire');
-      var daily = number(p.dailyMinutes, 'le temps quotidien en minutes', 1440, { positive: true });
       if (reserve > capital) return fail(continuousShape, 'La réserve à conserver dépasse votre capital actuel. Réduisez la réserve.');
       var available = subtract(capital, reserve);
       var missing = Math.max(0, subtract(target, available));
+      if(missing===0)return finish({missing:0,availableCapital:available,reserve:reserve,hourly:Number.isFinite(p.hourly)&&p.hourly>=0?p.hourly:null,totalMinutes:0,hours:0,activeMinutes:0,waitMinutes:0,sessions:0,days:0,finalCapital:capital},continuousShape);
+      if(p.hourly==null)return fail(Object.assign({},continuousShape,{missing:missing,availableCapital:available,reserve:reserve}),'Il te manque cette somme. Écris ce que tu gagnes par heure pour avoir le temps de jeu.');
+      var hourly = money(p.hourly, 'le gain net horaire');
+      var daily = p.dailyMinutes == null ? null : number(p.dailyMinutes, 'le temps quotidien en minutes', 1440, { positive: true });
       if (missing > 0 && hourly <= 0) return fail(continuousShape, 'Un gain net horaire strictement positif est nécessaire pour atteindre cet objectif.');
       var hours = missing === 0 ? 0 : missing / hourly;
       var total = hours * 60;
-      var sessions = total === 0 ? 0 : ceil(total / daily);
+      var sessions = total === 0 ? 0 : daily === null ? null : ceil(total / daily);
       return finish({ missing: missing, availableCapital: available, reserve: reserve, hourly: hourly, totalMinutes: total, hours: hours, activeMinutes: total, waitMinutes: 0, sessions: sessions, days: sessions, finalCapital: capital + missing }, continuousShape);
     } catch (error) { return fail(continuousShape, error.message); }
   }
@@ -324,13 +326,35 @@
       var p = data(input);
       var capital = money(p.capital, 'le capital');
       var price = money(p.price, 'le prix d’achat');
-      var hourly = money(p.hourly, 'le bénéfice horaire');
-      var target = money(p.target, 'l’objectif');
+      // Le budget d'achat ne dépend ni d'un objectif ni d'un revenu.
+      var hourly = p.hourly == null ? null : money(p.hourly, 'le bénéfice horaire');
+      var target = p.target == null ? null : money(p.target, 'l’objectif');
       var remaining = subtract(capital, price);
-      var before = timeTo(target, capital, hourly);
-      var after = timeTo(target, remaining, hourly);
+      var before = target === null ? null : timeTo(target, capital, hourly);
+      var after = target === null ? null : timeTo(target, remaining, hourly);
       return finish({ remaining: remaining, capitalPercent: ratio(price * 100, capital), recoveryHours: price === 0 ? 0 : ratio(price, hourly), goalDelayHours: before === null || after === null ? null : after - before, shortfall: Math.max(0, price - capital) }, purchaseShape);
     } catch (error) { return fail(purchaseShape, error.message); }
+  }
+
+  // Décision d'achat sans attribution de revenu. Regagner une dépense n'est pas
+  // un amortissement : seul un revenu additionnel explicite autorise un ROI.
+  function worth(input) {
+    var shape = { investment:null, remaining:null, cashRemaining:null, shortfall:null,
+      capitalPercent:null, recoveryHours:null, waitHours:null, buyNowCash:null, waitCash:null };
+    try {
+      var p=data(input), capital=money(p.capital,'l’argent disponible'), reserve=money(p.reserve,'la réserve',0);
+      if(reserve>capital)return fail(shape,'L’argent gardé de côté dépasse ce que tu as.');
+      var investment=money(p.price,'le prix d’achat')+money(p.extras,'les options',0)+money(p.fees,'les frais',0);
+      var hourly=p.hourly==null?null:money(p.hourly,'le gain net horaire');
+      var horizon=p.hours==null?null:number(p.hours,'la durée en heures',MINUTES_MAX/60);
+      var r=purchase({capital:capital-reserve,price:investment,hourly:hourly});
+      if(!r.valid)return fail(shape,r.reason);
+      return finish({investment:investment,remaining:r.remaining,cashRemaining:capital-investment,
+        shortfall:r.shortfall,capitalPercent:ratio(investment*100,capital),recoveryHours:r.recoveryHours,
+        waitHours:r.shortfall===0?0:ratio(r.shortfall,hourly),
+        buyNowCash:r.shortfall===0&&hourly!==null&&horizon!==null?capital-investment+hourly*horizon:null,
+        waitCash:hourly!==null&&horizon!==null?capital+hourly*horizon:null},shape);
+    } catch(error){return fail(shape,error.message);}
   }
 
   var budgetShape = { spent: null, remaining: null, available: null, overBudget: null, shares: [] };
@@ -353,7 +377,7 @@
     try {
       var p = data(input);
       var cash = money(p.capital, 'le capital');
-      var hourly = money(p.hourly, 'le bénéfice horaire');
+      var hourly = p.hourly == null ? null : money(p.hourly, 'le bénéfice horaire');
       var reserve = money(p.reserve, 'la réserve', 0);
       if (reserve > cash) return fail(orderShape, 'La réserve dépasse le capital disponible.');
       if (!Array.isArray(p.items) || p.items.length > 100) return fail(orderShape, '100 achats maximum dans l’ordre.');
@@ -370,7 +394,8 @@
         time += wait;
         // Waiting ends exactly at the price: avoid residual floating-point debt.
         cash = wait > 0 ? reserve : cash - item.price;
-        hourly += item.boostHourly;
+        // Un revenu inconnu ne devient pas implicitement zéro.
+        if(hourly!==null)hourly += item.boostHourly;
         steps.push({ name: item.name, waitHours: wait, timeHours: time, capital: cash, hourly: hourly });
       }
       return finish({ steps: steps, totalHours: time, finalCapital: cash, finalHourly: hourly }, orderShape);
@@ -452,5 +477,5 @@
     } catch(error){return fail(shape,error.message);}
   }
 
-  return Object.freeze({ investmentActivities: investmentActivities, sessionProjection: sessionProjection, activity: activity, goal: goal, goalMixed: goalMixed, inverse: inverse, roi: roi, purchase: purchase, budget: budget, order: order, compareBuy: compareBuy, goalContinuous: goalContinuous, sessionPlan: sessionPlan, parseLocalizedNumber: parseLocalizedNumber });
+  return Object.freeze({ worth:worth, investmentActivities: investmentActivities, sessionProjection: sessionProjection, activity: activity, goal: goal, goalMixed: goalMixed, inverse: inverse, roi: roi, purchase: purchase, budget: budget, order: order, compareBuy: compareBuy, goalContinuous: goalContinuous, sessionPlan: sessionPlan, parseLocalizedNumber: parseLocalizedNumber });
 }));

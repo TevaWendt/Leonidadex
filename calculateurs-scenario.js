@@ -10,7 +10,7 @@ function defaults(old){
  s.assets=[copy(assetTemplate)];s.purchase={key:'free-1'};
  s.session={...s.session,daysPerWeek:7,usualMinutes:60};
  s.activities=s.activities.map(a=>({...a,prepOnce:false,requiresPurchaseIds:[]}));
- s.roi={key:'free-1',mode:'estimate',activityIds:[],hours:10,revenueHourly:null,costHourly:0,gainPercent:20,durationReduction:0};
+ s.roi={key:'free-1',mode:'estimate',activityIds:[],hours:10,revenueHourly:null,costHourly:0,gainPercent:20,durationReduction:0,recoveryActivity:'',compareKey:''};
  s.order={keys:[]};s.budget={source:'basket',extra:0,allocations:[50000,60000,20000,10000,0]};
  s.completed=[];return s;
 }
@@ -57,7 +57,7 @@ function validate(raw,initial){
  const s=walk(initial,raw,'scenario');
  if(![...tools,'plan'].includes(s.tab)||!['quick','guided','advanced'].includes(s.mode)||!['continuous','cycles'].includes(s.model))throw Error('Outil ou mode invalide.');
  if(!asset(s,s.purchase.key)||!asset(s,s.roi.key))throw Error('Référence interne d’achat absente. La sauvegarde ne peut pas être restaurée.');
- if(!['all','vehicle','weapon','property','business','place','hideout','style','customization','activity'].includes(s.catalogue.type)||!['all','known','unknown','manual','official','verified','estimated'].includes(s.catalogue.status)||!['name','price-up','price-down'].includes(s.catalogue.sort))throw Error('Filtre de catalogue incompatible.');
+ if(!['all','vehicle','weapon','property','business','place','hideout','style','customization','consumable','ammo','housing','activity'].includes(s.catalogue.type)||!['all','known','unknown','manual','official','verified','estimated'].includes(s.catalogue.status)||!['name','price-up','price-down'].includes(s.catalogue.sort))throw Error('Filtre de catalogue incompatible.');
  if(s.activities.some((a,i)=>a.id!==initial.activities[i].id))throw Error('Référence d’activité invalide.');
  if(new Set(s.assets.map(a=>a.key)).size!==s.assets.length||s.assets.some(a=>!a.key||!['none','personal','roi'].includes(a.incomeMode)))throw Error('Références d’achats incompatibles.');
  if(!['estimate','new','improve','continuous'].includes(s.roi.mode)||!['basket','manual'].includes(s.budget.source))throw Error('Modèle de calcul incompatible.');
@@ -92,12 +92,29 @@ function projection(s,source=[],r=session(s,source)){
 }
 function roi(s,source=[]){
  const r=s.roi,a=asset(s,r.key);if(!a)return{valid:false,reason:'Choisis un achat dans la liste.'};
+ if(r.mode==='estimate')return decision(s,source);
  const input={...r,purchase:a.price,upgrades:a.extras,fees:a.fees};
  if(r.mode==='continuous')return E.roi(input);
  const acts=activities(s,source).filter(a=>r.activityIds.includes(a.id));
  if(acts.length!==r.activityIds.length)return{valid:false,reason:'Une des activités n’existe plus. Choisis-en une autre.'};
  if(acts.some(a=>a.players>s.goal.players))return{valid:false,reason:'Une des activités se joue à plus de joueurs que vous. Change le nombre de joueurs dans Mes activités.'};
  return E.investmentActivities({...input,activities:acts});
+}
+function decision(s,source=[],key=s.roi.key){
+ const a=asset(s,key);if(!a)return{valid:false,reason:'Choisis un achat ou écris un achat libre.'};
+ let hourly=s.goal.hourly;
+ if(s.roi.recoveryActivity){const activity=activities(s,source).find(x=>x.id===s.roi.recoveryActivity),r=activity&&E.activity(activity);hourly=r?.valid&&r.hourly>=0?r.hourly:null;}
+ return E.worth({capital:s.goal.capital,reserve:s.goal.reserve,price:a.price,extras:a.extras,fees:a.fees,hourly,hours:s.roi.hours});
+}
+function blank(current){
+ const s=copy(current);s.name='Mon calcul';s.model='continuous';s.completed=[];
+ s.goal={...s.goal,capital:null,target:null,hourly:null,dailyMinutes:null,reserve:0,players:1,selected:'scenario-a'};
+ s.assets=[{...copy(assetTemplate),price:null}];s.purchase={key:'free-1'};
+ s.roi={...s.roi,key:'free-1',mode:'estimate',hours:null,gainPercent:0,durationReduction:0,activityIds:[],revenueHourly:null,costHourly:0,compareKey:'',recoveryActivity:''};
+ s.order={keys:[]};s.budget={source:'manual',extra:0,allocations:[0,0,0,0,0]};
+ s.activities=s.activities.map((a,i)=>({...a,name:'Mon activité '+String.fromCharCode(65+i),reward:null,duration:null,cost:0,prep:0,cooldown:0,share:100,investment:0,players:1,owned:false,prepOnce:false,requiresPurchaseIds:[]}));
+ s.session={...s.session,enabled:['scenario-a'],minutes:null,usualMinutes:null,daysPerWeek:null};s.inverse={selected:'scenario-a',minutes:null};
+ return s;
 }
 function orderInput(s,source=[]){
  const items=s.order.keys.map(key=>{const a=asset(s,key);if(!a)return{name:'Achat absent',price:null};let boost=0;
@@ -114,6 +131,7 @@ function evaluate(tool,s,source=[]){
  return{valid:false,reason:'Choisis un outil.'};
 }
 const metrics={goal:['totalMinutes','Temps de jeu pour mon objectif','min',-1],session:['profit','Gagné pendant la partie','$',1],activities:['profit','Gagné, achat de départ enlevé','$',1],roi:['netProfit','Gagné au final, prix enlevé','$',1],purchase:['remaining','Ce qu’il me reste après l’achat','$',1],order:['totalHours','Temps de jeu jusqu’au dernier achat','h',-1],budget:['available','Ce qu’il me reste, sans l’argent mis de côté','$',1]};
+function metric(tool,s){return tool==='roi'&&s.roi.mode==='estimate'?['remaining','Ce qu’il me reste après cet achat','$',1]:metrics[tool];}
 function sensitivity(tool,s,source=[]){
  let path,label,sourceInput=false;
  function reward(id){let i=s.activities.findIndex(a=>a.id===id),a=s.activities[i];if(i<0){i=source.findIndex(a=>a.id===id);a=source[i];sourceInput=true;}if(!a)return;path=sourceInput?[i,'reward']:['activities',i,'reward'];label='Récompense de '+a.name+' uniquement';}
@@ -127,7 +145,7 @@ function sensitivity(tool,s,source=[]){
  return{label,rows:[.8,1,1.2].map(f=>{const c=copy(s),sources=sourceInput?copy(source):source;let p=sourceInput?sources:c;path.slice(0,-1).forEach(k=>p=p[k]);const v=Number.isFinite(value)?Math.min(1e12,value*f):null;p[path.at(-1)]=v;return{factor:f,value:v,bounded:Number.isFinite(value)&&value*f>1e12,result:evaluate(tool,c,sources)};})};
 }
 function signature(s){const c=copy(s);delete c.name;delete c.mode;delete c.views;delete c.tab;delete c.catalogue;delete c.completed;return JSON.stringify(c);}
-function referenceWarnings(s,catalogue){const out=[];s.assets.forEach(a=>{if(!a.itemId)return;const item=catalogue.find(x=>x.id===a.itemId);if(!item)out.push(a.name+' : référence absente, hypothèse conservée.');else if(a.referencePrice!==item.price)out.push(item.name+' : le prix de référence a changé ; vérifie ton hypothèse.');});return out;}
+function referenceWarnings(s,catalogue){const out=[];s.assets.forEach(a=>{if(!a.itemId)return;const item=catalogue.find(x=>x.id===a.itemId);if(!item)out.push(a.name+' : cette fiche n’existe plus, ton prix est gardé.');else if(a.referencePrice!==item.price)out.push(item.name+' : le prix du site a changé ; vérifie ton chiffre.');});return out;}
 function initial(dataVersion,presets){return defaults({version:2,dataVersion,mode:'quick',model:'continuous',name:'Mon premier million',tab:'goal',goal:{capital:200000,target:1000000,hourly:100000,reserve:0,dailyMinutes:60,players:1,selected:'scenario-a'},activities:presets.map(a=>({id:a.id,name:a.name,reward:a.reward,cost:a.cost,duration:a.duration,prep:a.prep,cooldown:a.cooldown,share:a.share,investment:a.investment,players:a.players,owned:false})),session:{minutes:60,maxRepeat:100,enabled:['scenario-a','scenario-b','scenario-c']},inverse:{minutes:60,selected:'scenario-a'},purchase:{itemId:'',price:100000,hourly:50000,boostHourly:0,capital:200000,target:1000000,reserve:0,extras:0},catalogue:{query:'',type:'all',status:'all',maxPrice:null,sort:'name',favorites:[],compareIds:[],favoritesOnly:false}});}
-return Object.freeze({copy,tools,names,defaults,initial,validate,migrate,asset,addAsset,activities,eligible,purchase,goal,session,projection,roi,orderInput,budgetInput,evaluate,metrics,sensitivity,signature,referenceWarnings});
+return Object.freeze({copy,tools,names,defaults,initial,validate,migrate,asset,addAsset,activities,eligible,purchase,goal,session,projection,roi,decision,blank,orderInput,budgetInput,evaluate,metrics,metric,sensitivity,signature,referenceWarnings});
 });

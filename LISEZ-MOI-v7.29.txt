@@ -1,0 +1,12 @@
+LEONIDAKIT v7.29 — archive « modifs » (24 septembre 2026)
+
+Base attendue : le zip Leonidadex-main (4)(1) = v7.28 (SHA-256 21b735f7…321286).
+Contenu : 462 fichiers ajoutés ou modifiés, chemins exacts depuis la racine. Rien à supprimer.
+Comprend le patch ChatGPT « Finition 01 » corrigé + les corrections de l'audit (voir outils/CHANGEMENTS-v7.29.txt).
+
+1. Copie ton dossier v7.28 (sauvegarde).
+2. Extrais l'archive dans la racine du site, écrase les fichiers homonymes.
+3. Ouvre calculateurs.html, a-propos.html et contact.html sur téléphone et sur ordinateur.
+4. Mets en ligne (aucune commande de build).
+
+Détails : outils/NOTICE_APPLICATION_AUDIT.md, outils/RAPPORT-AUDIT-v7.29.md, outils/ETAT_AUDIT.md.

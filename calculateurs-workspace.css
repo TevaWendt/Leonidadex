@@ -12,8 +12,8 @@
 .b-mode-summary{padding:0 0 14px;max-width:900px}.b-mode-summary .calc-note{margin:0 0 7px}
 .b-mode-summary button{font-size:12px;min-height:36px}
 .b-field-error{color:#9b1538;font-weight:650}
-.b-combobox{position:relative;margin:20px 0}.b-combobox input{width:100%;min-height:48px}
-.b-suggestions{position:absolute;z-index:15;top:calc(100% - 32px);left:0;right:0;max-height:350px;overflow:auto;background:#fffafc;border:1px solid #ad7590;border-radius:14px;box-shadow:0 12px 35px #38202f38;padding:5px}
+.b-combobox{margin:20px 0}.b-combobox-control{position:relative}.b-combobox input{width:100%;min-height:48px;font:inherit;font-size:16px;padding:12px;border:2px solid var(--ink);border-radius:8px;background:#fff;color:var(--ink)}.b-search-feedback:empty{display:none}
+.b-suggestions{position:absolute;z-index:15;top:100%;margin-top:4px;left:0;right:0;max-height:350px;overflow:auto;background:#fffafc;border:1px solid #ad7590;border-radius:14px;box-shadow:0 12px 35px #38202f38;padding:5px}
 .b-suggestion{display:flex;align-items:center;gap:10px;cursor:pointer;padding:10px;border-radius:10px;min-height:65px;overflow-wrap:anywhere}
 .b-suggestion:hover,.b-suggestion[aria-selected="true"]{background:#ead5e2;outline:2px solid #7f3359;outline-offset:-2px}
 .b-suggestion strong,.b-suggestion small{display:block}.b-suggestion small{color:#674957;margin-top:5px}.b-search-feedback{min-height:20px;font-size:12px}
@@ -26,7 +26,7 @@
 .calculator-page #expert-goal,.calculator-page #expert-session,.calculator-page #expert-activities,.calculator-page #expert-purchase,.calculator-page #expert-order,.calculator-page #expert-roi,.calculator-page #expert-budget{margin-top:24px}
 .calculator-page .calc-table{min-width:500px}.calculator-page .calc-table-wrap{max-width:100%;overflow:auto}.calculator-page .calc-table th,.calculator-page .calc-table td{overflow-wrap:anywhere}
 .b-expert .calc-fields{margin-top:14px}.b-expert details{margin-top:20px}.b-expert h4{margin-top:22px}.b-expert select{max-width:100%}.b-expert td{font-variant-numeric:tabular-nums}
-.calculator-page .calc-tabs button{min-width:145px;flex:1 0 145px}
+.calculator-page .calc-tabs button{min-width:0;flex:1 0 145px}
 .calculator-page .calc-field,.calculator-page .calc-fields>*,.calculator-page .calc-grid>*{min-width:0}
 .calculator-page .calc-fields>button{align-self:end;justify-self:start}
 @media(max-width:600px){.b-plan-step{align-items:flex-start;flex-direction:column;padding:16px}.b-plan-step .calc-button{width:100%}.b-selected .b-thumb{flex-basis:75px;width:75px;height:48px}.b-suggestions{max-height:280px}.b-suggestion{padding:8px}.b-suggestion .b-thumb{flex-basis:60px;width:60px;height:40px}.b-stage-actions>*{flex:1 1 170px}.b-notebook-actions>*{flex:1 1 120px}.b-order-editor{padding:10px}.b-answer{font-size:1.25rem}.calculator-page .calc-tabs button{min-width:130px;flex-basis:130px}.calculator-page .calc-table-wrap{width:100%}}
@@ -35,5 +35,11 @@
 .calculator-page .calc-field>label:not(.calc-check){display:block;font-size:12px;font-weight:650;color:#4d4254;margin-bottom:7px;line-height:1.5}
 .calculator-page .b-roi-activities label{font-size:13px;line-height:1.6;gap:9px}
 .calculator-page .b-roi-activities input[type="checkbox"]{width:18px;height:18px;min-height:18px;flex:0 0 18px}
-.calculator-page .calc-tabs button{min-width:max-content;flex:1 0 auto;padding-left:14px;padding-right:14px}
-@media(max-width:600px){.calculator-page .calc-section-head{flex-direction:column;align-items:flex-start;gap:14px}.calculator-page .calc-section-head .calc-actions{display:flex;flex-wrap:wrap;max-width:100%}.calculator-page .calc-tabs button{min-width:max-content;flex:0 0 auto}}
+.calculator-page .calc-tabs button{min-width:0;flex:1 0 auto;padding-left:10px;padding-right:10px}
+@media(max-width:600px){.calculator-page .calc-section-head{flex-direction:column;align-items:flex-start;gap:14px}.calculator-page .calc-section-head .calc-actions{display:flex;flex-wrap:wrap;max-width:100%}.calculator-page .calc-tabs button{min-width:0;flex:0 0 auto}}
+
+/* Champs facultatifs et activités autonomes : tailles bornées à leur carte. */
+.calc-optional,.b-inline-activity{margin:16px 0;padding:14px;border:1px solid var(--rule);border-radius:10px;min-width:0}
+.calc-optional>summary,.b-inline-activity>summary{cursor:pointer;font-weight:700;line-height:1.5;min-height:44px;display:list-item}
+.calc-optional[open]>summary,.b-inline-activity[open]>summary{margin-bottom:14px}
+.b-purchase-image{display:block;width:min(100%,240px);height:auto;object-fit:contain;margin-bottom:12px}

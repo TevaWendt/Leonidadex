@@ -51,7 +51,7 @@
     border-bottom:1px solid var(--rule); background:rgba(253,251,247,.93);
     backdrop-filter:blur(8px); position:sticky; top:0; z-index:50;
   }
-  .head-in{display:flex; align-items:center; justify-content:space-between; gap:24px; padding:16px 0;}
+  .head-in{display:flex; align-items:center; justify-content:space-between; gap:24px; padding-block:16px;}
   .brand{font-weight:900; font-size:1.28rem; letter-spacing:-0.02em;}
   .brand span{color:var(--coral-text,#B93220); display:inline-block; transition:transform .25s cubic-bezier(.34,1.56,.64,1);}
   .brand:hover span{transform:rotate(-7deg) scale(1.1);}
@@ -268,15 +268,15 @@
   footer{font-size:.9rem; color:var(--ink-soft); background:var(--paper);}
   .foot-art{display:block; width:100%; height:150px; border-top:3px solid var(--ink);}
   .foot-top{
-    display:grid; grid-template-columns:1.1fr 1.4fr; gap:44px;
+    display:grid; grid-template-columns:minmax(190px,.65fr) minmax(0,2fr); gap:36px;
     padding:40px 0 32px;
   }
   .foot-brand .brand{font-size:1.2rem; display:inline-block; margin-bottom:10px;}
   .foot-brand p{max-width:34ch; line-height:1.55;}
-  .foot-cols{display:grid; grid-template-columns:repeat(3,1fr); gap:24px;}
+  .foot-cols{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:24px;}
   .foot-cols nav{display:flex; flex-direction:column; gap:7px;}
   .foot-cols h2{font-size:.88rem; font-weight:800; color:var(--ink); margin-bottom:8px;}
-  .foot-cols a{display:inline-block; transition:color .15s, transform .15s;}
+  .foot-cols a{display:inline-block;overflow-wrap:anywhere;line-height:1.5;padding:4px 0; transition:color .15s, transform .15s;}
   .foot-cols a:hover{color:var(--coral-text,#B93220); transform:translateX(3px);}
   .legal{
     padding:20px 0 34px; border-top:1px solid var(--rule);
@@ -1773,33 +1773,26 @@ html:not(.js) .reveal,html:not(.js) .rise{opacity:1;transform:none;}
    demeures et planques, calculateurs mis en avant
    ============================================================ */
 
-/* Navigation principale : onze entrées sur une ligne, marque insécable, recherche compacte, menu replié plus tôt */
-header .brand{white-space:nowrap; flex-shrink:0;}
-header nav ul{flex-wrap:wrap; row-gap:4px; gap:17px; font-size:.88rem;}
-@media (max-width:1180px){ header nav ul{gap:14px; font-size:.86rem;} }
-/* Barre de recherche visible en permanence. Pour que les onze entrées et la barre tiennent sur une
-   ligne, l'en-tête est un peu plus large que le contenu ; sur les pages qui ont la barre, le menu se
-   replie dès 1 280 px (les navigateurs sans :has() replient à 1 080 px comme les autres pages). */
-header .shell{max-width:1280px;}
-header .head-search{flex:0 1 200px; max-width:200px; margin-left:auto; margin-top:0; opacity:1; animation:none;}
-@media (max-width:1279px) and (min-width:1081px){
-  header:has(.head-search) .burger{display:block;}
-  header:has(.head-search) nav{display:none; width:100%;}
-  header:has(.head-search) nav.open{display:block;}
-  header:has(.head-search) nav ul{flex-direction:column; gap:0; padding-bottom:10px;}
-  header:has(.head-search) nav ul a{display:block; padding:12px 0; border-bottom:1px solid var(--rule); width:100%;}
-  header:has(.head-search) .head-in{flex-wrap:wrap;}
-  header:has(.head-search) .head-search{order:0; flex:1 1 auto; max-width:300px;}
+/* Navigation commune : outils directs et catégories dans Explorer. */
+body>header .brand{white-space:nowrap;flex-shrink:0}
+body>header nav ul{flex-wrap:nowrap;gap:18px;font-size:.88rem;align-items:center}
+body>header .head-search{flex:0 1 200px;max-width:200px;margin-left:auto;margin-top:0;opacity:1;animation:none}
+.nav-more{position:relative}
+.nav-more>summary{cursor:pointer;font-weight:700;min-height:44px;display:flex;align-items:center;gap:8px}
+.nav-more>summary::after{content:'⌄';font-size:1rem}
+.nav-more[open]>summary::after{content:'⌃'}
+.nav-more-panel{position:absolute;right:0;top:100%;width:min(780px,calc(100vw - 48px));display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;padding:24px;background:var(--paper);border:2px solid var(--ink);border-radius:12px;box-shadow:5px 5px 0 var(--amber);z-index:20}
+.nav-more-panel strong{display:block;margin-bottom:8px;color:var(--coral-text,#B93220)}
+#nav .nav-more-panel a{display:block;min-height:40px;padding:9px 0;line-height:1.4;overflow-wrap:anywhere}
+.foot-feature{display:inline-block;margin-top:18px;font-weight:800;color:var(--coral-text,#B93220)}
+@media(max-width:1080px){
+ .burger{display:block;order:1}body>header nav{display:none;width:100%;order:3}body>header nav.open{display:block}
+ body>header nav ul{flex-direction:column;align-items:stretch;gap:0;padding-bottom:10px}
+ body>header nav ul a{display:block;padding:12px 0;border-bottom:1px solid var(--rule);width:100%}
+ .head-in{flex-wrap:wrap}.nav-more-panel{position:static;width:100%;box-shadow:none;max-height:60vh;overflow:auto}
+ body>header .head-search{order:0;flex:1 1 120px;max-width:300px}
 }
-
-@media (max-width:1080px) and (min-width:821px){
-  .burger{display:block;}
-  header nav{display:none; width:100%;}
-  header nav.open{display:block;}
-  header nav ul{flex-direction:column; gap:0; padding-bottom:10px;}
-  header nav ul a{display:block; padding:12px 0; border-bottom:1px solid var(--rule); width:100%;}
-  .head-in{flex-wrap:wrap;}
-}
+@media(max-width:600px){.nav-more-panel{grid-template-columns:1fr;gap:18px;padding:16px}.foot-top{grid-template-columns:1fr}.foot-cols{grid-template-columns:repeat(2,minmax(0,1fr))}.foot-cols>div:last-child{grid-column:1/-1}.foot-cols>div:last-child nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 18px}.foot-cols a{min-height:44px}}
 
 /* Bandeaux défilants : deux moitiés identiques, chacune au moins aussi large que l'écran */
 .mq-half{display:inline-flex; align-items:center; white-space:nowrap; flex-shrink:0;}
@@ -2165,10 +2158,10 @@ main{position:relative;}
 /* jeu de cartes rangé : trois cartes en éventail régulier sur une scène, chevauchement léger, la carte survolée se lève */
 @media(min-width:900px){
   .lk-links{display:flex;justify-content:center;align-items:flex-end;gap:0;height:clamp(340px,46vh,520px);padding:22px 0 8px;background:radial-gradient(ellipse at 50% 120%,rgba(245,165,36,.28),rgba(245,165,36,0) 60%);}
-  .lk-link{position:relative;top:auto;left:auto!important;width:36%;height:88%;flex:none;transform-origin:50% 100%;}
-  .lk-link:nth-child(1){transform:rotate(-6deg) translate(6%,4%);z-index:1;}
+  .lk-link{position:relative;top:auto;left:auto!important;width:33%;height:88%;flex:none;transform-origin:50% 100%;}
+  .lk-link:nth-child(1){transform:rotate(-6deg) translate(5%,4%);z-index:1;}
   .lk-link:nth-child(2){transform:translateY(-4%);z-index:2;}
-  .lk-link:nth-child(3){transform:rotate(6deg) translate(-6%,4%);z-index:1;}
+  .lk-link:nth-child(3){transform:rotate(6deg) translate(-5%,4%);z-index:1;}
   .lk-links:hover .lk-link{filter:saturate(.8) brightness(.9);}
   .lk-links .lk-link:is(:hover,:focus-visible){filter:none;transform:translateY(-8%) scale(1.06);z-index:5;box-shadow:10px 10px 0 var(--amber);}
 }

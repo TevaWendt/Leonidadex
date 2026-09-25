@@ -99,7 +99,7 @@ test('Relecture B: noms et montants du panier suivent la saisie sans perdre le f
  await page.click({tab:'roi'});assert.match(page.node('roi-selection').textContent,/Atelier test/);
 });
 test('Relecture B: les activités renommées se mettent aussi à jour dans les liens de rentabilité',async()=>{
- const page=app();await page.edit('activities.0.name','Mission renommée');
+ const page=app();await page.choose('roi.mode','new');await page.edit('activities.0.name','Mission renommée');
  assert.match(page.document.querySelector('[data-b-roi-activity="scenario-a"]').parentElement.textContent,/Mission renommée/);
 });
 test('Relecture B: un calendrier vide ne masque pas la progression et indique le bon champ à compléter',async()=>{

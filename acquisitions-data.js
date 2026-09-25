@@ -89,63 +89,63 @@ window.LK_ACQUISITIONS = {
     },
     {
       "id": "vetements",
-      "label": "Vêtements",
+      "pending": true,
+      "label": "Vêtements à l’unité",
       "route": "/vetements.html",
       "type": "style",
-      "intro": "Hauts, bas, chaussures, tenues complètes : ce que Jason et Lucia pourront porter et acheter en boutique.",
-      "limit": "Rockstar a annoncé des collections de vêtements, mais aucune pièce à l’unité ni aucun prix. Cette section se remplira avec de vrais relevés faits dans le jeu.",
-      "empty": "Aucun vêtement à l’unité n’est encore documenté officiellement. Les collections annoncées sont dans « Vêtements et style ».",
-      "pending": true
+      "intro": "Vêtements à l’unité : cette catégorie est prête à accueillir des pièces identifiées et leurs conditions d’obtention.",
+      "limit": "Les collections annoncées sont dans « Vêtements et style ». Aucune pièce à l’unité avec un prix séparé vérifié n’est actuellement publiée ici.",
+      "empty": "Aucune entrée individuelle vérifiée n’est publiée dans cette catégorie. Sa présence dans le menu ne confirme pas une possibilité d’achat dans GTA VI."
     },
     {
       "id": "accessoires",
+      "pending": true,
       "label": "Accessoires",
       "route": "/accessoires.html",
       "type": "style",
-      "intro": "Lunettes, montres, bijoux, sacs, casquettes : les accessoires que l’on pourra acheter et porter.",
-      "limit": "Aucun accessoire n’a été présenté à l’unité par Rockstar. Rien n’est inventé ici : la section attend les vraies données du jeu.",
-      "empty": "Aucun accessoire n’est encore documenté officiellement.",
-      "pending": true
+      "intro": "Lunettes, montres, bijoux, sacs, casquettes : une catégorie à documenter, sans liste d’achats confirmée.",
+      "limit": "Aucun accessoire individuel avec des conditions d’achat vérifiées n’est actuellement publié dans cette section.",
+      "empty": "Aucune entrée individuelle vérifiée n’est publiée dans cette catégorie. Sa présence dans le menu ne confirme pas une possibilité d’achat dans GTA VI."
     },
     {
       "id": "tatouages",
+      "pending": true,
       "label": "Tatouages",
       "route": "/tatouages.html",
       "type": "style",
-      "intro": "Les tatouages que l’on pourra se faire faire en salon, et ce qu’ils coûteront.",
-      "limit": "Sara’s Unisex Salon est présenté par Rockstar, mais aucun tatouage ni prix n’a été montré. La section attend les vraies données du jeu.",
-      "empty": "Aucun tatouage n’est encore documenté officiellement.",
-      "pending": true
+      "intro": "Tatouages : les motifs et leurs conditions d’accès restent à documenter dans ce catalogue.",
+      "limit": "Les services de style annoncés sont présentés dans « Vêtements et style ». Aucun motif avec un prix vérifié n’est publié ici.",
+      "empty": "Aucune entrée individuelle vérifiée n’est publiée dans cette catégorie. Sa présence dans le menu ne confirme pas une possibilité d’achat dans GTA VI."
     },
     {
       "id": "nourriture",
+      "pending": true,
       "label": "Nourriture et consommables",
       "route": "/nourriture.html",
       "type": "consumable",
-      "intro": "Ce que l’on pourra acheter pour manger, boire ou se soigner : fast-foods, distributeurs, épiceries.",
-      "limit": "Des enseignes apparaissent dans les médias officiels, mais aucun article ni prix n’a été publié. Rien n’est inventé.",
-      "empty": "Aucun consommable n’est encore documenté officiellement.",
-      "pending": true
+      "intro": "Nourriture et consommables : cette section attend des articles identifiables et des conditions d’obtention vérifiées.",
+      "limit": "Des enseignes apparaissent dans les médias officiels. Cela ne suffit pas à établir une liste de produits achetables ou leurs prix.",
+      "empty": "Aucune entrée individuelle vérifiée n’est publiée dans cette catégorie. Sa présence dans le menu ne confirme pas une possibilité d’achat dans GTA VI."
     },
     {
       "id": "munitions",
+      "pending": true,
       "label": "Munitions et équipement d’arme",
       "route": "/munitions.html",
       "type": "ammo",
-      "intro": "Munitions, chargeurs, viseurs, silencieux : ce que l’on pourra acheter pour ses armes.",
-      "limit": "Les motifs et variantes d’armes documentés sont dans « Personnalisations ». Aucun prix de munitions n’a été publié.",
-      "empty": "Aucune munition ni pièce d’équipement n’est encore documentée officiellement.",
-      "pending": true
+      "intro": "Munitions et équipement d’arme : articles, compatibilités et conditions d’acquisition restent à documenter.",
+      "limit": "Les motifs et variantes d’armes documentés sont dans « Personnalisations ». Aucun prix de munition vérifié n’est publié dans ce catalogue.",
+      "empty": "Aucune entrée individuelle vérifiée n’est publiée dans cette catégorie. Sa présence dans le menu ne confirme pas une possibilité d’achat dans GTA VI."
     },
     {
       "id": "logements",
+      "pending": true,
       "label": "Logements et appartements",
       "route": "/logements.html",
       "type": "housing",
-      "intro": "Les appartements, maisons et propriétés que l’on pourra acheter pour y vivre ou y ranger ses véhicules.",
-      "limit": "Les demeures des personnages sont dans « Demeures » et les garages documentés dans « Planques ». Aucun logement à acheter ni aucun prix n’a été publié.",
-      "empty": "Aucun logement à acheter n’est encore documenté officiellement.",
-      "pending": true
+      "intro": "Logements et appartements : les éventuels biens accessibles au joueur restent à distinguer des lieux montrés dans les médias.",
+      "limit": "Les demeures des personnages sont dans « Demeures » et les garages documentés dans « Planques ». Aucune offre de logement à acheter avec un prix vérifié n’est publiée ici.",
+      "empty": "Aucune entrée individuelle vérifiée n’est publiée dans cette catégorie. Sa présence dans le menu ne confirme pas une possibilité d’achat dans GTA VI."
     }
   ],
   "items": [

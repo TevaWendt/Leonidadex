@@ -1,0 +1,17 @@
+v7.29 — 24 septembre 2026 — audit de finition (lots 0 à 2 terminés, 3 à 6 vérifiés)
+
+Intégré depuis le patch ChatGPT « Finition 01 » (même base v7.28) :
+- menu à 7 entrées + « Explorer » ; pied de page commun (outils/site-shell.cjs) ; pages À propos, Contact, Mentions générées (outils/gen-informations.cjs, outils/site-informations.json) ; commande unique outils/regenerer.cjs ;
+- calculateur : chaque outil répond seul (moteur worth, gain et objectif facultatifs), « Ça vaut le coup ? » distingue achat plaisir et achat qui rapporte, comparaison de deux achats, « Partir de zéro », sauvegarde illisible ou plus récente conservée ;
+- Léo : un lieu ou une région n'est jamais proposé à l'achat ; recherche tolérante aux fautes ; 30 tests supplémentaires.
+
+Corrigé par l'audit :
+- débordement horizontal entre 900 et 1 180 px (éventail « Continuer la visite ») sur toutes les pages ;
+- en-tête sans marge latérale jusqu'à 1 300 px ; en-tête ramené à 1 120 px ;
+- onglet « Quoi acheter d'abord ? » coupé ; bouton de menu visible sur grand écran des pages d'information ;
+- menu et pied de page : catégories vides regroupées (« 6 catégories à confirmer »), « Vêtements » devient « Vêtements à l'unité », champ pending dans acquisitions.json ;
+- tous les libellés du patch réécrits en mots simples (calculateur, Léo, messages du moteur) ; « Partir de zéro » dans la barre de mode ; boutons de Mes achats après les champs ;
+- Tuto : texte aligné sur les libellés réels, 24 captures refaites ; bouton du menu mobile qui reste en haut ;
+- suivi : outils/ETAT_AUDIT.md, outils/RAPPORT-AUDIT-v7.29.md, outils/NOTICE_APPLICATION_AUDIT.md.
+
+Contrôles : 328/328 tests, régénération reproductible, verifier.js 0 erreur, 39 pages × 19 largeurs sans débordement ni erreur console.

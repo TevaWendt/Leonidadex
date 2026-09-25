@@ -81,7 +81,7 @@
       brand: text(entry.marque, 100),
       aliases: [entry.aliases,entry.insp,entry.search].flat().filter(function(v){return typeof v==='string';}).join(' ').slice(0,1500),
       purchasable: typeof entry.purchasable === 'boolean' ? entry.purchasable : null,
-      purchaseCandidate: typeof entry.calculatorCompatible === 'boolean' ? entry.calculatorCompatible : entry.purchasable === true || ['vehicle','weapon','business','property','hideout'].includes(type),
+      purchaseCandidate: type==='place'||entry.purchasable===false?false:typeof entry.calculatorCompatible === 'boolean' ? entry.calculatorCompatible : entry.purchasable === true || ['vehicle','weapon','business','property','hideout'].includes(type),
       acquisition: text(entry.acquisition, 80),
       acquisitionCondition: text(entry.condition, 300),
       evidenceLevel: [1,2,3].includes(entry.evidenceLevel) ? entry.evidenceLevel : null,

@@ -1,0 +1,15 @@
+{
+  "contactEmail": null,
+  "contactVerified": false,
+  "editorName": null,
+  "publicationDirector": null,
+  "editorContact": null,
+  "hostingPhone": null,
+  "newsletterRetention": null,
+  "checkedAt": "2026-09-24",
+  "hosting": {
+    "name": "Vercel Inc.",
+    "address": "440 N Barranca Avenue #4133, Covina, CA 91723, États-Unis",
+    "source": "https://vercel.com/legal/privacy-notice"
+  }
+}

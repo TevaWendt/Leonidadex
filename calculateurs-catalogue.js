@@ -186,7 +186,11 @@ window.LK_CALCULATEURS_CATALOGUE = {
       "status": "source-listed",
       "source": "https://www.rockstargames.com/VI/only-in-leonida/jason",
       "verifiedAt": null,
-      "provenance": "outils/editorial.json#residences/jason-keys"
+      "provenance": "outils/editorial.json#residences/jason-keys",
+      "aliases": [
+        "maison de Jason",
+        "chez Jason"
+      ]
     },
     {
       "id": "cal-keys",
@@ -210,7 +214,12 @@ window.LK_CALCULATEURS_CATALOGUE = {
       "status": "source-listed",
       "source": "https://www.rockstargames.com/VI/only-in-leonida/brian",
       "verifiedAt": null,
-      "provenance": "outils/editorial.json#residences/brian-keys"
+      "provenance": "outils/editorial.json#residences/brian-keys",
+      "aliases": [
+        "maison de Brian",
+        "chez Brian",
+        "chez Brian et Lori"
+      ]
     },
     {
       "id": "lucia-avant",

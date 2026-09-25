@@ -52,7 +52,7 @@ test('initial investment reduces cash and increases required earnings', () => {
 test('initial investment must be affordable', () => {
   const result = E.goal({ capital: 99, target: 300, dailyMinutes: 60, activity: { reward: 50, duration: 10, investment: 100 } });
   assert.equal(result.valid, false);
-  assert.match(result.reason, /Capital insuffisant/);
+  assert.match(result.reason, /Pas assez d’argent/);
 });
 test('already reached goal does not trigger an unnecessary investment', () => {
   const result = E.goal({ capital: 100, target: 50, dailyMinutes: 60, activity: { ...A, investment: 500 } });
