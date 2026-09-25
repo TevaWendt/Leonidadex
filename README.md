@@ -57,6 +57,16 @@ Le calculateur reste entièrement statique, gratuit et sans compte. Les sept cal
 - `progression-core.js` (`LKProgression.create`) : suivi commun, export / import versionné, migration sans réécriture. Tests : `outils/tests/lot-d-progression.test.cjs`.
 - Pour reconstruire le site actuel après un changement du Lot D : `node outils/regenerer.cjs` puis `node outils/verifier.js`.
 
+## Business plan mission par mission (v7.34, 25 septembre 2026)
+
+- Moteur (`calculateurs-engine.js`) : `missionPlan(input)` (programme partie par partie : `sessions`, `phases`, `purchases` avec `atSession`, `days`, `finalCash`, `finalUnits`, refus expliqués), `missionAlternatives(input)` (plans A/B/C, `extraPlans`, `results` par id), `missionDeadline(input, jours)` (leviers vérifiés par recalcul), `missionCurve(result)` ; `activity()` expose `units` / `unitsHourly`.
+- État v5 (`calculateurs-scenario.js`) : `plan` possède ses données (`goal`, `situation`, `source`, `missions`, `prerequisites`, `variant`, `log` détaillé) ; `planToV5` migre la v4 en copiant ce que le plan utilisait ; sélecteurs `planMissing`, `planInput(s, stratégie)`, `planStrategies`, `planAlternatives`, `planObserved`, `planDeadline`, `planCurve`, `planNextSession`. Rien n’est lu dans `goal`, `order`, `assets` ou `activities` sans action explicite (bouton « Reprendre mes chiffres », « Le mettre dans mon business plan », Léo).
+- `calculateurs-plan.js` réécrit : `markup` (cinq questions, cartes missions / achats d’avant), `render` (réponse, prochaine partie, document `.b-doc` : programme `.b-timeline`, plans `.b-alts`, suivi `.b-actual` + `.b-bilan`, point de départ, ordre des achats, échéance, détails), `event`, `sheet(config, date)` (fiche complète), `shortSummary`, `exportText`. Les résumés des cartes du formulaire se resynchronisent à chaque rendu (`syncForm`).
+- `calculateurs-workspace.js` : contextes de combobox `plan` et `plan-prereq` (copies, pas d’`addAsset`), `copyToPlanGoal`, deux carnets (`#saved-plans-list`, `#saved-list` classé par outil), fiche dans `<dialog id="calc-sheet">` (`openSheet`, `printSheet` via `#calc-sheet-print` + `body.is-printing-sheet`), `calcSheet` pour les huit outils.
+- `calculateurs.js` : garde de version locale `> 5`. `leo-link.js` : bloc plan (copie dans `plan.goal` / `plan.situation` / `plan.prerequisites`).
+- Tuto : chapitre `plan` et section Carnets réécrits ; `outils/tuto-shots.py` capture le plan avec deux missions (`f-plan-goal-kind` → purchase, `f-plan-source` → missions) et le carnet `#saved-calcs`.
+- Tests : `outils/tests/calculateurs-plan-v34.test.cjs` (références du moteur avec données fictives, migration v4 → v5, séparation, parcours DOM, déblocage, carnets et fiches, pas à pas, Léo).
+
 ## Calculateur « puissant » (v7.33, 25 septembre 2026)
 
 - Moteur (`calculateurs-engine.js`) : `investmentCompare` (avec / sans achat sur le même horizon, seuils, verdict), `investmentActivities` avec `baselineHourly` (coût d’opportunité, remboursement marginal), `planStrategies` (enchaînements comparés, recommandation par priorité, `recommendedInput`), `planDeadline`, `nextSession`, `planCurve` / `planCashAt`. Toutes retournent `{valid, reason, …}` ; aucune valeur inconnue ne devient zéro.

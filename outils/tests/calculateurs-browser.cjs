@@ -118,10 +118,10 @@ async function persistenceAndShare(page, context, browser, origin) {
   check(await page.locator('#f-goal-capital').inputValue().then(v => v.replace(/\s/g, '')) === '271828', 'Current configuration survives reload');
   page.on('dialog', dialog => dialog.accept(dialog.type() === 'prompt' ? 'QA navigateur' : undefined));
   await page.locator('#calc-save').click();
-  await page.locator('.calc-saved summary').click();
+  await page.locator('#saved-calcs summary').click();
   check(await page.locator('#saved-list [data-b-load]').count() > 0, 'Saved configuration appears in the notebook');
   await page.reload({ waitUntil: 'networkidle' });
-  await page.locator('.calc-saved summary').click();
+  await page.locator('#saved-calcs summary').click();
   check(await page.locator('#saved-list [data-b-load]').count() > 0, 'Notebook survives reload');
   await page.locator('#f-goal-capital').fill('222222');
   await page.locator('#saved-list [data-b-load]').first().click();

@@ -22,7 +22,7 @@ async function goto(page,suffix=''){await page.goto(origin+'/calculateurs.html'+
 async function tab(page,key){await page.locator('#tab-'+key).click();}
 async function fill(page,id,value){await page.locator('#'+id).fill(String(value));}
 async function state(page){return page.evaluate(()=>JSON.parse(localStorage.getItem('lk-calculator-v1')));}
-async function carnet(page){await page.locator('.calc-saved').evaluate(el=>el.open=true);}
+async function carnet(page){await page.locator('#saved-calcs').evaluate(el=>el.open=true);}
 async function importPlan(page,plan){await carnet(page);await page.locator('#calc-import').setInputFiles({name:'qa-plan.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(plan))});await page.waitForTimeout(100);}
 async function reset(page){await carnet(page);await page.locator('#calc-reset').click();}
 async function sane(page,label){const bad=(await page.locator('main').innerText()).match(/\b(?:NaN|Infinity|undefined)\b/g);check(!bad,label+' : aucune valeur non finie',bad?.join(', '));}

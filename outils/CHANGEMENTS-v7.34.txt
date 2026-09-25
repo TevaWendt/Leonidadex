@@ -1,0 +1,70 @@
+v7.34 — 25 septembre 2026 — BUSINESS PLAN MISSION PAR MISSION (retours sur la v7.33 ; cette archive contient aussi les lots A, B, C et la v7.33)
+
+Ce qui change pour le joueur
+- Le business plan a ses propres réponses. Il pose cinq questions (ton but, où tu en es, comment tu gagnes ton argent,
+  avant ton but, ce qui compte pour toi) et ne prend plus rien en silence dans les huit calculs : ni l’argent de Mon objectif,
+  ni les achats de « Quoi acheter d’abord ? », ni les activités. Un bouton « Reprendre mes chiffres de Mes calculs » les copie
+  si tu le veux ; ensuite les deux vivent séparément (changer l’un ne change pas l’autre). Les boutons « Le mettre dans mon
+  business plan » copient l’achat comme but, puis le plan pose ses questions.
+- Le programme se fait mission par mission : « en premier, en deuxième, en troisième… », partie après partie. À chaque partie,
+  le plan prend les missions qui rapportent le plus dans le temps de la partie, avec l’argent que tu as à ce moment-là ; il
+  achète les achats d’avant dès que tu peux les payer sans toucher à la réserve ; un achat peut débloquer une mission (« il faut
+  d’abord avoir acheté… ») ou rapporter de l’argent. C’est le chemin le plus rapide trouvé avec tes missions.
+- Trois sortes de but : acheter quelque chose (fiche du site ou achat libre), avoir une somme, ou débloquer quelque chose avec
+  de l’expérience (rang, XP, réputation… : tu nommes l’unité, tu dis combien il en faut, combien tu en as, ce que chaque
+  mission en donne, et ce que ça coûte une fois débloqué). Comme dans GTA V, une voiture peut se gagner au rang.
+- Toujours un plan de secours : « Si ça ne se passe pas comme prévu » liste les plans A, B, C… (le meilleur mélange, chaque
+  mission seule, sans les achats d’avant, et « au rythme que tu as vraiment eu » après tes mises à jour), chacun avec ses
+  parties, ses jours, l’argent à la fin et le programme en une ligne. « Suivre ce plan » : le programme suit le plan choisi.
+  Les plans impossibles disent pourquoi (par exemple une mission qui demande d’abord un achat).
+- « Mettre à jour mon plan » recalcule tout : tu écris ce que tu as, le temps joué, combien de fois tu as fait chaque mission,
+  les achats faits pendant la partie, tes points (déblocage), une note. Le plan repart de là : missions, achats, parties, jours.
+  Un « Bilan de ta dernière partie » compare le prévu et le réel (+300 000 $ prévus, +120 000 $ réels → écart, ton rythme réel),
+  et propose les plans de secours ; « Adopter mon vrai rythme » si tu gagnes un chiffre par heure.
+- Deux carnets séparés : « Mes plans enregistrés » et « Mes calculs enregistrés » (les huit calculs, classés par outil).
+  Enregistrer un plan génère sa fiche complète : le but, où j’en suis, mes missions, le programme partie par partie (temps,
+  gains, ce que tu fais de l’argent, achats et investissements avec leur moment et ce qu’ils rapportent), les plans de secours,
+  ce que j’ai vraiment fait. « Voir la fiche » l’ouvre comme un document, imprimable ; « Ouvrir dans le calculateur » la
+  restaure. Un calcul enregistré a aussi sa fiche (la réponse, les chiffres utilisés).
+- « Afficher plus de détails » refait : le rapport est un document lisible (titre, sections numérotées, frise du programme,
+  tuiles de chiffres, tableaux) dans la typographie et les couleurs du site, en Simple comme en Expert. Les détails ajoutent :
+  partie par partie, « Et si… ? » (parties plus longues, un jour de plus, prix plus chers, missions qui rapportent moins,
+  réserve utilisée), seuils, courbe prévu / réel, calendrier, formule.
+
+Moteur (calculateurs-engine.js)
+- missionPlan(input) : programme partie par partie (missions, achats d’avant dans l’ordre, gain continu par heure et points par
+  heure possibles, but prix / somme / points, réserve respectée, rien gagné avant sa partie, un achat jamais payé avec ce qu’il
+  rapportera). Retourne les parties, les phases (« parties 1 à 4 : A ×2, B ×1 »), les achats avec leur moment, jours et
+  semaines, argent et points finaux, refus expliqués (mission verrouillée au départ, rien ne rentre, rien ne donne de points).
+- missionAlternatives(input) : plans A, B, C… classés, sans doublon, plans supplémentaires (extraPlans), impossibles expliqués.
+- missionDeadline(input, jours) : faisable ou non ; leviers vérifiés par recalcul (tous les jours, parties plus longues, gain
+  par heure) ; missionCurve(result) : l’argent partie après partie.
+- activity() expose units / unitsHourly (points par mission, par heure).
+
+État partagé v5 (calculateurs-scenario.js)
+- plan = { goal (kind purchase | amount | unlock, name, itemId, price, boostHourly, target, unitLabel, targetUnits, currentUnits,
+  alsoPrice), situation (capital, reserve, hourly, unitsHourly, dailyMinutes, daysPerWeek, upkeepPerSession), source (missions |
+  hourly), missions[] (copies, jusqu’à 12, avec requires), prerequisites[] (copies, jusqu’à 20), priority, strategy, variant,
+  maxRepeat, deadlineDays, details, log[] (capital, minutes, prévu, réel, missions faites, achats, note), playedMinutes,
+  sessionsPlayed }. Migration v4 → v5 : le plan récupère une copie de ce qu’il utilisait (argent, réserve, gain, rythme, but,
+  achats d’avant, activité) ; v1 à v4 restent lisibles. Sélecteurs : planMissing, planInput, planStrategies (ordres comparés
+  par recalcul complet), planAlternatives, planObserved, planDeadline, planCurve, planNextSession.
+
+Interface
+- calculateurs-plan.js réécrit : formulaire à cinq questions (missions et achats d’avant en cartes, copie depuis Mes activités
+  ou le site), réponse, prochaine partie, document (programme, plans de secours, suivi, point de départ, ordre des achats,
+  échéance, détails), fiche (sheet), résumé pour le carnet, export texte.
+- calculateurs-workspace.js : contextes de recherche plan / plan-prereq (copies, sans toucher aux achats partagés), deux carnets,
+  fiche dans une fenêtre (dialog), impression de la fiche, « Aller à la case à corriger » pour une mission.
+- calculateurs.html : deux blocs « Mes plans enregistrés » / « Mes calculs enregistrés », fenêtre de fiche.
+- calculateurs-workspace.css : bloc v7.34 (document, frise, plans de secours, bilan, cartes du formulaire, carnets, fiche, impression).
+- leo-link.js : Léo remplit le but et les cases du plan (copie), pas les huit calculs. Léo, Tuto (chapitre Mon business plan
+  et Carnets réécrits, captures refaites avec deux missions) et barre de question alignés.
+
+Contrôles
+- 15 nouveaux tests (outils/tests/calculateurs-plan-v34.test.cjs : références du moteur, migration, séparation, parcours,
+  déblocage, carnets et fiches, pas à pas, Léo) ; tests v7.33 adaptés ; suite complète, régénération, verifier.js 0 erreur,
+  balayage Chromium (plan avec missions en Simple, détails, après mise à jour, Expert, fiche) sans débordement ni erreur console.
+- Limites connues : à chaque partie, le programme compare un ensemble borné d’enchaînements (dit dans l’interface) ; un but
+  « points » prend la mission qui donne le plus de points dans la partie ; aucune donnée officielle de GTA VI (prix, gains,
+  expérience) n’existe encore, tout vient des chiffres du joueur.

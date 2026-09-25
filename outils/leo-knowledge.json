@@ -1256,7 +1256,7 @@
     "utiliser le calculateur",
     "tuto"
    ],
-   "text": "Le calculateur répond à des questions concrètes avec tes chiffres : combien de temps pour ton objectif, est-ce que tu peux acheter ça, quoi acheter d’abord, ça vaut le coup ? Et Mon business plan transforme ton but en programme : la stratégie conseillée, les étapes dans l’ordre, ta prochaine partie, une échéance, et le suivi de ce que tu as vraiment gagné. Dis-moi tes chiffres et je te prépare le bon outil, ou lis le Tuto.",
+   "text": "Le calculateur répond à des questions concrètes avec tes chiffres : combien de temps pour ton objectif, est-ce que tu peux acheter ça, quoi acheter d’abord, ça vaut le coup ? Et Mon business plan transforme ton but en programme mission par mission : quoi faire en premier, en deuxième, en troisième, partie après partie, ta prochaine partie, des plans de secours si ça ne se passe pas comme prévu, et un suivi qui refait tout le plan après chaque partie. Dis-moi tes chiffres et je te prépare le bon outil, ou lis le Tuto.",
    "status": "Le site",
    "links": [
     {
@@ -1466,14 +1466,21 @@
     "a quoi sert le business plan",
     "le business plan",
     "business plan",
+    "programme mission par mission",
+    "mission par mission",
+    "plan de secours",
+    "plan b",
     "strategie conseillee",
     "prochaine partie",
     "echeance",
     "suivi du reel",
-    "ou en suis je"
+    "ou en suis je",
+    "debloquer avec l experience",
+    "rang",
+    "xp"
    ],
    "min": 1,
-   "text": "Mon business plan part de ton but (un achat ou une somme), de ce que tu as, de ce que tu gagnes et de ton temps de jeu. Il te donne la stratégie conseillée (et les autres façons de faire), les étapes dans l’ordre avec les dépenses, les gains et ce qu’il te reste, le programme de ta prochaine partie, et si une échéance est faisable. Après avoir joué, tu écris ce que tu as vraiment : le plan repart de là, sans compter deux fois. Rien ne vient du vrai jeu : ce sont tes chiffres.",
+   "text": "Mon business plan a ses propres questions : ton but (un achat, une somme, ou quelque chose à débloquer avec de l’expérience : rang, XP, réputation…), où tu en es, comment tu gagnes ton argent (tes missions, ou un chiffre par heure), ce qu’il faut acheter avant, et ce qui compte pour toi. Il te donne le programme dans l’ordre : en premier, en deuxième, en troisième… partie après partie, avec le chemin le plus rapide trouvé avec tes missions, ta prochaine partie, et des plans de secours A, B, C si tu gagnes moins que prévu. Après avoir joué, tu écris ce que tu as, le temps joué, les missions et les achats faits : tout le plan se recalcule. Enregistre-le : sa fiche complète reste dans Mes plans enregistrés. Rien ne vient du vrai jeu : ce sont tes chiffres.",
    "status": "Le site",
    "links": [
     {

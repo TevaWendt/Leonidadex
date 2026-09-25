@@ -1,0 +1,20 @@
+LEONIDAKIT v7.34 — BUSINESS PLAN MISSION PAR MISSION — archive « modifs » (25 septembre 2026)
+
+Base attendue : ton dossier Leonidadex en v7.33 (ou le zip Leonidadex-main (5) = v7.29 : cette archive contient aussi
+les lots A, B, C et la v7.33). Fichiers ajoutés ou modifiés seulement, chemins exacts depuis la racine. Rien à supprimer.
+
+1. Copie ton dossier actuel (sauvegarde).
+2. Extrais l’archive dans la racine du site, écrase les fichiers homonymes (garde le dossier .git).
+3. Ouvre calculateurs.html → « Mon business plan » :
+   - Réponds aux cinq questions (le plan ne prend rien tout seul dans les huit calculs ; « Reprendre mes chiffres de Mes
+     calculs » les copie si tu veux). Choisis « Avec mes missions », ajoute deux missions : le programme dit quoi faire en
+     premier, en deuxième… partie après partie, et « Ta prochaine partie ».
+   - Lis « Si ça ne se passe pas comme prévu » (plans A, B, C) et clique « Suivre ce plan » sur l’un d’eux.
+   - Après une partie : « Où en es-tu vraiment ? » → écris ce que tu as, le temps joué, les missions faites, coche un achat
+     fait → tout le plan se recalcule, avec le bilan prévu / réel.
+   - Essaie un but « Débloquer quelque chose avec de l’expérience » (rang, XP…).
+   - Enregistre le plan : « Mes plans enregistrés » → « Voir la fiche » (imprimable). Les huit calculs ont leur carnet à part.
+   - Le Tuto (chapitres Mon business plan et Carnets) et Léo (« fais-moi un business plan pour… ») suivent.
+4. Mets en ligne (aucune commande de build). Les sauvegardes des visiteurs restent lisibles (migration v4 → v5).
+
+Détails : outils/CHANGEMENTS-v7.34.txt, -v7.33 (calculateur puissant), -v7.32 (lot C), -v7.31 (lot B), -v7.30 (lot A), outils/ETAT_AUDIT.md.

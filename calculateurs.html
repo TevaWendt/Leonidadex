@@ -29,7 +29,7 @@
 <link rel="stylesheet" href="style.css?v=7eb607a224e7">
 <link rel="stylesheet" href="calculateurs.css?v=c46e8092ecb1">
 <link rel="stylesheet" href="calculateurs-brand.css?v=ae74979eb751">
-<link rel="stylesheet" href="calculateurs-workspace.css?v=1e54b120046c">
+<link rel="stylesheet" href="calculateurs-workspace.css?v=0c3f45bd7766">
 <link rel="stylesheet" href="calculateurs-motion.css?v=85e30567d69c">
 <meta name="robots" content="index, follow">
 <meta property="og:image" content="https://www.leonidakit.com/img/officiel/vice-city-11-1280.webp">
@@ -128,7 +128,9 @@
     <div class="calc-plan-name"><label for="calc-name">Le nom de mon calcul</label><input id="calc-name" type="text" maxlength="100" placeholder="Mon premier million" autocomplete="off"></div>
     <button class="calc-button" type="button" id="calc-reference">Garder pour comparer</button><button class="calc-button" type="button" id="calc-print">Imprimer</button><button class="calc-button" type="button" id="calc-undo" hidden>Annuler la remise à zéro</button>
   </div>
-  <details class="calc-saved"><summary>Mes calculs enregistrés <span>gardés sur cet appareil, sans compte</span></summary><div class="calc-saved-body"><div id="saved-list"></div><div class="calc-carnet-actions"><button class="calc-button" id="calc-export" type="button">Télécharger mon calcul</button><label class="calc-button calc-import">Ouvrir un fichier de calcul<input id="calc-import" type="file" accept="application/json,.json"></label><button class="calc-button" id="calc-zero" type="button">Partir de zéro</button><button class="calc-button" id="calc-reset" type="button">Recharger les exemples</button></div></div></details>
+  <details class="calc-saved" id="saved-plans"><summary>Mes plans enregistrés <span>avec leur fiche complète · sur cet appareil</span></summary><div class="calc-saved-body"><p class="calc-note">Chaque plan enregistré a sa fiche : le but, le programme partie par partie, les achats et investissements, les plans de secours et ton suivi. Clique sur « Voir la fiche » pour la lire ou l’imprimer.</p><div id="saved-plans-list"></div></div></details>
+  <details class="calc-saved" id="saved-calcs"><summary>Mes calculs enregistrés <span>les huit calculs · sur cet appareil, sans compte</span></summary><div class="calc-saved-body"><div id="saved-list"></div><div class="calc-carnet-actions"><button class="calc-button" id="calc-export" type="button">Télécharger mon calcul</button><label class="calc-button calc-import">Ouvrir un fichier de calcul<input id="calc-import" type="file" accept="application/json,.json"></label><button class="calc-button" id="calc-zero" type="button">Partir de zéro</button><button class="calc-button" id="calc-reset" type="button">Recharger les exemples</button></div></div></details>
+  <dialog id="calc-sheet" class="b-sheet-dialog" aria-labelledby="calc-sheet-title"><div class="b-sheet-bar"><button type="button" class="calc-button primary" data-b-sheet-print="1">Imprimer la fiche</button><button type="button" class="calc-button" data-b-sheet-open="1">Ouvrir dans le calculateur</button><button type="button" class="calc-button" data-b-sheet-close="1" aria-label="Fermer la fiche">Fermer ✕</button></div><div id="calc-sheet-body"></div></dialog>
   <div class="calc-tuto-links"><a href="tuto.html">Comment utiliser le calculateur ? Le Tuto ↗</a><a href="tuto.html" id="calc-tuto-return" hidden>Revenir au chapitre du Tuto ↗</a></div>
   <p class="calc-print-source">Leonidakit · leonidakit.com/calculateurs.html · Calcul fait avec tes chiffres à toi. Ce n’est pas une promesse de gain.</p>
 </section>
@@ -262,7 +264,7 @@
 
 <script src="search-index.js?v=04e23e03bd10"></script>
 <script src="assets-manifest.js?v=a6679b51533b"></script>
-<script src="common.js?v=66f2086d5b81"></script>
+<script src="common.js?v=ceab9c51f9ef"></script>
 <script src="app.js?v=30889b5e1b9c"></script>
 <script src="vehicules-data.js?v=0ad0de9e18f0"></script>
 <script src="armes-data.js?v=357ab104f318"></script>
@@ -270,17 +272,17 @@
 <script src="calculateurs-activites.js?v=80def6e8d122"></script>
 <script src="acquisitions-data.js?v=482b137c1caf"></script>
 <script src="calculateurs-data.js?v=5d935499cd45"></script>
-<script src="calculateurs-engine.js?v=da18d47518ae"></script>
-<script src="calculateurs-scenario.js?v=952d1e1c7f43"></script>
+<script src="calculateurs-engine.js?v=6dbf66e99fd9"></script>
+<script src="calculateurs-scenario.js?v=85ecd5fa6017"></script>
 <script src="calculateurs-notebooks.js?v=8c750eba625c"></script>
 <script src="calculateurs-visuals.js?v=644753e98802"></script>
-<script src="calculateurs-workspace.js?v=4cd87e2db4dc"></script>
-<script src="calculateurs-plan.js?v=3c5cf6bacc2a"></script>
-<script src="leo-link.js?v=3c99cf60cfac"></script>
-<script src="calculateurs.js?v=0d300efeef2b"></script>
+<script src="calculateurs-workspace.js?v=a504ebcbaa25"></script>
+<script src="calculateurs-plan.js?v=bd8c4c45d4f7"></script>
+<script src="leo-link.js?v=2963f9513bb1"></script>
+<script src="calculateurs.js?v=b61038f10649"></script>
 <script src="leo-calculator.js?v=c6e3d6c63383"></script>
 <script src="calculateurs-motion.js?v=5ccf9702a0cc"></script>
-<script src="calculateurs-hub.js?v=56ca3ef8e131"></script>
+<script src="calculateurs-hub.js?v=8c99a59185e6"></script>
 <script src="calculateurs-simple.js?v=810b5d882292"></script>
 </body>
 </html>

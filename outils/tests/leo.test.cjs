@@ -55,7 +55,7 @@ test('Lot B : deux fiches nommées vont dans Quel achat choisir ?, une fiche et 
  assert.equal(ask('Dans quel ordre acheter '+xs[0].name+' et '+xs[1].name+' ?').request.tool,'order');
  assert.equal(ask('comparer mes activités').request.tool,'activities');
  const s=L.apply(a.request,initial,initial,B,catalogue,'new',activities);assert.equal(s.tab,'compare');assert.equal(s.compare.keys.length,2);
- const t=L.apply(b.request,initial,initial,B,catalogue,'new',activities);assert.equal(t.tab,'plan');assert.equal(t.plan.kind,'purchase');assert.ok(t.plan.key);assert.equal(B.asset(t,t.plan.key).itemId,xs[0].calcId);
+ const t=L.apply(b.request,initial,initial,B,catalogue,'new',activities);assert.equal(t.tab,'plan');assert.equal(t.plan.goal.kind,'purchase');assert.equal(t.plan.goal.itemId,xs[0].calcId);assert.equal(t.plan.goal.name,catalogue.find(x=>x.id===xs[0].calcId).name);
 });
 test('v7.33 : Léo explique un calcul avec le moteur du calculateur, mêmes chiffres, sans inventer quand il en manque',()=>{
  const a=ask('J’ai 200 000 $ et je veux 1 million, je gagne 100 000 par heure');assert.equal(a.kind,'calc');assert.match(a.note,/il te manque 800\s000 \$, soit 8 h de jeu/);assert.match(a.note,/si tu gagnes toujours pareil/);

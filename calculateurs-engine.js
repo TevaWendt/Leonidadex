@@ -56,7 +56,7 @@
     return finish({ value: Number(text.replace(/[ \u00a0\u202f]/g, '').replace(',', '.')) }, shape);
   }
 
-  var activityShape = { net: null, activeMinutes: null, cycleMinutes: null, hourly: null, investment: null, paybackRuns: null };
+  var activityShape = { net: null, activeMinutes: null, cycleMinutes: null, hourly: null, investment: null, paybackRuns: null, units: null, unitsHourly: null };
   function activity(input) {
     try {
       var a = data(input);
@@ -68,9 +68,10 @@
       var share = number(a.share, 'la part de récompense', 100, { defaultValue: 100 });
       number(a.players, 'le nombre de joueurs', 100, { defaultValue: 1, positive: true, integer: true });
       var investment = money(a.investment, "l’investissement", 0);
+      var units = number(a.units, 'les points par mission', MONEY_MAX, { defaultValue: 0 });
       var net = subtract(reward * share / 100, cost);
       var active = duration + prep;
-      return finish({ net: net, activeMinutes: active, cycleMinutes: active + cooldown, hourly: net * 60 / (active + cooldown), investment: investment, paybackRuns: investment === 0 ? 0 : net > 0 ? ceil(investment / net) : null }, activityShape);
+      return finish({ net: net, activeMinutes: active, cycleMinutes: active + cooldown, hourly: net * 60 / (active + cooldown), investment: investment, paybackRuns: investment === 0 ? 0 : net > 0 ? ceil(investment / net) : null, units: units, unitsHourly: units * 60 / (active + cooldown) }, activityShape);
     } catch (error) { return fail(activityShape, error.message); }
   }
 
@@ -769,5 +770,171 @@
     } catch (error) { return fail(shape, error.message); }
   }
 
-  return Object.freeze({ investmentCompare:investmentCompare, planCurve:planCurve, planCashAt:planCashAt, planStrategies:planStrategies, planDeadline:planDeadline, nextSession:nextSession, choose:choose, businessPlan:businessPlan, worth:worth, investmentActivities: investmentActivities, sessionProjection: sessionProjection, activity: activity, goal: goal, goalMixed: goalMixed, inverse: inverse, roi: roi, purchase: purchase, budget: budget, order: order, compareBuy: compareBuy, goalContinuous: goalContinuous, sessionPlan: sessionPlan, parseLocalizedNumber: parseLocalizedNumber });
+
+  // ---------------------------------------------------------------------------
+  // Programme mission par mission : partie après partie, on choisit les missions
+  // qui rapportent le plus dans le temps de la partie (même recherche bornée que
+  // Mon temps de jeu), on paie les achats d'avant dès qu'on peut (dans l'ordre
+  // donné), ce qui peut débloquer d'autres missions, jusqu'au but. Le but peut
+  // être un prix, une somme, ou des points (XP, rang, réputation…) à atteindre,
+  // éventuellement les deux (débloquer ET payer). Sans mission, un gain continu
+  // par heure (« hourly ») joue le même rôle. Trésorerie respectée partie après
+  // partie ; jamais d'argent gagné avant sa partie ; un achat ne se paie pas avec
+  // ce qu'il rapportera.
+  var MISSION_MAX_SESSIONS = 400;
+  var missionShape = { sessions: [], totalSessions: null, totalMinutes: null, activeMinutes: null, days: null, weeks: null, phases: [], purchases: [], reached: null, finalCash: null, finalUnits: null, missing: null, missingUnits: null, averagePerSession: null, goalMoney: null, startCash: null, startUnits: null, limited: false, note: null };
+  function missionPlan(input) {
+    try {
+      var p = data(input);
+      var capital = money(p.capital, 'l’argent que tu as');
+      var reserve = money(p.reserve, 'l’argent mis de côté', 0);
+      if (reserve > capital) return fail(missionShape, 'L’argent gardé de côté dépasse ce que tu as.');
+      var sessionMinutes = number(p.sessionMinutes, 'la durée d’une partie', 1440, { positive: true });
+      var daysPerWeek = number(p.daysPerWeek, 'les jours par semaine', 7, { defaultValue: 7, integer: true, positive: true });
+      var upkeep = money(p.upkeepPerSession, 'les dépenses par partie', 0);
+      var hourly = money(p.hourly, 'ce que tu gagnes par heure', 0);
+      var unitsHourly = number(p.unitsHourly, 'les points par heure', MONEY_MAX, { defaultValue: 0 });
+      var maxRepeat = number(p.maxRepeat, 'les répétitions consécutives maximales', SESSION_MAX_RUNS, { defaultValue: SESSION_MAX_RUNS, positive: true, integer: true });
+      var goalPrice = p.goalPrice == null ? null : money(p.goalPrice, 'le prix du but');
+      var goalTarget = p.target == null ? null : money(p.target, 'la somme visée');
+      var goalUnits = p.targetUnits == null ? null : number(p.targetUnits, 'les points à atteindre', MONEY_MAX);
+      var units = number(p.currentUnits, 'tes points actuels', MONEY_MAX, { defaultValue: 0 });
+      var startUnits = units;
+      if (goalPrice === null && goalTarget === null && goalUnits === null) return fail(missionShape, 'Dis-moi ton but : un achat avec son prix, une somme à avoir, ou des points à atteindre.');
+      var list = Array.isArray(p.activities) ? p.activities : [];
+      if (list.length > 12) return fail(missionShape, 'Choisis douze missions au maximum.');
+      if (!list.length && !(hourly > 0) && !(unitsHourly > 0)) return fail(missionShape, 'Dis-moi comment tu gagnes ton argent : choisis au moins une mission, ou écris ce que tu gagnes par heure.');
+      var acts = list.map(function (entry, index) {
+        var r = activity(entry);
+        if (!r.valid) throw new Error('Mission ' + (index + 1) + (entry && typeof entry.name === 'string' && entry.name.trim() ? ' (' + entry.name.trim().slice(0, 40) + ')' : '') + ' : ' + r.reason);
+        return { id: typeof entry.id === 'string' ? entry.id : String(index), name: typeof entry.name === 'string' && entry.name.trim() ? entry.name.trim().slice(0, 120) : 'Mission ' + (index + 1), entry: entry, res: r, requires: Array.isArray(entry.requiresPurchaseIds) ? entry.requiresPurchaseIds : [], paid: entry.owned === true || !(entry.investment > 0) };
+      });
+      if (goalUnits !== null && units < goalUnits - 1e-9 && !(unitsHourly > 0) && !acts.some(function (a) { return a.res.units > 0; })) return fail(missionShape, 'Aucune de tes missions ne donne de points : écris les points gagnés par mission (ou par heure), sinon le but ne peut pas être atteint.');
+      var purchases = (Array.isArray(p.purchases) ? p.purchases : []).map(function (x, i) { x = data(x); return { id: typeof x.id === 'string' ? x.id : 'achat-' + i, name: typeof x.name === 'string' && x.name.trim() ? x.name.trim().slice(0, 120) : 'Achat ' + (i + 1), price: money(x.price, 'le prix de l’achat « ' + (typeof x.name === 'string' && x.name.trim() ? x.name.trim().slice(0, 40) : (i + 1)) + ' »'), boostHourly: money(x.boostHourly, 'ce que rapporte l’achat ' + (i + 1), 0), owned: x.owned === true, at: null }; });
+      if (purchases.length > 20) return fail(missionShape, 'Vingt achats maximum avant le but.');
+      var owned = {};
+      purchases.forEach(function (x) { if (x.owned) owned[x.id] = true; });
+      var cash = capital, sessions = [], totalActive = 0, boost = 0, limited = false;
+      function goalMoney() { return (goalPrice !== null ? goalPrice : 0) + (goalTarget !== null ? goalTarget : 0); }
+      function reached() { return (goalUnits === null || units >= goalUnits - 1e-9) && subtract(cash, reserve) >= goalMoney() - 1e-9; }
+      for (var n = 1; n <= MISSION_MAX_SESSIONS && !reached(); n += 1) {
+        var available = acts.filter(function (a) { return a.requires.every(function (id) { return owned[id]; }); });
+        var entries = available.map(function (a) { return Object.assign({}, a.entry, { id: a.id, name: a.name, investment: a.paid ? 0 : a.entry.investment }); });
+        var session = null, unitsGain = 0, used = [];
+        var needUnits = goalUnits !== null && units < goalUnits - 1e-9;
+        if (entries.length) {
+          if (needUnits && available.some(function (a) { return a.res.units > 0; })) {
+            // Points à gagner : la mission qui donne le plus de points dans la partie ; à égalité, celle qui rapporte le plus.
+            var best = null;
+            available.forEach(function (a) {
+              if (!(a.res.units > 0)) return;
+              var r = inverse({ minutes: sessionMinutes, capital: cash, reserve: reserve, activity: Object.assign({}, a.entry, { investment: a.paid ? 0 : a.entry.investment }) });
+              if (!r.valid || !r.runs) return;
+              var gained = r.runs * a.res.units;
+              if (!best || gained > best.units || (gained === best.units && r.profit > best.profit)) best = { a: a, r: r, units: gained, profit: r.profit };
+            });
+            if (best) { session = { profit: best.profit, investment: best.a.paid ? 0 : best.a.entry.investment, runs: best.r.runs, activeMinutes: best.r.totalMinutes, breakdown: [{ id: best.a.id, name: best.a.name, runs: best.r.runs, net: best.r.runs * best.a.res.net }] }; unitsGain = best.units; used = [best.a]; }
+          }
+          if (!session) {
+            var sp = sessionPlan({ capital: cash, reserve: reserve, minutes: sessionMinutes, maxRepeat: maxRepeat, activities: entries });
+            if (sp.valid && sp.runs) { session = sp; used = available.filter(function (a) { return sp.breakdown.some(function (b) { return b.id === a.id && b.runs; }); }); if (sp.limited) limited = true; unitsGain = sp.breakdown.reduce(function (sum, b) { var a = available.filter(function (x) { return x.id === b.id; })[0]; return sum + (a && a.res.units > 0 ? a.res.units * b.runs : 0); }, 0); }
+          }
+        }
+        var passive = (boost + hourly) * sessionMinutes / 60;
+        var passiveUnits = unitsHourly * sessionMinutes / 60;
+        var gain = (session ? session.profit : 0) + passive - upkeep;
+        var progress = gain > 1e-9 || (needUnits && (unitsGain > 0 || passiveUnits > 0));
+        if (!progress) {
+          var locked = acts.filter(function (a) { return available.indexOf(a) < 0; });
+          var why = n !== 1 ? 'À la partie ' + n + ', plus aucune mission ne rentre ni ne rapporte : vérifie tes missions et tes achats.'
+            : needUnits && !(unitsGain > 0 || passiveUnits > 0) && gain > 1e-9 ? 'Aucune de tes missions ne donne de points : écris les points gagnés par mission (ou par heure).'
+            : !available.length && locked.length ? 'Aucune mission n’est possible au départ : « ' + locked[0].name + ' » demande d’abord un achat (' + locked[0].requires.map(function (id) { var x = purchases.filter(function (y) { return y.id === id; })[0]; return x ? x.name : id; }).join(', ') + '). Ajoute une mission faisable tout de suite, ou coche « je l’ai déjà » sur cet achat.'
+            : 'Aucune mission ne rentre dans une partie avec ce que tu as : ajoute du temps, choisis une mission plus courte, ou vérifie tes frais et tes achats.';
+          return fail(Object.assign({}, missionShape, { sessions: sessions }), why);
+        }
+        cash = cash + gain;
+        used.forEach(function (a) { a.paid = true; });
+        units += unitsGain + passiveUnits;
+        totalActive += session ? session.activeMinutes : (hourly > 0 || passiveUnits > 0 ? sessionMinutes : 0);
+        var bought = [];
+        for (var k = 0; k < purchases.length; k += 1) { var x = purchases[k]; if (x.owned) continue; if (subtract(cash, reserve) >= x.price - 1e-9) { cash = subtract(cash, x.price); x.owned = true; x.at = n; owned[x.id] = true; boost += x.boostHourly; bought.push(x.name); } else break; }
+        sessions.push({ index: n, steps: session ? session.breakdown.filter(function (b) { return b.runs; }).map(function (b) { return { id: b.id, name: b.name, runs: b.runs, net: b.net }; }) : [], gain: gain, passive: passive, upkeep: upkeep, cashAfter: cash, unitsAfter: units, unitsGain: unitsGain + passiveUnits, purchases: bought, activeMinutes: session ? session.activeMinutes : (hourly > 0 || passiveUnits > 0 ? sessionMinutes : 0) });
+      }
+      var ok = reached();
+      var total = sessions.length;
+      var weeks = total === 0 ? 0 : Math.floor((total - 1) / daysPerWeek);
+      var days = total === 0 ? 0 : weeks * 7 + ((total - 1) % daysPerWeek) + 1;
+      // Phases : même programme d'une partie à l'autre → une seule ligne « parties 1 à 4 : A ×2, B ×1 ».
+      var phases = [];
+      sessions.forEach(function (se) {
+        var key = se.steps.map(function (st) { return st.id + '×' + st.runs; }).join('|') + '#' + Math.round(se.gain);
+        var last = phases[phases.length - 1];
+        if (last && last.key === key && !last.purchasesAfter.length) { last.to = se.index; last.count += 1; last.cashAfter = se.cashAfter; last.unitsAfter = se.unitsAfter; last.purchasesAfter = se.purchases.slice(); }
+        else phases.push({ key: key, from: se.index, to: se.index, count: 1, steps: se.steps, gain: se.gain, unitsGain: se.unitsGain, cashBefore: se.cashAfter - se.gain + se.purchases.reduce(function (sum, name) { var x = purchases.filter(function (y) { return y.name === name; })[0]; return sum + (x ? x.price : 0); }, 0), cashAfter: se.cashAfter, unitsAfter: se.unitsAfter, purchasesAfter: se.purchases.slice() });
+      });
+      var missing = Math.max(0, subtract(goalMoney() + reserve, cash));
+      return finish({ sessions: sessions, totalSessions: total, totalMinutes: total * sessionMinutes, activeMinutes: totalActive, days: days, weeks: total === 0 ? 0 : ceil(total / daysPerWeek), phases: phases.map(function (ph) { return { from: ph.from, to: ph.to, count: ph.count, steps: ph.steps, gain: ph.gain, unitsGain: ph.unitsGain, cashBefore: ph.cashBefore, cashAfter: ph.cashAfter, unitsAfter: ph.unitsAfter, purchasesAfter: ph.purchasesAfter }; }), purchases: purchases.map(function (x) { return { id: x.id, name: x.name, price: x.price, boostHourly: x.boostHourly, atSession: x.at, owned: x.owned }; }), reached: ok, finalCash: cash, finalUnits: units, missing: ok ? 0 : missing, missingUnits: goalUnits === null ? 0 : Math.max(0, goalUnits - units), averagePerSession: total ? subtract(cash, capital) / total : null, goalMoney: goalMoney(), startCash: capital, startUnits: startUnits, limited: limited || !ok, note: ok ? (limited ? 'Programme trouvé parmi les séquences explorées à chaque partie ; il peut en exister un plus rapide.' : null) : 'Le but n’est pas atteint en ' + MISSION_MAX_SESSIONS + ' parties : réduis le but, allonge tes parties ou change de missions.' }, missionShape);
+    } catch (error) { return fail(missionShape, error.message); }
+  }
+
+  // Plans A, B, C : le programme complet, puis chaque mission seule, puis sans
+  // les achats d'avant, puis les plans supplémentaires demandés (par exemple
+  // « au rythme que tu as vraiment eu »). Classés par nombre de parties, sans
+  // doublon. Aucun optimum garanti.
+  function missionAlternatives(input) {
+    var shape = { plans: [], results: {} };
+    try {
+      var p = data(input);
+      var acts = Array.isArray(p.activities) ? p.activities : [];
+      var plans = [];
+      function add(id, label, changes, note) { var r = missionPlan(Object.assign({}, p, changes)); plans.push({ id: id, label: label, note: note || null, valid: r.valid && r.reached, reason: r.valid ? (r.reached ? null : r.note) : r.reason, totalSessions: r.valid && r.reached ? r.totalSessions : null, days: r.valid && r.reached ? r.days : null, activeMinutes: r.valid ? r.activeMinutes : null, finalCash: r.valid ? r.finalCash : null, phases: r.valid ? r.phases.slice(0, 6) : [], result: r }); }
+      add('all', acts.length > 1 ? 'Le meilleur mélange de tes missions' : (acts.length ? 'Ta mission, répétée' : 'Ton gain par heure, partie après partie'), {}, acts.length > 1 ? 'À chaque partie, les missions qui rapportent le plus dans le temps disponible.' : null);
+      if (!plans[0].result.valid) return fail(shape, plans[0].result.reason);
+      if (acts.length > 1) acts.forEach(function (a, i) { add('only-' + (typeof a.id === 'string' ? a.id : i), 'Seulement « ' + (a && a.name ? String(a.name).slice(0, 60) : 'Mission ' + (i + 1)) + ' »', { activities: [a] }, 'La même mission, répétée tant qu’elle rentre dans la partie.'); });
+      if (Array.isArray(p.purchases) && p.purchases.some(function (x) { return x && !x.owned; })) add('no-purchases', 'Sans les achats d’avant', { purchases: (p.purchases || []).filter(function (x) { return x && x.owned; }) }, 'Seulement si tu peux te passer de ces achats pour ton but.');
+      (Array.isArray(p.extraPlans) ? p.extraPlans : []).slice(0, 6).forEach(function (x, i) { if (x && typeof x === 'object') add(typeof x.id === 'string' ? x.id : 'extra-' + i, typeof x.label === 'string' ? x.label : 'Autre plan', x.changes && typeof x.changes === 'object' ? x.changes : {}, typeof x.note === 'string' ? x.note : null); });
+      var ranked = plans.filter(function (x) { return x.valid; }).sort(function (a, b) { return a.totalSessions - b.totalSessions || b.finalCash - a.finalCash; });
+      var seen = {}, distinct = [];
+      ranked.forEach(function (x) { var key = x.totalSessions + '|' + x.phases.map(function (ph) { return ph.steps.map(function (st) { return st.id + st.runs; }).join(','); }).join('/'); if (!seen[key]) { seen[key] = true; distinct.push(x); } });
+      var failed = plans.filter(function (x) { return !x.valid; });
+      var results = {}; plans.forEach(function (x) { results[x.id] = x.result; });
+      return finish({ plans: distinct.concat(failed).map(function (x) { var out = Object.assign({}, x); delete out.result; return out; }), results: results }, shape);
+    } catch (error) { return fail(shape, error.message); }
+  }
+
+  // Échéance d'un programme mission par mission : faisable ou non ; sinon, les
+  // leviers vérifiés par recalcul (jouer tous les jours, parties plus longues,
+  // gagner plus par heure quand le gain est continu) et la date la plus proche.
+  function missionDeadline(input, days) {
+    var shape = { feasible: null, days: null, spareDays: null, everydayDays: null, requiredSessionMinutes: null, requiredHourly: null };
+    try {
+      var d = number(days, 'l’échéance en jours', 36500, { positive: true, integer: true });
+      var base = missionPlan(input);
+      if (!base.valid) return fail(shape, base.reason);
+      if (!base.reached) return fail(shape, base.note);
+      var p = data(input);
+      if (base.days <= d) return finish({ feasible: true, days: base.days, spareDays: d - base.days, everydayDays: null, requiredSessionMinutes: null, requiredHourly: null }, shape);
+      var every = null, dpw = number(p.daysPerWeek, 'les jours par semaine', 7, { defaultValue: 7, integer: true, positive: true });
+      if (dpw < 7) { var e = missionPlan(Object.assign({}, p, { daysPerWeek: 7 })); if (e.valid && e.reached) every = e.days; }
+      var minutes = null, cur = number(p.sessionMinutes, 'la durée d’une partie', 1440, { positive: true });
+      for (var m = Math.ceil(cur / 15) * 15 + 15; m <= 1440; m += 15) { var t = missionPlan(Object.assign({}, p, { sessionMinutes: m })); if (t.valid && t.reached && t.days <= d) { minutes = m; break; } }
+      var hourly = null;
+      if (!(Array.isArray(p.activities) && p.activities.length) && p.hourly > 0) { var lo = p.hourly, hi = p.hourly * 64, ok = missionPlan(Object.assign({}, p, { hourly: hi })); if (ok.valid && ok.reached && ok.days <= d) { for (var i = 0; i < 40; i += 1) { var mid = (lo + hi) / 2, r = missionPlan(Object.assign({}, p, { hourly: mid })); if (r.valid && r.reached && r.days <= d) hi = mid; else lo = mid; } hourly = Math.ceil(hi / 100) * 100; } }
+      return finish({ feasible: false, days: base.days, spareDays: base.days - d, everydayDays: every !== null && every <= d ? every : null, requiredSessionMinutes: minutes, requiredHourly: hourly }, shape);
+    } catch (error) { return fail(shape, error.message); }
+  }
+
+  // Courbe de l'argent du programme : un point par partie (après la partie), plus le départ.
+  function missionCurve(result) {
+    var shape = { points: [] };
+    try {
+      if (!result || !result.valid || !Array.isArray(result.sessions)) return fail(shape, 'Programme non calculé.');
+      var minutes = result.totalSessions ? result.totalMinutes / result.totalSessions : 0;
+      var points = [{ hours: 0, cash: result.startCash, units: result.startUnits, label: 'Départ', purchase: null }];
+      result.sessions.forEach(function (se) { points.push({ hours: se.index * minutes / 60, cash: se.cashAfter, units: se.unitsAfter, label: 'Partie ' + se.index + (se.purchases.length ? ' · ' + se.purchases.join(', ') : ''), purchase: se.purchases.length ? se.purchases.join(', ') : null }); });
+      return finish({ points: points }, shape);
+    } catch (error) { return fail(shape, error.message); }
+  }
+
+  return Object.freeze({ missionPlan:missionPlan, missionAlternatives:missionAlternatives, missionDeadline:missionDeadline, missionCurve:missionCurve, investmentCompare:investmentCompare, planCurve:planCurve, planCashAt:planCashAt, planStrategies:planStrategies, planDeadline:planDeadline, nextSession:nextSession, choose:choose, businessPlan:businessPlan, worth:worth, investmentActivities: investmentActivities, sessionProjection: sessionProjection, activity: activity, goal: goal, goalMixed: goalMixed, inverse: inverse, roi: roi, purchase: purchase, budget: budget, order: order, compareBuy: compareBuy, goalContinuous: goalContinuous, sessionPlan: sessionPlan, parseLocalizedNumber: parseLocalizedNumber });
 }));

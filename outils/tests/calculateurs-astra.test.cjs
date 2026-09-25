@@ -76,11 +76,11 @@ test('Objectif atteint, gain nul, gain négatif : réponses explicites, aucun pr
  const zero=E.businessPlan({capital:200000,reserve:0,hourly:0,dailyMinutes:60,target:1000000});assert.equal(zero.valid,false);assert.match(zero.reason,/gain|manque|attendre/i);
  const neg=E.businessPlan({capital:200000,reserve:0,hourly:20000,dailyMinutes:60,upkeepPerSession:30000,target:1000000});assert.equal(neg.valid,false);assert.match(neg.reason,/dépenses par partie/);
 });
-test('Sauvegardes v3 lues telles quelles, migrées en v4 avec un plan complet',()=>{
- const raw=B.copy(initial);raw.version=3;delete raw.plan.strategy;delete raw.plan.log;delete raw.plan.done;delete raw.plan.deadlineDays;
- const s=B.validate(raw,initial);assert.equal(s.version,4);assert.equal(s.plan.strategy,'auto');assert.deepEqual(s.plan.log,[]);assert.deepEqual(s.plan.done,[]);assert.equal(s.plan.deadlineDays,null);
+test('Sauvegardes v3 lues telles quelles, migrées (v4 puis v5) avec un plan complet',()=>{
+ const raw=B.copy(initial);raw.version=3;raw.plan={kind:'amount',key:'',target:750000,usePrerequisites:true,upkeepPerSession:0,priority:'balanced',activity:''};
+ const s=B.validate(raw,initial);assert.equal(s.version,5);assert.equal(s.plan.strategy,'auto');assert.deepEqual(s.plan.log,[]);assert.equal(s.plan.deadlineDays,null);assert.equal(s.plan.goal.kind,'amount');assert.equal(s.plan.goal.target,750000);assert.equal(s.plan.situation.capital,initial.goal.capital);
  const bad=B.copy(initial);bad.plan.log=[{capital:'x'}];assert.throws(()=>B.validate(bad,initial),/Historique/);
- const future=B.copy(initial);future.version=5;assert.throws(()=>B.validate(future,initial),/Version/);
+ const future=B.copy(initial);future.version=6;assert.throws(()=>B.validate(future,initial),/Version/);
 });
 
 /* ---------- parcours ---------- */
@@ -118,34 +118,27 @@ test('Saisie invalide : le champ concerné est nommé et un bouton y mène',asyn
  edit(p,'f-goal-capital',200000);edit(p,'f-goal-target',1000000);edit(p,'f-goal-hourly',100000);edit(p,'f-goal-reserve',500000);
  const t=text(p,'goal-results');assert.match(t,/réserve|de côté/i);const b=p.d.querySelector('#goal-results [data-b-focus]');assert.ok(b);assert.equal(b.dataset.bFocus,'f-goal-reserve');
  clean(p);});
-test('Business plan : prérequis, réserve, stratégie conseillée, prochaine partie, échéance et suivi du réel sans double compte',async()=>{
- const s=blank();s.goal.capital=200000;s.goal.reserve=20000;s.goal.hourly=100000;s.goal.dailyMinutes=60;s.session.daysPerWeek=7;s.session.usualMinutes=60;
- s.assets.push({key:'p1',itemId:'',name:'Sans gain',price:100000,referencePrice:null,extras:0,fees:0,owned:false,incomeMode:'none',boostHourly:0,utility:3},{key:'p2',itemId:'',name:'Rapporte',price:200000,referencePrice:null,extras:0,fees:0,owned:false,incomeMode:'personal',boostHourly:50000,utility:3},{key:'but',itemId:'',name:'Mon but',price:1000000,referencePrice:null,extras:0,fees:0,owned:false,incomeMode:'none',boostHourly:0,utility:3});
- s.order.keys=['p1','p2'];s.plan.kind='purchase';s.plan.key='but';
+test('Business plan (v5) : gain par heure, achats d’avant, réserve gardée, ordre conseillé, prochaine partie, échéance et suivi du réel',async()=>{
+ const s=blank();s.plan.goal={...s.plan.goal,kind:'purchase',name:'Mon but',price:1000000};s.plan.situation={capital:200000,reserve:20000,hourly:100000,unitsHourly:0,dailyMinutes:60,daysPerWeek:7,upkeepPerSession:0};s.plan.source='hourly';
+ s.plan.prerequisites=[{id:'p1',name:'Sans gain',itemId:'',referencePrice:null,price:100000,boostHourly:0,owned:false},{id:'p2',name:'Rapporte',itemId:'',referencePrice:null,price:200000,boostHourly:50000,owned:false}];
  const p=await page('plan',s);let t=text(p,'plan-results'),rep=text(p,'plan-report');
- assert.match(t,/il te manque/);assert.match(t,/Ta prochaine partie \(1 h\)/);
- assert.match(rep,/La stratégie conseillée/);assert.match(rep,/Ce qui rapporte le plus vite d’abord/);assert.match(rep,/Achète d’abord Rapporte/);
- // la réserve est gardée à chaque étape : jamais moins de 20 000 après un achat
- const r=B.evaluate('plan',JSON.parse(p.w.localStorage.getItem('lk-calculator-v1')));assert.ok(r.steps.every(x=>x.capitalAfter>=20000-1e-6));assert.equal(r.strategy,'byPayback');
- // suivi du réel : un résultat réel remplace l’argent de départ, l’historique garde prévu et réel
- edit(p,'plan-actual',350000);edit(p,'plan-actual-minutes',60);clickSel(p,'[data-b-plan-log]');
- const saved=JSON.parse(p.w.localStorage.getItem('lk-calculator-v1'));assert.equal(saved.goal.capital,350000);assert.equal(saved.plan.log.length,1);assert.equal(saved.plan.log[0].minutes,60);assert.ok(Number.isFinite(saved.plan.log[0].forecast));
- rep=text(p,'plan-report');assert.match(rep,/Réalisé contre prévu/);assert.match(rep,/350\s000/);
- // marquer un achat fait : il sort du plan et son gain s’ajoute une seule fois
- clickSel(p,'[data-b-plan-done="p2"]');const after=JSON.parse(p.w.localStorage.getItem('lk-calculator-v1'));assert.equal(after.assets.find(a=>a.key==='p2').owned,true);assert.deepEqual(after.plan.done,['p2']);
- rep=text(p,'plan-report');assert.match(rep,/Déjà fait : Rapporte/);assert.doesNotMatch(rep,/Achète d’abord Rapporte/);assert.match(rep,/achats faits/);
- const r2=B.evaluate('plan',after);assert.equal(B.planInput(after).hourly,150000);assert.ok(r2.valid);
- // échéance impossible : dit clairement, avec le rythme ou le gain nécessaires
- edit(p,'plan-deadline',2);rep=text(p,'plan-report');assert.match(rep,/Pas avec ton rythme actuel/);assert.match(rep,/Soit jouer/);assert.match(rep,/Soit gagner/);
+ assert.match(t,/il te manque/);assert.match(t,/Ta prochaine partie \(1 h\)/);assert.match(rep,/Ton programme, dans l’ordre/);assert.match(rep,/En premier/);assert.match(rep,/achète « Rapporte »/);assert.match(rep,/L’ordre des achats d’avant/);assert.match(rep,/Ce qui rapporte le plus vite d’abord/);
+ // la réserve est gardée à chaque partie : jamais moins de 20 000 après un achat
+ const r=B.evaluate('plan',JSON.parse(p.w.localStorage.getItem('lk-calculator-v1')));assert.ok(r.valid);assert.ok(r.sessions.every(x=>x.cashAfter>=20000-1e-6));assert.equal(r.strategy,'byPayback');assert.equal(r.purchases.find(x=>x.id==='p2').atSession,1);
+ // suivi du réel : ce que j’ai maintenant remplace l’argent de départ du plan, l’historique garde prévu et réel, l’achat coché sort du plan
+ edit(p,'plan-actual',350000);edit(p,'plan-actual-minutes',60);const bought=p.d.querySelector('[data-b-plan-actual-bought="p2"]');bought.checked=true;fire(p,bought,'change');clickSel(p,'[data-b-plan-log]');
+ const saved=JSON.parse(p.w.localStorage.getItem('lk-calculator-v1'));assert.equal(saved.plan.situation.capital,350000);assert.equal(saved.goal.capital,s.goal.capital,'les huit calculs ne bougent pas');assert.equal(saved.plan.log.length,1);assert.equal(saved.plan.log[0].sessionMinutes,60);assert.equal(saved.plan.log[0].gain,350000-200000+200000);assert.equal(saved.plan.log[0].plannedGain,100000);assert.deepEqual(saved.plan.log[0].purchases,['p2']);assert.equal(saved.plan.prerequisites.find(x=>x.id==='p2').owned,true);
+ rep=text(p,'plan-report');assert.match(rep,/BILAN DE TA DERNIÈRE PARTIE/);assert.match(rep,/Réalisé contre prévu/);assert.match(rep,/350\s000/);assert.doesNotMatch(rep,/achète « Rapporte »/);
+ // échéance impossible : dit clairement, avec les leviers ; puis faisable
+ edit(p,'plan-deadline',2);rep=text(p,'plan-report');assert.match(rep,/Pas avec ton rythme actuel/);assert.match(rep,/Ou gagner/);
  edit(p,'plan-deadline',60);assert.match(text(p,'plan-report'),/Oui, c’est faisable/);
- // export lisible
  assert.ok(p.d.querySelector('[data-b-plan-export]'));
  clean(p);});
 test('Business plan dans les trois modes : mêmes chiffres, profondeur différente',async()=>{
- const s=blank();s.goal.capital=200000;s.goal.hourly=100000;s.goal.dailyMinutes=60;s.plan.kind='amount';s.plan.target=1000000;
- const p=await page('plan',s);const answer=()=>p.d.querySelector('#plan-results .calc-answer').textContent.replace(/\s+/g,' ');const ref=answer();
+ const s=blank();s.plan.goal={...s.plan.goal,kind:'amount',target:1000000};s.plan.situation={capital:200000,reserve:0,hourly:100000,unitsHourly:0,dailyMinutes:60,daysPerWeek:7,upkeepPerSession:0};
+ const p=await page('plan',s);const answer=()=>p.d.querySelector('#plan-results .calc-answer').textContent.replace(/\s+/g,' ');const ref=answer();assert.match(ref,/8 parties/);
  assert.doesNotMatch(text(p,'plan-report'),/Ton calendrier/);
- clickSel(p,'[data-mode="advanced"]');assert.equal(answer(),ref);assert.match(text(p,'plan-report'),/Ton calendrier/);assert.match(text(p,'plan-report'),/Les seuils qui changent la donne/);assert.match(text(p,'expert-plan'),/Résultats bruts/);
+ clickSel(p,'[data-mode="advanced"]');assert.equal(answer(),ref);assert.match(text(p,'plan-report'),/Ton calendrier/);assert.match(text(p,'plan-report'),/Partie par partie/);assert.match(text(p,'plan-report'),/Et si/);assert.match(text(p,'expert-plan'),/Résultats bruts/);
  clickSel(p,'[data-mode="guided"]');p.flush();assert.equal(answer(),ref);assert.ok(p.d.getElementById('wiz-count'));assert.match(p.d.getElementById('wiz-count').textContent,/Question 1 sur/);
  clean(p);});
 test('Graphiques : titre, axes nommés, légende sans la couleur, phrase de lecture et chiffres qui correspondent',async()=>{const p=await page('roi');

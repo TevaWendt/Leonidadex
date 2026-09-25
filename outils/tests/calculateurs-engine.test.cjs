@@ -12,7 +12,7 @@ function assertSafe(value) {
 }
 
 test('activity includes preparation, cooldown and personal expenses', () => {
-  assert.deepEqual(E.activity(A), { valid: true, reason: null, net: 22500, activeMinutes: 15, cycleMinutes: 20, hourly: 67500, investment: 0, paybackRuns: 0 });
+  assert.deepEqual(E.activity(A), { valid: true, reason: null, net: 22500, activeMinutes: 15, cycleMinutes: 20, hourly: 67500, investment: 0, paybackRuns: 0, units: 0, unitsHourly: 0 });
 });
 test('activity computes whole-run payback without a decimal rounding mission', () => {
   assert.equal(E.activity({ reward: 0.01, duration: 1, investment: 0.07 }).paybackRuns, 7);
