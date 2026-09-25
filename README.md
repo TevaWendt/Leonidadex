@@ -57,6 +57,12 @@ Le calculateur reste entièrement statique, gratuit et sans compte. Les sept cal
 - `progression-core.js` (`LKProgression.create`) : suivi commun, export / import versionné, migration sans réécriture. Tests : `outils/tests/lot-d-progression.test.cjs`.
 - Pour reconstruire le site actuel après un changement du Lot D : `node outils/regenerer.cjs` puis `node outils/verifier.js`.
 
+## Lot A de la refonte (v7.30, 25 septembre 2026)
+
+- Menu et pied de page : `outils/site-shell.cjs` lit `outils/acquisitions.json` ; une catégorie apparaît dans « S’équiper » si `menu:true` (ordre `menuOrder`), et une catégorie `alias` devient une page de renvoi vers la section qui l’a absorbée (générée par `gen-acquisitions.cjs`, hors index et sitemap).
+- Volets éditoriaux d’un hub : champ `sections` d’une catégorie (`id`, `title`, `status`, `text`, `link`), rendus par `gen-acquisitions.cjs` et indexés par `sync-site.cjs`.
+- Léo : `outils/leo-knowledge.json` (sujets GTA VI avec `k` mots-clés, `text`, `status`, `links`, `source`, `min`, `priority`) est projeté dans `leo-index.json` par `gen-leo.cjs` ; le moteur `leo-core.js` ne répond par la base que si la question ne nomme pas une fiche achetable avec un prix, ne donne pas de chiffres et n’est pas une localisation. Mettre à jour `checkedAt` à chaque vérification des faits.
+
 ## Audit de finition — septembre 2026 (v7.29)
 
 - Suivi : `outils/ETAT_AUDIT.md` (état reprenable par lot), rapport `outils/RAPPORT-AUDIT-v7.29.md`, application `outils/NOTICE_APPLICATION_AUDIT.md`.

@@ -6,7 +6,7 @@ const {JSDOM}=require('jsdom');const root=path.resolve(__dirname,'..');
 function generate(options={}){
  const r=options.root||root,read=f=>fs.readFileSync(path.join(r,f),'utf8'),json=f=>JSON.parse(read(f)),exists=f=>fs.existsSync(path.join(r,f));
  const defs=json('outils/leo-editorial.json'),ed=json('outils/editorial.json'),med=json('outils/medias-officiels.json'),c={window:{}};
- const inputFiles=['vehicules-data.js','armes-data.js','carte-gtadb.js','carte.js','outils/editorial.json','outils/medias-officiels.json','outils/leo-editorial.json','tuto.html','outils/tuto.json','calculateurs-data.js','calculateurs-catalogue.js','acquisitions-data.js','collectibles-data.js','assets-manifest.js'];
+ const inputFiles=['vehicules-data.js','armes-data.js','carte-gtadb.js','carte.js','outils/editorial.json','outils/medias-officiels.json','outils/leo-editorial.json','outils/leo-knowledge.json','tuto.html','outils/tuto.json','calculateurs-data.js','calculateurs-catalogue.js','acquisitions-data.js','collectibles-data.js','assets-manifest.js'];
  for(const f of ['vehicules-data.js','armes-data.js','calculateurs-catalogue.js','acquisitions-data.js','assets-manifest.js','calculateurs-data.js','carte-gtadb.js','collectibles-data.js'])vm.runInNewContext(read(f),c);
  const catalog=c.window.LKCalcData.catalogue(),acq=c.window.LK_ACQUISITIONS,rows=new Map(),docs=new Map(),linked=new Set();
  const doc=file=>{if(!docs.has(file))docs.set(file,new JSDOM(read(file)));return docs.get(file).window.document;};
@@ -27,10 +27,12 @@ function generate(options={}){
  const definitions=defs.definitions.map(x=>{const url='/tuto.html#terme-'+x.id;routeOK(url);if(text(d.querySelector('#terme-'+x.id+' dd'))!==x.text)throw Error('Glossaire divergent : '+x.id);return {...x,url};});
  const faq=defs.faq.map(x=>{routeOK(x.source);const section=d.getElementById(x.source.split('#')[1]);const answer=x.selector?d.querySelector(x.selector):[...section.querySelectorAll('details')].find(e=>text(e.querySelector('summary'))===x.question)?.querySelector('p');if(!answer||!text(answer))throw Error('Réponse FAQ absente : '+x.id);return {id:x.id,terms:x.terms,text:text(answer),url:x.source};});
  const categories=defs.categories.filter(x=>exists(x.route.split('#')[0].slice(1))).map(x=>({...x,route:routeOK(x.route)}));
+ const kb=json('outils/leo-knowledge.json');if(!Array.isArray(kb.topics))throw Error('Base de connaissances invalide.');
+ const knowledge=kb.topics.map(x=>{if(!/^[a-z0-9-]+$/.test(x.id)||!Array.isArray(x.k)||!x.k.length||typeof x.text!=='string'||x.text.length>900)throw Error('Entrée de connaissance invalide : '+x.id);const links=(x.links||[]).map(l=>({label:l.label,url:l.url.startsWith('/calculateurs.html?')?l.url:routeOK(l.url)}));return {id:x.id,k:x.k,text:x.text,status:x.status||'',links,source:x.source||null,verifiedAt:kb.checkedAt,priority:!!x.priority,min:x.min||null};});
  const release={date:acq.game.releaseDate,verifiedAt:acq.game.checkedAt,status:acq.game.status,source:acq.sources.ultimate.url,maxAgeDays:30};
  const inputs=Object.fromEntries([...new Set([...inputFiles,...linked])].sort().map(f=>[f,crypto.createHash('sha256').update(read(f).replace(/\?v=[a-f0-9]+/g,'')).digest('hex')]));
  const proofs=[...new Set([...rows.values()].map(x=>x.proof))],items=[...rows.values()].map(x=>Object.fromEntries(Object.entries({...x,proof:proofs.indexOf(x.proof)}).filter(([k,v])=>k!=='id'&&v!==null&&v!==undefined&&!(Array.isArray(v)&&!v.length))));
- const data={schemaVersion:1,release,categories,tools:defs.tools,definitions,faq,proofs,items};data.revision=crypto.createHash('sha256').update(JSON.stringify(data)).digest('hex').slice(0,12);const encoded=JSON.stringify(data),meta=JSON.stringify({schemaVersion:1,inputs,items:data.items.length,bytes:Buffer.byteLength(encoded)},null,2)+'\n';
+ const data={schemaVersion:1,release,categories,tools:defs.tools,definitions,faq,knowledge,proofs,items};data.revision=crypto.createHash('sha256').update(JSON.stringify(data)).digest('hex').slice(0,12);const encoded=JSON.stringify(data),meta=JSON.stringify({schemaVersion:1,inputs,items:data.items.length,bytes:Buffer.byteLength(encoded)},null,2)+'\n';
  for(const [file,content] of [['leo-index.json',encoded],['outils/leo-index-manifest.json',meta]]){if(options.check){if(!exists(file)||read(file)!==content)throw Error('Index Léo à régénérer : '+file);}else fs.writeFileSync(path.join(r,file),content);}
  docs.forEach(x=>x.window.close());return {items:data.items.length,bytes:Buffer.byteLength(encoded),categories:categories.length};
 }

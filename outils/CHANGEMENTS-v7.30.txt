@@ -1,0 +1,21 @@
+v7.30 — 25 septembre 2026 — LOT A : menu, sections et Léo (base : zip Leonidadex-main (5) = v7.29)
+
+Menu « Explorer » et pied de page (outils/site-shell.cjs, outils/acquisitions.json)
+- « Armes » devient « Armurerie » dans la barre : armes.html réunit les 27 armes, le constructeur d’équipement (l’arsenal), les gadgets et les munitions, avec des raccourcis dans l’en-tête de page.
+- Groupe « S’équiper » : Consommables, Vêtements et style, Personnalisations. Retirés : « Tout ce qui s’achète » (déjà dans la barre sous « Achats »), « Bateaux » (déjà dans Véhicules), « Garages documentés » (même page que Planques), « 6 catégories à confirmer ».
+- Les catégories du menu se règlent dans acquisitions.json (menu:true, menuOrder).
+
+Pages (outils/gen-acquisitions.cjs, outils/gen-achats.cjs)
+- Consommables (nourriture.html) : vraie page en quatre volets — à quoi ça sert (manger pour récupérer de la vie, comme dans GTA V), ce que montre l’Extended Look, où on s’attend à en trouver, et dans le calculateur. Indexée, dans le sitemap.
+- Vêtements et style (style.html) : quatre volets Tenues, Accessoires, Tatouages (Electric Fang), Coiffures (Sara’s Unisex Salon) + collections et adresses.
+- vetements.html, accessoires.html, tatouages.html, munitions.html : simples renvois (redirection immédiate) vers la section qui les a absorbées ; hors index et sitemap.
+- Hub « Tout ce qui s’achète » : 11 catégories au lieu de 15 (Armurerie, Consommables, Vêtements et style regroupés).
+- Recherche : les volets (Tenues, Tatouages, Coiffures, Consommables…) et les sections de l’armurerie sont trouvables ; les renvois sortent de l’index.
+
+Léo (outils/leo-knowledge.json, outils/gen-leo.cjs, leo-core.js, leo-ui.js)
+- Base de connaissances GTA VI de 79 sujets : date et reports, heure de déblocage, préchargement, consoles, PC, prix et éditions, précommande et Pack Vintage, trailers et Extended Look, studio, personnages, régions, gameplay montré (police, vol de voitures, braquages, poids, réseau social), armes, véhicules, personnalisation, style, GTA Online, PEGI, mods, le site lui-même. Chaque réponse porte un statut (Officiel Rockstar / vu dans l’Extended Look / rumeur / non annoncé), la date de vérification et une source quand elle est officielle.
+- Moteur : correspondance par mots-clés tolérante (pluriels, petites fautes), sans jamais passer devant une fiche du site ni un calcul avec des chiffres ; « je ne sais pas » reste honnête.
+- Nouvelles suggestions d’ouverture, intro et sous-titre ; « Armurerie » et « Consommables » connus comme sections.
+
+Contrôles : 329/329 tests (un test de base de connaissances ajouté, deux tests adaptés aux renvois), régénération complète par outils/regenerer.cjs, verifier.js 0 erreur, 11 pages × 10 largeurs sans débordement ni erreur console.
+Lots suivants : B (calculateur refondu en deux sections + business plan, Tuto adapté), C (branding, marges, animations, images).

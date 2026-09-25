@@ -58,16 +58,51 @@ window.LK_ACQUISITIONS = {
       "type": "vehicle",
       "intro": "Kayak ou bateau à moteur : retrouve les embarcations dont Rockstar décrit l’obtention, puis les observations déjà recensées dans Véhicules.",
       "limit": "Les bonus ci-dessous sont liés à une édition. Leur achat séparé et leur prix dans le jeu ne sont pas confirmés.",
-      "empty": "Aucun bateau avec une obtention officiellement documentée n’est encore disponible."
+      "empty": "Aucun bateau avec une obtention officiellement documentée n’est encore disponible.",
+      "menuOrder": 99
     },
     {
       "id": "style",
       "label": "Vêtements et style",
       "route": "/style.html",
       "type": "style",
-      "intro": "Tenues, coiffures, tatouages et accessoires : cette page rassemble les collections et les services de style annoncés pour Jason et Lucia.",
+      "intro": "Tenues, accessoires, tatouages et coiffures : tout ce qui change l’apparence de Jason et Lucia, avec les collections annoncées et les adresses déjà présentées par Rockstar.",
       "limit": "Les collections décrites ne constituent pas une liste de pièces achetables à l’unité. Les noms individuels, tarifs et conditions détaillées restent à documenter.",
-      "empty": "En attente de données officielles pour les pièces individuelles. Les collections et services annoncés sont présentés ci-dessous, sans fausse fiche ni case à cocher."
+      "empty": "En attente de données officielles pour les pièces individuelles. Les collections et services annoncés sont présentés ci-dessous, sans fausse fiche ni case à cocher.",
+      "menu": true,
+      "sections": [
+        {
+          "id": "tenues",
+          "title": "Tenues",
+          "status": "Collections annoncées",
+          "text": "Les collections de l’Édition Ultime et du Pack Vintage Vice City décrivent des tenues pour les deux personnages (ci-dessous). Les pièces à l’unité, leurs noms et leurs prix ne sont pas publiés. La boutique Stock 305 est l’adresse de streetwear présentée par Rockstar.",
+          "link": "/entreprises/stock-305.html",
+          "linkLabel": "Voir Stock 305"
+        },
+        {
+          "id": "accessoires",
+          "title": "Accessoires",
+          "status": "À confirmer",
+          "text": "Lunettes, montres, bijoux, sacs, casquettes : les visuels officiels en montrent sur Jason et Lucia, mais aucun accessoire n’est nommé ni vendu séparément à ce jour. Rien n’est inventé ici : la liste se remplira avec des sources."
+        },
+        {
+          "id": "tatouages",
+          "title": "Tatouages",
+          "status": "Adresse présentée",
+          "text": "Electric Fang Tattoo, le salon de Stockyard présenté avec l’Édition Ultime, propose des créations sur les personnages. Les motifs, leur prix et les emplacements possibles restent à documenter. La collection « Style de Vice City » comprend des tatouages.",
+          "link": "/entreprises/electric-fang.html",
+          "linkLabel": "Voir Electric Fang Tattoo"
+        },
+        {
+          "id": "coiffures",
+          "title": "Coiffures",
+          "status": "Adresse présentée",
+          "text": "Sara’s Unisex Salon s’occupe des coiffures, de la barbe de Jason, du maquillage et des ongles. Le Pack Vintage Vice City décrit une coiffure rétro pour Jason et des cheveux bouclés pour Lucia. Tarifs non publiés.",
+          "link": "/entreprises/saras-unisex-salon.html",
+          "linkLabel": "Voir Sara’s Unisex Salon"
+        }
+      ],
+      "menuOrder": 2
     },
     {
       "id": "customizations",
@@ -76,7 +111,9 @@ window.LK_ACQUISITIONS = {
       "type": "customization",
       "intro": "Retrouve les modifications de véhicules et d’armes décrites par Rockstar, leurs conditions d’accès et les ateliers déjà présentés sur le site.",
       "limit": "Une modification esthétique ne prouve aucun gain de vitesse ou de revenu. Aucun prix ni effet chiffré n’est supposé.",
-      "empty": "En attente de données officielles pour une personnalisation identifiable."
+      "empty": "En attente de données officielles pour une personnalisation identifiable.",
+      "menu": true,
+      "menuOrder": 3
     },
     {
       "id": "garages",
@@ -85,57 +122,91 @@ window.LK_ACQUISITIONS = {
       "type": "hideout",
       "intro": "Les garages décrits avec des bonus de véhicule sont présentés à part des repaires simplement montrés dans les médias.",
       "limit": "L’accès dépend du contenu annoncé. Aucun achat immobilier séparé, revenu locatif ou prix en jeu n’est confirmé.",
-      "empty": "En attente de données officielles pour un garage identifiable."
+      "empty": "En attente de données officielles pour un garage identifiable.",
+      "menuOrder": 99
     },
     {
       "id": "vetements",
-      "pending": true,
       "label": "Vêtements à l’unité",
       "route": "/vetements.html",
       "type": "style",
       "intro": "Vêtements à l’unité : cette catégorie est prête à accueillir des pièces identifiées et leurs conditions d’obtention.",
       "limit": "Les collections annoncées sont dans « Vêtements et style ». Aucune pièce à l’unité avec un prix séparé vérifié n’est actuellement publiée ici.",
-      "empty": "Aucune entrée individuelle vérifiée n’est publiée dans cette catégorie. Sa présence dans le menu ne confirme pas une possibilité d’achat dans GTA VI."
+      "empty": "Aucune entrée individuelle vérifiée n’est publiée dans cette catégorie. Sa présence dans le menu ne confirme pas une possibilité d’achat dans GTA VI.",
+      "alias": "/style.html#tenues",
+      "menuOrder": 99
     },
     {
       "id": "accessoires",
-      "pending": true,
       "label": "Accessoires",
       "route": "/accessoires.html",
       "type": "style",
       "intro": "Lunettes, montres, bijoux, sacs, casquettes : une catégorie à documenter, sans liste d’achats confirmée.",
       "limit": "Aucun accessoire individuel avec des conditions d’achat vérifiées n’est actuellement publié dans cette section.",
-      "empty": "Aucune entrée individuelle vérifiée n’est publiée dans cette catégorie. Sa présence dans le menu ne confirme pas une possibilité d’achat dans GTA VI."
+      "empty": "Aucune entrée individuelle vérifiée n’est publiée dans cette catégorie. Sa présence dans le menu ne confirme pas une possibilité d’achat dans GTA VI.",
+      "alias": "/style.html#accessoires",
+      "menuOrder": 99
     },
     {
       "id": "tatouages",
-      "pending": true,
       "label": "Tatouages",
       "route": "/tatouages.html",
       "type": "style",
       "intro": "Tatouages : les motifs et leurs conditions d’accès restent à documenter dans ce catalogue.",
       "limit": "Les services de style annoncés sont présentés dans « Vêtements et style ». Aucun motif avec un prix vérifié n’est publié ici.",
-      "empty": "Aucune entrée individuelle vérifiée n’est publiée dans cette catégorie. Sa présence dans le menu ne confirme pas une possibilité d’achat dans GTA VI."
+      "empty": "Aucune entrée individuelle vérifiée n’est publiée dans cette catégorie. Sa présence dans le menu ne confirme pas une possibilité d’achat dans GTA VI.",
+      "alias": "/style.html#tatouages",
+      "menuOrder": 99
     },
     {
       "id": "nourriture",
-      "pending": true,
-      "label": "Nourriture et consommables",
+      "label": "Consommables",
       "route": "/nourriture.html",
       "type": "consumable",
-      "intro": "Nourriture et consommables : cette section attend des articles identifiables et des conditions d’obtention vérifiées.",
-      "limit": "Des enseignes apparaissent dans les médias officiels. Cela ne suffit pas à établir une liste de produits achetables ou leurs prix.",
-      "empty": "Aucune entrée individuelle vérifiée n’est publiée dans cette catégorie. Sa présence dans le menu ne confirme pas une possibilité d’achat dans GTA VI."
+      "intro": "Manger, boire, se soigner : les consommables servent à récupérer de la vie et à tenir pendant une mission. Voici ce que l’on sait pour GTA VI, sans inventer de liste de produits ni de prix.",
+      "limit": "Aucun article, prix ou effet chiffré n’est publié par Rockstar pour GTA VI. Les repères ci-dessous viennent des présentations officielles et des précédents jeux de la série.",
+      "empty": "Pas encore d’article vérifié à cocher : dès qu’un consommable sera nommé officiellement avec ses conditions d’obtention, il apparaîtra ici.",
+      "menu": true,
+      "sections": [
+        {
+          "id": "a-quoi-ca-sert",
+          "title": "À quoi ça sert",
+          "status": "Repère de la série",
+          "text": "Dans les précédents GTA, un snack, une boisson ou un repas rend de la vie ; un gilet pare-balles ajoute une protection. On les achète dans les supérettes, les distributeurs et les fast-foods, ou on les trouve sur place. C’est la même idée que le joueur attend dans GTA VI."
+        },
+        {
+          "id": "ce-qui-est-montre",
+          "title": "Ce qui est montré pour GTA VI",
+          "status": "Présentations officielles",
+          "text": "L’Extended Look du 27 août 2026 montre Jason et Lucia dans des restaurants et des commerces, qu’ils peuvent aussi braquer. D’après les comptes rendus de cette présentation, le personnage peut prendre ou perdre du poids selon ce qu’il mange et son activité physique, et sa condition physique joue sur ses capacités. Rockstar n’a publié ni liste d’articles, ni prix, ni chiffres d’effet."
+        },
+        {
+          "id": "ou-en-trouver",
+          "title": "Où on s’attend à en trouver",
+          "status": "À confirmer",
+          "text": "Fast-foods, supérettes, distributeurs automatiques, bars et stands de plage apparaissent dans les médias officiels de Vice City et des Keys. Voir une enseigne ne prouve pas qu’on peut y acheter quelque chose : chaque adresse sera ajoutée ici quand ce sera confirmé."
+        },
+        {
+          "id": "et-le-calculateur",
+          "title": "Et dans le calculateur ?",
+          "status": "Conseil",
+          "text": "Compte les consommables comme des petites dépenses régulières : dans « Mon budget », mets-les dans le poste « Consommables » avec le montant que tu imagines dépenser par partie. Le kit de soin et le gilet sont décrits dans l’Armurerie.",
+          "link": "/calculateurs.html?tool=budget#atelier",
+          "linkLabel": "Ouvrir Mon budget"
+        }
+      ],
+      "menuOrder": 1
     },
     {
       "id": "munitions",
-      "pending": true,
-      "label": "Munitions et équipement d’arme",
+      "label": "Munitions et équipement",
       "route": "/munitions.html",
       "type": "ammo",
       "intro": "Munitions et équipement d’arme : articles, compatibilités et conditions d’acquisition restent à documenter.",
       "limit": "Les motifs et variantes d’armes documentés sont dans « Personnalisations ». Aucun prix de munition vérifié n’est publié dans ce catalogue.",
-      "empty": "Aucune entrée individuelle vérifiée n’est publiée dans cette catégorie. Sa présence dans le menu ne confirme pas une possibilité d’achat dans GTA VI."
+      "empty": "Aucune entrée individuelle vérifiée n’est publiée dans cette catégorie. Sa présence dans le menu ne confirme pas une possibilité d’achat dans GTA VI.",
+      "alias": "/armes.html#munitions",
+      "menuOrder": 99
     },
     {
       "id": "logements",
@@ -145,7 +216,8 @@ window.LK_ACQUISITIONS = {
       "type": "housing",
       "intro": "Logements et appartements : les éventuels biens accessibles au joueur restent à distinguer des lieux montrés dans les médias.",
       "limit": "Les demeures des personnages sont dans « Demeures » et les garages documentés dans « Planques ». Aucune offre de logement à acheter avec un prix vérifié n’est publiée ici.",
-      "empty": "Aucune entrée individuelle vérifiée n’est publiée dans cette catégorie. Sa présence dans le menu ne confirme pas une possibilité d’achat dans GTA VI."
+      "empty": "Aucune entrée individuelle vérifiée n’est publiée dans cette catégorie. Sa présence dans le menu ne confirme pas une possibilité d’achat dans GTA VI.",
+      "menuOrder": 99
     }
   ],
   "items": [

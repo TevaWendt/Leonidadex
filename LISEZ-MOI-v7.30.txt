@@ -1,0 +1,12 @@
+LEONIDAKIT v7.30 — LOT A — archive « modifs » (25 septembre 2026)
+
+Base attendue : le zip Leonidadex-main (5) = v7.29 (celui que tu m’as envoyé).
+Contenu : fichiers ajoutés ou modifiés seulement, chemins exacts depuis la racine. Rien à supprimer :
+vetements.html, accessoires.html, tatouages.html et munitions.html restent en place comme simples renvois.
+
+1. Copie ton dossier v7.29 (sauvegarde).
+2. Extrais l’archive dans la racine du site, écrase les fichiers homonymes.
+3. Ouvre index.html (menu Explorer), nourriture.html, style.html, armes.html, puis Léo (« Sur quelles consoles ? »).
+4. Mets en ligne (aucune commande de build).
+
+Détails : outils/CHANGEMENTS-v7.30.txt et outils/ETAT_AUDIT.md.

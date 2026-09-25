@@ -1,0 +1,1463 @@
+{
+ "checkedAt": "2026-09-25",
+ "topics": [
+  {
+   "id": "sortie",
+   "k": [
+    "date de sortie",
+    "quand sort",
+    "sort quand",
+    "sortie",
+    "sort gta",
+    "sortira",
+    "release",
+    "jour de sortie",
+    "quelle date",
+    "arrive quand",
+    "disponible quand"
+   ],
+   "text": "GTA VI sort le jeudi 19 novembre 2026 sur PlayStation 5 et Xbox Series X|S. C’est la date annoncée par Rockstar le 6 novembre 2025, après deux reports.",
+   "status": "Officiel Rockstar",
+   "links": [
+    {
+     "label": "Compter les jours sur l’accueil",
+     "url": "/index.html"
+    }
+   ],
+   "source": "https://www.rockstargames.com/VI",
+   "priority": true
+  },
+  {
+   "id": "reports",
+   "k": [
+    "report",
+    "reporte",
+    "repousse",
+    "retard",
+    "decale",
+    "pourquoi pas encore sorti",
+    "deja repousse"
+   ],
+   "text": "Le jeu a été repoussé deux fois : d’abord de 2025 au 26 mai 2026 (annoncé le 2 mai 2025), puis au 19 novembre 2026 (annoncé le 6 novembre 2025). Rockstar a dit vouloir livrer le jeu au niveau de qualité attendu. Aucun nouveau report n’est annoncé.",
+   "status": "Officiel Rockstar",
+   "source": "https://www.rockstargames.com/VI"
+  },
+  {
+   "id": "heure",
+   "k": [
+    "quelle heure",
+    "heure de sortie",
+    "minuit",
+    "deblocage",
+    "debloque",
+    "a quelle heure"
+   ],
+   "text": "Sur le PlayStation Store, le jeu se débloque à minuit dans la nuit du 18 au 19 novembre 2026 (heure locale). Vérifie l’heure exacte sur la boutique de ta console juste avant, elle peut changer.",
+   "status": "Boutiques officielles, à vérifier",
+   "min": 1
+  },
+  {
+   "id": "precharge",
+   "k": [
+    "prechargement",
+    "precharger",
+    "pre telechargement",
+    "telecharger avant",
+    "pre load",
+    "preload"
+   ],
+   "text": "Le préchargement commence le 12 novembre 2026 pour les versions numériques, une semaine avant la sortie. Le poids du jeu n’a pas été communiqué.",
+   "status": "Officiel Rockstar",
+   "source": "https://www.rockstargames.com/VI"
+  },
+  {
+   "id": "taille",
+   "k": [
+    "poids du jeu",
+    "taille du jeu",
+    "combien de go",
+    "giga",
+    "espace disque",
+    "ssd"
+   ],
+   "text": "Rockstar n’a pas communiqué la taille du jeu. On saura le poids exact à l’ouverture du préchargement, le 12 novembre 2026.",
+   "status": "Non communiqué",
+   "min": 1
+  },
+  {
+   "id": "plateformes",
+   "k": [
+    "sur quelle console",
+    "quelles consoles",
+    "plateforme",
+    "plateformes",
+    "ps5",
+    "playstation 5",
+    "xbox series",
+    "xbox",
+    "console"
+   ],
+   "text": "À la sortie, GTA VI est prévu sur PlayStation 5 (dont PS5 Pro) et Xbox Series X|S seulement. Aucune autre plateforme n’est annoncée pour le 19 novembre 2026.",
+   "status": "Officiel Rockstar",
+   "source": "https://www.rockstargames.com/VI",
+   "priority": true
+  },
+  {
+   "id": "pc",
+   "k": [
+    "sur pc",
+    "version pc",
+    "pc",
+    "steam",
+    "ordinateur",
+    "windows",
+    "epic games",
+    "sortira sur pc",
+    "portage pc",
+    "sortira sur ordinateur"
+   ],
+   "text": "Aucune version PC n’est annoncée, ni date, ni page Steam. Une rumeur de septembre 2026 parle d’une arrivée « plus tôt que d’habitude », mais Rockstar n’a rien confirmé. Pour GTA V, la version PC était arrivée un an et demi après les consoles.",
+   "status": "Non annoncé · rumeur non confirmée",
+   "source": "https://www.rockstargames.com/VI",
+   "priority": true,
+   "min": 1
+  },
+  {
+   "id": "ps4",
+   "k": [
+    "ps4",
+    "playstation 4",
+    "xbox one",
+    "old gen",
+    "switch",
+    "nintendo",
+    "switch 2",
+    "ancienne console",
+    "anciennes consoles"
+   ],
+   "text": "Non : GTA VI n’est pas prévu sur PS4, Xbox One ni Nintendo Switch 2. Seules la PS5 et les Xbox Series X|S sont annoncées.",
+   "status": "Officiel Rockstar",
+   "source": "https://www.rockstargames.com/VI",
+   "min": 1
+  },
+  {
+   "id": "ps5pro",
+   "k": [
+    "ps5 pro",
+    "pro enhanced",
+    "60 fps",
+    "4k",
+    "fps",
+    "framerate",
+    "graphismes"
+   ],
+   "text": "Le jeu est annoncé « PS5 Pro Enhanced ». Rockstar n’a pas publié de détails sur la résolution ou le nombre d’images par seconde. L’Extended Look du 27 août 2026 a été capturé sur PS5.",
+   "status": "Officiel, détails non publiés",
+   "source": "https://www.rockstargames.com/VI"
+  },
+  {
+   "id": "crossplay",
+   "k": [
+    "cross play",
+    "crossplay",
+    "cross plateforme",
+    "jouer entre consoles",
+    "jouer avec un ami xbox"
+   ],
+   "text": "Rien n’est annoncé sur le jeu entre consoles différentes : il n’y a pour l’instant aucune annonce sur le mode en ligne de GTA VI.",
+   "status": "Non annoncé"
+  },
+  {
+   "id": "prix",
+   "k": [
+    "prix",
+    "combien coute",
+    "coute combien",
+    "tarif",
+    "cher",
+    "euros",
+    "80 euros",
+    "100 euros",
+    "prix du jeu",
+    "combien ca coute"
+   ],
+   "text": "Sur les boutiques, l’édition Standard est affichée à 79,99 € et l’Édition Ultime à 99,99 € (passage de l’une à l’autre : environ 20 €). Ce sont les prix constatés depuis l’ouverture des précommandes le 25 juin 2026 ; vérifie sur ta boutique.",
+   "status": "Prix constatés sur les boutiques",
+   "links": [
+    {
+     "label": "Ce que contiennent les éditions",
+     "url": "/achats.html"
+    }
+   ],
+   "source": "https://www.rockstargames.com/VI",
+   "priority": true,
+   "min": 1
+  },
+  {
+   "id": "editions",
+   "k": [
+    "edition",
+    "editions",
+    "edition ultime",
+    "ultimate",
+    "edition standard",
+    "difference entre les editions",
+    "quelle edition"
+   ],
+   "text": "Deux éditions : Standard (le jeu) et Ultime, qui ajoute une collection de véhicules, d’armes, de vêtements et de contenus liés à l’histoire de Jason et Lucia. Sur le site, les contenus déjà décrits sont listés dans « Tout ce qui s’achète », « Vêtements et style » et « Personnalisations ».",
+   "status": "Officiel Rockstar",
+   "links": [
+    {
+     "label": "Tout ce qui s’achète",
+     "url": "/achats.html"
+    },
+    {
+     "label": "Vêtements et style",
+     "url": "/style.html"
+    },
+    {
+     "label": "Personnalisations",
+     "url": "/personnalisations.html"
+    }
+   ],
+   "source": "https://www.rockstargames.com/VI"
+  },
+  {
+   "id": "ultime-contenu",
+   "k": [
+    "contenu de l edition ultime",
+    "contient l edition ultime",
+    "ultime contient",
+    "dans l edition ultime",
+    "bonus ultime",
+    "vaut le coup edition ultime"
+   ],
+   "text": "D’après les présentations officielles déjà relevées sur le site : un kit rétro pour le Ganado de Jason (Rideout Customs), les collections « Style de Vice City » et « Les articles du bonheur », le garage de Paradise avec le Dominator Buggy, et des services chez Sara’s Unisex Salon, Stock 305 et Electric Fang Tattoo. Les prix en jeu de ces contenus ne sont pas publiés.",
+   "status": "Officiel Rockstar",
+   "links": [
+    {
+     "label": "Voir les personnalisations",
+     "url": "/personnalisations.html"
+    },
+    {
+     "label": "Voir le garage de Paradise",
+     "url": "/planques.html#garages"
+    }
+   ],
+   "source": "https://www.rockstargames.com/VI"
+  },
+  {
+   "id": "precommande",
+   "k": [
+    "precommande",
+    "precommander",
+    "pre commande",
+    "reserver",
+    "bonus de precommande",
+    "ou precommander",
+    "ou acheter gta",
+    "acheter gta 6",
+    "acheter gta vi"
+   ],
+   "text": "Les précommandes sont ouvertes depuis le 25 juin 2026 sur le PlayStation Store, le Xbox Store et la boutique Rockstar. Le bonus de précommande (avant le 20 novembre 2026) est le Pack Vintage Vice City : des tenues années 80, un motif d’arme et le Stanier ’55 avec le garage de Shore Court.",
+   "status": "Officiel Rockstar",
+   "links": [
+    {
+     "label": "Le Pack Vintage Vice City sur le site",
+     "url": "/personnalisations.html"
+    },
+    {
+     "label": "Le garage de Shore Court",
+     "url": "/planques.html#garage-shore-court"
+    }
+   ],
+   "source": "https://www.rockstargames.com/VI"
+  },
+  {
+   "id": "vintage",
+   "k": [
+    "vintage vice city",
+    "pack vintage",
+    "vintage pack",
+    "stanier 55",
+    "shore court"
+   ],
+   "text": "Le Pack Vintage Vice City est le bonus de précommande : une tenue et une coiffure rétro pour Jason, une robe à sequins et des cheveux bouclés pour Lucia, un motif tropical pour les armes, et le Vapid Stanier ’55 garé dans un garage à Shore Court, près d’Ocean Beach.",
+   "status": "Officiel Rockstar",
+   "links": [
+    {
+     "label": "Tenues et coiffures du pack",
+     "url": "/style.html#vintage-tenues-coiffures"
+    },
+    {
+     "label": "Le motif d’arme",
+     "url": "/personnalisations.html#vintage-weapon-pattern"
+    }
+   ],
+   "source": "https://www.rockstargames.com/VI"
+  },
+  {
+   "id": "gtaplus",
+   "k": [
+    "gta+",
+    "gta plus",
+    "abonnement",
+    "gta+ inclus"
+   ],
+   "text": "D’après les boutiques, une précommande numérique inclut 30 jours d’abonnement GTA+. Rockstar n’a pas détaillé ce que GTA+ apportera dans GTA VI : vérifie les conditions sur la page d’achat.",
+   "status": "Boutiques, à vérifier"
+  },
+  {
+   "id": "physique",
+   "k": [
+    "version physique",
+    "boite",
+    "disque",
+    "edition physique",
+    "en magasin",
+    "cartouche"
+   ],
+   "text": "Une version en boîte est vendue, mais d’après les fiches des boutiques elle contient un code de téléchargement plutôt qu’un disque. Vérifie la mention sur la boîte avant d’acheter si c’est important pour toi.",
+   "status": "Fiches boutiques, à vérifier"
+  },
+  {
+   "id": "annonce",
+   "k": [
+    "annonce",
+    "annonce officielle",
+    "quand a ete annonce",
+    "depuis quand",
+    "en developpement depuis",
+    "developpement"
+   ],
+   "text": "Rockstar a confirmé le développement de GTA VI le 4 février 2022, dans un message sur son site. Le premier trailer est arrivé le 4 décembre 2023.",
+   "status": "Officiel Rockstar",
+   "source": "https://www.rockstargames.com/newswire"
+  },
+  {
+   "id": "trailer1",
+   "k": [
+    "trailer 1",
+    "premier trailer",
+    "trailer 1",
+    "premiere bande annonce",
+    "bande annonce 1",
+    "trailer de 2023"
+   ],
+   "text": "Le Trailer 1 est sorti le 4 décembre 2023, un jour plus tôt que prévu après une fuite. Il présente Lucia, Leonida et Vice City, sur « Love Is a Long Road » de Tom Petty. Il a dépassé 90 millions de vues en 24 heures.",
+   "status": "Officiel Rockstar",
+   "links": [
+    {
+     "label": "Les lieux montrés",
+     "url": "/lieux.html"
+    }
+   ],
+   "source": "https://www.rockstargames.com/VI"
+  },
+  {
+   "id": "trailer2",
+   "k": [
+    "trailer 2",
+    "deuxieme trailer",
+    "second trailer",
+    "bande annonce 2",
+    "trailer de 2025"
+   ],
+   "text": "Le Trailer 2 est sorti le 6 mai 2025, en même temps que les premières captures et les présentations de Jason, Lucia et des autres personnages. La musique est « Hot Together » des Pointer Sisters.",
+   "status": "Officiel Rockstar",
+   "links": [
+    {
+     "label": "Les personnages",
+     "url": "/personnages.html"
+    }
+   ],
+   "source": "https://www.rockstargames.com/VI"
+  },
+  {
+   "id": "extended",
+   "k": [
+    "extended look",
+    "presentation etendue",
+    "gameplay",
+    "video de gameplay",
+    "27 aout",
+    "netflix",
+    "26 minutes"
+   ],
+   "text": "L’Extended Look est une présentation d’environ 26 minutes diffusée le 27 août 2026, d’abord sur Netflix puis sur YouTube. Capturée sur PS5, elle montre le vol de voitures, des braquages de commerces, la police, les réseaux sociaux du jeu et la vie quotidienne de Jason et Lucia.",
+   "status": "Officiel Rockstar",
+   "links": [
+    {
+     "label": "Ce que montre l’Extended Look (armurerie)",
+     "url": "/armes.html"
+    }
+   ],
+   "source": "https://www.rockstargames.com/newswire"
+  },
+  {
+   "id": "trailer3",
+   "k": [
+    "trailer 3",
+    "troisieme trailer",
+    "prochain trailer",
+    "nouvelle bande annonce",
+    "prochaine video"
+   ],
+   "text": "Aucun Trailer 3 n’est annoncé. La dernière vidéo officielle est l’Extended Look du 27 août 2026.",
+   "status": "Non annoncé"
+  },
+  {
+   "id": "musique-trailer",
+   "k": [
+    "musique du trailer",
+    "chanson du trailer",
+    "quelle musique",
+    "tom petty",
+    "pointer sisters",
+    "hot together",
+    "love is a long road"
+   ],
+   "text": "Trailer 1 : « Love Is a Long Road » de Tom Petty. Trailer 2 : « Hot Together » des Pointer Sisters.",
+   "status": "Officiel Rockstar"
+  },
+  {
+   "id": "developpeur",
+   "k": [
+    "qui developpe",
+    "developpeur",
+    "studio",
+    "rockstar",
+    "rockstar north",
+    "take two",
+    "editeur",
+    "qui fait le jeu"
+   ],
+   "text": "GTA VI est développé par Rockstar Games (avec Rockstar North en tête et les autres studios du groupe) et édité par Take-Two Interactive, sur le moteur maison RAGE.",
+   "status": "Officiel",
+   "source": "https://www.rockstargames.com/VI"
+  },
+  {
+   "id": "budget-dev",
+   "k": [
+    "budget du jeu",
+    "cout de developpement",
+    "milliards",
+    "jeu le plus cher",
+    "combien a coute"
+   ],
+   "text": "Rockstar et Take-Two n’ont jamais publié le budget de GTA VI. Les chiffres qui circulent (un ou deux milliards de dollars) sont des estimations de presse, pas une information officielle.",
+   "status": "Rumeur, non confirmé"
+  },
+  {
+   "id": "gta7",
+   "k": [
+    "gta 7",
+    "gta vii",
+    "prochain gta"
+   ],
+   "text": "Rien n’existe sur un GTA VII : GTA VI n’est pas encore sorti.",
+   "status": "Sans objet"
+  },
+  {
+   "id": "protagonistes",
+   "k": [
+    "personnage principal",
+    "personnages principaux",
+    "heros",
+    "protagoniste",
+    "protagonistes",
+    "qui on joue",
+    "on joue qui",
+    "combien de personnages jouables",
+    "deux personnages",
+    "jason et lucia",
+    "lucia et jason",
+    "qui sont jason",
+    "jason lucia",
+    "duo"
+   ],
+   "text": "On joue deux personnages : Lucia Caminos et Jason Duval, un duo qui doit se faire confiance dans un État de Leonida où tout peut mal tourner. On passe de l’un à l’autre au fil de l’histoire, comme dans GTA V.",
+   "status": "Officiel Rockstar",
+   "links": [
+    {
+     "label": "Lucia",
+     "url": "/personnages/lucia.html"
+    },
+    {
+     "label": "Jason",
+     "url": "/personnages/jason.html"
+    }
+   ],
+   "source": "https://www.rockstargames.com/VI"
+  },
+  {
+   "id": "lucia",
+   "k": [
+    "lucia",
+    "lucia caminos",
+    "qui est lucia",
+    "heroine"
+   ],
+   "text": "Lucia Caminos est l’un des deux personnages jouables. Son père lui a appris à se battre ; se battre pour sa famille l’a envoyée au pénitencier de Leonida. Fraîchement libérée, elle ne veut plus faire que des coups intelligents. C’est la première héroïne principale de la série.",
+   "status": "Officiel Rockstar",
+   "links": [
+    {
+     "label": "Sa fiche",
+     "url": "/personnages/lucia.html"
+    }
+   ],
+   "source": "https://www.rockstargames.com/VI"
+  },
+  {
+   "id": "jason",
+   "k": [
+    "jason",
+    "jason duval",
+    "qui est jason"
+   ],
+   "text": "Jason Duval est l’autre personnage jouable : ancien militaire élevé parmi les escrocs, il travaille pour les trafiquants des Keys. Il voudrait une vie facile ; sa rencontre avec Lucia va tout compliquer.",
+   "status": "Officiel Rockstar",
+   "links": [
+    {
+     "label": "Sa fiche",
+     "url": "/personnages/jason.html"
+    }
+   ],
+   "source": "https://www.rockstargames.com/VI"
+  },
+  {
+   "id": "personnages",
+   "k": [
+    "personnages",
+    "qui sont les personnages",
+    "liste des personnages",
+    "tous les personnages",
+    "casting"
+   ],
+   "text": "Huit personnages sont présentés par Rockstar : Jason Duval, Lucia Caminos, Cal Hampton, Boobie Ike, Dre’Quan Priest, Real Dimez (Bae-Luxe et Roxy), Raul Bautista et Brian Heder. Chacun a sa fiche sur le site.",
+   "status": "Officiel Rockstar",
+   "links": [
+    {
+     "label": "Tous les personnages",
+     "url": "/personnages.html"
+    }
+   ],
+   "source": "https://www.rockstargames.com/VI"
+  },
+  {
+   "id": "histoire",
+   "k": [
+    "histoire",
+    "scenario",
+    "synopsis",
+    "de quoi ca parle",
+    "l intrigue",
+    "bonnie and clyde",
+    "couple"
+   ],
+   "text": "Rockstar décrit Jason et Lucia comme deux personnes qui n’ont que l’une l’autre dans un État où tout peut mal tourner : un coup qui dérape, la police, les trafiquants des Keys et l’empire de Boobie Ike à Vice City. Le détail du scénario n’est pas publié.",
+   "status": "Officiel Rockstar, résumé",
+   "links": [
+    {
+     "label": "Les personnages",
+     "url": "/personnages.html"
+    }
+   ],
+   "source": "https://www.rockstargames.com/VI"
+  },
+  {
+   "id": "vf",
+   "k": [
+    "en francais",
+    "doublage",
+    "sous titres",
+    "voix francaises",
+    "vf",
+    "langue"
+   ],
+   "text": "Comme tous les GTA, les voix sont en anglais avec des sous-titres, le français compris. Rockstar n’a pas annoncé de doublage.",
+   "status": "Habitude de la série, non détaillé",
+   "min": 1
+  },
+  {
+   "id": "leonida",
+   "k": [
+    "leonida",
+    "etat de leonida",
+    "c est quoi leonida",
+    "ou se passe",
+    "se passe ou",
+    "floride",
+    "florida"
+   ],
+   "text": "Leonida est l’État fictif où se passe le jeu : une Floride réinventée, avec Vice City (inspirée de Miami), les Keys, les marais de Grassrivers, Port Gellhorn, Ambrosia et le parc national de Mount Kalaga.",
+   "status": "Officiel Rockstar",
+   "links": [
+    {
+     "label": "Les six régions",
+     "url": "/lieux.html"
+    },
+    {
+     "label": "La carte",
+     "url": "/carte.html"
+    }
+   ],
+   "source": "https://www.rockstargames.com/VI"
+  },
+  {
+   "id": "vice-city",
+   "k": [
+    "vice city",
+    "miami",
+    "la ville",
+    "ocean beach",
+    "little cuba",
+    "downtown"
+   ],
+   "text": "Vice City est la grande ville de Leonida, inspirée de Miami : plages, quartiers commerçants, port de croisière et gratte-ciel de downtown. Rockstar cite Ocean Beach, Little Cuba, Tisha-Wocka et VC Port.",
+   "status": "Officiel Rockstar",
+   "links": [
+    {
+     "label": "Fiche Vice City",
+     "url": "/lieux/vice-city.html"
+    }
+   ],
+   "source": "https://www.rockstargames.com/VI"
+  },
+  {
+   "id": "regions",
+   "k": [
+    "regions",
+    "combien de regions",
+    "les regions",
+    "zones de la carte",
+    "quartiers",
+    "comtes"
+   ],
+   "text": "Six régions sont annoncées : Vice City, Leonida Keys, Grassrivers, Port Gellhorn, Ambrosia et Mount Kalaga National Park. Les noms de comtés vus dans les médias officiels (Vice-Dale, Kelly, Leonard, Mariana, Ambrosia) viennent de relevés communautaires.",
+   "status": "Officiel Rockstar (régions)",
+   "links": [
+    {
+     "label": "Les six régions",
+     "url": "/lieux.html"
+    }
+   ],
+   "source": "https://www.rockstargames.com/VI"
+  },
+  {
+   "id": "keys",
+   "k": [
+    "leonida keys",
+    "les keys",
+    "archipel",
+    "iles"
+   ],
+   "text": "Les Leonida Keys sont un archipel tropical relié par de longues routes au-dessus de l’eau. Jason y habite dans une propriété de Brian Heder, dont le chantier naval fait encore passer de la marchandise.",
+   "status": "Officiel Rockstar",
+   "links": [
+    {
+     "label": "Fiche Leonida Keys",
+     "url": "/lieux/leonida-keys.html"
+    }
+   ],
+   "source": "https://www.rockstargames.com/VI"
+  },
+  {
+   "id": "grassrivers",
+   "k": [
+    "grassrivers",
+    "marais",
+    "mangrove",
+    "everglades",
+    "hydroglisseur"
+   ],
+   "text": "Grassrivers est la grande étendue sauvage de Leonida : mangroves, canaux lents et plaines inondées qu’on parcourt en hydroglisseur, avec des alligators.",
+   "status": "Officiel Rockstar",
+   "links": [
+    {
+     "label": "Fiche Grassrivers",
+     "url": "/lieux/grassrivers.html"
+    }
+   ],
+   "source": "https://www.rockstargames.com/VI"
+  },
+  {
+   "id": "gellhorn",
+   "k": [
+    "port gellhorn",
+    "gellhorn",
+    "station balneaire",
+    "motel"
+   ],
+   "text": "Port Gellhorn est une ancienne destination de vacances qui vit de ce qu’il en reste : motels bon marché, centres commerciaux vides et attractions fermées.",
+   "status": "Officiel Rockstar",
+   "links": [
+    {
+     "label": "Fiche Port Gellhorn",
+     "url": "/lieux/port-gellhorn.html"
+    }
+   ],
+   "source": "https://www.rockstargames.com/VI"
+  },
+  {
+   "id": "ambrosia",
+   "k": [
+    "ambrosia",
+    "raffinerie",
+    "industriel",
+    "motards"
+   ],
+   "text": "Ambrosia est le versant agricole et industriel de Leonida, organisé autour de la raffinerie sucrière Allied Crystal, avec un gang de motards local.",
+   "status": "Officiel Rockstar",
+   "links": [
+    {
+     "label": "Fiche Ambrosia",
+     "url": "/lieux/ambrosia.html"
+    }
+   ],
+   "source": "https://www.rockstargames.com/VI"
+  },
+  {
+   "id": "kalaga",
+   "k": [
+    "mount kalaga",
+    "kalaga",
+    "parc national",
+    "montagne",
+    "chasse",
+    "peche",
+    "chasser",
+    "pecher"
+   ],
+   "text": "Mount Kalaga National Park est le parc du nord de Leonida : forêts, rivières et pistes boueuses. Rockstar le présente comme un terrain de chasse, de pêche et de tout-terrain.",
+   "status": "Officiel Rockstar",
+   "links": [
+    {
+     "label": "Fiche Mount Kalaga",
+     "url": "/lieux/mount-kalaga.html"
+    }
+   ],
+   "source": "https://www.rockstargames.com/VI",
+   "min": 1
+  },
+  {
+   "id": "taille-carte",
+   "k": [
+    "taille de la carte",
+    "grande carte",
+    "plus grande que gta 5",
+    "superficie",
+    "carte du jeu",
+    "map"
+   ],
+   "text": "Rockstar n’a pas donné la taille de la carte. Elle couvre six régions, de la ville aux marais. Sur le site, la carte interactive recense environ 2 500 lieux repérés dans les médias officiels.",
+   "status": "Non communiqué",
+   "links": [
+    {
+     "label": "Ouvrir la carte",
+     "url": "/carte.html"
+    }
+   ]
+  },
+  {
+   "id": "animaux",
+   "k": [
+    "animaux",
+    "alligator",
+    "chien",
+    "crocodile",
+    "faune",
+    "animal"
+   ],
+   "text": "Oui : les alligators de Grassrivers sont l’attraction la plus célèbre de la région, et l’Extended Look montre Jason caresser un chien. Le détail de la faune n’est pas publié.",
+   "status": "Vu dans les présentations officielles",
+   "links": [
+    {
+     "label": "Grassrivers",
+     "url": "/lieux/grassrivers.html"
+    }
+   ]
+  },
+  {
+   "id": "online",
+   "k": [
+    "gta online",
+    "en ligne",
+    "multijoueur",
+    "multi",
+    "online",
+    "jouer a plusieurs",
+    "mode en ligne"
+   ],
+   "text": "Rockstar n’a encore rien annoncé sur le mode en ligne de GTA VI. Le calculateur du site sert à préparer tes choix dans l’histoire ou en ligne, avec tes propres chiffres.",
+   "status": "Non annoncé",
+   "min": 1
+  },
+  {
+   "id": "police",
+   "k": [
+    "police",
+    "flics",
+    "etoiles",
+    "indice de recherche",
+    "poursuite",
+    "echapper a la police",
+    "niveau de recherche",
+    "wanted",
+    "cops",
+    "la police",
+    "les flics",
+    "recherche par la police"
+   ],
+   "text": "D’après l’Extended Look, la police identifie le suspect avec plus d’indices qu’avant : le véhicule, les vêtements et l’apparence. Changer de voiture ou de tenue aide à se faire oublier. Le système d’étoiles précis n’est pas détaillé.",
+   "status": "Vu dans l’Extended Look",
+   "min": 1
+  },
+  {
+   "id": "vol-voiture",
+   "k": [
+    "voler une voiture",
+    "vol de voiture",
+    "vitre",
+    "slim jim",
+    "cloner",
+    "cle numerique",
+    "ouvrir une voiture"
+   ],
+   "text": "L’Extended Look montre plusieurs façons de voler un véhicule : casser une vitre, utiliser un slim jim sur certains modèles ou cloner une clé numérique.",
+   "status": "Vu dans l’Extended Look",
+   "links": [
+    {
+     "label": "Les véhicules",
+     "url": "/vehicules.html"
+    }
+   ],
+   "min": 1
+  },
+  {
+   "id": "braquage",
+   "k": [
+    "braquage",
+    "braquer",
+    "casse",
+    "hold up",
+    "masque",
+    "magasin",
+    "restaurant"
+   ],
+   "text": "Jason et Lucia peuvent braquer des restaurants, des magasins et d’autres établissements, avec des masques. Les gros casses de l’histoire ne sont pas détaillés.",
+   "status": "Vu dans l’Extended Look"
+  },
+  {
+   "id": "poids",
+   "k": [
+    "prendre du poids",
+    "grossir",
+    "maigrir",
+    "sport",
+    "musculation",
+    "condition physique",
+    "manger",
+    "forme physique"
+   ],
+   "text": "D’après les comptes rendus de l’Extended Look, le personnage prend ou perd du poids selon ce qu’il mange et son activité physique, et sa condition physique joue sur ses capacités, un peu comme dans San Andreas.",
+   "status": "Comptes rendus de l’Extended Look",
+   "links": [
+    {
+     "label": "Les consommables",
+     "url": "/nourriture.html"
+    }
+   ]
+  },
+  {
+   "id": "consommables",
+   "k": [
+    "consommable",
+    "consommables",
+    "nourriture",
+    "boire",
+    "se soigner",
+    "snack",
+    "vie",
+    "sante",
+    "soins",
+    "kit de soin"
+   ],
+   "text": "Manger, boire ou se soigner rend de la vie dans les GTA ; le kit de soin et le gilet pare-balles sont décrits dans l’armurerie de GTA VI. Aucun article ni prix n’est publié pour l’instant.",
+   "status": "Repère de la série + Extended Look",
+   "links": [
+    {
+     "label": "Page Consommables",
+     "url": "/nourriture.html"
+    },
+    {
+     "label": "Gadgets de l’armurerie",
+     "url": "/armes.html#equipements"
+    }
+   ]
+  },
+  {
+   "id": "reseaux",
+   "k": [
+    "reseaux sociaux",
+    "snapmatic",
+    "telephone",
+    "smartphone",
+    "photos",
+    "fil d actualite"
+   ],
+   "text": "Le jeu a un fil de réseau social (Snapmatic) où l’on fait défiler les publications des personnages et des contacts, vu dans l’Extended Look. Le détail du téléphone n’est pas publié.",
+   "status": "Vu dans l’Extended Look"
+  },
+  {
+   "id": "radio",
+   "k": [
+    "radio",
+    "stations de radio",
+    "musique du jeu",
+    "bande son",
+    "v rock",
+    "album"
+   ],
+   "text": "D’après les relevés de l’Extended Look, plusieurs stations sont visibles (V-Rock, Emotion 98.3, Stockyard FM, Symphony FM, Kaleidoscope FM, WorldWide FM, CircoLoco Records Radio). Un album « GTA VI : The Album » est annoncé. La liste complète n’est pas officielle.",
+   "status": "Relevé communautaire, à vérifier",
+   "min": 1
+  },
+  {
+   "id": "argent",
+   "k": [
+    "argent du jeu",
+    "combien d argent",
+    "gagner de l argent",
+    "economie",
+    "salaire",
+    "revenu",
+    "prix en jeu",
+    "prix des voitures",
+    "combien coute une voiture"
+   ],
+   "text": "Rockstar n’a publié aucun prix en jeu : ni voitures, ni armes, ni maisons, ni revenus des missions. C’est pour ça que le calculateur du site te demande tes propres chiffres et te dit toujours d’où vient chaque valeur.",
+   "status": "Non publié",
+   "links": [
+    {
+     "label": "Ouvrir le calculateur",
+     "url": "/calculateurs.html"
+    }
+   ],
+   "priority": true
+  },
+  {
+   "id": "entreprises-achat",
+   "k": [
+    "acheter une entreprise",
+    "entreprises a acheter",
+    "business a acheter",
+    "proprietes",
+    "acheter une maison",
+    "acheter un appartement",
+    "immobilier"
+   ],
+   "text": "Rien n’est confirmé sur l’achat d’entreprises, de maisons ou d’appartements dans GTA VI. Les commerces et demeures présentés par Rockstar sont sur le site avec leur statut, et le calculateur permet de tester ton hypothèse d’achat avec un prix que tu imagines.",
+   "status": "Non confirmé",
+   "links": [
+    {
+     "label": "Les entreprises",
+     "url": "/entreprises.html"
+    },
+    {
+     "label": "Les demeures",
+     "url": "/demeures.html"
+    }
+   ]
+  },
+  {
+   "id": "armes-nombre",
+   "k": [
+    "combien d armes",
+    "nombre d armes",
+    "liste des armes",
+    "quelles armes",
+    "armes du jeu",
+    "arsenal"
+   ],
+   "text": "Le site recense 27 armes identifiées dans les médias officiels, dont cinq nommées par Rockstar (le Girardi ES9 de Jason, le Klose K17 de Lucia, les Hawk & Little Morgan…). L’armurerie explique aussi le constructeur d’équipement, les gadgets et les munitions.",
+   "status": "Identification à partir des médias officiels",
+   "links": [
+    {
+     "label": "Ouvrir l’armurerie",
+     "url": "/armes.html"
+    }
+   ]
+  },
+  {
+   "id": "munitions",
+   "k": [
+    "munition",
+    "munitions",
+    "recharger",
+    "acheter des balles",
+    "ammu nation",
+    "armurerie"
+   ],
+   "text": "Les types de munitions (pistolet, cartouches, fusil, etc.) et l’équipement (sac, gilet, kit de soin) sont décrits dans l’armurerie du site. Leur prix dans GTA VI n’est pas publié.",
+   "status": "Repère du site",
+   "links": [
+    {
+     "label": "Munitions et équipement",
+     "url": "/armes.html#munitions"
+    }
+   ]
+  },
+  {
+   "id": "vehicules-nombre",
+   "k": [
+    "combien de vehicules",
+    "combien de voitures",
+    "nombre de vehicules",
+    "liste des vehicules",
+    "toutes les voitures",
+    "marques"
+   ],
+   "text": "Le site recense 302 véhicules vus dans les médias officiels (voitures, motos, bateaux, avions, hélicoptères), avec la marque, la catégorie et l’inspiration réelle de chacun. Rockstar n’a publié aucune liste officielle.",
+   "status": "Identification à partir des médias officiels",
+   "links": [
+    {
+     "label": "Les véhicules",
+     "url": "/vehicules.html"
+    }
+   ]
+  },
+  {
+   "id": "personnalisation",
+   "k": [
+    "personnaliser",
+    "personnalisation",
+    "tuning",
+    "modifier sa voiture",
+    "peinture",
+    "jantes",
+    "customiser",
+    "gravure",
+    "teinte"
+   ],
+   "text": "Rideout Customs (voitures classiques) et One-Eyed Willie’s (tout-terrain) sont les ateliers présentés par Rockstar. Un kit rétro pour le Ganado et un motif d’arme sont décrits avec les éditions. Les prix ne sont pas publiés.",
+   "status": "Officiel Rockstar",
+   "links": [
+    {
+     "label": "Les personnalisations",
+     "url": "/personnalisations.html"
+    }
+   ]
+  },
+  {
+   "id": "vetements",
+   "k": [
+    "vetements",
+    "tenues",
+    "s habiller",
+    "fringues",
+    "accessoires",
+    "tatouage",
+    "tatouages",
+    "coiffure",
+    "coupe de cheveux",
+    "barbe"
+   ],
+   "text": "La page « Vêtements et style » réunit quatre volets : tenues, accessoires, tatouages (Electric Fang Tattoo) et coiffures (Sara’s Unisex Salon), avec les collections annoncées. Aucune pièce n’a de prix publié.",
+   "status": "Officiel Rockstar (adresses et collections)",
+   "links": [
+    {
+     "label": "Vêtements et style",
+     "url": "/style.html"
+    }
+   ]
+  },
+  {
+   "id": "bateaux",
+   "k": [
+    "bateau",
+    "bateaux",
+    "jet ski",
+    "kayak",
+    "yacht",
+    "naviguer"
+   ],
+   "text": "Oui : le site recense des embarcations vues dans les médias, et Rockstar décrit l’obtention du Crest Kayak et du Shitzu Squalo avec l’Édition Ultime. Les prix en jeu ne sont pas publiés.",
+   "status": "Officiel (obtention) · identification (autres)",
+   "links": [
+    {
+     "label": "Les bateaux",
+     "url": "/bateaux.html"
+    }
+   ]
+  },
+  {
+   "id": "avions",
+   "k": [
+    "avion",
+    "avions",
+    "helicoptere",
+    "helico",
+    "piloter",
+    "voler",
+    "aeroport"
+   ],
+   "text": "Le site recense des avions et des hélicoptères identifiés dans les médias officiels, dont l’aéroport de Vice City. Rockstar n’a pas détaillé le pilotage.",
+   "status": "Identification à partir des médias officiels",
+   "links": [
+    {
+     "label": "Les véhicules (avions et hélicoptères)",
+     "url": "/vehicules.html"
+    }
+   ]
+  },
+  {
+   "id": "pegi",
+   "k": [
+    "pegi",
+    "age",
+    "interdit aux moins",
+    "pour les enfants",
+    "classification"
+   ],
+   "text": "Comme tous les GTA, GTA VI est destiné aux adultes : la classification PEGI 18 est attendue en Europe. La classification officielle sera visible sur la boutique.",
+   "status": "Attendu, à vérifier"
+  },
+  {
+   "id": "mods",
+   "k": [
+    "mods",
+    "moddable",
+    "modding",
+    "triche",
+    "cheat",
+    "codes de triche"
+   ],
+   "text": "Rockstar n’a rien annoncé sur les mods ni sur les codes de triche pour GTA VI.",
+   "status": "Non annoncé",
+   "min": 1
+  },
+  {
+   "id": "vr",
+   "k": [
+    "vr",
+    "realite virtuelle",
+    "psvr"
+   ],
+   "text": "Aucune version en réalité virtuelle n’est annoncée.",
+   "status": "Non annoncé",
+   "min": 1
+  },
+  {
+   "id": "vice-city-2002",
+   "k": [
+    "vice city 2002",
+    "ancien vice city",
+    "tommy vercetti",
+    "gta vice city",
+    "annees 80",
+    "meme ville"
+   ],
+   "text": "C’est la même ville, mais à notre époque : GTA Vice City (2002) se passait en 1986. Le Pack Vintage Vice City fait un clin d’œil aux années 80 avec un motif inspiré de la chemise de Tommy Vercetti.",
+   "status": "Officiel (pack) · repère de la série",
+   "links": [
+    {
+     "label": "Fiche Vice City",
+     "url": "/lieux/vice-city.html"
+    }
+   ]
+  },
+  {
+   "id": "gta5-diff",
+   "k": [
+    "difference avec gta 5",
+    "par rapport a gta 5",
+    "mieux que gta 5",
+    "gta 5",
+    "gta v",
+    "nouveautes"
+   ],
+   "text": "Ce qu’on a vu de nouveau : deux personnages qui doivent se faire confiance, un réseau social dans le jeu, une police qui reconnaît le véhicule et la tenue, plusieurs façons de voler une voiture, le poids qui change avec l’alimentation, et une roue d’équipement à deux volets. Rockstar n’a pas publié de liste complète des nouveautés.",
+   "status": "Vu dans les présentations officielles"
+  },
+  {
+   "id": "site-qui",
+   "k": [
+    "qui a fait le site",
+    "qui a cree le site",
+    "qui es tu",
+    "tu es qui",
+    "c est quoi leonidakit",
+    "leonidakit",
+    "site officiel",
+    "tu es rockstar",
+    "a propos du site",
+    "qui est derriere"
+   ],
+   "text": "Leonidakit est un site indépendant fait par un joueur, gratuit et sans compte. Il n’est ni affilié ni approuvé par Rockstar ou Take-Two. Moi, c’est Léo : je réponds avec les données du site et des règles simples, sans envoyer tes questions nulle part.",
+   "status": "Le site",
+   "links": [
+    {
+     "label": "À propos",
+     "url": "/a-propos.html"
+    }
+   ]
+  },
+  {
+   "id": "site-donnees",
+   "k": [
+    "d ou viennent les donnees",
+    "sources",
+    "fiable",
+    "vrai ou faux",
+    "fuites",
+    "leak",
+    "rumeur"
+   ],
+   "text": "Tout vient des présentations officielles de Rockstar (trailers, captures, Extended Look, pages des éditions) et de relevés communautaires signalés comme tels. Rien ne vient des fuites. Chaque fiche indique sa source et son niveau de confirmation.",
+   "status": "Le site",
+   "links": [
+    {
+     "label": "Comment lire les statuts",
+     "url": "/a-propos.html"
+    },
+    {
+     "label": "Médias et crédits",
+     "url": "/medias.html"
+    }
+   ]
+  },
+  {
+   "id": "site-erreur",
+   "k": [
+    "signaler une erreur",
+    "erreur sur une fiche",
+    "faute",
+    "corriger",
+    "contact",
+    "contacter"
+   ],
+   "text": "Passe par la page Contact : elle t’aide à préparer un signalement clair (page, problème, source). Le canal de contact n’est pas encore confirmé, la page le dit honnêtement.",
+   "status": "Le site",
+   "links": [
+    {
+     "label": "Contact",
+     "url": "/contact.html"
+    }
+   ]
+  },
+  {
+   "id": "site-calc",
+   "k": [
+    "comment marche le calculateur",
+    "a quoi sert le calculateur",
+    "calculateur",
+    "calcul",
+    "utiliser le calculateur",
+    "tuto"
+   ],
+   "text": "Le calculateur répond à des questions concrètes avec tes chiffres : combien de temps pour ton objectif, est-ce que tu peux acheter ça, quoi acheter d’abord, ça vaut le coup ? Dis-moi tes chiffres et je te prépare le bon outil, ou lis le Tuto.",
+   "status": "Le site",
+   "links": [
+    {
+     "label": "Ouvrir le calculateur",
+     "url": "/calculateurs.html"
+    },
+    {
+     "label": "Lire le Tuto",
+     "url": "/tuto.html"
+    }
+   ]
+  },
+  {
+   "id": "site-progression",
+   "k": [
+    "progression",
+    "suivre ma progression",
+    "cocher",
+    "possede",
+    "ma collection",
+    "sauvegarde"
+   ],
+   "text": "La page Progression garde ce que tu as coché (véhicules, armes, lieux, contenus) sur ton appareil, sans compte. Tu peux exporter et importer ta sauvegarde en JSON.",
+   "status": "Le site",
+   "links": [
+    {
+     "label": "Ma progression",
+     "url": "/progression.html"
+    }
+   ]
+  },
+  {
+   "id": "site-gratuit",
+   "k": [
+    "gratuit",
+    "payant",
+    "abonnement au site",
+    "compte",
+    "inscription",
+    "pub"
+   ],
+   "text": "Le site est gratuit et sans compte. Tes calculs et ta progression restent dans ton navigateur.",
+   "status": "Le site"
+  },
+  {
+   "id": "leo-quoi",
+   "k": [
+    "que sais tu",
+    "tu sais quoi",
+    "tu peux faire quoi",
+    "que peux tu faire",
+    "aide moi",
+    "help",
+    "tu es une ia",
+    "intelligence artificielle",
+    "chatgpt",
+    "comment tu fonctionnes",
+    "tu fonctionnes comment"
+   ],
+   "text": "Je réponds sur GTA VI (sortie, consoles, prix, éditions, trailers, personnages, régions, ce que montre l’Extended Look), je trouve les fiches du site (véhicules, armes, lieux, personnages, entreprises), j’explique les mots du calculateur et je prépare un calcul avec tes chiffres. Je ne suis pas une IA générale : si je ne sais pas, je le dis.",
+   "status": "Léo",
+   "links": [
+    {
+     "label": "Le calculateur",
+     "url": "/calculateurs.html"
+    },
+    {
+     "label": "Le Tuto",
+     "url": "/tuto.html"
+    }
+   ]
+  },
+  {
+   "id": "blague",
+   "k": [
+    "blague",
+    "raconte une blague",
+    "drole",
+    "rigoler",
+    "humour"
+   ],
+   "text": "Pourquoi Jason ne prend jamais le bus à Vice City ? Parce qu’avec Lucia, ils ont déjà assez de problèmes de conduite. Bon, je suis meilleur pour les fiches que pour les blagues.",
+   "status": "Léo",
+   "min": 1
+  },
+  {
+   "id": "merci",
+   "k": [
+    "merci beaucoup",
+    "merci leo",
+    "super merci",
+    "top merci",
+    "nickel"
+   ],
+   "text": "Avec plaisir. Si tu veux, dis-moi tes chiffres et je te prépare un calcul.",
+   "status": "Léo"
+  },
+  {
+   "id": "lori",
+   "k": [
+    "lori",
+    "brian heder",
+    "brian",
+    "chantier naval"
+   ],
+   "text": "Brian Heder est un trafiquant à l’ancienne des Keys ; il fait encore passer sa marchandise par son chantier naval avec Lori, sa troisième épouse, et héberge Jason contre quelques services.",
+   "status": "Officiel Rockstar",
+   "links": [
+    {
+     "label": "Fiche Brian Heder",
+     "url": "/personnages/brian.html"
+    }
+   ],
+   "source": "https://www.rockstargames.com/VI"
+  },
+  {
+   "id": "boobie",
+   "k": [
+    "boobie",
+    "boobie ike",
+    "jack of hearts",
+    "only raw records",
+    "dre quan",
+    "drequan",
+    "real dimez",
+    "raul",
+    "cal hampton",
+    "cal"
+   ],
+   "text": "Boobie Ike est une légende de Vice City qui a transformé ses années de rue en empire légal (immobilier, le club Jack of Hearts, le label Only Raw Records avec Dre’Quan Priest, qui a signé Real Dimez). Raul Bautista est un braqueur chevronné, Cal Hampton l’ami paranoïaque de Jason.",
+   "status": "Officiel Rockstar",
+   "links": [
+    {
+     "label": "Tous les personnages",
+     "url": "/personnages.html"
+    }
+   ],
+   "source": "https://www.rockstargames.com/VI"
+  },
+  {
+   "id": "collectibles",
+   "k": [
+    "collectibles",
+    "objets a collectionner",
+    "objets caches",
+    "collection",
+    "trouver tous les"
+   ],
+   "text": "Aucun objet à collectionner n’est publié officiellement pour GTA VI. La page Collectibles est prête (carnet, favoris, sauvegarde) et se remplira avec des sources vérifiées.",
+   "status": "Non publié",
+   "links": [
+    {
+     "label": "Collectibles",
+     "url": "/collectibles.html"
+    }
+   ]
+  },
+  {
+   "id": "date-fiable",
+   "k": [
+    "date definitive",
+    "sur que ca sort",
+    "encore un report",
+    "va etre repousse",
+    "fiable la date"
+   ],
+   "text": "Rockstar et Take-Two ont confirmé la date du 19 novembre 2026 à plusieurs reprises en 2026, et les précommandes sont ouvertes. Aucun nouveau report n’est annoncé, mais personne ne peut le garantir avant le jour J.",
+   "status": "Officiel Rockstar",
+   "source": "https://www.rockstargames.com/VI"
+  },
+  {
+   "id": "ps6",
+   "k": [
+    "ps6",
+    "playstation 6",
+    "nouvelle console",
+    "prochaine generation"
+   ],
+   "text": "Aucune version pour une future console n’est annoncée. À la sortie, c’est PS5 et Xbox Series X|S.",
+   "status": "Non annoncé",
+   "min": 1
+  },
+  {
+   "id": "mission-solo",
+   "k": [
+    "jouer seul",
+    "solo",
+    "mode histoire",
+    "campagne",
+    "duree de vie",
+    "combien d heures",
+    "longueur"
+   ],
+   "text": "GTA VI a un mode histoire avec Jason et Lucia. Rockstar n’a pas donné de durée de vie. Le calculateur du site a un outil « Mon temps de jeu » pour organiser tes sessions.",
+   "status": "Officiel (histoire) · durée non publiée",
+   "links": [
+    {
+     "label": "Mon temps de jeu",
+     "url": "/calculateurs.html?tool=session#atelier"
+    }
+   ]
+  }
+ ]
+}

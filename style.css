@@ -2242,3 +2242,6 @@ main{position:relative;}
 .acq-sub{margin:26px 0 0;font:900 1.15rem 'Archivo',sans-serif;color:var(--ink)}
 @media(max-width:900px){.progress-cards--four{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:680px){.progress-cards--four{grid-template-columns:1fr}}
+
+/* Armurerie : raccourcis du hero */
+.vhero-jump{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 6px}.vhero-jump a{display:inline-flex;align-items:center;min-height:38px;padding:7px 14px;border:1px solid rgba(255,255,255,.45);border-radius:20px;color:#fff;font-size:.86rem;font-weight:700;text-decoration:none;transition:background .15s,transform .15s}.vhero-jump a:hover{background:var(--amber);color:var(--ink);border-color:var(--amber);transform:translateY(-1px)}

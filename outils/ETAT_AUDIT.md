@@ -1,6 +1,15 @@
 # ETAT_AUDIT — audit de finition LeonidaKit
 
-Mis à jour le 24 septembre 2026 · livraison **v7.29** (lots 0, 1, 2 terminés ; 3 à 6 partiellement ; 7 en cours).
+Mis à jour le 25 septembre 2026 · livraison **v7.30 = lot A** de la refonte en trois lots (A menu/sections/Léo · B calculateur et business plan · C branding, animations, images). L’audit v7.29 ci-dessous reste valable.
+
+## Refonte en trois lots (25/09/2026)
+
+| Lot | État | Contenu |
+|---|---|---|
+| A | **Livré (v7.30)** | Menu Explorer refait (S’équiper : Consommables, Vêtements et style, Personnalisations ; Armes → Armurerie ; doublons retirés), pages Consommables et Vêtements et style en volets, renvois pour les pages absorbées, Léo avec une base de connaissances GTA VI de 79 sujets. Détail : outils/CHANGEMENTS-v7.30.txt |
+| B | À faire | Calculateur en deux sections : (1) calculs utiles avec Simple / Pas à pas / Expert vraiment différents, comparateurs (rapport qualité-prix, budget, utilité, rentabilité, quand acheter) ; (2) business plan à la place des « 7 étapes » : fiche remplie par le joueur → rapport détaillé (temps, ordre des actions, étapes) avec texte simple + option « plus de détails ». Tuto réadapté. |
+| C | À faire | Textes calibrés, charte Leonidakit (couleurs, espacements, police) sur chaque page, marges latérales plus proches du bord, animations au survol et au défilement partout, images superposées et ajustées. |
+
 
 ## Identité exacte du ZIP de départ
 

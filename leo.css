@@ -1,4 +1,4 @@
-@import url('/motion-tokens.css?v=20efe0ee5b26');
+@import url('/motion-tokens.css?v=8f1da8a77fe1');
 /* Léo partage les tokens du Lot C ; tous ses sélecteurs restent isolés. */
 #leo-launch{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:850;display:flex;align-items:center;gap:9px;min-height:48px;padding:7px 16px 7px 8px;border:1px solid #f7b645;border-radius:28px;background:#241740;color:#fff9ef;box-shadow:0 5px 22px #24174030;font:700 16.5px/1.3 'Archivo',sans-serif;cursor:pointer;touch-action:manipulation;max-width:calc(100vw - 32px)}
 #leo-launch[hidden]{display:none!important}#leo-launch:hover{background:#35215f;border-color:var(--c-neon,#f7b23b)}#leo-launch:focus-visible,.leo-panel :is(a,button,input,select,summary):focus-visible,.leo-transfer :is(a,button):focus-visible{outline:3px solid #f6ab2a;outline-offset:4px}

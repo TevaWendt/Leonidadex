@@ -24,3 +24,7 @@
 .d-import-preview{background:#f4e9ef;border:1px solid #b393a8;border-radius:10px;padding:20px;margin-top:20px}.d-import-preview[hidden]{display:none}.d-import-preview p{font-size:14px;line-height:1.7}.d-import-preview button{min-height:44px;padding:10px 14px;border:1px solid #866478;background:#fffaf5;border-radius:6px;cursor:pointer;font:inherit}.d-import-preview button.primary{background:#714566;color:#fff}.d-import-preview ul{max-height:220px;overflow:auto;overflow-wrap:anywhere;font-size:13px;line-height:1.7}.d-import-preview .d-actions{margin-bottom:0}
 @media(max-width:700px){.d-grid,.d-progress-groups{grid-template-columns:minmax(0,1fr);gap:16px}.d-card-body,.d-progress-group{padding:18px}.d-card h3{font-size:21px}.d-section{margin-block:20px 36px}.d-section[id],.d-card[id]{scroll-margin-top:155px}.d-related{gap:7px;margin:14px 0}.d-related a{font-size:12px;padding:6px 9px}.d-global{padding:18px;gap:10px}.d-global h2{font-size:20px}.d-global strong{font-size:26px}.d-intro-note{font-size:13px}}
 @media(prefers-reduced-motion:reduce){.d-page main *,.d-section *{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+/* Volets éditoriaux des hubs (Consommables, Vêtements et style) */
+.d-topics{padding-top:8px}.d-topic-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.d-topic .d-card-body{padding-top:22px}.d-topic h3{font-size:1.25rem;margin:6px 0 10px}.d-topic p{line-height:1.65}
+@media(max-width:700px){.d-topic-grid{grid-template-columns:1fr}}

@@ -8,11 +8,12 @@ const acquisition = JSON.parse(fs.readFileSync(path.join(__dirname, 'acquisition
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
 const world = [['lieux.html', 'Lieux'], ['personnages.html', 'Personnages'], ['demeures.html', 'Demeures'], ['planques.html', 'Planques'], ['entreprises.html', 'Entreprises'], ['collectibles.html', 'Collectibles']];
-const documented = acquisition.filter(c => !c.pending).map(c => [c.route.slice(1), c.label]);
-const pending = acquisition.filter(c => c.pending);
-const shopping = [['achats.html', 'Tout ce qui s’achète'], ...documented, ...(pending.length ? [['achats.html#categories', pending.length + ' catégories à confirmer']] : [])];
+// Menu « S’équiper » : seules les catégories marquées menu:true dans acquisitions.json (pas de doublon avec Véhicules,
+// Planques ou Armurerie, pas de catégorie vide). Le hub « Tout ce qui s’achète » reste dans la barre (Achats) et le pied de page.
+const shopping = acquisition.filter(c => c.menu && !c.alias).sort((a, b) => (a.menuOrder || 99) - (b.menuOrder || 99)).map(c => [c.route.slice(1), c.label]);
+const footShopping = [['achats.html', 'Tout ce qui s’achète'], ...shopping, ['armes.html#munitions', 'Munitions et équipement'], ['logements.html', 'Logements et appartements']];
 const info = [['a-propos.html', 'À propos'], ['contact.html', 'Contact'], ['medias.html', 'Médias et crédits'], ['mentions-legales.html', 'Mentions et confidentialité']];
-const top = [['calculateurs.html', 'Calculateur'], ['tuto.html', 'Tuto'], ['carte.html', 'Carte'], ['vehicules.html', 'Véhicules'], ['armes.html', 'Armes'], ['achats.html', 'Achats'], ['progression.html', 'Progression']];
+const top = [['calculateurs.html', 'Calculateur'], ['tuto.html', 'Tuto'], ['carte.html', 'Carte'], ['vehicules.html', 'Véhicules'], ['armes.html', 'Armurerie'], ['achats.html', 'Achats'], ['progression.html', 'Progression']];
 
 function link([url, label], prefix = '', current = '') {
   const here = url.split('#')[0] === current;
@@ -24,7 +25,7 @@ function currentOf(file) {
 }
 function nav(file, prefix) {
   const current = currentOf(file);
-  const groups = [['Le monde', world], ['Acquisitions', shopping], ['Le site', info]];
+  const groups = [['Le monde', world], ['S’équiper', shopping], ['Le site', info]];
   return '<ul>' + top.map(x => '<li>' + link(x, prefix, current) + '</li>').join('')
     + '<li><details class="nav-more"><summary>Explorer</summary><div class="nav-more-panel">'
     + groups.map(([label, list]) => '<div><strong>' + esc(label) + '</strong>' + list.map(x => link(x, prefix, current)).join('') + '</div>').join('')
@@ -33,8 +34,8 @@ function nav(file, prefix) {
 function footer(existing, prefix) {
   const art = existing.match(/<svg class="foot-art"[\s\S]*?<\/svg>/)?.[0] || '';
   const groups = [
-    ['Explorer', [['carte.html', 'Carte'], ['vehicules.html', 'Véhicules'], ['armes.html', 'Armes'], ...world]],
-    ['Acquisitions', shopping],
+    ['Explorer', [['carte.html', 'Carte'], ['vehicules.html', 'Véhicules'], ['armes.html', 'Armurerie'], ...world]],
+    ['S’équiper', footShopping],
     ['Outils et aide', [['calculateurs.html', 'Calculateur'], ['tuto.html', 'Tuto'], ['progression.html', 'Progression'], ...info]]
   ];
   return '<footer>' + art + '<div class="shell"><div class="foot-top"><div class="foot-brand">'

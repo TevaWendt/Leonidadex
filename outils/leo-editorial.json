@@ -17,7 +17,10 @@
    "terms": [
     "benefice net",
     "gain net",
-    "profit net"
+    "profit net",
+    "gain",
+    "benefice",
+    "ce qu il me reste"
    ],
    "text": "C’est ce qu’il te reste une fois tes frais payés. Récompense 100 000 $, frais 20 000 $ : ton gain est de 80 000 $."
   },
@@ -36,7 +39,11 @@
    "terms": [
     "amortissement",
     "amortir",
-    "seuil de rentabilite"
+    "seuil de rentabilite",
+    "rembourse",
+    "remboursement",
+    "rembourser",
+    "remboursee"
    ],
    "text": "C’est le moment où un achat t’a rapporté autant qu’il t’a coûté. Dans « Ça vaut le coup ? », le calculateur te dit après combien d’heures de jeu tu y arrives."
   },
@@ -54,7 +61,10 @@
    "title": "Argent gardé de côté (réserve)",
    "terms": [
     "reserve",
-    "capital disponible"
+    "capital disponible",
+    "argent de cote",
+    "garde de cote",
+    "mis de cote"
    ],
    "text": "C’est la part de ton argent que tu ne veux pas dépenser. Le calculateur n’y touche jamais : il fait comme si cet argent n’existait pas pour tes achats."
   }
@@ -163,14 +173,17 @@
   },
   {
    "id": "weapon",
-   "label": "Armes",
+   "label": "Armurerie",
    "route": "/armes.html",
    "terms": [
     "arme",
     "armes",
     "pistolet",
     "fusil",
-    "flingue"
+    "flingue",
+    "armurerie",
+    "munitions",
+    "arsenal"
    ]
   },
   {
@@ -324,6 +337,19 @@
     "tuto",
     "tutoriel",
     "guide"
+   ]
+  },
+  {
+   "id": "consumable",
+   "label": "Consommables",
+   "route": "/nourriture.html",
+   "terms": [
+    "consommable",
+    "consommables",
+    "nourriture",
+    "snack",
+    "manger",
+    "boire"
    ]
   }
  ],

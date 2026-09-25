@@ -93,7 +93,9 @@ for(const file of htmlFiles){let s=fs.readFileSync(file,'utf8');if(file.startsWi
 }
 const urls=[...new Set(canonicals)].sort();for(const f of ['sitemap.xml','sitemap-fiches.xml']){const list=f==='sitemap-fiches.xml'?urls.filter(u=>/\/(armes|vehicules|lieux|personnages|entreprises|demeures|planques)\//.test(u)):urls;fs.writeFileSync(f,'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+list.map(u=>'  <url><loc>'+esc(u)+'</loc></url>').join('\n')+'\n</urlset>\n');}
 // Rebuild search terms from current names and aliases; exclude old retired pages.
-let index=data.window.LK_INDEX.filter(e=>!/^\/(vehicules|armes)\//.test(e.u));
+// Une page devenue un simple renvoi (meta refresh) sort de l’index interne : sa cible y est déjà.
+const redirectPage=u=>{const f=u.replace(/^\//,'').split('#')[0];return /\.html$/.test(f)&&!f.includes('/')&&fs.existsSync(f)&&/http-equiv="refresh"/.test(fs.readFileSync(f,'utf8'));};
+let index=data.window.LK_INDEX.filter(e=>!/^\/(vehicules|armes)\//.test(e.u)&&!redirectPage(e.u));
 for(const[type,list]of [['vehicules',V],['armes',A]])for(const v of list)index.push({l:name(v),k:type==='vehicules'?'Véhicule':'Arme',u:'/'+type+'/'+v.id+'.html',s:[v.id,v.search,name(v),v.fr,v.alias,v.insp,v.fam].filter(Boolean).join(' ').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase()});
 if(fs.existsSync('outils/lore-index.json'))index=index.concat(JSON.parse(fs.readFileSync('outils/lore-index.json','utf8')));
 { /* recherche des lieux : fichier séparé, chargé à la première saisie */
@@ -131,7 +133,9 @@ require('child_process').execFileSync(process.execPath,[path.join(__dirname,'gen
   if(item.ref)continue; // L'entité canonique véhicule/arme est déjà indexée.
   extra.push({l:item.name,k:acqContext.window.LK_ACQUISITIONS.categories.find(c=>c.id===item.category)?.label||'Acquisition',u:item.hubUrl,s:item.name+' '+item.description+' '+item.condition,w:0});
  }
- const index=[...new Map([...ctx.window.LK_INDEX,...extra].map(e=>[e.u,e])).values()];
+ for(const c of acqContext.window.LK_ACQUISITIONS.categories.filter(c=>!c.alias&&Array.isArray(c.sections)))for(const x of c.sections)extra.push({l:x.title,k:c.label,u:c.route+'#'+x.id,s:(x.title+' '+x.text+' '+c.label).toLowerCase(),w:0});
+ for(const e of [{l:'Munitions et équipement',k:'Armurerie',u:'/armes.html#munitions',s:'munitions balles cartouches chargeurs equipement armurerie'},{l:'Constructeur d’équipement',k:'Armurerie',u:'/armes.html#equipement',s:'arsenal equipement loadout constructeur armes longues armurerie'},{l:'Gadgets et équipements',k:'Armurerie',u:'/armes.html#equipements',s:'gadgets sac gilet pare-balles kit de soin equipement armurerie'},{l:'Garages documentés',k:'Planques',u:'/planques.html#garages',s:'garages garage paradise shore court planques'}])extra.push({...e,w:0});
+ const index=[...new Map([...ctx.window.LK_INDEX,...extra].filter(e=>!redirectPage(e.u)).map(e=>[e.u,e])).values()];
  fs.writeFileSync(path.join(root,'search-index.js'),'/* Généré depuis les pages, catalogues et acquisitions. */\nwindow.LK_INDEX = '+JSON.stringify(index)+';\n');
 }
 
