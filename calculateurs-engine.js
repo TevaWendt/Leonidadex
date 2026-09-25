@@ -402,6 +402,117 @@
     } catch (error) { return fail(orderShape, error.message); }
   }
 
+  // ---------------------------------------------------------------------------
+  // Quel achat choisir ? Compare plusieurs achats avec le même argent, le même
+  // gain par heure et le même temps de jeu. L'envie (1 à 5) vient du joueur ;
+  // aucun revenu n'est inventé : sans revenu renseigné, pas de remboursement.
+  var chooseShape = { items: [], best: null, bestByCriterion: {} };
+  function choose(input) {
+    try {
+      var p = data(input);
+      var capital = money(p.capital, 'l’argent que tu as');
+      var reserve = money(p.reserve, 'l’argent mis de côté', 0);
+      if (reserve > capital) return fail(chooseShape, 'L’argent gardé de côté dépasse ce que tu as.');
+      var hourly = p.hourly == null ? null : money(p.hourly, 'ce que tu gagnes par heure');
+      var dailyMinutes = p.dailyMinutes == null ? null : number(p.dailyMinutes, 'le temps de jeu par jour', 1440, { positive: true });
+      var horizon = p.hours == null ? null : number(p.hours, 'le temps où tu t’en sers', MINUTES_MAX / 60);
+      if (!Array.isArray(p.items) || p.items.length < 2 || p.items.length > 6) return fail(chooseShape, 'Compare entre deux et six achats.');
+      var available = subtract(capital, reserve);
+      var items = p.items.map(function (entry, index) {
+        entry = data(entry);
+        var name = typeof entry.name === 'string' && entry.name.trim() ? entry.name.trim().slice(0, 120) : 'Achat ' + (index + 1);
+        if (entry.price == null) return { name: name, known: false, price: null, total: null, utility: null, incomeHourly: null, affordable: null, shortfall: null, waitHours: null, waitDays: null, recoveryHours: null, paybackHours: null, valueScore: null, gainOverHorizon: null };
+        var total = money(entry.price, 'le prix de ' + name) + money(entry.extras, 'les options de ' + name, 0) + money(entry.fees, 'les frais de ' + name, 0);
+        var utility = number(entry.utility, 'l’envie pour ' + name, 5, { defaultValue: 3, integer: true, positive: true });
+        var income = entry.incomeHourly == null ? null : money(entry.incomeHourly, 'ce que rapporte ' + name);
+        var shortfall = Math.max(0, subtract(total, available));
+        var waitHours = shortfall === 0 ? 0 : hourly === null || hourly <= 0 ? null : shortfall / hourly;
+        var waitDays = waitHours === null ? null : dailyMinutes === null ? null : ceil(waitHours * 60 / dailyMinutes);
+        var recoveryHours = hourly === null || hourly <= 0 ? null : total / hourly;
+        var paybackHours = income === null || income <= 0 ? null : total / income;
+        var gain = income === null || horizon === null ? null : income * horizon - total;
+        return { name: name, known: true, price: entry.price, total: total, utility: utility, incomeHourly: income, affordable: shortfall === 0, shortfall: shortfall, waitHours: waitHours, waitDays: waitDays, recoveryHours: recoveryHours, paybackHours: paybackHours, valueScore: total > 0 ? utility * 100000 / total : null, gainOverHorizon: gain };
+      });
+      var known = items.filter(function (x) { return x.known; });
+      if (!known.length) return fail(chooseShape, 'Écris au moins un prix, même imaginé.');
+      function pick(score, higher) {
+        var best = null, bestValue = null;
+        known.forEach(function (x) { var v = score(x); if (v === null || v === undefined) return; if (best === null || (higher ? v > bestValue : v < bestValue)) { best = x; bestValue = v; } });
+        return best ? best.name : null;
+      }
+      var byCriterion = {
+        value: pick(function (x) { return x.valueScore; }, true),
+        cheapest: pick(function (x) { return x.total; }, false),
+        fastest: pick(function (x) { return x.waitHours; }, false),
+        profit: pick(function (x) { return x.paybackHours; }, false),
+        utility: pick(function (x) { return x.utility; }, true)
+      };
+      var criterion = ['value', 'cheapest', 'fastest', 'profit', 'utility'].indexOf(p.criterion) >= 0 ? p.criterion : 'value';
+      var chosen = known.find(function (x) { return x.name === byCriterion[criterion]; }) || null;
+      return finish({ items: items, best: byCriterion[criterion], bestByCriterion: byCriterion, criterion: criterion, available: available, bestWaitHours: chosen ? chosen.waitHours : null, bestTotal: chosen ? chosen.total : null }, chooseShape);
+    } catch (error) { return fail(chooseShape, error.message); }
+  }
+
+  // ---------------------------------------------------------------------------
+  // Business plan : un but (une somme ou un achat), ce que le joueur a, ce qu'il
+  // gagne, son temps de jeu, les achats à faire avant, et ce que le but rapporte
+  // après. Sort une chronologie en heures de jeu et en jours, des jalons, et deux
+  // variantes prudentes (prix +20 %, gain −20 %). Rien n'est promis par le jeu.
+  var planShape = { steps: [], totalHours: null, totalMinutes: null, sessions: null, days: null, weeks: null, missing: null, milestones: [], payback: null, effectiveHourly: null, variants: {} };
+  function businessPlan(input) {
+    try {
+      var p = data(input);
+      var capital = money(p.capital, 'l’argent que tu as');
+      var reserve = money(p.reserve, 'l’argent mis de côté', 0);
+      if (reserve > capital) return fail(planShape, 'L’argent gardé de côté dépasse ce que tu as.');
+      var hourly = money(p.hourly, 'ce que tu gagnes par heure');
+      var dailyMinutes = number(p.dailyMinutes, 'le temps de jeu par jour', 1440, { positive: true });
+      var daysPerWeek = number(p.daysPerWeek, 'les jours par semaine', 7, { defaultValue: 7, integer: true, positive: true });
+      var upkeep = money(p.upkeepPerSession, 'les dépenses par partie', 0);
+      var goalPrice = p.goalPrice == null ? null : money(p.goalPrice, 'le prix du but');
+      var goalTarget = p.target == null ? null : money(p.target, 'la somme visée');
+      if (goalPrice === null && goalTarget === null) return fail(planShape, 'Dis-moi ton but : une somme à avoir ou un achat avec son prix.');
+      var goalIncome = p.goalIncomeHourly == null ? 0 : money(p.goalIncomeHourly, 'ce que rapporte le but');
+      var prerequisites = Array.isArray(p.prerequisites) ? p.prerequisites : [];
+      if (prerequisites.length > 20) return fail(planShape, 'Vingt achats maximum avant le but.');
+      // Le gain utile par heure enlève les dépenses de chaque partie (consommables, munitions…).
+      var upkeepHourly = upkeep * 60 / dailyMinutes;
+      var effective = subtract(hourly, upkeepHourly);
+      if (effective <= 0 && (goalPrice !== null ? goalPrice : goalTarget) > subtract(capital, reserve)) return fail(planShape, 'Tes dépenses par partie mangent tout ce que tu gagnes : baisse-les ou augmente ton gain par heure.');
+      var items = prerequisites.map(function (x, i) { x = data(x); return { name: typeof x.name === 'string' && x.name.trim() ? x.name.trim().slice(0, 120) : 'Achat ' + (i + 1), price: money(x.price, 'le prix de l’achat ' + (i + 1)), boostHourly: money(x.boostHourly, 'ce que rapporte l’achat ' + (i + 1), 0) }; });
+      var goalItem = goalPrice !== null ? { name: typeof p.goalName === 'string' && p.goalName.trim() ? p.goalName.trim().slice(0, 120) : 'Mon but', price: goalPrice, boostHourly: goalIncome } : null;
+      var chain = order({ capital: capital, reserve: reserve, hourly: Math.max(0, effective), items: goalItem ? items.concat([goalItem]) : items });
+      if (!chain.valid) return fail(planShape, chain.reason);
+      var steps = chain.steps.map(function (st, i) { return { name: st.name, kind: goalItem && i === chain.steps.length - 1 ? 'goal' : 'prerequisite', waitHours: st.waitHours, atHours: st.timeHours, capitalAfter: st.capital, hourlyAfter: st.hourly }; });
+      var totalHours = chain.totalHours;
+      var finalTargetHours = 0;
+      if (goalTarget !== null) {
+        // Après les achats, il faut encore réunir la somme visée (en plus de la réserve).
+        var missingAfter = Math.max(0, subtract(goalTarget + reserve, chain.finalCapital));
+        var rate = chain.finalHourly === null ? Math.max(0, effective) : chain.finalHourly;
+        if (missingAfter > 0 && rate <= 0) return fail(planShape, 'Avec ce gain par heure, la somme visée ne peut pas être atteinte.');
+        finalTargetHours = missingAfter > 0 ? missingAfter / rate : 0;
+        totalHours += finalTargetHours;
+        steps.push({ name: 'Avoir ' + goalTarget.toLocaleString('fr-FR') + ' $', kind: 'goal', waitHours: finalTargetHours, atHours: totalHours, capitalAfter: goalTarget + reserve, hourlyAfter: rate });
+      }
+      var totalMinutes = totalHours * 60;
+      var sessions = totalMinutes === 0 ? 0 : ceil(totalMinutes / dailyMinutes);
+      var weeks = sessions === 0 ? 0 : Math.floor((sessions - 1) / daysPerWeek);
+      // Jour calendaire de chaque étape, avec la même règle de semaine que les jalons.
+      steps.forEach(function (st) { var sess = st.atHours === 0 ? 0 : ceil(st.atHours * 60 / dailyMinutes); var wk = sess === 0 ? 0 : Math.floor((sess - 1) / daysPerWeek); st.sessions = sess; st.days = sess === 0 ? 0 : wk * 7 + ((sess - 1) % daysPerWeek) + 1; });
+      var days = sessions === 0 ? 0 : weeks * 7 + ((sessions - 1) % daysPerWeek) + 1;
+      var missing = Math.max(0, subtract(items.reduce(function (a, x) { return a + x.price; }, 0) + (goalPrice || 0) + (goalTarget || 0) + reserve, capital));
+      var milestones = [0.25, 0.5, 0.75, 1].map(function (f) { var h = totalHours * f; var sess = h === 0 ? 0 : ceil(h * 60 / dailyMinutes); var wk = sess === 0 ? 0 : Math.floor((sess - 1) / daysPerWeek); return { fraction: f, hours: h, sessions: sess, days: sess === 0 ? 0 : wk * 7 + ((sess - 1) % daysPerWeek) + 1 }; });
+      var payback = goalItem && goalIncome > 0 ? goalPrice / goalIncome : null;
+      function variant(priceFactor, hourlyFactor) {
+        var alt = businessPlan(Object.assign({}, p, { hourly: hourly * hourlyFactor, goalPrice: goalPrice === null ? null : goalPrice * priceFactor, prerequisites: prerequisites.map(function (x) { return Object.assign({}, x, { price: x.price * priceFactor }); }), variants: false }));
+        return alt.valid ? { totalHours: alt.totalHours, days: alt.days, sessions: alt.sessions } : null;
+      }
+      var variants = p.variants === false ? {} : { pricePlus20: variant(1.2, 1), hourlyMinus20: variant(1, 0.8), noReserve: reserve > 0 ? (function () { var alt = businessPlan(Object.assign({}, p, { reserve: 0, variants: false })); return alt.valid ? { totalHours: alt.totalHours, days: alt.days, sessions: alt.sessions } : null; })() : null };
+      return finish({ steps: steps, totalHours: totalHours, totalMinutes: totalMinutes, sessions: sessions, days: days, weeks: sessions === 0 ? 0 : ceil(sessions / daysPerWeek), missing: missing, milestones: milestones, payback: payback, effectiveHourly: effective, upkeepHourly: upkeepHourly, finalCapital: chain.finalCapital, variants: variants }, planShape);
+    } catch (error) { return fail(planShape, error.message); }
+  }
+
   var compareShape = { buyHours: null, saveHours: null, affordable: null };
   function compareBuy(input) {
     try {
@@ -477,5 +588,5 @@
     } catch(error){return fail(shape,error.message);}
   }
 
-  return Object.freeze({ worth:worth, investmentActivities: investmentActivities, sessionProjection: sessionProjection, activity: activity, goal: goal, goalMixed: goalMixed, inverse: inverse, roi: roi, purchase: purchase, budget: budget, order: order, compareBuy: compareBuy, goalContinuous: goalContinuous, sessionPlan: sessionPlan, parseLocalizedNumber: parseLocalizedNumber });
+  return Object.freeze({ choose:choose, businessPlan:businessPlan, worth:worth, investmentActivities: investmentActivities, sessionProjection: sessionProjection, activity: activity, goal: goal, goalMixed: goalMixed, inverse: inverse, roi: roi, purchase: purchase, budget: budget, order: order, compareBuy: compareBuy, goalContinuous: goalContinuous, sessionPlan: sessionPlan, parseLocalizedNumber: parseLocalizedNumber });
 }));

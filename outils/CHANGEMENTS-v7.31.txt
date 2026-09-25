@@ -1,0 +1,39 @@
+v7.31 — 25 septembre 2026 — LOT B : calculateur en deux sections et business plan (base : zip Leonidadex-main (5) = v7.29, avec le lot A v7.30 inclus dans cette archive)
+
+Le calculateur en deux sections (calculateurs.html, calculateurs-brand.css)
+- Section 1 « Mes calculs » : huit onglets, chacun répond à une question (Mon objectif, Mon temps de jeu, Mes activités, Mes achats, Ça vaut le coup ?, Quoi acheter d’abord ?, Mon budget, Quel achat choisir ?).
+- Section 2 « Mon business plan » : un onglet à part, mis en avant, qui remplace « Mon plan » et ses sept étapes.
+- La grille des outils sous l’atelier montre les 8 calculs + le business plan (carte « BP »).
+
+Simple / Pas à pas / Expert vraiment différents (calculateurs-workspace.css)
+- Simple : la phrase de réponse et les trois chiffres clés, sans tableau, sans graphique, sans comparaison et sans « Comment est-ce calculé ? ».
+- Pas à pas : une question à la fois, mêmes résultats que Simple.
+- Expert : tout ce qui est caché en Simple + les réglages avancés (gain apporté par un achat, dépense par partie, horizon, jours par semaine…).
+
+Nouveau calcul « Quel achat choisir ? » (calculateurs-engine.js : choose ; calculateurs-scenario.js ; calculateurs-workspace.js)
+- 2 à 6 achats côte à côte : fiche du site ou achat libre, prix, note d’utilité de 1 à 5, et en Expert le gain que l’achat rapporte par heure.
+- Un critère à choisir : rapport qualité-prix (utilité par dollar), le moins cher, le plus vite accessible, le plus rentable, le plus utile. La réponse dit lequel choisir, quand tu peux l’acheter, et le tableau donne pour chaque achat le prix total (avec frais), ce qu’il manque, le temps de jeu avant de pouvoir l’acheter, le temps pour revenir à ton niveau d’argent, et le remboursement s’il rapporte.
+- Le gagnant de chaque critère est listé sous la réponse, pour comparer d’un coup d’œil.
+
+Mon business plan (calculateurs-engine.js : businessPlan ; calculateurs-scenario.js ; calculateurs-workspace.js)
+- Fiche en quatre questions : ton but (un achat du site, un achat libre avec ton prix, ou « avoir une somme »), où tu en es (argent, réserve, ce que tu gagnes par heure ou une activité, temps par jour, jours par semaine), avant et après (achats à faire d’abord depuis « Quoi acheter d’abord ? », dépense par partie, gain que le but rapporte), ce qui compte (équilibre / vite / sûr).
+- Réponse simple d’abord : « Pour acheter X, il te manque…, en jouant 1 h par jour, 5 jours par semaine, tu y arrives en 8 h de jeu, soit 10 jours (vers le 5 octobre) », trois chiffres, barre de progression, puis le plan étape par étape (garder de côté, gagner, acheter d’abord…, acheter ton but, ensuite).
+- Case « Afficher plus de détails » : chiffres après chaque étape, calendrier par jalons 25 / 50 / 75 / 100 % avec dates estimées, tableau « Et si… ? » (prix 20 % plus chers, gain 20 % plus bas, réserve utilisée), « Comment est-ce calculé ? ». Le jour de chaque étape suit la même règle de semaine que le calendrier.
+- Boutons vers « Quoi acheter d’abord ? », « Quel achat choisir ? » et « Ça vaut le coup ? » ; enregistrer / imprimer / partager comme les autres calculs.
+- Exemple de contrôle : 1 h par jour, 100 000 $ par partie, 200 000 $ en poche, but à 1 000 000 $ → 8 h de jeu, 8 parties, 8 jours (12 jours à 5 jours par semaine).
+
+Sauvegardes (calculateurs-scenario.js)
+- Nouvelles clés compare {keys, criterion, hours} et plan {kind, key, target, usePrerequisites, upkeepPerSession, priority, activity, details}. Les sauvegardes v1 à v3 existantes se lisent telles quelles (les clés absentes prennent leurs valeurs par défaut).
+
+Barre de question, accueil, Léo
+- calculateurs-hub.js : « business plan », « plan complet », « quoi faire en premier » → Mon business plan ; « lequel choisir », « comparer », « le mieux », « le plus rentable », « le moins cher », « X ou Y » → Quel achat choisir ?.
+- Léo : « Kamacho ou Bati 801 ? », « Comparer le Kamacho et la Bati 801 » ouvrent Quel achat choisir ? avec les deux fiches déjà en place ; « Fais-moi un business plan pour acheter un Kamacho » ouvre Mon business plan avec la fiche comme but (leo-core.js, leo-link.js). FAQ « Quelle différence entre Mon business plan et Ma progression ? ».
+- Accueil et pages d’information : « 8 calculs et le business plan ».
+
+Tuto (outils/tuto.json, outils/gen-tuto.cjs, outils/tuto-shots.py, img/tuto/)
+- Chapitre « Quel achat choisir ? » (11) et chapitre « Mon business plan » (13) réécrits pour le nouvel outil ; 15 chapitres, 9 outils, 26 captures réelles régénérées (dont compare et plan, bureau et mobile).
+- gen-tuto.cjs choisit les chapitres par identifiant (plus par position) : ajouter un chapitre ne décale plus les autres.
+
+Contrôles
+- 334/334 tests (3 tests moteur, 1 test DOM lot B, 1 test Léo ajoutés ; 3 assertions adaptées), régénération complète par outils/regenerer.cjs, verifier.js 0 erreur (36 493 références, 406 pages), calculateur et Tuto vérifiés à 1 280 et 360 px sans débordement ni erreur console.
+- Lot suivant : C (textes calibrés, charte Leonidakit sur chaque page, marges plus proches du bord, animations au survol et au défilement, images).

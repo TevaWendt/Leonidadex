@@ -117,11 +117,12 @@
    "id": "progression",
    "terms": [
     "plan progression",
+    "business plan progression",
     "sauvegarde console",
     "synchronise console"
    ],
    "source": "/tuto.html#faq",
-   "question": "Quelle différence entre Mon plan et Ma progression ?"
+   "question": "Quelle différence entre Mon business plan et Ma progression ?"
   },
   {
    "id": "export",
@@ -428,12 +429,24 @@
   },
   {
    "id": "plan",
-   "label": "Mon plan",
+   "label": "Mon business plan",
    "terms": [
     "mon plan",
     "mes plans",
     "plan complet",
-    "plusieurs decisions"
+    "plusieurs decisions",
+    "business plan",
+    "mon business plan"
+   ]
+  },
+  {
+   "id": "compare",
+   "label": "Quel achat choisir ?",
+   "terms": [
+    "quel achat choisir",
+    "lequel choisir",
+    "comparer des achats",
+    "meilleur rapport"
    ]
   }
  ]

@@ -451,3 +451,34 @@ test('goal metrics separate active play from actual session waits and skip overn
     assert.equal(reached.investment, 0);
   }
 });
+
+// ---- Lot B (refonte) : Quel achat choisir ? et Mon business plan
+test('choose: classe les achats selon le critère, sans inventer de revenu', () => {
+  const r = E.choose({ capital: 200000, reserve: 20000, hourly: 100000, dailyMinutes: 60, hours: 10, criterion: 'value', items: [{ name: 'A', price: 150000, utility: 5 }, { name: 'B', price: 50000, utility: 3 }, { name: 'C', price: 400000, utility: 2, incomeHourly: 30000 }, { name: 'D', price: null, utility: 4 }] });
+  assert.equal(r.valid, true);
+  assert.equal(r.best, 'B');
+  assert.deepEqual(r.bestByCriterion, { value: 'B', cheapest: 'B', fastest: 'A', profit: 'C', utility: 'A' });
+  const c = r.items[2];
+  assert.equal(c.affordable, false); assert.equal(c.shortfall, 220000); assert.equal(c.waitHours, 2.2); assert.equal(c.waitDays, 3);
+  assert.equal(r.items[0].paybackHours, null); assert.equal(r.items[3].known, false); assert.equal(r.bestWaitHours, 0);
+  assert.equal(E.choose({ capital: 100, reserve: 0, items: [{ name: 'A', price: 1 }] }).valid, false);
+  assert.equal(E.choose({ capital: 100, reserve: 200, items: [{ name: 'A', price: 1 }, { name: 'B', price: 2 }] }).valid, false);
+});
+test('businessPlan: 1 h par jour, 100 000 $ par heure et un million = 10 h et 10 jours', () => {
+  const r = E.businessPlan({ capital: 0, reserve: 0, hourly: 100000, dailyMinutes: 60, daysPerWeek: 7, target: 1000000 });
+  assert.equal(r.valid, true); assert.equal(r.totalHours, 10); assert.equal(r.sessions, 10); assert.equal(r.days, 10); assert.equal(r.steps.length, 1); assert.equal(r.milestones[3].days, 10);
+  const w = E.businessPlan({ capital: 0, reserve: 0, hourly: 100000, dailyMinutes: 60, daysPerWeek: 5, target: 1000000 });
+  assert.equal(w.days, 12); assert.equal(w.weeks, 2);
+});
+test('businessPlan: achats d’avant dans l’ordre, dépenses par partie, remboursement et variantes', () => {
+  const r = E.businessPlan({ capital: 200000, reserve: 20000, hourly: 100000, dailyMinutes: 60, daysPerWeek: 7, upkeepPerSession: 5000, goalName: 'Kamacho', goalPrice: 1000000, goalIncomeHourly: 50000, prerequisites: [{ name: 'Gilet', price: 20000 }, { name: 'Camion', price: 80000, boostHourly: 20000 }] });
+  assert.equal(r.valid, true);
+  assert.deepEqual(r.steps.map(s => s.name), ['Gilet', 'Camion', 'Kamacho']);
+  assert.equal(r.steps[2].kind, 'goal'); assert.equal(r.effectiveHourly, 95000); assert.equal(r.upkeepHourly, 5000);
+  assert.equal(r.steps[2].atHours, 8); assert.equal(r.payback, 20); assert.equal(r.missing, 920000);
+  assert.ok(r.variants.pricePlus20.totalHours > r.totalHours); assert.ok(r.variants.hourlyMinus20.totalHours > r.totalHours); assert.ok(r.variants.noReserve.totalHours < r.totalHours);
+  assert.equal(E.businessPlan({ capital: 0, reserve: 0, hourly: 1000, dailyMinutes: 60, daysPerWeek: 7, upkeepPerSession: 5000, target: 100 }).valid, false);
+  assert.equal(E.businessPlan({ capital: 0, reserve: 0, hourly: 1000, dailyMinutes: 60, daysPerWeek: 7 }).valid, false);
+  const reached = E.businessPlan({ capital: 2000000, reserve: 0, hourly: 1000, dailyMinutes: 60, daysPerWeek: 7, goalPrice: 1000000 });
+  assert.equal(reached.totalHours, 0); assert.equal(reached.days, 0); assert.equal(reached.missing, 0);
+});

@@ -360,7 +360,8 @@ test('Lot B: notebook isolates tools, updates an entry, restores a plan and reta
  const again=app({storage:page.storage()});again.window.confirm=()=>true;assert.equal(again.node('panel-plan').hidden,false);
  await again.click({bLoad:plan.id});assert.equal(again.node('f-session-minutes').value,'45');assert.ok(JSON.parse(again.storage()['lk-calculator-v1']).completed.includes('session'));
  await again.click({tab:'goal'});await again.edit('goal.target',2000000);await again.click({tab:'plan'});assert.equal(JSON.parse(again.storage()['lk-calculator-v1']).completed.length,0);
- assert.match(again.node('plan-summary').textContent,/2.000.000/);
+ // Le business plan « avoir une somme » reprend l’objectif partagé (2 000 000 $) quand aucun montant propre n’est écrit.
+ await again.click({tab:'plan'});const sel=again.node('f-plan-kind');sel.value='amount';await again.dispatch('change',sel);assert.match(again.node('plan-results').textContent,/2.000.000/);
 });
 
 test('Lot B: corrupted notebook entry does not hide a valid saved calculation', async () => {

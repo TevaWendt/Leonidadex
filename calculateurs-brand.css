@@ -386,7 +386,7 @@ body.calculator-page .lk-goals button{min-height:40px;padding:6px 14px;backgroun
 /* titre de l'atelier et onglets : sept grands boutons avec pictogramme */
 body.calculator-page .calc-section-head h2{font-size:1.9rem;color:var(--ink)}
 body.calculator-page main .calc-tab-svg{width:22px;height:22px;flex:none;display:block}
-body.calculator-page main .calc-tabs{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px;border:0;margin-bottom:20px;overflow:visible;padding:0 4px 4px 0}
+body.calculator-page main .calc-tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;border:0;margin-bottom:20px;overflow:visible;padding:0 4px 4px 0}
 body.calculator-page main .calc-tabs button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-height:96px;padding:12px 8px;background:#fff;color:var(--ink);border:2px solid var(--ink);border-radius:14px;box-shadow:3px 3px 0 var(--ink);font:800 .95rem/1.2 'Archivo',sans-serif;text-align:center;white-space:normal;cursor:pointer;transition:transform .15s,box-shadow .15s}
 body.calculator-page main .calc-tabs button:after{display:none}
 body.calculator-page main .calc-tabs button:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink)}
@@ -467,6 +467,8 @@ body.calculator-page main .calc-warning{font-size:1rem;font-weight:700}
 body.calculator-page main .lk-tools{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
 body.calculator-page main .lk-tool{display:flex;flex-direction:column;gap:9px;height:100%;padding:18px;background:#fff;color:var(--ink);border:2px solid var(--ink);border-top:6px solid var(--amber);border-radius:14px;box-shadow:4px 4px 0 rgba(26,26,30,.16);transition:transform .18s,box-shadow .18s}
 body.calculator-page main .lk-tool:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--amber)}
+body.calculator-page main .lk-tool--plan{grid-column:span 2;background:#FFF3DC;border:2px dashed var(--ink)}
+body.calculator-page main .lk-tool--plan .lk-tool-n em{color:#B93220}
 body.calculator-page main .lk-tool--lead{grid-column:span 2;background:linear-gradient(130deg,#2B1B4D 0%,#5A2358 60%,#E8452C 135%);color:#fff}
 body.calculator-page main .lk-tool-n{display:flex;align-items:center;justify-content:space-between}
 body.calculator-page main .lk-tool-n svg{width:24px;height:24px;padding:8px;box-sizing:content-box;border-radius:50%;background:var(--amber);color:var(--ink);border:2px solid var(--ink)}
@@ -490,7 +492,6 @@ body.calculator-page .lk-glossary dd{margin:2px 0 0;color:var(--ink-soft)}
 body.calculator-page .faq-sec{margin-top:64px}
 @media(max-width:1100px){
  body.calculator-page main .calc-tabs{grid-template-columns:repeat(4,minmax(0,1fr))}
- body.calculator-page main .calc-tabs button:first-child{grid-column:span 2}
  body.calculator-page main .lk-tools{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media(max-width:700px){
@@ -620,7 +621,10 @@ body.calculator-page main .is-highlighted{outline:4px solid var(--amber);outline
 body.calculator-page main .calc-tabs button.calc-tab-plan{grid-column:1/-1;flex-direction:row;justify-content:center;gap:12px;min-height:60px;background:#FFF3DC;border-style:dashed}
 body.calculator-page main .calc-tabs button.calc-tab-plan[aria-selected="true"]{background:linear-gradient(140deg,#2B1B4D,#5A2358);border-style:solid}
 body.calculator-page main .calc-tabs button.calc-tab-plan .calc-tab-icon{width:36px;height:36px}
-body.calculator-page main .calc-tabs button.calc-tab-plan>span:last-child:after{content:" : mes 7 étapes dans l’ordre";font-weight:600}
+body.calculator-page main .calc-tabs button.calc-tab-plan>span:last-child:after{content:" : mon but, mes chiffres, mon plan étape par étape";font-weight:600}
+body.calculator-page main .calc-tabs button.calc-tab-plan:before{content:"2 · MON BUSINESS PLAN";position:absolute;left:14px;top:-11px;font-size:11px;font-weight:800;letter-spacing:.12em;color:#B93220;background:#f7f7f1;padding:0 8px;border-radius:6px}
+body.calculator-page main .calc-tabs button.calc-tab-plan{position:relative;margin-top:14px}
+.calc-section-desc{max-width:62ch;margin-top:8px;font-size:14px;line-height:1.6;color:#5f5a62}
 body.calculator-page main .b-answer{margin:14px 0 2px;font:600 1.2rem/1.5 'Archivo',sans-serif;color:#fff}
 body.calculator-page main .b-answer b,body.calculator-page main .b-answer strong{font-weight:900;color:var(--amber)}
 @media(max-width:700px){body.calculator-page main .calc-tabs button.calc-tab-plan>span:last-child:after{content:""}}

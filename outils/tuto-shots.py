@@ -9,6 +9,8 @@ srv=socketserver.ThreadingTCPServer(('127.0.0.1',0),functools.partial(Q,director
 threading.Thread(target=srv.serve_forever,daemon=True).start()
 TAB=lambda t:"document.querySelector('[data-tab=\"%s\"]').click()"%t
 MODE=lambda m:"document.querySelector('.calc-mode-switch [data-mode=\"%s\"]').click()"%m
+PICK=lambda i,q:"(()=>{const s=document.getElementById('%s');s.focus();s.value='%s';s.dispatchEvent(new Event('input',{bubbles:true}));document.querySelector('#%s-list [data-b-suggestion=\"0\"]')?.click();})()"%(i,q,i)
+SET=lambda i,v:"(()=>{const el=document.getElementById('%s');if(el){el.value='%s';el.dispatchEvent(new Event('input',{bubbles:true}));}})()"%(i,v)
 # clé : (steps, sélecteur capturé, zone champs, zone réponse)
 SPEC={
  'goal-simple':([TAB('goal')],'#panel-goal .calc-grid','#panel-goal .calc-card:not(.calc-result)','#goal-results'),
@@ -21,7 +23,8 @@ SPEC={
  'order-simple':([TAB('order'),"(()=>{const i=document.getElementById('order-search');i.focus();i.value='fe';i.dispatchEvent(new Event('input',{bubbles:true}));})()"],'#panel-order','#panel-order .calc-card:not(.calc-result)','#order-results'),
  'roi-simple':([TAB('roi'),"(()=>{const s=document.getElementById('f-roi-mode');if(s){s.value='continuous';s.dispatchEvent(new Event('change',{bubbles:true}));}const r=document.getElementById('f-roi-revenueHourly');if(r){r.value='90000';r.dispatchEvent(new Event('input',{bubbles:true}));}})()"],'#panel-roi','#panel-roi .calc-card:not(.calc-result)','#roi-results'),
  'budget-simple':([TAB('budget')],'#panel-budget','#panel-budget .calc-card:not(.calc-result)','#budget-results'),
- 'plan':([TAB('plan')],'#panel-plan','#plan-steps','#plan-summary'),
+ 'compare-simple':([TAB('compare'),PICK('compare-search','kamacho'),PICK('compare-search','bati'),SET('compare-price-0','150000'),SET('compare-price-1','50000'),"document.querySelector('[data-field=\"assets.1.utility\"]')&&(()=>{const el=document.querySelector('[data-field=\"assets.1.utility\"]');el.value='5';el.dispatchEvent(new Event('change',{bubbles:true}));})()"],'#panel-compare','#panel-compare .calc-card:not(.calc-result)','#compare-results'),
+ 'plan':([TAB('plan'),PICK('plan-search','kamacho'),SET('plan-price','1000000')],'#panel-plan','#panel-plan .calc-card:not(.calc-result)','#plan-results'),
  'carnets':([TAB('goal'),"document.getElementById('calc-save').click()","(()=>{const d=document.querySelector('.calc-saved');d.open=true;})()"],'.calc-saved','.calc-saved-body','#saved-list'),
 }
 manifest={}
@@ -40,7 +43,7 @@ with sync_playwright() as p:
             pg=ctx.new_page(); pg.route('**/*',lambda r: r.abort() if 'fonts.g' in r.request.url else r.continue_())
             pg.goto(f'http://127.0.0.1:{port}/calculateurs.html',wait_until='load'); pg.wait_for_timeout(500)
             for s in steps: pg.evaluate(s); pg.wait_for_timeout(350)
-            pg.evaluate("document.querySelectorAll('.lk-sticky').forEach(e=>e.hidden=true);const st=document.createElement('style');st.textContent='header,.lk-rails,.calc-wizard{visibility:hidden!important}';document.head.appendChild(st)")
+            pg.evaluate("document.querySelectorAll('.lk-sticky').forEach(e=>e.hidden=true);const st=document.createElement('style');st.textContent='header,.lk-rails,.calc-wizard{visibility:hidden!important}#lk-status,.lk-status{display:none!important}';document.head.appendChild(st)")
             pg.wait_for_selector(sel.split(',')[0].strip(),state='visible',timeout=8000)
             box=rect(pg,sel.split(',')[0].strip()); ri=rect(pg,zi.split(',')[0].strip()); rr=rect(pg,zr)
             name=key+('-mobile' if mobile else ''); path=f'{OUT}/{name}.webp'; png=f'/tmp/{name}.png'

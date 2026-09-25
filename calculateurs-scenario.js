@@ -2,9 +2,12 @@
 (function(root,factory){'use strict';if(typeof module==='object'&&module.exports)module.exports=factory(require('./calculateurs-engine.js'));else root.LKCalcScenario=factory(root.LKCalcEngine);})(typeof globalThis!=='undefined'?globalThis:this,function(E){
 'use strict';
 const copy=x=>JSON.parse(JSON.stringify(x));
-const tools=['goal','activities','session','purchase','order','roi','budget'];
-const names={goal:'Mon objectif',activities:'Mes activités',session:'Mon temps de jeu',purchase:'Mes achats',order:'Quoi acheter d’abord ?',roi:'Ça vaut le coup ?',budget:'Mon budget',plan:'Mon plan'};
-const assetTemplate={key:'free-1',itemId:'',name:'Mon achat libre',price:100000,referencePrice:null,extras:0,fees:0,owned:false,incomeMode:'none',boostHourly:0};
+const tools=['goal','activities','session','purchase','order','roi','budget','compare'];
+const names={goal:'Mon objectif',activities:'Mes activités',session:'Mon temps de jeu',purchase:'Mes achats',order:'Quoi acheter d’abord ?',roi:'Ça vaut le coup ?',budget:'Mon budget',compare:'Quel achat choisir ?',plan:'Mon business plan'};
+const assetTemplate={key:'free-1',itemId:'',name:'Mon achat libre',price:100000,referencePrice:null,extras:0,fees:0,owned:false,incomeMode:'none',boostHourly:0,utility:3};
+// Quel achat choisir ? et Mon business plan : réglages propres à chaque outil, achats partagés via assets.
+const compareTemplate={keys:[],criterion:'value',hours:10};
+const planTemplate={kind:'purchase',key:'',target:null,usePrerequisites:true,upkeepPerSession:0,priority:'balanced',activity:'',details:false};
 function defaults(old){
  const s=copy(old);s.version=3;s.views=Object.fromEntries([...tools,'plan'].map(t=>[t,'quick']));
  s.assets=[copy(assetTemplate)];s.purchase={key:'free-1'};
@@ -12,6 +15,7 @@ function defaults(old){
  s.activities=s.activities.map(a=>({...a,prepOnce:false,requiresPurchaseIds:[]}));
  s.roi={key:'free-1',mode:'estimate',activityIds:[],hours:10,revenueHourly:null,costHourly:0,gainPercent:20,durationReduction:0,recoveryActivity:'',compareKey:''};
  s.order={keys:[]};s.budget={source:'basket',extra:0,allocations:[50000,60000,20000,10000,0]};
+ s.compare=copy(compareTemplate);s.plan=copy(planTemplate);
  s.completed=[];return s;
 }
 function asset(s,key){return s.assets.find(a=>a.key===key);}
@@ -61,6 +65,9 @@ function validate(raw,initial){
  if(s.activities.some((a,i)=>a.id!==initial.activities[i].id))throw Error('Référence d’activité invalide.');
  if(new Set(s.assets.map(a=>a.key)).size!==s.assets.length||s.assets.some(a=>!a.key||!['none','personal','roi'].includes(a.incomeMode)))throw Error('Références d’achats incompatibles.');
  if(!['estimate','new','improve','continuous'].includes(s.roi.mode)||!['basket','manual'].includes(s.budget.source))throw Error('Modèle de calcul incompatible.');
+ if(!['value','cheapest','fastest','profit','utility'].includes(s.compare.criterion)||!['purchase','amount'].includes(s.plan.kind)||!['balanced','fast','safe'].includes(s.plan.priority))throw Error('Réglage de comparaison ou de plan incompatible.');
+ s.compare.keys=s.compare.keys.filter(k=>asset(s,k)).slice(0,6);if(s.plan.key&&!asset(s,s.plan.key))s.plan.key='';
+ s.assets.forEach(a=>{if(!Number.isInteger(a.utility)||a.utility<1||a.utility>5)a.utility=3;});
  for(const t of [...tools,'plan'])if(!['quick','guided','advanced'].includes(s.views[t]))s.views[t]='quick';
  s.mode=s.views[s.tab];return s;
 }
@@ -111,7 +118,7 @@ function blank(current){
  s.goal={...s.goal,capital:null,target:null,hourly:null,dailyMinutes:null,reserve:0,players:1,selected:'scenario-a'};
  s.assets=[{...copy(assetTemplate),price:null}];s.purchase={key:'free-1'};
  s.roi={...s.roi,key:'free-1',mode:'estimate',hours:null,gainPercent:0,durationReduction:0,activityIds:[],revenueHourly:null,costHourly:0,compareKey:'',recoveryActivity:''};
- s.order={keys:[]};s.budget={source:'manual',extra:0,allocations:[0,0,0,0,0]};
+ s.order={keys:[]};s.budget={source:'manual',extra:0,allocations:[0,0,0,0,0]};s.compare={...copy(compareTemplate)};s.plan={...copy(planTemplate),key:''};
  s.activities=s.activities.map((a,i)=>({...a,name:'Mon activité '+String.fromCharCode(65+i),reward:null,duration:null,cost:0,prep:0,cooldown:0,share:100,investment:0,players:1,owned:false,prepOnce:false,requiresPurchaseIds:[]}));
  s.session={...s.session,enabled:['scenario-a'],minutes:null,usualMinutes:null,daysPerWeek:null};s.inverse={selected:'scenario-a',minutes:null};
  return s;
@@ -124,13 +131,28 @@ function orderInput(s,source=[]){
  return {capital:s.goal.capital,reserve:s.goal.reserve,hourly:s.goal.hourly,items};
 }
 function budgetInput(s){const allocations=s.budget.source==='basket'?s.order.keys.map(k=>{const a=asset(s,k);return a?.owned?0:!a||a.price===null||a.extras===null||a.fees===null?null:a.price+a.extras+a.fees;}):s.budget.allocations.slice();allocations.push(s.budget.extra);return{capital:s.goal.capital,reserve:s.goal.reserve,allocations};}
+function chooseInput(s,source=[]){
+ const items=s.compare.keys.map(k=>{const a=asset(s,k);if(!a)return null;let income=null;if(a.incomeMode==='personal'&&a.boostHourly>0)income=a.boostHourly;if(a.incomeMode==='roi'){const r=roi(s,source);if(s.roi.key===k&&['new','improve','continuous'].includes(s.roi.mode)&&r.valid&&Number.isFinite(r.netHourly)&&r.netHourly>0)income=r.netHourly;}
+  return {name:a.name,price:a.owned?0:a.price,extras:a.extras,fees:a.fees,utility:a.utility,incomeHourly:income};}).filter(Boolean);
+ return {capital:s.goal.capital,reserve:s.goal.reserve,hourly:s.goal.hourly,dailyMinutes:s.goal.dailyMinutes,hours:s.compare.hours,criterion:s.compare.criterion,items};
+}
+function planHourly(s,source=[]){if(!s.plan.activity)return s.goal.hourly;const a=activities(s,source).find(x=>x.id===s.plan.activity);const r=a&&E.activity(a);return r?.valid&&Number.isFinite(r.hourly)?r.hourly:null;}
+function planInput(s,source=[]){
+ const goalAsset=s.plan.kind==='purchase'?asset(s,s.plan.key):null;
+ const prerequisites=s.plan.usePrerequisites?s.order.keys.filter(k=>k!==s.plan.key).map(k=>{const a=asset(s,k);if(!a||a.owned)return null;return {name:a.name,price:a.price===null||a.extras===null||a.fees===null?null:a.price+a.extras+a.fees,boostHourly:a.incomeMode==='personal'?a.boostHourly:0};}).filter(Boolean):[];
+ let goalIncome=0;if(goalAsset){if(goalAsset.incomeMode==='personal')goalIncome=goalAsset.boostHourly;if(goalAsset.incomeMode==='roi'){const r=roi(s,source);if(s.roi.key===goalAsset.key&&r.valid&&Number.isFinite(r.netHourly)&&r.netHourly>0)goalIncome=r.netHourly;}}
+ return {capital:s.goal.capital,reserve:s.plan.priority==='safe'?s.goal.reserve:s.plan.priority==='fast'?0:s.goal.reserve,hourly:planHourly(s,source),dailyMinutes:s.goal.dailyMinutes,daysPerWeek:s.session.daysPerWeek==null?7:s.session.daysPerWeek,upkeepPerSession:s.plan.upkeepPerSession==null?0:s.plan.upkeepPerSession,
+  goalName:goalAsset?goalAsset.name:null,goalPrice:goalAsset?(goalAsset.price===null||goalAsset.extras===null||goalAsset.fees===null?null:goalAsset.price+goalAsset.extras+goalAsset.fees):null,goalIncomeHourly:goalIncome,target:s.plan.kind==='amount'?(s.plan.target===null?s.goal.target:s.plan.target):null,prerequisites};
+}
 function evaluate(tool,s,source=[]){
+ if(tool==='compare')return E.choose(chooseInput(s,source));
+ if(tool==='plan'){const i=planInput(s,source);if(s.plan.kind==='purchase'&&!asset(s,s.plan.key))return{valid:false,reason:'Choisis ce que tu veux acheter, ou dis-moi la somme que tu veux avoir.'};if(i.hourly===null)return{valid:false,reason:'Écris ce que tu gagnes par heure, ou choisis une activité avec des chiffres.'};return E.businessPlan(i);}
  if(tool==='goal')return goal(s,source);if(tool==='session')return session(s,source);if(tool==='roi')return roi(s,source);if(tool==='order')return E.order(orderInput(s,source));if(tool==='budget')return E.budget(budgetInput(s));
  if(tool==='purchase'){const p=purchase(s,source);return E.purchase({...p,capital:p.capital===null||p.reserve===null?null:p.capital-p.reserve,price:p.price===null||p.extras===null?null:p.price+p.extras});}
  if(tool==='activities'){if(!Number.isInteger(s.goal.players)||s.goal.players<1||s.goal.players>100)return{valid:false,reason:'Écris un nombre de joueurs entre 1 et 100.'};const a=activities(s,source).find(a=>a.id===s.inverse.selected);if(!a)return{valid:false,reason:'Choisis une activité.'};if(a.players>s.goal.players)return{valid:false,reason:'Cette activité se joue à '+a.players+' joueurs ; vous êtes '+s.goal.players+'. Ajuste ton groupe ou choisis un scénario solo.'};if((a.requiresPurchaseIds||[]).some(id=>!s.assets.some(x=>x.itemId===id&&x.owned)))return{valid:false,reason:'Il te manque un achat pour cette activité. Coche « Je l’ai déjà » dans Quoi acheter d’abord.'};return E.inverse({...s.inverse,capital:s.goal.capital,reserve:s.goal.reserve,activity:a});}
  return{valid:false,reason:'Choisis un outil.'};
 }
-const metrics={goal:['totalMinutes','Temps de jeu pour mon objectif','min',-1],session:['profit','Gagné pendant la partie','$',1],activities:['profit','Gagné, achat de départ enlevé','$',1],roi:['netProfit','Gagné au final, prix enlevé','$',1],purchase:['remaining','Ce qu’il me reste après l’achat','$',1],order:['totalHours','Temps de jeu jusqu’au dernier achat','h',-1],budget:['available','Ce qu’il me reste, sans l’argent mis de côté','$',1]};
+const metrics={compare:['bestWaitHours','Temps de jeu avant d’avoir le choix retenu','h',-1],goal:['totalMinutes','Temps de jeu pour mon objectif','min',-1],session:['profit','Gagné pendant la partie','$',1],activities:['profit','Gagné, achat de départ enlevé','$',1],roi:['netProfit','Gagné au final, prix enlevé','$',1],purchase:['remaining','Ce qu’il me reste après l’achat','$',1],order:['totalHours','Temps de jeu jusqu’au dernier achat','h',-1],budget:['available','Ce qu’il me reste, sans l’argent mis de côté','$',1]};
 function metric(tool,s){return tool==='roi'&&s.roi.mode==='estimate'?['remaining','Ce qu’il me reste après cet achat','$',1]:metrics[tool];}
 function sensitivity(tool,s,source=[]){
  let path,label,sourceInput=false;
@@ -139,7 +161,7 @@ function sensitivity(tool,s,source=[]){
  if(tool==='activities')reward(s.inverse.selected);
  if(tool==='session'){const r=session(s,source),id=r.valid?r.timeline.find(x=>x.net>0)?.id:null;reward(id||eligible(s,source).find(a=>E.activity(a).valid)?.id);}
  if(['roi','purchase'].includes(tool)){const i=s.assets.findIndex(a=>a.key===(tool==='roi'?s.roi.key:s.purchase.key));if(i<0)return null;path=['assets',i,'price'];label='Prix d’achat : +20 % = achat plus cher';}
- if(tool==='order'){path=['goal','hourly'];label='Gain net initial par heure : +20 % = revenu plus élevé';}
+ if(tool==='order'||tool==='compare'){path=['goal','hourly'];label='Ce que tu gagnes par heure : +20 % = tu attends moins';}
  if(tool==='budget'){const first=s.budget.source==='basket'?s.assets.findIndex(a=>a.key===s.order.keys[0]):-1;path=first>=0?['assets',first,'price']:s.budget.source==='manual'?['budget','allocations',0]:['budget','extra'];label='Coût du premier poste du budget uniquement';}
  if(!path)return null;let value=sourceInput?source:s;for(const k of path)value=value[k];
  return{label,rows:[.8,1,1.2].map(f=>{const c=copy(s),sources=sourceInput?copy(source):source;let p=sourceInput?sources:c;path.slice(0,-1).forEach(k=>p=p[k]);const v=Number.isFinite(value)?Math.min(1e12,value*f):null;p[path.at(-1)]=v;return{factor:f,value:v,bounded:Number.isFinite(value)&&value*f>1e12,result:evaluate(tool,c,sources)};})};
@@ -147,5 +169,5 @@ function sensitivity(tool,s,source=[]){
 function signature(s){const c=copy(s);delete c.name;delete c.mode;delete c.views;delete c.tab;delete c.catalogue;delete c.completed;return JSON.stringify(c);}
 function referenceWarnings(s,catalogue){const out=[];s.assets.forEach(a=>{if(!a.itemId)return;const item=catalogue.find(x=>x.id===a.itemId);if(!item)out.push(a.name+' : cette fiche n’existe plus, ton prix est gardé.');else if(a.referencePrice!==item.price)out.push(item.name+' : le prix du site a changé ; vérifie ton chiffre.');});return out;}
 function initial(dataVersion,presets){return defaults({version:2,dataVersion,mode:'quick',model:'continuous',name:'Mon premier million',tab:'goal',goal:{capital:200000,target:1000000,hourly:100000,reserve:0,dailyMinutes:60,players:1,selected:'scenario-a'},activities:presets.map(a=>({id:a.id,name:a.name,reward:a.reward,cost:a.cost,duration:a.duration,prep:a.prep,cooldown:a.cooldown,share:a.share,investment:a.investment,players:a.players,owned:false})),session:{minutes:60,maxRepeat:100,enabled:['scenario-a','scenario-b','scenario-c']},inverse:{minutes:60,selected:'scenario-a'},purchase:{itemId:'',price:100000,hourly:50000,boostHourly:0,capital:200000,target:1000000,reserve:0,extras:0},catalogue:{query:'',type:'all',status:'all',maxPrice:null,sort:'name',favorites:[],compareIds:[],favoritesOnly:false}});}
-return Object.freeze({copy,tools,names,defaults,initial,validate,migrate,asset,addAsset,activities,eligible,purchase,goal,session,projection,roi,decision,blank,orderInput,budgetInput,evaluate,metrics,metric,sensitivity,signature,referenceWarnings});
+return Object.freeze({copy,tools,names,defaults,initial,validate,migrate,asset,addAsset,activities,eligible,purchase,goal,session,projection,roi,decision,blank,orderInput,budgetInput,chooseInput,planInput,planHourly,evaluate,metrics,metric,sensitivity,signature,referenceWarnings});
 });

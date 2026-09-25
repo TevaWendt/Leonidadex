@@ -57,6 +57,14 @@ Le calculateur reste entièrement statique, gratuit et sans compte. Les sept cal
 - `progression-core.js` (`LKProgression.create`) : suivi commun, export / import versionné, migration sans réécriture. Tests : `outils/tests/lot-d-progression.test.cjs`.
 - Pour reconstruire le site actuel après un changement du Lot D : `node outils/regenerer.cjs` puis `node outils/verifier.js`.
 
+## Lot B de la refonte (v7.31, 25 septembre 2026)
+
+- Moteur : `calculateurs-engine.js` expose `choose(input)` (2 à 6 achats, critère `value` / `cheapest` / `fastest` / `profit` / `utility`, score utilité par dollar, temps avant de pouvoir acheter, remboursement) et `businessPlan(input)` (but = achat ou somme, réserve, gain effectif après dépense par partie, achats préalables enchaînés via `order`, jalons, variantes ±20 %, jour calendaire de chaque étape selon les jours par semaine). Fonctions pures, testées dans `outils/tests/calculateurs-engine.test.cjs`.
+- Scénario : `calculateurs-scenario.js` ajoute `compare` et `plan` à l’état (v3 inchangée : les clés absentes prennent les valeurs par défaut) et les entrées `chooseInput`, `planInput`, `planHourly` ; `assets[].utility` (1 à 5).
+- Interface : `calculateurs-workspace.js` rend les panneaux `compare` et `plan` ; `calculateurs-workspace.css` cache en Simple et Pas à pas les tableaux, graphiques, comparaisons et « Comment est-ce calculé ? » (`#calc-panels[data-mode]`), et en Pas à pas les champs `.b-expert`.
+- Tuto : `outils/gen-tuto.cjs` choisit les chapitres de `outils/tuto.json` par identifiant ; les captures viennent de `outils/tuto-shots.py` (spécifications `compare-simple`, `plan`, versions mobiles).
+- Léo : deux fiches achetables nommées avec « ou / comparer / lequel » → `compare` ; « business plan » → `plan` ; `leo-link.js` remplit `compare.keys` ou `plan.key` à l’ouverture du calculateur.
+
 ## Lot A de la refonte (v7.30, 25 septembre 2026)
 
 - Menu et pied de page : `outils/site-shell.cjs` lit `outils/acquisitions.json` ; une catégorie apparaît dans « S’équiper » si `menu:true` (ordre `menuOrder`), et une catégorie `alias` devient une page de renvoi vers la section qui l’a absorbée (générée par `gen-acquisitions.cjs`, hors index et sitemap).

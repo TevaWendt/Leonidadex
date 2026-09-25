@@ -1,0 +1,15 @@
+LEONIDAKIT v7.31 — LOT B — archive « modifs » (25 septembre 2026)
+
+Base attendue : le zip Leonidadex-main (5) = v7.29 (celui que tu m’as envoyé).
+Cette archive contient le lot A (v7.30) ET le lot B (v7.31) : tu peux l’appliquer directement sur la v7.29,
+ou par-dessus la v7.30 si tu l’as déjà posée (mêmes fichiers, versions plus récentes).
+Contenu : fichiers ajoutés ou modifiés seulement, chemins exacts depuis la racine. Rien à supprimer.
+
+1. Copie ton dossier actuel (sauvegarde).
+2. Extrais l’archive dans la racine du site, écrase les fichiers homonymes.
+3. Ouvre calculateurs.html : onglet « Quel achat choisir ? » (deux fiches, un critère), puis « Mon business plan »
+   (un but, tes chiffres, coche « Afficher plus de détails »). Ouvre tuto.html (chapitres 11 et 13).
+   Demande à Léo : « Kamacho ou Bati 801 ? » et « Fais-moi un business plan pour acheter un Kamacho ».
+4. Mets en ligne (aucune commande de build).
+
+Détails : outils/CHANGEMENTS-v7.31.txt (lot B), outils/CHANGEMENTS-v7.30.txt (lot A) et outils/ETAT_AUDIT.md.

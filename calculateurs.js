@@ -8,7 +8,7 @@ const money=n=>Number.isFinite(n)?nf.format(n)+'\u00a0$':'—';
 const hours=n=>{if(!Number.isFinite(n))return '—';const m=Math.ceil(n*60-1e-8);return m<60?m+' min':Math.floor(m/60)+' h'+(m%60?' '+String(m%60).padStart(2,'0'):'');};
 const warning=s=>'<p class="calc-warning">'+esc(s||'Remplis les cases pour voir ta réponse.')+'</p>';
 const stats=items=>'<div class="calc-stats">'+items.map(([label,value])=>'<div class="calc-stat"><strong>'+esc(value)+'</strong><span>'+esc(label)+'</span></div>').join('')+'</div>';
-const tabs=['goal','purchase','session','budget','order','roi','activities','plan'];
+const tabs=['goal','purchase','session','budget','order','roi','activities','compare','plan'];
 const tabNames=B.names;
 const labels={vehicle:'Véhicule',weapon:'Équipement',property:'Demeure',business:'Entreprise',place:'Lieu',hideout:'Planque',style:'Vêtements et style',customization:'Personnalisation',consumable:'Consommable',ammo:'Munitions',housing:'Logement',activity:'Activité'};
 const tutorialParams=new URLSearchParams(location.search),tutorialChapters=['demarrer','modes','objectif','activites','temps','achats','comparateur','ordre','rentabilite','budget','carnets','plan','sources','faq'];
@@ -182,7 +182,7 @@ function commitRecent(){}
 function changed(){
  $('goal-continuous-fields').hidden=state.model!=='continuous';$('goal-cycle-fields').hidden=state.model!=='cycles';
  for(const id of ['f-goal-selected','f-inverse-selected'])for(const o of $(id).options){const a=findActivity(o.value);if(a)o.textContent=a.name+(a.status==='manual'?' · à moi':' · du site');}
- renderGoal();renderActivities();renderPurchase();workspace.render();saveLocal();clearTimeout(liveTimer);liveTimer=setTimeout(()=>{if(state.tab==='activities'){$('activity-live').textContent=activityAnnouncement();return;}$('calc-live').textContent=state.tab==='plan'?'Plan actualisé.':workspace.summary(state.tab);},650);
+ renderGoal();renderActivities();renderPurchase();workspace.render();saveLocal();clearTimeout(liveTimer);liveTimer=setTimeout(()=>{if(state.tab==='activities'){$('activity-live').textContent=activityAnnouncement();return;}$('calc-live').textContent=state.tab==='plan'?'Business plan actualisé.':workspace.summary(state.tab);},650);
 }
 function setPath(path,value){const parts=path.split('.');let o=state;for(let i=0;i<parts.length-1;i++){if(!Object.prototype.hasOwnProperty.call(o,parts[i]))return;o=o[parts[i]];}const k=parts.at(-1);if(Object.prototype.hasOwnProperty.call(o,k))o[k]=value;}
 function resetFilters(){state.catalogue={...initial.catalogue,favorites:state.catalogue.favorites,compareIds:state.catalogue.compareIds};refreshCatalogueFilters();}

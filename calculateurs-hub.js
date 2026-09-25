@@ -4,6 +4,8 @@
   const $ = id => document.getElementById(id);
   const normalize = value => String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
   const rules = [
+    { tab: 'plan', label: 'Mon business plan', re: /business plan|mon plan|plan complet|etape par etape|quoi faire en premier|plan d'action/ },
+    { tab: 'compare', label: 'Quel achat choisir ?', re: /choisir|comparer|lequel|laquelle|le mieux|meilleur achat|rapport qualite|le plus rentable|le moins cher|\bou\b.*\bou\b/ },
     { tab: 'order', label: 'Quoi acheter d’abord ?', re: /\bordre\b|priorit|d'abord|en premier|sequence/ },
     { tab: 'roi', label: 'Ça vaut le coup ?', re: /rentab|\broi\b|amorti|retour sur|investi|seuil/ },
     { tab: 'session', label: 'Mon temps de jeu', re: /session|j'ai du temps|minutes?\b|temps disponible/ },

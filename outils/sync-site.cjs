@@ -123,7 +123,7 @@ require('child_process').execFileSync(process.execPath,[path.join(__dirname,'gen
  const extra=[];
  for(const file of fs.readdirSync(root).filter(f=>f.endsWith('.html')&&!f.startsWith('google')&&f!=='404.html')){
   const html=readFile(file);if(/http-equiv="refresh"/.test(html))continue; // Le noindex des moteurs externes n’exclut pas la recherche interne.
-  const label=({'a-propos.html':'À propos','contact.html':'Contact','mentions-legales.html':'Mentions et confidentialité','calculateurs.html':'Calculateur : sept outils','tuto.html':'Tuto du calculateur','index.html':'Accueil — Leonidakit'})[file]||html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/)?.[1]?.replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim();
+  const label=({'a-propos.html':'À propos','contact.html':'Contact','mentions-legales.html':'Mentions et confidentialité','calculateurs.html':'Calculateur : huit calculs et un business plan','tuto.html':'Tuto du calculateur','index.html':'Accueil — Leonidakit'})[file]||html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/)?.[1]?.replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim();
   if(!label)continue;const desc=html.match(/<meta name="description" content="([^"]*)"/)?.[1]||'';
   const synonyms=({'tuto.html':'tutoriel aide apprendre','achats.html':'achats acheter acquisitions','a-propos.html':'a propos equipe projet fonctionnement sources','contact.html':'contact erreur correction signalement retrait','style.html':'vetements habits looks coiffures style','personnalisations.html':'customisation ameliorations peinture tuning','medias.html':'credits photos images sources droits'})[file]||'';
   extra.push({l:label,k:file.includes('calcul')||file==='tuto.html'?'Outil':'Page',u:'/'+file,s:label+' '+desc+' '+synonyms,w:-1});

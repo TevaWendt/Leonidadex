@@ -48,3 +48,12 @@ for(const value of [null,false,0,''])test('Le contrat refuse values de type '+JS
 test('Un synonyme éditorial d’intention fonctionne sans changer le moteur',()=>{const edited=structuredClone(data);edited.tools.find(x=>x.id==='session').terms.push('petite pause');assert.equal(C.create(edited).answer('Préparer ma petite pause').request.tool,'session');});
 test('La projection Léo est à jour avec ses sources canoniques',()=>{const crypto=require('crypto'),manifest=JSON.parse(fs.readFileSync(root+'/outils/leo-index-manifest.json'));for(const [file,expected] of Object.entries(manifest.inputs)){const actual=crypto.createHash('sha256').update(fs.readFileSync(root+'/'+file,'utf8').replace(/\?v=[a-f0-9]+/g,'')).digest('hex');assert.equal(actual,expected,'Régénérer l’index après modification de '+file);}assert.equal(manifest.items,data.items.length);});
 test('Les fiches de Léo référencent des achats et routes réellement livrés',()=>{assert.equal(new Set(data.items.map(x=>x.key)).size,data.items.length);for(const x of data.items){assert.ok(fs.existsSync(root+x.url.split('#')[0]),x.url);if(x.calcId)assert.ok(catalogue.some(a=>a.id===x.calcId),x.calcId);if(x.image)assert.ok(fs.existsSync(root+x.image),x.image);}});
+test('Lot B : deux fiches nommées vont dans Quel achat choisir ?, une fiche et « business plan » vont dans Mon business plan',()=>{
+ const xs=core.items.filter(x=>x.calcId).slice(0,2);
+ const a=ask(xs[0].name+' ou '+xs[1].name+' ?');assert.equal(a.kind,'calc');assert.equal(a.request.tool,'compare');assert.deepEqual(a.request.items,[xs[0].calcId,xs[1].calcId]);
+ const b=ask('Fais-moi un business plan pour acheter '+xs[0].name);assert.equal(b.kind,'calc');assert.equal(b.request.tool,'plan');assert.deepEqual(b.request.items,[xs[0].calcId]);
+ assert.equal(ask('Dans quel ordre acheter '+xs[0].name+' et '+xs[1].name+' ?').request.tool,'order');
+ assert.equal(ask('comparer mes activités').request.tool,'activities');
+ const s=L.apply(a.request,initial,initial,B,catalogue,'new',activities);assert.equal(s.tab,'compare');assert.equal(s.compare.keys.length,2);
+ const t=L.apply(b.request,initial,initial,B,catalogue,'new',activities);assert.equal(t.tab,'plan');assert.equal(t.plan.kind,'purchase');assert.ok(t.plan.key);assert.equal(B.asset(t,t.plan.key).itemId,xs[0].calcId);
+});

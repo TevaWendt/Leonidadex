@@ -148,25 +148,47 @@
       "alt": "Mon budget : 200 000 $, 30 000 $ de côté, réponse « il te reste 30 000 $ » avec la barre."
     },
     {
+      "id": "choisir",
+      "tool": "compare",
+      "title": "Quel achat choisir ?",
+      "question": "Entre plusieurs achats, lequel prendre ?",
+      "use": "Mets deux à six achats côte à côte avec les mêmes chiffres de départ. Pour chacun : le prix, si tu peux l’acheter, quand, ton envie (1 à 5), ce que ça te coûte en temps de jeu et, si tu l’écris, ce que ça rapporte.",
+      "simple": "Trois questions : « Quels achats veux-tu comparer ? », « Combien as-tu ? », « Ce qui compte le plus pour toi ». La réponse : « Pour toi, c’est X » avec la raison, et le meilleur choix selon chaque critère.",
+      "expert": "Le tableau complet (prix, quand, envie, envie pour 100 000 $, temps pour regagner le prix, remboursement), le temps où tu t’en sers, et ce que chaque achat te fait gagner en plus.",
+      "steps": [
+        "Cherche un achat dans le site (« kamacho », « bati »…) ou ajoute un achat libre, puis écris son prix si le site ne le connaît pas.",
+        "Note ton envie de 1 à 5 pour chaque achat. C’est ta note à toi : elle sert au rapport envie / prix.",
+        "Choisis ce qui compte le plus : le rapport envie / prix, le moins cher, le plus vite accessible, celui qui se rembourse le plus vite, ou le plus d’envie."
+      ],
+      "example": "Exemple à essayer : Kamacho à 150 000 $ (envie 5), Bati 801 à 50 000 $ (envie 3), un achat libre à 400 000 $ (envie 3), avec 200 000 $ en poche et 100 000 $ par heure.",
+      "result": "« Pour toi, c’est Bati 801 : le meilleur rapport envie / prix. » Le Kamacho gagne sur l’envie, l’achat libre arrive « dans 2 h de jeu ».",
+      "try": "Change « Ce qui compte » pour « Le plus d’envie » : la réponse devient le Kamacho, et le tableau ne bouge pas.",
+      "error": "Comparer avec des prix imaginés très différents de la réalité. Un prix inconnu, c’est toi qui l’écris : garde-le raisonnable, ou compare seulement des fiches au prix connu.",
+      "capture": "compare-simple",
+      "mobile": "compare-simple-mobile",
+      "alt": "Quel achat choisir ? : trois achats comparés et la réponse selon le critère choisi."
+    },
+    {
       "id": "plan",
       "tool": "plan",
-      "title": "Mon plan",
-      "question": "Comment enchaîner les sept calculs sans rien retaper ?",
-      "use": "Mon plan met les sept étapes dans l’ordre : Objectif → Activités → Temps de jeu → Achats → Ordre → Ça vaut le coup → Budget. Chaque étape reprend tes chiffres, et tu valides quand c’est bon.",
-      "simple": "La liste des sept étapes avec leur état (prêt, à compléter), le bouton « Modifier » qui ouvre l’outil, et « C’est bon pour cette étape ✓ ».",
-      "expert": "Les avertissements quand une donnée du site a changé, l’écart entre ton temps de jeu par jour et la durée habituelle d’une partie, et l’enregistrement d’un plan partiel.",
+      "title": "Mon business plan",
+      "question": "Comment savoir quoi faire en premier, en deuxième, en troisième pour atteindre mon but ?",
+      "use": "Le business plan part de ton but (acheter quelque chose, ou avoir une somme), de ce que tu as, de ce que tu gagnes et de ton temps de jeu. Il te rend un plan étape par étape : garder de côté, acheter d’abord ce qu’il faut, jouer tant d’heures, acheter ton but, et ce qui se passe après.",
+      "simple": "Quatre questions : « Quel est ton but ? », « Où en es-tu ? », « Avant et après », « Ce qui compte pour toi ». La réponse dit ce qu’il te manque, le temps de jeu, le nombre de parties et la date estimée, puis les étapes dans l’ordre.",
+      "expert": "Coche « Afficher plus de détails » : les chiffres après chaque étape (ce qu’il te reste, ce que tu gagnes), le calendrier par jalons (25 %, 50 %, 75 %, 100 %) avec les dates, et « Et si… ? » (prix 20 % plus chers, gain 20 % plus bas, réserve utilisée).",
       "steps": [
-        "Commence par l’outil qui répond à ta question. Tu n’as pas besoin d’un objectif ni d’une activité pour ouvrir Mon plan ou enregistrer un plan à moitié rempli.",
-        "Ouvre chaque étape avec « Modifier », vérifie la réponse, puis clique sur « C’est bon pour cette étape ✓ ».",
-        "Donne un nom à ton plan et clique sur « Enregistrer le plan » : il se range dans « Mes plans enregistrés »."
+        "Choisis ton but : cherche une fiche du site ou écris un achat libre, puis son prix (celui que tu imagines s’il n’est pas connu). Ou choisis « Avoir une somme d’argent ».",
+        "Écris ce que tu as, ce que tu gardes de côté, comment tu gagnes ton argent (un chiffre par heure, ou une de tes activités), ton temps de jeu par jour et tes jours par semaine.",
+        "Dis ce que tu dois acheter avant (tes achats de « Quoi acheter d’abord ? »), ce que tu dépenses par partie, et si ton but te fait gagner de l’argent ensuite.",
+        "Choisis ce qui compte pour toi (équilibre, vitesse, sécurité), puis lis ton plan. Enregistre-le, imprime-le ou partage le lien."
       ],
-      "example": "Exemple à essayer : garde les chiffres d’exemple, valide Mon objectif et Mes activités, puis regarde la jauge « étapes validées sur 7 ».",
-      "result": "Le résumé donne le nombre d’étapes prêtes et l’objectif. Un plan enregistré garde toutes les étapes ; si tu changes un chiffre après, les validations sont retirées pour que tu revérifies.",
-      "try": "Change ton objectif dans Mon objectif : reviens dans Mon plan, les étapes qui en dépendent sont recalculées avec le nouveau chiffre.",
-      "error": "Valider une étape sans lire sa réponse. La coche veut dire « j’ai vérifié », pas « le calculateur a fini ».",
+      "example": "Exemple à essayer : but « Kamacho » à 1 000 000 $, 200 000 $ en poche, 100 000 $ par heure, 60 minutes par jour, 7 jours par semaine.",
+      "result": "« Il te manque 800 000 $. En jouant 1 h par jour, tu y arrives en 8 h de jeu, soit 8 jours. » Puis les étapes : gagner ton argent, acheter le Kamacho au jour 8, et « Ensuite, profite » (un achat plaisir ne se rembourse pas tout seul).",
+      "try": "Passe « Je préfère » sur « Le plus vite possible » avec de l’argent de côté : le plan raccourcit, et « Et si… ? » te montre la différence.",
+      "error": "Croire que la date est une promesse. C’est un calcul avec tes chiffres, en supposant que tu joues toujours pareil ; si un chiffre change, le plan se refait.",
       "capture": "plan",
       "mobile": "plan-mobile",
-      "alt": "Mon plan : les sept étapes dans l’ordre avec leur état et le résumé."
+      "alt": "Mon business plan : la fiche à remplir à gauche, la réponse et le plan étape par étape à droite."
     }
   ]
 }

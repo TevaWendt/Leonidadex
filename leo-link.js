@@ -1,7 +1,7 @@
 /* Contrat limité des liens Léo v1. Aucun calcul économique ni texte de conversation. */
 (function(root,factory){'use strict';if(typeof module==='object'&&module.exports)module.exports=factory();else root.LKLeoLink=factory();})(typeof globalThis!=='undefined'?globalThis:this,function(){
 'use strict';
-const VERSION=1,MAX_LENGTH=2600,tools=['goal','session','activities','purchase','roi','order','budget','plan'];
+const VERSION=1,MAX_LENGTH=2600,tools=['goal','session','activities','purchase','roi','order','budget','compare','plan'];
 const limits={capital:[0,1e12],target:[0,1e12],hourly:[0,1e12],reserve:[0,1e12],price:[0,1e12],minutes:[1,1440],dailyMinutes:[1,1440],players:[1,100]};
 const record=x=>!!x&&typeof x==='object'&&!Array.isArray(x),copy=x=>JSON.parse(JSON.stringify(x));
 const safeId=x=>typeof x==='string'&&/^[a-z0-9][a-z0-9:_-]{0,159}$/i.test(x)&&!['constructor','prototype','__proto__'].includes(x);
@@ -21,7 +21,7 @@ function apply(raw,base,initial,B,catalogue,mode,source=[]){
  if(Object.hasOwn(v,'dailyMinutes')){s.session.usualMinutes=v.dailyMinutes;if(!Object.hasOwn(v,'minutes')){s.session.minutes=v.dailyMinutes;s.inverse.minutes=v.dailyMinutes;}}
  if(s.goal.capital!==null&&s.goal.reserve!==null&&s.goal.reserve>s.goal.capital)throw Error('Ce que tu as est plus petit que l’argent gardé de côté. Change l’argent de côté, ou commence un nouveau calcul.');
  const assets=selected.map(item=>B.addAsset(s,item));
- if(assets.length){s.purchase.key=assets[0].key;if(req.tool==='roi'){s.roi.key=assets[0].key;s.roi.mode='estimate';s.roi.activityIds=B.activities(s,source).filter(a=>selected[0].activityIds?.includes(a.id)||a.purchaseIds?.includes(selected[0].id)).map(a=>a.id);}if(req.tool==='order'||req.tool==='plan')s.order.keys=[...new Set([...s.order.keys,...assets.map(a=>a.key)])];}
+ if(assets.length){s.purchase.key=assets[0].key;if(req.tool==='roi'){s.roi.key=assets[0].key;s.roi.mode='estimate';s.roi.activityIds=B.activities(s,source).filter(a=>selected[0].activityIds?.includes(a.id)||a.purchaseIds?.includes(selected[0].id)).map(a=>a.id);}if(req.tool==='order')s.order.keys=[...new Set([...s.order.keys,...assets.map(a=>a.key)])];if(req.tool==='plan'){s.plan=s.plan||{};s.plan.key=assets[0].key;s.plan.kind='purchase';s.order.keys=[...new Set([...s.order.keys,...assets.slice(1).map(a=>a.key)])];}if(req.tool==='compare'){s.compare=s.compare||{keys:[]};s.compare.keys=[...new Set([...(s.compare.keys||[]),...assets.map(a=>a.key)])].slice(0,6);}}
  if(Object.hasOwn(v,'price')){const a=B.asset(s,req.tool==='roi'?s.roi.key:s.purchase.key);a.price=v.price;}
  s.tab=req.tool;s.mode=s.views[req.tool]||'quick';s.completed=[];
  return B.validate(s,initial);

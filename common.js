@@ -137,4 +137,4 @@
 })();
 
 /* Léo : amorçage isolé. Les données ne se chargent qu'à l'ouverture du panneau. */
-(function(){'use strict';if(!document.querySelector('main')||document.getElementById('leo-style'))return;const base=(document.currentScript&&document.currentScript.src||'').replace(/[^/]*$/,'')||'/';const css=document.createElement('link');css.id='leo-style';css.rel='stylesheet';css.href=base+'leo.css?v=8f1da8a77fe1';css.onload=()=>{const script=document.createElement('script');script.src=base+'leo-loader.js?v=8f1da8a77fe1';document.head.append(script);};document.head.append(css);})();
+(function(){'use strict';if(!document.querySelector('main')||document.getElementById('leo-style'))return;const base=(document.currentScript&&document.currentScript.src||'').replace(/[^/]*$/,'')||'/';const css=document.createElement('link');css.id='leo-style';css.rel='stylesheet';css.href=base+'leo.css?v=b7767a94cc56';css.onload=()=>{const script=document.createElement('script');script.src=base+'leo-loader.js?v=b7767a94cc56';document.head.append(script);};document.head.append(css);})();

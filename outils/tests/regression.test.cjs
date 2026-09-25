@@ -173,7 +173,7 @@ test('Calculator question bar routes to the right tool and prefills amounts',wit
  const cases=[["j'ai 200 000 $ et 45 min par jour, quand est-ce que j'atteins 2 millions ?",'goal'],['Répartir mon budget entre véhicule, propriété et réserve','budget'],["Dans quel ordre acheter : véhicule puis propriété ?",'order'],['Quand un achat est-il amorti ?','roi'],["Quelle activité rapporte le plus par heure ?",'activities'],["Puis-je me permettre d'acheter un véhicule à 250000 $ ?",'purchase']];
  for(const [q,tab] of cases){const r=hub.route(q);assert.equal(r.tab,tab,q);assert.equal(a.d.querySelector('[data-tab][aria-selected="true"]').dataset.tab,tab,'onglet '+tab);}
  assert.equal(a.d.getElementById('f-goal-capital').value,'200000');assert.equal(a.d.getElementById('f-goal-target').value,'2000000');assert.equal(a.d.getElementById('f-goal-dailyMinutes').value,'45');
- assert.equal(a.d.querySelectorAll('.lk-tool').length,7);assert.equal(a.d.querySelectorAll('[data-goal-preset]').length,5);
+ assert.equal(a.d.querySelectorAll('.lk-tool').length,9,'8 calculs + le business plan');assert.equal(hub.route('Je veux un business plan pour acheter un Kamacho').tab,'plan');assert.equal(hub.route('Lequel choisir entre un Kamacho et un Bati ?').tab,'compare');assert.equal(a.d.querySelectorAll('[data-goal-preset]').length,5);
  assert.equal(hub.route('Que faire pendant une session de 30 minutes ?').tab,'session');assert.equal(a.d.getElementById('f-session-minutes').value,'30');
  assert.deepEqual(a.errors,[]);
 }));
