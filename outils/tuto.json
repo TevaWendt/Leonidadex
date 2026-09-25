@@ -1,194 +1,194 @@
 {
-  "chapters": [
-    {
-      "id": "objectif",
-      "tool": "goal",
-      "title": "Mon objectif",
-      "question": "Combien de temps pour avoir mon argent ?",
-      "use": "Commence ici. Tu dis combien tu as, combien tu veux et ce que tu gagnes : le calculateur te dit combien de temps de jeu il te faut et en combien de jours tu y arrives.",
-      "simple": "Quatre cases : « J’ai déjà », « Je veux avoir », « Je gagne à peu près ($ par heure de jeu) » et « Je joue chaque jour ». Les boutons rapides et la réglette t’évitent d’écrire.",
-      "expert": "« Garder de l’argent de côté », le nombre de joueurs, la comparaison des trois chemins, la sensibilité (20 % de moins ou de plus) et la comparaison avec un calcul gardé dans le carnet.",
-      "steps": [
-        "Écris ce que tu as dans « J’ai déjà » et ce que tu veux dans « Je veux avoir ». Tu peux cliquer sur 1 M $ ou bouger la réglette.",
-        "Dis comment tu gagnes ton argent : petit à petit par heure de jeu, ou à la fin de chaque mission. Si tu ne sais pas combien tu gagnes, ouvre « Je ne sais pas combien je gagne ».",
-        "Choisis ton temps de jeu par jour (30 min, 1 h, 2 h, 3 h) et lis la réponse : « Il te manque… En jouant… tu y arrives en… jours »."
-      ],
-      "example": "Exemple à essayer : j’ai déjà 200 000 $, je veux avoir 1 000 000 $, je gagne à peu près 100 000 $ par heure de jeu, je joue 1 h par jour. Ce sont des exemples, pas des chiffres du jeu.",
-      "result": "La réponse dit : « Il te manque 800 000 $. En jouant 1 h par jour, tu y arrives en 8 jours. » Dessous, le gros chiffre (8 h de jeu en tout) et le détail : ce qu’il te manque, ce que tu auras à la fin, ce que tu gardes de côté.",
-      "try": "Change « Je gagne à peu près » de 100 000 $ à 50 000 $ : le temps double. Clique sur 2 h par jour : le nombre de jours baisse, mais pas le temps de jeu.",
-      "error": "Écrire son argent total dans « Je gagne à peu près ». Cette case, c’est ce que tu gagnes en une heure de jeu, une fois tes frais payés.",
-      "capture": "goal-simple",
-      "mobile": "goal-simple-mobile",
-      "alt": "Mon objectif en mode Simple : j’ai déjà 200 000 $, je veux avoir 1 000 000 $, réponse 8 h de jeu et 8 jours."
-    },
-    {
-      "id": "activites",
-      "tool": "activities",
-      "title": "Mes activités",
-      "question": "Quelle activité rapporte le plus ?",
-      "use": "Écris ce que tes missions te rapportent et combien de temps elles durent. Le calculateur les classe et te dit ce que tu gagnes en les refaisant pendant ton temps de jeu.",
-      "simple": "« J’ai combien de temps ? » et « Activité à refaire ». Le choix « Je joue seul / à plusieurs ». Les trois exemples A, B et C sont déjà remplis.",
-      "expert": "Le volet « Changer les chiffres de mes activités » : récompense, ce que tu paies à chaque fois, durée, préparation, attente avant de recommencer, ta part, ce qu’il faut acheter une seule fois avant de commencer, joueurs qu’il faut.",
-      "steps": [
-        "Dis combien de temps tu as (30 min, 1 h, 2 h, 3 h) et choisis l’activité à refaire.",
-        "Lis la réponse : « En 1 h, en refaisant …, tu gagnes … avec … missions », et « Ce qui rapporte le plus par heure ».",
-        "Pour mettre tes vrais chiffres, ouvre « Changer les chiffres de mes activités » et remplace les exemples."
-      ],
-      "example": "Exemple à essayer : 60 minutes avec l’exemple A (missions courtes). Une mission rapporte 25 000 $, coûte 2 500 $ et dure 15 minutes.",
-      "result": "En 1 h, tu fais 3 missions et tu gagnes 67 500 $. Le tableau « Ce que rapportent tes activités » classe A, B et C par gain par heure, attente comprise.",
-      "try": "Choisis l’exemple C : il demande d’acheter pour 500 000 $ avant de commencer. La réponse te dit clairement combien il te manque et quoi faire.",
-      "error": "Oublier de dire que tu joues à plusieurs : une activité prévue pour 4 joueurs ne rentre pas si tu es seul. Coche « À plusieurs » et écris votre nombre.",
-      "capture": "activities-simple",
-      "mobile": "activities-simple-mobile",
-      "alt": "Mes activités : 60 minutes avec l’exemple A, réponse 67 500 $ avec 3 missions et le classement des activités."
-    },
-    {
-      "id": "temps",
-      "tool": "session",
-      "title": "Mon temps de jeu",
-      "question": "J’ai 30 minutes : je fais quoi ?",
-      "use": "Tu dis combien de temps tu as ce soir. Le calculateur te propose un programme avec tes activités, te dit ce que tu gagnes et ce que ça fait avancer sur ton objectif.",
-      "simple": "« J’ai combien de temps ? » (15 à 90 min), « Je joue seul / à plusieurs » et les activités que tu veux bien faire. Ton argent, ce que tu gardes de côté et les chiffres de tes activités se changent directement dans cet outil.",
-      "expert": "« Même activité à la suite, au maximum », les jours joués par semaine, la durée habituelle d’une partie, la sensibilité, et « Pourquoi ce programme ? » qui explique le choix.",
-      "steps": [
-        "Choisis ton temps : 15, 30, 45, 60 ou 90 minutes.",
-        "Coche les activités que tu veux bien faire ce soir. Ouvre « Écrire mes activités ici » pour changer leurs gains, frais et durées sans quitter cet outil.",
-        "Lis ce que tu gagnes et le programme dans l’ordre. « Cette partie fait avancer ton objectif de … % » apparaît seulement si tu as écrit un objectif."
-      ],
-      "example": "Exemple à essayer : 60 minutes, les trois exemples cochés, 200 000 $ déjà en poche.",
-      "result": "« En 1 h, tu peux gagner 110 000 $ avec 1 mission. Commence par l’exemple B. » Puis : cette partie fait avancer ton objectif de 13,75 %, il te manquera encore 690 000 $, encore 7 parties, soit environ 7 jours.",
-      "try": "Passe à 30 minutes : seules les missions courtes rentrent. Une mission pas finie ne rapporte rien, donc le programme ne coupe jamais une mission en deux.",
-      "error": "Croire que le programme est le seul possible. Le calculateur essaie beaucoup de programmes et garde celui qui rapporte le plus, mais il peut en exister un meilleur.",
-      "capture": "session-simple",
-      "mobile": "session-simple-mobile",
-      "alt": "Mon temps de jeu : 60 minutes, trois exemples cochés, réponse 110 000 $ avec 1 mission et la part de l’objectif."
-    },
-    {
-      "id": "achats",
-      "tool": "purchase",
-      "title": "Mes achats",
-      "question": "Est-ce que je peux l’acheter ?",
-      "use": "Choisis une voiture, une arme, un lieu ou une entreprise du site, ou écris un prix. Le calculateur te dit si tu peux l’acheter maintenant, et sinon combien de temps de jeu il te faut.",
-      "simple": "Deux étapes : « Quel est ton achat ? » (nom et prix) et « Combien as-tu ? » (ce que tu as, ce que tu gardes de côté). Ce que tu gagnes et ton objectif sont en plus, si tu veux.",
-      "expert": "« Options et frais en plus », l’argent gardé de côté, « Cet achat me fait gagner en plus », la comparaison avec un calcul gardé.",
-      "steps": [
-        "Cherche une fiche dans « Trouve ton prochain achat » et clique sur « Je veux celui-là », ou garde « Mon achat libre ». Un lieu ou une région, ça se visite : le calculateur ne le propose pas à l’achat.",
-        "Écris le prix que tu imagines si le site ne le connaît pas, puis ce que tu as et ce que tu gardes de côté, directement ici.",
-        "Lis la réponse : « Oui, tu peux l’acheter maintenant » ou « Pas encore : il te manque… ». Ouvre « Combien de temps pour regagner ce prix ? » si tu veux ce temps de jeu."
-      ],
-      "example": "Exemple à essayer : un achat à 100 000 $, 200 000 $ déjà en poche, 50 000 $ gagnés par heure de jeu.",
-      "result": "« Oui, tu peux l’acheter maintenant. Il te restera 100 000 $. » Le détail donne aussi le temps de jeu pour regagner ce prix (2 h) et ton objectif si tu achètes ou non.",
-      "try": "Mets un prix de 400 000 $ : « Pas encore : il te manque 200 000 $. Avec ce que tu gagnes, ça fait 4 h de jeu. »",
-      "error": "Prendre le prix affiché pour un prix officiel. Tant que Rockstar n’a rien publié, tous les prix sont « pas encore connus » et c’est toi qui écris le tien.",
-      "capture": "purchase-simple",
-      "mobile": "purchase-simple-mobile",
-      "alt": "Mes achats : un achat à 100 000 $, réponse « Oui, tu peux l’acheter maintenant » et le catalogue avec vignettes."
-    },
-    {
-      "id": "ordre",
-      "tool": "order",
-      "title": "Quoi acheter d’abord ?",
-      "question": "Dans quel ordre acheter pour tout avoir le plus vite ?",
-      "use": "Ajoute deux ou trois achats. Le calculateur compare ton ordre avec l’ordre inverse et l’ordre des prix croissants, et te dit lequel te fait tout avoir le plus tôt.",
-      "simple": "« Ajoute un achat (cherche dans le site) » avec des suggestions en tapant, ou « Ajouter autre chose, sans fiche ». Puis « Ça coûte » pour chaque achat.",
-      "expert": "Frais au départ, argent gardé de côté, « Je l’ai déjà », « Me fait gagner en plus » et l’utilisation du chiffre de « Ça vaut le coup ? ».",
-      "steps": [
-        "Écris ce que tu as, ce que tu gardes de côté et, si tu dois attendre, ce que tu gagnes par heure. Tape les premières lettres d’un nom (« fe » propose Feroci, Cheetah…) et choisis dans la liste, ou ajoute un achat libre.",
-        "Écris le prix que tu imagines pour chacun ; le calculateur attend d’avoir l’argent avant chaque achat.",
-        "Lis la réponse : « Achète d’abord…, puis…, puis… Tout est à toi en … de jeu. » Déplie « Comparer des ordres selon le délai » pour voir l’ordre inverse et l’ordre par prix."
-      ],
-      "example": "Exemple à essayer : trois achats à 30 000 $, 100 000 $ et 150 000 $, avec 200 000 $ déjà en poche et 50 000 $ gagnés par heure de jeu.",
-      "result": "Chaque étape montre quand tu peux payer l’achat, ce qu’il te reste après et ce que tu gagnes ensuite par heure. La comparaison porte sur le temps de jeu, pas sur l’envie que tu as de chaque objet.",
-      "try": "Monte et descends un achat avec les flèches, ou retire-le : la réponse se refait tout de suite. « Annuler » remet un achat retiré par erreur.",
-      "error": "Inventer ce qu’un achat rapporte. « Me fait gagner en plus », c’est ton chiffre à toi : laisse 0 pour une voiture qui ne rapporte rien.",
-      "capture": "order-simple",
-      "mobile": "order-simple-mobile",
-      "alt": "Quoi acheter d’abord : la case de recherche propose des fiches en tapant « fe »."
-    },
-    {
-      "id": "rentabilite",
-      "tool": "roi",
-      "title": "Ça vaut le coup ?",
-      "question": "Après combien de temps mon achat est-il remboursé ?",
-      "use": "Pour un achat qui rapporte de l’argent (une entreprise, un véhicule utile) : choisis l’achat, dis comment il rapporte, et le calculateur te dit après combien d’heures de jeu il est remboursé.",
-      "simple": "Trois étapes : « Quel achat ? », « Puis-je me le permettre ? » (prix, ce que tu as, ce que tu gardes de côté) et « Pourquoi cet achat ? ». « Achat plaisir, ou je ne sais pas ce qu’il rapporte » répond sans objectif ni activité.",
-      "expert": "Améliorations, frais du début, « Récompense en plus », « Mission plus courte », sensibilité et comparaison avec un calcul gardé.",
-      "steps": [
-        "Cherche l’achat dans le site ou clique sur « Écrire un achat libre ». Écris le prix, ce que tu as et ce que tu gardes de côté.",
-        "Pour un achat plaisir, lis ce qu’il te reste et compare « Acheter maintenant » et « Attendre ». Tu peux aussi comparer avec un deuxième achat, du site ou libre.",
-        "Seulement si l’achat te fait gagner de l’argent en plus : dis ce qu’il rapporte par heure, ou coche les activités qu’il rend possibles ou meilleures, et écris combien de temps tu t’en sers."
-      ],
-      "example": "Exemple à essayer : un achat libre à 100 000 $, avec 200 000 $ et 30 000 $ gardés de côté. Comme il ne rapporte rien, il te reste 70 000 $ et personne ne te promet qu’il « se rembourse ».",
-      "result": "La réponse arrive tout de suite : « Tu peux l’acheter. Il te resterait 100 000 $, dont 30 000 $ gardés de côté ». Si tu gagnes 50 000 $ par heure, regagner la même somme prend 2 h de jeu, mais ce n’est pas l’achat qui te rembourse. Si tu dis qu’il te fait gagner 75 000 $ de plus par heure, il est remboursé après 1 h 20.",
-      "try": "Depuis une fiche entreprise (Stock 305, Rideout Customs…), clique sur « Est-ce que ça vaut le coup ? » : l’achat arrive déjà rempli, et tu reviens à la fiche d’un clic.",
-      "error": "Compter comme « gagné grâce à l’achat » ce que tu gagnais déjà sans lui. Dans ce cas, garde « Achat plaisir, ou je ne sais pas ce qu’il rapporte » : le remboursement ne compte que ce que l’achat fait gagner en plus.",
-      "capture": "roi-simple",
-      "mobile": "roi-simple-mobile",
-      "alt": "Ça vaut le coup : un achat à 100 000 $ avec ce qu’il reste après, et la comparaison entre acheter maintenant ou attendre."
-    },
-    {
-      "id": "budget",
-      "tool": "budget",
-      "title": "Mon budget",
-      "question": "Comment partager mon argent ?",
-      "use": "Tu répartis ton argent entre tes envies en gardant une partie de côté. Le calculateur te dit ce qu’il te reste, ou ce qu’il te manque.",
-      "simple": "« J’ai déjà », « Quels achats compter ? » (mes achats de « Quoi acheter d’abord ? » ou je répartis moi-même) et « Autres dépenses prévues ».",
-      "expert": "L’argent gardé de côté, le détail de la répartition (véhicules, investissements, équipement, consommables, autres achats), la sensibilité et la comparaison.",
-      "steps": [
-        "Vérifie « J’ai déjà ».",
-        "Choisis de compter tes achats de « Quoi acheter d’abord ? » ou de répartir toi-même, chose par chose.",
-        "Lis la réponse : « Oui, tu peux tout acheter. Il te reste … » ou « Non : il te manque … »."
-      ],
-      "example": "Exemple à essayer : 200 000 $ déjà en poche, 30 000 $ gardés de côté, 140 000 $ d’achats prévus.",
-      "result": "« Oui, tu peux tout acheter. Il te reste 30 000 $, sans toucher à l’argent mis de côté. » La barre montre la part de ton argent utilisée.",
-      "try": "Ajoute 50 000 $ dans « Autres dépenses prévues » : la réponse passe à « Non : il te manque 20 000 $ » et te dit d’enlever ou de baisser un achat.",
-      "error": "Compter l’argent que tu gagneras plus tard. Le budget ne regarde que ce que tu as maintenant.",
-      "capture": "budget-simple",
-      "mobile": "budget-simple-mobile",
-      "alt": "Mon budget : 200 000 $, 30 000 $ de côté, réponse « il te reste 30 000 $ » avec la barre."
-    },
-    {
-      "id": "choisir",
-      "tool": "compare",
-      "title": "Quel achat choisir ?",
-      "question": "Entre plusieurs achats, lequel prendre ?",
-      "use": "Mets deux à six achats côte à côte avec les mêmes chiffres de départ. Pour chacun : le prix, si tu peux l’acheter, quand, ton envie (1 à 5), ce que ça te coûte en temps de jeu et, si tu l’écris, ce que ça rapporte.",
-      "simple": "Trois questions : « Quels achats veux-tu comparer ? », « Combien as-tu ? », « Ce qui compte le plus pour toi ». La réponse : « Pour toi, c’est X » avec la raison, et le meilleur choix selon chaque critère.",
-      "expert": "Le tableau complet (prix, quand, envie, envie pour 100 000 $, temps pour regagner le prix, remboursement), le temps où tu t’en sers, et ce que chaque achat te fait gagner en plus.",
-      "steps": [
-        "Cherche un achat dans le site (« kamacho », « bati »…) ou ajoute un achat libre, puis écris son prix si le site ne le connaît pas.",
-        "Note ton envie de 1 à 5 pour chaque achat. C’est ta note à toi : elle sert au rapport envie / prix.",
-        "Choisis ce qui compte le plus : le rapport envie / prix, le moins cher, le plus vite accessible, celui qui se rembourse le plus vite, ou le plus d’envie."
-      ],
-      "example": "Exemple à essayer : Kamacho à 150 000 $ (envie 5), Bati 801 à 50 000 $ (envie 3), un achat libre à 400 000 $ (envie 3), avec 200 000 $ en poche et 100 000 $ par heure.",
-      "result": "« Pour toi, c’est Bati 801 : le meilleur rapport envie / prix. » Le Kamacho gagne sur l’envie, l’achat libre arrive « dans 2 h de jeu ».",
-      "try": "Change « Ce qui compte » pour « Le plus d’envie » : la réponse devient le Kamacho, et le tableau ne bouge pas.",
-      "error": "Comparer avec des prix imaginés très différents de la réalité. Un prix inconnu, c’est toi qui l’écris : garde-le raisonnable, ou compare seulement des fiches au prix connu.",
-      "capture": "compare-simple",
-      "mobile": "compare-simple-mobile",
-      "alt": "Quel achat choisir ? : trois achats comparés et la réponse selon le critère choisi."
-    },
-    {
-      "id": "plan",
-      "tool": "plan",
-      "title": "Mon business plan",
-      "question": "Comment savoir quoi faire en premier, en deuxième, en troisième pour atteindre mon but ?",
-      "use": "Le business plan part de ton but (acheter quelque chose, ou avoir une somme), de ce que tu as, de ce que tu gagnes et de ton temps de jeu. Il te rend un plan étape par étape : garder de côté, acheter d’abord ce qu’il faut, jouer tant d’heures, acheter ton but, et ce qui se passe après.",
-      "simple": "Quatre questions : « Quel est ton but ? », « Où en es-tu ? », « Avant et après », « Ce qui compte pour toi ». La réponse dit ce qu’il te manque, le temps de jeu, le nombre de parties et la date estimée, puis les étapes dans l’ordre.",
-      "expert": "Coche « Afficher plus de détails » : les chiffres après chaque étape (ce qu’il te reste, ce que tu gagnes), le calendrier par jalons (25 %, 50 %, 75 %, 100 %) avec les dates, et « Et si… ? » (prix 20 % plus chers, gain 20 % plus bas, réserve utilisée).",
-      "steps": [
-        "Choisis ton but : cherche une fiche du site ou écris un achat libre, puis son prix (celui que tu imagines s’il n’est pas connu). Ou choisis « Avoir une somme d’argent ».",
-        "Écris ce que tu as, ce que tu gardes de côté, comment tu gagnes ton argent (un chiffre par heure, ou une de tes activités), ton temps de jeu par jour et tes jours par semaine.",
-        "Dis ce que tu dois acheter avant (tes achats de « Quoi acheter d’abord ? »), ce que tu dépenses par partie, et si ton but te fait gagner de l’argent ensuite.",
-        "Choisis ce qui compte pour toi (équilibre, vitesse, sécurité), puis lis ton plan. Enregistre-le, imprime-le ou partage le lien."
-      ],
-      "example": "Exemple à essayer : but « Kamacho » à 1 000 000 $, 200 000 $ en poche, 100 000 $ par heure, 60 minutes par jour, 7 jours par semaine.",
-      "result": "« Il te manque 800 000 $. En jouant 1 h par jour, tu y arrives en 8 h de jeu, soit 8 jours. » Puis les étapes : gagner ton argent, acheter le Kamacho au jour 8, et « Ensuite, profite » (un achat plaisir ne se rembourse pas tout seul).",
-      "try": "Passe « Je préfère » sur « Le plus vite possible » avec de l’argent de côté : le plan raccourcit, et « Et si… ? » te montre la différence.",
-      "error": "Croire que la date est une promesse. C’est un calcul avec tes chiffres, en supposant que tu joues toujours pareil ; si un chiffre change, le plan se refait.",
-      "capture": "plan",
-      "mobile": "plan-mobile",
-      "alt": "Mon business plan : la fiche à remplir à gauche, la réponse et le plan étape par étape à droite."
-    }
-  ]
+ "chapters": [
+  {
+   "id": "objectif",
+   "tool": "goal",
+   "title": "Mon objectif",
+   "question": "Combien de temps pour avoir mon argent ?",
+   "use": "Commence ici. Tu dis combien tu as, combien tu veux et ce que tu gagnes : le calculateur te dit combien de temps de jeu il te faut et en combien de jours tu y arrives.",
+   "simple": "Quatre cases : « J’ai déjà », « Je veux avoir », « Je gagne à peu près ($ par heure de jeu) » et « Je joue chaque jour ». Les boutons rapides et la réglette t’évitent d’écrire.",
+   "expert": "« Garder de l’argent de côté », le nombre de joueurs, la comparaison des trois chemins, la sensibilité (20 % de moins ou de plus) et la comparaison avec un calcul gardé dans le carnet.",
+   "steps": [
+    "Écris ce que tu as dans « J’ai déjà » et ce que tu veux dans « Je veux avoir ». Tu peux cliquer sur 1 M $ ou bouger la réglette.",
+    "Dis comment tu gagnes ton argent : petit à petit par heure de jeu, ou à la fin de chaque mission. Si tu ne sais pas combien tu gagnes, ouvre « Je ne sais pas combien je gagne ».",
+    "Choisis ton temps de jeu par jour (30 min, 1 h, 2 h, 3 h) et lis la réponse : « Il te manque… En jouant… tu y arrives en… jours »."
+   ],
+   "example": "Exemple à essayer : j’ai déjà 200 000 $, je veux avoir 1 000 000 $, je gagne à peu près 100 000 $ par heure de jeu, je joue 1 h par jour. Ce sont des exemples, pas des chiffres du jeu.",
+   "result": "La réponse dit : « Il te manque 800 000 $. En jouant 1 h par jour, tu y arrives en 8 jours. » Dessous, le gros chiffre (8 h de jeu en tout) et le détail : ce qu’il te manque, ce que tu auras à la fin, ce que tu gardes de côté.",
+   "try": "Change « Je gagne à peu près » de 100 000 $ à 50 000 $ : le temps double. Clique sur 2 h par jour : le nombre de jours baisse, mais pas le temps de jeu.",
+   "error": "Écrire son argent total dans « Je gagne à peu près ». Cette case, c’est ce que tu gagnes en une heure de jeu, une fois tes frais payés.",
+   "capture": "goal-simple",
+   "mobile": "goal-simple-mobile",
+   "alt": "Mon objectif en mode Simple : j’ai déjà 200 000 $, je veux avoir 1 000 000 $, réponse 8 h de jeu et 8 jours."
+  },
+  {
+   "id": "activites",
+   "tool": "activities",
+   "title": "Mes activités",
+   "question": "Quelle activité rapporte le plus ?",
+   "use": "Écris ce que tes missions te rapportent et combien de temps elles durent. Le calculateur les classe et te dit ce que tu gagnes en les refaisant pendant ton temps de jeu.",
+   "simple": "« J’ai combien de temps ? » et « Activité à refaire ». Le choix « Je joue seul / à plusieurs ». Les trois exemples A, B et C sont déjà remplis.",
+   "expert": "Le volet « Changer les chiffres de mes activités » : récompense, ce que tu paies à chaque fois, durée, préparation, attente avant de recommencer, ta part, ce qu’il faut acheter une seule fois avant de commencer, joueurs qu’il faut.",
+   "steps": [
+    "Dis combien de temps tu as (30 min, 1 h, 2 h, 3 h) et choisis l’activité à refaire.",
+    "Lis la réponse : « En 1 h, en refaisant …, tu gagnes … avec … missions », et « Ce qui rapporte le plus par heure ».",
+    "Pour mettre tes vrais chiffres, ouvre « Changer les chiffres de mes activités » et remplace les exemples."
+   ],
+   "example": "Exemple à essayer : 60 minutes avec l’exemple A (missions courtes). Une mission rapporte 25 000 $, coûte 2 500 $ et dure 15 minutes.",
+   "result": "En 1 h, tu fais 3 missions et tu gagnes 67 500 $. Le tableau « Ce que rapportent tes activités » classe A, B et C par gain par heure, attente comprise.",
+   "try": "Choisis l’exemple C : il demande d’acheter pour 500 000 $ avant de commencer. La réponse te dit clairement combien il te manque et quoi faire.",
+   "error": "Oublier de dire que tu joues à plusieurs : une activité prévue pour 4 joueurs ne rentre pas si tu es seul. Coche « À plusieurs » et écris votre nombre.",
+   "capture": "activities-simple",
+   "mobile": "activities-simple-mobile",
+   "alt": "Mes activités : 60 minutes avec l’exemple A, réponse 67 500 $ avec 3 missions et le classement des activités."
+  },
+  {
+   "id": "temps",
+   "tool": "session",
+   "title": "Mon temps de jeu",
+   "question": "J’ai 30 minutes : je fais quoi ?",
+   "use": "Tu dis combien de temps tu as ce soir. Le calculateur te propose un programme avec tes activités, te dit ce que tu gagnes et ce que ça fait avancer sur ton objectif.",
+   "simple": "« J’ai combien de temps ? » (15 à 90 min), « Je joue seul / à plusieurs » et les activités que tu veux bien faire. Ton argent, ce que tu gardes de côté et les chiffres de tes activités se changent directement dans cet outil.",
+   "expert": "« Même activité à la suite, au maximum », les jours joués par semaine, la durée habituelle d’une partie, la sensibilité, et « Pourquoi ce programme ? » qui explique le choix.",
+   "steps": [
+    "Choisis ton temps : 15, 30, 45, 60 ou 90 minutes.",
+    "Coche les activités que tu veux bien faire ce soir. Ouvre « Écrire mes activités ici » pour changer leurs gains, frais et durées sans quitter cet outil.",
+    "Lis ce que tu gagnes et le programme dans l’ordre. « Cette partie fait avancer ton objectif de … % » apparaît seulement si tu as écrit un objectif."
+   ],
+   "example": "Exemple à essayer : 60 minutes, les trois exemples cochés, 200 000 $ déjà en poche.",
+   "result": "« En 1 h, tu peux gagner 110 000 $ avec 1 mission. Commence par l’exemple B. » Puis : cette partie fait avancer ton objectif de 13,75 %, il te manquera encore 690 000 $, encore 7 parties, soit environ 7 jours.",
+   "try": "Passe à 30 minutes : seules les missions courtes rentrent. Une mission pas finie ne rapporte rien, donc le programme ne coupe jamais une mission en deux.",
+   "error": "Croire que le programme est le seul possible. Le calculateur essaie beaucoup de programmes et garde celui qui rapporte le plus, mais il peut en exister un meilleur.",
+   "capture": "session-simple",
+   "mobile": "session-simple-mobile",
+   "alt": "Mon temps de jeu : 60 minutes, trois exemples cochés, réponse 110 000 $ avec 1 mission et la part de l’objectif."
+  },
+  {
+   "id": "achats",
+   "tool": "purchase",
+   "title": "Mes achats",
+   "question": "Est-ce que je peux l’acheter ?",
+   "use": "Choisis une voiture, une arme, un lieu ou une entreprise du site, ou écris un prix. Le calculateur te dit si tu peux l’acheter maintenant, et sinon combien de temps de jeu il te faut.",
+   "simple": "Deux étapes : « Quel est ton achat ? » (nom et prix) et « Combien as-tu ? » (ce que tu as, ce que tu gardes de côté). Ce que tu gagnes et ton objectif sont en plus, si tu veux.",
+   "expert": "« Options et frais en plus », l’argent gardé de côté, « Cet achat me fait gagner en plus », la comparaison avec un calcul gardé.",
+   "steps": [
+    "Cherche une fiche dans « Trouve ton prochain achat » et clique sur « Je veux celui-là », ou garde « Mon achat libre ». Un lieu ou une région, ça se visite : le calculateur ne le propose pas à l’achat.",
+    "Écris le prix que tu imagines si le site ne le connaît pas, puis ce que tu as et ce que tu gardes de côté, directement ici.",
+    "Lis la réponse : « Oui, tu peux l’acheter maintenant » ou « Pas encore : il te manque… ». Ouvre « Combien de temps pour regagner ce prix ? » si tu veux ce temps de jeu."
+   ],
+   "example": "Exemple à essayer : un achat à 100 000 $, 200 000 $ déjà en poche, 50 000 $ gagnés par heure de jeu.",
+   "result": "« Oui, tu peux l’acheter maintenant. Il te restera 100 000 $. » Le détail donne aussi le temps de jeu pour regagner ce prix (2 h) et ton objectif si tu achètes ou non.",
+   "try": "Mets un prix de 400 000 $ : « Pas encore : il te manque 200 000 $. Avec ce que tu gagnes, ça fait 4 h de jeu. »",
+   "error": "Prendre le prix affiché pour un prix officiel. Tant que Rockstar n’a rien publié, tous les prix sont « pas encore connus » et c’est toi qui écris le tien.",
+   "capture": "purchase-simple",
+   "mobile": "purchase-simple-mobile",
+   "alt": "Mes achats : un achat à 100 000 $, réponse « Oui, tu peux l’acheter maintenant » et le catalogue avec vignettes."
+  },
+  {
+   "id": "ordre",
+   "tool": "order",
+   "title": "Quoi acheter d’abord ?",
+   "question": "Dans quel ordre acheter pour tout avoir le plus vite ?",
+   "use": "Ajoute deux ou trois achats. Le calculateur compare ton ordre avec l’ordre inverse et l’ordre des prix croissants, et te dit lequel te fait tout avoir le plus tôt.",
+   "simple": "« Ajoute un achat (cherche dans le site) » avec des suggestions en tapant, ou « Ajouter autre chose, sans fiche ». Puis « Ça coûte » pour chaque achat.",
+   "expert": "Frais au départ, argent gardé de côté, « Je l’ai déjà », « Me fait gagner en plus » et l’utilisation du chiffre de « Ça vaut le coup ? ».",
+   "steps": [
+    "Écris ce que tu as, ce que tu gardes de côté et, si tu dois attendre, ce que tu gagnes par heure. Tape les premières lettres d’un nom (« fe » propose Feroci, Cheetah…) et choisis dans la liste, ou ajoute un achat libre.",
+    "Écris le prix que tu imagines pour chacun ; le calculateur attend d’avoir l’argent avant chaque achat.",
+    "Lis la réponse : « Achète d’abord…, puis…, puis… Tout est à toi en … de jeu. » Déplie « Comparer des ordres selon le délai » pour voir l’ordre inverse et l’ordre par prix."
+   ],
+   "example": "Exemple à essayer : trois achats à 30 000 $, 100 000 $ et 150 000 $, avec 200 000 $ déjà en poche et 50 000 $ gagnés par heure de jeu.",
+   "result": "Chaque étape montre quand tu peux payer l’achat, ce qu’il te reste après et ce que tu gagnes ensuite par heure. La comparaison porte sur le temps de jeu, pas sur l’envie que tu as de chaque objet.",
+   "try": "Monte et descends un achat avec les flèches, ou retire-le : la réponse se refait tout de suite. « Annuler » remet un achat retiré par erreur.",
+   "error": "Inventer ce qu’un achat rapporte. « Me fait gagner en plus », c’est ton chiffre à toi : laisse 0 pour une voiture qui ne rapporte rien.",
+   "capture": "order-simple",
+   "mobile": "order-simple-mobile",
+   "alt": "Quoi acheter d’abord : la case de recherche propose des fiches en tapant « fe »."
+  },
+  {
+   "id": "rentabilite",
+   "tool": "roi",
+   "title": "Ça vaut le coup ?",
+   "question": "Est-ce que cet achat vaut le coup pour moi, et à partir de quand ?",
+   "use": "Le calculateur distingue trois cas : un achat plaisir (il ne rapporte rien : on regarde ce qu’il te coûte, ce qu’il te reste et le retard sur ton objectif), un achat qui débloque des activités, et un achat qui te fait gagner de l’argent en plus. Pour ces deux derniers, il compare la situation avec l’achat et la situation sans, sur le même temps de jeu : seul ce que l’achat rapporte EN PLUS de ce que tu gagnais déjà compte.",
+   "simple": "Trois étapes : « Quel achat ? », « Puis-je me le permettre ? » et « Pourquoi cet achat ? ». La réponse commence par oui, non ou pas encore, avec les chiffres qui la justifient, ta prochaine étape (acheter, attendre, vérifier un chiffre), le compromis « avec / sans » et les hypothèses qui comptent, chacune modifiable d’un clic.",
+   "expert": "La courbe « avec ou sans cet achat », les seuils (après combien de parties il est remboursé, ce qu’il devrait rapporter par heure pour l’être dans le temps où tu t’en sers), les activités liées avec leurs chiffres, la sensibilité et la comparaison avec un calcul gardé.",
+   "steps": [
+    "Cherche l’achat dans le site ou clique sur « Écrire un achat libre ». Écris le prix, ce que tu as et ce que tu gardes de côté.",
+    "Pour un achat plaisir, lis ce qu’il te reste, le temps pour retrouver ton argent et le retard sur ton objectif. Compare « Acheter maintenant » et « Attendre » ; personne ne met de prix sur le plaisir.",
+    "Si l’achat rapporte, dis ce qu’il te fait gagner en plus par heure (ou coche les activités qu’il rend possibles) et combien de temps tu t’en sers : la réponse dit après combien d’heures il est remboursé et ce qu’il te laisse en plus à la fin. Ce que tu gagnais déjà (Mon objectif) sert de comparaison."
+   ],
+   "example": "Exemple à essayer (chiffres inventés) : un achat libre à 120 000 $, 500 000 $ en poche, qui te fait gagner 20 000 $ de plus par heure pendant 10 h de jeu.",
+   "result": "« Oui, ça vaut le coup : remboursé après 6 h de jeu. Après 10 h, tu auras 80 000 $ de plus que si tu ne l’avais pas acheté. » Si tu ne t’en sers que 4 h, la réponse devient « Pas sur 4 h » ; s’il coûte autant qu’il rapporte, « Non : jamais remboursé ».",
+   "try": "Depuis une fiche entreprise (Stock 305, Rideout Customs…), clique sur « Est-ce que ça vaut le coup ? » : l’achat arrive déjà rempli. Puis « Le mettre dans mon business plan » en fait ton but.",
+   "error": "Compter comme « gagné grâce à l’achat » ce que tu gagnais déjà sans lui. Le calculateur compare toujours avec ce que tu gagnais avant : écris ce chiffre dans Mon objectif pour que la comparaison soit juste.",
+   "capture": "roi-simple",
+   "mobile": "roi-simple-mobile",
+   "alt": "Ça vaut le coup : un achat à 120 000 $ qui rapporte 20 000 $ de plus par heure, remboursé après 6 h de jeu, avec la prochaine étape et le compromis avec ou sans l’achat."
+  },
+  {
+   "id": "budget",
+   "tool": "budget",
+   "title": "Mon budget",
+   "question": "Comment partager mon argent ?",
+   "use": "Tu répartis ton argent entre tes envies en gardant une partie de côté. Le calculateur te dit ce qu’il te reste, ou ce qu’il te manque.",
+   "simple": "« J’ai déjà », « Quels achats compter ? » (mes achats de « Quoi acheter d’abord ? » ou je répartis moi-même) et « Autres dépenses prévues ».",
+   "expert": "L’argent gardé de côté, le détail de la répartition (véhicules, investissements, équipement, consommables, autres achats), la sensibilité et la comparaison.",
+   "steps": [
+    "Vérifie « J’ai déjà ».",
+    "Choisis de compter tes achats de « Quoi acheter d’abord ? » ou de répartir toi-même, chose par chose.",
+    "Lis la réponse : « Oui, tu peux tout acheter. Il te reste … » ou « Non : il te manque … »."
+   ],
+   "example": "Exemple à essayer : 200 000 $ déjà en poche, 30 000 $ gardés de côté, 140 000 $ d’achats prévus.",
+   "result": "« Oui, tu peux tout acheter. Il te reste 30 000 $, sans toucher à l’argent mis de côté. » La barre montre la part de ton argent utilisée.",
+   "try": "Ajoute 50 000 $ dans « Autres dépenses prévues » : la réponse passe à « Non : il te manque 20 000 $ » et te dit d’enlever ou de baisser un achat.",
+   "error": "Compter l’argent que tu gagneras plus tard. Le budget ne regarde que ce que tu as maintenant.",
+   "capture": "budget-simple",
+   "mobile": "budget-simple-mobile",
+   "alt": "Mon budget : 200 000 $, 30 000 $ de côté, réponse « il te reste 30 000 $ » avec la barre."
+  },
+  {
+   "id": "choisir",
+   "tool": "compare",
+   "title": "Quel achat choisir ?",
+   "question": "Entre plusieurs achats, lequel prendre ?",
+   "use": "Mets deux à six achats côte à côte avec les mêmes chiffres de départ. Pour chacun : le prix, si tu peux l’acheter, quand, ton envie (1 à 5), ce que ça te coûte en temps de jeu et, si tu l’écris, ce que ça rapporte.",
+   "simple": "Trois questions : « Quels achats veux-tu comparer ? », « Combien as-tu ? », « Ce qui compte le plus pour toi ». La réponse : « Pour toi, c’est X » avec la raison, et le meilleur choix selon chaque critère.",
+   "expert": "Le tableau complet (prix, quand, envie, envie pour 100 000 $, temps pour regagner le prix, remboursement), le temps où tu t’en sers, et ce que chaque achat te fait gagner en plus.",
+   "steps": [
+    "Cherche un achat dans le site (« kamacho », « bati »…) ou ajoute un achat libre, puis écris son prix si le site ne le connaît pas.",
+    "Note ton envie de 1 à 5 pour chaque achat. C’est ta note à toi : elle sert au rapport envie / prix.",
+    "Choisis ce qui compte le plus : le rapport envie / prix, le moins cher, le plus vite accessible, celui qui se rembourse le plus vite, ou le plus d’envie."
+   ],
+   "example": "Exemple à essayer : Kamacho à 150 000 $ (envie 5), Bati 801 à 50 000 $ (envie 3), un achat libre à 400 000 $ (envie 3), avec 200 000 $ en poche et 100 000 $ par heure.",
+   "result": "« Pour toi, c’est Bati 801 : le meilleur rapport envie / prix. » Le Kamacho gagne sur l’envie, l’achat libre arrive « dans 2 h de jeu ».",
+   "try": "Change « Ce qui compte » pour « Le plus d’envie » : la réponse devient le Kamacho, et le tableau ne bouge pas.",
+   "error": "Comparer avec des prix imaginés très différents de la réalité. Un prix inconnu, c’est toi qui l’écris : garde-le raisonnable, ou compare seulement des fiches au prix connu.",
+   "capture": "compare-simple",
+   "mobile": "compare-simple-mobile",
+   "alt": "Quel achat choisir ? : trois achats comparés et la réponse selon le critère choisi."
+  },
+  {
+   "id": "plan",
+   "tool": "plan",
+   "title": "Mon business plan",
+   "question": "Comment transformer mon but en programme à suivre, partie après partie ?",
+   "use": "Le business plan part de ton but (acheter quelque chose, ou avoir une somme), de ce que tu as, de ce que tu gagnes et de ton temps de jeu. Il te rend : ton point de départ, la stratégie conseillée et les autres façons de faire, les étapes dans l’ordre avec les dépenses, les gains, ce qu’il te reste et l’avancement, le programme de ta prochaine partie, et ce qui change si un chiffre bouge. Après avoir joué, tu écris ce que tu as vraiment : le plan repart de là.",
+   "simple": "Quatre questions : « Quel est ton but ? », « Où en es-tu ? », « Avant et après », « Ce qui compte pour toi ». La réponse dit ce qu’il te manque, le temps de jeu, le nombre de parties et la date estimée, puis « Ta prochaine partie » et les étapes dans l’ordre, avec un bouton « C’est fait » sur chaque achat.",
+   "expert": "Tout s’affiche : les façons de faire comparées (ordre donné, ce qui rapporte le plus vite d’abord, le moins cher d’abord, en touchant à la réserve…), les chiffres de chaque étape, les seuils (30 minutes de plus par jour, ce qui manque pour passer une étape tout de suite), la courbe de ton argent avec tes résultats réels, le calendrier et les résultats bruts.",
+   "steps": [
+    "Choisis ton but : cherche une fiche du site ou écris un achat libre, puis son prix (celui que tu imagines s’il n’est pas connu). Ou choisis « Avoir une somme d’argent ».",
+    "Écris ce que tu as, ce que tu gardes de côté, comment tu gagnes ton argent (un chiffre par heure, ou une de tes activités), ton temps de jeu par jour et tes jours par semaine.",
+    "Dis ce que tu dois acheter avant (tes achats de « Quoi acheter d’abord ? »), ce que tu dépenses par partie, et si ton but te fait gagner de l’argent ensuite.",
+    "Choisis ce qui compte pour toi (équilibre, vitesse, sécurité), une échéance si tu en as une, puis lis ton plan. Après chaque partie, écris ce que tu as dans « Où en es-tu vraiment ? » et coche les achats faits."
+   ],
+   "example": "Exemple à essayer : but « Kamacho » à 1 000 000 $, 200 000 $ en poche, 100 000 $ par heure, 60 minutes par jour, 7 jours par semaine.",
+   "result": "« Il te manque 800 000 $. En jouant 1 h par jour, tu y arrives en 8 h de jeu, soit 8 jours. » Puis « Ta prochaine partie (1 h) : +100 000 $, tu auras 300 000 $ », les étapes (gagner ton argent, acheter le Kamacho au jour 8, « Ensuite, profite ») et, si tu écris une échéance de 5 jours : « Pas avec ton rythme : soit jouer 1 h 36 par jour, soit gagner 160 000 $ par heure ».",
+   "try": "Écris 350 000 $ dans « J’ai maintenant » après une partie : le plan repart de ce chiffre, le tableau « Réalisé contre prévu » garde l’écart, et rien n’est compté deux fois. Ajoute un achat qui rapporte dans « Quoi acheter d’abord ? » pour voir la stratégie conseillée changer.",
+   "error": "Croire que la date est une promesse. C’est un calcul avec tes chiffres, en supposant que tu joues toujours pareil ; si un chiffre change, le plan se refait. Et un achat n’est jamais payé avec l’argent qu’il rapportera lui-même.",
+   "capture": "plan",
+   "mobile": "plan-mobile",
+   "alt": "Mon business plan : la fiche à remplir à gauche ; à droite la réponse, la prochaine partie, puis le point de départ, la stratégie conseillée et les étapes."
+  }
+ ]
 }

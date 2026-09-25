@@ -1,4 +1,5 @@
-/* État partagé v3 et sélecteurs déterministes. Aucun prix ni revenu n'est inventé. */
+/* État partagé v4 et sélecteurs déterministes. Aucun prix ni revenu n'est inventé.
+   v4 (v7.33) : le business plan garde une stratégie, une échéance, les étapes faites et l'historique du réel ; les sauvegardes v1 à v3 se lisent telles quelles. */
 (function(root,factory){'use strict';if(typeof module==='object'&&module.exports)module.exports=factory(require('./calculateurs-engine.js'));else root.LKCalcScenario=factory(root.LKCalcEngine);})(typeof globalThis!=='undefined'?globalThis:this,function(E){
 'use strict';
 const copy=x=>JSON.parse(JSON.stringify(x));
@@ -7,9 +8,10 @@ const names={goal:'Mon objectif',activities:'Mes activités',session:'Mon temps 
 const assetTemplate={key:'free-1',itemId:'',name:'Mon achat libre',price:100000,referencePrice:null,extras:0,fees:0,owned:false,incomeMode:'none',boostHourly:0,utility:3};
 // Quel achat choisir ? et Mon business plan : réglages propres à chaque outil, achats partagés via assets.
 const compareTemplate={keys:[],criterion:'value',hours:10};
-const planTemplate={kind:'purchase',key:'',target:null,usePrerequisites:true,upkeepPerSession:0,priority:'balanced',activity:'',details:false};
+const planTemplate={kind:'purchase',key:'',target:null,usePrerequisites:true,upkeepPerSession:0,priority:'balanced',activity:'',details:false,strategy:'auto',deadlineDays:null,countDoneBoost:true,done:[],log:[],playedMinutes:0};
+const STRATEGIES=['auto','asIs','byPayback','cheapFirst','skipNoBoost','direct','useReserve'];
 function defaults(old){
- const s=copy(old);s.version=3;s.views=Object.fromEntries([...tools,'plan'].map(t=>[t,'quick']));
+ const s=copy(old);s.version=4;s.views=Object.fromEntries([...tools,'plan'].map(t=>[t,'quick']));
  s.assets=[copy(assetTemplate)];s.purchase={key:'free-1'};
  s.session={...s.session,daysPerWeek:7,usualMinutes:60};
  s.activities=s.activities.map(a=>({...a,prepOnce:false,requiresPurchaseIds:[]}));
@@ -21,9 +23,11 @@ function defaults(old){
 function asset(s,key){return s.assets.find(a=>a.key===key);}
 function addAsset(s,item){let a=s.assets.find(x=>x.itemId===item.id);if(!a){if(s.assets.length>=40)throw Error('Quarante achats maximum. Retire un achat inutilisé avant de continuer.');a={...copy(assetTemplate),key:item.id,itemId:item.id,name:item.name,price:item.price,referencePrice:item.price};s.assets.push(a);}return a;}
 function migrate(raw,initial){
- if(!raw||typeof raw!=='object'||![1,2,3].includes(raw.version))throw Error('Version de sauvegarde non reconnue.');
- if(raw.version===3)return raw;
- const s={...copy(initial),...copy(raw),version:3};
+ if(!raw||typeof raw!=='object'||![1,2,3,4].includes(raw.version))throw Error('Version de sauvegarde non reconnue.');
+ if(raw.version===4)return raw;
+ // v3 → v4 : mêmes données, le plan reçoit ses nouvelles cases (stratégie, échéance, étapes faites, historique) avec leurs valeurs par défaut.
+ if(raw.version===3)return {...copy(raw),version:4,plan:{...copy(planTemplate),...(raw.plan||{})}};
+ const s={...copy(initial),...copy(raw),version:4};
  s.goal={...initial.goal,...raw.goal};
  const oldContext=raw.tab==='purchase'?raw.purchase:raw.tab==='budget'?raw.budget:raw.tab==='order'?raw.order:null;
  if(oldContext)for(const key of ['capital','reserve','hourly','target'])if(Object.prototype.hasOwnProperty.call(oldContext,key))s.goal[key]=oldContext[key];
@@ -49,7 +53,8 @@ function validate(raw,initial){
   if(typeof t==='boolean'){if(typeof v!=='boolean')throw Error('Option invalide : '+key);return v;}
   if(Array.isArray(t)){
    if(!Array.isArray(v)||v.length>100)throw Error('Liste invalide : '+key);
-   if(['keys','activityIds','requiresPurchaseIds','enabled','favorites','compareIds','completed'].includes(key)){if(v.some(x=>typeof x!=='string'||x.length>160))throw Error('Identifiant invalide.');return [...new Set(v)].slice(0,key==='compareIds'?3:100);}
+   if(key==='log'){return v.slice(0,50).map(e=>{if(!e||typeof e!=='object'||Array.isArray(e))throw Error('Historique du plan invalide.');const capital=typeof e.capital==='number'&&Number.isFinite(e.capital)&&e.capital>=0&&e.capital<=1e12?e.capital:null;if(capital===null)throw Error('Historique du plan invalide.');const num=(x,max)=>typeof x==='number'&&Number.isFinite(x)&&x>=0&&x<=max?x:null;return {at:typeof e.at==='string'?e.at.slice(0,40):'',capital,minutes:num(e.minutes,1e7)??0,forecast:typeof e.forecast==='number'&&Number.isFinite(e.forecast)?e.forecast:null,note:typeof e.note==='string'?e.note.slice(0,200):''};});}
+   if(['keys','activityIds','requiresPurchaseIds','enabled','favorites','compareIds','completed','done'].includes(key)){if(v.some(x=>typeof x!=='string'||x.length>160))throw Error('Identifiant invalide.');return [...new Set(v)].slice(0,key==='compareIds'?3:100);}
    if(key==='assets'){if(v.length<1||v.length>40)throw Error('Un à quarante achats par scénario.');return v.map(x=>walk(assetTemplate,x,'asset'));}
    if(key==='activities'){if(v.length!==initial.activities.length)throw Error('Nombre d’activités personnelles incompatible.');return v.map((x,i)=>walk(initial.activities[i],x,'activity'));}
    if(key==='allocations'&&v.length!==5)throw Error('Répartition du budget incompatible.');
@@ -66,7 +71,8 @@ function validate(raw,initial){
  if(new Set(s.assets.map(a=>a.key)).size!==s.assets.length||s.assets.some(a=>!a.key||!['none','personal','roi'].includes(a.incomeMode)))throw Error('Références d’achats incompatibles.');
  if(!['estimate','new','improve','continuous'].includes(s.roi.mode)||!['basket','manual'].includes(s.budget.source))throw Error('Modèle de calcul incompatible.');
  if(!['value','cheapest','fastest','profit','utility'].includes(s.compare.criterion)||!['purchase','amount'].includes(s.plan.kind)||!['balanced','fast','safe'].includes(s.plan.priority))throw Error('Réglage de comparaison ou de plan incompatible.');
- s.compare.keys=s.compare.keys.filter(k=>asset(s,k)).slice(0,6);if(s.plan.key&&!asset(s,s.plan.key))s.plan.key='';
+ if(!STRATEGIES.includes(s.plan.strategy))s.plan.strategy='auto';if(s.plan.deadlineDays!==null&&(!Number.isInteger(s.plan.deadlineDays)||s.plan.deadlineDays<1||s.plan.deadlineDays>36500))s.plan.deadlineDays=null;if(!Number.isFinite(s.plan.playedMinutes)||s.plan.playedMinutes<0)s.plan.playedMinutes=0;
+ s.compare.keys=s.compare.keys.filter(k=>asset(s,k)).slice(0,6);if(s.plan.key&&!asset(s,s.plan.key))s.plan.key='';s.plan.done=s.plan.done.filter(k=>asset(s,k));
  s.assets.forEach(a=>{if(!Number.isInteger(a.utility)||a.utility<1||a.utility>5)a.utility=3;});
  for(const t of [...tools,'plan'])if(!['quick','guided','advanced'].includes(s.views[t]))s.views[t]='quick';
  s.mode=s.views[s.tab];return s;
@@ -105,8 +111,10 @@ function roi(s,source=[]){
  const acts=activities(s,source).filter(a=>r.activityIds.includes(a.id));
  if(acts.length!==r.activityIds.length)return{valid:false,reason:'Une des activités n’existe plus. Choisis-en une autre.'};
  if(acts.some(a=>a.players>s.goal.players))return{valid:false,reason:'Une des activités se joue à plus de joueurs que vous. Change le nombre de joueurs dans Mes activités.'};
- return E.investmentActivities({...input,activities:acts});
+ // Nouvelle activité : le temps passé dessus ne rapporte plus ce que le joueur gagnait déjà (son chiffre par heure), si on le connaît.
+ return E.investmentActivities({...input,activities:acts,baselineHourly:r.mode==='new'?s.goal.hourly:null});
 }
+function investment(s,source=[]){const a=asset(s,s.roi.key);if(!a)return{valid:false,reason:'Choisis un achat.'};return E.investmentCompare({capital:s.goal.capital,reserve:s.goal.reserve,price:a.price,extras:a.extras,fees:a.fees,baselineHourly:s.goal.hourly,extraHourly:s.roi.revenueHourly,costHourly:s.roi.costHourly,hours:s.roi.hours,dailyMinutes:s.goal.dailyMinutes});}
 function decision(s,source=[],key=s.roi.key){
  const a=asset(s,key);if(!a)return{valid:false,reason:'Choisis un achat ou écris un achat libre.'};
  let hourly=s.goal.hourly;
@@ -136,17 +144,36 @@ function chooseInput(s,source=[]){
   return {name:a.name,price:a.owned?0:a.price,extras:a.extras,fees:a.fees,utility:a.utility,incomeHourly:income};}).filter(Boolean);
  return {capital:s.goal.capital,reserve:s.goal.reserve,hourly:s.goal.hourly,dailyMinutes:s.goal.dailyMinutes,hours:s.compare.hours,criterion:s.compare.criterion,items};
 }
-function planHourly(s,source=[]){if(!s.plan.activity)return s.goal.hourly;const a=activities(s,source).find(x=>x.id===s.plan.activity);const r=a&&E.activity(a);return r?.valid&&Number.isFinite(r.hourly)?r.hourly:null;}
+function planBaseHourly(s,source=[]){if(!s.plan.activity)return s.goal.hourly;const a=activities(s,source).find(x=>x.id===s.plan.activity);const r=a&&E.activity(a);return r?.valid&&Number.isFinite(r.hourly)?r.hourly:null;}
+// Gain apporté par les achats déjà faits dans ce plan (étapes cochées « fait »), si le joueur veut le compter en plus de son chiffre.
+function planDoneBoost(s){if(!s.plan.countDoneBoost)return 0;return s.plan.done.reduce((sum,k)=>{const a=asset(s,k);return sum+(a&&a.owned&&a.incomeMode==='personal'&&Number.isFinite(a.boostHourly)?a.boostHourly:0);},0);}
+function planHourly(s,source=[]){const base=planBaseHourly(s,source);return base===null?null:base+planDoneBoost(s);}
+// Ordre des achats d'avant selon la stratégie choisie (« auto » = celle que le moteur recommande, calculée à part).
+function planPrerequisites(s,list){const p=s.plan,ordered=list.slice();const ratio=x=>x.boostHourly>0&&x.price!==null?x.price/x.boostHourly:Infinity;
+ if(p.strategy==='byPayback')ordered.sort((a,b)=>ratio(a)-ratio(b)||list.indexOf(a)-list.indexOf(b));
+ if(p.strategy==='cheapFirst')ordered.sort((a,b)=>(a.price??1e12)-(b.price??1e12)||list.indexOf(a)-list.indexOf(b));
+ if(p.strategy==='skipNoBoost')return ordered.filter(x=>x.boostHourly>0);
+ if(p.strategy==='direct')return [];
+ return ordered;}
 function planInput(s,source=[]){
  const goalAsset=s.plan.kind==='purchase'?asset(s,s.plan.key):null;
  const prerequisites=s.plan.usePrerequisites?s.order.keys.filter(k=>k!==s.plan.key).map(k=>{const a=asset(s,k);if(!a||a.owned)return null;return {name:a.name,price:a.price===null||a.extras===null||a.fees===null?null:a.price+a.extras+a.fees,boostHourly:a.incomeMode==='personal'?a.boostHourly:0};}).filter(Boolean):[];
  let goalIncome=0;if(goalAsset){if(goalAsset.incomeMode==='personal')goalIncome=goalAsset.boostHourly;if(goalAsset.incomeMode==='roi'){const r=roi(s,source);if(s.roi.key===goalAsset.key&&r.valid&&Number.isFinite(r.netHourly)&&r.netHourly>0)goalIncome=r.netHourly;}}
- return {capital:s.goal.capital,reserve:s.plan.priority==='safe'?s.goal.reserve:s.plan.priority==='fast'?0:s.goal.reserve,hourly:planHourly(s,source),dailyMinutes:s.goal.dailyMinutes,daysPerWeek:s.session.daysPerWeek==null?7:s.session.daysPerWeek,upkeepPerSession:s.plan.upkeepPerSession==null?0:s.plan.upkeepPerSession,
-  goalName:goalAsset?goalAsset.name:null,goalPrice:goalAsset?(goalAsset.price===null||goalAsset.extras===null||goalAsset.fees===null?null:goalAsset.price+goalAsset.extras+goalAsset.fees):null,goalIncomeHourly:goalIncome,target:s.plan.kind==='amount'?(s.plan.target===null?s.goal.target:s.plan.target):null,prerequisites};
+ const reserve=s.plan.priority==='fast'||s.plan.strategy==='useReserve'?0:s.goal.reserve;
+ return {capital:s.goal.capital,reserve,hourly:planHourly(s,source),dailyMinutes:s.goal.dailyMinutes,daysPerWeek:s.session.daysPerWeek==null?7:s.session.daysPerWeek,upkeepPerSession:s.plan.upkeepPerSession==null?0:s.plan.upkeepPerSession,priority:s.plan.priority,
+  goalName:goalAsset?goalAsset.name:null,goalPrice:goalAsset?(goalAsset.price===null||goalAsset.extras===null||goalAsset.fees===null?null:goalAsset.price+goalAsset.extras+goalAsset.fees):null,goalIncomeHourly:goalIncome,target:s.plan.kind==='amount'?(s.plan.target===null?s.goal.target:s.plan.target):null,prerequisites:planPrerequisites(s,prerequisites),allPrerequisites:prerequisites};
 }
+function planStrategies(s,source=[]){const i=planInput(s,source);if(i.hourly===null)return {valid:false,reason:'Écris ce que tu gagnes par heure.'};return E.planStrategies({...i,prerequisites:i.allPrerequisites,reserve:s.plan.priority==='fast'?0:s.goal.reserve});}
+function planNextSession(s,source=[],r=evaluate('plan',s,source)){if(!r.valid)return r;const i=planInput(s,source);const minutes=s.session.usualMinutes??s.goal.dailyMinutes;if(!minutes)return {valid:false,reason:'Dis combien de temps tu joues par partie.'};
+ const act=s.plan.activity?activities(s,source).find(x=>x.id===s.plan.activity):null;const goalTotal=(i.goalPrice??0)+(i.target??0)+i.prerequisites.reduce((a,x)=>a+(x.price||0),0);
+ return E.nextSession({minutes,capital:s.goal.capital,reserve:i.reserve,hourly:i.hourly,upkeepPerSession:i.upkeepPerSession,activity:act?{...act,investment:act.owned?0:act.investment}:null,steps:r.steps,goalTotal});}
+function planDeadline(s,source=[]){if(!s.plan.deadlineDays)return null;const i=planInput(s,source);if(i.hourly===null||!i.dailyMinutes)return {valid:false,reason:'Il faut ton gain par heure et ton temps par jour pour vérifier une échéance.'};return E.planDeadline(i,s.plan.deadlineDays);}
+function planCurve(s,source=[],r=evaluate('plan',s,source)){if(!r.valid)return [];const c=E.planCurve({plan:planInput(s,source),result:r});return c.valid?c.points:[];}
 function evaluate(tool,s,source=[]){
  if(tool==='compare')return E.choose(chooseInput(s,source));
- if(tool==='plan'){const i=planInput(s,source);if(s.plan.kind==='purchase'&&!asset(s,s.plan.key))return{valid:false,reason:'Choisis ce que tu veux acheter, ou dis-moi la somme que tu veux avoir.'};if(i.hourly===null)return{valid:false,reason:'Écris ce que tu gagnes par heure, ou choisis une activité avec des chiffres.'};return E.businessPlan(i);}
+ if(tool==='plan'){const i=planInput(s,source);if(s.plan.kind==='purchase'&&!asset(s,s.plan.key))return{valid:false,reason:'Choisis ce que tu veux acheter, ou dis-moi la somme que tu veux avoir.'};if(i.hourly===null)return{valid:false,reason:'Écris ce que tu gagnes par heure, ou choisis une activité avec des chiffres.'};
+  if(s.plan.strategy==='auto'){const st=E.planStrategies({...i,prerequisites:i.allPrerequisites,reserve:s.plan.priority==='fast'?0:s.goal.reserve});if(st.valid&&st.recommendedInput)return Object.assign(E.businessPlan({...st.recommendedInput,variants:undefined}),{strategy:st.recommended,strategies:st});}
+  const r=E.businessPlan(i);return Object.assign(r,{strategy:s.plan.strategy});}
  if(tool==='goal')return goal(s,source);if(tool==='session')return session(s,source);if(tool==='roi')return roi(s,source);if(tool==='order')return E.order(orderInput(s,source));if(tool==='budget')return E.budget(budgetInput(s));
  if(tool==='purchase'){const p=purchase(s,source);return E.purchase({...p,capital:p.capital===null||p.reserve===null?null:p.capital-p.reserve,price:p.price===null||p.extras===null?null:p.price+p.extras});}
  if(tool==='activities'){if(!Number.isInteger(s.goal.players)||s.goal.players<1||s.goal.players>100)return{valid:false,reason:'Écris un nombre de joueurs entre 1 et 100.'};const a=activities(s,source).find(a=>a.id===s.inverse.selected);if(!a)return{valid:false,reason:'Choisis une activité.'};if(a.players>s.goal.players)return{valid:false,reason:'Cette activité se joue à '+a.players+' joueurs ; vous êtes '+s.goal.players+'. Ajuste ton groupe ou choisis un scénario solo.'};if((a.requiresPurchaseIds||[]).some(id=>!s.assets.some(x=>x.itemId===id&&x.owned)))return{valid:false,reason:'Il te manque un achat pour cette activité. Coche « Je l’ai déjà » dans Quoi acheter d’abord.'};return E.inverse({...s.inverse,capital:s.goal.capital,reserve:s.goal.reserve,activity:a});}
@@ -169,5 +196,5 @@ function sensitivity(tool,s,source=[]){
 function signature(s){const c=copy(s);delete c.name;delete c.mode;delete c.views;delete c.tab;delete c.catalogue;delete c.completed;return JSON.stringify(c);}
 function referenceWarnings(s,catalogue){const out=[];s.assets.forEach(a=>{if(!a.itemId)return;const item=catalogue.find(x=>x.id===a.itemId);if(!item)out.push(a.name+' : cette fiche n’existe plus, ton prix est gardé.');else if(a.referencePrice!==item.price)out.push(item.name+' : le prix du site a changé ; vérifie ton chiffre.');});return out;}
 function initial(dataVersion,presets){return defaults({version:2,dataVersion,mode:'quick',model:'continuous',name:'Mon premier million',tab:'goal',goal:{capital:200000,target:1000000,hourly:100000,reserve:0,dailyMinutes:60,players:1,selected:'scenario-a'},activities:presets.map(a=>({id:a.id,name:a.name,reward:a.reward,cost:a.cost,duration:a.duration,prep:a.prep,cooldown:a.cooldown,share:a.share,investment:a.investment,players:a.players,owned:false})),session:{minutes:60,maxRepeat:100,enabled:['scenario-a','scenario-b','scenario-c']},inverse:{minutes:60,selected:'scenario-a'},purchase:{itemId:'',price:100000,hourly:50000,boostHourly:0,capital:200000,target:1000000,reserve:0,extras:0},catalogue:{query:'',type:'all',status:'all',maxPrice:null,sort:'name',favorites:[],compareIds:[],favoritesOnly:false}});}
-return Object.freeze({copy,tools,names,defaults,initial,validate,migrate,asset,addAsset,activities,eligible,purchase,goal,session,projection,roi,decision,blank,orderInput,budgetInput,chooseInput,planInput,planHourly,evaluate,metrics,metric,sensitivity,signature,referenceWarnings});
+return Object.freeze({copy,tools,names,defaults,initial,validate,migrate,asset,addAsset,activities,eligible,purchase,goal,session,projection,roi,investment,decision,blank,orderInput,budgetInput,chooseInput,planInput,planHourly,planBaseHourly,planDoneBoost,planStrategies,planNextSession,planDeadline,planCurve,STRATEGIES,evaluate,metrics,metric,sensitivity,signature,referenceWarnings});
 });

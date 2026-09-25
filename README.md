@@ -57,6 +57,15 @@ Le calculateur reste entièrement statique, gratuit et sans compte. Les sept cal
 - `progression-core.js` (`LKProgression.create`) : suivi commun, export / import versionné, migration sans réécriture. Tests : `outils/tests/lot-d-progression.test.cjs`.
 - Pour reconstruire le site actuel après un changement du Lot D : `node outils/regenerer.cjs` puis `node outils/verifier.js`.
 
+## Calculateur « puissant » (v7.33, 25 septembre 2026)
+
+- Moteur (`calculateurs-engine.js`) : `investmentCompare` (avec / sans achat sur le même horizon, seuils, verdict), `investmentActivities` avec `baselineHourly` (coût d’opportunité, remboursement marginal), `planStrategies` (enchaînements comparés, recommandation par priorité, `recommendedInput`), `planDeadline`, `nextSession`, `planCurve` / `planCashAt`. Toutes retournent `{valid, reason, …}` ; aucune valeur inconnue ne devient zéro.
+- État v4 (`calculateurs-scenario.js`) : `plan.strategy`, `plan.deadlineDays`, `plan.countDoneBoost`, `plan.done`, `plan.log`, `plan.playedMinutes` ; `planStrategies`, `planNextSession`, `planDeadline`, `planCurve`, `planDoneBoost`, `investment`. Migration v3 → v4 dans `migrate`.
+- `calculateurs-plan.js` (nouveau, chargé avant `calculateurs.js`) rend et pilote le business plan : `markup`, `render`, `event` (fait, mise à jour du réel, effacer, exporter). `calculateurs-workspace.js` fournit `decision(o)` (bloc de réponse commun) et `problem(reason, tool)` (erreur → champ, table `FIELDS`), et refait `roiRender` (trois cas).
+- `calculateurs-visuals.js` : `chart(id, {title, question, xTitle, yTitle, unit, xUnit, series:[{name, kind: forecast|realized|reference|hypothesis, points}], thresholds, reading, note})` ; `plot` reste pour les usages existants.
+- Pas à pas (`calculateurs-simple.js`) : une question marquée `data-skip` par son outil n’est pas posée ; `data-why` s’affiche sous la question. Le mode s’applique aussi au plan (`views.plan`).
+- Tests : `outils/tests/calculateurs-astra.test.cjs` (références du moteur avec données fictives, parcours DOM) ; `runtime-helper.cjs` expose `flush()` pour exécuter les temporisations en attente.
+
 ## Lot C de la refonte (v7.32, 25 septembre 2026)
 
 - Charte : les jetons sont en tête de `style.css` (`--paper`, `--ink`, `--coral`, `--amber`, `--amber-2`, `--night*`, `--shell-max`, `--gutter`, `--fs-h1/h2/h3`, `--measure`, ombres et rayons). Les autres feuilles (`calculateurs-*.css`, `calculator-entry.css`, `leo.css`, `fiches.css`, `collectibles*.css`) les lisent avec `var(--jeton, valeur)` ; pour changer une couleur du site, changer le jeton.

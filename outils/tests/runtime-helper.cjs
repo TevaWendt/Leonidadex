@@ -7,5 +7,5 @@ w.URL.createObjectURL=()=> 'blob:local-test';w.URL.revokeObjectURL=()=>{};w.fetc
 w.Image=function(){const e=w.document.createElement('img');Object.defineProperty(e,'src',{set(v){requests.push(v);queueMicrotask(()=>{if(fs.existsSync(path.join(root,new URL(v,w.location.href).pathname.slice(1))))e.onload?.();else e.onerror?.()})},get(){return e.getAttribute('src')}});return e};
 for(const[k,v]of Object.entries(opts.storage||{}))w.localStorage.setItem(k,v);opts.before?.(w);
 for(const s of w.document.querySelectorAll('script')){if(s.type==='application/ld+json')continue;let code=s.textContent;if(s.src){const p=path.join(root,new URL(s.src).pathname);if(!fs.existsSync(p)){errors.push('Missing script '+s.getAttribute('src'));continue;}code=fs.readFileSync(p,'utf8')}opts.beforeScript?.(w,s);try{w.eval(code+'\n//# sourceURL='+ (s.getAttribute('src')||file))}catch(e){errors.push(e.stack)}}
-for(const f of timeouts.splice(0,300))try{f()}catch(e){errors.push(e.message)}await new Promise(r=>setImmediate(r));return{dom,w,d:w.document,errors,requests,close:()=>w.close()};}
+for(const f of timeouts.splice(0,300))try{f()}catch(e){errors.push(e.message)}await new Promise(r=>setImmediate(r));return{dom,w,d:w.document,errors,requests,flush:()=>{for(const f of timeouts.splice(0,300))try{f()}catch(e){errors.push(e.message)}},close:()=>w.close()};}
 module.exports={load};

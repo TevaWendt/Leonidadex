@@ -1256,7 +1256,7 @@
     "utiliser le calculateur",
     "tuto"
    ],
-   "text": "Le calculateur répond à des questions concrètes avec tes chiffres : combien de temps pour ton objectif, est-ce que tu peux acheter ça, quoi acheter d’abord, ça vaut le coup ? Dis-moi tes chiffres et je te prépare le bon outil, ou lis le Tuto.",
+   "text": "Le calculateur répond à des questions concrètes avec tes chiffres : combien de temps pour ton objectif, est-ce que tu peux acheter ça, quoi acheter d’abord, ça vaut le coup ? Et Mon business plan transforme ton but en programme : la stratégie conseillée, les étapes dans l’ordre, ta prochaine partie, une échéance, et le suivi de ce que tu as vraiment gagné. Dis-moi tes chiffres et je te prépare le bon outil, ou lis le Tuto.",
    "status": "Le site",
    "links": [
     {
@@ -1456,6 +1456,57 @@
     {
      "label": "Mon temps de jeu",
      "url": "/calculateurs.html?tool=session#atelier"
+    }
+   ]
+  },
+  {
+   "id": "site-plan",
+   "k": [
+    "comment marche le business plan",
+    "a quoi sert le business plan",
+    "le business plan",
+    "business plan",
+    "strategie conseillee",
+    "prochaine partie",
+    "echeance",
+    "suivi du reel",
+    "ou en suis je"
+   ],
+   "min": 1,
+   "text": "Mon business plan part de ton but (un achat ou une somme), de ce que tu as, de ce que tu gagnes et de ton temps de jeu. Il te donne la stratégie conseillée (et les autres façons de faire), les étapes dans l’ordre avec les dépenses, les gains et ce qu’il te reste, le programme de ta prochaine partie, et si une échéance est faisable. Après avoir joué, tu écris ce que tu as vraiment : le plan repart de là, sans compter deux fois. Rien ne vient du vrai jeu : ce sont tes chiffres.",
+   "status": "Le site",
+   "links": [
+    {
+     "label": "Ouvrir Mon business plan",
+     "url": "/calculateurs.html?tool=plan#atelier"
+    },
+    {
+     "label": "Le chapitre du Tuto",
+     "url": "/tuto.html#plan"
+    }
+   ]
+  },
+  {
+   "id": "site-roi",
+   "k": [
+    "comment marche ca vaut le coup",
+    "a partir de quand ca vaut le coup",
+    "comment savoir si un achat vaut le coup",
+    "achat plaisir",
+    "avec ou sans l achat",
+    "cout d opportunite"
+   ],
+   "min": 1,
+   "text": "« Ça vaut le coup ? » distingue trois cas : un achat plaisir (il ne rapporte rien : je regarde ce qu’il te coûte, ce qu’il te reste et le retard sur ton objectif), un achat qui débloque des activités, et un achat qui te fait gagner en plus. Pour ces deux derniers, je compare la situation avec l’achat et sans, sur le même temps de jeu : seul ce qui s’ajoute à ce que tu gagnais déjà compte, et je te dis après combien d’heures c’est remboursé. Sans chiffre de ta part, je n’invente ni gain ni prix.",
+   "status": "Le site",
+   "links": [
+    {
+     "label": "Ouvrir Ça vaut le coup ?",
+     "url": "/calculateurs.html?tool=roi#atelier"
+    },
+    {
+     "label": "Le chapitre du Tuto",
+     "url": "/tuto.html#rentabilite"
     }
    ]
   }

@@ -1,0 +1,82 @@
+v7.33 — 25 septembre 2026 — CALCULATEUR PUISSANT (prompt « Astra », ajout sur la base v7.32 ; les lots A, B, C sont inclus dans cette archive)
+
+Principe : usage simple, raisonnement avancé. Chaque réponse importante suit le même ordre : conclusion en français
+courant → les chiffres qui la justifient → la prochaine action → le compromis ou la comparaison → les hypothèses qui
+comptent, ce qui manque et ce qui ferait changer la réponse. Aucun prix, gain ou mécanique de GTA VI n'est inventé.
+
+Moteur (calculateurs-engine.js) — fonctions pures, testées avec des références indépendantes
+- investmentCompare : la situation AVEC l'achat contre la situation SANS, sur le même temps de jeu. Seul le gain EN PLUS compte
+  (ce que le joueur gagnait déjà n'est jamais présenté comme un bénéfice de l'achat). Rattrapage, différence à l'horizon,
+  seuils (heures et parties avant remboursement, gain par heure nécessaire pour être remboursé dans le temps d'usage,
+  attente avant de pouvoir payer) et verdict : acheter / pas encore / pas sur cet horizon / jamais / horizon inconnu.
+  Référence du prompt : 120 000 investis, 30 000 → 50 000 par heure = +20 000 par heure, rattrapage après 6 h.
+- investmentActivities (nouvelle activité) : coût d'opportunité = ce que le joueur gagnait déjà pendant le même temps ;
+  remboursement marginal distinct du remboursement brut.
+- planStrategies : plusieurs enchaînements pour le même but (ordre donné, ce qui rapporte le plus vite d'abord, le moins
+  cher d'abord, seulement les achats qui rapportent, directement vers le but, en touchant à la réserve), comparés sur le
+  délai, l'argent à la fin et la réserve gardée ; recommandation selon la priorité (équilibre / vite / sûr). Les stratégies
+  qui retirent un achat demandé ne sont jamais imposées. Portée dite honnêtement : petit ensemble exploré, pas d'optimum garanti.
+- planDeadline : une échéance en jours est faisable ou non ; sinon, rythme quotidien nécessaire et gain par heure
+  nécessaire (vérifié par recalcul), ou date la plus proche possible.
+- nextSession : programme de la prochaine partie (gain continu ou missions entières via inverse), achats atteignables
+  pendant la partie, avancement avant/après.
+- planCurve / planCashAt : l'argent au fil du plan (paliers d'achat au moment du paiement, jamais avant) et lecture du prévu
+  à un instant donné, pour comparer au réel.
+
+État partagé v4 (calculateurs-scenario.js)
+- plan reçoit strategy, deadlineDays, countDoneBoost, done (achats faits), log (historique réel/prévu), playedMinutes.
+  Les sauvegardes v1 à v3 se lisent telles quelles (migration v3 → v4 : mêmes données, nouvelles cases par défaut).
+- Les achats marqués « fait » sortent du plan ; leur gain s'ajoute une seule fois au gain par heure (case décochable si
+  le chiffre du joueur l'inclut déjà). Aucun double compte.
+
+Mon business plan (calculateurs-plan.js, nouveau ; calculateurs-workspace.js)
+- Point de départ (argent, réserve, gain par heure et son origine, rythme, but, achats d'avant, déjà possédé), chaque
+  hypothèse modifiable d'un clic.
+- Stratégie conseillée et alternatives (tableau : temps de jeu, jours, argent à la fin, réserve gardée), avec la raison.
+- Étapes dans l'ordre : quoi, quand (heures de jeu, jour, date), dépense, gagné en attendant, ce qu'il reste, avancement ;
+  bouton « C'est fait ✓ » sur chaque achat.
+- « Ta prochaine partie » : ce que rapporte la prochaine session et ce qu'elle débloque, dans le temps réellement disponible.
+- « Après avoir joué : où en es-tu vraiment ? » : le joueur écrit ce qu'il a et le temps joué ; le plan repart de là ;
+  tableau « Réalisé contre prévu » (le prévu est celui calculé avant la mise à jour) ; historique effaçable.
+- Échéance : faisable ou non, avec les deux leviers (rythme, gain) et la date la plus proche.
+- Détails (Simple : case « plus de détails » ; Expert : tout) : « Et si… ? », seuils (30 min de plus par jour, ce qui manque
+  pour passer une étape tout de suite), courbe de l'argent avec les points réels, calendrier, formule, résultats bruts.
+- Export du plan en texte lisible (.txt), en plus de l'enregistrement, de l'impression et du lien.
+- Les trois modes s'appliquent au business plan : Simple, Pas à pas (quatre questions expliquées), Expert.
+
+« Ça vaut le coup ? » refait autour de trois cas
+- Achat plaisir : accessibilité, ce qu'il reste, temps pour retrouver son argent, retard sur l'objectif, « acheter
+  maintenant ou attendre ». Aucune valeur du plaisir, aucun rendement, aucun score inventé.
+- Achat qui rapporte (chiffre par heure) : avec / sans sur le même horizon, remboursement, différence à la fin, seuils,
+  recommandation conditionnelle (« vaut le coup si tu t'en sers au moins X h »), courbe des deux situations.
+- Achat qui débloque ou améliore des activités : flux réels des missions avec le coût d'opportunité ; quand le gain actuel
+  du joueur manque, le calcul le dit et le demande.
+- « Le mettre dans mon business plan » en fait le but du plan, avec son gain s'il en a un.
+
+Tous les outils
+- Bloc de réponse commun : conclusion, chiffres, prochaine action, compromis (replié en Simple, ouvert en Expert),
+  « Ce qui compte dans ce calcul » (hypothèses avec leur origine : ton chiffre / prix du site, bouton Modifier),
+  « Il manque : … » avec un bouton vers la case, « Ce qui ferait changer la réponse ».
+- Erreur de saisie : le message nomme la cause et un bouton « Aller à la case à corriger » mène au champ concerné.
+- Pas à pas : chaque question dit pourquoi elle est posée ; les questions inutiles sont sautées (objectif déjà atteint,
+  « Avant et après » sans achat d'avant).
+- Graphiques (calculateurs-visuals.js refait) : titre qui dit la question, axes nommés avec unités et repères, séries
+  reconnaissables sans la couleur (trait plein / tirets / pointillés, formes des points), légende, prévu / réalisé / repère
+  distingués, phrase « À retenir », tableau des chiffres, points accessibles au clavier. Barres de progression avec
+  point de départ, cible et sens du pourcentage.
+
+Parcours
+- Barre de question : « échéance », « d'ici », « prochaine partie » → business plan ; « ça vaut le coup », « à partir de
+  quand », « rembourse » → Ça vaut le coup ?.
+- Léo : aperçu calculé par le même moteur (« il te manque 800 000 $, soit 8 h de jeu, si tu gagnes toujours pareil »)
+  quand les chiffres suffisent, deux sujets de connaissances (business plan, Ça vaut le coup ?), termes des outils.
+- Tuto : chapitres « Simple ou Expert ? », « Ça vaut le coup ? » et « Mon business plan » réécrits ; captures refaites
+  sur l'exemple du prompt.
+
+Contrôles
+- 352/352 tests (17 nouveaux dans outils/tests/calculateurs-astra.test.cjs : références du moteur, parcours utilisateur ;
+  1 test Léo), régénération complète, verifier.js 0 erreur, balayage Chromium de 9 outils × 11 largeurs (360 → 1 920 px,
+  plan et Ça vaut le coup ? en Expert avec données) sans débordement ni erreur console.
+- Limites connues : la recherche de stratégies explore un petit ensemble d'ordres (dit dans l'interface) ; le programme
+  de la prochaine partie en gain continu est une estimation proportionnelle ; aucune donnée officielle de GTA VI (prix,
+  gains) n'existe encore, tout vient des chiffres du joueur.

@@ -8,7 +8,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { JSDOM, VirtualConsole } = require('jsdom');
 const root = path.resolve(__dirname, '../..');
-const scripts = ['calculateurs-data.js', 'calculateurs-engine.js', 'calculateurs-tools.js', 'calculateurs-scenario.js', 'calculateurs-notebooks.js', 'calculateurs-workspace.js', 'calculateurs.js'];
+const scripts = ['calculateurs-data.js', 'calculateurs-engine.js', 'calculateurs-tools.js', 'calculateurs-scenario.js', 'calculateurs-notebooks.js', 'calculateurs-visuals.js', 'calculateurs-workspace.js', 'calculateurs-plan.js', 'calculateurs.js'];
 const scriptCode = scripts.map(file => [file, fs.readFileSync(path.join(root, file), 'utf8')]);
 const pages = [];
 test.afterEach(() => {

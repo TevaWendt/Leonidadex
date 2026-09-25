@@ -64,22 +64,23 @@
      déplacés dans l'outil ouvert. */
   var stepByTab = {};
   var head = document.createElement('div'); head.className = 'calc-guidance calc-wizard'; head.hidden = true;
-  head.innerHTML = '<p class="calc-wiz-count" id="wiz-count" aria-live="polite"></p><div class="calc-wiz-bar" aria-hidden="true"><span id="wiz-bar"></span></div><p class="calc-wiz-tip">Une question à la fois. Ta réponse se calcule toute seule.</p>';
+  head.innerHTML = '<p class="calc-wiz-count" id="wiz-count" aria-live="polite"></p><div class="calc-wiz-bar" aria-hidden="true"><span id="wiz-bar"></span></div><p class="calc-wiz-why" id="wiz-why"></p><p class="calc-wiz-tip">Une question à la fois. Ta réponse se calcule toute seule ; tu peux revenir en arrière, rien n’est perdu.</p>';
   var nav = document.createElement('div'); nav.className = 'calc-wiz-nav'; nav.hidden = true;
   nav.innerHTML = '<button type="button" class="calc-button" data-wiz="prev">← Retour</button><button type="button" class="calc-button calc-button-primary" data-wiz="next">Suivant →</button>';
   function guided() { return panels.dataset.mode === 'guided'; }
   function activePanel() { return panels.querySelector('.calc-panel:not([hidden])'); }
   function activeTab() { var p = activePanel(); return p ? p.id.replace('panel-', '') : ''; }
-  function stepsOf(panel) { return panel ? Array.prototype.slice.call(panel.querySelectorAll('.calc-step[data-step]')) : []; }
+  /* Les questions que l'outil a marquées « à sauter » (data-skip) ne sont pas posées : le parcours s'adapte à la demande. */
+  function stepsOf(panel) { return panel ? Array.prototype.slice.call(panel.querySelectorAll('.calc-step[data-step]')).filter(function (n) { return !n.dataset.skip && !n.hidden; }) : []; }
   function current() { return stepByTab[activeTab()] || 1; }
   function resultOf(panel) { return panel ? (panel.querySelector('.calc-result') || document.getElementById(activeTab() + '-results')) : null; }
   function wizard(focus) {
     var on = guided(), panel = activePanel(), steps = stepsOf(panel), total = steps.length;
     document.querySelectorAll('#calc-panels .has-steps').forEach(function (card) { card.classList.remove('has-steps'); });
     if (!on || !total) { head.hidden = true; nav.hidden = true; document.querySelectorAll('#calc-panels .calc-step').forEach(function (n) { n.classList.remove('is-off', 'is-step'); }); return; }
-    var step = Math.min(current(), total), cur = null;
+    var step = Math.min(current(), total), cur = steps[step - 1];
     stepByTab[activeTab()] = step;
-    steps.forEach(function (node) { var mine = Number(node.dataset.step) === step; node.classList.toggle('is-off', !mine); node.classList.toggle('is-step', mine); if (mine) cur = node; });
+    Array.prototype.slice.call(panel.querySelectorAll('.calc-step[data-step]')).forEach(function (node) { var mine = node === cur; node.classList.toggle('is-off', !mine); node.classList.toggle('is-step', mine); });
     var card = steps[0].closest('.calc-card'); if (card) card.classList.add('has-steps');
     if (panel.firstElementChild !== head) panel.insertBefore(head, panel.firstChild);
     var box = steps[0].closest('.calc-steps') || steps[0].parentElement;
@@ -87,6 +88,7 @@
     head.hidden = false; nav.hidden = false;
     var count = $('wiz-count'), bar = $('wiz-bar');
     if (count && cur) count.textContent = 'Question ' + step + ' sur ' + total + ' : ' + cur.dataset.question;
+    var why = $('wiz-why'); if (why) { why.textContent = cur && cur.dataset.why ? 'Pourquoi cette question ? ' + cur.dataset.why : ''; why.hidden = !(cur && cur.dataset.why); }
     if (bar) bar.style.width = (step / total * 100) + '%';
     var prev = nav.querySelector('[data-wiz="prev"]'), next = nav.querySelector('[data-wiz="next"]');
     if (prev) prev.disabled = step === 1;

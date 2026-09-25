@@ -1,0 +1,16 @@
+LEONIDAKIT v7.33 — CALCULATEUR PUISSANT — archive « modifs » (25 septembre 2026)
+
+Base attendue : ton dossier Leonidadex en v7.32 (ou le zip Leonidadex-main (5) = v7.29 : cette archive contient aussi
+les lots A, B et C). Fichiers ajoutés ou modifiés seulement, chemins exacts depuis la racine. Rien à supprimer.
+
+1. Copie ton dossier actuel (sauvegarde).
+2. Extrais l’archive dans la racine du site, écrase les fichiers homonymes (garde le dossier .git).
+3. Ouvre calculateurs.html :
+   - « Ça vaut le coup ? » : achat libre à 120 000 $, 500 000 $ en poche, « Je sais ce qu’il me fait gagner en plus »,
+     20 000 $/h, 10 h → « Oui, ça vaut le coup : remboursé après 6 h ». Passe en Expert pour la courbe avec / sans.
+   - « Mon business plan » : un but, tes chiffres → prochaine partie, stratégie conseillée, étapes ; écris ce que tu as
+     dans « Où en es-tu vraiment ? » et coche « C’est fait » sur un achat. Essaie une échéance de 5 jours.
+   - Le Tuto (chapitres 2, 9 et 13) et Léo (« J’ai 200 000 $ et je veux 1 million, je gagne 100 000 par heure »).
+4. Mets en ligne (aucune commande de build). Les calculs enregistrés par les visiteurs restent lisibles (migration v3 → v4).
+
+Détails : outils/CHANGEMENTS-v7.33.txt (calculateur), -v7.32 (lot C), -v7.31 (lot B), -v7.30 (lot A), outils/ETAT_AUDIT.md.

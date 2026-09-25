@@ -6,11 +6,11 @@
 #calc-panels[data-mode="quick"] #purchase-results details,
 #calc-panels[data-mode="quick"] #purchase-results .calc-stats~.calc-stats,
 #calc-panels[data-mode="quick"] #goal-results .calc-stats~.calc-stats,
-#calc-panels[data-mode="quick"] .calc-result details,#calc-panels[data-mode="guided"] .calc-result details,
+#calc-panels[data-mode="quick"] .calc-result details:not(.b-tradeoff),#calc-panels[data-mode="guided"] .calc-result details:not(.b-tradeoff),
 #calc-panels[data-mode="quick"] .calc-result .calc-chart,#calc-panels[data-mode="guided"] .calc-result .calc-chart,
 #calc-panels[data-mode="quick"] .calc-result .c-comparison,#calc-panels[data-mode="guided"] .calc-result .c-comparison,
 #calc-panels[data-mode="quick"] .c-detail,#calc-panels[data-mode="guided"] .c-detail,
-#calc-panels[data-mode="quick"] .b-mode-summary,#calc-panels[data-mode="guided"] .b-mode-summary,
+#calc-panels[data-mode="quick"] .b-mode-summary.is-default,#calc-panels[data-mode="guided"] .b-mode-summary.is-default,
 #calc-panels[data-mode="guided"] .b-expert {display:none!important}
 /* Simple : la réponse et trois chiffres. Expert : tableaux, courbes, formules, sensibilité et résultats bruts. */
 #calc-panels[data-mode="advanced"] .b-simple-action {display:none}
@@ -66,3 +66,47 @@
 .b-plan-step h4{margin:2px 0 6px}.b-plan-step .calc-note{margin-top:8px}
 .b-plan-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
 .calculator-page #plan-results .calc-check{margin-top:18px;padding:10px 12px;border:1px solid #ffffff40;border-radius:8px;background:#ffffff12;color:#f7f9f3;font-weight:600}.calculator-page #plan-results .calc-check input{accent-color:var(--amber,#F5A524)}
+
+/* ===== v7.33 : réponses qui aident à décider, business plan exécutable, graphiques honnêtes ===== */
+/* bloc « ce qui compte » : hypothèses décisives près de la réponse, chacune modifiable */
+.b-assumptions-box{margin-top:18px;padding:14px 16px;border:1px solid #ffffff33;border-radius:10px;background:#ffffff0d}
+.b-assumptions{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:6px}
+.b-assumptions li{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:8px 12px;padding:6px 0;border-bottom:1px solid #ffffff1f;font-size:.92rem}
+.b-assumptions li:last-child{border-bottom:0}.b-assumptions li span{color:inherit;opacity:.85}.b-assumptions li b{font-variant-numeric:tabular-nums;text-align:right}
+.b-assumptions .calc-button{min-height:32px;padding:4px 10px;font-size:.78rem}
+.b-origin{font-style:normal;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;opacity:.75;margin-left:6px}
+.b-missing{margin:10px 0 0;font-size:.92rem}.b-missing .calc-button{min-height:32px;padding:4px 10px;font-size:.78rem;margin-left:6px}
+.b-problem{margin:10px 0 0}
+.calc-card:not(.calc-result) .b-assumptions-box,.b-plan-report .b-assumptions-box{background:#fff;border-color:var(--rule,#DFD9CC)}
+.b-plan-report .b-assumptions li{border-bottom-color:var(--rule,#DFD9CC)}.b-plan-report .b-assumptions li span{color:var(--ink-soft,#5C5A63)}
+.b-tradeoff{margin-top:16px}.b-tradeoff>summary{cursor:pointer;font-weight:800;min-height:36px;display:list-item}
+.b-thresholds{margin:10px 0 0;padding-left:18px;line-height:1.6}.b-thresholds li+li{margin-top:6px}
+.b-strategy-answer{font-size:1.05rem;line-height:1.55;margin:0 0 12px}
+.b-step-figures{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:8px}.b-step-figures span{display:flex;flex-direction:column;gap:1px}.b-step-figures small{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft,#5C5A63)}.b-step-figures b{font-variant-numeric:tabular-nums}
+.b-plan-step .calc-button{margin-top:10px}
+.b-plan-done{padding:10px 14px;border-left:4px solid var(--amber,#F5A524);background:#fff3dc;border-radius:0 8px 8px 0;margin:0 0 14px}
+.b-actual{margin:12px 0 10px}
+.calc-wiz-why{margin:8px 0 0;font-size:.9rem;line-height:1.5;color:var(--coral-text,#B93220);font-weight:600}.calc-wiz-why[hidden]{display:none}
+/* graphiques : titre + question, axes nommés, légende reconnaissable sans la couleur, phrase de lecture */
+.c-chart-head{display:flex;flex-direction:column;gap:2px;margin:0 0 6px}.c-chart-head strong{font-size:1rem}.c-chart-question{font-size:.85rem;opacity:.85}
+.calculator-page .calc-chart .c-axis-title{font-weight:800;font-size:12px;letter-spacing:.04em;text-transform:uppercase}
+.calculator-page .calc-chart .c-tick{font-size:11.5px}
+.calculator-page .calc-chart .c-grid-x{stroke-dasharray:2 4}
+.calculator-page .calc-chart .c-threshold{stroke:var(--amber-2,#f7b645);stroke-dasharray:6 6;stroke-width:1.5}.calculator-page .calc-chart .c-threshold-label{font-size:11px}
+.calculator-page .calc-chart .path.c-series-0{stroke:var(--amber-2,#f7b645)}.calculator-page .calc-chart .c-chart-point.c-series-0{fill:var(--amber-2,#f7b645)}
+.calculator-page .calc-chart .path.c-series-1{stroke:#ffffff}.calculator-page .calc-chart .c-chart-point.c-series-1{fill:#ffffff}
+.calculator-page .calc-chart .path.c-series-2{stroke:#9ad0ff}.calculator-page .calc-chart .c-chart-point.c-series-2{fill:#9ad0ff}
+.calculator-page .calc-card:not(.calc-result) .calc-chart .path.c-series-0,.b-plan-report .calc-chart .path.c-series-0{stroke:var(--coral-text,#bf3422)}.calculator-page .calc-card:not(.calc-result) .calc-chart .c-chart-point.c-series-0,.b-plan-report .calc-chart .c-chart-point.c-series-0{fill:var(--coral-text,#bf3422)}
+.calculator-page .calc-card:not(.calc-result) .calc-chart .path.c-series-1,.b-plan-report .calc-chart .path.c-series-1{stroke:var(--night,#2B1B4D)}.calculator-page .calc-card:not(.calc-result) .calc-chart .c-chart-point.c-series-1,.b-plan-report .calc-chart .c-chart-point.c-series-1{fill:var(--night,#2B1B4D)}
+.calculator-page .calc-chart .c-chart-point:focus-visible{outline:2px solid var(--amber,#F5A524);outline-offset:2px}
+.c-legend{list-style:none;display:flex;flex-wrap:wrap;gap:6px 18px;margin:8px 0 0;padding:0;font-size:.85rem}.c-legend li{display:inline-flex;align-items:center;gap:6px}
+.c-chart-reading{margin:10px 0 0;font-size:.95rem;line-height:1.55}
+.c-progress-explain{margin-top:4px}
+#calc-panels[data-mode="quick"] .b-tradeoff:not([open])>summary,#calc-panels[data-mode="guided"] .b-tradeoff:not([open])>summary{opacity:.95}
+@media(max-width:600px){.b-assumptions li{grid-template-columns:1fr auto;grid-template-areas:"label edit" "value edit"}.b-assumptions li span{grid-area:label}.b-assumptions li b{grid-area:value;text-align:left}.b-assumptions li .calc-button{grid-area:edit}}
+.b-plan-step{justify-content:flex-start}.b-plan-step>div{flex:1 1 auto;min-width:0}
+.c-legend li{white-space:nowrap}
+
+/* En Simple et Pas à pas, le compromis reste accessible (replié) près de la réponse ; ses tableaux s'affichent quand on l'ouvre. */
+#calc-panels[data-mode="quick"] .b-tradeoff .c-comparison,#calc-panels[data-mode="guided"] .b-tradeoff .c-comparison{display:block!important}
+#calc-panels[data-mode="quick"] .b-tradeoff .b-expert,#calc-panels[data-mode="guided"] .b-tradeoff .b-expert{display:none!important}
