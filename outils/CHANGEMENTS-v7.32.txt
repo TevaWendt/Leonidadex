@@ -1,0 +1,32 @@
+v7.32 — 25 septembre 2026 — LOT C : charte Leonidakit partout, marges, mouvement, images (base : zip Leonidadex-main (5) = v7.29 ; les lots A v7.30 et B v7.31 sont inclus dans cette archive)
+
+Charte Leonidakit en jetons (style.css, en tête de fichier)
+- Couleurs, police, espacements, rayons, ombres dures et échelle de titres définis une seule fois (--paper, --ink, --coral, --amber, --night…, --fs-h1/h2/h3, --measure, --shell-max, --gutter) et réutilisés par toutes les feuilles de style.
+- Les feuilles du calculateur, de Léo, des fiches, de l’accueil et des collectibles lisent ces jetons (209 couleurs remplacées par var(--jeton, ancienne valeur) : même rendu, une seule source).
+- acquisitions.css réécrit : les hubs Consommables, Vêtements et style, Personnalisations, Logements, Bateaux, Tout ce qui s’achète, le bloc Garages et la page Progression abandonnent les tons mauves et les bordures grises du patch ; cadres encre 2 px, ombres dures, kickers corail, boutons ambre, bandeau nuit pour le suivi global.
+- Barre de raccourcis de l’Armurerie repassée sur la charte (pastilles blanches à bord encre, ambre au survol).
+
+Marges latérales plus proches du bord (style.css, calculateurs-brand.css, calculator-entry.css)
+- Contenu élargi de 1 120 px à 1 400 px, gouttière fluide de 16 à 44 px selon l’écran : à 1 440 px le contenu va presque jusqu’au bord, sur les très grands écrans il reste centré et lisible.
+- Toute section .shell garde sa gouttière ; l’accueil, le calculateur (calc-shell) et l’en-tête suivent la même largeur ; les rails animés se placent dans la gouttière, quel que soit l’écran (visibles dès 1 100 px).
+- Une seule échelle de titres (h1 fluide 35 → 54 px, h2, h3) et une mesure de 68 caractères pour les paragraphes d’introduction et les textes courants.
+
+Animations au survol et au défilement sur toutes les pages (common.js, style.css)
+- Apparition au défilement des blocs de contenu de toutes les pages (titres de section, cartes, volets, figures, tableaux du Tuto, FAQ…) par vagues avec un léger décalage ; les piles d’images s’ouvrent visuel par visuel ; chaque titre de section tire un trait ambre → corail.
+- Survol : toutes les familles de cartes lèvent d’un cran avec une ombre ambre, les images zooment légèrement, les boutons s’enfoncent, les liens de texte se soulignent en glissant, les liens du pied de page se décalent ; l’en-tête prend une ombre dès qu’on défile ; le contenu principal arrive en fondu à l’ouverture d’une page.
+- Halo lumineux lent derrière les en-têtes de hubs. Tout est désactivé avec « réduire les animations », et tout est visible sans JavaScript (filet de sécurité après 3 s, impression).
+- Les animations existantes (compteurs, bandeau, jeu de cartes, galerie épinglée des fiches, mouvement du calculateur) sont conservées.
+
+Images superposées (outils/lot-c-visuals.cjs, générateurs, pages)
+- Nouveau composant .lk-stack : deux ou trois visuels officiels Rockstar (déjà dans img/officiel) superposés, légèrement inclinés, cadre encre, ombres ambre/corail/encre, légende, éventail au survol, entrée animée.
+- Posé en tête de : Lieux, Personnages, Demeures, Entreprises, Planques (deuxième visuel de chaque fiche, jamais celui de la carte juste dessous), Consommables, Vêtements et style, Personnalisations, Logements, Bateaux, Tout ce qui s’achète, Armurerie, Véhicules, Carte, Collectibles, Classement, Progression, À propos.
+- Aucune image venue d’internet n’a été ajoutée : depuis cet environnement, seuls les visuels déjà livrés (officiels, crédités sur medias.html) sont utilisables ; c’est aussi ce qui garantit les crédits. Chaque pile a un texte alternatif et charge en différé.
+
+Textes calibrés
+- Titres, kickers et introductions à la même échelle sur toutes les familles de pages ; paragraphes limités en largeur ; notes d’introduction et sources en gris encre plus lisibles ; libellés « Ton suivi · GTA VI » et kickers ajoutés là où il en manquait.
+
+Tuto
+- 26 captures réelles régénérées sur le calculateur élargi ; le bouton de Léo n’apparaît plus dans les captures.
+
+Contrôles
+- 334/334 tests, régénération complète (outils/regenerer.cjs), verifier.js 0 erreur (36 654 références, 406 pages), balayage Chromium de 39 pages × 15 largeurs (360 → 1 920 px) : 585 combinaisons sans débordement ni erreur console ; captures avant/après à 1 440, 1 100, 1 024, 390 px.

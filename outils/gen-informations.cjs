@@ -3,6 +3,7 @@
 const fs=require('node:fs'),path=require('node:path'),root=path.resolve(__dirname,'..');
 const config=JSON.parse(fs.readFileSync(path.join(__dirname,'site-informations.json'),'utf8'));
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const visuals=require('./lot-c-visuals.cjs');
 const base=fs.readFileSync(path.join(root,'index.html'),'utf8'),header=base.match(/<header>[\s\S]*?<\/header>/)[0],footer=base.match(/<footer>[\s\S]*?<\/footer>/)[0],favicon=base.match(/<link rel="icon"[^>]+>/)?.[0]||'';
 const mail=config.contactVerified===true&&/^[^\s<>@]+@[^\s<>@]+\.[^\s<>@]+$/.test(config.contactEmail||'')?config.contactEmail:null;
 function page(file,title,description,content,script=''){
@@ -12,7 +13,7 @@ function page(file,title,description,content,script=''){
 }
 const card=(tag,title,text,href,label)=>`<article class="info-card"><span class="info-number">${tag}</span><h3>${title}</h3><p>${text}</p>${href?`<a href="${href}">${label} ↗</a>`:''}</article>`;
 page('a-propos.html','À propos','Un compagnon indépendant pour GTA VI : carte, fiches, calculateur autonome, Léo et progression. Comprendre les sources et les limites de chaque donnée.',`
-<section class="shell info-hero"><div><p class="info-eyebrow">LEONIDAKIT / LE PROJET</p><h1>Moins chercher.<br>Choisir plus facilement.</h1><p class="info-lede">Une adresse à retrouver, un achat à comparer, une session à préparer : Leonidakit rassemble les outils utiles pour explorer Leonida à ton rythme.</p><div class="info-actions"><a class="info-primary" href="calculateurs.html">Ouvrir le calculateur ↗</a><a href="tuto.html">Comprendre les outils</a></div></div><figure><img src="img/officiel/vice-city-01-1280.webp" width="1280" height="720" alt="Vice City dans un visuel officiel Rockstar Games"><figcaption>Un aperçu de Leonida · © Rockstar Games / Take-Two Interactive</figcaption></figure></section>
+<section class="shell info-hero lk-glow"><div><p class="info-eyebrow">LEONIDAKIT / LE PROJET</p><h1>Moins chercher.<br>Choisir plus facilement.</h1><p class="info-lede">Une adresse à retrouver, un achat à comparer, une session à préparer : Leonidakit rassemble les outils utiles pour explorer Leonida à ton rythme.</p><div class="info-actions"><a class="info-primary" href="calculateurs.html">Ouvrir le calculateur ↗</a><a href="tuto.html">Comprendre les outils</a></div></div>${visuals.stack('a-propos',{label:'Trois visuels officiels de Leonida'})}</section>
 <section class="shell info-section"><p class="info-eyebrow">UN OUTIL, UNE QUESTION</p><h2>Commence là où tu en as besoin.</h2><div class="info-grid">
 ${card('01','Préparer un choix','Les huit calculs répondent chacun à une question, et le business plan met tes étapes dans l’ordre. Tu peux évaluer un achat avec un prix et un budget, puis ajouter des détails si tu en as besoin.','calculateurs.html?tool=roi#atelier','Est-ce que ça vaut le coup ?')}
 ${card('02','Explorer une destination','La carte rassemble des lieux et leurs repères. Une région ou un bâtiment recensé n’est pas automatiquement un bien à acheter.','carte.html','Explorer la carte')}

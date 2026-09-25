@@ -43,7 +43,7 @@ with sync_playwright() as p:
             pg=ctx.new_page(); pg.route('**/*',lambda r: r.abort() if 'fonts.g' in r.request.url else r.continue_())
             pg.goto(f'http://127.0.0.1:{port}/calculateurs.html',wait_until='load'); pg.wait_for_timeout(500)
             for s in steps: pg.evaluate(s); pg.wait_for_timeout(350)
-            pg.evaluate("document.querySelectorAll('.lk-sticky').forEach(e=>e.hidden=true);const st=document.createElement('style');st.textContent='header,.lk-rails,.calc-wizard{visibility:hidden!important}#lk-status,.lk-status{display:none!important}';document.head.appendChild(st)")
+            pg.evaluate("document.querySelectorAll('.lk-sticky').forEach(e=>e.hidden=true);const st=document.createElement('style');st.textContent='header,.lk-rails,.calc-wizard{visibility:hidden!important}#lk-status,.lk-status,#leo-launch,.leo-launch{display:none!important}';document.head.appendChild(st)")
             pg.wait_for_selector(sel.split(',')[0].strip(),state='visible',timeout=8000)
             box=rect(pg,sel.split(',')[0].strip()); ri=rect(pg,zi.split(',')[0].strip()); rr=rect(pg,zr)
             name=key+('-mobile' if mobile else ''); path=f'{OUT}/{name}.webp'; png=f'/tmp/{name}.png'

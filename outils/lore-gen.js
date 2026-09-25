@@ -5,6 +5,7 @@ const HUB_NOTES={"lieux": "Ouvre une fiche pour retrouver ses médias et ses rep
    Usage : node outils/lore-gen.js   (depuis la racine du dépôt, après gen.js) */
 const fs=require('fs'),path=require('path');
 process.chdir(path.join(__dirname,'..'));
+const visuals=require('./lot-c-visuals.cjs');
 const esc=t=>String(t==null?'':t).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 const ED=JSON.parse(fs.readFileSync('outils/editorial.json','utf8'));
 const MED=JSON.parse(fs.readFileSync('outils/medias-officiels.json','utf8'));
@@ -129,12 +130,18 @@ const cardOf=(x,S,pfx,extraCls)=>{const m=visual(x);
 for(const [key,S] of Object.entries(SECTIONS)){
   const items=ED[key];
   const cards=items.map(x=>cardOf(x,S,'')).join('\n');
-  const body=`<section class="page-head shell">
+  /* lot C : pile de trois visuels officiels des fiches du hub, à droite du titre */
+  /* de préférence le deuxième visuel de chaque fiche (le premier est déjà sur la carte juste dessous) ; sinon le visuel des dernières fiches */
+  const second=items.map(x=>({x,m:(x.media||[]).map(id=>MED[id]).filter(Boolean)[1]})).filter(o=>o.m&&o.m.variants&&o.m.variants[0]);
+  const rest=items.slice().reverse().map(x=>({x,m:visual(x)})).filter(o=>o.m&&o.m.variants&&o.m.variants[0]);
+  const seen=new Set();const pileImgs=[...second,...rest].filter(o=>{const k=o.m.variants[0].src;if(seen.has(k))return false;seen.add(k);return true;}).slice(0,3).map(o=>({src:o.m.variants[0].src,big:o.m.variants[1]?o.m.variants[1].src:null,alt:IMG_ALT(o.m,o.x),caption:o.x.name}));
+  const pile=pileImgs.length>=2?visuals.stack(pileImgs,{label:'Trois visuels officiels de cette section'}):'';
+  const body=`<section class="page-head shell lk-glow">${pile?'<div class="lk-head-grid"><div>':''}
   <p class="fiche-cat">${esc(S.label)} · GTA VI</p>
   <h1>${esc(S.title)}</h1>
   <p class="lede">${esc(S.lede)}</p>
   <p class="d-intro-note">${esc(HUB_NOTES[S.hub]||"")} <a href="tuto.html#sources">Comprendre les statuts</a>.</p>
-</section>
+${pile?'</div>'+pile+'</div>':''}</section>
 <section class="shell">
   <div class="lore-grid lore-grid--center lore-grid--n${items.length}">
 ${cards}

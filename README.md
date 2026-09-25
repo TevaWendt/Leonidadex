@@ -57,6 +57,14 @@ Le calculateur reste entièrement statique, gratuit et sans compte. Les sept cal
 - `progression-core.js` (`LKProgression.create`) : suivi commun, export / import versionné, migration sans réécriture. Tests : `outils/tests/lot-d-progression.test.cjs`.
 - Pour reconstruire le site actuel après un changement du Lot D : `node outils/regenerer.cjs` puis `node outils/verifier.js`.
 
+## Lot C de la refonte (v7.32, 25 septembre 2026)
+
+- Charte : les jetons sont en tête de `style.css` (`--paper`, `--ink`, `--coral`, `--amber`, `--amber-2`, `--night*`, `--shell-max`, `--gutter`, `--fs-h1/h2/h3`, `--measure`, ombres et rayons). Les autres feuilles (`calculateurs-*.css`, `calculator-entry.css`, `leo.css`, `fiches.css`, `collectibles*.css`) les lisent avec `var(--jeton, valeur)` ; pour changer une couleur du site, changer le jeton.
+- Largeur : `.shell` = `--shell-max` + 2 × `--gutter` (padding forcé sur toute section `.shell`) ; `calc-shell` et `.lk-home-grid` suivent la même formule ; les rails (`.lk-rails`, créés par `common.js`) se placent avec `max(6px, calc(50% - --shell-max/2 - --gutter - 14px))`.
+- Mouvement : le dernier bloc de `common.js` pose `lk-reveal` (et `lk-h2` sur les titres de section) sur une liste de sélecteurs, puis `is-in` à l’intersection ; les styles sont dans le bloc « v7.32 : lot C » de `style.css`. Les éléments déjà `.reveal/.rise` (système historique de `app.js`) sont laissés à ce système. Sur le calculateur, la liste est réduite pour ne pas croiser `calculateurs-motion.js`.
+- Images : `outils/lot-c-visuals.cjs` (`STACKS` page → visuels, `stack(key|images, {label, prefix})`) rend une pile `.lk-stack` ; utilisé par `lore-gen.js` (deuxième visuel de chaque fiche), `gen-acquisitions.cjs`, `gen-achats.cjs`, `gen-informations.cjs`, et posé une fois dans `armes.html`, `carte.html`, `collectibles.html`, `classement-vehicules.html`, `progression.html` et `outils/templates/vehicules.html`. Ajouter une pile : une entrée dans `STACKS` avec des noms de `img/officiel` (le générateur refuse un visuel absent).
+- Tuto : `outils/tuto-shots.py` masque aussi le bouton de Léo dans les captures.
+
 ## Lot B de la refonte (v7.31, 25 septembre 2026)
 
 - Moteur : `calculateurs-engine.js` expose `choose(input)` (2 à 6 achats, critère `value` / `cheapest` / `fastest` / `profit` / `utility`, score utilité par dollar, temps avant de pouvoir acheter, remboursement) et `businessPlan(input)` (but = achat ou somme, réserve, gain effectif après dépense par partie, achats préalables enchaînés via `order`, jalons, variantes ±20 %, jour calendaire de chaque étape selon les jours par semaine). Fonctions pures, testées dans `outils/tests/calculateurs-engine.test.cjs`.

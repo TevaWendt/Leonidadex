@@ -1,0 +1,14 @@
+LEONIDAKIT v7.32 — LOT C — archive « modifs » (25 septembre 2026)
+
+Base attendue : le zip Leonidadex-main (5) = v7.29, ou ton dossier déjà en v7.30 / v7.31 (cette archive contient
+les lots A, B et C : mêmes fichiers, versions plus récentes).
+Contenu : fichiers ajoutés ou modifiés seulement, chemins exacts depuis la racine. Rien à supprimer.
+
+1. Copie ton dossier actuel (sauvegarde).
+2. Extrais l’archive dans la racine du site, écrase les fichiers homonymes (garde le dossier .git).
+3. Ouvre index.html, personnages.html, nourriture.html, armes.html, calculateurs.html et tuto.html :
+   contenu plus large, piles d’images en tête de page, apparitions au défilement, survols sur les cartes.
+   Vérifie aussi sur ton téléphone (ou en réduisant la fenêtre à 390 px).
+4. Mets en ligne (aucune commande de build).
+
+Détails : outils/CHANGEMENTS-v7.32.txt (lot C), -v7.31.txt (lot B), -v7.30.txt (lot A) et outils/ETAT_AUDIT.md.

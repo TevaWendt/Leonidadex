@@ -137,4 +137,46 @@
 })();
 
 /* Léo : amorçage isolé. Les données ne se chargent qu'à l'ouverture du panneau. */
-(function(){'use strict';if(!document.querySelector('main')||document.getElementById('leo-style'))return;const base=(document.currentScript&&document.currentScript.src||'').replace(/[^/]*$/,'')||'/';const css=document.createElement('link');css.id='leo-style';css.rel='stylesheet';css.href=base+'leo.css?v=b7767a94cc56';css.onload=()=>{const script=document.createElement('script');script.src=base+'leo-loader.js?v=b7767a94cc56';document.head.append(script);};document.head.append(css);})();
+(function(){'use strict';if(!document.querySelector('main')||document.getElementById('leo-style'))return;const base=(document.currentScript&&document.currentScript.src||'').replace(/[^/]*$/,'')||'/';const css=document.createElement('link');css.id='leo-style';css.rel='stylesheet';css.href=base+'leo.css?v=628d6295386d';css.onload=()=>{const script=document.createElement('script');script.src=base+'leo-loader.js?v=628d6295386d';document.head.append(script);};document.head.append(css);})();
+
+/* Lot C (v7.32) : du mouvement sur toutes les pages. Les blocs de contenu apparaissent au défilement (par vagues,
+   avec un léger décalage), les piles d'images s'ouvrent, les titres de section tirent leur trait, l'en-tête prend
+   une ombre dès qu'on défile. Sans JavaScript ou avec « réduire les animations », tout est visible immédiatement. */
+(function () {
+  'use strict';
+  const header = document.querySelector('header');
+  if (header) {
+    let queued = false;
+    const onScroll = function () { if (queued) return; queued = true; requestAnimationFrame(function () { header.classList.toggle('is-scrolled', window.scrollY > 8); queued = false; }); };
+    window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  }
+  const main = document.querySelector('main');
+  if (!main || !('IntersectionObserver' in window)) return;
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const calc = document.body.classList.contains('calculator-page');
+  const TITLES = 'main section.shell>h2, main .d-section>h2, main .info-section>h2, main .lore-sec>h2, main .tools-sec>h2, main .counties-sec>h2, main .lk-explore>h2, main .t-chapter>h2';
+  const BLOCKS = calc
+    ? '.lk-stack, .lk-tool, .lk-outro, .calc-editorial>*, .lk-tool-guide>*:not(h2)'
+    : '.lk-stack, .d-card, .info-card, .tool, .lk-her, .lk-feature, .t-chapter, .d-progress-group, .d-empty, .lk-photo-card, .lk-link, .lk-flip, .lk-outro, .col-card, .info-section>p, .info-section>.info-grid, .info-sources dl>div, .d-section>p, .d-section>.d-related, .d-sources>ul, .lore-texte, .d-global, .kit, .rare-card, .lk-entry-card, .faq details, .county, .fq, .t-intro, .t-figure, .t-steps, .t-mode-fields, .t-table-wrap';
+  const skip = function (el) { return el.closest('[hidden], template, .reveal, .rise, .lore-stack, .leo-panel') || el.classList.contains('reveal') || el.classList.contains('rise'); };
+  const targets = [];
+  main.querySelectorAll(TITLES).forEach(function (h) { if (skip(h)) return; h.classList.add('lk-h2'); h.classList.add('lk-reveal'); targets.push(h); });
+  main.querySelectorAll(BLOCKS).forEach(function (el) { if (skip(el) || el.classList.contains('lk-reveal')) return; el.classList.add('lk-reveal'); targets.push(el); });
+  main.querySelectorAll('.lk-stack').forEach(function (el) { if (!el.classList.contains('lk-reveal')) { el.classList.add('lk-reveal'); targets.push(el); } });
+  if (!targets.length) return;
+  if (reduced) { targets.forEach(function (el) { el.classList.add('is-in'); }); return; }
+  const io = new IntersectionObserver(function (entries) {
+    let k = 0;
+    entries.forEach(function (en) {
+      if (!en.isIntersecting) return;
+      const el = en.target;
+      el.style.setProperty('--lk-delay', Math.min(k * 70, 420) + 'ms'); k++;
+      el.classList.add('is-in'); io.unobserve(el);
+    });
+  }, { threshold: 0.06, rootMargin: '0px 0px -6% 0px' });
+  targets.forEach(function (el) { io.observe(el); });
+  /* filet de sécurité : tout ce qui n'est pas encore apparu s'affiche après 3 s. */
+  setTimeout(function () { targets.forEach(function (el) { if (!el.classList.contains('is-in')) { el.style.setProperty('--lk-delay', '0ms'); el.classList.add('is-in'); } }); }, 3000);
+  /* impression : tout visible */
+  window.addEventListener('beforeprint', function () { targets.forEach(function (el) { el.classList.add('is-in'); }); });
+})();

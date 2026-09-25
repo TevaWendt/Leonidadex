@@ -1,6 +1,6 @@
 # ETAT_AUDIT — audit de finition LeonidaKit
 
-Mis à jour le 25 septembre 2026 · livraison **v7.31 = lots A + B** de la refonte en trois lots (A menu/sections/Léo · B calculateur et business plan · C branding, animations, images). L’audit v7.29 ci-dessous reste valable.
+Mis à jour le 25 septembre 2026 · livraison **v7.32 = lots A + B + C** de la refonte en trois lots (A menu/sections/Léo · B calculateur et business plan · C charte, marges, animations, images). La refonte est complète ; l’audit v7.29 ci-dessous reste valable.
 
 ## Refonte en trois lots (25/09/2026)
 
@@ -8,7 +8,7 @@ Mis à jour le 25 septembre 2026 · livraison **v7.31 = lots A + B** de la refon
 |---|---|---|
 | A | **Livré (v7.30)** | Menu Explorer refait (S’équiper : Consommables, Vêtements et style, Personnalisations ; Armes → Armurerie ; doublons retirés), pages Consommables et Vêtements et style en volets, renvois pour les pages absorbées, Léo avec une base de connaissances GTA VI de 79 sujets. Détail : outils/CHANGEMENTS-v7.30.txt |
 | B | **Livré (v7.31)** | Calculateur en deux sections : (1) « Mes calculs », huit onglets dont le nouveau « Quel achat choisir ? » (2 à 6 achats, critère rapport qualité-prix / moins cher / plus vite / plus rentable / plus utile), Simple = phrase + 3 chiffres, Expert = tableaux, graphiques, réglages ; (2) « Mon business plan » à la place de « Mon plan » : fiche en quatre questions → réponse simple, plan étape par étape, puis « Afficher plus de détails » (chiffres après chaque étape, calendrier avec dates, « Et si… ? »). Tuto : 15 chapitres, 26 captures. Léo et la barre de question ouvrent les deux outils. Détail : outils/CHANGEMENTS-v7.31.txt |
-| C | À faire | Textes calibrés, charte Leonidakit (couleurs, espacements, police) sur chaque page, marges latérales plus proches du bord, animations au survol et au défilement partout, images superposées et ajustées. |
+| C | **Livré (v7.32)** | Charte Leonidakit en jetons (style.css) lue par toutes les feuilles, acquisitions.css réécrit (plus de mauve du patch), contenu élargi à 1 400 px avec gouttière fluide et rails dans la gouttière, échelle de titres et mesure des textes, apparitions au défilement et survols sur toutes les pages (common.js), piles d’images officielles superposées en tête de 18 pages (outils/lot-c-visuals.cjs), 26 captures Tuto refaites. 585 combinaisons page × largeur propres. Détail : outils/CHANGEMENTS-v7.32.txt |
 
 
 ## Identité exacte du ZIP de départ
