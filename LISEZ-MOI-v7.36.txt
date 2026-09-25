@@ -1,0 +1,17 @@
+LEONIDAKIT v7.36 — MOTION+ (animations sur tout le site) — archive « modifs » (25 septembre 2026)
+
+Base attendue : ton dossier Leonidadex en v7.35 (ou le zip Leonidadex-main (5) = v7.29 : cette archive contient aussi
+les lots A, B, C et les v7.33 à v7.35). Fichiers ajoutés ou modifiés seulement, chemins exacts depuis la racine. Rien à supprimer.
+
+1. Copie ton dossier actuel (sauvegarde).
+2. Extrais l’archive dans la racine du site, écrase les fichiers homonymes (garde le dossier .git).
+3. Ouvre le site :
+   - Accueil, Véhicules, Armurerie, une fiche de personnage : les titres se composent mot à mot, le bandeau entre en cascade,
+     le fond glisse au défilement, la barre ambre suit la lecture.
+   - Tuto : fais défiler, les captures se dévoilent d’un rideau ; les listes se remplissent ligne après ligne.
+   - Calculateur : les cartes de chaque outil apparaissent à leur première venue ; survole les cartes (inclinaison) et les
+     boutons principaux (reflet).
+   - Avec « réduire les animations » dans les réglages du système, rien ne bouge et tout est visible.
+4. Mets en ligne (aucune commande de build).
+
+Détails : outils/CHANGEMENTS-v7.36.txt, -v7.35 (ergonomie), -v7.34 (business plan), -v7.33, -v7.32, -v7.31, -v7.30, outils/ETAT_AUDIT.md.

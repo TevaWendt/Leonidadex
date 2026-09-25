@@ -57,6 +57,12 @@ Le calculateur reste entièrement statique, gratuit et sans compte. Les sept cal
 - `progression-core.js` (`LKProgression.create`) : suivi commun, export / import versionné, migration sans réécriture. Tests : `outils/tests/lot-d-progression.test.cjs`.
 - Pour reconstruire le site actuel après un changement du Lot D : `node outils/regenerer.cjs` puis `node outils/verifier.js`.
 
+## Motion+ (v7.36, 25 septembre 2026)
+
+- `common.js`, module « v7.36 : Motion+ » (après le bloc lot C) : `splitWords(el)` → `span.lk-w` avec `--lk-i` ; bandeaux (`HERO`, `HERO_ITEMS`) → `.lk-hero-item` + `--lk-i`, h1 en `lk-words` + `lk-now` (posé un rendu plus tard pour partir de l’état invisible) ; variantes `lk-reveal--clip|blur|zoom|rows|left|right` selon la nature du bloc, décalage `--lk-delay` par rang parmi les frères ; observateur dédié aux nouveaux blocs ; `#calc-panels` observé (MutationObserver) pour révéler les cartes une seule fois par panneau ; `.lk-progress` (barre de lecture) et `.lk-parallax` (bandeaux) sur un rAF commun ; `.lk-shine` sur les boutons principaux ; inclinaison (`.lk-tilt`) sur `(hover:hover) and (pointer:fine)`.
+- `style.css`, bloc « v7.36 : Motion+ » en fin de fichier. Le rideau d’image est un `::after` couleur papier (pas de `clip-path`, qui fausserait l’intersection). `prefers-reduced-motion` et `@media print` neutralisent tout.
+- Aucun changement de balisage : tout est posé par JavaScript ; sans lui, rien n’est masqué.
+
 ## Ergonomie : points repliables, mouvement, graphiques (v7.35, 25 septembre 2026)
 
 - `calculateurs-workspace.js` : `fold(id, {n, title, teaser, body, open, tone})` rend un point repliable (`.b-fold`, bouton `[data-fold-head]`, corps `#fold-<id>`), `body` peut être une fonction appelée seulement si le point est ouvert ; état dans `localStorage` `lk-calc-folds-v1` (`{all: true|false|null, items:{id:bool}}`, helpers `foldIsOpen`, `foldSet`, `foldAll`) ; `foldify(container, tool)` transforme après rendu les `.b-assumptions-box` et `<details>` des résultats des huit outils en points (ids `<tool>-assumptions`, `<tool>-d<i>`) et resynchronise l’état des points existants ; `[data-b-fold-all="open|close"]` ; `beforeprint` / `afterprint` forcent tout ouvert ; `pulseAnswers()` (`.calc-answer.is-updated`) ; info-bulle `.c-tip` sur `.c-chart-point` ; `openPointEditor` (`.c-edit`, `[data-c-edit-save|delete|close]`) ; `[data-c-apply="chemin|valeur"]` applique un chiffre via `api.setPath`.

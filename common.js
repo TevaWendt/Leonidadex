@@ -180,3 +180,154 @@
   /* impression : tout visible */
   window.addEventListener('beforeprint', function () { targets.forEach(function (el) { el.classList.add('is-in'); }); });
 })();
+
+/* v7.36 : Motion+ — encore plus de vie, toujours sobre. Les titres se composent mot à mot, les images se dévoilent d'un
+   rideau (façon bande-annonce), les paragraphes se nettoient d'un flou, les cartes des grilles arrivent en cascade,
+   les fonds des bandeaux glissent au défilement (parallaxe), une fine barre ambre suit la lecture, les cartes s'inclinent
+   sous la souris, les boutons principaux reçoivent un reflet. Sans JavaScript ou avec « réduire les animations », tout est
+   visible immédiatement, rien ne bouge. */
+(function () {
+  'use strict';
+  const main = document.querySelector('main');
+  if (!main) return;
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const calc = document.body.classList.contains('calculator-page');
+  const io = 'IntersectionObserver' in window;
+  /* --- 1. titres mot à mot ------------------------------------------------------------------------------- */
+  function splitWords(el) {
+    if (!el || el.dataset.lkWords || el.querySelector('input,button,select,textarea,svg,img') || el.textContent.trim().length > 140) return;
+    let i = 0;
+    const walk = function (node) {
+      Array.prototype.slice.call(node.childNodes).forEach(function (n) {
+        if (n.nodeType === 3) {
+          if (!n.textContent.trim()) return;
+          const frag = document.createDocumentFragment();
+          n.textContent.split(/(\s+)/).forEach(function (part) {
+            if (!part) return;
+            if (!part.trim()) { frag.appendChild(document.createTextNode(part)); return; }
+            const s = document.createElement('span'); s.className = 'lk-w'; s.style.setProperty('--lk-i', i++); s.textContent = part; frag.appendChild(s);
+          });
+          n.parentNode.replaceChild(frag, n);
+        } else if (n.nodeType === 1 && !/^(BR|SCRIPT|STYLE)$/.test(n.tagName) && !n.classList.contains('lk-w') && !n.classList.contains('w')) walk(n);
+      });
+    };
+    walk(el);
+    el.dataset.lkWords = '1';
+    el.classList.add('lk-words');
+  }
+  /* --- 2. bandeaux : entrée en cascade au chargement --------------------------------------------------------- */
+  const now = [];
+  const HERO = '.page-head, .vhero-in, .fhero-in, .lore-hero, .info-hero, .t-hero, .lk-calc-hero-in, .lk-tool-guide>header';
+  const HERO_ITEMS = 'h1, .fiche-cat, .vhero-eyebrow, .info-eyebrow, .calc-kicker, .lk-kicker, .lede, .info-lede, .d-intro-note, .lk-hero-meta, .c-hero-action, .d-actions, .fiche-liens, .lk-stack, figure, p, .lk-calc-hero-scene';
+  main.querySelectorAll(HERO).forEach(function (hero) {
+    if (hero.closest('.hero, .lore-stack')) return;
+    const items = Array.prototype.filter.call(hero.querySelectorAll(HERO_ITEMS), function (el) {
+      if (el.matches('.rise, .reveal, [hidden], .vhero-bg, .fhero-bg, .lk-rails') || el.closest('.rise, .reveal, figure figure, .lk-stack figure')) return false;
+      const parentItem = el.parentElement && el.parentElement.closest(HERO_ITEMS);
+      return !(parentItem && hero.contains(parentItem));
+    });
+    items.forEach(function (child, i) {
+      child.classList.add('lk-hero-item'); child.style.setProperty('--lk-i', Math.min(i, 8));
+      if (child.matches('h1')) { splitWords(child); now.push(child); }
+    });
+  });
+  main.querySelectorAll('h1').forEach(function (h) { if (!h.dataset.lkWords && !h.closest('.hero') && !h.querySelector('.w')) { splitWords(h); now.push(h); } });
+  const promise = main.querySelector('.lk-home-promise'); if (promise) { splitWords(promise); now.push(promise); }
+  /* les mots partent de leur état invisible : la classe qui les fait monter est posée un rendu plus tard */
+  const go = function () { now.forEach(function (el) { el.classList.add('lk-now'); }); };
+  if (reduced || !window.requestAnimationFrame) go(); else window.requestAnimationFrame(function () { window.requestAnimationFrame(go); });
+  if (reduced) return;
+  /* --- 3. apparition au défilement, variantes selon la nature du bloc ---------------------------------------- */
+  const GRID_CARDS = '.d-card, .info-card, .tool, .lk-feature, .kit, .rare-card, .lk-entry-card, .col-card, .lk-tool, .lk-photo-card, .county, .lore-card, .d-topic, .lk-her';
+  const FIGURES = 'main figure';
+  const TEXTS = '.lede, .info-lede, .lk-home-support, main .shell>p, main .d-section>p, main .info-section>p, .lore-texte>p, .t-intro>p, .calc-section-desc, .calc-card-desc';
+  const ROWS = 'main table>tbody, main .shell>ul, main .shell>ol, .t-steps, .d-sources>ul, .info-grid, .lk-goals';
+  const extra = [];
+  const add = function (el, variant) { if (!el || el.closest('[hidden], template, .lore-stack, .leo-panel, .hero, header, footer, #calc-panels')) return; if (!el.classList.contains('lk-reveal')) { el.classList.add('lk-reveal'); extra.push(el); } if (variant) el.classList.add('lk-reveal--' + variant); };
+  main.querySelectorAll(FIGURES).forEach(function (el) { if (el.closest('.lk-stack, figure figure, .lk-reveal--clip, .lk-hero-item, .d-card, .lore-card')) return; add(el, 'clip'); });
+  main.querySelectorAll(TEXTS).forEach(function (el) { if (el.closest('.lk-reveal--clip') || el.classList.contains('lk-hero-item') || el.closest('.lk-hero-item')) return; add(el, 'blur'); });
+  main.querySelectorAll(ROWS).forEach(function (el) { if (el.closest('.lk-reveal')) return; if (el.children.length > 1 && el.children.length <= 40) { add(el, 'rows'); Array.prototype.slice.call(el.children).forEach(function (c, i) { c.style.setProperty('--lk-i', i); }); } });
+  main.querySelectorAll(GRID_CARDS).forEach(function (el) { el.classList.add('lk-reveal--zoom'); if (!el.classList.contains('lk-reveal')) add(el); });
+  main.querySelectorAll('.lk-stack').forEach(function (el) { el.classList.add('lk-reveal--right'); el.querySelectorAll('img').forEach(function (img) { img.classList.add('lk-kb'); }); });
+  main.querySelectorAll('.lore-texte, .calc-editorial>div:first-child').forEach(function (el) { el.classList.add('lk-reveal--left'); });
+  main.querySelectorAll('.lk-h2').forEach(function (h) { splitWords(h); });
+  /* cascade dans les grilles : le rang parmi les frères décide du décalage */
+  main.querySelectorAll('.lk-reveal').forEach(function (el) {
+    const parent = el.parentElement; if (!parent) return;
+    const siblings = Array.prototype.filter.call(parent.children, function (c) { return c.classList.contains('lk-reveal'); });
+    if (siblings.length > 1) { const idx = siblings.indexOf(el); el.style.setProperty('--lk-delay', Math.min(idx * 80, 560) + 'ms'); el.dataset.lkStagger = '1'; }
+  });
+  if (io && extra.length) {
+    const obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (!en.isIntersecting) return; en.target.classList.add('is-in'); obs.unobserve(en.target); });
+    }, { threshold: 0.05, rootMargin: '0px 0px -5% 0px' });
+    extra.forEach(function (el) { obs.observe(el); });
+    setTimeout(function () { extra.forEach(function (el) { el.classList.add('is-in'); }); }, 3500);
+    window.addEventListener('beforeprint', function () { extra.forEach(function (el) { el.classList.add('is-in'); }); });
+  } else extra.forEach(function (el) { el.classList.add('is-in'); });
+  /* le calculateur : ses cartes sont créées par calculateurs.js ; elles apparaissent à leur première venue seulement */
+  if (calc && io) {
+    const panels = document.getElementById('calc-panels'), seen = {};
+    if (panels) {
+      const reveal = function () {
+        panels.querySelectorAll('.calc-panel').forEach(function (panel) {
+          const cards = panel.querySelectorAll(':scope>.calc-grid>.calc-card, :scope>.calc-card, :scope>div>.calc-card');
+          cards.forEach(function (card, i) {
+            if (card.classList.contains('lk-reveal')) return;
+            card.classList.add('lk-reveal'); card.classList.add('lk-reveal--zoom');
+            if (seen[panel.id]) { card.style.setProperty('--lk-delay', '0ms'); card.classList.add('is-in'); return; }
+            card.style.setProperty('--lk-delay', Math.min(i * 90, 360) + 'ms');
+            const o = new IntersectionObserver(function (entries) { entries.forEach(function (en) { if (!en.isIntersecting) return; en.target.classList.add('is-in'); seen[panel.id] = true; o.disconnect(); }); }, { threshold: 0.02 });
+            o.observe(card);
+            setTimeout(function () { if (!card.classList.contains('is-in')) { card.style.setProperty('--lk-delay', '0ms'); card.classList.add('is-in'); } }, 4000);
+          });
+        });
+      };
+      new MutationObserver(function () { window.requestAnimationFrame(reveal); }).observe(panels, { childList: true });
+      reveal();
+    }
+  }
+  /* --- 4. défilement : barre de lecture et parallaxe des bandeaux -------------------------------------------- */
+  const bar = document.createElement('div'); bar.className = 'lk-progress'; bar.setAttribute('aria-hidden', 'true'); bar.innerHTML = '<i></i>'; document.body.appendChild(bar);
+  const fill = bar.firstChild;
+  const parallax = Array.prototype.slice.call(document.querySelectorAll('.calc-hero-image, .vhero-bg, .fhero-bg, .info-hero>img, .t-hero img, .lk-calc-hero-scene img'));
+  parallax.forEach(function (el) { el.classList.add('lk-parallax'); });
+  const coarse = window.matchMedia('(pointer:coarse)').matches;
+  let queued = false;
+  const frame = function () {
+    queued = false;
+    const doc = document.documentElement, max = Math.max(1, doc.scrollHeight - window.innerHeight), p = Math.min(1, Math.max(0, window.scrollY / max));
+    fill.style.transform = 'scaleX(' + p.toFixed(4) + ')';
+    if (coarse) return;
+    const vh = window.innerHeight;
+    parallax.forEach(function (el) {
+      const box = (el.parentElement || el).getBoundingClientRect();
+      if (box.bottom < -80 || box.top > vh + 80) return;
+      const shift = (box.top + box.height / 2 - vh / 2) * -0.14;
+      el.style.transform = 'translate3d(0,' + shift.toFixed(1) + 'px,0) scale(1.12)';
+    });
+  };
+  const onScroll = function () { if (queued) return; queued = true; window.requestAnimationFrame(frame); };
+  window.addEventListener('scroll', onScroll, { passive: true }); window.addEventListener('resize', onScroll, { passive: true }); onScroll();
+  /* --- 5. survol : inclinaison légère des cartes, reflet sur les boutons principaux --------------------------- */
+  const CTA = '.lk-cta, .calc-primary, .calc-button.primary, .lk-entry-button, .lk-home-discover, .info-primary, .t-button';
+  document.querySelectorAll(CTA).forEach(function (el) { el.classList.add('lk-shine'); });
+  if (window.matchMedia('(hover:hover) and (pointer:fine)').matches) {
+    const TILT = '.lk-feature, .d-card, .info-card, .tool, .kit, .rare-card, .lk-entry-card, .lk-tool, .col-card, .b-phase>div, .b-alt';
+    let active = null;
+    document.addEventListener('pointerenter', function (ev) {
+      const t = ev.target; if (!t || !t.closest) return; const card = t.closest(TILT); if (!card || card === active) return;
+      active = card; card.classList.add('lk-tilt'); card.style.transitionDuration = '.18s';
+    }, true);
+    document.addEventListener('pointermove', function (ev) {
+      if (!active || !active.contains(ev.target)) return;
+      const r = active.getBoundingClientRect(); if (!r.width || !r.height) return;
+      const x = (ev.clientX - r.left) / r.width - 0.5, y = (ev.clientY - r.top) / r.height - 0.5;
+      active.style.transform = 'perspective(900px) rotateX(' + (-y * 5).toFixed(2) + 'deg) rotateY(' + (x * 6).toFixed(2) + 'deg) translate(-3px,-3px)';
+    });
+    document.addEventListener('pointerleave', function (ev) {
+      const t = ev.target; if (!active || !t || t !== active) return;
+      active.style.transform = ''; active.style.transitionDuration = ''; active.classList.remove('lk-tilt'); active = null;
+    }, true);
+  }
+})();

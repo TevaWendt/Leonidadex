@@ -2374,3 +2374,53 @@ html:not(.js) .lk-h2::after{transform:scaleX(1);}
 footer a{transition:color var(--dur),transform var(--dur) var(--ease-out);display:inline-block;}
 footer a:hover{color:var(--coral-text);transform:translateX(3px);}
 @media(prefers-reduced-motion:reduce){.js main{animation:none;} footer a:hover,.progress-cards .note-box:hover{transform:none;}}
+
+/* ===================== v7.36 : Motion+ — titres mot à mot, rideaux d'images, cascade, parallaxe, barre de lecture, inclinaison, reflets ===================== */
+/* barre de lecture : une ligne ambre → corail qui suit le défilement, sous rien, au-dessus de tout */
+.lk-progress{position:fixed;top:0;left:0;right:0;height:3px;z-index:1200;pointer-events:none;}
+.lk-progress i{display:block;height:100%;transform-origin:left;transform:scaleX(0);background:linear-gradient(90deg,var(--amber),var(--coral));transition:transform .1s linear;}
+/* titres mot à mot : chaque mot monte et se nettoie, l'un après l'autre */
+.js .lk-words .lk-w{display:inline-block;opacity:0;transform:translateY(.5em) rotate(1.5deg);filter:blur(5px);transition:opacity .5s var(--ease-out),transform .6s var(--ease-out),filter .5s var(--ease-out);transition-delay:calc(var(--lk-i,0)*45ms + var(--lk-delay,0ms) + 60ms);will-change:transform,opacity,filter;}
+.js .lk-words.is-in .lk-w,.js .lk-words.lk-now .lk-w{opacity:1;transform:none;filter:none;}
+.js .lk-words.lk-now .lk-w{transition-delay:calc(var(--lk-i,0)*55ms + 120ms);}
+/* bandeaux : les éléments arrivent en cascade au chargement (kicker, titre, phrase, boutons) */
+.js .lk-hero-item{animation:lk-rise .75s var(--ease-out) both;animation-delay:calc(var(--lk-i,0)*110ms);}
+@keyframes lk-rise{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:none;}}
+/* rideau d'image : un voile couleur papier se retire de gauche à droite pendant que l'image se recale (façon bande-annonce).
+   Un voile plutôt qu'un découpage : l'observateur de défilement voit toujours le bloc entier. */
+.js .lk-reveal--clip{opacity:1;transform:none;position:relative;}
+.js .lk-reveal--clip::after{content:'';position:absolute;inset:0;z-index:3;background:var(--paper);transform-origin:right center;transform:scaleX(1);transition:transform .9s var(--ease-out);transition-delay:var(--lk-delay,0ms);pointer-events:none;}
+.js .lk-reveal--clip img{transform:scale(1.14);transition:transform 1.2s var(--ease-out);transition-delay:var(--lk-delay,0ms);}
+.js .lk-reveal--clip.is-in::after{transform:scaleX(0);}
+.js .lk-reveal--clip.is-in img{transform:none;}
+/* paragraphes : un flou qui se dissipe */
+.js .lk-reveal--blur{transform:translateY(10px);filter:blur(6px);}
+.js .lk-reveal--blur.is-in{filter:blur(0);transition:opacity .6s var(--ease-out),transform .6s var(--ease-out),filter .6s var(--ease-out);transition-delay:var(--lk-delay,0ms);}
+/* cartes de grille : elles grandissent en arrivant, en cascade selon leur rang */
+.js .lk-reveal--zoom{transform:scale(.94) translateY(14px);}
+.js .lk-reveal.is-in.lk-reveal--zoom{transform:none;}
+/* lignes et listes : une ligne après l'autre */
+.js .lk-reveal--rows{opacity:1;transform:none;}
+.js .lk-reveal--rows>*{opacity:0;transform:translateY(9px);transition:opacity .45s var(--ease-out),transform .45s var(--ease-out);transition-delay:calc(var(--lk-i,0)*45ms + var(--lk-delay,0ms));}
+.js .lk-reveal--rows.is-in>*{opacity:1;transform:none;}
+/* images des piles : lente respiration tant qu'elles sont à l'écran */
+.js .lk-reveal.is-in .lk-kb{animation:lk-kb 22s ease-in-out infinite alternate;}
+@keyframes lk-kb{from{transform:scale(1) translate3d(0,0,0);}to{transform:scale(1.08) translate3d(-1.5%,-1%,0);}}
+/* parallaxe : le fond du bandeau glisse un peu moins vite que la page */
+.lk-parallax{will-change:transform;transform:scale(1.12);}
+.vhero,.fhero,.calc-hero,.info-hero,.t-hero{overflow:hidden;}
+/* inclinaison des cartes sous la souris (posée par common.js) */
+.lk-tilt{transform-style:preserve-3d;will-change:transform;z-index:2;}
+/* reflet qui traverse les boutons principaux au survol */
+.lk-shine{position:relative;overflow:hidden;}
+.lk-shine::after{content:'';position:absolute;top:-60%;bottom:-60%;left:0;width:34%;background:linear-gradient(105deg,transparent 0%,rgba(255,255,255,.55) 50%,transparent 100%);transform:skewX(-22deg) translateX(-220%);transition:transform .75s var(--ease-out);pointer-events:none;}
+@media(hover:hover){.lk-shine:hover::after{transform:skewX(-22deg) translateX(420%);}}
+/* accessibilité : réduire les animations = tout visible, rien ne bouge ; impression idem */
+@media(prefers-reduced-motion:reduce){
+  .js .lk-words .lk-w,.js .lk-reveal--clip,.js .lk-reveal--clip img,.js .lk-reveal--blur,.js .lk-hero-item,.js .lk-reveal--rows>*,.js .lk-reveal--zoom{opacity:1 !important;transform:none !important;filter:none !important;animation:none !important;transition:none !important;}
+  .js .lk-reveal--clip::after{display:none !important;}
+  .js .lk-reveal.is-in .lk-kb{animation:none !important;}
+  .lk-progress,.lk-shine::after{display:none !important;}
+  .lk-parallax{transform:none !important;}
+}
+@media print{.lk-progress{display:none;}.js .lk-reveal--clip::after{display:none !important;}.js .lk-words .lk-w,.js .lk-reveal--clip,.js .lk-reveal--clip img,.js .lk-reveal--blur,.js .lk-hero-item,.js .lk-reveal--rows>*{opacity:1 !important;transform:none !important;filter:none !important;animation:none !important;}}

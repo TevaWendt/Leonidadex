@@ -1,0 +1,36 @@
+v7.36 — 25 septembre 2026 — MOTION+ : ENCORE PLUS DE VIE SUR TOUT LE SITE, TOUJOURS SOBRE
+(cette archive contient aussi les lots A, B, C, la v7.33, la v7.34 et la v7.35)
+
+Ce qui change pour le visiteur (toutes les pages)
+- Les titres se composent mot à mot : chaque mot monte et se nettoie d’un flou, l’un après l’autre (h1 des bandeaux au
+  chargement, titres de section à l’arrivée à l’écran, promesse de l’accueil).
+- Les bandeaux entrent en cascade au chargement : kicker, titre, phrase, boutons, image, chacun avec un temps de décalage.
+- Les images se dévoilent d’un rideau (façon bande-annonce) : un voile couleur papier se retire de gauche à droite pendant
+  que l’image se recale (léger zoom qui se dépose). Les piles d’images respirent lentement tant qu’elles sont à l’écran.
+- Les paragraphes d’introduction arrivent d’un flou qui se dissipe ; les cartes des grilles grandissent en arrivant, en
+  cascade selon leur rang ; les tableaux et les listes se remplissent ligne après ligne.
+- Le fond des bandeaux glisse un peu moins vite que la page (parallaxe : calculateur, véhicules, armurerie, carte…).
+- Une fine barre ambre → corail en haut de l’écran suit la lecture.
+- Sous la souris, les cartes s’inclinent légèrement (3D discrète) ; les boutons principaux reçoivent un reflet qui les
+  traverse au survol.
+- Sur le calculateur, les cartes de chaque outil apparaissent à leur première venue (pas à chaque recalcul).
+- Rien ne bouge avec « réduire les animations » du système ni à l’impression : tout est visible tout de suite. Sans
+  JavaScript, idem. Aucune animation ne touche à la mise en page (opacité, transformation, filtre seulement).
+
+Technique
+- common.js : nouveau module « v7.36 : Motion+ » après le bloc lot C. splitWords() enveloppe les mots (span.lk-w, variable
+  --lk-i) ; cascade des bandeaux (.lk-hero-item, --lk-i) sur les éléments de premier niveau d’un bandeau ; variantes de
+  lk-reveal : --clip (figures), --blur (paragraphes), --zoom (cartes), --rows (tableaux, listes, grilles), --right (piles),
+  --left (textes de fiche) ; décalage selon le rang parmi les frères (--lk-delay) ; IntersectionObserver dédié aux nouveaux
+  blocs (filet de sécurité 3,5 s, tout visible à l’impression) ; MutationObserver sur #calc-panels pour les cartes du
+  calculateur ; barre de lecture (.lk-progress) et parallaxe (.lk-parallax) sur un seul requestAnimationFrame ; reflet
+  (.lk-shine) sur les boutons principaux ; inclinaison (.lk-tilt) sur pointeur fin et survol seulement.
+- style.css : bloc « v7.36 : Motion+ » en fin de fichier (mots, cascade, rideau via ::after, flou, zoom, lignes, respiration
+  des images, parallaxe, barre, inclinaison, reflet ; règles de réduction des animations et d’impression).
+- Le rideau est un pseudo-élément et non un clip-path : l’observateur d’intersection voit toujours le bloc entier.
+
+Contrôles
+- Suite complète 373/373 (aucun test ne dépend du mouvement ; les helpers jsdom simulent l’observateur).
+- Chromium : 12 pages types × 2 largeurs (1 280 / 390) parcourues de haut en bas : tout apparaît, aucun mot ni bloc ne reste
+  invisible, aucune erreur console, aucun débordement ; 39 pages × 15 largeurs (site entier) sans débordement ni erreur ;
+  images d’animation à 250 ms / 750 ms / 2 s (bandeau véhicules, calculateur), rideau d’image (Tuto), inclinaison d’une carte.
