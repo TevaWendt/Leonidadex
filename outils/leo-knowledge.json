@@ -38,7 +38,7 @@
     "pourquoi pas encore sorti",
     "deja repousse"
    ],
-   "text": "Le jeu a été repoussé deux fois : d’abord de 2025 au 26 mai 2026 (annoncé le 2 mai 2025), puis au 19 novembre 2026 (annoncé le 6 novembre 2025). Rockstar a dit vouloir livrer le jeu au niveau de qualité attendu. Aucun nouveau report n’est annoncé.",
+   "text": "Le jeu a été repoussé deux fois : d’abord de 2025 au 26 mai 2026 (annoncé le 2 mai 2025), puis au 19 novembre 2026 (annoncé le 6 novembre 2025). Rockstar a dit vouloir livrer le jeu au niveau de qualité attendu. Aucun nouveau report n’est annoncé.",
    "status": "Officiel Rockstar",
    "source": "https://www.rockstargames.com/VI"
   },
@@ -116,7 +116,7 @@
     "portage pc",
     "sortira sur ordinateur"
    ],
-   "text": "Aucune version PC n’est annoncée, ni date, ni page Steam. Une rumeur de septembre 2026 parle d’une arrivée « plus tôt que d’habitude », mais Rockstar n’a rien confirmé. Pour GTA V, la version PC était arrivée un an et demi après les consoles.",
+   "text": "Aucune version PC n’est annoncée, ni date, ni page Steam. Une rumeur de septembre 2026 parle d’une arrivée « plus tôt que d’habitude », mais Rockstar n’a rien confirmé. Pour GTA V, la version PC était arrivée un an et demi après les consoles.",
    "status": "Non annoncé · rumeur non confirmée",
    "source": "https://www.rockstargames.com/VI",
    "priority": true,
@@ -135,7 +135,7 @@
     "ancienne console",
     "anciennes consoles"
    ],
-   "text": "Non : GTA VI n’est pas prévu sur PS4, Xbox One ni Nintendo Switch 2. Seules la PS5 et les Xbox Series X|S sont annoncées.",
+   "text": "Non : GTA VI n’est pas prévu sur PS4, Xbox One ni Nintendo Switch 2. Seules la PS5 et les Xbox Series X|S sont annoncées.",
    "status": "Officiel Rockstar",
    "source": "https://www.rockstargames.com/VI",
    "min": 1
@@ -151,7 +151,7 @@
     "framerate",
     "graphismes"
    ],
-   "text": "Le jeu est annoncé « PS5 Pro Enhanced ». Rockstar n’a pas publié de détails sur la résolution ou le nombre d’images par seconde. L’Extended Look du 27 août 2026 a été capturé sur PS5.",
+   "text": "Le jeu est annoncé « PS5 Pro Enhanced ». Rockstar n’a pas publié de détails sur la résolution ou le nombre d’images par seconde. L’Extended Look du 27 août 2026 a été capturé sur PS5.",
    "status": "Officiel, détails non publiés",
    "source": "https://www.rockstargames.com/VI"
   },
@@ -164,7 +164,7 @@
     "jouer entre consoles",
     "jouer avec un ami xbox"
    ],
-   "text": "Rien n’est annoncé sur le jeu entre consoles différentes : il n’y a pour l’instant aucune annonce sur le mode en ligne de GTA VI.",
+   "text": "Rien n’est annoncé sur le jeu entre consoles différentes : il n’y a pour l’instant aucune annonce sur le mode en ligne de GTA VI.",
    "status": "Non annoncé"
   },
   {
@@ -181,7 +181,7 @@
     "prix du jeu",
     "combien ca coute"
    ],
-   "text": "Sur les boutiques, l’édition Standard est affichée à 79,99 € et l’Édition Ultime à 99,99 € (passage de l’une à l’autre : environ 20 €). Ce sont les prix constatés depuis l’ouverture des précommandes le 25 juin 2026 ; vérifie sur ta boutique.",
+   "text": "Sur les boutiques, l’édition Standard est affichée à 79,99 € et l’Édition Ultimate à 99,99 € (passage de l’une à l’autre : environ 20 €). Ce sont les prix constatés depuis l’ouverture des précommandes le 25 juin 2026 ; vérifie sur ta boutique.",
    "status": "Prix constatés sur les boutiques",
    "links": [
     {
@@ -199,12 +199,13 @@
     "edition",
     "editions",
     "edition ultime",
+    "edition ultimate",
     "ultimate",
     "edition standard",
     "difference entre les editions",
     "quelle edition"
    ],
-   "text": "Deux éditions : Standard (le jeu) et Ultime, qui ajoute une collection de véhicules, d’armes, de vêtements et de contenus liés à l’histoire de Jason et Lucia. Sur le site, les contenus déjà décrits sont listés dans « Tout ce qui s’achète », « Vêtements et style » et « Personnalisations ».",
+   "text": "Deux éditions : Standard (le jeu) et Ultimate, qui ajoute une collection de véhicules, d’armes, de vêtements et de contenus liés à l’histoire de Jason et Lucia. Sur le site, les contenus déjà décrits sont listés dans « Tout ce qui s’achète », « Vêtements et style » et « Personnalisations ».",
    "status": "Officiel Rockstar",
    "links": [
     {
@@ -226,13 +227,19 @@
    "id": "ultime-contenu",
    "k": [
     "contenu de l edition ultime",
+    "contenu de l edition ultimate",
     "contient l edition ultime",
+    "contient l edition ultimate",
     "ultime contient",
+    "ultimate contient",
     "dans l edition ultime",
+    "dans l edition ultimate",
     "bonus ultime",
-    "vaut le coup edition ultime"
+    "bonus ultimate",
+    "vaut le coup edition ultime",
+    "vaut le coup edition ultimate"
    ],
-   "text": "D’après les présentations officielles déjà relevées sur le site : un kit rétro pour le Ganado de Jason (Rideout Customs), les collections « Style de Vice City » et « Les articles du bonheur », le garage de Paradise avec le Dominator Buggy, et des services chez Sara’s Unisex Salon, Stock 305 et Electric Fang Tattoo. Les prix en jeu de ces contenus ne sont pas publiés.",
+   "text": "D’après les présentations officielles déjà relevées sur le site : un kit rétro pour le Ganado de Jason (Rideout Customs), les collections « Style de Vice City » et « Les articles du bonheur », le garage de Paradise avec le Dominator Buggy, et des services chez Sara’s Unisex Salon, Stock 305 et Electric Fang Tattoo. Les prix en jeu de ces contenus ne sont pas publiés.",
    "status": "Officiel Rockstar",
    "links": [
     {
@@ -259,7 +266,7 @@
     "acheter gta 6",
     "acheter gta vi"
    ],
-   "text": "Les précommandes sont ouvertes depuis le 25 juin 2026 sur le PlayStation Store, le Xbox Store et la boutique Rockstar. Le bonus de précommande (avant le 20 novembre 2026) est le Pack Vintage Vice City : des tenues années 80, un motif d’arme et le Stanier ’55 avec le garage de Shore Court.",
+   "text": "Les précommandes sont ouvertes depuis le 25 juin 2026 sur le PlayStation Store, le Xbox Store et la boutique Rockstar. Le bonus de précommande (avant le 20 novembre 2026) est le Pack Vintage Vice City : des tenues années 80, un motif d’arme et le Stanier ’55 avec le garage de Shore Court.",
    "status": "Officiel Rockstar",
    "links": [
     {
@@ -282,7 +289,7 @@
     "stanier 55",
     "shore court"
    ],
-   "text": "Le Pack Vintage Vice City est le bonus de précommande : une tenue et une coiffure rétro pour Jason, une robe à sequins et des cheveux bouclés pour Lucia, un motif tropical pour les armes, et le Vapid Stanier ’55 garé dans un garage à Shore Court, près d’Ocean Beach.",
+   "text": "Le Pack Vintage Vice City est le bonus de précommande : une tenue et une coiffure rétro pour Jason, une robe à sequins et des cheveux bouclés pour Lucia, un motif tropical pour les armes, et le Vapid Stanier ’55 garé dans un garage à Shore Court, près d’Ocean Beach.",
    "status": "Officiel Rockstar",
    "links": [
     {
@@ -304,7 +311,7 @@
     "abonnement",
     "gta+ inclus"
    ],
-   "text": "D’après les boutiques, une précommande numérique inclut 30 jours d’abonnement GTA+. Rockstar n’a pas détaillé ce que GTA+ apportera dans GTA VI : vérifie les conditions sur la page d’achat.",
+   "text": "D’après les boutiques, une précommande numérique inclut 30 jours d’abonnement GTA+. Rockstar n’a pas détaillé ce que GTA+ apportera dans GTA VI : vérifie les conditions sur la page d’achat.",
    "status": "Boutiques, à vérifier"
   },
   {
@@ -344,7 +351,7 @@
     "bande annonce 1",
     "trailer de 2023"
    ],
-   "text": "Le Trailer 1 est sorti le 4 décembre 2023, un jour plus tôt que prévu après une fuite. Il présente Lucia, Leonida et Vice City, sur « Love Is a Long Road » de Tom Petty. Il a dépassé 90 millions de vues en 24 heures.",
+   "text": "Le Trailer 1 est sorti le 4 décembre 2023, un jour plus tôt que prévu après une fuite. Il présente Lucia, Leonida et Vice City, sur « Love Is a Long Road » de Tom Petty. Il a dépassé 90 millions de vues en 24 heures.",
    "status": "Officiel Rockstar",
    "links": [
     {
@@ -363,7 +370,7 @@
     "bande annonce 2",
     "trailer de 2025"
    ],
-   "text": "Le Trailer 2 est sorti le 6 mai 2025, en même temps que les premières captures et les présentations de Jason, Lucia et des autres personnages. La musique est « Hot Together » des Pointer Sisters.",
+   "text": "Le Trailer 2 est sorti le 6 mai 2025, en même temps que les premières captures et les présentations de Jason, Lucia et des autres personnages. La musique est « Hot Together » des Pointer Sisters.",
    "status": "Officiel Rockstar",
    "links": [
     {
@@ -417,7 +424,7 @@
     "hot together",
     "love is a long road"
    ],
-   "text": "Trailer 1 : « Love Is a Long Road » de Tom Petty. Trailer 2 : « Hot Together » des Pointer Sisters.",
+   "text": "Trailer 1 : « Love Is a Long Road » de Tom Petty. Trailer 2 : « Hot Together » des Pointer Sisters.",
    "status": "Officiel Rockstar"
   },
   {
@@ -455,7 +462,7 @@
     "gta vii",
     "prochain gta"
    ],
-   "text": "Rien n’existe sur un GTA VII : GTA VI n’est pas encore sorti.",
+   "text": "Rien n’existe sur un GTA VII : GTA VI n’est pas encore sorti.",
    "status": "Sans objet"
   },
   {
@@ -476,7 +483,7 @@
     "jason lucia",
     "duo"
    ],
-   "text": "On joue deux personnages : Lucia Caminos et Jason Duval, un duo qui doit se faire confiance dans un État de Leonida où tout peut mal tourner. On passe de l’un à l’autre au fil de l’histoire, comme dans GTA V.",
+   "text": "On joue deux personnages : Lucia Caminos et Jason Duval, un duo qui doit se faire confiance dans un État de Leonida où tout peut mal tourner. On passe de l’un à l’autre au fil de l’histoire, comme dans GTA V.",
    "status": "Officiel Rockstar",
    "links": [
     {
@@ -498,7 +505,7 @@
     "qui est lucia",
     "heroine"
    ],
-   "text": "Lucia Caminos est l’un des deux personnages jouables. Son père lui a appris à se battre ; se battre pour sa famille l’a envoyée au pénitencier de Leonida. Fraîchement libérée, elle ne veut plus faire que des coups intelligents. C’est la première héroïne principale de la série.",
+   "text": "Lucia Caminos est l’un des deux personnages jouables. Son père lui a appris à se battre ; se battre pour sa famille l’a envoyée au pénitencier de Leonida. Fraîchement libérée, elle ne veut plus faire que des coups intelligents. C’est la première héroïne principale de la série.",
    "status": "Officiel Rockstar",
    "links": [
     {
@@ -515,7 +522,7 @@
     "jason duval",
     "qui est jason"
    ],
-   "text": "Jason Duval est l’autre personnage jouable : ancien militaire élevé parmi les escrocs, il travaille pour les trafiquants des Keys. Il voudrait une vie facile ; sa rencontre avec Lucia va tout compliquer.",
+   "text": "Jason Duval est l’autre personnage jouable : ancien militaire élevé parmi les escrocs, il travaille pour les trafiquants des Keys. Il voudrait une vie facile ; sa rencontre avec Lucia va tout compliquer.",
    "status": "Officiel Rockstar",
    "links": [
     {
@@ -534,7 +541,7 @@
     "tous les personnages",
     "casting"
    ],
-   "text": "Huit personnages sont présentés par Rockstar : Jason Duval, Lucia Caminos, Cal Hampton, Boobie Ike, Dre’Quan Priest, Real Dimez (Bae-Luxe et Roxy), Raul Bautista et Brian Heder. Chacun a sa fiche sur le site.",
+   "text": "Huit personnages sont présentés par Rockstar : Jason Duval, Lucia Caminos, Cal Hampton, Boobie Ike, Dre’Quan Priest, Real Dimez (Bae-Luxe et Roxy), Raul Bautista et Brian Heder. Chacun a sa fiche sur le site.",
    "status": "Officiel Rockstar",
    "links": [
     {
@@ -555,7 +562,7 @@
     "bonnie and clyde",
     "couple"
    ],
-   "text": "Rockstar décrit Jason et Lucia comme deux personnes qui n’ont que l’une l’autre dans un État où tout peut mal tourner : un coup qui dérape, la police, les trafiquants des Keys et l’empire de Boobie Ike à Vice City. Le détail du scénario n’est pas publié.",
+   "text": "Rockstar décrit Jason et Lucia comme deux personnes qui n’ont que l’une l’autre dans un État où tout peut mal tourner : un coup qui dérape, la police, les trafiquants des Keys et l’empire de Boobie Ike à Vice City. Le détail du scénario n’est pas publié.",
    "status": "Officiel Rockstar, résumé",
    "links": [
     {
@@ -590,7 +597,7 @@
     "floride",
     "florida"
    ],
-   "text": "Leonida est l’État fictif où se passe le jeu : une Floride réinventée, avec Vice City (inspirée de Miami), les Keys, les marais de Grassrivers, Port Gellhorn, Ambrosia et le parc national de Mount Kalaga.",
+   "text": "Leonida est l’État fictif où se passe le jeu : une Floride réinventée, avec Vice City (inspirée de Miami), les Keys, les marais de Grassrivers, Port Gellhorn, Ambrosia et le parc national de Mount Kalaga.",
    "status": "Officiel Rockstar",
    "links": [
     {
@@ -614,7 +621,7 @@
     "little cuba",
     "downtown"
    ],
-   "text": "Vice City est la grande ville de Leonida, inspirée de Miami : plages, quartiers commerçants, port de croisière et gratte-ciel de downtown. Rockstar cite Ocean Beach, Little Cuba, Tisha-Wocka et VC Port.",
+   "text": "Vice City est la grande ville de Leonida, inspirée de Miami : plages, quartiers commerçants, port de croisière et gratte-ciel de Downtown. Rockstar cite Ocean Beach, Little Cuba, Tisha-Wocka et VC Port.",
    "status": "Officiel Rockstar",
    "links": [
     {
@@ -634,7 +641,7 @@
     "quartiers",
     "comtes"
    ],
-   "text": "Six régions sont annoncées : Vice City, Leonida Keys, Grassrivers, Port Gellhorn, Ambrosia et Mount Kalaga National Park. Les noms de comtés vus dans les médias officiels (Vice-Dale, Kelly, Leonard, Mariana, Ambrosia) viennent de relevés communautaires.",
+   "text": "Six régions sont annoncées : Vice City, Leonida Keys, Grassrivers, Port Gellhorn, Ambrosia et Mount Kalaga National Park. Les noms de comtés vus dans les médias officiels (Vice-Dale, Kelly, Leonard, Mariana, Ambrosia) viennent de relevés communautaires.",
    "status": "Officiel Rockstar (régions)",
    "links": [
     {
@@ -671,7 +678,7 @@
     "everglades",
     "hydroglisseur"
    ],
-   "text": "Grassrivers est la grande étendue sauvage de Leonida : mangroves, canaux lents et plaines inondées qu’on parcourt en hydroglisseur, avec des alligators.",
+   "text": "Grassrivers est la grande étendue sauvage de Leonida : mangroves, canaux lents et plaines inondées qu’on parcourt en hydroglisseur, avec des alligators.",
    "status": "Officiel Rockstar",
    "links": [
     {
@@ -689,7 +696,7 @@
     "station balneaire",
     "motel"
    ],
-   "text": "Port Gellhorn est une ancienne destination de vacances qui vit de ce qu’il en reste : motels bon marché, centres commerciaux vides et attractions fermées.",
+   "text": "Port Gellhorn est une ancienne destination de vacances qui vit de ce qu’il en reste : motels bon marché, centres commerciaux vides et attractions fermées.",
    "status": "Officiel Rockstar",
    "links": [
     {
@@ -729,7 +736,7 @@
     "chasser",
     "pecher"
    ],
-   "text": "Mount Kalaga National Park est le parc du nord de Leonida : forêts, rivières et pistes boueuses. Rockstar le présente comme un terrain de chasse, de pêche et de tout-terrain.",
+   "text": "Mount Kalaga National Park est le parc du nord de Leonida : forêts, rivières et pistes boueuses. Rockstar le présente comme un terrain de chasse, de pêche et de tout-terrain.",
    "status": "Officiel Rockstar",
    "links": [
     {
@@ -750,7 +757,7 @@
     "carte du jeu",
     "map"
    ],
-   "text": "Rockstar n’a pas donné la taille de la carte. Elle couvre six régions, de la ville aux marais. Sur le site, la carte interactive recense environ 2 500 lieux repérés dans les médias officiels.",
+   "text": "Rockstar n’a pas donné la taille de la carte. Elle couvre six régions, de la ville aux marais. Sur le site, la carte interactive recense environ 2 500 lieux repérés dans les médias officiels.",
    "status": "Non communiqué",
    "links": [
     {
@@ -769,7 +776,7 @@
     "faune",
     "animal"
    ],
-   "text": "Oui : les alligators de Grassrivers sont l’attraction la plus célèbre de la région, et l’Extended Look montre Jason caresser un chien. Le détail de la faune n’est pas publié.",
+   "text": "Oui : les alligators de Grassrivers sont l’attraction la plus célèbre de la région, et l’Extended Look montre Jason caresser un chien. Le détail de la faune n’est pas publié.",
    "status": "Vu dans les présentations officielles",
    "links": [
     {
@@ -809,7 +816,7 @@
     "les flics",
     "recherche par la police"
    ],
-   "text": "D’après l’Extended Look, la police identifie le suspect avec plus d’indices qu’avant : le véhicule, les vêtements et l’apparence. Changer de voiture ou de tenue aide à se faire oublier. Le système d’étoiles précis n’est pas détaillé.",
+   "text": "D’après l’Extended Look, la police identifie le suspect avec plus d’indices qu’avant : le véhicule, les vêtements et l’apparence. Changer de voiture ou de tenue aide à se faire oublier. Le système d’étoiles précis n’est pas détaillé.",
    "status": "Vu dans l’Extended Look",
    "min": 1
   },
@@ -824,7 +831,7 @@
     "cle numerique",
     "ouvrir une voiture"
    ],
-   "text": "L’Extended Look montre plusieurs façons de voler un véhicule : casser une vitre, utiliser un slim jim sur certains modèles ou cloner une clé numérique.",
+   "text": "L’Extended Look montre plusieurs façons de voler un véhicule : casser une vitre, utiliser un slim jim sur certains modèles ou cloner une clé numérique.",
    "status": "Vu dans l’Extended Look",
    "links": [
     {
@@ -883,7 +890,7 @@
     "soins",
     "kit de soin"
    ],
-   "text": "Manger, boire ou se soigner rend de la vie dans les GTA ; le kit de soin et le gilet pare-balles sont décrits dans l’armurerie de GTA VI. Aucun article ni prix n’est publié pour l’instant.",
+   "text": "Manger, boire ou se soigner rend de la vie dans les GTA ; le kit de soin et le gilet pare-balles sont décrits dans l’armurerie de GTA VI. Aucun article ni prix n’est publié pour l’instant.",
    "status": "Repère de la série + Extended Look",
    "links": [
     {
@@ -919,7 +926,7 @@
     "v rock",
     "album"
    ],
-   "text": "D’après les relevés de l’Extended Look, plusieurs stations sont visibles (V-Rock, Emotion 98.3, Stockyard FM, Symphony FM, Kaleidoscope FM, WorldWide FM, CircoLoco Records Radio). Un album « GTA VI : The Album » est annoncé. La liste complète n’est pas officielle.",
+   "text": "D’après les relevés de l’Extended Look, plusieurs stations sont visibles (V-Rock, Emotion 98.3, Stockyard FM, Symphony FM, Kaleidoscope FM, WorldWide FM, CircoLoco Records Radio). Un album « GTA VI : The Album » est annoncé. La liste complète n’est pas officielle.",
    "status": "Relevé communautaire, à vérifier",
    "min": 1
   },
@@ -936,7 +943,7 @@
     "prix des voitures",
     "combien coute une voiture"
    ],
-   "text": "Rockstar n’a publié aucun prix en jeu : ni voitures, ni armes, ni maisons, ni revenus des missions. C’est pour ça que le calculateur du site te demande tes propres chiffres et te dit toujours d’où vient chaque valeur.",
+   "text": "Rockstar n’a publié aucun prix en jeu : ni voitures, ni armes, ni maisons, ni revenus des missions. C’est pour ça que le calculateur du site te demande tes propres chiffres et te dit toujours d’où vient chaque valeur.",
    "status": "Non publié",
    "links": [
     {
@@ -1063,7 +1070,7 @@
     "coupe de cheveux",
     "barbe"
    ],
-   "text": "La page « Vêtements et style » réunit quatre volets : tenues, accessoires, tatouages (Electric Fang Tattoo) et coiffures (Sara’s Unisex Salon), avec les collections annoncées. Aucune pièce n’a de prix publié.",
+   "text": "La page « Vêtements et style » réunit quatre volets : tenues, accessoires, tatouages (Electric Fang Tattoo) et coiffures (Sara’s Unisex Salon), avec les collections annoncées. Aucune pièce n’a de prix publié.",
    "status": "Officiel Rockstar (adresses et collections)",
    "links": [
     {
@@ -1082,7 +1089,7 @@
     "yacht",
     "naviguer"
    ],
-   "text": "Oui : le site recense des embarcations vues dans les médias, et Rockstar décrit l’obtention du Crest Kayak et du Shitzu Squalo avec l’Édition Ultime. Les prix en jeu ne sont pas publiés.",
+   "text": "Oui : le site recense des embarcations vues dans les médias, et Rockstar décrit l’obtention du Crest Kayak et du Shitzu Squalo avec l’Édition Ultimate. Les prix en jeu ne sont pas publiés.",
    "status": "Officiel (obtention) · identification (autres)",
    "links": [
     {
@@ -1120,7 +1127,7 @@
     "pour les enfants",
     "classification"
    ],
-   "text": "Comme tous les GTA, GTA VI est destiné aux adultes : la classification PEGI 18 est attendue en Europe. La classification officielle sera visible sur la boutique.",
+   "text": "Comme tous les GTA, GTA VI est destiné aux adultes : la classification PEGI 18 est attendue en Europe. La classification officielle sera visible sur la boutique.",
    "status": "Attendu, à vérifier"
   },
   {
@@ -1158,7 +1165,7 @@
     "annees 80",
     "meme ville"
    ],
-   "text": "C’est la même ville, mais à notre époque : GTA Vice City (2002) se passait en 1986. Le Pack Vintage Vice City fait un clin d’œil aux années 80 avec un motif inspiré de la chemise de Tommy Vercetti.",
+   "text": "C’est la même ville, mais à notre époque : GTA Vice City (2002) se passait en 1986. Le Pack Vintage Vice City fait un clin d’œil aux années 80 avec un motif inspiré de la chemise de Tommy Vercetti.",
    "status": "Officiel (pack) · repère de la série",
    "links": [
     {
@@ -1177,7 +1184,7 @@
     "gta v",
     "nouveautes"
    ],
-   "text": "Ce qu’on a vu de nouveau : deux personnages qui doivent se faire confiance, un réseau social dans le jeu, une police qui reconnaît le véhicule et la tenue, plusieurs façons de voler une voiture, le poids qui change avec l’alimentation, et une roue d’équipement à deux volets. Rockstar n’a pas publié de liste complète des nouveautés.",
+   "text": "Ce qu’on a vu de nouveau : deux personnages qui doivent se faire confiance, un réseau social dans le jeu, une police qui reconnaît le véhicule et la tenue, plusieurs façons de voler une voiture, le poids qui change avec l’alimentation, et une roue d’équipement à deux volets. Rockstar n’a pas publié de liste complète des nouveautés.",
    "status": "Vu dans les présentations officielles"
   },
   {
@@ -1194,7 +1201,7 @@
     "a propos du site",
     "qui est derriere"
    ],
-   "text": "Leonidakit est un site indépendant fait par un joueur, gratuit et sans compte. Il n’est ni affilié ni approuvé par Rockstar ou Take-Two. Moi, c’est Léo : je réponds avec les données du site et des règles simples, sans envoyer tes questions nulle part.",
+   "text": "Leonidakit est un site indépendant fait par un joueur, gratuit et sans compte. Il n’est ni affilié ni approuvé par Rockstar ou Take-Two. Moi, c’est Léo : je réponds avec les données du site et des règles simples, sans envoyer tes questions nulle part.",
    "status": "Le site",
    "links": [
     {
@@ -1237,7 +1244,7 @@
     "contact",
     "contacter"
    ],
-   "text": "Passe par la page Contact : elle t’aide à préparer un signalement clair (page, problème, source). Le canal de contact n’est pas encore confirmé, la page le dit honnêtement.",
+   "text": "Passe par la page Contact : elle t’aide à préparer un signalement clair (page, problème, source). Le canal de contact n’est pas encore confirmé, la page le dit honnêtement.",
    "status": "Le site",
    "links": [
     {
@@ -1256,7 +1263,7 @@
     "utiliser le calculateur",
     "tuto"
    ],
-   "text": "Le calculateur répond à des questions concrètes avec tes chiffres : combien de temps pour ton objectif, est-ce que tu peux acheter ça, quoi acheter d’abord, ça vaut le coup ? Et Mon business plan transforme ton but en programme mission par mission : quoi faire en premier, en deuxième, en troisième, partie après partie, ta prochaine partie, des plans de secours si ça ne se passe pas comme prévu, et un suivi qui refait tout le plan après chaque partie. Dis-moi tes chiffres et je te prépare le bon outil, ou lis le Tuto.",
+   "text": "Le calculateur répond à des questions concrètes avec tes chiffres : combien de temps pour ton objectif, est-ce que tu peux acheter ça, quoi acheter d’abord, ça vaut le coup ? Et Mon business plan transforme ton but en programme mission par mission : quoi faire en premier, en deuxième, en troisième, partie après partie, ta prochaine partie, des plans de secours si ça ne se passe pas comme prévu, et un suivi qui refait tout le plan après chaque partie. Dis-moi tes chiffres et je te prépare le bon outil, ou lis le Tuto.",
    "status": "Le site",
    "links": [
     {
@@ -1316,7 +1323,7 @@
     "comment tu fonctionnes",
     "tu fonctionnes comment"
    ],
-   "text": "Je réponds sur GTA VI (sortie, consoles, prix, éditions, trailers, personnages, régions, ce que montre l’Extended Look), je trouve les fiches du site (véhicules, armes, lieux, personnages, entreprises), j’explique les mots du calculateur et je prépare un calcul avec tes chiffres. Je ne suis pas une IA générale : si je ne sais pas, je le dis.",
+   "text": "Je réponds sur GTA VI (sortie, consoles, prix, éditions, trailers, personnages, régions, ce que montre l’Extended Look), je trouve les fiches du site (véhicules, armes, lieux, personnages, entreprises), j’explique les mots du calculateur et je prépare un calcul avec tes chiffres. Je ne suis pas une IA générale : si je ne sais pas, je le dis.",
    "status": "Léo",
    "links": [
     {
@@ -1338,7 +1345,7 @@
     "rigoler",
     "humour"
    ],
-   "text": "Pourquoi Jason ne prend jamais le bus à Vice City ? Parce qu’avec Lucia, ils ont déjà assez de problèmes de conduite. Bon, je suis meilleur pour les fiches que pour les blagues.",
+   "text": "Pourquoi Jason ne prend jamais le bus à Vice City ? Parce qu’avec Lucia, ils ont déjà assez de problèmes de conduite. Bon, je suis meilleur pour les fiches que pour les blagues.",
    "status": "Léo",
    "min": 1
   },
@@ -1362,7 +1369,7 @@
     "brian",
     "chantier naval"
    ],
-   "text": "Brian Heder est un trafiquant à l’ancienne des Keys ; il fait encore passer sa marchandise par son chantier naval avec Lori, sa troisième épouse, et héberge Jason contre quelques services.",
+   "text": "Brian Heder est un trafiquant à l’ancienne des Keys ; il fait encore passer sa marchandise par son chantier naval avec Lori, sa troisième épouse, et héberge Jason contre quelques services.",
    "status": "Officiel Rockstar",
    "links": [
     {
@@ -1450,7 +1457,7 @@
     "combien d heures",
     "longueur"
    ],
-   "text": "GTA VI a un mode histoire avec Jason et Lucia. Rockstar n’a pas donné de durée de vie. Le calculateur du site a un outil « Mon temps de jeu » pour organiser tes sessions.",
+   "text": "GTA VI a un mode histoire avec Jason et Lucia. Rockstar n’a pas donné de durée de vie. Le calculateur du site a un outil « Mon temps de jeu » pour organiser tes sessions.",
    "status": "Officiel (histoire) · durée non publiée",
    "links": [
     {
@@ -1480,7 +1487,7 @@
     "xp"
    ],
    "min": 1,
-   "text": "Mon business plan a ses propres questions : ton but (un achat, une somme, ou quelque chose à débloquer avec de l’expérience : rang, XP, réputation…), où tu en es, comment tu gagnes ton argent (tes missions, ou un chiffre par heure), ce qu’il faut acheter avant, et ce qui compte pour toi. Il te donne le programme dans l’ordre : en premier, en deuxième, en troisième… partie après partie, avec le chemin le plus rapide trouvé avec tes missions, ta prochaine partie, et des plans de secours A, B, C si tu gagnes moins que prévu. Après avoir joué, tu écris ce que tu as, le temps joué, les missions et les achats faits : tout le plan se recalcule. Enregistre-le : sa fiche complète reste dans Mes plans enregistrés. Rien ne vient du vrai jeu : ce sont tes chiffres.",
+   "text": "Mon business plan a ses propres questions : ton but (un achat, une somme, ou quelque chose à débloquer avec de l’expérience : rang, XP, réputation…), où tu en es, comment tu gagnes ton argent (tes missions, ou un chiffre par heure), ce qu’il faut acheter avant, et ce qui compte pour toi. Il te donne le programme dans l’ordre : en premier, en deuxième, en troisième… partie après partie, avec le chemin le plus rapide trouvé avec tes missions, ta prochaine partie, et des plans de secours A, B, C si tu gagnes moins que prévu. Après avoir joué, tu écris ce que tu as, le temps joué, les missions et les achats faits : tout le plan se recalcule. Enregistre-le : sa fiche complète reste dans Mes plans enregistrés. Rien ne vient du vrai jeu : ce sont tes chiffres.",
    "status": "Le site",
    "links": [
     {
@@ -1504,11 +1511,11 @@
     "cout d opportunite"
    ],
    "min": 1,
-   "text": "« Ça vaut le coup ? » distingue trois cas : un achat plaisir (il ne rapporte rien : je regarde ce qu’il te coûte, ce qu’il te reste et le retard sur ton objectif), un achat qui débloque des activités, et un achat qui te fait gagner en plus. Pour ces deux derniers, je compare la situation avec l’achat et sans, sur le même temps de jeu : seul ce qui s’ajoute à ce que tu gagnais déjà compte, et je te dis après combien d’heures c’est remboursé. Sans chiffre de ta part, je n’invente ni gain ni prix.",
+   "text": "« Ça vaut le coup ? » distingue trois cas : un achat plaisir (il ne rapporte rien : je regarde ce qu’il te coûte, ce qu’il te reste et le retard sur ton objectif), un achat qui débloque des activités, et un achat qui te fait gagner en plus. Pour ces deux derniers, je compare la situation avec l’achat et sans, sur le même temps de jeu : seul ce qui s’ajoute à ce que tu gagnais déjà compte, et je te dis après combien d’heures c’est remboursé. Sans chiffre de ta part, je n’invente ni gain ni prix.",
    "status": "Le site",
    "links": [
     {
-     "label": "Ouvrir Ça vaut le coup ?",
+     "label": "Ouvrir Ça vaut le coup ?",
      "url": "/calculateurs.html?tool=roi#atelier"
     },
     {

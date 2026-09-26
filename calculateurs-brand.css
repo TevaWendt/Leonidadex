@@ -52,8 +52,8 @@
 .calc-mode-switch button{border:none;background:transparent;padding:8px 16px;min-height:35px;border-radius:5px;cursor:pointer;color:#645869;font:700 13.5px/1.2 'Archivo',sans-serif}
 .calc-mode-switch button[aria-pressed=true]{background:#fffefa;box-shadow:0 1px 3px #2417401a;color:#291a49}
 .calc-mode-switch button:hover{background:#f8f5f1}
-.calc-data-note{font-size:12.5px;line-height:1.5;color:#70636e;margin:0;display:flex;align-items:center;gap:6px}
-.calc-data-note>span{display:inline-block;flex-shrink:0;width:6px;height:6px;border:1px solid var(--coral-text,#bf3422);border-radius:50%;background:var(--amber-2,#f7b645)}
+.calc-data-note{font-size:12.5px;line-height:1.5;color:#70636e;margin:0;display:block}
+.calc-data-note>span{display:inline-block;vertical-align:middle;margin-right:6px;width:6px;height:6px;border:1px solid var(--coral-text,#bf3422);border-radius:50%;background:var(--amber-2,#f7b645)}
 /* Forms: calm, large inputs and constrained secondary detail. */
 .calculator-page .calc-grid{gap:20px;align-items:start;grid-template-columns:minmax(0,1fr) minmax(0,1.04fr)}
 .calculator-page .calc-card{background:#fffdfa;border:1px solid #d9d2d9;border-radius:12px;padding:26px;box-shadow:0 3px 12px #26184403;min-width:0}
@@ -469,7 +469,7 @@ body.calculator-page main .lk-tool{display:flex;flex-direction:column;gap:9px;he
 body.calculator-page main .lk-tool:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--amber)}
 body.calculator-page main .lk-tool--plan{grid-column:span 2;background:#FFF3DC;border:2px dashed var(--ink)}
 body.calculator-page main .lk-tool--plan .lk-tool-n em{color:var(--coral-text,#B93220)}
-body.calculator-page main .lk-tool--lead{grid-column:span 2;background:linear-gradient(130deg,#2B1B4D 0%,#5A2358 60%,#E8452C 135%);color:#fff}
+body.calculator-page main .lk-tool--lead{grid-column:span 3;background:linear-gradient(130deg,#2B1B4D 0%,#5A2358 60%,#E8452C 135%);color:#fff}
 body.calculator-page main .lk-tool-n{display:flex;align-items:center;justify-content:space-between}
 body.calculator-page main .lk-tool-n svg{width:24px;height:24px;padding:8px;box-sizing:content-box;border-radius:50%;background:var(--amber);color:var(--ink);border:2px solid var(--ink)}
 body.calculator-page main .lk-tool-n em{font:800 .85rem 'JetBrains Mono',monospace;font-style:normal;color:var(--coral-text)}
@@ -482,6 +482,8 @@ body.calculator-page main .lk-tool--lead>span:not(.lk-tool-n){color:#F1E6F3}
 .lk-act-wrap{overflow-x:auto;border:2px solid var(--ink);border-radius:12px;box-shadow:4px 4px 0 rgba(26,26,30,.18);background:#fff;}
 .lk-act{width:100%;min-width:640px;} .lk-act th,.lk-act td{padding:12px 14px;} .lk-act thead th{background:var(--ink);color:#fff;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;}
 .lk-act tbody th{text-align:left;font-weight:800;} .lk-act td{color:var(--ink-soft);}
+/* v7.37 : largeurs des colonnes (la règle générique table.spec th{width:44%} s'appliquait aussi aux en-têtes) et statuts sur une ligne */
+.calculator-page .lk-act th{width:auto;} .calculator-page .lk-act tbody th{width:34%;} .calculator-page .lk-act .chip{white-space:nowrap;}
 body.calculator-page main #activites-gains{margin-top:56px}
 /* lexique */
 body.calculator-page .lk-glossary{margin-top:28px;padding:22px;background:#fff;border:2px solid var(--ink);border-top:6px solid var(--amber);border-radius:14px;box-shadow:4px 4px 0 rgba(26,26,30,.16)}
@@ -493,6 +495,8 @@ body.calculator-page .faq-sec{margin-top:64px}
 @media(max-width:1100px){
  body.calculator-page main .calc-tabs{grid-template-columns:repeat(4,minmax(0,1fr))}
  body.calculator-page main .lk-tools{grid-template-columns:repeat(2,minmax(0,1fr))}
+ body.calculator-page main .lk-tool--lead{grid-column:span 2}
+ body.calculator-page main .lk-tool--plan{grid-column:auto}
 }
 @media(max-width:700px){
  body.calculator-page main{display:flex;flex-direction:column}
@@ -636,3 +640,12 @@ body.calculator-page main .b-mode-summary .calc-button{min-height:38px;padding:6
 body.calculator-page main #calc-panels:not([data-mode="advanced"]) .b-mode-summary.is-default{display:none}
 body.calculator-page main .b-simple-action{margin-top:14px}
 body.calculator-page main .b-stage-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+/* v7.37 : à 320 px, « ☆ Enregistrer ce calcul » ne tient pas sur une ligne dans sa moitié de barre : le libellé passe sur deux lignes au lieu d'être coupé */
+@media(max-width:380px){body.calculator-page main .calc-actions .calc-button{white-space:normal;line-height:1.2;padding:8px 6px;text-align:center}}
+/* v7.37 : entre 901 et 1 180 px, la colonne des objectifs (5 puces) n'a pas la place à droite des questions (« 10 M $ » passait seul à la ligne, les questions s'empilaient une par ligne) : objectifs sur leur propre rangée */
+@media(min-width:901px) and (max-width:1180px){
+ body.calculator-page .lk-ask-stage{grid-template-columns:minmax(220px,280px) minmax(0,1fr)}
+ body.calculator-page .lk-ask-form{grid-column:2}
+ body.calculator-page .lk-ask-chips{grid-column:1/-1;grid-row:2}
+ body.calculator-page .lk-goals{grid-column:1/-1;grid-row:3;justify-content:flex-start;margin-top:2px}
+}

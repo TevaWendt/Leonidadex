@@ -75,8 +75,8 @@
     jason:  { n:'Jason Duval',      r:"Ancien militaire devenu convoyeur pour des trafiquants des Keys." },
     lucia:  { n:'Lucia Caminos',    r:"Originaire de Liberty City, sortie du pénitencier de Leonida." },
     cal:    { n:'Cal Hampton',      r:"Ami de Jason, paranoïaque et complotiste." },
-    boobie: { n:'Boobie Ike',       r:"Patron d'un empire d'affaires à Vice City." },
-    drequan:{ n:"Dre'Quan Priest",  r:"Copropriétaire du label Only Raw Records." },
+    boobie: { n:'Boobie Ike',       r:"Patron d’un empire d’affaires à Vice City." },
+    drequan:{ n:"Dre’Quan Priest",  r:"Copropriétaire du label Only Raw Records." },
     dimez:  { n:'Real Dimez',       r:"Duo musical Bae-Luxe et Roxy, signé chez Only Raw." },
     raul:   { n:'Raul Bautista',    r:"Braqueur de banques chevronné." },
     brian:  { n:'Brian Heder',      r:"Trafiquant de longue date des Keys, propriétaire du logement de Jason." }
@@ -105,7 +105,7 @@
     { id:'vice-city', n:'Vice City', c:'ville', x:3517, y:3214, s:'officiel', src:'SITE', z:0, pers:['boobie','drequan','dimez'],
       d:"La métropole de Leonida et le cœur du jeu. Rockstar la présente comme la capitale ensoleillée et festive du pays, et comme la ville la plus dense jamais construite par le studio." },
     { id:'leonida-keys', n:'Leonida Keys', c:'region', x:2889, y:5404, s:'officiel', src:'SITE', z:0, pers:['jason','brian'],
-      d:"Archipel tropical au sud de l'État, relié par de longues routes au-dessus de l'eau. Plongée, pêche, navigation et contrebande." },
+      d:"Archipel tropical au sud de l’État, relié par de longues routes au-dessus de l’eau. Plongée, pêche, navigation et contrebande." },
     { id:'grassrivers', n:'Grassrivers', c:'region', x:2280, y:4017, s:'officiel', src:'SITE', z:0,
       d:"La grande zone humide de Leonida. Végétation dense, visibilité réduite, hydroglisseurs et alligators." },
     { id:'port-gellhorn', n:'Port Gellhorn', c:'ville', x:1560, y:1988, s:'officiel', src:'SITE', z:0,
@@ -117,7 +117,7 @@
 
     /* ============ VICE CITY : QUARTIERS ============ */
     { id:'ocean-beach', n:'Ocean Beach', c:'quartier', x:4295, y:2957, s:'officiel', src:'SITE', p:'vice-city', z:1,
-      d:"Quartier nommé par Rockstar : hôtels art déco pastel, sable blanc, promenade bordée de palmiers. C'est la scène d'ouverture du premier trailer." },
+      d:"Quartier nommé par Rockstar : hôtels art déco pastel, sable blanc, promenade bordée de palmiers. C’est la scène d’ouverture du premier trailer." },
     { id:'little-cuba', n:'Little Cuba', c:'quartier', x:3331, y:3170, s:'officiel', src:'SITE', p:'vice-city', z:1,
       d:"Quartier nommé par Rockstar, connu pour ses boulangeries et sa culture cubano-américaine." },
     { id:'vice-beach', n:'Vice Beach', c:'quartier', x:4258, y:2813, s:'officiel', src:'T1', p:'vice-city', z:1,
@@ -125,31 +125,31 @@
     { id:'south-beach', n:'South Beach', c:'quartier', x:4295, y:3177, s:'vu', src:'T1', p:'vice-city', z:1,
       d:"Bande de front de mer où se concentrent bars et hôtels illuminés au néon. Plusieurs plans nocturnes des trailers en proviennent." },
     { id:'downtown', n:'Downtown', c:'quartier', x:3517, y:3214, s:'vu', src:'T2', p:'vice-city', z:1,
-      d:"Le centre financier : tours de verre et autoroutes surélevées, visibles dans les plans aériens du second trailer." },
+      d:"Le centre financier : tours de verre et autoroutes surélevées, visibles dans les plans aériens du second trailer." },
     { id:'stockyard', n:'Stockyard', c:'quartier', x:3601, y:2609, s:'officiel', src:'SITE', p:'vice-city', z:1,
-      d:"Quartier d'entrepôts reconvertis, couverts de fresques. Rockstar a confirmé qu'il s'inspire de Wynwood et a fait appel à plus de cinquante artistes de rue pour ses murs. Un rassemblement automobile s'y déroule dans le premier trailer." },
+      d:"Quartier d’entrepôts reconvertis, couverts de fresques. Rockstar a confirmé qu’il s’inspire de Wynwood et a fait appel à plus de cinquante artistes de rue pour ses murs. Un rassemblement automobile s’y déroule dans le premier trailer." },
     { id:'vc-port', n:'Port de Vice City', c:'transport', x:3971, y:3358, s:'vu', src:'T1', p:'vice-city', z:1,
-      d:"Zone portuaire industrielle : conteneurs, entrepôts et ponts, aperçue dans les deux trailers." },
+      d:"Zone portuaire industrielle : conteneurs, entrepôts et ponts, aperçue dans les deux trailers." },
     { id:'marina', n:'Marina', c:'quartier', x:3603, y:2854, s:'vu', src:'T2', p:'vice-city', z:1,
-      d:"Secteur résidentiel aisé au bord de l'eau : bateaux, jet-skis et propriétés de luxe." },
+      d:"Secteur résidentiel aisé au bord de l’eau : bateaux, jet-skis et propriétés de luxe." },
     { id:'vcia', n:'Aéroport international', c:'transport', x:2960, y:3435, s:'vu', src:'T2', p:'vice-city', z:1,
       d:"Principal aéroport de la ville, identifié par le train VCIA aperçu dans le second trailer." },
     { id:'causeway', n:'Chaussée de Vice Beach', c:'transport', x:4058, y:2813, s:'vu', src:'T1', p:'vice-city', z:1,
-      d:"Pont-chaussée reliant le continent à l'île de Vice Beach, avec péage à l'entrée." },
+      d:"Pont-chaussée reliant le continent à l’île de Vice Beach, avec péage à l’entrée." },
 
     /* ============ VICE CITY : BÂTIMENTS IDENTIFIÉS ============ */
     { id:'galina-opera', n:'Galina Ballet Opera House', c:'batiment', x:3557, y:2956, s:'vu', src:'T2', p:'downtown', z:2,
-      d:"Opéra à la silhouette anguleuse et au parvis animé, rapproché par les observateurs de l'Adrienne Arsht Center." },
+      d:"Opéra à la silhouette anguleuse et au parvis animé, rapproché par les observateurs de l’Adrienne Arsht Center." },
     { id:'sahara-arena', n:'Sahara Arena', c:'batiment', x:3624, y:3053, s:'vu', src:'T2', p:'downtown', z:2,
-      d:"Salle omnisports au bord de l'eau, domicile des Vice City Narcos. Forme rapprochée de la Kaseya Center." },
+      d:"Salle omnisports au bord de l’eau, domicile des Vice City Narcos. Forme rapprochée de la Kaseya Center." },
     { id:'twin-towers', n:'Tours jumelles', c:'batiment', x:3584, y:3123, s:'vu', src:'T2', p:'downtown', z:2,
       d:"Double tour reliée par un toit ajouré, rapprochée du 500 Brickell." },
     { id:'autograph-flight', n:'Autograph Flight Support', c:'batiment', x:2927, y:3231, s:'vu', src:'T2', p:'vcia', z:2,
-      d:"Terminal d'aviation privée au toit débordant et à la façade vitrée incurvée." },
+      d:"Terminal d’aviation privée au toit débordant et à la façade vitrée incurvée." },
     { id:'tisha-wocka', n:'Tisha-Wocka Flea Market', c:'lieu', x:2798, y:2948, s:'vu', src:'T1', p:'south-beach', z:2,
       d:"Marché aux puces nommé dans les supports officiels, près de South Beach." },
     { id:'ptt-youngin', n:'PTT YOUNGIN$', c:'lieu', x:3331, y:3170, s:'officiel', src:'SITE', p:'little-cuba', z:2,
-      d:"Boutique de biens illicites, lieu d'une mission exclusive à l'Édition Ultime." },
+      d:"Boutique de biens illicites, lieu d’une mission exclusive à l’édition Ultimate." },
     { id:'penthouse', n:'Penthouse de Vice Beach', c:'batiment', x:4335, y:2807, s:'vu', src:'T1', p:'vice-beach', z:2,
       d:"Terrasse de luxe avec piscine privée et douche extérieure, rapprochée de la Trésor Tower." },
     { id:'jade-condos', n:'Tours ondulées', c:'batiment', x:4355, y:2697, s:'vu', src:'T1', p:'vice-beach', z:2,
@@ -157,19 +157,19 @@
 
     /* ============ AUTRES VILLES ============ */
     { id:'waning-sands', n:'Waning Sands', c:'ville', x:3681, y:1860, s:'vu', src:'T1', z:0,
-      d:"Banlieue tentaculaire : voies rapides, centres commerciaux et vastes parkings." },
+      d:"Banlieue tentaculaire : voies rapides, centres commerciaux et vastes parkings." },
     { id:'hamlet', n:'Hamlet', c:'ville', x:2832, y:4258, s:'vu', src:'T1', z:0,
       d:"Localité nommée dans le premier trailer, dans une scène de rue résidentielle." },
     { id:'key-lento', n:'Key Lento', c:'quartier', x:2889, y:5144, s:'officiel', src:'T2', p:'leonida-keys', z:1,
-      d:"Île nommée dans l'archipel des Leonida Keys." },
+      d:"Île nommée dans l’archipel des Leonida Keys." },
 
     /* ============ LIEUX NOTABLES ============ */
     { id:'allied-crystal', n:'Raffinerie Allied Crystal', c:'lieu', x:2773, y:2004, s:'officiel', src:'SITE', p:'ambrosia', z:1,
-      d:"Raffinerie de sucre citée par Rockstar comme le principal employeur d'Ambrosia." },
+      d:"Raffinerie de sucre citée par Rockstar comme le principal employeur d’Ambrosia." },
     { id:'leonida-penitentiary', n:'Leonida Penitentiary', c:'lieu', x:2805, y:4133, s:'officiel', src:'SITE', z:0, pers:['lucia'],
-      d:"Le pénitencier d'État où Lucia purge sa peine au début de l'histoire, après s'être battue pour sa famille à Liberty City. Nom confirmé par Rockstar. Rapproché de la Florida State Prison." },
+      d:"Le pénitencier d’État où Lucia purge sa peine au début de l’histoire, après s’être battue pour sa famille à Liberty City. Nom confirmé par Rockstar. Rapproché de la Florida State Prison." },
     { id:'tv-tower', n:'Tour de télévision', c:'batiment', x:3365, y:2037, s:'spec', src:'COMM', z:0,
-      d:"Hypothèse communautaire d'une très haute antenne, inspirée de la tour WTVY. Non confirmée." },
+      d:"Hypothèse communautaire d’une très haute antenne, inspirée de la tour WTVY. Non confirmée." },
 
     /* ============ COMTÉS ============ */
     { id:'vice-dale', n:'Comté de Vice-Dale', c:'comte', x:3431, y:3189, s:'vu', src:'T1', z:0,
@@ -177,17 +177,17 @@
     { id:'leonard-county', n:'Comté de Leonard', c:'comte', x:3132, y:1989, s:'vu', src:'T1', z:0,
       d:"Identifié par le bureau du shérif du comté de Leonard. Contient Waning Sands." },
     { id:'kelly-county', n:'Comté de Kelly', c:'comte', x:1865, y:2298, s:'vu', src:'T1', z:0,
-      d:"Nommé sur un panneau routier. L'une des zones les moins documentées." },
+      d:"Nommé sur un panneau routier. L’une des zones les moins documentées." },
     { id:'mariana-county', n:'Comté de Mariana', c:'comte', x:2360, y:4317, s:'spec', src:'COMM', z:0,
       d:"Comté avancé par la communauté pour la zone des Grassrivers. Non confirmé." },
 
     /* ============ NATURE ============ */
     { id:'grand-lac', n:'Grand lac intérieur', c:'nature', x:3075, y:1639, s:'spec', src:'COMM', z:0,
-      d:"Étendue d'eau centrale déduite des images. Ni son nom ni ses contours ne sont confirmés." },
+      d:"Étendue d’eau centrale déduite des images. Ni son nom ni ses contours ne sont confirmés." },
     { id:'kalaga-summit', n:'Sommet du Kalaga', c:'nature', x:2732, y:762, s:'spec', src:'COMM', p:'mount-kalaga', z:1,
       d:"Point culminant supposé du parc national." },
     { id:'gloriana', n:'Gloriana', c:'region', x:1765, y:1398, s:'spec', src:'COMM', z:0,
-      d:"Nom aperçu sur des plaques d'immatriculation. Rockstar n'a jamais annoncé qu'il s'agissait d'une région explorable." }
+      d:"Nom aperçu sur des plaques d’immatriculation. Rockstar n’a jamais annoncé qu’il s’agissait d’une région explorable." }
   ];
 
   /* ---- bâtiments de la communauté gtadb (CC BY 4.0), voir carte-gtadb.js ---- */
@@ -261,7 +261,7 @@
       Object.keys(CATS).map(k => '.map-markers .mk--' + k + ' .mk-dot{background:' + CATS[k].col + ';}').join('') +
       '.map-markers .mk.lbl-off .mk-lbl{display:none;}' +
       '.map-markers .mk.lbl-off:hover .mk-lbl{display:inline-block;}' +
-      '.map-markers .mk.is-open .mk-lbl{display:inline-block !important;}' +
+      '.map-markers .mk.is-open .mk-lbl{display:inline-block !important;}' +
       '.map-markers .mk.lbl-reel .mk-lbl{font-style:italic;font-weight:600;opacity:.9;}' +
       '.map-markers .cl.cl--min .cl-n{width:24px;height:24px;border-width:2px;font-size:.66rem;' +
         'background:#7A5C8F;box-shadow:0 1px 4px rgba(0,0,0,.28);}' +
@@ -685,7 +685,7 @@
     if(fdCnt) fdCnt.textContent = liste.length;
 
     if(!liste.length){
-      fdList.innerHTML = '<p class="fd-empty">Aucun lieu repéré pour l\'instant. Ouvre un marqueur sur la carte et coche-le.</p>';
+      fdList.innerHTML = '<p class="fd-empty">Aucun lieu repéré pour l’instant. Ouvre un marqueur sur la carte et coche-le.</p>';
       return;
     }
     if(sec && !sec.open) sec.open = true;
@@ -813,7 +813,7 @@
       const zone = document.getElementById('mp-photos');
       const figure = function(src, legende, real){
         const w = real ? p.img2W : p.imgW, h = real ? p.img2H : p.imgH;
-        return '<figure class="mp-img"><img src="' + esc(src) + '" alt="' + esc(real ? (p.img2Alt || 'Lieu réel : ' + (p.reel || p.n)) : (p.imgAlt || p.n)) + '" decoding="async" ' + (w && h ? 'width="' + Number(w) + '" height="' + Number(h) + '"' : '') + '>' +
+        return '<figure class="mp-img"><img src="' + esc(src) + '" alt="' + esc(real ? (p.img2Alt || 'Lieu réel : ' + (p.reel || p.n)) : (p.imgAlt || p.n)) + '" decoding="async" ' + (w && h ? 'width="' + Number(w) + '" height="' + Number(h) + '"' : '') + '>' +
                (legende ? '<figcaption>' + esc(legende) + '</figcaption>' : '') + '</figure>';
       };
       const charger = function(src){
@@ -1110,7 +1110,7 @@
       document.querySelectorAll('.map-statut').forEach(function(i){
         i.checked = visStatut[i.dataset.st];
       });
-      onlyBt.textContent = on ? 'Afficher tout' : 'Uniquement l\'officiel';
+      onlyBt.textContent = on ? 'Afficher tout' : 'Uniquement l’officiel';
       refreshVisibility();
     });
   }
@@ -1233,7 +1233,7 @@
   /* ============================================================
      RECHERCHE
      ============================================================ */
-  const norm = s => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+  const norm = s => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[’‘]/g,"'").replace(/[\u00a0\u202f]/g," ");
 
   function goTo(p, z, showPanel = true){
     scale = z || 0.7;
@@ -1320,8 +1320,8 @@
     if(rulerPts.length < 2){
       rulerBx.innerHTML = '<p class="rl-hint">' +
         (rulerPts.length === 0
-          ? "Clique un premier point <b>n'importe où</b> sur la carte, ou directement sur un marqueur."
-          : "Clique le point suivant. Tu peux enchaîner jusqu'à " + MAX_ETAPES + " étapes.") + '</p>';
+          ? "Clique un premier point <b>n’importe où</b> sur la carte, ou directement sur un marqueur."
+          : "Clique le point suivant. Tu peux enchaîner jusqu’à " + MAX_ETAPES + " étapes.") + '</p>';
       return;
     }
 
@@ -1353,7 +1353,7 @@
                '<span class="rl-t">' + fmtDuree(m / v.v) + '</span></li>';
       }).join('') +
       '</ul>' +
-      '<p class="rl-note">Distance à vol d\'oiseau, sans tenir compte des routes ni du relief. Vitesses provisoires calées sur GTA V, recalibrées après le 19 novembre 2026.</p>';
+      '<p class="rl-note">Distance à vol d’oiseau, sans tenir compte des routes ni du relief. Vitesses provisoires calées sur GTA V, recalibrées après le 19 novembre 2026.</p>';
   }
 
   function drawLine(){
@@ -1423,7 +1423,7 @@
      ============================================================ */
   if(progRs){
     progRs.addEventListener('click', function(){
-      if(!confirm('Décocher tous les lieux repérés ?')) return;
+      if(!confirm('Décocher tous les lieux repérés ?')) return;
       found = {}; save();
       Object.keys(MK).forEach(id => { if(!BY_ID[id].collectible) MK[id].classList.remove('is-found'); });
       refreshProgress(); closePanel();
@@ -1599,7 +1599,7 @@
       savePerso(); renderPerso(); openPerso(i);
     });
     document.getElementById('pm-del').addEventListener('click', function(){
-      if(!confirm('Supprimer ce marqueur ?')) return;
+      if(!confirm('Supprimer ce marqueur ?')) return;
       perso.splice(i, 1);
       savePerso(); renderPerso(); M.panel.classList.remove('open'); M.panel.inert=true;
     });
@@ -1608,7 +1608,7 @@
   function renderList(){
     if(!editList) return;
     if(!perso.length){
-      editList.innerHTML = '<p class="ed-empty">Aucun marqueur pour l\'instant. Active le mode édition et clique sur la carte.</p>';
+      editList.innerHTML = '<p class="ed-empty">Aucun marqueur pour l’instant. Active le mode édition et clique sur la carte.</p>';
       return;
     }
     editList.innerHTML = perso.map(function(p, i){
@@ -1630,7 +1630,7 @@
       const del = e.target.closest('[data-del]');
       if(del){
         const i = parseInt(del.dataset.del, 10);
-        if(!confirm('Supprimer « ' + perso[i].n + ' » ?')) return;
+        if(!confirm('Supprimer « ' + perso[i].n + ' » ?')) return;
         perso.splice(i, 1); savePerso(); renderPerso();
         if(M.panel) M.panel.classList.remove('open'); M.panel.inert=true;
         return;
@@ -1659,7 +1659,7 @@
   if(clearAll){
     clearAll.addEventListener('click', function(){
       if(!perso.length) return;
-      if(!confirm('Supprimer tes ' + perso.length + ' marqueurs ?')) return;
+      if(!confirm('Supprimer tes ' + perso.length + ' marqueurs ?')) return;
       perso = []; savePerso(); renderPerso(); M.closePanel();
     });
   }
@@ -1723,12 +1723,12 @@
       fr.onload = function(){
         try{
           const d = window.LK.mapImport(JSON.parse(fr.result));
-          if((perso.length || Object.keys(M.getFound()).length || M.getDraw?.().length) && !confirm('Remplacer tes marqueurs, lieux repérés et tracés par cette sauvegarde ?')) return;
+          if((perso.length || Object.keys(M.getFound()).length || M.getDraw?.().length) && !confirm('Remplacer tes marqueurs, lieux repérés et tracés par cette sauvegarde ?')) return;
           d.repere=M.cleanFound(d.repere);
-          if(!window.LK.writeBatch({lk_map_perso:d.marqueurs,lk_map_found:d.repere,lk_map_draw:d.traces}))throw new Error('Sauvegarde indisponible ; import non appliqué.');
+          if(!window.LK.writeBatch({lk_map_perso:d.marqueurs,lk_map_found:d.repere,lk_map_draw:d.traces}))throw new Error('Sauvegarde indisponible ; import non appliqué.');
           perso=d.marqueurs; M.setFound(d.repere,false); if(M.setDraw)M.setDraw(d.traces,false);
           M.closePanel(); renderPerso(); alert('Import réussi.');
-        }catch(err){alert('Import refusé : '+err.message);}
+        }catch(err){alert('Import refusé : '+err.message);}
         finally {impIn.value='';}
       };
       fr.readAsText(f);
@@ -1915,7 +1915,7 @@
   if(ui.op){ ui.op.addEventListener('input', function(){ opacity = ui.op.value/100; if(ui.opV) ui.opV.textContent = ui.op.value + ' %'; }); }
   if(ui.undo){ ui.undo.addEventListener('click', function(){ if(!strokes.length) return; redo.push(strokes.pop()); save(); render(); }); }
   if(ui.redo){ ui.redo.addEventListener('click', function(){ if(!redo.length) return; strokes.push(redo.pop()); save(); render(); }); }
-  if(ui.clear){ ui.clear.addEventListener('click', function(){ if(!strokes.length || !confirm('Effacer tous tes tracés ?')) return; strokes = []; redo = []; save(); render(); }); }
+  if(ui.clear){ ui.clear.addEventListener('click', function(){ if(!strokes.length || !confirm('Effacer tous tes tracés ?')) return; strokes = []; redo = []; save(); render(); }); }
 
   document.addEventListener('keydown', function(e){
     if(!mode || e.target.closest('input,textarea,select,[contenteditable="true"]')) return;

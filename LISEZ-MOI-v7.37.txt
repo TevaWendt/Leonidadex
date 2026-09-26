@@ -1,0 +1,24 @@
+LEONIDAKIT v7.37 — AUDIT FINAL (chaque page, chaque mot) + RÉFÉRENCEMENT — archive « modifs » (26 septembre 2026)
+
+Base attendue : ton dossier Leonidadex en v7.36 (= zip Leonidadex-main (10), SHA-256 3bc615ea…03428). Fichiers ajoutés ou
+modifiés seulement, chemins exacts depuis la racine. Rien à supprimer. Aucune commande de build : les pages sont déjà régénérées.
+
+1. Copie ton dossier actuel (sauvegarde).
+2. Extrais l’archive dans la racine du site, écrase les fichiers homonymes (garde le dossier .git).
+3. Ouvre le site :
+   - Accueil : le « VI » de « GTA VI » est de nouveau visible avec son dégradé ; la carte « Carte interactive » dit « 2 547 lieux ».
+   - Une fiche de région (lieux/vice-city.html) : le visuel du bandeau s’ouvre d’un rideau, les textes sont dans la gouttière,
+     le bloc « En lien » prend toute la largeur.
+   - Calculateur : « À chaque question, son calcul » en trois rangées pleines ; tableau « Ce que rapporte chaque activité »
+     avec les statuts sur une ligne.
+   - Armurerie et classement : les six cartes en 3 + 3, les 16 équipements en 4 × 4.
+   - N’importe quelle page : apostrophes ’ partout, plus de « ? » ni de « : » rejetés en début de ligne, « tu » partout.
+   - Sur téléphone (320 et 390 px) : chiffres clés en 2 colonnes, bouton Léo qui ne recouvre plus la recherche ni les onglets.
+   - Aucune requête vers fonts.googleapis.com (onglet Réseau) : la police Archivo vient de /fonts/.
+4. Mets en ligne.
+
+Référencement : titres « … | Leonidakit », descriptions ≤ 160 caractères, données structurées (WebSite + SearchAction, WebApplication,
+FAQPage, BreadcrumbList), max-image-preview:large, police auto-hébergée et préchargée. Aucun texte visible n’a été réécrit pour le SEO.
+
+Détails : outils/CHANGEMENTS-v7.37.txt (liste complète), outils/RAPPORT-AUDIT-v7.37.md (anomalies, vérifications, limites),
+outils/ETAT_AUDIT.md. Versions précédentes : -v7.36 (Motion+), -v7.35 (ergonomie), -v7.34 (business plan), -v7.33 à -v7.30.

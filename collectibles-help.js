@@ -2,7 +2,7 @@
 (function () {
   'use strict';
   const $ = id => document.getElementById(id);
-  const norm = value => String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('fr').trim();
+  const norm = value => String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('fr').replace(/[’‘]/g, "'").replace(/[\u00a0\u202f]/g, ' ').trim();
   const feedback = message => {
     const node = document.querySelector('[data-col-feedback]');
     if (node) node.textContent = message;
@@ -23,7 +23,7 @@
     express = !express; applyExpress();
     try { localStorage.setItem(EXPRESS_KEY, express ? '1' : '0'); }
     catch (_) { feedback('Mode appliqué dans cet onglet. Le navigateur ne permet pas d’enregistrer cette préférence.'); return; }
-    feedback(express ? 'Mode express activé : visuels d’ambiance masqués et résultats compacts.' : 'Présentation illustrée rétablie.');
+    feedback(express ? 'Mode express activé : visuels d’ambiance masqués et résultats compacts.' : 'Présentation illustrée rétablie.');
   });
   window.addEventListener('storage', event => {
     if (event.key === EXPRESS_KEY || event.key === null) { express = event.newValue === '1'; applyExpress(); }
@@ -69,7 +69,7 @@
     share.addEventListener('click', async () => {
       const url = new URL(location.pathname, location.origin); url.hash = answer.id;
       try { await navigator.clipboard.writeText(url.href); feedback('Lien de la réponse copié.'); }
-      catch (_) { feedback('Copie indisponible. Adresse de la réponse : ' + url.href); }
+      catch (_) { feedback('Copie indisponible. Adresse de la réponse : ' + url.href); }
     });
     content.appendChild(share);
   });
@@ -123,7 +123,7 @@
   function buildDialog() {
     dialog = document.createElement('dialog'); dialog.id = 'col-image-dialog'; dialog.className = 'col-image-dialog';
     dialog.setAttribute('aria-labelledby', 'col-image-title');
-    dialog.innerHTML = '<div class="col-image-head"><h2 id="col-image-title">Image agrandie</h2><button type="button" id="col-image-close" class="col-btn" autofocus>Fermer <span aria-hidden="true">×</span></button></div><figure><img id="col-image-full" alt=""><figcaption><span id="col-image-credit"></span> <a id="col-image-source" target="_blank" rel="noopener noreferrer" hidden>Source du visuel ↗</a></figcaption></figure><p id="col-image-error" role="status" hidden>Cette image ne peut pas être chargée. Vous pouvez fermer la fenêtre et continuer la lecture.</p><div class="col-image-controls"><button type="button" id="col-image-prev" class="col-btn">← Précédente</button><span id="col-image-position" aria-live="polite"></span><button type="button" id="col-image-next" class="col-btn">Suivante →</button></div>';
+    dialog.innerHTML = '<div class="col-image-head"><h2 id="col-image-title">Image agrandie</h2><button type="button" id="col-image-close" class="col-btn" autofocus>Fermer <span aria-hidden="true">×</span></button></div><figure><img id="col-image-full" alt=""><figcaption><span id="col-image-credit"></span> <a id="col-image-source" target="_blank" rel="noopener noreferrer" hidden>Source du visuel ↗</a></figcaption></figure><p id="col-image-error" role="status" hidden>Cette image ne peut pas être chargée. Tu peux fermer la fenêtre et continuer la lecture.</p><div class="col-image-controls"><button type="button" id="col-image-prev" class="col-btn">← Précédente</button><span id="col-image-position" aria-live="polite"></span><button type="button" id="col-image-next" class="col-btn">Suivante →</button></div>';
     document.body.appendChild(dialog);
     image = $('col-image-full'); caption = $('col-image-credit'); title = $('col-image-title'); sourceLink = $('col-image-source'); previous = $('col-image-prev'); next = $('col-image-next'); position = $('col-image-position');
     $('col-image-close').addEventListener('click', () => dialog.close());

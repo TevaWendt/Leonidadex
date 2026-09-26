@@ -113,15 +113,15 @@ H=H.replace('.chip-filter.chip-st em{background:rgba(0,0,0,.08);}',
 /* bloc « et d'autres à venir » */
 const bloc=`
 <section class="shell reveal" id="a-venir">
-  <h2 class="sec-h">Et les autres ?</h2>
+  <h2 class="sec-h">Et les autres ?</h2>
   <div class="ouvert rise">
-    <h3>Cette liste est incomplète, et c'est normal</h3>
-    <p>Rockstar n'a publié aucun total. Pour situer : <b>GTA V comptait 252 véhicules au lancement</b>,
-    avant les centaines ajoutées par GTA Online. Leonidakit en recense aujourd'hui <b>${N}</b>, tous
+    <h3>Cette liste est incomplète, et c’est normal</h3>
+    <p>Rockstar n’a publié aucun total. Pour situer : <b>GTA V comptait 252 véhicules au lancement</b>,
+    avant les centaines ajoutées par GTA Online. Leonidakit en recense aujourd’hui <b>${N}</b>, tous
     repérés dans un support officiel de Rockstar ou identifiés par la communauté à partir de ces supports.</p>
-    <p>D'autres sites annoncent des chiffres plus élevés. L'écart vient de là : ils comptent des véhicules
-    vus dans les fuites de 2022 et de 2026. <b>Nous ne les listons pas</b>, parce qu'un véhicule vu dans du
-    code volé peut ne jamais sortir, et parce que relayer ce matériel n'est ni légitime ni utile au joueur.</p>
+    <p>D’autres sites annoncent des chiffres plus élevés. L’écart vient de là : ils comptent des véhicules
+    vus dans les fuites de 2022 et de 2026. <b>Nous ne les listons pas</b>, parce qu’un véhicule vu dans du
+    code volé peut ne jamais sortir, et parce que relayer ce matériel n’est ni légitime ni utile au joueur.</p>
     <p>Le compte réel sera connu le <b>19 novembre 2026</b>. Cette page sera mise à jour à partir du jeu
     lui-même, avec les vitesses, les prix et les emplacements qui manquent encore à chaque fiche.</p>
   </div>
@@ -153,26 +153,26 @@ const graine=id=>{let h=0;for(let i=0;i<id.length;i++)h=(h*31+id.charCodeAt(i))>
 const pioche=(id,sel,liste)=>liste[graine(id+sel)%liste.length];
 
 const V_INSP=[
- "Rockstar ne confirme jamais ses inspirations : c'est une observation établie à partir des visuels officiels, pas une licence.",
- "Aucune licence n'est en jeu ici. Le studio ne valide pas ses sources, et ce rapprochement vient de l'observation des visuels publiés.",
+ "Rockstar ne confirme jamais ses inspirations : c’est une observation établie à partir des visuels officiels, pas une licence.",
+ "Aucune licence n’est en jeu ici. Le studio ne valide pas ses sources, et ce rapprochement vient de l’observation des visuels publiés.",
  "Le studio garde le silence sur ses références. Ce rapprochement repose sur la comparaison des images officielles, rien de plus.",
- "À prendre pour ce que c'est : une lecture des images diffusées. Rockstar n'a jamais commenté ses modèles de départ.",
- "Personne chez Rockstar n'a confirmé quoi que ce soit. L'identification vient de la comparaison avec les visuels publiés.",
+ "À prendre pour ce que c’est : une lecture des images diffusées. Rockstar n’a jamais commenté ses modèles de départ.",
+ "Personne chez Rockstar n’a confirmé quoi que ce soit. L’identification vient de la comparaison avec les visuels publiés.",
  "Le studio ne dépose aucune licence et ne nomme aucune référence. Ce rapprochement est une déduction tirée des images.",
  "Rockstar dessine des répliques, jamais des modèles sous licence, et ne dit pas lesquelles. Ce rapprochement reste une observation.",
- "Il s'agit d'une comparaison visuelle, pas d'une information officielle : le studio ne commente pas ses inspirations."];
+ "Il s’agit d’une comparaison visuelle, pas d’une information officielle : le studio ne commente pas ses inspirations."];
 
 const V_CARTE=[
- "Notre carte situe déjà les concessions, l'atelier et le circuit. Les points d'apparition précis viendront avec le jeu.",
- "Les lieux utiles au conducteur sont placés sur la carte : vendeurs, préparateur, piste. Restent les spots de chaque modèle, après le 19 novembre.",
+ "Notre carte situe déjà les concessions, l’atelier et le circuit. Les points d’apparition précis viendront avec le jeu.",
+ "Les lieux utiles au conducteur sont placés sur la carte : vendeurs, préparateur, piste. Restent les spots de chaque modèle, après le 19 novembre.",
  "Concessionnaires, garage de préparation et circuit figurent sur notre carte. Où trouver ce véhicule exactement, nous le saurons à la sortie.",
- "La carte recense les adresses liées à l'automobile. Les emplacements propres à chaque modèle seront relevés une fois le jeu en main.",
+ "La carte recense les adresses liées à l’automobile. Les emplacements propres à chaque modèle seront relevés une fois le jeu en main.",
  "Vendeurs, atelier et circuit sont déjà cartographiés. Le détail des apparitions par véhicule suivra le lancement.",
- "Notre carte couvre les points de vente, l'atelier et la piste. Le repérage véhicule par véhicule commencera le jour de la sortie."];
+ "Notre carte couvre les points de vente, l’atelier et la piste. Le repérage véhicule par véhicule commencera le jour de la sortie."];
 
 const V_SANSIMG=[
- "Illustration provisoire : les visuels officiels restent à intégrer à cette fiche.",
- "Silhouette temporaire en attendant l'intégration des images du véhicule.",
+ "Illustration provisoire : les visuels officiels restent à intégrer à cette fiche.",
+ "Silhouette temporaire en attendant l’intégration des images du véhicule.",
  "Les images ne sont pas encore disponibles sur cette fiche. Illustration provisoire."];
 
 
@@ -181,7 +181,7 @@ const PENDCAT={
  avion:["Vitesse, plafond, distance de décollage et maniabilité.","Prix, aérodrome de vente et pistes où le croiser.","Livrées, décorations de fuselage et aménagements de cabine."],
  helicoptere:["Vitesse, taux de montée et stabilité en vol stationnaire.","Prix, hélisurface de vente et toits où le trouver.","Livrées, teintes et équipements de bord."],
  moto:["Vitesse de pointe, reprise, freinage et stabilité en courbe.","Prix, concessionnaire et rues où la croiser en Leonida.","Guidons, échappements, peintures et pièces moteur."],
- service:["Vitesse, masse, résistance aux chocs et comportement à vide.","Prix s'il est vendable, sinon les endroits où le récupérer.","Livrées de service, gyrophares et équipements spécifiques."],
+ service:["Vitesse, masse, résistance aux chocs et comportement à vide.","Prix s’il est vendable, sinon les endroits où le récupérer.","Livrées de service, gyrophares et équipements spécifiques."],
  divers:["Vitesse, tenue de route et comportement propre à cet engin.","Prix, point de vente et endroits où le trouver en Leonida.","Options disponibles, teintes et améliorations."],
  pickup:["Vitesse de pointe, motricité, franchissement et charge utile.","Prix, concessionnaire et terrains où le repérer.","Suspensions, pneumatiques, pare-chocs et teintes."],
  suv:["Vitesse de pointe, accélération, freinage et comportement en charge.","Prix, concessionnaire et quartiers où le croiser.","Jantes, teintes, intérieurs et améliorations moteur."],
@@ -193,7 +193,7 @@ const PENDCAT={
 const pend=v=>{const t=PENDCAT[v.cat]||PENDCAT.divers;
  return ["Performances","Acquisition","Personnalisation"].map((h,i)=>
   '\n    <div class="pending rise"><div class="pending-top"><h3>'+h+'</h3><span class="pending-tag">À venir</span></div><p>'
-  +esc(t[i]+(i===2?' '+pioche(v.id,'perso',['Pour chaque option : prix, niveau requis pour la débloquer, et atelier où la faire poser (Rideout Customs, One-Eyed Willie\'s).','Chaque option viendra avec son prix et le niveau qu\'elle demande, tels qu\'affichés dans les ateliers du jeu.','Le prix de chaque modification et le niveau nécessaire seront relevés chez Rideout Customs et One-Eyed Willie\'s.','Prix et niveau requis de chaque option, relevés atelier par atelier après la sortie.']):''))+'</p><div class="pending-bars" aria-hidden="true"><span></span><span></span><span></span></div></div>').join('')+'\n  ';};
+  +esc(t[i]+(i===2?' '+pioche(v.id,'perso',['Pour chaque option : prix, niveau requis pour la débloquer, et atelier où la faire poser (Rideout Customs, One-Eyed Willie’s).','Chaque option viendra avec son prix et le niveau qu’elle demande, tels qu’affichés dans les ateliers du jeu.','Le prix de chaque modification et le niveau nécessaire seront relevés chez Rideout Customs et One-Eyed Willie’s.','Prix et niveau requis de chaque option, relevés atelier par atelier après la sortie.']):''))+'</p><div class="pending-bars" aria-hidden="true"><span></span><span></span><span></span></div></div>').join('')+'\n  ';};
 
 const MOD=fs.readFileSync('outils/templates/vehicle-reference.html','utf8');
 const HEADER=MOD.match(/<a class="skip"[\s\S]*?<main id="main">/)[0];
@@ -202,13 +202,13 @@ const FAV=MOD.match(/<link rel="icon"[^>]*>/)[0];
 const CARTE='<div class="fiche-liens rise"><a href="../carte.html#lieu=g-L1610">Vapid Dealership</a><a href="../carte.html#lieu=g-L2375">Rideout Customs</a><a href="../carte.html#lieu=g-L590">Ambrosia Raceway Park</a></div>';
 const NOTE=MOD.match(/<div class="note-box rise">[\s\S]*?<\/div>/)[0];
 const V_NOTE=[
- "Les inspirations réelles sont des rapprochements établis à partir des visuels officiels, pas des informations communiquées par Rockstar. Aucune donnée issue de fuites n'est utilisée ici.",
- "Ce que vous lisez ici vient des visuels publiés par Rockstar, jamais d'une annonce du studio. Rien de ce qui a filtré par des fuites n'entre dans cette base.",
- "Chaque modèle réel cité est une déduction tirée des images officielles. Le studio ne confirme rien, et nous n'exploitons aucun contenu volé.",
- "Nos identifications reposent uniquement sur ce que Rockstar a diffusé publiquement. Les fuites, quelles qu'elles soient, restent hors de cette base.",
- "Les modèles réels indiqués sont le fruit d'une comparaison avec les visuels officiels. Rien ici ne provient d'un code ou d'une vidéo dérobés.",
+ "Les inspirations réelles sont des rapprochements établis à partir des visuels officiels, pas des informations communiquées par Rockstar. Aucune donnée issue de fuites n’est utilisée ici.",
+ "Ce que tu lis ici vient des visuels publiés par Rockstar, jamais d’une annonce du studio. Rien de ce qui a filtré par des fuites n’entre dans cette base.",
+ "Chaque modèle réel cité est une déduction tirée des images officielles. Le studio ne confirme rien, et nous n’exploitons aucun contenu volé.",
+ "Nos identifications reposent uniquement sur ce que Rockstar a diffusé publiquement. Les fuites, quelles qu’elles soient, restent hors de cette base.",
+ "Les modèles réels indiqués sont le fruit d’une comparaison avec les visuels officiels. Rien ici ne provient d’un code ou d’une vidéo dérobés.",
  "Tout ce qui figure sur cette fiche a été relevé dans les supports publiés par Rockstar. Aucun élément ne vient des fuites de 2022 ou de 2026."];
-const note=v=>NOTE.replace(/(<strong>Une erreur sur cette fiche \?<\/strong> )[\s\S]*?( Si vous avez une correction)/,'$1'+pioche(v.id,'note',V_NOTE)+'$2');
+const note=v=>NOTE.replace(/(<strong>Une erreur sur cette fiche \?<\/strong> )[\s\S]*?( Si tu as une correction)/,'$1'+pioche(v.id,'note',V_NOTE)+'$2');
 const artH=v=>art(v).replace(/style="height:\d+px"/,'style="height:120px"');
 
 function fiche(v,i){
@@ -217,9 +217,9 @@ function fiche(v,i){
  const vois=V.filter(x=>x.cat===v.cat&&x.id!==v.id).slice(0,6);
  const ed=v.edition==='Pre-Order'?'Bonus de précommande':v.edition?'Exclusif à l\u2019édition Ultimate':null;
  const red=RED.vehicule(v,CATL);
- const lede=nom+' dans GTA VI : '+cat.toLowerCase()+(mod?'. Inspiration : '+mod:'')+'. '+st.d;
+ const lede=nom+' dans GTA VI : '+cat.toLowerCase()+(mod?'. Inspiration : '+mod:'')+'. '+st.d;
  /* meta description : les premières phrases du texte de la fiche (160 caractères max), sinon le lede générique */
- const description=(()=>{const ph=(v.txt||'').split(/(?<=[.!?])\s+/);let d=nom+' dans GTA VI.';let n=0;for(const q of ph){if((d+' '+q).length>165)break;d=d+' '+q;n++;}return n?d:lede;})();
+ const description=(()=>{const ph=(v.txt||'').split(/(?<=[.!?])\s+/);let d=nom+' dans GTA VI.';let n=0;for(const q of ph){if((d+' '+q).length>158)break;d=d+' '+q;n++;}return n?d:(lede.length>158?lede.slice(0,155).replace(/\s+\S*$/,'')+'…':lede);})();
  const available=(v.vues||[]).filter(view=>fs.existsSync('img/vehicules/'+v.id+'-'+view+'.jpg'));
  const meds=medList(v);
  const img=available.length>0, vues=img?available.join(','):'';
@@ -252,9 +252,6 @@ function fiche(v,i){
 <meta name="color-scheme" content="light">
 <link rel="canonical" href="https://www.leonidakit.com/vehicules/${v.id}.html">
 ${FAV}
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;900&display=swap" rel="stylesheet">
 <script type="application/ld+json">${JSON.stringify({'@context':'https://schema.org','@type':'BreadcrumbList',itemListElement:[
  {'@type':'ListItem',position:1,name:'Accueil',item:'https://www.leonidakit.com/'},
  {'@type':'ListItem',position:2,name:'Véhicules',item:'https://www.leonidakit.com/vehicules.html'},
@@ -278,7 +275,7 @@ ${HEADER}
 <section class="fhero fhero--${v.cat==='pickup'?'pickup':v.cat}">
   <div class="fhero-bg" aria-hidden="true"></div>
   <div class="shell">
-    <nav class="crumbs" aria-label="Fil d'Ariane">
+    <nav class="crumbs" aria-label="Fil d’Ariane">
       <a href="../index.html">Accueil</a> <span>/</span>
       <a href="../vehicules.html">Véhicules</a> <span>/</span>
       <a href="../vehicules.html#cat=${v.cat}">${esc(cat)}</a> <span>/</span>
@@ -379,10 +376,10 @@ const garder=new Set(V.map(v=>v.id+'.html'));
 Object.keys(REDIR).forEach(k=>garder.add(k+'.html'));
 try{ const R0=JSON.parse(fs.readFileSync('outils/retraits.json','utf8'));
      Object.keys(R0).forEach(k=>{ if(k!=='_commentaire') garder.add(k+'.html'); }); }catch(e){}
-fs.readdirSync('vehicules').forEach(f=>{ if(f.endsWith('.html')&&!garder.has(f)&&!LEGACY.includes(f)) throw new Error('Fiche orpheline à examiner : '+f); });
+fs.readdirSync('vehicules').forEach(f=>{ if(f.endsWith('.html')&&!garder.has(f)&&!LEGACY.includes(f)) throw new Error('Fiche orpheline à examiner : '+f); });
 V.forEach((v,i)=>fs.writeFileSync('vehicules/'+v.id+'.html',fiche(v,i)));
 Object.entries(REDIR).forEach(([ancien,cible])=>{
-  const v=V.find(x=>x.id===cible); if(!v)throw new Error('Cible de redirection absente : '+cible);
+  const v=V.find(x=>x.id===cible); if(!v)throw new Error('Cible de redirection absente : '+cible);
   const url='/vehicules/'+cible+'.html';
   fs.writeFileSync('vehicules/'+ancien+'.html',
 `<!DOCTYPE html>
@@ -422,7 +419,7 @@ Object.entries(RETR).forEach(([id,r])=>{
 <body>
 <h1>${esc(r.nom)}</h1>
 <p>Cette fiche a été retirée de la base. ${esc(r.motif.replace(/GTA Base ne la donne plus que dans la fuite de septembre 2022\./g,'La source conservée dans notre historique ne satisfait plus les critères de cette base.'))}</p>
-<p>Leonidakit n'utilise aucune donnée issue d'une fuite. <a href="/vehicules.html">Revenir à la liste des véhicules</a>.</p>
+<p>Leonidakit n’utilise aucune donnée issue d’une fuite. <a href="/vehicules.html">Revenir à la liste des véhicules</a>.</p>
 </body>
 </html>
 `);
@@ -435,6 +432,6 @@ let IDX=window.LK_INDEX.filter(e=>e.u.indexOf('/vehicules/')!==0);
 V.forEach(v=>IDX.push({l:nomC(v),k:'Véhicule',u:'/vehicules/'+v.id+'.html',s:v.search}));
 fs.writeFileSync('search-index.js','/* Index de recherche, généré automatiquement. Ne pas éditer à la main. */\nwindow.LK_INDEX = '+JSON.stringify(IDX)+';\n');
 
-console.log('fiches générées :',V.length);
+console.log('fiches générées :',V.length);
 console.log('index           :',IDX.length,'entrées');
 require('./sync-site.cjs');

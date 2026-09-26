@@ -9,6 +9,7 @@ Hébergé sur Vercel, qui publie tel quel le contenu de ce dépôt : **aucune co
 |---|---|
 | `index.html`, `carte.html`, `vehicules.html`, `armes.html`, etc. | les pages du site (32 fichiers `.html`, dont `medias.html` : crédits des visuels officiels) |
 | `style.css`, `fiches.css` | les styles |
+| `fonts/` | la police Archivo (variable, latin et latin étendu, licence OFL dans `fonts/LICENCE-ARCHIVO.txt`) : hébergée ici, aucune connexion à Google Fonts ; `style.css` la déclare (`@font-face`) et chaque page la précharge |
 | `app.js`, `common.js`, `fiches.js`, `carte.js`, `comparateur.js`, `classement.js`, `progression.js` | le code qui fait fonctionner les pages |
 | `armes-data.js`, `vehicules-data.js`, `carte-gtadb.js`, `search-index.js`, `search-lieux.js`, `assets-manifest.js`, `progression-data.js` | les données lues par le site (`search-lieux.js` : les 2 500 lieux de la carte, chargé seulement à la première recherche) |
 | `robots.txt`, `sitemap.xml`, `sitemap-fiches.xml`, `googleea0091a4822a39f7.html` | référencement Google |
@@ -120,6 +121,8 @@ Le calculateur reste entièrement statique, gratuit et sans compte. Les sept cal
 
 - Génération complète reproductible : `node outils/regenerer.cjs`, puis `node outils/verifier.js`. `jsdom` doit être disponible dans le dossier de dépendances de développement via `NODE_PATH`, comme pour les tests. Aucune dépendance n’est déployée.
 - Navigation et footer : `outils/site-shell.cjs`, appliqués à toutes les pages par `sync-site.cjs`. Les catégories proviennent de `outils/acquisitions.json`.
+- Typographie française : `outils/typographie.cjs` (apostrophe ’, espace insécable avant ? ! ; : » et après «, avant $ et %, fine insécable dans les nombres). `sync-site.cjs` l’applique aux nœuds texte et aux attributs lisibles des 406 pages à chaque régénération ; les sources JSON/JS peuvent être passées une fois avec `node outils/typographie.cjs fichiers…`. Les recherches et Léo replient ’ et espaces insécables, donc « l'eau » et « l’eau » donnent le même résultat.
+- Référencement : titres « … | Leonidakit », descriptions ≤ 158 caractères (plafonnées par les générateurs), `max-image-preview:large`, FAQPage générée par `sync-site.cjs` depuis les questions visibles, BreadcrumbList sur les pages générées, @graph WebSite + SearchAction (`?q=`) sur l’accueil. Ne pas remettre de lien Google Fonts : la CSP (`vercel.json`) ne l’autorise plus.
 - À propos, Contact, Mentions : `outils/gen-informations.cjs` et `outils/site-informations.json`. Ne jamais publier une adresse opérationnelle avant confirmation réelle de la boîte. Le préparateur Contact ne transmet rien.
 - « Ça vaut le coup ? » : le mode sans attribution utilise `worth` (budget et coût d’opportunité). Le ROI nécessite un revenu additionnel explicitement renseigné ou supposé. Les anciens scénarios v1–v3 restent lisibles ; les nouvelles options v3 sont facultatives.
 - Le bouton « Partir de zéro » conserve les carnets/favoris et propose Annuler. Chaque outil permet les saisies essentielles sur place. Les chiffres restent volontairement partagés, avec indication visible.

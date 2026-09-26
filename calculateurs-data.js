@@ -143,9 +143,9 @@
     }).filter(Boolean);
   }
   var presets = [
-    { id: 'scenario-a', example: { capital: 200000, minutes: 60 }, name: 'Exemple A : missions courtes', reward: 25000, cost: 2500, duration: 12, prep: 3, cooldown: 5, share: 100, investment: 0, players: 1, beginner: true },
-    { id: 'scenario-b', example: { capital: 200000, minutes: 60 }, name: 'Exemple B : missions longues', reward: 120000, cost: 10000, duration: 40, prep: 10, cooldown: 10, share: 100, investment: 0, players: 1, beginner: false },
-    { id: 'scenario-c', example: { capital: 600000, minutes: 480 }, name: 'Exemple C : avec un achat de départ', reward: 90000, cost: 15000, duration: 45, prep: 15, cooldown: 0, share: 100, investment: 500000, players: 1, beginner: false }
+    { id: 'scenario-a', example: { capital: 200000, minutes: 60 }, name: 'Exemple A : missions courtes', reward: 25000, cost: 2500, duration: 12, prep: 3, cooldown: 5, share: 100, investment: 0, players: 1, beginner: true },
+    { id: 'scenario-b', example: { capital: 200000, minutes: 60 }, name: 'Exemple B : missions longues', reward: 120000, cost: 10000, duration: 40, prep: 10, cooldown: 10, share: 100, investment: 0, players: 1, beginner: false },
+    { id: 'scenario-c', example: { capital: 600000, minutes: 480 }, name: 'Exemple C : avec un achat de départ', reward: 90000, cost: 15000, duration: 45, prep: 15, cooldown: 0, share: 100, investment: 500000, players: 1, beginner: false }
   ].map(function (entry) {
     return Object.freeze(Object.assign(entry, { status: 'manual', source: null, verifiedAt: null, hypothetical: true, note: 'Hypothèses pédagogiques modifiables. Aucun montant ni rythme de GTA VI confirmé.' }));
   });

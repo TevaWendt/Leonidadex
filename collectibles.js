@@ -5,7 +5,7 @@
   if (!core || !Array.isArray(window.LK_COLLECTIBLES?.items)) return;
   const $ = id => document.getElementById(id);
   const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[c]));
-  const norm = value => String(value ?? '').toLocaleLowerCase('fr').normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
+  const norm = value => String(value ?? '').toLocaleLowerCase('fr').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[’‘]/g, "'").replace(/[\u00a0\u202f]/g, ' ').trim();
   const data = window.LK_COLLECTIBLES;
   const items = data.items.filter(item => item && item.published !== false && item.status !== 'placeholder' && core.validId(item.id));
   const categories = new Map((data.categories || []).map(category => [category.id, category.name]));
@@ -34,7 +34,7 @@
   }
   function savePrefs() {
     try { localStorage.setItem(PREF_KEY, JSON.stringify(prefs)); }
-    catch (_) { feedback('Cette préférence est appliquée pour cet onglet ; le navigateur ne permet pas sa sauvegarde.'); }
+    catch (_) { feedback('Cette préférence est appliquée pour cet onglet ; le navigateur ne permet pas sa sauvegarde.'); }
   }
   function readParams(params) {
     filters = {...defaults, view: params.get('view') === 'list' ? 'list' : params.get('view') === 'grid' ? 'grid' : prefs.view};
@@ -107,14 +107,14 @@
       button.setAttribute('aria-pressed', String(found && core.isTrackable(item)));
       const label = button.querySelector('[data-col-label]') || button;
       label.textContent = !core.isTrackable(item) ? 'Suivi indisponible' : found ? '✓ Trouvé' : 'Marquer trouvé';
-      button.setAttribute('aria-label', (found ? 'Marquer non trouvé : ' : 'Marquer trouvé : ') + (item?.name || 'collectible'));
+      button.setAttribute('aria-label', (found ? 'Marquer non trouvé : ' : 'Marquer trouvé : ') + (item?.name || 'collectible'));
     });
     document.querySelectorAll('[data-col-favorite]').forEach(button => {
       const favorite = !!state.favorites[button.dataset.colFavorite], item = core.getItem(button.dataset.colFavorite);
       button.setAttribute('aria-pressed', String(favorite));
       const label = button.querySelector('[data-col-label]') || button;
       label.textContent = favorite ? '★ Favori' : '☆ Favori';
-      button.setAttribute('aria-label', (favorite ? 'Retirer des favoris : ' : 'Ajouter aux favoris : ') + (item?.name || 'collectible'));
+      button.setAttribute('aria-label', (favorite ? 'Retirer des favoris : ' : 'Ajouter aux favoris : ') + (item?.name || 'collectible'));
     });
     document.querySelectorAll('[data-col-note]').forEach(input => { if (input !== document.activeElement) input.value = state.notes[input.dataset.colNote] || ''; });
     const storage = core.getStorageStatus();
@@ -133,7 +133,7 @@
     if ($('col-progress-fill')) $('col-progress-fill').style.width = (percent || 0) + '%';
     if ($('col-progress-meter')) {
       $('col-progress-meter').setAttribute('aria-valuenow', percent || 0);
-      $('col-progress-meter').setAttribute('aria-valuetext', percent === null ? 'Progression indisponible : aucun collectible suivi' : found + ' sur ' + trackable.length + ' fiches suivies, ' + percent + ' %');
+      $('col-progress-meter').setAttribute('aria-valuetext', percent === null ? 'Progression indisponible : aucun collectible suivi' : found + ' sur ' + trackable.length + ' fiches suivies, ' + percent + ' %');
     }
     setText('col-progress-caption', trackable.length ? 'Progression sur les fiches éligibles de ce catalogue. Ce pourcentage ne représente pas la complétion totale du jeu.' : 'Le suivi commencera avec les premières fiches éligibles. Le total du jeu est inconnu.');
     setText('col-favorite-count', items.filter(item => state.favorites[item.id]).length);
@@ -163,9 +163,9 @@
       '<h3>' + (url ? '<a href="' + esc(url) + '">' + esc(item.name) + '</a>' : esc(item.name)) + '</h3>' +
       '<p class="col-card-location">' + esc([categoryName(item), item.region].filter(Boolean).join(' · ')) + '</p>' +
       (item.summary ? '<p class="col-card-summary">' + esc(item.summary) + '</p>' : '') +
-      (spoilers ? '<details class="col-card-spoilers" data-col-spoiler' + (prefs.spoilers ? ' open' : '') + '><summary>Emplacement &amp; récompense</summary>' + (location ? '<p>' + esc(location) + '</p>' : '') + (item.reward ? '<p>Récompense : ' + esc(item.reward) + '</p>' : '') + (map ? '<a href="' + esc(map) + '">Voir sur la carte ↗</a>' : '') + '</details>' : '') +
+      (spoilers ? '<details class="col-card-spoilers" data-col-spoiler' + (prefs.spoilers ? ' open' : '') + '><summary>Emplacement &amp; récompense</summary>' + (location ? '<p>' + esc(location) + '</p>' : '') + (item.reward ? '<p>Récompense : ' + esc(item.reward) + '</p>' : '') + (map ? '<a href="' + esc(map) + '">Voir sur la carte ↗</a>' : '') + '</details>' : '') +
       '<div class="col-card-actions"><button type="button" data-col-found="' + esc(item.id) + '" aria-pressed="false">Marquer trouvé</button><button type="button" data-col-favorite="' + esc(item.id) + '" aria-pressed="false">☆ Favori</button><button type="button" data-col-plan="' + esc(item.id) + '" aria-pressed="false">Ajouter à ma sortie</button></div>' +
-      '<details class="col-card-note"><summary>Note personnelle' + (state.notes[item.id] ? ' · enregistrée' : '') + '</summary><label for="' + esc(noteId) + '">Votre note (2 000 caractères maximum)</label><textarea id="' + esc(noteId) + '" data-col-note="' + esc(item.id) + '" maxlength="2000" rows="3" placeholder="Vos repères pour la prochaine visite…">' + esc(state.notes[item.id] || '') + '</textarea></details></div></article>';
+      '<details class="col-card-note"><summary>Note personnelle' + (state.notes[item.id] ? ' · enregistrée' : '') + '</summary><label for="' + esc(noteId) + '">Ta note (2 000 caractères maximum)</label><textarea id="' + esc(noteId) + '" data-col-note="' + esc(item.id) + '" maxlength="2000" rows="3" placeholder="Tes repères pour la prochaine visite…">' + esc(state.notes[item.id] || '') + '</textarea></details></div></article>';
   }
   function ordered(list) {
     const alpha = (a,b) => String(a || '').localeCompare(String(b || ''), 'fr', {numeric: true, sensitivity: 'base'});
@@ -195,7 +195,7 @@
     setText('col-result-count', items.length ? list.length + ' résultat' + (list.length > 1 ? 's' : '') + ' sur ' + items.length + ' fiche' + (items.length > 1 ? 's' : '') : 'Aucune fiche documentée');
     if ($('col-empty')) $('col-empty').hidden = list.length > 0;
     setText('col-empty-title', items.length ? 'Aucune découverte avec ces filtres.' : 'Le terrain reste à explorer.');
-    setText('col-empty-text', items.length ? 'Essayez une autre recherche ou retirez un filtre. Vos trouvailles et vos notes sont conservées.' : 'Nous attendons des éléments suffisamment documentés pour publier les premières fiches. Aucun objet, emplacement ou total n’est inventé pour remplir le catalogue.');
+    setText('col-empty-text', items.length ? 'Essaie une autre recherche ou retire un filtre. Tes trouvailles et tes notes sont conservées.' : 'Nous attendons des éléments suffisamment documentés pour publier les premières fiches. Aucun objet, emplacement ou total n’est inventé pour remplir le catalogue.');
     if ($('col-empty-link')) $('col-empty-link').hidden = items.length > 0;
     if ($('col-empty-reset')) $('col-empty-reset').hidden = !activeFilters.length;
     if ($('col-active-filters')) $('col-active-filters').innerHTML = activeFilters.map(key => {
@@ -245,7 +245,7 @@
       const item = core.getItem(target.dataset.colShare);
       const url = new URL(core.itemUrl(item) || location.pathname, location.href).href;
       try { if (navigator.share) await navigator.share({title: document.title, url}); else { await navigator.clipboard.writeText(url); feedback('Lien de la fiche copié.'); } }
-      catch (error) { if (error.name !== 'AbortError') feedback('Copiez l’adresse de cette page dans la barre du navigateur pour la partager.'); }
+      catch (error) { if (error.name !== 'AbortError') feedback('Copie l’adresse de cette page dans la barre du navigateur pour la partager.'); }
     }
   });
   document.addEventListener('input', event => {
@@ -292,8 +292,8 @@
       try {
         const blob = new Blob([JSON.stringify(core.exportData(), null, 2)], {type: 'application/json'}), url = URL.createObjectURL(blob), link = document.createElement('a');
         link.href = url; link.download = 'leonidakit-collectibles-' + new Date().toISOString().slice(0,10) + '.json'; document.body.appendChild(link); link.click(); link.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000);
-        feedback('Export de votre carnet préparé. Conservez le fichier JSON pour le réimporter.');
-      } catch (_) { feedback('Export indisponible dans ce navigateur. Votre carnet n’a pas été modifié.'); }
+        feedback('Export de ton carnet préparé. Garde le fichier JSON pour le réimporter.');
+      } catch (_) { feedback('Export indisponible dans ce navigateur. Ton carnet n’a pas été modifié.'); }
     });
     $('col-import')?.addEventListener('click', () => $('col-import-file')?.click());
     $('col-import-file')?.addEventListener('change', async event => {
@@ -302,14 +302,14 @@
       try {
         if (file.size > core.maxImportBytes) throw new Error('Le fichier dépasse la limite de 2 Mo.');
         const counts = core.importData(await file.text(), 'merge');
-        feedback('Import fusionné : ' + counts.found + ' trouvé(s), ' + counts.favorites + ' favori(s), ' + counts.notes + ' note(s).' + (counts.tools ? ' Outils inclus : ' + counts.tools.savedViews + ' recherche(s), ' + counts.tools.plan + ' étape(s).' : '') + ' Les identifiants absents du catalogue sont conservés pour les futures fiches.');
+        feedback('Import fusionné : ' + counts.found + ' trouvé(s), ' + counts.favorites + ' favori(s), ' + counts.notes + ' note(s).' + (counts.tools ? ' Outils inclus : ' + counts.tools.savedViews + ' recherche(s), ' + counts.tools.plan + ' étape(s).' : '') + ' Les identifiants absents du catalogue sont conservés pour les futures fiches.');
       } catch (error) { feedback('Import refusé. ' + error.message); }
       input.value = '';
     });
     const dialog = $('col-reset-dialog');
     $('col-clear-progress')?.addEventListener('click', () => {
       if (dialog?.showModal) { dialog.returnValue = ''; dialog.showModal(); }
-      else if (window.confirm('Effacer tous les objets trouvés, favoris et notes de ce navigateur ?')) { core.resetProgress(); feedback('Carnet local effacé.'); }
+      else if (window.confirm('Effacer tous les objets trouvés, favoris et notes de ce navigateur ?')) { core.resetProgress(); feedback('Carnet local effacé.'); }
     });
     dialog?.addEventListener('close', () => { if (dialog.returnValue === 'confirm') { core.resetProgress(); feedback('Carnet local effacé.'); } $('col-clear-progress')?.focus(); });
   } else { updateActions(); syncControls(); }

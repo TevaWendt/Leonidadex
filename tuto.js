@@ -14,7 +14,7 @@
     if (!form || !msg) return;
     var capital = parse(form.elements.capital.value), target = parse(form.elements.target.value), hourly = parse(form.elements.hourly.value);
     if (capital === null || target === null || hourly === null) { msg.textContent = 'Écris trois nombres, par exemple 200 000, 1 000 000 et 100 000.'; return; }
-    if (!E || !E.goalContinuous) { msg.textContent = 'Clique sur le bouton : la réponse s’affiche dans le calculateur.'; return; }
+    if (!E || !E.goalContinuous) { msg.textContent = 'Clique sur le bouton : la réponse s’affiche dans le calculateur.'; return; }
     var r = E.goalContinuous({ capital: capital, target: target, hourly: hourly, reserve: 0, dailyMinutes: 60 });
     if (!r.valid) { msg.textContent = r.reason || 'Vérifie tes trois nombres.'; return; }
     msg.textContent = r.missing === 0 ? 'Tu as déjà assez d’argent pour cet objectif.' : 'Il te manque ' + money(r.missing) + '. En jouant 1 h par jour, tu y arrives en ' + r.days + ' jour' + (r.days > 1 ? 's' : '') + ' (' + hours(r.hours) + ' de jeu).';

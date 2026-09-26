@@ -11,15 +11,15 @@ window.LK_ACQUISITIONS = {
   "sources": {
     "ultimate": {
       "url": "https://www.rockstargames.com/VI",
-      "title": "Édition Ultime : présentation interactive",
+      "title": "Édition Ultimate : présentation interactive",
       "publishedAt": null,
       "consultedAt": "2026-09-23",
-      "context": "GTA VI, bonus de l’Édition Ultime",
+      "context": "GTA VI, bonus de l’Édition Ultimate",
       "claim": "Véhicules, garages, styles et personnalisations décrits comme contenus de cette édition. Leurs prix séparés en jeu ne sont pas publiés."
     },
     "vintage": {
       "url": "https://www.rockstargames.com/VI",
-      "title": "Pack Vintage Vice City : présentation interactive",
+      "title": "Pack Vintage Vice City : présentation interactive",
       "publishedAt": null,
       "consultedAt": "2026-09-23",
       "context": "GTA VI, bonus de précommande",
@@ -35,7 +35,7 @@ window.LK_ACQUISITIONS = {
     },
     "screenshots": {
       "url": "https://www.rockstargames.com/VI/media/screenshots",
-      "title": "GTA VI : captures officielles",
+      "title": "GTA VI : captures officielles",
       "publishedAt": null,
       "consultedAt": "2026-09-23",
       "context": "Galerie officielle GTA VI",
@@ -43,7 +43,7 @@ window.LK_ACQUISITIONS = {
     },
     "extended": {
       "url": "https://www.rockstargames.com/newswire/article/4k138k8okkk483/grand-theft-auto-vi-an-extended-look-now-playing",
-      "title": "Grand Theft Auto VI: An Extended Look : Now Playing",
+      "title": "Grand Theft Auto VI: An Extended Look : Now Playing",
       "publishedAt": "2026-08-27",
       "consultedAt": "2026-09-23",
       "context": "Présentation officielle",
@@ -56,7 +56,7 @@ window.LK_ACQUISITIONS = {
       "label": "Bateaux",
       "route": "/bateaux.html",
       "type": "vehicle",
-      "intro": "Kayak ou bateau à moteur : retrouve les embarcations dont Rockstar décrit l’obtention, puis les observations déjà recensées dans Véhicules.",
+      "intro": "Kayak ou bateau à moteur : retrouve les embarcations dont Rockstar décrit l’obtention, puis les observations déjà recensées dans Véhicules.",
       "limit": "Les bonus ci-dessous sont liés à une édition. Leur achat séparé et leur prix dans le jeu ne sont pas confirmés.",
       "empty": "Aucun bateau avec une obtention officiellement documentée n’est encore disponible.",
       "menuOrder": 99
@@ -66,7 +66,7 @@ window.LK_ACQUISITIONS = {
       "label": "Vêtements et style",
       "route": "/style.html",
       "type": "style",
-      "intro": "Tenues, accessoires, tatouages et coiffures : tout ce qui change l’apparence de Jason et Lucia, avec les collections annoncées et les adresses déjà présentées par Rockstar.",
+      "intro": "Tenues, accessoires, tatouages et coiffures : tout ce qui change l’apparence de Jason et Lucia, avec les collections annoncées et les adresses déjà présentées par Rockstar.",
       "limit": "Les collections décrites ne constituent pas une liste de pièces achetables à l’unité. Les noms individuels, tarifs et conditions détaillées restent à documenter.",
       "empty": "En attente de données officielles pour les pièces individuelles. Les collections et services annoncés sont présentés ci-dessous, sans fausse fiche ni case à cocher.",
       "menu": true,
@@ -75,7 +75,7 @@ window.LK_ACQUISITIONS = {
           "id": "tenues",
           "title": "Tenues",
           "status": "Collections annoncées",
-          "text": "Les collections de l’Édition Ultime et du Pack Vintage Vice City décrivent des tenues pour les deux personnages (ci-dessous). Les pièces à l’unité, leurs noms et leurs prix ne sont pas publiés. La boutique Stock 305 est l’adresse de streetwear présentée par Rockstar.",
+          "text": "Les collections de l’Édition Ultimate et du Pack Vintage Vice City décrivent des tenues pour les deux personnages (ci-dessous). Les pièces à l’unité, leurs noms et leurs prix ne sont pas publiés. La boutique Stock 305 est l’adresse de streetwear présentée par Rockstar.",
           "link": "/entreprises/stock-305.html",
           "linkLabel": "Voir Stock 305"
         },
@@ -83,13 +83,13 @@ window.LK_ACQUISITIONS = {
           "id": "accessoires",
           "title": "Accessoires",
           "status": "À confirmer",
-          "text": "Lunettes, montres, bijoux, sacs, casquettes : les visuels officiels en montrent sur Jason et Lucia, mais aucun accessoire n’est nommé ni vendu séparément à ce jour. Rien n’est inventé ici : la liste se remplira avec des sources."
+          "text": "Lunettes, montres, bijoux, sacs, casquettes : les visuels officiels en montrent sur Jason et Lucia, mais aucun accessoire n’est nommé ni vendu séparément à ce jour. Rien n’est inventé ici : la liste se remplira avec des sources."
         },
         {
           "id": "tatouages",
           "title": "Tatouages",
           "status": "Adresse présentée",
-          "text": "Electric Fang Tattoo, le salon de Stockyard présenté avec l’Édition Ultime, propose des créations sur les personnages. Les motifs, leur prix et les emplacements possibles restent à documenter. La collection « Style de Vice City » comprend des tatouages.",
+          "text": "Electric Fang Tattoo, le salon de Stockyard présenté avec l’Édition Ultimate, propose des créations sur les personnages. Les motifs, leur prix et les emplacements possibles restent à documenter. La collection « Style de Vice City » comprend des tatouages.",
           "link": "/entreprises/electric-fang.html",
           "linkLabel": "Voir Electric Fang Tattoo"
         },
@@ -130,8 +130,8 @@ window.LK_ACQUISITIONS = {
       "label": "Vêtements à l’unité",
       "route": "/vetements.html",
       "type": "style",
-      "intro": "Vêtements à l’unité : cette catégorie est prête à accueillir des pièces identifiées et leurs conditions d’obtention.",
-      "limit": "Les collections annoncées sont dans « Vêtements et style ». Aucune pièce à l’unité avec un prix séparé vérifié n’est actuellement publiée ici.",
+      "intro": "Vêtements à l’unité : cette catégorie est prête à accueillir des pièces identifiées et leurs conditions d’obtention.",
+      "limit": "Les collections annoncées sont dans « Vêtements et style ». Aucune pièce à l’unité avec un prix séparé vérifié n’est actuellement publiée ici.",
       "empty": "Aucune entrée individuelle vérifiée n’est publiée dans cette catégorie. Sa présence dans le menu ne confirme pas une possibilité d’achat dans GTA VI.",
       "alias": "/style.html#tenues",
       "menuOrder": 99
@@ -141,7 +141,7 @@ window.LK_ACQUISITIONS = {
       "label": "Accessoires",
       "route": "/accessoires.html",
       "type": "style",
-      "intro": "Lunettes, montres, bijoux, sacs, casquettes : une catégorie à documenter, sans liste d’achats confirmée.",
+      "intro": "Lunettes, montres, bijoux, sacs, casquettes : une catégorie à documenter, sans liste d’achats confirmée.",
       "limit": "Aucun accessoire individuel avec des conditions d’achat vérifiées n’est actuellement publié dans cette section.",
       "empty": "Aucune entrée individuelle vérifiée n’est publiée dans cette catégorie. Sa présence dans le menu ne confirme pas une possibilité d’achat dans GTA VI.",
       "alias": "/style.html#accessoires",
@@ -152,8 +152,8 @@ window.LK_ACQUISITIONS = {
       "label": "Tatouages",
       "route": "/tatouages.html",
       "type": "style",
-      "intro": "Tatouages : les motifs et leurs conditions d’accès restent à documenter dans ce catalogue.",
-      "limit": "Les services de style annoncés sont présentés dans « Vêtements et style ». Aucun motif avec un prix vérifié n’est publié ici.",
+      "intro": "Tatouages : les motifs et leurs conditions d’accès restent à documenter dans ce catalogue.",
+      "limit": "Les services de style annoncés sont présentés dans « Vêtements et style ». Aucun motif avec un prix vérifié n’est publié ici.",
       "empty": "Aucune entrée individuelle vérifiée n’est publiée dans cette catégorie. Sa présence dans le menu ne confirme pas une possibilité d’achat dans GTA VI.",
       "alias": "/style.html#tatouages",
       "menuOrder": 99
@@ -163,16 +163,16 @@ window.LK_ACQUISITIONS = {
       "label": "Consommables",
       "route": "/nourriture.html",
       "type": "consumable",
-      "intro": "Manger, boire, se soigner : les consommables servent à récupérer de la vie et à tenir pendant une mission. Voici ce que l’on sait pour GTA VI, sans inventer de liste de produits ni de prix.",
+      "intro": "Manger, boire, se soigner : les consommables servent à récupérer de la vie et à tenir pendant une mission. Voici ce que l’on sait pour GTA VI, sans inventer de liste de produits ni de prix.",
       "limit": "Aucun article, prix ou effet chiffré n’est publié par Rockstar pour GTA VI. Les repères ci-dessous viennent des présentations officielles et des précédents jeux de la série.",
-      "empty": "Pas encore d’article vérifié à cocher : dès qu’un consommable sera nommé officiellement avec ses conditions d’obtention, il apparaîtra ici.",
+      "empty": "Pas encore d’article vérifié à cocher : dès qu’un consommable sera nommé officiellement avec ses conditions d’obtention, il apparaîtra ici.",
       "menu": true,
       "sections": [
         {
           "id": "a-quoi-ca-sert",
           "title": "À quoi ça sert",
           "status": "Repère de la série",
-          "text": "Dans les précédents GTA, un snack, une boisson ou un repas rend de la vie ; un gilet pare-balles ajoute une protection. On les achète dans les supérettes, les distributeurs et les fast-foods, ou on les trouve sur place. C’est la même idée que le joueur attend dans GTA VI."
+          "text": "Dans les précédents GTA, un snack, une boisson ou un repas rend de la vie ; un gilet pare-balles ajoute une protection. On les achète dans les supérettes, les distributeurs et les fast-foods, ou on les trouve sur place. C’est la même idée que le joueur attend dans GTA VI."
         },
         {
           "id": "ce-qui-est-montre",
@@ -184,13 +184,13 @@ window.LK_ACQUISITIONS = {
           "id": "ou-en-trouver",
           "title": "Où on s’attend à en trouver",
           "status": "À confirmer",
-          "text": "Fast-foods, supérettes, distributeurs automatiques, bars et stands de plage apparaissent dans les médias officiels de Vice City et des Keys. Voir une enseigne ne prouve pas qu’on peut y acheter quelque chose : chaque adresse sera ajoutée ici quand ce sera confirmé."
+          "text": "Fast-foods, supérettes, distributeurs automatiques, bars et stands de plage apparaissent dans les médias officiels de Vice City et des Keys. Voir une enseigne ne prouve pas qu’on peut y acheter quelque chose : chaque adresse sera ajoutée ici quand ce sera confirmé."
         },
         {
           "id": "et-le-calculateur",
-          "title": "Et dans le calculateur ?",
+          "title": "Et dans le calculateur ?",
           "status": "Conseil",
-          "text": "Compte les consommables comme des petites dépenses régulières : dans « Mon budget », mets-les dans le poste « Consommables » avec le montant que tu imagines dépenser par partie. Le kit de soin et le gilet sont décrits dans l’Armurerie.",
+          "text": "Compte les consommables comme des petites dépenses régulières : dans « Mon budget », mets-les dans le poste « Consommables » avec le montant que tu imagines dépenser par partie. Le kit de soin et le gilet sont décrits dans l’Armurerie.",
           "link": "/calculateurs.html?tool=budget#atelier",
           "linkLabel": "Ouvrir Mon budget"
         }
@@ -202,8 +202,8 @@ window.LK_ACQUISITIONS = {
       "label": "Munitions et équipement",
       "route": "/munitions.html",
       "type": "ammo",
-      "intro": "Munitions et équipement d’arme : articles, compatibilités et conditions d’acquisition restent à documenter.",
-      "limit": "Les motifs et variantes d’armes documentés sont dans « Personnalisations ». Aucun prix de munition vérifié n’est publié dans ce catalogue.",
+      "intro": "Munitions et équipement d’arme : articles, compatibilités et conditions d’acquisition restent à documenter.",
+      "limit": "Les motifs et variantes d’armes documentés sont dans « Personnalisations ». Aucun prix de munition vérifié n’est publié dans ce catalogue.",
       "empty": "Aucune entrée individuelle vérifiée n’est publiée dans cette catégorie. Sa présence dans le menu ne confirme pas une possibilité d’achat dans GTA VI.",
       "alias": "/armes.html#munitions",
       "menuOrder": 99
@@ -214,8 +214,8 @@ window.LK_ACQUISITIONS = {
       "label": "Logements et appartements",
       "route": "/logements.html",
       "type": "housing",
-      "intro": "Logements et appartements : les éventuels biens accessibles au joueur restent à distinguer des lieux montrés dans les médias.",
-      "limit": "Les demeures des personnages sont dans « Demeures » et les garages documentés dans « Planques ». Aucune offre de logement à acheter avec un prix vérifié n’est publiée ici.",
+      "intro": "Logements et appartements : les éventuels biens accessibles au joueur restent à distinguer des lieux montrés dans les médias.",
+      "limit": "Les demeures des personnages sont dans « Demeures » et les garages documentés dans « Planques ». Aucune offre de logement à acheter avec un prix vérifié n’est publiée ici.",
       "empty": "Aucune entrée individuelle vérifiée n’est publiée dans cette catégorie. Sa présence dans le menu ne confirme pas une possibilité d’achat dans GTA VI.",
       "menuOrder": 99
     }
@@ -231,7 +231,7 @@ window.LK_ACQUISITIONS = {
       "sourceId": "ultimate",
       "evidenceLevel": 1,
       "acquisition": "edition-bonus",
-      "condition": "Bonus de l’Édition Ultime",
+      "condition": "Bonus de l’Édition Ultimate",
       "description": "Embarcation annoncée avec les véhicules de la planque de Jason.",
       "media": [
         "crest-kayak",
@@ -299,7 +299,7 @@ window.LK_ACQUISITIONS = {
       "sourceId": "ultimate",
       "evidenceLevel": 1,
       "acquisition": "edition-bonus",
-      "condition": "Bonus de l’Édition Ultime",
+      "condition": "Bonus de l’Édition Ultimate",
       "description": "Bateau annoncé à Washington Beach avec une caisse d’armes. Son tarif séparé reste inconnu.",
       "media": [
         "shitzu-squalo-01",
@@ -405,7 +405,7 @@ window.LK_ACQUISITIONS = {
       "sourceId": "ultimate",
       "evidenceLevel": 1,
       "acquisition": "edition-bonus",
-      "condition": "Collection de l’Édition Ultime",
+      "condition": "Collection de l’Édition Ultimate",
       "description": "Une sélection de tenues et de tatouages pour les deux protagonistes. Le détail des pièces n’est pas publié.",
       "media": [],
       "trackable": false,
@@ -428,7 +428,7 @@ window.LK_ACQUISITIONS = {
       "sourceId": "ultimate",
       "evidenceLevel": 1,
       "acquisition": "edition-bonus",
-      "condition": "Collection de l’Édition Ultime",
+      "condition": "Collection de l’Édition Ultimate",
       "description": "Vêtements et accessoires inspirés de Macca the Gator. Le catalogue individuel reste à documenter.",
       "media": [],
       "trackable": false,
@@ -452,7 +452,7 @@ window.LK_ACQUISITIONS = {
       "evidenceLevel": 1,
       "acquisition": "preorder-bonus",
       "condition": "Pack Vintage Vice City",
-      "description": "Costume pastel en lin et coiffure rétro pour Jason ; mini-robe rouge à sequins et cheveux bouclés pour Lucia. Ces descriptions ne sont pas des noms de produits inventés.",
+      "description": "Costume pastel en lin et coiffure rétro pour Jason ; mini-robe rouge à sequins et cheveux bouclés pour Lucia. Ces descriptions ne sont pas des noms de produits inventés.",
       "media": [],
       "trackable": false,
       "calculatorCompatible": false,
@@ -474,7 +474,7 @@ window.LK_ACQUISITIONS = {
       "sourceId": "ultimate",
       "evidenceLevel": 1,
       "acquisition": "edition-bonus",
-      "condition": "Kit de l’Édition Ultime · Vapid Ganado de Jason",
+      "condition": "Kit de l’Édition Ultimate · Vapid Ganado de Jason",
       "description": "Kit de modifications dédié au pick-up de Jason. Les performances et le coût séparé ne sont pas publiés.",
       "media": [
         "ganado-retro-build"
@@ -567,8 +567,8 @@ window.LK_ACQUISITIONS = {
       "sourceId": "ultimate",
       "evidenceLevel": 1,
       "acquisition": "edition-bonus",
-      "condition": "Édition Ultime · Watson Bay",
-      "description": "Associé au Dominator Buggy : stationnement, casier d’armes et dépôt de biens destinés à un receleur.",
+      "condition": "Édition Ultimate · Watson Bay",
+      "description": "Associé au Dominator Buggy : stationnement, casier d’armes et dépôt de biens destinés à un receleur.",
       "media": [],
       "trackable": true,
       "calculatorCompatible": true,
@@ -592,7 +592,7 @@ window.LK_ACQUISITIONS = {
       "evidenceLevel": 1,
       "acquisition": "preorder-bonus",
       "condition": "Pack Vintage Vice City · près d’Ocean Beach",
-      "description": "Garage privé associé au Stanier : casier d’armes et dépôt de biens destinés à un receleur.",
+      "description": "Garage privé associé au Stanier : casier d’armes et dépôt de biens destinés à un receleur.",
       "media": [],
       "trackable": true,
       "calculatorCompatible": true,
@@ -682,7 +682,7 @@ window.LK_ACQUISITIONS = {
           "mediaType": "official-screenshot"
         }
       ],
-      "condition": "Service de l’Édition Ultime · tarifs non publiés",
+      "condition": "Service de l’Édition Ultimate · tarifs non publiés",
       "evidenceLevel": 1
     },
     {
@@ -759,7 +759,7 @@ window.LK_ACQUISITIONS = {
           "mediaType": "official-screenshot"
         }
       ],
-      "condition": "Service de l’Édition Ultime · tarifs non publiés",
+      "condition": "Service de l’Édition Ultimate · tarifs non publiés",
       "evidenceLevel": 1
     },
     {
@@ -857,14 +857,14 @@ window.LK_ACQUISITIONS = {
           "mediaType": "official-screenshot"
         }
       ],
-      "condition": "Service de l’Édition Ultime · tarifs non publiés",
+      "condition": "Service de l’Édition Ultimate · tarifs non publiés",
       "evidenceLevel": 1
     },
     {
       "ref": "rideout-customs",
       "category": "customizations",
       "sourceId": "ultimate",
-      "description": "Personnalisation de voitures classiques : intérieurs, jantes et style donk.",
+      "description": "Personnalisation de voitures classiques : intérieurs, jantes et style donk.",
       "media": [
         "rideout-customs-mod-shop-01",
         "ultimate-edition-rideout-customs-02",
@@ -916,7 +916,7 @@ window.LK_ACQUISITIONS = {
         {
           "id": "ultimate-edition-rideout-customs-03",
           "titre": "Ultimate Edition Rideout Customs 03",
-          "alt": "Coupé jaune surélevé dans l'atelier Rideout Customs, identifié comme une Albany Manana",
+          "alt": "Coupé jaune surélevé dans l’atelier Rideout Customs, identifié comme une Albany Manana",
           "source": "https://www.rockstargames.com/VI/media/screenshots",
           "original": "https://www.rockstargames.com/VI/_next/static/media/ULTIMATE_EDITION_RIDEOUT_CUSTOMS_03.0_n4oqh5f_ar4.jpg?akim=1&imdensity=1&imwidth=1920",
           "credit": "© Rockstar Games / Take-Two Interactive",
@@ -934,7 +934,7 @@ window.LK_ACQUISITIONS = {
           ]
         }
       ],
-      "condition": "Service de l’Édition Ultime · tarifs non publiés",
+      "condition": "Service de l’Édition Ultimate · tarifs non publiés",
       "evidenceLevel": 1
     },
     {
@@ -993,7 +993,7 @@ window.LK_ACQUISITIONS = {
         {
           "id": "ultimate-edition-one-eyed-willie-03",
           "titre": "One-Eyed Willie 03",
-          "alt": "Pick-up Canis vert dans l'atelier One-Eyed Willie de GTA VI.",
+          "alt": "Pick-up Canis vert dans l’atelier One-Eyed Willie de GTA VI.",
           "source": "https://www.rockstargames.com/VI/media/screenshots",
           "original": "https://www.rockstargames.com/VI/_next/static/media/ULTIMATE_EDITION_ONE_EYED_WILLIE_03.0mhil16bnp3m2.jpg?akim=1&imdensity=1&imwidth=1920",
           "credit": "© Rockstar Games / Take-Two Interactive",
@@ -1011,7 +1011,7 @@ window.LK_ACQUISITIONS = {
           ]
         }
       ],
-      "condition": "Service de l’Édition Ultime · tarifs non publiés",
+      "condition": "Service de l’Édition Ultimate · tarifs non publiés",
       "evidenceLevel": 1
     }
   ],

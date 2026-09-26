@@ -29,7 +29,7 @@
   }
   function validateTools(value) {
     if (!record(value) || value.version !== 1 || !Array.isArray(value.savedViews) || !Array.isArray(value.plan)) throw new Error('Format des outils de collection invalide.');
-    if (value.savedViews.length > 12 || value.plan.length > 30) throw new Error('Limite dépassée : 12 recherches et 30 étapes maximum.');
+    if (value.savedViews.length > 12 || value.plan.length > 30) throw new Error('Limite dépassée : 12 recherches et 30 étapes maximum.');
     if (value.plan.some(id => !validId(id)) || new Set(value.plan).size !== value.plan.length) throw new Error('La sortie contient des identifiants invalides ou répétés.');
     const ids = new Set();
     const savedViews = value.savedViews.map(view => {
@@ -43,10 +43,10 @@
   const getItem = id => getItems().find(item => item.id === id);
   const utf8Bytes = text => typeof Blob === 'function' ? new Blob([text]).size : new TextEncoder().encode(text).length;
   function validate(value) {
-    if (!record(value) || value.version !== 1) throw new Error('Format incompatible : une sauvegarde Collectibles version 1 est attendue.');
+    if (!record(value) || value.version !== 1) throw new Error('Format incompatible : une sauvegarde Collectibles version 1 est attendue.');
     const result = empty();
     for (const field of ['found', 'favorites', 'notes']) {
-      if (!record(value[field])) throw new Error('Sauvegarde incomplète : champ « ' + field + ' » manquant ou invalide.');
+      if (!record(value[field])) throw new Error('Sauvegarde incomplète : champ « ' + field + ' » manquant ou invalide.');
       const entries = Object.entries(value[field]);
       if (entries.length > MAX_ENTRIES) throw new Error('Cette sauvegarde contient trop d’entrées.');
       for (const [id, entry] of entries) {
@@ -78,7 +78,7 @@
       return result;
     } catch (error) {
       storageStatus = 'unavailable';
-      storageMessage = 'La sauvegarde locale est indisponible ou illisible. Vos changements restent dans cet onglet : exportez-les avant de le fermer.';
+      storageMessage = 'La sauvegarde locale est indisponible ou illisible. Tes changements restent dans cet onglet : exporte-les avant de le fermer.';
       return null;
     }
   }
@@ -92,7 +92,7 @@
       return result;
     } catch (_) {
       toolsStorageStatus = 'unavailable';
-      toolsStorageMessage = 'Les outils restent disponibles dans cet onglet, mais leur sauvegarde locale est indisponible. Exportez votre carnet avant de fermer la page.';
+      toolsStorageMessage = 'Les outils restent disponibles dans cet onglet, mais leur sauvegarde locale est indisponible. Exporte ton carnet avant de fermer la page.';
       return null;
     }
   }
@@ -120,7 +120,7 @@
       toolsStorageStatus = 'available'; toolsStorageMessage = '';
     } catch (_) {
       toolsStorageStatus = 'unavailable';
-      toolsStorageMessage = 'Vos recherches et votre sortie restent dans cet onglet. Exportez votre carnet : le navigateur ne peut pas les sauvegarder.';
+      toolsStorageMessage = 'Tes recherches et ta sortie restent dans cet onglet. Exporte ton carnet : le navigateur ne peut pas les sauvegarder.';
     }
     emitTools(); return toolsSnapshot();
   }
@@ -135,7 +135,7 @@
       storageStatus = 'available'; storageMessage = '';
     } catch (_) {
       storageStatus = 'unavailable';
-      storageMessage = 'Le navigateur ne peut pas enregistrer vos changements. Exportez votre progression avant de fermer cet onglet.';
+      storageMessage = 'Le navigateur ne peut pas enregistrer tes changements. Exporte ta progression avant de fermer cet onglet.';
     }
     emit();
   }
@@ -198,7 +198,7 @@
         if (wroteTools) { if (previousTools === null) window.localStorage.removeItem(TOOLS_KEY); else window.localStorage.setItem(TOOLS_KEY, previousTools); }
       } catch (_) { rolledBack = false; }
       storageStatus = 'unavailable';
-      storageMessage = rolledBack ? 'L’import n’a pas été appliqué : le navigateur ne peut pas enregistrer la sauvegarde. Le carnet actuel est conservé.' : 'L’import a échoué et la restauration du stockage n’a pas pu être garantie. Exportez le carnet actuel avant de fermer la page.';
+      storageMessage = rolledBack ? 'L’import n’a pas été appliqué : le navigateur ne peut pas enregistrer la sauvegarde. Le carnet actuel est conservé.' : 'L’import a échoué et la restauration du stockage n’a pas pu être garantie. Exporte le carnet actuel avant de fermer la page.';
       emit(); throw new Error(storageMessage);
     }
     state = next; toolsState = nextTools;
@@ -212,7 +212,7 @@
   window.addEventListener('storage', event => {
     if (event.key === TOOLS_KEY || event.key === null) {
       try { toolsState = event.newValue ? validateTools(JSON.parse(event.newValue)) : emptyTools(); toolsStorageStatus = 'available'; toolsStorageMessage = ''; emitTools(); }
-      catch (_) { toolsStorageMessage = 'Les outils reçus depuis un autre onglet sont illisibles ; vos outils actuels sont conservés.'; emitTools(); }
+      catch (_) { toolsStorageMessage = 'Les outils reçus depuis un autre onglet sont illisibles ; tes outils actuels sont conservés.'; emitTools(); }
       if (event.key === TOOLS_KEY) return;
     }
     if (event.key !== KEY && event.key !== null) return;

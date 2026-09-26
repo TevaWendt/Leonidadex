@@ -1,3 +1,7 @@
+/* Police Archivo hébergée sur le site (v7.37) : plus de connexion à Google Fonts, affichage immédiat du texte (swap).
+   Fichiers : fonts/archivo-latin.woff2 et fonts/archivo-latin-ext.woff2 (variable, graisses 100 à 900, licence OFL). */
+@font-face{font-family:'Archivo';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/archivo-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+@font-face{font-family:'Archivo';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/archivo-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;}
 :root{
     --paper:#FDFBF7;
     --paper-2:#F4F0E7;
@@ -1433,8 +1437,8 @@ body.map-full-on{overflow:hidden;}
   background:#fff; border:2px solid var(--ink); border-radius:9px;
   padding:15px 17px; box-shadow:5px 5px 0 var(--ink); max-height:66%; overflow-y:auto;
 }
-.map-help-box h4{font-size:.74rem; font-weight:800; text-transform:uppercase; letter-spacing:.07em; color:var(--coral-text,#B93220); margin-bottom:6px;}
-.map-help-box h4 + ul{margin-bottom:12px;}
+.map-help-box h3{font-size:.74rem; font-weight:800; text-transform:uppercase; letter-spacing:.07em; color:var(--coral-text,#B93220); margin-bottom:6px;}
+.map-help-box h3 + ul{margin-bottom:12px;}
 .map-help-box ul{list-style:none;}
 .map-help-box li{font-size:.8rem; color:var(--ink-soft); padding:3px 0; line-height:1.45;}
 .map-help-box b{color:var(--ink); font-weight:700;}
@@ -2424,3 +2428,79 @@ footer a:hover{color:var(--coral-text);transform:translateX(3px);}
   .lk-parallax{transform:none !important;}
 }
 @media print{.lk-progress{display:none;}.js .lk-reveal--clip::after{display:none !important;}.js .lk-words .lk-w,.js .lk-reveal--clip,.js .lk-reveal--clip img,.js .lk-reveal--blur,.js .lk-hero-item,.js .lk-reveal--rows>*{opacity:1 !important;transform:none !important;filter:none !important;animation:none !important;}}
+
+/* ============================================================================================================
+   v7.37 : audit final — corrections transversales (voir outils/RAPPORT-AUDIT-v7.37.md)
+   ============================================================================================================ */
+/* Fiches du monde : le visuel du bandeau gardait son rideau fermé (clip-path) parce que la cascade Motion+
+   remplaçait l'animation loreWipe par lk-rise. Le rideau s'ouvre de nouveau, avec le même décalage. */
+.js .lore-enter .lore-fig.lk-hero-item{animation:loreWipe .8s cubic-bezier(.7,0,.2,1) .15s forwards;opacity:1;transform:none;}
+@media(prefers-reduced-motion:reduce){.js .lore-enter .lore-fig.lk-hero-item{animation:none !important;clip-path:none !important;}}
+/* Fiches du monde : un dernier bloc seul (5e, 7e…) prend toute la largeur au lieu de rester dans la colonne gauche. */
+@media(min-width:901px){.lore-body>:last-child:nth-child(odd){grid-column:1/-1;}}
+/* Fiches : les noms des fiches voisines ne sont plus coupés par des points de suspension (deux lignes au plus). */
+.rel-nom{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;line-height:1.25;overflow-wrap:anywhere;}
+/* Grilles équilibrées des hubs (chiffres clés, fonctions, équipements) : rangées pleines, dernière rangée centrée.
+   Le nombre de colonnes suit le nombre d'éléments (6 → 3 + 3, 4 → 4, 16 → 4 × 4) puis la largeur d'écran. */
+.kpis,.feat-grid,.kit-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:var(--lk-g,14px);margin-top:14px;}
+.kpis{--lk-g:12px;--lk-n:5;margin:16px 0;}
+.feat-grid{--lk-g:14px;--lk-n:3;}
+.kit-grid{--lk-g:10px;--lk-n:4;}
+.kpis>*,.feat-grid>*,.kit-grid>*{flex:0 0 calc((100% - var(--lk-g) * (var(--lk-n) - 1)) / var(--lk-n));min-width:0;box-sizing:border-box;margin:0;}
+.feat-grid>:where(:first-child:nth-last-child(4),:first-child:nth-last-child(4)~*,:first-child:nth-last-child(7),:first-child:nth-last-child(7)~*,:first-child:nth-last-child(8),:first-child:nth-last-child(8)~*){--lk-n:4;}
+.kit-grid>:where(:first-child:nth-last-child(5),:first-child:nth-last-child(5)~*,:first-child:nth-last-child(6),:first-child:nth-last-child(6)~*,:first-child:nth-last-child(9),:first-child:nth-last-child(9)~*){--lk-n:3;}
+@media(max-width:1000px){.kit-grid>*{--lk-n:3;}}
+@media(max-width:940px){.feat-grid>*{--lk-n:2;}}
+@media(max-width:800px){.kpis>*{--lk-n:3;}.kpis>:where(:first-child:nth-last-child(4),:first-child:nth-last-child(4)~*){--lk-n:2;}}
+@media(max-width:700px){.kit-grid>*{--lk-n:2;}}
+@media(max-width:620px){.feat-grid>*{--lk-n:1;}}
+@media(max-width:560px){.kpis>*{--lk-n:2;}}
+@media(max-width:430px){.kit-grid>*{--lk-n:1;}}
+/* Chiffres des bandeaux (hubs, carte) : deux par ligne sur téléphone au lieu de 3 + 1. */
+@media(max-width:600px){.vstats{gap:18px 22px;}.vstat{flex:1 1 calc(50% - 11px);}}
+/* Cibles tactiles : fil d'Ariane, sources, lien du pied de page, poignées de l'arbre de la carte, cases à cocher. */
+.crumbs a{display:inline-block;padding:4px 0;}
+.foot-feature{padding:6px 0;}
+.tr-tog{width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;border-radius:6px;}
+.fl{min-height:28px;}.fl input{width:17px;height:17px;}
+.media-row a,.d-sources li a,.fiche-sources a,.info-sources a,.lore-sources a,.col-sources a{display:inline-block;padding:3px 0;}
+.hs-bar{padding:2px 12px;}.hs-bar input{min-height:40px;}
+/* Le champ de recherche du bandeau d'accueil et de la 404 : hauteur utile sur toute la barre. */
+.searchbar{padding:8px 20px;}.searchbar input{min-height:40px;}
+/* Collectibles, outils de sortie : sans survol (tactile), l'explication de chaque outil reste visible en bas du panneau. */
+@media(hover:none){#sorties .col-tools-what{position:static;transform:none;margin:auto -18px -18px;padding-top:12px;border-radius:0 0 10px 10px;}}
+/* Titre lisible par les lecteurs d'écran seulement (hiérarchie h1 → h2 → h3 des hubs). */
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+/* Cibles tactiles (suite) : liens seuls dans une carte, une légende de capture, une cellule de tableau ou une source. */
+.note-box>a,.d-source p a,.t-figure-bar a,.d-card h3 a,table.spec td a,.acq-box>a{display:inline-block;padding:5px 0;}
+/* Carte, arbre des lieux : les noms longs passent sur deux lignes au lieu d'être coupés par des points de suspension. */
+.tr-n{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;line-height:1.25;overflow-wrap:anywhere;}
+/* Catalogues sur téléphone (deux colonnes) : une dernière carte seule se centre au lieu de rester collée à gauche. */
+@media(min-width:330px) and (max-width:699px){.veh-grid{justify-content:center;}.veh-grid .veh-card{flex-grow:0;}.veh-spacer{display:none;}}
+/* sous 330 px une seule colonne : la carte prend toute la largeur */
+@media(max-width:329px){.veh-spacer{display:none;}}
+/* --- Second passage à 320 / 768 / 1024 / 1440 / 1920 px --- */
+/* Carte, cartes des six régions : 3 + 3 (plus de 4 + 2 au-delà de 1 400 px), 2 + 2 + 2 entre 821 et 1 000 px. */
+@media(min-width:1001px){.reg-grid{grid-template-columns:repeat(3,minmax(0,1fr));}}
+@media(min-width:821px) and (max-width:1000px){.reg-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
+/* Accueil, six cartes d'outils : trois par rangée sur grand écran (plus de 4 + 2 au-delà de 1 400 px). */
+@media(min-width:960px){.lore-grid--center.lore-grid--n6{grid-template-columns:repeat(3,minmax(250px,320px));}}
+/* Armurerie, règles d'inventaire (5 cartes) : 5 sur une rangée, sinon 3 + 2 centrées, puis une colonne. */
+.rg-grid{display:flex;flex-wrap:wrap;justify-content:center;--lk-n:5;}
+.rg-grid>*{flex:0 0 calc((100% - 14px*(var(--lk-n) - 1))/var(--lk-n));min-width:0;}
+@media(max-width:1100px){.rg-grid{--lk-n:3;}}
+@media(max-width:900px){.rg-grid{--lk-n:1;}}
+/* Collectibles, cinq visuels : 5 par rangée, 3 + 2 centrées sous 1 100 px, 2 + 2 + 1 sous 700 px, une colonne sous 430 px. */
+.lk-photo-grid{display:flex;flex-wrap:wrap;justify-content:center;--lk-n:5;}
+.lk-photo-grid>*{flex:0 0 calc((100% - 14px*(var(--lk-n) - 1))/var(--lk-n));min-width:0;}
+@media(max-width:1100px){.lk-photo-grid{--lk-n:3;}}
+@media(max-width:700px){.lk-photo-grid{--lk-n:2;}}
+@media(max-width:430px){.lk-photo-grid{--lk-n:1;}}
+/* Progression, catégories documentées : 5, 6 ou 9 cartes en 3 colonnes (plus de 4 + 4 + 1) ; en 2 colonnes, une carte impaire finale prend toute la largeur. */
+@media(min-width:901px){.progress-cards--four:has(>:nth-child(5):last-child),.progress-cards--four:has(>:nth-child(6):last-child),.progress-cards--four:has(>:nth-child(9):last-child){grid-template-columns:repeat(3,minmax(0,1fr));}}
+@media(min-width:681px) and (max-width:900px){.progress-cards--four>:last-child:nth-child(odd){grid-column:1/-1;}}
+/* Menu « Explorer » : le panneau s'aligne sur le bord droit de l'en-tête (il dépassait de 15 à 24 px à gauche sur les pages où le menu suit la marque). */
+@media(min-width:1081px){.head-in{position:relative;}.nav-more{position:static;}.nav-more-panel{top:100%;right:var(--gutter);}}
+/* Champs de recherche des catalogues et de la carte : le champ occupe toute la hauteur de sa barre (cible tactile de 24 px au moins). */
+.vsearch{padding-top:0;padding-bottom:0;}.vsearch input{padding:11px 0;min-height:24px;}
+.map-search{padding-top:0;padding-bottom:0;}.map-search input{padding:9px 0;min-height:24px;}

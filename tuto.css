@@ -24,7 +24,9 @@
 .t-aside li{font-size:.95rem;line-height:1.35}
 .t-aside a{color:var(--ink);text-decoration:none;display:block;padding:5px 8px;border-radius:8px;border:2px solid transparent}
 .t-aside a:hover{background:#FFF3DC}
+.t-aside li a:not([class]){color:var(--ink);background:none;text-decoration:none}
 .t-aside a.is-current{background:var(--ink);color:#fff;border-color:var(--ink)}
+.t-aside li a.is-current{color:#fff}
 .t-content{display:grid;gap:28px;min-width:0}
 .t-content>*{min-width:0;max-width:100%}
 .t-chapter{min-width:0;overflow-wrap:anywhere}

@@ -2,12 +2,12 @@
 (function () {
   'use strict';
   const $ = id => document.getElementById(id);
-  const normalize = value => String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  const normalize = value => String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[’‘]/g, "'").replace(/[\u00a0\u202f]/g, ' ');
   const rules = [
     { tab: 'plan', label: 'Mon business plan', re: /business plan|mon plan|plan complet|etape par etape|quoi faire en premier|plan d'action|echeance|d'ici (le|la|\d)|en \d+ jours|avant le \d|prochaine partie|programme de la semaine|ou en suis-je|mission par mission|partie par partie|plan de secours|plan b|debloquer|rang \d|niveau \d|\bxp\b/ },
-    { tab: 'compare', label: 'Quel achat choisir ?', re: /choisir|comparer|lequel|laquelle|le mieux|meilleur achat|rapport qualite|le plus rentable|le moins cher|\bou\b.*\bou\b/ },
-    { tab: 'order', label: 'Quoi acheter d’abord ?', re: /\bordre\b|priorit|d'abord|en premier|sequence/ },
-    { tab: 'roi', label: 'Ça vaut le coup ?', re: /rentab|\broi\b|amorti|retour sur|investi|seuil|vaut le coup|a partir de quand|rembours|vaut-il|ca vaut/ },
+    { tab: 'compare', label: 'Quel achat choisir ?', re: /choisir|comparer|lequel|laquelle|le mieux|meilleur achat|rapport qualite|le plus rentable|le moins cher|\bou\b.*\bou\b/ },
+    { tab: 'order', label: 'Quoi acheter d’abord ?', re: /\bordre\b|priorit|d'abord|en premier|sequence/ },
+    { tab: 'roi', label: 'Ça vaut le coup ?', re: /rentab|\broi\b|amorti|retour sur|investi|seuil|vaut le coup|a partir de quand|rembours|vaut-il|ca vaut/ },
     { tab: 'session', label: 'Mon temps de jeu', re: /session|j'ai du temps|minutes?\b|temps disponible/ },
     { tab: 'budget', label: 'Mon budget', re: /repart|reserve|enveloppe|poste de depense/ },
     { tab: 'purchase', label: 'Mes achats', re: /achet|achat|prix|cout|permettre|vehicule|voiture|moto|bateau|propriete|maison|arme|budget/ },

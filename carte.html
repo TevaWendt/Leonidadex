@@ -3,19 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Carte interactive de Leonida — Leonidakit</title>
-<meta name="description" content="Carte interactive de Leonida pour GTA VI : les six régions confirmées, filtres, suivi de progression et calcul de distance avec temps de trajet.">
-<meta property="og:title" content="Carte interactive de Leonida — Leonidakit">
-<meta property="og:description" content="Carte interactive de l'État de Leonida pour GTA VI : collectibles, planques, magasins et missions, filtrables.">
+<title>Carte interactive de Leonida (GTA VI) | Leonidakit</title>
+<meta name="description" content="Carte interactive de Leonida pour GTA VI : les six régions confirmées, filtres, suivi de progression et calcul de distance avec temps de trajet.">
+<meta name="robots" content="max-image-preview:large">
+<meta property="og:title" content="Carte interactive de Leonida (GTA VI) | Leonidakit">
+<meta property="og:description" content="Carte interactive de l’État de Leonida pour GTA VI : collectibles, planques, magasins et missions, filtrables.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="fr_FR">
 <meta name="theme-color" content="#FDFBF7">
 <meta name="color-scheme" content="light">
 <link rel="canonical" href="https://www.leonidakit.com/carte.html">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%231A1A1E'/%3E%3Ccircle cx='32' cy='28' r='16' fill='%23F5A524'/%3E%3Crect x='10' y='30' width='44' height='3' fill='%231A1A1E'/%3E%3Crect x='10' y='37' width='44' height='4' fill='%231A1A1E'/%3E%3Crect x='10' y='45' width='44' height='5' fill='%231A1A1E'/%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;900&display=swap" rel="stylesheet">
 <script type="application/ld+json">
 {
   "@context":"https://schema.org",
@@ -57,7 +55,7 @@
     },
     {
       "@type": "Question",
-      "name": "Utilisez-vous la carte qui a fuité en août 2026 ?",
+      "name": "Le site utilise-t-il la carte qui a fuité en août 2026 ?",
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "Non, et c'est un choix assumé. Ce matériel provient d'une intrusion informatique et fait l'objet de procédures judiciaires de la part de Take-Two. Il provient par ailleurs d'une version de développement de 2022-2023, donc potentiellement obsolète."
@@ -84,13 +82,14 @@
       "name": "Comment fonctionne le calcul de distance ?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Vous choisissez deux points sur la carte, l'outil affiche la distance puis le temps de trajet selon sept modes de déplacement. Les vitesses sont actuellement calées sur GTA V et seront recalibrées après la sortie."
+        "text": "Tu choisis deux points sur la carte, l'outil affiche la distance puis le temps de trajet selon sept modes de déplacement. Les vitesses sont actuellement calées sur GTA V et seront recalibrées après la sortie."
       }
     }
   ]
 }
 </script>
-<link rel="stylesheet" href="style.css?v=58e54b597e3a">
+<link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="style.css?v=79e7cf2f342c">
 <meta property="og:image" content="https://www.leonidakit.com/img/social-card.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta property="og:url" content="https://www.leonidakit.com/carte.html">
@@ -235,13 +234,13 @@
               <input type="text" class="dr-hex" id="dr-hex" value="#E8452C" maxlength="7" aria-label="Couleur personnalisée">
             </div>
             <label class="dr-range"><span>Épaisseur <b id="dr-size-v">6</b></span><input type="range" id="dr-size" min="2" max="24" value="6"></label>
-            <label class="dr-range"><span>Opacité <b id="dr-op-v">85 %</b></span><input type="range" id="dr-op" min="10" max="100" value="85"></label>
+            <label class="dr-range"><span>Opacité <b id="dr-op-v">85 %</b></span><input type="range" id="dr-op" min="10" max="100" value="85"></label>
             <div class="dr-acts">
               <button type="button" id="dr-undo" disabled title="Annuler (Ctrl+Z)">Annuler</button>
               <button type="button" id="dr-redo" disabled title="Refaire (Ctrl+Y)">Refaire</button>
               <button type="button" id="dr-clear" class="dr-clear">Tout effacer</button>
             </div>
-            <p class="ed-note">Tes tracés sont enregistrés sur ton appareil et inclus dans l'export.</p>
+            <p class="ed-note">Tes tracés sont enregistrés sur ton appareil et inclus dans l’export.</p>
           </div>
         </div>
       </details>
@@ -268,7 +267,7 @@
             <button type="button" id="map-import">Importer</button>
             <input type="file" id="map-import-file" accept="application/json" hidden>
           </div>
-          <p class="ed-note">L'export enregistre tes marqueurs et ta progression dans un fichier, à conserver ou à transférer sur un autre appareil.</p>
+          <p class="ed-note">L’export enregistre tes marqueurs et ta progression dans un fichier, à conserver ou à transférer sur un autre appareil.</p>
         </div>
       </details>
 
@@ -276,7 +275,7 @@
         <summary>Fiabilité</summary>
         <div class="ms-in">
 
-          <button type="button" class="map-only" id="map-only-officiel">Uniquement l'officiel</button>
+          <button type="button" class="map-only" id="map-only-officiel">Uniquement l’officiel</button>
           <label class="fl fl-st"><input type="checkbox" class="map-statut" data-st="officiel" checked><span class="st-chip st-chip--officiel">Officiel</span><em>Nommé par Rockstar</em></label>
           <label class="fl fl-st"><input type="checkbox" class="map-statut" data-st="vu" checked><span class="st-chip st-chip--vu">Aperçu</span><em>Vu dans un trailer</em></label>
           <label class="fl fl-st"><input type="checkbox" class="map-statut" data-st="spec" checked><span class="st-chip st-chip--spec">Supposé</span><em>Reconstruction</em></label>
@@ -331,18 +330,18 @@
 
             <div class="map-credits">
         <p class="map-side-h">Crédits</p>
-        <p>Fond tracé et données assemblées pour Leonidakit à partir des supports officiels de Rockstar : trailers, captures, site et Extended Look.</p>
+        <p>Fond tracé et données assemblées pour Leonidakit à partir des supports officiels de Rockstar : trailers, captures, site et Extended Look.</p>
         <p>Aucun élément issu des fuites. Corrections bienvenues via la page <a href="contact.html">Contact</a>.</p>
-        <p>Tracé de la côte, bâtiments et photos : <a href="https://map.gtadb.org" target="_blank" rel="noopener">GTA VI Landmarks Data</a>, gtadb.org et ses contributeurs, <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>, modifiés pour Leonidakit.</p>
+        <p>Tracé de la côte, bâtiments et photos : <a href="https://map.gtadb.org" target="_blank" rel="noopener">GTA VI Landmarks Data</a>, gtadb.org et ses contributeurs, <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>, modifiés pour Leonidakit.</p>
       </div>
-      <p class="map-note">Fond de carte reconstitué d'après les supports officiels. Il sera affiné après la sortie du jeu, à partir de sources légitimes.</p>
+      <p class="map-note">Fond de carte reconstitué d’après les supports officiels. Il sera affiné après la sortie du jeu, à partir de sources légitimes.</p>
 
     </aside>
 
     <div class="map-stage" id="map-stage">
       <div class="map-world" id="map-world">
 
-        <svg class="map-bg" viewBox="0 0 5200 6000" xmlns="http://www.w3.org/2000/svg" aria-label="Carte de Leonida, fond tracé d'après les supports officiels">
+        <svg class="map-bg" viewBox="0 0 5200 6000" xmlns="http://www.w3.org/2000/svg" aria-label="Carte de Leonida, fond tracé d’après les supports officiels">
           <defs>
             <linearGradient id="water" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stop-color="#5FA8D3"/>
@@ -469,13 +468,13 @@
             <text x="0" y="626" font-family="Archivo, sans-serif" font-size="34" font-weight="800" fill="#E8452C">SPÉCULATIF</text>
             <g transform="translate(0,668)"><line x1="0" y1="0" x2="120" y2="0" stroke="#E8452C" stroke-width="10" stroke-dasharray="24 18" stroke-linecap="round"/><text x="150" y="12" font-family="Archivo, sans-serif" font-size="38" fill="#1A1A1E">Tracé supposé</text></g>
             <g transform="translate(0,736)"><line x1="0" y1="0" x2="120" y2="0" stroke="#3E3B47" stroke-width="7" stroke-dasharray="24 18" opacity=".6"/><text x="150" y="12" font-family="Archivo, sans-serif" font-size="38" fill="#1A1A1E">Limite de comté</text></g>
-            <text x="0" y="820" font-family="Archivo, sans-serif" font-size="30" fill="#5C5A63">Fond dessiné pour Leonidakit, d'après la géographie</text>
+            <text x="0" y="820" font-family="Archivo, sans-serif" font-size="30" fill="#5C5A63">Fond dessiné pour Leonidakit, d’après la géographie</text>
             <text x="0" y="858" font-family="Archivo, sans-serif" font-size="30" fill="#5C5A63">floridienne. Aucun tracé officiel publié à ce jour.</text>
           </g>
         
           <g opacity=".55">
             <text x="5080" y="5920" text-anchor="end" font-family="Archivo, sans-serif" font-size="48" font-weight="900" fill="#FDFBF7">FOND PROVISOIRE · v1.0</text>
-            <text x="5080" y="5970" text-anchor="end" font-family="Archivo, sans-serif" font-size="34" fill="#FDFBF7">Tracé d'après les supports officiels · affiné après le 19 novembre 2026</text>
+            <text x="5080" y="5970" text-anchor="end" font-family="Archivo, sans-serif" font-size="34" fill="#FDFBF7">Tracé d’après les supports officiels · affiné après le 19 novembre 2026</text>
           </g>
         </svg>
 
@@ -489,7 +488,7 @@
 
       <div class="map-zoom">
         <button type="button" id="map-zin"  aria-label="Zoomer">+</button>
-        <span id="map-zlvl">28 %</span>
+        <span id="map-zlvl">28 %</span>
         <button type="button" id="map-zout" aria-label="Dézoomer">&minus;</button>
         <button type="button" id="map-reset" aria-label="Recentrer la carte" title="Recentrer">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -503,7 +502,7 @@
         </button>
       </div>
 
-      <div class="map-mini" id="map-mini" title="Vue d'ensemble, clique pour te déplacer">
+      <div class="map-mini" id="map-mini" title="Vue d’ensemble, clique pour te déplacer">
         <svg viewBox="0 0 5200 6000" preserveAspectRatio="xMidYMid meet" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
           <rect width="5200" height="6000" fill="#5FA8D3"/>
           <path d="M2426 5563 L2404 5537 L2287 5522 L2172 5565 L2056 5537 L2044 5563 L2007 5574 L1939 5570 L1931 5596 L1981 5630 L2098 5598 L2172 5639 L2243 5643 L2278 5631 L2281 5589 L2309 5585 L2306 5633 L2383 5626 L2394 5609 L2343 5609 L2328 5593 L2385 5581 L2417 5602Z M1200 5163 L1180 5165 L1113 5296 L1091 5298 L1024 5400 L1033 5433 L1131 5437 L1200 5330 L1198 5220 L1174 5224Z M1533 5078 L1446 5050 L1396 5087 L1389 5124 L1339 5157 L1291 5254 L1272 5257 L1289 5280 L1239 5404 L1246 5435 L1228 5435 L1235 5463 L1202 5457 L1191 5504 L1163 5520 L1189 5556 L1233 5565 L1248 5548 L1267 5591 L1324 5598 L1307 5544 L1263 5537 L1256 5520 L1344 5531 L1317 5548 L1331 5587 L1348 5574 L1372 5587 L1444 5570 L1444 5530 L1457 5561 L1581 5537 L1667 5480 L1724 5483 L1733 5452 L1702 5444 L1670 5409 L1624 5435 L1594 5424 L1617 5469 L1580 5480 L1583 5370 L1617 5346 L1624 5361 L1591 5409 L1628 5406 L1657 5361 L1641 5313 L1659 5291 L1633 5287 L1644 5261Z M3128 4891 L3015 4856 L2996 4907 L2974 4915 L2974 4937 L3004 4941 L2978 4944 L2994 4969 L2965 4957 L2957 5002 L2898 5054 L2887 5096 L2870 5081 L2869 5124 L2841 5131 L2806 5217 L2670 5339 L2646 5315 L2648 5365 L2570 5415 L2572 5437 L2665 5431 L2907 5257 L2956 5156 L3007 5119 L3061 5043 L3085 5050 L3107 5019Z M2678 4819 L2650 4815 L2661 4831 L2606 4835 L2594 4907 L2619 4939 L2676 4935 L2711 4867Z M2435 4817 L2439 4869 L2481 4913 L2581 4906 L2587 4856 L2554 4857 L2559 4831 L2565 4846 L2593 4846 L2593 4826 L2557 4796 L2507 4781 L2493 4807Z M2639 4570 L2550 4648 L2574 4694 L2615 4674Z M3433 4467 L3407 4481 L3352 4594 L3265 4650 L3269 4719 L3215 4763 L3144 4767 L3146 4869 L3194 4880 L3233 4846 L3211 4807 L3241 4820 L3363 4633 L3400 4602 L3430 4530Z M2185 4283 L2185 4311 L2211 4339 L2211 4317 L2256 4302 L2243 4337 L2287 4337 L2289 4309 L2322 4309 L2331 4261 L2278 4246 L2244 4257 L2215 4241Z M2585 4200 L2470 4211 L2430 4231 L2424 4270 L2456 4257 L2457 4302 L2430 4328 L2400 4320 L2404 4337 L2446 4354 L2439 4372 L2457 4406 L2498 4357 L2493 4324 L2463 4341 L2465 4315 L2491 4281 L2493 4304 L2517 4311 L2533 4257 L2583 4248Z M3526 4130 L3493 4130 L3439 4183 L3357 4174 L3346 4200 L3313 4213 L3309 4246 L3337 4291 L3335 4380 L3261 4528 L3359 4426 L3359 4267 L3333 4254 L3389 4246 L3372 4272 L3396 4293 L3415 4243 L3526 4146Z M2006 4126 L1989 4157 L1969 4161 L1978 4194 L2000 4198 L2020 4235 L1991 4272 L2009 4339 L2037 4337 L2006 4289 L2024 4272 L2098 4372 L2115 4333 L2148 4337 L2172 4319 L2174 4291 L2124 4267 L2081 4217 L2091 4193Z M2430 4117 L2320 4133 L2315 4169 L2331 4159 L2328 4194 L2354 4207 L2365 4263 L2407 4246 L2443 4189Z M2061 4128 L2156 4241 L2296 4209 L2302 4174 L2263 4148 L2207 4143 L2217 4176 L2198 4189 L2144 4122 L2083 4107Z M2741 4019 L2698 4037 L2696 4065 L2654 4120 L2637 4111 L2648 4130 L2631 4180 L2602 4207 L2648 4259 L2628 4309 L2652 4387 L2724 4404 L2713 4393 L2726 4383 L2748 4402 L2739 4411 L2757 4407 L2754 4424 L2793 4413 L2783 4463 L2694 4402 L2676 4437 L2689 4463 L2731 4483 L2817 4478 L2785 4519 L2756 4509 L2739 4531 L2689 4537 L2674 4526 L2691 4574 L2681 4613 L2715 4656 L2728 4593 L2728 4680 L2683 4735 L2663 4719 L2639 4737 L2650 4789 L2722 4830 L2746 4748 L2789 4704 L2822 4709 L2837 4604 L2865 4598 L2874 4537 L2846 4535 L2867 4531 L2883 4448 L2900 4487 L2907 4624 L2850 4670 L2828 4728 L2750 4811 L2719 4919 L2748 4885 L2754 4846 L2780 4839 L2789 4791 L2843 4774 L2848 4748 L2869 4743 L2859 4720 L2883 4694 L2906 4704 L2907 4672 L2933 4669 L2930 4652 L2974 4611 L2946 4606 L2939 4635 L2915 4613 L2915 4591 L2944 4583 L2935 4541 L2948 4531 L2922 4457 L2926 4400 L2969 4354 L3015 4348 L2981 4333 L3015 4331 L3026 4198 L2981 4150 L2933 4137Z M1972 3859 L1928 3965 L1980 4015 L1993 4052 L2033 4057 L2041 4080 L2156 4087 L2176 4109 L2198 4087 L2206 4106 L2228 4102 L2248 4037 L2211 3926 L2194 3911 L2165 3928 L2109 3926 L2130 3896 L2130 3867 L2113 3861 L2098 3876 L2115 3883 L2072 3902 L2052 3894 L2067 3865 L2019 3856 L1994 3876Z M3759 3669 L3709 3667 L3654 3707 L3535 3748 L3528 3811 L3620 3907 L3646 3963 L3685 3935 L3717 3948 L3698 3985 L3646 3987 L3583 4050 L3567 4093 L3593 4131 L3609 4131 L3715 4009 L3741 3959 L3763 3811 L3746 3813 L3739 3789 L3781 3785 L3793 3759 L3793 3689Z M2654 3606 L2652 3624 L2731 3720 L2730 3759 L2676 3861 L2685 3889 L2848 3852 L2841 3839 L2863 3848 L2972 3820 L2965 3789 L2885 3733 L2750 3672Z M4119 3591 L4098 3606 L4109 3635 L4070 3663 L4009 3541 L3857 3541 L3826 3557 L3809 3628 L3826 3689 L3861 3706 L3983 3676 L4011 3696 L4017 3733 L3994 3759 L3880 3811 L3819 3811 L3857 3826 L3802 3859 L3824 3906 L3941 3909 L4033 3835 L4096 3756 L4109 3756 L4100 3770 L4120 3765 L4143 3713 L4122 3702Z M4172 3507 L4159 3557 L4191 3607 L4215 3598 L4222 3569 L4272 3576 L4265 3622 L4213 3631 L4254 3691 L4263 3746 L4293 3735 L4372 3756 L4409 3657 L4452 3604 L4415 3550 L4315 3485 L4302 3517 L4291 3485 L4233 3494 L4230 3511Z M3631 3476 L3665 3543 L3652 3606 L3759 3541 L3704 3535 L3687 3491Z M1522 3437 L1528 3485 L1565 3476 L1546 3491 L1565 3561 L1552 3539 L1535 3548 L1548 3517 L1530 3500 L1474 3507 L1463 3526 L1539 3598 L1554 3683 L1530 3785 L1613 3852 L1643 3919 L1596 3933 L1598 3954 L1654 3996 L1635 4026 L1583 3994 L1578 4030 L1633 4069 L1694 4072 L1843 4146 L1852 4130 L1800 4087 L1780 4089 L1776 4067 L1709 4006 L1707 3974 L1737 3917 L1689 3831 L1656 3833 L1674 3796 L1600 3648 L1635 3611 L1622 3520 L1587 3520 L1583 3491 L1602 3515 L1615 3500 L1583 3457 L1554 3459 L1557 3443Z M1276 3411 L1313 3446 L1356 3446 L1469 3494 L1507 3487 L1485 3452 L1354 3422 L1341 3383 L1357 3359 L1341 3344Z M4235 3420 L4215 3378 L4059 3252 L3998 3252 L3991 3315 L3972 3328 L3769 3276 L3731 3374 L3824 3437 L3981 3480 L3994 3463Z M4059 2978 L4026 2956 L3978 2970 L3907 3022 L3907 3072 L3937 3096 L3991 3083 L4063 3022Z M1272 2956 L1270 3002 L1331 3050 L1272 3035 L1256 3061 L1298 3093 L1309 3135 L1380 3226 L1446 3278 L1483 3283 L1498 3317 L1541 3317 L1576 3352 L1620 3333 L1604 3350 L1602 3396 L1654 3528 L1693 3556 L1687 3576 L1739 3656 L1787 3687 L1772 3706 L1807 3694 L1828 3707 L1807 3739 L1820 3767 L1826 3743 L1876 3774 L1883 3796 L1939 3796 L1985 3837 L2041 3809 L2085 3815 L2150 3854 L2226 3870 L2233 3948 L2261 3978 L2276 4057 L2322 4057 L2337 4093 L2383 4109 L2457 4091 L2550 4126 L2535 4150 L2554 4165 L2563 4117 L2576 4144 L2596 4109 L2633 4109 L2644 4048 L2685 4024 L2689 3972 L2898 4106 L2981 4122 L2993 4143 L3019 4115 L3033 4126 L3017 4139 L3043 4148 L3072 4119 L3044 4120 L3041 4100 L3078 4091 L3096 4157 L3069 4170 L3019 4157 L3048 4215 L3039 4324 L3126 4328 L3109 4317 L3113 4287 L3135 4309 L3131 4330 L3174 4307 L3124 4385 L3128 4431 L3161 4480 L3252 4485 L3256 4369 L3230 4356 L3263 4339 L3270 4404 L3294 4406 L3298 4281 L3272 4246 L3235 4244 L3211 4287 L3198 4252 L3265 4187 L3306 4200 L3335 4163 L3259 4091 L3259 4046 L3200 4015 L3017 4076 L2976 4115 L3011 4065 L3056 4044 L2998 3828 L2656 3911 L2644 3935 L2659 3961 L2624 3948 L2611 3963 L2604 3948 L2631 3893 L2654 3880 L2719 3761 L2719 3711 L2693 3683 L2665 3689 L2672 3722 L2650 3754 L2637 3748 L2633 3711 L2667 3670 L2639 3622 L2646 3593 L2507 3485 L2483 3441 L2456 3441 L2343 3378 L2126 3224 L2069 3294 L2156 3374 L2146 3389 L2083 3383 L1996 3339 L1898 3352 L1872 3370 L1802 3326 L1770 3324 L1800 3254 L2019 3250 L2063 3281 L2104 3209 L2044 3176 L1980 3183 L1874 3133 L1778 3137 L1678 3059 L1624 2987 L1594 2978 L1543 2989 L1463 2970 L1435 2989 L1430 2969 L1387 2983 L1387 3013 L1344 3046 L1341 3022 L1374 2993 L1363 2980 L1330 2996 L1309 2985 L1331 2950 L1326 2924Z M830 2843 L811 2874 L802 3043 L835 3109 L876 3300 L943 3407 L1057 3420 L1135 3361 L1137 3320 L1104 3248 L1080 3324 L1048 3319 L1017 3283 L1024 3311 L991 3350 L963 3337 L935 3289 L911 3283 L926 3083 L898 3067 L885 3111 L856 3100 L844 3030 L870 3031 L854 3009 L867 2987 L826 2976 L826 2917 L867 2841Z M3848 2761 L3726 2785 L3733 2831 L3852 2819Z M4065 2731 L4041 2709 L3976 2722 L3950 2765 L3970 2785 L4056 2763Z M3883 2694 L3865 2709 L3893 2841 L3926 2856 L3948 2831 L3919 2709Z M4044 2441 L3930 2544 L4065 2569 L4070 2593 L4028 2587 L4109 2646 L4124 2620 L4107 2602 L4167 2602 L4159 2489 L4126 2457Z M4100 2387 L4085 2426 L4141 2435 L4180 2467 L4200 2565 L4280 2541 L4265 2498Z M615 2246 L570 2313 L617 2391 L641 2498 L683 2509 L670 2431 L652 2443 L663 2354 L637 2319 L615 2326 L630 2287 L619 2267 L633 2257Z M4063 2339 L4022 2298 L3985 2294 L3991 2315 L3959 2322 L3970 2374 L3963 2361 L3931 2367 L3931 2350 L3876 2370 L3881 2352 L3861 2343 L3878 2311 L3891 2322 L3911 2300 L3872 2341 L3943 2346 L3974 2300 L3963 2267 L3985 2269 L3904 2235 L3802 2315 L3772 2369 L3772 2417 L3789 2443 L3846 2470 L3939 2469 L3981 2456 L4022 2415Z M4213 2222 L4119 2300 L4141 2328 L4124 2357 L4146 2389 L4219 2430 L4311 2537 L4309 2617 L4335 2665 L4315 2652 L4287 2678 L4244 2681 L4300 2652 L4298 2583 L4274 2561 L4196 2578 L4189 2694 L4239 2689 L4159 2726 L4143 2815 L4096 2843 L4096 2900 L4143 2956 L4120 2980 L4133 3078 L4196 3141 L4194 3228 L4220 3274 L4241 3278 L4224 3291 L4231 3315 L4320 3361 L4337 3341 L4352 3346 L4331 3372 L4452 3476 L4435 3128 L4467 2844 L4433 2481 L4356 2435 L4230 2270Z M3906 2180 L3913 2204 L4007 2230 L4048 2276 L4067 2274 L4069 2250 L4011 2193Z M4059 2115 L4031 2181 L4093 2246 L4120 2220 L4115 2193 L4091 2180 L4120 2135Z M693 2026 L663 2054 L652 2224 L711 2163 L717 2093Z M998 1733 L996 1772 L1020 1813 L1098 1850 L1159 1831 L1143 1748 L1057 1704Z M3757 1491 L3743 1526 L3769 1570 L3783 1656 L3798 1659 L3789 1687 L3822 1817 L3869 1891 L3874 1937 L3913 1954 L3970 2041 L3985 2115 L4059 2061 L3985 1956 L3870 1670 L3841 1537 L3854 1493Z M1535 1431 L1424 1389 L1263 1396 L1159 1444 L1050 1554 L969 1544 L933 1557 L939 1574 L893 1602 L887 1670 L907 1676 L970 1626 L1076 1613 L1180 1683 L1280 1676 L1306 1622 L1341 1630 L1409 1576 L1431 1596 L1413 1620 L1446 1604 L1469 1567 L1459 1533 L1487 1528 L1491 1474Z M1263 1296 L1235 1289 L1072 1326 L1217 1346Z M3928 1039 L3930 1083 L3894 1156 L3906 1176 L3883 1189 L3891 1211 L3872 1211 L3854 1339 L3809 1350 L3802 1367 L3826 1439 L3863 1424 L3907 1230 L3950 1137 L3978 1124Z M1554 904 L1528 941 L1517 1065 L1476 1137 L1491 1209 L1524 1254 L1511 1248 L1513 1270 L1496 1274 L1485 1254 L1452 1248 L1483 1217 L1457 1167 L1335 1274 L1350 1304 L1389 1311 L1443 1291 L1439 1311 L1494 1302 L1519 1331 L1520 1313 L1578 1313 L1567 1300 L1602 1289 L1598 1269 L1619 1272 L1619 1228 L1663 1163 L1600 1170 L1600 1154 L1578 1148 L1567 1037 L1580 1006 L1548 948Z M1869 520 L1844 517 L1720 585 L1722 622 L1785 600 L1820 628 L1796 670 L1769 670 L1794 674 L1765 694 L1756 772 L1783 769 L1785 743 L1833 702 L1870 691 L1891 709 L1913 620 L1878 576Z M1924 526 L1919 559 L1950 600 L1954 691 L2056 694 L2094 719 L2104 654 L2069 641 L2067 611 L2041 613 L2017 572 L2033 519Z M3074 409 L3033 419 L2957 500 L3033 524 L3033 444Z M2378 385 L2317 428 L2331 448 L2324 491 L2276 481 L2291 520 L2274 552 L2243 554 L2270 574 L2276 609 L2250 681 L2291 669 L2248 707 L2222 702 L2220 720 L2283 767 L2304 750 L2280 778 L2254 746 L2189 743 L2144 717 L2139 757 L2157 769 L2133 763 L2130 809 L2111 796 L2083 826 L2000 817 L1961 869 L1906 881 L1783 1020 L1787 1072 L1819 1080 L1778 1093 L1750 1143 L1752 1285 L1715 1319 L1694 1317 L1717 1357 L1643 1420 L1657 1435 L1630 1480 L1656 1489 L1654 1511 L1652 1493 L1635 1496 L1631 1526 L1700 1574 L1872 1565 L1843 1578 L1867 1643 L1920 1630 L1970 1670 L2124 1687 L2120 1656 L2154 1633 L2202 1702 L2252 1689 L2270 1644 L2350 1587 L2419 1506 L2413 1537 L2306 1626 L2243 1709 L2185 1711 L2157 1674 L2141 1674 L2130 1700 L1980 1687 L1983 1733 L2017 1789 L2006 1865 L2081 1894 L2109 1920 L2100 1928 L1996 1883 L1987 1848 L2002 1791 L1976 1754 L1956 1772 L1965 1698 L1928 1652 L1865 1656 L1819 1591 L1780 1607 L1743 1591 L1670 1596 L1652 1611 L1598 1735 L1557 1765 L1559 1791 L1535 1785 L1439 1898 L1454 1919 L1431 1913 L1374 1969 L1202 2020 L1183 2061 L1198 2080 L1167 2115 L1187 2172 L1248 2254 L1298 2239 L1381 2148 L1365 2137 L1335 2156 L1335 2119 L1363 2102 L1396 2130 L1400 2109 L1378 2093 L1406 2063 L1441 2061 L1424 2026 L1457 2007 L1465 2033 L1443 2043 L1456 2061 L1493 2020 L1550 2022 L1557 2063 L1498 2076 L1496 2094 L1519 2083 L1563 2107 L1567 2131 L1548 2183 L1502 2206 L1402 2343 L1317 2400 L1294 2446 L1165 2556 L1220 2559 L1222 2543 L1270 2561 L1263 2578 L1293 2580 L1294 2631 L1357 2720 L1370 2856 L1485 2917 L1652 2954 L1698 3015 L1759 3046 L1785 3117 L1831 3117 L1887 3080 L1926 3094 L1933 3115 L1894 3109 L1948 3139 L1987 3124 L2063 3135 L2119 3085 L2143 3087 L2065 3169 L2344 3367 L2506 3431 L2604 3546 L2807 3683 L2900 3691 L2994 3756 L3004 3800 L3111 3781 L3148 3750 L3146 3700 L3174 3733 L3120 3785 L3011 3811 L3076 4044 L3187 4002 L3254 4026 L3252 3994 L3311 3943 L3261 4000 L3270 4037 L3293 4044 L3304 4004 L3380 4093 L3415 4106 L3415 4078 L3322 3946 L3387 3911 L3402 3928 L3430 3917 L3415 3876 L3456 3867 L3439 3793 L3454 3746 L3530 3659 L3530 3552 L3598 3448 L3531 3415 L3413 3441 L3381 3426 L3369 3393 L3378 3383 L3404 3417 L3457 3422 L3504 3394 L3585 3402 L3648 3374 L3659 3306 L3696 3235 L3681 3139 L3652 3139 L3648 3163 L3641 3091 L3691 3067 L3680 3017 L3744 3026 L3787 3137 L3889 3137 L3876 3044 L3844 3004 L3778 2985 L3733 3009 L3654 2998 L3680 2991 L3663 2963 L3683 2970 L3667 2961 L3681 2911 L3650 2913 L3628 2719 L3652 2691 L3644 2663 L3663 2652 L3678 2589 L3726 2569 L3746 2441 L3726 2439 L3743 2428 L3735 2402 L3609 2417 L3635 2396 L3696 2389 L3757 2320 L3802 2213 L3776 2165 L3604 2007 L3448 1789 L3483 1807 L3665 2052 L3726 2102 L3769 2100 L3757 2128 L3776 2157 L3856 2156 L3826 2137 L3831 2089 L3883 2076 L3885 2020 L3844 1998 L3815 1874 L3741 1687 L3735 1578 L3715 1528 L3722 1433 L3698 1330 L3728 1261 L3726 1219 L3683 1183 L3641 1181 L3615 1161 L3580 1176 L3585 1115 L3565 1054 L3537 1048 L3472 970 L3385 957 L3446 952 L3481 917 L3481 869 L3393 683 L3361 681 L3348 663 L3324 674 L3185 617 L3150 631 L3109 619 L3107 648 L3076 641 L3048 678 L3006 667 L2985 685 L2943 685 L2907 728 L2939 676 L3033 650 L3059 659 L3107 606 L3143 613 L3113 552 L3030 570 L2987 541 L2970 548 L2963 522 L2943 530 L2930 504 L2859 539 L2828 515 L2787 511 L2759 541 L2711 552 L2696 493 L2661 494 L2678 472 L2711 472 L2706 437 L2670 435 L2619 400 L2606 443 L2598 411 L2543 393 L2517 415 L2522 389 L2470 365 L2444 404 L2431 385Z M3137 309 L3107 413 L3052 457 L3067 500 L3133 520 L3154 565 L3274 565 L3300 535 L3302 494 L3235 374Z M3041 109 L2878 156 L2780 144 L2748 259 L2831 259 L2828 315 L2806 328 L2811 372 L2926 443 L3011 404 L3011 333 L2920 311 L2893 285 L2894 250 L2928 224 L2937 181 L3043 146 L3096 196 L3096 231 L3156 211 L3152 176Z M2339 80 L2280 70 L2107 157 L1946 372 L1831 435 L1839 456 L1898 485 L1989 476 L1926 435 L2028 302 L2061 287 L2093 313 L2093 235 L2122 213 L2126 178 L2276 91Z" fill="#95CB84" fill-rule="evenodd"/>
@@ -515,23 +514,24 @@
 
       <button type="button" class="map-help" id="map-help" aria-expanded="false" aria-label="Aide et raccourcis">?</button>
       <div class="map-help-box" id="map-help-box" hidden>
-        <h4>Se déplacer</h4>
+        <h2 class="sr-only">Aide de la carte</h2>
+        <h3>Se déplacer</h3>
         <ul>
           <li><b>Glisser</b> pour déplacer la carte</li>
           <li><b>Molette</b> ou <b>pincement</b> pour zoomer</li>
           <li><b>Double-clic</b> pour approcher</li>
           <li><b>+</b> et <b>&minus;</b> au clavier</li>
-          <li>Clique la <b>vue d'ensemble</b> pour sauter ailleurs</li>
+          <li>Clique la <b>vue d’ensemble</b> pour sauter ailleurs</li>
         </ul>
-        <h4>Marqueurs</h4>
+        <h3>Marqueurs</h3>
         <ul>
-          <li>Un marqueur avec un <b>chiffre</b> contient d'autres lieux</li>
+          <li>Un marqueur avec un <b>chiffre</b> contient d’autres lieux</li>
           <li>Les lieux détaillés apparaissent <b>en zoomant</b></li>
           <li><b>Échap</b> ferme le panneau</li>
         </ul>
-        <h4>Outils</h4>
+        <h3>Outils</h3>
         <ul>
-          <li><b>Mesurer</b> accepte jusqu'à 50 étapes</li>
+          <li><b>Mesurer</b> accepte jusqu’à 50 étapes</li>
           <li><b>?</b> ouvre cette aide</li>
         </ul>
       </div>
@@ -562,8 +562,8 @@
   </div>
 
   <div class="note-box rise">
-    <p><strong>Comment ça marche.</strong> Glisse pour te déplacer, molette ou pincement pour zoomer, double-clic pour approcher. Clique sur un marqueur pour l'ouvrir, puis coche-le : ta progression reste enregistrée sur ton appareil, sans compte à créer.</p>
-    <p>Le bouton « Mesurer une distance » permet de choisir deux points et d'obtenir la distance ainsi que le temps de trajet à pied, à vélo, en voiture, en bateau et en avion.</p>
+    <p><strong>Comment ça marche.</strong> Glisse pour te déplacer, molette ou pincement pour zoomer, double-clic pour approcher. Clique sur un marqueur pour l’ouvrir, puis coche-le : ta progression reste enregistrée sur ton appareil, sans compte à créer.</p>
+    <p>Le bouton « Mesurer une distance » permet de choisir deux points et d’obtenir la distance ainsi que le temps de trajet à pied, à vélo, en voiture, en bateau et en avion.</p>
   </div>
 </section>
 </div>
@@ -590,34 +590,34 @@
     <p>Toutes présentées officiellement par Rockstar. Chaque carte ouvre la fiche détaillée de la région.</p>
   </div>
   <div class="reg-grid">
-    <a class="reg reg--link rise" href="lieux/vice-city.html"><img class="reg-img" src="/img/officiel/vice-city-01-480.webp" srcset="/img/officiel/vice-city-01-480.webp 480w, /img/officiel/vice-city-01-1280.webp 1280w" sizes="(max-width:700px) 100vw, 380px" width="480" height="270" alt="Vice City, capture officielle Rockstar Games" loading="lazy" decoding="async"><p class="reg-kind">Métropole</p>
+    <a class="reg reg--link rise" href="lieux/vice-city.html"><img class="reg-img" src="/img/officiel/vice-city-01-480.webp" srcset="/img/officiel/vice-city-01-480.webp 480w, /img/officiel/vice-city-01-1280.webp 1280w" sizes="(max-width:820px) 100vw, (max-width:1000px) 50vw, 33vw" width="480" height="270" alt="Vice City, capture officielle Rockstar Games" loading="lazy" decoding="async"><p class="reg-kind">Métropole</p>
       <h3>Vice City</h3>
-      <p>La ville principale de Leonida, revisitée dans une version contemporaine. Rockstar en montre les plages, les hôtels art déco, les quartiers résidentiels, les voies rapides et les zones portuaires. C'est la zone la plus dense du jeu.</p>
+      <p>La ville principale de Leonida, revisitée dans une version contemporaine. Rockstar en montre les plages, les hôtels art déco, les quartiers résidentiels, les voies rapides et les zones portuaires. C’est la zone la plus dense du jeu.</p>
     <span class="veh-go">Voir la fiche</span>
     </a>
-    <a class="reg reg--link rise" href="lieux/leonida-keys.html"><img class="reg-img" src="/img/officiel/leonida-keys-01-480.webp" srcset="/img/officiel/leonida-keys-01-480.webp 480w, /img/officiel/leonida-keys-01-1280.webp 1280w" sizes="(max-width:700px) 100vw, 380px" width="480" height="270" alt="Leonida Keys, capture officielle Rockstar Games" loading="lazy" decoding="async"><p class="reg-kind">Archipel</p>
+    <a class="reg reg--link rise" href="lieux/leonida-keys.html"><img class="reg-img" src="/img/officiel/leonida-keys-01-480.webp" srcset="/img/officiel/leonida-keys-01-480.webp 480w, /img/officiel/leonida-keys-01-1280.webp 1280w" sizes="(max-width:820px) 100vw, (max-width:1000px) 50vw, 33vw" width="480" height="270" alt="Leonida Keys, capture officielle Rockstar Games" loading="lazy" decoding="async"><p class="reg-kind">Archipel</p>
       <h3>Leonida Keys</h3>
-      <p>Un chapelet d'îles au sud de l'État, reliées par de longues routes construites au-dessus de l'eau. Bars, plages, bateaux et vie marine. Jason y a vécu avant les événements de l'histoire.</p>
+      <p>Un chapelet d’îles au sud de l’État, reliées par de longues routes construites au-dessus de l’eau. Bars, plages, bateaux et vie marine. Jason y a vécu avant les événements de l’histoire.</p>
     <span class="veh-go">Voir la fiche</span>
     </a>
-    <a class="reg reg--link rise" href="lieux/grassrivers.html"><img class="reg-img" src="/img/officiel/grassrivers-01-480.webp" srcset="/img/officiel/grassrivers-01-480.webp 480w, /img/officiel/grassrivers-01-1280.webp 1280w" sizes="(max-width:700px) 100vw, 380px" width="480" height="270" alt="Grassrivers, capture officielle Rockstar Games" loading="lazy" decoding="async"><p class="reg-kind">Marécages</p>
+    <a class="reg reg--link rise" href="lieux/grassrivers.html"><img class="reg-img" src="/img/officiel/grassrivers-01-480.webp" srcset="/img/officiel/grassrivers-01-480.webp 480w, /img/officiel/grassrivers-01-1280.webp 1280w" sizes="(max-width:820px) 100vw, (max-width:1000px) 50vw, 33vw" width="480" height="270" alt="Grassrivers, capture officielle Rockstar Games" loading="lazy" decoding="async"><p class="reg-kind">Marécages</p>
       <h3>Grassrivers</h3>
-      <p>Une vaste zone humide subtropicale, équivalent des Everglades. Mangroves, eaux peu profondes, hydroglisseurs et faune sauvage. La preuve que la carte ne se parcourt pas qu'en voiture.</p>
+      <p>Une vaste zone humide subtropicale, équivalent des Everglades. Mangroves, eaux peu profondes, hydroglisseurs et faune sauvage. La preuve que la carte ne se parcourt pas qu’en voiture.</p>
     <span class="veh-go">Voir la fiche</span>
     </a>
-    <a class="reg reg--link rise" href="lieux/port-gellhorn.html"><img class="reg-img" src="/img/officiel/port-gellhorn-01-480.webp" srcset="/img/officiel/port-gellhorn-01-480.webp 480w, /img/officiel/port-gellhorn-01-1280.webp 1280w" sizes="(max-width:700px) 100vw, 380px" width="480" height="270" alt="Port Gellhorn, capture officielle Rockstar Games" loading="lazy" decoding="async"><p class="reg-kind">Ville côtière</p>
+    <a class="reg reg--link rise" href="lieux/port-gellhorn.html"><img class="reg-img" src="/img/officiel/port-gellhorn-01-480.webp" srcset="/img/officiel/port-gellhorn-01-480.webp 480w, /img/officiel/port-gellhorn-01-1280.webp 1280w" sizes="(max-width:820px) 100vw, (max-width:1000px) 50vw, 33vw" width="480" height="270" alt="Port Gellhorn, capture officielle Rockstar Games" loading="lazy" decoding="async"><p class="reg-kind">Ville côtière</p>
       <h3>Port Gellhorn</h3>
-      <p>Une ville balnéaire qui a perdu sa prospérité. Motels bon marché, attractions fermées, commerces de bord de route. Une identité à l'opposé de Vice City.</p>
+      <p>Une ville balnéaire qui a perdu sa prospérité. Motels bon marché, attractions fermées, commerces de bord de route. Une identité à l’opposé de Vice City.</p>
     <span class="veh-go">Voir la fiche</span>
     </a>
-    <a class="reg reg--link rise" href="lieux/ambrosia.html"><img class="reg-img" src="/img/officiel/ambrosia-01-480.webp" srcset="/img/officiel/ambrosia-01-480.webp 480w, /img/officiel/ambrosia-01-1280.webp 1280w" sizes="(max-width:700px) 100vw, 380px" width="480" height="270" alt="Ambrosia, capture officielle Rockstar Games" loading="lazy" decoding="async"><p class="reg-kind">Industrie rurale</p>
+    <a class="reg reg--link rise" href="lieux/ambrosia.html"><img class="reg-img" src="/img/officiel/ambrosia-01-480.webp" srcset="/img/officiel/ambrosia-01-480.webp 480w, /img/officiel/ambrosia-01-1280.webp 1280w" sizes="(max-width:820px) 100vw, (max-width:1000px) 50vw, 33vw" width="480" height="270" alt="Ambrosia, capture officielle Rockstar Games" loading="lazy" decoding="async"><p class="reg-kind">Industrie rurale</p>
       <h3>Ambrosia</h3>
-      <p>Le versant agricole et industriel de l'État, marqué par l'activité sucrière et les petites villes. Rockstar y situe notamment la raffinerie Allied Crystal.</p>
+      <p>Le versant agricole et industriel de l’État, marqué par l’activité sucrière et les petites villes. Rockstar y situe notamment la raffinerie Allied Crystal.</p>
     <span class="veh-go">Voir la fiche</span>
     </a>
-    <a class="reg reg--link rise" href="lieux/mount-kalaga.html"><img class="reg-img" src="/img/officiel/mount-kalaga-national-park-01-480.webp" srcset="/img/officiel/mount-kalaga-national-park-01-480.webp 480w, /img/officiel/mount-kalaga-national-park-01-1280.webp 1280w" sizes="(max-width:700px) 100vw, 380px" width="480" height="270" alt="Mount Kalaga, capture officielle Rockstar Games" loading="lazy" decoding="async"><p class="reg-kind">Parc national</p>
+    <a class="reg reg--link rise" href="lieux/mount-kalaga.html"><img class="reg-img" src="/img/officiel/mount-kalaga-national-park-01-480.webp" srcset="/img/officiel/mount-kalaga-national-park-01-480.webp 480w, /img/officiel/mount-kalaga-national-park-01-1280.webp 1280w" sizes="(max-width:820px) 100vw, (max-width:1000px) 50vw, 33vw" width="480" height="270" alt="Mount Kalaga, capture officielle Rockstar Games" loading="lazy" decoding="async"><p class="reg-kind">Parc national</p>
       <h3>Mount Kalaga</h3>
-      <p>Le relief du nord de Leonida : forêts, rivières, pistes tout-terrain. Rockstar y associe des activités de chasse et de pêche.</p>
+      <p>Le relief du nord de Leonida : forêts, rivières, pistes tout-terrain. Rockstar y associe des activités de chasse et de pêche.</p>
     <span class="veh-go">Voir la fiche</span>
     </a>
   </div>
@@ -625,8 +625,8 @@
 
 <section class="shell">
   <div class="note-box rise">
-    <p><strong>Officiel ou reconstruit : la distinction compte.</strong> Les six régions et leurs noms viennent de Rockstar. En revanche, la position exacte des frontières, le tracé des routes et l'emplacement des points d'intérêt sont des reconstructions. Un lieu ajouté par la communauté n'est pas forcément un lieu officiellement nommé dans le jeu.</p>
-    <p>Nous préférons afficher un fond provisoire clairement identifié plutôt qu'une reconstruction présentée comme une certitude.</p>
+    <p><strong>Officiel ou reconstruit : la distinction compte.</strong> Les six régions et leurs noms viennent de Rockstar. En revanche, la position exacte des frontières, le tracé des routes et l’emplacement des points d’intérêt sont des reconstructions. Un lieu ajouté par la communauté n’est pas forcément un lieu officiellement nommé dans le jeu.</p>
+    <p>Nous préférons afficher un fond provisoire clairement identifié plutôt qu’une reconstruction présentée comme une certitude.</p>
   </div>
 </section>
 
@@ -638,32 +638,32 @@
     </div>
     <div class="faq rise">
       <details>
-        <summary>Cette carte est-elle officielle ?</summary>
-        <div class="ans">Non. Rockstar n'a jamais publié la carte complète de GTA VI. Le fond affiché ici est provisoire et sera remplacé après la sortie du jeu, à partir de captures réalisées par nous-mêmes.</div>
+        <summary>Cette carte est-elle officielle ?</summary>
+        <div class="ans">Non. Rockstar n’a jamais publié la carte complète de GTA VI. Le fond affiché ici est provisoire et sera remplacé après la sortie du jeu, à partir de captures réalisées par nous-mêmes.</div>
       </details>
       <details>
-        <summary>Quelle est la taille de la carte de GTA VI ?</summary>
-        <div class="ans">Rockstar n'a communiqué aucune superficie. La presse rapporte une carte environ trois fois plus grande que la zone jouable de Red Dead Redemption 2, mais ce chiffre n'a pas été confirmé par le studio. Les autres comparaisons qui circulent sont des estimations de joueurs.</div>
+        <summary>Quelle est la taille de la carte de GTA VI ?</summary>
+        <div class="ans">Rockstar n’a communiqué aucune superficie. La presse rapporte une carte environ trois fois plus grande que la zone jouable de Red Dead Redemption 2, mais ce chiffre n’a pas été confirmé par le studio. Les autres comparaisons qui circulent sont des estimations de joueurs.</div>
       </details>
       <details>
-        <summary>Combien de régions sont confirmées ?</summary>
-        <div class="ans">Six : Vice City, les Leonida Keys, Grassrivers, Port Gellhorn, Ambrosia et Mount Kalaga National Park. Elles ont toutes été présentées officiellement par Rockstar.</div>
+        <summary>Combien de régions sont confirmées ?</summary>
+        <div class="ans">Six : Vice City, les Leonida Keys, Grassrivers, Port Gellhorn, Ambrosia et Mount Kalaga National Park. Elles ont toutes été présentées officiellement par Rockstar.</div>
       </details>
       <details>
-        <summary>Utilisez-vous la carte qui a fuité en août 2026 ?</summary>
-        <div class="ans">Non, et c'est un choix assumé. Ce matériel provient d'une intrusion informatique et fait l'objet de procédures judiciaires de la part de Take-Two. Il provient par ailleurs d'une version de développement de 2022-2023, donc potentiellement obsolète.</div>
+        <summary>Le site utilise-t-il la carte qui a fuité en août 2026 ?</summary>
+        <div class="ans">Non, et c’est un choix assumé. Ce matériel provient d’une intrusion informatique et fait l’objet de procédures judiciaires de la part de Take-Two. Il provient par ailleurs d’une version de développement de 2022-2023, donc potentiellement obsolète.</div>
       </details>
       <details>
-        <summary>D'où viendront les emplacements ?</summary>
-        <div class="ans">De nos propres relevés après la sortie du 19 novembre 2026, et de sources officielles comme les trailers et l'Extended Look, entièrement capturé sur PlayStation 5 et publié par Rockstar.</div>
+        <summary>D’où viendront les emplacements ?</summary>
+        <div class="ans">De nos propres relevés après la sortie du 19 novembre 2026, et de sources officielles comme les trailers et l’Extended Look, entièrement capturé sur PlayStation 5 et publié par Rockstar.</div>
       </details>
       <details>
-        <summary>Toute la carte sera-t-elle accessible dès le début du jeu ?</summary>
-        <div class="ans">Rockstar ne l'a pas précisé. Certaines régions pourraient être verrouillées au début de l'histoire.</div>
+        <summary>Toute la carte sera-t-elle accessible dès le début du jeu ?</summary>
+        <div class="ans">Rockstar ne l’a pas précisé. Certaines régions pourraient être verrouillées au début de l’histoire.</div>
       </details>
       <details>
-        <summary>Comment fonctionne le calcul de distance ?</summary>
-        <div class="ans">Vous choisissez deux points sur la carte, l'outil affiche la distance puis le temps de trajet selon sept modes de déplacement. Les vitesses sont actuellement calées sur GTA V et seront recalibrées après la sortie.</div>
+        <summary>Comment fonctionne le calcul de distance ?</summary>
+        <div class="ans">Tu choisis deux points sur la carte, l’outil affiche la distance puis le temps de trajet selon sept modes de déplacement. Les vitesses sont actuellement calées sur GTA V et seront recalibrées après la sortie.</div>
       </details>
     </div>
   </div>
@@ -671,8 +671,8 @@
 
 <section class="lk-outro" aria-label="Et après">
   <div class="shell lk-outro-in">
-    <p class="lk-outro-k">Et après ?</p>
-    <h2>La suite s'écrit le 19 novembre 2026.</h2>
+    <p class="lk-outro-k">Et après ?</p>
+    <h2>La suite s’écrit le 19 novembre 2026.</h2>
     <p>La carte se précise à chaque nouveau visuel officiel.</p>
     <div class="lk-outro-links"><a href="lieux.html">Les six régions</a><a href="progression.html">Mes repérages</a></div>
   </div>
@@ -707,13 +707,13 @@
     </g>
   </svg><div class="shell"><div class="foot-top"><div class="foot-brand"><a class="brand" href="index.html">Leonida<span>kit</span></a><p>Une carte, des fiches, un calculateur. Prépare tes choix dans Leonida avec des sources claires et tes propres chiffres.</p><a class="foot-feature" href="calculateurs.html">Trouver mon calcul ↗</a></div><div class="foot-cols"><div><h2>Explorer</h2><nav aria-label="Explorer en pied de page"><a href="carte.html">Carte</a><a href="vehicules.html">Véhicules</a><a href="armes.html">Armurerie</a><a href="lieux.html">Lieux</a><a href="personnages.html">Personnages</a><a href="demeures.html">Demeures</a><a href="planques.html">Planques</a><a href="entreprises.html">Entreprises</a><a href="collectibles.html">Collectibles</a></nav></div><div><h2>S’équiper</h2><nav aria-label="S’équiper en pied de page"><a href="achats.html">Tout ce qui s’achète</a><a href="nourriture.html">Consommables</a><a href="style.html">Vêtements et style</a><a href="personnalisations.html">Personnalisations</a><a href="armes.html#munitions">Munitions et équipement</a><a href="logements.html">Logements et appartements</a></nav></div><div><h2>Outils et aide</h2><nav aria-label="Outils et aide en pied de page"><a href="calculateurs.html">Calculateur</a><a href="tuto.html">Tuto</a><a href="progression.html">Progression</a><a href="a-propos.html">À propos</a><a href="contact.html">Contact</a><a href="medias.html">Médias et crédits</a><a href="mentions-legales.html">Mentions et confidentialité</a></nav></div></div></div><p class="legal">Leonidakit est un projet indépendant réalisé par un joueur, sans affiliation, approbation ni sponsoring de Rockstar Games ou Take-Two Interactive. Grand Theft Auto est une marque de Take-Two Interactive. Les crédits de chaque média restent consultables.</p></div></footer>
 
-<script src="search-index.js?v=04e23e03bd10"></script>
+<script src="search-index.js?v=14ef3ddddb6f"></script>
 <script src="assets-manifest.js?v=a6679b51533b"></script>
-<script src="common.js?v=5bb7d1fed924"></script>
-<script src="app.js?v=30889b5e1b9c"></script>
-<script src="carte-gtadb.js?v=73535c3acb6a"></script>
-<script src="collectibles-data.js?v=ad0c4e3b86bc"></script>
-<script src="collectibles-core.js?v=10d736c55353"></script>
-<script src="carte.js?v=53c1b80b43fc"></script>
+<script src="common.js?v=aebb53715d6e"></script>
+<script src="app.js?v=22ec90e07aab"></script>
+<script src="carte-gtadb.js?v=0fb162b903b5"></script>
+<script src="collectibles-data.js?v=2e8ae3a05507"></script>
+<script src="collectibles-core.js?v=acc2d78e0e90"></script>
+<script src="carte.js?v=036a5c0d5fc6"></script>
 </body>
 </html>

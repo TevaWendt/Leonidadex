@@ -1,0 +1,89 @@
+v7.37 — 26 septembre 2026 — AUDIT FINAL : CHAQUE PAGE, CHAQUE MOT, ET LE RÉFÉRENCEMENT
+(base : dossier Leonidadex en v7.36 = zip Leonidadex-main (10), SHA-256 3bc615ea22974debccf5092378e308efee639a6b3cd69b93e8b6104ef5e03428)
+
+Ce qui change pour le visiteur
+- Accueil : le « VI » du grand titre « GTA VI » était devenu invisible depuis la v7.36 (le dégradé de couleur n’était plus
+  peint quand chaque mot est animé séparément). Il est de retour, avec son dégradé et son animation.
+- 30 fiches du monde (régions, personnages, entreprises, demeures, planques) : le visuel du bandeau restait caché derrière
+  son rideau (l’animation Motion+ remplaçait celle qui l’ouvrait) et les textes étaient décalés de 22 px hors de la gouttière.
+  Le rideau s’ouvre, les textes sont alignés, et un dernier bloc seul (« En lien ») prend toute la largeur au lieu de laisser
+  60 % de vide à droite.
+- Grilles équilibrées : « À chaque question, son calcul » (calculateur) passe de 4 + 4 + 3 à trois rangées pleines ; les
+  six cartes « Combat : ce qui change » (Armurerie) et du classement passent de 4 + 2 à 3 + 3 ; les 16 équipements et gadgets
+  en 4 × 4 au lieu de 5 + 5 + 5 + 1 ; chiffres clés et statistiques des bandeaux en 2 colonnes sur téléphone (plus de 3 + 1) ;
+  les 11 catégories de « Tout ce qui s’achète » centrent leur dernière rangée ; sur téléphone, une dernière carte seule des
+  catalogues se centre.
+- Textes : apostrophe typographique (’) partout où il y avait un mélange (5 638 apostrophes droites), espaces insécables
+  avant ? ! ; : » et après « (3 361 cas : plus de « ? » ou de « : » rejetés seuls en début de ligne), nombres groupés
+  (200 000 $, 2 547 lieux). Le site se lit partout en « tu » (Collectibles, classement, fiches et carte passaient au « vous »),
+  et les messages du moteur du calculateur parlent en mots simples (plus de « Réduisez votre capital »). « Édition Ultimate »
+  partout (plus d’« Édition Ultime »), « Leonidakit » partout (plus de « LeonidaKit »), « sélectionnes-en », « Calculateur »
+  au singulier dans le bandeau de l’accueil.
+- Fiches véhicules : 16 textes contradictoires avec leur inspiration corrigés (Tailgater / A6, Vectre / Emperor, Carbonizzare,
+  Itali GTO / 812 Superfast, Jugular / XE Project 8, Infernus Classic / Diablo, Cypher / M2, Dominator, Granger / Suburban,
+  Contender / Tundra, Astron / Macan, Rancher, SuperVolito / EC145, Shamal / Learjet 45, Maverick / LongRanger, Seashark / GTX).
+- Tableau « Ce que rapporte chaque activité » : colonnes rééquilibrées, statuts sur une ligne (ils se cassaient sur 2–3 lignes).
+- Noms des fiches voisines (« Elegy Retro C… », « Couteau à cra… ») et de l’arbre de la carte : deux lignes au lieu de points
+  de suspension. Sommaire du Tuto dans la couleur du gabarit. Note « Ce sont tes chiffres à toi · … · Partir de zéro » qui
+  ne se casse plus sur téléphone.
+- Bouton Léo : quand aucune place n’est libre (catalogues, onglets du calculateur sur téléphone), il cherche plus haut, puis
+  se replie sur son seul symbole ; il se replace quand le contenu de la page change (onglets rendus après le chargement).
+- Collectibles sur tactile : l’explication de chaque outil est visible sans survol.
+- Cibles tactiles élargies : fil d’Ariane, sources, « Trouver mon calcul », « Galerie officielle », poignées de l’arbre de la
+  carte, champ de recherche de l’en-tête, liens seuls dans les cartes et les tableaux.
+- Accueil : la carte d’outil « Carte interactive » affiche « 2 547 lieux » (synchronisé avec la carte) au lieu d’« En
+  construction » alors que la ligne d’état disait « La carte et les catalogues sont accessibles » ; la carte « Suivi de
+  progression » et la page Progression disent ce qu’elles suivent dès maintenant.
+- Police Archivo hébergée sur le site (fonts/, licence OFL) : plus aucune connexion à Google Fonts, texte affiché tout de
+  suite (swap), préchargement du fichier latin ; la page Mentions le dit.
+
+Référencement (sans changer les textes visibles)
+- Titres harmonisés « … | Leonidakit » sur les 401 pages (18 pages disaient « — Leonidakit ») ; accueil : « Calculateur GTA VI,
+  carte et fiches de Leonida | Leonidakit ». Descriptions ≤ 160 caractères partout (51 dépassaient), canonique d’achats.html
+  en www (elle était la seule sans), « max-image-preview:large » sur les 380 pages indexables.
+- Données structurées : accueil en @graph (WebSite + SearchAction « ?q= » réellement fonctionnelle, Organization, WebPage sur le
+  jeu), WebApplication sur le calculateur, FAQPage générée depuis les questions visibles (accueil, calculateur, achats ; les
+  autres l’avaient déjà), BreadcrumbList sur Tuto, Achats et les pages d’acquisitions.
+- Hiérarchie des titres : plus de saut h1 → h3 (h2 lisible par les lecteurs d’écran devant les grilles des hubs, aide de la
+  carte en h2/h3).
+
+Technique
+- outils/typographie.cjs (nouveau) : texte(), html(), js(), jsonText(). Passe unique sur les sources (JSON, JS, HTML, gabarits)
+  et étape permanente de sync-site.cjs sur les 406 pages (nœuds texte et attributs lisibles seulement) : une source corrigée
+  reste typographiée après régénération. Les recherches (app.js, calculateurs, carte, classement, collectibles) et Léo
+  replient ’ et espaces insécables pour que « l'eau » et « l’eau » donnent la même chose.
+- common.js : splitWords() traite un élément à background-clip:text comme un seul mot ; la variante lk-reveal--left ne
+  s’ajoute qu’aux blocs suivis par l’observateur. style.css : correction du rideau des .lore-fig, grilles .kpis/.feat-grid/
+  .kit-grid en flex centré avec nombre de colonnes selon le nombre de cartes (règles retirées des styles en ligne des hubs et du
+  gabarit), .lore-body dernier bloc pleine largeur, .rel-nom et .tr-n sur deux lignes, cibles tactiles, catalogues centrés sur
+  téléphone, @font-face Archivo, .sr-only global. calculateurs-brand.css : lk-tool--lead sur 3 colonnes, tableau des
+  activités, note en display:block. tuto.css : sommaire. leo-loader.js : recherche de place élargie, mode compact,
+  MutationObserver. leo.css : #leo-launch.leo-compact.
+- gen-leo.cjs : comparaison glossaire/FAQ insensible aux espaces insécables. gen.js / gen-armes.cjs / lore-gen.js /
+  gen-acquisitions.cjs : descriptions plafonnées à 158 caractères. gen-achats.cjs : canonique, grille centrée, BreadcrumbList.
+  gen-tuto.cjs, gen-acquisitions.cjs : BreadcrumbList. gen-informations.cjs : titres « | », phrase sur la police.
+  Générateurs : plus d’extraction du bloc Google Fonts (gen-armes HEAD_TOP, lore-gen, gen-acquisitions, gen-achats, gen-tuto).
+  sync-site.cjs : retrait des liens Google Fonts, preload de la police, robots max-image-preview, FAQPage, compteur de lieux
+  de l’accueil, typographie. vercel.json : CSP sans Google Fonts, cache des polices.
+- Tests : 373/373 (une assertion adaptée à l’espace insécable) ; calculateurs-browser.cjs 278/278 ; verifier.js 0 erreur sur
+  37 053 références. Détail des contrôles : outils/RAPPORT-AUDIT-v7.37.md.
+
+Second passage (320 / 768 / 1024 / 1440 / 1920 px sur les 31 pages de la racine)
+- Carte : les six régions en 3 + 3 (plus de 4 + 2 au-delà de 1 400 px), 2 + 2 + 2 entre 821 et 1 000 px ; leurs visuels ne sont plus
+  la petite variante étirée entre 701 et 820 px. Accueil : « L’État de Leonida » en 3 + 3 sur grand écran.
+- Véhicules rares : les 8 véhicules en 4 + 4 (plus de 5 + 3), les 5 équipements en 3 + 2 centrés (la page gardait ses propres règles de
+  grille en ligne). Armurerie (règles d’inventaire) et Collectibles (visuels) : 3 + 2 centrés entre 901 et 1 100 px au lieu de 4 + 1.
+  Progression : les 9 catégories en 3 × 3 (plus de 4 + 4 + 1) ; en deux colonnes, la dernière carte impaire prend toute la largeur.
+- Menu « Explorer » : le panneau s’aligne sur la marge droite de l’en-tête ; il dépassait de 15 à 24 px à gauche sur les pages où le
+  menu suit la marque (calculateur, catalogues).
+- Catalogues sous 324 px : une seule colonne de cartes pleine largeur (la règle de centrage v7.37 les réduisait à 140 px).
+- Bouton Léo : il ne monte plus au milieu de l’écran ; il reste dans la moitié basse, sinon se replie en bas à droite ; il évite aussi la
+  barre de filtres des catalogues et la barre « Mon garage ».
+- Champs « Filtrer les véhicules / les armes » et « Chercher un lieu sur la carte » : le champ occupe toute la hauteur de sa barre.
+- Calculateur à 320 px : « ☆ Enregistrer ce calcul » sur deux lignes au lieu d’être coupé.
+- Calculateur entre 901 et 1 180 px : la rangée « Ou choisis un objectif » passe sous les questions (les quatre questions s’empilaient
+  une par ligne et « 10 M $ » restait seul à droite).
+- Pages d’acquisitions : visuels des cartes servis en 1 280 px dès que la carte dépasse 480 px (ils étaient flous à partir de 1 280 px).
+- Accueil et Progression : puce « Dès maintenant » à la place d’« En construction » à côté d’un texte qui dit « cochés dès maintenant ».
+- Fichiers : style.css, fiches.css (.rare-grid), calculateurs-brand.css, leo-loader.js, carte.html, vehicules-rares.html, progression.html,
+  outils/lore-gen.js (classe lore-grid--n6, puce), outils/gen-acquisitions.cjs (sizes).

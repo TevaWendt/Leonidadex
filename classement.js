@@ -21,7 +21,7 @@
     const p = partage(); if(!p || !p.length) return false;
     const mien = enregistre();
     const memes = mien.length === p.length && mien.every((x, i) => x === p[i]);
-    if(mien.length && !memes && !confirm('Ce lien contient un autre classement. Remplacer le vôtre ?')){
+    if(mien.length && !memes && !confirm('Ce lien contient un autre classement. Remplacer le tien ?')){
       history.replaceState(null, '', location.pathname); return false;
     }
     ordre = p; ecrire(); history.replaceState(null, '', location.pathname); rendre(); return true;
@@ -86,7 +86,7 @@
     ordre.push(id); sel.value = ''; ecrire(); rendre();
   });
   document.getElementById('cl-raz').addEventListener('click', function(){
-    if(ordre.length && !confirm('Vider votre classement ?')) return;
+    if(ordre.length && !confirm('Vider ton classement ?')) return;
     ordre = []; ecrire(); rendre();
   });
   document.getElementById('cl-share').addEventListener('click', function(){
@@ -106,9 +106,9 @@
 (function () {
   const q = document.getElementById('cl-q'), sel = document.getElementById('cl-sel'), add = document.getElementById('cl-add');
   if (!q || !sel || !add) return;
-  const all = Array.from(sel.options).map(o => ({ value: o.value, text: o.textContent, norm: o.textContent.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() }));
+  const all = Array.from(sel.options).map(o => ({ value: o.value, text: o.textContent, norm: o.textContent.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[’‘]/g, "'") }));
   function filtre() {
-    const t = q.value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+    const t = q.value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[’‘]/g, "'").trim();
     const hits = t ? all.filter(o => o.norm.includes(t)) : all;
     sel.innerHTML = ''; hits.forEach(o => { const op = document.createElement('option'); op.value = o.value; op.textContent = o.text; sel.appendChild(op); });
     sel.size = t && hits.length ? Math.min(6, hits.length) : 0;

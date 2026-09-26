@@ -42,7 +42,7 @@ const el = id => document.getElementById(id);
   }).join(''));
 
   /* second bandeau, sens inverse */
-  const words2 = ["Carte filtrable","Suivi de progression","Fiches véhicules","Emplacements","Calculateurs","Mis à jour en continu"];
+  const words2 = ["Carte filtrable","Suivi de progression","Fiches véhicules","Emplacements","Calculateur","Mis à jour en continu"];
   fillTrack(el('mq2'), words2.map(w => '<b>' + w + '</b><i>&#9679;</i>').join(''));
 
   /* chiffres clés qui montent à l'apparition */
@@ -132,6 +132,8 @@ const el = id => document.getElementById(id);
       box.classList.add('open'); q.setAttribute('aria-expanded','true');
     }
     q.addEventListener('input',render); q.addEventListener('focus',()=>{if(q.value.trim())render();});
+    /* v7.37 : ouverture avec ?q=… (lien de recherche, SearchAction des données structurées) : la page d’accueil et la 404 pré-remplissent la recherche */
+    try{const initial=new URLSearchParams(location.search).get('q');if(initial&&initial.trim()&&!q.value){q.value=initial.trim().slice(0,100);chargerLieux();render();q.focus();}}catch(_){}
     q.addEventListener('keydown',function(e){
       const items=Array.from(box.querySelectorAll('a'));
       if(e.key==='Escape'){close();return;}
@@ -242,7 +244,7 @@ const el = id => document.getElementById(id);
   const LOT = 48; let limite = LOT, derniereSig = null;
   let plusBt = document.getElementById('vplus');
   if(!plusBt && emptyEl){ plusBt = document.createElement('button'); plusBt.type = 'button'; plusBt.id = 'vplus'; plusBt.className = 'vplus'; plusBt.hidden = true; emptyEl.parentNode.insertBefore(plusBt, emptyEl); }
-  const norm = s => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+  const norm = s => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[’‘]/g,"'").replace(/[\u00a0\u202f]/g," ");
   const motCarte = grid.dataset.mot || 'véhicule';
   const ordreInitial = cards.slice();
   const POIDS_ST = { officiel: 0, vu: 1, comm: 2 };
@@ -479,8 +481,8 @@ const el = id => document.getElementById(id);
     if(sel.dos.value && sel.dos.value === sel.main.value){
       ok = false; msg.push("Tu as mis la même arme dans le dos et en main.");
     }
-    if(longues === 2) msg.push("Deux armes longues : c'est le maximum. Une troisième devra rester dans un véhicule.");
-    if(visible) msg.push("Arme en main visible : les passants s'écartent et la police peut réagir.");
+    if(longues === 2) msg.push("Deux armes longues : c’est le maximum. Une troisième devra rester dans un véhicule.");
+    if(visible) msg.push("Arme en main visible : les passants s’écartent et la police peut réagir.");
     if(!sel.dos.value && !sel.main.value && !sel.poing.value) msg = ["Choisis tes armes. Le constructeur vérifie que ton équipement respecte les règles."];
     else if(ok && msg.length === 0) msg.push("Équipement valide et discret.");
 

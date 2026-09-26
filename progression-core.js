@@ -102,14 +102,14 @@
           emit(); return true;
         }
         for (var t in LEGACY) if ((ids[t] || []).indexOf(id) !== -1) { var raw3 = read(LEGACY[t]), p3 = parseMap(raw3); p3.map[id] = on; writeMap(LEGACY[t], p3.map, raw3, p3.corrupt); emit(); return true; }
-      } catch (e) { notice('Impossible d’enregistrer cette case : le stockage du navigateur est indisponible.'); return false; }
+      } catch (e) { notice('Impossible d’enregistrer cette case : le stockage du navigateur est indisponible.'); return false; }
       return false;
     }
     function migrate() {
       /* Pose seulement le marqueur v2 : les octets des clés historiques ne sont jamais réécrits ici. */
       var state = v2(); if (state.migrated) return false;
       var data = { version: VERSION, migratedAt: new Date().toISOString(), checked: state.checked };
-      try { storage.setItem(KEY, JSON.stringify(data)); } catch (e) { notice('Impossible de préparer le suivi : le stockage du navigateur est indisponible.'); return false; }
+      try { storage.setItem(KEY, JSON.stringify(data)); } catch (e) { notice('Impossible de préparer le suivi : le stockage du navigateur est indisponible.'); return false; }
       return true;
     }
     function exportData() {
@@ -124,7 +124,7 @@
       var parsed; try { parsed = JSON.parse(text); } catch (e) { throw new Error('Ce fichier n’est pas un fichier de suivi Leonidakit lisible.'); }
       if (!parsed || typeof parsed !== 'object' || parsed.site !== SITE) throw new Error('Ce fichier ne vient pas de Leonidakit.');
       var version = parsed.version === undefined ? 1 : parsed.version;
-      if (version !== 1 && version !== 2) throw new Error('Ce fichier vient d’une version plus récente du site : mets le site à jour avant de l’ouvrir.');
+      if (version !== 1 && version !== 2) throw new Error('Ce fichier vient d’une version plus récente du site : mets le site à jour avant de l’ouvrir.');
       if (!parsed.data || typeof parsed.data !== 'object' || Array.isArray(parsed.data)) throw new Error('Ce fichier ne contient pas de données de suivi.');
       if (version === 2) {
         if (parsed.categories !== undefined) {
@@ -136,22 +136,22 @@
       var allowed = Object.keys(LEGACY).map(function (t) { return LEGACY[t]; }).concat([KEY], TRANSPORT), issues = [], rubrics = {}, corrupt = {};
       Object.keys(parsed.data).forEach(function (key) {
         var raw = parsed.data[key];
-        if (typeof raw !== 'string') { issues.push('Rubrique illisible ignorée : ' + key); return; }
+        if (typeof raw !== 'string') { issues.push('Rubrique illisible ignorée : ' + key); return; }
         if (allowed.indexOf(key) === -1) {
-          if (key.indexOf('lk_') === 0 || key.indexOf('lk-') === 0) { issues.push('Rubrique non reconnue gardée telle quelle, sans être comptée : ' + key); rubrics[key] = raw; }
-          else issues.push('Rubrique inconnue ignorée : ' + key);
+          if (key.indexOf('lk_') === 0 || key.indexOf('lk-') === 0) { issues.push('Rubrique non reconnue gardée telle quelle, sans être comptée : ' + key); rubrics[key] = raw; }
+          else issues.push('Rubrique inconnue ignorée : ' + key);
           return;
         }
         if (key === LEGACY.vehicules || key === LEGACY.armes || key === LEGACY.lieux) {
           var p = parseMap(raw);
-          if (p.unreadable) { issues.push('Rubrique abîmée ignorée (une copie sera gardée) : ' + key); corrupt[key] = raw; return; }
+          if (p.unreadable) { issues.push('Rubrique abîmée ignorée (une copie sera gardée) : ' + key); corrupt[key] = raw; return; }
           var t = key === LEGACY.vehicules ? 'vehicules' : key === LEGACY.armes ? 'armes' : 'lieux';
-          Object.keys(p.map).forEach(function (id) { if ((ids[t] || []).indexOf(id) === -1) issues.push('Référence inconnue conservée mais non comptée : ' + id); });
+          Object.keys(p.map).forEach(function (id) { if ((ids[t] || []).indexOf(id) === -1) issues.push('Référence inconnue conservée mais non comptée : ' + id); });
           if (p.corrupt) issues.push('Certaines valeurs de ' + key + ' sont illisibles et ne sont pas comptées.');
         } else if (key === KEY) {
-          try { var d = JSON.parse(raw); if (!d || typeof d !== 'object' || (d.checked && typeof d.checked !== 'object')) throw 0; Object.keys(d.checked || {}).forEach(function (id) { if (!itemById(id)) issues.push('Référence inconnue conservée mais non comptée : ' + id); }); }
-          catch (e) { issues.push('Rubrique abîmée ignorée (une copie sera gardée) : ' + key); corrupt[key] = raw; return; }
-        } else { try { JSON.parse(raw); } catch (e) { issues.push('Rubrique abîmée ignorée (une copie sera gardée) : ' + key); corrupt[key] = raw; return; } }
+          try { var d = JSON.parse(raw); if (!d || typeof d !== 'object' || (d.checked && typeof d.checked !== 'object')) throw 0; Object.keys(d.checked || {}).forEach(function (id) { if (!itemById(id)) issues.push('Référence inconnue conservée mais non comptée : ' + id); }); }
+          catch (e) { issues.push('Rubrique abîmée ignorée (une copie sera gardée) : ' + key); corrupt[key] = raw; return; }
+        } else { try { JSON.parse(raw); } catch (e) { issues.push('Rubrique abîmée ignorée (une copie sera gardée) : ' + key); corrupt[key] = raw; return; } }
         rubrics[key] = raw;
       });
       return { version: version, rubrics: rubrics, corrupt: corrupt, issues: issues, categories: parsed.categories || [], exportedAt: parsed.exportedAt || parsed.date || null };
@@ -178,7 +178,7 @@
         /* Retour à l'état d'avant : rien n'est appliqué à moitié. */
         Object.keys(before).forEach(function (k) { try { storage.setItem(k, before[k]); } catch (e2) { /* on continue */ } });
         for (var i = 0; i < storage.length; i++) { var k2 = storage.key(i); if (!(k2 in before)) { try { storage.removeItem(k2); } catch (e3) { /* on continue */ } i--; } }
-        notice('Import annulé : le stockage du navigateur a refusé l’écriture. Rien n’a été modifié.');
+        notice('Import annulé : le stockage du navigateur a refusé l’écriture. Rien n’a été modifié.');
         throw e;
       }
       emit();

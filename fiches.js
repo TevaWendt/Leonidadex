@@ -152,9 +152,9 @@
       const card = document.createElement('aside'); card.id = 'lk-fiche-calculator';
       card.className = 'lk-entry-card lk-fiche-calculator';
       const eyebrow = document.createElement('p'); eyebrow.className = 'lk-entry-eyebrow'; eyebrow.textContent = 'LE CALCULATEUR';
-      const title = document.createElement('h2'); title.textContent = type === 'armes' ? 'Tu veux cette arme ?' : 'Tu veux ce véhicule ?';
-      const explanation = document.createElement('p'); explanation.textContent = 'Regarde si tu as assez d’argent, et sinon combien de temps de jeu il te faut. Son prix n’est pas encore connu : tu peux écrire celui que tu imagines.';
-      const link = document.createElement('a'); link.className = 'lk-entry-button'; link.href = calculatorLink(type, { id }, 'fiche'); link.textContent = 'Est-ce que je peux l’acheter ? ↗';
+      const title = document.createElement('h2'); title.textContent = type === 'armes' ? 'Tu veux cette arme ?' : 'Tu veux ce véhicule ?';
+      const explanation = document.createElement('p'); explanation.textContent = 'Regarde si tu as assez d’argent, et sinon combien de temps de jeu il te faut. Son prix n’est pas encore connu : tu peux écrire celui que tu imagines.';
+      const link = document.createElement('a'); link.className = 'lk-entry-button'; link.href = calculatorLink(type, { id }, 'fiche'); link.textContent = 'Est-ce que je peux l’acheter ? ↗';
       card.append(eyebrow, title, explanation, link);
       (bt.closest('.fiche-liens') || bt).insertAdjacentElement('afterend', card);
     }
@@ -198,7 +198,7 @@
       if(!tools){ tools = document.createElement('div'); tools.className = 'veh-tools'; c.appendChild(tools); }
       const b = document.createElement('button'); b.type = 'button'; b.className = 'own-card';
       b.innerHTML = '<span class="ck"></span><span class="own-lbl-c">' + (type === 'armes' ? 'Arsenal' : 'Garage') + '</span>';
-      b.title = 'Marquer comme possédé'; b.setAttribute('aria-label', (type==='armes'?'Arsenal : ':'Garage : ')+c.querySelector('h3').textContent); b.setAttribute('aria-pressed', 'false');
+      b.title = 'Marquer comme possédé'; b.setAttribute('aria-label', (type==='armes'?'Arsenal : ':'Garage : ')+c.querySelector('h3').textContent); b.setAttribute('aria-pressed', 'false');
       b.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation();
         if(own[id]) delete own[id]; else own[id] = 1; ecrire(own); majCartes(); });
       tools.appendChild(b);
@@ -248,7 +248,7 @@
     if (tray) {
       calculatorStyle();
       calculatorSelection = document.createElement('a'); calculatorSelection.className = 'lk-selection-calculator';
-      calculatorSelection.textContent = 'Est-ce que je peux les acheter ? ↗'; calculatorSelection.hidden = true;
+      calculatorSelection.textContent = 'Est-ce que je peux les acheter ? ↗'; calculatorSelection.hidden = true;
       tray.appendChild(calculatorSelection);
     }
     cards.forEach(function(c){
@@ -256,7 +256,7 @@
       const tools = c.querySelector('.veh-tools'); if(!tools) return;
       const b = document.createElement('button'); b.type = 'button'; b.className = 'cmp-card';
       b.innerHTML = '<span class="cmp-ico" aria-hidden="true">⇄</span><span>Comparer</span>';
-      b.setAttribute('aria-pressed', 'false'); b.setAttribute('aria-label','Comparer : '+c.querySelector('h3').textContent);
+      b.setAttribute('aria-pressed', 'false'); b.setAttribute('aria-label','Comparer : '+c.querySelector('h3').textContent);
       b.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation();
         const k = sel.indexOf(id);
         if(k >= 0) sel.splice(k, 1); else { if(sel.length >= 3){ sel.shift(); } sel.push(id); }
@@ -325,7 +325,7 @@
           : esc(e.licence);
         cap.innerHTML = '<b>' + esc(e.modele || '') + '</b> (photo '
           + (e.page ? '<a href="' + esc(url(e.page)) + '" target="_blank" rel="noopener nofollow">' + esc(e.auteur) + '</a>' : esc(e.auteur))
-          + ', ' + lic + '). Ce véhicule réel n\'est pas le modèle du jeu, c\'est son inspiration.';
+          + ', ' + lic + '). Ce véhicule réel n’est pas le modèle du jeu, c’est son inspiration.';
         fig.appendChild(cap);
         sec.insertBefore(fig, sec.querySelector('.fiche-liens'));
       })

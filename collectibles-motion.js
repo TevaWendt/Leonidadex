@@ -61,7 +61,7 @@
     document.documentElement.dataset.colMotion = active ? 'on' : 'off';
     toggle.setAttribute('aria-pressed', String(active));
     toggle.disabled = reduced.matches || !desktop.matches || express || !('IntersectionObserver' in window);
-    const reason = reduced.matches ? 'Les animations sont réduites selon les préférences de votre appareil.'
+    const reason = reduced.matches ? 'Les animations sont réduites selon les préférences de ton appareil.'
       : express ? 'Le mode express masque les images d’ambiance.'
       : !desktop.matches ? 'Sur petit écran, les images restent fixes pour faciliter la lecture.'
       : active ? 'Les photos se superposent pendant le défilement. Le défilement reste libre.'

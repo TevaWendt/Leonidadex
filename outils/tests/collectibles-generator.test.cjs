@@ -238,7 +238,7 @@ test('le zoom garde un vrai lien image utilisable sans JavaScript et le crédit 
   fs.writeFileSync(path.join(root, 'img/test.webp'), 'fixture');
   generate({ root });
   const html = read(root, 'collectibles/objet-test.html');
-  assert.match(html, /<a href="\/img\/test.webp" aria-label="Agrandir : Vue de test" data-col-zoom-alt="Vue de test" data-col-zoom-credit="Crédit test &amp; auteur">/);
+  assert.match(html, /<a href="\/img\/test.webp" aria-label="Agrandir[ \u00a0]: Vue de test" data-col-zoom-alt="Vue de test" data-col-zoom-credit="Crédit test &amp; auteur">/);
   assert.equal((html.match(/class="col-detail-image"/g) || []).length, 2);
   assert.match(html, /id="col-detail-gallery" data-col-spoiler/);
   assert.match(html, /href="https:\/\/example.org\/image"/);

@@ -17,10 +17,10 @@ const MED=JSON.parse(fs.readFileSync('outils/medias-officiels.json','utf8'));
 const AM=JSON.parse(fs.readFileSync('outils/armes-medias.json','utf8'));
 const {schema}=require('./armes-schemas.cjs');
 const RED=require('./redaction.cjs');
-const VIDE_TXT='Schéma indicatif du type d\'arme. Les visuels officiels détaillés arriveront avec le jeu.';
+const VIDE_TXT='Schéma indicatif du type d’arme. Les visuels officiels détaillés arriveront avec le jeu.';
 const PERSO_NOM=Object.fromEntries(JSON.parse(fs.readFileSync('outils/editorial.json','utf8')).characters.map(c=>[c.id,c.name.split(' ')[0]]));
 /* armureries repérées sur la carte : mêmes liens sur toutes les fiches, comme les concessions sur les fiches véhicules */
-const CARTE='<section class="shell reveal" id="carte">\n  <h2 class="sec-h">Sur la carte de Leonida</h2>\n  <p class="fiche-txt rise">Les armureries repérées sur notre carte. Les emplacements et prix de chaque arme seront ajoutés après la sortie.</p>\n  <div class="fiche-liens rise"><a href="../carte.html#lieu=g-L1074">Phil&#x27;s Ammu-Nation</a><a href="../carte.html#lieu=g-L1091">Ammu-Nation de Rockridge</a><a href="../carte.html#lieu=g-L298">Pawn &amp; Gun, Port Gellhorn</a></div>\n</section>';
+const CARTE='<section class="shell reveal" id="carte">\n  <h2 class="sec-h">Sur la carte de Leonida</h2>\n  <p class="fiche-txt rise">Les armureries repérées sur notre carte. Les emplacements et prix de chaque arme seront ajoutés après la sortie.</p>\n  <div class="fiche-liens rise"><a href="../carte.html#lieu=g-L1074">Phil’s Ammu-Nation</a><a href="../carte.html#lieu=g-L1091">Ammu-Nation de Rockridge</a><a href="../carte.html#lieu=g-L298">Pawn &amp; Gun, Port Gellhorn</a></div>\n</section>';
 const esc=s=>String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#x27;');
 const dec=s=>String(s).replace(/&quot;/g,'"').replace(/&#(?:39|x27);/g,"'").replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&');
 const ST={officiel:{chip:'Officielle',l:'Nommée par Rockstar',card:'Officielle'},vu:{chip:'Aperçue',l:'Vue dans un média officiel',card:'Aperçue'}};
@@ -41,17 +41,17 @@ const art=(a,h)=>schema(a.id,h)||(ART[a.cat]||ART.pistolet||'').replace(/style="
 
 /* ---------- gabarit d'une fiche : blocs fixes d'une fiche existante ---------- */
 const BASE=fs.readFileSync('armes/girardi-es9.html','utf8');
-const between=(re)=>{const m=BASE.match(re);if(!m)throw new Error('gabarit : '+re);return m[0];};
-const HEAD_TOP=between(/<meta name="theme-color"[\s\S]*?<link href="https:\/\/fonts\.googleapis\.com[^>]*>\n/);
+const between=(re)=>{const m=BASE.match(re);if(!m)throw new Error('gabarit : '+re);return m[0];};
+const HEAD_TOP=between(/<meta name="theme-color"[\s\S]*?<link rel="icon"[^>]*>\n/);
 const HEADER=between(/<a class="skip"[\s\S]*?<main id="main">/);
 const FCOUNT=between(/<div class="fcount">[\s\S]*?<\/div>\n<\/div>/);
 const PENDING=between(/<div class="fiche-col reveal">\s*<h2 class="sec-h">Ce qui arrive avec le jeu<\/h2>[\s\S]*?<\/div>\n\n<\/section>/);
 const NOTE=between(/<section class="shell">\s*<div class="note-box rise">[\s\S]*?<\/section>/);
 const FOOTER=between(/<footer>[\s\S]*?<\/body>\n<\/html>/);
 
-const lede=a=>{const cat=CATL[a.cat].toLowerCase();return a.nom+' dans GTA VI : '+cat+(a.insp?'. Inspiration : '+a.insp:'')+'. '+ST[a.st].l+' ('+a.src+').';};
+const lede=a=>{const cat=CATL[a.cat].toLowerCase();return a.nom+' dans GTA VI : '+cat+(a.insp?'. Inspiration : '+a.insp:'')+'. '+ST[a.st].l+' ('+a.src+').';};
 /* meta description : les premières phrases du contexte de l'arme (165 caractères max), sinon le lede générique */
-const description=a=>{const ph=(a.ctx||'').split(/(?<=[.!?])\s+/);let d=a.nom+' dans GTA VI.';let n=0;for(const q of ph){if((d+' '+q).length>165)break;d=d+' '+q;n++;}return n?d:lede(a);};
+const description=a=>{const ph=(a.ctx||'').split(/(?<=[.!?])\s+/);let d=a.nom+' dans GTA VI.';let n=0;for(const q of ph){if((d+' '+q).length>158)break;d=d+' '+q;n++;}const l=lede(a);return n?d:(l.length>158?l.slice(0,155).replace(/\s+\S*$/,'')+'…':l);};
 const related=a=>{let r=A.filter(x=>x.cat===a.cat&&x.id!==a.id);if(r.length<4)for(const x of A){if(r.length>=6)break;if(x.id!==a.id&&x.slot===a.slot&&!r.includes(x))r.push(x);}return r.slice(0,6);};
 
 function fiche(a,i){
@@ -64,13 +64,13 @@ function fiche(a,i){
   {'@type':'ListItem',position:3,name:a.nom,item:url}]},null,2);
  const tags=[...(meds.length?['<span class="chip">Images officielles</span>','']:[]),
   '<span class="chip live">'+st.chip+'</span>','<span class="chip">'+esc(a.src)+'</span>','<span class="chip">'+SLOTL[a.slot]+'</span>'].join('\n          ');
- const insp=a.insp?esc(a.insp)+' <span class="unknown">— rapprochement communautaire</span>':a.fam?esc(a.fam)+' <span class="unknown">— famille d\'objet</span>':'<span class="unknown">Objet du quotidien</span>';
+ const insp=a.insp?esc(a.insp)+' <span class="unknown">— rapprochement communautaire</span>':a.fam?esc(a.fam)+' <span class="unknown">— famille d’objet</span>':'<span class="unknown">Objet du quotidien</span>';
  const rows=[['Nom',esc(a.nom)+(a.perso?' <span class="perso-tag">Arme de '+esc(PERSO_NOM[a.perso]||a.perso)+'</span>':'')],...(a.fr?[['Désignation courante',esc(a.fr)]]:[]),['Statut',st.l],
   ['Catégorie','<a href="../armes.html#'+a.cat+'">'+esc(cat)+'</a>'],['Emplacement',SLOTL[a.slot]],
   ...(a.portee?[['Portée estimée',esc(a.portee)]]:[]),['Inspiration réelle',insp],...(a.mun?[['Munitions',esc(a.mun)]]:[]),
   ...(a.ue?[['Édition Ultimate','Version exclusive ou mise en avant']]:[]),['Source',esc(a.src)]];
  const gal=`<div class="gal" data-base="../img/armes/${a.id}" data-vues="" data-nom="${esc(a.nom)}"
-             data-art="${esc(art(a,150))}" data-vide-txt="${esc(VIDE_TXT)}" aria-label="Schéma : ${esc(a.nom)}" data-vide="1"><div class="gal-track"><div class="gal-item"><div class="gal-vide">${art(a,150)}<span>${esc(VIDE_TXT)}</span></div></div></div></div>`;
+             data-art="${esc(art(a,150))}" data-vide-txt="${esc(VIDE_TXT)}" aria-label="Schéma : ${esc(a.nom)}" data-vide="1"><div class="gal-track"><div class="gal-item"><div class="gal-vide">${art(a,150)}<span>${esc(VIDE_TXT)}</span></div></div></div></div>`;
  const rel=related(a).map(x=>'<a class="rel-card" href="'+x.id+'.html"><span class="rel-art">'+art(x,108)+'</span><span class="rel-txt"><span class="rel-marque">'+esc(CATL[x.cat])+'</span><span class="rel-nom">'+esc(x.nom)+'</span></span></a>').join('');
  return `<!DOCTYPE html>
 <html lang="fr">
@@ -100,7 +100,7 @@ ${HEADER}
 <section class="fhero fhero--arme fhero--${a.cat}">
   <div class="fhero-bg" aria-hidden="true"></div>
   <div class="shell">
-    <nav class="crumbs" aria-label="Fil d'Ariane">
+    <nav class="crumbs" aria-label="Fil d’Ariane">
       <a href="../index.html">Accueil</a> <span>/</span>
       <a href="../armes.html">Armes</a> <span>/</span>
       <a href="../armes.html#${a.cat}">${esc(cat)}</a> <span>/</span>
@@ -119,7 +119,7 @@ ${HEADER}
       </div>
       <div class="fhero-art fhero-art--gal">
         ${gal}
-        <p class="gal-note">${meds.length?'Schéma Leonidakit. '+meds.length+(meds.length>1?' aperçus officiels':' aperçu officiel')+' plus bas sur cette fiche.':'Schéma Leonidakit. Aucun aperçu officiel détaillé pour l\'instant.'}</p>
+        <p class="gal-note">${meds.length?'Schéma Leonidakit. '+meds.length+(meds.length>1?' aperçus officiels':' aperçu officiel')+' plus bas sur cette fiche.':'Schéma Leonidakit. Aucun aperçu officiel détaillé pour l’instant.'}</p>
       </div>
     </div>
   </div>
@@ -151,8 +151,8 @@ ${rows.map(([k,v])=>'        <tr><th scope="row">'+k+'</th><td>'+v+'</td></tr>')
 </section>
 ${meds.length?`<section class="shell reveal" id="apercus">
   <h2 class="sec-h">Aperçus dans les supports officiels</h2>
-  <p class="fiche-txt rise">Les captures où cette arme apparaît. Elles montrent la scène plus que l'arme : le schéma ci-dessus reste la référence visuelle tant que Rockstar n'a pas publié de vue détaillée.</p>
-  <div class="lore-gallery-grid rise">${meds.map(m=>'<a class="apercu" href="'+medBig(m).src+'" target="_blank" rel="noopener" aria-label="Agrandir : '+esc(m.titre)+'"><img src="'+m.variants[0].src+'" srcset="'+medSrcset(m)+'" sizes="(max-width:700px) 100vw, 560px" width="'+m.variants[0].w+'" height="'+m.variants[0].h+'" alt="'+esc(medAlt(a,m))+'" loading="lazy" decoding="async"></a>').join('')}</div>
+  <p class="fiche-txt rise">Les captures où cette arme apparaît. Elles montrent la scène plus que l’arme : le schéma ci-dessus reste la référence visuelle tant que Rockstar n’a pas publié de vue détaillée.</p>
+  <div class="lore-gallery-grid rise">${meds.map(m=>'<a class="apercu" href="'+medBig(m).src+'" target="_blank" rel="noopener" aria-label="Agrandir : '+esc(m.titre)+'"><img src="'+m.variants[0].src+'" srcset="'+medSrcset(m)+'" sizes="(max-width:700px) 100vw, 560px" width="'+m.variants[0].w+'" height="'+m.variants[0].h+'" alt="'+esc(medAlt(a,m))+'" loading="lazy" decoding="async"></a>').join('')}</div>
 </section>`:''}
 
 ${CARTE}
@@ -160,7 +160,7 @@ ${CARTE}
 ${NOTE}
 
 <section class="shell reveal">
-  <h2 class="rel-title">Autres armes : ${esc(cat.toLowerCase())}</h2>
+  <h2 class="rel-title">Autres armes : ${esc(cat.toLowerCase())}</h2>
   <div class="rel-grid rise">${rel}</div>
 </section>
 
@@ -208,4 +208,4 @@ hub=hub.replace(/(<title>Armes de GTA VI : les )\d+( modèles identifiés)/,'$1'
  .replace(/Les \d+ armes identifiées de GTA VI/g,'Les '+A.length+' armes identifiées de GTA VI').replace(/"description": "\d+ armes identifiées/,'"description": "'+A.length+' armes identifiées');
 hub=hub.replace(/Nous recensons \d+ armes visibles dans les supports officiels, dont \d+ sont nommées/g,'Nous recensons '+A.length+' armes visibles dans les supports officiels, dont '+nSt.officiel+' sont nommées');
 fs.writeFileSync('armes.html',hub);
-console.log('armes : '+A.length+' fiches ('+A.filter(a=>medList(a).length).length+' avec visuels officiels, '+nSt.officiel+' nommées par Rockstar), hub armes.html mis à jour');
+console.log('armes : '+A.length+' fiches ('+A.filter(a=>medList(a).length).length+' avec visuels officiels, '+nSt.officiel+' nommées par Rockstar), hub armes.html mis à jour');

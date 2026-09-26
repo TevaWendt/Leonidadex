@@ -1,5 +1,5 @@
 {
- "_commentaire": "Provenance des associations image / fiche ajoutées le 16/09/2026 (v7.2). Chaque ligne relie une fiche à un visuel du registre medias-officiels.json et note d'où vient l'identification. Les associations écartées du ZIP externe (objet en arrière-plan ou non identifiable) ne figurent pas ici.",
+ "_commentaire": "Provenance des associations image / fiche ajoutées le 16/09/2026 (v7.2). Chaque ligne relie une fiche à un visuel du registre medias-officiels.json et note d’où vient l’identification. Les associations écartées du ZIP externe (objet en arrière-plan ou non identifiable) ne figurent pas ici.",
  "associations": [
   {
    "type": "vehicules",
@@ -21,7 +21,7 @@
    "type": "vehicules",
    "fiche": "albany-manana",
    "media": "ultimate-edition-rideout-customs-03",
-   "alt": "Coupé jaune surélevé dans l'atelier Rideout Customs, identifié comme une Albany Manana",
+   "alt": "Coupé jaune surélevé dans l’atelier Rideout Customs, identifié comme une Albany Manana",
    "source": "https://www.rockstargames.com/VI/media/screenshots",
    "identification": "inspection visuelle de la capture (Leonidakit, 16/09/2026)"
   },
@@ -40,7 +40,7 @@
    "alt": "Berline bleue au premier plan, sous le viaduc de Vice City dans GTA VI.",
    "source": "https://www.rockstargames.com/VI/media/screenshots",
    "identification": "https://www.gtabase.com/vehicles/gta-6/impaler-lx",
-   "preuve": "Capture Rockstar consultée visuellement ; correspondance du véhicule attribuée à la galerie GTA VI dédiée de GTABase. Nom du modèle non validé par Rockstar.",
+   "preuve": "Capture Rockstar consultée visuellement ; correspondance du véhicule attribuée à la galerie GTA VI dédiée de GTABase. Nom du modèle non validé par Rockstar.",
    "confiance": "medium"
   },
   {
@@ -50,17 +50,17 @@
    "alt": "Pick-up Canis vert préparé chez One-Eyed Willie dans GTA VI.",
    "source": "https://www.rockstargames.com/VI/media/screenshots",
    "identification": "https://www.gtabase.com/vehicles/gta-6/kamacho",
-   "preuve": "Capture Rockstar consultée visuellement ; correspondance du véhicule attribuée à la galerie GTA VI dédiée de GTABase. Nom du modèle non validé par Rockstar.",
+   "preuve": "Capture Rockstar consultée visuellement ; correspondance du véhicule attribuée à la galerie GTA VI dédiée de GTABase. Nom du modèle non validé par Rockstar.",
    "confiance": "medium"
   },
   {
    "type": "vehicules",
    "fiche": "canis-kamacho",
    "media": "ultimate-edition-one-eyed-willie-03",
-   "alt": "Pick-up Canis vert dans l'atelier One-Eyed Willie de GTA VI.",
+   "alt": "Pick-up Canis vert dans l’atelier One-Eyed Willie de GTA VI.",
    "source": "https://www.rockstargames.com/VI/media/screenshots",
    "identification": "https://www.gtabase.com/vehicles/gta-6/kamacho",
-   "preuve": "Capture Rockstar consultée visuellement ; correspondance du véhicule attribuée à la galerie GTA VI dédiée de GTABase. Nom du modèle non validé par Rockstar.",
+   "preuve": "Capture Rockstar consultée visuellement ; correspondance du véhicule attribuée à la galerie GTA VI dédiée de GTABase. Nom du modèle non validé par Rockstar.",
    "confiance": "medium"
   },
   {
@@ -70,7 +70,7 @@
    "alt": "Brian Heder devant son pick-up Vapid dans le Trailer 2 officiel de GTA VI.",
    "source": "https://www.rockstargames.com/VI/media/videos",
    "identification": "https://www.gtabase.com/gta-6/vehicles/caracara-4x4",
-   "preuve": "Trame extraite du MP4 officiel Rockstar à16secondes ; face avant et badge Vapid visibles. GTABase relie la scène de Brian Heder au Caracara 4x4.",
+   "preuve": "Trame extraite du MP4 officiel Rockstar à16secondes ; face avant et badge Vapid visibles. GTABase relie la scène de Brian Heder au Caracara 4x4.",
    "confiance": "medium",
    "secondes": 16
   },
@@ -81,7 +81,7 @@
    "alt": "Brian Heder au volant de son pick-up dans une capture officielle GTA VI.",
    "source": "https://www.rockstargames.com/VI/media/screenshots",
    "identification": "https://www.gtabase.com/gta-6/vehicles/caracara-4x4",
-   "preuve": "Capture Rockstar consultée visuellement ; correspondance du véhicule attribuée à la galerie GTA VI dédiée de GTABase. Nom du modèle non validé par Rockstar.",
+   "preuve": "Capture Rockstar consultée visuellement ; correspondance du véhicule attribuée à la galerie GTA VI dédiée de GTABase. Nom du modèle non validé par Rockstar.",
    "confiance": "medium"
   },
   {
@@ -91,7 +91,7 @@
    "alt": "Pick-up au premier plan dans une poursuite à travers les marais de Grassrivers, GTA VI.",
    "source": "https://www.rockstargames.com/VI/media/screenshots",
    "identification": "https://www.gtabase.com/vehicles/gta-6/bison-ii",
-   "preuve": "Capture Rockstar consultée ; GTABase rattache précisément Grassrivers 04 à sa fiche Bison 1800. Identification secondaire.",
+   "preuve": "Capture Rockstar consultée ; GTABase rattache précisément Grassrivers 04 à sa fiche Bison 1800. Identification secondaire.",
    "confiance": "medium"
   },
   {
@@ -101,7 +101,7 @@
    "alt": "Jason conduit une moto rouge, devant un hydravion dans le Trailer 2 officiel de GTA VI.",
    "source": "https://www.rockstargames.com/VI/media/videos",
    "identification": "https://www.gtabase.com/vehicles/gta-6/avarus",
-   "preuve": "Trame extraite du MP4 officiel Rockstar, 2 min 23 s ; moto visible au premier plan. Identification Avarus également attribuée à la scène du Trailer 2 par GTABase.",
+   "preuve": "Trame extraite du MP4 officiel Rockstar, 2 min 23 s ; moto visible au premier plan. Identification Avarus également attribuée à la scène du Trailer 2 par GTABase.",
    "confiance": "medium",
    "secondes": 143
   },
@@ -112,7 +112,7 @@
    "alt": "Deux motos tout-terrain au Mount Kalaga National Park dans GTA VI.",
    "source": "https://www.rockstargames.com/VI/media/screenshots",
    "identification": "https://www.gtabase.com/vehicles/gta-6/manchez",
-   "preuve": "Capture Rockstar consultée visuellement ; correspondance du véhicule attribuée à la galerie GTA VI dédiée de GTABase. Nom du modèle non validé par Rockstar.",
+   "preuve": "Capture Rockstar consultée visuellement ; correspondance du véhicule attribuée à la galerie GTA VI dédiée de GTABase. Nom du modèle non validé par Rockstar.",
    "confiance": "medium"
   },
   {
@@ -122,7 +122,7 @@
    "alt": "Moto tout-terrain décorée dans la boutique PTT YOUNGIN$ de GTA VI.",
    "source": "https://www.rockstargames.com/VI/media/screenshots",
    "identification": "https://www.gtabase.com/vehicles/gta-6/manchez",
-   "preuve": "Capture Rockstar consultée visuellement ; correspondance du véhicule attribuée à la galerie GTA VI dédiée de GTABase. Nom du modèle non validé par Rockstar.",
+   "preuve": "Capture Rockstar consultée visuellement ; correspondance du véhicule attribuée à la galerie GTA VI dédiée de GTABase. Nom du modèle non validé par Rockstar.",
    "confiance": "medium"
   },
   {
@@ -145,20 +145,20 @@
    "type": "vehicules",
    "fiche": "western-nightblade",
    "media": "electric-fang-tattoo-01",
-   "alt": "Deux motos stationnées devant Electric Fang Tattoo dans GTA VI ; cruiser à large pneu arrière à droite.",
+   "alt": "Deux motos stationnées devant Electric Fang Tattoo dans GTA VI ; cruiser à large pneu arrière à droite.",
    "source": "https://www.rockstargames.com/VI/media/screenshots",
    "identification": "https://www.gtabase.com/gta-6/vehicles/nightblade",
-   "preuve": "Capture Rockstar consultée visuellement ; correspondance du véhicule attribuée à la galerie GTA VI dédiée de GTABase. Nom du modèle non validé par Rockstar.",
+   "preuve": "Capture Rockstar consultée visuellement ; correspondance du véhicule attribuée à la galerie GTA VI dédiée de GTABase. Nom du modèle non validé par Rockstar.",
    "confiance": "medium"
   },
   {
    "type": "vehicules",
    "fiche": "western-zombie-chopper",
    "media": "electric-fang-tattoo-01",
-   "alt": "Deux motos stationnées devant Electric Fang Tattoo dans GTA VI ; chopper à gauche.",
+   "alt": "Deux motos stationnées devant Electric Fang Tattoo dans GTA VI ; chopper à gauche.",
    "source": "https://www.rockstargames.com/VI/media/screenshots",
    "identification": "https://www.gtabase.com/vehicles/gta-6/zombie-chopper",
-   "preuve": "Capture Rockstar consultée visuellement ; correspondance du véhicule attribuée à la galerie GTA VI dédiée de GTABase. Nom du modèle non validé par Rockstar.",
+   "preuve": "Capture Rockstar consultée visuellement ; correspondance du véhicule attribuée à la galerie GTA VI dédiée de GTABase. Nom du modèle non validé par Rockstar.",
    "confiance": "medium"
   },
   {
@@ -168,7 +168,7 @@
    "alt": "Groupe de motards circulant à Ambrosia dans GTA VI.",
    "source": "https://www.rockstargames.com/VI/media/screenshots",
    "identification": "https://www.gtabase.com/vehicles/gta-6/sovereign",
-   "preuve": "Capture Rockstar consultée visuellement ; correspondance du véhicule attribuée à la galerie GTA VI dédiée de GTABase. Nom du modèle non validé par Rockstar.",
+   "preuve": "Capture Rockstar consultée visuellement ; correspondance du véhicule attribuée à la galerie GTA VI dédiée de GTABase. Nom du modèle non validé par Rockstar.",
    "confiance": "medium"
   },
   {
@@ -255,7 +255,7 @@
    "type": "vehicules",
    "fiche": "bravado-buffalo-stx-pursuit",
    "media": "vice-city-06",
-   "alt": "Buffalo STX de Vice Beach Police entourée de policiers et de passantes devant l'Ocean View Hotel.",
+   "alt": "Buffalo STX de Vice Beach Police entourée de policiers et de passantes devant l’Ocean View Hotel.",
    "source": "https://www.rockstargames.com/VI/media/screenshots",
    "identification": "inspection visuelle de la capture (Leonidakit, 16/09/2026)"
   },
@@ -266,14 +266,14 @@
    "alt": "Minibus blanc à droite dans la scène de rue des Leonida Keys dans GTA VI.",
    "source": "https://www.rockstargames.com/VI/media/screenshots",
    "identification": "https://www.gtabase.com/vehicles/gta-6/rental-shuttle-bus",
-   "preuve": "Capture Rockstar consultée visuellement ; correspondance du véhicule attribuée à la galerie GTA VI dédiée de GTABase. Nom du modèle non validé par Rockstar.",
+   "preuve": "Capture Rockstar consultée visuellement ; correspondance du véhicule attribuée à la galerie GTA VI dédiée de GTABase. Nom du modèle non validé par Rockstar.",
    "confiance": "medium"
   },
   {
    "type": "vehicules",
    "fiche": "pomazoom-mobility-scooter",
    "media": "leonida-keys-02",
-   "alt": "Conducteur d'un scooter de mobilité bleu dans les Leonida Keys, près d'un alligator",
+   "alt": "Conducteur d’un scooter de mobilité bleu dans les Leonida Keys, près d’un alligator",
    "source": "https://www.rockstargames.com/VI/media/screenshots",
    "identification": "inspection visuelle de la capture (Leonidakit, 16/09/2026)"
   },
@@ -281,7 +281,7 @@
    "type": "vehicules",
    "fiche": "suzuki-gsx-r1000",
    "media": "lucia-caminos-03",
-   "alt": "Lucia assise sur une moto jaune, rapprochée d'une Suzuki GSX-R1000",
+   "alt": "Lucia assise sur une moto jaune, rapprochée d’une Suzuki GSX-R1000",
    "source": "https://www.rockstargames.com/VI/media/screenshots",
    "identification": "inspection visuelle de la capture (Leonidakit, 16/09/2026)"
   },
@@ -289,7 +289,7 @@
    "type": "vehicules",
    "fiche": "kellison-j4",
    "media": "ultimate-edition-02",
-   "alt": "Jason et Lucia devant le coupé vert rapproché d'un Kellison J4 dans le visuel Ultimate Edition",
+   "alt": "Jason et Lucia devant le coupé vert rapproché d’un Kellison J4 dans le visuel Ultimate Edition",
    "source": "https://www.rockstargames.com/VI/media/screenshots",
    "identification": "inspection visuelle de la capture (Leonidakit, 16/09/2026)"
   },
@@ -403,7 +403,7 @@
    "media": "artwork-jason-lucia-beach",
    "alt": "Lucia tient un petit pistolet contre Jason sur une illustration officielle de GTA VI.",
    "source": "https://www.rockstargames.com/VI/media/artwork-wallpapers",
-   "preuve": "Pistolet compact clairement visible en main de Lucia ; identification Nipper .38 recoupée par PC Gamer. Illustration promotionnelle, et non capture en jeu."
+   "preuve": "Pistolet compact clairement visible en main de Lucia ; identification Nipper .38 recoupée par PC Gamer. Illustration promotionnelle, et non capture en jeu."
   },
   {
    "type": "armes",
@@ -419,7 +419,7 @@
    "media": "trailer-2-lucia-grenade-launcher",
    "alt": "Lucia tient un lance-grenades à cylindre pendant une poursuite, dans le Trailer 2 de GTA VI.",
    "source": "https://www.rockstargames.com/VI/media/videos",
-   "preuve": "Le large cylindre de l’arme se distingue à gauche du cadre, à hauteur de l’épaule de Lucia. Séquence recoupée par PC Gamer ; aucun calibre, capacité ou nom de marque déduit."
+   "preuve": "Le large cylindre de l’arme se distingue à gauche du cadre, à hauteur de l’épaule de Lucia. Séquence recoupée par PC Gamer ; aucun calibre, capacité ou nom de marque déduit."
   }
  ]
 }

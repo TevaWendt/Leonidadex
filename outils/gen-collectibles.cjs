@@ -121,7 +121,7 @@ function validateCatalog(input, options = {}) {
     if (item.coordinates) assert(item.status !== 'placeholder', loc + '.coordinates', 'aucune coordonnée publique pour un brouillon');
     return item;
   }, 20000);
-  for (const item of data.items) for (const related of item.relatedIds) assert(ids.has(related) && related !== item.id, item.id + '.relatedIds', 'référence inconnue ou vers soi-même : ' + related);
+  for (const item of data.items) for (const related of item.relatedIds) assert(ids.has(related) && related !== item.id, item.id + '.relatedIds', 'référence inconnue ou vers soi-même : ' + related);
   return data;
 }
 function isIndexable(item) {
@@ -146,7 +146,7 @@ function list(title, items, spoiler = false, sectionId = null) {
   return spoiler ? '<details class="col-panel"' + identifier + ' data-col-spoiler><summary>' + esc(title) + '</summary>' + body + '</details>' : '<section class="col-panel"' + identifier + '><h2>' + esc(title) + '</h2>' + body + '</section>';
 }
 function photo(image, eager = false) {
-  return '<figure class="col-detail-image"><a href="' + esc(image.src) + '" aria-label="Agrandir : ' + esc(image.alt) + '" data-col-zoom-alt="' + esc(image.alt) + '" data-col-zoom-credit="' + esc(image.credit) + '"><img src="' + esc(image.src) + '" width="' + image.width + '" height="' + image.height + '" alt="' + esc(image.alt) + '" loading="' + (eager ? 'eager' : 'lazy') + '" decoding="async"></a><figcaption>' + esc(image.credit) + ' · <a href="' + esc(image.sourceUrl) + '" target="_blank" rel="noopener noreferrer">Source du visuel</a></figcaption></figure>';
+  return '<figure class="col-detail-image"><a href="' + esc(image.src) + '" aria-label="Agrandir : ' + esc(image.alt) + '" data-col-zoom-alt="' + esc(image.alt) + '" data-col-zoom-credit="' + esc(image.credit) + '"><img src="' + esc(image.src) + '" width="' + image.width + '" height="' + image.height + '" alt="' + esc(image.alt) + '" loading="' + (eager ? 'eager' : 'lazy') + '" decoding="async"></a><figcaption>' + esc(image.credit) + ' · <a href="' + esc(image.sourceUrl) + '" target="_blank" rel="noopener noreferrer">Source du visuel</a></figcaption></figure>';
 }
 function templates(hub) {
   const header = hub.match(/<a class="skip"[\s\S]*?<\/header>/);
@@ -204,9 +204,6 @@ function renderDetail(item, data, parts, published) {
 <meta property="og:image" content="${SITE}${item.image ? esc(item.image.src) : '/img/social-card.png'}">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#FDFBF7">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../style.css">
 <link rel="stylesheet" href="../collectibles.css">
 <link rel="stylesheet" href="../collectibles-tools.css">
@@ -233,7 +230,7 @@ ${actions(item)}
 ${item.image ? photo(item.image, true) : ''}
 ${item.description ? '<section class="col-panel" id="col-detail-presentation"><h2>Présentation</h2>' + paragraphs(item.description) + '</section>' : ''}
 ${facts.length ? '<section class="col-panel" id="col-detail-facts"><h2>Repères</h2><dl class="col-detail-facts">' + facts.map(([key, value]) => '<div><dt>' + esc(key) + '</dt><dd>' + esc(value) + '</dd></div>').join('') + '</dl></section>' : ''}
-${locationAvailable ? '<details class="col-panel" id="col-detail-location" data-col-spoiler><summary>Révéler l’emplacement précis</summary>' + (item.zone ? '<p><strong>Zone :</strong> ' + esc(item.zone) + '</p>' : '') + paragraphs(item.place) + (map ? '<p><a class="col-btn" href="' + map + '">Voir cet emplacement sur la carte</a></p>' : '') + '</details>' : ''}
+${locationAvailable ? '<details class="col-panel" id="col-detail-location" data-col-spoiler><summary>Révéler l’emplacement précis</summary>' + (item.zone ? '<p><strong>Zone :</strong> ' + esc(item.zone) + '</p>' : '') + paragraphs(item.place) + (map ? '<p><a class="col-btn" href="' + map + '">Voir cet emplacement sur la carte</a></p>' : '') + '</details>' : ''}
 ${list('Prérequis', item.requirements, false, 'col-detail-requirements')}
 ${item.reward ? '<details class="col-panel" id="col-detail-reward" data-col-spoiler><summary>Révéler la récompense</summary>' + paragraphs(item.reward) + '</details>' : ''}
 ${item.hints.length ? '<section class="col-panel" id="col-detail-hints"><h2>Indices progressifs</h2><p>Ouvre un indice à la fois, dans l’ordre, pour conserver le plaisir de chercher.</p><div class="col-hint-list">' + item.hints.map((hint, i) => '<details class="col-hint" data-col-hint="' + (i + 1) + '" data-col-spoiler><summary>Indice ' + (i + 1) + ' sur ' + item.hints.length + '</summary>' + paragraphs(hint) + '</details>').join('') + '</div></section>' : ''}
@@ -244,7 +241,7 @@ ${item.gallery.length ? '<details class="col-panel" id="col-detail-gallery" data
 <section class="col-panel" id="col-detail-sources"><h2>Sources et vérification</h2><ul>${item.sources.map(s => '<li><a href="' + esc(s.url) + '" target="_blank" rel="noopener noreferrer">' + esc(s.label) + '</a> · ' + ({ official: 'Source officielle', community: 'Source communautaire', press: 'Presse' })[s.kind] + ' · consultée le <time datetime="' + s.checkedAt + '">' + s.checkedAt.split('-').reverse().join('/') + '</time></li>').join('')}</ul><p><a href="../contact.html">Signaler une source ou une correction</a></p></section>
 ${related.length ? '<section class="col-panel" id="col-detail-related"><h2>Fiches liées</h2><ul>' + related.map(entry => '<li><a href="' + entry.slug + '.html">' + esc(entry.name) + '</a></li>').join('') + '</ul></section>' : ''}
 ${item.category || item.region ? '<nav class="col-detail-browse" aria-label="Continuer dans le catalogue">' + (item.category ? filterLink('category', item.category, 'Voir la catégorie ' + categoryName(item, data)) : '') + (item.region ? filterLink('region', item.region, 'Voir les fiches de ' + item.region) : '') + '</nav>' : ''}
-<nav class="col-detail-nav" aria-label="Autres collectibles">${prev ? '<a class="col-btn" rel="prev" href="' + prev.slug + '.html">Précédent : ' + esc(prev.name) + '</a>' : ''}<a class="col-btn" href="../collectibles.html">Tous les collectibles</a>${next ? '<a class="col-btn" rel="next" href="' + next.slug + '.html">Suivant : ' + esc(next.name) + '</a>' : ''}</nav>
+<nav class="col-detail-nav" aria-label="Autres collectibles">${prev ? '<a class="col-btn" rel="prev" href="' + prev.slug + '.html">Précédent : ' + esc(prev.name) + '</a>' : ''}<a class="col-btn" href="../collectibles.html">Tous les collectibles</a>${next ? '<a class="col-btn" rel="next" href="' + next.slug + '.html">Suivant : ' + esc(next.name) + '</a>' : ''}</nav>
 <p id="col-storage-warning" class="col-notice col-warning" role="status" hidden></p>
 <p data-col-feedback role="status" aria-live="polite"></p>
 <noscript><p class="col-panel">Cette fiche reste consultable sans JavaScript. Active JavaScript pour enregistrer les objets trouvés, les favoris et tes notes.</p></noscript>
@@ -303,9 +300,9 @@ function updateHub(hub, items, data) {
   inner('col-review-summary', count ? count + ' fiche' + (count > 1 ? 's' : '') + ' publiée' + (count > 1 ? 's' : '') + ' avec ses sources et son statut de vérification. Les fiches non confirmées restent hors de la progression. Le total des collectibles du jeu reste distinct de ce catalogue.' : 'Aucune collection suffisamment documentée n’a été identifiée au cours de cette revue. Ce constat ne signifie pas que le jeu ne proposera aucun collectible.');
   opening('col-empty', tag => tag.replace(/\shidden(?:="[^"]*")?/g, '').replace(/>$/, count ? ' hidden>' : '>'));
   inner('col-trackable-label', eligible ? 'sur ' + eligible + ' objet' + (eligible > 1 ? 's' : '') + ' suivi' + (eligible > 1 ? 's' : '') : 'objet suivi');
-  inner('col-percent', eligible ? '0 %' : '—');
+  inner('col-percent', eligible ? '0 %' : '—');
   inner('col-progress-caption', eligible ? 'Le suivi porte sur ' + eligible + ' fiche' + (eligible > 1 ? 's' : '') + ' éligible' + (eligible > 1 ? 's' : '') + ' de ce catalogue. Il ne représente pas le total du jeu.' : 'Le suivi commencera avec les premières fiches éligibles. Le total du jeu est inconnu.');
-  opening('col-progress-meter', tag => tag.replace(/aria-valuetext="[^"]*"/, 'aria-valuetext="' + (eligible ? '0 objet trouvé sur ' + eligible + ' fiches éligibles' : 'Progression indisponible : aucun collectible suivi') + '"'));
+  opening('col-progress-meter', tag => tag.replace(/aria-valuetext="[^"]*"/, 'aria-valuetext="' + (eligible ? '0 objet trouvé sur ' + eligible + ' fiches éligibles' : 'Progression indisponible : aucun collectible suivi') + '"'));
   return hub;
 }
 function generate(options = {}) {
@@ -340,7 +337,7 @@ function generate(options = {}) {
     if (fs.readFileSync(path.join(detailDir, file), 'utf8').includes(MARKER)) stale.push('collectibles/' + file);
   }
   const changed = [...outputs].filter(([name, content]) => !fs.existsSync(path.join(root, name)) || fs.readFileSync(path.join(root, name), 'utf8') !== content).map(([name]) => name);
-  for (const name of changed) if (name.startsWith('collectibles/') && fs.existsSync(path.join(root, name))) assert(fs.readFileSync(path.join(root, name), 'utf8').includes(MARKER), name, 'une fiche manuelle occupe ce chemin ; aucun écrasement automatique');
+  for (const name of changed) if (name.startsWith('collectibles/') && fs.existsSync(path.join(root, name))) assert(fs.readFileSync(path.join(root, name), 'utf8').includes(MARKER), name, 'une fiche manuelle occupe ce chemin ; aucun écrasement automatique');
   if (!options.check) {
     for (const name of changed) {
       const target = path.join(root, name);
@@ -361,10 +358,10 @@ if (require.main === module) {
       else if (arg === '--root' || arg === '--source') {
         assert(process.argv[i + 1] && !process.argv[i + 1].startsWith('--'), arg, 'chemin attendu');
         options[arg.slice(2)] = path.resolve(process.argv[++i]);
-      } else throw new Error('Option inconnue : ' + arg);
+      } else throw new Error('Option inconnue : ' + arg);
     }
     const result = generate(options);
-    console.log('Collectibles : ' + result.published + ' fiche(s) publiée(s), ' + result.indexable + ' indexable(s), ' + result.changed.length + ' fichier(s) ' + (options.check ? 'à régénérer' : 'mis à jour') + ', ' + result.removed.length + ' fiche(s) retirée(s).');
+    console.log('Collectibles : ' + result.published + ' fiche(s) publiée(s), ' + result.indexable + ' indexable(s), ' + result.changed.length + ' fichier(s) ' + (options.check ? 'à régénérer' : 'mis à jour') + ', ' + result.removed.length + ' fiche(s) retirée(s).');
     if (options.check && !result.current) { console.error([...result.changed, ...result.removed].join('\n')); process.exitCode = 1; }
-  } catch (error) { console.error('Génération collectibles refusée : ' + error.message); process.exitCode = 1; }
+  } catch (error) { console.error('Génération collectibles refusée : ' + error.message); process.exitCode = 1; }
 }

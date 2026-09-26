@@ -31,7 +31,7 @@
       for (const key of written.reverse()) try {
         if (previous[key] === null) localStorage.removeItem(key); else localStorage.setItem(key,previous[key]);
       } catch (_) { restored = false; }
-      status(restored ? 'Import non enregistré : stockage indisponible. Les données précédentes sont conservées.' : 'Import interrompu. Exporte les données affichées avant de quitter : le stockage est indisponible.');
+      status(restored ? 'Import non enregistré : stockage indisponible. Les données précédentes sont conservées.' : 'Import interrompu. Exporte les données affichées avant de quitter : le stockage est indisponible.');
       return false;
     }
   }
@@ -51,7 +51,7 @@
       await navigator.clipboard.writeText(text);
       if (button && success) { button.textContent = success; setTimeout(() => { button.textContent = label; }, 1800); }
       status('Lien ou texte copié.'); return true;
-    } catch (_) { status('Copie impossible. Sélectionne et copie ce texte : ' + text); return false; }
+    } catch (_) { status('Copie impossible. Sélectionne et copie ce texte : ' + text); return false; }
   }
   function hasAsset(url) {
     try { return assets.has(new URL(url,location.href).pathname); } catch (_) { return false; }
@@ -137,7 +137,7 @@
 })();
 
 /* Léo : amorçage isolé. Les données ne se chargent qu'à l'ouverture du panneau. */
-(function(){'use strict';if(!document.querySelector('main')||document.getElementById('leo-style'))return;const base=(document.currentScript&&document.currentScript.src||'').replace(/[^/]*$/,'')||'/';const css=document.createElement('link');css.id='leo-style';css.rel='stylesheet';css.href=base+'leo.css?v=436b7c4c1eee';css.onload=()=>{const script=document.createElement('script');script.src=base+'leo-loader.js?v=436b7c4c1eee';document.head.append(script);};document.head.append(css);})();
+(function(){'use strict';if(!document.querySelector('main')||document.getElementById('leo-style'))return;const base=(document.currentScript&&document.currentScript.src||'').replace(/[^/]*$/,'')||'/';const css=document.createElement('link');css.id='leo-style';css.rel='stylesheet';css.href=base+'leo.css?v=91048ba67636';css.onload=()=>{const script=document.createElement('script');script.src=base+'leo-loader.js?v=91048ba67636';document.head.append(script);};document.head.append(css);})();
 
 /* Lot C (v7.32) : du mouvement sur toutes les pages. Les blocs de contenu apparaissent au défilement (par vagues,
    avec un léger décalage), les piles d'images s'ouvrent, les titres de section tirent leur trait, l'en-tête prend
@@ -208,7 +208,13 @@
             const s = document.createElement('span'); s.className = 'lk-w'; s.style.setProperty('--lk-i', i++); s.textContent = part; frag.appendChild(s);
           });
           n.parentNode.replaceChild(frag, n);
-        } else if (n.nodeType === 1 && !/^(BR|SCRIPT|STYLE)$/.test(n.tagName) && !n.classList.contains('lk-w') && !n.classList.contains('w')) walk(n);
+        } else if (n.nodeType === 1 && !/^(BR|SCRIPT|STYLE)$/.test(n.tagName) && !n.classList.contains('lk-w') && !n.classList.contains('w')) {
+          /* v7.37 : un texte peint par un dégradé (background-clip:text) reste entier : le dégradé n'est pas
+             transmis à un span enfant en inline-block, le mot deviendrait transparent (ex. « VI » du titre d'accueil). */
+          const cs = window.getComputedStyle(n);
+          if ((cs.webkitBackgroundClip || cs.backgroundClip) === 'text') { n.classList.add('lk-w'); n.style.setProperty('--lk-i', i++); return; }
+          walk(n);
+        }
       });
     };
     walk(el);
@@ -249,7 +255,9 @@
   main.querySelectorAll(ROWS).forEach(function (el) { if (el.closest('.lk-reveal')) return; if (el.children.length > 1 && el.children.length <= 40) { add(el, 'rows'); Array.prototype.slice.call(el.children).forEach(function (c, i) { c.style.setProperty('--lk-i', i); }); } });
   main.querySelectorAll(GRID_CARDS).forEach(function (el) { el.classList.add('lk-reveal--zoom'); if (!el.classList.contains('lk-reveal')) add(el); });
   main.querySelectorAll('.lk-stack').forEach(function (el) { el.classList.add('lk-reveal--right'); el.querySelectorAll('img').forEach(function (img) { img.classList.add('lk-kb'); }); });
-  main.querySelectorAll('.lore-texte, .calc-editorial>div:first-child').forEach(function (el) { el.classList.add('lk-reveal--left'); });
+  /* v7.37 : la variante « depuis la gauche » ne s'ajoute qu'aux blocs réellement suivis par l'observateur (classe lk-reveal),
+     sinon le décalage de -22 px restait appliqué pour toujours (textes des fiches du monde hors de la gouttière). */
+  main.querySelectorAll('.lore-texte, .calc-editorial>div:first-child').forEach(function (el) { if (el.classList.contains('lk-reveal')) el.classList.add('lk-reveal--left'); });
   main.querySelectorAll('.lk-h2').forEach(function (h) { splitWords(h); });
   /* cascade dans les grilles : le rang parmi les frères décide du décalage */
   main.querySelectorAll('.lk-reveal').forEach(function (el) {

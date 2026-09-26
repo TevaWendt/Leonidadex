@@ -44,7 +44,7 @@
     return values;
   }
   function duration(minutes) {
-    if (minutes === 0) return 'C’est bon !';
+    if (minutes === 0) return 'C’est bon !';
     if (minutes < 1) return '< 1 min';
     const rounded = Math.ceil(minutes - 1e-9);
     const hours = Math.floor(rounded / 60), remainder = rounded % 60;

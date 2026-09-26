@@ -1,11 +1,12 @@
 # ETAT_AUDIT — audit de finition LeonidaKit
 
-Mis à jour le 25 septembre 2026 · livraison **v7.36 = lots A + B + C + calculateur « puissant » + business plan mission par mission + ergonomie + Motion+ (animations sur tout le site)**. La refonte en trois lots est complète ; l’audit v7.29 ci-dessous reste valable.
+Mis à jour le 26 septembre 2026 · livraison **v7.37 = audit final (chaque page, chaque mot) + référencement**, sur la v7.36 (lots A + B + C + calculateur « puissant » + business plan + ergonomie + Motion+). La refonte en trois lots est complète ; l’audit v7.29 ci-dessous reste valable.
 
 ## Refonte en trois lots (25/09/2026)
 
 | Lot | État | Contenu |
 |---|---|---|
+| Audit final + SEO | **Livré (v7.37)** | 34 anomalies corrigées (F01–F34 dans outils/RAPPORT-AUDIT-v7.37.md) : deux régressions Motion+ (« VI » invisible, visuels des fiches du monde cachés), grilles équilibrées (3 + 3, 4 × 4, dernières rangées centrées) sur 320 → 1 920 px, typographie française sur les 406 pages (module `outils/typographie.cjs`, étape permanente de sync-site), registre « tu » partout, 16 contradictions des fiches véhicules, tableau des activités, cibles tactiles, bouton Léo, menu Explorer, police Archivo hébergée sur le site. SEO : titres « … \| Leonidakit », descriptions ≤ 158, données structurées (WebSite + SearchAction, WebApplication, FAQPage, BreadcrumbList), canonique, max-image-preview, hiérarchie des titres. 373/373 tests, verifier 0 erreur, audit automatique 31 pages × 5 largeurs + 155 pages × 2 largeurs. Détail : outils/CHANGEMENTS-v7.37.txt |
 | A | **Livré (v7.30)** | Menu Explorer refait (S’équiper : Consommables, Vêtements et style, Personnalisations ; Armes → Armurerie ; doublons retirés), pages Consommables et Vêtements et style en volets, renvois pour les pages absorbées, Léo avec une base de connaissances GTA VI de 79 sujets. Détail : outils/CHANGEMENTS-v7.30.txt |
 | B | **Livré (v7.31)** | Calculateur en deux sections : (1) « Mes calculs », huit onglets dont le nouveau « Quel achat choisir ? » (2 à 6 achats, critère rapport qualité-prix / moins cher / plus vite / plus rentable / plus utile), Simple = phrase + 3 chiffres, Expert = tableaux, graphiques, réglages ; (2) « Mon business plan » à la place de « Mon plan » : fiche en quatre questions → réponse simple, plan étape par étape, puis « Afficher plus de détails » (chiffres après chaque étape, calendrier avec dates, « Et si… ? »). Tuto : 15 chapitres, 26 captures. Léo et la barre de question ouvrent les deux outils. Détail : outils/CHANGEMENTS-v7.31.txt |
 | Motion+ (tout le site) | **Livré (v7.36)** | Titres mot à mot, bandeaux en cascade, rideaux d’images, flou des paragraphes, cartes en cascade, lignes de tableaux, respiration des piles, parallaxe des bandeaux, barre de lecture, inclinaison des cartes, reflet des boutons ; réduction des animations et impression respectées ; 12 pages × 2 largeurs parcourues + 39 pages × 15 largeurs sans erreur. Détail : outils/CHANGEMENTS-v7.36.txt |
@@ -43,7 +44,9 @@ Fichiers modifiés par rapport au ZIP v7.28 : 462 (toutes les pages HTML changen
 - P2 — Mentions : identité de l'éditeur, responsable de publication, contact légal, téléphone de l'hébergeur et modalités Brevo restent « à compléter ». Données propriétaire.
 - P3 — Onglet « Quoi acheter d'abord ? » sur deux lignes à partir de 1 101 px (choix retenu plutôt que réduire la police).
 - P3 — Menu mobile : le panneau « Explorer » a un défilement interne (60 vh) quand toutes les catégories sont dépliées.
-- P3 — Léo : formulations de quelques réponses anciennes (FAQ) non relues une par une.
+- P3 — Léo : formulations de quelques réponses anciennes (FAQ) non relues une par une (v7.37 : les 79 sujets et la FAQ ont été passés en typographie et en « tu », sans relecture du fond phrase par phrase).
+- P3 — Bouton Léo sur un téléphone de 320 px : sur les catalogues pleine largeur aucune place n’est libre ; il reste en bas à droite, replié sur son symbole (mise à jour v7.37).
+- P3 — Anciennes suites navigateur `outils/tests/calculateurs-v2-browser.cjs` (4 échecs) et `calculateurs-lot-b-browser.cjs` (attente de `.b-save-state`) : écrites pour une interface antérieure au lot B ; `calculateurs-browser.cjs` (278) passe. À réécrire ou retirer.
 - Non vérifié : écarts entre le ZIP et la production ; mesures Lighthouse ; lecteur d'écran réel ; test avec un nouveau visiteur (à faire par Téva).
 
 ## Tests réellement effectués

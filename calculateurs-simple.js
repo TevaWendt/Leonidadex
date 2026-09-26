@@ -53,7 +53,7 @@
     var reward = $('lk-help-reward'), minutes = $('lk-help-minutes'), out = $('lk-help-out'), apply = $('lk-help-apply');
     if (!reward || !minutes || !out || !apply) return;
     var r = parse(reward.value), m = parse(minutes.value); helped = null;
-    if (reward.value.trim() === '' || minutes.value.trim() === '') out.textContent = 'Écris les deux nombres : on calcule ton gain par heure.';
+    if (reward.value.trim() === '' || minutes.value.trim() === '') out.textContent = 'Écris les deux nombres : on calcule ton gain par heure.';
     else if (r === null || m === null || r < 0 || m <= 0) out.textContent = 'Écris des nombres plus grands que 0, par exemple 25 000 et 15.';
     else { helped = Math.round(r / m * 60); out.textContent = 'Ça fait environ ' + nf.format(helped) + ' $ par heure de jeu.'; }
     apply.disabled = helped === null;
@@ -64,7 +64,7 @@
      déplacés dans l'outil ouvert. */
   var stepByTab = {};
   var head = document.createElement('div'); head.className = 'calc-guidance calc-wizard'; head.hidden = true;
-  head.innerHTML = '<p class="calc-wiz-count" id="wiz-count" aria-live="polite"></p><div class="calc-wiz-bar" aria-hidden="true"><span id="wiz-bar"></span></div><p class="calc-wiz-why" id="wiz-why"></p><p class="calc-wiz-tip">Une question à la fois. Ta réponse se calcule toute seule ; tu peux revenir en arrière, rien n’est perdu.</p>';
+  head.innerHTML = '<p class="calc-wiz-count" id="wiz-count" aria-live="polite"></p><div class="calc-wiz-bar" aria-hidden="true"><span id="wiz-bar"></span></div><p class="calc-wiz-why" id="wiz-why"></p><p class="calc-wiz-tip">Une question à la fois. Ta réponse se calcule toute seule ; tu peux revenir en arrière, rien n’est perdu.</p>';
   var nav = document.createElement('div'); nav.className = 'calc-wiz-nav'; nav.hidden = true;
   nav.innerHTML = '<button type="button" class="calc-button" data-wiz="prev">← Retour</button><button type="button" class="calc-button calc-button-primary" data-wiz="next">Suivant →</button>';
   function guided() { return panels.dataset.mode === 'guided'; }
@@ -88,7 +88,7 @@
     head.hidden = false; nav.hidden = false;
     var count = $('wiz-count'), bar = $('wiz-bar');
     if (count && cur) count.textContent = 'Question ' + step + ' sur ' + total + ' : ' + cur.dataset.question;
-    var why = $('wiz-why'); if (why) { why.textContent = cur && cur.dataset.why ? 'Pourquoi cette question ? ' + cur.dataset.why : ''; why.hidden = !(cur && cur.dataset.why); }
+    var why = $('wiz-why'); if (why) { why.textContent = cur && cur.dataset.why ? 'Pourquoi cette question ? ' + cur.dataset.why : ''; why.hidden = !(cur && cur.dataset.why); }
     if (bar) bar.style.width = (step / total * 100) + '%';
     var prev = nav.querySelector('[data-wiz="prev"]'), next = nav.querySelector('[data-wiz="next"]');
     if (prev) prev.disabled = step === 1;
@@ -111,7 +111,7 @@
     clearTimeout(hiTimer); hiTimer = setTimeout(function () { res.classList.remove('is-highlighted'); }, 4000);
     if (!res.hasAttribute('tabindex')) res.setAttribute('tabindex', '-1');
     res.focus({ preventScroll: true });
-    var live = $('calc-live'), answer = res.querySelector('.calc-answer'); if (live && answer) { live.textContent = ''; setTimeout(function () { live.textContent = 'Réponse : ' + answer.textContent; }, 50); }
+    var live = $('calc-live'), answer = res.querySelector('.calc-answer'); if (live && answer) { live.textContent = ''; setTimeout(function () { live.textContent = 'Réponse : ' + answer.textContent; }, 50); }
   }
   /* Un bouton « Voir ma réponse » sous les cases de chaque outil, dans tous les modes (le pas à pas a le sien). */
   function answerButtons() {

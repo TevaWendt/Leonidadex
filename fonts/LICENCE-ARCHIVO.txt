@@ -1,0 +1,4 @@
+Archivo (variable, axe wght 100–900), fichiers woff2 « latin » et « latin-ext » tels que servis par Google Fonts (v25).
+Copyright 2020 The Archivo Project Authors (https://github.com/Omnibus-Type/Archivo)
+Police publiée sous la SIL Open Font License, Version 1.1 (https://openfontlicense.org).
+Hébergée sur Leonidakit depuis la v7.37 : aucune connexion à Google n’est nécessaire pour afficher le site.

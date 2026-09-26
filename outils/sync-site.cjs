@@ -61,6 +61,11 @@ for(const file of htmlFiles){let s=fs.readFileSync(file,'utf8');if(file.startsWi
   s=s.replace(/(<script src="(?:\.\.\/|\/)?app\.js"><\/script>)/,'<script src="'+prefix+'assets-manifest.js"></script>\n<script src="'+prefix+'common.js"></script>\n$1');
  }
  if(!s.includes('name="viewport"'))s=s.replace('</head>','<meta name="viewport" content="width=device-width, initial-scale=1.0">\n</head>');
+ // v7.37 : police Archivo hébergée sur le site (style.css) : plus aucun lien vers Google Fonts, préchargement du fichier latin.
+ s=s.replace(/[ \t]*<link rel="preconnect" href="https:\/\/fonts\.googleapis\.com">\s*\n?/g,'').replace(/[ \t]*<link rel="preconnect" href="https:\/\/fonts\.gstatic\.com" crossorigin>\s*\n?/g,'').replace(/[ \t]*<link href="https:\/\/fonts\.googleapis\.com\/css2[^"]*" rel="stylesheet">\s*\n?/g,'');
+ if(!s.includes('rel="preload" href="/fonts/archivo-latin.woff2"'))s=s.replace(/(<link rel="stylesheet" href="(?:\.\.\/|\/)?style\.css[^>]*>)/,'<link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>\n$1');
+ // v7.37 : aperçus d'images larges autorisés dans les résultats de recherche (pages indexables sans directive robots).
+ if(!s.includes('name="robots"')&&!s.includes('http-equiv="refresh"'))s=s.replace(/(<meta name="description"[^>]*>)/,'$1\n<meta name="robots" content="max-image-preview:large">');
  if(s.includes('http-equiv="refresh"')&&!s.includes('name="robots"'))s=s.replace('</head>','<meta name="robots" content="noindex, follow">\n</head>');
  s=s.replace(/\s+onerror="[^"]*"/g,'');
  // Separate the catalogue link from its possession/comparison buttons.
@@ -111,6 +116,8 @@ const pointIds=allPoints.map(p=>p.id);
 const cats=vm.runInNewContext('('+mapSource.match(/const CATS = (\{[\s\S]*?\n  \});/)[1]+')');
 const mapCounts=[allPoints.length,allPoints.filter(p=>p.s==='officiel').length,7,Object.keys(cats).length];let mi=0;
 fs.writeFileSync('carte.html',fs.readFileSync('carte.html','utf8').replace(/(<span class="n" data-count=")\d+(">)\d+(<\/span>)/g,(_,a,b,c)=>{const n=mapCounts[mi++];return a+n+b+n+c;}));
+// v7.37 : la carte d'outil de l'accueil affiche le même nombre de lieux que la carte.
+{const nb=String(allPoints.length).replace(/\B(?=(\d{3})+(?!\d))/g,'\u202f');fs.writeFileSync('index.html',fs.readFileSync('index.html','utf8').replace(/(<h3>Carte interactive <span class="chip live">)[^<]*lieux(<\/span>)/,'$1'+nb+' lieux$2'));}
 fs.writeFileSync('progression-data.js','/* IDs only; no need to load the full map on this page. */\nwindow.LK_PROGRESS_IDS = '+JSON.stringify({vehicules:V.map(v=>v.id),armes:A.map(v=>v.id),lieux:pointIds})+';\n');
 console.log('Synchronisation : '+htmlFiles.length+' pages, '+assets.length+' assets, '+urls.length+' URL canoniques.');
 
@@ -138,6 +145,21 @@ require('child_process').execFileSync(process.execPath,[path.join(__dirname,'gen
  const index=[...new Map([...ctx.window.LK_INDEX,...extra].filter(e=>!redirectPage(e.u)).map(e=>[e.u,e])).values()];
  fs.writeFileSync(path.join(root,'search-index.js'),'/* Généré depuis les pages, catalogues et acquisitions. */\nwindow.LK_INDEX = '+JSON.stringify(index)+';\n');
 }
+
+// v7.37 : données structurées FAQPage générées depuis les questions visibles (div.faq > details), pages indexables seulement.
+// Le bloc est reconstruit à chaque régénération : il ne peut pas diverger du texte de la page.
+{const strip=h=>h.replace(/<[^>]+>/g,' ').replace(/&nbsp;/g,' ').replace(/&#x27;|&#39;/g,'’').replace(/&quot;/g,'"').replace(/&amp;/g,'&').replace(/\s+/g,' ').trim();
+ for(const file of htmlFiles){if(file.startsWith('google')||file==='404.html')continue;let html=fs.readFileSync(file,'utf8');
+  if(/name="robots" content="[^"]*noindex/.test(html)||html.includes('http-equiv="refresh"'))continue;
+  html=html.replace(/<script type="application\/ld\+json" data-lk="faq">[\s\S]*?<\/script>\n?/,'');
+  const faq=html.match(/<div class="faq(?: [^"]*)?"[^>]*>([\s\S]*?)<\/div>\s*<\/div>\s*<\/section>/);
+  const qa=[];if(faq&&!/"@type":\s*"FAQPage"/.test(html.replace(/data-lk="faq"[\s\S]*?<\/script>/,'')))for(const m of faq[1].matchAll(/<details[^>]*>\s*<summary>([\s\S]*?)<\/summary>\s*<div class="ans">([\s\S]*?)<\/div>\s*<\/details>/g)){const q=strip(m[1]),a=strip(m[2]);if(q&&a)qa.push({'@type':'Question',name:q,acceptedAnswer:{'@type':'Answer',text:a}});}
+  if(qa.length>=2){const ld='<script type="application/ld+json" data-lk="faq">'+JSON.stringify({'@context':'https://schema.org','@type':'FAQPage',mainEntity:qa})+'</script>\n';html=html.replace('</head>',ld+'</head>');}
+  fs.writeFileSync(file,html);}}
+
+// v7.37 : typographie française sur toutes les pages (apostrophes, espaces insécables, groupes de chiffres).
+// Appliquée en dernier, sur les nœuds texte et les attributs lisibles seulement : une source corrigée le reste après régénération.
+{const typo=require('./typographie.cjs');for(const file of htmlFiles){if(file.startsWith('google'))continue;const html=fs.readFileSync(file,'utf8');const next=typo.html(html);if(next!==html)fs.writeFileSync(file,next);}}
 
 // Empreintes finales : ne dépendent pas de l’état antérieur des autres fichiers.
 {const hashes=new Map();for(const file of htmlFiles){let html=fs.readFileSync(file,'utf8');html=html.replace(/((?:href|src)=")([^"?#]+\.(?:css|js))(?:\?v=[a-f0-9]+)?("[^>]*>)/g,(match,start,url,end)=>{if(/^(?:https?:)?\/\//.test(url))return match;const target=url.startsWith('/')?path.join(root,url.slice(1)):path.resolve(root,path.dirname(file),url);if(!fs.existsSync(target))return match;if(!hashes.has(target))hashes.set(target,crypto.createHash('sha256').update(fs.readFileSync(target)).digest('hex').slice(0,12));return start+url+'?v='+hashes.get(target)+end;});fs.writeFileSync(file,html);}}

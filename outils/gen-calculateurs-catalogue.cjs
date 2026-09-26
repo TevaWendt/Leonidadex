@@ -28,7 +28,7 @@ for (const [collection, type, folder, category] of [
   for (const entry of editorial[collection] || []) {
     if (!/^[a-z0-9][a-z0-9-]*$/.test(entry.id)) throw new Error(`Identifiant invalide dans ${collection}`);
     const url = `/${folder}/${entry.id}.html`;
-    if (!exists(url)) throw new Error(`Fiche manquante : ${url}`);
+    if (!exists(url)) throw new Error(`Fiche manquante : ${url}`);
     const item = {
       id: entry.id, type, name: entry.name, category, url,
       image: imageFor(entry.media),
@@ -59,4 +59,4 @@ const output = '/* Généré par node outils/gen-calculateurs-catalogue.cjs. Ne 
   '   Véhicules et armes sont lus dans leurs sources runtime, sans copie de catalogue. */\n' +
   'window.LK_CALCULATEURS_CATALOGUE = ' + JSON.stringify(payload, null, 2) + ';\n';
 fs.writeFileSync(path.join(root, 'calculateurs-catalogue.js'), output);
-console.log(`Catalogue calculateur : ${entries.length} fiches éditoriales, ${Object.keys(weaponImages).length} médias d’armes.`);
+console.log(`Catalogue calculateur : ${entries.length} fiches éditoriales, ${Object.keys(weaponImages).length} médias d’armes.`);
