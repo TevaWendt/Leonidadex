@@ -1,0 +1,60 @@
+v7.38 — 26 septembre 2026 — LOT 1 : CALIBRAGE
+(base : v7.37 = archive « modifs » Leonidakit-v7.37-modifs.zip appliquée sur la v7.36)
+
+Ce qui change pour le visiteur
+- Tuto : les pastilles 1-2-3 des listes « À toi de jouer » (37 encadrés) sont centrées verticalement sur leur encadré
+  (une ligne ou plusieurs), le chiffre est centré dans la pastille (grille + interligne 1, tabular-nums), boîte en
+  border-box (32 px exactement). Les autres compteurs du site (étapes du calculateur, business plan, points repliables)
+  étaient déjà centrés par grille : inventoriés, inchangés.
+- Calculateur : la section « Comparer mes activités et tester d’autres chiffres » (Mon objectif, Expert) était un simple
+  pli collé aux bords du panneau ; elle devient une carte à part entière (bord encre, ombre, gouttière de 26 px, pastille
+  +/− ambre, titre en Archivo 800), alignée sur les cartes voisines à 1280, 1024, 768 et 390 px. Les autres sections
+  repliées (Mes réglages avancés, points 1 à 4, business plan) ont déjà leurs gouttières (22 / 28 px) : vérifiées.
+- Progression : huit cartes de suivi au lieu de six, sur deux rangées de quatre (deux colonnes sous 1 000 px, une sous
+  560 px) : Véhicules, Armes, Équipements, Munitions / Lieux, Collectibles trouvés, Catalogue des collectibles,
+  Calculs enregistrés. Dans chaque carte, titre, valeur, barre (ou trait pointillé de même hauteur) et liens sont sur les
+  mêmes lignes d’une carte à l’autre (plus de « 0Ouvrir le carnet »). « Collectibles trouvés » se déplie et affiche
+  directement ce qui est coché (nom, catégorie, lien fiche ou carte, bouton Retirer) ; « Catalogue des collectibles »
+  mène au catalogue. « Véhicules possédés », « Armes possédées », « Équipements », « Munitions » se déplient de la même
+  façon, triés par catégorie, avec le lien vers chaque fiche et un bouton Retirer. Ancres progression.html#garage,
+  #arsenal, #equipements, #munitions, #collectibles (la liste visée s’ouvre). Compteur global regroupé (« 2 901 »).
+- Véhicules et Armurerie : la barre « Mon garage / Mon arsenal » gagne un lien « Voir mon garage / Voir mon arsenal »
+  vers la liste de la page Progression, au même niveau que Partager et Vider.
+- Armurerie : les 16 équipements et gadgets et les 5 types de munitions se cochent (« Je l’ai » → « Obtenu »), avec une
+  barre « Mon équipement » et une barre « Mes munitions » (compte, progression, Voir mon suivi, Vider). Ces deux familles
+  entrent dans l’export / import de la page Progression et dans le compteur « Tout mon suivi ».
+- Achats et toutes les grilles de cartes à bouton : dans une rangée, les boutons jaunes (« Ouvrir la section »,
+  « Simuler un budget personnel ») et les liens finaux sont au même niveau, poussés en bas de la carte : page Achats
+  (11 cartes), sections d’acquisition (Bateaux, Garages documentés, Vêtements et style, Personnalisations…, où la mention
+  « Libellé descriptif fondé sur la présentation officielle » passe au-dessus du bouton), régions de la carte (« Voir la
+  fiche »), catégories de la page Progression. Inventaire par script (règle : rangée de cartes dont les boutons n’ont
+  pas le même bas) : 13 grilles corrigées, 1 non retenue (panneaux d’outils des Collectibles : des formulaires, pas des
+  cartes).
+- Piles d’images en tête de page (18 pages) : chaque image est un lien vers ce qu’elle représente (fiche du lieu, du
+  personnage, de l’entreprise, de la demeure ou de la planque ; fiche du véhicule ou de l’arme ; élément d’une section
+  d’acquisition) ; à défaut, la ligne du visuel dans Médias et crédits (medias.html#media-…). Légende = texte du lien,
+  aria-label « Nom : ouvrir la fiche », flèche au survol, contour de focus visible, animations d’entrée et de survol
+  conservées. 62 liens, tous vérifiés par verifier.js.
+- Calculateur : arriver depuis Progression sur #saved-calcs ouvre « Mes calculs enregistrés » et lui donne le focus.
+
+Technique
+- suivi.js (nouveau, 3 ko) : suivi générique par famille. Un élément data-track="famille" data-track-id="id" reçoit un
+  bouton « Je l’ai » ; une barre data-track-bar="famille" affiche compte et progression ; API window.LKSuivi (read, set,
+  toggle, count, list, subscribe, bind). Familles : vehicules, armes (clés existantes, toujours gérées par fiches.js),
+  equipements (lk_own_equipements), munitions (lk_own_munitions), lieux (lk_map_found). Les clés existantes ne changent
+  pas : le suivi des visiteurs survit à la mise à jour.
+- progression-core.js : LEGACY étendu à equipements et munitions (LABELS, ids, summary, export, import, fusion) ; les
+  boucles « vehicules / armes / lieux » sont généralisées à Object.keys(LEGACY).
+- outils/sync-site.cjs : progression-data.js reçoit LK_PROGRESS_IDS.equipements / .munitions (lus dans armes.html,
+  attributs data-track) et LK_PROGRESS_NAMES (nom, catégorie, lien) pour les listes de la page Progression (67 ko).
+- progression.html / progression.js : cartes .suivi-card, listes dépliables, boutons Retirer, ancres, libellés courts.
+- outils/lot-c-visuals.cjs : targets() (média → page : editorial.json, acquisitions.json, armes-medias.json, photos des
+  véhicules) et linkify(html, prefix) ; sync-site.cjs réécrit toutes les piles avant les empreintes (idempotent).
+  outils/lore-gen.js : id="media-<identifiant>" sur chaque ligne de medias.html.
+- outils/gen-acquisitions.cjs : mention « Libellé descriptif… » (classe d-label--note) déplacée avant les actions.
+  acquisitions.css : .d-card en colonne flex, .d-actions poussées en bas. style.css : .reg et .acq-box idem ; bloc
+  v7.38 (track-bt, own-link, cartes de suivi, piles cliquables). tuto.css : pastilles. calculateurs-brand.css :
+  carte de la section repliée. calculateurs.js : ouverture de #saved-calcs / #saved-plans.
+- Tests : 373 → 377 (nouveau outils/tests/suivi-v738.test.cjs : données, Armurerie, Progression, cœur) ; trois
+  assertions adaptées (« 1 / 3 » sans « documentés », total global avec les deux familles, nombre de lieux groupé
+  « 2 547 »). calculateurs-browser.cjs : 278 / 278. verifier.js : 0 erreur sur 37 115 références.

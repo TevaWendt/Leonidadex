@@ -27,7 +27,7 @@
 }
 </script>
 <link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="style.css?v=79e7cf2f342c">
+<link rel="stylesheet" href="style.css?v=745378fb2557">
 <link rel="stylesheet" href="fiches.css?v=0a1dd2f18a49">
 <style>
 /* ---- ajouts armes & véhicules ---- */
@@ -116,7 +116,7 @@ section.shell[id] .sec-h{margin-bottom:10px;}
       <div class="vstat"><span class="n" data-count="5">5</span><span class="l">nommées par Rockstar</span></div>
       <div class="vstat"><span class="n" data-count="2">2</span><span class="l">armes longues max.</span></div>
     </div>
-    </div><div class="lk-stack lk-stack--3" aria-label="Trois visuels officiels d’armes"><figure><img src="img/officiel/hawk-little-morgan-revolvers-01-480.webp" srcset="img/officiel/hawk-little-morgan-revolvers-01-480.webp 480w, img/officiel/hawk-little-morgan-revolvers-01-1280.webp 1280w" sizes="(max-width:900px) 70vw, 360px" width="480" height="270" alt="Revolver à lunette tenu à la main, visuel officiel Rockstar Games" loading="eager" decoding="async"><figcaption>Revolver Morgan</figcaption></figure><figure><img src="img/officiel/trailer-2-lucia-grenade-launcher-480.webp" srcset="img/officiel/trailer-2-lucia-grenade-launcher-480.webp 480w, img/officiel/trailer-2-lucia-grenade-launcher-1280.webp 1280w" sizes="(max-width:900px) 70vw, 360px" width="480" height="270" alt="Lucia tire au lance-grenades depuis une voiture, visuel officiel Rockstar Games" loading="lazy" decoding="async"><figcaption>Lance-grenades</figcaption></figure><figure><img src="img/officiel/vintage-vice-city-weapon-pattern-01-480.webp" srcset="img/officiel/vintage-vice-city-weapon-pattern-01-480.webp 480w, img/officiel/vintage-vice-city-weapon-pattern-01-1280.webp 1280w" sizes="(max-width:900px) 70vw, 360px" width="480" height="270" alt="Armes au motif Vintage Vice City posées sur une banquette, visuel officiel Rockstar Games" loading="lazy" decoding="async"><figcaption>Motif Vintage Vice City</figcaption></figure></div></div>
+    </div><div class="lk-stack lk-stack--3" aria-label="Trois visuels officiels d’armes"><figure><a class="lk-stack-link" href="armes/hawk-little-morgan.html" aria-label="Revolver Morgan : ouvrir la fiche"><img src="img/officiel/hawk-little-morgan-revolvers-01-480.webp" srcset="img/officiel/hawk-little-morgan-revolvers-01-480.webp 480w, img/officiel/hawk-little-morgan-revolvers-01-1280.webp 1280w" sizes="(max-width:900px) 70vw, 360px" width="480" height="270" alt="Revolver à lunette tenu à la main, visuel officiel Rockstar Games" loading="eager" decoding="async"><span class="lk-stack-cap">Revolver Morgan</span></a></figure><figure><a class="lk-stack-link" href="armes/lance-grenades.html" aria-label="Lance-grenades : ouvrir la fiche"><img src="img/officiel/trailer-2-lucia-grenade-launcher-480.webp" srcset="img/officiel/trailer-2-lucia-grenade-launcher-480.webp 480w, img/officiel/trailer-2-lucia-grenade-launcher-1280.webp 1280w" sizes="(max-width:900px) 70vw, 360px" width="480" height="270" alt="Lucia tire au lance-grenades depuis une voiture, visuel officiel Rockstar Games" loading="lazy" decoding="async"><span class="lk-stack-cap">Lance-grenades</span></a></figure><figure><a class="lk-stack-link" href="personnalisations.html#vintage-weapon-pattern" aria-label="Motif Vintage Vice City : ouvrir la fiche"><img src="img/officiel/vintage-vice-city-weapon-pattern-01-480.webp" srcset="img/officiel/vintage-vice-city-weapon-pattern-01-480.webp 480w, img/officiel/vintage-vice-city-weapon-pattern-01-1280.webp 1280w" sizes="(max-width:900px) 70vw, 360px" width="480" height="270" alt="Armes au motif Vintage Vice City posées sur une banquette, visuel officiel Rockstar Games" loading="lazy" decoding="async"><span class="lk-stack-cap">Motif Vintage Vice City</span></a></figure></div></div>
   </div>
 </section>
 
@@ -191,7 +191,7 @@ section.shell[id] .sec-h{margin-bottom:10px;}
   <div class="own-bar rise" id="own-bar">
     <span class="own-lbl">Mon arsenal :</span> <b>0</b><span class="own-lbl">/ <span class="own-total">0</span> possédées</span>
     <progress aria-label="Possessions enregistrées" value="0" max="1"></progress>
-    <div class="own-actions"><button type="button" data-export>Partager</button><button type="button" data-raz>Vider</button></div>
+    <div class="own-actions"><a class="own-link" href="progression.html#arsenal">Voir mon arsenal</a><button type="button" data-export>Partager</button><button type="button" data-raz>Vider</button></div>
   </div>
   <p class="fiche-txt" style="font-size:.85rem;color:#6B6874;margin:0 0 14px">Coche les armes que tu possèdes avec la case en haut à droite de chaque carte, ou sélectionnes-en jusqu’à trois avec « Comparer ». Tout reste enregistré sur ton appareil.</p>
   <h2 class="sr-only">Toutes les armes identifiées</h2>
@@ -246,15 +246,25 @@ section.shell[id] .sec-h{margin-bottom:10px;}
   <p class="fiche-txt">Le jeu introduit une roue à deux volets, dans l’esprit de Red Dead Redemption 2 :
   les armes d’un côté, les équipements de l’autre. Ces objets occupent leurs propres emplacements et
   servent surtout aux braquages et aux missions d’infiltration.</p>
+  <div class="own-bar own-bar--track rise" data-track-bar="equipements">
+    <span class="own-lbl">Mon équipement :</span> <b>0</b><span class="own-lbl">/ <span class="own-total">16</span> obtenus</span>
+    <progress aria-label="Équipements obtenus" value="0" max="16"></progress>
+    <div class="own-actions"><a class="own-link" href="progression.html#equipements">Voir mon suivi</a><button type="button" data-raz>Vider</button></div>
+  </div>
   <div class="kit-grid rise">
-    <div class="kit"><b>Sac à dos</b><span>Augmente ce que le personnage peut transporter</span></div><div class="kit"><b>Gilet pare-balles</b><span>Réduit les dégâts reçus</span></div><div class="kit"><b>Kit de soin</b><span>Rend une part importante de la santé</span></div><div class="kit"><b>Antidouleurs</b><span>Soin partiel, plus rapide à utiliser</span></div><div class="kit"><b>Jumelles</b><span>Observation à distance</span></div><div class="kit"><b>Lampe torche</b><span>Éclairage des zones sombres</span></div><div class="kit"><b>Crochet</b><span>Ouverture de serrures</span></div><div class="kit"><b>Réglette</b><span>Déverrouillage de portière</span></div><div class="kit"><b>Contournement d’antidémarrage</b><span>Démarrage des véhicules de luxe</span></div><div class="kit"><b>Outil de découpe</b><span>Ouverture de coffres et grilles</span></div><div class="kit"><b>Brouilleur</b><span>Neutralise un traceur</span></div><div class="kit"><b>Composeur automatique</b><span>Outil de piratage téléphonique</span></div><div class="kit"><b>Clé USB</b><span>Missions de piratage</span></div><div class="kit"><b>Serre-câbles</b><span>Immobiliser une personne</span></div><div class="kit"><b>Sac de butin</b><span>Emport du produit d’un braquage</span></div><div class="kit"><b>Pistolet à impulsion</b><span>Neutralisation non létale</span></div>
+    <div class="kit" data-track="equipements" data-track-id="sac-a-dos"><b>Sac à dos</b><span>Augmente ce que le personnage peut transporter</span></div><div class="kit" data-track="equipements" data-track-id="gilet-pare-balles"><b>Gilet pare-balles</b><span>Réduit les dégâts reçus</span></div><div class="kit" data-track="equipements" data-track-id="kit-de-soin"><b>Kit de soin</b><span>Rend une part importante de la santé</span></div><div class="kit" data-track="equipements" data-track-id="antidouleurs"><b>Antidouleurs</b><span>Soin partiel, plus rapide à utiliser</span></div><div class="kit" data-track="equipements" data-track-id="jumelles"><b>Jumelles</b><span>Observation à distance</span></div><div class="kit" data-track="equipements" data-track-id="lampe-torche"><b>Lampe torche</b><span>Éclairage des zones sombres</span></div><div class="kit" data-track="equipements" data-track-id="crochet"><b>Crochet</b><span>Ouverture de serrures</span></div><div class="kit" data-track="equipements" data-track-id="reglette"><b>Réglette</b><span>Déverrouillage de portière</span></div><div class="kit" data-track="equipements" data-track-id="contournement-d-antidemarrage"><b>Contournement d’antidémarrage</b><span>Démarrage des véhicules de luxe</span></div><div class="kit" data-track="equipements" data-track-id="outil-de-decoupe"><b>Outil de découpe</b><span>Ouverture de coffres et grilles</span></div><div class="kit" data-track="equipements" data-track-id="brouilleur"><b>Brouilleur</b><span>Neutralise un traceur</span></div><div class="kit" data-track="equipements" data-track-id="composeur-automatique"><b>Composeur automatique</b><span>Outil de piratage téléphonique</span></div><div class="kit" data-track="equipements" data-track-id="cle-usb"><b>Clé USB</b><span>Missions de piratage</span></div><div class="kit" data-track="equipements" data-track-id="serre-cables"><b>Serre-câbles</b><span>Immobiliser une personne</span></div><div class="kit" data-track="equipements" data-track-id="sac-de-butin"><b>Sac de butin</b><span>Emport du produit d’un braquage</span></div><div class="kit" data-track="equipements" data-track-id="pistolet-a-impulsion"><b>Pistolet à impulsion</b><span>Neutralisation non létale</span></div>
   </div>
 </section>
 
 <section class="shell reveal" id="munitions">
   <h2 class="sec-h">Types de munitions</h2>
+  <div class="own-bar own-bar--track rise" data-track-bar="munitions">
+    <span class="own-lbl">Mes munitions :</span> <b>0</b><span class="own-lbl">/ <span class="own-total">5</span> obtenus</span>
+    <progress aria-label="Types de munitions obtenus" value="0" max="5"></progress>
+    <div class="own-actions"><a class="own-link" href="progression.html#munitions">Voir mon suivi</a><button type="button" data-raz>Vider</button></div>
+  </div>
   <div class="kit-grid rise">
-    <div class="kit"><b>Munitions de pistolet</b><span>Pistolets, revolvers et pistolets-mitrailleurs</span></div><div class="kit"><b>Cartouches</b><span>Fusils à pompe et canons doubles</span></div><div class="kit"><b>Munitions de fusil</b><span>Fusils d’assaut et de précision</span></div><div class="kit"><b>Munitions lourdes</b><span>Mitrailleuses et armes d’appui</span></div><div class="kit"><b>Harpons</b><span>Fusil-harpon, sous l’eau</span></div>
+    <div class="kit" data-track="munitions" data-track-id="munitions-de-pistolet"><b>Munitions de pistolet</b><span>Pistolets, revolvers et pistolets-mitrailleurs</span></div><div class="kit" data-track="munitions" data-track-id="cartouches"><b>Cartouches</b><span>Fusils à pompe et canons doubles</span></div><div class="kit" data-track="munitions" data-track-id="munitions-de-fusil"><b>Munitions de fusil</b><span>Fusils d’assaut et de précision</span></div><div class="kit" data-track="munitions" data-track-id="munitions-lourdes"><b>Munitions lourdes</b><span>Mitrailleuses et armes d’appui</span></div><div class="kit" data-track="munitions" data-track-id="harpons"><b>Harpons</b><span>Fusil-harpon, sous l’eau</span></div>
   </div>
 </section>
 
@@ -400,6 +410,7 @@ section.shell[id] .sec-h{margin-bottom:10px;}
 <script src="common.js?v=aebb53715d6e"></script>
 <script src="app.js?v=22ec90e07aab"></script>
 <script src="fiches.js?v=1ea1d53c1ff0"></script>
+<script src="suivi.js?v=b1330503cd0c"></script>
 
 </body>
 </html>

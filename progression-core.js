@@ -6,9 +6,11 @@
 (function (global) {
   'use strict';
   var SITE = 'leonidakit', VERSION = 2, KEY = 'lk_progression_v2';
-  var LEGACY = { vehicules: 'lk_own_vehicules', armes: 'lk_own_armes', lieux: 'lk_map_found' };
+  var LEGACY = { vehicules: 'lk_own_vehicules', armes: 'lk_own_armes', lieux: 'lk_map_found', equipements: 'lk_own_equipements', munitions: 'lk_own_munitions' };
+  var LEGACY_KEYS = Object.keys(LEGACY).map(function (t) { return LEGACY[t]; });
+  function legacyType(key) { for (var t in LEGACY) if (LEGACY[t] === key) return t; return null; }
   var TRANSPORT = ['lk_collectibles_v1', 'lk_collectibles_tools_v1', 'lk-calculator-notebooks-v3', 'lk-calculator-v1', 'lk-calculator-favorites-v1'];
-  var LABELS = { vehicules: 'Véhicules', armes: 'Armes', lieux: 'Lieux de la carte', collectibles: 'Collectibles' };
+  var LABELS = { vehicules: 'Véhicules', armes: 'Armes', lieux: 'Lieux de la carte', equipements: 'Équipements et gadgets', munitions: 'Types de munitions', collectibles: 'Collectibles' };
   function isChecked(v) { return v === true || v === 1; }
   function parseMap(raw) {
     /* Retourne {map, corrupt} : les entrées illisibles ne comptent pas mais ne sont jamais perdues. */
@@ -30,7 +32,7 @@
   }
   function create(options) {
     var storage = options.storage, acquisitions = options.acquisitions || { categories: [], items: [] };
-    var ids = options.ids || global.LK_PROGRESS_IDS || { vehicules: [], armes: [], lieux: [] };
+    var ids = options.ids || global.LK_PROGRESS_IDS || { vehicules: [], armes: [], lieux: [], equipements: [], munitions: [] };
     var collectibles = options.collectibles || (global.LK_COLLECTIBLES && global.LK_COLLECTIBLES.items) || [];
     var notice = typeof options.notice === 'function' ? options.notice : function () {};
     var listeners = [];
@@ -44,7 +46,7 @@
     function trackable(item) { return item.trackable === true; }
     function known(id) {
       if (items.some(function (x) { return x.id === id; })) return true;
-      return ['vehicules', 'armes', 'lieux'].some(function (t) { return (ids[t] || []).indexOf(id) !== -1; });
+      return Object.keys(LEGACY).some(function (t) { return (ids[t] || []).indexOf(id) !== -1; });
     }
     function read(key) { try { return storage.getItem(key); } catch (e) { return null; } }
     function v2() { var p = parseMap(read(KEY)); var raw = read(KEY); var data = null; try { data = raw ? JSON.parse(raw) : null; } catch (e) { data = null; }
@@ -69,8 +71,8 @@
     function checked(item) { return checkedId(typeof item === 'string' ? item : item && item.id); }
     function summary() {
       var groups = [], done = 0, total = 0;
-      ['vehicules', 'armes', 'lieux'].forEach(function (t) {
-        var list = Array.from(new Set(ids[t] || [])), map = parseMap(read(LEGACY[t])).map, typeKey = { vehicules: 'vehicle', armes: 'weapon', lieux: 'place' }[t];
+      Object.keys(LEGACY).forEach(function (t) {
+        var list = Array.from(new Set(ids[t] || [])), map = parseMap(read(LEGACY[t])).map, typeKey = { vehicules: 'vehicle', armes: 'weapon', lieux: 'place', equipements: 'equipment', munitions: 'ammo' }[t];
         var own = list.filter(function (id) { return !partitioned[typeKey + ':' + id]; });
         var d = own.filter(function (id) { return map[id]; }).length;
         groups.push({ id: t, label: LABELS[t], total: own.length, done: d, percent: own.length ? d / own.length * 100 : null });
@@ -114,7 +116,7 @@
     }
     function exportData() {
       /* Tout le suivi local part dans le fichier : cases, carnets du calculateur, marqueurs et dessins de la carte, classement. */
-      var data = {}, keys = Object.keys(LEGACY).map(function (t) { return LEGACY[t]; }).concat([KEY], TRANSPORT), i, k;
+      var data = {}, keys = LEGACY_KEYS.concat([KEY], TRANSPORT), i, k;
       for (i = 0; i < storage.length; i++) { k = storage.key(i); if (k && (k.indexOf('lk_') === 0 || k.indexOf('lk-') === 0) && keys.indexOf(k) === -1 && k.indexOf('lk_recovery_') !== 0) keys.push(k); }
       keys.forEach(function (k) { var v = read(k); if (v !== null && v !== undefined) data[k] = v; });
       var cats = categories.map(function (cat) { return { id: cat.id, checkedIds: items.filter(function (x) { return x.category === cat.id && trackable(x) && checked(x); }).map(function (x) { return x.id; }) }; });
@@ -133,7 +135,7 @@
         }
         if (parsed.exportedAt !== undefined && (typeof parsed.exportedAt !== 'string' || isNaN(Date.parse(parsed.exportedAt)))) throw new Error('La date du fichier est illisible.');
       }
-      var allowed = Object.keys(LEGACY).map(function (t) { return LEGACY[t]; }).concat([KEY], TRANSPORT), issues = [], rubrics = {}, corrupt = {};
+      var allowed = LEGACY_KEYS.concat([KEY], TRANSPORT), issues = [], rubrics = {}, corrupt = {};
       Object.keys(parsed.data).forEach(function (key) {
         var raw = parsed.data[key];
         if (typeof raw !== 'string') { issues.push('Rubrique illisible ignorée : ' + key); return; }
@@ -142,10 +144,10 @@
           else issues.push('Rubrique inconnue ignorée : ' + key);
           return;
         }
-        if (key === LEGACY.vehicules || key === LEGACY.armes || key === LEGACY.lieux) {
+        if (legacyType(key)) {
           var p = parseMap(raw);
           if (p.unreadable) { issues.push('Rubrique abîmée ignorée (une copie sera gardée) : ' + key); corrupt[key] = raw; return; }
-          var t = key === LEGACY.vehicules ? 'vehicules' : key === LEGACY.armes ? 'armes' : 'lieux';
+          var t = legacyType(key);
           Object.keys(p.map).forEach(function (id) { if ((ids[t] || []).indexOf(id) === -1) issues.push('Référence inconnue conservée mais non comptée : ' + id); });
           if (p.corrupt) issues.push('Certaines valeurs de ' + key + ' sont illisibles et ne sont pas comptées.');
         } else if (key === KEY) {
@@ -164,7 +166,7 @@
         Object.keys(plan.corrupt || {}).forEach(function (key) { storage.setItem('lk_recovery_import_' + key + '_' + Date.now(), plan.corrupt[key]); written.push(key); });
         Object.keys(plan.rubrics).forEach(function (key) {
           var raw = plan.rubrics[key];
-          if (mode === 'merge' && (key === LEGACY.vehicules || key === LEGACY.armes || key === LEGACY.lieux)) {
+          if (mode === 'merge' && legacyType(key)) {
             var cur = parseMap(read(key)), inc = parseMap(raw), merged = {}; Object.keys(cur.map).forEach(function (id) { if (cur.map[id]) merged[id] = true; }); Object.keys(inc.map).forEach(function (id) { if (inc.map[id]) merged[id] = true; });
             storage.setItem(key, JSON.stringify(merged));
           } else if (mode === 'merge' && key === KEY) {

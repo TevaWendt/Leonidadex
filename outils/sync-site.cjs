@@ -118,7 +118,13 @@ const mapCounts=[allPoints.length,allPoints.filter(p=>p.s==='officiel').length,7
 fs.writeFileSync('carte.html',fs.readFileSync('carte.html','utf8').replace(/(<span class="n" data-count=")\d+(">)\d+(<\/span>)/g,(_,a,b,c)=>{const n=mapCounts[mi++];return a+n+b+n+c;}));
 // v7.37 : la carte d'outil de l'accueil affiche le même nombre de lieux que la carte.
 {const nb=String(allPoints.length).replace(/\B(?=(\d{3})+(?!\d))/g,'\u202f');fs.writeFileSync('index.html',fs.readFileSync('index.html','utf8').replace(/(<h3>Carte interactive <span class="chip live">)[^<]*lieux(<\/span>)/,'$1'+nb+' lieux$2'));}
-fs.writeFileSync('progression-data.js','/* IDs only; no need to load the full map on this page. */\nwindow.LK_PROGRESS_IDS = '+JSON.stringify({vehicules:V.map(v=>v.id),armes:A.map(v=>v.id),lieux:pointIds})+';\n');
+// v7.38 : familles suivies génériques (équipements, munitions) lues dans armes.html (data-track), et noms pour les listes de la page Progression.
+const tracked={equipements:[],munitions:[]},trackedNames={equipements:{},munitions:{}};
+{const armesHtml=fs.readFileSync('armes.html','utf8');const re=/data-track="(equipements|munitions)" data-track-id="([a-z0-9-]+)"><b>([^<]*)<\/b>/g;let m;while((m=re.exec(armesHtml))){if(!tracked[m[1]].includes(m[2])){tracked[m[1]].push(m[2]);trackedNames[m[1]][m[2]]={n:m[3].replace(/&#39;|&#x27;/g,'’').replace(/&amp;/g,'&')};}}}
+const CATV={berline:'Berlines',sport:'Voitures de sport',supercar:'Supercars',muscle:'Muscle cars',suv:'SUV et 4x4',pickup:'Pickups et tout-terrain',van:'Vans et cargos',moto:'Deux-roues et quads',helicoptere:'Hélicoptères',avion:'Avions',bateau:'Bateaux et jet-skis',service:'Service et urgence',divers:'Divers'};
+const CATA={pistolet:'Pistolets',pompe:'Fusils à pompe',pm:'Pistolets-mitrailleurs',assaut:'Fusils d’assaut',precision:'Fusils de précision',mitrailleuse:'Mitrailleuses',melee:'Corps à corps',projectile:'Projectiles',speciale:'Armes spéciales'};
+const progressNames={vehicules:Object.fromEntries(V.map(v=>[v.id,{n:name(v),c:CATV[v.cat]||v.cat||'',u:'vehicules/'+v.id+'.html'}])),armes:Object.fromEntries(A.map(a=>[a.id,{n:a.nom,c:CATA[a.cat]||a.cat||'',u:'armes/'+a.id+'.html'}])),equipements:trackedNames.equipements,munitions:trackedNames.munitions};
+fs.writeFileSync('progression-data.js','/* IDs only; no need to load the full map on this page. */\nwindow.LK_PROGRESS_IDS = '+JSON.stringify({vehicules:V.map(v=>v.id),armes:A.map(v=>v.id),lieux:pointIds,equipements:tracked.equipements,munitions:tracked.munitions})+';\n/* v7.38 : noms, catégories et liens pour les listes dépliables de la page Progression. */\nwindow.LK_PROGRESS_NAMES = '+JSON.stringify(progressNames)+';\n');
 console.log('Synchronisation : '+htmlFiles.length+' pages, '+assets.length+' assets, '+urls.length+' URL canoniques.');
 
 // Collectibles : le générateur dédié régénère collectibles-data.js, les fiches et sitemap-collectibles.xml à partir d'outils/collectibles.json.
@@ -162,4 +168,6 @@ require('child_process').execFileSync(process.execPath,[path.join(__dirname,'gen
 {const typo=require('./typographie.cjs');for(const file of htmlFiles){if(file.startsWith('google'))continue;const html=fs.readFileSync(file,'utf8');const next=typo.html(html);if(next!==html)fs.writeFileSync(file,next);}}
 
 // Empreintes finales : ne dépendent pas de l’état antérieur des autres fichiers.
+// v7.38 : chaque image d'une pile (.lk-stack) est un lien vers ce qu'elle représente (outils/lot-c-visuals.cjs).
+{const visuals=require('./lot-c-visuals.cjs');for(const file of htmlFiles){const html=fs.readFileSync(file,'utf8');if(!html.includes('class="lk-stack'))continue;const prefix=file.includes('/')?'../':'';const next=visuals.linkify(html,prefix);if(next!==html)fs.writeFileSync(file,next);}}
 {const hashes=new Map();for(const file of htmlFiles){let html=fs.readFileSync(file,'utf8');html=html.replace(/((?:href|src)=")([^"?#]+\.(?:css|js))(?:\?v=[a-f0-9]+)?("[^>]*>)/g,(match,start,url,end)=>{if(/^(?:https?:)?\/\//.test(url))return match;const target=url.startsWith('/')?path.join(root,url.slice(1)):path.resolve(root,path.dirname(file),url);if(!fs.existsSync(target))return match;if(!hashes.has(target))hashes.set(target,crypto.createHash('sha256').update(fs.readFileSync(target)).digest('hex').slice(0,12));return start+url+'?v='+hashes.get(target)+end;});fs.writeFileSync(file,html);}}

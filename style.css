@@ -2342,7 +2342,14 @@ html:not(.js) .lk-h2::after{transform:scaleX(1);}
 .lk-stack{position:relative;width:100%;aspect-ratio:5/4;min-width:0;margin:0;}
 .lk-stack figure{position:absolute;margin:0;width:66%;border:2px solid var(--ink);border-radius:var(--radius);overflow:hidden;background:var(--ink);box-shadow:var(--shadow-amber);transition:transform .55s var(--ease-out),box-shadow .3s;will-change:transform;}
 .lk-stack img{display:block;width:100%;height:100%;aspect-ratio:16/10;object-fit:cover;}
-.lk-stack figcaption{position:absolute;left:0;right:0;bottom:0;padding:22px 12px 9px;font-size:.74rem;font-weight:700;color:#fff;background:linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.75));letter-spacing:.02em;}
+.lk-stack figcaption,.lk-stack .lk-stack-cap{position:absolute;left:0;right:0;bottom:0;padding:22px 12px 9px;font-size:.74rem;font-weight:700;color:#fff;background:linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.75));letter-spacing:.02em;}
+/* v7.38 : chaque image de la pile est un lien (figure entière cliquable, légende = texte du lien) */
+.lk-stack .lk-stack-link{display:block;position:relative;width:100%;height:100%;color:#fff;text-decoration:none;}
+.lk-stack .lk-stack-link:focus-visible{outline:3px solid var(--amber);outline-offset:-5px;border-radius:calc(var(--radius) - 2px);}
+.lk-stack figure:focus-within{z-index:5;box-shadow:8px 8px 0 var(--amber);}
+.lk-stack .lk-stack-link::after{content:'→';position:absolute;right:10px;bottom:8px;font-size:.9rem;font-weight:900;opacity:0;transform:translateX(-4px);transition:opacity .2s,transform .2s;}
+.lk-stack figure:hover .lk-stack-link::after,.lk-stack .lk-stack-link:focus-visible::after{opacity:1;transform:none;}
+@media(max-width:520px){.lk-stack .lk-stack-cap{display:none;}}
 .lk-stack figure:nth-child(1){left:0;top:6%;transform:rotate(-5deg) translateY(var(--lift,0));z-index:1;}
 .lk-stack figure:nth-child(2){right:0;top:0;transform:rotate(3deg) translateY(var(--lift,0));z-index:2;box-shadow:6px 6px 0 var(--coral);}
 .lk-stack figure:nth-child(3){left:17%;bottom:0;transform:rotate(-1.5deg) translateY(var(--lift,0));z-index:3;box-shadow:6px 6px 0 var(--ink);}
@@ -2358,7 +2365,7 @@ html:not(.js) .lk-h2::after{transform:scaleX(1);}
 .lk-head-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr);gap:clamp(24px,4vw,56px);align-items:center;}
 .lk-head-grid .lk-stack{max-width:520px;margin-left:auto;}
 @media(max-width:900px){.lk-head-grid{grid-template-columns:1fr;} .lk-head-grid .lk-stack{max-width:440px;margin:8px auto 0;}}
-@media(max-width:520px){.lk-stack figure{width:70%;} .lk-stack figcaption{display:none;}}
+@media(max-width:520px){.lk-stack figure{width:70%;} .lk-stack figcaption,.lk-stack .lk-stack-cap{display:none;}}
 /* apparition des piles : chaque visuel arrive de son côté */
 .js .lk-stack:not(.is-in) figure{opacity:0;--lift:34px;}
 .js .lk-stack figure{transition:opacity .6s var(--ease-out),transform .8s var(--ease-spring),box-shadow .3s;}
@@ -2504,3 +2511,59 @@ footer a:hover{color:var(--coral-text);transform:translateX(3px);}
 /* Champs de recherche des catalogues et de la carte : le champ occupe toute la hauteur de sa barre (cible tactile de 24 px au moins). */
 .vsearch{padding-top:0;padding-bottom:0;}.vsearch input{padding:11px 0;min-height:24px;}
 .map-search{padding-top:0;padding-bottom:0;}.map-search input{padding:9px 0;min-height:24px;}
+/* ============================================================
+   v7.38 : lot 1 — calibrage (suivi générique, cartes Progression, barres de possession)
+   ============================================================ */
+/* Bouton « Je l'ai » posé par suivi.js sur chaque élément data-track (équipements, munitions…) */
+.has-track{display:flex;flex-direction:column;gap:6px;position:relative;}
+.has-track.is-own{border-color:var(--coral-text,#B93220);box-shadow:inset 0 0 0 1px var(--coral-text,#B93220);}
+.track-bt{margin-top:auto;align-self:flex-start;display:inline-flex;align-items:center;gap:7px;min-height:32px;padding:5px 10px;border:1px solid rgba(26,26,30,.25);border-radius:8px;background:#fff;color:var(--ink);font:700 .78rem 'Archivo',sans-serif;cursor:pointer;transition:background var(--dur,.22s),color var(--dur,.22s),border-color var(--dur,.22s);}
+.track-bt .ck{width:14px;height:14px;border-radius:4px;border:1.5px solid currentColor;position:relative;flex:none;}
+.track-bt:hover{border-color:var(--ink);}
+.track-bt.on{background:var(--ink);color:#fff;border-color:var(--ink);}
+.track-bt.on .ck{background:var(--coral);border-color:var(--coral-text,#B93220);}
+.track-bt.on .ck::after{content:'';position:absolute;left:4px;top:1px;width:4px;height:7px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg);}
+.track-bt:focus-visible{outline:3px solid var(--amber);outline-offset:2px;}
+/* Barres de possession : lien « Voir mon garage / mon arsenal / mon suivi » au même niveau que les boutons */
+.own-bar .own-actions{align-items:center;}
+.own-bar .own-actions a.own-link{display:inline-flex;align-items:center;min-height:32px;font:700 .78rem 'Archivo',sans-serif;padding:6px 11px;border-radius:8px;border:1px solid var(--ink);background:var(--ink);color:#fff;text-decoration:none;}
+.own-bar .own-actions a.own-link:hover{background:var(--coral-text,#B93220);border-color:var(--coral-text,#B93220);color:#fff;}
+.own-bar .own-actions button{min-height:32px;}
+.own-bar--track{margin:4px 0 14px;}
+/* Page Progression : huit cartes de suivi, titre / valeur / barre / liens sur les mêmes lignes, liste dépliable */
+.progress-cards--suivi{grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;align-items:start;}
+@media(max-width:1000px){.progress-cards--suivi{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media(max-width:560px){.progress-cards--suivi{grid-template-columns:1fr;}}
+.suivi-card{display:grid;grid-template-rows:2.7em auto 10px auto auto;grid-template-columns:minmax(0,1fr);align-content:start;row-gap:10px;margin:0;padding:18px 20px 16px;}
+.suivi-card h3{margin:0;font-size:.98rem;line-height:1.3;align-self:start;}
+.suivi-card .suivi-n{display:block;font:900 1.25rem/1.1 'Archivo',sans-serif;color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap;}
+.suivi-card progress{display:block;width:100%;height:10px;margin:0;accent-color:#B93220;}
+.suivi-card progress[hidden]{display:none;}
+.suivi-card .suivi-spacer{display:block;height:10px;margin:0;border:0;background:linear-gradient(to right,rgba(26,26,30,.2) 50%,transparent 50%) 0 50%/8px 1px repeat-x;}
+.suivi-card .suivi-spacer[hidden]{display:none;}
+.suivi-card .suivi-links{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;min-height:32px;}
+.suivi-card .suivi-links a{font-weight:700;color:var(--coral-text,#B93220);}
+.suivi-toggle{font:700 .8rem 'Archivo',sans-serif;min-height:32px;padding:5px 10px;border:1px solid rgba(26,26,30,.25);border-radius:8px;background:#fff;cursor:pointer;color:var(--ink);}
+.suivi-toggle:hover{border-color:var(--ink);}
+.suivi-toggle:disabled{opacity:.45;cursor:default;}
+.suivi-toggle[aria-expanded="true"]{background:var(--ink);color:#fff;border-color:var(--ink);}
+.suivi-list{border-top:1px solid rgba(26,26,30,.12);padding-top:10px;max-height:340px;overflow:auto;}
+.suivi-group+.suivi-group{margin-top:6px;}
+.suivi-cat{font:800 .7rem 'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin:6px 0 2px;}
+.suivi-cat span{color:var(--coral-text,#B93220);margin-left:4px;}
+.suivi-ul{list-style:none;margin:0;padding:0;}
+.suivi-ul li{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px dashed rgba(26,26,30,.1);font-size:.9rem;line-height:1.35;}
+.suivi-ul li>a{flex:1;min-width:0;color:var(--ink);font-weight:600;text-decoration:none;overflow-wrap:anywhere;}
+.suivi-ul li>a:hover{color:var(--coral-text,#B93220);text-decoration:underline;}
+.suivi-ul li>span{flex:1;min-width:0;}
+.suivi-ul li>.suivi-cat-inline{flex:0 0 auto;font-size:.72rem;color:var(--ink-soft);}
+.suivi-remove{flex:none;font:700 .72rem 'Archivo',sans-serif;min-height:28px;padding:3px 8px;border:1px solid rgba(26,26,30,.25);border-radius:6px;background:#fff;cursor:pointer;color:var(--ink-soft);}
+.suivi-remove:hover{color:var(--coral-text,#B93220);border-color:var(--coral-text,#B93220);}
+.suivi-empty{font-size:.88rem;color:var(--ink-soft);margin:0;line-height:1.5;}
+.suivi-card h3[id]{scroll-margin-top:90px;}
+/* Cartes à bouton : le lien ou bouton final s'aligne en bas de la carte sur toute la rangée (régions de la carte, catégories de Progression) */
+.reg{display:flex;flex-direction:column;}
+.reg>.veh-go{margin-top:auto;padding-top:12px;}
+.acq-box{display:flex;flex-direction:column;}
+.acq-box>a:last-child{margin-top:auto;align-self:flex-start;}
+.acq-box progress{margin:12px 0 6px;}

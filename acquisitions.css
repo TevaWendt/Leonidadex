@@ -43,3 +43,9 @@
 .d-topic:nth-child(2n){border-top-color:var(--coral)}
 .d-topic .d-card-body{padding-top:20px}.d-topic h3{font-size:var(--fs-h3,1.3rem);margin:6px 0 10px}.d-topic p{line-height:1.65}
 @media(max-width:700px){.d-topic-grid{grid-template-columns:1fr}}
+/* v7.38 : dans une rangée de cartes, le bloc d'actions (bouton jaune, liens) est poussé en bas de la carte : même niveau d'une carte à l'autre, quelle que soit la longueur du texte ; ce qui suit les actions (mention, source, galerie) reste groupé sous elles. */
+.d-card{display:flex;flex-direction:column}
+.d-card>.d-card-body{display:flex;flex-direction:column;flex:1 1 auto;min-width:0}
+.d-card>.d-card-body>.d-actions{margin-top:auto;padding-top:14px}
+.d-card>.d-card-body>.d-actions~*{flex:none}
+.d-card .d-label--note{margin:10px 0 0;font-size:.68rem;letter-spacing:.1em;color:var(--ink-soft)}

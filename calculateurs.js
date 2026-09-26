@@ -244,4 +244,6 @@ window.LKCalculator.leo={
 };
 if(tutorialChapter){const link=$('calc-tuto-return');if(link){link.href='tuto.html#'+tutorialChapter;link.hidden=false;}}
 if(tutorialParams.get('focus')==='carnets'){const section=document.querySelector('.calc-saved');if(section){section.open=true;requestAnimationFrame(()=>{section.scrollIntoView({block:'start',behavior:'auto'});section.querySelector('summary').focus({preventScroll:true});});}}
+/* v7.38 : arrivée depuis la page Progression (#saved-calcs / #saved-plans) : le bloc visé s'ouvre et reçoit le focus. */
+if(/^#saved-(calcs|plans)$/.test(location.hash)){const section=document.getElementById(location.hash.slice(1));if(section){section.open=true;requestAnimationFrame(()=>{section.scrollIntoView({block:'start',behavior:'auto'});section.querySelector('summary')?.focus({preventScroll:true});});}}
 })();

@@ -44,7 +44,8 @@
 .t-mode-fields dd{margin:0;font-size:.98rem;line-height:1.5;color:var(--ink-soft)}
 .t-steps{margin:10px 0 0;padding:0;list-style:none;counter-reset:t-steps;display:grid;gap:10px}
 .t-steps li{counter-increment:t-steps;position:relative;padding:10px 14px 10px 54px;background:var(--paper);border:2px solid var(--ink);border-radius:12px;font-size:1rem;line-height:1.55;color:var(--ink)}
-.t-steps li:before{content:counter(t-steps);position:absolute;left:10px;top:9px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;background:var(--amber);color:var(--ink);border:2px solid var(--ink);border-radius:50%;box-shadow:2px 2px 0 var(--ink);font:900 1rem 'Archivo',sans-serif}
+.t-steps li:before{content:counter(t-steps);position:absolute;left:10px;top:50%;transform:translateY(-50%);width:32px;height:32px;box-sizing:border-box;display:grid;place-items:center;line-height:1;padding-top:1px;text-align:center;font-variant-numeric:tabular-nums;background:var(--amber);color:var(--ink);border:2px solid var(--ink);border-radius:50%;box-shadow:2px 2px 0 var(--ink);font:900 1rem/1 'Archivo',sans-serif}
+/* v7.38 : pastille centrée verticalement sur l'encadré (une ou plusieurs lignes), chiffre centré optiquement */
 /* Exercice de démarrage */
 .t-start-form{margin:18px 0 6px;padding:18px;background:linear-gradient(165deg,#2B1B4D 0%,#3B1F57 60%,#5A2358 100%);color:#fff;border:2px solid var(--ink);border-radius:14px;box-shadow:6px 6px 0 var(--amber)}
 .t-start-form p{color:#EBDDEE}

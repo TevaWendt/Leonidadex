@@ -1,0 +1,21 @@
+LEONIDAKIT v7.38 — LOT 1 : CALIBRAGE — archive « modifs » (26 septembre 2026)
+
+Base attendue : ton dossier Leonidadex en v7.37 (v7.36 + archive Leonidakit-v7.37-modifs.zip). Fichiers ajoutés ou modifiés
+seulement, chemins exacts depuis la racine. Rien à supprimer. Aucune commande de build : les pages sont déjà régénérées.
+
+1. Copie ton dossier actuel (sauvegarde).
+2. Extrais l’archive dans la racine du site, écrase les fichiers homonymes (garde le dossier .git).
+3. Ouvre le site (2 minutes) :
+   - Tuto, n’importe quel encadré « À toi de jouer » : les pastilles 1-2-3 sont au milieu de leur encadré.
+   - Calculateur → Mon objectif → Expert : « Comparer mes activités et tester d’autres chiffres » est une carte avec sa
+     gouttière, comme les cartes voisines.
+   - Progression : deux rangées de quatre cartes, valeurs et liens alignés ; coche un véhicule dans le garage puis
+     reviens : « Voir la liste » déplie la liste avec le lien vers la fiche et « Retirer ».
+   - Véhicules et Armurerie : « Voir mon garage » / « Voir mon arsenal » dans la barre du haut ; dans l’Armurerie,
+     « Je l’ai » sur chaque équipement et chaque type de munitions, barres « Mon équipement » et « Mes munitions ».
+   - Achats : les boutons jaunes sont au même niveau sur chaque rangée (idem Garages documentés, Bateaux, régions de la
+     carte).
+   - Carte, Véhicules, Achats, À propos… : clique une image de la pile en haut à droite, elle ouvre la fiche.
+4. Mets en ligne.
+
+Détails : outils/CHANGEMENTS-v7.38.txt. Versions précédentes : -v7.37 (audit final + SEO), -v7.36 (Motion+), -v7.35 à -v7.30.

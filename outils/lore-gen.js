@@ -211,7 +211,7 @@ fs.writeFileSync('outils/lore-index.json',JSON.stringify(index));
   for(const [vid,ids] of Object.entries(VMED))for(const id of ids)add(id,VNOM[vid]||vid,'vehicules/'+vid+'.html');
   for(const [aid,ids] of Object.entries(AMED))for(const id of ids)add(id,aid.replace(/-/g,' '),'armes/'+aid+'.html');
   for(const [k,S] of Object.entries(SECTIONS))for(const x of ED[k])for(const id of (x.media||[]))add(id,x.name,S.hub+'/'+x.id+'.html');
-  const rows=Object.values(MED).map(m=>{const a=m.variants[0];return `<li class="media-row"><img src="${a.src}" width="${a.w}" height="${a.h}" alt="${esc(m.titre)}" loading="lazy" decoding="async"><div><b>${esc(m.titre)}</b><br><span>${esc(m.credit)}</span>${usage[m.id]?'<br><span>Utilisé sur : '+usage[m.id].join(', ')+'</span>':''}<br><a href="${esc(m.source)}" target="_blank" rel="noopener nofollow">Galerie officielle</a></div></li>`;}).join('\n');
+  const rows=Object.values(MED).map(m=>{const a=m.variants[0];return `<li class="media-row" id="media-${esc(m.id)}"><img src="${a.src}" width="${a.w}" height="${a.h}" alt="${esc(m.titre)}" loading="lazy" decoding="async"><div><b>${esc(m.titre)}</b><br><span>${esc(m.credit)}</span>${usage[m.id]?'<br><span>Utilisé sur : '+usage[m.id].join(', ')+'</span>':''}<br><a href="${esc(m.source)}" target="_blank" rel="noopener nofollow">Galerie officielle</a></div></li>`;}).join('\n');
   const body=`<section class="page-head shell">
   <p class="fiche-cat">Crédits · Visuels officiels</p>
   <h1>Les visuels officiels utilisés</h1>

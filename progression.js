@@ -1,23 +1,75 @@
 (function(){
   'use strict';
-  const ids=window.LK_PROGRESS_IDS;
+  const ids=window.LK_PROGRESS_IDS, names=window.LK_PROGRESS_NAMES||{}, S=window.LKSuivi, esc=window.LK.esc;
+  const FAM=['vehicules','armes','equipements','munitions','lieux'];
+  const KEYS={vehicules:'lk_own_vehicules',armes:'lk_own_armes',equipements:'lk_own_equipements',munitions:'lk_own_munitions',lieux:'lk_map_found'};
+  const nf=new Intl.NumberFormat('fr-FR');
+  const saved=f=>window.LK.read(KEYS[f],{},window.LK.own);
   function render(){
-    for(const [type,key] of [['vehicules','lk_own_vehicules'],['armes','lk_own_armes'],['lieux','lk_map_found']]){
-      const saved=window.LK.read(key,{},window.LK.own),total=ids[type].length,done=ids[type].filter(id=>Object.hasOwn(saved,id)&&saved[id]).length;
-      const row=document.getElementById('progress-'+type);row.querySelector('strong').textContent=done+' / '+total;const bar=row.querySelector('progress');bar.max=total;bar.value=done;
+    for(const type of FAM){
+      const row=document.querySelector('.suivi-card[data-family="'+type+'"]'); if(!row) continue;
+      const o=saved(type),list=ids[type]||[],total=list.length,done=list.filter(id=>o[id]).length;
+      row.querySelector('.suivi-n').textContent=nf.format(done)+' / '+nf.format(total);
+      const bar=row.querySelector('progress');bar.max=total||1;bar.value=done;
+      const btn=row.querySelector('.suivi-toggle'); if(btn){btn.textContent=(btn.getAttribute('aria-expanded')==='true'?'Masquer':'Voir la liste')+(done?' ('+nf.format(done)+')':'');btn.disabled=!done&&btn.getAttribute('aria-expanded')!=='true';}
+      if(row.querySelector('.suivi-list:not([hidden])')) renderList(type);
     }
+  }
+  /* v7.38 : la carte se déplie et liste ce qui est coché (nom, catégorie, lien vers la fiche, bouton Retirer). */
+  function renderList(type){
+    const box=document.getElementById('suivi-list-'+type); if(!box) return;
+    const o=saved(type),list=(ids[type]||[]).filter(id=>o[id]),map=names[type]||{};
+    if(!list.length){box.innerHTML='<p class="suivi-empty">Rien de coché pour l’instant. Coche depuis la page <a href="'+esc(S?S.FAMILIES[type].page:'#')+'">'+esc(S?S.FAMILIES[type].label.replace(/^M(on|es) /,''):type)+'</a>.</p>';return;}
+    const groups=new Map();
+    list.forEach(id=>{const it=map[id]||{n:id,c:''};const k=it.c||'';if(!groups.has(k))groups.set(k,[]);groups.get(k).push({id,...it});});
+    const cats=[...groups.keys()].sort((a,b)=>a.localeCompare(b,'fr'));
+    box.innerHTML=cats.map(c=>'<div class="suivi-group">'+(c?'<p class="suivi-cat">'+esc(c)+' <span>'+groups.get(c).length+'</span></p>':'')+'<ul class="suivi-ul">'+groups.get(c).sort((a,b)=>a.n.localeCompare(b.n,'fr')).map(it=>'<li>'+(it.u?'<a href="'+esc(it.u)+'">'+esc(it.n)+'</a>':'<span>'+esc(it.n)+'</span>')+'<button type="button" class="suivi-remove" data-suivi-remove="'+esc(it.id)+'" data-suivi-family="'+esc(type)+'" aria-label="Retirer '+esc(it.n)+'">Retirer</button></li>').join('')+'</ul></div>').join('');
   }
   function renderCollectibles(){
     const core=window.LKCollectibles, row=document.getElementById('progress-collectibles');
     if(!core||!row)return;
-    const items=(window.LK_COLLECTIBLES?.items||[]).filter(item=>core.isTrackable(item));
-    const state=core.getState(),done=items.filter(item=>state.found[item.id]).length;
-    row.querySelector('strong').textContent=items.length?done+' / '+items.length+' documentés':'Collection à documenter';
-    const bar=row.querySelector('progress');bar.hidden=!items.length;bar.max=items.length||1;bar.value=done;
+    const all=(window.LK_COLLECTIBLES?.items||[]), items=all.filter(item=>core.isTrackable(item));
+    const state=core.getState(),found=items.filter(item=>state.found[item.id]);
+    row.querySelector('.suivi-n').textContent=items.length?found.length+' / '+items.length:'À documenter';
+    const bar=row.querySelector('progress');bar.hidden=!items.length;bar.max=items.length||1;bar.value=found.length;
+    const sp=row.querySelector('.suivi-spacer'); if(sp) sp.hidden=!!items.length;
+    const btn=row.querySelector('.suivi-toggle'); if(btn){btn.textContent=(btn.getAttribute('aria-expanded')==='true'?'Masquer':'Voir la liste')+(found.length?' ('+found.length+')':'');btn.disabled=!found.length&&btn.getAttribute('aria-expanded')!=='true';}
+    const box=document.getElementById('suivi-list-collectibles');
+    if(box&&!box.hidden){
+      if(!found.length){box.innerHTML='<p class="suivi-empty">'+(items.length?'Rien de coché pour l’instant. Coche depuis ton <a href="collectibles.html#carnet">carnet de collection</a>.':'Aucun collectible n’est encore publié : la liste se remplira avec le jeu.')+'</p>';}
+      else{
+        const cat=id=>{const c=(window.LK_COLLECTIBLES?.categories||[]).find(x=>x.id===id);return c?c.label||c.name||id:(id||'');};
+        box.innerHTML='<ul class="suivi-ul">'+found.map(it=>{const u=core.itemUrl(it)||core.mapUrl(it);return '<li>'+(u?'<a href="'+esc(u)+'">'+esc(it.name||it.id)+'</a>':'<span>'+esc(it.name||it.id)+'</span>')+(it.category?'<span class="suivi-cat-inline">'+esc(cat(it.category))+'</span>':'')+'<button type="button" class="suivi-remove" data-suivi-collectible="'+esc(it.id)+'" aria-label="Retirer '+esc(it.name||it.id)+'">Retirer</button></li>';}).join('')+'</ul>';
+      }
+    }
+    const cat=document.getElementById('progress-catalogue-n');
+    if(cat){const pub=all.filter(i=>i.published!==false).length;cat.textContent=pub?pub+' fiche'+(pub>1?'s':''):'Aucune fiche';}
+  }
+  document.addEventListener('click',ev=>{
+    const t=ev.target.closest('.suivi-toggle, [data-suivi-remove], [data-suivi-collectible]'); if(!t) return;
+    if(t.classList.contains('suivi-toggle')){
+      const box=document.getElementById(t.getAttribute('aria-controls')); if(!box) return;
+      const open=box.hidden; box.hidden=!open; t.setAttribute('aria-expanded',String(open));
+      const fam=t.closest('[data-family]')?.dataset.family;
+      if(open){ if(fam==='collectibles') renderCollectibles(); else renderList(fam); }
+      render(); renderCollectibles(); return;
+    }
+    if(t.dataset.suiviRemove){ if(S) S.set(t.dataset.suiviFamily,t.dataset.suiviRemove,false); render(); renderList(t.dataset.suiviFamily); return; }
+    if(t.dataset.suiviCollectible){ window.LKCollectibles?.setFound(t.dataset.suiviCollectible,false); renderCollectibles(); }
+  });
+  /* Ancres : progression.html#garage, #arsenal, #equipements, #munitions, #collectibles ouvrent la liste visée. */
+  function openFromHash(){
+    const h=location.hash.slice(1); const map={garage:'vehicules',arsenal:'armes',equipements:'equipements',munitions:'munitions',collectibles:'collectibles'};
+    const fam=map[h]; if(!fam) return; const row=document.querySelector('.suivi-card[data-family="'+fam+'"]'); const btn=row?.querySelector('.suivi-toggle'); const box=row?.querySelector('.suivi-list');
+    if(box&&box.hidden){box.hidden=false;btn?.setAttribute('aria-expanded','true');}
+    if(fam==='collectibles') renderCollectibles(); else renderList(fam); render();
+    row?.scrollIntoView({block:'start'});
   }
   renderCollectibles();window.LKCollectibles?.subscribe(renderCollectibles);
   window.addEventListener('pageshow',renderCollectibles);
   render();window.addEventListener('storage',render);window.addEventListener('pageshow',render);
+  if(S) S.subscribe(()=>{render();});
+  openFromHash();window.addEventListener('hashchange',openFromHash);
 })();
 
 /* Progression v2 : contenus documentés, total et export / import versionné (progression-core.js). */
@@ -43,7 +95,7 @@
       box.innerHTML='<div class="progress-cards progress-cards--four">'+docs.map(card).join('')+'</div>'+(pend.length?'<h3 class="acq-sub">Sections à venir : en attente du jeu</h3><div class="progress-cards">'+pend.map(card).join('')+'</div>':'');
     }
     const v=document.getElementById('progress-global-value'), bar=document.getElementById('progress-global-bar'), t=document.getElementById('progress-global-text');
-    if(v){ v.textContent=nf.format(Math.floor(s.percent))+' %'; bar.value=Math.max(0,Math.min(100,s.percent)); t.textContent=s.done+' coché'+(s.done>1?'s':'')+' sur '+s.total+' recensés. Ce suivi est personnel : ce n’est pas la progression officielle du jeu.'; }
+    if(v){ v.textContent=nf.format(Math.floor(s.percent))+' %'; bar.value=Math.max(0,Math.min(100,s.percent)); t.textContent=nf.format(s.done)+' coché'+(s.done>1?'s':'')+' sur '+nf.format(s.total)+' recensés. Ce suivi est personnel : ce n’est pas la progression officielle du jeu.'; }
   }
   document.addEventListener('change',ev=>{ const el=ev.target; if(el.matches&&el.matches('[data-acq]')){ if(!store.toggle(el.dataset.acq,el.checked)){ el.checked=!el.checked; } } });
   store.subscribe(render); window.addEventListener('storage',render); window.addEventListener('pageshow',render); render();
@@ -65,7 +117,7 @@
       try{
         plan=store.prepareImport(String(r.result||''));
         const list=document.getElementById('save-preview-list'), iss=document.getElementById('save-preview-issues');
-        const names={lk_own_vehicules:'Véhicules cochés',lk_own_armes:'Armes cochées',lk_map_found:'Lieux repérés',lk_progression_v2:'Contenus documentés cochés',lk_collectibles_v1:'Carnet de collection','lk-calculator-notebooks-v3':'Carnets du calculateur','lk-calculator-v1':'Calcul en cours','lk-calculator-favorites-v1':'Fiches favorites'};
+        const names={lk_own_vehicules:'Véhicules cochés',lk_own_armes:'Armes cochées',lk_map_found:'Lieux repérés',lk_own_equipements:'Équipements obtenus',lk_own_munitions:'Types de munitions obtenus',lk_progression_v2:'Contenus documentés cochés',lk_collectibles_v1:'Carnet de collection','lk-calculator-notebooks-v3':'Carnets du calculateur','lk-calculator-v1':'Calcul en cours','lk-calculator-favorites-v1':'Fiches favorites'};
         list.innerHTML=Object.keys(plan.rubrics).map(k=>'<li>'+esc(names[k]||k)+'</li>').join('')||'<li>Aucune rubrique lisible.</li>';
         iss.hidden=!plan.issues.length; iss.textContent=plan.issues.length?'À savoir : '+plan.issues.join(' · '):'';
         pv.hidden=false; notice('Fichier de suivi lu (version '+plan.version+(plan.exportedAt?', du '+String(plan.exportedAt).slice(0,10):'')+'). Choisis : fusionner, remplacer ou annuler.');
@@ -81,14 +133,13 @@
   }); });
 })();
 
-/* Carnet de collection et calculs enregistrés : compteurs lus dans le navigateur (mêmes clés que les pages Collectibles et Calculateurs). */
+/* Calculs enregistrés : compteur lu dans le navigateur (même clé que la page Calculateur). */
 (function () {
   function count(keys, pick) {
     for (const k of keys) { try { const raw = localStorage.getItem(k); if (!raw) continue; const d = JSON.parse(raw); const n = pick(d); if (Number.isFinite(n)) return n; } catch (e) {} }
     return 0;
   }
-  const carnet = count(['lk_collectibles_v1'], d => { const f = d.found || d.trouves || d.items || d; return Array.isArray(f) ? f.length : (f && typeof f === 'object' ? Object.keys(f).filter(k => f[k]).length : 0); });
   const calc = count(['lk-calculator-saved-v1'], d => { const s = Array.isArray(d) ? d : (d.saved || d.items || []); return Array.isArray(s) ? s.length : 0; });
-  const a = document.getElementById('progress-carnet-n'), b = document.getElementById('progress-calc-n');
-  if (a) a.textContent = String(carnet); if (b) b.textContent = String(calc);
+  const b = document.getElementById('progress-calc-n');
+  if (b) b.textContent = calc ? String(calc) + ' calcul' + (calc > 1 ? 's' : '') : 'Aucun calcul';
 })();

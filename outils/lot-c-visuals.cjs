@@ -29,4 +29,37 @@ function pick(key){const list=STACKS[key];if(!list)throw Error('Pile d’images 
 function stack(key,opts={}){const imgs=Array.isArray(key)?key:pick(key);const prefix=opts.prefix||'';const cls='lk-stack lk-stack--'+imgs.length+(opts.cls?' '+opts.cls:'');
  return `<div class="${cls}" aria-label="${esc(opts.label||CREDIT)}">${imgs.map((m,i)=>`<figure><img src="${prefix}${m.src.replace(/^\//,'')}"${m.big?` srcset="${prefix}${m.src.replace(/^\//,'')} 480w, ${prefix}${m.big.replace(/^\//,'')} 1280w" sizes="(max-width:900px) 70vw, 360px"`:''} width="480" height="270" alt="${esc(m.alt)}" loading="${i===0?'eager':'lazy'}" decoding="async">${m.caption?`<figcaption>${esc(m.caption)}</figcaption>`:''}</figure>`).join('')}</div>`;}
 /* Pile construite à partir de médias déjà résolus (hubs du monde) : [{src,big,alt,caption}] */
-module.exports={STACKS,pick,stack,file,CREDIT};
+/* v7.38 : chaque image d'une pile est un lien vers ce qu'elle représente.
+   Cible d'un visuel (par identifiant de média, ex. « vice-city-01ʼ ») : la fiche du monde qui le cite (editorial.json),
+   sinon l'élément d'acquisition qui le cite (fiche existante ou section), sinon l'arme (armes-medias.json), sinon le véhicule
+   dont c'est la photo (vehicules-data.js), sinon la ligne du visuel dans medias.html. Les liens sont relatifs à la racine. */
+let targetMap=null;
+function targets(){
+ if(targetMap)return targetMap;
+ const map={};
+ const put=(id,href)=>{if(id&&href&&!map[id])map[id]=href;};
+ try{const ED=JSON.parse(fs.readFileSync(path.join(root,'outils/editorial.json'),'utf8'));const HUB={regions:'lieux',characters:'personnages',businesses:'entreprises',residences:'demeures',hideouts:'planques'};
+  for(const [k,hub] of Object.entries(HUB))for(const x of ED[k]||[])for(const m of x.media||[])put(m,hub+'/'+x.id+'.html');}catch(e){}
+ try{const AC=JSON.parse(fs.readFileSync(path.join(root,'outils/acquisitions.json'),'utf8'));const route=Object.fromEntries((AC.categories||[]).map(c=>[c.id,String(c.route||'').replace(/^\//,'')]));
+  for(const it of AC.items||[]){const href=it.ref&&it.ref.type==='vehicle'?'vehicules/'+it.ref.id+'.html':it.ref&&it.ref.type==='weapon'?'armes/'+it.ref.id+'.html':(route[it.category]?route[it.category].replace(/#.*$/,'')+'#'+it.id:null);for(const m of it.media||[])put(m,href);}}catch(e){}
+ try{const AM=JSON.parse(fs.readFileSync(path.join(root,'outils/armes-medias.json'),'utf8'));const uses={};for(const list of Object.values(AM))for(const m of list||[])uses[m]=(uses[m]||0)+1;for(const [id,list] of Object.entries(AM))for(const m of list||[])put(m,uses[m]>1?'armes.html':'armes/'+id+'.html');}catch(e){}
+ try{const vm=require('node:vm');const d={window:{}};vm.runInNewContext(fs.readFileSync(path.join(root,'vehicules-data.js'),'utf8'),d);for(const v of d.window.LK_VEHICULES||[]){const mm=/\/img\/officiel\/([a-z0-9-]+)-480\.webp$/.exec(v.thumb||'');if(mm)put(mm[1],'vehicules/'+v.id+'.html');}}catch(e){}
+ targetMap=map;return map;
+}
+function targetFor(mediaId){return targets()[mediaId]||('medias.html#media-'+mediaId);}
+const unesc=x=>String(x).replace(/&quot;/g,'"').replace(/&#39;/g,"'").replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&');
+/* Réécrit toutes les piles d'un document : <figure><img…><figcaption>…</figcaption></figure> devient un lien couvrant la figure.
+   Idempotent : une pile déjà liée est reconstruite à partir de son image et de sa légende. prefix = chemin vers la racine ('' ou '../'). */
+function linkify(html,prefix){
+ prefix=prefix||'';
+ return html.replace(/<div class="lk-stack[^"]*"[^>]*>[\s\S]*?<\/div>/g,block=>block.replace(/<figure>([\s\S]*?)<\/figure>/g,(f,inner)=>{
+  const img=/<img [^>]*>/.exec(inner);if(!img)return f;
+  const src=/ src="([^"]*)"/.exec(img[0]);const id=src?/([a-z0-9-]+)-(?:480|1280)\.webp$/i.exec(src[1]):null;
+  const cap=/<figcaption>([\s\S]*?)<\/figcaption>/.exec(inner)||/<span class="lk-stack-cap">([\s\S]*?)<\/span>/.exec(inner);
+  const caption=cap?cap[1]:'';
+  const href=prefix+targetFor(id?id[1].toLowerCase():'');
+  const label=(caption?unesc(caption)+' : ':'')+(href.includes('medias.html')?'voir le visuel et ses crédits':'ouvrir la fiche');
+  return `<figure><a class="lk-stack-link" href="${href}" aria-label="${esc(label)}">${img[0]}${caption?`<span class="lk-stack-cap">${caption}</span>`:''}</a></figure>`;
+ }));
+}
+module.exports={STACKS,pick,stack,file,CREDIT,targets,targetFor,linkify};

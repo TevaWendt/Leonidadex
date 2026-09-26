@@ -38,9 +38,10 @@ function card(item){const media=item.images[0];return `<article class="d-card" i
  ${photo(media,(item.nameKind==='official-description'?'Visuel du contenu décrit : ':'')+item.name+', capture officielle Rockstar Games')}
  <div class="d-card-body"><p class="d-label">${esc(item.condition)}</p><h3>${esc(item.name)}</h3><p>${esc(item.description)}</p>
  ${item.trackable?'<p class="d-status">Obtention documentée · prix séparé inconnu</p>':'<p class="d-status">Collection annoncée · détail des pièces à documenter</p>'}
+ ${item.nameKind==='official-description'?'<p class="d-label d-label--note">Libellé descriptif fondé sur la présentation officielle.</p>':''}
  ${item.trackable?`<label class="d-check" hidden><input type="checkbox" data-acq-toggle="${item.id}"> J’ai obtenu ${esc(item.name)}</label>`:''}
  <div class="d-actions">${item.ref?`<a href="${item.url}">Ouvrir la fiche existante</a>`:''}${item.calculatorCompatible?`<a href="/calculateurs.html?tool=purchase&amp;type=${item.type}&amp;id=${item.id}&amp;from=fiche#atelier">Simuler un budget personnel</a>`:''}</div>
- ${item.nameKind==='official-description'?'<p class="d-label">Libellé descriptif fondé sur la présentation officielle.</p>':''}${provenance(item)}${gallery(item.images,item.name)}
+ ${provenance(item)}${gallery(item.images,item.name)}
  </div></article>`;}
 function serviceCard(item){return `<article class="d-card" data-d-reveal>${photo(item.images[0],item.name+', commerce présenté par Rockstar')}<div class="d-card-body"><p class="d-label">${esc(item.condition)}</p><h3><a href="${item.url}">${esc(item.name)}</a></h3><p>${esc(item.description)}</p><p class="d-status">Service annoncé · propriété du commerce non confirmée</p>${provenance(item)}${gallery(item.images,item.name)}</div></article>`;}
 const contextual=current=>`<nav class="d-related" aria-label="Explorer les contenus documentés">${source.categories.filter(x=>x.id!==current&&!x.alias).map(x=>`<a href="${x.route}">${esc(x.label)}</a>`).join('')}<a href="/progression.html#acquisitions">Ma progression</a><a href="/tuto.html#sources">Comprendre les statuts</a></nav>`;

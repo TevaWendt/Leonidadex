@@ -649,3 +649,12 @@ body.calculator-page main .b-stage-actions{display:flex;flex-wrap:wrap;gap:10px;
  body.calculator-page .lk-ask-chips{grid-column:1/-1;grid-row:2}
  body.calculator-page .lk-goals{grid-column:1/-1;grid-row:3;justify-content:flex-start;margin-top:2px}
 }
+/* v7.38 : la section repliable de niveau panneau (« Comparer mes activités et tester d'autres chiffres ») était collée aux bords du panneau alors que les cartes voisines ont bord, ombre et gouttière ; elle devient une carte à part entière */
+body.calculator-page main .calc-panel>details.calc-advanced{margin:22px 0 0;padding:6px 26px 22px;background:#fff;border:2px solid var(--ink);border-radius:14px;box-shadow:5px 5px 0 rgba(26,26,30,.16)}
+body.calculator-page main .calc-panel>details.calc-advanced>summary{display:flex;align-items:center;gap:14px;min-height:56px;padding:6px 0;font:800 1.12rem/1.2 'Archivo',sans-serif;color:var(--ink);list-style:none}
+body.calculator-page main .calc-panel>details.calc-advanced>summary::-webkit-details-marker{display:none}
+body.calculator-page main .calc-panel>details.calc-advanced>summary::before{content:'';flex:none;width:36px;height:36px;border-radius:50%;background:var(--amber);border:2px solid var(--ink);box-shadow:2px 2px 0 var(--ink);background-image:linear-gradient(var(--ink),var(--ink)),linear-gradient(var(--ink),var(--ink));background-size:14px 2px,2px 14px;background-position:center;background-repeat:no-repeat}
+body.calculator-page main .calc-panel>details.calc-advanced[open]>summary::before{background-size:14px 2px,0 0}
+body.calculator-page main .calc-panel>details.calc-advanced[open]>summary{margin-bottom:12px;border-bottom:1px solid var(--rule)}
+body.calculator-page main .calc-panel>details.calc-advanced>summary:focus-visible{outline:3px solid var(--amber);outline-offset:4px;border-radius:8px}
+@media(max-width:700px){body.calculator-page main .calc-panel>details.calc-advanced{padding:4px 16px 16px;border-radius:12px}}
