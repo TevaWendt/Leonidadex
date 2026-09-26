@@ -2295,9 +2295,10 @@ main .d-section>p,main .info-section p,main .lore-texte p,main .d-intro-note,.in
 @media(max-width:700px){.page-head{padding-block:30px 20px;}}
 
 /* 3. Mouvement partout : survol des cartes, boutons et liens ; apparition au défilement (classe posée par common.js). */
-.js .lk-reveal{opacity:0;transform:translateY(18px);}
-.js .lk-reveal.is-in{opacity:1;transform:none;transition:opacity .6s var(--ease-out),transform .6s var(--ease-out);transition-delay:var(--lk-delay,0ms);}
-.js .lk-reveal--left{transform:translateX(-22px);} .js .lk-reveal--right{transform:translateX(22px);} .js .lk-reveal--zoom{transform:scale(.96);}
+.js .lk-reveal{opacity:0;transform:translate3d(0,18px,0);}
+.js .lk-reveal:not(.lk-settled){will-change:opacity,transform;}
+.js .lk-reveal.is-in{opacity:1;transform:none;transition:opacity .45s var(--ease-out),transform .45s var(--ease-out);transition-delay:var(--lk-delay,0ms);}
+.js .lk-reveal--left{transform:translate3d(-22px,0,0);} .js .lk-reveal--right{transform:translate3d(22px,0,0);} .js .lk-reveal--zoom{transform:translate3d(0,16px,0);}
 .js .lk-reveal.is-in.lk-reveal--left,.js .lk-reveal.is-in.lk-reveal--right,.js .lk-reveal.is-in.lk-reveal--zoom{transform:none;}
 /* cartes : la famille entière lève d'un cran, l'ombre dure devient ambre */
 .lk-card-hover,.d-card,.info-card,.tool,.lk-her,.lk-feature,.t-chapter,.d-topic,.d-progress-group,.lore-card,.kit,.rare-card,.lk-entry-card,.col-card,.d-empty{transition:transform var(--dur) var(--ease-out),box-shadow var(--dur) var(--ease-out),border-color var(--dur);}
@@ -2386,42 +2387,52 @@ footer a{transition:color var(--dur),transform var(--dur) var(--ease-out);displa
 footer a:hover{color:var(--coral-text);transform:translateX(3px);}
 @media(prefers-reduced-motion:reduce){.js main{animation:none;} footer a:hover,.progress-cards .note-box:hover{transform:none;}}
 
-/* ===================== v7.36 : Motion+ — titres mot à mot, rideaux d'images, cascade, parallaxe, barre de lecture, inclinaison, reflets ===================== */
+/* ===================== v7.36 : Motion+ — titres mot à mot, rideaux d'images, cascade, parallaxe, barre de lecture, reflets ===================== */
+/* RÈGLE « LISIBLE AVANT TOUT » (v7.39, s'applique à tout le site) :
+   1. jamais de filter:blur ni de rotation 3D (perspective, rotateX/Y) sur un élément qui contient du texte ; jamais de scale
+      sur du texte au survol (le texte serait re-rastérisé et flou) ;
+   2. les translations se font en pixels entiers (translate3d), transition ≤ 220 ms au survol, ≤ 600 ms à l'apparition ;
+   3. une carte qu'on lit signale le survol ou le focus par un état « sélectionné » immobile : ombre portée ambre décalée,
+      bord encre renforcé (anneau intérieur), barre d'accent qui se déroule, chevron ou flèche qui glisse de 4 px — jamais
+      une bascule qui suit la souris ; seuls les boutons (reflet, pression) et les images seules (zoom léger) bougent ;
+   4. un titre est lisible en moins de 400 ms après son arrivée à l'écran ; un élément déjà vu ne rejoue pas ;
+   5. avec « réduire les animations », tout est visible et rien ne bouge. */
 /* barre de lecture : une ligne ambre → corail qui suit le défilement, sous rien, au-dessus de tout */
 .lk-progress{position:fixed;top:0;left:0;right:0;height:3px;z-index:1200;pointer-events:none;}
 .lk-progress i{display:block;height:100%;transform-origin:left;transform:scaleX(0);background:linear-gradient(90deg,var(--amber),var(--coral));transition:transform .1s linear;}
 /* titres mot à mot : chaque mot monte et se nettoie, l'un après l'autre */
-.js .lk-words .lk-w{display:inline-block;opacity:0;transform:translateY(.5em) rotate(1.5deg);filter:blur(5px);transition:opacity .5s var(--ease-out),transform .6s var(--ease-out),filter .5s var(--ease-out);transition-delay:calc(var(--lk-i,0)*45ms + var(--lk-delay,0ms) + 60ms);will-change:transform,opacity,filter;}
-.js .lk-words.is-in .lk-w,.js .lk-words.lk-now .lk-w{opacity:1;transform:none;filter:none;}
-.js .lk-words.lk-now .lk-w{transition-delay:calc(var(--lk-i,0)*55ms + 120ms);}
+.js .lk-words .lk-w{display:inline-block;opacity:0;transform:translate3d(0,.45em,0);transition:opacity .38s var(--ease-out),transform .42s var(--ease-out);transition-delay:calc(var(--lk-i,0)*40ms + var(--lk-delay,0ms) + 40ms);}
+.js .lk-words:not(.lk-settled) .lk-w{will-change:transform,opacity;}
+.js .lk-words.is-in .lk-w,.js .lk-words.lk-now .lk-w{opacity:1;transform:none;}
+.js .lk-words.lk-now .lk-w{transition-delay:calc(var(--lk-i,0)*45ms + 80ms);}
 /* bandeaux : les éléments arrivent en cascade au chargement (kicker, titre, phrase, boutons) */
-.js .lk-hero-item{animation:lk-rise .75s var(--ease-out) both;animation-delay:calc(var(--lk-i,0)*110ms);}
+.js .lk-hero-item{animation:lk-rise .55s var(--ease-out) both;animation-delay:calc(min(var(--lk-i,0),5)*60ms);}
 @keyframes lk-rise{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:none;}}
 /* rideau d'image : un voile couleur papier se retire de gauche à droite pendant que l'image se recale (façon bande-annonce).
    Un voile plutôt qu'un découpage : l'observateur de défilement voit toujours le bloc entier. */
 .js .lk-reveal--clip{opacity:1;transform:none;position:relative;}
-.js .lk-reveal--clip::after{content:'';position:absolute;inset:0;z-index:3;background:var(--paper);transform-origin:right center;transform:scaleX(1);transition:transform .9s var(--ease-out);transition-delay:var(--lk-delay,0ms);pointer-events:none;}
-.js .lk-reveal--clip img{transform:scale(1.14);transition:transform 1.2s var(--ease-out);transition-delay:var(--lk-delay,0ms);}
+.js .lk-reveal--clip::after{content:'';position:absolute;inset:0;z-index:3;background:var(--paper);transform-origin:right center;transform:scaleX(1);transition:transform .6s var(--ease-out);transition-delay:var(--lk-delay,0ms);pointer-events:none;}
+.js .lk-reveal--clip img{transform:scale(1.1);transition:transform .8s var(--ease-out);transition-delay:var(--lk-delay,0ms);}
 .js .lk-reveal--clip.is-in::after{transform:scaleX(0);}
 .js .lk-reveal--clip.is-in img{transform:none;}
-/* paragraphes : un flou qui se dissipe */
-.js .lk-reveal--blur{transform:translateY(10px);filter:blur(6px);}
-.js .lk-reveal--blur.is-in{filter:blur(0);transition:opacity .6s var(--ease-out),transform .6s var(--ease-out),filter .6s var(--ease-out);transition-delay:var(--lk-delay,0ms);}
+/* paragraphes : une simple montée (v7.39 : plus de flou, le texte reste net à chaque image) */
+.js .lk-reveal--blur{transform:translate3d(0,10px,0);}
+.js .lk-reveal--blur.is-in{transition:opacity .45s var(--ease-out),transform .45s var(--ease-out);transition-delay:var(--lk-delay,0ms);}
 /* cartes de grille : elles grandissent en arrivant, en cascade selon leur rang */
-.js .lk-reveal--zoom{transform:scale(.94) translateY(14px);}
+.js .lk-reveal--zoom{transform:translate3d(0,16px,0);}
 .js .lk-reveal.is-in.lk-reveal--zoom{transform:none;}
 /* lignes et listes : une ligne après l'autre */
 .js .lk-reveal--rows{opacity:1;transform:none;}
-.js .lk-reveal--rows>*{opacity:0;transform:translateY(9px);transition:opacity .45s var(--ease-out),transform .45s var(--ease-out);transition-delay:calc(var(--lk-i,0)*45ms + var(--lk-delay,0ms));}
+.js .lk-reveal--rows>*{opacity:0;transform:translate3d(0,9px,0);transition:opacity .4s var(--ease-out),transform .4s var(--ease-out);transition-delay:calc(var(--lk-i,0)*40ms + var(--lk-delay,0ms));}
 .js .lk-reveal--rows.is-in>*{opacity:1;transform:none;}
-/* images des piles : lente respiration tant qu'elles sont à l'écran */
+/* images des piles : lente respiration tant qu'elles sont à l'écran (en pause hors écran, classe lk-off posée par common.js) */
 .js .lk-reveal.is-in .lk-kb{animation:lk-kb 22s ease-in-out infinite alternate;}
+.js .lk-stack.lk-off .lk-kb{animation-play-state:paused;}
+.lk-glow.lk-off::before{animation-play-state:paused;}
 @keyframes lk-kb{from{transform:scale(1) translate3d(0,0,0);}to{transform:scale(1.08) translate3d(-1.5%,-1%,0);}}
 /* parallaxe : le fond du bandeau glisse un peu moins vite que la page */
 .lk-parallax{will-change:transform;transform:scale(1.12);}
 .vhero,.fhero,.calc-hero,.info-hero,.t-hero{overflow:hidden;}
-/* inclinaison des cartes sous la souris (posée par common.js) */
-.lk-tilt{transform-style:preserve-3d;will-change:transform;z-index:2;}
 /* reflet qui traverse les boutons principaux au survol */
 .lk-shine{position:relative;overflow:hidden;}
 .lk-shine::after{content:'';position:absolute;top:-60%;bottom:-60%;left:0;width:34%;background:linear-gradient(105deg,transparent 0%,rgba(255,255,255,.55) 50%,transparent 100%);transform:skewX(-22deg) translateX(-220%);transition:transform .75s var(--ease-out);pointer-events:none;}
@@ -2567,3 +2578,107 @@ footer a:hover{color:var(--coral-text);transform:translateX(3px);}
 .acq-box{display:flex;flex-direction:column;}
 .acq-box>a:last-child{margin-top:auto;align-self:flex-start;}
 .acq-box progress{margin:12px 0 6px;}
+/* ============================================================
+   v7.39 : lot 2 — mouvement. État « sélectionné » immobile des cartes qu'on lit (règle « lisible avant tout », en tête
+   du bloc Motion+) : plus aucune translation, rotation ni mise à l'échelle sur une carte de texte au survol ; l'ombre
+   ambre se pose, un anneau encre renforce le bord, la flèche « Voir la fiche » glisse de 4 px.
+   ============================================================ */
+@media(hover:hover){
+  .d-card:hover,.info-card:hover,.tool:hover,.lk-her:hover,.d-topic:hover,.d-progress-group:hover,.lk-entry-card:hover,.d-empty:hover,.lk-feature:hover,.county:hover,.reg:hover,.rg:hover,.lore-card:hover,.rel-card:hover,.calc-feature:hover,.lk-photo-card:hover,#sorties .col-tools-panel:hover,#carnet .col-carnet-grid>*:hover,.progress-cards .note-box:hover,.kit--lien:hover,.rare-card:hover,.duo:hover,.lore-minicard:hover,.lk-tool:hover,.veh-card:hover,.veh-card:active,.tool:active,.lk-link:hover{transform:none;}
+  .d-card:hover,.info-card:hover,.tool:hover,.lk-her:hover,.d-topic:hover,.d-progress-group:hover,.lk-entry-card:hover,.d-empty:hover,.lk-feature:hover,.county:hover,.reg:hover,.rg:hover,.lore-card:hover,.calc-feature:hover,.lk-photo-card:hover,.rare-card:hover,.lore-minicard:hover{box-shadow:7px 7px 0 var(--amber),inset 0 0 0 1px var(--ink);}
+  .progress-cards .note-box:hover,#sorties .col-tools-panel:hover,#carnet .col-carnet-grid>*:hover{box-shadow:7px 7px 0 var(--amber);}
+  .kit--lien:hover,.rel-card:hover,.duo:hover{box-shadow:5px 5px 0 var(--amber);border-color:var(--ink);}
+  .veh-card:hover{box-shadow:9px 9px 0 var(--ink);}
+  /* flèche ou chevron qui glisse (4 px, entiers) */
+  .veh-go,.lore-card .veh-go,.rel-go,.lk-link::after{transition:transform .2s var(--ease-out),color .2s,gap .2s;}
+  .reg:hover .veh-go,.lore-card:hover .veh-go,.rel-card:hover .rel-go,.rg:hover .veh-go,.lk-photo-card:hover .veh-go,.rare-card:hover .veh-go{transform:translate3d(4px,0,0);}
+  /* éventail « Continuer la visite » : chaque carte garde son angle, elle monte seulement (plus de scale, plus de rotation qui change) */
+  .lk-links .lk-link:is(:hover,:focus-visible){transform:translate3d(0,-8%,0);}
+  .lk-links .lk-link:nth-child(1):is(:hover,:focus-visible){transform:rotate(-6deg) translate(5%,-6%);}
+  .lk-links .lk-link:nth-child(2):is(:hover,:focus-visible){transform:translateY(-10%);}
+  .lk-links .lk-link:nth-child(3):is(:hover,:focus-visible){transform:rotate(6deg) translate(-5%,-6%);}
+  /* petits éléments de texte qui grossissaient ou tournaient : signal par couleur et ombre, texte immobile */
+  .brand:hover span{transform:none;color:var(--coral);}
+  .cl:hover .cl-n{transform:none;box-shadow:0 0 0 3px var(--amber);}
+}
+/* survol des cartes : transitions courtes (≤ 220 ms) */
+.d-card,.info-card,.tool,.lk-her,.lk-feature,.t-chapter,.d-topic,.d-progress-group,.lore-card,.kit,.rare-card,.lk-entry-card,.col-card,.d-empty,.reg,.rg,.county,.calc-feature,.lk-photo-card,.rel-card,.note-box,.progress-cards article{transition-duration:.2s;}
+/* éventail : le survol ne repasse pas la carte entière par une transition de rotation */
+@media(min-width:900px){.lk-link{transition:transform .22s var(--ease-out),box-shadow .22s,filter .22s;}}
+/* pastille du rang (classement) : aucune mise à l'échelle sur le chiffre */
+.cl-n{transition:box-shadow .2s,background .2s,color .2s;}
+/* vitrine à deux cartes (Collectibles) : la carte qui passe devant garde son angle (plus de rotation qui change sous la
+   souris), elle se lève de 8 px, l'autre s'assombrit ; transition courte */
+@media(min-width:801px){
+  .lk-flip-card{transition:transform .22s var(--ease-out),filter .22s,box-shadow .22s;}
+  .lk-flip-card:nth-child(1).is-front{transform:rotate(-2deg) translate3d(0,-8px,0);}
+  .lk-flip-card:nth-child(2).is-front{transform:rotate(3deg) translate3d(0,10px,0);}
+}
+@media(prefers-reduced-motion:reduce){.lk-link,.lk-flip-card{transition:none;}}
+/* ------------------------------------------------------------
+   v7.39 : composant lk-arrive — arrivée liée au défilement (signature des cartes Achats, réutilisable).
+   Chaque carte progresse avec son entrée dans l'écran (view timeline) : elle monte et son ombre ambre se dessine,
+   la barre d'accent se déroule, l'étiquette se compose (rideau), le titre puis le texte montent, le bouton arrive en
+   dernier. La colonne (--lk-col, posée par common.js) décale la cascade sur une rangée. Réversible en remontant.
+   Sans prise en charge des timelines de défilement : mêmes images-clés au passage de l'observateur (classe is-in).
+   Avec « réduire les animations » : tout est visible, rien ne bouge.
+   ------------------------------------------------------------ */
+.lk-arrive{--lk-col:0;--ak-accent:var(--amber);position:relative;}
+.lk-arrive.ak-card{border-top-color:transparent;}
+.lk-arrive.ak-card.is-shown{--ak-accent:var(--coral);} .lk-arrive.ak-card.is-pending{--ak-accent:var(--line);}
+.lk-arrive.ak-card::before{content:'';position:absolute;left:0;right:0;top:-6px;height:6px;background:var(--ak-accent);transform-origin:left center;pointer-events:none;z-index:2;}
+@keyframes lk-arrive-card{from{opacity:0;transform:translate3d(0,28px,0);box-shadow:0 0 0 rgba(26,26,30,0);}60%{opacity:1;}to{opacity:1;transform:none;box-shadow:var(--shadow-soft,4px 4px 0 rgba(26,26,30,.18));}}
+@keyframes lk-arrive-bar{from{transform:scaleX(0);}to{transform:scaleX(1);}}
+@keyframes lk-arrive-label{from{clip-path:inset(0 100% 0 0);transform:translate3d(-6px,0,0);}to{clip-path:inset(0 0 0 0);transform:none;}}
+@keyframes lk-arrive-up{from{opacity:0;transform:translate3d(0,10px,0);}to{opacity:1;transform:none;}}
+@keyframes lk-arrive-cta{from{opacity:0;transform:translate3d(0,14px,0);}to{opacity:1;transform:none;}}
+@keyframes lk-arrive-curtain{from{clip-path:inset(0 100% 0 0);}to{clip-path:inset(0 0 0 0);}}
+/* état de départ (JS actif) : la carte attend son entrée */
+.js .lk-arrive.ak-card{animation:lk-arrive-card .7s var(--ease-out) both;animation-play-state:paused;}
+.js .lk-arrive.ak-card::before{animation:lk-arrive-bar .5s var(--ease-out) both;animation-play-state:paused;}
+.js .lk-arrive.ak-card .d-label:first-child{animation:lk-arrive-label .45s var(--ease-out) both;animation-play-state:paused;}
+.js .lk-arrive.ak-card h3{animation:lk-arrive-up .45s var(--ease-out) both;animation-play-state:paused;}
+.js .lk-arrive.ak-card .ak-count,.js .lk-arrive.ak-card .d-card-body>p:not(.d-label):not(.ak-count),.js .lk-arrive.ak-card .d-status{animation:lk-arrive-up .45s var(--ease-out) both;animation-play-state:paused;}
+.js .lk-arrive.ak-card .d-actions{animation:lk-arrive-cta .45s var(--ease-out) both;animation-play-state:paused;}
+/* repli : au passage de l'observateur, la séquence se joue dans le temps (colonne décalée de 90 ms) */
+.js .lk-arrive.ak-card.is-in,.js .lk-arrive.ak-card.is-in::before,.js .lk-arrive.ak-card.is-in .d-label:first-child,.js .lk-arrive.ak-card.is-in h3,.js .lk-arrive.ak-card.is-in .ak-count,.js .lk-arrive.ak-card.is-in .d-card-body>p:not(.d-label):not(.ak-count),.js .lk-arrive.ak-card.is-in .d-status,.js .lk-arrive.ak-card.is-in .d-actions{animation-play-state:running;}
+.js .lk-arrive.ak-card.is-in{animation-delay:calc(var(--lk-col)*90ms);}
+.js .lk-arrive.ak-card.is-in::before{animation-delay:calc(var(--lk-col)*90ms + 120ms);}
+.js .lk-arrive.ak-card.is-in .d-label:first-child{animation-delay:calc(var(--lk-col)*90ms + 160ms);}
+.js .lk-arrive.ak-card.is-in h3{animation-delay:calc(var(--lk-col)*90ms + 220ms);}
+.js .lk-arrive.ak-card.is-in .ak-count,.js .lk-arrive.ak-card.is-in .d-card-body>p:not(.d-label):not(.ak-count),.js .lk-arrive.ak-card.is-in .d-status{animation-delay:calc(var(--lk-col)*90ms + 280ms);}
+.js .lk-arrive.ak-card.is-in .d-actions{animation-delay:calc(var(--lk-col)*90ms + 360ms);}
+/* timeline de défilement : la position de la carte dans l'écran pilote la séquence (réversible) */
+@supports (animation-timeline:view()){
+  .js .lk-arrive.ak-card{view-timeline-name:--lk-card;view-timeline-axis:block;}
+  .js .lk-arrive.ak-card,.js .lk-arrive.ak-card::before,.js .lk-arrive.ak-card .d-label:first-child,.js .lk-arrive.ak-card h3,.js .lk-arrive.ak-card .ak-count,.js .lk-arrive.ak-card .d-card-body>p:not(.d-label):not(.ak-count),.js .lk-arrive.ak-card .d-status,.js .lk-arrive.ak-card .d-actions{animation-timeline:--lk-card;animation-play-state:running;animation-duration:auto;animation-delay:0s;animation-timing-function:linear;}
+  .js .lk-arrive.ak-card{animation-range:entry calc(0% + var(--lk-col)*8%) entry calc(55% + var(--lk-col)*8%);}
+  .js .lk-arrive.ak-card::before{animation-range:entry calc(15% + var(--lk-col)*8%) entry calc(65% + var(--lk-col)*8%);}
+  .js .lk-arrive.ak-card .d-label:first-child{animation-range:entry calc(22% + var(--lk-col)*8%) entry calc(66% + var(--lk-col)*8%);}
+  .js .lk-arrive.ak-card h3{animation-range:entry calc(30% + var(--lk-col)*8%) entry calc(72% + var(--lk-col)*8%);}
+  .js .lk-arrive.ak-card .ak-count,.js .lk-arrive.ak-card .d-card-body>p:not(.d-label):not(.ak-count),.js .lk-arrive.ak-card .d-status{animation-range:entry calc(38% + var(--lk-col)*8%) entry calc(78% + var(--lk-col)*8%);}
+  .js .lk-arrive.ak-card .d-actions{animation-range:entry calc(48% + var(--lk-col)*8%) entry calc(84% + var(--lk-col)*8%);}
+}
+/* Médias et crédits : chaque ligne entre avec un rideau sur l'image, la légende suit */
+.js .lk-arrive.media-row{animation:lk-arrive-up .45s var(--ease-out) both;animation-play-state:paused;}
+.js .lk-arrive.media-row img{animation:lk-arrive-curtain .55s var(--ease-out) both;animation-play-state:paused;}
+.js .lk-arrive.media-row>div{animation:lk-arrive-up .45s var(--ease-out) both;animation-play-state:paused;}
+.js .lk-arrive.media-row.is-in,.js .lk-arrive.media-row.is-in img,.js .lk-arrive.media-row.is-in>div{animation-play-state:running;}
+.js .lk-arrive.media-row.is-in img{animation-delay:80ms;} .js .lk-arrive.media-row.is-in>div{animation-delay:160ms;}
+@supports (animation-timeline:view()){
+  .js .lk-arrive.media-row{view-timeline-name:--lk-row;view-timeline-axis:block;}
+  .js .lk-arrive.media-row,.js .lk-arrive.media-row img,.js .lk-arrive.media-row>div{animation-timeline:--lk-row;animation-play-state:running;animation-duration:auto;animation-delay:0s;animation-timing-function:linear;}
+  .js .lk-arrive.media-row{animation-range:entry 0% entry 50%;}
+  .js .lk-arrive.media-row img{animation-range:entry 10% entry 80%;}
+  .js .lk-arrive.media-row>div{animation-range:entry 25% entry 85%;}
+}
+@media(prefers-reduced-motion:reduce){
+  .js .lk-arrive,.js .lk-arrive::before,.js .lk-arrive *{animation:none !important;opacity:1 !important;transform:none !important;clip-path:none !important;}
+  .lk-arrive.ak-card{border-top-color:var(--ak-accent);} .lk-arrive.ak-card::before{display:none;}
+}
+@media print{.js .lk-arrive,.js .lk-arrive::before,.js .lk-arrive *{animation:none !important;opacity:1 !important;transform:none !important;clip-path:none !important;}}
+/* survol d'une carte lk-arrive : l'état « sélectionné » prime (les images-clés sont levées, la carte est entière) */
+@media(hover:hover){
+  .js .lk-arrive.ak-card:hover,.js .lk-arrive.ak-card:hover::before,.js .lk-arrive.ak-card:hover .d-label:first-child,.js .lk-arrive.ak-card:hover h3,.js .lk-arrive.ak-card:hover .ak-count,.js .lk-arrive.ak-card:hover .d-card-body>p:not(.d-label):not(.ak-count),.js .lk-arrive.ak-card:hover .d-status,.js .lk-arrive.ak-card:hover .d-actions{animation:none;opacity:1;transform:none;clip-path:none;}
+  .js .lk-arrive.ak-card:hover{box-shadow:7px 7px 0 var(--amber),inset 0 0 0 1px var(--ink);}
+}

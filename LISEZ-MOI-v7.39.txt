@@ -1,0 +1,27 @@
+LEONIDAKIT v7.39 — LOT 2 : MOUVEMENT — archive « modifs » (26 septembre 2026)
+
+Base attendue : ton dossier Leonidadex en v7.38 (lot 1). Fichiers ajoutés ou modifiés seulement, chemins exacts depuis la
+racine. Rien à supprimer. Aucune commande de build : les pages sont déjà régénérées.
+
+1. Copie ton dossier actuel (sauvegarde).
+2. Extrais l’archive dans la racine du site, écrase les fichiers homonymes (garde le dossier .git).
+3. Ouvre le site (2 minutes) :
+   - Accueil : passe la souris sur les cartes d’outils (« Carte interactive », « Fiches véhicules et armes »…) : la carte
+     ne bouge plus, elle prend une ombre ambre et un bord renforcé ; le texte reste net. Idem sur toutes les cartes du site.
+   - Achats : fais défiler vers les 11 cartes, lentement, puis remonte : chaque carte se compose avec son entrée dans
+     l’écran (barre d’accent, étiquette, titre, texte, bouton jaune en dernier), en cascade sur la rangée, et se défait si
+     tu remontes.
+   - Médias et crédits : fais défiler : chaque ligne se dévoile d’un rideau sur son image quand elle arrive sous tes yeux.
+   - Collectibles, section « Catalogue », les deux cartes superposées : la carte qui passe devant se lève sans pivoter. Continuer la
+     visite (bas de page) : chaque carte de l’éventail monte en gardant son angle.
+   - N’importe quelle page : les blocs sont déjà visibles quand ils arrivent à l’écran (plus d’attente), les titres ne se
+     floutent plus.
+   - Avec « réduire les animations » dans les réglages du système : tout est visible, rien ne bouge.
+4. Mets en ligne.
+
+Navigateurs : Chrome, Edge, Opera et Safari récents jouent l’animation des cartes Achats et des Médias avec le
+défilement ; Firefox (sans timeline de défilement) joue la même séquence à l’entrée de chaque carte. Dans les deux cas
+rien n’est caché : tout est visible au plus tard 1,5 s après l’arrivée.
+
+Détails : outils/CHANGEMENTS-v7.39.txt (mesures avant/après, liste des sélecteurs). Versions précédentes : -v7.38 (calibrage),
+-v7.37 (audit final + SEO), -v7.36 (Motion+).

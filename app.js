@@ -160,12 +160,13 @@ const el = id => document.getElementById(id);
       entries.forEach(function(en){
         if(!en.isIntersecting) return;
         const own = parseInt(en.target.dataset.delay || '-1', 10);
-        const d = own >= 0 ? own : k * 65;
+        /* v7.39 : cascade plafonnée (60 ms par élément, 300 ms au plus) et déclenchement un peu avant l'entrée dans l'écran */
+        const d = own >= 0 ? Math.min(own, 300) : Math.min(k * 60, 300);
         k++;
-        setTimeout(function(){ en.target.classList.add('in'); }, d);
+        if (d) setTimeout(function(){ en.target.classList.add('in'); }, d); else en.target.classList.add('in');
         io.unobserve(en.target);
       });
-    }, {threshold:.08, rootMargin:'0px 0px -30px 0px'});
+    }, {threshold:.01, rootMargin:'0px 0px 12% 0px'});
 
     function scan(){
       document.querySelectorAll('.reveal:not(.in), .rise:not(.in)').forEach(function(n){
@@ -180,7 +181,7 @@ const el = id => document.getElementById(id);
         const r = n.getBoundingClientRect();
         if(r.top < window.innerHeight && r.bottom > 0) n.classList.add('in');
       });
-    }, 3200);
+    }, 2500);
 
     return { scan: scan };
   })();

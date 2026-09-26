@@ -71,12 +71,18 @@
   if (!stage || slides.length < 2) return;
   const N = slides.length;
   let queued = false, last = -1;
+  /* v7.39 : la géométrie (position de la galerie, hauteur, décalage collant) est mesurée au chargement et au
+     redimensionnement ; le défilement ne lit plus le layout. */
+  let stackTop = 0, travel = 1, stickTop = 96;
+  function measure() {
+    const rect = stack.getBoundingClientRect();
+    stackTop = rect.top + window.scrollY;
+    stickTop = parseFloat(getComputedStyle(stage).top) || 96;
+    travel = Math.max(1, rect.height - stage.offsetHeight);
+  }
   function update() {
     queued = false;
-    const rect = stack.getBoundingClientRect();
-    const top = parseFloat(getComputedStyle(stage).top) || 96;
-    const travel = Math.max(1, rect.height - stage.offsetHeight);
-    const p = Math.min(1, Math.max(0, (top - rect.top) / travel));
+    const p = Math.min(1, Math.max(0, (stickTop - (stackTop - window.scrollY)) / travel));
     const pos = p * (N - 1), i = Math.min(N - 2, Math.floor(pos)), t = Math.min(1, Math.max(0, pos - i));
     slides.forEach(function (s, k) {
       s.classList.remove('is-active', 'is-out', 'is-next');
@@ -90,8 +96,10 @@
     });
   }
   window.addEventListener('scroll', function () { if (!queued) { queued = true; requestAnimationFrame(update); } }, { passive: true });
-  window.addEventListener('resize', update);
-  update();
+  window.addEventListener('resize', function () { measure(); update(); });
+  window.addEventListener('load', function () { measure(); update(); });
+  setTimeout(function () { measure(); update(); }, 1200);
+  measure(); update();
 })();
 
 /* Vitrine à deux cartes superposées (.lk-flip) : survol ou clic amène l'autre carte devant. */
@@ -158,7 +166,7 @@
   const BLOCKS = calc
     ? '.lk-stack, .lk-tool, .lk-outro, .calc-editorial>*, .lk-tool-guide>*:not(h2)'
     : '.lk-stack, .d-card, .info-card, .tool, .lk-her, .lk-feature, .t-chapter, .d-progress-group, .d-empty, .lk-photo-card, .lk-link, .lk-flip, .lk-outro, .col-card, .info-section>p, .info-section>.info-grid, .info-sources dl>div, .d-section>p, .d-section>.d-related, .d-sources>ul, .lore-texte, .d-global, .kit, .rare-card, .lk-entry-card, .faq details, .county, .fq, .t-intro, .t-figure, .t-steps, .t-mode-fields, .t-table-wrap';
-  const skip = function (el) { return el.closest('[hidden], template, .reveal, .rise, .lore-stack, .leo-panel') || el.classList.contains('reveal') || el.classList.contains('rise'); };
+  const skip = function (el) { return el.closest('[hidden], template, .reveal, .rise, .lore-stack, .leo-panel, .lk-arrive') || el.classList.contains('reveal') || el.classList.contains('rise') || el.classList.contains('lk-arrive') || el.classList.contains('sr-only'); };
   const targets = [];
   main.querySelectorAll(TITLES).forEach(function (h) { if (skip(h)) return; h.classList.add('lk-h2'); h.classList.add('lk-reveal'); targets.push(h); });
   main.querySelectorAll(BLOCKS).forEach(function (el) { if (skip(el) || el.classList.contains('lk-reveal')) return; el.classList.add('lk-reveal'); targets.push(el); });
@@ -170,13 +178,15 @@
     entries.forEach(function (en) {
       if (!en.isIntersecting) return;
       const el = en.target;
-      el.style.setProperty('--lk-delay', Math.min(k * 70, 420) + 'ms'); k++;
+      el.style.setProperty('--lk-delay', Math.min(k * 60, 300) + 'ms'); k++;
       el.classList.add('is-in'); io.unobserve(el);
     });
-  }, { threshold: 0.06, rootMargin: '0px 0px -6% 0px' });
+  }, { threshold: 0.01, rootMargin: '0px 0px 12% 0px' });
   targets.forEach(function (el) { io.observe(el); });
   /* filet de sécurité : tout ce qui n'est pas encore apparu s'affiche après 3 s. */
-  setTimeout(function () { targets.forEach(function (el) { if (!el.classList.contains('is-in')) { el.style.setProperty('--lk-delay', '0ms'); el.classList.add('is-in'); } }); }, 3000);
+  setTimeout(function () { targets.forEach(function (el) { if (!el.classList.contains('is-in')) { el.style.setProperty('--lk-delay', '0ms'); el.classList.add('is-in'); } }); }, 2500);
+  /* v7.39 : une fois l'apparition jouée, la promotion en couche (will-change) est rendue */
+  document.addEventListener('transitionend', function (ev) { const el = ev.target; if (!el || !el.classList) return; if (el.classList.contains('lk-reveal') && el.classList.contains('is-in')) el.classList.add('lk-settled'); if (el.classList.contains('lk-w')) { const w = el.closest('.lk-words'); if (w) w.classList.add('lk-settled'); } });
   /* impression : tout visible */
   window.addEventListener('beforeprint', function () { targets.forEach(function (el) { el.classList.add('is-in'); }); });
 })();
@@ -205,14 +215,14 @@
           n.textContent.split(/(\s+)/).forEach(function (part) {
             if (!part) return;
             if (!part.trim()) { frag.appendChild(document.createTextNode(part)); return; }
-            const s = document.createElement('span'); s.className = 'lk-w'; s.style.setProperty('--lk-i', i++); s.textContent = part; frag.appendChild(s);
+            const s = document.createElement('span'); s.className = 'lk-w'; s.style.setProperty('--lk-i', Math.min(i++, 8)); s.textContent = part; frag.appendChild(s);
           });
           n.parentNode.replaceChild(frag, n);
         } else if (n.nodeType === 1 && !/^(BR|SCRIPT|STYLE)$/.test(n.tagName) && !n.classList.contains('lk-w') && !n.classList.contains('w')) {
           /* v7.37 : un texte peint par un dégradé (background-clip:text) reste entier : le dégradé n'est pas
              transmis à un span enfant en inline-block, le mot deviendrait transparent (ex. « VI » du titre d'accueil). */
           const cs = window.getComputedStyle(n);
-          if ((cs.webkitBackgroundClip || cs.backgroundClip) === 'text') { n.classList.add('lk-w'); n.style.setProperty('--lk-i', i++); return; }
+          if ((cs.webkitBackgroundClip || cs.backgroundClip) === 'text') { n.classList.add('lk-w'); n.style.setProperty('--lk-i', Math.min(i++, 8)); return; }
           walk(n);
         }
       });
@@ -249,11 +259,11 @@
   const TEXTS = '.lede, .info-lede, .lk-home-support, main .shell>p, main .d-section>p, main .info-section>p, .lore-texte>p, .t-intro>p, .calc-section-desc, .calc-card-desc';
   const ROWS = 'main table>tbody, main .shell>ul, main .shell>ol, .t-steps, .d-sources>ul, .info-grid, .lk-goals';
   const extra = [];
-  const add = function (el, variant) { if (!el || el.closest('[hidden], template, .lore-stack, .leo-panel, .hero, header, footer, #calc-panels')) return; if (!el.classList.contains('lk-reveal')) { el.classList.add('lk-reveal'); extra.push(el); } if (variant) el.classList.add('lk-reveal--' + variant); };
+  const add = function (el, variant) { if (!el || el.closest('[hidden], template, .lore-stack, .leo-panel, .hero, header, footer, #calc-panels, .lk-arrive')) return; if (!el.classList.contains('lk-reveal')) { el.classList.add('lk-reveal'); extra.push(el); } if (variant) el.classList.add('lk-reveal--' + variant); };
   main.querySelectorAll(FIGURES).forEach(function (el) { if (el.closest('.lk-stack, figure figure, .lk-reveal--clip, .lk-hero-item, .d-card, .lore-card')) return; add(el, 'clip'); });
   main.querySelectorAll(TEXTS).forEach(function (el) { if (el.closest('.lk-reveal--clip') || el.classList.contains('lk-hero-item') || el.closest('.lk-hero-item')) return; add(el, 'blur'); });
-  main.querySelectorAll(ROWS).forEach(function (el) { if (el.closest('.lk-reveal')) return; if (el.children.length > 1 && el.children.length <= 40) { add(el, 'rows'); Array.prototype.slice.call(el.children).forEach(function (c, i) { c.style.setProperty('--lk-i', i); }); } });
-  main.querySelectorAll(GRID_CARDS).forEach(function (el) { el.classList.add('lk-reveal--zoom'); if (!el.classList.contains('lk-reveal')) add(el); });
+  main.querySelectorAll(ROWS).forEach(function (el) { if (el.closest('.lk-reveal')) return; if (el.children.length > 1 && el.children.length <= 40) { add(el, 'rows'); Array.prototype.slice.call(el.children).forEach(function (c, i) { c.style.setProperty('--lk-i', Math.min(i, 8)); }); } });
+  main.querySelectorAll(GRID_CARDS).forEach(function (el) { if (el.classList.contains('lk-arrive')) return; el.classList.add('lk-reveal--zoom'); if (!el.classList.contains('lk-reveal')) add(el); });
   main.querySelectorAll('.lk-stack').forEach(function (el) { el.classList.add('lk-reveal--right'); el.querySelectorAll('img').forEach(function (img) { img.classList.add('lk-kb'); }); });
   /* v7.37 : la variante « depuis la gauche » ne s'ajoute qu'aux blocs réellement suivis par l'observateur (classe lk-reveal),
      sinon le décalage de -22 px restait appliqué pour toujours (textes des fiches du monde hors de la gouttière). */
@@ -263,14 +273,14 @@
   main.querySelectorAll('.lk-reveal').forEach(function (el) {
     const parent = el.parentElement; if (!parent) return;
     const siblings = Array.prototype.filter.call(parent.children, function (c) { return c.classList.contains('lk-reveal'); });
-    if (siblings.length > 1) { const idx = siblings.indexOf(el); el.style.setProperty('--lk-delay', Math.min(idx * 80, 560) + 'ms'); el.dataset.lkStagger = '1'; }
+    if (siblings.length > 1) { const idx = siblings.indexOf(el); el.style.setProperty('--lk-delay', Math.min(idx * 60, 300) + 'ms'); el.dataset.lkStagger = '1'; }
   });
   if (io && extra.length) {
     const obs = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) { if (!en.isIntersecting) return; en.target.classList.add('is-in'); obs.unobserve(en.target); });
-    }, { threshold: 0.05, rootMargin: '0px 0px -5% 0px' });
+    }, { threshold: 0.01, rootMargin: '0px 0px 12% 0px' });
     extra.forEach(function (el) { obs.observe(el); });
-    setTimeout(function () { extra.forEach(function (el) { el.classList.add('is-in'); }); }, 3500);
+    setTimeout(function () { extra.forEach(function (el) { el.classList.add('is-in'); }); }, 2500);
     window.addEventListener('beforeprint', function () { extra.forEach(function (el) { el.classList.add('is-in'); }); });
   } else extra.forEach(function (el) { el.classList.add('is-in'); });
   /* le calculateur : ses cartes sont créées par calculateurs.js ; elles apparaissent à leur première venue seulement */
@@ -284,7 +294,7 @@
             if (card.classList.contains('lk-reveal')) return;
             card.classList.add('lk-reveal'); card.classList.add('lk-reveal--zoom');
             if (seen[panel.id]) { card.style.setProperty('--lk-delay', '0ms'); card.classList.add('is-in'); return; }
-            card.style.setProperty('--lk-delay', Math.min(i * 90, 360) + 'ms');
+            card.style.setProperty('--lk-delay', Math.min(i * 60, 300) + 'ms');
             const o = new IntersectionObserver(function (entries) { entries.forEach(function (en) { if (!en.isIntersecting) return; en.target.classList.add('is-in'); seen[panel.id] = true; o.disconnect(); }); }, { threshold: 0.02 });
             o.observe(card);
             setTimeout(function () { if (!card.classList.contains('is-in')) { card.style.setProperty('--lk-delay', '0ms'); card.classList.add('is-in'); } }, 4000);
@@ -301,41 +311,60 @@
   const parallax = Array.prototype.slice.call(document.querySelectorAll('.calc-hero-image, .vhero-bg, .fhero-bg, .info-hero>img, .t-hero img, .lk-calc-hero-scene img'));
   parallax.forEach(function (el) { el.classList.add('lk-parallax'); });
   const coarse = window.matchMedia('(pointer:coarse)').matches;
-  let queued = false;
+  /* v7.39 : aucune lecture de géométrie pendant le défilement. Les positions des bandeaux sont mesurées au chargement
+     et au redimensionnement, puis le défilement ne fait que de l'arithmétique sur scrollY. */
+  let queued = false, geo = [], docMax = 1;
+  const measure = function () {
+    docMax = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+    geo = parallax.map(function (el) { const r = (el.parentElement || el).getBoundingClientRect(); return { el: el, top: r.top + window.scrollY, h: r.height }; });
+  };
   const frame = function () {
     queued = false;
-    const doc = document.documentElement, max = Math.max(1, doc.scrollHeight - window.innerHeight), p = Math.min(1, Math.max(0, window.scrollY / max));
+    const p = Math.min(1, Math.max(0, window.scrollY / docMax));
     fill.style.transform = 'scaleX(' + p.toFixed(4) + ')';
     if (coarse) return;
-    const vh = window.innerHeight;
-    parallax.forEach(function (el) {
-      const box = (el.parentElement || el).getBoundingClientRect();
-      if (box.bottom < -80 || box.top > vh + 80) return;
-      const shift = (box.top + box.height / 2 - vh / 2) * -0.14;
-      el.style.transform = 'translate3d(0,' + shift.toFixed(1) + 'px,0) scale(1.12)';
+    const vh = window.innerHeight, y = window.scrollY;
+    geo.forEach(function (g) {
+      const top = g.top - y;
+      if (top + g.h < -80 || top > vh + 80) return;
+      const shift = Math.round((top + g.h / 2 - vh / 2) * -0.14);
+      g.el.style.transform = 'translate3d(0,' + shift + 'px,0) scale(1.12)';
     });
   };
   const onScroll = function () { if (queued) return; queued = true; window.requestAnimationFrame(frame); };
-  window.addEventListener('scroll', onScroll, { passive: true }); window.addEventListener('resize', onScroll, { passive: true }); onScroll();
-  /* --- 5. survol : inclinaison légère des cartes, reflet sur les boutons principaux --------------------------- */
+  const remeasure = function () { measure(); onScroll(); };
+  window.addEventListener('scroll', onScroll, { passive: true }); window.addEventListener('resize', remeasure, { passive: true }); window.addEventListener('load', remeasure);
+  setTimeout(remeasure, 1200); remeasure();
+  /* v7.39 : les animations infinies (respiration des piles, halo) se mettent en pause hors écran */
+  if (io) {
+    const loops = Array.prototype.slice.call(document.querySelectorAll('.lk-stack, .lk-glow'));
+    if (loops.length) { const lo = new IntersectionObserver(function (entries) { entries.forEach(function (en) { en.target.classList.toggle('lk-off', !en.isIntersecting); }); }, { rootMargin: '10% 0px 10% 0px' }); loops.forEach(function (el) { lo.observe(el); }); }
+  }
+  /* --- 6. lk-arrive : arrivée liée au défilement (cartes Achats, lignes des Médias) ------------------------------- */
+  /* La colonne de chaque carte dans sa rangée décale la cascade (--lk-col). Sans timeline de défilement (Firefox, anciens
+     Safari), un observateur pose is-in un peu avant l'entrée ; garde-fou : tout est visible au plus tard après 1,5 s. */
+  const arrive = Array.prototype.slice.call(main.querySelectorAll('.lk-arrive'));
+  if (arrive.length) {
+    const columns = function () {
+      const groups = new Map();
+      arrive.forEach(function (el) { const p = el.parentElement; if (!groups.has(p)) groups.set(p, []); groups.get(p).push(el); });
+      groups.forEach(function (list) {
+        let rowTop = null, col = 0;
+        list.forEach(function (el) { const t = Math.round(el.getBoundingClientRect().top); if (rowTop === null || Math.abs(t - rowTop) > 8) { rowTop = t; col = 0; } el.style.setProperty('--lk-col', Math.min(col, 3)); col++; });
+      });
+    };
+    columns(); window.addEventListener('resize', columns); window.addEventListener('load', columns);
+    const scrollTimeline = window.CSS && CSS.supports && CSS.supports('animation-timeline: view()');
+    if (!scrollTimeline && io) {
+      const ao = new IntersectionObserver(function (entries) { entries.forEach(function (en) { if (!en.isIntersecting) return; en.target.classList.add('is-in'); ao.unobserve(en.target); }); }, { threshold: 0.01, rootMargin: '0px 0px 4% 0px' });
+      arrive.forEach(function (el) { ao.observe(el); });
+      setTimeout(function () { arrive.forEach(function (el) { el.classList.add('is-in'); }); }, 1500);
+      window.addEventListener('beforeprint', function () { arrive.forEach(function (el) { el.classList.add('is-in'); }); });
+    } else if (!scrollTimeline) arrive.forEach(function (el) { el.classList.add('is-in'); });
+  }
+  /* --- 5. survol : reflet sur les boutons principaux ------------------------------------------------------------ */
+  /* v7.39 : l'inclinaison 3D des cartes sous la souris (perspective + rotation) est retirée : elle rendait le texte flou
+     et faisait bouger les cartes qu'on lit. Une carte signale le survol par un état « sélectionné » immobile (style.css). */
   const CTA = '.lk-cta, .calc-primary, .calc-button.primary, .lk-entry-button, .lk-home-discover, .info-primary, .t-button';
   document.querySelectorAll(CTA).forEach(function (el) { el.classList.add('lk-shine'); });
-  if (window.matchMedia('(hover:hover) and (pointer:fine)').matches) {
-    const TILT = '.lk-feature, .d-card, .info-card, .tool, .kit, .rare-card, .lk-entry-card, .lk-tool, .col-card, .b-phase>div, .b-alt';
-    let active = null;
-    document.addEventListener('pointerenter', function (ev) {
-      const t = ev.target; if (!t || !t.closest) return; const card = t.closest(TILT); if (!card || card === active) return;
-      active = card; card.classList.add('lk-tilt'); card.style.transitionDuration = '.18s';
-    }, true);
-    document.addEventListener('pointermove', function (ev) {
-      if (!active || !active.contains(ev.target)) return;
-      const r = active.getBoundingClientRect(); if (!r.width || !r.height) return;
-      const x = (ev.clientX - r.left) / r.width - 0.5, y = (ev.clientY - r.top) / r.height - 0.5;
-      active.style.transform = 'perspective(900px) rotateX(' + (-y * 5).toFixed(2) + 'deg) rotateY(' + (x * 6).toFixed(2) + 'deg) translate(-3px,-3px)';
-    });
-    document.addEventListener('pointerleave', function (ev) {
-      const t = ev.target; if (!active || !t || t !== active) return;
-      active.style.transform = ''; active.style.transitionDuration = ''; active.classList.remove('lk-tilt'); active = null;
-    }, true);
-  }
 })();

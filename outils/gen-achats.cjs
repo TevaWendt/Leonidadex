@@ -35,7 +35,7 @@ const cards = [
 ];
 const base = read('a-propos.html'), header = base.match(/<header>[\s\S]*?<\/header>/)[0].replace(/ class="here"/g, ''), footer = base.match(/<footer>[\s\S]*?<\/footer>/)[0];
 const favicon = base.match(/<link rel="icon"[^>]*>/)[0];
-const grid = cards.map(c => `<article class="d-card ak-card is-${c.status}" data-d-reveal>
+const grid = cards.map(c => `<article class="d-card ak-card lk-arrive is-${c.status}" data-d-reveal>
  <div class="d-card-body"><p class="d-label">${esc(S[c.status][0])}</p><h3><a href="${c.href}">${esc(c.label)}</a></h3>
  <p class="ak-count">${c.n === null ? 'Suivi dans la progression' : c.n ? c.n + ' ' + esc(c.unit) : 'Rien de publié pour l’instant'}</p>
  <p>${esc(c.text)}</p><p class="d-status">${esc(S[c.status][1])}</p>

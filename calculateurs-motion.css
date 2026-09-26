@@ -104,3 +104,13 @@
 /* La grille mobile prend sa place immédiatement au passage depuis l’éventail. */
 @media(max-width:899px){.calculator-page .lk-link{transition-property:box-shadow;transition-duration:var(--c-fast)}}
 @media(hover:none),(pointer:coarse){.calculator-page :is(.calc-button,.calc-chip,.calc-mode-switch button,.calc-tabs button):hover{transform:none}}
+/* v7.39 : règle « lisible avant tout » (style.css) — les cartes et blocs de texte du calculateur ne bougent plus au survol ;
+   les pastilles numérotées ne grossissent plus (pas de scale sur du texte) ; l'état survolé = ombre et bord. */
+@media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+  .calculator-page :is(.lk-tool,.calc-product,.calc-route):hover{transform:none;box-shadow:7px 7px 0 var(--amber,#F5A524),inset 0 0 0 1px var(--ink,#1A1A1E);}
+}
+body.calculator-page main .lk-tool:hover,.lk-tool:hover,.b-phase>div:hover,.b-alt:hover,.b-plan-mission:hover,.b-plan-prereq:hover,.b-notebook-entry:hover,.calc-stat:hover{transform:none;}
+.b-fold-head:hover .b-fold-num,.b-phase>div:hover~.b-phase-n,.b-phase:hover .b-phase-n{transform:none;box-shadow:0 0 0 3px var(--amber,#F5A524);}
+.b-alt:hover .b-alt-letter{transform:none;color:var(--amber,#F5A524);}
+.b-fold-num,.b-phase-n,.b-alt-letter{transition:box-shadow .2s,background .2s,color .2s;}
+@media(min-width:1000px) and (prefers-reduced-motion:no-preference){.calc-ticket:hover{transform:rotate(3deg) translateY(-5px);}}

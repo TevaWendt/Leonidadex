@@ -1,0 +1,80 @@
+v7.39 — 26 septembre 2026 — LOT 2 : MOUVEMENT
+(base : v7.38 = lot 1 « Calibrage »)
+
+Règle « lisible avant tout » (écrite en tête du bloc Motion+ de style.css, appliquée à tout le site)
+1. Jamais de filter:blur ni de rotation 3D (perspective, rotateX/Y) sur un élément qui contient du texte ; jamais de
+   scale sur du texte au survol.
+2. Translations en pixels entiers (translate3d) ; transition ≤ 220 ms au survol, ≤ 600 ms à l’apparition.
+3. Une carte qu’on lit signale le survol ou le focus par un état « sélectionné » immobile : ombre ambre décalée, anneau
+   encre qui renforce le bord, barre d’accent qui se déroule, flèche « Voir la fiche » qui glisse de 4 px. Seuls les
+   boutons (reflet, pression) et les images seules (zoom léger) bougent.
+4. Un titre est lisible en moins de 400 ms après son arrivée ; un élément déjà vu ne rejoue pas.
+5. « Réduire les animations » : tout visible, rien ne bouge.
+
+Ce qui change pour le visiteur
+- Fini le flou : les titres ne se « nettoient » plus d’un flou et ne tournent plus (montée simple, 40 ms par mot,
+  8 mots au plus décalés), les paragraphes non plus (variante lk-reveal--blur sans filtre). Au survol, plus aucun texte
+  flou : l’inclinaison 3D des cartes sous la souris (perspective + rotation posée par common.js sur .lk-feature,
+  .d-card, .info-card, .tool, .kit, .rare-card, .lk-entry-card, .lk-tool, .col-card, .b-phase>div, .b-alt) est
+  retirée. Mesure à 200 % sur la carte « Carte interactive » de l’accueil : avant, matrice 3D et lettres floues ;
+  après, transform:none et texte net.
+- Cartes lisibles immobiles : .d-card, .info-card, .tool, .lk-her, .d-topic, .d-progress-group, .lk-entry-card,
+  .d-empty, .lk-feature, .county, .reg, .rg, .lore-card, .rel-card, .calc-feature, .lk-photo-card, panneaux des
+  Collectibles, cartes de la Progression, .kit--lien, .rare-card, .duo, .lore-minicard, .lk-tool, .veh-card, cartes du
+  business plan (.b-phase, .b-alt, .b-plan-mission, .b-plan-prereq, .b-notebook-entry, .calc-stat) : plus de
+  translation ni de bascule ; ombre ambre + anneau encre, flèche qui glisse. Les petits textes qui grossissaient ou
+  tournaient sont figés : « kit » de la marque (couleur seulement), rang du classement (.cl-n), pastilles des points
+  repliables et des étapes du plan (.b-fold-num, .b-phase-n, anneau ambre), lettre des choix A/B/C (.b-alt-letter).
+  Éventail « Continuer la visite » : chaque carte garde son angle et monte seulement (plus de scale 1.06 / 1.08 ni de
+  changement de rotation au survol). Vitrine à deux cartes des Collectibles : la carte qui passe devant garde son
+  angle (−2° / 3°) et se lève de 8 px, au lieu de pivoter vers 0° sous la souris (transition 220 ms au lieu de 500).
+  Ticket du calculateur : il garde son inclinaison de 3° et se lève de 5 px (avant : rotation vers 0°).
+- Latence : les apparitions se déclenchent 12 % de hauteur d’écran avant l’entrée (rootMargin), au lieu de 5–6 % après ;
+  cascade plafonnée à 60 ms par élément et 300 ms au total (au lieu de 70/80 ms jusqu’à 420/560 ms, et non plafonnée
+  pour les cartes .rise) ; transitions ramenées de 600 à 450 ms (rideaux d’images 900/1200 → 600/800 ms) ; bandeaux
+  550 ms au lieu de 750 avec un décalage de 60 ms (max 5 éléments) au lieu de 110 ms × 8 ; lignes de tableaux et de
+  listes : rang plafonné à 8. Mesure (Playwright, 1280 px, 8 pages, temps entre l’entrée d’un bloc dans les 90 %
+  bas de l’écran et sa visibilité complète) : accueil médiane 733 → 0 ms, p90 942 → 244 ms, max 1042 → 371 ms ;
+  calculateur p90 617 → 372 ms ; tuto max 728 → 370 ms ; fiche de région 603 → 241 ms ; armurerie max 1402 → 243 ms
+  (le titre réservé aux lecteurs d’écran, invisible, était animé pour rien : exclu).
+- Plus de lecture de géométrie pendant le défilement : la parallaxe des bandeaux et la galerie épinglée des fiches
+  mesurent leurs positions au chargement et au redimensionnement, le défilement ne fait plus que de l’arithmétique sur
+  scrollY (décalages arrondis au pixel). La barre de lecture idem.
+- will-change n’est plus permanent : posé sur les blocs et les mots tant qu’ils n’ont pas fini d’apparaître (classe
+  lk-settled à transitionend), puis rendu. La respiration des piles d’images et le halo des bandeaux se mettent en pause
+  hors écran (classe lk-off posée par un observateur).
+- Cartes de la page Achats — animation signature « lk-arrive » : chaque carte progresse avec son entrée dans l’écran
+  (timeline de défilement, animation-timeline: view()) : elle monte et apparaît, la barre d’accent (ambre, corail ou
+  grise selon le statut) se déroule de gauche à droite, l’étiquette « Recensé sur le site / Montré par Rockstar / À
+  confirmer » se compose sous un rideau, le titre puis le compteur et le texte montent, le bouton jaune arrive en
+  dernier ; sur une rangée, la deuxième et la troisième carte suivent avec 8 % de retard (colonne posée par common.js).
+  Réversible en remontant (c’est le défilement qui pilote). Navigateurs sans timeline de défilement (Firefox) : mêmes
+  images-clés jouées au passage d’un observateur (≤ 700 ms, décalage de 90 ms par colonne), garde-fou 1,5 s. Rien en
+  mouvement réduit. Composant réutilisable (classe lk-arrive, variante .ak-card ; vidéo achats-arrivee.webm).
+- Médias et crédits : les 148 lignes n’arrivent plus d’un bloc ; chaque ligne entre avec un rideau sur son image
+  (clip-path de gauche à droite) et la légende qui suit, pilotés par sa position dans l’écran : les lignes passées vite
+  sont instantanément entières, celles qui arrivent sous les yeux se dévoilent (variante .media-row de lk-arrive ;
+  repli observateur + garde-fou 1,5 s ; vidéo medias-arrivee.webm). Images toujours en chargement paresseux.
+
+Technique
+- common.js : splitWords (rang ≤ 8), observateurs (threshold .01, rootMargin +12 %), cascades plafonnées, geo cache
+  de la parallaxe (measure/remeasure au load, resize et 1,2 s), galerie épinglée (measure), lk-settled, lk-off,
+  section 6 lk-arrive (colonne --lk-col par rangée, repli IntersectionObserver, garde-fou), suppression de la section
+  inclinaison ; titres .sr-only et éléments .lk-arrive exclus des apparitions génériques.
+- app.js : cascade .rise/.reveal plafonnée (60 ms, 300 ms), rootMargin +12 %, filet 2,5 s.
+- learning-motion.js : ignore les éléments lk-arrive.
+- style.css : règle en tête du bloc Motion+, mots sans flou ni rotation, bandeaux 550 ms / min(i,5)·60 ms, rideaux
+  600/800 ms, paragraphes sans filtre, lignes 40 ms, zoom → montée, .lk-tilt retiré, pause hors écran, bloc v7.39
+  (état sélectionné, éventail, vitrine des Collectibles, marque, rang), composant lk-arrive (cartes Achats et lignes Médias, @supports
+  animation-timeline, repli is-in, survol prioritaire, mouvement réduit et impression).
+- calculateurs-motion.css : cartes du calculateur immobiles au survol, pastilles sans scale, ticket sans rotation.
+- outils/gen-achats.cjs : classe lk-arrive sur les cartes ; outils/lore-gen.js : classe lk-arrive sur les lignes de
+  medias.html.
+- Passe automatique des survols (hover-live, Playwright 1280 px) : sur 35 pages, les 45 premières cartes, liens et
+  boutons survolés un à un, transform et filter comparés avant / après sur l’élément et ses 11 premiers descendants
+  qui portent du texte : 0 cas d’angle qui change (> 0,2°), de mise à l’échelle (> 1 %), de perspective ou de flou
+  qui apparaît. Une première passe signalait deux familles : l’éventail (angle ±6° présent avant et après, donc
+  immobile : faux positif du script, corrigé pour comparer les angles) et la vitrine des Collectibles (rotation −2° →
+  0° au passage devant : corrigée, voir plus haut).
+- Tests : 377 / 377 ; calculateurs-browser.cjs 278 / 278 (dont « Reduced motion keeps content visible ») ; verifier.js
+  0 erreur ; régénération reproductible.
