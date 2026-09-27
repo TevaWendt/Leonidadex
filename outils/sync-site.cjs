@@ -32,7 +32,7 @@ home=home.replace('Six comtés confirmés par Rockstar à ce jour.','Six comtés
 let hub=fs.readFileSync('vehicules.html','utf8');const st=V.reduce((a,v)=>(a[v.st]=(a[v.st]||0)+1,a),{});
 const counts=[V.length,new Set(V.map(v=>v.cat)).size,new Set(V.map(v=>v.marque).filter(x=>x&&x!=='Marque inconnue')).size,V.filter(v=>v.insp).length];let ci=0;
 hub=hub.replace(/(<span class="n" data-count=")\d+(">)\d+(<\/span>)/g,(_,a,b,c)=>{const n=counts[ci++];return a+n+b+n+c;});
-hub=hub.replace(/(<div class="kpi"><b>)\d+(<\/b><span>véhicules recensés ici)/,'$1'+V.length+'$2').replace(/(<div class="kpi"><b>)\d+(<\/b><span>nommés par Rockstar)/,'$1'+st.officiel+'$2').replace(/(<div class="kpi"><b>)\d+(<\/b><span>vus sans nom communiqué)/,'$1'+st.vu+'$2').replace(/(<div class="kpi"><b>)\d+(<\/b><span>identifications communautaires)/,'$1'+st.comm+'$2');
+// v7.40 : les grands chiffres de vehicules.html sont générés par gen.js (outils/hubs-editoriaux.cjs).
 hub=hub.replace(/Nous recensons ici \d+ véhicules/g,'Nous recensons ici '+V.length+' véhicules').replace(/les \d+ modèles (recensés|confirmés)/g,'les '+V.length+' modèles recensés');
 const kit=v=>'<a class="kit kit--lien" href="vehicules/'+v.id+'.html"><b>'+esc(name(v))+'</b><span>'+esc(v.insp||v.fam)+'</span><span class="kit-src">'+esc(v.src)+'</span></a>';
 hub=hub.replace(/(<div class="kit-grid rise">)[\s\S]*?(<\/div>)/, '$1'+V.filter(v=>v.st==='officiel').map(kit).join('')+'$2');fs.writeFileSync('vehicules.html',hub);
@@ -94,6 +94,8 @@ for(const file of htmlFiles){let s=fs.readFileSync(file,'utf8');if(file.startsWi
  if(canonical&&!/name="robots" content="[^"]*noindex/.test(s)&&!s.includes('http-equiv="refresh"')&&file!=='404.html')canonicals.push(canonical);
  // Navigation principale : toutes les pages importantes, onglet actif selon la page
  {const ul=require('./site-shell.cjs').nav(file,prefix);s=s.replace(/(<nav id="nav" aria-label="Navigation principale">)[\s\S]*?<\/nav>/,'$1'+ul+'</nav>');}
+ // v7.40 : puces « Explorer les contenus documentés » identiques en bas de chaque page de section (site-shell.cjs)
+ if(!file.includes('/'))s=require('./site-shell.cjs').placeChips(s,file);
  fs.writeFileSync(file,s);
 }
 const urls=[...new Set(canonicals)].sort();for(const f of ['sitemap.xml','sitemap-fiches.xml']){const list=f==='sitemap-fiches.xml'?urls.filter(u=>/\/(armes|vehicules|lieux|personnages|entreprises|demeures|planques)\//.test(u)):urls;fs.writeFileSync(f,'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+list.map(u=>'  <url><loc>'+esc(u)+'</loc></url>').join('\n')+'\n</urlset>\n');}
@@ -120,7 +122,7 @@ fs.writeFileSync('carte.html',fs.readFileSync('carte.html','utf8').replace(/(<sp
 {const nb=String(allPoints.length).replace(/\B(?=(\d{3})+(?!\d))/g,'\u202f');fs.writeFileSync('index.html',fs.readFileSync('index.html','utf8').replace(/(<h3>Carte interactive <span class="chip live">)[^<]*lieux(<\/span>)/,'$1'+nb+' lieux$2'));}
 // v7.38 : familles suivies génériques (équipements, munitions) lues dans armes.html (data-track), et noms pour les listes de la page Progression.
 const tracked={equipements:[],munitions:[]},trackedNames={equipements:{},munitions:{}};
-{const armesHtml=fs.readFileSync('armes.html','utf8');const re=/data-track="(equipements|munitions)" data-track-id="([a-z0-9-]+)"><b>([^<]*)<\/b>/g;let m;while((m=re.exec(armesHtml))){if(!tracked[m[1]].includes(m[2])){tracked[m[1]].push(m[2]);trackedNames[m[1]][m[2]]={n:m[3].replace(/&#39;|&#x27;/g,'’').replace(/&amp;/g,'&')};}}}
+{const armesHtml=fs.readFileSync('armes.html','utf8');const re=/data-track="(equipements|munitions)" data-track-id="([a-z0-9-]+)"(?: data-dot="[a-z0-9]+")?>(?:<span class="ed-kit-ico">[\s\S]*?<\/span>|<i class="ed-dot"[^>]*><\/i>)?<b>([^<]*)<\/b>/g;let m;while((m=re.exec(armesHtml))){if(!tracked[m[1]].includes(m[2])){tracked[m[1]].push(m[2]);trackedNames[m[1]][m[2]]={n:m[3].replace(/&#39;|&#x27;/g,'’').replace(/&amp;/g,'&')};}}}
 const CATV={berline:'Berlines',sport:'Voitures de sport',supercar:'Supercars',muscle:'Muscle cars',suv:'SUV et 4x4',pickup:'Pickups et tout-terrain',van:'Vans et cargos',moto:'Deux-roues et quads',helicoptere:'Hélicoptères',avion:'Avions',bateau:'Bateaux et jet-skis',service:'Service et urgence',divers:'Divers'};
 const CATA={pistolet:'Pistolets',pompe:'Fusils à pompe',pm:'Pistolets-mitrailleurs',assaut:'Fusils d’assaut',precision:'Fusils de précision',mitrailleuse:'Mitrailleuses',melee:'Corps à corps',projectile:'Projectiles',speciale:'Armes spéciales'};
 const progressNames={vehicules:Object.fromEntries(V.map(v=>[v.id,{n:name(v),c:CATV[v.cat]||v.cat||'',u:'vehicules/'+v.id+'.html'}])),armes:Object.fromEntries(A.map(a=>[a.id,{n:a.nom,c:CATA[a.cat]||a.cat||'',u:'armes/'+a.id+'.html'}])),equipements:trackedNames.equipements,munitions:trackedNames.munitions};

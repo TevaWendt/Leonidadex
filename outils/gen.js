@@ -95,40 +95,11 @@ H=H.replace(/(<button class="chip-filter chip-slot" data-slotf="europeen">[^<]*<
  '$1\n    <span class="chip-sep"></span>\n    '+['standard','ultimate','precommande'].map(k=>
   '<button class="chip-filter chip-ed" data-edf="'+k+'">'+EDL[k]+'<em>'+nEd[k]+'</em></button>').join('\n    '));
 
-/* styles ajoutés : on purge les copies précédentes avant de réinjecter */
-H=H.replace(/\n\.chip-filter\.chip-slot em\{background:rgba\(0,0,0,\.08\);\}[\s\S]*?\n\.ouvert b\{color:#1A1A1E;\}/g,'');
-H=H.replace('.chip-filter.chip-st em{background:rgba(0,0,0,.08);}',
- `.chip-filter.chip-st em{background:rgba(0,0,0,.08);}
-.chip-filter.chip-slot em{background:rgba(0,0,0,.08);}\n.chip-filter.chip-ed em{background:rgba(0,0,0,.08);}
-.veh-ed{display:inline-flex;align-self:flex-start;font-size:.6rem;font-weight:800;letter-spacing:.05em;
-  text-transform:uppercase;padding:2px 8px;border-radius:20px;margin:0 0 7px;
-  background:rgba(245,165,36,.2);color:#7A4E0A;}
-.ouvert{border:2px solid #1A1A1E;border-radius:12px;padding:20px 22px;background:#fff;
-  box-shadow:4px 4px 0 rgba(26,26,30,.12);margin-top:18px;}
-.ouvert h3{margin:0 0 8px;font-size:1.05rem;}
-.ouvert p{margin:0 0 10px;font-size:.9rem;line-height:1.65;color:#55525C;max-width:74ch;}
-.ouvert p:last-child{margin-bottom:0;}
-.ouvert b{color:#1A1A1E;}`);
-
-/* bloc « et d'autres à venir » */
-const bloc=`
-<section class="shell reveal" id="a-venir">
-  <h2 class="sec-h">Et les autres ?</h2>
-  <div class="ouvert rise">
-    <h3>Cette liste est incomplète, et c’est normal</h3>
-    <p>Rockstar n’a publié aucun total. Pour situer : <b>GTA V comptait 252 véhicules au lancement</b>,
-    avant les centaines ajoutées par GTA Online. Leonidakit en recense aujourd’hui <b>${N}</b>, tous
-    repérés dans un support officiel de Rockstar ou identifiés par la communauté à partir de ces supports.</p>
-    <p>D’autres sites annoncent des chiffres plus élevés. L’écart vient de là : ils comptent des véhicules
-    vus dans les fuites de 2022 et de 2026. <b>Nous ne les listons pas</b>, parce qu’un véhicule vu dans du
-    code volé peut ne jamais sortir, et parce que relayer ce matériel n’est ni légitime ni utile au joueur.</p>
-    <p>Le compte réel sera connu le <b>19 novembre 2026</b>. Cette page sera mise à jour à partir du jeu
-    lui-même, avec les vitesses, les prix et les emplacements qui manquent encore à chaque fiche.</p>
-  </div>
-</section>
-`;
-H=H.replace(/\n*<section class="shell reveal" id="a-venir">[\s\S]*?<\/section>\n*/g,'\n');
-H=H.replace('<section class="shell reveal" id="aller-plus-loin">', bloc+'<section class="shell reveal" id="aller-plus-loin">');
+/* v7.40 : zone éditoriale (Et les autres ?, Aller plus loin, chiffres, marques, conduite, nommés, carte, méthode, suite, FAQ),
+   rendue par outils/hubs-editoriaux.cjs depuis outils/hubs-editoriaux.json et les comptes de la base */
+{const HUBS=require('./hubs-editoriaux.cjs');const A=(()=>{const c={window:{}};require('vm').runInNewContext(fs.readFileSync('armes-data.js','utf8'),c);return c.window.LK_ARMES;})();
+ const counts={...HUBS.counts(V),nArmes:A.length,nLieux:HUBS.nLieux()};
+ H=HUBS.replaceZone(H,'vehicules-editorial',HUBS.vehicules(V,counts));}
 
 /* données structurées */
 H=H.replace(/<script type="application\/ld\+json">\{"@context":"https:\/\/schema\.org","@type":"ItemList"[\s\S]*?<\/script>/,

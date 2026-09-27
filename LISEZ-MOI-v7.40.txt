@@ -1,0 +1,27 @@
+LEONIDAKIT v7.40 — LOT 3 : HUBS VÉHICULES ET ARMURERIE, PAGE ACHATS — archive « modifs » (26 septembre 2026)
+
+Base attendue : ton dossier Leonidadex en v7.39 (lot 2). Fichiers ajoutés ou modifiés seulement, chemins exacts depuis la
+racine. Rien à supprimer. Aucune commande de build : les pages sont déjà régénérées.
+
+1. Copie ton dossier actuel (sauvegarde).
+2. Extrais l’archive dans la racine du site, écrase les fichiers homonymes (garde le dossier .git).
+3. Ouvre le site (3 minutes) :
+   - Véhicules, sous le catalogue : chaque section a son numéro, son icône et son fond (papier, papier-2, nuit). « Les
+     chiffres, sans arrondi » compte en grand avec des barres ; « Marques fictives » est un mur de 50 marques avec un
+     monogramme, une recherche et des lettres (clique une marque : le catalogue se filtre) ; « Où les trouver » montre
+     une petite carte de Leonida avec le lieu repéré. La barre collante « Le catalogue · Chiffres · Marques… » suit ta
+     position.
+   - Armurerie : mêmes sections ; « Équipements et gadgets » avec une icône par objet et la case « Je l’ai » ; « Types de
+     munitions » en bandeau nuit ; « Combat » en six cartes numérotées, trois avec une capture officielle ; la barre
+     collante a un point de couleur par famille (Équipements ambre, Munitions corail…). Les chiffres de la section
+     « Les chiffres, sans arrondi » sont désormais les vrais (27 armes, 5 nommées, 22 vues).
+   - Achats : sous chaque carte, deux à trois lignes qui disent ce qu’il y a, ce qui est confirmé, ce que tu peux faire
+     (avec les liens « Ici tu peux : … »). Sous la grille, quatre sections : lire les statuts, ce que Rockstar a dit de
+     l’argent (avec les sources datées), ce qui vient des jeux précédents, s’en servir avec le calculateur ; puis la FAQ.
+   - En bas de Véhicules, Armurerie, Achats, Planques, Lieux, Collectibles, Progression et de chaque catégorie
+     d’acquisition : la même rangée de puces (Tout ce qui s’achète · Véhicules · Armurerie · Bateaux · …), sans la page
+     où tu es.
+4. Mets en ligne.
+
+Détails : outils/CHANGEMENTS-v7.40.txt (liste des fichiers, contrôle, points signalés). Versions précédentes : -v7.39
+(mouvement), -v7.38 (calibrage), -v7.37 (audit final + SEO), -v7.36 (Motion+).

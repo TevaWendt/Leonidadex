@@ -1,0 +1,210 @@
+{
+ "_note": "v7.40 (lot 3) : rapprochements « évoque » du mur de marques (page Véhicules). Observations communautaires, jamais des licences ; les entrées marquées source « fiches » reprennent l’inspiration réelle indiquée sur les fiches véhicules de la marque. Une marque absente d’ici s’affiche sans rapprochement.",
+ "marques": [
+  {
+   "name": "Airgator",
+   "evoque": "évoque Diamondback",
+   "source": "fiches"
+  },
+  {
+   "name": "Albany",
+   "evoque": "évoque Cadillac"
+  },
+  {
+   "name": "Annis",
+   "evoque": "évoque Nissan"
+  },
+  {
+   "name": "Benefactor",
+   "evoque": "évoque Mercedes-Benz"
+  },
+  {
+   "name": "Bravado",
+   "evoque": "évoque Dodge"
+  },
+  {
+   "name": "Brute",
+   "evoque": "évoque GMC / Chevrolet"
+  },
+  {
+   "name": "Buckingham",
+   "evoque": "évoque Bell / Learjet"
+  },
+  {
+   "name": "Canis",
+   "evoque": "évoque Jeep"
+  },
+  {
+   "name": "Cheval",
+   "evoque": "évoque Chrysler"
+  },
+  {
+   "name": "Coil",
+   "evoque": "évoque Tesla",
+   "source": "fiches"
+  },
+  {
+   "name": "Crest",
+   "evoque": "évoque Crescent",
+   "source": "fiches"
+  },
+  {
+   "name": "Declasse",
+   "evoque": "évoque Chevrolet"
+  },
+  {
+   "name": "Dinka",
+   "evoque": "évoque Honda"
+  },
+  {
+   "name": "Dundreary",
+   "evoque": "évoque Lincoln"
+  },
+  {
+   "name": "Emperor",
+   "evoque": "évoque Lexus",
+   "source": "fiches"
+  },
+  {
+   "name": "Endurex",
+   "evoque": "évoque Pinarello",
+   "source": "fiches"
+  },
+  {
+   "name": "Enus",
+   "evoque": "évoque Rolls-Royce"
+  },
+  {
+   "name": "Fathom",
+   "evoque": "évoque Infiniti",
+   "source": "fiches"
+  },
+  {
+   "name": "Gallivanter",
+   "evoque": "évoque Land Rover"
+  },
+  {
+   "name": "Grotti",
+   "evoque": "évoque Ferrari"
+  },
+  {
+   "name": "Imponte",
+   "evoque": "évoque Pontiac"
+  },
+  {
+   "name": "Invetero",
+   "evoque": "évoque Chevrolet Corvette"
+  },
+  {
+   "name": "Jacksheepe",
+   "evoque": "évoque Liebherr",
+   "source": "fiches"
+  },
+  {
+   "name": "JoBuilt",
+   "evoque": "évoque Peterbilt"
+  },
+  {
+   "name": "Karin",
+   "evoque": "évoque Toyota"
+  },
+  {
+   "name": "Lampadati",
+   "evoque": "évoque Maserati",
+   "source": "fiches"
+  },
+  {
+   "name": "Lure",
+   "evoque": "évoque Contender",
+   "source": "fiches"
+  },
+  {
+   "name": "Maibatsu",
+   "evoque": "évoque Mitsubishi"
+  },
+  {
+   "name": "Mammoth",
+   "evoque": "évoque De Havilland"
+  },
+  {
+   "name": "MTL",
+   "evoque": "évoque International"
+  },
+  {
+   "name": "Nagasaki",
+   "evoque": "évoque Kawasaki / Yamaha"
+  },
+  {
+   "name": "Obey",
+   "evoque": "évoque Audi"
+  },
+  {
+   "name": "Ocelot",
+   "evoque": "évoque Jaguar / Lotus"
+  },
+  {
+   "name": "Pegassi",
+   "evoque": "évoque Lamborghini / Ducati"
+  },
+  {
+   "name": "Pfister",
+   "evoque": "évoque Porsche"
+  },
+  {
+   "name": "Principe",
+   "evoque": "évoque Ducati"
+  },
+  {
+   "name": "Progen",
+   "evoque": "évoque McLaren",
+   "source": "fiches"
+  },
+  {
+   "name": "Schyster",
+   "evoque": "évoque AMC / Chrysler"
+  },
+  {
+   "name": "Shitzu",
+   "evoque": "évoque Chris-Craft"
+  },
+  {
+   "name": "Speedophile",
+   "evoque": "évoque Sea-Doo"
+  },
+  {
+   "name": "Vapid",
+   "evoque": "évoque Ford"
+  },
+  {
+   "name": "Vortex",
+   "evoque": "évoque Panther Airboat",
+   "source": "fiches"
+  },
+  {
+   "name": "Western",
+   "evoque": "évoque Harley-Davidson"
+  },
+  {
+   "name": "Western Company",
+   "evoque": "évoque Stearman",
+   "source": "fiches"
+  },
+  {
+   "name": "Willard",
+   "evoque": "évoque Buick",
+   "source": "fiches"
+  },
+  {
+   "name": "Xero",
+   "evoque": "évoque Goodyear"
+  },
+  {
+   "name": "Zirconium",
+   "evoque": "évoque Honda"
+  },
+  {
+   "name": "Übermacht",
+   "evoque": "évoque BMW"
+  }
+ ]
+}

@@ -40,44 +40,9 @@
 .veh-ed{display:inline-flex;align-self:flex-start;font-size:.6rem;font-weight:800;letter-spacing:.05em;
   text-transform:uppercase;padding:2px 8px;border-radius:20px;margin:0 0 7px;
   background:rgba(245,165,36,.2);color:#7A4E0A;}
-.ouvert{border:2px solid #1A1A1E;border-radius:12px;padding:20px 22px;background:#fff;
-  box-shadow:4px 4px 0 rgba(26,26,30,.12);margin-top:18px;}
-.ouvert h3{margin:0 0 8px;font-size:1.05rem;}
-.ouvert p{margin:0 0 10px;font-size:.9rem;line-height:1.65;color:#55525C;max-width:74ch;}
-.ouvert p:last-child{margin-bottom:0;}
-.ouvert b{color:#1A1A1E;}
-
-.niveaux{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));margin:18px 0 6px;}
-.niveau{border:1px solid rgba(26,26,30,.12);border-radius:12px;padding:15px 16px;background:#fff;}
-.niveau h3{margin:0 0 6px;font-size:.95rem;display:flex;align-items:center;gap:8px;}
-.niveau p{margin:0;font-size:.86rem;line-height:1.55;color:#55525C;}
-.niveau .pip{width:11px;height:11px;border-radius:50%;flex:none;}
-.pip--officiel{background:#1A1A1E;} .pip--vu{background:#B5762A;} .pip--comm{background:#7A5C8F;}
-
-.kpi{border:1px solid rgba(26,26,30,.12);border-radius:12px;padding:14px 16px;background:#fff;}
-.kpi b{display:block;font-size:1.9rem;font-weight:900;line-height:1;}
-.kpi span{font-size:.78rem;color:#6B6874;display:block;margin-top:5px;}
-
-.marques-grid{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));margin-top:14px;}
-.marque-row{display:flex;align-items:baseline;gap:8px;font-size:.88rem;padding:7px 10px;
-  border-radius:8px;background:rgba(26,26,30,.035);}
-.marque-row b{font-weight:800;} .marque-row span{color:#6B6874;}
-
-.feat{border-left:3px solid #E8452C;padding:2px 0 2px 14px;}
-.feat h3{margin:0 0 5px;font-size:.95rem;}
-.feat p,.feat li{font-size:.87rem;line-height:1.6;color:#55525C;margin:0;}
-.feat ul{margin:0;padding-left:17px;}
-
 .kit{border:1px solid rgba(26,26,30,.12);border-radius:10px;padding:11px 13px;background:#fff;}
 .kit b{display:block;font-size:.88rem;} .kit span{font-size:.79rem;color:#6B6874;}
-
-.faq-item{border-bottom:1px solid rgba(26,26,30,.1);}
-.faq-item summary{cursor:pointer;padding:14px 2px;font-weight:700;font-size:.95rem;list-style:none;
-  display:flex;justify-content:space-between;align-items:center;gap:12px;}
-.faq-item summary::-webkit-details-marker{display:none;}
-.faq-item summary::after{content:'+';font-size:1.3rem;font-weight:400;color:#E8452C;flex:none;}
-.faq-item[open] summary::after{content:'−';}
-.faq-item p{margin:0 0 14px;font-size:.9rem;line-height:1.65;color:#55525C;}
+/* v7.40 : les sections éditoriales (chiffres, marques, conduite, lieux, niveaux, FAQ) sont stylées par le bloc « v7.40 » de style.css et générées par gen.js (outils/hubs-editoriaux.json). */
 .fiche-txt{font-size:.95rem;line-height:1.7;max-width:70ch;}
 section.shell[id]{padding-top:34px;padding-bottom:6px;}
 section.shell[id] .sec-h{margin-bottom:10px;}
@@ -115,6 +80,7 @@ section.shell[id] .sec-h{margin-bottom:10px;}
     <p class="vhero-eyebrow">Base de données</p>
     <h1>Véhicules de GTA VI</h1>
     <p class="lede">Chaque modèle repéré dans un support officiel de Rockstar, classé et consultable en quelques secondes.</p>
+    <nav class="vhero-jump rise" aria-label="Sections de la page"><a href="#vgrid">Le catalogue</a><a href="#chiffres">Chiffres</a><a href="#marques">Marques</a><a href="#conduite">Conduite</a><a href="#carte">Où les trouver</a><a href="#faq">Questions</a></nav>
 
     <div class="vstats rise">
       <div class="vstat"><span class="n" data-count="192">0</span><span class="l">véhicules</span></div>
@@ -127,6 +93,7 @@ section.shell[id] .sec-h{margin-bottom:10px;}
   <div class="vhero-strip" aria-hidden="true"><div class="vhero-strip-track" id="vstrip"></div></div>
 </section>
 
+<div class="lk-catalogue-zone">
 <div class="vbar" id="vbar">
   <div class="shell vbar-in">
     <div class="vsearch">
@@ -181,198 +148,9 @@ section.shell[id] .sec-h{margin-bottom:10px;}
   </div>
 </section>
 </div>
+</div>
 
-<section class="shell reveal" id="a-venir">
-  <h2 class="sec-h">Et les autres ?</h2>
-  <div class="ouvert rise">
-    <h3>Cette liste est incomplète, et c’est normal</h3>
-    <p>Rockstar n’a publié aucun total. Pour situer : <b>GTA V comptait 252 véhicules au lancement</b>,
-    avant les centaines ajoutées par GTA Online. Leonidakit en recense aujourd’hui <b>300</b>, tous
-    repérés dans un support officiel de Rockstar ou identifiés par la communauté à partir de ces supports.</p>
-    <p>D’autres sites annoncent des chiffres plus élevés. L’écart vient de là : ils comptent des véhicules
-    vus dans les fuites de 2022 et de 2026. <b>Nous ne les listons pas</b>, parce qu’un véhicule vu dans du
-    code volé peut ne jamais sortir, et parce que relayer ce matériel n’est ni légitime ni utile au joueur.</p>
-    <p>Le compte réel sera connu le <b>19 novembre 2026</b>. Cette page sera mise à jour à partir du jeu
-    lui-même, avec les vitesses, les prix et les emplacements qui manquent encore à chaque fiche.</p>
-  </div>
-</section>
-<section class="shell reveal" id="aller-plus-loin">
-  <h2 class="sec-h">Aller plus loin</h2>
-  <div class="duo-grid rise">
-    <a class="duo" href="vehicules-rares.html">
-      <span class="duo-k">Véhicules rares</span>
-      <span class="duo-t">Ce qui est vraiment exclusif</span>
-      <span class="duo-d">Les 9 véhicules nommés par Rockstar, le contenu des éditions, et les modèles vus une seule fois dans le kit média officiel.</span></a>
-    <a class="duo" href="classement-vehicules.html">
-      <span class="duo-k">Classement</span>
-      <span class="duo-t">Compose ton top 10</span>
-      <span class="duo-d">Aucun classement objectif n’est possible avant la sortie. Fais le tien, réordonne-le, partage-le en un lien.</span></a>
-    <a class="duo" href="comparateur.html?type=vehicules">
-      <span class="duo-k">Comparateur</span>
-      <span class="duo-t">Jusqu’à trois côte à côte</span>
-      <span class="duo-d">Identité, statut, source et inspiration en parallèle. Les différences sont surlignées.</span></a>
-  </div>
-</section>
-<section class="shell reveal" id="fiabilite">
-  <h2 class="sec-h">Comment lire cette page</h2>
-  <p class="fiche-txt">Rockstar n’a publié aucune liste officielle de véhicules. Chaque entrée porte donc
-  son niveau de certitude, comme sur notre carte de Leonida.</p>
-  <div class="niveaux rise">
-    <div class="niveau"><h3><span class="pip pip--officiel"></span>Nommé par Rockstar</h3>
-      <p>Le nom apparaît tel quel dans un support officiel : site de Rockstar, page produit des éditions,
-      ou pages Only in Leonida.</p></div>
-    <div class="niveau"><h3><span class="pip pip--vu"></span>Vu dans un média officiel</h3>
-      <p>Le véhicule est visible dans le premier trailer, le second trailer, l’Extended Look du 27 août 2026
-      ou une capture officielle, mais Rockstar n’a pas communiqué son nom.</p></div>
-    <div class="niveau"><h3><span class="pip pip--comm"></span>Identification communautaire</h3>
-      <p>Le nom ou l’équivalent réel vient d’un rapprochement visuel fait par les joueurs.
-      Ce n’est ni une confirmation de Rockstar, ni une licence officielle.</p></div>
-  </div>
-  <div class="note-box rise" style="margin-top:16px">
-    <p><strong>Notre règle.</strong> Aucune marque et aucun modèle réel n’est présenté comme confirmé par
-    Rockstar : les rapprochements du type « Grotti évoque Ferrari » sont des observations, jamais des
-    déclarations officielles. Et aucun élément de cette page ne provient de fuites.</p>
-  </div>
-</section>
-
-<section class="shell reveal" id="chiffres">
-  <h2 class="sec-h">Les chiffres, sans arrondi</h2>
-  <div class="kpis rise"><div class="kpi"><b>139</b><span>véhicules recensés ici</span></div><div class="kpi"><b>9</b><span>nommés par Rockstar</span></div><div class="kpi"><b>20</b><span>vus sans nom communiqué</span></div><div class="kpi"><b>110</b><span>identifications communautaires</span></div><div class="kpi"><b>0</b><span>total officiel publié</span></div></div>
-  <p class="fiche-txt">Les totaux plus élevés qui circulent en ligne mélangent véhicules aperçus et
-  véhicules simplement repris de GTA V. Nous ne comptons que ce que nous pouvons rattacher à un support
-  officiel ou à un rapprochement assumé comme tel.</p>
-</section>
-
-<section class="shell reveal" id="marques">
-  <h2 class="sec-h">Marques fictives et constructeurs évoqués</h2>
-  <p class="fiche-txt">Comme dans toute la série, les constructeurs sont inventés. Les correspondances
-  ci-dessous sont des observations de la communauté à partir du design : aucun constructeur réel n’est
-  sous licence dans le jeu, et Rockstar n’a confirmé aucune de ces équivalences.</p>
-  <div class="marques-grid rise">
-    <div class="marque-row"><b>Albany</b><span>évoque Cadillac</span></div><div class="marque-row"><b>Annis</b><span>évoque Nissan</span></div><div class="marque-row"><b>Benefactor</b><span>évoque Mercedes-Benz</span></div><div class="marque-row"><b>Bravado</b><span>évoque Dodge</span></div><div class="marque-row"><b>Brute</b><span>évoque GMC / Chevrolet</span></div><div class="marque-row"><b>Buckingham</b><span>évoque Bell / Learjet</span></div><div class="marque-row"><b>Canis</b><span>évoque Jeep</span></div><div class="marque-row"><b>Cheval</b><span>évoque Chrysler</span></div><div class="marque-row"><b>Declasse</b><span>évoque Chevrolet</span></div><div class="marque-row"><b>Dinka</b><span>évoque Honda</span></div><div class="marque-row"><b>Dundreary</b><span>évoque Lincoln</span></div><div class="marque-row"><b>Enus</b><span>évoque Rolls-Royce</span></div><div class="marque-row"><b>Gallivanter</b><span>évoque Land Rover</span></div><div class="marque-row"><b>Grotti</b><span>évoque Ferrari</span></div><div class="marque-row"><b>Imponte</b><span>évoque Pontiac</span></div><div class="marque-row"><b>Invetero</b><span>évoque Chevrolet Corvette</span></div><div class="marque-row"><b>JoBuilt</b><span>évoque Peterbilt</span></div><div class="marque-row"><b>Karin</b><span>évoque Toyota</span></div><div class="marque-row"><b>Maibatsu</b><span>évoque Mitsubishi</span></div><div class="marque-row"><b>Mammoth</b><span>évoque De Havilland</span></div><div class="marque-row"><b>MTL</b><span>évoque International</span></div><div class="marque-row"><b>Nagasaki</b><span>évoque Kawasaki / Yamaha</span></div><div class="marque-row"><b>Obey</b><span>évoque Audi</span></div><div class="marque-row"><b>Ocelot</b><span>évoque Jaguar / Lotus</span></div><div class="marque-row"><b>Pegassi</b><span>évoque Lamborghini / Ducati</span></div><div class="marque-row"><b>Pfister</b><span>évoque Porsche</span></div><div class="marque-row"><b>Principe</b><span>évoque Ducati</span></div><div class="marque-row"><b>Schyster</b><span>évoque AMC / Chrysler</span></div><div class="marque-row"><b>Shitzu</b><span>évoque Chris-Craft</span></div><div class="marque-row"><b>Speedophile</b><span>évoque Sea-Doo</span></div><div class="marque-row"><b>Übermacht</b><span>évoque BMW</span></div><div class="marque-row"><b>Vapid</b><span>évoque Ford</span></div><div class="marque-row"><b>Western</b><span>évoque Harley-Davidson</span></div><div class="marque-row"><b>Xero</b><span>évoque Goodyear</span></div><div class="marque-row"><b>Zirconium</b><span>évoque Honda</span></div>
-  </div>
-</section>
-
-<section class="shell reveal" id="conduite">
-  <h2 class="sec-h">Conduite et mécaniques montrées à ce jour</h2>
-  <div class="feat-grid rise">
-    <div class="feat"><h3>Vue et intérieurs</h3>
-      <ul><li>Vues première et troisième personne</li><li>Rétroviseurs actifs avec reflets</li>
-      <li>Tableaux de bord détaillés : compteur, jauges, éclairage</li>
-      <li>Animations de pédales, volant, siège, pare-soleil</li></ul></div>
-    <div class="feat"><h3>Carburant et entretien</h3>
-      <ul><li>Les stations-service servent à faire le plein : le carburant est une mécanique de jeu</li>
-      <li>Réparation des véhicules également en station</li>
-      <li>Dégâts de collision nettement plus détaillés qu’en GTA V</li></ul></div>
-    <div class="feat"><h3>Voler une voiture</h3>
-      <ul><li>Deux approches au contact : cloner la clé, ou briser la vitre</li>
-      <li>Un mini-jeu de contournement d’antidémarrage pour les modèles de luxe</li></ul></div>
-    <div class="feat"><h3>Menu véhicule</h3>
-      <ul><li>Onglets d’équipement et de rangement</li>
-      <li>Le coffre sert de casier : quatre armes stockables</li>
-      <li>Garages rattachés aux propriétés, certains avec dépôt pour les biens volés</li></ul></div>
-  </div>
-  <p class="fiche-txt" style="margin-top:14px">Ces éléments proviennent des séquences de gameplay
-  diffusées par Rockstar, principalement l’Extended Look du 27 août 2026. Les valeurs chiffrées
-  (vitesse, accélération, prix) ne seront publiées qu’après la sortie.</p>
-</section>
-
-<section class="shell reveal" id="ultimate">
-  <h2 class="sec-h">Véhicules nommés par Rockstar</h2>
-  <p class="fiche-txt">Ce sont les seuls véhicules dont Rockstar a publié le nom, sur la page produit des
-  éditions et dans le Vintage Vice City Pack. Leur inspiration réelle reste en revanche un rapprochement
-  communautaire. Cette liste est générée directement depuis notre base : elle ne peut pas diverger des fiches.</p>
-  <div class="kit-grid rise">
-    <a class="kit kit--lien" href="vehicules/crest-kayak.html"><b>Crest Kayak</b><span>Kayak de mer</span><span class="kit-src">Page officielle de l’édition Ultimate</span></a><a class="kit kit--lien" href="vehicules/shitzu-squalo.html"><b>Shitzu Squalo</b><span>Vedette sportive type Chris-Craft</span><span class="kit-src">Page officielle de l’édition Ultimate</span></a><a class="kit kit--lien" href="vehicules/vapid-stanier.html"><b>Vapid Stanier ’55</b><span>Ford Fairlane de 1955</span><span class="kit-src">Vintage Vice City Pack</span></a><a class="kit kit--lien" href="vehicules/dinka-enduro.html"><b>Dinka Enduro</b><span>Trail japonaise type Honda XL</span><span class="kit-src">Page officielle de l’édition Ultimate</span></a><a class="kit kit--lien" href="vehicules/vapid-dominator-buggy.html"><b>Vapid Dominator Buggy ’67</b><span>Ford Mustang de 1967, préparée tout-terrain</span><span class="kit-src">Page officielle de l’édition Ultimate</span></a><a class="kit kit--lien" href="vehicules/schyster-deviant.html"><b>Schyster Deviant</b><span>AMC Javelin</span><span class="kit-src">Page officielle de l’édition Ultimate</span></a><a class="kit kit--lien" href="vehicules/vapid-riata-classic.html"><b>Vapid Riata Classic</b><span>Ford Bronco classique</span><span class="kit-src">Page officielle de l’édition Ultimate</span></a><a class="kit kit--lien" href="vehicules/declasse-mamba-gt.html"><b>Declasse Mamba GT</b><span>Shelby Daytona Coupé</span><span class="kit-src">Page officielle de l’édition Ultimate</span></a><a class="kit kit--lien" href="vehicules/grotti-cheetah-classic.html"><b>Grotti Cheetah ’95</b><span>Ferrari Testarossa 512 BB</span><span class="kit-src">Page officielle de l’édition Ultimate</span></a>
-  </div>
-</section>
-
-<section class="shell reveal" id="carte">
-  <h2 class="sec-h">Où les trouver sur la carte</h2>
-  <p class="fiche-txt">Les lieux liés aux véhicules déjà repérés sur notre carte de Leonida. Un clic ouvre la carte directement sur le lieu.</p>
-  <div class="feat-grid rise">
-    <div class="feat"><h3>Concessions</h3><ul>
-      <li><a href="carte.html#lieu=g-L1610">Vapid Dealership</a>, Southside</li>
-      <li><a href="carte.html#lieu=g-L1594">Baller Dealership</a>, Southside</li>
-      <li><a href="carte.html#lieu=g-L1599">Marlin Motors</a>, Southside</li>
-      <li><a href="carte.html#lieu=g-L702">Status Auto Resort</a>, Crosstown</li></ul></div>
-    <div class="feat"><h3>Ateliers</h3><ul>
-      <li><a href="carte.html#lieu=g-L2375">Rideout Customs</a>, Crosstown</li>
-      <li><a href="carte.html#lieu=g-L1381">Chip’s Body Shop</a>, Key Lento</li>
-      <li><a href="carte.html#lieu=g-L348">Watkins Auto Parts</a>, Port Gellhorn</li></ul></div>
-    <div class="feat"><h3>Marinas</h3><ul>
-      <li><a href="carte.html#lieu=g-L120">Vice Beach Marina</a></li>
-      <li><a href="carte.html#lieu=g-L328">Key Lento Marina Club</a></li>
-      <li><a href="carte.html#lieu=g-L326">Brian’s Marina</a>, Key Lento</li></ul></div>
-    <div class="feat"><h3>Aérodromes et circuit</h3><ul>
-      <li><a href="carte.html#lieu=autograph-flight">Autograph Flight Support</a>, VCIA</li>
-      <li><a href="carte.html#lieu=g-L1562">LTF Airfield</a>, comté de Mariana</li>
-      <li><a href="carte.html#lieu=g-L590">Ambrosia Raceway Park</a></li></ul></div>
-  </div>
-</section>
-<section class="shell reveal lk-explore">
-  <h2 class="sec-h">Continuer la visite</h2>
-  <div class="lk-links rise"><a class="lk-link" href="vehicules-rares.html"><img src="/img/officiel/classic-car-collection-01-480.webp" width="480" height="270" alt="" loading="lazy" decoding="async"><span><b>Édition Ultimate</b><i>Les véhicules nommés par Rockstar</i></span></a><a class="lk-link" href="carte.html"><img src="/img/officiel/leonida-keys-01-480.webp" width="480" height="270" alt="" loading="lazy" decoding="async"><span><b>La carte</b><i>2 547 lieux repérés, à cocher</i></span></a><a class="lk-link" href="armes.html"><img src="/img/officiel/vintage-vice-city-weapon-pattern-01-480.webp" width="480" height="270" alt="" loading="lazy" decoding="async"><span><b>Les 27 armes</b><i>Schémas, statuts et constructeur d’équipement</i></span></a></div>
-</section>
-
-<section class="shell reveal" id="faq">
-  <h2 class="sec-h">Questions fréquentes</h2>
-  <div class="faq rise"><details><summary>Combien de véhicules dans GTA VI ?</summary><div class="ans">Rockstar n’a communiqué aucun total. Nous recensons ici 192 véhicules, dont 9 sont nommés par Rockstar. Le reste est soit visible dans un média officiel sans nom, soit identifié par la communauté.</div></details><details><summary>Y a-t-il de vraies marques de voitures dans GTA VI ?</summary><div class="ans">Non. Tous les constructeurs sont fictifs, comme dans les épisodes précédents. Les rapprochements avec Ferrari, Porsche ou Ford sont des observations de joueurs, pas des licences.</div></details><details><summary>Peut-on conduire en vue première personne ?</summary><div class="ans">Oui, les vues première et troisième personne sont montrées dans les séquences officielles, avec des intérieurs détaillés et des rétroviseurs actifs.</div></details><details><summary>Faut-il faire le plein dans GTA VI ?</summary><div class="ans">Les séquences officielles montrent l’usage des stations-service pour le carburant et la réparation. C’est donc bien une mécanique de jeu, mais son fonctionnement précis reste à découvrir.</div></details><details><summary>Comment obtenir un véhicule ?</summary><div class="ans">Le vol dans la rue reste la méthode de base, avec deux approches montrées : cloner la clé ou briser la vitre. Les modèles de luxe demandent de contourner l’antidémarrage. L’achat en concession et le stockage en garage sont également montrés.</div></details><details><summary>Pourquoi certaines fiches sont-elles incomplètes ?</summary><div class="ans">Parce que les statistiques n’existent pas encore publiquement. Vitesse, accélération et prix seront ajoutés à partir du 19 novembre 2026, à partir du jeu lui-même.</div></details></div>
-</section>
-<script type="application/ld+json">{
- "@context": "https://schema.org",
- "@type": "FAQPage",
- "mainEntity": [
-  {
-   "@type": "Question",
-   "name": "Combien de véhicules dans GTA VI ?",
-   "acceptedAnswer": {
-    "@type": "Answer",
-    "text": "Rockstar n'a communiqué aucun total. Nous recensons ici 192 véhicules, dont 9 sont nommés par Rockstar. Le reste est soit visible dans un média officiel sans nom, soit identifié par la communauté."
-   }
-  },
-  {
-   "@type": "Question",
-   "name": "Y a-t-il de vraies marques de voitures dans GTA VI ?",
-   "acceptedAnswer": {
-    "@type": "Answer",
-    "text": "Non. Tous les constructeurs sont fictifs, comme dans les épisodes précédents. Les rapprochements avec Ferrari, Porsche ou Ford sont des observations de joueurs, pas des licences."
-   }
-  },
-  {
-   "@type": "Question",
-   "name": "Peut-on conduire en vue première personne ?",
-   "acceptedAnswer": {
-    "@type": "Answer",
-    "text": "Oui, les vues première et troisième personne sont montrées dans les séquences officielles, avec des intérieurs détaillés et des rétroviseurs actifs."
-   }
-  },
-  {
-   "@type": "Question",
-   "name": "Faut-il faire le plein dans GTA VI ?",
-   "acceptedAnswer": {
-    "@type": "Answer",
-    "text": "Les séquences officielles montrent l'usage des stations-service pour le carburant et la réparation. C'est donc bien une mécanique de jeu, mais son fonctionnement précis reste à découvrir."
-   }
-  },
-  {
-   "@type": "Question",
-   "name": "Comment obtenir un véhicule ?",
-   "acceptedAnswer": {
-    "@type": "Answer",
-    "text": "Le vol dans la rue reste la méthode de base, avec deux approches montrées : cloner la clé ou briser la vitre. Les modèles de luxe demandent de contourner l'antidémarrage. L'achat en concession et le stockage en garage sont également montrés."
-   }
-  },
-  {
-   "@type": "Question",
-   "name": "Pourquoi certaines fiches sont-elles incomplètes ?",
-   "acceptedAnswer": {
-    "@type": "Answer",
-    "text": "Parce que les statistiques n'existent pas encore publiquement. Vitesse, accélération et prix seront ajoutés à partir du 19 novembre 2026, à partir du jeu lui-même."
-   }
-  }
- ]
-}</script>
+<!-- lk:vehicules-editorial (zone générée par gen.js depuis outils/hubs-editoriaux.json) -->
 
 <div class="cmp-tray" id="cmp-tray" role="status"><b>0 sélectionné</b><a href="comparateur.html">Comparer</a><button type="button">Annuler</button></div>
 <section class="lk-outro" aria-label="Et après"><div class="shell lk-outro-in"><p class="lk-outro-k">Et après ?</p><h2>La suite s’écrit le 19 novembre 2026.</h2><p>Les prix, les statistiques et les emplacements arrivent avec le jeu.</p><div class="lk-outro-links"><a href="classement-vehicules.html">Composer mon top 10</a><a href="carte.html#pins=g-L1610,g-L2375,g-L590&t=Concessions">Voir les concessions</a></div></div></section>

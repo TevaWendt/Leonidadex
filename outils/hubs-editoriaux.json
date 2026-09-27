@@ -1,0 +1,606 @@
+{
+ "_note": "v7.40 (lot 3) : contenu des zones éditoriales des hubs Véhicules et Armurerie, rendu par outils/sections.cjs (gen.js et gen-armurerie.cjs). Mêmes faits et mêmes statuts que les pages précédentes ; {N} et {nOfficiel} sont remplacés à la génération par les comptes de vehicules-data.js.",
+ "vehicules": {
+  "nav": [
+   {
+    "href": "#vgrid",
+    "label": "Le catalogue"
+   },
+   {
+    "href": "#a-venir",
+    "label": "Et les autres ?"
+   },
+   {
+    "href": "#chiffres",
+    "label": "Chiffres"
+   },
+   {
+    "href": "#marques",
+    "label": "Marques"
+   },
+   {
+    "href": "#conduite",
+    "label": "Conduite"
+   },
+   {
+    "href": "#ultimate",
+    "label": "Nommés par Rockstar"
+   },
+   {
+    "href": "#carte",
+    "label": "Où les trouver"
+   },
+   {
+    "href": "#fiabilite",
+    "label": "Comment lire"
+   },
+   {
+    "href": "#faq",
+    "label": "FAQ"
+   }
+  ],
+  "aVenir": {
+   "titre": "Cette liste est incomplète, et c’est normal",
+   "p": [
+    "Rockstar n’a publié aucun total. Pour situer : <b>GTA V comptait 252 véhicules au lancement</b>, avant les centaines ajoutées par GTA Online. Leonidakit en recense aujourd’hui <b>{N}</b>, tous repérés dans un support officiel de Rockstar ou identifiés par la communauté à partir de ces supports.",
+    "D’autres sites annoncent des chiffres plus élevés. L’écart vient de là : ils comptent des véhicules vus dans les fuites de 2022 et de 2026. <b>Nous ne les listons pas</b>, parce qu’un véhicule vu dans du code volé peut ne jamais sortir, et parce que relayer ce matériel n’est ni légitime ni utile au joueur.",
+    "Le compte réel sera connu le <b>19 novembre 2026</b>. Cette page sera mise à jour à partir du jeu lui-même, avec les vitesses, les prix et les emplacements qui manquent encore à chaque fiche."
+   ]
+  },
+  "aller": [
+   {
+    "href": "vehicules-rares.html",
+    "k": "Véhicules rares",
+    "t": "Ce qui est vraiment exclusif",
+    "d": "Les {nOfficiel} véhicules nommés par Rockstar, le contenu des éditions, et les modèles vus une seule fois dans le kit média officiel."
+   },
+   {
+    "href": "classement-vehicules.html",
+    "k": "Classement",
+    "t": "Compose ton top 10",
+    "d": "Aucun classement objectif n’est possible avant la sortie. Fais le tien, réordonne-le, partage-le en un lien."
+   },
+   {
+    "href": "comparateur.html?type=vehicules",
+    "k": "Comparateur",
+    "t": "Jusqu’à trois côte à côte",
+    "d": "Identité, statut, source et inspiration en parallèle. Les différences sont surlignées."
+   }
+  ],
+  "chiffres": {
+   "texte": "Les totaux plus élevés qui circulent en ligne mélangent véhicules aperçus et véhicules simplement repris de GTA V. Nous ne comptons que ce que nous pouvons rattacher à un support officiel ou à un rapprochement assumé comme tel."
+  },
+  "marques": {
+   "lede": "Comme dans toute la série, les constructeurs sont inventés. Les correspondances ci-dessous sont des observations de la communauté à partir du design : aucun constructeur réel n’est sous licence dans le jeu, et Rockstar n’a confirmé aucune de ces équivalences."
+  },
+  "conduite": {
+   "cards": [
+    {
+     "titre": "Vue et intérieurs",
+     "liste": [
+      "Vues première et troisième personne",
+      "Rétroviseurs actifs avec reflets",
+      "Tableaux de bord détaillés : compteur, jauges, éclairage",
+      "Animations de pédales, volant, siège, pare-soleil"
+     ],
+     "icon": "conduite"
+    },
+    {
+     "titre": "Carburant et entretien",
+     "liste": [
+      "Les stations-service servent à faire le plein : le carburant est une mécanique de jeu",
+      "Réparation des véhicules également en station",
+      "Dégâts de collision nettement plus détaillés qu’en GTA V"
+     ],
+     "icon": "horloge"
+    },
+    {
+     "titre": "Voler une voiture",
+     "liste": [
+      "Deux approches au contact : cloner la clé, ou briser la vitre",
+      "Un mini-jeu de contournement d’antidémarrage pour les modèles de luxe"
+     ],
+     "icon": "crochet"
+    },
+    {
+     "titre": "Menu véhicule",
+     "liste": [
+      "Onglets d’équipement et de rangement",
+      "Le coffre sert de casier : quatre armes stockables",
+      "Garages rattachés aux propriétés, certains avec dépôt pour les biens volés"
+     ],
+     "icon": "inventaire"
+    }
+   ],
+   "note": "Ces éléments proviennent des séquences de gameplay diffusées par Rockstar, principalement l’Extended Look du 27 août 2026. Les valeurs chiffrées (vitesse, accélération, prix) ne seront publiées qu’après la sortie."
+  },
+  "nommes": {
+   "lede": "Ce sont les seuls véhicules dont Rockstar a publié le nom, sur la page produit des éditions et dans le Vintage Vice City Pack. Leur inspiration réelle reste en revanche un rapprochement communautaire. Cette liste est générée directement depuis notre base : elle ne peut pas diverger des fiches."
+  },
+  "carte": {
+   "lede": "Les lieux liés aux véhicules déjà repérés sur notre carte de Leonida. Un clic ouvre la carte directement sur le lieu.",
+   "groups": [
+    {
+     "title": "Concessions",
+     "items": [
+      {
+       "id": "g-L1610",
+       "name": "Vapid Dealership",
+       "where": "Southside"
+      },
+      {
+       "id": "g-L1594",
+       "name": "Baller Dealership",
+       "where": "Southside"
+      },
+      {
+       "id": "g-L1599",
+       "name": "Marlin Motors",
+       "where": "Southside"
+      },
+      {
+       "id": "g-L702",
+       "name": "Status Auto Resort",
+       "where": "Crosstown"
+      }
+     ]
+    },
+    {
+     "title": "Ateliers",
+     "items": [
+      {
+       "id": "g-L2375",
+       "name": "Rideout Customs",
+       "where": "Crosstown"
+      },
+      {
+       "id": "g-L1381",
+       "name": "Chip’s Body Shop",
+       "where": "Key Lento"
+      },
+      {
+       "id": "g-L348",
+       "name": "Watkins Auto Parts",
+       "where": "Port Gellhorn"
+      }
+     ]
+    },
+    {
+     "title": "Marinas",
+     "items": [
+      {
+       "id": "g-L120",
+       "name": "Vice Beach Marina"
+      },
+      {
+       "id": "g-L328",
+       "name": "Key Lento Marina Club"
+      },
+      {
+       "id": "g-L326",
+       "name": "Brian’s Marina",
+       "where": "Key Lento"
+      }
+     ]
+    },
+    {
+     "title": "Aérodromes et circuit",
+     "items": [
+      {
+       "id": "autograph-flight",
+       "name": "Autograph Flight Support",
+       "where": "VCIA"
+      },
+      {
+       "id": "g-L1562",
+       "name": "LTF Airfield",
+       "where": "comté de Mariana"
+      },
+      {
+       "id": "g-L590",
+       "name": "Ambrosia Raceway Park"
+      }
+     ]
+    }
+   ]
+  },
+  "lecture": {
+   "intro": "Rockstar n’a publié aucune liste officielle de véhicules. Chaque entrée porte donc son niveau de certitude, comme sur notre carte de Leonida.",
+   "niveaux": [
+    {
+     "statut": "officiel",
+     "titre": "Nommé par Rockstar",
+     "texte": "Le nom apparaît tel quel dans un support officiel : site de Rockstar, page produit des éditions, ou pages Only in Leonida."
+    },
+    {
+     "statut": "vu",
+     "titre": "Vu dans un média officiel",
+     "texte": "Le véhicule est visible dans le premier trailer, le second trailer, l’Extended Look du 27 août 2026 ou une capture officielle, mais Rockstar n’a pas communiqué son nom."
+    },
+    {
+     "statut": "comm",
+     "titre": "Identification communautaire",
+     "texte": "Le nom ou l’équivalent réel vient d’un rapprochement visuel fait par les joueurs. Ce n’est ni une confirmation de Rockstar, ni une licence officielle."
+    }
+   ],
+   "regle": "Aucune marque et aucun modèle réel n’est présenté comme confirmé par Rockstar : les rapprochements du type « Grotti évoque Ferrari » sont des observations, jamais des déclarations officielles. Et aucun élément de cette page ne provient de fuites."
+  },
+  "explore": [
+   {
+    "href": "vehicules-rares.html",
+    "img": "/img/officiel/classic-car-collection-01-480.webp",
+    "b": "Édition Ultimate",
+    "i": "Les véhicules nommés par Rockstar"
+   },
+   {
+    "href": "carte.html",
+    "img": "/img/officiel/leonida-keys-01-480.webp",
+    "b": "La carte",
+    "i": "2 547 lieux repérés, à cocher"
+   },
+   {
+    "href": "armes.html",
+    "img": "/img/officiel/vintage-vice-city-weapon-pattern-01-480.webp",
+    "b": "Les {nArmes} armes",
+    "i": "Schémas, statuts et constructeur d’équipement"
+   }
+  ],
+  "faq": [
+   {
+    "q": "Combien de véhicules dans GTA VI ?",
+    "a": "Rockstar n’a communiqué aucun total. Nous recensons ici {N} véhicules, dont {nOfficiel} sont nommés par Rockstar. Le reste est soit visible dans un média officiel sans nom, soit identifié par la communauté."
+   },
+   {
+    "q": "Y a-t-il de vraies marques de voitures dans GTA VI ?",
+    "a": "Non. Tous les constructeurs sont fictifs, comme dans les épisodes précédents. Les rapprochements avec Ferrari, Porsche ou Ford sont des observations de joueurs, pas des licences."
+   },
+   {
+    "q": "Peut-on conduire en vue première personne ?",
+    "a": "Oui, les vues première et troisième personne sont montrées dans les séquences officielles, avec des intérieurs détaillés et des rétroviseurs actifs."
+   },
+   {
+    "q": "Faut-il faire le plein dans GTA VI ?",
+    "a": "Les séquences officielles montrent l’usage des stations-service pour le carburant et la réparation. C’est donc bien une mécanique de jeu, mais son fonctionnement précis reste à découvrir."
+   },
+   {
+    "q": "Comment obtenir un véhicule ?",
+    "a": "Le vol dans la rue reste la méthode de base, avec deux approches montrées : cloner la clé ou briser la vitre. Les modèles de luxe demandent de contourner l’antidémarrage. L’achat en concession et le stockage en garage sont également montrés."
+   },
+   {
+    "q": "Pourquoi certaines fiches sont-elles incomplètes ?",
+    "a": "Parce que les statistiques n’existent pas encore publiquement. Vitesse, accélération et prix seront ajoutés à partir du 19 novembre 2026, à partir du jeu lui-même."
+   }
+  ]
+ },
+ "armes": {
+  "nav": [
+   {
+    "href": "#catalogue",
+    "label": "Les armes",
+    "fam": "armes"
+   },
+   {
+    "href": "#inventaire",
+    "label": "Inventaire",
+    "fam": "armes"
+   },
+   {
+    "href": "#chiffres",
+    "label": "Chiffres",
+    "fam": "armes"
+   },
+   {
+    "href": "#equipements",
+    "label": "Équipements",
+    "fam": "equipements"
+   },
+   {
+    "href": "#munitions",
+    "label": "Munitions",
+    "fam": "munitions"
+   },
+   {
+    "href": "#combat",
+    "label": "Combat",
+    "fam": "combat"
+   },
+   {
+    "href": "#carte",
+    "label": "Où les trouver",
+    "fam": "carte"
+   },
+   {
+    "href": "#fiabilite",
+    "label": "Comment lire",
+    "fam": "armes"
+   },
+   {
+    "href": "#faq",
+    "label": "FAQ",
+    "fam": "armes"
+   }
+  ],
+  "inventaire": {
+   "lede": "Ce que Rockstar a confirmé lors de l’Extended Look.",
+   "items": [
+    {
+     "titre": "Armes de poing",
+     "texte": "Inventaire invisible, comme dans les épisodes précédents. Nombre non limité annoncé.",
+     "icon": "combat"
+    },
+    {
+     "titre": "Armes longues",
+     "texte": "Deux au maximum. Une seule peut être portée dans le dos, l’autre doit rester en main.",
+     "icon": "munitions"
+    },
+    {
+     "titre": "Véhicules",
+     "texte": "Peuvent servir de réserve pour transporter davantage d’équipement.",
+     "icon": "conduite"
+    },
+    {
+     "titre": "Réactions",
+     "texte": "Les passants s’écartent d’une arme visible. La police réagit selon le contexte.",
+     "icon": "passants"
+    },
+    {
+     "titre": "Personnalisation",
+     "texte": "Retour de l’atelier avec gravures, teintes et livrées annoncées comme plus poussées.",
+     "icon": "personnalisation"
+    }
+   ]
+  },
+  "chiffres": {
+   "texte": "On lit souvent des totaux de 32, 37 ou 41 armes. Ces chiffres viennent en partie de la fuite de septembre 2022, dont le contenu ne reflète pas nécessairement le jeu final et n’a jamais été validé par Rockstar. Nous ne comptons ici que ce qui est visible dans les supports officiels."
+  },
+  "equipements": {
+   "lede": "Le jeu introduit une roue à deux volets, dans l’esprit de Red Dead Redemption 2 : les armes d’un côté, les équipements de l’autre. Ces objets occupent leurs propres emplacements et servent surtout aux braquages et aux missions d’infiltration.",
+   "items": [
+    {
+     "id": "sac-a-dos",
+     "nom": "Sac à dos",
+     "usage": "Augmente ce que le personnage peut transporter"
+    },
+    {
+     "id": "gilet-pare-balles",
+     "nom": "Gilet pare-balles",
+     "usage": "Réduit les dégâts reçus"
+    },
+    {
+     "id": "kit-de-soin",
+     "nom": "Kit de soin",
+     "usage": "Rend une part importante de la santé"
+    },
+    {
+     "id": "antidouleurs",
+     "nom": "Antidouleurs",
+     "usage": "Soin partiel, plus rapide à utiliser"
+    },
+    {
+     "id": "jumelles",
+     "nom": "Jumelles",
+     "usage": "Observation à distance"
+    },
+    {
+     "id": "lampe-torche",
+     "nom": "Lampe torche",
+     "usage": "Éclairage des zones sombres"
+    },
+    {
+     "id": "crochet",
+     "nom": "Crochet",
+     "usage": "Ouverture de serrures"
+    },
+    {
+     "id": "reglette",
+     "nom": "Réglette",
+     "usage": "Déverrouillage de portière"
+    },
+    {
+     "id": "contournement-d-antidemarrage",
+     "nom": "Contournement d’antidémarrage",
+     "usage": "Démarrage des véhicules de luxe"
+    },
+    {
+     "id": "outil-de-decoupe",
+     "nom": "Outil de découpe",
+     "usage": "Ouverture de coffres et grilles"
+    },
+    {
+     "id": "brouilleur",
+     "nom": "Brouilleur",
+     "usage": "Neutralise un traceur"
+    },
+    {
+     "id": "composeur-automatique",
+     "nom": "Composeur automatique",
+     "usage": "Outil de piratage téléphonique"
+    },
+    {
+     "id": "cle-usb",
+     "nom": "Clé USB",
+     "usage": "Missions de piratage"
+    },
+    {
+     "id": "serre-cables",
+     "nom": "Serre-câbles",
+     "usage": "Immobiliser une personne"
+    },
+    {
+     "id": "sac-de-butin",
+     "nom": "Sac de butin",
+     "usage": "Emport du produit d’un braquage"
+    },
+    {
+     "id": "pistolet-a-impulsion",
+     "nom": "Pistolet à impulsion",
+     "usage": "Neutralisation non létale"
+    }
+   ]
+  },
+  "munitions": {
+   "items": [
+    {
+     "id": "munitions-de-pistolet",
+     "nom": "Munitions de pistolet",
+     "usage": "Pistolets, revolvers et pistolets-mitrailleurs",
+     "dot": "amber"
+    },
+    {
+     "id": "cartouches",
+     "nom": "Cartouches",
+     "usage": "Fusils à pompe et canons doubles",
+     "dot": "coral"
+    },
+    {
+     "id": "munitions-de-fusil",
+     "nom": "Munitions de fusil",
+     "usage": "Fusils d’assaut et de précision",
+     "dot": "paper"
+    },
+    {
+     "id": "munitions-lourdes",
+     "nom": "Munitions lourdes",
+     "usage": "Mitrailleuses et armes d’appui",
+     "dot": "amber2"
+    },
+    {
+     "id": "harpons",
+     "nom": "Harpons",
+     "usage": "Fusil-harpon, sous l’eau",
+     "dot": "wine"
+    }
+   ]
+  },
+  "combat": {
+   "items": [
+    {
+     "titre": "Inventaire limité",
+     "texte": "Le personnage porte deux armes de poing et deux armes longues. Le reste va dans le coffre du véhicule, qui devient un vrai casier mobile.",
+     "media": "jason-and-lucia-12"
+    },
+    {
+     "titre": "Drive-by élargi",
+     "texte": "En passager, il devient possible de se lever et de tirer par la fenêtre ou depuis la benne d’un pick-up, ce qui ouvre le drive-by aux armes longues.",
+     "media": "trailer-2-lucia-grenade-launcher",
+     "alt": "Lucia tire au lance-grenades depuis l’arrière d’un véhicule sur des voitures de police en feu, dans le Trailer 2 de GTA VI"
+    },
+    {
+     "titre": "Tir sous l’eau",
+     "texte": "Une première dans la série, avec le fusil-harpon. Cohérent avec les zones immergées explorables autour des Keys.",
+     "icon": "eau"
+    },
+    {
+     "titre": "Réaction des passants",
+     "texte": "Sortir une arme en zone peuplée provoque une réaction des personnages autour. Les protagonistes rangent d’ailleurs leur arme automatiquement en présence de monde.",
+     "icon": "passants"
+    },
+    {
+     "titre": "Changement de main",
+     "texte": "Il est possible de tirer de la main gauche ou de la droite, utile pour se protéger derrière un angle.",
+     "icon": "main"
+    },
+    {
+     "titre": "Personnalisation",
+     "texte": "Chargeurs, viseurs, silencieux, lampe tactique, livrées et munitions spéciales sont montrés ou suggérés. Le détail des options reste à confirmer.",
+     "media": "personalized-weapon-variants",
+     "alt": "Deux pistolets à finitions personnalisées, gravures et motif rose, posés près d’une piscine : visuel officiel « Personalized Weapon Variants » de l’Édition Ultimate"
+    }
+   ]
+  },
+  "carte": {
+   "lede": "Les armureries déjà repérées sur notre carte de Leonida. Un clic ouvre la carte directement sur le lieu.",
+   "groups": [
+    {
+     "items": [
+      {
+       "id": "g-L1074",
+       "name": "Phil’s Ammu-Nation"
+      },
+      {
+       "id": "g-L1091",
+       "name": "Ammu-Nation",
+       "where": "Rockridge, nom supposé"
+      },
+      {
+       "id": "g-L298",
+       "name": "Pawn & Gun",
+       "where": "Port Gellhorn"
+      }
+     ]
+    }
+   ]
+  },
+  "lecture": {
+   "notes": [
+    "Cinq armes sont nommées par Rockstar à ce jour : le Girardi ES9 de Jason, le Klose K17 de Lucia et les revolvers Hawk & Little Morgan dans le matériel de l’édition Ultimate, le Nipper .38 dont le nom est gravé sur l’arme de la jaquette, et le Mustang .357 dont le nom est gravé sur le revolver d’une motarde sur les captures d’Ambrosia. Toutes les autres sont identifiées visuellement dans les trailers, l’Extended Look et les captures officielles ; leurs désignations françaises sont les nôtres, et les inspirations réelles des rapprochements communautaires.",
+    "Les armes qui n’apparaissent que dans des fuites ne sont volontairement pas listées ici."
+   ],
+   "intro": "Rockstar n’a publié aucune liste officielle d’armes. Chaque entrée porte donc son niveau de certitude, comme sur notre carte de Leonida.",
+   "niveaux": [
+    {
+     "statut": "officiel",
+     "titre": "Nommé par Rockstar",
+     "texte": "Le nom apparaît tel quel dans un support officiel : matériel de précommande, jaquette, site de Rockstar ou pages Only in Leonida."
+    },
+    {
+     "statut": "vu",
+     "titre": "Vu dans un média officiel",
+     "texte": "L’arme est visible dans le premier trailer, le second trailer, l’Extended Look du 27 août 2026 ou une capture officielle, mais Rockstar n’a pas communiqué son nom."
+    },
+    {
+     "statut": "comm",
+     "titre": "Identification communautaire",
+     "texte": "Le nom ou l’équivalent réel vient d’un rapprochement visuel fait par les joueurs. Ce n’est ni une confirmation de Rockstar, ni une licence officielle."
+    }
+   ],
+   "regle": "Aucune marque et aucun modèle réel n’est présenté comme confirmé par Rockstar : les rapprochements du type « Grotti évoque Ferrari » sont des observations, jamais des déclarations officielles. Et aucun élément de cette page ne provient de fuites."
+  },
+  "explore": [
+   {
+    "href": "vehicules.html",
+    "img": "/img/officiel/one-eyed-willie-s-mod-shop-01-480.webp",
+    "b": "Les {nVehicules} véhicules",
+    "i": "Fiches, photos officielles et schémas"
+   },
+   {
+    "href": "personnages.html",
+    "img": "/img/officiel/jason-duval-01-480.webp",
+    "b": "Les personnages",
+    "i": "Jason, Lucia et les six autres"
+   },
+   {
+    "href": "carte.html",
+    "img": "/img/officiel/leonida-keys-01-480.webp",
+    "b": "La carte",
+    "i": "2 547 lieux repérés, à cocher"
+   }
+  ],
+  "faq": [
+   {
+    "q": "Combien d’armes dans GTA VI ?",
+    "a": "Rockstar n’a publié aucun total. Nous recensons {N} armes visibles dans les supports officiels, dont {nOfficiel} sont nommées par Rockstar. Les totaux de 32 à 41 que l’on lit ailleurs s’appuient en partie sur la fuite de 2022, que nous n’utilisons pas."
+   },
+   {
+    "q": "Combien d’armes peut-on porter ?",
+    "a": "Deux armes de poing et deux armes longues sur soi. Le coffre du véhicule sert de rangement supplémentaire, avec quatre emplacements montrés à l’écran."
+   },
+   {
+    "q": "La personnalisation d’armes revient-elle ?",
+    "a": "Les séquences officielles montrent des armes équipées de viseurs et d’accessoires, et une arme à habillage personnalisé. Le système complet n’a pas été détaillé."
+   },
+   {
+    "q": "Peut-on tirer sous l’eau ?",
+    "a": "Oui, le fusil-harpon apparaît dans les séquences sous-marines. C’est une nouveauté pour la série."
+   },
+   {
+    "q": "Les armes de mêlée sont-elles de retour ?",
+    "a": "Oui : batte, marteau, club de golf et queue de billard sont visibles, avec des animations de corps à corps refaites."
+   },
+   {
+    "q": "Pourquoi ne pas utiliser la liste issue des fuites ?",
+    "a": "Parce qu’elle date de septembre 2022, qu’elle décrit une version de développement très antérieure, et qu’elle n’a jamais été confirmée. Publier ces données reviendrait à diffuser du matériel volé et potentiellement faux."
+   }
+  ]
+ }
+}

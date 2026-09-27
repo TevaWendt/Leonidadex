@@ -400,12 +400,17 @@ const el = id => document.getElementById(id);
       statIO.unobserve(node);
     });
   }, {threshold:.4});
-  document.querySelectorAll('.vstat .n[data-count]').forEach(n => statIO.observe(n));
+  document.querySelectorAll('.vstat .n[data-count], .fig-n[data-count]').forEach(n => statIO.observe(n));
 
   /* filtre via l'ancre : vehicules.html#suv */
-  function fromHash(){
+  function fromHash(ev){
     const h = location.hash.replace('#','');
-    if(h.includes('=') || !h){lireEtat(); apply(); return;}
+    if(h.includes('=') || !h){
+      lireEtat(); apply();
+      /* v7.40 : depuis le mur de marques (#q=Albany), on remonte sur la barre de recherche pour voir le résultat */
+      if(ev && ev.type === 'hashchange' && /(^|&)q=/.test(h)){ const anchor = document.querySelector('.vbar'); if(anchor) window.scrollTo({top: anchor.offsetTop - 70, behavior:'smooth'}); }
+      return;
+    }
     if(!h) return;
     const target = chips.find(c => c.dataset.filter === h);
     if(target){

@@ -1,0 +1,114 @@
+{
+ "_note": "v7.40 (lot 3) : bloc éditorial de la page Achats (achats.html), rendu par gen-achats.cjs avec outils/sections.cjs. Chaque paragraphe apporte un fait daté ou un usage ; les faits sur GTA VI reprennent ceux déjà vérifiés sur le site (sources dans acquisitions.json, consultées le 23 septembre 2026). {n…} sont remplis par gen-achats.cjs. Le HTML autorisé se limite aux liens et au gras.",
+ "sections": [
+  {
+   "id": "statuts",
+   "kicker": "Méthode",
+   "titre": "Lire les trois statuts",
+   "icon": "statuts",
+   "tone": "paper2",
+   "p": [
+    "La règle complète, avec des exemples, est dans le Tuto : <a href=\"tuto.html#sources\">« Comprendre les statuts »</a>."
+   ],
+   "layout": "levels",
+   "items": [
+    {
+     "statut": "listed",
+     "titre": "Recensé sur le site",
+     "texte": "La section a déjà des fiches (véhicules, armes, entreprises, demeures, planques), chacune avec son niveau de certitude et sa source. Un contenu existe dans les médias officiels ; rien ne dit qu’il s’achète, et aucun prix n’est publié."
+    },
+    {
+     "statut": "shown",
+     "titre": "Montré par Rockstar",
+     "texte": "Rockstar décrit lui-même comment on obtient le contenu, le plus souvent comme bonus d’une édition (véhicules, garages, collections de style, personnalisations). Le prix séparé en jeu reste inconnu."
+    },
+    {
+     "statut": "pending",
+     "titre": "À confirmer",
+     "texte": "Aucune entrée vérifiée pour la catégorie (logements, collectibles). La section existe pour accueillir de vrais relevés faits dans le jeu ; elle ne promet rien."
+    }
+   ]
+  },
+  {
+   "id": "rockstar",
+   "kicker": "Sources officielles",
+   "titre": "Ce que Rockstar a dit de l’argent et des achats",
+   "icon": "argent",
+   "tone": "paper",
+   "p": [
+    "Le <b>24 juin 2026</b>, Rockstar a ouvert les précommandes sur le Newswire : sortie le <b>19 novembre 2026</b> sur PS5 et Xbox Series X|S, expérience solo, et un Pack Vintage Vice City pour les achats effectués avant le 20 novembre 2026. Aucun prix en jeu dans cette annonce.",
+    "La présentation de l’<b>Édition Ultimate</b> décrit des contenus et leur usage : des véhicules (kayak Crest, Shitzu Squalo, Dinka Enduro, Dominator Buggy ’67), le garage Paradise à Watson Bay avec « stationnement, casier d’armes et dépôt de biens destinés à un receleur », des collections de tenues et de tatouages, un kit de modifications pour le Ganado de Jason. Le <b>Pack Vintage Vice City</b> ajoute le Stanier ’55, le garage Shore Court près d’Ocean Beach, un costume et une coiffure rétro, un motif d’arme. Aucun prix séparé.",
+    "Les <b>captures officielles</b> montrent les commerces : Stock 305 (streetwear), Sara’s Unisex Salon (coiffures, maquillage, ongles), Electric Fang Tattoo, Rideout Customs et One-Eyed Willie’s Mod Shop. Ce sont des services annoncés ; rien ne dit que le joueur pourra en devenir propriétaire.",
+    "L’<b>Extended Look</b> du 27 août 2026 a montré ce qui touche au portefeuille : le plein et la réparation en station-service, le coffre du véhicule qui sert de casier, des garages rattachés aux propriétés avec un dépôt pour les biens volés, une roue d’inventaire à deux volets. Toujours aucun montant."
+   ],
+   "sources": [
+    "preorder",
+    "ultimate",
+    "vintage",
+    "screenshots",
+    "extended"
+   ],
+   "layout": "split"
+  },
+  {
+   "id": "serie",
+   "kicker": "Repères",
+   "titre": "Ce qui vient des précédents jeux et reste à confirmer",
+   "icon": "horloge",
+   "tone": "night",
+   "p": [
+    "Pour situer les ordres de grandeur, le site cite GTA V : <b>252 véhicules au lancement</b>, avant les centaines ajoutées par GTA Online. Aucun total n’a été publié pour GTA VI : les compteurs du site ({nVehicules} véhicules, {nArmes} armes) ne comptent que ce qui est visible dans les supports officiels.",
+    "Manger, boire et se soigner existent dans la série ; le gilet pare-balles et le kit de soin figurent parmi les équipements montrés pour GTA VI. Leurs effets chiffrés et leurs prix ne sont pas publiés. Même chose pour les ateliers et les armureries, repérés sur la carte sans catalogue ni tarif.",
+    "Acheter un logement, une entreprise ou un garage à part : GTA V et GTA Online le permettaient, GTA VI ne l’a pas confirmé. Les seuls garages décrits sont liés aux éditions. Les fuites de 2022 et de 2026 ne sont pas utilisées sur ce site."
+   ]
+  },
+  {
+   "id": "calculateur",
+   "kicker": "Outils",
+   "titre": "S’en servir avec le calculateur",
+   "icon": "calcul",
+   "tone": "paper2",
+   "p": [
+    "<a href=\"calculateurs.html?tool=purchase&amp;from=achats#atelier\">« Mes achats »</a> : choisis une fiche, écris le prix que tu imagines, et le calculateur dit s’il te manque de l’argent et combien de temps de jeu il te faut. Le prix reste ton hypothèse tant que Rockstar n’a rien publié.",
+    "<a href=\"calculateurs.html?tool=roi&amp;from=achats#atelier\">« Ça vaut le coup ? »</a> compare la situation avec l’achat et sans, sur le même temps de jeu : utile pour une entreprise ou un garage dont tu supposes qu’il rapporte. <a href=\"calculateurs.html?tool=order&amp;from=achats#atelier\">« Quoi acheter d’abord ? »</a> enchaîne plusieurs achats : le calculateur attend d’avoir l’argent avant chacun et donne l’ordre et le temps.",
+    "Ce que tu coches sur chaque section se retrouve dans <a href=\"progression.html#acquisitions\">Progression</a>, avec un pourcentage par catégorie ; les catégories vides ne comptent pas dans le total."
+   ],
+   "links": [
+    [
+     "calculateurs.html?tool=purchase&from=achats#atelier",
+     "Mes achats"
+    ],
+    [
+     "calculateurs.html?tool=roi&from=achats#atelier",
+     "Ça vaut le coup ?"
+    ],
+    [
+     "calculateurs.html?tool=order&from=achats#atelier",
+     "Quoi acheter d’abord ?"
+    ],
+    [
+     "progression.html#acquisitions",
+     "Ma progression"
+    ]
+   ]
+  }
+ ],
+ "faq": [
+  [
+   "Pourquoi il n’y a aucun prix ?",
+   "Aucun prix séparé en jeu n’est vérifié dans le catalogue actuel. La sortie de GTA VI est annoncée le 19 novembre 2026. Dès qu’un prix sera connu et vérifié, il sera ajouté avec sa source. En attendant, le calculateur te laisse écrire le prix que tu imagines."
+  ],
+  [
+   "Que veut dire « À confirmer » ?",
+   "Que le site ne dispose pas d’entrées vérifiées pour cette catégorie. Cela ne confirme ni sa présence ni un achat possible dans GTA VI. La section est prête et se remplira avec de vrais relevés faits dans le jeu, jamais avec des chiffres de GTA V."
+  ],
+  [
+   "Où est-ce que je coche ce que j’ai acheté ?",
+   "Sur chaque section : un véhicule dans Véhicules, une arme dans Armurerie, un contenu documenté dans sa section. Tout se retrouve dans Progression, avec un pourcentage par catégorie. Les catégories vides ne comptent pas dans le total."
+  ],
+  [
+   "Comment calculer si je peux acheter quelque chose ?",
+   "Ouvre le calculateur, outil « Mes achats » : choisis la fiche, écris le prix que tu imagines, et il te dit s’il te manque de l’argent et combien de temps de jeu il te faut."
+  ]
+ ]
+}

@@ -1,0 +1,115 @@
+v7.40 — 26 septembre 2026 — LOT 3 : DESIGN DES HUBS VÉHICULES ET ARMURERIE, PAGE ACHATS
+(base : v7.39 = lot 2 « Mouvement »)
+
+Ce qui change pour le visiteur
+- Véhicules et Armurerie : les sections de texte sous le catalogue ne se ressemblent plus. Chaque section a une identité
+  (numéro et kicker en mono, grand titre Archivo 800, ligne d’accent ambre ou corail, icône dessinée dans la charte,
+  fond papier / papier-2 / bloc nuit à texte clair pour une section sur trois) et une composition propre à son contenu :
+  · « Les chiffres, sans arrondi » : grands chiffres comptés (data-count) avec légende et micro-barre de proportion par
+    rapport au total ; le « 0 total officiel publié » garde sa barre vide. Les chiffres viennent de vehicules-data.js et
+    armes-data.js à la génération : sur l’Armurerie, ils étaient faux depuis plusieurs versions (23 / 4 / 19 affichés pour
+    27 armes, 5 nommées, 22 vues) ; ils sont maintenant exacts par construction.
+  · « Marques fictives et constructeurs évoqués » (Véhicules) : mur de 50 marques généré depuis la base (au lieu de 35
+    lignes tapées à la main, dont « Cheval » sans véhicule), monogramme dessiné (initiales dans une pastille ambre,
+    corail, nuit ou encre, jamais un logo réel), nom, « évoque » en petit, nombre de véhicules et lien vers le catalogue
+    filtré (#q=Marque, qui remonte sur la barre de recherche), recherche et filtre par lettre. Les 35 rapprochements
+    existants sont conservés tels quels dans outils/marques.json ; 13 marques qui n’en avaient pas reçoivent celui de leurs
+    fiches (l’inspiration réelle déjà écrite sur chaque fiche véhicule, source « fiches ») ; HVY, BTN et LCC restent sans
+    rapprochement (« constructeur fictif, pas de rapprochement retenu »).
+  · « Conduite et mécaniques » (Véhicules) et « Le nouveau système d’inventaire » (Armurerie) : colonnes avec icône,
+    accent corail, note encadrée.
+  · « Équipements et gadgets » (Armurerie) : 16 cartes avec une icône dessinée par objet, le nom, la ligne d’usage et la
+    case « Je l’ai » du lot 1 (mêmes identifiants data-track, même clé lk_own_equipements).
+  · « Types de munitions » : bandeau nuit à part, puce colorée par famille, cases « Je l’ai » et barre « Mes munitions »
+    adaptées au fond sombre.
+  · « Combat : ce qui change » : six cartes numérotées à accent corail ; trois portent une capture officielle qui montre
+    la mécanique (Inventaire : Jason et Lucia armés ; Drive-by : Lucia tire au lance-grenades depuis l’arrière d’un
+    véhicule ; Personnalisation : « Personalized Weapon Variants » de l’Édition Ultimate), les trois autres une icône.
+    Aucune capture n’existe pour le tir sous l’eau, la réaction des passants et le changement de main : rien d’inventé.
+  · « Où les trouver sur la carte » : cartes-lieux avec une vignette de la carte (silhouette de Leonida dessinée depuis
+    le fond de carte.html, repère aux coordonnées exactes du lieu) et lien carte.html#lieu=… : 13 lieux (Véhicules,
+    en quatre groupes) et 3 armureries (Armurerie).
+  · « Comment lire cette page » : niveaux de certitude en cartes, règle et notes encadrées ; FAQ en section du système.
+  · Sous-navigation collante au-dessus de la zone éditoriale (9 entrées par page), état actif qui suit le défilement,
+    défilement horizontal sur téléphone avec l’entrée active recentrée ; dans l’Armurerie, un marqueur de couleur par
+    famille (Armes encre, Équipements ambre, Munitions corail, Combat vin, Où les trouver prune). La barre de filtres
+    du catalogue ne colle plus que le long du catalogue (avant, elle restait collée jusqu’au pied de page). Un lien
+    « Sections de la page » est ajouté dans le bandeau Véhicules (l’Armurerie l’avait déjà).
+  · Hiérarchie : quatre tailles de texte (titre, intertitre, courant, légende), mesure de 68 caractères, contrastes AA
+    vérifiés par script (837 textes des zones du lot, 0 sous 4,5:1 ; trois écarts trouvés et corrigés : numéro de section
+    ambre sur papier, monogramme et badge blanc sur corail → corail-texte).
+  Aucun texte n’est réécrit sur le fond : les phrases, statuts et faits sont ceux de la v7.39 (déplacés dans
+  outils/hubs-editoriaux.json), à deux exceptions près : les chiffres faux de l’Armurerie (voir ci-dessus) et la ligne
+  « Cheval évoque Chrysler » qui n’avait aucun véhicule.
+- Achats : sous chaque carte de catégorie, une description de deux à trois lignes qui dit ce que la section contient, ce
+  qui est confirmé ou non, et ce qu’on peut y faire, suivie de deux liens d’action (« Ici tu peux : Cocher mon garage ·
+  Comparer · Simuler un achat », etc.). Les descriptions vivent dans outils/acquisitions.json (champ description des six
+  catégories concernées, bloc hub.cards pour Véhicules, Armurerie, Entreprises, Demeures, Collectibles) ; les comptes
+  ({n}, {nOfficiel}) sont remplis à la génération. Sous la grille, un bloc éditorial de quatre sections (≈ 590 mots hors
+  sources) : lire les trois statuts (trois cartes), ce que Rockstar a dit de l’argent et des achats (précommandes du
+  24 juin 2026, Édition Ultimate et Pack Vintage, commerces des captures officielles, Extended Look du 27 août 2026 ;
+  texte à gauche, encadré « Sources consultées » à droite avec les cinq sources d’acquisitions.json, leur date de
+  publication et de consultation), ce qui vient des précédents jeux et reste à confirmer, s’en servir avec le calculateur
+  (liens « Mes achats », « Ça vaut le coup ? », « Quoi acheter d’abord ? », Progression). FAQ de quatre questions (les
+  mêmes qu’avant) reprise en FAQPage par sync-site. Tout est dans le HTML : visible sans JavaScript.
+- Puces de navigation entre les sections documentées : une seule liste (Tout ce qui s’achète, Véhicules, Armurerie,
+  Bateaux, Vêtements et style, Personnalisations, Garages documentés, Consommables, Logements et appartements, Ma
+  progression, Comprendre les statuts), même ordre partout, page courante retirée de sa propre liste, posée en bas de
+  19 pages de section (hubs du monde, Collectibles, catégories d’acquisition et leurs pages d’alias, Véhicules,
+  Armurerie, Achats, Progression), avant le bandeau « Et après ? ». Style commun (pilule, bord encre, cibles de 44 px,
+  rangée centrée). Avant : sept puces sur six pages seulement, dans l’en-tête des catégories et dans la section Garages
+  de Planques.
+
+Technique
+- outils/sections.cjs (nouveau) : système de sections éditoriales : section({id, num, kicker, title, icon, lede, tone,
+  accent, fam}), nav(items), figures(list), brandWall(brands), kits(items, famille), ammo(items, famille), steps(items),
+  places(groups), columns(cards), mediaFigure(id), defs() ; 39 icônes SVG 24 × 24 (trait courant, classe « ac » pour la
+  couleur d’accent). Erreurs franches : icône inconnue, fond inconnu, visuel absent, lieu inconnu.
+- outils/carte-vignette.cjs (nouveau) : silhouette de Leonida extraite du calque « TERRES » de carte.html, simplifiée
+  (Ramer-Douglas-Peucker, tolérance 30 unités, îlots < 8 000 unités² ignorés : 7 182 caractères, un symbole SVG par page
+  réutilisé avec <use>) ; coordonnées des lieux prises dans outils/data/carte-gtadb-source.json et la liste POINTS de
+  carte.js (2 547 lieux).
+- outils/hubs-editoriaux.json (nouveau) : contenu des zones éditoriales de Véhicules et Armurerie (textes de la v7.39,
+  icônes, visuels, lieux, sous-navigation, FAQ, liens « Continuer la visite ») ; {N}, {nOfficiel}, {nVehicules},
+  {nArmes}, {nLieux} remplis à la génération. outils/marques.json (nouveau) : rapprochements du mur de marques.
+- outils/hubs-editoriaux.cjs (nouveau) : rend les deux zones. gen.js remplace le marqueur
+  <!-- lk:vehicules-editorial --> du gabarit ; outils/gen-armurerie.cjs (nouveau, dans regenerer.cjs après gen-armes)
+  remplace la zone entre <!-- lk:armurerie-editorial --> et <!-- /lk:armurerie-editorial --> de armes.html (idempotent).
+  Le reste de armes.html (bandeau, constructeur d’équipement, catalogue) reste écrit à la main.
+- outils/templates/vehicules.html et armes.html : zone éditoriale remplacée par le marqueur ; barre de filtres et
+  catalogue enveloppés dans .lk-catalogue-zone ; règles en ligne devenues inutiles retirées (.ouvert, .niveaux, .kpi,
+  .marques-grid, .marque-row, .feat, .faq-item) ; FAQPage tapée à la main retirée (sync-site la génère depuis les
+  questions visibles). gen.js : plus de purge / réinjection de styles en ligne.
+- outils/sync-site.cjs : lecture des familles suivies tolérante à l’icône devant le nom ; grands chiffres de Véhicules
+  générés par gen.js (anciennes expressions kpi retirées) ; pose des puces (site-shell.placeChips) sur les pages de la
+  racine.
+- outils/site-shell.cjs : chips(file), placeChips(html, file), chipList, sectionPages. outils/gen-acquisitions.cjs : plus
+  de puces dans l’en-tête des catégories.
+- outils/gen-achats.cjs : descriptions et actions des cartes, bloc éditorial (outils/achats-editorial.json, nouveau),
+  FAQ depuis le même fichier.
+- style.css : bloc « v7.40 : sections éditoriales » (section, sous-navigation, chiffres, mur de marques, équipements,
+  munitions, cartes numérotées, cartes-lieux, colonnes, niveaux, texte + encadré, sources, liens), puces .lk-chips ;
+  la barre .vbar et la sous-navigation suivent la hauteur réelle de l’en-tête (--lk-head-h posée par common.js).
+- common.js : filtre du mur de marques (recherche + lettre, boutons aria-pressed, lettres sans résultat désactivées),
+  sous-navigation (hauteur d’en-tête, ombre quand elle colle, état actif par IntersectionObserver — aucune lecture de
+  géométrie au défilement — recentrage de l’entrée active sur téléphone). app.js : compteurs animés aussi sur .fig-n ;
+  depuis #q=… (mur de marques), remontée sur la barre de recherche.
+- Nom de classe : le bloc note s’appelle .ed-callout (le .ed-note existant appartient à l’éditeur de la carte).
+- Tests : 377 → 385 (nouveau outils/tests/hubs-v740.test.cjs : module, vignette, zones générées, suivi sur les nouvelles
+  cartes, filtre des marques, page Achats, puces). calculateurs-browser.cjs : 278 / 278. verifier.js : 0 erreur sur
+  37 381 références. gen-leo --check : sans divergence. Régénération reproductible (double passage, empreintes identiques).
+- Contrôle : 8 pages (vehicules, armes, achats, planques, style, progression, collectibles, lieux) × 7 largeurs (320,
+  390, 768, 1024, 1280, 1440, 1920) : 0 erreur console, 0 débordement de document ; différences avec la v7.39 = les
+  nouveaux blocs seulement (rangées de pilules signalées par l’heuristique de grille comme « largeurs inégales » : ce sont
+  des pilules de longueurs différentes, pas des cartes) ; mouvement réduit : tout visible, 0 animation en cours ;
+  clavier : sous-navigation, recherche, 23 lettres, tuiles, cartes-lieux et puces atteignables, contour visible partout,
+  Entrée sur une lettre filtre (aria-pressed). Captures avant / après de chaque section à 390 et 1 280 px (82 fichiers)
+  dans le dossier de contrôle.
+
+Reste ouvert (signalé, pas modifié)
+- armes.html dit dans « Le nouveau système d’inventaire » (Extended Look) : armes de poing « nombre non limité annoncé »,
+  et dans « Combat : ce qui change » : « deux armes de poing et deux armes longues ». Les deux phrases sont celles de la
+  v7.39 ; à arbitrer avec la source.
+- JetBrains Mono n’est pas hébergée (comme avant) : les navigateurs affichent leur monospace système.
+- Les pages Rockstar n’ont pas été rouvertes depuis cette session (accès réseau soumis à approbation) : les sources
+  citées sont celles d’acquisitions.json, consultées le 23 septembre 2026.

@@ -492,7 +492,7 @@ nav a.here::after{width:100%;}
    BARRE DE FILTRES COLLANTE
    ============================================================ */
 .vbar{
-  position:sticky; top:62px; z-index:30;
+  position:sticky; top:var(--lk-head-h,62px); z-index:30;
   background:rgba(253,251,247,.96); backdrop-filter:blur(10px);
   border-bottom:2px solid var(--rule); padding:14px 0 12px; margin-bottom:30px;
   transition:box-shadow .2s;
@@ -2682,3 +2682,217 @@ footer a:hover{color:var(--coral-text);transform:translateX(3px);}
   .js .lk-arrive.ak-card:hover,.js .lk-arrive.ak-card:hover::before,.js .lk-arrive.ak-card:hover .d-label:first-child,.js .lk-arrive.ak-card:hover h3,.js .lk-arrive.ak-card:hover .ak-count,.js .lk-arrive.ak-card:hover .d-card-body>p:not(.d-label):not(.ak-count),.js .lk-arrive.ak-card:hover .d-status,.js .lk-arrive.ak-card:hover .d-actions{animation:none;opacity:1;transform:none;clip-path:none;}
   .js .lk-arrive.ak-card:hover{box-shadow:7px 7px 0 var(--amber),inset 0 0 0 1px var(--ink);}
 }
+/* ------------------------------------------------------------
+   v7.40 : lot 3 — sections éditoriales des hubs (Véhicules, Armurerie, Achats ; réutilisable).
+   Balisage : outils/sections.cjs ; comportement (mur de marques, sous-navigation) : common.js.
+   Une section = numéro et kicker en mono, titre Archivo 800, ligne d'accent, icône dessinée dans la charte,
+   fond papier / papier-2 / nuit, et une composition propre à son contenu. Quatre tailles de texte au plus :
+   titre (--fs-h2), intertitre (1.05 rem), courant (.95 rem), légende (.76 rem). Mesure 60 à 75 caractères.
+   Contrastes AA : encre sur papier, --ink-soft sur papier et papier-2, papier et ambre-2 sur nuit.
+   Survol : état « sélectionné » immobile (règle du lot 2).
+   ============================================================ */
+.ed{--ed-accent:var(--amber);--ed-fg:var(--ink);--ed-soft:var(--ink-soft);--ed-card:#fff;--ed-line:var(--rule);--ed-chip:var(--paper-2);position:relative;padding:46px 0 42px;color:var(--ed-fg);scroll-margin-top:120px;}
+.ed--coral{--ed-accent:var(--coral);}
+.ed--paper2{background:var(--paper-2);border-top:2px solid var(--rule);border-bottom:2px solid var(--rule);--ed-card:var(--paper);--ed-chip:#fff;}
+.ed--paper2+.ed--paper2{border-top:0;}
+.ed--night{background:linear-gradient(160deg,var(--night-deep) 0%,var(--night) 55%,var(--night-2) 100%);--ed-fg:var(--paper);--ed-soft:rgba(253,251,247,.84);--ed-card:rgba(255,255,255,.07);--ed-line:rgba(255,255,255,.22);--ed-chip:rgba(255,255,255,.12);--ed-accent:var(--amber-2);border-top:3px solid var(--ink);border-bottom:3px solid var(--ink);}
+.ed--night.ed--coral{--ed-accent:var(--coral);}
+.ed-head{display:grid;grid-template-columns:auto minmax(0,1fr);gap:0 20px;align-items:start;}
+.ed-mark{display:flex;flex-direction:column;align-items:center;gap:10px;padding-top:4px;}
+.ed-num{font:700 .8rem/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:var(--coral-text,#B93220);}
+.ed--night .ed-num{color:var(--amber-2);}
+.ed-mark .ed-ico{width:34px;height:34px;color:var(--ed-fg);}
+.ed-ico .ac{fill:var(--ed-accent);stroke:none;}
+.ed-kicker{font:700 var(--fs-kicker)/1.2 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--ed-soft);margin:0 0 6px;}
+.ed-title{font:800 var(--fs-h2)/1.05 'Archivo',sans-serif;letter-spacing:-.03em;margin:0;}
+.ed-title::after{content:'';display:block;width:56px;height:5px;border-radius:3px;background:var(--ed-accent);margin-top:12px;}
+.ed-lede{max-width:var(--measure);font-size:1rem;line-height:1.65;color:var(--ed-soft);margin:14px 0 0;}
+.ed-lede b,.ed-lede strong{color:var(--ed-fg);}
+.ed-body{margin-top:26px;}
+.ed-body>p{max-width:var(--measure);font-size:.95rem;line-height:1.7;color:var(--ed-soft);margin:0 0 12px;}
+.ed-body>p b,.ed-body>p strong{color:var(--ed-fg);}
+.ed-body>p:last-child{margin-bottom:0;}
+.ed-body>p+*{margin-top:18px;}
+.ed-body>*+p{margin-top:18px;}
+.ed-h3{font:800 1.05rem/1.25 'Archivo',sans-serif;letter-spacing:-.01em;margin:22px 0 10px;display:flex;align-items:center;gap:10px;}
+.ed-h3:first-child{margin-top:0;}
+.ed-h3::after{content:'';flex:1;height:2px;background:var(--ed-line);}
+.ed-callout{border:2px solid var(--ed-fg);border-radius:12px;padding:16px 18px;background:var(--ed-card);margin-top:20px;max-width:var(--measure);}
+.ed--night .ed-callout{border-color:rgba(255,255,255,.35);}
+.ed-callout p{font-size:.92rem;line-height:1.65;color:var(--ed-soft);margin:0 0 8px;}
+.ed-callout p:last-child{margin-bottom:0;}
+.ed-callout strong{color:var(--ed-fg);}
+/* grands chiffres et micro-barres */
+.ed-figs{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:14px;}
+.fig{background:var(--ed-card);border:1.5px solid var(--ed-line);border-radius:12px;padding:16px 16px 14px;display:flex;flex-direction:column;gap:6px;min-width:0;}
+.fig-n{font:800 clamp(1.9rem,1.4rem + 1.6vw,2.7rem)/1 'JetBrains Mono',monospace;letter-spacing:-.03em;font-variant-numeric:tabular-nums;color:var(--ed-fg);}
+.fig-l{font-size:.82rem;line-height:1.35;font-weight:600;color:var(--ed-soft);}
+.fig-bar{display:block;height:6px;border-radius:3px;background:var(--ed-line);overflow:hidden;margin-top:4px;}
+.fig-bar i{display:block;height:100%;border-radius:3px;background:var(--ed-accent);transform-origin:left center;}
+.fig--zero .fig-n{color:var(--ed-soft);}
+.js .reveal .fig-bar i{transform:scaleX(0);transition:transform .6s var(--ease-out) .25s;}
+.js .reveal.in .fig-bar i{transform:scaleX(1);}
+/* mur de marques */
+.ed-brandbar{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;margin-bottom:16px;}
+.ed-brandsearch{position:relative;flex:1 1 260px;max-width:440px;display:block;}
+.ed-brandsearch svg{position:absolute;left:12px;top:50%;width:18px;height:18px;transform:translateY(-50%);color:var(--ed-soft);pointer-events:none;}
+.ed-brandsearch input{width:100%;min-height:44px;padding:8px 12px 8px 38px;border:2px solid var(--ink);border-radius:10px;background:var(--ed-card);color:var(--ed-fg);font:600 .92rem 'Archivo',sans-serif;}
+.ed-brandsearch input::placeholder{color:var(--ed-soft);opacity:1;}
+.ed-letters{display:flex;flex-wrap:wrap;gap:6px;}
+.ed-letters button{min-width:36px;min-height:40px;padding:0 10px;border:1.5px solid var(--ink);border-radius:9px;background:var(--ed-card);color:var(--ed-fg);font:800 .82rem 'Archivo',sans-serif;cursor:pointer;}
+.ed-letters button:hover{background:var(--ed-chip);}
+.ed-letters button.is-on{background:var(--ink);color:var(--paper);}
+.ed-letters button[disabled]{opacity:.35;cursor:default;}
+.ed-brandcount{flex-basis:100%;margin:0;font:700 .76rem 'JetBrains Mono',monospace;letter-spacing:.06em;color:var(--ed-soft);}
+.ed-brandcount:empty{display:none;}
+.ed-brands{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;}
+.ed-brand{display:flex;gap:12px;align-items:center;padding:10px 12px;border:1.5px solid var(--ed-line);border-radius:12px;background:var(--ed-card);color:inherit;text-decoration:none;min-height:64px;min-width:0;}
+.ed-brand[hidden]{display:none;}
+.ed-brand-mono{flex:none;width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font:900 .95rem/1 'Archivo',sans-serif;letter-spacing:.02em;border:2px solid var(--ink);}
+.ed-brand-mono--amber{background:var(--amber);color:var(--ink);}
+.ed-brand-mono--coral{background:var(--coral-text,#B93220);color:#fff;}
+.ed-brand-mono--night{background:var(--night);color:var(--amber-2);}
+.ed-brand-mono--ink{background:var(--ink);color:var(--paper);}
+.ed-brand-body{display:flex;flex-direction:column;gap:2px;min-width:0;}
+.ed-brand b{font-size:.98rem;line-height:1.2;letter-spacing:-.01em;}
+.ed-brand-ev{font-size:.8rem;line-height:1.35;color:var(--ed-soft);}
+.ed-brand-ev--none{font-style:italic;}
+.ed-brand-n{font:700 .74rem 'JetBrains Mono',monospace;color:var(--coral-text,#B93220);letter-spacing:.02em;}
+.ed-brand-n i{font-style:normal;}
+a.ed-brand{transition:box-shadow .2s var(--ease-out),border-color .2s;}
+a.ed-brand:hover,a.ed-brand:focus-visible{border-color:var(--ink);box-shadow:5px 5px 0 var(--amber);}
+.ed-brandempty{margin:14px 0 0;font-size:.92rem;color:var(--ed-soft);}
+/* cartes d'équipement (suivi du lot 1) */
+.ed-kits{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;}
+.ed-kit{border:1.5px solid var(--ed-line);background:var(--ed-card);border-radius:12px;padding:14px 14px 12px;display:flex;flex-direction:column;gap:5px;min-width:0;}
+.ed-kit-ico{width:40px;height:40px;border-radius:10px;background:var(--ed-chip);display:grid;place-items:center;color:var(--ed-fg);margin-bottom:4px;}
+.ed-kit-ico .ed-ico{width:24px;height:24px;}
+.ed-kit b{font-size:.95rem;line-height:1.25;letter-spacing:-.01em;}
+.ed-kit>span:not(.ed-kit-ico){font-size:.83rem;line-height:1.45;color:var(--ed-soft);}
+/* bandeau de munitions (fond nuit, puce colorée par famille) */
+.ed-ammo{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;}
+.ed-ammo-item{--dot:var(--amber);border:1.5px solid var(--ed-line);background:var(--ed-card);border-radius:12px;padding:16px 14px 12px;display:flex;flex-direction:column;gap:5px;min-width:0;}
+.ed-ammo-item[data-dot=coral]{--dot:var(--coral);}
+.ed-ammo-item[data-dot=paper]{--dot:var(--paper);}
+.ed-ammo-item[data-dot=amber2]{--dot:var(--amber-2);}
+.ed-ammo-item[data-dot=wine]{--dot:#F0C1D0;}
+.ed-dot{width:14px;height:14px;border-radius:50%;background:var(--dot);border:2px solid var(--night-deep);box-shadow:0 0 0 2px var(--dot);margin-bottom:6px;}
+.ed-ammo-item b{font-size:.95rem;line-height:1.25;}
+.ed-ammo-item>span{font-size:.83rem;line-height:1.45;color:var(--ed-soft);}
+.ed--night .track-bt{background:rgba(255,255,255,.08);color:var(--paper);border-color:rgba(255,255,255,.4);}
+.ed--night .track-bt:hover{border-color:var(--paper);}
+.ed--night .track-bt.on{background:var(--amber-2);color:var(--ink);border-color:var(--amber-2);}
+.ed--night .track-bt.on .ck{background:var(--ink);border-color:var(--ink);}
+.ed--night .track-bt.on .ck::after{border-color:var(--amber-2);}
+.ed--night .has-track.is-own{border-color:var(--amber-2);box-shadow:inset 0 0 0 1px var(--amber-2);}
+.ed--night .own-bar{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.22);color:var(--paper);}
+.ed--night .own-bar .own-lbl{color:var(--ed-soft);}
+.ed--night .own-bar progress{accent-color:var(--amber-2);}
+.ed--night .own-bar .own-actions button{background:transparent;color:var(--paper);border-color:rgba(255,255,255,.45);}
+.ed--night .own-bar .own-actions a.own-link{background:var(--amber-2);color:var(--ink);border-color:var(--amber-2);}
+.ed--night .own-bar .own-actions a.own-link:hover{background:var(--paper);border-color:var(--paper);color:var(--ink);}
+/* cartes numérotées (Combat) : accent corail, capture officielle quand elle existe */
+.ed-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;}
+.ed-step{position:relative;border:2px solid var(--ink);border-radius:14px;background:var(--ed-card);padding:48px 18px 18px;display:flex;flex-direction:column;gap:8px;box-shadow:var(--shadow-soft);overflow:hidden;min-width:0;}
+.ed-step::before{content:'';position:absolute;left:0;top:0;bottom:0;width:6px;background:var(--coral);}
+.ed-step-n{position:absolute;top:12px;left:18px;z-index:1;font:800 .76rem/1 'JetBrains Mono',monospace;letter-spacing:.12em;background:var(--coral-text,#B93220);color:#fff;padding:6px 8px;border-radius:6px;}
+.ed-step--media{padding-top:0;}
+.ed-step .ed-media{margin:0 -18px 6px;border-bottom:2px solid var(--ink);}
+.ed-media{margin:0;}
+.ed-media img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;}
+.ed-media figcaption{font:600 .68rem/1.3 'Archivo',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--ed-soft);padding:6px 18px 4px;}
+.ed-step-ico{width:56px;height:56px;border-radius:14px;background:var(--ed-chip);display:grid;place-items:center;color:var(--ed-fg);}
+.ed-step-ico .ed-ico{width:30px;height:30px;}
+.ed-step h3{font-size:1.05rem;line-height:1.25;letter-spacing:-.01em;margin:2px 0 0;}
+.ed-step p{font-size:.92rem;line-height:1.6;color:var(--ed-soft);margin:0;}
+/* cartes-lieux avec vignette de la carte (silhouette de Leonida et repère) */
+.lk-defs{position:absolute;width:0;height:0;overflow:hidden;}
+.ed-places{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;}
+.ed-places+.ed-h3{margin-top:26px;}
+.ed-place{display:flex;gap:14px;align-items:stretch;border:2px solid var(--ink);border-radius:14px;background:var(--paper);color:var(--ink);text-decoration:none;overflow:hidden;box-shadow:var(--shadow-soft);min-width:0;transition:box-shadow .2s var(--ease-out);}
+.ed-place:hover,.ed-place:focus-visible{box-shadow:6px 6px 0 var(--amber);}
+.ed-map{flex:none;width:92px;background:var(--paper-2);border-right:2px solid var(--ink);display:block;}
+.ed-map use{fill:var(--rule);}
+.ed-map-halo{fill:var(--amber);fill-opacity:.35;}
+.ed-map-pin{fill:var(--amber);stroke:var(--ink);stroke-width:40;}
+.ed-place-body{display:flex;flex-direction:column;gap:3px;padding:12px 14px 12px 0;min-width:0;flex:1;}
+.ed-place b{font-size:.98rem;line-height:1.25;letter-spacing:-.01em;}
+.ed-place-where{font-size:.8rem;line-height:1.35;color:var(--ink-soft);}
+.ed-place .veh-go{margin-top:auto;padding-top:8px;font-size:.82rem;font-weight:800;color:var(--coral-text,#B93220);display:inline-flex;align-items:center;gap:6px;}
+.ed-place .veh-go::after{display:inline-block;transition:transform .2s var(--ease-out);}
+.ed-place:hover .veh-go::after,.ed-place:focus-visible .veh-go::after{transform:translate3d(4px,1px,0);}
+/* colonnes de texte (Conduite) et niveaux de certitude */
+.ed-cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px 22px;}
+.ed-cols--4{grid-template-columns:repeat(4,minmax(0,1fr));}
+.ed-cols--5{grid-template-columns:repeat(5,minmax(0,1fr));}
+.ed-col{border-left:4px solid var(--ed-accent);padding:4px 0 4px 16px;min-width:0;}
+.ed-col h3{font-size:1.02rem;line-height:1.3;margin:0 0 8px;display:flex;align-items:center;gap:8px;}
+.ed-col-ico{width:30px;height:30px;border-radius:8px;background:var(--ed-chip);display:grid;place-items:center;flex:none;}
+.ed-col-ico .ed-ico{width:20px;height:20px;}
+.ed-col ul{margin:0;padding-left:18px;}
+.ed-col li,.ed-col p{font-size:.92rem;line-height:1.6;color:var(--ed-soft);margin:0 0 4px;}
+.ed-levels{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;}
+.ed-level{border:1.5px solid var(--ed-line);border-radius:12px;padding:15px 16px;background:var(--ed-card);min-width:0;}
+.ed-level h3{margin:0 0 6px;font-size:.98rem;display:flex;align-items:center;gap:9px;}
+.ed-level p{margin:0;font-size:.88rem;line-height:1.55;color:var(--ed-soft);}
+.ed-level .pip{width:12px;height:12px;border-radius:50%;flex:none;border:1.5px solid var(--ink);}
+.ed--night .ed-level .pip{border-color:var(--paper);}
+.pip--officiel{background:#1A1A1E;} .pip--vu{background:#B5762A;} .pip--comm{background:#7A5C8F;}
+/* cartes « Aller plus loin » sur fond nuit */
+.ed--night .duo{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.35);color:var(--paper);}
+.ed--night .duo-k{color:var(--amber-2);}
+.ed--night .duo-d{color:var(--ed-soft);}
+/* sous-navigation collante de la zone éditoriale : l'état actif suit le défilement, un marqueur de couleur par famille */
+.lk-catalogue-zone,.ed-zone{position:relative;}
+.ed-nav{position:sticky;top:var(--lk-head-h,62px);z-index:29;background:rgba(253,251,247,.96);backdrop-filter:blur(10px);border-top:2px solid var(--ink);border-bottom:2px solid var(--rule);}
+.ed-nav.stuck{box-shadow:0 6px 20px rgba(26,26,30,.09);}
+.ed-nav-in{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding-block:5px;}
+.ed-nav-in::-webkit-scrollbar{display:none;}
+.ed-nav a{--dot:var(--ink);flex:none;position:relative;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 12px;border-radius:10px;font:700 .84rem 'Archivo',sans-serif;color:var(--ink-soft);text-decoration:none;white-space:nowrap;}
+.ed-nav a::after,.ed-nav a:hover::after{content:'';position:absolute;left:12px;right:12px;bottom:3px;height:3px;width:auto;border-radius:2px;background:var(--dot);transform:scaleX(0);transform-origin:left center;transition:transform .2s var(--ease-out);}
+.ed-nav a:hover,.ed-nav a.is-active{color:var(--ink);}
+.ed-nav a.is-active::after,.ed-nav a.is-active:hover::after{transform:scaleX(1);}
+.ed-nav-dot{width:10px;height:10px;border-radius:50%;background:var(--dot);border:1.5px solid var(--ink);flex:none;}
+.ed-nav a[data-fam=armes]{--dot:var(--ink);}
+.ed-nav a[data-fam=equipements]{--dot:var(--amber);}
+.ed-nav a[data-fam=munitions]{--dot:var(--coral);}
+.ed-nav a[data-fam=combat]{--dot:var(--night-3);}
+.ed-nav a[data-fam=carte]{--dot:var(--night-2);}
+@media(max-width:1000px){
+  .ed-steps,.ed-kits,.ed-brands,.ed-cols--4,.ed-cols--5{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .ed-cols--5>:last-child{grid-column:1/-1;}
+  .ed-ammo{grid-template-columns:repeat(auto-fit,minmax(190px,1fr));}
+  .ed-places:has(>:nth-child(4):last-child){grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+@media(max-width:700px){
+  .ed{padding:36px 0 34px;}
+  .ed-head{grid-template-columns:1fr;gap:12px;}
+  .ed-mark{flex-direction:row;align-items:center;padding-top:0;}
+  .ed-steps,.ed-cols--4,.ed-cols--5{grid-template-columns:1fr;}
+  .ed-ammo{grid-template-columns:1fr;}
+  .ed-brandsearch{max-width:none;}
+  .ed-place{flex-direction:row;}
+  .ed-map{width:84px;}
+}
+@media(max-width:480px){.ed-figs{grid-template-columns:repeat(2,minmax(0,1fr));} .ed-figs>.fig:last-child:nth-child(odd){grid-column:1/-1;} .ed-brands,.ed-kits{grid-template-columns:1fr;}}
+@media print{.ed--night{background:#fff;color:#000;--ed-fg:#000;--ed-soft:#333;} .ed-nav{display:none;} .js .reveal .fig-bar i{transform:none;}}
+/* v7.40 : puces de navigation entre les sections documentées (outils/site-shell.cjs, posées par sync-site en bas de page) */
+.lk-chips{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px 12px;margin:34px auto 30px;}
+.lk-chips a{display:inline-flex;align-items:center;min-height:44px;padding:8px 16px;border:2px solid var(--ink);border-radius:999px;background:#fff;color:var(--ink);font:700 .86rem/1.3 'Archivo',sans-serif;text-decoration:none;box-shadow:2px 2px 0 var(--ink);transition:background .15s,box-shadow .15s;}
+.lk-chips a:hover,.lk-chips a:focus-visible{background:var(--amber);box-shadow:3px 3px 0 var(--ink);}
+.lk-chips+.lk-outro{margin-top:0;}
+/* v7.40 : sources et liens d'action dans une section éditoriale (page Achats) */
+.ed-sources{list-style:none;margin:0;padding:0;display:grid;gap:8px;max-width:var(--measure);}
+.ed-sources li{font-size:.86rem;line-height:1.55;color:var(--ed-soft);padding-left:14px;border-left:3px solid var(--ed-accent);}
+.ed-sources a{color:var(--ed-fg);font-weight:700;text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:3px;}
+.ed-sources span{font:600 .74rem 'JetBrains Mono',monospace;letter-spacing:.02em;}
+.ed-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px;}
+.ed-links a{display:inline-flex;align-items:center;min-height:44px;padding:10px 16px;border:2px solid var(--ink);border-radius:10px;background:var(--amber);color:var(--ink);font:800 .88rem 'Archivo',sans-serif;text-decoration:none;box-shadow:3px 3px 0 var(--ink);}
+.ed-links a:hover,.ed-links a:focus-visible{background:var(--ink);color:var(--paper);}
+/* v7.40 : texte + encadré de sources côte à côte sur grand écran */
+.ed-split{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr);gap:28px 40px;align-items:start;}
+.ed-text>p{max-width:var(--measure);font-size:.95rem;line-height:1.7;color:var(--ed-soft);margin:0 0 12px;}
+.ed-text>p b,.ed-text>p strong{color:var(--ed-fg);}
+.ed-aside{border:1.5px solid var(--ed-line);border-radius:12px;padding:16px 18px;background:var(--ed-card);}
+.ed-aside .ed-h3{margin-top:0;}
+@media(max-width:900px){.ed-split{grid-template-columns:1fr;}}

@@ -59,7 +59,8 @@ window.LK_ACQUISITIONS = {
       "intro": "Kayak ou bateau à moteur : retrouve les embarcations dont Rockstar décrit l’obtention, puis les observations déjà recensées dans Véhicules.",
       "limit": "Les bonus ci-dessous sont liés à une édition. Leur achat séparé et leur prix dans le jeu ne sont pas confirmés.",
       "empty": "Aucun bateau avec une obtention officiellement documentée n’est encore disponible.",
-      "menuOrder": 99
+      "menuOrder": 99,
+      "description": "Les embarcations dont Rockstar décrit l’obtention, Crest Kayak et Shitzu Squalo, bonus de l’Édition Ultimate reliés aux fiches Véhicules. Leur achat séparé et leur prix en jeu ne sont pas confirmés. Tu peux les cocher et retrouver les autres bateaux dans le catalogue Véhicules."
     },
     {
       "id": "style",
@@ -102,7 +103,8 @@ window.LK_ACQUISITIONS = {
           "linkLabel": "Voir Sara’s Unisex Salon"
         }
       ],
-      "menuOrder": 2
+      "menuOrder": 2,
+      "description": "Les collections annoncées (Édition Ultimate, Pack Vintage Vice City) et les adresses présentées par Rockstar : Stock 305, Sara’s Unisex Salon, Electric Fang Tattoo. Aucune pièce à l’unité ni tarif : une collection n’est pas une liste d’achats, rien n’est à cocher. Tu peux lire ce que chaque collection contient et ce que chaque adresse propose."
     },
     {
       "id": "customizations",
@@ -113,7 +115,8 @@ window.LK_ACQUISITIONS = {
       "limit": "Une modification esthétique ne prouve aucun gain de vitesse ou de revenu. Aucun prix ni effet chiffré n’est supposé.",
       "empty": "En attente de données officielles pour une personnalisation identifiable.",
       "menu": true,
-      "menuOrder": 3
+      "menuOrder": 3,
+      "description": "Le kit Ganado de l’Édition Ultimate et le motif d’arme Vintage Vice City, décrits par Rockstar, avec les ateliers Rideout Customs et One-Eyed Willie’s. Aucun prix ni effet chiffré ; la compatibilité arme par arme n’est pas publiée. Tu peux cocher les deux personnalisations documentées et ouvrir les fiches des ateliers."
     },
     {
       "id": "garages",
@@ -123,7 +126,8 @@ window.LK_ACQUISITIONS = {
       "intro": "Les garages décrits avec des bonus de véhicule sont présentés à part des repaires simplement montrés dans les médias.",
       "limit": "L’accès dépend du contenu annoncé. Aucun achat immobilier séparé, revenu locatif ou prix en jeu n’est confirmé.",
       "empty": "En attente de données officielles pour un garage identifiable.",
-      "menuOrder": 99
+      "menuOrder": 99,
+      "description": "Les repaires vus dans les médias et les deux garages décrits avec les éditions : Paradise à Watson Bay (Édition Ultimate) et Shore Court près d’Ocean Beach (Pack Vintage). Rockstar y décrit un casier d’armes et un dépôt pour un receleur ; aucun achat immobilier séparé, prix ou revenu n’est confirmé. Tu peux cocher les garages documentés."
     },
     {
       "id": "vetements",
@@ -195,7 +199,8 @@ window.LK_ACQUISITIONS = {
           "linkLabel": "Ouvrir Mon budget"
         }
       ],
-      "menuOrder": 1
+      "menuOrder": 1,
+      "description": "Manger, boire, se soigner pour récupérer de la vie : ce que les présentations officielles montrent et ce que la série fait déjà. Aucun article, prix ou effet chiffré n’est publié par Rockstar pour GTA VI : rien à cocher pour l’instant. Tu peux lire les repères de la série et prévoir une part « autres achats » dans ton budget."
     },
     {
       "id": "munitions",
@@ -217,7 +222,8 @@ window.LK_ACQUISITIONS = {
       "intro": "Logements et appartements : les éventuels biens accessibles au joueur restent à distinguer des lieux montrés dans les médias.",
       "limit": "Les demeures des personnages sont dans « Demeures » et les garages documentés dans « Planques ». Aucune offre de logement à acheter avec un prix vérifié n’est publiée ici.",
       "empty": "Aucune entrée individuelle vérifiée n’est publiée dans cette catégorie. Sa présence dans le menu ne confirme pas une possibilité d’achat dans GTA VI.",
-      "menuOrder": 99
+      "menuOrder": 99,
+      "description": "La catégorie est prête pour les biens qu’un joueur pourrait acheter. Aucune offre de logement avec un prix vérifié n’est publiée : sa présence dans le menu ne confirme pas un achat possible. Les demeures des personnages sont dans « Demeures », les garages documentés dans « Planques »."
     }
   ],
   "items": [

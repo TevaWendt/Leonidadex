@@ -368,3 +368,73 @@
   const CTA = '.lk-cta, .calc-primary, .calc-button.primary, .lk-entry-button, .lk-home-discover, .info-primary, .t-button';
   document.querySelectorAll(CTA).forEach(function (el) { el.classList.add('lk-shine'); });
 })();
+
+/* v7.40 (lot 3) : sections éditoriales des hubs — mur de marques filtrable et sous-navigation collante.
+   Sans JavaScript, tout est visible : le filtre et l'état actif sont un complément. */
+(function () {
+  /* --- mur de marques : recherche + filtre par lettre ------------------------------------------------------------- */
+  document.querySelectorAll('[data-brandbar]').forEach(function (bar) {
+    const wall = bar.parentNode.querySelector('[data-brands]'); if (!wall) return;
+    const tiles = Array.from(wall.querySelectorAll('.ed-brand'));
+    const q = bar.querySelector('[data-brand-q]'), letters = Array.from(bar.querySelectorAll('[data-letter]'));
+    const count = bar.querySelector('[data-brand-count]'), empty = bar.parentNode.querySelector('[data-brand-empty]');
+    const fold = function (s) { return String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim(); };
+    let letter = '';
+    function apply() {
+      const needle = fold(q ? q.value : '');
+      let shown = 0;
+      tiles.forEach(function (t) {
+        const ok = (!letter || t.dataset.letter === letter) && (!needle || t.dataset.n.indexOf(needle) !== -1);
+        t.hidden = !ok; if (ok) shown++;
+      });
+      if (count) count.textContent = (needle || letter) ? shown + ' sur ' + tiles.length : '';
+      if (empty) empty.hidden = shown > 0;
+      letters.forEach(function (b) {
+        b.classList.toggle('is-on', b.dataset.letter === letter);
+        b.setAttribute('aria-pressed', b.dataset.letter === letter ? 'true' : 'false');
+        if (b.dataset.letter) b.disabled = !!needle && !tiles.some(function (t) { return t.dataset.letter === b.dataset.letter && t.dataset.n.indexOf(needle) !== -1; });
+      });
+    }
+    letters.forEach(function (b) { b.addEventListener('click', function () { letter = b.dataset.letter === letter ? '' : b.dataset.letter; apply(); }); });
+    if (q) q.addEventListener('input', apply);
+    apply();
+  });
+
+  /* --- sous-navigation collante : hauteur de l'en-tête, ombre quand elle colle, état actif qui suit le défilement --- */
+  const header = document.querySelector('body > header');
+  function head() { if (header) document.documentElement.style.setProperty('--lk-head-h', header.offsetHeight + 'px'); }
+  head(); window.addEventListener('resize', head); window.addEventListener('load', head);
+  const navs = Array.from(document.querySelectorAll('.ed-nav'));
+  if (!navs.length) return;
+  navs.forEach(function (nav) {
+    const links = Array.from(nav.querySelectorAll('a[href^="#"]'));
+    const targets = links.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
+    const sentinel = document.createElement('div'); sentinel.setAttribute('aria-hidden', 'true');
+    nav.parentNode.insertBefore(sentinel, nav);
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (e) { nav.classList.toggle('stuck', !e[0].isIntersecting && e[0].boundingClientRect.top < 0); }, { threshold: 1 }).observe(sentinel);
+    }
+    function setActive(i) {
+      links.forEach(function (a, k) { const on = k === i; a.classList.toggle('is-active', on); if (on) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current'); });
+      const a = links[i]; if (!a) return;
+      const box = nav.querySelector('.ed-nav-in'); if (!box || box.scrollWidth <= box.clientWidth) return;
+      const left = a.offsetLeft - (box.clientWidth - a.offsetWidth) / 2;
+      box.scrollTo({ left: Math.max(0, left), behavior: 'auto' });
+    }
+    /* état actif par IntersectionObserver (aucune lecture de géométrie au défilement, règle du lot 2) : une ligne
+       de lecture juste sous la barre ; la section qui la traverse est la section courante. Recalculé au redimensionnement. */
+    let io = null, timer = 0;
+    function arm() {
+      if (io) io.disconnect();
+      if (!('IntersectionObserver' in window)) return;
+      const line = (parseFloat(getComputedStyle(nav).top) || 0) + nav.offsetHeight + 24;
+      const below = Math.max(0, window.innerHeight - line - 1);
+      io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) { if (en.isIntersecting) setActive(targets.indexOf(en.target)); });
+      }, { rootMargin: -line + 'px 0px -' + below + 'px 0px', threshold: 0 });
+      targets.forEach(function (t) { if (t) io.observe(t); });
+    }
+    window.addEventListener('resize', function () { clearTimeout(timer); timer = setTimeout(arm, 150); });
+    arm();
+  });
+})();
