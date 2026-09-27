@@ -1,0 +1,789 @@
+{
+  "_note": "v7.42 (lot 5) : contenu éditorial des pages de section d’acquisition (gabarit « vrai site » de outils/gen-acquisitions.cjs, système de sections de outils/sections.cjs). Chaque affirmation porte un statut (officiel / vu / comm / serie / conf) et renvoie aux sources des catalogues (outils/catalogues/sources.json). Les listes elles-mêmes viennent des catalogues. {nStyle}, {nConsommables} sont remplis à la génération.",
+  "nourriture": {
+    "nav": [
+      {
+        "href": "#ce-qui-est-montre",
+        "label": "Rockstar",
+        "fam": "rockstar"
+      },
+      {
+        "href": "#liste-consommables",
+        "label": "La liste",
+        "fam": "consommables"
+      },
+      {
+        "href": "#ou-en-trouver",
+        "label": "Où en trouver",
+        "fam": "carte"
+      },
+      {
+        "href": "#a-quoi-ca-sert",
+        "label": "La série",
+        "fam": "serie"
+      },
+      {
+        "href": "#a-confirmer",
+        "label": "À confirmer",
+        "fam": "conf"
+      },
+      {
+        "href": "#et-le-calculateur",
+        "label": "Pour toi",
+        "fam": "toi"
+      },
+      {
+        "href": "#faq",
+        "label": "FAQ",
+        "fam": "faq"
+      },
+      {
+        "href": "#sources",
+        "label": "Sources",
+        "fam": "sources"
+      }
+    ],
+    "rockstar": {
+      "id": "ce-qui-est-montre",
+      "lede": "Quatre temps, chacun avec son statut : ce que le jeu montre à l’écran et ce que Rob Nelson a dit ensuite. Rien n’est chiffré : ni prix, ni part de vie rendue.",
+      "items": [
+        {
+          "date": "6 mai 2025",
+          "titre": "Captures officielles : bars et piscines",
+          "statut": "vu",
+          "texte": "Les captures publiées avec le Trailer 2 montrent Jason avec des bières au comptoir d’un bar et Lucia avec un cocktail au bord d’une piscine ; The Rusty Anchor, un bar de plage des Keys, apparaît sur une autre image. Une image montre un objet, pas son prix.",
+          "media": "jason-duval-06",
+          "alt": "Jason accoudé au comptoir d’un bar avec des bières, capture officielle Rockstar Games"
+        },
+        {
+          "date": "27 août 2026",
+          "titre": "Extended Look : on mange, on boit, on braque",
+          "statut": "vu",
+          "texte": "Pendant les 26 minutes, Jason et Lucia mangent des chips tortilla dans la rue, passent par le bar Effluvia sur un toit de Vice Beach, vont à la salle de sport et braquent des stations-service avec un bandana. Une publicité de burger passe à la télé de l’appartement ; des canettes de Sprunk sont en rayon dans une station Xero.",
+          "media": "lucia-caminos-02",
+          "alt": "Lucia au bord d’une piscine avec un cocktail, capture officielle Rockstar Games"
+        },
+        {
+          "date": "27 août 2026",
+          "titre": "Rob Nelson : la nourriture joue sur le poids",
+          "statut": "officiel",
+          "texte": "Le jour de la diffusion, VGC puis Dazed (6 septembre) publient les propos de Rob Nelson, responsable du développement : « Food affects Jason and Lucia’s weight, while exercising visibly builds and tones their muscles ». Les nuits sans lit, la cavale et une beuverie de plusieurs jours marquent aussi leurs traits."
+        },
+        {
+          "date": "28 août 2026",
+          "titre": "Famitsu : café du matin, shake et barre protéinés",
+          "statut": "officiel",
+          "texte": "À Famitsu, Rob Nelson cite le café du matin, puis le shake et la barre protéinés après l’entraînement : « Food provides buffs that strengthen your meters ». Trois jours d’entraînement de suite font monter la santé et la force. Aucun article, aucun prix, aucun chiffre d’effet n’est publié.",
+          "media": "leonida-keys-03",
+          "alt": "Terrasse du bar de plage The Rusty Anchor dans les Keys, capture officielle Rockstar Games"
+        }
+      ],
+      "p": [
+        "Ce que ça donne dans la liste : neuf lignes sont confirmées pour GTA VI (nommées par Rockstar ou vues dans un média officiel) et aucune n’a de prix. Le reste vient de la série, et chaque ligne le dit."
+      ]
+    },
+    "lieux": {
+      "id": "ou-en-trouver",
+      "lede": "Des enseignes vues dans les trailers et les captures, placées sur la carte par gtadb.org. Voir une enseigne ne prouve pas qu’on peut y acheter quelque chose : chaque lieu garde son statut, et la liste le rappelle ligne par ligne.",
+      "groups": [
+        {
+          "title": "Supérettes, stations-service et magasins d’alcool",
+          "lieux": [
+            "g-L341",
+            "g-L1670",
+            "g-L2360",
+            "g-L408",
+            "g-L406",
+            "g-L1612",
+            "g-L313",
+            "g-L1320"
+          ]
+        },
+        {
+          "title": "Manger",
+          "lieux": [
+            "g-L403",
+            "g-L306",
+            "g-L2376",
+            "g-L1773",
+            "g-L357",
+            "g-L1932",
+            "g-L982"
+          ]
+        },
+        {
+          "title": "Se soigner, se protéger",
+          "lieux": [
+            "g-L2183",
+            "g-L1074",
+            "g-L1091"
+          ]
+        }
+      ],
+      "p": [
+        "Le bar Effluvia (Extended Look) et The Rusty Anchor (capture officielle) ne sont pas encore placés sur la carte : ils apparaissent dans la liste comme type de commerce, sans lien."
+      ]
+    },
+    "serie": {
+      "id": "a-quoi-ca-sert",
+      "lede": "Les repères viennent de GTA V, GTA Online, GTA IV et San Andreas. Ils disent ce que le joueur attend, pas ce que GTA VI fera : c’est pour ça qu’ils restent dans leur colonne.",
+      "cols": [
+        {
+          "titre": "Manger et boire pour récupérer",
+          "icon": "boisson",
+          "liste": [
+            "GTA V : une canette eCola ou Sprunk au distributeur, 1 $, rend toute la vie",
+            "GTA V : P’s & Q’s 1 $, EgoChaser 2 $, Meteorite 4 $ en supérette",
+            "GTA V : la vie remonte seule jusqu’à la moitié, à l’arrêt",
+            "GTA IV : stands et fast-foods rendent de la vie ; burger Bleeder à 1 $"
+          ]
+        },
+        {
+          "titre": "Se protéger",
+          "icon": "gilet-pare-balles",
+          "liste": [
+            "GTA V : cinq gilets chez Ammu-Nation, de 20 % (500 $) à 100 % (2 500 $)",
+            "GTA Online : mêmes gilets de 100 à 500 $, débloqués par rang",
+            "Kit de soin : gratuit, ramassé dans la ville (San Andreas, GTA IV)"
+          ]
+        },
+        {
+          "titre": "Le poids et la forme",
+          "icon": "zone",
+          "liste": [
+            "San Andreas : un menu Cluckin’ Bell ajoute 1 à 3 % de graisse, la salade 0 %",
+            "San Andreas : trop manger fait vomir",
+            "GTA VI : Rob Nelson confirme le retour du poids et des muscles visibles"
+          ]
+        }
+      ],
+      "p": [
+        "Chaque repère porte sa source dans la liste, colonne « Repère de la série ». Quand une page consultée ne chiffre pas un effet, la ligne le dit au lieu d’inventer."
+      ]
+    },
+    "confirmer": {
+      "id": "a-confirmer",
+      "lede": "Ce que Rockstar n’a pas publié au 27 septembre 2026.",
+      "items": [
+        {
+          "q": "Combien coûte un soda, un repas, un gilet ?",
+          "etat": "Aucun prix GTA VI publié. La colonne GTA VI reste « à confirmer » sur les {nConsommables} lignes."
+        },
+        {
+          "q": "Combien de vie rend un en-cas ?",
+          "etat": "Aucun chiffre. Rob Nelson parle de « buffs » qui renforcent les jauges, sans détail."
+        },
+        {
+          "q": "Peut-on commander dans les fast-foods et les diners vus à l’écran ?",
+          "etat": "Les enseignes sont vues, l’achat ne l’est pas. Dans GTA V, Cluckin’ Bell et Burger Shot ne s’ouvraient plus."
+        },
+        {
+          "q": "Gilets et kits de soin ?",
+          "etat": "Ammu-Nation est confirmé pour les armes (casier, exclusivités) ; rien sur les gilets ni les kits."
+        },
+        {
+          "q": "Le poids change-t-il les capacités ?",
+          "etat": "Rob Nelson dit que l’exercice muscle et que la santé et la force montent après trois jours d’entraînement ; l’effet du surpoids n’est pas détaillé."
+        }
+      ]
+    },
+    "toi": {
+      "id": "et-le-calculateur",
+      "lede": "Quatre outils du site prennent le relais : le budget, la carte, ton suivi et l’Armurerie.",
+      "actions": [
+        {
+          "k": "Calculateur",
+          "t": "Mon budget",
+          "d": "Mets les consommables dans le poste « Consommables » avec ce que tu penses dépenser par partie.",
+          "href": "calculateurs.html?tool=budget&type=consumable&from=nourriture#atelier"
+        },
+        {
+          "k": "Carte",
+          "t": "Les enseignes sur la carte",
+          "d": "Supérettes, stations, bars et fast-foods vus dans les médias, déjà posés comme repères.",
+          "pins": [
+            "g-L341",
+            "g-L1670",
+            "g-L406",
+            "g-L1612",
+            "g-L2360",
+            "g-L408",
+            "g-L403",
+            "g-L306",
+            "g-L2376",
+            "g-L1773",
+            "g-L357",
+            "g-L1932",
+            "g-L982",
+            "g-L313",
+            "g-L1320",
+            "g-L2183",
+            "g-L1074",
+            "g-L1091"
+          ],
+          "pinsTitle": "Où manger, boire et se soigner"
+        },
+        {
+          "k": "Suivi",
+          "t": "Mes consommables",
+          "d": "Coche ce que tu as goûté : la barre de la liste et Ma progression suivent.",
+          "href": "progression.html#consommables"
+        },
+        {
+          "k": "Armurerie",
+          "t": "Gilets et kits",
+          "d": "Le kit de soin et le gilet sont suivis avec les équipements de l’Armurerie.",
+          "href": "armes.html#equipements"
+        }
+      ]
+    },
+    "faq": [
+      {
+        "q": "Peut-on manger dans GTA 6 ?",
+        "a": "Oui. Rockstar montre Jason et Lucia qui mangent et boivent (chips dans la rue, café du matin, bar Effluvia), et Rob Nelson dit que la nourriture renforce les jauges et joue sur le poids. Aucune liste d’articles ni de prix n’est publiée.",
+        "k": [
+          "manger gta",
+          "peut on manger",
+          "on mange",
+          "nourriture gta",
+          "repas gta",
+          "bouffe",
+          "manger boire",
+          "manger dans le jeu"
+        ]
+      },
+      {
+        "q": "Est-ce qu’on grossit dans GTA 6 ?",
+        "a": "Oui, d’après Rob Nelson : la nourriture joue sur le poids, trop manger fait grossir, la salle de sport muscle visiblement, et les nuits sans sommeil ou les beuveries se lisent sur le visage. Comme dans San Andreas, où un menu ajoutait 1 à 3 % de graisse.",
+        "k": [
+          "grossir",
+          "grossit",
+          "grossi",
+          "prendre du poids",
+          "perdre du poids",
+          "poids gta",
+          "maigrir",
+          "graisse",
+          "muscles visibles",
+          "salle de sport",
+          "musculation"
+        ]
+      },
+      {
+        "q": "Combien coûte un soda ou un en-cas dans GTA 6 ?",
+        "a": "Rockstar n’a publié aucun prix. Repère de la série : dans GTA V, une canette au distributeur coûte 1 $ et rend toute la vie ; P’s & Q’s 1 $, EgoChaser 2 $, Meteorite 4 $ en supérette.",
+        "k": [
+          "prix d un soda",
+          "prix soda",
+          "prix en-cas",
+          "prix snack",
+          "soda gta",
+          "sprunk",
+          "ecola",
+          "snack gta",
+          "en-cas gta",
+          "canette",
+          "combien coute un soda",
+          "combien un soda"
+        ]
+      },
+      {
+        "q": "Y a-t-il des gilets pare-balles dans GTA 6 ?",
+        "a": "Pas encore confirmé. Ammu-Nation existe dans GTA VI (casier d’armes, armes exclusives), mais Rockstar n’a ni montré ni nommé de gilet. Dans GTA V, cinq gilets vont de 20 % (500 $) à 100 % (2 500 $).",
+        "k": [
+          "gilet pare-balles",
+          "gilets pare-balles",
+          "pare-balles",
+          "gilet gta",
+          "armure gta",
+          "protection gta",
+          "ammu-nation gilet",
+          "acheter un gilet"
+        ]
+      },
+      {
+        "q": "Peut-on boire de l’alcool dans GTA 6 ?",
+        "a": "Rockstar montre Jason avec une bière au comptoir et Lucia avec un cocktail, et l’Extended Look passe par le bar Effluvia. Rob Nelson ajoute qu’une beuverie de plusieurs jours se voit sur le personnage. Prix et effets ne sont pas publiés.",
+        "k": [
+          "alcool gta",
+          "boire de l alcool",
+          "biere gta",
+          "bière gta",
+          "cocktail gta",
+          "bar gta",
+          "boire gta",
+          "ivre",
+          "bourré",
+          "se souler",
+          "cocktail"
+        ]
+      }
+    ]
+  },
+  "style": {
+    "nav": [
+      {
+        "href": "#ce-que-rockstar-a-dit",
+        "label": "Rockstar",
+        "fam": "rockstar"
+      },
+      {
+        "href": "#coiffures",
+        "label": "Coiffures",
+        "fam": "coiffures"
+      },
+      {
+        "href": "#tatouages",
+        "label": "Tatouages",
+        "fam": "tatouages"
+      },
+      {
+        "href": "#tenues",
+        "label": "Tenues et accessoires",
+        "fam": "tenues"
+      },
+      {
+        "href": "#adresses",
+        "label": "Adresses",
+        "fam": "carte"
+      },
+      {
+        "href": "#a-confirmer",
+        "label": "À confirmer",
+        "fam": "conf"
+      },
+      {
+        "href": "#pour-toi",
+        "label": "Pour toi",
+        "fam": "toi"
+      },
+      {
+        "href": "#faq",
+        "label": "FAQ",
+        "fam": "faq"
+      },
+      {
+        "href": "#sources",
+        "label": "Sources",
+        "fam": "sources"
+      }
+    ],
+    "rockstar": {
+      "id": "ce-que-rockstar-a-dit",
+      "lede": "Quatre temps, chacun avec son statut : les captures, les éditions, l’Extended Look, puis les entretiens de Rob Nelson. Aucun prix, aucune liste de pièces.",
+      "items": [
+        {
+          "date": "6 mai 2025",
+          "titre": "Captures officielles : ce que Jason et Lucia portent",
+          "statut": "vu",
+          "texte": "Débardeur imprimé « Leonida », chaîne, montre et casquette pour Jason ; chignon haut, créoles et lunettes de soleil pour Lucia. Les images montrent des pièces, pas une boutique ni un prix.",
+          "media": "jason-and-lucia-09",
+          "alt": "Jason et Lucia sur une moto jaune, Jason en débardeur imprimé Leonida, capture officielle Rockstar Games"
+        },
+        {
+          "date": "24 juin 2026",
+          "titre": "Éditions : trois adresses et deux collections",
+          "statut": "officiel",
+          "texte": "L’Édition Ultimate ouvre Stock 305 (streetwear de Stockyard), Sara’s Unisex Salon (coiffures signature, barbe de Jason, maquillage et ongles de Lucia) et Electric Fang Tattoo (plus de 50 tatouages dessinés par FAILE), et ajoute les collections Vice City Style et Goodtime Gear. Le Pack Vintage Vice City livre un costume en lin pastel et une coiffure rétro à Jason, une mini-robe rouge à sequins et des boucles à Lucia. Rockstar cite aussi les réglages de base : coiffure, pilosité faciale, maquillage, ongles, tatouages des bras, des jambes et du dos.",
+          "media": "stock-305-clothing-store-01",
+          "alt": "Lucia en manteau léopard et un homme sur le toit d’un van devant Stock 305, capture officielle Rockstar Games"
+        },
+        {
+          "date": "27 août 2026",
+          "titre": "Extended Look : la garde-robe en jeu",
+          "statut": "vu",
+          "texte": "Lucia choisit une tenue avant une soirée pendant que Jason commente ; le duo braque des stations-service avec un bandana sur le visage. Rien n’est nommé ni chiffré.",
+          "media": "sara-s-unisex-salon-02",
+          "alt": "Jason après sa coupe chez Sara’s Unisex Salon, capture officielle Rockstar Games"
+        },
+        {
+          "date": "28 août 2026",
+          "titre": "Rob Nelson : des milliers de tenues, des salons partout",
+          "statut": "officiel",
+          "texte": "À Famitsu (traduit le 9 septembre) puis à GamingBible (10 septembre) : « We have thousands of outfits », gagnées en mission ou achetées, « countless clothing stores and hair salons » ; on peut se couper les cheveux à la planque, avec un choix limité. À Dazed (6 septembre), la styliste Jillian Carr : Vice City « is built around vanity ».",
+          "media": "electric-fang-tattoo-04",
+          "alt": "Dos entièrement tatoué dans le salon Electric Fang, capture officielle Rockstar Games"
+        }
+      ],
+      "p": [
+        "Les trois listes ci-dessous rangent tout ça ligne par ligne, avec le statut et la source de chacune, puis les coupes, tatouages et vêtements de GTA V et GTA Online avec leurs prix, présentés comme repères."
+      ]
+    },
+    "lieux": {
+      "id": "adresses",
+      "lede": "Trois adresses présentées par Rockstar avec l’Édition Ultimate, puis des enseignes de mode vues sur la carte. Une enseigne vue n’est pas une boutique confirmée.",
+      "groups": [
+        {
+          "title": "Présentées par Rockstar (Édition Ultimate)",
+          "lieux": [
+            "g-L1488",
+            "g-L360",
+            "g-L1482"
+          ]
+        },
+        {
+          "title": "Enseignes vues sur la carte",
+          "lieux": [
+            "g-L2361",
+            "g-L677",
+            "g-L1646",
+            "g-L539"
+          ]
+        }
+      ],
+      "p": [
+        "En édition Standard, la presse du 24 juin 2026 indique que les trois adresses de l’Édition Ultimate « ne sont pas ouvertes » ; Rob Nelson promet par ailleurs des boutiques et des salons « innombrables »."
+      ]
+    },
+    "confirmer": {
+      "id": "a-confirmer",
+      "lede": "Ce que Rockstar n’a pas publié au 27 septembre 2026.",
+      "items": [
+        {
+          "q": "Combien coûte une tenue, une coupe, un tatouage ?",
+          "etat": "Aucun prix GTA VI publié. Les {nStyle} lignes des trois listes gardent la colonne GTA VI « à confirmer »."
+        },
+        {
+          "q": "Quelles pièces contiennent Vice City Style et Goodtime Gear ?",
+          "etat": "Rockstar décrit les collections (tenues, tatouages, accessoires) sans lister les pièces."
+        },
+        {
+          "q": "Les accessoires s’achètent-ils à l’unité ?",
+          "etat": "Les captures en montrent (lunettes, créoles, chaîne, montre, casquette) ; aucune boutique d’accessoires n’est nommée."
+        },
+        {
+          "q": "Teintures, lentilles, tatouages du visage ?",
+          "etat": "Rien de publié pour GTA VI ; GTA Online propose des lentilles de couleur, GTA V une zone « tête »."
+        },
+        {
+          "q": "Et le maquillage de Jason, les ongles de Lucia ailleurs que chez Sara’s ?",
+          "etat": "Le texte de l’édition attribue maquillage et ongles à Lucia chez Sara’s ; les autres salons ne sont pas décrits."
+        }
+      ]
+    },
+    "toi": {
+      "id": "pour-toi",
+      "lede": "Quatre outils du site prennent le relais : le budget, la carte, ton suivi et la section Personnalisations.",
+      "actions": [
+        {
+          "k": "Calculateur",
+          "t": "Mon budget",
+          "d": "Écris ce que tu veux acheter et ce que tu gagnes : tu vois ce qui rentre dans ton budget.",
+          "href": "calculateurs.html?tool=budget&type=style&from=style#atelier"
+        },
+        {
+          "k": "Carte",
+          "t": "Les adresses sur la carte",
+          "d": "Stock 305, Sara’s, Electric Fang et les enseignes de mode vues, déjà posées comme repères.",
+          "pins": [
+            "g-L1488",
+            "g-L360",
+            "g-L1482",
+            "g-L2361",
+            "g-L677",
+            "g-L1646",
+            "g-L539"
+          ],
+          "pinsTitle": "Les adresses du style"
+        },
+        {
+          "k": "Suivi",
+          "t": "Ma garde-robe",
+          "d": "Coche coiffures, tatouages, tenues et accessoires : trois barres ici, trois cartes dans Ma progression.",
+          "href": "progression.html#tenues"
+        },
+        {
+          "k": "Personnalisations",
+          "t": "Véhicules et armes",
+          "d": "Le motif d’arme Vintage et le kit Ganado sont dans Personnalisations, avec les ateliers.",
+          "href": "personnalisations.html"
+        }
+      ]
+    },
+    "faq": [
+      {
+        "q": "Peut-on changer de coiffure dans GTA 6 ?",
+        "a": "Oui : à la planque avec un choix limité, ou dans un salon pour beaucoup plus de coupes, d’après Rob Nelson. Sara’s Unisex Salon (Édition Ultimate) ajoute des coiffures signature, la barbe de Jason, le maquillage et les ongles de Lucia. Prix non publiés ; dans GTA V, une coupe va de 20 à 450 $.",
+        "k": [
+          "coiffure gta",
+          "changer de coiffure",
+          "coupe de cheveux",
+          "cheveux gta",
+          "salon de coiffure",
+          "barbe gta",
+          "coiffeur",
+          "coiffer",
+          "coiffures"
+        ]
+      },
+      {
+        "q": "Peut-on se faire tatouer dans GTA 6 ?",
+        "a": "Oui. Rockstar cite les bras, les jambes et le dos ; Electric Fang Tattoo (Édition Ultimate) propose plus de 50 tatouages dessinés par FAILE. Prix non publiés ; dans GTA V, un motif coûte de 50 à 550 $ et se retire gratuitement.",
+        "k": [
+          "tatouage gta",
+          "tatouages",
+          "tatouer",
+          "se faire tatouer",
+          "tattoo",
+          "electric fang"
+        ]
+      },
+      {
+        "q": "Combien de tenues dans GTA 6 ?",
+        "a": "« Des milliers », selon Rob Nelson, achetées en boutique ou gagnées en mission, dans des boutiques « innombrables ». Stock 305 (Édition Ultimate) vend des looks exclusifs de streetwear. Aucun prix n’est publié.",
+        "k": [
+          "combien de tenues",
+          "tenues gta",
+          "tenue gta",
+          "vetements gta",
+          "vêtements gta",
+          "habits gta",
+          "fringues",
+          "boutique de vetements",
+          "garde-robe",
+          "acheter des vetements"
+        ]
+      },
+      {
+        "q": "Y a-t-il des accessoires (lunettes, bijoux, montres) dans GTA 6 ?",
+        "a": "Les captures officielles en montrent : lunettes de soleil, créoles de Lucia, chaîne, montre et casquette de Jason ; la collection Goodtime Gear comprend des accessoires. Aucun n’est vendu séparément à ce jour.",
+        "k": [
+          "accessoires gta",
+          "accessoire gta",
+          "lunettes gta",
+          "lunettes de soleil",
+          "bijoux gta",
+          "bijou gta",
+          "montre gta",
+          "casquette gta",
+          "chapeau gta",
+          "boucles d oreilles",
+          "creoles"
+        ]
+      },
+      {
+        "q": "Que contient le Pack Vintage Vice City pour le style ?",
+        "a": "Un costume en lin pastel et une coiffure rétro pour Jason, une mini-robe rouge à sequins et des boucles pour Lucia, plus un motif tropical pour la plupart des armes, la Stanier ’55 et le garage Shore Court. Réservé aux achats effectués avant le 20 novembre 2026.",
+        "k": [
+          "pack vintage",
+          "vintage vice city",
+          "bonus de precommande",
+          "costume en lin",
+          "robe a sequins",
+          "sequins",
+          "coiffure retro",
+          "precommande style"
+        ]
+      }
+    ]
+  },
+  "boats": {
+    "nav": [
+      {
+        "href": "#contenus",
+        "label": "Rockstar",
+        "fam": "rockstar"
+      },
+      {
+        "href": "#observations",
+        "label": "Dans les médias",
+        "fam": "carte"
+      },
+      {
+        "href": "#a-confirmer",
+        "label": "À confirmer",
+        "fam": "conf"
+      },
+      {
+        "href": "#pour-toi",
+        "label": "Pour toi",
+        "fam": "toi"
+      },
+      {
+        "href": "#sources",
+        "label": "Sources",
+        "fam": "sources"
+      }
+    ],
+    "confirmer": {
+      "id": "a-confirmer",
+      "lede": "Ce que Rockstar n’a pas publié au 27 septembre 2026.",
+      "items": [
+        {
+          "q": "Peut-on acheter un bateau ?",
+          "etat": "Les deux embarcations documentées sont des bonus d’édition. Aucune concession ni aucun prix n’est publié."
+        },
+        {
+          "q": "Où amarrer ?",
+          "etat": "Le Squalo est annoncé à Washington Beach avec une caisse d’armes ; rien sur d’autres places."
+        },
+        {
+          "q": "Les autres bateaux vus dans les médias ?",
+          "etat": "Ils restent dans le catalogue Véhicules avec leur niveau d’identification ; une apparition ne prouve pas un achat."
+        }
+      ]
+    },
+    "toi": {
+      "id": "pour-toi",
+      "lede": "Trois outils du site prennent le relais.",
+      "actions": [
+        {
+          "k": "Calculateur",
+          "t": "Combien de temps pour un bateau ?",
+          "d": "Écris le prix que tu imagines : le calculateur te dit le temps de jeu qu’il faut.",
+          "href": "calculateurs.html?tool=purchase&type=vehicle&from=bateaux#atelier"
+        },
+        {
+          "k": "Véhicules",
+          "t": "Les embarcations recensées",
+          "d": "Tous les bateaux, jet-skis, avions et hélicoptères vus dans les médias, avec leur statut.",
+          "href": "vehicules.html#cat=bateau"
+        },
+        {
+          "k": "Suivi",
+          "t": "Ma progression",
+          "d": "Coche les deux embarcations documentées avec le reste de ton garage.",
+          "href": "progression.html#acquisitions"
+        }
+      ]
+    }
+  },
+  "customizations": {
+    "nav": [
+      {
+        "href": "#contenus",
+        "label": "Rockstar",
+        "fam": "rockstar"
+      },
+      {
+        "href": "#services",
+        "label": "Ateliers",
+        "fam": "carte"
+      },
+      {
+        "href": "#variantes",
+        "label": "Armes personnalisées",
+        "fam": "armes"
+      },
+      {
+        "href": "#a-confirmer",
+        "label": "À confirmer",
+        "fam": "conf"
+      },
+      {
+        "href": "#pour-toi",
+        "label": "Pour toi",
+        "fam": "toi"
+      },
+      {
+        "href": "#sources",
+        "label": "Sources",
+        "fam": "sources"
+      }
+    ],
+    "confirmer": {
+      "id": "a-confirmer",
+      "lede": "Ce que Rockstar n’a pas publié au 27 septembre 2026. Les listes complètes de personnalisation (véhicules poste par poste, accessoires d’armes) arrivent avec le lot suivant.",
+      "items": [
+        {
+          "q": "Combien coûte une modification ?",
+          "etat": "Aucun prix publié. Le calculateur travaille avec le chiffre que tu écris."
+        },
+        {
+          "q": "Une modification change-t-elle les performances ?",
+          "etat": "Rien de chiffré : une modification esthétique ne prouve aucun gain de vitesse."
+        },
+        {
+          "q": "Le motif Vintage va-t-il sur toutes les armes ?",
+          "etat": "Rockstar écrit « la plupart des armes » sans liste arme par arme."
+        }
+      ]
+    },
+    "toi": {
+      "id": "pour-toi",
+      "lede": "Trois outils du site prennent le relais.",
+      "actions": [
+        {
+          "k": "Calculateur",
+          "t": "Ça vaut le coup ?",
+          "d": "Écris ce que ça coûterait et ce que ça t’apporterait : réponse en une phrase.",
+          "href": "calculateurs.html?tool=roi&type=customization&from=personnalisations#atelier"
+        },
+        {
+          "k": "Entreprises",
+          "t": "Les ateliers",
+          "d": "Rideout Customs et One-Eyed Willie’s ont leur fiche et leur place sur la carte.",
+          "href": "entreprises.html"
+        },
+        {
+          "k": "Suivi",
+          "t": "Ma progression",
+          "d": "Coche le kit Ganado et le motif Vintage avec le reste.",
+          "href": "progression.html#acquisitions"
+        }
+      ]
+    }
+  },
+  "logements": {
+    "nav": [
+      {
+        "href": "#contenus",
+        "label": "État",
+        "fam": "rockstar"
+      },
+      {
+        "href": "#a-confirmer",
+        "label": "À confirmer",
+        "fam": "conf"
+      },
+      {
+        "href": "#pour-toi",
+        "label": "Pour toi",
+        "fam": "toi"
+      },
+      {
+        "href": "#sources",
+        "label": "Sources",
+        "fam": "sources"
+      }
+    ],
+    "confirmer": {
+      "id": "a-confirmer",
+      "lede": "Ce que Rockstar n’a pas publié au 27 septembre 2026.",
+      "items": [
+        {
+          "q": "Peut-on acheter un logement ?",
+          "etat": "Aucune offre avec un prix n’est publiée. Les demeures des personnages sont dans « Demeures », les garages documentés dans « Planques »."
+        },
+        {
+          "q": "Les planques changent-elles ?",
+          "etat": "Rob Nelson (Famitsu) : les planques évoluent avec les chapitres, les garages s’achètent ; détail sur le hub Planques."
+        }
+      ]
+    },
+    "toi": {
+      "id": "pour-toi",
+      "lede": "Trois pages du site prennent le relais.",
+      "actions": [
+        {
+          "k": "Calculateur",
+          "t": "Combien de temps pour un logement ?",
+          "d": "Écris le prix que tu imagines, ton argent et ce que tu gagnes par partie.",
+          "href": "calculateurs.html?tool=purchase&type=housing&from=logements#atelier"
+        },
+        {
+          "k": "Demeures",
+          "t": "Où vivent les personnages",
+          "d": "Les maisons montrées par Rockstar, avec fiche et carte.",
+          "href": "demeures.html"
+        },
+        {
+          "k": "Planques",
+          "t": "Planques et garages",
+          "d": "Ce que Rockstar a dit des planques et des garages à acheter.",
+          "href": "planques.html"
+        }
+      ]
+    }
+  }
+}

@@ -66,44 +66,12 @@
       "label": "Vêtements et style",
       "route": "/style.html",
       "type": "style",
-      "intro": "Tenues, accessoires, tatouages et coiffures : tout ce qui change l’apparence de Jason et Lucia, avec les collections annoncées et les adresses déjà présentées par Rockstar.",
-      "limit": "Les collections décrites ne constituent pas une liste de pièces achetables à l’unité. Les noms individuels, tarifs et conditions détaillées restent à documenter.",
+      "intro": "Coiffures, tatouages, tenues et accessoires : tout ce qui change l’apparence de Jason et Lucia, en trois listes dépliables, avec les collections annoncées et les adresses présentées par Rockstar.",
+      "limit": "Aucun prix GTA VI n’est publié : chaque ligne porte son statut, et les prix de GTA V et GTA Online restent dans leur colonne de repère. Les collections décrites ne sont pas une liste de pièces achetables.",
       "empty": "En attente de données officielles pour les pièces individuelles. Les collections et services annoncés sont présentés ci-dessous, sans fausse fiche ni case à cocher.",
       "menu": true,
-      "sections": [
-        {
-          "id": "tenues",
-          "title": "Tenues",
-          "status": "Collections annoncées",
-          "text": "Les collections de l’Édition Ultimate et du Pack Vintage Vice City décrivent des tenues pour les deux personnages (ci-dessous). Les pièces à l’unité, leurs noms et leurs prix ne sont pas publiés. La boutique Stock 305 est l’adresse de streetwear présentée par Rockstar.",
-          "link": "/entreprises/stock-305.html",
-          "linkLabel": "Voir Stock 305"
-        },
-        {
-          "id": "accessoires",
-          "title": "Accessoires",
-          "status": "À confirmer",
-          "text": "Lunettes, montres, bijoux, sacs, casquettes : les visuels officiels en montrent sur Jason et Lucia, mais aucun accessoire n’est nommé ni vendu séparément à ce jour. Rien n’est inventé ici : la liste se remplira avec des sources."
-        },
-        {
-          "id": "tatouages",
-          "title": "Tatouages",
-          "status": "Adresse présentée",
-          "text": "Electric Fang Tattoo, le salon de Stockyard présenté avec l’Édition Ultimate, propose des créations sur les personnages. Les motifs, leur prix et les emplacements possibles restent à documenter. La collection « Style de Vice City » comprend des tatouages.",
-          "link": "/entreprises/electric-fang.html",
-          "linkLabel": "Voir Electric Fang Tattoo"
-        },
-        {
-          "id": "coiffures",
-          "title": "Coiffures",
-          "status": "Adresse présentée",
-          "text": "Sara’s Unisex Salon s’occupe des coiffures, de la barbe de Jason, du maquillage et des ongles. Le Pack Vintage Vice City décrit une coiffure rétro pour Jason et des cheveux bouclés pour Lucia. Tarifs non publiés.",
-          "link": "/entreprises/saras-unisex-salon.html",
-          "linkLabel": "Voir Sara’s Unisex Salon"
-        }
-      ],
       "menuOrder": 2,
-      "description": "Les collections annoncées (Édition Ultimate, Pack Vintage Vice City) et les adresses présentées par Rockstar : Stock 305, Sara’s Unisex Salon, Electric Fang Tattoo. Aucune pièce à l’unité ni tarif : une collection n’est pas une liste d’achats, rien n’est à cocher. Tu peux lire ce que chaque collection contient et ce que chaque adresse propose."
+      "description": "Trois listes dépliables (coiffures, tatouages, tenues et accessoires) avec statut, effet, prix repère de la série, lieu et lien vers la carte, plus les collections annoncées (Édition Ultimate, Pack Vintage Vice City) et les adresses Stock 305, Sara’s Unisex Salon et Electric Fang Tattoo. Aucun prix GTA VI. Tu peux filtrer, trier et cocher ce que tu portes."
     },
     {
       "id": "customizations",
@@ -166,40 +134,12 @@
       "label": "Consommables",
       "route": "/nourriture.html",
       "type": "consumable",
-      "intro": "Manger, boire, se soigner : les consommables servent à récupérer de la vie et à tenir pendant une mission. Voici ce que l’on sait pour GTA VI, sans inventer de liste de produits ni de prix.",
-      "limit": "Aucun article, prix ou effet chiffré n’est publié par Rockstar pour GTA VI. Les repères ci-dessous viennent des présentations officielles et des précédents jeux de la série.",
+      "intro": "Manger, boire, se soigner, se protéger : les consommables servent à récupérer de la vie et à tenir pendant une mission. Voici la liste complète de ce qu’on sait pour GTA VI, avec ce que la série faisait avant.",
+      "limit": "Aucun prix ni effet chiffré n’est publié par Rockstar pour GTA VI : chaque ligne porte son statut, et les chiffres de GTA V, GTA IV ou San Andreas restent dans leur colonne de repère.",
       "empty": "Pas encore d’article vérifié à cocher : dès qu’un consommable sera nommé officiellement avec ses conditions d’obtention, il apparaîtra ici.",
       "menu": true,
-      "sections": [
-        {
-          "id": "a-quoi-ca-sert",
-          "title": "À quoi ça sert",
-          "status": "Repère de la série",
-          "text": "Dans les précédents GTA, un snack, une boisson ou un repas rend de la vie ; un gilet pare-balles ajoute une protection. On les achète dans les supérettes, les distributeurs et les fast-foods, ou on les trouve sur place. C’est la même idée que le joueur attend dans GTA VI."
-        },
-        {
-          "id": "ce-qui-est-montre",
-          "title": "Ce qui est montré pour GTA VI",
-          "status": "Présentations officielles",
-          "text": "L’Extended Look du 27 août 2026 montre Jason et Lucia dans des restaurants et des commerces, qu’ils peuvent aussi braquer. D’après les comptes rendus de cette présentation, le personnage peut prendre ou perdre du poids selon ce qu’il mange et son activité physique, et sa condition physique joue sur ses capacités. Rockstar n’a publié ni liste d’articles, ni prix, ni chiffres d’effet."
-        },
-        {
-          "id": "ou-en-trouver",
-          "title": "Où on s’attend à en trouver",
-          "status": "À confirmer",
-          "text": "Fast-foods, supérettes, distributeurs automatiques, bars et stands de plage apparaissent dans les médias officiels de Vice City et des Keys. Voir une enseigne ne prouve pas qu’on peut y acheter quelque chose : chaque adresse sera ajoutée ici quand ce sera confirmé."
-        },
-        {
-          "id": "et-le-calculateur",
-          "title": "Et dans le calculateur ?",
-          "status": "Conseil",
-          "text": "Compte les consommables comme des petites dépenses régulières : dans « Mon budget », mets-les dans le poste « Consommables » avec le montant que tu imagines dépenser par partie. Le kit de soin et le gilet sont décrits dans l’Armurerie.",
-          "link": "/calculateurs.html?tool=budget#atelier",
-          "linkLabel": "Ouvrir Mon budget"
-        }
-      ],
       "menuOrder": 1,
-      "description": "Manger, boire, se soigner pour récupérer de la vie : ce que les présentations officielles montrent et ce que la série fait déjà. Aucun article, prix ou effet chiffré n’est publié par Rockstar pour GTA VI : rien à cocher pour l’instant. Tu peux lire les repères de la série et prévoir une part « autres achats » dans ton budget."
+      "description": "Manger, boire, se soigner, se protéger : une liste dépliable complète (café du matin, shake protéiné, Sprunk, bière au comptoir, gilets, kits…) avec statut, effet, prix repère de la série, lieu et lien vers la carte. Aucun prix GTA VI publié. Tu peux filtrer, trier et cocher ce que tu as goûté."
     },
     {
       "id": "munitions",

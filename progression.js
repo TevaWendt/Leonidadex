@@ -1,8 +1,9 @@
 (function(){
   'use strict';
   const ids=window.LK_PROGRESS_IDS, names=window.LK_PROGRESS_NAMES||{}, S=window.LKSuivi, esc=window.LK.esc;
-  const FAM=['vehicules','armes','equipements','munitions','lieux'];
-  const KEYS={vehicules:'lk_own_vehicules',armes:'lk_own_armes',equipements:'lk_own_equipements',munitions:'lk_own_munitions',lieux:'lk_map_found'};
+  /* v7.42 (lot 5) : familles des catalogues (consommables, coiffures, tatouages, tenues) suivies comme équipements et munitions. */
+  const FAM=['vehicules','armes','equipements','munitions','lieux','consommables','coiffures','tatouages','tenues'];
+  const KEYS={vehicules:'lk_own_vehicules',armes:'lk_own_armes',equipements:'lk_own_equipements',munitions:'lk_own_munitions',lieux:'lk_map_found',consommables:'lk_own_consommables',coiffures:'lk_own_coiffures',tatouages:'lk_own_tatouages',tenues:'lk_own_tenues'};
   const nf=new Intl.NumberFormat('fr-FR');
   const saved=f=>window.LK.read(KEYS[f],{},window.LK.own);
   function render(){
@@ -59,7 +60,7 @@
   });
   /* Ancres : progression.html#garage, #arsenal, #equipements, #munitions, #collectibles ouvrent la liste visée. */
   function openFromHash(){
-    const h=location.hash.slice(1); const map={garage:'vehicules',arsenal:'armes',equipements:'equipements',munitions:'munitions',collectibles:'collectibles'};
+    const h=location.hash.slice(1); const map={garage:'vehicules',arsenal:'armes',equipements:'equipements',munitions:'munitions',collectibles:'collectibles',consommables:'consommables',coiffures:'coiffures',tatouages:'tatouages',tenues:'tenues'};
     const fam=map[h]; if(!fam) return; const row=document.querySelector('.suivi-card[data-family="'+fam+'"]'); const btn=row?.querySelector('.suivi-toggle'); const box=row?.querySelector('.suivi-list');
     if(box&&box.hidden){box.hidden=false;btn?.setAttribute('aria-expanded','true');}
     if(fam==='collectibles') renderCollectibles(); else renderList(fam); render();
@@ -87,10 +88,14 @@
     if(box){
       const cats=(window.LK_ACQUISITIONS?.categories||[]);
       const docs=cats.filter(c=>!c.pending), pend=cats.filter(c=>c.pending);
+      /* v7.42 (lot 5) : les sections qui ont des listes dépliables (Consommables ; Vêtements et style) comptent les lignes cochées de leurs familles, déjà comptées dans le total par progression-core. */
+      const FAMS={nourriture:['consommables'],style:['coiffures','tatouages','tenues']}, ids=window.LK_PROGRESS_IDS||{}, S=window.LKSuivi;
       const card=c=>{
         const g=s.groups.find(x=>x.id===c.id)||{total:0,done:0}, items=store.items.filter(x=>x.category===c.id&&x.trackable);
         const checks=items.map(x=>'<label class="acq-check"><input type="checkbox" data-acq="'+esc(x.id)+'" '+(store.checked(x)?'checked':'')+'> '+esc(x.name)+'</label>').join('');
-        return '<article class="note-box acq-box'+(g.total?'':' is-pending')+'" id="progress-'+esc(c.id)+'"><h3>'+esc(c.label)+'</h3><strong>'+(g.total?g.done+' / '+g.total:'En attente du jeu')+'</strong>'+(g.total?'<progress value="'+g.done+'" max="'+g.total+'" aria-label="'+esc(c.label)+'"></progress>':'<p class="acq-pending">Rien de publié par Rockstar pour l’instant : ne compte pas dans le total.</p>')+checks+'<a href="'+esc(routes[c.id]||'achats.html')+'">Ouvrir la section</a></article>';
+        if(FAMS[c.id]){const fams=FAMS[c.id],total=fams.reduce((n,f)=>n+new Set(ids[f]||[]).size,0),done=S?fams.reduce((n,f)=>n+S.count(f,ids[f]||[]),0):0;
+          return '<article class="note-box acq-box" id="progress-'+esc(c.id)+'"><h3>'+esc(c.label)+'</h3><strong>'+done+' / '+total+'</strong><progress value="'+done+'" max="'+(total||1)+'" aria-label="'+esc(c.label)+'"></progress><p class="acq-pending">'+(fams.length>1?'Coiffures, tatouages, tenues et accessoires cochés dans les trois listes.':'Consommables cochés dans la liste.')+'</p>'+checks+'<a href="'+esc(routes[c.id]||'achats.html')+'">Ouvrir la section</a></article>';}
+        return '<article class="note-box acq-box'+(g.total?'':' is-pending')+'" id="progress-'+esc(c.id)+'"><h3>'+esc(c.label)+'</h3><strong>'+(g.total?g.done+' / '+g.total:'En attente du jeu')+'</strong>'+(g.total?'<progress value="'+g.done+'" max="'+g.total+'" aria-label="'+esc(c.label)+'"></progress>':'<p class="acq-pending">Rien de publié par Rockstar pour l’instant : ne compte pas dans le total.</p>')+checks+'<a href="'+esc(routes[c.id]||'achats.html')+'">Ouvrir la section</a></article>';
       };
       box.innerHTML='<div class="progress-cards progress-cards--four">'+docs.map(card).join('')+'</div>'+(pend.length?'<h3 class="acq-sub">Sections à venir : en attente du jeu</h3><div class="progress-cards">'+pend.map(card).join('')+'</div>':'');
     }
@@ -98,7 +103,7 @@
     if(v){ v.textContent=nf.format(Math.floor(s.percent))+' %'; bar.value=Math.max(0,Math.min(100,s.percent)); t.textContent=nf.format(s.done)+' coché'+(s.done>1?'s':'')+' sur '+nf.format(s.total)+' recensés. Ce suivi est personnel : ce n’est pas la progression officielle du jeu.'; }
   }
   document.addEventListener('change',ev=>{ const el=ev.target; if(el.matches&&el.matches('[data-acq]')){ if(!store.toggle(el.dataset.acq,el.checked)){ el.checked=!el.checked; } } });
-  store.subscribe(render); window.addEventListener('storage',render); window.addEventListener('pageshow',render); render();
+  store.subscribe(render); window.addEventListener('storage',render); window.addEventListener('pageshow',render); if(window.LKSuivi)window.LKSuivi.subscribe(function(){render();}); render();
 
   const ex=document.getElementById('save-export'), im=document.getElementById('save-import'), pv=document.getElementById('save-preview');
   if(!ex||!im) return;
@@ -117,7 +122,7 @@
       try{
         plan=store.prepareImport(String(r.result||''));
         const list=document.getElementById('save-preview-list'), iss=document.getElementById('save-preview-issues');
-        const names={lk_own_vehicules:'Véhicules cochés',lk_own_armes:'Armes cochées',lk_map_found:'Lieux repérés',lk_own_equipements:'Équipements obtenus',lk_own_munitions:'Types de munitions obtenus',lk_progression_v2:'Contenus documentés cochés',lk_collectibles_v1:'Carnet de collection','lk-calculator-notebooks-v3':'Carnets du calculateur','lk-calculator-v1':'Calcul en cours','lk-calculator-favorites-v1':'Fiches favorites'};
+        const names={lk_own_vehicules:'Véhicules cochés',lk_own_armes:'Armes cochées',lk_map_found:'Lieux repérés',lk_own_equipements:'Équipements obtenus',lk_own_munitions:'Types de munitions obtenus',lk_own_consommables:'Consommables goûtés',lk_own_coiffures:'Coiffures essayées',lk_own_tatouages:'Tatouages faits',lk_own_tenues:'Tenues et accessoires portés',lk_progression_v2:'Contenus documentés cochés',lk_collectibles_v1:'Carnet de collection','lk-calculator-notebooks-v3':'Carnets du calculateur','lk-calculator-v1':'Calcul en cours','lk-calculator-favorites-v1':'Fiches favorites'};
         list.innerHTML=Object.keys(plan.rubrics).map(k=>'<li>'+esc(names[k]||k)+'</li>').join('')||'<li>Aucune rubrique lisible.</li>';
         iss.hidden=!plan.issues.length; iss.textContent=plan.issues.length?'À savoir : '+plan.issues.join(' · '):'';
         pv.hidden=false; notice('Fichier de suivi lu (version '+plan.version+(plan.exportedAt?', du '+String(plan.exportedAt).slice(0,10):'')+'). Choisis : fusionner, remplacer ou annuler.');

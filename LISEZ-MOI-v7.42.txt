@@ -1,0 +1,29 @@
+LEONIDAKIT v7.42 — LOT 5 : CONSOMMABLES ET VÊTEMENTS ET STYLE EN LISTES COMPLÈTES — archive « modifs » (27 septembre 2026)
+
+Base attendue : ton dossier Leonidadex en v7.41 (lot 4, ce qui est sur GitHub depuis le 27 septembre).
+Fichiers ajoutés ou modifiés seulement, chemins exacts depuis la racine. Rien à supprimer. Aucune commande de build :
+les pages sont déjà régénérées. Le dossier outils/ reste hors ligne (.vercelignore), comme avant.
+
+1. Copie ton dossier actuel (sauvegarde).
+2. Extrais l’archive dans la racine du site, écrase les fichiers homonymes (garde le dossier .git).
+3. Ouvre le site (3 minutes) :
+   - Consommables : sous le bandeau, une barre collante « Rockstar · La liste · Où en trouver · La série · À confirmer ·
+     Pour toi · FAQ · Sources ». Clique « Tous les consommables » : 30 lignes, dont 9 confirmées pour GTA VI ; tape
+     « sprunk » dans la recherche, filtre « Protection », trie par « Repère de prix » : la colonne GTA VI dit toujours
+     « À confirmer », les prix de GTA V restent dans « Repère de la série ». Clique « Je l’ai » sur une ligne : la barre
+     « Mes consommables » monte. Clique un lieu (« Xero Gas Station ») : la carte s’ouvre dessus.
+   - Vêtements et style : trois boîtes (Toutes les coiffures 55 · Tous les tatouages 24 · Toutes les tenues et tous les
+     accessoires 30), les adresses avec leurs captures et leurs vignettes de carte, les collections annoncées, puis À
+     confirmer, Pour toi, FAQ, Sources. Dans la garde-robe, les puces « Vêtements » / « Accessoires » filtrent la liste.
+   - Sur téléphone (ou fenêtre étroite) : chaque ligne devient une carte empilée, rien ne dépasse à droite.
+   - Progression : douze cartes ; « Consommables goûtés », « Coiffures essayées », « Tatouages faits », « Tenues et
+     accessoires portés » comptent ce que tu as coché, « Voir la liste » mène à la ligne exacte.
+   - Léo : « peut-on manger dans GTA 6 ? », « est-ce qu’on grossit ? », « peut-on changer de coiffure ? », « trouve
+     sprunk » : il répond avec la FAQ ou ouvre la ligne.
+   - Bateaux, Personnalisations, Logements : même gabarit (barre collante, sections numérotées, sources), contenu inchangé
+     (les personnalisations arrivent au lot 6).
+4. Mets en ligne (GitHub Desktop, dossier complet).
+
+Détails : outils/CHANGEMENTS-v7.42.txt (fichiers, recherche et sources, contrôle, points signalés). Captures avant /
+après et captures de contrôle : dossier séparé, hors dépôt. Versions précédentes : -v7.41 (hubs du monde), -v7.40 (hubs
+Véhicules / Armurerie, Achats), -v7.39 (mouvement), -v7.38 (calibrage), -v7.37 (audit final + SEO).

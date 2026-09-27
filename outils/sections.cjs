@@ -59,7 +59,28 @@ const ICONS = {
   /* v7.41 (lot 4) : hubs du monde */
   film: '<rect x="3" y="8" width="18" height="12" rx="2"/><path d="M3.5 8l2-4h13l2 4"/><path d="M7.5 4l2 4M12 4l2 4M16.5 4l2 4"/><path class="ac" d="M10 11.5v5l4.5-2.5z"/>',
   loupe: '<circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/><circle cx="8.5" cy="9" r="1.6"/><circle cx="12.5" cy="9" r="1.6"/><path class="ac" d="M7.5 13.2c.8 1 1.9 1.5 3 1.5s2.2-.5 3-1.5v-1.4c-.8.7-1.9 1.1-3 1.1s-2.2-.4-3-1.1z"/>',
-  sablier: '<path d="M6 3h12M6 21h12M7.5 3v3.5a4.5 4.5 0 0 0 2 3.7L12 12l2.5-1.8a4.5 4.5 0 0 0 2-3.7V3M7.5 21v-3.5a4.5 4.5 0 0 1 2-3.7L12 12l2.5 1.8a4.5 4.5 0 0 1 2 3.7V21"/><path class="ac" d="M9.5 19.5h5L12 15.5z"/>'
+  sablier: '<path d="M6 3h12M6 21h12M7.5 3v3.5a4.5 4.5 0 0 0 2 3.7L12 12l2.5-1.8a4.5 4.5 0 0 0 2-3.7V3M7.5 21v-3.5a4.5 4.5 0 0 1 2-3.7L12 12l2.5 1.8a4.5 4.5 0 0 1 2 3.7V21"/><path class="ac" d="M9.5 19.5h5L12 15.5z"/>',
+  /* v7.42 (lot 5) : catalogues (consommables, coiffures, tatouages, tenues et accessoires) */
+  liste: '<path d="M8 6h12M8 12h12M8 18h12"/><circle class="ac" cx="4" cy="6" r="1.4"/><circle class="ac" cx="4" cy="12" r="1.4"/><circle class="ac" cx="4" cy="18" r="1.4"/>',
+  boisson: '<path d="M7 3h10l-1 5.5a4 4 0 0 1-8 0z"/><path d="M12 12.5V20M8.5 20h7"/><path class="ac" d="M8.2 6h7.6l-.4 2.2H8.6z"/>',
+  snack: '<rect x="3" y="8" width="18" height="8" rx="2"/><path d="M3 12h18"/><path class="ac" d="M7 10h2M11 10h2M15 10h2"/>',
+  repas: '<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4.5"/><path d="M3 4.5v6M5 4.5v6M4 10.5V21M20 4.5c-1.5 1-2 3-2 5 0 1.5.7 2.5 2 3V21"/><circle class="ac" cx="12" cy="12" r="1.5"/>',
+  coupe: '<circle cx="7" cy="7" r="2.6"/><circle cx="7" cy="17" r="2.6"/><path d="M9.2 8.5L20 16M9.2 15.5L20 8"/><circle class="ac" cx="13.5" cy="12" r="1.2"/>',
+  barbe: '<path d="M6 8c0 6 2.5 10 6 10s6-4 6-10"/><path d="M6 8a6 6 0 0 1 12 0"/><path class="ac" d="M9 9.5h2M13 9.5h2"/><path d="M10 13.5c.6.6 1.2.9 2 .9s1.4-.3 2-.9"/>',
+  couleur: '<path d="M12 3s-6 7-6 11.5a6 6 0 0 0 12 0C18 10 12 3 12 3z"/><path class="ac" d="M9.5 15a2.5 2.5 0 0 0 2.5 2.5"/>',
+  maquillage: '<path d="M8 21V10l3-7 3 7v11z"/><path d="M8 14h6"/><path class="ac" d="M9 10h4l-2-4.5z"/><path d="M17 5l2 2-2 2-2-2z"/>',
+  zone: '<circle cx="12" cy="5" r="2.5"/><path d="M8 21v-8.5a4 4 0 0 1 8 0V21"/><path d="M5 11l3 1M19 11l-3 1"/><circle class="ac" cx="12" cy="14" r="1.5"/>',
+  motif: '<path d="M12 3l2.3 5.2 5.7.6-4.3 3.8 1.3 5.6L12 15.3 7 18.2l1.3-5.6L4 8.8l5.7-.6z"/><circle class="ac" cx="12" cy="11" r="1.4"/>',
+  retrait: '<path d="M4 17l9-9 4 4-9 9H4z"/><path d="M11 10l4 4M4 21h16"/><path class="ac" d="M13 8l3-3 4 4-3 3z"/>',
+  tenue: '<path d="M12 3a2 2 0 0 0 2 2 2 2 0 0 1-4 0"/><path d="M12 5 4 10v3l3-1v9h10v-9l3 1v-3z"/><path class="ac" d="M11 12h2v5h-2z"/>',
+  haut: '<path d="M8 4l4 2 4-2 4 3-2 3-2-1v11H8V9L6 10 4 7z"/><path class="ac" d="M10.5 6.5L12 9l1.5-2.5"/>',
+  bas: '<path d="M7 3h10l1 18h-5l-1-9-1 9H6z"/><path class="ac" d="M7 6h10"/>',
+  chaussure: '<path d="M3 16c0-1 1-2 3-2h4l3-4h2l1 3c2 0 5 1 5 3v2H3z"/><path d="M3 18h18"/><path class="ac" d="M12 13l2 1M10 12l2 1"/>',
+  lunettes: '<circle cx="7" cy="14" r="4"/><circle cx="17" cy="14" r="4"/><path d="M11 14h2M3 14l2-6h3M21 14l-2-6h-3"/><circle class="ac" cx="7" cy="14" r="1.3"/><circle class="ac" cx="17" cy="14" r="1.3"/>',
+  chapeau: '<path d="M4 15h16M6 15v-2a6 6 0 0 1 12 0v2"/><path d="M2 15c2 2 5 3 10 3s8-1 10-3"/><path class="ac" d="M7 12h10"/>',
+  bijou: '<path d="M7 4h10l4 5-9 12L3 9z"/><path d="M3 9h18M9 9l3 12 3-12M7 4l2 5M17 4l-2 5"/><circle class="ac" cx="12" cy="6.5" r="1"/>',
+  masque: '<path d="M4 8c0-2 3.5-3 8-3s8 1 8 3v5c0 4-3.5 8-8 8s-8-4-8-8z"/><path d="M8 11h2.5M13.5 11H16"/><path class="ac" d="M9 15c1 1 2 1.5 3 1.5s2-.5 3-1.5"/>',
+  etiquette: '<path d="M3 12V5a2 2 0 0 1 2-2h7l9 9-9 9-9-9z"/><path class="ac" d="M7 7h2v2H7z"/>'
 };
 function icon(name, cls) {
   if (!ICONS[name]) throw Error('Icône inconnue : ' + name);
@@ -181,7 +202,8 @@ function columns(cards) {
 }
 
 /* ---------- v7.41 (lot 4) : compositions des hubs du monde ---------- */
-const STATUS_LABEL = { officiel: 'Officiel', vu: 'Vu dans un média', comm: 'Identification communautaire', conf: 'À confirmer' };
+/* v7.42 : « serie » = repère de la série (ce que GTA V, GTA Online, GTA IV ou San Andreas font, présenté comme tel). */
+const STATUS_LABEL = { officiel: 'Officiel', vu: 'Vu dans un média', comm: 'Identification communautaire', serie: 'Repère de la série', conf: 'À confirmer' };
 function pip(statut, withLabel) {
   const s = STATUS_LABEL[statut] ? statut : 'conf';
   const dot = '<span class="pip pip--' + s + '" aria-hidden="true"></span>';

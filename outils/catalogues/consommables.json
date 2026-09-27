@@ -1,0 +1,1118 @@
+{
+  "famille": "consommables",
+  "label": "Consommables",
+  "titre": "Tous les consommables",
+  "page": "/nourriture.html",
+  "section": "liste-consommables",
+  "suivi": {
+    "cle": "lk_own_consommables",
+    "label": "Mes consommables",
+    "fait": "goûtés",
+    "ancre": "consommables"
+  },
+  "intro": "Manger, boire, se soigner, se protéger : chaque ligne dit ce que Rockstar a montré ou dit pour GTA VI, et ce que la série faisait avant. Un chiffre de GTA V, GTA IV ou San Andreas reste dans la colonne « Repère de la série » : la colonne GTA VI reste à confirmer tant que Rockstar n’a rien publié.",
+  "categories": [
+    {
+      "id": "boissons",
+      "label": "Boissons",
+      "icon": "boisson"
+    },
+    {
+      "id": "snacks",
+      "label": "En-cas",
+      "icon": "snack"
+    },
+    {
+      "id": "repas",
+      "label": "Repas",
+      "icon": "repas"
+    },
+    {
+      "id": "soins",
+      "label": "Soins",
+      "icon": "kit-de-soin"
+    },
+    {
+      "id": "protection",
+      "label": "Protection",
+      "icon": "gilet-pare-balles"
+    }
+  ],
+  "items": [
+    {
+      "id": "cafe-du-matin",
+      "nom": "Café du matin",
+      "categorie": "boissons",
+      "statut": "officiel",
+      "personnage": "jason-lucia",
+      "description": "Rob Nelson cite le café du matin de Jason et Lucia parmi les moments du quotidien montrés dans le jeu.",
+      "effet": {
+        "texte": "Rockstar dit que la nourriture renforce les jauges ; aucun chiffre publié",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": null,
+      "ou_le_trouver": [
+        {
+          "type": "À la planque ou à l’appartement"
+        },
+        {
+          "lieu": "g-L982"
+        },
+        {
+          "lieu": "g-L1932"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtavice-famitsu",
+        "famitsu-nelson"
+      ],
+      "notes": "« We’ll also show you them having their morning coffee » (Rob Nelson, Famitsu). Le Cafe Carraway et Perkins Deli sont des enseignes vues sur la carte : la vente de café n’y est pas confirmée."
+    },
+    {
+      "id": "shake-proteine",
+      "nom": "Shake protéiné",
+      "categorie": "boissons",
+      "statut": "officiel",
+      "personnage": "jason-lucia",
+      "description": "Boisson prise après l’entraînement, citée par Rob Nelson avec la barre protéinée.",
+      "effet": {
+        "texte": "Renforce les jauges après la salle de sport ; aucun chiffre publié",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": null,
+      "ou_le_trouver": [
+        {
+          "type": "Salle de sport"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtavice-famitsu",
+        "famitsu-nelson"
+      ],
+      "notes": "« Once you’ve finished training, round things off with a protein shake and a protein bar » et « Food provides buffs that strengthen your meters » (Rob Nelson)."
+    },
+    {
+      "id": "barre-proteinee",
+      "nom": "Barre protéinée",
+      "categorie": "snacks",
+      "statut": "officiel",
+      "personnage": "jason-lucia",
+      "description": "Barre prise après l’entraînement, citée par Rob Nelson avec le shake protéiné.",
+      "effet": {
+        "texte": "Renforce les jauges après la salle de sport ; aucun chiffre publié",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": null,
+      "ou_le_trouver": [
+        {
+          "type": "Salle de sport"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtavice-famitsu",
+        "famitsu-nelson"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "chips-tortilla",
+      "nom": "Chips tortilla",
+      "categorie": "snacks",
+      "statut": "vu",
+      "description": "Mangées dans la rue pendant l’Extended Look, sans marque nommée.",
+      "effet": {
+        "texte": "Non publié",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": null,
+      "ou_le_trouver": [
+        {
+          "type": "Supérette ou station-service"
+        },
+        {
+          "lieu": "g-L341"
+        },
+        {
+          "lieu": "g-L1670"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gamesradar-live",
+        "rs-videos"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "sprunk",
+      "nom": "Sprunk",
+      "categorie": "boissons",
+      "statut": "vu",
+      "description": "Soda de la série vu en rayon dans l’Extended Look, dans une station Xero et dans un magasin d’alcool.",
+      "effet": {
+        "texte": "GTA V : une canette au distributeur rend toute la vie ; GTA VI : non publié",
+        "valeur": 100,
+        "unite": "sante",
+        "jeu": "GTA V"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 1,
+        "jeu": "GTA V",
+        "note": "au distributeur ; 2 $ en supérette dans GTA Online"
+      },
+      "ou_le_trouver": [
+        {
+          "lieu": "g-L406"
+        },
+        {
+          "lieu": "g-L1612"
+        },
+        {
+          "lieu": "g-L1320"
+        },
+        {
+          "type": "Distributeur automatique"
+        }
+      ],
+      "variantes": [
+        "Sprunk",
+        "Sprunk Light"
+      ],
+      "sources": [
+        "gtawiki-sprunk",
+        "gtawiki-vending",
+        "gtawiki-snacks"
+      ],
+      "notes": "Le carton Sprunk Light est vu dans un magasin d’alcool de l’Extended Look."
+    },
+    {
+      "id": "biere-au-comptoir",
+      "nom": "Bière au comptoir",
+      "categorie": "boissons",
+      "statut": "vu",
+      "personnage": "jason",
+      "media": "jason-duval-06",
+      "description": "Jason boit une bière au comptoir d’un bar sur une capture officielle ; l’Extended Look passe par le bar Effluvia.",
+      "effet": {
+        "texte": "Rob Nelson : une beuverie de plusieurs jours se lit sur le visage ; aucun chiffre",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": null,
+        "jeu": "GTA V",
+        "note": "au Yellow Jack Inn de GTA V, les boissons du comptoir ne s’achètent pas"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Bar (Effluvia, The Rusty Anchor)"
+        },
+        {
+          "lieu": "g-L313"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "rs-screens",
+        "gtawiki-extended",
+        "dazed-nelson",
+        "gtawiki-yellowjack"
+      ],
+      "notes": "Uncle Jack’s Liquor est un magasin d’alcool vu à Port Gellhorn."
+    },
+    {
+      "id": "cocktail",
+      "nom": "Cocktail",
+      "categorie": "boissons",
+      "statut": "vu",
+      "personnage": "lucia",
+      "media": "lucia-caminos-02",
+      "description": "Lucia tient un cocktail rouge au bord d’une piscine sur une capture officielle.",
+      "effet": {
+        "texte": "Non publié",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": null,
+      "ou_le_trouver": [
+        {
+          "type": "Bar de piscine ou d’hôtel"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "rs-screens"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "burger-fast-food",
+      "nom": "Burger de fast-food",
+      "categorie": "repas",
+      "statut": "vu",
+      "description": "Une publicité de burger passe à la télé de l’appartement pendant l’Extended Look ; Rockstar ne nomme aucune enseigne.",
+      "effet": {
+        "texte": "Rockstar : la nourriture joue sur le poids ; aucun chiffre",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 1,
+        "jeu": "GTA IV",
+        "note": "burger Bleeder du Burger Shot"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Fast-food"
+        },
+        {
+          "lieu": "g-L2376"
+        },
+        {
+          "lieu": "g-L306"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gamesradar-live",
+        "gtawiki-burgershot-hd",
+        "gtadb"
+      ],
+      "notes": "The Flamingrill et Taco Bomb sont des enseignes vues sur la carte ; on ne sait pas encore ce qu’on y commande."
+    },
+    {
+      "id": "repas-au-diner",
+      "nom": "Repas au diner",
+      "categorie": "repas",
+      "statut": "vu",
+      "description": "Diners et restaurants apparaissent dans l’Extended Look ; on ne sait pas encore ce qu’on y commande.",
+      "effet": {
+        "texte": "Rockstar : trop manger fait grossir, trop peu maigrir ; aucun chiffre",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 2,
+        "jeu": "GTA San Andreas",
+        "note": "petit menu Cluckin’ Bell ; 5 $ le grand, 10 $ l’énorme ou la salade"
+      },
+      "ou_le_trouver": [
+        {
+          "lieu": "g-L1773"
+        },
+        {
+          "lieu": "g-L403"
+        },
+        {
+          "lieu": "g-L357"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "vgtimes-extended",
+        "ladbible-weight",
+        "gtawiki-cluckin-sa",
+        "gtadb"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "ps-and-qs",
+      "nom": "P’s & Q’s",
+      "categorie": "snacks",
+      "statut": "serie",
+      "description": "Bonbons de supérette de GTA V et GTA Online, à manger pour récupérer de la vie.",
+      "effet": {
+        "texte": "Rend de la vie ; la part rendue n’est pas chiffrée sur la page consultée",
+        "valeur": null,
+        "unite": null,
+        "jeu": "GTA V"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 1,
+        "jeu": "GTA V",
+        "note": "2 $ dans GTA Online"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Supérette"
+        },
+        {
+          "lieu": "g-L341"
+        },
+        {
+          "lieu": "g-L1670"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-snacks",
+        "gtawiki-health"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "egochaser",
+      "nom": "EgoChaser",
+      "categorie": "snacks",
+      "statut": "serie",
+      "description": "Barre énergétique de supérette de GTA V et GTA Online.",
+      "effet": {
+        "texte": "Rend de la vie ; part non chiffrée sur la page consultée",
+        "valeur": null,
+        "unite": null,
+        "jeu": "GTA V"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 2,
+        "jeu": "GTA V",
+        "note": "3 $ dans GTA Online"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Supérette"
+        },
+        {
+          "lieu": "g-L341"
+        },
+        {
+          "lieu": "g-L1670"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-snacks",
+        "gtawiki-health"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "meteorite",
+      "nom": "Meteorite",
+      "categorie": "snacks",
+      "statut": "serie",
+      "description": "Barre de chocolat noir à cœur fondant, la plus chère des trois barres de GTA V.",
+      "effet": {
+        "texte": "Rend de la vie ; part non chiffrée sur la page consultée",
+        "valeur": null,
+        "unite": null,
+        "jeu": "GTA V"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 4,
+        "jeu": "GTA V",
+        "note": "5 $ dans GTA Online"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Supérette"
+        },
+        {
+          "lieu": "g-L341"
+        },
+        {
+          "lieu": "g-L1670"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-snacks",
+        "gtawiki-health"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "ecola",
+      "nom": "eCola",
+      "categorie": "boissons",
+      "statut": "serie",
+      "description": "Soda de la série, au distributeur ou en canette de supérette.",
+      "effet": {
+        "texte": "GTA V : une canette au distributeur rend toute la vie",
+        "valeur": 100,
+        "unite": "sante",
+        "jeu": "GTA V"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 1,
+        "jeu": "GTA V",
+        "note": "au distributeur ; 2 $ en supérette dans GTA Online"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Distributeur automatique"
+        },
+        {
+          "type": "Supérette"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-vending",
+        "gtawiki-snacks"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "pisswasser",
+      "nom": "Pißwasser",
+      "categorie": "boissons",
+      "statut": "serie",
+      "description": "Bière en canette vendue comme en-cas dans GTA Online.",
+      "effet": {
+        "texte": "Compte parmi les en-cas qui rendent de la vie dans GTA Online",
+        "valeur": null,
+        "unite": null,
+        "jeu": "GTA Online"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 2,
+        "jeu": "GTA Online",
+        "note": ""
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Supérette"
+        },
+        {
+          "lieu": "g-L1320"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-snacks"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "hot-dog-de-stand",
+      "nom": "Hot-dog de stand",
+      "categorie": "repas",
+      "statut": "serie",
+      "description": "Les stands de rue de Liberty City rendent de la vie dans GTA IV.",
+      "effet": {
+        "texte": "Rend de la vie",
+        "valeur": null,
+        "unite": null,
+        "jeu": "GTA IV"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": null,
+        "jeu": "GTA IV",
+        "note": "prix non relevé sur la page consultée"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Stand de rue"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-health"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "bleeder-burger-shot",
+      "nom": "Burger « Bleeder » (Burger Shot)",
+      "categorie": "repas",
+      "statut": "serie",
+      "description": "Le seul plat qu’on commande vraiment au Burger Shot de GTA IV.",
+      "effet": {
+        "texte": "Rend de la vie",
+        "valeur": null,
+        "unite": null,
+        "jeu": "GTA IV"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 1,
+        "jeu": "GTA IV",
+        "note": "menu affiché de 3,99 à 6,99 $"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Fast-food"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-burgershot-hd"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "fowl-burger",
+      "nom": "Fowl Burger (Cluckin’ Bell)",
+      "categorie": "repas",
+      "statut": "serie",
+      "description": "Burger de poulet de GTA IV qui rend de la vie ; dans GTA V, le restaurant ne s’ouvre plus.",
+      "effet": {
+        "texte": "Rend de la vie",
+        "valeur": null,
+        "unite": null,
+        "jeu": "GTA IV"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 5,
+        "jeu": "GTA IV",
+        "note": "soupe 2 $, Cluckin’ Huge 4 $"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Fast-food"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-cluckin-hd"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "menu-cluckin-little",
+      "nom": "Menu « Cluckin’ Little »",
+      "categorie": "repas",
+      "statut": "serie",
+      "description": "Petit menu de poulet de San Andreas : rend de la vie et ajoute 1 % de graisse.",
+      "effet": {
+        "texte": "Rend de la vie, +1 % de graisse",
+        "valeur": 1,
+        "unite": "graisse",
+        "jeu": "GTA San Andreas"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 2,
+        "jeu": "GTA San Andreas",
+        "note": "20 % plus cher à Las Venturas"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Fast-food"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-cluckin-sa"
+      ],
+      "notes": "Trop manger fait vomir le personnage."
+    },
+    {
+      "id": "menu-cluckin-big",
+      "nom": "Menu « Cluckin’ Big »",
+      "categorie": "repas",
+      "statut": "serie",
+      "description": "Grand menu de poulet de San Andreas : rend de la vie et ajoute 2 % de graisse.",
+      "effet": {
+        "texte": "Rend de la vie, +2 % de graisse",
+        "valeur": 2,
+        "unite": "graisse",
+        "jeu": "GTA San Andreas"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 5,
+        "jeu": "GTA San Andreas",
+        "note": "6 $ à Las Venturas"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Fast-food"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-cluckin-sa"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "menu-cluckin-huge",
+      "nom": "Menu « Cluckin’ Huge »",
+      "categorie": "repas",
+      "statut": "serie",
+      "description": "Énorme menu de poulet de San Andreas : rend de la vie et ajoute 3 % de graisse.",
+      "effet": {
+        "texte": "Rend de la vie, +3 % de graisse",
+        "valeur": 3,
+        "unite": "graisse",
+        "jeu": "GTA San Andreas"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 10,
+        "jeu": "GTA San Andreas",
+        "note": "12 $ à Las Venturas"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Fast-food"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-cluckin-sa"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "menu-salade",
+      "nom": "Menu salade",
+      "categorie": "repas",
+      "statut": "serie",
+      "description": "Le menu de San Andreas qui rend de la vie sans ajouter de graisse.",
+      "effet": {
+        "texte": "Rend de la vie, 0 % de graisse",
+        "valeur": 0,
+        "unite": "graisse",
+        "jeu": "GTA San Andreas"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 10,
+        "jeu": "GTA San Andreas",
+        "note": "12 $ à Las Venturas"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Fast-food"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-cluckin-sa"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "gilet-super-leger",
+      "nom": "Gilet super léger",
+      "categorie": "protection",
+      "statut": "serie",
+      "description": "Le premier des cinq gilets d’Ammu-Nation dans GTA V.",
+      "effet": {
+        "texte": "Armure : 20 %",
+        "valeur": 20,
+        "unite": "armure",
+        "jeu": "GTA V"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 500,
+        "jeu": "GTA V",
+        "note": "100 $ en ligne, dès le rang 5"
+      },
+      "ou_le_trouver": [
+        {
+          "lieu": "g-L1074"
+        },
+        {
+          "lieu": "g-L1091"
+        },
+        {
+          "type": "Ammu-Nation"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-armor"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "gilet-leger",
+      "nom": "Gilet léger",
+      "categorie": "protection",
+      "statut": "serie",
+      "description": "Deuxième gilet d’Ammu-Nation dans GTA V.",
+      "effet": {
+        "texte": "Armure : 40 %",
+        "valeur": 40,
+        "unite": "armure",
+        "jeu": "GTA V"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 1000,
+        "jeu": "GTA V",
+        "note": "200 $ en ligne, dès le rang 10"
+      },
+      "ou_le_trouver": [
+        {
+          "lieu": "g-L1074"
+        },
+        {
+          "lieu": "g-L1091"
+        },
+        {
+          "type": "Ammu-Nation"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-armor"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "gilet-standard",
+      "nom": "Gilet standard",
+      "categorie": "protection",
+      "statut": "serie",
+      "description": "Gilet du milieu de gamme d’Ammu-Nation dans GTA V.",
+      "effet": {
+        "texte": "Armure : 60 %",
+        "valeur": 60,
+        "unite": "armure",
+        "jeu": "GTA V"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 1500,
+        "jeu": "GTA V",
+        "note": "300 $ en ligne, dès le rang 15"
+      },
+      "ou_le_trouver": [
+        {
+          "lieu": "g-L1074"
+        },
+        {
+          "lieu": "g-L1091"
+        },
+        {
+          "type": "Ammu-Nation"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-armor"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "gilet-lourd",
+      "nom": "Gilet lourd",
+      "categorie": "protection",
+      "statut": "serie",
+      "description": "Quatrième gilet d’Ammu-Nation dans GTA V.",
+      "effet": {
+        "texte": "Armure : 80 %",
+        "valeur": 80,
+        "unite": "armure",
+        "jeu": "GTA V"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 2000,
+        "jeu": "GTA V",
+        "note": "400 $ en ligne, dès le rang 20"
+      },
+      "ou_le_trouver": [
+        {
+          "lieu": "g-L1074"
+        },
+        {
+          "lieu": "g-L1091"
+        },
+        {
+          "type": "Ammu-Nation"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-armor"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "gilet-super-lourd",
+      "nom": "Gilet super lourd",
+      "categorie": "protection",
+      "statut": "serie",
+      "description": "Le gilet complet d’Ammu-Nation dans GTA V.",
+      "effet": {
+        "texte": "Armure : 100 %",
+        "valeur": 100,
+        "unite": "armure",
+        "jeu": "GTA V"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 2500,
+        "jeu": "GTA V",
+        "note": "500 $ en ligne, dès le rang 25"
+      },
+      "ou_le_trouver": [
+        {
+          "lieu": "g-L1074"
+        },
+        {
+          "lieu": "g-L1091"
+        },
+        {
+          "type": "Ammu-Nation"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-armor"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "kit-de-soin-ramasse",
+      "nom": "Kit de soin ramassé",
+      "categorie": "soins",
+      "statut": "serie",
+      "description": "Trousse posée dans la ville : gratuite, elle rend la vie au maximum dans San Andreas et se trouve partout dans Liberty City.",
+      "effet": {
+        "texte": "Vie rendue au maximum",
+        "valeur": 100,
+        "unite": "sante",
+        "jeu": "GTA San Andreas"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 0,
+        "jeu": "GTA San Andreas",
+        "note": "gratuit : ramassage"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Hôpitaux, stations de métro, recoins de la ville (GTA IV)"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-health"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "recuperation-automatique",
+      "nom": "Récupération automatique",
+      "categorie": "soins",
+      "statut": "serie",
+      "description": "Dans GTA V, la vie remonte seule jusqu’à la moitié quand on reste immobile ; au-delà, il faut manger ou boire.",
+      "effet": {
+        "texte": "Jusqu’à 50 % de la vie, sans rien acheter",
+        "valeur": 50,
+        "unite": "sante",
+        "jeu": "GTA V"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 0,
+        "jeu": "GTA V",
+        "note": "gratuit"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Partout, à l’arrêt"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-health"
+      ],
+      "notes": "",
+      "suivi": false
+    },
+    {
+      "id": "gilet-gta6",
+      "nom": "Gilet pare-balles dans GTA VI",
+      "categorie": "protection",
+      "statut": "conf",
+      "description": "Aucun gilet n’est nommé ni montré par Rockstar ; Ammu-Nation existe (casier d’armes, armes exclusives), pas encore son rayon protection.",
+      "effet": {
+        "texte": "Non publié",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 500,
+        "jeu": "GTA V",
+        "note": "gilet super léger ; jusqu’à 2 500 $ le gilet complet"
+      },
+      "ou_le_trouver": [
+        {
+          "lieu": "g-L1074"
+        },
+        {
+          "lieu": "g-L1091"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtavice-famitsu",
+        "gtawiki-armor"
+      ],
+      "lien": {
+        "href": "armes.html#equipements",
+        "label": "Suivi dans l’Armurerie"
+      },
+      "notes": ""
+    },
+    {
+      "id": "kit-de-soin-gta6",
+      "nom": "Kit de soin dans GTA VI",
+      "categorie": "soins",
+      "statut": "conf",
+      "description": "Aucun kit de soin n’est nommé ni montré par Rockstar ; il reste dans les équipements à confirmer de l’Armurerie.",
+      "effet": {
+        "texte": "Non publié",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 0,
+        "jeu": "GTA San Andreas",
+        "note": "gratuit : ramassage"
+      },
+      "ou_le_trouver": [
+        {
+          "lieu": "g-L2183"
+        },
+        {
+          "type": "Pharmacie (enseigne vue, vente non confirmée)"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-health",
+        "gtadb"
+      ],
+      "lien": {
+        "href": "armes.html#equipements",
+        "label": "Suivi dans l’Armurerie"
+      },
+      "notes": ""
+    }
+  ]
+}

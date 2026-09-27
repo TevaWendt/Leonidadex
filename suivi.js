@@ -12,7 +12,12 @@
     armes:       { key: 'lk_own_armes',       label: 'Mon arsenal',     done: 'possédées', page: 'armes.html',     anchor: 'arsenal' },
     equipements: { key: 'lk_own_equipements', label: 'Mon équipement',  done: 'obtenus',   page: 'armes.html#equipements', anchor: 'equipements' },
     munitions:   { key: 'lk_own_munitions',   label: 'Mes munitions',   done: 'obtenus',   page: 'armes.html#munitions',   anchor: 'munitions' },
-    lieux:       { key: 'lk_map_found',       label: 'Lieux repérés',   done: 'repérés',   page: 'carte.html',     anchor: 'lieux' }
+    lieux:       { key: 'lk_map_found',       label: 'Lieux repérés',   done: 'repérés',   page: 'carte.html',     anchor: 'lieux' },
+    /* v7.42 (lot 5) : familles des catalogues en listes dépliables (outils/catalogues/*.json) ; une clé par famille. */
+    consommables:{ key: 'lk_own_consommables',label: 'Mes consommables',done: 'goûtés',    page: 'nourriture.html#liste-consommables', anchor: 'consommables' },
+    coiffures:   { key: 'lk_own_coiffures',   label: 'Mes coiffures',   done: 'essayées',  page: 'style.html#coiffures', anchor: 'coiffures' },
+    tatouages:   { key: 'lk_own_tatouages',   label: 'Mes tatouages',   done: 'faits',     page: 'style.html#tatouages', anchor: 'tatouages' },
+    tenues:      { key: 'lk_own_tenues',      label: 'Ma garde-robe',   done: 'portées',   page: 'style.html#tenues',    anchor: 'tenues' }
   };
   const ID = /^[a-z0-9][a-z0-9-]{0,99}$/;
   const listeners = new Set();
@@ -42,7 +47,8 @@
       if (!FAMILIES[f] || !ID.test(id)) return;
       (byFam[f] = byFam[f] || []).push(id);
       if (el.querySelector('.track-bt')) return;
-      const name = (el.querySelector('b, h3, strong') || el).textContent.trim();
+      /* v7.42 : data-track-name quand l'élément porteur n'est qu'une case (cellule d'un tableau de catalogue). */
+      const name = el.dataset.trackName || (el.querySelector('b, h3, strong') || el).textContent.trim();
       const b = document.createElement('button');
       b.type = 'button'; b.className = 'track-bt'; b.dataset.trackFor = id;
       b.innerHTML = '<span class="ck" aria-hidden="true"></span><span class="track-lbl">Je l’ai</span>';

@@ -1,0 +1,309 @@
+{
+  "_note": "v7.42 (lot 5) : registre des sources des catalogues (consommables, coiffures, tatouages, tenues et accessoires). Chaque ligne d’un catalogue cite un ou plusieurs identifiants d’ici. statut : officiel (page ou vidéo Rockstar, ou texte officiel reproduit), vu (trailer, capture, Extended Look), comm (identification communautaire), serie (ce que GTA V, GTA Online, GTA IV ou San Andreas font, présenté comme repère), conf (à confirmer). Les pages Rockstar gardent leur dernière ouverture directe ; les autres pages ont été ouvertes le 27 septembre 2026.",
+  "sources": {
+    "rs-vi": {
+      "url": "https://www.rockstargames.com/VI",
+      "title": "Site officiel Grand Theft Auto VI (éditions, précommandes, Pack Vintage Vice City)",
+      "publishedAt": "2026-06-24",
+      "consultedAt": "2026-09-23",
+      "statut": "officiel",
+      "claim": "Textes des éditions : Stock 305, Sara’s Unisex Salon, Electric Fang Tattoo, collections Vice City Style et Goodtime Gear, looks du Pack Vintage Vice City. Relus le 27/09/2026 dans VGC et TheSixthAxis, qui les reproduisent."
+    },
+    "rs-screens": {
+      "url": "https://www.rockstargames.com/VI/media/screenshots",
+      "title": "Rockstar Games : captures officielles GTA VI",
+      "publishedAt": null,
+      "consultedAt": "2026-09-23",
+      "statut": "officiel",
+      "claim": "Les visuels d’img/officiel en viennent : Jason au comptoir d’un bar, Lucia au bord de la piscine, Stock 305, Sara’s Unisex Salon, Electric Fang Tattoo, The Rusty Anchor. Une image montre un objet ; elle ne dit ni son prix ni s’il s’achète."
+    },
+    "rs-videos": {
+      "url": "https://www.rockstargames.com/VI/media/videos",
+      "title": "Rockstar Games : vidéos officielles GTA VI (Trailer 1, Trailer 2, An Extended Look)",
+      "publishedAt": "2023-12-04",
+      "consultedAt": "2026-09-23",
+      "statut": "officiel",
+      "claim": "Les plans cités (bar Effluvia, salle de sport, braquages de stations-service, chips, soda Sprunk) viennent de l’Extended Look du 27 août 2026."
+    },
+    "rs-extended": {
+      "url": "https://www.rockstargames.com/newswire/article/4k138k8okkk483/grand-theft-auto-vi-an-extended-look-now-playing",
+      "title": "Rockstar Newswire : Grand Theft Auto VI, An Extended Look",
+      "publishedAt": "2026-08-27",
+      "consultedAt": "2026-09-23",
+      "statut": "officiel",
+      "claim": "Présentation de 26 minutes capturée sur PS5."
+    },
+    "vgc-editions": {
+      "url": "https://www.videogameschronicle.com/news/rockstar-confirms-grand-theft-auto-6-ultimate-edition-and-pre-order-bonuses-but-still-no-price/",
+      "title": "VGC : Rockstar confirms GTA 6 Ultimate Edition and pre-order bonuses",
+      "publishedAt": "2026-06-24",
+      "consultedAt": "2026-09-27",
+      "statut": "officiel",
+      "claim": "Texte officiel des éditions : Vice City Style (« exclusive outfits, tattoos, and more »), Goodtime Gear (vêtements et accessoires inspirés de Macca the Gator), Sara’s Unisex Salon (coiffures signature, pilosité faciale de Jason, maquillage et ongles de Lucia), Stock 305 (streetwear de Stockyard), Electric Fang Tattoo (plus de 50 tatouages signature dessinés par le collectif FAILE)."
+    },
+    "sixthaxis-editions": {
+      "url": "https://www.thesixthaxis.com/2026/06/24/gta-6-ultimate-edition-pre-order-bonus-and-vintage-vice-city-pack-revealed/",
+      "title": "TheSixthAxis : Ultimate Edition and Vintage Vice City Pack revealed",
+      "publishedAt": "2026-06-24",
+      "consultedAt": "2026-09-27",
+      "statut": "officiel",
+      "claim": "Texte officiel du Pack Vintage : costume en lin « vintage pastel » pour Jason, mini-robe rouge à sequins et boucles pour Lucia, motif tropical pour la plupart des armes, Stanier ’55 et garage Shore Court."
+    },
+    "gamesradar-63": {
+      "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-new-gameplay-details-activities-customization-confirmed-63-screenshots/",
+      "title": "GamesRadar+ : new GTA 6 gameplay details revealed alongside 63 screenshots",
+      "publishedAt": "2026-06-24",
+      "consultedAt": "2026-09-27",
+      "statut": "officiel",
+      "claim": "Reprend les détails publiés par Rockstar le 24 juin 2026 : changement de coiffure pour chaque personnage, pilosité faciale pour Jason, maquillage et ongles pour Lucia, tatouages sur les bras, les jambes et le dos, tenues, vêtements et accessoires."
+    },
+    "gtawiki-ultimate": {
+      "url": "https://gta.wiki/w/Grand_Theft_Auto_VI:_Ultimate_Edition",
+      "title": "GTA Wiki : Grand Theft Auto VI, Ultimate Edition",
+      "publishedAt": "2026-09-26",
+      "consultedAt": "2026-09-27",
+      "statut": "officiel",
+      "claim": "Reproduit les descriptions officielles des cinq commerces de l’édition et nomme les collections Goodtime Gear et Vice City Style d’après les captures officielles."
+    },
+    "gamingnexus-editions": {
+      "url": "https://www.gamingnexus.com/News/73323/Grand-Theft-Auto-VI-reveals-pricing2c-editions2c-and-emphasis-on-immersion",
+      "title": "Gaming Nexus : GTA VI reveals pricing, editions, and emphasis on immersion",
+      "publishedAt": "2026-06-24",
+      "consultedAt": "2026-09-27",
+      "statut": "officiel",
+      "claim": "Texte officiel des commerces de l’Édition Ultimate : Stock 305 et Electric Fang à Stockyard, Sara’s Unisex Salon, Rideout Customs, One-Eyed Willie’s à Lake Leonida."
+    },
+    "dazed-nelson": {
+      "url": "https://www.dazeddigital.com/life-culture/article/70859/1/gta-6-grand-theft-auto-vi-rockstar-exclusive-deep-dive-game-unparalleled-world",
+      "title": "Dazed : GTA VI, an exclusive deep dive (Rob Nelson, Jillian Carr, Stu Petri, Jamie-Lee Lloyd)",
+      "publishedAt": "2026-09-06",
+      "consultedAt": "2026-09-27",
+      "statut": "officiel",
+      "claim": "Rob Nelson : « Food affects Jason and Lucia’s weight, while exercising visibly builds and tones their muscles » ; nuits sans lit, cavale ou « multi-day bender » marquent leurs traits. Jillian Carr, styliste : Vice City « is built around vanity », les tendances tournent vite. Habitants tatoués, percés, en chemises hawaïennes rétro, costumes, luxe ou tenue de combat boueuse."
+    },
+    "vgc-details": {
+      "url": "https://www.videogameschronicle.com/news/rockstar-reveals-a-swathe-of-new-gta-6-details-ahead-of-the-netflix-extended-look/",
+      "title": "VGC : Rockstar reveals a swathe of new GTA 6 details ahead of the Extended Look",
+      "publishedAt": "2026-08-27",
+      "consultedAt": "2026-09-27",
+      "statut": "officiel",
+      "claim": "Même entretien, publié le jour de l’Extended Look : la nourriture joue sur le poids, l’exercice muscle visiblement, le manque de sommeil et les beuveries se voient ; captures de mode pour Jason et Lucia."
+    },
+    "ladbible-weight": {
+      "url": "https://www.ladbible.com/entertainment/gaming/gta-6-gameplay-lucia-jason-weight-gain-feature-578092-20260827",
+      "title": "LADbible : new GTA 6 gameplay preview has players « getting fat »",
+      "publishedAt": "2026-08-27",
+      "consultedAt": "2026-09-27",
+      "statut": "officiel",
+      "claim": "Reprend Rob Nelson (Dazed) : trop manger fait grossir, trop peu maigrir, la salle de sport se voit sur le corps ; retour du système de San Andreas."
+    },
+    "famitsu-nelson": {
+      "url": "https://www.famitsu.com/article/202608/85753",
+      "title": "Famitsu : interview de Rob Nelson (Rockstar North) après la démonstration",
+      "publishedAt": "2026-08-28",
+      "consultedAt": "2026-09-27",
+      "statut": "officiel",
+      "claim": "Café du matin, shake et barre protéinés après l’entraînement, nourriture qui renforce les jauges, entraînement trois jours de suite, milliers de tenues, boutiques et salons innombrables, coupe à la planque limitée, casier Ammu-Nation, braquer les magasins."
+    },
+    "gtavice-famitsu": {
+      "url": "https://www.gtavice.net/news/gta-6-famitsus-full-rob-nelson-interview-translated-into-english",
+      "title": "GTAVice.net : traduction anglaise de l’interview Famitsu de Rob Nelson",
+      "publishedAt": "2026-09-09",
+      "consultedAt": "2026-09-27",
+      "statut": "officiel",
+      "claim": "« We’ll also show you them having their morning coffee » ; « round things off with a protein shake and a protein bar » ; « Food provides buffs that strengthen your meters » ; trois jours d’entraînement de suite font monter santé et force ; « We have thousands of outfits » gagnées en mission ou achetées ; « countless clothing stores and hair salons » ; coupe possible à la planque, choix limité ; casier Ammu-Nation pour les armes longues ; armes exclusives selon la boutique ; braquer les magasins, détruire les caméras."
+    },
+    "gamingbible-7": {
+      "url": "https://www.gamingbible.com/news/gta-6-new-details-september-10-436002-20260910",
+      "title": "GamingBible : GTA 6 shares 7 new gameplay details",
+      "publishedAt": "2026-09-10",
+      "consultedAt": "2026-09-27",
+      "statut": "officiel",
+      "claim": "Rob Nelson : coupe de cheveux à la planque avec un choix limité, « If you want to try lots of hairstyles, you’ll have to go to a salon » ; milliers de tenues, achetées ou gagnées en mission."
+    },
+    "gamesradar-live": {
+      "url": "https://www.gamesradar.com/news/live/gta-6-extended-look-showcase-live-coverage-2026-everything-announced/",
+      "title": "GamesRadar+ : everything revealed from the GTA 6 Extended Look (suivi en direct)",
+      "publishedAt": "2026-08-28",
+      "consultedAt": "2026-09-27",
+      "statut": "vu",
+      "claim": "Vu pendant la diffusion : chips tortilla mangées dans la rue, publicité de burger à la télé, salle de sport, braquages de stations-service avec bandana, Lucia qui entre dans une boutique arme dans le dos et ressort avec un sac, Lucia qui choisit une tenue avant une soirée, danseuses du club."
+    },
+    "gtawiki-extended": {
+      "url": "https://gta.wiki/wiki/An_Extended_Look",
+      "title": "GTA Wiki : Grand Theft Auto VI, An Extended Look",
+      "publishedAt": "2026-09-25",
+      "consultedAt": "2026-09-27",
+      "statut": "vu",
+      "claim": "Diffusion du 27 août 2026, 26 min 48 s ; bar Effluvia sur un toit de Vice Beach où Jason et Lucia retrouvent Brian et Lori ; Lucia choisit une tenue pour une soirée."
+    },
+    "vgtimes-extended": {
+      "url": "https://vgtimes.com/articles/165665-gta-6-an-extended-look-breakdown.html",
+      "title": "VGTimes : GTA 6 An Extended Look breakdown",
+      "publishedAt": "2026-08-27",
+      "consultedAt": "2026-09-27",
+      "statut": "vu",
+      "claim": "Bars, clubs, diners, appartement avec frigo et télé vus dans la présentation."
+    },
+    "gtawiki-sprunk": {
+      "url": "https://gta.wiki/w/Sprunk",
+      "title": "GTA Wiki : Sprunk",
+      "publishedAt": null,
+      "consultedAt": "2026-09-27",
+      "statut": "vu",
+      "claim": "Dans l’Extended Look, Sprunk apparaît dans des supérettes : en vente dans une station Xero, carton Sprunk Light dans un magasin d’alcool. Les passages de la page sur les fuites ne sont pas utilisés."
+    },
+    "gtawiki-shops": {
+      "url": "https://gta.wiki/w/Stock_305",
+      "title": "GTA Wiki : Stock 305, Sara’s Unisex Salon, Electric Fang Tattoo, Uncle Jack’s Liquor, The Rusty Anchor, Effluvia, Jack of Hearts (une page par enseigne)",
+      "publishedAt": null,
+      "consultedAt": "2026-09-27",
+      "statut": "comm",
+      "claim": "Apparitions minutées dans les trailers, les captures et l’Extended Look ; adresses réelles proposées par les contributeurs."
+    },
+    "gtadb": {
+      "url": "https://gtadb.org/",
+      "title": "gtadb.org : bâtiments de Leonida repérés dans les trailers et captures officielles",
+      "publishedAt": null,
+      "consultedAt": "2026-09-27",
+      "statut": "comm",
+      "claim": "Base communautaire ouverte (CC BY 4.0, créditée sur la carte du site) : chaque bâtiment est rapproché d’une adresse réelle ; c’est d’elle que viennent les enseignes de la carte (Xero, 24/7, Taco Bomb, Uncle Jack’s Liquor, A1 Fashions…). Voir une enseigne ne prouve pas qu’on peut y acheter quelque chose."
+    },
+    "gtawiki-snacks": {
+      "url": "https://gta.wiki/wiki/Snacks",
+      "title": "GTA Wiki : Snacks (GTA V, GTA Online, San Andreas)",
+      "publishedAt": "2026-07-15",
+      "consultedAt": "2026-09-27",
+      "statut": "serie",
+      "claim": "GTA V : P’s & Q’s 1 $, EgoChaser 2 $, Meteorite 4 $ en supérette, pour récupérer de la vie. GTA Online : eCola 2 $, Sprunk 2 $, Pißwasser 2 $, P’s & Q’s 2 $, EgoChaser 3 $, Meteorite 5 $, paquet de Redwood 7 $ ; eCola et Sprunk à 1 $ au distributeur. La page ne chiffre pas la vie rendue par chaque en-cas."
+    },
+    "gtawiki-vending": {
+      "url": "https://gta.wiki/w/Vending_Machine",
+      "title": "GTA Wiki : Vending Machine",
+      "publishedAt": "2026-08-13",
+      "consultedAt": "2026-09-27",
+      "statut": "serie",
+      "claim": "1 $ l’article ; San Andreas : environ 50 % de la vie de base ; GTA V et GTA Online : une boisson eCola ou Sprunk rend toute la vie ; GTA IV : une partie de la vie."
+    },
+    "gtawiki-health": {
+      "url": "https://gta.wiki/w/Health",
+      "title": "GTA Wiki : Health",
+      "publishedAt": "2026-08-08",
+      "consultedAt": "2026-09-27",
+      "statut": "serie",
+      "claim": "GTA V : la vie remonte seule jusqu’à la moitié ; boissons des distributeurs et en-cas des supérettes pour le reste. GTA IV : stands et boutiques de nourriture rendent de la vie ; kits de soin dans la ville. San Andreas : kits de soin et repas ; vie rendue au maximum par un kit."
+    },
+    "gtawiki-armor": {
+      "url": "https://gta.wiki/w/Body_Armor",
+      "title": "GTA Wiki : Body Armor",
+      "publishedAt": null,
+      "consultedAt": "2026-09-27",
+      "statut": "serie",
+      "claim": "Cinq gilets chez Ammu-Nation : super léger 20 % (500 $ dans GTA V, 100 $ en ligne), léger 40 % (1 000 $ / 200 $), standard 60 % (1 500 $ / 300 $), lourd 80 % (2 000 $ / 400 $), super lourd 100 % (2 500 $ / 500 $) ; en ligne, débloqués par rang."
+    },
+    "gtawiki-barbers-v": {
+      "url": "https://gta.wiki/w/Barbers_in_GTA_V",
+      "title": "GTA Wiki : Barbers in Grand Theft Auto V",
+      "publishedAt": "2026-07-08",
+      "consultedAt": "2026-09-27",
+      "statut": "serie",
+      "claim": "Bob Mulét (haut de gamme, Rockford Hills) et les salons courants Herr Kutz, Hair on Hawick, Beach Combover, O’Sheas ; coupes de 20 à 450 $ selon le personnage et le salon, barbe de 20 à 100 $, rasage 20 $ ou 50 $, coupes du Social Club gratuites."
+    },
+    "gtawiki-barbers-online": {
+      "url": "https://gta.wiki/w/Barbers_in_GTA_Online",
+      "title": "GTA Wiki : Barbers in Grand Theft Auto Online",
+      "publishedAt": null,
+      "consultedAt": "2026-09-27",
+      "statut": "serie",
+      "claim": "Sept salons ; coupes homme de 170 $ (buzzcut) à 5 995 $, coupes femme de 175 $ (couettes) à 6 770 $, barbes de 150 à 5 000 $, lentilles de couleur de 4 500 à 19 000 $ ; maquillage (blush, fards, rouge à lèvres, peintures), sourcils, poils de torse. « Purement cosmétique »."
+    },
+    "gtawiki-tattoos-v": {
+      "url": "https://gta.wiki/w/Tattoos_in_GTA_V",
+      "title": "GTA Wiki : Tattoos in Grand Theft Auto V",
+      "publishedAt": "2026-06-30",
+      "consultedAt": "2026-09-27",
+      "statut": "serie",
+      "claim": "Six salons (Los Santos Tattoos, The Pit, Blazing Tattoo, Ink Inc., Alamo Tattoo Studio, Paleto Tattoo) ; zones torse, tête, bras gauche, bras droit, jambe gauche, jambe droite ; motifs de 50 à 550 $ ; retrait gratuit ; ouverts après la mission « Mr. Philips »."
+    },
+    "gtawiki-clothing-v": {
+      "url": "https://gta.wiki/w/Clothing_in_GTA_V",
+      "title": "GTA Wiki : Clothing in Grand Theft Auto V",
+      "publishedAt": "2026-08-26",
+      "consultedAt": "2026-09-27",
+      "statut": "serie",
+      "claim": "Des boutiques dans toute la carte ; costumes chez Ponsonbys ; Binco et Discount Store pour le bon marché ; chaque protagoniste a son catalogue."
+    },
+    "gtawiki-clothing-online": {
+      "url": "https://gta.wiki/w/Clothing_in_GTA_Online",
+      "title": "GTA Wiki : Clothing in Grand Theft Auto Online",
+      "publishedAt": "2026-05-24",
+      "consultedAt": "2026-09-27",
+      "statut": "serie",
+      "claim": "Catégories : hauts, pantalons, chaussures, chapeaux, accessoires, lunettes, tenues, masques ; toutes les boutiques vendent le même stock ; une tenue dont on possède déjà toutes les pièces coûte 100 $."
+    },
+    "gtawiki-ponsonbys": {
+      "url": "https://gta.wiki/w/Ponsonbys",
+      "title": "GTA Wiki : Ponsonbys",
+      "publishedAt": "2026-09-07",
+      "consultedAt": "2026-09-27",
+      "statut": "serie",
+      "claim": "Boutique de luxe (« Effeminate Luxury ») : costumes, vêtements habillés ; boutons de manchette, eau de Cologne et parfum en vitrine ; trois adresses dans GTA V."
+    },
+    "gtawiki-masks": {
+      "url": "https://gta.wiki/w/Vespucci_Movie_Masks",
+      "title": "GTA Wiki : Vespucci Movie Masks",
+      "publishedAt": "2026-08-24",
+      "consultedAt": "2026-09-27",
+      "statut": "serie",
+      "claim": "Masques de 50 $ (singe) à 500 $ (hockey blanc), monstre vert 270 $ ; T-shirts et débardeurs de 10 à 38 $ ; ouvert après le braquage aux masques dans GTA V, dès le début en ligne."
+    },
+    "gtawiki-cluckin-sa": {
+      "url": "https://gta.wiki/w/Cluckin'_Bell_(3D_Universe)",
+      "title": "GTA Wiki : Cluckin’ Bell (San Andreas)",
+      "publishedAt": "2026-09-07",
+      "consultedAt": "2026-09-27",
+      "statut": "serie",
+      "claim": "Menus de San Andreas : petit 2 $ (+1 % de graisse), grand 5 $ (+2 %), énorme 10 $ (+3 %), salade 10 $ (0 %) ; chaque repas rend de la vie ; trop manger fait vomir ; 20 % plus cher à Las Venturas."
+    },
+    "gtawiki-cluckin-hd": {
+      "url": "https://gta.wiki/w/Cluckin'_Bell_(HD_Universe)",
+      "title": "GTA Wiki : Cluckin’ Bell (GTA IV, GTA V)",
+      "publishedAt": "2026-09-26",
+      "consultedAt": "2026-09-27",
+      "statut": "serie",
+      "claim": "GTA IV : Fowl Burger 5 $ rend de la vie, Cock-A-Hoop Soup 2 $, Farmer’s Surprise 2 $, Cluckin’ Huge 4 $ ; dans GTA V, les restaurants ne s’ouvrent plus."
+    },
+    "gtawiki-burgershot-hd": {
+      "url": "https://gta.wiki/w/Burger_Shot_(HD_Universe)",
+      "title": "GTA Wiki : Burger Shot (GTA IV)",
+      "publishedAt": null,
+      "consultedAt": "2026-09-27",
+      "statut": "serie",
+      "claim": "Menu affiché de 3,99 à 6,99 $ ; en jeu, seul le burger Bleeder se commande, à 1 $."
+    },
+    "gtawiki-yellowjack": {
+      "url": "https://gta.wiki/w/Yellow_Jack_Inn",
+      "title": "GTA Wiki : Yellow Jack Inn",
+      "publishedAt": "2026-06-24",
+      "consultedAt": "2026-09-27",
+      "statut": "serie",
+      "claim": "Bar de GTA V : fléchettes jouables ; les boissons servies au comptoir ne s’achètent pas dans GTA V."
+    },
+    "gamingbible-ultimate": {
+      "url": "https://www.gamingbible.com/news/gta-6-exclusive-missions-story-content-ultimate-edition-921026-20260624",
+      "title": "GamingBible : GTA 6 locks exclusive content behind the Ultimate Edition",
+      "publishedAt": "2026-06-24",
+      "consultedAt": "2026-09-27",
+      "statut": "officiel",
+      "claim": "En édition Standard, les cinq commerces de l’Édition Ultimate (dont Stock 305, Sara’s Unisex Salon, Electric Fang Tattoo) « ne sont pas ouverts »."
+    },
+    "xbox-vintage": {
+      "url": "https://www.xbox.com/en-US/games/store/grand-theft-auto-vi-vintage-vice-city-pack/9plvssh8849x",
+      "title": "Xbox Store : Grand Theft Auto VI, Vintage Vice City Pack (texte officiel de l’éditeur)",
+      "publishedAt": "2026-06-24",
+      "consultedAt": "2026-09-27",
+      "statut": "officiel",
+      "claim": "Texte officiel du pack : Stanier ’55 et garage Shore Court près d’Ocean Beach ; pour Jason « effortlessly chic linen suit in vintage pastel, complemented by the cut and coif of the decade of decadence » ; pour Lucia « red sequin mini dress and curls » ; motif tropical inspiré de la chemise de Tommy Vercetti."
+    }
+  }
+}

@@ -1,0 +1,148 @@
+v7.42 — 27 septembre 2026 — LOT 5 : CONSOMMABLES ET VÊTEMENTS ET STYLE EN LISTES COMPLÈTES
+(base : v7.41 = lot 4 « Hubs du monde », telle que poussée sur GitHub le 27 septembre)
+
+Ce qui change pour le visiteur
+- Consommables (nourriture.html) et Vêtements et style (style.html) ne sont plus des « présentations » (kicker + carte).
+  Chaque page est un vrai site dans la charte : bandeau avec la pile d’images cliquable, sous-navigation collante,
+  sections numérotées du système du lot 3 (fonds papier / papier-2 / nuit, icônes dessinées), les listes dépliables au
+  centre, l’encart calculateur du lot 4, le bloc « Vérification et sources » en pied, puis les puces du lot 3.
+- Quatre listes dépliables complètes, une par famille, dans une boîte details/summary dans la charte (compteur dans le
+  titre : « N référencés · N confirmés pour GTA VI · N repères de la série ») :
+  · Consommables (nourriture.html) : 30 lignes, dont 9 confirmées pour GTA VI (café du matin, shake et barre protéinés
+    cités par Rob Nelson ; chips, Sprunk, bière au comptoir, cocktail, burger, repas au diner vus dans les médias
+    officiels), 19 repères de la série (P’s & Q’s, EgoChaser, Meteorite, eCola, Pißwasser, hot-dog, Burger Shot,
+    Cluckin’ Bell de GTA IV et de San Andreas avec la graisse, les cinq gilets d’Ammu-Nation avec leur pourcentage et
+    leur prix GTA V, kit de soin, récupération automatique) et 2 lignes « à confirmer » (gilet et kit dans GTA VI).
+  · Coiffures (style.html#coiffures) : 55 lignes, dont 10 confirmées (coupe à la planque et en salon, coiffures signature,
+    barbe de Jason, maquillage et ongles de Lucia chez Sara’s, coiffure rétro de Jason et boucles de Lucia du Pack
+    Vintage, deux coupes vues sur les captures), 44 repères (coupes et barbes de Michael, Franklin et Trevor avec leurs
+    prix en salon courant et chez Bob Mulét, coupes homme et femme de GTA Online, lentilles, maquillage) et 1 « à
+    confirmer » (couleur des cheveux).
+  · Tatouages (style.html#tatouages) : 24 lignes, dont 7 confirmées (plus de 50 tatouages FAILE d’Electric Fang,
+    collection Vice City Style, zones bras / jambes / dos citées par Rockstar, tatouages de Jason et de Lucia sur les
+    captures), 15 repères (six zones et neuf motifs de GTA V avec leurs prix, retrait gratuit) et 2 « à confirmer »
+    (torse ; visage, cou et yeux).
+  · Tenues et accessoires (style.html#tenues, ancre #accessoires) : 30 lignes, dont 20 confirmées (des milliers de
+    tenues, tenues gagnées en mission, looks Stock 305, Vice City Style, Goodtime Gear, costume en lin et mini-robe à
+    sequins du Pack Vintage, tenue de soirée de l’Extended Look, débardeur, chemise tropicale, blouson, manteau léopard,
+    bustier et mini-jupe, baskets, bandana, lunettes de soleil, créoles, chaîne, montre, casquette vus sur les captures)
+    et 10 repères (catégories des boutiques de GTA V et GTA Online, T-shirts de 10 à 38 $, masques de Vespucci Movie
+    Masks de 50 à 500 $, costumes Ponsonbys, tenue complète à 100 $ en ligne).
+  Chaque ligne : puce de statut, nom, catégorie (icône dessinée), personnage concerné, description en une phrase,
+  effet (texte, et chiffre avec son jeu d’origine quand il existe), colonne GTA VI (toujours « à confirmer »), colonne
+  « Repère de la série » (« GTA V : 500 $ », jamais dans la colonne GTA VI), lieu(x) avec lien vers la carte
+  (carte.html#lieu=…) ou type de commerce quand le lieu n’est pas connu, liens « source » vers le bloc Sources de la
+  page, « visuel officiel » vers medias.html, case de suivi « Je l’ai » (suivi.js) qui alimente la barre de la famille et
+  Ma progression.
+- La liste complète est écrite dans la page : lisible sans JavaScript. Avec JavaScript (catalogue.js) : recherche,
+  filtres par catégorie (avec groupes Vêtements / Accessoires pour la garde-robe) et par statut, tri (GTA VI d’abord,
+  nom, catégorie, repère de prix), compteur de lignes, « Tout afficher », ouverture automatique de la boîte quand
+  l’adresse vise une ligne (nourriture.html#consommables-sprunk) ou l’ancre Accessoires. Tableau sur grand écran, cartes
+  empilées sous 900 px : aucun défilement horizontal.
+- Sections éditoriales des deux pages (contenu dans outils/catalogues/editorial.json) : « Ce que Rockstar a dit et
+  montré » (frise datée à quatre temps avec statut et visuel officiel), « Où on s’attend à en trouver » / « Les
+  adresses » (cartes-lieux avec vignette de la carte : 18 enseignes vues pour les consommables, 7 pour le style, plus
+  les trois adresses de l’Édition Ultimate avec leurs captures), « Ce que la série faisait déjà » (Consommables),
+  « Collections annoncées » (style), « Ce qui reste à confirmer » (fond nuit), « Ce que ça change pour toi » (budget,
+  carte avec repères préréglés, suivi, Armurerie / Personnalisations), FAQ de cinq questions (FAQPage et Léo),
+  « Vérification et sources » avec la légende des cinq statuts et la liste datée des pages consultées.
+- Bateaux, Personnalisations, Logements reçoivent le même gabarit (sous-navigation, sections numérotées, « À confirmer »,
+  « Pour toi », Sources) avec leur contenu existant ; Personnalisations sera refaite au lot 6 avec le même modèle.
+- Progression : douze cartes (4 + 4 + 4) : les quatre familles ont leur carte avec liste dépliable (nom, catégorie, lien
+  vers la ligne, Retirer), leur clé de stockage (lk_own_consommables, lk_own_coiffures, lk_own_tatouages, lk_own_tenues)
+  dans l’export / import, et le compteur global les compte ; les cartes Consommables et Vêtements et style de « Ce qui
+  s’achète » affichent les lignes cochées de leurs familles au lieu d’« En attente du jeu ». Le compteur global suit
+  aussi les retraits faits depuis les cartes.
+- Recherche interne : une entrée par famille (ancre de la liste), une par ligne (type « élément », lien vers l’ancre de
+  la ligne), plus l’ancre Accessoires. Léo : chaque ligne entre dans l’index (sans prix), les dix questions des FAQ
+  répondent (« peut-on manger dans GTA 6 ? », « est-ce qu’on grossit ? », « peut-on changer de coiffure ? »…).
+- Données structurées : ItemList par famille (une par liste) en plus de BreadcrumbList et FAQPage.
+
+Statut « repère de la série »
+- Nouveau statut, en plus des quatre du lot 4 : officiel / vu dans un média / identification communautaire / repère de la
+  série / à confirmer. Un chiffre qui vient de GTA V, GTA Online, GTA IV ou San Andreas est écrit « GTA V : 2 $ » dans
+  la colonne dédiée ; la colonne GTA VI reste « à confirmer » tant que Rockstar n’a rien publié. Le validateur refuse
+  tout prix GTA VI et tout chiffre d’effet sans jeu d’origine ; un test parcourt les deux pages et vérifie qu’aucune
+  cellule GTA VI ne contient un chiffre.
+
+Recherche et sources (toutes ouvertes le 27 septembre 2026, registre outils/catalogues/sources.json, 39 entrées)
+- GTA VI, officiel : texte des éditions (VGC, TheSixthAxis, Gaming Nexus, GTA Wiki Ultimate Edition, Xbox Store pour le
+  Pack Vintage : « the cut and coif of the decade of decadence »), détails du 24 juin 2026 (GamesRadar+ : coiffure,
+  pilosité faciale, maquillage, ongles, tatouages bras / jambes / dos), Rob Nelson à Dazed (6 septembre : « Food
+  affects Jason and Lucia’s weight… »), à VGC et LADbible (27 août), à Famitsu (28 août, traduction GTAVice.net du
+  9 septembre : café du matin, shake et barre protéinés, « Food provides buffs that strengthen your meters », milliers de
+  tenues, boutiques et salons innombrables, coupe à la planque limitée, casier Ammu-Nation), à GamingBible (10 septembre),
+  GamingBible du 24 juin (boutiques fermées en édition Standard).
+- GTA VI, vu dans un média : captures officielles déjà dans img/officiel (Jason au bar avec chaîne, montre et casquette ;
+  Lucia à la piscine avec créoles et lunettes ; Stock 305, Sara’s, Electric Fang), suivi en direct de GamesRadar+
+  (chips, pub de burger, salle de sport, bandanas, Lucia et sa tenue de soirée), GTA Wiki Extended Look (Effluvia),
+  GTA Wiki Sprunk (en rayon chez Xero ; les passages sur les fuites sont ignorés), VGTimes.
+- Repères de la série : GTA Wiki (gta.wiki) : Snacks, Vending Machine, Health, Body Armor, Barbers in GTA V, Barbers in
+  GTA Online, Tattoos in GTA V, Clothing in GTA V, Clothing in GTA Online, Ponsonbys, Vespucci Movie Masks, Cluckin’ Bell
+  (San Andreas et HD), Burger Shot (HD), Yellow Jack Inn. Quand une page ne chiffre pas un effet ou un prix, la ligne
+  écrit « non relevé sur la page consultée » au lieu d’inventer.
+- Lieux : la carte du site (données gtadb.org, CC BY 4.0, enseignes vues dans les trailers et captures) ; chaque lieu
+  garde son statut sur la ligne. Le lien de carte suit la convention du site (carte.html#lieu=…, pas ?lieu=).
+- Écarté volontairement : les listes de marques de sites secondaires non recoupées (fast-foods « aperçus » sans source
+  vérifiable), les fuites de 2022 et de 2026, tout prix ou effet GTA VI. gta.fandom.com n’était pas joignable (erreur 402) :
+  gta.wiki a été utilisé pour tous les repères.
+- Choix de modèle : « Tenues » et « Accessoires » forment une seule famille (tenues, label « Tenues et accessoires »),
+  les accessoires étant ses catégories (lunettes, chapeaux et casquettes, bijoux et montres, masques et bandanas, autres) ;
+  l’ancre #accessoires reste et filtre la liste sur ce groupe. Ainsi la page Progression garde une grille de 12 cartes
+  (4 + 4 + 4) et une seule barre « Ma garde-robe ».
+
+Technique
+- outils/catalogues/schema.json (nouveau) : modèle commun (famille, label, titre, page, section, suivi, intro, catégories
+  avec icône et groupe ; lignes : id, nom, catégorie, statut, personnage, media, suivi, description, effet {texte, valeur,
+  unité, jeu}, prix_gta6 {valeur: null, statut: conf}, prix_repere_serie {valeur | min/max, jeu, note}, ou_le_trouver
+  [{lieu} | {type, note}], variantes, sources, lien, notes). Le même modèle servira au lot 6.
+- outils/catalogues/sources.json (registre daté), consommables.json, coiffures.json, tatouages.json, tenues.json,
+  editorial.json (sections, FAQ, cartes-lieux, actions des pages).
+- outils/catalogues.cjs (nouveau) : validateur (sous-ensemble JSON Schema sans dépendance + règles du site : identifiants
+  uniques y compris face aux véhicules, armes et équipements ; catégorie, source, lieu de carte et visuel connus ; statut
+  cohérent avec les sources ; prix GTA VI interdit ; chiffre d’effet toujours daté d’un jeu), rendu listBox(fam) (boîte,
+  outils inertes, tableau complet, légende), counts / counterText, ldItemList, searchEntries, leoRows, progressIds /
+  progressNames, sourcesOf, placesOf. `node outils/catalogues.cjs` valide et affiche les comptes.
+- outils/gen-acquisitions.cjs réécrit pour le gabarit (bandeau, S.nav, sections S.section : timeline, places avec S.defs,
+  columns, pending, actions, FAQ, sources avec légende à cinq statuts) ; alias, acquisitions-data.js, bloc Garages de
+  planques.html et acquisitions-index.json inchangés dans leur rôle. Les anciens « volets » (champ sections de
+  outils/acquisitions.json) sont retirés ; les textes intro / limit / description de Consommables et Vêtements et style
+  sont réécrits pour les listes.
+- catalogue.js (nouveau, chargé sur les pages de section avec suivi.js) : filtres, tri, compteur, ancres. suivi.js : quatre
+  familles et attribut data-track-name (cellule de tableau). progression-core.js : familles dans LEGACY / LABELS ;
+  progression.js : familles, ancres #consommables #coiffures #tatouages #tenues, cartes de « Ce qui s’achète » ;
+  progression.html : quatre cartes ; sync-site.cjs : identifiants et noms des familles (lus dans les JSON, jamais dans
+  les pages), compteurs « 0 / N » des cartes, entrées de recherche. gen-leo.cjs : lignes des catalogues et FAQ des deux
+  pages (identifiants acq-nourriture-n, acq-style-n) ; empreinte Léo régénérée.
+- outils/sections.cjs : statut serie dans STATUS_LABEL, 20 icônes de catégories (liste, boisson, snack, repas, coupe,
+  barbe, couleur, maquillage, zone, motif, retrait, tenue, haut, bas, chaussure, lunettes, chapeau, bijou, masque,
+  étiquette). style.css : bloc « v7.42 » (pip--serie, marqueurs de sous-navigation). acquisitions.css : bloc « v7.42 »
+  (gabarit, boîte, outils, tableau, cartes empilées sous 900 px, légende à cinq statuts).
+- Tests : 396 → 408 (nouveau outils/tests/catalogues-v742.test.cjs : schéma et données, validateur, rendu, colonne GTA VI,
+  pages, filtres et tri au clavier / à la souris dans jsdom, suivi, Progression, progression-core, recherche, Léo,
+  sitemap, icônes). Deux tests des lots 1 et D mis à jour pour compter les quatre familles ; le test « huit cartes » du
+  lot 1 compte douze cartes et le compteur global suit désormais les retraits (2 au lieu de 3 restés affichés).
+  calculateurs-browser.cjs : 278 / 278. verifier.js : 0 erreur sur 38 086 références. gen-leo --check : sans divergence.
+  Régénération reproductible à l’octet (double passage comparé).
+
+Contrôle
+- 9 pages (Consommables, Vêtements et style, Bateaux, Personnalisations, Logements, Progression, Planques, Achats,
+  Accueil) × 7 largeurs (320, 390, 768, 1024, 1280, 1440, 1920), boîtes ouvertes : 0 erreur console, 0 requête en échec,
+  0 débordement horizontal, 0 image cassée.
+- Clavier : Entrée sur le résumé ouvre la boîte ; champ de recherche, listes déroulantes, « Tout afficher » et « Je l’ai »
+  atteignables et actionnables au clavier, contour visible (3 px) à chaque arrêt.
+- Mouvement réduit (Consommables, Vêtements et style) : tout visible, 0 animation en cours ; mouvement normal : chaque
+  titre de section lisible en moins de 400 ms. Survols (résumé, ligne, lieu, bouton, carte-lieu, action, sous-navigation) :
+  aucun transform ni filtre.
+- Contraste AA (script) : 713 + 1 698 textes des zones du lot, 0 écart (les quatre signalements du script étaient des
+  faux positifs de lecture de dégradé, vérifiés à la main : 5,9:1 et 6,5:1).
+- Captures avant / après à 390 et 1 280 px, captures de contrôle des 6 pages à 390 et 1 280 px et des listes ouvertes,
+  dans le dossier de contrôle (hors dépôt).
+
+Reste ouvert (signalé, pas modifié)
+- Léo envoie « prix d’un soda ? » vers le calculateur (le mot « prix » déclenche le parcours de calcul avant la base de
+  connaissances, comme avant) ; les mêmes questions sans « prix » répondent par la FAQ.
+- Effluvia et The Rusty Anchor ne sont pas encore des lieux de la carte : ils apparaissent comme type de commerce.
+- Les personnalisations (véhicules et armes) suivront au lot 6 avec le même modèle.
+- rockstargames.com toujours cité avec sa dernière ouverture directe ; textes officiels relus dans les pages qui les
+  reproduisent (VGC, TheSixthAxis, Xbox Store).

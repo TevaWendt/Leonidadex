@@ -1,0 +1,1828 @@
+{
+  "famille": "coiffures",
+  "label": "Coiffures",
+  "titre": "Toutes les coiffures",
+  "page": "/style.html",
+  "section": "coiffures",
+  "suivi": {
+    "cle": "lk_own_coiffures",
+    "label": "Mes coiffures",
+    "fait": "essayées",
+    "ancre": "coiffures"
+  },
+  "intro": "Coupes, barbe, couleur, maquillage et ongles : ce que Rockstar a dit ou montré pour Jason et Lucia, puis les coupes de GTA V et GTA Online avec leurs prix, présentés comme repères. Aucune coiffure n’a de prix GTA VI.",
+  "categories": [
+    {
+      "id": "coupes",
+      "label": "Coupes",
+      "icon": "coupe"
+    },
+    {
+      "id": "barbe",
+      "label": "Barbe et moustache",
+      "icon": "barbe"
+    },
+    {
+      "id": "couleur-et-yeux",
+      "label": "Couleur et yeux",
+      "icon": "couleur"
+    },
+    {
+      "id": "maquillage-et-ongles",
+      "label": "Maquillage et ongles",
+      "icon": "maquillage"
+    }
+  ],
+  "items": [
+    {
+      "id": "coupe-a-la-planque",
+      "nom": "Coupe à la planque",
+      "categorie": "coupes",
+      "statut": "officiel",
+      "personnage": "jason-lucia",
+      "description": "On peut se couper les cheveux à la planque, avec un choix limité d’après Rob Nelson.",
+      "effet": {
+        "texte": "Change l’apparence ; aucun effet de jeu publié",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": null,
+      "ou_le_trouver": [
+        {
+          "type": "Planque"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtavice-famitsu",
+        "gamingbible-7"
+      ],
+      "notes": "« You can cut your hair at a hideout as well, but the customization options there are limited » (Rob Nelson)."
+    },
+    {
+      "id": "coupe-en-salon",
+      "nom": "Coupe en salon",
+      "categorie": "coupes",
+      "statut": "officiel",
+      "personnage": "jason-lucia",
+      "description": "Les salons, « innombrables » selon Rob Nelson, offrent bien plus de coiffures que la planque.",
+      "effet": {
+        "texte": "Change l’apparence ; aucun effet de jeu publié",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "min": 20,
+        "max": 450,
+        "jeu": "GTA V",
+        "note": "selon le salon et la coupe"
+      },
+      "ou_le_trouver": [
+        {
+          "lieu": "g-L360"
+        },
+        {
+          "type": "Salon de coiffure"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtavice-famitsu",
+        "gamingbible-7",
+        "gtawiki-barbers-v"
+      ],
+      "notes": "« If you want to try lots of hairstyles, you’ll have to go to a salon » (Rob Nelson)."
+    },
+    {
+      "id": "sara-coiffures-signature",
+      "nom": "Coiffures signature de Sara’s Unisex Salon",
+      "categorie": "coupes",
+      "statut": "officiel",
+      "personnage": "jason-lucia",
+      "media": "sara-s-unisex-salon-02",
+      "description": "Coiffures signature pour Jason et Lucia, réservées à l’Édition Ultimate.",
+      "effet": {
+        "texte": "Change l’apparence ; aucun effet de jeu publié",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": null,
+      "ou_le_trouver": [
+        {
+          "lieu": "g-L360"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "vgc-editions",
+        "rs-vi",
+        "gtawiki-ultimate",
+        "gamingbible-ultimate"
+      ],
+      "notes": "Salon fermé en édition Standard d’après la presse du 24 juin 2026."
+    },
+    {
+      "id": "jason-pilosite-faciale",
+      "nom": "Pilosité faciale de Jason",
+      "categorie": "barbe",
+      "statut": "officiel",
+      "personnage": "jason",
+      "media": "sara-s-unisex-salon-02",
+      "description": "Barbe et moustache de Jason se règlent chez Sara’s, d’après le texte de l’Édition Ultimate ; Rockstar cite aussi la pilosité faciale parmi les réglages de base.",
+      "effet": {
+        "texte": "Change l’apparence ; aucun effet de jeu publié",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "min": 20,
+        "max": 100,
+        "jeu": "GTA V",
+        "note": "rasage 20 $, bouc complet 100 $"
+      },
+      "ou_le_trouver": [
+        {
+          "lieu": "g-L360"
+        },
+        {
+          "type": "Salon de coiffure"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "vgc-editions",
+        "gamesradar-63",
+        "gtawiki-barbers-v"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "jason-coiffure-retro",
+      "nom": "Coiffure rétro de Jason (Pack Vintage Vice City)",
+      "categorie": "coupes",
+      "statut": "officiel",
+      "personnage": "jason",
+      "description": "Coiffure rétro livrée avec le costume en lin pastel du Pack Vintage Vice City.",
+      "effet": {
+        "texte": "Change l’apparence ; aucun effet de jeu publié",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": null,
+      "ou_le_trouver": [
+        {
+          "type": "Bonus de précommande, pas une boutique"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "xbox-vintage",
+        "rs-vi",
+        "sixthaxis-editions"
+      ],
+      "notes": "« the cut and coif of the decade of decadence » (texte officiel du pack). Pack lié aux achats effectués avant le 20 novembre 2026."
+    },
+    {
+      "id": "lucia-boucles",
+      "nom": "Cheveux bouclés de Lucia (Pack Vintage Vice City)",
+      "categorie": "coupes",
+      "statut": "officiel",
+      "personnage": "lucia",
+      "description": "Boucles livrées avec la mini-robe rouge à sequins du Pack Vintage Vice City.",
+      "effet": {
+        "texte": "Change l’apparence ; aucun effet de jeu publié",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": null,
+      "ou_le_trouver": [
+        {
+          "type": "Bonus de précommande, pas une boutique"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "xbox-vintage",
+        "sixthaxis-editions",
+        "rs-vi"
+      ],
+      "notes": "« a red sequin mini dress and curls » (texte officiel)."
+    },
+    {
+      "id": "lucia-maquillage",
+      "nom": "Maquillage de Lucia",
+      "categorie": "maquillage-et-ongles",
+      "statut": "officiel",
+      "personnage": "lucia",
+      "description": "Le maquillage de Lucia se fait chez Sara’s, et Rockstar le cite parmi les réglages de base du personnage.",
+      "effet": {
+        "texte": "Change l’apparence ; aucun effet de jeu publié",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": null,
+        "jeu": "GTA Online",
+        "note": "blush, fards, rouge à lèvres, peintures ; prix non relevés"
+      },
+      "ou_le_trouver": [
+        {
+          "lieu": "g-L360"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "vgc-editions",
+        "gamesradar-63",
+        "gtawiki-barbers-online"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "lucia-ongles",
+      "nom": "Ongles de Lucia",
+      "categorie": "maquillage-et-ongles",
+      "statut": "officiel",
+      "personnage": "lucia",
+      "media": "sara-s-unisex-salon-03",
+      "description": "Une capture officielle montre Lucia à la table à ongles de Sara’s ; le texte de l’édition cite « makeup and nails ».",
+      "effet": {
+        "texte": "Change l’apparence ; aucun effet de jeu publié",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": null,
+      "ou_le_trouver": [
+        {
+          "lieu": "g-L360"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "vgc-editions",
+        "rs-screens",
+        "gamesradar-63"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "jason-coupe-capture-salon",
+      "nom": "Coupe dégagée sur les côtés, longue sur la nuque (Jason)",
+      "categorie": "coupes",
+      "statut": "vu",
+      "personnage": "jason",
+      "media": "sara-s-unisex-salon-02",
+      "description": "Sur la capture officielle du salon, Jason sort avec les côtés dégagés, la nuque longue et une barbe de quelques jours.",
+      "effet": {
+        "texte": "Non publié",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": null,
+      "ou_le_trouver": [
+        {
+          "lieu": "g-L360"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "rs-screens"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "lucia-chignon-haut",
+      "nom": "Chignon haut de Lucia",
+      "categorie": "coupes",
+      "statut": "vu",
+      "personnage": "lucia",
+      "media": "lucia-caminos-02",
+      "description": "Lucia porte les cheveux relevés en chignon haut sur plusieurs captures officielles, dont celle de la piscine.",
+      "effet": {
+        "texte": "Non publié",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": null,
+      "ou_le_trouver": [
+        {
+          "type": "Planque ou salon"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "rs-screens"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "couleur-des-cheveux",
+      "nom": "Couleur des cheveux",
+      "categorie": "couleur-et-yeux",
+      "statut": "conf",
+      "description": "Aucune teinture n’est citée par Rockstar pour GTA VI ; GTA Online en propose avec les lentilles de couleur.",
+      "effet": {
+        "texte": "Non publié",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": null,
+        "jeu": "GTA Online",
+        "note": "prix non relevés"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Salon de coiffure"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gamesradar-63",
+        "gtawiki-barbers-online"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "gta5-fade",
+      "nom": "Fade (Franklin)",
+      "categorie": "coupes",
+      "statut": "serie",
+      "description": "Coupe dégradée des salons courants de GTA V.",
+      "effet": {
+        "texte": "Purement visuel",
+        "valeur": null,
+        "unite": null,
+        "jeu": "GTA V"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 25,
+        "jeu": "GTA V",
+        "note": "salon courant"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Herr Kutz, Hair on Hawick, Beach Combover, O’Sheas"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-barbers-v"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "gta5-shape-up",
+      "nom": "Shape-up (Franklin)",
+      "categorie": "coupes",
+      "statut": "serie",
+      "description": "Contours nets : 20 $ en salon courant, 180 $ chez Bob Mulét.",
+      "effet": {
+        "texte": "Purement visuel",
+        "valeur": null,
+        "unite": null,
+        "jeu": "GTA V"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "min": 20,
+        "max": 180,
+        "jeu": "GTA V",
+        "note": "salon courant ou Bob Mulét"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Salon courant ou Bob Mulét"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-barbers-v"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "gta5-corn-rows",
+      "nom": "Corn Rows (Franklin)",
+      "categorie": "coupes",
+      "statut": "serie",
+      "description": "Tresses plaquées, la coupe la plus chère des salons courants de Franklin.",
+      "effet": {
+        "texte": "Purement visuel",
+        "valeur": null,
+        "unite": null,
+        "jeu": "GTA V"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 150,
+        "jeu": "GTA V",
+        "note": "salon courant"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Salon courant"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-barbers-v"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "gta5-lo-fro",
+      "nom": "Lo Fro (Franklin)",
+      "categorie": "coupes",
+      "statut": "serie",
+      "description": "Petite afro des salons courants de GTA V.",
+      "effet": {
+        "texte": "Purement visuel",
+        "valeur": null,
+        "unite": null,
+        "jeu": "GTA V"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 95,
+        "jeu": "GTA V",
+        "note": "salon courant"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Salon courant"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-barbers-v"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "gta5-the-king-fresh",
+      "nom": "The King Fresh (Franklin)",
+      "categorie": "coupes",
+      "statut": "serie",
+      "description": "Coupe haut de gamme réservée à Bob Mulét.",
+      "effet": {
+        "texte": "Purement visuel",
+        "valeur": null,
+        "unite": null,
+        "jeu": "GTA V"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 400,
+        "jeu": "GTA V",
+        "note": "Bob Mulét"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Bob Mulét (Rockford Hills)"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-barbers-v"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "gta5-abstraction",
+      "nom": "Abstraction (Franklin)",
+      "categorie": "coupes",
+      "statut": "serie",
+      "description": "La coupe la plus chère de GTA V, chez Bob Mulét.",
+      "effet": {
+        "texte": "Purement visuel",
+        "valeur": null,
+        "unite": null,
+        "jeu": "GTA V"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 450,
+        "jeu": "GTA V",
+        "note": "Bob Mulét"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Bob Mulét (Rockford Hills)"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-barbers-v"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "gta5-lexington",
+      "nom": "Lexington (Michael)",
+      "categorie": "coupes",
+      "statut": "serie",
+      "description": "Coupe classique de Michael : 40 $ en salon courant, 180 $ chez Bob Mulét.",
+      "effet": {
+        "texte": "Purement visuel",
+        "valeur": null,
+        "unite": null,
+        "jeu": "GTA V"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "min": 40,
+        "max": 180,
+        "jeu": "GTA V",
+        "note": "salon courant ou Bob Mulét"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Salon courant ou Bob Mulét"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-barbers-v"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "gta5-clippered-cut",
+      "nom": "Clippered Cut (Michael)",
+      "categorie": "coupes",
+      "statut": "serie",
+      "description": "Coupe à la tondeuse : 50 $ en salon courant, 200 $ chez Bob Mulét.",
+      "effet": {
+        "texte": "Purement visuel",
+        "valeur": null,
+        "unite": null,
+        "jeu": "GTA V"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "min": 50,
+        "max": 200,
+        "jeu": "GTA V",
+        "note": "salon courant ou Bob Mulét"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Salon courant ou Bob Mulét"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-barbers-v"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "gta5-grown-out",
+      "nom": "Grown Out (Michael, Trevor)",
+      "categorie": "coupes",
+      "statut": "serie",
+      "description": "Cheveux laissés pousser : de 30 $ (Trevor, salon courant) à 300 $ (Trevor, Bob Mulét).",
+      "effet": {
+        "texte": "Purement visuel",
+        "valeur": null,
+        "unite": null,
+        "jeu": "GTA V"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "min": 30,
+        "max": 300,
+        "jeu": "GTA V",
+        "note": "Michael : 60 $ ou 290 $"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Salon courant ou Bob Mulét"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-barbers-v"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "gta5-slicker",
+      "nom": "Slicker (Michael)",
+      "categorie": "coupes",
+      "statut": "serie",
+      "description": "Cheveux plaqués en arrière, coupe haut de gamme de Michael.",
+      "effet": {
+        "texte": "Purement visuel",
+        "valeur": null,
+        "unite": null,
+        "jeu": "GTA V"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 350,
+        "jeu": "GTA V",
+        "note": "Bob Mulét"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Bob Mulét (Rockford Hills)"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-barbers-v"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "gta5-trailer-cut",
+      "nom": "Trailer Cut (Trevor)",
+      "categorie": "coupes",
+      "statut": "serie",
+      "description": "La coupe de base de Trevor : 20 $ en salon courant, 200 $ chez Bob Mulét.",
+      "effet": {
+        "texte": "Purement visuel",
+        "valeur": null,
+        "unite": null,
+        "jeu": "GTA V"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "min": 20,
+        "max": 200,
+        "jeu": "GTA V",
+        "note": "salon courant ou Bob Mulét"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Salon courant ou Bob Mulét"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-barbers-v"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "gta5-mullet",
+      "nom": "Mullet (Trevor)",
+      "categorie": "coupes",
+      "statut": "serie",
+      "description": "Nuque longue de Trevor, dans les salons courants de GTA V.",
+      "effet": {
+        "texte": "Purement visuel",
+        "valeur": null,
+        "unite": null,
+        "jeu": "GTA V"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 60,
+        "jeu": "GTA V",
+        "note": "salon courant"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Salon courant"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-barbers-v"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "gta5-clean-razor",
+      "nom": "Clean Razor (Trevor)",
+      "categorie": "coupes",
+      "statut": "serie",
+      "description": "Crâne rasé au rasoir, chez Bob Mulét.",
+      "effet": {
+        "texte": "Purement visuel",
+        "valeur": null,
+        "unite": null,
+        "jeu": "GTA V"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 200,
+        "jeu": "GTA V",
+        "note": "Bob Mulét"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Bob Mulét (Rockford Hills)"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-barbers-v"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "gta5-coupes-social-club",
+      "nom": "Coupes du Social Club (The Wood, Blowout, Randal)",
+      "categorie": "coupes",
+      "statut": "serie",
+      "description": "Une coupe gratuite par personnage pour les membres du Social Club dans GTA V.",
+      "effet": {
+        "texte": "Purement visuel",
+        "valeur": null,
+        "unite": null,
+        "jeu": "GTA V"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 0,
+        "jeu": "GTA V",
+        "note": "gratuite"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Tous les salons"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-barbers-v"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "gta5-rasage",
+      "nom": "Rasage de près (Clean Shave)",
+      "categorie": "barbe",
+      "statut": "serie",
+      "description": "Le rasage complet : 20 $ en salon courant, 50 $ chez Bob Mulét.",
+      "effet": {
+        "texte": "Purement visuel",
+        "valeur": null,
+        "unite": null,
+        "jeu": "GTA V"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "min": 20,
+        "max": 50,
+        "jeu": "GTA V",
+        "note": "salon courant ou Bob Mulét"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Salon courant ou Bob Mulét"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-barbers-v"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "gta5-barbe-de-trois-jours",
+      "nom": "Barbe de trois jours (Stubble)",
+      "categorie": "barbe",
+      "statut": "serie",
+      "description": "De 30 $ (Franklin, salon courant) à 80 $ (Michael, Bob Mulét).",
+      "effet": {
+        "texte": "Purement visuel",
+        "valeur": null,
+        "unite": null,
+        "jeu": "GTA V"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "min": 30,
+        "max": 80,
+        "jeu": "GTA V",
+        "note": "Trevor : 60 $ chez Bob Mulét"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Salon courant ou Bob Mulét"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-barbers-v"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "gta5-bouc-complet",
+      "nom": "Bouc complet (Full Goatee, Michael)",
+      "categorie": "barbe",
+      "statut": "serie",
+      "description": "Bouc de Michael chez Bob Mulét.",
+      "effet": {
+        "texte": "Purement visuel",
+        "valeur": null,
+        "unite": null,
+        "jeu": "GTA V"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 100,
+        "jeu": "GTA V",
+        "note": "Bob Mulét"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Bob Mulét (Rockford Hills)"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-barbers-v"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "gta5-methodical",
+      "nom": "Methodical (Franklin)",
+      "categorie": "barbe",
+      "statut": "serie",
+      "description": "Barbe taillée de Franklin chez Bob Mulét.",
+      "effet": {
+        "texte": "Purement visuel",
+        "valeur": null,
+        "unite": null,
+        "jeu": "GTA V"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 100,
+        "jeu": "GTA V",
+        "note": "Bob Mulét"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Bob Mulét (Rockford Hills)"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-barbers-v"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "gta5-full-spartan",
+      "nom": "Full Spartan (Franklin)",
+      "categorie": "barbe",
+      "statut": "serie",
+      "description": "Barbe fournie de Franklin en salon courant.",
+      "effet": {
+        "texte": "Purement visuel",
+        "valeur": null,
+        "unite": null,
+        "jeu": "GTA V"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 65,
+        "jeu": "GTA V",
+        "note": "salon courant"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Salon courant"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-barbers-v"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "gta5-grosse-moustache",
+      "nom": "Grosse moustache (Trevor)",
+      "categorie": "barbe",
+      "statut": "serie",
+      "description": "Moustache épaisse de Trevor chez Bob Mulét.",
+      "effet": {
+        "texte": "Purement visuel",
+        "valeur": null,
+        "unite": null,
+        "jeu": "GTA V"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 80,
+        "jeu": "GTA V",
+        "note": "Bob Mulét"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Bob Mulét (Rockford Hills)"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-barbers-v"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "gta5-the-gerry",
+      "nom": "The Gerry (Trevor)",
+      "categorie": "barbe",
+      "statut": "serie",
+      "description": "Barbe de Trevor en salon courant.",
+      "effet": {
+        "texte": "Purement visuel",
+        "valeur": null,
+        "unite": null,
+        "jeu": "GTA V"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 65,
+        "jeu": "GTA V",
+        "note": "salon courant"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Salon courant"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-barbers-v"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "gta5-barbes-de-depart",
+      "nom": "Barbes de départ (Full Beard, Full Van Dyke, Handlebar)",
+      "categorie": "barbe",
+      "statut": "serie",
+      "description": "Le look de départ de chaque protagoniste de GTA V se remet gratuitement.",
+      "effet": {
+        "texte": "Purement visuel",
+        "valeur": null,
+        "unite": null,
+        "jeu": "GTA V"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 0,
+        "jeu": "GTA V",
+        "note": "gratuit"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Tous les salons"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-barbers-v"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "online-buzzcut",
+      "nom": "Buzzcut (homme)",
+      "categorie": "coupes",
+      "statut": "serie",
+      "description": "La coupe la moins chère des salons de GTA Online.",
+      "effet": {
+        "texte": "Purement visuel",
+        "valeur": null,
+        "unite": null,
+        "jeu": "GTA Online"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 170,
+        "jeu": "GTA Online",
+        "note": ""
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Sept salons de GTA Online"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-barbers-online"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "online-close-shave",
+      "nom": "Close Shave (homme)",
+      "categorie": "coupes",
+      "statut": "serie",
+      "description": "Crâne rasé de près dans GTA Online.",
+      "effet": {
+        "texte": "Purement visuel",
+        "valeur": null,
+        "unite": null,
+        "jeu": "GTA Online"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 500,
+        "jeu": "GTA Online",
+        "note": ""
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Sept salons de GTA Online"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-barbers-online"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "online-faux-hawk",
+      "nom": "Faux Hawk (homme)",
+      "categorie": "coupes",
+      "statut": "serie",
+      "description": "Crête souple de GTA Online.",
+      "effet": {
+        "texte": "Purement visuel",
+        "valeur": null,
+        "unite": null,
+        "jeu": "GTA Online"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 560,
+        "jeu": "GTA Online",
+        "note": ""
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Sept salons de GTA Online"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-barbers-online"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "online-cornrows",
+      "nom": "Cornrows (homme)",
+      "categorie": "coupes",
+      "statut": "serie",
+      "description": "Tresses plaquées de GTA Online.",
+      "effet": {
+        "texte": "Purement visuel",
+        "valeur": null,
+        "unite": null,
+        "jeu": "GTA Online"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 1130,
+        "jeu": "GTA Online",
+        "note": ""
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Sept salons de GTA Online"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-barbers-online"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "online-dreads",
+      "nom": "Dreads (homme)",
+      "categorie": "coupes",
+      "statut": "serie",
+      "description": "Dreadlocks de GTA Online.",
+      "effet": {
+        "texte": "Purement visuel",
+        "valeur": null,
+        "unite": null,
+        "jeu": "GTA Online"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 1980,
+        "jeu": "GTA Online",
+        "note": ""
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Sept salons de GTA Online"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-barbers-online"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "online-top-knot",
+      "nom": "Top Knot (homme)",
+      "categorie": "coupes",
+      "statut": "serie",
+      "description": "Chignon haut masculin de GTA Online.",
+      "effet": {
+        "texte": "Purement visuel",
+        "valeur": null,
+        "unite": null,
+        "jeu": "GTA Online"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 5495,
+        "jeu": "GTA Online",
+        "note": ""
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Sept salons de GTA Online"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-barbers-online"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "online-shaggy-mullet",
+      "nom": "Shaggy Mullet (homme)",
+      "categorie": "coupes",
+      "statut": "serie",
+      "description": "La coupe homme la plus chère de GTA Online.",
+      "effet": {
+        "texte": "Purement visuel",
+        "valeur": null,
+        "unite": null,
+        "jeu": "GTA Online"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 5995,
+        "jeu": "GTA Online",
+        "note": ""
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Sept salons de GTA Online"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-barbers-online"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "online-couettes",
+      "nom": "Couettes (Pigtails, femme)",
+      "categorie": "coupes",
+      "statut": "serie",
+      "description": "La coupe femme la moins chère de GTA Online.",
+      "effet": {
+        "texte": "Purement visuel",
+        "valeur": null,
+        "unite": null,
+        "jeu": "GTA Online"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 175,
+        "jeu": "GTA Online",
+        "note": ""
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Sept salons de GTA Online"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-barbers-online"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "online-queue-de-cheval",
+      "nom": "Queue de cheval (Ponytail, femme)",
+      "categorie": "coupes",
+      "statut": "serie",
+      "description": "Queue de cheval de GTA Online.",
+      "effet": {
+        "texte": "Purement visuel",
+        "valeur": null,
+        "unite": null,
+        "jeu": "GTA Online"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 280,
+        "jeu": "GTA Online",
+        "note": ""
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Sept salons de GTA Online"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-barbers-online"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "online-coupe-courte",
+      "nom": "Coupe courte (Short, femme)",
+      "categorie": "coupes",
+      "statut": "serie",
+      "description": "Coupe courte femme de GTA Online.",
+      "effet": {
+        "texte": "Purement visuel",
+        "valeur": null,
+        "unite": null,
+        "jeu": "GTA Online"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 485,
+        "jeu": "GTA Online",
+        "note": ""
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Sept salons de GTA Online"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-barbers-online"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "online-tresses",
+      "nom": "Tresses (Braids, femme)",
+      "categorie": "coupes",
+      "statut": "serie",
+      "description": "Tresses de GTA Online.",
+      "effet": {
+        "texte": "Purement visuel",
+        "valeur": null,
+        "unite": null,
+        "jeu": "GTA Online"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 1135,
+        "jeu": "GTA Online",
+        "note": ""
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Sept salons de GTA Online"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-barbers-online"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "online-mullet-femme",
+      "nom": "Mullet (femme)",
+      "categorie": "coupes",
+      "statut": "serie",
+      "description": "Nuque longue version femme dans GTA Online.",
+      "effet": {
+        "texte": "Purement visuel",
+        "valeur": null,
+        "unite": null,
+        "jeu": "GTA Online"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 4965,
+        "jeu": "GTA Online",
+        "note": ""
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Sept salons de GTA Online"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-barbers-online"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "online-knotless-braids",
+      "nom": "Knotless Braids (femme)",
+      "categorie": "coupes",
+      "statut": "serie",
+      "description": "Tresses sans nœud de GTA Online.",
+      "effet": {
+        "texte": "Purement visuel",
+        "valeur": null,
+        "unite": null,
+        "jeu": "GTA Online"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 6695,
+        "jeu": "GTA Online",
+        "note": ""
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Sept salons de GTA Online"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-barbers-online"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "online-baby-braids",
+      "nom": "Baby Braids (femme)",
+      "categorie": "coupes",
+      "statut": "serie",
+      "description": "La coupe femme la plus chère de GTA Online.",
+      "effet": {
+        "texte": "Purement visuel",
+        "valeur": null,
+        "unite": null,
+        "jeu": "GTA Online"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 6770,
+        "jeu": "GTA Online",
+        "note": ""
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Sept salons de GTA Online"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-barbers-online"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "online-light-stubble",
+      "nom": "Light Stubble",
+      "categorie": "barbe",
+      "statut": "serie",
+      "description": "La barbe la moins chère de GTA Online.",
+      "effet": {
+        "texte": "Purement visuel",
+        "valeur": null,
+        "unite": null,
+        "jeu": "GTA Online"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 150,
+        "jeu": "GTA Online",
+        "note": ""
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Sept salons de GTA Online"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-barbers-online"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "online-balbo",
+      "nom": "Balbo",
+      "categorie": "barbe",
+      "statut": "serie",
+      "description": "Barbe Balbo de GTA Online.",
+      "effet": {
+        "texte": "Purement visuel",
+        "valeur": null,
+        "unite": null,
+        "jeu": "GTA Online"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 430,
+        "jeu": "GTA Online",
+        "note": ""
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Sept salons de GTA Online"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-barbers-online"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "online-goatee",
+      "nom": "Goatee",
+      "categorie": "barbe",
+      "statut": "serie",
+      "description": "Bouc de GTA Online.",
+      "effet": {
+        "texte": "Purement visuel",
+        "valeur": null,
+        "unite": null,
+        "jeu": "GTA Online"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 465,
+        "jeu": "GTA Online",
+        "note": ""
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Sept salons de GTA Online"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-barbers-online"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "online-curly",
+      "nom": "Curly",
+      "categorie": "barbe",
+      "statut": "serie",
+      "description": "Barbe bouclée de GTA Online.",
+      "effet": {
+        "texte": "Purement visuel",
+        "valeur": null,
+        "unite": null,
+        "jeu": "GTA Online"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 3400,
+        "jeu": "GTA Online",
+        "note": ""
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Sept salons de GTA Online"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-barbers-online"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "online-handlebar",
+      "nom": "Handlebar",
+      "categorie": "barbe",
+      "statut": "serie",
+      "description": "Moustache en guidon, la barbe la plus chère de GTA Online.",
+      "effet": {
+        "texte": "Purement visuel",
+        "valeur": null,
+        "unite": null,
+        "jeu": "GTA Online"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 5000,
+        "jeu": "GTA Online",
+        "note": ""
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Sept salons de GTA Online"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-barbers-online"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "online-lentilles",
+      "nom": "Lentilles de couleur",
+      "categorie": "couleur-et-yeux",
+      "statut": "serie",
+      "description": "De 4 500 $ (noisette) à 19 000 $ (Space Ranger) dans les salons de GTA Online.",
+      "effet": {
+        "texte": "Purement visuel",
+        "valeur": null,
+        "unite": null,
+        "jeu": "GTA Online"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "min": 4500,
+        "max": 19000,
+        "jeu": "GTA Online",
+        "note": "vert 5 750 $, violet 9 500 $"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Sept salons de GTA Online"
+        }
+      ],
+      "variantes": [
+        "Noisette",
+        "Vert",
+        "Violet",
+        "Space Ranger"
+      ],
+      "sources": [
+        "gtawiki-barbers-online"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "online-maquillage",
+      "nom": "Maquillage (blush, fards, rouge à lèvres, peintures)",
+      "categorie": "maquillage-et-ongles",
+      "statut": "serie",
+      "description": "Le maquillage des salons de GTA Online, décrit comme purement cosmétique.",
+      "effet": {
+        "texte": "Purement visuel",
+        "valeur": null,
+        "unite": null,
+        "jeu": "GTA Online"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": null,
+        "jeu": "GTA Online",
+        "note": "prix non relevés sur la page consultée"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Sept salons de GTA Online"
+        }
+      ],
+      "variantes": [
+        "Blush",
+        "Fard à paupières",
+        "Rouge à lèvres",
+        "Peintures"
+      ],
+      "sources": [
+        "gtawiki-barbers-online"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "online-sourcils-torse",
+      "nom": "Sourcils et poils de torse",
+      "categorie": "barbe",
+      "statut": "serie",
+      "description": "Deux réglages de plus dans les salons de GTA Online.",
+      "effet": {
+        "texte": "Purement visuel",
+        "valeur": null,
+        "unite": null,
+        "jeu": "GTA Online"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": null,
+        "jeu": "GTA Online",
+        "note": "prix non relevés sur la page consultée"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Sept salons de GTA Online"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-barbers-online"
+      ],
+      "notes": ""
+    }
+  ]
+}

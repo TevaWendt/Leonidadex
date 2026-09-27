@@ -2976,3 +2976,18 @@ a.ed-brand:hover,a.ed-brand:focus-visible{border-color:var(--ink);box-shadow:5px
   .ed-open>.ed-open-item{flex-basis:100%;}
 }
 @media print{.ed-srcs li{break-inside:avoid;}}
+
+/* ============================================================================
+   v7.42 : lot 5 — statut « repère de la série » et marqueurs de la sous-navigation des pages de section
+   ============================================================================ */
+.pip--serie{background:#2F6F73;}
+.ed--night .pip--serie{background:#5CB3B8;}
+.ed-nav a[data-fam=rockstar]{--dot:var(--ink);}
+.ed-nav a[data-fam=consommables],.ed-nav a[data-fam=tenues]{--dot:var(--amber);}
+.ed-nav a[data-fam=coiffures]{--dot:var(--coral);}
+.ed-nav a[data-fam=tatouages]{--dot:var(--night-3);}
+.ed-nav a[data-fam=serie]{--dot:#2F6F73;}
+.ed-nav a[data-fam=conf]{--dot:var(--paper);}
+.ed-nav a[data-fam=toi]{--dot:var(--amber-2);}
+.ed-nav a[data-fam=faq]{--dot:var(--night-2);}
+.ed-nav a[data-fam=sources]{--dot:var(--ink-soft);}
