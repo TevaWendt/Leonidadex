@@ -6,7 +6,7 @@ const {JSDOM}=require('jsdom');const root=path.resolve(__dirname,'..');
 function generate(options={}){
  const r=options.root||root,read=f=>fs.readFileSync(path.join(r,f),'utf8'),json=f=>JSON.parse(read(f)),exists=f=>fs.existsSync(path.join(r,f));
  const defs=json('outils/leo-editorial.json'),ed=json('outils/editorial.json'),med=json('outils/medias-officiels.json'),c={window:{}};
- const inputFiles=['vehicules-data.js','armes-data.js','carte-gtadb.js','carte.js','outils/editorial.json','outils/medias-officiels.json','outils/leo-editorial.json','outils/leo-knowledge.json','tuto.html','outils/tuto.json','calculateurs-data.js','calculateurs-catalogue.js','acquisitions-data.js','collectibles-data.js','assets-manifest.js'];
+ const inputFiles=['vehicules-data.js','armes-data.js','carte-gtadb.js','carte.js','outils/editorial.json','outils/editorial-hubs.json','outils/medias-officiels.json','outils/leo-editorial.json','outils/leo-knowledge.json','tuto.html','outils/tuto.json','calculateurs-data.js','calculateurs-catalogue.js','acquisitions-data.js','collectibles-data.js','assets-manifest.js'];
  for(const f of ['vehicules-data.js','armes-data.js','calculateurs-catalogue.js','acquisitions-data.js','assets-manifest.js','calculateurs-data.js','carte-gtadb.js','collectibles-data.js'])vm.runInNewContext(read(f),c);
  const catalog=c.window.LKCalcData.catalogue(),acq=c.window.LK_ACQUISITIONS,rows=new Map(),docs=new Map(),linked=new Set();
  const doc=file=>{if(!docs.has(file))docs.set(file,new JSDOM(read(file)));return docs.get(file).window.document;};
@@ -29,6 +29,11 @@ function generate(options={}){
  const categories=defs.categories.filter(x=>exists(x.route.split('#')[0].slice(1))).map(x=>({...x,route:routeOK(x.route)}));
  const kb=json('outils/leo-knowledge.json');if(!Array.isArray(kb.topics))throw Error('Base de connaissances invalide.');
  const knowledge=kb.topics.map(x=>{if(!/^[a-z0-9-]+$/.test(x.id)||!Array.isArray(x.k)||!x.k.length||typeof x.text!=='string'||x.text.length>900)throw Error('Entrée de connaissance invalide : '+x.id);const links=(x.links||[]).map(l=>({label:l.label,url:l.url.startsWith('/calculateurs.html?')?l.url:routeOK(l.url)}));return {id:x.id,k:x.k,text:x.text,status:x.status||'',links,source:x.source||null,verifiedAt:kb.checkedAt,priority:!!x.priority,min:x.min||null};});
+ /* v7.41 (lot 4) : les FAQ des cinq hubs du monde (outils/editorial-hubs.json) entrent dans la base de Léo, après les sujets
+    rédigés à la main (qui gardent la priorité à score égal) ; seuil de correspondance min 2 (ou x.min), les sujets existants gardant la main à score égal ; chaque réponse renvoie vers la FAQ du hub. */
+ {const hubsEd=json('outils/editorial-hubs.json');const HUB_LABEL={lieux:'Les lieux',personnages:'Les personnages',demeures:'Les demeures',planques:'Les planques',entreprises:'Les entreprises'};
+  for(const hub of ['lieux','personnages','demeures','planques','entreprises'])(hubsEd[hub]?.faq||[]).forEach((x,i)=>{if(!Array.isArray(x.k)||!x.k.length||typeof x.a!=='string'||x.a.length>900)throw Error('FAQ du hub '+hub+' sans mots-clés ou trop longue : '+x.q);
+   knowledge.push({id:'hub-'+hub+'-'+(i+1),k:x.k,text:x.a,status:'Réponse de la FAQ « '+HUB_LABEL[hub]+' », sources en bas de la page',links:[{label:'La FAQ et ses sources',url:routeOK('/'+hub+'.html#faq')}],source:null,verifiedAt:hubsEd.sources['rs-vi'].consultedAt,priority:false,min:Number.isInteger(x.min)?x.min:2});});}
  const release={date:acq.game.releaseDate,verifiedAt:acq.game.checkedAt,status:acq.game.status,source:acq.sources.ultimate.url,maxAgeDays:30};
  const inputs=Object.fromEntries([...new Set([...inputFiles,...linked])].sort().map(f=>[f,crypto.createHash('sha256').update(read(f).replace(/\?v=[a-f0-9]+/g,'')).digest('hex')]));
  const proofs=[...new Set([...rows.values()].map(x=>x.proof))],items=[...rows.values()].map(x=>Object.fromEntries(Object.entries({...x,proof:proofs.indexOf(x.proof)}).filter(([k,v])=>k!=='id'&&v!==null&&v!==undefined&&!(Array.isArray(v)&&!v.length))));

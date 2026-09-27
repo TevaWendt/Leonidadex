@@ -1,0 +1,129 @@
+v7.41 — 27 septembre 2026 — LOT 4 : HUBS DU MONDE (LIEUX, PERSONNAGES, DEMEURES, PLANQUES, ENTREPRISES)
+(base : v7.40 = lot 3 « Hubs Véhicules et Armurerie, page Achats »)
+
+Ce qui change pour le visiteur
+- Les cinq hubs du monde ne s’arrêtent plus à leurs cartes. Sous la grille des fiches (et, sur Planques, sous les
+  Garages documentés), chacun reçoit une zone éditoriale de six sections dans le système du lot 3 (numéro et kicker
+  mono, titre Archivo 800, ligne d’accent, icône dessinée, fonds papier / papier-2 / nuit), avec une sous-navigation
+  collante (Les fiches · Rockstar · Communauté · À confirmer · Pour toi · FAQ · Sources) :
+  · 01 « Ce que Rockstar a montré » : une frise datée à quatre temps (Trailer 1 du 4 décembre 2023, pages « Only in
+    Leonida » et Trailer 2 du 6 mai 2025, éditions du 24 juin 2026, Extended Look du 27 août 2026 et interview Famitsu
+    du lendemain), chaque temps avec son statut (officiel / vu dans un média), ce qu’il établit pour le hub, les
+    minutages connus, et un visuel officiel référencé par son identifiant dans outils/medias-officiels.json (aucun visuel
+    ajouté : ceux d’img/officiel seulement).
+  · 02 « Ce que la communauté a identifié » : des paires fiction ↔ réel (Ocean Beach ↔ South Beach, Key Lento ↔ Key
+    Largo, Jack of Hearts ↔ King of Diamonds, Manni L. Perez pour Lucia « selon les fans »…), chacune avec une puce
+    « source » qui renvoie à l’entrée correspondante du bloc Sources. Toujours écrites comme des observations, jamais
+    comme des confirmations.
+  · 03 « Ce qui reste à confirmer » (fond nuit) : cinq questions ouvertes par hub (taille de la carte, achat de maisons,
+    prix des garages, casting, entreprises à gérer…) avec l’état exact de ce qui est publié.
+  · 04 « Ce que ça change pour toi » : quatre cartes d’action : la carte ouverte avec des repères préréglés
+    (carte.html#pins=…&t=…, six régions / lieux des personnages / demeures / planques / commerces), le calculateur
+    avec le bon outil (calculateurs.html?tool=…&type=…&from=…#atelier), le suivi (Ma progression), la page voisine.
+  · 05 « Questions fréquentes » : 5 à 6 questions réelles par hub (« Vice City est-elle dans GTA VI ? », « Peut-on
+    acheter une maison dans GTA VI ? », « Qui fait la voix de Lucia et de Jason ? », « Combien de planques dans
+    GTA VI ? », « Peut-on braquer des magasins ? »…), reprises en FAQPage par sync-site et dans Léo.
+  · 06 « Sources et statuts » (fond nuit) : la légende des quatre statuts (officiel, vu dans un média, identification
+    communautaire, à confirmer) puis la liste numérotée des pages consultées (17 à 24 par hub) avec date de publication,
+    date de consultation et ce qu’on en a pris ; un encadré rappelle ce qu’on ne fait pas (fuites, prix inventés).
+  Volume : 791 à 799 mots par hub (hors bloc Sources, hors sous-navigation), soit 500 à 800 comme demandé. Chaque
+  paragraphe porte un fait daté ou un usage ; aucune phrase n’est reprise des fiches (contrôle ci-dessous).
+- Encart calculateur : un seul composant, posé au même endroit sur quinze pages de section (juste avant les puces
+  « Explorer les contenus documentés » ; avant le bandeau de fin sur la Carte) : Lieux, Personnages, Demeures,
+  Planques, Entreprises, Véhicules, Armurerie, Collectibles, Carte, Achats, Bateaux, Vêtements et style,
+  Personnalisations, Consommables, Logements. Question contextuelle par page (« Combien de temps pour t’offrir une
+  maison comme celle de Jason ? », « Une entreprise comme celle de Boobie, ça vaudrait le coup ? », « Quel véhicule
+  acheter en premier ? »…) et bouton vers le bon outil avec le paramètre from=<page>. Fond nuit de la charte, ligne
+  d’accent corail → ambre qui se dessine à l’arrivée (opacité + translation, rien ne bouge sous la souris, texte net,
+  tout visible en mouvement réduit).
+- Puces de navigation du lot 3 conservées en bas de chaque hub ; piles d’images cliquables du lot 1 conservées en tête.
+- Données structurées : chaque hub porte désormais BreadcrumbList + CollectionPage (ItemList des fiches) + FAQPage.
+
+Recherche et sources
+- rockstargames.com n’était pas joignable depuis l’atelier le 27 septembre 2026 (accès réseau soumis à approbation).
+  Les pages Rockstar sont citées avec leur dernière ouverture directe (23 septembre 2026, sources d’acquisitions.json)
+  et leurs textes ont été relus le 27 septembre dans des pages ouvertes ce jour-là qui les reproduisent : Game Informer
+  (6 mai 2025), gta.wiki (pages régions, personnages, lieux, éditions, Extended Look), GTABase, Gaming Nexus, VGC,
+  TheSixthAxis, GamesRadar+ (24 juin 2026), GameSpot, SVG, VGTimes, Engadget, Red Bull, Kotaku, Rockstar Report,
+  Dexerto, Miami New Times, Famitsu (28 août 2026) et sa traduction GTAVice.net, Vice, TechRadar, Push Square,
+  GamingBible, RockstarINTEL, ComicBook, GTA Intel. Chaque entrée du registre (outils/editorial-hubs.json → sources)
+  garde l’URL, le titre, la date de publication quand elle est visible, la date de consultation, le statut et ce qui en
+  est tiré. Liste complète dans le dossier de livraison (sources-consultees.md).
+- Faits nouveaux par rapport aux fiches (statut entre parenthèses) : slogans officiels des six régions et texte de Vice
+  City (officiel, via gta.wiki et Game Informer) ; quartiers nommés par les éditions : Watson Bay, Lake Leonida,
+  Stockyard, Southside (officiel, Gaming Nexus / VGC) ; « Jason’s Safehouse » nom officiel en jeu, garages personnels
+  « dans tout Leonida » avec casier d’armes et cache, receleur local (officiel, GamesRadar+ 24/06/2026) ; commerces
+  fermés en édition Standard (officiel, GamingBible) ; Rob Nelson (Famitsu 28/08/2026) : planques qui changent avec les
+  chapitres, trois places de véhicule au départ, garages à acheter, casier Ammu-Nation, Pay ’n’ Spray, receleurs,
+  bijouteries ; Rob Nelson (IGN, Famitsu, Dazed, fin août – début septembre) : romance facultative, changement de
+  personnage parfois imposé, quatre personnages envisagés, partie d’environ 80 heures ; plans des trailers et de
+  l’Extended Look avec minutages (vu dans un média, gta.wiki / Engadget / SVG) ; rapprochements réels (identification
+  communautaire, gta.wiki, Dexerto, Miami New Times, Kotaku, GTABase) ; acteurs supposés (identification
+  communautaire : seul Stephen Root a confirmé un rôle, sans le nommer).
+- Écarté volontairement : tout ce qui vient des fuites de 2022 et de 2026 (cartes de comtés, Lummox County, noms de
+  quartiers non publiés, intérieurs), le nom de l’arène de Vice City (non publié par Rockstar), le chiffre « 70 % plus
+  grande que GTA V » (contredit par les comparaisons données par Rockstar), l’affirmation de GTABase « aucune
+  planque achetable, confirmé par Rockstar » (sans source : rangée dans « à confirmer » avec les aperçus de presse).
+- Aucune fiche n’est modifiée (relues en v7.37). Deux nuances d’écriture entre hub et fiche sont assumées : la scène
+  d’ouverture du Trailer 1 est décrite comme « un entretien au pénitencier » (fiche Lucia : « interrogatoire »), et
+  la capture « Jason’s Safehouse Vehicles » est datée du 24 juin 2026 (éditions), la fiche parlant seulement de la
+  galerie officielle.
+
+Technique
+- outils/editorial-hubs.json (nouveau) : tout le contenu du lot (nav, rockstar.items avec date / statut / media / alt,
+  communaute.pairs avec src, confirmer.items, toi.actions avec href ou pins + pinsTitle, faq avec mots-clés k pour Léo,
+  sources = liste d’identifiants), registre commun des sources et légende des statuts.
+- outils/hubs-monde.cjs (nouveau) : render(hub, ctx) → zone .ed-zone--monde (nav + six sections), words(hub),
+  sourcesOf(hub). Erreurs franches : bloc manquant, FAQ hors 4–6, source inconnue ou absente de la liste du hub,
+  action sans lien.
+- outils/hubs-doublons.cjs (nouveau) : compare chaque phrase (≥ 4 mots, normalisée) des hubs aux phrases des 29
+  fiches (description, tagline, facts, texte, contexte, pratique) et aux autres hubs ; lore-gen.js refuse de générer
+  s’il en trouve ; exécutable seul (node outils/hubs-doublons.cjs).
+- outils/sections.cjs : trois icônes (film, loupe, sablier) ; compositions timeline(items), pairs(items, sources),
+  pending(items), actions(items), sourceList(entries), pip(statut, label) et STATUS_LABEL.
+- outils/lore-gen.js : contrôle anti-doublon au démarrage ; section de la grille identifiée #fiches ; zone éditoriale
+  après la grille (sur Planques, marqueur lot-d-garages placé entre les deux pour que gen-acquisitions.cjs pose le bloc
+  Garages au même endroit) ; CollectionPage dans page() (paramètre ld) ; journal des mots / questions / sources.
+- outils/site-shell.cjs : ENTRY (question, texte, outil, type, bouton par page), entry(file), placeEntry(html, file,
+  prefix) idempotent (retire l’encart existant, ajoute calculator-entry.css si absent, insère avant .lk-chips, sinon
+  avant .lk-outro, sinon avant </main>), entryPages(). outils/sync-site.cjs : appel de placeEntry après placeChips
+  sur les pages de la racine.
+- outils/gen-leo.cjs : les FAQ des cinq hubs entrent dans la base de connaissances après les sujets rédigés à la main
+  (qui gardent la main à score égal), identifiants hub-<hub>-<n>, seuil min 2 (ou min du JSON), statut « Réponse de
+  la FAQ « … », sources en bas de la page », lien vers /<hub>.html#faq ; outils/editorial-hubs.json entre dans le
+  manifeste. leo-index.json : 26 sujets de plus (81 → 107), empreinte Léo régénérée (common.js, leo-*.js, leo.css).
+- style.css : bloc « v7.41 : lot 4 — hubs du monde » (statut .ed-status / .pip--conf, frise .ed-tl, paires .ed-pairs
+  avec dernières rangées centrées, questions .ed-open, actions .ed-acts, sources .ed-srcs avec ancres :target,
+  contrastes AA sur les trois fonds, réponses 1000 / 700 / 480 px). calculator-entry.css : variante
+  .lk-entry-card--hub et .lk-entry-hub.
+- Tests : 385 → 396 (nouveau outils/tests/hubs-monde-v741.test.cjs : compositions, JSON complet et daté, anti-doublon
+  et sa détection, cinq pages (ordre, 500–800 mots, visuels présents, ancres, FAQPage / CollectionPage / BreadcrumbList,
+  identifiants uniques), encart unique sur quinze pages et absent ailleurs, Léo, recherche et sitemap).
+  calculateurs-browser.cjs : 278 / 278. verifier.js : 0 erreur sur 37 548 références. gen-leo --check : sans
+  divergence. Régénération reproductible à l’octet (double passage).
+- Trois pages de retrait (vehicules/vapid-minivan.html, vapid-sadler.html, vulcar-ingot.html) changent d’une apostrophe :
+  elles n’avaient pas reçu la typographie française à la livraison précédente ; la régénération les aligne.
+
+Contrôle
+- 15 pages (cinq hubs, Véhicules, Armurerie, Collectibles, Carte, Achats, Bateaux, Vêtements et style,
+  Personnalisations, Consommables, Logements) × 7 largeurs (320, 390, 768, 1024, 1280, 1440, 1920) : 0 erreur console,
+  0 requête en échec, 0 débordement horizontal, 0 image cassée.
+- Mouvement réduit (cinq hubs, Carte, Véhicules, à 390 et 1280) : tout visible, 0 animation en cours ; mouvement
+  normal : chaque titre de section lisible en moins de 400 ms après son arrivée.
+- Contraste AA (script Playwright) sur les zones du lot : 1 137 textes, 0 sous 4,5:1 (une flèche décorative corrigée
+  en corail-texte).
+- Clavier : sous-navigation, puces « source », cartes d’action, questions de la FAQ (Entrée ouvre), liens des sources
+  et bouton de l’encart atteignables, contour visible à chaque arrêt.
+- Liens préréglés de la carte vérifiés dans le navigateur (panneau « N lieux sur la carte » avec le bon titre) ; l’encart
+  ouvre le bon onglet du calculateur (from=<page>).
+- Captures avant / après des cinq hubs, de la Carte et de Véhicules à 390 et 1 280 px, captures de contrôle des
+  15 pages × 7 largeurs et en mouvement réduit, dans le dossier de livraison (hors dépôt).
+
+Reste ouvert (signalé, pas modifié)
+- rockstargames.com n’a pas été rouvert depuis l’atelier : les textes officiels sont relus dans des pages qui les citent
+  (voir Recherche et sources). À la prochaine session avec accès, mettre à jour consultedAt des entrées rs-* du registre.
+- La fiche Lucia écrit « interrogatoire » pour la scène d’ouverture du Trailer 1 ; la transcription plan par plan parle
+  d’un entretien avec une employée du pénitencier. À arbitrer dans un lot fiches.
+- Le mot « repéré » des fiches Planques et Entreprises reste celui de la v7.37 ; le hub explique ce qu’il veut dire
+  (vu dans une image officielle, placé sur la carte à partir de cette image).
+- JetBrains Mono n’est toujours pas hébergée (monospace système).

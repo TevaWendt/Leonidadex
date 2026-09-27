@@ -1,0 +1,25 @@
+LEONIDAKIT v7.41 — LOT 4 : HUBS DU MONDE — archive « modifs » (27 septembre 2026)
+
+Base attendue : ton dossier Leonidadex en v7.40 (lot 3, c’est ce qui est sur GitHub depuis le 27 septembre à 04:08).
+Fichiers ajoutés ou modifiés seulement, chemins exacts depuis la racine. Rien à supprimer. Aucune commande de build :
+les pages sont déjà régénérées. Le dossier outils/ reste hors ligne (.vercelignore), comme avant.
+
+1. Copie ton dossier actuel (sauvegarde).
+2. Extrais l’archive dans la racine du site, écrase les fichiers homonymes (garde le dossier .git).
+3. Ouvre le site (3 minutes) :
+   - Lieux, Personnages, Demeures, Planques, Entreprises : sous les cartes (et sous les Garages sur Planques), une barre
+     collante « Les fiches · Rockstar · Communauté · À confirmer · Pour toi · FAQ · Sources » puis six sections :
+     la frise « Ce que Rockstar a montré » (quatre dates, une pastille de statut, des visuels officiels), les paires
+     « Ce que la communauté a identifié » (clique une puce « source » : la page descend sur la référence), le bloc nuit
+     « Ce qui reste à confirmer », les quatre cartes « Ce que ça change pour toi » (celle « Carte » ouvre la carte avec
+     les repères du hub déjà posés), la FAQ, puis « Sources et statuts » avec la liste datée des pages consultées.
+   - Sur ces cinq pages et sur Véhicules, Armurerie, Collectibles, Carte, Achats, Bateaux, Vêtements et style,
+     Personnalisations, Consommables, Logements : en bas, juste avant les puces, le même encart nuit « Le calculateur »
+     avec une question propre à la page et un bouton qui ouvre le bon outil.
+   - Léo : demande-lui « peut-on acheter une maison ? », « combien de planques ? », « qui fait la voix de Lucia ? » :
+     il répond avec la FAQ du hub et renvoie vers elle.
+4. Mets en ligne (GitHub Desktop, dossier complet).
+
+Détails : outils/CHANGEMENTS-v7.41.txt (fichiers, recherche et sources, contrôle, points signalés). Captures avant /
+après, captures de contrôle et liste des sources consultées : dossier séparé, hors dépôt. Versions précédentes : -v7.40
+(hubs Véhicules / Armurerie, Achats), -v7.39 (mouvement), -v7.38 (calibrage), -v7.37 (audit final + SEO).

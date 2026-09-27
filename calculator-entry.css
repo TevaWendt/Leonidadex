@@ -102,3 +102,26 @@
 @keyframes lk-home-flicker{0%,92%,100%{opacity:1}94%{opacity:.82}97%{opacity:.94}}
 @media(prefers-reduced-motion:no-preference){.lk-home-scene img{animation:lk-home-drift 26s ease-in-out infinite alternate}.lk-home-media::after{animation:lk-home-light 18s ease-in-out infinite alternate}.lk-home-glow{animation:lk-home-glow 7s ease-in-out infinite alternate}.lk-home-copy h1 em{animation:lk-home-flicker 9s linear infinite}}
 @media(prefers-reduced-motion:reduce){.lk-home-scene img,.lk-home-media::after,.lk-home-glow,.lk-home-copy h1 em{animation:none;transform:none}}
+/* v7.41 (lot 4) : encart calculateur des pages de section (outils/site-shell.cjs : entry / placeEntry), même position
+   partout (avant les puces). Discret mais visible : fond nuit de la charte, ligne d'accent qui se dessine à l'arrivée
+   (règle du lot 2 : translation et opacité seulement, rien ne bouge sous la souris, texte toujours net). */
+.lk-entry-hub{margin:34px auto 0;}
+.lk-entry-card--hub{position:relative;overflow:hidden;gap:22px;padding:22px 26px 22px 22px;border:2px solid var(--ink,#1A1A1E);border-radius:16px;margin-block:0;box-shadow:var(--shadow-soft,0 10px 30px rgba(26,26,30,.08));}
+.lk-entry-card--hub::before{content:"";position:absolute;left:0;top:0;height:4px;width:100%;background:linear-gradient(90deg,var(--coral,#E8452C),var(--amber,#F5A524));transform-origin:left center;}
+.js .lk-entry-card--hub::before{transform:scaleX(0);transition:transform .6s var(--ease-out,cubic-bezier(.2,.7,.2,1)) .25s;}
+.js .lk-entry-card--hub.is-in::before{transform:scaleX(1);}
+.lk-entry-hub-ico{flex:none;width:52px;height:52px;border-radius:14px;display:grid;place-items:center;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.28);color:var(--amber-2,#f7b645);}
+.lk-entry-hub-ico svg{width:28px;height:28px;}
+.lk-entry-hub-body{min-width:0;flex:1;}
+.lk-entry-card--hub .lk-entry-eyebrow{margin:0 0 4px;letter-spacing:.14em;text-transform:uppercase;font-family:'JetBrains Mono',monospace;font-size:.72rem;}
+.lk-entry-card--hub h2{margin:0 0 6px;font-size:1.22rem;line-height:1.25;letter-spacing:-.02em;}
+.lk-entry-card--hub p{margin:0;font-size:.92rem;line-height:1.55;color:#f0eae0;max-width:62ch;}
+.lk-entry-card--hub .lk-entry-button{transition:background .18s,box-shadow .18s;transform:none!important;}
+.lk-entry-card--hub .lk-entry-button:hover,.lk-entry-card--hub .lk-entry-button:focus-visible{background:#ffc358;box-shadow:0 0 0 3px rgba(247,182,69,.35);}
+.lk-entry-card--hub .lk-entry-button span{display:inline-block;transition:transform .2s var(--ease-out,ease-out);}
+.lk-entry-card--hub .lk-entry-button:hover span,.lk-entry-card--hub .lk-entry-button:focus-visible span{transform:translate3d(3px,-2px,0);}
+.lk-entry-hub+.lk-chips{margin-top:26px;}
+@media(max-width:850px){.lk-entry-card--hub{gap:16px;padding:20px;}}
+@media(max-width:650px){.lk-entry-card--hub{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px 14px;padding:18px;}.lk-entry-hub-ico{width:44px;height:44px;}.lk-entry-hub-ico svg{width:24px;height:24px;}.lk-entry-card--hub .lk-entry-button{grid-column:1/-1;margin-top:4px;width:100%;justify-content:center;min-width:0;}.lk-entry-card--hub h2{font-size:1.08rem;}}
+@media(prefers-reduced-motion:reduce){.js .lk-entry-card--hub::before{transform:none;transition:none;}.lk-entry-card--hub .lk-entry-button span{transition:none;}.lk-entry-card--hub .lk-entry-button:hover span{transform:none;}}
+@media print{.lk-entry-card--hub{background:#fff;color:#000;border-color:#000;}.lk-entry-card--hub p{color:#333;}}

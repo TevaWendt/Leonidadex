@@ -96,6 +96,8 @@ for(const file of htmlFiles){let s=fs.readFileSync(file,'utf8');if(file.startsWi
  {const ul=require('./site-shell.cjs').nav(file,prefix);s=s.replace(/(<nav id="nav" aria-label="Navigation principale">)[\s\S]*?<\/nav>/,'$1'+ul+'</nav>');}
  // v7.40 : puces « Explorer les contenus documentés » identiques en bas de chaque page de section (site-shell.cjs)
  if(!file.includes('/'))s=require('./site-shell.cjs').placeChips(s,file);
+ // v7.41 : encart calculateur, même composant et même position (avant les puces) sur toutes les pages de section (site-shell.cjs)
+ if(!file.includes('/'))s=require('./site-shell.cjs').placeEntry(s,file,prefix);
  fs.writeFileSync(file,s);
 }
 const urls=[...new Set(canonicals)].sort();for(const f of ['sitemap.xml','sitemap-fiches.xml']){const list=f==='sitemap-fiches.xml'?urls.filter(u=>/\/(armes|vehicules|lieux|personnages|entreprises|demeures|planques)\//.test(u)):urls;fs.writeFileSync(f,'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+list.map(u=>'  <url><loc>'+esc(u)+'</loc></url>').join('\n')+'\n</urlset>\n');}

@@ -67,4 +67,49 @@ function placeChips(html, file) {
   if (/<section class="lk-outro"/.test(html)) return html.replace(/<section class="lk-outro"/, block + '\n<section class="lk-outro"');
   return html.replace(/<\/main>/, block + '\n</main>');
 }
-module.exports = { nav, footer, top, world, shopping, info, chips, placeChips, chipList, sectionPages };
+/* v7.41 (lot 4) : encart calculateur, un seul composant pour toutes les pages de section (hubs du monde, Véhicules,
+   Armurerie, Collectibles, Carte, Achats, catégories d'acquisition). Même position partout : en bas de page, juste avant
+   les puces « Explorer les contenus documentés ». Question contextuelle par page, bouton vers le bon outil du
+   calculateur (calculateurs.html?tool=…&type=…&from=…#atelier). Posé par sync-site.cjs (placeEntry), idempotent.
+   Mouvement : apparition générique lk-reveal (common.js) + ligne d'accent qui se dessine (calculator-entry.css). */
+const ENTRY = {
+  'lieux.html': { q: 'Combien de temps de jeu pour t’installer dans une région ?', d: 'Une maison, un commerce, un garage : écris le prix que tu imagines, le calculateur te dit le temps qu’il faut.', tool: 'purchase', type: 'place', cta: 'Faire le calcul' },
+  'personnages.html': { q: 'Ton premier gros achat, mission par mission ?', d: 'Le business plan pose ses propres questions et te dit quoi faire en premier, avec un plan de secours.', tool: 'plan', cta: 'Ouvrir mon business plan' },
+  'demeures.html': { q: 'Combien de temps pour t’offrir une maison comme celle de Jason ?', d: 'Aucun prix n’est publié : écris celui que tu imagines, ton argent et ce que tu gagnes par partie.', tool: 'purchase', type: 'property', cta: 'Faire le calcul' },
+  'planques.html': { q: 'Combien de temps pour t’offrir une planque ou un garage ?', d: 'Écris un prix et ton rythme de jeu : tu obtiens le temps qu’il faut, et quand ce serait bon.', tool: 'purchase', type: 'hideout', cta: 'Faire le calcul' },
+  'entreprises.html': { q: 'Une entreprise comme celle de Boobie, ça vaudrait le coup ?', d: 'Ce que ça coûte, ce que ça rapporte : le calculateur te dit quand ce serait remboursé, et si ça vaut mieux que de jouer sans.', tool: 'roi', type: 'business', cta: 'Est-ce que ça vaut le coup ?' },
+  'vehicules.html': { q: 'Quel véhicule acheter en premier ?', d: 'Mets tes envies dans l’ordre : le calculateur classe tes achats selon ton budget et ton temps de jeu.', tool: 'order', type: 'vehicle', cta: 'Classer mes achats' },
+  'armes.html': { q: 'Quel budget pour ton arsenal ?', d: 'Armes, munitions, équipement : écris ce que tu veux et ce que tu gagnes, tu vois ce qui rentre dans ton budget.', tool: 'budget', type: 'weapon', cta: 'Faire mon budget' },
+  'collectibles.html': { q: 'Combien de temps pour finir ta collection ?', d: 'Écris ton temps de jeu par partie : le calculateur te dit en combien de sessions tu y arrives.', tool: 'session', cta: 'Compter mes parties' },
+  'carte.html': { q: 'Combien de temps de jeu pour t’offrir ce que tu as repéré ?', d: 'Écris ce que tu as, ce que tu veux et ce que tu gagnes : réponse en une phrase, puis les étapes.', tool: 'goal', cta: 'Faire le calcul' },
+  'achats.html': { q: 'Quoi acheter d’abord ?', d: 'Le calculateur classe tes achats et te dit combien de temps de jeu chacun demande.', tool: 'order', cta: 'Classer mes achats' },
+  'bateaux.html': { q: 'Combien de temps pour t’offrir un bateau ?', d: 'Aucun prix n’est publié : écris celui que tu imagines, le calculateur fait le reste.', tool: 'purchase', type: 'vehicle', cta: 'Faire le calcul' },
+  'style.html': { q: 'Quel budget pour tes tenues ?', d: 'Écris ce que tu veux acheter et ce que tu gagnes : tu vois ce qui rentre dans ton budget.', tool: 'budget', type: 'style', cta: 'Faire mon budget' },
+  'personnalisations.html': { q: 'Personnaliser ton véhicule, ça vaut le coup ?', d: 'Écris ce que ça coûterait et ce que ça t’apporterait : le calculateur te répond en une phrase.', tool: 'roi', type: 'customization', cta: 'Est-ce que ça vaut le coup ?' },
+  'nourriture.html': { q: 'Quel budget pour manger et récupérer ?', d: 'Écris ce que tu dépenses par partie : tu vois ce que ça pèse sur ton objectif.', tool: 'budget', type: 'consumable', cta: 'Faire mon budget' },
+  'logements.html': { q: 'Combien de temps pour t’offrir un logement ?', d: 'Aucun prix n’est publié : écris celui que tu imagines, ton argent et ce que tu gagnes par partie.', tool: 'purchase', type: 'housing', cta: 'Faire le calcul' }
+};
+const ENTRY_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="5" y="3" width="14" height="18" rx="2"/><rect x="8" y="6" width="8" height="3" rx=".6"/><path d="M8.5 13h1M12 13h1M15.5 13h1M8.5 17h1M12 17h1"/><rect x="15" y="16" width="2" height="2" rx=".5" fill="currentColor" stroke="none"/></svg>';
+function entryPages() { return Object.keys(ENTRY); }
+function entry(file) {
+  const e = ENTRY[file]; if (!e) return '';
+  const from = file.replace(/\.html$/, '');
+  const params = new URLSearchParams({ tool: e.tool }); if (e.type) params.set('type', e.type); params.set('from', from);
+  const href = 'calculateurs.html?' + params.toString().replace(/&/g, '&amp;') + '#atelier';
+  return '<section class="shell lk-entry-hub" aria-labelledby="lk-entry-hub-t"><div class="lk-entry-card lk-entry-card--hub">'
+    + '<span class="lk-entry-hub-ico" aria-hidden="true">' + ENTRY_ICON + '</span>'
+    + '<div class="lk-entry-hub-body"><p class="lk-entry-eyebrow">Le calculateur</p><h2 id="lk-entry-hub-t">' + esc(e.q) + '</h2><p>' + esc(e.d) + '</p></div>'
+    + '<a class="lk-entry-button" href="' + href + '">' + esc(e.cta) + ' <span aria-hidden="true">↗</span></a></div></section>';
+}
+/* Pose (ou remplace) l'encart en bas de <main>, avant les puces, sinon avant le bandeau de fin, sinon avant </main> ;
+   ajoute la feuille calculator-entry.css si la page ne la charge pas. Idempotent. */
+function placeEntry(html, file, prefix = '') {
+  html = html.replace(/<section class="shell lk-entry-hub"[^>]*>[\s\S]*?<\/section>\n?/g, '');
+  const block = entry(file);
+  if (!block) return html;
+  if (!/href="(?:\.\.\/|\/)?calculator-entry\.css/.test(html)) html = html.replace(/(<link rel="stylesheet" href="(?:\.\.\/|\/)?style\.css[^>]*>)/, '$1\n<link rel="stylesheet" href="' + prefix + 'calculator-entry.css">');
+  if (/<nav class="lk-chips shell"/.test(html)) return html.replace(/<nav class="lk-chips shell"/, block + '\n<nav class="lk-chips shell"');
+  if (/<section class="lk-outro"/.test(html)) return html.replace(/<section class="lk-outro"/, block + '\n<section class="lk-outro"');
+  return html.replace(/<\/main>/, block + '\n</main>');
+}
+module.exports = { nav, footer, top, world, shopping, info, chips, placeChips, chipList, sectionPages, ENTRY, entry, placeEntry, entryPages };

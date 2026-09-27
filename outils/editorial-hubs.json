@@ -1,0 +1,1822 @@
+{
+  "_note": "v7.41 (lot 4) : contenu éditorial des cinq hubs du monde (lieux, personnages, demeures, planques, entreprises), rendu sous la grille des fiches par outils/hubs-monde.cjs avec le système de sections du lot 3 (outils/sections.cjs), appelé par outils/lore-gen.js. Chaque hub : « Ce que Rockstar a montré » (frise datée, visuels par identifiant de outils/medias-officiels.json), « Ce que la communauté a identifié » (paires fiction ↔ réel, source citée), « Ce qui reste à confirmer », « Ce que ça change pour toi » (carte avec repères préréglés, calculateur, suivi), une FAQ (reprise en FAQPage par sync-site et dans Léo par gen-leo) et le bloc « Sources et statuts » (registre commun ci-dessous). Aucune phrase ne doit être identique à une phrase des fiches (outils/editorial.json) : lore-gen.js refuse la génération sinon. Registre « tu », mots simples ; chaque paragraphe apporte un fait daté ou un usage. rockstargames.com n’étant pas joignable depuis l’atelier le 27/09/2026, les textes officiels ont été relus dans des pages qui les citent (presse, gta.wiki, GTABase), toutes ouvertes ce jour-là.",
+  "statuts": [
+    {
+      "statut": "officiel",
+      "titre": "Officiel",
+      "texte": "Page ou vidéo publiée par Rockstar (site GTA VI, Newswire, trailers, Extended Look), ou propos d’un responsable de Rockstar rapportés par un média nommé, avec la date."
+    },
+    {
+      "statut": "vu",
+      "titre": "Vu dans un média",
+      "texte": "Ce qu’une image ou une séquence officielle montre, sans texte de Rockstar pour le dire : un plan de trailer, une capture, un moment de l’Extended Look, avec le minutage quand il est connu."
+    },
+    {
+      "statut": "comm",
+      "titre": "Identification communautaire",
+      "texte": "Rapprochement fait par des joueurs, un wiki ou un site de fans (lieu réel, acteur, comté). Cité comme tel, jamais présenté comme confirmé."
+    },
+    {
+      "statut": "conf",
+      "titre": "À confirmer",
+      "texte": "Question sans réponse publiée : prix, achat, accès, rôle dans l’histoire. On l’écrit pour ne pas la deviner."
+    }
+  ],
+  "sources": {
+    "rs-vi": {
+      "url": "https://www.rockstargames.com/VI",
+      "title": "Site officiel Grand Theft Auto VI (pages « Only in Leonida », éditions, précommandes)",
+      "publishedAt": "2025-05-06",
+      "consultedAt": "2026-09-23",
+      "statut": "officiel",
+      "claim": "Six régions et huit personnages présentés le 6 mai 2025 ; textes des éditions du 24 juin 2026. Relu le 27/09/2026 dans les pages qui le citent (rockstargames.com inaccessible depuis l’atelier ce jour-là)."
+    },
+    "rs-videos": {
+      "url": "https://www.rockstargames.com/VI/media/videos",
+      "title": "Rockstar Games : vidéos officielles GTA VI (Trailer 1, Trailer 2, An Extended Look)",
+      "publishedAt": "2023-12-04",
+      "consultedAt": "2026-09-23",
+      "statut": "officiel",
+      "claim": "Trailer 1 du 4 décembre 2023, Trailer 2 du 6 mai 2025, Extended Look du 27 août 2026 : les photogrammes du site en viennent."
+    },
+    "rs-screens": {
+      "url": "https://www.rockstargames.com/VI/media/screenshots",
+      "title": "Rockstar Games : captures officielles GTA VI",
+      "publishedAt": null,
+      "consultedAt": "2026-09-23",
+      "statut": "officiel",
+      "claim": "Captures des régions et des personnages (mai 2025) et des éditions (juin 2026) ; les enseignes nommées dans les titres des captures."
+    },
+    "rs-preorder": {
+      "url": "https://www.rockstargames.com/newswire/article/5171972o3ak5oa/pre-order-grand-theft-auto-vi-on-june-25",
+      "title": "Rockstar Newswire : Pre-Order Grand Theft Auto VI on June 25",
+      "publishedAt": "2026-06-24",
+      "consultedAt": "2026-09-23",
+      "statut": "officiel",
+      "claim": "Éditions, Pack Vintage Vice City, sortie le 19 novembre 2026."
+    },
+    "rs-extended": {
+      "url": "https://www.rockstargames.com/newswire/article/4k138k8okkk483/grand-theft-auto-vi-an-extended-look-now-playing",
+      "title": "Rockstar Newswire : Grand Theft Auto VI, An Extended Look",
+      "publishedAt": "2026-08-27",
+      "consultedAt": "2026-09-23",
+      "statut": "officiel",
+      "claim": "Présentation de 26 minutes capturée sur PS5."
+    },
+    "gi-areas": {
+      "url": "https://gameinformer.com/2025/05/06/rockstar-shows-off-six-major-areas-of-vice-city-in-grand-theft-auto-vi",
+      "title": "Game Informer : Rockstar Shows Off Six Major Areas Of Vice City In Grand Theft Auto VI",
+      "publishedAt": "2025-05-06",
+      "consultedAt": "2026-09-27",
+      "statut": "officiel",
+      "claim": "Reprend les descriptions officielles des six régions publiées le 6 mai 2025."
+    },
+    "gi-characters": {
+      "url": "https://gameinformer.com/2025/05/06/rockstar-details-nine-of-grand-theft-auto-vis-presumably-many-many-characters",
+      "title": "Game Informer : Rockstar Details Nine of Grand Theft Auto VI’s Characters",
+      "publishedAt": "2025-05-06",
+      "consultedAt": "2026-09-27",
+      "statut": "officiel",
+      "claim": "Huit fiches officielles pour neuf personnages (Real Dimez est un duo)."
+    },
+    "gtawiki-vice-city": {
+      "url": "https://gta.wiki/w/Vice_City",
+      "title": "GTA Wiki : Vice City et ses quartiers (Ocean Beach, Little Cuba, Tisha-Wocka, VC Port, Downtown : une page par lieu)",
+      "publishedAt": "2026-09-18",
+      "consultedAt": "2026-09-27",
+      "statut": "comm",
+      "claim": "Cite le texte officiel « Everything in excess » ; rapproche Vice City de Miami, Ocean Beach de South Beach, Little Cuba de Little Havana, Tisha-Wocka d’Opa-locka, VC Port de PortMiami, Downtown du centre de Miami."
+    },
+    "gtawiki-keys": {
+      "url": "https://gta.wiki/w/Leonida_Keys",
+      "title": "GTA Wiki : Leonida Keys",
+      "publishedAt": "2026-08-19",
+      "consultedAt": "2026-09-27",
+      "statut": "comm",
+      "claim": "Cite le slogan officiel « Gateway to paradise » ; rapproche l’archipel des Florida Keys et Key Lento de Key Largo."
+    },
+    "gtawiki-regions": {
+      "url": "https://gta.wiki/w/Mount_Kalaga_National_Park",
+      "title": "GTA Wiki : Grassrivers, Port Gellhorn, Ambrosia, Mount Kalaga National Park (une page par région)",
+      "publishedAt": "2026-09-17",
+      "consultedAt": "2026-09-27",
+      "statut": "comm",
+      "claim": "Slogans officiels des régions ; rapprochements Everglades, Clewiston, Géorgie et nord de la Floride ; course tout-terrain de l’Extended Look à Mount Kalaga (18:35)."
+    },
+    "gtawiki-counties": {
+      "url": "https://gta.wiki/w/Mariana_County",
+      "title": "GTA Wiki : Vice-Dale, Leonard, Mariana, Kelly et Ambrosia County (une page par comté)",
+      "publishedAt": "2026-09-20",
+      "consultedAt": "2026-09-27",
+      "statut": "comm",
+      "claim": "Panneaux et voitures de shérif des trailers où les noms de comtés se lisent ; comtés réels proposés en face."
+    },
+    "gtawiki-trailers": {
+      "url": "https://gta.wiki/w/Grand_Theft_Auto_VI/Trailers",
+      "title": "GTA Wiki : plans des trailers, minutés",
+      "publishedAt": null,
+      "consultedAt": "2026-09-27",
+      "statut": "vu",
+      "claim": "Plan par plan du Trailer 1 et du Trailer 2 avec les minutages utilisés sur cette page."
+    },
+    "gtawiki-extended": {
+      "url": "https://gta.wiki/wiki/An_Extended_Look",
+      "title": "GTA Wiki : Grand Theft Auto VI, An Extended Look",
+      "publishedAt": "2026-09-25",
+      "consultedAt": "2026-09-27",
+      "statut": "vu",
+      "claim": "Diffusion du 27 août 2026 (Netflix puis YouTube), 26 min 48 s, quatre missions : Venture Apartments, Effluvia, poursuite avec Raul, Megamundo."
+    },
+    "gamesradar-85": {
+      "url": "https://www.gamesradar.com/games/grand-theft-auto/85-new-gta-6-screenshots-and-images-drop-alongside-new-trailer-providing-an-in-depth-tour-of-vice-city-and-all-its-surrounding-locations/",
+      "title": "GamesRadar+ : 85 new GTA 6 screenshots and images drop alongside new trailer",
+      "publishedAt": "2025-05-06",
+      "consultedAt": "2026-09-27",
+      "statut": "vu",
+      "claim": "Ce que les captures officielles de mai 2025 montrent de chaque région."
+    },
+    "rockstarintel-signs": {
+      "url": "https://rockstarintel.com/gta-6-all-confirmed-locations-so-far/",
+      "title": "RockstarINTEL : GTA 6, all confirmed locations so far",
+      "publishedAt": "2023-12-05",
+      "consultedAt": "2026-09-27",
+      "statut": "vu",
+      "claim": "Panneaux de l’autoroute 404 du Trailer 1 : Kelly County, aéroport VCI, Vice Beaches, VC Port, les Keys."
+    },
+    "gamespot-t2": {
+      "url": "https://www.gamespot.com/gallery/gta-6-trailer-2-breakdown-whats-happening-in-leonida/2900-6542/",
+      "title": "GameSpot : GTA 6 Trailer 2 breakdown",
+      "publishedAt": "2025-05-06",
+      "consultedAt": "2026-09-27",
+      "statut": "vu",
+      "claim": "Panneaux Ambrosia, Downtown, VCI Airport, Southside ; Jason sur son toit, Brian et « ses chèques », le voisin."
+    },
+    "svg-extended-map": {
+      "url": "https://www.svg.com/2246139/gta-6-leonida-map-new-locations-extended-look/",
+      "title": "SVG : every new location Rockstar showed in the Extended Look",
+      "publishedAt": "2026-08-28",
+      "consultedAt": "2026-09-27",
+      "statut": "vu",
+      "claim": "Bayside nommé par Lucia, l’Effluvia, les marais en bateau, la maison de Jason et l’appartement de Lucia."
+    },
+    "vgtimes-extended": {
+      "url": "https://vgtimes.com/articles/165665-gta-6-an-extended-look-breakdown.html",
+      "title": "VGTimes : GTA 6 An Extended Look breakdown",
+      "publishedAt": "2026-08-27",
+      "consultedAt": "2026-09-27",
+      "statut": "vu",
+      "claim": "Bars, clubs, diners, appartements, frigo, télé, plongée, jet-ski, kayak."
+    },
+    "redbull-extended": {
+      "url": "https://www.redbull.com/int-en/gta-6-extended-look-everything-revealed",
+      "title": "Red Bull : GTA 6 Extended Look, everything we learned",
+      "publishedAt": "2026-08-28",
+      "consultedAt": "2026-09-27",
+      "statut": "vu",
+      "claim": "Course-poursuite avec la police dans Vice City."
+    },
+    "engadget-missed": {
+      "url": "https://www.engadget.com/2246846/things-you-may-have-missed-gta-6-extended-look/",
+      "title": "Engadget : 20+ things you may have missed in the GTA 6 extended look",
+      "publishedAt": "2026-08-28",
+      "consultedAt": "2026-09-27",
+      "statut": "vu",
+      "claim": "Effluvia (10:50), stand de tir (18:31), passage de Jason à Lucia (18:41), arme cachée dans le dos avant un magasin (17:57)."
+    },
+    "engadget-breakdown": {
+      "url": "https://www.engadget.com/2245942/guns-cars-and-chihuahuas-breaking-down-the-gta-6-extended-look/",
+      "title": "Engadget : breaking down the GTA 6 extended look",
+      "publishedAt": "2026-08-27",
+      "consultedAt": "2026-09-27",
+      "statut": "vu",
+      "claim": "L’appartement, Jason devant la télé, Real Dimez en cabine d’enregistrement."
+    },
+    "kotaku-map": {
+      "url": "https://kotaku.com/gta-6s-vice-city-is-rockstars-biggest-yet-and-the-whole-map-is-three-times-larger-than-red-dead-redemption-2-2000728978",
+      "title": "Kotaku : the whole map is three times larger than Red Dead Redemption 2",
+      "publishedAt": "2026-08-27",
+      "consultedAt": "2026-09-27",
+      "statut": "officiel",
+      "claim": "Comparaisons de taille données par Rockstar à la presse et à un créateur reçu à Rockstar North ; aucun chiffre en km²."
+    },
+    "rockstarreport-map": {
+      "url": "https://rockstarreport.com/features/gta-6-map-locations-confirmed-leaked-rumoured-leonida",
+      "title": "Rockstar Report : GTA 6 map and locations, confirmed, leaked and rumoured",
+      "publishedAt": "2026-09-24",
+      "consultedAt": "2026-09-27",
+      "statut": "comm",
+      "claim": "Vice City seule grande ville confirmée ; contours de l’État et frontière nord non montrés ; sépare le confirmé des fuites (que nous n’utilisons pas)."
+    },
+    "dexerto-real": {
+      "url": "https://www.dexerto.com/wikis/gta-6/map-locations-in-real-life/",
+      "title": "Dexerto : GTA 6 map locations in real life",
+      "publishedAt": null,
+      "consultedAt": "2026-09-27",
+      "statut": "comm",
+      "claim": "Grassrivers et les Everglades ; Port Gellhorn rapproché de Panama City « sans certitude »."
+    },
+    "miaminewtimes-landmarks": {
+      "url": "https://www.miaminewtimes.com/arts-culture/interactive-map-20-miami-landmarks-in-gta-6-and-where-to-find-them-22206001/",
+      "title": "Miami New Times : 20 Miami landmarks in GTA 6",
+      "publishedAt": null,
+      "consultedAt": "2026-09-27",
+      "statut": "comm",
+      "claim": "Hotel Dixon ↔ Hotel Victor, Hotel Boardwalk ↔ Breakwater, sur Ocean Beach."
+    },
+    "svg-anklet": {
+      "url": "https://www.svg.com/1465818/gta-6-lucia-ankle-monitor-theory/",
+      "title": "SVG : the GTA 6 Lucia ankle monitor theory",
+      "publishedAt": null,
+      "consultedAt": "2026-09-27",
+      "statut": "comm",
+      "claim": "Théorie de joueurs : le bracelet de Lucia limiterait la zone de jeu au début. Non confirmée."
+    },
+    "gtabase-jason": {
+      "url": "https://www.gtabase.com/gta-6/characters/jason",
+      "title": "GTABase : Jason Duval",
+      "publishedAt": null,
+      "consultedAt": "2026-09-27",
+      "statut": "officiel",
+      "claim": "Reprend la fiche officielle de Jason (armée, Keys, trafiquants, Brian) ; l’acteur supposé y est donné comme non confirmé."
+    },
+    "gtabase-lucia": {
+      "url": "https://www.gtabase.com/gta-6/characters/lucia",
+      "title": "GTABase : Lucia Caminos",
+      "publishedAt": null,
+      "consultedAt": "2026-09-27",
+      "statut": "officiel",
+      "claim": "Reprend la fiche officielle de Lucia (pénitencier, Liberty City, coups intelligents) ; Manni L. Perez donnée comme supposition de fans."
+    },
+    "gtawiki-characters": {
+      "url": "https://gta.wiki/wiki/Raul_Bautista",
+      "title": "GTA Wiki : Jason Duval, Lucia Caminos, Cal Hampton, Boobie Ike, Dre’Quan Priest, Real Dimez, Raul Bautista, Brian Heder, Lori Heder (une page par personnage)",
+      "publishedAt": null,
+      "consultedAt": "2026-09-27",
+      "statut": "comm",
+      "claim": "Slogans officiels, apparitions minutées dans les trailers et l’Extended Look, rapprochements (City Girls, Gunplay, Duval, King of Diamonds)."
+    },
+    "variety-t2": {
+      "url": "https://au.variety.com/2025/tv/news/gta-6-trailer-video-game-grand-theft-auto-6-rockstar-games-release-date-1706262/",
+      "title": "Variety : GTA 6 trailer 2, Jason and Lucia",
+      "publishedAt": "2025-05-06",
+      "consultedAt": "2026-09-27",
+      "statut": "officiel",
+      "claim": "Résumé officiel : un coup facile tourne mal, le duo se retrouve du côté sombre de l’endroit le plus ensoleillé des États-Unis."
+    },
+    "techradar-romance": {
+      "url": "https://www.techradar.com/gaming/rockstar-says-if-you-want-gta-6s-romance-you-can-have-it-and-if-you-dont-you-dont-have-to",
+      "title": "TechRadar : Rob Nelson (IGN), la romance est facultative",
+      "publishedAt": "2026-09-04",
+      "consultedAt": "2026-09-27",
+      "statut": "officiel",
+      "claim": "Rob Nelson, co-directeur de Rockstar North : la relation entre Jason et Lucia se construit si le joueur le veut."
+    },
+    "gamesradar-switch": {
+      "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-wont-let-you-switch-between-jason-and-lucia-whenever-you-want-because-sometimes-the-story-decides-who-you-play-as/",
+      "title": "GamesRadar+ : Rob Nelson (Famitsu), le changement de personnage dépend parfois de l’histoire",
+      "publishedAt": "2026-09-01",
+      "consultedAt": "2026-09-27",
+      "statut": "officiel",
+      "claim": "Passage libre ou imposé selon la mission ; Jason ancien des forces spéciales."
+    },
+    "dexerto-four": {
+      "url": "https://www.dexerto.com/gta/gta-6-almost-had-four-playable-characters-3269861/",
+      "title": "Dexerto : Rob Nelson (IGN), GTA 6 a failli avoir quatre personnages jouables",
+      "publishedAt": "2026-09-02",
+      "consultedAt": "2026-09-27",
+      "statut": "officiel",
+      "claim": "Quatre personnages envisagés, un duo choisi pour l’attachement."
+    },
+    "svg-length": {
+      "url": "https://www.svg.com/2246065/gta-6-game-length-confirmed-rockstar-games/",
+      "title": "SVG : Rob Nelson a fini sa partie en environ 80 heures",
+      "publishedAt": "2026-08-27",
+      "consultedAt": "2026-09-27",
+      "statut": "officiel",
+      "claim": "Environ 80 heures, histoire principale et une partie du contenu facultatif."
+    },
+    "pushsquare-root": {
+      "url": "https://www.pushsquare.com/news/2026/09/the-first-gta-6-actor-has-confirmed-his-involvement",
+      "title": "Push Square : the first GTA 6 actor has confirmed his involvement",
+      "publishedAt": "2026-09-14",
+      "consultedAt": "2026-09-27",
+      "statut": "comm",
+      "claim": "Stephen Root confirme un rôle sans le nommer ; le lien avec Brian Heder vient des fans et de la presse."
+    },
+    "svg-cast": {
+      "url": "https://www.svg.com/2246330/gta-6-extended-look-actors-voice-cast/",
+      "title": "SVG : GTA 6 extended look, the actors fans think they recognise",
+      "publishedAt": "2026-08-28",
+      "consultedAt": "2026-09-27",
+      "statut": "comm",
+      "claim": "Dylan Rourke pour Jason : nom qui circule, jamais confirmé."
+    },
+    "gamesradar-anklet": {
+      "url": "https://www.gamesradar.com/gta-6-detectives-think-the-trailer-is-telling-the-story-of-the-game-in-reverse-because-of-lucias-ankle-monitor/",
+      "title": "GamesRadar+ : le bracelet de Lucia et l’ordre des scènes du Trailer 1",
+      "publishedAt": null,
+      "consultedAt": "2026-09-27",
+      "statut": "comm",
+      "claim": "Des joueurs déduisent l’ordre des scènes de l’absence du bracelet pendant le braquage."
+    },
+    "dexerto-kod": {
+      "url": "https://www.dexerto.com/gaming/gta-6-fans-convinced-theyve-found-trailers-strip-club-in-real-life-2449072/",
+      "title": "Dexerto : fans convinced they’ve found the trailer’s strip club in real life",
+      "publishedAt": "2023-12-28",
+      "consultedAt": "2026-09-27",
+      "statut": "comm",
+      "claim": "Jack of Hearts rapproché du King of Diamonds de Miami."
+    },
+    "vgc-editions": {
+      "url": "https://www.videogameschronicle.com/news/rockstar-confirms-grand-theft-auto-6-ultimate-edition-and-pre-order-bonuses-but-still-no-price/",
+      "title": "VGC : Rockstar confirms GTA 6 Ultimate Edition and pre-order bonuses",
+      "publishedAt": "2026-06-24",
+      "consultedAt": "2026-09-27",
+      "statut": "officiel",
+      "claim": "Texte officiel : Dinka Enduro et kayak Crest à la planque de Jason ; garage Paradise à Watson Bay, casier d’armes, dépôt pour le receleur."
+    },
+    "sixthaxis-editions": {
+      "url": "https://www.thesixthaxis.com/2026/06/24/gta-6-ultimate-edition-pre-order-bonus-and-vintage-vice-city-pack-revealed/",
+      "title": "TheSixthAxis : Ultimate Edition and Vintage Vice City Pack revealed",
+      "publishedAt": "2026-06-24",
+      "consultedAt": "2026-09-27",
+      "statut": "officiel",
+      "claim": "Texte officiel du Pack Vintage : la Stanier ’55 et un garage « à deux pas d’Ocean Beach » ; Ganado Retro Build ; précommandes le 25 juin."
+    },
+    "gamesradar-63": {
+      "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-new-gameplay-details-activities-customization-confirmed-63-screenshots/",
+      "title": "GamesRadar+ : new GTA 6 gameplay details revealed alongside 63 screenshots",
+      "publishedAt": "2026-06-24",
+      "consultedAt": "2026-09-27",
+      "statut": "officiel",
+      "claim": "« Jason’s Safehouse » est le nom officiel en jeu ; garages personnels dans tout Leonida avec casier d’armes ; receleur local et Stash Box."
+    },
+    "gamingnexus-editions": {
+      "url": "https://www.gamingnexus.com/News/73323/Grand-Theft-Auto-VI-reveals-pricing2c-editions2c-and-emphasis-on-immersion",
+      "title": "Gaming Nexus : GTA VI reveals pricing, editions, and emphasis on immersion",
+      "publishedAt": "2026-06-24",
+      "consultedAt": "2026-09-27",
+      "statut": "officiel",
+      "claim": "Texte officiel des commerces de l’Édition Ultimate : Rideout Customs, One-Eyed Willie’s à Lake Leonida, Stock 305 et Electric Fang à Stockyard, Sara’s Unisex Salon, PTT Youngin$ à Southside, Ammu-Nation."
+    },
+    "gamingbible-ultimate": {
+      "url": "https://www.gamingbible.com/news/gta-6-exclusive-missions-story-content-ultimate-edition-921026-20260624",
+      "title": "GamingBible : GTA 6 locks exclusive content behind the Ultimate Edition",
+      "publishedAt": "2026-06-24",
+      "consultedAt": "2026-09-27",
+      "statut": "officiel",
+      "claim": "En édition Standard, ces boutiques « ne sont pas ouvertes »."
+    },
+    "gtawiki-ultimate": {
+      "url": "https://gta.wiki/w/Grand_Theft_Auto_VI:_Ultimate_Edition",
+      "title": "GTA Wiki : Grand Theft Auto VI, Ultimate Edition",
+      "publishedAt": "2026-09-26",
+      "consultedAt": "2026-09-27",
+      "statut": "officiel",
+      "claim": "Contenu de l’édition annoncée le 24 juin 2026, garage de Watson Bay."
+    },
+    "gtawiki-safehouses": {
+      "url": "https://gta.wiki/wiki/Jason%27s_Safehouse",
+      "title": "GTA Wiki : Jason’s Safehouse, Shore Court Garage, Starlet Motel, Leonida Penitentiary, Bayside Safehouse (une page par lieu)",
+      "publishedAt": null,
+      "consultedAt": "2026-09-27",
+      "statut": "comm",
+      "claim": "Apparitions minutées ; rapprochements Economy Inn de Lawtey, Dixie Motel, immeuble de Miami ; la liste des planques du wiki mêle des fuites, écartées ici."
+    },
+    "gtabase-properties": {
+      "url": "https://www.gtabase.com/gta-6/properties/",
+      "title": "GTABase : properties & safehouses confirmed so far",
+      "publishedAt": null,
+      "consultedAt": "2026-09-27",
+      "statut": "comm",
+      "claim": "Trois planques et deux garages listés ; les noms autres que Jason’s Safehouse, Paradise et Shore Court sont ceux du site ; ses affirmations sans source (déblocage gratuit, aucun achat) restent à confirmer."
+    },
+    "famitsu-nelson": {
+      "url": "https://www.famitsu.com/article/202608/85753",
+      "title": "Famitsu : interview de Rob Nelson (Rockstar North) après la démonstration",
+      "publishedAt": "2026-08-28",
+      "consultedAt": "2026-09-27",
+      "statut": "officiel",
+      "claim": "Planques qui changent avec les chapitres, trois places de véhicule au départ, garages à acheter, casier Ammu-Nation, Pay ’n’ Spray et receleurs, braquages, salons et magasins, coupe à la maison."
+    },
+    "gtavice-famitsu": {
+      "url": "https://www.gtavice.net/news/gta-6-famitsus-full-rob-nelson-interview-translated-into-english",
+      "title": "GTAVice.net : traduction anglaise de l’interview Famitsu",
+      "publishedAt": "2026-09-09",
+      "consultedAt": "2026-09-27",
+      "statut": "officiel",
+      "claim": "Même interview, citée en anglais ; les propos de Rob Nelson repris ici en viennent."
+    },
+    "vice-150": {
+      "url": "https://www.vice.com/en/article/gta-6-new-details-netflix-extended-look-previews/",
+      "title": "Vice : 150 new GTA 6 details revealed in the Extended Look and previews",
+      "publishedAt": "2026-08-27",
+      "consultedAt": "2026-09-27",
+      "statut": "vu",
+      "claim": "Aperçus de presse : planque partagée, gens qui vont et viennent, coupe à la maison, véhicules gardés là où l’on habite."
+    },
+    "vice-details": {
+      "url": "https://www.vice.com/en/article/gta-6-new-gameplay-features-details-revealed/",
+      "title": "Vice : GTA 6 just revealed a massive number of new gameplay details",
+      "publishedAt": "2026-09-05",
+      "consultedAt": "2026-09-27",
+      "statut": "conf",
+      "claim": "Aperçus de presse sans citation de Rockstar : planques non achetables, garages achetables, presque toutes les boutiques braquables, receleurs spécialisés, abonnement à la salle."
+    },
+    "kotaku-apartment": {
+      "url": "https://kotaku.com/gta-6-grand-theft-auto-lucia-jason-apartment-miami-vice-city-real-location-2000729948",
+      "title": "Kotaku : a fan found the real-life location of Jason and Lucia’s apartment",
+      "publishedAt": "2026-08-31",
+      "consultedAt": "2026-09-27",
+      "statut": "comm",
+      "claim": "L’immeuble de l’appartement apparaît vers 6:20 ; un fan le situe sur Bayshore Drive, à Miami."
+    },
+    "gta6record-real": {
+      "url": "https://gta6record.com/real-places",
+      "title": "GTA 6 Record : the real Florida places behind GTA 6 locations",
+      "publishedAt": "2026-09-24",
+      "consultedAt": "2026-09-27",
+      "statut": "comm",
+      "claim": "Maison de Jason rapprochée d’une adresse de Cedar Key ; rappelle que Rockstar n’a jamais publié ces rapprochements."
+    },
+    "ladbible-extended": {
+      "url": "https://www.ladbible.com/entertainment/gaming/gta-6-extended-look-trailer-netflix-videogame-details-844865-20260827",
+      "title": "LADbible : Rockstar drops official GTA 6 gameplay",
+      "publishedAt": "2026-08-28",
+      "consultedAt": "2026-09-27",
+      "statut": "vu",
+      "claim": "Le duo se prépare dans l’appartement de Lucia."
+    },
+    "gtawiki-shops": {
+      "url": "https://gta.wiki/w/Jack_of_Hearts",
+      "title": "GTA Wiki : Jack of Hearts, NINE1NINE, Effluvia, Uncle Jack’s Liquor, The Rusty Anchor, Brian’s Boat Works & Marina, Stock 305, Electric Fang Tattoo, Sara’s Unisex Salon, Only Raw Records, Rideout Customs, One-Eyed Willie’s (une page par enseigne)",
+      "publishedAt": null,
+      "consultedAt": "2026-09-27",
+      "statut": "comm",
+      "claim": "Apparitions minutées dans les trailers et l’Extended Look ; adresses réelles proposées à Miami, Wynwood, Homestead et Key Largo."
+    },
+    "gtawiki-screens": {
+      "url": "https://gta.wiki/w/Grand_Theft_Auto_VI/Screenshots",
+      "title": "GTA Wiki : official screenshots of Grand Theft Auto VI",
+      "publishedAt": null,
+      "consultedAt": "2026-09-27",
+      "statut": "vu",
+      "claim": "Titres des captures officielles : six enseignes nommées en juin 2026, aucune en mai 2025."
+    },
+    "dexerto-e11even": {
+      "url": "https://www.dexerto.com/gta/miami-nightclub-responds-to-gta-6s-imitation-with-parody-trailer-of-their-own-2441435/",
+      "title": "Dexerto : Miami nightclub responds to GTA 6’s imitation with a parody trailer",
+      "publishedAt": "2023-12-20",
+      "consultedAt": "2026-09-27",
+      "statut": "comm",
+      "claim": "E11EVEN reconnaît NINE 1 NINE et répond par une fausse bande-annonce."
+    },
+    "miaminewtimes-flanigans": {
+      "url": "https://www.miaminewtimes.com/food-drink/a-florida-flanigans-made-the-new-gta-6-map-and-its-glorious-23094794/",
+      "title": "Miami New Times : a Florida Flanigan’s made the GTA 6 map",
+      "publishedAt": null,
+      "consultedAt": "2026-09-27",
+      "statut": "comm",
+      "claim": "Uncle Jack’s Liquor rapproché des magasins Big Daddy’s de Flanigan’s."
+    },
+    "comicbook-phil": {
+      "url": "https://comicbook.com/gaming/news/gta-6-vice-city-characters-phil/",
+      "title": "ComicBook : la publicité « Phil’s Ammu-Nation » du Trailer 2",
+      "publishedAt": "2025-05-06",
+      "consultedAt": "2026-09-27",
+      "statut": "vu",
+      "claim": "Publicité télé pour Phil’s Ammu-Nation vers 2:10 ; le lien avec Phil Cassidy est une hypothèse."
+    },
+    "gamesradar-live": {
+      "url": "https://www.gamesradar.com/news/live/gta-6-extended-look-showcase-live-coverage-2026-everything-announced/",
+      "title": "GamesRadar+ : everything revealed from the GTA 6 extended look",
+      "publishedAt": "2026-08-27",
+      "consultedAt": "2026-09-27",
+      "statut": "vu",
+      "claim": "Braquages de stations-service avec bandana, Lucia qui entre dans une boutique arme dans le dos, salle de sport."
+    },
+    "gamesradar-refuel": {
+      "url": "https://www.gamesradar.com/games/grand-theft-auto/rockstar-boss-says-well-see-what-people-say-about-gta-6s-controversial-refueling-system-but-thinks-its-so-fast-that-you-cant-complain/",
+      "title": "GamesRadar+ : Rockstar boss on GTA 6’s refueling system",
+      "publishedAt": "2026-09-03",
+      "consultedAt": "2026-09-27",
+      "statut": "officiel",
+      "claim": "Rob Nelson : le plein prend une dizaine de secondes, la station répare aussi (propos rapportés depuis une présentation à Rockstar North)."
+    },
+    "gamingbible-7": {
+      "url": "https://www.gamingbible.com/news/gta-6-new-details-september-10-436002-20260910",
+      "title": "GamingBible : 7 new GTA 6 gameplay details",
+      "publishedAt": "2026-09-10",
+      "consultedAt": "2026-09-27",
+      "statut": "officiel",
+      "claim": "Rob Nelson : coupe limitée à la maison, salons pour plus de choix, drogue volée au receleur."
+    },
+    "gtaintel-businesses": {
+      "url": "https://gtaintel.com/news/gta-6-businesses-and-properties-expected",
+      "title": "GTA Intel : GTA 6 businesses and properties, what we expect",
+      "publishedAt": "2026-06-05",
+      "consultedAt": "2026-09-27",
+      "statut": "comm",
+      "claim": "Rappelle les huit entreprises achetables de GTA Vice City (2002) et note que les commerces connus de GTA VI appartiennent à des personnages."
+    },
+    "gtabase-cal": {
+      "url": "https://www.gtabase.com/characters/gta-6/cal-hampton",
+      "title": "GTABase : Cal Hampton",
+      "publishedAt": null,
+      "consultedAt": "2026-09-27",
+      "statut": "officiel",
+      "claim": "Reprend la fiche officielle de Cal (garde-côtes, bières, onglets privés) ; Bobby Moynihan donné comme supposition."
+    },
+    "gtawiki-arena": {
+      "url": "https://gta.wiki/w/Sahara_Arena",
+      "title": "GTA Wiki : l’arène de Vice City vue depuis l’autoroute 404",
+      "publishedAt": "2026-09-15",
+      "consultedAt": "2026-09-27",
+      "statut": "comm",
+      "claim": "Rapproche l’arène du Kaseya Center de Miami ; son nom, non publié par Rockstar, n’est pas repris ici."
+    }
+  },
+  "lieux": {
+    "nav": [
+      {
+        "href": "#fiches",
+        "label": "Les six régions"
+      },
+      {
+        "href": "#rockstar",
+        "label": "Rockstar"
+      },
+      {
+        "href": "#communaute",
+        "label": "Communauté"
+      },
+      {
+        "href": "#a-confirmer",
+        "label": "À confirmer"
+      },
+      {
+        "href": "#pour-toi",
+        "label": "Pour toi"
+      },
+      {
+        "href": "#faq",
+        "label": "FAQ"
+      },
+      {
+        "href": "#sources",
+        "label": "Sources"
+      }
+    ],
+    "rockstar": {
+      "lede": "Quatre rendez-vous officiels ont dessiné Leonida. Voici ce que chacun établit pour les lieux.",
+      "items": [
+        {
+          "date": "4 décembre 2023",
+          "titre": "Trailer 1",
+          "statut": "vu",
+          "texte": "La plage et les tours de Vice City, un hydroglisseur dans les marais, des panneaux de l’autoroute 404 (Kelly County, aéroport VCI, VC Port, les Keys) et des voitures du shérif de Leonard County.",
+          "media": "trailer-1-vehicles-025",
+          "alt": "Lucia debout sur le toit d’une voiture rouge devant les tours de Vice City de nuit, photogramme du Trailer 1 (0:25)"
+        },
+        {
+          "date": "6 mai 2025",
+          "titre": "Pages « Only in Leonida » et Trailer 2",
+          "statut": "officiel",
+          "texte": "Six régions nommées, chacune avec un slogan : « Everything in excess » (Vice City), « Gateway to paradise » (Keys), « Welcome to the wetlands » (Grassrivers), « Live hard » (Port Gellhorn), « Keeping Leonida sweet » (Ambrosia), « Wild, wild country » (Mount Kalaga). Le texte de Vice City cite Ocean Beach, Little Cuba, Tisha-Wocka et VC Port. Le Trailer 2 s’ouvre sur Key Lento et affiche des panneaux vers Ambrosia, Downtown et Southside.",
+          "media": "trailer-2-rancher-035",
+          "alt": "Panneaux verts de l’autoroute devant les tours de Vice City, photogramme du Trailer 2 (0:35)"
+        },
+        {
+          "date": "24 juin 2026",
+          "titre": "Éditions et précommandes",
+          "statut": "officiel",
+          "texte": "Les textes des éditions nomment des quartiers : Watson Bay, Ocean Beach, Lake Leonida (One-Eyed Willie’s), Stockyard (Stock 305, Electric Fang), Southside (PTT Youngin$). Les seuls depuis 2025.",
+          "media": "jason-s-safehouse-vehicles",
+          "alt": "La maison sur pilotis de Jason dans les Keys, avec un pick-up jaune, une moto et un kayak devant, capture officielle publiée avec les éditions"
+        },
+        {
+          "date": "27 août 2026",
+          "titre": "Extended Look",
+          "statut": "vu",
+          "texte": "Vingt-six minutes de jeu : une poursuite avec la police dans Vice City, le quartier de Bayside nommé par Lucia, un bar sur un toit à Vice Beach, une course tout-terrain à Mount Kalaga (18:35), le Starlet Motel de Port Gellhorn (25:58)."
+        }
+      ],
+      "p": [
+        "Chaque région a sa fiche plus haut ; ici, on relie les sources entre elles."
+      ]
+    },
+    "communaute": {
+      "lede": "Leonida est une Floride réinventée. Ces rapprochements viennent des joueurs, jamais de Rockstar.",
+      "pairs": [
+        {
+          "fiction": "Vice City",
+          "reel": "Miami, version d’aujourd’hui",
+          "src": "gtawiki-vice-city"
+        },
+        {
+          "fiction": "Ocean Beach",
+          "reel": "South Beach ; l’Hotel Dixon rappelle l’Hotel Victor, l’Hotel Boardwalk le Breakwater",
+          "src": "miaminewtimes-landmarks"
+        },
+        {
+          "fiction": "Little Cuba",
+          "reel": "Little Havana, le quartier cubain de Miami",
+          "src": "gtawiki-vice-city"
+        },
+        {
+          "fiction": "Tisha-Wocka",
+          "reel": "Opa-locka, en banlieue de Miami",
+          "src": "gtawiki-vice-city"
+        },
+        {
+          "fiction": "VC Port",
+          "reel": "PortMiami, premier port de passagers du monde",
+          "src": "gtawiki-vice-city"
+        },
+        {
+          "fiction": "L’arène vue depuis la 404",
+          "reel": "Le Kaseya Center, salle du Miami Heat",
+          "src": "gtawiki-arena"
+        },
+        {
+          "fiction": "Leonida Keys et Key Lento",
+          "reel": "Les Florida Keys et Key Largo (deux tempos lents, « lento » et « largo »)",
+          "src": "gtawiki-keys"
+        },
+        {
+          "fiction": "Grassrivers",
+          "reel": "Les Everglades",
+          "src": "dexerto-real"
+        },
+        {
+          "fiction": "Port Gellhorn",
+          "reel": "Panama City, sur la côte nord-ouest, « difficile à situer » selon Dexerto",
+          "src": "dexerto-real"
+        },
+        {
+          "fiction": "Ambrosia",
+          "reel": "Clewiston, ville du sucre au bord du lac Okeechobee",
+          "src": "gtawiki-regions"
+        },
+        {
+          "fiction": "Mount Kalaga",
+          "reel": "Géorgie et nord de la Floride ; canyons de Providence Canyon, montagne proche de Table Rock",
+          "src": "gtawiki-regions"
+        },
+        {
+          "fiction": "Vice-Dale, Leonard, Mariana, Kelly, Ambrosia County",
+          "reel": "Miami-Dade, Broward, Monroe, Collier et Lee, Hendry : cinq comtés lus sur des panneaux",
+          "src": "gtawiki-counties"
+        }
+      ],
+      "p": [
+        "Un nom de comté lu sur un panneau est « vu dans un média » ; le comté réel en face est une déduction. Sur la carte, les comtés portent leur niveau de certitude."
+      ]
+    },
+    "confirmer": {
+      "lede": "Rien de tout ça n’est publié par Rockstar. On le note pour ne pas le deviner.",
+      "items": [
+        {
+          "q": "La taille de la carte",
+          "etat": "Fin août 2026, Rockstar a parlé à la presse de trois fois la zone jouable de Red Dead Redemption 2 et de deux fois GTA V. Aucun chiffre en km²."
+        },
+        {
+          "q": "Toutes les régions dès le début ?",
+          "etat": "Aucune information. La zone réduite par le bracelet de Lucia est une théorie de joueurs."
+        },
+        {
+          "q": "Combien de régions en tout ?",
+          "etat": "Six sont nommées. Ni les contours de l’État ni sa frontière nord n’ont été montrés ; Vice City est la seule grande ville confirmée."
+        },
+        {
+          "q": "Quel comté pour quelle région ?",
+          "etat": "Cinq noms de comtés lus sur des panneaux, aucun découpage publié. Les cartes qui circulent viennent de fuites."
+        },
+        {
+          "q": "Acheter dans une région",
+          "etat": "Aucun prix de maison ou de commerce n’est publié. Seul l’achat de garages est évoqué par Rockstar (Famitsu, 28 août 2026)."
+        }
+      ]
+    },
+    "toi": {
+      "lede": "La carte, ton suivi et le calculateur sont branchés ici.",
+      "actions": [
+        {
+          "k": "Carte",
+          "t": "Les six régions sur la carte",
+          "d": "Un repère par région, 2 547 lieux avec leur niveau de certitude.",
+          "pins": [
+            "vice-city",
+            "leonida-keys",
+            "grassrivers",
+            "port-gellhorn",
+            "ambrosia",
+            "mount-kalaga"
+          ],
+          "pinsTitle": "Les six régions"
+        },
+        {
+          "k": "Suivi",
+          "t": "Cocher les lieux trouvés",
+          "d": "Chaque lieu de la carte se coche ; le total s’affiche dans Ma progression.",
+          "href": "progression.html#lieux"
+        },
+        {
+          "k": "Calculateur",
+          "t": "Combien de temps pour t’installer ?",
+          "d": "Écris le prix que tu imagines : tu obtiens le temps de jeu qu’il te faut.",
+          "href": "calculateurs.html?tool=purchase&type=place&from=lieux#atelier"
+        },
+        {
+          "k": "Fiches",
+          "t": "Lire les six régions",
+          "d": "Texte, visuels officiels, lieux voisins.",
+          "href": "#fiches"
+        }
+      ]
+    },
+    "faq": [
+      {
+        "q": "Vice City est-elle dans GTA VI ?",
+        "a": "Oui. C’est la grande ville de Leonida, montrée dès le Trailer 1 (4 décembre 2023) et décrite par Rockstar le 6 mai 2025 : Ocean Beach, Little Cuba, Tisha-Wocka, VC Port.",
+        "k": [
+          "vice city dans gta 6",
+          "vice city gta vi",
+          "est ce que vice city",
+          "vice city revient"
+        ]
+      },
+      {
+        "q": "Combien de régions dans GTA VI ?",
+        "a": "Six sont nommées par Rockstar : Vice City, Leonida Keys, Grassrivers, Port Gellhorn, Ambrosia et Mount Kalaga National Park. Rien n’exclut d’autres régions.",
+        "k": [
+          "combien de regions",
+          "nombre de regions",
+          "regions de leonida",
+          "liste des regions"
+        ]
+      },
+      {
+        "q": "Leonida, c’est la Floride ?",
+        "a": "Leonida est un État inventé qui s’inspire de la Floride : Vice City reprend Miami, les Keys les Florida Keys, Grassrivers les Everglades. Ce sont des rapprochements de joueurs, jamais publiés par Rockstar.",
+        "k": [
+          "leonida floride",
+          "c est la floride",
+          "inspire de la floride",
+          "miami dans gta 6"
+        ]
+      },
+      {
+        "q": "La carte de GTA VI est-elle plus grande que celle de GTA V ?",
+        "a": "Fin août 2026, Rockstar a dit à la presse : environ trois fois la zone jouable de Red Dead Redemption 2 et deux fois GTA V. Aucune surface chiffrée.",
+        "k": [
+          "plus grande que gta 5",
+          "taille de la carte",
+          "carte plus grande",
+          "grande carte",
+          "superficie"
+        ]
+      },
+      {
+        "q": "Peut-on aller partout dès le début ?",
+        "a": "On ne sait pas. Rockstar n’a rien dit sur des zones fermées au départ ; la zone limitée par le bracelet de Lucia est une théorie de joueurs.",
+        "k": [
+          "aller partout",
+          "des le debut",
+          "zones fermees",
+          "carte bloquee",
+          "toute la carte"
+        ]
+      }
+    ],
+    "sources": [
+      "rs-vi",
+      "rs-videos",
+      "rs-screens",
+      "rs-extended",
+      "gi-areas",
+      "gtawiki-vice-city",
+      "gtawiki-arena",
+      "gtawiki-keys",
+      "gtawiki-regions",
+      "gtawiki-counties",
+      "gtawiki-trailers",
+      "gtawiki-extended",
+      "gamesradar-85",
+      "rockstarintel-signs",
+      "gamespot-t2",
+      "svg-extended-map",
+      "redbull-extended",
+      "kotaku-map",
+      "rockstarreport-map",
+      "dexerto-real",
+      "miaminewtimes-landmarks",
+      "svg-anklet",
+      "famitsu-nelson"
+    ]
+  },
+  "personnages": {
+    "nav": [
+      {
+        "href": "#fiches",
+        "label": "Les huit fiches"
+      },
+      {
+        "href": "#rockstar",
+        "label": "Rockstar"
+      },
+      {
+        "href": "#communaute",
+        "label": "Communauté"
+      },
+      {
+        "href": "#a-confirmer",
+        "label": "À confirmer"
+      },
+      {
+        "href": "#pour-toi",
+        "label": "Pour toi"
+      },
+      {
+        "href": "#faq",
+        "label": "FAQ"
+      },
+      {
+        "href": "#sources",
+        "label": "Sources"
+      }
+    ],
+    "rockstar": {
+      "lede": "Huit fiches, trois vidéos, quelques interviews : ce que chaque rendez-vous officiel dit d’eux.",
+      "items": [
+        {
+          "date": "4 décembre 2023",
+          "titre": "Trailer 1",
+          "statut": "vu",
+          "texte": "Lucia ouvre le jeu, en tenue orange, en entretien au pénitencier de Leonida ; puis avec Jason dans une chambre du Starlet Motel et pendant le braquage d’un magasin Uncle Jack’s Liquor. Jason n’est pas encore nommé.",
+          "media": "lucia-caminos-05",
+          "alt": "Lucia en tenue orange, menottée, entre deux gardiens du pénitencier, capture officielle"
+        },
+        {
+          "date": "6 mai 2025",
+          "titre": "Huit fiches « Only in Leonida » et Trailer 2",
+          "statut": "officiel",
+          "texte": "Rockstar nomme Jason Duval et Lucia Caminos, qu’on joue, puis Cal Hampton, Boobie Ike, Dre’Quan Priest, Real Dimez (Bae-Luxe et Roxy), Raul Bautista et Brian Heder, chacun avec un slogan. Le Trailer 2 montre Jason sur son toit dans les Keys, Brian qui l’envoie encaisser, Jason qui vient chercher Lucia à sa sortie de prison (0:52), Cal au Rusty Anchor (1:29).",
+          "media": "jason-duval-01",
+          "alt": "Jason Duval, portrait officiel publié avec sa fiche le 6 mai 2025"
+        },
+        {
+          "date": "24 juin 2026",
+          "titre": "Éditions",
+          "statut": "officiel",
+          "texte": "Les textes des éditions parlent du duo au présent du jeu : tenues, tatouages et coiffures « pour Jason et Lucia », pick-up et planque « de Jason ». Aucun nouveau personnage."
+        },
+        {
+          "date": "27 août 2026",
+          "titre": "Extended Look",
+          "statut": "vu",
+          "texte": "Quatre missions : une récupération pour Boobie qui tourne mal, une rencontre avec Brian et Lori au bar Effluvia (10:50), Lucia au volant pour Raul pendant une poursuite, une fusillade à l’inauguration du Megamundo. Le jeu passe de Jason à Lucia en pleine poursuite (18:41). Cal conclut par un monologue.",
+          "media": "raul-bautista-02",
+          "alt": "Raul Bautista au volant d’une voiture, un pistolet contre la jambe, capture officielle"
+        }
+      ],
+      "p": [
+        "Rob Nelson, co-directeur de Rockstar North, à la presse entre le 27 août et le 4 septembre 2026 : la romance est facultative ; le passage d’un personnage à l’autre est parfois libre, parfois imposé ; quatre personnages avaient été envisagés avant le duo ; sa propre partie a duré environ 80 heures, contenu facultatif compris."
+      ]
+    },
+    "communaute": {
+      "lede": "Les fans ont beaucoup regardé et écouté. Voici ce qu’ils avancent, avec prudence.",
+      "pairs": [
+        {
+          "fiction": "Lucia, voix et visage",
+          "reel": "Manni L. Perez, selon les fans ; Rockstar ne publie aucun casting avant la sortie.",
+          "src": "gtabase-lucia"
+        },
+        {
+          "fiction": "Jason, voix et visage",
+          "reel": "Dylan Rourke, nom qui circule depuis 2023, jamais confirmé.",
+          "src": "svg-cast"
+        },
+        {
+          "fiction": "Brian Heder",
+          "reel": "Stephen Root a confirmé en septembre 2026 un rôle dans GTA VI, sans le nommer.",
+          "src": "pushsquare-root"
+        },
+        {
+          "fiction": "Cal Hampton",
+          "reel": "Bobby Moynihan, selon GTABase. Non confirmé.",
+          "src": "gtabase-cal"
+        },
+        {
+          "fiction": "Real Dimez et DWNPLY",
+          "reel": "Le duo rappelle City Girls (Yung Miami et JT) ; DWNPLY sonne comme Gunplay, rappeur de Miami.",
+          "src": "gtawiki-characters"
+        },
+        {
+          "fiction": "Le Jack of Hearts de Boobie",
+          "reel": "Comparé au King of Diamonds de Miami depuis décembre 2023.",
+          "src": "dexerto-kod"
+        },
+        {
+          "fiction": "Le bracelet de Lucia",
+          "reel": "Des joueurs déduisent l’ordre des scènes du Trailer 1 de son absence pendant le braquage.",
+          "src": "gamesradar-anklet"
+        }
+      ],
+      "p": [
+        "Un acteur reconnu à la voix reste une identification communautaire, même repris par dix sites."
+      ]
+    },
+    "confirmer": {
+      "lede": "Ce que les fiches ne disent pas, on ne le devine pas.",
+      "items": [
+        {
+          "q": "D’autres personnages jouables ?",
+          "etat": "Non annoncés : Rockstar ne parle que de Jason et Lucia."
+        },
+        {
+          "q": "Le casting",
+          "etat": "Aucun acteur confirmé par Rockstar ; un seul a confirmé lui-même un rôle, sans le nommer."
+        },
+        {
+          "q": "Le rôle de Raul, Boobie et Real Dimez",
+          "etat": "Employeurs, partenaires ou obstacles ? Le scénario n’est pas publié."
+        },
+        {
+          "q": "Lucia sous contrôle judiciaire ?",
+          "etat": "Rockstar dit qu’elle sort de prison. Le bracelet et la liberté conditionnelle sont des lectures de la presse."
+        },
+        {
+          "q": "La durée de l’histoire",
+          "etat": "Environ 80 heures pour la partie du co-directeur, contenu facultatif compris : pas une durée officielle."
+        }
+      ]
+    },
+    "toi": {
+      "lede": "Les portraits mènent à la carte, aux demeures et au calculateur.",
+      "actions": [
+        {
+          "k": "Carte",
+          "t": "Où ils vivent et travaillent",
+          "d": "La maison de Jason, le chantier de Brian, le club de Boobie, le pénitencier.",
+          "pins": [
+            "key-lento",
+            "g-L1421",
+            "g-L172",
+            "leonida-penitentiary",
+            "g-L1488"
+          ],
+          "pinsTitle": "Où vivent et travaillent les personnages"
+        },
+        {
+          "k": "Demeures",
+          "t": "Chez eux",
+          "d": "La maison de Jason, chez Cal, chez Brian et Lori, le pénitencier de Lucia.",
+          "href": "demeures.html"
+        },
+        {
+          "k": "Calculateur",
+          "t": "Ton business plan, mission par mission",
+          "d": "Le plan pose ses propres questions et te dit quoi faire en premier.",
+          "href": "calculateurs.html?tool=plan&from=personnages#atelier"
+        },
+        {
+          "k": "Fiches",
+          "t": "Lire les huit portraits",
+          "d": "Slogan, texte officiel, scènes des trailers.",
+          "href": "#fiches"
+        }
+      ]
+    },
+    "faq": [
+      {
+        "q": "Qui est Lucia Caminos ?",
+        "a": "L’une des deux personnages qu’on joue, première héroïne principale de la série. Sa fiche officielle (6 mai 2025) : son père lui a appris à se battre, défendre sa famille l’a envoyée au pénitencier, elle en sort décidée à ne plus faire que des coups intelligents.",
+        "k": [
+          "qui est lucia caminos",
+          "lucia caminos c est qui",
+          "heroine de gta 6"
+        ]
+      },
+      {
+        "q": "Qui est Jason Duval ?",
+        "a": "L’autre personnage jouable : ancien militaire élevé parmi les escrocs, il vit dans les Keys chez Brian Heder et travaille pour les trafiquants du coin.",
+        "k": [
+          "qui est jason duval",
+          "jason duval c est qui",
+          "heros de gta 6"
+        ]
+      },
+      {
+        "q": "Combien de personnages jouables dans GTA VI ?",
+        "a": "Deux : Jason et Lucia. Rob Nelson a expliqué en septembre 2026 que quatre personnages avaient été envisagés avant le duo. Les six autres ne sont pas annoncés comme jouables.",
+        "k": [
+          "combien de personnages jouables",
+          "personnages jouables",
+          "on joue combien de personnages",
+          "quatre personnages"
+        ]
+      },
+      {
+        "q": "Qui fait la voix de Lucia et de Jason ?",
+        "a": "Rockstar n’a rien publié. Les fans citent Manni L. Perez pour Lucia et Dylan Rourke pour Jason ; seul Stephen Root a confirmé un rôle, sans dire lequel.",
+        "k": [
+          "voix de lucia",
+          "voix de jason",
+          "acteur de lucia",
+          "acteur de jason",
+          "doubleur",
+          "casting",
+          "manni perez",
+          "dylan rourke",
+          "stephen root"
+        ]
+      },
+      {
+        "q": "Peut-on changer de personnage à tout moment ?",
+        "a": "Pas toujours. L’Extended Look montre un passage de Jason à Lucia en pleine poursuite ; Rob Nelson a précisé à Famitsu que l’histoire impose parfois le personnage.",
+        "k": [
+          "changer de personnage",
+          "switch",
+          "passer de jason a lucia",
+          "choisir son personnage",
+          "basculer"
+        ]
+      },
+      {
+        "q": "Jason et Lucia sont-ils en couple ?",
+        "a": "C’est toi qui décides : Rob Nelson a dit à IGN que la romance est facultative. Ses effets sur le jeu ne sont pas détaillés.",
+        "k": [
+          "en couple",
+          "romance",
+          "histoire d amour",
+          "relation jason lucia",
+          "bonnie and clyde",
+          "bonnie et clyde"
+        ]
+      }
+    ],
+    "sources": [
+      "rs-vi",
+      "rs-videos",
+      "rs-screens",
+      "gi-characters",
+      "variety-t2",
+      "gtabase-jason",
+      "gtabase-lucia",
+      "gtabase-cal",
+      "gtawiki-characters",
+      "gtawiki-trailers",
+      "gtawiki-extended",
+      "engadget-missed",
+      "engadget-breakdown",
+      "techradar-romance",
+      "gamesradar-switch",
+      "dexerto-four",
+      "svg-length",
+      "pushsquare-root",
+      "svg-cast",
+      "gamesradar-anklet",
+      "dexerto-kod"
+    ]
+  },
+  "demeures": {
+    "nav": [
+      {
+        "href": "#fiches",
+        "label": "Les quatre fiches"
+      },
+      {
+        "href": "#rockstar",
+        "label": "Rockstar"
+      },
+      {
+        "href": "#communaute",
+        "label": "Communauté"
+      },
+      {
+        "href": "#a-confirmer",
+        "label": "À confirmer"
+      },
+      {
+        "href": "#pour-toi",
+        "label": "Pour toi"
+      },
+      {
+        "href": "#faq",
+        "label": "FAQ"
+      },
+      {
+        "href": "#sources",
+        "label": "Sources"
+      }
+    ],
+    "rockstar": {
+      "lede": "Une demeure, ici, c’est un lieu de vie décrit ou montré par Rockstar. Voici d’où vient chaque information.",
+      "items": [
+        {
+          "date": "6 mai 2025",
+          "titre": "Fiches officielles et Trailer 2",
+          "statut": "officiel",
+          "texte": "La fiche de Jason : il vit gratuitement dans une propriété de Brian Heder, contre un coup de main sur les recouvrements. Celle de Lucia : le pénitencier avant l’histoire. Celle de Cal : chez lui, devant son scanner. Le Trailer 2 montre la maison sur pilotis de Jason à Key Lento : il répare le toit, Brian arrive et réclame « ses chèques », un voisin l’interpelle.",
+          "media": "cal-hampton-01",
+          "alt": "Cal Hampton devant des installations au bord de l’eau dans les Keys, capture officielle"
+        },
+        {
+          "date": "24 juin 2026",
+          "titre": "Éditions",
+          "statut": "officiel",
+          "texte": "La capture « Jason’s Safehouse Vehicles » montre la maison réparée, avec le Ganado, la Dinka Enduro et le kayak Crest. C’est le seul nom officiel d’un logement du jeu. Les éditions décrivent aussi des garages personnels « dans tout Leonida », avec casier d’armes et cache pour les objets volés.",
+          "media": "jason-s-safehouse-vehicles",
+          "alt": "La maison sur pilotis de Jason, réparée, avec le Ganado jaune, la moto et le kayak devant, capture officielle publiée avec les éditions"
+        },
+        {
+          "date": "27 août 2026",
+          "titre": "Extended Look, puis Famitsu",
+          "statut": "vu",
+          "texte": "Un appartement décoré en rose, où Lucia choisit une tenue pendant que Jason s’inquiète d’être en retard ; un frigo, une télé qui passe les émissions du jeu. Le lendemain, Rob Nelson (Rockstar North) précise à Famitsu : les planques changent au fil des chapitres, comme les campements de Red Dead Redemption 2 ; on se coupe les cheveux à la maison avec peu d’options ; on démarre avec trois places de véhicule, extensibles en achetant des garages."
+        }
+      ],
+      "p": [
+        "Une demeure montrée n’est pas un bien à vendre : aucune des quatre fiches n’a de prix, et aucune n’en aura tant que Rockstar n’en publie pas."
+      ]
+    },
+    "communaute": {
+      "lede": "Les fans cherchent les adresses réelles. Voici ce qu’ils proposent, et ce que ça vaut.",
+      "pairs": [
+        {
+          "fiction": "La maison de Jason",
+          "reel": "Key Lento reprend Key Largo ; un site de fans la rapproche d’une adresse de Cedar Key, sans donnée de Rockstar.",
+          "src": "gta6record-real"
+        },
+        {
+          "fiction": "L’appartement rose",
+          "reel": "« Bayside Safehouse » pour le wiki, dans un immeuble de Miami démoli vers 2023 ; un fan le place sur Bayshore Drive. Les deux ne concordent pas.",
+          "src": "kotaku-apartment"
+        },
+        {
+          "fiction": "Le Starlet Motel",
+          "reel": "L’ancien Economy Inn de Lawtey (Floride), démoli en 2021, surtout pour l’accueil ; l’enseigne rappelle le Dixie Motel de Hilliard.",
+          "src": "gtawiki-safehouses"
+        },
+        {
+          "fiction": "Chez Brian et Lori",
+          "reel": "Jamais montrée. Le chantier naval, lui, rappelle le Marina Club de Blackwater Sound, à Key Largo.",
+          "src": "gtawiki-shops"
+        },
+        {
+          "fiction": "Les listes de planques",
+          "reel": "GTABase et le wiki comptent trois planques et deux garages ; seuls « Jason’s Safehouse », Paradise et Shore Court ont un nom officiel.",
+          "src": "gtabase-properties"
+        }
+      ],
+      "p": [
+        "Un immeuble reconnu dans une vidéo reste une identification communautaire, même quand deux sites tombent d’accord. Ici, ils ne tombent pas d’accord."
+      ]
+    },
+    "confirmer": {
+      "lede": "Les questions qu’on nous pose le plus, sans réponse publiée.",
+      "items": [
+        {
+          "q": "Acheter une maison ou un appartement ?",
+          "etat": "Rien d’annoncé. Les aperçus de presse de septembre 2026 disent que les planques se débloquent avec l’histoire et que seuls les garages s’achètent ; Rockstar n’a rien publié là-dessus."
+        },
+        {
+          "q": "L’appartement rose : à qui, où ?",
+          "etat": "Le wiki écrit « probablement loué par Lucia », à Bayside. Rien d’officiel."
+        },
+        {
+          "q": "Sauvegarder, se changer, dormir",
+          "etat": "Habituel dans la série. Pour GTA VI, seuls la coupe de cheveux, la nourriture et la télé ont été montrés à la maison."
+        },
+        {
+          "q": "Des revenus liés à un logement",
+          "etat": "Aucun. L’argent décrit vient des vols, des braquages et du receleur."
+        },
+        {
+          "q": "La maison de Cal et celle de Brian",
+          "etat": "Décrites, jamais montrées ni placées sur la carte."
+        }
+      ]
+    },
+    "toi": {
+      "lede": "Le calculateur accepte le prix que tu imagines ; la carte et le suivi font le reste.",
+      "actions": [
+        {
+          "k": "Calculateur",
+          "t": "Combien de temps pour t’offrir une maison ?",
+          "d": "Écris un prix, ton argent et ce que tu gagnes par partie : tu obtiens le temps de jeu qu’il faut.",
+          "href": "calculateurs.html?tool=purchase&type=property&from=demeures#atelier"
+        },
+        {
+          "k": "Carte",
+          "t": "Les demeures repérées",
+          "d": "La maison de Jason à Key Lento, la marina de Brian, le pénitencier.",
+          "pins": [
+            "key-lento",
+            "g-L326",
+            "leonida-penitentiary"
+          ],
+          "pinsTitle": "Les demeures repérées"
+        },
+        {
+          "k": "Planques",
+          "t": "Les planques et les garages",
+          "d": "Ce que Rockstar appelle planque, et les deux garages des éditions.",
+          "href": "planques.html"
+        },
+        {
+          "k": "Suivi",
+          "t": "Cocher ce que tu obtiens",
+          "d": "Les garages des éditions se cochent sur la page Planques.",
+          "href": "progression.html#acquisitions"
+        }
+      ]
+    },
+    "faq": [
+      {
+        "q": "Peut-on acheter une maison dans GTA VI ?",
+        "a": "Rien n’est annoncé. Rob Nelson a dit à Famitsu (28 août 2026) que les planques changent avec l’histoire et que seuls les garages s’achètent. Aucun prix de logement n’existe ; le calculateur te laisse écrire le tien.",
+        "k": [
+          "acheter une maison",
+          "acheter un appartement",
+          "acheter un logement",
+          "immobilier",
+          "maison a vendre"
+        ]
+      },
+      {
+        "q": "Où habite Jason ?",
+        "a": "Dans les Leonida Keys, à Key Lento, dans une maison sur pilotis prêtée par Brian Heder. Rockstar l’appelle « Jason’s Safehouse » dans la capture publiée avec les éditions (24 juin 2026).",
+        "k": [
+          "ou habite jason",
+          "maison de jason",
+          "chez jason",
+          "jason vit ou"
+        ]
+      },
+      {
+        "q": "Où habite Lucia ?",
+        "a": "Avant l’histoire, au pénitencier de Leonida. L’Extended Look (27 août 2026) montre ensuite un appartement décoré en rose où le duo se prépare ; Rockstar n’a dit ni à qui il est, ni où.",
+        "k": [
+          "ou habite lucia",
+          "appartement de lucia",
+          "chez lucia",
+          "appartement rose"
+        ]
+      },
+      {
+        "q": "Combien de véhicules peut-on garder chez soi ?",
+        "a": "Trois au début, d’après Rob Nelson (Famitsu, 28 août 2026). Pour en garder plus, il faut acheter des garages sur la carte ; sinon, on vend un véhicule pour libérer une place.",
+        "k": [
+          "combien de vehicules",
+          "garder ses voitures",
+          "places de garage",
+          "stocker des voitures",
+          "trois vehicules"
+        ]
+      },
+      {
+        "q": "Peut-on changer de maison ?",
+        "a": "Oui, mais pas en l’achetant : Rob Nelson explique qu’on passe d’une planque à l’autre au fil des chapitres, et que l’intérieur change un peu avec l’histoire.",
+        "k": [
+          "changer de maison",
+          "demenager",
+          "nouvelle planque",
+          "plusieurs maisons"
+        ]
+      }
+    ],
+    "sources": [
+      "rs-vi",
+      "rs-screens",
+      "rs-preorder",
+      "vgc-editions",
+      "sixthaxis-editions",
+      "gamesradar-63",
+      "gtawiki-ultimate",
+      "gtawiki-safehouses",
+      "gtawiki-shops",
+      "gtawiki-trailers",
+      "gtawiki-extended",
+      "gamespot-t2",
+      "ladbible-extended",
+      "engadget-breakdown",
+      "vgtimes-extended",
+      "svg-extended-map",
+      "famitsu-nelson",
+      "gtavice-famitsu",
+      "vice-150",
+      "vice-details",
+      "kotaku-apartment",
+      "gta6record-real",
+      "gtabase-properties"
+    ]
+  },
+  "planques": {
+    "nav": [
+      {
+        "href": "#fiches",
+        "label": "Les trois fiches"
+      },
+      {
+        "href": "#garages",
+        "label": "Garages"
+      },
+      {
+        "href": "#rockstar",
+        "label": "Rockstar"
+      },
+      {
+        "href": "#communaute",
+        "label": "Communauté"
+      },
+      {
+        "href": "#a-confirmer",
+        "label": "À confirmer"
+      },
+      {
+        "href": "#pour-toi",
+        "label": "Pour toi"
+      },
+      {
+        "href": "#faq",
+        "label": "FAQ"
+      },
+      {
+        "href": "#sources",
+        "label": "Sources"
+      }
+    ],
+    "rockstar": {
+      "lede": "Une planque, un chantier, un motel : trois lieux montrés, puis des textes d’éditions qui décrivent enfin le système.",
+      "items": [
+        {
+          "date": "4 décembre 2023",
+          "titre": "Trailer 1",
+          "statut": "vu",
+          "texte": "Une chambre de motel, rideau tiré : Jason et Lucia au Starlet Motel de Port Gellhorn (vers 1:12). L’enseigne, lisible dans les captures de 2025, a permis de le placer sur la carte.",
+          "media": "port-gellhorn-01",
+          "alt": "L’enseigne en néon du Starlet Motel de nuit, entre les palmiers de Port Gellhorn, capture officielle"
+        },
+        {
+          "date": "6 mai 2025",
+          "titre": "Trailer 2 et captures",
+          "statut": "vu",
+          "texte": "Le chantier naval de Brian, avec l’enseigne Brian’s Boat Works & Marina lisible de nuit vers 1:25, et la bagarre de Jason sur le parking du Starlet vers 1:54. Une chambre du motel revient vers 2:25.",
+          "media": "trailer-2-brian-boatyard-085",
+          "alt": "L’atelier de Brian de nuit, enseigne Brian’s Boat Works & Marina au-dessus de la porte, photogramme du Trailer 2 (1:25)"
+        },
+        {
+          "date": "24 juin 2026",
+          "titre": "Éditions",
+          "statut": "officiel",
+          "texte": "Rockstar appelle « Jason’s Safehouse » la maison des Keys et décrit deux garages : Paradise à Watson Bay (Édition Ultimate, avec le Dominator Buggy ’67) et Shore Court « à deux pas d’Ocean Beach » (Pack Vintage Vice City, avec la Stanier ’55). Chacun a un casier d’armes et une cache pour les objets volés, qu’un receleur local rachète avec une décote. Des garages personnels existent « dans tout Leonida ».",
+          "media": "55-vapid-stanier-01",
+          "alt": "La Vapid Stanier ’55 du Pack Vintage Vice City, capture officielle"
+        },
+        {
+          "date": "27 août 2026",
+          "titre": "Extended Look et démonstration",
+          "statut": "vu",
+          "texte": "Le Starlet Motel réapparaît vers 25:58. Le lendemain, Rob Nelson (Rockstar North) explique à Famitsu qu’on change de planque au fil des chapitres, qu’on démarre avec trois places de véhicule et qu’on achète des garages pour en avoir plus ; les armes longues se rangent dans un casier chez Ammu-Nation."
+        }
+      ],
+      "p": [
+        "Les deux garages des éditions sont documentés plus haut, sous les fiches, avec leur source et une case à cocher quand tu les obtiens."
+      ]
+    },
+    "communaute": {
+      "lede": "Ce que les joueurs ajoutent, et ce qu’on laisse de côté.",
+      "pairs": [
+        {
+          "fiction": "Le Starlet Motel",
+          "reel": "L’ancien Economy Inn de Lawtey (Floride), démoli en 2021 ; l’enseigne et les couleurs rappellent le Dixie Motel de Hilliard.",
+          "src": "gtawiki-safehouses"
+        },
+        {
+          "fiction": "Le chantier naval de Brian",
+          "reel": "Le Marina Club de Blackwater Sound, à Key Largo.",
+          "src": "gtawiki-shops"
+        },
+        {
+          "fiction": "Le Starlet, une planque jouable ?",
+          "reel": "GTABase le liste comme planque ; le wiki rappelle que le motel a d’abord été vu dans les fuites de 2022. Pas de texte officiel.",
+          "src": "gtabase-properties"
+        },
+        {
+          "fiction": "Le nombre de planques",
+          "reel": "Trois planques et deux garages chez GTABase et le wiki, avec des noms inventés par eux, sauf trois.",
+          "src": "gtabase-properties"
+        },
+        {
+          "fiction": "Watson Bay et Shore Court sur la carte",
+          "reel": "Non placés : Rockstar donne le quartier, pas l’adresse. Les cartes issues de fuites ne sont pas utilisées.",
+          "src": "rockstarreport-map"
+        }
+      ],
+      "p": [
+        "Sur cette page, une planque « repérée » veut dire : vue dans une image officielle et placée sur la carte à partir de cette image."
+      ]
+    },
+    "confirmer": {
+      "lede": "Le système de planques est décrit par bribes. Voici les trous.",
+      "items": [
+        {
+          "q": "Acheter une planque ?",
+          "etat": "Non selon les aperçus de presse de septembre 2026 : elles se débloquent avec l’histoire. Seuls les garages s’achètent ; aucune page Rockstar ne le confirme."
+        },
+        {
+          "q": "Le prix d’un garage",
+          "etat": "Aucun chiffre publié."
+        },
+        {
+          "q": "Paradise et Shore Court dès le début ?",
+          "etat": "Inconnu. GTABase écrit « gratuit, au cours du jeu » sans source."
+        },
+        {
+          "q": "Combien de places par garage",
+          "etat": "Non publié. Seul le total de départ est connu : trois véhicules."
+        },
+        {
+          "q": "La cache et le receleur",
+          "etat": "Décrits dans les textes des éditions ; le taux de décote n’est pas donné."
+        }
+      ]
+    },
+    "toi": {
+      "lede": "Ce que tu peux faire dès maintenant avec ces trois fiches et les deux garages.",
+      "actions": [
+        {
+          "k": "Calculateur",
+          "t": "Combien de temps pour t’offrir un garage ?",
+          "d": "Rockstar n’a pas donné de prix : écris celui que tu imagines, le calculateur fait le reste.",
+          "href": "calculateurs.html?tool=purchase&type=hideout&from=planques#atelier"
+        },
+        {
+          "k": "Garages",
+          "t": "Les deux garages documentés",
+          "d": "Paradise (Watson Bay) et Shore Court (près d’Ocean Beach), avec leur source et une case « J’ai obtenu ».",
+          "href": "#garages"
+        },
+        {
+          "k": "Carte",
+          "t": "Les planques repérées",
+          "d": "La maison de Jason, l’atelier de Brian et le Starlet Motel, chacun avec sa fiche.",
+          "pins": [
+            "key-lento",
+            "g-L1421",
+            "g-L304"
+          ],
+          "pinsTitle": "Les planques repérées"
+        },
+        {
+          "k": "Suivi",
+          "t": "Cocher un garage obtenu",
+          "d": "Le total s’affiche dans Ma progression, avec l’export et l’import.",
+          "href": "progression.html#acquisitions"
+        }
+      ]
+    },
+    "faq": [
+      {
+        "q": "Combien de planques dans GTA VI ?",
+        "a": "Aucun nombre publié. Une seule adresse porte officiellement le nom de planque, « Jason’s Safehouse » ; Rob Nelson a dit à Famitsu qu’on en change au fil des chapitres. Les listes à trois planques viennent des sites de fans.",
+        "k": [
+          "combien de planques",
+          "nombre de planques",
+          "liste des planques",
+          "safehouse"
+        ]
+      },
+      {
+        "q": "Peut-on acheter des garages ?",
+        "a": "Oui, d’après Rob Nelson (Famitsu, 28 août 2026) : on démarre avec trois places de véhicule et on achète des garages sur la carte pour en avoir plus. Aucun prix n’est publié.",
+        "k": [
+          "acheter un garage",
+          "acheter des garages",
+          "garage a vendre",
+          "plus de places"
+        ]
+      },
+      {
+        "q": "Qu’est-ce qu’il y a dans un garage personnel ?",
+        "a": "D’après les textes des éditions (24 juin 2026) : un casier d’armes pour composer son équipement et une cache où déposer les objets volés, qu’un receleur local rachète ensuite avec une décote.",
+        "k": [
+          "garage personnel",
+          "casier d armes",
+          "cache",
+          "stash",
+          "receleur",
+          "fence"
+        ]
+      },
+      {
+        "q": "Le Starlet Motel est-il une planque ?",
+        "a": "Il est montré dans le Trailer 1, le Trailer 2 et l’Extended Look, toujours avec Jason et Lucia. Rockstar ne l’a jamais appelé planque : le site le classe « vu dans un média », sans rien affirmer de plus.",
+        "k": [
+          "starlet motel",
+          "motel planque",
+          "motel du trailer"
+        ]
+      },
+      {
+        "q": "Où sont Watson Bay et Shore Court ?",
+        "a": "Watson Bay accueille le garage Paradise de l’Édition Ultimate ; Shore Court est « à deux pas d’Ocean Beach » selon le texte du Pack Vintage. Rockstar n’a pas donné d’adresse précise, donc ils ne sont pas encore placés sur la carte.",
+        "k": [
+          "watson bay",
+          "shore court",
+          "paradise garage",
+          "garage de paradise",
+          "ou est le garage"
+        ]
+      }
+    ],
+    "sources": [
+      "rs-vi",
+      "rs-screens",
+      "rs-preorder",
+      "vgc-editions",
+      "sixthaxis-editions",
+      "gamesradar-63",
+      "gamingnexus-editions",
+      "gtawiki-ultimate",
+      "gtawiki-safehouses",
+      "gtawiki-shops",
+      "gtawiki-trailers",
+      "gtawiki-extended",
+      "famitsu-nelson",
+      "gtavice-famitsu",
+      "vice-details",
+      "gtabase-properties",
+      "rockstarreport-map"
+    ]
+  },
+  "entreprises": {
+    "nav": [
+      {
+        "href": "#fiches",
+        "label": "Les huit fiches"
+      },
+      {
+        "href": "#rockstar",
+        "label": "Rockstar"
+      },
+      {
+        "href": "#communaute",
+        "label": "Communauté"
+      },
+      {
+        "href": "#a-confirmer",
+        "label": "À confirmer"
+      },
+      {
+        "href": "#pour-toi",
+        "label": "Pour toi"
+      },
+      {
+        "href": "#faq",
+        "label": "FAQ"
+      },
+      {
+        "href": "#sources",
+        "label": "Sources"
+      }
+    ],
+    "rockstar": {
+      "lede": "Des enseignes dans les trailers, des noms dans les fiches, puis des textes d’éditions qui décrivent cinq commerces.",
+      "items": [
+        {
+          "date": "4 décembre 2023",
+          "titre": "Trailer 1",
+          "statut": "vu",
+          "texte": "Un magasin Uncle Jack’s Liquor braqué par Jason et Lucia (vers 1:16) et une banderole d’avion pour le club NINE 1 NINE."
+        },
+        {
+          "date": "6 mai 2025",
+          "titre": "Fiches et Trailer 2",
+          "statut": "officiel",
+          "texte": "Les fiches de Boobie et Dre’Quan nomment le Jack of Hearts et Only Raw Records, le label de Real Dimez ; celle de Brian, son chantier naval. Le Trailer 2 montre le bar The Rusty Anchor (1:19), le NINE 1 NINE, les danseuses du Jack of Hearts (2:07) et une publicité pour « Phil’s Ammu-Nation » (2:10).",
+          "media": "boobie-ike-02",
+          "alt": "Boobie Ike devant l’enseigne rouge du Jack of Hearts, de nuit, capture officielle"
+        },
+        {
+          "date": "24 juin 2026",
+          "titre": "Éditions",
+          "statut": "officiel",
+          "texte": "Cinq commerces reçoivent un texte officiel : Rideout Customs à Vice City (intérieurs, jantes, style « donk »), One-Eyed Willie’s à Lake Leonida (tout-terrain, peintures à la main), Stock 305 à Stockyard (streetwear), Sara’s Unisex Salon (coiffures, barbe, maquillage, ongles), Electric Fang Tattoo à Stockyard (plus de 50 tatouages du collectif FAILE). Les deux ateliers et Stock 305 « n’ouvrent qu’avec l’Édition Ultimate ». Une mission attaque le magasin des PTT Youngin$ à Southside.",
+          "media": "rideout-customs-mod-shop-01",
+          "alt": "Une Manana dorée sur le pont élévateur de Rideout Customs, capture officielle de l’Édition Ultimate"
+        },
+        {
+          "date": "27 août 2026",
+          "titre": "Extended Look, Famitsu et après",
+          "statut": "vu",
+          "texte": "Braquages de stations-service, Lucia qui cache son arme dans le dos avant d’entrer dans une boutique (17:57), stand de tir, salle de sport, l’intérieur du Jack of Hearts, le bar Effluvia. Rob Nelson ajoute dans Famitsu : d’innombrables magasins et salons, des Ammu-Nation avec casier, un Pay ’n’ Spray qui indique ce qu’une voiture volée vaut à la revente, des receleurs, des bijouteries bien gardées. Début septembre : un plein prend une dizaine de secondes."
+        }
+      ],
+      "p": [
+        "Les huit fiches plus haut décrivent chaque enseigne. Cette page dit ce qui est écrit, ce qui est seulement vu, et ce qui manque."
+      ]
+    },
+    "communaute": {
+      "lede": "Presque chaque enseigne a son modèle à Miami ou dans les Keys, d’après les joueurs.",
+      "pairs": [
+        {
+          "fiction": "Jack of Hearts",
+          "reel": "Le King of Diamonds de Miami ; la façade rappelle une ancienne salle de boxe d’Edgewater.",
+          "src": "dexerto-kod"
+        },
+        {
+          "fiction": "NINE 1 NINE",
+          "reel": "Le club E11EVEN, qui a répondu par une fausse bande-annonce en décembre 2023.",
+          "src": "dexerto-e11even"
+        },
+        {
+          "fiction": "Effluvia",
+          "reel": "Juvia, bar sur un toit de Miami Beach fermé en 2023.",
+          "src": "gtawiki-shops"
+        },
+        {
+          "fiction": "Uncle Jack’s Liquor",
+          "reel": "Les magasins Big Daddy’s de Flanigan’s, qui ont salué le clin d’œil.",
+          "src": "miaminewtimes-flanigans"
+        },
+        {
+          "fiction": "Stock 305 et Electric Fang Tattoo",
+          "reel": "Deux bâtiments de Wynwood, à Miami.",
+          "src": "gtawiki-shops"
+        },
+        {
+          "fiction": "Sara’s Unisex Salon",
+          "reel": "Un bâtiment vide de Homestead, en Floride.",
+          "src": "gtawiki-shops"
+        },
+        {
+          "fiction": "The Rusty Anchor et le chantier de Brian",
+          "reel": "Le Caribbean Club et le Marina Club de Blackwater Sound, à Key Largo.",
+          "src": "gtawiki-shops"
+        },
+        {
+          "fiction": "Only Raw Records et One-Eyed Willie’s",
+          "reel": "Maybach Music Group, label de Miami ; clin d’œil au pirate des Goonies (1985).",
+          "src": "gtawiki-shops"
+        }
+      ],
+      "p": [
+        "Quand une vraie enseigne répond à Rockstar, comme E11EVEN ou Flanigan’s, ça reste une identification."
+      ]
+    },
+    "confirmer": {
+      "lede": "Ce que personne n’a publié sur l’argent des commerces.",
+      "items": [
+        {
+          "q": "Acheter ou gérer une entreprise ?",
+          "etat": "Aucune annonce. Les commerces connus appartiennent à des personnages ; seul l’achat de garages est confirmé par Rockstar."
+        },
+        {
+          "q": "Le prix des services",
+          "etat": "Aucun chiffre pour une coupe, un tatouage, une modification ou le plein."
+        },
+        {
+          "q": "Les commerces des éditions pour tout le monde ?",
+          "etat": "Non : Rideout Customs, One-Eyed Willie’s et Stock 305 sont fermés en édition Standard ; une mise à niveau s’achète à part."
+        },
+        {
+          "q": "Combien de commerces braquables",
+          "etat": "« Presque toutes les boutiques » selon les aperçus ; aucun chiffre."
+        },
+        {
+          "q": "Un receleur par type de butin",
+          "etat": "Voitures, drogue, bijoux d’après les aperçus. Pas de page Rockstar."
+        }
+      ]
+    },
+    "toi": {
+      "lede": "Les fiches, la carte et le calculateur travaillent ensemble.",
+      "actions": [
+        {
+          "k": "Calculateur",
+          "t": "Ça vaudrait le coup ?",
+          "d": "Écris ce que ça coûterait et ce que ça rapporterait : tu vois quand ce serait remboursé.",
+          "href": "calculateurs.html?tool=roi&type=business&from=entreprises#atelier"
+        },
+        {
+          "k": "Carte",
+          "t": "Les commerces repérés",
+          "d": "Rideout Customs, Sara’s, Stock 305, Electric Fang, le Jack of Hearts, PTT Youngin$, le chantier de Brian.",
+          "pins": [
+            "g-L2375",
+            "g-L360",
+            "g-L1488",
+            "g-L1482",
+            "g-L172",
+            "ptt-youngin",
+            "g-L1421"
+          ],
+          "pinsTitle": "Les commerces documentés"
+        },
+        {
+          "k": "Achats",
+          "t": "Tout ce qui s’achète",
+          "d": "Les catégories, leurs statuts, ce que tu peux cocher ou simuler.",
+          "href": "achats.html"
+        },
+        {
+          "k": "Personnalisations",
+          "t": "Ateliers et tatouages",
+          "d": "Ce que les trois ateliers annoncent, avec leur source.",
+          "href": "personnalisations.html"
+        }
+      ]
+    },
+    "faq": [
+      {
+        "q": "Peut-on acheter des entreprises dans GTA VI ?",
+        "a": "Non, rien d’annoncé. Les commerces présentés appartiennent à des personnages (Boobie, Dre’Quan, Brian) ; Rockstar n’a confirmé que l’achat de garages.",
+        "k": [
+          "acheter une entreprise",
+          "acheter un commerce",
+          "business a acheter",
+          "posseder une entreprise",
+          "gerer une entreprise"
+        ]
+      },
+      {
+        "q": "Les magasins de l’Édition Ultimate sont-ils réservés ?",
+        "a": "Oui pour Rideout Customs, One-Eyed Willie’s et Stock 305 : en édition Standard, ils « ne sont pas ouverts » ; une mise à niveau s’achète à part. Sara’s propose des coiffures « signature », Electric Fang des tatouages « exclusifs ».",
+        "k": [
+          "edition ultimate",
+          "reserve a l ultimate",
+          "magasins exclusifs",
+          "stock 305",
+          "electric fang",
+          "sara s unisex",
+          "rideout customs"
+        ]
+      },
+      {
+        "q": "Peut-on braquer des magasins ?",
+        "a": "Oui. L’Extended Look (27 août 2026) montre des braquages de stations-service et de boutiques, seul ou avec Lucia. Selon Rob Nelson (Famitsu), les bijouteries et petites banques sont mieux gardées.",
+        "k": [
+          "braquer un magasin",
+          "braquer une station service",
+          "braquage de magasin",
+          "cambrioler",
+          "voler un magasin"
+        ]
+      },
+      {
+        "q": "C’est quoi le Jack of Hearts ?",
+        "a": "Le club de strip-tease de Boobie Ike, cité dans sa fiche officielle : l’argent du club paie le studio Only Raw Records. Vu dans le Trailer 2 et de l’intérieur dans l’Extended Look ; placé sur notre carte.",
+        "k": [
+          "jack of hearts",
+          "club de boobie",
+          "strip club",
+          "club de strip tease"
+        ]
+      },
+      {
+        "q": "Où faire le plein et réparer sa voiture ?",
+        "a": "Dans les stations-service : selon Rob Nelson (début septembre 2026), le plein prend une dizaine de secondes et la station répare aussi.",
+        "k": [
+          "faire le plein",
+          "plein d essence",
+          "essence",
+          "carburant",
+          "station service",
+          "station essence",
+          "reparer sa voiture",
+          "pay n spray"
+        ],
+        "min": 1
+      }
+    ],
+    "sources": [
+      "rs-vi",
+      "rs-videos",
+      "rs-screens",
+      "rs-preorder",
+      "gamingnexus-editions",
+      "gamingbible-ultimate",
+      "sixthaxis-editions",
+      "gamesradar-63",
+      "gtawiki-shops",
+      "gtawiki-screens",
+      "gtawiki-trailers",
+      "gtawiki-extended",
+      "gamesradar-live",
+      "engadget-missed",
+      "comicbook-phil",
+      "famitsu-nelson",
+      "gtavice-famitsu",
+      "gamesradar-refuel",
+      "gamingbible-7",
+      "vice-details",
+      "dexerto-kod",
+      "dexerto-e11even",
+      "miaminewtimes-flanigans",
+      "gtaintel-businesses"
+    ]
+  }
+}

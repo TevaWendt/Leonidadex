@@ -6,6 +6,9 @@ const HUB_NOTES={"lieux": "Ouvre une fiche pour retrouver ses médias et ses rep
 const fs=require('fs'),path=require('path');
 process.chdir(path.join(__dirname,'..'));
 const visuals=require('./lot-c-visuals.cjs');
+/* v7.41 (lot 4) : zones éditoriales des cinq hubs du monde (outils/editorial-hubs.json → outils/hubs-monde.cjs) et
+   contrôle anti-doublon hubs ↔ fiches (outils/hubs-doublons.cjs) : la génération refuse toute phrase identique. */
+const MONDE=require('./hubs-monde.cjs'),DOUBLONS=require('./hubs-doublons.cjs');
 const esc=t=>String(t==null?'':t).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 const ED=JSON.parse(fs.readFileSync('outils/editorial.json','utf8'));
 const MED=JSON.parse(fs.readFileSync('outils/medias-officiels.json','utf8'));
@@ -45,6 +48,8 @@ const SECTIONS={
     desc:'Les planques de GTA VI repérées dans les médias officiels : la planque de Jason dans les Keys, le chantier naval de Brian, le motel du premier trailer.'},
 };
 const byId={};for(const k of Object.keys(SECTIONS))for(const x of ED[k])byId[x.id]=Object.assign({sec:k},x);
+{const dupes=DOUBLONS.check({editorial:ED,extra:[...Object.values(HUB_NOTES),...Object.values(SECTIONS).flatMap(S=>[S.lede,S.desc,S.title])]});
+ if(dupes.length)throw new Error('Hubs du monde : phrases identiques aux fiches ou à un autre hub, corrige outils/editorial-hubs.json :\n'+dupes.map(x=>'  '+x.hub+' ↔ '+x.ou+' : « '+x.phrase+' »').join('\n'));}
 
 const media=x=>(x.media||[]).map(id=>MED[id]).filter(Boolean)[0]||null;
 const GT=JSON.parse(fs.readFileSync('outils/data/carte-gtadb-source.json','utf8'));const GTBY={};for(const q of [...GT.groupes,...GT.lieux])GTBY[q.id]=q;
@@ -75,7 +80,7 @@ const recapOf=(x,S)=>{const f=(x&&x.facts||[]).map(t=>String(t).trim().replace(/
   const intro={regions:'Ce qu’il faut retenir de cette région',characters:'Ce qu’il faut retenir de ce personnage',businesses:'Ce qu’il faut retenir de cette adresse',residences:'Ce qu’il faut retenir de ce lieu',hideouts:'Ce qu’il faut retenir de ce lieu'}[S]||'À retenir';
   return `<section class="shell reveal lk-recap"><h2 class="sec-h">${intro}</h2><p class="fiche-txt rise">${esc(f.join('. ')+'.')} ${esc(x.name)} est relié aux fiches voisines ci-dessous : les fiches se complètent avec le jeu, et ce résumé se mettra à jour avec elles.</p></section>`;};
 const metaDesc=t=>{t=String(t||'').replace(/\s+/g,' ').trim();if(t.length<=158)return t;const ph=t.split(/(?<=[.!?])\s+/);let d='';for(const q of ph){if(d&&(d+' '+q).length>158)break;d=d?d+' '+q:q;}return d.length<=158&&d.length>=60?d:t.slice(0,155).replace(/\s+\S*$/,'')+'…';};
-function page({p,title,desc,canonical,ogImg,body,crumbs,hub,RECAP=''}){desc=metaDesc(desc);
+function page({p,title,desc,canonical,ogImg,body,crumbs,hub,RECAP='',ld=''}){desc=metaDesc(desc);
   const C=p?SUB:ROOT;const header=hub?withHere(C.header,hub):C.header.replace(/ class="here"/g,'');
   return `<!DOCTYPE html>
 <html lang="fr">
@@ -92,7 +97,7 @@ function page({p,title,desc,canonical,ogImg,body,crumbs,hub,RECAP=''}){desc=meta
 <meta name="color-scheme" content="light">
 <link rel="canonical" href="${SITE}${canonical}">
 ${C.fav}
-${bc(crumbs)}
+${bc(crumbs)}${ld?'\n'+ld:''}
 <link rel="stylesheet" href="${p}style.css">
 <link rel="stylesheet" href="${p}motion-tokens.css">
 <link rel="stylesheet" href="${p}acquisitions.css">
@@ -141,13 +146,17 @@ for(const [key,S] of Object.entries(SECTIONS)){
   <p class="lede">${esc(S.lede)}</p>
   <p class="d-intro-note">${esc(HUB_NOTES[S.hub]||"")} <a href="tuto.html#sources">Comprendre les statuts</a>.</p>
 ${pile?'</div>'+pile+'</div>':''}</section>
-<section class="shell">
+<section class="shell" id="fiches">
   <h2 class="sr-only">Les ${items.length} fiches</h2>
   <div class="lore-grid lore-grid--center lore-grid--n${items.length}">
 ${cards}
   </div>
-</section>`;
-  fs.writeFileSync(S.hub+'.html',page({p:'',title:S.title+' | Leonidakit',desc:S.desc,canonical:'/'+S.hub+'.html',ogImg:visual(items[0])?(visual(items[0]).variants[1]||visual(items[0]).variants[0]).src:null,body,crumbs:[['Accueil','/'],[S.label,'/'+S.hub+'.html']],hub:S.hub}));
+</section>
+${S.hub==='planques'?'<!-- lot-d-garages:start --><!-- lot-d-garages:end -->\n':''}${MONDE.render(S.hub,{label:S.label,n:items.length})}`;
+  /* v7.41 : CollectionPage (la liste des fiches) à côté du fil d'Ariane ; la FAQPage est posée par sync-site depuis les questions visibles. */
+  const collection='<script type="application/ld+json">'+JSON.stringify({"@context":"https://schema.org","@type":"CollectionPage","name":S.title,"description":metaDesc(S.desc),"url":SITE+'/'+S.hub+'.html',"inLanguage":"fr","isPartOf":{"@type":"WebSite","name":"Leonidakit","url":SITE+'/'},"mainEntity":{"@type":"ItemList","numberOfItems":items.length,"itemListElement":items.map((x,i)=>({"@type":"ListItem","position":i+1,"name":x.name,"url":SITE+'/'+S.hub+'/'+x.id+'.html'}))}})+'</script>';
+  console.log(S.hub+' : zone éditoriale de '+MONDE.words(S.hub)+' mots, '+MONDE.DATA[S.hub].faq.length+' questions, '+MONDE.sourcesOf(S.hub).length+' sources');
+  fs.writeFileSync(S.hub+'.html',page({p:'',title:S.title+' | Leonidakit',desc:S.desc,canonical:'/'+S.hub+'.html',ogImg:visual(items[0])?(visual(items[0]).variants[1]||visual(items[0]).variants[0]).src:null,body,crumbs:[['Accueil','/'],[S.label,'/'+S.hub+'.html']],hub:S.hub,ld:collection}));
   index.push({l:S.title,k:S.label,u:'/'+S.hub+'.html',s:(S.title+' '+S.label+' leonida gta vi').toLowerCase(),w:1});
 
   /* ---------- fiches ---------- */

@@ -55,7 +55,11 @@ const ICONS = {
   main: '<path d="M8 12V6a1.5 1.5 0 0 1 3 0v5M11 11V4.5a1.5 1.5 0 0 1 3 0V11M14 11V6a1.5 1.5 0 0 1 3 0v7"/><path d="M8 12l-2-2a1.6 1.6 0 0 0-2.3 2.2L8 17a6 6 0 0 0 9.5 1L20 13"/><circle class="ac" cx="12.5" cy="15.5" r="1.2"/>',
   eau: '<path d="M3 15c2-2 4-2 6 0s4 2 6 0 4-2 6 0M3 19c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M6 10l9-6"/><path class="ac" d="M14 3.5l4-1-1 4z"/>',
   'drive-by': '<path d="M3 15l2-5h11l3 5v3H3z"/><circle cx="7" cy="18" r="1.8"/><circle cx="16" cy="18" r="1.8"/><path d="M13 10l2-4h4"/><path class="ac" d="M15.5 4.5h4v2h-4z"/>',
-  personnalisation: '<path d="M20.5 7a4.5 4.5 0 0 1-6 4.2L7 18.7a2 2 0 0 1-2.8-2.8l7.5-7.5A4.5 4.5 0 0 1 17 2.5l-2.5 2.5 2 2 2.5-2.5c.3.8.5 1.6.5 2.5z"/><circle class="ac" cx="6" cy="18" r="1"/>'
+  personnalisation: '<path d="M20.5 7a4.5 4.5 0 0 1-6 4.2L7 18.7a2 2 0 0 1-2.8-2.8l7.5-7.5A4.5 4.5 0 0 1 17 2.5l-2.5 2.5 2 2 2.5-2.5c.3.8.5 1.6.5 2.5z"/><circle class="ac" cx="6" cy="18" r="1"/>',
+  /* v7.41 (lot 4) : hubs du monde */
+  film: '<rect x="3" y="8" width="18" height="12" rx="2"/><path d="M3.5 8l2-4h13l2 4"/><path d="M7.5 4l2 4M12 4l2 4M16.5 4l2 4"/><path class="ac" d="M10 11.5v5l4.5-2.5z"/>',
+  loupe: '<circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/><circle cx="8.5" cy="9" r="1.6"/><circle cx="12.5" cy="9" r="1.6"/><path class="ac" d="M7.5 13.2c.8 1 1.9 1.5 3 1.5s2.2-.5 3-1.5v-1.4c-.8.7-1.9 1.1-3 1.1s-2.2-.4-3-1.1z"/>',
+  sablier: '<path d="M6 3h12M6 21h12M7.5 3v3.5a4.5 4.5 0 0 0 2 3.7L12 12l2.5-1.8a4.5 4.5 0 0 0 2-3.7V3M7.5 21v-3.5a4.5 4.5 0 0 1 2-3.7L12 12l2.5 1.8a4.5 4.5 0 0 1 2 3.7V21"/><path class="ac" d="M9.5 19.5h5L12 15.5z"/>'
 };
 function icon(name, cls) {
   if (!ICONS[name]) throw Error('Icône inconnue : ' + name);
@@ -176,4 +180,43 @@ function columns(cards) {
     + (c.p || []).map(p => '<p>' + esc(p) + '</p>').join('') + '</div>').join('') + '</div>';
 }
 
-module.exports = { esc, icon, ICONS, section, nav, figures, brandWall, kits, ammo, steps, mediaFigure, places, columns, defs: carte.defs, initials, fold };
+/* ---------- v7.41 (lot 4) : compositions des hubs du monde ---------- */
+const STATUS_LABEL = { officiel: 'Officiel', vu: 'Vu dans un média', comm: 'Identification communautaire', conf: 'À confirmer' };
+function pip(statut, withLabel) {
+  const s = STATUS_LABEL[statut] ? statut : 'conf';
+  const dot = '<span class="pip pip--' + s + '" aria-hidden="true"></span>';
+  return withLabel ? '<span class="ed-status">' + dot + '<i class="ed-st">' + esc(STATUS_LABEL[s]) + '</i></span>' : dot;
+}
+/* Frise datée : items : [{date, titre, statut, texte, media, alt}] ; le visuel vient de outils/medias-officiels.json. */
+function timeline(items, opts = {}) {
+  return '<ol class="ed-tl">' + items.map(x => '<li class="ed-tl-item' + (x.media ? ' ed-tl-item--media' : '') + '">'
+    + '<div class="ed-tl-when"><time>' + esc(x.date) + '</time>' + pip(x.statut, true) + '</div>'
+    + '<div class="ed-tl-body"><h3>' + esc(x.titre) + '</h3><p>' + esc(x.texte) + '</p></div>'
+    + (x.media ? mediaFigure(x.media, x.alt, { prefix: opts.prefix, sizes: '(max-width:700px) 100vw, 320px' }) : '') + '</li>').join('') + '</ol>';
+}
+/* Paires fiction ↔ réel : items : [{fiction, reel, src}] ; src renvoie à l'entrée #src-<id> du bloc Sources de la page. */
+function pairs(items, sources = {}) {
+  return '<div class="ed-pairs">' + items.map(x => {
+    const s = x.src && sources[x.src];
+    return '<div class="ed-pair"><span class="ed-pair-f">' + esc(x.fiction) + '</span><span class="ed-pair-arrow" aria-hidden="true">→</span>'
+      + '<span class="ed-pair-r">' + esc(x.reel) + (s ? ' <a class="ed-pair-src" href="#src-' + esc(x.src) + '" aria-label="Source : ' + esc(s.title) + '">source</a>' : '') + '</span></div>';
+  }).join('') + '</div>';
+}
+/* Questions ouvertes : items : [{q, etat}] */
+function pending(items) {
+  return '<div class="ed-open">' + items.map(x => '<div class="ed-open-item"><span class="ed-open-q" aria-hidden="true">?</span><h3>' + esc(x.q) + '</h3><p>' + esc(x.etat) + '</p></div>').join('') + '</div>';
+}
+/* Cartes d'action : items : [{k, t, d, href}] */
+function actions(items) {
+  return '<div class="ed-acts">' + items.map(x => '<a class="ed-act" href="' + esc(x.href) + '"><span class="ed-act-k">' + esc(x.k) + '</span><span class="ed-act-t">' + esc(x.t) + '</span><span class="ed-act-d">' + esc(x.d) + '</span><span class="veh-go">Ouvrir</span></a>').join('') + '</div>';
+}
+/* Sources : entries : [{id, url, title, publishedAt, consultedAt, statut, claim}] */
+const frDate = iso => iso ? iso.split('-').reverse().join('/') : null;
+function sourceList(entries) {
+  return '<ol class="ed-srcs">' + entries.map(s => '<li id="src-' + esc(s.id) + '">' + pip(s.statut, true)
+    + '<a class="ed-src-link" href="' + esc(s.url) + '" target="_blank" rel="noopener nofollow">' + esc(s.title) + '</a>'
+    + '<span class="ed-src-meta">' + (s.publishedAt ? 'publié le ' + esc(frDate(s.publishedAt)) + ' · ' : '') + 'consulté le ' + esc(frDate(s.consultedAt)) + '</span>'
+    + (s.claim ? '<p>' + esc(s.claim) + '</p>' : '') + '</li>').join('') + '</ol>';
+}
+
+module.exports = { esc, icon, ICONS, section, nav, figures, brandWall, kits, ammo, steps, mediaFigure, places, columns, defs: carte.defs, initials, fold, timeline, pairs, pending, actions, sourceList, pip, STATUS_LABEL };
