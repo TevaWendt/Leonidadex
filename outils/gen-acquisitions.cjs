@@ -76,6 +76,24 @@ function placesSection(num,L,opts={}){
  const groups=L.groups.map(g=>({title:g.title,items:g.lieux.map(id=>{const p=C.place(id);return {id,name:p.name,where:S.STATUS_LABEL[p.statut]+(p.region?' · '+p.region:'')};})}));
  return S.section({id:L.id,num,kicker:'Sur la carte',title:opts.title||'Où on s’attend à en trouver',icon:'carte',tone:'paper2',accent:'coral',lede:esc(L.lede)},(opts.before||'')+S.defs()+S.places(groups)+para(L.p));
 }
+/* v7.43 (lot 6) : cartes-ateliers. Un atelier = une entreprise du site (fiche entreprises/<id>.html) ou une enseigne vue sur la
+   carte ; vignette de la carte et lien carte.html#lieu=… quand le lieu est placé, silhouette sans repère et « pas encore placé »
+   sinon (One-Eyed Willie’s). Chaque carte dit ce qu’on y fait, son statut, et renvoie à la sous-section de la liste. */
+const carteV=require('./carte-vignette.cjs');
+function atelierCard(a){
+ const biz=a.business?ed.businesses.find(b=>b.id===a.business):null;if(a.business&&!biz)throw Error('Atelier inconnu : '+a.business);
+ const name=biz?biz.name:a.name;const p=a.lieu?C.place(a.lieu):null;if(a.lieu&&!p)throw Error('Lieu inconnu : '+a.lieu);
+ const where=p?'Sur la carte'+(p.region?' · '+p.region:''):'Pas encore placé sur la carte';
+ const href=p?'carte.html#lieu='+esc(a.lieu):(biz?'entreprises/'+esc(biz.id)+'.html':'#'+esc(a.fam));
+ const map=p?carteV.vignette(a.lieu):'<svg class="ed-map ed-map--vide" viewBox="0 0 '+carteV.W+' '+carteV.H+'" aria-hidden="true" focusable="false"><use href="#lk-leonida"/></svg>';
+ return '<article class="ed-place ed-atelier"><a class="ed-atelier-map" href="'+href+'" aria-label="'+esc(name)+' : '+esc(p?'voir sur la carte':'fiche de l’atelier')+'">'+map+'</a>'
+  +'<div class="ed-place-body"><b>'+esc(name)+'</b><span class="ed-place-where">'+S.pip(a.statut,true)+' <span>'+esc(where)+'</span></span><span class="ed-atelier-fait">'+esc(a.fait)+'</span>'
+  +'<span class="ed-atelier-links">'+(p?'<a class="veh-go" href="carte.html#lieu='+esc(a.lieu)+'">Voir sur la carte</a>':'')+(biz?'<a class="veh-go" href="entreprises/'+esc(biz.id)+'.html">La fiche</a>':'')+'<a class="veh-go" href="#'+esc(a.fam)+'">La liste</a></span></div></article>';
+}
+function ateliersSection(num,L){
+ return S.section({id:L.id,num,kicker:'Sur la carte',title:'Les ateliers et les armureries',icon:'carte',tone:'paper2',accent:'coral',lede:esc(L.lede)},
+  S.defs()+L.groups.map(g=>'<h3 class="ed-h3">'+esc(g.title)+'</h3><div class="ed-places ed-places--ateliers">'+g.items.map(atelierCard).join('')+'</div>').join('')+para(L.p));
+}
 function serieSection(num,Z){return S.section({id:Z.id,num,kicker:'Repères',title:'Ce que la série faisait déjà',icon:'statuts',tone:'paper',lede:esc(Z.lede)},S.columns(Z.cols)+para(Z.p));}
 function pendingSection(num,P,vars){return S.section({id:P.id,num,kicker:'Questions ouvertes',title:'Ce qui reste à confirmer',icon:'sablier',tone:'night',lede:esc(P.lede)},S.pending(P.items.map(x=>({q:x.q,etat:fill(x.etat,vars)}))));}
 function actionsSection(num,T){return S.section({id:T.id,num,kicker:'Outils du site',title:'Ce que ça change pour toi',icon:'boussole',tone:'paper',lede:esc(T.lede)},S.actions(T.actions.map(a=>({...a,href:pinsHref(a)}))));}
@@ -90,15 +108,26 @@ for(const c of source.categories.filter(c=>c.alias)){
 <body><main id="main" class="shell" style="padding:48px 0"><h1>${esc(c.label)}</h1><p>Cette section fait maintenant partie de <a href="${target}">${esc(dest)}</a>. Tu y es redirigé automatiquement.</p></main></body></html>
 `);
 }
-const nStyle=['coiffures','tatouages','tenues'].reduce((n,f)=>n+C.counts(f).n,0),nConsommables=C.counts('consommables').n;
+const nStyle=['coiffures','tatouages','tenues'].reduce((n,f)=>n+C.counts(f).n,0),nConsommables=C.counts('consommables').n,nPerso=['perso-vehicules','perso-armes'].reduce((n,f)=>n+C.counts(f).n,0);
 for(const c of source.categories.filter(c=>c.id!=='garages'&&!c.alias)){
  const own=items.filter(x=>x.category===c.id),tracked=own.filter(x=>x.trackable),editorial=own.filter(x=>!x.trackable),svc=services.filter(x=>x.category===c.id);
  const E=EDITO[c.id];if(!E||!E.nav)throw Error('Contenu éditorial absent pour la catégorie '+c.id);
  const pile=visuals.STACKS[c.id]?visuals.stack(c.id):'';
  const head=`<section class="page-head shell lk-glow">${pile?'<div class="lk-head-grid"><div>':''}<p class="fiche-cat">GTA VI · contenus documentés</p><h1>${esc(c.label)}</h1><p class="lede">${esc(c.intro)}</p><p class="d-intro-note">${esc(c.limit)}</p>${contextual(c.id)}${pile?'</div>'+pile+'</div>':''}</section>`;
  const parts=[S.nav(E.nav,'Sections de la page '+c.label)];let n=0;const ld=[];
- const vars={nStyle,nConsommables};
- if(c.id==='nourriture'){
+ const vars={nStyle,nConsommables,nPerso};
+ if(c.id==='customizations'){
+  /* v7.43 (lot 6) : deux sous-sections (véhicules, armes), les cartes Rockstar avec leur case (kit Ganado, motif Vintage), les ateliers, puis À confirmer, Pour toi, FAQ, Sources. */
+  parts.push(rockstarSection(++n,E.rockstar));
+  parts.push(cardsSection(++n,{id:'contenus',kicker:'Sources officielles',title:'Ce que Rockstar a décrit',icon:'film',tone:'paper',lede:tracked.length+' contenus documentés, chacun avec sa source et son niveau de confirmation. Tu peux les cocher ici ou depuis leur ligne dans les listes ; le compte se retrouve dans Ma progression.'},tracked.map(card)));
+  parts.push(listSection(++n,'perso-vehicules',{tone:'paper2'}));ld.push(['perso-vehicules',C.ldItemList('perso-vehicules')]);
+  parts.push(listSection(++n,'perso-armes',{tone:'paper',accent:'coral'}));ld.push(['perso-armes',C.ldItemList('perso-armes')]);
+  parts.push(ateliersSection(++n,E.ateliers));
+  parts.push(pendingSection(++n,E.confirmer,vars));
+  parts.push(actionsSection(++n,E.toi));
+  parts.push(faqSection(++n,E.faq));
+  parts.push(sourcesSection(++n,[...C.sourcesOf(['perso-vehicules','perso-armes']),...acqSources(['ultimate','vintage'])]));
+ }else if(c.id==='nourriture'){
   parts.push(rockstarSection(++n,E.rockstar));
   parts.push(listSection(++n,'consommables',{tone:'paper2'}));ld.push(['consommables',C.ldItemList('consommables')]);
   parts.push(placesSection(++n,E.lieux));
@@ -123,7 +152,7 @@ for(const c of source.categories.filter(c=>c.id!=='garages'&&!c.alias)){
   parts.push(cardsSection(++n,{id:'contenus',kicker:'Sources officielles',title:tracked.length?'Ce que Rockstar a décrit':'Où en est cette section',icon:'film',tone:'paper',lede:tracked.length?tracked.length+' contenus documentés, chacun avec sa source et son niveau de confirmation. Tu peux les cocher ; le compte se retrouve dans Ma progression.':c.empty},tracked.map(card),tracked.length?'':empty));
   if(c.id==='boats')parts.push(S.section({id:'observations',num:++n,kicker:'Dans les médias',title:'Aperçus dans les médias',icon:'loupe',tone:'paper2',accent:'coral',lede:esc('Les autres embarcations restent dans le catalogue Véhicules, avec leur niveau d’identification. Un nom reconnu ou une apparition dans un trailer ne prouve pas un achat.')},'<div class="d-actions"><a href="/vehicules.html#cat=bateau">Consulter les embarcations recensées</a><a href="/vehicules.html#cat=avion">Avions recensés</a><a href="/vehicules.html#cat=helico">Hélicoptères recensés</a></div>'));
   if(svc.length)parts.push(cardsSection(++n,{id:'services',kicker:'Adresses',title:'Ateliers et adresses',icon:'carte',tone:'paper2',accent:'coral',lede:'Ces établissements décrivent des possibilités de personnalisation. Ils ne forment pas un catalogue d’entreprises à acheter.'},svc.map(serviceCard)));
-  if(c.id==='customizations')parts.push(S.section({id:'variantes',num:++n,kicker:'Arsenal',title:'Armes personnalisées déjà recensées',icon:'personnalisation',tone:'paper',lede:esc('Les variantes annoncées dans l’Édition Ultimate restent reliées aux fiches de l’arsenal. Elles ne deviennent pas de nouvelles armes comptées deux fois.')},'<ul class="d-related">'+variants.map(v=>`<li><a href="${v.url}">${esc(v.name)}</a></li>`).join('')+'</ul><p><a href="/collectibles.html#catalogue">La collection de voitures classiques de Wyman</a> possède déjà sa page : une commande spéciale ne confirme pas la propriété d’une entreprise.</p>'));
+  /* v7.43 : la section « Armes personnalisées déjà recensées » de Personnalisations est remplacée par les lignes de la liste perso-armes (variantes gravées reliées aux fiches). */
   parts.push(pendingSection(++n,E.confirmer,vars));
   parts.push(actionsSection(++n,E.toi));
   parts.push(sourcesSection(++n,acqSources(['ultimate','vintage','preorder','screenshots','extended'])));
@@ -146,6 +175,6 @@ for(const f of ['motion-tokens.css','acquisitions.css'])if(!planques.includes(f)
 for(const f of ['acquisitions-data.js','progression-core.js','acquisitions.js','learning-motion.js'])if(!planques.includes(f))planques=planques.replace('</body>',`<script src="${f}"></script>\n</body>`);
 fs.writeFileSync(path.join(root,'planques.html'),planques);
 /* Index de recherche : catégories, sections des catalogues (ancres), éléments des listes (type « élément »), contenus documentés. */
-const famSections=C.FAMILIES.map(f=>{const d=C.load().families[f];return {l:d.label,k:cat(d.page==='/style.html'?'style':'nourriture').label,u:d.page+'#'+d.section,s:(d.label+' '+d.titre+' '+d.intro).toLowerCase()};});
+const famSections=C.FAMILIES.map(f=>{const d=C.load().families[f];return {l:d.label,k:cat(d.page==='/style.html'?'style':d.page==='/personnalisations.html'?'customizations':'nourriture').label,u:d.page+'#'+d.section,s:(d.label+' '+d.titre+' '+d.intro).toLowerCase()};});
 fs.writeFileSync(path.join(__dirname,'acquisitions-index.json'),JSON.stringify([...source.categories.filter(c=>!c.alias).map(c=>({l:c.label,k:'Contenus documentés',u:c.route,s:c.label.toLowerCase()})),...famSections,{l:'Accessoires',k:cat('style').label,u:'/style.html#accessoires',s:'accessoires lunettes bijoux montres chapeaux masques'},...C.FAMILIES.flatMap(f=>C.searchEntries(f)),...items.map(x=>({l:x.name,k:cat(x.category).label,u:x.hubUrl,s:(x.name+' '+x.description).toLowerCase()}))]));
 console.log(`Acquisitions : ${items.length} références (${items.filter(x=>x.trackable).length} suivables), ${services.length} services, ${source.categories.filter(c=>c.id!=='garages'&&!c.alias).length} pages de section et le bloc Garages ; catalogues : ${C.FAMILIES.map(f=>f+' '+C.counts(f).n).join(', ')}.`);

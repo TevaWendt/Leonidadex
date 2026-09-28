@@ -1,0 +1,1781 @@
+{
+  "famille": "perso-armes",
+  "label": "Personnalisation des armes",
+  "titre": "Tous les postes de personnalisation des armes",
+  "page": "/personnalisations.html",
+  "section": "perso-armes",
+  "suivi": {
+    "cle": "lk_own_perso-armes",
+    "label": "Mes modifs d’arme",
+    "fait": "posées",
+    "ancre": "perso-armes"
+  },
+  "intro": "Chargeurs, viseurs, silencieux, poignées, lampes, finitions, camouflages et munitions spéciales : ce que Rockstar a dit ou montré pour GTA VI (variantes gravées de l’Édition Ultimate, motif du Pack Vintage, casiers d’Ammu-Nation), puis ce qu’Ammu-Nation et l’atelier d’armes de GTA Online proposent, avec leurs prix présentés comme repères. Quand une arme compatible est connue, la ligne renvoie à sa fiche ; sinon la compatibilité reste à confirmer.",
+  "categories": [
+    {
+      "id": "variantes",
+      "label": "Variantes complètes",
+      "icon": "kit"
+    },
+    {
+      "id": "chargeurs",
+      "label": "Chargeurs",
+      "icon": "chargeur"
+    },
+    {
+      "id": "viseurs",
+      "label": "Viseurs et lunettes",
+      "icon": "viseur"
+    },
+    {
+      "id": "canons",
+      "label": "Silencieux et canons",
+      "icon": "silencieux"
+    },
+    {
+      "id": "poignees",
+      "label": "Poignées et crosses",
+      "icon": "poignee"
+    },
+    {
+      "id": "lampes",
+      "label": "Lampes et lasers",
+      "icon": "lampe-torche"
+    },
+    {
+      "id": "finitions",
+      "label": "Finitions et gravures",
+      "icon": "finition"
+    },
+    {
+      "id": "camouflages",
+      "label": "Camouflages et livrées",
+      "icon": "camouflage"
+    },
+    {
+      "id": "munitions-speciales",
+      "label": "Munitions spéciales",
+      "icon": "munitions"
+    },
+    {
+      "id": "conversion",
+      "label": "Conversion Mk II",
+      "icon": "conversion"
+    },
+    {
+      "id": "armurerie",
+      "label": "Armurerie et casier",
+      "icon": "casier"
+    }
+  ],
+  "items": [
+    {
+      "id": "variante-girardi-es9",
+      "nom": "Girardi ES9 gravé de Jason",
+      "categorie": "variantes",
+      "statut": "officiel",
+      "personnage": "jason",
+      "media": "personalized-weapon-variants",
+      "description": "Version personnalisée du pistolet de Jason dans l’Édition Ultimate : « detailed engravings » ; sur la capture, « J. Duval » sur la glissière et crosse gravée.",
+      "effet": {
+        "texte": "Visuel : gravures ; aucune différence de tir publiée",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": null,
+      "ou_le_trouver": [
+        {
+          "type": "Livré avec l’Édition Ultimate"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "vgc-editions",
+        "rs-screens"
+      ],
+      "lien": {
+        "href": "armes/girardi-es9.html",
+        "label": "fiche du Girardi ES9"
+      },
+      "compat": {
+        "armes": [
+          "pistolet"
+        ],
+        "ids": [
+          "girardi-es9"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "variante-klose-k17",
+      "nom": "Klose K17 gravé de Lucia",
+      "categorie": "variantes",
+      "statut": "officiel",
+      "personnage": "lucia",
+      "media": "personalized-weapon-variants",
+      "description": "Version personnalisée du pistolet de Lucia : carcasse bordeaux, rose tatouée et prénom « Lucia » gravés sur la capture officielle.",
+      "effet": {
+        "texte": "Visuel : gravures ; aucune différence de tir publiée",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": null,
+      "ou_le_trouver": [
+        {
+          "type": "Livré avec l’Édition Ultimate"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "vgc-editions",
+        "rs-screens"
+      ],
+      "lien": {
+        "href": "armes/klose-k17.html",
+        "label": "fiche du Klose K17"
+      },
+      "compat": {
+        "armes": [
+          "pistolet"
+        ],
+        "ids": [
+          "klose-k17"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "variante-morgan",
+      "nom": "Hawk & Little Morgan « his and hers »",
+      "categorie": "variantes",
+      "statut": "officiel",
+      "personnage": "jason-lucia",
+      "description": "Deux revolvers aux couleurs de Vice City tirés du domaine Vercetti : crosses gravées de palmiers, gravures, lunette « high-performance » et finitions personnalisées.",
+      "effet": {
+        "texte": "Lunette « high-performance » citée par Rockstar ; rien de chiffré",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": null,
+      "ou_le_trouver": [
+        {
+          "type": "Livré avec l’Édition Ultimate"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "vgc-editions",
+        "sixthaxis-editions"
+      ],
+      "lien": {
+        "href": "armes/hawk-little-morgan.html",
+        "label": "fiche du Morgan"
+      },
+      "compat": {
+        "armes": [
+          "pistolet"
+        ],
+        "ids": [
+          "hawk-little-morgan"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "plus-d-options",
+      "nom": "Plus d’options que jamais (Rob Nelson)",
+      "categorie": "variantes",
+      "statut": "officiel",
+      "description": "« There are also more weapon customization options than ever before » : Rob Nelson à Famitsu, sans détail ni liste.",
+      "effet": {
+        "texte": "Aucun détail publié",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": null,
+      "ou_le_trouver": [
+        {
+          "lieu": "g-L1074"
+        },
+        {
+          "lieu": "g-L1091"
+        },
+        {
+          "lieu": "g-L298"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtavice-famitsu",
+        "famitsu-nelson"
+      ],
+      "compat": {
+        "armes": [
+          "pistolet",
+          "pm",
+          "assaut",
+          "precision",
+          "mitrailleuse",
+          "pompe"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "motif-vintage-vice-city",
+      "nom": "Motif tropical du Pack Vintage Vice City",
+      "categorie": "camouflages",
+      "statut": "officiel",
+      "media": "vintage-vice-city-weapon-pattern-01",
+      "suivi": false,
+      "description": "Motif tropical inspiré de la chemise de Tommy Vercetti, « available to adorn most guns » ; sur la capture, un PM à crosse rabattable et un pistolet le portent.",
+      "effet": {
+        "texte": "Visuel ; rien de chiffré",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": null,
+      "ou_le_trouver": [
+        {
+          "type": "Bonus de précommande",
+          "note": "Pack Vintage Vice City, avant le 20 novembre 2026"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "sixthaxis-editions",
+        "xbox-vintage",
+        "rs-screens"
+      ],
+      "compat": {
+        "armes": [
+          "pistolet",
+          "pm",
+          "assaut",
+          "precision",
+          "mitrailleuse",
+          "pompe"
+        ],
+        "ids": [
+          "pm-tactique",
+          "girardi-es9"
+        ],
+        "note": "armes vues sur la capture ; « la plupart des armes » sans liste"
+      },
+      "acq": "vintage-weapon-pattern",
+      "notes": "La case « J’ai obtenu » est celle de la carte Rockstar plus haut."
+    },
+    {
+      "id": "camouflages-mk2",
+      "nom": "Camouflages Mk II",
+      "categorie": "camouflages",
+      "statut": "serie",
+      "description": "Digital, coup de pinceau, forêt, crâne, léopard, zèbre, géométrique, Perseus, Boom, patriotique : dix livrées pour les armes Mk II de GTA Online.",
+      "effet": {
+        "texte": "Visuel uniquement",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "min": 40000,
+        "max": 100000,
+        "jeu": "GTA Online",
+        "note": "digital 40 000 $ … patriotique 100 000 $"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier d’armes",
+          "note": "repère : Weapon Workshop, GTA Online"
+        }
+      ],
+      "variantes": [
+        "digital",
+        "coup de pinceau",
+        "forêt",
+        "crâne",
+        "léopard",
+        "zèbre",
+        "géométrique",
+        "Perseus",
+        "Boom",
+        "patriotique"
+      ],
+      "sources": [
+        "gtawiki-carbine-mk2",
+        "gtawiki-pistol-mk2"
+      ],
+      "compat": {
+        "armes": [
+          "pistolet",
+          "pm",
+          "assaut",
+          "precision",
+          "mitrailleuse",
+          "pompe"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "finition-doree",
+      "nom": "Finition dorée (vue)",
+      "categorie": "finitions",
+      "statut": "vu",
+      "media": "vice-city-12",
+      "description": "Un fusil à silhouette AK entièrement doré apparaît dans une capture officielle de Vice City : une finition vue, sans nom ni prix.",
+      "effet": {
+        "texte": "Visuel ; rien de chiffré",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": null,
+      "ou_le_trouver": [
+        {
+          "type": "Non précisé par Rockstar"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "rs-screens"
+      ],
+      "compat": {
+        "armes": [
+          "assaut"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "crosses-gravees",
+      "nom": "Crosses gravées de palmiers",
+      "categorie": "finitions",
+      "statut": "officiel",
+      "media": "personalized-weapon-variants",
+      "description": "Les Morgan « his and hers » ont des « palm-tree-etched grips » ; le Girardi ES9 de la capture porte une crosse gravée « Sua Sponte ».",
+      "effet": {
+        "texte": "Visuel ; rien de chiffré",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": null,
+      "ou_le_trouver": [
+        {
+          "type": "Livré avec l’Édition Ultimate"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "vgc-editions",
+        "rs-screens"
+      ],
+      "compat": {
+        "armes": [
+          "pistolet"
+        ],
+        "ids": [
+          "hawk-little-morgan",
+          "girardi-es9"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "teintes",
+      "nom": "Teintes (armée, vert, orange, LSPD, rose, or, platine)",
+      "categorie": "finitions",
+      "statut": "serie",
+      "description": "Sept couleurs de finition pour la plupart des armes à feu de GTA V, débloquées au rang en ligne.",
+      "effet": {
+        "texte": "Visuel uniquement",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "min": 100,
+        "max": 1500,
+        "jeu": "GTA V",
+        "note": "armée 100 $ … platine 1 500 $ ; 5 000 à 12 500 $ en ligne"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Armurerie",
+          "note": "repère : Ammu-Nation, GTA V"
+        }
+      ],
+      "variantes": [
+        "armée",
+        "vert",
+        "orange",
+        "LSPD",
+        "rose",
+        "or",
+        "platine"
+      ],
+      "sources": [
+        "gtawiki-pistol",
+        "gtawiki-carbine"
+      ],
+      "compat": {
+        "armes": [
+          "pistolet",
+          "pm",
+          "assaut",
+          "precision",
+          "mitrailleuse",
+          "pompe"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "teintes-mk2",
+      "nom": "Teintes Mk II (classiques, contraste, métal)",
+      "categorie": "finitions",
+      "statut": "serie",
+      "description": "Finitions étendues des armes Mk II de GTA Online, jusqu’aux métaux.",
+      "effet": {
+        "texte": "Visuel uniquement",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "min": 20000,
+        "max": 100000,
+        "jeu": "GTA Online",
+        "note": "classiques 20 000 à 35 000 $, contraste 40 000 $, métal 75 000 à 100 000 $"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier d’armes",
+          "note": "repère : Weapon Workshop, GTA Online"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-pistol-mk2",
+        "gtawiki-carbine-mk2"
+      ],
+      "compat": {
+        "armes": [
+          "pistolet",
+          "pm",
+          "assaut",
+          "precision",
+          "mitrailleuse",
+          "pompe"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "chargeur-etendu",
+      "nom": "Chargeur étendu",
+      "categorie": "chargeurs",
+      "statut": "serie",
+      "description": "Plus de balles avant de recharger : de +33 % sur certains pistolets à +300 % sur le fusil à pompe d’assaut.",
+      "effet": {
+        "texte": "Capacité augmentée, jusqu’à",
+        "valeur": 300,
+        "unite": "capacite",
+        "jeu": "GTA V"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "min": 262,
+        "max": 387,
+        "jeu": "GTA V",
+        "note": "carabine 262 $, pistolet 387 $ ; 9 175 à 9 775 $ en ligne"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Armurerie",
+          "note": "repère : Ammu-Nation, GTA V"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-attachments",
+        "gtawiki-pistol",
+        "gtawiki-carbine"
+      ],
+      "compat": {
+        "armes": [
+          "pistolet",
+          "pm",
+          "assaut",
+          "precision",
+          "mitrailleuse",
+          "pompe"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "chargeur-tambour",
+      "nom": "Chargeur tambour",
+      "categorie": "chargeurs",
+      "statut": "serie",
+      "description": "Beaucoup plus de balles, rechargement plus lent ; GTA Online seulement (fusil à pompe lourd 6 → 30, PM 30 → 100).",
+      "effet": {
+        "texte": "Capacité très augmentée, rechargement plus lent (GTA Online)",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": null,
+        "jeu": "GTA Online",
+        "note": "prix non relevé sur la page consultée"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Armurerie",
+          "note": "repère : Ammu-Nation, GTA V"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-attachments"
+      ],
+      "compat": {
+        "armes": [
+          "pm",
+          "pompe",
+          "assaut"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "chargeur-caisson",
+      "nom": "Chargeur caisson (100 coups)",
+      "categorie": "chargeurs",
+      "statut": "serie",
+      "description": "Boîte de cent cartouches pour la carabine en ligne.",
+      "effet": {
+        "texte": "Capacité de 100 coups (GTA Online)",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 25550,
+        "jeu": "GTA Online",
+        "note": "carabine"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Armurerie",
+          "note": "repère : Ammu-Nation, GTA V"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-carbine"
+      ],
+      "compat": {
+        "armes": [
+          "assaut"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "lunette",
+      "nom": "Lunette",
+      "categorie": "viseurs",
+      "statut": "serie",
+      "description": "Zoom pour tirer loin ; sur les fusils de précision elle est de série.",
+      "effet": {
+        "texte": "Zoom à la visée (GTA V)",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 1125,
+        "jeu": "GTA V",
+        "note": "carabine ; 10 900 $ en ligne"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Armurerie",
+          "note": "repère : Ammu-Nation, GTA V"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-carbine",
+        "gtawiki-attachments"
+      ],
+      "compat": {
+        "armes": [
+          "assaut",
+          "precision",
+          "mitrailleuse",
+          "pm"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "viseur-holographique",
+      "nom": "Viseur holographique",
+      "categorie": "viseurs",
+      "statut": "serie",
+      "description": "Petit zoom, pratique en intérieur ; armes Mk II de GTA Online.",
+      "effet": {
+        "texte": "Petit zoom (GTA Online)",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 19600,
+        "jeu": "GTA Online",
+        "note": "carabine Mk II"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier d’armes",
+          "note": "repère : Weapon Workshop, GTA Online"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-carbine-mk2",
+        "gtawiki-attachments"
+      ],
+      "compat": {
+        "armes": [
+          "assaut",
+          "pm",
+          "pistolet"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "lunettes-mk2",
+      "nom": "Petite et grande lunette (Mk II)",
+      "categorie": "viseurs",
+      "statut": "serie",
+      "description": "Deux niveaux de zoom pour les armes Mk II, plus une lunette zoom sur le fusil de précision lourd.",
+      "effet": {
+        "texte": "Zoom à la visée (GTA Online)",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "min": 23730,
+        "max": 34020,
+        "jeu": "GTA Online",
+        "note": "carabine Mk II ; zoom du précision lourd 29 595 $"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier d’armes",
+          "note": "repère : Weapon Workshop, GTA Online"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-carbine-mk2",
+        "gtawiki-heavy-sniper-mk2"
+      ],
+      "compat": {
+        "armes": [
+          "assaut",
+          "precision",
+          "mitrailleuse",
+          "pm"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "lunette-montee-pistolet",
+      "nom": "Lunette montée (pistolet Mk II)",
+      "categorie": "viseurs",
+      "statut": "serie",
+      "description": "Zoom standard monté sur un pistolet.",
+      "effet": {
+        "texte": "Zoom à la visée (GTA Online)",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 16250,
+        "jeu": "GTA Online"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier d’armes",
+          "note": "repère : Weapon Workshop, GTA Online"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-pistol-mk2"
+      ],
+      "compat": {
+        "armes": [
+          "pistolet"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "lunette-nocturne",
+      "nom": "Lunette à vision nocturne",
+      "categorie": "viseurs",
+      "statut": "serie",
+      "description": "Voir les cibles dans le noir ; fusil de précision lourd Mk II, recherche demandée.",
+      "effet": {
+        "texte": "Vision de nuit (GTA Online)",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 45950,
+        "jeu": "GTA Online",
+        "note": "recherche demandée"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier d’armes",
+          "note": "repère : Weapon Workshop, GTA Online"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-heavy-sniper-mk2"
+      ],
+      "compat": {
+        "armes": [
+          "precision"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "lunette-thermique",
+      "nom": "Lunette thermique",
+      "categorie": "viseurs",
+      "statut": "serie",
+      "description": "Voir les cibles à travers leur chaleur ; fusil de précision lourd Mk II.",
+      "effet": {
+        "texte": "Vision thermique (GTA Online)",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 69000,
+        "jeu": "GTA Online",
+        "note": "recherche demandée"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier d’armes",
+          "note": "repère : Weapon Workshop, GTA Online"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-heavy-sniper-mk2"
+      ],
+      "compat": {
+        "armes": [
+          "precision"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "silencieux",
+      "nom": "Silencieux",
+      "categorie": "canons",
+      "statut": "serie",
+      "description": "Tir silencieux et flash réduit ; dégâts et portée légèrement diminués dans GTA V.",
+      "effet": {
+        "texte": "Discrétion ; dégâts et portée un peu réduits (GTA V)",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "min": 1822,
+        "max": 2037,
+        "jeu": "GTA V",
+        "note": "pistolet 1 822 $, carabine 2 037 $ ; 12 050 à 12 450 $ en ligne"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Armurerie",
+          "note": "repère : Ammu-Nation, GTA V"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-attachments",
+        "gtawiki-pistol",
+        "gtawiki-carbine"
+      ],
+      "compat": {
+        "armes": [
+          "pistolet",
+          "pm",
+          "assaut",
+          "precision",
+          "pompe"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "canon-filete",
+      "nom": "Canon fileté (vu)",
+      "categorie": "canons",
+      "statut": "vu",
+      "media": "personalized-weapon-variants",
+      "description": "Le Girardi ES9 gravé de la capture officielle a un canon fileté et un rail sous le canon : ce que ça permet n’est pas dit.",
+      "effet": {
+        "texte": "Visuel ; rien d’annoncé",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": null,
+      "ou_le_trouver": [
+        {
+          "type": "Livré avec l’Édition Ultimate"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "rs-screens"
+      ],
+      "compat": {
+        "armes": [
+          "pistolet"
+        ],
+        "ids": [
+          "girardi-es9"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "compensateur",
+      "nom": "Compensateur",
+      "categorie": "canons",
+      "statut": "serie",
+      "description": "Réduit le recul en tir rapide ; pistolet Mk II.",
+      "effet": {
+        "texte": "Moins de recul (GTA Online)",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 21250,
+        "jeu": "GTA Online"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier d’armes",
+          "note": "repère : Weapon Workshop, GTA Online"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-pistol-mk2",
+        "gtawiki-attachments"
+      ],
+      "compat": {
+        "armes": [
+          "pistolet"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "freins-de-bouche",
+      "nom": "Freins de bouche (sept modèles)",
+      "categorie": "canons",
+      "statut": "serie",
+      "description": "Plat, tactique, évasé, précision, renforcé, biseauté, fendu : moins de recul pour les armes Mk II.",
+      "effet": {
+        "texte": "Moins de recul (GTA Online)",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "min": 29750,
+        "max": 38530,
+        "jeu": "GTA Online",
+        "note": "carabine Mk II ; 45 010 à 57 790 $ sur le précision lourd"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier d’armes",
+          "note": "repère : Weapon Workshop, GTA Online"
+        }
+      ],
+      "variantes": [
+        "plat",
+        "tactique",
+        "évasé",
+        "précision",
+        "renforcé",
+        "biseauté",
+        "fendu"
+      ],
+      "sources": [
+        "gtawiki-carbine-mk2",
+        "gtawiki-heavy-sniper-mk2"
+      ],
+      "compat": {
+        "armes": [
+          "assaut",
+          "precision",
+          "pm",
+          "mitrailleuse",
+          "pompe"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "canon-lourd",
+      "nom": "Canon lourd",
+      "categorie": "canons",
+      "statut": "serie",
+      "description": "Garde plus de dégâts à longue distance : 50 % des dégâts à bout portant au lieu de 30 %.",
+      "effet": {
+        "texte": "Dégâts à distance conservés à",
+        "valeur": 50,
+        "unite": "pourcent",
+        "jeu": "GTA Online"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "min": 49000,
+        "max": 69825,
+        "jeu": "GTA Online",
+        "note": "carabine Mk II 49 000 $, précision lourd 69 825 $"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier d’armes",
+          "note": "repère : Weapon Workshop, GTA Online"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-attachments",
+        "gtawiki-carbine-mk2",
+        "gtawiki-heavy-sniper-mk2"
+      ],
+      "compat": {
+        "armes": [
+          "assaut",
+          "precision",
+          "mitrailleuse"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "poignee",
+      "nom": "Poignée",
+      "categorie": "poignees",
+      "statut": "serie",
+      "description": "Plus de précision à moyenne et longue portée, moins de secousse à chaque tir.",
+      "effet": {
+        "texte": "Précision améliorée, recul réduit (GTA V)",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 330,
+        "jeu": "GTA V",
+        "note": "carabine ; 4 350 $ en ligne, 14 080 $ en Mk II"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Armurerie",
+          "note": "repère : Ammu-Nation, GTA V"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-attachments",
+        "gtawiki-carbine",
+        "gtawiki-carbine-mk2"
+      ],
+      "compat": {
+        "armes": [
+          "assaut",
+          "precision",
+          "mitrailleuse",
+          "pm",
+          "pompe"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "crosse-rabattable",
+      "nom": "Crosse rabattable (vue)",
+      "categorie": "poignees",
+      "statut": "vu",
+      "media": "vintage-vice-city-weapon-pattern-01",
+      "description": "Le PM de la capture du Pack Vintage a une crosse rabattue sur le côté : la fiche « PM à crosse rabattable » le recense.",
+      "effet": {
+        "texte": "Visuel ; rien d’annoncé",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": null,
+      "ou_le_trouver": [
+        {
+          "type": "Bonus de précommande",
+          "note": "Pack Vintage Vice City, avant le 20 novembre 2026"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "rs-screens"
+      ],
+      "lien": {
+        "href": "armes/pm-tactique.html",
+        "label": "fiche du PM"
+      },
+      "compat": {
+        "armes": [
+          "pm"
+        ],
+        "ids": [
+          "pm-tactique"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "lampe-tactique",
+      "nom": "Lampe tactique",
+      "categorie": "lampes",
+      "statut": "serie",
+      "description": "Éclaire devant toi quand tu vises ; s’allume et s’éteint.",
+      "effet": {
+        "texte": "Éclairage à la visée (GTA V)",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "min": 375,
+        "max": 472,
+        "jeu": "GTA V",
+        "note": "carabine 375 $, pistolet 472 $ ; 1 675 à 2 350 $ en ligne"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Armurerie",
+          "note": "repère : Ammu-Nation, GTA V"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-attachments",
+        "gtawiki-pistol",
+        "gtawiki-carbine"
+      ],
+      "compat": {
+        "armes": [
+          "pistolet",
+          "pm",
+          "assaut",
+          "precision",
+          "mitrailleuse",
+          "pompe"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "laser",
+      "nom": "Laser",
+      "categorie": "lampes",
+      "statut": "conf",
+      "description": "Aucun laser montré ni décrit pour GTA VI ; les pages consultées sur GTA V n’en listent pas non plus.",
+      "effet": {
+        "texte": "Rien de publié",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": null,
+      "ou_le_trouver": [
+        {
+          "type": "Non précisé par Rockstar"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-attachments"
+      ],
+      "compat": {
+        "armes": [
+          "pistolet",
+          "pm",
+          "assaut",
+          "precision",
+          "mitrailleuse",
+          "pompe"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "munitions-tracantes",
+      "nom": "Balles traçantes",
+      "categorie": "munitions-speciales",
+      "statut": "serie",
+      "description": "Traînée lumineuse à la couleur de la teinte ; armes Mk II.",
+      "effet": {
+        "texte": "Traînée visible (GTA Online)",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "min": 28600,
+        "max": 44700,
+        "jeu": "GTA Online",
+        "note": "pistolet Mk II 28 600 $, carabine Mk II 44 700 $"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier d’armes",
+          "note": "repère : Weapon Workshop, GTA Online"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-pistol-mk2",
+        "gtawiki-carbine-mk2"
+      ],
+      "compat": {
+        "armes": [
+          "pistolet",
+          "pm",
+          "assaut",
+          "precision",
+          "mitrailleuse",
+          "pompe"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "munitions-incendiaires",
+      "nom": "Balles incendiaires",
+      "categorie": "munitions-speciales",
+      "statut": "serie",
+      "description": "Chance d’enflammer la cible ; moins de balles par chargeur.",
+      "effet": {
+        "texte": "Peut enflammer la cible (GTA Online)",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "min": 34750,
+        "max": 59275,
+        "jeu": "GTA Online"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier d’armes",
+          "note": "repère : Weapon Workshop, GTA Online"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-pistol-mk2",
+        "gtawiki-carbine-mk2",
+        "gtawiki-heavy-sniper-mk2"
+      ],
+      "compat": {
+        "armes": [
+          "pistolet",
+          "pm",
+          "assaut",
+          "precision",
+          "mitrailleuse",
+          "pompe"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "munitions-perforantes",
+      "nom": "Balles perforantes",
+      "categorie": "munitions-speciales",
+      "statut": "serie",
+      "description": "Traversent mieux le gilet pare-balles ; moins de balles par chargeur.",
+      "effet": {
+        "texte": "Traverse mieux le gilet (GTA Online)",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "min": 66000,
+        "max": 76100,
+        "jeu": "GTA Online"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier d’armes",
+          "note": "repère : Weapon Workshop, GTA Online"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-carbine-mk2",
+        "gtawiki-heavy-sniper-mk2"
+      ],
+      "compat": {
+        "armes": [
+          "assaut",
+          "precision",
+          "mitrailleuse",
+          "pm"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "munitions-creuses",
+      "nom": "Balles à pointe creuse",
+      "categorie": "munitions-speciales",
+      "statut": "serie",
+      "description": "Plus de dégâts sur une cible sans gilet ; pistolet Mk II.",
+      "effet": {
+        "texte": "Plus de dégâts sans gilet (GTA Online)",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 39650,
+        "jeu": "GTA Online"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier d’armes",
+          "note": "repère : Weapon Workshop, GTA Online"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-pistol-mk2"
+      ],
+      "compat": {
+        "armes": [
+          "pistolet",
+          "pm"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "munitions-blindees",
+      "nom": "Balles blindées (FMJ)",
+      "categorie": "munitions-speciales",
+      "statut": "serie",
+      "description": "Plus de dégâts aux véhicules, traversent les vitres pare-balles.",
+      "effet": {
+        "texte": "Plus de dégâts aux véhicules (GTA Online)",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "min": 52000,
+        "max": 88525,
+        "jeu": "GTA Online"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier d’armes",
+          "note": "repère : Weapon Workshop, GTA Online"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-pistol-mk2",
+        "gtawiki-carbine-mk2",
+        "gtawiki-heavy-sniper-mk2"
+      ],
+      "compat": {
+        "armes": [
+          "pistolet",
+          "pm",
+          "assaut",
+          "precision",
+          "mitrailleuse",
+          "pompe"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "munitions-explosives",
+      "nom": "Balles explosives",
+      "categorie": "munitions-speciales",
+      "statut": "serie",
+      "description": "Explosent à l’impact ; fusil de précision lourd Mk II, recherche demandée.",
+      "effet": {
+        "texte": "Explosion à l’impact (GTA Online)",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 115450,
+        "jeu": "GTA Online",
+        "note": "recherche demandée"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier d’armes",
+          "note": "repère : Weapon Workshop, GTA Online"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-heavy-sniper-mk2"
+      ],
+      "compat": {
+        "armes": [
+          "precision"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "munitions-gta6-conf",
+      "nom": "Munitions spéciales dans GTA VI",
+      "categorie": "munitions-speciales",
+      "statut": "conf",
+      "description": "Rien de publié sur des balles spéciales ; les types de munitions déjà recensés sont dans l’Armurerie.",
+      "effet": {
+        "texte": "Rien de publié",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": null,
+      "ou_le_trouver": [
+        {
+          "lieu": "g-L1074"
+        },
+        {
+          "lieu": "g-L1091"
+        },
+        {
+          "lieu": "g-L298"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtavice-famitsu"
+      ],
+      "lien": {
+        "href": "armes.html#munitions",
+        "label": "types de munitions"
+      },
+      "compat": {
+        "armes": [
+          "pistolet",
+          "pm",
+          "assaut",
+          "precision",
+          "mitrailleuse",
+          "pompe"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "conversion-mk2",
+      "nom": "Conversion Mk II",
+      "categorie": "conversion",
+      "statut": "serie",
+      "description": "Dans GTA Online, une arme devient Mk II dans un atelier d’armes : c’est la porte des munitions spéciales, freins de bouche et camouflages.",
+      "effet": {
+        "texte": "Ouvre les postes Mk II (GTA Online)",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "min": 73750,
+        "max": 165375,
+        "jeu": "GTA Online",
+        "note": "pistolet 73 750 $, carabine 107 500 $, précision lourd 165 375 $"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier d’armes",
+          "note": "repère : Weapon Workshop, GTA Online"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-pistol-mk2",
+        "gtawiki-carbine-mk2",
+        "gtawiki-heavy-sniper-mk2"
+      ],
+      "compat": {
+        "armes": [
+          "pistolet",
+          "pm",
+          "assaut",
+          "precision",
+          "mitrailleuse",
+          "pompe"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "casier-ammunation",
+      "nom": "Casier d’Ammu-Nation",
+      "categorie": "armurerie",
+      "statut": "officiel",
+      "description": "Chaque Ammu-Nation a un casier : c’est là que tu gères et récupères tes armes longues, qui ne sont plus « invisibles » sur toi.",
+      "effet": {
+        "texte": "Gestion des armes longues, d’après Rob Nelson",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": null,
+      "ou_le_trouver": [
+        {
+          "lieu": "g-L1074"
+        },
+        {
+          "lieu": "g-L1091"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtavice-famitsu",
+        "famitsu-nelson"
+      ],
+      "compat": {
+        "armes": [
+          "assaut",
+          "precision",
+          "mitrailleuse",
+          "pompe",
+          "pm"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "armes-exclusives",
+      "nom": "Armes exclusives à certains magasins",
+      "categorie": "armurerie",
+      "statut": "officiel",
+      "description": "« Ammu-Nation also sells special guns exclusive to particular stores » : chaque magasin peut avoir ses armes.",
+      "effet": {
+        "texte": "Variété par magasin, d’après Rob Nelson",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": null,
+      "ou_le_trouver": [
+        {
+          "lieu": "g-L1074"
+        },
+        {
+          "lieu": "g-L1091"
+        },
+        {
+          "lieu": "g-L298"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtavice-famitsu"
+      ],
+      "compat": {
+        "armes": [
+          "pistolet",
+          "pm",
+          "assaut",
+          "precision",
+          "mitrailleuse",
+          "pompe"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "casier-garage",
+      "nom": "Casier d’armes du garage",
+      "categorie": "armurerie",
+      "statut": "officiel",
+      "description": "Les garages Paradise et Shore Court ont « a weapon locker to customize your loadout for any occasion ».",
+      "effet": {
+        "texte": "Composer son chargement au garage",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": null,
+      "ou_le_trouver": [
+        {
+          "type": "Garages Paradise et Shore Court",
+          "note": "Édition Ultimate et Pack Vintage"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "sixthaxis-editions",
+        "vgc-editions"
+      ],
+      "lien": {
+        "href": "planques.html#garages",
+        "label": "garages documentés"
+      },
+      "compat": {
+        "armes": [
+          "pistolet",
+          "pm",
+          "assaut",
+          "precision",
+          "mitrailleuse",
+          "pompe"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "melee-projectiles-conf",
+      "nom": "Corps à corps et projectiles",
+      "categorie": "armurerie",
+      "statut": "conf",
+      "description": "Aucune personnalisation montrée pour ces armes ; dans GTA V, elles n’ont pas d’accessoire sur les pages consultées.",
+      "effet": {
+        "texte": "Rien de publié",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": null,
+      "ou_le_trouver": [
+        {
+          "type": "Non précisé par Rockstar"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-attachments"
+      ],
+      "compat": {
+        "armes": [
+          "melee",
+          "projectile",
+          "speciale"
+        ]
+      },
+      "notes": ""
+    }
+  ]
+}

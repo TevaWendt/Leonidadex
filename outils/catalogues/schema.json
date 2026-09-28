@@ -1,85 +1,392 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "leonidakit-catalogue",
-  "title": "Catalogue Leonidakit (v7.42, lot 5) : une famille de listes dépliables",
-  "description": "Modèle commun aux familles consommables, coiffures, tatouages, tenues (et, au lot 6, perso-vehicules et perso-armes). Validé par outils/catalogues.cjs (sous-ensemble de JSON Schema) et par outils/tests/catalogues-v742.test.cjs. Règles hors schéma vérifiées par le module : identifiants uniques sur toutes les familles, catégorie connue de la famille, sources connues du registre (sources.json) et cohérentes avec le statut, lieu connu de la carte, visuel connu de outils/medias-officiels.json, prix_gta6.valeur toujours null tant que Rockstar n’a rien publié.",
+  "title": "Catalogue Leonidakit (v7.42, lot 5 ; v7.43, lot 6) : une famille de listes dépliables",
+  "description": "Modèle commun aux familles consommables, coiffures, tatouages, tenues (lot 5) et perso-vehicules, perso-armes (lot 6). Validé par outils/catalogues.cjs (sous-ensemble de JSON Schema) et par outils/tests/catalogues-v742.test.cjs et catalogues-v743.test.cjs. Règles hors schéma vérifiées par le module : identifiants uniques sur toutes les familles, catégorie connue de la famille, sources connues du registre (sources.json) et cohérentes avec le statut, lieu connu de la carte, visuel connu de outils/medias-officiels.json, prix_gta6.valeur toujours null tant que Rockstar n’a rien publié ; lot 6 : compat.vehicules et compat.armes limités aux catégories du site, compat.ids aux armes recensées, acq à une acquisition suivable (la ligne renvoie alors sa case à la carte Rockstar : suivi false).",
   "type": "object",
-  "required": ["famille", "label", "titre", "page", "section", "suivi", "intro", "categories", "items"],
+  "required": [
+    "famille",
+    "label",
+    "titre",
+    "page",
+    "section",
+    "suivi",
+    "intro",
+    "categories",
+    "items"
+  ],
   "additionalProperties": false,
   "properties": {
-    "famille": { "type": "string", "pattern": "^[a-z][a-z0-9-]{1,30}$" },
-    "label": { "type": "string", "minLength": 3 },
-    "titre": { "type": "string", "minLength": 3 },
-    "page": { "type": "string", "pattern": "^/[a-z0-9-]+\\.html$" },
-    "section": { "type": "string", "pattern": "^[a-z][a-z0-9-]+$" },
-    "intro": { "type": "string", "minLength": 40 },
+    "famille": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]{1,30}$"
+    },
+    "label": {
+      "type": "string",
+      "minLength": 3
+    },
+    "titre": {
+      "type": "string",
+      "minLength": 3
+    },
+    "page": {
+      "type": "string",
+      "pattern": "^/[a-z0-9-]+\\.html$"
+    },
+    "section": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]+$"
+    },
+    "intro": {
+      "type": "string",
+      "minLength": 40
+    },
     "suivi": {
-      "type": "object", "required": ["cle", "label", "fait", "ancre"], "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "cle",
+        "label",
+        "fait",
+        "ancre"
+      ],
+      "additionalProperties": false,
       "properties": {
-        "cle": { "type": "string", "pattern": "^lk_own_[a-z0-9-]+$" },
-        "label": { "type": "string" }, "fait": { "type": "string" }, "ancre": { "type": "string", "pattern": "^[a-z][a-z0-9-]+$" }
+        "cle": {
+          "type": "string",
+          "pattern": "^lk_own_[a-z0-9-]+$"
+        },
+        "label": {
+          "type": "string"
+        },
+        "fait": {
+          "type": "string"
+        },
+        "ancre": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]+$"
+        }
       }
     },
     "categories": {
-      "type": "array", "minItems": 1,
+      "type": "array",
+      "minItems": 1,
       "items": {
-        "type": "object", "required": ["id", "label", "icon"], "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "label",
+          "icon"
+        ],
+        "additionalProperties": false,
         "properties": {
-          "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]+$" },
-          "label": { "type": "string" },
-          "icon": { "type": "string" },
-          "groupe": { "type": "string", "enum": ["vetements", "accessoires", "vehicules", "armes"] }
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]+$"
+          },
+          "label": {
+            "type": "string"
+          },
+          "icon": {
+            "type": "string"
+          },
+          "groupe": {
+            "type": "string",
+            "enum": [
+              "vetements",
+              "accessoires",
+              "vehicules",
+              "armes"
+            ]
+          }
         }
       }
     },
     "items": {
-      "type": "array", "minItems": 1,
+      "type": "array",
+      "minItems": 1,
       "items": {
         "type": "object",
-        "required": ["id", "nom", "categorie", "statut", "description", "effet", "prix_gta6", "prix_repere_serie", "ou_le_trouver", "variantes", "sources", "notes"],
+        "required": [
+          "id",
+          "nom",
+          "categorie",
+          "statut",
+          "description",
+          "effet",
+          "prix_gta6",
+          "prix_repere_serie",
+          "ou_le_trouver",
+          "variantes",
+          "sources",
+          "notes"
+        ],
         "additionalProperties": false,
         "properties": {
-          "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]{1,99}$" },
-          "nom": { "type": "string", "minLength": 2, "maxLength": 120 },
-          "categorie": { "type": "string" },
-          "statut": { "type": "string", "enum": ["officiel", "vu", "comm", "serie", "conf"] },
-          "personnage": { "type": "string", "enum": ["jason", "lucia", "jason-lucia"] },
-          "media": { "type": "string", "pattern": "^[a-z0-9-]+$" },
-          "suivi": { "type": "boolean" },
-          "description": { "type": "string", "minLength": 15, "maxLength": 220, "pattern": "[.!?»]$" },
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9-]{1,99}$"
+          },
+          "nom": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 120
+          },
+          "categorie": {
+            "type": "string"
+          },
+          "statut": {
+            "type": "string",
+            "enum": [
+              "officiel",
+              "vu",
+              "comm",
+              "serie",
+              "conf"
+            ]
+          },
+          "personnage": {
+            "type": "string",
+            "enum": [
+              "jason",
+              "lucia",
+              "jason-lucia"
+            ]
+          },
+          "media": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]+$"
+          },
+          "suivi": {
+            "type": "boolean"
+          },
+          "description": {
+            "type": "string",
+            "minLength": 15,
+            "maxLength": 220,
+            "pattern": "[.!?»]$"
+          },
           "effet": {
-            "type": "object", "required": ["texte", "valeur", "unite", "jeu"], "additionalProperties": false,
+            "type": "object",
+            "required": [
+              "texte",
+              "valeur",
+              "unite",
+              "jeu"
+            ],
+            "additionalProperties": false,
             "properties": {
-              "texte": { "type": "string", "minLength": 3 },
-              "valeur": { "type": ["number", "null"] },
-              "unite": { "type": ["string", "null"], "enum": ["sante", "armure", "duree", "graisse", null] },
-              "jeu": { "type": ["string", "null"], "enum": ["GTA V", "GTA Online", "GTA IV", "GTA San Andreas", null] }
+              "texte": {
+                "type": "string",
+                "minLength": 3
+              },
+              "valeur": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "unite": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "enum": [
+                  "sante",
+                  "armure",
+                  "duree",
+                  "graisse",
+                  "capacite",
+                  "pourcent",
+                  null
+                ]
+              },
+              "jeu": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "enum": [
+                  "GTA V",
+                  "GTA Online",
+                  "GTA IV",
+                  "GTA San Andreas",
+                  null
+                ]
+              }
             }
           },
           "prix_gta6": {
-            "type": "object", "required": ["valeur", "statut"], "additionalProperties": false,
-            "properties": { "valeur": { "type": "null" }, "statut": { "type": "string", "const": "conf" } }
+            "type": "object",
+            "required": [
+              "valeur",
+              "statut"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "valeur": {
+                "type": "null"
+              },
+              "statut": {
+                "type": "string",
+                "const": "conf"
+              }
+            }
           },
           "prix_repere_serie": {
-            "type": ["object", "null"], "required": ["jeu"], "additionalProperties": false,
+            "type": [
+              "object",
+              "null"
+            ],
+            "required": [
+              "jeu"
+            ],
+            "additionalProperties": false,
             "properties": {
-              "valeur": { "type": ["number", "null"] },
-              "min": { "type": "number" }, "max": { "type": "number" },
-              "jeu": { "type": "string", "enum": ["GTA V", "GTA Online", "GTA IV", "GTA San Andreas"] },
-              "note": { "type": "string" }
+              "valeur": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "min": {
+                "type": "number"
+              },
+              "max": {
+                "type": "number"
+              },
+              "jeu": {
+                "type": "string",
+                "enum": [
+                  "GTA V",
+                  "GTA Online",
+                  "GTA IV",
+                  "GTA San Andreas"
+                ]
+              },
+              "note": {
+                "type": "string"
+              }
             }
           },
           "ou_le_trouver": {
-            "type": "array", "minItems": 1,
+            "type": "array",
+            "minItems": 1,
             "items": {
-              "type": "object", "additionalProperties": false,
-              "properties": { "lieu": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }, "type": { "type": "string", "minLength": 3 }, "note": { "type": "string" } }
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "lieu": {
+                  "type": "string",
+                  "pattern": "^[a-zA-Z0-9-]+$"
+                },
+                "type": {
+                  "type": "string",
+                  "minLength": 3
+                },
+                "note": {
+                  "type": "string"
+                }
+              }
             }
           },
-          "variantes": { "type": "array", "items": { "type": "string", "minLength": 1 } },
-          "sources": { "type": "array", "minItems": 1, "items": { "type": "string", "pattern": "^[a-z0-9-]+$" } },
-          "lien": { "type": "object", "required": ["href", "label"], "additionalProperties": false, "properties": { "href": { "type": "string" }, "label": { "type": "string" } } },
-          "notes": { "type": "string" }
+          "variantes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "sources": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z0-9-]+$"
+            }
+          },
+          "lien": {
+            "type": "object",
+            "required": [
+              "href",
+              "label"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "href": {
+                "type": "string"
+              },
+              "label": {
+                "type": "string"
+              }
+            }
+          },
+          "notes": {
+            "type": "string"
+          },
+          "compat": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "Lot 6 : à quoi le poste s’applique. vehicules : catégories de véhicules du site ; armes : catégories d’armes ; ids : armes recensées (armes/<id>.html) quand la compatibilité est documentée ; note : précision affichée.",
+            "properties": {
+              "vehicules": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "berline",
+                    "sport",
+                    "supercar",
+                    "muscle",
+                    "suv",
+                    "pickup",
+                    "van",
+                    "moto",
+                    "helicoptere",
+                    "avion",
+                    "bateau",
+                    "service",
+                    "divers"
+                  ]
+                }
+              },
+              "armes": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "pistolet",
+                    "pompe",
+                    "pm",
+                    "assaut",
+                    "precision",
+                    "mitrailleuse",
+                    "melee",
+                    "projectile",
+                    "speciale"
+                  ]
+                }
+              },
+              "ids": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9-]+$"
+                }
+              },
+              "note": {
+                "type": "string",
+                "minLength": 3
+              }
+            }
+          },
+          "acq": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]+$",
+            "description": "Lot 6 : identifiant d’une acquisition suivable de outils/acquisitions.json ; la ligne affiche sa case « J’ai obtenu » (même stockage, aucun double compte) et porte suivi false."
+          }
         }
       }
     }

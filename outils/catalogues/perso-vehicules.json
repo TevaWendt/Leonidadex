@@ -1,0 +1,2772 @@
+{
+  "famille": "perso-vehicules",
+  "label": "Personnalisation des véhicules",
+  "titre": "Tous les postes de personnalisation des véhicules",
+  "page": "/personnalisations.html",
+  "section": "perso-vehicules",
+  "suivi": {
+    "cle": "lk_own_perso-vehicules",
+    "label": "Mes modifs de véhicule",
+    "fait": "posées",
+    "ancre": "perso-vehicules"
+  },
+  "intro": "De la carrosserie au blindage, poste par poste : ce que Rockstar a dit ou montré pour GTA VI (Rideout Customs, One-Eyed Willie’s, kit du Ganado, Pay ’n’ Spray), puis ce que Los Santos Customs et Benny’s font dans GTA V et GTA Online avec leurs prix, présentés comme repères. La colonne GTA VI reste à confirmer tant que Rockstar n’a rien publié.",
+  "categories": [
+    {
+      "id": "kits",
+      "label": "Kits complets",
+      "icon": "kit"
+    },
+    {
+      "id": "carrosserie",
+      "label": "Carrosserie",
+      "icon": "carrosserie"
+    },
+    {
+      "id": "jantes",
+      "label": "Jantes et pneus",
+      "icon": "jante"
+    },
+    {
+      "id": "peinture",
+      "label": "Peinture",
+      "icon": "peinture"
+    },
+    {
+      "id": "vitres",
+      "label": "Vitres teintées",
+      "icon": "vitre"
+    },
+    {
+      "id": "plaques",
+      "label": "Plaques",
+      "icon": "plaque"
+    },
+    {
+      "id": "klaxons",
+      "label": "Klaxons et sons",
+      "icon": "klaxon"
+    },
+    {
+      "id": "phares",
+      "label": "Phares",
+      "icon": "phare"
+    },
+    {
+      "id": "neons",
+      "label": "Néons",
+      "icon": "neon"
+    },
+    {
+      "id": "suspension",
+      "label": "Suspension",
+      "icon": "suspension"
+    },
+    {
+      "id": "moteur",
+      "label": "Moteur et performances",
+      "icon": "moteur"
+    },
+    {
+      "id": "freins",
+      "label": "Freins",
+      "icon": "frein"
+    },
+    {
+      "id": "transmission",
+      "label": "Transmission",
+      "icon": "transmission"
+    },
+    {
+      "id": "turbo",
+      "label": "Turbo",
+      "icon": "turbo"
+    },
+    {
+      "id": "blindage",
+      "label": "Blindage",
+      "icon": "blindage"
+    },
+    {
+      "id": "interieur",
+      "label": "Intérieur",
+      "icon": "interieur"
+    },
+    {
+      "id": "livrees",
+      "label": "Livrées et stickers",
+      "icon": "livree"
+    },
+    {
+      "id": "securite",
+      "label": "Sécurité et suivi",
+      "icon": "securite"
+    }
+  ],
+  "items": [
+    {
+      "id": "kit-ganado-retro",
+      "nom": "Modèle rétro du Ganado (kit)",
+      "categorie": "kits",
+      "statut": "officiel",
+      "media": "ganado-retro-build",
+      "suivi": false,
+      "description": "Kit exclusif de l’Édition Ultimate pour le pick-up Vapid Ganado de Jason : aileron de cabine, antennes arrière et livrée spéciale, d’après Rockstar.",
+      "effet": {
+        "texte": "Visuel : aileron de cabine, antennes arrière, livrée à bandes ; aucun gain chiffré publié",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": null,
+      "ou_le_trouver": [
+        {
+          "type": "Livré avec l’Édition Ultimate",
+          "note": "atelier de pose non précisé"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "vgc-editions",
+        "sixthaxis-editions",
+        "rs-screens"
+      ],
+      "lien": {
+        "href": "vehicules/vapid-ganado.html",
+        "label": "fiche du Ganado"
+      },
+      "compat": {
+        "vehicules": [
+          "pickup"
+        ]
+      },
+      "acq": "ganado-retro-build",
+      "notes": "« Exclusive mods including a cab spoiler, rear aerials, and special livery ». Sur la capture : bandes rouge et orange sur fond jaune, prise d’air et badge 434 sur le capot, jantes chromées. La case « J’ai obtenu » est celle de la carte Rockstar plus haut."
+    },
+    {
+      "id": "conversion-bennys",
+      "nom": "Conversion lowrider (Benny’s)",
+      "categorie": "kits",
+      "statut": "serie",
+      "description": "Dans GTA Online, Benny’s transforme 31 modèles en version « custom » avant toute autre modification : hydrauliques, intérieur et jantes exclusives.",
+      "effet": {
+        "texte": "Ouvre les hydrauliques, l’intérieur et les jantes Benny’s ; aucun gain de vitesse annoncé",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "min": 180000,
+        "max": 1288000,
+        "jeu": "GTA Online",
+        "note": "conversion seule, selon le modèle"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier lowrider",
+          "note": "repère : Benny’s Original Motor Works, GTA Online"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-bennys"
+      ],
+      "compat": {
+        "vehicules": [
+          "berline",
+          "muscle",
+          "suv",
+          "van"
+        ]
+      },
+      "notes": "Rideout Customs cite les « donk stylings » et les intérieurs : la conversion de Benny’s est le repère le plus proche dans la série."
+    },
+    {
+      "id": "mods-performance-gta6",
+      "nom": "Mods de performances (annoncés)",
+      "categorie": "moteur",
+      "statut": "officiel",
+      "description": "Rockstar annonce « a wide selection of artistic and performance-based vehicle mods » dans ses ateliers : rien de détaillé, rien de chiffré.",
+      "effet": {
+        "texte": "Performances annoncées, sans chiffre",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": null,
+      "ou_le_trouver": [
+        {
+          "lieu": "g-L2375"
+        },
+        {
+          "type": "One-Eyed Willie’s (Lake Leonida)",
+          "note": "pas encore placé sur la carte"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "sixthaxis-editions",
+        "gamesradar-63"
+      ],
+      "compat": {
+        "vehicules": [
+          "berline",
+          "sport",
+          "supercar",
+          "muscle",
+          "suv",
+          "pickup",
+          "van",
+          "service",
+          "divers"
+        ]
+      },
+      "notes": "Texte officiel des éditions du 24 juin 2026, reproduit par TheSixthAxis et GamesRadar+."
+    },
+    {
+      "id": "pare-chocs-avant",
+      "nom": "Pare-chocs avant",
+      "categorie": "carrosserie",
+      "statut": "serie",
+      "description": "Pare-chocs de série, lame ou intercooler apparent : du visuel, ça ne change pas la conduite dans GTA V.",
+      "effet": {
+        "texte": "Visuel uniquement",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "min": 750,
+        "max": 1650,
+        "jeu": "GTA V",
+        "note": "relevé sur la Karin Sultan"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier de personnalisation",
+          "note": "repère : Los Santos Customs, GTA V"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-sultan",
+        "gtawiki-lsc"
+      ],
+      "compat": {
+        "vehicules": [
+          "berline",
+          "sport",
+          "supercar",
+          "muscle",
+          "suv",
+          "pickup",
+          "van",
+          "service",
+          "divers"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "pare-chocs-arriere",
+      "nom": "Pare-chocs arrière",
+      "categorie": "carrosserie",
+      "statut": "serie",
+      "description": "Pare-chocs de série ou diffuseur carbone à l’arrière ; visuel seulement dans GTA V.",
+      "effet": {
+        "texte": "Visuel uniquement",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "min": 750,
+        "max": 1250,
+        "jeu": "GTA V",
+        "note": "relevé sur la Karin Sultan"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier de personnalisation",
+          "note": "repère : Los Santos Customs, GTA V"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-sultan",
+        "gtawiki-lsc"
+      ],
+      "compat": {
+        "vehicules": [
+          "berline",
+          "sport",
+          "supercar",
+          "muscle",
+          "suv",
+          "pickup",
+          "van",
+          "service",
+          "divers"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "pare-chocs-tout-terrain",
+      "nom": "Pare-chocs tout-terrain et treuil",
+      "categorie": "carrosserie",
+      "statut": "vu",
+      "media": "one-eyed-willie-s-mod-shop-01",
+      "description": "Sur la capture de One-Eyed Willie’s, le Canis porte un pare-chocs renforcé avec treuil et crochets, une plaque de protection et une barre de toit.",
+      "effet": {
+        "texte": "Visuel sur la capture ; aucun effet publié",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": null,
+      "ou_le_trouver": [
+        {
+          "type": "One-Eyed Willie’s (Lake Leonida)",
+          "note": "pas encore placé sur la carte"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "rs-screens",
+        "vgc-editions"
+      ],
+      "lien": {
+        "href": "entreprises/one-eyed-willie.html",
+        "label": "fiche de l’atelier"
+      },
+      "compat": {
+        "vehicules": [
+          "pickup",
+          "suv"
+        ]
+      },
+      "notes": "Rockstar parle d’« off-road modifications » sans nommer les pièces."
+    },
+    {
+      "id": "jupes",
+      "nom": "Jupes latérales",
+      "categorie": "carrosserie",
+      "statut": "serie",
+      "description": "Bas de caisse de série ou jupes sur mesure ; visuel seulement.",
+      "effet": {
+        "texte": "Visuel uniquement",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "min": 1250,
+        "max": 1500,
+        "jeu": "GTA V",
+        "note": "relevé sur la Karin Sultan"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier de personnalisation",
+          "note": "repère : Los Santos Customs, GTA V"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-sultan"
+      ],
+      "compat": {
+        "vehicules": [
+          "berline",
+          "sport",
+          "supercar",
+          "muscle",
+          "suv",
+          "pickup",
+          "van",
+          "service",
+          "divers"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "aileron",
+      "nom": "Aileron",
+      "categorie": "carrosserie",
+      "statut": "serie",
+      "description": "Dans GTA V, l’aileron est le seul élément de carrosserie qui joue sur la conduite : il améliore l’adhérence en virage.",
+      "effet": {
+        "texte": "Meilleure adhérence en virage (GTA V), du bas aileron à l’aile GT",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "min": 500,
+        "max": 1300,
+        "jeu": "GTA V",
+        "note": "Karin Sultan : sans, bas, haut, aile GT"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier de personnalisation",
+          "note": "repère : Los Santos Customs, GTA V"
+        }
+      ],
+      "variantes": [
+        "bas",
+        "haut",
+        "aile GT"
+      ],
+      "sources": [
+        "gtawiki-sultan",
+        "gtawiki-lsc"
+      ],
+      "compat": {
+        "vehicules": [
+          "berline",
+          "sport",
+          "supercar",
+          "muscle",
+          "suv",
+          "pickup",
+          "van",
+          "service",
+          "divers"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "capot",
+      "nom": "Capot",
+      "categorie": "carrosserie",
+      "statut": "serie",
+      "description": "Capot ventilé, carbone ou à prise d’air : visuel seulement.",
+      "effet": {
+        "texte": "Visuel uniquement",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "min": 450,
+        "max": 2225,
+        "jeu": "GTA V",
+        "note": "relevé sur la Karin Sultan"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier de personnalisation",
+          "note": "repère : Los Santos Customs, GTA V"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-sultan"
+      ],
+      "compat": {
+        "vehicules": [
+          "berline",
+          "sport",
+          "supercar",
+          "muscle",
+          "suv",
+          "pickup",
+          "van",
+          "service",
+          "divers"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "toit",
+      "nom": "Toit",
+      "categorie": "carrosserie",
+      "statut": "serie",
+      "description": "Bandeau pare-soleil, toit carbone ou panoramique selon le modèle ; visuel.",
+      "effet": {
+        "texte": "Visuel uniquement",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 350,
+        "jeu": "GTA V",
+        "note": "bandeau pare-soleil, Karin Sultan"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier de personnalisation",
+          "note": "repère : Los Santos Customs, GTA V"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-sultan",
+        "gtawiki-lsc"
+      ],
+      "compat": {
+        "vehicules": [
+          "berline",
+          "sport",
+          "supercar",
+          "muscle",
+          "suv",
+          "pickup",
+          "van",
+          "service",
+          "divers"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "calandre",
+      "nom": "Calandre",
+      "categorie": "carrosserie",
+      "statut": "serie",
+      "description": "Calandre de série ou sur mesure, visuel seulement.",
+      "effet": {
+        "texte": "Visuel uniquement",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": null,
+        "jeu": "GTA V",
+        "note": "prix non relevé sur la page consultée"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier de personnalisation",
+          "note": "repère : Los Santos Customs, GTA V"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-lsc"
+      ],
+      "compat": {
+        "vehicules": [
+          "berline",
+          "sport",
+          "supercar",
+          "muscle",
+          "suv",
+          "pickup",
+          "van",
+          "service",
+          "divers"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "ailes",
+      "nom": "Ailes et élargisseurs",
+      "categorie": "carrosserie",
+      "statut": "serie",
+      "description": "Ailes élargies ou de série, visuel seulement.",
+      "effet": {
+        "texte": "Visuel uniquement",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": null,
+        "jeu": "GTA V",
+        "note": "prix non relevé sur la page consultée"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier de personnalisation",
+          "note": "repère : Los Santos Customs, GTA V"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-lsc"
+      ],
+      "compat": {
+        "vehicules": [
+          "berline",
+          "sport",
+          "supercar",
+          "muscle",
+          "suv",
+          "pickup",
+          "van",
+          "service",
+          "divers"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "echappement",
+      "nom": "Échappement",
+      "categorie": "carrosserie",
+      "statut": "serie",
+      "description": "Sorties titane ou doubles : change le son et le look, pas les performances dans GTA V.",
+      "effet": {
+        "texte": "Son et visuel",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "min": 130,
+        "max": 375,
+        "jeu": "GTA V",
+        "note": "relevé sur la Karin Sultan"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier de personnalisation",
+          "note": "repère : Los Santos Customs, GTA V"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-sultan",
+        "gtawiki-lsc"
+      ],
+      "compat": {
+        "vehicules": [
+          "berline",
+          "sport",
+          "supercar",
+          "muscle",
+          "suv",
+          "pickup",
+          "van",
+          "service",
+          "divers",
+          "moto"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "arceau",
+      "nom": "Arceau et châssis",
+      "categorie": "carrosserie",
+      "statut": "serie",
+      "description": "Arceau de sécurité visible dans l’habitacle ; visuel seulement.",
+      "effet": {
+        "texte": "Visuel uniquement",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 550,
+        "jeu": "GTA V",
+        "note": "relevé sur la Karin Sultan"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier de personnalisation",
+          "note": "repère : Los Santos Customs, GTA V"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-sultan"
+      ],
+      "compat": {
+        "vehicules": [
+          "berline",
+          "sport",
+          "supercar",
+          "muscle",
+          "suv",
+          "pickup",
+          "van",
+          "service",
+          "divers"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "jantes-donk",
+      "nom": "Jantes surdimensionnées (style donk)",
+      "categorie": "jantes",
+      "statut": "officiel",
+      "media": "rideout-customs-mod-shop-01",
+      "description": "Rockstar cite les « exquisite rims » et le « donk stylings » de Rideout Customs ; la capture montre une Albany dorée sur d’immenses jantes dorées.",
+      "effet": {
+        "texte": "Visuel ; rien de chiffré",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": null,
+      "ou_le_trouver": [
+        {
+          "lieu": "g-L2375"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "vgc-editions",
+        "rs-screens"
+      ],
+      "lien": {
+        "href": "entreprises/rideout-customs.html",
+        "label": "fiche de l’atelier"
+      },
+      "compat": {
+        "vehicules": [
+          "berline",
+          "muscle"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "jantes-familles",
+      "nom": "Jantes (treize familles)",
+      "categorie": "jantes",
+      "statut": "serie",
+      "description": "Sport, muscle, lowrider, SUV, tout-terrain, tuner, haut de gamme, moto, Benny’s, course, street, track : chaque famille a ses modèles, chromés ou non.",
+      "effet": {
+        "texte": "Visuel uniquement",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "min": 1290,
+        "max": 4290,
+        "jeu": "GTA V",
+        "note": "fourchette des familles muscle à haut de gamme"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier de personnalisation",
+          "note": "repère : Los Santos Customs, GTA V"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-custom-wheels",
+        "gtawiki-custom"
+      ],
+      "compat": {
+        "vehicules": [
+          "berline",
+          "sport",
+          "supercar",
+          "muscle",
+          "suv",
+          "pickup",
+          "van",
+          "service",
+          "divers",
+          "moto"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "couleur-jantes",
+      "nom": "Couleur des jantes",
+      "categorie": "jantes",
+      "statut": "serie",
+      "description": "Quarante et une teintes préréglées pour les jantes dans GTA V, en plus des versions chromées.",
+      "effet": {
+        "texte": "Visuel uniquement",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": null,
+        "jeu": "GTA V",
+        "note": "prix non relevé sur la page consultée"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier de personnalisation",
+          "note": "repère : Los Santos Customs, GTA V"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-custom-wheels"
+      ],
+      "compat": {
+        "vehicules": [
+          "berline",
+          "sport",
+          "supercar",
+          "muscle",
+          "suv",
+          "pickup",
+          "van",
+          "service",
+          "divers",
+          "moto"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "pneus-flancs",
+      "nom": "Pneus sur mesure et flancs",
+      "categorie": "jantes",
+      "statut": "serie",
+      "description": "Dessin de flanc propre à chaque famille de jantes, flanc blanc compris ; visuel.",
+      "effet": {
+        "texte": "Visuel uniquement",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": null,
+        "jeu": "GTA V",
+        "note": "prix non relevé sur la page consultée"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier de personnalisation",
+          "note": "repère : Los Santos Customs, GTA V"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-custom-wheels"
+      ],
+      "compat": {
+        "vehicules": [
+          "berline",
+          "sport",
+          "supercar",
+          "muscle",
+          "suv",
+          "pickup",
+          "van",
+          "service",
+          "divers",
+          "moto"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "pneus-pare-balles",
+      "nom": "Pneus pare-balles",
+      "categorie": "jantes",
+      "statut": "serie",
+      "description": "Dans GTA V et GTA Online, les pneus pare-balles ne crèvent ni sous les balles, ni au feu, ni sur les herses.",
+      "effet": {
+        "texte": "Pneus qui ne crèvent pas (GTA V)",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": null,
+        "jeu": "GTA Online",
+        "note": "prix non relevé sur la page consultée"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier de personnalisation",
+          "note": "repère : Los Santos Customs, GTA V"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-custom-wheels",
+        "gtawiki-lsc"
+      ],
+      "compat": {
+        "vehicules": [
+          "berline",
+          "sport",
+          "supercar",
+          "muscle",
+          "suv",
+          "pickup",
+          "van",
+          "service",
+          "divers",
+          "moto"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "fumee-pneus",
+      "nom": "Fumée de pneus colorée",
+      "categorie": "jantes",
+      "statut": "serie",
+      "description": "Couleur de la fumée quand tu fais patiner les roues ; visuel.",
+      "effet": {
+        "texte": "Visuel uniquement",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": null,
+        "jeu": "GTA V",
+        "note": "prix non relevé sur la page consultée"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier de personnalisation",
+          "note": "repère : Los Santos Customs, GTA V"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-custom-wheels"
+      ],
+      "compat": {
+        "vehicules": [
+          "berline",
+          "sport",
+          "supercar",
+          "muscle",
+          "suv",
+          "pickup",
+          "van",
+          "service",
+          "divers",
+          "moto"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "pneus-tout-terrain",
+      "nom": "Pneus tout-terrain",
+      "categorie": "jantes",
+      "statut": "officiel",
+      "media": "ultimate-edition-one-eyed-willie-03",
+      "description": "Le Canis de One-Eyed Willie’s roule sur des pneus à crampons marqués « All Terrain » ; Rockstar parle d’« off-road modifications ».",
+      "effet": {
+        "texte": "Visuel ; aucun effet publié",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": null,
+      "ou_le_trouver": [
+        {
+          "type": "One-Eyed Willie’s (Lake Leonida)",
+          "note": "pas encore placé sur la carte"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "vgc-editions",
+        "rs-screens"
+      ],
+      "compat": {
+        "vehicules": [
+          "pickup",
+          "suv"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "pneus-faible-adherence",
+      "nom": "Pneus à faible adhérence (drift)",
+      "categorie": "jantes",
+      "statut": "serie",
+      "description": "Réservés au LS Car Meet dans GTA Online : ils font glisser la voiture pour drifter.",
+      "effet": {
+        "texte": "Fait glisser l’arrière (GTA Online)",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": null,
+        "jeu": "GTA Online",
+        "note": "prix non relevé sur la page consultée"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "LS Car Meet",
+          "note": "repère : GTA Online"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-custom-wheels"
+      ],
+      "compat": {
+        "vehicules": [
+          "berline",
+          "sport",
+          "supercar",
+          "muscle",
+          "suv",
+          "pickup",
+          "van",
+          "service",
+          "divers"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "pay-n-spray",
+      "nom": "Repeinte au Pay ’n’ Spray",
+      "categorie": "peinture",
+      "statut": "officiel",
+      "description": "Rob Nelson : au Pay ’n’ Spray tu répares et tu repeins ta voiture pour semer la police ; seule la couleur change, la peinture élaborée se fait dans un atelier.",
+      "effet": {
+        "texte": "Fait tomber la traque de la police après une repeinte, d’après Rob Nelson",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": null,
+      "ou_le_trouver": [
+        {
+          "type": "Pay ’n’ Spray",
+          "note": "pas encore placé sur la carte"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtavice-famitsu",
+        "famitsu-nelson"
+      ],
+      "compat": {
+        "vehicules": [
+          "berline",
+          "sport",
+          "supercar",
+          "muscle",
+          "suv",
+          "pickup",
+          "van",
+          "service",
+          "divers",
+          "moto"
+        ]
+      },
+      "notes": "« You can basically only change the color there, so if you want an elaborate paint job, you’ll need to take it to a tuning shop. » Le même Pay ’n’ Spray ne reprend pas une autre voiture tout de suite."
+    },
+    {
+      "id": "peinture-pailletee",
+      "nom": "Peinture pailletée dorée (vue)",
+      "categorie": "peinture",
+      "statut": "vu",
+      "media": "rideout-customs-mod-shop-01",
+      "description": "L’Albany de la capture Rideout Customs porte une peinture dorée à paillettes : une finition vue, sans nom ni prix.",
+      "effet": {
+        "texte": "Visuel ; rien de chiffré",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": null,
+      "ou_le_trouver": [
+        {
+          "lieu": "g-L2375"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "rs-screens"
+      ],
+      "compat": {
+        "vehicules": [
+          "berline",
+          "muscle"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "peinture-bicolore",
+      "nom": "Peinture bicolore (vue)",
+      "categorie": "peinture",
+      "statut": "vu",
+      "media": "55-vapid-stanier-01",
+      "description": "La Stanier ’55 du Pack Vintage est peinte en deux tons, jaune et blanc, avec des chromes : un exemple vu, pas une option annoncée.",
+      "effet": {
+        "texte": "Visuel ; rien de chiffré",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": null,
+      "ou_le_trouver": [
+        {
+          "type": "Livrée avec le Pack Vintage Vice City"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "rs-screens",
+        "sixthaxis-editions"
+      ],
+      "lien": {
+        "href": "vehicules/vapid-stanier.html",
+        "label": "fiche de la Stanier ’55"
+      },
+      "compat": {
+        "vehicules": [
+          "berline"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "peinture-principale",
+      "nom": "Peinture principale",
+      "categorie": "peinture",
+      "statut": "serie",
+      "description": "Classique, métallisée, mate, métal ou chrome : la couleur principale de la carrosserie.",
+      "effet": {
+        "texte": "Visuel uniquement",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "min": 400,
+        "max": 1200,
+        "jeu": "GTA V",
+        "note": "classique 400 $, métallisée 650 $, métal 900 $, mate 1 000 $, chrome 1 200 $"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier de personnalisation",
+          "note": "repère : Los Santos Customs, GTA V"
+        }
+      ],
+      "variantes": [
+        "classique",
+        "métallisée",
+        "mate",
+        "métal",
+        "chrome"
+      ],
+      "sources": [
+        "gtawiki-custom-respray",
+        "gtawiki-custom"
+      ],
+      "compat": {
+        "vehicules": [
+          "berline",
+          "sport",
+          "supercar",
+          "muscle",
+          "suv",
+          "pickup",
+          "van",
+          "service",
+          "divers",
+          "moto"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "peinture-secondaire",
+      "nom": "Peinture secondaire",
+      "categorie": "peinture",
+      "statut": "serie",
+      "description": "La seconde teinte (bandes, toit, détails) avec les mêmes finitions que la principale.",
+      "effet": {
+        "texte": "Visuel uniquement",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "min": 400,
+        "max": 1200,
+        "jeu": "GTA V",
+        "note": "mêmes tarifs que la principale"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier de personnalisation",
+          "note": "repère : Los Santos Customs, GTA V"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-custom-respray"
+      ],
+      "compat": {
+        "vehicules": [
+          "berline",
+          "sport",
+          "supercar",
+          "muscle",
+          "suv",
+          "pickup",
+          "van",
+          "service",
+          "divers",
+          "moto"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "nacre",
+      "nom": "Nacré",
+      "categorie": "peinture",
+      "statut": "serie",
+      "description": "Reflet nacré ajouté sur une peinture métallisée ; réglé à part avec la couleur des jantes et des garnitures.",
+      "effet": {
+        "texte": "Visuel uniquement",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": null,
+        "jeu": "GTA V",
+        "note": "prix non relevé sur la page consultée"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier de personnalisation",
+          "note": "repère : Los Santos Customs, GTA V"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-custom-respray"
+      ],
+      "compat": {
+        "vehicules": [
+          "berline",
+          "sport",
+          "supercar",
+          "muscle",
+          "suv",
+          "pickup",
+          "van",
+          "service",
+          "divers",
+          "moto"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "cameleon",
+      "nom": "Peinture caméléon",
+      "categorie": "peinture",
+      "statut": "serie",
+      "description": "Teinte qui change avec l’angle, réservée à GTA Online sur les versions améliorées.",
+      "effet": {
+        "texte": "Visuel uniquement",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "min": 44250,
+        "max": 65000,
+        "jeu": "GTA Online"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier de personnalisation",
+          "note": "repère : Los Santos Customs, GTA V"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-custom-respray",
+        "gtawiki-custom"
+      ],
+      "compat": {
+        "vehicules": [
+          "berline",
+          "sport",
+          "supercar",
+          "muscle",
+          "suv",
+          "pickup",
+          "van",
+          "service",
+          "divers"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "vitres-teintees",
+      "nom": "Vitres teintées",
+      "categorie": "vitres",
+      "statut": "serie",
+      "description": "Fumé léger, fumé foncé ou limousine ; visuel seulement.",
+      "effet": {
+        "texte": "Visuel uniquement",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "min": 200,
+        "max": 700,
+        "jeu": "GTA V",
+        "note": "fumé léger 200 $, foncé 450 $, limousine 700 $"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier de personnalisation",
+          "note": "repère : Los Santos Customs, GTA V"
+        }
+      ],
+      "variantes": [
+        "fumé léger",
+        "fumé foncé",
+        "limousine"
+      ],
+      "sources": [
+        "gtawiki-custom",
+        "gtawiki-gauntlet"
+      ],
+      "compat": {
+        "vehicules": [
+          "berline",
+          "sport",
+          "supercar",
+          "muscle",
+          "suv",
+          "pickup",
+          "van",
+          "service",
+          "divers"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "vitres-noir-pur",
+      "nom": "Vitres noir pur",
+      "categorie": "vitres",
+      "statut": "serie",
+      "description": "Teinte totalement opaque, réservée à GTA Online.",
+      "effet": {
+        "texte": "Visuel uniquement",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 10000,
+        "jeu": "GTA Online"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier de personnalisation",
+          "note": "repère : Los Santos Customs, GTA V"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-custom"
+      ],
+      "compat": {
+        "vehicules": [
+          "berline",
+          "sport",
+          "supercar",
+          "muscle",
+          "suv",
+          "pickup",
+          "van",
+          "service",
+          "divers"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "plaques",
+      "nom": "Plaque d’immatriculation",
+      "categorie": "plaques",
+      "statut": "serie",
+      "description": "Bleu sur blanc, jaune sur bleu, jaune sur noir : le style de la plaque.",
+      "effet": {
+        "texte": "Visuel uniquement",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "min": 50,
+        "max": 150,
+        "jeu": "GTA V",
+        "note": "relevé sur la Bravado Gauntlet"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier de personnalisation",
+          "note": "repère : Los Santos Customs, GTA V"
+        }
+      ],
+      "variantes": [
+        "bleu sur blanc",
+        "jaune sur bleu",
+        "jaune sur noir"
+      ],
+      "sources": [
+        "gtawiki-gauntlet"
+      ],
+      "compat": {
+        "vehicules": [
+          "berline",
+          "sport",
+          "supercar",
+          "muscle",
+          "suv",
+          "pickup",
+          "van",
+          "service",
+          "divers",
+          "moto"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "klaxons",
+      "nom": "Klaxons",
+      "categorie": "klaxons",
+      "statut": "serie",
+      "description": "Klaxon de camion, de police, de clown, plus des airs musicaux courts.",
+      "effet": {
+        "texte": "Son uniquement",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "min": 50,
+        "max": 1700,
+        "jeu": "GTA V",
+        "note": "de série 50 $, camion 60 $, police 75 $, clown 150 $, musicaux 255 à 1 700 $"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier de personnalisation",
+          "note": "repère : Los Santos Customs, GTA V"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-custom-horns"
+      ],
+      "compat": {
+        "vehicules": [
+          "berline",
+          "sport",
+          "supercar",
+          "muscle",
+          "suv",
+          "pickup",
+          "van",
+          "service",
+          "divers",
+          "moto"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "klaxons-boucle",
+      "nom": "Klaxons en boucle",
+      "categorie": "klaxons",
+      "statut": "serie",
+      "description": "Airs joués en continu : jazz, classique, San Andreas, versions saisonnières.",
+      "effet": {
+        "texte": "Son uniquement",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "min": 1500,
+        "max": 2200,
+        "jeu": "GTA V",
+        "note": "35 000 à 90 000 $ en ligne"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier de personnalisation",
+          "note": "repère : Los Santos Customs, GTA V"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-custom-horns"
+      ],
+      "compat": {
+        "vehicules": [
+          "berline",
+          "sport",
+          "supercar",
+          "muscle",
+          "suv",
+          "pickup",
+          "van",
+          "service",
+          "divers",
+          "moto"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "phares-xenon",
+      "nom": "Phares xénon",
+      "categorie": "phares",
+      "statut": "serie",
+      "description": "Éclairage plus blanc et plus fort ; visuel de nuit.",
+      "effet": {
+        "texte": "Visuel de nuit",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 1000,
+        "jeu": "GTA V",
+        "note": "relevé sur la Karin Sultan ; variable selon le véhicule"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier de personnalisation",
+          "note": "repère : Los Santos Customs, GTA V"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-sultan",
+        "gtawiki-custom-lights"
+      ],
+      "compat": {
+        "vehicules": [
+          "berline",
+          "sport",
+          "supercar",
+          "muscle",
+          "suv",
+          "pickup",
+          "van",
+          "service",
+          "divers",
+          "moto"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "phares-couleur",
+      "nom": "Phares de couleur",
+      "categorie": "phares",
+      "statut": "serie",
+      "description": "Treize couleurs de phares dans GTA Online : blanc, bleus, verts, jaune, orange, rouge, roses, violet, lumière noire.",
+      "effet": {
+        "texte": "Visuel de nuit",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "min": 20000,
+        "max": 80000,
+        "jeu": "GTA Online",
+        "note": "moitié prix après Arena War"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier de personnalisation",
+          "note": "repère : Los Santos Customs, GTA V"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-custom-lights"
+      ],
+      "compat": {
+        "vehicules": [
+          "berline",
+          "sport",
+          "supercar",
+          "muscle",
+          "suv",
+          "pickup",
+          "van",
+          "service",
+          "divers"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "neons-disposition",
+      "nom": "Néons (disposition)",
+      "categorie": "neons",
+      "statut": "serie",
+      "description": "Sous la caisse : avant, arrière, côtés ou tout le tour.",
+      "effet": {
+        "texte": "Visuel de nuit",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "min": 1000,
+        "max": 3000,
+        "jeu": "GTA V",
+        "note": "avant ou arrière 1 000 $, côtés 1 250 $, tout le tour 3 000 $"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier de personnalisation",
+          "note": "repère : Los Santos Customs, GTA V"
+        }
+      ],
+      "variantes": [
+        "avant",
+        "arrière",
+        "côtés",
+        "avant et arrière",
+        "tout le tour"
+      ],
+      "sources": [
+        "gtawiki-custom-lights"
+      ],
+      "compat": {
+        "vehicules": [
+          "berline",
+          "sport",
+          "supercar",
+          "muscle",
+          "suv",
+          "pickup",
+          "van",
+          "service",
+          "divers"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "neons-couleur",
+      "nom": "Néons (couleur)",
+      "categorie": "neons",
+      "statut": "serie",
+      "description": "Treize couleurs de néon, plus la couleur du crew en ligne.",
+      "effet": {
+        "texte": "Visuel de nuit",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 650,
+        "jeu": "GTA V",
+        "note": "5 000 à 6 900 $ en ligne"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier de personnalisation",
+          "note": "repère : Los Santos Customs, GTA V"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-custom-lights"
+      ],
+      "compat": {
+        "vehicules": [
+          "berline",
+          "sport",
+          "supercar",
+          "muscle",
+          "suv",
+          "pickup",
+          "van",
+          "service",
+          "divers"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "suspension-rehaussee",
+      "nom": "Rehausse et garde au sol (vue)",
+      "categorie": "suspension",
+      "statut": "vu",
+      "media": "ultimate-edition-rideout-customs-03",
+      "description": "Le coupé jaune de Rideout Customs et le Canis de One-Eyed Willie’s sont nettement surélevés sur les captures ; aucune option nommée.",
+      "effet": {
+        "texte": "Visuel ; rien de chiffré",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": null,
+      "ou_le_trouver": [
+        {
+          "lieu": "g-L2375"
+        },
+        {
+          "type": "One-Eyed Willie’s (Lake Leonida)",
+          "note": "pas encore placé sur la carte"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "rs-screens"
+      ],
+      "compat": {
+        "vehicules": [
+          "berline",
+          "muscle",
+          "pickup",
+          "suv"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "suspension-niveaux",
+      "nom": "Suspension (rabaissée, street, sport)",
+      "categorie": "suspension",
+      "statut": "serie",
+      "description": "Rabaissée, street, sport ou compétition : la caisse descend d’un cran à chaque niveau ; GTA Wiki la range avec les postes de performances.",
+      "effet": {
+        "texte": "Caisse abaissée ; effet sur la tenue de route discuté selon les guides",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "min": 500,
+        "max": 1700,
+        "jeu": "GTA V",
+        "note": "Bravado Gauntlet : rabaissée 500 $, street 1 000 $, sport 1 700 $"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier de personnalisation",
+          "note": "repère : Los Santos Customs, GTA V"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-gauntlet",
+        "gtawiki-lsc"
+      ],
+      "compat": {
+        "vehicules": [
+          "berline",
+          "sport",
+          "supercar",
+          "muscle",
+          "suv",
+          "pickup",
+          "van",
+          "service",
+          "divers",
+          "moto"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "hydrauliques",
+      "nom": "Hydrauliques (lowrider)",
+      "categorie": "suspension",
+      "statut": "serie",
+      "description": "Pompes hydrauliques de Benny’s : la caisse monte, descend et saute, avec plusieurs puissances de pompe.",
+      "effet": {
+        "texte": "Fait sauter la caisse (GTA Online)",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": null,
+        "jeu": "GTA Online",
+        "note": "prix non relevé sur la page consultée"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier lowrider",
+          "note": "repère : Benny’s Original Motor Works, GTA Online"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-bennys"
+      ],
+      "compat": {
+        "vehicules": [
+          "berline",
+          "muscle",
+          "suv",
+          "van"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "moteur-ems",
+      "nom": "Moteur (EMS niveaux 1 à 4)",
+      "categorie": "moteur",
+      "statut": "serie",
+      "description": "Quatre niveaux de gestion moteur : plus de puissance et d’accélération à chaque cran.",
+      "effet": {
+        "texte": "Plus de puissance et d’accélération (GTA V)",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "min": 900,
+        "max": 3350,
+        "jeu": "GTA V",
+        "note": "Bravado Gauntlet : 900, 1 250, 1 800, 3 350 $"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier de personnalisation",
+          "note": "repère : Los Santos Customs, GTA V"
+        }
+      ],
+      "variantes": [
+        "niveau 1",
+        "niveau 2",
+        "niveau 3",
+        "niveau 4"
+      ],
+      "sources": [
+        "gtawiki-gauntlet",
+        "gtawiki-lsc"
+      ],
+      "compat": {
+        "vehicules": [
+          "berline",
+          "sport",
+          "supercar",
+          "muscle",
+          "suv",
+          "pickup",
+          "van",
+          "service",
+          "divers",
+          "moto"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "moteur-bennys",
+      "nom": "Bloc moteur et admission (Benny’s)",
+      "categorie": "moteur",
+      "statut": "serie",
+      "description": "Bloc moteur, filtre à air et barre anti-rapprochement visibles capot ouvert chez Benny’s ; visuel.",
+      "effet": {
+        "texte": "Visuel uniquement",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": null,
+        "jeu": "GTA Online",
+        "note": "prix non relevé sur la page consultée"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier lowrider",
+          "note": "repère : Benny’s Original Motor Works, GTA Online"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-bennys"
+      ],
+      "compat": {
+        "vehicules": [
+          "berline",
+          "muscle",
+          "suv",
+          "van"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "freins",
+      "nom": "Freins (street, sport, course)",
+      "categorie": "freins",
+      "statut": "serie",
+      "description": "Trois niveaux : la voiture s’arrête plus court.",
+      "effet": {
+        "texte": "Freinage plus court (GTA V)",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "min": 2000,
+        "max": 3500,
+        "jeu": "GTA V",
+        "note": "Bravado Gauntlet : 2 000, 2 700, 3 500 $"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier de personnalisation",
+          "note": "repère : Los Santos Customs, GTA V"
+        }
+      ],
+      "variantes": [
+        "street",
+        "sport",
+        "course"
+      ],
+      "sources": [
+        "gtawiki-gauntlet",
+        "gtawiki-lsc"
+      ],
+      "compat": {
+        "vehicules": [
+          "berline",
+          "sport",
+          "supercar",
+          "muscle",
+          "suv",
+          "pickup",
+          "van",
+          "service",
+          "divers",
+          "moto"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "transmission",
+      "nom": "Transmission (street, sport, course)",
+      "categorie": "transmission",
+      "statut": "serie",
+      "description": "Passages de rapports plus rapides : meilleure accélération.",
+      "effet": {
+        "texte": "Accélération améliorée (GTA V)",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "min": 2950,
+        "max": 4000,
+        "jeu": "GTA V",
+        "note": "Bravado Gauntlet : 2 950, 3 250, 4 000 $"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier de personnalisation",
+          "note": "repère : Los Santos Customs, GTA V"
+        }
+      ],
+      "variantes": [
+        "street",
+        "sport",
+        "course"
+      ],
+      "sources": [
+        "gtawiki-gauntlet",
+        "gtawiki-lsc"
+      ],
+      "compat": {
+        "vehicules": [
+          "berline",
+          "sport",
+          "supercar",
+          "muscle",
+          "suv",
+          "pickup",
+          "van",
+          "service",
+          "divers",
+          "moto"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "turbo",
+      "nom": "Turbo",
+      "categorie": "turbo",
+      "statut": "serie",
+      "description": "Un seul niveau : grosse reprise à l’accélération.",
+      "effet": {
+        "texte": "Accélération nettement améliorée (GTA V)",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": 2500,
+        "jeu": "GTA V",
+        "note": "30 000 $ en ligne sur la Bravado Gauntlet"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier de personnalisation",
+          "note": "repère : Los Santos Customs, GTA V"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-gauntlet",
+        "gtawiki-lsc"
+      ],
+      "compat": {
+        "vehicules": [
+          "berline",
+          "sport",
+          "supercar",
+          "muscle",
+          "suv",
+          "pickup",
+          "van",
+          "service",
+          "divers",
+          "moto"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "blindage",
+      "nom": "Blindage (20 à 100 %)",
+      "categorie": "blindage",
+      "statut": "serie",
+      "description": "Cinq niveaux : la voiture encaisse plus de dégâts avant d’exploser.",
+      "effet": {
+        "texte": "Encaisse plus de dégâts, jusqu’à",
+        "valeur": 100,
+        "unite": "armure",
+        "jeu": "GTA V"
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "min": 500,
+        "max": 5000,
+        "jeu": "GTA V",
+        "note": "Bravado Gauntlet : 500 à 5 000 $ ; 4 500 à 30 000 $ en ligne"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier de personnalisation",
+          "note": "repère : Los Santos Customs, GTA V"
+        }
+      ],
+      "variantes": [
+        "20 %",
+        "40 %",
+        "60 %",
+        "80 %",
+        "100 %"
+      ],
+      "sources": [
+        "gtawiki-gauntlet",
+        "gtawiki-lsc"
+      ],
+      "compat": {
+        "vehicules": [
+          "berline",
+          "sport",
+          "supercar",
+          "muscle",
+          "suv",
+          "pickup",
+          "van",
+          "service",
+          "divers",
+          "moto"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "interieur-rideout",
+      "nom": "Intérieurs sur mesure (Rideout Customs)",
+      "categorie": "interieur",
+      "statut": "officiel",
+      "media": "ultimate-edition-rideout-customs-02",
+      "description": "Rockstar cite les « detailed interiors » de Rideout Customs ; la capture montre un habitacle entièrement retapissé en rouge.",
+      "effet": {
+        "texte": "Visuel ; rien de chiffré",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": null,
+      "ou_le_trouver": [
+        {
+          "lieu": "g-L2375"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "vgc-editions",
+        "rs-screens"
+      ],
+      "lien": {
+        "href": "entreprises/rideout-customs.html",
+        "label": "fiche de l’atelier"
+      },
+      "compat": {
+        "vehicules": [
+          "berline",
+          "muscle"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "interieur-bennys",
+      "nom": "Tableau de bord, sièges, volant (Benny’s)",
+      "categorie": "interieur",
+      "statut": "serie",
+      "description": "Chez Benny’s : tableau de bord, cadrans, portes, sièges, volant, levier de vitesse, plaques, garnitures et ornements.",
+      "effet": {
+        "texte": "Visuel uniquement",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": null,
+        "jeu": "GTA Online",
+        "note": "prix non relevé sur la page consultée"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier lowrider",
+          "note": "repère : Benny’s Original Motor Works, GTA Online"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-bennys"
+      ],
+      "compat": {
+        "vehicules": [
+          "berline",
+          "muscle",
+          "suv",
+          "van"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "livree-ganado",
+      "nom": "Livrée spéciale du Ganado",
+      "categorie": "livrees",
+      "statut": "officiel",
+      "media": "ganado-retro-build",
+      "description": "La « special livery » du kit rétro : bandes rouge et orange sur fond jaune, badge 434 sur le capot, nom Ganado sur les flancs.",
+      "effet": {
+        "texte": "Visuel ; rien de chiffré",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": null,
+      "ou_le_trouver": [
+        {
+          "type": "Livré avec l’Édition Ultimate"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "sixthaxis-editions",
+        "rs-screens"
+      ],
+      "lien": {
+        "href": "vehicules/vapid-ganado.html",
+        "label": "fiche du Ganado"
+      },
+      "compat": {
+        "vehicules": [
+          "pickup"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "livree-peinte-main",
+      "nom": "Livrée peinte à la main",
+      "categorie": "livrees",
+      "statut": "officiel",
+      "media": "one-eyed-willie-s-mod-shop-01",
+      "description": "One-Eyed Willie’s propose des « custom hand-painted masterpieces » : la capture montre un alligator peint sur le flanc du Canis.",
+      "effet": {
+        "texte": "Visuel ; rien de chiffré",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": null,
+      "ou_le_trouver": [
+        {
+          "type": "One-Eyed Willie’s (Lake Leonida)",
+          "note": "pas encore placé sur la carte"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "sixthaxis-editions",
+        "vgc-editions",
+        "rs-screens"
+      ],
+      "lien": {
+        "href": "entreprises/one-eyed-willie.html",
+        "label": "fiche de l’atelier"
+      },
+      "compat": {
+        "vehicules": [
+          "pickup",
+          "suv"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "livrees-serie",
+      "nom": "Livrées et autocollants",
+      "categorie": "livrees",
+      "statut": "serie",
+      "description": "Bandes, numéros et décos propres à chaque modèle dans GTA V ; beaucoup viennent des mises à jour de GTA Online.",
+      "effet": {
+        "texte": "Visuel uniquement",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": null,
+        "jeu": "GTA V",
+        "note": "prix non relevé sur la page consultée"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier de personnalisation",
+          "note": "repère : Los Santos Customs, GTA V"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-lsc"
+      ],
+      "compat": {
+        "vehicules": [
+          "berline",
+          "sport",
+          "supercar",
+          "muscle",
+          "suv",
+          "pickup",
+          "van",
+          "service",
+          "divers",
+          "moto"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "embleme-crew",
+      "nom": "Emblème de crew",
+      "categorie": "livrees",
+      "statut": "serie",
+      "description": "Logo de ton crew Social Club posé sur la carrosserie, GTA Online seulement.",
+      "effet": {
+        "texte": "Visuel uniquement",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "valeur": null,
+        "jeu": "GTA Online",
+        "note": "prix non relevé sur la page consultée"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier de personnalisation",
+          "note": "repère : Los Santos Customs, GTA V"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-lsc"
+      ],
+      "compat": {
+        "vehicules": [
+          "berline",
+          "sport",
+          "supercar",
+          "muscle",
+          "suv",
+          "pickup",
+          "van",
+          "service",
+          "divers",
+          "moto"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "alarme-traceur-gta6",
+      "nom": "Alarme et traceur (voitures de luxe)",
+      "categorie": "securite",
+      "statut": "officiel",
+      "description": "Rob Nelson : les voitures de luxe ont souvent une alarme et un traceur ; il faut cloner la clé, et un receleur peut retirer le traceur.",
+      "effet": {
+        "texte": "Le traceur peut signaler ta position à la police, d’après Rob Nelson",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": null,
+      "ou_le_trouver": [
+        {
+          "type": "Receleur de véhicules",
+          "note": "retire le traceur ; pas encore placé sur la carte"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtavice-famitsu",
+        "gamingbible-7"
+      ],
+      "compat": {
+        "vehicules": [
+          "berline",
+          "sport",
+          "supercar",
+          "muscle",
+          "suv",
+          "pickup",
+          "van",
+          "service",
+          "divers"
+        ]
+      },
+      "notes": "« If the car you’re trying to steal is a luxury vehicle, you’ll need the key cloner. There’s also a high probability that it will have an alarm and a sophisticated tracker. »"
+    },
+    {
+      "id": "traceur-assurance",
+      "nom": "Traceur et assurance",
+      "categorie": "securite",
+      "statut": "serie",
+      "description": "Dans GTA Online, le traceur fait apparaître ta voiture sur le radar et l’assurance la remplace si elle est détruite.",
+      "effet": {
+        "texte": "Voiture retrouvée et remplacée (GTA Online)",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "min": 2000,
+        "max": 4000,
+        "jeu": "GTA Online",
+        "note": "traceur 2 000 $, assurance 4 000 $ sur la Bravado Gauntlet"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier de personnalisation",
+          "note": "repère : Los Santos Customs, GTA V"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-gauntlet",
+        "gtawiki-lsc"
+      ],
+      "compat": {
+        "vehicules": [
+          "berline",
+          "sport",
+          "supercar",
+          "muscle",
+          "suv",
+          "pickup",
+          "van",
+          "service",
+          "divers",
+          "moto"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "bombes",
+      "nom": "Bombe à distance ou au démarrage",
+      "categorie": "securite",
+      "statut": "serie",
+      "description": "Explosif posé dans la voiture, déclenché à distance ou au démarrage ; GTA Online seulement.",
+      "effet": {
+        "texte": "Fait exploser la voiture (GTA Online)",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": {
+        "min": 5000,
+        "max": 7500,
+        "jeu": "GTA Online",
+        "note": "au démarrage 5 000 $, à distance 7 500 $"
+      },
+      "ou_le_trouver": [
+        {
+          "type": "Atelier de personnalisation",
+          "note": "repère : Los Santos Customs, GTA V"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-gauntlet",
+        "gtawiki-lsc"
+      ],
+      "compat": {
+        "vehicules": [
+          "berline",
+          "sport",
+          "supercar",
+          "muscle",
+          "suv",
+          "pickup",
+          "van",
+          "service",
+          "divers"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "motos-conf",
+      "nom": "Personnalisation des motos",
+      "categorie": "kits",
+      "statut": "conf",
+      "description": "Rockstar n’a rien montré pour les motos ; dans GTA V, Los Santos Customs modifie aussi les deux-roues (jantes « moto », échappement, peinture).",
+      "effet": {
+        "texte": "Rien de publié pour GTA VI",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": null,
+      "ou_le_trouver": [
+        {
+          "type": "Atelier de personnalisation",
+          "note": "à confirmer"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "gtawiki-custom-wheels",
+        "gtawiki-lsc"
+      ],
+      "compat": {
+        "vehicules": [
+          "moto"
+        ]
+      },
+      "notes": ""
+    },
+    {
+      "id": "bateaux-avions-conf",
+      "nom": "Bateaux, avions et hélicoptères",
+      "categorie": "kits",
+      "statut": "conf",
+      "description": "Rockstar n’a rien montré ni décrit pour les bateaux, les avions et les hélicoptères : ligne ouverte, sans repère avancé.",
+      "effet": {
+        "texte": "Rien de publié pour GTA VI",
+        "valeur": null,
+        "unite": null,
+        "jeu": null
+      },
+      "prix_gta6": {
+        "valeur": null,
+        "statut": "conf"
+      },
+      "prix_repere_serie": null,
+      "ou_le_trouver": [
+        {
+          "type": "Non précisé par Rockstar"
+        }
+      ],
+      "variantes": [],
+      "sources": [
+        "sixthaxis-editions"
+      ],
+      "compat": {
+        "vehicules": [
+          "bateau",
+          "avion",
+          "helicoptere"
+        ]
+      },
+      "notes": ""
+    }
+  ]
+}

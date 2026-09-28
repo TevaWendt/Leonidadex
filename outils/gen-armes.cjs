@@ -17,6 +17,8 @@ const MED=JSON.parse(fs.readFileSync('outils/medias-officiels.json','utf8'));
 const AM=JSON.parse(fs.readFileSync('outils/armes-medias.json','utf8'));
 const {schema}=require('./armes-schemas.cjs');
 const RED=require('./redaction.cjs');
+/* v7.43 (lot 6) : catégories d’armes couvertes par au moins un poste de personnalisation (outils/catalogues/perso-armes.json) : lien « Accessoires compatibles » vers la liste filtrée. */
+const PERSO_COVER=require('./catalogues.cjs').coverage('perso-armes');
 const VIDE_TXT='Schéma indicatif du type d’arme. Les visuels officiels détaillés arriveront avec le jeu.';
 const PERSO_NOM=Object.fromEntries(JSON.parse(fs.readFileSync('outils/editorial.json','utf8')).characters.map(c=>[c.id,c.name.split(' ')[0]]));
 /* armureries repérées sur la carte : mêmes liens sur toutes les fiches, comme les concessions sur les fiches véhicules */
@@ -115,7 +117,7 @@ ${HEADER}
         <div class="fiche-tags">
           ${tags}
         </div>
-        <div class="fiche-liens"><button type="button" class="own-bt" id="own-bt" data-id="${a.id}"><span class="ck"></span><span>Ajouter à mon arsenal</span></button><a href="../comparateur.html?type=armes&amp;ids=${a.id}">Comparer</a></div>
+        <div class="fiche-liens"><button type="button" class="own-bt" id="own-bt" data-id="${a.id}"><span class="ck"></span><span>Ajouter à mon arsenal</span></button><a href="../comparateur.html?type=armes&amp;ids=${a.id}">Comparer</a>${PERSO_COVER.has(a.cat)?'<a href="../personnalisations.html#perso-armes='+a.cat+'">Accessoires compatibles</a>':''}</div>
       </div>
       <div class="fhero-art fhero-art--gal">
         ${gal}

@@ -1,5 +1,5 @@
 {
-  "_note": "v7.42 (lot 5) : registre des sources des catalogues (consommables, coiffures, tatouages, tenues et accessoires). Chaque ligne d’un catalogue cite un ou plusieurs identifiants d’ici. statut : officiel (page ou vidéo Rockstar, ou texte officiel reproduit), vu (trailer, capture, Extended Look), comm (identification communautaire), serie (ce que GTA V, GTA Online, GTA IV ou San Andreas font, présenté comme repère), conf (à confirmer). Les pages Rockstar gardent leur dernière ouverture directe ; les autres pages ont été ouvertes le 27 septembre 2026.",
+  "_note": "v7.42 (lot 5) et v7.43 (lot 6) : registre des sources des catalogues (consommables, coiffures, tatouages, tenues et accessoires, personnalisations des véhicules et des armes). Chaque ligne d’un catalogue cite un ou plusieurs identifiants d’ici. statut : officiel (page ou vidéo Rockstar, ou texte officiel reproduit), vu (trailer, capture, Extended Look), comm (identification communautaire), serie (ce que GTA V, GTA Online, GTA IV ou San Andreas font, présenté comme repère), conf (à confirmer). Les pages Rockstar gardent leur dernière ouverture directe ; les autres pages ont été ouvertes le 27 septembre 2026.",
   "sources": {
     "rs-vi": {
       "url": "https://www.rockstargames.com/VI",
@@ -15,7 +15,7 @@
       "publishedAt": null,
       "consultedAt": "2026-09-23",
       "statut": "officiel",
-      "claim": "Les visuels d’img/officiel en viennent : Jason au comptoir d’un bar, Lucia au bord de la piscine, Stock 305, Sara’s Unisex Salon, Electric Fang Tattoo, The Rusty Anchor. Une image montre un objet ; elle ne dit ni son prix ni s’il s’achète."
+      "claim": "Les visuels d’img/officiel en viennent : Jason au comptoir d’un bar, Lucia au bord de la piscine, Stock 305, Sara’s Unisex Salon, Electric Fang Tattoo, The Rusty Anchor. Une image montre un objet ; elle ne dit ni son prix ni s’il s’achète. Lot 6 : les captures Rideout Customs (Albany dorée sur jantes surdimensionnées, habitacle rouge, coupé jaune surélevé), One-Eyed Willie’s (Canis vert peint à la main, pneus tout-terrain, pare-chocs à treuil), Ganado Retro Build, Personalized Weapon Variants (pistolets gravés), Vintage Vice City Weapon Pattern (PM et pistolet à motif tropical), Stanier ’55 bicolore, fusil doré de Vice City."
     },
     "rs-videos": {
       "url": "https://www.rockstargames.com/VI/media/videos",
@@ -39,7 +39,7 @@
       "publishedAt": "2026-06-24",
       "consultedAt": "2026-09-27",
       "statut": "officiel",
-      "claim": "Texte officiel des éditions : Vice City Style (« exclusive outfits, tattoos, and more »), Goodtime Gear (vêtements et accessoires inspirés de Macca the Gator), Sara’s Unisex Salon (coiffures signature, pilosité faciale de Jason, maquillage et ongles de Lucia), Stock 305 (streetwear de Stockyard), Electric Fang Tattoo (plus de 50 tatouages signature dessinés par le collectif FAILE)."
+      "claim": "Texte officiel des éditions : Vice City Style (« exclusive outfits, tattoos, and more »), Goodtime Gear (vêtements et accessoires inspirés de Macca the Gator), Sara’s Unisex Salon (coiffures signature, pilosité faciale de Jason, maquillage et ongles de Lucia), Stock 305 (streetwear de Stockyard), Electric Fang Tattoo (plus de 50 tatouages signature dessinés par le collectif FAILE). Relu pour le lot 6 : Rideout Customs (« Transform vanilla vehicles into magnificent works of art with detailed interiors, exquisite rims, and donk stylings »), One-Eyed Willie’s (« specializes in off-road modifications and hand-painted automotive artistry »), Ganado (« exclusive mods »), variantes d’armes (« Personalized sidearms with detailed engravings for Jason’s Girardi ES9 pistol and Lucia’s Klose K17 pistol »), Morgan (« palm-tree-etched grips, engraved detailing, and high-performance scope »), garage Paradise avec casier d’armes."
     },
     "sixthaxis-editions": {
       "url": "https://www.thesixthaxis.com/2026/06/24/gta-6-ultimate-edition-pre-order-bonus-and-vintage-vice-city-pack-revealed/",
@@ -47,7 +47,7 @@
       "publishedAt": "2026-06-24",
       "consultedAt": "2026-09-27",
       "statut": "officiel",
-      "claim": "Texte officiel du Pack Vintage : costume en lin « vintage pastel » pour Jason, mini-robe rouge à sequins et boucles pour Lucia, motif tropical pour la plupart des armes, Stanier ’55 et garage Shore Court."
+      "claim": "Texte officiel du Pack Vintage : costume en lin « vintage pastel » pour Jason, mini-robe rouge à sequins et boucles pour Lucia, motif tropical pour la plupart des armes, Stanier ’55 et garage Shore Court. Relu pour le lot 6 : les deux ateliers proposent « a wide selection of artistic and performance-based vehicle mods » ; Ganado : « exclusive mods including a cab spoiler, rear aerials, and special livery » ; One-Eyed Willie’s : « Transform off-road vehicles with exclusive mods and even attain custom hand-painted masterpieces » ; Morgan : « palm-tree-etched grips, engraved detailing, high-performance scope, and personalized finishes » ; motif Vintage : « Tropical pattern available to adorn most guns » ; garage de Shore Court avec « a weapon locker to customize your loadout for any occasion »."
     },
     "gamesradar-63": {
       "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-new-gameplay-details-activities-customization-confirmed-63-screenshots/",
@@ -55,7 +55,7 @@
       "publishedAt": "2026-06-24",
       "consultedAt": "2026-09-27",
       "statut": "officiel",
-      "claim": "Reprend les détails publiés par Rockstar le 24 juin 2026 : changement de coiffure pour chaque personnage, pilosité faciale pour Jason, maquillage et ongles pour Lucia, tatouages sur les bras, les jambes et le dos, tenues, vêtements et accessoires."
+      "claim": "Reprend les détails publiés par Rockstar le 24 juin 2026 : changement de coiffure pour chaque personnage, pilosité faciale pour Jason, maquillage et ongles pour Lucia, tatouages sur les bras, les jambes et le dos, tenues, vêtements et accessoires. Relu pour le lot 6 : « wide selection of artistic and performance-based vehicle mods », armes de l’Édition Ultimate avec « customized grips, various engravings, and different scopes », motif d’arme exclusif du Pack Vintage."
     },
     "gtawiki-ultimate": {
       "url": "https://gta.wiki/w/Grand_Theft_Auto_VI:_Ultimate_Edition",
@@ -63,7 +63,7 @@
       "publishedAt": "2026-09-26",
       "consultedAt": "2026-09-27",
       "statut": "officiel",
-      "claim": "Reproduit les descriptions officielles des cinq commerces de l’édition et nomme les collections Goodtime Gear et Vice City Style d’après les captures officielles."
+      "claim": "Reproduit les descriptions officielles des cinq commerces de l’édition et nomme les collections Goodtime Gear et Vice City Style d’après les captures officielles. Relu pour le lot 6 : Rideout Customs « specializing in unique interiors, rims, and donk stylings », One-Eyed Willie’s « off-road modifications and hand-painted automotive liveries », variantes d’armes « featuring classic Vercetti Estate-inspired styling, including palm-tree-etched grips, engraved detailing, and a scope »."
     },
     "gamingnexus-editions": {
       "url": "https://www.gamingnexus.com/News/73323/Grand-Theft-Auto-VI-reveals-pricing2c-editions2c-and-emphasis-on-immersion",
@@ -111,7 +111,7 @@
       "publishedAt": "2026-09-09",
       "consultedAt": "2026-09-27",
       "statut": "officiel",
-      "claim": "« We’ll also show you them having their morning coffee » ; « round things off with a protein shake and a protein bar » ; « Food provides buffs that strengthen your meters » ; trois jours d’entraînement de suite font monter santé et force ; « We have thousands of outfits » gagnées en mission ou achetées ; « countless clothing stores and hair salons » ; coupe possible à la planque, choix limité ; casier Ammu-Nation pour les armes longues ; armes exclusives selon la boutique ; braquer les magasins, détruire les caméras."
+      "claim": "« We’ll also show you them having their morning coffee » ; « round things off with a protein shake and a protein bar » ; « Food provides buffs that strengthen your meters » ; trois jours d’entraînement de suite font monter santé et force ; « We have thousands of outfits » gagnées en mission ou achetées ; « countless clothing stores and hair salons » ; coupe possible à la planque, choix limité ; casier Ammu-Nation pour les armes longues ; armes exclusives selon la boutique ; braquer les magasins, détruire les caméras. Relu pour le lot 6 : Pay ’n’ Spray (réparer et repeindre pour semer la police ; « you can basically only change the color there, so if you want an elaborate paint job, you’ll need to take it to a tuning shop »), alarmes et traceurs des voitures de luxe, cloneur de clés, receleurs qui retirent le traceur, garages à acheter, casier d’Ammu-Nation pour les armes longues, « Ammu-Nation also sells special guns exclusive to particular stores », « There are also more weapon customization options than ever before »."
     },
     "gamingbible-7": {
       "url": "https://www.gamingbible.com/news/gta-6-new-details-september-10-436002-20260910",
@@ -119,7 +119,7 @@
       "publishedAt": "2026-09-10",
       "consultedAt": "2026-09-27",
       "statut": "officiel",
-      "claim": "Rob Nelson : coupe de cheveux à la planque avec un choix limité, « If you want to try lots of hairstyles, you’ll have to go to a salon » ; milliers de tenues, achetées ou gagnées en mission."
+      "claim": "Rob Nelson : coupe de cheveux à la planque avec un choix limité, « If you want to try lots of hairstyles, you’ll have to go to a salon » ; milliers de tenues, achetées ou gagnées en mission. Relu pour le lot 6 : vol des voitures de luxe (cloneur de clés, alarme, traceur qui peut transmettre ta position à la police)."
     },
     "gamesradar-live": {
       "url": "https://www.gamesradar.com/news/live/gta-6-extended-look-showcase-live-coverage-2026-everything-announced/",
@@ -304,6 +304,126 @@
       "consultedAt": "2026-09-27",
       "statut": "officiel",
       "claim": "Texte officiel du pack : Stanier ’55 et garage Shore Court près d’Ocean Beach ; pour Jason « effortlessly chic linen suit in vintage pastel, complemented by the cut and coif of the decade of decadence » ; pour Lucia « red sequin mini dress and curls » ; motif tropical inspiré de la chemise de Tommy Vercetti."
+    },
+    "gtawiki-lsc": {
+      "url": "https://gta.wiki/w/Los_Santos_Customs",
+      "title": "GTA Wiki : Los Santos Customs (GTA V, GTA Online)",
+      "publishedAt": null,
+      "consultedAt": "2026-09-27",
+      "statut": "serie",
+      "claim": "Quatre ateliers (Burton, La Mesa, aéroport, Harmony achetable 349 000 $ par Franklin), Beeker’s Garage à Paleto Bay et Benny’s. Postes esthétiques : pare-chocs, échappement, calandre, capot, klaxons, feux et néons, plaques, peinture (brillante, mate, métallisée, nacrée, chrome), arceau, toit, jupes, jantes (couleur, pneus, fumée), vitres teintées. Postes de performances : blindage 20 à 100 %, freins, moteur EMS 1 à 4, suspension, transmission, turbo, ailerons (adhérence). GTA Online seulement : assurance, traceur, bombes, emblème de crew. Les prix varient selon le véhicule."
+    },
+    "gtawiki-gauntlet": {
+      "url": "https://gta.wiki/w/Gauntlet",
+      "title": "GTA Wiki : Bravado Gauntlet, tableau des modifications (GTA V / GTA Online)",
+      "publishedAt": null,
+      "consultedAt": "2026-09-27",
+      "statut": "serie",
+      "claim": "Prix relevés sur ce modèle : blindage 20 à 100 % de 500 à 5 000 $ (4 500 à 30 000 $ en ligne), freins street / sport / course 2 000, 2 700, 3 500 $, moteur EMS 1 à 4 de 900 à 3 350 $, transmission 2 950 à 4 000 $, turbo 2 500 $ (30 000 $ en ligne), suspension rabaissée / street / sport 500, 1 000, 1 700 $, vitres 200 à 700 $, plaques 50 à 150 $ ; en ligne : traceur 2 000 $, assurance 4 000 $, bombe au contact 5 000 $, bombe à distance 7 500 $."
+    },
+    "gtawiki-sultan": {
+      "url": "https://gta.wiki/w/Sultan",
+      "title": "GTA Wiki : Karin Sultan, tableau des modifications (GTA V / GTA Online)",
+      "publishedAt": null,
+      "consultedAt": "2026-09-27",
+      "statut": "serie",
+      "claim": "Prix relevés sur ce modèle : pare-chocs avant 750 à 1 650 $, pare-chocs arrière 750 à 1 250 $, échappement 130 à 375 $, capots 450 à 2 225 $, phares xénon 1 000 $, arceau 550 $, bandeau de toit 350 $, jupes 1 250 à 1 500 $, ailerons 500 à 1 300 $ (sans, bas, haut, aile GT) ; conversion Sultan RS chez Benny’s 795 000 $ en ligne."
+    },
+    "gtawiki-custom": {
+      "url": "https://gta.wiki/w/Vehicle_Customization_in_GTA_V",
+      "title": "GTA Wiki : Vehicle Customization in GTA V (feux, peintures, jantes, vitres)",
+      "publishedAt": null,
+      "consultedAt": "2026-09-27",
+      "statut": "serie",
+      "claim": "Vitres teintées : fumé léger 200 $, fumé foncé 450 $, limousine 700 $ (1 500, 3 500, 5 000 $ en ligne), noir pur 10 000 $ en ligne seulement. Peintures : chrome (1), classique, métallisée (75), mate (20), métaux (5), caméléon (en ligne, versions améliorées). Treize familles de jantes."
+    },
+    "gtawiki-custom-lights": {
+      "url": "https://gta.wiki/w/Vehicle_Customization_in_GTA_V/Lights",
+      "title": "GTA Wiki : Vehicle Customization in GTA V, Lights (phares et néons)",
+      "publishedAt": null,
+      "consultedAt": "2026-09-27",
+      "statut": "serie",
+      "claim": "Néons : avant ou arrière 1 000 $, côtés 1 250 $, avant et arrière 1 800 $, tout le tour 3 000 $ (1 000 à 30 000 $ en ligne) ; couleurs de néon 650 $ (5 000 à 6 900 $ en ligne, lumière noire 10 000 $, couleur de crew 20 000 $). Phares de couleur en ligne : blanc 20 000 $, treize couleurs de 49 200 à 55 200 $, lumière noire 80 000 $ (moitié prix après Arena War). Prix des phares de série et xénon variables selon le véhicule."
+    },
+    "gtawiki-custom-wheels": {
+      "url": "https://gta.wiki/w/Vehicle_Customization_in_GTA_V/Wheels",
+      "title": "GTA Wiki : Vehicle Customization in GTA V, Wheels (jantes et pneus)",
+      "publishedAt": null,
+      "consultedAt": "2026-09-27",
+      "statut": "serie",
+      "claim": "Treize familles de jantes (haut de gamme, lowrider, muscle, tout-terrain, sport, SUV, tuner, moto, Benny’s Originals et Bespoke, course, street et track en ligne). Fourchettes GTA V : muscle 1 290 à 2 450 $, moto 1 690 à 2 180 $, tout-terrain 1 770 à 2 590 $, lowrider 1 980 à 3 000 $, sport 2 080 à 3 550 $, tuner 2 400 à 2 890 $, haut de gamme 2 530 à 4 290 $, SUV 3 000 à 3 600 $. 41 couleurs de jantes, versions chromées, flancs de pneus propres à chaque famille, fumée de pneus colorée, pneus pare-balles (balles, feu, herses), pneus à faible adhérence réservés au LS Car Meet."
+    },
+    "gtawiki-custom-respray": {
+      "url": "https://gta.wiki/w/Vehicle_Customization_in_GTA_V/Respray_Colors",
+      "title": "GTA Wiki : Vehicle Customization in GTA V, Respray Colors (peintures)",
+      "publishedAt": null,
+      "consultedAt": "2026-09-27",
+      "statut": "serie",
+      "claim": "Prix GTA V d’une couleur principale ou secondaire : classique 400 $, métallisée 650 $, métaux 900 $, mate 1 000 $, chrome 1 200 $ ; en ligne : classique 780 à 12 500 $, métallisée 1 300 à 20 000 $, mate 2 000 à 17 500 $, métaux 10 250 à 50 000 $, chrome 25 000 $, caméléon 44 250 à 65 000 $. Nacré, couleur des jantes, garnitures et cadrans réglés à part (mise à jour Lowriders, versions améliorées)."
+    },
+    "gtawiki-custom-horns": {
+      "url": "https://gta.wiki/w/Vehicle_Customization_in_GTA_V/Horns",
+      "title": "GTA Wiki : Vehicle Customization in GTA V, Horns (klaxons)",
+      "publishedAt": null,
+      "consultedAt": "2026-09-27",
+      "statut": "serie",
+      "claim": "Klaxon de série 50 $, camion 60 $, police 75 $, clown 150 $ (500 à 5 000 $ en ligne), klaxons musicaux 255 à 1 700 $ (10 000 à 32 750 $ en ligne), klaxons en boucle 1 500 à 2 200 $ (35 000 à 90 000 $ en ligne), avertisseurs pneumatiques 25 000 $ en ligne seulement."
+    },
+    "gtawiki-bennys": {
+      "url": "https://gta.wiki/w/Benny%27s_Original_Motor_Works",
+      "title": "GTA Wiki : Benny’s Original Motor Works (GTA Online)",
+      "publishedAt": null,
+      "consultedAt": "2026-09-27",
+      "statut": "serie",
+      "claim": "Atelier lowrider d’Alta Street (mise à jour Lowriders) : 31 modèles convertibles en version « custom » (conversion de 180 000 à 1 288 000 $ selon le modèle) avant les autres postes ; hydrauliques à plusieurs puissances de pompe ; intérieur (tableau de bord, cadrans, portes, sièges, volant, levier, plaques, garnitures, ornements) ; bloc moteur, filtre à air, barre anti-rapprochement, échappement ; jantes Benny’s exclusives ; peintures et vinyles."
+    },
+    "gtawiki-attachments": {
+      "url": "https://gta.wiki/w/Attachments",
+      "title": "GTA Wiki : Attachments (accessoires d’armes de GTA V et GTA Online)",
+      "publishedAt": null,
+      "consultedAt": "2026-09-27",
+      "statut": "serie",
+      "claim": "Chargeur étendu (+33 % sur certains pistolets à +300 % sur le fusil à pompe d’assaut), chargeur tambour (GTA Online, rechargement plus lent, fusil à pompe lourd 6 → 30, PM 30 → 100), poignée (précision, moins de secousse), silencieux (tir silencieux, flash réduit, dégâts et portée légèrement réduits), lampe (à la visée), lunettes (holographique, petite, grande, thermique, nocturne), freins de bouche et compensateurs (recul), canon lourd (dégâts à distance 50 % au lieu de 30 %), munitions spéciales Mk II (traçantes, incendiaires, pointe creuse, perforantes, blindées, explosives) avec moins de balles par chargeur. Aucun laser listé."
+    },
+    "gtawiki-pistol": {
+      "url": "https://gta.wiki/w/Pistol",
+      "title": "GTA Wiki : Pistol (GTA V / GTA Online), accessoires et teintes",
+      "publishedAt": null,
+      "consultedAt": "2026-09-27",
+      "statut": "serie",
+      "claim": "Chargeur étendu 16 coups 387 $ (9 175 $ en ligne), lampe 472 $ (1 675 $), silencieux 1 822 $ (12 050 $) ; teintes : armée 100 $, or 1 000 $, platine 1 500 $ (5 000 à 12 500 $ en ligne)."
+    },
+    "gtawiki-carbine": {
+      "url": "https://gta.wiki/w/Carbine_Rifle",
+      "title": "GTA Wiki : Carbine Rifle (GTA V / GTA Online), accessoires et teintes",
+      "publishedAt": null,
+      "consultedAt": "2026-09-27",
+      "statut": "serie",
+      "claim": "Chargeur étendu 60 coups 262 $ (9 775 $ en ligne), chargeur caisson 100 coups 25 550 $ en ligne, poignée 330 $ (4 350 $), lampe 375 $ (2 350 $), lunette 1 125 $ (10 900 $), silencieux 2 037 $ (12 450 $) ; teintes armée 100 $, vert 200 $, orange 400 $, LSPD 600 $, rose 800 $, or 1 000 $, platine 1 500 $ (5 000 à 12 500 $ en ligne)."
+    },
+    "gtawiki-pistol-mk2": {
+      "url": "https://gta.wiki/w/Pistol_Mk_II",
+      "title": "GTA Wiki : Pistol Mk II (GTA Online)",
+      "publishedAt": null,
+      "consultedAt": "2026-09-27",
+      "statut": "serie",
+      "claim": "Conversion 73 750 $ à l’atelier d’armes ; chargeur étendu 15 250 $, traçantes 28 600 $, incendiaires 34 750 $, pointe creuse 39 650 $, blindées 52 000 $ ; lunette montée 16 250 $, lampe 7 500 $, compensateur 21 250 $ ; dix camouflages de 40 000 à 100 000 $ ; teintes de 20 000 à 100 000 $."
+    },
+    "gtawiki-carbine-mk2": {
+      "url": "https://gta.wiki/w/Carbine_Rifle_Mk_II",
+      "title": "GTA Wiki : Carbine Rifle Mk II (GTA Online)",
+      "publishedAt": null,
+      "consultedAt": "2026-09-27",
+      "statut": "serie",
+      "claim": "Conversion 107 500 $ ; chargeur étendu 25 925 $, traçantes 44 700 $, incendiaires 51 600 $, perforantes 66 000 $, blindées 76 200 $ ; viseur holographique 19 600 $, petite lunette 23 730 $, grande lunette 34 020 $ ; sept freins de bouche de 29 750 à 38 530 $ ; canon lourd 49 000 $ ; poignée 14 080 $ ; lampe 10 500 $ ; camouflages de 40 000 à 100 000 $ ; teintes classiques 20 000 à 35 000 $, contraste 40 000 $, métal 75 000 à 100 000 $."
+    },
+    "gtawiki-heavy-sniper-mk2": {
+      "url": "https://gta.wiki/w/Heavy_Sniper_Mk_II",
+      "title": "GTA Wiki : Heavy Sniper Mk II (GTA Online)",
+      "publishedAt": null,
+      "consultedAt": "2026-09-27",
+      "statut": "serie",
+      "claim": "Conversion 165 375 $ ; chargeur étendu 32 025 $, incendiaires 59 275 $, perforantes 76 100 $, blindées 88 525 $, explosives 115 450 $ (recherche demandée) ; lunette zoom 29 595 $, vision nocturne 45 950 $, thermique 69 000 $ ; freins de bouche 45 010 et 57 790 $ ; canon lourd 69 825 $."
     }
   }
 }

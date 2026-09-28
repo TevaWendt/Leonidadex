@@ -651,19 +651,24 @@
   "customizations": {
     "nav": [
       {
-        "href": "#contenus",
+        "href": "#ce-que-rockstar-a-montre",
         "label": "Rockstar",
         "fam": "rockstar"
       },
       {
-        "href": "#services",
-        "label": "Ateliers",
-        "fam": "carte"
+        "href": "#perso-vehicules",
+        "label": "Véhicules",
+        "fam": "perso-vehicules"
       },
       {
-        "href": "#variantes",
-        "label": "Armes personnalisées",
-        "fam": "armes"
+        "href": "#perso-armes",
+        "label": "Armes",
+        "fam": "perso-armes"
+      },
+      {
+        "href": "#ateliers",
+        "label": "Ateliers",
+        "fam": "carte"
       },
       {
         "href": "#a-confirmer",
@@ -676,53 +681,293 @@
         "fam": "toi"
       },
       {
+        "href": "#faq",
+        "label": "FAQ",
+        "fam": "faq"
+      },
+      {
         "href": "#sources",
         "label": "Sources",
         "fam": "sources"
       }
     ],
+    "rockstar": {
+      "id": "ce-que-rockstar-a-montre",
+      "lede": "Quatre temps, chacun avec son statut : les captures des ateliers, les éditions du 24 juin 2026, le motif du Pack Vintage, puis l’entretien de Rob Nelson. Aucun prix, aucune liste d’options.",
+      "items": [
+        {
+          "date": "24 juin 2026",
+          "titre": "Deux ateliers ouverts avec l’Édition Ultimate",
+          "statut": "officiel",
+          "texte": "Rideout Customs : « detailed interiors, exquisite rims, and donk stylings ». One-Eyed Willie’s, à Lake Leonida : « off-road modifications and hand-painted automotive artistry ». Les deux proposent « a wide selection of artistic and performance-based vehicle mods ». Les captures montrent une Albany dorée sur d’immenses jantes, un habitacle rouge et un Canis vert peint à la main sur des pneus tout-terrain.",
+          "media": "rideout-customs-mod-shop-01",
+          "alt": "Albany dorée sur jantes surdimensionnées dans l’atelier Rideout Customs, capture officielle Rockstar Games"
+        },
+        {
+          "date": "24 juin 2026",
+          "titre": "Le kit rétro du Ganado et les armes gravées",
+          "statut": "officiel",
+          "texte": "Le Vapid Ganado de Jason reçoit « exclusive mods including a cab spoiler, rear aerials, and special livery ». Côté armes : « personalized sidearms with detailed engravings » pour le Girardi ES9 de Jason et le Klose K17 de Lucia, et deux Hawk & Little Morgan « his and hers » avec « palm-tree-etched grips, engraved detailing, high-performance scope, and personalized finishes ». Les garages Paradise et Shore Court ont un casier d’armes.",
+          "media": "personalized-weapon-variants",
+          "alt": "Girardi ES9 et Klose K17 gravés posés au bord d’une piscine, capture officielle Rockstar Games"
+        },
+        {
+          "date": "24 juin 2026",
+          "titre": "Le motif tropical du Pack Vintage Vice City",
+          "statut": "officiel",
+          "texte": "Bonus de précommande : un « tropical pattern available to adorn most guns », inspiré de la chemise de Tommy Vercetti. La capture le montre sur un PM à crosse rabattable et sur un pistolet ; Rockstar ne publie pas la liste arme par arme.",
+          "media": "vintage-vice-city-weapon-pattern-01",
+          "alt": "PM et pistolet à motif tropical sur la banquette d’une voiture, capture officielle Rockstar Games"
+        },
+        {
+          "date": "28 août 2026",
+          "titre": "Rob Nelson : Pay ’n’ Spray, ateliers et casiers",
+          "statut": "officiel",
+          "texte": "À Famitsu (traduit le 9 septembre) : au Pay ’n’ Spray tu répares et tu repeins pour semer la police, mais « you can basically only change the color there », la peinture élaborée se fait « at a tuning shop ». Les voitures de luxe ont alarme et traceur, un receleur peut le retirer. Chaque Ammu-Nation a un casier pour les armes longues, certains magasins vendent des armes exclusives, et « there are also more weapon customization options than ever before ».",
+          "media": "ganado-retro-build",
+          "alt": "Jason au volant du Vapid Ganado jaune à bandes rouges du kit rétro, capture officielle Rockstar Games"
+        }
+      ],
+      "p": [
+        "Les deux listes ci-dessous rangent tout ça poste par poste, avec le statut et la source de chaque ligne, puis ce que Los Santos Customs, Benny’s, Ammu-Nation et l’atelier d’armes de GTA Online proposent, avec leurs prix présentés comme repères."
+      ]
+    },
+    "ateliers": {
+      "id": "ateliers",
+      "lede": "Deux ateliers de véhicules présentés par Rockstar, trois armureries vues sur la carte. Une enseigne vue ne dit ni ses tarifs ni ses options : chaque carte garde son statut.",
+      "groups": [
+        {
+          "title": "Ateliers de véhicules",
+          "items": [
+            {
+              "business": "rideout-customs",
+              "lieu": "g-L2375",
+              "fam": "perso-vehicules",
+              "fait": "Intérieurs, jantes, style donk : « artistic and performance-based vehicle mods »",
+              "statut": "officiel"
+            },
+            {
+              "business": "one-eyed-willie",
+              "lieu": null,
+              "fam": "perso-vehicules",
+              "fait": "Tout-terrain et peinture à la main, à Lake Leonida",
+              "statut": "officiel"
+            }
+          ]
+        },
+        {
+          "title": "Armureries vues sur la carte",
+          "items": [
+            {
+              "name": "Phil’s Ammu-Nation",
+              "lieu": "g-L1074",
+              "fam": "perso-armes",
+              "fait": "Casier d’armes longues et armes exclusives par magasin, d’après Rob Nelson",
+              "statut": "vu"
+            },
+            {
+              "name": "Ammu-Nation (nom supposé)",
+              "lieu": "g-L1091",
+              "fam": "perso-armes",
+              "fait": "Enseigne repérée sur les captures ; casier et options non montrés",
+              "statut": "vu"
+            },
+            {
+              "name": "Pawn & Gun",
+              "lieu": "g-L298",
+              "fam": "perso-armes",
+              "fait": "Prêteur sur gages et armurier de Port Gellhorn, vu sur la carte",
+              "statut": "vu"
+            }
+          ]
+        },
+        {
+          "title": "Autres enseignes automobiles vues",
+          "items": [
+            {
+              "name": "Chip’s Body Shop",
+              "lieu": "g-L1381",
+              "fam": "perso-vehicules",
+              "fait": "Carrosserie vue à Key Lento ; rien d’annoncé",
+              "statut": "vu"
+            },
+            {
+              "name": "Simon’s Tires",
+              "lieu": "g-L419",
+              "fam": "perso-vehicules",
+              "fait": "Pneus, vu à La Perle ; rien d’annoncé",
+              "statut": "vu"
+            },
+            {
+              "name": "Oster Tire",
+              "lieu": "g-L975",
+              "fam": "perso-vehicules",
+              "fait": "Pneus, vu à Little Cuba ; rien d’annoncé",
+              "statut": "vu"
+            },
+            {
+              "name": "Status Auto Resort",
+              "lieu": "g-L702",
+              "fam": "perso-vehicules",
+              "fait": "Garage vu à Crosstown ; rien d’annoncé",
+              "statut": "vu"
+            }
+          ]
+        }
+      ],
+      "p": [
+        "Le Pay ’n’ Spray cité par Rob Nelson et le receleur de véhicules ne sont pas encore placés sur la carte : ils apparaissent dans les listes comme type de commerce, sans lien."
+      ]
+    },
     "confirmer": {
       "id": "a-confirmer",
-      "lede": "Ce que Rockstar n’a pas publié au 27 septembre 2026. Les listes complètes de personnalisation (véhicules poste par poste, accessoires d’armes) arrivent avec le lot suivant.",
+      "lede": "Ce que Rockstar n’a pas publié au 27 septembre 2026.",
       "items": [
         {
           "q": "Combien coûte une modification ?",
-          "etat": "Aucun prix publié. Le calculateur travaille avec le chiffre que tu écris."
+          "etat": "Aucun prix publié. Les {nPerso} lignes des deux listes gardent la colonne GTA VI « à confirmer » ; les prix de GTA V et GTA Online sont dans la colonne repère."
         },
         {
           "q": "Une modification change-t-elle les performances ?",
-          "etat": "Rien de chiffré : une modification esthétique ne prouve aucun gain de vitesse."
+          "etat": "Rockstar annonce des « performance-based vehicle mods » sans rien chiffrer. Dans GTA V, moteur, freins, transmission, turbo, blindage et aileron jouent sur la conduite."
         },
         {
           "q": "Le motif Vintage va-t-il sur toutes les armes ?",
-          "etat": "Rockstar écrit « la plupart des armes » sans liste arme par arme."
+          "etat": "Rockstar écrit « most guns » sans liste ; la capture le montre sur un PM à crosse rabattable et un pistolet."
+        },
+        {
+          "q": "Silencieux, lunettes, chargeurs dans GTA VI ?",
+          "etat": "Rob Nelson promet « more weapon customization options than ever before » ; le Girardi ES9 gravé a un canon fileté et un rail. Rien de nommé."
+        },
+        {
+          "q": "Où est One-Eyed Willie’s, où sont les Pay ’n’ Spray ?",
+          "etat": "Rockstar dit « Lake Leonida » pour l’atelier ; aucune position validée sur la carte pour lui ni pour un Pay ’n’ Spray."
+        },
+        {
+          "q": "Motos, bateaux, avions ?",
+          "etat": "Rien de montré. Dans GTA V, Los Santos Customs modifie aussi les motos."
         }
       ]
     },
     "toi": {
       "id": "pour-toi",
-      "lede": "Trois outils du site prennent le relais.",
+      "lede": "Quatre outils du site prennent le relais : le budget, la carte, ton suivi et les fiches.",
       "actions": [
         {
           "k": "Calculateur",
           "t": "Ça vaut le coup ?",
-          "d": "Écris ce que ça coûterait et ce que ça t’apporterait : réponse en une phrase.",
+          "d": "Écris ce qu’une modification te coûterait et ce qu’elle t’apporterait : réponse en une phrase.",
           "href": "calculateurs.html?tool=roi&type=customization&from=personnalisations#atelier"
         },
         {
-          "k": "Entreprises",
-          "t": "Les ateliers",
-          "d": "Rideout Customs et One-Eyed Willie’s ont leur fiche et leur place sur la carte.",
-          "href": "entreprises.html"
+          "k": "Carte",
+          "t": "Les ateliers sur la carte",
+          "d": "Rideout Customs, les armureries et les enseignes auto vues, déjà posés comme repères.",
+          "pins": [
+            "g-L2375",
+            "g-L1074",
+            "g-L1091",
+            "g-L298",
+            "g-L1381",
+            "g-L419",
+            "g-L975",
+            "g-L702"
+          ],
+          "pinsTitle": "Ateliers et armureries"
         },
         {
           "k": "Suivi",
-          "t": "Ma progression",
-          "d": "Coche le kit Ganado et le motif Vintage avec le reste.",
-          "href": "progression.html#acquisitions"
+          "t": "Mes modifs",
+          "d": "Coche les postes posés sur ta voiture ou ton arme : deux barres ici, deux cartes dans Ma progression.",
+          "href": "progression.html#perso-vehicules"
+        },
+        {
+          "k": "Fiches",
+          "t": "Véhicules et armes",
+          "d": "Chaque fiche véhicule a son lien « Personnaliser ce véhicule », chaque fiche d’arme ses « Accessoires compatibles ».",
+          "href": "vehicules.html"
         }
       ]
-    }
+    },
+    "faq": [
+      {
+        "q": "Peut-on personnaliser sa voiture dans GTA 6 ?",
+        "a": "Oui : Rockstar présente deux ateliers, Rideout Customs (intérieurs, jantes, style donk) et One-Eyed Willie’s (tout-terrain, peinture à la main), avec « a wide selection of artistic and performance-based vehicle mods ». Les deux ouvrent avec l’Édition Ultimate ; aucun prix n’est publié. Dans GTA V, un turbo coûte 2 500 $ et un blindage complet 5 000 $.",
+        "k": [
+          "personnaliser sa voiture",
+          "personnaliser une voiture",
+          "tuning gta 6",
+          "tuning",
+          "modifier sa voiture",
+          "customiser",
+          "custom voiture",
+          "atelier voiture",
+          "mod shop",
+          "rideout customs",
+          "one eyed willie"
+        ]
+      },
+      {
+        "q": "Peut-on repeindre sa voiture dans GTA 6 ?",
+        "a": "Oui. D’après Rob Nelson, le Pay ’n’ Spray répare et repeint ta voiture pour semer la police, mais seule la couleur change : pour une peinture élaborée, il faut un atelier de tuning. Dans GTA V, une peinture classique coûte 400 $ et une chrome 1 200 $.",
+        "k": [
+          "repeindre",
+          "repeindre sa voiture",
+          "pay n spray",
+          "pay and spray",
+          "peinture voiture",
+          "changer la couleur",
+          "couleur de la voiture",
+          "repeinte"
+        ]
+      },
+      {
+        "q": "Peut-on personnaliser ses armes dans GTA 6 ?",
+        "a": "Rob Nelson promet « more weapon customization options than ever before », sans détail. Rockstar montre des pistolets gravés (Girardi ES9, Klose K17), des Morgan à crosse gravée de palmiers avec lunette, et le motif tropical du Pack Vintage sur « la plupart des armes ». Silencieux, chargeurs et lunettes de GTA V sont listés comme repères.",
+        "k": [
+          "personnaliser ses armes",
+          "personnaliser une arme",
+          "accessoires d armes",
+          "accessoire arme",
+          "silencieux",
+          "lunette",
+          "chargeur etendu",
+          "viseur",
+          "customiser une arme",
+          "skin d arme",
+          "motif arme",
+          "camouflage arme"
+        ]
+      },
+      {
+        "q": "Qu’est-ce que le kit rétro du Ganado ?",
+        "a": "Un kit exclusif de l’Édition Ultimate pour le pick-up Vapid Ganado de Jason : aileron de cabine, antennes arrière et livrée spéciale, d’après Rockstar. Sur la capture, le pick-up est jaune à bandes rouges, avec une prise d’air sur le capot. Aucun prix ni gain de performance n’est publié.",
+        "k": [
+          "kit retro",
+          "ganado retro",
+          "modele retro du ganado",
+          "ganado",
+          "kit ganado",
+          "retro build"
+        ]
+      },
+      {
+        "q": "Où sont les ateliers et les armureries dans GTA 6 ?",
+        "a": "Rideout Customs est placé sur la carte à Crosstown (Vice City) ; One-Eyed Willie’s est à Lake Leonida d’après Rockstar, sans position validée. Trois armureries sont vues sur la carte : Phil’s Ammu-Nation, une Ammu-Nation au nom supposé à Rockridge, et Pawn & Gun à Port Gellhorn. Chaque Ammu-Nation a un casier pour les armes longues.",
+        "k": [
+          "ou sont les ateliers",
+          "ou est rideout",
+          "ou est ammu nation",
+          "ammu nation gta 6",
+          "armurerie gta 6",
+          "pawn and gun",
+          "pawn gun",
+          "casier ammu nation",
+          "casier d armes",
+          "atelier de tuning"
+        ]
+      }
+    ]
   },
   "logements": {
     "nav": [

@@ -1,0 +1,36 @@
+LEONIDAKIT v7.43 — LOT 6 : PERSONNALISATIONS VÉHICULES ET ARMES DE A À Z — archive « modifs » (28 septembre 2026)
+
+Base attendue : ton dossier Leonidadex en v7.42 (lot 5 : dépôt GitHub v7.41 + archive modifs v7.42 appliquée).
+Fichiers ajoutés ou modifiés seulement, chemins exacts depuis la racine. Rien à supprimer. Aucune commande de build :
+les pages sont déjà régénérées. Le dossier outils/ reste hors ligne (.vercelignore), comme avant.
+
+1. Copie ton dossier actuel (sauvegarde).
+2. Extrais l’archive dans la racine du site, écrase les fichiers homonymes (garde le dossier .git).
+3. Ouvre le site (3 minutes) :
+   - Personnalisations : sous le bandeau, une barre collante « Rockstar · Véhicules · Armes · Ateliers · À confirmer ·
+     Pour toi · FAQ · Sources ». Clique « Tous les postes de personnalisation des véhicules » : 58 postes, dont 13
+     confirmés pour GTA VI ; tape « turbo » dans la recherche, filtre « Blindage », trie par « Repère de prix » : la
+     colonne GTA VI dit toujours « À confirmer », les prix de GTA V et GTA Online restent dans « Repère de la série ».
+     Clique « Je l’ai » sur une ligne : la barre « Mes modifs de véhicule » monte. Clique « Rideout Customs » : la
+     carte s’ouvre dessus.
+   - Toujours sur Personnalisations : « Tous les postes de personnalisation des armes », 40 postes dont 12 confirmés ;
+     les lignes « Girardi ES9 gravé de Jason », « Klose K17 gravé de Lucia », « Motif tropical » citent la fiche de
+     l’arme. La ligne « Modèle rétro du Ganado (kit) » et la ligne « Motif tropical » portent la même case « J’ai
+     obtenu » que la carte Rockstar au-dessus (une seule case, comptée une fois).
+   - « Les ateliers et les armureries » : Rideout Customs avec sa vignette de carte, One-Eyed Willie’s « pas encore
+     placé sur la carte » avec sa fiche, Phil’s Ammu-Nation, Ammu-Nation (nom supposé), Pawn & Gun.
+   - Ouvre la fiche d’un véhicule (Vapid Ganado ’70) : lien « Personnaliser ce véhicule » dans le bandeau, qui ouvre la
+     liste filtrée sur les pick-up avec la note « Filtré pour : Pick-up et tout-terrain » et le bouton « Tout afficher ».
+     Ouvre la fiche d’une arme (Girardi ES9) : lien « Accessoires compatibles » → liste des armes filtrée sur les
+     pistolets. Fiche entreprise Rideout Customs : lien « Personnaliser mon véhicule ».
+   - Sur téléphone (ou fenêtre étroite) : chaque ligne devient une carte empilée, rien ne dépasse à droite.
+   - Progression : quatorze cartes (4 + 4 + 4 + 2 centrées) ; « Modifs de véhicule posées » et « Modifs d’arme posées »
+     comptent ce que tu as coché, « Voir la liste » mène à la ligne exacte ; la carte « Personnalisations » de « Ce qui
+     s’achète » compte les deux listes plus le kit Ganado et le motif Vintage.
+   - Léo : « peut-on personnaliser sa voiture dans GTA 6 ? », « peut-on repeindre sa voiture ? », « c’est quoi le kit
+     rétro du Ganado ? », « trouve silencieux » : il répond avec la FAQ ou ouvre la ligne.
+4. Mets en ligne (GitHub Desktop, dossier complet).
+
+Détails : outils/CHANGEMENTS-v7.43.txt (fichiers, recherche et sources, contrôle, points signalés). Captures avant /
+après et captures de contrôle : dossier séparé, hors dépôt. Versions précédentes : -v7.42 (Consommables et Vêtements
+et style), -v7.41 (hubs du monde), -v7.40 (hubs Véhicules / Armurerie, Achats), -v7.39 (mouvement), -v7.38 (calibrage).

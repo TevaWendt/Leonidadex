@@ -1,4 +1,4 @@
-/* Leonidakit — suivi.js (v7.38)
+/* Leonidakit — suivi.js (v7.38 ; familles des lots 5 et 6)
    Suivi personnel générique par famille : un élément porteur de data-track="famille" data-track-id="id"
    reçoit un bouton « Je l’ai » ; une barre data-track-bar="famille" affiche le compte et la progression.
    Les clés sont celles du reste du site (lk_own_<famille>, valeurs 1 / absentes), lues et écrites avec
@@ -17,7 +17,10 @@
     consommables:{ key: 'lk_own_consommables',label: 'Mes consommables',done: 'goûtés',    page: 'nourriture.html#liste-consommables', anchor: 'consommables' },
     coiffures:   { key: 'lk_own_coiffures',   label: 'Mes coiffures',   done: 'essayées',  page: 'style.html#coiffures', anchor: 'coiffures' },
     tatouages:   { key: 'lk_own_tatouages',   label: 'Mes tatouages',   done: 'faits',     page: 'style.html#tatouages', anchor: 'tatouages' },
-    tenues:      { key: 'lk_own_tenues',      label: 'Ma garde-robe',   done: 'portées',   page: 'style.html#tenues',    anchor: 'tenues' }
+    tenues:      { key: 'lk_own_tenues',      label: 'Ma garde-robe',   done: 'portées',   page: 'style.html#tenues',    anchor: 'tenues' },
+    /* v7.43 (lot 6) : personnalisations des véhicules et des armes (outils/catalogues/perso-*.json). */
+    'perso-vehicules': { key: 'lk_own_perso-vehicules', label: 'Mes modifs de véhicule', done: 'posées', page: 'personnalisations.html#perso-vehicules', anchor: 'perso-vehicules' },
+    'perso-armes':     { key: 'lk_own_perso-armes',     label: 'Mes modifs d’arme',      done: 'posées', page: 'personnalisations.html#perso-armes',     anchor: 'perso-armes' }
   };
   const ID = /^[a-z0-9][a-z0-9-]{0,99}$/;
   const listeners = new Set();

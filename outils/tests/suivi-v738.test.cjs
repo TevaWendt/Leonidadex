@@ -24,8 +24,8 @@ test('Armurerie : bouton « Je l’ai » sur chaque équipement, barre synchroni
   assert.ok(a.d.querySelector('#own-bar a.own-link[href="progression.html#arsenal"]'));
 }));
 
-test('Progression : douze cartes alignées (huit du lot 1 + quatre familles du lot 5), liste du garage avec noms, catégories, liens et retrait',withPage('progression.html',a=>{
-  const cards=[...a.d.querySelectorAll('.suivi-card')];assert.equal(cards.length,12);
+test('Progression : quatorze cartes alignées (huit du lot 1 + quatre familles du lot 5 + deux du lot 6), liste du garage avec noms, catégories, liens et retrait',withPage('progression.html',a=>{
+  const cards=[...a.d.querySelectorAll('.suivi-card')];assert.equal(cards.length,14);
   for(const c of cards){assert.ok(c.querySelector('h3'));assert.ok(c.querySelector('.suivi-n'));assert.ok(c.querySelector('progress, .suivi-spacer'));assert.ok(c.querySelector('.suivi-links a'));}
   const veh=a.d.getElementById('progress-vehicules');
   assert.match(veh.querySelector('.suivi-n').textContent,/^2 \/ /);
@@ -49,7 +49,8 @@ test('progression-core : export et import transportent les nouvelles familles, l
   assert.ok(store.toggle('cle-usb',true));assert.ok(store.toggle('harpons',true));
   const s=store.summary();
   assert.equal(s.groups.find(g=>g.id==='equipements').done,1);assert.equal(s.groups.find(g=>g.id==='munitions').total,5);
-  assert.equal(s.total,IDS.vehicules.length+IDS.armes.length+new Set(IDS.lieux).size+16+5+['consommables','coiffures','tatouages','tenues'].reduce((n,f)=>n+new Set(IDS[f]||[]).size,0));
+  /* v7.43 : les deux familles du lot 6 entrent dans le total */
+  assert.equal(s.total,IDS.vehicules.length+IDS.armes.length+new Set(IDS.lieux).size+16+5+['consommables','coiffures','tatouages','tenues','perso-vehicules','perso-armes'].reduce((n,f)=>n+new Set(IDS[f]||[]).size,0));
   const out=store.exportData();assert.equal(out.data.lk_own_equipements,'{"cle-usb":true}');assert.equal(out.data.lk_own_munitions,'{"harpons":true}');
   mem.clear();
   const plan=store.prepareImport(JSON.stringify(out));assert.deepEqual(plan.issues,[]);store.applyImport(plan,'merge');

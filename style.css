@@ -2991,3 +2991,27 @@ a.ed-brand:hover,a.ed-brand:focus-visible{border-color:var(--ink);box-shadow:5px
 .ed-nav a[data-fam=toi]{--dot:var(--amber-2);}
 .ed-nav a[data-fam=faq]{--dot:var(--night-2);}
 .ed-nav a[data-fam=sources]{--dot:var(--ink-soft);}
+
+/* ============================================================================
+   v7.43 : lot 6 — Personnalisations (marqueurs de sous-navigation, cartes-ateliers, Progression à 14 cartes)
+   ============================================================================ */
+.ed-nav a[data-fam=perso-vehicules]{--dot:var(--amber);}
+.ed-nav a[data-fam=perso-armes]{--dot:var(--coral);}
+/* cartes-ateliers : vignette de la carte (ou silhouette sans repère quand l'atelier n'est pas placé), statut, ce qu'on y fait, liens */
+.ed-places--ateliers{grid-template-columns:repeat(auto-fill,minmax(280px,1fr));}
+.ed-atelier{padding:0;}
+.ed-atelier .ed-atelier-map{display:flex;flex:none;text-decoration:none;}
+.ed-atelier .ed-map{height:100%;min-height:120px;}
+.ed-map--vide use{fill:var(--rule);fill-opacity:.55;}
+.ed-atelier .ed-place-where{display:inline-flex;flex-wrap:wrap;align-items:center;gap:6px;}
+.ed-atelier .ed-place-where .ed-status{margin:0;}
+.ed-atelier-fait{font-size:.84rem;line-height:1.45;color:var(--ink);}
+.ed-atelier-links{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:auto;padding-top:8px;}
+.ed-atelier .ed-atelier-links .veh-go{margin:0;padding:0;text-decoration:none;min-height:24px;}
+.ed-atelier .ed-atelier-links .veh-go:hover,.ed-atelier .ed-atelier-links .veh-go:focus-visible{text-decoration:underline;text-underline-offset:3px;}
+/* Page Progression : quatorze cartes (4 + 4 + 4 + 2) ; la dernière rangée de deux est centrée sur grand écran */
+@media(min-width:1001px){
+  .progress-cards--suivi:has(>:nth-child(14):last-child){grid-template-columns:repeat(8,minmax(0,1fr));}
+  .progress-cards--suivi:has(>:nth-child(14):last-child)>*{grid-column:span 2;}
+  .progress-cards--suivi:has(>:nth-child(14):last-child)>:nth-child(13){grid-column:3/span 2;}
+}

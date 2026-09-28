@@ -11,6 +11,8 @@ const visuals=require('./lot-c-visuals.cjs');
 const MONDE=require('./hubs-monde.cjs'),DOUBLONS=require('./hubs-doublons.cjs');
 const esc=t=>String(t==null?'':t).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 const ED=JSON.parse(fs.readFileSync('outils/editorial.json','utf8'));
+/* v7.43 (lot 6) : ateliers de personnalisation (fiches entreprises reliées à personnalisations.html). */
+const ATELIERS=(JSON.parse(fs.readFileSync('outils/catalogues/editorial.json','utf8')).customizations.ateliers||{groups:[]}).groups.flatMap(g=>g.items).filter(a=>a.business);
 const MED=JSON.parse(fs.readFileSync('outils/medias-officiels.json','utf8'));
 const CREDIT='Capture officielle © Rockstar Games / Take-Two Interactive';
 global.window={};eval(fs.readFileSync('vehicules-data.js','utf8'));const VNOM=Object.fromEntries(window.LK_VEHICULES.map(v=>[v.id,(v.marque?v.marque+' ':'')+v.nom]));const VMED=Object.fromEntries(window.LK_VEHICULES.filter(v=>v.medias).map(v=>[v.id,v.medias]));
@@ -179,6 +181,8 @@ ${S.hub==='planques'?'<!-- lot-d-garages:start --><!-- lot-d-garages:end -->\n':
     if(x.mapId)links.push(`<a href="${mapHref(x.mapId,p)}">Voir sur la carte</a>`);
     if(key==='regions')links.push(`<a href="${p}vehicules.html">Véhicules</a>`);
     if(x.source)links.push(`<a href="${esc(x.source)}" target="_blank" rel="noopener nofollow">Page officielle</a>`);
+    /* v7.43 (lot 6) : les ateliers de personnalisation renvoient vers leur sous-section de personnalisations.html (outils/catalogues/editorial.json, ateliers). */
+    if(key==='businesses'){const at=ATELIERS.find(a=>a.business===x.id);if(at)links.push(`<a href="${p}personnalisations.html#${at.fam}">${at.fam==='perso-armes'?'Personnaliser mes armes':'Personnaliser mon véhicule'}</a>`);}
     const calcKind = key === 'businesses' ? 'business' : key === 'residences' ? 'property' : null;
     const calcTool = calcKind === 'business' ? 'roi' : 'purchase';
     const calcTitle = calcKind === 'business' ? 'Est-ce que ça vaudrait le coup ?' : 'Combien faudrait-il pour l’avoir ?';

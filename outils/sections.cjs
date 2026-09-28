@@ -80,7 +80,35 @@ const ICONS = {
   chapeau: '<path d="M4 15h16M6 15v-2a6 6 0 0 1 12 0v2"/><path d="M2 15c2 2 5 3 10 3s8-1 10-3"/><path class="ac" d="M7 12h10"/>',
   bijou: '<path d="M7 4h10l4 5-9 12L3 9z"/><path d="M3 9h18M9 9l3 12 3-12M7 4l2 5M17 4l-2 5"/><circle class="ac" cx="12" cy="6.5" r="1"/>',
   masque: '<path d="M4 8c0-2 3.5-3 8-3s8 1 8 3v5c0 4-3.5 8-8 8s-8-4-8-8z"/><path d="M8 11h2.5M13.5 11H16"/><path class="ac" d="M9 15c1 1 2 1.5 3 1.5s2-.5 3-1.5"/>',
-  etiquette: '<path d="M3 12V5a2 2 0 0 1 2-2h7l9 9-9 9-9-9z"/><path class="ac" d="M7 7h2v2H7z"/>'
+  etiquette: '<path d="M3 12V5a2 2 0 0 1 2-2h7l9 9-9 9-9-9z"/><path class="ac" d="M7 7h2v2H7z"/>',
+  /* v7.43 (lot 6) : personnalisation des véhicules */
+  kit: '<rect x="3" y="7" width="18" height="14" rx="2"/><path d="M3 12h18M9 7V4.5h6V7"/><path class="ac" d="M10.5 15h3v3h-3z"/>',
+  carrosserie: '<path d="M3 15l2-5.5A2 2 0 0 1 6.9 8h8.6l3.5 2.5H21v4.5H3z"/><circle cx="7" cy="17.5" r="2"/><circle cx="17" cy="17.5" r="2"/><path class="ac" d="M9 10.5h4"/>',
+  jante: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="M12 3v5M12 16v5M3 12h5M16 12h5M5.6 5.6l3.6 3.6M14.8 14.8l3.6 3.6M18.4 5.6l-3.6 3.6M9.2 14.8l-3.6 3.6"/><circle class="ac" cx="12" cy="12" r="1.4"/>',
+  peinture: '<path d="M4 6a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M17 7h2.5v5H11v2"/><rect x="9.5" y="14" width="3" height="7" rx="1"/><path class="ac" d="M6.5 6.5h3"/>',
+  vitre: '<path d="M4 17V9a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8z"/><path d="M4 17h16"/><path d="M8 7l-1 10M16 7l1 10"/><path class="ac" d="M9.5 10l6 0M9.5 13h6"/>',
+  plaque: '<rect x="3" y="7" width="18" height="10" rx="2"/><path d="M7 12h2M11 12h2M15 12h2"/><path class="ac" d="M5.5 9.5h2M16.5 9.5h2"/>',
+  klaxon: '<path d="M4 10v4h4l6 4V6l-6 4z"/><path d="M17 9a4 4 0 0 1 0 6"/><path class="ac" d="M19.5 6.5a8 8 0 0 1 0 11"/>',
+  phare: '<path d="M4 12a7 5 0 0 1 7-5h2v10h-2a7 5 0 0 1-7-5z"/><path d="M13 7c2 0 4 2.3 4 5s-2 5-4 5"/><path class="ac" d="M19 9l2-1M19 12h2.5M19 15l2 1"/>',
+  neon: '<path d="M5 8h14"/><rect x="3" y="11" width="18" height="6" rx="3"/><path class="ac" d="M6 14h12"/><path d="M8 20l1-3M16 20l-1-3"/>',
+  suspension: '<path d="M12 3v3M12 18v3M7 6h10M7 18h10"/><path d="M8 6l8 3-8 3 8 3-8 3"/><circle class="ac" cx="12" cy="12" r="1.2"/>',
+  moteur: '<path d="M6 9h3V6h6v3h3v9H6z"/><path d="M3 12h3M18 12h3M9 18v2M15 18v2"/><path class="ac" d="M10 12h4v3h-4z"/>',
+  frein: '<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4"/><path d="M12 3.5v2M12 18.5v2M3.5 12h2M18.5 12h2"/><path class="ac" d="M18.5 7.5a8.5 8.5 0 0 1 2 4.5"/>',
+  transmission: '<circle cx="7" cy="6" r="2"/><circle cx="17" cy="6" r="2"/><circle cx="7" cy="18" r="2"/><path d="M7 8v8M7 12h10V8"/><circle class="ac" cx="17" cy="12" r="1.6"/>',
+  turbo: '<circle cx="11" cy="13" r="6"/><circle cx="11" cy="13" r="2"/><path d="M17 13h4v-3h-2"/><path d="M11 7V4h3"/><path class="ac" d="M9.5 9.5a4 4 0 0 1 4.5 1"/>',
+  blindage: '<path d="M12 3l7 3v5.5c0 4.5-3 7.8-7 9.5-4-1.7-7-5-7-9.5V6z"/><path d="M12 6.5v11"/><path class="ac" d="M8.5 10.5h7M9 13.5h6"/>',
+  interieur: '<path d="M6 12V6a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v6"/><path d="M4 12h16v4H4z"/><path d="M6 16v4M18 16v4"/><path class="ac" d="M9 8.5h6"/>',
+  livree: '<path d="M4 7h16v10H4z"/><path d="M4 12h16"/><path class="ac" d="M6 9l3 6M11 9l3 6M16 9l2 4"/>',
+  securite: '<rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7.5a4 4 0 0 1 8 0V10"/><circle class="ac" cx="12" cy="15" r="1.6"/><path d="M12 16.6V18"/>',
+  /* v7.43 (lot 6) : personnalisation des armes */
+  chargeur: '<path d="M8 3h8v12l-1.5 6h-5L8 15z"/><path d="M8 8h8M8 12h8"/><path class="ac" d="M10.5 5h3"/>',
+  viseur: '<circle cx="12" cy="12" r="7"/><path d="M12 2.5v4M12 17.5v4M2.5 12h4M17.5 12h4"/><circle cx="12" cy="12" r="2.5"/><circle class="ac" cx="12" cy="12" r=".9"/>',
+  silencieux: '<rect x="3" y="9" width="12" height="6" rx="1.5"/><path d="M15 10.5h5v3h-5"/><path class="ac" d="M6 12h6"/>',
+  poignee: '<path d="M6 4h9v5l-2 1v10a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V10L6 9z"/><path class="ac" d="M9 12h3M9 15h3M9 18h3"/>',
+  finition: '<path d="M12 3l1.8 5.2 5.2 1.8-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path class="ac" d="M18.5 16l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/>',
+  camouflage: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10c3-2 5 2 8 0s5-3 10-1M3 15c3-2 5 2 8 0s5-3 10-1"/><path class="ac" d="M7 6.5c1.5 0 2.5 1 4 1"/>',
+  conversion: '<path d="M20.5 7a4.5 4.5 0 0 1-6 4.2L7 18.7a2 2 0 0 1-2.8-2.8l7.5-7.5A4.5 4.5 0 0 1 17 2.5l-2.5 2.5 2 2 2.5-2.5c.3.8.5 1.6.5 2.5z"/><path class="ac" d="M3 6h4M5 4v4"/>',
+  casier: '<rect x="5" y="3" width="14" height="18" rx="1.5"/><path d="M12 3v18M8 7h1.5M14.5 7H16"/><circle class="ac" cx="9.5" cy="13" r="1"/><circle class="ac" cx="14.5" cy="13" r="1"/>'
 };
 function icon(name, cls) {
   if (!ICONS[name]) throw Error('Icône inconnue : ' + name);

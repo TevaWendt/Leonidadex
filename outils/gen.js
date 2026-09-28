@@ -32,6 +32,8 @@ while((m=re.exec(hub0))!==null){ THUMB[m[1]]={cls:m[2],in:m[3]};
     const v=V.find(x=>x.id===m[1]); if(v&&!ART_CAT[v.cat])ART_CAT[v.cat]=s[0]; } }
 const {schema:vehSchema}=require('./vehicules-schemas.cjs');
 const RED=require('./redaction.cjs');
+/* v7.43 (lot 6) : catégories de véhicules couvertes par au moins un poste de personnalisation (outils/catalogues/perso-vehicules.json) : lien « Personnaliser ce véhicule » vers la liste filtrée. */
+const PERSO_COVER=require('./catalogues.cjs').coverage('perso-vehicules');
 const VIDE_TXT='Schéma indicatif du modèle. Les visuels officiels détaillés arriveront avec le jeu.';
 const art=v=>vehSchema(v,90)||ART_ID[v.id]||ART_CAT[v.cat]||ART_CAT.sport||'';
 /* img/schemas/<id>.svg : le même schéma en fichier autonome, pour les pages qui chargent une image (top 10, véhicules rares) */
@@ -260,7 +262,7 @@ ${HEADER}
         <div class="fiche-tags">
           ${tags}
         </div>
-        <div class="fiche-liens"><button type="button" class="own-bt" id="own-bt" data-id="${v.id}"><span class="ck"></span><span>Ajouter à mon garage</span></button><a href="../comparateur.html?type=vehicules&amp;ids=${v.id}">Comparer</a>${v.reel?'<a href="#modele-reel">Le modèle réel</a>':''}${v.perso?'<a href="../personnages/'+v.perso+'.html">Véhicule de '+esc(PERSO_NOM[v.perso]||v.perso)+'</a>':''}</div>
+        <div class="fiche-liens"><button type="button" class="own-bt" id="own-bt" data-id="${v.id}"><span class="ck"></span><span>Ajouter à mon garage</span></button><a href="../comparateur.html?type=vehicules&amp;ids=${v.id}">Comparer</a>${PERSO_COVER.has(v.cat)?'<a href="../personnalisations.html#perso-vehicules='+v.cat+'">Personnaliser ce véhicule</a>':''}${v.reel?'<a href="#modele-reel">Le modèle réel</a>':''}${v.perso?'<a href="../personnages/'+v.perso+'.html">Véhicule de '+esc(PERSO_NOM[v.perso]||v.perso)+'</a>':''}</div>
       </div>
       <div class="fhero-art fhero-art--gal">
         <div class="gal" data-base="../img/vehicules/${v.id}" data-vues="${vues}" data-nom="${esc(nom)}" data-vide="${img?0:1}"${meds.length?` data-medias="${medAttr(v)}"`:''}

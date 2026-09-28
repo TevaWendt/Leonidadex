@@ -12,14 +12,16 @@ const C=require(path.join(root,'outils/catalogues.cjs'));
 const S=require(path.join(root,'outils/sections.cjs'));
 const D=C.load();
 const PAGES={consommables:'nourriture.html',coiffures:'style.html',tatouages:'style.html',tenues:'style.html'};
+/* v7.43 (lot 6) : les familles perso-vehicules et perso-armes s'ajoutent ; ce fichier garde les vérifications du lot 5 sur ses quatre familles, catalogues-v743.test.cjs couvre les deux nouvelles. */
+const LOT5=['consommables','coiffures','tatouages','tenues'];
 const withPage=(file,fn,opts={})=>async()=>{const a=await load(root,file,opts);try{await fn(a);assert.deepEqual(a.errors.filter(x=>!x.includes('Not implemented: navigation')),[]);}finally{a.close();}};
 const ld=d=>[...d.querySelectorAll('script[type="application/ld+json"]')].map(s=>JSON.parse(s.textContent));
 const progress=()=>{const c={window:{}};vm.runInNewContext(read('progression-data.js'),c);return c.window;};
 
 test('schéma : quatre familles valides, identifiants uniques, catégories et sources connues, lieux de la carte réels, visuels officiels, statuts et sources cohérents',()=>{
-  assert.deepEqual(C.FAMILIES,['consommables','coiffures','tatouages','tenues']);
+  assert.deepEqual(C.FAMILIES,[...LOT5,'perso-vehicules','perso-armes']);
   const ids=new Set();const lieux=new Set(progress().LK_PROGRESS_IDS.lieux);const medias=JSON.parse(read('outils/medias-officiels.json'));
-  for(const fam of C.FAMILIES){const d=D.families[fam];assert.ok(d.items.length>=20,fam+' : au moins 20 lignes');assert.equal(d.famille,fam);assert.ok(fs.existsSync(path.join(root,d.page.slice(1))),d.page);
+  for(const fam of LOT5){const d=D.families[fam];assert.ok(d.items.length>=20,fam+' : au moins 20 lignes');assert.equal(d.famille,fam);assert.ok(fs.existsSync(path.join(root,d.page.slice(1))),d.page);
     for(const it of d.items){assert.ok(!ids.has(it.id),'doublon '+it.id);ids.add(it.id);
       assert.ok(d.categories.some(c=>c.id===it.categorie),it.id+' catégorie');assert.ok(['officiel','vu','comm','serie','conf'].includes(it.statut),it.id);
       assert.match(it.description,/[.!?»]$/,it.id+' : une phrase');assert.ok(it.sources.length>=1&&it.sources.every(s=>D.sources[s]),it.id+' sources');
@@ -48,7 +50,7 @@ test('schéma : le validateur refuse un prix GTA VI, un champ inconnu, un statut
 });
 
 test('rendu : la boîte dépliable écrit toute la liste (lisible sans JavaScript), sept colonnes, outils inertes, suivi par ligne, compteur honnête',()=>{
-  for(const fam of C.FAMILIES){const html=C.listBox(fam),d=new JSDOM('<body>'+html+'</body>').window.document,data=D.families[fam],c=C.counts(fam);
+  for(const fam of LOT5){const html=C.listBox(fam),d=new JSDOM('<body>'+html+'</body>').window.document,data=D.families[fam],c=C.counts(fam);
     const box=d.querySelector('details.cat-box');assert.equal(box.dataset.catalogue,fam);assert.equal(box.hasAttribute('open'),false);
     assert.match(box.querySelector('.cat-sum').textContent,new RegExp(c.n+'\\s*référencés'));assert.match(C.counterText(fam),new RegExp('^'+c.n+' référencés, dont '+c.confirmes+' confirmés pour GTA VI$'));
     assert.equal(c.confirmes,c.officiel+c.vu);
@@ -70,7 +72,7 @@ test('aucune valeur de la série dans une colonne GTA VI : toutes les cellules G
     for(const td of p6){assert.match(td.textContent.replace(/\s+/g,' ').trim(),/^À confirmer$/);assert.doesNotMatch(td.textContent,/\d|\$/);}
     for(const b of d.querySelectorAll('.cat-repere'))assert.match(b.textContent.replace(/[  ]/g,' '),/^GTA (V|Online|IV|San Andreas)\s?: /);
     for(const b of d.querySelectorAll('.cat-eff-n'))assert.match(b.textContent,/\((GTA V|GTA Online|GTA IV|GTA San Andreas)\)/);}
-  for(const fam of C.FAMILIES)for(const it of D.families[fam].items){assert.equal(it.prix_gta6.valeur,null,it.id);assert.equal(it.prix_gta6.statut,'conf');if(it.effet.valeur!==null)assert.ok(it.effet.jeu,it.id);}
+  for(const fam of LOT5)for(const it of D.families[fam].items){assert.equal(it.prix_gta6.valeur,null,it.id);assert.equal(it.prix_gta6.statut,'conf');if(it.effet.valeur!==null)assert.ok(it.effet.jeu,it.id);}
 });
 
 test('pages Consommables et Vêtements et style : gabarit (bandeau, sous-navigation, sections numérotées, listes centrales, encart, puces), ancres attendues, JSON-LD, sources ancrées',()=>{
@@ -96,7 +98,8 @@ test('pages Consommables et Vêtements et style : gabarit (bandeau, sous-navigat
     assert.doesNotMatch(html,/pourra acheter|pourront porter et acheter/);}
   const s=doc('style.html');assert.equal(s.querySelectorAll('#adresses .d-card').length,3);assert.equal(s.querySelectorAll('#collections .d-card').length,3);
   for(const id of ['style-vice-city','articles-du-bonheur','vintage-tenues-coiffures'])assert.ok(s.getElementById(id),id);
-  for(const f of ['bateaux.html','personnalisations.html','logements.html']){const d=doc(f);assert.equal(d.querySelectorAll('.ed-zone--acq > nav.ed-nav').length,1,f);assert.ok(d.getElementById('sources')&&d.getElementById('a-confirmer')&&d.getElementById('pour-toi'),f);assert.equal(d.querySelectorAll('details.cat-box').length,0,f);}
+  for(const f of ['bateaux.html','logements.html']){const d=doc(f);assert.equal(d.querySelectorAll('.ed-zone--acq > nav.ed-nav').length,1,f);assert.ok(d.getElementById('sources')&&d.getElementById('a-confirmer')&&d.getElementById('pour-toi'),f);assert.equal(d.querySelectorAll('details.cat-box').length,0,f);}
+  /* v7.43 : personnalisations.html reçoit ses deux listes au lot 6 (catalogues-v743.test.cjs). */
 });
 
 test('navigateur : recherche, filtres par catégorie et statut, tri, réinitialisation, compteur de lignes, ouverture par l’ancre d’une ligne',withPage('nourriture.html#consommables-sprunk',a=>{
@@ -136,10 +139,10 @@ test('navigateur : style.html, trois boîtes, l’ancre #accessoires ouvre la ga
   assert.equal(a.d.getElementById('box-coiffures').open,false);
 }));
 
-test('Progression : douze cartes (4 + 4 + 4), les quatre familles comptent leurs lignes, la liste dépliée mène à l’ancre de la ligne, export / import',withPage('progression.html',a=>{
-  const cards=[...a.d.querySelectorAll('.suivi-card')];assert.equal(cards.length,12);
+test('Progression : quatorze cartes (douze du lot 5 + deux du lot 6), les quatre familles comptent leurs lignes, la liste dépliée mène à l’ancre de la ligne, export / import',withPage('progression.html',a=>{
+  const cards=[...a.d.querySelectorAll('.suivi-card')];assert.equal(cards.length,14);
   const P=progress();
-  for(const fam of C.FAMILIES){const card=a.d.querySelector('.suivi-card[data-family="'+fam+'"]');assert.ok(card,fam);assert.ok(a.d.getElementById(fam),'ancre #'+fam);
+  for(const fam of LOT5){const card=a.d.querySelector('.suivi-card[data-family="'+fam+'"]');assert.ok(card,fam);assert.ok(a.d.getElementById(fam),'ancre #'+fam);
     assert.equal(P.LK_PROGRESS_IDS[fam].length,C.counts(fam).suivis);assert.equal(Object.keys(P.LK_PROGRESS_NAMES[fam]).length,C.counts(fam).suivis);
     assert.match(card.querySelector('.suivi-n').textContent,new RegExp('^'+(fam==='consommables'?'1':'0')+' \\/ '+C.counts(fam).suivis+'$'),fam);}
   const card=a.d.querySelector('.suivi-card[data-family="consommables"]');card.querySelector('.suivi-toggle').click();
@@ -154,18 +157,18 @@ test('progression-core : les quatre familles entrent dans le total, l’export e
   const mem=new Map();const storage={get length(){return mem.size;},key:i=>[...mem.keys()][i],getItem:k=>mem.has(k)?mem.get(k):null,setItem:(k,v)=>mem.set(k,String(v)),removeItem:k=>mem.delete(k)};
   const store=P.create({storage,acquisitions:{categories:[],items:[]},ids:IDS,collectibles:[]});
   assert.ok(store.toggle('sprunk',true));assert.ok(store.toggle('zone-bras',true));assert.ok(store.toggle('gta5-fade',true));assert.ok(store.toggle('lunettes-de-soleil',true));
-  const s=store.summary();for(const fam of C.FAMILIES){const g=s.groups.find(x=>x.id===fam);assert.ok(g,fam);assert.equal(g.total,IDS[fam].length);assert.equal(g.done,1);}
+  const s=store.summary();for(const fam of LOT5){const g=s.groups.find(x=>x.id===fam);assert.ok(g,fam);assert.equal(g.total,IDS[fam].length);assert.equal(g.done,1);}
   const out=store.exportData();assert.equal(out.data.lk_own_consommables,'{"sprunk":true}');assert.equal(out.data.lk_own_tenues,'{"lunettes-de-soleil":true}');
   mem.clear();const plan=store.prepareImport(JSON.stringify(out));assert.deepEqual(plan.issues,[]);store.applyImport(plan,'merge');assert.equal(store.summary().done,4);
 });
 
 test('recherche interne, Léo et sitemap : chaque ligne indexée (type élément) vers son ancre, familles et Accessoires indexés, FAQ dans Léo, réponses',()=>{
   const c={window:{}};vm.runInNewContext(read('search-index.js'),c);const idx=c.window.LK_INDEX;
-  for(const fam of C.FAMILIES){const d=D.families[fam];assert.ok(idx.some(e=>e.u===d.page+'#'+d.section&&e.l===d.label),fam+' section');
+  for(const fam of LOT5){const d=D.families[fam];assert.ok(idx.some(e=>e.u===d.page+'#'+d.section&&e.l===d.label),fam+' section');
     for(const it of d.items){const e=idx.find(x=>x.u===d.page+'#'+C.rowId(fam,it));assert.ok(e,it.id+' indexé');assert.equal(e.t,'element');assert.equal(e.k,C.KIND[fam]);assert.ok(e.s.includes(it.nom.normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/’/g,"'").toLowerCase().split(' ')[0]));}}
   assert.ok(idx.some(e=>e.u==='/style.html#accessoires'));assert.ok(idx.some(e=>e.u==='/style.html#tatouages'&&e.l==='Tatouages'));assert.ok(idx.some(e=>e.u==='/nourriture.html'));
   const leo=JSON.parse(read('leo-index.json'));
-  for(const fam of C.FAMILIES){const rows=leo.items.filter(x=>x.kind==='catalogue-'+fam);assert.equal(rows.length,D.families[fam].items.length,fam+' dans Léo');for(const r of rows){assert.ok(r.url.startsWith(D.families[fam].page+'#'),r.name);assert.equal(r.price,undefined);}}
+  for(const fam of LOT5){const rows=leo.items.filter(x=>x.kind==='catalogue-'+fam);assert.equal(rows.length,D.families[fam].items.length,fam+' dans Léo');for(const r of rows){assert.ok(r.url.startsWith(D.families[fam].page+'#'),r.name);assert.equal(r.price,undefined);}}
   const faq=leo.knowledge.filter(x=>/^acq-(nourriture|style)-/.test(x.id));assert.equal(faq.length,10);for(const t of faq)assert.match(t.links[0].url,/^\/(nourriture|style)\.html#faq$/);
   const core=require(path.join(root,'leo-core.js')).create(leo);
   for(const [q,re,url] of [['peut-on manger dans gta 6 ?',/Rob Nelson/,'/nourriture.html#faq'],['est-ce qu’on grossit dans gta 6 ?',/grossir/,'/nourriture.html#faq'],['peut-on changer de coiffure dans gta 6 ?',/salon/,'/style.html#faq'],['peut-on se faire tatouer ?',/FAILE/,'/style.html#faq'],['y a-t-il des gilets pare-balles dans gta 6 ?',/Ammu-Nation/,'/nourriture.html#faq'],['combien de tenues dans gta 6 ?',/milliers/,'/style.html#faq']]){const a=core.answer(q);assert.equal(a.kind,'answer',q);assert.match(a.text,re,q);assert.equal(a.links[0].url,url,q);}

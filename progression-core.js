@@ -7,11 +7,12 @@
   'use strict';
   var SITE = 'leonidakit', VERSION = 2, KEY = 'lk_progression_v2';
   /* v7.42 (lot 5) : familles des catalogues (consommables, coiffures, tatouages, tenues), même mécanique que équipements / munitions. */
-  var LEGACY = { vehicules: 'lk_own_vehicules', armes: 'lk_own_armes', lieux: 'lk_map_found', equipements: 'lk_own_equipements', munitions: 'lk_own_munitions', consommables: 'lk_own_consommables', coiffures: 'lk_own_coiffures', tatouages: 'lk_own_tatouages', tenues: 'lk_own_tenues' };
+  /* v7.43 (lot 6) : perso-vehicules et perso-armes, même mécanique. */
+  var LEGACY = { vehicules: 'lk_own_vehicules', armes: 'lk_own_armes', lieux: 'lk_map_found', equipements: 'lk_own_equipements', munitions: 'lk_own_munitions', consommables: 'lk_own_consommables', coiffures: 'lk_own_coiffures', tatouages: 'lk_own_tatouages', tenues: 'lk_own_tenues', 'perso-vehicules': 'lk_own_perso-vehicules', 'perso-armes': 'lk_own_perso-armes' };
   var LEGACY_KEYS = Object.keys(LEGACY).map(function (t) { return LEGACY[t]; });
   function legacyType(key) { for (var t in LEGACY) if (LEGACY[t] === key) return t; return null; }
   var TRANSPORT = ['lk_collectibles_v1', 'lk_collectibles_tools_v1', 'lk-calculator-notebooks-v3', 'lk-calculator-v1', 'lk-calculator-favorites-v1'];
-  var LABELS = { vehicules: 'Véhicules', armes: 'Armes', lieux: 'Lieux de la carte', equipements: 'Équipements et gadgets', munitions: 'Types de munitions', consommables: 'Consommables', coiffures: 'Coiffures', tatouages: 'Tatouages', tenues: 'Tenues et accessoires', collectibles: 'Collectibles' };
+  var LABELS = { vehicules: 'Véhicules', armes: 'Armes', lieux: 'Lieux de la carte', equipements: 'Équipements et gadgets', munitions: 'Types de munitions', consommables: 'Consommables', coiffures: 'Coiffures', tatouages: 'Tatouages', tenues: 'Tenues et accessoires', 'perso-vehicules': 'Personnalisation des véhicules', 'perso-armes': 'Personnalisation des armes', collectibles: 'Collectibles' };
   function isChecked(v) { return v === true || v === 1; }
   function parseMap(raw) {
     /* Retourne {map, corrupt} : les entrées illisibles ne comptent pas mais ne sont jamais perdues. */
@@ -33,7 +34,7 @@
   }
   function create(options) {
     var storage = options.storage, acquisitions = options.acquisitions || { categories: [], items: [] };
-    var ids = options.ids || global.LK_PROGRESS_IDS || { vehicules: [], armes: [], lieux: [], equipements: [], munitions: [], consommables: [], coiffures: [], tatouages: [], tenues: [] };
+    var ids = options.ids || global.LK_PROGRESS_IDS || { vehicules: [], armes: [], lieux: [], equipements: [], munitions: [], consommables: [], coiffures: [], tatouages: [], tenues: [], 'perso-vehicules': [], 'perso-armes': [] };
     var collectibles = options.collectibles || (global.LK_COLLECTIBLES && global.LK_COLLECTIBLES.items) || [];
     var notice = typeof options.notice === 'function' ? options.notice : function () {};
     var listeners = [];
@@ -73,7 +74,7 @@
     function summary() {
       var groups = [], done = 0, total = 0;
       Object.keys(LEGACY).forEach(function (t) {
-        var list = Array.from(new Set(ids[t] || [])), map = parseMap(read(LEGACY[t])).map, typeKey = { vehicules: 'vehicle', armes: 'weapon', lieux: 'place', equipements: 'equipment', munitions: 'ammo', consommables: 'consumable', coiffures: 'haircut', tatouages: 'tattoo', tenues: 'outfit' }[t];
+        var list = Array.from(new Set(ids[t] || [])), map = parseMap(read(LEGACY[t])).map, typeKey = { vehicules: 'vehicle', armes: 'weapon', lieux: 'place', equipements: 'equipment', munitions: 'ammo', consommables: 'consumable', coiffures: 'haircut', tatouages: 'tattoo', tenues: 'outfit', 'perso-vehicules': 'vehicle-mod', 'perso-armes': 'weapon-mod' }[t];
         var own = list.filter(function (id) { return !partitioned[typeKey + ':' + id]; });
         var d = own.filter(function (id) { return map[id]; }).length;
         groups.push({ id: t, label: LABELS[t], total: own.length, done: d, percent: own.length ? d / own.length * 100 : null });

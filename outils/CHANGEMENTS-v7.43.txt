@@ -1,0 +1,175 @@
+v7.43 — 28 septembre 2026 — LOT 6 : PERSONNALISATIONS VÉHICULES ET ARMES DE A À Z
+(base : v7.42 = lot 5 « Consommables et Vêtements et style en listes complètes »)
+
+Ce qui change pour le visiteur
+- Personnalisations (personnalisations.html) devient deux sous-sections nettes, sur le gabarit « vrai site » du lot 5 :
+  bandeau avec la pile d’images cliquable, sous-navigation collante (Rockstar · Véhicules · Armes · Ateliers ·
+  À confirmer · Pour toi · FAQ · Sources), neuf sections numérotées du système du lot 3 : « Ce que Rockstar a montré »
+  (frise à quatre temps : les deux ateliers de l’Édition Ultimate, le kit du Ganado et les armes gravées, le motif du
+  Pack Vintage, Rob Nelson à Famitsu), « Ce que Rockstar a décrit » (les deux cartes existantes, kit Ganado et motif
+  Vintage, avec leur case), les deux listes dépliables, « Les ateliers et les armureries », « Ce qui reste à confirmer »,
+  « Ce que ça change pour toi », FAQ de cinq questions, « Vérification et sources » ; puis l’encart calculateur et les
+  puces. L’ancienne section « Armes personnalisées déjà recensées » disparaît : ses trois armes sont des lignes de la
+  liste, reliées à leurs fiches.
+- Deux listes dépliables complètes, une par famille (compteur honnête dans le titre : « N postes référencés · N confirmés
+  pour GTA VI · N repères de la série ») :
+  · Personnalisation des véhicules (#perso-vehicules) : 58 postes en 18 catégories (kits complets, carrosserie, jantes et
+    pneus, peinture, vitres, plaques, klaxons, phares, néons, suspension, moteur et performances, freins, transmission,
+    turbo, blindage, intérieur, livrées et stickers, sécurité et suivi), dont 13 confirmés pour GTA VI (9 officiels :
+    kit rétro du Ganado, jantes surdimensionnées « donk » et intérieurs sur mesure de Rideout Customs, pneus tout-terrain
+    et livrée peinte à la main de One-Eyed Willie’s, livrée spéciale du Ganado, mods de performances annoncés, repeinte au
+    Pay ’n’ Spray, alarme et traceur des voitures de luxe ; 4 vus : pare-chocs tout-terrain à treuil, peinture pailletée
+    dorée, peinture bicolore de la Stanier ’55, rehausse et garde au sol), 43 repères de la série (Los Santos Customs et
+    Benny’s : blindage 20 à 100 %, freins, moteur EMS 1 à 4, transmission, turbo, suspension, hydrauliques, pare-chocs,
+    jupes, ailerons, capots, toits, échappements, arceau, treize familles de jantes, couleurs de jantes, pneus pare-balles,
+    fumée colorée, pneus à faible adhérence, peintures classique / métallisée / mate / métal / chrome / caméléon, nacré,
+    vitres teintées, plaques, klaxons, xénon, phares de couleur, néons, intérieurs Benny’s, livrées, emblème de crew,
+    traceur et assurance, bombes, conversion lowrider) et 2 « à confirmer » (motos ; bateaux, avions et hélicoptères).
+  · Personnalisation des armes (#perso-armes) : 40 postes en 11 catégories (variantes complètes, chargeurs, viseurs et
+    lunettes, silencieux et canons, poignées et crosses, lampes et lasers, finitions et gravures, camouflages et livrées,
+    munitions spéciales, conversion Mk II, armurerie et casier), dont 12 confirmés (9 officiels : Girardi ES9 et Klose K17
+    gravés, Morgan « his and hers », motif tropical du Pack Vintage, crosses gravées de palmiers, casier d’Ammu-Nation,
+    armes exclusives à certains magasins, casier d’armes des garages, « more weapon customization options than ever
+    before » ; 3 vus : finition dorée, canon fileté, crosse rabattable), 25 repères (Ammu-Nation et atelier d’armes de
+    GTA Online : chargeurs étendu / tambour / caisson, lunettes et viseurs, silencieux, compensateur, freins de bouche,
+    canon lourd, poignée, lampe, teintes, camouflages, balles traçantes / incendiaires / perforantes / creuses / blindées /
+    explosives, conversion Mk II) et 3 « à confirmer » (laser, munitions spéciales dans GTA VI, corps à corps et
+    projectiles).
+  Chaque ligne : puce de statut, nom, catégorie (icône dessinée), personnage concerné, description en une phrase, ligne
+  « Pour : … » (catégories de véhicules) ou « Armes : … · fiches : … » (catégories d’armes et fiches armes/*.html citées
+  seulement quand une source officielle ou une capture les montre), effet (texte, et chiffre daté d’un jeu : « 100 %
+  d’armure (GTA V) », « 300 % de capacité (GTA V) », « 50 % (GTA Online) »), colonne GTA VI (toujours « à confirmer »),
+  colonne « Repère de la série » (« GTA V : 500 $ à 5 000 $ », « GTA Online : 73 750 $ à 165 375 $ », note du modèle
+  relevé, jamais dans la colonne GTA VI), atelier ou lieu avec lien vers la carte (Rideout Customs, Phil’s Ammu-Nation,
+  Ammu-Nation, Pawn & Gun) ou type de commerce quand le lieu n’est pas connu (One-Eyed Willie’s « pas encore placé »,
+  Pay ’n’ Spray, receleur, Los Santos Customs, Benny’s, Weapon Workshop, présentés comme repères), liens « source »,
+  « visuel officiel », « fiche … », case « Je l’ai » (suivi.js) qui alimente la barre de la famille et Ma progression.
+- La liste complète est écrite dans la page : lisible sans JavaScript. Avec JavaScript (catalogue.js) : recherche
+  (les mots de compatibilité comptent : « moto », « pistolets »), filtres par catégorie et par statut, tri, compteur,
+  « Tout afficher », ouverture par l’ancre d’une ligne (personnalisations.html#perso-armes-silencieux). Nouveau : filtre
+  de compatibilité par l’adresse, #perso-vehicules=<catégorie de véhicule> (sport, pickup, moto, bateau…) et
+  #perso-armes=<catégorie d’arme ou identifiant d’arme> (pistolet, assaut, girardi-es9…) : la boîte s’ouvre sur les
+  postes qui s’appliquent, avec une note « Filtré pour : Voitures de sport » et « Tout afficher » ; une valeur inconnue
+  ouvre la liste entière. Tableau sur grand écran, cartes empilées sous 900 px : aucun défilement horizontal.
+- Les deux contenus déjà documentés (kit rétro du Ganado, motif d’arme Vintage) gardent leur carte Rockstar et leur case
+  « J’ai obtenu » ; leur ligne dans la liste porte la même case (même stockage lk_progression_v2, aucun double compte,
+  aucune clé changée) et un lien « Carte Rockstar ».
+- « Les ateliers et les armureries » : cartes-ateliers avec vignette de la carte et lien carte.html#lieu=… quand le lieu
+  est placé (Rideout Customs à Crosstown ; Phil’s Ammu-Nation, Ammu-Nation au nom supposé à Rockridge, Pawn & Gun à Port
+  Gellhorn ; Chip’s Body Shop, Simon’s Tires, Oster Tire, Status Auto Resort vus sur la carte), silhouette sans repère et
+  « Pas encore placé sur la carte » pour One-Eyed Willie’s (Lake Leonida d’après Rockstar) avec le lien vers sa fiche ;
+  chaque carte dit ce qu’on y fait, son statut, et renvoie à la liste.
+- Liens croisés : chaque fiche véhicule (302) a « Personnaliser ce véhicule » dans le bloc de liens du bandeau, vers la
+  liste filtrée sur sa catégorie ; chaque fiche d’arme (27) a « Accessoires compatibles » vers la liste filtrée sur sa
+  catégorie (pour le corps à corps et les projectiles, la liste montre la ligne « à confirmer » qui les concerne) ; les
+  fiches Rideout Customs et One-Eyed Willie’s ont « Personnaliser mon véhicule » vers la sous-section. Rien d’autre ne
+  change sur les fiches.
+- Progression : quatorze cartes (4 + 4 + 4 + 2, la dernière rangée centrée sur grand écran, 2 colonnes sous 1 000 px,
+  1 colonne sous 560 px) : « Modifs de véhicule posées » (0 / 57) et « Modifs d’arme posées » (0 / 39) avec liste
+  dépliable (nom, catégorie, lien vers la ligne, Retirer), clés lk_own_perso-vehicules et lk_own_perso-armes dans
+  l’export / import, comptées dans le total ; la carte « Personnalisations » de « Ce qui s’achète » compte les deux
+  listes plus le kit Ganado et le motif Vintage (3 / 98 quand les trois sont cochés).
+- Recherche interne : une entrée par famille (ancre de la liste, catégorie « Personnalisations »), une par poste (type
+  « élément », lien vers l’ancre de sa ligne, mots de compatibilité). Léo : chaque poste entre dans l’index (sans prix),
+  les cinq questions de la FAQ répondent (« peut-on personnaliser sa voiture ? », « peut-on repeindre sa voiture ? »,
+  « peut-on personnaliser ses armes ? », « c’est quoi le kit rétro du Ganado ? », « où sont les ateliers et les
+  armureries ? »), « trouve silencieux » ouvre la ligne. Données structurées : deux ItemList (une par liste), FAQPage,
+  BreadcrumbList. Achats : la carte Personnalisations décrit les deux listes.
+
+Statuts et honnêteté des chiffres
+- Aucun prix GTA VI, aucun effet GTA VI chiffré, aucune compatibilité arme par arme supposée : « la plupart des armes »
+  du motif Vintage reste « la plupart des armes », les deux armes citées sont celles de la capture. Les prix des repères
+  sont relevés sur un modèle nommé (Bravado Gauntlet, Karin Sultan, carabine, pistolet, Mk II) et la note le dit : dans
+  GTA V, les prix varient selon le véhicule. Quand une page ne chiffre pas un poste, la ligne écrit « prix non relevé sur
+  la page consultée » au lieu d’inventer. Un poste vu sur une capture cite la capture ; un poste officiel cite le texte
+  de Rockstar (guillemets d’origine).
+- Le validateur (outils/catalogues.cjs) refuse : un prix GTA VI, un chiffre d’effet sans jeu ni unité, un repère sans
+  source de la série, une catégorie de compatibilité hors du site, une arme inconnue, une compatibilité arme par arme
+  sans source officielle ou vue, une ligne reliée à une acquisition qui garderait sa propre case. Un test parcourt la
+  page et vérifie qu’aucune cellule GTA VI ne contient un chiffre.
+
+Recherche et sources (pages ouvertes le 27 septembre 2026 ; registre outils/catalogues/sources.json, 53 entrées dont 16
+nouvelles)
+- GTA VI, officiel : texte des éditions du 24 juin 2026 relu dans VGC (Rideout Customs « detailed interiors, exquisite
+  rims, and donk stylings », One-Eyed Willie’s « off-road modifications and hand-painted automotive artistry », Ganado
+  « exclusive mods », variantes gravées, Morgan « palm-tree-etched grips, engraved detailing, and high-performance
+  scope », garage Paradise avec casier) et TheSixthAxis (« a wide selection of artistic and performance-based vehicle
+  mods », « cab spoiler, rear aerials, and special livery », « custom hand-painted masterpieces », « Tropical pattern
+  available to adorn most guns », casier du garage de Shore Court), GamesRadar+ du 24 juin (« customized grips, various
+  engravings, and different scopes »), GTA Wiki Ultimate Edition, Rob Nelson à Famitsu (traduction GTAVice.net du
+  9 septembre : Pay ’n’ Spray, atelier de tuning, alarmes et traceurs, cloneur de clés, receleurs, garages, casier
+  d’Ammu-Nation, armes exclusives par magasin, « more weapon customization options than ever before »), GamingBible du
+  10 septembre (vol des voitures de luxe).
+- GTA VI, vu dans un média : captures officielles déjà dans img/officiel (Rideout Customs 01 / 02 / 03, One-Eyed
+  Willie’s 01 / 02 / 03, Ganado Retro Build, Personalized Weapon Variants, Vintage Vice City Weapon Pattern 01, Stanier ’55
+  01, Vice City 12), décrites d’après ce qu’elles montrent.
+- Repères de la série (gta.wiki, 16 pages) : Los Santos Customs, tableaux des modifications de la Bravado Gauntlet et de
+  la Karin Sultan, Vehicle Customization in GTA V (vitres, peintures, jantes) et ses sous-pages Lights, Wheels, Respray
+  Colors, Horns, Benny’s Original Motor Works, Attachments, Pistol, Carbine Rifle, Pistol Mk II, Carbine Rifle Mk II,
+  Heavy Sniper Mk II. gta.fandom.com renvoie une erreur 402 sur ses sous-pages : gta.wiki a été utilisé pour tous les
+  repères.
+- Lieux : la carte du site (données gtadb.org, CC BY 4.0) ; One-Eyed Willie’s, le Pay ’n’ Spray et le receleur ne sont
+  pas placés : ils apparaissent comme type de commerce, sans lien.
+- Écarté volontairement : les listes de « leaks », les prix « probables », les guides sans chiffre, toute compatibilité
+  arme par arme déduite d’une silhouette.
+
+Technique
+- outils/catalogues/perso-vehicules.json et perso-armes.json (nouveaux), même modèle que le lot 5 ; schema.json étendu :
+  effet.unite accepte capacite et pourcent ; champ compat {vehicules[], armes[], ids[], note} (catégories du site, armes
+  recensées) ; champ acq (identifiant d’une acquisition suivable, ligne à suivi false). sources.json : 16 sources GTA
+  Wiki ajoutées, descriptions des sources officielles relues complétées (rien retiré).
+- outils/catalogues.cjs : FAMILIES à six familles ; VEH_CATS et ARM_CATS ; validation de compat et acq (acquisitions.json
+  et armes-data.js lus) ; rendu : ligne .cat-compat, attribut data-compat sur la ligne, data-cat-tags (libellés) et note
+  .cat-filter sur la boîte, cellule de suivi avec la case d’acquisition (data-acq-toggle, liée par acquisitions.js) ;
+  compteur « postes » pour ces deux familles ; nom de lieu avec « & » rétabli (Pawn & Gun) ; compatWords dans la
+  recherche ; compatLabels(fam) et coverage(fam) exportés. UNITS centralisé.
+- outils/gen-acquisitions.cjs : branche customizations (frise, cartes Rockstar, deux listes, ateliers, À confirmer, Pour
+  toi, FAQ, Sources) ; atelierCard / ateliersSection (vignette outils/carte-vignette.cjs ou silhouette .ed-map--vide) ;
+  {nPerso} ; l’ancienne section « variantes » retirée ; famille → catégorie Personnalisations dans l’index.
+- outils/catalogues/editorial.json : bloc customizations réécrit (nav, rockstar, ateliers, confirmer, toi, faq avec
+  mots-clés). outils/acquisitions.json : intro, limite et description de la catégorie customizations (rien d’autre).
+- outils/sections.cjs : 27 icônes dessinées (kit, carrosserie, jante, peinture, vitre, plaque, klaxon, phare, neon,
+  suspension, moteur, frein, transmission, turbo, blindage, interieur, livree, securite, chargeur, viseur, silencieux,
+  poignee, finition, camouflage, conversion, casier ; lampe-torche et munitions réutilisées).
+- catalogue.js : filtre de compatibilité (state.tag, #<famille>=<valeur>, note et réinitialisation). suivi.js,
+  progression-core.js (LEGACY, LABELS, typeKey), progression.js (familles, ancres, carte Personnalisations = listes +
+  acquisitions, noms d’import), progression.html (deux cartes, phrase d’intro). outils/gen.js et outils/gen-armes.cjs :
+  lien dans le bloc de liens du bandeau, posé seulement si la catégorie est couverte (coverage). outils/lore-gen.js :
+  lien des fiches d’ateliers (outils/catalogues/editorial.json, ateliers). outils/gen-leo.cjs : FAQ acq-customizations-n.
+  sync-site.cjs et gen-leo.cjs suivent C.FAMILIES sans changement.
+- style.css : bloc « v7.43 » (marqueurs de sous-navigation, cartes-ateliers, grille Progression à 14 cartes : 8 colonnes
+  virtuelles, dernière rangée centrée). acquisitions.css : bloc « v7.43 » (.cat-compat, .cat-acq, .cat-filter) et
+  .cat-type en inline-block (les types avec note ne se coupent plus en deux colonnes).
+- Tests : 408 → 419 (nouveau outils/tests/catalogues-v743.test.cjs : schéma et données, validateur, rendu, page, filtres
+  par l’adresse dans jsdom, suivi et case reliée, Progression, progression-core, fiches, recherche, Léo, sitemap, icônes).
+  Trois tests des lots 1, 5 et D mis à jour pour compter les six familles et les quatorze cartes (aucune assertion
+  supprimée). calculateurs-browser.cjs : 278 / 278 (calculateur non touché, vérifié quand même). verifier.js : 0 erreur
+  sur 38 767 références. gen-leo --check : sans divergence. Régénération reproductible à l’octet (double passage comparé).
+
+Contrôle
+- 7 pages (Personnalisations, fiche Vapid Ganado ’70, fiche Girardi ES9, Progression, fiches One-Eyed Willie’s et Rideout
+  Customs, Achats) × 7 largeurs (320, 390, 768, 1024, 1280, 1440, 1920), listes ouvertes : 0 erreur console, 0 requête
+  en échec, 0 débordement horizontal, 0 image cassée ; grille Progression 4 + 4 + 4 + 2 dès 1 024 px, 2 colonnes à
+  768 px, 1 colonne à 320 et 390 px.
+- Clavier : Entrée sur le résumé ouvre et ferme la boîte ; champ de recherche, listes déroulantes, « Tout afficher » et
+  « Je l’ai » atteignables et actionnables au clavier, contour visible à chaque arrêt ; l’adresse #perso-armes=pistolet
+  ouvre la liste filtrée (25 lignes) avec sa note ; la case reliée du kit Ganado est affichée et cochable.
+- Mouvement réduit : tout visible, 0 animation en cours ; mouvement normal : titre de section lisible en moins de
+  20 ms après son arrivée. Survols (résumé, ligne, carte-atelier, action, lien de fiche) : aucun transform ni filtre.
+- Captures avant / après à 390 et 1 280 px (Personnalisations section par section, listes filtrées, fiches véhicule,
+  arme et atelier, Progression, Achats) dans le dossier de contrôle, hors dépôt, avec le rapport JSON.
+
+Reste ouvert (signalé, pas modifié)
+- One-Eyed Willie’s n’a toujours pas de position validée sur la carte (Rockstar dit « Lake Leonida ») ; sa carte-atelier
+  le dit et renvoie à sa fiche. Pay ’n’ Spray et receleur de véhicules : cités par Rob Nelson, pas encore des lieux.
+- Prix des repères : relevés sur un modèle nommé (Gauntlet, Sultan, carabine, pistolet) ; dans GTA V les postes
+  esthétiques varient selon le véhicule, la note de chaque ligne le rappelle. Les pages consultées ne chiffrent pas
+  la calandre, les ailes, la couleur des jantes, la fumée, le nacré, les hydrauliques ni les intérieurs de Benny’s.
+- Les « Autres enseignes automobiles vues » (Chip’s Body Shop, Simon’s Tires, Oster Tire, Status Auto Resort) sont des
+  bâtiments repérés sur la carte ; rien n’indique qu’on y personnalise un véhicule : leurs cartes le disent.
+- Choix à valider par Téva : les deux lignes reliées aux cartes Rockstar (kit Ganado, motif Vintage) partagent la case
+  de la carte (stockage inchangé) au lieu d’une case propre à la liste ; et les postes « armurerie et casier » (casiers,
+  armes exclusives par magasin) figurent dans la liste des armes comme postes officiels bien qu’ils ne soient pas des
+  accessoires.
+- rockstargames.com toujours cité avec sa dernière ouverture directe ; textes officiels relus dans les pages qui les
+  reproduisent (VGC, TheSixthAxis, GTA Wiki, Xbox Store, GamesRadar+).

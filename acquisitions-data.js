@@ -79,12 +79,12 @@ window.LK_ACQUISITIONS = {
       "label": "Personnalisations",
       "route": "/personnalisations.html",
       "type": "customization",
-      "intro": "Retrouve les modifications de véhicules et d’armes décrites par Rockstar, leurs conditions d’accès et les ateliers déjà présentés sur le site.",
-      "limit": "Une modification esthétique ne prouve aucun gain de vitesse ou de revenu. Aucun prix ni effet chiffré n’est supposé.",
+      "intro": "Tout ce qui se personnalise sur un véhicule ou une arme, poste par poste : ce que Rockstar a dit ou montré pour GTA VI (Rideout Customs, One-Eyed Willie’s, kit du Ganado, armes gravées, motif Vintage), et ce que la série faisait déjà, avec ses prix présentés comme repères.",
+      "limit": "Une modification esthétique ne prouve aucun gain de vitesse ou de revenu. Aucun prix ni effet chiffré GTA VI n’est supposé : un chiffre de GTA V ou GTA Online reste dans sa colonne.",
       "empty": "En attente de données officielles pour une personnalisation identifiable.",
       "menu": true,
       "menuOrder": 3,
-      "description": "Le kit Ganado de l’Édition Ultimate et le motif d’arme Vintage Vice City, décrits par Rockstar, avec les ateliers Rideout Customs et One-Eyed Willie’s. Aucun prix ni effet chiffré ; la compatibilité arme par arme n’est pas publiée. Tu peux cocher les deux personnalisations documentées et ouvrir les fiches des ateliers."
+      "description": "Deux listes dépliables, véhicules et armes, avec pour chaque poste son statut, son effet, son prix repère de la série, l’atelier où le faire et un lien vers la carte. Le kit Ganado et le motif Vintage décrits par Rockstar restent à cocher ; chaque fiche véhicule et chaque fiche d’arme renvoient à sa liste filtrée."
     },
     {
       "id": "garages",
