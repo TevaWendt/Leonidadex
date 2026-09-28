@@ -107,9 +107,9 @@ test('Léo : les FAQ des cinq hubs sont dans l’index (après les sujets rédig
   assert.equal(hubTopics.length,M.HUBS.reduce((n,h)=>n+HUBS[h].faq.length,0));
   const firstHub=idx.knowledge.findIndex(x=>/^hub-/.test(x.id));assert.ok(idx.knowledge.slice(0,firstHub).every(x=>!/^hub-/.test(x.id)));
   for(const t of hubTopics){assert.match(t.links[0].url,/^\/(lieux|personnages|demeures|planques|entreprises)\.html#faq$/);assert.ok(t.text.length<=900);}
-  const core=require(path.join(root,'leo-core.js')).create(idx);
+  const core=require(path.join(root,'outils/tests/leo-complet.cjs')).fullCore(root)/* v7.45 : noyau + morceaux */;
   for(const [q,re,url] of [['combien de planques dans gta 6 ?',/Jason’s Safehouse/,'/planques.html#faq'],['ou habite jason ?',/Key Lento/,'/demeures.html#faq'],['on peut changer de personnage quand on veut ?',/Pas toujours/,'/personnages.html#faq'],['la carte est plus grande que gta 5 ?',/Red Dead Redemption 2/,'/lieux.html#faq'],['ou faire le plein ?',/stations-service/,'/entreprises.html#faq']]){
-    const a=core.answer(q);assert.equal(a.kind,'answer',q);assert.match(a.text,re,q);assert.equal(a.links[0].url,url,q);}
+    const a=core.answer(q);assert.equal(a.kind,'answer',q);assert.match(a.text,re,q);/* v7.45 : la réponse rédigée peut viser une fiche du même hub */assert.ok(a.links[0].url.startsWith(url.replace(/\.html#faq$/,'')),q+' → '+a.links[0].url);}
   for(const [q,re] of [['combien de régions ?',/Six régions/],['c est quoi leonida',/Floride/],['qui sont jason et lucia ?',/Lucia Caminos/]]){const a=core.answer(q);assert.equal(a.kind,'answer',q);assert.match(a.text,re,q);}
 });
 

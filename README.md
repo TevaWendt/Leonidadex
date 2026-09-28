@@ -12,6 +12,7 @@ Hébergé sur Vercel, qui publie tel quel le contenu de ce dépôt : **aucune co
 | `fonts/` | la police Archivo (variable, latin et latin étendu, licence OFL dans `fonts/LICENCE-ARCHIVO.txt`) : hébergée ici, aucune connexion à Google Fonts ; `style.css` la déclare (`@font-face`) et chaque page la précharge |
 | `app.js`, `common.js`, `fiches.js`, `carte.js`, `comparateur.js`, `classement.js`, `progression.js`, `suivi.js`, `catalogue.js` | le code qui fait fonctionner les pages (`suivi.js` : suivi générique par famille — un élément `data-track="famille" data-track-id="id"` reçoit un bouton « Je l’ai », une barre `data-track-bar` affiche le compte ; clés `lk_own_<famille>`) |
 | `armes-data.js`, `vehicules-data.js`, `carte-gtadb.js`, `search-index.js`, `search-lieux.js`, `assets-manifest.js`, `progression-data.js` | les données lues par le site (`search-lieux.js` : les 2 500 lieux de la carte, chargé seulement à la première recherche) |
+| `leo-loader.js`, `leo-nlp.js`, `leo-core.js`, `leo-ui.js`, `leo-link.js`, `leo-calculator.js`, `leo.css`, `leo-index.json`, `leo/` | Léo, l’assistant local (voir « Léo v2 » plus bas) : bouton, compréhension du français, moteur de réponse, interface, lien vers le calculateur, index (noyau + morceaux chargés à la demande) |
 | `robots.txt`, `sitemap.xml`, `sitemap-fiches.xml`, `googleea0091a4822a39f7.html` | référencement Google |
 | `vercel.json` | onze redirections d'anciennes adresses (dont les dossiers imbriqués par erreur `armes/armes/`, `personnages/personnages/`, `photos/photos/`, `img/officiel/officiel/`) et les en-têtes de sécurité (dont la Content-Security-Policy) et de cache. Pas de build. |
 | `.vercelignore` | exclut `outils/` du déploiement : le dossier reste sur GitHub mais n'est jamais mis en ligne. |
@@ -39,6 +40,41 @@ Hébergé sur Vercel, qui publie tel quel le contenu de ce dépôt : **aucune co
 - Photos de la carte : `outils/data/carte-gtadb-source.json` doit référencer les fichiers WebP réellement présents (`photos/L…,ig.webp`). Une référence `.jpg` est considérée comme une photo absente et disparaît de `carte-gtadb.js` à la régénération (défaut corrigé en v7.2, protégé par un test).
 - Aucune donnée issue de fuites. Crédit gtadb.org conservé sur la carte et dans les mentions légales.
 
+
+## Léo v2, assistant local (v7.45, 28 septembre 2026)
+
+Léo répond depuis le navigateur : aucune API, aucun serveur, aucun script tiers, aucun coût, rien ne quitte la page (CSP `connect-src 'self'` : il ne lit que des fichiers du site). Il ne dit que ce que le site dit, avec le lien de la page source et le statut de l’information. Sans réponse, il le dit (« Je n’ai pas cette réponse sur Leonidakit »), renvoie vers le site officiel de Rockstar (https://www.rockstargames.com/VI et la sous-page officielle la plus proche), la page la plus proche du site et « Signaler une mauvaise réponse ». Hors sujet : une phrase (« Léo répond seulement sur Leonidakit et GTA VI »), deux suggestions et le lien Rockstar.
+
+**Architecture**
+
+```
+leo-loader.js (bouton, toujours là, 4,7 ko)
+  └─ 1re ouverture : calculateurs-engine.js + leo-link.js + leo-nlp.js → leo-core.js → leo-ui.js
+       └─ leo-index.json = noyau (≤ 300 ko, vérifié par gen-leo) : questions rédigées déjà analysées, lexique,
+          gabarits, textes, suggestions par page, hors sujet, liens officiels, noms des armes et du monde,
+          vocabulaire de chaque morceau
+            └─ leo/*.json = morceaux, chargés à la demande (un mot ou un nom de la question les désigne) :
+               calculateur (questions du calculateur) · vehicules · armes · monde (régions, personnages,
+               entreprises, demeures, planques, contenus Ultimate) · lieux (lieux de la carte, format compact) ·
+               catalogues (lignes des listes) · passages (extraits de 300 à 600 signes des pages)
+```
+
+- `leo-nlp.js` (compréhension, sans dépendance) : normalisation (casse, accents, apostrophes, « gta 6 » → `gta6`, `$ € %`), lexique (abréviations SMS, fautes courantes, anglais courant, concepts), racines françaises légères, index BM25 sur les formulations, rapprochement d’un mot inconnu (Damerau-Levenshtein ≤ 1 de 4 à 6 lettres, ≤ 2 au-delà, ou même clé phonétique), jetons des noms de fiches (`nameTokens` : numéros et lettres seules départagent les homonymes, « (nom réel) » ignoré, suite de lettres pour « P’s & Q’s »).
+- `leo-core.js` (décision) : salutations, date de sortie, définitions et FAQ du Tuto depuis le noyau seul ; puis suite de conversation (six derniers échanges : « et son prix ? », « et à Vice City ? ») ; nom de fiche seul ; question rédigée sûre (confiance ≥ 0,78) ; fiche + intention (gabarits : prix, où, inspiration, Édition Ultimate, vitesse, munitions, personnalisation, effet, propriétaire, maison, véhicules, arme) ; question rédigée probable (≥ 0,6 ; « Tu voulais dire… ? » quand deux sujets sont à moins de 0,08) ; destinations et calculs (couche v1 conservée : `leo-link.js`, `leo-calculator.js`) ; passages des pages ; sinon « Je n’ai pas cette réponse ». Sur une fiche, « ça vaut le coup ? », « combien ça coûte ? », « est-ce que je peux l’acheter ? » visent la fiche ouverte.
+- `leo-ui.js` (interface) : réponse composée mot à mot (≤ 320 ms ; complète tout de suite en mouvement réduit et pour le lecteur d’écran), passage cité, bouton d’action (carte, outil, page), sources cliquables, liens externes Rockstar, « Tu voulais dire… ? », « Signaler une mauvaise réponse » (ouvre Contact prérempli, données après `#`, jamais envoyées), six suggestions selon la page, mention « Léo répond depuis ton navigateur, rien n’est envoyé » avec lien vers Mentions. Le morceau de la page ouverte est préparé à l’ouverture ; les morceaux visés par une question sont préparés pendant la frappe et au survol d’une suggestion. Session de l’onglet : clé `lk_leo_session_v2`.
+- Cache : tous les fichiers portent `?v=<empreinte>` (posée par `sync-site.cjs`) ; `vercel.json` met `/leo/` en cache une semaine.
+
+**Fichiers sources** (dans `outils/`, hors ligne)
+
+- `leo-knowledge.json` : les questions rédigées (sujets). `leo-lexique.json` : abréviations, concepts, anglais, liens officiels Rockstar autorisés. `leo-editorial.json` : définitions et FAQ du Tuto, textes (introuvable, hors sujet, « Tu voulais dire »…), gabarits par famille, suggestions par page, mots et expressions hors sujet.
+- `gen-leo.cjs` lit ces fichiers et les données du site (véhicules, armes, carte, catalogues, éditorial des hubs, FAQ des hubs et des sections, pages HTML pour les passages), applique la typographie française, écrit `leo-index.json`, `leo/*.json` et `outils/leo-index-manifest.json` (empreintes des entrées, poids, comptes). `node outils/gen-leo.cjs --check` compare tout à l’octet près. Il refuse : un sujet sans lien vers une page existante, moins de 5 ou plus de 15 formulations, une réponse de plus de 900 signes, un lien officiel absent des données du site, un noyau de plus de 300 ko, une abréviation qui réécrirait un nom de fiche d’un seul mot.
+- Lancé par `node outils/regenerer.cjs` (avec la vérification `--check`), vérifié par `node outils/verifier.js` (routes, ancres, lieux, images, morceaux, liens officiels).
+
+**Ajouter une question rédigée** : dans `outils/leo-knowledge.json`, un sujet `{ "id", "theme", "q", "f", "text", "status", "links", "source"?, "action"?, "checkedAt" }` — `id` unique ; `q` la question canonique ; `f` 5 à 15 formulations variées, dont au moins une abrégée ou fautive (« cb », « koi », « gta6 ») ; `text` en « tu », phrases courtes, rien d’autre que ce que dit la page, 900 signes au plus ; `links[0]` = la page source ; `source` = lien officiel déjà présent dans les données ; `action` = `{"type":"map","id":…}`, `{"type":"tool","tool":…}` ou `{"type":"page","url":…}` ; `theme: "calculateur"` range le sujet dans le morceau du calculateur. Puis `node outils/regenerer.cjs`, `node outils/verifier.js` et l’évaluation (ajoute une question de test dans `outils/tests/leo-questions.json`).
+
+**Ajouter une abréviation** : dans `outils/leo-lexique.json`, `abbreviations` reçoit `{ "f": "forme telle qu’écrite, normalisée (minuscules, sans accent, apostrophes en espaces)", "to": "forme normalisée (vide = mot ignoré)", "c": "concept" }` ; un synonyme de concept va dans `concepts`, un mot anglais dans `english`. Un nom de fiche n’est jamais réécrit : les noms de plusieurs mots sont protégés automatiquement, un mot seul qui réécrirait un nom est refusé par `gen-leo.cjs`.
+
+**Évaluer** : `NODE_PATH=<dossier des dépendances>/node_modules node outils/tests/leo-eval.cjs` (options `--verbose`, `--json`) rejoue `outils/tests/leo-questions.json` (490 questions : jeu, abréviations et SMS, fautes, anglais, hors sujet, suites de conversation, lots 5 et 6, calculateur, noms de fiches…) dans jsdom avec les vrais fichiers ; seuils : au moins 95 % de bonnes pages ou intentions, 100 % des hors sujet refusés avec le lien Rockstar, 0 réponse sans source (code 1 sinon). Tests : `outils/tests/leo-v745.test.cjs` (et `leo.test.cjs` pour la couche v1). Contrôle navigateur (Playwright + Chromium, sept largeurs, clavier, mouvement réduit, processeur ralenti ×4) : `node outils/tests/leo-browser.cjs <dossier hors dépôt>`.
 
 ## Calculateur : v7.28 (24 septembre 2026)
 

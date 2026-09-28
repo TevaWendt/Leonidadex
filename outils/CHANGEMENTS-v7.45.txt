@@ -1,0 +1,139 @@
+v7.45 — 28 septembre 2026 — LOT 8 : LÉO V2, ASSISTANT LOCAL
+(base : v7.44 = lot 7 « Page À propos refaite »)
+
+Ce qui change pour le visiteur
+- Léo comprend beaucoup plus de questions, y compris mal écrites (« cb coute la baraque de jason », « c koi l ed
+  ultimate », « kan sor gta6 », « kestion : veicule le + rapide ? », « how much is gta 6 »), et répond court : une ou
+  deux phrases tirées de ce que le site dit, le statut de l’information (officiel, vu dans un média, à confirmer…), le
+  lien de la page source, la date de vérification et, quand c’est utile, un bouton d’action (centrer la carte, ouvrir un
+  outil du calculateur prérempli, ouvrir une page).
+- Il reste entièrement local : aucune API, aucun serveur, aucun script tiers, aucun coût ; il ne lit que des fichiers du
+  site (CSP connect-src 'self' inchangée). La mention « Léo répond depuis ton navigateur, rien n’est envoyé » est en tête
+  du panneau, avec un lien vers Mentions et confidentialité.
+- Rien d’inventé : sans réponse sur le site, Léo le dit (« Je n’ai pas cette réponse sur Leonidakit »), renvoie vers le
+  site officiel de Rockstar (https://www.rockstargames.com/VI, et la sous-page officielle la plus proche pour un
+  personnage ou un lieu), la page du site la plus proche et « Signaler une mauvaise réponse ». Hors sujet (« capitale de
+  la france », « 2+2 », « minecraft c’est bien ? ») : une phrase (« Léo répond seulement sur Leonidakit et GTA VI : essaie
+  plutôt une de ces deux questions. »), deux suggestions et le lien Rockstar.
+- « Tu voulais dire… ? » : deux puces quand deux questions rédigées sont aussi probables l’une que l’autre.
+- Suites de conversation (six derniers échanges) : « qui est jason » puis « et son arme ? » → Girardi ES9 ; « et sa
+  maison ? » ; « ou est ocean beach » puis « et à vice city ? » ; « canis kamacho c’est quoi » puis « et son prix ? ».
+  Sur une fiche, la première question vise la fiche ouverte : « et son prix ? », « combien ça coûte ? », « ça vaut le
+  coup ? » (calcul « Ça vaut le coup ? » avec la fiche), « Est-ce que je peux l’acheter ? » (Mes achats avec la fiche).
+- Un nom de fiche seul mène à sa fiche (« marteau », « cocktail molotov », « pm compact », « sprunk », « P’s & Q’s »,
+  « 100 fisher island dr », « bravado bison 1800 ») : les homonymes sont départagés par leur numéro ou leur lettre, la
+  précision « (nom réel) » est ignorée.
+- Réponse affichée mot à mot (320 ms au plus ; complète tout de suite en mouvement réduit et pour le lecteur d’écran),
+  passage de page cité en encadré, sources cliquables, liens Rockstar en onglet externe, six suggestions selon la page
+  (accueil, calculateur, Tuto, carte, véhicules, armes, progression, monde, listes, achats, pages d’information, fiche
+  avec son nom, lieu avec son nom).
+- « Signaler une mauvaise réponse » sous chaque réponse : ouvre Contact avec le motif « Réponse de Léo à corriger », la
+  question, la réponse et la page préremplies (données écrites après #, donc jamais envoyées au serveur en ouvrant la
+  page) ; « Champs préremplis depuis le lien. Rien n’est envoyé. » Le canal réel de Contact reste le lot 9.
+
+Base de connaissances (trois couches)
+- 322 questions rédigées (outils/leo-knowledge.json) sur tout le site : jeu (47), personnages (26), lieux (40),
+  véhicules (23), armes (10), éditions (9), carte (8), listes (31), style et personnalisations (2), site (37),
+  calculateur (62), suivi (12), Léo (15). 2 577 formulations (5 à 14 par question), dont 286 abrégées ou fautives. Chaque
+  réponse est en « tu », 900 signes au plus, avec sa page source en premier lien, son statut, sa date de vérification
+  (checkedAt, 28/09/2026 pour les nouvelles), le lien officiel quand il existe et une action facultative. S’y ajoutent
+  les 41 FAQ des hubs (26) et des sections (15) déjà publiées : 363 sujets en tout (compteur d’À propos mis à jour).
+- 16 436 questions générées par gabarits (outils/leo-editorial.json, « templates ») : 3 143 fiches × les intentions de
+  leur famille — véhicules 302 × 7 (quoi, où, prix, inspiration, Édition Ultimate, vitesse, personnalisation), armes
+  27 × 8 (+ munitions, propriétaire), monde 36 × 6 (régions, personnages, entreprises, demeures, planques, contenus
+  Ultimate : quoi, où, maison, véhicules, arme…), lieux de la carte 2 541 × 5, lignes des listes 237 × 5 (quoi, prix,
+  repère de la série, où, effet).
+- 601 passages de 300 à 600 signes extraits des pages principales et des fiches du monde (sans navigation, tableaux,
+  sources ni formulaires), cités quand aucune question ni fiche ne répond.
+- Lexique (outils/leo-lexique.json, nouveau) : 477 abréviations et fautes avec forme normalisée et concept (gta6, cb,
+  koi, kan, ki, ya, jsp, baraque, bagnole, flingue, thune, ed ultimate, vc, gta+…), 30 concepts avec leurs synonymes,
+  134 mots et tournures anglaises, 22 liens officiels Rockstar autorisés (chacun déjà présent dans les données du site,
+  vérifié par verifier.js). 147 noms de fiches de plusieurs mots sont protégés automatiquement (« Ocean Beach » n’est
+  jamais réécrit) ; une abréviation qui réécrirait un nom d’un seul mot est refusée par gen-leo.cjs.
+
+Index découpé, chargé à la demande
+- leo-index.json = noyau, 285 728 octets (79 ko compressé), ≤ 300 ko vérifié par gen-leo.cjs : questions rédigées (hors
+  calculateur) livrées déjà analysées, lexique, gabarits, textes, suggestions, hors sujet, liens officiels, noms des
+  armes et du monde, vocabulaire de chaque morceau.
+- leo/*.json = morceaux (nouveau dossier) : calculateur 46 011 o, vehicules 134 289 o, armes 15 304 o, monde 23 309 o,
+  lieux 234 096 o (format compact), catalogues 158 107 o, passages 412 220 o. Total noyau + morceaux 1 309 064 octets,
+  282 ko compressés. Un morceau n’est chargé que si un mot ou un nom de la question le désigne (même avec une faute :
+  « emperr » charge les véhicules) ; celui de la page ouverte est préparé à l’ouverture ; ceux d’une question sont
+  préparés pendant la frappe (au plus toutes les 150 ms) et au survol ou au focus d’une suggestion ; un morceau déjà en
+  route n’est jamais demandé deux fois. Sur l’évaluation, 62 questions sur 490 répondent avec le noyau seul, et les
+  réponses obtenues en chargeant à la demande sont identiques, à la virgule près, à celles de l’index complet.
+- Cache : ?v= commun à tous les fichiers de Léo (sync-site.cjs, entrées : leo-nlp.js et leo/*.json en plus) ; vercel.json
+  met /leo/ en cache une semaine (stale-while-revalidate 30 jours).
+
+Compréhension sans IA distante (leo-nlp.js, nouveau)
+- Normalisation (casse, accents, apostrophes et tirets, « gta 6 » / « gta vi » → gta6, « gta+ », $ € %, « 1h30 »),
+  lexique appliqué par la forme la plus longue (jusqu’à quatre mots, en temps linéaire), racines françaises légères
+  (pluriels, terminaisons verbales, e final), index BM25 sur les formulations, rapprochement d’un mot inconnu
+  (Damerau-Levenshtein ≤ 1 de 4 à 6 lettres, ≤ 2 au-delà, ou même clé phonétique ; un rapprochement seul pèse moins),
+  intentions par règles, seuils de confiance (0,78 sûre, 0,6 probable, écart 0,08 pour « Tu voulais dire… ? »).
+- Garde-fous : un mot rapproché d’un nom de fiche ne l’est pas si une question rédigée le corrige aussi bien
+  (« animaus » → animaux, pas Nimbus) ; un sujet trouvé par le seul mot interrogatif ne passe pas devant une fiche
+  nommée ; « c’est quoi le Sprunk » ne reçoit pas la réponse sur le prix des sodas ; « je veux acheter Leonida Keys »
+  reçoit la réponse « destination » ; « le Kamacho est dans l’Ultimate ? » reçoit la réponse de la fiche.
+
+Technique
+- leo-core.js réécrit (couches : noyau seul pour salutations, date de sortie, définitions et FAQ du Tuto ; suite de
+  conversation ; nom de fiche seul ; question rédigée sûre ; fiche + intention ; question rédigée probable ; couche v1
+  destinations et calculs conservée ; passages ; introuvable ou refus). API : ask() (asynchrone, charge les morceaux),
+  answer() (synchrone), needs(), loadShard(), attach(), reportLink(), suggest(). leo-link.js et leo-calculator.js
+  inchangés.
+- leo-ui.js : réponse progressive, passage, action, liens externes, signalement, suggestions par page, préchargement,
+  session lk_leo_session_v2 (la v1 est ignorée proprement). leo-loader.js : leo-nlp.js ajouté à la chaîne. leo.css :
+  passage, lien externe, signalement, action secondaire, mention locale.
+- outils/gen-leo.cjs réécrit : lignes par famille, passages (jsdom), validation des questions (5 à 15 formulations,
+  ≤ 900 signes, lien existant, liens officiels connus), typographie, formulations, noms et passages livrés analysés
+  (d, dq, dk ; nt ; s), noyau ≤ 300 ko, manifeste (entrées, poids, comptes), --check à l’octet.
+- contact.js : préremplissage par l’adresse (après # ; l’ancienne forme après ? reste lue). gen-informations.cjs : motif
+  « Réponse de Léo à corriger ». sync-site.cjs : empreinte de Léo, compteur des sujets (noyau + morceau calculateur).
+  verifier.js : routes, ancres, lieux, images et liens officiels du noyau et des morceaux.
+- Tests : 427 → 442. Nouveaux : outils/tests/leo-v745.test.cjs (15 tests : base, lexique, noyau et morceaux, compréhension,
+  suites, introuvable / hors sujet / sources, gabarits, noms de fiches, précalculs identiques à l’analyse du navigateur,
+  suggestions et signalement, évaluation, interface jsdom ×2, Contact, chaîne) ; outils/tests/leo-eval.cjs et
+  outils/tests/leo-questions.json (évaluation) ; outils/tests/leo-complet.cjs (aide : moteur avec tous les morceaux) ;
+  outils/tests/leo-browser.cjs (contrôle navigateur, hors node --test). Adaptés au découpage de l’index, sans assertion
+  retirée : leo.test.cjs (moteur complet ; une question rédigée sur un outil peut répondre à la place du calcul, avec le
+  lien de l’outil ; « Emperor » peut recevoir la fiche au lieu de la liste), audit-finition.test.cjs (« où trouver Vice
+  City » : réponse rédigée avec la carte, toujours sans calcul ; « lucia » : réponse rédigée avec la fiche),
+  catalogues-v742/v743 et hubs-monde-v741 (la réponse rédigée peut viser une ancre plus précise de la même page ou une
+  fiche du même hub), a-propos-v744 (compteur des sujets = noyau + morceau calculateur).
+
+Mesures
+- Évaluation (node outils/tests/leo-eval.cjs, jsdom, vrais fichiers) : 490 questions, 490 bonnes pages ou intentions
+  (100 %, seuil 95 %) ; hors sujet refusés avec le lien Rockstar 39/39 ; réponses sans source 0. Étiquettes : SMS 58,
+  abréviations 10, fautes 13 (81 en tout), anglais 12, hors sujet 39, suites 21, lot 5 27, lot 6 20, calculateur 61,
+  noms de fiches 14, jeu 61, site 27… Temps par question (jsdom) : médiane 0,8 ms, p95 4 ms.
+- Balayage des noms : sur les 2 623 noms de fiches portés par une seule fiche (hors codes « plus code »), 2 620 mènent à
+  leur fiche (99,9 % ; seuil du test : 99,5 %). Les trois autres : « Port Vice City » (réponse sur les quartiers de
+  Vice City, qui cite le port), « Blimp » (le véhicule Xero Blimp) et « Delights Plus » (le lieu « Delights »).
+- Chromium, processeur ralenti ×4, 390 px (téléphone moyen), trois passages : question tapée au clavier → réponse affichée
+  20 à 165 ms ; suggestion cliquée après survol 160 à 200 ms ; une fois les morceaux chargés, 34 à 65 ms de bout en bout
+  (moteur seul 1 à 36 ms). Pas besoin de Web Worker pour répondre. Pire cas, question envoyée d’un coup sans rien de
+  préparé et plusieurs familles à charger : 0,4 à 1,2 s (téléchargement, lecture et indexation des morceaux compris).
+  Ouverture du panneau (scripts + noyau, sans cache) : 0,6 à 3,2 s selon la page.
+- node --test outils/tests/*.test.cjs : 442/442. verifier.js : 0 erreur sur 43 529 références (406 pages).
+  gen-leo --check : sans divergence. Régénération reproductible à l’octet (double passage comparé).
+
+Contrôle (dossier séparé, hors dépôt : captures et rapport.json)
+- 6 pages (accueil, fiche véhicule, fiche personnage, carte, calculateur, Vêtements et style) × 7 largeurs (320, 390,
+  768, 1024, 1280, 1440, 1920) : panneau ouvert, une question, capture ; 0 erreur console, 0 erreur de page, 0 requête en
+  échec, 0 débordement horizontal.
+- Clavier : Entrée ouvre, le focus va dans le champ, Échap ferme et rend le focus au bouton Léo ; à 390 px (fenêtre
+  modale) Tab reste dans le panneau ; à 1 280 px le panneau latéral reste non modal (comme en v7.44 : la page reste
+  utilisable). Mouvement réduit : texte complet immédiat, aucune animation en cours.
+- « Signaler » → Contact : motif, question, réponse et page préremplis.
+
+Reste ouvert (signalé, pas modifié)
+- Pire cas à froid au-dessus de 300 ms sur un téléphone lent quand une question collée est envoyée tout de suite et
+  touche plusieurs familles : l’indexation des morceaux pourrait passer dans un Web Worker, ou les morceaux être
+  préchargés au repos ; non fait pour ne rien télécharger qui ne soit demandé.
+- Les 363 réponses ont été relues contre les pages du site, pas phrase par phrase contre les sources Rockstar
+  (rockstargames.com inaccessible depuis l’atelier) ; les dates de vérification disent de quand date chaque réponse.
+- Un nom très générique porté par plusieurs lieux de la carte (« Lake », « Park », « Marina ») renvoie vers la question
+  rédigée qui l’emploie ou vers l’un des lieux, pas vers une liste de tous.
+- La date de sortie est lue dans outils/acquisitions.json : Léo dit « à revérifier » si elle a plus de 30 jours.
+- Contact : toujours un préparateur de texte local (le vrai canal, Brevo, est le lot 9 ; les clés iront dans Vercel).

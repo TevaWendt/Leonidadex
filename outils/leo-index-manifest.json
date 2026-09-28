@@ -1,7 +1,7 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "inputs": {
-    "a-propos.html": "856720b4623456e67828099d10676a00100f1851c2905c576518ab7bf5ca4896",
+    "a-propos.html": "a5ecc435727ca04e4bc8060504ad2adabc633e16e72a60245d51b306b136ef15",
     "achats.html": "4ec609f4f0e9f34bea19ca38abbf48e3694244fd472e80212616293546a09514",
     "acquisitions-data.js": "d4b9a492a559f0db9ca9ca7cc01f49e801b2d4739365f9da24b748e80140e040",
     "armes-data.js": "756b55fd79907a8136b6ee906d291382905a26558f123112c968637d9992a50e",
@@ -41,9 +41,11 @@
     "carte-gtadb.js": "0fb162b903b5dc4ad11169270c80be77434116562fb3b2201d547f4def9072f1",
     "carte.html": "9ffd6a6c020b32467024f1a110d4affee142b4bb8dbbdad9ed9fbbdce922e95c",
     "carte.js": "036a5c0d5fc601d0ebb8d2ff7b18a20a4444dd72a471cf4c1d5422f24343875e",
+    "classement-vehicules.html": "b21967ad46737b372bcdfe2386417297442ddd87cc0a78efa8f1e0b904559975",
     "collectibles-data.js": "2e8ae3a05507683bacbde601c8178cd9a0dc5a630bb2b137b9cd8eb5e402af08",
     "collectibles.html": "abe03c9b7863f7d1077ab51a4e1ba8df5438d59bdc36520b5a58124408f946d2",
-    "contact.html": "84ea236c14abb6a224f3c35b63840a612733d2f09e37149b30c17305241b0774",
+    "comparateur.html": "e357e4b7fb5b12b61765009377b9a4d5e95c1e5db68c6c26de784e98bba7f4c2",
+    "contact.html": "54a959a24a0ae7e6ff28605dfef488b45ffb3fc3b5ca7fb07d7f223a26557520",
     "demeures.html": "b03843c82816f143ad035a72752cb35f319acec2b9604b451a2118bc9c0ffaa7",
     "demeures/brian-keys.html": "de62f64bd2ad7c3d974f82f761b9b71889b31a4b1e481833ade7aa56367687e7",
     "demeures/cal-keys.html": "df5cc4acfc1e9a80ff98e3200b42113711355660b8ebe13b6217a4304dc49055",
@@ -66,8 +68,11 @@
     "lieux/mount-kalaga.html": "00889bef389510511a7860ff4ed7a951bcfb2261aef5ff09286dbb8566b7e203",
     "lieux/port-gellhorn.html": "1e2b832a586eea33bb165ad3b04fd4a2ce8fff3f6694202863e7335f6b00ffc8",
     "lieux/vice-city.html": "a1736215b9c7da80c7e54dae0912a6cd73cf2cb077a1071d9bda2799dd2595ef",
+    "logements.html": "50dec425cdd45e41bc1448c46e88c8d43ac1ad609fbd9f8577980e6cd54c8306",
     "medias.html": "35c39fdde9e3b7cc37610f217eb6c2135d47eadb18f16aad65f8e91f40731e1f",
+    "mentions-legales.html": "b51d6bc9bef2b1419c6c6fba5e7921b0f42684097dca9f80a16f1284c3b968d2",
     "nourriture.html": "93b072e91afb77ca772ea7e53746c065b4b47edc76c371c98a1ff446ce8447d1",
+    "outils/acquisitions.json": "f3d9db9f3b69f31e722a895740a8dd7dddcecf3dbf25abd76e5d5b4d580429c9",
     "outils/catalogues/coiffures.json": "92ff8b9b8b82b2a7d4590a1d4dfd5fca110a164ef6f54b66fbf286ba45c4ef19",
     "outils/catalogues/consommables.json": "898f225b012cf6e389326d7a4a0a4eb87a53768dc1a0876ecd012cab50b09f53",
     "outils/catalogues/editorial.json": "6f51cef3d17159544ab39c30ec66b83e6ff26574b08cf900a50f945d8310b8ca",
@@ -78,8 +83,9 @@
     "outils/catalogues/tenues.json": "7345558ac318fc4c3aab6100ce47ddc5b81ba274b65afd197ed9fa7eeea5efe9",
     "outils/editorial-hubs.json": "7a03cf920904ee46268f250e2c2b9798b51712a4d93ea2801cf6ece05a266b05",
     "outils/editorial.json": "7d1b33dac8dcba3329c386aad65a5a0b1d20d44d7e40f399cd8917bc3edc6d15",
-    "outils/leo-editorial.json": "5f15de206ecea1ab3b85be8b0ce5c0e676d366b76f71dd0a21ecff7a0226cabc",
-    "outils/leo-knowledge.json": "31bb17cc10736f9345d373407796aaac5fdfea30f9cc1d3d0a6ee89f1f93be4b",
+    "outils/leo-editorial.json": "61fecd811489577d7bf7b761c1e39ed1ad15be84a54e4832c1d977baab7f9a14",
+    "outils/leo-knowledge.json": "b2b6f8baef1875f7500a4da434af8edbcff4c13b4fb2c810a22ba53bf1c397e0",
+    "outils/leo-lexique.json": "b4eb49c920d779fa35d7a63f960b604993c4ee49bf5aecfd64a64eec6a48954d",
     "outils/medias-officiels.json": "a237f9273899b1c2b21b128c9ba1fbaddf637c37ea6c50db52153c699ef04c91",
     "outils/tuto.json": "28cb3d27f859e56e9a161c9fe183eb3178aa8571b85bf94815318d5a84e35005",
     "personnages.html": "50296bd47c0cdc6b84381a118f8260bdd539298ff73db4da176268a1b4516588",
@@ -100,6 +106,7 @@
     "style.html": "345446771a386f75579ec75ea685bf1fc83dfd726eac8eb56b0904b05fa6342c",
     "tuto.html": "a260a830d9430ccd9cb1efc73397f7acf3224ad8d05fc18fe70873921bce26b5",
     "vehicules-data.js": "915e9f454f927fb3f0ab62dfa5b456a62fe9836beb0b88f56bc9bb1c2c57acf1",
+    "vehicules-rares.html": "36bc096580d6be4aee3520d96fffed7935468954d87fc699a1c9735630191dd0",
     "vehicules.html": "b6160eab3ea2d7940077a39f1324b93d3019e4705a9f3f74fc139161f3e9cc75",
     "vehicules/airboat-09.html": "670b95396e6561af3c6686f431bad6644d8bfda000ea4062c0b16c1011857e29",
     "vehicules/airport-bus.html": "406ff20688f8a20b25d3078fee910287c8d7325f5417faf1cae475cf4ca38738",
@@ -404,6 +411,25 @@
     "vehicules/zirconium-journey-ii.html": "5a73cb8daf8fcefeaa160446aa888e53eb2e8c03293a46ba9654d6ad3167a7d6",
     "vehicules/zirconium-journey.html": "b5434ed757109d1a393ce124f18f08090d95a68d93db365a70c9409bab76076d"
   },
-  "items": 3143,
-  "bytes": 724983
+  "outputs": {
+    "leo-index.json": 285728,
+    "leo/vehicules.json": 134289,
+    "leo/armes.json": 15304,
+    "leo/monde.json": 23309,
+    "leo/lieux.json": 234096,
+    "leo/catalogues.json": 158107,
+    "leo/calculateur.json": 46011,
+    "leo/passages.json": 412220
+  },
+  "counts": {
+    "questionsRedigees": 322,
+    "questionsFaq": 41,
+    "questionsGenerees": 16436,
+    "fiches": 3143,
+    "passages": 601,
+    "lexique": 477,
+    "nomsProteges": 147,
+    "anglais": 134,
+    "concepts": 30
+  }
 }

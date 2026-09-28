@@ -1,0 +1,56 @@
+LEONIDAKIT v7.45 — LOT 8 : LÉO V2, ASSISTANT LOCAL — archive « modifs » (28 septembre 2026)
+
+Base attendue : ton dossier Leonidadex en v7.44 (lot 7 : page À propos refaite).
+Fichiers ajoutés ou modifiés seulement, chemins exacts depuis la racine. Rien à supprimer. Aucune commande de build :
+les pages sont déjà régénérées. Le dossier outils/ reste hors ligne (.vercelignore), comme avant. Nouveau dossier à la
+racine : leo/ (les morceaux de l’index de Léo) ; nouveau fichier : leo-nlp.js.
+
+1. Copie ton dossier actuel (sauvegarde).
+2. Extrais l’archive dans la racine du site, écrase les fichiers homonymes (garde le dossier .git).
+3. Ouvre le site et clique sur « Léo » (en bas à droite). En haut du panneau : « Léo répond depuis ton navigateur, rien
+   n’est envoyé. » avec le lien « Mentions et confidentialité ». Pose ces dix questions (5 minutes) :
+
+   1. cb coute la baraque de jason
+      → « Aucun prix n’est connu : la maison de Jason appartient à Brian Heder… » ; liens « La fiche de la maison de
+        Jason » et « Tester un achat avec mon prix ».
+   2. ou est vice city
+      → « Vice City est la métropole du sud-est de Leonida : je peux centrer la carte dessus. » ; bouton « Centrer la
+        carte sur Vice City » (la carte s’ouvre centrée) et la fiche de Vice City.
+   3. capitale de la france
+      → refus en une phrase « Léo répond seulement sur Leonidakit et GTA VI : essaie plutôt une de ces deux questions. »,
+        deux boutons de questions, lien vers le site officiel de Rockstar (nouvel onglet).
+   4. Quand sort GTA 6 ?
+      → « Rockstar annonce GTA VI pour le 19 novembre 2026. », statut « Date annoncée · source officielle », date de
+        vérification, lien source.
+   5. c koi l ed ultimate
+      → les deux éditions (Standard, Ultimate) avec les pages Tout ce qui s’achète, Vêtements et style, Personnalisations.
+   6. qui est jason   puis   et son arme ?
+      → la présentation de Jason, puis « … l’arme de Jason Duval : Girardi ES9. » (Léo se souvient de la question
+        d’avant).
+   7. c est quoi le zorglub de gta 6
+      → « Je n’ai pas cette réponse sur Leonidakit. » + lien Rockstar + page proche + « Signaler une mauvaise réponse ».
+   8. how much is gta 6
+      → les prix des éditions constatés sur les boutiques (Léo comprend l’anglais courant).
+   9. g 300k je veux 2 millions
+      → « Vérifie les chiffres que j’ai compris » : 300 000 $ déjà, 2 000 000 $ visés, bouton « Ouvrir Mon objectif »
+        (l’outil s’ouvre prérempli).
+  10. marteau
+      → la fiche de l’arme Marteau (un nom seul mène à sa fiche).
+
+   Puis :
+   - Ouvre une fiche véhicule (par exemple Canis Kamacho), ouvre Léo et demande « et son prix ? » (« Canis Kamacho n’a
+     pas de prix connu… ») puis « est-ce que je peux l’acheter ? » (Mes achats préparé avec cette fiche) : sur une fiche,
+     Léo vise la fiche ouverte.
+   - Sous une réponse, clique « Signaler une mauvaise réponse » : Contact s’ouvre avec le motif « Réponse de Léo à
+     corriger », ta question, la réponse et la page déjà remplies (« Champs préremplis depuis le lien. Rien n’est
+     envoyé. »).
+   - Tape lentement une question : la réponse s’écrit mot à mot. Avec le réglage « Réduire les animations » du système,
+     elle s’affiche d’un coup.
+   - Sur téléphone : le panneau prend l’écran, Tab reste dedans, Échap ou la croix le ferme.
+4. Mets en ligne (GitHub Desktop, dossier complet).
+
+Détails : outils/CHANGEMENTS-v7.45.txt (fichiers, chiffres, mesures, points signalés) et la section « Léo v2 » du
+README (architecture, comment ajouter une question ou une abréviation, comment lancer l’évaluation). Captures et rapport
+du contrôle navigateur : dossier séparé, hors dépôt. Versions précédentes : -v7.44 (À propos), -v7.43
+(personnalisations), -v7.42 (consommables et style), -v7.41 (hubs du monde), -v7.40 (hubs Véhicules / Armurerie,
+Achats), -v7.39 (mouvement), -v7.38 (calibrage).

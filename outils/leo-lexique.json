@@ -1,0 +1,3656 @@
+{
+ "_note": "v7.45 (lot 8) : lexique de Léo. « abbreviations » : chaque forme (déjà normalisée : minuscules, sans accent, apostrophes remplacées par des espaces) reçoit sa forme normalisée « to » (vide = mot de remplissage ignoré) et son concept « c ». « concepts » : synonymes par concept du site, ajoutés comme jeton commun aux questions et aux réponses. « english » : vocabulaire anglais courant → mot français. Un nom de fiche n'est jamais réécrit : gen-leo.cjs refuse une entrée qui réécrit un nom d'un seul mot (Sprunk, eCola…) et protège les noms de plusieurs mots (« Ocean Beach ») par une entrée identité ajoutée au noyau. « official » : liens officiels Rockstar autorisés dans les renvois (chacun doit déjà figurer dans les données du site ; vérifié par outils/verifier.js). Tout est lu par outils/gen-leo.cjs, jamais à la main dans les fichiers de sortie.",
+ "schemaVersion": 1,
+ "checkedAt": "2026-09-28",
+ "abbreviations": [
+  {
+   "f": "gta6",
+   "to": "gta6",
+   "c": "jeu"
+  },
+  {
+   "f": "gta 6",
+   "to": "gta6",
+   "c": "jeu"
+  },
+  {
+   "f": "gta vi",
+   "to": "gta6",
+   "c": "jeu"
+  },
+  {
+   "f": "gtavi",
+   "to": "gta6",
+   "c": "jeu"
+  },
+  {
+   "f": "gta six",
+   "to": "gta6",
+   "c": "jeu"
+  },
+  {
+   "f": "grand theft auto 6",
+   "to": "gta6",
+   "c": "jeu"
+  },
+  {
+   "f": "grand theft auto vi",
+   "to": "gta6",
+   "c": "jeu"
+  },
+  {
+   "f": "grand theft auto",
+   "to": "gta6",
+   "c": "jeu"
+  },
+  {
+   "f": "le jeu",
+   "to": "gta6",
+   "c": "jeu"
+  },
+  {
+   "f": "gta5",
+   "to": "gta5",
+   "c": "serie"
+  },
+  {
+   "f": "gta 5",
+   "to": "gta5",
+   "c": "serie"
+  },
+  {
+   "f": "gta v",
+   "to": "gta5",
+   "c": "serie"
+  },
+  {
+   "f": "gtav",
+   "to": "gta5",
+   "c": "serie"
+  },
+  {
+   "f": "gta 4",
+   "to": "gta4",
+   "c": "serie"
+  },
+  {
+   "f": "gta iv",
+   "to": "gta4",
+   "c": "serie"
+  },
+  {
+   "f": "gtaiv",
+   "to": "gta4",
+   "c": "serie"
+  },
+  {
+   "f": "gta online",
+   "to": "gta online",
+   "c": "serie"
+  },
+  {
+   "f": "gtao",
+   "to": "gta online",
+   "c": "serie"
+  },
+  {
+   "f": "gta o",
+   "to": "gta online",
+   "c": "serie"
+  },
+  {
+   "f": "gtaplus",
+   "to": "gtaplus",
+   "c": "abonnement"
+  },
+  {
+   "f": "gta +",
+   "to": "gtaplus",
+   "c": "abonnement"
+  },
+  {
+   "f": "san andreas",
+   "to": "san andreas",
+   "c": "serie"
+  },
+  {
+   "f": "gta sa",
+   "to": "san andreas",
+   "c": "serie"
+  },
+  {
+   "f": "rdr2",
+   "to": "red dead redemption 2",
+   "c": "serie"
+  },
+  {
+   "f": "red dead",
+   "to": "red dead redemption 2",
+   "c": "serie"
+  },
+  {
+   "f": "r*",
+   "to": "rockstar",
+   "c": "editeur"
+  },
+  {
+   "f": "rockstar games",
+   "to": "rockstar",
+   "c": "editeur"
+  },
+  {
+   "f": "rockstar north",
+   "to": "rockstar",
+   "c": "editeur"
+  },
+  {
+   "f": "rstar",
+   "to": "rockstar",
+   "c": "editeur"
+  },
+  {
+   "f": "t2",
+   "to": "take two",
+   "c": "editeur"
+  },
+  {
+   "f": "take-two",
+   "to": "take two",
+   "c": "editeur"
+  },
+  {
+   "f": "vc",
+   "to": "vice city",
+   "c": "lieu"
+  },
+  {
+   "f": "vice citi",
+   "to": "vice city",
+   "c": "lieu"
+  },
+  {
+   "f": "vicecity",
+   "to": "vice city",
+   "c": "lieu"
+  },
+  {
+   "f": "vice",
+   "to": "vice city",
+   "c": "lieu"
+  },
+  {
+   "f": "lk",
+   "to": "leonidakit",
+   "c": "site"
+  },
+  {
+   "f": "leonida kit",
+   "to": "leonidakit",
+   "c": "site"
+  },
+  {
+   "f": "leonidadex",
+   "to": "leonidakit",
+   "c": "site"
+  },
+  {
+   "f": "le site",
+   "to": "leonidakit",
+   "c": "site"
+  },
+  {
+   "f": "ce site",
+   "to": "leonidakit",
+   "c": "site"
+  },
+  {
+   "f": "les keys",
+   "to": "leonida keys",
+   "c": "lieu"
+  },
+  {
+   "f": "keys",
+   "to": "leonida keys",
+   "c": "lieu"
+  },
+  {
+   "f": "florida keys",
+   "to": "leonida keys",
+   "c": "lieu"
+  },
+  {
+   "f": "grass rivers",
+   "to": "grassrivers",
+   "c": "lieu"
+  },
+  {
+   "f": "grassriver",
+   "to": "grassrivers",
+   "c": "lieu"
+  },
+  {
+   "f": "gelhorn",
+   "to": "port gellhorn",
+   "c": "lieu"
+  },
+  {
+   "f": "gellhorn",
+   "to": "port gellhorn",
+   "c": "lieu"
+  },
+  {
+   "f": "port gelhorn",
+   "to": "port gellhorn",
+   "c": "lieu"
+  },
+  {
+   "f": "kalaga",
+   "to": "mount kalaga",
+   "c": "lieu"
+  },
+  {
+   "f": "mt kalaga",
+   "to": "mount kalaga",
+   "c": "lieu"
+  },
+  {
+   "f": "mont kalaga",
+   "to": "mount kalaga",
+   "c": "lieu"
+  },
+  {
+   "f": "cb",
+   "to": "combien",
+   "c": "question"
+  },
+  {
+   "f": "cmb",
+   "to": "combien",
+   "c": "question"
+  },
+  {
+   "f": "kombien",
+   "to": "combien",
+   "c": "question"
+  },
+  {
+   "f": "combi1",
+   "to": "combien",
+   "c": "question"
+  },
+  {
+   "f": "pq",
+   "to": "pourquoi",
+   "c": "question"
+  },
+  {
+   "f": "pk",
+   "to": "pourquoi",
+   "c": "question"
+  },
+  {
+   "f": "pkoi",
+   "to": "pourquoi",
+   "c": "question"
+  },
+  {
+   "f": "pourkoi",
+   "to": "pourquoi",
+   "c": "question"
+  },
+  {
+   "f": "koi",
+   "to": "quoi",
+   "c": "question"
+  },
+  {
+   "f": "kwa",
+   "to": "quoi",
+   "c": "question"
+  },
+  {
+   "f": "koa",
+   "to": "quoi",
+   "c": "question"
+  },
+  {
+   "f": "c koi",
+   "to": "c est quoi",
+   "c": "question"
+  },
+  {
+   "f": "c kwa",
+   "to": "c est quoi",
+   "c": "question"
+  },
+  {
+   "f": "ckoi",
+   "to": "c est quoi",
+   "c": "question"
+  },
+  {
+   "f": "cest quoi",
+   "to": "c est quoi",
+   "c": "question"
+  },
+  {
+   "f": "cest",
+   "to": "c est",
+   "c": "question"
+  },
+  {
+   "f": "ct",
+   "to": "c est",
+   "c": "question"
+  },
+  {
+   "f": "kestion",
+   "to": "question",
+   "c": "question"
+  },
+  {
+   "f": "kestce",
+   "to": "qu est ce",
+   "c": "question"
+  },
+  {
+   "f": "keske",
+   "to": "qu est ce que",
+   "c": "question"
+  },
+  {
+   "f": "kesk",
+   "to": "qu est ce que",
+   "c": "question"
+  },
+  {
+   "f": "qu est ce que",
+   "to": "qu est ce que",
+   "c": "question"
+  },
+  {
+   "f": "esk",
+   "to": "est ce que",
+   "c": "question"
+  },
+  {
+   "f": "eske",
+   "to": "est ce que",
+   "c": "question"
+  },
+  {
+   "f": "es ce que",
+   "to": "est ce que",
+   "c": "question"
+  },
+  {
+   "f": "es que",
+   "to": "est ce que",
+   "c": "question"
+  },
+  {
+   "f": "est ce ke",
+   "to": "est ce que",
+   "c": "question"
+  },
+  {
+   "f": "ki",
+   "to": "qui",
+   "c": "question"
+  },
+  {
+   "f": "kan",
+   "to": "quand",
+   "c": "question"
+  },
+  {
+   "f": "qd",
+   "to": "quand",
+   "c": "question"
+  },
+  {
+   "f": "qnd",
+   "to": "quand",
+   "c": "question"
+  },
+  {
+   "f": "kand",
+   "to": "quand",
+   "c": "question"
+  },
+  {
+   "f": "komen",
+   "to": "comment",
+   "c": "question"
+  },
+  {
+   "f": "koman",
+   "to": "comment",
+   "c": "question"
+  },
+  {
+   "f": "cmt",
+   "to": "comment",
+   "c": "question"
+  },
+  {
+   "f": "comant",
+   "to": "comment",
+   "c": "question"
+  },
+  {
+   "f": "kel",
+   "to": "quel",
+   "c": "question"
+  },
+  {
+   "f": "kelle",
+   "to": "quelle",
+   "c": "question"
+  },
+  {
+   "f": "kels",
+   "to": "quels",
+   "c": "question"
+  },
+  {
+   "f": "kelles",
+   "to": "quelles",
+   "c": "question"
+  },
+  {
+   "f": "ke",
+   "to": "que",
+   "c": "question"
+  },
+  {
+   "f": "ya",
+   "to": "il y a",
+   "c": "question"
+  },
+  {
+   "f": "y a",
+   "to": "il y a",
+   "c": "question"
+  },
+  {
+   "f": "yen a",
+   "to": "il y en a",
+   "c": "question"
+  },
+  {
+   "f": "yen",
+   "to": "il y en",
+   "c": "question"
+  },
+  {
+   "f": "y a t il",
+   "to": "il y a",
+   "c": "question"
+  },
+  {
+   "f": "ya t il",
+   "to": "il y a",
+   "c": "question"
+  },
+  {
+   "f": "yatil",
+   "to": "il y a",
+   "c": "question"
+  },
+  {
+   "f": "jsp",
+   "to": "je sais pas",
+   "c": "aide"
+  },
+  {
+   "f": "jpp",
+   "to": "",
+   "c": "bruit"
+  },
+  {
+   "f": "jpense",
+   "to": "je pense",
+   "c": "bruit"
+  },
+  {
+   "f": "g",
+   "to": "j ai",
+   "c": "possession"
+  },
+  {
+   "f": "jai",
+   "to": "j ai",
+   "c": "possession"
+  },
+  {
+   "f": "jve",
+   "to": "je veux",
+   "c": "objectif"
+  },
+  {
+   "f": "jveux",
+   "to": "je veux",
+   "c": "objectif"
+  },
+  {
+   "f": "jvx",
+   "to": "je veux",
+   "c": "objectif"
+  },
+  {
+   "f": "chui",
+   "to": "je suis",
+   "c": "bruit"
+  },
+  {
+   "f": "jsuis",
+   "to": "je suis",
+   "c": "bruit"
+  },
+  {
+   "f": "chuis",
+   "to": "je suis",
+   "c": "bruit"
+  },
+  {
+   "f": "ds",
+   "to": "dans",
+   "c": "bruit"
+  },
+  {
+   "f": "dc",
+   "to": "donc",
+   "c": "bruit"
+  },
+  {
+   "f": "pr",
+   "to": "pour",
+   "c": "bruit"
+  },
+  {
+   "f": "pcq",
+   "to": "parce que",
+   "c": "bruit"
+  },
+  {
+   "f": "pck",
+   "to": "parce que",
+   "c": "bruit"
+  },
+  {
+   "f": "parceque",
+   "to": "parce que",
+   "c": "bruit"
+  },
+  {
+   "f": "tt",
+   "to": "tout",
+   "c": "bruit"
+  },
+  {
+   "f": "tte",
+   "to": "toute",
+   "c": "bruit"
+  },
+  {
+   "f": "ts",
+   "to": "tous",
+   "c": "bruit"
+  },
+  {
+   "f": "tjs",
+   "to": "toujours",
+   "c": "bruit"
+  },
+  {
+   "f": "tjrs",
+   "to": "toujours",
+   "c": "bruit"
+  },
+  {
+   "f": "bcp",
+   "to": "beaucoup",
+   "c": "bruit"
+  },
+  {
+   "f": "mtn",
+   "to": "maintenant",
+   "c": "temps"
+  },
+  {
+   "f": "auj",
+   "to": "aujourd hui",
+   "c": "temps"
+  },
+  {
+   "f": "ajd",
+   "to": "aujourd hui",
+   "c": "temps"
+  },
+  {
+   "f": "dsl",
+   "to": "",
+   "c": "bruit"
+  },
+  {
+   "f": "stp",
+   "to": "",
+   "c": "bruit"
+  },
+  {
+   "f": "svp",
+   "to": "",
+   "c": "bruit"
+  },
+  {
+   "f": "svpl",
+   "to": "",
+   "c": "bruit"
+  },
+  {
+   "f": "s il te plait",
+   "to": "",
+   "c": "bruit"
+  },
+  {
+   "f": "s il vous plait",
+   "to": "",
+   "c": "bruit"
+  },
+  {
+   "f": "mdr",
+   "to": "",
+   "c": "bruit"
+  },
+  {
+   "f": "mdrr",
+   "to": "",
+   "c": "bruit"
+  },
+  {
+   "f": "mdrrr",
+   "to": "",
+   "c": "bruit"
+  },
+  {
+   "f": "lol",
+   "to": "",
+   "c": "bruit"
+  },
+  {
+   "f": "ptdr",
+   "to": "",
+   "c": "bruit"
+  },
+  {
+   "f": "xd",
+   "to": "",
+   "c": "bruit"
+  },
+  {
+   "f": "tkt",
+   "to": "",
+   "c": "bruit"
+  },
+  {
+   "f": "tqt",
+   "to": "",
+   "c": "bruit"
+  },
+  {
+   "f": "wsh",
+   "to": "",
+   "c": "bruit"
+  },
+  {
+   "f": "wesh",
+   "to": "",
+   "c": "bruit"
+  },
+  {
+   "f": "yo",
+   "to": "bonjour",
+   "c": "salutation"
+  },
+  {
+   "f": "slt",
+   "to": "bonjour",
+   "c": "salutation"
+  },
+  {
+   "f": "bjr",
+   "to": "bonjour",
+   "c": "salutation"
+  },
+  {
+   "f": "bsr",
+   "to": "bonjour",
+   "c": "salutation"
+  },
+  {
+   "f": "cc",
+   "to": "bonjour",
+   "c": "salutation"
+  },
+  {
+   "f": "coucou",
+   "to": "bonjour",
+   "c": "salutation"
+  },
+  {
+   "f": "salut",
+   "to": "bonjour",
+   "c": "salutation"
+  },
+  {
+   "f": "hello",
+   "to": "bonjour",
+   "c": "salutation"
+  },
+  {
+   "f": "hey",
+   "to": "bonjour",
+   "c": "salutation"
+  },
+  {
+   "f": "bonsoir",
+   "to": "bonjour",
+   "c": "salutation"
+  },
+  {
+   "f": "mrc",
+   "to": "merci",
+   "c": "salutation"
+  },
+  {
+   "f": "mci",
+   "to": "merci",
+   "c": "salutation"
+  },
+  {
+   "f": "thx",
+   "to": "merci",
+   "c": "salutation"
+  },
+  {
+   "f": "ok",
+   "to": "",
+   "c": "bruit"
+  },
+  {
+   "f": "oki",
+   "to": "",
+   "c": "bruit"
+  },
+  {
+   "f": "okay",
+   "to": "",
+   "c": "bruit"
+  },
+  {
+   "f": "nn",
+   "to": "non",
+   "c": "bruit"
+  },
+  {
+   "f": "wi",
+   "to": "oui",
+   "c": "bruit"
+  },
+  {
+   "f": "ui",
+   "to": "oui",
+   "c": "bruit"
+  },
+  {
+   "f": "vs",
+   "to": "ou",
+   "c": "comparaison"
+  },
+  {
+   "f": "versus",
+   "to": "ou",
+   "c": "comparaison"
+  },
+  {
+   "f": "ptet",
+   "to": "peut etre",
+   "c": "bruit"
+  },
+  {
+   "f": "ptetre",
+   "to": "peut etre",
+   "c": "bruit"
+  },
+  {
+   "f": "pe",
+   "to": "peut etre",
+   "c": "bruit"
+  },
+  {
+   "f": "ms",
+   "to": "mais",
+   "c": "bruit"
+  },
+  {
+   "f": "pa",
+   "to": "pas",
+   "c": "bruit"
+  },
+  {
+   "f": "pas encore",
+   "to": "pas encore",
+   "c": "statut"
+  },
+  {
+   "f": "encor",
+   "to": "encore",
+   "c": "bruit"
+  },
+  {
+   "f": "vrmt",
+   "to": "vraiment",
+   "c": "bruit"
+  },
+  {
+   "f": "vrmnt",
+   "to": "vraiment",
+   "c": "bruit"
+  },
+  {
+   "f": "genre",
+   "to": "",
+   "c": "bruit"
+  },
+  {
+   "f": "en gros",
+   "to": "",
+   "c": "bruit"
+  },
+  {
+   "f": "du coup",
+   "to": "",
+   "c": "bruit"
+  },
+  {
+   "f": "perso",
+   "to": "personnage",
+   "c": "personnage"
+  },
+  {
+   "f": "persos",
+   "to": "personnages",
+   "c": "personnage"
+  },
+  {
+   "f": "pnj",
+   "to": "personnage non joueur",
+   "c": "personnage"
+  },
+  {
+   "f": "npc",
+   "to": "personnage non joueur",
+   "c": "personnage"
+  },
+  {
+   "f": "prota",
+   "to": "protagoniste",
+   "c": "personnage"
+  },
+  {
+   "f": "protas",
+   "to": "protagonistes",
+   "c": "personnage"
+  },
+  {
+   "f": "heros",
+   "to": "protagoniste",
+   "c": "personnage"
+  },
+  {
+   "f": "vehic",
+   "to": "vehicule",
+   "c": "vehicule"
+  },
+  {
+   "f": "veh",
+   "to": "vehicule",
+   "c": "vehicule"
+  },
+  {
+   "f": "vehicul",
+   "to": "vehicule",
+   "c": "vehicule"
+  },
+  {
+   "f": "veicule",
+   "to": "vehicule",
+   "c": "vehicule"
+  },
+  {
+   "f": "voit",
+   "to": "voiture",
+   "c": "vehicule"
+  },
+  {
+   "f": "bagnole",
+   "to": "voiture",
+   "c": "vehicule"
+  },
+  {
+   "f": "bagnoles",
+   "to": "voitures",
+   "c": "vehicule"
+  },
+  {
+   "f": "caisse",
+   "to": "voiture",
+   "c": "vehicule"
+  },
+  {
+   "f": "caisses",
+   "to": "voitures",
+   "c": "vehicule"
+  },
+  {
+   "f": "tuture",
+   "to": "voiture",
+   "c": "vehicule"
+  },
+  {
+   "f": "gova",
+   "to": "voiture",
+   "c": "vehicule"
+  },
+  {
+   "f": "auto",
+   "to": "voiture",
+   "c": "vehicule"
+  },
+  {
+   "f": "autos",
+   "to": "voitures",
+   "c": "vehicule"
+  },
+  {
+   "f": "becane",
+   "to": "moto",
+   "c": "vehicule"
+  },
+  {
+   "f": "meule",
+   "to": "moto",
+   "c": "vehicule"
+  },
+  {
+   "f": "brele",
+   "to": "moto",
+   "c": "vehicule"
+  },
+  {
+   "f": "scoot",
+   "to": "scooter",
+   "c": "vehicule"
+  },
+  {
+   "f": "4x4",
+   "to": "suv",
+   "c": "vehicule"
+  },
+  {
+   "f": "pick up",
+   "to": "pickup",
+   "c": "vehicule"
+  },
+  {
+   "f": "pick-up",
+   "to": "pickup",
+   "c": "vehicule"
+  },
+  {
+   "f": "helico",
+   "to": "helicoptere",
+   "c": "vehicule"
+  },
+  {
+   "f": "helicos",
+   "to": "helicopteres",
+   "c": "vehicule"
+  },
+  {
+   "f": "jet ski",
+   "to": "jetski",
+   "c": "vehicule"
+  },
+  {
+   "f": "jet-ski",
+   "to": "jetski",
+   "c": "vehicule"
+  },
+  {
+   "f": "flingue",
+   "to": "arme",
+   "c": "arme"
+  },
+  {
+   "f": "flingues",
+   "to": "armes",
+   "c": "arme"
+  },
+  {
+   "f": "gun",
+   "to": "arme",
+   "c": "arme"
+  },
+  {
+   "f": "guns",
+   "to": "armes",
+   "c": "arme"
+  },
+  {
+   "f": "petoire",
+   "to": "arme",
+   "c": "arme"
+  },
+  {
+   "f": "arme a feu",
+   "to": "arme",
+   "c": "arme"
+  },
+  {
+   "f": "sniper",
+   "to": "fusil de precision",
+   "c": "arme"
+  },
+  {
+   "f": "snipe",
+   "to": "fusil de precision",
+   "c": "arme"
+  },
+  {
+   "f": "pompe",
+   "to": "fusil a pompe",
+   "c": "arme"
+  },
+  {
+   "f": "shotgun",
+   "to": "fusil a pompe",
+   "c": "arme"
+  },
+  {
+   "f": "smg",
+   "to": "pistolet mitrailleur",
+   "c": "arme"
+  },
+  {
+   "f": "mitraillette",
+   "to": "pistolet mitrailleur",
+   "c": "arme"
+  },
+  {
+   "f": "uzi",
+   "to": "pistolet mitrailleur",
+   "c": "arme"
+  },
+  {
+   "f": "ak47",
+   "to": "fusil d assaut",
+   "c": "arme"
+  },
+  {
+   "f": "rpg",
+   "to": "lance roquettes",
+   "c": "arme"
+  },
+  {
+   "f": "molo",
+   "to": "molotov",
+   "c": "arme"
+  },
+  {
+   "f": "munition",
+   "to": "munitions",
+   "c": "arme"
+  },
+  {
+   "f": "balles",
+   "to": "munitions",
+   "c": "arme"
+  },
+  {
+   "f": "cartouches",
+   "to": "munitions",
+   "c": "arme"
+  },
+  {
+   "f": "ammo",
+   "to": "munitions",
+   "c": "arme"
+  },
+  {
+   "f": "baraque",
+   "to": "maison",
+   "c": "logement"
+  },
+  {
+   "f": "appart",
+   "to": "appartement",
+   "c": "logement"
+  },
+  {
+   "f": "apart",
+   "to": "appartement",
+   "c": "logement"
+  },
+  {
+   "f": "crib",
+   "to": "maison",
+   "c": "logement"
+  },
+  {
+   "f": "logement",
+   "to": "maison",
+   "c": "logement"
+  },
+  {
+   "f": "safehouse",
+   "to": "planque",
+   "c": "logement"
+  },
+  {
+   "f": "safe house",
+   "to": "planque",
+   "c": "logement"
+  },
+  {
+   "f": "repaire",
+   "to": "planque",
+   "c": "logement"
+  },
+  {
+   "f": "calc",
+   "to": "calculateur",
+   "c": "calculateur"
+  },
+  {
+   "f": "calculette",
+   "to": "calculateur",
+   "c": "calculateur"
+  },
+  {
+   "f": "calculatrice",
+   "to": "calculateur",
+   "c": "calculateur"
+  },
+  {
+   "f": "calculator",
+   "to": "calculateur",
+   "c": "calculateur"
+  },
+  {
+   "f": "simulateur",
+   "to": "calculateur",
+   "c": "calculateur"
+  },
+  {
+   "f": "bp",
+   "to": "business plan",
+   "c": "calculateur"
+  },
+  {
+   "f": "buisness plan",
+   "to": "business plan",
+   "c": "calculateur"
+  },
+  {
+   "f": "buziness plan",
+   "to": "business plan",
+   "c": "calculateur"
+  },
+  {
+   "f": "bizness plan",
+   "to": "business plan",
+   "c": "calculateur"
+  },
+  {
+   "f": "ed ultimate",
+   "to": "edition ultimate",
+   "c": "edition"
+  },
+  {
+   "f": "edition ultim",
+   "to": "edition ultimate",
+   "c": "edition"
+  },
+  {
+   "f": "edition ultime",
+   "to": "edition ultimate",
+   "c": "edition"
+  },
+  {
+   "f": "ultim",
+   "to": "edition ultimate",
+   "c": "edition"
+  },
+  {
+   "f": "ultimate",
+   "to": "edition ultimate",
+   "c": "edition"
+  },
+  {
+   "f": "ue",
+   "to": "edition ultimate",
+   "c": "edition"
+  },
+  {
+   "f": "l ultimate",
+   "to": "edition ultimate",
+   "c": "edition"
+  },
+  {
+   "f": "ed standard",
+   "to": "edition standard",
+   "c": "edition"
+  },
+  {
+   "f": "version de base",
+   "to": "edition standard",
+   "c": "edition"
+  },
+  {
+   "f": "preco",
+   "to": "precommande",
+   "c": "edition"
+  },
+  {
+   "f": "precos",
+   "to": "precommande",
+   "c": "edition"
+  },
+  {
+   "f": "pre commande",
+   "to": "precommande",
+   "c": "edition"
+  },
+  {
+   "f": "pre commander",
+   "to": "precommander",
+   "c": "edition"
+  },
+  {
+   "f": "preorder",
+   "to": "precommande",
+   "c": "edition"
+  },
+  {
+   "f": "pre order",
+   "to": "precommande",
+   "c": "edition"
+  },
+  {
+   "f": "dlc",
+   "to": "contenu telechargeable",
+   "c": "edition"
+  },
+  {
+   "f": "dlcs",
+   "to": "contenu telechargeable",
+   "c": "edition"
+  },
+  {
+   "f": "season pass",
+   "to": "abonnement",
+   "c": "abonnement"
+  },
+  {
+   "f": "map",
+   "to": "carte",
+   "c": "carte"
+  },
+  {
+   "f": "mape",
+   "to": "carte",
+   "c": "carte"
+  },
+  {
+   "f": "la map",
+   "to": "carte",
+   "c": "carte"
+  },
+  {
+   "f": "minimap",
+   "to": "carte",
+   "c": "carte"
+  },
+  {
+   "f": "spawn",
+   "to": "apparait",
+   "c": "lieu"
+  },
+  {
+   "f": "spawner",
+   "to": "apparait",
+   "c": "lieu"
+  },
+  {
+   "f": "spawne",
+   "to": "apparait",
+   "c": "lieu"
+  },
+  {
+   "f": "pop",
+   "to": "apparait",
+   "c": "lieu"
+  },
+  {
+   "f": "farm",
+   "to": "gagner de l argent",
+   "c": "argent"
+  },
+  {
+   "f": "farmer",
+   "to": "gagner de l argent",
+   "c": "argent"
+  },
+  {
+   "f": "farme",
+   "to": "gagner de l argent",
+   "c": "argent"
+  },
+  {
+   "f": "grind",
+   "to": "gagner de l argent",
+   "c": "argent"
+  },
+  {
+   "f": "grinder",
+   "to": "gagner de l argent",
+   "c": "argent"
+  },
+  {
+   "f": "rush",
+   "to": "gagner de l argent vite",
+   "c": "argent"
+  },
+  {
+   "f": "rp",
+   "to": "reputation",
+   "c": "experience"
+  },
+  {
+   "f": "xp",
+   "to": "experience",
+   "c": "experience"
+  },
+  {
+   "f": "exp",
+   "to": "experience",
+   "c": "experience"
+  },
+  {
+   "f": "lvl",
+   "to": "niveau",
+   "c": "experience"
+  },
+  {
+   "f": "level",
+   "to": "niveau",
+   "c": "experience"
+  },
+  {
+   "f": "cash",
+   "to": "argent",
+   "c": "argent"
+  },
+  {
+   "f": "thune",
+   "to": "argent",
+   "c": "argent"
+  },
+  {
+   "f": "tune",
+   "to": "argent",
+   "c": "argent"
+  },
+  {
+   "f": "fric",
+   "to": "argent",
+   "c": "argent"
+  },
+  {
+   "f": "pognon",
+   "to": "argent",
+   "c": "argent"
+  },
+  {
+   "f": "ble",
+   "to": "argent",
+   "c": "argent"
+  },
+  {
+   "f": "oseille",
+   "to": "argent",
+   "c": "argent"
+  },
+  {
+   "f": "moula",
+   "to": "argent",
+   "c": "argent"
+  },
+  {
+   "f": "moulaga",
+   "to": "argent",
+   "c": "argent"
+  },
+  {
+   "f": "sous",
+   "to": "argent",
+   "c": "argent"
+  },
+  {
+   "f": "brouzoufs",
+   "to": "argent",
+   "c": "argent"
+  },
+  {
+   "f": "pepettes",
+   "to": "argent",
+   "c": "argent"
+  },
+  {
+   "f": "$",
+   "to": "dollars",
+   "c": "argent"
+  },
+  {
+   "f": "dollar",
+   "to": "dollars",
+   "c": "argent"
+  },
+  {
+   "f": "boules",
+   "to": "dollars",
+   "c": "argent"
+  },
+  {
+   "f": "€",
+   "to": "euros",
+   "c": "argent"
+  },
+  {
+   "f": "euro",
+   "to": "euros",
+   "c": "argent"
+  },
+  {
+   "f": "tarif",
+   "to": "prix",
+   "c": "prix"
+  },
+  {
+   "f": "tarifs",
+   "to": "prix",
+   "c": "prix"
+  },
+  {
+   "f": "cout",
+   "to": "prix",
+   "c": "prix"
+  },
+  {
+   "f": "coute",
+   "to": "prix",
+   "c": "prix"
+  },
+  {
+   "f": "coutent",
+   "to": "prix",
+   "c": "prix"
+  },
+  {
+   "f": "coutera",
+   "to": "prix",
+   "c": "prix"
+  },
+  {
+   "f": "couter",
+   "to": "prix",
+   "c": "prix"
+  },
+  {
+   "f": "koute",
+   "to": "prix",
+   "c": "prix"
+  },
+  {
+   "f": "cher",
+   "to": "prix",
+   "c": "prix"
+  },
+  {
+   "f": "chere",
+   "to": "prix",
+   "c": "prix"
+  },
+  {
+   "f": "valeur",
+   "to": "prix",
+   "c": "prix"
+  },
+  {
+   "f": "vaut",
+   "to": "prix",
+   "c": "prix"
+  },
+  {
+   "f": "cheat",
+   "to": "triche",
+   "c": "triche"
+  },
+  {
+   "f": "cheats",
+   "to": "triche",
+   "c": "triche"
+  },
+  {
+   "f": "cheat code",
+   "to": "triche",
+   "c": "triche"
+  },
+  {
+   "f": "codes de triche",
+   "to": "triche",
+   "c": "triche"
+  },
+  {
+   "f": "code de triche",
+   "to": "triche",
+   "c": "triche"
+  },
+  {
+   "f": "ba",
+   "to": "trailer",
+   "c": "media"
+  },
+  {
+   "f": "bande annonce",
+   "to": "trailer",
+   "c": "media"
+  },
+  {
+   "f": "bande-annonce",
+   "to": "trailer",
+   "c": "media"
+  },
+  {
+   "f": "teaser",
+   "to": "trailer",
+   "c": "media"
+  },
+  {
+   "f": "trailler",
+   "to": "trailer",
+   "c": "media"
+  },
+  {
+   "f": "trailers",
+   "to": "trailer",
+   "c": "media"
+  },
+  {
+   "f": "video",
+   "to": "trailer",
+   "c": "media"
+  },
+  {
+   "f": "ps 5",
+   "to": "ps5",
+   "c": "console"
+  },
+  {
+   "f": "playstation 5",
+   "to": "ps5",
+   "c": "console"
+  },
+  {
+   "f": "playstation5",
+   "to": "ps5",
+   "c": "console"
+  },
+  {
+   "f": "playstation",
+   "to": "ps5",
+   "c": "console"
+  },
+  {
+   "f": "ps4",
+   "to": "ps4",
+   "c": "console"
+  },
+  {
+   "f": "playstation 4",
+   "to": "ps4",
+   "c": "console"
+  },
+  {
+   "f": "xsx",
+   "to": "xbox",
+   "c": "console"
+  },
+  {
+   "f": "xss",
+   "to": "xbox",
+   "c": "console"
+  },
+  {
+   "f": "series x",
+   "to": "xbox",
+   "c": "console"
+  },
+  {
+   "f": "series s",
+   "to": "xbox",
+   "c": "console"
+  },
+  {
+   "f": "xbox series",
+   "to": "xbox",
+   "c": "console"
+  },
+  {
+   "f": "xbox one",
+   "to": "xbox one",
+   "c": "console"
+  },
+  {
+   "f": "ordi",
+   "to": "pc",
+   "c": "console"
+  },
+  {
+   "f": "ordinateur",
+   "to": "pc",
+   "c": "console"
+  },
+  {
+   "f": "steam",
+   "to": "pc",
+   "c": "console"
+  },
+  {
+   "f": "release",
+   "to": "sortie",
+   "c": "sortie"
+  },
+  {
+   "f": "release date",
+   "to": "date de sortie",
+   "c": "sortie"
+  },
+  {
+   "f": "sort",
+   "to": "sortie",
+   "c": "sortie"
+  },
+  {
+   "f": "sortira",
+   "to": "sortie",
+   "c": "sortie"
+  },
+  {
+   "f": "sorti",
+   "to": "sortie",
+   "c": "sortie"
+  },
+  {
+   "f": "dispo",
+   "to": "disponible",
+   "c": "sortie"
+  },
+  {
+   "f": "leo",
+   "to": "leo",
+   "c": "leo"
+  },
+  {
+   "f": "lolo",
+   "to": "leo",
+   "c": "leo"
+  },
+  {
+   "f": "chatbot",
+   "to": "leo",
+   "c": "leo"
+  },
+  {
+   "f": "bot",
+   "to": "leo",
+   "c": "leo"
+  },
+  {
+   "f": "assistant",
+   "to": "leo",
+   "c": "leo"
+  },
+  {
+   "f": "ia",
+   "to": "intelligence artificielle",
+   "c": "leo"
+  },
+  {
+   "f": "chatgpt",
+   "to": "intelligence artificielle",
+   "c": "leo"
+  },
+  {
+   "f": "pv",
+   "to": "vie",
+   "c": "consommable"
+  },
+  {
+   "f": "hp",
+   "to": "vie",
+   "c": "consommable"
+  },
+  {
+   "f": "sante",
+   "to": "vie",
+   "c": "consommable"
+  },
+  {
+   "f": "medkit",
+   "to": "kit de soin",
+   "c": "consommable"
+  },
+  {
+   "f": "med kit",
+   "to": "kit de soin",
+   "c": "consommable"
+  },
+  {
+   "f": "trousse de soin",
+   "to": "kit de soin",
+   "c": "consommable"
+  },
+  {
+   "f": "gilet",
+   "to": "gilet pare balles",
+   "c": "consommable"
+  },
+  {
+   "f": "armure",
+   "to": "gilet pare balles",
+   "c": "consommable"
+  },
+  {
+   "f": "armor",
+   "to": "gilet pare balles",
+   "c": "consommable"
+  },
+  {
+   "f": "kevlar",
+   "to": "gilet pare balles",
+   "c": "consommable"
+  },
+  {
+   "f": "pare balle",
+   "to": "gilet pare balles",
+   "c": "consommable"
+  },
+  {
+   "f": "pare balles",
+   "to": "gilet pare balles",
+   "c": "consommable"
+  },
+  {
+   "f": "bouffe",
+   "to": "nourriture",
+   "c": "consommable"
+  },
+  {
+   "f": "bouffer",
+   "to": "manger",
+   "c": "consommable"
+  },
+  {
+   "f": "grailler",
+   "to": "manger",
+   "c": "consommable"
+  },
+  {
+   "f": "food",
+   "to": "nourriture",
+   "c": "consommable"
+  },
+  {
+   "f": "snack",
+   "to": "en cas",
+   "c": "consommable"
+  },
+  {
+   "f": "snacks",
+   "to": "en cas",
+   "c": "consommable"
+  },
+  {
+   "f": "biere",
+   "to": "boisson",
+   "c": "consommable"
+  },
+  {
+   "f": "soda",
+   "to": "boisson",
+   "c": "consommable"
+  },
+  {
+   "f": "alcool",
+   "to": "boisson",
+   "c": "consommable"
+  },
+  {
+   "f": "coupe",
+   "to": "coiffure",
+   "c": "style"
+  },
+  {
+   "f": "cheveux",
+   "to": "coiffure",
+   "c": "style"
+  },
+  {
+   "f": "barber",
+   "to": "coiffure",
+   "c": "style"
+  },
+  {
+   "f": "coiffeur",
+   "to": "coiffure",
+   "c": "style"
+  },
+  {
+   "f": "barbe",
+   "to": "coiffure",
+   "c": "style"
+  },
+  {
+   "f": "tatoo",
+   "to": "tatouage",
+   "c": "style"
+  },
+  {
+   "f": "tattoo",
+   "to": "tatouage",
+   "c": "style"
+  },
+  {
+   "f": "tattoos",
+   "to": "tatouages",
+   "c": "style"
+  },
+  {
+   "f": "tatou",
+   "to": "tatouage",
+   "c": "style"
+  },
+  {
+   "f": "tatouer",
+   "to": "tatouage",
+   "c": "style"
+  },
+  {
+   "f": "fringues",
+   "to": "vetements",
+   "c": "style"
+  },
+  {
+   "f": "sapes",
+   "to": "vetements",
+   "c": "style"
+  },
+  {
+   "f": "habits",
+   "to": "vetements",
+   "c": "style"
+  },
+  {
+   "f": "outfit",
+   "to": "tenue",
+   "c": "style"
+  },
+  {
+   "f": "outfits",
+   "to": "tenues",
+   "c": "style"
+  },
+  {
+   "f": "skin",
+   "to": "tenue",
+   "c": "style"
+  },
+  {
+   "f": "skins",
+   "to": "tenues",
+   "c": "style"
+  },
+  {
+   "f": "look",
+   "to": "tenue",
+   "c": "style"
+  },
+  {
+   "f": "custom",
+   "to": "personnalisation",
+   "c": "personnalisation"
+  },
+  {
+   "f": "customisation",
+   "to": "personnalisation",
+   "c": "personnalisation"
+  },
+  {
+   "f": "customiser",
+   "to": "personnaliser",
+   "c": "personnalisation"
+  },
+  {
+   "f": "customization",
+   "to": "personnalisation",
+   "c": "personnalisation"
+  },
+  {
+   "f": "tuning",
+   "to": "personnalisation",
+   "c": "personnalisation"
+  },
+  {
+   "f": "tuner",
+   "to": "personnaliser",
+   "c": "personnalisation"
+  },
+  {
+   "f": "modif",
+   "to": "personnalisation",
+   "c": "personnalisation"
+  },
+  {
+   "f": "modifs",
+   "to": "personnalisations",
+   "c": "personnalisation"
+  },
+  {
+   "f": "upgrade",
+   "to": "amelioration",
+   "c": "personnalisation"
+  },
+  {
+   "f": "upgrades",
+   "to": "ameliorations",
+   "c": "personnalisation"
+  },
+  {
+   "f": "rims",
+   "to": "jantes",
+   "c": "personnalisation"
+  },
+  {
+   "f": "paint",
+   "to": "peinture",
+   "c": "personnalisation"
+  },
+  {
+   "f": "repeindre",
+   "to": "peinture",
+   "c": "personnalisation"
+  },
+  {
+   "f": "suppressor",
+   "to": "silencieux",
+   "c": "personnalisation"
+  },
+  {
+   "f": "silencer",
+   "to": "silencieux",
+   "c": "personnalisation"
+  },
+  {
+   "f": "scope",
+   "to": "viseur",
+   "c": "personnalisation"
+  },
+  {
+   "f": "mag",
+   "to": "chargeur",
+   "c": "personnalisation"
+  },
+  {
+   "f": "biz",
+   "to": "entreprise",
+   "c": "entreprise"
+  },
+  {
+   "f": "business",
+   "to": "entreprise",
+   "c": "entreprise"
+  },
+  {
+   "f": "boite",
+   "to": "entreprise",
+   "c": "entreprise"
+  },
+  {
+   "f": "commerce",
+   "to": "entreprise",
+   "c": "entreprise"
+  },
+  {
+   "f": "shop",
+   "to": "boutique",
+   "c": "entreprise"
+  },
+  {
+   "f": "quete",
+   "to": "mission",
+   "c": "mission"
+  },
+  {
+   "f": "quest",
+   "to": "mission",
+   "c": "mission"
+  },
+  {
+   "f": "job",
+   "to": "mission",
+   "c": "mission"
+  },
+  {
+   "f": "jobs",
+   "to": "missions",
+   "c": "mission"
+  },
+  {
+   "f": "taf",
+   "to": "mission",
+   "c": "mission"
+  },
+  {
+   "f": "braco",
+   "to": "braquage",
+   "c": "mission"
+  },
+  {
+   "f": "heist",
+   "to": "braquage",
+   "c": "mission"
+  },
+  {
+   "f": "heists",
+   "to": "braquages",
+   "c": "mission"
+  },
+  {
+   "f": "casse",
+   "to": "braquage",
+   "c": "mission"
+  },
+  {
+   "f": "flic",
+   "to": "police",
+   "c": "police"
+  },
+  {
+   "f": "flics",
+   "to": "police",
+   "c": "police"
+  },
+  {
+   "f": "keufs",
+   "to": "police",
+   "c": "police"
+  },
+  {
+   "f": "keuf",
+   "to": "police",
+   "c": "police"
+  },
+  {
+   "f": "cops",
+   "to": "police",
+   "c": "police"
+  },
+  {
+   "f": "poulets",
+   "to": "police",
+   "c": "police"
+  },
+  {
+   "f": "condes",
+   "to": "police",
+   "c": "police"
+  },
+  {
+   "f": "wanted",
+   "to": "indice de recherche",
+   "c": "police"
+  },
+  {
+   "f": "etoiles",
+   "to": "indice de recherche",
+   "c": "police"
+  },
+  {
+   "f": "multi",
+   "to": "en ligne",
+   "c": "online"
+  },
+  {
+   "f": "multijoueur",
+   "to": "en ligne",
+   "c": "online"
+  },
+  {
+   "f": "coop",
+   "to": "en ligne",
+   "c": "online"
+  },
+  {
+   "f": "co op",
+   "to": "en ligne",
+   "c": "online"
+  },
+  {
+   "f": "story",
+   "to": "histoire",
+   "c": "histoire"
+  },
+  {
+   "f": "scenar",
+   "to": "histoire",
+   "c": "histoire"
+  },
+  {
+   "f": "campagne",
+   "to": "histoire",
+   "c": "histoire"
+  },
+  {
+   "f": "endroit",
+   "to": "lieu",
+   "c": "lieu"
+  },
+  {
+   "f": "spot",
+   "to": "lieu",
+   "c": "lieu"
+  },
+  {
+   "f": "coin",
+   "to": "lieu",
+   "c": "lieu"
+  },
+  {
+   "f": "ou c est",
+   "to": "ou est",
+   "c": "lieu"
+  },
+  {
+   "f": "ou ce trouve",
+   "to": "ou se trouve",
+   "c": "lieu"
+  },
+  {
+   "f": "ou ke",
+   "to": "ou est",
+   "c": "lieu"
+  },
+  {
+   "f": "u",
+   "to": "ou",
+   "c": "lieu"
+  },
+  {
+   "f": "fps",
+   "to": "images par seconde",
+   "c": "technique"
+  },
+  {
+   "f": "4k",
+   "to": "resolution",
+   "c": "technique"
+  },
+  {
+   "f": "60fps",
+   "to": "images par seconde",
+   "c": "technique"
+  },
+  {
+   "f": "go",
+   "to": "gigaoctets",
+   "c": "technique"
+  },
+  {
+   "f": "giga",
+   "to": "gigaoctets",
+   "c": "technique"
+  },
+  {
+   "f": "gb",
+   "to": "gigaoctets",
+   "c": "technique"
+  },
+  {
+   "f": "sauvegarde",
+   "to": "sauvegarde",
+   "c": "suivi"
+  },
+  {
+   "f": "save",
+   "to": "sauvegarde",
+   "c": "suivi"
+  },
+  {
+   "f": "backup",
+   "to": "sauvegarde",
+   "c": "suivi"
+  },
+  {
+   "f": "coche",
+   "to": "cocher",
+   "c": "suivi"
+  },
+  {
+   "f": "cocher",
+   "to": "cocher",
+   "c": "suivi"
+  },
+  {
+   "f": "checker",
+   "to": "cocher",
+   "c": "suivi"
+  },
+  {
+   "f": "tel",
+   "to": "telephone",
+   "c": "technique"
+  },
+  {
+   "f": "phone",
+   "to": "telephone",
+   "c": "technique"
+  },
+  {
+   "f": "smartphone",
+   "to": "telephone",
+   "c": "technique"
+  },
+  {
+   "f": "portable",
+   "to": "telephone",
+   "c": "technique"
+  },
+  {
+   "f": "collec",
+   "to": "collection",
+   "c": "collection"
+  },
+  {
+   "f": "collectibles",
+   "to": "collectibles",
+   "c": "collection"
+  },
+  {
+   "f": "collectables",
+   "to": "collectibles",
+   "c": "collection"
+  },
+  {
+   "f": "objets caches",
+   "to": "collectibles",
+   "c": "collection"
+  },
+  {
+   "f": "tortue",
+   "to": "alligator",
+   "c": "animaux"
+  },
+  {
+   "f": "croco",
+   "to": "alligator",
+   "c": "animaux"
+  },
+  {
+   "f": "crocodile",
+   "to": "alligator",
+   "c": "animaux"
+  },
+  {
+   "f": "gator",
+   "to": "alligator",
+   "c": "animaux"
+  },
+  {
+   "f": "insp",
+   "to": "inspiration",
+   "c": "inspiration"
+  },
+  {
+   "f": "irl",
+   "to": "dans la vraie vie",
+   "c": "inspiration"
+  },
+  {
+   "f": "en vrai",
+   "to": "dans la vraie vie",
+   "c": "inspiration"
+  },
+  {
+   "f": "en vrai de vrai",
+   "to": "dans la vraie vie",
+   "c": "inspiration"
+  },
+  {
+   "f": "dans la realite",
+   "to": "dans la vraie vie",
+   "c": "inspiration"
+  },
+  {
+   "f": "ressemble a",
+   "to": "inspiration",
+   "c": "inspiration"
+  },
+  {
+   "f": "copie de",
+   "to": "inspiration",
+   "c": "inspiration"
+  },
+  {
+   "f": "equivalent reel",
+   "to": "inspiration",
+   "c": "inspiration"
+  },
+  {
+   "f": "vraie voiture",
+   "to": "inspiration",
+   "c": "inspiration"
+  },
+  {
+   "f": "vrai modele",
+   "to": "inspiration",
+   "c": "inspiration"
+  },
+  {
+   "f": "gta plus",
+   "to": "gtaplus",
+   "c": "abonnement"
+  },
+  {
+   "f": "vice city",
+   "to": "vice city",
+   "c": "lieu"
+  }
+ ],
+ "concepts": {
+  "vehicule": [
+   "vehicule",
+   "vehicules",
+   "voiture",
+   "voitures",
+   "moto",
+   "motos",
+   "bateau",
+   "bateaux",
+   "avion",
+   "avions",
+   "helicoptere",
+   "helicopteres",
+   "camion",
+   "pickup",
+   "suv",
+   "scooter",
+   "quad",
+   "jetski",
+   "berline",
+   "supercar",
+   "muscle",
+   "van"
+  ],
+  "arme": [
+   "arme",
+   "armes",
+   "pistolet",
+   "pistolets",
+   "fusil",
+   "fusils",
+   "revolver",
+   "mitrailleuse",
+   "carabine",
+   "grenade",
+   "molotov",
+   "couteau",
+   "batte",
+   "marteau",
+   "harpon",
+   "munitions",
+   "armurerie",
+   "arsenal"
+  ],
+  "lieu": [
+   "lieu",
+   "lieux",
+   "region",
+   "regions",
+   "ville",
+   "villes",
+   "quartier",
+   "quartiers",
+   "zone",
+   "zones",
+   "ile",
+   "iles",
+   "comte",
+   "comtes",
+   "plage",
+   "port",
+   "parc",
+   "marais",
+   "route",
+   "adresse"
+  ],
+  "logement": [
+   "maison",
+   "maisons",
+   "appartement",
+   "appartements",
+   "demeure",
+   "demeures",
+   "propriete",
+   "proprietes",
+   "planque",
+   "planques",
+   "garage",
+   "garages",
+   "villa",
+   "habite",
+   "habiter",
+   "habitation",
+   "domicile"
+  ],
+  "entreprise": [
+   "entreprise",
+   "entreprises",
+   "atelier",
+   "ateliers",
+   "boutique",
+   "boutiques",
+   "magasin",
+   "magasins",
+   "salon",
+   "club",
+   "label",
+   "chantier",
+   "station",
+   "commerce",
+   "commerces",
+   "enseigne",
+   "enseignes"
+  ],
+  "personnage": [
+   "personnage",
+   "personnages",
+   "protagoniste",
+   "protagonistes",
+   "heroine",
+   "duo",
+   "casting",
+   "acteur",
+   "acteurs",
+   "voix"
+  ],
+  "achat": [
+   "achat",
+   "achats",
+   "acheter",
+   "achete",
+   "achetes",
+   "achetee",
+   "achetez",
+   "acquerir",
+   "acquisition",
+   "acquisitions",
+   "payer",
+   "vendre",
+   "vendu",
+   "vend",
+   "obtenir",
+   "avoir",
+   "debloquer",
+   "debloque",
+   "s achete",
+   "achetable",
+   "achetables"
+  ],
+  "prix": [
+   "prix",
+   "coute",
+   "coutent",
+   "cout",
+   "couts",
+   "tarif",
+   "tarifs",
+   "cher",
+   "chere",
+   "gratuit",
+   "gratuite",
+   "valeur",
+   "montant",
+   "dollars",
+   "euros"
+  ],
+  "argent": [
+   "argent",
+   "dollars",
+   "gain",
+   "gains",
+   "gagner",
+   "gagne",
+   "gagnes",
+   "revenu",
+   "revenus",
+   "recompense",
+   "recompenses",
+   "salaire",
+   "capital",
+   "budget",
+   "economiser",
+   "economies",
+   "epargner",
+   "riche",
+   "million",
+   "millions",
+   "mille"
+  ],
+  "temps": [
+   "temps",
+   "heure",
+   "heures",
+   "minute",
+   "minutes",
+   "jour",
+   "jours",
+   "semaine",
+   "semaines",
+   "session",
+   "sessions",
+   "partie",
+   "parties",
+   "duree",
+   "soir",
+   "longtemps",
+   "vite",
+   "rapide",
+   "rapidement",
+   "delai",
+   "echeance",
+   "date",
+   "quand"
+  ],
+  "objectif": [
+   "objectif",
+   "objectifs",
+   "but",
+   "buts",
+   "viser",
+   "vise",
+   "atteindre",
+   "atteint",
+   "cible",
+   "plan",
+   "programme",
+   "strategie",
+   "etape",
+   "etapes"
+  ],
+  "calculateur": [
+   "calculateur",
+   "calcul",
+   "calculs",
+   "calculer",
+   "outil",
+   "outils",
+   "simulation",
+   "simuler",
+   "estimation",
+   "estimer",
+   "comparer",
+   "comparaison",
+   "comparateur",
+   "rentabilite",
+   "rentable",
+   "rembourse",
+   "amorti",
+   "roi",
+   "business plan"
+  ],
+  "statut": [
+   "statut",
+   "statuts",
+   "officiel",
+   "officielle",
+   "officiels",
+   "confirme",
+   "confirmee",
+   "confirmes",
+   "confirmer",
+   "verifie",
+   "verifiee",
+   "verification",
+   "source",
+   "sources",
+   "fiable",
+   "sur",
+   "sure",
+   "vrai",
+   "faux",
+   "rumeur",
+   "rumeurs",
+   "fuite",
+   "fuites",
+   "leak",
+   "leaks",
+   "communautaire",
+   "repere",
+   "reperes"
+  ],
+  "sortie": [
+   "sortie",
+   "sortir",
+   "sort",
+   "sortira",
+   "date",
+   "disponible",
+   "disponibilite",
+   "arrive",
+   "arrivee",
+   "report",
+   "reporte",
+   "repousse",
+   "retard",
+   "annonce",
+   "annoncee",
+   "precommande",
+   "precommander",
+   "lancement"
+  ],
+  "edition": [
+   "edition",
+   "editions",
+   "ultimate",
+   "standard",
+   "pack",
+   "packs",
+   "bonus",
+   "contenu",
+   "contenus",
+   "collection",
+   "collections",
+   "kit",
+   "exclusif",
+   "exclusifs",
+   "exclusive",
+   "reserve",
+   "reserves"
+  ],
+  "style": [
+   "vetement",
+   "vetements",
+   "tenue",
+   "tenues",
+   "habit",
+   "habits",
+   "accessoire",
+   "accessoires",
+   "coiffure",
+   "coiffures",
+   "tatouage",
+   "tatouages",
+   "style",
+   "mode",
+   "look",
+   "lunettes",
+   "montre",
+   "casquette",
+   "bijoux",
+   "chaussures",
+   "robe",
+   "costume",
+   "maquillage",
+   "ongles"
+  ],
+  "consommable": [
+   "consommable",
+   "consommables",
+   "nourriture",
+   "manger",
+   "mange",
+   "boire",
+   "boisson",
+   "boissons",
+   "repas",
+   "en cas",
+   "soin",
+   "soins",
+   "kit de soin",
+   "vie",
+   "gilet pare balles",
+   "protection",
+   "cafe",
+   "chips",
+   "shake",
+   "regime",
+   "poids",
+   "grossir",
+   "maigrir",
+   "sport",
+   "musculation"
+  ],
+  "personnalisation": [
+   "personnalisation",
+   "personnalisations",
+   "personnaliser",
+   "personnalise",
+   "amelioration",
+   "ameliorations",
+   "ameliorer",
+   "peinture",
+   "peintures",
+   "jantes",
+   "jante",
+   "turbo",
+   "moteur",
+   "blindage",
+   "freins",
+   "suspension",
+   "pneus",
+   "klaxon",
+   "neons",
+   "neon",
+   "plaque",
+   "plaques",
+   "vitres",
+   "teintees",
+   "silencieux",
+   "viseur",
+   "chargeur",
+   "poignee",
+   "lampe",
+   "motif",
+   "motifs",
+   "finition",
+   "finitions",
+   "gravure",
+   "grave",
+   "gravee",
+   "skin",
+   "livree",
+   "aileron",
+   "spoiler"
+  ],
+  "carte": [
+   "carte",
+   "cartes",
+   "plan",
+   "repere",
+   "reperes",
+   "position",
+   "positions",
+   "coordonnees",
+   "photo",
+   "photos",
+   "distance",
+   "distances",
+   "filtre",
+   "filtres",
+   "centrer",
+   "chercher",
+   "trouver",
+   "aller",
+   "situe",
+   "situee",
+   "trouve"
+  ],
+  "suivi": [
+   "suivi",
+   "progression",
+   "cocher",
+   "coche",
+   "coches",
+   "cochee",
+   "cochees",
+   "possede",
+   "possedes",
+   "possedee",
+   "garage",
+   "arsenal",
+   "collection",
+   "sauvegarde",
+   "sauvegarder",
+   "exporter",
+   "export",
+   "importer",
+   "import",
+   "effacer",
+   "supprimer",
+   "reinitialiser",
+   "carnet",
+   "carnets",
+   "enregistrer",
+   "enregistre",
+   "enregistres",
+   "favoris"
+  ],
+  "site": [
+   "leonidakit",
+   "site",
+   "page",
+   "pages",
+   "fiche",
+   "fiches",
+   "tuto",
+   "tutoriel",
+   "guide",
+   "aide",
+   "menu",
+   "recherche",
+   "chercher",
+   "contact",
+   "contacter",
+   "mentions",
+   "confidentialite",
+   "donnees",
+   "cookies",
+   "gratuit",
+   "compte",
+   "inscription",
+   "publicite",
+   "pub",
+   "affiliation",
+   "officiel",
+   "auteur",
+   "createur",
+   "hebergement",
+   "hebergeur",
+   "vercel",
+   "brevo",
+   "newsletter",
+   "alerte"
+  ],
+  "leo": [
+   "leo",
+   "toi",
+   "tu",
+   "assistant",
+   "robot",
+   "intelligence artificielle",
+   "ia",
+   "chatbot"
+  ],
+  "media": [
+   "trailer",
+   "trailers",
+   "video",
+   "videos",
+   "capture",
+   "captures",
+   "image",
+   "images",
+   "visuel",
+   "visuels",
+   "extended look",
+   "gameplay",
+   "presentation",
+   "presentations",
+   "newswire",
+   "artwork",
+   "musique",
+   "chanson",
+   "media",
+   "medias"
+  ],
+  "console": [
+   "console",
+   "consoles",
+   "ps5",
+   "ps4",
+   "xbox",
+   "pc",
+   "plateforme",
+   "plateformes",
+   "steam",
+   "switch",
+   "nintendo",
+   "ps6",
+   "pro"
+  ],
+  "police": [
+   "police",
+   "policier",
+   "policiers",
+   "indice de recherche",
+   "poursuite",
+   "poursuites",
+   "arrete",
+   "arreter",
+   "prison",
+   "penitencier",
+   "recherche"
+  ],
+  "mission": [
+   "mission",
+   "missions",
+   "braquage",
+   "braquages",
+   "braquer",
+   "activite",
+   "activites",
+   "boulot",
+   "coup",
+   "coups",
+   "contrat",
+   "contrats",
+   "livraison",
+   "livraisons"
+  ],
+  "online": [
+   "en ligne",
+   "online",
+   "multijoueur",
+   "amis",
+   "ami",
+   "joueurs",
+   "joueur",
+   "coop",
+   "crossplay"
+  ],
+  "histoire": [
+   "histoire",
+   "scenario",
+   "synopsis",
+   "intrigue",
+   "campagne",
+   "solo",
+   "fin",
+   "chapitre",
+   "chapitres",
+   "romance",
+   "couple"
+  ],
+  "inspiration": [
+   "inspiration",
+   "inspire",
+   "inspiree",
+   "inspires",
+   "ressemble",
+   "ressemblent",
+   "modele",
+   "reel",
+   "reelle",
+   "vraie",
+   "vrai",
+   "dans la vraie vie",
+   "equivalent",
+   "correspond",
+   "base",
+   "basee",
+   "reference"
+  ],
+  "question": [
+   "combien",
+   "pourquoi",
+   "quoi",
+   "qui",
+   "quand",
+   "comment",
+   "quel",
+   "quelle",
+   "quels",
+   "quelles",
+   "ou",
+   "c est quoi",
+   "qu est ce que",
+   "est ce que",
+   "il y a",
+   "explique",
+   "definition",
+   "veut dire",
+   "signifie"
+  ]
+ },
+ "english": [
+  {
+   "f": "how much is",
+   "to": "combien coute"
+  },
+  {
+   "f": "how much does",
+   "to": "combien coute"
+  },
+  {
+   "f": "price",
+   "to": "prix"
+  },
+  {
+   "f": "prices",
+   "to": "prix"
+  },
+  {
+   "f": "cost",
+   "to": "prix"
+  },
+  {
+   "f": "costs",
+   "to": "prix"
+  },
+  {
+   "f": "how much",
+   "to": "combien"
+  },
+  {
+   "f": "how many",
+   "to": "combien"
+  },
+  {
+   "f": "where",
+   "to": "ou"
+  },
+  {
+   "f": "where is",
+   "to": "ou est"
+  },
+  {
+   "f": "when",
+   "to": "quand"
+  },
+  {
+   "f": "why",
+   "to": "pourquoi"
+  },
+  {
+   "f": "how",
+   "to": "comment"
+  },
+  {
+   "f": "what",
+   "to": "quoi"
+  },
+  {
+   "f": "what is",
+   "to": "c est quoi"
+  },
+  {
+   "f": "who is",
+   "to": "qui est"
+  },
+  {
+   "f": "who",
+   "to": "qui"
+  },
+  {
+   "f": "which",
+   "to": "quel"
+  },
+  {
+   "f": "car",
+   "to": "voiture"
+  },
+  {
+   "f": "cars",
+   "to": "voitures"
+  },
+  {
+   "f": "vehicle",
+   "to": "vehicule"
+  },
+  {
+   "f": "vehicles",
+   "to": "vehicules"
+  },
+  {
+   "f": "bike",
+   "to": "moto"
+  },
+  {
+   "f": "motorbike",
+   "to": "moto"
+  },
+  {
+   "f": "boat",
+   "to": "bateau"
+  },
+  {
+   "f": "boats",
+   "to": "bateaux"
+  },
+  {
+   "f": "plane",
+   "to": "avion"
+  },
+  {
+   "f": "helicopter",
+   "to": "helicoptere"
+  },
+  {
+   "f": "weapon",
+   "to": "arme"
+  },
+  {
+   "f": "weapons",
+   "to": "armes"
+  },
+  {
+   "f": "gun",
+   "to": "arme"
+  },
+  {
+   "f": "pistol",
+   "to": "pistolet"
+  },
+  {
+   "f": "rifle",
+   "to": "fusil"
+  },
+  {
+   "f": "knife",
+   "to": "couteau"
+  },
+  {
+   "f": "ammo",
+   "to": "munitions"
+  },
+  {
+   "f": "map",
+   "to": "carte"
+  },
+  {
+   "f": "location",
+   "to": "lieu"
+  },
+  {
+   "f": "locations",
+   "to": "lieux"
+  },
+  {
+   "f": "place",
+   "to": "lieu"
+  },
+  {
+   "f": "places",
+   "to": "lieux"
+  },
+  {
+   "f": "home",
+   "to": "maison"
+  },
+  {
+   "f": "apartment",
+   "to": "appartement"
+  },
+  {
+   "f": "safehouse",
+   "to": "planque"
+  },
+  {
+   "f": "garage",
+   "to": "garage"
+  },
+  {
+   "f": "shop",
+   "to": "boutique"
+  },
+  {
+   "f": "store",
+   "to": "boutique"
+  },
+  {
+   "f": "business",
+   "to": "entreprise"
+  },
+  {
+   "f": "money",
+   "to": "argent"
+  },
+  {
+   "f": "cash",
+   "to": "argent"
+  },
+  {
+   "f": "buy",
+   "to": "acheter"
+  },
+  {
+   "f": "purchase",
+   "to": "achat"
+  },
+  {
+   "f": "sell",
+   "to": "vendre"
+  },
+  {
+   "f": "cheap",
+   "to": "pas cher"
+  },
+  {
+   "f": "expensive",
+   "to": "cher"
+  },
+  {
+   "f": "free",
+   "to": "gratuit"
+  },
+  {
+   "f": "best",
+   "to": "meilleur"
+  },
+  {
+   "f": "fastest",
+   "to": "le plus rapide"
+  },
+  {
+   "f": "fast",
+   "to": "rapide"
+  },
+  {
+   "f": "worth it",
+   "to": "vaut le coup"
+  },
+  {
+   "f": "worth",
+   "to": "vaut le coup"
+  },
+  {
+   "f": "character",
+   "to": "personnage"
+  },
+  {
+   "f": "characters",
+   "to": "personnages"
+  },
+  {
+   "f": "protagonist",
+   "to": "protagoniste"
+  },
+  {
+   "f": "story",
+   "to": "histoire"
+  },
+  {
+   "f": "mission",
+   "to": "mission"
+  },
+  {
+   "f": "missions",
+   "to": "missions"
+  },
+  {
+   "f": "heist",
+   "to": "braquage"
+  },
+  {
+   "f": "police",
+   "to": "police"
+  },
+  {
+   "f": "cops",
+   "to": "police"
+  },
+  {
+   "f": "wanted level",
+   "to": "indice de recherche"
+  },
+  {
+   "f": "clothes",
+   "to": "vetements"
+  },
+  {
+   "f": "clothing",
+   "to": "vetements"
+  },
+  {
+   "f": "outfit",
+   "to": "tenue"
+  },
+  {
+   "f": "hair",
+   "to": "coiffure"
+  },
+  {
+   "f": "haircut",
+   "to": "coiffure"
+  },
+  {
+   "f": "tattoo",
+   "to": "tatouage"
+  },
+  {
+   "f": "tattoos",
+   "to": "tatouages"
+  },
+  {
+   "f": "food",
+   "to": "nourriture"
+  },
+  {
+   "f": "eat",
+   "to": "manger"
+  },
+  {
+   "f": "drink",
+   "to": "boisson"
+  },
+  {
+   "f": "health",
+   "to": "vie"
+  },
+  {
+   "f": "armor",
+   "to": "gilet pare balles"
+  },
+  {
+   "f": "customization",
+   "to": "personnalisation"
+  },
+  {
+   "f": "customize",
+   "to": "personnaliser"
+  },
+  {
+   "f": "tuning",
+   "to": "personnalisation"
+  },
+  {
+   "f": "upgrade",
+   "to": "amelioration"
+  },
+  {
+   "f": "paint",
+   "to": "peinture"
+  },
+  {
+   "f": "wheels",
+   "to": "jantes"
+  },
+  {
+   "f": "engine",
+   "to": "moteur"
+  },
+  {
+   "f": "armour",
+   "to": "blindage"
+  },
+  {
+   "f": "edition",
+   "to": "edition"
+  },
+  {
+   "f": "ultimate edition",
+   "to": "edition ultimate"
+  },
+  {
+   "f": "standard edition",
+   "to": "edition standard"
+  },
+  {
+   "f": "preorder",
+   "to": "precommande"
+  },
+  {
+   "f": "pre order",
+   "to": "precommande"
+  },
+  {
+   "f": "bonus",
+   "to": "bonus"
+  },
+  {
+   "f": "release",
+   "to": "sortie"
+  },
+  {
+   "f": "release date",
+   "to": "date de sortie"
+  },
+  {
+   "f": "delay",
+   "to": "report"
+  },
+  {
+   "f": "delayed",
+   "to": "reporte"
+  },
+  {
+   "f": "platform",
+   "to": "plateforme"
+  },
+  {
+   "f": "platforms",
+   "to": "plateformes"
+  },
+  {
+   "f": "console",
+   "to": "console"
+  },
+  {
+   "f": "trailer",
+   "to": "trailer"
+  },
+  {
+   "f": "gameplay",
+   "to": "gameplay"
+  },
+  {
+   "f": "online",
+   "to": "en ligne"
+  },
+  {
+   "f": "multiplayer",
+   "to": "en ligne"
+  },
+  {
+   "f": "cheat",
+   "to": "triche"
+  },
+  {
+   "f": "cheats",
+   "to": "triche"
+  },
+  {
+   "f": "mods",
+   "to": "mods"
+  },
+  {
+   "f": "help",
+   "to": "aide"
+  },
+  {
+   "f": "hello",
+   "to": "bonjour"
+  },
+  {
+   "f": "hi",
+   "to": "bonjour"
+  },
+  {
+   "f": "thanks",
+   "to": "merci"
+  },
+  {
+   "f": "thank you",
+   "to": "merci"
+  },
+  {
+   "f": "ty",
+   "to": "merci"
+  },
+  {
+   "f": "please",
+   "to": ""
+  },
+  {
+   "f": "get",
+   "to": "obtenir"
+  },
+  {
+   "f": "find",
+   "to": "trouver"
+  },
+  {
+   "f": "save",
+   "to": "sauvegarde"
+  },
+  {
+   "f": "export",
+   "to": "exporter"
+  },
+  {
+   "f": "import",
+   "to": "importer"
+  },
+  {
+   "f": "calculator",
+   "to": "calculateur"
+  },
+  {
+   "f": "tool",
+   "to": "outil"
+  },
+  {
+   "f": "tools",
+   "to": "outils"
+  },
+  {
+   "f": "tutorial",
+   "to": "tuto"
+  },
+  {
+   "f": "website",
+   "to": "site"
+  },
+  {
+   "f": "official",
+   "to": "officiel"
+  },
+  {
+   "f": "source",
+   "to": "source"
+  },
+  {
+   "f": "sources",
+   "to": "sources"
+  },
+  {
+   "f": "leak",
+   "to": "fuite"
+  },
+  {
+   "f": "leaks",
+   "to": "fuites"
+  },
+  {
+   "f": "rumor",
+   "to": "rumeur"
+  },
+  {
+   "f": "confirmed",
+   "to": "confirme"
+  }
+ ],
+ "official": {
+  "site": {
+   "label": "Le site officiel de GTA VI (Rockstar Games)",
+   "url": "https://www.rockstargames.com/VI"
+  },
+  "newswire": {
+   "label": "Le Newswire de Rockstar (actualités officielles)",
+   "url": "https://www.rockstargames.com/newswire"
+  },
+  "ultimate": {
+   "label": "La page officielle des éditions et de la précommande",
+   "url": "https://www.rockstargames.com/newswire/article/5171972o3ak5oa/pre-order-grand-theft-auto-vi-on-june-25"
+  },
+  "extended": {
+   "label": "L’Extended Look officiel",
+   "url": "https://www.rockstargames.com/VI/an-extended-look"
+  },
+  "medias": {
+   "label": "Les captures officielles",
+   "url": "https://www.rockstargames.com/VI/media/screenshots"
+  },
+  "videos": {
+   "label": "Les vidéos officielles",
+   "url": "https://www.rockstargames.com/VI/media/videos"
+  },
+  "personnages": {
+   "label": "Les personnages sur le site officiel",
+   "url": "https://www.rockstargames.com/VI/only-in-leonida/jason"
+  },
+  "lieux": {
+   "label": "Les lieux sur le site officiel",
+   "url": "https://www.rockstargames.com/VI/only-in-leonida/vice-city"
+  },
+  "jason": {
+   "label": "Jason Duval sur le site officiel",
+   "url": "https://www.rockstargames.com/VI/only-in-leonida/jason"
+  },
+  "lucia": {
+   "label": "Lucia Caminos sur le site officiel",
+   "url": "https://www.rockstargames.com/VI/only-in-leonida/lucia"
+  },
+  "cal": {
+   "label": "Cal Hampton sur le site officiel",
+   "url": "https://www.rockstargames.com/VI/only-in-leonida/cal"
+  },
+  "boobie": {
+   "label": "Boobie Ike sur le site officiel",
+   "url": "https://www.rockstargames.com/VI/only-in-leonida/boobie"
+  },
+  "drequan": {
+   "label": "Dre’Quan Priest sur le site officiel",
+   "url": "https://www.rockstargames.com/VI/only-in-leonida/drequan"
+  },
+  "dimez": {
+   "label": "Real Dimez sur le site officiel",
+   "url": "https://www.rockstargames.com/VI/only-in-leonida/dimez"
+  },
+  "raul": {
+   "label": "Raul Bautista sur le site officiel",
+   "url": "https://www.rockstargames.com/VI/only-in-leonida/raul"
+  },
+  "brian": {
+   "label": "Brian Heder sur le site officiel",
+   "url": "https://www.rockstargames.com/VI/only-in-leonida/brian"
+  },
+  "vice-city": {
+   "label": "Vice City sur le site officiel",
+   "url": "https://www.rockstargames.com/VI/only-in-leonida/vice-city"
+  },
+  "leonida-keys": {
+   "label": "Les Leonida Keys sur le site officiel",
+   "url": "https://www.rockstargames.com/VI/only-in-leonida/leonida-keys"
+  },
+  "grassrivers": {
+   "label": "Grassrivers sur le site officiel",
+   "url": "https://www.rockstargames.com/VI/only-in-leonida/grassrivers"
+  },
+  "port-gellhorn": {
+   "label": "Port Gellhorn sur le site officiel",
+   "url": "https://www.rockstargames.com/VI/only-in-leonida/port-gellhorn"
+  },
+  "ambrosia": {
+   "label": "Ambrosia sur le site officiel",
+   "url": "https://www.rockstargames.com/VI/only-in-leonida/ambrosia"
+  },
+  "mount-kalaga": {
+   "label": "Mount Kalaga sur le site officiel",
+   "url": "https://www.rockstargames.com/VI/only-in-leonida/kalaga"
+  }
+ }
+}

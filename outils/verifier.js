@@ -1,5 +1,5 @@
-/* Contrôles locaux sans dépendance : HTML, srcset, CSS, galeries, données et sitemaps.
-   Ce contrôle ne teste ni les URL externes, ni le rendu, ni la véracité des contenus. */
+/* Contrôles locaux sans dépendance : HTML, srcset, CSS, galeries, données, base de Léo et sitemaps.
+   Ce contrôle ne teste ni le rendu, ni la véracité des contenus ; les seules URL externes vérifiées sont les liens officiels de Léo (forme et présence dans les données du site). */
 'use strict';
 const fs=require('fs'),path=require('path'),vm=require('vm');
 const root=path.resolve(__dirname,'..');process.chdir(root);
@@ -77,6 +77,18 @@ for(const [file,{text}] of documents)for(const m of text.matchAll(/<a\b[^>]*>/gi
   const cats=rel==='vehicules.html'?data.window.LK_VEHICULES_CATS:rel==='armes.html'?data.window.LK_ARMES_CATS:null;
   if(documents.has(rel)&&!documents.get(rel).ids.has(id)&&!Object.hasOwn(cats||{},id))bad(file,'ancre absente : '+raw);
 }
+/* v7.45 (lot 8) : la base de Léo. Chaque route interne (questions rédigées, actions, fiches des morceaux, passages) doit exister ;
+   chaque lien officiel doit être en https sur www.rockstargames.com et figurer déjà dans les données du site (outils/*.json). */
+{const leoFiles=['leo-index.json',...(fs.existsSync('leo')?fs.readdirSync('leo').filter(f=>f.endsWith('.json')).map(f=>'leo/'+f):[])];const corpus=new Set();
+ for(const f of ['outils/acquisitions.json','outils/editorial.json','outils/editorial-hubs.json','outils/medias-officiels.json','outils/collectibles.json','outils/catalogues/sources.json','outils/leo-knowledge.json','outils/leo-lexique.json'].filter(f=>fs.existsSync(f)))for(const m of fs.readFileSync(f,'utf8').matchAll(/https:\/\/www\.rockstargames\.com\/[A-Za-z0-9/._~-]*/g))corpus.add(m[0]);
+ const officialOK=(u,where)=>{let url;try{url=new URL(u);}catch{bad(where,'lien officiel invalide : '+u);return;}if(url.protocol!=='https:'||url.hostname!=='www.rockstargames.com')bad(where,'lien non officiel : '+u);else if(!corpus.has(u))bad(where,'lien officiel absent des données du site : '+u);};
+ const route=(u,where)=>{if(typeof u!=='string')return;const base=u.split(/[?#]/)[0];reference(base,where,'route Léo');const hash=u.includes('#')?u.split('#')[1]:'';if(hash&&!hash.includes('=')&&!hash.startsWith('lieu=')){const rel=base.replace(/^\//,'')||'index.html';if(documents.has(rel)&&!documents.get(rel).ids.has(hash))bad(where,'ancre Léo absente : '+u);}if(hash.startsWith('lieu=')&&!mapIds.has(hash.slice(5)))bad(where,'lieu de carte absent : '+u);};
+ for(const file of leoFiles){let j;try{j=JSON.parse(fs.readFileSync(file,'utf8'));}catch(e){bad(file,'JSON invalide : '+e.message);continue;}
+  for(const t of j.knowledge||[]){for(const l of t.links||[])route(l.url,file+' → '+t.id);if(t.action?.url)route(t.action.url,file+' → '+t.id);if(t.source)officialOK(t.source,file+' → '+t.id);if(!(t.links||[]).length)bad(file,'sujet sans page source : '+t.id);}
+  for(const [k,v] of Object.entries(j.official||{}))officialOK(v.url,file+' → official.'+k);
+  if(j.release?.source)officialOK(j.release.source,file+' → release');
+  for(const it of j.items||[]){if(Array.isArray(it)){if(j.packed)route('/carte.html#lieu='+it[0],file+' → '+it[0]);continue;}if(it.url)route(it.url,file+' → '+it.key);if(it.mapUrl)route(it.mapUrl,file+' → '+it.key);if(it.image)reference(it.image,file+' → '+it.key,'image Léo');if(it.p)route(it.p+(it.a?'#'+it.a:''),file+' → passage');}
+  for(const s of Object.values(j.shards||{}))if(s.file)reference(s.file,file,'morceau Léo');}}
 for(const file of ['sitemap.xml','sitemap-fiches.xml']){
   const urls=new Set();for(const m of fs.readFileSync(file,'utf8').matchAll(/<loc>(.*?)<\/loc>/g)){
     const raw=decode(m[1]);if(urls.has(raw))bad(file,'URL dupliquée : '+raw);urls.add(raw);

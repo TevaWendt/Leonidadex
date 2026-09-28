@@ -1,7 +1,7 @@
 /* Keep static HTML, search, images and sitemaps consistent. No runtime framework. */
-/* Lot E : version des fichiers de Léo (chargés dynamiquement, hors empreintes des pages). Doit précéder les empreintes des pages. */
+/* Lot E : version des fichiers de Léo (chargés dynamiquement, hors empreintes des pages). Doit précéder les empreintes des pages. v7.45 : leo-nlp.js et les morceaux leo/*.json entrent dans l'empreinte. */
 {const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');const root=path.resolve(__dirname,'..'),read=f=>fs.readFileSync(path.join(root,f),'utf8');
- const inputs=['leo-index.json','leo-core.js','leo-link.js','leo-ui.js','leo-loader.js','leo-calculator.js','leo.css','calculateurs-engine.js','motion-tokens.css'].filter(f=>fs.existsSync(path.join(root,f)));
+ const inputs=['leo-index.json','leo-core.js','leo-nlp.js','leo-link.js','leo-ui.js','leo-loader.js','leo-calculator.js','leo.css','calculateurs-engine.js','motion-tokens.css',...(fs.existsSync(path.join(root,'leo'))?fs.readdirSync(path.join(root,'leo')).filter(f=>f.endsWith('.json')).sort().map(f=>'leo/'+f):[])].filter(f=>fs.existsSync(path.join(root,f)));
  const norm=t=>t.replace(/\?v=(?:LEO|__LEO_VERSION__|[a-f0-9]{12})/g,'?v=LEO');
  const version=crypto.createHash('sha256').update(inputs.map(f=>f+'\n'+norm(read(f))).join('\n')).digest('hex').slice(0,12);
  for(const f of ['common.js','leo-ui.js','leo-loader.js','leo.css'])if(fs.existsSync(path.join(root,f))){const cur=read(f),next=cur.replace(/\?v=(?:LEO|__LEO_VERSION__|[a-f0-9]{12})/g,'?v='+version);if(next!==cur)fs.writeFileSync(path.join(root,f),next);}}
@@ -135,11 +135,13 @@ const progressIds={vehicules:V.map(v=>v.id),armes:A.map(v=>v.id),lieux:pointIds,
 {let prog=fs.readFileSync('progression.html','utf8');prog=prog.replace(/(<article class="note-box suivi-card" id="[^"]+" data-family="([a-z]+)">[\s\S]*?<strong class="suivi-n">)0 \/ \d+(<\/strong>)/g,(m,a,fam,c)=>progressIds[fam]?a+'0 / '+new Set(progressIds[fam]).size+c:m);fs.writeFileSync('progression.html',prog);}
 // v7.44 (lot 7) : « Le site en chiffres » de a-propos.html, posé d'après les données réelles (jamais tapé à la main) : pages,
 // fiches véhicules et armes, lieux de la carte, lignes des listes dépliables, visuels officiels crédités, sujets de la base
-// de Léo (leo-index.json, régénéré juste avant le second passage), tests automatisés écrits (appels test( dans outils/tests).
+// de Léo (leo-index.json et ses morceaux de questions, régénérés juste avant le second passage), tests automatisés écrits (appels test( dans outils/tests).
 {const C=require('./catalogues.cjs');const medias=JSON.parse(fs.readFileSync('outils/medias-officiels.json','utf8'));
  const leo=fs.existsSync('leo-index.json')?JSON.parse(fs.readFileSync('leo-index.json','utf8')):{knowledge:[]};
+ /* v7.45 : les sujets du morceau « calculateur » (leo/calculateur.json) comptent aussi */
+ const leoTopics=(leo.knowledge||[]).length+Object.values(leo.shards||{}).filter(x=>x&&x.knowledge&&fs.existsSync(String(x.file).slice(1))).reduce((n,x)=>n+(JSON.parse(fs.readFileSync(String(x.file).slice(1),'utf8')).knowledge||[]).length,0);
  const tests=fs.readdirSync('outils/tests').filter(f=>f.endsWith('.test.cjs')).reduce((n,f)=>n+(fs.readFileSync('outils/tests/'+f,'utf8').match(/^\s*test\(/gm)||[]).length,0);
- const STATS={pages:htmlFiles.filter(f=>!f.startsWith('google')).length,vehicules:V.length,armes:A.length,lieux:new Set(pointIds).size,lignes:C.FAMILIES.reduce((n,f)=>n+C.counts(f).n,0),visuels:Object.keys(medias).length,leo:(leo.knowledge||[]).length,tests};
+ const STATS={pages:htmlFiles.filter(f=>!f.startsWith('google')).length,vehicules:V.length,armes:A.length,lieux:new Set(pointIds).size,lignes:C.FAMILIES.reduce((n,f)=>n+C.counts(f).n,0),visuels:Object.keys(medias).length,leo:leoTopics,tests};
  if(fs.existsSync('a-propos.html')){let ap=fs.readFileSync('a-propos.html','utf8');ap=ap.replace(/(<b class="fig-n" data-count=")\d+(" data-stat="([a-z]+)">)\d+(<\/b>)/g,(m,a,b,key,c)=>STATS[key]===undefined?m:a+STATS[key]+b+STATS[key]+c);fs.writeFileSync('a-propos.html',ap);}}
 fs.writeFileSync('progression-data.js','/* IDs only; no need to load the full map on this page. */\nwindow.LK_PROGRESS_IDS = '+JSON.stringify(progressIds)+';\n/* v7.38 : noms, catégories et liens pour les listes dépliables de la page Progression. */\nwindow.LK_PROGRESS_NAMES = '+JSON.stringify(progressNames)+';\n');
 console.log('Synchronisation : '+htmlFiles.length+' pages, '+assets.length+' assets, '+urls.length+' URL canoniques.');

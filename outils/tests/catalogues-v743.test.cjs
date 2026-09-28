@@ -182,11 +182,10 @@ test('recherche interne, Léo et sitemap : chaque poste indexé vers son ancre (
   for(const fam of LOT6){const d=D.families[fam];const sec=idx.find(e=>e.u===d.page+'#'+d.section);assert.ok(sec&&sec.l===d.label&&sec.k==='Personnalisations',fam+' section');
     for(const it of d.items){const e=idx.find(x=>x.u===d.page+'#'+C.rowId(fam,it));assert.ok(e,it.id+' indexé');assert.equal(e.t,'element');assert.equal(e.k,C.KIND[fam]);}}
   assert.ok(idx.find(e=>e.u==='/personnalisations.html#perso-armes-silencieux').s.includes('pistolets'),'mots de compatibilité dans la recherche');
-  const leo=JSON.parse(read('leo-index.json'));
-  for(const fam of LOT6){const rows=leo.items.filter(x=>x.kind==='catalogue-'+fam);assert.equal(rows.length,D.families[fam].items.length,fam+' dans Léo');for(const r of rows){assert.ok(r.url.startsWith('/personnalisations.html#'),r.name);assert.equal(r.price,undefined);}}
+  const leo=JSON.parse(read('leo-index.json')),core=require(path.join(root,'outils/tests/leo-complet.cjs')).fullCore(root)/* v7.45 : noyau + morceaux */;
+  for(const fam of LOT6){const rows=core.items.filter(x=>x.kind==='catalogue-'+fam);assert.equal(rows.length,D.families[fam].items.length,fam+' dans Léo');for(const r of rows){assert.ok(r.url.startsWith('/personnalisations.html#'),r.name);assert.equal(r.price,undefined);}}
   const faq=leo.knowledge.filter(x=>/^acq-customizations-/.test(x.id));assert.equal(faq.length,5);for(const t of faq)assert.equal(t.links[0].url,'/personnalisations.html#faq');
-  const core=require(path.join(root,'leo-core.js')).create(leo);
-  for(const [q,re] of [['peut-on personnaliser sa voiture dans gta 6 ?',/Rideout Customs/],['peut-on repeindre sa voiture dans gta 6 ?',/Pay ’n’ Spray/],['peut-on personnaliser ses armes dans gta 6 ?',/Rob Nelson/],['c est quoi le kit retro du ganado ?',/Édition Ultimate/],['ou est ammu nation dans gta 6 ?',/Ammu-Nation/]]){const a=core.answer(q);assert.equal(a.kind,'answer',q);assert.match(a.text,re,q);assert.equal(a.links[0].url,'/personnalisations.html#faq',q);}
+  for(const [q,re] of [['peut-on personnaliser sa voiture dans gta 6 ?',/Rideout Customs/],['peut-on repeindre sa voiture dans gta 6 ?',/Pay ’n’ Spray/],['peut-on personnaliser ses armes dans gta 6 ?',/Rob Nelson/],['c est quoi le kit retro du ganado ?',/Édition Ultimate/],['ou est ammu nation dans gta 6 ?',/Ammu-Nation/]]){const a=core.answer(q);assert.equal(a.kind,'answer',q);assert.match(a.text,re,q);/* v7.45 : la réponse rédigée peut viser une ancre plus précise de la même page */assert.ok(a.links[0].url.startsWith('/personnalisations.html'),q+' → '+a.links[0].url);}
   const r=core.answer('trouve silencieux');assert.equal(r.kind,'results');assert.ok(r.results.some(x=>x.url==='/personnalisations.html#perso-armes-silencieux'));
   assert.ok(read('sitemap.xml').includes('https://www.leonidakit.com/personnalisations.html'));
 });

@@ -57,7 +57,7 @@ test('À propos : aucun nombre tapé à la main — les chiffres viennent des do
   const C=require(path.join(root,'outils/catalogues.cjs'));const medias=JSON.parse(read('outils/medias-officiels.json'));const leo=JSON.parse(read('leo-index.json'));
   const stat=k=>parseInt(d.querySelector('.fig-n[data-stat="'+k+'"]').dataset.count,10);
   assert.equal(stat('vehicules'),c.window.LK_VEHICULES.length);assert.equal(stat('armes'),c.window.LK_ARMES.length);assert.equal(stat('lieux'),new Set(c.window.LK_PROGRESS_IDS.lieux).size);
-  assert.equal(stat('lignes'),C.FAMILIES.reduce((n,f)=>n+C.counts(f).n,0));assert.equal(stat('visuels'),Object.keys(medias).length);assert.equal(stat('leo'),leo.knowledge.length);
+  assert.equal(stat('lignes'),C.FAMILIES.reduce((n,f)=>n+C.counts(f).n,0));assert.equal(stat('visuels'),Object.keys(medias).length);assert.equal(stat('leo'),leo.knowledge.length+Object.values(leo.shards||{}).filter(x=>x.knowledge).reduce((n,x)=>n+JSON.parse(read(x.file.slice(1))).knowledge.length,0))/* v7.45 : noyau + morceau calculateur */;
   const tests=fs.readdirSync(path.join(root,'outils/tests')).filter(f=>f.endsWith('.test.cjs')).reduce((n,f)=>n+(read('outils/tests/'+f).match(/^\s*test\(/gm)||[]).length,0);assert.equal(stat('tests'),tests);
   const pages=fs.readdirSync(root).filter(f=>f.endsWith('.html')&&!f.startsWith('google')).length+['armes','vehicules','lieux','personnages','entreprises','demeures','planques'].reduce((n,x)=>n+fs.readdirSync(path.join(root,x)).filter(f=>f.endsWith('.html')).length,0);
   assert.equal(stat('pages'),pages);
