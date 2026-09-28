@@ -58,6 +58,16 @@ const ICONS = {
   personnalisation: '<path d="M20.5 7a4.5 4.5 0 0 1-6 4.2L7 18.7a2 2 0 0 1-2.8-2.8l7.5-7.5A4.5 4.5 0 0 1 17 2.5l-2.5 2.5 2 2 2.5-2.5c.3.8.5 1.6.5 2.5z"/><circle class="ac" cx="6" cy="18" r="1"/>',
   /* v7.41 (lot 4) : hubs du monde */
   film: '<rect x="3" y="8" width="18" height="12" rx="2"/><path d="M3.5 8l2-4h13l2 4"/><path d="M7.5 4l2 4M12 4l2 4M16.5 4l2 4"/><path class="ac" d="M10 11.5v5l4.5-2.5z"/>',
+  /* v7.46 (lot 9) : Contact et Mentions */
+  enveloppe: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 6.5l8.5 6.5 8.5-6.5"/><circle class="ac" cx="18" cy="16" r="1.4"/>',
+  serveur: '<rect x="4" y="4" width="16" height="6" rx="1.5"/><rect x="4" y="14" width="16" height="6" rx="1.5"/><circle class="ac" cx="8" cy="7" r="1.2"/><circle class="ac" cx="8" cy="17" r="1.2"/><path d="M12 7h5M12 17h5"/>',
+  navigateur: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><circle class="ac" cx="6.5" cy="6.5" r=".9"/><circle cx="9.3" cy="6.5" r=".9"/><path d="M8 14h8M8 17h5"/>',
+  balance: '<path d="M12 4v16M7 20h10M5 7h14"/><path d="M5 7l-3 6a3 3 0 0 0 6 0z"/><path class="ac" d="M19 7l-3 6a3 3 0 0 0 6 0z"/>',
+  cookie: '<path d="M20 12.5A8 8 0 1 1 11.5 4a3 3 0 0 0 4 3.5 3 3 0 0 0 4.5 5z"/><circle class="ac" cx="9" cy="10" r="1.2"/><circle cx="14" cy="15" r="1.2"/><circle cx="8.5" cy="15.5" r="1"/>',
+  accessibilite: '<circle class="ac" cx="12" cy="4.5" r="1.8"/><path d="M5 8.5l7 1.5 7-1.5M12 10v4.5M9 21l3-6.5 3 6.5"/>',
+  droits: '<path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path class="ac" d="M9 12l2 2 4-4.5"/>',
+  copyright: '<circle cx="12" cy="12" r="8.5"/><path class="ac" d="M14.8 9.6a3.6 3.6 0 1 0 0 4.8"/>',
+  envoi: '<path d="M21 3L10 14"/><path d="M21 3l-6.5 18-4.5-7-7-4.5z"/><circle class="ac" cx="10" cy="14" r="1.2"/>',
   loupe: '<circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/><circle cx="8.5" cy="9" r="1.6"/><circle cx="12.5" cy="9" r="1.6"/><path class="ac" d="M7.5 13.2c.8 1 1.9 1.5 3 1.5s2.2-.5 3-1.5v-1.4c-.8.7-1.9 1.1-3 1.1s-2.2-.4-3-1.1z"/>',
   sablier: '<path d="M6 3h12M6 21h12M7.5 3v3.5a4.5 4.5 0 0 0 2 3.7L12 12l2.5-1.8a4.5 4.5 0 0 0 2-3.7V3M7.5 21v-3.5a4.5 4.5 0 0 1 2-3.7L12 12l2.5 1.8a4.5 4.5 0 0 1 2 3.7V21"/><path class="ac" d="M9.5 19.5h5L12 15.5z"/>',
   /* v7.42 (lot 5) : catalogues (consommables, coiffures, tatouages, tenues et accessoires) */

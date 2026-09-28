@@ -1,0 +1,123 @@
+v7.46 — 28 septembre 2026 — LOT 9 : CONTACT RÉEL, MENTIONS ET CONFIDENTIALITÉ
+(base : v7.45 = lot 8 « Léo v2, assistant local »)
+
+Ce qui change pour le visiteur
+- Contact envoie vraiment. Le formulaire (motif, page, message, source, ton adresse si tu veux une réponse) part par une
+  petite fonction du site (api/contact.js, hébergée par Vercel) qui le confie à Brevo ; le message arrive dans la boîte
+  de l’éditeur avec un numéro de référence (LK-AAAAMMJJ-XXXXXX), affiché aussi à l’écran. Le site n’en garde rien.
+- Canal de secours toujours là : l’adresse contact@leonidakit.com est affichée (assemblée par le script, jamais en clair
+  dans le HTML, repli lisible « contact [arobase] leonidakit [point] com »), avec « Copier l’adresse » ; « Écrire avec ma
+  messagerie » ouvre ta messagerie avec l’objet et le texte déjà écrits (coupés proprement au-delà de 1 800 caractères) ;
+  « Préparer le texte sans envoyer », « Copier le texte », « Télécharger le texte » restent. Si l’envoi échoue (clé
+  absente, service indisponible, réseau), la page le dit et propose ces solutions.
+- La page dit exactement ce qui se passe (trois étapes illustrées), ce qu’il ne faut pas envoyer, et qu’aucun délai de
+  réponse n’est garanti. Le brouillon reste dans ton navigateur (clé lk_contact_draft_v1) et s’efface après l’envoi ou
+  avec « Effacer le brouillon ». Les erreurs de saisie sont signalées sous le champ et annoncées (aria-live).
+- Nouveau motif « Question sur mes données » (pour exercer tes droits). Le lien « Signaler une mauvaise réponse » de Léo
+  préremplit toujours le formulaire (données après #, jamais envoyées au serveur en ouvrant la page).
+- Les trois cartes « informations utiles » deviennent une liste illustrée d’icônes ; gabarit d’information du lot 7,
+  sections numérotées, champs de 46 px, JSON-LD ContactPage.
+- Mentions et confidentialité, complètes et vérifiées contre le code : En bref (cinq phrases) ; Éditeur (à titre non
+  professionnel, anonymat préservé selon l’article 1-1, II de la LCEN, rédaction issue de la loi SREN du 21 mai 2024 ;
+  identité conservée par l’hébergeur ; aucune publicité, affiliation ni vente ; contact) ; Hébergement (Vercel Inc.,
+  adresse, privacy@vercel.com, téléphone avec sa source, notice datée) ; Propriété intellectuelle (Rockstar Games /
+  Take-Two, médias promotionnels, gtadb.org CC BY 4.0, Archivo OFL, textes et code du site : tous droits réservés) ;
+  Données personnelles (ce qui reste dans le navigateur, avec Léo ; ce qui part, où, pourquoi, sur quelle base légale et
+  combien de temps, en tableau ; les deux prestataires ; droits et CNIL) ; Cookies et traceurs (aucun, mesuré, donc pas
+  de bandeau) ; Responsabilité et contenu ; Accessibilité (état réel, sans déclaration inventée) ; Mises à jour
+  (date et historique). Un bloc « En clair » ouvre chaque section ; sommaire collant à neuf entrées ; JSON-LD WebPage
+  avec dateModified.
+- Alerte de l’accueil : case « J’accepte que mon adresse soit transmise à Brevo pour recevoir cet unique e-mail »
+  obligatoire (elle n’est pas transmise, elle bloque l’envoi sans accord), texte vrai (la phrase « Un lien de
+  confirmation te sera envoyé » est retirée : rien dans le code ne le garantit), lien vers la section Données.
+- À propos et Léo alignés : « Deux formulaires envoient ce que tu y écris, et seulement si tu les envoies : l’alerte de
+  l’accueil et le formulaire de Contact, tous deux par Brevo » ; les réponses de Léo sur le contact, les mentions, les
+  cookies, les données et l’alerte sont réécrites (plus de « canal pas encore confirmé »).
+
+Vérifications faites avant d’écrire
+- Vercel : un fichier du dossier /api est une fonction Node.js sans configuration (documentation « Using the Node.js
+  Runtime with Vercel Functions », https://vercel.com/docs/functions/runtimes/node-js, section « Create a Node.js
+  function in /api » : « No additional configuration is needed » ; req.body analysé pour application/json). La fonction
+  lit aussi le corps depuis le flux si ces aides sont absentes. Aucun package.json.
+- Brevo : API transactionnelle POST https://api.brevo.com/v3/smtp/email, en-têtes api-key / content-type / accept,
+  réponse 201 avec messageId (https://developers.brevo.com/reference/sendtransacemail). Entité : Brevo SAS, 106 boulevard
+  Haussmann, 75008 Paris, RCS Paris 498 019 298 (politique de confidentialité de Brevo).
+- DNS de leonidakit.com (lus le 28/09/2026) : serveurs de noms OVH (dns111 / ns111.ovh.net) ; MX OVH (mx1, mx2, mx3) ;
+  code Brevo (TXT brevo-code), DKIM Brevo (CNAME brevo1._domainkey → b1.leonidakit-com.dkim.brevo.com et brevo2 → b2),
+  DMARC (v=DMARC1; p=none; rua=mailto:rua@dmarc.brevo.com) : le domaine est authentifié chez Brevo. Le SPF
+  (v=spf1 include:mx.ovh.com -all) ne cite pas Brevo ; Brevo s’appuie sur DKIM et DMARC, ce n’est pas bloquant.
+- Vercel : notice de confidentialité du 1er juin 2026 (adresse, privacy@vercel.com, Data Privacy Framework UE–États-
+  Unis) ; elle ne donne pas de téléphone : le numéro publié est le dernier déclaré par Vercel (dossier Privacy Shield,
+  inactif depuis 2022), avec cette précision sur la page.
+- LCEN après la loi SREN : les obligations sont à l’article 1-1 ; l’éditeur non professionnel peut ne publier que les
+  coordonnées de l’hébergeur (analyse d’avocat citée dans LISEZ-MOI ; Légifrance inaccessible depuis l’atelier).
+- Formulaire d’alerte : la page Brevo de ce formulaire existe (titre « Newsletter », champ e-mail, messages
+  « Votre inscription est confirmée »). La liste de contacts, la double validation et le lien de désinscription se
+  règlent dans le compte Brevo : à vérifier par l’éditeur (LISEZ-MOI).
+
+Preuve « aucun cookie, aucun script tiers » (node outils/preuve-confidentialite.cjs, sortie du 28/09/2026)
+  Preuve de confidentialité : 406 pages, 51 scripts, 16 feuilles de style déployés.
+  - Cookies : aucun (ni document.cookie, ni cookieStore, ni Set-Cookie).
+  - Ressources d’autres sites dans les pages : 0. Traceurs : aucun. Requêtes du navigateur vers un autre site : 0.
+  - CSP : default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src
+    'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'self'; form-action
+    'self' https://affd58b3.sibforms.com
+  - Formulaires qui postent ailleurs : index.html → affd58b3.sibforms.com. Fonctions serveur : api/contact.js.
+    package.json : absent.
+  - Clés de stockage lues dans le code : lk-calc-folds-v1, lk-calculator-notebooks-v3, lk-calculator-selection-,
+    lk-calculator-v1-backup-, lk_collectibles_motion_v1, lk_collectibles_prefs_v1, lk_collectibles_quick_v1,
+    lk_collectibles_tools_v1, lk_collectibles_v1, lk_contact_draft_v1, lk_leo_session_v2, lk_progression_v2,
+    lk_recovery_, lk_recovery_import_ ; clés calculées : 9.
+  Toutes les affirmations des Mentions sont tenues.
+  Les 9 clés calculées sont les paramètres de fonctions génériques (common.js write / writeBatch, calculateurs.js
+  persist, progression-core.js, carnets du calculateur) ; leurs appelants passent tous une clé « lk… » (LEGACY et
+  TRANSPORT de progression-core.js, FAMILIES de suivi.js, constantes de carte.js, lk-calculator-v1) : relu à la main.
+  Le script échoue (code 1) si quelqu’un ajoute un cookie, une ressource ou une requête vers un autre site (essai fait
+  avec un fichier piégé : trois violations détectées).
+
+Technique
+- api/contact.js (nouveau) : createHandler({env, fetch, now}) testable ; validation (motifs identiques à la page,
+  message de 10 à 5 000 caractères, adresses http(s), e-mail facultatif), champ piège, délai minimal 3 s, page ouverte
+  depuis moins de 24 h, origine (leonidakit.com, *.vercel.app, localhost), Content-Type JSON, corps ≤ 20 ko, débit
+  5 envois / 10 min par empreinte SHA-256 de l’IP (mémoire vive de l’instance), délai d’envoi 8 s ; réponse no-store ;
+  le journal ne contient que le code d’erreur de Brevo, jamais le message.
+- contact.js réécrit (adresse, copie, messagerie, préparation, brouillon, erreurs, envoi, repli ; chargé aussi par les
+  Mentions pour l’adresse). outils/gen-informations.cjs : Contact et Mentions réécrits, contrôle que motifs et adresse
+  sont identiques dans la page et dans la fonction, refus de générer sans adresse confirmée. outils/site-informations.json :
+  adresse confirmée, statut d’éditeur, hébergeur complet, Brevo, CNIL, historique. outils/sections.cjs : neuf icônes
+  (enveloppe, serveur, navigateur, balance, cookie, accessibilité, droits, copyright, envoi). informations.css : bloc
+  v7.46. index.html, app.js, style.css : consentement de l’alerte. vercel.json : CSP sans Google Fonts (la police est
+  sur le site), en-têtes no-store et noindex pour /api/. outils/informations-editorial.json, outils/leo-knowledge.json
+  (six réponses, liens #independance → #propriete) : alignés.
+- Tests : 442 → 452 (nouveau outils/tests/contact-v746.test.cjs, 10 tests : fonction sans dépendance, envoi par Brevo
+  imité, refus (piège, délai, débit, origine, méthode, format, longueurs, clé absente, Brevo en erreur), journal
+  sans contenu, adresse assemblée, messagerie limitée, préparation sans réseau, erreurs annoncées, envoi réussi et
+  brouillon effacé, repli, brouillon retrouvé et effacé, noms accessibles, Mentions complètes, preuve de
+  confidentialité, consentement de l’alerte, cohérence Léo / À propos / pied de page). Adaptés : audit-finition (la
+  préparation sans envoi passe par « Préparer le texte », l’envoi par /api/contact), a-propos-v744 (liste illustrée,
+  section Propriété, plus rien « à compléter »). Nouveau contrôle navigateur : outils/tests/contact-browser.cjs.
+
+Contrôle (captures et rapport-contact.json dans le dossier séparé, hors dépôt)
+- contact.html et mentions-legales.html × 7 largeurs (320, 390, 768, 1024, 1280, 1440, 1920) × mouvement normal et
+  réduit, page parcourue jusqu’en bas : 0 erreur console, 0 débordement horizontal, 0 texte resté invisible.
+- Lecteur d’écran simulé (arbre d’accessibilité de Chromium) : chaque champ, bouton et lien de Contact a un nom.
+- Contrastes WCAG AA : 277 textes mesurés sur les deux pages, 0 sous le seuil.
+- Cibles des champs et boutons ≥ 44 px à 390 px.
+- Clavier à 390 px : Tab motif → page → message → source → e-mail ; message trop court → erreur annoncée et focus sur le
+  champ ; message valide → Entrée → envoi par la vraie fonction avec un faux Brevo local (imitation : aucune clé Brevo
+  dans l’atelier) → « Message envoyé. Ta référence : LK-20260928-… », formulaire vidé, brouillon effacé. Sans clé : 503,
+  message clair, repli visible (seule réponse réseau en erreur de la session, voulue).
+- node --test : 452/452. verifier.js : 0 erreur (43 564 références). Léo : 490/490, gen-leo --check sans divergence.
+  Régénération reproductible à l’octet.
+
+Reste ouvert (signalé)
+- Envoi réel non testé depuis l’atelier (pas de clé Brevo ici) : premier message à envoyer par l’éditeur après la mise
+  en place de BREVO_API_KEY et CONTACT_TO (procédure dans LISEZ-MOI-v7.46.txt).
+- La boîte contact@leonidakit.com (MX OVH) doit exister ou rediriger vers ta boîte : le lien de messagerie et la
+  fonction sans CONTACT_TO y envoient.
+- Le compte Vercel doit porter l’identité de l’éditeur (formule « éditeur non professionnel »).
+- Formulaire d’alerte : liste, double validation et désinscription à vérifier dans Brevo.
+- Le compteur anti-abus est par instance de fonction (Vercel peut en lancer plusieurs) : il freine, il ne garantit pas.
+- La FAQ de l’accueil dit « Rockstar n’a pas communiqué de prix » alors qu’Achats et Léo donnent les prix constatés
+  chez les boutiques (79,99 € / 99,99 €) : les deux sont vrais, mais la formulation est à harmoniser (lot 10).
+- Relecture juridique par un professionnel conseillée (trois points dans le LISEZ-MOI).

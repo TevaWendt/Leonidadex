@@ -2215,14 +2215,15 @@
     "contact",
     "contacter"
    ],
-   "text": "Passe par la page Contact : elle t’aide à préparer un signalement clair (page, problème, source). Le canal de contact n’est pas encore confirmé, la page le dit honnêtement.",
+   "text": "Passe par la page Contact : tu indiques la page, le problème, la correction et une source, puis tu envoies le message (il part par Brevo vers la boîte de l’éditeur, avec un numéro de référence). Si l’envoi échoue, la page te donne l’adresse et le texte prêt pour ta messagerie.",
    "status": "Le site",
    "links": [
     {
      "label": "Contact",
      "url": "/contact.html"
     }
-   ]
+   ],
+   "checkedAt": "2026-09-28"
   },
   {
    "id": "site-calc",
@@ -5935,7 +5936,7 @@
     "ecrire au site",
     "ya un mail"
    ],
-   "text": "La page Contact t’aide à préparer un signalement clair (motif, page concernée, ce que tu as remarqué, source) : tu copies ou télécharges le texte. Le canal d’envoi réel n’est pas encore en place, la page le dit ; il arrive avec une prochaine version.",
+   "text": "Par la page Contact : un formulaire envoie ton message (motif, page, ce que tu as remarqué, source, ton adresse si tu veux une réponse) par Brevo vers la boîte de l’éditeur, avec un numéro de référence. L’adresse du site y est affichée, avec un bouton pour la copier. Aucun délai de réponse n’est garanti.",
    "status": "Le site",
    "links": [
     {
@@ -5959,7 +5960,7 @@
     "hebergeur",
     "mentions et confidentialite"
    ],
-   "text": "La page Mentions et confidentialité décrit l’éditeur, l’hébergement (Vercel), l’indépendance du site, les données (ce qui reste dans ton navigateur, ce qui part et où) et les cookies. Elle est complétée dans une prochaine version.",
+   "text": "La page Mentions et confidentialité décrit l’éditeur (un particulier, à titre non professionnel), l’hébergeur (Vercel), la propriété intellectuelle, les données (ce qui reste dans ton navigateur, ce qui part et où, tes droits), l’absence de cookies, la responsabilité et l’accessibilité.",
    "status": "Le site",
    "links": [
     {
@@ -5983,11 +5984,11 @@
     "bandeau cookies",
     "pas de cookies"
    ],
-   "text": "Le site n’a aucun script publicitaire ni de mesure d’audience. Tes calculs, ton suivi et ta conversation avec moi restent dans ton navigateur. La page Mentions et confidentialité détaille ce qui est stocké et comment l’effacer.",
+   "text": "Non : aucun cookie, aucune publicité, aucune mesure d’audience et aucun script d’un autre site, vérifié dans le code. Tes calculs, ton suivi et ta conversation avec moi restent dans ton navigateur, c’est pourquoi il n’y a pas de bandeau à accepter.",
    "status": "Le site",
    "links": [
     {
-     "label": "Cookies et données",
+     "label": "Cookies et traceurs",
      "url": "/mentions-legales.html#cookies"
     },
     {
@@ -6011,7 +6012,7 @@
     "local storage",
     "serveur leonidakit"
    ],
-   "text": "Dans ton navigateur : calculs, carnets, favoris, possessions, lieux repérés, marqueurs et ma conversation. Rien ne part sur un serveur du site. Seul le formulaire d’alerte de l’accueil envoie quelque chose, vers Brevo, si tu t’y inscris. Tu peux tout exporter ou effacer depuis la page Progression.",
+   "text": "Dans ton navigateur : calculs, carnets, favoris, possessions, lieux repérés, marqueurs et ma conversation. Rien ne part sans que tu envoies un formulaire : seuls Contact et l’alerte de l’accueil transmettent ce que tu y écris, par Brevo. Tu peux tout exporter ou effacer depuis la page Progression.",
    "status": "Le site",
    "links": [
     {
@@ -6041,16 +6042,16 @@
     "etre prevenu quand le jeu sort",
     "prevenu a la sortie du jeu"
    ],
-   "text": "En bas de la page d’accueil, un formulaire d’alerte (service Brevo) te propose de laisser ton adresse pour être prévenu. C’est la seule chose du site qui envoie une donnée ailleurs ; la page Mentions et confidentialité décrit ce qui est transmis.",
+   "text": "En bas de la page d’accueil, un formulaire d’alerte (service Brevo) te propose de laisser ton adresse, avec une case à cocher pour accepter l’envoi. Ton adresse sert seulement à cette alerte et reste chez Brevo jusqu’à ta désinscription ; la page Mentions et confidentialité détaille tout.",
    "status": "Le site",
    "links": [
     {
-     "label": "La page d’accueil",
+     "label": "L’accueil",
      "url": "/index.html"
     },
     {
-     "label": "Données et confidentialité",
-     "url": "/mentions-legales.html#confidentialite"
+     "label": "Ce qui se passe avec ton adresse",
+     "url": "/mentions-legales.html#donnees-alerte"
     }
    ],
    "checkedAt": "2026-09-28"
@@ -8602,7 +8603,7 @@
    "links": [
     {
      "label": "Indépendance et propriété intellectuelle",
-     "url": "/mentions-legales.html#independance"
+     "url": "/mentions-legales.html#propriete"
     },
     {
      "label": "Médias et crédits",
@@ -8630,7 +8631,7 @@
    "links": [
     {
      "label": "Indépendance et propriété intellectuelle",
-     "url": "/mentions-legales.html#independance"
+     "url": "/mentions-legales.html#propriete"
     },
     {
      "label": "Médias et crédits",

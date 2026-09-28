@@ -1,0 +1,78 @@
+LEONIDAKIT v7.46 — LOT 9 : CONTACT RÉEL, MENTIONS ET CONFIDENTIALITÉ — archive « modifs » (28 septembre 2026)
+
+Base attendue : ton dossier Leonidadex en v7.45 (lot 8 : Léo v2).
+Fichiers ajoutés ou modifiés seulement, chemins exacts depuis la racine. Rien à supprimer. Aucune commande de build.
+Nouveau dossier à la racine : api/ (un seul fichier, api/contact.js : la fonction qui envoie le formulaire de Contact).
+Toujours aucun package.json : Vercel reconnaît seul un fichier du dossier api/.
+
+1. Copie ton dossier actuel (sauvegarde).
+2. Extrais l’archive dans la racine du site, écrase les fichiers homonymes (garde le dossier .git).
+3. Mets en ligne (GitHub Desktop, dossier complet), puis règle l’envoi (étape 4) : sans ces deux variables, le
+   formulaire ne part pas, la page le dit et propose ta messagerie à la place (rien n’est cassé).
+
+4. RÉGLER L’ENVOI (10 minutes, une seule fois)
+   a. Brevo, la clé : connecte-toi sur app.brevo.com → roue « Paramètres » (en haut à droite) → « SMTP & API » → onglet
+      « Clés API » → « Générer une nouvelle clé API » → nom : leonidakit-contact → « Générer ». Copie la clé (elle
+      n’est affichée qu’une fois). Ne la colle nulle part ailleurs que dans Vercel (ni dans le dépôt, ni dans une
+      conversation).
+   b. Vercel, les variables : vercel.com → ton projet Leonidakit → « Settings » → « Environment Variables ».
+        - Key : BREVO_API_KEY    Value : la clé copiée    Environments : Production et Preview → « Save ».
+        - Key : CONTACT_TO       Value : ta boîte personnelle (celle où tu veux recevoir les messages)
+                                 Environments : Production et Preview → « Save ».
+      CONTACT_TO n’est écrit nulle part dans le code ; sans elle, les messages partent à contact@leonidakit.com.
+   c. Redéploie : onglet « Deployments » → le dernier déploiement → menu « … » → « Redeploy » (les variables ne sont
+      prises en compte qu’au déploiement suivant).
+   d. Teste : ouvre https://www.leonidakit.com/contact.html#ecrire, écris un message d’au moins 10 caractères, attends
+      trois secondes, « Envoyer le message ». Tu dois voir « Message envoyé. Ta référence : LK-… » et recevoir l’e-mail
+      « [Leonidakit] Erreur dans une fiche — LK-… » dans ta boîte (regarde les indésirables la première fois). Si la
+      page dit « L’envoi n’est pas disponible », une variable manque ou le redéploiement n’est pas fait ; si elle dit
+      « Le message n’est pas parti », Brevo a refusé (clé fausse, expéditeur non validé) : Vercel → « Logs » affiche
+      « contact: envoi refusé par le service (code) », sans le contenu du message.
+   e. Brevo, l’expéditeur et le domaine : « Paramètres » → « Expéditeurs, domaines et IP dédiées ».
+        - Onglet « Expéditeurs » : contact@leonidakit.com doit y être, validé (sinon « Ajouter un expéditeur »).
+        - Onglet « Domaines » : leonidakit.com doit être « Authentifié ». D’après tes DNS lus le 28/09/2026, c’est déjà
+          en place : code Brevo (TXT brevo-code:b2d30f7e…), DKIM (CNAME brevo1._domainkey → b1.leonidakit-com.dkim.brevo.com
+          et brevo2._domainkey → b2.leonidakit-com.dkim.brevo.com), DMARC (TXT _dmarc : v=DMARC1; p=none;
+          rua=mailto:rua@dmarc.brevo.com). Ton domaine est géré chez OVH (serveurs dns111 / ns111.ovh.net) : si un de ces
+          enregistrements manquait, c’est dans l’espace client OVH (Domaines → leonidakit.com → Zone DNS) qu’on les
+          ajoute, pas dans Vercel ; les valeurs exactes du code Brevo et du DKIM sont celles affichées par Brevo pour ton
+          compte.
+   f. La boîte contact@leonidakit.com : tes MX sont chez OVH (mx1/mx2/mx3.mail.ovh.net). Vérifie dans l’espace client
+      OVH (E-mails) que contact@leonidakit.com existe ou redirige vers ta boîte : le bouton « Écrire avec ma messagerie »
+      et les réponses de secours y envoient.
+
+5. CE QUE TU DOIS VÉRIFIER TOI-MÊME
+   - Le compte Vercel porte ton identité exacte (nom, adresse) : la page Mentions utilise la formule de l’éditeur non
+     professionnel. En une phrase : quand on édite un site sans activité commerciale, la loi (LCEN, article 1-1, II)
+     permet de ne publier que les coordonnées de l’hébergeur, à condition que l’hébergeur, lui, connaisse ton identité ;
+     c’est pourquoi ni ton nom, ni ton adresse, ni ton téléphone ne sont sur le site.
+   - Pas de publicité, d’affiliation ni de vente sur le site : sinon la formule ne s’applique plus et il faudrait publier
+     ton identité complète.
+   - Formulaire d’alerte (accueil) : dans Brevo, « Contacts » → « Formulaires » → le formulaire « Newsletter » : la liste
+     de destination existe, la double validation (e-mail de confirmation) est activée ou non (la page ne promet plus de
+     lien de confirmation), et l’e-mail de sortie contiendra le lien de désinscription que Brevo ajoute.
+   - Les messages reçus : garde-les le temps de traiter la demande, puis supprime-les (c’est ce que disent les Mentions).
+
+6. OUVRE LE SITE (3 minutes)
+   - Contact : bandeau avec l’adresse et « Copier l’adresse » ; « Ce qui se passe quand tu envoies » (trois étapes) ;
+     liste illustrée des informations utiles ; formulaire : un message trop court affiche une erreur sous le champ ;
+     « Préparer le texte sans envoyer » remplit le cadre de droite ; « Écrire avec ma messagerie » ouvre ta messagerie
+     avec le texte. Ferme l’onglet et reviens : ton brouillon est retrouvé.
+   - Dans Léo, pose une question puis « Signaler une mauvaise réponse » : le formulaire est prérempli.
+   - Mentions et confidentialité : barre collante « En bref · Éditeur · Hébergement · Propriété · Données · Cookies ·
+     Responsabilité · Accessibilité · Mises à jour », un bloc « En clair » en tête de chaque section, le tableau
+     « Ce qui part, et où ».
+   - Accueil, tout en bas : la case à cocher est obligatoire pour s’inscrire à l’alerte.
+
+7. JE NE SUIS PAS JURISTE. La page Mentions est complète et cohérente avec le code (preuve : outils/
+   preuve-confidentialite.cjs), mais une relecture par un professionnel reste conseillée. Les trois points à lui montrer :
+   1) la formule de l’éditeur non professionnel (article 1-1, II de la LCEN depuis la loi SREN de 2024) et le téléphone
+      de l’hébergeur (Vercel n’en publie plus : le site affiche l’ancien numéro déclaré, avec sa source) ;
+   2) les bases légales et les durées du tableau « Ce qui part, et où » (intérêt légitime pour Contact et les journaux
+      de Vercel, consentement pour l’alerte ; « le temps de traiter ta demande » comme durée pour les messages) ;
+   3) l’absence de bandeau cookies, justifiée par l’absence de cookie et par le stockage local réservé aux fonctions
+      demandées (article 82 de la loi Informatique et Libertés).
+
+Détails : outils/CHANGEMENTS-v7.46.txt (fichiers, vérifications, preuve, contrôle, points ouverts) et la section
+« Contact et Mentions » du README. Captures et rapport du contrôle : dossier séparé, hors dépôt. Versions précédentes :
+-v7.45 (Léo v2), -v7.44 (À propos), -v7.43 (personnalisations), -v7.42 (consommables et style), -v7.41 (hubs du monde).

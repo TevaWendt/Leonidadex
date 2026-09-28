@@ -312,7 +312,7 @@
           "icon": "securite",
           "titre": "Tes données restent chez toi",
           "p": [
-            "Calculs, suivi et Léo restent dans ton navigateur. Seul le formulaire d’alerte de l’accueil envoie quelque chose, vers Brevo, si tu le remplis."
+            "Calculs, suivi et Léo restent dans ton navigateur. Deux formulaires envoient ce que tu y écris, et seulement si tu les envoies : l’alerte de l’accueil et le formulaire de Contact, tous deux par Brevo."
           ],
           "href": "mentions-legales.html#confidentialite",
           "label": "Lire la page Mentions et confidentialité"
@@ -372,7 +372,7 @@
       },
       {
         "q": "Que deviennent mes données ?",
-        "a": "Elles restent dans ton navigateur : calculs, suivi, favoris, conversation avec Léo. Rien ne part sur un serveur du site. Mentions et confidentialité détaille ce qui est stocké et comment l’effacer."
+        "a": "Elles restent dans ton navigateur : calculs, suivi, favoris, conversation avec Léo. Rien ne part sans que tu envoies un formulaire. Mentions et confidentialité détaille ce qui est stocké et comment l’effacer."
       },
       {
         "q": "Comment signaler une erreur ?",

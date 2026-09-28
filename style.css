@@ -3015,3 +3015,8 @@ a.ed-brand:hover,a.ed-brand:focus-visible{border-color:var(--ink);box-shadow:5px
   .progress-cards--suivi:has(>:nth-child(14):last-child)>*{grid-column:span 2;}
   .progress-cards--suivi:has(>:nth-child(14):last-child)>:nth-child(13){grid-column:3/span 2;}
 }
+
+/* v7.46 (lot 9) : consentement de l'alerte de l'accueil */
+.form .signup-consent{flex-basis:100%;display:flex;gap:10px;align-items:flex-start;margin-top:4px;font-size:.92rem;line-height:1.5;color:var(--ink);cursor:pointer;}
+.form .signup-consent input{flex:none;width:22px;height:22px;min-width:22px;margin:1px 0 0;padding:0;accent-color:#B93220;border:0;}
+.signup-legal a{color:var(--coral-text,#B93220);text-decoration:underline;text-underline-offset:3px;font-weight:700;}

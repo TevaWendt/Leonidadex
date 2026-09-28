@@ -1,15 +1,38 @@
 {
-  "contactEmail": null,
-  "contactVerified": false,
-  "editorName": null,
-  "publicationDirector": null,
-  "editorContact": null,
-  "hostingPhone": null,
-  "newsletterRetention": null,
-  "checkedAt": "2026-09-24",
-  "hosting": {
-    "name": "Vercel Inc.",
-    "address": "440 N Barranca Avenue #4133, Covina, CA 91723, États-Unis",
-    "source": "https://vercel.com/legal/privacy-notice"
-  }
+ "_note": "v7.46 (lot 9) : coordonnées publiées sur Contact et Mentions (outils/gen-informations.cjs). contactVerified vaut true parce que l’adresse a été fournie par l’éditeur (expéditeur validé dans son compte Brevo). La boîte qui reçoit les messages n’est jamais écrite ici : elle est lue par api/contact.js dans la variable d’environnement Vercel CONTACT_TO. Éditeur non professionnel (LCEN, art. 1-1, II, depuis la loi SREN du 21 mai 2024) : aucun nom, domicile ni téléphone de l’éditeur n’est publié ; son identité est conservée par l’hébergeur.",
+ "contactEmail": "contact@leonidakit.com",
+ "contactVerified": true,
+ "editorStatus": "non-professionnel",
+ "editorName": null,
+ "publicationDirector": null,
+ "editorContact": "contact@leonidakit.com",
+ "checkedAt": "2026-09-28",
+ "hosting": {
+  "name": "Vercel Inc.",
+  "address": "440 N Barranca Avenue #4133, Covina, CA 91723, États-Unis",
+  "email": "privacy@vercel.com",
+  "phone": "+1 559 288 7060",
+  "phoneSource": "https://www.privacyshield.gov/ps/participant?id=a2zt0000000TTIbAAO",
+  "phoneNote": "dernier numéro publié par Vercel (inscription au Privacy Shield, dossier inactif depuis 2022) ; sa notice de confidentialité actuelle ne donne que l’adresse postale et l’e-mail",
+  "source": "https://vercel.com/legal/privacy-notice",
+  "sourceDate": "2026-06-01",
+  "dpf": true,
+  "checkedAt": "2026-09-28"
+ },
+ "mailer": {
+  "name": "Brevo",
+  "entity": "Brevo SAS, 106 boulevard Haussmann, 75008 Paris, France (RCS Paris 498 019 298)",
+  "source": "https://www.brevo.com/fr/legal/privacypolicy/",
+  "checkedAt": "2026-09-28"
+ },
+ "cnil": {
+  "name": "Commission nationale de l’informatique et des libertés (CNIL)",
+  "address": "3 place de Fontenoy, TSA 80715, 75334 Paris Cedex 07",
+  "complaint": "https://www.cnil.fr/fr/adresser-une-plainte"
+ },
+ "history": [
+  {"date": "2026-09-28", "version": "v7.46", "text": "Réécriture complète : éditeur non professionnel, hébergeur, propriété intellectuelle, données (navigateur, Contact, alerte), bases légales, droits, cookies mesurés, responsabilité, accessibilité, historique."},
+  {"date": "2026-09-28", "version": "v7.44", "text": "Passage au gabarit des pages d’information, contenu inchangé."},
+  {"date": "2026-09-24", "version": "v7.29", "text": "Première version : hébergement, crédits, stockage local, Léo, formulaire d’alerte."}
+ ]
 }

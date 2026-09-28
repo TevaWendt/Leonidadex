@@ -209,6 +209,15 @@ const el = id => document.getElementById(id);
         return;
       }
 
+      /* v7.46 : consentement explicite (case non transmise à Brevo, elle ne sert qu'à bloquer l'envoi sans accord) */
+      const consent = el('consent');
+      if(consent && !consent.checked){
+        e.preventDefault();
+        say("Coche la case pour accepter l’envoi de ton adresse à Brevo.", 'ko');
+        consent.focus();
+        return;
+      }
+
       /* Brevo affiche son résultat réel dans l'onglet courant. */
       say("Ouverture du formulaire de confirmation…", '');
     });

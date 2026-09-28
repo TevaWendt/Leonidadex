@@ -99,15 +99,16 @@ test('À propos : SEO — titre et description uniques, AboutPage + Organization
   assert.match(d.querySelector('meta[property="og:image"]').content,/^https:\/\/www\.leonidakit\.com\/img\/officiel\//);
 });
 
-test('Contact et Mentions : nouveau gabarit (bandeau avec pile, largeur commune), contenu inchangé (préparateur de signalement, sections des mentions), sous-navigation collante sur Mentions',()=>{
+test('Contact et Mentions : gabarit (bandeau avec pile, largeur commune), préparateur de signalement et sections des mentions (v7.46 : lot 9), sous-navigation collante sur Mentions',()=>{
   const c=doc('contact.html'),m=doc('mentions-legales.html');
   for(const d of [c,m]){assert.equal(d.querySelectorAll('.page-head .lk-stack').length,1);assert.ok(d.querySelector('body.info-page'));assert.ok(read('contact.html').includes('informations.css'));}
   for(const id of ['contact-draft','contact-topic','contact-page','contact-details','contact-source','contact-preview','contact-copy','contact-download','contact-status'])assert.ok(c.getElementById(id),id);
-  assert.ok(read('contact.html').includes('src="contact.js'));assert.equal(c.querySelectorAll('.info-card').length,3);
+  assert.ok(read('contact.html').includes('src="contact.js'));/* v7.46 : les trois cartes deviennent une liste illustrée */assert.equal(c.querySelectorAll('#utile .info-illus li').length,3);
   assert.equal(m.querySelectorAll('nav.ed-nav').length,1);for(const a of m.querySelectorAll('.ed-nav a'))assert.ok(m.getElementById(a.getAttribute('href').slice(1)),a.getAttribute('href'));
-  for(const id of ['editeur','hebergement','independance','confidentialite','cookies'])assert.ok(m.getElementById(id),id);
-  for(const t of ['Calculs, favoris et progression','Conversation avec Léo','Inscription à l’alerte','Cookies et traceurs','Vercel'])assert.ok(m.body.textContent.includes(t),t);
-  assert.ok(m.body.textContent.includes('à compléter'),'les données propriétaire restent à compléter (lot 9)');
+  /* v7.46 (lot 9) : Mentions complètes ; « Indépendance » devient « Propriété intellectuelle », plus rien « à compléter » */
+  for(const id of ['editeur','hebergement','propriete','confidentialite','cookies'])assert.ok(m.getElementById(id),id);
+  for(const t of ['Ce qui reste dans ton navigateur','Léo','alerte de l’accueil','Cookies et traceurs','Vercel'])assert.ok(m.body.textContent.includes(t),t);
+  assert.ok(!m.body.textContent.includes('à compléter'),'plus rien à compléter (lot 9)');
 });
 
 test('navigateur : la séquence se révèle (observateur ou timeline), chaque carte est focusable au clavier et se révèle au focus, les compteurs montent jusqu’à leur valeur, aucune erreur console',withPage('a-propos.html',async a=>{
