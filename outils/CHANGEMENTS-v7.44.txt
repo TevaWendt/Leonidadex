@@ -1,0 +1,104 @@
+v7.44 — 28 septembre 2026 — LOT 7 : PAGE À PROPOS REFAITE
+(base : v7.43 = lot 6 « Personnalisations véhicules et armes de A à Z »)
+
+Ce qui change pour le visiteur
+- À propos (a-propos.html) n’est plus une présentation : c’est une vraie page de site, dans le gabarit des sections
+  (bandeau avec pile d’images cliquable, sous-navigation collante à neuf entrées, neuf sections numérotées du système du
+  lot 3 aux compositions variées, jamais deux identiques à la suite) :
+  01 Pourquoi Leonidakit existe (le problème / la promesse, deux colonnes avec icônes) ;
+  02 Ce que le site fait : la séquence « effet Rockstar » des six outils (composant lk-showcase, ci-dessous) ;
+  03 Comment on vérifie : les cinq statuts (officiel, vu dans un média, identification communautaire, repère de la
+     série, à confirmer) chacun avec un exemple réel relié à une page du site (Rideout Customs dans le texte de
+     l’Édition Ultimate ; le PM à motif tropical sur la capture du Pack Vintage ; la Karin Asterope rapprochée d’une
+     Toyota Camry ; le blindage complet à 5 000 $ dans GTA V ; le prix d’une coupe de cheveux), puis ce qu’on refuse de
+     publier, comment une correction est traitée (lien Contact) et la date des dernières sources ouvertes ;
+  04 Le site en chiffres (fond nuit) : huit compteurs animés, tous posés par script (voir « Technique ») ;
+  05 Le calendrier : aujourd’hui, la sortie (date et date de relecture lues dans les données), après la sortie ;
+  06 Un projet indépendant : personnel, gratuit sans compte ni publicité, sans affiliation Rockstar / Take-Two, données
+     dans le navigateur (lien vers Mentions et confidentialité) ;
+  07 Qui est derrière Leonidakit (fond nuit) : « Téva », prénom seul, une phrase sobre, lien vers Contact ; aucun nom de
+     famille, école, ville ni réseau social ;
+  08 Contribuer : signaler, proposer, ce qu’est une bonne source (liens Contact et Tuto) ;
+  09 FAQ de cinq questions (FAQPage).
+  Corps de 1 053 mots (hors bandeau et navigation), registre « tu », phrases courtes, aucun superlatif.
+- Séquence lk-showcase (six cartes « Préparer un choix », « Explorer une destination », « Lire avant de comparer »,
+  « Garder ses repères », « Demander à Léo », « Distinguer apparition et acquisition ») : chaque carte prend toute la
+  largeur du contenu (image 56 % / texte 44 %, côtés alternés), avec un visuel officiel d’img/officiel crédité
+  (légende avec lien vers medias.html) ; au défilement l’image glisse et se dévoile, le numéro s’écrit, le titre se
+  compose mot à mot, le texte suit, le lien arrive en dernier ; la carte se fige lisible, puis la suivante entre. Lié
+  au défilement (animation-timeline: view(), réversible quand on remonte) avec repli IntersectionObserver réversible
+  (la carte se défait si elle ressort par le bas) et garde-fou à 1,5 s ; ≤ 860 ms par carte en repli ; aucun flou,
+  aucune rotation, rien ne bouge sous la souris (état sélectionné immobile : ombre ambre). Sur téléphone : cartes
+  empilées, image au-dessus, rideau du bas. Clavier : chaque carte est focusable (tabindex 0, aria-labelledby), le focus
+  la révèle et la centre, puis Tab passe au lien du visuel et au bouton de l’outil. Mouvement réduit : rien ne bouge,
+  tout est visible, aucun état d’animation posé. Composant réutilisable : un conteneur [data-showcase] avec des
+  .lk-show (lk-showcase.js + bloc « lk-showcase » d’informations.css).
+- Animations de texte lisibles : titres de section composés mot à mot (système existant du lot 2), paragraphes en
+  opacité + translation, compteurs qui montent (900 ms, sortie douce), lignes d’accent qui se déroulent ; un titre est
+  lisible en moins de 400 ms après son arrivée (mesuré : 28 ms après l’arrivée instantanée de la carte 6).
+- Contact et Mentions : fin de l’effet présentation. Même bandeau que le reste du site (pile d’images cliquable :
+  Contact réutilise sa pile, Mentions reçoit une pile Vice City / Leonida Keys), largeur de contenu commune, sous-
+  navigation collante sur Mentions (Éditeur · Hébergement · Indépendance · Données · Cookies). Les contenus ne changent
+  pas (préparateur de signalement, mentions « à compléter ») : ils seront refaits au lot 9.
+- SEO : titre et description uniques ; AboutPage + Organization en JSON-LD (@graph, Organization identique à celle de
+  l’accueil, AboutPage rattachée au #website et à l’#organization), FAQPage (reconstruite par sync-site depuis les
+  questions visibles), BreadcrumbList, og:image = visuel officiel de la première carte, liens internes vers chaque outil.
+
+Vérité des chiffres et des dates
+- Aucun nombre tapé à la main. « Le site en chiffres » est posé par sync-site.cjs à chaque régénération, d’après les
+  données réelles : pages en ligne (fichiers HTML servis, hors fichier de vérification), fiches de véhicules
+  (vehicules-data.js), fiches d’armes (armes-data.js), lieux sur la carte (identifiants uniques de la carte), lignes des
+  listes dépliables (les six familles d’outils/catalogues), visuels officiels crédités (outils/medias-officiels.json),
+  sujets dans la base de Léo (leo-index.json, régénéré avant le second passage de sync-site), tests automatisés écrits
+  (appels test( dans outils/tests/*.test.cjs). Sans JavaScript, la valeur est écrite dans la page ; avec, elle monte à
+  l’arrivée à l’écran.
+- La date de sortie et sa date de relecture viennent d’outils/acquisitions.json (game.releaseDate, game.checkedAt),
+  la date des dernières sources ouvertes du registre outils/catalogues/sources.json. Le JSON éditorial ne contient ni
+  la date de sortie ni un compteur (un test le vérifie) ; seules les dates d’événements cités y figurent (texte des
+  éditions du 24 juin 2026, fuites de 2022 et de 2026).
+- Tout ce qui est écrit est vérifiable dans le code : « rien ne quitte ton navigateur » (calculs, suivi, Léo local),
+  « seul le formulaire d’alerte de l’accueil envoie quelque chose, vers Brevo », « aucun script publicitaire ni de mesure
+  d’audience » (mêmes constats que les Mentions), « chaque source affiche sa date de consultation » (blocs Sources des
+  pages), « un journal par version dans le dépôt du site » (outils/CHANGEMENTS-v7.xx.txt du dépôt public).
+
+Technique
+- outils/informations-editorial.json (nouveau) : tout le contenu d’À propos (bandeau, navigation, sections, cartes de la
+  séquence avec identifiant de visuel et texte alternatif, statuts et exemples, actions, FAQ). Variables remplies à la
+  génération : {dateSources}, {releaseDate}, {releaseChecked}.
+- outils/gen-informations.cjs réécrit : gabarit commun page() (JSON-LD supplémentaires, scripts, classe de page,
+  og:image), hero() (page-head + lk-head-grid + pile), compositions d’À propos (showcase, statuts avec exemple, colonnes
+  avec lien, stats data-stat, FAQ), Contact et Mentions dans le même gabarit (contenus inchangés, Mentions découpée en
+  cinq sections ancrées pour la sous-navigation). outils/site-informations.json inchangé (coordonnées, hébergeur).
+- lk-showcase.js (nouveau, chargé par a-propos.html seulement) : mode timeline / observateur / immobile, mots du titre
+  (.lk-sw), focus clavier, compteurs (fr-FR, mouvement réduit respecté).
+- informations.css réécrit : bandeau et actions, sections d’information (Contact, Mentions), compositions d’À propos
+  (statuts avec exemple, colonnes avec lien, huit chiffres, signature), composant lk-showcase (mise en page, transitions
+  du repli, animations liées au défilement sous @supports, focus, téléphone, mouvement réduit, impression), largeurs.
+- common.js : la séquence lk-showcase est exclue des apparitions génériques du lot 2 (elle gère les siennes).
+- outils/sync-site.cjs : bloc « Le site en chiffres » (data-stat) ; outils/lot-c-visuals.cjs : pile « mentions ».
+- Tests : 419 → 427 (nouveau outils/tests/a-propos-v744.test.cjs : gabarit et compositions, séquence et visuels
+  crédités, chiffres et dates synchronisés, statuts avec exemples et signature, SEO, Contact et Mentions, navigateur
+  jsdom : focus clavier, compteurs, mouvement réduit). Aucun test existant modifié. verifier.js : 0 erreur sur 38 840
+  références. gen-leo --check : sans divergence. Régénération reproductible à l’octet (double passage comparé).
+
+Contrôle
+- 3 pages (À propos, Contact, Mentions) × 7 largeurs (320, 390, 768, 1024, 1280, 1440, 1920) × mouvement normal et
+  réduit, page parcourue jusqu’en bas : 0 erreur console, 0 requête en échec, 0 débordement horizontal, 0 image cassée,
+  0 élément resté invisible ; en mouvement réduit : 0 animation en cours, séquence marquée immobile.
+- Clavier (1 280 px) : Tab parcourt carte 1 → lien du visuel → bouton de l’outil → carte 2 → … ; le focus révèle la
+  carte (texte et mots à opacité 1) ; contour visible ; titre de la carte 6 lisible 28 ms après son arrivée ; effet
+  réversible (carte 3 : texte à 1 en vue, à 0 une fois remontée au-dessus).
+- Survols : aucun transform ni filtre sur la carte, son titre, les cartes de statut, les colonnes, les chiffres, les
+  actions.
+- Compteurs : les huit valeurs affichées égalent leurs data-count après l’arrivée à l’écran.
+- Captures avant (v7.43) / après (v7.44) à 390 et 1 280 px, section par section, et vidéo webm de la séquence à 1 280 px
+  (effet-rockstar-a-propos-1280.webm), dans le dossier de contrôle, hors dépôt, avec le rapport JSON.
+
+Reste ouvert (signalé, pas modifié)
+- Les fuites : le refus de les publier est affiché ; aucune vérification automatique ne peut le prouver, c’est une règle
+  éditoriale tenue à la main.
+- « Tests automatisés écrits » compte les appels test( des fichiers de tests (370) ; node --test en rapporte 427 parce que
+  certains tests sont répétés par page ou par famille. Le libellé dit « écrits » pour rester exact.
+- Firefox et Safari anciens n’ont pas animation-timeline: view() : ils reçoivent le repli par observateur (réversible,
+  ≤ 860 ms), vérifié dans jsdom, pas dans ces navigateurs.
+- Contact et Mentions : contenus inchangés, données propriétaire toujours « à compléter » (lot 9).

@@ -1,0 +1,31 @@
+LEONIDAKIT v7.44 — LOT 7 : PAGE À PROPOS REFAITE — archive « modifs » (28 septembre 2026)
+
+Base attendue : ton dossier Leonidadex en v7.43 (lot 6 : Personnalisations véhicules et armes).
+Fichiers ajoutés ou modifiés seulement, chemins exacts depuis la racine. Rien à supprimer. Aucune commande de build :
+les pages sont déjà régénérées. Le dossier outils/ reste hors ligne (.vercelignore), comme avant.
+
+1. Copie ton dossier actuel (sauvegarde).
+2. Extrais l’archive dans la racine du site, écrase les fichiers homonymes (garde le dossier .git).
+3. Ouvre le site (3 minutes) :
+   - À propos : bandeau « Des faits sourcés avant la sortie. » avec la pile d’images, puis une barre collante
+     « Pourquoi · Ce que le site fait · Vérification · En chiffres · Calendrier · Indépendance · Qui · Contribuer · FAQ ».
+   - Descends lentement dans « Ce que le site fait » : chaque grande carte arrive avec son image officielle qui se
+     dévoile, son titre qui se compose mot à mot, le texte, puis le bouton jaune ; la carte se fige lisible, la
+     suivante entre. Remonte : la carte se défait dans l’autre sens. Sur téléphone, les six cartes s’empilent, image
+     au-dessus. Avec Tab, chaque carte reçoit le focus (contour rouge) et se révèle ; Tab encore : le lien du visuel,
+     puis le bouton de l’outil.
+   - « Comment on vérifie » : cinq statuts avec un exemple réel chacun (clique « Rideout Customs », « Karin Asterope »…
+     : la page du site s’ouvre), ce qu’on refuse, comment une correction est traitée, la date des dernières sources.
+   - « Le site en chiffres » (fond nuit) : huit compteurs montent quand la section arrive à l’écran ; ces nombres sont
+     calculés par script à chaque régénération (pages, fiches, lieux, lignes, visuels, sujets de Léo, tests).
+   - « Le calendrier » : la date de sortie vient des données du site. « Qui est derrière Leonidakit » : « Téva »,
+     prénom seul, une phrase, un lien vers Contact. FAQ de cinq questions.
+   - Contact et Mentions : même bandeau avec pile d’images que le reste du site, largeur commune, sous-navigation
+     collante sur Mentions ; les textes sont inchangés (le vrai contact et les mentions complètes arrivent au lot 9).
+   - Réglage « Réduire les animations » du système : tout est visible d’un coup, rien ne bouge, compteurs affichés
+     directement.
+4. Mets en ligne (GitHub Desktop, dossier complet).
+
+Détails : outils/CHANGEMENTS-v7.44.txt (fichiers, effet, contrôle, points signalés). Captures avant / après et vidéo
+de l’effet : dossier séparé, hors dépôt. Versions précédentes : -v7.43 (personnalisations), -v7.42 (consommables et
+style), -v7.41 (hubs du monde), -v7.40 (hubs Véhicules / Armurerie, Achats), -v7.39 (mouvement), -v7.38 (calibrage).

@@ -1,0 +1,383 @@
+{
+  "_note": "v7.44 (lot 7) : contenu de a-propos.html, projeté par outils/gen-informations.cjs. Aucun nombre tapé ici : les chiffres de la section « Le site en chiffres » et les dates sont posés à la génération (sync-site.cjs, acquisitions.json, catalogues/sources.json). Registre « tu », mots simples, aucune affirmation invérifiable.",
+  "aPropos": {
+    "title": "À propos de Leonidakit",
+    "description": "Pourquoi Leonidakit existe, comment chaque information est vérifiée, ce que le site compte, ce qui changera à la sortie de GTA VI, et qui est derrière.",
+    "hero": {
+      "eyebrow": "LEONIDAKIT / LE PROJET",
+      "h1": "Des faits sourcés avant la sortie.",
+      "lede": "Leonidakit rassemble ce que Rockstar a montré de GTA VI, dit d’où vient chaque information, et te donne des outils pour décider : combien de temps pour un achat, où aller, quoi cocher.",
+      "actions": [
+        {
+          "href": "calculateurs.html",
+          "label": "Ouvrir le calculateur",
+          "primary": true
+        },
+        {
+          "href": "tuto.html",
+          "label": "Lire le Tuto"
+        }
+      ]
+    },
+    "nav": [
+      {
+        "href": "#pourquoi",
+        "label": "Pourquoi",
+        "fam": "rockstar"
+      },
+      {
+        "href": "#ce-que-le-site-fait",
+        "label": "Ce que le site fait",
+        "fam": "toi"
+      },
+      {
+        "href": "#comment-on-verifie",
+        "label": "Vérification",
+        "fam": "conf"
+      },
+      {
+        "href": "#en-chiffres",
+        "label": "En chiffres",
+        "fam": "serie"
+      },
+      {
+        "href": "#calendrier",
+        "label": "Calendrier",
+        "fam": "carte"
+      },
+      {
+        "href": "#independance",
+        "label": "Indépendance",
+        "fam": "coiffures"
+      },
+      {
+        "href": "#qui",
+        "label": "Qui",
+        "fam": "tatouages"
+      },
+      {
+        "href": "#contribuer",
+        "label": "Contribuer",
+        "fam": "consommables"
+      },
+      {
+        "href": "#faq",
+        "label": "FAQ",
+        "fam": "faq"
+      }
+    ],
+    "pourquoi": {
+      "id": "pourquoi",
+      "kicker": "Le point de départ",
+      "title": "Pourquoi Leonidakit existe",
+      "lede": "Avant la sortie, les rumeurs sont partout et les chiffres sûrs nulle part.",
+      "cols": [
+        {
+          "icon": "loupe",
+          "titre": "Le problème",
+          "p": [
+            "Un prix « probable » circule, une carte « fuitée » aussi, et on ne sait plus ce qui vient de Rockstar. Préparer une partie avec ça, c’est compter sur un prix qui n’existe pas."
+          ]
+        },
+        {
+          "icon": "statuts",
+          "titre": "La promesse",
+          "p": [
+            "Ici, chaque information porte un statut et une source datée. Ce que Rockstar n’a pas publié reste « à confirmer », les prix en premier. Le calculateur, la carte, le suivi et Léo servent ensuite à décider, avec tes propres chiffres."
+          ]
+        }
+      ]
+    },
+    "showcase": {
+      "id": "ce-que-le-site-fait",
+      "kicker": "Six outils, six questions",
+      "title": "Ce que le site fait",
+      "lede": "Chaque outil répond à une question. Tu commences là où tu en as besoin.",
+      "cards": [
+        {
+          "media": "jason-s-safehouse-vehicles",
+          "alt": "La maison de Jason sur pilotis avec ses véhicules garés devant, visuel officiel Rockstar Games",
+          "title": "Préparer un choix",
+          "text": "Huit calculs répondent chacun à une question, et le business plan met tes étapes dans l’ordre. Tu écris un prix et un budget, tu lis une réponse en une phrase.",
+          "href": "calculateurs.html?tool=roi#atelier",
+          "label": "Est-ce que ça vaut le coup ?"
+        },
+        {
+          "media": "leonida-keys-01",
+          "alt": "Route au-dessus de la mer dans les Leonida Keys, visuel officiel Rockstar Games",
+          "title": "Explorer une destination",
+          "text": "La carte place les villes, les quartiers et les enseignes vues dans les trailers et les captures. Un bâtiment repéré n’est pas un bien à acheter, et la carte le dit.",
+          "href": "carte.html",
+          "label": "Explorer la carte"
+        },
+        {
+          "media": "jason-duval-01",
+          "alt": "Jason à côté d’une moto sportive verte, visuel officiel Rockstar Games",
+          "title": "Lire avant de comparer",
+          "text": "Véhicules, armes, personnages, lieux, entreprises : chaque fiche dit si c’est nommé par Rockstar, vu dans un média ou rapproché par la communauté.",
+          "href": "vehicules.html",
+          "label": "Parcourir les fiches"
+        },
+        {
+          "media": "classic-car-collection-01",
+          "alt": "Un homme devant des voitures classiques dans une casse, visuel officiel Rockstar Games",
+          "title": "Garder ses repères",
+          "text": "Garage, arsenal, lieux repérés, listes cochées et calculs restent sur ton appareil. Une sauvegarde te suit sur un autre.",
+          "href": "progression.html",
+          "label": "Voir mon suivi"
+        },
+        {
+          "media": "vice-city-09",
+          "alt": "Berline bleue sous un viaduc peint de Vice City, visuel officiel Rockstar Games",
+          "title": "Demander à Léo",
+          "text": "Léo répond depuis ton navigateur, avec ce que le site sait : il retrouve une fiche, ouvre un calcul, explique un statut. Rien ne quitte ton navigateur.",
+          "href": "tuto.html",
+          "label": "Lire le Tuto"
+        },
+        {
+          "media": "stock-305-clothing-store-01",
+          "alt": "Lucia en manteau léopard devant la boutique Stock 305, visuel officiel Rockstar Games",
+          "title": "Distinguer apparition et acquisition",
+          "text": "Une voiture vue dans un trailer n’est pas une voiture à vendre. Les sections d’achat séparent l’annoncé, ce qui vient d’une édition et ce qui reste à confirmer.",
+          "href": "achats.html",
+          "label": "Voir ce qui s’achète"
+        }
+      ]
+    },
+    "verifie": {
+      "id": "comment-on-verifie",
+      "kicker": "La méthode",
+      "title": "Comment on vérifie",
+      "lede": "Cinq statuts, toujours affichés, toujours reliés à une source ouverte à une date connue.",
+      "statuts": [
+        {
+          "statut": "officiel",
+          "titre": "Officiel",
+          "texte": "Nommé ou décrit par Rockstar, ou texte officiel reproduit par un média nommé.",
+          "exemple": "Rideout Customs, nommé dans le texte de l’Édition Ultimate du 24 juin 2026.",
+          "href": "personnalisations.html#ateliers"
+        },
+        {
+          "statut": "vu",
+          "titre": "Vu dans un média",
+          "texte": "Visible dans un trailer, une capture ou l’Extended Look ; ni prix ni achat connus.",
+          "exemple": "Le PM à motif tropical, vu sur la capture du Pack Vintage Vice City.",
+          "href": "armes/micro-smg.html"
+        },
+        {
+          "statut": "comm",
+          "titre": "Identification communautaire",
+          "texte": "Un rapprochement fait par des joueurs, cité comme tel.",
+          "exemple": "La Karin Asterope, rapprochée d’une Toyota Camry par la communauté.",
+          "href": "vehicules/karin-asterope.html"
+        },
+        {
+          "statut": "serie",
+          "titre": "Repère de la série",
+          "texte": "Ce que GTA V ou GTA Online font, avec leur prix, jamais dans la colonne GTA VI.",
+          "exemple": "Le blindage complet à 5 000 $ dans GTA V, relevé sur la Bravado Gauntlet.",
+          "href": "personnalisations.html#perso-vehicules-blindage"
+        },
+        {
+          "statut": "conf",
+          "titre": "À confirmer",
+          "texte": "Rien de publié par Rockstar : la ligne dit ce qu’on attend, pas ce qui est.",
+          "exemple": "Le prix d’une coupe de cheveux dans GTA VI.",
+          "href": "style.html#coiffures"
+        }
+      ],
+      "cols": [
+        {
+          "icon": "sablier",
+          "titre": "Ce qu’on refuse de publier",
+          "liste": [
+            "Les fuites de 2022 et de 2026, même quand tout le monde en parle.",
+            "Un prix ou un effet « probable » sans source.",
+            "Une image qui n’est pas officielle.",
+            "Une compatibilité devinée sur une silhouette."
+          ]
+        },
+        {
+          "icon": "lire",
+          "titre": "Comment une correction est traitée",
+          "p": [
+            "Tu indiques la page, le problème et la source. La donnée est corrigée dans les fichiers sources, la page est régénérée avec la source datée. Sans source, la correction reste une question ouverte."
+          ],
+          "href": "contact.html",
+          "label": "Préparer un signalement"
+        },
+        {
+          "icon": "horloge",
+          "titre": "Quand les contenus ont été vérifiés",
+          "p": [
+            "Chaque source affiche sa date de consultation en bas de la page qui la cite. Dernières pages ouvertes le {dateSources}."
+          ]
+        }
+      ]
+    },
+    "chiffres": {
+      "id": "en-chiffres",
+      "kicker": "Compté par script",
+      "title": "Le site en chiffres",
+      "lede": "Ces nombres sont recalculés à chaque régénération du site, jamais tapés à la main.",
+      "stats": [
+        {
+          "stat": "pages",
+          "label": "pages en ligne"
+        },
+        {
+          "stat": "vehicules",
+          "label": "fiches de véhicules"
+        },
+        {
+          "stat": "armes",
+          "label": "fiches d’armes"
+        },
+        {
+          "stat": "lieux",
+          "label": "lieux sur la carte"
+        },
+        {
+          "stat": "lignes",
+          "label": "lignes dans les listes dépliables"
+        },
+        {
+          "stat": "visuels",
+          "label": "visuels officiels crédités"
+        },
+        {
+          "stat": "leo",
+          "label": "sujets dans la base de Léo"
+        },
+        {
+          "stat": "tests",
+          "label": "tests automatisés écrits"
+        }
+      ],
+      "p": [
+        "Les fiches, les listes et la carte se comptent dans leurs données ; les tests sont lancés avant chaque mise en ligne."
+      ]
+    },
+    "calendrier": {
+      "id": "calendrier",
+      "kicker": "Avant, pendant, après",
+      "title": "Le calendrier",
+      "lede": "Le site vit avant la sortie et continuera après. Voici ce qui change à chaque étape.",
+      "steps": [
+        {
+          "icon": "boussole",
+          "titre": "Aujourd’hui",
+          "texte": "Le site publie ce que Rockstar a montré, avec les repères de la série pour l’ordre de grandeur. Les prix de GTA VI restent à confirmer."
+        },
+        {
+          "icon": "horloge",
+          "titre": "Le {releaseDate} : la sortie",
+          "texte": "Date annoncée par Rockstar, relue le {releaseChecked}. Si elle change, cette page change avec elle."
+        },
+        {
+          "icon": "chiffres",
+          "titre": "Après la sortie",
+          "texte": "Les prix réels remplacent les repères, les listes se complètent, les missions arrivent dans le suivi. Chaque mise à jour est datée : un journal par version dans le dépôt du site, une date sur chaque source."
+        }
+      ]
+    },
+    "independance": {
+      "id": "independance",
+      "kicker": "Les règles",
+      "title": "Un projet indépendant",
+      "lede": "Quatre choses qui ne changeront pas.",
+      "cols": [
+        {
+          "icon": "nommes",
+          "titre": "Un projet personnel",
+          "p": [
+            "Fait par un joueur, sur son temps libre, pour d’autres joueurs."
+          ]
+        },
+        {
+          "icon": "argent",
+          "titre": "Gratuit, sans compte, sans publicité",
+          "p": [
+            "Rien à payer, rien à créer, aucun script publicitaire ni de mesure d’audience."
+          ]
+        },
+        {
+          "icon": "statuts",
+          "titre": "Sans affiliation",
+          "p": [
+            "Ni affilié à Rockstar Games ou Take-Two Interactive, ni approuvé ou sponsorisé par eux. Grand Theft Auto leur appartient."
+          ]
+        },
+        {
+          "icon": "securite",
+          "titre": "Tes données restent chez toi",
+          "p": [
+            "Calculs, suivi et Léo restent dans ton navigateur. Seul le formulaire d’alerte de l’accueil envoie quelque chose, vers Brevo, si tu le remplis."
+          ],
+          "href": "mentions-legales.html#confidentialite",
+          "label": "Lire la page Mentions et confidentialité"
+        }
+      ]
+    },
+    "qui": {
+      "id": "qui",
+      "kicker": "Signé",
+      "title": "Qui est derrière Leonidakit",
+      "signature": "Téva",
+      "phrase": "Un joueur qui voulait des chiffres sûrs avant la sortie, et qui a fini par construire le site.",
+      "p": [
+        "Pour une question, une correction ou une idée : la page Contact."
+      ],
+      "href": "contact.html",
+      "label": "Aller à la page Contact"
+    },
+    "contribuer": {
+      "id": "contribuer",
+      "kicker": "Faire avancer le site",
+      "title": "Contribuer",
+      "lede": "Trois façons d’aider, toutes passent par la page Contact.",
+      "actions": [
+        {
+          "k": "Signaler",
+          "t": "Une erreur sur une page",
+          "d": "L’adresse de la page, ce qui est faux, et la source qui permet de vérifier.",
+          "href": "contact.html"
+        },
+        {
+          "k": "Proposer",
+          "t": "Un contenu qui manque",
+          "d": "Un nom précis, son contexte, d’où il vient.",
+          "href": "contact.html"
+        },
+        {
+          "k": "Comprendre",
+          "t": "Ce qu’est une bonne source",
+          "d": "Une page ou une vidéo Rockstar, ou un texte officiel repris par un média nommé, avec sa date. Un wiki est communautaire ; une fuite n’est pas une source.",
+          "href": "tuto.html#sources"
+        }
+      ]
+    },
+    "faq": [
+      {
+        "q": "Leonidakit est-il un site officiel ?",
+        "a": "Non. C’est un projet personnel, indépendant de Rockstar Games et de Take-Two Interactive. Les visuels officiels sont crédités dans Médias et crédits."
+      },
+      {
+        "q": "Les prix affichés sont-ils ceux de GTA VI ?",
+        "a": "Non. Rockstar n’a publié aucun prix. Ceux que tu vois viennent de GTA V ou GTA Online, marqués « repère de la série » ; dans le calculateur, ce sont tes chiffres."
+      },
+      {
+        "q": "D’où viennent les informations ?",
+        "a": "Du site et du Newswire de Rockstar, des trailers, de l’Extended Look, des textes officiels repris par la presse et des captures officielles ; de GTA Wiki pour la série. Chaque page liste ses sources datées."
+      },
+      {
+        "q": "Que deviennent mes données ?",
+        "a": "Elles restent dans ton navigateur : calculs, suivi, favoris, conversation avec Léo. Rien ne part sur un serveur du site. Mentions et confidentialité détaille ce qui est stocké et comment l’effacer."
+      },
+      {
+        "q": "Comment signaler une erreur ?",
+        "a": "Par la page Contact : la page, le problème, la source. La correction entre dans les données du site, la page est régénérée avec sa source datée."
+      }
+    ]
+  }
+}

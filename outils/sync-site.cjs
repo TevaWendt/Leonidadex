@@ -133,6 +133,14 @@ const progressIds={vehicules:V.map(v=>v.id),armes:A.map(v=>v.id),lieux:pointIds,
 {const C=require('./catalogues.cjs');for(const f of C.FAMILIES){progressIds[f]=C.progressIds(f);progressNames[f]=C.progressNames(f);}}
 // v7.42 : les compteurs écrits dans progression.html (« 0 / N ») suivent les identifiants réels de chaque famille.
 {let prog=fs.readFileSync('progression.html','utf8');prog=prog.replace(/(<article class="note-box suivi-card" id="[^"]+" data-family="([a-z]+)">[\s\S]*?<strong class="suivi-n">)0 \/ \d+(<\/strong>)/g,(m,a,fam,c)=>progressIds[fam]?a+'0 / '+new Set(progressIds[fam]).size+c:m);fs.writeFileSync('progression.html',prog);}
+// v7.44 (lot 7) : « Le site en chiffres » de a-propos.html, posé d'après les données réelles (jamais tapé à la main) : pages,
+// fiches véhicules et armes, lieux de la carte, lignes des listes dépliables, visuels officiels crédités, sujets de la base
+// de Léo (leo-index.json, régénéré juste avant le second passage), tests automatisés écrits (appels test( dans outils/tests).
+{const C=require('./catalogues.cjs');const medias=JSON.parse(fs.readFileSync('outils/medias-officiels.json','utf8'));
+ const leo=fs.existsSync('leo-index.json')?JSON.parse(fs.readFileSync('leo-index.json','utf8')):{knowledge:[]};
+ const tests=fs.readdirSync('outils/tests').filter(f=>f.endsWith('.test.cjs')).reduce((n,f)=>n+(fs.readFileSync('outils/tests/'+f,'utf8').match(/^\s*test\(/gm)||[]).length,0);
+ const STATS={pages:htmlFiles.filter(f=>!f.startsWith('google')).length,vehicules:V.length,armes:A.length,lieux:new Set(pointIds).size,lignes:C.FAMILIES.reduce((n,f)=>n+C.counts(f).n,0),visuels:Object.keys(medias).length,leo:(leo.knowledge||[]).length,tests};
+ if(fs.existsSync('a-propos.html')){let ap=fs.readFileSync('a-propos.html','utf8');ap=ap.replace(/(<b class="fig-n" data-count=")\d+(" data-stat="([a-z]+)">)\d+(<\/b>)/g,(m,a,b,key,c)=>STATS[key]===undefined?m:a+STATS[key]+b+STATS[key]+c);fs.writeFileSync('a-propos.html',ap);}}
 fs.writeFileSync('progression-data.js','/* IDs only; no need to load the full map on this page. */\nwindow.LK_PROGRESS_IDS = '+JSON.stringify(progressIds)+';\n/* v7.38 : noms, catégories et liens pour les listes dépliables de la page Progression. */\nwindow.LK_PROGRESS_NAMES = '+JSON.stringify(progressNames)+';\n');
 console.log('Synchronisation : '+htmlFiles.length+' pages, '+assets.length+' assets, '+urls.length+' URL canoniques.');
 

@@ -1,33 +1,133 @@
-/* Pages d'information : charte existante, compositions lisibles sans animation. */
-.info-hero{display:grid;grid-template-columns:1.15fr 1fr;align-items:center;gap:42px;padding-top:64px;padding-bottom:56px}
-.info-eyebrow{font-size:.78rem;font-weight:800;letter-spacing:.12em;color:var(--coral-text,#B93220);margin-bottom:18px}
-.info-hero h1{font-size:clamp(2.3rem,4.5vw,4.5rem);line-height:1.06;letter-spacing:-.045em;margin:0 0 24px;overflow-wrap:break-word}
-.info-lede{font-size:1.12rem;line-height:1.7;max-width:54ch;color:var(--ink-soft)}
-.info-hero>figure{margin:0;min-width:0;transform:rotate(1deg)}
-.info-hero>figure img{width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;border:2px solid var(--ink);border-radius:18px;box-shadow:8px 8px 0 var(--amber)}
-.info-hero>figure figcaption{font-size:.75rem;line-height:1.5;margin-top:18px;color:var(--ink-soft)}
-.info-actions{display:flex;align-items:center;flex-wrap:wrap;gap:14px;margin-top:24px}
-.info-page .info-primary,.info-page main button{display:inline-block;padding:13px 18px;font:inherit;font-weight:750;border:2px solid var(--ink);border-radius:8px;background:var(--amber);color:var(--ink);cursor:pointer;min-height:46px}
-.info-page main button:disabled{opacity:.5;cursor:default}
-.info-page :is(a,button,input,textarea,select,summary):focus-visible{outline:3px solid var(--coral-text,#B93220);outline-offset:4px}
-.info-section{padding-top:42px;padding-bottom:46px;border-top:1px solid var(--rule)}
-.info-section h2{font-size:clamp(1.7rem,3vw,2.5rem);line-height:1.2;margin-bottom:24px;letter-spacing:-.025em}
-.info-section h3{font-size:1.2rem;line-height:1.35;margin:16px 0 12px}
-.info-section p{line-height:1.75;margin:12px 0}
-.info-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
-.info-card{border:2px solid var(--ink);border-radius:12px;padding:24px;background:#fff;min-width:0;display:flex;flex-direction:column}
-.info-card a{margin-top:auto;padding-top:16px;font-weight:750;color:var(--coral-text,#B93220)}
-.info-number{font-weight:900;font-size:.8rem;letter-spacing:.1em;color:var(--coral-text,#B93220)}
-.info-sources dl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
-.info-sources dl>div{padding:22px;background:#f6efdf;border-radius:12px;border-left:4px solid var(--amber)}
-.info-sources dt{font-weight:800;margin-bottom:10px}.info-sources dd{margin:0;line-height:1.65}
-.info-split{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:40px}
-.info-contact-status{padding:28px;border:2px solid var(--ink);border-radius:14px;background:#fff4d9;line-height:1.7;min-width:0;overflow-wrap:anywhere}
-.info-contact-status h2{font-size:1.25rem;margin-bottom:16px}.info-contact-status p{margin:12px 0}
-.info-note{font-size:.9rem;color:var(--ink-soft)}.info-prose{max-width:850px}
-.info-prose a,.info-section>p a{color:var(--coral-text,#B93220);text-decoration:underline;text-underline-offset:3px}
-.info-page main :is(input,select,textarea){display:block;width:100%;font:inherit;padding:12px;background:#fff;border:1px solid var(--ink-soft);border-radius:8px;min-width:0;max-width:100%}
-.info-page textarea{resize:vertical;line-height:1.6}.info-page label{display:block;font-weight:700;line-height:1.5;margin:20px 0 8px}.info-page form button{margin-top:20px}
-@media(max-width:950px){.info-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.info-hero{gap:26px}.info-split{gap:24px}}
-@media(max-width:680px){.info-hero,.info-split,.info-sources dl,.info-grid{grid-template-columns:1fr}.info-hero{padding-top:36px;padding-bottom:36px}.info-hero>figure{transform:none}.info-section{padding-top:32px;padding-bottom:32px}.info-card{padding:20px}.info-contact-status{padding:20px}.info-actions>*{max-width:100%}}
-@media print{.info-hero>figure{transform:none}.info-page button,.info-page form{display:none}.info-grid{grid-template-columns:repeat(2,1fr)}}
+/* Pages d'information — v7.44 (lot 7). Même charte que le reste du site (jetons de style.css), largeur de contenu
+   commune (.shell), bandeau avec pile d'images cliquable (.page-head + .lk-head-grid de style.css), sous-navigation
+   collante (.ed-nav) et sections éditoriales (.ed) du lot 3. Règle du lot 2 : aucun flou, aucune rotation 3D, rien ne
+   bouge sous la souris sur un bloc qu'on lit. Sans JavaScript ou en mouvement réduit, tout est visible. */
+
+/* ---------- bandeau ---------- */
+.info-page .page-head{padding-top:56px;padding-bottom:40px;}
+.info-eyebrow{font:800 .78rem/1.4 'JetBrains Mono',monospace;letter-spacing:.12em;color:var(--coral-text,#B93220);margin:0 0 16px;text-transform:uppercase;}
+.info-page .page-head h1{font-size:clamp(2.2rem,4.4vw,4.2rem);line-height:1.06;letter-spacing:-.045em;margin:0 0 20px;overflow-wrap:break-word;}
+.info-lede{font-size:1.1rem;line-height:1.7;max-width:56ch;color:var(--ink-soft);margin:0;}
+.info-actions{display:flex;align-items:center;flex-wrap:wrap;gap:12px 14px;margin-top:22px;}
+.info-page .info-primary,.info-page main button{display:inline-flex;align-items:center;gap:6px;padding:12px 18px;font:inherit;font-weight:800;border:2px solid var(--ink);border-radius:9px;background:var(--amber);color:var(--ink);cursor:pointer;min-height:46px;text-decoration:none;box-shadow:3px 3px 0 var(--ink);}
+.info-page .info-link{display:inline-flex;align-items:center;gap:6px;min-height:46px;padding:12px 4px;font-weight:800;color:var(--ink);text-decoration:underline;text-underline-offset:4px;}
+.info-page main button:disabled{opacity:.5;cursor:default;box-shadow:none;}
+.info-page :is(a,button,input,textarea,select,summary,.lk-show):focus-visible{outline:3px solid var(--coral-text,#B93220);outline-offset:4px;}
+
+/* ---------- sections (Contact, Mentions : gabarit commun, contenu inchangé) ---------- */
+.info-section{padding-top:42px;padding-bottom:46px;border-top:1px solid var(--rule);}
+.info-section h2{font-size:clamp(1.6rem,2.8vw,2.3rem);line-height:1.2;margin:0 0 22px;letter-spacing:-.025em;}
+.info-section h3{font-size:1.15rem;line-height:1.35;margin:18px 0 10px;}
+.info-section p{line-height:1.75;margin:12px 0;max-width:72ch;}
+.info-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;}
+.info-card{border:2px solid var(--ink);border-radius:14px;padding:22px;background:#fff;min-width:0;display:flex;flex-direction:column;box-shadow:var(--shadow-soft,4px 4px 0 rgba(26,26,30,.18));}
+.info-card p{max-width:none;}
+.info-card a{margin-top:auto;padding-top:14px;font-weight:800;color:var(--coral-text,#B93220);}
+.info-number{font:800 .74rem/1.4 'JetBrains Mono',monospace;letter-spacing:.1em;color:var(--coral-text,#B93220);}
+.info-split{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:40px;}
+.info-contact-status{padding:24px;border:2px solid var(--ink);border-radius:14px;background:var(--paper-2,#F4F0E7);line-height:1.7;min-width:0;overflow-wrap:anywhere;margin-top:22px;}
+.info-contact-status h2{font-size:1.2rem;margin:0 0 12px;}
+.info-contact-status p{margin:10px 0;max-width:none;}
+.info-note{font-size:.9rem;color:var(--ink-soft);}
+/* la largeur de page reste celle du site ; seul le texte courant est limité à une mesure lisible, aligné à gauche comme le bandeau */
+.info-prose :is(h2,h3,p,aside,ul){max-width:860px;}
+.info-prose a,.info-section>p a{color:var(--coral-text,#B93220);text-decoration:underline;text-underline-offset:3px;}
+.info-page main :is(input,select,textarea){display:block;width:100%;font:inherit;padding:12px;background:#fff;border:1.5px solid var(--ink-soft);border-radius:8px;min-width:0;max-width:100%;}
+.info-page textarea{resize:vertical;line-height:1.6;}
+.info-page label{display:block;font-weight:700;line-height:1.5;margin:20px 0 8px;}
+.info-page form button{margin-top:20px;}
+.info-page .ed-nav+.info-section{border-top:0;}
+
+/* ---------- À propos : compositions propres ---------- */
+.ed-level-ex{margin-top:10px;font-size:.86rem;line-height:1.5;}
+.ed-level-ex span{font-weight:800;}
+.ed-level-ex a{color:var(--coral-text,#B93220);text-decoration:underline;text-underline-offset:3px;}
+.ed--night .ed-level-ex a{color:var(--amber);}
+.ed-levels--about{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:26px;}
+.ed-col-link{display:inline-flex;align-items:center;gap:6px;margin-top:10px;font-weight:800;color:var(--coral-text,#B93220);text-decoration:underline;text-underline-offset:4px;}
+.ed-figs--about{grid-template-columns:repeat(4,minmax(0,1fr));}
+.ed-figs--about .fig{gap:8px;}
+.ed-figs--about .fig-n{font-size:clamp(2rem,1.4rem + 2vw,3rem);}
+.ed-sign{max-width:62ch;}
+.ed-sign-name{font:800 clamp(2.4rem,2rem + 2vw,3.6rem)/1 'Archivo',sans-serif;letter-spacing:-.04em;margin:0 0 12px;position:relative;padding-bottom:14px;}
+.ed-sign-name::after{content:'';position:absolute;left:0;bottom:0;width:72px;height:4px;border-radius:2px;background:var(--amber);}
+.ed-sign-phrase{font-size:1.15rem;line-height:1.6;margin:0 0 10px;}
+.ed-act--inline{margin-top:18px;max-width:420px;}
+.ed-zone--info .faq details{max-width:78ch;}
+
+/* ---------- lk-showcase : séquence « effet Rockstar » des six outils ---------- */
+.lk-showcase{display:grid;gap:28px;}
+.lk-show{position:relative;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);align-items:stretch;min-height:400px;border:2px solid var(--ink);border-radius:20px;background:#fff;overflow:hidden;box-shadow:var(--shadow-soft,4px 4px 0 rgba(26,26,30,.18));}
+.lk-show:nth-child(even){grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);}
+.lk-show:nth-child(even) .lk-show-fig{order:2;}
+.lk-show-fig{margin:0;position:relative;min-height:240px;background:var(--paper-2,#F4F0E7);overflow:hidden;}
+.lk-show-fig img{display:block;width:100%;height:100%;object-fit:cover;}
+.lk-show-fig figcaption{position:absolute;left:0;right:0;bottom:0;padding:8px 14px;font:600 .68rem/1.4 'JetBrains Mono',monospace;letter-spacing:.02em;color:#fff;background:linear-gradient(to top,rgba(26,26,30,.78),rgba(26,26,30,0));}
+.lk-show-fig figcaption a{color:#fff;text-decoration:underline;text-underline-offset:3px;}
+.lk-show-body{display:flex;flex-direction:column;justify-content:center;gap:12px;padding:34px 36px;min-width:0;}
+.lk-show-n{font:800 .82rem/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:var(--coral-text,#B93220);}
+.lk-show-t{font:800 clamp(1.5rem,1.15rem + 1.4vw,2.2rem)/1.12 'Archivo',sans-serif;letter-spacing:-.03em;margin:0;}
+.lk-sw{display:inline-block;}
+.lk-show-p{margin:0;font-size:1.02rem;line-height:1.65;color:var(--ink);max-width:48ch;}
+.lk-show-link{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;margin-top:6px;padding:11px 16px;font:800 .92rem 'Archivo',sans-serif;color:var(--ink);background:var(--amber);border:2px solid var(--ink);border-radius:9px;text-decoration:none;box-shadow:3px 3px 0 var(--ink);}
+.lk-show-link:hover,.lk-show-link:focus-visible{background:var(--ink);color:#fff;box-shadow:3px 3px 0 var(--amber);}
+/* état sélectionné immobile (lot 2) : bord et ombre, jamais de transform */
+.lk-show:hover,.lk-show.is-focus{box-shadow:7px 7px 0 var(--amber);}
+/* --- repli par observateur : transitions réversibles, ≤ 860 ms par carte --- */
+.js .lk-showcase--observer .lk-show-fig img{clip-path:inset(0 0 0 100%);transform:translate3d(6%,0,0);transition:clip-path .7s var(--ease-out,cubic-bezier(.2,.7,.2,1)),transform .8s var(--ease-out,cubic-bezier(.2,.7,.2,1));}
+.js .lk-showcase--observer .lk-show:nth-child(even) .lk-show-fig img{clip-path:inset(0 100% 0 0);transform:translate3d(-6%,0,0);}
+.js .lk-showcase--observer .lk-show.is-in .lk-show-fig img{clip-path:inset(0 0 0 0);transform:none;}
+.js .lk-showcase--observer .lk-show-n{clip-path:inset(0 100% 0 0);transition:clip-path .4s var(--ease-out,ease-out) 80ms;}
+.js .lk-showcase--observer .lk-show.is-in .lk-show-n{clip-path:inset(0);}
+.js .lk-showcase--observer .lk-sw{opacity:0;transform:translate3d(0,.5em,0);transition:opacity .32s var(--ease-out,ease-out),transform .38s var(--ease-out,ease-out);transition-delay:calc(160ms + var(--lk-i,0)*40ms);}
+.js .lk-showcase--observer .lk-show.is-in .lk-sw{opacity:1;transform:none;}
+.js .lk-showcase--observer .lk-show-p{opacity:0;transform:translate3d(0,12px,0);transition:opacity .4s var(--ease-out,ease-out) 380ms,transform .4s var(--ease-out,ease-out) 380ms;}
+.js .lk-showcase--observer .lk-show-link{opacity:0;transform:translate3d(0,12px,0);transition:opacity .38s var(--ease-out,ease-out) 480ms,transform .38s var(--ease-out,ease-out) 480ms;}
+.js .lk-showcase--observer .lk-show.is-in .lk-show-p,.js .lk-showcase--observer .lk-show.is-in .lk-show-link{opacity:1;transform:none;}
+/* --- lié au défilement : la carte se compose pendant son entrée, se défait si on remonte --- */
+@keyframes lk-show-img{from{clip-path:inset(0 0 0 100%);transform:translate3d(6%,0,0);}to{clip-path:inset(0 0 0 0);transform:none;}}
+@keyframes lk-show-img-r{from{clip-path:inset(0 100% 0 0);transform:translate3d(-6%,0,0);}to{clip-path:inset(0 0 0 0);transform:none;}}
+@keyframes lk-show-img-up{from{clip-path:inset(100% 0 0 0);transform:translate3d(0,4%,0);}to{clip-path:inset(0 0 0 0);transform:none;}}
+@keyframes lk-show-num{from{clip-path:inset(0 100% 0 0);}to{clip-path:inset(0);}}
+@keyframes lk-show-word{from{opacity:0;transform:translate3d(0,.5em,0);}to{opacity:1;transform:none;}}
+@keyframes lk-show-up{from{opacity:0;transform:translate3d(0,12px,0);}to{opacity:1;transform:none;}}
+@supports (animation-timeline:view()){
+  .js .lk-showcase--timeline .lk-show{view-timeline-name:--lk-show;view-timeline-axis:block;}
+  .js .lk-showcase--timeline .lk-show-fig img{animation:lk-show-img linear both;animation-timeline:--lk-show;animation-range:entry 0% entry 48%;}
+  .js .lk-showcase--timeline .lk-show:nth-child(even) .lk-show-fig img{animation-name:lk-show-img-r;}
+  .js .lk-showcase--timeline .lk-show-n{animation:lk-show-num linear both;animation-timeline:--lk-show;animation-range:entry 10% entry 40%;}
+  .js .lk-showcase--timeline .lk-sw{animation:lk-show-word linear both;animation-timeline:--lk-show;animation-range:entry calc(16% + var(--lk-i,0)*3%) entry calc(46% + var(--lk-i,0)*3%);}
+  .js .lk-showcase--timeline .lk-show-p{animation:lk-show-up linear both;animation-timeline:--lk-show;animation-range:entry 34% entry 66%;}
+  .js .lk-showcase--timeline .lk-show-link{animation:lk-show-up linear both;animation-timeline:--lk-show;animation-range:entry 46% entry 78%;}
+  /* le focus clavier révèle la carte quelle que soit sa position */
+  .js .lk-showcase--timeline .lk-show.is-focus .lk-show-fig img,.js .lk-showcase--timeline .lk-show.is-focus .lk-show-n,.js .lk-showcase--timeline .lk-show.is-focus .lk-sw,.js .lk-showcase--timeline .lk-show.is-focus .lk-show-p,.js .lk-showcase--timeline .lk-show.is-focus .lk-show-link{animation:none;clip-path:none;opacity:1;transform:none;}
+}
+/* mouvement réduit et impression : tout visible, rien ne bouge (en plus de la règle globale de style.css) */
+@media(prefers-reduced-motion:reduce){
+  .lk-show-fig img,.lk-show-n,.lk-sw,.lk-show-p,.lk-show-link{animation:none !important;transition:none !important;clip-path:none !important;opacity:1 !important;transform:none !important;}
+}
+@media print{.lk-show-fig img,.lk-show-n,.lk-sw,.lk-show-p,.lk-show-link{animation:none !important;transition:none !important;clip-path:none !important;opacity:1 !important;transform:none !important;} .lk-show{break-inside:avoid;}}
+
+/* ---------- largeurs ---------- */
+@media(max-width:1000px){.ed-figs--about{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media(max-width:950px){.info-grid{grid-template-columns:repeat(2,minmax(0,1fr));}.info-split{gap:24px;}}
+@media(max-width:900px){
+  .lk-show,.lk-show:nth-child(even){grid-template-columns:1fr;min-height:0;}
+  .lk-show:nth-child(even) .lk-show-fig{order:0;}
+  .lk-show-fig{min-height:0;aspect-ratio:16/9;}
+  .lk-show-body{padding:22px 20px 24px;gap:10px;}
+  .lk-showcase{gap:18px;}
+  .js .lk-showcase--observer .lk-show-fig img,.js .lk-showcase--observer .lk-show:nth-child(even) .lk-show-fig img{clip-path:inset(100% 0 0 0);transform:translate3d(0,4%,0);}
+  .js .lk-showcase--observer .lk-show.is-in .lk-show-fig img{clip-path:inset(0);transform:none;}
+  @supports (animation-timeline:view()){.js .lk-showcase--timeline .lk-show-fig img,.js .lk-showcase--timeline .lk-show:nth-child(even) .lk-show-fig img{animation-name:lk-show-img-up;}}
+}
+@media(max-width:680px){
+  .info-split,.info-grid{grid-template-columns:1fr;}
+  .info-page .page-head{padding-top:32px;padding-bottom:28px;}
+  .info-section{padding-top:30px;padding-bottom:30px;}
+  .info-card{padding:18px;}
+  .info-contact-status{padding:18px;}
+  .info-actions>*{max-width:100%;}
+  .ed-levels--about{grid-template-columns:1fr;}
+}
+@media(max-width:480px){.ed-figs--about{grid-template-columns:repeat(2,minmax(0,1fr));}}
