@@ -119,7 +119,7 @@ test('Relecture B: la limite de carnet est expliquée sans exception au clic Dup
  const original=app(),config=(await original.share()).config,now=new Date().toISOString();
  const entries=Array.from({length:160},(_,i)=>({id:'entry-'+i,tool:'goal',name:'Calcul '+i,createdAt:now,updatedAt:now,config,summary:'OK'}));
  const page=app({storage:{'lk-calculator-notebooks-v3':JSON.stringify({version:3,entries,active:{goal:'entry-0'},references:{}})}});
- await page.click({bDuplicate:'entry-0'});assert.match(page.node('calc-live').textContent,/Carnet plein/);
+ await page.click({bDuplicate:'entry-0'});assert.match(page.node('calc-live').textContent,/160 enregistrements/);
  assert.equal(page.document.querySelectorAll('.b-notebook-entry').length,160);
 });
 test('Relecture B: un import composé uniquement d’achats du catalogue peut revenir à un achat libre',async()=>{
@@ -355,11 +355,11 @@ test('Lot B: notebook isolates tools, updates an entry, restores a plan and reta
  await page.dispatch('click',page.node('calc-save'));await page.dispatch('click',page.node('calc-save'));
  assert.equal(page.document.querySelectorAll('#saved-list .b-notebook-entry').length,1);assert.equal(page.document.querySelectorAll('#saved-list .b-notebook-entry[data-tool="goal"]').length,1);
  await page.click({tab:'session'});assert.equal(page.document.querySelectorAll('#saved-list .b-notebook-entry[data-tool="session"]').length,0);assert.equal(page.document.querySelectorAll('#saved-list .b-notebook-entry').length,1,'les calculs des huit outils restent listés, classés par outil');
- await page.click({sessionMinutes:'45'});await page.click({bComplete:'session'});await page.click({tab:'plan'});
+ await page.click({sessionMinutes:'45'});await page.click({tab:'plan'});
  await page.dispatch('click',page.node('calc-save'));
- const bundle=JSON.parse(page.storage()['lk-calculator-notebooks-v3']),plan=bundle.entries.find(e=>e.tool==='plan');assert.ok(plan.config.completed.includes('session'));assert.equal(page.document.querySelectorAll('#saved-plans-list .b-notebook-entry').length,1);assert.equal(page.document.querySelectorAll('#saved-list .b-notebook-entry').length,1,'le plan n’est pas dans le carnet des calculs');
+ const bundle=JSON.parse(page.storage()['lk-calculator-notebooks-v3']),plan=bundle.entries.find(e=>e.tool==='plan');assert.ok(Array.isArray(plan.config.completed),'le champ « completed » reste lu (v7.47 : le bouton « C’est bon pour cette étape » est retiré)');assert.equal(page.document.querySelectorAll('#saved-plans-list .b-notebook-entry').length,1);assert.equal(page.document.querySelectorAll('#saved-list .b-notebook-entry').length,1,'le plan n’est pas dans le carnet des calculs');
  const again=app({storage:page.storage()});again.window.confirm=()=>true;assert.equal(again.node('panel-plan').hidden,false);
- await again.click({bLoad:plan.id});assert.equal(again.node('f-session-minutes').value,'45');assert.ok(JSON.parse(again.storage()['lk-calculator-v1']).completed.includes('session'));
+ await again.click({bLoad:plan.id});assert.equal(again.node('f-session-minutes').value,'45');assert.ok(Array.isArray(JSON.parse(again.storage()['lk-calculator-v1']).completed));
  await again.click({tab:'goal'});await again.edit('goal.target',2000000);await again.click({tab:'plan'});assert.equal(JSON.parse(again.storage()['lk-calculator-v1']).completed.length,0);
  // v7.34 : le business plan a ses propres cases ; l’objectif de Mon objectif (2 000 000 $) n’y entre pas tout seul.
  await again.click({tab:'plan'});assert.doesNotMatch(again.node('plan-results').textContent,/2.000.000/);assert.match(again.node('plan-results').textContent,/1.000.000/);

@@ -4362,7 +4362,7 @@
     "changer de mode",
     "quel mode choisir"
    ],
-   "text": "Les trois modes donnent la même réponse avec les mêmes chiffres : ils changent la façon de remplir et de lire. Simple montre la phrase de réponse, les chiffres qui la justifient et ta prochaine étape ; Pas à pas pose une question à la fois et explique pourquoi ; Expert ajoute les réglages avancés, les tableaux, les courbes avec points cliquables, les seuils et la comparaison avec un calcul gardé. Changer de mode garde tes chiffres.",
+   "text": "Les trois modes donnent la même réponse avec les mêmes chiffres : ils changent la façon de remplir et de lire. Simple montre la phrase de réponse, les chiffres qui la justifient et ta prochaine étape ; Pas à pas pose une question à la fois et explique pourquoi ; Expert ajoute tous les réglages (frais, attente, part…), les tableaux, les courbes avec points cliquables, les seuils et la comparaison avec un calcul gardé. Changer de mode garde tes chiffres.",
    "status": "Le site",
    "links": [
     {
@@ -4379,7 +4379,7 @@
   {
    "id": "reglages-avances",
    "theme": "calculateur",
-   "q": "Que veut dire « Réglages avancés changés » ?",
+   "q": "Que veut dire « Changé en mode Expert » ?",
    "f": [
     "reglages avances changes",
     "un reglage expert compte en simple",
@@ -4387,9 +4387,11 @@
     "revenir en simple efface les reglages",
     "reglage avance c koi",
     "les reglages avances",
-    "j ai change un reglage en expert"
+    "j ai change un reglage en expert",
+    "change en mode expert",
+    "que veut dire change en mode expert"
    ],
-   "text": "Un réglage avancé changé en Expert compte toujours en Simple : une ligne « Réglages avancés changés » le dit au-dessus de l’outil pour que tu ne l’oublies pas. Revenir en Simple ne l’efface pas. Chaque outil garde son propre mode.",
+   "text": "Un réglage changé en mode Expert compte toujours en Simple : une ligne « Changé en mode Expert » le dit au-dessus de l’outil pour que tu ne l’oublies pas. Revenir en Simple ne l’efface pas. Chaque outil garde son propre mode.",
    "status": "Le site",
    "links": [
     {
@@ -4777,7 +4779,7 @@
     "reinitialiser le calculateur",
     "effacer mes chiffres"
    ],
-   "text": "Dans l’atelier, « Partir de zéro » vide les cases du calcul en cours ; tes calculs enregistrés et tes plans ne bougent pas. « Annuler » revient en arrière juste après une action. Pour tout effacer, y compris les carnets, passe par la page Progression.",
+   "text": "Dans l’atelier, sous le choix du mode, « Partir de zéro » vide les cases du calcul en cours et « Remettre les exemples » remet les chiffres d’exemple ; tes calculs enregistrés et tes plans ne bougent pas. « Annuler » revient en arrière juste après une action. Pour tout effacer, y compris tes calculs enregistrés, passe par la page Progression.",
    "status": "Le site",
    "links": [
     {
@@ -5107,7 +5109,7 @@
   {
    "id": "trois-chemins",
    "theme": "calculateur",
-   "q": "C’est quoi « Trois chemins pour le même objectif » ?",
+   "q": "C’est quoi « Trois activités, le même objectif » ?",
    "f": [
     "trois chemins",
     "les trois chemins pour le meme objectif",
@@ -5117,9 +5119,12 @@
     "trois facons d atteindre mon objectif",
     "le plus rapide des 3",
     "le moins cher pour commencer",
-    "trois chemins pour le meme objectif"
+    "trois chemins pour le meme objectif",
+    "trois activites le meme objectif",
+    "avec quelle activite j arrive le plus vite a mon objectif",
+    "quelle activite pour mon objectif le plus vite"
    ],
-   "text": "Dans Mon objectif, sous « Comparer mes activités et tester d’autres chiffres » (Expert), les trois chemins montrent le même objectif atteint avec chacune de tes activités : même argent de départ, chaque activité avec ses frais et ses durées. Une étiquette marque « Le plus rapide des 3 » et « Le moins cher pour commencer ». C’est une lecture, pas une promesse.",
+   "text": "Dans Mon objectif, sous « Avec quelle activité j’arrive le plus vite à mon objectif ? » (ouvert en Expert), trois activités montrent le même objectif atteint avec chacune de tes activités : même argent de départ, chaque activité avec ses frais et ses durées. Une étiquette marque « Le plus rapide des 3 » et « Le moins cher pour commencer ». C’est une lecture, pas une promesse.",
    "status": "Le site",
    "links": [
     {
@@ -5148,11 +5153,11 @@
     "ou sont mes calculs",
     "carnet de calculs"
    ],
-   "text": "Donne un nom au calcul, puis clique sur Enregistrer : il va dans « Mes calculs enregistrés », classé par outil. « Enregistrer une copie » garde un nouvel essai sans écraser l’autre. Dans le carnet, chaque entrée a Voir la fiche, Ouvrir, Dupliquer, Supprimer et Garder pour comparer. Tout reste dans ton navigateur.",
+   "text": "Donne un nom au calcul, puis clique sur « ☆ Enregistrer ce calcul » : il va dans « Mes calculs enregistrés ». Le bouton « Mes calculs », en haut et en bas de l’atelier, montre combien tu en as et les ouvre d’un clic. « Enregistrer une copie » garde un nouvel essai sans écraser l’autre. Chaque carte a Ouvrir, Voir la fiche, Renommer, Dupliquer, Supprimer et Comparer. Tout reste dans ton navigateur.",
    "status": "Le site",
    "links": [
     {
-     "label": "Le chapitre Carnets de calculs",
+     "label": "Le chapitre Mes calculs enregistrés",
      "url": "/tuto.html#carnets"
     },
     {
@@ -5175,11 +5180,11 @@
     "garder pour comparer c koi",
     "deux calculs cote a cote"
    ],
-   "text": "Enregistre deux essais, puis clique « Garder pour comparer » sur l’un d’eux dans le carnet et passe en Expert : l’outil te montre l’écart entre ton calcul en cours et cet essai. Chaque outil a sa propre comparaison.",
+   "text": "Ouvre « Mes calculs », coche « Comparer » sur deux cartes, puis clique sur « Comparer ces deux calculs » : les deux s’affichent côte à côte, et une phrase dit lequel demande le moins de temps de jeu ou te laisse le plus d’argent. En Expert, « Comparer avec un calcul gardé » montre aussi l’écart entre ton calcul en cours et un calcul enregistré du même outil.",
    "status": "Le site",
    "links": [
     {
-     "label": "Le chapitre Carnets de calculs",
+     "label": "Le chapitre Mes calculs enregistrés",
      "url": "/tuto.html#carnets"
     }
    ],
@@ -5199,15 +5204,15 @@
     "voir la fiche",
     "plan lisible comme un document"
    ],
-   "text": "Dans les carnets, « Voir la fiche » ouvre le calcul ou le plan comme un document : pour un plan, le but, le programme partie par partie, les achats, les plans de secours et ton suivi ; pour un calcul, sa réponse et les chiffres utilisés. Tu peux l’imprimer.",
+   "text": "Dans « Mes calculs », « Voir la fiche » ouvre le calcul ou le plan comme un document : pour un plan, le but, le programme partie par partie, les achats, les plans de secours et ton suivi ; pour un calcul, sa réponse et les chiffres utilisés. Tu peux l’imprimer.",
    "status": "Le site",
    "links": [
     {
-     "label": "Le chapitre Carnets de calculs",
+     "label": "Le chapitre Mes calculs enregistrés",
      "url": "/tuto.html#carnets"
     },
     {
-     "label": "Mes plans enregistrés",
+     "label": "Mes plans enregistrés (dans Mes calculs)",
      "url": "/calculateurs.html#saved-plans"
     }
    ],
@@ -5227,7 +5232,7 @@
     "export json calcul",
     "transferer mes calculs"
    ],
-   "text": "L’export du calculateur emporte la configuration courante ; « Exporter mon suivi » (page Progression) emporte aussi les carnets et les plans enregistrés. Sur l’autre appareil, importe le fichier, lis l’aperçu, puis choisis Fusionner ou Remplacer. Les anciennes sauvegardes compatibles sont migrées.",
+   "text": "« Télécharger mon calcul », en bas de « Mes calculs », emporte le calcul en cours dans un fichier ; « Exporter mon suivi » (page Progression) emporte aussi tous tes calculs et plans enregistrés. Sur l’autre appareil, importe le fichier, lis l’aperçu, puis choisis Fusionner ou Remplacer. Les anciennes sauvegardes compatibles sont reprises.",
    "status": "Le site",
    "links": [
     {
@@ -5254,7 +5259,7 @@
     "recuperer un calcul",
     "annuler la suppression"
    ],
-   "text": "Une suppression de carnet peut être annulée avec l’action « Annuler » proposée juste après. Passé ce moment, le calcul n’est plus dans le navigateur, sauf si tu avais exporté ton suivi.",
+   "text": "Oui, juste après : « Supprimer » affiche le bouton « Annuler la suppression ». Passé ce moment, le calcul n’est plus dans le navigateur, sauf si tu avais exporté ton suivi.",
    "status": "Le site",
    "links": [
     {
@@ -5278,7 +5283,7 @@
     "partager un lien",
     "lien copie"
    ],
-   "text": "Dans l’atelier, « Partager » met ton calcul dans l’adresse de la page (après #plan=) et copie ce lien : la personne qui l’ouvre voit les mêmes chiffres. Si le plan est trop gros pour un lien, l’outil te dit d’exporter le fichier JSON ; si la copie est indisponible, le lien complet reste dans la barre d’adresse. Rien n’est envoyé sur un serveur.",
+   "text": "Dans l’atelier, « Partager » met ton calcul dans l’adresse de la page (après #plan=) et copie ce lien : la personne qui l’ouvre voit les mêmes chiffres. Si le calcul est trop long pour un lien, l’outil te dit de le télécharger ; si la copie est indisponible, le lien complet reste dans la barre d’adresse. Rien n’est envoyé sur un serveur.",
    "status": "Le site",
    "links": [
     {
@@ -5286,7 +5291,7 @@
      "url": "/calculateurs.html#atelier"
     },
     {
-     "label": "Le chapitre Carnets de calculs",
+     "label": "Le chapitre Mes calculs enregistrés",
      "url": "/tuto.html#carnets"
     }
    ],
@@ -5538,7 +5543,7 @@
     "tuto c koi",
     "mode d emploi du site"
    ],
-   "text": "Le Tuto est le guide du calculateur en 15 chapitres : ton premier calcul, les modes, un chapitre par outil avec un exemple à essayer et « une erreur fréquente à éviter », les carnets, le business plan, les sources et statuts, les mots du calculateur et une FAQ. Chaque exercice s’ouvre directement dans l’outil.",
+   "text": "Le Tuto est le guide du calculateur en 15 chapitres : ton premier calcul, les modes, un chapitre par outil avec un exemple à essayer et « une erreur fréquente à éviter », tes calculs enregistrés, le business plan, les sources et statuts, les mots du calculateur et une FAQ. Chaque exercice s’ouvre directement dans l’outil.",
    "status": "Le site",
    "links": [
     {
@@ -5616,7 +5621,7 @@
     "effacer les donnees du site supprime mes calculs",
     "calculs dans le navigateur"
    ],
-   "text": "Oui : les carnets restent dans ce navigateur, sans compte. Effacer les données du site peut les supprimer, alors exporte ton suivi de temps en temps pour le garder ou l’emporter sur un autre appareil.",
+   "text": "Oui : tes calculs enregistrés restent dans ce navigateur, sans compte. Effacer les données du site peut les supprimer, alors exporte ton suivi de temps en temps pour le garder ou l’emporter sur un autre appareil.",
    "status": "Le site",
    "links": [
     {
@@ -6219,11 +6224,11 @@
     "imprimer un calcul",
     "imprimer mon business plan"
    ],
-   "text": "Oui : les pages ont un style d’impression propre (sans menu ni bouton), et la fiche d’un plan ou d’un calcul enregistré s’imprime comme un document depuis les carnets.",
+   "text": "Oui : les pages ont un style d’impression propre (sans menu ni bouton), et la fiche d’un plan ou d’un calcul enregistré s’imprime comme un document depuis « Mes calculs ».",
    "status": "Le site",
    "links": [
     {
-     "label": "Le chapitre Carnets de calculs",
+     "label": "Le chapitre Mes calculs enregistrés",
      "url": "/tuto.html#carnets"
     }
    ],
@@ -6400,7 +6405,7 @@
     "transferer mon suivi",
     "exporter mon suivi sur un autre appareil"
    ],
-   "text": "Sur la page Progression, « Exporter mon suivi » crée un fichier avec garage, arsenal, lieux repérés, contenus cochés, carnets du calculateur, marqueurs et dessins de la carte. Sur l’autre appareil, importe le fichier : un aperçu montre ce qu’il contient, puis « Fusionner » ajoute ses cases aux tiennes et « Remplacer » met le fichier à la place, rubrique par rubrique.",
+   "text": "Sur la page Progression, « Exporter mon suivi » crée un fichier avec garage, arsenal, lieux repérés, contenus cochés, calculs enregistrés du calculateur, marqueurs et dessins de la carte. Sur l’autre appareil, importe le fichier : un aperçu montre ce qu’il contient, puis « Fusionner » ajoute ses cases aux tiennes et « Remplacer » met le fichier à la place, rubrique par rubrique.",
    "status": "Le site",
    "links": [
     {

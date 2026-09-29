@@ -118,12 +118,15 @@ async function persistenceAndShare(page, context, browser, origin) {
   check(await page.locator('#f-goal-capital').inputValue().then(v => v.replace(/\s/g, '')) === '271828', 'Current configuration survives reload');
   page.on('dialog', dialog => dialog.accept(dialog.type() === 'prompt' ? 'QA navigateur' : undefined));
   await page.locator('#calc-save').click();
-  await page.locator('#saved-calcs summary').click();
+  // v7.47 : « Mes calculs enregistrés » s’ouvre dans un tiroir (bouton « Mes calculs »)
+  await page.locator('#calc-saved-open').click();
   check(await page.locator('#saved-list [data-b-load]').count() > 0, 'Saved configuration appears in the notebook');
   await page.reload({ waitUntil: 'networkidle' });
-  await page.locator('#saved-calcs summary').click();
+  await page.locator('#calc-saved-open').click();
   check(await page.locator('#saved-list [data-b-load]').count() > 0, 'Notebook survives reload');
+  await page.keyboard.press('Escape');
   await page.locator('#f-goal-capital').fill('222222');
+  await page.locator('#calc-saved-open').click();
   await page.locator('#saved-list [data-b-load]').first().click();
   check(await page.locator('#f-goal-capital').inputValue().then(v => v.replace(/\s/g, '')) === '271828', 'Opening a favourite restores its parameters');
   await context.grantPermissions(['clipboard-read', 'clipboard-write']);
@@ -141,6 +144,7 @@ async function persistenceAndShare(page, context, browser, origin) {
     await badNumbers(sharedPage, 'shared configuration');
     await clean.close();
   }
+  await page.locator('#calc-saved-open').click();
   const downloadPromise = page.waitForEvent('download');
   await page.locator('#calc-export').click();
   const download = await downloadPromise;
@@ -150,6 +154,7 @@ async function persistenceAndShare(page, context, browser, origin) {
   check(exported && typeof exported === 'object', 'Configuration export is valid JSON');
   await page.locator('#calc-import').setInputFiles({ name: 'invalid.json', mimeType: 'application/json', buffer: Buffer.from('{broken') });
   await badNumbers(page, 'invalid JSON import');
+  await page.keyboard.press('Escape');
   await page.locator('button[data-tab="purchase"]').click();
   await page.locator('#catalogue-type').selectOption('activity');
   const activity = page.locator('#catalogue-results [data-activity]').first();

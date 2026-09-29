@@ -25,7 +25,8 @@ SPEC={
  'budget-simple':([TAB('budget')],'#panel-budget','#panel-budget .calc-card:not(.calc-result)','#budget-results'),
  'compare-simple':([TAB('compare'),PICK('compare-search','kamacho'),PICK('compare-search','bati'),SET('compare-price-0','150000'),SET('compare-price-1','50000'),"document.querySelector('[data-field=\"assets.1.utility\"]')&&(()=>{const el=document.querySelector('[data-field=\"assets.1.utility\"]');el.value='5';el.dispatchEvent(new Event('change',{bubbles:true}));})()"],'#panel-compare','#panel-compare .calc-card:not(.calc-result)','#compare-results'),
  'plan':([TAB('plan'),"(()=>{const s=document.getElementById('f-plan-goal-kind');if(s){s.value='purchase';s.dispatchEvent(new Event('change',{bubbles:true}));}})()",PICK('plan-search','kamacho'),SET('plan-price','1000000'),"(()=>{const s=document.getElementById('f-plan-source');if(s){s.value='missions';s.dispatchEvent(new Event('change',{bubbles:true}));}})()","document.querySelector('[data-b-plan-m-add]').click()",SET('plan-m-0-name','Livraison'),SET('plan-m-0-reward','60000'),SET('plan-m-0-cost','5000'),SET('plan-m-0-duration','20'),"document.querySelector('[data-b-plan-m-add]').click()",SET('plan-m-1-name','Braquage'),SET('plan-m-1-reward','150000'),SET('plan-m-1-cost','20000'),SET('plan-m-1-duration','40'),"(()=>{document.querySelectorAll('.b-plan-mission').forEach(d=>d.open=false);})()","document.querySelector('[data-fold-head=\"plan-program\"]')?.click()"],'#panel-plan','#panel-plan .calc-card:not(.calc-result)','#plan-results'),
- 'carnets':([TAB('goal'),"document.getElementById('calc-save').click()","(()=>{const d=document.getElementById('saved-calcs');d.open=true;})()"],'#saved-calcs','#saved-calcs .calc-saved-body','#saved-list'),
+ # v7.47 : « Mes calculs enregistrés » est un tiroir ; deux essais (Normal, Prudent) cochés pour la comparaison
+ 'carnets':([TAB('goal'),SET('calc-name','Normal'),"document.getElementById('calc-save').click()",SET('f-goal-hourly','80000'),SET('calc-name','Prudent'),"document.getElementById('calc-saved-open').click()","document.querySelector('#saved-now [data-b-save-copy]').click()","(()=>{document.querySelectorAll('#saved-list [data-b-pick]').forEach(i=>{i.checked=true;i.dispatchEvent(new Event('change',{bubbles:true}));});document.querySelector('.calc-drawer-in').scrollTop=0;})()"],'#calc-drawer','#saved-now','#saved-list'),
 }
 manifest={}
 def rect(pg,sel):
@@ -39,11 +40,11 @@ with sync_playwright() as p:
     for key,(steps,sel,zi,zr) in SPEC.items():
         for mobile in (False,True):
             w,h=(390,844) if mobile else (1440,900)
-            ctx=b.new_context(viewport={'width':w,'height':h},device_scale_factor=1,is_mobile=mobile,has_touch=mobile,reduced_motion='reduce')
+            ctx=b.new_context(viewport={'width':w,'height':h},device_scale_factor=(2 if key=='carnets' and not mobile else 1),is_mobile=mobile,has_touch=mobile,reduced_motion='reduce')
             pg=ctx.new_page(); pg.route('**/*',lambda r: r.abort() if 'fonts.g' in r.request.url else r.continue_())
             pg.goto(f'http://127.0.0.1:{port}/calculateurs.html',wait_until='load'); pg.wait_for_timeout(500)
             for s in steps: pg.evaluate(s); pg.wait_for_timeout(350)
-            pg.evaluate("document.querySelectorAll('.lk-sticky').forEach(e=>e.hidden=true);const st=document.createElement('style');st.textContent='header,.lk-rails,.calc-wizard{visibility:hidden!important}#lk-status,.lk-status,#leo-launch,.leo-launch{display:none!important}';document.head.appendChild(st)")
+            pg.evaluate("document.querySelectorAll('.lk-sticky').forEach(e=>e.hidden=true);const st=document.createElement('style');st.textContent='header,.lk-rails,.calc-wizard{visibility:hidden!important}#lk-status,.lk-status,#leo-launch,.leo-launch,.b-drawer-status,.calc-reminder{display:none!important}';document.head.appendChild(st)")
             pg.wait_for_selector(sel.split(',')[0].strip(),state='visible',timeout=8000)
             box=rect(pg,sel.split(',')[0].strip()); ri=rect(pg,zi.split(',')[0].strip()); rr=rect(pg,zr)
             name=key+('-mobile' if mobile else ''); path=f'{OUT}/{name}.webp'; png=f'/tmp/{name}.png'

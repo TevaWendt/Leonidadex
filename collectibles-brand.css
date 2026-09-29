@@ -7,7 +7,7 @@
 :root{--col-ink:var(--ink,#1A1A1E);--col-paper:var(--paper,#FDFBF7);--col-line:var(--ink,#1A1A1E);--col-shadow:4px 4px 0 rgba(26,26,30,.18);}
 
 /* ---------- typographie et sections ---------- */
-main .col-eyebrow,main .col-panel-heading .col-eyebrow{font:800 .72rem/1 'Archivo',system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--coral);margin:0 0 8px;}
+main .col-eyebrow,main .col-panel-heading .col-eyebrow{font:800 .72rem/1 'Archivo',system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--coral-text);margin:0 0 8px;}
 main h2:not(.sec-h),main h3{font-family:'Archivo',system-ui,sans-serif;font-weight:900;letter-spacing:-.02em;color:var(--col-ink);}
 main .col-section-head{margin:0 0 14px;}
 main .col-section-head h2{font-size:1.15rem;margin:0;}
@@ -26,7 +26,7 @@ main input[type="text"],main input[type="search"],main input[type="url"],main se
 main input:focus-visible,main select:focus-visible,main textarea:focus-visible,main .col-btn:focus-visible{outline:3px solid var(--amber);outline-offset:2px;}
 main .col-checkbox input,main input[type="checkbox"]{accent-color:var(--coral);width:18px;height:18px;}
 main label{font-weight:700;color:var(--col-ink);}
-main .col-text-link,main .col-link{color:var(--coral);font-weight:800;text-decoration:underline;text-underline-offset:3px;}
+main .col-text-link,main .col-link{color:var(--coral-text);font-weight:800;text-decoration:underline;text-underline-offset:3px;}
 
 /* ---------- catalogue ---------- */
 #catalogue .col-filters{background:#fff;border:2px solid var(--col-ink);border-radius:12px;padding:16px;box-shadow:var(--col-shadow);}
@@ -95,7 +95,7 @@ main .col-notice:empty,main .col-feedback:empty,main .col-tools-feedback:empty,m
 @media(max-width:820px){#methode-sources .col-method-grid,#methode-sources .col-method > div:has(> article){grid-template-columns:1fr;}}
 #methode-sources .col-sources{background:var(--col-paper);border:2px solid var(--col-ink);border-radius:12px;padding:18px;box-shadow:var(--col-shadow);}
 #methode-sources .col-sources ul{padding-left:18px;}
-#methode-sources .col-sources a{color:var(--coral);font-weight:700;}
+#methode-sources .col-sources a{color:var(--coral-text);font-weight:700;}
 
 /* ---------- boîtes de dialogue ---------- */
 .col-dialog{border:2px solid var(--col-ink);border-radius:14px;box-shadow:8px 8px 0 var(--amber);padding:22px;font-family:'Archivo',sans-serif;}

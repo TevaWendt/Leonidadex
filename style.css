@@ -970,7 +970,7 @@ table.spec td.unknown{font-weight:400; color:var(--ink-soft); font-style:italic;
 .rl-ico svg{width:100%; height:100%;}
 .rl-nom{color:var(--ink-soft);}
 .rl-t{margin-left:auto; font-weight:800; font-variant-numeric:tabular-nums;}
-.rl-note{font-size:.72rem; color:var(--ink-soft); margin-top:11px; line-height:1.45; opacity:.85;}
+.rl-note{font-size:.72rem; color:var(--ink-soft); margin-top:11px; line-height:1.45;}
 .map-ruler-reset{
   width:100%; margin-top:8px; cursor:pointer; font-family:inherit;
   font-size:.82rem; font-weight:700; color:var(--ink-soft);
@@ -1227,7 +1227,7 @@ body.map-full-on{overflow:hidden;}
 .map-only.on{background:var(--coral); border-color:var(--coral-text,#B93220);}
 
 .fl-st{align-items:center; gap:8px; padding:5px 0;}
-.fl-st em{font-style:normal; font-size:.75rem; color:var(--ink-soft); opacity:.8;}
+.fl-st em{font-style:normal; font-size:.75rem; color:var(--ink-soft);}
 .st-chip{
   font-size:.68rem; font-weight:800; letter-spacing:.02em;
   border-radius:100px; padding:2px 9px; flex-shrink:0;
@@ -1266,7 +1266,7 @@ body.map-full-on{overflow:hidden;}
 }
 .map-edit-pane{margin-top:11px;}
 .ed-help{font-size:.78rem; color:var(--ink-soft); line-height:1.5; margin-bottom:10px;}
-.ed-empty{font-size:.78rem; color:var(--ink-soft); font-style:italic; opacity:.8;}
+.ed-empty{font-size:.78rem; color:var(--ink-soft); font-style:italic;}
 .ed-list{list-style:none; max-height:190px; overflow-y:auto; margin-bottom:10px;}
 .ed-list li{border-bottom:1px solid var(--rule);}
 .ed-list button{
@@ -1390,7 +1390,7 @@ body.map-full-on{overflow:hidden;}
   font-size:1.1rem; line-height:1; color:var(--ink-soft); border-radius:4px;
 }
 .fd-un:hover{background:#FADFD9; color:#9B2E19;}
-.fd-empty{font-size:.78rem; color:var(--ink-soft); font-style:italic; opacity:.8; line-height:1.5;}
+.fd-empty{font-size:.78rem; color:var(--ink-soft); font-style:italic; line-height:1.5;}
 
 .ed-list li{display:flex; align-items:center; gap:2px;}
 .ed-go{
@@ -1448,7 +1448,7 @@ body.map-full-on{overflow:hidden;}
   margin-left:auto; font-size:.68rem; font-weight:800; color:var(--ink-soft);
   background:var(--paper-2); border-radius:100px; padding:1px 7px; flex-shrink:0;
 }
-.fl-vide{opacity:.4;}
+.fl-vide{font-style:italic;} /* v7.47 : plus d’opacité .4 (contraste 1,9:1) ; le « 0 » et l’italique disent que la catégorie est vide */
 .fl{justify-content:flex-start;}
 
 /* itinéraire multi-étapes */
@@ -1734,7 +1734,7 @@ body.map-full-on{overflow:hidden;}
 [hidden]{display:none!important;}
 html:not(.js) .reveal,html:not(.js) .rise{opacity:1;transform:none;}
 :focus-visible{outline:3px solid #126b85;outline-offset:3px;}
-.lk-status{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);z-index:2000;background:#1A1A1E;color:#fff;border-radius:10px;padding:12px 18px;max-width:min(92vw,680px);overflow-wrap:anywhere;box-shadow:0 3px 15px #0003;}
+.lk-status{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);z-index:2000;background:#1A1A1E;color:#fff;border-radius:10px;padding:12px 18px;width:max-content;max-width:min(92vw,680px);overflow-wrap:anywhere;box-shadow:0 3px 15px #0003;}
 .lk-status:empty{display:none;}
 .progress-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:24px 0;}
 .progress-cards progress{display:block;width:100%;margin:12px 0;accent-color:#B93220;}
@@ -3020,3 +3020,31 @@ a.ed-brand:hover,a.ed-brand:focus-visible{border-color:var(--ink);box-shadow:5px
 .form .signup-consent{flex-basis:100%;display:flex;gap:10px;align-items:flex-start;margin-top:4px;font-size:.92rem;line-height:1.5;color:var(--ink);cursor:pointer;}
 .form .signup-consent input{flex:none;width:22px;height:22px;min-width:22px;margin:1px 0 0;padding:0;accent-color:#B93220;border:0;}
 .signup-legal a{color:var(--coral-text,#B93220);text-decoration:underline;text-underline-offset:3px;font-weight:700;}
+/* v7.47 (audit de clôture) : niveaux de lecture équilibrés. 3, 4 ou 5 cartes : jamais « 3 + 1 » ni « 4 + 1 » collés
+   à gauche ; la dernière rangée incomplète est centrée (1 colonne, puis 2, puis 3 ou 4 selon le nombre de cartes). */
+.ed-levels,.ed-levels--about{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;}
+.ed-levels>*{flex:0 1 100%;max-width:100%;}
+@media(min-width:700px){.ed-levels>*{flex-basis:calc(50% - 7px);}}
+@media(min-width:1100px){.ed-levels>*{flex-basis:calc((100% - 28px)/3);}.ed-levels:has(>:nth-child(4):last-child)>*{flex-basis:calc((100% - 42px)/4);}}
+.ed-pair-src{display:inline-flex;align-items:center;min-height:24px;padding:2px 8px;}
+/* v7.47 : cartes « Autres … » des fiches : rangées pleines ou dernière rangée centrée (jamais 5 + 1 ni 4 + 2 à gauche) */
+.rel-grid{display:flex;flex-wrap:wrap;justify-content:center;}
+.rel-grid>*{flex:0 1 calc((100% - 11px)/2);min-width:0;}
+@media(min-width:700px){.rel-grid>*{flex-basis:calc((100% - 22px)/3);}}
+@media(min-width:1180px){.rel-grid>*{flex-basis:calc((100% - 55px)/6);}}
+/* v7.47 : un nom de lieu sur trois lignes au plus (« Moore Haven Lock & Dam (nom réel) » n’est plus coupé) */
+.tr-n{-webkit-line-clamp:3;}
+/* v7.47 (audit de clôture) : contrastes AA mesurés par script. Le corail vif (#E8452C) ne passe pas 4,5:1 en petit
+   texte, sur blanc comme en fond d’un texte blanc : on passe au corail foncé (--coral-text, 5,9:1). */
+.chip-filter.is-on em{background:var(--coral-text);}
+.lo-share{background:var(--coral-text);border-color:var(--coral-text);}
+.lo-share:hover{background:#9E2A1B;}
+.lk-her-k{color:var(--coral-text);}
+.map-coord{background:rgba(253,251,247,.96);}
+/* v7.47 : cibles tactiles d’au moins 24 px (WCAG 2.5.8) pour les liens seuls sur leur ligne */
+.feat h3 a{display:inline-block;padding:4px 0;}
+/* noms longs (« Pegassi Infernus Classic ») : une carte par rangée sur téléphone */
+@media(max-width:480px){.rel-grid>*{flex-basis:100%;}}
+/* v7.47 : étapes numérotées (Collectibles) et bouton « Copier la position » de la carte */
+.lk-steps b{color:var(--coral-text);}
+.map-copy{min-height:24px;}

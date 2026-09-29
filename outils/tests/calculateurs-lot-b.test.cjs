@@ -37,7 +37,7 @@ test('Relecture B: calendrier incomplet conserve le gain et la progression calcu
  const days=E.sessionProjection({...input,daysPerWeek:null});
  assert.equal(days.valid,true);assert.equal(days.missingAfter,800000);assert.equal(days.sessionsLeft,8);assert.equal(days.calendarDays,null);assert.match(days.calendarReason,/jours/);
  const repeat=E.sessionProjection({...input,repeatProfit:null});
- assert.equal(repeat.valid,true);assert.equal(repeat.missingAfter,800000);assert.equal(repeat.sessionsLeft,null);assert.match(repeat.calendarReason,/session/);
+ assert.equal(repeat.valid,true);assert.equal(repeat.missingAfter,800000);assert.equal(repeat.sessionsLeft,null);assert.match(repeat.calendarReason,/partie/);
  const reached=E.sessionProjection({...input,target:100000,daysPerWeek:null,repeatProfit:null});
  assert.equal(reached.valid,true);assert.equal(reached.sessionsLeft,0);assert.equal(reached.calendarDays,0);
 });

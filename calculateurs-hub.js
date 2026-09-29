@@ -85,7 +85,7 @@
   function answer(value) {
     const result = route(value);
     if (!result) return;
-    if (out) { out.textContent = result.label + (result.done.length ? ' · ' + result.done.join(' · ') : ' : remplis les cases juste en dessous.'); out.hidden = false; }
+    if (out) { out.textContent = result.label + (result.done.length ? ' · ' + result.done.join(' · ') : ' : remplis les cases juste en dessous.'); out.hidden = false; }
     focusWorkshop();
   }
   if (form && input) {

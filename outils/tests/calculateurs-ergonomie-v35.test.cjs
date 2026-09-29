@@ -52,7 +52,7 @@ test('Les huit calculs aussi : hypothèses, compromis et formules deviennent des
  clickSel(p,'[data-mode="advanced"]');const ex=folds(p,'#expert-session');assert.ok(ex.includes('session-formula:closed')&&ex.includes('session-raw:closed'),ex.join(' '));
  clean(p);});
 test('Graphiques : aire dégradée, info-bulle sur chaque point, point réel modifiable, chiffre de sensibilité applicable d’un clic',async()=>{
- const s=blank();s.goal={...s.goal,capital:200000,target:1000000,hourly:100000,dailyMinutes:60};s.plan.goal={...s.plan.goal,kind:'amount',target:1000000};s.plan.situation={capital:250000,reserve:0,hourly:100000,unitsHourly:0,dailyMinutes:60,daysPerWeek:7,upkeepPerSession:0};s.plan.details=true;
+ const s=blank();s.goal={...s.goal,capital:200000,target:1000000,hourly:100000,dailyMinutes:60};s.plan.goal={...s.plan.goal,kind:'amount',target:1000000};s.plan.situation={capital:250000,reserve:0,hourly:100000,unitsHourly:0,dailyMinutes:60,daysPerWeek:7,upkeepPerSession:0};/* v7.47 : le détail du plan (courbe, calendrier) est dans le mode Expert */s.views={...(s.views||{}),plan:'advanced'};s.mode='advanced';
  s.plan.log=[{at:'2026-09-20T10:00:00.000Z',capital:250000,minutes:60,forecast:300000,note:'',units:null,unitsGain:null,gain:50000,plannedGain:100000,sessionMinutes:60,runs:{},purchases:[]}];
  const p=await page('plan',s,{storage:{'lk-calc-folds-v1':JSON.stringify({all:true})}});
  const fig=p.d.querySelector('[data-c-chart="c-plan-curve"]');assert.ok(fig);assert.ok(fig.querySelector('.c-area'),'aire sous la courbe prévue');assert.ok(fig.querySelector('linearGradient'));

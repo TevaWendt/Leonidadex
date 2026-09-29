@@ -135,7 +135,7 @@
 .cat-lieu:hover,.cat-lieu:focus-visible{background:var(--amber);}
 .cat-lieu .pip{width:9px;height:9px;border-radius:50%;display:inline-block;border:1.5px solid var(--ink);flex:none;}
 .cat-type{display:inline-block;border:1.5px dashed var(--rule);background:var(--paper-2,#F4F0E7);color:var(--ink-soft);white-space:normal;line-height:1.45;}
-.cat-type i{font-style:normal;opacity:.85;}
+.cat-type i{font-style:normal;} /* v7.47 : opacité .85 retirée (4,3:1 sur papier) */
 .cat-type i::before{content:' · ';}
 .cat-c-own .track-bt{margin:0;}
 .cat-c-own.is-own{background:transparent;}

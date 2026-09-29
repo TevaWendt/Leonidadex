@@ -70,10 +70,10 @@
   function guided() { return panels.dataset.mode === 'guided'; }
   function activePanel() { return panels.querySelector('.calc-panel:not([hidden])'); }
   function activeTab() { var p = activePanel(); return p ? p.id.replace('panel-', '') : ''; }
-  /* Les questions que l'outil a marquées « à sauter » (data-skip) ne sont pas posées : le parcours s'adapte à la demande. */
+  /* Les questions que l'outil a marquées « à sauter » (data-skip) ne sont pas posées : le parcours s'adapte à la demande. */
   function stepsOf(panel) { return panel ? Array.prototype.slice.call(panel.querySelectorAll('.calc-step[data-step]')).filter(function (n) { return !n.dataset.skip && !n.hidden; }) : []; }
   function current() { return stepByTab[activeTab()] || 1; }
-  function resultOf(panel) { return panel ? (panel.querySelector('.calc-result') || document.getElementById(activeTab() + '-results')) : null; }
+  function resultOf(panel) { return panel ? (panel.querySelector('.calc-result,[data-answer-card]') || document.getElementById(activeTab() + '-results')) : null; }
   function wizard(focus) {
     var on = guided(), panel = activePanel(), steps = stepsOf(panel), total = steps.length;
     document.querySelectorAll('#calc-panels .has-steps').forEach(function (card) { card.classList.remove('has-steps'); });
@@ -87,7 +87,7 @@
     if (nav.previousElementSibling !== box) box.insertAdjacentElement('afterend', nav);
     head.hidden = false; nav.hidden = false;
     var count = $('wiz-count'), bar = $('wiz-bar');
-    if (count && cur) count.textContent = 'Question ' + step + ' sur ' + total + ' : ' + cur.dataset.question;
+    if (count && cur) count.textContent = 'Question ' + step + ' sur ' + total + ' : ' + cur.dataset.question;
     var why = $('wiz-why'); if (why) { why.textContent = cur && cur.dataset.why ? 'Pourquoi cette question ? ' + cur.dataset.why : ''; why.hidden = !(cur && cur.dataset.why); }
     if (bar) bar.style.width = (step / total * 100) + '%';
     var prev = nav.querySelector('[data-wiz="prev"]'), next = nav.querySelector('[data-wiz="next"]');

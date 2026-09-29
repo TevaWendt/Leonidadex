@@ -192,7 +192,7 @@ function fiche(v,i){
  const red=RED.vehicule(v,CATL);
  const lede=nom+' dans GTA VI : '+cat.toLowerCase()+(mod?'. Inspiration : '+mod:'')+'. '+st.d;
  /* meta description : les premières phrases du texte de la fiche (160 caractères max), sinon le lede générique */
- const description=(()=>{const ph=(v.txt||'').split(/(?<=[.!?])\s+/);let d=nom+' dans GTA VI.';let n=0;for(const q of ph){if((d+' '+q).length>158)break;d=d+' '+q;n++;}return n?d:(lede.length>158?lede.slice(0,155).replace(/\s+\S*$/,'')+'…':lede);})();
+ const description=(()=>{const ph=(v.txt||'').split(/(?<=[.!?])\s+/);let d=nom+' dans GTA VI.';let n=0;for(const q of ph){if((d+' '+q).length>158)break;d=d+' '+q;n++;}/* v7.47 : description trop courte (moins de 100 caractères) : la phrase suivante, coupée à un mot */if(n&&d.length<100&&ph[n]){const room=156-d.length;const cut=ph[n].slice(0,room).replace(/\s+\S*$/,'').replace(/[,;:\s]+$/,'');if(cut.length>20)d=d+' '+cut+'…';}return n?d:(lede.length>158?lede.slice(0,155).replace(/\s+\S*$/,'')+'…':lede);})();
  const available=(v.vues||[]).filter(view=>fs.existsSync('img/vehicules/'+v.id+'-'+view+'.jpg'));
  const meds=medList(v);
  const img=available.length>0, vues=img?available.join(','):'';
@@ -384,6 +384,7 @@ Object.entries(RETR).forEach(([id,r])=>{
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+${FAV}
 <title>Fiche retirée | Leonidakit</title>
 <link rel="canonical" href="https://www.leonidakit.com/vehicules.html">
 <meta name="robots" content="noindex, follow">

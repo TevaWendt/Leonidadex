@@ -43,7 +43,7 @@
 .ed-level-ex span{font-weight:800;}
 .ed-level-ex a{color:var(--coral-text,#B93220);text-decoration:underline;text-underline-offset:3px;}
 .ed--night .ed-level-ex a{color:var(--amber);}
-.ed-levels--about{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:26px;}
+.ed-levels--about{margin-bottom:26px;} /* v7.47 : la mise en page vient de .ed-levels (style.css), rangées équilibrées */
 .ed-col-link{display:inline-flex;align-items:center;gap:6px;margin-top:10px;font-weight:800;color:var(--coral-text,#B93220);text-decoration:underline;text-underline-offset:4px;}
 .ed-figs--about{grid-template-columns:repeat(4,minmax(0,1fr));}
 .ed-figs--about .fig{gap:8px;}
@@ -128,7 +128,7 @@
   .info-card{padding:18px;}
   .info-contact-status{padding:18px;}
   .info-actions>*{max-width:100%;}
-  .ed-levels--about{grid-template-columns:1fr;}
+
 }
 @media(max-width:480px){.ed-figs--about{grid-template-columns:repeat(2,minmax(0,1fr));}}
 

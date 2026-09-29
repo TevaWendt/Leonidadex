@@ -341,7 +341,7 @@ html,.calculator-page,.calculator-page main{background:#fff!important;color:#161
 .calc-guide-steps{display:flex;flex-wrap:wrap;gap:8px}.calc-guide-steps button{border:1px solid var(--amber-2,#f7b645);border-radius:8px;padding:10px 13px;background:#fff;color:#2e1d53;cursor:pointer;font:inherit;font-weight:700}
 @media(max-width:600px){.calculator-page .calc-fields>.calc-field>.calc-label{min-height:2.8em}}
 .calc-reference:empty{display:none}
-@media print{.calculator-page h3,.calculator-page summary{break-after:avoid}#goal-sensitivity{break-inside:avoid}.calc-route-head{break-after:avoid}}
+@media print{.calculator-page h3,.calculator-page summary{break-after:avoid}.calc-route-head{break-after:avoid}}
 /* Réserve l’atelier avant l’initialisation, sans décaler le carnet au premier rendu. */
 .calculator-page #calc-panels:empty{min-height:900px}
 @media(max-width:700px){.calculator-page #calc-panels:empty{min-height:1100px}}

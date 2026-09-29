@@ -80,7 +80,7 @@ test('Courbe du programme : un point par partie, l’argent baisse au moment de 
 });
 test('Refus clairs : rien ne rentre, mission verrouillée au départ, but absent, trop de missions, jamais d’Infinity',()=>{
  assert.match(E.missionPlan({capital:0,sessionMinutes:60,goalPrice:1000,activities:[A]}).reason,/Aucune mission ne rentre/);
- assert.match(E.missionPlan({capital:120000,reserve:10000,sessionMinutes:90,goalPrice:1000000,activities:[Bq],purchases:[G]}).reason,/« Braquage » demande d’abord un achat \(Garage\)/);
+ assert.match(E.missionPlan({capital:120000,reserve:10000,sessionMinutes:90,goalPrice:1000000,activities:[Bq],purchases:[G]}).reason,/«\sBraquage\s» demande d’abord un achat \(Garage\)/);
  assert.match(E.missionPlan({capital:100,sessionMinutes:60,hourly:10}).reason,/Dis-moi ton but/);
  assert.match(E.missionPlan({capital:100,sessionMinutes:60,goalPrice:10}).reason,/comment tu gagnes ton argent/);
  assert.match(E.missionPlan({capital:100,sessionMinutes:60,goalPrice:10,activities:Array.from({length:13},()=>A)}).reason,/douze/);
@@ -162,7 +162,8 @@ test('But gagné avec l’expérience dans le formulaire : ses cases, sa répons
 test('Deux carnets : le plan enregistré a sa fiche complète, le calcul enregistré la sienne, chacun dans sa boîte',async()=>{
  const p=await page('plan',scenario());p.w.confirm=()=>true;
  clickSel(p,'[data-b-save="plan"]');assert.equal(p.d.querySelectorAll('#saved-plans-list .b-notebook-entry').length,1);assert.equal(p.d.querySelectorAll('#saved-list .b-notebook-entry').length,0);
- assert.match(text(p,'saved-plans-list'),/But : Ma voiture · 5 parties de 1 h 30 · 5 jours · 2 missions · 1 achat d’avant/);
+ // v7.47 : la carte du tiroir montre la réponse et les chiffres clés (le résumé complet reste dans le carnet)
+ assert.match(text(p,'saved-plans-list'),/Mon plan\s*5\sparties de 1\sh\s30 · 5\sjours/);assert.match(text(p,'saved-plans-list'),/Mon but\s*Ma voiture/);assert.match(JSON.parse(p.w.localStorage.getItem('lk-calculator-notebooks-v3')).entries[0].summary.replace(/[\u00a0\u202f]/g,' '),/But : Ma voiture · 5 parties de 1 h 30 · 5 jours · 2 missions · 1 achat d’avant/);
  clickSel(p,'#saved-plans-list [data-b-sheet]');const sheet=text(p,'calc-sheet-body');
  for(const part of ['FICHE DE BUSINESS PLAN','Ma voiture','En bref','Le but','Où j’en suis','Mes missions','Le programme, dans l’ordre','En premier · Partie 1','Après la partie 1 : achète « Garage »','Mes achats et investissements','après la partie 1','remboursé après','Si ça ne se passe pas comme prévu','Plan A'])assert.match(sheet,new RegExp(part.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')),part);
  assert.doesNotMatch(sheet,/NaN|Infinity|undefined/);

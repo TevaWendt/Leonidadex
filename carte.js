@@ -1265,10 +1265,10 @@
         ? hits.map(function(p){
             const parent = p.p ? byId(p.p) : null;
             const detail = (p.r ? p.r + ' · ' : '') + (parent ? parent.n + ' · ' : '') + CATS[p.c].nom;
-            return '<button type="button" data-go="'+p.id+'"><span>'+p.n+'</span>'+
+            return '<button type="button" role="option" aria-selected="false" data-go="'+p.id+'"><span>'+p.n+'</span>'+
               '<span class="kind" style="color:'+CATS[p.c].col+'">'+detail+'</span></button>';
           }).join('')
-        : '<div class="none">Aucun lieu trouvé.</div>';
+        : '<div class="none" role="option" aria-disabled="true" aria-selected="false">Aucun lieu trouvé.</div>';
       sugBox.classList.add('open');
     });
 
@@ -1276,6 +1276,7 @@
     searchI.addEventListener('input',()=>searchI.setAttribute('aria-expanded',String(sugBox.classList.contains('open'))));
     searchI.addEventListener('keydown',function(e){if(e.key==='Escape'){sugBox.classList.remove('open');searchI.setAttribute('aria-expanded','false');}else if(e.key==='ArrowDown' || e.key==='Enter'){const b=sugBox.querySelector('button');if(b){e.preventDefault();if(e.key==='Enter')b.click();else b.focus();}}});
     sugBox.addEventListener('keydown',function(e){const buttons=Array.from(sugBox.querySelectorAll('button'));const i=buttons.indexOf(e.target);if(i<0)return;if(e.key==='Escape'){sugBox.classList.remove('open');searchI.setAttribute('aria-expanded','false');searchI.focus();}else if(['ArrowDown','ArrowUp'].includes(e.key)){e.preventDefault();buttons[(i+(e.key==='ArrowDown'?1:-1)+buttons.length)%buttons.length].focus();}});
+    sugBox.addEventListener('focusin',function(e){sugBox.querySelectorAll('[role="option"]').forEach(o=>o.setAttribute('aria-selected',String(o===e.target)));});
     sugBox.addEventListener('click', function(e){
       const b = e.target.closest('[data-go]');
       if(!b) return;

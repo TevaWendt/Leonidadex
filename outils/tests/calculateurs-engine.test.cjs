@@ -360,7 +360,7 @@ test('session has explicit finite limits and safe structured errors', () => {
   const capped = E.sessionPlan({ capital: 0, minutes: 60, activities: [{ reward: 1, duration: 0.01 }] });
   assert.equal(capped.runs, 256);
   assert.equal(capped.limited, true);
-  assert.match(capped.note, /256 activités/);
+  assert.match(capped.note, /256 missions/);
   assert.equal(E.sessionPlan({ capital: 0, minutes: 1441, activities: [A] }).valid, false);
   assert.equal(E.sessionPlan({ capital: 0, minutes: 60, activities: Array(13).fill(A) }).valid, false);
   assert.equal(E.sessionPlan({ capital: 0, minutes: 60, maxRepeat: 0, activities: [A] }).valid, false);

@@ -42,7 +42,7 @@
       '<div id="budget-results" class="calc-card calc-result" aria-live="polite" aria-atomic="true"></div></div>');
     var orderFields = step(1, 'Combien as-tu, et combien gagnes-tu ?', '<div class="calc-fields">' + h.field('order.capital', 'J’ai déjà ($)', order.capital, { step: 1000 }) + h.field('order.hourly', 'Je gagne à peu près ($ par heure de jeu)', order.hourly, { step: 1000 }) + '</div>', h);
     var itemFields = order.items.map(function (item, index) {
-      return step(index + 2, 'Achat ' + (index + 1) + ' : c’est quoi, et ça coûte combien ?', '<fieldset class="calc-fields three"><legend>Achat ' + (index + 1) + '</legend>' +
+      return step(index + 2, 'Achat ' + (index + 1) + ' : c’est quoi, et ça coûte combien ?', '<fieldset class="calc-fields three"><legend>Achat ' + (index + 1) + '</legend>' +
         h.field('order.items.' + index + '.name', 'Nom', item.name, { type: 'text' }) +
         h.field('order.items.' + index + '.price', 'Ça coûte ($)', item.price, { step: 1000 }) +
         h.field('order.items.' + index + '.boostHourly', 'Me fait gagner en plus ($ par heure)', item.boostHourly, { step: 1000, hint: 'Mets 0 si cet achat ne rapporte rien.' }) + '</fieldset>', h);
@@ -55,7 +55,7 @@
     return roiPanel + budgetPanel + orderPanel;
   }
   function percent(value) {
-    return value === null ? 'Pas de pourcentage' : value.toLocaleString('fr-FR', { maximumFractionDigits: 1 }) + ' %';
+    return value === null ? 'Pas de pourcentage' : value.toLocaleString('fr-FR', { maximumFractionDigits: 1 }) + ' %';
   }
   function roiChart(input, result, h) {
     if (input.hours <= 0) return '<p class="calc-note">Écris un nombre d’heures plus grand que 0 pour voir la courbe.</p>';
@@ -92,8 +92,8 @@
     var answer = r.investment === 0 ? 'Cet achat ne coûte rien au départ : il rapporte dès la première heure.' : r.paybackHours === null ? 'Avec ces chiffres, cet achat n’est <b>jamais remboursé</b>.' : 'Cet achat est remboursé après <b>' + h.esc(h.hours(r.paybackHours)) + '</b> de jeu.' + (r.netProfit > 0 ? ' Après ' + h.esc(h.hours(input.hours)) + ', il t’a rapporté <b>' + h.esc(h.money(r.netProfit)) + '</b> en plus de son prix.' : '');
     return '<p class="calc-kicker">MA RÉPONSE</p><span class="calc-tag">CALCULÉ AVEC TES CHIFFRES</span><p class="calc-answer" data-short="' + h.esc(r.paybackHours === null ? 'Jamais remboursé' : 'Remboursé : ' + h.hours(r.paybackHours)) + '">' + answer + '</p><p class="calc-kicker">REMBOURSÉ APRÈS</p><div class="calc-result-main">' + h.esc(payback) + '</div>' +
       '<p class="calc-result-sub">de jeu pour regagner les ' + h.esc(h.money(r.investment)) + ' dépensés au départ.</p>' +
-      h.stats([['Gain par heure', h.money(r.netHourly) + '/h'], ['Gagné au final, prix enlevé', h.money(r.netProfit)], ['Gagné en % du prix, après ' + h.hours(input.hours), percent(r.roiPercent)]]) +
-      roiChart(input, r, h) + extra + '<p class="calc-note">Sur ' + h.esc(h.hours(input.hours)) + ' : ' + h.esc(h.money(r.grossProfit)) + ' rapportés, ' + h.esc(h.money(r.operatingProfit)) +
+      h.stats([['Gain par heure', h.money(r.netHourly) + '/h'], ['Gagné au final, prix enlevé', h.money(r.netProfit)], ['Gagné en % du prix, après ' + h.hours(input.hours), percent(r.roiPercent)]]) +
+      roiChart(input, r, h) + extra + '<p class="calc-note">Sur ' + h.esc(h.hours(input.hours)) + ' : ' + h.esc(h.money(r.grossProfit)) + ' rapportés, ' + h.esc(h.money(r.operatingProfit)) +
       ' une fois les coûts payés, puis ' + h.esc(h.money(r.netProfit)) + ' une fois le prix de départ enlevé. Le pourcentage = ce dernier montant ÷ le prix de départ × 100.' +
       (r.roiPercent === null ? ' Pas de pourcentage quand le prix de départ est 0.' : '') + '</p>';
   }
@@ -105,7 +105,7 @@
     var scale = Math.max(input.capital, r.spent + input.reserve, 1);
     var bars = amounts.map(function (value, i) { return value > 0 ? '<span style="width:' + (value / scale * 100).toFixed(5) + '%;background:' + colors[i] + '"></span>' : ''; }).join('');
     var legend = amounts.map(function (value, i) {
-      return '<div><i aria-hidden="true" style="background:' + colors[i] + '"></i>' + h.esc(names[i]) + ' : <strong>' + h.esc(h.money(value)) + '</strong></div>';
+      return '<div><i aria-hidden="true" style="background:' + colors[i] + '"></i>' + h.esc(names[i]) + ' : <strong>' + h.esc(h.money(value)) + '</strong></div>';
     }).join('');
     return '<p class="calc-kicker">MA RÉPONSE</p><span class="calc-tag">CALCULÉ AVEC TES CHIFFRES</span><p class="calc-answer" data-short="' + h.esc(r.overBudget ? 'Il manque ' + h.money(-r.available) : 'Il te reste ' + h.money(r.available)) + '">' + (r.overBudget ? 'Non : il te manque <b>' + h.esc(h.money(-r.available)) + '</b> pour tout acheter en gardant ton argent de côté. Enlève ou baisse un achat.' : 'Oui, tu peux tout acheter. Il te reste <b>' + h.esc(h.money(r.available)) + '</b>, sans toucher à l’argent mis de côté.') + '</p>' +
       h.stats([['Je dépense', h.money(r.spent)], ['Il me reste après', h.money(r.remaining)], ['Sans l’argent mis de côté', h.money(r.available)]]) +

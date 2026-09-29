@@ -841,7 +841,7 @@ window.LK_ACQUISITIONS = {
         },
         {
           "id": "ultimate-edition-rideout-customs-02",
-          "titre": "Ultimate Edition Rideout Customs 02",
+          "titre": "Édition Ultimate, Rideout Customs 02",
           "alt": "Habitacle rouge de la voiture présentée dans la série de captures Rideout Customs",
           "source": "https://www.rockstargames.com/VI/media/screenshots",
           "original": "https://www.rockstargames.com/VI/_next/static/media/ULTIMATE_EDITION_RIDEOUT_CUSTOMS_02.0u9jg4xxbm_yd.jpg?akim=1&imdensity=1&imwidth=1920",
@@ -861,7 +861,7 @@ window.LK_ACQUISITIONS = {
         },
         {
           "id": "ultimate-edition-rideout-customs-03",
-          "titre": "Ultimate Edition Rideout Customs 03",
+          "titre": "Édition Ultimate, Rideout Customs 03",
           "alt": "Coupé jaune surélevé dans l’atelier Rideout Customs, identifié comme une Albany Manana",
           "source": "https://www.rockstargames.com/VI/media/screenshots",
           "original": "https://www.rockstargames.com/VI/_next/static/media/ULTIMATE_EDITION_RIDEOUT_CUSTOMS_03.0_n4oqh5f_ar4.jpg?akim=1&imdensity=1&imwidth=1920",

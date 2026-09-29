@@ -1,0 +1,48 @@
+LEONIDAKIT v7.47 — LOT 10 : CALCULATEUR, PASSE FINALE ET AUDIT DE CLÔTURE — archive « modifs » (29 septembre 2026)
+
+Base attendue : ton dossier Leonidadex en v7.46 (lot 9 : Contact réel, Mentions et confidentialité). Cette archive
+remplace celle du 28 septembre : elle contient tout le lot 10 plus le traitement des doublons ; tu peux l’extraire que
+tu aies déjà mis en ligne la précédente ou non.
+Fichiers ajoutés ou modifiés seulement, chemins exacts depuis la racine. Rien à supprimer. Aucune commande de build.
+Toujours aucun package.json ; le dossier api/ ne change pas ; tes variables Vercel (BREVO_API_KEY, CONTACT_TO) non plus.
+
+1. Copie ton dossier actuel (sauvegarde).
+2. Extrais l’archive dans la racine du site, écrase les fichiers homonymes (garde le dossier .git).
+3. Mets en ligne (GitHub Desktop, dossier complet). Rien à régler dans Vercel ni dans Brevo.
+
+4. OUVRE LE SITE (5 minutes)
+   - Calculateur : en haut, à côté de « ☆ Enregistrer », le bouton « Mes calculs » avec un nombre. Enregistre un calcul :
+     le nombre monte et le message dit où le retrouver. Clique « Mes calculs » : un tiroir s’ouvre à droite (plein écran
+     sur téléphone) avec une carte par calcul (outil, date, réponse, chiffres clés). Essaie « Renommer », « Dupliquer »,
+     « Supprimer » puis « Annuler la suppression ». Coche « Comparer » sur deux cartes, puis « Comparer ces deux
+     calculs ». Échap ferme le tiroir.
+   - Change un chiffre dans Mon objectif, puis clique sur un autre outil : une ligne te rappelle que le calcul n’est pas
+     enregistré (« ☆ L’enregistrer » ou « Plus tard »).
+   - Mes activités : quatre étapes numérotées, puis « Voir ma réponse ↓ » ; la phrase-réponse est maintenant lisible.
+   - Sous « Simple · Pas à pas · Expert » : « Partir de zéro » et « Remettre les exemples » (le tiroir ne garde que tes
+     calculs enregistrés). Business plan : plus de boutons Enregistrer / Imprimer en double, « Télécharger mon plan en
+     texte » reste. Mon objectif en Expert : « Avec quelle activité j’arrive le plus vite à mon objectif ? ». Plus bas :
+     « Les activités qui rapportent de l’argent », en trois colonnes (une petite carte par activité sur téléphone).
+   - Tuto, chapitre « Mes calculs enregistrés » : nouvelles captures.
+   - Accueil, FAQ « Combien coûte GTA VI ? » : même réponse que la page Achats (79,99 € / 99,99 € sur les boutiques).
+   - Une fiche véhicule sur téléphone : les cartes « Autres … » en bas sont une par ligne, les noms entiers.
+   Tes anciens calculs enregistrés sont retrouvés tels quels : aucune clé de stockage n’a changé.
+
+5. DOUBLONS : TRAITÉS SELON TA DÉCISION DU 29/09
+   Retirés (même action qu’un autre bouton) : le second « Partir de zéro », « Enregistrer mon plan » et « Imprimer mon
+   plan », « Voir les réglages avancés », la case « Afficher plus de détails » du business plan (même contenu que le mode
+   Expert : un bouton « Voir en mode Expert » la remplace), le « Et si je gagne plus, ou moins ? » de Mon objectif (il
+   reste en Expert).
+   Renommés (ils font autre chose) : « Remettre les exemples », « Télécharger mon plan en texte (à lire ou à envoyer) »,
+   « Avec quelle activité j’arrive le plus vite à mon objectif ? ». Un seul nom pour l’Expert : « mode Expert » (plus de
+   « réglages avancés »). Tableau des activités : les colonnes vides « Gain » et « Durée » sont retirées jusqu’aux
+   vrais relevés. L’accordéon des hubs Véhicules et Armurerie reste (effet voulu). Détail : outils/CHANGEMENTS-v7.47.txt.
+
+6. TOUJOURS EN ATTENTE DU LOT 9
+   Tes résultats du test d’envoi (référence LK-… reçue par e-mail ou non) et, dans Brevo, la liste et la double
+   validation du formulaire d’alerte : envoie-moi ce que tu vois (jamais la clé Brevo ni ton adresse Gmail). Selon la
+   réponse, la phrase d’inscription de l’accueil sera ajustée.
+
+Détails : outils/CHANGEMENTS-v7.47.txt (ce qui change, doublons, tests) et outils/RAPPORT-AUDIT-v7.47.md (méthode,
+anomalies corrigées, mesures Lighthouse, ce qui reste ouvert et sa gravité). Captures et rapports des contrôles : dossier
+séparé, hors dépôt. Versions précédentes : -v7.46 (Contact et Mentions), -v7.45 (Léo v2), -v7.44 (À propos).

@@ -1,0 +1,167 @@
+v7.47 — 28 septembre 2026 — LOT 10 : CALCULATEUR, PASSE FINALE ET AUDIT DE CLÔTURE
+(base : v7.46 = lot 9 « Contact réel, Mentions et confidentialité », commit b17a788)
+
+Ce qui change pour le visiteur — calculateur
+- « Mes calculs enregistrés » se voit et s’ouvre en un clic depuis n’importe quel outil : bouton « Mes calculs » avec
+  le nombre d’enregistrements, en haut (à côté de « ☆ Enregistrer ») et dans la barre du bas. Il ouvre un tiroir sur
+  le côté droit (plein écran sur téléphone), fermé par ×, Échap ou un clic à côté ; le focus revient au bouton.
+  Dans le tiroir :
+  - « En ce moment » : l’outil ouvert, s’il est enregistré ou changé depuis, « ☆ Enregistrer ce calcul » et
+    « Enregistrer une copie » ;
+  - deux listes, « Mes calculs » et « Mes plans » (les business plans), chacune avec son nombre ;
+  - une carte par calcul, la plus récente en haut : outil (icône et nom), date (« Enregistré le 28 sept. 2026 à
+    19 h 56 »), nom modifiable, la réponse en une phrase, trois chiffres clés (« J’ai 200 000 $ », « Je veux
+    1 000 000 $ », « Je gagne 80 000 $ par heure »…), « Ouvrir », « Voir la fiche », puis « Renommer », « Dupliquer »,
+    « Supprimer » (avec « Annuler la suppression ») et une case « Comparer » ;
+  - deux cases cochées → « Comparer ces deux calculs » : tableau côte à côte, lignes différentes marquées, une phrase
+    qui tranche (« Le n° 2 « Normal » demande 2 h de jeu en moins. ») ;
+  - en bas : « Sur un autre appareil » (télécharger / ouvrir un fichier).
+- Rappel discret : si tu changes un calcul puis passes à un autre outil sans l’enregistrer, une ligne apparaît
+  au-dessus des outils (« « Mon objectif » n’est pas enregistré. ») avec « ☆ L’enregistrer » et « Plus tard » ; elle
+  s’efface seule après 15 secondes. Rien quand tu n’as rien changé.
+- « ☆ Enregistrer » nomme le calcul d’après l’outil tant que tu n’as pas choisi de nom, et le dit : « Calcul enregistré :
+  « Mon budget ». Retrouve-le dans Mes calculs. »
+- Mes activités en quatre étapes numérotées, comme les autres outils : 1 quelle activité, 2 combien de temps, 3 seul ou
+  à plusieurs, 4 combien d’argent ; puis « Voir ma réponse ↓ ».
+- Relecture de chaque message, libellé et bulle (8 outils × 3 modes + business plan) : plus de « configuration »,
+  « JSON », « ROI », « capital », « marginal », « référence » ; « réserve » n’apparaît plus qu’expliquée (« l’argent
+  que tu gardes de côté ») dans les messages d’erreur, et le business plan dit « l’argent gardé de côté » ; une idée par phrase ; nombres groupés et
+  suivis de leur unité ; pluriels justes (« 1 mission », « 3 jours ») ; la réponse en une phrase avant le détail.
+  Exemples : « Ce que tu gagnes par heure : 20 % de plus ou de moins », « Tu as 160 enregistrements : c’est le
+  maximum. Supprimes-en un pour faire de la place. », « L’argent gardé de côté doit être un nombre égal à 0 ou plus,
+  et au plus 1 000 000 000 000. », « Tous les chiffres du calcul » (Expert) avec des noms français au lieu des noms de
+  variables, « Pas encore calculable » au lieu d’un tiret.
+- Corrigé : les calculs « Quel achat choisir ? » enregistrés disparaissaient au rechargement (outil absent de la liste
+  des carnets) ; la phrase-réponse de « Mes activités » était écrite en blanc sur une carte claire (déjà le cas en
+  v7.46) ; « Ta prochaine étape » en ambre sur fond clair ; renommer une carte pendant un nouvel affichage provoquait
+  une erreur du navigateur.
+- Tuto : chapitre « Mes calculs enregistrés » réécrit (tiroir, cartes, comparaison, rappel), 26 captures refaites,
+  chaque libellé cité vérifié dans l’interface (deux corrigés : « Argent que je garde de côté », la réponse de Mon
+  temps de jeu). Léo : dix réponses sur l’enregistrement, la comparaison, l’export et la suppression mises à jour.
+
+Doublons et parties inutiles
+- Retirés (évidents) : « C’est bon pour cette étape ✓ » (le bouton ne faisait que replier la carte), « Garder pour
+  comparer » et le champ caché #calc-reference (remplacés par la comparaison du tiroir ; l’Expert garde « Comparer
+  avec un calcul gardé »), les deux blocs repliés du bas de page « Mes calculs enregistrés » / « Mes business plans »
+  (remplacés par le tiroir), le code mort de #compare-dialog (calculateurs-motion.js).
+- Renommé : « Voir mon plan » → « Aller à mon business plan ».
+- Décision de Téva (29/09/2026) : un doublon qui n’apporte rien est retiré ; un doublon qui fait autre chose garde sa
+  place mais reçoit un nom qui dit ce qu’il fait.
+  1. « Partir de zéro » (deux boutons, même action) : celui du tiroir est retiré. « Recharger les exemples » quitte
+     aussi le tiroir et rejoint « Partir de zéro » dans l’atelier, sous le choix du mode, sous le nom « Remettre les
+     exemples ». Le tiroir ne garde que ce qui concerne les calculs enregistrés.
+  2. Business plan : « Enregistrer mon plan (avec sa fiche) » et « Imprimer mon plan » faisaient exactement ce que
+     font « ☆ Enregistrer le plan » et « Imprimer » des barres du haut et du bas : retirés. « Télécharger mon plan
+     (fichier texte) » fait autre chose (un texte à lire ou à envoyer, pas le fichier de sauvegarde) : gardé, renommé
+     « Télécharger mon plan en texte (à lire ou à envoyer) ». La note sous le plan dit où l’enregistrer.
+  3. « Réglages avancés » et mode Expert étaient la même chose sous deux noms. Le bouton « Voir les réglages avancés
+     (mode Expert) » en bas de chaque outil (même action que le bouton Expert) est retiré et un seul nom reste,
+     « mode Expert » : la ligne en tête de chaque outil dit « Mode Expert : rien de changé » ou « Changé en mode
+     Expert : … » avec « Voir en mode Expert » (elle prévient qu’un réglage fait en Expert compte aussi en Simple) ;
+     la partie Expert s’appelle « Mode Expert : tout le détail ». Dans le business plan, la case « Afficher plus de
+     détails » montrait la même chose que le mode Expert (chaque partie, et si, courbe, calendrier) : retirée, remplacée
+     par un bouton « Voir en mode Expert ». Tuto et Léo suivent.
+  4. Tableau des activités du jeu : les colonnes « Gain » et « Durée », vides (« À relever ») jusqu’à la sortie, sont
+     retirées. Il reste l’activité, ce qu’il faut avant et où on l’a vue, sous le titre « Les activités qui rapportent
+     de l’argent » ; sur téléphone, une petite carte par activité. Les colonnes reviendront avec de vrais relevés.
+  5. Mon objectif : « Et si je gagne plus, ou moins ? » (±20 % sur le gain par heure) répétait « Et si le chiffre bouge
+     de 20 % ? » du mode Expert : retiré. « Trois chemins pour le même objectif » compare autre chose (trois activités
+     pour atteindre le même objectif) : renommé « Avec quelle activité j’arrive le plus vite à mon objectif ? », titre
+     « Trois activités, le même objectif. ».
+  Hors calculateur : l’accordéon des hubs Véhicules et Armurerie (la carte survolée s’élargit, le texte reste net)
+  est un effet voulu, confirmé par Téva le 28/09/2026 : il reste.
+
+Ce qui change pour le visiteur — site entier (audit de clôture)
+- Registre : « Si tu as une correction » sur 27 fiches armes et 3 fiches véhicules (« vous » subsistait).
+- Prix : la FAQ de l’accueil dit maintenant ce que disent Achats et Léo — « Sur les boutiques, l’édition Standard est
+  affichée à 79,99 € et l’Édition Ultimate à 99,99 €, depuis l’ouverture des précommandes le 25 juin 2026 » — et
+  qu’aucun prix n’est publié dans le jeu. « Édition Ultimate » dans trois titres de médias.
+- Grilles : « Comment lire cette page » (niveaux de certitude, 14 hubs et pages de section, À propos) équilibré en
+  1, 2, 3 ou 4 colonnes, jamais 3 + 1 ; cartes « Autres … » des fiches en rangées pleines ou dernière rangée centrée,
+  une par rangée sous 480 px (les noms longs n’étaient plus lisibles) ; dans l’arbre des lieux de la carte, noms sur
+  trois lignes au plus (plus de « Moore Haven Lock & D… »).
+- Premier écran : ce qui est déjà visible à l’ouverture n’est plus caché puis révélé ; le texte se peint dès le
+  premier rendu au lieu d’attendre la fin des scripts (calculateur sur téléphone : le paragraphe de l’atelier
+  n’apparaissait qu’après 6,8 s dans Lighthouse). Les apparitions au défilement, les piles d’images des bandeaux et
+  l’arrivée des titres mot à mot restent.
+- Contrastes AA mesurés par script (57 498 textes au premier passage) : surtitre « Fiche de route » des 329 fiches
+  (corail vif → corail foncé), surtitres, jalons, étapes et liens de Collectibles, filtre actif et bouton de partage
+  de l’Armurerie, bouton de la page 404, coordonnées de la carte, textes vides et sources des fiches, notes des listes
+  (opacité .8 retirée), précisions des listes dépliables (« atelier de pose non précisé »), filtres vides de la carte
+  (opacité .4 : 1,9:1 ; le « 0 » et l’italique suffisent), filigrane « Fond provisoire » de la carte (contour
+  sombre), et dans le calculateur (voir plus haut).
+- Cibles tactiles : sources des paires fiction ↔ réel des hubs du monde, titres-liens des cartes vedettes, liens
+  éditoriaux et lien du Tuto du calculateur, « Copier la position » de la carte (24 px au moins, 44 px pour les boutons).
+- Images : 377 vignettes « -480 » de 43 pages reçoivent leur variante 1 280 px (srcset) : plus d’image de 480 px
+  étirée à 700 px sur tablette ; 13 images sans largeur ni hauteur (Progression, Véhicules rares) en ont une, et
+  sync-site les écrit désormais lui-même pour les vignettes des véhicules rares. Piles d’images des bandeaux
+  (21 pages) : `sizes` mesuré (64vw sur téléphone, puis 286 px et 360 px) : un téléphone ne télécharge plus la
+  variante 1 280 px pour une image de 262 px. Image éditoriale du calculateur : `sizes` 680 px (affichée jusqu’à
+  673 px).
+- Référencement : 52 descriptions de fiches véhicules trop courtes (moins de 100 caractères) complétées par la phrase
+  suivante ; descriptions du comparateur et des Mentions ramenées sous 158 caractères ; FAQPage de la carte et des
+  véhicules rares identiques aux questions visibles.
+- Accessibilité : recherche de la carte en combobox avec sa liste d’options ; le bouton Léo s’annonce « Léo : ouvrir
+  l’assistant Leonidakit » (le nom visible est au début du nom accessible) ; notification du bas centrée à la largeur
+  de son texte ; icône de l’onglet sur les 7 fiches retirées (la seule erreur console du site : /favicon.ico en 404).
+- Typographie : espace insécable aussi quand la ponctuation suit une balise en ligne (« <a>Mes achats</a> : »,
+  « <kbd>K</kbd> : ») ou quand « « » précède un lien.
+
+Technique
+- calculateurs.html : barre du haut et barre du bas (bouton « Mes calculs » avec badge), dialog#calc-drawer, rappel
+  #calc-reminder, FAQ « Comment retrouver mon calcul plus tard ? ». calculateurs-workspace.js : cartes, tiroir,
+  comparaison, rappel, protection contre un nouvel affichage pendant un affichage (renderSaved), setHTML qui garde le
+  focus ; API openDrawer / closeDrawer / touch / left / untouchAll. calculateurs.js : rappel au changement d’onglet,
+  #saved-calcs / #saved-plans et ?focus=carnets ouvrent le tiroir, Mes activités en étapes, textes ; doublons :
+  « Et si » de Mon objectif retiré, comparaison des activités renommée. calculateurs-plan.js : boutons en double
+  retirés, export texte renommé. calculateurs.html : « Partir de zéro » et « Remettre les exemples » dans l’atelier,
+  tableau des activités en trois colonnes (cartes sur téléphone, rôles de tableau gardés).
+  calculateurs-notebooks.js : liste des neuf outils (TOOLS), messages. calculateurs-engine.js, -scenario.js,
+  -visuals.js, -plan.js, -simple.js, -motion.js : textes, code mort. calculateurs-workspace.css : tiroir, cartes,
+  comparaison, rappel, 320–1 920 px, mouvement réduit, impression, contrastes.
+- common.js : premier écran montré sans apparition. style.css, fiches.css, informations.css, collectibles-brand.css,
+  acquisitions.css, 404.html : grilles, contrastes, cibles. carte.html / carte.js : combobox et options, filigrane.
+  leo-loader.js, leo-calculator.js, outils/leo-knowledge.json : Léo. outils/lot-c-visuals.cjs,
+  outils/templates/vehicules.html, armes.html, collectibles.html, classement-vehicules.html, progression.html,
+  carte.html : `sizes` des piles d’images.
+- outils/typographie.cjs (balises en ligne, kbd), outils/sync-site.cjs (srcset des vignettes -480, dimensions des
+  vignettes des véhicules rares), outils/gen.js (descriptions courtes, icône des fiches retirées),
+  outils/gen-informations.cjs, outils/gen-tuto.cjs, outils/tuto.json, outils/tuto-shots.py, outils/tuto-captures.json,
+  outils/medias-officiels.json, index.html, progression.html, vehicules-rares.html, carte.html, comparateur.html.
+- Aucune clé de stockage changée (lk-calculator-v1, lk-calculator-notebooks-v3, anciennes clés lues comme avant ;
+  liste identique dans la preuve de confidentialité). Aucune dépendance dans le dépôt, aucun package.json ; api/
+  inchangé.
+
+Tests
+- Nouveau outils/tests/calculateurs-v747.test.cjs (11 tests jsdom) : badge, tiroir, carte, comparaison des calculs
+  « Quel achat choisir ? » après rechargement, comparer deux calculs, renommer / dupliquer / supprimer / annuler, rappel,
+  liens #saved-calcs, Mes activités en quatre étapes, mots simples, doublons retirés ou renommés. node --test : 452 → 463 (dont un test des doublons).
+- Nouveau outils/tests/calculateurs-parcours-browser.cjs : le parcours complet demandé (remplir, calculer,
+  enregistrer, recharger, retrouver ; 8 outils × 3 modes + business plan ; tiroir ; comparaison ; rappel ; exemples ;
+  partage ; impression ; téléchargement puis ouverture ; sauvegardes v1, v2, v3 et anciens carnets ; 7 largeurs ;
+  clavier ; mouvement réduit ; contrastes AA de chaque panneau dans chaque mode).
+- Nouveau outils/tests/audit-site-browser.cjs : l’audit automatique du site (méthode dans RAPPORT-AUDIT-v7.47.md).
+- Anciennes suites navigateur, en échec depuis la v7.36 :
+  - calculateurs-lot-b-browser.cjs : RÉÉCRITE. Elle attendait .b-save-state et des blocs repliés qui n’existent plus ;
+    elle couvre maintenant Quel achat choisir ?, le business plan, l’enregistrement dans le tiroir, la référence de
+    l’Expert et le rechargement.
+  - calculateurs-v2-browser.cjs : ADAPTÉE (gardée, car elle seule vérifie l’export v5, le repli de la chronologie de
+    Mon temps de jeu et le partage) : aides carnet() / closeCarnet() pour le tiroir, neuf panneaux, attente « load ».
+  - calculateurs-browser.cjs (suite principale) : ouvre le tiroir pour charger et exporter.
+- Adaptés à l’interface : calculateurs-integration, calculateurs-plan-v34, audit-finition, calculateurs-astra,
+  calculateurs-engine, calculateurs-lot-b (tests jsdom).
+
+Résultats (détail et chiffres dans RAPPORT-AUDIT-v7.47.md)
+- node --test : 463 / 463. verifier.js : 0 erreur (44 322 références, 406 pages). Régénération reproductible à l’octet
+  (deux passages, 4 523 fichiers). gen-leo --check : sans divergence. Léo : 490 / 490, hors sujet 39 / 39.
+  Preuve de confidentialité : tenue, mêmes clés de stockage qu’en v7.46.
+- Navigateur : calculateurs-browser 278 / 278 ; calculateurs-v2-browser 142 / 142 ; calculateurs-lot-b-browser
+  140 / 140 ; calculateurs-parcours-browser 161 / 161 ; leo-browser et contact-browser : contrôles tenus.
+- Audit du site (905 chargements) : 0 débordement, 0 grille déséquilibrée, 0 texte coupé, 0 élément resté invisible,
+  0 identifiant doublé, 0 saut de titre, 0 nom accessible manquant, 0 erreur console, 0 requête en échec ; restent les
+  marqueurs de la carte (19 px, exception voulue) et le visuel décoratif de l’accueil à 1 920 px.
+  Contrastes : 3 textes sous AA sur 57 521 au passage complet, corrigés ; 0 sur 7 179 à l’échantillon final.
+- Lighthouse (médiane de trois passages, mobile / ordinateur) : accueil 83 / 98 (mobile 83 à 92 selon le
+  passage), calculateur 58 / 90, fiche véhicule 88 / 99, carte 87 / 90, hub Véhicules 71 / 92 ; accessibilité 96 à
+  100, bonnes pratiques et SEO 100 partout. Carte et hub Véhicules sur mobile : deux fois moins d’octets transférés
+  (867 → 404 Ko, 611 → 333 Ko) grâce aux `sizes` mesurés. Reste ouvert : le calculateur sur mobile (voir le rapport).

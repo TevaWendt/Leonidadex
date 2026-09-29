@@ -42,7 +42,14 @@ function html(src) {
   const parts = src.split(/(<script\b[\s\S]*?<\/script>|<style\b[\s\S]*?<\/style>|<pre\b[\s\S]*?<\/pre>|<code\b[\s\S]*?<\/code>|<textarea\b[\s\S]*?<\/textarea>|<!--[\s\S]*?-->)/);
   return parts.map(function (part, i) {
     if (i % 2 === 1) return part;
-    return part.replace(/(<[^>]*>)|([^<]+)/g, function (m, tag, text) { return tag ? attrs(tag) : texte(text); });
+    /* v7.47 : une ponctuation haute juste après une balise en ligne (« <a>Mes achats</a> : ») reçoit aussi son espace insécable */
+    let prev = '';
+    return part.replace(/(<[^>]*>)|([^<]+)/g, function (m, tag, text) {
+      if (tag) { prev = tag; return attrs(tag); }
+      let t = texte(text);
+      if (/^<\/(?:a|b|strong|em|i|span|abbr|time|small|q|cite|mark|sup|sub|code|kbd)>$/i.test(prev)) t = t.replace(/^ ([;:?!»])(?=\s|$|&)/, NBSP + '$1');
+      prev = ''; return t;
+    }).replace(/« (<(?:a|b|strong|em|i|span)\b)/g, '«' + NBSP + '$1');
   }).join('');
 }
 function js(src) {

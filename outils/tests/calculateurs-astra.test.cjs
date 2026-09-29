@@ -139,7 +139,7 @@ test('Business plan dans les trois modes : mêmes chiffres, profondeur différen
  const s=blank();s.plan.goal={...s.plan.goal,kind:'amount',target:1000000};s.plan.situation={capital:200000,reserve:0,hourly:100000,unitsHourly:0,dailyMinutes:60,daysPerWeek:7,upkeepPerSession:0};
  const p=await page('plan',s);const answer=()=>p.d.querySelector('#plan-results .calc-answer').textContent.replace(/\s+/g,' ');const ref=answer();assert.match(ref,/8 parties/);
  assert.doesNotMatch(text(p,'plan-report'),/Ton calendrier/);
- clickSel(p,'[data-mode="advanced"]');assert.equal(answer(),ref);assert.match(text(p,'plan-report'),/Ton calendrier/);assert.match(text(p,'plan-report'),/Partie par partie/);assert.match(text(p,'plan-report'),/Et si/);assert.match(text(p,'expert-plan'),/Résultats bruts/);
+ clickSel(p,'[data-mode="advanced"]');assert.equal(answer(),ref);assert.match(text(p,'plan-report'),/Ton calendrier/);assert.match(text(p,'plan-report'),/Partie par partie/);assert.match(text(p,'plan-report'),/Et si/);assert.match(text(p,'expert-plan'),/Tous les chiffres du calcul/);
  clickSel(p,'[data-mode="guided"]');p.flush();assert.equal(answer(),ref);assert.ok(p.d.getElementById('wiz-count'));assert.match(p.d.getElementById('wiz-count').textContent,/Question 1 sur/);
  clean(p);});
 test('Graphiques : titre, axes nommés, légende sans la couleur, phrase de lecture et chiffres qui correspondent',async()=>{const p=await page('roi');
