@@ -127,3 +127,7 @@
 @media(max-width:650px){.lk-entry-card--hub{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px 14px;padding:18px;}.lk-entry-hub-ico{width:44px;height:44px;}.lk-entry-hub-ico svg{width:24px;height:24px;}.lk-entry-card--hub .lk-entry-button{grid-column:1/-1;margin-top:4px;width:100%;justify-content:center;min-width:0;}.lk-entry-card--hub h2{font-size:1.08rem;}}
 @media(prefers-reduced-motion:reduce){.js .lk-entry-card--hub::before{transform:none;transition:none;}.lk-entry-card--hub .lk-entry-button span{transition:none;}.lk-entry-card--hub .lk-entry-button:hover span{transform:none;}}
 @media print{.lk-entry-card--hub{background:#fff;color:#000;border-color:#000;}.lk-entry-card--hub p{color:#333;}}
+/* v7.54 : deux liens dans la carte du comparateur (« Quel achat choisir ? » et « Lequel puis-je acheter ? ») */
+.lk-entry-links{display:flex;flex-direction:column;gap:10px;flex:0 0 auto}
+.lk-entry-card .lk-entry-button--second{background:transparent;color:#fefbf5;border-color:#fefbf5aa}
+.lk-entry-card .lk-entry-button--second:hover{background:#ffffff1a}

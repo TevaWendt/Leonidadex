@@ -62,7 +62,10 @@
   const P=window.LKProgression, msg=document.getElementById('save-msg');
   if(!P) return;
   const notice=m=>{ if(msg) msg.textContent=m; };
-  const store=P.create({storage:localStorage,acquisitions:window.LK_ACQUISITIONS,ids:window.LK_PROGRESS_IDS,collectibles:(window.LK_COLLECTIBLES&&window.LK_COLLECTIBLES.items)||[],notice});
+  /* v7.54 : stockage du navigateur refusé (navigation privée stricte, réglage) : la page reste lisible et le dit, au lieu de planter (revue v7.53). */
+  let storage=null;try{storage=window.localStorage;const probe='lk_probe';storage.setItem(probe,'1');storage.removeItem(probe);}catch(e){storage=null;}
+  if(!storage){const memory={};storage={getItem:k=>Object.prototype.hasOwnProperty.call(memory,k)?memory[k]:null,setItem:(k,v)=>{memory[k]=String(v);},removeItem:k=>{delete memory[k];},key:i=>Object.keys(memory)[i]??null,get length(){return Object.keys(memory).length;}};notice('Le stockage de ce navigateur est indisponible : ta progression s’affiche mais ne sera pas gardée. Autorise le stockage du site, ou exporte-la depuis un autre navigateur.');}
+  const store=P.create({storage,acquisitions:window.LK_ACQUISITIONS,ids:window.LK_PROGRESS_IDS,collectibles:(window.LK_COLLECTIBLES&&window.LK_COLLECTIBLES.items)||[],notice});
   try{ store.migrate(); }catch(e){}
   const nf=new Intl.NumberFormat('fr-FR',{maximumFractionDigits:0});
   function esc(x){ return String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }

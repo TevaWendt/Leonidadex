@@ -7,7 +7,7 @@
    "question": "Combien de temps pour avoir mon argent ?",
    "use": "Commence ici. Tu dis combien tu as, combien tu veux et ce que tu gagnes : le calculateur te dit combien de temps de jeu il te faut et en combien de jours tu y arrives.",
    "simple": "Quatre cases : « J’ai déjà », « Je veux avoir », « Je gagne à peu près ($ par heure de jeu) » et « Je joue chaque jour ». Les boutons rapides et la réglette t’évitent d’écrire.",
-   "expert": "« Mon objectif, c’est » : de l’argent en plus de ce que je garde de côté, l’argent que j’aurai en tout, ou ce que je vais gagner à partir de maintenant. Puis « Argent gardé de côté, dépenses, échéance » : l’argent que je garde de côté, les achats à payer avant mon objectif, ce que je dépense à chaque partie (consommables, munitions…) et « Je veux y arriver en (jours) ». Aussi « Avec quelle activité j’arrive le plus vite à mon objectif ? », « Et si le chiffre bouge de 20 % ? » et « Comparer avec un calcul gardé ».",
+   "expert": "« Mon objectif, c’est » : de l’argent en plus de ce que je garde de côté, l’argent que j’aurai en tout, ou ce que je vais gagner à partir de maintenant. Puis « Argent gardé de côté, dépenses, échéance » : l’argent que je garde de côté, les achats à payer avant mon objectif, ce que je dépense à chaque partie (consommables, munitions…) et « Je veux y arriver en (jours) ». Aussi « Avec quelle activité j’arrive le plus vite à mon objectif ? », « Et si le chiffre bouge de 20 % ? » et « Comparer avec un calcul gardé ».",
    "steps": [
     "Écris ce que tu as dans « J’ai déjà » et ce que tu veux dans « Je veux avoir ». Tu peux cliquer sur 1 M $ ou bouger la réglette.",
     "Dis comment tu gagnes ton argent : petit à petit par heure de jeu, ou à la fin de chaque mission. Si tu ne sais pas combien tu gagnes, ouvre « Je ne sais pas combien je gagne ».",
@@ -20,7 +20,7 @@
    "capture": "goal-simple",
    "mobile": "goal-simple-mobile",
    "alt": "Mon objectif en mode Simple : j’ai déjà 200 000 $, je veux avoir 1 000 000 $, réponse 8 h de jeu et 8 jours.",
-   "compte": "Le sens de ton but change la cible : « en plus de ce que je garde de côté » ajoute ta réserve, « en tout » la compte dedans, « à partir de maintenant » ne compte pas ce que tu as déjà. Les achats à payer avant et ce que tu dépenses à chaque partie allongent le temps. Avec une échéance, la réponse dit si elle tient et, sinon, de combien il faudrait jouer ou gagner en plus."
+   "compte": "Le sens de ton but change la cible : « en plus de ce que je garde de côté » ajoute ta réserve, « en tout » la compte dedans, « à partir de maintenant » ne compte pas ce que tu as déjà. Les achats à payer avant et ce que tu dépenses à chaque partie allongent le temps. Avec une échéance, la réponse dit si elle tient et, sinon, de combien il faudrait jouer ou gagner en plus."
   },
   {
    "id": "activites",
@@ -29,7 +29,7 @@
    "question": "Quelle activité rapporte le plus ?",
    "use": "Écris ce que tes missions te rapportent et combien de temps elles durent. Le calculateur les classe et te dit ce que tu gagnes en les refaisant pendant ton temps de jeu.",
    "simple": "« J’ai combien de temps ? » et « Activité à refaire ». Le choix « Je joue seul » ou « Je joue à plusieurs ». Les trois exemples A, B et C sont déjà remplis.",
-   "expert": "Le volet « Écris ce que tes activités te rapportent. » : récompense, ce que tu paies à chaque fois, durée, préparation, attente avant de recommencer, ta part, ce qu’il faut acheter une seule fois avant de commencer, joueurs qu’il faut. « Afficher » filtre le classement : ce qui rapporte le plus par heure, le moins cher pour commencer, faisable tout seul, moins de 30 minutes, que je peux payer maintenant.",
+   "expert": "Le volet « Écris ce que tes activités te rapportent. » : récompense, ce que tu paies à chaque fois, durée, préparation, attente avant de recommencer, ta part, ce qu’il faut acheter une seule fois avant de commencer, joueurs qu’il faut. « Afficher » filtre le classement : ce qui rapporte le plus par heure, le moins cher pour commencer, faisable tout seul, moins de 30 minutes, que je peux payer maintenant.",
    "steps": [
     "Dis combien de temps tu as (30 min, 1 h, 2 h, 3 h) et choisis l’activité à refaire.",
     "Lis la réponse : « En 1 h, en refaisant …, tu gagnes … avec … missions », et « Ce qui rapporte le plus par heure ».",
@@ -42,7 +42,7 @@
    "capture": "activities-simple",
    "mobile": "activities-simple-mobile",
    "alt": "Mes activités : 60 minutes avec l’exemple A, réponse 67 500 $ avec 3 missions et le classement des activités.",
-   "compte": "Une activité écartée l’est avec sa raison : pas assez de joueurs, achat de départ manquant, trop longue pour ton temps, ou elle coûte plus qu’elle ne rapporte. Ta part s’applique une seule fois (les joueurs ne redivisent pas la récompense) et une activité ne paie qu’une fois finie."
+   "compte": "Une activité écartée l’est avec sa raison : pas assez de joueurs, achat de départ manquant, trop longue pour ton temps, ou elle coûte plus qu’elle ne rapporte. Ta part s’applique une seule fois (les joueurs ne redivisent pas la récompense) et une activité ne paie qu’une fois finie."
   },
   {
    "id": "temps",
@@ -73,7 +73,7 @@
    "question": "Est-ce que je peux l’acheter ?",
    "use": "Choisis une voiture, une arme, un lieu ou une entreprise du site, ou écris un prix. Le calculateur te dit si tu peux l’acheter maintenant, et sinon combien de temps de jeu il te faut.",
    "simple": "Deux étapes : « Quel est ton achat ? » (nom et prix) et « Combien as-tu ? » (ce que tu as, ce que tu gardes de côté). Ce que tu gagnes et ton objectif sont en plus, si tu veux.",
-   "expert": "« À quoi il te sert ? », « Il coûte quelque chose à chaque partie ? » (« Il me coûte à chaque partie » et « Je m’en sers pendant (parties) »), « Combien de temps pour regagner ce prix ? ». En Expert : « Options que je prends », « Frais obligatoires au départ », « Je pourrais le revendre » (ton hypothèse, jamais comptée dans l’argent d’aujourd’hui), « Ses capacités, si tu les connais » (où il va, places), « Est-ce que cet achat me fait gagner de l’argent ? », « Et si le chiffre bouge de 20 % ? » et « Comparer avec un calcul gardé ».",
+   "expert": "« À quoi il te sert ? », « Il coûte quelque chose à chaque partie ? » (« Il me coûte à chaque partie » et « Je m’en sers pendant (parties) »), « Combien de temps pour regagner ce prix ? ». En Expert : « Options que je prends », « Frais obligatoires au départ », « Je pourrais le revendre » (ton hypothèse, jamais comptée dans l’argent d’aujourd’hui), « Ses capacités, si tu les connais » (où il va, places), « Est-ce que cet achat me fait gagner de l’argent ? », « Et si le chiffre bouge de 20 % ? » et « Comparer avec un calcul gardé ».",
    "steps": [
     "Cherche une fiche dans « Trouve ton prochain achat » et clique sur « Je veux celui-là », ou garde « Mon achat libre ». Un lieu ou une région, ça se visite : le calculateur ne le propose pas à l’achat.",
     "Écris le prix que tu imagines si le site ne le connaît pas, puis ce que tu as et ce que tu gardes de côté, directement ici.",
@@ -81,12 +81,12 @@
    ],
    "example": "Exemple à essayer : un achat à 100 000 $, 200 000 $ déjà en poche, 50 000 $ gagnés par heure de jeu.",
    "result": "« Oui, tu peux l’acheter maintenant, sans toucher à l’argent mis de côté. » Et « Il te restera » : 100 000 $. Le détail donne aussi le temps de jeu pour regagner ce prix (2 h) et ton objectif si tu achètes ou non.",
-   "try": "Mets un prix de 400 000 $ : « Pas encore : il te manque 200 000 $, sans toucher à l’argent mis de côté. » Ta prochaine étape dit : « Joue encore 4 h avec ce que tu gagnes (50 000 $ par heure), puis reviens. »",
+   "try": "Mets un prix de 400 000 $ : « Pas encore : il te manque 200 000 $, sans toucher à l’argent mis de côté. » Ta prochaine étape dit : « Joue encore 4 h avec ce que tu gagnes (50 000 $ par heure), puis reviens. »",
    "error": "Prendre le prix affiché pour un prix officiel. Tant que Rockstar n’a rien publié, tous les prix sont « pas encore connus » et c’est toi qui écris le tien.",
    "capture": "purchase-simple",
    "mobile": "purchase-simple-mobile",
    "alt": "Mes achats : un achat à 100 000 $, réponse « Oui, tu peux l’acheter maintenant » et le catalogue avec vignettes.",
-   "compte": "Pouvoir payer maintenant et pouvoir tenir sont deux réponses : le prix, les options et les frais obligatoires doivent tenir dans l’argent disponible (ce que tu as moins ce que tu gardes de côté) ; un coût à chaque partie peut rendre l’achat intenable après quelques parties, et c’est dit. Un véhicule ou une arme déjà coché dans « Mon garage » ou « Mon arsenal » arrive « déjà possédé » : rien à payer, et tu peux décocher « Achat déjà possédé » pour en racheter un."
+   "compte": "Pouvoir payer maintenant et pouvoir tenir sont deux réponses : le prix, les options et les frais obligatoires doivent tenir dans l’argent disponible (ce que tu as moins ce que tu gardes de côté) ; un coût à chaque partie peut rendre l’achat intenable après quelques parties, et c’est dit. Un véhicule ou une arme déjà coché dans « Mon garage » ou « Mon arsenal » arrive « déjà possédé » : rien à payer, et tu peux décocher « Achat déjà possédé » pour en racheter un."
   },
   {
    "id": "ordre",
@@ -94,21 +94,21 @@
    "title": "Quoi acheter d’abord ?",
    "question": "Dans quel ordre acheter pour tout avoir le plus vite ?",
    "use": "Ajoute tes achats. Le calculateur compare tous les ordres possibles jusqu’à 6 achats (au-delà, une recherche plus courte, annoncée comme telle), respecte ce qui doit être acheté avant autre chose, et te propose le meilleur ordre selon ce que tu veux. Ton ordre à toi reste montré à côté.",
-   "simple": "« Ajoute un achat (cherche dans le site) » avec des suggestions en tapant, ou « Ajouter autre chose, sans fiche ». Puis « Ça coûte, d’après ce que tu imagines » pour chaque achat, et « Je veux » : tout avoir au plus vite, avoir au plus tôt un achat qui rapporte, garder le plus d’argent à chaque étape, ou garder mon ordre à moi.",
-   "expert": "Pour chaque achat (« Modifier ») : frais et améliorations, autres frais au départ, « Ce que je gagne après cet achat », « Achat déjà possédé », « Il me coûte à chaque partie » et « À acheter avant lui (si c’est obligatoire) ». Aussi « Et si le chiffre bouge de 20 % ? » et « Comparer avec un calcul gardé ».",
+   "simple": "« Ajoute un achat (cherche dans le site) » avec des suggestions en tapant, ou « Ajouter autre chose, sans fiche ». Puis « Ça coûte, d’après ce que tu imagines » pour chaque achat, et « Je veux » : tout avoir au plus vite, avoir au plus tôt un achat qui rapporte, garder le plus d’argent à chaque étape, ou garder mon ordre à moi.",
+   "expert": "Pour chaque achat (« Modifier ») : frais et améliorations, autres frais au départ, « Ce que je gagne après cet achat », « Achat déjà possédé », « Il me coûte à chaque partie » et « À acheter avant lui (si c’est obligatoire) ». Aussi « Comparer des ordres selon le délai » sous la réponse (ton ordre, l’inverse, les prix croissants, l’ordre proposé et les autres ordres utiles, avec « Appliquer l’ordre inverse » et « Trier par prix croissant »), « Et si le chiffre bouge de 20 % ? » et « Comparer avec un calcul gardé ».",
    "steps": [
     "Écris ce que tu as, ce que tu gardes de côté et, si tu dois attendre, ce que tu gagnes par heure. Tape les premières lettres d’un nom (« fe » propose Feroci, Cheetah…) et choisis dans la liste, ou ajoute un achat libre.",
     "Écris le prix que tu imagines pour chacun ; le calculateur attend d’avoir l’argent avant chaque achat.",
-    "Lis la réponse : « Ton ordre est le bon… » ou l’ordre proposé, puis « Tout est à toi en … de jeu ». Change « Je veux » pour voir le meilleur ordre selon un autre but ; ton ordre reste montré à côté."
+    "Lis la réponse : « Ton ordre est le bon… » ou l’ordre proposé, puis « Tout est à toi en … de jeu ». Change « Je veux » pour voir le meilleur ordre selon un autre but ; ton ordre reste montré à côté."
    ],
-   "example": "Exemple à essayer : Feroci à 30 000 $, Kamacho à 100 000 $ et Bati 801 à 150 000 $ (tes prix imaginés), avec 200 000 $ déjà en poche et 50 000 $ gagnés par heure de jeu.",
-   "result": "La réponse dit : « Ton ordre est le bon pour tout avoir au plus vite. Tout est à toi en 1 h 36 de jeu. » Chaque étape montre quand tu peux payer l’achat (Feroci et Kamacho tout de suite, Bati 801 après 1 h 36 de jeu), ce qu’il te reste après et ce que tu gagnes ensuite par heure. La comparaison porte sur ton but, pas sur l’envie que tu as de chaque objet.",
-   "try": "Monte et descends un achat avec les flèches, ou retire-le : la réponse se refait tout de suite. « Annuler » remet un achat retiré par erreur.",
-   "error": "Inventer ce qu’un achat rapporte. « Ce que je gagne après cet achat », c’est ton chiffre à toi : laisse 0 pour une voiture qui ne rapporte rien.",
+   "example": "Exemple à essayer : Feroci à 30 000 $, Kamacho à 100 000 $ et Bati 801 à 150 000 $ (tes prix imaginés), avec 200 000 $ déjà en poche et 50 000 $ gagnés par heure de jeu.",
+   "result": "La réponse dit : « Ton ordre est le bon pour tout avoir au plus vite. Tout est à toi en 1 h 36 de jeu. » Chaque étape montre quand tu peux payer l’achat (Feroci et Kamacho tout de suite, Bati 801 après 1 h 36 de jeu), ce qu’il te reste après et ce que tu gagnes ensuite par heure. La comparaison porte sur ton but, pas sur l’envie que tu as de chaque objet.",
+   "try": "Monte et descends un achat avec les flèches, ou retire-le : la réponse se refait tout de suite. « Annuler » remet un achat retiré par erreur. Ouvre « Comparer des ordres selon le délai » : « Appliquer l’ordre inverse » ou « Trier par prix croissant » change ton ordre et la réponse suit.",
+   "error": "Inventer ce qu’un achat rapporte. « Ce que je gagne après cet achat », c’est ton chiffre à toi : laisse 0 pour une voiture qui ne rapporte rien.",
    "capture": "order-simple",
    "mobile": "order-simple-mobile",
    "alt": "Quoi acheter d’abord : la case de recherche propose des fiches en tapant « fe ».",
-   "compte": "Un achat qui en demande un autre n’est jamais placé avant lui ; un prérequis partagé n’est payé qu’une fois ; un cycle (A demande B qui demande A) bloque avec sa cause. Si un prix manque, la réponse dit « Parcours à compléter » au lieu de supposer 0. « Ce qui compte dans ce calcul » dit quel but l’ordre sert et combien d’ordres ont été comparés (« Toutes les séquences possibles… ont été comparées », ou la limite de la recherche au-delà de 6 achats)."
+   "compte": "Un achat qui en demande un autre n’est jamais placé avant lui ; un prérequis partagé n’est payé qu’une fois ; un cycle (A demande B qui demande A) bloque avec sa cause. Si un prix manque, la réponse dit « Parcours à compléter » au lieu de supposer 0. « Ce qui compte dans ce calcul » dit quel but l’ordre sert et combien d’ordres ont été comparés (« Toutes les séquences possibles… ont été comparées », ou la limite de la recherche au-delà de 6 achats)."
   },
   {
    "id": "rentabilite",
@@ -117,7 +117,7 @@
    "question": "Est-ce que cet achat vaut le coup pour moi, et à partir de quand ?",
    "use": "Le calculateur distingue trois cas : un achat plaisir (il ne rapporte rien : on regarde ce qu’il te coûte, ce qu’il te reste et le retard sur ton objectif), un achat qui débloque des activités, et un achat qui te fait gagner de l’argent en plus. Pour ces deux derniers, il compare la situation avec l’achat et la situation sans, sur le même temps de jeu : seul ce que l’achat rapporte EN PLUS de ce que tu gagnais déjà compte.",
    "simple": "Trois étapes : « Quel achat ? », « Puis-je me le permettre ? » et « Pourquoi cet achat ? ». La réponse commence par oui, non ou pas encore, avec les chiffres qui la justifient, ta prochaine étape (acheter, attendre, vérifier un chiffre), le compromis avec ou sans l’achat et les hypothèses qui comptent, chacune modifiable d’un clic.",
-   "expert": "La courbe « Avec ou sans cet achat », les seuils (après combien de parties il est remboursé, ce qu’il devrait rapporter par heure pour l’être dans le temps où tu t’en sers), les activités liées avec leurs chiffres, « Et si le chiffre bouge de 20 % ? » et « Comparer avec un calcul gardé ».",
+   "expert": "La courbe « Avec ou sans cet achat », les seuils (après combien de parties il est remboursé, ce qu’il devrait rapporter par heure pour l’être dans le temps où tu t’en sers), les activités liées avec leurs chiffres, « Et si le chiffre bouge de 20 % ? » et « Comparer avec un calcul gardé ».",
    "steps": [
     "Cherche l’achat dans le site ou clique sur « Écrire un achat libre ». Écris le prix, ce que tu as et ce que tu gardes de côté.",
     "Pour un achat plaisir, lis ce qu’il te reste, le temps pour retrouver ton argent et le retard sur ton objectif. Compare « Acheter maintenant » et « Attendre » ; personne ne met de prix sur le plaisir.",
@@ -130,7 +130,7 @@
    "capture": "roi-simple",
    "mobile": "roi-simple-mobile",
    "alt": "Ça vaut le coup : un achat à 120 000 $ qui rapporte 20 000 $ de plus par heure, remboursé après 6 h de jeu, avec la prochaine étape et le compromis avec ou sans l’achat.",
-   "compte": "La revente est une hypothèse pour plus tard : elle ne rend jamais un achat payable aujourd’hui. Un coût à chaque partie peut retourner la réponse ; la donnée qui manque le plus est dite en premier."
+   "compte": "La revente est une hypothèse pour plus tard : elle ne rend jamais un achat payable aujourd’hui. Un coût à chaque partie peut retourner la réponse ; la donnée qui manque le plus est dite en premier."
   },
   {
    "id": "budget",
@@ -138,33 +138,33 @@
    "title": "Mon budget",
    "question": "Comment partager mon argent ?",
    "use": "Tu répartis ton argent entre tes envies en gardant une partie de côté. Le calculateur te dit ce qu’il te reste, ou ce qu’il te manque.",
-   "simple": "« J’ai déjà », « Quels achats compter ? » (mes achats de « Quoi acheter d’abord ? », ou je répartis moi-même : cinq postes visibles, véhicules, investissements, équipement, consommables, autres achats) et « Autres dépenses prévues ».",
-   "expert": "« Sur combien de parties veux-tu voir ton argent ? » (ce que tes coûts à chaque partie font à ton argent, partie après partie, avec le point le plus bas), l’argent gardé de côté, « Et si le chiffre bouge de 20 % ? » et « Comparer avec un calcul gardé ».",
+   "simple": "« J’ai déjà », « Quels achats compter ? » (mes achats de « Quoi acheter d’abord ? », ou je répartis moi-même : cinq postes visibles, véhicules, investissements, équipement, consommables, autres achats) et « Autres dépenses prévues ».",
+   "expert": "« Sur combien de parties veux-tu voir ton argent ? » (ce que tes coûts à chaque partie font à ton argent, partie après partie, avec le point le plus bas), l’argent gardé de côté, « Et si le chiffre bouge de 20 % ? » et « Comparer avec un calcul gardé ».",
    "steps": [
     "Vérifie « J’ai déjà ».",
-    "Choisis de compter tes achats de « Quoi acheter d’abord ? » ou de répartir toi-même. Depuis la comparaison des consommables ou tes envies dans « Ma garde-robe », « Préparer… dans mon budget » ajoute ta sélection, prix à venir.",
-    "Lis la réponse : « Après les dépenses, il te reste … de disponible, sans l’argent mis de côté » ou « Il manque … pour couvrir les dépenses et garder ton argent de côté »."
+    "Choisis de compter tes achats de « Quoi acheter d’abord ? » ou de répartir toi-même. Depuis la comparaison des consommables ou tes envies dans « Ma garde-robe », « Préparer… dans mon budget » ajoute ta sélection, prix à venir.",
+    "Lis la réponse : « Après les dépenses, il te reste … de disponible, sans l’argent mis de côté » ou « Il manque … pour couvrir les dépenses et garder ton argent de côté »."
    ],
-   "example": "Exemple à essayer : 200 000 $ déjà en poche, 30 000 $ gardés de côté, 140 000 $ dans le poste « Véhicules » et 0 dans les autres.",
-   "result": "« Après les dépenses, il te reste 30 000 $ de disponible, sans l’argent mis de côté. » Dessous : 140 000 $ de dépenses prévues, 60 000 $ qui te restent en tout, dont 30 000 $ gardés de côté. La barre montre la part de ton argent utilisable déjà dépensée.",
-   "try": "Écris 50 000 $ dans « Autres dépenses prévues » : la réponse passe à « Il manque 20 000 $ pour couvrir les dépenses et garder ton argent de côté » et te propose de retirer une dépense, de baisser l’argent gardé de côté ou de jouer pour gagner cette somme.",
+   "example": "Exemple à essayer : 200 000 $ déjà en poche, 30 000 $ gardés de côté, 140 000 $ dans le poste « Véhicules » et 0 dans les autres.",
+   "result": "« Après les dépenses, il te reste 30 000 $ de disponible, sans l’argent mis de côté. » Dessous : 140 000 $ de dépenses prévues, 60 000 $ qui te restent en tout, dont 30 000 $ gardés de côté. La barre montre la part de ton argent utilisable déjà dépensée.",
+   "try": "Écris 50 000 $ dans « Autres dépenses prévues » : la réponse passe à « Il manque 20 000 $ pour couvrir les dépenses et garder ton argent de côté » et te propose de retirer une dépense, de baisser l’argent gardé de côté ou de jouer pour gagner cette somme.",
    "error": "Compter l’argent que tu gagneras plus tard. Le budget ne regarde que ce que tu as maintenant.",
    "capture": "budget-simple",
    "mobile": "budget-simple-mobile",
    "alt": "Mon budget : 200 000 $, 30 000 $ de côté, réponse « il te reste 30 000 $ » avec la barre.",
-   "compte": "Un prix inconnu n’est jamais compté à 0 : le total devient « au plus » ou « à compléter », et la réponse dit ce qui manque. Ce que tu peux payer aujourd’hui et ce que tu peux tenir dans la durée (coûts à chaque partie) sont montrés à part."
+   "compte": "Un prix inconnu n’est jamais compté à 0 : le total devient « au plus » ou « à compléter », et la réponse dit ce qui manque. Ce que tu peux payer aujourd’hui et ce que tu peux tenir dans la durée (coûts à chaque partie) sont montrés à part."
   },
   {
    "id": "choisir",
    "tool": "compare",
    "title": "Quel achat choisir ?",
    "question": "Entre plusieurs achats, lequel prendre ?",
-   "use": "Mets deux à six achats côte à côte avec les mêmes chiffres de départ. D’abord ce dont tu as besoin (où il doit aller, combien de personnes, transporter des choses) : une option qui ne convient pas est écartée avec la raison, même si elle est rapide ou pas chère. Puis, parmi celles qui conviennent : le prix, quand tu peux l’avoir, ton envie (1 à 5), le coût sur la durée si tu écris un coût à chaque partie, et ce que ça rapporte si tu l’écris.",
+   "use": "Mets deux à six achats côte à côte avec les mêmes chiffres de départ. D’abord ce dont tu as besoin (où il doit aller, combien de personnes, transporter des choses) : une option qui ne convient pas est écartée avec la raison, même si elle est rapide ou pas chère. Puis, parmi celles qui conviennent : le prix, quand tu peux l’avoir, ton envie (1 à 5), le coût sur la durée si tu écris un coût à chaque partie, et ce que ça rapporte si tu l’écris.",
    "simple": "Trois questions : « Quels achats veux-tu comparer ? », « Combien as-tu ? », « Ce qui compte le plus pour toi ». La réponse : « Pour toi, c’est X » avec la raison, et le meilleur choix selon chaque critère.",
-   "expert": "« Il doit aller » (route, tout-terrain, eau, airs), « Il doit transporter (personnes, toi compris) », « Il doit pouvoir transporter des choses », « Je m’en sers pendant (parties) » pour le coût sur la durée, le tableau complet (prix, quand, envie, envie pour 100 000 $, temps pour regagner le prix, remboursement) et ce que chaque achat te fait gagner en plus.",
+   "expert": "« Il doit aller » (route, tout-terrain, eau, airs), « Il doit transporter (personnes, toi compris) », « Il doit pouvoir transporter des choses », « Je m’en sers pendant (parties) » pour le coût sur la durée, le tableau complet (prix, quand, envie, envie pour 100 000 $, temps pour regagner le prix, remboursement) et ce que chaque achat te fait gagner en plus.",
    "steps": [
     "Cherche un achat dans le site (« kamacho », « bati »…) ou ajoute un achat libre, puis écris son prix si le site ne le connaît pas.",
-    "Note ton envie de 1 à 5 pour chaque achat. C’est ta note à toi : elle sert au rapport envie / prix.",
+    "Note ton envie de 1 à 5 pour chaque achat, si tu veux. C’est ta note à toi : elle sert au rapport envie / prix. Sans note, le site n’en invente pas : la réponse par défaut devient « le moins cher à l’achat », et elle le dit.",
     "Choisis ce qui compte le plus : le rapport envie / prix, le moins cher, le plus vite accessible, celui qui se rembourse le plus vite, ou le plus d’envie."
    ],
    "example": "Exemple à essayer : Kamacho à 150 000 $ (envie 5), Bati 801 à 50 000 $ (envie 3), un achat libre à 400 000 $ (envie 3), avec 200 000 $ en poche et 100 000 $ par heure.",
@@ -174,7 +174,7 @@
    "capture": "compare-simple",
    "mobile": "compare-simple-mobile",
    "alt": "Quel achat choisir ? : trois achats comparés et la réponse selon le critère choisi.",
-   "compte": "« Le moins cher sur la durée (prix + usage) » compare le prix et le coût à chaque partie sur le même nombre de parties, et dit après combien de parties l’ordre s’inverse. Si une option a un coût à chaque partie et qu’une autre n’en a pas d’écrit, la comparaison reste ouverte (« non renseigné » n’est pas 0) : écris 0 s’il n’y en a vraiment pas. Ton envie est ta note à toi : elle compte si tu choisis un critère d’envie, et sinon elle ne sert qu’à départager, formule affichée."
+   "compte": "« Le moins cher sur la durée (prix + usage) » compare le prix et le coût à chaque partie sur le même nombre de parties, et dit après combien de parties l’ordre s’inverse. Si une option a un coût à chaque partie et qu’une autre n’en a pas d’écrit, la comparaison reste ouverte (« non renseigné » n’est pas 0) : écris 0 s’il n’y en a vraiment pas. Ton envie est ta note à toi : elle compte si tu choisis un critère d’envie, et sinon elle ne sert qu’à départager, formule affichée."
   },
   {
    "id": "plan",
@@ -183,21 +183,21 @@
    "question": "Comment transformer mon but en programme à suivre, mission par mission ?",
    "use": "Le business plan a ses propres questions : ton but (acheter quelque chose, avoir une somme, ou débloquer quelque chose avec de l’expérience : rang, XP, réputation…), où tu en es, comment tu gagnes ton argent (tes missions, ou un chiffre par heure), ce qu’il faut acheter avant, et ce qui compte pour toi. Rien n’est pris en silence dans les huit calculs : un bouton « Reprendre mes chiffres de Mes calculs » les copie si tu le veux. Il te rend : ton programme dans l’ordre (en premier, en deuxième, en troisième… partie après partie, avec le chemin le plus rapide trouvé avec tes missions), ta prochaine partie, des plans de secours A, B, C si ça ne se passe pas comme prévu, et un suivi qui refait tout le plan après chaque partie.",
    "simple": "Cinq questions : « Quel est ton but ? », « Où en es-tu ? », « Comment tu gagnes ton argent ? », « Avant ton but », « Ce qui compte pour toi ». La réponse dit ce qu’il te manque, le nombre de parties et de jours, ce que tu fais en premier, puis « Ta prochaine partie » (les missions à faire, ce que tu gagnes, ce que tu achètes après). En dessous, le document en « gros points » : le programme dans l’ordre, les plans de secours, « Où en es-tu vraiment ? », ton point de départ, l’ordre conseillé des achats d’avant. Chaque point porte déjà l’essentiel dans son titre ; appuie dessus pour ouvrir le détail (« Tout déplier » les ouvre tous).",
-   "expert": "Tout s’affiche en plus : chaque partie avec ses missions, ses gains et ses achats, « Dans quel ordre les acheter ? » (laisser le calculateur choisir, ton ordre, ce qui rapporte le plus vite, le moins cher, directement vers ton but, en touchant à l’argent mis de côté), « Et si… ? », « Ce qui change tout », la courbe de ton argent avec tes résultats réels, le calendrier, « Mes variantes du plan » (garde ce plan avant d’essayer autre chose), la formule et « Tous les chiffres du calcul ». Sur la courbe, un point réel se corrige d’un clic ; dans « Et si le chiffre bouge de 20 % ? », un clic sur −20 % ou +20 % adopte ce chiffre.",
+   "expert": "Tout s’affiche en plus : chaque partie avec ses missions, ses gains et ses achats, « Dans quel ordre les acheter ? » (laisser le calculateur choisir, ton ordre, ce qui rapporte le plus vite, le moins cher, directement vers ton but, en touchant à l’argent mis de côté), « Et si… ? », « Ce qui change tout », la courbe de ton argent avec tes résultats réels, le calendrier, « Mes variantes du plan » (garde ce plan avant d’essayer autre chose), la formule et « Tous les chiffres du calcul ». Sur la courbe, un point réel se corrige d’un clic ; dans « Et si le chiffre bouge de 20 % ? », un clic sur −20 % ou +20 % adopte ce chiffre.",
    "steps": [
     "Choisis ton but : une fiche du site ou un achat libre avec son prix (celui que tu imagines s’il n’est pas connu), une somme à avoir, ou quelque chose à débloquer avec des points (dis combien il en faut, combien tu en as, et ce que ça coûte ensuite).",
-    "Écris ce que tu as, ce que tu gardes de côté, la durée d’une partie et tes jours par semaine. Puis dis comment tu gagnes ton argent : tes missions (récompense, frais, durée, attente… copie-les depuis Mes activités si tu veux) ou un chiffre par heure.",
-    "Ajoute ce qu’il faut acheter avant ton but (fiche du site ou achat libre), ce que chaque achat rapporte ensuite, et dis où tu en es pour chacun : « Prévu », « Commencé (pas encore à moi) » ou « Déjà à moi ». Une mission peut demander un de ces achats : le plan l’achète au bon moment et débloque la mission. Une mission à faire une seule fois se marque de la même façon : prévue, commencée ou déjà faite.",
-    "Choisis ce qui compte pour toi (équilibre, vitesse, sécurité), une échéance si tu en as une, puis lis ton programme. Après chaque partie, écris ce que tu as, le temps joué, les missions faites et les achats faits : tout le plan se recalcule, et les plans de secours restent là si tu as gagné moins que prévu."
+    "Écris ce que tu as, ce que tu gardes de côté, la durée d’une partie, tes jours par semaine et à combien vous jouez (une mission qui demande plus de joueurs que ton groupe est écartée, et c’est dit). Puis dis comment tu gagnes ton argent : tes missions (récompense, frais, durée, attente… « Ou reprendre une mission déjà écrite » les copie depuis Mes activités ; « Reprendre mes chiffres de Mes calculs » reprend tout : missions, groupe, dépenses par partie, coûts d’usage, dépendances) ou un chiffre par heure.",
+    "Ajoute ce qu’il faut acheter avant ton but (fiche du site ou achat libre), ce que chaque achat rapporte ensuite, et dis où tu en es pour chacun : « Prévu », « Commencé (pas encore à moi) » ou « Déjà à moi ». Une mission peut demander un de ces achats : le plan l’achète au bon moment et débloque la mission. Une mission à faire une seule fois se marque de la même façon : prévue, commencée ou déjà faite.",
+    "Choisis ce qui compte pour toi (équilibre, le plus vite, la sécurité, le moins coûteux sur tout le parcours), une échéance si tu en as une, puis lis ton programme. Après chaque partie, écris ce que tu as, le temps joué, les missions faites et les achats faits : tout le plan se recalcule, et les plans de secours restent là si tu as gagné moins que prévu."
    ],
    "example": "Exemple à essayer : but « Kamacho » à 1 000 000 $, 200 000 $ en poche, parties de 60 minutes, 7 jours par semaine, deux missions : « Livraison » (60 000 $ de récompense, 5 000 $ de frais, 20 minutes) et « Braquage » (150 000 $, 20 000 $ de frais, 40 minutes).",
-   "result": "« Pour Kamacho, il te manque 800 000 $. Avec tes missions, tu y arrives en 5 parties de 1 h, soit 5 jours. En premier : « Livraison » ×1 puis « Braquage » ×1. » Chaque partie rapporte 185 000 $. Après la partie 5 : « Objectif atteint », « Achète Kamacho (1 000 000 $) » et « Il te reste 125 000 $ ». Plans de secours : Plan B, seulement Livraison (5 parties aussi, moins d’argent à la fin), et Plan C, seulement Braquage (7 parties). Avec une échéance de 3 jours : « Pas avec ton rythme actuel : tu finirais au jour 5, soit 2 jours trop tard. Ou des parties de 1 h 45 au lieu de 1 h. »",
+   "result": "« Pour Kamacho, il te manque 800 000 $. Avec tes missions, tu y arrives en 5 parties de 1 h, soit 5 jours. En premier : « Livraison » ×1 puis « Braquage » ×1. » Chaque partie rapporte 185 000 $. Après la partie 5 : « Objectif atteint », « Achète Kamacho (1 000 000 $) » et « Il te reste 125 000 $ ». Plans de secours : Plan B, seulement Livraison (5 parties aussi, moins d’argent à la fin), et Plan C, seulement Braquage (7 parties). Avec une échéance de 3 jours : « Pas avec ton rythme actuel : tu finirais au jour 5, soit 2 jours trop tard. Ou des parties de 1 h 45 au lieu de 1 h. »",
    "try": "Après une partie, écris 320 000 $ dans « J’ai maintenant » et 60 minutes : le bilan compare le prévu (+185 000 $) et le réel (+120 000 $), le plan repart de 320 000 $, et un plan « Au rythme que tu as vraiment eu » apparaît dans les plans de secours. Enregistre ton plan : il se range dans « Mes calculs », liste « Mes plans », avec sa fiche complète.",
    "error": "Croire que la date est une promesse. C’est un calcul avec tes chiffres, en supposant que tu joues toujours pareil ; si un chiffre change, le plan se refait. Et un achat n’est jamais payé avec l’argent qu’il rapportera lui-même.",
    "capture": "plan",
    "mobile": "plan-mobile",
    "alt": "Mon business plan : les cinq questions à gauche ; à droite la réponse et la prochaine partie ; en dessous le document avec le programme dans l’ordre et les plans de secours.",
-   "compte": "Un déblocage ne se fait qu’une fois et un achat d’avant n’est payé qu’une fois ; le temps pour l’obtenir compte. « Au plus bas » montre le moment où tu as le moins d’argent. Si un chiffre indispensable manque, la réponse dit « Parcours à compléter » avec ce qu’il faut écrire. Si le seul chemin touche à ton argent gardé de côté, c’est dit en tête, avec la raison. Prévu, commencé et fait sont distincts : « commencé » ne compte rien, seul « fait » (ou une partie relevée pour de vrai) change le calcul, et une même partie n’est jamais comptée deux fois."
+   "compte": "Un déblocage ne se fait qu’une fois et un achat d’avant n’est payé qu’une fois ; le temps pour l’obtenir compte. « Au plus bas » montre le moment où tu as le moins d’argent. Si un chiffre indispensable manque, la réponse dit « Parcours à compléter » avec ce qu’il faut écrire. Si aucun plan ne garde ton argent de côté, le plan est bloqué et t’explique quoi faire : choisir « Le plus vite possible » (le plan puise alors dans l’argent de côté et le dit à chaque étape) ou changer ce que tu gardes. Sans durée de partie, le parcours attend la mission la plus rentable plutôt que de lancer n’importe laquelle, et il te dit s’il laisse une mission de côté pour aller plus vite. Les munitions que tu simules en mode Expert s’ajoutent aux frais de chaque tentative. Prévu, commencé et fait sont distincts : « commencé » ne compte rien, seul « fait » (ou une partie relevée pour de vrai) change le calcul, et une même partie n’est jamais comptée deux fois."
   }
  ]
 }

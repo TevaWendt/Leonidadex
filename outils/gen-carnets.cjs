@@ -73,7 +73,7 @@ function dataOf(k) {
   if (items.some(it => it.t && it.t.ico === 'viseur')) icons.viseur = SEC.ICONS.viseur;
   const lieux = k.id === 'lieux' ? S.lieux() : null;
   const counted = k.id === 'lieux' ? lieux.items : items;
-  const clean = it => { const o = { f: it.f, id: it.id, n: t(it.n), c: t(it.c || ''), g: it.g || '', u: it.u || '', x: it.x || 'ligne' }; if (it.t) o.t = it.t; if (it.k) o.k = it.k; return o; };
+  const clean = it => { const o = { f: it.f, id: it.id, n: t(it.n), c: t(it.c || ''), g: it.g || '', u: it.u || '', x: it.x || 'ligne' }; if (it.t) o.t = it.t; if (it.k) o.k = it.k; if (it.sr) o.sr = 1; return o; };
   const data = {
     v: 1, id: k.id, titre: t(k.titre), nature: k.nature, fams, meta, prefix: '../',
     vues: Object.fromEntries(Object.entries(E.vues).map(([a, b]) => [a, t(b)])),
@@ -146,7 +146,7 @@ function page(k, footer) {
   const V2 = Object.keys(E.vues);
   const counters = doc
     ? `<p class="cn-counter"><b data-cn-n="calcs">0</b>${lab(E.compteurs.calcs)}</p><p class="cn-counter"><b data-cn-n="plans">0</b>${lab(E.compteurs.plans)}</p>`
-    : `<p class="cn-counter cn-counter--main"><b data-cn-n="done">0</b><span>${esc(E.compteurs.done)} sur <span data-cn-n="total">${nf(total)}</span></span></p>`
+    : `<p class="cn-counter cn-counter--main"><b data-cn-n="done">0</b><span>${esc(E.compteurs.done)} sur <span data-cn-n="total">${nf(total)}</span></span></p><p class="cn-counter cn-counter--serie" data-cn-serie hidden>dont <b>0</b> repères de la série (GTA V, GTA Online), pas encore vus dans GTA VI</p>`
       + (E.compteurs.wish ? `<p class="cn-counter"><b data-cn-n="wish">0</b>${lab(E.compteurs.wish)}</p>` : '')
       + `<p class="cn-counter"><b data-cn-n="rest">${nf(total)}</b>${lab(E.compteurs.rest)}</p>`;
   const meter = doc ? '' : `<div class="cn-meter" aria-hidden="true"><span class="cn-meter-bar"><i data-cn-bar style="width:0%"></i></span><span class="cn-meter-pct" data-cn-pct>0 %</span></div>`;

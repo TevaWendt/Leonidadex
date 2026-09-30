@@ -397,23 +397,35 @@
   }
   /* Adaptateurs : ce que les données actuelles du site savent vraiment, avec leur statut. */
   var SITE_STATUS = { officiel: 'official', vu: 'official', comm: 'estimated', conf: 'unknown', spec: 'estimated', serie: 'series' };
+  var HUMAN_POWERED = /^(bmx|cruiser|scorcher|lombike|endurex-race-bike|crest-kayak)$/;
   function fromVehicle(v) {
     var cat = v && v.cat, terrain = cat === 'bateau' ? 'eau' : cat === 'avion' || cat === 'helicoptere' ? 'air' : cat ? 'route' : null;
-    return {
+    var outV = {
       price: v && typeof v.price === 'number' ? V.official(v.price) : V.unknown(),
       purchasable: typeof (v && v.purchasable) === 'boolean' ? V.official(v.purchasable) : V.unknown(),
       terrain: terrain ? V.estimated(terrain, { ctx: 'Déduit du type de véhicule (catégorie du site), pas d’une fiche technique.' }) : V.unknown(),
+      // v7.54 : vélo, kayak, trottinette, train ou monorail : pas de carburant à payer, « sans objet » plutôt que « mécanique non confirmée » (revue v7.53).
+      fuel: v && HUMAN_POWERED.test(v.id || '') ? V.na('Se déplace sans carburant : rien à payer pour rouler.') : v && /train|monorail/.test(v.id || '') ? V.na('Transport public : on n’en fait pas le plein.') : undefined,
       topSpeed: V.unknown(), acceleration: V.unknown(), braking: V.unknown(), handling: V.unknown(), seats: V.unknown(), cargo: V.unknown()
     };
+    if (outV.fuel === undefined) delete outV.fuel;
+    return outV;
   }
   function fromWeapon(a) {
-    return {
+    // v7.54 : une arme de mêlée ou de jet n’a ni chargeur, ni rechargement, ni munitions : « sans objet », pas « à confirmer » (revue v7.53).
+    var noAmmo = a && (a.cat === 'melee' || a.cat === 'projectile');
+    var naText = a && a.cat === 'melee' ? 'Arme de mêlée : ni munitions, ni chargeur.' : 'Arme de jet : chaque exemplaire se lance, sans chargeur ni rechargement.';
+    var out = {
       price: a && typeof a.price === 'number' ? V.official(a.price) : V.unknown(),
       purchasable: V.unknown(),
-      ammoType: a && a.mun ? make(a.mun, SITE_STATUS[a.st] || 'estimated', { ctx: 'Type de munitions écrit sur la fiche.' }) : V.unknown(),
+      ammoType: noAmmo ? V.na(naText) : a && a.mun ? make(a.mun, SITE_STATUS[a.st] || 'estimated', { ctx: 'Type de munitions écrit sur la fiche.' }) : V.unknown(),
+      ammoCost: noAmmo ? V.na(naText) : undefined,
       range: a && a.portee ? make(a.portee, 'estimated', { ctx: 'Portée décrite en mots d’après l’arme réelle qui l’inspire ; aucune mesure de GTA VI.' }) : V.unknown(),
-      rate: V.unknown(), accuracy: V.unknown(), reload: V.unknown(), capacity: V.unknown()
+      rate: noAmmo && a.cat === 'melee' ? V.na('Arme de mêlée : pas de cadence de tir.') : V.unknown(), accuracy: V.unknown(),
+      reload: noAmmo ? V.na(naText) : V.unknown(), capacity: noAmmo ? V.na(naText) : V.unknown()
     };
+    if (out.ammoCost === undefined) delete out.ammoCost;
+    return out;
   }
   function fromConsumable(row) {
     var effet = row && row.effet || {};

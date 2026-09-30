@@ -79,7 +79,8 @@
     const el = document.getElementById(id); if (!el) return;
     const box = el.closest('details.cat-box'); if (!box) return;
     const c = controllers.get(box);
-    if (el.matches('tr.cat-row')) { if (c) c.reset(); box.open = true; el.classList.add('is-target'); requestAnimationFrame(() => { el.scrollIntoView({ block: 'center' }); }); return; }
+    /* v7.54 : la ligne visée arrive sous les bandeaux collants (marge de défilement) et sa « Fiche complète » s’ouvre (revue v7.53, écart E6). */
+    if (el.matches('tr.cat-row')) { if (c) c.reset(); box.open = true; el.classList.add('is-target'); const fiche = el.querySelector('details'); if (fiche) fiche.open = true; requestAnimationFrame(() => { el.scrollIntoView({ block: 'start' }); const stuck = [...document.querySelectorAll('body>header,.ed-nav,.cat-table th')].reduce((h, n) => { const cs = getComputedStyle(n); return cs.position === 'sticky' || cs.position === 'fixed' ? Math.max(h, n.getBoundingClientRect().bottom) : h; }, 0); if (stuck > 0) window.scrollBy(0, -(stuck + 12)); }); return; }
     if (el.matches('[data-cat-group]')) { box.open = true; if (c) c.setGroup(el.dataset.catGroup); requestAnimationFrame(() => { el.scrollIntoView({ block: 'center' }); }); }
   }
   openFromHash();

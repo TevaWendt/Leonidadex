@@ -562,3 +562,7 @@ body.calculator-page main .lk-act--3 td[data-l]::before{content:attr(data-l) "\0
 /* v7.53 : répartition du budget, les cinq postes visibles (plus de montant compté sans être montré) */
 .b-budget-split{border:1px solid var(--rule,#DFD9CC);border-radius:10px;padding:10px 14px;margin:14px 0 0}
 .b-budget-split legend{font-weight:700;padding:0 5px;font-size:12px}
+/* v7.54 : boutons du bloc « Comparer des ordres selon le délai » */
+.b-tradeoff .b-order-actions{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 4px}
+.b-explain-keys{margin-top:10px}.b-explain-keys li{font-size:.9rem}.b-explain-keys .calc-button{padding:4px 10px;font-size:.78rem;min-height:30px}
+.calc-tag.is-example{background:#f5e6c8;color:#5a3d00}

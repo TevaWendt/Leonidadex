@@ -32,7 +32,7 @@ test('Neuf carnets, neuf pages sous /carnets/ : titre, description, canonique, f
 test('Aucune liste personnelle publiée : données de la page = catalogue public, rien de lk_* dans les métadonnées',()=>{
   for(const k of M.carnets){const html=read(k.url.slice(1)),d=dataOf(html);
     assert.equal(d.id,k.id);assert.deepEqual(d.fams,k.familles);
-    for(const it of d.items.concat(d.styles))assert.deepEqual(Object.keys(it).filter(x=>!['f','id','n','c','g','u','x','t','k'].includes(x)),[],'champ inattendu '+it.id);
+    for(const it of d.items.concat(d.styles))assert.deepEqual(Object.keys(it).filter(x=>!['f','id','n','c','g','u','x','t','k','sr'].includes(x)),[],'champ inattendu '+it.id);
     assert.doesNotMatch(html.replace(/<script[\s\S]*?<\/script>/g,''),/lk_own_|lk_wish_v1|lk_stock_v1/,'aucune clé de stockage dans le HTML publié : '+k.id);
     assert.doesNotMatch(html,/"(?:owned|possede|possedes|mine)"\s*:/,'aucun état personnel dans la page : '+k.id);}
 });

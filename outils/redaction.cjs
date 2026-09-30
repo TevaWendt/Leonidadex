@@ -86,7 +86,10 @@ const ST_ARM={
 };
 const SLOT_ARM={
  longue:["C’est une arme longue : dans le jeu, elle se porte dans le dos ou en main, et le nombre d’armes longues qu’on peut emporter est limité.","Arme longue, donc encombrante : elle prend l’une des deux places disponibles, dans le dos ou en main.","Elle se classe parmi les armes longues, celles qui se voient quand on les porte et qui ne se cachent pas."],
- poing:["C’est une arme de poing : discrète, rangée dans la ceinture, sans limite de place dans l’équipement.","Arme de poing, donc invisible une fois rangée et toujours disponible.","Elle se classe parmi les armes de poing, celles qu’on garde sur soi sans encombrer l’équipement."],
+ poing:["C’est une arme de poing : rangée sur soi, invisible une fois rangée, à la différence des armes longues qui se voient. Le nombre exact qu’on peut porter reste à confirmer.","Arme de poing, donc invisible une fois rangée ; combien on en porte à la fois n’est pas encore confirmé.","Elle se classe parmi les armes de poing, celles qu’on garde sur soi sans qu’elles se voient ; leur nombre sur soi reste à confirmer."],
+ /* v7.54 : une arme de mêlée ou de jet n’est pas une « arme de poing » : phrase propre, sans mécanique inventée (revue v7.53). */
+ melee:["C’est une arme de mêlée : elle se porte sur soi et ne demande ni munitions ni rechargement.","Arme de mêlée, donc au corps à corps : rien à recharger, rien à acheter comme munitions.","Elle se classe parmi les armes de mêlée, celles qu’on utilise au contact, sans munitions."],
+ projectile:["C’est une arme de jet : chaque exemplaire se lance, sans chargeur ni rechargement.","Arme de jet, donc consommée à l’usage : on en emporte un certain nombre, encore à confirmer.","Elle se classe parmi les projectiles, ceux qu’on lance et qu’il faut réapprovisionner."],
 };
 const H2_ARM=[["Ce que montrent les supports officiels","Ce type d’arme dans la série"],["Ce qu’on en sait","Le rôle de cette catégorie"],["Ce que disent les visuels","Sa place dans un GTA"],["Présentation","Dans la série"]];
 
@@ -96,7 +99,7 @@ function arme(a,CATL){
   const p1=[
     tire(id,'p1a',[`${a.nom} est classé parmi les ${cat} du catalogue.`,`Sur Leonidakit, ${a.nom} appartient à la catégorie ${cat}.`,`Catégorie ${cat} : voilà où ${a.nom} se range dans notre base.`]),
     tire(id,'p1b',ST_ARM[a.st]||ST_ARM.vu),
-    tire(id,'p1c',SLOT_ARM[a.slot]||[]),
+    tire(id,'p1c',SLOT_ARM[a.cat==='melee'?'melee':a.cat==='projectile'?'projectile':a.slot]||[]),
     a.insp?tire(id,'p1d',[`Le rapprochement retenu est ${a.insp}, une lecture des visuels et non une information du studio.`,`Sa silhouette rappelle ${a.insp} : c’est l’inspiration réelle retenue, sans confirmation de Rockstar.`,`Le modèle réel le plus proche est ${a.insp}, d’après les images.`]):(a.fam?tire(id,'p1d',[`Il s’agit d’un objet du quotidien : ${lower(a.fam)}.`,`Sa famille : ${lower(a.fam)}.`]):''),
     a.mun?tire(id,'p1e',[`Elle utilise des ${lower(a.mun)}.`,`Côté munitions : ${lower(a.mun)}.`,`Munitions : ${lower(a.mun)}.`]):'',
     a.portee?tire(id,'p1f',[`Sa portée estimée est ${lower(a.portee)}.`,`Portée estimée : ${lower(a.portee)}.`]):'',

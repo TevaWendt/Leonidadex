@@ -101,7 +101,7 @@ test('v4 → v5 : le plan récupère une copie de ce qu’il utilisait (argent, 
  raw.assets.push({key:'k1',itemId:'',name:'Équipement',price:50000,referencePrice:null,extras:5000,fees:0,owned:false,incomeMode:'personal',boostHourly:2000,utility:3},{key:'but',itemId:'',name:'Ma voiture',price:900000,referencePrice:null,extras:0,fees:0,owned:false,incomeMode:'none',boostHourly:0,utility:3});
  raw.order={keys:['k1','but']};raw.plan={kind:'purchase',key:'but',target:null,usePrerequisites:true,upkeepPerSession:1500,priority:'safe',activity:'scenario-a',details:true,strategy:'cheapFirst',deadlineDays:20,countDoneBoost:true,done:[],log:[{at:'2026-09-01T10:00:00.000Z',capital:310000,minutes:45,forecast:305000,note:'ok'}],playedMinutes:45};
  const s=B.validate(raw,initial);assert.equal(s.version,6);
- assert.deepEqual(s.plan.situation,{capital:300000,reserve:25000,hourly:80000,unitsHourly:0,dailyMinutes:45,daysPerWeek:4,upkeepPerSession:1500});
+ assert.deepEqual(s.plan.situation,{capital:300000,reserve:25000,hourly:80000,unitsHourly:0,dailyMinutes:45,daysPerWeek:4,upkeepPerSession:1500,players:1}/* v7.54 : le groupe (1 par défaut) fait partie de la situation */);
  assert.equal(s.plan.goal.kind,'purchase');assert.equal(s.plan.goal.name,'Ma voiture');assert.equal(s.plan.goal.price,900000);
  assert.equal(s.plan.prerequisites.length,1);assert.equal(s.plan.prerequisites[0].name,'Équipement');assert.equal(s.plan.prerequisites[0].price,55000);assert.equal(s.plan.prerequisites[0].boostHourly,2000);
  assert.equal(s.plan.source,'missions');assert.equal(s.plan.missions.length,1);assert.equal(s.plan.missions[0].name,initial.activities[0].name);

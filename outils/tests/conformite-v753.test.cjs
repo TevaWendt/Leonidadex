@@ -19,7 +19,7 @@ test('coût d’usage : « non renseigné » n’est pas « sans objet » q
 test('« Quoi acheter d’abord ? » sans achat : pas de « Ordre proposé : : 0 min », pas de « Et si… » vide',()=>{
   const s=fresh();s.order.keys=[];const x=B.analysis('order',s,[]);
   const d=(x.explain&&x.explain.drivers)||[];assert.ok(d.length);assert.doesNotMatch(d.map(y=>y.label+' : '+y.text).join(' '),/: : |0 min de jeu au total/);
-  assert.match(d[0].text,/Aucun achat à ordonner/);assert.equal(B.sensitivity('order',s,[]),null);
+  assert.match(d[0].text,/Aucun achat à ordonner/);const se=B.sensitivity('order',s,[]);assert.equal(se.pending,true,'v7.54 : le bloc « Et si » reste, avec ce qu’il faut écrire');assert.match(se.need,/Ajoute au moins un achat/);
 });
 
 test('business plan : prévu, commencé et fait sont distincts ; « commencé » ne crédite rien',()=>{
@@ -78,7 +78,7 @@ test('sélection des listes → budget : achats libres, prix inconnu (jamais 0)
 });
 
 test('Tuto : textes de la version finale, critères lus dans le registre, plus de légende « captures anciennes »',()=>{
-  const html=read('tuto.html');assert.doesNotMatch(html,/ont changé de place depuis cette capture|Comparer des ordres selon le délai|Me fait gagner en plus/);
+  const html=read('tuto.html');assert.doesNotMatch(html,/ont changé de place depuis cette capture|Me fait gagner en plus/);assert.match(html,/Comparer des ordres selon le délai/,'v7.54 : le bloc de la v7.47 est de retour');
   assert.match(html,/Ce que le calcul prend en compte/);assert.match(html,/Commencé \(pas encore à moi\)/);assert.match(html,/1 h 36 de jeu/);
   const tools=JSON.parse(read('outils/tuto.json')).chapters.map(c=>c.tool),F=JSON.parse(read('outils/modele-donnees.json')).facteurs;
   for(const t of tools){const n=F.filter(f=>f.outils.includes(t)).length;assert.ok(html.includes('Tous les critères de cet outil ('+n+')'),t);}

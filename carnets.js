@@ -175,6 +175,7 @@
     var badges = el('p', 'cn-badges');
     if (own) badges.appendChild(el('span', 'cn-stamp', cap(m.done)));
     if (wish) badges.appendChild(el('span', 'cn-wishb', it.f === 'lieux' ? 'À visiter' : it.f === 'consommables' ? 'À essayer' : 'Envie'));
+    if (it.sr) { var sb = el('span', 'cn-serieb', 'Repère de la série'); sb.title = 'Vu dans GTA V ou GTA Online, pas encore montré dans GTA VI : compté à part.'; badges.appendChild(sb); }
     if (it.f === 'collectibles' && window.LKCollectibles) { try { var cs = window.LKCollectibles.getState(); if (cs.favorites && cs.favorites[it.id]) badges.appendChild(el('span', 'cn-favb', 'Favori')); if (cs.notes && cs.notes[it.id]) body.appendChild(el('p', 'cn-note', cs.notes[it.id])); } catch (e) { /* carnet illisible */ } }
     if (badges.childNodes.length) body.appendChild(badges);
     if (own && m.stock) body.appendChild(stockBlock(it));
@@ -252,6 +253,9 @@
   function plural(n, v) { var l = n.nextElementSibling; if (l && l.hasAttribute('data-one')) l.textContent = v > 1 ? l.getAttribute('data-many') : l.getAttribute('data-one'); }
   function headCounters(s) {
     var total = items.length, done = items.filter(function (it) { return isOwn(it, s); }).length;
+    /* v7.54 : les repères de la série sont dits et comptés à part du total GTA VI. */
+    var serie = items.filter(function (it) { return it.sr; }).length;
+    document.querySelectorAll('[data-cn-serie]').forEach(function (n) { n.hidden = !serie; var b = n.querySelector('b'); if (b) b.textContent = nf.format(serie); });
     var wish = items.concat(styles).filter(function (it) { return s.wish[it.f + ':' + it.id]; }).length;
     function set(k, v) { document.querySelectorAll('[data-cn-n="' + k + '"]').forEach(function (n) { n.textContent = nf.format(v); plural(n, v); }); }
     set('done', done); set('total', total); set('wish', wish); set('rest', total - done);

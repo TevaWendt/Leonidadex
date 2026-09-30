@@ -1,4 +1,4 @@
-# Suivi de la mission « calculateur, catalogues, Achats, carnets » (v7.48 → v7.52)
+# Suivi de la mission « calculateur, catalogues, Achats, carnets » (v7.48 → v7.54)
 
 Document unique de suivi et de reprise. À relire avant toute reprise : il dit la base exacte, les lots faits, le lot
 actif, les fichiers touchés, les choix, les vérifications, les blocages et le point de reprise. Les détails par outil
@@ -32,6 +32,7 @@ site statique (Vercel, sans build), mots simples pour le joueur, charte Leonidak
 | 4 | v7.51 | Carnets de progression et raccordements | **fait** |
 | 5 | v7.52 | Harmonisation, validation complète, livraison | **fait** |
 | — | v7.53 | Revue de conformité au cahier des charges (après le lot 5) | **fait** |
+| — | v7.54 | Deux audits (respect du cahier des charges ; intégration dans le dépôt du propriétaire), restauration du mode Expert de la v7.47, corrections | **fait** |
 
 ## Lot 1 (v7.48) — fait le 29/09/2026
 
@@ -349,6 +350,86 @@ officiel du dépôt fait 1 280 px), désormais écrite dans les preuves.
 
 Vérifications (v7.53) : voir `outils/PREUVES-v7.53.md`. Résumé de la dernière passe complète : tests `node` 586 / 586 ; `verifier.js` 0 erreur (47 643 références, 415 pages) ; carnets 94 / 94, parcours 161 / 161, lot B 140 / 140, v2 142 / 142, calculateurs 278 / 278, Léo tenu à la relance isolée (1 requête d’image interrompue à la fermeture d’une page dans la passe complète, non reproduite), Contact tenu ; audit 26 pages / 182 chargements sans défaut (0 cible < 24 px, 0 image étirée) ; axe-core 0 violation sur 44 chargements ; 0 mot coupé sur 190 chargements ; zoom et fenêtres basses 56 / 56 ; Tuto 22 / 22 ; 53 captures relues.
 
+## Audits et restauration du mode Expert (v7.54) — faits le 30/09/2026
+
+**Pourquoi** : le propriétaire a ajouté les archives v7.48 à v7.53 à son dépôt et a demandé deux audits complets : (1) le
+cahier des charges a-t-il été respecté ? (2) tout a-t-il bien été ajouté ? Il a aussi signalé que le mode Expert du
+calculateur « n’est plus comme avant » : les consignes du cahier des charges ajoutaient des options, elles ne demandaient
+pas d’en retirer ; les sous-parties disparues (« Et si… », etc.) devaient revenir **à côté** des ajouts.
+
+**Audit 2 (intégration)** : son dépôt (`Leonidadex-main`, 30/09) est identique à la v7.53, fichier pour fichier, sauf
+`calculateurs-tools.js` qui n’a pas été supprimé (aucune page ne le charge ; sans effet tant qu’il reste). Rien à reprendre.
+
+**Audit 1 (cahier des charges)** : relecture par un vérificateur indépendant, 281 exigences rapprochées du code et des
+pages en exécutant les calculs : 195 conformes, 71 partielles, 8 non conformes, 7 invérifiables (données de jeu absentes).
+Quatre écarts bloquants (business plan), treize importants, une liste de mineurs. Rapport remis à part
+(`AUDIT-Leonidakit-v7.53.md`, hors dépôt). Tout écart corrigé ici a été reproduit avant correction.
+
+**Inventaire du mode Expert, v7.47 contre v7.53** (relevé au navigateur, huit outils, deux états chacun) — ce qui manquait
+vraiment et revient en v7.54, sans retirer les ajouts des lots :
+- « Quoi acheter d’abord ? » : le bloc **« Comparer des ordres selon le délai »** (ton ordre saisi, l’inverse, les prix
+  croissants, le meilleur trouvé, côte à côte : temps de jeu, argent au plus bas, premier gain) avec ses deux boutons
+  « Appliquer l’ordre inverse » et « Trier par prix croissant ». Il vit à côté du « Ce qui compte dans ce calcul » du lot 2.
+- Le point **« Et si le chiffre bouge de 20 % ? »** reste affiché quand le panier ou la comparaison est vide : il dit quoi
+  écrire (« pas encore calculable ») au lieu de disparaître.
+- « Quel achat choisir ? » : la ligne **« Temps pour regagner le prix »** du tableau côte à côte.
+- « Ce qui compte dans ce calcul » : les **chiffres clés au premier niveau avec leur bouton « Modifier »** (le détail replié
+  les garde aussi).
+- Comparateur (`comparateur.html`) : le lien **« Lequel puis-je acheter ? »** (Mes achats) revient à côté de « Quel achat
+  choisir ? » ; la carte 05 de `calculateurs.html` redit que plusieurs ordres réalisables sont comparés.
+- Les autres points relevés par le propriétaire (« Et si je gagne plus, ou moins ? » de Mon objectif, la case « Afficher
+  plus de détails » du plan, le bouton « Voir les réglages avancés ») ont été retirés **avant** la mission (v7.46 → v7.47,
+  chasse aux doublons) : ils ne font pas partie de cette restauration ; leur contenu existe ailleurs (« Et si le chiffre
+  bouge de 20 % ? », points repliables, « Voir en mode Expert »). À remettre sur demande.
+
+**Écarts bloquants corrigés (business plan)** :
+1. Parcours sans durée de partie : à chaque étape le moteur compare « lancer maintenant » et « attendre la mission la plus
+   rentable » (gain par minute, attente comprise), puis compare le parcours complet aux parcours qui laissent une mission de
+   côté (toutes les combinaisons jusqu’à 4 missions, les meilleures ensuite) ; s’il en trouve un plus rapide, il le prend et
+   le dit (« Parcours le plus rapide en laissant de côté… »). Le cas de l’audit passe de 1 h 11 à 25 min ; le tirage de
+   l’audit rejoué (500 plans) : plus aucun n’est battu par un sous-ensemble (171 avant) ; le test du dépôt en rejoue 200.
+2. Priorités « sécurité » et « le moins coûteux » : jamais un plan qui passe sous l’argent de côté. S’il n’en existe aucun,
+   le plan est **bloqué et l’explique** (frais de la première mission, ce qu’il reste d’utilisable, et le plan qui existe en
+   puisant dans la réserve, à choisir explicitement avec « Le plus vite possible »), avec deux boutons de sortie ; plus de
+   phrases contradictoires (« jamais sous… » / « touche à tes… »).
+3. Munitions simulées : ajoutées aux frais de chaque tentative du plan (comme dans Mes activités), dites dans « Ce qui compte »
+   (chiffre marqué SIMULATION) et dans « Ce qui ferait changer la réponse » ; la note de portée des hypothèses le dit.
+4. « Reprendre mes chiffres de Mes calculs » copie tout : groupe (joueurs), dépenses par partie, sens du but, coût d’usage
+   par achat, gain d’un achat (personnel ou issu de « Ça vaut le coup ? »), dépendances entre achats, joueurs et dépendances
+   des missions ; une option inconnue reste inconnue. Nouveau champ « Nous jouons à (joueurs) » : une mission qui demande
+   plus de joueurs est écartée et c’est dit. (Le champ était perdu à l’enregistrement — trouvé au contrôle visuel des
+   captures ; corrigé, test ajouté.)
+
+**Écarts importants corrigés** : prix inconnu dans « Quel achat choisir ? » (option gardée, réponse « partielle » qui le
+dit, jamais « chacune gagne sur un point » à tort) ; l’envie n’est plus notée par le site (facultative, « — pas notée » ;
+sans note, la réponse par défaut devient « le moins cher », et c’est dit) ; chiffres d’exemple étiquetés EXEMPLE et bandeau
+« CALCULÉ AVEC LES EXEMPLES » tant que rien n’a été changé ; Mon budget : un coût d’usage non confirmé n’est ni compté ni
+tu (flux « incomplet ») ; tentatives ratées chiffrées dans Mon objectif (missions) et Mon temps de jeu, munitions dites dans
+« Ce qui compte » de Mon temps de jeu, registre à jour ; plan : « Achat à confirmer » reste écrit dans la réponse, « Il te
+restera, but acheté » distinct de « Tu auras à la fin » ; « Quoi acheter d’abord ? » : un prérequis retiré du panier bloque
+l’achat qui en dépend avec un message ; plan : priorité « Le moins coûteux sur tout le parcours », liens vers la fiche de
+chaque achat du parcours, hypothèses écrites dans l’export ; fiches : armes de mêlée et de jet « sans objet » (chargeur,
+rechargement, munitions), BMX / vélos / kayak / train « sans objet » (carburant), phrase de la batte réécrite (plus de
+« sans limite de place »), Armurerie cohérente (« nombre exact d’armes de poing à confirmer ») ; Collectibles renvoie au
+carnet dédié ; carnets : repères de la série (GTA V, GTA Online) marqués « Repère de la série » et comptés à part ; liste
+ouverte depuis un carnet : ligne visible sous les bandeaux, « Fiche complète » ouverte ; Léo : « combien de temps pour
+1 000 000 $ » est un objectif, « entre la Cheetah et l’Emperor » garde les deux.
+
+**Mineurs corrigés** : « À compléter : Un chiffre » remplacé par un libellé qui dit quoi (Parcours à compléter, À écrire,
+Blocage, À corriger) ; égalité « le moins cher sur la durée » départagée par le nom ; « Effet sur la vie » écarté d’un
+véhicule dit « sans objet » ; `progression.html` fonctionne (en mémoire, avec un avis) quand le stockage est bloqué ;
+« Coût sur ? parties » remplacé par une ligne qui dit quoi écrire ; matrice et correspondance des carnets retitrées, les
+trois affirmations fausses de la matrice corrigées.
+
+**Mineurs non corrigés (limites connues, écrites dans les preuves)** : solutions équivalentes « l’un ou l’autre » et rôle
+d’achat (remplace, débloque, améliore) sans effet dans le plan ; pas de case « ce que l’étape débloque » ni de plafond de
+production ; besoin « chargement » sans saisie ; objet obtenu par récompense non modélisé ; coûts par utilisation sans
+case ; registre sans provenance par facteur ; « Effacer l’historique » sans confirmation ; « J’ai déjà » partagé entre
+outils sans le dire ; silhouettes de véhicules sans le mot « schéma » ; une seule erreur d’adresse affichée à la fois ;
+localisateur « VCMM Train » relié à 7 concessions (relation non confirmée, signalée).
+
+Vérifications (v7.54) : voir `outils/PREUVES-v7.54.md`. Résumé de la dernière passe complète : tests `node` 599 / 599 ; `verifier.js` 0 erreur (47 651 références, 415 pages) ; carnets 94 / 94, parcours 161 / 161, lot B 140 / 140, v2 142 / 142, calculateurs 278 / 278, Léo tenu, Contact tenu ; audit 26 pages / 182 chargements sans défaut (0 cible < 24 px, 0 image étirée) ; axe-core 0 violation sur 44 chargements ; 0 mot coupé sur 190 chargements ; zoom et fenêtres basses 56 / 56 ; Tuto 22 / 22 ; 85 captures relues (36 contrôles du texte affiché, 0 en échec). Anomalies 56 à 70 dans le tableau.
+
 ## Anomalies relevées à l’inventaire (lot où elles sont traitées)
 
 | # | Anomalie | Lot |
@@ -408,6 +489,21 @@ Vérifications (v7.53) : voir `outils/PREUVES-v7.53.md`. Résumé de la dernièr
 | 53 | (trouvée à la relecture des captures, déjà dans la base v7.47) Véhicules : bandeau des marques sous l’en-tête resté une bande noire vide (il lisait l’index de recherche, que la page ne charge pas) | revue (**corrigé v7.53**) |
 | 54 | (trouvée à la relecture des captures) « Quel achat choisir ? » : à égalité sur un critère (deux achats payables tout de suite pour « le plus vite »), le premier de la liste gagnait ; réordonner changeait le gagnant | revue (**corrigé v7.53**) |
 | 55 | (revue) Captures de livraison : lignes de tableau et figures qui apparaissent au défilement restées vides dans les captures hautes | revue (**corrigé v7.53**) |
+| 56 | (propriétaire) Mode Expert : « Comparer des ordres selon le délai » (ordre saisi, inverse, prix croissants) et ses deux boutons retirés au lot 2 | v7.54 (**restauré**, à côté de « Ce qui compte ») |
+| 57 | (propriétaire) Mode Expert : « Et si le chiffre bouge de 20 % ? » disparaissait panier ou comparaison vide | v7.54 (**restauré** : dit quoi écrire) |
+| 58 | (propriétaire) « Quel achat choisir ? » : ligne « Temps pour regagner le prix » retirée ; chiffres clés sans « Modifier » au premier niveau ; comparateur sans « Lequel puis-je acheter ? » | v7.54 (**restauré**) |
+| 59 | (audit, bloquant) Plan sans durée de partie plus lent qu’en retirant une mission (171 cas sur 500), sans avertissement | v7.54 (**corrigé** : attente rentable, sous-ensembles comparés, dit) |
+| 60 | (audit, bloquant) Priorité « sécurité » : plan recommandé puisant dans l’argent de côté, deux phrases contradictoires | v7.54 (**corrigé** : plan bloqué et expliqué, sorties proposées) |
+| 61 | (audit, bloquant) Munitions simulées annoncées mais sans effet dans le plan | v7.54 (**corrigé**) |
+| 62 | (audit, bloquant) « Reprendre mes chiffres » perdait joueurs, dépenses, coût d’usage, dépendances, gain, sens du but ; le plan imposait 1 joueur | v7.54 (**corrigé** : champ « Nous jouons à », import complet) |
+| 63 | (audit) « Quel achat choisir ? » : prix inconnu retiré en silence ; envie notée 3/5 par le site ; exemples étiquetés « ton chiffre » | v7.54 (**corrigé**) |
+| 64 | (audit) Mon budget : coût d’usage non confirmé compté 0 et flux dit complet ; tentatives ratées sans effet dans Mon objectif et Mon temps de jeu ; munitions absentes de « Ce qui compte » (temps de jeu) | v7.54 (**corrigé**) |
+| 65 | (audit) Plan : « Achat à confirmer » effacé de la réponse ; « Tu auras à la fin » contre « il te restera » ; pas de priorité « le moins coûteux sur tout le parcours » ; parcours sans lien vers les fiches ; export sans hypothèses | v7.54 (**corrigé**) |
+| 66 | (audit) « Quoi acheter d’abord ? » : prérequis retiré du panier, l’achat dépendant proposé seul sans message | v7.54 (**corrigé**) |
+| 67 | (audit) Fiches : mêlée / jet « à confirmer » pour chargeur, rechargement, munitions ; carburant du BMX et du kayak ; batte « sans limite de place » ; Armurerie contradictoire | v7.54 (**corrigé**) |
+| 68 | (audit) Collectibles : liens vers une ancre de la page au lieu du carnet ; carnets : repères de GTA V / Online comptés comme GTA VI sans mention ; ligne ouverte depuis un carnet cachée sous les bandeaux | v7.54 (**corrigé**) |
+| 69 | (audit) Léo : montant d’objectif pris pour un prix ; deux achats nommés réduits à un seul | v7.54 (**corrigé**) |
+| 70 | (audit, mineurs) « À compléter : Un chiffre » ; égalité sur la durée par l’ordre de la liste ; `progression.html` sans stockage ; « Coût sur ? parties » ; matrice fausse sur trois points et titres v7.52 | v7.54 (**corrigé**) ; autres mineurs listés comme limites |
 
 ## Blocages connus
 
@@ -418,9 +514,13 @@ Vérifications (v7.53) : voir `outils/PREUVES-v7.53.md`. Résumé de la dernièr
 
 ## Point de reprise
 
-Mission terminée et revérifiée : lots 1 à 5 (v7.48 à v7.52), puis la revue de conformité (v7.53). Archive cumulée depuis la
-v7.47 : `Leonidakit-v7.53-modifs.zip`, avec une suppression à faire (`calculateurs-tools.js`). La mise en ligne est une étape
-à part, faite par le propriétaire du site (voir `LISEZ-MOI-v7.53.txt`). Pour une reprise : repartir de la v7.53, lire ce
-fichier, `outils/MATRICE-COUVERTURE.md` et `outils/PREUVES-v7.53.md` ; les données de jeu encore à venir sont listées dans
-les preuves : dès qu’une source officielle les publie, les saisir dans les données sources puis `node outils/regenerer.cjs`,
-`node outils/verifier.js`, les tests, et refaire les captures du Tuto (`python3 outils/tuto-shots.py .`) si l’interface change.
+Mission terminée, revérifiée (v7.53), puis auditée et corrigée (v7.54) : lots 1 à 5 (v7.48 à v7.52), revue de conformité
+(v7.53), deux audits et restauration du mode Expert (v7.54). Archive cumulée depuis la v7.47 : `Leonidakit-v7.54-modifs.zip`,
+avec une suppression à faire (`calculateurs-tools.js`, toujours présent dans le dépôt du propriétaire au 30/09). La mise en
+ligne est une étape à part, faite par le propriétaire du site (voir `LISEZ-MOI-v7.54.txt`). Pour une reprise : repartir de
+la v7.54, lire ce fichier, `outils/MATRICE-COUVERTURE.md` et `outils/PREUVES-v7.54.md` ; les données de jeu encore à venir
+sont listées dans les preuves : dès qu’une source officielle les publie, les saisir dans les données sources puis
+`node outils/regenerer.cjs`, `node outils/verifier.js`, les tests, et refaire les captures du Tuto
+(`python3 outils/tuto-shots.py .`) si l’interface change. Sur demande du propriétaire : remettre les trois éléments retirés
+avant la mission (« Et si je gagne plus, ou moins ? » de Mon objectif, « Afficher plus de détails » du plan, « Voir les
+réglages avancés »).

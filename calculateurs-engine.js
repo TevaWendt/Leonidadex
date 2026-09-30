@@ -425,7 +425,8 @@
         var name = typeof entry.name === 'string' && entry.name.trim() ? entry.name.trim().slice(0, 120) : 'Achat ' + (index + 1);
         if (entry.price == null) return { name: name, known: false, price: null, total: null, utility: null, incomeHourly: null, affordable: null, shortfall: null, waitHours: null, waitDays: null, recoveryHours: null, paybackHours: null, valueScore: null, gainOverHorizon: null };
         var total = money(entry.price, 'le prix de ' + name) + money(entry.extras, 'les options de ' + name, 0) + money(entry.fees, 'les frais de ' + name, 0);
-        var utility = number(entry.utility, 'l’envie pour ' + name, 5, { defaultValue: 3, integer: true, positive: true });
+        // v7.54 : l’envie n’est plus notée 3 par le site : absente, elle reste absente (revue v7.53) ; le critère « envie / prix » attend alors ta note.
+        var utility = entry.utility === null || entry.utility === undefined ? null : number(entry.utility, 'l’envie pour ' + name, 5, { integer: true, positive: true });
         var income = entry.incomeHourly == null ? null : money(entry.incomeHourly, 'ce que rapporte ' + name);
         var shortfall = Math.max(0, subtract(total, available));
         var waitHours = shortfall === 0 ? 0 : hourly === null || hourly <= 0 ? null : shortfall / hourly;
@@ -433,7 +434,7 @@
         var recoveryHours = hourly === null || hourly <= 0 ? null : total / hourly;
         var paybackHours = income === null || income <= 0 ? null : total / income;
         var gain = income === null || horizon === null ? null : income * horizon - total;
-        return { name: name, known: true, price: entry.price, total: total, utility: utility, incomeHourly: income, affordable: shortfall === 0, shortfall: shortfall, waitHours: waitHours, waitDays: waitDays, recoveryHours: recoveryHours, paybackHours: paybackHours, valueScore: total > 0 ? utility * 100000 / total : null, gainOverHorizon: gain };
+        return { name: name, known: true, price: entry.price, total: total, utility: utility, incomeHourly: income, affordable: shortfall === 0, shortfall: shortfall, waitHours: waitHours, waitDays: waitDays, recoveryHours: recoveryHours, paybackHours: paybackHours, valueScore: total > 0 && utility !== null ? utility * 100000 / total : null, gainOverHorizon: gain };
       });
       var known = items.filter(function (x) { return x.known; });
       if (!known.length) return fail(chooseShape, 'Écris au moins un prix, même imaginé.');
@@ -470,8 +471,9 @@
         utility: pick('utility', function (x) { return x.utility; }, true)
       };
       var criterion = ['value', 'cheapest', 'fastest', 'profit', 'utility'].indexOf(p.criterion) >= 0 ? p.criterion : 'value';
+      var unrated = known.filter(function (x) { return x.utility === null; }).map(function (x) { return x.name; });
       var chosen = known.find(function (x) { return x.name === byCriterion[criterion]; }) || null;
-      return finish({ items: items, best: byCriterion[criterion], bestByCriterion: byCriterion, ties: ties, criterion: criterion, available: available, bestWaitHours: chosen ? chosen.waitHours : null, bestTotal: chosen ? chosen.total : null }, chooseShape);
+      return finish({ items: items, best: byCriterion[criterion], bestByCriterion: byCriterion, ties: ties, unrated: unrated, criterion: criterion, available: available, bestWaitHours: chosen ? chosen.waitHours : null, bestTotal: chosen ? chosen.total : null }, chooseShape);
     } catch (error) { return fail(chooseShape, error.message); }
   }
 
@@ -844,7 +846,29 @@
   function missionPlan(input) {
     try {
       var p = data(input), c = missionPrep(p);
-      return c.continuous ? missionFlow(c) : missionSessions(c);
+      if (!c.continuous) return missionSessions(c);
+      /* v7.54 : en parcours (sans durée de partie), le programme avec toutes les missions est comparé à ceux qui en laissent de
+         côté (les k missions les plus rentables par minute, k = 1…n, et chaque mission seule) : le plus court qui atteint le but
+         gagne. Une mission qui ralentit l’ensemble n’est plus imposée en silence ; la note dit lesquelles sont laissées de côté. */
+      var full = missionFlow(c), acts = (p.activities || []).filter(function (a) { return a && !a.once; });
+      if (acts.length < 2) return full;
+      var rateOf = function (a) { var e = c.acts.filter(function (x) { return x.id === a.id; })[0]; return e && e.res && e.res.cycleMinutes > 0 ? e.res.net / e.res.cycleMinutes : -Infinity; };
+      var byRate = acts.slice().sort(function (a, b) { return rateOf(b) - rateOf(a); }), subsets = [], seen = {};
+      if (acts.length <= 4) { for (var mask = 1; mask < (1 << acts.length) - 1; mask++) subsets.push(acts.filter(function (a, i) { return mask & (1 << i); })); }
+      else { for (var k = 1; k < byRate.length; k++) subsets.push(byRate.slice(0, k)); byRate.forEach(function (a) { subsets.push([a]); }); }
+      var best = full, bestKeep = null, better = function (r) { return r.valid && r.reached && (!best.valid || !best.reached || r.totalMinutes < best.totalMinutes - 1e-9 || (Math.abs(r.totalMinutes - best.totalMinutes) < 1e-9 && r.finalCash > best.finalCash)); };
+      subsets.forEach(function (keep) {
+        var key = keep.map(function (a) { return a.id; }).sort().join('|'); if (seen[key]) return; seen[key] = true;
+        var ids = {}; keep.forEach(function (a) { ids[a.id] = true; });
+        var sub = (p.activities || []).filter(function (a) { return a.once || ids[a.id]; });
+        var r; try { r = missionFlow(missionPrep(Object.assign({}, p, { activities: sub }))); } catch (e) { return; }
+        if (better(r)) { best = r; bestKeep = keep; }
+      });
+      if (bestKeep) {
+        var left = acts.filter(function (a) { return bestKeep.indexOf(a) < 0; }).map(function (a) { return '« ' + a.name + ' »'; });
+        best = Object.assign({}, best, { method: 'flow-subset', leftOut: left, note: (best.note ? best.note + ' ' : '') + 'Parcours le plus rapide en laissant de côté ' + left.join(', ') + ' : ' + (left.length > 1 ? 'elles ralentissaient' : 'elle ralentissait') + ' l’ensemble' + (full.valid && full.reached ? ' (' + Math.round(full.totalMinutes) + ' min avec toutes tes missions)' : '') + '.' });
+      }
+      return best;
     } catch (error) { return fail(missionShape, error.message); }
   }
   // Commun aux deux modes : état, but, achats, grand livre.
@@ -1032,10 +1056,12 @@
         }
         break;
       }
-      // Rentabilité par minute active ; à égalité l’ordre donné. Attente si la meilleure n’est pas encore prête.
-      candidates.sort(function (a, b) { return b.res.net / b.res.activeMinutes - a.res.net / a.res.activeMinutes || c.acts.indexOf(a) - c.acts.indexOf(b); });
-      var readyNow = candidates.filter(function (a) { return ready[a.id] <= t + 1e-9; });
-      var pick = readyNow[0] || candidates.slice().sort(function (a, b) { return ready[a.id] - ready[b.id]; })[0];
+      // v7.54 : rentabilité par minute, attente comprise (net ÷ (attente avant d’être prête + durée)) ; à égalité l’ordre donné.
+      // Avant, une mission prête tout de suite passait devant la meilleure en attente, même si l’attente ne durait que quelques
+      // minutes : le parcours pouvait être bien plus lent qu’en se contentant de la meilleure mission (revue v7.53, écart B1).
+      var waitOf = function (a) { return Math.max(0, ready[a.id] - t); };
+      candidates.sort(function (a, b) { return b.res.net / (waitOf(b) + b.res.activeMinutes) - a.res.net / (waitOf(a) + a.res.activeMinutes) || c.acts.indexOf(a) - c.acts.indexOf(b); });
+      var pick = candidates[0];
       if (ready[pick.id] > t) { var wait = ready[pick.id] - t; t = ready[pick.id]; accrue(wait, 'Gain par heure pendant l’attente'); }
       var invest = pick.paid ? 0 : pick.entry.investment || 0, cost = (pick.entry.cost || 0) + invest;
       ledgerAdd(st, t, 'spend', cost, 'Frais de « ' + pick.name + ' »');

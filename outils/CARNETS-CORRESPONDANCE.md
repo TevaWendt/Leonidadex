@@ -1,4 +1,4 @@
-# Correspondance des carnets de progression (v7.52)
+# Correspondance des carnets de progression (v7.54)
 
 Généré depuis `outils/modele-donnees.json`, `outils/carnets-source.cjs` et `carnets-core.js`. Une ligne par catégorie suivie : carnet, bouton, adresse du carnet, clé de stockage, source des données, fiches liées, où cocher, nombre d’éléments suivis au 29/09/2026. Les envies de toutes les familles vont dans `lk_wish_v1` ; les réalisations déclarées (stock, plan) dans `lk_journal_v1`.
 
@@ -24,3 +24,9 @@ Styles gardés (planches du carnet de style, `outils/catalogues/editorial.json` 
 Anciennes ancres de `progression.html` (`#garage`, `#arsenal`, `#equipements`, `#munitions`, `#tenues`, `#coiffures`, `#tatouages`, `#consommables`, `#perso-vehicules`, `#perso-armes`, `#acquisitions`, `#lieux`, `#collectibles`, `#calculs`) : conservées, elles mettent en évidence la carte du carnet concerné.
 
 Depuis la v7.53 : dans la vue « Mes envies » d’un carnet, les envies qui n’ont pas de fiche dans le calculateur (tenues, coiffures, tatouages, consommables, personnalisations, équipements, munitions) ont le bouton « Préparer ces envies dans mon budget » (`calculateurs.html?tool=budget&achats=…`, prix à venir, jamais comptés à 0) ; celles qui en ont une (véhicules, armes) gardent « Classer mes envies dans le calculateur ».
+
+Depuis la v7.54 : les éléments qui ne sont encore que des repères de la série (vus dans GTA V ou GTA Online, pas encore
+montrés dans GTA VI ; statut « serie » des catalogues) portent le badge « Repère de la série » dans le carnet et sont comptés
+à part sous le compteur principal (« dont N repères de la série (GTA V, GTA Online), pas encore vus dans GTA VI »). Le total
+GTA VI du carnet ne change pas de règle : rien n’est retiré, la provenance est dite. La page Collectibles renvoie au carnet
+dédié (`carnets/collectibles.html`) et non plus à une ancre de la page.

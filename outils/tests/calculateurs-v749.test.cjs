@@ -143,6 +143,17 @@ test('Quel achat choisir ? : A moins cher au départ, plus coûteux à l’usage
   // Réordonner les candidats ne change pas le mérite.
   s.goal.capital = 500000; s.analysis.horizon.sessions = 15; s.compare.keys = ['b', 'a'];
   assert.equal(B.evaluate('compare', s, []).best, 'B');
+  // v7.54 (audit) : la réserve et la fréquence sont vraiment variées ici, comme le titre le dit.
+  // Réserve : 140 000 en poche, B à 130 000 est payable avec 0 de côté ; avec 30 000 gardés, il manque 20 000.
+  s.goal.capital = 140000; s.goal.reserve = 0; s.purchase.key = 'b';
+  assert.equal(B.analysis('purchase', s, []).cash.state, 'ok');
+  s.goal.reserve = 30000; assert.equal(B.analysis('purchase', s, []).cash.state, 'short'); assert.equal(B.analysis('purchase', s, []).cash.shortfall, 20000);
+  assert.equal(B.evaluate('compare', s, []).items.find(it => it.name === 'B').affordable, false);
+  // Fréquence : le même horizon de 30 heures fait 30 parties d’une heure (B moins cher : 160 000 contre 145 000 déjà à 15)
+  // ou 5 parties de six heures (A moins cher : 120 000 contre 135 000).
+  s.goal.capital = 500000; s.goal.reserve = 0; s.analysis.horizon.sessions = null; s.analysis.horizon.hours = 30;
+  s.goal.dailyMinutes = 60; assert.equal(B.evaluate('compare', s, []).best, 'B');
+  s.goal.dailyMinutes = 360; r = B.evaluate('compare', s, []); assert.equal(r.best, 'A'); assert.deepEqual(r.totals, { A: 120000, B: 135000 });
 });
 
 test('un coût inconnu ne favorise pas une option : comparaison partielle, conclusion conditionnelle', () => {

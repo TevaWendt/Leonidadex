@@ -96,7 +96,8 @@ function items(fam) {
   if (C.FAMILIES.includes(fam)) {
     const d = C.load().families[fam], cats = new Map(d.categories.map(c => [c.id, c])), byId = new Map(d.items.map(it => [it.id, it]));
     return ids.map(id => { const it = byId.get(id) || {}, nm = names[id] || { n: it.nom || id }, cat = cats.get(it.categorie) || {}, img = it.media ? media480(it.media) : null;
-      return { f: fam, id, n: nm.n, c: nm.c || cat.label || '', g: it.categorie || '', u: nm.u || d.page.slice(1) + '#' + fam + '-' + id, x: 'ligne', t: img ? { img } : { ico: cat.icon || 'etiquette' }, k: [it.description, (it.variantes || []).join(' ')].filter(Boolean).join(' ').slice(0, 240) }; });
+      /* v7.54 : une ligne « repère de la série » (vue dans GTA V ou GTA Online, pas encore dans GTA VI) est marquée (sr) : le carnet le dit et la compte à part. */
+      return { f: fam, id, n: nm.n, c: nm.c || cat.label || '', g: it.categorie || '', u: nm.u || d.page.slice(1) + '#' + fam + '-' + id, x: 'ligne', t: img ? { img } : { ico: cat.icon || 'etiquette' }, k: [it.description, (it.variantes || []).join(' ')].filter(Boolean).join(' ').slice(0, 240), ...(it.statut === 'serie' ? { sr: 1 } : {}) }; });
   }
   if (fam === 'acquisitions') {
     const A = json('outils/acquisitions.json'), cats = new Map(A.categories.map(c => [c.id, c]));

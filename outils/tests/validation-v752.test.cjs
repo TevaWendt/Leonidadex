@@ -37,11 +37,15 @@ test('un critère changé (frais de consommables par tentative) se répercute da
   // Étapes : l’ordre des étapes ne change pas (achats, déblocage, mission), seul le solde de chaque étape bouge.
   assert.deepEqual(rb.route.map(x => x.type), ['acquire', 'acquire', 'unlock', 'run']);
   assert.ok(rb.route[3].cashAfter < ra.route[3].cashAfter);
-  // 20 000 de frais : impossible en gardant la réserve (30 000 − 20 000 = 10 000 < 20 000). Le plan « choisi par le
-  // calculateur » passe alors par la réserve ; il le dit, avec la raison chiffrée et le point bas (10 000).
-  const s20 = million(20000), rc = B.evaluate('plan', s20, []);
-  assert.equal(rc.strategy, 'useReserve'); assert.equal(rc.lowPoint.cash, 10000);
-  const asIs = rc.strategies.candidates.find(c => c.id === 'asIs');
+  // 20 000 de frais : impossible en gardant la réserve (30 000 − 20 000 = 10 000 < 20 000). v7.54 : avec « je garde mon argent
+  // de côté » (équilibre, par défaut) ou « sécurité », aucun plan qui puise dans la réserve n’est recommandé à sa place : le plan
+  // est bloqué, avec la raison chiffrée et la façon d’en sortir. Avec « le plus vite possible », le plan passe par la réserve et le dit.
+  const s20 = million(20000), rb20 = B.evaluate('plan', s20, []);
+  assert.equal(rb20.valid, false); assert.equal(rb20.blockedByReserve, true);
+  assert.match(rb20.reason, /Aucun plan ne garde tes 20\s000 \$ de côté/); assert.match(rb20.reason, /au plus bas 10\s000 \$/); assert.match(rb20.reason, /Le plus vite possible/);
+  const fast = B.copy(s20); fast.plan.priority = 'fast'; const rc = B.evaluate('plan', B.validate(fast, initial), []);
+  assert.equal(rc.valid, true); assert.equal(rc.input.reserve, 0, '« le plus vite » : la réserve peut être utilisée'); assert.equal(rc.lowPoint.cash, 10000);
+  const asIs = rb20.strategies.candidates.find(c => c.id === 'asIs');
   assert.equal(asIs.valid, false); assert.match(asIs.reason, /demande 20\s000 \$ de frais avant de commencer\s?; en gardant 20\s000 \$ de côté, il ne te reste que 10\s000 \$/);
   assert.match(read('calculateurs-plan.js'), /Ce plan touche à tes '\+money\(kept\)\+' gardés de côté/);
   // En gardant l’ordre donné (réserve tenue), aucun plan « faisable » n’est inventé.

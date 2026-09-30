@@ -72,7 +72,7 @@
     { "id": "priorite", "label": "Ce qui compte le plus pour toi", "genre": "preference", "unite": null, "sens": "Le plus vite, le moins cher au départ, le moins cher au total, garder de l’argent de côté.", "intervention": "Choisit la recommandation parmi les options possibles ; le compromis est montré.", "outils": ["compare", "order", "plan", "roi"] },
     { "id": "esthetique", "label": "Ton goût", "genre": "preference", "unite": null, "sens": "Une préférence de style que tu choisis.", "intervention": "Jamais une note inventée par le site ; jamais un argument économique.", "outils": ["compare"], "categories": ["style", "vehicle"] },
     { "id": "mecanique-simulee", "label": "Mécanique simulée", "genre": "hypothese", "unite": null, "sens": "Carburant, entretien, réparations, munitions… si tu choisis de les simuler.", "intervention": "Désactivé par défaut ; activé seulement par toi, affiché comme hypothèse jusque dans les plans exportés.", "outils": ["purchase", "compare", "roi", "budget", "activities", "plan"] },
-    { "id": "scenario-echec", "label": "Tentatives ratées", "genre": "hypothese", "unite": "tentatives", "sens": "Ce que coûte une tentative ratée : frais perdus, temps à refaire.", "intervention": "Des scénarios explicites, jamais un taux de réussite inventé.", "outils": ["activities", "plan"], "mecanique": "echec" }
+    { "id": "scenario-echec", "label": "Tentatives ratées", "genre": "hypothese", "unite": "tentatives", "sens": "Ce que coûte une tentative ratée : frais perdus, temps à refaire.", "intervention": "Des scénarios explicites, jamais un taux de réussite inventé.", "outils": ["activities", "plan", "goal", "session"], "mecanique": "echec" }
   ],
   "vides": {
     "prix": "Prix à venir",
