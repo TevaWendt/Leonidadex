@@ -42,6 +42,13 @@ Hébergé sur Vercel, qui publie tel quel le contenu de ce dépôt : **aucune co
 - Aucune donnée issue de fuites. Crédit gtadb.org conservé sur la carte et dans les mentions légales.
 
 
+## Revue de conformité (v7.53, 29 septembre 2026)
+
+- **Tuto** : `outils/tuto.json` (textes), `outils/gen-tuto.cjs` (encart « Ce que le calcul prend en compte » lu dans `outils/modele-donnees.json`), captures réelles par `python3 outils/tuto-shots.py .` (26 WebP dans `img/tuto/`, zones dans `outils/tuto-captures.json` ; `TUTO_TEXTES=<fichier hors dépôt>` enregistre le texte des réponses capturées). À refaire après tout changement d’interface.
+- **Contrôles** : `outils/tests/conformite-v753.test.cjs` ; navigateur : `tuto-essayer-browser.cjs` (chaque « Essayer » et les exemples du Tuto), `zoom-hauteur-browser.cjs [dossier]` (zoom 200 / 400 %, fenêtres basses).
+- **Calculateur** : `started` (commencé) dans les missions et achats d’avant du plan, sans effet sur le calcul ; `achats=Nom1|Nom2` (budget, ordre) pour une sélection venue des listes ; recherche d’ordre exhaustive jusqu’à 6 (`calculateurs-modele.js`, `sequences`) ; `E.choose` rend `ties` (ex æquo par critère) et départage une égalité sans dépendre de l’ordre de la liste (rapport envie / prix, envie, prix, délai, nom).
+- **Véhicules** : le bandeau des marques (`#vstrip`, `app.js`) se remplit depuis `window.LK_VEHICULES` (l’index de recherche n’est pas chargé sur la page) ; sans données, il est masqué.
+
 ## Mission v7.48 → v7.52 : harmonisation et validation finale (lot 5, v7.52, 29 septembre 2026)
 
 - **Documents de fin de mission** (dans `outils/`, jamais publiés) : `SUIVI-MISSION.md` (lots, choix, anomalies, reprise), `MATRICE-COUVERTURE.md` (sections 6 et 7 : matrice finale des huit outils et du business plan, décisions avant / après), `CARNETS-CORRESPONDANCE.md` (catégorie → bouton → adresse du carnet → clé → source → fiches), `PREUVES-v7.52.md` (tests, navigateur, audit, accessibilité, performances, vérifications visuelles et parcours, limites, médias, champs à venir).

@@ -114,6 +114,17 @@ const redirectPage=u=>{const f=u.replace(/^\//,'').split('#')[0];return /\.html$
 let index=data.window.LK_INDEX.filter(e=>!/^\/(vehicules|armes)\//.test(e.u)&&!redirectPage(e.u));
 for(const[type,list]of [['vehicules',V],['armes',A]])for(const v of list)index.push({l:name(v),k:type==='vehicules'?'Véhicule':'Arme',u:'/'+type+'/'+v.id+'.html',s:[v.id,v.search,name(v),v.fr,v.alias,v.insp,v.fam].filter(Boolean).join(' ').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase()});
 if(fs.existsSync('outils/lore-index.json'))index=index.concat(JSON.parse(fs.readFileSync('outils/lore-index.json','utf8')));
+/* Revue de conformité (v7.53) : chaque calcul et le business plan sont trouvables avec les mots du joueur, vers le bon outil. */
+{const CALC=[['goal','Mon objectif : combien de temps pour mon but','objectif premier million combien de temps atteindre somme argent vise'],
+ ['purchase','Mes achats : est-ce que je peux l’acheter','acheter achat payer peux je acheter tresorerie frais obligatoires reserve deja possede'],
+ ['session','Mon temps de jeu : quoi faire pendant ma partie','temps de jeu partie session minutes soir quoi faire gagner'],
+ ['budget','Mon budget : répartir mon argent','budget repartir argent depenses reserve flux cout usage'],
+ ['order','Quoi acheter d’abord : l’ordre de mes achats','ordre achats quoi acheter d abord premier sequence priorite dependances envies classer'],
+ ['roi','Ça vaut le coup : rentabilité d’un achat','rentabilite vaut le coup rentable retour investissement amorti revente'],
+ ['activities','Mes activités : lesquelles rapportent le plus','activites missions braquages gain par heure rapporte le plus echec'],
+ ['compare','Quel achat choisir : comparer des options','comparer choisir quel achat vehicule cout complet cout usage carburant entretien horizon bascule besoin places terrain'],
+ ['plan','Mon business plan : le parcours étape par étape','business plan parcours etapes prerequis point bas reserve variantes missions deblocage chaine']];
+ for(const [t,l,w] of CALC)index.push({l,k:'Calcul',u:'/calculateurs.html?tool='+t+'#atelier',s:(l+' calculateur '+w).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase(),w:0});}
 { /* recherche des lieux : fichier séparé, chargé à la première saisie */
   const CATL={ville:'Villes',quartier:'Quartiers',comte:'Comtés',region:'Régions',transport:'Transports',nature:'Nature',notable:'Lieux notables',batiment:'Bâtiments',planque:'Planques'};
   const gnom=Object.fromEntries(mapData.groupes.map(g=>[g.id,g.n]));

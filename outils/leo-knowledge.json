@@ -3425,7 +3425,7 @@
     "outil distance",
     "distance carte gta 6"
    ],
-   "text": "Sur la carte, ouvre « Mesurer une distance » : tu choisis deux points (jusqu’à 50 étapes) et tu obtiens la distance et le temps de trajet à pied, à vélo, en voiture, en bateau et en avion. C’est une estimation d’après le fond de carte du site, pas une donnée du jeu.",
+   "text": "Sur la carte, ouvre « Mesurer une distance » : tu choisis deux points (jusqu’à 50 étapes) et tu obtiens une distance à vol d’oiseau, estimée d’après l’échelle du fond de carte du site (pas une donnée du jeu). Aucun temps de trajet par défaut : tu peux en afficher une simulation avec les vitesses de GTA V, présentée comme telle.",
    "status": "Le site",
    "links": [
     {

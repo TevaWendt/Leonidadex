@@ -384,14 +384,16 @@ const el = id => document.getElementById(id);
   }
 
   /* bandeau défilant de l'en-tête */
+  /* v7.53 : les marques viennent des données véhicules, chargées par la page (l’index de recherche ne l’est pas :
+     le bandeau restait une bande noire vide). Sans données, le bandeau est masqué plutôt que laissé vide. */
   const strip = document.getElementById('vstrip');
-  if(strip && window.LK_INDEX){
-    const marques = Array.from(new Set(
-      window.LK_INDEX.filter(e => e.u.indexOf('/vehicules/') === 0)
-                     .map(e => e.l.split(' ')[0])
-    )).filter(m => m && m !== 'Marque').sort();
-    const line = marques.map(m => '<b>' + m + '</b><i>&#9679;</i>').join('');
-    fillTrack(strip, line);
+  if(strip){
+    const source = Array.isArray(window.LK_VEHICULES) ? window.LK_VEHICULES.map(v => v.marque)
+      : (window.LK_INDEX || []).filter(e => e.u.indexOf('/vehicules/') === 0).map(e => e.l.split(' ')[0]);
+    const marques = Array.from(new Set(source)).filter(m => m && m !== 'Marque' && m !== 'Marque inconnue')
+      .sort((a, b) => a.localeCompare(b, 'fr'));
+    if(marques.length) fillTrack(strip, marques.map(m => '<b>' + esc(m) + '</b><i>&#9679;</i>').join(''));
+    else if(strip.parentNode) strip.parentNode.hidden = true;
   }
 
   /* statistiques qui montent */

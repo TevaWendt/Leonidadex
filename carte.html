@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Carte interactive de Leonida (GTA VI) | Leonidakit</title>
-<meta name="description" content="Carte interactive de Leonida pour GTA VI : les six régions confirmées, filtres, suivi de progression et calcul de distance avec temps de trajet.">
+<meta name="description" content="Carte interactive de Leonida pour GTA VI : les six régions confirmées, filtres, suivi de progression et mesure de distance estimée entre deux points.">
 <meta name="robots" content="max-image-preview:large">
 <meta property="og:title" content="Carte interactive de Leonida (GTA VI) | Leonidakit">
 <meta property="og:description" content="Carte interactive de l’État de Leonida pour GTA VI : collectibles, planques, magasins et missions, filtrables.">
@@ -82,15 +82,15 @@
       "name": "Comment fonctionne le calcul de distance ?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Tu choisis deux points sur la carte, l’outil affiche la distance puis le temps de trajet selon sept modes de déplacement. Les vitesses sont actuellement calées sur GTA V et seront recalibrées après la sortie."
+        "text": "Tu choisis deux points sur la carte : l’outil affiche une distance à vol d’oiseau, estimée d’après l’échelle du fond de carte (à confirmer après la sortie). Aucun temps de trajet n’est donné par défaut : GTA VI n’a publié aucune vitesse. Tu peux afficher une simulation avec les vitesses de GTA V, présentée comme telle."
       }
     }
   ]
 }
 </script>
 <link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="style.css?v=6f1ccc912ad5">
-<link rel="stylesheet" href="calculator-entry.css?v=bfeed7ebbd6b">
+<link rel="stylesheet" href="style.css?v=3d66767f12e6">
+<link rel="stylesheet" href="calculator-entry.css?v=3ce6b560fe89">
 <meta property="og:image" content="https://www.leonidakit.com/img/social-card.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta property="og:url" content="https://www.leonidakit.com/carte.html">
@@ -126,12 +126,12 @@
   <div class="shell vhero-in"><div class="lk-head-grid"><div>
     <p class="vhero-eyebrow">Outil</p>
     <h1>Carte de Leonida</h1>
-    <p class="lede">Déplace, zoome, filtre, coche ce que tu as trouvé. Mesure la distance entre deux points et le temps de trajet selon le véhicule.</p>
+    <p class="lede">Déplace, zoome, filtre, coche ce que tu as trouvé. Mesure la distance estimée entre deux points, à vol d’oiseau.</p>
 
     <div class="vstats rise">
       <div class="vstat"><span class="n" data-count="2547">2547</span><span class="l">lieux référencés</span></div>
       <div class="vstat"><span class="n" data-count="14">14</span><span class="l">nommés par Rockstar</span></div>
-      <div class="vstat"><span class="n" data-count="7">7</span><span class="l">modes de trajet</span></div>
+      <div class="vstat"><span class="n" data-count="7">7</span><span class="l">régions confirmées</span></div>
       <div class="vstat"><span class="n" data-count="12">12</span><span class="l">catégories</span></div>
     </div>
     </div><div class="lk-stack lk-stack--3" aria-label="Trois visuels officiels de Leonida"><figure><a class="lk-stack-link" href="lieux/vice-city.html" aria-label="Vice City : ouvrir la fiche"><img src="img/officiel/vice-city-03-480.webp" srcset="img/officiel/vice-city-03-480.webp 480w, img/officiel/vice-city-03-1280.webp 1280w" sizes="(max-width:440px) 64vw, (max-width:900px) 286px, 360px" width="480" height="270" alt="Vue aérienne de Vice City, visuel officiel Rockstar Games" loading="eager" decoding="async"><span class="lk-stack-cap">Vice City</span></a></figure><figure><a class="lk-stack-link" href="lieux/grassrivers.html" aria-label="Grassrivers : ouvrir la fiche"><img src="img/officiel/grassrivers-05-480.webp" srcset="img/officiel/grassrivers-05-480.webp 480w, img/officiel/grassrivers-05-1280.webp 1280w" sizes="(max-width:440px) 64vw, (max-width:900px) 286px, 360px" width="480" height="270" alt="Marais de Grassrivers et skyline au loin, visuel officiel Rockstar Games" loading="lazy" decoding="async"><span class="lk-stack-cap">Grassrivers</span></a></figure><figure><a class="lk-stack-link" href="lieux/mount-kalaga.html" aria-label="Mount Kalaga : ouvrir la fiche"><img src="img/officiel/mount-kalaga-national-park-04-480.webp" srcset="img/officiel/mount-kalaga-national-park-04-480.webp 480w, img/officiel/mount-kalaga-national-park-04-1280.webp 1280w" sizes="(max-width:440px) 64vw, (max-width:900px) 286px, 360px" width="480" height="270" alt="Route en corniche dans Mount Kalaga, visuel officiel Rockstar Games" loading="lazy" decoding="async"><span class="lk-stack-cap">Mount Kalaga</span></a></figure></div></div>
@@ -565,7 +565,7 @@
 
   <div class="note-box rise">
     <p><strong>Comment ça marche.</strong> Glisse pour te déplacer, molette ou pincement pour zoomer, double-clic pour approcher. Clique sur un marqueur pour l’ouvrir, puis coche-le : ta progression reste enregistrée sur ton appareil, sans compte à créer.</p>
-    <p>Le bouton « Mesurer une distance » permet de choisir deux points et d’obtenir la distance ainsi que le temps de trajet à pied, à vélo, en voiture, en bateau et en avion.</p>
+    <p>Le bouton « Mesurer une distance » permet de choisir deux points et d’obtenir une distance estimée à vol d’oiseau. Les temps de trajet ne sont affichés que si tu demandes la simulation (vitesses de GTA V, pas des données de GTA VI).</p>
   </div>
 </section>
 </div>
@@ -665,7 +665,7 @@
       </details>
       <details>
         <summary>Comment fonctionne le calcul de distance ?</summary>
-        <div class="ans">Tu choisis deux points sur la carte, l’outil affiche la distance puis le temps de trajet selon sept modes de déplacement. Les vitesses sont actuellement calées sur GTA V et seront recalibrées après la sortie.</div>
+        <div class="ans">Tu choisis deux points sur la carte : l’outil affiche une distance à vol d’oiseau, estimée d’après l’échelle du fond de carte (à confirmer après la sortie). Aucun temps de trajet n’est donné par défaut : GTA VI n’a publié aucune vitesse. Tu peux afficher une simulation avec les vitesses de GTA V, présentée comme telle.</div>
       </details>
     </div>
   </div>
@@ -710,13 +710,13 @@
     </g>
   </svg><div class="shell"><div class="foot-top"><div class="foot-brand"><a class="brand" href="index.html">Leonida<span>kit</span></a><p>Une carte, des fiches, un calculateur. Prépare tes choix dans Leonida avec des sources claires et tes propres chiffres.</p><a class="foot-feature" href="calculateurs.html">Trouver mon calcul ↗</a></div><div class="foot-cols"><div><h2>Explorer</h2><nav aria-label="Explorer en pied de page"><a href="carte.html">Carte</a><a href="vehicules.html">Véhicules</a><a href="armes.html">Armurerie</a><a href="lieux.html">Lieux</a><a href="personnages.html">Personnages</a><a href="demeures.html">Demeures</a><a href="planques.html">Planques</a><a href="entreprises.html">Entreprises</a><a href="collectibles.html">Collectibles</a></nav></div><div><h2>S’équiper</h2><nav aria-label="S’équiper en pied de page"><a href="achats.html">Tout ce qui s’achète</a><a href="nourriture.html">Consommables</a><a href="style.html">Vêtements et style</a><a href="personnalisations.html">Personnalisations</a><a href="armes.html#munitions">Munitions et équipement</a><a href="logements.html">Logements et appartements</a></nav></div><div><h2>Outils et aide</h2><nav aria-label="Outils et aide en pied de page"><a href="calculateurs.html">Calculateur</a><a href="tuto.html">Tuto</a><a href="progression.html">Progression</a><a href="a-propos.html">À propos</a><a href="contact.html">Contact</a><a href="medias.html">Médias et crédits</a><a href="mentions-legales.html">Mentions et confidentialité</a></nav></div></div></div><p class="legal">Leonidakit est un projet indépendant réalisé par un joueur, sans affiliation, approbation ni sponsoring de Rockstar Games ou Take-Two Interactive. Grand Theft Auto est une marque de Take-Two Interactive. Les crédits de chaque média restent consultables.</p></div></footer>
 
-<script src="search-index.js?v=5f8f1a241754"></script>
+<script src="search-index.js?v=195b3a8d0239"></script>
 <script src="assets-manifest.js?v=e81471d96b71"></script>
-<script src="common.js?v=484a5df775df"></script>
-<script src="app.js?v=ecab33d7a9d3"></script>
+<script src="common.js?v=62adb58b6178"></script>
+<script src="app.js?v=2db05e51748c"></script>
 <script src="carte-gtadb.js?v=eac8e425afa4"></script>
 <script src="collectibles-data.js?v=2e8ae3a05507"></script>
 <script src="collectibles-core.js?v=acc2d78e0e90"></script>
-<script src="carte.js?v=caa8b35e027f"></script>
+<script src="carte.js?v=cffdde906780"></script>
 </body>
 </html>

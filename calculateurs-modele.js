@@ -295,7 +295,9 @@
   function sequences(items, score, options) {
     options = options || {};
     var ids = items.map(function (x) { return x.id; }), results = [], method, explored = 0;
-    var limit = options.exhaustiveUpTo || 7;
+    /* v7.53 : exhaustif jusqu’à 6 éléments (720 ordres, quelques millisecondes) ; au-delà, recherche locale annoncée.
+       Mesuré : 7 éléments en exhaustif prenaient 200 ms par saisie sur ordinateur, trop pour rester réactif sur téléphone. */
+    var limit = options.exhaustiveUpTo != null ? options.exhaustiveUpTo : 6;
     function consider(order) { explored += 1; if (!respects(order, items)) return; var r = score(order); results.push({ order: order.slice(), result: r }); }
     function better(x, y) { if (!x || !x.valid) return false; if (!y || !y.valid) return true; return lexLess(x.key, y.key); }
     if (ids.length <= limit) { method = 'exhaustive'; permutations(ids, 5040).forEach(consider); }
@@ -306,14 +308,20 @@
       while (!respects(current, items) && guard++ < ids.length * ids.length) { for (var k = 0; k < current.length - 1; k += 1) { var probe = current.slice(); var tmp = probe[k]; probe[k] = probe[k + 1]; probe[k + 1] = tmp; if (items.some(function (it) { return it.id === probe[k] && (it.before || []).indexOf(probe[k + 1]) >= 0; })) current = probe; } }
       consider(current);
       var currentScore = results.length ? results[results.length - 1].result : null;
-      for (var pass = 0, improved = true; improved && pass < 12; pass += 1) {
+      /* Recherche locale : échanges de deux achats quelconques et déplacement d’un achat à une autre place, tant que ça
+         améliore (au plus 20 passes). Chaque ordre essayé respecte les dépendances. */
+      var seen = {};
+      function tryOrder(cand) { var key = cand.join('\u0001'); if (seen[key] || !respects(cand, items)) return null; seen[key] = true; consider(cand); return results[results.length - 1].result; }
+      seen[current.join('\u0001')] = true;
+      for (var pass = 0, improved = true; improved && pass < 20; pass += 1) {
         improved = false;
-        for (var i = 0; i < current.length - 1; i += 1) {
-          var swapped = current.slice(); var t = swapped[i]; swapped[i] = swapped[i + 1]; swapped[i + 1] = t;
-          if (!respects(swapped, items)) continue;
-          consider(swapped);
-          var candidate = results[results.length - 1].result;
-          if (better(candidate, currentScore)) { current = swapped; currentScore = candidate; improved = true; }
+        for (var i = 0; i < current.length && !improved; i += 1) {
+          for (var j = 0; j < current.length && !improved; j += 1) {
+            if (i === j) continue;
+            var sw = current.slice(); var t = sw[i]; sw[i] = sw[j]; sw[j] = t;
+            var mv = current.slice(); var el = mv.splice(i, 1)[0]; mv.splice(j, 0, el);
+            [sw, mv].forEach(function (cand) { if (improved) return; var r = tryOrder(cand); if (r && better(r, currentScore)) { current = cand; currentScore = r; improved = true; } });
+          }
         }
       }
     }

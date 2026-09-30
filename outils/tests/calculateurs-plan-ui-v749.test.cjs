@@ -51,8 +51,13 @@ test('avec une durée de partie, le même parcours redevient un programme partie
 test('mission « une seule fois » et « déjà faite » : cases dans la carte, état gardé, recalcul immédiat',async()=>{
  const p=await page(million());
  const once=p.d.querySelector('[data-b-plan-m-once="0"]');assert.ok(once.checked);
- const done=p.d.querySelector('[data-b-plan-m-done="0"]');assert.ok(done,'« Je l’ai déjà faite » apparaît pour une mission unique');
- done.checked=true;fire(p,done,'change');assert.equal(stored(p).plan.missions[0].done,true);
+ /* v7.53 : trois états distincts (prévue, commencée, faite) ; « commencée » ne crédite rien. */
+ assert.match(text(p,'plan-results'),/PRÉVU/,'un plan sans rien de commencé est « prévu »');
+ const started=p.d.querySelector('[data-b-plan-m-state="0"][value="started"]');assert.ok(started,'« Commencée » apparaît pour une mission unique');
+ started.checked=true;fire(p,started,'change');assert.equal(stored(p).plan.missions[0].started,true);assert.equal(stored(p).plan.missions[0].done,false,'commencée n’est pas faite');
+ assert.match(text(p,'plan-results'),/COMMENCÉ/);assert.match(text(p,'plan-results'),/Fais « Déblocage »|Déblocage/,'une mission commencée reste à faire dans le parcours');
+ const done=p.d.querySelector('[data-b-plan-m-state="0"][value="done"]');assert.ok(done,'« Déjà faite » apparaît pour une mission unique');
+ done.checked=true;fire(p,done,'change');assert.equal(stored(p).plan.missions[0].done,true);assert.equal(stored(p).plan.missions[0].started,false);
  assert.doesNotMatch(text(p,'plan-results'),/Fais « Déblocage »/,'une mission déjà faite ne revient pas dans le parcours');
  const again=p.d.querySelector('[data-b-plan-m-once="0"]');again.checked=false;fire(p,again,'change');
  assert.equal(stored(p).plan.missions[0].once,false);assert.equal(stored(p).plan.missions[0].done,false,'une mission répétable n’est jamais « déjà faite »');

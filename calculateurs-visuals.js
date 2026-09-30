@@ -7,7 +7,9 @@
 function create(h){
  const {esc,money,hours}=h,nf=new Intl.NumberFormat('fr-FR',{maximumFractionDigits:2}),compact=new Intl.NumberFormat('fr-FR',{notation:'compact',maximumFractionDigits:1});
  const fmt=(v,u)=>u==='$'?money(v):u==='h'?hours(v):u==='min'?hours(v/60):u==='%'?nf.format(v)+' %':nf.format(v)+(u?' '+u:'');
- const PATTERN={forecast:{dash:'',marker:'circle'},realized:{dash:'',marker:'square'},reference:{dash:'8 6',marker:'diamond'},hypothesis:{dash:'2 5',marker:'triangle'}};
+ const PATTERN={forecast:{dash:'',marker:'circle'},realized:{dash:'',marker:'square'},reference:{dash:'8 6',marker:'diamond'},hypothesis:{dash:'2 5',marker:'triangle'},
+  /* v7.53 : motifs neutres pour distinguer des options entre elles (aucune n’est « réalisée » ni « de référence ») */
+  opt1:{dash:'',marker:'circle'},opt2:{dash:'8 6',marker:'diamond'},opt3:{dash:'2 5',marker:'triangle'},opt4:{dash:'12 4 2 4',marker:'square'}};
  function marker(kind,x,y,r){x=Number(x);y=Number(y);const f=v=>Number(v.toFixed(2));if(kind==='square')return '<rect x="'+f(x-r)+'" y="'+f(y-r)+'" width="'+2*r+'" height="'+2*r+'"/>';if(kind==='diamond')return '<path d="M'+f(x)+' '+f(y-r*1.3)+'L'+f(x+r*1.3)+' '+f(y)+'L'+f(x)+' '+f(y+r*1.3)+'L'+f(x-r*1.3)+' '+f(y)+'Z"/>';if(kind==='triangle')return '<path d="M'+f(x)+' '+f(y-r*1.3)+'L'+f(x+r*1.2)+' '+f(y+r)+'L'+f(x-r*1.2)+' '+f(y+r)+'Z"/>';return '<circle cx="'+f(x)+'" cy="'+f(y)+'" r="'+r+'"/>';}
  function niceTicks(lo,hi,n){if(!(hi>lo))return [lo];const raw=(hi-lo)/n,mag=Math.pow(10,Math.floor(Math.log10(raw))),norm=raw/mag,step=(norm<1.5?1:norm<3?2:norm<7?5:10)*mag,start=Math.floor(lo/step)*step,out=[];for(let v=start;v<=hi+step*1e-6&&out.length<12;v+=step)out.push(Math.round(v/step)*step);return out;}
  function progress(id,label,value,total,explain){
@@ -73,7 +75,7 @@ function create(h){
   const drawn=rows.filter(r=>Number.isFinite(r.initial)&&Number.isFinite(r.rate)),hidden=rows.filter(r=>drawn.indexOf(r)<0);
   if(!drawn.length||!(maxSessions>0))return '';
   const n=Math.max(1,Math.ceil(maxSessions)),xs=[0,...(cross&&cross.n>0&&cross.n<n?[cross.n]:[]),n].sort((a,b)=>a-b);
-  const kinds=['forecast','reference','hypothesis','realized'];
+  const kinds=['opt1','opt2','opt3','opt4'];
   return chart(id,{title:'Ce que chaque option coûte en tout, partie après partie',question:'Laquelle coûte le moins sur la durée ?',xTitle:'Parties jouées',yTitle:'Coût total ($)',unit:'$',xUnit:'',area:false,legendAlways:true,optionsLegend:true,
    series:drawn.map((r,i)=>({name:r.name,kind:kinds[i%kinds.length],points:xs.map(x=>({x,y:r.initial+r.rate*x,label:x===0?'Achat':(cross&&x===cross.n?'Bascule':x+' parties'),key:cross&&x===cross.n}))})),
    reading:cross&&cross.n>0?'« '+cross.before+' » coûte moins avant '+nf.format(Math.round(cross.n*10)/10)+' parties ; au-delà, « '+cross.after+' » devient moins chère.':'Les lignes ne se croisent pas sur cet horizon : la moins chère le reste.',

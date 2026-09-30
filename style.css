@@ -484,7 +484,7 @@ nav a.here::after{width:100%;}
   background:var(--ink); padding:9px 0; border-top:2px solid var(--ink);
 }
 .vhero-strip-track{
-  display:inline-block; animation:scrollX 34s linear infinite;
+  display:flex; width:max-content; animation:scrollX 34s linear infinite;
   font-size:.78rem; font-weight:700; color:var(--paper);
 }
 .vhero-strip:hover .vhero-strip-track{animation-play-state:paused;}
@@ -974,6 +974,11 @@ table.spec td.unknown{font-weight:400; color:var(--ink-soft); font-style:italic;
 .rl-nom{color:var(--ink-soft);}
 .rl-t{margin-left:auto; font-weight:800; font-variant-numeric:tabular-nums;}
 .rl-note{font-size:.72rem; color:var(--ink-soft); margin-top:11px; line-height:1.45;}
+/* v7.53 : temps de trajet seulement en simulation demandée */
+.rl-sim{display:flex; align-items:flex-start; gap:8px; margin-top:10px; min-height:24px; font-size:.8rem; font-weight:700; line-height:1.4; cursor:pointer;}
+.rl-sim input{width:18px; height:18px; flex:none; margin-top:1px; accent-color:var(--ink);}
+.rl-sim-t{font-size:.74rem; color:var(--ink-soft); margin:8px 0 4px; line-height:1.45;}
+.rl-sim-tag{display:inline-block; margin-right:6px; padding:1px 7px; border:1.5px dashed var(--ink); border-radius:999px; font:700 .64rem/1.5 var(--font-mono,ui-monospace,monospace); letter-spacing:.06em; text-transform:uppercase; color:var(--ink);}
 .map-ruler-reset{
   width:100%; margin-top:8px; cursor:pointer; font-family:inherit;
   font-size:.82rem; font-weight:700; color:var(--ink-soft);
@@ -3171,3 +3176,11 @@ a.ed-brand:hover,a.ed-brand:focus-visible{border-color:var(--ink);box-shadow:5px
 .veh-doc{display:flex;flex-wrap:wrap;gap:4px 6px;margin:6px 0 2px}
 .veh-doc span{font:700 .66rem/1.3 var(--font-mono,ui-monospace,monospace);letter-spacing:.03em;text-transform:uppercase;padding:2px 7px;border:1.5px dashed var(--ink-soft);border-radius:999px;color:var(--ink-soft)}
 @media(max-width:900px){.lk-loc-view .lk-loc-sum{order:-1}}
+
+/* v7.53 (revue de conformité) : zoom fort (400 % = 320 px de large) et fenêtres basses. Sous 520 px de haut, l’en-tête et
+   les barres de navigation ne restent plus collées en haut : elles couvraient jusqu’aux deux tiers de l’écran. Elles se
+   retrouvent en remontant, et le menu reste au même endroit dans la page. */
+@media (max-height:520px){
+  body>header{position:relative!important}
+  .ed-nav,.vbar,.cat-table th{position:static!important}
+}

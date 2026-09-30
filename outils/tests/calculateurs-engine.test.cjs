@@ -457,7 +457,12 @@ test('choose: classe les achats selon le critère, sans inventer de revenu', () 
   const r = E.choose({ capital: 200000, reserve: 20000, hourly: 100000, dailyMinutes: 60, hours: 10, criterion: 'value', items: [{ name: 'A', price: 150000, utility: 5 }, { name: 'B', price: 50000, utility: 3 }, { name: 'C', price: 400000, utility: 2, incomeHourly: 30000 }, { name: 'D', price: null, utility: 4 }] });
   assert.equal(r.valid, true);
   assert.equal(r.best, 'B');
-  assert.deepEqual(r.bestByCriterion, { value: 'B', cheapest: 'B', fastest: 'A', profit: 'C', utility: 'A' });
+  // v7.53 : A et B s’achètent tous deux tout de suite (délai 0) : égalité, départagée par le rapport envie / prix (B),
+  // et non plus par l’ordre de la liste.
+  assert.deepEqual(r.bestByCriterion, { value: 'B', cheapest: 'B', fastest: 'B', profit: 'C', utility: 'A' });
+  assert.deepEqual(r.ties.fastest, ['B', 'A']); assert.deepEqual(r.ties.value, []);
+  const reversed = E.choose({ capital: 200000, reserve: 20000, hourly: 100000, dailyMinutes: 60, hours: 10, criterion: 'value', items: [{ name: 'D', price: null, utility: 4 }, { name: 'C', price: 400000, utility: 2, incomeHourly: 30000 }, { name: 'B', price: 50000, utility: 3 }, { name: 'A', price: 150000, utility: 5 }] });
+  assert.deepEqual(reversed.bestByCriterion, r.bestByCriterion, 'réordonner la liste ne change pas le gagnant');
   const c = r.items[2];
   assert.equal(c.affordable, false); assert.equal(c.shortfall, 220000); assert.equal(c.waitHours, 2.2); assert.equal(c.waitDays, 3);
   assert.equal(r.items[0].paybackHours, null); assert.equal(r.items[3].known, false); assert.equal(r.bestWaitHours, 0);

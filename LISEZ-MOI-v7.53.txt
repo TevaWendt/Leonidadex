@@ -1,0 +1,32 @@
+LEONIDAKIT v7.53 — MISSION EN 5 LOTS + REVUE DE CONFORMITÉ — archive « modifs » (29 septembre 2026)
+
+Base attendue : ton dossier Leonidadex en v7.47 (ton zip « main » du 29 septembre l’est, octet pour octet). L’archive est
+CUMULÉE depuis la v7.47 : elle contient les cinq lots (v7.48 à v7.52) et la revue de conformité (v7.53). Elle remplace les
+archives précédentes : tu peux mettre en ligne celle-ci directement.
+Fichiers ajoutés ou modifiés seulement, chemins exacts depuis la racine (dossier carnets/ compris).
+Aucune commande de build. Toujours aucun package.json ; api/ ne change pas ; rien à régler dans Vercel ni dans Brevo.
+
+UNE SUPPRESSION À FAIRE (l’archive ne peut pas supprimer un fichier) :
+- calculateurs-tools.js (à la racine) : aucune page ne le chargeait. Supprime-le de ton dossier avant de mettre en ligne.
+
+1. Copie ton dossier actuel (sauvegarde).
+2. Extrais l’archive dans la racine du site, écrase les fichiers homonymes (garde le dossier .git).
+3. Supprime calculateurs-tools.js.
+4. Mets en ligne (GitHub Desktop, dossier complet). La mise en ligne est une étape à part : rien n’a été publié pour toi.
+
+CE QUE LA REVUE CHANGE PAR RAPPORT À LA v7.52 :
+- Le Tuto est à jour, avec de vraies captures de la version finale et, pour chaque outil, ce que le calcul prend en compte.
+- Business plan : chaque mission unique et chaque achat d’avant peut être « prévu », « commencé » ou « fait ».
+- Quel achat choisir ? : une option sans coût d’usage écrit ne gagne plus à tort contre une option qui en a un ; une égalité
+  est dite (« à égalité avec… ») et le gagnant ne dépend plus de l’ordre de ta liste.
+- La carte ne donne plus de temps de trajet par défaut (simulation à la demande, avec les vitesses de GTA V).
+- Mon budget montre ses cinq postes ; tes envies et la comparaison des consommables peuvent y être envoyées.
+- La recherche du site trouve chaque calcul ; Léo sait ce qui est déjà dans ton garage.
+- Véhicules : le bandeau des marques sous l’en-tête n’est plus une bande noire vide (défaut déjà présent dans la v7.47).
+
+POUR VÉRIFIER (3 minutes) : ouvre le Tuto, chapitre « Mon business plan » : la capture montre « PRÉVU » et le plan de
+l’exemple. Dans le calculateur, « Mon budget », choisis « Je répartis moi-même » : les cinq postes sont là. Sur la carte,
+« Mesurer une distance » : une distance, et la case pour simuler les temps.
+
+Détails : outils/CHANGEMENTS-v7.53.txt ; preuves : outils/PREUVES-v7.53.md ; matrice : outils/MATRICE-COUVERTURE.md ;
+suivi : outils/SUIVI-MISSION.md.

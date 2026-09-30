@@ -281,7 +281,7 @@ const tools=`<section class="tools-sec shell" id="outils">
   <div class="tools tools--three">
     <a class="tool reveal" href="carte.html">
       <h3>Carte interactive <span class="chip live">2 547 lieux</span></h3>
-      <p>Filtres, suivi de ce que tu as trouvé, et calcul de distance entre deux points avec le temps de trajet.</p>
+      <p>Filtres, suivi de ce que tu as trouvé, et mesure de distance estimée entre deux points.</p>
     </a>
     <a class="tool reveal" href="vehicules.html">
       <h3>Fiches véhicules et armes <span class="chip live">324 fiches</span></h3>

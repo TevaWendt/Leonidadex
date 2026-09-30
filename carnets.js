@@ -284,7 +284,11 @@
     var type = ids.length ? meta(ids[0].f).calc : null;
     var same = ids.filter(function (it) { return meta(it.f).calc === type; }).slice(0, 12);
     E.calc.hidden = !(state.view === 'wish' && same.length >= 2);
-    if (!E.calc.hidden) E.calc.href = P + 'calculateurs.html?tool=order&type=' + type + '&ids=' + same.map(function (it) { return encodeURIComponent(it.id); }).join(',') + '&from=carnet#atelier';
+    if (!E.calc.hidden) { E.calc.textContent = 'Classer mes envies dans le calculateur'; E.calc.href = P + 'calculateurs.html?tool=order&type=' + type + '&ids=' + same.map(function (it) { return encodeURIComponent(it.id); }).join(',') + '&from=carnet#atelier'; return; }
+    /* v7.53 : envies sans fiche dans le calculateur (tenues, coiffures, tatouages, consommables, personnalisations) :
+       elles partent dans « Mon budget » comme achats libres, prix à venir (jamais comptés à 0). Les styles gardés n’en sont pas. */
+    var free = list.filter(function (it) { return !meta(it.f).calc && it.f !== 'styles' && it.f !== 'lieux' && it.f !== 'collectibles'; }).slice(0, 12);
+    if (state.view === 'wish' && free.length) { E.calc.hidden = false; E.calc.textContent = 'Préparer ces envies dans mon budget'; E.calc.href = P + 'calculateurs.html?tool=budget&achats=' + encodeURIComponent(free.map(function (it) { return it.n; }).join('|')) + '&from=carnet#atelier'; }
   }
   function render(opts) {
     opts = opts || {};

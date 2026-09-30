@@ -1,0 +1,70 @@
+LEONIDAKIT v7.53 — REVUE DE CONFORMITÉ AU CAHIER DES CHARGES, APRÈS LE LOT 5 (29 septembre 2026)
+
+Base : v7.52. Archive cumulée depuis la v7.47 (lots 1 à 5 et cette revue). Suivi : outils/SUIVI-MISSION.md (section « Revue
+de conformité », anomalies 35 à 55) ; preuves : outils/PREUVES-v7.53.md.
+
+Relecture ligne à ligne du cahier des charges par un vérificateur indépendant (111 exigences rapprochées du code et des
+pages). Écarts corrigés :
+
+TUTO
+- Textes remis à la version finale : sens du but et échéance, frais obligatoires, déjà possédé (garage, arsenal), coût à
+  chaque partie et durée, besoin (où il va, places, chargement), ordres comparés et dépendances, budget « au plus » et
+  sélection reçue des listes, activités écartées avec leur raison, business plan (chaîne d’achats d’avant, point bas,
+  « Parcours à compléter », variantes, prévu / commencé / fait, réserve).
+- Nouvel encart par outil « Ce que le calcul prend en compte » : la liste des critères vient du registre du modèle, le même
+  que « Ce qui compte dans ce calcul » ; les six parties de ce bloc sont expliquées.
+- 26 captures refaites sur la version finale, chacune avec l’exemple de son chapitre ; la légende « certains champs ont changé
+  de place » est retirée. Chaque « Essayer », le formulaire de départ et les exemples sont vérifiés au navigateur.
+
+CALCULATEUR
+- Business plan : « Où j’en suis : Prévue / Commencée / Déjà faite » (missions uniques) et « Prévu / Commencé / Déjà à moi »
+  (achats d’avant), état du plan PRÉVU / COMMENCÉ / RÉALISÉ. « Commencé » se voit partout mais ne crédite rien.
+- Quel achat choisir ? : un coût d’usage laissé vide, face à une option qui en a un, est « non renseigné » (la comparaison
+  sur la durée reste ouverte et le dit) ; écrire 0 tranche.
+- Quoi acheter d’abord ? : tous les ordres comparés jusqu’à 6 achats, recherche locale au-delà (échanges et déplacements,
+  identique à l’exhaustif sur 200 cas tirés au sort) ; chaque ordre n’est simulé qu’une fois. Pire cas mesuré, processeur
+  ralenti 4 fois, 390 px : 60 ms par saisie (12 achats), 125 ms (business plan maximal). Panier vide : message clair, plus
+  de « : : 0 min ».
+- Mon budget : « Je répartis moi-même » montre les cinq postes (avant, un seul était visible et les autres comptaient
+  quand même) ; une sélection venue des listes (« achats=… ») arrive en achats libres, prix à venir, jamais comptés à 0.
+- Comparaison de Mes achats : catégories en toutes lettres (« Mêlée », « Muscle cars »), lues dans les tables du site.
+- Courbes des options : motifs neutres (aucune option dessinée comme « réalisée »).
+- Quel achat choisir ? : à égalité sur un critère (par exemple deux achats payables tout de suite pour « le plus vite à
+  avoir »), le gagnant ne dépend plus de l’ordre de la liste : départage fixe (rapport envie / prix, envie, prix), et
+  l’écran dit « à égalité avec… ». Libellé « Le plus vite à avoir » (rien n’est comparé sur la vitesse du véhicule).
+- Bandeau des exemples : « des exemples de démonstration, pas des chiffres du jeu ». Carte 05 : « Trouver le meilleur ordre ».
+- Messages lus une seule fois par les lecteurs d’écran (le bandeau visuel ne les répète plus).
+- Ligne « Changé en mode Expert » : l’argent de côté n’y figure plus quand il s’écrit dans le formulaire Simple (seul
+  « Mon objectif » le range dans un bloc replié, où la ligne le signale toujours).
+
+AUTRES SECTIONS
+- Carte : plus de temps de trajet par défaut ; distance estimée à vol d’oiseau ; case « Simuler des temps de trajet
+  (vitesses de GTA V : une hypothèse) ». Textes de la page, de l’accueil et de Léo alignés.
+- Recherche du site : une entrée par calcul et pour le business plan, avec les mots du joueur (quoi acheter d’abord,
+  carburant, coût d’usage, business plan…).
+- Léo : l’aperçu « achat » dit « déjà coché dans Mon garage : rien à payer » comme le calculateur, et ce qu’il ne compte pas.
+- Consommables « En un regard » : « Préparer ces achats dans mon budget » sous la comparaison. Carnets : « Préparer ces
+  envies dans mon budget » pour les envies sans fiche au calculateur.
+- Sélecteur « Où le trouver » : le schéma du véhicule remplace une photo de scène où il n’est pas reconnaissable.
+- Accueil : cinquième entrée « Mon business plan ».
+- Véhicules : le bandeau des marques sous l’en-tête est rempli depuis les données de la page (c’était une bande noire vide,
+  déjà dans la v7.47).
+- Zoom 400 % et fenêtres de moins de 520 px de haut : l’en-tête et les barres ne restent plus collés (ils couvraient jusqu’aux
+  deux tiers de l’écran).
+
+CONTRÔLES AJOUTÉS
+- outils/tests/conformite-v753.test.cjs (13 tests), outils/tests/tuto-essayer-browser.cjs (22 contrôles),
+  outils/tests/zoom-hauteur-browser.cjs (14 pages × 4 tailles) ; outils/tuto-shots.py enregistre aussi le texte des réponses
+  capturées (TUTO_TEXTES=<fichier hors dépôt>) pour comparer le Tuto à la capture.
+
+FICHIERS
+- Supprimé (toujours, depuis la v7.52) : calculateurs-tools.js.
+- Ajoutés : outils/tests/conformite-v753.test.cjs, outils/tests/tuto-essayer-browser.cjs, outils/tests/zoom-hauteur-browser.cjs,
+  outils/CHANGEMENTS-v7.53.txt, outils/PREUVES-v7.53.md, LISEZ-MOI-v7.53.txt.
+- Modifiés (sources) : calculateurs.js, calculateurs-scenario.js, calculateurs-plan.js, calculateurs-modele.js,
+  calculateurs-data.js, calculateurs-visuals.js, calculateurs-engine.js, app.js, calculateurs-workspace.js, calculateurs-workspace.css, calculateurs.html,
+  calculator-entry.css, carte.js, carte.html, carnets.js, consommables.js, common.js, leo-core.js, index.html, style.css,
+  acquisitions.css, tuto.css, outils/tuto.json, outils/gen-tuto.cjs, outils/tuto-shots.py, outils/sync-site.cjs,
+  outils/localisateur.cjs, outils/lore-gen.js, outils/leo-knowledge.json, img/tuto/*.webp (26), outils/tuto-captures.json ;
+  tests adaptés (calculateurs-v749, calculateurs-plan-ui-v749, calculateurs-engine : égalités) ; documents de mission.
+- Régénérés : pages (Tuto, carte, listes, versions des feuilles et scripts), search-index.js, index de Léo, fiches.

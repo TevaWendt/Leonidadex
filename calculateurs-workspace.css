@@ -55,7 +55,7 @@
 .b-compare-item{margin:14px 0}.b-compare-item .calc-fields{margin:12px 0}
 .b-compare-picks{list-style:none;padding:0;margin:14px 0 6px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px}
 .b-compare-picks li{display:flex;flex-direction:column;gap:4px;padding:10px 12px;border:1px solid #ffffff30;border-radius:8px;background:#ffffff0b}
-.b-compare-picks span{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#c2cfc6}.b-compare-picks b{font-size:15px;overflow-wrap:anywhere}
+.b-compare-tie{font-size:12px;color:#e6dcef;line-height:1.35}.b-compare-picks span{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#c2cfc6}.b-compare-picks b{font-size:15px;overflow-wrap:anywhere}
 .calc-result h4{margin:22px 0 8px;font-size:15px;color:var(--amber,#F5A524)}
 /* Mon business plan */
 .b-plan-report{margin-top:22px}.b-plan-report h3{margin-top:26px}.b-plan-report h3:first-child{margin-top:0}
@@ -178,6 +178,12 @@ body.calculator-page main .calc-card .b-doc-head h3,.calculator-page .b-doc-head
 .b-plan-requires{border:1px solid var(--rule,#DFD9CC);border-radius:10px;padding:10px 14px;margin:12px 0}
 .b-plan-requires legend{font-weight:700;padding:0 5px;font-size:12px}
 .b-plan-requires label{margin:8px 0}
+/* v7.53 : prévu / commencé / fait */
+.b-plan-state{border:1px solid var(--rule,#DFD9CC);border-radius:10px;padding:8px 14px;margin:12px 0;display:flex;flex-wrap:wrap;gap:0 18px}
+.b-plan-state legend{font-weight:700;padding:0 5px;font-size:12px}
+.b-plan-state label{margin:6px 0}
+.b-plan-status{margin:12px 0 0;font-size:.92rem;line-height:1.5}
+.b-plan-status .calc-tag{margin-right:6px}
 .b-plan-card-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
 .b-plan-card-actions button{min-width:44px}
 .b-plan-add{margin:14px 0 6px;display:grid;gap:8px}
@@ -552,3 +558,7 @@ body.calculator-page main .lk-act--3 td[data-l]::before{content:attr(data-l) "\0
 @keyframes c-chain-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 .c-chain-step{animation:c-chain-in .32s ease-out both;animation-delay:calc(var(--i,0) * 45ms)}
 @media(prefers-reduced-motion:reduce){.c-chain-step{animation:none}}
+
+/* v7.53 : répartition du budget, les cinq postes visibles (plus de montant compté sans être montré) */
+.b-budget-split{border:1px solid var(--rule,#DFD9CC);border-radius:10px;padding:10px 14px;margin:14px 0 0}
+.b-budget-split legend{font-weight:700;padding:0 5px;font-size:12px}

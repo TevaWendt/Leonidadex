@@ -25,8 +25,8 @@ const planTemplateV4={kind:'purchase',key:'',target:null,usePrerequisites:true,u
 // situation = où en est le joueur ; missions = ses missions à lui (copiées, jamais liées) ; prerequisites = ses achats d'avant.
 const planGoalTemplate={kind:'purchase',name:'',itemId:'',referencePrice:null,price:null,boostHourly:0,target:null,unitLabel:'points',targetUnits:null,currentUnits:0,alsoPrice:0,meaning:'available'};
 const planSituationTemplate={capital:null,reserve:0,hourly:null,unitsHourly:0,dailyMinutes:null,daysPerWeek:7,upkeepPerSession:0};
-const planMissionTemplate={id:'m-1',name:'Ma mission',reward:null,cost:0,duration:null,prep:0,cooldown:0,share:100,investment:0,owned:false,units:0,requires:[],once:false,done:false,requiresMissions:[]};
-const planPrereqTemplate={id:'p-1',name:'Mon achat d’avant',itemId:'',referencePrice:null,price:null,boostHourly:0,owned:false,minutes:null,requires:[],usagePerSession:null};
+const planMissionTemplate={id:'m-1',name:'Ma mission',reward:null,cost:0,duration:null,prep:0,cooldown:0,share:100,investment:0,owned:false,units:0,requires:[],once:false,done:false,started:false,requiresMissions:[]};
+const planPrereqTemplate={id:'p-1',name:'Mon achat d’avant',itemId:'',referencePrice:null,price:null,boostHourly:0,owned:false,started:false,minutes:null,requires:[],usagePerSession:null};
 const planLogTemplate={id:'',at:'',capital:0,minutes:0,forecast:null,note:'',units:null,unitsGain:null,gain:null,plannedGain:null,sessionMinutes:0,runs:{},purchases:[]};
 const planTemplate={goal:copy(planGoalTemplate),situation:copy(planSituationTemplate),source:'hourly',missions:[],prerequisites:[],priority:'balanced',strategy:'auto',variant:'auto',maxRepeat:100,deadlineDays:null,details:false,log:[],playedMinutes:0,sessionsPlayed:0,locked:[],variants:[]};
 // v6 : une variante garde une copie des réponses du plan (jamais le plan de référence écrasé) ; cinq au plus.
@@ -367,7 +367,7 @@ function terrainFits(need,have){const h=have.v;if(need==='eau'||need==='air')ret
 function needChecks(s,a,item){
  const need=s.analysis.need,checks=[];
  const cap=a&&a.capabilities||{};
- if(need.terrain){const have=cap.terrain?V.personal(cap.terrain):item&&item.type==='vehicle'?M.fromVehicle({cat:item.category}).terrain:V.unknown();
+ if(need.terrain){const have=cap.terrain?V.personal(cap.terrain):item&&item.type==='vehicle'?M.fromVehicle({cat:item.categoryId||item.category}).terrain:V.unknown();
   const state=have.v===null?'unknown':terrainFits(need.terrain,have);
   checks.push({id:'usage-compatible',label:'Terrain : '+need.terrain,state,detail:state==='unknown'?(have.v==='route'&&need.terrain==='tout-terrain'?'Rien ne dit qu’il va en tout-terrain : écris-le dans ses capacités si tu le sais.':'Terrain inconnu pour cet achat : écris-le dans ses capacités.'):state==='ok'?'Convient ('+have.v+(have.s==='estimated'?', d’après son type':'')+').':'Ne convient pas : il va sur '+have.v+'.',fix:state==='ko'?{text:'Choisis un véhicule qui va sur '+need.terrain+'.'}:null});}
  if(num(need.passengers)&&need.passengers>0){const seats=num(cap.seats)?V.personal(cap.seats):item&&num(item.seats)?V.official(item.seats):V.unknown();checks.push({id:'usage-compatible',label:'Places : '+need.passengers,state:!V.usable(seats)?'unknown':seats.v>=need.passengers?'ok':'ko',detail:!V.usable(seats)?'Nombre de places inconnu : écris-le si tu le connais.':seats.v>=need.passengers?seats.v+' places.':'Seulement '+seats.v+' places.',fix:{text:'Choisis un véhicule avec au moins '+need.passengers+' places.'}});}
@@ -379,6 +379,11 @@ function compareAnalysis(s,source,ctx){
  s.compare.keys.forEach(k=>{const a=asset(s,k);if(!a)return;const item=itemOf(a,ctx),acq=totalAcq(a,item),use=usageOf(s,a,item),cost=M.usageCost({initial:acq.complete?V.personal(acq.value):V.unknown(),perSession:use.perSession},{sessions});
   const cc=cashFor(s,acq,a),pc=purchasableCheck(item,a),need=needChecks(s,a,item),conditions=[pc,...need].filter(Boolean),adm=M.admission(conditions);
   rows.push({key:k,name:a.name,asset:a,item,acquisition:acq,usage:use,cost,cash:cc,conditions,admission:adm,utility:a.utility,income:a.incomeMode==='personal'&&a.boostHourly>0?a.boostHourly:null});});
+ /* Revue de conformité (v7.53) : un achat libre sans coût d’usage écrit est « sans objet » quand il est seul ; comparé à un
+    achat qui a un coût d’usage, ce vide devient « non renseigné » (inconnu), sinon il gagnerait à tort sur la durée. */
+ if(rows.some(r=>r.usage.source==='personal'||r.usage.source==='simulated'))for(const r of rows)if(r.usage.source==='na'){
+  r.usage={perSession:V.blank(),lines:[],missing:['Coût d’usage de « '+r.name+' » (non renseigné)'],note:'Coût d’usage non renseigné : une autre option en a un. Écris 0 s’il n’y en a vraiment pas.',source:'blank'};
+  r.cost=M.usageCost({initial:r.acquisition.complete?V.personal(r.acquisition.value):V.unknown(),perSession:r.usage.perSession},{sessions});}
  const admissible=rows.filter(r=>r.admission.state==='admissible'||r.admission.state==='conditionnel'||r.admission.state==='inconnu');
  const excluded=rows.filter(r=>r.admission.state==='impossible');
  const P=M.pareto(admissible.map(r=>({id:r.key,admission:{state:'admissible'},values:{now:r.acquisition.complete?r.acquisition.value:null,total:r.cost.total.complete&&sessions!==null&&V.usable(r.usage.perSession)?r.cost.total.value:null,envie:-(r.utility||0)}})),['now','total','envie']);
@@ -399,7 +404,10 @@ function orderAnalysis(s,source,ctx){
  const deps=M.prerequisites({nodes:graph,targets:items.map(x=>x.id)});
  if(deps.cycles.length)return {tool:'order',valid:false,reason:deps.reason,items,deps,objective};
  if(unknown.length)return {tool:'order',valid:false,incomplete:true,reason:'Parcours à compléter : écris le prix de '+unknown.map(x=>'« '+x.name+' »').join(', ')+' (même celui que tu imagines).',items,deps,objective,unknown};
- const run=order=>{const r=E.order({capital:s.goal.capital,reserve:s.goal.reserve,hourly:s.goal.hourly,items:order.map(id=>items.find(x=>x.id===id))});
+ /* v7.53 : chaque ordre n’est simulé qu’une fois, même quand trois objectifs le comparent (mémoire locale à ce calcul, donc
+    toujours à jour avec les dernières saisies). */
+ const memo=new Map(),run=order=>{const k=order.join('\u0001');if(!memo.has(k))memo.set(k,runOnce(order));return memo.get(k);};
+ const runOnce=order=>{const r=E.order({capital:s.goal.capital,reserve:s.goal.reserve,hourly:s.goal.hourly,items:order.map(id=>items.find(x=>x.id===id))});
   if(!r.valid)return {valid:false,reason:r.reason,key:[Infinity]};
   let firstIncome=null;r.steps.forEach((st,i)=>{const it=items.find(x=>x.id===order[i]);if(firstIncome===null&&it.boostHourly>0)firstIncome=st.timeHours;});
   const low=r.steps.reduce((m,st)=>Math.min(m,st.capital),s.goal.capital);
@@ -532,7 +540,8 @@ function explainOrder(s,source,r,x){
  if(conds.length)used.push('achetable');else excluded.achetable='Achats libres : c’est toi qui dis qu’ils s’achètent.';
  const OBJ={all:'tout avoir au plus vite',income:'avoir au plus tôt un achat qui rapporte',reserve:'garder le plus d’argent à chaque étape',given:'garder ton ordre'};
  const drivers=[],missing=[];
- if(x.valid&&x.best){drivers.push({label:'Ordre proposé',text:x.best.order.map(id=>'« '+(x.items.find(i=>i.id===id)||{}).name+' »').join(' → ')+' : '+H(x.best.result.totalHours)+' de jeu au total.'});if(x.given&&x.given.valid&&x.given.order.join()!==x.best.order.join())drivers.push({label:'Ton ordre',text:H(x.given.result.totalHours)+' de jeu au total dans ton ordre.'});if(x.search)drivers.push({label:'Recherche',text:x.search.note});}
+ if(x.valid&&x.best&&!x.best.order.length)drivers.push({label:'Ordre proposé',text:'Aucun achat à ordonner : ajoute au moins deux achats à ton panier.'});
+ else if(x.valid&&x.best){drivers.push({label:'Ordre proposé',text:x.best.order.map(id=>'« '+(x.items.find(i=>i.id===id)||{}).name+' »').join(' → ')+' : '+H(x.best.result.totalHours)+' de jeu au total.'});if(x.given&&x.given.valid&&x.given.order.join()!==x.best.order.join())drivers.push({label:'Ton ordre',text:H(x.given.result.totalHours)+' de jeu au total dans ton ordre.'});if(x.search)drivers.push({label:'Recherche',text:x.search.note});}
  else missing.push({label:x.incomplete?'Prix':'Blocage',text:x.reason,decisive:true});
  return M.explain({tool:'order',aim:'Trouver l’ordre d’achat qui permet de '+OBJ[x.objective]+'.',horizon:'Jusqu’au dernier achat',conditions:conds,used,excluded,values:[{label:'J’ai déjà',value:vPers(s.goal.capital),unit:'$',field:'order-capital'},{label:'Gardé de côté',value:vPers(s.goal.reserve),unit:'$',field:'order-reserve'},{label:'Je gagne par heure',value:vPers(s.goal.hourly),unit:'$/h',field:'order-hourly'}].concat(x.items.map(i=>({label:i.name,value:i.price===null?V.blank():V.personal(i.price),unit:'$'}))),drivers,missing,changes:(x.alternatives||[]).map(a=>'Pour '+OBJ[a.objective]+' : '+a.order.map(id=>'« '+(x.items.find(i=>i.id===id)||{}).name+' »').join(' → ')+(a.valid?' ('+H(a.result.totalHours)+')':''))});
 }
@@ -655,6 +664,9 @@ function sensitivity(tool,s,source=[]){
  if(tool==='activities')reward(s.inverse.selected);
  if(tool==='session'){const r=session(s,source),id=r.valid?r.timeline.find(x=>x.net>0)?.id:null;reward(id||eligible(s,source).find(a=>E.activity(a).valid)?.id);}
  if(['roi','purchase'].includes(tool)){const i=s.assets.findIndex(a=>a.key===(tool==='roi'?s.roi.key:s.purchase.key));if(i<0)return null;path=['assets',i,'price'];label='Le prix de l’achat : 20 % plus cher ou moins cher';}
+ /* v7.53 : sans achat à ordonner ou à comparer, pas de « Et si… » (il afficherait « de 0 min à 0 min »). */
+ if(tool==='order'&&s.order.keys.filter(k=>asset(s,k)).length<1)return null;
+ if(tool==='compare'&&s.compare.keys.filter(k=>asset(s,k)).length<1)return null;
  if(tool==='order'||tool==='compare'){path=['goal','hourly'];label='Ce que tu gagnes par heure : 20 % de plus ou de moins';}
  if(tool==='budget'){const first=s.budget.source==='basket'?s.assets.findIndex(a=>a.key===s.order.keys[0]):-1;path=first>=0?['assets',first,'price']:s.budget.source==='manual'?['budget','allocations',0]:['budget','extra'];label='Le prix de ta première dépense seulement';}
  if(!path)return null;let value=sourceInput?source:s;for(const k of path)value=value[k];

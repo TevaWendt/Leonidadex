@@ -6,9 +6,11 @@
   const assets=new Set(window.LK_ASSETS||[]);
   const record = x => !!x && typeof x === 'object' && !Array.isArray(x);
   const esc = x => String(x ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  function status(message) {
+  /* v7.53 : { silent: true } montre le message sans le faire lire une deuxième fois (la page l’annonce déjà ailleurs). */
+  function status(message, opts) {
     let box = document.getElementById('lk-status');
     if (!box) { box = document.createElement('p'); box.id = 'lk-status'; box.className = 'lk-status'; box.setAttribute('role','status'); document.body.appendChild(box); }
+    if (opts && opts.silent) box.setAttribute('aria-hidden', 'true'); else box.removeAttribute('aria-hidden');
     box.textContent = message;
   }
   function read(key, fallback, valid) {
@@ -145,7 +147,7 @@
 })();
 
 /* Léo : amorçage isolé. Les données ne se chargent qu'à l'ouverture du panneau. */
-(function(){'use strict';if(!document.querySelector('main')||document.getElementById('leo-style'))return;const base=(document.currentScript&&document.currentScript.src||'').replace(/[^/]*$/,'')||'/';const css=document.createElement('link');css.id='leo-style';css.rel='stylesheet';css.href=base+'leo.css?v=3840ca040375';css.onload=()=>{const script=document.createElement('script');script.src=base+'leo-loader.js?v=3840ca040375';document.head.append(script);};document.head.append(css);})();
+(function(){'use strict';if(!document.querySelector('main')||document.getElementById('leo-style'))return;const base=(document.currentScript&&document.currentScript.src||'').replace(/[^/]*$/,'')||'/';const css=document.createElement('link');css.id='leo-style';css.rel='stylesheet';css.href=base+'leo.css?v=abece84fdb0e';css.onload=()=>{const script=document.createElement('script');script.src=base+'leo-loader.js?v=abece84fdb0e';document.head.append(script);};document.head.append(css);})();
 
 /* Lot C (v7.32) : du mouvement sur toutes les pages. Les blocs de contenu apparaissent au défilement (par vagues,
    avec un léger décalage), les piles d'images s'ouvrent, les titres de section tirent leur trait, l'en-tête prend

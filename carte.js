@@ -38,7 +38,8 @@
      À vérifier sur les vraies distances après le 19 novembre. */
   const METRES_PAR_UNITE = 3.04;   /* 1 unité de carte = 3,04 m, calé sur les coordonnées du jeu */
 
-  /* vitesses provisoires, en mètres par seconde */
+  /* vitesses de GTA V, en mètres par seconde : servent seulement à la simulation demandée par le joueur (v7.53) */
+  let simTrajets = false;
   const VITESSES = [
     { id:'pied',    nom:'À pied',     v: 2.0,  ico:'walk' },
     { id:'course',  nom:'En courant', v: 6.0,  ico:'run'  },
@@ -1346,15 +1347,23 @@
       (etapes.length > 1
         ? '<p class="rl-seg">' + etapes.length + ' segments · le plus long ' + fmtDist(Math.max.apply(null, etapes)) + '</p>'
         : '') +
-      '<ul class="rl-list">' +
-      VITESSES.map(function(v){
-        return '<li><span class="rl-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
-               'stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">' + ICONS[v.ico] + '</svg></span>' +
-               '<span class="rl-nom">' + v.nom + '</span>' +
-               '<span class="rl-t">' + fmtDuree(m / v.v) + '</span></li>';
-      }).join('') +
-      '</ul>' +
-      '<p class="rl-note">Distance à vol d’oiseau, sans tenir compte des routes ni du relief. Vitesses provisoires calées sur GTA V, recalibrées après le 19 novembre 2026.</p>';
+      /* Revue de conformité (v7.53) : aucun temps de trajet par défaut (ni la vitesse ni l’échelle ne sont calibrées sur
+         GTA VI). La simulation se demande, et se lit comme telle. */
+      '<p class="rl-note">Distance estimée à vol d’oiseau, d’après l’échelle du fond de carte (à confirmer après le 19 novembre 2026), sans tenir compte des routes ni du relief.</p>' +
+      '<label class="rl-sim"><input type="checkbox" id="rl-sim"' + (simTrajets ? ' checked' : '') + '> Simuler des temps de trajet (vitesses de GTA V : une hypothèse, pas une donnée de GTA VI)</label>' +
+      (simTrajets
+        ? '<p class="rl-sim-t"><span class="rl-sim-tag">Simulation</span> Temps calculés avec les vitesses de GTA V, sur la distance à vol d’oiseau.</p>' +
+          '<ul class="rl-list rl-list--sim">' +
+          VITESSES.map(function(v){
+            return '<li><span class="rl-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
+                   'stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">' + ICONS[v.ico] + '</svg></span>' +
+                   '<span class="rl-nom">' + v.nom + '</span>' +
+                   '<span class="rl-t">≈ ' + fmtDuree(m / v.v) + '</span></li>';
+          }).join('') +
+          '</ul>'
+        : '');
+    const sim = document.getElementById('rl-sim');
+    if(sim) sim.addEventListener('change', function(){ simTrajets = sim.checked; renderRuler(); const again = document.getElementById('rl-sim'); if(again) again.focus(); });
   }
 
   function drawLine(){

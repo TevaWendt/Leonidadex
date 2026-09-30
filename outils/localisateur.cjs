@@ -101,8 +101,14 @@ function vehicleLinks(v) {
 }
 const EDITION = { 'Ultimate Edition': 'l’édition Ultimate', 'Pre-Order': 'la précommande' };
 function vehicleItem(v, prefix) {
-  const d = data(), catLabel = d.VC[v.cat] || v.cat, photo = /\/officiel\//.test(v.thumb || '');
-  const thumb = '<img src="' + esc(prefix + String(v.thumb || '/img/schemas/' + v.id + '.svg').replace(/^\//, '')) + '" width="' + (photo ? 480 : 240) + '" height="' + (photo ? 270 : 120) + '" alt="" loading="lazy" decoding="async"' + (photo ? '' : ' class="is-schema"') + '>';
+  /* v7.53 : une vignette doit montrer le véhicule. Une photo de scène (Jason et Lucia, une région, un salon de tatouage…)
+     où il n’est qu’un détail laisse la place à son schéma : photo gardée seulement si son nom de fichier désigne le
+     véhicule (un mot de son identifiant) ou un plan de véhicules des trailers. */
+  const d = data(), catLabel = d.VC[v.cat] || v.cat, file = String(v.thumb || '').split('/').pop(),
+    words = v.id.split('-').filter(w => w.length >= 4),
+    photo = /\/officiel\//.test(v.thumb || '') && (words.some(w => file.includes(w)) || /vehicles?-\d/.test(file));
+  const src = photo ? v.thumb : '/img/schemas/' + v.id + '.svg';
+  const thumb = '<img src="' + esc(prefix + String(src).replace(/^\//, '')) + '" width="' + (photo ? 480 : 240) + '" height="' + (photo ? 270 : 120) + '" alt="" loading="lazy" decoding="async"' + (photo ? '' : ' class="is-schema"') + '>';
   return { id: v.id, name: v.nom, cat: v.cat, catLabel, thumb, url: 'vehicules/' + v.id + '.html', places: vehicleLinks(v), search: (v.marque || '') + ' ' + (v.search || ''), pronoun: 'le',
     status: v.edition && EDITION[v.edition] ? 'offert avec ' + EDITION[v.edition] + ' ; ' + EMPTY.toLowerCase() + ' dans le jeu' : EMPTY,
     linkedText: 'Lieux liés aux ' + catLabel.toLowerCase() + ' sur notre carte (pas un emplacement confirmé pour ce véhicule) :',

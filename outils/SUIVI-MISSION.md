@@ -31,6 +31,7 @@ site statique (Vercel, sans build), mots simples pour le joueur, charte Leonidak
 | 3 | v7.50 | Catalogues, visuels, sélecteurs de carte, page Achats | **fait** |
 | 4 | v7.51 | Carnets de progression et raccordements | **fait** |
 | 5 | v7.52 | Harmonisation, validation complète, livraison | **fait** |
+| — | v7.53 | Revue de conformité au cahier des charges (après le lot 5) | **fait** |
 
 ## Lot 1 (v7.48) — fait le 29/09/2026
 
@@ -316,6 +317,38 @@ Choix retenus :
 
 Vérifications (lot 5) : voir `outils/PREUVES-v7.52.md` (chiffres complets). Résumé de la dernière passe complète : tests `node` 573 / 573 ; `verifier.js` 0 erreur (47 710 références, 415 pages) ; carnets 94 / 94, parcours 161 / 161, lot B 140 / 140, v2 142 / 142, calculateurs 278 / 278, Léo et Contact tenus ; audit 26 pages / 182 chargements sans défaut (0 cible < 24 px, 0 image étirée) ; axe-core 0 violation sur 44 chargements ; 0 mot coupé sur 190 chargements ; 45 captures relues.
 
+## Revue de conformité (v7.53) — faite le 29/09/2026, après le lot 5
+
+**Pourquoi** : les cinq lots ont été faits dans une même conversation ; le propriétaire a demandé de revérifier que tout
+respecte le cahier des charges, et a fourni son dépôt (`Leonidadex-main`). **Base** : ce dépôt est identique, octet pour
+octet, à la v7.47 ; « v7.47 + archive v7.52 − `calculateurs-tools.js` » redonne exactement la v7.52 (vérifié).
+
+**Méthode** : relecture ligne à ligne du cahier des charges par un vérificateur indépendant (qui n’avait pas fait le
+travail) : 111 exigences, chacune rapprochée du code et des pages, pas des documents. Chaque écart a été revérifié ici avant
+correction ; deux points ont été jugés conformes après examen (voir plus bas).
+
+Écarts corrigés (anomalies 35 à 55) : voir le tableau des anomalies. Les principaux :
+- Tuto : textes remis à jour avec la version finale (sens du but, frais obligatoires, déjà possédé, coût d’usage, besoin,
+  ordres comparés et dépendances, budget « au plus », prévu / commencé / fait…) ; encart « Ce que le calcul prend en compte »
+  par outil, dont la liste vient du registre du modèle ; les six parties de « Ce qui compte dans ce calcul » expliquées ;
+  26 captures refaites sur la version finale, chacune avec l’exemple de son chapitre ; chaque « Essayer » et chaque exemple
+  vérifiés au navigateur (`tuto-essayer-browser.cjs`) ; la légende « certains champs ont changé de place » retirée.
+- Business plan : trois états distincts, « Prévu / Commencé / Déjà fait (ou déjà à moi) » pour les missions uniques et les
+  achats d’avant, et un état du plan (PRÉVU, COMMENCÉ, RÉALISÉ) ; « commencé » ne crédite rien.
+- Comparaison : un coût d’usage laissé vide face à une option qui en a un est « non renseigné » (comparaison ouverte), plus
+  « sans objet ».
+- Recherche d’ordre : exhaustive jusqu’à 6 achats, recherche locale au-delà (identique à l’exhaustif sur 200 cas tirés au
+  sort) ; pire cas mesuré au navigateur, processeur ralenti ×4, 390 px : 125 ms par saisie (plan maximal), 60 ms (12 achats).
+- Carte : aucun temps de trajet par défaut ; simulation à la demande, dite « vitesses de GTA V ».
+- Recherche du site : une entrée par calcul et pour le business plan ; Léo : même règle de possession que le calculateur ;
+  listes et envies → « Mon budget » (prix à venir, jamais 0) ; budget : cinq postes visibles ; zoom 400 % et fenêtres basses.
+
+Jugés conformes après examen : les phrases de catégorie de `outils/redaction.cjs` (« dans la série… ») décrivent la série,
+pas des performances de GTA VI ; l’absence de visuels 4K est une limite des sources disponibles (le plus grand visuel
+officiel du dépôt fait 1 280 px), désormais écrite dans les preuves.
+
+Vérifications (v7.53) : voir `outils/PREUVES-v7.53.md`. Résumé de la dernière passe complète : tests `node` 586 / 586 ; `verifier.js` 0 erreur (47 643 références, 415 pages) ; carnets 94 / 94, parcours 161 / 161, lot B 140 / 140, v2 142 / 142, calculateurs 278 / 278, Léo tenu à la relance isolée (1 requête d’image interrompue à la fermeture d’une page dans la passe complète, non reproduite), Contact tenu ; audit 26 pages / 182 chargements sans défaut (0 cible < 24 px, 0 image étirée) ; axe-core 0 violation sur 44 chargements ; 0 mot coupé sur 190 chargements ; zoom et fenêtres basses 56 / 56 ; Tuto 22 / 22 ; 53 captures relues.
+
 ## Anomalies relevées à l’inventaire (lot où elles sont traitées)
 
 | # | Anomalie | Lot |
@@ -354,6 +387,27 @@ Vérifications (lot 5) : voir `outils/PREUVES-v7.52.md` (chiffres complets). Ré
 | 32 | (lot 5, contrôle des mots coupés) Tuto, tableau des statuts : mots coupés au milieu de 320 à 1 024 px | 5 (**corrigé v7.52**) |
 | 33 | (lot 5, captures) « Xero Gas Station · Xero Gas Station » : deux lieux du même nom écrits deux fois sans distinction | 5 (**corrigé v7.52**) |
 | 34 | (lot 5, typographie) Six scripts sans espaces insécables avant « : ; ? ! » (modèle, collectibles, contact, Léo, suivi) | 5 (**corrigé v7.52**) |
+| 35 | (revue) Tuto non mis à jour : textes d’avant la mission (« Comparer des ordres selon le délai », « Me fait gagner en plus »…), captures anciennes avec la légende « certains champs ont changé de place », « Essayer » non vérifiés | revue (**corrigé v7.53**) |
+| 36 | (revue) Un coût d’usage vide face à une option qui en a un était « sans objet » : l’option sans chiffre pouvait gagner à tort sur la durée | revue (**corrigé v7.53**) |
+| 37 | (revue) Business plan sans état « commencé » entre prévu et réalisé | revue (**corrigé v7.53**) |
+| 38 | (revue) Panier vide : « Ordre proposé : : 0 min de jeu au total » et « Et si… de 0 min à 0 min » | revue (**corrigé v7.53**) |
+| 39 | (revue, antérieur à la mission) Carte : temps de trajet affichés par défaut avec des vitesses de GTA V | revue (**corrigé v7.53**) |
+| 40 | (revue) Recherche d’ordre exhaustive à 7 achats : environ 200 ms par saisie sur ordinateur, sans état ni interruption | revue (**corrigé v7.53** : bornée, mesurée) |
+| 41 | (revue) Recherche du site : une seule entrée pour tout le calculateur | revue (**corrigé v7.53**) |
+| 42 | (revue) Léo : l’aperçu d’achat ignorait la possession du garage et ne disait pas ce qu’il ne compte pas | revue (**corrigé v7.53**) |
+| 43 | (revue) Listes (style, consommables) : rien n’était transmis au budget | revue (**corrigé v7.53**) |
+| 44 | (trouvée pendant la revue) Budget réparti à la main : un seul poste visible, les quatre autres comptés sans être montrés | revue (**corrigé v7.53**) |
+| 45 | (trouvée pendant la revue) Comparaison de Mes achats : catégories affichées en identifiants bruts (« melee », « muscle ») | revue (**corrigé v7.53**) |
+| 46 | (revue) Courbes des options : le motif « réalisé » pouvait être donné à une option prévue | revue (**corrigé v7.53**) |
+| 47 | (revue) Sélecteur « Où le trouver » : vignettes de scène où le véhicule n’est pas reconnaissable | revue (**corrigé v7.53**) |
+| 48 | (trouvée pendant la revue) Zoom 400 % et fenêtres basses : en-tête collé couvrant jusqu’à 67 % de l’écran | revue (**corrigé v7.53**) |
+| 49 | (revue) Bandeau d’exemples ambigu, libellé « Comparer les deux ordres », business plan absent des entrées de l’accueil | revue (**corrigé v7.53**) |
+| 50 | (revue) Messages du calculateur annoncés deux fois aux lecteurs d’écran | revue (**corrigé v7.53**) |
+| 51 | (revue) Capture de livraison avec une image différée restée vide ; en-tête posé au milieu de captures hautes | revue (**corrigé v7.53**) |
+| 52 | (trouvée à la relecture des captures) Mode Simple : « Changé en mode Expert : argent de côté… » alors que ce champ est dans le formulaire Simple (sauf « Mon objectif », où il est replié) | revue (**corrigé v7.53**) |
+| 53 | (trouvée à la relecture des captures, déjà dans la base v7.47) Véhicules : bandeau des marques sous l’en-tête resté une bande noire vide (il lisait l’index de recherche, que la page ne charge pas) | revue (**corrigé v7.53**) |
+| 54 | (trouvée à la relecture des captures) « Quel achat choisir ? » : à égalité sur un critère (deux achats payables tout de suite pour « le plus vite »), le premier de la liste gagnait ; réordonner changeait le gagnant | revue (**corrigé v7.53**) |
+| 55 | (revue) Captures de livraison : lignes de tableau et figures qui apparaissent au défilement restées vides dans les captures hautes | revue (**corrigé v7.53**) |
 
 ## Blocages connus
 
@@ -364,9 +418,9 @@ Vérifications (lot 5) : voir `outils/PREUVES-v7.52.md` (chiffres complets). Ré
 
 ## Point de reprise
 
-Mission terminée : lots 1 à 5 livrés (v7.48 à v7.52), archive cumulée depuis la v7.47 (`Leonidakit-v7.52-modifs.zip`) et
-une suppression à faire (`calculateurs-tools.js`). La mise en ligne est une étape à part, faite par le propriétaire du site
-(voir `LISEZ-MOI-v7.52.txt`). Pour une reprise : repartir de la v7.52, lire ce fichier, `outils/MATRICE-COUVERTURE.md` et
-`outils/PREUVES-v7.52.md` ; les données de jeu encore à venir sont listées dans les preuves (section « Champs encore à
-venir ») : dès qu’une source officielle les publie, les ajouter dans les données sources puis `node outils/regenerer.cjs`,
-`node outils/verifier.js` et les tests.
+Mission terminée et revérifiée : lots 1 à 5 (v7.48 à v7.52), puis la revue de conformité (v7.53). Archive cumulée depuis la
+v7.47 : `Leonidakit-v7.53-modifs.zip`, avec une suppression à faire (`calculateurs-tools.js`). La mise en ligne est une étape
+à part, faite par le propriétaire du site (voir `LISEZ-MOI-v7.53.txt`). Pour une reprise : repartir de la v7.53, lire ce
+fichier, `outils/MATRICE-COUVERTURE.md` et `outils/PREUVES-v7.53.md` ; les données de jeu encore à venir sont listées dans
+les preuves : dès qu’une source officielle les publie, les saisir dans les données sources puis `node outils/regenerer.cjs`,
+`node outils/verifier.js`, les tests, et refaire les captures du Tuto (`python3 outils/tuto-shots.py .`) si l’interface change.

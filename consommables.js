@@ -36,9 +36,14 @@
     tb.appendChild(s1); tb.appendChild(s2); tb.appendChild(s3); table.appendChild(tb); result();
     var wrap = el('div', 'cg-table-wrap'); wrap.tabIndex = 0; wrap.appendChild(table);
     box.appendChild(el('h3', 'ed-h3', 'Côte à côte'));
+    var act = el('p', 'cg-actions-budget'); act.appendChild(budgetLink(cards)); act.appendChild(el('span', 'cg-note', ' Les prix de GTA VI ne sont pas publiés : le budget te les demandera.'));
     box.appendChild(wrap);
+    box.appendChild(act);
     box.appendChild(el('p', 'cg-note', 'Les lignes du haut viennent des fiches. Les trois lignes du bas sont une simulation personnelle : tes chiffres, gardés le temps de la visite, jamais présentés comme ceux du jeu. Le plafond de vie et le gaspillage ne sont pas publiés : ils ne sont pas comptés.'));
   }
+  /* v7.53 : la sélection part dans « Mon budget » (achats libres, prix à venir : jamais comptés à 0). */
+  function budgetLink(cards) { var names = cards.map(function (c) { return c.querySelector('.cg-nom').textContent.trim(); }), a = el('a', 'cg-budget', 'Préparer ces achats dans mon budget');
+    a.href = 'calculateurs.html?tool=budget&achats=' + encodeURIComponent(names.join('|')) + '&from=nourriture#atelier'; return a; }
   root.addEventListener('change', function (ev) { if (ev.target.hasAttribute('data-cg-cmp')) render(); });
   root.addEventListener('click', function (ev) { if (ev.target.closest('[data-cg-clear]')) { checks.forEach(function (c) { c.checked = false; }); render(); } });
   render();

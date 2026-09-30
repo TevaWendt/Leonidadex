@@ -86,7 +86,8 @@
       acquisitionCondition: text(entry.condition, 300),
       evidenceLevel: [1,2,3].includes(entry.evidenceLevel) ? entry.evidenceLevel : null,
       activityIds: Array.isArray(entry.activityIds) ? entry.activityIds.filter(function(v){return typeof v==='string';}) : [],
-      category: text(entry.category || entry.cat, 100) || type,
+      categoryId: text(entry.cat || entry.category, 60) || null,
+      category: catLabel(type, entry.cat) || text(entry.category || entry.cat, 100) || type, // v7.53 : libellé du site, jamais l’identifiant brut (« melee », « muscle »)
       image: media.image, imageFallback: media.imageFallback || (media.image ? schemaImage : null), schemaImage: schemaImage,
       url: safeRoute(entry.url) || '/' + folders[type] + '/' + entry.id + '.html',
       price: price.value, speed: speed.value, acceleration: acceleration.value, seats: seats.value,
@@ -97,6 +98,8 @@
       provenance: text(entry.provenance, 300) || (type === 'vehicle' ? 'vehicules-data.js#' : type === 'weapon' ? 'armes-data.js#' : 'outils/editorial.json#') + entry.id
     };
   }
+  /* v7.53 : libellés lus dans les tables du site (armes-data.js, vehicules-data.js) : aucun libellé recopié ici. */
+  function catLabel(type, id) { var t = type === 'weapon' ? global.LK_ARMES_CATS : type === 'vehicle' ? global.LK_VEHICULES_CATS : null; var v = t && id ? t[id] : null; return typeof v === 'string' ? v : v && typeof v === 'object' ? (v.nom || v.label || v.titre || null) : null; }
   function catalogue() {
     var generated = object(global.LK_CALCULATEURS_CATALOGUE), images = object(generated.weaponImages), schemas = object(generated.weaponSchemas);
     var rows = [];

@@ -408,7 +408,7 @@
   // Quel achat choisir ? Compare plusieurs achats avec le même argent, le même
   // gain par heure et le même temps de jeu. L'envie (1 à 5) vient du joueur ;
   // aucun revenu n'est inventé : sans revenu renseigné, pas de remboursement.
-  var chooseShape = { items: [], best: null, bestByCriterion: {} };
+  var chooseShape = { items: [], best: null, bestByCriterion: {}, ties: {} };
   function choose(input) {
     try {
       var p = data(input);
@@ -437,21 +437,41 @@
       });
       var known = items.filter(function (x) { return x.known; });
       if (!known.length) return fail(chooseShape, 'Écris au moins un prix, même imaginé.');
-      function pick(score, higher) {
-        var best = null, bestValue = null;
-        known.forEach(function (x) { var v = score(x); if (v === null || v === undefined) return; if (best === null || (higher ? v > bestValue : v < bestValue)) { best = x; bestValue = v; } });
-        return best ? best.name : null;
+      // v7.53 : à égalité sur un critère, le gagnant ne dépend plus de l’ordre de la liste (avant, le premier écrit
+      // gagnait) : départage fixe par le rapport envie / prix, l’envie, le prix, le délai, puis le nom ; les ex æquo
+      // sont rendus (ties) pour que l’écran dise « à égalité ».
+      var ties = {};
+      function near(a, b) { return Math.abs(a - b) <= 1e-9 * Math.max(1, Math.abs(a), Math.abs(b)); }
+      function tieBreak(a, b) {
+        var keys = [['valueScore', true], ['utility', true], ['total', false], ['waitHours', false]];
+        for (var i = 0; i < keys.length; i++) {
+          var va = a[keys[i][0]], vb = b[keys[i][0]];
+          if (va == null && vb == null) continue;
+          if (va == null) return 1;
+          if (vb == null) return -1;
+          if (!near(va, vb)) return keys[i][1] ? vb - va : va - vb;
+        }
+        return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
+      }
+      function pick(key, score, higher) {
+        var scored = known.filter(function (x) { var v = score(x); return v !== null && v !== undefined; });
+        ties[key] = [];
+        if (!scored.length) return null;
+        var bestValue = scored.reduce(function (m, x) { var v = score(x); return m === null || (higher ? v > m : v < m) ? v : m; }, null);
+        var top = scored.filter(function (x) { return near(score(x), bestValue); }).sort(tieBreak);
+        if (top.length > 1) ties[key] = top.map(function (x) { return x.name; });
+        return top[0].name;
       }
       var byCriterion = {
-        value: pick(function (x) { return x.valueScore; }, true),
-        cheapest: pick(function (x) { return x.total; }, false),
-        fastest: pick(function (x) { return x.waitHours; }, false),
-        profit: pick(function (x) { return x.paybackHours; }, false),
-        utility: pick(function (x) { return x.utility; }, true)
+        value: pick('value', function (x) { return x.valueScore; }, true),
+        cheapest: pick('cheapest', function (x) { return x.total; }, false),
+        fastest: pick('fastest', function (x) { return x.waitHours; }, false),
+        profit: pick('profit', function (x) { return x.paybackHours; }, false),
+        utility: pick('utility', function (x) { return x.utility; }, true)
       };
       var criterion = ['value', 'cheapest', 'fastest', 'profit', 'utility'].indexOf(p.criterion) >= 0 ? p.criterion : 'value';
       var chosen = known.find(function (x) { return x.name === byCriterion[criterion]; }) || null;
-      return finish({ items: items, best: byCriterion[criterion], bestByCriterion: byCriterion, criterion: criterion, available: available, bestWaitHours: chosen ? chosen.waitHours : null, bestTotal: chosen ? chosen.total : null }, chooseShape);
+      return finish({ items: items, best: byCriterion[criterion], bestByCriterion: byCriterion, ties: ties, criterion: criterion, available: available, bestWaitHours: chosen ? chosen.waitHours : null, bestTotal: chosen ? chosen.total : null }, chooseShape);
     } catch (error) { return fail(chooseShape, error.message); }
   }
 

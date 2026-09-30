@@ -97,3 +97,9 @@
  .t-zone{left:var(--zm-x);top:var(--zm-y);width:var(--zm-width);height:var(--zm-height)}
 }
 @media(prefers-reduced-motion:reduce){.t-button,.t-chapter{transition:none}}
+/* v7.53 : ce que le calcul prend en compte (critères lus dans le registre du modèle) */
+.t-counts{margin:18px 0 0;padding:14px 16px;border:1.5px dashed var(--ink);border-radius:12px;background:var(--paper-2,#F4F0E7)}
+.t-counts h3{margin:0 0 6px}
+.t-counts>p{margin:0 0 8px}
+.t-count-list{margin:10px 0 0;padding-left:18px;display:grid;gap:6px;font-size:.92rem;line-height:1.5}
+.t-count-g{display:inline-block;padding:0 7px;border:1px solid var(--rule,#DFD9CC);border-radius:999px;font:700 .68rem/1.6 var(--font-mono,ui-monospace,monospace);text-transform:uppercase;letter-spacing:.04em;color:var(--ink-soft)}

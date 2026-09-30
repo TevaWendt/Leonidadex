@@ -22,3 +22,5 @@ Généré depuis `outils/modele-donnees.json`, `outils/carnets-source.cjs` et `c
 Styles gardés (planches du carnet de style, `outils/catalogues/editorial.json` style.lookbook) : envies seulement (`lk_wish_v1`, famille `styles`), vue « Mes envies » de Ma garde-robe, lien `style.html#style-<id>`.
 
 Anciennes ancres de `progression.html` (`#garage`, `#arsenal`, `#equipements`, `#munitions`, `#tenues`, `#coiffures`, `#tatouages`, `#consommables`, `#perso-vehicules`, `#perso-armes`, `#acquisitions`, `#lieux`, `#collectibles`, `#calculs`) : conservées, elles mettent en évidence la carte du carnet concerné.
+
+Depuis la v7.53 : dans la vue « Mes envies » d’un carnet, les envies qui n’ont pas de fiche dans le calculateur (tenues, coiffures, tatouages, consommables, personnalisations, équipements, munitions) ont le bouton « Préparer ces envies dans mon budget » (`calculateurs.html?tool=budget&achats=…`, prix à venir, jamais comptés à 0) ; celles qui en ont une (véhicules, armes) gardent « Classer mes envies dans le calculateur ».

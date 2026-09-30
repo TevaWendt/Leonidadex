@@ -150,8 +150,16 @@ test('un coût inconnu ne favorise pas une option : comparaison partielle, concl
   s.assets = [asset('a', 'A', 100000, { usage: { perSession: 4000, perUse: null, uses: null } }), asset('b', 'B', 130000)];
   s.purchase.key = 'a'; s.roi.key = 'a'; s.compare.keys = ['a', 'b']; s.compare.criterion = 'cheapestTotal'; s.analysis.horizon.sessions = 15;
   const r = B.evaluate('compare', s, []);
-  // B n’a pas de coût d’usage écrit : c’est un achat libre → « sans objet » (aucun coût supposé) ; son total vaut son prix.
-  assert.equal(r.best, 'B');
+  // Revue v7.53 : B (achat libre) n’a pas de coût d’usage écrit alors que A en a un → « non renseigné », pas « sans objet » :
+  // la comparaison sur la durée reste indécise au lieu de désigner B à tort (le prompt : non applicable ≠ non renseigné).
+  assert.equal(r.best, null); assert.equal(r.undecided, true);
+  assert.ok(B.analysis('compare', s, []).explain.missing.some(m => /« B »/.test(m.label)), 'la donnée manquante est nommée');
+  // B seul (sans autre option qui a un coût d’usage) : le vide reste « sans objet ».
+  const solo = fresh(); solo.assets = [asset('b', 'B', 130000)]; solo.purchase.key = 'b';
+  assert.equal(B.analysis('purchase', solo, []).usage.source, 'na');
+  // Écrire 0 lève le doute : B est alors le moins cher sur 15 parties (130 000 contre 160 000).
+  s.assets[1] = asset('b', 'B', 130000, { usage: { perSession: 0, perUse: null, uses: null } });
+  assert.equal(B.evaluate('compare', s, []).best, 'B');
   s.assets[1] = asset('b', 'B', null);
   const r2 = B.evaluate('compare', s, []);
   assert.equal(r2.best, null); assert.equal(r2.undecided, true); assert.match(r2.undecidedReason, /coût incomplet/);
