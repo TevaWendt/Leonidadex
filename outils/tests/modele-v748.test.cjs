@@ -230,9 +230,12 @@ test('fiche documentaire : « Prix à venir » et « Achat à confirmer » reste
   assert.equal(field(v, 'price').text, 'Prix à venir'); assert.equal(field(v, 'purchasable').text, 'Achat à confirmer');
   assert.equal(field(v, 'terrain').value.v, 'eau'); assert.equal(field(v, 'terrain').value.s, 'estimated');
   assert.match(field(v, 'fuel').text, /Carburant : mécanique non confirmée/); assert.match(field(v, 'fuel').note, /jauge/);
-  const c = L.fiche('consumable', L.fromConsumable({ statut: 'officiel', effet: { texte: 'Rend de la vie', valeur: 20, unite: '%', jeu: 'GTA V' }, prix_gta6: { valeur: null } }));
+  const c = L.fiche('consumable', L.fromConsumable({ statut: 'officiel', effet: { texte: 'Rend de la vie', valeur: 20, unite: 'sante', jeu: 'GTA V' }, prix_gta6: { valeur: null } }));
   const h = field(c, 'health');
   assert.equal(h.text, 'Récupération de vie : à confirmer'); assert.equal(h.repere.v, 20); assert.equal(L.V.usable(h.value), false);
+  // v7.50 : un chiffre d’armure (gilet) n’est jamais lu comme de la vie rendue.
+  const armure = field(L.fiche('consumable', L.fromConsumable({ statut: 'serie', effet: { texte: 'Protège', valeur: 40, unite: 'armure', jeu: 'GTA V' } })), 'health');
+  assert.equal(armure.repere, null); assert.equal(armure.text, 'Récupération de vie : à confirmer');
   const na = L.fiche('style', { price: L.V.na() }); assert.equal(field(na, 'price').text, 'Ne s’applique pas');
   const known = L.fiche('weapon', { price: L.V.official(1200) }); assert.equal(field(known, 'price').text, null); assert.equal(field(known, 'price').known, true);
   // Toutes les catégories ont des rubriques et des champs exploitables.

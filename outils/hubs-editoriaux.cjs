@@ -3,7 +3,7 @@
    Contenu : outils/hubs-editoriaux.json (mêmes faits et statuts qu'avant, {N} & co remplacés par les comptes réels).
    Balisage : outils/sections.cjs. Appelé par gen.js (vehicules.html) et gen-armurerie.cjs (armes.html). */
 const fs = require('node:fs'), path = require('node:path'), vm = require('node:vm');
-const S = require('./sections.cjs'), carte = require('./carte-vignette.cjs');
+const S = require('./sections.cjs'), carte = require('./carte-vignette.cjs'), LOC = require('./localisateur.cjs');
 const root = path.resolve(__dirname, '..');
 const read = f => fs.readFileSync(path.join(root, f), 'utf8');
 const esc = S.esc;
@@ -52,8 +52,11 @@ function vehicules(V, counts) {
     S.columns(D.conduite.cards) + '<div class="ed-callout"><p>' + esc(D.conduite.note) + '</p></div>'));
   out.push(S.section({ id: 'ultimate', num: 6, kicker: counts.nOfficiel + ' noms officiels', title: 'Véhicules nommés par Rockstar', icon: 'nommes', tone: 'paper', lede: esc(D.nommes.lede) },
     '<div class="kit-grid rise"></div>'));
+  /* v7.50 : sélecteur illustré (un véhicule → les lieux liés à son type), puis tous les lieux en cartes. */
+  const locV = LOC.data();
   out.push(S.section({ id: 'carte', num: 7, kicker: 'Sur la carte', title: 'Où les trouver sur la carte', icon: 'carte', tone: 'night', lede: esc(D.carte.lede) },
-    S.defs() + S.places(D.carte.groups)));
+    S.defs() + LOC.hub({ kind: 'vehicules', items: locV.V.map(v => LOC.vehicleItem(v, '')), places: locV.placesV, cats: Object.entries(locV.VC), catsLabel: 'Types de véhicules', searchLabel: 'Chercher un véhicule', noun: 'véhicules', listLabel: 'Véhicules à situer', mapLabel: 'Carte de Leonida : lieux liés aux véhicules', caption: 'Ce sont des lieux de notre carte liés au type de véhicule, pas des emplacements confirmés par Rockstar.' })
+    + '<h3 class="ed-h3 lk-loc-after">Tous les lieux repérés</h3>' + S.places(D.carte.groups)));
   out.push(levels(D.lecture, 8, 'paper2'));
   out.push(explore(D.explore, vars));
   out.push(faq(D.faq, vars));
@@ -82,8 +85,10 @@ function armes(A, counts) {
     bar('munitions', 'Mes munitions', D.munitions.items.length, 'progression.html#munitions', 'Types de munitions obtenus') + S.ammo(D.munitions.items, 'munitions')));
   out.push(S.section({ id: 'combat', num: 5, kicker: 'Six changements', title: 'Combat : ce qui change', icon: 'combat', tone: 'paper2', accent: 'coral', fam: 'combat' },
     S.steps(D.combat.items)));
+  const locA = LOC.data(), { schema } = require('./armes-schemas.cjs');
   out.push(S.section({ id: 'carte', num: 6, kicker: 'Sur la carte', title: 'Où les trouver sur la carte', icon: 'carte', tone: 'paper', lede: esc(D.carte.lede), fam: 'carte' },
-    S.defs() + S.places(D.carte.groups)));
+    S.defs() + LOC.hub({ kind: 'armes', items: locA.A.map(a => LOC.weaponItem(a, '', schema)), places: locA.placesA, cats: Object.entries(locA.AC).filter(([k]) => locA.A.some(a => a.cat === k)), catsLabel: 'Classes d’armes', searchLabel: 'Chercher une arme', noun: 'armes', listLabel: 'Armes à situer', mapLabel: 'Carte de Leonida : armureries repérées', caption: 'Ce sont les armureries de notre carte, pas des points de vente confirmés pour une arme.' })
+    + '<h3 class="ed-h3 lk-loc-after">Toutes les armureries repérées</h3>' + S.places(D.carte.groups)));
   out.push(levels(D.lecture, 7, 'night'));
   out.push(explore(D.explore, vars));
   out.push(faq(D.faq, vars));

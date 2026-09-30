@@ -1,0 +1,29 @@
+LEONIDAKIT v7.50 — MISSION EN 5 LOTS, LOT 3 : CATALOGUES, VISUELS ET PAGE ACHATS — archive « modifs » (29 septembre 2026)
+
+Base attendue : ton dossier Leonidadex en v7.47. L’archive est CUMULÉE depuis la v7.47 : elle contient aussi les lots 1 et 2
+(v7.48, v7.49). Tu peux la mettre en ligne directement.
+Fichiers ajoutés ou modifiés seulement, chemins exacts depuis la racine. Rien à supprimer. Aucune commande de build.
+Toujours aucun package.json ; api/ ne change pas ; rien à régler dans Vercel ni dans Brevo.
+
+1. Copie ton dossier actuel (sauvegarde).
+2. Extrais l’archive dans la racine du site, écrase les fichiers homonymes (garde le dossier .git).
+3. Mets en ligne (GitHub Desktop, dossier complet).
+
+CE QUE TU VERRAS :
+- Armurerie et Véhicules, section « Où les trouver sur la carte » : un vrai sélecteur illustré (vignette, nom, catégorie,
+  recherche). Choisis une arme ou un véhicule : la carte montre les lieux liés, numérotés, et un résumé dit clairement que
+  l’emplacement exact est « à venir ». Même composant, sans script, sur chaque fiche.
+- Chaque fiche arme ou véhicule a sa « Fiche documentaire » : prix, achat, obtention, performances, capacités, coûts d’usage…
+  Ce qui n’est pas publié reste « à venir » ou « à confirmer », jamais inventé.
+- Vêtements et style : le « Carnet de style » (5 planches), des vignettes dans les listes, une fiche complète par ligne, et
+  « Garder ce style » (une envie, pas une possession).
+- Consommables : « En un regard » pour comparer d’un coup d’œil, et une simulation personnelle du coût par point de vie.
+- Page Achats : une image par catégorie, les bons comptes, un accès rapide, et les cartes qui montent l’une après l’autre
+  quand tu descends (en grille si tu préfères, ou si ton appareil réduit les animations).
+
+POUR VÉRIFIER (3 minutes) : ouvre armes.html#carte, choisis « Klose K17 » puis reviens en arrière depuis sa fiche : le même
+choix est retrouvé. Ouvre achats.html et descends doucement : chaque catégorie vient se poser sur la précédente.
+
+SUITE : lot 4 (v7.51), les carnets de progression (Mon garage, Mon arsenal…) et leurs raccordements.
+
+Détails : outils/CHANGEMENTS-v7.50.txt ; suivi et reprise : outils/SUIVI-MISSION.md.

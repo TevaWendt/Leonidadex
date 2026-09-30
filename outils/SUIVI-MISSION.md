@@ -28,7 +28,7 @@ site statique (Vercel, sans build), mots simples pour le joueur, charte Leonidak
 |---|---|---|---|
 | 1 | v7.48 | Contexte, inventaire, matrice, fondations communes (critères, statuts, coûts, prérequis, fiches, carnets, état v6) | **fait** |
 | 2 | v7.49 | Huit calculs et business plan complet | **fait** |
-| 3 | v7.50 | Catalogues, visuels, sélecteurs de carte, page Achats | à faire |
+| 3 | v7.50 | Catalogues, visuels, sélecteurs de carte, page Achats | **fait** |
 | 4 | v7.51 | Carnets de progression et raccordements | à faire |
 | 5 | v7.52 | Harmonisation, validation complète, livraison | à faire |
 
@@ -130,6 +130,56 @@ lot B 140 / 140, v2 142 / 142, calculateur 278 / 278, Léo « contrôle tenu » 
 navigateur verts + rendu relu sur captures (corrigés à la relecture : manque selon le sens du but, étiquettes de légende
 trompeuses, identifiants dans les messages, séparateurs doublés, libellé du but non atteint).
 
+## Lot 3 (v7.50) — fait le 29/09/2026
+
+**Besoin traité** : catalogues beaux et complets sans rien inventer ; « où le trouver » compréhensible ; page Achats
+immersive et juste. **Pages concernées** : `style.html`, `nourriture.html`, `personnalisations.html` (listes),
+`armes.html`, `vehicules.html`, les 27 fiches armes et 302 fiches véhicules, `achats.html`, `comparateur.html`, les fiches
+du monde (galerie épinglée). **Critères de réussite** : chaque élément réel a sa structure documentaire complète avec
+ses états vides ; un prix inconnu n’est jamais gratuit ni zéro ; aucun emplacement inventé ; effets de défilement dans une
+seule direction, réversibles, sans texte flouté, statiques en mouvement réduit ; audit navigateur sans nouveau défaut.
+
+Fichiers ajoutés :
+- `outils/fiche-doc.cjs` : fiche documentaire commune (modèle `outils/modele-donnees.json` via `LKCalcModel.fiche`),
+  lecture honnête d’une ligne de catalogue (`knownOfRow` : officiel / estimé / repère de la série / sans objet).
+- `outils/localisateur.cjs` + `localisateur.js` : sélecteur illustré « Où le trouver » (hub : recherche, catégories,
+  vignettes, carte cadrée aux repères numérotés sans chevauchement, résumé synchronisé, choix gardé pour la visite ;
+  fiche : même composant sans script). `img/leonida-silhouette.svg` : silhouette commune des fiches.
+- `souhaits.js` (« Garder ce style » → `lk_wish_v1`, jamais une possession), `consommables.js` (comparer trois
+  consommables, simulation personnelle signalée), `achats-pile.js` (voile et netteté de la pile, focus, grille).
+- Test : `outils/tests/catalogues-v750.test.cjs` (10).
+
+Fichiers modifiés (sources) : `outils/catalogues.cjs` (vignette, colonne GTA VI « Prix à venir » + « Achat à confirmer »
+ou « Ne s’achète pas », fiche complète dépliable), `outils/gen-armes.cjs` et `outils/gen.js` (fiche documentaire à la place
+de « Ce qui arrive avec le jeu », localisateur à la place des boutons-textes, synthèse légère sur les cartes),
+`outils/hubs-editoriaux.cjs` (localisateur des hubs, cartes-lieux gardées en dessous), `outils/gen-acquisitions.cjs`
+(carnet de style, consommables en un regard, scripts, index de recherche), `outils/gen-achats.cjs` (visuels, comptes
+justes, accès rapide, pile), `outils/catalogues/editorial.json` (planches du carnet de style, sous-navigations),
+`outils/acquisitions.json` (collections illustrées), `calculateurs-modele.js` (une valeur d’armure n’est jamais lue comme
+de la vie), `comparateur.js` / `comparateur.html` (mêmes états vides, pont vers « Quel achat choisir ? »), `common.js`
+(pas d’effet d’apparition dans les composants interactifs), `style.css`, `acquisitions.css`.
+
+Anomalies 16 à 19 corrigées : Achats (visuel par catégorie, 30 lignes de consommables, 109 lignes de style, 98 de
+personnalisations) ; sous-navigation de `style.html` avec « Collections » (et « Carnet de style ») ; images dans les lignes
+des catalogues ; galerie épinglée : seule l’image de la vue suivante est floue, jamais son texte.
+
+Choix retenus :
+- Emplacement d’un objet : « Emplacement à venir » partout ; les repères de la carte sont des lieux liés au type
+  (armureries ; concessions et ateliers, circuit pour les véhicules de course, marinas, aérodromes ; aucun pour les
+  véhicules de service), dits comme tels.
+- Carnet de style : planches éditoriales décrites en regardant les images (coupes, couleurs, matières), teintes relevées
+  approximatives, distinctes des tenues ou bonus du jeu.
+- Consommables : aucune jauge (aucune quantité ni référence de GTA VI) ; repère de la série écrit à part ; simulation du
+  coût par point de vie seulement avec les deux chiffres du joueur.
+- Page Achats : pile collante sur ordinateur et tablette (hauteur ≥ 600 px) ; sur téléphone, les cartes se suivent sans se
+  superposer pour que rien ne soit coupé ; mouvement réduit et « Tout voir en grille » : grille statique.
+
+Vérifications (lot 3) : `node --test` 549 / 549 ; `node outils/verifier.js` 0 erreur (46 513 références) ; audit
+navigateur `--rapide` (23 pages, 7 largeurs) : 0 débordement, 0 texte coupé, 0 contraste insuffisant, 0 saut de titre,
+0 flou, 0 erreur console (restent 3 défauts antérieurs hors lot : repères de 19 px de `carte.html`, image agrandie de
+l’accueil à 1 920 px, un titre masqué de `collectibles.html` → lot 5) ; parcours calculateur 161 / 161, lot B 140 / 140,
+Léo tenu ; captures bureau et téléphone (`captures-v7.50/`).
+
 ## Anomalies relevées à l’inventaire (lot où elles sont traitées)
 
 | # | Anomalie | Lot |
@@ -149,10 +199,10 @@ trompeuses, identifiants dans les messages, séparateurs doublés, libellé du b
 | 13 | L’export du suivi emporte le brouillon de Contact (`lk_contact_draft_v1`, adresse e-mail) | 4 |
 | 14 | 3 fiches véhicules hors liste portent « Ajouter à mon garage » sans être comptées | 4 |
 | 15 | Fiches planques sans encart calculateur alors qu’elles sont dans le catalogue du calculateur | 4 |
-| 16 | Page Achats : aucun visuel, « Consommables : Rien de publié » (30 lignes existent), « Vêtements et style : 3 collections » (109 lignes) | 3 |
-| 17 | `style.html` : sous-navigation sans « Collections » | 3 |
-| 18 | Images des lignes de catalogue : lien texte seulement | 3 |
-| 19 | Galerie épinglée des fiches du monde : image suivante floutée alors qu’elle porte du texte (règle v7.39) | 3 |
+| 16 | Page Achats : aucun visuel, « Consommables : Rien de publié » (30 lignes existent), « Vêtements et style : 3 collections » (109 lignes) | 3 (**corrigé v7.50**) |
+| 17 | `style.html` : sous-navigation sans « Collections » | 3 (**corrigé v7.50**) |
+| 18 | Images des lignes de catalogue : lien texte seulement | 3 (**corrigé v7.50**) |
+| 19 | Galerie épinglée des fiches du monde : image suivante floutée alors qu’elle porte du texte (règle v7.39) | 3 (**corrigé v7.50**) |
 | 20 | « JetBrains Mono » citée 19 fois mais non hébergée (monospace du système) | 5 |
 | 21 | `lk-showcase.js` chargé pour rien sur les hubs du monde et Médias | 5 |
 | 22 | `calculateurs-tools.js` chargé par aucune page ; `outils/CALCULATEUR-V2.md` dépassé | 5 |
@@ -168,7 +218,7 @@ trompeuses, identifiants dans les messages, séparateurs doublés, libellé du b
 
 ## Point de reprise
 
-Lots 1 et 2 livrés (v7.48, v7.49). Prochaine action : lot 3 — catalogues Vêtements et style (lookbook), Consommables,
-Armes, Véhicules (fiches structurées par `LKCalcModel.fiche`, « Prix à venir », « Achat à confirmer », effets « à
-confirmer »), sélecteurs de localisation illustrés, page Achats (visuel par catégorie, succession verticale au
-défilement, comptes justes), anomalies 16 à 19 ; ensuite captures et tests des pages refondues.
+Lots 1 à 3 livrés (v7.48, v7.49, v7.50). Prochaine action : lot 4 — pages dédiées sous `/carnets/` (garage, arsenal,
+garde-robe, consommables avec stocks, personnalisations, propriétés, lieux, collectibles, calculs) sur `carnets-core.js`,
+boutons « Voir mon… » vers ces pages, souhaits distincts (dont les styles gardés), tableau de bord Progression, SEO public
+sans liste personnelle, anomalies 8 à 15 et 24 ; raccordements recherche, Léo, Tuto, accueil, navigation.

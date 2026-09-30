@@ -1,0 +1,56 @@
+LEONIDAKIT v7.50 — LOT 3 DE LA MISSION v7.48 → v7.52 : CATALOGUES, VISUELS, SÉLECTEURS DE CARTE, PAGE ACHATS (29 septembre 2026)
+
+Base : v7.49 (lot 2). Archive cumulée depuis la v7.47. Suivi : outils/SUIVI-MISSION.md.
+
+FICHES DOCUMENTAIRES (modèle commun, rien d’inventé)
+- outils/fiche-doc.cjs : rendu commun des rubriques et champs de outils/modele-donnees.json (LKCalcModel.fiche). Chaque champ
+  garde son état : connu (avec son statut), estimé, « Prix à venir », « Achat à confirmer », « Récupération de vie : à
+  confirmer », « Emplacement à venir », « Mécanique non confirmée », « Ne s’applique pas ». Un chiffre de GTA V ou d’un autre
+  jeu est écrit à part (« Repère de la série »), jamais comme la valeur de GTA VI.
+- Listes (Vêtements et style, Consommables, Personnalisations) : vignette par ligne (visuel officiel lié, sinon pictogramme de
+  la catégorie dit comme tel), colonne GTA VI qui sépare « Prix à venir » et « Achat à confirmer » (ou « Ne s’achète pas » pour
+  un bonus d’édition), « Fiche complète » dépliable dans chaque ligne.
+- Fiches armes et véhicules : « Ce qui arrive avec le jeu » devient la « Fiche documentaire » (L’obtenir, Au tir / Performances,
+  Munitions / Capacités, Améliorations et restrictions / Coûts d’usage). Cartes des catalogues : synthèse légère (« Prix à
+  venir », emplacement ou munitions).
+- calculateurs-modele.js : une valeur d’armure n’est jamais lue comme de la vie rendue.
+
+SÉLECTEUR ILLUSTRÉ « OÙ LE TROUVER » (anciens petits carrés portant seulement un nom)
+- outils/localisateur.cjs + localisateur.js : vignette (photo officielle ou schéma), nom, catégorie, sélection évidente ;
+  recherche et filtres par catégorie (hubs) ; carte de Leonida cadrée sur les lieux, repères numérotés reliés à leur point sans
+  chevauchement ; résumé synchronisé (ce qui est choisi, ce qui est montré, « Emplacement à venir ») ; liens vers la fiche et vers
+  la carte interactive (#pins) ; choix gardé pour la visite (sessionStorage lk_loc_<type>) ; version fiche sans script.
+- Lieux liés au type : armureries pour les armes ; concessions et ateliers, plus le circuit pour les véhicules de course,
+  marinas pour les bateaux, aérodromes pour ce qui vole, aucun pour les véhicules de service. Jamais un point de vente confirmé.
+- armes.html et vehicules.html (#carte) : sélecteur + toutes les cartes-lieux ; 27 fiches armes et 302 fiches véhicules.
+  img/leonida-silhouette.svg : silhouette partagée par les fiches (un seul téléchargement).
+
+VÊTEMENTS ET STYLE
+- Nouveau « Carnet de style » : 5 planches composées à partir des visuels officiels (imprimés de Stock 305, Jason et Lucia en
+  ville, soleil et néon, coupes du salon, encre et néon) : ce qu’on voit, teintes relevées, pièces des listes liées, adresse,
+  bouton « Garder ce style » (souhait lk_wish_v1, jamais une possession ; souhaits.js).
+- Sous-navigation complète (Carnet de style, Collections). Collections illustrées.
+
+CONSOMMABLES
+- Nouveau « En un regard » : cartes par besoin (récupérer, se protéger) avec pictogrammes légendés : à quoi ça sert, prix, effet
+  connu (sans fausse jauge), où en trouver ; comparaison de trois au plus avec une simulation personnelle du coût par point de
+  vie, calculée seulement avec tes deux chiffres et signalée comme telle (consommables.js).
+
+PAGE ACHATS
+- Un visuel officiel par catégorie (une illustration dite comme telle quand rien n’est confirmé), comptes justes (30 lignes de
+  consommables, 109 de style, 98 de personnalisations), accès rapide aux 11 catégories.
+- Succession verticale au défilement : les cartes montent depuis le bas et se posent l’une sur l’autre (une seule direction,
+  réversible, aucun détournement de la molette) ; la précédente s’atténue, seule l’image d’une carte qui arrive peut être floue.
+  Focus clavier et accès rapide ramènent la carte au premier plan. Téléphone : cartes à la suite, rien de coupé ; mouvement
+  réduit ou « Tout voir en grille » : grille statique (achats-pile.js, acquisitions.css).
+
+AUTRES
+- Comparateur : mêmes états vides que les fiches ; terrain déduit du type ; « Faire le calcul » ouvre « Quel achat choisir ? ».
+- Galerie épinglée des fiches du monde : seule l’image de la vue suivante est floue, son texte reste net (règle v7.39).
+- common.js : pas d’effet d’apparition à l’intérieur des composants interactifs (sélecteur, pile).
+- Recherche : Carnet de style, Consommables en un regard, Où trouver une arme, Où trouver un véhicule.
+
+TESTS
+- Ajouté : catalogues-v750.test.cjs (10). Adaptés : catalogues-v742, catalogues-v743, regression, modele-v748.
+- Résultats : node --test 549 / 549 ; verifier.js 0 erreur ; audit navigateur rapide sans nouveau défaut ; parcours
+  calculateur 161 / 161 ; lot B 140 / 140 ; Léo tenu.

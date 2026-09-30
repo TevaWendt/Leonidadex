@@ -145,7 +145,7 @@
 })();
 
 /* Léo : amorçage isolé. Les données ne se chargent qu'à l'ouverture du panneau. */
-(function(){'use strict';if(!document.querySelector('main')||document.getElementById('leo-style'))return;const base=(document.currentScript&&document.currentScript.src||'').replace(/[^/]*$/,'')||'/';const css=document.createElement('link');css.id='leo-style';css.rel='stylesheet';css.href=base+'leo.css?v=981a46a9bb16';css.onload=()=>{const script=document.createElement('script');script.src=base+'leo-loader.js?v=981a46a9bb16';document.head.append(script);};document.head.append(css);})();
+(function(){'use strict';if(!document.querySelector('main')||document.getElementById('leo-style'))return;const base=(document.currentScript&&document.currentScript.src||'').replace(/[^/]*$/,'')||'/';const css=document.createElement('link');css.id='leo-style';css.rel='stylesheet';css.href=base+'leo.css?v=2f3f0a409fd1';css.onload=()=>{const script=document.createElement('script');script.src=base+'leo-loader.js?v=2f3f0a409fd1';document.head.append(script);};document.head.append(css);})();
 
 /* Lot C (v7.32) : du mouvement sur toutes les pages. Les blocs de contenu apparaissent au défilement (par vagues,
    avec un léger décalage), les piles d'images s'ouvrent, les titres de section tirent leur trait, l'en-tête prend
@@ -166,7 +166,7 @@
   const BLOCKS = calc
     ? '.lk-stack, .lk-tool, .lk-outro, .calc-editorial>*, .lk-tool-guide>*:not(h2)'
     : '.lk-stack, .d-card, .info-card, .tool, .lk-her, .lk-feature, .t-chapter, .d-progress-group, .d-empty, .lk-photo-card, .lk-link, .lk-flip, .lk-outro, .col-card, .info-section>p, .info-section>.info-grid, .info-sources dl>div, .d-section>p, .d-section>.d-related, .d-sources>ul, .lore-texte, .d-global, .kit, .rare-card, .lk-entry-card, .faq details, .county, .fq, .t-intro, .t-figure, .t-steps, .t-mode-fields, .t-table-wrap';
-  const skip = function (el) { return el.closest('[hidden], template, .reveal, .rise, .lore-stack, .leo-panel, .lk-arrive, .lk-showcase') || el.classList.contains('reveal') || el.classList.contains('rise') || el.classList.contains('lk-arrive') || el.classList.contains('sr-only'); };
+  const skip = function (el) { return el.closest('[hidden], template, .reveal, .rise, .lore-stack, .leo-panel, .lk-arrive, .lk-showcase, .lk-loc, .ak-stack') || el.classList.contains('reveal') || el.classList.contains('rise') || el.classList.contains('lk-arrive') || el.classList.contains('sr-only'); };
   const targets = [];
   /* v7.47 : ce qui est déjà à l'écran à l'ouverture n'est jamais caché (mesuré avant de poser la moindre classe, donc sans
      transition) : le texte principal se peint dès le premier rendu, au lieu d'attendre la fin des scripts de la page
@@ -270,11 +270,11 @@
   const firstScreen = new Set();
   { const vh = window.innerHeight || 800; main.querySelectorAll(FIGURES + ',' + TEXTS + ',' + ROWS + ',' + GRID_CARDS).forEach(function (el) { if (el.classList.contains('lk-reveal')) return; const r = el.getBoundingClientRect(); if (r.height && r.top < vh && r.bottom > 0) firstScreen.add(el); }); }
   /* v7.44 : la séquence lk-showcase (À propos) gère ses propres apparitions (lk-showcase.js, informations.css) */
-  const add = function (el, variant) { if (!el || el.closest('[hidden], template, .lore-stack, .leo-panel, .hero, header, footer, #calc-panels, .lk-arrive, .lk-showcase')) return; if (!el.classList.contains('lk-reveal')) { el.classList.add('lk-reveal'); if (firstScreen.has(el)) el.classList.add('is-in', 'lk-settled'); extra.push(el); } if (variant) el.classList.add('lk-reveal--' + variant); };
+  const add = function (el, variant) { if (!el || el.closest('[hidden], template, .lore-stack, .leo-panel, .hero, header, footer, #calc-panels, .lk-arrive, .lk-showcase, .lk-loc, .ak-stack')) return; if (!el.classList.contains('lk-reveal')) { el.classList.add('lk-reveal'); if (firstScreen.has(el)) el.classList.add('is-in', 'lk-settled'); extra.push(el); } if (variant) el.classList.add('lk-reveal--' + variant); };
   main.querySelectorAll(FIGURES).forEach(function (el) { if (el.closest('.lk-stack, figure figure, .lk-reveal--clip, .lk-hero-item, .d-card, .lore-card')) return; add(el, 'clip'); });
   main.querySelectorAll(TEXTS).forEach(function (el) { if (el.closest('.lk-reveal--clip') || el.classList.contains('lk-hero-item') || el.closest('.lk-hero-item')) return; add(el, 'blur'); });
   main.querySelectorAll(ROWS).forEach(function (el) { if (el.closest('.lk-reveal')) return; if (el.children.length > 1 && el.children.length <= 40) { add(el, 'rows'); Array.prototype.slice.call(el.children).forEach(function (c, i) { c.style.setProperty('--lk-i', Math.min(i, 8)); }); } });
-  main.querySelectorAll(GRID_CARDS).forEach(function (el) { if (el.classList.contains('lk-arrive')) return; el.classList.add('lk-reveal--zoom'); if (!el.classList.contains('lk-reveal')) add(el); });
+  main.querySelectorAll(GRID_CARDS).forEach(function (el) { if (el.classList.contains('lk-arrive') || el.closest('.lk-loc, .ak-stack')) return; el.classList.add('lk-reveal--zoom'); if (!el.classList.contains('lk-reveal')) add(el); });
   main.querySelectorAll('.lk-stack').forEach(function (el) { el.classList.add('lk-reveal--right'); el.querySelectorAll('img').forEach(function (img) { img.classList.add('lk-kb'); }); });
   /* v7.37 : la variante « depuis la gauche » ne s'ajoute qu'aux blocs réellement suivis par l'observateur (classe lk-reveal),
      sinon le décalage de -22 px restait appliqué pour toujours (textes des fiches du monde hors de la gouttière). */

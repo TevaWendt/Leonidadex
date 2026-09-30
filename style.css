@@ -3048,3 +3048,122 @@ a.ed-brand:hover,a.ed-brand:focus-visible{border-color:var(--ink);box-shadow:5px
 /* v7.47 : étapes numérotées (Collectibles) et bouton « Copier la position » de la carte */
 .lk-steps b{color:var(--coral-text);}
 .map-copy{min-height:24px;}
+
+/* ===== v7.50 (lot 3) : fiche documentaire commune (véhicules, armes, consommables, style, personnalisations) =====
+   Chaque champ garde son état : connu (avec son statut), estimé, à venir / à confirmer, mécanique non confirmée,
+   ne s’applique pas. Un repère d’un autre jeu est écrit à part, jamais à la place de la valeur de GTA VI. */
+.doc-fiche{--doc-line:var(--rule);font-size:.92rem;line-height:1.5;color:var(--ink)}
+.doc-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 12px;margin:0 0 10px}
+.doc-head b{font:800 1rem/1.2 'Archivo',sans-serif}
+.doc-count{font:700 .72rem/1.3 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-soft);padding:2px 8px;border:1px solid var(--doc-line);border-radius:999px}
+.doc-lead{margin:0 0 12px;color:var(--ink-soft)}
+.doc-rubs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:14px}
+.doc-rub{border:1.5px solid var(--ink);border-radius:var(--radius,12px);background:var(--paper);box-shadow:var(--shadow-soft);padding:12px 14px 6px}
+.doc-rub-t{margin:0 0 6px;font:800 .78rem/1.3 'Archivo',sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--coral-text)}
+.doc-list{margin:0}
+.doc-row{display:grid;grid-template-columns:minmax(0,40%) minmax(0,1fr);gap:4px 12px;padding:7px 0;border-top:1px solid var(--doc-line)}
+.doc-row:first-child{border-top:0}
+.doc-row dt{font-weight:700;color:var(--ink)}
+.doc-row dd{margin:0;display:flex;flex-direction:column;gap:3px;min-width:0}
+.doc-v{overflow-wrap:anywhere}
+.doc-st{align-self:flex-start;font:700 .64rem/1.3 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.05em;text-transform:uppercase;padding:1px 6px;border-radius:6px;background:var(--ink);color:var(--paper)}
+.doc-ctx,.doc-rep{font-size:.78rem;line-height:1.4;color:var(--ink-soft)}
+.doc-rep{padding-left:8px;border-left:3px solid #2F6F73}
+.doc-row.is-wait .doc-v,.doc-row.is-unconf .doc-v{font-style:italic;color:var(--ink-soft)}
+.doc-row.is-wait .doc-v::before,.doc-row.is-unconf .doc-v::before{content:'';display:inline-block;width:8px;height:8px;margin-right:7px;border:1.5px dashed var(--ink-soft);border-radius:50%;vertical-align:1px}
+.doc-row.is-na .doc-v{color:var(--ink-soft)}
+.doc-row.is-est .doc-st{background:#7A4F00}
+.doc-fiche--compact .doc-rubs{grid-template-columns:1fr;gap:10px}
+.doc-fiche--compact .doc-rub{box-shadow:none;border-width:1px;padding:8px 12px 4px}
+.doc-fiche--compact .doc-row{grid-template-columns:minmax(0,38%) minmax(0,1fr);font-size:.84rem}
+@media(max-width:560px){.doc-row{grid-template-columns:1fr}}
+
+/* ===== v7.50 (lot 3) : localisateur illustré « Où le trouver » (armes, véhicules, fiches, carnets) =====
+   Vignette + nom + catégorie, sélection évidente (anneau encre, ombre ambre, barre d’accent), carte cadrée sur les lieux,
+   repères numérotés reliés à leur point, résumé qui dit ce qui est sélectionné et ce qui est montré. Règle v7.39 : aucun
+   flou ni échelle sur du texte, translations entières, ≤ 220 ms ; mouvement réduit : rien ne bouge. */
+.lk-loc{--loc-line:var(--ink);display:grid;gap:18px;color:var(--ink);margin:6px 0 26px}
+.lk-loc--hub{grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);align-items:start}
+.lk-loc--single{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);align-items:start}
+.lk-loc-pick,.lk-loc-map,.lk-loc-sum{background:var(--paper);border:2px solid var(--loc-line);border-radius:14px;box-shadow:var(--shadow-soft)}
+.lk-loc-pick{padding:14px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.lk-loc-tools{display:flex;flex-direction:column;gap:10px}
+.lk-loc-search{display:flex;align-items:center;gap:8px;border:1.5px solid var(--ink);border-radius:10px;padding:0 10px;background:#fff;min-height:44px}
+.lk-loc-search svg{width:18px;height:18px;flex:none;color:var(--ink-soft)}
+.lk-loc-search input{border:0;outline:0;flex:1;min-width:0;font:inherit;font-size:1rem;background:transparent;min-height:42px}
+.lk-loc-search:focus-within{box-shadow:0 0 0 3px var(--amber)}
+.lk-loc-cats{display:flex;flex-wrap:wrap;gap:6px}
+.lk-loc-chip{font:700 .8rem/1.2 'Archivo',sans-serif;padding:7px 11px;min-height:36px;border:1.5px solid var(--ink);border-radius:999px;background:var(--paper);color:var(--ink);cursor:pointer;transition:background var(--dur) var(--ease-out),box-shadow var(--dur) var(--ease-out)}
+.lk-loc-chip[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.lk-loc-chip:hover{box-shadow:3px 3px 0 var(--amber)}
+.lk-loc-count{margin:0;font:700 .74rem/1.3 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-soft)}
+.lk-loc-list{list-style:none;margin:0;padding:4px 6px 6px 2px;display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;max-height:520px;overflow:auto;overscroll-behavior:contain}
+.lk-loc-list li[hidden]{display:none}
+.lk-loc-item{position:relative;display:grid;grid-template-columns:64px minmax(0,1fr);align-items:center;gap:8px;width:100%;min-height:58px;padding:6px 8px 6px 6px;border:1.5px solid var(--rule);border-radius:10px;background:#fff;color:var(--ink);text-align:left;cursor:pointer;font:inherit;transition:box-shadow var(--dur) var(--ease-out),border-color var(--dur) var(--ease-out),transform var(--dur) var(--ease-out)}
+.lk-loc-item:hover{border-color:var(--ink);box-shadow:3px 3px 0 var(--amber);transform:translate3d(0,-1px,0)}
+.lk-loc-item:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+.lk-loc-item[aria-pressed="true"]{border-color:var(--ink);box-shadow:4px 4px 0 var(--amber),0 0 0 1.5px var(--ink);background:#fff8ec}
+.lk-loc-item[aria-pressed="true"]::before{content:'';position:absolute;left:-1.5px;top:8px;bottom:8px;width:4px;border-radius:0 3px 3px 0;background:var(--coral)}
+.lk-loc-thumb{display:grid;place-items:center;width:64px;height:44px;border-radius:7px;overflow:hidden;background:var(--paper-2)}
+.lk-loc-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.lk-loc-thumb img.is-schema,.lk-loc-sum-thumb img.is-schema{object-fit:contain;padding:3px}
+.lk-loc-schema{display:grid;place-items:center;width:100%;height:100%;color:var(--ink)}
+.lk-loc-schema svg{width:100%;height:auto;max-height:40px}
+.lk-loc-txt{display:flex;flex-direction:column;gap:1px;min-width:0}
+.lk-loc-txt b{font:800 .88rem/1.2 'Archivo',sans-serif;overflow-wrap:break-word;hyphens:auto}
+.lk-loc-txt small{font-size:.72rem;color:var(--ink-soft)}
+.lk-loc-empty{margin:0;font-size:.9rem}
+.lk-loc-reset{font:inherit;font-weight:700;text-decoration:underline;background:none;border:0;cursor:pointer;color:var(--coral-text)}
+.lk-loc-view{display:flex;flex-direction:column;gap:14px;min-width:0}
+.lk-loc-map{margin:0;padding:10px;background:linear-gradient(180deg,#e9f3f4,#f4f0e7)}
+.lk-loc-svg{display:block;width:100%;height:auto;max-height:520px}
+.lk-loc-svg use{fill:#d9d2c3;stroke:var(--ink);stroke-width:14}
+.lk-loc-halo{fill:rgba(245,165,36,.28)}
+.lk-loc-dot{fill:var(--amber);stroke:var(--ink);stroke-width:24}
+.lk-loc-lead{stroke:var(--ink)}
+.lk-loc-lab{fill:var(--ink);stroke:var(--paper)}
+.lk-loc-pin-n{fill:var(--paper);font-family:'Archivo',sans-serif;font-weight:900}
+.lk-loc-pin{transition:opacity var(--dur) var(--ease-out)}
+.lk-loc-pin.is-off{opacity:.28}
+.lk-loc-pin.is-on .lk-loc-dot{fill:var(--coral)}
+.lk-loc-pin.is-on .lk-loc-lab{fill:var(--coral-text)}
+.lk-loc-map figcaption{margin-top:8px;font-size:.8rem;line-height:1.45;color:var(--ink-soft)}
+.lk-loc-key{display:inline-block;width:11px;height:11px;border-radius:50%;background:var(--amber);border:2px solid var(--ink);vertical-align:-1px;opacity:.45}
+.lk-loc-key--on{background:var(--coral);opacity:1}
+.lk-loc-sum{padding:14px 16px}
+.lk-loc-sum-in{display:grid;grid-template-columns:120px minmax(0,1fr);gap:14px;align-items:start}
+.lk-loc-sum-thumb{display:grid;place-items:center;width:120px;height:78px;border-radius:10px;overflow:hidden;background:var(--paper-2);border:1.5px solid var(--ink)}
+.lk-loc-sum-thumb img{width:100%;height:100%;object-fit:cover}
+.lk-loc-sum-thumb .lk-loc-schema svg{max-height:70px}
+.lk-loc-kicker{margin:0;font:800 .7rem/1.2 'Archivo',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--coral-text)}
+.lk-loc-name{margin:2px 0 6px;font:900 1.2rem/1.15 'Archivo',sans-serif;overflow-wrap:anywhere}
+.lk-loc-status{margin:0 0 6px;font-size:.92rem}
+.lk-loc-note{margin:0 0 10px;font-size:.84rem;line-height:1.5;color:var(--ink-soft)}
+.lk-loc-actions{display:flex;flex-wrap:wrap;gap:8px;margin:0}
+.lk-loc-btn{display:inline-flex;align-items:center;min-height:40px;padding:8px 14px;border:2px solid var(--ink);border-radius:10px;background:var(--paper);color:var(--ink);font:800 .86rem/1.2 'Archivo',sans-serif;text-decoration:none;transition:box-shadow var(--dur) var(--ease-out),transform var(--dur) var(--ease-out)}
+.lk-loc-btn--main{background:var(--ink);color:var(--paper)}
+.lk-loc-btn:hover{box-shadow:4px 4px 0 var(--amber);transform:translate3d(-1px,-1px,0)}
+.lk-loc-btn:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+.lk-loc-sum.is-fresh .lk-loc-sum-in{animation:lk-loc-in .2s var(--ease-out) both}
+@keyframes lk-loc-in{from{opacity:.35;transform:translate3d(0,6px,0)}to{opacity:1;transform:none}}
+.lk-loc-h{margin:14px 0 8px;font:800 1rem/1.2 'Archivo',sans-serif}
+.lk-loc-places{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.lk-loc-place{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:10px;padding:10px 12px;border:1.5px solid var(--ink);border-radius:10px;background:#fff;color:var(--ink);text-decoration:none;transition:box-shadow var(--dur) var(--ease-out)}
+.lk-loc-place:hover{box-shadow:4px 4px 0 var(--amber)}
+.lk-loc-num{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--ink);color:var(--paper);font:900 .82rem/1 'Archivo',sans-serif}
+.lk-loc-place-t{display:flex;flex-direction:column;min-width:0}.lk-loc-place-t small{color:var(--ink-soft);font-size:.78rem}
+.lk-loc-after{margin-top:8px}
+.ed-place.is-linked{box-shadow:5px 5px 0 var(--coral),0 0 0 2px var(--ink)}
+.ed--night .lk-loc-map figcaption{color:var(--ink-soft)}
+@media(max-width:900px){.lk-loc--hub,.lk-loc--single{grid-template-columns:minmax(0,1fr)}.lk-loc-list{max-height:360px}}
+@media(max-width:480px){.lk-loc-list{grid-template-columns:minmax(0,1fr)}.lk-loc-sum-in{grid-template-columns:84px minmax(0,1fr)}.lk-loc-sum-thumb{width:84px;height:56px}.lk-loc-place .veh-go{display:none}}
+@media(prefers-reduced-motion:reduce){.lk-loc-item,.lk-loc-btn,.lk-loc-chip,.lk-loc-pin,.lk-loc-place{transition:none}.lk-loc-item:hover,.lk-loc-btn:hover{transform:none}.lk-loc-sum.is-fresh .lk-loc-sum-in{animation:none}}
+/* v7.50 (lot 3, anomalie 19) : règle « lisible avant tout » — la vue suivante de la galerie épinglée ne floute plus son
+   texte : seul l’image (décorative) passe du flou au net, le cartouche reste net. */
+.lore-slide.is-next{filter:none}
+.lore-slide.is-next > a img,.lore-slide.is-next > img{filter:blur(calc((1 - var(--t,0))*22px))}
+@media(prefers-reduced-motion:reduce){.lore-slide.is-next > a img,.lore-slide.is-next > img{filter:none}}
+/* v7.50 (lot 3) : synthèse légère sur les cartes du catalogue (le détail est dans la fiche documentaire) */
+.veh-doc{display:flex;flex-wrap:wrap;gap:4px 6px;margin:6px 0 2px}
+.veh-doc span{font:700 .66rem/1.3 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.03em;text-transform:uppercase;padding:2px 7px;border:1.5px dashed var(--ink-soft);border-radius:999px;color:var(--ink-soft)}
+@media(max-width:900px){.lk-loc-view .lk-loc-sum{order:-1}}

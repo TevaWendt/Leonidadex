@@ -8,6 +8,11 @@
         "fam": "rockstar"
       },
       {
+        "href": "#en-un-regard",
+        "label": "En un regard",
+        "fam": "comparer"
+      },
+      {
         "href": "#liste-consommables",
         "label": "La liste",
         "fam": "consommables"
@@ -328,6 +333,11 @@
         "fam": "rockstar"
       },
       {
+        "href": "#carnet-de-style",
+        "label": "Carnet de style",
+        "fam": "style"
+      },
+      {
         "href": "#coiffures",
         "label": "Coiffures",
         "fam": "coiffures"
@@ -346,6 +356,11 @@
         "href": "#adresses",
         "label": "Adresses",
         "fam": "carte"
+      },
+      {
+        "href": "#collections",
+        "label": "Collections",
+        "fam": "collections"
       },
       {
         "href": "#a-confirmer",
@@ -575,7 +590,125 @@
           "precommande style"
         ]
       }
-    ]
+    ],
+    "lookbook": {
+      "id": "carnet-de-style",
+      "lede": "Cinq planches composées par le site à partir des visuels officiels : ce qu’on y voit vraiment (coupes, couleurs, matières), rien de plus. Ce ne sont ni des tenues ni des bonus proposés dans le jeu, et garder un style ne coche rien dans ta progression.",
+      "note": "Regroupements éditoriaux du site pour découvrir les styles. Les pièces précises, leur prix et leur boutique restent « à confirmer » tant que Rockstar ne les a pas publiés.",
+      "planches": [
+        {
+          "id": "imprimes-stock-305",
+          "titre": "Imprimés et couleurs vives",
+          "lieu": "Stock 305",
+          "entreprise": "entreprises/stock-305.html",
+          "medias": [
+            "stock-305-clothing-store-04",
+            "stock-305-clothing-store-01",
+            "stock-305-clothing-store-03"
+          ],
+          "vu": [
+            "Bustier noir zippé, jupe en jean effilochée et lunettes de soleil derrière le comptoir",
+            "Manteau à motif léopard sur un haut rose, devant un van peint en noir et blanc",
+            "Façade couverte de fresques : rose, turquoise, jaune, noir et blanc"
+          ],
+          "couleurs": [
+            "#1A1A1E",
+            "#E0569A",
+            "#2BB3B1",
+            "#F2C230",
+            "#F4F0E7"
+          ]
+        },
+        {
+          "id": "jason-lucia-dehors",
+          "titre": "Jason et Lucia, en ville",
+          "lieu": "Visuels officiels",
+          "medias": [
+            "ultimate-edition-02",
+            "jason-and-lucia-09"
+          ],
+          "vu": [
+            "Lucia en veste de cuir marron sur une robe courte assortie ; Jason en chemise ouverte à motif floral clair et lunettes de soleil",
+            "À moto : débardeur blanc imprimé et short cargo pour Jason, débardeur gris pour Lucia"
+          ],
+          "couleurs": [
+            "#7A4A2C",
+            "#EDE3CF",
+            "#8FB48A",
+            "#FFFFFF",
+            "#6E6E6E"
+          ]
+        },
+        {
+          "id": "couleurs-vice-city",
+          "titre": "Soleil et néon",
+          "lieu": "Visuels officiels",
+          "medias": [
+            "vintage-vice-city-pack-exclusive-looks-03",
+            "lucia-caminos-02",
+            "jason-duval-06"
+          ],
+          "vu": [
+            "Chemise bleu clair ouverte et lunettes aux verres teintés roses, sur fond violet et palmiers (visuel du Vintage Vice City Pack)",
+            "Lunettes aviateur, créoles et chignon au bord d’une piscine",
+            "Casquette, débardeur gris, chaîne dorée et montre au comptoir d’un bar"
+          ],
+          "couleurs": [
+            "#8AB6E0",
+            "#E48BB8",
+            "#6B3FA0",
+            "#C9A13B",
+            "#8C8C8C"
+          ]
+        },
+        {
+          "id": "coiffures-salon",
+          "titre": "Coupes du salon",
+          "lieu": "Sara’s Unisex Salon",
+          "entreprise": "entreprises/saras-unisex-salon.html",
+          "medias": [
+            "sara-s-unisex-salon-02",
+            "sara-s-unisex-salon-01",
+            "sara-s-unisex-salon-03"
+          ],
+          "vu": [
+            "Coupe mulet aux mèches décolorées et barbe de quelques jours",
+            "Blouson noir à bandes blanches, pantalon large et lunettes noires",
+            "Queue de cheval haute, lunettes bleues rectangulaires et haut à motif"
+          ],
+          "couleurs": [
+            "#D9C9A8",
+            "#1A1A1E",
+            "#2F5DA8",
+            "#C8C8C8",
+            "#6E4B2A"
+          ]
+        },
+        {
+          "id": "tatouages-neon",
+          "titre": "Encre et néon",
+          "lieu": "Electric Fang Tattoo",
+          "entreprise": "entreprises/electric-fang.html",
+          "medias": [
+            "electric-fang-tattoo-04",
+            "electric-fang-tattoo-02",
+            "electric-fang-tattoo-03"
+          ],
+          "vu": [
+            "Grand tatouage qui couvre le haut du dos",
+            "Bras tatoués, cagoule blanche et baskets aux motifs colorés dans le fauteuil",
+            "Cheveux platine coupés court, lunettes noires et néon rouge de l’enseigne"
+          ],
+          "couleurs": [
+            "#D7263D",
+            "#8E2F9E",
+            "#F4F0E7",
+            "#1A1A1E",
+            "#E8E8E8"
+          ]
+        }
+      ]
+    }
   },
   "boats": {
     "nav": [

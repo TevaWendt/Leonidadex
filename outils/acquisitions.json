@@ -218,7 +218,9 @@
       "acquisition": "edition-bonus",
       "condition": "Collection de l’Édition Ultimate",
       "description": "Une sélection de tenues et de tatouages pour les deux protagonistes. Le détail des pièces n’est pas publié.",
-      "media": [],
+      "media": [
+        "ultimate-edition-02"
+      ],
       "trackable": false,
       "calculatorCompatible": false,
       "price": null
@@ -248,7 +250,9 @@
       "acquisition": "preorder-bonus",
       "condition": "Pack Vintage Vice City",
       "description": "Costume pastel en lin et coiffure rétro pour Jason ; mini-robe rouge à sequins et cheveux bouclés pour Lucia. Ces descriptions ne sont pas des noms de produits inventés.",
-      "media": [],
+      "media": [
+        "vintage-vice-city-pack-exclusive-looks-03"
+      ],
       "trackable": false,
       "calculatorCompatible": false,
       "price": null

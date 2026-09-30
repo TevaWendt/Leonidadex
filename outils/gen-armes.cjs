@@ -22,7 +22,16 @@ const PERSO_COVER=require('./catalogues.cjs').coverage('perso-armes');
 const VIDE_TXT='Schéma indicatif du type d’arme. Les visuels officiels détaillés arriveront avec le jeu.';
 const PERSO_NOM=Object.fromEntries(JSON.parse(fs.readFileSync('outils/editorial.json','utf8')).characters.map(c=>[c.id,c.name.split(' ')[0]]));
 /* armureries repérées sur la carte : mêmes liens sur toutes les fiches, comme les concessions sur les fiches véhicules */
-const CARTE='<section class="shell reveal" id="carte">\n  <h2 class="sec-h">Sur la carte de Leonida</h2>\n  <p class="fiche-txt rise">Les armureries repérées sur notre carte. Les emplacements et prix de chaque arme seront ajoutés après la sortie.</p>\n  <div class="fiche-liens rise"><a href="../carte.html#lieu=g-L1074">Phil’s Ammu-Nation</a><a href="../carte.html#lieu=g-L1091">Ammu-Nation de Rockridge</a><a href="../carte.html#lieu=g-L298">Pawn &amp; Gun, Port Gellhorn</a></div>\n</section>';
+/* v7.50 (lot 3) : « Sur la carte de Leonida » devient un localisateur illustré (carte cadrée, repères numérotés, résumé,
+   lieux en texte) ; l’emplacement de l’arme reste « Emplacement à venir ». La silhouette vient d’un fichier commun. */
+const LOC=require('./localisateur.cjs'),FD=require('./fiche-doc.cjs'),MODEL=require('../calculateurs-modele.js');
+LOC.writeSprite();
+const carteOf=a=>'<section class="shell reveal" id="carte">\n  <h2 class="sec-h">Sur la carte de Leonida</h2>\n  <p class="fiche-txt rise">Les armureries repérées sur notre carte. L’emplacement et le prix de cette arme seront ajoutés quand Rockstar les publiera.</p>\n  '
+ +LOC.single({item:LOC.weaponItem(a,'../',(id,h)=>schema(id,h)),places:LOC.data().placesA,prefix:'../',sprite:'../'+LOC.SPRITE,caption:'Armureries repérées sur notre carte : pas un point de vente confirmé pour cette arme.',placesTitle:'Armureries repérées',mapLabel:'Carte de Leonida : armureries repérées'})+'\n</section>';
+/* Fiche documentaire : structure du modèle commun ; seules les données déjà sur la fiche sont remplies, avec leur statut. */
+const docCol=a=>{const V=MODEL.V,known=MODEL.fromWeapon(a);known.acquisition=a.ue?V.official('Une version est offerte avec l’édition Ultimate'):V.unknown();known.location=V.unknown();
+ if(a.slot==='longue')known.restrictions=V.official('Deux armes longues au plus sur toi : une dans le dos, une en main (Extended Look).');
+ return '<div class="fiche-col reveal">\n    <h2 class="sec-h">Fiche documentaire</h2>\n    '+FD.render('weapon',known,{level:3,lead:'Ce qui n’est pas encore publié garde son état : « Prix à venir », « Achat à confirmer », « à confirmer ». Rien n’est inventé.'})+'\n  </div>\n\n</section>';};
 const esc=s=>String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#x27;');
 const dec=s=>String(s).replace(/&quot;/g,'"').replace(/&#(?:39|x27);/g,"'").replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&');
 const ST={officiel:{chip:'Officielle',l:'Nommée par Rockstar',card:'Officielle'},vu:{chip:'Aperçue',l:'Vue dans un média officiel',card:'Aperçue'}};
@@ -47,7 +56,6 @@ const between=(re)=>{const m=BASE.match(re);if(!m)throw new Error('gabarit : '+
 const HEAD_TOP=between(/<meta name="theme-color"[\s\S]*?<link rel="icon"[^>]*>\n/);
 const HEADER=between(/<a class="skip"[\s\S]*?<main id="main">/);
 const FCOUNT=between(/<div class="fcount">[\s\S]*?<\/div>\n<\/div>/);
-const PENDING=between(/<div class="fiche-col reveal">\s*<h2 class="sec-h">Ce qui arrive avec le jeu<\/h2>[\s\S]*?<\/div>\n\n<\/section>/);
 const NOTE=between(/<section class="shell">\s*<div class="note-box rise">[\s\S]*?<\/section>/);
 const FOOTER=between(/<footer>[\s\S]*?<\/body>\n<\/html>/);
 
@@ -140,7 +148,7 @@ ${rows.map(([k,v])=>'        <tr><th scope="row">'+k+'</th><td>'+v+'</td></tr>')
     </table>
   </div>
 
-  ${PENDING}
+  ${docCol(a)}
 
 <section class="shell reveal">
   <h2 class="sec-h">${esc(red.h2[0])}</h2>
@@ -157,7 +165,7 @@ ${meds.length?`<section class="shell reveal" id="apercus">
   <div class="lore-gallery-grid rise">${meds.map(m=>'<a class="apercu" href="'+medBig(m).src+'" target="_blank" rel="noopener" aria-label="Agrandir : '+esc(m.titre)+'"><img src="'+m.variants[0].src+'" srcset="'+medSrcset(m)+'" sizes="(max-width:700px) 100vw, 560px" width="'+m.variants[0].w+'" height="'+m.variants[0].h+'" alt="'+esc(medAlt(a,m))+'" loading="lazy" decoding="async"></a>').join('')}</div>
 </section>`:''}
 
-${CARTE}
+${carteOf(a)}
 
 ${NOTE}
 
@@ -188,7 +196,7 @@ A.forEach((a,i)=>fs.writeFileSync('armes/'+a.id+'.html',fiche(a,i)));
 const search=a=>[a.nom,a.fr,a.insp,CATL[a.cat]].filter(Boolean).join(' ').toLowerCase();
 function card(a){const meds=medList(a);
  const thumb=art(a,90);
- return '<article class="veh-card rise arm-card" data-id="'+a.id+'" data-cat="'+a.cat+'" data-slot="'+a.slot+'" data-st="'+a.st+'" data-search="'+esc(search(a))+'"><a class="veh-link" href="armes/'+a.id+'.html"><div class="veh-thumb veh-thumb--arm veh-thumb--'+a.cat+'"><span class="veh-badge">'+esc(CATL[a.cat])+'</span>'+thumb+'<span class="arm-slot arm-slot--'+a.slot+'">'+(a.slot==='longue'?'Longue':'Poing')+'</span></div><div class="veh-body"><span class="veh-st veh-st--'+a.st+'">'+ST[a.st].card+'</span><h3>'+esc(a.nom)+'</h3>'+(a.insp?'<p class="veh-insp">Inspiration&nbsp;: <span>'+esc(a.insp)+'</span></p>':a.fam?'<p class="veh-insp veh-insp--fam">Famille&nbsp;: <span>'+esc(a.fam)+'</span></p>':'')+'<span class="veh-go">Voir la fiche</span></div></a></article>';}
+ return '<article class="veh-card rise arm-card" data-id="'+a.id+'" data-cat="'+a.cat+'" data-slot="'+a.slot+'" data-st="'+a.st+'" data-search="'+esc(search(a))+'"><a class="veh-link" href="armes/'+a.id+'.html"><div class="veh-thumb veh-thumb--arm veh-thumb--'+a.cat+'"><span class="veh-badge">'+esc(CATL[a.cat])+'</span>'+thumb+'<span class="arm-slot arm-slot--'+a.slot+'">'+(a.slot==='longue'?'Longue':'Poing')+'</span></div><div class="veh-body"><span class="veh-st veh-st--'+a.st+'">'+ST[a.st].card+'</span><h3>'+esc(a.nom)+'</h3>'+(a.insp?'<p class="veh-insp">Inspiration&nbsp;: <span>'+esc(a.insp)+'</span></p>':a.fam?'<p class="veh-insp veh-insp--fam">Famille&nbsp;: <span>'+esc(a.fam)+'</span></p>':'')+'<p class="veh-doc"><span>Prix à venir</span><span>Munitions : '+esc((a.mun||'à confirmer').replace(/^Munitions de /,'').replace(/^Munitions d’/,''))+'</span></p><span class="veh-go">Voir la fiche</span></div></a></article>';}
 const nSt={officiel:0,vu:0};A.forEach(a=>nSt[a.st]++);
 const nSlot={longue:0,poing:0};A.forEach(a=>nSlot[a.slot]++);
 const nCat={};A.forEach(a=>nCat[a.cat]=(nCat[a.cat]||0)+1);

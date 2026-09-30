@@ -59,6 +59,7 @@ function carte(v){
   +'<span class="veh-marque">'+esc(v.marque||'Marque inconnue')+'</span><h3>'+esc(v.nom)+'</h3>'
   +(v.insp?'<p class="veh-insp">Inspiration&nbsp;: <span>'+esc(v.insp)+'</span></p>'
     :v.fam?'<p class="veh-insp veh-insp--fam">Famille&nbsp;: <span>'+esc(v.fam)+'</span></p>':'')
+  +'<p class="veh-doc"><span>Prix à venir</span><span>'+(v.cat==='service'?'Achat à confirmer':'Emplacement à venir')+'</span></p>'
   +'<span class="veh-go">Voir la fiche</span></div></a>';
 }
 let H=hub0;
@@ -172,7 +173,15 @@ const MOD=fs.readFileSync('outils/templates/vehicle-reference.html','utf8');
 const HEADER=MOD.match(/<a class="skip"[\s\S]*?<main id="main">/)[0];
 const FOOTER=MOD.match(/<footer>[\s\S]*?<\/body>/)[0];
 const FAV=MOD.match(/<link rel="icon"[^>]*>/)[0];
-const CARTE='<div class="fiche-liens rise"><a href="../carte.html#lieu=g-L1610">Vapid Dealership</a><a href="../carte.html#lieu=g-L2375">Rideout Customs</a><a href="../carte.html#lieu=g-L590">Ambrosia Raceway Park</a></div>';
+/* v7.50 (lot 3) : localisateur illustré (lieux liés au type du véhicule, jamais un emplacement inventé) et fiche
+   documentaire (modèle commun : prix, achat, obtention, performances, capacités, coûts d’usage). */
+const LOC=require('./localisateur.cjs'),FD=require('./fiche-doc.cjs'),MODEL=require('../calculateurs-modele.js');
+LOC.writeSprite();
+const V_CARTE_TYPE={bateau:'Les marinas repérées sur notre carte. Où trouver ce bateau exactement, nous le saurons à la sortie.',avion:'Les aérodromes repérés sur notre carte. Où trouver cet appareil exactement, nous le saurons à la sortie.',helicoptere:'Les aérodromes repérés sur notre carte. Où trouver cet appareil exactement, nous le saurons à la sortie.',service:'Aucun lieu d’achat n’est repéré pour les véhicules de service, et rien ne dit qu’ils s’achètent.'};
+const carteV=v=>(V_CARTE_TYPE[v.cat]||pioche(v.id,'carte',V_CARTE))+'</p>\n  '+LOC.single({item:LOC.vehicleItem(v,'../'),places:LOC.data().placesV,prefix:'../',sprite:'../'+LOC.SPRITE,caption:'Lieux de notre carte liés à ce type de véhicule : pas un emplacement confirmé.',placesTitle:'Lieux liés sur notre carte',mapLabel:'Carte de Leonida : lieux liés à ce véhicule'});
+const EDV={'Ultimate Edition':'Offert avec l’édition Ultimate','Pre-Order':'Offert avec la précommande'};
+const docV=v=>{const V=MODEL.V,known=MODEL.fromVehicle(v);known.acquisition=v.edition&&EDV[v.edition]?V.official(EDV[v.edition]):V.unknown();known.location=V.unknown();
+ return FD.render('vehicle',known,{level:3,lead:'Ce qui n’est pas encore publié garde son état : rien n’est inventé, et les coûts d’usage ne sont pas des mécaniques confirmées.'});};
 const NOTE=MOD.match(/<div class="note-box rise">[\s\S]*?<\/div>/)[0];
 const V_NOTE=[
  "Les inspirations réelles sont des rapprochements établis à partir des visuels officiels, pas des informations communiquées par Rockstar. Aucune donnée issue de fuites n’est utilisée ici.",
@@ -309,12 +318,11 @@ ${HEADER}
     </table>
   </div>
   <div class="fiche-col reveal">
-    <h2 class="sec-h">Ce qui arrive avec le jeu</h2>${pend(v)}</div>
+    <h2 class="sec-h">Fiche documentaire</h2>${docV(v)}</div>
 </section>
 <section class="shell reveal" id="carte">
   <h2 class="sec-h">Sur la carte de Leonida</h2>
-  <p class="fiche-txt rise">${esc(pioche(v.id,'carte',V_CARTE))}</p>
-  ${CARTE}
+  <p class="fiche-txt rise">${esc(carteV(v).split('</p>')[0])}</p>${carteV(v).slice(carteV(v).indexOf('</p>')+4)}
 </section>
 <section class="shell">
   ${note(v)}

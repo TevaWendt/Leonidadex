@@ -8,8 +8,11 @@
   while(ids.length<3)ids.push('');
   const statuses={officiel:'Nommé par Rockstar',vu:'Vu dans un support officiel',comm:'Identification communautaire'};
   const name=x=>(x.marque && x.marque!=='Marque inconnue'?x.marque+' ':'')+x.nom;
-  const waiting='Donnée non encore publiée';
-  const fields=[...(type==='vehicules'?[['Constructeur',x=>x.marque]]:[]),['Catégorie',x=>cats[x.cat]],['Statut',x=>statuses[x.st]],['Source',x=>x.src],['Inspiration réelle',x=>x.insp||x.fam],...(type==='armes'?[['Emplacement',x=>x.slot==='longue'?'Arme longue':'Arme de poing'],['Portée estimée',x=>x.portee],['Munitions',x=>x.mun],['Édition Ultimate',x=>x.ue?'Oui':'Non indiquée']]:[['Édition',x=>x.edition==='Pre-Order'?'Bonus de précommande':x.edition||'Standard']]),...(type==='armes'?['Dégâts','Cadence','Précision']:['Vitesse de pointe','Accélération','Prix']).map(x=>[x,()=>waiting])];
+  const waiting='À confirmer';
+  /* v7.50 (lot 3) : mêmes états vides que les fiches documentaires (modèle commun) : « Prix à venir », « Achat à confirmer »,
+     « Emplacement à venir », coûts d’usage « mécanique non confirmée » ; le terrain est déduit du type et dit comme tel. */
+  const terrain=x=>x.cat==='bateau'?'Eau (déduit du type)':x.cat==='avion'||x.cat==='helicoptere'?'Air (déduit du type)':'Route (déduit du type)';
+  const fields=[...(type==='vehicules'?[['Constructeur',x=>x.marque]]:[]),['Catégorie',x=>cats[x.cat]],['Statut',x=>statuses[x.st]],['Source',x=>x.src],['Inspiration réelle',x=>x.insp||x.fam],...(type==='armes'?[['Où elle se porte',x=>x.slot==='longue'?'Arme longue':'Arme de poing'],['Portée estimée',x=>x.portee],['Munitions',x=>x.mun],['Édition Ultimate',x=>x.ue?'Oui':'Non indiquée']]:[['Édition',x=>x.edition==='Pre-Order'?'Bonus de précommande':x.edition||'Standard']]),['Prix',()=>'Prix à venir'],['Achetable',()=>'Achat à confirmer'],['Où la trouver'.replace('la',type==='armes'?'la':'le'),()=>'Emplacement à venir'],...(type==='armes'?[['Coût des munitions',()=>'Mécanique non confirmée'],...['Dégâts','Cadence','Précision'].map(x=>[x,()=>waiting])]:[['Terrain',terrain],['Coûts d’usage (carburant, entretien)',()=>'Mécanique non confirmée'],...['Vitesse de pointe','Accélération','Places'].map(x=>[x,()=>waiting])])];
   document.getElementById('cmp-type-lbl').textContent='Comparateur · '+type;
   document.getElementById('cmp-back').href=type+'.html';
   const sw=document.getElementById('cmp-switch');sw.textContent=type==='armes'?'Passer aux véhicules':'Passer aux armes';sw.href='comparateur.html?type='+(type==='armes'?'vehicules':'armes');
@@ -25,7 +28,7 @@
     const calculatorLink = document.getElementById('cmp-calculator-link');
     if (calculator && calculatorLink) {
       calculator.hidden = cols.length === 0;
-      const calculatorQuery = new URLSearchParams({ tool: 'purchase', type, ids: ids.filter(Boolean).join(','), from: 'comparateur' });
+      const calculatorQuery = new URLSearchParams({ tool: 'compare', type, ids: ids.filter(Boolean).join(','), from: 'comparateur' });
       calculatorLink.href = 'calculateurs.html?' + calculatorQuery.toString() + '#atelier';
     }
     const query=new URLSearchParams({type});if(ids.some(Boolean))query.set('ids',ids.filter(Boolean).join(','));history.replaceState(null,'','comparateur.html?'+query.toString());

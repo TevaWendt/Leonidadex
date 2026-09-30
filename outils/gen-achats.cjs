@@ -21,6 +21,10 @@ const vehicles = ctx.window.LK_VEHICULES || [], weapons = ctx.window.LK_ARMES ||
 const aircraft = vehicles.filter(v => ['avion', 'helicoptere'].includes(v.cat)).length;
 const boats = vehicles.filter(v => v.cat === 'bateau').length;
 const count = (list, id) => (acq.items || []).filter(x => x.category === id && x.trackable).length;
+/* v7.50 (lot 3) : comptes justes (anomalie 16) : lignes des listes documentées (outils/catalogues/*.json). */
+const CAT = require('./catalogues.cjs');
+const lines = fams => fams.reduce((n, f) => n + CAT.counts(f).n, 0);
+const nConso = lines(['consommables']), nStyle = lines(['coiffures', 'tatouages', 'tenues']), nPerso = lines(['perso-vehicules', 'perso-armes']);
 /* Trois statuts, toujours dits en clair. */
 const STATUS = {
   listed: ['Recensé sur le site', 'fiches déjà en ligne, prix pas encore connus'],
@@ -30,9 +34,9 @@ const STATUS = {
 const cards = [
   { label: 'Véhicules', href: 'vehicules.html', status: 'listed', n: vehicles.length, unit: 'fiches', desc: fill(hubDesc('vehicules'), { n: vehicles.length, nOfficiel: vehicles.filter(v => v.st === 'officiel').length }), actions: [['vehicules.html', 'Cocher mon garage'], ['comparateur.html?type=vehicules', 'Comparer'], ['calculateurs.html?tool=purchase&from=achats#atelier', 'Simuler un achat']], text: 'Voitures, motos, camions, aéronefs et bateaux recensés, avec un schéma ou une photo officielle par fiche.' + (aircraft ? ' ' + aircraft + ' aéronefs et ' + boats + ' embarcations inclus.' : '') },
   { label: 'Armurerie', href: 'armes.html', status: 'listed', n: weapons.length, unit: 'armes', desc: fill(hubDesc('armes'), { n: weapons.length, nOfficiel: weapons.filter(a => a.st === 'officiel').length }), actions: [['armes.html#catalogue', 'Cocher mon arsenal'], ['armes.html#equipement', 'Composer mon chargement']], text: 'Les armes identifiées, le constructeur d’équipement, les gadgets et les types de munitions, au même endroit. Aucun prix publié.' },
-  { label: 'Consommables', href: 'nourriture.html', status: 'shown', n: 0, unit: '', desc: catDesc('nourriture'), actions: [['nourriture.html', 'Lire les repères'], ['calculateurs.html?tool=budget&from=achats#atelier', 'Prévoir un budget']], text: 'Manger, boire, se soigner pour récupérer de la vie : ce que la série fait déjà, ce que l’Extended Look montre, et où on s’attend à en trouver.' },
-  { label: 'Vêtements et style', href: 'style.html', status: 'shown', n: (acq.items || []).filter(x => x.category === 'style').length, unit: 'collections', desc: catDesc('style'), actions: [['style.html#collections', 'Voir les collections'], ['style.html', 'Voir les adresses']], text: 'Tenues, accessoires, tatouages et coiffures : les collections annoncées et les adresses de Sara’s Unisex Salon, Stock 305 et Electric Fang Tattoo.' },
-  { label: 'Personnalisations', href: 'personnalisations.html', status: count(acq, 'customizations') ? 'shown' : 'pending', n: count(acq, 'customizations'), unit: 'documentées', desc: catDesc('customizations'), actions: [['personnalisations.html', 'Cocher ce qui est documenté'], ['entreprises.html', 'Voir les ateliers']], text: 'Kits de véhicules et motifs d’armes décrits par Rockstar, et les ateliers Rideout Customs et One-Eyed Willie’s.' },
+  { label: 'Consommables', href: 'nourriture.html', status: 'shown', n: nConso, unit: 'lignes documentées', desc: catDesc('nourriture'), actions: [['nourriture.html', 'Lire les repères'], ['calculateurs.html?tool=budget&from=achats#atelier', 'Prévoir un budget']], text: 'Manger, boire, se soigner pour récupérer de la vie : ce que la série fait déjà, ce que l’Extended Look montre, et où on s’attend à en trouver.' },
+  { label: 'Vêtements et style', href: 'style.html', status: 'shown', n: nStyle, unit: 'lignes documentées', desc: catDesc('style'), actions: [['style.html#collections', 'Voir les collections'], ['style.html', 'Voir les adresses']], text: 'Tenues, accessoires, tatouages et coiffures : les collections annoncées et les adresses de Sara’s Unisex Salon, Stock 305 et Electric Fang Tattoo.' },
+  { label: 'Personnalisations', href: 'personnalisations.html', status: count(acq, 'customizations') ? 'shown' : 'pending', n: nPerso, unit: 'lignes documentées', desc: catDesc('customizations'), actions: [['personnalisations.html', 'Cocher ce qui est documenté'], ['entreprises.html', 'Voir les ateliers']], text: 'Kits de véhicules et motifs d’armes décrits par Rockstar, et les ateliers Rideout Customs et One-Eyed Willie’s.' },
   { label: 'Entreprises', href: 'entreprises.html', status: 'listed', n: (ed.businesses || []).length, unit: 'fiches', desc: hubDesc('entreprises'), actions: [['entreprises.html', 'Voir les fiches'], ['calculateurs.html?tool=roi&from=achats#atelier', 'Ça vaut le coup ?']], text: 'Les commerces présentés par Rockstar. Leur achat dans le jeu n’est pas confirmé : le calculateur « Ça vaut le coup ? » sert à tester ton hypothèse.' },
   { label: 'Demeures', href: 'demeures.html', status: 'listed', n: (ed.residences || []).length, unit: 'fiches', desc: hubDesc('demeures'), actions: [['demeures.html', 'Voir les fiches'], ['carte.html', 'Ouvrir la carte']], text: 'Où vivent les personnages, d’après ce que Rockstar a montré.' },
   { label: 'Planques et garages', href: 'planques.html#garages', status: count(acq, 'garages') ? 'shown' : 'listed', n: (ed.hideouts || []).length + count(acq, 'garages'), unit: 'fiches', desc: catDesc('garages'), actions: [['planques.html#garages', 'Cocher les garages'], ['planques.html', 'Voir les planques']], text: 'Les repaires vus dans les médias et les garages décrits avec les éditions (Paradise, Shore Court).' },
@@ -40,13 +44,43 @@ const cards = [
   { label: 'Bateaux', href: 'bateaux.html', status: count(acq, 'boats') ? 'shown' : 'pending', n: count(acq, 'boats'), unit: 'documentés', desc: catDesc('boats'), actions: [['bateaux.html', 'Cocher les bateaux'], ['vehicules.html#bateau', 'Catalogue Véhicules']], text: 'Les embarcations dont Rockstar décrit l’obtention (Édition Ultimate), reliées aux fiches Véhicules.' },
   { label: 'Collectibles', href: 'collectibles.html', status: 'pending', n: null, unit: '', desc: hubDesc('collectibles'), actions: [['collectibles.html', 'Voir le catalogue'], ['progression.html#collectibles', 'Mon carnet']], text: 'Le suivi est prêt ; aucun objet à collectionner n’est actuellement publié dans le catalogue. Cette section ne constitue pas une catégorie d’achat.' }
 ];
+/* v7.50 (lot 3) : un visuel officiel par catégorie (mêmes images que les bandeaux des sections). Une catégorie sans
+   donnée confirmée garde une illustration dite comme telle : l’image ne prouve pas qu’un objet s’achète. */
+const MED = JSON.parse(read('outils/medias-officiels.json'));
+const VIS = {
+  'Véhicules': ['95-grotti-cheetah-01', 'Grotti Cheetah blanche devant un hôtel Art déco'],
+  'Armurerie': ['hawk-little-morgan-revolvers-01', 'Revolver à lunette tenu à la main'],
+  'Consommables': ['leonida-keys-03', 'Terrasse du bar The Rusty Anchor, dans les Keys'],
+  'Vêtements et style': ['stock-305-clothing-store-04', 'Vendeuse de Stock 305 derrière le comptoir'],
+  'Personnalisations': ['rideout-customs-mod-shop-01', 'Berline à jantes dorées devant Rideout Customs'],
+  'Entreprises': ['ptt-youngin-illegal-goods-store', 'Devant la boutique PTT Youngin$'],
+  'Demeures': ['cal-hampton-01', 'Cal Hampton devant un décor de minigolf'],
+  'Planques et garages': ['jason-s-safehouse-vehicles', 'Maison sur pilotis de Jason dans les Keys'],
+  'Logements et appartements': ['port-gellhorn-01', 'Enseigne d’un motel de Port Gellhorn au crépuscule'],
+  'Bateaux': ['shitzu-squalo-01', 'Hors-bord Squalo devant la skyline de Vice City'],
+  'Collectibles': ['classic-car-collection-04', 'Voiture de course rouge numéro 36']
+};
+const slug = s => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+function visual(c) {
+  const v = VIS[c.label]; if (!v) throw Error('Visuel absent pour la catégorie ' + c.label);
+  const m = MED[v[0]]; if (!m) throw Error('Visuel officiel inconnu : ' + v[0]);
+  const s = m.variants.find(x => x.w === 480), l = m.variants.find(x => x.w === 1280);
+  for (const x of [s, l]) if (!x || !fs.existsSync(path.join(root, x.src.replace(/^\//, '')))) throw Error('Fichier absent : ' + v[0]);
+  const note = c.status === 'pending' ? 'Illustration : rien de confirmé à acheter dans cette catégorie' : 'Visuel officiel Rockstar Games';
+  return '<figure class="ak-media"><img src="' + s.src.replace(/^\//, '') + '" srcset="' + s.src.replace(/^\//, '') + ' 480w, ' + l.src.replace(/^\//, '') + ' 1280w" sizes="(max-width:760px) 100vw, 46vw" width="' + s.w + '" height="' + s.h + '" alt="' + esc(v[1]) + '" loading="lazy" decoding="async"><figcaption>' + esc(note) + '</figcaption></figure>';
+}
 const base = read('a-propos.html'), header = base.match(/<header>[\s\S]*?<\/header>/)[0].replace(/ class="here"/g, ''), footer = base.match(/<footer>[\s\S]*?<\/footer>/)[0];
 const favicon = base.match(/<link rel="icon"[^>]*>/)[0];
-const grid = cards.map(c => `<article class="d-card ak-card lk-arrive is-${c.status}" data-d-reveal>
- <div class="d-card-body"><p class="d-label">${esc(STATUS[c.status][0])}</p><h3><a href="${c.href}">${esc(c.label)}</a></h3>
+/* v7.50 (lot 3) : succession verticale au défilement. Chaque carte monte depuis le bas et vient se poser sur la
+   précédente (position collante, une seule direction) ; la précédente s’atténue un peu. Piloté par le défilement du
+   navigateur (achats-pile.js ne fait que doser l’atténuation et la netteté de l’image) ; remonter revisite les cartes.
+   Mouvement réduit, écran bas ou choix « Tout voir en grille » : grille statique, mêmes cartes, mêmes liens. */
+const grid = cards.map((c, i) => `<li class="ak-slot" id="ak-${slug(c.label)}" style="--i:${i}"><article class="d-card ak-card is-${c.status}">${visual(c)}
+ <div class="d-card-body"><p class="d-label"><span class="ak-num">${String(i + 1).padStart(2, '0')}</span> ${esc(STATUS[c.status][0])}</p><h3><a href="${c.href}">${esc(c.label)}</a></h3>
  <p class="ak-count">${c.n === null ? 'Suivi dans la progression' : c.n ? c.n + ' ' + esc(c.unit) : 'Rien de publié pour l’instant'}</p>
  <p class="ak-desc">${esc(c.desc)}</p><p class="ak-do"><span>Ici tu peux :</span> ${c.actions.map(([h, l]) => '<a href="' + esc(h) + '">' + esc(l) + '</a>').join('')}</p><p class="d-status">${esc(STATUS[c.status][1])}</p>
- <div class="d-actions"><a href="${c.href}">Ouvrir la section</a></div></div></article>`).join('\n');
+ <div class="d-actions"><a href="${c.href}">Ouvrir la section</a></div></div></article></li>`).join('\n');
+const jump = '<nav class="ak-jump" aria-label="Aller directement à une catégorie">' + cards.map(c => '<a href="#ak-' + slug(c.label) + '">' + esc(c.label) + '</a>').join('') + '</nav>';
 const faq = EDITO.faq;
 /* v7.40 : bloc éditorial sous la grille (sections du lot 3), visible sans JS. Les sources citées sont celles
    d'acquisitions.json (URL, titre, date de consultation). */
@@ -74,11 +108,11 @@ ${favicon}
 <body class="d-page"><a class="skip" href="#main">Aller au contenu</a><div class="sunset" aria-hidden="true"></div>${header}<main id="main" class="lore-page">
 <section class="page-head shell lk-glow"><div class="lk-head-grid"><div><p class="fiche-cat">GTA VI · tout ce qui s’achète</p><h1>Tout ce qui s’achète dans GTA VI</h1><p class="lede ak-intro">Voitures, armes, vêtements, logements, munitions, consommables : explore les catégories recensées et les acquisitions documentées, section par section. Une fiche ou une catégorie ne prouve pas qu’un achat sera possible. Pour chaque catégorie, tu vois ce que le site recense déjà, ce que Rockstar a montré, et ce qui attend encore de vraies données.</p><p class="d-intro-note">Aucun prix séparé en jeu n’est vérifié dans le catalogue actuel. La sortie est annoncée le 19 novembre 2026. « À confirmer » signale une donnée absente ; ce n’est pas une promesse d’achat futur. <a href="tuto.html#sources">Comprendre les statuts</a>.</p>
 <div class="ak-legend" aria-label="Légende des statuts"><span class="l1"><i aria-hidden="true"></i>Recensé sur le site</span><span class="l2"><i aria-hidden="true"></i>Montré par Rockstar</span><span class="l3"><i aria-hidden="true"></i>À confirmer</span></div></div>${visuals.stack('achats',{label:'Trois visuels officiels d’achats montrés par Rockstar'})}</div></section>
-<section class="shell d-section" id="categories" aria-labelledby="categories-title"><h2 id="categories-title">${cards.length} catégories, une section pour chacune</h2><div class="d-grid ak-grid">${grid}</div></section>
+<section class="shell d-section" id="categories" aria-labelledby="categories-title"><h2 id="categories-title">${cards.length} catégories, une section pour chacune</h2><p class="ak-lead">Descends : chaque catégorie arrive à son tour, avec ce que tu peux y faire. Pressé ? Va directement à celle qui t’intéresse.</p>${jump}<p class="ak-view"><button type="button" class="ak-view-btn" data-ak-view aria-pressed="false" hidden>Tout voir en grille</button></p><ol class="ak-stack" data-ak-stack>${grid}</ol></section>
 ${edito}
 ${S.section({ id: 'faq', kicker: 'Questions', title: 'Questions fréquentes', icon: 'faq', tone: 'paper' }, '<p>Des réponses courtes, avec des mots simples.</p><div class="faq rise">' + faq.map(([q, a]) => '<details><summary>' + esc(q) + '</summary><div class="ans">' + esc(a) + '</div></details>').join('') + '</div>')}
 </main>${footer}
-<script src="search-index.js"></script><script src="assets-manifest.js"></script><script src="common.js"></script><script src="app.js"></script><script src="learning-motion.js"></script>
+<script src="search-index.js"></script><script src="assets-manifest.js"></script><script src="common.js"></script><script src="app.js"></script><script src="learning-motion.js"></script><script src="achats-pile.js"></script>
 </body></html>
 `;
 fs.writeFileSync(path.join(root, 'achats.html'), page);

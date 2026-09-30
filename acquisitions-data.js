@@ -353,14 +353,37 @@ window.LK_ACQUISITIONS = {
       "acquisition": "edition-bonus",
       "condition": "Collection de l’Édition Ultimate",
       "description": "Une sélection de tenues et de tatouages pour les deux protagonistes. Le détail des pièces n’est pas publié.",
-      "media": [],
+      "media": [
+        "ultimate-edition-02"
+      ],
       "trackable": false,
       "calculatorCompatible": false,
       "price": null,
       "type": "style",
       "url": "/style.html#style-vice-city",
       "hubUrl": "/style.html#style-vice-city",
-      "images": [],
+      "images": [
+        {
+          "id": "ultimate-edition-02",
+          "titre": "Édition Ultimate 02",
+          "alt": "Jason et Lucia devant le coupé vert rapproché d’un Kellison J4 dans le visuel Ultimate Edition",
+          "source": "https://www.rockstargames.com/VI/media/screenshots",
+          "original": "https://www.rockstargames.com/VI/_next/static/media/ULTIMATE_EDITION_02.0q-6.nrtf~jj0.jpg?akim=1&imdensity=1&imwidth=1920",
+          "credit": "© Rockstar Games / Take-Two Interactive",
+          "variants": [
+            {
+              "src": "/img/officiel/ultimate-edition-02-480.webp",
+              "w": 480,
+              "h": 270
+            },
+            {
+              "src": "/img/officiel/ultimate-edition-02-1280.webp",
+              "w": 1280,
+              "h": 720
+            }
+          ]
+        }
+      ],
       "source": "https://www.rockstargames.com/VI",
       "verifiedAt": "2026-09-23",
       "status": "official",
@@ -399,14 +422,37 @@ window.LK_ACQUISITIONS = {
       "acquisition": "preorder-bonus",
       "condition": "Pack Vintage Vice City",
       "description": "Costume pastel en lin et coiffure rétro pour Jason ; mini-robe rouge à sequins et cheveux bouclés pour Lucia. Ces descriptions ne sont pas des noms de produits inventés.",
-      "media": [],
+      "media": [
+        "vintage-vice-city-pack-exclusive-looks-03"
+      ],
       "trackable": false,
       "calculatorCompatible": false,
       "price": null,
       "type": "style",
       "url": "/style.html#vintage-tenues-coiffures",
       "hubUrl": "/style.html#vintage-tenues-coiffures",
-      "images": [],
+      "images": [
+        {
+          "id": "vintage-vice-city-pack-exclusive-looks-03",
+          "titre": "Vintage Vice City Pack Exclusive Looks 03",
+          "alt": "Jason tient un PM compact turquoise à motif de palmiers dans un visuel Vintage Vice City.",
+          "source": "https://www.rockstargames.com/VI/media/screenshots",
+          "original": "https://www.rockstargames.com/VI/_next/static/media/VINTAGE_VICE_CITY_PACK_EXCLUSIVE_LOOKS_03.0au1tphsftqm5.jpg?akim=1&imdensity=1&imwidth=1920",
+          "credit": "© Rockstar Games / Take-Two Interactive",
+          "variants": [
+            {
+              "src": "/img/officiel/vintage-vice-city-pack-exclusive-looks-03-480.webp",
+              "w": 480,
+              "h": 270
+            },
+            {
+              "src": "/img/officiel/vintage-vice-city-pack-exclusive-looks-03-1280.webp",
+              "w": 1280,
+              "h": 720
+            }
+          ]
+        }
+      ],
       "source": "https://www.rockstargames.com/VI",
       "verifiedAt": "2026-09-23",
       "status": "official",

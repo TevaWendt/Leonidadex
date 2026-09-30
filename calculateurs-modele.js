@@ -409,7 +409,7 @@
   }
   function fromConsumable(row) {
     var effet = row && row.effet || {};
-    var health = typeof effet.valeur === 'number' && effet.jeu ? V.series(effet.valeur, { ctx: 'Chiffre de ' + effet.jeu + ', pas de GTA VI.', unit: effet.unite || null }) : V.unknown();
+    var health = typeof effet.valeur === 'number' && effet.jeu && effet.unite === 'sante' ? V.series(effet.valeur, { ctx: 'Chiffre de ' + effet.jeu + ', pas de GTA VI.', unit: effet.unite || null }) : V.unknown();
     return {
       price: row && row.prix_gta6 && typeof row.prix_gta6.valeur === 'number' ? V.official(row.prix_gta6.valeur) : V.unknown(),
       purchasable: V.unknown(),

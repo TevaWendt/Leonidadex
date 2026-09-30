@@ -94,6 +94,54 @@ function ateliersSection(num,L){
  return S.section({id:L.id,num,kicker:'Sur la carte',title:'Les ateliers et les armureries',icon:'carte',tone:'paper2',accent:'coral',lede:esc(L.lede)},
   S.defs()+L.groups.map(g=>'<h3 class="ed-h3">'+esc(g.title)+'</h3><div class="ed-places ed-places--ateliers">'+g.items.map(atelierCard).join('')+'</div>').join('')+para(L.p));
 }
+/* ---------- v7.50 (lot 3) : carnet de style (lookbook) ----------
+   Planches composées par le site à partir des visuels officiels : ce qu’on voit (texte écrit en regardant les images),
+   teintes relevées, pièces des listes qui renvoient à ces visuels, adresse liée, bouton « Garder ce style » (souhait,
+   jamais une possession). Ni tenue ni bonus du jeu. */
+const MEDIAS=JSON.parse(fs.readFileSync(path.join(root,'outils/medias-officiels.json'),'utf8'));
+function lbImg(id,alt,big){const m=MEDIAS[id];if(!m)throw Error('Visuel officiel inconnu : '+id);const s=m.variants.find(v=>v.w===480)||m.variants[0],l=m.variants.find(v=>v.w===1280);
+ for(const v of [s,l])if(v&&!fs.existsSync(path.join(root,v.src.replace(/^\//,''))))throw Error('Fichier absent : '+v.src);
+ return '<img src="'+esc(s.src.replace(/^\//,''))+'"'+(big&&l?' srcset="'+esc(s.src.replace(/^\//,''))+' 480w, '+esc(l.src.replace(/^\//,''))+' 1280w" sizes="(max-width:900px) 100vw, 60vw"':'')+' width="'+s.w+'" height="'+s.h+'" alt="'+esc(alt)+'" loading="lazy" decoding="async">';}
+function lookbookSection(num,L){
+ const fams=['coiffures','tatouages','tenues'],rows=fams.flatMap(f=>C.load().families[f].items.map(it=>({fam:f,it})));
+ const planche=(p,i)=>{if(p.medias.length!==p.vu.length)throw Error('Planche '+p.id+' : un texte « ce qu’on voit » par visuel');
+  const linked=rows.filter(r=>r.it.media&&p.medias.includes(r.it.media));
+  return '<article class="lb-planche'+(i%2?' lb-planche--rev':'')+'" id="style-'+esc(p.id)+'">'
+   +'<div class="lb-images"><figure class="lb-main">'+lbImg(p.medias[0],p.vu[0],true)+'<figcaption>'+esc(p.vu[0])+'</figcaption></figure>'
+   +(p.medias.length>1?'<div class="lb-side">'+p.medias.slice(1).map((m,k)=>'<figure class="lb-small">'+lbImg(m,p.vu[k+1],false)+'</figure>').join('')+'</div>':'')+'</div>'
+   +'<div class="lb-text"><p class="lb-k"><span class="lb-n">'+String(i+1).padStart(2,'0')+'</span> '+esc(p.lieu)+'</p><h3>'+esc(p.titre)+'</h3>'
+   +'<p class="lb-h">Ce qu’on voit</p><ul class="lb-vu">'+p.vu.map(v=>'<li>'+esc(v)+'</li>').join('')+'</ul>'
+   +'<p class="lb-h">Teintes relevées sur les images</p><p class="lb-palette" role="img" aria-label="Teintes relevées sur les images, approximatives">'+p.couleurs.map(c=>'<span style="--c:'+esc(c)+'"></span>').join('')+'</p>'
+   +(linked.length?'<p class="lb-h">Dans les listes</p><p class="lb-links">'+linked.map(r=>'<a href="#'+esc(C.rowId?C.rowId(r.fam,r.it):r.fam+'-'+r.it.id)+'">'+esc(r.it.nom)+'</a>').join('')+'</p>':'')
+   +'<p class="lb-actions">'+(p.entreprise?'<a class="lb-btn" href="'+esc(p.entreprise)+'">La fiche '+esc(p.lieu)+'</a>':'')
+   +'<button type="button" class="lb-btn lb-wish" data-wish-fam="styles" data-wish-id="'+esc(p.id)+'" data-wish-off="Garder ce style" data-wish-on="Style gardé ✓" aria-pressed="false" hidden><span data-wish-label>Garder ce style</span></button></p></div></article>';};
+ return S.section({id:L.id,num,kicker:L.planches.length+' planches',title:'Le carnet de style',icon:'inventaire',tone:'paper2',accent:'coral',lede:esc(L.lede),fam:'style'},
+  '<div class="lb-book">'+L.planches.map(planche).join('')+'</div><div class="ed-callout"><p>'+esc(L.note)+' Les styles gardés restent sur cet appareil, séparés de ce que tu possèdes.</p></div>');
+}
+/* ---------- v7.50 (lot 3) : consommables « en un regard » ----------
+   Par besoin (récupérer, se protéger, garder la forme) : pictogramme légendé, à quoi ça sert, prix (« Prix à venir »),
+   effet connu (« Récupération de vie : à confirmer » tant que Rockstar n’a rien chiffré ; repère de la série à part,
+   jamais dessiné en jauge), où en trouver. Comparaison de trois au plus et simulation personnelle signalée (consommables.js). */
+const NEED=[{id:'recuperer',titre:'Récupérer de la vie',icon:'kit-de-soin',cats:['boissons','snacks','repas','soins']},{id:'proteger',titre:'Se protéger',icon:'gilet-pare-balles',cats:['protection']}];
+function glanceSection(num){
+ const d=C.load().families.consommables,cats=new Map(d.categories.map(c=>[c.id,c]));
+ const FD=require('./fiche-doc.cjs');
+ const card=it=>{const cat=cats.get(it.categorie),e=it.effet||{},acc=FD.accessCell(it);const sante=typeof e.valeur==='number'&&e.unite==='sante';
+  const rep=sante?(e.valeur+' % de vie dans '+e.jeu):(typeof e.valeur==='number'&&e.unite==='armure'?e.valeur+' % d’armure dans '+e.jeu:null);
+  const where=it.ou_le_trouver.map(o=>o.lieu?C.place(o.lieu).name:o.type).slice(0,2).join(' · ');
+  return '<article class="cg-card" data-cg-id="'+esc(it.id)+'" data-cg-cat="'+esc(it.categorie)+'"><div class="cg-top"><span class="cg-ico" aria-hidden="true">'+S.icon(cat.icon)+'</span><span class="cg-cat">'+esc(cat.label)+'</span>'+S.pip(it.statut)+'</div>'
+   +'<h4 class="cg-nom">'+esc(it.nom)+'</h4><dl class="cg-facts">'
+   +'<div><dt>À quoi ça sert</dt><dd>'+esc(cat.id==='protection'?'Encaisser les coups':cat.id==='soins'?'Se soigner':'Manger ou boire pour récupérer')+'</dd></div>'
+   +'<div><dt>Prix</dt><dd>'+esc(acc.price)+'</dd></div>'
+   +'<div><dt>'+(cat.id==='protection'?'Protection':'Vie rendue')+'</dt><dd>'+(cat.id==='protection'?'Protection : à confirmer':'Récupération de vie : à confirmer')+(rep?'<small>Repère de la série : '+esc(rep)+'</small>':'')+'</dd></div>'
+   +'<div><dt>Où</dt><dd>'+esc(where||'Emplacement à venir')+'</dd></div></dl>'
+   +'<p class="cg-actions"><a class="cg-link" href="#'+esc('consommables-'+it.id)+'">Fiche complète</a><label class="cg-cmp" hidden><input type="checkbox" data-cg-cmp="'+esc(it.id)+'"> Comparer</label></p></article>';};
+ const groups=NEED.map(n=>{const RANK={officiel:0,vu:1,comm:2,conf:3,serie:4},list=d.items.filter(it=>n.cats.includes(it.categorie)&&it.suivi!==false).sort((a,b)=>(RANK[a.statut]??5)-(RANK[b.statut]??5)||a.nom.localeCompare(b.nom,'fr'));return '<div class="cg-group" id="besoin-'+n.id+'"><h3 class="ed-h3"><span class="cg-need-ico" aria-hidden="true">'+S.icon(n.icon)+'</span>'+esc(n.titre)+' <small>'+list.length+'</small></h3><div class="cg-grid">'+list.map(card).join('')+'</div></div>';}).join('');
+ return S.section({id:'en-un-regard',num,kicker:'Comparer',title:'En un regard',icon:'loupe',tone:'paper',accent:'amber',lede:esc('À quoi sert chaque consommable, combien il coûte, ce qu’on sait de son effet et où en trouver. Aucun effet n’est chiffré pour GTA VI : pas de fausse jauge, le repère d’un autre jeu est écrit à part.')},
+  '<p class="cg-legend"><span>'+S.icon('kit-de-soin')+' Récupérer</span><span>'+S.icon('gilet-pare-balles')+' Se protéger</span><span>'+S.pip('officiel',true)+'</span><span>'+S.pip('vu',true)+'</span><span>'+S.pip('serie',true)+'</span></p>'
+  +'<div class="cg-tools" data-cg-tools hidden><p class="cg-tools-t" role="status" aria-live="polite" data-cg-status>Coche jusqu’à trois consommables pour les comparer.</p><button type="button" class="cg-clear" data-cg-clear>Tout décocher</button></div>'
+  +groups+'<div class="cg-compare" data-cg-compare hidden></div>');
+}
 function serieSection(num,Z){return S.section({id:Z.id,num,kicker:'Repères',title:'Ce que la série faisait déjà',icon:'statuts',tone:'paper',lede:esc(Z.lede)},S.columns(Z.cols)+para(Z.p));}
 function pendingSection(num,P,vars){return S.section({id:P.id,num,kicker:'Questions ouvertes',title:'Ce qui reste à confirmer',icon:'sablier',tone:'night',lede:esc(P.lede)},S.pending(P.items.map(x=>({q:x.q,etat:fill(x.etat,vars)}))));}
 function actionsSection(num,T){return S.section({id:T.id,num,kicker:'Outils du site',title:'Ce que ça change pour toi',icon:'boussole',tone:'paper',lede:esc(T.lede)},S.actions(T.actions.map(a=>({...a,href:pinsHref(a)}))));}
@@ -129,6 +177,7 @@ for(const c of source.categories.filter(c=>c.id!=='garages'&&!c.alias)){
   parts.push(sourcesSection(++n,[...C.sourcesOf(['perso-vehicules','perso-armes']),...acqSources(['ultimate','vintage'])]));
  }else if(c.id==='nourriture'){
   parts.push(rockstarSection(++n,E.rockstar));
+  parts.push(glanceSection(++n));
   parts.push(listSection(++n,'consommables',{tone:'paper2'}));ld.push(['consommables',C.ldItemList('consommables')]);
   parts.push(placesSection(++n,E.lieux));
   parts.push(serieSection(++n,E.serie));
@@ -138,6 +187,7 @@ for(const c of source.categories.filter(c=>c.id!=='garages'&&!c.alias)){
   parts.push(sourcesSection(++n,C.sourcesOf(['consommables'])));
  }else if(c.id==='style'){
   parts.push(rockstarSection(++n,E.rockstar));
+  parts.push(lookbookSection(++n,E.lookbook));
   parts.push(listSection(++n,'coiffures',{tone:'paper2'}));ld.push(['coiffures',C.ldItemList('coiffures')]);
   parts.push(listSection(++n,'tatouages',{tone:'paper',accent:'coral'}));ld.push(['tatouages',C.ldItemList('tatouages')]);
   parts.push(listSection(++n,'tenues',{tone:'paper2'}));ld.push(['tenues',C.ldItemList('tenues')]);
@@ -163,7 +213,7 @@ for(const c of source.categories.filter(c=>c.id!=='garages'&&!c.alias)){
  fs.writeFileSync(path.join(root,c.route.slice(1)),`<!DOCTYPE html>
 <html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>${esc(c.label)} GTA VI : ce qu’on sait | Leonidakit</title><meta name="description" content="${esc(metaDesc(c.intro))}"><meta name="theme-color" content="#FDFBF7">${c.pending&&!own.length&&!svc.length?'<meta name="robots" content="noindex, follow">':''}<link rel="canonical" href="https://www.leonidakit.com${c.route}">${ldScripts}<meta property="og:title" content="${esc(c.label)} : ce qu’on sait dans GTA VI"><meta property="og:description" content="${esc(metaDesc(c.intro))}"><meta property="og:type" content="website"><meta property="og:locale" content="fr_FR"><meta property="og:url" content="https://www.leonidakit.com${c.route}"><meta property="og:image" content="https://www.leonidakit.com${og}"><meta name="twitter:card" content="summary_large_image">${favicon}<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="motion-tokens.css"><link rel="stylesheet" href="acquisitions.css"></head>
 <body class="d-page"><a class="skip" href="#main">Aller au contenu</a><div class="sunset" aria-hidden="true"></div>${header}<main id="main" class="lore-page">${body}<p class="shell d-feedback" id="acq-feedback" role="status" aria-live="polite"></p></main>${footer}
-<script src="search-index.js"></script><script src="assets-manifest.js"></script><script src="common.js"></script><script src="app.js"></script><script src="acquisitions-data.js"></script><script src="progression-core.js"></script><script src="acquisitions.js"></script><script src="suivi.js"></script><script src="catalogue.js"></script><script src="learning-motion.js"></script></body></html>\n`);
+<script src="search-index.js"></script><script src="assets-manifest.js"></script><script src="common.js"></script><script src="app.js"></script><script src="acquisitions-data.js"></script><script src="progression-core.js"></script><script src="acquisitions.js"></script><script src="suivi.js"></script><script src="carnets-core.js"></script><script src="souhaits.js"></script><script src="consommables.js"></script><script src="catalogue.js"></script><script src="learning-motion.js"></script></body></html>\n`);
 }
 // Le bloc réutilise les mêmes données que les nouveaux hubs. Pas de deuxième liste de garages.
 const garages=cat('garages');
@@ -176,5 +226,5 @@ for(const f of ['acquisitions-data.js','progression-core.js','acquisitions.js','
 fs.writeFileSync(path.join(root,'planques.html'),planques);
 /* Index de recherche : catégories, sections des catalogues (ancres), éléments des listes (type « élément »), contenus documentés. */
 const famSections=C.FAMILIES.map(f=>{const d=C.load().families[f];return {l:d.label,k:cat(d.page==='/style.html'?'style':d.page==='/personnalisations.html'?'customizations':'nourriture').label,u:d.page+'#'+d.section,s:(d.label+' '+d.titre+' '+d.intro).toLowerCase()};});
-fs.writeFileSync(path.join(__dirname,'acquisitions-index.json'),JSON.stringify([...source.categories.filter(c=>!c.alias).map(c=>({l:c.label,k:'Contenus documentés',u:c.route,s:c.label.toLowerCase()})),...famSections,{l:'Accessoires',k:cat('style').label,u:'/style.html#accessoires',s:'accessoires lunettes bijoux montres chapeaux masques'},...C.FAMILIES.flatMap(f=>C.searchEntries(f)),...items.map(x=>({l:x.name,k:cat(x.category).label,u:x.hubUrl,s:(x.name+' '+x.description).toLowerCase()}))]));
+fs.writeFileSync(path.join(__dirname,'acquisitions-index.json'),JSON.stringify([...source.categories.filter(c=>!c.alias).map(c=>({l:c.label,k:'Contenus documentés',u:c.route,s:c.label.toLowerCase()})),...famSections,{l:'Accessoires',k:cat('style').label,u:'/style.html#accessoires',s:'accessoires lunettes bijoux montres chapeaux masques'},{l:'Le carnet de style',k:cat('style').label,u:'/style.html#carnet-de-style',s:'carnet de style lookbook looks tenues couleurs silhouettes garder un style envies'},{l:'Consommables en un regard',k:cat('nourriture').label,u:'/nourriture.html#en-un-regard',s:'comparer consommables en un regard soin vie rendue gilet protection prix a venir cout par point de vie'},{l:'Où trouver une arme',k:'Armurerie',u:'/armes.html#carte',s:'ou trouver une arme emplacement armurerie ammu-nation carte localiser'},{l:'Où trouver un véhicule',k:'Véhicules',u:'/vehicules.html#carte',s:'ou trouver un vehicule emplacement concession marina aerodrome carte localiser'},...C.FAMILIES.flatMap(f=>C.searchEntries(f)),...items.map(x=>({l:x.name,k:cat(x.category).label,u:x.hubUrl,s:(x.name+' '+x.description).toLowerCase()}))]));
 console.log(`Acquisitions : ${items.length} références (${items.filter(x=>x.trackable).length} suivables), ${services.length} services, ${source.categories.filter(c=>c.id!=='garages'&&!c.alias).length} pages de section et le bloc Garages ; catalogues : ${C.FAMILIES.map(f=>f+' '+C.counts(f).n).join(', ')}.`);

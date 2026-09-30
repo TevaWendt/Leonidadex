@@ -198,6 +198,17 @@ function whereCell(it) {
 }
 const PERSON = { jason: 'Jason', lucia: 'Lucia', 'jason-lucia': 'Jason et Lucia' };
 function rowId(fam, it) { return fam + '-' + it.id; }
+/* v7.50 (lot 3) : vignette de la ligne (visuel officiel lié, sinon pictogramme de la catégorie, dit comme tel),
+   colonne GTA VI qui distingue « Prix à venir » et « Achat à confirmer », fiche complète dépliable (modèle commun). */
+const FD = require('./fiche-doc.cjs');
+function thumb(it, cat, media) {
+  if (media) { const v = media.variants.find(x => x.w === 480) || media.variants[0]; return '<span class="cat-thumb"><img src="' + esc(v.src.replace(/^\//, '')) + '" width="' + v.w + '" height="' + v.h + '" alt="' + esc(media.alt || media.titre || it.nom) + '" loading="lazy" decoding="async"></span>'; }
+  return '<span class="cat-thumb cat-thumb--ico" title="Pictogramme de la catégorie, pas un visuel de l’objet">' + S.icon(cat.icon, 'cat-thumb-ico') + '</span>';
+}
+function ficheBox(fam, it) {
+  return '<details class="cat-fiche"><summary>Fiche complète</summary>' + FD.render(FD.CATEGORY_OF[fam], FD.knownOfRow(fam, it, id => place(id).name), { compact: true, level: 3, title: it.nom }) + '</details>';
+}
+function accessHtml(it) { const a = FD.accessCell(it); return '<span class="cat-conf">' + S.pip('conf') + esc(a.price) + '</span><small class="cat-buy">' + esc(a.buy) + '</small>'; }
 function row(fam, it, cat, sources) {
   const d = load(), media = it.media ? d.ctx.medias[it.media] : null, ci = d.families[fam].categories.findIndex(x => x.id === cat.id);
   const srcLinks = it.sources.map((id, i) => '<a href="#src-' + esc(id) + '" class="cat-src" aria-label="Source : ' + esc(sources[id].title) + '">source' + (it.sources.length > 1 ? ' ' + (i + 1) : '') + '</a>').join(' ');
@@ -205,16 +216,16 @@ function row(fam, it, cat, sources) {
   const rep = repereText(it.prix_repere_serie), repV = repereValue(it.prix_repere_serie), compat = compatOf(it);
   return '<tr class="cat-row" id="' + esc(rowId(fam, it)) + '" data-cat="' + esc(it.categorie) + '" data-st="' + esc(it.statut) + '" data-ci="' + ci + '"' + (cat.groupe ? ' data-group="' + esc(cat.groupe) + '"' : '') + ' data-nom="' + esc(fold(it.nom)) + '"' + (repV !== null ? ' data-prix="' + repV + '"' : '') + compat.attrs + ' data-q="' + esc(q) + '">'
     + '<td class="cat-c-st" data-l="Statut">' + S.pip(it.statut, true) + '</td>'
-    + '<td class="cat-c-nom" data-l="Élément"><b class="cat-nom">' + esc(it.nom) + '</b>'
+    + '<td class="cat-c-nom" data-l="Élément">' + thumb(it, cat, media) + '<b class="cat-nom">' + esc(it.nom) + '</b>'
     + '<span class="cat-cat">' + S.icon(cat.icon, 'cat-ico') + esc(cat.label) + '</span>'
     + (it.personnage ? '<span class="cat-who">' + esc(PERSON[it.personnage]) + '</span>' : '')
     + '<p class="cat-desc">' + esc(it.description) + '</p>'
     + (it.variantes && it.variantes.length ? '<p class="cat-var"><span>Variantes :</span> ' + esc(it.variantes.join(', ')) + '</p>' : '')
     + compat.html
     + (it.notes ? '<p class="cat-note">' + esc(it.notes) + '</p>' : '')
-    + '<p class="cat-meta">' + srcLinks + (media ? ' <a class="cat-media" href="medias.html#media-' + esc(it.media) + '">visuel officiel</a>' : '') + (it.lien ? ' <a class="cat-link" href="' + esc(it.lien.href) + '">' + esc(it.lien.label) + '</a>' : '') + '</p></td>'
+    + '<p class="cat-meta">' + srcLinks + (media ? ' <a class="cat-media" href="medias.html#media-' + esc(it.media) + '">visuel officiel</a>' : '') + (it.lien ? ' <a class="cat-link" href="' + esc(it.lien.href) + '">' + esc(it.lien.label) + '</a>' : '') + '</p>' + ficheBox(fam, it) + '</td>'
     + '<td class="cat-c-eff" data-l="Effet">' + esc(it.effet.texte) + (it.effet.valeur !== null ? '<b class="cat-eff-n">' + esc(String(it.effet.valeur)) + (UNITS[it.effet.unite] || ' min') + ' <i>(' + esc(it.effet.jeu) + ')</i></b>' : '') + '</td>'
-    + '<td class="cat-c-p6" data-l="GTA VI"><span class="cat-conf">' + S.pip('conf') + 'À confirmer</span></td>'
+    + '<td class="cat-c-p6" data-l="GTA VI">' + accessHtml(it) + '</td>'
     + '<td class="cat-c-pr" data-l="Repère de la série">' + (rep ? '<b class="cat-repere">' + esc(rep) + '</b>' + (it.prix_repere_serie.note ? '<small>' + esc(it.prix_repere_serie.note) + '</small>' : '') : '<span class="cat-none">Pas de repère</span>') + '</td>'
     + '<td class="cat-c-ou" data-l="Où le trouver">' + whereCell(it) + '</td>'
     + '<td class="cat-c-own" data-l="Suivi"' + (trackable(it) ? ' data-track="' + esc(fam) + '" data-track-id="' + esc(it.id) + '" data-track-name="' + esc(it.nom) + '"' : '') + '>' + (trackable(it) ? '' : it.acq ? acqCell(it) : '<span class="cat-none">—</span>') + '</td></tr>';

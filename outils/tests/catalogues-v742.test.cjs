@@ -69,7 +69,7 @@ test('rendu : la boîte dépliable écrit toute la liste (lisible sans JavaScrip
 test('aucune valeur de la série dans une colonne GTA VI : toutes les cellules GTA VI disent « à confirmer », tout repère nomme son jeu',()=>{
   for(const file of ['nourriture.html','style.html']){const d=doc(file);
     const p6=[...d.querySelectorAll('td.cat-c-p6')];assert.ok(p6.length>=24,file);
-    for(const td of p6){assert.match(td.textContent.replace(/\s+/g,' ').trim(),/^À confirmer$/);assert.doesNotMatch(td.textContent,/\d|\$/);}
+    for(const td of p6){/* v7.50 : « Prix à venir » et « Achat à confirmer » dits séparément ; un bonus « ne s’achète pas » */assert.match(td.textContent.replace(/\s+/g,' ').trim(),/^(Prix à venir\s?Achat à confirmer|Ne s’achète pas\s?.+)$/);assert.doesNotMatch(td.textContent,/\d|\$/);}
     for(const b of d.querySelectorAll('.cat-repere'))assert.match(b.textContent.replace(/[  ]/g,' '),/^GTA (V|Online|IV|San Andreas)\s?: /);
     for(const b of d.querySelectorAll('.cat-eff-n'))assert.match(b.textContent,/\((GTA V|GTA Online|GTA IV|GTA San Andreas)\)/);}
   for(const fam of LOT5)for(const it of D.families[fam].items){assert.equal(it.prix_gta6.valeur,null,it.id);assert.equal(it.prix_gta6.statut,'conf');if(it.effet.valeur!==null)assert.ok(it.effet.jeu,it.id);}

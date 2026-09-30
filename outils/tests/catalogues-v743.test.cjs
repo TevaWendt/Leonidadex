@@ -77,7 +77,7 @@ test('rendu : sept colonnes, compteur « postes », ligne de compatibilité avec
       const own=r.querySelector('.cat-c-own');
       if(it.acq){assert.equal(own.dataset.track,undefined);const inp=own.querySelector('input[data-acq-toggle]');assert.equal(inp.dataset.acqToggle,it.acq);assert.equal(own.querySelector('a.cat-acq-link').getAttribute('href'),'#'+it.acq);}
       else if(it.suivi!==false){assert.equal(own.dataset.track,fam);assert.equal(own.dataset.trackId,it.id);}
-      assert.match(r.querySelector('td.cat-c-p6').textContent.replace(/\s+/g,' ').trim(),/^À confirmer$/);}
+      assert.match(r.querySelector('td.cat-c-p6').textContent.replace(/\s+/g,' ').trim(),/^(Prix à venir\s?Achat à confirmer|Ne s’achète pas\s?.+)$/);}
     for(const b of d.querySelectorAll('.cat-repere'))assert.match(b.textContent.replace(/[  ]/g,' '),/^GTA (V|Online|IV|San Andreas)\s?: /);
     for(const b of d.querySelectorAll('.cat-eff-n'))assert.match(b.textContent,/\((GTA V|GTA Online)\)/);}
   const blind=new JSDOM('<body>'+C.listBox('perso-vehicules')+'</body>').window.document.querySelector('#perso-vehicules-blindage .cat-eff-n');assert.match(blind.textContent,/^100 % d’armure/);

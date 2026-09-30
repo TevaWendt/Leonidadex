@@ -42,6 +42,14 @@ Hébergé sur Vercel, qui publie tel quel le contenu de ce dépôt : **aucune co
 - Aucune donnée issue de fuites. Crédit gtadb.org conservé sur la carte et dans les mentions légales.
 
 
+## Mission v7.48 → v7.52 : catalogues, visuels et page Achats (lot 3, v7.50, 29 septembre 2026)
+
+- **Fiche documentaire commune** : `outils/fiche-doc.cjs` (`render(catégorie, valeurs connues)`, `knownOfRow(famille, ligne)`, `accessCell`) sur `LKCalcModel.fiche` ; utilisée par `catalogues.cjs` (colonne « Élément » : `.cat-thumb`, `details.cat-fiche`), `gen-armes.cjs` et `gen.js` (colonne « Fiche documentaire » des fiches). Classes `.doc-fiche`, `.doc-rub`, `.doc-row.is-known|is-est|is-wait|is-unconf|is-na` dans `style.css`.
+- **Localisateur « Où le trouver »** : `outils/localisateur.cjs` (`hub`, `single`, `vehicleItem`, `weaponItem`, `vehicleLinks`, `writeSprite`) et `localisateur.js` (hubs). Lieux : `outils/hubs-editoriaux.json` (`carte.groups`), coordonnées de la carte interactive ; aucun emplacement par objet tant que Rockstar n’en publie pas. Silhouette des fiches : `img/leonida-silhouette.svg` (écrite par le générateur).
+- **Style** : planches du carnet dans `outils/catalogues/editorial.json` (`style.lookbook`, un texte « ce qu’on voit » par visuel, vérifié) ; souhaits `souhaits.js` (`data-wish-fam`, `data-wish-id`, clé `lk_wish_v1`). **Consommables** : section `#en-un-regard` et `consommables.js`.
+- **Achats** : `outils/gen-achats.cjs` (visuels `VIS`, comptes des listes, `.ak-jump`, `ol.ak-stack > li.ak-slot`), pile dans `acquisitions.css`, `achats-pile.js` (voile `--ak-cover`, netteté `--ak-blur`, focus, « Tout voir en grille », clé `lk_achats_vue`).
+- Tests : `catalogues-v750.test.cjs`.
+
 ## Mission v7.48 → v7.52 : les huit calculs et le business plan (lot 2, v7.49, 29 septembre 2026)
 
 - **Analyse par outil** : `LKCalcScenario.analysis(outil, état, activités, {catalogue})` (dans `calculateurs-scenario.js`) s’appuie sur `calculateurs-modele.js` et rend, pour les neuf outils, les chiffres de décision et `explain` (six parties : but et horizon, conditions, chiffres avec origine, facteurs décisifs, ce qui changerait la réponse, critères écartés). Affichage commun : `workspace.explainBlock(analyse, outil)` (classe `b-explain`). Un facteur du registre ni utilisé ni écarté est une erreur de test.
