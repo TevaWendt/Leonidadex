@@ -724,8 +724,8 @@
         {
           "k": "Calculateur",
           "t": "Combien de temps pour t’installer ?",
-          "d": "Écris le prix que tu imagines : tu obtiens le temps de jeu qu’il te faut.",
-          "href": "calculateurs.html?tool=purchase&type=place&from=lieux#atelier"
+          "d": "Écris le prix d’une demeure ou d’un logement : tu obtiens ton temps de jeu.",
+          "href": "calculateurs.html?tool=purchase&type=property&from=lieux#atelier"
         },
         {
           "k": "Fiches",

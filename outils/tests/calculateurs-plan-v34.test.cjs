@@ -41,7 +41,8 @@ test('Le but « avoir une somme » et le gain continu par heure donnent un progr
  const r=E.missionPlan({capital:200000,reserve:20000,sessionMinutes:60,daysPerWeek:7,hourly:100000,goalPrice:1000000,purchases:[{id:'p1',name:'Sans gain',price:100000},{id:'p2',name:'Rapporte',price:200000,boostHourly:50000}]});
  assert.equal(r.valid,true);assert.equal(r.totalSessions,9);assert.equal(r.days,9);assert.equal(r.finalCash,1150000);
  assert.deepEqual(r.sessions[0].purchases,['Sans gain']);assert.deepEqual(r.sessions[1].purchases,['Rapporte']);assert.equal(r.sessions[2].gain,150000);
- assert.equal(r.phases.length,3);
+ // v7.49 : « Sans gain » se paie avant la première partie (200 000 − 20 000 ≥ 100 000) : parties 1 et 2 ont le même programme.
+ assert.equal(r.phases.length,2);assert.deepEqual(r.sessions[0].purchasesBefore,['Sans gain']);assert.deepEqual(r.phases[0].purchasesAfter,['Rapporte']);
  const amount=E.missionPlan({capital:200000,reserve:0,sessionMinutes:60,hourly:100000,target:1000000});assert.equal(amount.totalSessions,8);assert.equal(amount.finalCash,1000000);
  // 5 jours par semaine : la partie 8 tombe le jour 10 (semaine 1 : jours 1-5, semaine 2 : jours 8-10)
  assert.equal(E.missionPlan({capital:200000,sessionMinutes:60,daysPerWeek:5,hourly:100000,target:1000000}).days,10);
@@ -79,8 +80,13 @@ test('Courbe du programme : un point par partie, l’argent baisse au moment de 
  assert.equal(E.missionCurve(null).valid,false);assert.equal(E.missionCurve({valid:false}).valid,false);
 });
 test('Refus clairs : rien ne rentre, mission verrouillée au départ, but absent, trop de missions, jamais d’Infinity',()=>{
- assert.match(E.missionPlan({capital:0,sessionMinutes:60,goalPrice:1000,activities:[A]}).reason,/Aucune mission ne rentre/);
- assert.match(E.missionPlan({capital:120000,reserve:10000,sessionMinutes:90,goalPrice:1000000,activities:[Bq],purchases:[G]}).reason,/«\sBraquage\s» demande d’abord un achat \(Garage\)/);
+ // v7.49 : le refus dit maintenant quelle mission, combien il faut avancer et combien il reste.
+ assert.match(E.missionPlan({capital:0,sessionMinutes:60,goalPrice:1000,activities:[A]}).reason,/« Courses » demande 2\s000 \$ avant de commencer, et il ne te reste que 0 \$ utilisables/);
+ assert.match(E.missionPlan({capital:100000,sessionMinutes:5,goalPrice:1000000,activities:[A]}).reason,/Aucune mission ne rentre/);
+ // v7.49 : avec 120 000 le Garage se paie dès le début ; le cas « verrouillé au départ » se teste avec 60 000 (Garage hors de portée).
+ assert.match(E.missionPlan({capital:60000,reserve:10000,sessionMinutes:90,goalPrice:1000000,activities:[Bq],purchases:[G]}).reason,/«\sBraquage\s» demande d’abord un achat \(Garage\)/);
+ const early=E.missionPlan({capital:120000,reserve:10000,sessionMinutes:90,goalPrice:1000000,activities:[Bq],purchases:[G]});assert.equal(early.valid,true);assert.deepEqual(early.sessions[0].purchasesBefore,['Garage']);
+ assert.match(E.missionPlan({capital:120000,reserve:10000,sessionMinutes:90,goalPrice:1000000,activities:[Bq],purchases:[{...G,boostHourly:0}]}).reason,/demande 20\s000 \$ avant de commencer, et il ne te reste que 10\s000 \$ utilisables après tes achats d’avant/);
  assert.match(E.missionPlan({capital:100,sessionMinutes:60,hourly:10}).reason,/Dis-moi ton but/);
  assert.match(E.missionPlan({capital:100,sessionMinutes:60,goalPrice:10}).reason,/comment tu gagnes ton argent/);
  assert.match(E.missionPlan({capital:100,sessionMinutes:60,goalPrice:10,activities:Array.from({length:13},()=>A)}).reason,/douze/);
@@ -108,7 +114,8 @@ test('v4 → v5 : le plan récupère une copie de ce qu’il utilisait (argent, 
 });
 test('Le plan dit ce qui manque dans l’ordre de ses questions, compare les ordres d’achats, suit un plan de secours choisi',()=>{
  const s=blank();assert.match(B.planMissing(s),/prix de ton but/);s.plan.goal.kind='amount';assert.match(B.planMissing(s),/somme/);s.plan.goal.target=1000000;assert.match(B.planMissing(s),/argent que tu as/);
- s.plan.situation.capital=50000;assert.match(B.planMissing(s),/dure une partie/);s.plan.situation.dailyMinutes=90;assert.match(B.planMissing(s),/gagnes par heure/);s.plan.source='missions';assert.match(B.planMissing(s),/au moins une mission/);
+ // v7.49 : sans durée de partie, le plan se fait en parcours continu (sans calendrier) : la durée n’est plus obligatoire.
+ s.plan.situation.capital=50000;assert.match(B.planMissing(s),/gagnes par heure/);s.plan.situation.dailyMinutes=0;assert.match(B.planMissing(s),/au moins 1 minute/);s.plan.situation.dailyMinutes=90;assert.match(B.planMissing(s),/gagnes par heure/);s.plan.source='missions';assert.match(B.planMissing(s),/au moins une mission/);
  s.plan.missions=[{...B.copy(B.planMissionTemplate),...A,requires:[]},{...B.copy(B.planMissionTemplate),...Bq,requires:['g']}];s.plan.prerequisites=[{id:'g',name:'Garage',itemId:'',referencePrice:null,price:100000,boostHourly:5000,owned:false},{id:'h',name:'Gadget',itemId:'',referencePrice:null,price:20000,boostHourly:0,owned:false}];s.plan.situation.reserve=10000;
  assert.equal(B.planMissing(s),null);const r=B.evaluate('plan',s);assert.equal(r.valid,true);assert.equal(r.reached,true);assert.ok(r.strategies.candidates.length>=2);assert.ok(r.strategies.candidates.every(c=>c.id!=='direct'||c.removes));
  assert.equal(r.strategy,r.strategies.recommended);assert.ok(['asIs','byPayback','cheapFirst'].includes(r.strategy));

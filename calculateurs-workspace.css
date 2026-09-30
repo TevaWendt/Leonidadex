@@ -483,3 +483,70 @@ body.calculator-page main .lk-act--3 td[data-l]::before{content:attr(data-l) "\0
 }
 .b-doc-more>.calc-note{margin:0}
 .b-doc-more>.calc-button{margin-top:12px}
+
+/* ===== v7.49 (lot 2) : « Ce qui compte dans ce calcul », conditions, parcours, liens ===== */
+/* Explication générée depuis les critères actifs : fonctionne sur le fond sombre de la réponse et sur le fond clair du plan. */
+.b-explain-aim{margin:6px 0 10px;line-height:1.55}.b-explain-horizon{display:block;margin-top:2px;font-size:.85rem;opacity:.85}
+.b-explain-drivers{list-style:none;margin:0 0 10px;padding:0;display:grid;gap:6px}
+.b-explain-drivers li{padding:8px 10px;border-left:3px solid var(--amber-2,#f7b645);background:#ffffff0a;border-radius:0 8px 8px 0;line-height:1.5}
+.b-explain-drivers li b{display:block;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase}
+.b-explain-conds{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 8px}
+.b-cond{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border:1px solid currentColor;border-radius:999px;font-size:.8rem;font-weight:700;line-height:1.4}
+.b-cond i{font-style:normal;font-weight:900}
+.b-cond.is-ok{color:#9be3b0}.b-cond.is-ko{color:#ff9d8a}.b-cond.is-unknown{color:#d8d0ff}.b-cond.is-assumed{color:var(--amber-2,#f7b645)}
+.b-missing--help{opacity:.92}
+.b-explain-more{margin-top:12px}.b-explain-more>summary{cursor:pointer;font-weight:800;min-height:36px;display:list-item}
+.b-explain-parts{margin:10px 0 0;padding-left:20px;display:grid;gap:12px}.b-explain-parts h5{margin:0 0 6px;font-size:.92rem}
+.b-explain-list{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.b-explain-list li{display:flex;gap:8px;align-items:flex-start;line-height:1.5;font-size:.92rem}
+.b-cond-i{flex:none;display:inline-grid;place-content:center;width:22px;height:22px;border-radius:50%;border:1px solid currentColor;font-weight:900;font-size:.78rem}
+.b-explain-list li.is-ok .b-cond-i{color:#9be3b0}.b-explain-list li.is-ko .b-cond-i{color:#ff9d8a}.b-explain-list li.is-unknown .b-cond-i{color:#d8d0ff}.b-explain-list li.is-assumed .b-cond-i{color:var(--amber-2,#f7b645)}
+.b-explain-excluded li{opacity:.85}
+.b-origin.b-o-toi{opacity:.9}.b-origin.b-o-site{opacity:.7}.b-origin.b-o-sim{color:#d8d0ff;opacity:1}.b-origin.b-o-ex{font-style:italic}
+.calc-card:not(.calc-result) .b-origin.b-o-sim,.b-plan-report .b-origin.b-o-sim{color:#4b3a86}
+.calc-card:not(.calc-result) .b-cond.is-ok,.b-plan-report .b-cond.is-ok,.calc-card:not(.calc-result) .b-explain-list li.is-ok .b-cond-i,.b-plan-report .b-explain-list li.is-ok .b-cond-i{color:#1d6b3a}
+.calc-card:not(.calc-result) .b-cond.is-ko,.b-plan-report .b-cond.is-ko,.calc-card:not(.calc-result) .b-explain-list li.is-ko .b-cond-i,.b-plan-report .b-explain-list li.is-ko .b-cond-i{color:var(--coral-text,#B93220)}
+.calc-card:not(.calc-result) .b-cond.is-unknown,.b-plan-report .b-cond.is-unknown,.calc-card:not(.calc-result) .b-explain-list li.is-unknown .b-cond-i,.b-plan-report .b-explain-list li.is-unknown .b-cond-i{color:#4b3a86}
+.calc-card:not(.calc-result) .b-cond.is-assumed,.b-plan-report .b-cond.is-assumed,.calc-card:not(.calc-result) .b-explain-list li.is-assumed .b-cond-i,.b-plan-report .b-explain-list li.is-assumed .b-cond-i{color:#8a5a00}
+.calc-card:not(.calc-result) .b-explain-drivers li,.b-plan-report .b-explain-drivers li{background:#fff8ec;border-left-color:var(--coral-text,#B93220)}
+/* hypothèses globales (Expert) et mécaniques simulées */
+.b-hypotheses{margin:0 0 16px;padding:12px 14px;border:1px dashed var(--rule,#DFD9CC);border-radius:10px;background:#fff}
+.b-hypotheses>summary{cursor:pointer;font-weight:800;min-height:36px;display:list-item}
+.b-sim-item{margin:10px 0 0;padding:10px 12px;border:1px solid var(--rule,#DFD9CC);border-radius:8px}
+.b-sim-item .calc-fields{margin-top:8px}
+/* réponses complétées : exclus, compromis, échéance, lignes en plus */
+.b-excluded{margin:10px 0 0;padding:8px 12px;border-left:3px solid #ff9d8a;background:#ffffff0a;border-radius:0 8px 8px 0;font-size:.92rem;line-height:1.5}
+.calc-card:not(.calc-result) .b-excluded{border-left-color:var(--coral-text,#B93220);background:#fff5f2}
+.b-tradeoff-line{margin:8px 0 0;font-size:.92rem;line-height:1.5}
+.b-deadline,.b-lowpoint{margin:10px 0 0;padding:8px 12px;border-radius:8px;background:#ffffff0d;font-weight:600;line-height:1.5}
+.b-plan-report .b-lowpoint,.calc-card:not(.calc-result) .b-lowpoint{background:#fff3dc}
+.b-purchase-more,.b-roi-more{margin:12px 0 0;line-height:1.6;font-size:.94rem}
+.b-fail{margin:10px 0 0;padding:10px 12px;border:1px solid #ffffff33;border-radius:8px}
+.b-budget-flow{margin-top:14px}
+.b-requires{border:1px solid var(--rule,#DFD9CC);border-radius:10px;padding:8px 12px;margin:10px 0}.b-requires legend{font-weight:700;padding:0 5px;font-size:12px}
+.b-variant-list{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:8px}
+.b-variant-list li{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:8px 10px;border:1px solid var(--rule,#DFD9CC);border-radius:8px}
+.b-variant-list li span{flex:1 1 220px;font-weight:700}
+/* chaîne d’étapes (parcours, prérequis) : se lit de haut en bas, jamais seulement par la couleur */
+.c-chain{margin:14px 0 0}
+.c-chain-list{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:0;counter-reset:chain}
+.c-chain-step{position:relative;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:4px 12px;align-items:start;padding:10px 12px 10px 14px;border-left:3px solid var(--rule,#DFD9CC);margin-left:10px}
+.c-chain-step:before{content:'';position:absolute;left:-8px;top:14px;width:13px;height:13px;border-radius:50%;background:var(--calc-paper,#f7f4ee);border:3px solid var(--night,#2B1B4D)}
+.c-chain-k{font-size:.7rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border-radius:999px;border:1px solid currentColor;white-space:nowrap}
+.c-chain-body{display:flex;flex-direction:column;gap:2px;min-width:0}.c-chain-body b{overflow-wrap:anywhere}.c-chain-body small{opacity:.8;line-height:1.45}
+.c-chain-cash{font-variant-numeric:tabular-nums;font-weight:800;white-space:nowrap}
+.c-chain-step.is-acquire .c-chain-k{color:var(--coral-text,#B93220)}.c-chain-step.is-unlock .c-chain-k{color:#4b3a86}.c-chain-step.is-run .c-chain-k{color:#1d6b3a}
+.c-chain-step.is-goal{border-left-color:var(--amber-2,#f7b645)}.c-chain-step.is-goal:before{background:var(--amber-2,#f7b645);border-color:var(--amber-2,#f7b645)}
+.c-chain-step.is-missing{border-left-style:dashed}.c-chain-step.is-missing:before{background:#fff;border-style:dashed}.c-chain-step.is-missing .c-chain-k{color:var(--coral-text,#B93220);border-style:dashed}
+.c-chain-step.is-start .c-chain-k{opacity:.8}
+.calc-result .c-chain-step{border-left-color:#ffffff40}.calc-result .c-chain-step:before{background:#241740;border-color:var(--amber-2,#f7b645)}
+.calc-result .c-chain-step.is-acquire .c-chain-k{color:#ffb4a6}.calc-result .c-chain-step.is-unlock .c-chain-k{color:#d8d0ff}.calc-result .c-chain-step.is-run .c-chain-k{color:#9be3b0}.calc-result .c-chain-step.is-missing .c-chain-k{color:#ffb4a6}.calc-result .c-chain-step.is-missing:before{background:#241740}
+@media(max-width:600px){.c-chain-step{grid-template-columns:minmax(0,1fr) auto}.c-chain-k{grid-column:1/-1;justify-self:start}}
+/* bandeau après un lien qui a changé le calcul */
+.calc-link-notice{margin:0 0 16px;padding:12px 16px;border:1px solid var(--amber-2,#f7b645);border-left-width:5px;border-radius:10px;background:#fff8ec;color:var(--ink,#1d1a24)}
+.calc-link-notice p{margin:0 0 8px;line-height:1.5}
+.calc-link-actions{display:flex;flex-wrap:wrap;gap:8px}
+/* les étapes arrivent l’une après l’autre, de haut en bas (rien ne bouge si le mouvement est réduit) */
+@keyframes c-chain-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.c-chain-step{animation:c-chain-in .32s ease-out both;animation-delay:calc(var(--i,0) * 45ms)}
+@media(prefers-reduced-motion:reduce){.c-chain-step{animation:none}}

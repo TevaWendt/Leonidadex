@@ -27,7 +27,7 @@ site statique (Vercel, sans build), mots simples pour le joueur, charte Leonidak
 | Lot | Version | Contenu | État |
 |---|---|---|---|
 | 1 | v7.48 | Contexte, inventaire, matrice, fondations communes (critères, statuts, coûts, prérequis, fiches, carnets, état v6) | **fait** |
-| 2 | v7.49 | Huit calculs et business plan complet | à faire |
+| 2 | v7.49 | Huit calculs et business plan complet | **fait** |
 | 3 | v7.50 | Catalogues, visuels, sélecteurs de carte, page Achats | à faire |
 | 4 | v7.51 | Carnets de progression et raccordements | à faire |
 | 5 | v7.52 | Harmonisation, validation complète, livraison | à faire |
@@ -77,17 +77,70 @@ confidentialité tenue ; navigateur : `calculateurs-parcours-browser.cjs` 161 / 
 Finition du lot 1 = registre validé + fonctions testées sur tous les cas chiffrés de la demande qui relèvent du modèle +
 migration sans effet sur les résultats + aucune régression (Node et navigateur). Rien de visible à embellir dans ce lot.
 
+## Lot 2 (v7.49) — fait le 29/09/2026
+
+**Besoin traité** : que chaque calcul utilise vraiment les critères du modèle (conditions, coûts d’usage, prérequis,
+horizon, besoin, simulations signalées) et le dise ; que le business plan suive toute la chaîne (missions de déblocage,
+achats et leur temps, coût par partie, financement, temps total) ; que les liens ne remplacent plus un calcul en silence.
+**Pages concernées** : `calculateurs.html` (9 panneaux, FAQ, lexique). **Critères de réussite** : les cas chiffrés de la
+demande passent dans l’outil qui les porte, les nouveaux critères changent le résultat quand ils sont décisifs et
+s’expliquent quand ils ne le sont pas, aucun facteur « oublié » dans « Ce qui compte », les trois modes donnent les mêmes
+chiffres, les anciennes sauvegardes et tous les parcours navigateur restent verts.
+
+Fichiers modifiés :
+- `calculateurs-engine.js` : `order` avec coût d’usage par heure ; `missionPlan` réécrit (achats avant la 1re partie,
+  temps d’acquisition, prérequis entre achats et missions, missions « une seule fois » et « déjà faite », sens du but
+  disponible / en tout / gagné, grand livre avec point bas et conservation des flux, parcours continu sans durée de
+  partie, courbe en marches) ; messages d’impossibilité avec les noms (plans de secours compris).
+- `calculateurs-scenario.js` : couche d’analyse par outil (`analysis`) branchée sur `calculateurs-modele.js` ;
+  explication « Ce qui compte dans ce calcul » en six parties pour les 9 outils ; comparaison « le moins cher sur la
+  durée » (égalité, écart faible, indécidable), exclusion pour besoin incompatible ; ordre proposé (séquences exhaustives
+  jusqu’à 7, dépendances, objectifs) ; budget partiel « au plus » et flux ; activités classées avec scénario d’échec ;
+  munitions simulées ; échéance de Mon objectif ; sens du but ; stratégies du plan comparées au temps de jeu en continu.
+- `calculateurs-workspace.js`, `calculateurs.js`, `calculateurs-visuals.js`, `calculateurs-plan.js` : bloc
+  « Ce qui compte » (premier niveau court, détail repliable), champs d’usage, de capacités, de besoin, d’horizon, de
+  revente, hypothèses globales (Expert), rendus refaits d’Ordre / Budget / Comparaison ; business plan : sens du but,
+  durée de partie facultative (parcours en temps de jeu), cartes de mission (une seule fois, déjà faite, après une autre
+  mission), cartes d’achat (temps pour l’obtenir, coût par partie, prérequis, indispensable), chaîne des étapes, point bas,
+  « Parcours à compléter » (prix inconnu jamais gratuit), variantes gardées (5, reprise sans perte), courbe en marches,
+  points réels jamais reliés ; liens (anomalies 1 à 7) et copie avant lien.
+- `calculateurs-workspace.css` : styles des nouveaux blocs (fond sombre de la réponse et fond clair du plan, téléphone,
+  mouvement réduit). `calculateurs.html` : FAQ et lexique complétés (le JSON-LD suit).
+- `outils/editorial-hubs.json` : le lien « Combien de temps pour t’installer ? » de Lieux vise les demeures.
+- Tests ajoutés : `calculateurs-v749` (24), `calculateurs-plan-ui-v749` (10), `calculateurs-liens-v749` (8) ; adaptés :
+  `astra`, `ergonomie-v35` (courbe en marches, point « variantes »), `integration`, `plan-v34`, `scenario-v6-v748`,
+  `calculateurs-v2-browser` (export v6).
+
+Anomalies 1 à 7 corrigées : retour au Tuto depuis « choisir » ; `type` sans fiche limite le catalogue (un lieu n’est
+jamais un achat) ; `ids` remplit « Quel achat choisir ? » ; `minutes` ne remplit que l’outil demandé (0 refusé) ; `price`,
+`reserve`, `players`, `mode=guided` lus ; un lien qui change un calcul existant garde une copie dans « Mes calculs » et
+propose d’y revenir (idem `#plan=`, y compris collé en cours de visite) ; `id` va dans l’outil demandé.
+
+Choix retenus :
+- « Avoir » garde son sens d’avant par défaut (disponible en plus de la réserve) : aucune sauvegarde ne change de résultat.
+- Sans durée de partie, le plan n’invente aucun calendrier : temps de jeu seulement, et une échéance en jours est refusée
+  avec la raison.
+- Les coûts de carburant, d’entretien, de munitions… restent « à confirmer » ; ils comptent seulement comme ton chiffre ou
+  comme simulation choisie en Expert, signalée partout.
+- Un lien applique ses chiffres puis enregistre ; la copie d’avant n’est faite qu’une fois par état (pas de doublons).
+
+Vérifications (lot 2) : `node --test` 539 / 539 ; `node outils/verifier.js` 0 erreur ; navigateur : parcours 161 / 161,
+lot B 140 / 140, v2 142 / 142, calculateur 278 / 278, Léo « contrôle tenu » ; captures bureau et téléphone
+(`captures-v7.49/`). Finition du lot 2 = cas chiffrés dans les outils + explication sans facteur oublié + parcours
+navigateur verts + rendu relu sur captures (corrigés à la relecture : manque selon le sens du but, étiquettes de légende
+trompeuses, identifiants dans les messages, séparateurs doublés, libellé du but non atteint).
+
 ## Anomalies relevées à l’inventaire (lot où elles sont traitées)
 
 | # | Anomalie | Lot |
 |---|---|---|
-| 1 | Chapitre Tuto `choisir` absent de la liste de `calculateurs.js` (pas de retour au Tuto depuis Quel achat choisir ?) | 2 |
-| 2 | `type` sans `id` ignoré dans les liens vers le calculateur (25 liens) ; `tool=purchase&type=place` mène à Mes achats alors qu’un lieu ne s’achète pas | 2 |
-| 3 | `ids` remplit la comparaison de Mes achats, pas « Quel achat choisir ? » | 2 |
-| 4 | `minutes` écrase aussi « Je joue chaque jour » ; 0 accepté | 2 |
-| 5 | Pas de prix, de réserve, de joueurs transmis par l’adresse ; pas de `mode=guided` | 2 |
-| 6 | Paramètres et `#plan=` modifient ou remplacent le calcul sans copie ni confirmation (sauf Léo) | 2 |
-| 7 | `id` avec un outil autre que purchase / roi force purchase | 2 |
+| 1 | Chapitre Tuto `choisir` absent de la liste de `calculateurs.js` (pas de retour au Tuto depuis Quel achat choisir ?) | 2 (**corrigé v7.49**) |
+| 2 | `type` sans `id` ignoré dans les liens vers le calculateur (25 liens) ; `tool=purchase&type=place` mène à Mes achats alors qu’un lieu ne s’achète pas | 2 (**corrigé v7.49**) |
+| 3 | `ids` remplit la comparaison de Mes achats, pas « Quel achat choisir ? » | 2 (**corrigé v7.49**) |
+| 4 | `minutes` écrase aussi « Je joue chaque jour » ; 0 accepté | 2 (**corrigé v7.49**) |
+| 5 | Pas de prix, de réserve, de joueurs transmis par l’adresse ; pas de `mode=guided` | 2 (**corrigé v7.49**) |
+| 6 | Paramètres et `#plan=` modifient ou remplacent le calcul sans copie ni confirmation (sauf Léo) | 2 (**corrigé v7.49**) |
+| 7 | `id` avec un outil autre que purchase / roi force purchase | 2 (**corrigé v7.49**) |
 | 8 | Léo « Mon temps de jeu » : formule propre au lieu du moteur | 4 |
 | 9 | Progression : carte « Calculs enregistrés » lit l’ancienne clé (toujours « Aucun calcul ») | 4 |
 | 10 | `sync-site.cjs` : compteur des consommables « 0 / 30 » au lieu de 29, familles perso ignorées (le JS corrige) | 4 |
@@ -115,7 +168,7 @@ migration sans effet sur les résultats + aucune régression (Node et navigateur
 
 ## Point de reprise
 
-Lot 1 livré (v7.48). Prochaine action : lot 2 — brancher `modele-donnees.js` et `calculateurs-modele.js` dans
-`calculateurs.html`, puis outil par outil selon la matrice (ordre : trésorerie et coûts d’usage communs → Mes achats →
-Quel achat choisir ? → Ça vaut le coup ? → Mon budget → Quoi acheter d’abord ? → Mon objectif → Mes activités → Mon temps
-de jeu → business plan), explication « Ce qui compte » générée, tests des situations de la demande.
+Lots 1 et 2 livrés (v7.48, v7.49). Prochaine action : lot 3 — catalogues Vêtements et style (lookbook), Consommables,
+Armes, Véhicules (fiches structurées par `LKCalcModel.fiche`, « Prix à venir », « Achat à confirmer », effets « à
+confirmer »), sélecteurs de localisation illustrés, page Achats (visuel par catégorie, succession verticale au
+défilement, comptes justes), anomalies 16 à 19 ; ensuite captures et tests des pages refondues.

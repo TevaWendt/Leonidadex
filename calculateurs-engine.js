@@ -205,7 +205,7 @@
       if(p.hourly==null)return fail(Object.assign({},continuousShape,{missing:missing,availableCapital:available,reserve:reserve}),'Il te manque cette somme. Écris ce que tu gagnes par heure pour avoir le temps de jeu.');
       var hourly = money(p.hourly, 'ce que tu gagnes par heure');
       var daily = p.dailyMinutes == null ? null : number(p.dailyMinutes, 'ton temps de jeu par jour, en minutes', 1440, { positive: true });
-      if (missing > 0 && hourly <= 0) return fail(continuousShape, 'Pour atteindre cet objectif, il faut gagner plus de 0 $ par heure.');
+      if (missing > 0 && hourly <= 0) return fail(continuousShape, 'Pour atteindre cet objectif, il faut gagner plus de 0 $ par heure.');
       var hours = missing === 0 ? 0 : missing / hourly;
       var total = hours * 60;
       var sessions = total === 0 ? 0 : daily === null ? null : ceil(total / daily);
@@ -385,19 +385,19 @@
       var items = p.items.map(function (entry, index) {
         entry = data(entry);
         var label = typeof entry.name === 'string' && entry.name.trim() ? entry.name.trim().slice(0, 120) : 'Achat ' + (index + 1);
-        return { name: label, price: money(entry.price, 'le prix de « ' + label + ' »'), boostHourly: money(entry.boostHourly, 'ce que rapporte en plus l’achat ' + (index + 1), 0) };
+        return { name: label, price: money(entry.price, 'le prix de « ' + label + ' »'), boostHourly: money(entry.boostHourly, 'ce que rapporte en plus l’achat ' + (index + 1), 0), costHourly: money(entry.costHourly, 'ce que coûte l’achat ' + (index + 1) + ' à l’usage', 0) }; // v7.49 : coût d’usage par heure
       });
       var time = 0;
       var steps = [];
       for (var i = 0; i < items.length; i += 1) {
         var item = items[i];
         var wait = timeTo(item.price + reserve, cash, hourly);
-        if (wait === null) return fail(Object.assign({}, orderShape, {steps: steps, blockedIndex: i, shortfall: item.price + reserve - cash}), 'Étape ' + (i + 1) + ' bloquée : il manque ' + (item.price + reserve - cash).toLocaleString('fr-FR') + ' $ pour « ' + item.name + ' ». Tu ne gagnes rien par heure avant cet achat.');
+        if (wait === null) return fail(Object.assign({}, orderShape, {steps: steps, blockedIndex: i, shortfall: item.price + reserve - cash}), 'Étape ' + (i + 1) + ' bloquée : il manque ' + (item.price + reserve - cash).toLocaleString('fr-FR') + ' $ pour « ' + item.name + ' ». ' + (hourly !== null && hourly < 0 ? 'Tes achats d’avant coûtent plus à l’usage qu’ils ne rapportent : tu perds de l’argent en jouant.' : 'Tu ne gagnes rien par heure avant cet achat.'));
         time += wait;
         // Waiting ends exactly at the price: avoid residual floating-point debt.
         cash = wait > 0 ? reserve : cash - item.price;
         // Un revenu inconnu ne devient pas implicitement zéro.
-        if(hourly!==null)hourly += item.boostHourly;
+        if(hourly!==null)hourly = subtract(hourly + item.boostHourly, item.costHourly);
         steps.push({ name: item.name, waitHours: wait, timeHours: time, capital: cash, hourly: hourly });
       }
       return finish({ steps: steps, totalHours: time, finalCapital: cash, finalHourly: hourly }, orderShape);
@@ -783,99 +783,267 @@
   // partie ; jamais d'argent gagné avant sa partie ; un achat ne se paie pas avec
   // ce qu'il rapportera.
   var MISSION_MAX_SESSIONS = 400;
-  var missionShape = { sessions: [], totalSessions: null, totalMinutes: null, activeMinutes: null, days: null, weeks: null, phases: [], purchases: [], reached: null, finalCash: null, finalUnits: null, missing: null, missingUnits: null, averagePerSession: null, goalMoney: null, startCash: null, startUnits: null, limited: false, note: null };
+  var FLOW_MAX_STEPS = 20000;
+  var missionShape = { sessions: [], totalSessions: null, totalMinutes: null, activeMinutes: null, days: null, weeks: null, phases: [], purchases: [], reached: null, finalCash: null, finalUnits: null, missing: null, missingUnits: null, averagePerSession: null, goalMoney: null, startCash: null, startUnits: null, limited: false, note: null, route: [], events: [], lowPoint: null, earned: null, conserved: null, continuous: false, goalMeaning: null, onceDone: [] };
+  // v7.49 : un achat d’avant peut demander du temps pour l’obtenir (minutes), d’autres achats ou des missions faites avant
+  // (requires), et coûter à chaque partie une fois possédé (usagePerSession). Une mission peut être une mission de
+  // déblocage faite une seule fois (once), déjà faite (done), et demander d’autres missions faites avant (requiresMissions).
+  // Le but « avoir une somme » dit ce qu’il vise : argent disponible après l’argent gardé de côté (« available », comme
+  // avant), argent détenu en tout (« held », la réserve comprise mais jamais entamée) ou gains cumulés (« cumulative »).
+  function missionPrep(p) {
+    var capital = money(p.capital, 'l’argent que tu as');
+    var reserve = money(p.reserve, 'l’argent mis de côté', 0);
+    if (reserve > capital) throw new Error('L’argent gardé de côté dépasse ce que tu as.');
+    var continuous = p.sessionMinutes === null || p.sessionMinutes === undefined;
+    var sessionMinutes = continuous ? null : number(p.sessionMinutes, 'la durée d’une partie', 1440, { positive: true });
+    var daysPerWeek = number(p.daysPerWeek, 'les jours par semaine', 7, { defaultValue: 7, integer: true, positive: true });
+    var upkeep = money(p.upkeepPerSession, 'les dépenses par partie', 0);
+    var hourly = money(p.hourly, 'ce que tu gagnes par heure', 0);
+    var unitsHourly = number(p.unitsHourly, 'les points par heure', MONEY_MAX, { defaultValue: 0 });
+    var maxRepeat = number(p.maxRepeat, 'le nombre de fois à la suite', SESSION_MAX_RUNS, { defaultValue: SESSION_MAX_RUNS, positive: true, integer: true });
+    var goalPrice = p.goalPrice == null ? null : money(p.goalPrice, 'le prix du but');
+    var goalTarget = p.target == null ? null : money(p.target, 'la somme visée');
+    var goalUnits = p.targetUnits == null ? null : number(p.targetUnits, 'les points à atteindre', MONEY_MAX);
+    var units = number(p.currentUnits, 'tes points actuels', MONEY_MAX, { defaultValue: 0 });
+    var meaning = ['held', 'available', 'cumulative'].indexOf(p.goalMeaning) >= 0 ? p.goalMeaning : 'available';
+    if (goalPrice === null && goalTarget === null && goalUnits === null) throw new Error('Dis-moi ton but : un achat avec son prix, une somme à avoir, ou des points à atteindre.');
+    var list = Array.isArray(p.activities) ? p.activities : [];
+    if (list.length > 12) throw new Error('Choisis douze missions au maximum.');
+    if (!list.length && !(hourly > 0) && !(unitsHourly > 0)) throw new Error('Dis-moi comment tu gagnes ton argent : choisis au moins une mission, ou écris ce que tu gagnes par heure.');
+    var acts = list.map(function (entry, index) {
+      var r = activity(entry);
+      if (!r.valid) throw new Error('Mission ' + (index + 1) + (entry && typeof entry.name === 'string' && entry.name.trim() ? ' (' + entry.name.trim().slice(0, 40) + ')' : '') + ' : ' + r.reason);
+      return { id: typeof entry.id === 'string' ? entry.id : String(index), name: typeof entry.name === 'string' && entry.name.trim() ? entry.name.trim().slice(0, 120) : 'Mission ' + (index + 1), entry: entry, res: r, requires: Array.isArray(entry.requiresPurchaseIds) ? entry.requiresPurchaseIds : [], requiresMissions: Array.isArray(entry.requiresMissions) ? entry.requiresMissions : [], once: entry.once === true, done: entry.done === true, paid: entry.owned === true || !(entry.investment > 0) };
+    });
+    var purchases = (Array.isArray(p.purchases) ? p.purchases : []).map(function (x, i) { x = data(x); var nm = typeof x.name === 'string' && x.name.trim() ? x.name.trim().slice(0, 120) : 'Achat ' + (i + 1); return { id: typeof x.id === 'string' ? x.id : 'achat-' + i, name: nm, price: money(x.price, 'le prix de l’achat « ' + nm.slice(0, 40) + ' »'), boostHourly: money(x.boostHourly, 'ce que rapporte l’achat ' + (i + 1), 0), minutes: number(x.minutes, 'le temps pour obtenir « ' + nm.slice(0, 40) + ' »', MINUTES_MAX, { defaultValue: 0 }), usage: money(x.usagePerSession, 'ce que coûte « ' + nm.slice(0, 40) + ' » à chaque partie', 0), requires: Array.isArray(x.requires) ? x.requires.filter(function (id) { return typeof id === 'string'; }) : [], owned: x.owned === true, at: null, atMinute: null, before: false }; });
+    if (purchases.length > 20) throw new Error('Vingt achats maximum avant le but.');
+    if (continuous && (upkeep > 0 || purchases.some(function (x) { return x.usage > 0; }))) throw new Error('Des dépenses « par partie » demandent la durée d’une partie : écris-la, ou mets ces dépenses à 0.');
+    if (goalUnits !== null && units < goalUnits - 1e-9 && !(unitsHourly > 0) && !acts.some(function (a) { return a.res.units > 0; })) throw new Error('Aucune de tes missions ne donne de points : écris les points gagnés par mission (ou par heure), sinon le but ne peut pas être atteint.');
+    return { capital: capital, reserve: reserve, continuous: continuous, sessionMinutes: sessionMinutes, daysPerWeek: daysPerWeek, upkeep: upkeep, hourly: hourly, unitsHourly: unitsHourly, maxRepeat: maxRepeat, goalPrice: goalPrice, goalTarget: goalTarget, goalUnits: goalUnits, units: units, meaning: meaning, acts: acts, purchases: purchases, names: knownNames(p, purchases) };
+  }
   function missionPlan(input) {
     try {
-      var p = data(input);
-      var capital = money(p.capital, 'l’argent que tu as');
-      var reserve = money(p.reserve, 'l’argent mis de côté', 0);
-      if (reserve > capital) return fail(missionShape, 'L’argent gardé de côté dépasse ce que tu as.');
-      var sessionMinutes = number(p.sessionMinutes, 'la durée d’une partie', 1440, { positive: true });
-      var daysPerWeek = number(p.daysPerWeek, 'les jours par semaine', 7, { defaultValue: 7, integer: true, positive: true });
-      var upkeep = money(p.upkeepPerSession, 'les dépenses par partie', 0);
-      var hourly = money(p.hourly, 'ce que tu gagnes par heure', 0);
-      var unitsHourly = number(p.unitsHourly, 'les points par heure', MONEY_MAX, { defaultValue: 0 });
-      var maxRepeat = number(p.maxRepeat, 'le nombre de fois à la suite', SESSION_MAX_RUNS, { defaultValue: SESSION_MAX_RUNS, positive: true, integer: true });
-      var goalPrice = p.goalPrice == null ? null : money(p.goalPrice, 'le prix du but');
-      var goalTarget = p.target == null ? null : money(p.target, 'la somme visée');
-      var goalUnits = p.targetUnits == null ? null : number(p.targetUnits, 'les points à atteindre', MONEY_MAX);
-      var units = number(p.currentUnits, 'tes points actuels', MONEY_MAX, { defaultValue: 0 });
-      var startUnits = units;
-      if (goalPrice === null && goalTarget === null && goalUnits === null) return fail(missionShape, 'Dis-moi ton but : un achat avec son prix, une somme à avoir, ou des points à atteindre.');
-      var list = Array.isArray(p.activities) ? p.activities : [];
-      if (list.length > 12) return fail(missionShape, 'Choisis douze missions au maximum.');
-      if (!list.length && !(hourly > 0) && !(unitsHourly > 0)) return fail(missionShape, 'Dis-moi comment tu gagnes ton argent : choisis au moins une mission, ou écris ce que tu gagnes par heure.');
-      var acts = list.map(function (entry, index) {
-        var r = activity(entry);
-        if (!r.valid) throw new Error('Mission ' + (index + 1) + (entry && typeof entry.name === 'string' && entry.name.trim() ? ' (' + entry.name.trim().slice(0, 40) + ')' : '') + ' : ' + r.reason);
-        return { id: typeof entry.id === 'string' ? entry.id : String(index), name: typeof entry.name === 'string' && entry.name.trim() ? entry.name.trim().slice(0, 120) : 'Mission ' + (index + 1), entry: entry, res: r, requires: Array.isArray(entry.requiresPurchaseIds) ? entry.requiresPurchaseIds : [], paid: entry.owned === true || !(entry.investment > 0) };
-      });
-      if (goalUnits !== null && units < goalUnits - 1e-9 && !(unitsHourly > 0) && !acts.some(function (a) { return a.res.units > 0; })) return fail(missionShape, 'Aucune de tes missions ne donne de points : écris les points gagnés par mission (ou par heure), sinon le but ne peut pas être atteint.');
-      var purchases = (Array.isArray(p.purchases) ? p.purchases : []).map(function (x, i) { x = data(x); return { id: typeof x.id === 'string' ? x.id : 'achat-' + i, name: typeof x.name === 'string' && x.name.trim() ? x.name.trim().slice(0, 120) : 'Achat ' + (i + 1), price: money(x.price, 'le prix de l’achat « ' + (typeof x.name === 'string' && x.name.trim() ? x.name.trim().slice(0, 40) : (i + 1)) + ' »'), boostHourly: money(x.boostHourly, 'ce que rapporte l’achat ' + (i + 1), 0), owned: x.owned === true, at: null }; });
-      if (purchases.length > 20) return fail(missionShape, 'Vingt achats maximum avant le but.');
-      var owned = {};
-      purchases.forEach(function (x) { if (x.owned) owned[x.id] = true; });
-      var cash = capital, sessions = [], totalActive = 0, boost = 0, limited = false;
-      function goalMoney() { return (goalPrice !== null ? goalPrice : 0) + (goalTarget !== null ? goalTarget : 0); }
-      function reached() { return (goalUnits === null || units >= goalUnits - 1e-9) && subtract(cash, reserve) >= goalMoney() - 1e-9; }
-      for (var n = 1; n <= MISSION_MAX_SESSIONS && !reached(); n += 1) {
-        var available = acts.filter(function (a) { return a.requires.every(function (id) { return owned[id]; }); });
-        var entries = available.map(function (a) { return Object.assign({}, a.entry, { id: a.id, name: a.name, investment: a.paid ? 0 : a.entry.investment }); });
-        var session = null, unitsGain = 0, used = [];
-        var needUnits = goalUnits !== null && units < goalUnits - 1e-9;
-        if (entries.length) {
-          if (needUnits && available.some(function (a) { return a.res.units > 0; })) {
-            // Points à gagner : la mission qui donne le plus de points dans la partie ; à égalité, celle qui rapporte le plus.
-            var best = null;
-            available.forEach(function (a) {
-              if (!(a.res.units > 0)) return;
-              var r = inverse({ minutes: sessionMinutes, capital: cash, reserve: reserve, activity: Object.assign({}, a.entry, { investment: a.paid ? 0 : a.entry.investment }) });
-              if (!r.valid || !r.runs) return;
-              var gained = r.runs * a.res.units;
-              if (!best || gained > best.units || (gained === best.units && r.profit > best.profit)) best = { a: a, r: r, units: gained, profit: r.profit };
-            });
-            if (best) { session = { profit: best.profit, investment: best.a.paid ? 0 : best.a.entry.investment, runs: best.r.runs, activeMinutes: best.r.totalMinutes, breakdown: [{ id: best.a.id, name: best.a.name, runs: best.r.runs, net: best.r.runs * best.a.res.net }] }; unitsGain = best.units; used = [best.a]; }
-          }
-          if (!session) {
-            var sp = sessionPlan({ capital: cash, reserve: reserve, minutes: sessionMinutes, maxRepeat: maxRepeat, activities: entries });
-            if (sp.valid && sp.runs) { session = sp; used = available.filter(function (a) { return sp.breakdown.some(function (b) { return b.id === a.id && b.runs; }); }); if (sp.limited) limited = true; unitsGain = sp.breakdown.reduce(function (sum, b) { var a = available.filter(function (x) { return x.id === b.id; })[0]; return sum + (a && a.res.units > 0 ? a.res.units * b.runs : 0); }, 0); }
-          }
-        }
-        var passive = (boost + hourly) * sessionMinutes / 60;
-        var passiveUnits = unitsHourly * sessionMinutes / 60;
-        var gain = (session ? session.profit : 0) + passive - upkeep;
-        var progress = gain > 1e-9 || (needUnits && (unitsGain > 0 || passiveUnits > 0));
-        if (!progress) {
-          var locked = acts.filter(function (a) { return available.indexOf(a) < 0; });
-          var why = n !== 1 ? 'À la partie ' + n + ', plus aucune mission ne rentre ni ne rapporte : vérifie tes missions et tes achats.'
-            : needUnits && !(unitsGain > 0 || passiveUnits > 0) && gain > 1e-9 ? 'Aucune de tes missions ne donne de points : écris les points gagnés par mission (ou par heure).'
-            : !available.length && locked.length ? 'Aucune mission n’est possible au départ : « ' + locked[0].name + ' » demande d’abord un achat (' + locked[0].requires.map(function (id) { var x = purchases.filter(function (y) { return y.id === id; })[0]; return x ? x.name : id; }).join(', ') + '). Ajoute une mission faisable tout de suite, ou coche « je l’ai déjà » sur cet achat.'
-            : 'Aucune mission ne rentre dans une partie avec ce que tu as : ajoute du temps, choisis une mission plus courte, ou vérifie tes frais et tes achats.';
-          return fail(Object.assign({}, missionShape, { sessions: sessions }), why);
-        }
-        cash = cash + gain;
-        used.forEach(function (a) { a.paid = true; });
-        units += unitsGain + passiveUnits;
-        totalActive += session ? session.activeMinutes : (hourly > 0 || passiveUnits > 0 ? sessionMinutes : 0);
-        var bought = [];
-        for (var k = 0; k < purchases.length; k += 1) { var x = purchases[k]; if (x.owned) continue; if (subtract(cash, reserve) >= x.price - 1e-9) { cash = subtract(cash, x.price); x.owned = true; x.at = n; owned[x.id] = true; boost += x.boostHourly; bought.push(x.name); } else break; }
-        sessions.push({ index: n, steps: session ? session.breakdown.filter(function (b) { return b.runs; }).map(function (b) { return { id: b.id, name: b.name, runs: b.runs, net: b.net }; }) : [], gain: gain, passive: passive, upkeep: upkeep, cashAfter: cash, unitsAfter: units, unitsGain: unitsGain + passiveUnits, purchases: bought, activeMinutes: session ? session.activeMinutes : (hourly > 0 || passiveUnits > 0 ? sessionMinutes : 0) });
-      }
-      var ok = reached();
-      var total = sessions.length;
-      var weeks = total === 0 ? 0 : Math.floor((total - 1) / daysPerWeek);
-      var days = total === 0 ? 0 : weeks * 7 + ((total - 1) % daysPerWeek) + 1;
-      // Phases : même programme d'une partie à l'autre → une seule ligne « parties 1 à 4 : A ×2, B ×1 ».
-      var phases = [];
-      sessions.forEach(function (se) {
-        var key = se.steps.map(function (st) { return st.id + '×' + st.runs; }).join('|') + '#' + Math.round(se.gain);
-        var last = phases[phases.length - 1];
-        if (last && last.key === key && !last.purchasesAfter.length) { last.to = se.index; last.count += 1; last.cashAfter = se.cashAfter; last.unitsAfter = se.unitsAfter; last.purchasesAfter = se.purchases.slice(); }
-        else phases.push({ key: key, from: se.index, to: se.index, count: 1, steps: se.steps, gain: se.gain, unitsGain: se.unitsGain, cashBefore: se.cashAfter - se.gain + se.purchases.reduce(function (sum, name) { var x = purchases.filter(function (y) { return y.name === name; })[0]; return sum + (x ? x.price : 0); }, 0), cashAfter: se.cashAfter, unitsAfter: se.unitsAfter, purchasesAfter: se.purchases.slice() });
-      });
-      var missing = Math.max(0, subtract(goalMoney() + reserve, cash));
-      return finish({ sessions: sessions, totalSessions: total, totalMinutes: total * sessionMinutes, activeMinutes: totalActive, days: days, weeks: total === 0 ? 0 : ceil(total / daysPerWeek), phases: phases.map(function (ph) { return { from: ph.from, to: ph.to, count: ph.count, steps: ph.steps, gain: ph.gain, unitsGain: ph.unitsGain, cashBefore: ph.cashBefore, cashAfter: ph.cashAfter, unitsAfter: ph.unitsAfter, purchasesAfter: ph.purchasesAfter }; }), purchases: purchases.map(function (x) { return { id: x.id, name: x.name, price: x.price, boostHourly: x.boostHourly, atSession: x.at, owned: x.owned }; }), reached: ok, finalCash: cash, finalUnits: units, missing: ok ? 0 : missing, missingUnits: goalUnits === null ? 0 : Math.max(0, goalUnits - units), averagePerSession: total ? subtract(cash, capital) / total : null, goalMoney: goalMoney(), startCash: capital, startUnits: startUnits, limited: limited || !ok, note: ok ? (limited ? 'Programme trouvé parmi les séquences explorées à chaque partie ; il peut en exister un plus rapide.' : null) : 'Le but n’est pas atteint en ' + MISSION_MAX_SESSIONS + ' parties : réduis le but, allonge tes parties ou change de missions.' }, missionShape);
+      var p = data(input), c = missionPrep(p);
+      return c.continuous ? missionFlow(c) : missionSessions(c);
     } catch (error) { return fail(missionShape, error.message); }
+  }
+  // Commun aux deux modes : état, but, achats, grand livre.
+  function missionState(c) {
+    var st = { cash: c.capital, units: c.units, earned: 0, boost: 0, upkeepOwned: 0, owned: {}, done: {}, events: [], low: { cash: c.capital, at: 'Départ' }, receipts: 0, spends: 0, route: [] };
+    c.purchases.forEach(function (x) { if (x.owned) { st.owned[x.id] = true; st.boost += x.boostHourly; st.upkeepOwned += x.usage; } });
+    c.acts.forEach(function (a) { if (a.done) st.done[a.id] = true; });
+    return st;
+  }
+  function goalMoneyOf(c) { return (c.goalPrice !== null ? c.goalPrice : 0) + (c.goalTarget !== null ? c.goalTarget : 0); }
+  function reachedOf(c, st) {
+    if (c.goalUnits !== null && st.units < c.goalUnits - 1e-9) return false;
+    var need = goalMoneyOf(c);
+    if (c.goalTarget !== null && c.goalPrice === null) {
+      if (c.meaning === 'held') return st.cash >= need - 1e-9;
+      if (c.meaning === 'cumulative') return st.earned >= need - 1e-9;
+    }
+    return subtract(st.cash, c.reserve) >= need - 1e-9;
+  }
+  function ledgerAdd(st, t, type, amount, label) {
+    if (!(amount > 0)) return;
+    if (type === 'spend') { st.cash = subtract(st.cash, amount); st.spends += amount; if (st.cash < st.low.cash - 1e-9) st.low = { cash: st.cash, at: label, t: t }; }
+    else { st.cash += amount; st.receipts += amount; }
+    if (st.events.length < 600) st.events.push({ t: t, type: type, amount: amount, label: label, cash: st.cash });
+  }
+  function satisfied(ids, st) { return ids.every(function (id) { return st.owned[id] || st.done[id]; }); }
+  // Achats d’avant dans l’ordre donné (la stratégie) : on paie dès que possible, sans jamais descendre sous la réserve ;
+  // un achat dont les prérequis ne sont pas faits attend, et ceux d’après aussi (l’ordre est respecté).
+  function buyPurchases(c, st, t, session, where, advance) {
+    var bought = [], cursor = t;
+    for (var k = 0; k < c.purchases.length; k += 1) {
+      var x = c.purchases[k]; if (x.owned) continue;
+      if (!satisfied(x.requires, st)) break;
+      if (subtract(st.cash, c.reserve) < x.price - 1e-9) break;
+      ledgerAdd(st, cursor, 'spend', x.price, 'Achat « ' + x.name + ' »');
+      x.owned = true; x.at = session; x.atMinute = cursor; x.before = where === 'before'; st.owned[x.id] = true; st.boost += x.boostHourly; st.upkeepOwned += x.usage;
+      bought.push(x);
+      st.route.push({ type: 'acquire', id: x.id, name: x.name, session: session, start: cursor, minutes: x.minutes, spend: x.price, receive: 0, cashAfter: st.cash, requires: x.requires.slice(), where: where });
+      if (advance) cursor += x.minutes;
+    }
+    return bought;
+  }
+  function runOnce(c, st, a, t, session) {
+    var invest = a.paid ? 0 : a.entry.investment || 0, cost = (a.entry.cost || 0) + invest;
+    ledgerAdd(st, t, 'spend', cost, 'Frais de « ' + a.name + ' »');
+    var end = t + a.res.activeMinutes, reward = (a.entry.reward || 0) * (a.entry.share === undefined ? 100 : a.entry.share) / 100;
+    ledgerAdd(st, end, 'receive', reward, 'Récompense de « ' + a.name + ' »');
+    st.earned += reward - cost + invest; a.paid = true; st.done[a.id] = true; st.units += a.res.units > 0 ? a.res.units : 0;
+    st.route.push({ type: 'unlock', id: a.id, name: a.name, session: session, start: t, minutes: a.res.activeMinutes, spend: cost, receive: reward, cashAfter: st.cash, requires: a.requires.concat(a.requiresMissions) });
+    return end;
+  }
+  function onceReady(c, st, a) { return a.once && !st.done[a.id] && satisfied(a.requires, st) && satisfied(a.requiresMissions, st); }
+  function affordableStart(c, st, a) { var invest = a.paid ? 0 : a.entry.investment || 0; return subtract(st.cash, c.reserve) >= (a.entry.cost || 0) + invest - 1e-9; }
+  // « un achat (Garage) », « la mission (Déblocage) » : ce qui manque, dit avec les noms.
+  // Noms des achats, même retirés d’un plan de secours (« Sans les achats d’avant ») : un message ne montre jamais un identifiant.
+  function knownNames(p, purchases) { var names = {}; purchases.forEach(function (x) { names[x.id] = x.name; }); var k = p.knownNames && typeof p.knownNames === 'object' ? p.knownNames : {}; Object.keys(k).forEach(function (id) { if (typeof k[id] === 'string' && !names[id]) names[id] = k[id].slice(0, 120); }); return names; }
+  function lockedReason(c, st, a) {
+    var need = (a.requires || []).filter(function (id) { return !st.owned[id] && !st.done[id]; }).map(function (id) { var x = c.purchases.filter(function (y) { return y.id === id; })[0]; var m = c.acts.filter(function (y) { return y.id === id; })[0]; return x ? { k: 'p', n: x.name } : m ? { k: 'm', n: m.name } : { k: 'p', n: (c.names && c.names[id]) || id }; });
+    (a.requiresMissions || []).filter(function (id) { return !st.done[id]; }).forEach(function (id) { var x = c.acts.filter(function (y) { return y.id === id; })[0]; need.push({ k: 'm', n: x ? x.name : (c.names && c.names[id]) || id }); });
+    var ps = need.filter(function (x) { return x.k === 'p'; }).map(function (x) { return x.n; }), ms = need.filter(function (x) { return x.k === 'm'; }).map(function (x) { return x.n; });
+    return [(ps.length ? (ps.length > 1 ? 'des achats (' : 'un achat (') + ps.join(', ') + ')' : '') + (ps.length && ms.length ? ' et ' : '') + (ms.length ? (ms.length > 1 ? 'les missions (' : 'la mission (') + ms.join(', ') + ')' : '')];
+  }
+  function missionResult(c, st, sessions, extra) {
+    var ok = reachedOf(c, st), total = sessions.length;
+    var weeks = total === 0 ? 0 : Math.floor((total - 1) / c.daysPerWeek);
+    var days = c.continuous ? null : total === 0 ? 0 : weeks * 7 + ((total - 1) % c.daysPerWeek) + 1;
+    var phases = [];
+    sessions.forEach(function (se) {
+      var key = se.steps.map(function (s2) { return s2.id + '×' + s2.runs; }).join('|') + '#' + Math.round(se.gain);
+      var last = phases[phases.length - 1];
+      if (last && last.key === key && !last.purchasesAfter.length && !(se.purchasesBefore || []).length && !(se.onceSteps || []).length) { last.to = se.index; last.count += 1; last.cashAfter = se.cashAfter; last.unitsAfter = se.unitsAfter; last.purchasesAfter = se.purchasesAfterOnly.slice(); }
+      else phases.push({ key: key, from: se.index, to: se.index, count: 1, steps: se.steps, gain: se.gain, unitsGain: se.unitsGain, cashBefore: se.cashBefore, cashAfter: se.cashAfter, unitsAfter: se.unitsAfter, purchasesAfter: se.purchasesAfterOnly.slice(), purchasesBefore: (se.purchasesBefore || []).slice(), onceSteps: (se.onceSteps || []).slice() });
+    });
+    var missing = Math.max(0, subtract(goalMoneyOf(c) + (c.meaning === 'held' && c.goalPrice === null ? 0 : c.reserve), c.meaning === 'cumulative' && c.goalPrice === null ? st.earned + c.reserve : st.cash));
+    var conserved = Math.abs(c.capital + st.receipts - st.spends - st.cash) <= 1e-6 * Math.max(1, Math.abs(st.cash));
+    return finish({ sessions: sessions, totalSessions: c.continuous ? null : total, totalMinutes: extra.totalMinutes, activeMinutes: extra.activeMinutes, days: days, weeks: c.continuous ? null : total === 0 ? 0 : ceil(total / c.daysPerWeek),
+      phases: phases.map(function (ph) { return { from: ph.from, to: ph.to, count: ph.count, steps: ph.steps, gain: ph.gain, unitsGain: ph.unitsGain, cashBefore: ph.cashBefore, cashAfter: ph.cashAfter, unitsAfter: ph.unitsAfter, purchasesAfter: ph.purchasesAfter, purchasesBefore: ph.purchasesBefore, onceSteps: ph.onceSteps }; }),
+      purchases: c.purchases.map(function (x) { return { id: x.id, name: x.name, price: x.price, boostHourly: x.boostHourly, minutes: x.minutes, usagePerSession: x.usage, atSession: x.at, atMinute: x.atMinute, before: x.before, owned: x.owned }; }),
+      reached: ok, finalCash: st.cash, finalUnits: st.units, missing: ok ? 0 : missing, missingUnits: c.goalUnits === null ? 0 : Math.max(0, c.goalUnits - st.units), averagePerSession: c.continuous ? null : total ? subtract(st.cash, c.capital) / total : null, goalMoney: goalMoneyOf(c), startCash: c.capital, startUnits: c.units, limited: extra.limited || !ok,
+      note: ok ? (extra.limited ? extra.limitNote : null) : extra.failNote,
+      route: st.route, events: st.events, lowPoint: { cash: st.low.cash, at: st.low.at, t: st.low.t === undefined ? null : st.low.t }, earned: st.earned, conserved: conserved, continuous: c.continuous, goalMeaning: c.meaning, onceDone: Object.keys(st.done), method: extra.method }, missionShape);
+  }
+  // Mode « parties » (comme avant) : partie après partie ; achats au début de la partie 1 si possible, puis entre deux
+  // parties ; le temps d’obtention d’un achat se prend au début de la partie suivante ; missions de déblocage d’abord.
+  function missionSessions(c) {
+    var st = missionState(c), sessions = [], totalActive = 0, limited = false, carry = 0;
+    var first = buyPurchases(c, st, 0, 1, 'before');
+    first.forEach(function (x) { carry += x.minutes; });
+    for (var n = 1; n <= MISSION_MAX_SESSIONS && !reachedOf(c, st); n += 1) {
+      var cashBefore = st.cash, unitsBefore = st.units, t = Math.min(c.sessionMinutes, carry), onceSteps = [], before = n === 1 ? first.map(function (x) { return x.name; }) : [], acquiring = t > 0;
+      carry -= t;
+      // Missions de déblocage prêtes : une seule fois chacune, si elles tiennent dans la partie et se paient.
+      for (var guard = 0; guard < c.acts.length; guard += 1) {
+        var once = c.acts.filter(function (a) { return onceReady(c, st, a) && t + a.res.activeMinutes <= c.sessionMinutes + 1e-9 && affordableStart(c, st, a); })[0];
+        if (!once) break;
+        t = runOnce(c, st, once, t, n); onceSteps.push({ id: once.id, name: once.name });
+        totalActive += once.res.activeMinutes;
+      }
+      var available = c.acts.filter(function (a) { return !a.once && satisfied(a.requires, st) && satisfied(a.requiresMissions, st); });
+      var entries = available.map(function (a) { return Object.assign({}, a.entry, { id: a.id, name: a.name, investment: a.paid ? 0 : a.entry.investment }); });
+      var session = null, unitsGain = 0, used = [], remaining = subtract(c.sessionMinutes, t);
+      var needUnits = c.goalUnits !== null && st.units < c.goalUnits - 1e-9;
+      if (entries.length && remaining > 0) {
+        if (needUnits && available.some(function (a) { return a.res.units > 0; })) {
+          var best = null;
+          available.forEach(function (a) {
+            if (!(a.res.units > 0)) return;
+            var r = inverse({ minutes: remaining, capital: st.cash, reserve: c.reserve, activity: Object.assign({}, a.entry, { investment: a.paid ? 0 : a.entry.investment }) });
+            if (!r.valid || !r.runs) return;
+            var gained = r.runs * a.res.units;
+            if (!best || gained > best.units || (gained === best.units && r.profit > best.profit)) best = { a: a, r: r, units: gained, profit: r.profit };
+          });
+          if (best) { session = { profit: best.profit, investment: best.a.paid ? 0 : best.a.entry.investment, runs: best.r.runs, activeMinutes: best.r.totalMinutes, breakdown: [{ id: best.a.id, name: best.a.name, runs: best.r.runs, net: best.r.runs * best.a.res.net }], timeline: null, single: best }; unitsGain = best.units; used = [best.a]; }
+        }
+        if (!session) {
+          var sp = sessionPlan({ capital: st.cash, reserve: c.reserve, minutes: remaining, maxRepeat: c.maxRepeat, activities: entries });
+          if (sp.valid && sp.runs) { session = sp; used = available.filter(function (a) { return sp.breakdown.some(function (b) { return b.id === a.id && b.runs; }); }); if (sp.limited) limited = true; unitsGain = sp.breakdown.reduce(function (sum, b) { var a = available.filter(function (x) { return x.id === b.id; })[0]; return sum + (a && a.res.units > 0 ? a.res.units * b.runs : 0); }, 0); }
+        }
+      }
+      var passive = (st.boost + c.hourly) * c.sessionMinutes / 60;
+      var passiveUnits = c.unitsHourly * c.sessionMinutes / 60;
+      var upkeepNow = c.upkeep + st.upkeepOwned;
+      var sessionGain = session ? session.profit : 0;
+      // Une partie prise par l’obtention d’un achat avance le parcours, même sans gain.
+      var progress = sessionGain + passive - upkeepNow > 1e-9 || onceSteps.length > 0 || acquiring || (needUnits && (unitsGain > 0 || passiveUnits > 0));
+      if (!progress) {
+        var locked = c.acts.filter(function (a) { return !a.once && available.indexOf(a) < 0; }), pendingOnce = c.acts.filter(function (a) { return a.once && !st.done[a.id]; });
+        var why = n !== 1 ? 'À la partie ' + n + ', plus aucune mission ne rentre ni ne rapporte : vérifie tes missions et tes achats.'
+          : needUnits && !(unitsGain > 0 || passiveUnits > 0) && sessionGain + passive - upkeepNow > 1e-9 ? 'Aucune de tes missions ne donne de points : écris les points gagnés par mission (ou par heure).'
+          : !available.length && locked.length ? 'Aucune mission n’est possible au départ : « ' + locked[0].name + ' » demande d’abord ' + lockedReason(c, st, locked[0]).join(', ') + '. Ajoute une mission faisable tout de suite, ou coche « je l’ai déjà » sur ce qu’il te faut.'
+          : pendingOnce.length && !available.length ? 'La mission de déblocage « ' + pendingOnce[0].name + ' » ne peut pas se faire : ' + (lockedReason(c, st, pendingOnce[0]).length ? 'il faut d’abord ' + lockedReason(c, st, pendingOnce[0]).join(', ') + '.' : 'elle ne tient pas dans une partie ou ses frais dépassent ton argent disponible.')
+          : available.length && available.every(function (a) { return !affordableStart(c, st, a); }) ? '« ' + available[0].name + ' » demande ' + ((available[0].entry.cost || 0) + (available[0].paid ? 0 : available[0].entry.investment || 0)).toLocaleString('fr-FR') + ' $ avant de commencer, et il ne te reste que ' + Math.max(0, subtract(st.cash, c.reserve)).toLocaleString('fr-FR') + ' $ utilisables' + (st.route.some(function (r) { return r.type === 'acquire'; }) ? ' après tes achats d’avant' : '') + ' : baisse l’argent gardé de côté ou ajoute une mission moins chère à lancer.'
+          : 'Aucune mission ne rentre dans une partie avec ce que tu as : ajoute du temps, choisis une mission plus courte, ou vérifie tes frais et tes achats.';
+        return fail(Object.assign({}, missionShape, { sessions: sessions, route: st.route }), why);
+      }
+      // Grand livre de la partie : frais avant chaque mission, récompense à la fin ; revenus « par heure » et dépenses par partie à la fin.
+      if (session && session.timeline) session.timeline.forEach(function (s2) { ledgerAdd(st, s2.start + t, 'spend', s2.cost + s2.investment, 'Frais de « ' + s2.name + ' » (partie ' + n + ')'); ledgerAdd(st, s2.end + t, 'receive', s2.reward, 'Récompense de « ' + s2.name + ' » (partie ' + n + ')'); st.earned += s2.reward - s2.cost; });
+      else if (session && session.single) {
+        var a0 = session.single.a, inv0 = a0.paid ? 0 : a0.entry.investment || 0, rew0 = (a0.entry.reward || 0) * (a0.entry.share === undefined ? 100 : a0.entry.share) / 100, cost0 = a0.entry.cost || 0, t0 = t;
+        for (var k0 = 0; k0 < session.runs; k0 += 1) { ledgerAdd(st, t0, 'spend', cost0 + (k0 === 0 ? inv0 : 0), 'Frais de « ' + a0.name + ' » (partie ' + n + ')'); t0 += a0.res.activeMinutes; ledgerAdd(st, t0, 'receive', rew0, 'Récompense de « ' + a0.name + ' » (partie ' + n + ')'); st.earned += rew0 - cost0; t0 += a0.res.cycleMinutes - a0.res.activeMinutes; }
+      }
+      ledgerAdd(st, c.sessionMinutes, 'receive', passive, 'Gain par heure (partie ' + n + ')'); st.earned += passive;
+      ledgerAdd(st, c.sessionMinutes, 'spend', upkeepNow, 'Dépenses de la partie ' + n);
+      used.forEach(function (a) { a.paid = true; });
+      st.units += unitsGain + passiveUnits;
+      var active = session ? session.activeMinutes : (c.hourly > 0 || passiveUnits > 0 || st.boost > 0 ? subtract(c.sessionMinutes, t) : 0);
+      totalActive += active;
+      var boughtAfter = buyPurchases(c, st, c.sessionMinutes, n, 'after');
+      boughtAfter.forEach(function (x) { carry += x.minutes; });
+      sessions.push({ index: n, steps: session ? session.breakdown.filter(function (b) { return b.runs; }).map(function (b) { return { id: b.id, name: b.name, runs: b.runs, net: b.net }; }) : [], onceSteps: onceSteps, gain: subtract(st.cash + boughtAfter.reduce(function (sum, x) { return sum + x.price; }, 0), cashBefore), passive: passive, upkeep: upkeepNow, cashBefore: cashBefore, cashAfter: st.cash, unitsAfter: st.units, unitsGain: st.units - unitsBefore, purchases: before.concat(boughtAfter.map(function (x) { return x.name; })), purchasesBefore: before, purchasesAfterOnly: boughtAfter.map(function (x) { return x.name; }), activeMinutes: active });
+    }
+    var ok = reachedOf(c, st);
+    return missionResult(c, st, sessions, { totalMinutes: sessions.length * c.sessionMinutes, activeMinutes: totalActive, limited: limited, limitNote: 'Programme trouvé parmi les séquences explorées à chaque partie ; il peut en exister un plus rapide.', failNote: ok ? null : 'Le but n’est pas atteint en ' + MISSION_MAX_SESSIONS + ' parties : réduis le but, allonge tes parties ou change de missions.', method: 'sessions' });
+  }
+  // Mode « parcours » (sans durée de partie) : une étape après l’autre, sans calendrier. À chaque étape : acheter ce qui
+  // peut l’être (dans l’ordre donné), faire une mission de déblocage prête, sinon la mission répétable qui rapporte le
+  // plus par minute parmi celles qui sont possibles maintenant ; on s’arrête dès que le but est atteint. Méthode simple et
+  // annoncée : elle ne prétend pas trouver l’optimum.
+  function missionFlow(c) {
+    var st = missionState(c), t = 0, active = 0, runs = {}, ready = {}, streak = { id: null, n: 0 }, steps = 0, limited = false;
+    c.acts.forEach(function (a) { runs[a.id] = 0; ready[a.id] = 0; });
+    function acquire() { var b = buyPurchases(c, st, t, 1, 'flow', true); b.forEach(function (x) { t += x.minutes; active += x.minutes; }); return b.length; }
+    function accrue(dt, label) { var rate = st.boost + c.hourly; if (rate > 0 && dt > 0) { ledgerAdd(st, t, 'receive', rate * dt / 60, label || 'Gain par heure'); st.earned += rate * dt / 60; } }
+    while (!reachedOf(c, st) && steps < FLOW_MAX_STEPS) {
+      steps += 1;
+      if (acquire()) continue;
+      var once = c.acts.filter(function (a) { return onceReady(c, st, a) && affordableStart(c, st, a); })[0];
+      if (once) { t = runOnce(c, st, once, t, 1); active += once.res.activeMinutes; continue; }
+      var candidates = c.acts.filter(function (a) { return !a.once && a.res.net > 0 && satisfied(a.requires, st) && satisfied(a.requiresMissions, st) && affordableStart(c, st, a) && !(streak.id === a.id && streak.n >= c.maxRepeat && c.acts.some(function (o) { return o !== a && !o.once && o.res.net > 0 && satisfied(o.requires, st) && satisfied(o.requiresMissions, st); })); });
+      if (!candidates.length) {
+        var rate = st.boost + c.hourly;
+        if (rate > 0 || c.unitsHourly > 0) {
+          // Gain continu seulement : on avance jusqu’au prochain achat possible ou jusqu’au but.
+          var nextBuy = c.purchases.filter(function (x) { return !x.owned; })[0], needCash = null;
+          if (nextBuy && satisfied(nextBuy.requires, st)) needCash = nextBuy.price + c.reserve;
+          var goalCash = c.goalPrice !== null || c.goalTarget !== null ? goalMoneyOf(c) + (c.meaning === 'held' && c.goalPrice === null ? 0 : c.reserve) : null;
+          var target = [needCash, goalCash].filter(function (x) { return x !== null && x > st.cash; }).sort(function (a, b) { return a - b; })[0];
+          var dt = null;
+          if (c.meaning === 'cumulative' && c.goalPrice === null && c.goalTarget !== null && rate > 0) dt = Math.max(0, goalMoneyOf(c) - st.earned) * 60 / rate;
+          if (target !== undefined && rate > 0) dt = dt === null ? (target - st.cash) * 60 / rate : Math.min(dt, (target - st.cash) * 60 / rate);
+          if (c.goalUnits !== null && st.units < c.goalUnits && c.unitsHourly > 0) { var du = (c.goalUnits - st.units) * 60 / c.unitsHourly; dt = dt === null ? du : Math.max(dt, du); }
+          if (dt === null || !(dt > 0)) break;
+          ledgerAdd(st, t + dt, 'receive', rate * dt / 60, 'Gain par heure'); st.earned += rate * dt / 60; st.units += c.unitsHourly * dt / 60; t += dt; active += dt;
+          continue;
+        }
+        break;
+      }
+      // Rentabilité par minute active ; à égalité l’ordre donné. Attente si la meilleure n’est pas encore prête.
+      candidates.sort(function (a, b) { return b.res.net / b.res.activeMinutes - a.res.net / a.res.activeMinutes || c.acts.indexOf(a) - c.acts.indexOf(b); });
+      var readyNow = candidates.filter(function (a) { return ready[a.id] <= t + 1e-9; });
+      var pick = readyNow[0] || candidates.slice().sort(function (a, b) { return ready[a.id] - ready[b.id]; })[0];
+      if (ready[pick.id] > t) { var wait = ready[pick.id] - t; t = ready[pick.id]; accrue(wait, 'Gain par heure pendant l’attente'); }
+      var invest = pick.paid ? 0 : pick.entry.investment || 0, cost = (pick.entry.cost || 0) + invest;
+      ledgerAdd(st, t, 'spend', cost, 'Frais de « ' + pick.name + ' »');
+      var duration = pick.res.activeMinutes - (pick.entry.prepOnce && runs[pick.id] ? pick.entry.prep || 0 : 0), reward = (pick.entry.reward || 0) * (pick.entry.share === undefined ? 100 : pick.entry.share) / 100;
+      t += duration; active += duration;
+      ledgerAdd(st, t, 'receive', reward, 'Récompense de « ' + pick.name + ' »');
+      accrue(duration);
+      st.earned += reward - (pick.entry.cost || 0); st.units += pick.res.units > 0 ? pick.res.units : 0; pick.paid = true;
+      runs[pick.id] += 1; ready[pick.id] = t + (pick.res.cycleMinutes - pick.res.activeMinutes);
+      streak = streak.id === pick.id ? { id: pick.id, n: streak.n + 1 } : { id: pick.id, n: 1 };
+      var last = st.route[st.route.length - 1];
+      if (last && last.type === 'run' && last.id === pick.id) { last.runs += 1; last.minutes = t - last.start; last.spend += cost; last.receive += reward; last.cashAfter = st.cash; }
+      else st.route.push({ type: 'run', id: pick.id, name: pick.name, session: 1, start: t - duration, minutes: duration, runs: 1, spend: cost, receive: reward, cashAfter: st.cash, requires: pick.requires.concat(pick.requiresMissions) });
+    }
+    if (steps >= FLOW_MAX_STEPS) limited = true;
+    var ok = reachedOf(c, st);
+    if (!ok && !limited) {
+      var locked = c.acts.filter(function (a) { return !satisfied(a.requires, st) || !satisfied(a.requiresMissions, st); });
+      var nextBuy2 = c.purchases.filter(function (x) { return !x.owned; })[0];
+      var why = nextBuy2 && !satisfied(nextBuy2.requires, st) ? 'L’achat « ' + nextBuy2.name + ' » attend d’abord ' + lockedReason(c, st, { requires: nextBuy2.requires.filter(function (id) { return c.purchases.some(function (y) { return y.id === id; }); }), requiresMissions: nextBuy2.requires.filter(function (id) { return c.acts.some(function (y) { return y.id === id; }); }) }).join(', ') + ', qui ne peut pas se faire.'
+        : nextBuy2 ? 'Il manque ' + Math.max(0, nextBuy2.price + c.reserve - st.cash).toLocaleString('fr-FR') + ' $ pour « ' + nextBuy2.name + ' », et aucune mission possible sans lui ne rapporte : ajoute une mission faisable maintenant (financement), ou baisse la réserve.'
+        : locked.length ? '« ' + locked[0].name + ' » demande d’abord ' + lockedReason(c, st, locked[0]).join(', ') + '.'
+        : 'Aucune mission possible ne rapporte plus que ses frais avec ce que tu as.';
+      return fail(Object.assign({}, missionShape, { route: st.route, continuous: true }), why);
+    }
+    var steps2 = Object.keys(runs).filter(function (id) { return runs[id] > 0; }).map(function (id) { var a = c.acts.filter(function (x) { return x.id === id; })[0]; return { id: id, name: a.name, runs: runs[id], net: runs[id] * a.res.net }; });
+    var one = { index: 1, steps: steps2, onceSteps: st.route.filter(function (r) { return r.type === 'unlock'; }).map(function (r) { return { id: r.id, name: r.name }; }), gain: subtract(st.cash, c.capital) + c.purchases.filter(function (x) { return x.at !== null; }).reduce(function (s2, x) { return s2 + x.price; }, 0), passive: 0, upkeep: 0, cashBefore: c.capital, cashAfter: st.cash, unitsAfter: st.units, unitsGain: st.units - c.units, purchases: c.purchases.filter(function (x) { return x.at !== null; }).map(function (x) { return x.name; }), purchasesBefore: [], purchasesAfterOnly: [], activeMinutes: active };
+    return missionResult(c, st, t > 0 || steps2.length ? [one] : [], { totalMinutes: t, activeMinutes: active, limited: limited, limitNote: 'Parcours arrêté après ' + FLOW_MAX_STEPS + ' étapes.', failNote: limited ? 'Le parcours dépasse ' + FLOW_MAX_STEPS + ' étapes : réduis le but ou choisis des missions qui rapportent plus.' : null, method: 'flow' });
   }
 
   // Plans A, B, C : le programme complet, puis chaque mission seule, puis sans
@@ -888,15 +1056,16 @@
       var p = data(input);
       var acts = Array.isArray(p.activities) ? p.activities : [];
       var plans = [];
-      function add(id, label, changes, note) { var r = missionPlan(Object.assign({}, p, changes)); plans.push({ id: id, label: label, note: note || null, valid: r.valid && r.reached, reason: r.valid ? (r.reached ? null : r.note) : r.reason, totalSessions: r.valid && r.reached ? r.totalSessions : null, days: r.valid && r.reached ? r.days : null, activeMinutes: r.valid ? r.activeMinutes : null, finalCash: r.valid ? r.finalCash : null, phases: r.valid ? r.phases.slice(0, 6) : [], result: r }); }
+      var allNames = (p.purchases || []).concat(acts).reduce(function (o, x) { if (x && typeof x.id === 'string' && typeof x.name === 'string') o[x.id] = x.name; return o; }, {});
+      function add(id, label, changes, note) { var r = missionPlan(Object.assign({}, p, { knownNames: allNames }, changes)); plans.push({ id: id, label: label, note: note || null, valid: r.valid && r.reached, reason: r.valid ? (r.reached ? null : r.note) : r.reason, totalSessions: r.valid && r.reached ? r.totalSessions : null, totalMinutes: r.valid && r.reached ? r.totalMinutes : null, days: r.valid && r.reached ? r.days : null, activeMinutes: r.valid ? r.activeMinutes : null, finalCash: r.valid ? r.finalCash : null, phases: r.valid ? r.phases.slice(0, 6) : [], result: r }); }
       add('all', acts.length > 1 ? 'Le meilleur mélange de tes missions' : (acts.length ? 'Ta mission, répétée' : 'Ton gain par heure, partie après partie'), {}, acts.length > 1 ? 'À chaque partie, les missions qui rapportent le plus dans le temps disponible.' : null);
       if (!plans[0].result.valid) return fail(shape, plans[0].result.reason);
       if (acts.length > 1) acts.forEach(function (a, i) { add('only-' + (typeof a.id === 'string' ? a.id : i), 'Seulement « ' + (a && a.name ? String(a.name).slice(0, 60) : 'Mission ' + (i + 1)) + ' »', { activities: [a] }, 'La même mission, répétée tant qu’elle rentre dans la partie.'); });
-      if (Array.isArray(p.purchases) && p.purchases.some(function (x) { return x && !x.owned; })) add('no-purchases', 'Sans les achats d’avant', { purchases: (p.purchases || []).filter(function (x) { return x && x.owned; }) }, 'Seulement si tu peux te passer de ces achats pour ton but.');
+      if (Array.isArray(p.purchases) && p.purchases.some(function (x) { return x && !x.owned; })) add('no-purchases', 'Sans les achats d’avant', { purchases: (p.purchases || []).filter(function (x) { return x && x.owned; }), knownNames: (p.purchases || []).reduce(function (o, x) { if (x && typeof x.id === 'string' && typeof x.name === 'string') o[x.id] = x.name; return o; }, {}) }, 'Seulement si tu peux te passer de ces achats pour ton but.');
       (Array.isArray(p.extraPlans) ? p.extraPlans : []).slice(0, 6).forEach(function (x, i) { if (x && typeof x === 'object') add(typeof x.id === 'string' ? x.id : 'extra-' + i, typeof x.label === 'string' ? x.label : 'Autre plan', x.changes && typeof x.changes === 'object' ? x.changes : {}, typeof x.note === 'string' ? x.note : null); });
-      var ranked = plans.filter(function (x) { return x.valid; }).sort(function (a, b) { return a.totalSessions - b.totalSessions || b.finalCash - a.finalCash; });
+      var ranked = plans.filter(function (x) { return x.valid; }).sort(function (a, b) { return (a.totalSessions || 0) - (b.totalSessions || 0) || (a.totalMinutes || 0) - (b.totalMinutes || 0) || b.finalCash - a.finalCash; });
       var seen = {}, distinct = [];
-      ranked.forEach(function (x) { var key = x.totalSessions + '|' + x.phases.map(function (ph) { return ph.steps.map(function (st) { return st.id + st.runs; }).join(','); }).join('/'); if (!seen[key]) { seen[key] = true; distinct.push(x); } });
+      ranked.forEach(function (x) { var key = x.totalSessions + '|' + x.totalMinutes + '|' + x.phases.map(function (ph) { return ph.steps.map(function (st) { return st.id + st.runs; }).join(','); }).join('/'); if (!seen[key]) { seen[key] = true; distinct.push(x); } });
       var failed = plans.filter(function (x) { return !x.valid; });
       var results = {}; plans.forEach(function (x) { results[x.id] = x.result; });
       return finish({ plans: distinct.concat(failed).map(function (x) { var out = Object.assign({}, x); delete out.result; return out; }), results: results }, shape);
@@ -913,6 +1082,7 @@
       var base = missionPlan(input);
       if (!base.valid) return fail(shape, base.reason);
       if (!base.reached) return fail(shape, base.note);
+      if (base.continuous) return fail(shape, 'Une échéance en jours demande un calendrier : écris la durée d’une partie et tes jours de jeu par semaine.');
       var p = data(input);
       if (base.days <= d) return finish({ feasible: true, days: base.days, spareDays: d - base.days, everydayDays: null, requiredSessionMinutes: null, requiredHourly: null }, shape);
       var every = null, dpw = number(p.daysPerWeek, 'les jours par semaine', 7, { defaultValue: 7, integer: true, positive: true });
@@ -930,6 +1100,12 @@
     var shape = { points: [] };
     try {
       if (!result || !result.valid || !Array.isArray(result.sessions)) return fail(shape, 'Programme non calculé.');
+      // Parcours sans parties : une marche par dépense ou récompense (l’argent n’arrive jamais « petit à petit »).
+      if (result.continuous) {
+        var pts = [{ hours: 0, cash: result.startCash, units: result.startUnits, label: 'Départ', purchase: null }], prev = result.startCash;
+        (result.events || []).forEach(function (e) { var h = e.t / 60; if (e.cash !== prev) { pts.push({ hours: h, cash: prev, label: null, purchase: null, hold: true }); pts.push({ hours: h, cash: e.cash, label: e.label, purchase: e.type === 'spend' && /^Achat/.test(e.label) ? e.label.replace(/^Achat « |»$/g, '') : null }); prev = e.cash; } });
+        return finish({ points: pts, stepped: true }, shape);
+      }
       var minutes = result.totalSessions ? result.totalMinutes / result.totalSessions : 0;
       var points = [{ hours: 0, cash: result.startCash, units: result.startUnits, label: 'Départ', purchase: null }];
       result.sessions.forEach(function (se) { points.push({ hours: se.index * minutes / 60, cash: se.cashAfter, units: se.unitsAfter, label: 'Partie ' + se.index + (se.purchases.length ? ' · ' + se.purchases.join(', ') : ''), purchase: se.purchases.length ? se.purchases.join(', ') : null }); });

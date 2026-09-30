@@ -42,6 +42,14 @@ Hébergé sur Vercel, qui publie tel quel le contenu de ce dépôt : **aucune co
 - Aucune donnée issue de fuites. Crédit gtadb.org conservé sur la carte et dans les mentions légales.
 
 
+## Mission v7.48 → v7.52 : les huit calculs et le business plan (lot 2, v7.49, 29 septembre 2026)
+
+- **Analyse par outil** : `LKCalcScenario.analysis(outil, état, activités, {catalogue})` (dans `calculateurs-scenario.js`) s’appuie sur `calculateurs-modele.js` et rend, pour les neuf outils, les chiffres de décision et `explain` (six parties : but et horizon, conditions, chiffres avec origine, facteurs décisifs, ce qui changerait la réponse, critères écartés). Affichage commun : `workspace.explainBlock(analyse, outil)` (classe `b-explain`). Un facteur du registre ni utilisé ni écarté est une erreur de test.
+- **Nouveaux critères réellement utilisés** : coût d’usage (ton chiffre > simulation choisie en Expert > « non confirmé », jamais 0), revente, horizon en parties, besoin (terrain, places, chargement), coût complet et point de bascule (`compare.criterion = 'cheapestTotal'`), ordre proposé et dépendances (`assets[i].requires`, `order.objective`), budget partiel, classement des activités et échec, échéance et sens du but (`goal.meaning` / `plan.goal.meaning` : `available`, `held`, `cumulative`).
+- **Business plan** : `missionPlan` suit toute la chaîne (achats d’avant et leur temps, prérequis, missions `once` / `done` / `requiresMissions`, coût par partie, réserve, grand livre, point bas) ; sans durée de partie, parcours continu en temps de jeu (`result.continuous`, `route`, pas de jours). Interface : chaîne des étapes (`visual.chain`), courbe en marches (`series.step`), points réels non reliés (`series.dots`), « Parcours à compléter », variantes (`plan.variants`, 5 au plus), achats indispensables (`plan.locked`).
+- **Liens vers le calculateur** : `tool`, `mode` (`simple`, `guided`/`pas-a-pas`, `expert`), `type`, `id`, `ids`, `capital`, `target`, `hourly`, `reserve`, `players`, `minutes`, `price`, `#plan=` ; chaque valeur va dans l’outil demandé ; un lien qui change un calcul existant en garde une copie dans « Mes calculs » (bandeau `#calc-link-notice`).
+- Tests : `calculateurs-v749.test.cjs`, `calculateurs-plan-ui-v749.test.cjs`, `calculateurs-liens-v749.test.cjs`. Les suites navigateur écrivent dans le dossier passé en argument : toujours un dossier **hors dépôt**.
+
 ## Mission v7.48 → v7.52 : fondations communes (lot 1, v7.48, 29 septembre 2026)
 
 - Suivi unique et point de reprise : `outils/SUIVI-MISSION.md` ; matrice des huit outils et du plan : `outils/MATRICE-COUVERTURE.md` ; inventaire de départ : `outils/INVENTAIRE-MISSION.md`.

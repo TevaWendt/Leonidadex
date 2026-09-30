@@ -8,7 +8,7 @@
    dans le plan : durée d’obtention et prérequis des achats d’avant, missions de déblocage faites une fois, choix
    verrouillés, variantes sans écraser le plan de référence, identifiant de chaque réalisation (pas de double crédit),
    versions du modèle et des données. Une case nouvelle vaut null (pas encore écrit), jamais 0 inventé. */
-(function(root,factory){'use strict';if(typeof module==='object'&&module.exports)module.exports=factory(require('./calculateurs-engine.js'));else root.LKCalcScenario=factory(root.LKCalcEngine);})(typeof globalThis!=='undefined'?globalThis:this,function(E){
+(function(root,factory){'use strict';if(typeof module==='object'&&module.exports)module.exports=factory(require('./calculateurs-engine.js'),require('./calculateurs-modele.js'));else root.LKCalcScenario=factory(root.LKCalcEngine,root.LKCalcModel);})(typeof globalThis!=='undefined'?globalThis:this,function(E,M){
 'use strict';
 const copy=x=>JSON.parse(JSON.stringify(x));
 const tools=['goal','activities','session','purchase','order','roi','budget','compare'];
@@ -23,7 +23,7 @@ const compareTemplate={keys:[],criterion:'value',hours:10};
 const planTemplateV4={kind:'purchase',key:'',target:null,usePrerequisites:true,upkeepPerSession:0,priority:'balanced',activity:'',details:false,strategy:'auto',deadlineDays:null,countDoneBoost:true,done:[],log:[],playedMinutes:0};
 // v5 : le plan possède ses réponses. goal = le but (achat, somme, ou déblocage par des points : rang, XP, réputation…) ;
 // situation = où en est le joueur ; missions = ses missions à lui (copiées, jamais liées) ; prerequisites = ses achats d'avant.
-const planGoalTemplate={kind:'purchase',name:'',itemId:'',referencePrice:null,price:null,boostHourly:0,target:null,unitLabel:'points',targetUnits:null,currentUnits:0,alsoPrice:0,meaning:'held'};
+const planGoalTemplate={kind:'purchase',name:'',itemId:'',referencePrice:null,price:null,boostHourly:0,target:null,unitLabel:'points',targetUnits:null,currentUnits:0,alsoPrice:0,meaning:'available'};
 const planSituationTemplate={capital:null,reserve:0,hourly:null,unitsHourly:0,dailyMinutes:null,daysPerWeek:7,upkeepPerSession:0};
 const planMissionTemplate={id:'m-1',name:'Ma mission',reward:null,cost:0,duration:null,prep:0,cooldown:0,share:100,investment:0,owned:false,units:0,requires:[],once:false,done:false,requiresMissions:[]};
 const planPrereqTemplate={id:'p-1',name:'Mon achat d’avant',itemId:'',referencePrice:null,price:null,boostHourly:0,owned:false,minutes:null,requires:[],usagePerSession:null};
@@ -45,7 +45,7 @@ function defaults(old){
  s.session={...s.session,daysPerWeek:7,usualMinutes:60};
  s.activities=s.activities.map(a=>({...a,prepOnce:false,requiresPurchaseIds:[]}));
  s.roi={key:'free-1',mode:'estimate',activityIds:[],hours:10,revenueHourly:null,costHourly:0,gainPercent:20,durationReduction:0,recoveryActivity:'',compareKey:''};
- s.order={keys:[]};s.budget={source:'basket',extra:0,allocations:[50000,60000,20000,10000,0]};
+ s.order={keys:[],objective:'all'};s.budget={source:'basket',extra:0,allocations:[50000,60000,20000,10000,0]};
  s.compare=copy(compareTemplate);s.plan=copy(planTemplate);
  // Exemple de départ du plan : les mêmes chiffres d'exemple que les huit calculs, mais écrits ici, dans ses propres cases.
  s.plan.goal.kind='amount';s.plan.goal.target=s.goal.target;s.plan.situation={capital:s.goal.capital,reserve:s.goal.reserve,hourly:s.goal.hourly,unitsHourly:0,dailyMinutes:s.goal.dailyMinutes,daysPerWeek:7,upkeepPerSession:0};
@@ -105,7 +105,7 @@ function validate(raw,initial){
   if(typeof t==='boolean'){if(typeof v!=='boolean')throw Error('Option invalide : '+key);return v;}
   if(Array.isArray(t)){
    if(!Array.isArray(v)||v.length>100)throw Error('Liste invalide : '+key);
-   if(key==='log'){return v.slice(0,60).map(e=>{if(!e||typeof e!=='object'||Array.isArray(e))throw Error('Historique du plan invalide.');const capital=typeof e.capital==='number'&&Number.isFinite(e.capital)&&e.capital>=0&&e.capital<=1e12?e.capital:null;if(capital===null)throw Error('Historique du plan invalide.');const num=(x,max)=>typeof x==='number'&&Number.isFinite(x)&&x>=0&&x<=max?x:null;const any=x=>typeof x==='number'&&Number.isFinite(x)&&Math.abs(x)<=1e12?x:null;const runs={};if(e.runs&&typeof e.runs==='object'&&!Array.isArray(e.runs))Object.keys(e.runs).slice(0,12).forEach(k=>{const n=num(e.runs[k],1e5);if(k.length<=60&&n!==null)runs[k]=n;});return {id:typeof e.id==='string'?e.id.slice(0,80):'',at:typeof e.at==='string'?e.at.slice(0,40):'',capital,minutes:num(e.minutes,1e7)??0,forecast:any(e.forecast),note:typeof e.note==='string'?e.note.slice(0,300):'',units:num(e.units,1e12),unitsGain:any(e.unitsGain),gain:any(e.gain),plannedGain:any(e.plannedGain),sessionMinutes:num(e.sessionMinutes,1e5)??0,runs,purchases:Array.isArray(e.purchases)?e.purchases.filter(x=>typeof x==='string'&&x.length<=60).slice(0,20):[]};});}
+   if(key==='log'){const seenLog=new Set();return v.slice(0,60).filter(e=>{if(!e||typeof e!=='object'||typeof e.id!=='string'||!e.id)return true;if(seenLog.has(e.id))return false;seenLog.add(e.id);return true;}).map(e=>{if(!e||typeof e!=='object'||Array.isArray(e))throw Error('Historique du plan invalide.');const capital=typeof e.capital==='number'&&Number.isFinite(e.capital)&&e.capital>=0&&e.capital<=1e12?e.capital:null;if(capital===null)throw Error('Historique du plan invalide.');const num=(x,max)=>typeof x==='number'&&Number.isFinite(x)&&x>=0&&x<=max?x:null;const any=x=>typeof x==='number'&&Number.isFinite(x)&&Math.abs(x)<=1e12?x:null;const runs={};if(e.runs&&typeof e.runs==='object'&&!Array.isArray(e.runs))Object.keys(e.runs).slice(0,12).forEach(k=>{const n=num(e.runs[k],1e5);if(k.length<=60&&n!==null)runs[k]=n;});return {id:typeof e.id==='string'?e.id.slice(0,80):'',at:typeof e.at==='string'?e.at.slice(0,40):'',capital,minutes:num(e.minutes,1e7)??0,forecast:any(e.forecast),note:typeof e.note==='string'?e.note.slice(0,300):'',units:num(e.units,1e12),unitsGain:any(e.unitsGain),gain:any(e.gain),plannedGain:any(e.plannedGain),sessionMinutes:num(e.sessionMinutes,1e5)??0,runs,purchases:Array.isArray(e.purchases)?e.purchases.filter(x=>typeof x==='string'&&x.length<=60).slice(0,20):[]};});}
    if(key==='missions'){if(v.length>12)throw Error('Douze missions au maximum dans le plan.');return v.map((x,i)=>{const m=walk(planMissionTemplate,x,'mission');if(typeof m.id!=='string'||!m.id)m.id='m-'+(i+1);return m;});}
    if(key==='prerequisites'){if(v.length>20)throw Error('Vingt achats d’avant au maximum dans le plan.');return v.map((x,i)=>{const a=walk(planPrereqTemplate,x,'prerequisite');if(typeof a.id!=='string'||!a.id)a.id='p-'+(i+1);return a;});}
    if(key==='variants'){if(v.length>5)throw Error('Cinq variantes au maximum dans le plan.');return v.map((x,i)=>{const a=walk(planVariantTemplate,x,'variant');if(typeof a.id!=='string'||!a.id)a.id='v-'+(i+1);return a;});}
@@ -125,31 +125,46 @@ function validate(raw,initial){
  if(s.activities.some((a,i)=>a.id!==initial.activities[i].id))throw Error('Référence d’activité invalide.');
  if(new Set(s.assets.map(a=>a.key)).size!==s.assets.length||s.assets.some(a=>!a.key||!['none','personal','roi'].includes(a.incomeMode)))throw Error('Références d’achats incompatibles.');
  if(!['estimate','new','improve','continuous'].includes(s.roi.mode)||!['basket','manual'].includes(s.budget.source))throw Error('Modèle de calcul incompatible.');
- if(!['value','cheapest','fastest','profit','utility'].includes(s.compare.criterion)||!PLAN_KINDS.includes(s.plan.goal.kind)||!PLAN_SOURCES.includes(s.plan.source)||!['balanced','fast','safe'].includes(s.plan.priority))throw Error('Réglage de comparaison ou de plan incompatible.');
+ if(!['value','cheapest','cheapestTotal','fastest','profit','utility'].includes(s.compare.criterion)||!PLAN_KINDS.includes(s.plan.goal.kind)||!PLAN_SOURCES.includes(s.plan.source)||!['balanced','fast','safe'].includes(s.plan.priority))throw Error('Réglage de comparaison ou de plan incompatible.');
  if(!STRATEGIES.includes(s.plan.strategy))s.plan.strategy='auto';if(s.plan.deadlineDays!==null&&(!Number.isInteger(s.plan.deadlineDays)||s.plan.deadlineDays<1||s.plan.deadlineDays>36500))s.plan.deadlineDays=null;if(!Number.isFinite(s.plan.playedMinutes)||s.plan.playedMinutes<0)s.plan.playedMinutes=0;if(!Number.isInteger(s.plan.sessionsPlayed)||s.plan.sessionsPlayed<0)s.plan.sessionsPlayed=0;
  if(typeof s.plan.variant!=='string'||s.plan.variant.length>80)s.plan.variant='auto';if(!Number.isInteger(s.plan.maxRepeat)||s.plan.maxRepeat<1||s.plan.maxRepeat>256)s.plan.maxRepeat=100;if(s.plan.goal.unitLabel.trim()==='')s.plan.goal.unitLabel='points';
  {const ids=new Set();s.plan.missions.forEach((m,i)=>{if(ids.has(m.id))m.id='m-'+(i+1)+'-'+ids.size;ids.add(m.id);});const pids=new Set();s.plan.prerequisites.forEach((a,i)=>{if(pids.has(a.id))a.id='p-'+(i+1)+'-'+pids.size;pids.add(a.id);});s.plan.missions.forEach(m=>{m.requires=m.requires.filter(id=>pids.has(id));});}
  s.compare.keys=s.compare.keys.filter(k=>asset(s,k)).slice(0,6);
  s.assets.forEach(a=>{if(!Number.isInteger(a.utility)||a.utility<1||a.utility>5)a.utility=3;if(!ROLES.includes(a.role))a.role='unknown';if(!TERRAINS.includes(a.capabilities.terrain))a.capabilities.terrain='';for(const k of ['perSession','perUse','uses'])if(a.usage[k]!==null&&a.usage[k]<0)a.usage[k]=null;if(a.usage.uses!==null&&!Number.isInteger(a.usage.uses))a.usage.uses=Math.round(a.usage.uses);a.requires=a.requires.filter(k=>k!==a.key);});
  // v6 : sens du but, priorité et besoin d’usage ; une valeur inattendue revient à la valeur par défaut au lieu de tout refuser.
- if(!GOAL_MEANINGS.includes(s.plan.goal.meaning))s.plan.goal.meaning='held';if(!PRIORITIES.includes(s.analysis.priority))s.analysis.priority='fast';if(!TERRAINS.includes(s.analysis.need.terrain))s.analysis.need.terrain='';
- {const pids=new Set(s.plan.prerequisites.map(a=>a.id)),mids=new Set(s.plan.missions.map(m=>m.id));s.plan.prerequisites.forEach(a=>{a.requires=a.requires.filter(id=>pids.has(id)&&id!==a.id);});s.plan.missions.forEach(m=>{m.requiresMissions=m.requiresMissions.filter(id=>mids.has(id)&&id!==m.id);});s.plan.locked=s.plan.locked.filter(id=>id==='strategy'||id==='goal'||mids.has(id)||pids.has(id));}
+ if(!GOAL_MEANINGS.includes(s.plan.goal.meaning))s.plan.goal.meaning='available';if(!GOAL_MEANINGS.includes(s.goal.meaning))s.goal.meaning='available';if(!OBJECTIVES.includes(s.order.objective))s.order.objective='all';if(s.goal.deadlineDays!==null&&(!Number.isInteger(s.goal.deadlineDays)||s.goal.deadlineDays<1||s.goal.deadlineDays>36500))s.goal.deadlineDays=null;if(!PRIORITIES.includes(s.analysis.priority))s.analysis.priority='fast';if(!TERRAINS.includes(s.analysis.need.terrain))s.analysis.need.terrain='';
+ {const pids=new Set(s.plan.prerequisites.map(a=>a.id)),mids=new Set(s.plan.missions.map(m=>m.id));s.plan.prerequisites.forEach(a=>{a.requires=a.requires.filter(id=>(pids.has(id)||mids.has(id))&&id!==a.id);});s.plan.missions.forEach(m=>{m.requiresMissions=m.requiresMissions.filter(id=>mids.has(id)&&id!==m.id);});s.plan.locked=s.plan.locked.filter(id=>id==='strategy'||id==='goal'||mids.has(id)||pids.has(id));}
  for(const t of [...tools,'plan'])if(!['quick','guided','advanced'].includes(s.views[t]))s.views[t]='quick';
  s.mode=s.views[s.tab];return s;
 }
-function activities(s,source=[]){return [...s.activities.map(a=>({...a,status:'manual',investment:a.owned?0:a.investment})),...source];}
+// v7.49 : munitions simulées (ton hypothèse, désactivée par défaut) : ajoutées aux frais de chaque tentative, dans tous les outils.
+function ammoPerAttempt(s){const on=s.analysis&&s.analysis.simulations&&s.analysis.simulations.munitions,v=on?s.analysis.sim.munitions.parTentative:null;return typeof v==='number'&&Number.isFinite(v)&&v>0?v:0;}
+function activities(s,source=[]){const ammo=ammoPerAttempt(s);return [...s.activities.map(a=>({...a,status:'manual',investment:a.owned?0:a.investment,...(ammo&&typeof a.cost==='number'?{cost:a.cost+ammo,ammoSimulated:ammo}:{})})),...source.map(a=>ammo&&typeof a.cost==='number'?{...a,cost:a.cost+ammo,ammoSimulated:ammo}:a)];}
 function eligible(s,source=[]){
  const owned=s.assets.filter(a=>a.owned).map(a=>a.itemId).filter(Boolean);
  return activities(s,source).filter(a=>s.session.enabled.includes(a.id)&&a.players<=s.goal.players&&(a.requiresPurchaseIds||[]).every(id=>owned.includes(id)));
 }
 function purchase(s,source=[]){const a=asset(s,s.purchase.key)||{...assetTemplate,price:null};let boost=a.incomeMode==='personal'?a.boostHourly:0;if(a.incomeMode==='roi'){const r=roi(s,source);boost=s.roi.key===a.key&&['new','improve'].includes(s.roi.mode)&&r.valid&&Number.isFinite(r.netHourly)?Math.max(0,r.netHourly):null;}return {...a,extras:a.extras===null||a.fees===null?null:a.extras+a.fees,capital:s.goal.capital,reserve:s.goal.reserve,target:s.goal.target,hourly:s.goal.hourly,boostHourly:boost};}
 function goal(s,source=[]){
- const g=s.goal;if(s.model==='continuous')return E.goalContinuous(g);
+ // v7.49 : le but vise l’argent disponible après la réserve (comme avant), l’argent détenu (réserve comprise) ou des gains
+ // cumulés ; les dépenses prévues avant le but s’ajoutent à ce qu’il faut gagner ; les dépenses par partie baissent le gain.
+ const g=s.goal,target=goalTarget(s),daily=typeof g.dailyMinutes==='number'&&g.dailyMinutes>0?g.dailyMinutes:null,up=typeof g.upkeepPerSession==='number'&&g.upkeepPerSession>0?g.upkeepPerSession:0;
+ if(s.model==='continuous'){
+  let hourly=g.hourly;
+  if(up>0){if(!daily)return{valid:false,reason:'Tes dépenses par partie demandent ton temps de jeu par jour : écris-le.'};if(typeof hourly==='number')hourly=hourly-up*60/daily;}
+  if(typeof hourly==='number'&&hourly<=0&&up>0&&target!==null&&target>(g.capital??0)-(g.reserve??0))return{valid:false,reason:'Tes dépenses par partie mangent tout ce que tu gagnes : baisse-les ou gagne plus par heure.'};
+  const r=E.goalContinuous({...g,target,hourly:typeof hourly==='number'?Math.max(0,hourly):hourly});
+  return up>0&&r.valid?{...r,upkeepHourly:up*60/daily}:r;}
  if(!Number.isInteger(g.players)||g.players<1||g.players>100)return{valid:false,reason:'Écris un nombre de joueurs entre 1 et 100.'};
  const all=activities(s,source), compatible=all.filter(a=>a.players<=g.players&&(a.requiresPurchaseIds||[]).every(id=>s.assets.some(x=>x.itemId===id&&x.owned)));
- if(g.selected==='mixed')return E.goalMixed({...g,target:g.target===null?null:g.target+g.reserve,activities:compatible.filter(a=>s.activities.some(x=>x.id===a.id))});
- const a=compatible.find(a=>a.id===g.selected);if(!a){const excluded=all.find(a=>a.id===g.selected);return{valid:false,reason:excluded&&excluded.players>g.players?'Ce scénario se joue à '+excluded.players+' joueurs ; vous êtes '+g.players+'.':'Choisis une activité compatible avec ton groupe et tes achats possédés.'};}
- return E.goal({...g,target:g.target===null?null:g.target+g.reserve,activity:a});
+ const run=extra=>{const t=target===null?null:target+g.reserve+extra;
+  if(g.selected==='mixed')return E.goalMixed({...g,target:t,activities:compatible.filter(a=>s.activities.some(x=>x.id===a.id))});
+  const a=compatible.find(a=>a.id===g.selected);if(!a){const excluded=all.find(a=>a.id===g.selected);return{valid:false,reason:excluded&&excluded.players>g.players?'Ce scénario se joue à '+excluded.players+' joueurs ; vous êtes '+g.players+'.':'Choisis une activité compatible avec ton groupe et tes achats possédés.'};}
+  return E.goal({...g,target:t,activity:a});};
+ if(!up)return run(0);
+ // Dépenses par partie : chaque partie en plus coûte aussi ; on recalcule jusqu’à ce que le nombre de parties ne bouge plus.
+ let extra=0,r=run(0);for(let i=0;i<24&&r.valid;i+=1){const need=up*r.sessions;if(need===extra)break;extra=need;r=run(extra);}
+ return r.valid?{...r,upkeepTotal:extra}:r;
 }
 function session(s,source=[]){
  if(!Number.isInteger(s.goal.players)||s.goal.players<1||s.goal.players>100)return{valid:false,reason:'Dis si tu joues seul ou à plusieurs dans Mes activités.'};
@@ -163,18 +178,20 @@ function projection(s,source=[],r=session(s,source)){
  const next=repeat.session.minutes===s.session.minutes?{valid:true,profit:r.profit+r.investment}:session(repeat,source);
  return E.sessionProjection({capital:s.goal.capital,reserve:s.goal.reserve,target:s.goal.target,session:r,repeatProfit:next.valid?next.profit:null,repeatReason:next.valid?null:next.reason,daysPerWeek:s.session.daysPerWeek});
 }
-function roi(s,source=[]){
+function roi(s,source=[],ctx={}){
  const r=s.roi,a=asset(s,r.key);if(!a)return{valid:false,reason:'Choisis un achat dans la liste.'};
  if(r.mode==='estimate')return decision(s,source);
  const input={...r,purchase:a.price,upgrades:a.extras,fees:a.fees};
- if(r.mode==='continuous')return E.roi(input);
+ if(r.mode==='continuous'){const u=usagePerHourOf(s,a,ctx);if(u!==null&&!(r.costHourly>0))return {...E.roi({...input,costHourly:u}),usageFromPurchase:u};return E.roi(input);}
  const acts=activities(s,source).filter(a=>r.activityIds.includes(a.id));
  if(acts.length!==r.activityIds.length)return{valid:false,reason:'Une des activités n’existe plus. Choisis-en une autre.'};
  if(acts.some(a=>a.players>s.goal.players))return{valid:false,reason:'Une des activités se joue à plus de joueurs que vous. Change le nombre de joueurs dans Mes activités.'};
  // Nouvelle activité : le temps passé dessus ne rapporte plus ce que le joueur gagnait déjà (son chiffre par heure), si on le connaît.
  return E.investmentActivities({...input,activities:acts,baselineHourly:r.mode==='new'?s.goal.hourly:null});
 }
-function investment(s,source=[]){const a=asset(s,s.roi.key);if(!a)return{valid:false,reason:'Choisis un achat.'};return E.investmentCompare({capital:s.goal.capital,reserve:s.goal.reserve,price:a.price,extras:a.extras,fees:a.fees,baselineHourly:s.goal.hourly,extraHourly:s.roi.revenueHourly,costHourly:s.roi.costHourly,hours:s.roi.hours,dailyMinutes:s.goal.dailyMinutes});}
+function investment(s,source=[],ctx={}){const a=asset(s,s.roi.key);if(!a)return{valid:false,reason:'Choisis un achat.'};const u=usagePerHourOf(s,a,ctx),cost=u!==null&&!(s.roi.costHourly>0)?u:s.roi.costHourly;return E.investmentCompare({capital:s.goal.capital,reserve:s.goal.reserve,price:a.price,extras:a.extras,fees:a.fees,baselineHourly:s.goal.hourly,extraHourly:s.roi.revenueHourly,costHourly:cost,hours:s.roi.hours,dailyMinutes:s.goal.dailyMinutes});}
+// Coût d’usage de l’achat converti par heure (une partie = ton temps de jeu par jour) ; null s’il n’est pas connu.
+function usagePerHourOf(s,a,ctx){if(!M||!a)return null;const u=usageOf(s,a,itemOf(a,ctx)),d=typeof s.goal.dailyMinutes==='number'&&s.goal.dailyMinutes>0?s.goal.dailyMinutes:null;return M.V.usable(u.perSession)&&d?u.perSession.v*60/d:null;}
 function decision(s,source=[],key=s.roi.key){
  const a=asset(s,key);if(!a)return{valid:false,reason:'Choisis un achat ou écris un achat libre.'};
  let hourly=s.goal.hourly;
@@ -183,10 +200,10 @@ function decision(s,source=[],key=s.roi.key){
 }
 function blank(current){
  const s=copy(current);s.name='Mon calcul';s.model='continuous';s.completed=[];
- s.goal={...s.goal,capital:null,target:null,hourly:null,dailyMinutes:null,reserve:0,players:1,selected:'scenario-a'};
+ s.goal={...s.goal,capital:null,target:null,hourly:null,dailyMinutes:null,reserve:0,players:1,selected:'scenario-a',meaning:'available',plannedSpend:null,upkeepPerSession:null,deadlineDays:null};
  s.assets=[{...copy(assetTemplate),price:null}];s.purchase={key:'free-1'};
  s.roi={...s.roi,key:'free-1',mode:'estimate',hours:null,gainPercent:0,durationReduction:0,activityIds:[],revenueHourly:null,costHourly:0,compareKey:'',recoveryActivity:''};
- s.order={keys:[]};s.budget={source:'manual',extra:0,allocations:[0,0,0,0,0]};s.compare={...copy(compareTemplate)};s.plan=copy(planTemplate);s.analysis=copy(analysisTemplate);
+ s.order={keys:[],objective:'all'};s.budget={source:'manual',extra:0,allocations:[0,0,0,0,0]};s.compare={...copy(compareTemplate)};s.plan=copy(planTemplate);s.analysis=copy(analysisTemplate);
  s.activities=s.activities.map((a,i)=>({...a,name:'Mon activité '+String.fromCharCode(65+i),reward:null,duration:null,cost:0,prep:0,cooldown:0,share:100,investment:0,players:1,owned:false,prepOnce:false,requiresPurchaseIds:[]}));
  s.session={...s.session,enabled:['scenario-a'],minutes:null,usualMinutes:null,daysPerWeek:null};s.inverse={selected:'scenario-a',minutes:null};
  return s;
@@ -211,15 +228,21 @@ function planReserve(s,strategy=s.plan.strategy){return s.plan.priority==='fast'
 function planPurchases(s,strategy=s.plan.strategy){const list=s.plan.prerequisites.slice(),ratio=x=>x.boostHourly>0&&x.price!==null?x.price/x.boostHourly:Infinity;let ordered=list.slice();
  if(strategy==='byPayback')ordered.sort((a,b)=>ratio(a)-ratio(b)||list.indexOf(a)-list.indexOf(b));
  if(strategy==='cheapFirst')ordered.sort((a,b)=>(a.price??1e12)-(b.price??1e12)||list.indexOf(a)-list.indexOf(b));
- if(strategy==='skipNoBoost')ordered=ordered.filter(x=>x.owned||x.boostHourly>0);
- if(strategy==='direct')ordered=ordered.filter(x=>x.owned);
- return ordered.map(x=>({id:x.id,name:x.name,price:x.price,boostHourly:x.boostHourly,owned:x.owned}));}
+ // v7.49 : un achat verrouillé (« indispensable ») n’est jamais retiré par une stratégie ; les dépendances entre achats
+ // d’avant sont respectées quel que soit l’ordre choisi (un achat passe après ce qu’il demande).
+ const locked=new Set(s.plan.locked||[]);
+ if(strategy==='skipNoBoost')ordered=ordered.filter(x=>x.owned||x.boostHourly>0||locked.has(x.id));
+ if(strategy==='direct')ordered=ordered.filter(x=>x.owned||locked.has(x.id));
+ return dependencyOrder(ordered).map(x=>({id:x.id,name:x.name,price:x.price,boostHourly:x.boostHourly,owned:x.owned,minutes:x.minutes??0,requires:(x.requires||[]).slice(),usagePerSession:x.usagePerSession??0}));}
+function dependencyOrder(list){const ids=new Set(list.map(x=>x.id)),out=[],placed=new Set();let guard=0;
+ while(out.length<list.length&&guard++<list.length*list.length+5){const next=list.find(x=>!placed.has(x.id)&&(x.requires||[]).every(r=>!ids.has(r)||placed.has(r)));if(!next){list.filter(x=>!placed.has(x.id)).forEach(x=>{placed.add(x.id);out.push(x);});break;}placed.add(next.id);out.push(next);}
+ return out;}
 function planGoalName(s){const g=s.plan.goal;return g.kind==='amount'?'avoir '+String(g.target)+' $':g.kind==='unlock'?'débloquer '+(g.name||'mon but'):(g.name||'mon achat');}
 function planInput(s,strategy=s.plan.strategy){const p=s.plan,g=p.goal,si=p.situation;
- return {capital:si.capital,reserve:planReserve(s,strategy),sessionMinutes:si.dailyMinutes,daysPerWeek:si.daysPerWeek??7,upkeepPerSession:si.upkeepPerSession??0,maxRepeat:p.maxRepeat,
+ return {capital:si.capital,reserve:planReserve(s,strategy),sessionMinutes:si.dailyMinutes,daysPerWeek:si.daysPerWeek??7,upkeepPerSession:si.upkeepPerSession??0,maxRepeat:p.maxRepeat,goalMeaning:g.kind==='amount'?g.meaning:'available',
   hourly:p.source==='hourly'?si.hourly:0,unitsHourly:p.source==='hourly'&&g.kind==='unlock'?(si.unitsHourly??0):0,
   goalPrice:g.kind==='purchase'?g.price:g.kind==='unlock'?(g.alsoPrice??0):null,target:g.kind==='amount'?g.target:null,targetUnits:g.kind==='unlock'?g.targetUnits:null,currentUnits:g.kind==='unlock'?(g.currentUnits??0):0,
-  activities:p.source==='missions'?p.missions.map(m=>({id:m.id,name:m.name,reward:m.reward,cost:m.cost,duration:m.duration,prep:m.prep,cooldown:m.cooldown,share:m.share,investment:m.investment,owned:m.owned,units:g.kind==='unlock'?m.units:0,requiresPurchaseIds:m.requires,players:1})):[],
+  activities:p.source==='missions'?p.missions.map(m=>({id:m.id,name:m.name,reward:m.reward,cost:m.cost,duration:m.duration,prep:m.prep,cooldown:m.cooldown,share:m.share,investment:m.investment,owned:m.owned,units:g.kind==='unlock'?m.units:0,requiresPurchaseIds:m.requires,requiresMissions:m.requiresMissions||[],once:m.once===true,done:m.done===true,players:1})):[],
   purchases:planPurchases(s,strategy),goalName:planGoalName(s),goalIncomeHourly:g.kind==='purchase'?(g.boostHourly||0):0};}
 // Ce qui manque pour calculer : dit dans l'ordre des questions du formulaire.
 function planMissing(s){const p=s.plan,g=p.goal,si=p.situation;
@@ -227,7 +250,10 @@ function planMissing(s){const p=s.plan,g=p.goal,si=p.situation;
  if(g.kind==='amount'&&(g.target===null||!Number.isFinite(g.target)))return 'Écris la somme que tu veux avoir.';
  if(g.kind==='unlock'&&(g.targetUnits===null||!Number.isFinite(g.targetUnits)))return 'Écris combien de '+g.unitLabel+' il faut atteindre.';
  if(si.capital===null||!Number.isFinite(si.capital))return 'Écris l’argent que tu as maintenant.';
- if(si.dailyMinutes===null||!Number.isFinite(si.dailyMinutes)||si.dailyMinutes<=0)return 'Dis combien de temps dure une partie (en minutes).';
+ // v7.49 : sans durée de partie, le plan se fait en parcours continu (sans calendrier) ; une durée écrite doit être positive.
+ if(si.dailyMinutes!==null&&(!Number.isFinite(si.dailyMinutes)||si.dailyMinutes<=0))return 'Une partie dure au moins 1 minute (ou laisse vide pour un parcours sans parties).';
+ if(si.dailyMinutes===null&&(si.upkeepPerSession>0||p.prerequisites.some(x=>x.usagePerSession>0)))return 'Tes dépenses par partie demandent la durée d’une partie : écris-la.';
+ {const todo=p.prerequisites.filter(x=>!x.owned&&(x.price===null||!Number.isFinite(x.price)));if(todo.length)return 'Parcours à compléter : écris le prix de '+todo.map(x=>'« '+x.name+' »').join(', ')+' (même celui que tu imagines), ou coche « Je l’ai déjà ».';}
  if(p.source==='hourly'&&(si.hourly===null||!Number.isFinite(si.hourly)))return 'Écris ce que tu gagnes par heure, ou choisis tes missions.';
  if(p.source==='missions'&&!p.missions.length)return 'Ajoute au moins une mission que tu peux faire.';
  return null;}
@@ -236,8 +262,8 @@ function planStrategies(s){const missing=planMissing(s);if(missing)return {valid
  const ids=['asIs','byPayback','cheapFirst','skipNoBoost','direct','useReserve'],seen={},candidates=[];
  ids.forEach(id=>{const input=planInput(s,id),key=id==='useReserve'?'reserve':input.purchases.map(x=>x.id).join('|');if(id!=='asIs'&&id!=='useReserve'&&seen[key]!==undefined)return;if(id==='useReserve'&&input.reserve===planInput(s,'asIs').reserve)return;seen[key]=id;
   const r=E.missionPlan(input),removes=input.purchases.filter(x=>!x.owned).length<planInput(s,'asIs').purchases.filter(x=>!x.owned).length;
-  candidates.push({id,label:STRATEGY_LABEL[id],valid:r.valid&&r.reached,reason:r.valid?(r.reached?null:r.note):r.reason,totalSessions:r.valid&&r.reached?r.totalSessions:null,days:r.valid&&r.reached?r.days:null,finalCash:r.valid?r.finalCash:null,reserveKept:input.reserve>0||(s.plan.situation.reserve??0)===0,removes,note:removes?'retire un achat demandé':(id==='useReserve'?'dépense l’argent gardé de côté':null)});});
- const ok=candidates.filter(c=>c.valid&&!c.removes),byTime=(a,b)=>a.totalSessions-b.totalSessions||b.finalCash-a.finalCash||ids.indexOf(a.id)-ids.indexOf(b.id);
+  candidates.push({id,label:STRATEGY_LABEL[id],valid:r.valid&&r.reached,reason:r.valid?(r.reached?null:r.note):r.reason,totalSessions:r.valid&&r.reached?r.totalSessions:null,totalMinutes:r.valid&&r.reached?r.totalMinutes:null,days:r.valid&&r.reached?r.days:null,finalCash:r.valid?r.finalCash:null,reserveKept:input.reserve>0||(s.plan.situation.reserve??0)===0,removes,note:removes?'retire un achat demandé':(id==='useReserve'?'dépense l’argent gardé de côté':null)});});
+ const ok=candidates.filter(c=>c.valid&&!c.removes),byTime=(a,b)=>(a.totalSessions===null&&b.totalSessions===null?a.totalMinutes-b.totalMinutes:a.totalSessions-b.totalSessions)||b.finalCash-a.finalCash||ids.indexOf(a.id)-ids.indexOf(b.id);
  let pool=s.plan.priority==='fast'?ok:ok.filter(c=>c.reserveKept);if(!pool.length)pool=ok;
  const recommended=pool.slice().sort(byTime)[0]?.id||null;
  return {valid:true,reason:null,candidates,recommended,explored:candidates.length};}
@@ -247,18 +273,375 @@ function planAlternatives(s,r){if(!r||!r.valid||!r.input)return {valid:false,rea
 // Ce que le joueur a vraiment fait, d'après ses mises à jour : gain moyen par heure et par partie, dernière partie contre prévu.
 function planObserved(s){const log=s.plan.log.filter(e=>e.gain!==null&&e.sessionMinutes>0);if(!log.length)return null;const minutes=log.reduce((a,e)=>a+e.sessionMinutes,0),gain=log.reduce((a,e)=>a+e.gain,0),units=log.reduce((a,e)=>a+(e.unitsGain||0),0);const last=log[log.length-1];
  return {sessions:log.length,minutes,gain,hourly:minutes>0?gain*60/minutes:null,perSession:gain/log.length,unitsHourly:minutes>0?units*60/minutes:0,last:{gain:last.gain,plannedGain:last.plannedGain,gap:last.plannedGain===null?null:last.gain-last.plannedGain,minutes:last.sessionMinutes,at:last.at}};}
+// v7.49 : identifiant d’un relevé réel, tiré de son contenu : le même relevé envoyé deux fois (double clic, import répété) n’est compté qu’une fois.
+function planLogId(o){const t=JSON.stringify(o);let h=2166136261;for(let i=0;i<t.length;i+=1){h^=t.charCodeAt(i);h=Math.imul(h,16777619);}return 'log-'+(h>>>0).toString(36);}
 function planDeadline(s,r){if(!s.plan.deadlineDays||!r||!r.valid||!r.input)return null;return E.missionDeadline(r.input,s.plan.deadlineDays);}
 function planCurve(r){if(!r||!r.valid)return [];const c=E.missionCurve(r);return c.valid?c.points:[];}
 function planNextSession(r){return r&&r.valid&&r.sessions.length?r.sessions[0]:null;}
-function evaluate(tool,s,source=[]){
- if(tool==='compare')return E.choose(chooseInput(s,source));
+/* ---------- v7.49 (lot 2) : analyses complètes, calculées avec les fonctions communes (LKCalcModel) ----------
+   analysis(outil, état, activités du site, {catalogue}) → { conditions, admission, valeurs, coûts, verdict, explication… }.
+   Tout chiffre vient du moteur ou de LKCalcModel ; une valeur inconnue garde son statut jusque dans l’explication. */
+const OBJECTIVES=['all','income','reserve','given'];
+const SIM_LABEL={carburant:'Carburant',entretien:'Entretien',reparation:'Réparations',assurance:'Assurance',revente:'Revente',munitions:'Munitions',soin:'Soin',"revenu-passif":'Revenu d’entreprise',echec:'Tentatives ratées',bonus:'Bonus'};
+const V=M?M.V:null;
+function itemOf(a,ctx){return a&&a.itemId&&ctx&&Array.isArray(ctx.catalogue)?ctx.catalogue.find(x=>x.id===a.itemId)||null:null;}
+const num=x=>typeof x==='number'&&Number.isFinite(x);
+const fmt=n=>num(n)?new Intl.NumberFormat('fr-FR',{maximumFractionDigits:0}).format(Math.round(n)):'?';
+// Prix d’un achat avec son statut : le prix du site (officiel) seulement s’il est connu et repris tel quel.
+function priceV(a,item){if(!a||a.price===null||a.price===undefined)return V.blank();if(item&&num(item.price)&&a.price===item.price)return V.official(a.price,{src:item.fieldMeta?.price?.source||null});return V.personal(a.price);}
+function totalAcq(a,item){if(!a)return M.total([]);if(a.owned)return M.total([{label:'Déjà à toi',value:V.personal(0)}]);return M.total([{label:'Prix',value:priceV(a,item),field:'price'},{label:'Options',value:a.extras===null?V.blank():V.personal(a.extras||0),field:'extras'},{label:'Frais obligatoires au départ',value:a.fees===null?V.blank():V.personal(a.fees||0),field:'fees'}]);}
+// Coût d’usage par partie : ton chiffre s’il est écrit ; sinon les mécaniques que tu as choisi de simuler (véhicule) ;
+// sinon « mécanique non confirmée » (véhicule, arme) ou « sans objet » (le reste). Jamais les deux à la fois.
+function usageOf(s,a,item){
+ const u=a&&a.usage||{},on=s.analysis.simulations,sim=s.analysis.sim,type=item?item.type:(a&&!a.itemId&&a.capabilities&&a.capabilities.terrain?'vehicle':null);
+ const anySim=['carburant','entretien','reparation','assurance'].some(k=>on[k]);
+ if(num(u.perSession))return {perSession:V.personal(u.perSession),lines:[{label:'Coût par partie (ton chiffre)',value:u.perSession,status:'personal'}],missing:[],note:anySim?'Tu as écrit un coût par partie : les simulations ne s’y ajoutent pas (pas de double comptage).':null,source:'personal'};
+ const lines=[],missing=[];let total=0,any=false;
+ if(type==='vehicle'){
+  if(on.carburant){const f=sim.carburant;if([f.distance,f.consommation,f.prixUnitaire].every(num)){const v=M.units.fuelPerSession(f.distance,f.consommation,f.prixUnitaire);total+=v;any=true;lines.push({label:'Carburant (simulation)',value:v,status:'simulated',formula:fmt(f.distance)+' km × '+f.consommation+' L/100 km ÷ 100 × '+f.prixUnitaire+' $/L'});}else missing.push('Carburant : distance, consommation et prix du litre');}
+  for(const k of ['entretien','reparation','assurance'])if(on[k]){const v=sim[k].parPartie;if(num(v)){total+=v;any=true;lines.push({label:SIM_LABEL[k]+' (simulation)',value:v,status:'simulated'});}else missing.push(SIM_LABEL[k]+' par partie');}
+ }
+ if(any&&!missing.length)return {perSession:V.simulated(total),lines,missing,note:null,source:'simulated'};
+ if(missing.length)return {perSession:V.blank(),lines,missing,note:'Simulation incomplète : '+missing.join(', ')+'.',source:'blank'};
+ if(type==='vehicle')return {perSession:V.unconfirmed('carburant'),lines,missing,note:'Carburant, entretien, réparations : aucun coût confirmé dans GTA VI. Tu peux écrire ton chiffre ou choisir une simulation.',source:'unconfirmed'};
+ if(type==='weapon')return {perSession:V.unconfirmed('munitions'),lines,missing,note:'Munitions : prix et consommation pas publiés. Tu peux écrire ton chiffre si tu veux les compter.',source:'unconfirmed'};
+ return {perSession:V.na('Pas de coût d’usage pour ce genre d’achat, sauf si tu en écris un.'),lines,missing,note:null,source:'na'};
+}
+function resaleOf(s,a){if(!a||a.resale===null||a.resale===undefined)return V.unconfirmed('revente');return V.simulated(a.resale,{note:'Revente choisie par toi'});}
+function purchasableCheck(item,a){
+ if(!a||!a.itemId)return {id:'achetable',label:'Achat libre',state:'na'};
+ if(!item)return {id:'achetable',label:'Fiche introuvable',state:'unknown',detail:'Cette fiche n’existe plus dans le catalogue : ton prix est gardé.'};
+ if(item.purchasable===false||item.type==='place')return {id:'achetable',label:'Achetable',state:'ko',detail:item.type==='place'?'Un lieu ne s’achète pas.':'Cet objet ne s’achète pas dans GTA VI.',fix:{text:'Choisis un objet qui s’achète.'}};
+ if(item.purchasable===true)return {id:'achetable',label:'Achetable',state:'ok'};
+ return {id:'achetable',label:'Achat à confirmer',state:'assumed',detail:'Rockstar n’a pas encore dit si et comment il s’achète : le calcul suppose que oui.'};
+}
+function cashCond(cc,label){if(!cc)return null;if(cc.owned)return {id:'argent-disponible',label:label||'Payer maintenant',state:'na',detail:'Déjà à toi : rien à payer.'};return {id:'argent-disponible',label:label||'Payer maintenant',state:cc.state==='ok'?'ok':cc.state==='short'?'ko':'unknown',detail:cc.state==='short'?(cc.exact?'Il manque ':'Il manque au moins ')+fmt(cc.shortfall)+' $ sans toucher à l’argent gardé de côté.':cc.state==='unknown'?cc.reason:'Ça tient dans ton argent disponible.',fix:cc.state==='short'?{text:'Garde moins de côté, ou gagne encore '+fmt(cc.shortfall)+' $ avant.',delta:cc.shortfall}:null};}
+function cashFor(s,acq,a){if(a&&a.owned)return {owned:true,state:'ok',shortfall:0};return M.cashCheck({cash:s.goal.capital===null?null:V.personal(s.goal.capital),reserve:s.goal.reserve===null?null:V.personal(s.goal.reserve),spends:acq.rows.map(r=>({label:r.label,value:r.value,field:r.field}))});}
+function sessionMinutesOf(s){return num(s.goal.dailyMinutes)&&s.goal.dailyMinutes>0?s.goal.dailyMinutes:null;}
+function horizonSessions(s){const h=s.analysis.horizon;if(num(h.sessions))return h.sessions;const d=sessionMinutesOf(s);if(num(h.hours)&&d)return Math.ceil(h.hours*60/d-1e-9);return null;}
+// Payable maintenant ≠ soutenable dans la durée : chaque partie rapporte ton gain par heure et coûte l’usage.
+function sustain(s,acqValue,perSessionV,sessions){
+ const d=sessionMinutesOf(s),h=s.goal.hourly;
+ if(!V.usable(perSessionV)||!num(h)||!d||!num(s.goal.capital))return null;
+ const earn=h*d/60,net=earn-perSessionV.v;
+ const n=num(sessions)?sessions:null;
+ const after=n===null||!num(acqValue)?null:s.goal.capital-acqValue+net*n;
+ const low=!num(acqValue)?null:Math.min(s.goal.capital-acqValue,after===null?Infinity:after);
+ return {earnPerSession:earn,usagePerSession:perSessionV.v,netPerSession:net,sessions:n,after,low:Number.isFinite(low)?low:null,breach:low!==null&&low<(s.goal.reserve||0)-1e-9,state:net<0?'insoutenable':'soutenable'};
+}
+function explainValues(rows){return rows.filter(Boolean);}
+/* ----- Mes achats ----- */
+function purchaseAnalysis(s,source,ctx){
+ const a=asset(s,s.purchase.key),item=itemOf(a,ctx),acq=totalAcq(a,item),cc=cashFor(s,acq,a),use=usageOf(s,a,item),sessions=horizonSessions(s);
+ const cost=M.usageCost({initial:acq.complete?V.personal(acq.value):V.unknown(),perSession:use.perSession,resale:resaleOf(s,a)},{sessions});
+ const pc=purchasableCheck(item,a),need=needChecks(s,a,item),conditions=[cashCond(cc),pc,...need].filter(Boolean),adm=M.admission(conditions);
+ const role=a?(a.role!=='unknown'?a.role:a.incomeMode==='none'?'pleasure':'income'):'unknown';
+ const st=sustain(s,acq.complete?acq.value:null,use.perSession,sessions);
+ const used=['argent-disponible','reserve','cout-acquisition'],excluded={};
+ if(pc.state==='na')excluded.achetable='Achat libre : c’est toi qui le décris.';else used.push('achetable');
+ if(need.length)used.push('usage-compatible');else excluded['usage-compatible']='Aucun besoin d’usage écrit (terrain, places, chargement).';
+ if(V.usable(use.perSession)){used.push('cout-usage');if(sessions!==null)used.push('cout-complet','horizon','frequence');else{excluded['cout-complet']='Écris sur combien de parties tu comptes t’en servir pour avoir le coût complet.';excluded.horizon='Pas d’horizon écrit.';excluded.frequence='Pas de nombre de parties écrit.';}}
+ else{excluded['cout-usage']=use.source==='na'?'Ce genre d’achat n’a pas de coût d’usage, sauf si tu en écris un.':use.note||'Coût d’usage pas écrit.';excluded['cout-complet']='Il faut un coût d’usage pour aller au-delà du prix.';excluded.horizon='Sert seulement avec un coût d’usage.';excluded.frequence='Sert seulement avec un coût d’usage.';}
+ if(num(s.goal.hourly)){used.push('delai-recuperation');}else excluded['delai-recuperation']='Écris ce que tu gagnes par heure pour savoir en combien de temps tu retrouves ton argent.';
+ used.push('argent-restant');
+ if(role==='income'&&a&&a.incomeMode!=='none')used.push('gain-en-plus');else excluded['gain-en-plus']=role==='pleasure'?'Achat plaisir : aucune rentabilité n’est calculée.':'Aucun gain en plus écrit.';
+ if(V.usable(cost.resale))used.push('revente-prevue');else excluded['revente-prevue']='Revente : mécanique non confirmée ; comptée seulement si tu écris un prix de revente.';
+ const mechanicsOn=Object.keys(s.analysis.simulations).filter(k=>s.analysis.simulations[k]);
+ if(use.source==='simulated')used.push('mecanique-simulee');else excluded['mecanique-simulee']=mechanicsOn.length?'Tu as écrit ton propre coût par partie : la simulation n’est pas ajoutée.':'Aucune mécanique simulée (carburant, entretien…) : rien n’est inventé.';
+ const values=[{label:'Prix',value:acq.rows[0]?.value,unit:'$',field:'f-purchase-price'},{label:'Options',value:acq.rows[1]?.value,unit:'$',field:'f-purchase-extras'},{label:'Frais obligatoires au départ',value:acq.rows[2]?.value,unit:'$',field:'f-purchase-fees'},{label:'J’ai déjà',value:V.from(s.goal.capital),unit:'$',field:'f-purchase-capital'},{label:'Gardé de côté',value:V.from(s.goal.reserve),unit:'$',field:'f-purchase-reserve'},{label:'Coût par partie',value:use.perSession,unit:'$/partie',field:'f-purchase-usage'},{label:'Parties comptées',value:sessions===null?V.blank():V.personal(sessions),unit:'parties',field:'f-analysis-horizon'}];
+ const drivers=[];
+ if(cc.state==='short')drivers.push({label:'Argent disponible',text:'Prix, options et frais obligatoires dépassent ce que tu peux dépenser de '+fmt(cc.shortfall)+' $.',factor:'argent-disponible'});
+ else if(cc.state==='ok'&&!cc.owned)drivers.push({label:'Argent disponible',text:'Tout se paie maintenant sans toucher à l’argent gardé de côté.',factor:'argent-disponible'});
+ if(st&&st.state==='insoutenable')drivers.push({label:'Coût d’usage',text:'Chaque partie coûte '+fmt(st.usagePerSession)+' $ et ne rapporte que '+fmt(st.earnPerSession)+' $ : tu perds '+fmt(-st.netPerSession)+' $ par partie.',factor:'cout-usage'});
+ else if(st&&st.breach)drivers.push({label:'Réserve dans la durée',text:'Sur '+st.sessions+' parties, ton argent descendrait sous ce que tu gardes de côté.',factor:'reserve'});
+ const missing=[];if(acq.missing.length)missing.push({label:acq.missing.map(m=>m.label).join(', '),text:'Sans ce chiffre, on ne peut pas dire si tu peux payer.',field:'f-purchase-price',decisive:true});
+ if(!V.usable(use.perSession)&&use.source==='unconfirmed')missing.push({label:'Coût d’usage',text:'Il peut changer la réponse sur la durée ; il n’est pas confirmé dans GTA VI.',field:'f-purchase-usage',decisive:false});
+ if(pc.state==='assumed')missing.push({label:'Achetable dans GTA VI',text:'Pas encore confirmé : la réponse suppose que oui.',decisive:true});
+ const explain=M.explain({tool:'purchase',category:item?item.type:null,aim:'Savoir si tu peux payer cet achat maintenant, et ce qu’il coûte ensuite.',horizon:sessions===null?'Maintenant (aucune partie comptée après l’achat)':'Maintenant, puis '+sessions+' parties',conditions,used,excluded,values,drivers,missing,changes:cc.state==='short'?['Garder '+fmt(cc.shortfall)+' $ de moins de côté rendrait l’achat possible maintenant.']:[]});
+ return {tool:'purchase',asset:a,item,acquisition:acq,cash:cc,usage:use,cost,sustain:st,purchasable:pc,admission:adm,role,sessions,explain};
+}
+/* ----- Quel achat choisir ? ----- */
+// Terrain : l’eau et l’air demandent un bateau ou un aéronef ; la route accepte le tout-terrain ; le tout-terrain d’un
+// véhicule de route n’est pas documenté (« on ne peut pas dire »), jamais supposé.
+function terrainFits(need,have){const h=have.v;if(need==='eau'||need==='air')return h===need?'ok':'ko';if(need==='route')return h==='route'||h==='tout-terrain'?'ok':'ko';if(need==='tout-terrain')return h==='tout-terrain'?'ok':h==='route'?'unknown':'ko';return 'unknown';}
+function needChecks(s,a,item){
+ const need=s.analysis.need,checks=[];
+ const cap=a&&a.capabilities||{};
+ if(need.terrain){const have=cap.terrain?V.personal(cap.terrain):item&&item.type==='vehicle'?M.fromVehicle({cat:item.category}).terrain:V.unknown();
+  const state=have.v===null?'unknown':terrainFits(need.terrain,have);
+  checks.push({id:'usage-compatible',label:'Terrain : '+need.terrain,state,detail:state==='unknown'?(have.v==='route'&&need.terrain==='tout-terrain'?'Rien ne dit qu’il va en tout-terrain : écris-le dans ses capacités si tu le sais.':'Terrain inconnu pour cet achat : écris-le dans ses capacités.'):state==='ok'?'Convient ('+have.v+(have.s==='estimated'?', d’après son type':'')+').':'Ne convient pas : il va sur '+have.v+'.',fix:state==='ko'?{text:'Choisis un véhicule qui va sur '+need.terrain+'.'}:null});}
+ if(num(need.passengers)&&need.passengers>0){const seats=num(cap.seats)?V.personal(cap.seats):item&&num(item.seats)?V.official(item.seats):V.unknown();checks.push({id:'usage-compatible',label:'Places : '+need.passengers,state:!V.usable(seats)?'unknown':seats.v>=need.passengers?'ok':'ko',detail:!V.usable(seats)?'Nombre de places inconnu : écris-le si tu le connais.':seats.v>=need.passengers?seats.v+' places.':'Seulement '+seats.v+' places.',fix:{text:'Choisis un véhicule avec au moins '+need.passengers+' places.'}});}
+ if(need.cargo){const cargo=cap.cargo===null||cap.cargo===undefined?V.unknown():V.personal(cap.cargo);checks.push({id:'usage-compatible',label:'Chargement',state:!V.usable(cargo)?'unknown':cargo.v>0?'ok':'ko',detail:!V.usable(cargo)?'Capacité de chargement inconnue.':cargo.v>0?'Peut transporter.':'Ne transporte rien.'});}
+ return checks;
+}
+function compareAnalysis(s,source,ctx){
+ const sessions=horizonSessions(s),rows=[];
+ s.compare.keys.forEach(k=>{const a=asset(s,k);if(!a)return;const item=itemOf(a,ctx),acq=totalAcq(a,item),use=usageOf(s,a,item),cost=M.usageCost({initial:acq.complete?V.personal(acq.value):V.unknown(),perSession:use.perSession},{sessions});
+  const cc=cashFor(s,acq,a),pc=purchasableCheck(item,a),need=needChecks(s,a,item),conditions=[pc,...need].filter(Boolean),adm=M.admission(conditions);
+  rows.push({key:k,name:a.name,asset:a,item,acquisition:acq,usage:use,cost,cash:cc,conditions,admission:adm,utility:a.utility,income:a.incomeMode==='personal'&&a.boostHourly>0?a.boostHourly:null});});
+ const admissible=rows.filter(r=>r.admission.state==='admissible'||r.admission.state==='conditionnel'||r.admission.state==='inconnu');
+ const excluded=rows.filter(r=>r.admission.state==='impossible');
+ const P=M.pareto(admissible.map(r=>({id:r.key,admission:{state:'admissible'},values:{now:r.acquisition.complete?r.acquisition.value:null,total:r.cost.total.complete&&sessions!==null&&V.usable(r.usage.perSession)?r.cost.total.value:null,envie:-(r.utility||0)}})),['now','total','envie']);
+ // Point de bascule entre les deux options admissibles les moins chères à l’achat, si leurs coûts d’usage sont connus.
+ let cross=null;const priced=admissible.filter(r=>r.acquisition.complete&&V.usable(r.usage.perSession)).sort((x,y)=>x.acquisition.value-y.acquisition.value);
+ if(priced.length>=2){const A=priced[0],Bq=priced[1],x=M.crossover({initial:A.acquisition.value,rate:A.usage.perSession.v},{initial:Bq.acquisition.value,rate:Bq.usage.perSession.v});if(x.known&&x.n!==null)cross={a:A.name,b:Bq.name,n:x.n,before:x.before==='a'?A.name:Bq.name,after:x.after==='a'?A.name:Bq.name,costAt:x.costAt};}
+ const partial=admissible.filter(r=>!r.acquisition.complete||(sessions!==null&&!r.cost.total.complete&&r.usage.source!=='na'));
+ return {tool:'compare',rows,admissible,excluded,pareto:P,crossover:cross,partial,sessions};
+}
+/* ----- Quoi acheter d’abord ? ----- */
+function orderAnalysis(s,source,ctx){
+ const keys=s.order.keys.filter(k=>asset(s,k)),d=sessionMinutesOf(s),objective=OBJECTIVES.includes(s.order.objective)?s.order.objective:'all';
+ const items=keys.map(k=>{const a=asset(s,k),item=itemOf(a,ctx),use=usageOf(s,a,item);let boost=a.owned?0:a.incomeMode==='personal'?a.boostHourly:0;if(a.incomeMode==='roi'){const r=roi(s,source);boost=s.roi.key===k&&['new','improve'].includes(s.roi.mode)&&r.valid&&Number.isFinite(r.netHourly)?Math.max(0,r.netHourly):null;}
+  const costHourly=V.usable(use.perSession)&&d?use.perSession.v*60/d:0;
+  return {id:k,name:a.name+(a.owned?' (déjà possédé)':''),price:a.owned?0:a.price===null||a.extras===null||a.fees===null?null:a.price+a.extras+a.fees,boostHourly:a.owned?0:boost,costHourly:a.owned?0:costHourly,before:(a.requires||[]).filter(r=>keys.includes(r)),unlocks:a.unlocks||[],owned:a.owned,usage:use};});
+ const unknown=items.filter(x=>x.price===null);
+ const graph={};items.forEach(x=>{graph[x.id]={id:x.id,name:x.name,requires:x.before,price:x.price===null?V.unknown():V.personal(x.price)};});
+ const deps=M.prerequisites({nodes:graph,targets:items.map(x=>x.id)});
+ if(deps.cycles.length)return {tool:'order',valid:false,reason:deps.reason,items,deps,objective};
+ if(unknown.length)return {tool:'order',valid:false,incomplete:true,reason:'Parcours à compléter : écris le prix de '+unknown.map(x=>'« '+x.name+' »').join(', ')+' (même celui que tu imagines).',items,deps,objective,unknown};
+ const run=order=>{const r=E.order({capital:s.goal.capital,reserve:s.goal.reserve,hourly:s.goal.hourly,items:order.map(id=>items.find(x=>x.id===id))});
+  if(!r.valid)return {valid:false,reason:r.reason,key:[Infinity]};
+  let firstIncome=null;r.steps.forEach((st,i)=>{const it=items.find(x=>x.id===order[i]);if(firstIncome===null&&it.boostHourly>0)firstIncome=st.timeHours;});
+  const low=r.steps.reduce((m,st)=>Math.min(m,st.capital),s.goal.capital);
+  const out={valid:true,result:r,firstIncome,low};out.key=orderKey(objective,out);return out;};
+ const pack=(order,run)=>({order,run,result:run.valid?run.result:null,valid:run.valid,reason:run.valid?null:run.reason});
+ const given=pack(keys,run(keys));
+ if(objective==='given'||keys.length<2)return {tool:'order',valid:given.valid,reason:given.reason,items,deps,objective,best:given,given,search:{method:'given',explored:1,note:'Ton ordre, tel quel.'},alternatives:[]};
+ const search=M.sequences(items.map(x=>({id:x.id,before:x.before})),run);
+ if(!search.best)return {tool:'order',valid:false,reason:(search.invalid[0]&&search.invalid[0].result.reason)||'Aucun ordre possible avec ces chiffres.',items,deps,objective,given,search:{method:search.method,explored:search.explored,note:search.note},alternatives:[]};
+ const best=pack(search.best.order,search.best.result);
+ // Une autre séquence utile : la meilleure pour un autre objectif, si elle diffère (pour montrer le compromis).
+ const alternatives=[];
+ for(const other of OBJECTIVES.filter(o=>o!=='given'&&o!==objective)){const alt=bestFor(other,items,run);if(alt&&alt.order.join()!==best.order.join()&&!alternatives.some(x=>x.order.join()===alt.order.join()))alternatives.push({objective:other,...pack(alt.order,alt.run)});}
+ return {tool:'order',valid:true,items,deps,objective,best,given,search:{method:search.method,explored:search.explored,note:search.note},alternatives};
+}
+function orderKey(objective,r){return objective==='income'?[r.firstIncome===null?Infinity:r.firstIncome,r.result.totalHours]:objective==='reserve'?[-r.low,r.result.totalHours]:[r.result.totalHours,-(r.result.finalHourly||0)];}
+function bestFor(objective,items,runBase){const sr=M.sequences(items.map(x=>({id:x.id,before:x.before})),order=>{const r=runBase(order);return r.valid?{...r,key:orderKey(objective,r)}:r;});return sr.best?{order:sr.best.order,run:sr.best.result}:null;}
+/* ----- Mon budget ----- */
+function budgetAnalysis(s,source,ctx){
+ const basket=s.budget.source==='basket';
+ const rows=basket?s.order.keys.map(k=>{const a=asset(s,k);if(!a)return null;const item=itemOf(a,ctx),acq=totalAcq(a,item),use=usageOf(s,a,item);return {label:a.name,value:acq.complete?(a.owned?V.personal(0):V.personal(acq.value)):V.blank(),usage:use,owned:a.owned,field:null};}).filter(Boolean):s.budget.allocations.map((v,i)=>({label:['Véhicules','Investissements','Équipement','Consommables','Autres achats'][i],value:V.personal(v),usage:null}));
+ rows.push({label:'Autres dépenses prévues',value:V.personal(s.budget.extra||0),usage:null});
+ const spend=M.total(rows.map(r=>({label:r.label,value:r.value})));
+ const perSession=M.total(rows.filter(r=>r.usage&&!r.owned).map(r=>({label:'Usage de '+r.label,value:V.usable(r.usage.perSession)||r.usage.source==='na'?r.usage.perSession:r.usage.perSession})).filter(p=>p.value.s!=='unconfirmed'));
+ const sessions=horizonSessions(s),d=sessionMinutesOf(s),earn=num(s.goal.hourly)&&d?s.goal.hourly*d/60:null;
+ let flow=null;
+ if(sessions!==null&&num(s.goal.capital)){const events=[{t:0,type:'spend',amount:spend.value,label:'Achats (sous-total connu)'}];for(let i=1;i<=Math.min(sessions,400);i+=1){if(earn!==null)events.push({t:i,type:'receive',amount:earn,label:'Gain de la partie '+i});if(perSession.value>0)events.push({t:i,type:'spend',amount:perSession.value,label:'Usage (partie '+i+')'});}flow={sessions,earn,usage:perSession.value,usageComplete:perSession.complete,ledger:M.ledger(s.goal.capital,events,s.goal.reserve||0)};}
+ return {tool:'budget',spend,perSession,flow,rows,sessions};
+}
+/* ----- Mon objectif ----- */
+function goalTarget(s){const g=s.goal;if(g.target===null)return null;let t=g.target;const meaning=['held','available','cumulative'].includes(g.meaning)?g.meaning:'available';
+ if(meaning==='held')t=Math.max(0,t-(g.reserve||0));else if(meaning==='cumulative')t=t+Math.max(0,(g.capital||0)-(g.reserve||0));
+ if(num(g.plannedSpend)&&g.plannedSpend>0)t+=g.plannedSpend;return t;}
+function goalAnalysis(s,source,ctx,r){
+ const g=s.goal,meaning=['held','available','cumulative'].includes(g.meaning)?g.meaning:'available',d=sessionMinutesOf(s);
+ let deadline=null;
+ if(num(g.deadlineDays)&&g.deadlineDays>0&&r&&r.valid){const days=r.days;if(days===null||days===undefined){deadline={known:false,reason:'Écris ton temps de jeu par jour pour une échéance en jours.'};}
+  else if(days<=g.deadlineDays)deadline={known:true,feasible:true,days,spare:g.deadlineDays-days};
+  else{let minutes=null;for(let m=Math.ceil((d||1)/15)*15+15;m<=1440;m+=15){const t=evaluate('goal',{...s,goal:{...s.goal,dailyMinutes:m,deadlineDays:null}},source);if(t.valid&&t.days<=g.deadlineDays){minutes=m;break;}}
+   let hourly=null;if(s.model==='continuous'&&num(g.hourly)&&g.hourly>0){let lo=g.hourly,hi=g.hourly*64;const ok=evaluate('goal',{...s,goal:{...s.goal,hourly:hi,deadlineDays:null}},source);if(ok.valid&&ok.days<=g.deadlineDays){for(let i=0;i<40;i+=1){const mid=(lo+hi)/2,t=evaluate('goal',{...s,goal:{...s.goal,hourly:mid,deadlineDays:null}},source);if(t.valid&&t.days<=g.deadlineDays)hi=mid;else lo=mid;}hourly=Math.ceil(hi/100)*100;}}
+   deadline={known:true,feasible:false,days,over:days-g.deadlineDays,requiredDailyMinutes:minutes,requiredHourly:hourly};}}
+ return {tool:'goal',meaning,target:goalTarget(s),plannedSpend:num(g.plannedSpend)?g.plannedSpend:null,upkeep:num(g.upkeepPerSession)?g.upkeepPerSession:null,deadline};
+}
+/* ----- Mes activités ----- */
+function failureShare(s){return s.analysis.simulations.echec&&num(s.analysis.sim.echec.tentativesRatees)?Math.min(10,Math.max(0,s.analysis.sim.echec.tentativesRatees))/10:null;}
+function activitiesAnalysis(s,source,ctx){
+ const minutes=s.inverse.minutes,rank=[];
+ activities(s,source).forEach(a=>{const reasons=[];if(a.players>s.goal.players)reasons.push('se joue à '+a.players+' joueurs, vous êtes '+s.goal.players);const miss=(a.requiresPurchaseIds||[]).filter(id=>!s.assets.some(x=>x.itemId===id&&x.owned));if(miss.length)reasons.push('il faut d’abord '+miss.map(id=>(ctx&&ctx.catalogue&&ctx.catalogue.find(c=>c.id===id)?.name)||id).join(', '));
+  const one=E.activity(a);if(!one.valid){rank.push({id:a.id,name:a.name,valid:false,reason:one.reason,excluded:reasons});return;}
+  const r=num(minutes)?E.inverse({minutes,capital:s.goal.capital,reserve:s.goal.reserve,activity:a}):null;
+  let fail=null;const k=failureShare(s);if(k!==null&&r&&r.valid&&r.runs){const reward=(a.reward||0)*(a.share??100)/100,cost=a.cost||0,okRuns=Math.round(r.runs*(1-k)),badRuns=r.runs-okRuns;fail={share:k,okRuns,badRuns,profit:okRuns*reward-r.runs*cost-(a.investment&&!a.owned?a.investment:0)};}
+  rank.push({id:a.id,name:a.name,valid:true,hourly:one.hourly,net:one.net,cycle:one.cycleMinutes,profit:r&&r.valid?r.profit:null,runs:r&&r.valid?r.runs:null,reason:r&&!r.valid?r.reason:null,excluded:reasons,fail});});
+ const ok=rank.filter(x=>x.valid&&!x.excluded.length&&x.profit!==null);ok.sort((x,y)=>y.profit-x.profit||y.hourly-x.hourly);
+ return {tool:'activities',rank,accessible:ok,excludedList:rank.filter(x=>x.excluded.length),best:ok[0]||null,failureShare:failureShare(s)};
+}
+/* ----- Mon temps de jeu ----- */
+function sessionAnalysis(s,source,ctx){
+ const out=[];activities(s,source).forEach(a=>{const reasons=[];if(!s.session.enabled.includes(a.id))reasons.push('pas cochée');if(a.players>s.goal.players)reasons.push('se joue à '+a.players+' joueurs');const miss=(a.requiresPurchaseIds||[]).filter(id=>!s.assets.some(x=>x.itemId===id&&x.owned));if(miss.length)reasons.push('achat manquant');const one=E.activity(a);if(!one.valid)reasons.push('chiffres à compléter');else{if(num(s.session.minutes)&&one.activeMinutes>s.session.minutes)reasons.push('ne tient pas dans '+s.session.minutes+' min');if(one.net<=0)reasons.push('ne rapporte pas plus que ses frais');}out.push({id:a.id,name:a.name,reasons});});
+ return {tool:'session',activities:out,excluded:out.filter(x=>x.reasons.length),kept:out.filter(x=>!x.reasons.length)};
+}
+/* ----- Ça vaut le coup ? ----- */
+function roiAnalysis(s,source,ctx){
+ const a=asset(s,s.roi.key),item=itemOf(a,ctx),acq=totalAcq(a,item),cc=cashFor(s,acq,a),use=usageOf(s,a,item),d=sessionMinutesOf(s);
+ const hoursH=num(s.roi.hours)?s.roi.hours:null,sessions=hoursH!==null&&d?Math.ceil(hoursH*60/d-1e-9):null;
+ const cost=M.usageCost({initial:acq.complete?V.personal(acq.value):V.unknown(),perSession:use.perSession,resale:resaleOf(s,a)},{sessions});
+ const usagePerHour=V.usable(use.perSession)&&d?use.perSession.v*60/d:null;
+ const pc=purchasableCheck(item,a),conditions=[cashCond(cc,'Payer maintenant'),pc].filter(Boolean),adm=M.admission(conditions);
+ return {tool:'roi',asset:a,item,acquisition:acq,cash:cc,usage:use,usagePerHour,cost,sessions,purchasable:pc,admission:adm,hours:hoursH};
+}
+/* ----- Business plan : chaîne des prérequis ----- */
+function planAnalysis(s,source,ctx,r){
+ const p=s.plan,nodes={};
+ p.prerequisites.forEach(x=>{nodes[x.id]={id:x.id,name:x.name,kind:'item',price:x.price===null?V.blank():V.personal(x.price),minutes:num(x.minutes)?V.personal(x.minutes):V.na(),requires:(x.requires||[]).slice()};});
+ p.missions.forEach(m=>{nodes[m.id]={id:m.id,name:m.name,kind:m.once?'unlock':'activity',minutes:num(m.duration)?V.personal((m.duration||0)+(m.prep||0)):V.blank(),requires:[...(m.requires||[]),...(m.requiresMissions||[])]};});
+ const owned=[...p.prerequisites.filter(x=>x.owned).map(x=>x.id),...p.missions.filter(m=>m.done).map(m=>m.id)];
+ const targets=p.source==='missions'?p.missions.filter(m=>!m.once).map(m=>m.id):p.prerequisites.map(x=>x.id);
+ const chain=M.prerequisites({nodes,targets,owned});
+ const incomplete=p.prerequisites.filter(x=>!x.owned&&(x.price===null||!num(x.price))).map(x=>({id:x.id,name:x.name,field:'plan-p-'+p.prerequisites.indexOf(x)+'-price'}));
+ const low=r&&r.valid&&r.lowPoint?r.lowPoint:null;
+ return {tool:'plan',chain,incomplete,low,meaning:p.goal.meaning,continuous:r?!!r.continuous:false};
+}
+/* ----- « Ce qui compte dans ce calcul » : explication fidèle, construite depuis les critères réellement actifs -----
+   Chaque facteur de l’outil (outils/modele-donnees.json) est soit utilisé, soit écarté avec une raison dite simplement ;
+   les tests vérifient qu’aucun ne reste « oublié ». */
+const H=n=>{if(!num(n))return '?';const m=Math.ceil(n*60-1e-8);return m<60?m+' min':Math.floor(m/60)+' h'+(m%60?' '+String(m%60).padStart(2,'0'):'');};
+const MEANING={held:'l’argent que tu auras en tout (l’argent gardé de côté compris)',available:'l’argent disponible en plus de ce que tu gardes de côté',cumulative:'l’argent gagné à partir de maintenant, sans compter ce que tu as déjà'};
+function vPers(v){return v===null||v===undefined?V.blank():V.personal(v);}
+function explainGoal(s,source,r,x){
+ const g=s.goal,cycles=s.model==='cycles',used=['argent-disponible','reserve','gain-net','avancement'],excluded={},values=[],drivers=[],missing=[],changes=[],conditions=[];
+ values.push({label:'J’ai déjà',value:vPers(g.capital),unit:'$',field:'f-goal-capital'},{label:'Je veux avoir',value:vPers(g.target),unit:'$',field:'f-goal-target',text:'C’est '+MEANING[x.meaning]+'.'},{label:'Gardé de côté',value:vPers(g.reserve),unit:'$',field:'f-goal-reserve'});
+ if(num(g.plannedSpend)&&g.plannedSpend>0)values.push({label:'Dépenses prévues avant le but',value:V.personal(g.plannedSpend),unit:'$',field:'f-goal-plannedSpend'});
+ if(!cycles){values.push({label:'Je gagne par heure',value:vPers(g.hourly),unit:'$/h',field:'f-goal-hourly'});excluded.joueurs='En mode « petit à petit », il n’y a pas de mission à plusieurs.';excluded['temps-actif']='Pas de missions en mode « petit à petit » : ton gain par heure compte déjà tout.';excluded.attente='Pas d’attente entre missions en mode « petit à petit ».';excluded.versement='En mode « petit à petit », l’argent arrive au fil du jeu ; passe en « à la fin de chaque mission » pour compter les récompenses entières.';}
+ else{used.push('joueurs','temps-actif','attente','versement');conditions.push({id:'joueurs',label:'Joueurs : '+g.players,state:r.valid||!/joueurs/.test(r.reason||'')?'ok':'ko',detail:r.valid?'L’activité se joue à ton nombre de joueurs.':r.reason});}
+ if(num(g.dailyMinutes)){used.push('temps-partie','horizon');values.push({label:'Je joue chaque jour',value:V.personal(g.dailyMinutes),unit:'min',field:'f-goal-dailyMinutes'});if(cycles)conditions.push({id:'temps-partie',label:'Une mission tient dans ta partie',state:r.valid||!/temps de jeu par jour/.test(r.reason||'')?'ok':'ko',detail:r.valid?'Chaque mission, préparation comprise, tient dans '+g.dailyMinutes+' min.':r.reason,fix:{text:'Joue plus longtemps chaque jour ou choisis une mission plus courte.'}});}
+ else{excluded['temps-partie']='Temps de jeu par jour pas écrit : on donne le temps de jeu, pas le nombre de jours.';excluded.horizon='Sans temps par jour, pas de calendrier.';}
+ if(num(g.upkeepPerSession)&&g.upkeepPerSession>0){used.push('cout-usage');values.push({label:'Dépenses par partie',value:V.personal(g.upkeepPerSession),unit:'$/partie',field:'f-goal-upkeepPerSession'});drivers.push({label:'Dépenses par partie',text:cycles?'Elles ajoutent '+fmt(r.upkeepTotal)+' $ à gagner sur tout le parcours.':'Elles baissent ton gain à '+fmt(r.hourly)+' $ par heure.',factor:'cout-usage'});}
+ else excluded['cout-usage']=cycles?'Les frais de chaque mission sont déjà dans son gain net ; aucune autre dépense par partie écrite.':'Aucune dépense par partie écrite (consommables, munitions…).';
+ if(r.valid){drivers.unshift({label:'Ce qu’il manque',text:fmt(r.missing)+' $ à gagner'+(cycles?' avec des missions entières, frais payés avant et récompense à la fin':' au rythme de '+fmt(r.hourly)+' $ par heure')+'.',factor:'gain-net'});
+  if(x.deadline&&x.deadline.known){if(x.deadline.feasible)drivers.push({label:'Échéance',text:'Faisable : '+x.deadline.days+' jours sur '+g.deadlineDays+'.'});else{drivers.push({label:'Échéance',text:'Pas faisable à ce rythme : '+x.deadline.days+' jours au lieu de '+g.deadlineDays+'.'});if(x.deadline.requiredDailyMinutes)changes.push('Jouer '+x.deadline.requiredDailyMinutes+' min par jour tiendrait l’échéance.');if(x.deadline.requiredHourly)changes.push('Gagner '+fmt(x.deadline.requiredHourly)+' $ par heure tiendrait l’échéance.');}}}
+ else missing.push({label:'Un chiffre',text:r.reason,decisive:true});
+ if(!cycles&&num(g.hourly))changes.push('Le temps change en proportion de ton gain par heure : 20 % de plus, 17 % de temps en moins.');
+ return M.explain({tool:'goal',aim:'Le temps de jeu pour avoir '+MEANING[x.meaning]+'.',horizon:num(g.dailyMinutes)?'Jusqu’au but, en parties de '+g.dailyMinutes+' min par jour':'Jusqu’au but (sans calendrier)',conditions,used,excluded,values,drivers,missing,changes});
+}
+function explainSession(s,source,r,x){
+ const used=['argent-disponible','reserve','possession-requise','joueurs','temps-partie','ressource-exclusive','gain-net','temps-actif','attente','versement','variete'],excluded={'cout-usage':'Les frais de chaque mission sont payés avant elle ; aucune autre dépense par partie dans ce calcul.'};
+ const conditions=x.activities.map(a=>({id:'possession-requise',label:a.name,state:a.reasons.length?'ko':'ok',detail:a.reasons.length?'Écartée : '+a.reasons.join(', ')+'.':'Possible dans ta partie.'}));
+ const drivers=[];if(r.valid){drivers.push({label:'Programme',text:r.runs+' mission'+(r.runs>1?'s':'')+', '+fmt(r.profit)+' $ gagnés en '+r.totalMinutes+' min ; chaque récompense arrive à la fin de sa mission.'});if(r.limited)drivers.push({label:'Recherche bornée',text:'Meilleur programme trouvé parmi ceux essayés : il en existe peut-être un meilleur.'});}
+ return M.explain({tool:'session',aim:'Gagner le plus d’argent pendant ta partie.',horizon:'Une partie de '+(s.session.minutes??'?')+' min',conditions,used,excluded,values:[{label:'Temps de la partie',value:vPers(s.session.minutes),unit:'min',field:'f-session-minutes'},{label:'Joueurs',value:vPers(s.goal.players),unit:'joueurs',field:'session-players'},{label:'J’ai déjà',value:vPers(s.goal.capital),unit:'$',field:'session-capital'},{label:'Gardé de côté',value:vPers(s.goal.reserve),unit:'$',field:'session-reserve'}],drivers,missing:r.valid?[]:[{label:'Un chiffre',text:r.reason,decisive:true}],changes:x.excluded.filter(a=>a.reasons.includes('pas cochée')).length?['Cocher d’autres activités peut changer le programme.']:[]});
+}
+function explainActivities(s,source,r,x){
+ const sel=x.rank.find(a=>a.id===s.inverse.selected),used=['argent-disponible','reserve','possession-requise','joueurs','temps-partie','gain-net','temps-actif','attente','versement'],excluded={'cout-usage':'Les frais de chaque mission sont déjà dans son gain net.'};
+ if(ammoPerAttempt(s))used.push('mecanique-simulee');else excluded['mecanique-simulee']='Aucune munition simulée : seuls les frais que tu as écrits comptent.';
+ if(x.failureShare!==null)used.push('scenario-echec');else excluded['scenario-echec']='Le calcul suppose que chaque tentative réussit ; ajoute un scénario de tentatives ratées en mode Expert si tu veux être prudent.';
+ const drivers=[];if(x.best)drivers.push({label:'Classement',text:(x.best.id===s.inverse.selected?'C’est l’activité qui rapporte le plus':'« '+x.best.name+' » rapporte plus')+' avec '+(s.inverse.minutes??'?')+' min : '+fmt(x.best.profit)+' $.'});
+ if(sel&&sel.fail)drivers.push({label:'Si des tentatives ratent',text:'Avec '+Math.round(sel.fail.share*10)+' tentatives ratées sur 10 : '+fmt(sel.fail.profit)+' $ au lieu de '+fmt(sel.profit)+' $ (frais payés, pas de récompense).',factor:'scenario-echec'});
+ return M.explain({tool:'activities',aim:'Ce que rapporte ton temps avec une activité, comparé aux autres activités possibles.',horizon:(s.inverse.minutes??'?')+' min de jeu',conditions:x.rank.map(a=>({id:'possession-requise',label:a.name,state:!a.valid?'unknown':a.excluded.length?'ko':'ok',detail:!a.valid?a.reason:a.excluded.length?a.excluded.join(', '):'Possible.'})),used,excluded,values:[{label:'Temps',value:vPers(s.inverse.minutes),unit:'min',field:'f-inverse-minutes'},{label:'Joueurs',value:vPers(s.goal.players),unit:'joueurs',field:'activity-players'}],drivers,missing:r.valid?[]:[{label:'Un chiffre',text:r.reason,decisive:true}]});
+}
+function explainBudget(s,source,r,x){
+ const used=['argent-disponible','reserve','cout-acquisition','argent-restant'],excluded={'effet-soin':'Le budget compte l’argent ; l’effet des consommables n’est pas chiffré dans GTA VI.'},drivers=[],missing=[];
+ if(x.flow){used.push('cout-usage','cout-complet','frequence','horizon');drivers.push({label:'Dans la durée',text:x.flow.ledger.reserveBreach?'Tu passerais sous l’argent gardé de côté à la partie '+x.flow.ledger.reserveBreach.at+'.':'Sur '+x.flow.sessions+' parties, ton argent reste au-dessus de ce que tu gardes de côté (au plus bas : '+fmt(x.flow.ledger.low.value)+' $).'});}
+ else{excluded['cout-usage']='Écris sur combien de parties tu comptes (mode Expert) pour voir les dépenses dans la durée.';excluded['cout-complet']='Pas d’horizon écrit.';excluded.frequence='Pas de nombre de parties écrit.';excluded.horizon='Pas d’horizon écrit : seul « maintenant » est calculé.';}
+ if(x.rows.some(row=>row.usage&&row.usage.source==='simulated'))used.push('mecanique-simulee');else excluded['mecanique-simulee']='Aucune mécanique simulée dans tes achats.';
+ if(!x.spend.complete)missing.push({label:x.spend.missing.map(m=>m.label).join(', '),text:'Prix pas encore écrit : le reste affiché est un maximum.',decisive:true});
+ return M.explain({tool:'budget',aim:'Savoir ce qu’il te reste après tes dépenses, sans toucher à l’argent gardé de côté.',horizon:x.flow?'Maintenant, puis '+x.flow.sessions+' parties':'Maintenant',conditions:[{id:'argent-disponible',label:'Dépenses possibles maintenant',state:!r.valid?'unknown':r.overBudget?'ko':x.spend.complete?'ok':'unknown',detail:r.valid?(r.overBudget?'Tes dépenses et l’argent gardé de côté dépassent ce que tu as.':'Tout tient.'):r.reason}],used,excluded,values:x.rows.map(row=>({label:row.label,value:row.value,unit:'$'})).concat([{label:'J’ai déjà',value:vPers(s.goal.capital),unit:'$',field:'budget-capital'},{label:'Gardé de côté',value:vPers(s.goal.reserve),unit:'$',field:'budget-reserve'}]),drivers,missing});
+}
+function explainOrder(s,source,r,x){
+ const used=['argent-disponible','reserve','cout-acquisition','gain-en-plus','delai-recuperation','argent-restant','priorite'],excluded={'usage-compatible':'L’ordre ne vérifie pas un besoin d’usage : compare les options dans « Quel achat choisir ? ».',envie:'L’ordre se décide sur le temps et l’argent ; ton envie compte dans « Quel achat choisir ? ».'};
+ if(x.items.some(i=>i.before.length))used.push('possession-requise');else excluded['possession-requise']='Aucun de tes achats n’en demande un autre avant lui.';
+ const conds=[];x.items.forEach(i=>{const a=asset(s,i.id);if(a&&a.itemId)conds.push({id:'achetable',label:i.name,state:'assumed',detail:'Achat à confirmer dans GTA VI.'});});
+ if(conds.length)used.push('achetable');else excluded.achetable='Achats libres : c’est toi qui dis qu’ils s’achètent.';
+ const OBJ={all:'tout avoir au plus vite',income:'avoir au plus tôt un achat qui rapporte',reserve:'garder le plus d’argent à chaque étape',given:'garder ton ordre'};
+ const drivers=[],missing=[];
+ if(x.valid&&x.best){drivers.push({label:'Ordre proposé',text:x.best.order.map(id=>'« '+(x.items.find(i=>i.id===id)||{}).name+' »').join(' → ')+' : '+H(x.best.result.totalHours)+' de jeu au total.'});if(x.given&&x.given.valid&&x.given.order.join()!==x.best.order.join())drivers.push({label:'Ton ordre',text:H(x.given.result.totalHours)+' de jeu au total dans ton ordre.'});if(x.search)drivers.push({label:'Recherche',text:x.search.note});}
+ else missing.push({label:x.incomplete?'Prix':'Blocage',text:x.reason,decisive:true});
+ return M.explain({tool:'order',aim:'Trouver l’ordre d’achat qui permet de '+OBJ[x.objective]+'.',horizon:'Jusqu’au dernier achat',conditions:conds,used,excluded,values:[{label:'J’ai déjà',value:vPers(s.goal.capital),unit:'$',field:'order-capital'},{label:'Gardé de côté',value:vPers(s.goal.reserve),unit:'$',field:'order-reserve'},{label:'Je gagne par heure',value:vPers(s.goal.hourly),unit:'$/h',field:'order-hourly'}].concat(x.items.map(i=>({label:i.name,value:i.price===null?V.blank():V.personal(i.price),unit:'$'}))),drivers,missing,changes:(x.alternatives||[]).map(a=>'Pour '+OBJ[a.objective]+' : '+a.order.map(id=>'« '+(x.items.find(i=>i.id===id)||{}).name+' »').join(' → ')+(a.valid?' ('+H(a.result.totalHours)+')':''))});
+}
+function explainRoi(s,source,r,x){
+ const mode=s.roi.mode,used=['argent-disponible','reserve','cout-acquisition','argent-restant'],excluded={},drivers=[],missing=[];
+ if(['new','improve'].includes(mode))used.push('joueurs','gain-net');else{excluded.joueurs='Pas d’activité à plusieurs dans ce mode.';excluded['gain-net']=mode==='estimate'?'Achat plaisir : aucun gain calculé.':'Tu as écrit directement le gain en plus par heure.';}
+ if(mode==='estimate'){excluded['gain-en-plus']='Achat plaisir ou gain inconnu : aucune rentabilité n’est inventée.';if(num(s.goal.hourly)||s.roi.recoveryActivity)used.push('delai-recuperation');else excluded['delai-recuperation']='Écris ce que tu gagnes par heure pour savoir en combien de temps tu retrouves ton argent.';}
+ else used.push('gain-en-plus','delai-recuperation');
+ if(x.purchasable.state==='na')excluded.achetable='Achat libre : c’est toi qui le décris.';else used.push('achetable');
+ if(V.usable(x.usage.perSession)){used.push('cout-usage');if(x.sessions!==null)used.push('cout-complet','frequence','horizon');else{excluded['cout-complet']='Écris ton temps de jeu par jour pour convertir les heures en parties.';excluded.frequence='Pas de nombre de parties calculable.';excluded.horizon='Heures d’usage sans temps par jour.';}}
+ else{excluded['cout-usage']=x.usage.note||'Aucun coût d’usage écrit.';excluded['cout-complet']='Sans coût d’usage, le coût complet est le prix.';if(num(s.roi.hours)){used.push('horizon','frequence');}else{excluded.horizon='Écris combien d’heures tu t’en sers.';excluded.frequence='Pas d’heures d’usage écrites.';}}
+ if(V.usable(x.cost.resale))used.push('revente-prevue');else excluded['revente-prevue']='Revente non confirmée dans GTA VI : comptée seulement si tu écris un prix de revente.';
+ if(x.usage.source==='simulated')used.push('mecanique-simulee');else excluded['mecanique-simulee']='Aucune mécanique simulée pour cet achat.';
+ excluded.priorite='La réponse compare « avec » et « sans » l’achat sur le même temps de jeu ; pas de priorité à choisir.';
+ if(x.cash.state==='short')drivers.push({label:'Argent disponible',text:'Il manque '+fmt(x.cash.shortfall)+' $ pour payer maintenant.'});
+ if(mode==='estimate'&&!num(s.goal.hourly)&&!s.roi.recoveryActivity)missing.push({label:'Ce que tu gagnes par heure',text:'pour savoir en combien de temps tu retrouves ton argent',field:'roi-recovery-hourly',decisive:false});
+ if(mode==='continuous'&&!num(s.goal.hourly))missing.push({label:'Ce que tu gagnes déjà par heure',text:'pour comparer les deux situations, avec et sans l’achat, avec le même argent',field:'f-goal-hourly',decisive:false});
+ if(mode!=='estimate'&&!num(s.roi.revenueHourly)&&mode==='continuous')missing.push({label:'Gain en plus par heure',text:'C’est la donnée qui décide : sans elle, pas de remboursement calculé.',field:'f-roi-revenueHourly',decisive:true});
+ if(!r.valid)missing.push({label:'Un chiffre',text:r.reason,decisive:true});
+ return M.explain({tool:'roi',aim:mode==='estimate'?'Savoir si tu peux te l’offrir et ce qu’il te laisse.':'Savoir si l’achat te fait gagner plus qu’il ne coûte, comparé à ne pas l’acheter.',horizon:num(s.roi.hours)?s.roi.hours+' h de jeu':'Maintenant',conditions:x.admission.ok.concat(x.admission.failed,x.admission.unknown,x.admission.assumed),used,excluded,values:[{label:'Prix total',value:x.acquisition.complete?V.personal(x.acquisition.value):V.blank(),unit:'$',field:'f-roi-purchase'},{label:'J’ai déjà',value:vPers(s.goal.capital),unit:'$',field:'roi-capital'},{label:'Gardé de côté',value:vPers(s.goal.reserve),unit:'$',field:'roi-reserve'},{label:'Coût par partie',value:x.usage.perSession,unit:'$/partie'},{label:'Heures d’usage',value:vPers(s.roi.hours),unit:'h',field:'f-roi-hours'}],drivers,missing});
+}
+function explainCompare(s,source,r,x){
+ const used=['argent-disponible','reserve','cout-acquisition','priorite'],excluded={},drivers=[],missing=[],need=s.analysis.need;
+ const hasNeed=!!(need.terrain||num(need.passengers)||need.cargo);
+ if(hasNeed){used.push('usage-compatible');if(num(need.passengers)||need.cargo)used.push('capacite');else excluded.capacite='Aucune place ni chargement demandés.';}else{excluded['usage-compatible']='Aucun besoin d’usage écrit (terrain, places, chargement) : aucune option n’est écartée pour ça.';excluded.capacite='Aucune capacité demandée.';}
+ if(x.rows.some(row=>row.item))used.push('achetable');else excluded.achetable='Achats libres : c’est toi qui les décris.';
+ if(x.rows.some(row=>row.asset.owned))used.push('possession-requise');else excluded['possession-requise']='Aucun de ces achats n’est déjà à toi : chacun est compté à son prix.';
+ if(x.rows.some(row=>V.usable(row.usage.perSession))){used.push('cout-usage');if(x.sessions!==null)used.push('cout-complet','frequence','horizon');else{excluded['cout-complet']='Écris sur combien de parties tu t’en sers pour comparer le coût complet.';excluded.frequence='Pas de nombre de parties.';excluded.horizon='Pas d’horizon écrit.';}}
+ else{excluded['cout-usage']='Aucun coût d’usage connu pour ces achats (carburant, entretien : non confirmés).';excluded['cout-complet']='Sans coût d’usage, on compare le prix.';excluded.frequence='Sert avec un coût d’usage.';excluded.horizon='Sert avec un coût d’usage.';}
+ if(x.rows.some(row=>row.income!==null)){used.push('gain-en-plus','delai-recuperation');}else{excluded['gain-en-plus']='Aucun achat n’a de gain en plus écrit : pas de remboursement comparé.';if(num(s.goal.hourly))used.push('delai-recuperation');else excluded['delai-recuperation']='Écris ce que tu gagnes par heure pour savoir quand tu pourras payer.';}
+ excluded['revente-prevue']='Revente non confirmée dans GTA VI : pas comptée dans la comparaison.';
+ excluded['performance-usage']='Aucune performance (vitesse, accélération…) n’est publiée pour GTA VI : rien n’est comparé là-dessus.';
+ excluded['effet-soin']='Effet des consommables pas chiffré dans GTA VI.';
+ excluded.esthetique='Ton goût n’est pas noté par le site : dis-le avec ta note d’envie.';
+ used.push('envie');
+ if(x.rows.some(row=>row.usage.source==='simulated'))used.push('mecanique-simulee');else excluded['mecanique-simulee']='Aucune mécanique simulée.';
+ if(x.excluded.length)drivers.push({label:'Écartés',text:x.excluded.map(row=>'« '+row.name+' » ('+row.admission.failed.map(c=>c.detail||c.label).join(', ')+')').join(' ; ')+'.'});
+ if(x.crossover)drivers.push({label:'Coût dans la durée',text:'« '+x.crossover.before+' » coûte moins avant '+Math.ceil(x.crossover.n-1e-9)+' parties ; au-delà, « '+x.crossover.after+' » devient moins cher.'});
+ x.partial.forEach(row=>missing.push({label:'« '+row.name+' »',text:'Coût incomplet : comparaison partielle.',decisive:true}));
+ if(!r.valid)missing.push({label:'Un chiffre',text:r.reason,decisive:true});
+ const conditions=[];x.rows.forEach(row=>row.conditions.forEach(c=>conditions.push({...c,label:row.name+' · '+c.label})));
+ return M.explain({tool:'compare',aim:'Choisir l’achat qui répond à ton besoin, d’abord parmi ceux qui conviennent, puis selon ce qui compte pour toi.',horizon:x.sessions!==null?'Achat, puis '+x.sessions+' parties':'Au moment de l’achat',conditions,used,excluded,values:x.rows.map(row=>({label:row.name,value:row.acquisition.complete?V.personal(row.acquisition.value):V.blank(),unit:'$'})).concat([{label:'J’ai déjà',value:vPers(s.goal.capital),unit:'$',field:'compare-capital'},{label:'Gardé de côté',value:vPers(s.goal.reserve),unit:'$',field:'compare-reserve'}]),drivers,missing});
+}
+function explainPlan(s,source,r,x){
+ const p=s.plan,g=p.goal,missions=p.source==='missions',used=['argent-disponible','reserve','argent-restant','avancement','priorite'],excluded={},drivers=[],missing=[],changes=[];
+ const any=(k)=>p.missions.some(k),anyP=(k)=>p.prerequisites.some(k);
+ if(p.prerequisites.length){used.push('cout-acquisition','achetable');}else{excluded['cout-acquisition']='Aucun achat avant ton but.';excluded.achetable='Aucun achat avant ton but.';}
+ if(anyP(a=>a.boostHourly>0)||g.boostHourly>0)used.push('gain-en-plus');else excluded['gain-en-plus']='Aucun achat ne te fait gagner plus (ou tu ne l’as pas écrit).';
+ if(missions){used.push('gain-net','temps-actif','attente','versement','ressource-exclusive','variete');excluded.joueurs='Les missions du plan se jouent à ton nombre de joueurs ; ta part de récompense est écrite dans chaque mission.';}
+ else{excluded['gain-net']='Tu gagnes « petit à petit » : ton gain par heure compte déjà les frais.';excluded['temps-actif']='Pas de missions : pas de temps de mission séparé.';excluded.attente='Pas de missions : pas d’attente.';excluded.versement='Gain continu : pas de récompense de fin de mission.';excluded['ressource-exclusive']='Pas de missions à enchaîner.';excluded.variete='Pas de missions à varier.';excluded.joueurs='Pas de missions à plusieurs.';}
+ if(missions&&any(m=>(m.requires||[]).length)||anyP(a=>(a.requires||[]).length))used.push('possession-requise');else excluded['possession-requise']='Aucune mission ni achat n’en demande un autre.';
+ if(any(m=>m.once))used.push('deblocage');else excluded.deblocage='Aucune mission de déblocage (faite une seule fois).';
+ if(p.situation.dailyMinutes){used.push('temps-partie','horizon');}else{excluded['temps-partie']='Pas de durée de partie : parcours continu, sans calendrier.';excluded.horizon='Sans parties, pas de dates : seulement le temps de jeu.';}
+ if((p.situation.upkeepPerSession||0)>0||anyP(a=>(a.usagePerSession||0)>0))used.push('cout-usage');else excluded['cout-usage']='Aucune dépense par partie écrite.';
+ if(ammoPerAttempt(s))used.push('mecanique-simulee');else excluded['mecanique-simulee']='Aucune mécanique simulée dans le plan.';
+ excluded['scenario-echec']='Le plan suppose que chaque mission réussit ; si une partie se passe moins bien, écris ce que tu as vraiment gagné : le plan se refait.';
+ if(r.valid){drivers.push({label:'Parcours',text:(r.continuous?H(r.totalMinutes/60)+' de jeu en tout':r.totalSessions+' partie'+(r.totalSessions>1?'s':'')+(r.days?' ('+r.days+' jours)':''))+', '+fmt(r.finalCash)+' $ à la fin.'});
+  if(r.lowPoint)drivers.push({label:'Au plus bas',text:fmt(r.lowPoint.cash)+' $ ('+(r.lowPoint.at||'départ')+'), jamais sous les '+fmt(r.input&&r.input.reserve||0)+' $ gardés de côté.'});
+  if(x.chain&&x.chain.steps.length)drivers.push({label:'Préparation',text:x.chain.steps.filter(st=>st.kind!=='activity').map(st=>st.name).join(' → ')||'Rien à préparer.'});}
+ else missing.push({label:/Parcours à compléter/.test(r.reason||'')?'Parcours à compléter':'Un chiffre',text:r.reason,decisive:true});
+ if(x.chain&&!x.chain.ok&&x.chain.reason)missing.push({label:'Prérequis',text:x.chain.reason,decisive:true});
+ return M.explain({tool:'plan',aim:g.kind==='amount'?'Avoir '+fmt(g.target)+' $ : '+MEANING[g.meaning]+'.':g.kind==='unlock'?'Débloquer '+(g.name||'ton but')+'.':'Acheter '+(g.name||'ton but')+'.',horizon:p.situation.dailyMinutes?'Partie après partie ('+p.situation.dailyMinutes+' min, '+(p.situation.daysPerWeek||7)+' jours par semaine)':'Une étape après l’autre, sans calendrier',conditions:[],used,excluded,values:[{label:'J’ai déjà',value:vPers(p.situation.capital),unit:'$',field:'plan-capital'},{label:'Gardé de côté',value:vPers(p.situation.reserve),unit:'$',field:'plan-reserve'}],drivers,missing,changes});
+}
+function explainTool(tool,s,source,ctx,r,x){
+ if(tool==='goal')return explainGoal(s,source,r,x);if(tool==='session')return explainSession(s,source,r,x);if(tool==='activities')return explainActivities(s,source,r,x);
+ if(tool==='budget')return explainBudget(s,source,r,x);if(tool==='order')return explainOrder(s,source,r,x);if(tool==='roi')return explainRoi(s,source,r,x);
+ if(tool==='compare')return explainCompare(s,source,r,x);if(tool==='plan')return explainPlan(s,source,r,x);return x.explain||null;
+}
+
+function analysis(tool,s,source=[],ctx={}){
+ if(!M)return null;
+ try{
+  const r=evaluate(tool,s,source,ctx);let x=null;
+  if(tool==='purchase')x=purchaseAnalysis(s,source,ctx);else if(tool==='compare')x=compareAnalysis(s,source,ctx);else if(tool==='order')x=orderAnalysis(s,source,ctx);
+  else if(tool==='budget')x=budgetAnalysis(s,source,ctx);else if(tool==='goal')x=goalAnalysis(s,source,ctx,r);else if(tool==='activities')x=activitiesAnalysis(s,source,ctx);
+  else if(tool==='session')x=sessionAnalysis(s,source,ctx);else if(tool==='roi')x=roiAnalysis(s,source,ctx);else if(tool==='plan')x=planAnalysis(s,source,ctx,r);
+  if(!x)return null;
+  if(!x.explain)x.explain=explainTool(tool,s,source,ctx,r,x);
+  x.result=r;return x;
+ }catch(error){return {tool,error:error.message};}
+}
+
+function evaluate(tool,s,source=[],ctx={}){
+ if(tool==='compare'){const input=chooseInput(s,source),total=input.criterion==='cheapestTotal';if(total)input.criterion='cheapest';
+  let r;
+  // v7.49 : une option incompatible avec ton besoin (terrain, places, chargement) ou qui ne s’achète pas est écartée avant de choisir.
+  const x=M?compareAnalysis(s,source,ctx):null,bad=new Set(x?x.excluded.map(row=>row.name):[]);
+  if(bad.size){const kept=input.items.filter(it=>!bad.has(it.name));if(kept.length<2)return {valid:false,reason:kept.length?'Une seule option convient à ton besoin : « '+kept[0].name+' ». Les autres sont écartées : '+[...bad].join(', ')+'.':'Aucune option ne convient à ton besoin : '+[...bad].join(', ')+'.',excludedByNeed:[...bad],items:[],best:null,bestByCriterion:{}};r={...E.choose({...input,items:kept}),excludedByNeed:[...bad]};}
+  else r=E.choose(input);
+  if(!total||!r.valid||!x)return r;
+  // « Le moins cher sur la durée » : prix + coût d’usage sur le nombre de parties écrit ; un coût incomplet n’est jamais un avantage.
+  if(x.sessions===null)return {...r,criterion:'cheapestTotal',best:null,undecided:true,undecidedReason:'Écris sur combien de parties tu t’en serviras : sans ça, pas de coût sur la durée.'};
+  const rows=x.admissible,complete=rows.filter(row=>row.cost.total.complete).sort((a,b)=>a.cost.total.value-b.cost.total.value);
+  if(!complete.length)return {...r,criterion:'cheapestTotal',best:null,undecided:true,undecidedReason:'Aucune option n’a un coût complet : écris les coûts d’usage ou les prix manquants.'};
+  const lead=complete[0],doubt=rows.filter(row=>!row.cost.total.complete&&!M.compareCosts(lead.cost.total,row.cost.total).decided);
+  const bestTotals=Object.fromEntries(rows.map(row=>[row.name,row.cost.total.complete?row.cost.total.value:null]));
+  if(doubt.length)return {...r,criterion:'cheapestTotal',best:null,undecided:true,undecidedReason:'« '+lead.name+' » coûte le moins parmi les coûts complets, mais '+doubt.map(row=>'« '+row.name+' »').join(', ')+' a un coût incomplet qui pourrait être plus bas.',totals:bestTotals};
+  const chosen=r.items.find(it=>it.name===lead.name),second=complete[1],tie=second&&Math.abs(second.cost.total.value-lead.cost.total.value)<=1e-6*Math.max(1,lead.cost.total.value),near=second&&!tie&&M.close(lead.cost.total.value,second.cost.total.value,0.02);
+  return {...r,criterion:'cheapestTotal',tie:!!tie,near:!!near,closeWith:tie||near?second.name:null,best:lead.name,bestWaitHours:chosen?chosen.waitHours:null,bestTotal:lead.cost.total.value,totals:bestTotals,bestByCriterion:{...r.bestByCriterion,cheapestTotal:lead.name}};}
  if(tool==='plan'){const missing=planMissing(s);if(missing)return{valid:false,reason:missing};
   const st=s.plan.strategy==='auto'?planStrategies(s):null,strategy=st&&st.recommended?st.recommended:(s.plan.strategy==='auto'?'asIs':s.plan.strategy),input=planInput(s,strategy);
   let r=E.missionPlan(input),variant='auto';
   // Plan de secours choisi (« Suivre ce plan ») : même situation, missions ou achats d'avant réduits.
   if(s.plan.variant!=='auto'){const alt=E.missionAlternatives(input);const v=alt.valid?alt.results[s.plan.variant]:null;if(v&&v.valid&&v.reached){r=v;variant=s.plan.variant;}}
   return Object.assign(r,{strategy,strategies:st,variant,input});}
- if(tool==='goal')return goal(s,source);if(tool==='session')return session(s,source);if(tool==='roi')return roi(s,source);if(tool==='order')return E.order(orderInput(s,source));if(tool==='budget')return E.budget(budgetInput(s));
+ if(tool==='goal')return goal(s,source);if(tool==='session')return session(s,source);if(tool==='roi')return roi(s,source,ctx);if(tool==='order'){if(!M)return E.order(orderInput(s,source));const x=orderAnalysis(s,source,ctx);if(x.best&&x.best.valid)return {...x.best.result,order:x.best.order,objective:x.objective,method:x.search&&x.search.method};return {valid:false,reason:x.reason,incomplete:!!x.incomplete,steps:[],totalHours:null,finalCapital:null,finalHourly:null};}
+ if(tool==='budget'){const input=budgetInput(s),unknown=input.allocations.filter(v=>v===null).length;if(!unknown)return E.budget(input);
+  // v7.49 : un prix inconnu ne vaut pas 0 : le calcul se fait sur le sous-total connu et le dit (« au plus »).
+  const r=E.budget({...input,allocations:input.allocations.map(v=>v===null?0:v)});return r.valid?{...r,partial:true,unknownCount:unknown,shares:r.shares.map((x,i)=>input.allocations[i]===null?null:x)}:r;}
  if(tool==='purchase'){const p=purchase(s,source);return E.purchase({...p,capital:p.capital===null||p.reserve===null?null:p.capital-p.reserve,price:p.price===null||p.extras===null?null:p.price+p.extras});}
  if(tool==='activities'){if(!Number.isInteger(s.goal.players)||s.goal.players<1||s.goal.players>100)return{valid:false,reason:'Écris un nombre de joueurs entre 1 et 100.'};const a=activities(s,source).find(a=>a.id===s.inverse.selected);if(!a)return{valid:false,reason:'Choisis une activité.'};if(a.players>s.goal.players)return{valid:false,reason:'Cette activité se joue à '+a.players+' joueurs ; vous êtes '+s.goal.players+'. Ajuste ton groupe ou choisis un scénario solo.'};if((a.requiresPurchaseIds||[]).some(id=>!s.assets.some(x=>x.itemId===id&&x.owned)))return{valid:false,reason:'Il te manque un achat pour cette activité. Coche « Je l’ai déjà » dans Quoi acheter d’abord.'};return E.inverse({...s.inverse,capital:s.goal.capital,reserve:s.goal.reserve,activity:a});}
  return{valid:false,reason:'Choisis un outil.'};
@@ -279,6 +662,6 @@ function sensitivity(tool,s,source=[]){
 }
 function signature(s){const c=copy(s);delete c.name;delete c.mode;delete c.views;delete c.tab;delete c.catalogue;delete c.completed;return JSON.stringify(c);}
 function referenceWarnings(s,catalogue){const out=[];s.assets.forEach(a=>{if(!a.itemId)return;const item=catalogue.find(x=>x.id===a.itemId);if(!item)out.push(a.name+' : cette fiche n’existe plus, ton prix est gardé.');else if(a.referencePrice!==item.price)out.push(item.name+' : le prix du site a changé ; vérifie ton chiffre.');});return out;}
-function initial(dataVersion,presets){return defaults({version:2,dataVersion,mode:'quick',model:'continuous',name:'Mon premier million',tab:'goal',goal:{capital:200000,target:1000000,hourly:100000,reserve:0,dailyMinutes:60,players:1,selected:'scenario-a'},activities:presets.map(a=>({id:a.id,name:a.name,reward:a.reward,cost:a.cost,duration:a.duration,prep:a.prep,cooldown:a.cooldown,share:a.share,investment:a.investment,players:a.players,owned:false})),session:{minutes:60,maxRepeat:100,enabled:['scenario-a','scenario-b','scenario-c']},inverse:{minutes:60,selected:'scenario-a'},purchase:{itemId:'',price:100000,hourly:50000,boostHourly:0,capital:200000,target:1000000,reserve:0,extras:0},catalogue:{query:'',type:'all',status:'all',maxPrice:null,sort:'name',favorites:[],compareIds:[],favoritesOnly:false}});}
-return Object.freeze({copy,tools,names,defaults,initial,validate,migrate,asset,addAsset,activities,eligible,purchase,goal,session,projection,roi,investment,decision,blank,orderInput,budgetInput,chooseInput,planInput,planMissing,planPurchases,planReserve,planGoalName,planStrategies,planAlternatives,planObserved,planNextSession,planDeadline,planCurve,planTemplate,planMissionTemplate,planPrereqTemplate,planLogTemplate,planVariantTemplate,analysisTemplate,assetTemplate,MECHANICS,ROLES,GOAL_MEANINGS,PRIORITIES,TERRAINS,STRATEGIES,STRATEGY_LABEL,PLAN_KINDS,PLAN_SOURCES,evaluate,metrics,metric,sensitivity,signature,referenceWarnings});
+function initial(dataVersion,presets){return defaults({version:2,dataVersion,mode:'quick',model:'continuous',name:'Mon premier million',tab:'goal',goal:{capital:200000,target:1000000,hourly:100000,reserve:0,dailyMinutes:60,players:1,selected:'scenario-a',meaning:'available',plannedSpend:null,upkeepPerSession:null,deadlineDays:null},activities:presets.map(a=>({id:a.id,name:a.name,reward:a.reward,cost:a.cost,duration:a.duration,prep:a.prep,cooldown:a.cooldown,share:a.share,investment:a.investment,players:a.players,owned:false})),session:{minutes:60,maxRepeat:100,enabled:['scenario-a','scenario-b','scenario-c']},inverse:{minutes:60,selected:'scenario-a'},purchase:{itemId:'',price:100000,hourly:50000,boostHourly:0,capital:200000,target:1000000,reserve:0,extras:0},catalogue:{query:'',type:'all',status:'all',maxPrice:null,sort:'name',favorites:[],compareIds:[],favoritesOnly:false}});}
+return Object.freeze({planLogId,analysis,goalTarget,usageOf,terrainFits,OBJECTIVES,dependencyOrder,copy,tools,names,defaults,initial,validate,migrate,asset,addAsset,activities,eligible,purchase,goal,session,projection,roi,investment,decision,blank,orderInput,budgetInput,chooseInput,planInput,planMissing,planPurchases,planReserve,planGoalName,planStrategies,planAlternatives,planObserved,planNextSession,planDeadline,planCurve,planTemplate,planMissionTemplate,planPrereqTemplate,planLogTemplate,planVariantTemplate,analysisTemplate,assetTemplate,MECHANICS,ROLES,GOAL_MEANINGS,PRIORITIES,TERRAINS,STRATEGIES,STRATEGY_LABEL,PLAN_KINDS,PLAN_SOURCES,evaluate,metrics,metric,sensitivity,signature,referenceWarnings});
 });

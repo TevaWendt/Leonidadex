@@ -1,0 +1,73 @@
+LEONIDAKIT v7.49 — LOT 2 DE LA MISSION v7.48 → v7.52 : LES HUIT CALCULS ET LE BUSINESS PLAN (29 septembre 2026)
+
+Base : v7.48 (lot 1). Archive cumulée depuis la v7.47. Suivi : outils/SUIVI-MISSION.md ; matrice : outils/MATRICE-COUVERTURE.md.
+
+MOTEUR (calculateurs-engine.js)
+- order : chaque achat accepte un coût d’usage par heure (costHourly) ; si l’usage dépasse le gain, l’ordre est bloqué avec
+  la raison.
+- missionPlan réécrit : achats d’avant payés dès que possible, y compris avant la première partie ; temps pour obtenir un
+  achat (reporté sur la partie suivante) ; prérequis entre achats et missions ; missions « une seule fois » (déblocage) et
+  « déjà faite » ; sens du but (disponible après la réserve, en tout, gagné depuis maintenant) ; coût par partie d’un achat ;
+  grand livre (frais avant, récompense à la fin, point bas, conservation des flux vérifiée) ; parcours continu quand la durée
+  d’une partie est vide (mission la plus rentable par minute parmi les possibles, attentes, arrêt au but, 20 000 étapes au
+  plus) ; courbe en marches ; échéance refusée sans calendrier ; messages d’impossibilité précis et nommés (plans de secours
+  compris : knownNames).
+- Cas « un million » : 7 répétitions, 240 min, 900 000 après 6, 1 045 000 après 7, point bas 25 000.
+
+SCÉNARIO (calculateurs-scenario.js)
+- analysis(outil, état, activités, contexte) : analyse par outil branchée sur calculateurs-modele.js (trésorerie, coût
+  d’usage personnel > simulation > « non confirmé », revente, besoin et terrain, admission, Pareto, bascule, séquences,
+  dépendances, grand livre) et explication « Ce qui compte dans ce calcul » en six parties pour les neuf outils ; aucun
+  facteur du registre n’est ni utilisé ni écarté sans raison (vérifié par les tests).
+- compare : critère « le moins cher sur la durée » (cheapestTotal : égalité, écart de moins de 2 %, indécidable si un coût
+  incomplet pourrait être plus bas) ; options incompatibles avec le besoin écartées.
+- order : meilleur ordre proposé (exhaustif jusqu’à 7 achats, heuristique annoncée au-delà), objectifs « tout avoir le plus
+  vite », « gagner plus vite », « garder de l’argent », « mon ordre » ; dépendances respectées ; cycle et prix inconnu
+  expliqués.
+- budget : prix inconnus → sous-total « au plus » (partial, unknownCount) ; flux sur l’horizon.
+- activities : coût simulé des munitions par tentative ; classement des activités accessibles ; scénario d’échec.
+- goal : sens du but, dépenses prévues, dépenses par partie (converties par heure en continu), échéance (minutes par jour
+  nécessaires par pas de 15 min, gain par heure nécessaire par dichotomie).
+- roi / investissement : usage par heure ajouté quand aucun coût n’est écrit dans l’outil.
+- plan : stratégies comparées au temps de jeu quand il n’y a pas de parties ; planLogId (un relevé envoyé deux fois compté
+  une fois) ; « Parcours à compléter » quand un prix d’achat d’avant manque.
+
+PAGE (calculateurs.js, calculateurs-workspace.js, calculateurs-plan.js, calculateurs-visuals.js, calculateurs-workspace.css,
+calculateurs.html)
+- Bloc « Ce qui compte dans ce calcul » (premier niveau : but, horizon, 3 facteurs décisifs, conditions ✓ ✗ ? ≈, « Pour
+  aller plus loin », « Ce qui peut changer la réponse » ; détail repliable en six parties, chaque chiffre modifiable).
+- Champs : coût d’usage et revente, capacités (terrain, places, chargement), besoin, horizon (parties), hypothèses
+  globales et simulations en mode Expert ; rôle d’un achat ; « Frais obligatoires au départ ».
+- Rendus refaits : Quoi acheter d’abord ? (ordre proposé, étapes, compromis, « Adopter cet ordre »), Mon budget (« au
+  plus », flux en marches), Quel achat choisir ? (exclus, égalité, courbe des coûts complets, Pareto, tableau étendu),
+  Mes achats (payable maintenant, soutenable, revente, plaisir), Mes activités (classement, échec), Mon objectif (sens,
+  échéance).
+- Business plan : « Avoir, pour moi, c’est… » ; durée de partie facultative (parcours en temps de jeu) ; cartes de mission
+  (une seule fois, déjà faite, après une autre mission) ; cartes d’achat (temps pour l’obtenir, coût par partie, prérequis,
+  indispensable) ; chaîne des étapes (visual.chain, apparition décalée, rien en mouvement réduit) ; point bas ; « Parcours
+  à compléter » ; « Mes variantes du plan » (5 au plus, reprise qui range le plan actuel à sa place) ; courbe prévue en
+  marches, points réels jamais reliés (series.dots) ; fiche enregistrée et export texte en temps de jeu quand il n’y a pas
+  de parties ; manque et progression selon le sens du but.
+- Graphiques : légende des options sans suffixe « repère / hypothèse » trompeur (optionsLegend).
+- Liens (anomalies 1 à 7) : chapitre Tuto « choisir » ; type sans fiche = catalogue limité (un lieu n’est jamais un
+  achat) ; ids → « Quel achat choisir ? » ; minutes → l’outil demandé seulement, 0 refusé ; price, reserve, players,
+  mode=guided (« pas-a-pas ») ; id → outil demandé (comparaison, ordre, budget, plan, rentabilité) ; un lien ou un
+  #plan= qui change un calcul existant garde une copie dans « Mes calculs » (une seule par état) et affiche un bandeau
+  « Revenir à mon calcul d’avant / Garder le nouveau ».
+- FAQ (4 questions) et lexique (4 mots) complétés ; le JSON-LD FAQPage suit à la régénération.
+- Textes d’aide des champs facultatifs : « Tu peux écrire ton chiffre… » au lieu d’un ordre.
+
+AUTRES
+- outils/editorial-hubs.json : « Combien de temps pour t’installer ? » (Lieux) vise les demeures (type=property).
+- Régénération : empreintes ?v= de toutes les pages (version de Léo, qui inclut le moteur), Léo (FAQ du calculateur).
+
+TESTS
+- Ajoutés : calculateurs-v749.test.cjs (24 : un million, sens du but, coûts d’usage, A/B dans Quel achat choisir ?,
+  trésorerie dans Mes achats, coût inconnu, propriétés — coût ajouté, possession retirée, unités, ordre des candidats,
+  conservation —, joueurs et part, incompatible exclu, plaisir, ordre et dépendances, budget partiel, activités et échec,
+  munitions simulées, échéance, trois modes identiques, facteurs tous expliqués, relevé en double, messages nommés),
+  calculateurs-plan-ui-v749.test.cjs (10), calculateurs-liens-v749.test.cjs (8).
+- Adaptés : calculateurs-astra, calculateurs-ergonomie-v35 (courbe en marches, point « variantes »),
+  calculateurs-integration, calculateurs-plan-v34, scenario-v6-v748, calculateurs-v2-browser (export v6).
+- Résultats : node --test 539 / 539 ; verifier.js 0 erreur ; navigateur : parcours 161 / 161, lot B 140 / 140, v2 142 / 142,
+  calculateur 278 / 278, Léo tenu.

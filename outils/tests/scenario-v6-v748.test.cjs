@@ -42,7 +42,7 @@ test('v5 → v6 : aucune valeur existante ne change, les neuf résultats sont id
     assert.equal(JSON.stringify(b), JSON.stringify(a), t);
   }
   assert.equal(migrated.assets[1].price, 150000); assert.equal(migrated.plan.prerequisites[0].minutes, null);
-  assert.equal(migrated.plan.goal.meaning, 'held'); assert.deepEqual(migrated.plan.locked, []); assert.deepEqual(migrated.plan.variants, []);
+  assert.equal(migrated.plan.goal.meaning, 'available', 'v7.49 : par défaut, le but vise l’argent disponible après la réserve, comme avant'); assert.deepEqual(migrated.plan.locked, []); assert.deepEqual(migrated.plan.variants, []);
   assert.equal(migrated.plan.log[0].id, '', 'un ancien relevé n’a pas d’identifiant : il est gardé tel quel');
 });
 
@@ -60,7 +60,7 @@ test('v6 : une valeur inattendue revient au défaut au lieu de tout refuser ; le
   s.plan.locked = ['strategy', 'm-2', 'inconnu'];
   const v = B.validate(s, initial);
   assert.equal(v.assets[0].role, 'unknown'); assert.equal(v.assets[0].capabilities.terrain, ''); assert.deepEqual(v.assets[0].requires, ['absent']);
-  assert.equal(v.analysis.priority, 'fast'); assert.equal(v.plan.goal.meaning, 'held');
+  assert.equal(v.analysis.priority, 'fast'); assert.equal(v.plan.goal.meaning, 'available');
   assert.deepEqual(v.plan.prerequisites[0].requires, []); assert.deepEqual(v.plan.prerequisites[1].requires, ['p-1']);
   assert.deepEqual(v.plan.missions[0].requiresMissions, ['m-2']); assert.equal(v.plan.missions[1].once, true);
   assert.deepEqual(v.plan.locked, ['strategy', 'm-2']);

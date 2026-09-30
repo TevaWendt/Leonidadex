@@ -1,0 +1,41 @@
+LEONIDAKIT v7.49 — MISSION EN 5 LOTS, LOT 2 : LES HUIT CALCULS ET LE BUSINESS PLAN — archive « modifs » (29 septembre 2026)
+
+Base attendue : ton dossier Leonidadex en v7.47. L’archive est CUMULÉE depuis la v7.47 : elle contient aussi le lot 1
+(v7.48). Tu peux donc la mettre en ligne directement, que tu aies déjà mis la v7.48 ou non.
+Fichiers ajoutés ou modifiés seulement, chemins exacts depuis la racine. Rien à supprimer. Aucune commande de build.
+Toujours aucun package.json ; api/ ne change pas ; rien à régler dans Vercel ni dans Brevo.
+
+1. Copie ton dossier actuel (sauvegarde).
+2. Extrais l’archive dans la racine du site, écrase les fichiers homonymes (garde le dossier .git).
+3. Mets en ligne (GitHub Desktop, dossier complet).
+Beaucoup de pages changent d’une seule ligne : c’est l’empreinte « ?v= » des scripts, pour que les navigateurs prennent
+les nouvelles versions.
+
+CE QUE TU VERRAS (calculateurs.html) :
+- Sous chaque réponse, « Ce qui compte dans ce calcul » : ce que le calcul cherche, les conditions (✓ ✗ ? ≈), les chiffres
+  utilisés et d’où ils viennent, ce qui décide vraiment, ce qui pourrait changer la réponse, les critères écartés et
+  pourquoi. Le premier niveau est court ; le détail s’ouvre d’un geste.
+- Les coûts de carburant, d’entretien, de munitions… sont « à confirmer » : jamais comptés comme 0. Tu peux écrire ton
+  chiffre, ou choisir une simulation en mode Expert (toujours signalée).
+- Quel achat choisir ? : « le moins cher sur la durée » (prix + usage sur tes parties), avec le moment où l’autre devient
+  moins cher ; un véhicule qui ne va pas avec ton besoin (terrain, places, chargement) est écarté, avec la raison.
+- Quoi acheter d’abord ? : un ordre proposé (tous les ordres comparés jusqu’à 7 achats), les achats qui en demandent un
+  autre, et un bouton pour adopter l’ordre.
+- Mon budget : un prix inconnu donne un total « au plus », jamais un budget faux ; Mes activités : classement des
+  activités possibles et « et si une tentative sur X rate ? » ; Mon objectif : ce que « avoir » veut dire et une échéance.
+- Mon business plan : missions à faire une seule fois (déblocage), achats avec leur temps pour les obtenir et leur coût
+  par partie, « il faut d’abord avoir… », achat indispensable, le parcours en chaîne, ton argent au plus bas, la courbe en
+  marches (l’argent arrive d’un coup), des variantes que tu gardes et reprends sans rien perdre. Sans durée de partie,
+  le plan donne un parcours en temps de jeu, sans dates inventées.
+- Un lien (fiche, Tuto, ami) qui change un calcul que tu avais garde une copie dans « Mes calculs » et te propose d’y
+  revenir.
+
+POUR VÉRIFIER (3 minutes) : ouvre le calculateur, Mon business plan : but « Avoir une somme d’argent » 1 000 000,
+« en tout », j’ai 100 000, 20 000 de côté, laisse vide la durée d’une partie ; ajoute une mission « Déblocage » (récompense 0,
+10 min, une seule fois) et une mission à 150 000 (frais 5 000, 30 min, après « Déblocage ») ; deux achats d’avant 60 000 (12 min)
+et 10 000 (8 min), demandés par la mission. Réponse attendue : 4 h de jeu, 1 045 000 $ à la fin, au plus bas 25 000 $.
+
+SUITE : lot 3 (v7.50), catalogues, visuels, sélecteurs de carte et page Achats.
+
+Détails : outils/CHANGEMENTS-v7.49.txt ; suivi et reprise : outils/SUIVI-MISSION.md ; matrice des outils :
+outils/MATRICE-COUVERTURE.md.

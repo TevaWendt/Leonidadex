@@ -88,14 +88,14 @@ test('Sauvegardes v3 lues telles quelles, migrées (v4, v5 puis v6) avec un plan
 test('Un seul outil, session vide : « Ça vaut le coup ? » répond avec une recommandation, une prochaine étape et ses hypothèses',async()=>{const p=await page('roi');
  clickSel(p,'[data-b-roi-manual]');edit(p,'f-roi-purchase',120000);edit(p,'roi-capital',500000);edit(p,'roi-reserve',0);
  const mode=p.d.getElementById('f-roi-mode');mode.value='continuous';fire(p,mode,'change');edit(p,'f-roi-revenueHourly',20000);edit(p,'f-roi-hours',10);
- const t=text(p,'roi-results');assert.match(t,/Oui, ça vaut le coup/);assert.match(t,/remboursé après 6 h/);assert.match(t,/80\s000\s\$ de plus/);assert.match(t,/Ta prochaine étape/);assert.match(t,/CE QUI COMPTE DANS CE CALCUL/);assert.match(t,/Il manque : ce que tu gagnes déjà/);
+ const t=text(p,'roi-results');assert.match(t,/Oui, ça vaut le coup/);assert.match(t,/remboursé après 6 h/);assert.match(t,/80\s000\s\$ de plus/);assert.match(t,/Ta prochaine étape/);assert.match(t,/CE QUI COMPTE DANS CE CALCUL/);assert.match(t,/Pour aller plus loin\s: Ce que tu gagnes déjà par heure/,'v7.49 : la donnée utile manquante est dite, avec son bouton');
  edit(p,'f-roi-hours',4);assert.match(text(p,'roi-results'),/Pas sur 4 h/);
  edit(p,'f-roi-costHourly',20000);assert.match(text(p,'roi-results'),/Non : /);assert.match(text(p,'roi-results'),/jamais/);
  clean(p);});
 test('Achat plaisir : accessibilité, ce qui reste, temps pour retrouver son argent, aucun remboursement inventé',async()=>{const p=await page('roi');
  clickSel(p,'[data-b-roi-manual]');edit(p,'f-roi-purchase',150000);edit(p,'roi-capital',200000);edit(p,'roi-reserve',20000);
  let t=text(p,'roi-results');assert.match(t,/Oui, tu peux acheter/);assert.match(t,/ne rapporte rien/);assert.doesNotMatch(t,/Remboursé après \d/);assert.doesNotMatch(t,/rendement|score/i);
- assert.match(t,/Il manque : ce que tu gagnes par heure/);
+ assert.match(t,/Pour aller plus loin\s: Ce que tu gagnes par heure — pour savoir en combien de temps/,'v7.49');
  edit(p,'roi-recovery-hourly',50000);t=text(p,'roi-results');assert.match(t,/3 h de jeu pour retrouver ton argent/);
  edit(p,'f-roi-purchase',300000);t=text(p,'roi-results');assert.match(t,/Pas encore : il te manque 120\s000/);assert.match(t,/joue encore 2 h 24/i);
  clean(p);});

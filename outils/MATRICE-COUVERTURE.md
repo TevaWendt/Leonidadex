@@ -69,8 +69,12 @@ Légende des critères : C condition · G grandeur · K comparaison · P préfé
 | Réalisation enregistrée deux fois comptée une fois ; prévu ≠ possédé | 1 → 4 | `carnets-core-v748.test.cjs` |
 | Ancienne progression importée conservée ; nouvelles rubriques exportées | 1 → 4 | `carnets-core-v748.test.cjs` |
 | Migration v5 → v6 sans changer un résultat | 1 | `scenario-v6-v748.test.cjs` |
-| Objectif « un million » (7 répétitions, 240 min, point bas 25 000) | 2 | à écrire |
-| Véhicule incompatible exclu, plaisir sans rentabilité, trois modes identiques, dernière saisie gagnante | 2 | à écrire |
+| Objectif « un million » (7 répétitions, 240 min, point bas 25 000, 900 000 après 6, 1 045 000 après 7) | 2 | `calculateurs-v749.test.cjs`, `calculateurs-plan-ui-v749.test.cjs` |
+| Véhicule incompatible exclu, plaisir sans rentabilité, trois modes identiques, dernière saisie gagnante | 2 | `calculateurs-v749.test.cjs`, `calculateurs-plan-ui-v749.test.cjs` |
+| A/B et trésorerie dans les outils (Quel achat choisir ?, Mes achats) ; coût inconnu → budget « au plus » | 2 | `calculateurs-v749.test.cjs` |
+| Joueurs et part non comptés deux fois ; conversion d’unités ; ordre des candidats sans effet ; coût ajouté ne peut pas améliorer | 2 | `calculateurs-v749.test.cjs` |
+| Réalisé enregistré deux fois compté une fois (plan) ; fiche → comparaison → calcul → plan garde les données | 2 | `calculateurs-v749.test.cjs`, `calculateurs-liens-v749.test.cjs` |
+| Liens : outil demandé seulement, copie avant remplacement, retour possible | 2 | `calculateurs-liens-v749.test.cjs` |
 | Carnets dédiés, « Voir mon… » vers la bonne page | 4 | à écrire |
 
 ## 5. État par lot
@@ -78,7 +82,7 @@ Légende des critères : C condition · G grandeur · K comparaison · P préfé
 | Lot | État |
 |---|---|
 | 1 Fondations | fait (v7.48) : registre, statuts, genres, mécaniques, fiches documentaires, fonctions communes, carnets (stock, souhaits, journal), état v6 + migration, tests |
-| 2 Huit calculs + plan | à faire |
+| 2 Huit calculs + plan | fait (v7.49) : analyse par outil branchée sur le modèle, « Ce qui compte » en six parties (aucun facteur oublié, vérifié), coût complet et bascule, besoin, ordre proposé et dépendances, budget partiel et flux, activités classées et échec, échéance, sens du but, plan avec chaîne de prérequis, missions uniques, parcours continu, point bas, variantes, liens sûrs |
 | 3 Catalogues + Achats | à faire |
 | 4 Carnets + raccordements | à faire |
 | 5 Validation + livraison | à faire |
