@@ -3,6 +3,8 @@
 .lk-home-hero{position:relative;isolation:isolate;background:var(--night-deep,#241740);color:#fefbf5;overflow:hidden;padding:54px 0 36px}
 .lk-home-media{position:absolute;inset:0;z-index:-2;pointer-events:none;overflow:hidden}
 .lk-home-scene{position:absolute;inset:0}
+/* v7.52 (lot 5) : sur un écran très large, la scène garde sa définition (1 280 px) et se fond sur les côtés au lieu d’être étirée */
+@media(min-width:1360px){.lk-home-scene{left:50%;right:auto;width:1280px;margin-left:-640px;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 16%,#000 84%,transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 16%,#000 84%,transparent 100%)}}
 .lk-home-media::after{content:"";position:absolute;inset:-20%;background:linear-gradient(110deg,transparent 35%,#f5a52438 50%,#e8452c18 58%,transparent 70%);opacity:.65;transform:translateX(-20%)}
 .lk-home-scan{position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,0) 0 3px,rgba(255,255,255,.05) 3px 4px);mix-blend-mode:overlay}
 .lk-home-glow{position:absolute;left:-10%;right:-10%;bottom:-30%;height:70%;background:radial-gradient(ellipse at 50% 100%,rgba(232,69,44,.55),rgba(90,35,88,.25) 45%,transparent 70%);filter:blur(8px)}
@@ -90,7 +92,7 @@
 .lk-mini-fields label>.lk-mini-t>span{font-weight:500;color:#5C5A63}
 .lk-mini-fields input{min-height:52px;margin-top:2px;font-size:1.12rem;font-variant-numeric:tabular-nums;color:var(--ink,#1A1A1E);border:2px solid var(--ink,#1A1A1E);border-radius:10px}
 .lk-mini-fields input:focus{outline:3px solid var(--amber,#F5A524);outline-offset:2px}
-.lk-mini-echo{display:block;min-height:1.3em;font:800 .82rem 'JetBrains Mono',monospace;color:var(--coral-text,#B93220)}
+.lk-mini-echo{display:block;min-height:1.3em;font:800 .82rem var(--font-mono,ui-monospace,monospace);color:var(--coral-text,#B93220)}
 .lk-mini-help{font-size:.86rem!important;color:#5C5A63!important}
 @media(min-width:1000px){.lk-home-copy h1{font-size:clamp(5.5rem,8.6vw,8.75rem)}.lk-home-copy h1 em{white-space:nowrap}}
 /* Lot A : mouvement décoratif du fond (CSS seul, aucune vidéo). Rien ne change de taille. */
@@ -113,7 +115,7 @@
 .lk-entry-hub-ico{flex:none;width:52px;height:52px;border-radius:14px;display:grid;place-items:center;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.28);color:var(--amber-2,#f7b645);}
 .lk-entry-hub-ico svg{width:28px;height:28px;}
 .lk-entry-hub-body{min-width:0;flex:1;}
-.lk-entry-card--hub .lk-entry-eyebrow{margin:0 0 4px;letter-spacing:.14em;text-transform:uppercase;font-family:'JetBrains Mono',monospace;font-size:.72rem;}
+.lk-entry-card--hub .lk-entry-eyebrow{margin:0 0 4px;letter-spacing:.14em;text-transform:uppercase;font-family:var(--font-mono,ui-monospace,monospace);font-size:.72rem;}
 .lk-entry-card--hub h2{margin:0 0 6px;font-size:1.22rem;line-height:1.25;letter-spacing:-.02em;}
 .lk-entry-card--hub p{margin:0;font-size:.92rem;line-height:1.55;color:#f0eae0;max-width:62ch;}
 .lk-entry-card--hub .lk-entry-button{transition:background .18s,box-shadow .18s;transform:none!important;}

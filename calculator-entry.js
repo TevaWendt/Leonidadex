@@ -77,7 +77,6 @@
     if (!values) return;
     const params = new URLSearchParams({ tool: 'goal', from: 'home' });
     keys.forEach(key => params.set(key, String(values[key])));
-    document.dispatchEvent(new CustomEvent('lk:calculator', { detail: { event: 'open', origin: 'home', tool: 'goal' } }));
     window.location.assign('calculateurs.html?' + params.toString() + '#atelier');
   });
   form.addEventListener('focusout', () => setTimeout(echoes, 0));

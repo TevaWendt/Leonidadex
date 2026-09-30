@@ -7,7 +7,7 @@ Le site reste statique, en HTML/CSS/JavaScript, déployable sur Vercel sans comp
 - `calculateurs-data.js` adapte les sources canoniques, conserve les inconnues à `null` et expose trois exemples personnels.
 - `calculateurs-engine.js` est le moteur pur utilisable dans le navigateur et sous Node. Unités : dollars, minutes, pourcentages ; modèles horaires en dollars/heure.
 - `calculateurs.js` gère les formulaires, sept intentions, modes de détail, filtres, références, sauvegardes, exports et paramètres.
-- `calculateurs-tools.js` expose les interfaces rentabilité, budget et ordre d’achat, en appelant le même moteur.
+- Les interfaces rentabilité, budget et ordre d’achat sont dans `calculateurs.js` et `calculateurs-workspace.js`, sur le même moteur. (L’ancien `calculateurs-tools.js`, chargé par aucune page, est retiré en v7.52.)
 - `calculateurs-hub.js` reconnaît des intentions et des valeurs dans une question. C’est un routage par règles, pas un modèle d’IA.
 - `calculator-entry.js` réutilise `goalContinuous` sur l’accueil ; `calculator-entry.css` présente les points d’entrée.
 
@@ -65,19 +65,19 @@ L’empreinte `dataVersion` est calculée à partir du catalogue et des activit�
 
 ## Sauvegardes et liens
 
-Le JSON est en version 2 ; la version 1 précédente migre vers le modèle par cycles, avec réserve zéro et valeurs initiales pour les nouveaux champs. Les anciennes clés `lk-calculator-*-v1` sont conservées pour la compatibilité avec Progression ; leur contenu est versionné séparément.
+Le JSON est en version 6 (v7.49) ; les versions précédentes (1 à 5) migrent au chargement, avec réserve zéro et valeurs initiales pour les nouveaux champs, sans changer un résultat (`scenario-v6-v748.test.cjs`). Les anciennes clés `lk-calculator-*-v1` sont conservées pour la compatibilité avec Progression ; leur contenu est versionné séparément.
 
-- Brouillon courant ; jusqu’à 12 plans nommés ; 5 calculs récents ; 100 fiches favorites ; 3 objets comparés.
+- Brouillon courant ; jusqu’à 160 enregistrements (calculs et business plans, `lk-calculator-notebooks-v3`), lisibles aussi sur la page « Mes calculs et mes plans » (`carnets/calculs.html`, `calculateurs.html?voir=<id>`) ; 3 objets comparés dans Mes achats, 6 dans « Quel achat choisir ? ».
 - Renommage, duplication, suppression, réinitialisation avec annulation.
 - Référence d’objectif stockée séparément : la comparaison porte sur le temps de deux objectifs. Le lien et l’export du plan courant n’emportent pas cette référence locale séparée.
-- Export/import JSON ≤ 40 000 octets ; URL `#plan=` ≤ 24 000 caractères. Texte, identifiants, tableaux, nombres finis et version sont validés. Les valeurs inconnues peuvent rester `null`.
+- Export/import JSON ≤ 200 000 octets ; URL `#plan=` ≤ 24 000 caractères. Texte, identifiants, tableaux, nombres finis et version sont validés. Les valeurs inconnues peuvent rester `null`.
 - Les saisies hors limites ne remplacent pas une sauvegarde valide. Les paramètres de navigation et l’ancien lien partagé sont retirés après modification pour ne pas écraser un nouveau brouillon au rechargement.
 - Stockage ou presse-papiers indisponible : message, export et copie de la barre d’adresse restent utilisables. Les noms et hypothèses font partie du lien partagé ; ne pas y saisir d’informations privées inutiles.
 - Aucune synchronisation avec un compte GTA. La progression provient du capital renseigné par la personne.
 
 ## Points d’entrée et mesure
 
-`?tool=goal&capital=...&target=...&hourly=...`, `?tool=session&minutes=30`, `?tool=purchase&type=vehicules&id=...`, `?tool=purchase&type=armes&ids=a,b`, `?tool=roi&type=business&id=...`. Les paramètres incorrects sont ignorés avec explication. Les fiches d’entreprises importent un contexte et des valeurs absentes, sans supposer leur exploitation possible.
+`?tool=goal&capital=...&target=...&hourly=...`, `?tool=session&minutes=30`, `?tool=purchase&type=vehicules&id=...`, `?tool=purchase&type=armes&ids=a,b`, `?tool=compare&ids=a,b` (6 au plus), `?tool=order&type=vehicle&ids=...` (12 au plus, « Classer mes envies » des carnets), `?tool=roi&type=business&id=...`, `?mode=simple|guided|expert`, `?voir=<id>` (fiche d’un calcul enregistré). Les paramètres incorrects sont ignorés avec explication. Les fiches d’entreprises importent un contexte et des valeurs absentes, sans supposer leur exploitation possible.
 
 Les événements locaux `leonidakit:calculator` exposent uniquement nom d’événement, outil et niveau de détail (`open`, `first_valid_result`, `tool_open`, `save`, `share`, `compare`, `reference`, `catalogue_open`). Aucun montant et aucun nom ne sont envoyés, aucun service de mesure n’est installé. Pour les exploiter, brancher ultérieurement un gestionnaire compatible avec les choix de confidentialité du site.
 
@@ -114,7 +114,7 @@ Règle : un enfant de 10 ans doit pouvoir s'en servir. Concrètement :
 
 ## v7.23 : les sept outils en étapes, réponse en une phrase partout
 
-- Chaque outil découpe ses cases en `.calc-step[data-step][data-question]` (aide `step(n, question, html)` dans `calculateurs.js` et `calculateurs-tools.js`). Le pas à pas de `calculateurs-simple.js` est générique : il lit les étapes de l'outil ouvert, garde la position par outil (`stepByTab`), déplace un seul en-tête et une seule barre Retour / Suivant, et masque dans la carte `.has-steps` les descriptions, notes, volets avancés et liens secondaires.
+- Chaque outil découpe ses cases en `.calc-step[data-step][data-question]` (aide `step(n, question, html)` dans `calculateurs.js`). Le pas à pas de `calculateurs-simple.js` est générique : il lit les étapes de l'outil ouvert, garde la position par outil (`stepByTab`), déplace un seul en-tête et une seule barre Retour / Suivant, et masque dans la carte `.has-steps` les descriptions, notes, volets avancés et liens secondaires.
 - Chaque rendu de résultat commence par `<p class="calc-answer" data-short="…">` : la phrase complète pour l'écran, le résumé court pour le bandeau collant mobile. Tous les résultats sont dans une carte `.calc-result` (sombre) ; `#order-results` en contient une suivie des deux cartes A / B.
 - `Mes activités` : la question inverse (`inverse.minutes`, `inverse.selected`) est la carte principale ; le tableau reste dans `#activity-results` ; les éditeurs (`.calc-activity-editors`) sont dans `<details class="calc-activity-settings">`. Les identifiants des champs ne changent pas.
 - Puces `data-inverse-minutes` et état `aria-pressed` des puces `data-session-minutes`.

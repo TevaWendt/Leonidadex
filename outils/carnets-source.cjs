@@ -126,13 +126,15 @@ function lieux() {
   const CATS = vm.runInNewContext('(' + src.match(/const CATS = (\{[\s\S]*?\n {2}\});/)[1] + ')');
   const G = run(['carte-gtadb.js']).LK_GTADB;
   const all = [...local, ...G.groupes, ...G.lieux];
-  const groupName = Object.fromEntries(G.groupes.map(g => [g.id, g.n]));
+  /* Texte simple : la source GTADB peut écrire un nom en entités HTML (&quot;…&quot;, &amp;) ; la page l’échappe elle-même. */
+  const ENT = { quot: '"', amp: '&', apos: "'", '#39': "'", '#x27': "'", lt: '<', gt: '>' }, plainText = v => String(v || '').replace(/&(quot|amp|apos|#39|#x27|lt|gt);/g, (m, k) => ENT[k]);
+  const groupName = Object.fromEntries(G.groupes.map(g => [g.id, plainText(g.n)]));
   const fiches = new Set(fs.existsSync(path.join(root, 'lieux')) ? fs.readdirSync(path.join(root, 'lieux')).filter(f => f.endsWith('.html')).map(f => f.slice(0, -5)) : []);
   const P = progress(), wanted = new Set(P.ids.lieux || []), seen = new Set(), out = [];
   for (const p of all) {
     if (!p || !p.id || !wanted.has(p.id) || seen.has(p.id)) continue; seen.add(p.id);
     const fiche = fiches.has(p.id) && !/http-equiv="refresh"/.test(read('lieux/' + p.id + '.html'));
-    out.push({ f: 'lieux', id: p.id, n: p.n || p.id, c: (CATS[p.c] && CATS[p.c].nom) || 'Lieux', g: p.c || 'lieu', u: fiche ? 'lieux/' + p.id + '.html' : 'carte.html#lieu=' + encodeURIComponent(p.id), x: fiche ? 'fiche' : 'carte', p: groupName[p.p] || '', col: (CATS[p.c] && CATS[p.c].col) || '#B5762A' });
+    out.push({ f: 'lieux', id: p.id, n: plainText(p.n) || p.id, c: (CATS[p.c] && CATS[p.c].nom) || 'Lieux', g: p.c || 'lieu', u: fiche ? 'lieux/' + p.id + '.html' : 'carte.html#lieu=' + encodeURIComponent(p.id), x: fiche ? 'fiche' : 'carte', p: groupName[p.p] || '', col: (CATS[p.c] && CATS[p.c].col) || '#B5762A' });
   }
   lieuxCache = { items: out, cats: CATS };
   return lieuxCache;

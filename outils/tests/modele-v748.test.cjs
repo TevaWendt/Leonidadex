@@ -133,7 +133,7 @@ test('prérequis : chaîne récursive, prérequis partagé compté une fois, pos
 
 test('prérequis : dépendance circulaire et référence absente donnent un blocage expliqué, sans boucle', () => {
   const cyc = L.prerequisites({ nodes: { a: { id: 'a', name: 'A', requires: ['b'] }, b: { id: 'b', name: 'B', requires: ['c'] }, c: { id: 'c', name: 'C', requires: ['a'] } }, targets: ['a'] });
-  assert.equal(cyc.ok, false); assert.deepEqual(cyc.cycles[0], ['a', 'b', 'c', 'a']); assert.match(cyc.reason, /Dépendance circulaire : A → B → C → A/);
+  assert.equal(cyc.ok, false); assert.deepEqual(cyc.cycles[0], ['a', 'b', 'c', 'a']); assert.match(cyc.reason, /Dépendance circulaire\s: A → B → C → A/);
   const miss = L.prerequisites({ nodes: { a: { id: 'a', name: 'A', requires: ['fantome'] } }, targets: ['a'] });
   assert.equal(miss.ok, false); assert.equal(miss.missingRefs[0].ref, 'fantome'); assert.match(miss.reason, /n’existe pas/);
 });
@@ -229,7 +229,7 @@ test('fiche documentaire : « Prix à venir » et « Achat à confirmer » reste
   const field = (f, id) => f.flatMap(r => r.champs).find(c => c.id === id);
   assert.equal(field(v, 'price').text, 'Prix à venir'); assert.equal(field(v, 'purchasable').text, 'Achat à confirmer');
   assert.equal(field(v, 'terrain').value.v, 'eau'); assert.equal(field(v, 'terrain').value.s, 'estimated');
-  assert.match(field(v, 'fuel').text, /Carburant : mécanique non confirmée/); assert.match(field(v, 'fuel').note, /jauge/);
+  assert.match(field(v, 'fuel').text, /Carburant\s: mécanique non confirmée/); assert.match(field(v, 'fuel').note, /jauge/);
   const c = L.fiche('consumable', L.fromConsumable({ statut: 'officiel', effet: { texte: 'Rend de la vie', valeur: 20, unite: 'sante', jeu: 'GTA V' }, prix_gta6: { valeur: null } }));
   const h = field(c, 'health');
   assert.equal(h.text, 'Récupération de vie : à confirmer'); assert.equal(h.repere.v, 20); assert.equal(L.V.usable(h.value), false);

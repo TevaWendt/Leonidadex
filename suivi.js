@@ -55,7 +55,7 @@
       const b = document.createElement('button');
       b.type = 'button'; b.className = 'track-bt'; b.dataset.trackFor = id;
       b.innerHTML = '<span class="ck" aria-hidden="true"></span><span class="track-lbl">Je l’ai</span>';
-      b.setAttribute('aria-label', 'Je l’ai : ' + name); b.setAttribute('aria-pressed', 'false');
+      b.setAttribute('aria-label', 'Je l’ai : ' + name); b.setAttribute('aria-pressed', 'false');
       b.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); toggle(f, id); });
       el.classList.add('has-track'); el.appendChild(b);
     });
@@ -78,7 +78,7 @@
     }
     bars.forEach(bar => {
       const f = bar.dataset.trackBar, raz = bar.querySelector('[data-raz]');
-      if (raz && !raz.dataset.bound) { raz.dataset.bound = '1'; raz.addEventListener('click', () => { if (!FAMILIES[f] || !confirm('Vider « ' + FAMILIES[f].label + ' » sur cet appareil ?')) return; if (write(f, {})) emit(f); }); }
+      if (raz && !raz.dataset.bound) { raz.dataset.bound = '1'; raz.addEventListener('click', () => { if (!FAMILIES[f] || !confirm('Vider « ' + FAMILIES[f].label + ' » sur cet appareil ?')) return; if (write(f, {})) emit(f); }); }
     });
     listeners.add(refresh); refresh();
   }

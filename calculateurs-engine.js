@@ -1034,10 +1034,13 @@
     var ok = reachedOf(c, st);
     if (!ok && !limited) {
       var locked = c.acts.filter(function (a) { return !satisfied(a.requires, st) || !satisfied(a.requiresMissions, st); });
+      /* v7.52 : une mission rentable et débloquée mais trop chère à lancer sans toucher à la réserve : on le dit avec les chiffres. */
+      var poor = c.acts.filter(function (a) { return !a.once && a.res.net > 0 && satisfied(a.requires, st) && satisfied(a.requiresMissions, st) && !affordableStart(c, st, a); })[0];
       var nextBuy2 = c.purchases.filter(function (x) { return !x.owned; })[0];
       var why = nextBuy2 && !satisfied(nextBuy2.requires, st) ? 'L’achat « ' + nextBuy2.name + ' » attend d’abord ' + lockedReason(c, st, { requires: nextBuy2.requires.filter(function (id) { return c.purchases.some(function (y) { return y.id === id; }); }), requiresMissions: nextBuy2.requires.filter(function (id) { return c.acts.some(function (y) { return y.id === id; }); }) }).join(', ') + ', qui ne peut pas se faire.'
         : nextBuy2 ? 'Il manque ' + Math.max(0, nextBuy2.price + c.reserve - st.cash).toLocaleString('fr-FR') + ' $ pour « ' + nextBuy2.name + ' », et aucune mission possible sans lui ne rapporte : ajoute une mission faisable maintenant (financement), ou baisse la réserve.'
         : locked.length ? '« ' + locked[0].name + ' » demande d’abord ' + lockedReason(c, st, locked[0]).join(', ') + '.'
+        : poor ? '« ' + poor.name + ' » demande ' + Math.round((poor.entry.cost || 0) + (poor.paid ? 0 : poor.entry.investment || 0)).toLocaleString('fr-FR') + ' $ de frais avant de commencer ; en gardant ' + Math.round(c.reserve).toLocaleString('fr-FR') + ' $ de côté, il ne te reste que ' + Math.round(Math.max(0, st.cash - c.reserve)).toLocaleString('fr-FR') + ' $. Baisse la réserve ou les frais, ou ajoute une mission moins chère pour démarrer.'
         : 'Aucune mission possible ne rapporte plus que ses frais avec ce que tu as.';
       return fail(Object.assign({}, missionShape, { route: st.route, continuous: true }), why);
     }

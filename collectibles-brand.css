@@ -57,7 +57,7 @@ main .col-text-link,main .col-link{color:var(--coral-text);font-weight:800;text-
 #carnet .col-panel-heading{display:flex;justify-content:space-between;align-items:center;gap:8px;}
 #carnet .col-meter{height:10px;border-radius:6px;background:#E8E4DA;border:2px solid var(--col-ink);overflow:hidden;}
 #carnet .col-meter > *{background:linear-gradient(90deg,var(--coral),var(--amber));height:100%;}
-#carnet .col-progress-panel strong,#carnet .col-progress-panel b{font-family:'JetBrains Mono',monospace;}
+#carnet .col-progress-panel strong,#carnet .col-progress-panel b{font-family:var(--font-mono,ui-monospace,monospace);}
 #carnet .col-progress-panel > div:has(#col-percent) b,#carnet #col-percent{font-size:1.6rem;color:var(--coral);}
 #carnet .col-backup-panel > div{display:flex;flex-wrap:wrap;gap:8px;}
 main .col-notice,main .col-feedback{background:var(--col-paper);border-left:4px solid var(--amber);padding:10px 14px;border-radius:0 8px 8px 0;margin:12px 0 0;}
@@ -86,7 +86,7 @@ main .col-notice:empty,main .col-feedback:empty,main .col-tools-feedback:empty,m
 #col-quick-help .faq summary::after{content:'+';position:absolute;right:16px;top:10px;font-size:1.4rem;color:var(--coral);font-weight:900;}
 #col-quick-help .faq details[open] summary::after{content:'\\2013';}
 #col-quick-help .faq details > *:not(summary){padding:0 16px 14px;line-height:1.6;}
-#col-quick-help .col-help-shortcut kbd{border:2px solid var(--col-ink);border-radius:6px;padding:1px 6px;font-family:'JetBrains Mono',monospace;font-size:.8rem;}
+#col-quick-help .col-help-shortcut kbd{border:2px solid var(--col-ink);border-radius:6px;padding:1px 6px;font-family:var(--font-mono,ui-monospace,monospace);font-size:.8rem;}
 
 /* ---------- méthode et sources ---------- */
 #methode-sources .col-method{margin:0 0 18px;}

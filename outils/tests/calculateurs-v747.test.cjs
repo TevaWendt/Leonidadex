@@ -6,7 +6,7 @@
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
 const {JSDOM,VirtualConsole}=require('jsdom');
 const root=path.resolve(__dirname,'../..');
-const scripts=['calculateurs-data.js','calculateurs-engine.js','calculateurs-tools.js','calculateurs-scenario.js','calculateurs-notebooks.js','calculateurs-visuals.js','calculateurs-workspace.js','calculateurs-plan.js','calculateurs.js'].map(f=>[f,fs.readFileSync(path.join(root,f),'utf8')]);
+const scripts=['calculateurs-data.js','calculateurs-engine.js','calculateurs-scenario.js','calculateurs-notebooks.js','calculateurs-visuals.js','calculateurs-workspace.js','calculateurs-plan.js','calculateurs.js'].map(f=>[f,fs.readFileSync(path.join(root,f),'utf8')]);
 const opened=[];
 test.afterEach(()=>{for(const p of opened.splice(0)){const errors=p.errors.slice();p.close();assert.deepEqual(errors,[],'aucune erreur de script');}});
 function app(storage={}){const errors=[],vc=new VirtualConsole();vc.on('jsdomError',e=>errors.push(e.message));

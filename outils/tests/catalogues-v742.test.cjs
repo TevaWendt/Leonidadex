@@ -124,7 +124,7 @@ test('navigateur : « Je l’ai » sur une ligne remplit la clé lk_own_consomma
   const box=a.d.getElementById('box-consommables');
   const bts=[...box.querySelectorAll('td.cat-c-own .track-bt')];assert.equal(bts.length,C.counts('consommables').suivis);
   assert.equal(box.querySelector('tr#consommables-recuperation-automatique td.cat-c-own .track-bt'),null,'ligne sans suivi');
-  const sprunk=a.d.querySelector('tr#consommables-sprunk td.cat-c-own .track-bt');assert.equal(sprunk.getAttribute('aria-label'),'Je l’ai : Sprunk');
+  const sprunk=a.d.querySelector('tr#consommables-sprunk td.cat-c-own .track-bt');assert.match(sprunk.getAttribute('aria-label'),/^Je l’ai\s: Sprunk$/);
   sprunk.click();bts[0].click();
   assert.deepEqual(JSON.parse(a.w.localStorage.getItem('lk_own_consommables')),{sprunk:1,[bts[0].dataset.trackFor]:1});
   assert.equal(box.querySelector('[data-track-bar="consommables"] b').textContent,'2');assert.equal(box.querySelector('[data-track-bar="consommables"] progress').value,2);

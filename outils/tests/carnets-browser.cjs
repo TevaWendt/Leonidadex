@@ -151,6 +151,9 @@ const text=(p,sel)=>p.locator(sel).first().innerText();
   await p.goto(base+'/calculateurs.html?tool=order&type=vehicle&ids=albany-emperor,vapid-dominator&from=carnet#atelier',{waitUntil:'load'});await p.waitForTimeout(300);
   ok(await p.locator('#tab-order').getAttribute('aria-selected')==='true','« Classer mes envies » ouvre « Quoi acheter d’abord ? »');
   const keys=await p.evaluate(()=>JSON.parse(localStorage.getItem('lk-calculator-v1')||'{}').order?.keys?.length||0);ok(keys>=2,'… avec les deux véhicules',keys);
+  const own=await p.evaluate(()=>(JSON.parse(localStorage.getItem('lk-calculator-v1')||'{}').assets||[]).filter(x=>x.itemId==='albany-emperor'||x.itemId==='vapid-dominator').map(x=>x.itemId+':'+x.owned).sort().join(' '));
+  ok(/albany-emperor:true/.test(own),'Même contexte de calcul : le véhicule déjà dans le garage arrive « déjà possédé »',own);
+  ok(/déjà dans ton garage/.test(await p.evaluate(()=>document.getElementById('calc-live').textContent)),'… et le calculateur le dit');
  });
 
  await group('Business plan : prévu ne coche rien, un achat déclaré fait range le véhicule une seule fois',async()=>{

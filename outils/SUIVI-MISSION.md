@@ -30,7 +30,7 @@ site statique (Vercel, sans build), mots simples pour le joueur, charte Leonidak
 | 2 | v7.49 | Huit calculs et business plan complet | **fait** |
 | 3 | v7.50 | Catalogues, visuels, sélecteurs de carte, page Achats | **fait** |
 | 4 | v7.51 | Carnets de progression et raccordements | **fait** |
-| 5 | v7.52 | Harmonisation, validation complète, livraison | à faire |
+| 5 | v7.52 | Harmonisation, validation complète, livraison | **fait** |
 
 ## Lot 1 (v7.48) — fait le 29/09/2026
 
@@ -258,6 +258,64 @@ calculateurs 278 / 278, Léo tenu (0 erreur), Contact ; audit navigateur `--rapi
 antérieurs hors lot : repères de 19 px de `carte.html`, image agrandie de l’accueil à 1 920 px → lot 5) ; captures bureau
 et téléphone (`captures-v7.51/`).
 
+## Lot 5 (v7.52) — fait le 29/09/2026
+
+**Besoin traité** : que tout le site dise la même chose (vocabulaire, chiffres, visuels, mouvement, parcours entre sections),
+corriger ce qui reste, prouver chaque point par une vérification réellement lancée, livrer. **Pages concernées** : toutes
+celles de la mission (calculateur, Véhicules, Armurerie, Vêtements et style, Consommables, Personnalisations, Achats,
+Progression, 9 carnets, carte, fiches véhicules et armes, accueil, Tuto) et les pages partagées (feuilles communes,
+recherche, Léo). **Critères de réussite** : aucune anomalie ouverte dans l’inventaire ; un critère changé se répercute
+partout ; même total partout ; aucune violation d’accessibilité automatique (WCAG A / AA) ; aucun débordement, texte coupé,
+contraste insuffisant ou erreur de script sur les largeurs contrôlées ; captures relues.
+
+Fichiers ajoutés : `outils/tests/validation-v752.test.cjs` (6 tests), `outils/tests/accessibilite-perf-browser.cjs`
+(axe-core + mesures), `outils/tests/mots-coupes-browser.cjs` (mots coupés au milieu, 38 pages × 5 largeurs), `outils/CARNETS-CORRESPONDANCE.md`, `outils/PREUVES-v7.52.md`, `outils/CHANGEMENTS-v7.52.txt`,
+`LISEZ-MOI-v7.52.txt`. Fichier supprimé : `calculateurs-tools.js`.
+
+Fichiers modifiés : `style.css` (`--font-mono`, cible des repères de carte) et les feuilles qui citaient la police
+(`acquisitions.css`, `calculateurs-brand.css`, `calculator-entry.css` — scène d’accueil non étirée —, `carnets.css`,
+`collectibles-brand.css`, `informations.css`, `leo.css`, `tuto.css`), `calculateurs.js` (`LKCalcOwned`, événements retirés),
+`calculateurs-scenario.js` (`addAsset` : possession déclarée), `calculateurs-engine.js` (raison chiffrée quand la réserve
+empêche de démarrer), `calculateurs-plan.js` (avertissement « Ce plan touche à tes … gardés de côté »),
+`calculator-entry.js`, `outils/sync-site.cjs` et `outils/carnets-source.cjs` (noms de lieux en texte simple),
+`outils/gen-carnets.cjs` (libellé des lignes du tableau de bord), `outils/gen-achats.cjs`, `outils/lore-gen.js` (scripts
+inutiles retirés des fiches du monde), `outils/gen-acquisitions.cjs` (pastilles et légende « En un regard », lieux
+homonymes), `outils/catalogues.cjs` et `outils/fiche-doc.cjs` (lieux homonymes), `acquisitions.css` (tableau des listes,
+grille des adresses), `tuto.css`, six scripts passés à la typographie, `outils/CALCULATEUR-V2.md`, `outils/MATRICE-COUVERTURE.md`, `README.md` ; tests
+adaptés (`calculateurs-integration`, `calculateurs-v747`, `carnets-browser`).
+
+Anomalies 20 à 23 et 25 à 34 corrigées :
+- 20 : `--font-mono` (chasse fixe du système) remplace la police jamais hébergée, dans toutes les feuilles et la page Achats ;
+- 21 : `lk-showcase.js` n’est plus chargé que là où la page l’utilise (`data-showcase`) ; `carnets-core.js` sorti des fiches
+  du monde ;
+- 22 : `calculateurs-tools.js` supprimé (retiré des listes de scripts des tests) ; `CALCULATEUR-V2.md` à jour ;
+- 23 : les événements du calculateur sans écouteur et leur fonction d’émission sont retirés ;
+- 25 : entités HTML décodées à la génération (`carte-gtadb.js`, `search-lieux.js`, `carnets/lieux-data.js`) ; la source
+  GTADB reste intacte ; test et capture (`carte-lieu-guillemets-1280.png`) ;
+- 26 : le moteur donne la vraie raison ; l’interface du plan l’affiche en tête avec le point bas ;
+- 27 : `LKCalcOwned` : possession déclarée = « déjà possédé » au calculateur, dit en une phrase, décochable ;
+- 28 : repères de carte avec zone de 24 × 24 px ; scène d’accueil limitée à 1 280 px et fondue sur les côtés.
+- 29 : pastille dessinée (même dessin que la légende), texte masqué « Statut : … » et bulle ; légende calculée d’après les
+  statuts présents ;
+- 30 : bouton de suivi sans coupure, case gardée en cellule de tableau, largeurs de colonnes revues (et entre 901 et
+  1 100 px) ;
+- 31 : grille « Les adresses » à deux colonnes sous 1 000 px, une sous 700 px ;
+- 32 : tableau du Tuto sans coupure, lu en deux temps sur téléphone ;
+- 33 : « Xero Gas Station (2 lieux) » dans les cartes et la fiche documentaire ; liens numérotés dans la liste ;
+- 34 : `outils/typographie.cjs` passé sur les six scripts ; trois tests acceptent l’espace insécable.
+
+Choix retenus :
+- Pas de police à chasse fixe téléchargée : le rendu affiché aux joueurs depuis toujours (chasse fixe du système) devient la
+  règle écrite ; aucun octet de plus.
+- Le calculateur lit la possession par une seule fonction de page (`LKCalcOwned`) ; le moteur et le scénario restent sans
+  accès au stockage (une prévision ne peut toujours rien cocher).
+- Données tierces : la source brute est conservée telle quelle (traçabilité, licence) ; le nettoyage se fait à la
+  génération et un test le protège.
+- Vérifications de performance mesurées sur le serveur local sans compression (plafond haut) ; aucun budget inventé : les
+  chiffres sont consignés tels quels dans les preuves.
+
+Vérifications (lot 5) : voir `outils/PREUVES-v7.52.md` (chiffres complets). Résumé de la dernière passe complète : tests `node` 573 / 573 ; `verifier.js` 0 erreur (47 710 références, 415 pages) ; carnets 94 / 94, parcours 161 / 161, lot B 140 / 140, v2 142 / 142, calculateurs 278 / 278, Léo et Contact tenus ; audit 26 pages / 182 chargements sans défaut (0 cible < 24 px, 0 image étirée) ; axe-core 0 violation sur 44 chargements ; 0 mot coupé sur 190 chargements ; 45 captures relues.
+
 ## Anomalies relevées à l’inventaire (lot où elles sont traitées)
 
 | # | Anomalie | Lot |
@@ -281,11 +339,21 @@ et téléphone (`captures-v7.51/`).
 | 17 | `style.html` : sous-navigation sans « Collections » | 3 (**corrigé v7.50**) |
 | 18 | Images des lignes de catalogue : lien texte seulement | 3 (**corrigé v7.50**) |
 | 19 | Galerie épinglée des fiches du monde : image suivante floutée alors qu’elle porte du texte (règle v7.39) | 3 (**corrigé v7.50**) |
-| 20 | « JetBrains Mono » citée 19 fois mais non hébergée (monospace du système) | 5 |
-| 21 | `lk-showcase.js` chargé pour rien sur les hubs du monde et Médias | 5 |
-| 22 | `calculateurs-tools.js` chargé par aucune page ; `outils/CALCULATEUR-V2.md` dépassé | 5 |
-| 23 | Événements `lk:calculator` / `leonidakit:calculator` sans écouteur | 5 |
+| 20 | « JetBrains Mono » citée 19 fois mais non hébergée (monospace du système) | 5 (**corrigé v7.52**) |
+| 21 | `lk-showcase.js` chargé pour rien sur les hubs du monde et Médias | 5 (**corrigé v7.52**) |
+| 22 | `calculateurs-tools.js` chargé par aucune page ; `outils/CALCULATEUR-V2.md` dépassé | 5 (**corrigé v7.52**) |
+| 23 | Événements `lk:calculator` / `leonidakit:calculator` sans écouteur | 5 (**corrigé v7.52**) |
 | 24 | Le mot « carnet » désigne déjà le carnet des Collectibles et les enregistrements du calculateur : les nouvelles pages s’appellent « Mon garage », « Mon arsenal »… ; le mot « carnet » n’est utilisé qu’en titre de famille | 4 (**corrigé v7.51**) |
+| 25 | (trouvée au lot 5, relecture des captures) Noms de lieux GTADB affichés en entités HTML (« &quot;Ambrosia Hills&quot; », « &amp; ») sur la carte, dans la recherche et dans « Mes lieux repérés » : 27 noms entre guillemets, 84 « & » | 5 (**corrigé v7.52**) |
+| 26 | (trouvée au lot 5, test de validation) Plan qui ne tient qu’en touchant à la réserve : dit seulement dans le détail des stratégies, avec une raison fausse (« aucune mission ne rapporte plus que ses frais ») | 5 (**corrigé v7.52**) |
+| 27 | (trouvée au lot 5) Un véhicule ou une arme déjà coché dans un carnet est recompté comme un achat à payer dans le calculateur | 5 (**corrigé v7.52**) |
+| 28 | (audit v7.47, hors mission) Repères de la carte de 19 px (cible < 24 px) ; image d’accueil agrandie à 1 960 px sur écran de 1 920 px | 5 (**corrigé v7.52**) |
+| 29 | (lot 5, captures) Consommables « En un regard » : pastilles de statut des cartes invisibles (sans taille), légende sans « À confirmer », statut non dit aux lecteurs d’écran | 5 (**corrigé v7.52**) |
+| 30 | (lot 5, captures) Listes : « Obtenu » coupé en « Obten / u » ; case de suivi sortie du tableau (fond interrompu, cadre rouge des cartes) ; « Ne s’achète pas » et « Officiel » coupés entre 901 et 1 100 px | 5 (**corrigé v7.52**) |
+| 31 | (lot 5, contrôle des mots coupés) « Les adresses » (Vêtements et style) en trois colonnes de 109 px sur téléphone | 5 (**corrigé v7.52**) |
+| 32 | (lot 5, contrôle des mots coupés) Tuto, tableau des statuts : mots coupés au milieu de 320 à 1 024 px | 5 (**corrigé v7.52**) |
+| 33 | (lot 5, captures) « Xero Gas Station · Xero Gas Station » : deux lieux du même nom écrits deux fois sans distinction | 5 (**corrigé v7.52**) |
+| 34 | (lot 5, typographie) Six scripts sans espaces insécables avant « : ; ? ! » (modèle, collectibles, contact, Léo, suivi) | 5 (**corrigé v7.52**) |
 
 ## Blocages connus
 
@@ -296,7 +364,9 @@ et téléphone (`captures-v7.51/`).
 
 ## Point de reprise
 
-Lots 1 à 4 livrés (v7.48 à v7.51). Prochaine action : lot 5 (v7.52) — harmonisation de tout le site (vocabulaire,
-composants, mouvement, états vides), anomalies 20 à 23 et défauts antérieurs de l’audit (repères de 19 px de la carte,
-image agrandie de l’accueil), matrice finale, tableau catégorie → bouton → carnet → source → fiches, validation complète
-(tests, navigateur, audit, captures), livraison finale.
+Mission terminée : lots 1 à 5 livrés (v7.48 à v7.52), archive cumulée depuis la v7.47 (`Leonidakit-v7.52-modifs.zip`) et
+une suppression à faire (`calculateurs-tools.js`). La mise en ligne est une étape à part, faite par le propriétaire du site
+(voir `LISEZ-MOI-v7.52.txt`). Pour une reprise : repartir de la v7.52, lire ce fichier, `outils/MATRICE-COUVERTURE.md` et
+`outils/PREUVES-v7.52.md` ; les données de jeu encore à venir sont listées dans les preuves (section « Champs encore à
+venir ») : dès qu’une source officielle les publie, les ajouter dans les données sources puis `node outils/regenerer.cjs`,
+`node outils/verifier.js` et les tests.

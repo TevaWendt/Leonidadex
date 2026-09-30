@@ -1,6 +1,6 @@
 /* Leonidakit : page Tuto. Charte du site : encre, corail, ambre, nuit de Vice City. */
 .tuto-page main{background:var(--paper);color:var(--ink)}
-.t-label{font:800 .78rem 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--coral-text)}
+.t-label{font:800 .78rem var(--font-mono,ui-monospace,monospace);letter-spacing:.14em;text-transform:uppercase;color:var(--coral-text)}
 /* En-tête */
 .t-hero{position:relative;overflow:hidden;background:linear-gradient(100deg,#2B1B4D 0%,#5A2358 60%,#8E2F4C 100%);color:#fff;padding:56px 0 48px;border-bottom:3px solid var(--amber)}
 .t-hero:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,0) 0 3px,rgba(255,255,255,.045) 3px 4px);pointer-events:none}
@@ -32,7 +32,7 @@
 .t-chapter{min-width:0;overflow-wrap:anywhere}
 .t-chapter{background:#fff;border:2px solid var(--ink);border-top:6px solid var(--amber);border-radius:16px;box-shadow:5px 5px 0 rgba(26,26,30,.16);padding:26px 28px;scroll-margin-top:90px}
 .t-chapter.is-target{outline:4px solid var(--amber);outline-offset:6px}
-.t-chapter-n{font:800 .78rem 'JetBrains Mono',monospace;letter-spacing:.14em;color:var(--coral-text);margin:0 0 6px}
+.t-chapter-n{font:800 .78rem var(--font-mono,ui-monospace,monospace);letter-spacing:.14em;color:var(--coral-text);margin:0 0 6px}
 .t-chapter h2{margin:0 0 12px;font:900 clamp(1.5rem,2.6vw,2rem)/1.15 'Archivo',sans-serif;color:var(--ink)}
 .t-chapter h3{margin:22px 0 8px;font:900 1.2rem 'Archivo',sans-serif;color:var(--ink)}
 .t-chapter p{font-size:1.02rem;line-height:1.6;color:var(--ink-soft)}
@@ -79,6 +79,13 @@
 .t-table-wrap caption{text-align:left;padding:10px 14px;font:800 .95rem 'Archivo',sans-serif;color:var(--coral-text)}
 .t-table-wrap th,.t-table-wrap td{padding:10px 14px;text-align:left;vertical-align:top;border-top:1px solid var(--line)}
 .t-table-wrap th{color:var(--ink);font-weight:800}
+/* v7.52 : les mots du tableau ne se coupent plus au milieu (« Indica / tion ») ; sur téléphone, chaque ligne se lit en
+   deux temps (le statut, puis ce qu’il permet de comprendre) au lieu de deux colonnes trop étroites. */
+.t-table-wrap th,.t-table-wrap td{overflow-wrap:break-word}
+@media(max-width:560px){.t-table-wrap table,.t-table-wrap tbody,.t-table-wrap tr,.t-table-wrap th,.t-table-wrap td{display:block;width:auto}
+ .t-table-wrap caption{display:block}
+ .t-table-wrap thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+ .t-table-wrap tbody th{padding-bottom:2px}.t-table-wrap tbody td{border-top:0;padding-top:2px}}
 .t-chapter details:not(.t-pitfall)>summary{font:800 1.05rem 'Archivo',sans-serif;color:var(--ink);cursor:pointer;min-height:40px;display:flex;align-items:center}
 .t-hub-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
 .t-hub-links a{display:inline-flex;align-items:center;min-height:42px;padding:8px 14px;background:#fff;color:var(--ink);border:2px solid var(--ink);border-radius:999px;box-shadow:2px 2px 0 var(--ink);font:800 .92rem 'Archivo',sans-serif;text-decoration:none}

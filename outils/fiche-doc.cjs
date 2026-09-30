@@ -52,7 +52,12 @@ function statusOf(it) { return it.statut === 'officiel' || it.statut === 'vu' ? 
 function mk(v, s, ctx) { return s === 'series' ? V.series(v, { ctx: ctx || 'Vu dans un autre jeu de la série, pas dans GTA VI.' }) : s === 'official' ? V.official(v, ctx ? { ctx } : null) : V.estimated(v, ctx ? { ctx } : null); }
 /* Une description d’effet écrite par le site n’est pas une donnée officielle : « estimé », ou repère si la ligne vient de la série. */
 function describe(text, st) { return st === 'series' ? V.series(text, { ctx: 'Ce que fait l’objet dans un autre jeu de la série.' }) : V.estimated(text, { ctx: 'Description du site d’après les sources citées ; aucun chiffre de GTA VI.' }); }
-function whereText(it, placeName) { return it.ou_le_trouver.map(o => o.lieu ? placeName(o.lieu) : o.type).filter(Boolean).join(', '); }
+/* v7.52 : deux lieux du même nom ne s’écrivent qu’une fois, avec leur nombre (« Xero Gas Station (2 lieux) »). */
+function whereText(it, placeName) {
+  const seen = new Map();
+  for (const o of it.ou_le_trouver) { const n = o.lieu ? placeName(o.lieu) : o.type; if (n) seen.set(n, (seen.get(n) || 0) + (o.lieu ? 1 : 0)); }
+  return [...seen].map(([n, k]) => k > 1 ? n + ' (' + k + ' lieux)' : n).join(', ');
+}
 function knownOfRow(fam, it, placeName) {
   const st = statusOf(it), bonus = notBought(it), where = whereText(it, placeName);
   const base = { price: V.unknown(), purchasable: bonus ? V.na('Obtenu autrement qu’en boutique : ' + it.ou_le_trouver.map(o => o.type).join(', ') + '.') : V.unknown() };

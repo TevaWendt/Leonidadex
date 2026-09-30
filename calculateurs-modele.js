@@ -95,7 +95,7 @@
     var needed = [];
     if (!a.complete) a.missing.forEach(function (m) { needed.push({ option: labels[0], label: m.label, field: m.field, status: m.status }); });
     if (!b.complete) b.missing.forEach(function (m) { needed.push({ option: labels[1], label: m.label, field: m.field, status: m.status }); });
-    return { decided: false, lower: null, gap: null, reason: 'On ne peut pas encore dire lequel coûte le moins : des coûts manquent.', needed: needed };
+    return { decided: false, lower: null, gap: null, reason: 'On ne peut pas encore dire lequel coûte le moins : des coûts manquent.', needed: needed };
   }
 
   /* ---------- Coût sur la durée ---------- */
@@ -133,15 +133,15 @@
     // Le total garde le détail des manques de l’achat et de l’usage.
     var all = total(acq.rows.map(function (r) { return { label: r.label, value: r.value, field: r.field }; }).concat(recurringParts));
     var resale = o.resale === undefined ? V.na() : V.from(o.resale), futureNet = null, resaleNote;
-    if (V.usable(resale)) { futureNet = all.complete ? all.value - resale.v : null; resaleNote = 'La revente (' + resale.v + ' $, ' + V.statusLabel(resale) + ') baisse le coût net futur seulement le jour où tu revends ; elle ne baisse pas l’argent à payer aujourd’hui.'; }
-    else if (resale.s === 'unconfirmed' || resale.s === 'unknown') resaleNote = 'Revente non comptée : ' + (resale.s === 'unconfirmed' ? 'rien ne dit qu’elle existe dans GTA VI.' : 'son prix est inconnu.');
+    if (V.usable(resale)) { futureNet = all.complete ? all.value - resale.v : null; resaleNote = 'La revente (' + resale.v + ' $, ' + V.statusLabel(resale) + ') baisse le coût net futur seulement le jour où tu revends ; elle ne baisse pas l’argent à payer aujourd’hui.'; }
+    else if (resale.s === 'unconfirmed' || resale.s === 'unknown') resaleNote = 'Revente non comptée : ' + (resale.s === 'unconfirmed' ? 'rien ne dit qu’elle existe dans GTA VI.' : 'son prix est inconnu.');
     return { acquisition: acq, recurring: recurring, total: all, payNow: acq, lines: lines, resale: resale, futureNet: futureNet, resaleNote: resaleNote || null, horizon: { sessions: horizonNumber(h, 'sessions'), uses: horizonNumber(h, 'uses'), hours: horizonNumber(h, 'hours') } };
   }
   // Point de bascule entre deux options linéaires : initial + taux × n. Renvoie null si l’une des valeurs est inconnue.
   function crossover(a, b) {
     var ia = V.num(a.initial), ib = V.num(b.initial), ra = V.num(a.rate), rb = V.num(b.rate);
-    if ([ia, ib, ra, rb].some(function (x) { return x === null; })) return { known: false, n: null, reason: 'Un prix ou un coût d’usage manque : pas de point de bascule calculable.' };
-    if (Math.abs(ra - rb) <= EPS) return { known: true, n: null, parallel: true, cheaper: ia < ib ? 'a' : ia > ib ? 'b' : 'equal', reason: 'Même coût d’usage : la moins chère à l’achat le reste toujours.' };
+    if ([ia, ib, ra, rb].some(function (x) { return x === null; })) return { known: false, n: null, reason: 'Un prix ou un coût d’usage manque : pas de point de bascule calculable.' };
+    if (Math.abs(ra - rb) <= EPS) return { known: true, n: null, parallel: true, cheaper: ia < ib ? 'a' : ia > ib ? 'b' : 'equal', reason: 'Même coût d’usage : la moins chère à l’achat le reste toujours.' };
     var n = (ib - ia) / (ra - rb);
     if (n <= 0) return { known: true, n: null, cheaper: ra < rb ? 'a' : 'b', reason: 'L’une est moins chère dès le départ et à chaque utilisation.' };
     return { known: true, n: n, before: ia < ib ? 'a' : 'b', after: ra < rb ? 'a' : 'b', costAt: ia + ra * n };
@@ -159,7 +159,7 @@
     var available = cash - reserve, required = spends.value, gap = required - available;
     if (!spends.complete) {
       if (gap > EPS) return { state: 'short', exact: false, shortfall: gap, required: required, available: available, after: null, unknown: spends.missing, reason: 'Il manque au moins ' + gap + ' $ (et une dépense obligatoire est encore inconnue).' };
-      return { state: 'unknown', exact: false, shortfall: null, required: required, available: available, after: null, unknown: spends.missing, reason: 'Une dépense obligatoire est inconnue : on ne peut pas dire si tu peux payer maintenant.' };
+      return { state: 'unknown', exact: false, shortfall: null, required: required, available: available, after: null, unknown: spends.missing, reason: 'Une dépense obligatoire est inconnue : on ne peut pas dire si tu peux payer maintenant.' };
     }
     if (gap > EPS) return { state: 'short', exact: true, shortfall: gap, required: required, available: available, after: cash - required, unknown: [], reason: 'Il manque ' + gap + ' $ pour payer sans toucher à l’argent gardé de côté.' };
     return { state: 'ok', exact: true, shortfall: 0, required: required, available: available, after: cash - required, unknown: [], reason: null };
@@ -224,7 +224,7 @@
         ranked.sort(function (x, y) { return (y.cost.complete - x.cost.complete) || (x.cost.price - y.cost.price) || (x.cost.minutes - y.cost.minutes) || alts.indexOf(x.id) - alts.indexOf(y.id); });
         if (!ranked.length) { ok = false; alts.forEach(function (x) { if (!nodes[x]) missingRefs.push({ from: id, ref: x }); }); blocked.push({ id: id, reason: 'Aucune des solutions équivalentes n’est disponible.' }); return; }
         var decided = ranked.length === 1 || ranked.every(function (x) { return x.cost.complete; });
-        choices.push({ for: id, label: r.label || null, chosen: ranked[0].id, alternatives: alts, decided: decided, reason: ranked.length === 1 ? 'seule solution disponible' : decided ? 'la moins chère (puis la plus rapide) des solutions équivalentes' : 'à départager : un prix ou une durée manque ; la solution chiffrée est gardée pour continuer, sans dire qu’elle est la moins chère' });
+        choices.push({ for: id, label: r.label || null, chosen: ranked[0].id, alternatives: alts, decided: decided, reason: ranked.length === 1 ? 'seule solution disponible' : decided ? 'la moins chère (puis la plus rapide) des solutions équivalentes' : 'à départager : un prix ou une durée manque ; la solution chiffrée est gardée pour continuer, sans dire qu’elle est la moins chère' });
         if (!visit(ranked[0].id, path.concat(id), id)) ok = false;
       });
       state[id] = 'done';
@@ -236,7 +236,7 @@
     var steps = sequence.map(function (id) { var n = nodes[id]; return { id: id, name: n.name || id, kind: n.kind || 'item', price: V.from(n.price === undefined ? V.na() : n.price), minutes: V.from(n.minutes === undefined ? V.na() : n.minutes), neededBy: (dependents[id] || []).slice(), shared: (dependents[id] || []).length > 1, target: targets.indexOf(id) >= 0 }; });
     var price = total(steps.map(function (s) { return { label: s.name, value: s.price }; })), minutes = total(steps.map(function (s) { return { label: s.name, value: s.minutes }; }));
     var ok = !cycles.length && !missingRefs.length && !blocked.length;
-    return { ok: ok, steps: steps, order: sequence.slice(), reused: reused, cycles: cycles, missingRefs: missingRefs, choices: choices, blocked: blocked, totals: { price: price, minutes: minutes }, reason: cycles.length ? 'Dépendance circulaire : ' + cycles[0].map(function (id) { return nodes[id] && nodes[id].name || id; }).join(' → ') + '.' : missingRefs.length ? 'Référence absente : « ' + missingRefs[0].ref + ' » n’existe pas dans les données.' : blocked.length ? blocked[0].reason : null };
+    return { ok: ok, steps: steps, order: sequence.slice(), reused: reused, cycles: cycles, missingRefs: missingRefs, choices: choices, blocked: blocked, totals: { price: price, minutes: minutes }, reason: cycles.length ? 'Dépendance circulaire : ' + cycles[0].map(function (id) { return nodes[id] && nodes[id].name || id; }).join(' → ') + '.' : missingRefs.length ? 'Référence absente : « ' + missingRefs[0].ref + ' » n’existe pas dans les données.' : blocked.length ? blocked[0].reason : null };
   }
 
   /* ---------- Grand livre ---------- */
@@ -319,7 +319,7 @@
     }
     var valid = results.filter(function (x) { return x.result && x.result.valid; });
     valid.sort(function (a, b) { return lexLess(a.result.key, b.result.key) ? -1 : lexLess(b.result.key, a.result.key) ? 1 : ids.indexOf(a.order[0]) - ids.indexOf(b.order[0]); });
-    return { method: method, explored: explored, valid: valid, invalid: results.filter(function (x) { return !x.result || !x.result.valid; }), best: valid[0] || null, note: method === 'exhaustive' ? 'Toutes les séquences possibles (' + explored + ') ont été comparées.' : 'Séquence trouvée parmi ' + explored + ' séquences essayées : il peut en exister une meilleure.' };
+    return { method: method, explored: explored, valid: valid, invalid: results.filter(function (x) { return !x.result || !x.result.valid; }), best: valid[0] || null, note: method === 'exhaustive' ? 'Toutes les séquences possibles (' + explored + ') ont été comparées.' : 'Séquence trouvée parmi ' + explored + ' séquences essayées : il peut en exister une meilleure.' };
   }
 
   /* ---------- Critères actifs et explication ---------- */
@@ -403,7 +403,7 @@
       price: a && typeof a.price === 'number' ? V.official(a.price) : V.unknown(),
       purchasable: V.unknown(),
       ammoType: a && a.mun ? make(a.mun, SITE_STATUS[a.st] || 'estimated', { ctx: 'Type de munitions écrit sur la fiche.' }) : V.unknown(),
-      range: a && a.portee ? make(a.portee, 'estimated', { ctx: 'Portée décrite en mots d’après l’arme réelle qui l’inspire ; aucune mesure de GTA VI.' }) : V.unknown(),
+      range: a && a.portee ? make(a.portee, 'estimated', { ctx: 'Portée décrite en mots d’après l’arme réelle qui l’inspire ; aucune mesure de GTA VI.' }) : V.unknown(),
       rate: V.unknown(), accuracy: V.unknown(), reload: V.unknown(), capacity: V.unknown()
     };
   }

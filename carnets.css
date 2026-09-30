@@ -65,7 +65,7 @@
 .cn-doc-tool{color:#FFE3A6;font:900 .82rem/1 'Archivo',sans-serif;letter-spacing:.12em;text-transform:uppercase;transform:rotate(-8deg)}
 .cn-kicker{margin:0 0 4px;font-size:.74rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--coral-text);overflow-wrap:anywhere}
 .cn-name{margin:0;font-size:1.06rem;line-height:1.3;letter-spacing:-.01em}
-.cn-card .cn-name a{color:var(--ink);text-decoration:none;background-image:linear-gradient(var(--amber),var(--amber));background-size:0 3px;background-position:0 100%;background-repeat:no-repeat;transition:background-size .25s var(--ease-out)}
+.cn-card .cn-name a{display:inline-block;min-height:24px;padding:1px 0;color:var(--ink);text-decoration:none;background-image:linear-gradient(var(--amber),var(--amber));background-size:0 3px;background-position:0 100%;background-repeat:no-repeat;transition:background-size .25s var(--ease-out)}
 .cn-name a:hover,.cn-name a:focus-visible{background-size:100% 3px}
 .cn-name a:focus-visible{outline:3px solid var(--coral);outline-offset:2px}
 .cn-summary,.cn-note{margin:6px 0 0;font-size:.88rem;color:var(--ink-soft);line-height:1.5}
@@ -158,7 +158,7 @@
 .cn-dcard-body{display:flex;flex-direction:column;gap:8px;flex:1;padding:14px 16px 16px 22px;position:relative}
 .cn-dcard-body::before{content:'';position:absolute;left:10px;top:0;bottom:0;width:2px;background:rgba(232,69,44,.4)}
 .cn-dcard h3{margin:0;font-size:1.2rem}
-.cn-dcard h3 a{color:var(--ink);text-decoration:none}
+.cn-dcard h3 a{display:inline-flex;align-items:center;min-height:28px;color:var(--ink);text-decoration:none}
 .cn-dcard h3 a:hover{text-decoration:underline;text-decoration-color:var(--amber);text-decoration-thickness:3px}
 .cn-dcard-n{margin:0;color:var(--ink-soft);font-variant-numeric:tabular-nums}
 .cn-dcard-n strong{font:900 1.6rem/1 'Archivo',sans-serif;color:var(--coral-text)}

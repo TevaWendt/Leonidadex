@@ -52,6 +52,11 @@ rare=rare.replace('Vus une seule fois','Noms repérés sur les visuels').replace
 const rawPath='outils/data/carte-gtadb-source.json';fs.mkdirSync('outils/data',{recursive:true});
 if(!fs.existsSync(rawPath))fs.writeFileSync(rawPath,JSON.stringify(data.window.LK_GTADB));
 const mapData=JSON.parse(fs.readFileSync(rawPath,'utf8'));
+/* v7.52 : la source GTADB écrit certains noms en entités HTML (&quot;Ambrosia Hills&quot;, Casino &amp; Resort). La carte,
+   la recherche et les carnets échappent déjà ce qu’ils affichent : sans décodage, l’entité s’affichait telle quelle. La source
+   reste intacte ; les données du site sont du texte simple. */
+{const ent={quot:'"',amp:'&',apos:"'",'#39':"'",'#x27':"'",lt:'<',gt:'>'};const dec=v=>typeof v==='string'?v.replace(/&(quot|amp|apos|#39|#x27|lt|gt);/g,(m,k)=>ent[k]):Array.isArray(v)?v.map(dec):v&&typeof v==='object'?Object.fromEntries(Object.entries(v).map(([k,x])=>[k,dec(x)])):v;
+ for(const section of ['groupes','lieux'])mapData[section]=dec(mapData[section]);mapData.enrichit=dec(mapData.enrichit);}
 for(const p of [...mapData.groupes,...mapData.lieux,...Object.values(mapData.enrichit)])for(const key of ['img','img2'])if(p[key]&&!available('carte.html',p[key]))delete p[key];
 fs.writeFileSync('carte-gtadb.js','/* Generated from data/carte-gtadb-source.json. gtadb.org et ses contributeurs, CC BY 4.0; adapté pour Leonidakit. */\nwindow.LK_GTADB = '+JSON.stringify(mapData)+';\n');
 

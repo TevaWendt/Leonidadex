@@ -191,8 +191,13 @@ function acqCell(it) {
   return '<label class="d-check cat-acq" hidden><input type="checkbox" data-acq-toggle="' + esc(it.acq) + '" aria-label="J’ai obtenu : ' + esc(a.name) + '"> J’ai obtenu</label><a class="cat-acq-link" href="#' + esc(it.acq) + '">Carte Rockstar</a>';
 }
 function whereCell(it) {
+  /* v7.52 : deux lieux du même nom dans une ligne se distinguent par leur numéro sur la carte (« Xero Gas Station 2 »), sans
+     inventer de région ; le lien mène toujours au bon repère. */
+  const names = it.ou_le_trouver.filter(o => o.lieu).map(o => place(o.lieu).name), rank = new Map();
   return it.ou_le_trouver.map(o => {
-    if (o.lieu) { const p = place(o.lieu); return '<a class="cat-lieu" href="carte.html#lieu=' + esc(p.id) + '"' + (p.region ? ' title="' + esc(p.region) + '"' : '') + '>' + S.pip(p.statut) + esc(p.name) + '</a>'; }
+    if (o.lieu) { const p = place(o.lieu), twin = names.filter(n => n === p.name).length > 1, k = (rank.get(p.name) || 0) + 1; rank.set(p.name, k);
+      const label = twin ? p.name + ' ' + k + (p.region ? ' (' + p.region + ')' : '') : p.name;
+      return '<a class="cat-lieu" href="carte.html#lieu=' + esc(p.id) + '"' + (p.region ? ' title="' + esc(p.region) + '"' : '') + '>' + S.pip(p.statut) + esc(label) + '</a>'; }
     return '<span class="cat-type">' + esc(o.type) + (o.note ? ' <i>' + esc(o.note) + '</i>' : '') + '</span>';
   }).join('');
 }

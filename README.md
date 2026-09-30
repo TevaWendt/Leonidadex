@@ -42,6 +42,15 @@ Hébergé sur Vercel, qui publie tel quel le contenu de ce dépôt : **aucune co
 - Aucune donnée issue de fuites. Crédit gtadb.org conservé sur la carte et dans les mentions légales.
 
 
+## Mission v7.48 → v7.52 : harmonisation et validation finale (lot 5, v7.52, 29 septembre 2026)
+
+- **Documents de fin de mission** (dans `outils/`, jamais publiés) : `SUIVI-MISSION.md` (lots, choix, anomalies, reprise), `MATRICE-COUVERTURE.md` (sections 6 et 7 : matrice finale des huit outils et du business plan, décisions avant / après), `CARNETS-CORRESPONDANCE.md` (catégorie → bouton → adresse du carnet → clé → source → fiches), `PREUVES-v7.52.md` (tests, navigateur, audit, accessibilité, performances, vérifications visuelles et parcours, limites, médias, champs à venir).
+- **Police à chasse fixe** : variable `--font-mono` dans `style.css` (polices du système) ; aucune feuille ne cite plus de police non hébergée.
+- **Carnets → calculateur** : `calculateurs.js` expose `window.LKCalcOwned` (lecture de `LKCarnets.isOwned`) ; `B.addAsset` s’en sert pour marquer « déjà possédé » un véhicule ou une arme déjà coché. Le moteur et le scénario ne lisent jamais le stockage (test `validation-v752`).
+- **Données de la carte** : `sync-site.cjs` décode les entités HTML de `outils/data/carte-gtadb-source.json` (source intacte) avant d’écrire `carte-gtadb.js` ; `carnets-source.cjs` fait de même pour `carnets/lieux-data.js`. Toute page échappe ce qu’elle affiche.
+- **Contrôles ajoutés** : `outils/tests/validation-v752.test.cjs` ; `outils/tests/accessibilite-perf-browser.cjs <dossier hors dépôt>` (axe-core WCAG A / AA et mesures de performance, 22 pages à 1 280 et 390 px ; `axe-core` et `playwright` installés hors dépôt, `QA_CHROMIUM=<Chromium>`) ; `outils/tests/mots-coupes-browser.cjs [dossier]` (aucun mot coupé au milieu dans les boutons, liens, onglets et en-têtes, 38 pages à 1 280, 1 024, 768, 390 et 320 px : signe d’une colonne trop étroite que l’audit ne voit pas).
+- `calculateurs-tools.js` supprimé (chargé par aucune page).
+
 ## Mission v7.48 → v7.52 : carnets de progression (lot 4, v7.51, 29 septembre 2026)
 
 - **Pages** : `carnets/<id>.html` (garage, arsenal, garde-robe, consommables, personnalisations, proprietes, lieux, collectibles, calculs), écrites par `outils/gen-carnets.cjs` (lancé par `regenerer.cjs` **avant** `sync-site.cjs`) depuis `outils/modele-donnees.json` (carnets), `outils/carnets-editorial.json` (textes) et `outils/carnets-source.cjs` (éléments, identifiants identiques à `progression-data.js`, liens `carnetOf` / `carnetHref`). Les données publiques sont dans `#lk-carnet-data` ; les lieux dans `carnets/lieux-data.js`. Le même générateur écrit le bloc « Mes carnets » de `progression.html` entre `<!-- carnets:debut -->` et `<!-- carnets:fin -->`.

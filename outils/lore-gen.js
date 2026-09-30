@@ -26,7 +26,7 @@ const chrome=(s)=>({
   fav:pick(s,/<link rel="icon"[^>]*>/),
   header:pick(s,/<header>[\s\S]*?<\/header>/),
   footer:pick(s,/<footer>[\s\S]*?<\/footer>/),
-  scripts:(s.match(/<script src="[^"]*"><\/script>/g)||[]).filter(x=>!/fiches\.js|vehicules-data\.js|armes-data\.js/.test(x)).join('\n'),
+  scripts:(s.match(/<script src="[^"]*"><\/script>/g)||[]).filter(x=>!/fiches\.js|vehicules-data\.js|armes-data\.js|lk-showcase\.js|carnets-core\.js/.test(x)) /* v7.52 : ni la séquence d’À propos, ni les envies des fiches véhicules sur les pages du monde */.join('\n'),
 });
 const ROOT=chrome(rootRef), SUB=chrome(subRef);
 const withHere=(header,hub)=>header.replace(/ class="here"/g,'').replace(new RegExp('(<a href="(?:\\.\\./)?'+hub+'\\.html")>'),'$1 class="here">');
@@ -58,10 +58,10 @@ const GT=JSON.parse(fs.readFileSync('outils/data/carte-gtadb-source.json','utf8'
 /* visuel de secours : la capture de la carte (gtadb, créditée dans les mentions légales) */
 const ENR=GT.enrichit||{};const LORE_BY_MAP={};for(const k of Object.keys(ED))for(const x of ED[k]){const m=(x.media||[]).map(id=>MED[id]).find(Boolean);if(x.mapId&&m)LORE_BY_MAP[x.mapId]=m;if(k==='regions'&&m)LORE_BY_MAP[x.id]=m;}
 const placeImage=id=>{const e=ENR[id];if(e&&e.img&&/^img\/officiel\//.test(e.img)&&fs.existsSync(e.img))return {variants:[{src:'/'+e.img.replace('-1280.webp','-480.webp'),w:480,h:270}]};const l=LORE_BY_MAP[id];if(l&&l.variants)return l;return mapPhoto(id);};
-const mapPhoto=id=>{const q=GTBY[id];if(!q||!q.img||!/\.webp$/.test(q.img)||!fs.existsSync(q.img.replace(/^\//,'')))return null;return {variants:[{src:'/'+q.img.replace(/^\//,''),w:q.imgW||960,h:q.imgH||540}],titre:q.n.replace(/&#x27;/g,"'").replace(/&amp;/g,'&'),alt:q.imgAlt||null};};
+const mapPhoto=id=>{const q=GTBY[id];if(!q||!q.img||!/\.webp$/.test(q.img)||!fs.existsSync(q.img.replace(/^\//,'')))return null;return {variants:[{src:'/'+q.img.replace(/^\//,''),w:q.imgW||960,h:q.imgH||540}],titre:q.n.replace(/&#x27;/g,"'").replace(/&quot;/g,'"').replace(/&amp;/g,'&'),alt:q.imgAlt||null};};
 const visual=x=>media(x)||(x.mapId?mapPhoto(x.mapId):null);
 const RELATED=[['regions','Régions'],['characters','Personnages'],['residences','Demeures'],['hideouts','Planques'],['businesses','Entreprises']];
-const gtName=id=>{const q=GTBY[id];return q?q.n.replace(/&#x27;/g,"'").replace(/&amp;/g,'&').replace(/ \(nom réel\)$/,''):id;};
+const gtName=id=>{const q=GTBY[id];return q?q.n.replace(/&#x27;/g,"'").replace(/&quot;/g,'"').replace(/&amp;/g,'&').replace(/ \(nom réel\)$/,''):id;};
 const LOCAL={'vice-city':'Vice City','leonida-keys':'Leonida Keys','grassrivers':'Grassrivers','port-gellhorn':'Port Gellhorn','ambrosia':'Ambrosia','mount-kalaga':'Mount Kalaga','ocean-beach':'Ocean Beach','little-cuba':'Little Cuba','tisha-wocka':'Tisha-Wocka','vc-port':'VC Port','key-lento':'Key Lento','allied-crystal':'Allied Crystal','leonida-penitentiary':'Pénitencier de Leonida','ptt-youngin':'PTT Youngin$'};
 const placeName=id=>LOCAL[id]||gtName(id);
 const IMG_ALT=(m,x)=>x.imageAlt||m.alt||(x.name+', capture officielle Rockstar Games');

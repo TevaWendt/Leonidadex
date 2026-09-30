@@ -1,0 +1,75 @@
+LEONIDAKIT v7.52 — LOT 5 DE LA MISSION v7.48 → v7.52 : HARMONISATION, VALIDATION COMPLÈTE, LIVRAISON (29 septembre 2026)
+
+Base : v7.51 (lot 4). Archive cumulée depuis la v7.47. Suivi : outils/SUIVI-MISSION.md ; preuves : outils/PREUVES-v7.52.md ;
+matrice finale : outils/MATRICE-COUVERTURE.md (sections 6 et 7) ; correspondance des carnets : outils/CARNETS-CORRESPONDANCE.md.
+
+COHÉRENCE ENTRE LES SECTIONS
+- Carnets → calculateur : un véhicule ou une arme déjà coché dans « Mon garage » / « Mon arsenal » arrive dans le calculateur
+  « déjà possédé » (il n’est plus recompté comme un achat à payer) ; le calculateur le dit en une phrase et la case reste
+  décochable (« Achat déjà possédé »). Une prévision ne coche toujours rien.
+- Business plan : quand le seul plan faisable touche à l’argent gardé de côté, l’avertissement est en tête du résultat
+  (« Ce plan touche à tes 20 000 $ gardés de côté. En les gardant : … ») avec la raison chiffrée et le point bas ; avant, il
+  n’apparaissait que dans le détail des stratégies. Le moteur donne la vraie raison (« « Mission » demande 20 000 $ de frais
+  avant de commencer ; en gardant 20 000 $ de côté, il ne te reste que 10 000 $ ») au lieu de « aucune mission ne rapporte
+  plus que ses frais ».
+- Tableau de bord : la ligne de chaque carte reprend le libellé du carnet (« goûtés », « repérés », « posées »…).
+- Noms de lieux : 27 noms entre guillemets et 84 « & » de la source GTADB s’affichaient en entités (« &quot;Ambrosia
+  Hills&quot; », « Casino &amp; Resort ») sur la carte, dans la recherche et dans « Mes lieux repérés » (défaut antérieur,
+  trouvé à la relecture des captures). Les données publiées sont maintenant du texte simple ; la source reste intacte.
+
+RENDU ET TEXTES (défauts trouvés par la relecture des captures et le nouveau contrôle des mots coupés)
+- Consommables « En un regard » : la pastille de statut de chaque carte était invisible (elle n’avait pas de taille) ; elle
+  est dessinée comme dans la légende, dite aux lecteurs d’écran (« Statut : … ») ; la légende montre les statuts présents,
+  « À confirmer » compris.
+- Deux lieux du même nom ne s’écrivent plus « Xero Gas Station · Xero Gas Station » : « Xero Gas Station (2 lieux) » dans
+  les cartes et la fiche documentaire ; dans la liste, les deux liens sont numérotés (« Xero Gas Station 1 », « … 2 (Capri) »).
+- Listes (Vêtements et style, Consommables, Personnalisations) : « Obtenu » ne se coupe plus en « Obten / u » ; la case de
+  suivi garde le fond de la ligne (elle était sortie du tableau par une règle commune) ; colonnes rééquilibrées pour que
+  « Ne s’achète pas » et « Officiel » tiennent entre 901 et 1 100 px.
+- Vêtements et style, « Les adresses » : la grille restait à trois colonnes sur téléphone (cartes de 109 px, mots coupés) ;
+  elle passe à deux colonnes sous 1 000 px et à une sous 700 px.
+- Tuto, tableau des statuts : plus de mots coupés (« Indica / tion ») ; sur téléphone, chaque ligne se lit en deux temps.
+- Espaces insécables avant « : ; ? ! » dans six scripts qui n’étaient pas passés à la typographie (calculateurs-modele.js,
+  collectibles-tools.js, contact.js, leo-loader.js, leo-ui.js, suivi.js).
+
+ANOMALIES DE L’INVENTAIRE (lot 1) CORRIGÉES
+- 20 « JetBrains Mono » (jamais hébergée) : remplacée partout par une variable --font-mono (chasse fixe du système, le rendu
+  que voyaient déjà les joueurs) ; aucune police externe.
+- 21 lk-showcase.js n’est plus chargé sur les hubs du monde et Médias (gardé là où la page l’utilise) ; carnets-core.js
+  n’est plus chargé sur les fiches du monde.
+- 22 calculateurs-tools.js (chargé par aucune page) supprimé ; outils/CALCULATEUR-V2.md remis à jour (état v6, limites,
+  paramètres d’adresse).
+- 23 Événements du calculateur sans aucun écouteur retirés (calculateurs.js, calculator-entry.js).
+
+DÉFAUTS ANTÉRIEURS DE L’AUDIT (hors mission, relevés en v7.47 et v7.51)
+- Carte : chaque repère a une zone cliquable d’au moins 24 × 24 px (le point dessiné ne change pas).
+- Accueil sur écran très large (≥ 1 360 px) : la scène garde sa définition de 1 280 px et se fond sur les côtés au lieu
+  d’être agrandie (plus d’image étirée à 1 960 px).
+- Carnets : grilles impaires centrées, liens des cartes et du tableau de bord avec une cible d’au moins 24 px.
+
+TYPOGRAPHIE
+- Espaces insécables avant « : ; ? ! » dans les textes du calculateur (calculateurs.js, calculateurs-scenario.js,
+  calculateurs-engine.js, calculateurs-plan.js, calculator-entry.js).
+
+VALIDATION (détail et chiffres : outils/PREUVES-v7.52.md)
+- Nouveaux tests : outils/tests/validation-v752.test.cjs (critère changé → résultat, explication, courbe et étapes ;
+  carnets = tableau de bord = progression ; ancienne progression importée ; possession → calcul ; harmonisation ; noms de
+  lieux en texte simple) ; outils/tests/accessibilite-perf-browser.cjs (axe-core, règles WCAG A et AA, et mesures de
+  performance sur 22 pages à 1 280 et 390 px) ; outils/tests/mots-coupes-browser.cjs (mots coupés au milieu dans les
+  boutons, liens, onglets et en-têtes, 38 pages à 1 280, 1 024, 768, 390 et 320 px) ; carnets-browser.cjs : « déjà
+  possédé » au calculateur. Tests adaptés aux espaces insécables (catalogues-v742, leo-v745, modele-v748).
+
+FICHIERS
+- Supprimé : calculateurs-tools.js (à supprimer aussi dans ton dossier).
+- Ajoutés : outils/tests/validation-v752.test.cjs, outils/tests/accessibilite-perf-browser.cjs,
+  outils/tests/mots-coupes-browser.cjs,
+  outils/CARNETS-CORRESPONDANCE.md, outils/PREUVES-v7.52.md, outils/CHANGEMENTS-v7.52.txt, LISEZ-MOI-v7.52.txt.
+- Modifiés (sources) : style.css et toutes les feuilles qui citaient la police (acquisitions.css, calculateurs-brand.css,
+  calculator-entry.css, carnets.css, collectibles-brand.css, informations.css, leo.css, tuto.css), calculateurs.js,
+  calculateurs-engine.js, calculateurs-plan.js, calculateurs-scenario.js, calculator-entry.js, calculateurs-modele.js,
+  collectibles-tools.js, contact.js, leo-loader.js, leo-ui.js, suivi.js, outils/sync-site.cjs, outils/carnets-source.cjs,
+  outils/gen-carnets.cjs, outils/gen-achats.cjs, outils/gen-acquisitions.cjs, outils/catalogues.cjs, outils/fiche-doc.cjs,
+  outils/lore-gen.js, outils/CALCULATEUR-V2.md, outils/MATRICE-COUVERTURE.md, outils/SUIVI-MISSION.md, README.md ; tests
+  adaptés (calculateurs-integration, calculateurs-v747, carnets-browser, catalogues-v742, leo-v745, modele-v748).
+- Régénérés : pages (numéros de version des feuilles et scripts), carte-gtadb.js, search-lieux.js, carnets/lieux-data.js,
+  index de Léo.
