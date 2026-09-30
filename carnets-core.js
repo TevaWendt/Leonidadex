@@ -18,7 +18,8 @@
   var KEYS = { stock: 'lk_stock_v1', wish: 'lk_wish_v1', journal: 'lk_journal_v1' };
   var OWN = { vehicules: 'lk_own_vehicules', armes: 'lk_own_armes', equipements: 'lk_own_equipements', munitions: 'lk_own_munitions', consommables: 'lk_own_consommables', coiffures: 'lk_own_coiffures', tatouages: 'lk_own_tatouages', tenues: 'lk_own_tenues', 'perso-vehicules': 'lk_own_perso-vehicules', 'perso-armes': 'lk_own_perso-armes', lieux: 'lk_map_found' };
   var STOCKABLE = { consommables: true, munitions: true };
-  var ID = /^[a-z0-9][a-z0-9-]{0,99}$/;
+  /* v7.51 (lot 4) : les lieux de la carte ont des identifiants avec majuscules (g-L1848) : ils sont acceptés tels quels. */
+  var ID = /^[A-Za-z0-9][A-Za-z0-9-]{0,99}$/;
   var FAM = /^[a-z][a-z0-9-]{1,30}$/;
   var MAX_JOURNAL = 500;
   function isChecked(v) { return v === true || v === 1; }
@@ -47,7 +48,7 @@
         if (broken) storage.setItem('lk_recovery_' + KEYS[kind] + '_' + Date.now(), broken);
         storage.setItem(KEYS[kind], JSON.stringify(data));
         emit(kind); return true;
-      } catch (e) { notice('Impossible d’enregistrer : le stockage du navigateur est indisponible. Exporte ton suivi pour ne rien perdre.'); return false; }
+      } catch (e) { notice('Impossible d’enregistrer : le stockage du navigateur est indisponible. Exporte ton suivi pour ne rien perdre.'); return false; }
     }
     function key(famille, id) { if (!FAM.test(famille) || !ID.test(id)) throw new Error('Identifiant invalide.'); return famille + ':' + id; }
     /* ---- Possessions : lues dans les clés historiques, jamais recopiées ailleurs. ---- */
@@ -65,7 +66,7 @@
       var k = OWN[famille]; if (!k || !ID.test(id)) return false;
       var d; try { d = JSON.parse(raw(k) || '{}'); if (!record(d)) d = {}; } catch (e) { d = {}; }
       if (on) d[id] = famille === 'lieux' ? true : 1; else delete d[id];
-      try { storage.setItem(k, JSON.stringify(d)); emit('own'); return true; } catch (e) { notice('Impossible d’enregistrer cette case : le stockage du navigateur est indisponible.'); return false; }
+      try { storage.setItem(k, JSON.stringify(d)); emit('own'); return true; } catch (e) { notice('Impossible d’enregistrer cette case : le stockage du navigateur est indisponible.'); return false; }
     }
     /* ---- Stock ---- */
     function stock(famille, id) {

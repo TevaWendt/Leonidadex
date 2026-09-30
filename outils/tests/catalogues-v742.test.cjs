@@ -139,17 +139,22 @@ test('navigateur : style.html, trois boîtes, l’ancre #accessoires ouvre la ga
   assert.equal(a.d.getElementById('box-coiffures').open,false);
 }));
 
-test('Progression : quatorze cartes (douze du lot 5 + deux du lot 6), les quatre familles comptent leurs lignes, la liste dépliée mène à l’ancre de la ligne, export / import',withPage('progression.html',a=>{
-  const cards=[...a.d.querySelectorAll('.suivi-card')];assert.equal(cards.length,14);
+/* v7.51 (lot 4) : les quatorze cartes à listes dépliables sont devenues neuf carnets ; chaque famille a sa ligne dans la
+   carte de son carnet (Ma garde-robe, Mes consommables…) et sa liste sur la page du carnet (carnets/<id>.html). */
+test('Progression : les quatre familles comptent leurs lignes dans la carte de leur carnet, ancres gardées ; la liste est sur la page du carnet et mène à l’ancre de la ligne',withPage('progression.html',a=>{
+  assert.equal(a.d.querySelectorAll('.cn-dcard').length,9);
   const P=progress();
-  for(const fam of LOT5){const card=a.d.querySelector('.suivi-card[data-family="'+fam+'"]');assert.ok(card,fam);assert.ok(a.d.getElementById(fam),'ancre #'+fam);
+  for(const fam of LOT5){const line=a.d.querySelector('.cn-dcard [data-family="'+fam+'"]');assert.ok(line,fam);assert.ok(a.d.getElementById(fam),'ancre #'+fam);
     assert.equal(P.LK_PROGRESS_IDS[fam].length,C.counts(fam).suivis);assert.equal(Object.keys(P.LK_PROGRESS_NAMES[fam]).length,C.counts(fam).suivis);
-    assert.match(card.querySelector('.suivi-n').textContent,new RegExp('^'+(fam==='consommables'?'1':'0')+' \\/ '+C.counts(fam).suivis+'$'),fam);}
-  const card=a.d.querySelector('.suivi-card[data-family="consommables"]');card.querySelector('.suivi-toggle').click();
-  const list=a.d.getElementById('suivi-list-consommables');assert.equal(list.hidden,false);
-  assert.equal(list.querySelector('a').getAttribute('href'),'nourriture.html#consommables-sprunk');assert.ok(list.textContent.includes('Boissons'));
-  list.querySelector('[data-suivi-remove="sprunk"]').click();assert.match(card.querySelector('.suivi-n').textContent,/^0 \//);
-  assert.match(read('progression.html'),new RegExp('data-family="coiffures">[\\s\\S]*?<strong class="suivi-n">0 / '+C.counts('coiffures').suivis+'<'));
+    assert.match(line.querySelector('.suivi-n').textContent,new RegExp('^'+(fam==='consommables'?'1':'0')+' \\/ '+C.counts(fam).suivis+'$'),fam);}
+  assert.match(read('progression.html'),new RegExp('data-family="coiffures"><span>[^<]*</span> <strong class="suivi-n">0 / '+C.counts('coiffures').suivis+'<'));
+},{storage:{lk_own_consommables:'{"sprunk":1}'}}));
+
+test('Carnet « Mes consommables » : la ligne cochée mène à son ancre, avec sa catégorie ; « Retirer » la décoche partout',withPage('carnets/consommables.html',a=>{
+  const card=a.d.querySelector('.cn-card[data-key="consommables:sprunk"]');assert.ok(card);
+  assert.equal(card.querySelector('.cn-name a').getAttribute('href'),'../nourriture.html#consommables-sprunk');assert.ok(card.textContent.includes('Boissons'));
+  card.querySelector('[data-cn-act="unown"]').click();a.flush();
+  assert.deepEqual(JSON.parse(a.w.localStorage.getItem('lk_own_consommables')),{});
 },{storage:{lk_own_consommables:'{"sprunk":1}'}}));
 
 test('progression-core : les quatre familles entrent dans le total, l’export et l’import (sans rubrique inconnue)',()=>{

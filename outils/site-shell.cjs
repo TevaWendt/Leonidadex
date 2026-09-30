@@ -20,6 +20,8 @@ function link([url, label], prefix = '', current = '') {
   return '<a href="' + prefix + url + '"' + (here ? ' class="here" aria-current="page"' : '') + '>' + esc(label) + '</a>';
 }
 function currentOf(file) {
+  /* v7.51 (lot 4) : les carnets de progression (carnets/<id>.html) sont des pages de la Progression. */
+  if (file.startsWith('carnets/')) return 'progression.html';
   if (file.includes('/')) return file.split('/')[0] + '.html';
   return ({ 'comparateur.html': 'vehicules.html', 'classement-vehicules.html': 'vehicules.html', 'vehicules-rares.html': 'vehicules.html' })[file] || file;
 }
@@ -50,7 +52,7 @@ function footer(existing, prefix) {
    un seul ordre, la page courante retirée de sa propre liste ; posées en bas de la page par sync-site.cjs. */
 const chipList = [['achats.html', 'Tout ce qui s’achète'], ['vehicules.html', 'Véhicules'], ['armes.html', 'Armurerie'],
   ...acquisition.filter(c => !c.alias).map(c => [c.route.slice(1), c.label]),
-  ['progression.html#acquisitions', 'Ma progression'], ['tuto.html#sources', 'Comprendre les statuts']];
+  ['progression.html#carnets', 'Mes carnets'], ['tuto.html#sources', 'Comprendre les statuts']];
 const sectionPages = new Set([...world.map(x => x[0]), ...acquisition.map(c => c.route.slice(1).split('#')[0]), 'vehicules.html', 'armes.html', 'achats.html', 'progression.html']);
 function chips(file) {
   if (!sectionPages.has(file)) return '';

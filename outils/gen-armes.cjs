@@ -57,7 +57,7 @@ const HEAD_TOP=between(/<meta name="theme-color"[\s\S]*?<link rel="icon"[^>]*>\n
 const HEADER=between(/<a class="skip"[\s\S]*?<main id="main">/);
 const FCOUNT=between(/<div class="fcount">[\s\S]*?<\/div>\n<\/div>/);
 const NOTE=between(/<section class="shell">\s*<div class="note-box rise">[\s\S]*?<\/section>/);
-const FOOTER=between(/<footer>[\s\S]*?<\/body>\n<\/html>/);
+const FOOTER=between(/<footer>[\s\S]*?<\/body>\n<\/html>/).replace(/(<script src="\.\.\/carnets-core\.js[^"]*"><\/script>\n)?(<script src="\.\.\/fiches\.js)/,'<script src="../carnets-core.js"></script>\n$2'); // v7.51 : envies (carnets-core.js) avant fiches.js
 
 const lede=a=>{const cat=CATL[a.cat].toLowerCase();return a.nom+' dans GTA VI : '+cat+(a.insp?'. Inspiration : '+a.insp:'')+'. '+ST[a.st].l+' ('+a.src+').';};
 /* meta description : les premières phrases du contexte de l'arme (165 caractères max), sinon le lede générique */

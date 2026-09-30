@@ -76,7 +76,13 @@ Légende des critères : C condition · G grandeur · K comparaison · P préfé
 | Réalisé enregistré deux fois compté une fois (plan) ; fiche → comparaison → calcul → plan garde les données | 2 | `calculateurs-v749.test.cjs`, `calculateurs-liens-v749.test.cjs` |
 | Liens : outil demandé seulement, copie avant remplacement, retour possible | 2 | `calculateurs-liens-v749.test.cjs` |
 | Prix inconnu jamais gratuit dans les catalogues ; emplacement jamais inventé ; souhait ≠ possession | 3 | `catalogues-v750.test.cjs` |
-| Carnets dédiés, « Voir mon… » vers la bonne page | 4 | à écrire |
+| Carnets dédiés (9 pages, adresses stables), « Voir mon… » vers la bonne page, aucune ancienne ancre cassée | 4 | `carnets-v751.test.cjs`, `carnets-browser.cjs` |
+| Mêmes identifiants et mêmes comptes : fiches, carnets, tableau de bord, carte, calculateur | 4 | `carnets-v751.test.cjs`, `carnets-browser.cjs` |
+| Envie ≠ possession ; « Je l’ai » sur une envie la range et la retire ; « Annuler » | 4 | `carnets-browser.cjs`, `suivi-v738.test.cjs` |
+| Ancienne case → « stock à renseigner » ; un geste de stock = un événement ; stock à zéro ne décoche rien ; le plan ne touche pas au stock | 4 | `carnets-v751.test.cjs`, `carnets-browser.cjs` |
+| Achat déclaré fait dans le plan rangé une fois dans le garage ; prévu ne coche rien | 4 | `carnets-browser.cjs` |
+| Retour arrière, rechargement, deux onglets, stockage indisponible (lecture seule annoncée) | 4 | `carnets-browser.cjs` |
+| Référencement de la présentation publique ; aucune liste personnelle dans la page, les métadonnées ou la sitemap | 4 | `carnets-v751.test.cjs` |
 
 ## 5. État par lot
 
@@ -85,5 +91,5 @@ Légende des critères : C condition · G grandeur · K comparaison · P préfé
 | 1 Fondations | fait (v7.48) : registre, statuts, genres, mécaniques, fiches documentaires, fonctions communes, carnets (stock, souhaits, journal), état v6 + migration, tests |
 | 2 Huit calculs + plan | fait (v7.49) : analyse par outil branchée sur le modèle, « Ce qui compte » en six parties (aucun facteur oublié, vérifié), coût complet et bascule, besoin, ordre proposé et dépendances, budget partiel et flux, activités classées et échec, échéance, sens du but, plan avec chaîne de prérequis, missions uniques, parcours continu, point bas, variantes, liens sûrs |
 | 3 Catalogues + Achats | fait (v7.50) : fiches documentaires communes (listes, armes, véhicules), vignettes, localisateur illustré (hubs et fiches), carnet de style, consommables en un regard, comparateur aligné, page Achats (visuels, comptes justes, pile verticale), galerie nette |
-| 4 Carnets + raccordements | à faire |
+| 4 Carnets + raccordements | fait (v7.51) : 9 pages dédiées (garage, arsenal, garde-robe, consommables, personnalisations, propriétés, lieux, collectibles, calculs), trois vues, recherche, filtres, tri, stock, envies, saisies à part, état dans l’adresse ; tableau de bord Progression ; « Voir mon… », fiches, catalogues, carte, calculateur (envies classées, fiche d’un calcul, achat fait rangé), Léo, Tuto, accueil, recherche ; anomalies 8 à 15 et 24 |
 | 5 Validation + livraison | à faire |

@@ -143,19 +143,27 @@ test('navigateur : « Je l’ai » remplit lk_own_perso-vehicules et lk_own_pers
   assert.equal(a.w.localStorage.getItem('lk_own_perso-vehicules'),'{"turbo":1}','aucune clé de famille touchée');
 }));
 
-test('Progression : quatorze cartes, deux familles du lot 6 comptées (cartes, total, carte Personnalisations = listes + kit + motif), ancres, liste dépliée vers la ligne, export / import',withPage('progression.html#perso-armes',a=>{
-  const cards=[...a.d.querySelectorAll('.suivi-card')];assert.equal(cards.length,14);
+/* v7.51 (lot 4) : les deux familles sont deux lignes de la carte « Mes personnalisations » ; le kit Ganado et le motif
+   Vintage sont des contenus documentés (carte « Mes propriétés et contenus »), comptés une fois dans le total. */
+test('Progression : deux familles du lot 6 comptées dans la carte « Mes personnalisations », kit et motif dans « Mes propriétés et contenus », ancres, total ; liste sur la page du carnet',withPage('progression.html#perso-armes',a=>{
   const P=progress();
-  for(const fam of LOT6){const card=a.d.querySelector('.suivi-card[data-family="'+fam+'"]');assert.ok(card,fam);assert.ok(a.d.getElementById(fam),'ancre #'+fam);
+  for(const fam of LOT6){const line=a.d.querySelector('#carnet-personnalisations [data-family="'+fam+'"]');assert.ok(line,fam);assert.ok(a.d.getElementById(fam),'ancre #'+fam);
     assert.equal(P.LK_PROGRESS_IDS[fam].length,C.counts(fam).suivis);assert.equal(Object.keys(P.LK_PROGRESS_NAMES[fam]).length,C.counts(fam).suivis);
-    assert.match(read('progression.html'),new RegExp('data-family="'+fam+'">[\\s\\S]*?<strong class="suivi-n">0 / '+C.counts(fam).suivis+'<'));}
-  const arm=a.d.querySelector('.suivi-card[data-family="perso-armes"]');assert.match(arm.querySelector('.suivi-n').textContent,new RegExp('^1 / '+C.counts('perso-armes').suivis+'$'));
-  const list=a.d.getElementById('suivi-list-perso-armes');assert.equal(list.hidden,false,'ouverte par l’ancre');assert.equal(list.querySelector('a').getAttribute('href'),'personnalisations.html#perso-armes-silencieux');assert.ok(list.textContent.includes('Silencieux et canons'));
-  const veh=a.d.querySelector('.suivi-card[data-family="perso-vehicules"]');assert.match(veh.querySelector('.suivi-n').textContent,/^1 \//);
-  const acqCard=a.d.getElementById('progress-customizations');assert.ok(acqCard);assert.match(acqCard.querySelector('strong').textContent,new RegExp('^3 / '+(C.counts('perso-vehicules').suivis+C.counts('perso-armes').suivis+2)+'$'));
+    assert.match(read('progression.html'),new RegExp('data-family="'+fam+'"><span>[^<]*</span> <strong class="suivi-n">0 / '+C.counts(fam).suivis+'<'));}
+  assert.match(a.d.querySelector('[data-family="perso-armes"] .suivi-n').textContent,new RegExp('^1 / '+C.counts('perso-armes').suivis+'$'));
+  assert.match(a.d.querySelector('[data-family="perso-vehicules"] .suivi-n').textContent,/^1 \//);
+  assert.ok(a.d.getElementById('carnet-personnalisations').classList.contains('is-target'),'l’ancre #perso-armes met la carte du carnet en évidence');
+  assert.equal(a.d.querySelector('#carnet-personnalisations [data-cn-done]').textContent,'2');
+  assert.equal(a.d.querySelector('#carnet-proprietes [data-cn-done]').textContent,'1','kit Ganado : contenu documenté');
   assert.match(a.d.getElementById('progress-global-text').textContent,/^3 cochés sur/);
-  list.querySelector('[data-suivi-remove="silencieux"]').click();assert.match(arm.querySelector('.suivi-n').textContent,/^0 \//);
 },{storage:{'lk_own_perso-armes':'{"silencieux":1}','lk_own_perso-vehicules':'{"turbo":1}',lk_progression_v2:'{"version":2,"migratedAt":"2026-09-27T00:00:00.000Z","checked":{"ganado-retro-build":true}}'}}));
+
+test('Carnet « Mes personnalisations » : ligne cochée vers son ancre, catégorie, filtre par famille depuis l’adresse (#f=perso-armes)',withPage('carnets/personnalisations.html#f=perso-armes',a=>{
+  assert.equal(a.d.getElementById('cn-fam').value,'perso-armes');
+  const cards=[...a.d.querySelectorAll('.cn-card')];assert.deepEqual(cards.map(c=>c.dataset.key),['perso-armes:silencieux']);
+  assert.equal(cards[0].querySelector('.cn-name a').getAttribute('href'),'../personnalisations.html#perso-armes-silencieux');assert.ok(cards[0].textContent.includes('Silencieux et canons'));
+  cards[0].querySelector('[data-cn-act="unown"]').click();a.flush();assert.deepEqual(JSON.parse(a.w.localStorage.getItem('lk_own_perso-armes')),{});
+},{storage:{'lk_own_perso-armes':'{"silencieux":1}','lk_own_perso-vehicules':'{"turbo":1}'}}));
 
 test('progression-core : les deux familles entrent dans le total, l’export et l’import ; une case du kit reste une acquisition',()=>{
   const P=require(path.join(root,'progression-core.js')),IDS=progress().LK_PROGRESS_IDS;

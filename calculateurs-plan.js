@@ -257,7 +257,11 @@ function create(env){
   document.querySelectorAll('[data-field="plan.situation.capital"]').forEach(i=>{i.value=cap;});if(unitsNow!==null)document.querySelectorAll('[data-field="plan.goal.currentUnits"]').forEach(i=>{i.value=unitsNow;});
   if(bought.length)refresh('plan-actual');else api.changed();
   const gap=plannedGain===null||gain===null?null:gain-plannedGain;
-  api.notify('Plan refait à partir de '+money(cap)+'.'+(gap===null?'':gap>=0?' Tu as gagné '+money(gap)+' de plus que prévu.':' Tu as gagné '+money(-gap)+' de moins que prévu : regarde les plans de secours.'));return true;}
+  /* v7.51 (lot 4) : un achat déclaré fait range le véhicule ou l’arme de la fiche dans son carnet (garage, arsenal). Le
+     journal des réalisations (carnets-core.js) tient l’identifiant de la partie : enregistrer deux fois ne range rien deux
+     fois. Une prévision du plan, elle, ne coche jamais rien et ne retire jamais rien. */
+  const ranged=[];if(bought.length&&global.LKCarnets){try{const K=global.LKCarnets.create({storage:global.localStorage});bought.forEach(id=>{const a=p.prerequisites.find(x=>x.id===id),item=a&&a.itemId?itemFor({itemId:a.itemId}):null,fam=item?({vehicle:'vehicules',weapon:'armes'})[item.type]:null;if(!fam||!/^[a-z0-9][a-z0-9-]{0,99}$/.test(item.id))return;const r=K.applyEvent('plan:'+logId+':'+id,[{type:'own',famille:fam,id:item.id}]);if(r&&r.applied)ranged.push(item.name+(fam==='armes'?' (Mon arsenal)':' (Mon garage)'));});}catch(e){/* stockage indisponible : le plan reste juste, rien n’est annoncé */}}
+  api.notify('Plan refait à partir de '+money(cap)+'.'+(gap===null?'':gap>=0?' Tu as gagné '+money(gap)+' de plus que prévu.':' Tu as gagné '+money(-gap)+' de moins que prévu : regarde les plans de secours.')+(ranged.length?' Rangé dans tes carnets : '+ranged.join(', ')+'.':''));return true;}
  /* ---------- Fiche complète (enregistrement) : le plan entier, lisible comme un document ---------- */
  function sheet(cfg,at){const s=cfg,p=s.plan,g=p.goal,si=p.situation,r=B.evaluate('plan',s),base=at||new Date().toISOString(),date=new Date(base),dateText=Number.isFinite(date.getTime())?date.toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'}):'—';
   let html='<article class="b-sheet"><div class="b-sheet-head"><p class="calc-kicker">LEONIDAKIT · FICHE DE BUSINESS PLAN</p><h2 id="calc-sheet-title">'+esc(s.name||'Mon plan')+'</h2><p class="b-doc-meta">'+esc('But : '+goalName(s)+' · enregistré le '+dateText)+'</p></div>';

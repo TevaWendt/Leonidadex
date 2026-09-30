@@ -2282,14 +2282,15 @@
     "ma collection",
     "sauvegarde"
    ],
-   "text": "La page Progression garde ce que tu as coché (véhicules, armes, lieux, contenus) sur ton appareil, sans compte. Tu peux exporter et importer ta sauvegarde en JSON.",
+   "text": "La page Progression est ton tableau de bord : un carnet par famille (garage, arsenal, garde-robe, consommables, personnalisations, propriétés, lieux repérés, collectibles, calculs), chacun avec sa page. Tout reste sur ton appareil, sans compte, et tu peux exporter ou importer ta sauvegarde en JSON.",
    "status": "Le site",
    "links": [
     {
      "label": "Ma progression",
-     "url": "/progression.html"
+     "url": "/progression.html#carnets"
     }
-   ]
+   ],
+   "checkedAt": "2026-09-29"
   },
   {
    "id": "site-gratuit",
@@ -3578,7 +3579,7 @@
     "cases de la carte",
     "lieux coches"
    ],
-   "text": "Clique sur un marqueur pour l’ouvrir, puis coche-le : il entre dans tes « Lieux repérés ». Le compteur et la liste sont dans le panneau de la carte et sur la page Progression. Tout est enregistré sur ton appareil, sans compte.",
+   "text": "Clique sur un marqueur pour l’ouvrir, puis coche « Marquer comme repéré » : il entre dans tes lieux repérés. Le carnet « Mes lieux repérés » les liste, avec ceux qui restent et tes lieux à visiter. Tout est enregistré sur ton appareil, sans compte.",
    "status": "Le site",
    "links": [
     {
@@ -3587,10 +3588,10 @@
     },
     {
      "label": "Mes lieux repérés",
-     "url": "/progression.html#lieux"
+     "url": "/carnets/lieux.html"
     }
    ],
-   "checkedAt": "2026-09-28"
+   "checkedAt": "2026-09-29"
   },
   {
    "id": "carte-comtes",
@@ -6248,7 +6249,7 @@
     "possede vehicule",
     "comment dire que j ai une voiture"
    ],
-   "text": "Sur la page Véhicules ou sur une fiche, coche la case en haut à droite de la carte (« Je l’ai ») : la voiture entre dans « Mon garage ». La barre du garage compte tes véhicules et propose « Voir mon garage », « Partager » et « Vider ». Tout reste enregistré sur ton appareil.",
+   "text": "Sur la page Véhicules, coche la case « Garage » d’une carte ; sur une fiche, le bouton « Ajouter à mon garage ». La voiture entre dans ton garage. La barre du garage compte tes véhicules et propose « Voir mon garage », « Partager » et « Vider ». Tout reste enregistré sur ton appareil.",
    "status": "Le site",
    "links": [
     {
@@ -6257,10 +6258,10 @@
     },
     {
      "label": "Mon garage",
-     "url": "/progression.html#garage"
+     "url": "/carnets/garage.html"
     }
    ],
-   "checkedAt": "2026-09-28"
+   "checkedAt": "2026-09-29"
   },
   {
    "id": "voir-garage",
@@ -6276,15 +6277,15 @@
     "ouvrir mon garage",
     "mes vehicules possedes"
    ],
-   "text": "« Voir mon garage » (barre du haut de la page Véhicules) ouvre la carte « Véhicules possédés » de la page Progression : la liste de tes véhicules cochés, triés par catégorie, avec un lien vers chaque fiche et un bouton « Retirer ».",
+   "text": "« Voir mon garage » ouvre la page « Mon garage » : tes véhicules possédés, tes envies et ceux qui restent, avec recherche, filtres par catégorie, tri et un lien vers chaque fiche. Tu peux y retirer un véhicule ou en ajouter un.",
    "status": "Le site",
    "links": [
     {
      "label": "Mon garage",
-     "url": "/progression.html#garage"
+     "url": "/carnets/garage.html"
     }
    ],
-   "checkedAt": "2026-09-28"
+   "checkedAt": "2026-09-29"
   },
   {
    "id": "voir-arsenal",
@@ -6300,15 +6301,15 @@
     "ouvrir mon arsenal",
     "mes armes possedees"
    ],
-   "text": "« Voir mon arsenal » (barre du haut de l’Armurerie) ouvre la carte « Armes possédées » de la page Progression : la liste de tes armes cochées, par catégorie, avec un lien vers chaque fiche et un bouton « Retirer ». Les équipements et les types de munitions ont leurs propres cartes.",
+   "text": "« Voir mon arsenal » ouvre la page « Mon arsenal » : tes armes, tes équipements et tes types de munitions, avec tes envies et ce qui reste. Pour les munitions, tu peux noter ton stock à part : le site ne devine jamais une quantité.",
    "status": "Le site",
    "links": [
     {
      "label": "Mon arsenal",
-     "url": "/progression.html#arsenal"
+     "url": "/carnets/arsenal.html"
     }
    ],
-   "checkedAt": "2026-09-28"
+   "checkedAt": "2026-09-29"
   },
   {
    "id": "partager-garage",
@@ -6352,7 +6353,7 @@
     "barre mon equipement",
     "cocher un gadget"
    ],
-   "text": "Oui : dans l’Armurerie, les 16 équipements et gadgets et les 5 types de munitions se cochent comme les armes, avec une barre « Mon équipement ». La page Progression a deux cartes pour eux (Équipements obtenus, Types de munitions), comprises dans « Tout mon suivi ».",
+   "text": "Oui : dans l’Armurerie, les 16 équipements et gadgets et les 5 types de munitions se cochent comme les armes, avec une barre « Mon équipement ». Ils sont dans ton carnet « Mon arsenal », compris dans « Tout mon suivi ».",
    "status": "Le site",
    "links": [
     {
@@ -6360,11 +6361,11 @@
      "url": "/armes.html#equipements"
     },
     {
-     "label": "Mes équipements",
-     "url": "/progression.html#equipements"
+     "label": "Mon arsenal",
+     "url": "/carnets/arsenal.html#f=equipements"
     }
    ],
-   "checkedAt": "2026-09-28"
+   "checkedAt": "2026-09-29"
   },
   {
    "id": "progression-cartes",
@@ -6380,15 +6381,15 @@
     "tout mon suivi",
     "page progression c koi"
    ],
-   "text": "Quatorze cartes : véhicules possédés, armes possédées, équipements, munitions, lieux repérés, collectibles trouvés, catalogue des collectibles, calculs enregistrés, consommables goûtés, coiffures essayées, tatouages faits, tenues et accessoires portés, modifs de véhicule et modifs d’arme posées. Un compteur « Tout mon suivi » les résume ; ce n’est pas la progression officielle du jeu.",
+   "text": "Un carnet par famille : Mon garage, Mon arsenal, Ma garde-robe, Mes consommables, Mes personnalisations, Mes propriétés et contenus, Mes lieux repérés, Mes collectibles, Mes calculs et mes plans. Chaque carte compte ce qui est coché et mène à la page du carnet. Un compteur « Tout mon suivi » les résume ; ce n’est pas la progression officielle du jeu.",
    "status": "Le site",
    "links": [
     {
      "label": "Ma progression",
-     "url": "/progression.html"
+     "url": "/progression.html#carnets"
     }
    ],
-   "checkedAt": "2026-09-28"
+   "checkedAt": "2026-09-29"
   },
   {
    "id": "exporter-suivi",
@@ -6487,19 +6488,19 @@
     "goute un consommable",
     "suivi des listes depliables"
    ],
-   "text": "Dans chaque liste dépliable (Consommables, Vêtements et style, Personnalisations), la case « Je l’ai » d’une ligne l’ajoute à ton suivi : la barre de la liste monte, et la page Progression a une carte par famille (goûtés, essayées, faits, portés, posées). Une ligne reliée à une carte Rockstar partage sa case, comptée une fois.",
+   "text": "Dans chaque liste dépliable (Consommables, Vêtements et style, Personnalisations), la case « Je l’ai » d’une ligne l’ajoute à ton suivi : la barre de la liste monte, et le carnet de la famille la range (Mes consommables, Ma garde-robe, Mes personnalisations). Une ligne reliée à une carte Rockstar partage sa case, comptée une fois.",
    "status": "Le site",
    "links": [
     {
-     "label": "Ma progression",
-     "url": "/progression.html#suivi"
+     "label": "Ma garde-robe",
+     "url": "/carnets/garde-robe.html"
     },
     {
      "label": "Les consommables",
      "url": "/nourriture.html#liste-consommables"
     }
    ],
-   "checkedAt": "2026-09-28"
+   "checkedAt": "2026-09-29"
   },
   {
    "id": "collectibles-page",
@@ -6865,15 +6866,15 @@
     "ma progression stp",
     "mon suivi"
    ],
-   "text": "Voici ta page Progression : ce que tu as coché sur le site, carte par carte, et la sauvegarde de ton suivi.",
+   "text": "Voici ta page Progression : un carnet par famille, ce que tu as coché, tes envies, et la sauvegarde de ton suivi.",
    "status": "Le site",
    "links": [
     {
      "label": "Ouvrir ma progression",
-     "url": "/progression.html"
+     "url": "/progression.html#carnets"
     }
    ],
-   "checkedAt": "2026-09-28"
+   "checkedAt": "2026-09-29"
   },
   {
    "id": "ouvrir-carte",
@@ -8280,15 +8281,15 @@
     "mes tenues portees",
     "suivi listes depliables"
    ],
-   "text": "Chaque liste dépliable a sa case « Je l’ai » par ligne et sa barre de suivi (« Mes consommables », « Mes coiffures », « Mes modifs de véhicule »…). La page Progression a une carte par famille et « Tout mon suivi » les compte ; l’export de ton suivi les emporte.",
+   "text": "Chaque liste dépliable a sa case « Je l’ai » par ligne et sa barre de suivi. Chaque famille a son carnet (Mes consommables, Ma garde-robe, Mes personnalisations) et « Tout mon suivi » les compte ; l’export de ton suivi les emporte.",
    "status": "Le site",
    "links": [
     {
-     "label": "Ma progression",
-     "url": "/progression.html#suivi"
+     "label": "Mes carnets",
+     "url": "/progression.html#carnets"
     }
    ],
-   "checkedAt": "2026-09-28"
+   "checkedAt": "2026-09-29"
   },
   {
    "id": "filtrer-liste",
@@ -9153,6 +9154,123 @@
    ],
    "checkedAt": "2026-09-28",
    "source": "https://www.rockstargames.com/VI"
+  },
+  {
+   "id": "carnets-envies",
+   "theme": "suivi",
+   "q": "Quelle différence entre une envie et un objet possédé ?",
+   "f": [
+    "c est quoi une envie",
+    "difference envie possede",
+    "je le veux",
+    "mes envies",
+    "liste de souhaits",
+    "wishlist",
+    "garder un vehicule en envie",
+    "envie ou possede",
+    "souhait leonidakit"
+   ],
+   "text": "Un objet possédé compte dans ta progression. Une envie non : c’est ce que tu veux, gardé dans l’onglet « Mes envies » de ton carnet. Quand tu l’as, « Je l’ai » le range dans le carnet et le retire de tes envies. Le calculateur peut classer tes envies pour savoir quoi acheter d’abord.",
+   "status": "Le site",
+   "links": [
+    {
+     "label": "Mon garage",
+     "url": "/carnets/garage.html#vue=envies"
+    },
+    {
+     "label": "Mes carnets",
+     "url": "/progression.html#carnets"
+    }
+   ],
+   "checkedAt": "2026-09-29"
+  },
+  {
+   "id": "carnets-stock",
+   "theme": "suivi",
+   "q": "Comment noter mon stock de consommables ou de munitions ?",
+   "f": [
+    "noter mon stock",
+    "stock de munitions",
+    "combien il me reste",
+    "stock consommables",
+    "stock a renseigner",
+    "quantite de munitions",
+    "j en ai utilise un",
+    "gerer mon stock"
+   ],
+   "text": "Dans « Mes consommables » ou « Mon arsenal », un objet coché affiche son stock. Écris combien il t’en reste, puis « J’en ai utilisé un » ou « J’en ai racheté un » le met à jour, une seule fois par geste. Une ancienne case cochée affiche « stock à renseigner » : le site ne devine jamais une quantité, et un plan du calculateur ne retire jamais rien de ton stock.",
+   "status": "Le site",
+   "links": [
+    {
+     "label": "Mes consommables",
+     "url": "/carnets/consommables.html"
+    },
+    {
+     "label": "Mon arsenal",
+     "url": "/carnets/arsenal.html#f=munitions"
+    }
+   ],
+   "checkedAt": "2026-09-29"
+  },
+  {
+   "id": "voir-carnets-famille",
+   "theme": "suivi",
+   "q": "Où voir ma garde-robe, mes consommables ou mes personnalisations ?",
+   "f": [
+    "voir ma garde robe",
+    "ma garde robe",
+    "mes consommables",
+    "mes personnalisations",
+    "mes tatouages",
+    "mes coiffures",
+    "mes tenues",
+    "mes modifs",
+    "ou voir mes tenues"
+   ],
+   "text": "Chaque famille a sa page : « Ma garde-robe » (tenues, coiffures, tatouages et styles gardés), « Mes consommables » (avec ton stock) et « Mes personnalisations » (modifs de véhicule et d’arme). Chacune a trois vues : ce que tu as, tes envies, ce qui reste.",
+   "status": "Le site",
+   "links": [
+    {
+     "label": "Ma garde-robe",
+     "url": "/carnets/garde-robe.html"
+    },
+    {
+     "label": "Mes consommables",
+     "url": "/carnets/consommables.html"
+    },
+    {
+     "label": "Mes personnalisations",
+     "url": "/carnets/personnalisations.html"
+    }
+   ],
+   "checkedAt": "2026-09-29"
+  },
+  {
+   "id": "voir-calculs-enregistres",
+   "theme": "suivi",
+   "q": "Où retrouver mes calculs et mes plans enregistrés ?",
+   "f": [
+    "mes calculs enregistres",
+    "retrouver mon calcul",
+    "mes plans",
+    "mes business plans",
+    "ou sont mes calculs",
+    "calculs sauvegardes",
+    "revoir un calcul"
+   ],
+   "text": "La page « Mes calculs et mes plans » liste tout ce que tu as enregistré dans le calculateur, avec son résumé. « Voir la fiche » l’ouvre dans le calculateur sans rien remplacer tant que tu ne confirmes pas. Renommer, dupliquer ou supprimer se fait dans le calculateur.",
+   "status": "Le site",
+   "links": [
+    {
+     "label": "Mes calculs et mes plans",
+     "url": "/carnets/calculs.html"
+    },
+    {
+     "label": "Le calculateur",
+     "url": "/calculateurs.html#atelier"
+    }
+   ],
+   "checkedAt": "2026-09-29"
   }
  ]
 }

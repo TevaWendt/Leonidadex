@@ -231,8 +231,8 @@
         {
           "k": "Suivi",
           "t": "Mes consommables",
-          "d": "Coche ce que tu as goûté : la barre de la liste et Ma progression suivent.",
-          "href": "progression.html#consommables"
+          "d": "Coche ce que tu as goûté : la barre de la liste et ton carnet suivent. Tu y notes aussi ton stock.",
+          "href": "carnets/consommables.html"
         },
         {
           "k": "Armurerie",
@@ -504,8 +504,8 @@
         {
           "k": "Suivi",
           "t": "Ma garde-robe",
-          "d": "Coche coiffures, tatouages, tenues et accessoires : trois barres ici, trois cartes dans Ma progression.",
-          "href": "progression.html#tenues"
+          "d": "Coche coiffures, tatouages, tenues et accessoires : trois barres ici, un seul carnet pour tout retrouver.",
+          "href": "carnets/garde-robe.html"
         },
         {
           "k": "Personnalisations",
@@ -774,9 +774,9 @@
         },
         {
           "k": "Suivi",
-          "t": "Ma progression",
-          "d": "Coche les deux embarcations documentées avec le reste de ton garage.",
-          "href": "progression.html#acquisitions"
+          "t": "Mon garage",
+          "d": "Les deux embarcations documentées se cochent comme les autres véhicules : elles rejoignent ton garage.",
+          "href": "carnets/garage.html"
         }
       ]
     }
@@ -1010,9 +1010,9 @@
         },
         {
           "k": "Suivi",
-          "t": "Mes modifs",
-          "d": "Coche les postes posés sur ta voiture ou ton arme : deux barres ici, deux cartes dans Ma progression.",
-          "href": "progression.html#perso-vehicules"
+          "t": "Mes personnalisations",
+          "d": "Coche les postes posés sur ta voiture ou ton arme : deux barres ici, un carnet pour les retrouver.",
+          "href": "carnets/personnalisations.html"
         },
         {
           "k": "Fiches",

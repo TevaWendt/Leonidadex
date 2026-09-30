@@ -145,8 +145,26 @@
     const id = bt.dataset.id;
     const maj = () => { const on = !!own[id]; bt.classList.toggle('on', on); bt.setAttribute('aria-pressed',String(on));
       bt.querySelector('span:last-child').textContent = on ? 'Dans mon ' + MOT[2] : 'Ajouter à mon ' + MOT[2]; };
-    bt.addEventListener('click', function(){ if(own[id]) delete own[id]; else own[id] = 1; ecrire(own); maj(); });
+    /* v7.51 (lot 4) : envie (« Je le veux », lk_wish_v1 via carnets-core.js : une envie n’est jamais une possession) et lien
+       « Voir mon garage » / « Voir mon arsenal » vers la page du carnet. Une envie devenue possession quitte les envies. */
+    const carnet = type === 'armes' ? ['arsenal', 'Voir mon arsenal'] : ['garage', 'Voir mon garage'];
+    let wstore = null, wb = null;
+    if (window.LKCarnets) { try { wstore = window.LKCarnets.create({ storage: localStorage, notice: m => window.LK.status(m) }); } catch (e) { wstore = null; } }
+    const wished = () => { try { return !!wstore && wstore.isWished(type, id); } catch (e) { return false; } };
+    const paintW = () => { if (!wb) return; const on = wished(); wb.setAttribute('aria-pressed', String(on)); wb.textContent = on ? 'Dans mes envies' : (type === 'armes' ? 'Je la veux' : 'Je le veux'); };
+    bt.addEventListener('click', function(){ if(own[id]) delete own[id]; else own[id] = 1; ecrire(own); maj();
+      if (own[id] && wished()) { let ok = false; try { ok = wstore.setWish(type, id, false); } catch (e) { ok = false; } if (ok) window.LK.status('Rangé dans ton ' + MOT[2] + ' et retiré de tes envies.'); paintW(); } });
     maj();
+    if (wstore && /^[a-z0-9][a-z0-9-]{0,99}$/.test(id)) {
+      wb = document.createElement('button'); wb.type = 'button'; wb.className = 'wish-bt';
+      wb.addEventListener('click', function(){ const on = wb.getAttribute('aria-pressed') !== 'true'; let ok = false; try { ok = wstore.setWish(type, id, on, 'fiche'); } catch (e) { ok = false; }
+        if (!ok) { window.LK.status('Impossible de garder cette envie : le stockage du navigateur est indisponible.'); return; }
+        paintW(); window.LK.status(on ? 'Gardé dans tes envies. Ce n’est pas une possession : rien n’est coché dans ton ' + MOT[2] + '.' : 'Retiré de tes envies.'); });
+      paintW(); window.addEventListener('storage', e => { if (e.key === 'lk_wish_v1') paintW(); });
+    }
+    const see = document.createElement('a'); see.className = 'own-see'; see.href = '../carnets/' + carnet[0] + '.html'; see.textContent = carnet[1];
+    bt.insertAdjacentElement('afterend', see); if (wb) bt.insertAdjacentElement('afterend', wb);
+    window.addEventListener('storage', e => { if (e.key === KEY) { own = lire(); maj(); } });
     if (/^[a-z0-9][a-z0-9-]{0,99}$/.test(id) && !document.getElementById('lk-fiche-calculator')) {
       calculatorStyle();
       const card = document.createElement('aside'); card.id = 'lk-fiche-calculator';

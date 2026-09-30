@@ -71,7 +71,7 @@
    "p": [
     "<a href=\"calculateurs.html?tool=purchase&amp;from=achats#atelier\">« Mes achats »</a> : choisis une fiche, écris le prix que tu imagines, et le calculateur dit s’il te manque de l’argent et combien de temps de jeu il te faut. Le prix reste ton hypothèse tant que Rockstar n’a rien publié.",
     "<a href=\"calculateurs.html?tool=roi&amp;from=achats#atelier\">« Ça vaut le coup ? »</a> compare la situation avec l’achat et sans, sur le même temps de jeu : utile pour une entreprise ou un garage dont tu supposes qu’il rapporte. <a href=\"calculateurs.html?tool=order&amp;from=achats#atelier\">« Quoi acheter d’abord ? »</a> enchaîne plusieurs achats : le calculateur attend d’avoir l’argent avant chacun et donne l’ordre et le temps.",
-    "Ce que tu coches sur chaque section se retrouve dans <a href=\"progression.html#acquisitions\">Progression</a>, avec un pourcentage par catégorie ; les catégories vides ne comptent pas dans le total."
+    "Ce que tu coches sur chaque section se retrouve dans tes carnets de la page <a href=\"progression.html#carnets\">Progression</a> (garage, garde-robe, propriétés…) ; les catégories vides ne comptent pas dans le total."
    ],
    "links": [
     [
@@ -87,8 +87,8 @@
      "Quoi acheter d’abord ?"
     ],
     [
-     "progression.html#acquisitions",
-     "Ma progression"
+     "progression.html#carnets",
+     "Mes carnets"
     ]
    ]
   }

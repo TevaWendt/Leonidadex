@@ -1,0 +1,226 @@
+{
+  "_commentaire": "Textes des carnets de progression (v7.51, lot 4), lus par outils/gen-carnets.cjs. Aucun chiffre n’est écrit ici : {total}, {cats}, {familles} sont posés par le générateur d’après les données. Les listes personnelles ne sont jamais dans la page publiée : elles sont lues dans le navigateur.",
+  "commun": {
+    "kicker": "Carnet de progression · sur cet appareil",
+    "local": "Rien ne part sur un serveur : ce carnet est lu dans ce navigateur. Pour le garder ou le transférer, exporte ton suivi depuis la page Progression.",
+    "noscript": "Active JavaScript pour lire ce que tu as enregistré dans ce navigateur. Sans JavaScript, la page présente le carnet et mène au catalogue.",
+    "orphelins": "Ces identifiants ont été cochés sur cet appareil, mais ils ne sont plus dans la liste (fiche renommée ou retirée). Ils restent enregistrés et ne comptent pas. Tu peux les retirer.",
+    "autres": "Mes autres carnets"
+  },
+  "carnets": {
+    "garage": {
+      "seoTitle": "Mon garage GTA VI : véhicules possédés, envies et restants | Leonidakit",
+      "seoDesc": "Ton garage GTA VI sur cet appareil : les véhicules que tu possèdes, ceux que tu veux et ceux qui restent. Recherche, filtres, fiches et calculateur, sans compte.",
+      "lede": "Les véhicules que tu as rangés dans ton garage, ceux que tu gardes en envie et tous ceux qui restent. Tout est enregistré dans ce navigateur, sans compte.",
+      "app": "Ton garage sur cet appareil",
+      "vues": { "own": "Dans mon garage", "wish": "Mes envies", "rest": "Pas encore dans mon garage" },
+      "compteurs": { "done": "dans ton garage", "wish": "envies", "rest": "pas encore dans ton garage" },
+      "vide": {
+        "own": ["Ton garage est vide pour l’instant", "Sur la fiche d’un véhicule, « Ajouter à mon garage » le range ici. Tu peux aussi le cocher dans « Pas encore dans mon garage »."],
+        "wish": ["Aucune envie pour l’instant", "« Je le veux » garde un véhicule de côté sans le compter comme possédé. Ensuite, le calculateur te dit lequel acheter d’abord."],
+        "rest": ["Tout y est", "Chaque véhicule recensé est dans ton garage."]
+      },
+      "cta": "Parcourir les véhicules",
+      "apropos": [
+        ["Possédé, envie, pas encore", "« Dans mon garage » compte ce que tu possèdes. « Mes envies » garde ce que tu veux, sans le compter. « Pas encore dans mon garage » liste tous les véhicules recensés que tu n’as pas cochés."],
+        ["Où l’ajouter", "Sur chaque fiche, le bouton « Ajouter à mon garage ». Sur la page Véhicules, la case « Garage » de chaque carte. Ici, directement dans « Pas encore dans mon garage »."],
+        ["Ce qui est compté", "Les {total} véhicules recensés par Leonidakit, en {cats} catégories. Ce n’est pas la liste officielle du jeu : elle suit les annonces de Rockstar."]
+      ],
+      "faq": [
+        ["Mon garage est-il sauvegardé en ligne ?", "Non. Ton garage reste dans ce navigateur, sur cet appareil. Pour le garder ou le retrouver ailleurs, exporte ton suivi depuis la page Progression : un fichier que tu importes sur l’autre appareil."],
+        ["Quelle différence entre « possédé » et « envie » ?", "Un véhicule possédé compte dans ta progression. Une envie ne compte pas : c’est un véhicule que tu veux. Le calculateur peut ensuite classer tes envies pour savoir quoi acheter d’abord."],
+        ["Pourquoi un véhicule est dans « Saisies à part » ?", "Il a été coché sur cet appareil, mais son identifiant n’existe plus dans la liste (fiche renommée ou retirée). Il reste enregistré, ne compte pas, et tu peux le retirer."]
+      ]
+    },
+    "arsenal": {
+      "seoTitle": "Mon arsenal GTA VI : armes, équipements et munitions | Leonidakit",
+      "seoDesc": "Ton arsenal GTA VI sur cet appareil : armes possédées, équipements obtenus, munitions et leur stock. Envies, restants, recherche et calculateur, sans compte.",
+      "lede": "Tes armes, tes équipements et tes munitions au même endroit. Pour les munitions, tu peux noter ton stock : avoir obtenu un type de munitions et savoir combien il t’en reste, ce n’est pas la même chose.",
+      "app": "Ton arsenal sur cet appareil",
+      "vues": { "own": "Dans mon arsenal", "wish": "Mes envies", "rest": "Pas encore dans mon arsenal" },
+      "compteurs": { "done": "dans ton arsenal", "wish": "envies", "rest": "pas encore dans ton arsenal" },
+      "vide": {
+        "own": ["Ton arsenal est vide pour l’instant", "Sur la fiche d’une arme, « Ajouter à mon arsenal » la range ici. Les équipements et les munitions se cochent dans l’Armurerie, ou ici dans « Pas encore dans mon arsenal »."],
+        "wish": ["Aucune envie pour l’instant", "« Je la veux » garde une arme ou un équipement de côté sans le compter comme obtenu."],
+        "rest": ["Tout y est", "Chaque arme, chaque équipement et chaque type de munitions recensés sont dans ton arsenal."]
+      },
+      "cta": "Ouvrir l’Armurerie",
+      "apropos": [
+        ["Trois familles", "Les armes ({armes}), les équipements ({equipements}) et les types de munitions ({munitions}). Le filtre « Famille » n’affiche que l’une d’elles."],
+        ["Obtenu, puis en stock", "Un type de munitions coché reste obtenu. Le stock, lui, se note à part : tu écris combien il t’en reste, puis « J’en ai utilisé » ou « J’en ai racheté » le met à jour. On ne devine jamais une quantité."],
+        ["Où l’ajouter", "Sur chaque fiche d’arme, « Ajouter à mon arsenal ». Dans l’Armurerie, « Je l’ai » sur chaque équipement et chaque type de munitions. Ici, dans « Pas encore dans mon arsenal »."]
+      ],
+      "faq": [
+        ["Pourquoi « stock à renseigner » sur mes munitions ?", "Tu as coché ce type de munitions avant l’arrivée des stocks, ou tu ne l’as pas encore noté. Le site n’invente jamais une quantité : écris-la quand tu la connais. En attendant, le type reste compté comme obtenu."],
+        ["Mon arsenal est-il sauvegardé en ligne ?", "Non. Il reste dans ce navigateur. L’export de la page Progression l’emporte avec le reste de ton suivi, stocks compris."],
+        ["Une envie compte-t-elle dans ma progression ?", "Non. Une envie est une arme que tu veux : elle ne coche rien. Quand tu l’as, « Je l’ai » la range dans ton arsenal et la retire de tes envies."]
+      ]
+    },
+    "garde-robe": {
+      "seoTitle": "Ma garde-robe GTA VI : tenues, coiffures et tatouages | Leonidakit",
+      "seoDesc": "Ta garde-robe GTA VI sur cet appareil : tenues et accessoires portés, coiffures essayées, tatouages faits, et les looks du carnet de style gardés en envie.",
+      "lede": "Tenues et accessoires, coiffures, tatouages : ce que tu as déjà porté ou essayé, et les looks du carnet de style que tu gardes en envie.",
+      "app": "Ta garde-robe sur cet appareil",
+      "vues": { "own": "Dans ma garde-robe", "wish": "Mes envies", "rest": "Pas encore dans ma garde-robe" },
+      "compteurs": { "done": "dans ta garde-robe", "wish": "envies", "rest": "pas encore dans ta garde-robe" },
+      "vide": {
+        "own": ["Ta garde-robe est vide pour l’instant", "Dans Vêtements et style, « Je l’ai » range une tenue, une coiffure ou un tatouage ici. Tu peux aussi les cocher dans « Pas encore dans ma garde-robe »."],
+        "wish": ["Aucune envie pour l’instant", "Dans le carnet de style, « Garder ce style » ajoute un look ici. Un style gardé ne coche rien dans ta progression."],
+        "rest": ["Tout y est", "Chaque tenue, coiffure et tatouage recensés sont dans ta garde-robe."]
+      },
+      "cta": "Ouvrir Vêtements et style",
+      "apropos": [
+        ["Trois familles", "Les tenues et accessoires ({tenues}), les coiffures ({coiffures}) et les tatouages ({tatouages}). Chacune garde son mot : une tenue portée, une coiffure essayée, un tatouage fait."],
+        ["Les styles gardés", "Les planches du carnet de style sont des idées de looks composées par le site, pas des objets du jeu. Gardées, elles vont dans « Mes envies » et ne comptent jamais comme possédées."],
+        ["Où l’ajouter", "Dans Vêtements et style, « Je l’ai » sur chaque ligne des trois listes. Ici, dans « Pas encore dans ma garde-robe »."]
+      ],
+      "faq": [
+        ["Un style gardé compte-t-il dans ma progression ?", "Non. Un style gardé est une envie : il reste dans « Mes envies » et ne coche aucune tenue."],
+        ["Ma garde-robe est-elle sauvegardée en ligne ?", "Non. Elle reste dans ce navigateur. L’export de la page Progression l’emporte, envies comprises."],
+        ["Pourquoi certaines lignes ont un pictogramme au lieu d’une photo ?", "Quand aucun visuel officiel ne montre l’objet, la vignette est le pictogramme de sa catégorie. Ce n’est pas une image de l’objet."]
+      ]
+    },
+    "consommables": {
+      "seoTitle": "Mes consommables GTA VI : goûtés, stock et envies | Leonidakit",
+      "seoDesc": "Tes consommables GTA VI sur cet appareil : ce que tu as goûté, ce qu’il te reste en stock, ce que tu veux essayer. Le stock est noté par toi, jamais deviné.",
+      "lede": "Ce que tu as goûté, et combien il t’en reste. Goûté et en stock, ce n’est pas pareil : une boisson bue une fois reste goûtée, même quand ton stock tombe à zéro.",
+      "app": "Tes consommables sur cet appareil",
+      "vues": { "own": "Goûtés", "wish": "À essayer", "rest": "Pas encore goûtés" },
+      "compteurs": { "done": "goûtés", "wish": "à essayer", "rest": "pas encore goûtés" },
+      "vide": {
+        "own": ["Rien de goûté pour l’instant", "Dans Consommables, « Je l’ai » range un objet ici. Tu pourras ensuite noter combien il t’en reste."],
+        "wish": ["Rien à essayer pour l’instant", "« Je veux l’essayer » garde un consommable de côté sans le compter comme goûté."],
+        "rest": ["Tout y est", "Tu as goûté chaque consommable recensé."]
+      },
+      "cta": "Ouvrir Consommables",
+      "apropos": [
+        ["Goûté ou en stock", "« Goûté » compte dans ta progression. Le stock se note à part, seulement si tu veux : combien il t’en reste. Un stock à zéro ne décoche rien."],
+        ["Une case cochée avant", "Un consommable coché avant l’arrivée des stocks affiche « stock à renseigner ». Le site ne devine jamais une quantité : écris-la quand tu la connais."],
+        ["Ce qui est compté", "Les {total} consommables suivis, en {cats} catégories. Les prix et les effets exacts attendent le jeu : ils sont « à confirmer » dans la liste."]
+      ],
+      "faq": [
+        ["« J’en ai utilisé un » peut-il compter deux fois ?", "Non. Chaque mise à jour du stock est enregistrée une seule fois, même si tu cliques deux fois ou si la page est ouverte dans deux onglets : le carnet relit ton stock avant d’écrire."],
+        ["Le calculateur retire-t-il des objets de mon stock ?", "Non. Un plan du calculateur est une prévision : il ne touche jamais à ce que tu as noté ici. Seul ce que tu déclares avoir fait change ton stock."],
+        ["Mon stock est-il sauvegardé en ligne ?", "Non. Il reste dans ce navigateur. L’export de la page Progression l’emporte avec le reste de ton suivi."]
+      ]
+    },
+    "personnalisations": {
+      "seoTitle": "Mes personnalisations GTA VI : modifs de véhicule et d’arme | Leonidakit",
+      "seoDesc": "Tes personnalisations GTA VI sur cet appareil : modifs de véhicule et d’arme posées, envies et restants. Recherche, filtres et liens vers chaque ligne, sans compte.",
+      "lede": "Les modifs que tu as posées sur tes véhicules et tes armes, celles que tu vises, et toutes celles qui restent.",
+      "app": "Tes personnalisations sur cet appareil",
+      "vues": { "own": "Posées", "wish": "Mes envies", "rest": "Pas encore posées" },
+      "compteurs": { "done": "posées", "wish": "envies", "rest": "pas encore posées" },
+      "vide": {
+        "own": ["Aucune modif posée pour l’instant", "Dans Personnalisations, « Je l’ai » range une modif ici. Tu peux aussi la cocher dans « Pas encore posées »."],
+        "wish": ["Aucune envie pour l’instant", "« Je la veux » garde une modif de côté sans la compter comme posée."],
+        "rest": ["Tout y est", "Chaque modif recensée est posée."]
+      },
+      "cta": "Ouvrir Personnalisations",
+      "apropos": [
+        ["Deux familles", "Les modifs de véhicule ({perso-vehicules}) et les modifs d’arme ({perso-armes}). Le filtre « Famille » n’affiche que l’une des deux."],
+        ["Kits et motifs à part", "Le kit rétro du Ganado et le motif Vintage Vice City sont des contenus documentés : ils sont dans « Mes propriétés et contenus »."],
+        ["Où l’ajouter", "Dans Personnalisations, « Je l’ai » sur chaque ligne. Ici, dans « Pas encore posées »."]
+      ],
+      "faq": [
+        ["Une modif posée est-elle liée à un véhicule précis ?", "Non. Le carnet note que tu as posé ce type de modif, pas sur quel véhicule. Les détails de compatibilité sont dans la ligne de la liste."],
+        ["Mes personnalisations sont-elles sauvegardées en ligne ?", "Non. Elles restent dans ce navigateur. L’export de la page Progression les emporte."],
+        ["Pourquoi un pictogramme au lieu d’une photo ?", "Quand aucun visuel officiel ne montre la modif, la vignette est le pictogramme de sa catégorie. Ce n’est pas une image de l’objet."]
+      ]
+    },
+    "proprietes": {
+      "seoTitle": "Mes propriétés et contenus GTA VI : garages, kits, motifs | Leonidakit",
+      "seoDesc": "Tes propriétés et contenus GTA VI sur cet appareil : garages documentés, kits et motifs obtenus. Les logements attendent le jeu : rien n’est inventé.",
+      "lede": "Les garages documentés, les kits et les motifs que tu as obtenus. Les logements, planques et demeures à acheter ne sont pas encore publiés par Rockstar : ils arriveront ici avec le jeu.",
+      "app": "Tes propriétés et contenus sur cet appareil",
+      "vues": { "own": "Obtenus", "wish": "Mes envies", "rest": "Pas encore obtenus" },
+      "compteurs": { "done": "obtenus", "wish": "envies", "rest": "pas encore obtenus" },
+      "vide": {
+        "own": ["Rien d’obtenu pour l’instant", "Sur la page Planques (garages) ou Personnalisations (kits et motifs), la case de chaque contenu le range ici. Tu peux aussi le cocher dans « Pas encore obtenus »."],
+        "wish": ["Aucune envie pour l’instant", "« Je le veux » garde un contenu de côté sans le compter comme obtenu."],
+        "rest": ["Tout y est", "Chaque contenu documenté est obtenu."]
+      },
+      "cta": "Voir tout ce qui s’achète",
+      "apropos": [
+        ["Ce qui est compté", "Les contenus documentés qui se cochent : {total} pour l’instant. Les bateaux de l’Édition Ultimate sont des véhicules : ils comptent dans ton garage, jamais deux fois."],
+        ["En attente du jeu", "Logements, appartements, planques et demeures à acheter : aucun n’est publié comme achetable. Ils ne comptent pas, et rien n’est inventé à leur place."],
+        ["Le calculateur", "Pour une propriété que tu imagines, écris son prix : le calculateur te dit le temps de jeu qu’il faut."]
+      ],
+      "faq": [
+        ["Pourquoi mes bateaux ne sont pas ici ?", "Parce que ce sont des véhicules : ils sont dans ton garage. Chaque élément n’est compté qu’une fois dans ta progression."],
+        ["Pourquoi aucune maison à cocher ?", "Rockstar n’a publié aucune propriété achetable. Les demeures et planques ont leurs fiches, mais rien ne dit qu’elles s’achètent : on ne les coche pas."],
+        ["Mes contenus sont-ils sauvegardés en ligne ?", "Non. Ils restent dans ce navigateur. L’export de la page Progression les emporte."]
+      ]
+    },
+    "lieux": {
+      "seoTitle": "Mes lieux repérés GTA VI : le carnet de la carte de Leonida | Leonidakit",
+      "seoDesc": "Tes lieux repérés sur la carte de GTA VI : villes, quartiers, bâtiments et lieux notables cochés sur cet appareil. Lieux à visiter, restants et recherche.",
+      "lede": "Les lieux que tu as repérés sur la carte, ceux que tu veux visiter, et tous ceux qui restent à découvrir. Un lieu repéré n’est pas un lieu possédé : c’est un endroit où tu es passé.",
+      "app": "Tes lieux repérés sur cet appareil",
+      "vues": { "own": "Repérés", "wish": "À visiter", "rest": "Pas encore repérés" },
+      "compteurs": { "done": "repérés", "wish": "à visiter", "rest": "pas encore repérés" },
+      "vide": {
+        "own": ["Aucun lieu repéré pour l’instant", "Sur la carte, ouvre un lieu et coche « Marquer comme repéré » : il arrive ici. Tu peux aussi le cocher dans « Pas encore repérés »."],
+        "wish": ["Aucun lieu à visiter pour l’instant", "« À visiter » garde un lieu de côté sans le compter comme repéré."],
+        "rest": ["Tout est repéré", "Chaque lieu de la carte est repéré."]
+      },
+      "cta": "Ouvrir la carte",
+      "apropos": [
+        ["Repéré, pas possédé", "Un lieu repéré est un endroit où tu es passé. Il ne s’achète pas ici : pour une propriété, regarde « Mes propriétés et contenus »."],
+        ["Ce qui est compté", "Les {total} lieux de la carte, en {cats} catégories : régions et villes officielles, quartiers, bâtiments et lieux repérés par la communauté."],
+        ["Où les cocher", "Sur la carte, dans le panneau d’un lieu. Ici, dans « Pas encore repérés ». Les deux écrivent au même endroit."]
+      ],
+      "faq": [
+        ["Mes lieux repérés viennent-ils de la carte ?", "Oui. La carte et ce carnet lisent et écrivent la même liste : un lieu coché sur l’une apparaît sur l’autre."],
+        ["Pourquoi certains lieux n’ont pas de fiche ?", "Seules les régions officielles ont une fiche. Les autres lieux s’ouvrent directement sur la carte, à leur emplacement."],
+        ["Mes lieux sont-ils sauvegardés en ligne ?", "Non. Ils restent dans ce navigateur. L’export de la page Progression les emporte, comme celui de la carte."]
+      ]
+    },
+    "collectibles": {
+      "seoTitle": "Mes collectibles GTA VI : trouvés et à trouver | Leonidakit",
+      "seoDesc": "Tes collectibles GTA VI sur cet appareil : ce que tu as trouvé et ce qu’il reste à trouver. La liste se remplit avec les fiches documentées, sans rien inventer.",
+      "lede": "Les collectibles que tu as trouvés et ceux qui restent. Aucune fiche n’est inventée : la liste se remplit quand un collectible est documenté par une source.",
+      "app": "Tes collectibles sur cet appareil",
+      "vues": { "own": "Trouvés", "rest": "Pas encore trouvés" },
+      "compteurs": { "done": "trouvés", "rest": "pas encore trouvés" },
+      "vide": {
+        "own": ["Rien de trouvé pour l’instant", "Dans le catalogue des collectibles, coche un objet trouvé : il arrive ici, avec tes favoris et tes notes."],
+        "rest": ["Rien à trouver pour l’instant", "Aucun collectible n’est encore documenté. La liste se remplira avec le jeu, fiche par fiche."]
+      },
+      "cta": "Ouvrir les collectibles",
+      "apropos": [
+        ["Ce qui est compté", "Les collectibles documentés et suivables : {total} pour l’instant. Le total du jeu n’est pas connu : on ne l’invente pas."],
+        ["Trouvés, favoris, notes", "Le catalogue des collectibles garde aussi tes favoris et tes notes. Ils apparaissent ici sur chaque objet trouvé."],
+        ["Où les cocher", "Dans le catalogue des collectibles, sur chaque fiche. Ici, dans « Pas encore trouvés » quand la liste sera remplie."]
+      ],
+      "faq": [
+        ["Pourquoi la liste est vide ?", "Parce qu’aucun collectible n’est encore documenté par une source fiable. Le carnet se remplira dès les premières fiches, sans que tu perdes ce que tu as déjà coché."],
+        ["Mes collectibles sont-ils sauvegardés en ligne ?", "Non. Ils restent dans ce navigateur. L’export de la page Progression et celui du catalogue des collectibles les emportent."],
+        ["Le carnet du catalogue et ce carnet, c’est pareil ?", "Ils lisent la même liste. Le catalogue sert à chercher et préparer une sortie ; ce carnet montre d’un coup d’œil ce que tu as trouvé."]
+      ]
+    },
+    "calculs": {
+      "seoTitle": "Mes calculs et mes plans GTA VI : le carnet du calculateur | Leonidakit",
+      "seoDesc": "Tes calculs et tes business plans GTA VI enregistrés sur cet appareil : retrouve-les, relis leur résumé et rouvre-les dans le calculateur, sans compte.",
+      "lede": "Tout ce que tu as enregistré dans le calculateur : tes calculs et tes business plans, avec leur résumé. Pour en modifier un, rouvre-le dans le calculateur.",
+      "app": "Tes enregistrements sur cet appareil",
+      "vues": { "calcs": "Mes calculs", "plans": "Mes plans" },
+      "compteurs": { "calcs": "calculs", "plans": "plans" },
+      "vide": {
+        "calcs": ["Aucun calcul enregistré pour l’instant", "Dans le calculateur, « Enregistrer » range ton calcul ici, avec son résumé."],
+        "plans": ["Aucun plan enregistré pour l’instant", "Dans le calculateur, le business plan s’enregistre comme un calcul. Tes plans arriveront ici."]
+      },
+      "cta": "Ouvrir le calculateur",
+      "apropos": [
+        ["Un calcul, un résumé", "Chaque enregistrement garde son résumé en une phrase. « Voir la fiche » l’ouvre dans le calculateur, sans rien remplacer tant que tu ne confirmes pas."],
+        ["Prévu n’est pas fait", "Un plan est une prévision : il ne coche rien dans tes carnets. Quand tu notes une partie jouée et un achat fait, le plan peut le ranger dans ton garage ou ton arsenal, une seule fois."],
+        ["Renommer, dupliquer, supprimer", "Ces actions se font dans le calculateur, onglet « Mes calculs enregistrés ». Ce carnet les lit sans jamais les modifier."]
+      ],
+      "faq": [
+        ["Mes calculs sont-ils sauvegardés en ligne ?", "Non. Ils restent dans ce navigateur, jusqu’à 160 enregistrements. L’export de la page Progression les emporte."],
+        ["Un plan coche-t-il des véhicules dans mon garage ?", "Pas tant que c’est une prévision. Quand tu notes dans le plan qu’un achat est fait, le véhicule ou l’arme correspondant est rangé dans ton carnet, une seule fois, même si tu enregistres deux fois."],
+        ["Pourquoi un calcul ne s’ouvre plus ?", "Il a peut-être été supprimé dans le calculateur ou dans un autre onglet. Recharge la page : le carnet relit la liste à jour."]
+      ]
+    }
+  }
+}

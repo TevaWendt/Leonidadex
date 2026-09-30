@@ -1,0 +1,27 @@
+LEONIDAKIT v7.51 — MISSION EN 5 LOTS, LOT 4 : CARNETS DE PROGRESSION — archive « modifs » (29 septembre 2026)
+
+Base attendue : ton dossier Leonidadex en v7.47. L’archive est CUMULÉE depuis la v7.47 : elle contient aussi les lots 1 à 3
+(v7.48, v7.49, v7.50). Tu peux la mettre en ligne directement.
+Fichiers ajoutés ou modifiés seulement, chemins exacts depuis la racine (un nouveau dossier : carnets/). Rien à supprimer.
+Aucune commande de build. Toujours aucun package.json ; api/ ne change pas ; rien à régler dans Vercel ni dans Brevo.
+
+1. Copie ton dossier actuel (sauvegarde).
+2. Extrais l’archive dans la racine du site, écrase les fichiers homonymes (garde le dossier .git).
+   Si l’archive est en plusieurs parties, extrais-les toutes au même endroit.
+3. Mets en ligne (GitHub Desktop, dossier complet).
+
+CE QUE TU VERRAS :
+- « Voir mon garage » ouvre maintenant la page « Mon garage » (carnets/garage.html) : tes véhicules, tes envies, et tout ce
+  qui reste, avec recherche, filtres, tri et un lien vers chaque fiche. Pareil pour « Mon arsenal », « Ma garde-robe »,
+  « Mes consommables », « Mes personnalisations », « Mes propriétés et contenus », « Mes lieux repérés », « Mes collectibles »
+  et « Mes calculs et mes plans ».
+- Sur les fiches véhicules et armes : « Je le veux » (une envie, qui ne coche rien) à côté de « Ajouter à mon garage ».
+- Consommables et munitions : tu peux noter ton stock ; une ancienne case dit « stock à renseigner », jamais un chiffre inventé.
+- La page Progression devient ton tableau de bord : une carte par carnet, avec ses comptes et son bouton.
+
+POUR VÉRIFIER (3 minutes) : sur une fiche véhicule, clique « Je le veux », puis « Voir mon garage » : il est dans « Mes
+envies ». Clique « Je l’ai » : il passe dans « Dans mon garage » (et « Annuler » le remet). Recharge la page : rien ne bouge.
+
+SUITE : lot 5 (v7.52), harmonisation de tout le site, validation complète et livraison finale.
+
+Détails : outils/CHANGEMENTS-v7.51.txt ; suivi et reprise : outils/SUIVI-MISSION.md.

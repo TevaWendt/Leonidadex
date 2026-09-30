@@ -21,26 +21,25 @@ test('Armurerie : bouton « Je l’ai » sur chaque équipement, barre synchroni
   assert.equal(a.d.querySelector('[data-track-bar="equipements"] progress').value,2);
   assert.deepEqual(JSON.parse(a.w.localStorage.getItem('lk_own_equipements')),{[items[0].dataset.trackFor]:1,[items[1].dataset.trackFor]:1});
   items[0].click();assert.equal(a.d.querySelector('[data-track-bar="equipements"] b').textContent,'1');
-  assert.ok(a.d.querySelector('#own-bar a.own-link[href="progression.html#arsenal"]'));
+  assert.ok(a.d.querySelector('#own-bar a.own-link[href="carnets/arsenal.html"]'),'v7.51 : « Voir mon arsenal » mène au carnet');
 }));
 
-test('Progression : quatorze cartes alignées (huit du lot 1 + quatre familles du lot 5 + deux du lot 6), liste du garage avec noms, catégories, liens et retrait',withPage('progression.html',a=>{
-  const cards=[...a.d.querySelectorAll('.suivi-card')];assert.equal(cards.length,14);
-  for(const c of cards){assert.ok(c.querySelector('h3'));assert.ok(c.querySelector('.suivi-n'));assert.ok(c.querySelector('progress, .suivi-spacer'));assert.ok(c.querySelector('.suivi-links a'));}
-  const veh=a.d.getElementById('progress-vehicules');
-  assert.match(veh.querySelector('.suivi-n').textContent,/^2 \/ /);
-  assert.match(a.d.getElementById('suivi-equipements').querySelector('.suivi-n').textContent,/^1 \/ 16$/);
-  veh.querySelector('.suivi-toggle').click();
-  const list=a.d.getElementById('suivi-list-vehicules');assert.equal(list.hidden,false);
-  const links=[...list.querySelectorAll('a')].map(x=>x.getAttribute('href'));
-  assert.deepEqual(links.sort(),['vehicules/albany-emperor.html','vehicules/vapid-dominator.html']);
-  assert.ok(list.textContent.includes('Berlines'));
-  list.querySelector('[data-suivi-remove="albany-emperor"]').click();
-  assert.match(veh.querySelector('.suivi-n').textContent,/^1 \/ /);
-  assert.deepEqual(JSON.parse(a.w.localStorage.getItem('lk_own_vehicules')),{'vapid-dominator':1});
-  /* v7.42 : le compteur global suit aussi les retraits faits depuis les cartes (LKSuivi.subscribe) : 2 véhicules + 1 équipement, moins le véhicule retiré */
-  assert.match(a.d.getElementById('progress-global-text').textContent,/^2 cochés sur/);
+test('Progression (v7.51 : neuf carnets) : cartes alignées, une ligne par famille, garage compté, total suivi',withPage('progression.html',a=>{
+  const cards=[...a.d.querySelectorAll('.cn-dcard')];assert.equal(cards.length,9);
+  for(const c of cards){assert.ok(c.querySelector('h3 a'));assert.ok(c.querySelector('.suivi-n'));assert.ok(c.querySelector('a.cn-dcard-btn'));}
+  assert.match(a.d.querySelector('#progress-vehicules .suivi-n').textContent,/^2 \/ /);
+  assert.match(a.d.querySelector('#suivi-equipements .suivi-n').textContent,/^1 \/ 16$/);
+  assert.match(a.d.getElementById('progress-global-text').textContent,/^3 cochés sur/);
 },{storage:{lk_own_vehicules:'{"albany-emperor":1,"vapid-dominator":1}',lk_own_equipements:'{"cle-usb":1}'}}));
+
+test('Carnet « Mon garage » : noms, catégories, liens vers les fiches et retrait',withPage('carnets/garage.html',a=>{
+  const links=[...a.d.querySelectorAll('.cn-card .cn-name a')].map(x=>x.getAttribute('href'));
+  assert.deepEqual(links.sort(),['../vehicules/albany-emperor.html','../vehicules/vapid-dominator.html']);
+  assert.ok(a.d.querySelector('.cn-grid').textContent.includes('Berlines'));
+  a.d.querySelector('.cn-card[data-key="vehicules:albany-emperor"] [data-cn-act="unown"]').click();a.flush();
+  assert.equal(a.d.querySelector('[data-cn-n="done"]').textContent,'1');
+  assert.deepEqual(JSON.parse(a.w.localStorage.getItem('lk_own_vehicules')),{'vapid-dominator':1});
+},{storage:{lk_own_vehicules:'{"albany-emperor":1,"vapid-dominator":1}'},before:w=>{/* mouvement réduit : la carte retirée part sans animation */w.matchMedia=q=>({matches:/reduce/.test(q),addEventListener(){},removeEventListener(){}});}}));
 
 test('progression-core : export et import transportent les nouvelles familles, le total les compte',()=>{
   const P=require(path.join(root,'progression-core.js'));

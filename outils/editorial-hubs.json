@@ -717,9 +717,9 @@
         },
         {
           "k": "Suivi",
-          "t": "Cocher les lieux trouvés",
-          "d": "Chaque lieu de la carte se coche ; le total s’affiche dans Ma progression.",
-          "href": "progression.html#lieux"
+          "t": "Mes lieux repérés",
+          "d": "Chaque lieu de la carte se coche ; ton carnet les liste, avec ceux qui restent.",
+          "href": "carnets/lieux.html"
         },
         {
           "k": "Calculateur",
@@ -1228,8 +1228,8 @@
         {
           "k": "Suivi",
           "t": "Cocher ce que tu obtiens",
-          "d": "Les garages des éditions se cochent sur la page Planques.",
-          "href": "progression.html#acquisitions"
+          "d": "Les garages des éditions se cochent sur la page Planques, puis dans ton carnet.",
+          "href": "carnets/proprietes.html"
         }
       ]
     },
@@ -1473,8 +1473,8 @@
         {
           "k": "Suivi",
           "t": "Cocher un garage obtenu",
-          "d": "Le total s’affiche dans Ma progression, avec l’export et l’import.",
-          "href": "progression.html#acquisitions"
+          "d": "Il rejoint « Mes propriétés et contenus » ; l’export de la page Progression l’emporte.",
+          "href": "carnets/proprietes.html"
         }
       ]
     },

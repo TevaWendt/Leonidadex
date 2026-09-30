@@ -78,11 +78,11 @@ function armes(A, counts) {
   out.push(S.section({ id: 'chiffres', num: 2, kicker: 'Inventaire', title: 'Les chiffres, sans arrondi', icon: 'chiffres', tone: 'paper2', fam: 'armes' },
     S.figures(figs) + '<p>' + esc(D.chiffres.texte) + '</p>'));
   const bar = (fam, label, total, href, aria) => '<div class="own-bar own-bar--track rise" data-track-bar="' + fam + '"><span class="own-lbl">' + label + ' :</span> <b>0</b><span class="own-lbl">/ <span class="own-total">' + total + '</span> obtenus</span>'
-    + '<progress aria-label="' + esc(aria) + '" value="0" max="' + total + '"></progress><div class="own-actions"><a class="own-link" href="' + href + '">Voir mon suivi</a><button type="button" data-raz>Vider</button></div></div>';
+    + '<progress aria-label="' + esc(aria) + '" value="0" max="' + total + '"></progress><div class="own-actions"><a class="own-link" href="' + href + '">Voir mon arsenal</a><button type="button" data-raz>Vider</button></div></div>';
   out.push(S.section({ id: 'equipements', num: 3, kicker: D.equipements.items.length + ' objets', title: 'Équipements et gadgets', icon: 'equipements', tone: 'paper', lede: esc(D.equipements.lede), fam: 'equipements' },
-    bar('equipements', 'Mon équipement', D.equipements.items.length, 'progression.html#equipements', 'Équipements obtenus') + S.kits(D.equipements.items, 'equipements')));
+    bar('equipements', 'Mon équipement', D.equipements.items.length, 'carnets/arsenal.html#f=equipements', 'Équipements obtenus') + S.kits(D.equipements.items, 'equipements')));
   out.push(S.section({ id: 'munitions', num: 4, kicker: D.munitions.items.length + ' familles', title: 'Types de munitions', icon: 'munitions', tone: 'night', accent: 'coral', fam: 'munitions' },
-    bar('munitions', 'Mes munitions', D.munitions.items.length, 'progression.html#munitions', 'Types de munitions obtenus') + S.ammo(D.munitions.items, 'munitions')));
+    bar('munitions', 'Mes munitions', D.munitions.items.length, 'carnets/arsenal.html#f=munitions', 'Types de munitions obtenus') + S.ammo(D.munitions.items, 'munitions')));
   out.push(S.section({ id: 'combat', num: 5, kicker: 'Six changements', title: 'Combat : ce qui change', icon: 'combat', tone: 'paper2', accent: 'coral', fam: 'combat' },
     S.steps(D.combat.items)));
   const locA = LOC.data(), { schema } = require('./armes-schemas.cjs');

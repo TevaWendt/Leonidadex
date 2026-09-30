@@ -13,6 +13,9 @@
   function legacyType(key) { for (var t in LEGACY) if (LEGACY[t] === key) return t; return null; }
   /* v7.48 (lot 1) : stocks, souhaits et journal des réalisations (carnets-core.js) voyagent avec le reste et sont reconnus à l’import. */
   var TRANSPORT = ['lk_collectibles_v1', 'lk_collectibles_tools_v1', 'lk-calculator-notebooks-v3', 'lk-calculator-v1', 'lk-calculator-favorites-v1', 'lk_stock_v1', 'lk_wish_v1', 'lk_journal_v1'];
+  /* v7.51 (lot 4) : ce qui n’est pas du suivi ne voyage jamais dans le fichier, ni à l’export ni à l’import : le brouillon du
+     formulaire de contact (il contient une adresse e-mail) et les sondes techniques du navigateur. */
+  var PRIVATE = /^(lk_contact_|lk_probe$)/;
   var LABELS = { vehicules: 'Véhicules', armes: 'Armes', lieux: 'Lieux de la carte', equipements: 'Équipements et gadgets', munitions: 'Types de munitions', consommables: 'Consommables', coiffures: 'Coiffures', tatouages: 'Tatouages', tenues: 'Tenues et accessoires', 'perso-vehicules': 'Personnalisation des véhicules', 'perso-armes': 'Personnalisation des armes', collectibles: 'Collectibles' };
   function isChecked(v) { return v === true || v === 1; }
   function parseMap(raw) {
@@ -86,7 +89,9 @@
       var dc = trackC.filter(function (x) { return isChecked(found[x.id]); }).length;
       groups.push({ id: 'collectibles', label: LABELS.collectibles, total: trackC.length, done: dc, percent: trackC.length ? dc / trackC.length * 100 : null });
       done += dc; total += trackC.length;
-      categories.forEach(function (cat) {
+      /* v7.51 (lot 4, anomalie 12) : une catégorie « alias » (vetements, accessoires, tatouages, munitions) n’est qu’un renvoi
+         vers une section ; elle ne crée plus de groupe portant le même identifiant qu’une famille. */
+      categories.filter(function (cat) { return !cat.alias; }).forEach(function (cat) {
         var mine = items.filter(function (x) { return x.category === cat.id && trackable(x); });
         var d = mine.filter(function (x) { return checked(x); }).length;
         groups.push({ id: cat.id, label: cat.label, total: mine.length, done: d, percent: mine.length ? d / mine.length * 100 : null, pending: mine.length === 0 });
@@ -120,7 +125,7 @@
     function exportData() {
       /* Tout le suivi local part dans le fichier : cases, carnets du calculateur, marqueurs et dessins de la carte, classement. */
       var data = {}, keys = LEGACY_KEYS.concat([KEY], TRANSPORT), i, k;
-      for (i = 0; i < storage.length; i++) { k = storage.key(i); if (k && (k.indexOf('lk_') === 0 || k.indexOf('lk-') === 0) && keys.indexOf(k) === -1 && k.indexOf('lk_recovery_') !== 0) keys.push(k); }
+      for (i = 0; i < storage.length; i++) { k = storage.key(i); if (k && (k.indexOf('lk_') === 0 || k.indexOf('lk-') === 0) && keys.indexOf(k) === -1 && k.indexOf('lk_recovery_') !== 0 && !PRIVATE.test(k)) keys.push(k); }
       keys.forEach(function (k) { var v = read(k); if (v !== null && v !== undefined) data[k] = v; });
       var cats = categories.map(function (cat) { return { id: cat.id, checkedIds: items.filter(function (x) { return x.category === cat.id && trackable(x) && checked(x); }).map(function (x) { return x.id; }) }; });
       return { site: SITE, version: VERSION, schemaVersion: VERSION, exportedAt: new Date().toISOString(), categories: cats, data: data };
@@ -141,6 +146,7 @@
       var allowed = LEGACY_KEYS.concat([KEY], TRANSPORT), issues = [], rubrics = {}, corrupt = {};
       Object.keys(parsed.data).forEach(function (key) {
         var raw = parsed.data[key];
+        if (PRIVATE.test(key)) { issues.push('Rubrique privée ignorée (jamais importée) : ' + key); return; }
         if (typeof raw !== 'string') { issues.push('Rubrique illisible ignorée : ' + key); return; }
         if (allowed.indexOf(key) === -1) {
           if (key.indexOf('lk_') === 0 || key.indexOf('lk-') === 0) { issues.push('Rubrique non reconnue gardée telle quelle, sans être comptée : ' + key); rubrics[key] = raw; }

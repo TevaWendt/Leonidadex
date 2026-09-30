@@ -29,7 +29,7 @@ site statique (Vercel, sans build), mots simples pour le joueur, charte Leonidak
 | 1 | v7.48 | Contexte, inventaire, matrice, fondations communes (critères, statuts, coûts, prérequis, fiches, carnets, état v6) | **fait** |
 | 2 | v7.49 | Huit calculs et business plan complet | **fait** |
 | 3 | v7.50 | Catalogues, visuels, sélecteurs de carte, page Achats | **fait** |
-| 4 | v7.51 | Carnets de progression et raccordements | à faire |
+| 4 | v7.51 | Carnets de progression et raccordements | **fait** |
 | 5 | v7.52 | Harmonisation, validation complète, livraison | à faire |
 
 ## Lot 1 (v7.48) — fait le 29/09/2026
@@ -180,6 +180,84 @@ navigateur `--rapide` (23 pages, 7 largeurs) : 0 débordement, 0 texte coupé, 0
 l’accueil à 1 920 px, un titre masqué de `collectibles.html` → lot 5) ; parcours calculateur 161 / 161, lot B 140 / 140,
 Léo tenu ; captures bureau et téléphone (`captures-v7.50/`).
 
+## Lot 4 (v7.51) — fait le 29/09/2026
+
+**Besoin traité** : une vraie page par catégorie suivie, au lieu d’une carte de la page Progression ; « Voir mon garage »
+mène au garage, « Voir mon arsenal » à l’arsenal, et ainsi de suite ; une seule progression, comptée pareil par les fiches,
+les carnets, le tableau de bord, la carte et le calculateur. **Pages concernées** : 9 nouvelles pages `carnets/<id>.html`,
+`progression.html`, les pages qui portent un bouton ou un lien « Voir mon… » (Véhicules, Armurerie, Vêtements et style,
+Consommables, Personnalisations, Carte, Collectibles, Achats, fiches véhicules et armes), le calculateur, le Tuto, l’accueil,
+Léo, la recherche. **Critères de réussite** : adresses stables ; vocabulaire juste (possédé, obtenu, goûté, porté, posé,
+repéré, trouvé ; un lieu repéré n’est jamais « possédé ») ; envies distinctes des possessions ; vue « restants » au libellé
+sans ambiguïté ; stocks sans quantité inventée et sans double comptage ; recherche, filtres, tri, nombre de résultats ;
+retour arrière, rechargement et deux onglets sans écrasement ; aucune liste personnelle publiée ; page publique référencée.
+
+Fichiers ajoutés :
+- `outils/gen-carnets.cjs` (lancé par `regenerer.cjs` avant `sync-site.cjs`) : écrit les 9 pages, `carnets/lieux-data.js`
+  (2 547 lieux en lignes compactes) et le bloc « Mes carnets » de `progression.html` (entre deux marqueurs).
+- `outils/carnets-source.cjs` : éléments de chaque famille (nom, catégorie, lien vers la fiche ou la ligne du catalogue,
+  vignette), identifiants calculés avec les règles de `sync-site.cjs` (un test vérifie qu’ils sont identiques à
+  `progression-data.js`) ; `carnetOf` / `carnetHref` pour les liens « Voir mon… » des générateurs.
+- `outils/carnets-editorial.json` : textes des 9 carnets (titre et description de référencement, introduction, vues,
+  compteurs, états vides, « Comment marche ce carnet », questions fréquentes) ; aucun chiffre écrit à la main.
+- `carnets.js` (page d’un carnet), `carnets.css` (carnets et tableau de bord).
+- Tests : `outils/tests/carnets-v751.test.cjs` (15) ; `outils/tests/carnets-browser.cjs` (contrôles navigateur comptés).
+
+Fichiers modifiés : `progression.html` / `progression.js` (tableau de bord : neuf cartes, une ligne par famille, envies,
+stocks à renseigner, saisies à part, calculs ; les 14 cartes à listes dépliables et la section des acquisitions,
+doublons des carnets, sont retirées), `progression-core.js` (brouillon de contact jamais exporté ni importé ; plus de
+groupe pour les catégories alias), `carnets-core.js` (identifiants des lieux avec majuscules), `fiches.js` / `fiches.css`
+(« Je le veux » et « Voir mon garage / arsenal » sur les fiches), gabarits des fiches (`carnets-core.js` chargé),
+`outils/catalogues.cjs` (lien « Voir ma garde-robe »… sur la barre de chaque liste), `outils/hubs-editoriaux.cjs`,
+`outils/templates/vehicules.html`, `armes.html`, `carte.html`, `collectibles.html`, `outils/gen-achats.cjs`,
+`outils/catalogues/editorial.json`, `outils/editorial-hubs.json`, `outils/achats-editorial.json`,
+`outils/informations-editorial.json`, `outils/lore-gen.js` (accueil, encart des planques), `outils/gen-tuto.cjs`,
+`outils/leo-knowledge.json` (liens vers les carnets, 4 sujets ajoutés), `outils/site-shell.cjs` (menu : Progression active
+sur les carnets ; puce « Mes carnets »), `outils/sync-site.cjs` (dossier `carnets/`, recherche interne, compteurs),
+`calculateurs.js` / `calculateurs-plan.js` / `calculateurs-workspace.js` / `calculateurs.html` (« Classer mes envies »,
+fiche d’un calcul par `?voir=`, achat déclaré fait rangé dans le carnet), `leo-core.js`.
+
+Anomalies 8 à 15 et 24 corrigées :
+- 8 : l’aperçu « Mon temps de jeu » de Léo passe par le moteur (`LKCalcEngine.inverse`) ;
+- 9 : la carte des calculs lit `lk-calculator-notebooks-v3` (calculs et plans comptés à part) ;
+- 10 : compteurs par famille écrits d’après les données (29 consommables, familles à trait d’union comprises) ;
+- 11 : plus de `section#acquisitions` ouverte : sections équilibrées ; l’ancre `#acquisitions` reste ;
+- 12 : les catégories alias ne créent plus de groupe homonyme d’une famille ; plus de carte qui les affiche ;
+- 13 : `lk_contact_draft_v1` n’est ni exporté ni importé (règle `PRIVATE`) ;
+- 14 : les 3 anciennes fiches hors liste n’ont plus de case « Ajouter à mon garage » (message et lien vers la liste) ;
+- 15 : les 3 fiches planques ont l’encart calculateur (`type=hideout`) comme les demeures ;
+- 24 : les pages s’appellent « Mon garage », « Mon arsenal »… ; « carnet » n’apparaît qu’en titre de famille.
+
+Choix retenus :
+- Page publique = présentation (ce que suit le carnet, catégories et nombres recensés, questions) : indexable, dans
+  `sitemap.xml`, fil d’Ariane en données structurées. Ce que le joueur a coché est lu dans son navigateur, jamais écrit
+  dans la page, les métadonnées ou la sitemap.
+- Trois vues par carnet : ce que tu as (libellé du carnet : « Dans mon garage », « Goûtés », « Repérés »…), « Mes envies »
+  (« À essayer », « À visiter »), et « Pas encore dans mon garage » / « Pas encore goûtés »… ; les collectibles n’ont pas
+  d’envie (favoris affichés), les calculs ont « Mes calculs » et « Mes plans » en lecture.
+- Vue, recherche et filtres dans l’ancre de l’adresse (`#vue=envies&q=…`) : retour arrière et rechargement retrouvent la
+  même page ; pages de 48 cartes (« Afficher la suite »).
+- Une envie n’est jamais une possession ; « Je l’ai » sur une envie la range et la retire des envies ; « Annuler » après
+  chaque geste. Les éléments cochés mais absents de la liste restent dans « Saisies à part », jamais comptés.
+- Stock (consommables, munitions) : noté à part de la case « obtenu » ; ancienne case = « stock à renseigner » ;
+  « J’en ai utilisé un / racheté un » passe par le journal des réalisations (un événement par geste) ; un stock à zéro ne
+  décoche rien ; le plan du calculateur ne touche jamais au stock.
+- Propriétés et contenus : les 4 contenus documentés suivables ; les bateaux (renvois vers des véhicules) comptent au
+  garage, jamais deux fois ; logements, planques et demeures achetables : « en attente du jeu », rien d’inventé.
+- Calculateur : « Classer mes envies » ouvre « Quoi acheter d’abord ? » avec les envies (12 au plus) ; dans le business
+  plan, un achat déclaré fait (« Pendant cette partie, j’ai acheté ») range le véhicule ou l’arme de la fiche dans son
+  carnet, une seule fois (identifiant de la partie dans le journal) ; une prévision ne coche jamais rien.
+
+Vérifications (lot 4) : `node --test` 567 / 567 ; `node outils/verifier.js` 0 erreur (47 745 références, 415 pages) ;
+`gen-leo.cjs --check` à jour ; carnets au navigateur 92 / 92 (vues, possession, annulation, envies, recherche et adresse,
+retour arrière, deux onglets, fiche, stock et journal, arsenal, lieux et carte, propriétés, collectibles, garde-robe,
+tableau de bord, calculs et `?voir=`, envies classées, plan → garage une seule fois, lecture seule, téléphone sans
+débordement, mouvement réduit, cibles tactiles) ; parcours calculateur 161 / 161, lot B 140 / 140, v2 142 / 142,
+calculateurs 278 / 278, Léo tenu (0 erreur), Contact ; audit navigateur `--rapide` (26 pages dont 3 carnets, 7 largeurs) :
+0 débordement, 0 grille décentrée, 0 texte coupé, 0 contraste insuffisant, 0 erreur console (restent les 2 défauts
+antérieurs hors lot : repères de 19 px de `carte.html`, image agrandie de l’accueil à 1 920 px → lot 5) ; captures bureau
+et téléphone (`captures-v7.51/`).
+
 ## Anomalies relevées à l’inventaire (lot où elles sont traitées)
 
 | # | Anomalie | Lot |
@@ -191,14 +269,14 @@ Léo tenu ; captures bureau et téléphone (`captures-v7.50/`).
 | 5 | Pas de prix, de réserve, de joueurs transmis par l’adresse ; pas de `mode=guided` | 2 (**corrigé v7.49**) |
 | 6 | Paramètres et `#plan=` modifient ou remplacent le calcul sans copie ni confirmation (sauf Léo) | 2 (**corrigé v7.49**) |
 | 7 | `id` avec un outil autre que purchase / roi force purchase | 2 (**corrigé v7.49**) |
-| 8 | Léo « Mon temps de jeu » : formule propre au lieu du moteur | 4 |
-| 9 | Progression : carte « Calculs enregistrés » lit l’ancienne clé (toujours « Aucun calcul ») | 4 |
-| 10 | `sync-site.cjs` : compteur des consommables « 0 / 30 » au lieu de 29, familles perso ignorées (le JS corrige) | 4 |
-| 11 | `progression.html` : `section#acquisitions` jamais fermée | 4 |
-| 12 | Identifiants `tatouages` / `munitions` à la fois catégorie d’acquisition et famille (chiffres mélangés) | 4 |
-| 13 | L’export du suivi emporte le brouillon de Contact (`lk_contact_draft_v1`, adresse e-mail) | 4 |
-| 14 | 3 fiches véhicules hors liste portent « Ajouter à mon garage » sans être comptées | 4 |
-| 15 | Fiches planques sans encart calculateur alors qu’elles sont dans le catalogue du calculateur | 4 |
+| 8 | Léo « Mon temps de jeu » : formule propre au lieu du moteur | 4 (**corrigé v7.51**) |
+| 9 | Progression : carte « Calculs enregistrés » lit l’ancienne clé (toujours « Aucun calcul ») | 4 (**corrigé v7.51**) |
+| 10 | `sync-site.cjs` : compteur des consommables « 0 / 30 » au lieu de 29, familles perso ignorées (le JS corrige) | 4 (**corrigé v7.51**) |
+| 11 | `progression.html` : `section#acquisitions` jamais fermée | 4 (**corrigé v7.51**) |
+| 12 | Identifiants `tatouages` / `munitions` à la fois catégorie d’acquisition et famille (chiffres mélangés) | 4 (**corrigé v7.51**) |
+| 13 | L’export du suivi emporte le brouillon de Contact (`lk_contact_draft_v1`, adresse e-mail) | 4 (**corrigé v7.51**) |
+| 14 | 3 fiches véhicules hors liste portent « Ajouter à mon garage » sans être comptées | 4 (**corrigé v7.51**) |
+| 15 | Fiches planques sans encart calculateur alors qu’elles sont dans le catalogue du calculateur | 4 (**corrigé v7.51**) |
 | 16 | Page Achats : aucun visuel, « Consommables : Rien de publié » (30 lignes existent), « Vêtements et style : 3 collections » (109 lignes) | 3 (**corrigé v7.50**) |
 | 17 | `style.html` : sous-navigation sans « Collections » | 3 (**corrigé v7.50**) |
 | 18 | Images des lignes de catalogue : lien texte seulement | 3 (**corrigé v7.50**) |
@@ -207,7 +285,7 @@ Léo tenu ; captures bureau et téléphone (`captures-v7.50/`).
 | 21 | `lk-showcase.js` chargé pour rien sur les hubs du monde et Médias | 5 |
 | 22 | `calculateurs-tools.js` chargé par aucune page ; `outils/CALCULATEUR-V2.md` dépassé | 5 |
 | 23 | Événements `lk:calculator` / `leonidakit:calculator` sans écouteur | 5 |
-| 24 | Le mot « carnet » désigne déjà le carnet des Collectibles et les enregistrements du calculateur : les nouvelles pages s’appellent « Mon garage », « Mon arsenal »… ; le mot « carnet » n’est utilisé qu’en titre de famille | 4 |
+| 24 | Le mot « carnet » désigne déjà le carnet des Collectibles et les enregistrements du calculateur : les nouvelles pages s’appellent « Mon garage », « Mon arsenal »… ; le mot « carnet » n’est utilisé qu’en titre de famille | 4 (**corrigé v7.51**) |
 
 ## Blocages connus
 
@@ -218,7 +296,7 @@ Léo tenu ; captures bureau et téléphone (`captures-v7.50/`).
 
 ## Point de reprise
 
-Lots 1 à 3 livrés (v7.48, v7.49, v7.50). Prochaine action : lot 4 — pages dédiées sous `/carnets/` (garage, arsenal,
-garde-robe, consommables avec stocks, personnalisations, propriétés, lieux, collectibles, calculs) sur `carnets-core.js`,
-boutons « Voir mon… » vers ces pages, souhaits distincts (dont les styles gardés), tableau de bord Progression, SEO public
-sans liste personnelle, anomalies 8 à 15 et 24 ; raccordements recherche, Léo, Tuto, accueil, navigation.
+Lots 1 à 4 livrés (v7.48 à v7.51). Prochaine action : lot 5 (v7.52) — harmonisation de tout le site (vocabulaire,
+composants, mouvement, états vides), anomalies 20 à 23 et défauts antérieurs de l’audit (repères de 19 px de la carte,
+image agrandie de l’accueil), matrice finale, tableau catégorie → bouton → carnet → source → fiches, validation complète
+(tests, navigateur, audit, captures), livraison finale.

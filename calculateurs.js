@@ -53,9 +53,11 @@ function importContext(){const q=new URLSearchParams(location.search),anchor=loc
  else if(kind){// v7.49 : un type sans fiche limite le catalogue au lieu d’être ignoré ; un lieu ne s’achète pas.
   if(kind==='place')notify('Un lieu ne s’achète pas : cherche l’achat qui t’intéresse (logement, demeure, entreprise…).');
   else{state.catalogue.type=kind;const n=catalogue.filter(x=>x.type===kind).length;notify(n?'Catalogue limité à la catégorie « '+(labels[kind]||kind)+' » : cherche ce que tu veux, ou écris un achat libre.':'Pas encore de fiche « '+(labels[kind]||kind)+' » avec un prix dans le calculateur : écris tes montants à la main.');}}
- if(q.has('ids')){const found=q.get('ids').split(',').slice(0,6).map(match).filter(x=>x&&x.purchaseCandidate);
+ if(q.has('ids')){const toOrder=tool==='order'||tool==='budget',found=q.get('ids').split(',').slice(0,toOrder?12:6).map(match).filter(x=>x&&x.purchaseCandidate);
   if(!found.length)notify('La sélection partagée ne contient aucune fiche disponible.');
   else if(tool==='purchase')state.catalogue.compareIds=found.slice(0,3).map(x=>x.id);
+  /* v7.51 (lot 4) : « Classer mes envies » (carnets) envoie la liste dans « Quoi acheter d’abord ? » ou « Mon budget », pas dans la comparaison. */
+  else if(toOrder){const keys=[];for(const item of found){try{keys.push(B.addAsset(state,item).key);}catch(e){notify(e.message);break;}}state.order.keys=[...new Set([...state.order.keys,...keys])];if(keys.length)notify(keys.length+' achat'+(keys.length>1?'s':'')+' ajouté'+(keys.length>1?'s':'')+' dans « '+B.names[tool]+' ». Écris le prix que tu imagines pour chacun.');}
   else{const keys=[];for(const item of found){try{keys.push(B.addAsset(state,item).key);}catch(e){notify(e.message);break;}}state.compare.keys=[...new Set(keys)].slice(0,6);state.tab='compare';if(keys.length)notify(keys.length+' achat'+(keys.length>1?'s':'')+' à comparer dans « Quel achat choisir ? ».');}}
 }
 // v7.49 : une fiche ouverte depuis un lien va dans l’outil demandé (comparaison, ordre, budget, plan), plus seulement dans Mes achats.
@@ -303,5 +305,7 @@ window.LKCalculator.leo={
 if(tutorialChapter){const link=$('calc-tuto-return');if(link){link.href='tuto.html#'+tutorialChapter;link.hidden=false;}}
 /* v7.47 : « Mes calculs enregistrés » est un tiroir. Il s'ouvre depuis le Tuto (focus=carnets) et depuis la page Progression ou Léo (#saved-calcs / #saved-plans). */
 if(tutorialParams.get('focus')==='carnets')workspace.openDrawer('calcs');
+/* v7.51 (lot 4) : « Voir la fiche » depuis le carnet « Mes calculs et mes plans » (calculateurs.html?voir=<id>) : la fiche s’ouvre en lecture ; rien n’est remplacé tant que tu ne confirmes pas « Ouvrir dans le calculateur ». */
+{const voir=tutorialParams.get('voir');if(voir){if(/^[A-Za-z0-9-]{1,80}$/.test(voir)&&workspace.notebook.get(voir))workspace.openSheet(voir);else notify('Ce calcul n’est plus enregistré sur cet appareil : il a peut-être été supprimé dans un autre onglet.');}}
 if(/^#saved-(calcs|plans)$/.test(location.hash))workspace.openDrawer(location.hash.slice(7));
 })();

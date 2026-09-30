@@ -55,7 +55,7 @@ const mapData=JSON.parse(fs.readFileSync(rawPath,'utf8'));
 for(const p of [...mapData.groupes,...mapData.lieux,...Object.values(mapData.enrichit)])for(const key of ['img','img2'])if(p[key]&&!available('carte.html',p[key]))delete p[key];
 fs.writeFileSync('carte-gtadb.js','/* Generated from data/carte-gtadb-source.json. gtadb.org et ses contributeurs, CC BY 4.0; adapté pour Leonidakit. */\nwindow.LK_GTADB = '+JSON.stringify(mapData)+';\n');
 
-const htmlFiles=[...fs.readdirSync('.').filter(x=>x.endsWith('.html')),...['armes','vehicules','lieux','personnages','entreprises','demeures','planques'].filter(d=>fs.existsSync(d)).flatMap(d=>fs.readdirSync(d).filter(f=>f.endsWith('.html')).map(f=>d+'/'+f))].sort();
+const htmlFiles=[...fs.readdirSync('.').filter(x=>x.endsWith('.html')),...['armes','vehicules','lieux','personnages','entreprises','demeures','planques','carnets'].filter(d=>fs.existsSync(d)).flatMap(d=>fs.readdirSync(d).filter(f=>f.endsWith('.html')).map(f=>d+'/'+f))].sort();
 const canonicals=[];
 for(const file of htmlFiles){let s=fs.readFileSync(file,'utf8');if(file.startsWith('google'))continue;const prefix=file==='404.html'?'/':file.includes('/')?'../':'';
  if(s.includes('app.js')){
@@ -134,7 +134,9 @@ const progressNames={vehicules:Object.fromEntries(V.map(v=>[v.id,{n:name(v),c:CA
 const progressIds={vehicules:V.map(v=>v.id),armes:A.map(v=>v.id),lieux:pointIds,equipements:tracked.equipements,munitions:tracked.munitions};
 {const C=require('./catalogues.cjs');for(const f of C.FAMILIES){progressIds[f]=C.progressIds(f);progressNames[f]=C.progressNames(f);}}
 // v7.42 : les compteurs écrits dans progression.html (« 0 / N ») suivent les identifiants réels de chaque famille.
-{let prog=fs.readFileSync('progression.html','utf8');prog=prog.replace(/(<article class="note-box suivi-card" id="[^"]+" data-family="([a-z]+)">[\s\S]*?<strong class="suivi-n">)0 \/ \d+(<\/strong>)/g,(m,a,fam,c)=>progressIds[fam]?a+'0 / '+new Set(progressIds[fam]).size+c:m);fs.writeFileSync('progression.html',prog);}
+// v7.51 (lot 4) : les lignes par famille sont dans les cartes des carnets (bloc écrit par gen-carnets.cjs). L’expression ne
+// traverse plus une carte (elle s’arrête à sa ligne) et accepte les familles à trait d’union (perso-vehicules, perso-armes).
+{let prog=fs.readFileSync('progression.html','utf8');prog=prog.replace(/(<li id="[^"]+" data-family="([a-z-]+)"><span>[^<]*<\/span> <strong class="suivi-n">)0 \/ [\d\s\u202f\u00a0]+(<\/strong>)/g,(m,a,fam,c)=>progressIds[fam]?a+'0 / '+new Set(progressIds[fam]).size+c:m);fs.writeFileSync('progression.html',prog);}
 // v7.44 (lot 7) : « Le site en chiffres » de a-propos.html, posé d'après les données réelles (jamais tapé à la main) : pages,
 // fiches véhicules et armes, lieux de la carte, lignes des listes dépliables, visuels officiels crédités, sujets de la base
 // de Léo (leo-index.json et ses morceaux de questions, régénérés juste avant le second passage), tests automatisés écrits (appels test( dans outils/tests).
@@ -162,6 +164,14 @@ require('child_process').execFileSync(process.execPath,[path.join(__dirname,'gen
   const synonyms=({'tuto.html':'tutoriel aide apprendre','achats.html':'achats acheter acquisitions','a-propos.html':'a propos equipe projet fonctionnement sources','contact.html':'contact erreur correction signalement retrait','style.html':'vetements habits looks coiffures style','personnalisations.html':'customisation ameliorations peinture tuning','medias.html':'credits photos images sources droits'})[file]||'';
   extra.push({l:label,k:file.includes('calcul')||file==='tuto.html'?'Outil':'Page',u:'/'+file,s:label+' '+desc+' '+synonyms,w:-1});
  }
+ /* v7.51 (lot 4) : une entrée par carnet de progression (page dédiée carnets/<id>.html), avec les mots qu’on tape pour les trouver. */
+ {const CS={garage:'mon garage vehicules possedes voitures collection',arsenal:'mon arsenal armes possedees equipements munitions stock',
+   'garde-robe':'ma garde-robe vetements tenues coiffures tatouages looks styles',consommables:'mes consommables nourriture boissons stock goutes',
+   personnalisations:'mes personnalisations modifs vehicule arme tuning',proprietes:'mes proprietes contenus garages kits motifs',
+   lieux:'mes lieux reperes carte decouverts',collectibles:'mes collectibles trouves collection',calculs:'mes calculs plans enregistres calculateur business plan'};
+  if(fs.existsSync(path.join(root,'carnets')))for(const f of fs.readdirSync(path.join(root,'carnets')).filter(x=>x.endsWith('.html')).sort()){const html=readFile('carnets/'+f),id=f.slice(0,-5);
+   const label=html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/)?.[1]?.replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim();if(!label)continue;const desc=html.match(/<meta name="description" content="([^"]*)"/)?.[1]||'';
+   extra.push({l:label,k:'Carnet de progression',u:'/carnets/'+f,s:(label+' '+desc+' '+(CS[id]||'')+' carnet progression suivi').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[\s\u00a0\u202f]+/g,' ').toLowerCase(),w:-1});}}
  const acqContext={window:{}};vm.runInNewContext(readFile('acquisitions-data.js'),acqContext);
  for(const item of acqContext.window.LK_ACQUISITIONS.items){
   if(item.ref)continue; // L'entité canonique véhicule/arme est déjà indexée.

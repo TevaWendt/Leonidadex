@@ -1,0 +1,71 @@
+LEONIDAKIT v7.51 — LOT 4 DE LA MISSION v7.48 → v7.52 : CARNETS DE PROGRESSION ET RACCORDEMENTS (29 septembre 2026)
+
+Base : v7.50 (lot 3). Archive cumulée depuis la v7.47. Suivi : outils/SUIVI-MISSION.md.
+
+UNE PAGE PAR CARNET (adresses stables, présentation publique référencée)
+- carnets/garage.html « Mon garage », carnets/arsenal.html « Mon arsenal » (armes, équipements, munitions),
+  carnets/garde-robe.html « Ma garde-robe » (tenues et accessoires, coiffures, tatouages, styles gardés),
+  carnets/consommables.html « Mes consommables » (avec le stock), carnets/personnalisations.html « Mes personnalisations »,
+  carnets/proprietes.html « Mes propriétés et contenus », carnets/lieux.html « Mes lieux repérés »,
+  carnets/collectibles.html « Mes collectibles », carnets/calculs.html « Mes calculs et mes plans ».
+- Chaque page : en-tête (fil d’Ariane, titre, explication, compteurs, jauge, trois visuels officiels crédités), trois vues
+  (ce que tu as / tes envies / ce qui reste : « Dans mon garage », « Mes envies », « Pas encore dans mon garage » ;
+  « Goûtés », « À essayer », « Pas encore goûtés » ; « Repérés », « À visiter », « Pas encore repérés »…), recherche,
+  famille, catégorie, stock, tri, nombre de résultats, « Afficher la suite », cartes à vignette (photo officielle, schéma,
+  ou pictogramme de la catégorie dit comme tel), tampon « Possédé / Goûté / Repéré… », lien vers la fiche ou la ligne,
+  « Je l’ai », « Je le veux », « Retirer », « Annuler », « Combien de temps pour l’avoir ? » (calculateur).
+- États vides expliqués, jamais de collection fictive ; « Saisies à part » pour ce qui est coché mais n’est plus dans la
+  liste (gardé, jamais compté, retirable).
+- Vue et filtres gardés dans l’adresse (#vue=envies&q=…) : retour arrière et rechargement retrouvent la page. Un autre onglet
+  qui change le suivi : la page relit tout et le dit, rien n’est écrasé. Stockage indisponible : lecture seule annoncée.
+- Présentation publique indexable (titre, description, « Comment marche ce carnet », catégories recensées, questions
+  fréquentes en données structurées, fil d’Ariane), dans sitemap.xml. Ce que tu as coché n’est jamais écrit dans la page,
+  les métadonnées, les données structurées ou la sitemap : c’est lu dans ton navigateur.
+
+STOCKS (consommables, munitions)
+- Une case « goûté » ou « obtenu » et une quantité sont deux choses : le stock se note à part. Une ancienne case cochée
+  affiche « stock à renseigner » (aucune quantité inventée). « J’en ai utilisé un / racheté un » passe par le journal des
+  réalisations : un geste = un événement, jamais compté deux fois. Un stock à zéro ne décoche rien. « Oublier la quantité ».
+
+ENVIES
+- Une envie (lk_wish_v1) n’est jamais une possession. « Je le veux » sur les fiches véhicules et armes et dans les carnets ;
+  « Garder ce style » (carnet de style) arrive dans « Mes envies » de Ma garde-robe. « Je l’ai » sur une envie la range et la
+  retire des envies. « Classer mes envies dans le calculateur » ouvre « Quoi acheter d’abord ? » avec tes envies.
+
+TABLEAU DE BORD (progression.html)
+- Neuf cartes « Mes carnets » : visuel, compte, jauge, une ligne par famille, envies, stocks à renseigner, saisies à part,
+  bouton « Voir mon garage », « Voir mon arsenal »… Les 14 cartes à listes dépliables et la section des acquisitions,
+  devenues des doublons des carnets, sont retirées ; les anciennes ancres (#garage, #tenues, #acquisitions…) mènent à la
+  carte du carnet qui les contient, mise en évidence. « Tout mon suivi », sauvegarde, export et import inchangés.
+
+RACCORDEMENTS
+- « Voir mon garage » (Véhicules, fiches), « Voir mon arsenal » (Armurerie, fiches ; équipements et munitions filtrés),
+  « Voir ma garde-robe / mes consommables / mes personnalisations » sur la barre de chaque liste, « Voir mes lieux repérés »
+  (carte), « Voir mes collectibles » (collectibles, Achats), lien du tiroir « Mes calculs enregistrés » et du Tuto vers
+  « Mes calculs et mes plans ».
+- Calculateur : calculateurs.html?voir=<identifiant> ouvre la fiche d’un calcul enregistré (rien n’est remplacé sans
+  confirmation) ; ?tool=order&ids=… remplit « Quoi acheter d’abord ? » (12 au plus) ; dans le business plan, un achat
+  déclaré fait range le véhicule ou l’arme dans son carnet, une seule fois ; une prévision ne coche jamais rien.
+- Léo : liens vers les carnets, 4 sujets ajoutés (envie ou possession, stock, garde-robe et autres carnets, calculs).
+  Recherche interne : une entrée par carnet. Accueil : « Mes carnets de progression ». Menu : Progression active sur les
+  carnets ; puce « Mes carnets ».
+
+ANOMALIES CORRIGÉES (inventaire, lot 4)
+- 8 Léo « Mon temps de jeu » passe par le moteur ; 9 carte des calculs lue dans le bon carnet (calculs et plans) ;
+  10 compteurs par famille justes (29 consommables, familles à trait d’union) ; 11 section « acquisitions » refermée ;
+  12 catégories alias sans groupe homonyme ; 13 brouillon du formulaire de contact jamais exporté ni importé ;
+  14 anciennes fiches hors liste sans case « Ajouter à mon garage » ; 15 encart calculateur sur les planques ;
+  24 pages nommées « Mon garage », « Mon arsenal »…, « carnet » en titre de famille seulement.
+
+FICHIERS
+- Ajoutés : carnets.js, carnets.css, carnets/*.html (9), carnets/lieux-data.js, outils/gen-carnets.cjs,
+  outils/carnets-source.cjs, outils/carnets-editorial.json, outils/tests/carnets-v751.test.cjs, outils/tests/carnets-browser.cjs,
+  outils/CHANGEMENTS-v7.51.txt, LISEZ-MOI-v7.51.txt.
+- Modifiés (sources) : progression.html, progression.js, progression-core.js, carnets-core.js, fiches.js, fiches.css,
+  acquisitions.css, calculateurs.js, calculateurs-plan.js, calculateurs-workspace.js, calculateurs-workspace.css,
+  calculateurs.html, leo-core.js, armes.html, carte.html, collectibles.html, index.html, 3 anciennes fiches véhicules,
+  outils/templates/vehicules.html, outils/templates/vehicle-reference.html, outils/regenerer.cjs, outils/sync-site.cjs,
+  outils/site-shell.cjs, outils/catalogues.cjs, outils/hubs-editoriaux.cjs, outils/gen-achats.cjs, outils/gen-armes.cjs,
+  outils/lore-gen.js, outils/gen-tuto.cjs, outils/catalogues/editorial.json, outils/editorial-hubs.json,
+  outils/achats-editorial.json, outils/informations-editorial.json, outils/leo-knowledge.json ; tests adaptés.
+- Régénérés : pages, fiches, index de Léo, search-index.js, sitemap.xml, progression-data.js.

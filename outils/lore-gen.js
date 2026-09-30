@@ -183,7 +183,8 @@ ${S.hub==='planques'?'<!-- lot-d-garages:start --><!-- lot-d-garages:end -->\n':
     if(x.source)links.push(`<a href="${esc(x.source)}" target="_blank" rel="noopener nofollow">Page officielle</a>`);
     /* v7.43 (lot 6) : les ateliers de personnalisation renvoient vers leur sous-section de personnalisations.html (outils/catalogues/editorial.json, ateliers). */
     if(key==='businesses'){const at=ATELIERS.find(a=>a.business===x.id);if(at)links.push(`<a href="${p}personnalisations.html#${at.fam}">${at.fam==='perso-armes'?'Personnaliser mes armes':'Personnaliser mon véhicule'}</a>`);}
-    const calcKind = key === 'businesses' ? 'business' : key === 'residences' ? 'property' : null;
+    /* v7.51 (lot 4) : les planques sont dans le catalogue du calculateur (type hideout) : même encart que les demeures. */
+    const calcKind = key === 'businesses' ? 'business' : key === 'residences' ? 'property' : key === 'hideouts' ? 'hideout' : null;
     const calcTool = calcKind === 'business' ? 'roi' : 'purchase';
     const calcTitle = calcKind === 'business' ? 'Est-ce que ça vaudrait le coup ?' : 'Combien faudrait-il pour l’avoir ?';
     const calcDescription = calcKind === 'business' ? 'On ne sait pas encore si ce lieu peut s’acheter dans le jeu. Tu peux quand même écrire tes propres chiffres : ce que ça coûte, ce que ça rapporte, et voir quand ce serait remboursé.' : 'On ne sait pas encore si ce lieu peut s’acheter, ni à quel prix. Écris le prix que tu imagines : le calculateur te dit combien de temps de jeu il te faudrait.';
@@ -286,9 +287,9 @@ const tools=`<section class="tools-sec shell" id="outils">
       <h3>Fiches véhicules et armes <span class="chip live">324 fiches</span></h3>
       <p>301 véhicules, 23 armes, et un constructeur d’équipement fondé sur les règles officielles.</p>
     </a>
-    <a class="tool reveal" href="progression.html">
-      <h3>Suivi de progression <span class="chip live">Dès maintenant</span></h3>
-      <p>Véhicules, armes, lieux et contenus cochés dès maintenant, missions et succès avec le jeu. Sauvegardé sur ton appareil.</p>
+    <a class="tool reveal" href="progression.html#carnets">
+      <h3>Mes carnets de progression <span class="chip live">Dès maintenant</span></h3>
+      <p>Mon garage, mon arsenal, ma garde-robe, mes lieux repérés… Ce que tu as, tes envies et ce qui reste, sauvegardés sur ton appareil.</p>
     </a>
   </div>
 </section>`;

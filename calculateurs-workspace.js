@@ -531,7 +531,7 @@ function create(api){
  function hideTip(){if(tip)tip.classList.remove('is-on');}
  document.addEventListener('mouseover',ev=>{const pt=ev.target.closest?.('.c-chart-point');if(pt)showTip(pt);});document.addEventListener('mouseout',ev=>{if(ev.target.closest?.('.c-chart-point'))hideTip();});document.addEventListener('focusin',ev=>{const pt=ev.target.closest?.('.c-chart-point');if(pt)showTip(pt);});document.addEventListener('focusout',ev=>{if(ev.target.closest?.('.c-chart-point'))hideTip();});
  $('calc-drawer')?.addEventListener('click',ev=>{if(ev.target===ev.currentTarget)closeDrawer();});
- return{explainBlock,analysisOf,usageField,capabilityFields,horizonField,check,ROLE_OPTS,markup,purchaseFields,decorate,render,renderSaved,event,mode,sessionRender,save,notebook,summary,decision,problem,fold,foldify,foldIsOpen,openDrawer,closeDrawer,touch,left,untouchAll,resetRevision(){previousRevision=B.signature(state());}};
+ return{explainBlock,analysisOf,usageField,capabilityFields,horizonField,check,ROLE_OPTS,markup,purchaseFields,decorate,render,renderSaved,event,mode,sessionRender,save,notebook,summary,decision,problem,fold,foldify,foldIsOpen,openDrawer,closeDrawer,openSheet,touch,left,untouchAll,resetRevision(){previousRevision=B.signature(state());}};
 }
 global.LKCalcWorkspace={create};
 })(window);

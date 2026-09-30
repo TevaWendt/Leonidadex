@@ -441,6 +441,8 @@ body.calculator-page main .b-pick-bar .calc-text-button{color:#fff}
 .calc-drawer-foot h3{margin:14px 0 2px;font:900 1rem 'Archivo',sans-serif}
 .calc-drawer-foot p{margin:0;font-size:.92rem;color:var(--ink-soft,#5C5A63)}
 .calc-drawer-foot .calc-carnet-actions{margin-top:10px}
+/* v7.51 (lot 4) : lien vers la page « Mes calculs et mes plans » (soulignement simple, contraste lisible sur le pied du tiroir) */
+.calc-drawer-foot .calc-foot-link{color:var(--coral-text,#B93220);font-weight:700;text-decoration:underline;text-underline-offset:3px}
 .calc-reminder{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;margin:0 0 16px;padding:12px 16px;border:2px solid var(--ink,#1A1A1E);border-radius:12px;background:#fff7e6;box-shadow:3px 3px 0 var(--amber,#F5A524)}
 .calc-reminder[hidden]{display:none}
 .calc-reminder p{margin:0;flex:1 1 280px}

@@ -59,7 +59,7 @@ test('À propos : aucun nombre tapé à la main — les chiffres viennent des do
   assert.equal(stat('vehicules'),c.window.LK_VEHICULES.length);assert.equal(stat('armes'),c.window.LK_ARMES.length);assert.equal(stat('lieux'),new Set(c.window.LK_PROGRESS_IDS.lieux).size);
   assert.equal(stat('lignes'),C.FAMILIES.reduce((n,f)=>n+C.counts(f).n,0));assert.equal(stat('visuels'),Object.keys(medias).length);assert.equal(stat('leo'),leo.knowledge.length+Object.values(leo.shards||{}).filter(x=>x.knowledge).reduce((n,x)=>n+JSON.parse(read(x.file.slice(1))).knowledge.length,0))/* v7.45 : noyau + morceau calculateur */;
   const tests=fs.readdirSync(path.join(root,'outils/tests')).filter(f=>f.endsWith('.test.cjs')).reduce((n,f)=>n+(read('outils/tests/'+f).match(/^\s*test\(/gm)||[]).length,0);assert.equal(stat('tests'),tests);
-  const pages=fs.readdirSync(root).filter(f=>f.endsWith('.html')&&!f.startsWith('google')).length+['armes','vehicules','lieux','personnages','entreprises','demeures','planques'].reduce((n,x)=>n+fs.readdirSync(path.join(root,x)).filter(f=>f.endsWith('.html')).length,0);
+  const pages=fs.readdirSync(root).filter(f=>f.endsWith('.html')&&!f.startsWith('google')).length+['armes','vehicules','lieux','personnages','entreprises','demeures','planques','carnets'].reduce((n,x)=>n+fs.readdirSync(path.join(root,x)).filter(f=>f.endsWith('.html')).length,0);
   assert.equal(stat('pages'),pages);
   for(const b of d.querySelectorAll('.fig-n'))assert.equal(b.textContent.replace(/[  ]/g,''),b.dataset.count,'texte sans JS = valeur');
   const acq=JSON.parse(read('outils/acquisitions.json'));const fr=iso=>new Intl.DateTimeFormat('fr-FR',{day:'numeric',month:'long',year:'numeric',timeZone:'UTC'}).format(new Date(iso+'T12:00:00Z'));

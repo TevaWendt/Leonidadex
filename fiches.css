@@ -40,6 +40,13 @@
 .own-bt.on .ck::after{content:'';position:absolute;left:5px;top:1px;width:5px;height:9px;border:solid #fff;
   border-width:0 2.5px 2.5px 0;transform:rotate(45deg);}
 .veh-card.is-own .veh-thumb::before{content:'';position:absolute;inset:0;box-shadow:inset 0 0 0 3px var(--coral,#E8452C);pointer-events:none;z-index:2;}
+/* v7.51 (lot 4) : « Je le veux » (envie, jamais une possession) à côté de « Ajouter à mon garage » */
+.wish-bt{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border-radius:10px;border:2px dashed var(--ink,#1A1A1E);background:#fff;color:var(--ink,#1A1A1E);font:inherit;font-weight:800;font-size:.85rem;cursor:pointer;}
+.wish-bt[aria-pressed=true]{border-style:solid;background:var(--amber,#F5A524);}
+.wish-bt:focus-visible,.own-bt:focus-visible{outline:3px solid var(--coral,#E8452C);outline-offset:2px;}
+/* v7.51 (lot 4) : ancienne fiche hors de la liste suivie (pas de case « Ajouter à mon garage » qui ne compterait jamais) */
+.own-off{flex-basis:100%;margin:0;padding:9px 12px;border:2px dashed var(--rule,#DFD9CC);border-radius:10px;font-size:.88rem;color:var(--ink-soft,#5C5A63);}
+.own-off a,.fiche-liens .own-off a{padding:0;border:0;background:none;color:var(--coral-text,#B93220);font-weight:700;text-decoration:underline;}
 .own-bar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:12px 16px;border-radius:12px;
   background:#fff;border:1px solid rgba(26,26,30,.12);margin:14px 0 6px;}
 .own-bar b{font-size:1.05rem;} .own-bar .own-lbl{font-size:.85rem;color:#55525C;}

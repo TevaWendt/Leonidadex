@@ -42,6 +42,13 @@ Hébergé sur Vercel, qui publie tel quel le contenu de ce dépôt : **aucune co
 - Aucune donnée issue de fuites. Crédit gtadb.org conservé sur la carte et dans les mentions légales.
 
 
+## Mission v7.48 → v7.52 : carnets de progression (lot 4, v7.51, 29 septembre 2026)
+
+- **Pages** : `carnets/<id>.html` (garage, arsenal, garde-robe, consommables, personnalisations, proprietes, lieux, collectibles, calculs), écrites par `outils/gen-carnets.cjs` (lancé par `regenerer.cjs` **avant** `sync-site.cjs`) depuis `outils/modele-donnees.json` (carnets), `outils/carnets-editorial.json` (textes) et `outils/carnets-source.cjs` (éléments, identifiants identiques à `progression-data.js`, liens `carnetOf` / `carnetHref`). Les données publiques sont dans `#lk-carnet-data` ; les lieux dans `carnets/lieux-data.js`. Le même générateur écrit le bloc « Mes carnets » de `progression.html` entre `<!-- carnets:debut -->` et `<!-- carnets:fin -->`.
+- **Navigateur** : `carnets.js` (vues possédés / envies / restants, recherche, famille, catégorie, stock, tri, pages de 48, état dans l’ancre `#vue=…&q=…&f=…&cat=…&tri=…&stock=…`, « Annuler », saisies à part, relecture à l’événement `storage`, lecture seule sans stockage) sur `carnets-core.js` ; styles `carnets.css`. Clés inchangées : `lk_own_<famille>`, `lk_map_found`, `lk_progression_v2`, `lk_collectibles_v1`, plus `lk_wish_v1`, `lk_stock_v1`, `lk_journal_v1`.
+- **Raccordements** : « Voir mon… » (Véhicules, Armurerie, listes des catalogues via `catalogues.cjs`, carte, collectibles, Achats, fiches avec « Je le veux »), calculateur (`?tool=order&ids=…` pour « Classer mes envies », `?voir=<id>` pour la fiche d’un calcul, achat déclaré fait → `applyEvent`), Léo (`leo-knowledge.json`), Tuto, accueil, recherche interne (`sync-site.cjs`), menu (Progression active), puce « Mes carnets ».
+- Tests : `carnets-v751.test.cjs` ; navigateur : `outils/tests/carnets-browser.cjs` (`QA_OUT=<dossier hors dépôt>`).
+
 ## Mission v7.48 → v7.52 : catalogues, visuels et page Achats (lot 3, v7.50, 29 septembre 2026)
 
 - **Fiche documentaire commune** : `outils/fiche-doc.cjs` (`render(catégorie, valeurs connues)`, `knownOfRow(famille, ligne)`, `accessCell`) sur `LKCalcModel.fiche` ; utilisée par `catalogues.cjs` (colonne « Élément » : `.cat-thumb`, `details.cat-fiche`), `gen-armes.cjs` et `gen.js` (colonne « Fiche documentaire » des fiches). Classes `.doc-fiche`, `.doc-rub`, `.doc-row.is-known|is-est|is-wait|is-unconf|is-na` dans `style.css`.
