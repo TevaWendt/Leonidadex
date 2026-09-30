@@ -11,7 +11,8 @@
   var LEGACY = { vehicules: 'lk_own_vehicules', armes: 'lk_own_armes', lieux: 'lk_map_found', equipements: 'lk_own_equipements', munitions: 'lk_own_munitions', consommables: 'lk_own_consommables', coiffures: 'lk_own_coiffures', tatouages: 'lk_own_tatouages', tenues: 'lk_own_tenues', 'perso-vehicules': 'lk_own_perso-vehicules', 'perso-armes': 'lk_own_perso-armes' };
   var LEGACY_KEYS = Object.keys(LEGACY).map(function (t) { return LEGACY[t]; });
   function legacyType(key) { for (var t in LEGACY) if (LEGACY[t] === key) return t; return null; }
-  var TRANSPORT = ['lk_collectibles_v1', 'lk_collectibles_tools_v1', 'lk-calculator-notebooks-v3', 'lk-calculator-v1', 'lk-calculator-favorites-v1'];
+  /* v7.48 (lot 1) : stocks, souhaits et journal des réalisations (carnets-core.js) voyagent avec le reste et sont reconnus à l’import. */
+  var TRANSPORT = ['lk_collectibles_v1', 'lk_collectibles_tools_v1', 'lk-calculator-notebooks-v3', 'lk-calculator-v1', 'lk-calculator-favorites-v1', 'lk_stock_v1', 'lk_wish_v1', 'lk_journal_v1'];
   var LABELS = { vehicules: 'Véhicules', armes: 'Armes', lieux: 'Lieux de la carte', equipements: 'Équipements et gadgets', munitions: 'Types de munitions', consommables: 'Consommables', coiffures: 'Coiffures', tatouages: 'Tatouages', tenues: 'Tenues et accessoires', 'perso-vehicules': 'Personnalisation des véhicules', 'perso-armes': 'Personnalisation des armes', collectibles: 'Collectibles' };
   function isChecked(v) { return v === true || v === 1; }
   function parseMap(raw) {

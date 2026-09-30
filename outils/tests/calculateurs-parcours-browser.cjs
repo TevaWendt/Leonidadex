@@ -138,7 +138,7 @@ const TOOLS={
   await page.emulateMedia({media:'print'});const vis=await page.evaluate(()=>[...document.querySelectorAll('.calc-panel')].filter(p=>getComputedStyle(p).display!=='none'&&!p.hidden).length);const hiddenBits=await page.evaluate(()=>['.calc-tabs','.calc-mode-row','.calc-drawer','.calc-saved-open','header'].every(s=>{const e=document.querySelector(s);return !e||getComputedStyle(e).display==='none';}));
   check(vis===1&&hiddenBits,'Impression : un seul panneau, sans onglets ni boutons');await page.emulateMedia({media:'screen'});
   await drawer(page);const [download]=await Promise.all([page.waitForEvent('download'),page.locator('#calc-export').click()]);const file=path.join(out,'calcul-telecharge.json');await download.saveAs(file);const json=JSON.parse(fs.readFileSync(file,'utf8'));
-  check(json.version===5&&json.goal.capital===310000,'Télécharger : un fichier avec mes chiffres');
+  check(json.version===6&&json.goal.capital===310000,'Télécharger : un fichier avec mes chiffres');
   const other=await fresh(768);await open(other.page);await drawer(other.page);await other.page.locator('#calc-import').setInputFiles(file);await other.page.waitForTimeout(200);
   check(digits(await other.page.locator('#f-goal-capital').inputValue())==='310000'&&!(await other.page.locator('#calc-drawer').evaluate(d=>d.open)),'Ouvrir un fichier : le calcul revient sur un autre appareil, le tiroir se ferme');await other.ctx.close();
   await closeDrawer(page).catch(()=>{});
@@ -153,7 +153,7 @@ const TOOLS={
    check(digits(await t.page.locator('#f-goal-capital').inputValue())===expect,'Réglages '+label+' lus : le calcul reprend');await sane(t.page,'Réglages '+label);
    check(await t.page.evaluate(()=>JSON.parse(localStorage.getItem('lk-calculator-v1')).version)===cfg.version,'Réglages '+label+' : rien n’est réécrit tant qu’on ne change rien');
    await fill(t.page,'f-goal-target','2 000 000');await t.page.waitForTimeout(100);
-   check(await t.page.evaluate(()=>JSON.parse(localStorage.getItem('lk-calculator-v1')).version)===5,'Réglages '+label+' : mis à jour en version 5 au premier changement');
+   check(await t.page.evaluate(()=>JSON.parse(localStorage.getItem('lk-calculator-v1')).version)===6,'Réglages '+label+' : mis à jour en version 6 au premier changement');
    check(await t.page.evaluate(v=>Object.keys(localStorage).filter(k=>k.startsWith('lk-calculator-v1-backup-')).some(k=>JSON.parse(localStorage.getItem(k)).version===v),cfg.version),'Réglages '+label+' : l’original est gardé à part');await t.ctx.close();}
   const legacy=await fresh(390);await legacy.page.addInitScript(([saved,recent,ref])=>{if(sessionStorage.getItem('seeded'))return;localStorage.setItem('lk-calculator-saved-v1',saved);localStorage.setItem('lk-calculator-recent-v1',recent);localStorage.setItem('lk-calculator-reference-v2',ref);sessionStorage.setItem('seeded','1');},[JSON.stringify([{name:'Vieux carnet',config:v2}]),JSON.stringify([{name:'Vieux récent',config:v1}]),JSON.stringify({...v2,name:'Vieille référence'})]);
   await open(legacy.page);await drawer(legacy.page);const names=async()=>(await legacy.page.locator('#calc-drawer [data-b-rename]').evaluateAll(els=>els.map(e=>e.value))).join(' | ');const all=await names();

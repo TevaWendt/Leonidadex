@@ -77,11 +77,11 @@ test('Objectif atteint, gain nul, gain négatif : réponses explicites, aucun pr
  const zero=E.businessPlan({capital:200000,reserve:0,hourly:0,dailyMinutes:60,target:1000000});assert.equal(zero.valid,false);assert.match(zero.reason,/gain|manque|attendre/i);
  const neg=E.businessPlan({capital:200000,reserve:0,hourly:20000,dailyMinutes:60,upkeepPerSession:30000,target:1000000});assert.equal(neg.valid,false);assert.match(neg.reason,/dépenses par partie/);
 });
-test('Sauvegardes v3 lues telles quelles, migrées (v4 puis v5) avec un plan complet',()=>{
+test('Sauvegardes v3 lues telles quelles, migrées (v4, v5 puis v6) avec un plan complet',()=>{
  const raw=B.copy(initial);raw.version=3;raw.plan={kind:'amount',key:'',target:750000,usePrerequisites:true,upkeepPerSession:0,priority:'balanced',activity:''};
- const s=B.validate(raw,initial);assert.equal(s.version,5);assert.equal(s.plan.strategy,'auto');assert.deepEqual(s.plan.log,[]);assert.equal(s.plan.deadlineDays,null);assert.equal(s.plan.goal.kind,'amount');assert.equal(s.plan.goal.target,750000);assert.equal(s.plan.situation.capital,initial.goal.capital);
+ const s=B.validate(raw,initial);assert.equal(s.version,6);assert.equal(s.plan.strategy,'auto');assert.deepEqual(s.plan.log,[]);assert.equal(s.plan.deadlineDays,null);assert.equal(s.plan.goal.kind,'amount');assert.equal(s.plan.goal.target,750000);assert.equal(s.plan.situation.capital,initial.goal.capital);
  const bad=B.copy(initial);bad.plan.log=[{capital:'x'}];assert.throws(()=>B.validate(bad,initial),/Historique/);
- const future=B.copy(initial);future.version=6;assert.throws(()=>B.validate(future,initial),/Version/);
+ const future=B.copy(initial);future.version=7;assert.throws(()=>B.validate(future,initial),/Version/);
 });
 
 /* ---------- parcours ---------- */

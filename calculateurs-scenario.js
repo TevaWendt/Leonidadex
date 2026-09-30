@@ -1,28 +1,46 @@
 /* État partagé v5 et sélecteurs déterministes. Aucun prix ni revenu n'est inventé.
    v4 (v7.33) : le business plan garde une stratégie, une échéance, les étapes faites et l'historique du réel.
    v5 (v7.34) : le business plan a ses propres réponses (but, situation, missions, achats d'avant) : rien n'est pris en silence
-   dans les huit calculs ; le programme se fait mission par mission ; les sauvegardes v1 à v4 se lisent telles quelles. */
+   dans les huit calculs ; le programme se fait mission par mission ; les sauvegardes v1 à v4 se lisent telles quelles.
+   v6 (v7.48, lot 1) : structures communes de l’analyse, ajoutées sans rien changer aux chiffres existants — horizon et
+   besoin d’usage partagés, sens d’un but en argent (détenu, disponible après la réserve, gains cumulés), mécaniques
+   simulées (désactivées par défaut), par achat : rôle, coût d’usage, capacités, revente, dépendances et déblocages ;
+   dans le plan : durée d’obtention et prérequis des achats d’avant, missions de déblocage faites une fois, choix
+   verrouillés, variantes sans écraser le plan de référence, identifiant de chaque réalisation (pas de double crédit),
+   versions du modèle et des données. Une case nouvelle vaut null (pas encore écrit), jamais 0 inventé. */
 (function(root,factory){'use strict';if(typeof module==='object'&&module.exports)module.exports=factory(require('./calculateurs-engine.js'));else root.LKCalcScenario=factory(root.LKCalcEngine);})(typeof globalThis!=='undefined'?globalThis:this,function(E){
 'use strict';
 const copy=x=>JSON.parse(JSON.stringify(x));
 const tools=['goal','activities','session','purchase','order','roi','budget','compare'];
 const names={goal:'Mon objectif',activities:'Mes activités',session:'Mon temps de jeu',purchase:'Mes achats',order:'Quoi acheter d’abord ?',roi:'Ça vaut le coup ?',budget:'Mon budget',compare:'Quel achat choisir ?',plan:'Mon business plan'};
-const assetTemplate={key:'free-1',itemId:'',name:'Mon achat libre',price:100000,referencePrice:null,extras:0,fees:0,owned:false,incomeMode:'none',boostHourly:0,utility:3};
+const assetTemplate={key:'free-1',itemId:'',name:'Mon achat libre',price:100000,referencePrice:null,extras:0,fees:0,owned:false,incomeMode:'none',boostHourly:0,utility:3,
+ // v6 : rôle de l’achat (ouvre une activité, améliore, remplace une dépense, confort, plaisir ; « unknown » = pas dit),
+ // coût d’usage (par partie, par utilisation) et nombre d’utilisations, revente (non comptée sans valeur choisie),
+ // capacités écrites par le joueur quand le site ne les connaît pas, achats à posséder avant, activités débloquées.
+ role:'unknown',usage:{perSession:null,perUse:null,uses:null},resale:null,capabilities:{seats:null,terrain:'',cargo:null},requires:[],unlocks:[]};
 // Quel achat choisir ? et Mon business plan : réglages propres à chaque outil, achats partagés via assets.
 const compareTemplate={keys:[],criterion:'value',hours:10};
 const planTemplateV4={kind:'purchase',key:'',target:null,usePrerequisites:true,upkeepPerSession:0,priority:'balanced',activity:'',details:false,strategy:'auto',deadlineDays:null,countDoneBoost:true,done:[],log:[],playedMinutes:0};
 // v5 : le plan possède ses réponses. goal = le but (achat, somme, ou déblocage par des points : rang, XP, réputation…) ;
 // situation = où en est le joueur ; missions = ses missions à lui (copiées, jamais liées) ; prerequisites = ses achats d'avant.
-const planGoalTemplate={kind:'purchase',name:'',itemId:'',referencePrice:null,price:null,boostHourly:0,target:null,unitLabel:'points',targetUnits:null,currentUnits:0,alsoPrice:0};
+const planGoalTemplate={kind:'purchase',name:'',itemId:'',referencePrice:null,price:null,boostHourly:0,target:null,unitLabel:'points',targetUnits:null,currentUnits:0,alsoPrice:0,meaning:'held'};
 const planSituationTemplate={capital:null,reserve:0,hourly:null,unitsHourly:0,dailyMinutes:null,daysPerWeek:7,upkeepPerSession:0};
-const planMissionTemplate={id:'m-1',name:'Ma mission',reward:null,cost:0,duration:null,prep:0,cooldown:0,share:100,investment:0,owned:false,units:0,requires:[]};
-const planPrereqTemplate={id:'p-1',name:'Mon achat d’avant',itemId:'',referencePrice:null,price:null,boostHourly:0,owned:false};
-const planLogTemplate={at:'',capital:0,minutes:0,forecast:null,note:'',units:null,unitsGain:null,gain:null,plannedGain:null,sessionMinutes:0,runs:{},purchases:[]};
-const planTemplate={goal:copy(planGoalTemplate),situation:copy(planSituationTemplate),source:'hourly',missions:[],prerequisites:[],priority:'balanced',strategy:'auto',variant:'auto',maxRepeat:100,deadlineDays:null,details:false,log:[],playedMinutes:0,sessionsPlayed:0};
+const planMissionTemplate={id:'m-1',name:'Ma mission',reward:null,cost:0,duration:null,prep:0,cooldown:0,share:100,investment:0,owned:false,units:0,requires:[],once:false,done:false,requiresMissions:[]};
+const planPrereqTemplate={id:'p-1',name:'Mon achat d’avant',itemId:'',referencePrice:null,price:null,boostHourly:0,owned:false,minutes:null,requires:[],usagePerSession:null};
+const planLogTemplate={id:'',at:'',capital:0,minutes:0,forecast:null,note:'',units:null,unitsGain:null,gain:null,plannedGain:null,sessionMinutes:0,runs:{},purchases:[]};
+const planTemplate={goal:copy(planGoalTemplate),situation:copy(planSituationTemplate),source:'hourly',missions:[],prerequisites:[],priority:'balanced',strategy:'auto',variant:'auto',maxRepeat:100,deadlineDays:null,details:false,log:[],playedMinutes:0,sessionsPlayed:0,locked:[],variants:[]};
+// v6 : une variante garde une copie des réponses du plan (jamais le plan de référence écrasé) ; cinq au plus.
+const planVariantTemplate={id:'v-1',label:'Ma variante',at:'',goal:copy(planGoalTemplate),situation:copy(planSituationTemplate),source:'hourly',missions:[],prerequisites:[],priority:'balanced',strategy:'auto',maxRepeat:100,deadlineDays:null};
+// v6 : réglages d’analyse partagés par les huit calculs. Tout est « pas encore écrit » (null) ou désactivé au départ.
+const MECHANICS=['carburant','entretien','reparation','assurance','revente','munitions','soin','revenu-passif','echec','bonus'];
+const analysisTemplate={horizon:{sessions:null,uses:null,hours:null},need:{usage:'',passengers:null,terrain:'',cargo:false},priority:'fast',
+ simulations:Object.fromEntries(MECHANICS.map(m=>[m,false])),
+ sim:{carburant:{distance:null,consommation:null,prixUnitaire:null},entretien:{parPartie:null},reparation:{parPartie:null},assurance:{parPartie:null},revente:{valeur:null},munitions:{parTentative:null},soin:{points:null},'revenu-passif':{parHeure:null,plafond:null},echec:{tentativesRatees:null},bonus:{pourcentage:null}}};
+const ROLES=['unknown','income','unlock','improve','replace','comfort','pleasure'],GOAL_MEANINGS=['held','available','cumulative'],PRIORITIES=['fast','cheapStart','cheapTotal','reserve'],TERRAINS=['','route','tout-terrain','eau','air'];
 const STRATEGIES=['auto','asIs','byPayback','cheapFirst','skipNoBoost','direct','useReserve'];
 const PLAN_KINDS=['purchase','amount','unlock'],PLAN_SOURCES=['hourly','missions'];
 function defaults(old){
- const s=copy(old);s.version=5;s.views=Object.fromEntries([...tools,'plan'].map(t=>[t,'quick']));
+ const s=copy(old);s.version=6;s.modelVersion=1;s.analysis=copy(analysisTemplate);s.views=Object.fromEntries([...tools,'plan'].map(t=>[t,'quick']));
  s.assets=[copy(assetTemplate)];s.purchase={key:'free-1'};
  s.session={...s.session,daysPerWeek:7,usualMinutes:60};
  s.activities=s.activities.map(a=>({...a,prepOnce:false,requiresPurchaseIds:[]}));
@@ -54,12 +72,14 @@ function planToV5(s){
  return {...copy(s),version:5,plan};
 }
 function migrate(raw,initial){
- if(!raw||typeof raw!=='object'||![1,2,3,4,5].includes(raw.version))throw Error('Version de sauvegarde non reconnue.');
- if(raw.version===5)return raw;
- // v3 → v4 : mêmes données, le plan reçoit ses cases de la v4 avec leurs valeurs par défaut ; puis v4 → v5.
- if(raw.version===3)return planToV5({...copy(raw),version:4,plan:{...copy(planTemplateV4),...(raw.plan||{})}});
- if(raw.version===4)return planToV5(raw);
- const s={...copy(initial),...copy(raw),version:5};
+ if(!raw||typeof raw!=='object'||![1,2,3,4,5,6].includes(raw.version))throw Error('Version de sauvegarde non reconnue.');
+ if(raw.version===6)return raw;
+ // v5 → v6 : aucune valeur existante ne change ; les nouvelles cases prennent leur valeur « pas encore écrit » à la validation.
+ if(raw.version===5)return {...copy(raw),version:6,modelVersion:raw.modelVersion??1};
+ // v3 → v4 : mêmes données, le plan reçoit ses cases de la v4 avec leurs valeurs par défaut ; puis v4 → v5 → v6.
+ if(raw.version===3)return {...planToV5({...copy(raw),version:4,plan:{...copy(planTemplateV4),...(raw.plan||{})}}),version:6};
+ if(raw.version===4)return {...planToV5(raw),version:6};
+ const s={...copy(initial),...copy(raw),version:6};
  s.goal={...initial.goal,...raw.goal};
  const oldContext=raw.tab==='purchase'?raw.purchase:raw.tab==='budget'?raw.budget:raw.tab==='order'?raw.order:null;
  if(oldContext)for(const key of ['capital','reserve','hourly','target'])if(Object.prototype.hasOwnProperty.call(oldContext,key))s.goal[key]=oldContext[key];
@@ -85,10 +105,11 @@ function validate(raw,initial){
   if(typeof t==='boolean'){if(typeof v!=='boolean')throw Error('Option invalide : '+key);return v;}
   if(Array.isArray(t)){
    if(!Array.isArray(v)||v.length>100)throw Error('Liste invalide : '+key);
-   if(key==='log'){return v.slice(0,60).map(e=>{if(!e||typeof e!=='object'||Array.isArray(e))throw Error('Historique du plan invalide.');const capital=typeof e.capital==='number'&&Number.isFinite(e.capital)&&e.capital>=0&&e.capital<=1e12?e.capital:null;if(capital===null)throw Error('Historique du plan invalide.');const num=(x,max)=>typeof x==='number'&&Number.isFinite(x)&&x>=0&&x<=max?x:null;const any=x=>typeof x==='number'&&Number.isFinite(x)&&Math.abs(x)<=1e12?x:null;const runs={};if(e.runs&&typeof e.runs==='object'&&!Array.isArray(e.runs))Object.keys(e.runs).slice(0,12).forEach(k=>{const n=num(e.runs[k],1e5);if(k.length<=60&&n!==null)runs[k]=n;});return {at:typeof e.at==='string'?e.at.slice(0,40):'',capital,minutes:num(e.minutes,1e7)??0,forecast:any(e.forecast),note:typeof e.note==='string'?e.note.slice(0,300):'',units:num(e.units,1e12),unitsGain:any(e.unitsGain),gain:any(e.gain),plannedGain:any(e.plannedGain),sessionMinutes:num(e.sessionMinutes,1e5)??0,runs,purchases:Array.isArray(e.purchases)?e.purchases.filter(x=>typeof x==='string'&&x.length<=60).slice(0,20):[]};});}
+   if(key==='log'){return v.slice(0,60).map(e=>{if(!e||typeof e!=='object'||Array.isArray(e))throw Error('Historique du plan invalide.');const capital=typeof e.capital==='number'&&Number.isFinite(e.capital)&&e.capital>=0&&e.capital<=1e12?e.capital:null;if(capital===null)throw Error('Historique du plan invalide.');const num=(x,max)=>typeof x==='number'&&Number.isFinite(x)&&x>=0&&x<=max?x:null;const any=x=>typeof x==='number'&&Number.isFinite(x)&&Math.abs(x)<=1e12?x:null;const runs={};if(e.runs&&typeof e.runs==='object'&&!Array.isArray(e.runs))Object.keys(e.runs).slice(0,12).forEach(k=>{const n=num(e.runs[k],1e5);if(k.length<=60&&n!==null)runs[k]=n;});return {id:typeof e.id==='string'?e.id.slice(0,80):'',at:typeof e.at==='string'?e.at.slice(0,40):'',capital,minutes:num(e.minutes,1e7)??0,forecast:any(e.forecast),note:typeof e.note==='string'?e.note.slice(0,300):'',units:num(e.units,1e12),unitsGain:any(e.unitsGain),gain:any(e.gain),plannedGain:any(e.plannedGain),sessionMinutes:num(e.sessionMinutes,1e5)??0,runs,purchases:Array.isArray(e.purchases)?e.purchases.filter(x=>typeof x==='string'&&x.length<=60).slice(0,20):[]};});}
    if(key==='missions'){if(v.length>12)throw Error('Douze missions au maximum dans le plan.');return v.map((x,i)=>{const m=walk(planMissionTemplate,x,'mission');if(typeof m.id!=='string'||!m.id)m.id='m-'+(i+1);return m;});}
    if(key==='prerequisites'){if(v.length>20)throw Error('Vingt achats d’avant au maximum dans le plan.');return v.map((x,i)=>{const a=walk(planPrereqTemplate,x,'prerequisite');if(typeof a.id!=='string'||!a.id)a.id='p-'+(i+1);return a;});}
-   if(['keys','activityIds','requiresPurchaseIds','enabled','favorites','compareIds','completed','done','requires'].includes(key)){if(v.some(x=>typeof x!=='string'||x.length>160))throw Error('Identifiant invalide.');return [...new Set(v)].slice(0,key==='compareIds'?3:100);}
+   if(key==='variants'){if(v.length>5)throw Error('Cinq variantes au maximum dans le plan.');return v.map((x,i)=>{const a=walk(planVariantTemplate,x,'variant');if(typeof a.id!=='string'||!a.id)a.id='v-'+(i+1);return a;});}
+   if(['keys','activityIds','requiresPurchaseIds','enabled','favorites','compareIds','completed','done','requires','unlocks','requiresMissions','locked'].includes(key)){if(v.some(x=>typeof x!=='string'||x.length>160))throw Error('Identifiant invalide.');return [...new Set(v)].slice(0,key==='compareIds'?3:100);}
    if(key==='assets'){if(v.length<1||v.length>40)throw Error('Un à quarante achats par scénario.');return v.map(x=>walk(assetTemplate,x,'asset'));}
    if(key==='activities'){if(v.length!==initial.activities.length)throw Error('Nombre d’activités personnelles incompatible.');return v.map((x,i)=>walk(initial.activities[i],x,'activity'));}
    if(key==='allocations'&&v.length!==5)throw Error('Répartition du budget incompatible.');
@@ -109,7 +130,10 @@ function validate(raw,initial){
  if(typeof s.plan.variant!=='string'||s.plan.variant.length>80)s.plan.variant='auto';if(!Number.isInteger(s.plan.maxRepeat)||s.plan.maxRepeat<1||s.plan.maxRepeat>256)s.plan.maxRepeat=100;if(s.plan.goal.unitLabel.trim()==='')s.plan.goal.unitLabel='points';
  {const ids=new Set();s.plan.missions.forEach((m,i)=>{if(ids.has(m.id))m.id='m-'+(i+1)+'-'+ids.size;ids.add(m.id);});const pids=new Set();s.plan.prerequisites.forEach((a,i)=>{if(pids.has(a.id))a.id='p-'+(i+1)+'-'+pids.size;pids.add(a.id);});s.plan.missions.forEach(m=>{m.requires=m.requires.filter(id=>pids.has(id));});}
  s.compare.keys=s.compare.keys.filter(k=>asset(s,k)).slice(0,6);
- s.assets.forEach(a=>{if(!Number.isInteger(a.utility)||a.utility<1||a.utility>5)a.utility=3;});
+ s.assets.forEach(a=>{if(!Number.isInteger(a.utility)||a.utility<1||a.utility>5)a.utility=3;if(!ROLES.includes(a.role))a.role='unknown';if(!TERRAINS.includes(a.capabilities.terrain))a.capabilities.terrain='';for(const k of ['perSession','perUse','uses'])if(a.usage[k]!==null&&a.usage[k]<0)a.usage[k]=null;if(a.usage.uses!==null&&!Number.isInteger(a.usage.uses))a.usage.uses=Math.round(a.usage.uses);a.requires=a.requires.filter(k=>k!==a.key);});
+ // v6 : sens du but, priorité et besoin d’usage ; une valeur inattendue revient à la valeur par défaut au lieu de tout refuser.
+ if(!GOAL_MEANINGS.includes(s.plan.goal.meaning))s.plan.goal.meaning='held';if(!PRIORITIES.includes(s.analysis.priority))s.analysis.priority='fast';if(!TERRAINS.includes(s.analysis.need.terrain))s.analysis.need.terrain='';
+ {const pids=new Set(s.plan.prerequisites.map(a=>a.id)),mids=new Set(s.plan.missions.map(m=>m.id));s.plan.prerequisites.forEach(a=>{a.requires=a.requires.filter(id=>pids.has(id)&&id!==a.id);});s.plan.missions.forEach(m=>{m.requiresMissions=m.requiresMissions.filter(id=>mids.has(id)&&id!==m.id);});s.plan.locked=s.plan.locked.filter(id=>id==='strategy'||id==='goal'||mids.has(id)||pids.has(id));}
  for(const t of [...tools,'plan'])if(!['quick','guided','advanced'].includes(s.views[t]))s.views[t]='quick';
  s.mode=s.views[s.tab];return s;
 }
@@ -162,7 +186,7 @@ function blank(current){
  s.goal={...s.goal,capital:null,target:null,hourly:null,dailyMinutes:null,reserve:0,players:1,selected:'scenario-a'};
  s.assets=[{...copy(assetTemplate),price:null}];s.purchase={key:'free-1'};
  s.roi={...s.roi,key:'free-1',mode:'estimate',hours:null,gainPercent:0,durationReduction:0,activityIds:[],revenueHourly:null,costHourly:0,compareKey:'',recoveryActivity:''};
- s.order={keys:[]};s.budget={source:'manual',extra:0,allocations:[0,0,0,0,0]};s.compare={...copy(compareTemplate)};s.plan=copy(planTemplate);
+ s.order={keys:[]};s.budget={source:'manual',extra:0,allocations:[0,0,0,0,0]};s.compare={...copy(compareTemplate)};s.plan=copy(planTemplate);s.analysis=copy(analysisTemplate);
  s.activities=s.activities.map((a,i)=>({...a,name:'Mon activité '+String.fromCharCode(65+i),reward:null,duration:null,cost:0,prep:0,cooldown:0,share:100,investment:0,players:1,owned:false,prepOnce:false,requiresPurchaseIds:[]}));
  s.session={...s.session,enabled:['scenario-a'],minutes:null,usualMinutes:null,daysPerWeek:null};s.inverse={selected:'scenario-a',minutes:null};
  return s;
@@ -256,5 +280,5 @@ function sensitivity(tool,s,source=[]){
 function signature(s){const c=copy(s);delete c.name;delete c.mode;delete c.views;delete c.tab;delete c.catalogue;delete c.completed;return JSON.stringify(c);}
 function referenceWarnings(s,catalogue){const out=[];s.assets.forEach(a=>{if(!a.itemId)return;const item=catalogue.find(x=>x.id===a.itemId);if(!item)out.push(a.name+' : cette fiche n’existe plus, ton prix est gardé.');else if(a.referencePrice!==item.price)out.push(item.name+' : le prix du site a changé ; vérifie ton chiffre.');});return out;}
 function initial(dataVersion,presets){return defaults({version:2,dataVersion,mode:'quick',model:'continuous',name:'Mon premier million',tab:'goal',goal:{capital:200000,target:1000000,hourly:100000,reserve:0,dailyMinutes:60,players:1,selected:'scenario-a'},activities:presets.map(a=>({id:a.id,name:a.name,reward:a.reward,cost:a.cost,duration:a.duration,prep:a.prep,cooldown:a.cooldown,share:a.share,investment:a.investment,players:a.players,owned:false})),session:{minutes:60,maxRepeat:100,enabled:['scenario-a','scenario-b','scenario-c']},inverse:{minutes:60,selected:'scenario-a'},purchase:{itemId:'',price:100000,hourly:50000,boostHourly:0,capital:200000,target:1000000,reserve:0,extras:0},catalogue:{query:'',type:'all',status:'all',maxPrice:null,sort:'name',favorites:[],compareIds:[],favoritesOnly:false}});}
-return Object.freeze({copy,tools,names,defaults,initial,validate,migrate,asset,addAsset,activities,eligible,purchase,goal,session,projection,roi,investment,decision,blank,orderInput,budgetInput,chooseInput,planInput,planMissing,planPurchases,planReserve,planGoalName,planStrategies,planAlternatives,planObserved,planNextSession,planDeadline,planCurve,planTemplate,planMissionTemplate,planPrereqTemplate,planLogTemplate,STRATEGIES,STRATEGY_LABEL,PLAN_KINDS,PLAN_SOURCES,evaluate,metrics,metric,sensitivity,signature,referenceWarnings});
+return Object.freeze({copy,tools,names,defaults,initial,validate,migrate,asset,addAsset,activities,eligible,purchase,goal,session,projection,roi,investment,decision,blank,orderInput,budgetInput,chooseInput,planInput,planMissing,planPurchases,planReserve,planGoalName,planStrategies,planAlternatives,planObserved,planNextSession,planDeadline,planCurve,planTemplate,planMissionTemplate,planPrereqTemplate,planLogTemplate,planVariantTemplate,analysisTemplate,assetTemplate,MECHANICS,ROLES,GOAL_MEANINGS,PRIORITIES,TERRAINS,STRATEGIES,STRATEGY_LABEL,PLAN_KINDS,PLAN_SOURCES,evaluate,metrics,metric,sensitivity,signature,referenceWarnings});
 });

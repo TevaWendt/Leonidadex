@@ -1,0 +1,30 @@
+LEONIDAKIT v7.48 — MISSION EN 5 LOTS, LOT 1 : CONTEXTE, DONNÉES ET FONDATIONS COMMUNES — archive « modifs » (29 septembre 2026)
+
+Base attendue : ton dossier Leonidadex en v7.47 (lot 10 : calculateur, passe finale et audit de clôture).
+Fichiers ajoutés ou modifiés seulement, chemins exacts depuis la racine. Rien à supprimer. Aucune commande de build.
+Toujours aucun package.json ; api/ ne change pas ; rien à régler dans Vercel ni dans Brevo.
+
+1. Copie ton dossier actuel (sauvegarde).
+2. Extrais l’archive dans la racine du site, écrase les fichiers homonymes (garde le dossier .git).
+3. Mets en ligne (GitHub Desktop, dossier complet).
+
+CE QUE TU VERRAS : presque rien, c’est voulu. Ce lot prépare les quatre suivants :
+- un modèle commun (modele-donnees.js) qui dit, pour chaque chiffre, s’il est officiel, à toi, une simulation ou encore
+  inconnu, et ce qu’on affiche quand il manque (« Prix à venir », « Achat à confirmer », « Récupération de vie : à
+  confirmer ») ;
+- les calculs communs aux huit outils et au business plan (calculateurs-modele.js) : coût sur la durée, point où une
+  option devient moins chère, « puis-je payer maintenant ? » avec les frais et l’argent gardé de côté, prérequis des
+  prérequis, argent au plus bas, séquences d’achat comparées ;
+- les bases des carnets (carnets-core.js) : stock de consommables et de munitions, souhaits séparés de ce que tu
+  possèdes, réalisations comptées une seule fois ;
+- tes réglages du calculateur passent en version 6 au premier changement : tous tes chiffres restent identiques
+  (vérifié sur les neuf outils) ; tes calculs enregistrés et ton suivi ne bougent pas.
+
+POUR VÉRIFIER (2 minutes) : ouvre le calculateur, change un chiffre dans Mon objectif, recharge : tout est retrouvé.
+Ouvre « Mes calculs » : tes anciens enregistrements sont là.
+
+SUITE : lot 2 (v7.49), les huit calculs et le business plan. Chaque lot arrive avec son archive cumulée depuis la v7.47 :
+tu peux mettre en ligne chaque lot, ou seulement le dernier.
+
+Détails : outils/CHANGEMENTS-v7.48.txt ; suivi et reprise : outils/SUIVI-MISSION.md ; matrice des outils :
+outils/MATRICE-COUVERTURE.md ; inventaire de départ : outils/INVENTAIRE-MISSION.md.

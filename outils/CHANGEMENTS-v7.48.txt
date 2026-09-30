@@ -1,0 +1,86 @@
+v7.48 — 29 septembre 2026 — MISSION « CALCULATEUR, CATALOGUES, ACHATS, CARNETS », LOT 1 SUR 5 : CONTEXTE, DONNÉES ET FONDATIONS COMMUNES
+(base : v7.47 = dépôt a843930 v7.46 + archive modifs v7.47)
+
+Ce lot ne change rien de visible pour le visiteur : il pose ce que les lots 2 à 4 vont utiliser, pour qu’aucun
+outil, aucune page ni aucun carnet n’ait sa propre formule ou sa propre copie des données.
+
+Contexte et suivi
+- outils/SUIVI-MISSION.md : base exacte, objectif, contraintes, état des cinq lots, fichiers, choix, vérifications,
+  blocages, 24 anomalies relevées à l’inventaire (avec le lot qui les traite) et point de reprise.
+- outils/MATRICE-COUVERTURE.md : les huit outils réels (Mon objectif, Mes achats, Mon temps de jeu, Mon budget, Quoi
+  acheter d’abord ?, Ça vaut le coup ?, Mes activités, Quel achat choisir ?) et le business plan : question, fonctions du
+  moteur, entrées réelles, dépendances ; puis une ligne par outil : critères utilisés, omissions, critères à ajouter,
+  données, effets attendus, vérifications.
+- outils/INVENTAIRE-MISSION.md : organisation du projet, chaîne de génération, catalogues concernés, sélecteurs de carte,
+  suivis et progression, charte, effets, tests qui verrouillent la structure.
+
+Modèle commun (outils/modele-donnees.json → modele-donnees.js, généré et validé par outils/gen-modele.cjs)
+- 11 statuts d’une valeur : officiel, mesuré, estimé, ton chiffre, simulation, exemple (utilisables dans un calcul) ;
+  repère de la série (autre jeu), pas encore écrit, inconnu, mécanique non confirmée, sans objet (jamais comptés comme 0).
+- 5 genres de critères : condition obligatoire, grandeur calculée, critère de comparaison, préférence, inconnue ou
+  hypothèse ; 4 états d’admission : possible, possible si ton hypothèse est juste, impossible pour l’instant, on ne peut
+  pas encore dire.
+- 32 facteurs (sens, unité, genre, outils où il agit, façon d’intervenir) ; chaque outil en a au moins quatre.
+- 10 mécaniques non confirmées pour GTA VI : carburant, entretien, réparations, assurance, revente, munitions consommées,
+  soin, revenu d’entreprise, échec d’une mission, bonus. Chacune dit pourquoi elle n’est pas comptée et quels chiffres
+  une simulation demanderait (le carburant : distance × consommation ÷ 100 × prix du litre).
+- Structure documentaire de 8 catégories (véhicule, arme, consommable, vêtement, personnalisation, bien, entreprise,
+  activité) : rubriques, champs, unités, états vides (« Prix à venir », « Achat à confirmer », « Récupération de vie :
+  à confirmer », « Emplacement à venir », « Ne s’applique pas »…).
+- 9 carnets : garage, arsenal, garde-robe, consommables, personnalisations, propriétés, lieux, collectibles, calculs ;
+  chacun avec son adresse sous /carnets/, ses familles, son verbe (possédé, repéré, trouvé…) et le libellé de son
+  bouton (« Voir mon garage »…). Le générateur refuse une famille oubliée ou comptée dans deux carnets.
+
+Fonctions communes (calculateurs-modele.js, pures, sans page)
+- Sommes partielles : un poste inconnu donne un « sous-total connu », jamais un total ; un poste sans objet n’est pas
+  un manque.
+- Coûts incomplets comparés avec une borne basse : on ne conclut que si c’est démontré (« même sans ses coûts inconnus,
+  B coûte déjà plus cher »), sinon on dit quelle donnée écrire.
+- Coût sur la durée (achat, par partie, par utilisation, par heure, dépenses déclenchées) et point de bascule entre deux
+  options ; la revente baisse le coût futur seulement, jamais l’argent à payer aujourd’hui.
+- Trésorerie : l’achat et ses frais obligatoires immédiats doivent tenir dans l’argent disponible, réserve gardée ;
+  manque exact, ou « au moins » quand une dépense obligatoire est inconnue.
+- Admission : une condition non remplie n’est jamais compensée ; plus petit changement utile.
+- Prérequis récursifs : chaîne dans l’ordre, prérequis partagé payé une fois, possession réutilisée sans être refacturée,
+  solutions équivalentes (la possédée, sinon la moins chère ; « à départager » si un prix manque), dépendance circulaire et
+  référence absente expliquées sans boucle.
+- Grand livre : dépense avant, récompense à la fin, point le plus bas, franchissement de la réserve, conservation des
+  flux (départ + recettes − dépenses = arrivée).
+- Seuils de bascule, résultats trop proches pour trancher, variations sans probabilité, séquences (toutes les séquences
+  jusqu’à 7 achats, sinon une recherche annoncée comme telle), front de Pareto sans normalisation par les candidats,
+  explication « Ce qui compte » construite depuis les facteurs réellement utilisés (un facteur ni utilisé ni écarté est
+  signalé), fiche documentaire et adaptateurs pour les véhicules, les armes et les consommables.
+
+Carnets (carnets-core.js)
+- Les possessions restent dans leurs clés historiques (lk_own_…, lk_map_found, lk_collectibles_v1, lk_progression_v2) :
+  rien n’est renommé ni réécrit.
+- Nouvelles rubriques séparées : lk_stock_v1 (quantité encore disponible d’un consommable ou d’une munition ; une ancienne
+  case cochée se lit « stock à renseigner », jamais une quantité inventée), lk_wish_v1 (souhaits et achats prévus, jamais
+  une possession), lk_journal_v1 (réalisations déclarées : le même événement n’est appliqué qu’une fois). Chaque opération
+  relit le stockage avant d’écrire (deux onglets ne s’écrasent pas) ; stockage indisponible : « false » et un message,
+  jamais un succès annoncé. progression-core.js reconnaît ces rubriques à l’import (elles partaient déjà à l’export).
+
+Calculateur : état v6 (calculateurs-scenario.js)
+- Ajouts, tous vides ou désactivés au départ : analyse partagée (horizon, besoin d’usage, priorité, mécaniques simulées
+  et leurs chiffres), par achat (rôle, coût d’usage, nombre d’utilisations, revente, capacités, achats à avoir avant,
+  activités débloquées), dans le plan (sens du but : argent détenu, disponible après la réserve ou gains cumulés ; durée
+  d’obtention et prérequis des achats d’avant ; missions de déblocage faites une fois ; choix verrouillés ; cinq variantes
+  au plus, sans écraser le plan ; identifiant de chaque relevé réel), versions du modèle et des données.
+- Migration v5 → v6 : aucun chiffre ne change ; les neuf résultats sont identiques avant et après (testé). Une valeur
+  inattendue revient à sa valeur par défaut au lieu de faire refuser toute la sauvegarde. Les anciennes sauvegardes v1 à
+  v5 se lisent toujours. calculateurs.js : une sauvegarde v6 reste modifiable.
+
+Tests
+- Nouveaux : outils/tests/modele-v748.test.cjs (20), carnets-core-v748.test.cjs (8), scenario-v6-v748.test.cjs (6),
+  avec des références écrites à la main : coût A/B (égalité à 10 parties à 140 000, puis 160 000 contre 145 000 à 15),
+  trésorerie (50 000, 10 000 gardés, 40 000 + 5 000 → il manque 5 000), coût inconnu ≠ 0, prérequis partagé payé une
+  fois, cycle et référence absente, grand livre (point bas 25 000), séquences comparées à une recherche brute
+  indépendante, Pareto stable quand on ajoute une option sans intérêt ou qu’on réordonne la liste, conversions d’unités
+  sans effet sur le résultat, réalisation déclarée deux fois comptée une fois, prévu ≠ possédé, export / import.
+- Adaptés à la v6 : calculateurs-astra, calculateurs-lot-b, calculateurs-plan-v34, calculateurs-parcours-browser.
+
+Résultats
+- node --test : 497 / 497 (463 + 34). verifier.js : 0 erreur (44 322 références, 406 pages). Régénération complète
+  reproductible (deux passages, aucune différence). gen-modele --check : à jour. Preuve de confidentialité : tenue.
+- Navigateur : calculateurs-parcours-browser 161 / 161 (huit outils × trois modes, business plan, enregistrer, recharger,
+  anciennes sauvegardes, sept largeurs, clavier, mouvement réduit, contrastes).

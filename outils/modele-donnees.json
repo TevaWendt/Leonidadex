@@ -1,0 +1,247 @@
+{
+  "version": "2026-09-29.1",
+  "titre": "Modèle commun des données, des critères et des carnets (v7.48, lot 1)",
+  "description": "Une seule source pour : les statuts d’une valeur, les cinq genres de critères, les mécaniques de jeu non confirmées, la structure documentaire de chaque catégorie (rubriques, champs, états vides) et les carnets de progression. Lu par outils/gen-modele.cjs, qui le valide et écrit modele-donnees.js (window.LK_MODELE) pour le calculateur, les catalogues et les carnets. Rien ici n’est une donnée de GTA VI : ce fichier décrit comment ranger et afficher les données, pas leurs valeurs.",
+  "statuts": [
+    { "id": "official", "label": "Donnée officielle", "court": "Officiel", "origine": "site", "calcul": true, "texte": "Publiée par Rockstar pour GTA VI." },
+    { "id": "measured", "label": "Mesure documentée", "court": "Mesuré", "origine": "site", "calcul": true, "texte": "Relevée dans le jeu, avec la méthode et la date." },
+    { "id": "estimated", "label": "Estimation", "court": "Estimé", "origine": "site", "calcul": true, "texte": "Déduite d’indices publiés ; peut changer." },
+    { "id": "personal", "label": "Ton chiffre", "court": "À toi", "origine": "toi", "calcul": true, "texte": "Écrit par toi : ce que tu as vu, payé ou gagné." },
+    { "id": "simulated", "label": "Hypothèse de simulation", "court": "Simulation", "origine": "simulation", "calcul": true, "texte": "Choisie par toi pour essayer ; ce n’est pas une règle du jeu." },
+    { "id": "example", "label": "Exemple de démonstration", "court": "Exemple", "origine": "exemple", "calcul": true, "texte": "Chiffre fictif pour montrer le calcul ; remplace-le par le tien." },
+    { "id": "series", "label": "Repère de la série", "court": "Autre jeu", "origine": "site", "calcul": false, "texte": "Chiffre d’un autre jeu (GTA V, GTA Online…) : il ne prouve rien pour GTA VI. Il sert seulement si tu le choisis comme hypothèse." },
+    { "id": "blank", "label": "Pas encore écrit", "court": "À écrire", "origine": "toi", "calcul": false, "texte": "La case existe mais tu ne l’as pas remplie." },
+    { "id": "unknown", "label": "Inconnu", "court": "À confirmer", "origine": "site", "calcul": false, "texte": "Personne ne connaît encore ce chiffre : il n’est jamais compté comme 0." },
+    { "id": "unconfirmed", "label": "Mécanique non confirmée", "court": "Non confirmé", "origine": "site", "calcul": false, "texte": "Rien ne dit encore que ce système existe dans GTA VI (par exemple un coût de carburant)." },
+    { "id": "na", "label": "Ne s’applique pas", "court": "Sans objet", "origine": "site", "calcul": false, "texte": "Ce critère n’a pas de sens ici ; ce n’est pas une donnée qui manque." }
+  ],
+  "genres": [
+    { "id": "condition", "label": "Condition obligatoire", "texte": "À remplir, sinon l’option est écartée. Une bonne note ailleurs ne compense jamais une condition non remplie." },
+    { "id": "grandeur", "label": "Grandeur calculée", "texte": "Un chiffre obtenu par le calcul : coût total, gain net, durée, argent restant, délai de récupération, avancement." },
+    { "id": "comparaison", "label": "Critère de comparaison", "texte": "Une propriété documentée qui départage des options admissibles, pour un usage donné." },
+    { "id": "preference", "label": "Préférence personnelle", "texte": "Ce que tu aimes ou préfères. Elle départage à égalité ; elle n’est jamais présentée comme une performance." },
+    { "id": "hypothese", "label": "Inconnue ou hypothèse", "texte": "Une valeur qui manque ou que tu choisis pour simuler ; elle garde ce statut jusque dans les résultats enregistrés." }
+  ],
+  "etatsAdmission": [
+    { "id": "admissible", "label": "Possible", "texte": "Toutes les conditions sont remplies avec des données connues ou tes chiffres." },
+    { "id": "conditionnel", "label": "Possible si ton hypothèse est juste", "texte": "Possible seulement avec une hypothèse que tu as choisie." },
+    { "id": "impossible", "label": "Impossible pour l’instant", "texte": "Une condition obligatoire n’est pas remplie ; on te dit laquelle et le plus petit changement utile." },
+    { "id": "inconnu", "label": "On ne peut pas encore dire", "texte": "Une donnée décisive manque ; on te dit laquelle écrire." }
+  ],
+  "mecaniques": [
+    { "id": "carburant", "label": "Carburant", "statut": "unconfirmed", "texte": "Une jauge vue dans une bande-annonce ne prouve ni un prix, ni une consommation, ni un coût d’usage.", "simulation": { "champs": [ { "id": "distance", "label": "Distance par partie", "unite": "km" }, { "id": "consommation", "label": "Consommation", "unite": "L/100 km" }, { "id": "prixUnitaire", "label": "Prix du litre", "unite": "$/L" } ], "formule": "distance × consommation ÷ 100 × prix du litre = coût par partie" } },
+    { "id": "entretien", "label": "Entretien", "statut": "unconfirmed", "texte": "Aucun coût d’entretien de véhicule n’est annoncé pour GTA VI.", "simulation": { "champs": [ { "id": "parPartie", "label": "Coût par partie", "unite": "$/partie" } ] } },
+    { "id": "reparation", "label": "Réparations", "statut": "unconfirmed", "texte": "Les réparations payantes de GTA V ne prouvent rien pour GTA VI.", "simulation": { "champs": [ { "id": "parPartie", "label": "Coût par partie", "unite": "$/partie" } ] } },
+    { "id": "assurance", "label": "Assurance", "statut": "unconfirmed", "texte": "Aucune assurance de véhicule n’est annoncée pour GTA VI.", "simulation": { "champs": [ { "id": "parPartie", "label": "Coût par partie", "unite": "$/partie" } ] } },
+    { "id": "revente", "label": "Revente", "statut": "unconfirmed", "texte": "Une revente compte seulement si elle est possible et si son prix est connu ou choisi comme hypothèse. Elle ne réduit jamais l’argent à payer aujourd’hui.", "simulation": { "champs": [ { "id": "valeur", "label": "Prix de revente", "unite": "$" } ] } },
+    { "id": "munitions", "label": "Munitions consommées", "statut": "unconfirmed", "texte": "Le prix des munitions et la quantité tirée par mission ne sont pas publiés.", "simulation": { "champs": [ { "id": "parTentative", "label": "Munitions par tentative", "unite": "$/tentative" } ] } },
+    { "id": "soin", "label": "Soin par consommable", "statut": "unconfirmed", "texte": "Rockstar dit que la nourriture agit sur les jauges, sans chiffre : une jauge de soin chiffrée demande une quantité et une référence connues.", "simulation": { "champs": [ { "id": "points", "label": "Vie rendue", "unite": "points de vie" } ] } },
+    { "id": "revenu-passif", "label": "Revenu d’une entreprise", "statut": "unconfirmed", "texte": "Aucun revenu d’entreprise, stock ou plafond de production n’est publié pour GTA VI.", "simulation": { "champs": [ { "id": "parHeure", "label": "Revenu net par heure", "unite": "$/h" }, { "id": "plafond", "label": "Stock maximum", "unite": "$" } ] } },
+    { "id": "echec", "label": "Échec d’une mission", "statut": "unconfirmed", "texte": "Aucune probabilité de réussite n’est défendable : on compare des scénarios (tout réussit, une tentative ratée…) au lieu d’inventer un taux.", "simulation": { "champs": [ { "id": "tentativesRatees", "label": "Tentatives ratées sur 10", "unite": "tentatives" } ] } },
+    { "id": "bonus", "label": "Bonus temporaire", "statut": "unconfirmed", "texte": "Un bonus ne compte que si ses conditions et sa durée sont connues ou choisies comme hypothèse.", "simulation": { "champs": [ { "id": "pourcentage", "label": "Bonus", "unite": "%" } ] } }
+  ],
+  "facteurs": [
+    { "id": "argent-disponible", "label": "Argent disponible maintenant", "genre": "condition", "unite": "$", "sens": "Ce que tu as, moins l’argent gardé de côté.", "intervention": "Un achat, ses frais obligatoires immédiats et la première dépense d’une activité doivent tenir dedans ; sinon on calcule le manque.", "outils": ["goal", "purchase", "session", "budget", "order", "roi", "activities", "compare", "plan"] },
+    { "id": "reserve", "label": "Argent gardé de côté", "genre": "condition", "unite": "$", "sens": "La somme sous laquelle tu ne veux jamais descendre.", "intervention": "Aucune étape ne peut faire passer l’argent en dessous ; la réserve n’est pas une dépense.", "outils": ["goal", "purchase", "session", "budget", "order", "roi", "activities", "compare", "plan"] },
+    { "id": "possession-requise", "label": "Ce qu’il faut posséder", "genre": "condition", "unite": null, "sens": "Un véhicule, une arme ou un bien sans lequel une activité ne se fait pas.", "intervention": "Seulement si la relation est écrite dans les données ou choisie par toi ; une utilité supposée ne débloque rien.", "outils": ["session", "activities", "order", "compare", "plan"] },
+    { "id": "deblocage", "label": "Mission ou rang à débloquer", "genre": "condition", "unite": null, "sens": "Une étape à faire une fois avant d’accéder à une activité.", "intervention": "Faite une seule fois même si deux activités en ont besoin ; son temps compte dans le parcours.", "outils": ["plan"] },
+    { "id": "joueurs", "label": "Joueurs disponibles", "genre": "condition", "unite": "joueurs", "sens": "Le nombre de joueurs qu’une activité demande.", "intervention": "Une activité à 4 joueurs est écartée si vous êtes 2 ; la part de récompense n’est pas redivisée par le nombre de joueurs.", "outils": ["goal", "session", "activities", "roi", "plan"] },
+    { "id": "usage-compatible", "label": "Compatible avec ton besoin", "genre": "condition", "unite": null, "sens": "Terrain, passagers, place ou capacité que ton usage exige.", "intervention": "Un véhicule très rapide mais incompatible reste écarté ; une capacité inconnue rend l’option « à vérifier ».", "outils": ["compare", "order", "purchase"] },
+    { "id": "achetable", "label": "Vraiment achetable", "genre": "condition", "unite": null, "sens": "L’objet s’achète-t-il dans GTA VI ?", "intervention": "« Achat à confirmer » rend l’option conditionnelle, jamais gratuite.", "outils": ["purchase", "order", "compare", "roi", "plan"] },
+    { "id": "temps-partie", "label": "Temps de ta partie", "genre": "condition", "unite": "min", "sens": "La durée d’une partie de jeu.", "intervention": "Une activité qui ne tient pas entière dans la partie n’est pas coupée en morceaux.", "outils": ["goal", "session", "activities", "plan"] },
+    { "id": "ressource-exclusive", "label": "Pas deux choses à la fois", "genre": "condition", "unite": null, "sens": "Un même joueur ne fait pas deux activités en même temps.", "intervention": "Les activités s’enchaînent ; seule une attente permise par les règles peut chevaucher.", "outils": ["session", "plan"] },
+    { "id": "cout-acquisition", "label": "Coût d’achat complet", "genre": "grandeur", "unite": "$", "sens": "Prix, options indispensables et frais au départ.", "intervention": "Payé avant d’utiliser l’objet ; un prix inconnu laisse le total « à compléter », jamais à 0.", "outils": ["purchase", "budget", "order", "roi", "compare", "plan"] },
+    { "id": "cout-usage", "label": "Coût d’usage", "genre": "grandeur", "unite": "$/partie", "sens": "Ce que l’objet ou l’activité coûte à chaque partie, utilisation ou heure.", "intervention": "Compté une seule fois, dans une seule unité ; il baisse le gain net, l’argent à la fin et la vitesse de progression.", "outils": ["purchase", "budget", "roi", "compare", "activities", "session", "goal", "plan"] },
+    { "id": "cout-complet", "label": "Coût sur la durée", "genre": "grandeur", "unite": "$", "sens": "Coût d’achat plus coût d’usage sur l’horizon choisi.", "intervention": "Compare deux options sur le même nombre de parties ; montre quand l’une devient moins chère.", "outils": ["purchase", "compare", "roi", "budget"] },
+    { "id": "gain-net", "label": "Gain net", "genre": "grandeur", "unite": "$", "sens": "Ta part de la récompense moins les frais de l’activité.", "intervention": "La part s’applique à la récompense ; les frais sont retirés après ; rien n’est divisé deux fois.", "outils": ["goal", "session", "activities", "roi", "plan"] },
+    { "id": "gain-en-plus", "label": "Ce que l’achat te fait gagner en plus", "genre": "grandeur", "unite": "$/h", "sens": "La différence avec ce que tu gagnes déjà sans l’achat.", "intervention": "Seul le gain en plus rembourse l’achat ; un même gain n’est pas compté deux fois (revenu débloqué et bénéfice du véhicule).", "outils": ["roi", "order", "compare", "plan", "purchase"] },
+    { "id": "temps-actif", "label": "Temps de jeu actif", "genre": "grandeur", "unite": "min", "sens": "Préparation et activité, sans les attentes.", "intervention": "Séparé des attentes et du temps calendaire.", "outils": ["goal", "session", "activities", "plan"] },
+    { "id": "attente", "label": "Attente avant de recommencer", "genre": "grandeur", "unite": "min", "sens": "Le délai avant de pouvoir refaire la même activité.", "intervention": "Une autre activité peut l’occuper ; elle n’est jamais comptée comme du jeu qui rapporte.", "outils": ["goal", "session", "activities", "plan"] },
+    { "id": "versement", "label": "Moment du paiement", "genre": "grandeur", "unite": null, "sens": "La récompense arrive à la fin de l’activité ; les frais sont payés avant.", "intervention": "L’argent n’arrive jamais « petit à petit » pendant une mission ; la courbe monte par marches.", "outils": ["session", "activities", "plan", "goal"] },
+    { "id": "delai-recuperation", "label": "Temps pour regagner le prix", "genre": "grandeur", "unite": "h", "sens": "Le temps de jeu pour que le gain en plus égale le coût.", "intervention": "Seulement s’il existe un gain en plus ; sinon « pas de remboursement », sans chiffre inventé.", "outils": ["roi", "compare", "order", "purchase"] },
+    { "id": "argent-restant", "label": "Argent restant", "genre": "grandeur", "unite": "$", "sens": "Ce qui reste après une étape.", "intervention": "Sert à décider si l’étape suivante est possible ; le point le plus bas est montré.", "outils": ["purchase", "budget", "order", "plan", "roi"] },
+    { "id": "avancement", "label": "Avancement vers le but", "genre": "grandeur", "unite": "%", "sens": "Où tu en es par rapport à ton but.", "intervention": "Calculé sur ce que vise le but : argent détenu, argent disponible après la réserve ou gains cumulés.", "outils": ["goal", "plan"] },
+    { "id": "revente-prevue", "label": "Revente prévue", "genre": "hypothese", "unite": "$", "sens": "Ce que tu récupérerais en revendant.", "intervention": "Baisse le coût net futur seulement si elle est possible et chiffrée ; jamais l’argent à payer aujourd’hui.", "outils": ["purchase", "compare", "roi"], "mecanique": "revente" },
+    { "id": "performance-usage", "label": "Performance utile pour ton usage", "genre": "comparaison", "unite": null, "sens": "Accélération, freinage, tenue de route, maniabilité ou vitesse, selon le trajet.", "intervention": "Seulement si c’est documenté ; une vitesse maximale n’est jamais transformée en vitesse moyenne de trajet.", "outils": ["compare"], "categories": ["vehicle"] },
+    { "id": "capacite", "label": "Capacité", "genre": "comparaison", "unite": null, "sens": "Places, chargement, portée, cadence : ce que l’objet permet.", "intervention": "Condition si ton besoin l’exige, critère de comparaison sinon.", "outils": ["compare"], "categories": ["vehicle", "weapon"] },
+    { "id": "effet-soin", "label": "Effet sur la vie", "genre": "comparaison", "unite": "points de vie", "sens": "Ce qu’un consommable rend, dans quelle unité et en combien de temps.", "intervention": "Sans quantité connue, aucune jauge chiffrée ni coût par point de vie.", "outils": ["compare", "budget"], "categories": ["consumable"] },
+    { "id": "frequence", "label": "Combien de fois tu t’en sers", "genre": "grandeur", "unite": "parties", "sens": "Le nombre de parties ou d’utilisations sur l’horizon.", "intervention": "Multiplie le coût d’usage ; peut faire changer l’option la moins chère.", "outils": ["purchase", "compare", "roi", "budget"] },
+    { "id": "horizon", "label": "Sur quelle durée", "genre": "grandeur", "unite": null, "sens": "Prochaine partie, nombre d’utilisations, heures de jeu ou période.", "intervention": "Toutes les options sont comparées sur le même horizon.", "outils": ["purchase", "compare", "roi", "budget", "goal", "plan"] },
+    { "id": "envie", "label": "Ton envie", "genre": "preference", "unite": "1 à 5", "sens": "À quel point tu veux cet objet.", "intervention": "Départage des options proches ; ne crée jamais de rentabilité.", "outils": ["compare", "order"] },
+    { "id": "variete", "label": "Varier les activités", "genre": "preference", "unite": "fois", "sens": "Combien de fois la même activité à la suite, au plus.", "intervention": "Limite le programme ; peut le rendre moins rapide, et on le dit.", "outils": ["session", "plan"] },
+    { "id": "priorite", "label": "Ce qui compte le plus pour toi", "genre": "preference", "unite": null, "sens": "Le plus vite, le moins cher au départ, le moins cher au total, garder de l’argent de côté.", "intervention": "Choisit la recommandation parmi les options possibles ; le compromis est montré.", "outils": ["compare", "order", "plan", "roi"] },
+    { "id": "esthetique", "label": "Ton goût", "genre": "preference", "unite": null, "sens": "Une préférence de style que tu choisis.", "intervention": "Jamais une note inventée par le site ; jamais un argument économique.", "outils": ["compare"], "categories": ["style", "vehicle"] },
+    { "id": "mecanique-simulee", "label": "Mécanique simulée", "genre": "hypothese", "unite": null, "sens": "Carburant, entretien, réparations, munitions… si tu choisis de les simuler.", "intervention": "Désactivé par défaut ; activé seulement par toi, affiché comme hypothèse jusque dans les plans exportés.", "outils": ["purchase", "compare", "roi", "budget", "activities", "plan"] },
+    { "id": "scenario-echec", "label": "Tentatives ratées", "genre": "hypothese", "unite": "tentatives", "sens": "Ce que coûte une tentative ratée : frais perdus, temps à refaire.", "intervention": "Des scénarios explicites, jamais un taux de réussite inventé.", "outils": ["activities", "plan"], "mecanique": "echec" }
+  ],
+  "vides": {
+    "prix": "Prix à venir",
+    "achat": "Achat à confirmer",
+    "effet": "à confirmer",
+    "soin": "Récupération de vie : à confirmer",
+    "emplacement": "Emplacement à venir",
+    "obtention": "Obtention à confirmer",
+    "na": "Ne s’applique pas",
+    "stock": "Stock à renseigner",
+    "blank": "Pas encore écrit"
+  },
+  "categories": [
+    {
+      "id": "vehicle", "label": "Véhicule", "pluriel": "Véhicules",
+      "rubriques": [
+        { "id": "acces", "titre": "L’obtenir" },
+        { "id": "perf", "titre": "Performances" },
+        { "id": "capacites", "titre": "Capacités" },
+        { "id": "usage", "titre": "Coûts d’usage" }
+      ],
+      "champs": [
+        { "id": "price", "label": "Prix", "rubrique": "acces", "genre": "grandeur", "unite": "$", "vide": "prix" },
+        { "id": "purchasable", "label": "Achetable", "rubrique": "acces", "genre": "condition", "vide": "achat" },
+        { "id": "acquisition", "label": "Comment l’obtenir", "rubrique": "acces", "genre": "condition", "vide": "obtention" },
+        { "id": "location", "label": "Où le trouver", "rubrique": "acces", "genre": "condition", "vide": "emplacement" },
+        { "id": "acceleration", "label": "Accélération", "rubrique": "perf", "genre": "comparaison", "unite": "s de 0 à 100 km/h", "vide": "effet" },
+        { "id": "topSpeed", "label": "Vitesse maximale", "rubrique": "perf", "genre": "comparaison", "unite": "km/h", "vide": "effet", "note": "Une vitesse maximale n’est pas une vitesse de trajet." },
+        { "id": "braking", "label": "Freinage", "rubrique": "perf", "genre": "comparaison", "unite": null, "vide": "effet" },
+        { "id": "handling", "label": "Tenue de route", "rubrique": "perf", "genre": "comparaison", "unite": null, "vide": "effet" },
+        { "id": "seats", "label": "Places", "rubrique": "capacites", "genre": "condition", "unite": "places", "vide": "effet" },
+        { "id": "terrain", "label": "Terrain", "rubrique": "capacites", "genre": "condition", "unite": null, "vide": "effet", "valeurs": ["route", "tout-terrain", "eau", "air"] },
+        { "id": "cargo", "label": "Chargement", "rubrique": "capacites", "genre": "condition", "unite": null, "vide": "effet" },
+        { "id": "fuel", "label": "Carburant", "rubrique": "usage", "genre": "hypothese", "mecanique": "carburant" },
+        { "id": "upkeep", "label": "Entretien", "rubrique": "usage", "genre": "hypothese", "mecanique": "entretien" },
+        { "id": "repair", "label": "Réparations", "rubrique": "usage", "genre": "hypothese", "mecanique": "reparation" },
+        { "id": "insurance", "label": "Assurance", "rubrique": "usage", "genre": "hypothese", "mecanique": "assurance" },
+        { "id": "resale", "label": "Revente", "rubrique": "usage", "genre": "hypothese", "mecanique": "revente" }
+      ]
+    },
+    {
+      "id": "weapon", "label": "Arme", "pluriel": "Armes",
+      "rubriques": [
+        { "id": "acces", "titre": "L’obtenir" },
+        { "id": "tir", "titre": "Au tir" },
+        { "id": "munitions", "titre": "Munitions" },
+        { "id": "ameliorations", "titre": "Améliorations et restrictions" }
+      ],
+      "champs": [
+        { "id": "price", "label": "Prix", "rubrique": "acces", "genre": "grandeur", "unite": "$", "vide": "prix" },
+        { "id": "purchasable", "label": "Achetable", "rubrique": "acces", "genre": "condition", "vide": "achat" },
+        { "id": "acquisition", "label": "Comment l’obtenir", "rubrique": "acces", "genre": "condition", "vide": "obtention" },
+        { "id": "location", "label": "Où la trouver", "rubrique": "acces", "genre": "condition", "vide": "emplacement" },
+        { "id": "range", "label": "Portée utile", "rubrique": "tir", "genre": "comparaison", "unite": "m", "vide": "effet" },
+        { "id": "rate", "label": "Cadence", "rubrique": "tir", "genre": "comparaison", "unite": "coups/min", "vide": "effet" },
+        { "id": "accuracy", "label": "Précision", "rubrique": "tir", "genre": "comparaison", "unite": null, "vide": "effet" },
+        { "id": "reload", "label": "Rechargement", "rubrique": "tir", "genre": "comparaison", "unite": "s", "vide": "effet" },
+        { "id": "capacity", "label": "Chargeur", "rubrique": "tir", "genre": "comparaison", "unite": "coups", "vide": "effet" },
+        { "id": "ammoType", "label": "Munitions compatibles", "rubrique": "munitions", "genre": "condition", "vide": "effet" },
+        { "id": "ammoCost", "label": "Coût des munitions", "rubrique": "munitions", "genre": "hypothese", "mecanique": "munitions" },
+        { "id": "upgrades", "label": "Améliorations", "rubrique": "ameliorations", "genre": "comparaison", "vide": "effet" },
+        { "id": "restrictions", "label": "Restrictions", "rubrique": "ameliorations", "genre": "condition", "vide": "effet" }
+      ]
+    },
+    {
+      "id": "consumable", "label": "Consommable", "pluriel": "Consommables",
+      "rubriques": [
+        { "id": "acces", "titre": "L’acheter" },
+        { "id": "effet", "titre": "Son effet" },
+        { "id": "limites", "titre": "Conditions et limites" }
+      ],
+      "champs": [
+        { "id": "price", "label": "Prix", "rubrique": "acces", "genre": "grandeur", "unite": "$", "vide": "prix" },
+        { "id": "purchasable", "label": "Achetable", "rubrique": "acces", "genre": "condition", "vide": "achat" },
+        { "id": "unit", "label": "Unité d’achat", "rubrique": "acces", "genre": "grandeur", "unite": null, "vide": "effet" },
+        { "id": "effectType", "label": "Type d’effet", "rubrique": "effet", "genre": "comparaison", "vide": "effet" },
+        { "id": "health", "label": "Vie rendue", "rubrique": "effet", "genre": "comparaison", "unite": "points de vie", "vide": "soin", "mecanique": "soin" },
+        { "id": "duration", "label": "Durée de l’effet", "rubrique": "effet", "genre": "comparaison", "unite": "s", "vide": "effet" },
+        { "id": "conditions", "label": "Conditions d’utilisation", "rubrique": "limites", "genre": "condition", "vide": "effet" },
+        { "id": "limits", "label": "Limites (plafond, quantité portée)", "rubrique": "limites", "genre": "condition", "vide": "effet" },
+        { "id": "location", "label": "Où en trouver", "rubrique": "acces", "genre": "condition", "vide": "emplacement" }
+      ]
+    },
+    {
+      "id": "style", "label": "Vêtement ou accessoire", "pluriel": "Vêtements et style",
+      "rubriques": [
+        { "id": "acces", "titre": "L’obtenir" },
+        { "id": "variantes", "titre": "Variantes" }
+      ],
+      "champs": [
+        { "id": "price", "label": "Prix", "rubrique": "acces", "genre": "grandeur", "unite": "$", "vide": "prix" },
+        { "id": "purchasable", "label": "Achetable", "rubrique": "acces", "genre": "condition", "vide": "achat" },
+        { "id": "availability", "label": "Disponibilité", "rubrique": "acces", "genre": "condition", "vide": "effet" },
+        { "id": "provenance", "label": "Provenance", "rubrique": "acces", "genre": "condition", "vide": "obtention" },
+        { "id": "location", "label": "Où l’obtenir", "rubrique": "acces", "genre": "condition", "vide": "emplacement" },
+        { "id": "variants", "label": "Variantes connues", "rubrique": "variantes", "genre": "preference", "vide": "effet" }
+      ]
+    },
+    {
+      "id": "customization", "label": "Personnalisation", "pluriel": "Personnalisations",
+      "rubriques": [
+        { "id": "acces", "titre": "L’obtenir" },
+        { "id": "effet", "titre": "Ce qu’elle change" }
+      ],
+      "champs": [
+        { "id": "price", "label": "Coût en plus", "rubrique": "acces", "genre": "grandeur", "unite": "$", "vide": "prix" },
+        { "id": "compat", "label": "Compatible avec", "rubrique": "acces", "genre": "condition", "vide": "effet" },
+        { "id": "prereq", "label": "Ce qu’il faut avant", "rubrique": "acces", "genre": "condition", "vide": "effet" },
+        { "id": "effect", "label": "Effet par rapport à ce que tu as", "rubrique": "effet", "genre": "comparaison", "vide": "effet" },
+        { "id": "restrictions", "label": "Restrictions", "rubrique": "effet", "genre": "condition", "vide": "effet" }
+      ]
+    },
+    {
+      "id": "property", "label": "Demeure, planque ou bien", "pluriel": "Demeures et planques",
+      "rubriques": [
+        { "id": "acces", "titre": "L’obtenir" },
+        { "id": "services", "titre": "Ce qu’elle apporte" }
+      ],
+      "champs": [
+        { "id": "purchasable", "label": "Vraiment achetable", "rubrique": "acces", "genre": "condition", "vide": "achat" },
+        { "id": "price", "label": "Coût complet", "rubrique": "acces", "genre": "grandeur", "unite": "$", "vide": "prix" },
+        { "id": "location", "label": "Emplacement", "rubrique": "acces", "genre": "condition", "vide": "emplacement" },
+        { "id": "capacities", "label": "Capacités (garage, rangement…)", "rubrique": "services", "genre": "comparaison", "vide": "effet" },
+        { "id": "services", "label": "Accès ou services confirmés", "rubrique": "services", "genre": "comparaison", "vide": "effet" }
+      ]
+    },
+    {
+      "id": "business", "label": "Entreprise", "pluriel": "Entreprises",
+      "rubriques": [
+        { "id": "acces", "titre": "La reprendre" },
+        { "id": "production", "titre": "Ce qu’elle produit" }
+      ],
+      "champs": [
+        { "id": "purchasable", "label": "Vraiment achetable", "rubrique": "acces", "genre": "condition", "vide": "achat" },
+        { "id": "price", "label": "Coût de départ", "rubrique": "acces", "genre": "grandeur", "unite": "$", "vide": "prix" },
+        { "id": "prereq", "label": "Ce qu’il faut avant", "rubrique": "acces", "genre": "condition", "vide": "effet" },
+        { "id": "running", "label": "Frais de fonctionnement", "rubrique": "production", "genre": "grandeur", "unite": "$/h", "mecanique": "revenu-passif" },
+        { "id": "revenue", "label": "Revenu net", "rubrique": "production", "genre": "grandeur", "unite": "$/h", "mecanique": "revenu-passif" },
+        { "id": "capacity", "label": "Stock maximum", "rubrique": "production", "genre": "condition", "unite": "$", "mecanique": "revenu-passif" }
+      ]
+    },
+    {
+      "id": "activity", "label": "Activité", "pluriel": "Activités",
+      "rubriques": [
+        { "id": "acces", "titre": "Y accéder" },
+        { "id": "argent", "titre": "Ce qu’elle rapporte" },
+        { "id": "temps", "titre": "Le temps qu’elle prend" }
+      ],
+      "champs": [
+        { "id": "requires", "label": "Ce qu’il faut avant", "rubrique": "acces", "genre": "condition", "vide": "effet" },
+        { "id": "players", "label": "Joueurs", "rubrique": "acces", "genre": "condition", "unite": "joueurs", "vide": "effet" },
+        { "id": "reward", "label": "Récompense", "rubrique": "argent", "genre": "grandeur", "unite": "$", "vide": "effet" },
+        { "id": "share", "label": "Ta part", "rubrique": "argent", "genre": "grandeur", "unite": "%", "vide": "effet" },
+        { "id": "cost", "label": "Frais par tentative", "rubrique": "argent", "genre": "grandeur", "unite": "$", "vide": "effet" },
+        { "id": "duration", "label": "Durée", "rubrique": "temps", "genre": "grandeur", "unite": "min", "vide": "effet" },
+        { "id": "prep", "label": "Préparation", "rubrique": "temps", "genre": "grandeur", "unite": "min", "vide": "effet" },
+        { "id": "cooldown", "label": "Attente avant de recommencer", "rubrique": "temps", "genre": "grandeur", "unite": "min", "vide": "effet" }
+      ]
+    }
+  ],
+  "carnets": [
+    { "id": "garage", "titre": "Mon garage", "url": "/carnets/garage.html", "familles": ["vehicules"], "verbe": "possédé", "verbePluriel": "possédés", "nature": "possession", "bouton": "Voir mon garage", "catalogue": "/vehicules.html", "categorie": "vehicle" },
+    { "id": "arsenal", "titre": "Mon arsenal", "url": "/carnets/arsenal.html", "familles": ["armes", "equipements", "munitions"], "verbe": "possédée", "verbePluriel": "possédées", "nature": "possession", "bouton": "Voir mon arsenal", "catalogue": "/armes.html", "categorie": "weapon" },
+    { "id": "garde-robe", "titre": "Ma garde-robe", "url": "/carnets/garde-robe.html", "familles": ["tenues", "coiffures", "tatouages"], "verbe": "obtenu", "verbePluriel": "obtenus", "nature": "possession", "bouton": "Voir ma garde-robe", "catalogue": "/style.html", "categorie": "style" },
+    { "id": "consommables", "titre": "Mes consommables", "url": "/carnets/consommables.html", "familles": ["consommables"], "verbe": "goûté", "verbePluriel": "goûtés", "nature": "stock", "bouton": "Voir mes consommables", "catalogue": "/nourriture.html", "categorie": "consumable" },
+    { "id": "personnalisations", "titre": "Mes personnalisations", "url": "/carnets/personnalisations.html", "familles": ["perso-vehicules", "perso-armes"], "verbe": "posée", "verbePluriel": "posées", "nature": "possession", "bouton": "Voir mes personnalisations", "catalogue": "/personnalisations.html", "categorie": "customization" },
+    { "id": "proprietes", "titre": "Mes propriétés et contenus", "url": "/carnets/proprietes.html", "familles": ["acquisitions"], "verbe": "obtenu", "verbePluriel": "obtenus", "nature": "possession", "bouton": "Voir mes propriétés", "catalogue": "/achats.html", "categorie": "property" },
+    { "id": "lieux", "titre": "Mes lieux repérés", "url": "/carnets/lieux.html", "familles": ["lieux"], "verbe": "repéré", "verbePluriel": "repérés", "nature": "decouverte", "bouton": "Voir mes lieux repérés", "catalogue": "/carte.html", "categorie": "place" },
+    { "id": "collectibles", "titre": "Mes collectibles", "url": "/carnets/collectibles.html", "familles": ["collectibles"], "verbe": "trouvé", "verbePluriel": "trouvés", "nature": "collection", "bouton": "Voir mes collectibles", "catalogue": "/collectibles.html", "categorie": "collectible" },
+    { "id": "calculs", "titre": "Mes calculs et mes plans", "url": "/carnets/calculs.html", "familles": ["calculs"], "verbe": "enregistré", "verbePluriel": "enregistrés", "nature": "document", "bouton": "Voir mes calculs", "catalogue": "/calculateurs.html", "categorie": "calcul" }
+  ]
+}
