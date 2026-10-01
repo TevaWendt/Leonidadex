@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "inputs": {
-    "a-propos.html": "544e3fedd9a11a0796ac419cbd183572813362b8899e1f3f7c12c62a9b2df834",
+    "a-propos.html": "f777e29e1859e52354dec1796e261b4b6fcf25b59f03dd93c646db620fb2da7b",
     "achats.html": "8faf349dc88570ed145c6d2951315e914a4713b516d75b69fbd6e3b47ee85eac",
     "acquisitions-data.js": "aaf39ac5aa7d2054ce6ab0b9270c3f851000ab258890b1bf79d9ad4f95243e3c",
     "armes-data.js": "756b55fd79907a8136b6ee906d291382905a26558f123112c968637d9992a50e",
@@ -77,7 +77,7 @@
     "lieux/vice-city.html": "853cebf9f6b240ef713c77066226b1f5da33e18561a4855cf060cfd93d6472cc",
     "logements.html": "dccc3ed0051cd5b0ae6ab1342ca94d330c26a1852c4f2c5f31197bf53b5fb8c2",
     "medias.html": "b8ad6b374f19e553733d02dc9eb551d39e85780a56bbadf294b14c762169bf52",
-    "mentions-legales.html": "e3cbc02b05d2deb1781ef576ea642d0956194e2b6c45dabc6f9d84a91423fb15",
+    "mentions-legales.html": "eac92d80675e65f0e4efe16f99a1c7b77af3750b44aaee1dea8705f66e7fd498",
     "nourriture.html": "409db85874f7a1523d67e5750fd6d483f34e414603caf4244ba9b8f1370f2264",
     "outils/acquisitions.json": "0d89fe77f6ce484a81efabc1f410d178202755d63d973a73b7ea409b974dbd1d",
     "outils/catalogues/coiffures.json": "92ff8b9b8b82b2a7d4590a1d4dfd5fca110a164ef6f54b66fbf286ba45c4ef19",
@@ -91,7 +91,7 @@
     "outils/editorial-hubs.json": "6a9dd8d260eaac443c4b80f14a12ca02780d5a0014206d04c73ad66696410f89",
     "outils/editorial.json": "7d1b33dac8dcba3329c386aad65a5a0b1d20d44d7e40f399cd8917bc3edc6d15",
     "outils/leo-editorial.json": "61fecd811489577d7bf7b761c1e39ed1ad15be84a54e4832c1d977baab7f9a14",
-    "outils/leo-knowledge.json": "43d88f27d035cee4f4039f59ed03682aa8b246a76c3785f3ab8c08ece24cafa3",
+    "outils/leo-knowledge.json": "87f78406823109051742e4375d31f7b27de257d122e1cfab13a5045eca6160ea",
     "outils/leo-lexique.json": "b4eb49c920d779fa35d7a63f960b604993c4ee49bf5aecfd64a64eec6a48954d",
     "outils/medias-officiels.json": "03863062d064d970ce2250db2dc4309bd6099279ef0f58fa15f06349f22b3596",
     "outils/tuto.json": "9e4a40e38a574f02e1bfefd4d1fc7c0e652a5486a855b6ec245e6522ad3c6e73",
@@ -419,21 +419,21 @@
     "vehicules/zirconium-journey.html": "84228d22672178dccee85cf0fa92573d640603cc52a765a0bf6541636b253b37"
   },
   "outputs": {
-    "leo-index.json": 289454,
+    "leo-index.json": 289586,
     "leo/vehicules.json": 134289,
     "leo/armes.json": 15304,
     "leo/monde.json": 23487,
     "leo/lieux.json": 233270,
     "leo/catalogues.json": 158095,
     "leo/calculateur.json": 46635,
-    "leo/passages.json": 505297
+    "leo/passages.json": 509559
   },
   "counts": {
     "questionsRedigees": 326,
     "questionsFaq": 41,
     "questionsGenerees": 16436,
     "fiches": 3143,
-    "passages": 694,
+    "passages": 697,
     "lexique": 477,
     "nomsProteges": 147,
     "anglais": 134,

@@ -1,38 +1,80 @@
 {
- "_note": "v7.46 (lot 9) : coordonnées publiées sur Contact et Mentions (outils/gen-informations.cjs). contactVerified vaut true parce que l’adresse a été fournie par l’éditeur (expéditeur validé dans son compte Brevo). La boîte qui reçoit les messages n’est jamais écrite ici : elle est lue par api/contact.js dans la variable d’environnement Vercel CONTACT_TO. Éditeur non professionnel (LCEN, art. 1-1, II, depuis la loi SREN du 21 mai 2024) : aucun nom, domicile ni téléphone de l’éditeur n’est publié ; son identité est conservée par l’hébergeur.",
+ "_note": "v7.46 (lot 9) : coordonnées publiées sur Contact et Mentions (outils/gen-informations.cjs). contactVerified vaut true parce que l’adresse a été fournie par l’éditeur (expéditeur validé dans son compte Brevo). La boîte qui reçoit les messages n’est jamais écrite ici : elle est lue par api/contact.js dans la variable d’environnement Vercel CONTACT_TO. Éditeur non professionnel (LCEN, art. 1-1, II, depuis la loi SREN du 21 mai 2024) : aucun nom, domicile ni téléphone de l’éditeur n’est publié ; son identité est conservée par l’hébergeur. v7.57 (lot 4) : relecture des textes à la date du 1er octobre 2026 (LCEN art. 1-1 II consulté sur Légifrance ; CNIL « que dit la loi » ; notices Vercel et Brevo) ; téléphone de l’hébergeur retiré (non requis pour un éditeur non professionnel, et le numéro publié venait d’un dossier Privacy Shield inactif) ; audit réel des stockages (outils/preuve-confidentialite.cjs + recette navigateur du dossier de contrôle). editorName reste null tant que l’éditeur n’a pas choisi de publier son nom comme responsable du traitement (voir CHANGEMENTS-v7.57) ; s’il le renseigne, la page Mentions le nomme dans « Données personnelles » seulement.",
  "contactEmail": "contact@leonidakit.com",
  "contactVerified": true,
  "editorStatus": "non-professionnel",
  "editorName": null,
  "publicationDirector": null,
  "editorContact": "contact@leonidakit.com",
- "checkedAt": "2026-09-28",
+ "checkedAt": "2026-10-01",
  "hosting": {
   "name": "Vercel Inc.",
   "address": "440 N Barranca Avenue #4133, Covina, CA 91723, États-Unis",
   "email": "privacy@vercel.com",
-  "phone": "+1 559 288 7060",
-  "phoneSource": "https://www.privacyshield.gov/ps/participant?id=a2zt0000000TTIbAAO",
-  "phoneNote": "dernier numéro publié par Vercel (inscription au Privacy Shield, dossier inactif depuis 2022) ; sa notice de confidentialité actuelle ne donne que l’adresse postale et l’e-mail",
   "source": "https://vercel.com/legal/privacy-notice",
   "sourceDate": "2026-06-01",
   "dpf": true,
-  "checkedAt": "2026-09-28"
+  "checkedAt": "2026-10-01",
+  "dpfSource": "https://vercel.com/legal/privacy-notice"
  },
  "mailer": {
   "name": "Brevo",
-  "entity": "Brevo SAS, 106 boulevard Haussmann, 75008 Paris, France (RCS Paris 498 019 298)",
+  "entity": "SENDINBLUE SAS (service Brevo), RCS Paris 498 019 298",
   "source": "https://www.brevo.com/fr/legal/privacypolicy/",
-  "checkedAt": "2026-09-28"
+  "checkedAt": "2026-10-01",
+  "addressLegal": "17 rue de Salneuve, 75017 Paris, France (mentions légales de Brevo)",
+  "addressPrivacy": "106 boulevard Haussmann, 75008 Paris, France (politique de confidentialité de Brevo)",
+  "legalSource": "https://www.brevo.com/fr/legal/mentions-legales/"
  },
  "cnil": {
   "name": "Commission nationale de l’informatique et des libertés (CNIL)",
   "address": "3 place de Fontenoy, TSA 80715, 75334 Paris Cedex 07",
-  "complaint": "https://www.cnil.fr/fr/adresser-une-plainte"
+  "complaint": "https://www.cnil.fr/fr/adresser-une-plainte",
+  "cookiesLaw": {
+   "source": "https://www.cnil.fr/fr/cookies-et-autres-traceurs/que-dit-la-loi",
+   "consultedAt": "2026-10-01",
+   "deliberations": "lignes directrices n° 2020-091 et recommandation n° 2020-092 du 17 septembre 2020"
+  }
  },
  "history": [
-  {"date": "2026-09-28", "version": "v7.46", "text": "Réécriture complète : éditeur non professionnel, hébergeur, propriété intellectuelle, données (navigateur, Contact, alerte), bases légales, droits, cookies mesurés, responsabilité, accessibilité, historique."},
-  {"date": "2026-09-28", "version": "v7.44", "text": "Passage au gabarit des pages d’information, contenu inchangé."},
-  {"date": "2026-09-24", "version": "v7.29", "text": "Première version : hébergement, crédits, stockage local, Léo, formulaire d’alerte."}
- ]
+  {
+   "date": "2026-10-01",
+   "version": "v7.57",
+   "text": "Lot 4 : textes de loi relus à la date du jour (LCEN art. 1-1 II, CNIL), audit réel des cookies et stockages (17 pages, 0 cookie, aucun tiers avant un envoi), stockages du navigateur écrits seulement après une action, téléphone obsolète de l’hébergeur retiré, coordonnées de Brevo relues, responsable du traitement précisé."
+  },
+  {
+   "date": "2026-09-28",
+   "version": "v7.46",
+   "text": "Réécriture complète : éditeur non professionnel, hébergeur, propriété intellectuelle, données (navigateur, Contact, alerte), bases légales, droits, cookies mesurés, responsabilité, accessibilité, historique."
+  },
+  {
+   "date": "2026-09-28",
+   "version": "v7.44",
+   "text": "Passage au gabarit des pages d’information, contenu inchangé."
+  },
+  {
+   "date": "2026-09-24",
+   "version": "v7.29",
+   "text": "Première version : hébergement, crédits, stockage local, Léo, formulaire d’alerte."
+  }
+ ],
+ "lcen": {
+  "article": "article 1-1, II de la loi n° 2004-575 du 21 juin 2004 pour la confiance dans l’économie numérique (rédaction issue de la loi n° 2024-449 du 21 mai 2024)",
+  "source": "https://www.legifrance.gouv.fr/loda/id/JORFTEXT000000801164/",
+  "versionInForce": "2024-11-09",
+  "consultedAt": "2026-10-01",
+  "rule": "Les personnes éditant à titre non professionnel un service de communication au public en ligne peuvent ne tenir à la disposition du public, pour préserver leur anonymat, que le nom, la dénomination ou la raison sociale et l’adresse du fournisseur de services d’hébergement."
+ },
+ "audit": {
+  "date": "2026-10-01",
+  "pages": 17,
+  "cookies": 0,
+  "setCookie": 0,
+  "indexedDB": 0,
+  "cacheStorage": 0,
+  "serviceWorkers": 0,
+  "thirdPartyBeforeAction": "aucune",
+  "thirdPartyOnAction": "envoi de l’alerte de l’accueil : navigation POST vers affd58b3.sibforms.com (Brevo), déclenchée par le bouton « Me prévenir » et la case cochée",
+  "storages": "localStorage et sessionStorage, clés « lk » seulement, écrites après une action (saisie du calculateur, « Je l’ai », brouillon de Contact, sélection à comparer, conversation avec Léo)"
+ }
 }

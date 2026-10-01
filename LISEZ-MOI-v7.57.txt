@@ -1,0 +1,60 @@
+LEONIDAKIT v7.57 — LOT 4 (À PROPOS, MENTIONS LÉGALES ET COOKIES) DE LA MISSION « CORRECTIONS VISUELLES, FLUIDITÉ ET LÉO »
+— archive « modifs » (1er octobre 2026)
+
+Base attendue : ton dépôt GitHub tel qu'il est après le commit « Delete img/leonida-silhouette.svg » (2eb945f, 1er octobre), c'est-à-dire
+le lot 3 poussé tel quel plus la suppression demandée. Cette archive est construite sur ce commit : ne réapplique ni les archives
+des lots 1 à 3 (déjà dedans), ni l'archive ChatGPT du lot 4.
+L'archive contient seulement les fichiers créés ou modifiés, aux chemins exacts depuis la racine. Aucune commande de build, pas de
+package.json ; api/, vercel.json et .vercelignore ne changent pas ; rien à régler dans Vercel ni dans Brevo. Rien à supprimer.
+
+1. Note le commit courant dans GitHub Desktop (ou copie le dossier).
+2. Extrais l'archive dans la racine du site, écrase les fichiers homonymes (garde le dossier .git).
+3. Vérifie 2 minutes en local ou sur la prévisualisation Vercel (voir « Pour vérifier »).
+4. Mets en ligne quand tu le décides (GitHub Desktop : commit puis push ; Vercel déploie tel quel). Rien n'a été publié pour toi.
+Retour arrière : « Revert » du commit dans GitHub Desktop. Les clés de stockage du navigateur (lk_*) et leurs formats sont
+inchangés : aucune donnée de progression, de carnet, de souhait ou de calcul n'est touchée.
+
+POURQUOI L'ARCHIVE CONTIENT TOUTES LES PAGES : style.css, fiches.js et progression-core.js changent, et la base de Léo aussi ; les
+415 pages portent leurs empreintes ?v= (anti-cache), elles sont donc toutes régénérées. Leur contenu ne change pas, sauf
+a-propos.html et mentions-legales.html.
+
+CE QUE CE LOT CHANGE (détail : outils/CHANGEMENTS-v7.57.txt ; preuves : outils/PREUVES-v7.57.md ; suivi des 44 points :
+outils/MATRICE-FLUIDITE.md) :
+- À propos : ton prénom n'apparaît plus nulle part (page, métadonnées, textes accessibles, réponse et déclencheurs de Léo). La
+  section « Qui est derrière Leonidakit » parle du projet (« Un joueur, un site », « Pas d'équipe, pas de société, pas de
+  sponsor… », renvoi vers Mentions et Contact). Les blocs de la page apparaissent au fil du défilement (44 éléments animés au lieu
+  de 14), avec le même mouvement que le reste du site ; rien ne bouge en « réduire les animations » ; tout est visible sans script.
+- Mentions : textes de loi relus à la date du jour (LCEN art. 1-1 II sur Légifrance, CNIL « que dit la loi ») et cités avec leur date ;
+  téléphone obsolète de Vercel retiré (sa notice n'en publie pas, la loi n'en demande pas) ; Brevo nommé par sa raison sociale
+  (SENDINBLUE SAS) avec RCS et adresses sourcées ; « Responsable du traitement » précisé (l'éditeur du site, personne physique,
+  joignable par l'adresse de contact) ; résultat de l'audit navigateur écrit dans la page ; dates au 1er octobre 2026.
+- Cookies : audit réel dans un navigateur sur 17 pages, avant toute action puis pendant les usages : 0 cookie, 0 traceur, 0 base,
+  0 cache, 0 service worker, aucune requête vers un autre site avant un envoi ; seule sortie : l'alerte de l'accueil vers Brevo au
+  clic « Me prévenir ». Décision : pas de bandeau (il n'y aurait rien à accepter ni à refuser ; la page Mentions l'explique).
+  Deux écritures « au chargement » trouvées par l'audit sont corrigées : rien n'est plus écrit dans le navigateur tant que le
+  visiteur n'a rien fait (le suivi et le comparateur créent leur clé à la première action ; une sauvegarde existante est relue comme
+  avant).
+
+DEUX DÉCISIONS À PRENDRE (je ne les invente pas ; tout le reste est prêt) :
+A. Le nom du responsable du traitement. La LCEN (art. 1-1 II) te permet de rester anonyme vis-à-vis du public comme éditeur non
+   professionnel (seuls le nom et l'adresse de l'hébergeur sont publiés : c'est fait). Mais le site collecte des données par deux
+   formulaires (alerte, contact), et le RGPD (art. 13) demande d'indiquer l'identité du responsable du traitement au moment de la
+   collecte. Aujourd'hui la page dit « l'éditeur du site, personne physique », joignable à l'adresse de contact : c'est le compromis
+   le plus discret, mais une identité nommée est la lecture la plus sûre du texte. Si tu choisis de la publier, mets ton nom dans
+   outils/site-informations.json → "editorName": "Prénom Nom" puis node outils/regenerer.cjs : il apparaîtra dans Mentions
+   (Éditeur et Données personnelles) seulement, jamais dans À propos. Si tu préfères ne pas le publier, rien à faire.
+B. La durée de conservation des messages reçus par Contact. La page dit « le temps de traiter ta demande » ; le RGPD demande une
+   durée ou un critère précis. Dis-moi la règle que tu appliques réellement dans ta boîte (par exemple « supprimés 12 mois après la
+   réponse ») et je l'écris au lot 5 ; je n'ai pas mis de chiffre.
+(Non vérifiable depuis le code, pour information : le double opt-in de ton formulaire d'alerte se règle dans ton compte Brevo.)
+
+POUR VÉRIFIER (2 minutes) : ouvre a-propos.html et descends : les colonnes, chiffres et questions de la FAQ montent en apparaissant ;
+la section « Qui est derrière Leonidakit » ne contient aucun prénom. Ouvre mentions-legales.html : section Éditeur (phrase sur ce que
+la loi demande, lien Légifrance, responsable du traitement), Hébergement (plus de téléphone), Données personnelles (paragraphe
+« Responsable du traitement », Brevo = SENDINBLUE SAS), Cookies et traceurs (audit du 1er octobre, pourquoi pas de bandeau). Ouvre
+progression.html dans une fenêtre privée sans rien cocher : outils du navigateur → Application → Local storage : vide ; coche une
+case : la clé apparaît.
+
+PROCHAIN LOT : lot 5 (Léo : LEO-01 à LEO-03 ; reprise des mesures FINAL-01 ; recette globale FINAL-02 ; clôture de la matrice
+FINAL-03 ; livraison finale avec ZIP complet), à partir de cette v7.57 — de préférence dans une nouvelle conversation, avec le
+message de reprise du dossier de contrôle (REPRISE-lot5.md).

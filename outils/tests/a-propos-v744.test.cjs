@@ -70,13 +70,15 @@ test('À propos : aucun nombre tapé à la main — les chiffres viennent des do
   const ed=JSON.stringify(ED);assert.doesNotMatch(ed,/19 novembre|novembre 2026|septembre 2026/);assert.doesNotMatch(ed,/\b(302|2 ?547|148|405|406|237|122)\b/);
 });
 
-test('À propos : cinq statuts avec un exemple réel chacun (lien vers une page du site), refus, correction (lien Contact), signature « Téva » prénom seul, Contribuer et Indépendance reliés à Contact et Mentions',()=>{
+test('À propos : cinq statuts avec un exemple réel chacun (lien vers une page du site), refus, correction (lien Contact), section « Qui » sans aucun prénom (v7.57, ABOUT-01), Contribuer et Indépendance reliés à Contact et Mentions',()=>{
   const d=doc('a-propos.html');
   const lv=[...d.querySelectorAll('#comment-on-verifie .ed-level')];assert.equal(lv.length,5);
   assert.deepEqual(lv.map(x=>x.querySelector('.pip').className.replace('pip pip--','')),['officiel','vu','comm','serie','conf']);
   for(const x of lv){const a=x.querySelector('.ed-level-ex a');assert.ok(a,'exemple');const h=a.getAttribute('href').split('#')[0];assert.ok(fs.existsSync(path.join(root,h)),h);if(a.getAttribute('href').includes('#'))assert.ok(read(h).includes('id="'+a.getAttribute('href').split('#')[1]+'"'),a.getAttribute('href'));}
   assert.ok(d.querySelector('#comment-on-verifie a[href="contact.html"]'));
-  const qui=d.getElementById('qui');assert.equal(qui.querySelector('.ed-sign-name').textContent,'Téva');assert.ok(qui.querySelector('a[href="contact.html"]'));
+  const qui=d.getElementById('qui');assert.equal(qui.querySelector('.ed-sign-name').textContent,'Un joueur, un site');assert.ok(qui.querySelector('a[href="contact.html"]'));
+  /* v7.57 (lot 4, ABOUT-01) : aucun prénom ni nom personnel sur la page, ni dans ses métadonnées, ni dans la réponse de Léo */
+  const whole=read('a-propos.html');assert.ok(!/Téva|Teva/.test(whole),'aucun prénom dans la page À propos');assert.ok(!/t[ée]va/i.test(read('leo-index.json'))&&!/t[ée]va/i.test(read('outils/leo-knowledge.json')),'aucun prénom dans la base de Léo (texte et déclencheurs)');assert.ok(/équipe, pas de société/.test(qui.textContent),'rédaction centrée sur le projet, sans équipe ni société inventée');
   assert.doesNotMatch(qui.textContent,/EDHEC|Wendt|école|Paris|Instagram|Twitter|TikTok/i);
   assert.ok(d.querySelectorAll('#contribuer a[href="contact.html"]').length>=2);assert.ok(d.querySelector('#independance a[href="mentions-legales.html#confidentialite"]'));
   assert.ok(read('mentions-legales.html').includes('id="confidentialite"'));

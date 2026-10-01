@@ -115,9 +115,13 @@
       } catch (e) { notice('Impossible d’enregistrer cette case : le stockage du navigateur est indisponible.'); return false; }
       return false;
     }
+    function hasAnything() { if (read(KEY)) return true; for (var t in LEGACY) if (read(LEGACY[t])) return true; return false; }
     function migrate() {
-      /* Pose seulement le marqueur v2 : les octets des clés historiques ne sont jamais réécrits ici. */
+      /* Pose seulement le marqueur v2 : les octets des clés historiques ne sont jamais réécrits ici.
+         v7.57 (lot 4, COOKIE-02) : quand le navigateur ne contient encore rien du site, rien n'est écrit au chargement ; la
+         première action (« J'ai obtenu ») crée la clé. */
       var state = v2(); if (state.migrated) return false;
+      if (!hasAnything()) return false;
       var data = { version: VERSION, migratedAt: new Date().toISOString(), checked: state.checked };
       try { storage.setItem(KEY, JSON.stringify(data)); } catch (e) { notice('Impossible de préparer le suivi : le stockage du navigateur est indisponible.'); return false; }
       return true;

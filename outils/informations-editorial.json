@@ -1,5 +1,5 @@
 {
-  "_note": "v7.44 (lot 7) : contenu de a-propos.html, projeté par outils/gen-informations.cjs. Aucun nombre tapé ici : les chiffres de la section « Le site en chiffres » et les dates sont posés à la génération (sync-site.cjs, acquisitions.json, catalogues/sources.json). Registre « tu », mots simples, aucune affirmation invérifiable.",
+  "_note": "v7.44 (lot 7), v7.57 (lot 4 : aucun prénom, section « Qui » centrée sur le projet) : contenu de a-propos.html, projeté par outils/gen-informations.cjs. Aucun nombre tapé ici : les chiffres de la section « Le site en chiffres » et les dates sont posés à la génération (sync-site.cjs, acquisitions.json, catalogues/sources.json). Registre « tu », mots simples, aucune affirmation invérifiable.",
   "aPropos": {
     "title": "À propos de Leonidakit",
     "description": "Pourquoi Leonidakit existe, comment chaque information est vérifiée, ce que le site compte, ce qui changera à la sortie de GTA VI, et qui est derrière.",
@@ -321,11 +321,12 @@
     },
     "qui": {
       "id": "qui",
-      "kicker": "Signé",
+      "kicker": "Le projet",
       "title": "Qui est derrière Leonidakit",
-      "signature": "Téva",
-      "phrase": "Un joueur qui voulait des chiffres sûrs avant la sortie, et qui a fini par construire le site.",
+      "signature": "Un joueur, un site",
+      "phrase": "Leonidakit est fait par un seul joueur, sur son temps libre : quelqu’un qui voulait des chiffres sûrs avant la sortie, et qui a fini par construire le site pour les partager.",
       "p": [
+        "Pas d’équipe, pas de société, pas de sponsor : ce sont les sources, les statuts et le code qui font foi. L’éditeur se présente dans la page Mentions, dans le cadre prévu pour un site personnel.",
         "Pour une question, une correction ou une idée : la page Contact."
       ],
       "href": "contact.html",

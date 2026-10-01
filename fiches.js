@@ -298,7 +298,8 @@
       tools.appendChild(b); compareButtons.set(id, b);
     });
     function majSel(){
-      try { sessionStorage.setItem(selectionKey, JSON.stringify(sel)); } catch (e) { /* Optional persistence. */ }
+      /* v7.57 (lot 4) : une sélection vide ne crée aucune clé au chargement ; la clé disparaît quand la sélection se vide */
+      try { if (sel.length) sessionStorage.setItem(selectionKey, JSON.stringify(sel)); else if (sessionStorage.getItem(selectionKey) !== null) sessionStorage.removeItem(selectionKey); } catch (e) { /* Optional persistence. */ }
       if (calculatorSelection) {
         calculatorSelection.hidden = !sel.length;
         calculatorSelection.href = calculatorLink(type, { ids: sel.join(',') }, 'catalogue');

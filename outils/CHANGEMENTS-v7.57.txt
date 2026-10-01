@@ -1,0 +1,123 @@
+LEONIDAKIT v7.57 — mission « corrections visuelles, fluidité et Léo », lot 4 : À propos, mentions légales et cookies
+(1er octobre 2026)
+
+Base : dépôt GitHub TevaWendt/Leonidadex au commit « Delete img/leonida-silhouette.svg » (2eb945f, 1er octobre 2026), c'est-à-dire
+la v7.56 (lot 3) poussée telle quelle, plus la suppression demandée. Vérifié : 0 différence entre ce commit et l'archive du lot 3.
+Suivi des 44 exigences : outils/MATRICE-FLUIDITE.md ; preuves : outils/PREUVES-v7.57.md.
+Rien n'est publié : l'archive est à poser sur le dépôt par toi (voir LISEZ-MOI-v7.57.txt).
+
+A. PAGE À PROPOS
+[ABOUT-01] Plus aucun prénom (outils/informations-editorial.json → section « qui », outils/leo-knowledge.json)
+- La section 07 « Qui est derrière Leonidakit » est réécrite autour du projet : kicker « Le projet », signature « Un joueur, un
+  site », phrase « Leonidakit est fait par un seul joueur, sur son temps libre : quelqu'un qui voulait des chiffres sûrs avant la
+  sortie, et qui a fini par construire le site pour les partager. », puis « Pas d'équipe, pas de société, pas de sponsor : ce sont
+  les sources, les statuts et le code qui font foi. L'éditeur se présente dans la page Mentions, dans le cadre prévu pour un site
+  personnel. » et le renvoi à Contact. Aucun autre nom, aucune équipe ni société inventée ; l'ancre #qui, la carte « Aller à la page
+  Contact » et la mise en page ne changent pas.
+- Le prénom n'apparaît plus nulle part dans la page : texte, attributs (alt, aria-label, title), métadonnées (title, description,
+  JSON-LD), ni dans les contenus dérivés : réponse de Léo « Qui est derrière Leonidakit ? » réécrite (même sens : un seul joueur,
+  aucun nom publié, l'éditeur se présente dans Mentions et répond par Contact) et ses déclencheurs qui contenaient le prénom
+  retirés de la base (ils étaient servis en clair dans leo-index.json). Le reste du site n'en contenait pas (vérifié sur les 415
+  pages et les fichiers JSON/JS servis).
+- Test : outils/tests/a-propos-v744.test.cjs (section « Qui » sans aucun prénom, signature, rédaction centrée sur le projet,
+  leo-index.json et leo-knowledge.json sans le prénom, déclencheurs compris).
+
+[ABOUT-02] Apparitions de la page (outils/gen-informations.cjs, feuille commune style.css inchangée)
+- La page animait seulement ses neuf sections en bloc (classe « reveal ») et la FAQ en bloc (« rise ») : 14 éléments. Elle anime
+  maintenant 44 éléments : les neuf sections comme avant, plus 35 blocs intérieurs portant la classe commune lk-reveal
+  (9 colonnes de texte, 5 niveaux de vérification, 8 figures chiffrées, 3 cartes d'action, la signature du bloc « Qui » en entrée
+  latérale, les 5 questions de la FAQ une par une, les 3 étapes et la pile de l'en-tête déjà animées). Même mécanisme que tout le
+  site depuis le lot 1 (LKMotion : un seul IntersectionObserver, translation 18 px + opacité 450 ms, vagues de 60 ms plafonnées à
+  300 ms, will-change limité à l'entrée) et mêmes règles CSS : aucune règle ni script propre à la page n'a été ajouté. Les classes
+  sont posées à la génération (gen-informations.cjs : remplacement ciblé dans le HTML de la page À propos uniquement).
+- Les blocs de la FAQ perdent le « rise » global (qui faisait apparaître les cinq questions d'un coup) au profit d'une entrée par
+  question.
+- Réduction des mouvements (prefers-reduced-motion) : rien ne bouge, tout est visible d'emblée (règles du lot 1) ; sans
+  JavaScript : tout est visible (la classe « js » n'est jamais posée) ; impression : tout visible.
+- Vérifié dans Chromium : 1280 et 390 px, 0 erreur JavaScript, aucun débordement horizontal, tous les blocs apparaissent au fil du
+  défilement, mouvement réduit, sans script (qa/recette-lot4.cjs, dossier de contrôle).
+
+B. MENTIONS LÉGALES
+[LEGAL-01] Relecture à la date du jour (outils/site-informations.json, outils/gen-informations.cjs)
+Sources consultées le 1er octobre 2026 (URL et dates dans site-informations.json et dans la page) :
+- Légifrance, loi n° 2004-575 (LCEN), article 1-1 II dans sa rédaction en vigueur (loi SREN du 21 mai 2024, version du
+  9 novembre 2024) : un éditeur non professionnel peut ne publier que le nom (ou la dénomination) et l'adresse de l'hébergeur,
+  à condition de lui avoir communiqué son identité. La page le disait déjà ; elle cite maintenant le texte avec la date de
+  consultation et dit explicitement ce que la loi demande dans ce cadre (nom et adresse de l'hébergeur ; pas de téléphone).
+- Service-Public.fr, fiche F31228 « Mentions légales d'un site internet » : ne couvre que les sites professionnels (vérifiée le
+  31/07/2023, articles 6 et 19 LCEN) ; elle ne s'applique pas à un site personnel et n'est donc pas citée dans la page.
+- CNIL, « Cookies et autres traceurs : que dit la loi ? » (29/09/2020) : article 82 de la loi Informatique et Libertés, lignes
+  directrices n° 2020-091 et recommandation n° 2020-092 du 17/09/2020 ; exemption de consentement pour les stockages strictement
+  nécessaires à un service expressément demandé. Cité avec la date de consultation.
+- Vercel, notice de confidentialité du 1er juin 2026 : adresse postale (440 N Barranca Avenue #4133, Covina, CA 91723), e-mail
+  privacy@vercel.com, certification Data Privacy Framework ; aucun numéro de téléphone.
+- Brevo : mentions légales (SENDINBLUE SAS, siège 17 rue de Salneuve, 75017 Paris, RCS Paris 498 019 298) et politique de
+  confidentialité (adresse 106 boulevard Haussmann, 75008 Paris ; conservation des coordonnées des utilisateurs deux ans au plus).
+Changements dans la page :
+- Éditeur : phrase ajoutée « Dans ce cadre, la loi demande seulement le nom et l'adresse de l'hébergeur (texte en vigueur consulté
+  sur Légifrance le 1er octobre 2026) » avec le lien Légifrance, et « Pour les données des deux formulaires, le responsable du
+  traitement est l'éditeur du site, personne physique ; il répond à l'adresse ci-dessous. »
+- Hébergement : la ligne « Téléphone : +1 559 288 7060 » est retirée. Ce numéro venait d'un dossier Privacy Shield inactif depuis
+  2022 ; la notice actuelle de Vercel ne publie aucun téléphone et la LCEN n'en demande pas pour un éditeur non professionnel.
+  Afficher un numéro invérifiable était pire que ne rien afficher. La source de la ligne le dit.
+- Données personnelles : paragraphe « Responsable du traitement : l'éditeur du site, personne physique (voir Éditeur), joignable à
+  contact@… Le site n'a pas de délégué à la protection des données (non obligatoire pour un site personnel sans traitement à
+  grande échelle). » (ancre #responsable) ; « Rien n'est écrit tant que tu n'as rien fait : une clé apparaît avec ta première
+  action… » ; prestataire Brevo réécrit avec la raison sociale (SENDINBLUE SAS, service Brevo), le RCS et ses deux adresses
+  sourcées, plus la durée de conservation que Brevo annonce.
+- Cookies et traceurs : la vérification « dans le code » est complétée par la vérification « dans un navigateur, le 1er octobre
+  2026, sur 17 pages avant toute action puis pendant les usages principaux » (COOKIE-01) ; l'exemption de consentement est datée
+  et sourcée (article 82, page CNIL, délibérations) ; la raison de l'absence de bandeau est écrite : « il n'y a rien à accepter ni
+  à refuser, et un bandeau sans traceur ne protégerait rien ».
+- Dates : « Vérifié dans le code du site le 1er octobre 2026 », « Dernière mise à jour : 1er octobre 2026 », historique v7.57 ;
+  frDate écrit « 1er » au lieu de « 1 ».
+- Ancres internes des sections éditoriales (h3, p, tr portant un id : #responsable, #prestataires, #droits, #donnees-*) :
+  scroll-margin-top 150 px dans style.css, pour qu'elles atterrissent sous l'en-tête et la barre de sections collants (les sections
+  elles-mêmes avaient déjà leur marge).
+Ce que la page ne dit pas, parce que je ne l'invente pas (voir « Informations manquantes » du rapport et le LISEZ-MOI) :
+- le nom du responsable du traitement (la page dit « l'éditeur du site, personne physique ») : le champ editorName de
+  outils/site-informations.json reste null ; s'il est renseigné, gen-informations.cjs écrit « <Nom>, éditeur du site » aux deux
+  endroits (Éditeur et Données) sans toucher à la page À propos ;
+- la durée de conservation des messages reçus par Contact (la page dit « le temps de traiter ta demande ») ;
+- les réglages de ton compte Brevo (double opt-in de l'alerte) : non vérifiables depuis le code.
+
+C. COOKIES ET STOCKAGES
+[COOKIE-01] Audit réel (qa/audit-cookies.cjs, livré dans le dossier de contrôle et copié dans outils/audit-cookies.cjs)
+- Chromium (Playwright), contexte neuf par page, toute requête vers un autre hôte interceptée et journalisée (jamais transmise),
+  en-têtes Set-Cookie des réponses, cookies, localStorage, sessionStorage, IndexedDB, CacheStorage et service workers relevés
+  avant toute interaction puis après les usages principaux (alerte remplie puis envoyée, calculateur, carte, Véhicules, Consommables
+  « Je l'ai » + description + fiche, brouillon de Contact, Progression, Léo). 17 pages : accueil, calculateurs, carte, véhicules,
+  armes, nourriture, style, personnalisations, progression, collectibles, tuto, à propos, contact, mentions, une fiche véhicule, un
+  carnet, achats.
+- Résultat (inventaire complet dans outils/PREUVES-v7.57.md § 3) : 0 cookie, 0 en-tête Set-Cookie, 0 base IndexedDB, 0 cache,
+  0 service worker, aucune requête vers un autre hôte avant une action ; la seule sortie est le POST du formulaire d'alerte vers
+  affd58b3.sibforms.com (Brevo) quand on clique « Me prévenir » après avoir coché la case. Stockages : uniquement des clés lk_* /
+  lk-* (calculateur, brouillon de contact, suivi « Je l'ai », session de Léo en sessionStorage).
+- Deux écritures au chargement trouvées et corrigées (voir COOKIE-02) : la sélection du comparateur des fiches (sessionStorage
+  lk-calculator-selection-<type>, écrite vide à l'ouverture de toute fiche véhicule ou arme) et le marqueur de migration de la
+  progression (localStorage lk_progression_v2, écrit sur toute page de suivi même vide). lk_probe (progression.js, carnets.js) est
+  un test de disponibilité : écrit puis effacé dans la même instruction, jamais conservé.
+[COOKIE-02] Décision : aucun bandeau, et le stockage n'est écrit qu'après une action (progression-core.js, fiches.js)
+- Le site n'a ni cookie, ni traceur, ni ressource d'un autre site ; ses stockages servent des fonctions demandées par le visiteur
+  (article 82, exemption). Un bandeau n'aurait rien à faire accepter ni refuser : il n'est pas ajouté, et la page Mentions explique
+  pourquoi.
+- Pour que l'affirmation « rien n'est écrit tant que tu n'as rien fait » soit vraie : progression-core.js ne pose plus le marqueur
+  v2 quand le navigateur ne contient encore aucune clé du site (hasAnything() ; une sauvegarde existante est migrée comme avant,
+  et la première coche crée la clé) ; fiches.js n'écrit la sélection du comparateur que si elle n'est pas vide et n'efface la clé
+  que si elle existe. Aucune donnée existante n'est touchée : les clés et formats sont identiques.
+
+D. FICHIERS
+Sources modifiées : outils/informations-editorial.json, outils/leo-knowledge.json, outils/site-informations.json,
+outils/gen-informations.cjs, progression-core.js, fiches.js, style.css (une règle), outils/tests/a-propos-v744.test.cjs,
+outils/tests/contact-v746.test.cjs. Nouveaux : outils/audit-cookies.cjs, outils/CHANGEMENTS-v7.57.txt, outils/PREUVES-v7.57.md,
+LISEZ-MOI-v7.57.txt. Mis à jour : outils/MATRICE-FLUIDITE.md, README.md.
+Régénérés : a-propos.html, mentions-legales.html, leo-index.json, leo/*.json ; toutes les pages pour les empreintes ?v=
+(style.css, fiches.js, progression-core.js, Léo). api/, vercel.json, .vercelignore : inchangés. Aucun fichier à supprimer.
+
+E. CONTRÔLES
+- node outils/regenerer.cjs puis node outils/verifier.js : 48 342 références, 0 erreur.
+- Tests : 624 / 624 (NODE_PATH=… SITE_ROOT=$PWD node --test outils/tests/*.test.cjs).
+- Recette navigateur du lot (qa/recette-lot4.cjs) : 51 contrôles, 0 échec. Audit des cookies : voir PREUVES § 3.
+- Travail ChatGPT du lot 4 (rapport + archive v7.57) lu pour comparaison : mêmes conclusions de fond (prénom retiré, pas de
+  bandeau, téléphone Vercel retiré, SENDINBLUE SAS, nom du responsable manquant) ; non appliqué, le lot est construit ici sur le
+  dépôt réel avec les générateurs du site.
