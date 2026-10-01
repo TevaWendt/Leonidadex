@@ -2971,7 +2971,7 @@ a.ed-brand:hover,a.ed-brand:focus-visible{border-color:var(--ink);box-shadow:5px
 .ed-act:hover .veh-go::after,.ed-act:focus-visible .veh-go::after{transform:translate3d(4px,1px,0);}
 /* sources (fond nuit) */
 .ed-srcs{list-style:none;margin:0;padding:0;display:grid;gap:10px;counter-reset:src;}
-.ed h3[id],.ed p[id],.ed tr[id]{scroll-margin-top:150px;}
+.ed h3[id],.ed p[id],.ed tr[id]{scroll-margin-top:170px;}
 .ed-srcs li{position:relative;border:1.5px solid var(--ed-line);border-radius:12px;background:var(--ed-card);padding:12px 14px 12px 48px;font-size:.86rem;line-height:1.5;color:var(--ed-soft);scroll-margin-top:130px;}
 .ed-srcs li::before{counter-increment:src;content:counter(src,decimal-leading-zero);position:absolute;left:14px;top:12px;font:700 .76rem/1.6 var(--font-mono,ui-monospace,monospace);color:var(--amber-2);}
 .ed-srcs li .ed-status{margin-right:10px;vertical-align:baseline;}

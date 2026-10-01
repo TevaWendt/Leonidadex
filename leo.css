@@ -1,4 +1,4 @@
-@import url('/motion-tokens.css?v=12b40304ffbc');
+@import url('/motion-tokens.css?v=eb4cd4f751bc');
 /* Léo partage les tokens du Lot C ; tous ses sélecteurs restent isolés. */
 #leo-launch{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:850;display:flex;align-items:center;gap:9px;min-height:48px;padding:7px 16px 7px 8px;border:1px solid var(--amber-2,#f7b645);border-radius:28px;background:var(--night-deep,#241740);color:#fff9ef;box-shadow:0 5px 22px #24174030;font:700 16.5px/1.3 'Archivo',sans-serif;cursor:pointer;touch-action:manipulation;max-width:calc(100vw - 32px)}
 #leo-launch[hidden]{display:none!important}#leo-launch.leo-compact{padding:7px 8px;gap:0}#leo-launch.leo-compact>span:last-child{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}#leo-launch:hover{background:#35215f;border-color:var(--c-neon,#f7b23b)}#leo-launch:focus-visible,.leo-panel :is(a,button,input,select,summary):focus-visible,.leo-transfer :is(a,button):focus-visible{outline:3px solid #f6ab2a;outline-offset:4px}
@@ -16,6 +16,11 @@
 .leo-notice a{color:#a42d1d;text-decoration:underline;text-underline-offset:3px}.leo-passage{margin:8px 0 10px;padding:10px 12px;border-left:3px solid var(--amber-2,#f7b645);background:#fffcf7;border-radius:0 8px 8px 0}.leo-passage strong{display:block;font-size:13px;margin-bottom:4px;color:#3d266e}.leo-passage p{margin:0;font-size:14px;line-height:1.55;color:#3a2a55}
 .leo-external a{color:#3d266e;background:#f3efea;border:1px solid var(--amber-2,#f7b645);border-radius:6px;padding:6px 9px;text-decoration:none;font-size:13.5px}.leo-external a:hover{background:#eee9e1;text-decoration:underline}
 .leo-report{display:inline-block;margin-top:9px;font-size:12.5px;color:#6c5968;text-decoration:underline;text-underline-offset:3px;padding-block:4px}.leo-report:hover{color:#a32c1d}
+/* v7.58 : pied de réponse (copier, signaler) */
+.leo-foot{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;margin-top:8px}.leo-foot .leo-report{margin-top:0}
+.leo-copy{appearance:none;border:1px solid var(--rule,#e2d9cc);background:#fff;color:#4a3f47;border-radius:999px;padding:5px 11px;font:inherit;font-size:12.5px;line-height:1.2;min-height:30px;cursor:pointer;transition:background .15s,border-color .15s,color .15s}
+.leo-copy:hover,.leo-copy:focus-visible{border-color:var(--amber-2,#f7b645);background:#fffaf5;color:#1a1a1e}.leo-copy.is-done{border-color:#2f6f73;color:#2f6f73;background:#eef6f6}
+@media (prefers-reduced-motion:reduce){.leo-copy{transition:none}}
 .leo-message>p.is-typing{min-height:1.65em}.leo-message .leo-action.secondary{width:auto;display:inline-block;padding:8px 12px;margin:6px 0 2px}
 @media(max-width:600px){.leo-field input,.leo-params select{font-size:16px}.leo-panel{inset:var(--leo-vtop,0px) 0 auto 0;width:100%;max-width:none;height:var(--leo-vheight,100dvh);border:0;border-radius:0}.leo-header{padding-top:calc(14px + env(safe-area-inset-top,0px));padding-inline:16px}.leo-compose{padding-bottom:calc(12px + env(safe-area-inset-bottom,0px));padding-inline:12px}.leo-log{padding:16px 12px}.leo-notice{padding-inline:12px}.leo-panel button:focus-visible{outline-offset:2px}#leo-launch{right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));font-size:16px}}
 @media(max-height:480px){.leo-panel{height:var(--leo-vheight,100dvh);bottom:auto;top:var(--leo-vtop,0px)}.leo-header{padding:8px 14px}.leo-notice{padding-block:6px}.leo-compose{padding-block:7px}}

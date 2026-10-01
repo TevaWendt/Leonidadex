@@ -6,7 +6,7 @@ const test=require('node:test'),assert=require('node:assert/strict'),fs=require(
 const root=path.resolve(__dirname,'../..'),read=f=>fs.readFileSync(path.join(root,f),'utf8'),json=f=>JSON.parse(read(f));
 const C=require(root+'/leo-core.js'),N=require(root+'/leo-nlp.js'),data=json('leo-index.json'),kb=json('outils/leo-knowledge.json'),lex=json('outils/leo-lexique.json'),manifest=json('outils/leo-index-manifest.json');
 const core=C.create(data,{load:async(name,file)=>JSON.parse(read(file.slice(1)))});for(const name of Object.keys(data.shards))core.attach(name,JSON.parse(read(data.shards[name].file.slice(1))));
-const ask=(q,c={})=>core.answer(q,c,{now:'2026-09-28T12:00:00Z',page:'/index.html'});
+const ask=(q,c={})=>core.answer(q,c,{now:'2026-10-01T12:00:00Z',page:'/index.html'});
 
 test('Base : au moins 300 questions rédigées, 5 à 15 formulations chacune, réponse en « tu » avec sa page source',()=>{
  assert.ok(kb.topics.length>=300,'sujets : '+kb.topics.length);const ids=new Set();
@@ -19,10 +19,10 @@ test('Lexique : au moins 150 abréviations avec forme normalisée et concept, sy
  for(const w of ['gta6','gta 6','gta vi','vc','jsp','cb','pq','koi','ultim','dlc','pnj','bagnole','flingue','thune','baraque','safehouse','tuning','edition ultim','ed ultimate'])assert.ok(lex.abbreviations.some(a=>a.f===w),w);
  assert.ok(Object.keys(lex.concepts).length>=20&&lex.english.length>=80);
  const A=N.createAnalyzer(lex);assert.deepEqual(A.analyze('GTA 6').terms,A.analyze('gta6').terms);assert.deepEqual(A.analyze('gta vi').terms,A.analyze('grand theft auto 6').terms);assert.ok(A.analyze('cb coute la baraque de jason').expanded.includes('maison'));assert.ok(A.analyze('price of the car').expanded.includes('prix'));});
-test('Noyau ≤ 300 ko, morceaux présents, chargés à la demande seulement',async()=>{
- assert.ok(fs.statSync(path.join(root,'leo-index.json')).size<=300*1024);for(const [name,s] of Object.entries(data.shards)){assert.ok(fs.existsSync(path.join(root,s.file.slice(1))),name);const j=JSON.parse(read(s.file.slice(1)));assert.equal(j.revision,data.revision,name);}
+test('Noyau ≤ 320 ko (v7.58 : 300 → 320, vues de section et aide par page), morceaux présents, chargés à la demande seulement',async()=>{
+ assert.ok(fs.statSync(path.join(root,'leo-index.json')).size<=320*1024);for(const [name,s] of Object.entries(data.shards)){assert.ok(fs.existsSync(path.join(root,s.file.slice(1))),name);const j=JSON.parse(read(s.file.slice(1)));assert.equal(j.revision,data.revision,name);}
  const fresh=C.create(data,{load:async(name,file)=>JSON.parse(read(file.slice(1)))});assert.deepEqual(fresh.loaded(),[]);
- const a=await fresh.ask('Quand sort GTA 6 ?',{},{now:'2026-09-28T12:00:00Z'});assert.equal(a.topic,'sortie');assert.deepEqual(fresh.loaded(),[],'une question rédigée ne charge aucun morceau');
+ const a=await fresh.ask('Quand sort GTA 6 ?',{},{now:'2026-10-01T12:00:00Z'});assert.equal(a.topic,'sortie');assert.deepEqual(fresh.loaded(),[],'une question rédigée ne charge aucun morceau');
  for(const q of ['bonjour','c est quoi le roi','merci'])await fresh.ask(q,{},{});assert.deepEqual(fresh.loaded(),[],'salutations, définitions et FAQ répondent depuis le noyau seul');
  assert.ok(fresh.needs('c est quoi le kamacho').includes('vehicules'));assert.ok(fresh.needs('ou est ocean beach').includes('lieux'));assert.ok(fresh.needs('emperr').includes('vehicules'),'un nom mal orthographié désigne son morceau');assert.ok(!fresh.needs('bonjour').length);
  const b=await fresh.ask('albany emperor s inspire de quoi',{},{});assert.equal(b.entity,'vehicle:albany-emperor');assert.ok(fresh.loaded().includes('vehicules')&&!fresh.loaded().includes('armes')&&!fresh.loaded().includes('passages'),'seuls les morceaux dont le vocabulaire touche la question : '+fresh.loaded().join(', '));});
@@ -38,7 +38,7 @@ test('Suites de conversation : la dernière fiche ou le dernier sujet est repris
  let c=ask('ou est ocean beach');assert.equal(c.entity,'map:ocean-beach');c=ask('et a vice city ?',c.context);assert.equal(c.entity,'place:vice-city');assert.ok(c.action.url.includes('lieu=vice-city'));
  assert.ok(Array.isArray(c.context.recent)&&c.context.recent.length<=6);
  /* première question sur une fiche : elle vise la fiche ouverte */
- const onPage=(q,pageKey)=>core.answer(q,{},{now:'2026-09-28T12:00:00Z',pageKey});
+ const onPage=(q,pageKey)=>core.answer(q,{},{now:'2026-10-01T12:00:00Z',pageKey});
  assert.match(onPage('et son arme ?','character:jason').text,/Girardi ES9/);assert.match(onPage('et son prix ?','vehicle:canis-kamacho').text,/Canis Kamacho/);assert.equal(onPage('ça vaut le coup ?','vehicle:canis-kamacho').request.tool,'roi');assert.deepEqual(onPage('est-ce que je peux l’acheter ?','vehicle:canis-kamacho').request.items,['canis-kamacho']);assert.equal(onPage('c est ou ?','map:ocean-beach').entity,'map:ocean-beach');assert.equal(onPage('qui est jason','vehicle:canis-kamacho').topic,'jason');});
 test('« Tu voulais dire… ? », renvoi Rockstar obligatoire, hors sujet, jamais sans source',()=>{
  const nf=ask('c est quoi le zorglub de gta 6');assert.equal(nf.kind,'unknown');assert.match(nf.text,/Je n’ai pas cette réponse/);assert.ok(nf.external.some(x=>x.url==='https://www.rockstargames.com/VI'));assert.ok(nf.links.length>=1);assert.match(nf.report,/^\/contact\.html#motif=leo/);

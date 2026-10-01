@@ -1,7 +1,7 @@
 {
  "_note": "v7.45 (lot 8) : base de questions rédigées de Léo. Chaque sujet : id, theme, q (question canonique), f (5 à 15 formulations, dont abrégées et fautives), k (mots-clés hérités, facultatif), text (réponse en « tu »), status, links (la première entrée est la page source), source (lien officiel Rockstar, facultatif), action (map / tool / page, facultatif), checkedAt (date de vérification du sujet ; sinon celle du fichier). Aucune réponse ne doit dire autre chose que ce que le site dit : le lien de la page source est obligatoire. Projeté dans leo-index.json par outils/gen-leo.cjs (typographie appliquée à la génération).",
  "schemaVersion": 2,
- "checkedAt": "2026-09-25",
+ "checkedAt": "2026-10-01",
  "topics": [
   {
    "id": "sortie",
@@ -9270,6 +9270,178 @@
     }
    ],
    "checkedAt": "2026-09-29"
+  },
+  {
+   "id": "aide-listes",
+   "theme": "listes",
+   "q": "Comment utiliser une liste dépliable (badges, filtres, fiches, « Je l’ai ») ?",
+   "f": [
+    "aide sur la liste",
+    "comment marche la liste",
+    "comment utiliser la liste",
+    "que peut on faire dans la liste",
+    "comment marche cette page de liste",
+    "les boutons de la liste",
+    "comment lire la liste des consommables",
+    "comment lire la liste des coiffures",
+    "comment lire les personnalisations",
+    "mode d emploi de la liste",
+    "aide consommables",
+    "aide vetements et style",
+    "aide personnalisation"
+   ],
+   "text": "Les six listes (Consommables, Coiffures, Tatouages, Tenues et accessoires, Personnalisation des véhicules et des armes) marchent pareil. En tête : la légende des badges de statut, qui filtre la liste au clic. Au-dessus des lignes : une recherche, un filtre par catégorie, un filtre par statut et un tri (nom, catégorie, statut, repère de prix), avec le compte de lignes. Sur chaque ligne : « Fiche complète » ouvre la fiche paysage (visuel, statut, description, sources, faits) et « Je l’ai » la coche dans ton carnet ; dans Consommables, « Description » déplie le texte de la ligne. Les filtres se mettent dans l’adresse (par exemple #perso-vehicules=sport) et tout reste lisible sans JavaScript.",
+   "status": "Le site",
+   "links": [
+    {
+     "label": "Tous les consommables",
+     "url": "/nourriture.html#liste-consommables"
+    },
+    {
+     "label": "Toutes les coiffures",
+     "url": "/style.html#coiffures"
+    },
+    {
+     "label": "Personnalisation des véhicules",
+     "url": "/personnalisations.html#perso-vehicules"
+    }
+   ],
+   "checkedAt": "2026-10-01"
+  },
+  {
+   "id": "legende-badges",
+   "theme": "listes",
+   "q": "Que veulent dire les badges et la légende d’une liste ?",
+   "f": [
+    "c est quoi les badges",
+    "les badges de la liste",
+    "a quoi sert la legende",
+    "la legende de la liste",
+    "les couleurs des statuts",
+    "c est quoi les pastilles de couleur",
+    "que veut dire le badge violet",
+    "badge vert badge orange",
+    "legende des statuts",
+    "les badges de couleur dans les listes",
+    "ca veut dire quoi les badges"
+   ],
+   "text": "En tête de chaque liste, la légende montre les badges présents dans la liste, avec leur sens et leur nombre de lignes : Officiel (nommé ou décrit par Rockstar pour GTA VI), Vu (vu dans un trailer ou une capture officielle), Repère de la série (chiffre d’un autre GTA, qui ne vaut pas pour GTA VI), À confirmer (rien de publié : on attend Rockstar) et, dans certaines listes, Rapprochement de joueurs (non confirmé). Chaque badge a sa couleur, son pictogramme et son libellé : la couleur seule ne porte jamais l’information. Un clic sur un badge de la légende filtre la liste sur ce statut, un second clic l’enlève ; c’est le même filtre que la case « Statut ». Le badge se retrouve dans la colonne Statut, dans la fiche complète et sur les cartes « En un regard ».",
+   "status": "Le site",
+   "links": [
+    {
+     "label": "Tous les consommables",
+     "url": "/nourriture.html#liste-consommables"
+    },
+    {
+     "label": "Les statuts expliqués",
+     "url": "/a-propos.html#comment-on-verifie"
+    }
+   ],
+   "checkedAt": "2026-10-01"
+  },
+  {
+   "id": "fiche-complete",
+   "theme": "listes",
+   "q": "Comment ouvrir la fiche complète d’une ligne ?",
+   "f": [
+    "ouvrir une fiche dans la liste",
+    "la fiche complete",
+    "bouton fiche complete",
+    "c est quoi fiche complete",
+    "comment fermer la fiche",
+    "la fiche ne se ferme pas",
+    "bouton description",
+    "c est quoi le bouton description",
+    "difference entre description et fiche complete",
+    "voir le detail d une ligne",
+    "ouvrir la fiche d un consommable",
+    "fiche d une coiffure"
+   ],
+   "text": "Sur chaque ligne, le bouton « Fiche complète » ouvre la fiche en grand : à gauche le visuel (ou un pictogramme dit comme tel), le badge de statut, la catégorie, la description, les sources et « Je l’ai » ; à droite les faits de la ligne (prix repère, où, édition…) et les rubriques détaillées. Échap, la croix ou un clic à côté la ferment, et le focus revient sur le bouton. Sur téléphone, elle prend tout l’écran, la croix reste visible. Dans Consommables, « Description » est un autre bouton : il déplie seulement le texte de la ligne, sans ouvrir la fiche. Les cartes « En un regard » ont aussi un lien « Fiche complète ». Sans JavaScript, le détail s’ouvre dans la ligne.",
+   "status": "Le site",
+   "links": [
+    {
+     "label": "Tous les consommables",
+     "url": "/nourriture.html#liste-consommables"
+    },
+    {
+     "label": "Toutes les tenues et accessoires",
+     "url": "/style.html#tenues"
+    }
+   ],
+   "checkedAt": "2026-10-01"
+  },
+  {
+   "id": "aide-vehicules",
+   "theme": "vehicules",
+   "q": "Comment utiliser la page Véhicules (recherche, filtres, tri, garage) ?",
+   "f": [
+    "aide vehicules",
+    "comment marche la page vehicules",
+    "comment utiliser la page vehicules",
+    "c est quoi les filtres des vehicules",
+    "comment filtrer les vehicules",
+    "comment trier les vehicules",
+    "les filtres de la page vehicules",
+    "comment chercher un vehicule",
+    "afficher plus de vehicules",
+    "les boutons de la page vehicules",
+    "que faire sur la page vehicules",
+    "mode d emploi vehicules"
+   ],
+   "text": "La page recense 302 véhicules. La barre « Chercher un véhicule, une marque, un modèle réel » filtre en tapant. Les puces filtrent par catégorie (berlines, sport, supercars, muscle cars, SUV et 4x4, pick-up, vans, deux-roues, hélicoptères, avions, bateaux, service, divers), par certitude (nommés par Rockstar, vus officiellement, communautaires), par origine du modèle réel (américains, japonais, européens) et par édition (Standard, Ultimate, précommande). Tri : ordre par défaut, A → Z, Z → A, constructeur, certitude. Les 48 premières cartes s’affichent, « Afficher plus » complète. Sur chaque carte, la case en haut à droite coche un véhicule possédé (puce « Mon garage » pour ne voir que ceux-là) et « Comparer » en met jusqu’à trois côte à côte ; tout reste sur ton appareil. Les filtres se mettent dans l’adresse (#cat=suv&q=…), donc un lien filtré se partage.",
+   "status": "Le site",
+   "links": [
+    {
+     "label": "Tous les véhicules recensés",
+     "url": "/vehicules.html"
+    },
+    {
+     "label": "Mon garage",
+     "url": "/carnets/garage.html"
+    },
+    {
+     "label": "Comparer des fiches",
+     "url": "/comparateur.html"
+    }
+   ],
+   "checkedAt": "2026-10-01"
+  },
+  {
+   "id": "aide-armurerie",
+   "theme": "armes",
+   "q": "Comment utiliser la page Armurerie (constructeur d’équipement, filtres, munitions) ?",
+   "f": [
+    "aide armurerie",
+    "aide armes",
+    "comment marche la page armes",
+    "comment utiliser l armurerie",
+    "c est quoi le constructeur d equipement",
+    "composer mon equipement",
+    "comment filtrer les armes",
+    "comment trier les armes",
+    "les filtres de l armurerie",
+    "que faire sur la page armurerie",
+    "mode d emploi armurerie",
+    "copier mon equipement"
+   ],
+   "text": "La page recense 27 armes identifiées. En haut, le constructeur d’équipement : tu choisis une arme par emplacement (poing, longues, mêlée, projectiles…), puis « Copier mon équipement » ou « Partager » (le lien le contient). Plus bas, la grille « Toutes les armes identifiées » se filtre par classe (pistolets, pistolets-mitrailleurs, fusils d’assaut, fusils à pompe, précision, mitrailleuses, mêlée, projectiles, spéciales) et par certitude (nommées par Rockstar), avec une recherche et la puce « Mon arsenal » pour tes armes cochées. Chaque carte mène à la fiche de l’arme. Suivent le système d’inventaire, les chiffres sans arrondi, les équipements et gadgets, les types de munitions (pistolet, fusil, lourdes), les six changements du combat et la carte des lieux liés.",
+   "status": "Le site",
+   "links": [
+    {
+     "label": "Toutes les armes identifiées",
+     "url": "/armes.html#catalogue"
+    },
+    {
+     "label": "Constructeur d’équipement",
+     "url": "/armes.html#equipement"
+    },
+    {
+     "label": "Mon arsenal",
+     "url": "/carnets/arsenal.html"
+    }
+   ],
+   "checkedAt": "2026-10-01"
   }
  ]
 }

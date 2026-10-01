@@ -2387,6 +2387,31 @@
    "f": "vice city",
    "to": "vice city",
    "c": "lieu"
+  },
+  {
+   "f": "sulfateuse",
+   "to": "mitrailleuse",
+   "c": "arme"
+  },
+  {
+   "f": "sape",
+   "to": "vetements",
+   "c": "style"
+  },
+  {
+   "f": "tatoos",
+   "to": "tatouages",
+   "c": "style"
+  },
+  {
+   "f": "becanes",
+   "to": "motos",
+   "c": "vehicule"
+  },
+  {
+   "f": "clopes",
+   "to": "consommables",
+   "c": "consommable"
   }
  ],
  "concepts": {

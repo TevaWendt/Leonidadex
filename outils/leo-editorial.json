@@ -167,8 +167,6 @@
     "vehicules",
     "voiture",
     "voitures",
-    "moto",
-    "motos",
     "bagnole"
    ]
   },
@@ -178,13 +176,18 @@
    "route": "/armes.html",
    "terms": [
     "arme",
+    "armement",
     "armes",
-    "pistolet",
-    "fusil",
-    "flingue",
     "armurerie",
+    "arsenal",
+    "flingue",
+    "flingues",
+    "fusil",
+    "fusils",
+    "les armes",
     "munitions",
-    "arsenal"
+    "pistolet",
+    "pistolets"
    ]
   },
   {
@@ -272,7 +275,7 @@
   {
    "id": "helicopter",
    "label": "Hélicoptères recensés",
-   "route": "/vehicules.html#cat=helico",
+   "route": "/vehicules.html#cat=helicoptere",
    "terms": [
     "helicoptere",
     "helicopteres",
@@ -284,11 +287,15 @@
    "label": "Vêtements et style",
    "route": "/style.html",
    "terms": [
+    "coiffure",
+    "fringues",
+    "habits",
+    "look",
+    "style",
+    "tatouage",
     "vetement",
     "vetements",
-    "style",
-    "coiffure",
-    "tatouage"
+    "vetements et style"
    ]
   },
   {
@@ -296,9 +303,12 @@
    "label": "Personnalisations",
    "route": "/personnalisations.html",
    "terms": [
+    "amelioration",
+    "custom",
+    "customisation",
+    "perso",
     "personnalisation",
     "personnalisations",
-    "amelioration",
     "tuning"
    ]
   },
@@ -309,7 +319,11 @@
    "terms": [
     "collectible",
     "collectibles",
-    "objet a collectionner"
+    "collection d objets",
+    "objet a collectionner",
+    "objet de collection",
+    "objets a collectionner",
+    "objets de collection"
    ]
   },
   {
@@ -345,12 +359,696 @@
    "label": "Consommables",
    "route": "/nourriture.html",
    "terms": [
+    "a boire",
+    "a manger",
+    "boire",
+    "boissons",
+    "bouffe",
     "consommable",
     "consommables",
-    "nourriture",
-    "snack",
     "manger",
-    "boire"
+    "nourriture",
+    "nourritures",
+    "snack",
+    "snacks"
+   ]
+  },
+  {
+   "id": "vehicle-sport",
+   "label": "Voitures de sport recensées",
+   "route": "/vehicules.html#cat=sport",
+   "terms": [
+    "voiture de sport",
+    "voitures de sport",
+    "sportive",
+    "sportives",
+    "les sport",
+    "les sportives",
+    "voitures sport"
+   ]
+  },
+  {
+   "id": "vehicle-suv",
+   "label": "SUV recensés",
+   "route": "/vehicules.html#cat=suv",
+   "terms": [
+    "suv",
+    "suvs",
+    "4x4",
+    "tout terrain",
+    "tout terrains"
+   ]
+  },
+  {
+   "id": "vehicle-pickup",
+   "label": "Pick-up recensés",
+   "route": "/vehicules.html#cat=pickup",
+   "terms": [
+    "pickup",
+    "pickups",
+    "pick up",
+    "pick ups",
+    "camionnette"
+   ]
+  },
+  {
+   "id": "vehicle-muscle",
+   "label": "Muscle cars recensées",
+   "route": "/vehicules.html#cat=muscle",
+   "terms": [
+    "muscle",
+    "muscle car",
+    "muscle cars",
+    "muscles"
+   ]
+  },
+  {
+   "id": "vehicle-supercar",
+   "label": "Supercars recensées",
+   "route": "/vehicules.html#cat=supercar",
+   "terms": [
+    "supercar",
+    "supercars",
+    "super voiture",
+    "hypercar"
+   ]
+  },
+  {
+   "id": "vehicle-berline",
+   "label": "Berlines recensées",
+   "route": "/vehicules.html#cat=berline",
+   "terms": [
+    "berline",
+    "berlines",
+    "sedan"
+   ]
+  },
+  {
+   "id": "vehicle-van",
+   "label": "Vans recensés",
+   "route": "/vehicules.html#cat=van",
+   "terms": [
+    "van",
+    "vans",
+    "fourgon",
+    "fourgons",
+    "camion",
+    "camions",
+    "utilitaire"
+   ]
+  },
+  {
+   "id": "vehicle-moto",
+   "label": "Motos recensées",
+   "route": "/vehicules.html#cat=moto",
+   "terms": [
+    "moto",
+    "motos",
+    "deux roues",
+    "becane",
+    "scooter",
+    "quad",
+    "quads"
+   ]
+  },
+  {
+   "id": "vehicle-service",
+   "label": "Véhicules de service recensés",
+   "route": "/vehicules.html#cat=service",
+   "terms": [
+    "vehicule de service",
+    "vehicules de service",
+    "voiture de police",
+    "voitures de police",
+    "ambulance",
+    "camion de pompiers",
+    "taxi",
+    "taxis"
+   ]
+  },
+  {
+   "id": "style-tatouages",
+   "label": "Tatouages",
+   "route": "/style.html#tatouages",
+   "terms": [
+    "tatouage",
+    "tatouages",
+    "tatoo",
+    "tatoos",
+    "tattoo",
+    "tattoos",
+    "tatouer"
+   ]
+  },
+  {
+   "id": "style-coiffures",
+   "label": "Coiffures",
+   "route": "/style.html#coiffures",
+   "terms": [
+    "coiffure",
+    "coiffures",
+    "coupe de cheveux",
+    "coupes de cheveux",
+    "cheveux",
+    "barbe",
+    "coiffeur",
+    "salon de coiffure"
+   ]
+  },
+  {
+   "id": "style-tenues",
+   "label": "Tenues et accessoires",
+   "route": "/style.html#tenues",
+   "terms": [
+    "tenue",
+    "tenues",
+    "accessoire",
+    "accessoires",
+    "chaussures",
+    "lunettes",
+    "chapeaux",
+    "bijoux"
+   ]
+  },
+  {
+   "id": "customization-vehicles",
+   "label": "Personnalisation des véhicules",
+   "route": "/personnalisations.html#perso-vehicules",
+   "terms": [
+    "personnalisation des vehicules",
+    "personnalisation des voitures",
+    "personnalisation vehicule",
+    "personnalisation voiture",
+    "personnaliser ma voiture",
+    "personnaliser une voiture",
+    "modifier ma voiture",
+    "tuning voiture"
+   ]
+  },
+  {
+   "id": "customization-weapons",
+   "label": "Personnalisation des armes",
+   "route": "/personnalisations.html#perso-armes",
+   "terms": [
+    "personnalisation des armes",
+    "personnalisation arme",
+    "personnalisation d arme",
+    "personnaliser mon arme",
+    "personnaliser une arme",
+    "accessoires d arme",
+    "accessoires d armes"
+   ]
+  },
+  {
+   "id": "consumable-list",
+   "label": "Tous les consommables",
+   "route": "/nourriture.html#liste-consommables",
+   "terms": [
+    "liste des consommables",
+    "tous les consommables",
+    "liste des boissons",
+    "liste des snacks",
+    "liste des repas"
+   ]
+  },
+  {
+   "id": "shop",
+   "label": "Achats",
+   "route": "/achats.html",
+   "terms": [
+    "achats",
+    "page achats",
+    "page des achats",
+    "tout ce qui s achete",
+    "ce qui s achete"
+   ]
+  },
+  {
+   "id": "comparator",
+   "label": "Comparateur",
+   "route": "/comparateur.html",
+   "terms": [
+    "comparateur",
+    "le comparateur",
+    "ma comparaison"
+   ]
+  },
+  {
+   "id": "ranking",
+   "label": "Classement",
+   "route": "/classement-vehicules.html",
+   "terms": [
+    "classement",
+    "mon classement",
+    "top 10",
+    "mon top 10"
+   ]
+  },
+  {
+   "id": "weapon-melee",
+   "label": "Armes de mêlée",
+   "route": "/armes.html#cat=melee",
+   "terms": [
+    "melee",
+    "armes de melee",
+    "arme de melee",
+    "corps a corps",
+    "arme blanche",
+    "armes blanches",
+    "batte",
+    "couteau",
+    "marteau"
+   ]
+  },
+  {
+   "id": "weapon-pistolet",
+   "label": "Pistolets",
+   "route": "/armes.html#cat=pistolet",
+   "terms": [
+    "les pistolets",
+    "pistolets",
+    "revolver",
+    "revolvers",
+    "arme de poing",
+    "armes de poing"
+   ]
+  },
+  {
+   "id": "weapon-pm",
+   "label": "Pistolets-mitrailleurs",
+   "route": "/armes.html#cat=pm",
+   "terms": [
+    "pistolet mitrailleur",
+    "pistolets mitrailleurs",
+    "smg",
+    "uzi"
+   ]
+  },
+  {
+   "id": "weapon-assaut",
+   "label": "Fusils d’assaut",
+   "route": "/armes.html#cat=assaut",
+   "terms": [
+    "fusil d assaut",
+    "fusils d assaut",
+    "fusil automatique",
+    "kalash",
+    "ak47",
+    "m4"
+   ]
+  },
+  {
+   "id": "weapon-pompe",
+   "label": "Fusils à pompe",
+   "route": "/armes.html#cat=pompe",
+   "terms": [
+    "fusils a pompe",
+    "shotgun",
+    "shotguns"
+   ]
+  },
+  {
+   "id": "weapon-precision",
+   "label": "Fusils de précision",
+   "route": "/armes.html#cat=precision",
+   "terms": [
+    "fusils de precision",
+    "snipers",
+    "fusil a lunette",
+    "fusils a lunette"
+   ]
+  },
+  {
+   "id": "weapon-mitrailleuse",
+   "label": "Mitrailleuses",
+   "route": "/armes.html#cat=mitrailleuse",
+   "terms": [
+    "mitrailleuses",
+    "arme lourde",
+    "armes lourdes"
+   ]
+  },
+  {
+   "id": "weapon-projectile",
+   "label": "Projectiles",
+   "route": "/armes.html#cat=projectile",
+   "terms": [
+    "projectile",
+    "projectiles",
+    "grenade",
+    "grenades",
+    "explosifs",
+    "molotov"
+   ]
+  },
+  {
+   "id": "weapon-speciale",
+   "label": "Armes spéciales",
+   "route": "/armes.html#cat=speciale",
+   "terms": [
+    "armes speciales",
+    "arme speciale",
+    "lance grenades",
+    "harpon"
+   ]
+  },
+  {
+   "id": "conso-boissons",
+   "label": "Boissons",
+   "route": "/nourriture.html#consommables=boissons",
+   "terms": [
+    "boisson",
+    "boissons",
+    "soda",
+    "sodas",
+    "les sodas",
+    "a boire",
+    "bieres",
+    "biere"
+   ]
+  },
+  {
+   "id": "conso-snacks",
+   "label": "En-cas",
+   "route": "/nourriture.html#consommables=snacks",
+   "terms": [
+    "snack",
+    "snacks",
+    "en cas",
+    "encas",
+    "grignoter",
+    "barres"
+   ]
+  },
+  {
+   "id": "conso-repas",
+   "label": "Repas",
+   "route": "/nourriture.html#consommables=repas",
+   "terms": [
+    "repas",
+    "les repas",
+    "restaurant",
+    "restaurants",
+    "fast food",
+    "fast foods",
+    "burger",
+    "burgers",
+    "pizza",
+    "pizzas"
+   ]
+  },
+  {
+   "id": "conso-soins",
+   "label": "Soins",
+   "route": "/nourriture.html#consommables=soins",
+   "terms": [
+    "soins",
+    "soin",
+    "kit de soin",
+    "kits de soin",
+    "medikit",
+    "se soigner",
+    "trousse de soin"
+   ]
+  },
+  {
+   "id": "conso-protection",
+   "label": "Protection",
+   "route": "/nourriture.html#consommables=protection",
+   "terms": [
+    "gilet",
+    "gilets",
+    "gilet pare balles",
+    "gilets pare balles",
+    "armure",
+    "protection"
+   ]
+  },
+  {
+   "id": "coiffures-coupes",
+   "label": "Coupes de cheveux",
+   "route": "/style.html#coiffures=coupes",
+   "terms": [
+    "coupes",
+    "les coupes",
+    "coupe de cheveux",
+    "coupes de cheveux",
+    "cheveux",
+    "coiffeur",
+    "salon de coiffure"
+   ]
+  },
+  {
+   "id": "coiffures-barbe",
+   "label": "Barbe et moustache",
+   "route": "/style.html#coiffures=barbe",
+   "terms": [
+    "barbe",
+    "barbes",
+    "moustache",
+    "moustaches",
+    "rasage"
+   ]
+  },
+  {
+   "id": "coiffures-maquillage",
+   "label": "Maquillage et ongles",
+   "route": "/style.html#coiffures=maquillage-et-ongles",
+   "terms": [
+    "maquillage",
+    "ongles",
+    "manucure",
+    "make up"
+   ]
+  },
+  {
+   "id": "tenues-chaussures",
+   "label": "Chaussures",
+   "route": "/style.html#tenues=chaussures",
+   "terms": [
+    "chaussures",
+    "chaussure",
+    "baskets",
+    "sneakers",
+    "bottes"
+   ]
+  },
+  {
+   "id": "tenues-lunettes",
+   "label": "Lunettes",
+   "route": "/style.html#tenues=lunettes",
+   "terms": [
+    "lunettes",
+    "lunettes de soleil"
+   ]
+  },
+  {
+   "id": "tenues-chapeaux",
+   "label": "Chapeaux et casquettes",
+   "route": "/style.html#tenues=chapeaux",
+   "terms": [
+    "chapeau",
+    "chapeaux",
+    "casquette",
+    "casquettes"
+   ]
+  },
+  {
+   "id": "tenues-bijoux",
+   "label": "Bijoux et montres",
+   "route": "/style.html#tenues=bijoux-et-montres",
+   "terms": [
+    "bijou",
+    "bijoux",
+    "chaine en or",
+    "chaines",
+    "montre connectee",
+    "les montres"
+   ]
+  },
+  {
+   "id": "tenues-masques",
+   "label": "Masques et bandanas",
+   "route": "/style.html#tenues=masques",
+   "terms": [
+    "masque",
+    "masques",
+    "bandana",
+    "bandanas",
+    "cagoule"
+   ]
+  },
+  {
+   "id": "perso-kits",
+   "label": "Kits complets",
+   "route": "/personnalisations.html#perso-vehicules=kits",
+   "terms": [
+    "kit complet",
+    "kits complets",
+    "kit retro",
+    "kits"
+   ]
+  },
+  {
+   "id": "perso-carrosserie",
+   "label": "Carrosserie",
+   "route": "/personnalisations.html#perso-vehicules=carrosserie",
+   "terms": [
+    "carrosserie",
+    "kit carrosserie",
+    "kits carrosserie",
+    "pare chocs",
+    "aileron",
+    "ailerons",
+    "spoiler"
+   ]
+  },
+  {
+   "id": "perso-jantes",
+   "label": "Jantes et pneus",
+   "route": "/personnalisations.html#perso-vehicules=jantes",
+   "terms": [
+    "jantes",
+    "jante",
+    "pneus",
+    "pneu",
+    "roues"
+   ]
+  },
+  {
+   "id": "perso-peinture",
+   "label": "Peinture",
+   "route": "/personnalisations.html#perso-vehicules=peinture",
+   "terms": [
+    "peinture",
+    "peintures",
+    "repeindre",
+    "couleur de la voiture",
+    "couleur voiture"
+   ]
+  },
+  {
+   "id": "perso-neons",
+   "label": "Néons",
+   "route": "/personnalisations.html#perso-vehicules=neons",
+   "terms": [
+    "neon",
+    "neons"
+   ]
+  },
+  {
+   "id": "perso-moteur",
+   "label": "Moteur et performances",
+   "route": "/personnalisations.html#perso-vehicules=moteur",
+   "terms": [
+    "moteur",
+    "moteurs",
+    "performances moteur",
+    "amelioration moteur"
+   ]
+  },
+  {
+   "id": "perso-turbo",
+   "label": "Turbo",
+   "route": "/personnalisations.html#perso-vehicules=turbo",
+   "terms": [
+    "turbo",
+    "turbos",
+    "nitro"
+   ]
+  },
+  {
+   "id": "perso-blindage",
+   "label": "Blindage",
+   "route": "/personnalisations.html#perso-vehicules=blindage",
+   "terms": [
+    "blindage",
+    "blinder ma voiture",
+    "voiture blindee",
+    "blindee"
+   ]
+  },
+  {
+   "id": "perso-livrees",
+   "label": "Livrées et stickers",
+   "route": "/personnalisations.html#perso-vehicules=livrees",
+   "terms": [
+    "livree",
+    "livrees",
+    "stickers",
+    "sticker",
+    "autocollants"
+   ]
+  },
+  {
+   "id": "perso-chargeurs",
+   "label": "Chargeurs",
+   "route": "/personnalisations.html#perso-armes=chargeurs",
+   "terms": [
+    "chargeur",
+    "chargeurs",
+    "chargeur etendu",
+    "chargeurs etendus"
+   ]
+  },
+  {
+   "id": "perso-viseurs",
+   "label": "Viseurs et lunettes",
+   "route": "/personnalisations.html#perso-armes=viseurs",
+   "terms": [
+    "viseur",
+    "viseurs",
+    "lunette de visee",
+    "lunettes de visee",
+    "point rouge"
+   ]
+  },
+  {
+   "id": "perso-canons",
+   "label": "Silencieux et canons",
+   "route": "/personnalisations.html#perso-armes=canons",
+   "terms": [
+    "silencieux",
+    "canons",
+    "suppresseur"
+   ]
+  },
+  {
+   "id": "perso-finitions",
+   "label": "Finitions et gravures",
+   "route": "/personnalisations.html#perso-armes=finitions",
+   "terms": [
+    "finition",
+    "finitions",
+    "gravure",
+    "gravures",
+    "arme gravee",
+    "armes gravees",
+    "arme doree"
+   ]
+  },
+  {
+   "id": "perso-camouflages",
+   "label": "Camouflages et livrées d’armes",
+   "route": "/personnalisations.html#perso-armes=camouflages",
+   "terms": [
+    "camouflage",
+    "camouflages",
+    "camo",
+    "skin d arme",
+    "skins d armes"
+   ]
+  },
+  {
+   "id": "perso-munitions",
+   "label": "Munitions spéciales",
+   "route": "/personnalisations.html#perso-armes=munitions-speciales",
+   "terms": [
+    "munitions speciales",
+    "munition speciale",
+    "balles speciales",
+    "balles incendiaires",
+    "balles perforantes"
    ]
   }
  ],
@@ -651,19 +1349,19 @@
    "Combien de lieux y a-t-il sur la carte ?"
   ],
   "vehicules": [
+   "Comment utiliser la page Véhicules (filtres, tri, garage) ?",
    "Combien de véhicules y a-t-il dans GTA VI ?",
    "Quelle est la voiture la plus rapide de GTA VI ?",
    "Quels véhicules donne l’Édition Ultimate ?",
    "Comment cocher un véhicule que je possède ?",
-   "Que veut dire « inspiration » sur une fiche véhicule ?",
    "Peut-on personnaliser sa voiture dans GTA VI ?"
   ],
   "armes": [
+   "Comment utiliser la page Armurerie (équipement, filtres) ?",
    "Combien d’armes y a-t-il dans GTA VI ?",
    "Quelles armes ont un nom officiel ?",
    "Combien d’armes peut-on porter dans GTA VI ?",
    "Quelle est l’arme de Jason ?",
-   "Où voir mon arsenal ?",
    "Peut-on personnaliser ses armes dans GTA VI ?"
   ],
   "progression": [
@@ -683,11 +1381,11 @@
    "Où sont les ateliers et les armureries dans GTA VI ?"
   ],
   "listes": [
+   "Que veulent dire les badges et la légende de la liste ?",
+   "Comment ouvrir la fiche complète d’une ligne ?",
    "Combien coûte un soda ou un en-cas dans GTA VI ?",
    "Peut-on changer de coiffure dans GTA VI ?",
-   "Combien coûte le tuning (turbo, blindage, moteur) dans GTA VI ?",
    "Peut-on repeindre sa voiture dans GTA VI ?",
-   "Quels tatouages sont listés sur le site ?",
    "C’est quoi un « repère de la série » ?"
   ],
   "achats": [
@@ -699,7 +1397,7 @@
    "Faut-il prendre l’Édition Ultimate ?"
   ],
   "info": [
-   "C’est quoi Leonidakit et qui l’a fait ?",
+   "C’est quoi Leonidakit et qui est derrière ?",
    "D’où viennent les données du site ?",
    "Comment signaler une erreur sur le site ?",
    "Où sont stockées mes données ?",
@@ -808,5 +1506,167 @@
    "entities": "Fiches du site en rapport"
   }
  },
- "_lexiqueNote": "Le concept « prix » du lexique ne contient pas « combien » (réservé aux questions), pour ne pas confondre « combien de lieux » avec une question de prix."
+ "_lexiqueNote": "Le concept « prix » du lexique ne contient pas « combien » (réservé aux questions), pour ne pas confondre « combien de lieux » avec une question de prix.",
+ "help": {
+  "pages": {
+   "/nourriture.html": {
+    "topic": "aide-listes",
+    "rules": [
+     {
+      "re": "\\b(?:badge|badges|legende|legendes|pastille|pastilles|couleur des statuts|couleurs)\\b",
+      "topic": "legende-badges"
+     },
+     {
+      "re": "\\b(?:fiche complete|fiches completes|ouvrir une fiche|ouvrir la fiche|la fiche d une ligne|description|descriptions|detail d une ligne|details d une ligne)\\b",
+      "topic": "fiche-complete"
+     },
+     {
+      "re": "\\b(?:filtre|filtres|filtrer|filtrage|tri|trier|trie|tris|classer|ranger|recherche|rechercher|chercher dans)\\b",
+      "topic": "filtrer-liste"
+     },
+     {
+      "re": "\\b(?:je l ai|je l’ai|jlai|possede|possedes|cocher|coche|cocher une ligne|mon stock)\\b",
+      "topic": "suivi-listes"
+     }
+    ]
+   },
+   "/style.html": {
+    "topic": "aide-listes",
+    "rules": [
+     {
+      "re": "\\b(?:badge|badges|legende|legendes|pastille|pastilles|couleur des statuts|couleurs)\\b",
+      "topic": "legende-badges"
+     },
+     {
+      "re": "\\b(?:fiche complete|fiches completes|ouvrir une fiche|ouvrir la fiche|la fiche d une ligne|description|descriptions|detail d une ligne|details d une ligne)\\b",
+      "topic": "fiche-complete"
+     },
+     {
+      "re": "\\b(?:filtre|filtres|filtrer|filtrage|tri|trier|trie|tris|classer|ranger|recherche|rechercher|chercher dans)\\b",
+      "topic": "filtrer-liste"
+     },
+     {
+      "re": "\\b(?:je l ai|je l’ai|jlai|possede|possedes|cocher|coche|cocher une ligne|mon stock)\\b",
+      "topic": "suivi-listes"
+     }
+    ]
+   },
+   "/personnalisations.html": {
+    "topic": "aide-listes",
+    "rules": [
+     {
+      "re": "\\b(?:badge|badges|legende|legendes|pastille|pastilles|couleur des statuts|couleurs)\\b",
+      "topic": "legende-badges"
+     },
+     {
+      "re": "\\b(?:fiche complete|fiches completes|ouvrir une fiche|ouvrir la fiche|la fiche d une ligne|description|descriptions|detail d une ligne|details d une ligne)\\b",
+      "topic": "fiche-complete"
+     },
+     {
+      "re": "\\b(?:filtre|filtres|filtrer|filtrage|tri|trier|trie|tris|classer|ranger|recherche|rechercher|chercher dans)\\b",
+      "topic": "filtrer-liste"
+     },
+     {
+      "re": "\\b(?:je l ai|je l’ai|jlai|possede|possedes|cocher|coche|cocher une ligne|mon stock)\\b",
+      "topic": "suivi-listes"
+     }
+    ]
+   },
+   "/vehicules.html": {
+    "topic": "aide-vehicules",
+    "rules": [
+     {
+      "re": "\\b(?:filtre|filtres|filtrer|filtrage|tri|trier|trie|tris|classer|ranger|recherche|rechercher|chercher dans)\\b",
+      "topic": "aide-vehicules"
+     },
+     {
+      "re": "\\b(?:comparer|comparaison|comparateur)\\b",
+      "topic": "comparateur-fiches"
+     },
+     {
+      "re": "\\b(?:je l ai|je l’ai|jlai|possede|possedes|cocher|coche|cocher une ligne|mon stock)\\b|\\bgarage\\b",
+      "topic": "cocher-vehicule"
+     },
+     {
+      "re": "\\b(?:badge|badges|legende|legendes|pastille|pastilles|couleur des statuts|couleurs)\\b",
+      "topic": "statuts"
+     }
+    ]
+   },
+   "/armes.html": {
+    "topic": "aide-armurerie",
+    "rules": [
+     {
+      "re": "\\b(?:filtre|filtres|filtrer|filtrage|tri|trier|trie|tris|classer|ranger|recherche|rechercher|chercher dans)\\b",
+      "topic": "aide-armurerie"
+     },
+     {
+      "re": "\\b(?:equipement|constructeur|composer|loadout)\\b",
+      "topic": "aide-armurerie"
+     },
+     {
+      "re": "\\b(?:badge|badges|legende|legendes|pastille|pastilles|couleur des statuts|couleurs)\\b",
+      "topic": "statuts"
+     }
+    ]
+   },
+   "/carte.html": {
+    "topic": "carte-quoi",
+    "rules": [
+     {
+      "re": "\\b(?:filtre|filtres|filtrer|filtrage|tri|trier|trie|tris|classer|ranger|recherche|rechercher|chercher dans)\\b|\\b(?:badge|badges|legende|legendes|pastille|pastilles|couleur des statuts|couleurs)\\b",
+      "topic": "carte-filtres"
+     }
+    ]
+   },
+   "/calculateurs.html": {
+    "topic": "outils-liste",
+    "rules": []
+   },
+   "/progression.html": {
+    "topic": "progression-cartes",
+    "rules": []
+   },
+   "/collectibles.html": {
+    "topic": "collectibles-page",
+    "rules": []
+   },
+   "/tuto.html": {
+    "topic": "tuto-quoi",
+    "rules": []
+   },
+   "/comparateur.html": {
+    "topic": "comparateur-fiches",
+    "rules": []
+   },
+   "/classement-vehicules.html": {
+    "topic": "classement",
+    "rules": []
+   },
+   "/carnets/": {
+    "topic": "voir-carnets-famille",
+    "rules": []
+   },
+   "/index.html": {
+    "topic": "menu",
+    "rules": []
+   },
+   "/a-propos.html": {
+    "topic": "qui-derriere",
+    "rules": []
+   },
+   "/mentions-legales.html": {
+    "topic": "donnees-navigateur",
+    "rules": []
+   },
+   "/vehicules/": {
+    "topic": "lire-fiche-vehicule",
+    "rules": []
+   },
+   "/armes/": {
+    "topic": "lire-fiche-arme",
+    "rules": []
+   }
+  }
+ }
 }

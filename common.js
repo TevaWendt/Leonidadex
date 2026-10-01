@@ -271,6 +271,9 @@
   const fc = document.querySelector('.fcount') || main.querySelector('.vhero, .hero, .fhero, .lore-hero');
   const rails = document.createElement('div'); rails.className = 'lk-rails'; rails.setAttribute('aria-hidden', 'true');
   rails.innerHTML = '<span class="lk-rail lk-rail--l"></span><span class="lk-rail lk-rail--r"></span>';
+  /* v7.58 (FINAL-01) : les rails restent invisibles (visibility) tant que la page n'est pas chargée : leur recalage après le
+     chargement des images de l'en-tête déplaçait un bloc visible (décalage de mise en page 0,078 mesuré par intermittence). */
+  rails.style.visibility = 'hidden';
   main.appendChild(rails);
   /* Les rails commencent sous le premier bloc pleine largeur (en-tête de page ou compte à rebours) et passent
      derrière tous les blocs pleine largeur suivants (bandeaux, compte à rebours, chiffres clés) : ils ne se
@@ -297,11 +300,13 @@
   }
   let queued = false;
   const schedule = function () { if (queued) return; queued = true; requestAnimationFrame(function () { queued = false; place(); }); };
-  window.addEventListener('resize', schedule); window.addEventListener('load', schedule); place();
+  const reveal = function () { requestAnimationFrame(function () { place(); rails.style.visibility = ''; }); };
+  window.addEventListener('resize', schedule); window.addEventListener('load', reveal, { once: true }); place();
+  if (document.readyState === 'complete') reveal(); else setTimeout(reveal, 4000);
 })();
 
 /* Léo : amorçage isolé. Les données ne se chargent qu'à l'ouverture du panneau. */
-(function(){'use strict';if(!document.querySelector('main')||document.getElementById('leo-style'))return;const base=(document.currentScript&&document.currentScript.src||'').replace(/[^/]*$/,'')||'/';const css=document.createElement('link');css.id='leo-style';css.rel='stylesheet';css.href=base+'leo.css?v=12b40304ffbc';css.onload=()=>{const script=document.createElement('script');script.src=base+'leo-loader.js?v=12b40304ffbc';document.head.append(script);};document.head.append(css);})();
+(function(){'use strict';if(!document.querySelector('main')||document.getElementById('leo-style'))return;const base=(document.currentScript&&document.currentScript.src||'').replace(/[^/]*$/,'')||'/';const css=document.createElement('link');css.id='leo-style';css.rel='stylesheet';css.href=base+'leo.css?v=eb4cd4f751bc';css.onload=()=>{const script=document.createElement('script');script.src=base+'leo-loader.js?v=eb4cd4f751bc';document.head.append(script);};document.head.append(css);})();
 
 /* Lot C (v7.32) : du mouvement sur toutes les pages. Les blocs de contenu apparaissent au défilement (par vagues,
    avec un léger décalage), les piles d'images s'ouvrent, les titres de section tirent leur trait, l'en-tête prend

@@ -2092,10 +2092,12 @@
   {
    "q": "kamacho ou bati 801",
    "expect": {
-    "tool": "compare"
+    "topic": "comparaison",
+    "entity": "vehicle:canis-kamacho"
    },
    "tags": [
-    "calc"
+    "calc",
+    "lot7"
    ]
   },
   {
@@ -2162,10 +2164,12 @@
   {
    "q": "c est qui teva",
    "expect": {
-    "topic": "qui-derriere"
+    "kind": "unknown",
+    "page": "/personnages.html"
    },
    "tags": [
-    "site"
+    "site",
+    "inconnu"
    ]
   },
   {
@@ -5561,6 +5565,223 @@
    },
    "tags": [
     "noms"
+   ]
+  },
+  {
+   "q": "qui est jason",
+   "expect": {
+    "topic": "jason"
+   },
+   "tags": [
+    "personnages"
+   ]
+  },
+  {
+   "q": "les suv",
+   "expect": {
+    "page": "/vehicules.html"
+   },
+   "tags": [
+    "nav",
+    "lot7"
+   ]
+  },
+  {
+   "q": "une voiture de sport",
+   "expect": {
+    "page": "/vehicules.html"
+   },
+   "tags": [
+    "nav",
+    "lot7"
+   ]
+  },
+  {
+   "q": "les pickups",
+   "expect": {
+    "page": "/vehicules.html"
+   },
+   "tags": [
+    "nav",
+    "lot7"
+   ]
+  },
+  {
+   "q": "les helico",
+   "expect": {
+    "page": "/vehicules.html"
+   },
+   "tags": [
+    "nav",
+    "lot7"
+   ]
+  },
+  {
+   "q": "ouvre les tatouages",
+   "expect": {
+    "page": "/style.html"
+   },
+   "tags": [
+    "nav",
+    "lot7"
+   ]
+  },
+  {
+   "q": "ouvre les coiffures",
+   "expect": {
+    "page": "/style.html"
+   },
+   "tags": [
+    "nav",
+    "lot7"
+   ]
+  },
+  {
+   "q": "ouvre la personnalisation des armes",
+   "expect": {
+    "page": "/personnalisations.html"
+   },
+   "tags": [
+    "nav",
+    "lot7"
+   ]
+  },
+  {
+   "q": "ouvre les achats",
+   "expect": {
+    "page": "/achats.html"
+   },
+   "tags": [
+    "nav",
+    "lot7"
+   ]
+  },
+  {
+   "q": "ouvre la fiche du dinka enduro",
+   "expect": {
+    "entity": "vehicle:dinka-enduro"
+   },
+   "tags": [
+    "nav",
+    "lot7"
+   ]
+  },
+  {
+   "q": "les armes de melee",
+   "expect": {
+    "page": "/armes.html"
+   },
+   "tags": [
+    "nav",
+    "lot7"
+   ]
+  },
+  {
+   "q": "kit carrosserie",
+   "expect": {
+    "page": "/personnalisations.html"
+   },
+   "tags": [
+    "nav",
+    "lot7"
+   ]
+  },
+  {
+   "q": "objets de collection",
+   "expect": {
+    "page": "/collectibles.html"
+   },
+   "tags": [
+    "nav",
+    "lot7"
+   ]
+  },
+  {
+   "q": "la sulfateuse",
+   "expect": {
+    "entity": "weapon:mitrailleuse"
+   },
+   "tags": [
+    "abrev",
+    "lot7"
+   ]
+  },
+  {
+   "q": "compare dominator et banshee",
+   "expect": {
+    "topic": "comparaison"
+   },
+   "tags": [
+    "lot7"
+   ]
+  },
+  {
+   "q": "le plus rapide entre le kamacho et le bati 801",
+   "expect": {
+    "topic": "comparaison"
+   },
+   "tags": [
+    "lot7"
+   ]
+  },
+  {
+   "q": "c est quoi les badges",
+   "expect": {
+    "topic": "legende-badges"
+   },
+   "tags": [
+    "site",
+    "lot7"
+   ]
+  },
+  {
+   "q": "a quoi sert la legende",
+   "expect": {
+    "topic": "legende-badges"
+   },
+   "tags": [
+    "site",
+    "lot7"
+   ]
+  },
+  {
+   "q": "comment ouvrir la fiche complete",
+   "expect": {
+    "topic": "fiche-complete"
+   },
+   "tags": [
+    "site",
+    "lot7"
+   ]
+  },
+  {
+   "q": "aide vehicules",
+   "expect": {
+    "topic": "aide-vehicules"
+   },
+   "tags": [
+    "site",
+    "lot7"
+   ]
+  },
+  {
+   "q": "aide armurerie",
+   "expect": {
+    "topic": "aide-armurerie"
+   },
+   "tags": [
+    "site",
+    "lot7"
+   ]
+  },
+  {
+   "q": "comment utiliser la liste",
+   "expect": {
+    "topic": "aide-listes"
+   },
+   "tags": [
+    "site",
+    "lot7"
    ]
   }
  ]

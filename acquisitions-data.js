@@ -6,7 +6,7 @@ window.LK_ACQUISITIONS = {
     "name": "Grand Theft Auto VI",
     "releaseDate": "2026-11-19",
     "status": "Sortie annoncée",
-    "checkedAt": "2026-09-24"
+    "checkedAt": "2026-10-01"
   },
   "sources": {
     "ultimate": {

@@ -1,0 +1,55 @@
+LEONIDAKIT v7.58 — LOT 5 (LÉO, VÉRIFICATION GLOBALE ET LIVRAISON FINALE) DE LA MISSION « CORRECTIONS VISUELLES, FLUIDITÉ ET LÉO »
+— archive « modifs » + ZIP complet (1er octobre 2026)
+
+Base attendue : ton dépôt GitHub tel qu'il est après le commit « Delete img/leonida-silhouette.svg » (2eb945f, 1er octobre), avec ou
+sans le lot 4 déjà posé. L'archive « modifs » est construite depuis 2eb945f et CONTIENT le lot 4 (v7.57) : si tu l'as déjà poussé,
+ses fichiers sont écrasés par des versions identiques ou plus récentes ; si tu ne l'as pas poussé, elle le pose en même temps.
+Ne réapplique ni les archives des lots 1 à 3, ni les archives ChatGPT.
+Deux livrables au choix :
+- LeonidaKit_v7.58_Lot5_Modifications.zip : seulement les fichiers créés ou modifiés depuis 2eb945f, aux chemins exacts depuis la racine.
+- LeonidaKit_v7.58_Complet.zip : le projet entier consolidé (tout ce qui sert au site, à sa régénération et à son déploiement : pages,
+  scripts, feuilles, données, photos, outils/ et tests ; sans .git). Il peut servir de base à une nouvelle conversation sans rien
+  reconstituer. Les rapports et preuves sont dans le dossier de contrôle, à part.
+Aucune commande de build, pas de package.json ; api/, vercel.json et .vercelignore ne changent pas ; rien à régler dans Vercel ni dans
+Brevo. Rien à supprimer.
+
+1. Note le commit courant dans GitHub Desktop (ou copie le dossier).
+2. Extrais l'archive « modifs » dans la racine du site, écrase les fichiers homonymes (garde le dossier .git). (Ou remplace tout le
+   dossier par le contenu du ZIP complet, en gardant .git.)
+3. Vérifie 3 minutes en local ou sur la prévisualisation Vercel (voir « Pour vérifier »).
+4. Mets en ligne quand tu le décides (GitHub Desktop : commit puis push ; Vercel déploie tel quel). Rien n'a été publié pour toi.
+Retour arrière : « Revert » du commit dans GitHub Desktop. Les clés de stockage du navigateur (lk_*) et leurs formats sont
+inchangés : aucune donnée de progression, de carnet, de souhait ou de calcul n'est touchée ; la session de Léo reste dans l'onglet.
+
+POURQUOI L'ARCHIVE CONTIENT TOUTES LES PAGES : common.js, style.css, catalogue.js, fiches.js, progression-core.js et Léo changent ; les
+415 pages portent leurs empreintes ?v= (anti-cache) et sont donc toutes régénérées. Seules a-propos.html et mentions-legales.html
+changent de contenu (lot 4 + décisions ci-dessous).
+
+CE QUE CE LOT CHANGE (détail : outils/CHANGEMENTS-v7.58.txt ; preuves : outils/PREUVES-v7.58.md ; matrice close : outils/MATRICE-FLUIDITE.md) :
+- Tes deux décisions du lot 4 sont écrites dans Mentions : le responsable du traitement reste « l'éditeur du site, personne
+  physique », joignable à l'adresse de contact, son identité connue de l'hébergeur et communiquée sur demande (je n'ai pas publié ton
+  nom : tu avais demandé la discrétion, la LCEN te le permet, et je n'écris pas un état civil que je ne peux pas vérifier ; le champ
+  editorName reste prêt si tu changes d'avis) ; les messages de Contact sont gardés 12 mois après traitement, puis supprimés.
+- Léo comprend et ouvre toutes les rubriques : chaque catégorie de véhicules (« les suv », « une voiture de sport »), chaque classe
+  d'armes (« les armes de mêlée », « la sulfateuse »), les listes et leurs catégories (« les tatouages », « les boissons », « kit
+  carrosserie », « les viseurs »), Achats, Comparateur, Classement, la fiche demandée (« ouvre la fiche du Dinka Enduro »). Chaque
+  lien qu'il renvoie est vérifié à la génération (page, ancre, vue filtrée) ; un lien faux vers les hélicoptères est corrigé.
+- Léo aide selon la page : « aide », « que faire ici ? », « c'est quoi les badges ? », « à quoi sert la légende ? », « comment ouvrir
+  une fiche ? », « comment filtrer ? » répondent avec les fonctions de la page ouverte (listes, Véhicules, Armurerie, Carte,
+  Calculateur, Progression…), avec de nouvelles suggestions en tête de conversation.
+- Les suites de conversation tiennent (« qui est Jason ? » → « et sa voiture ? » → « et sa maison ? » ; « Girardi ES9 » → « et en
+  munitions ? »), les comparaisons disent ce que le site sait sans inventer de vainqueur (fiches, comparateur, « Quel achat
+  choisir ? » préparé), « c'est qui <inconnu> » répond « je n'ai pas cette réponse » au lieu de présenter Léo, un fichier qui ne
+  charge pas propose de relancer la question, et chaque réponse a un bouton « Copier la réponse ».
+- Les listes acceptent une adresse filtrée : nourriture.html#consommables=boissons, style.html#coiffures=officiel (catégorie ou statut).
+- Vérification globale : mesures avant/après identiques (aucune régression ; un petit décalage intermittent des rails décoratifs,
+  déjà présent, est corrigé), recette de 214 contrôles sur 21 pages et 8 largeurs, 624 tests, 512 questions à Léo (100 %).
+
+POUR VÉRIFIER (3 minutes) : ouvre vehicules.html, clique le bouton Léo et tape « aide » (réponse sur la page Véhicules), puis « les
+suv » (ouvre la grille filtrée), puis « ouvre la fiche du dinka enduro », puis « compare dominator et banshee » (comparaison sans
+vainqueur, lien vers le comparateur) et clique « Copier la réponse ». Ouvre nourriture.html, tape « c'est quoi les badges » puis
+« à quoi sert la légende ». Ouvre nourriture.html#consommables=boissons : la liste s'ouvre filtrée sur Boissons. Ouvre
+mentions-legales.html : « Responsable du traitement » et la ligne Contact (12 mois).
+
+FIN DE LA MISSION : les 44 exigences sont closes (outils/MATRICE-FLUIDITE.md, bilan en fin de fichier). Le dossier de contrôle
+contient l'état de reprise final (REPRISE-finale.md) pour toute suite éventuelle, à partir de cette v7.58.

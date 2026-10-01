@@ -1,0 +1,126 @@
+LEONIDAKIT v7.58 — mission « corrections visuelles, fluidité et Léo », lot 5 : Léo, vérification globale et livraison finale
+(1er octobre 2026)
+
+Base : dépôt GitHub TevaWendt/Leonidadex au commit « Delete img/leonida-silhouette.svg » (2eb945f) + lot 4 (v7.57). L'archive de ce
+lot est construite depuis 2eb945f et contient aussi le lot 4 : elle s'applique que le lot 4 soit déjà poussé ou non.
+Suivi des 44 exigences : outils/MATRICE-FLUIDITE.md (close) ; preuves : outils/PREUVES-v7.58.md. Rien n'est publié.
+
+0. DÉCISIONS DU LOT 4, ÉCRITES (demandées à l'éditeur, tranchées le 1er octobre)
+- Responsable du traitement : désignation anonyme conservée — « l'éditeur du site, personne physique, joignable à contact@… ».
+  Raison : la LCEN (art. 1-1 II) lui permet l'anonymat comme éditeur non professionnel, l'éditeur a demandé de ne plus publier son
+  prénom, et je n'écris pas un état civil que je ne peux pas vérifier. Ajout, pour tenir le RGPD au plus près : « Son identité est
+  connue de l'hébergeur (LCEN, art. 1-1 II) et t'est communiquée sur simple demande à cette adresse, notamment pour exercer tes
+  droits. » Le champ editorName de outils/site-informations.json reste disponible si l'éditeur change d'avis (nom écrit dans
+  Mentions seulement, jamais dans À propos).
+- Messages de Contact : « L'éditeur garde ton message et sa réponse 12 mois après le traitement de ta demande (réponse envoyée ou
+  demande classée), puis les supprime (règle fixée le 1er octobre 2026) ; tu peux demander l'effacement avant. » Données :
+  contactRetention / contactRetentionDecidedAt (site-informations.json), rendu par gen-informations.cjs. Historique v7.58 ajouté.
+- Matrice : LEGAL-01 passe de « corrigé à vérifier » à « validé ».
+
+A. LÉO — CE QUI EXISTAIT (LEO-01, inspection du 1er octobre)
+- Assistant local (aucun service distant, CSP connect-src 'self') : noyau leo-index.json (questions rédigées pré-analysées, lexique,
+  gabarits, suggestions, hors sujet) + 7 morceaux leo/*.json chargés à la demande ; compréhension leo-nlp.js (normalisation, SMS,
+  fautes, anglais, BM25) ; décision leo-core.js (salutations, date de sortie, définitions, suites de conversation, fiche nommée,
+  question rédigée, fiche + intention, calculateur, passages) ; interface leo-ui.js (réponse composée ≤ 320 ms, sources, action,
+  « Tu voulais dire… ? », « Signaler », six suggestions par page, « Effacer », session de l'onglet lk_leo_session_v2).
+- Évaluation de départ : 485 / 490 (99 %), hors sujet 39 / 39, 0 réponse sans source ; 86 tests Node ; contrôle navigateur
+  (7 largeurs, clavier, mouvement réduit, CPU ×4) tenu.
+- Manques constatés (sonde de 150 questions, qa/leo-sonde.cjs) : suites de conversation détournées par une ligne de catalogue
+  (« et sa voiture ? » → « Alarme et traceur (voitures de luxe) », « et en munitions ? » → « Munitions spéciales », « et pour la
+  personnaliser ? » → « Pistolet personnalisé ») ; sections nommées sans verbe non reconnues (« les suv », « une voiture de sport »,
+  « les pickups » → réponses de côté) ; « ouvre les tatouages / les coiffures » → « Tu voulais dire… ? » ; « ouvre la personnalisation
+  des armes » → Armurerie ; « ouvre les achats » → outil du calculateur ; « ouvre la fiche du Dinka Enduro » → sujet « motos » ; lien
+  Hélicoptères faux (#cat=helico, la puce est helicoptere) ; aide contextuelle absente (« aide », « c'est quoi les badges », « à quoi
+  sert la légende », « comment ouvrir une fiche » sur une liste → calculateur, carte ou « Tu voulais dire ») ; « c'est qui <inconnu> »
+  → présentation de Léo ; comparaison de deux fiches → outil du calculateur sans prix ; aucune copie de réponse ; erreur de
+  chargement sans suite utile.
+
+B. LÉO — CE QUI CHANGE (LEO-02 a → h, LEO-03)
+[a] Rubriques et formulations (outils/leo-editorial.json → categories : 17 → 72 vues ; leo-lexique.json ; leo-core.js)
+- Vues de section : catégories de Véhicules (sport, SUV, pick-up, muscle, supercar, berline, van, moto, service), classes d'armes
+  (mêlée, pistolets, PM, assaut, pompe, précision, mitrailleuses, projectiles, spéciales), listes (tatouages, coiffures, tenues,
+  perso véhicules / armes, liste des consommables) et leurs catégories (boissons, en-cas, repas, soins, protection ; coupes, barbe,
+  maquillage ; chaussures, lunettes, chapeaux, bijoux, masques ; kits, carrosserie, jantes, peinture, néons, moteur, turbo, blindage,
+  livrées ; chargeurs, viseurs, silencieux, finitions, camouflages, munitions spéciales), Achats, Comparateur, Classement, avec
+  synonymes et pluriels (fringues, flingues, sulfateuse → mitrailleuse, bécane, bouffe…).
+- La catégorie dont le terme reconnu est le plus long l'emporte (« voiture de sport » avant « voiture ») ; une section nommée seule
+  (« les suv », « kit carrosserie », « objets de collection ») ouvre sa vue, sauf si une question rédigée sûre mène déjà à cette page
+  (« les motos » garde sa réponse chiffrée, dont le lien est la vue).
+- Les alias d'un seul mot des lignes de catalogue (« sport », « course », « peintures ») ne font plus entité ; la règle « un mot de six
+  lettres qui ne désigne qu'une fiche » ne vaut plus pour les lignes de catalogue ni pour un mot présent dans les questions rédigées
+  (« légende » ne mène plus à la « Don Panoz Gallery of Legends »).
+[b] Liens et actions (gen-leo.cjs, catalogue.js)
+- « ouvre la fiche du Dinka Enduro », « fiche du Girardi » → la fiche directement ; « ouvre les tatouages / coiffures / la
+  personnalisation des armes / les achats / le comparateur / le classement » → la bonne page ou ancre.
+- gen-leo.cjs vérifie désormais chaque vue filtrée : #cat=<puce> doit exister sur Véhicules / Armurerie, #<famille>=<valeur> doit être
+  une catégorie, un statut ou une étiquette de compatibilité de la liste ; une route fausse arrête la génération. Le lien Hélicoptères
+  est corrigé (#cat=helicoptere).
+- catalogue.js : #<famille>=<valeur> accepte une catégorie du menu (setCat) ou un statut (setStatus), en plus des étiquettes de
+  compatibilité ; la légende se synchronise (aria-pressed). Exemple : nourriture.html#consommables=boissons, style.html#coiffures=officiel.
+[c] Aide liée à la page (leo-editorial.json → help.pages, validé par gen-leo.cjs ; leo-core.js ; 5 sujets dans leo-knowledge.json)
+- « aide », « que faire ici ? », « comment ça marche ? », « c'est quoi cette page ? » renvoient au sujet de la page ouverte : listes →
+  aide-listes (nouveau), Véhicules → aide-vehicules (nouveau), Armurerie → aide-armurerie (nouveau), Carte → carte-quoi, Calculateur →
+  outils-liste, Progression → progression-cartes, Collectibles → collectibles-page, Tuto, Comparateur, Classement, carnets, accueil
+  (menu), À propos (qui-derriere), Mentions (donnees-navigateur), fiche véhicule / arme (lire-fiche-*).
+- Sur une liste, les mots badges / légende / pastilles → legende-badges (nouveau : les cinq badges, leur sens, le filtre au clic) ;
+  fiche complète / description → fiche-complete (nouveau : ouverture, fermeture, focus, téléphone, sans script) ; filtre / tri /
+  recherche → filtrer-liste ; « Je l'ai » / cocher → suivi-listes. Sur Véhicules : filtres / tri → aide-vehicules, comparer →
+  comparateur-fiches, garage → cocher-vehicule, badges → statuts. Sur Armurerie : filtres / équipement → aide-armurerie.
+- Textes des trois nouveaux sujets relus contre les pages (puces, options de tri, boutons réels : case « Garage » en haut à droite
+  des cartes, « Comparer » jusqu'à trois, « Copier mon équipement », « Partager », puce « Mon arsenal »).
+- Suggestions par page : listes, Véhicules, Armurerie, pages d'information mises à jour (la première suggestion est l'aide de la page).
+[d] Calculateur : inchangé (routage vers Mon objectif, Mon temps de jeu, Mon budget, Ça vaut le coup ?, Mes achats, Quoi acheter
+  d'abord ?, Quel achat choisir ?, Mon business plan vérifié par la sonde et l'évaluation : 61 / 61).
+[e] Comparaisons (leo-core.js)
+- Deux ou trois véhicules (ou armes) nommés sans chiffres (« X ou Y ? », « compare X et Y », « le plus rapide entre X et Y ») : ce que le
+  site sait de chacun (catégorie, statut, inspiration ; munition et portée pour une arme), le rappel qu'aucune vitesse, dégât ni prix
+  n'est publié (« je ne peux pas dire lequel est le plus rapide »), les fiches, le comparateur (/comparateur.html?type=…&ids=…, route
+  autorisée par safeURL) et « Quel achat choisir ? » préparé avec les fiches (request : contrat du lot B conservé, test adapté).
+  Avec des chiffres, le calculateur répond comme avant. Les fiches strictement nommées passent avant un rapprochement partiel
+  (« Albany Emperor ou Albany Primo » ne traîne plus l'Emperor Vectre).
+[f] Statuts et sources : inchangés ; date de sortie revérifiée le 1er octobre 2026 sur rockstargames.com/VI (« Coming November 19,
+  2026 », PS5 et Xbox Series X|S) : acquisitions.json game.checkedAt 2026-10-01 (sinon Léo aurait dit « à revérifier » à partir du
+  24 octobre).
+[g] Échecs : « c'est qui <nom inconnu du site> » → « Je n'ai pas cette réponse » vers Personnages (plus jamais « Je suis Léo ») ; un
+  fichier local qui ne charge pas → message explicite avec « relancer la question » (bouton) et « Chercher sur le site ».
+[h] Confort : bouton « Copier la réponse » sous chaque réponse (texte, statut, liens en adresses absolues, source, signature ;
+  presse-papiers, repli execCommand, retour « Réponse copiée ✓ » et annonce au lecteur d'écran) ; « Effacer », Échap, focus de retour,
+  fenêtre modale sur téléphone, mention « rien n'est envoyé » : inchangés et revérifiés.
+[LEO-03] Latence et fiabilité
+- Expressions des catégories (72 × termes) et des règles d'aide compilées une fois ; une section nommée répond sans passer par la
+  recherche (310 → 102 ms à ×4). Noyau 300 → 320 Kio maximum (gen-leo.cjs CORE_MAX, test leo-v745) : 310 Kio servis, ≈ 85 Kio
+  compressés (80 avant). Mesures à ×4, réseau 10 Mbit/s + 40 ms, 5 essais (qa/leo-latence.cjs) : ouverture 969 → 1 025 ms (+5 %,
+  noyau plus lourd de 4 % et vues de section), première question qui charge un morceau 680 → 762 ms, même question 113 → 96 ms,
+  noyau seul 120 → 99 ms ; 12 fichiers chargés, 0 rechargé. Composition mot à mot conservée (≤ 320 ms, texte complet pour le lecteur
+  d'écran et en mouvement réduit).
+- Rien n'est effacé sans l'utilisateur : Léo ne touche ni progression ni sauvegarde ; « Effacer » ne vide que sa conversation.
+
+C. VÉRIFICATION GLOBALE (FINAL-01, FINAL-02)
+- Mesures comparables au lot 1 (qa/perf-final.cjs : CPU ×4, 10 Mbit/s + 40 ms, froid puis chaud, 3 répétitions, 1280 et 390 px, 14 pages,
+  actions) : avant = commit 2eb945f (v7.56), après = v7.58. Aucune régression mesurable : écarts de −14 % à +9 % sur DCL / LCP, dans
+  le bruit (3 répétitions) ; transferts identiques à 1 Kio près ; nœuds identiques ; CLS inchangé ; actions identiques (recherche
+  Véhicules 473 → 511 ms, filtre 647 → 617, tri 367 → 362 ; Armurerie 467 → 467 ; saisie calculateur 316 → 304 ; fiche
+  Consommables mesurée dans la page 353 → 342 ms, 7 essais). Détail : outils/PREUVES-v7.58.md § 4.
+- Sous-ancres des pages éditoriales (#responsable, #prestataires, #droits, #donnees-*) : scroll-margin-top 150 → 170 px (style.css) :
+  la section .reveal entre avec une translation de 20 px, et l'ancre atterrissait 7 px sous la barre de sections (trouvé par la recette).
+- Recette finale (qa/recette-finale.cjs) : 214 contrôles, 0 échec — 21 pages × 8 largeurs (360, 390, 768, 1024, 1079, 1081, 1280,
+  1440 : 0 erreur JS, aucun défilement horizontal, en-tête et menu, images, bouton Léo dans l'écran), parcours Véhicules (recherche,
+  filtre, tri, adresse partagée, Afficher plus, Garage), Armurerie (filtre, constructeur), Carte, Calculateur, listes (vue filtrée,
+  légende, Description, Fiche complète, Échap, focus), carrousel, collections, Planques, Progression (coche → rechargement →
+  conservée, clés inchangées, export), À propos, Mentions, Léo (4 pages, 42 questions, 77 liens tous servis avec ancres et vues
+  filtrées existantes, copie, effacement, clavier), mouvement réduit et sans script sur 4 pages. Recettes des lots 3 (227 / 227) et 4
+  (51 / 51) rejouées. Contrôle navigateur de Léo (outils/tests/leo-browser.cjs) : 7 largeurs, clavier, mouvement réduit, perf ×4.
+
+D. FICHIERS
+Sources modifiées : leo-core.js, leo-ui.js, leo.css, catalogue.js, common.js (rails), style.css (sous-ancres), outils/leo-editorial.json, outils/leo-lexique.json,
+outils/leo-knowledge.json (+5 sujets), outils/gen-leo.cjs, outils/acquisitions.json, outils/site-informations.json,
+outils/gen-informations.cjs, outils/tests/leo.test.cjs, leo-v745.test.cjs, leo-eval.cjs, leo-questions.json (+22 questions, 2 attentes
+mises à jour). Nouveaux : outils/CHANGEMENTS-v7.58.txt, outils/PREUVES-v7.58.md, LISEZ-MOI-v7.58.txt. Mis à jour : README.md,
+outils/MATRICE-FLUIDITE.md, outils/leo-index-manifest.json. Régénérés : leo-index.json, leo/*.json, acquisitions-data.js,
+mentions-legales.html et toutes les pages (empreintes ?v=). Rien à supprimer. Le lot 4 (v7.57) est inclus dans l'archive.
+
+E. CONTRÔLES
+- node outils/regenerer.cjs (avec gen-leo --check) puis node outils/verifier.js : 48 355 références, 0 erreur.
+- Tests : 624 / 624. Évaluation de Léo : 512 / 512 (100 %), hors sujet 39 / 39, 0 réponse sans source.
+- Recette finale 214 / 214 ; recette lot 3 227 / 227 ; recette lot 4 51 / 51 ; audit des cookies : inchangé (Léo n'écrit que sa
+  session dans l'onglet, après la première question).

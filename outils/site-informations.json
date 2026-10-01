@@ -1,9 +1,11 @@
 {
- "_note": "v7.46 (lot 9) : coordonnées publiées sur Contact et Mentions (outils/gen-informations.cjs). contactVerified vaut true parce que l’adresse a été fournie par l’éditeur (expéditeur validé dans son compte Brevo). La boîte qui reçoit les messages n’est jamais écrite ici : elle est lue par api/contact.js dans la variable d’environnement Vercel CONTACT_TO. Éditeur non professionnel (LCEN, art. 1-1, II, depuis la loi SREN du 21 mai 2024) : aucun nom, domicile ni téléphone de l’éditeur n’est publié ; son identité est conservée par l’hébergeur. v7.57 (lot 4) : relecture des textes à la date du 1er octobre 2026 (LCEN art. 1-1 II consulté sur Légifrance ; CNIL « que dit la loi » ; notices Vercel et Brevo) ; téléphone de l’hébergeur retiré (non requis pour un éditeur non professionnel, et le numéro publié venait d’un dossier Privacy Shield inactif) ; audit réel des stockages (outils/preuve-confidentialite.cjs + recette navigateur du dossier de contrôle). editorName reste null tant que l’éditeur n’a pas choisi de publier son nom comme responsable du traitement (voir CHANGEMENTS-v7.57) ; s’il le renseigne, la page Mentions le nomme dans « Données personnelles » seulement.",
+ "_note": "v7.46 (lot 9) : coordonnées publiées sur Contact et Mentions (outils/gen-informations.cjs). contactVerified vaut true parce que l’adresse a été fournie par l’éditeur (expéditeur validé dans son compte Brevo). La boîte qui reçoit les messages n’est jamais écrite ici : elle est lue par api/contact.js dans la variable d’environnement Vercel CONTACT_TO. Éditeur non professionnel (LCEN, art. 1-1, II, depuis la loi SREN du 21 mai 2024) : aucun nom, domicile ni téléphone de l’éditeur n’est publié ; son identité est conservée par l’hébergeur. v7.57 (lot 4) : relecture des textes à la date du 1er octobre 2026 (LCEN art. 1-1 II consulté sur Légifrance ; CNIL « que dit la loi » ; notices Vercel et Brevo) ; téléphone de l’hébergeur retiré (non requis pour un éditeur non professionnel, et le numéro publié venait d’un dossier Privacy Shield inactif) ; audit réel des stockages (outils/preuve-confidentialite.cjs + recette navigateur du dossier de contrôle). editorName reste null tant que l’éditeur n’a pas choisi de publier son nom comme responsable du traitement (voir CHANGEMENTS-v7.57) ; s’il le renseigne, la page Mentions le nomme dans « Données personnelles » seulement. v7.58 (lot 5) : contactRetention / contactRetentionDecidedAt écrivent la durée de conservation des messages de Contact ; la désignation anonyme du responsable reste le choix de l’éditeur (editorName null).",
  "contactEmail": "contact@leonidakit.com",
  "contactVerified": true,
  "editorStatus": "non-professionnel",
  "editorName": null,
+ "contactRetention": "12 mois après le traitement de ta demande (réponse envoyée ou demande classée), puis les supprime",
+ "contactRetentionDecidedAt": "2026-10-01",
  "publicationDirector": null,
  "editorContact": "contact@leonidakit.com",
  "checkedAt": "2026-10-01",
@@ -37,6 +39,11 @@
   }
  },
  "history": [
+  {
+   "date": "2026-10-01",
+   "version": "v7.58",
+   "text": "Lot 5 : décisions du lot 4 écrites (responsable du traitement : l’éditeur du site, personne physique, identité connue de l’hébergeur et communiquée sur demande ; messages de Contact gardés 12 mois après traitement) ; Léo : vues de section et filtrées, aide liée à la page, suites de conversation, comparaisons factuelles, copie d’une réponse ; aucune donnée ni cookie supplémentaire (Léo reste local, session de l’onglet)."
+  },
   {
    "date": "2026-10-01",
    "version": "v7.57",

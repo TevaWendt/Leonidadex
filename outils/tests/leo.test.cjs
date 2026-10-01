@@ -6,7 +6,7 @@ const shardJSON=name=>JSON.parse(fs.readFileSync(root+data.shards[name].file));
 function fullCore(d=data){const c=C.create(d,{load:async(name,file)=>JSON.parse(fs.readFileSync(root+file))});for(const name of Object.keys(d.shards))c.attach(name,shardJSON(name));return c;}
 const core=fullCore();
 const ctx={window:{}};vm.createContext(ctx);for(const f of ['vehicules-data.js','armes-data.js','calculateurs-catalogue.js','calculateurs-activites.js','acquisitions-data.js','calculateurs-data.js'])vm.runInContext(fs.readFileSync(root+'/'+f,'utf8'),ctx);const D=ctx.window.LKCalcData,initial=B.initial('test',JSON.parse(JSON.stringify(D.presets))),catalogue=JSON.parse(JSON.stringify(D.catalogue())),activities=JSON.parse(JSON.stringify(D.activities()));
-const ask=(q,c={})=>core.answer(q,c,{now:'2026-09-24T12:00:00Z'}),req=(tool='goal',values={},items=[])=>({v:1,tool,values,items});
+const ask=(q,c={})=>core.answer(q,c,{now:'2026-10-01T12:00:00Z'}),req=(tool='goal',values={},items=[])=>({v:1,tool,values,items});
 for(const [q,tool,values] of [
  ["J’ai 200k et je vise 1M",'goal',{capital:200000,target:1000000}],
  ["J'ai 200 000 et je veux atteindre 1 million",'goal',{capital:200000,target:1000000}],
@@ -54,7 +54,7 @@ test('La projection Léo est à jour avec ses sources canoniques',()=>{const cry
 test('Les fiches de Léo référencent des achats et routes réellement livrés',()=>{assert.equal(new Set(core.items.map(x=>x.key)).size,core.items.length);for(const x of core.items){assert.ok(fs.existsSync(root+x.url.split('#')[0]),x.url);if(x.calcId)assert.ok(catalogue.some(a=>a.id===x.calcId),x.calcId);if(x.image)assert.ok(fs.existsSync(root+x.image),x.image);}});
 test('Lot B : deux fiches nommées vont dans Quel achat choisir ?, une fiche et « business plan » vont dans Mon business plan',()=>{
  const xs=core.items.filter(x=>x.calcId).slice(0,2);
- const a=ask(xs[0].name+' ou '+xs[1].name+' ?');assert.equal(a.kind,'calc');assert.equal(a.request.tool,'compare');assert.deepEqual(a.request.items,[xs[0].calcId,xs[1].calcId]);
+ const a=ask(xs[0].name+' ou '+xs[1].name+' ?');/* v7.58 : deux véhicules ou deux armes sans chiffres reçoivent d'abord la comparaison factuelle (ce que le site sait, sans vainqueur), la demande « Quel achat choisir ? » restant préparée avec les deux fiches */assert.ok(a.kind==='calc'||(a.kind==='answer'&&a.topic==='comparaison'),a.kind);assert.equal(a.request.tool,'compare');assert.deepEqual(a.request.items,[xs[0].calcId,xs[1].calcId]);
  const b=ask('Fais-moi un business plan pour acheter '+xs[0].name);assert.equal(b.kind,'calc');assert.equal(b.request.tool,'plan');assert.deepEqual(b.request.items,[xs[0].calcId]);
  assert.equal(ask('Dans quel ordre acheter '+xs[0].name+' et '+xs[1].name+' ?').request.tool,'order');
  assert.equal(ask('comparer mes activités').request.tool,'activities');

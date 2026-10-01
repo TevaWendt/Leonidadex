@@ -12,7 +12,7 @@
    « --check » recompare toutes les sorties à l'octet près sans les écrire. */
 const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),crypto=require('node:crypto');
 const {JSDOM}=require('jsdom');const root=path.resolve(__dirname,'..');const T=require('./typographie.cjs');
-const CORE_MAX=300*1024,PASSAGE_MIN=300,PASSAGE_MAX=600;
+const CORE_MAX=320*1024,PASSAGE_MIN=300,PASSAGE_MAX=600; /* v7.58 : 300 → 320 Kio (72 vues de section, aide par page, 5 sujets) ; servi compressé par Vercel (≈ 80 Kio), chargé une fois à la première ouverture */
 function generate(options={}){
  const r=options.root||root,read=f=>fs.readFileSync(path.join(r,f),'utf8'),json=f=>JSON.parse(read(f)),exists=f=>fs.existsSync(path.join(r,f));
  const defs=json('outils/leo-editorial.json'),ed=json('outils/editorial.json'),med=json('outils/medias-officiels.json'),lex=json('outils/leo-lexique.json'),c={window:{}};const N=require(path.join(r,'leo-nlp.js'));const DEFAULT_DATE=(()=>{const k=json('outils/leo-knowledge.json'),m={};for(const t of k.topics||[]){const dt=t.checkedAt||k.checkedAt;m[dt]=(m[dt]||0)+1;}return Object.entries(m).sort((a,b)=>b[1]-a[1])[0]?.[0]||null;})();
@@ -20,7 +20,13 @@ function generate(options={}){
  for(const f of ['vehicules-data.js','armes-data.js','calculateurs-catalogue.js','acquisitions-data.js','assets-manifest.js','calculateurs-data.js','carte-gtadb.js','collectibles-data.js'])vm.runInNewContext(read(f),c);
  const catalog=c.window.LKCalcData.catalogue(),acq=c.window.LK_ACQUISITIONS,acqSrc=json('outils/acquisitions.json'),rows=new Map(),docs=new Map(),linked=new Set();
  const doc=file=>{if(!docs.has(file))docs.set(file,new JSDOM(read(file)));return docs.get(file).window.document;};
- const routeOK=url=>{if(typeof url!=='string'||!/^\/(?!\/)[a-z0-9/_-]+\.html(?:\?[a-z0-9=&_-]+)?(?:#[a-z0-9=_-]+)?$/i.test(url))throw Error('Route invalide : '+url);const [file,rest]=url.slice(1).split(/[?#]/,2);const hash=url.includes('#')?url.split('#')[1]:null;if(!exists(file))throw Error('Page absente : '+file);if(hash&&!hash.includes('=')&&!doc(file).getElementById(hash))throw Error('Ancre absente : '+url);linked.add(file);return url;};
+ const routeOK=url=>{if(typeof url!=='string'||!/^\/(?!\/)[a-z0-9/_-]+\.html(?:\?[a-z0-9=&_-]+)?(?:#[a-z0-9=_-]+)?$/i.test(url))throw Error('Route invalide : '+url);const [file,rest]=url.slice(1).split(/[?#]/,2);const hash=url.includes('#')?url.split('#')[1]:null;if(!exists(file))throw Error('Page absente : '+file);if(hash&&!hash.includes('=')&&!doc(file).getElementById(hash))throw Error('Ancre absente : '+url);
+  /* v7.58 : une vue filtrée doit exister — #cat=<puce> sur Véhicules/Armurerie, #<famille>=<catégorie|statut|tag> sur les listes, #lieu= et #pins= sur la carte */
+  if(hash&&hash.includes('=')){const [k,v]=hash.split('=');const d=doc(file);
+   if(k==='cat'){if(!d.querySelector('[data-filter="'+v+'"]'))throw Error('Filtre absent : '+url);}
+   else if(k==='lieu'||k==='pins'||k==='q'||k==='own'||k==='st'||k==='slot'||k==='ed'||k==='vue'){/* vérifié ailleurs (lieux de la carte, état partagé) */}
+   else{const box=d.getElementById('box-'+k);if(box){const ok=box.querySelector('[data-cat-f="cat"] option[value="'+v+'"]')||box.querySelector('[data-cat-f="st"] option[value="'+v+'"]')||(()=>{try{return Object.prototype.hasOwnProperty.call(JSON.parse(box.getAttribute('data-cat-tags')||'{}'),v);}catch{return false;}})();if(!ok)throw Error('Catégorie, statut ou filtre absent de la liste : '+url);}}}
+  linked.add(file);return url;};
  const image=url=>typeof url==='string'&&/^\/(?:img|photos)\/[a-z0-9/_,.-]+\.(?:webp|svg|png)$/i.test(url)&&exists(url.slice(1))?url:null;
  const imageFor=ids=>(ids||[]).flatMap(id=>med[id]?.variants||[]).map(x=>x.src).map(image).find(Boolean)||null;
  const calcFor=(id,type)=>catalog.find(x=>x.type===type&&(x.id===id||x.id===type+':'+id));
@@ -58,6 +64,7 @@ function generate(options={}){
  const definitions=defs.definitions.map(x=>{const url='/tuto.html#terme-'+x.id;routeOK(url);if(text(d.querySelector('#terme-'+x.id+' dd'))!==flat(x.text))throw Error('Glossaire divergent : '+x.id);return {...x,url};});
  const faq=defs.faq.map(x=>{routeOK(x.source);const section=d.getElementById(x.source.split('#')[1]);const answer=x.selector?d.querySelector(x.selector):[...section.querySelectorAll('details')].find(e=>text(e.querySelector('summary'))===flat(x.question))?.querySelector('p');if(!answer||!text(answer))throw Error('Réponse FAQ absente : '+x.id);return {id:x.id,terms:x.terms,text:text(answer),url:x.source};});
  const categories=defs.categories.filter(x=>exists(x.route.split('#')[0].slice(1))).map(x=>({...x,route:routeOK(x.route)}));
+
  /* ---------- questions rédigées ---------- */
  const kb=json('outils/leo-knowledge.json');if(kb.schemaVersion!==2||!Array.isArray(kb.topics))throw Error('Base de connaissances invalide (schéma 2 attendu).');
  const ids=new Set();const knowledge=kb.topics.map(x=>{if(!/^[a-z0-9-]+$/.test(x.id)||ids.has(x.id))throw Error('Identifiant de sujet invalide ou en double : '+x.id);ids.add(x.id);
@@ -67,6 +74,8 @@ function generate(options={}){
   const action=x.action?{...x.action}:null;if(action){if(action.type==='map'){if(!rows.has('map:'+action.id)&&!rows.has('place:'+action.id))throw Error('Action carte vers un lieu absent : '+x.id+' → '+action.id);action.url='/carte.html#lieu='+action.id;}else if(action.type==='tool'){if(!defs.tools.some(t=>t.id===action.tool))throw Error('Action outil inconnue : '+x.id);action.url='/calculateurs.html?tool='+action.tool+'#atelier';}else if(action.type==='page')action.url=routeOK(action.url);else throw Error('Type d’action inconnu : '+x.id);}
   /* mots-clés hérités : gardés seulement s'ils apportent un radical absent des formulations et de la question canonique */const fset=new Set(x.f.map(s=>N.raw(s).join(' '))),fstems=new Set([...x.f,x.q].flatMap(s=>N.raw(s).map(N.stem)));const k=(x.k||[]).filter(w=>!fset.has(N.raw(w).join(' '))&&N.raw(w).map(N.stem).some(t=>t.length>=3&&!fstems.has(t)));
   return {id:x.id,q:tx(x.q),f:x.f,...(k.length?{k}:{}),text:tx(x.text),status:tx(x.status||''),links,...(x.source?{source:official(x.source)}:{}),...((x.checkedAt||kb.checkedAt)!==DEFAULT_DATE?{verifiedAt:x.checkedAt||kb.checkedAt}:{}),...(x.priority?{priority:true}:{}),...(x.min?{min:x.min}:{}),...(action?{action}:{}),_theme:x.theme||null};});
+ /* v7.58 : aide liée à la page (LEO-02c) : chaque page citée existe (ou est un dossier de fiches), chaque sujet existe, chaque règle est une expression valide */
+ const helpMap={pages:{}};{const H=defs.help&&defs.help.pages||{};const topicIds=ids;for(const [page,spec] of Object.entries(H)){if(!(page.endsWith('/')?fs.existsSync(path.join(root,page.slice(1))):exists(page.slice(1))))throw Error('Aide : page absente '+page);if(!topicIds.has(spec.topic))throw Error('Aide : sujet absent '+spec.topic+' ('+page+')');for(const r of spec.rules||[]){new RegExp(r.re);if(!topicIds.has(r.topic))throw Error('Aide : sujet absent '+r.topic+' ('+page+')');}helpMap.pages[page]={topic:spec.topic,rules:(spec.rules||[]).map(r=>({re:r.re,topic:r.topic}))};}}
  const written=knowledge.length;
  /* FAQ des cinq hubs du monde (v7.41) et des pages Consommables, Vêtements et style, Personnalisations (v7.42-43) : questions rédigées dans leurs JSON éditoriaux */
  {const hubsEd=json('outils/editorial-hubs.json');const HUB_LABEL={lieux:'Les lieux',personnages:'Les personnages',demeures:'Les demeures',planques:'Les planques',entreprises:'Les entreprises'};
@@ -107,7 +116,7 @@ function generate(options={}){
  /* Le thème « calculateur » (une soixantaine de questions) est un morceau à part, chargé dès qu'une question en parle ou dès l'ouverture sur le calculateur et le Tuto : il allège le noyau. */
  const calcTopics=knowledge.filter(t=>t._theme==='calculateur'),coreTopics=knowledge.filter(t=>t._theme!=='calculateur'),stripTheme=t=>{/* les formulations sont livrées déjà analysées (d, dq, dk : jetons séparés par des espaces, même analyseur que dans le navigateur) : le navigateur n'a rien à réanalyser à l'ouverture */const o={...t},terms=x=>analyzer.analyze(x).terms.join(' ');delete o._theme;o.d=t.f.map(terms);o.dq=terms(t.q);if(t.k&&t.k.length)o.dk=[...new Set(t.k.flatMap(k=>analyzer.analyze(k).terms))].join(' ');delete o.f;delete o.k;return o;};
  const shards={calculateur:{file:'/leo/calculateur.json',knowledge:true,vocab:vocabOf(calcTopics.flatMap(t=>[t.q,...t.f,...(t.k||[])]))},vehicules:{file:'/leo/vehicules.json',vocab:vocab.vehicules},armes:{file:'/leo/armes.json'},monde:{file:'/leo/monde.json'},lieux:{file:'/leo/lieux.json',vocab:vocab.lieux,packed:['id','name','region','st','image','real','proof','nt']},catalogues:{file:'/leo/catalogues.json',vocab:vocab.catalogues},passages:{file:'/leo/passages.json'}};
- const core={schemaVersion:2,checkedAt:DEFAULT_DATE,release,categories,tools:defs.tools,definitions,faq,texts:deepTx(defs.texts),templates:deepTx(defs.templates),suggestions:deepTx(defs.suggestions),offtopic:defs.offtopic,lexique:compactLex,seqNames,official:officialLinks,knowledge:coreTopics.map(stripTheme),names,shards};
+ const core={schemaVersion:2,checkedAt:DEFAULT_DATE,release,categories,tools:defs.tools,definitions,faq,texts:deepTx(defs.texts),templates:deepTx(defs.templates),suggestions:deepTx(defs.suggestions),help:helpMap,offtopic:defs.offtopic,lexique:compactLex,seqNames,official:officialLinks,knowledge:coreTopics.map(stripTheme),names,shards};
  core.revision=crypto.createHash('sha256').update(JSON.stringify(core)).digest('hex').slice(0,12);
  const outputs=new Map();outputs.set('leo-index.json',JSON.stringify(core));
  const strip=x=>Object.fromEntries(Object.entries(x).filter(([k,v])=>k!=='id'&&k!=='shard'&&v!==null&&v!==undefined&&!(Array.isArray(v)&&!v.length)));

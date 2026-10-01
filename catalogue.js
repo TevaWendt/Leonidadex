@@ -116,7 +116,10 @@
     box.querySelectorAll('[data-cat-reset]').forEach(b => b.addEventListener('click', reset));
     tools.hidden = false;
     apply('init');
-    return { box, rows, state, apply, reset, tags, setGroup(g) { state.group = g; state.cat = ''; if (fCat) fCat.value = ''; apply(); }, setTag(t) { reset(); state.tag = t; apply(); } };
+    /* v7.58 : #<famille>=<catégorie> ouvre la liste filtrée sur une catégorie du menu (Léo, liens partagés) ; #<famille>=<statut> sur un statut */
+    return { box, rows, state, apply, reset, tags, setGroup(g) { state.group = g; state.cat = ''; if (fCat) fCat.value = ''; apply(); }, setTag(t) { reset(); state.tag = t; apply(); },
+      setCat(c) { if (!fCat || !Array.from(fCat.options).some(o => o.value === c)) return false; reset(); fCat.value = c; state.cat = c; apply(); return true; },
+      setStatus(st) { if (!fSt || !Array.from(fSt.options).some(o => o.value === st)) return false; reset(); fSt.value = st; state.st = st; apply(); return true; } };
   }
   boxes.forEach(box => { const c = setup(box); if (c) controllers.set(box, c); });
 
@@ -248,7 +251,7 @@
     if (m) {
       const box = document.getElementById('box-' + m[1]), c = box && controllers.get(box);
       if (!c) return;
-      if (c.tags[m[2]]) c.setTag(m[2]); else c.reset();
+      if (c.tags[m[2]]) c.setTag(m[2]); else if (!c.setCat(m[2]) && !c.setStatus(m[2])) c.reset();
       box.open = true;
       requestAnimationFrame(() => { box.scrollIntoView({ block: 'start' }); });
       return;

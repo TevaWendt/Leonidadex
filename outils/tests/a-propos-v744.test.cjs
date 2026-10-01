@@ -63,7 +63,7 @@ test('À propos : aucun nombre tapé à la main — les chiffres viennent des do
   assert.equal(stat('pages'),pages);
   for(const b of d.querySelectorAll('.fig-n'))assert.equal(b.textContent.replace(/[  ]/g,''),b.dataset.count,'texte sans JS = valeur');
   const acq=JSON.parse(read('outils/acquisitions.json'));const fr=iso=>new Intl.DateTimeFormat('fr-FR',{day:'numeric',month:'long',year:'numeric',timeZone:'UTC'}).format(new Date(iso+'T12:00:00Z'));
-  assert.ok(d.getElementById('calendrier').textContent.includes(fr(acq.game.releaseDate)));assert.ok(d.getElementById('calendrier').textContent.includes(fr(acq.game.checkedAt)));
+  assert.ok(d.getElementById('calendrier').textContent.includes(fr(acq.game.releaseDate)));assert.ok(d.getElementById('calendrier').textContent.includes(fr(acq.game.checkedAt))||d.getElementById('calendrier').textContent.includes(fr(acq.game.checkedAt).replace(/^1 /,'1er ')),'date de relecture de la sortie (« 1er » depuis la v7.57)');
   const src=JSON.parse(read('outils/catalogues/sources.json')).sources;assert.ok(d.getElementById('comment-on-verifie').textContent.includes(fr(Object.values(src).map(s=>s.consultedAt).sort().pop())));
   /* aucune date ni aucun nombre de fiches écrit dans le JSON éditorial */
   /* la date de sortie, les dates de vérification et les compteurs ne sont jamais écrits dans le JSON éditorial (seules les dates d’événements cités le sont, comme le texte des éditions du 24 juin 2026) */
