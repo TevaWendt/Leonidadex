@@ -57,7 +57,8 @@ const HEAD_TOP=between(/<meta name="theme-color"[\s\S]*?<link rel="icon"[^>]*>\n
 const HEADER=between(/<a class="skip"[\s\S]*?<main id="main">/);
 const FCOUNT=between(/<div class="fcount">[\s\S]*?<\/div>\n<\/div>/);
 const NOTE=between(/<section class="shell">\s*<div class="note-box rise">[\s\S]*?<\/section>/);
-const FOOTER=between(/<footer>[\s\S]*?<\/body>\n<\/html>/).replace(/(<script src="\.\.\/carnets-core\.js[^"]*"><\/script>\n)?(<script src="\.\.\/fiches\.js)/,'<script src="../carnets-core.js"></script>\n$2'); // v7.51 : envies (carnets-core.js) avant fiches.js
+const FOOTER=between(/<footer>[\s\S]*?<\/body>\n<\/html>/).replace(/(<script src="\.\.\/carnets-core\.js[^"]*"><\/script>\n)?(<script src="\.\.\/fiches\.js)/,'<script src="../carnets-core.js"></script>\n$2') // v7.51 : envies (carnets-core.js) avant fiches.js
+ .replace(/<script src="\.\.\/armes-data\.js[^"]*"><\/script>\n?/,''); // v7.54 : aucun script d'une fiche ne lit LK_ARMES (le comparateur charge ses données lui-même)
 
 const lede=a=>{const cat=CATL[a.cat].toLowerCase();return a.nom+' dans GTA VI : '+cat+(a.insp?'. Inspiration : '+a.insp:'')+'. '+ST[a.st].l+' ('+a.src+').';};
 /* meta description : les premières phrases du contexte de l'arme (165 caractères max), sinon le lede générique */
@@ -217,5 +218,6 @@ hub=hub.replace(/<script type="application\/ld\+json">\{"@context":"https:\/\/sc
 hub=hub.replace(/(<title>Armes de GTA VI : les )\d+( modèles identifiés)/,'$1'+A.length+'$2').replace(/(content="Armes de GTA VI : les )\d+( modèles identifiés)/g,'$1'+A.length+'$2')
  .replace(/Les \d+ armes identifiées de GTA VI/g,'Les '+A.length+' armes identifiées de GTA VI').replace(/"description": "\d+ armes identifiées/,'"description": "'+A.length+' armes identifiées');
 hub=hub.replace(/Nous recensons \d+ armes visibles dans les supports officiels, dont \d+ sont nommées/g,'Nous recensons '+A.length+' armes visibles dans les supports officiels, dont '+nSt.officiel+' sont nommées');
+hub=hub.replace(/<script src="armes-data\.js[^"]*"><\/script>\n?/,''); // v7.54 : le hub ne lit pas LK_ARMES au chargement (données projetées à la génération)
 fs.writeFileSync('armes.html',hub);
 console.log('armes : '+A.length+' fiches ('+A.filter(a=>medList(a).length).length+' avec visuels officiels, '+nSt.officiel+' nommées par Rockstar), hub armes.html mis à jour');

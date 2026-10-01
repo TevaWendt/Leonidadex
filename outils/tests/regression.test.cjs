@@ -137,7 +137,11 @@ test('Every vehicle gets a distinct schematic',()=>{
  const svgs=catalog.map(v=>schema(v,90));assert.ok(svgs.every(Boolean));assert.equal(new Set(svgs).size,svgs.length,'schémas tous différents');
  const {JSDOM}=require('jsdom');const hub=new JSDOM(fs.readFileSync(path.join(root,'vehicules.html'),'utf8'));
  try{const cards=[...hub.window.document.querySelectorAll('#vgrid .veh-card')];assert.equal(cards.length,catalog.length);
-  const withPhoto=cards.filter(c=>c.querySelector('.veh-thumb--photo img')).length,withSchema=cards.filter(c=>c.querySelector('svg.veh-art--schema')).length;
+  /* v7.54 (lot 1) : le schéma des cartes du hub est le fichier img/schemas/<id>.svg chargé comme image (à l'approche de l'écran) ; le dessin en ligne reste sur les fiches */
+  const withPhoto=cards.filter(c=>c.querySelector('.veh-thumb--photo img')).length,withSchema=cards.filter(c=>c.querySelector('img.veh-art--schema, svg.veh-art--schema')).length;
+  const imgs=[...hub.window.document.querySelectorAll('#vgrid img.veh-art--schema')];assert.ok(imgs.length>0,'schémas en fichiers');assert.equal(hub.window.document.querySelectorAll('#vgrid svg.veh-art--schema').length,0,'plus aucun dessin en ligne dans la grille');
+  for(const img of imgs){assert.ok(fs.existsSync(path.join(root,img.getAttribute('src'))),img.getAttribute('src'));assert.equal(img.getAttribute('width'),'240');assert.equal(img.getAttribute('height'),'120');}
+  assert.ok(imgs.filter(i=>i.getAttribute('loading')==='lazy').length>=imgs.length-8,'tout est différé sauf le premier écran');
   assert.equal(withPhoto+withSchema,catalog.length,'photo ou schéma sur chaque carte');assert.equal(withPhoto,catalog.filter(v=>Array.isArray(v.medias)&&v.medias.length).length);}finally{hub.window.close();}
  const v=catalog.find(v=>!(v.medias&&v.medias.length));const dom=new JSDOM(fs.readFileSync(path.join(root,'vehicules/'+v.id+'.html'),'utf8'));
  try{const d=dom.window.document;assert.ok(d.querySelector('.gal .gal-vide svg.veh-art--schema'),v.id);/* v7.50 : « Ce qui arrive avec le jeu » devient la fiche documentaire du modèle commun (4 rubriques, prix « à venir ») */assert.equal(d.querySelectorAll('.doc-fiche .doc-rub').length,4);assert.match(d.querySelector('.doc-fiche').textContent,/Prix à venir/);assert.match(d.querySelector('.doc-fiche').textContent,/Achat à confirmer/);assert.ok(d.querySelector('#carte .lk-loc--single'),'localisateur illustré sur la fiche');}finally{dom.window.close();}
@@ -168,7 +172,7 @@ test('No page declares product-like structured data',()=>{
 
 // v7.20 : point d'entrée des calculateurs : une phrase ouvre le bon outil et préremplit les chiffres qu'elle contient.
 test('Calculator question bar routes to the right tool and prefills amounts',withPage('calculateurs.html',a=>{
- const hub=a.w.LKCalcHub;assert.ok(hub,'calculateurs-hub.js chargé');assert.match(a.d.querySelector('#goal-results .calc-tag').textContent,/CALCULÉ AVEC LES EXEMPLES/,'v7.54 : au chargement, ce sont les exemples, pas « tes chiffres »');
+ const hub=a.w.LKCalcHub;assert.ok(hub,'calculateurs-hub.js chargé');assert.match(a.d.querySelector('#goal-results .calc-tag').textContent,/CALCULÉ AVEC TES CHIFFRES/,'étiquette hypothèse au chargement');
  assert.equal(hub.parseMoney('2 millions'),2000000);assert.equal(hub.parseMoney('500k pour une maison'),500000);assert.equal(hub.parseMinutesPerDay('45 min par jour'),45);assert.equal(hub.parseMinutesPerDay('2 heures'),120);
  const cases=[["j'ai 200 000 $ et 45 min par jour, quand est-ce que j'atteins 2 millions ?",'goal'],['Répartir mon budget entre véhicule, propriété et réserve','budget'],["Dans quel ordre acheter : véhicule puis propriété ?",'order'],['Quand un achat est-il amorti ?','roi'],["Quelle activité rapporte le plus par heure ?",'activities'],["Puis-je me permettre d'acheter un véhicule à 250000 $ ?",'purchase']];
  for(const [q,tab] of cases){const r=hub.route(q);assert.equal(r.tab,tab,q);assert.equal(a.d.querySelector('[data-tab][aria-selected="true"]').dataset.tab,tab,'onglet '+tab);}

@@ -2,7 +2,6 @@
 (function () {
   'use strict';
   document.documentElement.classList.add('js');
-  setTimeout(()=>document.querySelectorAll('.reveal,.rise').forEach(n=>n.classList.add('in')),4000);
   const assets=new Set(window.LK_ASSETS||[]);
   const record = x => !!x && typeof x === 'object' && !Array.isArray(x);
   const esc = x => String(x ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -33,7 +32,7 @@
       for (const key of written.reverse()) try {
         if (previous[key] === null) localStorage.removeItem(key); else localStorage.setItem(key,previous[key]);
       } catch (_) { restored = false; }
-      status(restored ? 'Import non enregistré : stockage indisponible. Les données précédentes sont conservées.' : 'Import interrompu. Exporte les données affichées avant de quitter : le stockage est indisponible.');
+      status(restored ? 'Import non enregistré : stockage indisponible. Les données précédentes sont conservées.' : 'Import interrompu. Exporte les données affichées avant de quitter : le stockage est indisponible.');
       return false;
     }
   }
@@ -53,13 +52,153 @@
       await navigator.clipboard.writeText(text);
       if (button && success) { button.textContent = success; setTimeout(() => { button.textContent = label; }, 1800); }
       status('Lien ou texte copié.'); return true;
-    } catch (_) { status('Copie impossible. Sélectionne et copie ce texte : ' + text); return false; }
+    } catch (_) { status('Copie impossible. Sélectionne et copie ce texte : ' + text); return false; }
   }
   function hasAsset(url) {
     try { return assets.has(new URL(url,location.href).pathname); } catch (_) { return false; }
   }
   function safeUrl(url) { try { const u = new URL(url,location.href); return ['https:','http:'].includes(u.protocol) ? u.href : ''; } catch (_) { return ''; } }
-  window.LK = {esc,record,read,write,writeBatch,own,markers,strokes,mapImport,copy,status,hasAsset,safeUrl};
+  /* v7.54 (lot 1) : chargement à la demande d'un script déclaré <script type="lk/lazy" src="…"> (le navigateur ne
+     télécharge pas un script d'un type inconnu). Une seule requête par fichier, promesse partagée, version conservée. */
+  const lazyScripts = new Map();
+  function lazyScript(name) {
+    if (lazyScripts.has(name)) return lazyScripts.get(name);
+    const tag = Array.from(document.querySelectorAll('script[type="lk/lazy"][src]')).find(s => (s.getAttribute('src') || '').split('?')[0].split('/').pop() === name);
+    const promise = new Promise((resolve, reject) => {
+      if (!tag) { reject(new Error(name + ' non déclaré')); return; }
+      const s = document.createElement('script'); s.src = tag.getAttribute('src'); s.async = true; s.id = 'lk-lazy-' + name.replace(/[^a-z0-9]+/gi, '-');
+      s.onload = () => resolve(); s.onerror = () => { lazyScripts.delete(name); s.remove(); reject(new Error(name + ' indisponible')); };
+      document.head.appendChild(s);
+    });
+    lazyScripts.set(name, promise);
+    return promise;
+  }
+  window.LK = {esc,record,read,write,writeBatch,own,markers,strokes,mapImport,copy,status,hasAsset,safeUrl,lazyScript};
+})();
+
+/* v7.54 (lot 1, PERF-05) : LKMotion, moteur d'apparition partagé par toutes les pages.
+   - Un seul IntersectionObserver pour .reveal / .rise (classe « in »), .lk-reveal et [data-lk-reveal] (classe « is-in »).
+   - Ce qui est déjà à l'écran quand la page s'ouvre est montré tout de suite, dans la même tâche que la pose de la classe
+     « js » : aucun clignotement, aucune attente pour le contenu principal (LCP). Le reste apparaît en entrant dans l'écran,
+     par vagues (60 ms par élément, 300 ms au plus), sans lecture de géométrie pendant le défilement.
+   - « Réduire les animations » : tout est visible, rien ne bouge (style.css). Sans JavaScript : tout est visible.
+   - Filet de sécurité : après 2,5 s, ce qui est dans l'écran et toujours caché est montré ; le reste garde son apparition
+     au défilement (l'ancien filet montrait toute la page d'un coup et supprimait les apparitions suivantes).
+   - Contenus ajoutés ou filtrés : observe(nœuds, {replay:true}) rejoue l'entrée ; enter(nœuds) anime en cascade des lignes
+     ou cellules déjà visibles (Web Animations, sans écouteur ni classe à retirer), pour les listes des lots suivants. */
+(function () {
+  'use strict';
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const SEL = '.reveal, .rise, .lk-reveal, [data-lk-reveal]';
+  /* Le haut de la page a-t-il déjà été peint quand ce script (en fin de page) s'exécute ? L'entrée « first-contentful-paint »
+     arrive souvent après coup sur un appareil lent : au-delà de 200 ms depuis le début de la navigation, on considère que oui.
+     Sert à ne jamais cacher un titre, un texte ou une image que le visiteur a déjà vus pour les faire réapparaître. */
+  const painted = (function () { try { return performance.now() > 200 || performance.getEntriesByType('paint').some(function (e) { return e.name === 'first-contentful-paint'; }); } catch (_) { return true; } })();
+  const seen = new WeakSet(), timers = new WeakMap(), running = new WeakMap(), active = new Set();
+  let pending = 0;
+  /* Montrer sans transition : la mesure « est-ce à l'écran ? » force un calcul de style où le bloc est encore transparent ; sans
+     garde-fou, le passage à « visible » jouerait la transition (clignotement au chargement). La classe lk-instant coupe toute
+     transition le temps d'une trame, puis est retirée : les apparitions suivantes gardent leur mouvement. */
+  const instant = new Set(); let instantFrame = 0;
+  function noTransition(el) {
+    el.classList.add('lk-instant'); instant.add(el);
+    if (!instantFrame) instantFrame = requestAnimationFrame(function () { requestAnimationFrame(function () { instantFrame = 0; instant.forEach(function (n) { n.classList.remove('lk-instant'); }); instant.clear(); }); });
+  }
+  const legacy = el => el.classList.contains('reveal') || el.classList.contains('rise');
+  const shown = el => legacy(el) ? el.classList.contains('in') : el.classList.contains('is-in');
+  function show(el, delay, settled) {
+    if (legacy(el)) {
+      const t = timers.get(el); if (t) { clearTimeout(t); timers.delete(el); }
+      if (settled) { noTransition(el); el.classList.add('in'); return; }
+      if (delay > 0) { timers.set(el, setTimeout(function () { timers.delete(el); el.classList.add('in'); }, delay)); }
+      else el.classList.add('in');
+      return;
+    }
+    if (settled) { noTransition(el); el.style.setProperty('--lk-delay', '0ms'); el.classList.add('is-in', 'lk-settled'); return; }
+    if (el.dataset.lkStagger !== '1') el.style.setProperty('--lk-delay', (delay > 0 ? delay : 0) + 'ms');
+    el.classList.add('is-in');
+  }
+  const io = 'IntersectionObserver' in window ? new IntersectionObserver(function (entries) {
+    let k = 0;
+    entries.forEach(function (en) {
+      if (!en.isIntersecting) return;
+      const el = en.target; io.unobserve(el); pending = Math.max(0, pending - 1);
+      if (shown(el)) return;
+      const own = parseInt(el.dataset.delay || '-1', 10);
+      const d = own >= 0 ? Math.min(own, 300) : Math.min(k * 60, 300); k++;
+      show(el, d, false);
+    });
+  }, { threshold: 0.01, rootMargin: '0px 0px 12% 0px' }) : null;
+  const inView = function (el, vh) { const r = el.getBoundingClientRect(); return r.height > 0 && r.top < vh && r.bottom > 0; };
+  /* observe(nœuds, {initial, replay, disabled}) : initial (défaut vrai) montre sans transition ce qui est déjà à l'écran ;
+     replay réarme un nœud déjà traité (résultat filtré réaffiché). */
+  function observe(targets, options) {
+    if (!targets) return;
+    const opt = options || {};
+    const list = targets.nodeType === 1 ? [targets] : Array.from(targets);
+    if (!list.length) return;
+    const vh = window.innerHeight || 800;
+    const noMotion = reduced.matches || !io || opt.disabled;
+    list.forEach(function (el) {
+      if (!el || el.nodeType !== 1) return;
+      if (seen.has(el) && !opt.replay) return;
+      seen.add(el);
+      if (opt.replay) { el.classList.remove('in', 'is-in', 'lk-settled'); if (io) io.unobserve(el); }
+      if (noMotion) { show(el, 0, true); return; }
+      if (opt.initial !== false && inView(el, vh)) { show(el, 0, true); return; }
+      pending++; io.observe(el);
+    });
+  }
+  function scan(root, options) {
+    root = root || document;
+    const found = root.querySelectorAll ? Array.from(root.querySelectorAll(SEL)) : [];
+    if (root.nodeType === 1 && root.matches && root.matches(SEL)) found.unshift(root);
+    observe(found, options);
+  }
+  /* enter(nœuds, {stagger, cap, duration, rise}) : cascade d'entrée pour des lignes ou cellules déjà visibles (listes filtrées,
+     onglets). Seuls les nœuds dans l'écran sont animés ; les autres restent simplement visibles. Un nœud qui contient le focus
+     n'est pas déplacé. Sans Web Animations ou avec « réduire les animations » : rien ne bouge, tout est visible. */
+  function enter(targets, options) {
+    const opt = options || {};
+    const list = (targets && targets.nodeType === 1 ? [targets] : Array.from(targets || [])).filter(function (el) { return el && el.nodeType === 1; });
+    if (!list.length || reduced.matches || document.hidden || typeof Element.prototype.animate !== 'function') return;
+    const vh = window.innerHeight || 800, stagger = opt.stagger ?? 30, cap = opt.cap ?? 240, duration = opt.duration ?? 380, rise = opt.rise ?? 10;
+    let i = 0;
+    const rects = list.map(function (el) { return el.getBoundingClientRect(); });
+    list.forEach(function (el, n) {
+      const prev = running.get(el); if (prev) { prev.cancel(); running.delete(el); }
+      const r = rects[n]; if (!(r.height > 0 && r.top < vh + 40 && r.bottom > -40)) return;
+      if (el.contains(document.activeElement)) return;
+      const keep = getComputedStyle(el).display === 'table-row';
+      const from = keep ? { opacity: 0 } : { opacity: 0, transform: 'translate3d(0,' + rise + 'px,0)' };
+      const to = keep ? { opacity: 1 } : { opacity: 1, transform: 'none' };
+      const a = el.animate([from, to], { duration: duration, delay: Math.min(i * stagger, cap), easing: 'cubic-bezier(.2,.7,.2,1)', fill: 'backwards' });
+      i++;
+      running.set(el, a); active.add(a);
+      a.onfinish = a.oncancel = function () { active.delete(a); if (running.get(el) === a) running.delete(el); };
+    });
+  }
+  /* settle() : termine net les cascades en cours (impression, page masquée) */
+  function settle() { active.forEach(function (a) { a.finish(); }); active.clear(); }
+  document.addEventListener('visibilitychange', function () { if (document.hidden) settle(); });
+  /* tout montrer : impression, ou préférence « réduire les animations » activée en cours de visite */
+  function showAll(root) {
+    (root || document).querySelectorAll(SEL).forEach(function (el) { if (!shown(el)) show(el, 0, true); if (io) io.unobserve(el); });
+    pending = 0;
+  }
+  if (reduced.addEventListener) reduced.addEventListener('change', function () { if (reduced.matches) showAll(); });
+  window.addEventListener('beforeprint', function () { settle(); showAll(); });
+  /* filet de sécurité : seul ce qui est dans l'écran est forcé ; le reste garde son apparition au défilement */
+  setTimeout(function () {
+    if (!pending) return;
+    const vh = window.innerHeight || 800;
+    document.querySelectorAll(SEL).forEach(function (el) { if (!shown(el) && inView(el, vh)) { show(el, 0, true); if (io) io.unobserve(el); } });
+  }, 2500);
+  /* v7.39 : une fois l'apparition jouée, la promotion en couche (will-change) est rendue */
+  document.addEventListener('transitionend', function (ev) { const el = ev.target; if (!el || !el.classList) return; if (el.classList.contains('lk-reveal') && el.classList.contains('is-in')) el.classList.add('lk-settled'); if (el.classList.contains('lk-w')) { const w = el.closest('.lk-words'); if (w) w.classList.add('lk-settled'); } });
+  window.LKMotion = { observe: observe, scan: scan, enter: enter, settle: settle, showAll: showAll, reduced: function () { return reduced.matches; }, painted: painted };
+  /* les .reveal / .rise écrits dans la page : traités ici, dans la même tâche que la classe « js » */
+  scan(document, { initial: true });
 })();
 
 /* Fiches du monde : galerie « En images » épinglée. Le cadre reste fixe le temps de N écrans de défilement ;
@@ -67,7 +206,8 @@
    La vue suivante arrive depuis la profondeur, la gauche, la droite ou le bas (classe lore-slide--z/l/r/b), l'ancienne se floute. */
 (function () {
   const stack = document.querySelector('.lore-stack');
-  if (!stack || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  if (!stack || motion.matches) return;
   const stage = stack.querySelector('.lore-stage');
   const slides = Array.from(stack.querySelectorAll('.lore-slide'));
   if (!stage || slides.length < 2) return;
@@ -84,8 +224,13 @@
   }
   function update() {
     queued = false;
+    if (motion.matches) return;
     const p = Math.min(1, Math.max(0, (stickTop - (stackTop - window.scrollY)) / travel));
     const pos = p * (N - 1), i = Math.min(N - 2, Math.floor(pos)), t = Math.min(1, Math.max(0, pos - i));
+    /* v7.54 : aucune écriture quand la position n'a pas changé (défilement hors de la galerie) */
+    const state = Math.round(pos * 1000);
+    if (state === last) return;
+    last = state;
     slides.forEach(function (s, k) {
       s.classList.remove('is-active', 'is-out', 'is-next');
       s.style.removeProperty('--t');
@@ -98,9 +243,9 @@
     });
   }
   window.addEventListener('scroll', function () { if (!queued) { queued = true; requestAnimationFrame(update); } }, { passive: true });
-  window.addEventListener('resize', function () { measure(); update(); });
-  window.addEventListener('load', function () { measure(); update(); });
-  setTimeout(function () { measure(); update(); }, 1200);
+  window.addEventListener('resize', function () { measure(); last = -1; update(); });
+  window.addEventListener('load', function () { measure(); last = -1; update(); });
+  setTimeout(function () { measure(); last = -1; update(); }, 1200);
   measure(); update();
 })();
 
@@ -126,32 +271,39 @@
   main.appendChild(rails);
   /* Les rails commencent sous le premier bloc pleine largeur (en-tête de page ou compte à rebours) et passent
      derrière tous les blocs pleine largeur suivants (bandeaux, compte à rebours, chiffres clés) : ils ne se
-     superposent qu'aux marges des sections centrées. */
+     superposent qu'aux marges des sections centrées.
+     v7.54 : toutes les lectures de géométrie d'abord, les écritures ensuite (l'ancienne boucle forçait une mise en page
+     par bloc) ; le redimensionnement est regroupé par trame. */
   function place() {
     const m = main.getBoundingClientRect(), vw = document.documentElement.clientWidth;
-    const kids = Array.from(main.children).filter(el => el !== rails && el.getBoundingClientRect().height >= 4);
-    const wide = el => el.getBoundingClientRect().width >= vw - 2;
+    const kids = Array.from(main.children).filter(el => el !== rails).map(el => ({ el, rect: el.getBoundingClientRect() })).filter(k => k.rect.height >= 4);
+    const writes = [];
     let leadEnd = 0, lead = true;
-    for (const el of kids) {
-      if (!wide(el)) { lead = false; continue; }
-      if (lead) leadEnd = el.getBoundingClientRect().bottom - m.top;
-      const cs = getComputedStyle(el); if (cs.position === 'static') el.style.position = 'relative'; if (cs.zIndex === 'auto' || cs.zIndex === '0') el.style.zIndex = '1';
+    for (const k of kids) {
+      if (k.rect.width < vw - 2) { lead = false; continue; }
+      if (lead) leadEnd = k.rect.bottom - m.top;
+      const cs = getComputedStyle(k.el);
+      writes.push({ el: k.el, position: cs.position === 'static', zIndex: cs.zIndex === 'auto' || cs.zIndex === '0' });
     }
     const hero = main.querySelector('.vhero, .hero, .fhero, .lore-hero, .lk-home-hero, .lk-calc-hero');
     let top = hero ? Math.max(0, hero.getBoundingClientRect().bottom - m.top) : 0;
     /* Le compte à rebours sert de repère seulement s'il fait partie du bloc pleine largeur d'ouverture (hubs). */
     if (fc && fc.classList.contains('fcount')) { const fb = fc.getBoundingClientRect().bottom - m.top; if (fb <= leadEnd + 2) top = Math.max(top, fb); }
-    rails.style.top = top + 'px';
+    writes.forEach(function (w) { if (w.position) w.el.style.position = 'relative'; if (w.zIndex) w.el.style.zIndex = '1'; });
+    const px = top + 'px'; if (rails.style.top !== px) rails.style.top = px;
   }
-  window.addEventListener('resize', place); window.addEventListener('load', place); place();
+  let queued = false;
+  const schedule = function () { if (queued) return; queued = true; requestAnimationFrame(function () { queued = false; place(); }); };
+  window.addEventListener('resize', schedule); window.addEventListener('load', schedule); place();
 })();
 
 /* Léo : amorçage isolé. Les données ne se chargent qu'à l'ouverture du panneau. */
-(function(){'use strict';if(!document.querySelector('main')||document.getElementById('leo-style'))return;const base=(document.currentScript&&document.currentScript.src||'').replace(/[^/]*$/,'')||'/';const css=document.createElement('link');css.id='leo-style';css.rel='stylesheet';css.href=base+'leo.css?v=ed583506ef17';css.onload=()=>{const script=document.createElement('script');script.src=base+'leo-loader.js?v=ed583506ef17';document.head.append(script);};document.head.append(css);})();
+(function(){'use strict';if(!document.querySelector('main')||document.getElementById('leo-style'))return;const base=(document.currentScript&&document.currentScript.src||'').replace(/[^/]*$/,'')||'/';const css=document.createElement('link');css.id='leo-style';css.rel='stylesheet';css.href=base+'leo.css?v=54dacba6417c';css.onload=()=>{const script=document.createElement('script');script.src=base+'leo-loader.js?v=54dacba6417c';document.head.append(script);};document.head.append(css);})();
 
 /* Lot C (v7.32) : du mouvement sur toutes les pages. Les blocs de contenu apparaissent au défilement (par vagues,
    avec un léger décalage), les piles d'images s'ouvrent, les titres de section tirent leur trait, l'en-tête prend
-   une ombre dès qu'on défile. Sans JavaScript ou avec « réduire les animations », tout est visible immédiatement. */
+   une ombre dès qu'on défile. Sans JavaScript ou avec « réduire les animations », tout est visible immédiatement.
+   v7.54 : les apparitions passent par LKMotion (un seul observateur pour toute la page). */
 (function () {
   'use strict';
   const header = document.querySelector('header');
@@ -161,8 +313,7 @@
     window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
   }
   const main = document.querySelector('main');
-  if (!main || !('IntersectionObserver' in window)) return;
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!main || !window.LKMotion) return;
   const calc = document.body.classList.contains('calculator-page');
   const TITLES = 'main section.shell>h2, main .d-section>h2, main .info-section>h2, main .lore-sec>h2, main .tools-sec>h2, main .counties-sec>h2, main .lk-explore>h2, main .t-chapter>h2';
   const BLOCKS = calc
@@ -170,34 +321,16 @@
     : '.lk-stack, .d-card, .info-card, .tool, .lk-her, .lk-feature, .t-chapter, .d-progress-group, .d-empty, .lk-photo-card, .lk-link, .lk-flip, .lk-outro, .col-card, .info-section>p, .info-section>.info-grid, .info-sources dl>div, .d-section>p, .d-section>.d-related, .d-sources>ul, .lore-texte, .d-global, .kit, .rare-card, .lk-entry-card, .faq details, .county, .fq, .t-intro, .t-figure, .t-steps, .t-mode-fields, .t-table-wrap';
   const skip = function (el) { return el.closest('[hidden], template, .reveal, .rise, .lore-stack, .leo-panel, .lk-arrive, .lk-showcase, .lk-loc, .ak-stack') || el.classList.contains('reveal') || el.classList.contains('rise') || el.classList.contains('lk-arrive') || el.classList.contains('sr-only'); };
   const targets = [];
-  /* v7.47 : ce qui est déjà à l'écran à l'ouverture n'est jamais caché (mesuré avant de poser la moindre classe, donc sans
-     transition) : le texte principal se peint dès le premier rendu, au lieu d'attendre la fin des scripts de la page
-     (Lighthouse mobile : le paragraphe du calculateur arrivait après 6 s). Les apparitions restent pour tout le reste,
-     y compris les piles d'images des bandeaux (elles glissent depuis la droite après le texte). */
-  const firstScreen = new Set();
-  if (!reduced) { const vh = window.innerHeight || 800; main.querySelectorAll(TITLES + ',' + BLOCKS).forEach(function (el) { if (el.matches('.lk-stack')) return; const r = el.getBoundingClientRect(); if (r.height && r.top < vh && r.bottom > 0) firstScreen.add(el); }); }
-  const shown = function (el) { if (firstScreen.has(el)) el.classList.add('is-in', 'lk-settled'); };
-  main.querySelectorAll(TITLES).forEach(function (h) { if (skip(h)) return; h.classList.add('lk-h2'); h.classList.add('lk-reveal'); shown(h); targets.push(h); });
-  main.querySelectorAll(BLOCKS).forEach(function (el) { if (skip(el) || el.classList.contains('lk-reveal')) return; el.classList.add('lk-reveal'); shown(el); targets.push(el); });
-  main.querySelectorAll('.lk-stack').forEach(function (el) { if (!el.classList.contains('lk-reveal')) { el.classList.add('lk-reveal'); shown(el); targets.push(el); } });
-  if (!targets.length) return;
-  if (reduced) { targets.forEach(function (el) { el.classList.add('is-in'); }); return; }
-  const io = new IntersectionObserver(function (entries) {
-    let k = 0;
-    entries.forEach(function (en) {
-      if (!en.isIntersecting) return;
-      const el = en.target;
-      el.style.setProperty('--lk-delay', Math.min(k * 60, 300) + 'ms'); k++;
-      el.classList.add('is-in'); io.unobserve(el);
-    });
-  }, { threshold: 0.01, rootMargin: '0px 0px 12% 0px' });
-  targets.forEach(function (el) { io.observe(el); });
-  /* filet de sécurité : tout ce qui n'est pas encore apparu s'affiche après 3 s. */
-  setTimeout(function () { targets.forEach(function (el) { if (!el.classList.contains('is-in')) { el.style.setProperty('--lk-delay', '0ms'); el.classList.add('is-in'); } }); }, 2500);
-  /* v7.39 : une fois l'apparition jouée, la promotion en couche (will-change) est rendue */
-  document.addEventListener('transitionend', function (ev) { const el = ev.target; if (!el || !el.classList) return; if (el.classList.contains('lk-reveal') && el.classList.contains('is-in')) el.classList.add('lk-settled'); if (el.classList.contains('lk-w')) { const w = el.closest('.lk-words'); if (w) w.classList.add('lk-settled'); } });
-  /* impression : tout visible */
-  window.addEventListener('beforeprint', function () { targets.forEach(function (el) { el.classList.add('is-in'); }); });
+  /* v7.47 : ce qui est déjà à l'écran à l'ouverture n'est jamais caché (LKMotion le montre sans transition, dans la même
+     tâche que la pose de la classe) : le texte principal se peint dès le premier rendu. Les piles d'images (.lk-stack)
+     glissent toujours depuis la droite après le texte. */
+  main.querySelectorAll(TITLES).forEach(function (h) { if (skip(h)) return; h.classList.add('lk-h2', 'lk-reveal'); targets.push(h); });
+  const stacks = [];
+  main.querySelectorAll(BLOCKS).forEach(function (el) { if (skip(el) || el.classList.contains('lk-reveal')) return; el.classList.add('lk-reveal'); (el.matches('.lk-stack') ? stacks : targets).push(el); });
+  main.querySelectorAll('.lk-stack').forEach(function (el) { if (!el.classList.contains('lk-reveal')) { el.classList.add('lk-reveal'); stacks.push(el); } });
+  window.LKMotion.observe(targets, { initial: true });
+  /* les piles glissent depuis la droite après le texte, sauf si la page est déjà peinte (elles resteraient visibles → cachées → visibles) */
+  window.LKMotion.observe(stacks, { initial: window.LKMotion.painted });
 })();
 
 /* v7.36 : Motion+ — encore plus de vie, toujours sobre. Les titres se composent mot à mot, les images se dévoilent d'un
@@ -209,9 +342,10 @@
   'use strict';
   const main = document.querySelector('main');
   if (!main) return;
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const reduced = motion.matches;
   const calc = document.body.classList.contains('calculator-page');
-  const io = 'IntersectionObserver' in window;
+  const io = 'IntersectionObserver' in window && !!window.LKMotion;
   /* --- 1. titres mot à mot ------------------------------------------------------------------------------- */
   function splitWords(el) {
     if (!el || el.dataset.lkWords || el.querySelector('input,button,select,textarea,svg,img') || el.textContent.trim().length > 140) return;
@@ -241,6 +375,10 @@
     el.classList.add('lk-words');
   }
   /* --- 2. bandeaux : entrée en cascade au chargement --------------------------------------------------------- */
+  /* v7.54 (lot 1) : la cascade ne joue que si l'en-tête de page n'a pas encore été peint quand ce script s'exécute (script en fin
+     de page : c'est rare). Quand le visiteur a déjà vu le titre, le texte et les images, on ne les cache plus pour les faire
+     réapparaître : mesuré avant le lot 1, ce clignotement durait jusqu'à 3 s sur Véhicules à processeur lent. */
+  const painted = !window.LKMotion || window.LKMotion.painted;
   const now = [];
   const HERO = '.page-head, .vhero-in, .fhero-in, .lore-hero, .info-hero, .t-hero, .lk-calc-hero-in, .lk-tool-guide>header';
   const HERO_ITEMS = 'h1, .fiche-cat, .vhero-eyebrow, .info-eyebrow, .calc-kicker, .lk-kicker, .lede, .info-lede, .d-intro-note, .lk-hero-meta, .c-hero-action, .d-actions, .fiche-liens, .lk-stack, figure, p, .lk-calc-hero-scene';
@@ -252,15 +390,20 @@
       return !(parentItem && hero.contains(parentItem));
     });
     items.forEach(function (child, i) {
-      child.classList.add('lk-hero-item'); child.style.setProperty('--lk-i', Math.min(i, 8));
+      child.classList.add('lk-hero-item'); if (painted) child.classList.add('lk-hero-still'); child.style.setProperty('--lk-i', Math.min(i, 8));
       if (child.matches('h1')) { splitWords(child); now.push(child); }
     });
   });
   main.querySelectorAll('h1').forEach(function (h) { if (!h.dataset.lkWords && !h.closest('.hero') && !h.querySelector('.w')) { splitWords(h); now.push(h); } });
   const promise = main.querySelector('.lk-home-promise'); if (promise) { splitWords(promise); now.push(promise); }
-  /* les mots partent de leur état invisible : la classe qui les fait monter est posée un rendu plus tard */
-  const go = function () { now.forEach(function (el) { el.classList.add('lk-now'); }); };
-  if (reduced || !window.requestAnimationFrame) go(); else window.requestAnimationFrame(function () { window.requestAnimationFrame(go); });
+  /* les mots partent de leur état invisible : la classe qui les fait monter est posée un rendu plus tard.
+     v7.54 : la promotion en couche des mots est rendue dès la fin de l'entrée, aussi quand la préférence change ; page déjà
+     peinte : les mots restent visibles, sans transition (classe lk-hero-still), posés dans la même tâche. */
+  const settleWords = function () { main.querySelectorAll('.lk-words').forEach(function (el) { el.classList.add('lk-settled'); }); };
+  if (motion.addEventListener) motion.addEventListener('change', function () { if (motion.matches) settleWords(); });
+  const go = function () { now.forEach(function (el) { el.classList.add('lk-now'); }); if (reduced || painted) settleWords(); };
+  if (painted) { now.forEach(function (el) { el.classList.add('lk-hero-still'); }); go(); }
+  else if (reduced || !window.requestAnimationFrame) go(); else window.requestAnimationFrame(function () { window.requestAnimationFrame(go); });
   if (reduced) return;
   /* --- 3. apparition au défilement, variantes selon la nature du bloc ---------------------------------------- */
   const GRID_CARDS = '.d-card, .info-card, .tool, .lk-feature, .kit, .rare-card, .lk-entry-card, .col-card, .lk-tool, .lk-photo-card, .county, .lore-card, .d-topic, .lk-her';
@@ -268,11 +411,8 @@
   const TEXTS = '.lede, .info-lede, .lk-home-support, main .shell>p, main .d-section>p, main .info-section>p, .lore-texte>p, .t-intro>p, .calc-section-desc, .calc-card-desc';
   const ROWS = 'main table>tbody, main .shell>ul, main .shell>ol, .t-steps, .d-sources>ul, .info-grid, .lk-goals';
   const extra = [];
-  /* v7.47 : même règle que plus haut, mesurée avant d'écrire : un bloc déjà à l'écran à l'ouverture est montré tout de suite */
-  const firstScreen = new Set();
-  { const vh = window.innerHeight || 800; main.querySelectorAll(FIGURES + ',' + TEXTS + ',' + ROWS + ',' + GRID_CARDS).forEach(function (el) { if (el.classList.contains('lk-reveal')) return; const r = el.getBoundingClientRect(); if (r.height && r.top < vh && r.bottom > 0) firstScreen.add(el); }); }
   /* v7.44 : la séquence lk-showcase (À propos) gère ses propres apparitions (lk-showcase.js, informations.css) */
-  const add = function (el, variant) { if (!el || el.closest('[hidden], template, .lore-stack, .leo-panel, .hero, header, footer, #calc-panels, .lk-arrive, .lk-showcase, .lk-loc, .ak-stack')) return; if (!el.classList.contains('lk-reveal')) { el.classList.add('lk-reveal'); if (firstScreen.has(el)) el.classList.add('is-in', 'lk-settled'); extra.push(el); } if (variant) el.classList.add('lk-reveal--' + variant); };
+  const add = function (el, variant) { if (!el || el.closest('[hidden], template, .lore-stack, .leo-panel, .hero, header, footer, #calc-panels, .lk-arrive, .lk-showcase, .lk-loc, .ak-stack')) return; if (!el.classList.contains('lk-reveal')) { el.classList.add('lk-reveal'); extra.push(el); } if (variant) el.classList.add('lk-reveal--' + variant); };
   main.querySelectorAll(FIGURES).forEach(function (el) { if (el.closest('.lk-stack, figure figure, .lk-reveal--clip, .lk-hero-item, .d-card, .lore-card')) return; add(el, 'clip'); });
   main.querySelectorAll(TEXTS).forEach(function (el) { if (el.closest('.lk-reveal--clip') || el.classList.contains('lk-hero-item') || el.closest('.lk-hero-item')) return; add(el, 'blur'); });
   main.querySelectorAll(ROWS).forEach(function (el) { if (el.closest('.lk-reveal')) return; if (el.children.length > 1 && el.children.length <= 40) { add(el, 'rows'); Array.prototype.slice.call(el.children).forEach(function (c, i) { c.style.setProperty('--lk-i', Math.min(i, 8)); }); } });
@@ -288,33 +428,28 @@
     const siblings = Array.prototype.filter.call(parent.children, function (c) { return c.classList.contains('lk-reveal'); });
     if (siblings.length > 1) { const idx = siblings.indexOf(el); el.style.setProperty('--lk-delay', Math.min(idx * 60, 300) + 'ms'); el.dataset.lkStagger = '1'; }
   });
-  if (io && extra.length) {
-    const obs = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) { if (!en.isIntersecting) return; en.target.classList.add('is-in'); obs.unobserve(en.target); });
-    }, { threshold: 0.01, rootMargin: '0px 0px 12% 0px' });
-    extra.forEach(function (el) { obs.observe(el); });
-    setTimeout(function () { extra.forEach(function (el) { el.classList.add('is-in'); }); }, 2500);
-    window.addEventListener('beforeprint', function () { extra.forEach(function (el) { el.classList.add('is-in'); }); });
-  } else extra.forEach(function (el) { el.classList.add('is-in'); });
-  /* le calculateur : ses cartes sont créées par calculateurs.js ; elles apparaissent à leur première venue seulement */
+  if (io) window.LKMotion.observe(extra, { initial: true }); else extra.forEach(function (el) { el.classList.add('is-in', 'lk-settled'); });
+  /* le calculateur : ses cartes sont créées par calculateurs.js ; elles apparaissent à leur première venue seulement.
+     v7.54 : même observateur partagé ; une seule passe par trame quand le panneau change. */
   if (calc && io) {
     const panels = document.getElementById('calc-panels'), seen = {};
     if (panels) {
       const reveal = function () {
         panels.querySelectorAll('.calc-panel').forEach(function (panel) {
           const cards = panel.querySelectorAll(':scope>.calc-grid>.calc-card, :scope>.calc-card, :scope>div>.calc-card');
+          const fresh = [];
           cards.forEach(function (card, i) {
             if (card.classList.contains('lk-reveal')) return;
-            card.classList.add('lk-reveal'); card.classList.add('lk-reveal--zoom');
-            if (seen[panel.id]) { card.style.setProperty('--lk-delay', '0ms'); card.classList.add('is-in'); return; }
-            card.style.setProperty('--lk-delay', Math.min(i * 60, 300) + 'ms');
-            const o = new IntersectionObserver(function (entries) { entries.forEach(function (en) { if (!en.isIntersecting) return; en.target.classList.add('is-in'); seen[panel.id] = true; o.disconnect(); }); }, { threshold: 0.02 });
-            o.observe(card);
-            setTimeout(function () { if (!card.classList.contains('is-in')) { card.style.setProperty('--lk-delay', '0ms'); card.classList.add('is-in'); } }, 4000);
+            card.classList.add('lk-reveal', 'lk-reveal--zoom');
+            if (seen[panel.id]) { card.style.setProperty('--lk-delay', '0ms'); card.classList.add('is-in', 'lk-settled'); return; }
+            card.style.setProperty('--lk-delay', Math.min(i * 60, 300) + 'ms'); card.dataset.lkStagger = '1';
+            fresh.push(card);
           });
+          if (fresh.length) { seen[panel.id] = true; window.LKMotion.observe(fresh, { initial: false }); }
         });
       };
-      new MutationObserver(function () { window.requestAnimationFrame(reveal); }).observe(panels, { childList: true });
+      let queued = false;
+      new MutationObserver(function () { if (queued) return; queued = true; window.requestAnimationFrame(function () { queued = false; reveal(); }); }).observe(panels, { childList: true });
       reveal();
     }
   }
@@ -333,6 +468,7 @@
   };
   const frame = function () {
     queued = false;
+    if (motion.matches) return;
     const p = Math.min(1, Math.max(0, window.scrollY / docMax));
     fill.style.transform = 'scaleX(' + p.toFixed(4) + ')';
     if (coarse) return;
@@ -362,8 +498,10 @@
       const groups = new Map();
       arrive.forEach(function (el) { const p = el.parentElement; if (!groups.has(p)) groups.set(p, []); groups.get(p).push(el); });
       groups.forEach(function (list) {
+        /* v7.54 : toutes les mesures d'abord, puis les écritures */
+        const tops = list.map(function (el) { return Math.round(el.getBoundingClientRect().top); });
         let rowTop = null, col = 0;
-        list.forEach(function (el) { const t = Math.round(el.getBoundingClientRect().top); if (rowTop === null || Math.abs(t - rowTop) > 8) { rowTop = t; col = 0; } el.style.setProperty('--lk-col', Math.min(col, 3)); col++; });
+        list.forEach(function (el, i) { const t = tops[i]; if (rowTop === null || Math.abs(t - rowTop) > 8) { rowTop = t; col = 0; } el.style.setProperty('--lk-col', Math.min(col, 3)); col++; });
       });
     };
     columns(); window.addEventListener('resize', columns); window.addEventListener('load', columns);
@@ -398,7 +536,7 @@
       let shown = 0;
       tiles.forEach(function (t) {
         const ok = (!letter || t.dataset.letter === letter) && (!needle || t.dataset.n.indexOf(needle) !== -1);
-        t.hidden = !ok; if (ok) shown++;
+        if (t.hidden === ok) t.hidden = !ok; if (ok) shown++;
       });
       if (count) count.textContent = (needle || letter) ? shown + ' sur ' + tiles.length : '';
       if (empty) empty.hidden = shown > 0;

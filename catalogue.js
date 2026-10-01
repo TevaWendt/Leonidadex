@@ -1,4 +1,4 @@
-/* Leonidakit — catalogue.js (v7.42, lot 5 ; v7.43, lot 6)
+/* Leonidakit — catalogue.js (v7.42, lot 5 ; v7.43, lot 6 ; v7.54, lot 1 performance)
    Listes dépliables des catalogues (Consommables, Coiffures, Tatouages, Tenues et accessoires, Personnalisation des
    véhicules et des armes) : la liste complète est écrite dans la page à la génération (lisible sans script) ; ce module
    ajoute la recherche, les filtres par catégorie, groupe et statut, le tri, le compteur de lignes, et l'ouverture de la
@@ -25,30 +25,42 @@
     const filterNote = box.querySelector('[data-cat-filter]'), filterLabel = box.querySelector('[data-cat-filter-label]');
     let tags = {}; try { tags = box.dataset.catTags ? JSON.parse(box.dataset.catTags) : {}; } catch (_) { tags = {}; }
     const state = { q: '', cat: '', st: '', group: '', tag: '', sort: 'statut' };
-    let timer = 0;
+    /* v7.54 (lot 1) : les lignes sont lues une fois (texte, catégorie, statut, compatibilité) ; filtrer ne déplace aucune
+       ligne dans la page (seul un changement de tri réordonne, chaque tri n'est calculé qu'une fois) ; l'attente de 80 ms
+       à la frappe est retirée : le résultat suit la saisie. */
+    const meta = new Map(rows.map(r => [r, { q: r.dataset.q || '', cat: r.dataset.cat || '', group: r.dataset.group || '', st: r.dataset.st || '', compat: ' ' + (r.dataset.compat || '') + ' ' }]));
+    const collator = new Intl.Collator('fr');
+    const sortCache = new Map([['statut', rows]]);
+    let lastSort = 'statut';
     function apply() {
-      const needle = fold(state.q);
+      const needle = fold(state.q), tag = state.tag ? ' ' + state.tag + ' ' : '';
       let shown = 0;
       rows.forEach(r => {
-        const ok = (!needle || r.dataset.q.indexOf(needle) !== -1) && (!state.cat || r.dataset.cat === state.cat) && (!state.group || r.dataset.group === state.group) && (!state.st || r.dataset.st === state.st)
-          && (!state.tag || (' ' + (r.dataset.compat || '') + ' ').indexOf(' ' + state.tag + ' ') !== -1);
-        r.hidden = !ok; if (ok) shown++;
+        const m = meta.get(r);
+        const ok = (!needle || m.q.indexOf(needle) !== -1) && (!state.cat || m.cat === state.cat) && (!state.group || m.group === state.group) && (!state.st || m.st === state.st)
+          && (!tag || m.compat.indexOf(tag) !== -1);
+        if (r.hidden === ok) r.hidden = !ok; if (ok) shown++;
       });
       if (filterNote) { filterNote.hidden = !state.tag; if (filterLabel) filterLabel.textContent = state.tag ? (tags[state.tag] || state.tag) : ''; }
-      const sorted = rows.slice().sort((a, b) => {
-        if (state.sort === 'nom') return a.dataset.nom.localeCompare(b.dataset.nom, 'fr');
-        if (state.sort === 'cat') return (Number(a.dataset.ci) - Number(b.dataset.ci)) || (Number(a.dataset.i) - Number(b.dataset.i));
-        if (state.sort === 'prix') { const pa = 'prix' in a.dataset ? Number(a.dataset.prix) : Infinity, pb = 'prix' in b.dataset ? Number(b.dataset.prix) : Infinity; return (pa - pb) || (Number(a.dataset.i) - Number(b.dataset.i)); }
-        return Number(a.dataset.i) - Number(b.dataset.i);
-      });
-      sorted.forEach(r => tbody.appendChild(r));
+      if (state.sort !== lastSort) {
+        if (!sortCache.has(state.sort)) sortCache.set(state.sort, rows.slice().sort((a, b) => {
+          if (state.sort === 'nom') return collator.compare(a.dataset.nom, b.dataset.nom);
+          if (state.sort === 'cat') return (Number(a.dataset.ci) - Number(b.dataset.ci)) || (Number(a.dataset.i) - Number(b.dataset.i));
+          if (state.sort === 'prix') { const pa = 'prix' in a.dataset ? Number(a.dataset.prix) : Infinity, pb = 'prix' in b.dataset ? Number(b.dataset.prix) : Infinity; return (pa - pb) || (Number(a.dataset.i) - Number(b.dataset.i)); }
+          return Number(a.dataset.i) - Number(b.dataset.i);
+        }));
+        const fragment = document.createDocumentFragment();
+        sortCache.get(state.sort).forEach(r => fragment.appendChild(r));
+        tbody.appendChild(fragment);
+        lastSort = state.sort;
+      }
       if (count) count.textContent = shown === rows.length ? nf.format(rows.length) + ' lignes' : nf.format(shown) + ' ligne' + (shown > 1 ? 's' : '') + ' sur ' + nf.format(rows.length);
       if (empty) empty.hidden = shown > 0;
       chips.forEach(c => c.setAttribute('aria-pressed', String(c.dataset.catGroup === state.group)));
       box.classList.toggle('is-filtered', !!(needle || state.cat || state.st || state.group || state.tag));
     }
     function reset() { state.q = ''; state.cat = ''; state.st = ''; state.group = ''; state.tag = ''; state.sort = 'statut'; if (q) q.value = ''; if (fCat) fCat.value = ''; if (fSt) fSt.value = ''; if (sort) sort.value = 'statut'; apply(); }
-    if (q) q.addEventListener('input', () => { clearTimeout(timer); timer = setTimeout(() => { state.q = q.value; apply(); }, 80); });
+    if (q) q.addEventListener('input', () => { state.q = q.value; apply(); });
     if (fCat) fCat.addEventListener('change', () => { state.cat = fCat.value; if (state.cat) state.group = ''; apply(); });
     if (fSt) fSt.addEventListener('change', () => { state.st = fSt.value; apply(); });
     if (sort) sort.addEventListener('change', () => { state.sort = sort.value; apply(); });
@@ -79,8 +91,7 @@
     const el = document.getElementById(id); if (!el) return;
     const box = el.closest('details.cat-box'); if (!box) return;
     const c = controllers.get(box);
-    /* v7.54 : la ligne visée arrive sous les bandeaux collants (marge de défilement) et sa « Fiche complète » s’ouvre (revue v7.53, écart E6). */
-    if (el.matches('tr.cat-row')) { if (c) c.reset(); box.open = true; el.classList.add('is-target'); const fiche = el.querySelector('details'); if (fiche) fiche.open = true; requestAnimationFrame(() => { el.scrollIntoView({ block: 'start' }); const stuck = [...document.querySelectorAll('body>header,.ed-nav,.cat-table th')].reduce((h, n) => { const cs = getComputedStyle(n); return cs.position === 'sticky' || cs.position === 'fixed' ? Math.max(h, n.getBoundingClientRect().bottom) : h; }, 0); if (stuck > 0) window.scrollBy(0, -(stuck + 12)); }); return; }
+    if (el.matches('tr.cat-row')) { if (c) c.reset(); box.open = true; el.classList.add('is-target'); requestAnimationFrame(() => { el.scrollIntoView({ block: 'center' }); }); return; }
     if (el.matches('[data-cat-group]')) { box.open = true; if (c) c.setGroup(el.dataset.catGroup); requestAnimationFrame(() => { el.scrollIntoView({ block: 'center' }); }); }
   }
   openFromHash();

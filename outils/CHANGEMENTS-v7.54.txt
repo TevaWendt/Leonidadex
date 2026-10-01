@@ -1,85 +1,96 @@
-LEONIDAKIT v7.54 — DEUX AUDITS, MODE EXPERT RESTAURÉ, CORRECTIONS (30 septembre 2026)
+LEONIDAKIT v7.54 — LOT 1 : DIAGNOSTIC, LATENCE ET SOCLE DE PERFORMANCE (1er octobre 2026)
 
-Base : v7.53. Archive cumulée depuis la v7.47 (lots 1 à 5, revue de conformité, cette version). Suivi :
-outils/SUIVI-MISSION.md (section « Audits et restauration du mode Expert », anomalies 56 à 70) ; preuves :
-outils/PREUVES-v7.54.md.
+Base : v7.53 (zip Leonidadex-main (7), SHA-256 a650b62a…50b8e ; même version que le site en ligne à l'empreinte de common.js
+près). Mission « corrections visuelles, fluidité et Léo » en 5 lots ; ce lot est le premier. Matrice de suivi des 44 exigences :
+outils/MATRICE-FLUIDITE.md ; méthode et mesures : outils/PREUVES-v7.54.md. Le travail livré par ChatGPT sur le même lot a servi de
+point de départ ; ce qui contredisait une décision prise (accordéon des hubs au survol, à garder — 28/09/2026) ou aplatissait le
+langage visuel Motion+ n'a pas été repris.
 
-AUDITS
-- Intégration : le dépôt du propriétaire (archives v7.48 à v7.53 ajoutées) est identique à la v7.53, fichier pour fichier,
-  sauf calculateurs-tools.js qui reste à supprimer (aucune page ne le charge). Rien d’autre à reprendre.
-- Cahier des charges : 281 exigences relues par un vérificateur indépendant, en exécutant les calculs : 195 conformes,
-  71 partielles, 8 non conformes, 7 invérifiables (données de jeu absentes). Quatre écarts bloquants et treize importants,
-  tous reproduits ici avant correction. Les mineurs non corrigés sont écrits comme limites dans les preuves.
+VÉHICULES (vehicules.html, outils/gen.js, gabarit outils/templates/vehicules.html)
+- Les 248 schémas dessinés en ligne dans la grille (810 Ko, environ 15 000 nœuds) sont remplacés par le même dessin en fichier
+  (img/schemas/<id>.svg, déjà écrit par gen.js) chargé comme une image à l'approche de l'écran ; les huit premières cartes sont
+  chargées tout de suite. Rendu identique (même viewBox, même hauteur de 90 px).
+- Les cartes au-delà des 48 premières sont écrites masquées (attribut hidden) : le navigateur ne met en page ni ne peint 254 cartes
+  que app.js cachait ensuite. Sans JavaScript, une feuille <noscript> du gabarit les montre toutes.
+- vehicules-data.js (215 Ko) n'est plus chargé par le hub : les marques du bandeau de l'en-tête sont écrites dans la page
+  (attribut data-marques de #vstrip), app.js les lit.
+- Page : 1 478 Ko → 712 Ko ; nœuds du DOM au chargement : 18 243 → 3 359 environ (48 cartes rendues).
 
-MODE EXPERT : CE QUI REVIENT DE LA v7.47 (à côté des ajouts des lots, jamais à leur place)
-- Quoi acheter d’abord ? : « Comparer des ordres selon le délai » — ton ordre saisi, l’inverse, les prix croissants et le
-  meilleur trouvé, côte à côte (temps de jeu, argent au plus bas, premier gain en plus) — avec « Appliquer l’ordre inverse »
-  et « Trier par prix croissant ». Le « Ce qui compte dans ce calcul » du lot 2 reste juste en dessous.
-- « Et si le chiffre bouge de 20 % ? » reste affiché quand le panier ou la comparaison est vide : il dit quoi écrire.
-- Quel achat choisir ? : ligne « Temps pour regagner le prix » du tableau côte à côte.
-- « Ce qui compte dans ce calcul » : les chiffres clés au premier niveau, chacun avec « Modifier ».
-- Comparateur : « Lequel puis-je acheter ? » (Mes achats) à côté de « Quel achat choisir ? » ; carte 05 des calculateurs.
-- Non concernés (retirés avant la mission, v7.46 → v7.47, chasse aux doublons ; à remettre sur demande) : « Et si je gagne
-  plus, ou moins ? » de Mon objectif, la case « Afficher plus de détails » du plan, le bouton « Voir les réglages avancés ».
+GRILLES VÉHICULES ET ARMURERIE (app.js, fiches.js)
+- Les cartes sont indexées une fois (catégorie, statut, origine, édition, texte de recherche, nom, marque) : plus aucune lecture du
+  DOM à la frappe.
+- Une recherche ou un filtre ne déplace plus aucune carte dans la page (avant : les 302 cartes étaient réinsérées à chaque
+  frappe) ; seul un changement de tri réordonne, et chaque tri n'est calculé qu'une fois. La limite « 48 puis Afficher plus »
+  s'applique à l'ordre trié réel (avant : le tri A→Z réordonnait seulement les 48 premières cartes de l'ordre d'origine).
+- Aucune écriture DOM quand rien ne change (hidden, compteur, boutons). Le double filtrage au chargement (init puis fromHash) est
+  retiré ; un ancien lien #suv amène toujours sur le catalogue filtré.
+- La puce « Mon garage / Mon arsenal » suit un événement lk-owned émis par fiches.js et l'événement storage (autre onglet) ; plus
+  d'écouteur de clic global sur le document. Quand la dernière possession affichée est décochée, le focus revient sur la puce.
+- fiches.js : boutons Garage / Comparer retenus dans une table (plus de querySelector par carte à chaque changement) ; sur les fiches,
+  la première image de la galerie (déjà en cours de chargement) est conservée au lieu d'être recréée.
+- Bandeaux défilants : une seule mesure (l'ancienne boucle mesurait après chaque insertion, jusqu'à 41 fois).
+- Compteurs et défilement doux respectent « réduire les animations ».
+- Les fiches véhicules (302) ne chargent plus vehicules-data.js (215 Ko) ni les fiches armes et le hub Armurerie armes-data.js :
+  aucun script de ces pages ne lisait ces données (le comparateur, le classement et le calculateur, qui les lisent, les chargent
+  toujours). Gabarit outils/templates/vehicle-reference.html, gen-armes.cjs, vehicules-rares.html.
 
-BUSINESS PLAN (écarts bloquants)
-- Parcours sans durée de partie : à chaque étape, attendre la mission la plus rentable vaut mieux que lancer n’importe
-  laquelle ; le parcours complet est comparé aux parcours qui laissent une mission de côté, et le plus rapide est pris et
-  dit. Cas de l’audit : 25 min au lieu de 1 h 11 ; le tirage de l’audit rejoué (500 plans) : plus aucun n’est battu
-  par un sous-ensemble (171 avant) ; le test du dépôt en rejoue 200.
-- Priorités « sécurité » et « le moins coûteux sur tout le parcours » (nouvelle) : jamais un plan qui passe sous l’argent de
-  côté. S’il n’en existe aucun, le plan est bloqué et explique pourquoi, avec deux sorties : « Le plus vite possible » (le plan
-  puise alors dans la réserve et le dit à chaque étape) ou changer l’argent de côté. Plus de phrases contradictoires.
-- Munitions simulées : ajoutées aux frais de chaque tentative, dites dans « Ce qui compte » (SIMULATION) et dans « Ce qui
-  ferait changer la réponse » ; la note de portée des hypothèses le dit.
-- « Reprendre mes chiffres de Mes calculs » copie tout : joueurs, dépenses par partie, sens du but, coût d’usage par achat,
-  gain d’un achat, dépendances, joueurs et dépendances des missions ; une option inconnue reste inconnue.
-- Nouveau : « Nous jouons à (joueurs) » ; une mission qui demande plus de joueurs est écartée du plan, et c’est dit.
-- « Achat à confirmer » reste écrit dans la réponse ; « Il te restera, but acheté » distinct de « Tu auras à la fin » ;
-  chaque achat du parcours a son lien vers sa fiche ; l’export écrit ses hypothèses (sens du but, priorité, joueurs,
-  dépenses par partie, munitions simulées, coûts d’usage, missions écartées).
+LISTES DÉPLIABLES (catalogue.js : Consommables, Vêtements et style, Personnalisations)
+- Lignes lues une fois ; un filtre ne déplace aucune ligne ; le tri est calculé une fois par critère ; l'attente de 80 ms à la frappe
+  est retirée.
 
-AUTRES CORRECTIONS DU CALCULATEUR
-- Quel achat choisir ? : l’envie n’est plus notée par le site (« — pas notée », facultative) ; sans note, la réponse par
-  défaut devient « le moins cher » et le dit ; un prix inconnu n’est plus retiré en silence (réponse partielle, dite) ;
-  égalité « le moins cher sur la durée » départagée par le nom ; ligne « Coût sur ? parties » remplacée.
-- Exemples : tant qu’un chiffre vaut encore l’exemple, il est étiqueté EXEMPLE et le bandeau dit « CALCULÉ AVEC LES
-  EXEMPLES » ; dès qu’un chiffre clé change, « AVEC TES CHIFFRES ».
-- Mon budget : un coût d’usage non confirmé n’est ni compté ni tu (flux « incomplet », donnée nommée).
-- Tentatives ratées : chiffrées dans Mon objectif (missions) et Mon temps de jeu (« Si des tentatives ratent »), munitions
-  dites dans « Ce qui compte » de Mon temps de jeu ; registre du modèle à jour ; libellé de l’hypothèse mis à jour.
-- Quoi acheter d’abord ? : retirer du panier un prérequis déclaré bloque l’achat qui en dépend, avec un message et les
-  trois façons de s’en sortir.
-- « À compléter : Un chiffre » remplacé par un libellé qui dit quoi (Parcours à compléter, À écrire, Blocage, À corriger) ;
-  « Effet sur la vie » écarté d’un véhicule dit « sans objet ».
+COMMUN À TOUTES LES PAGES (common.js, outils/sync-site.cjs, leo-loader.js, lk-showcase.js, learning-motion.js, style.css, vercel.json)
+- L'index de recherche (search-index.js, 175 Ko) et les 2 500 lieux (search-lieux.js) ne sont plus téléchargés avec chaque page :
+  déclarés en <script type="lk/lazy" src="…"> (un type inconnu n'est ni téléchargé ni exécuté), ils sont chargés par app.js à la
+  première approche de la recherche (survol, focus, touche « / », adresse ?q=). LK.lazyScript(nom) : une requête par fichier,
+  version conservée. sync-site.cjs fait la conversion sur les 415 pages (et l'ajoute aux pages du monde, dont le gabarit ne la
+  copiait pas).
+- LKMotion (common.js) : moteur d'apparition partagé — un seul IntersectionObserver pour .reveal / .rise / .lk-reveal /
+  [data-lk-reveal] (avant : quatre observateurs et deux minuteries par page) ; ce qui est à l'écran à l'ouverture est montré dans la
+  même tâche que la classe « js » (plus de clignotement visible → invisible → visible, plus d'attente pour le contenu principal) ;
+  vagues de 60 ms plafonnées à 300 ms ; le filet de sécurité ne force que ce qui est dans l'écran (l'ancien affichait toute la page
+  après 2,5 s et supprimait de fait les apparitions au défilement) ; observe(nœuds, {replay}) pour des résultats réaffichés et
+  enter(nœuds) (cascade Web Animations, lignes de tableau en opacité seule, focus respecté) pour les listes des lots 2 et 3.
+  Réduction des mouvements, impression, absence de JavaScript : tout visible. Les variantes Motion+ (rideau, flou, lignes, zoom,
+  gauche/droite, mots des titres, parallaxe) sont conservées telles quelles.
+- Plus de clignotement au chargement : mesuré avant ce lot, le titre, le texte d'introduction et les images de l'en-tête de 9 pages
+  sur 12 étaient visibles, puis cachés par les scripts de fin de page, puis remontrés en cascade (de 0,2 s sur ordinateur à 3,4 s
+  sur Véhicules mobile à processeur ralenti). Quand le haut de la page est déjà peint à l'arrivée du script (plus de 200 ms depuis
+  la navigation, c'est-à-dire presque toujours), l'entrée en cascade des en-têtes et des piles d'images n'est plus rejouée (classe
+  lk-hero-still) ; elle reste jouée quand le script arrive avant le premier rendu. Un bloc du premier écran est montré sans
+  transition (classe lk-instant posée puis retirée par LKMotion) : 0 clignotement sur 12 pages × 2 largeurs après ce lot.
+- Rails latéraux : toutes les lectures de géométrie avant les écritures (l'ancienne boucle forçait une mise en page par bloc) ;
+  redimensionnement regroupé par trame. Galerie épinglée des fiches du monde : aucune écriture quand la position n'a pas changé.
+- Bouton Léo : la place libre n'est plus recalculée à chaque trame du défilement (sept tests de recouvrement par position, jusqu'à
+  douze positions) ; au plus toutes les 120 ms puis une fois à l'arrêt ; une position encore libre n'écrit rien. Clics, clavier,
+  menu et contenus ajoutés : dès la trame suivante, comme avant.
+- À propos : les compteurs gardent la valeur écrite dans la page tant qu'ils ne sont pas à l'écran (plus de « 0 » posé au
+  chargement ni de minuterie qui lançait tous les compteurs après 4 s).
+- style.css : la promotion en couche (will-change) des blocs .lk-reveal ne vaut que pendant l'entrée, plus pour les blocs encore
+  hors écran ; contain:layout sur .veh-card ; règle d'affichage des schémas en image.
+- vercel.json : Cache-Control 7 jours (stale-while-revalidate 30 jours) pour les scripts et feuilles (tous versionnés par ?v=) et
+  leo-index.json, 1 an pour les polices ; les pages HTML restent revalidées à chaque visite. CSP inchangée.
+- Module mort calculateurs-tools.js retiré (chargé par aucune page ; sa suppression était déjà demandée depuis la v7.52).
 
-FICHES, CATALOGUES, CARNETS, LÉO
-- Armes de mêlée et de jet : chargeur, rechargement, munitions « sans objet » (fiches et calculateur) ; carburant « sans
-  objet » pour BMX, vélos, kayak, train, monorail ; phrase de la batte réécrite (plus de « sans limite de place ») ;
-  Armurerie cohérente (« nombre exact d’armes de poing reste à confirmer »).
-- Collectibles : « Ouvrir mon carnet des collectibles » et « Voir mon carnet » mènent au carnet dédié.
-- Carnets : les repères de la série (GTA V, GTA Online, pas encore vus dans GTA VI) portent « Repère de la série » et sont
-  comptés à part (« dont N repères de la série ») ; liste ouverte depuis un carnet : ligne visible sous les bandeaux
-  collants, « Fiche complète » ouverte.
-- progression.html : fonctionne en mémoire, avec un avis, quand le stockage du navigateur est bloqué.
-- Léo : « combien de temps pour 1 000 000 $ » est un objectif (pas un prix) ; « entre la Cheetah et l’Emperor » garde les
-  deux achats.
-
-CONTRÔLES AJOUTÉS
-- outils/tests/conformite-v754.test.cjs (13 tests) ; calculateurs-v749.test.cjs fait vraiment varier réserve, horizon et
-  fréquence ; tests adaptés (conformite-v753, validation-v752, regression, carnets-v751).
-- Captures de livraison : 84 (dont 28 nouvelles pour les fonctions restaurées et les corrections), avec un contrôle du texte
-  affiché pour chacune des nouvelles.
+CONTRÔLES
+- Tests Node : 595 / 595 (suite complète), dont outils/tests/performance-lot1.test.cjs (9 tests : scripts différés, données non lues,
+  LK.lazyScript, hub sans dessin en ligne ni vehicules-data.js, filtres sans réinsertion, LKMotion, feuilles, listes, cache Vercel) ; tests adaptés :
+  audit-finition (recherche différée), regression (schémas en fichiers), runtime-helper (option lazy:'skip').
+- node outils/verifier.js : 47 953 références vérifiées sur 415 pages, aucune erreur.
+- Recette Chromium (qa/recette.cjs, dossier de contrôle) : 416 contrôles à 1280 et 390 px sur 31 pages (erreurs JS, ressources
+  manquantes, index non téléchargé, défilement horizontal, premier écran visible, recherche différée, hub Véhicules complet,
+  Armurerie, galerie des fiches, listes, Léo, calculateur, carte, réduction des mouvements, impression) : 0 échec ; la base v7.53
+  en échoue 67, tous sur les points corrigés. Détecteur de clignotement (qa/flicker.cjs) : 0 bloc sur 12 pages × 2 largeurs (base :
+  40 blocs).
+- Mesures avant / après (qa/perf.cjs, 108 + 108 navigations, CPU ×4, 10 Mbit/s + 40 ms) : outils/PREUVES-v7.54.md.
 
 FICHIERS
-- Supprimé (toujours, depuis la v7.52) : calculateurs-tools.js.
-- Ajoutés : outils/tests/conformite-v754.test.cjs, outils/CHANGEMENTS-v7.54.txt, outils/PREUVES-v7.54.md, LISEZ-MOI-v7.54.txt.
-- Modifiés (sources) : calculateurs-engine.js, calculateurs-modele.js, calculateurs-scenario.js, calculateurs-workspace.js,
-  calculateurs-plan.js, calculateurs-workspace.css, calculator-entry.css, calculateurs.html, comparateur.html,
-  comparateur.js, carnets.js, carnets.css, catalogue.js, collectibles.html, progression.js, leo-core.js, common.js,
-  leo-loader.js, leo-ui.js, leo.css (versions), modele-donnees.js et leo/passages.json (régénérés), outils/redaction.cjs, outils/hubs-editoriaux.json, outils/carnets-source.cjs, outils/gen-carnets.cjs,
-  outils/modele-donnees.json, outils/tuto.json, outils/tuto-shots.py, outils/templates/collectibles-quick-help.html,
-  img/tuto/*.webp (26) et outils/tuto-captures.json ; tests (calculateurs-v749, conformite-v753, validation-v752,
-  regression, carnets-v751) ; documents (README.md, outils/SUIVI-MISSION.md, outils/MATRICE-COUVERTURE.md,
-  outils/CARNETS-CORRESPONDANCE.md).
-- Régénérés : fiches d’armes et de véhicules, hubs, carnets, Tuto, pages (versions des scripts), index de Léo, données.
+- Supprimé : calculateurs-tools.js.
+- Ajoutés : outils/MATRICE-FLUIDITE.md, outils/PREUVES-v7.54.md, outils/CHANGEMENTS-v7.54.txt, LISEZ-MOI-v7.54.txt,
+  outils/tests/performance-lot1.test.cjs.
+- Modifiés (sources) : app.js, common.js, fiches.js, catalogue.js, leo-loader.js, lk-showcase.js, learning-motion.js, style.css,
+  vercel.json, vehicules-rares.html, outils/gen.js, outils/gen-armes.cjs, outils/sync-site.cjs, outils/lore-gen.js,
+  outils/templates/vehicules.html, outils/templates/vehicle-reference.html,
+  outils/tests/audit-finition.test.cjs, outils/tests/regression.test.cjs, outils/tests/runtime-helper.cjs, README.md.
+- Régénérés : les 415 pages (déclaration différée de la recherche et nouvelles empreintes ?v= de common.js et app.js), vehicules.html
+  (schémas, cartes masquées, marques), armes.html et les fiches (scripts de données retirés), a-propos.html (compteur de tests 537),
+  leo-ui.js et leo.css (version de Léo), outils/leo-index-manifest.json.

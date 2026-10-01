@@ -551,7 +551,7 @@ nav a.here::after{width:100%;}
   gap:16px; margin-bottom:44px;
 }
 .veh-card{
-  display:flex; flex-direction:column; background:#fff; position:relative;
+  display:flex; flex-direction:column; background:#fff; position:relative; contain:layout;
   border:2px solid var(--ink); border-radius:8px; overflow:hidden;
   box-shadow:4px 4px 0 rgba(26,26,30,.12);
   transition:transform .18s cubic-bezier(.3,.85,.4,1), box-shadow .18s;
@@ -1961,6 +1961,8 @@ body>header .head-search{flex:0 1 200px;max-width:200px;margin-left:auto;margin-
 .veh-spacer{flex:1 1 calc(25% - 9px);min-width:172px;height:0;padding:0;margin:0;visibility:hidden;}
 .veh-thumb{height:152px;padding:0;transition:height .38s cubic-bezier(.2,.7,.2,1);}
 .veh-thumb .veh-art{height:96px;width:auto;max-width:82%;}
+/* v7.54 : schémas des cartes en fichiers SVG (img/schemas), chargés à l'approche de l'écran ; même cadrage que le dessin en ligne */
+img.veh-art--schema{object-fit:contain;background:transparent;}
 .veh-thumb--photo img{width:100%;height:100%;aspect-ratio:auto;object-fit:cover;transition:object-fit 0s .1s;}
 @media(hover:hover) and (min-width:700px){
   .veh-grid .veh-card:hover{flex-grow:2.3;}
@@ -2305,7 +2307,10 @@ main .d-section>p,main .info-section p,main .lore-texte p,main .d-intro-note,.in
 
 /* 3. Mouvement partout : survol des cartes, boutons et liens ; apparition au défilement (classe posée par common.js). */
 .js .lk-reveal{opacity:0;transform:translate3d(0,18px,0);}
-.js .lk-reveal:not(.lk-settled){will-change:opacity,transform;}
+/* v7.54 : un bloc déjà à l'écran à l'ouverture est montré sans transition (classe posée puis retirée par LKMotion) */
+.js .lk-instant,.js .lk-instant *,.js .lk-instant::after{transition:none!important;}
+/* v7.54 : la promotion en couche ne vaut que pendant l'entrée (is-in → lk-settled), jamais pour les blocs encore hors écran */
+.js .lk-reveal.is-in:not(.lk-settled){will-change:opacity,transform;}
 .js .lk-reveal.is-in{opacity:1;transform:none;transition:opacity .45s var(--ease-out),transform .45s var(--ease-out);transition-delay:var(--lk-delay,0ms);}
 .js .lk-reveal--left{transform:translate3d(-22px,0,0);} .js .lk-reveal--right{transform:translate3d(22px,0,0);} .js .lk-reveal--zoom{transform:translate3d(0,16px,0);}
 .js .lk-reveal.is-in.lk-reveal--left,.js .lk-reveal.is-in.lk-reveal--right,.js .lk-reveal.is-in.lk-reveal--zoom{transform:none;}
@@ -2416,6 +2421,9 @@ footer a:hover{color:var(--coral-text);transform:translateX(3px);}
 .js .lk-words.lk-now .lk-w{transition-delay:calc(var(--lk-i,0)*45ms + 80ms);}
 /* bandeaux : les éléments arrivent en cascade au chargement (kicker, titre, phrase, boutons) */
 .js .lk-hero-item{animation:lk-rise .55s var(--ease-out) both;animation-delay:calc(min(var(--lk-i,0),5)*60ms);}
+/* v7.54 : en-tête déjà peint quand le script arrive : aucune entrée rejouée (ni cascade, ni mots), rien ne disparaît */
+.js .lk-hero-item.lk-hero-still,.js .lore-enter .lore-fig.lk-hero-item.lk-hero-still{animation:none;opacity:1;transform:none;clip-path:none;}
+.js .lk-words.lk-hero-still .lk-w{transition:none;}
 @keyframes lk-rise{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:none;}}
 /* rideau d'image : un voile couleur papier se retire de gauche à droite pendant que l'image se recale (façon bande-annonce).
    Un voile plutôt qu'un découpage : l'observateur de défilement voit toujours le bloc entier. */

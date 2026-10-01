@@ -67,6 +67,13 @@ for(const file of htmlFiles){let s=fs.readFileSync(file,'utf8');if(file.startsWi
   s=s.replace(/<script src="(?:\.\.\/|\/)?(?:assets-manifest|common)\.js"><\/script>\n?/g,'');
   s=s.replace(/(<script src="(?:\.\.\/|\/)?app\.js"><\/script>)/,'<script src="'+prefix+'assets-manifest.js"></script>\n<script src="'+prefix+'common.js"></script>\n$1');
  }
+ // v7.54 (lot 1) : l'index de recherche (search-index.js, 175 Ko) et les lieux (search-lieux.js) ne sont plus téléchargés avec
+ // chaque page : déclarés en <script type="lk/lazy" src="…"> (un type inconnu n'est ni téléchargé ni exécuté), ils sont chargés
+ // par app.js à la première approche de la recherche. Les empreintes ?v= sont posées plus bas, comme pour les autres scripts.
+ s=s.replace(/<script type="lk\/lazy" src="(?:\.\.\/|\/)?search-lieux\.js(?:\?v=[a-f0-9]+)?"><\/script>/g,'');
+ s=s.replace(/<script(?: type="lk\/lazy")? src="((?:\.\.\/|\/)?)search-index\.js(?:\?v=[a-f0-9]+)?"><\/script>/g,(m,p)=>'<script type="lk/lazy" src="'+p+'search-index.js"></script><script type="lk/lazy" src="'+p+'search-lieux.js"></script>');
+ // une page avec la recherche mais sans déclaration (gabarit qui ne la copie pas) la reçoit devant app.js
+ if(/class="[^"]*\bsearchwrap\b/.test(s)&&!/search-index\.js/.test(s))s=s.replace(/(<script src="(?:\.\.\/|\/)?app\.js(?:\?v=[a-f0-9]+)?"><\/script>)/,'<script type="lk/lazy" src="'+prefix+'search-index.js"></script><script type="lk/lazy" src="'+prefix+'search-lieux.js"></script>\n$1');
  if(!s.includes('name="viewport"'))s=s.replace('</head>','<meta name="viewport" content="width=device-width, initial-scale=1.0">\n</head>');
  // v7.37 : police Archivo hébergée sur le site (style.css) : plus aucun lien vers Google Fonts, préchargement du fichier latin.
  s=s.replace(/[ \t]*<link rel="preconnect" href="https:\/\/fonts\.googleapis\.com">\s*\n?/g,'').replace(/[ \t]*<link rel="preconnect" href="https:\/\/fonts\.gstatic\.com" crossorigin>\s*\n?/g,'').replace(/[ \t]*<link href="https:\/\/fonts\.googleapis\.com\/css2[^"]*" rel="stylesheet">\s*\n?/g,'');

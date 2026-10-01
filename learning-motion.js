@@ -1,5 +1,8 @@
 /* Présentation pédagogique : tokens du Lot C, effets finis, contenu visible sans script. */
 (function(){'use strict';
+/* v7.54 (lot 1) : quand le moteur commun LKMotion est là, ces apparitions passent par son observateur partagé ; le reste
+   du fichier sert de repli (page chargée sans common.js). */
+if(window.LKMotion){document.querySelectorAll('[data-d-reveal]:not(.lk-arrive)').forEach(el=>{el.classList.add('lk-reveal');});window.LKMotion.observe(document.querySelectorAll('[data-d-reveal]:not(.lk-arrive)'),{initial:true});return;}
 const reduced=matchMedia('(prefers-reduced-motion: reduce)'),effects=new Set(),seen=new WeakSet(),style=getComputedStyle(document.documentElement);
 const duration=parseFloat(style.getPropertyValue('--c-standard'))||300,easing=style.getPropertyValue('--c-ease-result').trim()||'ease-out',rise=style.getPropertyValue('--c-rise').trim()||'10px';
 function settle(){effects.forEach(a=>a.cancel());effects.clear();}

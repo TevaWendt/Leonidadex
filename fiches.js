@@ -32,15 +32,22 @@
     var medias = [];
     try { medias = gal.dataset.medias ? JSON.parse(gal.dataset.medias) : []; } catch (e) { medias = []; }
     if (medias.length) {
+      /* v7.54 : le nœud de la première image (déjà en cours de chargement, souvent le plus grand contenu de la page)
+         est conservé au lieu d'être recréé : pas de second décodage ni de nouveau candidat LCP */
+      const firstImage = gal.querySelector('img[src]');
       const trk = document.createElement('div'); trk.className = 'gal-track';
       /* la première vue est déjà dans le HTML (visible sans JS) ; les suivantes ne sont demandées
          qu'au moment où on les affiche, pour ne pas charger toute la galerie d'un coup */
       medias.forEach(function (m, k) {
         const it = document.createElement('div'); it.className = 'gal-item';
-        const im = document.createElement('img');
+        const im = k === 0 && firstImage ? firstImage : document.createElement('img');
         im.sizes = '(max-width:700px) 100vw, 520px';
         im.dataset.src = m.s; im.dataset.srcset = m.s + ' ' + (m.w || 480) + 'w, ' + m.l + ' ' + (m.lw || 1280) + 'w';
-        if (k === 0) { im.srcset = im.dataset.srcset; im.src = m.s; im.fetchPriority = 'high'; }
+        if (k === 0) {
+          if (im.getAttribute('srcset') !== im.dataset.srcset) im.srcset = im.dataset.srcset;
+          if (im.getAttribute('src') !== m.s) im.src = m.s;
+          im.fetchPriority = 'high';
+        }
         im.width = m.w; im.height = m.h; im.decoding = 'async';
         if (m.h > m.w) im.classList.add('gal-portrait');
         im.alt = m.a || ((gal.dataset.nom || '') + ' — ' + m.t + ', capture officielle Rockstar Games');
@@ -135,7 +142,8 @@
   if(!type) return;
   const KEY = 'lk_own_' + type;
   const lire = () => window.LK.read(KEY,{},window.LK.own);
-  const ecrire = o => window.LK.write(KEY,o);
+  /* v7.54 : la page (puce « Mon garage / Mon arsenal », app.js) est prévenue par un événement, plus par un écouteur de clic global */
+  const ecrire = o => { const saved = window.LK.write(KEY,o); document.dispatchEvent(new CustomEvent('lk-owned', { detail: { type } })); return saved; };
   let own = lire();
   const MOT = type === 'armes' ? ['arme', 'armes', 'arsenal'] : ['véhicule', 'véhicules', 'garage'];
 
@@ -208,6 +216,7 @@
   const grid = document.getElementById('vgrid');
   if(grid){
     const cards = Array.from(grid.querySelectorAll('.veh-card'));
+    const ownButtons = new Map(), compareButtons = new Map();
     cards.forEach(function(c){
       const id = c.dataset.id; if(!id) return;
       const body = c.querySelector('.veh-body'); if(!body) return;
@@ -219,12 +228,17 @@
       b.title = 'Marquer comme possédé'; b.setAttribute('aria-label', (type==='armes'?'Arsenal : ':'Garage : ')+c.querySelector('h3').textContent); b.setAttribute('aria-pressed', 'false');
       b.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation();
         if(own[id]) delete own[id]; else own[id] = 1; ecrire(own); majCartes(); });
-      tools.appendChild(b);
+      tools.appendChild(b); ownButtons.set(id, { card: c, button: b });
     });
+    /* v7.54 : boutons retenus dans une table (plus de querySelector par carte) et écritures seulement quand l'état change */
     function majCartes(){
       let n = 0;
-      cards.forEach(function(c){ const on = !!own[c.dataset.id]; c.classList.toggle('is-own', on);
-        const b = c.querySelector('.own-card'); if(b){ b.classList.toggle('on', on); b.setAttribute('aria-pressed', on ? 'true' : 'false'); } if(on) n++; });
+      ownButtons.forEach(function(entry, id){ const on = !!own[id], b = entry.button;
+        if(entry.card.classList.contains('is-own') !== on) entry.card.classList.toggle('is-own', on);
+        if(b.classList.contains('on') !== on) b.classList.toggle('on', on);
+        if(b.getAttribute('aria-pressed') !== String(on)) b.setAttribute('aria-pressed', String(on));
+        if(on) n++;
+      });
       const bar = document.getElementById('own-bar');
       if(bar){
         bar.querySelector('b').textContent = n;
@@ -254,6 +268,8 @@
       hp.delete(MOT[2]); history.replaceState(null,'',location.pathname+location.search+(hp.size?'#'+hp.toString():''));
     }
     majCartes();
+    /* v7.54 : une possession cochée dans un autre onglet est reflétée ici */
+    window.addEventListener('storage', function(e){ if(e.key === KEY || e.key === null){ own = lire(); majCartes(); } });
 
     /* ------------------------------------------------------ sélection pour comparer */
     let sel = [];
@@ -279,7 +295,7 @@
         const k = sel.indexOf(id);
         if(k >= 0) sel.splice(k, 1); else { if(sel.length >= 3){ sel.shift(); } sel.push(id); }
         majSel(); });
-      tools.appendChild(b);
+      tools.appendChild(b); compareButtons.set(id, b);
     });
     function majSel(){
       try { sessionStorage.setItem(selectionKey, JSON.stringify(sel)); } catch (e) { /* Optional persistence. */ }
@@ -287,7 +303,10 @@
         calculatorSelection.hidden = !sel.length;
         calculatorSelection.href = calculatorLink(type, { ids: sel.join(',') }, 'catalogue');
       }
-      cards.forEach(c => { const b = c.querySelector('.cmp-card'); if(b){ const on = sel.indexOf(c.dataset.id) >= 0; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on ? 'true' : 'false'); } });
+      compareButtons.forEach(function(b, id){ const on = sel.indexOf(id) >= 0;
+        if(b.classList.contains('on') !== on) b.classList.toggle('on', on);
+        if(b.getAttribute('aria-pressed') !== String(on)) b.setAttribute('aria-pressed', String(on));
+      });
       if(!tray) return;
       tray.classList.toggle('on', sel.length > 0);
       tray.querySelector('b').textContent = sel.length + ' sélectionné' + (sel.length > 1 ? 's' : '');

@@ -65,7 +65,9 @@
     const end = parseInt(node.dataset.count, 10) || 0;
     if (reduced || !window.requestAnimationFrame || end < 10) { show(node, end); return; }
     const t0 = performance.now(), dur = 900;
+    show(node, 0);
     const step = function (t) {
+      if (document.hidden) { show(node, end); return; }
       const p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 3);
       show(node, Math.round(end * e));
       if (p < 1) window.requestAnimationFrame(step);
@@ -73,8 +75,10 @@
     window.requestAnimationFrame(step);
   };
   if (io && !reduced) {
+    /* v7.54 : la valeur écrite dans la page reste lisible tant que le compteur n'est pas à l'écran (plus de « 0 » posé
+       au chargement, ni de minuterie qui lançait tous les compteurs après 4 s) ; le compteur part de zéro à son entrée. */
     const co = new IntersectionObserver(function (entries) { entries.forEach(function (en) { if (!en.isIntersecting) return; run(en.target); co.unobserve(en.target); }); }, { threshold: 0.4 });
-    counters.forEach(function (n) { show(n, 0); co.observe(n); });
-    setTimeout(function () { counters.forEach(function (n) { if (n.textContent === '0' && parseInt(n.dataset.count, 10) > 0) run(n); co.unobserve(n); }); }, 4000);
+    counters.forEach(function (n) { co.observe(n); });
+    window.addEventListener('beforeprint', function () { counters.forEach(function (n) { co.unobserve(n); show(n, parseInt(n.dataset.count, 10) || 0); }); });
   } else counters.forEach(function (n) { show(n, parseInt(n.dataset.count, 10) || 0); });
 })();

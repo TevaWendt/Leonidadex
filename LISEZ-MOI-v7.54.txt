@@ -1,39 +1,40 @@
-LEONIDAKIT v7.54 — MISSION EN 5 LOTS + REVUE + AUDITS ET MODE EXPERT RESTAURÉ — archive « modifs » (30 septembre 2026)
+LEONIDAKIT v7.54 — LOT 1 (PERFORMANCE) DE LA MISSION « CORRECTIONS VISUELLES, FLUIDITÉ ET LÉO » — archive « modifs » (1er octobre 2026)
 
-Base attendue : ton dossier Leonidadex tel qu’il est après les archives v7.48 à v7.53 (ton zip « main » du 30 septembre est
-identique à la v7.53, sauf calculateurs-tools.js encore présent). L’archive est CUMULÉE depuis la v7.47 : elle contient les
-cinq lots, la revue de conformité et cette version. Elle remplace les archives précédentes : tu peux mettre en ligne celle-ci
-directement, même si tu repars d’un dossier resté en v7.47.
-Fichiers ajoutés ou modifiés seulement, chemins exacts depuis la racine (dossier carnets/ compris).
+Base attendue : ton dossier Leonidadex en v7.53 (ton zip « Leonidadex-main (7) » du 30 septembre l'est, octet pour octet :
+SHA-256 a650b62af33e46d976e867f68cb727d4feada62637cb7b4ee30bc43cf2750b8e). L'archive contient seulement les fichiers créés ou
+modifiés, aux chemins exacts depuis la racine (sous-dossiers armes/, vehicules/, lieux/, personnages/, entreprises/, demeures/,
+planques/, carnets/, outils/ compris). Elle remplace l'archive « LeonidaKit_Lot1_Modifications » de ChatGPT : ne pas appliquer
+les deux.
 Aucune commande de build. Toujours aucun package.json ; api/ ne change pas ; rien à régler dans Vercel ni dans Brevo.
 
-UNE SUPPRESSION À FAIRE (l’archive ne peut pas supprimer un fichier) :
-- calculateurs-tools.js (à la racine) : aucune page ne le charge. Il est encore dans ton dossier : supprime-le avant de
-  mettre en ligne.
+UNE SUPPRESSION À FAIRE (l'archive ne peut pas supprimer un fichier) :
+- calculateurs-tools.js (à la racine) : aucune page ne le charge ; un test du dépôt exige son absence. Supprime-le avant de mettre
+  en ligne (c'est la même suppression que celle demandée depuis la v7.52 ; ton zip du 30 septembre le contenait encore).
 
-1. Copie ton dossier actuel (sauvegarde).
-2. Extrais l’archive dans la racine du site, écrase les fichiers homonymes (garde le dossier .git).
+1. Copie ton dossier actuel (sauvegarde) ou note le commit courant dans GitHub Desktop.
+2. Extrais l'archive dans la racine du site, écrase les fichiers homonymes (garde le dossier .git).
 3. Supprime calculateurs-tools.js.
-4. Mets en ligne (GitHub Desktop, dossier complet). La mise en ligne est une étape à part : rien n’a été publié pour toi.
+4. Vérifie 30 secondes en local (double-clic sur vehicules.html suffit pour les schémas) ou sur la prévisualisation Vercel.
+5. Mets en ligne quand tu le décides (GitHub Desktop : commit puis push ; Vercel déploie le contenu tel quel). Rien n'a été publié
+   pour toi.
+Retour arrière : « Revert » du commit dans GitHub Desktop, ou remets ta sauvegarde. Les clés de stockage du navigateur (lk_*) sont
+inchangées : aucune donnée de progression ou de calcul n'est touchée.
 
-CE QUE CETTE VERSION CHANGE PAR RAPPORT À LA v7.53 :
-- Mode Expert : ce que la mission avait retiré de la v7.47 revient, à côté des ajouts. « Comparer des ordres selon le délai »
-  (ton ordre, l’inverse, les prix croissants, le meilleur trouvé) avec ses deux boutons ; « Et si le chiffre bouge de 20 % ? »
-  toujours affiché ; « Temps pour regagner le prix » dans Quel achat choisir ? ; chiffres clés avec « Modifier » dans « Ce qui
-  compte » ; « Lequel puis-je acheter ? » dans le comparateur.
-- Business plan : parcours plus rapide quand il vaut mieux attendre une mission (et il le dit) ; « la sécurité » et « le
-  moins coûteux » ne touchent jamais à ton argent de côté (sinon le plan est bloqué et t’explique quoi faire) ; les munitions
-  simulées comptent vraiment ; « Reprendre mes chiffres » copie tout ; nouveau champ « Nous jouons à (joueurs) ».
-- Quel achat choisir ? : l’envie n’est plus notée à ta place ; un prix inconnu est dit, pas retiré en silence.
-- Exemples étiquetés EXEMPLE tant que tu n’as rien changé ; Mon budget ne compte pas un coût inconnu comme 0.
-- Fiches : les armes de mêlée et de jet disent « sans objet » pour chargeur et munitions ; Armurerie cohérente.
-- Carnets : les repères de GTA V / GTA Online sont marqués et comptés à part ; Collectibles mène au carnet dédié.
-- Léo comprend « combien de temps pour 1 000 000 $ » et garde les deux achats d’une comparaison.
+CE QUE CE LOT CHANGE (détail : outils/CHANGEMENTS-v7.54.txt ; mesures : outils/PREUVES-v7.54.md ; suivi des 44 points du prompt :
+outils/MATRICE-FLUIDITE.md) :
+- Véhicules : page de 1,48 Mo → 0,71 Mo (schémas en fichiers, chargés à l'approche de l'écran ; 254 cartes écrites masquées et
+  montrées par « Afficher plus » ; vehicules-data.js plus chargé). Arrivée sur la page environ deux fois plus rapide dans nos
+  mesures (processeur ralenti 4 fois) ; recherche, filtres, tris et « Afficher plus » ne réinsèrent plus les cartes. L'accordéon au
+  survol est conservé.
+- Toutes les pages : l'index de recherche (175 Ko) n'est plus téléchargé à chaque page, il arrive quand on approche la recherche ;
+  un seul observateur d'apparitions (LKMotion) et le premier écran montré sans attente ni clignotement ; le bouton Léo ne recalcule
+  plus sa place à chaque trame ; scripts, feuilles et polices gardés en cache par le navigateur (pages toujours revalidées).
+- Armurerie et listes dépliables : mêmes gains de filtrage (aucune réinsertion, plus d'attente à la frappe).
 
-POUR VÉRIFIER (3 minutes) : ouvre le calculateur, « Quoi acheter d’abord ? », mode Expert, ajoute deux achats avec un prix :
-le bloc « Comparer des ordres selon le délai » est là, avec « Appliquer l’ordre inverse ». Vide le panier : « Et si le
-chiffre bouge de 20 % ? » reste affiché et dit quoi écrire. Dans « Mon business plan », mets 30 000 $ en poche, 25 000 $ de
-côté et une mission à 20 000 $ de frais : le plan est bloqué et explique les deux sorties.
+POUR VÉRIFIER (2 minutes) : ouvre Véhicules, tape « vapid » puis efface, choisis « A → Z » : les premières cartes sont maintenant
+celles de tout le catalogue (avant, seules les 48 premières de l'ordre d'origine étaient triées). Survole une carte : elle s'élargit
+toujours. Ouvre les outils du navigateur (F12 → Réseau) sur l'accueil : search-index.js n'apparaît qu'après un clic dans la
+recherche.
 
-Détails : outils/CHANGEMENTS-v7.54.txt ; preuves : outils/PREUVES-v7.54.md ; matrice : outils/MATRICE-COUVERTURE.md ;
-suivi : outils/SUIVI-MISSION.md (anomalies 56 à 70).
+PROCHAIN LOT : lot 2 (Arsenal blocs 05 et 06, apparition des cartes de Progression, cartes de Planques, « Méthode et sources » de
+Collectibles), à partir de cette v7.54.

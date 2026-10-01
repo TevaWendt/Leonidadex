@@ -26,7 +26,7 @@ const chrome=(s)=>({
   fav:pick(s,/<link rel="icon"[^>]*>/),
   header:pick(s,/<header>[\s\S]*?<\/header>/),
   footer:pick(s,/<footer>[\s\S]*?<\/footer>/),
-  scripts:(s.match(/<script src="[^"]*"><\/script>/g)||[]).filter(x=>!/fiches\.js|vehicules-data\.js|armes-data\.js|lk-showcase\.js|carnets-core\.js/.test(x)) /* v7.52 : ni la séquence d’À propos, ni les envies des fiches véhicules sur les pages du monde */.join('\n'),
+  scripts:(s.match(/<script(?: type="lk\/lazy")? src="[^"]*"><\/script>/g)||[]).filter(x=>!/fiches\.js|vehicules-data\.js|armes-data\.js|lk-showcase\.js|carnets-core\.js/.test(x)) /* v7.52 : ni la séquence d’À propos, ni les envies des fiches véhicules sur les pages du monde */.join('\n'),
 });
 const ROOT=chrome(rootRef), SUB=chrome(subRef);
 const withHere=(header,hub)=>header.replace(/ class="here"/g,'').replace(new RegExp('(<a href="(?:\\.\\./)?'+hub+'\\.html")>'),'$1 class="here">');

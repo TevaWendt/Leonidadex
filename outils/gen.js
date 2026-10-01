@@ -40,16 +40,28 @@ const art=v=>vehSchema(v,90)||ART_ID[v.id]||ART_CAT[v.cat]||ART_CAT.sport||'';
 fs.mkdirSync('img/schemas',{recursive:true});
 for(const v of V){const svg=vehSchema(v,120);if(svg)fs.writeFileSync('img/schemas/'+v.id+'.svg','<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 120">'+svg.replace(/^<svg[^>]*>/,'').replace(/<\/svg>\s*$/,'')+'</svg>');}
 
+/* v7.54 (lot 1) : sur le hub, le schéma de chaque carte est le fichier img/schemas/<id>.svg (même dessin, écrit juste
+   au-dessus) chargé comme une image, à l'approche de l'écran : la page ne porte plus 248 dessins en ligne (810 Ko, 15 000
+   nœuds). Les huit premières cartes (premier écran) sont chargées tout de suite. Dimensions identiques au dessin en ligne. */
+let hubRank=0;
+const hubArt=v=>vehSchema(v,90)
+ ? '<img class="veh-art veh-art--schema" src="img/schemas/'+esc(v.id)+'.svg" width="240" height="120" style="height:90px" alt="" aria-hidden="true"'+(hubRank<8?'':' loading="lazy"')+' decoding="async">'
+ : art(v);
+
 /* ================= HUB ================= */
 function carte(v){
  const t0=THUMB[v.id];
  const t=(t0&&!/image-placeholder|<img\b/.test(t0.in)&&!vehSchema(v,90))?t0:null; /* vignette du gabarit, sauf si un schéma propre au véhicule existe */
  const cls=t?t.cls.replace(' veh-thumb--photo',''):' veh-thumb--'+v.cat;
  const meds=medList(v);
- const inner=meds.length?'<span class="veh-badge">'+CATL[v.cat]+'</span><img src="'+meds[0].variants[0].src+'" srcset="'+medSrcset(meds[0])+'" sizes="(max-width:600px) 100vw, 280px" width="'+meds[0].variants[0].w+'" height="'+meds[0].variants[0].h+'" alt="'+esc(medAlt(v,meds[0]))+'" loading="lazy" decoding="async">'
+ const inner=meds.length?'<span class="veh-badge">'+CATL[v.cat]+'</span><img src="'+meds[0].variants[0].src+'" srcset="'+medSrcset(meds[0])+'" sizes="(max-width:600px) 100vw, 280px" width="'+meds[0].variants[0].w+'" height="'+meds[0].variants[0].h+'" alt="'+esc(medAlt(v,meds[0]))+'"'+(hubRank<8?'':' loading="lazy"')+' decoding="async">'
    :t?t.in.replace(/<span class="veh-badge">[^<]*<\/span>/,'<span class="veh-badge">'+CATL[v.cat]+'</span>')
-   :'<span class="veh-badge">'+CATL[v.cat]+'</span>'+art(v);
- return '<a class="veh-card rise" href="vehicules/'+v.id+'.html" data-id="'+v.id+'"'
+   :'<span class="veh-badge">'+CATL[v.cat]+'</span>'+hubArt(v);
+ /* v7.54 : au-delà des 48 premières cartes (le lot affiché par app.js), la carte est écrite masquée : le navigateur ne met
+    en page ni ne peint 254 cartes que le script cacherait ensuite ; sans JavaScript, la feuille <noscript> du gabarit les montre toutes. */
+ const wait=hubRank>=48;
+ hubRank++;
+ return '<a class="veh-card rise" href="vehicules/'+v.id+'.html" data-id="'+v.id+'"'+(wait?' hidden':'')
   +(v.slot?' data-slot="'+v.slot+'"':'')+' data-ed="'+(v.edition==='Pre-Order'?'precommande':v.edition?'ultimate':'standard')+'"'+' data-st="'+v.st+'" data-cat="'+v.cat+'"'
   +(v.reel?' data-reel="'+esc(v.reel)+'" data-reel-nom="'+esc(v.reelNom)+'"':'')
   +' data-search="'+esc(v.search)+'">'
@@ -71,6 +83,9 @@ const parCat={}; V.forEach(v=>parCat[v.cat]=(parCat[v.cat]||0)+1);
 
 H=H.replace(/(<div class="veh-grid" id="vgrid" data-mot="véhicule">)[\s\S]*?(<\/div>\n\n  <p class="vempty")/,
   '$1'+V.map(carte).join('')+'<i class="veh-spacer" aria-hidden="true"></i>'.repeat(3)+'$2');
+/* v7.54 : marques du bandeau de l'en-tête écrites dans la page (app.js les lit ; vehicules-data.js n'est plus chargé ici) */
+{const marques=[...new Set(V.map(v=>v.marque).filter(m=>m&&m!=='Marque'&&m!=='Marque inconnue'))].sort((a,b)=>a.localeCompare(b,'fr'));
+ H=H.replace(/<div class="vhero-strip-track" id="vstrip"(?: data-marques="[^"]*")?>/,'<div class="vhero-strip-track" id="vstrip" data-marques="'+esc(marques.join('|'))+'">');}
 H=H.replace(/<p class="vcount" id="vcount" role="status"><strong>\d+<\/strong>/,
   '<p class="vcount" id="vcount" role="status"><strong>'+N+'</strong>');
 H=H.replace(/<div class="vstat"><span class="n" data-count="\d+">0<\/span><span class="l">véhicules<\/span><\/div>[\s\S]*?<span class="l">inspirations identifiées<\/span><\/div>/,
