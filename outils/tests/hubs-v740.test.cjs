@@ -62,7 +62,12 @@ test('armes.html : zone générée entre les marqueurs, idempotente ; équipemen
   assert.deepEqual([...d.querySelectorAll('#chiffres .fig-n')].map(x=>+x.dataset.count).slice(0,3),[A.length,st.officiel,st.vu]);
   assert.equal(d.querySelectorAll('#equipements [data-track="equipements"]').length,16);assert.equal(d.querySelectorAll('#equipements .ed-kit .ed-ico').length,16);
   assert.equal(d.querySelectorAll('#munitions [data-track="munitions"]').length,5);assert.ok(d.querySelector('#munitions').classList.contains('ed--night'));
-  assert.equal(d.querySelectorAll('#combat .ed-step').length,6);assert.equal(d.querySelectorAll('#combat .ed-step--media img[loading="lazy"]').length,3);
+  /* v7.55 (lot 2, VIS-01) : six cartes homogènes, toutes avec visuel officiel, statut, limite et source datée */
+  assert.equal(d.querySelectorAll('#combat .ed-step').length,6);assert.equal(d.querySelectorAll('#combat .ed-step--media img[loading="lazy"]').length,6);
+  assert.equal(d.querySelectorAll('#combat .ed-steps--sourced .ed-step .ed-status .ed-st').length,6);assert.equal(d.querySelectorAll('#combat .ed-step-limit').length,6);
+  assert.equal(d.querySelectorAll('#combat .ed-step-src a[href^="https://"][rel~="noopener"]').length,6);assert.equal(d.querySelectorAll('#combat .ed-step-src .ed-src-meta').length,6);
+  assert.ok(d.querySelector('#combat .ed-callout a[href="#fiabilite"]'));assert.ok(d.querySelector('#fiabilite'));
+  assert.ok(!/Changement de main|rangent d’ailleurs leur arme automatiquement/.test(d.querySelector('#combat').textContent),'anciennes formulations non sourcées retirées');
   for(const img of d.querySelectorAll('#combat img'))assert.ok(fs.existsSync(path.join(root,img.getAttribute('src'))),img.getAttribute('src'));
   assert.equal(d.querySelectorAll('#carte .ed-place').length,3);
   assert.deepEqual([...d.querySelectorAll('.ed-nav a')].map(a=>a.dataset.fam),HUBS.armes.nav.map(x=>x.fam));

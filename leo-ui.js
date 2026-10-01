@@ -3,7 +3,7 @@
    sources cliquables, « Signaler une mauvaise réponse » (page Contact préremplie), mention locale. Le noyau leo-index.json
    est chargé à l'ouverture ; les morceaux leo/*.json seulement quand une question les vise. */
 (function(){'use strict';
-const C=window.LKLeoCore,L=window.LKLeoLink,launch=document.getElementById('leo-launch'),KEY='lk_leo_session_v2',TTL=30*60*1000,MAX_MESSAGES=32,V='?v=54dacba6417c',MAX_BYTES=1500000;
+const C=window.LKLeoCore,L=window.LKLeoLink,launch=document.getElementById('leo-launch'),KEY='lk_leo_session_v2',TTL=30*60*1000,MAX_MESSAGES=32,V='?v=a1ca02222a8a',MAX_BYTES=1500000;
 const names={capital:'J’ai déjà ($)',target:'Je veux avoir ($)',hourly:'Gain net estimé ($ / h)',price:'Prix que j’imagine ($)',reserve:'Réserve à garder ($)',minutes:'Session (min)',dailyMinutes:'Temps par jour (min)',players:'Joueurs, moi compris'};
 const preferred={goal:['capital','target','hourly'],session:['minutes','capital','players'],activities:['capital','minutes','players'],purchase:['price','capital'],roi:['price','capital'],order:['capital','hourly'],budget:['capital','reserve'],plan:['capital','target','minutes']};
 const el=(tag,text,cls)=>{const node=document.createElement(tag);if(text!==undefined&&text!==null)node.textContent=text;if(cls)node.className=cls;return node;};

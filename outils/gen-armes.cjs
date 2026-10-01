@@ -25,9 +25,9 @@ const PERSO_NOM=Object.fromEntries(JSON.parse(fs.readFileSync('outils/editorial.
 /* v7.50 (lot 3) : « Sur la carte de Leonida » devient un localisateur illustré (carte cadrée, repères numérotés, résumé,
    lieux en texte) ; l’emplacement de l’arme reste « Emplacement à venir ». La silhouette vient d’un fichier commun. */
 const LOC=require('./localisateur.cjs'),FD=require('./fiche-doc.cjs'),MODEL=require('../calculateurs-modele.js');
-LOC.writeSprite();
+LOC.writeReference(); // v7.55 : fond commun img/leonida-carte.svg dérivé de carte.html
 const carteOf=a=>'<section class="shell reveal" id="carte">\n  <h2 class="sec-h">Sur la carte de Leonida</h2>\n  <p class="fiche-txt rise">Les armureries repérées sur notre carte. L’emplacement et le prix de cette arme seront ajoutés quand Rockstar les publiera.</p>\n  '
- +LOC.single({item:LOC.weaponItem(a,'../',(id,h)=>schema(id,h)),places:LOC.data().placesA,prefix:'../',sprite:'../'+LOC.SPRITE,caption:'Armureries repérées sur notre carte : pas un point de vente confirmé pour cette arme.',placesTitle:'Armureries repérées',mapLabel:'Carte de Leonida : armureries repérées'})+'\n</section>';
+ +LOC.single({item:LOC.weaponItem(a,'../',(id,h)=>schema(id,h)),places:LOC.data().placesA,prefix:'../',caption:'Armureries repérées sur notre carte : pas un point de vente confirmé pour cette arme.',placesTitle:'Armureries repérées',mapLabel:'Carte de Leonida : armureries repérées'})+'\n</section>';
 /* Fiche documentaire : structure du modèle commun ; seules les données déjà sur la fiche sont remplies, avec leur statut. */
 const docCol=a=>{const V=MODEL.V,known=MODEL.fromWeapon(a);known.acquisition=a.ue?V.official('Une version est offerte avec l’édition Ultimate'):V.unknown();known.location=V.unknown();
  if(a.slot==='longue')known.restrictions=V.official('Deux armes longues au plus sur toi : une dans le dos, une en main (Extended Look).');

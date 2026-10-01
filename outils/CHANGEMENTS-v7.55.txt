@@ -1,0 +1,108 @@
+LEONIDAKIT v7.55 — LOT 2 : ARSENAL (BLOCS 05 ET 06), PROGRESSION, PLANQUES, COLLECTIBLES (1er octobre 2026)
+
+Base : v7.54 (= zip Leonidadex-main (7), SHA-256 a650b62a…50b8e, + archive LeonidaKit_v7.54_Lot1_Modifications.zip appliquée,
+calculateurs-tools.js supprimé). Mission « corrections visuelles, fluidité et Léo » en 5 lots ; ce lot est le deuxième (VIS-01 à
+VIS-04, CONT-01). Matrice de suivi : outils/MATRICE-FLUIDITE.md ; preuves : outils/PREUVES-v7.55.md. Le lot 2 livré par ChatGPT
+(sur sa propre v7.55, qui ne contenait pas le lot 1 de la v7.54) a servi de point de comparaison : repris dans l'esprit (référence
+cartographique centralisée, cartes « Combat » sourcées), réécrit pour la v7.54 réelle et ses tests.
+
+ARMURERIE — BLOC 05 « COMBAT : CE QUI CHANGE » (VIS-01)
+- Six cartes homogènes : même cadre 16/9 pour les six (visuel officiel Rockstar Games pour chacune, recadrage centré, numéro posé
+  sur l'image, légende sous l'image), pastille de statut (Officiel / Vu dans un média / À confirmer : les niveaux de la section
+  « Comment lire cette page »), fait, « Limite » (ce qui n'est pas établi) et source datée (média, date, URL, consultée le
+  01/10/2026). Quand aucune image officielle ne montre la mécanique (passants, tir sous l'eau), la capture choisie illustre le
+  contexte et sa légende le dit.
+- Contenu réécrit d'après la recherche du 1er octobre 2026 : inventaire (2 armes de poing dissimulées + 2 armes longues, véhicule
+  comme casier : Rob Nelson à TGG, GamingBolt 07/09/2026) ; drive-by (Jason tire par la lunette arrière dans l'Extended Look :
+  Engadget 27/08/2026 ; Lucia au lance-grenades, Trailer 2 1:58 ; benne de pick-up : à confirmer) ; tir sous l'eau : à confirmer
+  (harpon cité par des sites de fans d'après les fuites, que le site n'utilise pas ; plongée montrée) ; réaction des passants (arme
+  longue en main : Rob Nelson, Dexerto 07/09/2026 ; le « rangement automatique » de l'ancienne carte, sans source, est retiré) ;
+  « Changement de main » devient « Changement d'épaule » (caméra, visée moins accrocheuse, ennemis hors radar : GTABoom
+  02/09/2026 d'après les previews TGG et Kinda Funny) ; personnalisation (captures officielles « Personalized Weapon Variants »,
+  motif Vintage Vice City ; chargeurs, munitions spéciales et menu non montrés).
+- Apparition en cascade par LKMotion (comme les autres cartes du site) ; survol selon la charte des cartes de texte : ombre corail
+  et anneau encre, l'image respire, aucun déplacement ; rien ne bouge en « réduire les animations ».
+- Données : outils/hubs-editoriaux.json (armes.combat : lede, note, items avec statut / media / alt / legende / texte / limite /
+  source) ; rendu : outils/sections.cjs (steps : statut, légende, limite, source ; classe ed-steps--sourced), outils/hubs-
+  editoriaux.cjs (lede + encadré « Lire les niveaux de preuve » → #fiabilite) ; style.css (bloc v7.55 VIS-01).
+
+CARTES — UNE SEULE BASE CARTOGRAPHIQUE (VIS-02)
+- Nouveau outils/carte-reference.cjs : la source unique du fond de Leonida reste le dessin inline de carte.html (<svg
+  class="map-bg">, 5200 × 6000) ; le module en dérive img/leonida-carte.svg (210 Ko : mer, terres, marais, zones urbaines,
+  plages, routes, tracés supposés, limites de comtés, noms, mention « FOND PROVISOIRE ») sans la grille ni la légende (calques
+  d'outil de la carte interactive), avec un titre et une description « fond communautaire, non officiel ». Écrit par gen.js,
+  gen-armes.cjs et sync-site.cjs : modifier carte.html puis régénérer suffit, les copies ne peuvent plus diverger.
+- outils/localisateur.cjs : le bloc 06 de l'Armurerie, la section 07 des Véhicules et les 329 fiches (302 véhicules, 27 armes)
+  posent cette image entière (img loading="lazy", mise en cache) sous le SVG des repères, dans la même boîte 5200 × 6000 :
+  même fond, même orientation, mêmes proportions, repères aux coordonnées exactes de la carte interactive, Leonida en entier
+  (le cadrage serré reste disponible : {full:false}). Repères légèrement agrandis pour la vue entière. Avant : une silhouette
+  simplifiée (tolérance 30 unités) beige sur fond pâle, recadrée, sans routes ni noms, qui ne ressemblait pas à la carte.
+- Les vignettes des cartes-lieux (« Toutes les armureries repérées », « Tous les lieux repérés ») gardent la silhouette tirée du
+  même calque « TERRES » (84 px de large : un fond détaillé n'y serait pas lisible), désormais aux couleurs du fond (eau, terre).
+- img/leonida-silhouette.svg n'est plus lu par aucune page : supprimé (writeSprite retiré de localisateur.cjs).
+- Liens vérifiés dans la carte interactive : carte.html#lieu=<id> ouvre la fiche du lieu, carte.html#pins=<ids>&t=<titre> liste
+  les lieux et chacun ouvre sa fiche.
+
+PROGRESSION — APPARITION DES NEUF CARTES (VIS-03)
+- Les cartes « Mes carnets » (.cn-dcard) entrent en cascade par LKMotion à leur arrivée dans l'écran (60 ms entre deux, plafond
+  300 ms), comme les autres cartes du site ; leur image n'a pas de rideau séparé. Compteurs, jauges et boutons sont écrits par
+  progression.js sans attendre l'apparition ; une action (coche dans une fiche, autre onglet) met le compteur à jour sans que la
+  carte ne réapparaisse ; « réduire les animations » : tout visible sans transition. Données et clés lk_* inchangées.
+- style.css : le déplacement d'entrée des blocs lk-reveal et sa transition ne valent que jusqu'à la fin de l'apparition (classe
+  lk-settled posée par LKMotion) ; ensuite la carte reprend ses propres règles de survol. Avant, « transform:none » du moteur
+  d'apparition l'emportait sur le déplacement au survol des cartes (carnets de Progression, cartes « Combat »).
+
+PLANQUES — TROIS CARTES ALIGNÉES (VIS-04)
+- Cause réelle : l'attribut height de l'image (270 pour une capture 16/9, 216 pour un photogramme 1280 × 576) l'emportait sur
+  le ratio 16/9 de la feuille ; la carte centrale (chantier naval de Brian) avait une image plus courte, titre et texte décalés.
+- style.css : cadre 16/9 réel (height:auto, recadrage centré) et grilles imbriquées (subgrid) pour toutes les grilles .lore-grid
+  (Planques, Demeures, Lieux, Entreprises, Personnages, accueil) : image, étiquette, titre, accroche, texte et action occupent
+  la même rangée d'une carte à l'autre, quelle que soit la longueur des textes et à toutes les largeurs (3, 2 ou 1 colonne) ;
+  sans subgrid, l'action reste calée en bas. Aucun déplacement visuel à la main. Balisage (outils/lore-gen.js) inchangé.
+
+COLLECTIBLES — « MÉTHODE ET SOURCES » (CONT-01)
+- Le bloc, jusqu'ici écrit à la main dans collectibles.html (dépliant avec trois étiquettes et deux liens), est généré par
+  outils/gen-collectibles.cjs entre les bornes COLLECTIBLES-METHODE depuis le bloc « veille » de outils/collectibles.json
+  (validé : dates réelles, URL HTTPS, statuts connus, chaque fait renvoie à une page consultée, date de revue = date du
+  catalogue), au format « Sources et statuts » des hubs du monde (demeures.html#sources, etc.) : section nuit à accent corail,
+  quatre niveaux de preuve (les mêmes), « Ce qu'on sait au 1er octobre 2026 » (cinq faits datés et statués), « Comment une
+  fiche entre au catalogue » (entrer, vérifier, mettre à jour), revue datée et résumé (toujours mis à jour par le générateur),
+  huit pages consultées (Rockstar d'abord, URL + date de publication + date de consultation), encadré « Ce qu'on ne fait pas »,
+  lien de signalement. Ancres #methode-sources, #methode, #sources, #col-review-date, #col-review-summary conservées.
+- Recherche du 1er octobre 2026 (outils/RECHERCHE-COLLECTIBLES.md) : Rob Nelson à TGG (la pêche est liée à des défis, des
+  collectibles et des parties de l'histoire ; Notebookcheck 07/09/2026) ; Game Informer 25 et 29/09/2026 (plus de 170 espèces,
+  animaux Rare / Discoverable / Legendary à pister) ; captures Rockstar (pêche, plongée) ; GTA Intel (liste d'activités) ; GTABase
+  (liste communautaire, citée comme telle). Aucun objet, aucune quantité, aucun emplacement : le catalogue reste à zéro fiche.
+- La veille ne part pas dans collectibles-data.js. CSS : bloc v7.55 CONT-01 (titres lisibles sur fond nuit malgré la feuille de
+  la page).
+
+RÉGRESSION DE LA v7.54 TROUVÉE ET CORRIGÉE (common.js)
+- Un bloc portant à la fois l'ancienne classe « rise » / « reveal » du gabarit et « lk-reveal » (posée par Motion+ sur les cartes
+  des hubs du monde, les outils de l'accueil, les textes des fiches, Véhicules rares, Collectibles) ne recevait que « in » du
+  moteur LKMotion de la v7.54 : il restait à opacité 0 quand les animations sont actives (75 blocs sur 30 pages mesurées ; la base
+  v7.53 en avait 0 ; les captures du lot 1 étaient faites en « réduire les animations » et ne le montraient pas). Il reçoit
+  maintenant « in » et « is-in », et un bloc déjà montré qui reçoit « lk-reveal » après la première passe reste visible, sans
+  transition. Nouveau contrôle qa/stuck.cjs (0 bloc invisible sur 30 pages × 2 largeurs) et § 0 de la recette du lot 2.
+
+CONTRÔLES
+- Tests Node : 603 / 603 (suite complète), dont outils/tests/carte-reference-lot2.test.cjs (4 tests) et
+  outils/tests/visuel-lot2.test.cjs (4 tests) ; adaptés : hubs-v740 (six cartes sourcées), catalogues-v750 (fond de référence).
+- node outils/verifier.js : 48 309 références vérifiées sur 415 pages, aucune erreur. Régénération idempotente (deux passes,
+  0 fichier changé).
+- Recette Chromium du lot 2 (qa/recette-lot2.cjs, dossier de contrôle) : 248 contrôles (blocs invisibles sur 23 pages × 2
+  largeurs ; bloc 05 à 360/390/768/1024/1280/1440 ; cartes de 4 pages × 2 largeurs + liens #lieu= / #pins= ; Progression ;
+  Planques à 6 largeurs + 4 autres grilles ; Collectibles ; lot 1 préservé) : 0 échec ; la v7.54 soumise à la même recette en
+  échoue 100. Recette du lot 1 rejouée : 416 / 416. Détecteur de clignotement : 0 sur 12 pages × 2 largeurs.
+- Mesures (qa/perf.cjs, CPU ×4, 10 Mbit/s + 40 ms) sur les pages du lot : outils/PREUVES-v7.55.md.
+
+FICHIERS
+- Supprimé : img/leonida-silhouette.svg.
+- Ajoutés : img/leonida-carte.svg (généré), outils/carte-reference.cjs, outils/tests/carte-reference-lot2.test.cjs,
+  outils/tests/visuel-lot2.test.cjs, outils/CHANGEMENTS-v7.55.txt, outils/PREUVES-v7.55.md, LISEZ-MOI-v7.55.txt.
+- Modifiés (sources) : common.js, style.css, outils/hubs-editoriaux.json, outils/hubs-editoriaux.cjs, outils/sections.cjs,
+  outils/localisateur.cjs, outils/gen.js, outils/gen-armes.cjs, outils/sync-site.cjs, outils/gen-collectibles.cjs,
+  outils/collectibles.json, outils/RECHERCHE-COLLECTIBLES.md, outils/MATRICE-FLUIDITE.md, outils/tests/hubs-v740.test.cjs,
+  outils/tests/catalogues-v750.test.cjs, README.md, collectibles.html (bornes).
+- Régénérés : armes.html, vehicules.html, collectibles.html, collectibles-data.js, les 329 fiches véhicules et armes (fond de
+  carte), les 415 pages (nouvelles empreintes ?v= de common.js et style.css), a-propos.html (compteur de tests), leo-ui.js,
+  leo-loader.js, leo.css, leo/passages.json, outils/leo-index-manifest.json, assets-manifest.js.

@@ -1,0 +1,52 @@
+LEONIDAKIT v7.55 — LOT 2 (ARSENAL, CARTES, PROGRESSION, PLANQUES, COLLECTIBLES) — archive « modifs » (1er octobre 2026)
+
+Base attendue : ta v7.54, c'est-à-dire le zip « Leonidadex-main (7) » (v7.53, SHA-256 a650b62af33e46d976e867f68cb727d4feada62637cb7b4ee30bc43cf2750b8e)
+avec l'archive LeonidaKit_v7.54_Lot1_Modifications.zip appliquée et calculateurs-tools.js supprimé. Si tu n'as pas encore appliqué
+le lot 1 : applique d'abord l'archive du lot 1, puis celle-ci (dans cet ordre ; aucune des deux ne remplace l'autre). Le projet
+complet « LeonidaKit_v7_55_Lots1-2 » de ChatGPT n'est pas la base de cette archive : ne pas l'appliquer.
+L'archive contient seulement les fichiers créés ou modifiés, aux chemins exacts depuis la racine (dossiers armes/, vehicules/, lieux/,
+personnages/, entreprises/, demeures/, planques/, carnets/, leo/, img/, outils/ compris). Aucune commande de build, pas de
+package.json, api/ et vercel.json ne changent, rien à régler dans Vercel ni dans Brevo.
+
+UNE SUPPRESSION À FAIRE (l'archive ne peut pas supprimer un fichier) :
+- img/leonida-silhouette.svg : plus lu par aucune page (remplacé par img/leonida-carte.svg) ; un test du dépôt exige son absence.
+
+1. Copie ton dossier actuel (sauvegarde) ou note le commit courant dans GitHub Desktop.
+2. Extrais l'archive dans la racine du site, écrase les fichiers homonymes (garde le dossier .git).
+3. Supprime img/leonida-silhouette.svg.
+4. Vérifie 2 minutes en local ou sur la prévisualisation Vercel (voir « Pour vérifier »).
+5. Mets en ligne quand tu le décides (GitHub Desktop : commit puis push ; Vercel déploie le contenu tel quel). Rien n'a été publié
+   pour toi.
+Retour arrière : « Revert » du commit dans GitHub Desktop, ou remets ta sauvegarde. Les clés de stockage du navigateur (lk_*) sont
+inchangées : aucune donnée de progression, de carnet ou de calcul n'est touchée.
+
+CE QUE CE LOT CHANGE (détail : outils/CHANGEMENTS-v7.55.txt ; preuves : outils/PREUVES-v7.55.md ; suivi des 44 points :
+outils/MATRICE-FLUIDITE.md) :
+- Armurerie, bloc 05 « Combat : ce qui change » : six cartes au même format (visuel officiel 16/9, statut, fait, limite, source
+  datée), textes corrigés d'après les sources (changement d'épaule et non de main ; tir sous l'eau et benne de pick-up « à
+  confirmer » ; rangement automatique de l'arme retiré faute de source), apparition en cascade et survol léger.
+- Armurerie bloc 06, Véhicules section 07 et toutes les fiches véhicules et armes : la carte est maintenant le même fond que la
+  page Carte (terres, eaux, routes, comtés, noms), Leonida en entier, repères aux mêmes coordonnées ; une seule référence
+  (img/leonida-carte.svg, dérivée automatiquement de carte.html) pour qu'elles ne divergent plus. Les liens « Voir sur la carte »
+  et « Voir ces lieux sur la carte » ouvrent bien le lieu ou la liste.
+- Progression : les neuf cartes « Mes carnets » apparaissent en cascade en arrivant à l'écran ; compteurs et boutons n'attendent
+  rien ; données intactes.
+- Planques (et Demeures, Lieux, Entreprises, Personnages, accueil) : les cartes sont alignées ligne à ligne (image, titre,
+  accroche, texte, « Voir la fiche ») à toutes les largeurs ; la carte centrale n'est plus décalée.
+- Collectibles : « Méthode et sources » reprend le format « Sources et statuts » des hubs du monde, avec une recherche du
+  1er octobre 2026 (Rob Nelson sur la pêche et les collectibles, Game Informer sur les 170 espèces et les animaux à pister, captures
+  Rockstar, liste communautaire citée comme telle), huit pages consultées et datées ; aucun objet, quantité ou emplacement
+  inventé, le catalogue reste vide tant que Rockstar n'a rien publié.
+- Correction d'un défaut de la v7.54 que j'ai trouvé pendant ce lot : avec les animations actives, les cartes des hubs du monde,
+  les trois outils de l'accueil, les textes des fiches, Véhicules rares et Collectibles restaient invisibles (opacité 0) — 75 blocs
+  sur 30 pages. Le site en ligne (v7.53) n'a pas ce défaut ; la v7.54 ne l'ayant jamais été mise en ligne, personne ne l'a vu, mais
+  il fallait le corriger avant toute publication. C'est fait, avec un contrôle automatique qui l'empêchera de revenir.
+
+POUR VÉRIFIER (2 minutes) : ouvre armes.html, descends au bloc 05 (six cartes identiques en forme, un statut sous chaque image)
+puis au bloc 06 (la carte ressemble à la page Carte ; clique « Voir ces lieux sur la carte » : la page Carte s'ouvre avec les trois
+armureries). Ouvre planques.html : les trois cartes ont la même hauteur d'image et « Voir la fiche » au même niveau ; rétrécis la
+fenêtre, ça tient. Ouvre progression.html et descends : les cartes arrivent une à une. Ouvre collectibles.html en bas de page : le
+bloc sombre « Méthode et sources ». Ouvre lieux.html ou l'accueil avec les animations actives : les cartes sont visibles.
+
+PROCHAIN LOT : lot 3 (Consommables, Vêtements et style, Personnalisation : STYLE-01 à STYLE-05, CONSO-01 à CONSO-03, PERSO-01 et
+PERSO-02), à partir de cette v7.55.

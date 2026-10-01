@@ -1,20 +1,169 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-18",
+  "updatedAt": "2026-10-01",
   "sources": [
     {
-      "label": "Rockstar Games : GTA VI",
+      "label": "Rockstar Games : GTA VI",
       "url": "https://www.rockstargames.com/VI",
       "kind": "official",
-      "checkedAt": "2026-09-18"
+      "checkedAt": "2026-10-01"
     },
     {
-      "label": "Rockstar Games : An Extended Look",
+      "label": "Rockstar Games : An Extended Look",
       "url": "https://www.rockstargames.com/VI/an-extended-look",
       "kind": "official",
-      "checkedAt": "2026-09-18"
+      "checkedAt": "2026-10-01"
+    },
+    {
+      "label": "Rockstar Games : captures officielles",
+      "url": "https://www.rockstargames.com/VI/media/screenshots",
+      "kind": "official",
+      "checkedAt": "2026-10-01"
     }
   ],
   "categories": [],
-  "items": []
+  "items": [],
+  "veille": {
+    "_note": "v7.55 (lot 2, CONT-01) : bloc « Méthode et sources » de collectibles.html au format « Sources et statuts » des hubs du monde (outils/hubs-monde.cjs). Rendu par outils/gen-collectibles.cjs entre les bornes COLLECTIBLES-METHODE. Recherche Internet du 1er octobre 2026 ; chaque affirmation renvoie à une page consultée, aucune fuite utilisée, aucun objet, quantité ou emplacement inventé.",
+    "revueAt": "2026-10-01",
+    "lede": "Rockstar n’a publié ni liste de collectibles, ni quantité, ni emplacement. Cette page dit ce qui est établi, par qui et depuis quand, et comment une fiche entrera au catalogue quand une preuve existera. Chaque affirmation porte un statut et renvoie à une page ouverte à la date indiquée.",
+    "etat": [
+      {
+        "statut": "officiel",
+        "titre": "La pêche mène à des défis, des collectibles et des morceaux d’histoire",
+        "texte": "Rob Nelson (Rockstar North) à TGG, rapporté le 7 septembre 2026 : la pêche est liée à des défis, à des collectibles et à des parties de l’histoire. Espèces, appâts et récompenses ne sont pas détaillés.",
+        "src": "notebookcheck-peche"
+      },
+      {
+        "statut": "officiel",
+        "titre": "Plus de 170 espèces, dont des animaux « rares, à découvrir et légendaires » à pister",
+        "texte": "Dossier de couverture Game Informer (29 septembre 2026) : plus de 170 espèces sur terre, dans les airs et en mer ; certaines, classées Rare, Discoverable et Legendary, peuvent être pistées. Rien n’est dit d’un carnet ou d’un pourcentage.",
+        "src": "gameinformer-faune"
+      },
+      {
+        "statut": "vu",
+        "titre": "Pêche et plongée sont montrées",
+        "texte": "Capture officielle « Jason Duval 03 » (Jason pêche depuis un bateau) et « Leonida Keys 04 » (plongée sur un récif) ; la plongée sous-marine figure dans la liste d’activités du dossier Game Informer. Une image montre une activité, pas une collection.",
+        "src": "rs-captures"
+      },
+      {
+        "statut": "comm",
+        "titre": "Liste d’espèces et « liste à cocher » des animaux",
+        "texte": "GTABase tient une liste d’animaux vus dans les médias et écrit que les animaux pourront être étudiés et ajoutés à une liste « comme dans Red Dead Redemption 2 », sans citer de source. Cité comme tel, pas repris comme fait.",
+        "src": "gtabase-animaux"
+      },
+      {
+        "statut": "conf",
+        "titre": "Objets à collectionner nommés, quantités, emplacements",
+        "texte": "Aucun objet (magazine, carte, figurine, plaque…), aucun total, aucune position n’a été publié par Rockstar ni montré dans un trailer, une capture ou l’Extended Look. Le catalogue reste vide tant que c’est le cas.",
+        "src": "rs-vi"
+      }
+    ],
+    "entree": [
+      {
+        "titre": "Entrer au catalogue",
+        "icon": "statuts",
+        "liste": [
+          "Un nom, une catégorie et au moins une source ouverte, datée.",
+          "Confirmé : une page ou une vidéo Rockstar, ou un propos d’un responsable de Rockstar rapporté par un média nommé.",
+          "Fortement établi : plusieurs éléments officiels concordants (capture, séquence, texte), sans confirmation écrite.",
+          "Non confirmé : une piste signalée comme telle ; elle n’entre pas dans ta progression et ne reçoit aucun emplacement."
+        ]
+      },
+      {
+        "titre": "Vérifier",
+        "icon": "lire",
+        "liste": [
+          "Rockstar d’abord (site GTA VI, Newswire, trailers, Extended Look, captures), puis les médias nommés qui citent Rockstar.",
+          "Chaque source garde son URL, sa date de publication quand elle existe et sa date de consultation.",
+          "Un emplacement n’est écrit qu’avec un repère vérifié sur notre carte (système leonidakit-v1) et sa source.",
+          "Les fuites de 2022 et de 2026 ne sont jamais utilisées, même pour une piste."
+        ]
+      },
+      {
+        "titre": "Mettre à jour",
+        "icon": "horloge",
+        "liste": [
+          "La date de revue est celle de la dernière relecture des sources, pas celle de la dernière mise en ligne.",
+          "Après la sortie du 19 novembre 2026, les fiches viendront du jeu lui-même, avec captures et coordonnées.",
+          "Une fiche retirée des sources est retirée du suivi ; les coches locales sont conservées mais ne comptent plus.",
+          "Les corrections passent par le formulaire de contact, avec la page à l’appui."
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "id": "rs-vi",
+        "url": "https://www.rockstargames.com/VI",
+        "title": "Site officiel Grand Theft Auto VI",
+        "publishedAt": "2025-05-06",
+        "consultedAt": "2026-10-01",
+        "statut": "officiel",
+        "claim": "Pages « Only in Leonida », éditions et précommandes : aucune liste de collectibles, aucune quantité, aucun emplacement publié."
+      },
+      {
+        "id": "rs-extended",
+        "url": "https://www.rockstargames.com/VI/an-extended-look",
+        "title": "Rockstar Games : Grand Theft Auto VI, An Extended Look",
+        "publishedAt": "2026-08-27",
+        "consultedAt": "2026-10-01",
+        "statut": "officiel",
+        "claim": "Page de la présentation de 26 minutes capturée sur PS5 ; son texte ne mentionne aucun objet à collectionner."
+      },
+      {
+        "id": "rs-captures",
+        "url": "https://www.rockstargames.com/VI/media/screenshots",
+        "title": "Rockstar Games : captures officielles GTA VI",
+        "publishedAt": null,
+        "consultedAt": "2026-10-01",
+        "statut": "officiel",
+        "claim": "« Jason Duval 03 » (pêche depuis un bateau), « Leonida Keys 04 » (plongée) : des activités montrées, pas des collections."
+      },
+      {
+        "id": "notebookcheck-peche",
+        "url": "https://www.notebookcheck.net/Fishing-in-GTA-6-will-be-as-extensive-as-in-RDR2-but-there-s-a-catch.1391730.0.html",
+        "title": "Notebookcheck : Fishing in GTA 6 will be as extensive as in RDR2, but there’s a catch",
+        "publishedAt": "2026-09-07",
+        "consultedAt": "2026-10-01",
+        "statut": "officiel",
+        "claim": "Propos de Rob Nelson (Rockstar North) à TGG : la pêche est liée à des défis, des collectibles et des parties de l’histoire ; espèces, appâts et récompenses inconnus."
+      },
+      {
+        "id": "gameinformer-faune",
+        "url": "https://gameinformer.com/exclusive/2026/09/29/exclusive-grand-theft-auto-vi-includes-over-170-animal-species",
+        "title": "Game Informer : Grand Theft Auto VI includes over 170 animal species",
+        "publishedAt": "2026-09-29",
+        "consultedAt": "2026-10-01",
+        "statut": "officiel",
+        "claim": "Dossier de couverture réalisé avec Rockstar : plus de 170 espèces ; animaux Rare, Discoverable et Legendary à pister ; flamants, pélicans, alligators, iguanes verts, crapauds-buffles, macaques rhésus."
+      },
+      {
+        "id": "gameinformer-couverture",
+        "url": "https://gameinformer.com/cover-reveal/2026/09/25/cover-reveal-grand-theft-auto-vi",
+        "title": "Game Informer : cover reveal, Grand Theft Auto VI",
+        "publishedAt": "2026-09-25",
+        "consultedAt": "2026-10-01",
+        "statut": "officiel",
+        "claim": "Annonce du dossier (numéro 382, 14 pages) rédigé après des entretiens avec des lead designers de Rockstar."
+      },
+      {
+        "id": "gtaintel-couverture",
+        "url": "https://gtaintel.com/news/gta-6-game-informer-cover-story-new-details",
+        "title": "GTA Intel : résumé du dossier Game Informer (ouragans, 170 espèces, activités)",
+        "publishedAt": "2026-09-29",
+        "consultedAt": "2026-10-01",
+        "statut": "vu",
+        "claim": "Liste d’activités citées par le dossier : base jump, billard, salles de sport, kayak, mini-golf, plongée sous-marine, courses, zoo, hydroglisseur, jet-ski, randonnée. Aucun collectible nommé."
+      },
+      {
+        "id": "gtabase-animaux",
+        "url": "https://www.gtabase.com/gta-6/animals/",
+        "title": "GTABase : GTA 6 animals list",
+        "publishedAt": null,
+        "consultedAt": "2026-10-01",
+        "statut": "comm",
+        "claim": "Liste communautaire des animaux vus dans les médias ; affirme sans source que les animaux pourront être étudiés et cochés dans une liste et qu’un zoo sera explorable."
+      }
+    ]
+  }
 }

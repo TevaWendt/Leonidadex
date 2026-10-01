@@ -6,14 +6,17 @@
    l’emplacement de l’objet reste « Emplacement à venir » et les repères sont des lieux repérés sur notre carte, dits
    comme tels (jamais un point de vente confirmé pour cet objet). Coordonnées : celles de la carte interactive.
    Deux formes : hub (liste filtrable + carte + résumé, animée par localisateur.js) et fiche (un seul objet, sans script). */
-const carte = require('./carte-vignette.cjs');
+const carte = require('./carte-vignette.cjs'), REF = require('./carte-reference.cjs');
 const esc = s => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const fold = s => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
 const EMPTY = 'Emplacement à venir';
 
-/* Carte : silhouette de Leonida (symbole #lk-leonida posé une fois par page), cadrée sur les lieux montrés, et repères.
-   Les lieux proches (plusieurs concessions dans le même quartier) ne se recouvrent pas : chaque numéro est posé à côté
-   de son point, dans la première direction libre, relié par un trait fin. Placement calculé ici, déterministe. */
+/* Carte : v7.55 (lot 2, VIS-02) le fond est la référence commune img/leonida-carte.svg (outils/carte-reference.cjs,
+   dérivée du dessin de carte.html), posée entière sous les repères (img chargée à l'approche de l'écran, SVG des repères
+   par-dessus, même boîte 5200 × 6000) : même fond, même orientation, mêmes proportions et mêmes coordonnées que la carte
+   interactive ; Leonida est montrée en entier (vue par défaut), le cadrage serré (frame) reste disponible avec {full:false}. Les lieux proches (plusieurs concessions dans le même quartier) ne se
+   recouvrent pas : chaque numéro est posé à côté de son point, dans la première direction libre, relié par un trait
+   fin. Placement calculé ici, déterministe. */
 function frame(pts) {
   const xs = pts.map(p => p.x), ys = pts.map(p => p.y);
   let x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys);
@@ -25,8 +28,8 @@ function frame(pts) {
 }
 function mapSvg(places, opts = {}) {
   const pts = places.map((p, i) => Object.assign({}, carte.point(p.id), { id: p.id, n: i + 1 }));
-  const f = opts.full ? { vx: 0, vy: 0, vw: carte.W, vh: carte.H } : frame(pts);
-  const dot = Math.round(f.vw * 0.012), lab = Math.round(f.vw * 0.03), gap = lab * 2.25;
+  const f = opts.full === false ? frame(pts) : { vx: 0, vy: 0, vw: carte.W, vh: carte.H };
+  const dot = Math.round(f.vw * 0.014), lab = Math.round(f.vw * 0.034), gap = lab * 2.25;
   const taken = pts.map(p => ({ x: p.x, y: p.y, r: dot * 1.6 }));
   const DIRS = [[1, -1], [1, 1], [-1, -1], [-1, 1], [0, -1.35], [1.35, 0], [0, 1.35], [-1.35, 0]];
   const labels = pts.map(p => {
@@ -40,7 +43,11 @@ function mapSvg(places, opts = {}) {
   const pins = pts.map((p, i) => { const l = labels[i];
     return '<g class="lk-loc-pin" data-place="' + esc(p.id) + '" data-name="' + esc(places[i].name) + '"><line class="lk-loc-lead" x1="' + p.x + '" y1="' + p.y + '" x2="' + l.x + '" y2="' + l.y + '" stroke-width="' + Math.max(8, Math.round(dot * 0.35)) + '"/><circle class="lk-loc-halo" cx="' + p.x + '" cy="' + p.y + '" r="' + dot * 2.4 + '"/><circle class="lk-loc-dot" cx="' + p.x + '" cy="' + p.y + '" r="' + dot + '"/>'
       + '<circle class="lk-loc-lab" cx="' + l.x + '" cy="' + l.y + '" r="' + lab + '" stroke-width="' + Math.round(lab * 0.14) + '"/><text class="lk-loc-pin-n" x="' + l.x + '" y="' + l.y + '" dy="' + Math.round(lab * 0.42) + '" text-anchor="middle" font-size="' + Math.round(lab * 1.15) + '">' + p.n + '</text></g>'; }).join('');
-  return '<svg class="lk-loc-svg" viewBox="' + f.vx + ' ' + f.vy + ' ' + f.vw + ' ' + f.vh + '" role="img" aria-label="' + esc(opts.label || 'Carte de Leonida et lieux repérés') + '" focusable="false"><use href="' + (opts.sprite || '') + '#lk-leonida" x="0" y="0" width="' + carte.W + '" height="' + carte.H + '"/>' + pins + '</svg>';
+  return '<div class="lk-loc-stage">' + REF.image(opts.prefix) + '<svg class="lk-loc-svg" viewBox="' + f.vx + ' ' + f.vy + ' ' + f.vw + ' ' + f.vh + '" role="img" aria-label="' + esc(opts.label || 'Carte de Leonida et lieux repérés') + '" focusable="false">' + pins + '</svg></div>';
+}
+/* Carte sans lieu lié : le même fond, sans repère. */
+function emptyMap(prefix) {
+  return '<div class="lk-loc-stage">' + REF.image(prefix) + '<svg class="lk-loc-svg lk-loc-svg--empty" viewBox="0 0 ' + carte.W + ' ' + carte.H + '" role="img" aria-label="Carte de Leonida, aucun lieu lié" focusable="false"></svg></div>';
 }
 function placeList(places, prefix, opts = {}) {
   return '<ol class="lk-loc-places"' + (opts.data ? ' data-loc-places-list' : '') + '>' + places.map((p, i) => '<li data-place="' + esc(p.id) + '"><a class="lk-loc-place" href="' + prefix + 'carte.html#lieu=' + esc(p.id) + '"><span class="lk-loc-num" aria-hidden="true">' + (i + 1) + '</span><span class="lk-loc-place-t"><b>' + esc(p.name) + '</b>' + (p.where || p.group ? '<small>' + esc([p.group, p.where].filter(Boolean).join(' · ')) + '</small>' : '') + '</span><span class="veh-go">Voir sur la carte</span></a></li>').join('') + '</ol>';
@@ -63,14 +70,14 @@ function hub(o) {
   return '<div class="lk-loc lk-loc--hub" data-lk-loc="' + esc(o.kind) + '" data-loc-prefix="' + esc(prefix) + '">'
     + '<div class="lk-loc-pick"><div class="lk-loc-tools"><label class="lk-loc-search"><span class="sr-only">' + esc(o.searchLabel) + '</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg><input type="search" data-loc-q placeholder="' + esc(o.searchLabel) + '" autocomplete="off"></label>' + chips + '<p class="lk-loc-count" role="status" aria-live="polite" data-loc-count>' + o.items.length + ' ' + esc(o.noun) + '</p></div>'
     + '<ul class="lk-loc-list" data-loc-list aria-label="' + esc(o.listLabel) + '">' + list + '</ul><p class="lk-loc-empty" data-loc-empty hidden>Aucun résultat. <button type="button" class="lk-loc-reset" data-loc-reset>Tout afficher</button></p></div>'
-    + '<div class="lk-loc-view"><figure class="lk-loc-map">' + mapSvg(o.places, { label: o.mapLabel }) + '<figcaption><span class="lk-loc-key lk-loc-key--on"></span> Lieu lié à la sélection <span class="lk-loc-key"></span> Autre lieu repéré. ' + esc(o.caption) + '</figcaption></figure>'
+    + '<div class="lk-loc-view"><figure class="lk-loc-map">' + mapSvg(o.places, { label: o.mapLabel, prefix }) + '<figcaption><span class="lk-loc-key lk-loc-key--on"></span> Lieu lié à la sélection <span class="lk-loc-key"></span> Autre lieu repéré. ' + esc(o.caption) + '</figcaption></figure>'
     + '<div class="lk-loc-sum" data-loc-sum aria-live="polite">' + summary(first, byId, prefix) + '</div></div></div>';
 }
 /* Forme « fiche » : un seul objet, sans script. */
 function single(o) {
   const prefix = o.prefix || '', linked = o.item.places.map(id => o.places.find(p => p.id === id)).filter(Boolean);
   return '<div class="lk-loc lk-loc--single">'
-    + '<figure class="lk-loc-map">' + (linked.length ? mapSvg(linked, { label: o.mapLabel, sprite: o.sprite }) : '<svg class="lk-loc-svg lk-loc-svg--empty" viewBox="0 0 ' + carte.W + ' ' + carte.H + '" role="img" aria-label="Carte de Leonida, aucun lieu lié" focusable="false"><use href="' + (o.sprite || '') + '#lk-leonida"/></svg>')
+    + '<figure class="lk-loc-map">' + (linked.length ? mapSvg(linked, { label: o.mapLabel, prefix }) : emptyMap(prefix))
     + '<figcaption>' + esc(linked.length ? o.caption : 'Aucun lieu repéré pour cette catégorie : rien n’est placé au hasard.') + '</figcaption></figure>'
     + '<div class="lk-loc-side"><div class="lk-loc-sum">' + summary(o.item, Object.fromEntries(o.places.map(p => [p.id, p])), prefix, { self: true }) + '</div>'
     + (linked.length ? '<h3 class="lk-loc-h">' + esc(o.placesTitle) + '</h3>' + placeList(linked, prefix) : '') + '</div></div>';
@@ -122,11 +129,8 @@ function weaponItem(a, prefix, schema) {
     linkedText: 'Armureries repérées sur notre carte (pas un point de vente confirmé pour cette arme) :',
     noneText: 'Aucune armurerie repérée.', mapTitle: a.nom + ' : armureries repérées' };
 }
-/* Silhouette de Leonida en fichier (fiches) : un seul téléchargement mis en cache au lieu de 7 ko recopiés dans chaque page. */
-const SPRITE = 'img/leonida-silhouette.svg';
-function writeSprite() {
-  const file = path.join(root, SPRITE), body = '<svg xmlns="http://www.w3.org/2000/svg"><symbol id="lk-leonida" viewBox="0 0 ' + carte.W + ' ' + carte.H + '"><path d="' + carte.land() + '" fill-rule="evenodd"/></symbol></svg>\n';
-  if (!fs.existsSync(file) || fs.readFileSync(file, 'utf8') !== body) fs.writeFileSync(file, body);
-  return SPRITE;
-}
-module.exports = { writeSprite, SPRITE, hub, single, mapSvg, summary, EMPTY, fold, data, vehicleItem, weaponItem, vehicleLinks, VEH_LINK };
+/* v7.55 : le fond des fiches est la référence commune (outils/carte-reference.cjs) ; writeReference() l'écrit depuis
+   carte.html avant de générer les pages. L'ancien sprite de silhouette (img/leonida-silhouette.svg) n'est plus lu. */
+const REFERENCE = REF.FILE;
+function writeReference() { return REF.write(); }
+module.exports = { writeReference, REFERENCE, hub, single, mapSvg, emptyMap, summary, EMPTY, fold, data, vehicleItem, weaponItem, vehicleLinks, VEH_LINK };

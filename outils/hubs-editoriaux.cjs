@@ -83,8 +83,10 @@ function armes(A, counts) {
     bar('equipements', 'Mon équipement', D.equipements.items.length, 'carnets/arsenal.html#f=equipements', 'Équipements obtenus') + S.kits(D.equipements.items, 'equipements')));
   out.push(S.section({ id: 'munitions', num: 4, kicker: D.munitions.items.length + ' familles', title: 'Types de munitions', icon: 'munitions', tone: 'night', accent: 'coral', fam: 'munitions' },
     bar('munitions', 'Mes munitions', D.munitions.items.length, 'carnets/arsenal.html#f=munitions', 'Types de munitions obtenus') + S.ammo(D.munitions.items, 'munitions')));
-  out.push(S.section({ id: 'combat', num: 5, kicker: 'Six changements', title: 'Combat : ce qui change', icon: 'combat', tone: 'paper2', accent: 'coral', fam: 'combat' },
-    S.steps(D.combat.items)));
+  /* v7.55 (lot 2, VIS-01) : six cartes homogènes avec visuel officiel, statut, limite et source datée ; la note renvoie aux
+     niveaux de preuve de la section « Comment lire cette page » (#fiabilite). */
+  out.push(S.section({ id: 'combat', num: 5, kicker: 'Six changements', title: 'Combat : ce qui change', icon: 'combat', tone: 'paper2', accent: 'coral', fam: 'combat', lede: D.combat.lede ? esc(D.combat.lede) : undefined },
+    S.steps(D.combat.items) + (D.combat.note ? '<div class="ed-callout ed-callout--steps"><p>' + esc(D.combat.note) + ' <a href="#fiabilite">Lire les niveaux de preuve</a>.</p></div>' : '')));
   const locA = LOC.data(), { schema } = require('./armes-schemas.cjs');
   out.push(S.section({ id: 'carte', num: 6, kicker: 'Sur la carte', title: 'Où les trouver sur la carte', icon: 'carte', tone: 'paper', lede: esc(D.carte.lede), fam: 'carte' },
     S.defs() + LOC.hub({ kind: 'armes', items: locA.A.map(a => LOC.weaponItem(a, '', schema)), places: locA.placesA, cats: Object.entries(locA.AC).filter(([k]) => locA.A.some(a => a.cat === k)), catsLabel: 'Classes d’armes', searchLabel: 'Chercher une arme', noun: 'armes', listLabel: 'Armes à situer', mapLabel: 'Carte de Leonida : armureries repérées', caption: 'Ce sont les armureries de notre carte, pas des points de vente confirmés pour une arme.' })

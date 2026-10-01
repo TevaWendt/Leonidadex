@@ -2306,14 +2306,19 @@ main .d-section>p,main .info-section p,main .lore-texte p,main .d-intro-note,.in
 @media(max-width:700px){.page-head{padding-block:30px 20px;}}
 
 /* 3. Mouvement partout : survol des cartes, boutons et liens ; apparition au défilement (classe posée par common.js). */
-.js .lk-reveal{opacity:0;transform:translate3d(0,18px,0);}
+.js .lk-reveal{opacity:0;}
+/* v7.55 (lot 2) : le déplacement d'entrée et sa transition ne valent que jusqu'à la fin de l'apparition (classe lk-settled
+   posée par LKMotion) : ensuite la carte reprend ses propres règles de survol (déplacement, ombre), que ces règles
+   plus faibles perdaient contre « transform:none » (cartes du monde, carnets de Progression, cartes « Combat »). */
+.js .lk-reveal:not(.lk-settled){transform:translate3d(0,18px,0);}
 /* v7.54 : un bloc déjà à l'écran à l'ouverture est montré sans transition (classe posée puis retirée par LKMotion) */
 .js .lk-instant,.js .lk-instant *,.js .lk-instant::after{transition:none!important;}
 /* v7.54 : la promotion en couche ne vaut que pendant l'entrée (is-in → lk-settled), jamais pour les blocs encore hors écran */
 .js .lk-reveal.is-in:not(.lk-settled){will-change:opacity,transform;}
-.js .lk-reveal.is-in{opacity:1;transform:none;transition:opacity .45s var(--ease-out),transform .45s var(--ease-out);transition-delay:var(--lk-delay,0ms);}
-.js .lk-reveal--left{transform:translate3d(-22px,0,0);} .js .lk-reveal--right{transform:translate3d(22px,0,0);} .js .lk-reveal--zoom{transform:translate3d(0,16px,0);}
-.js .lk-reveal.is-in.lk-reveal--left,.js .lk-reveal.is-in.lk-reveal--right,.js .lk-reveal.is-in.lk-reveal--zoom{transform:none;}
+.js .lk-reveal.is-in{opacity:1;}
+.js .lk-reveal.is-in:not(.lk-settled){transform:none;transition:opacity .45s var(--ease-out),transform .45s var(--ease-out);transition-delay:var(--lk-delay,0ms);}
+.js .lk-reveal--left:not(.lk-settled){transform:translate3d(-22px,0,0);} .js .lk-reveal--right:not(.lk-settled){transform:translate3d(22px,0,0);} .js .lk-reveal--zoom:not(.lk-settled){transform:translate3d(0,16px,0);}
+.js .lk-reveal.is-in.lk-reveal--left:not(.lk-settled),.js .lk-reveal.is-in.lk-reveal--right:not(.lk-settled),.js .lk-reveal.is-in.lk-reveal--zoom:not(.lk-settled){transform:none;}
 /* cartes : la famille entière lève d'un cran, l'ombre dure devient ambre */
 .lk-card-hover,.d-card,.info-card,.tool,.lk-her,.lk-feature,.t-chapter,.d-topic,.d-progress-group,.lore-card,.kit,.rare-card,.lk-entry-card,.col-card,.d-empty{transition:transform var(--dur) var(--ease-out),box-shadow var(--dur) var(--ease-out),border-color var(--dur);}
 @media(hover:hover){
@@ -2433,11 +2438,11 @@ footer a:hover{color:var(--coral-text);transform:translateX(3px);}
 .js .lk-reveal--clip.is-in::after{transform:scaleX(0);}
 .js .lk-reveal--clip.is-in img{transform:none;}
 /* paragraphes : une simple montée (v7.39 : plus de flou, le texte reste net à chaque image) */
-.js .lk-reveal--blur{transform:translate3d(0,10px,0);}
-.js .lk-reveal--blur.is-in{transition:opacity .45s var(--ease-out),transform .45s var(--ease-out);transition-delay:var(--lk-delay,0ms);}
+.js .lk-reveal--blur:not(.lk-settled){transform:translate3d(0,10px,0);}
+.js .lk-reveal--blur.is-in:not(.lk-settled){transition:opacity .45s var(--ease-out),transform .45s var(--ease-out);transition-delay:var(--lk-delay,0ms);}
 /* cartes de grille : elles grandissent en arrivant, en cascade selon leur rang */
-.js .lk-reveal--zoom{transform:translate3d(0,16px,0);}
-.js .lk-reveal.is-in.lk-reveal--zoom{transform:none;}
+.js .lk-reveal--zoom:not(.lk-settled){transform:translate3d(0,16px,0);}
+.js .lk-reveal.is-in.lk-reveal--zoom:not(.lk-settled){transform:none;}
 /* lignes et listes : une ligne après l'autre */
 .js .lk-reveal--rows{opacity:1;transform:none;}
 .js .lk-reveal--rows>*{opacity:0;transform:translate3d(0,9px,0);transition:opacity .4s var(--ease-out),transform .4s var(--ease-out);transition-delay:calc(var(--lk-i,0)*40ms + var(--lk-delay,0ms));}
@@ -2828,8 +2833,8 @@ a.ed-brand:hover,a.ed-brand:focus-visible{border-color:var(--ink);box-shadow:5px
 .ed-places+.ed-h3{margin-top:26px;}
 .ed-place{display:flex;gap:14px;align-items:stretch;border:2px solid var(--ink);border-radius:14px;background:var(--paper);color:var(--ink);text-decoration:none;overflow:hidden;box-shadow:var(--shadow-soft);min-width:0;transition:box-shadow .2s var(--ease-out);}
 .ed-place:hover,.ed-place:focus-visible{box-shadow:6px 6px 0 var(--amber);}
-.ed-map{flex:none;width:92px;background:var(--paper-2);border-right:2px solid var(--ink);display:block;}
-.ed-map use{fill:var(--rule);}
+.ed-map{flex:none;width:92px;background:#5FA8D3;border-right:2px solid var(--ink);display:block;}
+.ed-map use{fill:#95CB84;stroke:#5E9A66;stroke-width:14;}
 .ed-map-halo{fill:var(--amber);fill-opacity:.35;}
 .ed-map-pin{fill:var(--amber);stroke:var(--ink);stroke-width:40;}
 .ed-place-body{display:flex;flex-direction:column;gap:3px;padding:12px 14px 12px 0;min-width:0;flex:1;}
@@ -3019,7 +3024,7 @@ a.ed-brand:hover,a.ed-brand:focus-visible{border-color:var(--ink);box-shadow:5px
 .ed-atelier{padding:0;}
 .ed-atelier .ed-atelier-map{display:flex;flex:none;text-decoration:none;}
 .ed-atelier .ed-map{height:100%;min-height:120px;}
-.ed-map--vide use{fill:var(--rule);fill-opacity:.55;}
+.ed-map--vide use{fill:#95CB84;fill-opacity:.55;}
 .ed-atelier .ed-place-where{display:inline-flex;flex-wrap:wrap;align-items:center;gap:6px;}
 .ed-atelier .ed-place-where .ed-status{margin:0;}
 .ed-atelier-fait{font-size:.84rem;line-height:1.45;color:var(--ink);}
@@ -3134,7 +3139,9 @@ a.ed-brand:hover,a.ed-brand:focus-visible{border-color:var(--ink);box-shadow:5px
 .lk-loc-view{display:flex;flex-direction:column;gap:14px;min-width:0}
 .lk-loc-map{margin:0;padding:10px;background:linear-gradient(180deg,#e9f3f4,#f4f0e7)}
 .lk-loc-svg{display:block;width:100%;height:auto;max-height:520px}
-.lk-loc-svg use{fill:#d9d2c3;stroke:var(--ink);stroke-width:14}
+.lk-loc-stage{position:relative;line-height:0}
+.lk-loc-stage .lk-loc-base{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;pointer-events:none}
+.lk-loc-stage .lk-loc-svg{position:relative}
 .lk-loc-halo{fill:rgba(245,165,36,.28)}
 .lk-loc-dot{fill:var(--amber);stroke:var(--ink);stroke-width:24}
 .lk-loc-lead{stroke:var(--ink)}
@@ -3192,3 +3199,73 @@ a.ed-brand:hover,a.ed-brand:focus-visible{border-color:var(--ink);box-shadow:5px
   body>header{position:relative!important}
   .ed-nav,.vbar,.cat-table th{position:static!important}
 }
+
+/* v7.55 (lot 2, VIS-01) : bloc « Combat : ce qui change » — six cartes homogènes. Même cadre d’image (16/9, recadrage
+   centré), numéro posé sur l’image, statut sous l’image, titre et texte, puis la limite et la source calées en bas de la
+   carte (les cartes d’une même rangée ont la même hauteur par la grille). Survol léger, apparition en cascade par LKMotion
+   (classe lk-reveal posée par common.js), rien ne bouge en « réduire les animations ». */
+.ed-steps--sourced{align-items:stretch}
+.ed-steps--sourced .ed-step{padding:0 18px 16px;gap:6px;transition:transform .35s var(--ease-out),box-shadow .35s var(--ease-out)}
+.ed-steps--sourced .ed-step .ed-media{margin:0 -18px 10px;border-bottom:2px solid var(--ink)}
+.ed-steps--sourced .ed-step .ed-media img{aspect-ratio:16/9;height:auto;object-fit:cover;object-position:center;background:var(--ink)}
+.ed-steps--sourced .ed-step .ed-media figcaption{padding:6px 18px 4px;letter-spacing:.04em;text-transform:none;font-size:.7rem;color:var(--ed-soft)}
+.ed-steps--sourced .ed-step-n{left:auto;right:12px;top:12px;box-shadow:0 1px 0 rgba(0,0,0,.35)}
+.ed-steps--sourced .ed-step .ed-status{margin:2px 0 0}
+.ed-steps--sourced .ed-step h3{margin:0}
+.ed-steps--sourced .ed-step-limit{font-size:.84rem;line-height:1.55;margin-top:auto;padding-top:10px;border-top:1.5px dashed var(--ed-line)}
+.ed-steps--sourced .ed-step-limit strong{color:var(--ed-fg)}
+.ed-steps--sourced .ed-step-src{font-size:.8rem;line-height:1.5;margin:0}
+.ed-steps--sourced .ed-step-src-k{font:700 .68rem/1.4 var(--font-mono,ui-monospace,monospace);letter-spacing:.08em;text-transform:uppercase;color:var(--coral-text,#B93220);margin-right:6px}
+.ed-steps--sourced .ed-step-src a{color:var(--ed-fg);font-weight:700;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1.5px;overflow-wrap:anywhere}
+.ed-steps--sourced .ed-step-src a:hover,.ed-steps--sourced .ed-step-src a:focus-visible{color:var(--coral-text,#B93220)}
+.ed-steps--sourced .ed-step-src .ed-src-meta{display:inline;margin:0 0 0 6px;font-size:.68rem}
+.ed-steps--sourced .ed-step--conf{border-style:dashed}
+.ed-steps--sourced .ed-step--conf::before{background:var(--ed-soft)}
+.ed-callout--steps{margin-top:18px}
+.ed-callout--steps a{color:var(--ed-fg);font-weight:700;text-decoration:underline;text-underline-offset:3px}
+/* survol : règle de la charte pour les cartes de texte (v7.4x) : pas de déplacement, l'ombre corail se pose, l'image respire */
+.ed-steps--sourced .ed-step .ed-media img{transition:transform .6s var(--ease-out)}
+@media(hover:hover){.ed-steps--sourced .ed-step:hover{box-shadow:7px 7px 0 var(--coral),inset 0 0 0 1px var(--ink)}.ed-steps--sourced .ed-step:hover .ed-media img{transform:scale(1.03)}}
+@media(max-width:1100px){.ed-steps--sourced{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){.ed-steps--sourced{grid-template-columns:1fr}.ed-steps--sourced .ed-step .ed-media img{aspect-ratio:16/9}}
+@media(prefers-reduced-motion:reduce){.ed-steps--sourced .ed-step,.ed-steps--sourced .ed-step .ed-media img{transition:none}.ed-steps--sourced .ed-step:hover .ed-media img{transform:none}}
+@media print{.ed-steps--sourced .ed-step{break-inside:avoid;box-shadow:none}}
+
+/* v7.55 (lot 2, VIS-02) : une seule base cartographique. Les localisateurs (hubs et fiches) posent la référence
+   img/leonida-carte.svg (dérivée du dessin de carte.html) sous leurs repères ; les vignettes des cartes-lieux gardent la
+   silhouette tirée du même calque « TERRES », aux couleurs du fond (eau, terre). */
+.lk-loc-map{background:linear-gradient(180deg,#dfeef5,#eef2ea)}
+.lk-loc-svg{max-height:620px;margin:0 auto}
+.ed-map-halo{fill:var(--amber);fill-opacity:.5}
+
+/* v7.55 (lot 2, VIS-04) : cartes-fiches des hubs du monde (Planques, Demeures, Lieux, Entreprises, Personnages, accueil)
+   alignées ligne à ligne. Cause du décalage : l'attribut height de l'image (270 ou 216 selon la capture) l'emportait sur
+   le ratio 16/9 de la feuille, la carte centrale de Planques (photogramme 1280 × 576) était plus courte. Le cadre est
+   désormais un vrai 16/9 (height:auto, recadrage centré) et, avec les grilles imbriquées (subgrid), image, étiquette,
+   titre, accroche, texte et action occupent la même rangée d'une carte à l'autre, quelle que soit la longueur des
+   textes ou la largeur d'écran ; sans subgrid, l'action reste calée en bas. */
+.lore-card>img,.lore-card>.lore-vide{height:auto;aspect-ratio:16/9;object-fit:cover;object-position:center}
+.lore-card .veh-body>.veh-go{margin-top:auto}
+@supports (grid-template-rows:subgrid){
+  .lore-grid>.lore-card{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:subgrid;grid-row:span 6;row-gap:0}
+  .lore-grid>.lore-card>img,.lore-grid>.lore-card>.lore-vide{grid-row:1}
+  .lore-grid>.lore-card>.veh-body{grid-row:2/span 5;display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:subgrid;row-gap:0;flex:none}
+  .lore-grid>.lore-card .veh-body>.veh-marque{grid-row:1}
+  .lore-grid>.lore-card .veh-body>h3{grid-row:2}
+  .lore-grid>.lore-card .veh-body>.lore-cardtag{grid-row:3}
+  .lore-grid>.lore-card .veh-body>p:not(.lore-cardtag){grid-row:4}
+  .lore-grid>.lore-card .veh-body>.veh-go{grid-row:5;align-self:end;margin-top:8px}
+}
+
+/* v7.55 (lot 2, CONT-01) : « Méthode et sources » de Collectibles au format « Sources et statuts » des hubs du monde */
+.ed-zone--collectibles{margin-top:28px}
+.ed-zone--collectibles .ed-srcs--etat{counter-reset:src;margin-bottom:6px}
+.ed-zone--collectibles .ed-srcs--etat .ed-src-link--plain{text-decoration:none;cursor:default}
+.ed-zone--collectibles .ed-srcs--etat .ed-pair-src{color:var(--ed-fg);border-color:rgba(255,255,255,.45);text-decoration:none}
+.ed-zone--collectibles .ed-srcs--etat .ed-pair-src:hover,.ed-zone--collectibles .ed-srcs--etat .ed-pair-src:focus-visible{border-color:var(--amber-2);color:var(--amber-2)}
+.ed-zone--collectibles .ed-cols{margin-top:4px}
+.ed-zone--collectibles .ed-revue{margin:22px 0 0;font-size:.92rem;color:var(--ed-soft)}
+.ed-zone--collectibles .ed-revue strong{color:var(--ed-fg)}
+.ed-zone--collectibles .ed-revue-note{margin:6px 0 0;font-size:.88rem;line-height:1.55;color:var(--ed-soft);max-width:var(--measure)}
+.ed-zone--collectibles .ed-callout-link{display:inline-block;margin-top:4px;font-weight:700;color:var(--amber-2)}
+.ed-zone--collectibles .ed h2,.ed-zone--collectibles .ed h3{color:var(--ed-fg)}

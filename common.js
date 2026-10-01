@@ -104,19 +104,20 @@
     el.classList.add('lk-instant'); instant.add(el);
     if (!instantFrame) instantFrame = requestAnimationFrame(function () { requestAnimationFrame(function () { instantFrame = 0; instant.forEach(function (n) { n.classList.remove('lk-instant'); }); instant.clear(); }); });
   }
+  /* v7.55 (lot 2) : un bloc peut porter les deux langages à la fois (classe « rise » du gabarit + « lk-reveal » posée par
+     Motion+ : cartes des hubs du monde, outils de l'accueil, textes des fiches). La v7.54 ne lui donnait que « in » : il
+     restait à opacité 0 (75 blocs sur 30 pages, animations actives). Il reçoit maintenant « in » et « is-in ». */
   const legacy = el => el.classList.contains('reveal') || el.classList.contains('rise');
-  const shown = el => legacy(el) ? el.classList.contains('in') : el.classList.contains('is-in');
+  const modern = el => el.classList.contains('lk-reveal') || el.hasAttribute('data-lk-reveal');
+  const shown = el => (!legacy(el) || el.classList.contains('in')) && (!modern(el) || el.classList.contains('is-in'));
   function show(el, delay, settled) {
-    if (legacy(el)) {
-      const t = timers.get(el); if (t) { clearTimeout(t); timers.delete(el); }
-      if (settled) { noTransition(el); el.classList.add('in'); return; }
-      if (delay > 0) { timers.set(el, setTimeout(function () { timers.delete(el); el.classList.add('in'); }, delay)); }
-      else el.classList.add('in');
-      return;
-    }
-    if (settled) { noTransition(el); el.style.setProperty('--lk-delay', '0ms'); el.classList.add('is-in', 'lk-settled'); return; }
-    if (el.dataset.lkStagger !== '1') el.style.setProperty('--lk-delay', (delay > 0 ? delay : 0) + 'ms');
-    el.classList.add('is-in');
+    const leg = legacy(el), mod = modern(el) || !leg;
+    const t = timers.get(el); if (t) { clearTimeout(t); timers.delete(el); }
+    const apply = function () { if (leg) el.classList.add('in'); if (mod) el.classList.add('is-in'); };
+    if (settled) { noTransition(el); if (mod) { el.style.setProperty('--lk-delay', '0ms'); el.classList.add('lk-settled'); } apply(); return; }
+    if (mod && el.dataset.lkStagger !== '1') el.style.setProperty('--lk-delay', (!leg && delay > 0 ? delay : 0) + 'ms');
+    if (leg && delay > 0) { timers.set(el, setTimeout(function () { timers.delete(el); apply(); }, delay)); return; }
+    apply();
   }
   const io = 'IntersectionObserver' in window ? new IntersectionObserver(function (entries) {
     let k = 0;
@@ -141,7 +142,9 @@
     const noMotion = reduced.matches || !io || opt.disabled;
     list.forEach(function (el) {
       if (!el || el.nodeType !== 1) return;
-      if (seen.has(el) && !opt.replay) return;
+      /* bloc déjà suivi qui reçoit de nouvelles classes (lk-reveal posée après la première passe) : s'il est déjà montré
+         par l'ancien langage, il le reste, sans transition ; sinon l'observateur en cours le montrera entièrement */
+      if (seen.has(el) && !opt.replay) { if (!shown(el) && legacy(el) && el.classList.contains('in')) show(el, 0, true); return; }
       seen.add(el);
       if (opt.replay) { el.classList.remove('in', 'is-in', 'lk-settled'); if (io) io.unobserve(el); }
       if (noMotion) { show(el, 0, true); return; }
@@ -298,7 +301,7 @@
 })();
 
 /* Léo : amorçage isolé. Les données ne se chargent qu'à l'ouverture du panneau. */
-(function(){'use strict';if(!document.querySelector('main')||document.getElementById('leo-style'))return;const base=(document.currentScript&&document.currentScript.src||'').replace(/[^/]*$/,'')||'/';const css=document.createElement('link');css.id='leo-style';css.rel='stylesheet';css.href=base+'leo.css?v=54dacba6417c';css.onload=()=>{const script=document.createElement('script');script.src=base+'leo-loader.js?v=54dacba6417c';document.head.append(script);};document.head.append(css);})();
+(function(){'use strict';if(!document.querySelector('main')||document.getElementById('leo-style'))return;const base=(document.currentScript&&document.currentScript.src||'').replace(/[^/]*$/,'')||'/';const css=document.createElement('link');css.id='leo-style';css.rel='stylesheet';css.href=base+'leo.css?v=a1ca02222a8a';css.onload=()=>{const script=document.createElement('script');script.src=base+'leo-loader.js?v=a1ca02222a8a';document.head.append(script);};document.head.append(css);})();
 
 /* Lot C (v7.32) : du mouvement sur toutes les pages. Les blocs de contenu apparaissent au défilement (par vagues,
    avec un léger décalage), les piles d'images s'ouvrent, les titres de section tirent leur trait, l'en-tête prend
@@ -406,14 +409,15 @@
   else if (reduced || !window.requestAnimationFrame) go(); else window.requestAnimationFrame(function () { window.requestAnimationFrame(go); });
   if (reduced) return;
   /* --- 3. apparition au défilement, variantes selon la nature du bloc ---------------------------------------- */
-  const GRID_CARDS = '.d-card, .info-card, .tool, .lk-feature, .kit, .rare-card, .lk-entry-card, .col-card, .lk-tool, .lk-photo-card, .county, .lore-card, .d-topic, .lk-her';
+  /* v7.55 (lot 2) : les cartes « Combat » (.ed-step) et les carnets de Progression (.cn-dcard) entrent en cascade comme les autres cartes */
+  const GRID_CARDS = '.d-card, .info-card, .tool, .lk-feature, .kit, .rare-card, .lk-entry-card, .col-card, .lk-tool, .lk-photo-card, .county, .lore-card, .d-topic, .lk-her, .ed-step, .cn-dcard';
   const FIGURES = 'main figure';
   const TEXTS = '.lede, .info-lede, .lk-home-support, main .shell>p, main .d-section>p, main .info-section>p, .lore-texte>p, .t-intro>p, .calc-section-desc, .calc-card-desc';
   const ROWS = 'main table>tbody, main .shell>ul, main .shell>ol, .t-steps, .d-sources>ul, .info-grid, .lk-goals';
   const extra = [];
   /* v7.44 : la séquence lk-showcase (À propos) gère ses propres apparitions (lk-showcase.js, informations.css) */
   const add = function (el, variant) { if (!el || el.closest('[hidden], template, .lore-stack, .leo-panel, .hero, header, footer, #calc-panels, .lk-arrive, .lk-showcase, .lk-loc, .ak-stack')) return; if (!el.classList.contains('lk-reveal')) { el.classList.add('lk-reveal'); extra.push(el); } if (variant) el.classList.add('lk-reveal--' + variant); };
-  main.querySelectorAll(FIGURES).forEach(function (el) { if (el.closest('.lk-stack, figure figure, .lk-reveal--clip, .lk-hero-item, .d-card, .lore-card')) return; add(el, 'clip'); });
+  main.querySelectorAll(FIGURES).forEach(function (el) { if (el.closest('.lk-stack, figure figure, .lk-reveal--clip, .lk-hero-item, .d-card, .lore-card, .ed-step, .cn-dcard')) return; add(el, 'clip'); });
   main.querySelectorAll(TEXTS).forEach(function (el) { if (el.closest('.lk-reveal--clip') || el.classList.contains('lk-hero-item') || el.closest('.lk-hero-item')) return; add(el, 'blur'); });
   main.querySelectorAll(ROWS).forEach(function (el) { if (el.closest('.lk-reveal')) return; if (el.children.length > 1 && el.children.length <= 40) { add(el, 'rows'); Array.prototype.slice.call(el.children).forEach(function (c, i) { c.style.setProperty('--lk-i', Math.min(i, 8)); }); } });
   main.querySelectorAll(GRID_CARDS).forEach(function (el) { if (el.classList.contains('lk-arrive') || el.closest('.lk-loc, .ak-stack')) return; el.classList.add('lk-reveal--zoom'); if (!el.classList.contains('lk-reveal')) add(el); });

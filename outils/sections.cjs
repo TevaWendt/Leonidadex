@@ -213,12 +213,21 @@ function mediaFigure(id, alt, opts = {}) {
   return '<figure class="ed-media"><img src="' + prefix + small.src.replace(/^\//, '') + '"' + (big ? ' srcset="' + prefix + small.src.replace(/^\//, '') + ' 480w, ' + prefix + big.src.replace(/^\//, '') + ' 1280w" sizes="' + esc(opts.sizes || '(max-width:700px) 100vw, 400px') + '"' : '')
     + ' width="' + small.w + '" height="' + small.h + '" alt="' + esc(text) + '" loading="lazy" decoding="async"><figcaption>' + esc(opts.caption || 'Visuel officiel Rockstar Games') + '</figcaption></figure>';
 }
-/* items : [{titre, texte, media, alt, icon}] */
+/* items : [{titre, texte, media, alt, icon}]
+   v7.55 (lot 2, VIS-01) : champs facultatifs statut (officiel | vu | comm | conf → pastille et libellé), legende (légende du
+   visuel), limite (ce qui reste à confirmer) et source {label, url, publishedAt, consultedAt}. Quand tous les éléments ont un
+   statut, la grille reçoit la classe ed-steps--sourced (cartes homogènes, source calée en bas). */
 function steps(items, opts = {}) {
-  return '<div class="ed-steps">' + items.map((x, i) => '<article class="ed-step' + (x.media ? ' ed-step--media' : '') + '">'
+  const sourced = items.length > 0 && items.every(x => x.statut);
+  return '<div class="ed-steps' + (sourced ? ' ed-steps--sourced' : '') + '">' + items.map((x, i) => '<article class="ed-step' + (x.media ? ' ed-step--media' : '') + (x.statut ? ' ed-step--' + esc(STATUS_LABEL[x.statut] ? x.statut : 'conf') : '') + '">'
     + '<span class="ed-step-n" aria-hidden="true">' + pad(i + 1) + '</span>'
-    + (x.media ? mediaFigure(x.media, x.alt, { prefix: opts.prefix }) : '<span class="ed-step-ico">' + icon(x.icon) + '</span>')
-    + '<h3>' + esc(x.titre) + '</h3><p>' + esc(x.texte) + '</p></article>').join('') + '</div>';
+    + (x.media ? mediaFigure(x.media, x.alt, { prefix: opts.prefix, caption: x.legende }) : '<span class="ed-step-ico">' + icon(x.icon) + '</span>')
+    + (x.statut ? pip(x.statut, true) : '')
+    + '<h3>' + esc(x.titre) + '</h3><p>' + esc(x.texte) + '</p>'
+    + (x.limite ? '<p class="ed-step-limit"><strong>Limite.</strong> ' + esc(x.limite) + '</p>' : '')
+    + (x.source ? '<p class="ed-step-src"><span class="ed-step-src-k">Source</span> <a href="' + esc(x.source.url) + '" target="_blank" rel="noopener nofollow">' + esc(x.source.label) + '</a>'
+      + (x.source.consultedAt ? '<span class="ed-src-meta">consulté le ' + esc(frDate(x.source.consultedAt)) + '</span>' : '') + '</p>' : '')
+    + '</article>').join('') + '</div>';
 }
 
 /* ---------- cartes-lieux ---------- */

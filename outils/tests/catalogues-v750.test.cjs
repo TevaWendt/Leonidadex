@@ -54,8 +54,10 @@ test('listes des catalogues : vignette (visuel officiel ou pictogramme dit comme
 });
 
 test('fiches armes : fiche documentaire (4 rubriques) et localisateur illustré, emplacement « à venir », repères numérotés sur la vraie carte', () => {
-  assert.ok(exists(LOC.SPRITE), 'silhouette de Leonida en fichier');
-  assert.match(read(LOC.SPRITE), /<symbol id="lk-leonida"/);
+  /* v7.55 (lot 2, VIS-02) : le fond des fiches est la référence commune img/leonida-carte.svg, dérivée de carte.html */
+  assert.ok(exists(LOC.REFERENCE), 'référence cartographique en fichier');
+  assert.match(read(LOC.REFERENCE), /^<svg xmlns="http:\/\/www\.w3\.org\/2000\/svg" viewBox="0 0 5200 6000"/);
+  assert.ok(!exists('img/leonida-silhouette.svg'), 'ancien sprite de silhouette retiré');
   for (const a of data.LK_ARMES) {
     const d = doc('armes/' + a.id + '.html');
     assert.equal(d.querySelectorAll('.doc-fiche .doc-rub').length, 4, a.id);
@@ -64,7 +66,9 @@ test('fiches armes : fiche documentaire (4 rubriques) et localisateur illustré,
     assert.match(loc.querySelector('.lk-loc-status').textContent, /Emplacement à venir/);
     const pins = [...loc.querySelectorAll('.lk-loc-pin')]; assert.equal(pins.length, 3, a.id);
     pins.forEach((p, i) => { const pt = carte.point(p.dataset.place); assert.equal(p.querySelector('.lk-loc-dot').getAttribute('cx'), String(pt.x)); assert.equal(p.querySelector('text').textContent, String(i + 1)); });
-    assert.equal(loc.querySelector('use').getAttribute('href'), '../' + LOC.SPRITE + '#lk-leonida');
+    const base = loc.querySelector('.lk-loc-stage > img.lk-loc-base'); assert.ok(base, a.id + ' : fond de référence');
+    assert.match(base.getAttribute('src'), /^\.\.\/img\/leonida-carte\.svg\?v=[a-f0-9]{12}$/); assert.equal(loc.querySelector('.lk-loc-svg').getAttribute('viewBox'), '0 0 5200 6000');
+    assert.equal(loc.querySelector('use'), null, 'plus de silhouette dans le localisateur');
     assert.equal(loc.querySelectorAll('.lk-loc-places a[href^="../carte.html#lieu="]').length, 3);
     assert.equal(d.querySelector('#carte .fiche-liens'), null, 'plus de petits carrés portant seulement un nom');
   }

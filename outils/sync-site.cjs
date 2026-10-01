@@ -8,6 +8,8 @@
 
 const fs=require('fs'),path=require('path'),vm=require('vm');
 const root=path.resolve(__dirname,'..');process.chdir(root);
+// v7.55 (lot 2, VIS-02) : la référence cartographique img/leonida-carte.svg suit le dessin de carte.html (outils/carte-reference.cjs).
+require('./carte-reference.cjs').write();
 // Catalogue du calculateur : projeter les sources avant le calcul de version.
 require('child_process').execFileSync(process.execPath,[path.join(__dirname,'gen-calculateurs-catalogue.cjs')],{stdio:'inherit'});
 const crypto=require('crypto');

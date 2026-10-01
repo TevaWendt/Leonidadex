@@ -1,6 +1,26 @@
 # Collectibles GTA VI : recherche et choix UX
 
-Vérification : 18 septembre 2026. Périmètre : collectibles uniquement.
+Vérification : 18 septembre 2026, relue et complétée le 1er octobre 2026 (v7.55, lot 2, CONT-01). Périmètre : collectibles uniquement.
+
+## Relecture du 1er octobre 2026 (v7.55)
+
+Le bloc « Méthode et sources » de `collectibles.html` est désormais généré par `outils/gen-collectibles.cjs` depuis le bloc
+`veille` de `outils/collectibles.json`, au format « Sources et statuts » des hubs du monde (`outils/hubs-monde.cjs`,
+`outils/sections.cjs`) : quatre niveaux de preuve du site, état daté des connaissances, méthode d'entrée au catalogue,
+pages consultées numérotées, encadré « Ce qu'on ne fait pas ». Résultat de la recherche (toutes les pages ouvertes le
+1er octobre 2026) :
+
+| Statut | Fait retenu | Page |
+|---|---|---|
+| Officiel | La pêche est liée à des défis, des collectibles et des parties de l'histoire (Rob Nelson, Rockstar North, à TGG) | [Notebookcheck, 07/09/2026](https://www.notebookcheck.net/Fishing-in-GTA-6-will-be-as-extensive-as-in-RDR2-but-there-s-a-catch.1391730.0.html) |
+| Officiel | Plus de 170 espèces ; animaux Rare, Discoverable, Legendary à pister (dossier de couverture réalisé avec Rockstar) | [Game Informer, 29/09/2026](https://gameinformer.com/exclusive/2026/09/29/exclusive-grand-theft-auto-vi-includes-over-170-animal-species), [cover reveal, 25/09/2026](https://gameinformer.com/cover-reveal/2026/09/25/cover-reveal-grand-theft-auto-vi) |
+| Vu | Pêche (« Jason Duval 03 ») et plongée (« Leonida Keys 04 ») montrées ; plongée sous-marine dans la liste d'activités du dossier | [captures Rockstar](https://www.rockstargames.com/VI/media/screenshots), [GTA Intel, 29/09/2026](https://gtaintel.com/news/gta-6-game-informer-cover-story-new-details) |
+| Communautaire | Liste d'animaux et « liste à cocher » annoncée sans source | [GTABase](https://www.gtabase.com/gta-6/animals/) |
+| À confirmer | Aucun objet nommé, aucune quantité, aucun emplacement publié par Rockstar | [site officiel](https://www.rockstargames.com/VI), [Extended Look](https://www.rockstargames.com/VI/an-extended-look) |
+
+Écarté : les pages de fans qui déduisent des « collectibles attendus » des anciens jeux (prédictions assumées), les
+mentions de magazines ou de bandes dessinées à collectionner rapportées sans page vérifiable, et tout ce qui vient
+des fuites de 2022 ou de 2026. Le catalogue reste à zéro fiche ; le suivi local n'est pas modifié.
 
 ## Résultat documentaire
 
