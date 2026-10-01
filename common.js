@@ -301,7 +301,7 @@
 })();
 
 /* Léo : amorçage isolé. Les données ne se chargent qu'à l'ouverture du panneau. */
-(function(){'use strict';if(!document.querySelector('main')||document.getElementById('leo-style'))return;const base=(document.currentScript&&document.currentScript.src||'').replace(/[^/]*$/,'')||'/';const css=document.createElement('link');css.id='leo-style';css.rel='stylesheet';css.href=base+'leo.css?v=a1ca02222a8a';css.onload=()=>{const script=document.createElement('script');script.src=base+'leo-loader.js?v=a1ca02222a8a';document.head.append(script);};document.head.append(css);})();
+(function(){'use strict';if(!document.querySelector('main')||document.getElementById('leo-style'))return;const base=(document.currentScript&&document.currentScript.src||'').replace(/[^/]*$/,'')||'/';const css=document.createElement('link');css.id='leo-style';css.rel='stylesheet';css.href=base+'leo.css?v=ed6f8121bdb5';css.onload=()=>{const script=document.createElement('script');script.src=base+'leo-loader.js?v=ed6f8121bdb5';document.head.append(script);};document.head.append(css);})();
 
 /* Lot C (v7.32) : du mouvement sur toutes les pages. Les blocs de contenu apparaissent au défilement (par vagues,
    avec un léger décalage), les piles d'images s'ouvrent, les titres de section tirent leur trait, l'en-tête prend
@@ -419,7 +419,9 @@
   const add = function (el, variant) { if (!el || el.closest('[hidden], template, .lore-stack, .leo-panel, .hero, header, footer, #calc-panels, .lk-arrive, .lk-showcase, .lk-loc, .ak-stack')) return; if (!el.classList.contains('lk-reveal')) { el.classList.add('lk-reveal'); extra.push(el); } if (variant) el.classList.add('lk-reveal--' + variant); };
   main.querySelectorAll(FIGURES).forEach(function (el) { if (el.closest('.lk-stack, figure figure, .lk-reveal--clip, .lk-hero-item, .d-card, .lore-card, .ed-step, .cn-dcard')) return; add(el, 'clip'); });
   main.querySelectorAll(TEXTS).forEach(function (el) { if (el.closest('.lk-reveal--clip') || el.classList.contains('lk-hero-item') || el.closest('.lk-hero-item')) return; add(el, 'blur'); });
-  main.querySelectorAll(ROWS).forEach(function (el) { if (el.closest('.lk-reveal')) return; if (el.children.length > 1 && el.children.length <= 40) { add(el, 'rows'); Array.prototype.slice.call(el.children).forEach(function (c, i) { c.style.setProperty('--lk-i', Math.min(i, 8)); }); } });
+  /* v7.56 (lot 3, UI-03) : les listes des catalogues (.cat-table) animent chaque ligne elles-mêmes (catalogue.js), y compris
+     après un filtre ou un tri ; le bloc entier n'est plus traité comme une rangée de Motion+. */
+  main.querySelectorAll(ROWS).forEach(function (el) { if (el.closest('.lk-reveal, .cat-table')) return; if (el.children.length > 1 && el.children.length <= 40) { add(el, 'rows'); Array.prototype.slice.call(el.children).forEach(function (c, i) { c.style.setProperty('--lk-i', Math.min(i, 8)); }); } });
   main.querySelectorAll(GRID_CARDS).forEach(function (el) { if (el.classList.contains('lk-arrive') || el.closest('.lk-loc, .ak-stack')) return; el.classList.add('lk-reveal--zoom'); if (!el.classList.contains('lk-reveal')) add(el); });
   main.querySelectorAll('.lk-stack').forEach(function (el) { el.classList.add('lk-reveal--right'); el.querySelectorAll('img').forEach(function (img) { img.classList.add('lk-kb'); }); });
   /* v7.37 : la variante « depuis la gauche » ne s'ajoute qu'aux blocs réellement suivis par l'observateur (classe lk-reveal),

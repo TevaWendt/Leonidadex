@@ -235,7 +235,10 @@
       "acquisition": "edition-bonus",
       "condition": "Collection de l’Édition Ultimate",
       "description": "Vêtements et accessoires inspirés de Macca the Gator. Le catalogue individuel reste à documenter.",
-      "media": [],
+      "media": [
+        "goodtime-gear-01"
+      ],
+      "mediaCaption": "Capture officielle « Goodtime Gear » de l’Édition Ultimate : Jason et Lucia portent les tenues et casquettes Macca the Gator de cette collection.",
       "trackable": false,
       "calculatorCompatible": false,
       "price": null
@@ -344,6 +347,7 @@
       "description": "Boutique de streetwear proposant des looks pour Jason et Lucia.",
       "media": [
         "stock-305-clothing-store-01",
+        "stock-305-clothing-store-02",
         "stock-305-clothing-store-03",
         "stock-305-clothing-store-04"
       ]

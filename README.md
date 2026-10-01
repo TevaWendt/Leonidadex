@@ -42,6 +42,18 @@ Hébergé sur Vercel, qui publie tel quel le contenu de ce dépôt : **aucune co
 - Aucune donnée issue de fuites. Crédit gtadb.org conservé sur la carte et dans les mentions légales.
 
 
+## Mission « corrections visuelles, fluidité et Léo » — lot 3 : Consommables, Vêtements et style, Personnalisation (v7.56, 1er octobre 2026)
+
+- **Suivi** : `outils/MATRICE-FLUIDITE.md` (lot 3 validé, lots 4 et 5 à faire) ; preuves : `outils/PREUVES-v7.56.md` ; détail : `outils/CHANGEMENTS-v7.56.txt` (§ 0 : le dépôt mêlait deux « v7.54 », il a été régénéré en entier et quatre retouches du 30/09 reposées ; le travail du 30/09 sur le calculateur est conservé).
+- **Fiche paysage** (`catalogue.js`, `acquisitions.css`) : « Fiche complète » d’une ligne de catalogue ouvre un `<dialog class="cat-dlg">` commun (visuel, identité, statut, description, sources, « Je l’ai » à gauche ; faits de la ligne et rubriques documentaires à droite ; une colonne plein écran sous 761 px). Le corps documentaire `.cat-fiche-body` est **déplacé** depuis `details.cat-fiche` puis remis à sa place à la fermeture : rien n’est écrit deux fois, et les données suivent la ligne après filtre ou tri. Sans `<dialog>` ou sans script, la boîte `details` de la ligne s’ouvre comme avant. Une ancre de ligne (`#consommables-sprunk`) pose la ligne sous les bandeaux collants et ouvre sa fiche. API : `window.LKCatalogue.open(tr, déclencheur)` / `.close()`.
+- **Statuts en badges** : `S.pip(statut, true)` (`outils/sections.cjs`) ajoute la classe `ed-status--<statut>` ; `acquisitions.css` dessine les cinq badges (couleur + pictogramme en masque SVG + libellé) dans les pages de section (`.ed-zone--acq`) et la fiche ; les autres pages gardent la pastille. Légende de tête de liste `.cat-key` (`outils/catalogues.cjs` keyStrip : badge, sens `C.KEY`, compte) dont les boutons filtrent par statut.
+- **Apparitions** : les `tr.cat-row` portent `lk-reveal` (LKMotion : translation 12 px + opacité, cascade) ; `catalogue.js` rejoue l’entrée des lignes réaffichées (`LKMotion.observe(…, {replay:true, initial:false})`) et rappelle les lignes visibles après un tri ; `common.js` exclut `.cat-table` de la variante « rows » de Motion+.
+- **Descriptions repliées** : familles de `C.FOLDED` (consommables) : bloc `.cat-more[hidden]` + bouton `[data-cat-more]` par ligne ; les pages de section portent une feuille `<noscript>` (descriptions visibles, bouton caché, vues des carrousels empilées).
+- **Sections de liste opaques** : `listSection()` pose `ed--list` (`.ed--list.ed--paper{background:var(--paper)}`) : les rails des bords de page ne passent plus derrière une liste (Tatouages, Personnalisation des armes).
+- **Adresses** (`style.html#adresses`) : `carousel()` dans `gen-acquisitions.cjs` écrit toutes les vues officielles (flèches, position, points masqués sans script) ; `acquisitions.js` les anime (clavier, balayage, transition rétro, légende et crédits par vue). Nouveaux visuels officiels : `stock-305-clothing-store-02` (4e vue publiée par Rockstar) et `goodtime-gear-01` (« Les articles du bonheur », `mediaCaption` dans `outils/acquisitions.json`) ; `medias.html` : 150 visuels.
+- **Collections** : grille `d-grid--collections` (3 / 2 avec troisième centrée / 1 colonne).
+- **Contrôles** : `outils/tests/catalogues-lot3.test.cjs` ; recette navigateur, mesures et captures dans le dossier de contrôle (`qa/recette-lot3.cjs`, `qa/perf-lot3.cjs`).
+
 ## Mission « corrections visuelles, fluidité et Léo » — lot 2 : Arsenal, cartes, Progression, Planques, Collectibles (v7.55, 1er octobre 2026)
 
 - **Suivi** : `outils/MATRICE-FLUIDITE.md` (lot 2 validé, lots 3 à 5 à faire) ; preuves : `outils/PREUVES-v7.55.md` ; détail : `outils/CHANGEMENTS-v7.55.txt`.

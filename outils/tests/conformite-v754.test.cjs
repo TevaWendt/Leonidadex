@@ -129,7 +129,8 @@ test('fiches : une arme de mêlée ou de jet dit « sans objet » pour chargeur,
   assert.equal(M.fromVehicle({id:'bmx',cat:'divers'}).fuel.s,'na');assert.equal(M.fromVehicle({id:'crest-kayak',cat:'bateau'}).fuel.s,'na');assert.equal(M.fromVehicle({id:'canis-kamacho',cat:'suv'}).fuel,undefined);
   const html=read('armes/batte.html');assert.doesNotMatch(html,/arme de poing/);assert.match(html,/arme de mêlée/);assert.match(html,/<dt>Chargeur<\/dt><dd><span class="doc-v">Ne s’applique pas/);
   assert.match(read('vehicules/bmx.html'),/<dt>Carburant<\/dt><dd><span class="doc-v">Ne s’applique pas/);
-  const ed=read('outils/hubs-editoriaux.json');assert.doesNotMatch(ed,/Nombre non limité annoncé|deux armes de poing et deux armes longues/);assert.match(ed,/nombre exact d’armes de poing reste à confirmer/);
+  /* v7.56 : le port d’armes est sourcé depuis le lot 2 (Rob Nelson via GamingBolt, 07/09/2026 : deux armes de poing dissimulées et deux armes longues) ; l’ancien « Nombre non limité annoncé » est retiré et l’inventaire renvoie à cette source. */
+  const ed=read('outils/hubs-editoriaux.json');assert.doesNotMatch(ed,/Nombre non limité annoncé/);assert.match(ed,/Deux armes de poing dissimulées sur soi d’après Rob Nelson/);assert.match(ed,/gamingbolt\.com\/gta-6-lets-you-carry-2-concealed-handguns/);
 });
 
 test('carnets et catalogues : repères de la série marqués et comptés à part ; Collectibles renvoie au carnet ; la ligne visée passe sous les bandeaux et sa fiche s’ouvre ; Progression tient sans stockage',async()=>{

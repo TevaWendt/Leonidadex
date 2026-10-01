@@ -399,14 +399,40 @@ window.LK_ACQUISITIONS = {
       "acquisition": "edition-bonus",
       "condition": "Collection de l’Édition Ultimate",
       "description": "Vêtements et accessoires inspirés de Macca the Gator. Le catalogue individuel reste à documenter.",
-      "media": [],
+      "media": [
+        "goodtime-gear-01"
+      ],
+      "mediaCaption": "Capture officielle « Goodtime Gear » de l’Édition Ultimate : Jason et Lucia portent les tenues et casquettes Macca the Gator de cette collection.",
       "trackable": false,
       "calculatorCompatible": false,
       "price": null,
       "type": "style",
       "url": "/style.html#articles-du-bonheur",
       "hubUrl": "/style.html#articles-du-bonheur",
-      "images": [],
+      "images": [
+        {
+          "id": "goodtime-gear-01",
+          "titre": "Goodtime Gear",
+          "alt": "Jason et Lucia en casquettes et tee-shirts Vice City illustrés de Macca the Gator, devant une fresque de l’alligator (capture officielle « Goodtime Gear » de l’Édition Ultimate).",
+          "source": "https://www.rockstargames.com/VI/media/screenshots",
+          "original": "https://www.rockstargames.com/VI/_next/static/media/ULTIMATE_EDITION_GOODTIME_GEAR_01.0t7de8dow381q.jpg?akim=1&imdensity=1&imwidth=1920",
+          "credit": "© Rockstar Games / Take-Two Interactive",
+          "variants": [
+            {
+              "src": "/img/officiel/goodtime-gear-01-480.webp",
+              "w": 480,
+              "h": 270
+            },
+            {
+              "src": "/img/officiel/goodtime-gear-01-1280.webp",
+              "w": 1280,
+              "h": 720
+            }
+          ],
+          "mediaType": "official-screenshot",
+          "consultedAt": "2026-10-01"
+        }
+      ],
       "source": "https://www.rockstargames.com/VI",
       "verifiedAt": "2026-09-23",
       "status": "official",
@@ -684,6 +710,7 @@ window.LK_ACQUISITIONS = {
       "description": "Boutique de streetwear proposant des looks pour Jason et Lucia.",
       "media": [
         "stock-305-clothing-store-01",
+        "stock-305-clothing-store-02",
         "stock-305-clothing-store-03",
         "stock-305-clothing-store-04"
       ],
@@ -709,6 +736,28 @@ window.LK_ACQUISITIONS = {
               "h": 720
             }
           ]
+        },
+        {
+          "id": "stock-305-clothing-store-02",
+          "titre": "Stock 305 Clothing Store 02",
+          "alt": "Jason, veste en jean grise, adossé à un mur de bombes de peinture colorées dans la boutique Stock 305 (capture officielle de l’Édition Ultimate).",
+          "source": "https://www.rockstargames.com/VI/media/screenshots",
+          "original": "https://www.rockstargames.com/VI/_next/static/media/ULTIMATE_EDITION_STOCK_305_02.0va5ldrhsejht.jpg?akim=1&imdensity=1&imwidth=1920",
+          "credit": "© Rockstar Games / Take-Two Interactive",
+          "variants": [
+            {
+              "src": "/img/officiel/stock-305-clothing-store-02-480.webp",
+              "w": 480,
+              "h": 270
+            },
+            {
+              "src": "/img/officiel/stock-305-clothing-store-02-1280.webp",
+              "w": 1280,
+              "h": 720
+            }
+          ],
+          "mediaType": "official-screenshot",
+          "consultedAt": "2026-10-01"
         },
         {
           "id": "stock-305-clothing-store-03",

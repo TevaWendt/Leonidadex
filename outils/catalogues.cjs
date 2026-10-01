@@ -206,29 +206,50 @@ function rowId(fam, it) { return fam + '-' + it.id; }
 /* v7.50 (lot 3) : vignette de la ligne (visuel officiel lié, sinon pictogramme de la catégorie, dit comme tel),
    colonne GTA VI qui distingue « Prix à venir » et « Achat à confirmer », fiche complète dépliable (modèle commun). */
 const FD = require('./fiche-doc.cjs');
+/* v7.56 (lot 3, UI-01) : la vignette garde l'adresse de la grande version (data-big) pour la fiche paysage ouverte par catalogue.js. */
 function thumb(it, cat, media) {
-  if (media) { const v = media.variants.find(x => x.w === 480) || media.variants[0]; return '<span class="cat-thumb"><img src="' + esc(v.src.replace(/^\//, '')) + '" width="' + v.w + '" height="' + v.h + '" alt="' + esc(media.alt || media.titre || it.nom) + '" loading="lazy" decoding="async"></span>'; }
+  if (media) { const v = media.variants.find(x => x.w === 480) || media.variants[0], big = media.variants.find(x => x.w === 1280); return '<span class="cat-thumb"><img src="' + esc(v.src.replace(/^\//, '')) + '" width="' + v.w + '" height="' + v.h + '" alt="' + esc(media.alt || media.titre || it.nom) + '" loading="lazy" decoding="async"' + (big ? ' data-big="' + esc(big.src.replace(/^\//, '')) + '"' : '') + '></span>'; }
   return '<span class="cat-thumb cat-thumb--ico" title="Pictogramme de la catégorie, pas un visuel de l’objet">' + S.icon(cat.icon, 'cat-thumb-ico') + '</span>';
 }
+/* v7.56 (lot 3, UI-01) : la fiche complète reste une boîte details/summary (lisible sans script, repli de secours) ; avec
+   script, catalogue.js ouvre son contenu (.cat-fiche-body) dans une fiche paysage commune (<dialog class="cat-dlg">) :
+   visuel et identité à gauche, faits et rubriques à droite, empilés sur téléphone. Rien n'est écrit deux fois dans la page. */
 function ficheBox(fam, it) {
-  return '<details class="cat-fiche"><summary>Fiche complète</summary>' + FD.render(FD.CATEGORY_OF[fam], FD.knownOfRow(fam, it, id => place(id).name), { compact: true, level: 3, title: it.nom }) + '</details>';
+  return '<details class="cat-fiche"><summary class="cat-fiche-bt" data-cat-sheet aria-label="Fiche complète : ' + esc(it.nom) + '">Fiche complète</summary><div class="cat-fiche-body">' + FD.render(FD.CATEGORY_OF[fam], FD.knownOfRow(fam, it, id => place(id).name), { compact: true, level: 3, title: it.nom }) + '</div></details>';
+}
+/* v7.56 (lot 3, CONSO-01) : familles dont la description de chaque ligne est repliée au départ (commande « Description »
+   propre à la ligne, dépliable et repliable, au clavier aussi). Sans script, tout est visible (feuille <noscript> des pages). */
+const FOLDED = new Set(['consommables']);
+/* v7.56 (lot 3, UI-02) : légende des statuts en tête de chaque liste — un badge par statut présent, son sens en une ligne et
+   son nombre de lignes ; avec script, chaque badge filtre la liste (catalogue.js). Mêmes couleurs sur toutes les pages. */
+const KEY = { officiel: 'Nommé ou décrit par Rockstar pour GTA VI', vu: 'Vu dans un trailer ou une capture officielle', comm: 'Rapprochement de joueurs, non confirmé', serie: 'Chiffre d’un autre GTA : ne vaut pas pour GTA VI', conf: 'Rien de publié : on attend Rockstar' };
+function keyStrip(fam) {
+  const c = counts(fam);
+  return '<div class="cat-key" role="group" aria-label="Légende des statuts de la liste"><span class="cat-key-t">Légende</span>'
+    + STATUS_ORDER.filter(s => c[s]).map(s => '<button type="button" class="cat-key-bt" data-cat-key="' + s + '" aria-pressed="false" disabled title="' + esc(KEY[s]) + '">' + S.pip(s, true) + '<span class="cat-key-d">' + esc(KEY[s]) + '</span><span class="cat-key-n">' + c[s] + ' ligne' + (c[s] > 1 ? 's' : '') + '</span></button>').join('')
+    + '</div>';
 }
 function accessHtml(it) { const a = FD.accessCell(it); return '<span class="cat-conf">' + S.pip('conf') + esc(a.price) + '</span><small class="cat-buy">' + esc(a.buy) + '</small>'; }
 function row(fam, it, cat, sources) {
   const d = load(), media = it.media ? d.ctx.medias[it.media] : null, ci = d.families[fam].categories.findIndex(x => x.id === cat.id);
   const srcLinks = it.sources.map((id, i) => '<a href="#src-' + esc(id) + '" class="cat-src" aria-label="Source : ' + esc(sources[id].title) + '">source' + (it.sources.length > 1 ? ' ' + (i + 1) : '') + '</a>').join(' ');
   const q = fold([it.nom, it.description, cat.label, it.effet.texte, ...(it.variantes || []), ...it.ou_le_trouver.map(o => o.lieu ? place(o.lieu).name : o.type), PERSON[it.personnage] || '', ...compatWords(it)].join(' '));
-  const rep = repereText(it.prix_repere_serie), repV = repereValue(it.prix_repere_serie), compat = compatOf(it);
+  const rep = repereText(it.prix_repere_serie), repV = repereValue(it.prix_repere_serie), compat = compatOf(it), folded = FOLDED.has(fam);
   return '<tr class="cat-row" id="' + esc(rowId(fam, it)) + '" data-cat="' + esc(it.categorie) + '" data-st="' + esc(it.statut) + '" data-ci="' + ci + '"' + (cat.groupe ? ' data-group="' + esc(cat.groupe) + '"' : '') + ' data-nom="' + esc(fold(it.nom)) + '"' + (repV !== null ? ' data-prix="' + repV + '"' : '') + compat.attrs + ' data-q="' + esc(q) + '">'
     + '<td class="cat-c-st" data-l="Statut">' + S.pip(it.statut, true) + '</td>'
     + '<td class="cat-c-nom" data-l="Élément">' + thumb(it, cat, media) + '<b class="cat-nom">' + esc(it.nom) + '</b>'
     + '<span class="cat-cat">' + S.icon(cat.icon, 'cat-ico') + esc(cat.label) + '</span>'
     + (it.personnage ? '<span class="cat-who">' + esc(PERSON[it.personnage]) + '</span>' : '')
+    /* v7.56 : description, variantes, compatibilité et note forment un bloc (.cat-more) ; repliée au départ pour les familles
+       de FOLDED (attribut hidden retiré par le bouton « Description » de catalogue.js, ou par la feuille <noscript>). */
+    + '<div class="cat-more" id="' + esc(rowId(fam, it)) + '-more"' + (folded ? ' hidden' : '') + '>'
     + '<p class="cat-desc">' + esc(it.description) + '</p>'
     + (it.variantes && it.variantes.length ? '<p class="cat-var"><span>Variantes :</span> ' + esc(it.variantes.join(', ')) + '</p>' : '')
     + compat.html
     + (it.notes ? '<p class="cat-note">' + esc(it.notes) + '</p>' : '')
-    + '<p class="cat-meta">' + srcLinks + (media ? ' <a class="cat-media" href="medias.html#media-' + esc(it.media) + '">visuel officiel</a>' : '') + (it.lien ? ' <a class="cat-link" href="' + esc(it.lien.href) + '">' + esc(it.lien.label) + '</a>' : '') + '</p>' + ficheBox(fam, it) + '</td>'
+    + '</div>'
+    + '<p class="cat-meta">' + srcLinks + (media ? ' <a class="cat-media" href="medias.html#media-' + esc(it.media) + '">visuel officiel</a>' : '') + (it.lien ? ' <a class="cat-link" href="' + esc(it.lien.href) + '">' + esc(it.lien.label) + '</a>' : '') + '</p>'
+    + '<div class="cat-acts">' + (folded ? '<button type="button" class="cat-more-bt" data-cat-more aria-expanded="false" aria-controls="' + esc(rowId(fam, it)) + '-more"><span class="cat-more-l">Description</span></button>' : '') + ficheBox(fam, it) + '</div></td>'
     + '<td class="cat-c-eff" data-l="Effet">' + esc(it.effet.texte) + (it.effet.valeur !== null ? '<b class="cat-eff-n">' + esc(String(it.effet.valeur)) + (UNITS[it.effet.unite] || ' min') + ' <i>(' + esc(it.effet.jeu) + ')</i></b>' : '') + '</td>'
     + '<td class="cat-c-p6" data-l="GTA VI">' + accessHtml(it) + '</td>'
     + '<td class="cat-c-pr" data-l="Repère de la série">' + (rep ? '<b class="cat-repere">' + esc(rep) + '</b>' + (it.prix_repere_serie.note ? '<small>' + esc(it.prix_repere_serie.note) + '</small>' : '') : '<span class="cat-none">Pas de repère</span>') + '</td>'
@@ -251,7 +272,7 @@ function listBox(fam, opts = {}) {
   const rows = sortItems(data).map(it => row(fam, it, cats.get(it.categorie), d.sources)).join('\n');
   const chips = groups.length ? '<div class="cat-groups" role="group" aria-label="Filtrer par groupe">' + groups.map(g => '<button type="button" class="cat-chip" data-cat-group="' + esc(g) + '" id="' + esc(g === 'accessoires' ? 'accessoires' : fam + '-' + g) + '">' + esc({ vetements: 'Vêtements', accessoires: 'Accessoires', vehicules: 'Véhicules', armes: 'Armes' }[g] || g) + '</button>').join('') + '</div>' : '';
   const tags = compatLabels(fam);
-  return '<details class="cat-box" id="' + esc('box-' + fam) + '" data-catalogue="' + esc(fam) + '"' + (Object.keys(tags).length ? ' data-cat-tags="' + esc(JSON.stringify(tags)) + '"' : '') + (opts.open ? ' open' : '') + '>'
+  return '<details class="cat-box" id="' + esc('box-' + fam) + '" data-catalogue="' + esc(fam) + '"' + (Object.keys(tags).length ? ' data-cat-tags="' + esc(JSON.stringify(tags)) + '"' : '') + (FOLDED.has(fam) ? ' data-cat-desc="fold"' : '') + (opts.open ? ' open' : '') + '>'
     + '<summary class="cat-sum"><span class="cat-sum-t">' + esc(data.titre) + '</span><span class="cat-sum-n"><b>' + c.n + '</b> ' + esc(NOUN[fam] || '') + 'référencés · <b>' + c.confirmes + '</b> confirmés pour GTA VI · ' + c.serie + ' repères de la série</span><span class="cat-chev" aria-hidden="true"></span></summary>'
     + '<div class="cat-body">'
     + (Object.keys(tags).length ? '<p class="cat-filter" data-cat-filter hidden><span>Filtré pour :</span> <b data-cat-filter-label></b> <button type="button" class="cat-reset" data-cat-reset>Tout afficher</button></p>' : '')
@@ -264,9 +285,10 @@ function listBox(fam, opts = {}) {
     + '<button type="reset" class="cat-reset">Tout afficher</button>'
     + '<p class="cat-count" role="status" aria-live="polite" data-cat-count></p>'
     + chips + '</form>'
+    + keyStrip(fam)
     + '<div class="cat-wrap"><table class="cat-table"><caption class="sr-only">' + esc(data.titre) + ' : ' + esc(counterText(fam)) + '</caption><thead><tr><th scope="col">Statut</th><th scope="col">Élément</th><th scope="col">Effet</th><th scope="col">GTA VI</th><th scope="col">Repère de la série</th><th scope="col">Où le trouver</th><th scope="col">Suivi</th></tr></thead><tbody>' + rows + '</tbody></table></div>'
     + '<p class="cat-empty" data-cat-empty hidden>Aucune ligne ne correspond. <button type="button" class="cat-reset" data-cat-reset>Tout afficher</button></p>'
-    + '<div class="cat-legend"><p>' + STATUS_ORDER.map(s => S.pip(s, true)).join(' ') + '</p><p>Un chiffre de GTA V, GTA Online, GTA IV ou San Andreas reste dans la colonne « Repère de la série » : la colonne GTA VI reste à confirmer tant que Rockstar n’a rien publié. « Je l’ai » s’enregistre sur cet appareil et compte dans <a href="' + esc(require('./carnets-source.cjs').carnetHref(fam)) + '">' + esc(require('./carnets-source.cjs').carnetOf(fam).titre) + '</a>, ton carnet sur cet appareil.</p>'
+    + '<div class="cat-legend"><p>Un chiffre de GTA V, GTA Online, GTA IV ou San Andreas reste dans la colonne « Repère de la série » : la colonne GTA VI reste à confirmer tant que Rockstar n’a rien publié. « Je l’ai » s’enregistre sur cet appareil et compte dans <a href="' + esc(require('./carnets-source.cjs').carnetHref(fam)) + '">' + esc(require('./carnets-source.cjs').carnetOf(fam).titre) + '</a>, ton carnet sur cet appareil.</p>'
     + (Object.keys(tags).length ? '<p>Les postes venus de la série s’appliquent aux catégories qu’ils indiquent dans GTA V ou GTA Online : rien n’est confirmé pour GTA VI tant que Rockstar n’a rien publié. Une fiche d’arme n’est citée que quand une source officielle la montre.</p>' : '') + '</div>'
     + '</div></details>';
 }
@@ -302,5 +324,5 @@ function placesOf(fams) {
   for (const fam of fams) for (const it of d.families[fam].items) for (const o of it.ou_le_trouver) if (o.lieu) ids.add(o.lieu);
   return [...ids].map(place);
 }
-module.exports = { FAMILIES, STATUS_ORDER, KIND, VEH_CATS, ARM_CATS, load, check, counts, counterText, listBox, row, rowId, ldItemList, searchEntries, leoRows, progressIds, progressNames, sourcesOf, placesOf, place, repereText, trackable, sortItems, compatLabels, coverage };
+module.exports = { FAMILIES, STATUS_ORDER, KIND, VEH_CATS, ARM_CATS, FOLDED, KEY, load, check, counts, counterText, listBox, row, rowId, ldItemList, searchEntries, leoRows, progressIds, progressNames, sourcesOf, placesOf, place, repereText, trackable, sortItems, compatLabels, coverage };
 if (require.main === module) { const d = load({ fresh: true }); for (const fam of FAMILIES) { const c = counts(fam); console.log(fam + ' : ' + counterText(fam) + ' (officiel ' + c.officiel + ', vu ' + c.vu + ', comm ' + c.comm + ', série ' + c.serie + ', à confirmer ' + c.conf + ', suivis ' + c.suivis + ')'); } }

@@ -1,0 +1,56 @@
+LEONIDAKIT v7.56 — LOT 3 (CONSOMMABLES, VÊTEMENTS ET STYLE, PERSONNALISATION) DE LA MISSION « CORRECTIONS VISUELLES,
+FLUIDITÉ ET LÉO » — archive « modifs » (1er octobre 2026)
+
+Base attendue : ton dépôt GitHub tel qu'il est après le commit « LeonidaKit_v7.55_Lot2_Modifications » (0be6825, 1er octobre,
+13 h 30), c'est-à-dire exactement ce que leonidakit.com sert aujourd'hui. Cette archive est construite sur ce dépôt, pas sur le
+zip v7.53 : ne réapplique ni les archives des lots 1 et 2 (déjà dedans), ni une archive ChatGPT du lot 3.
+L'archive contient seulement les fichiers créés ou modifiés, aux chemins exacts depuis la racine (dossiers armes/, vehicules/,
+lieux/, personnages/, entreprises/, demeures/, planques/, carnets/, leo/, img/officiel/, outils/ compris). Aucune commande de
+build, pas de package.json, api/ et vercel.json ne changent, rien à régler dans Vercel ni dans Brevo.
+
+UNE SUPPRESSION À FAIRE (déjà demandée en v7.55, le fichier est encore sur GitHub ; l'archive ne peut pas supprimer) :
+- img/leonida-silhouette.svg : plus lu par aucune page ; un test du dépôt exige son absence.
+
+1. Copie ton dossier actuel (sauvegarde) ou note le commit courant dans GitHub Desktop.
+2. Extrais l'archive dans la racine du site, écrase les fichiers homonymes (garde le dossier .git).
+3. Supprime img/leonida-silhouette.svg.
+4. Vérifie 2 minutes en local ou sur la prévisualisation Vercel (voir « Pour vérifier »).
+5. Mets en ligne quand tu le décides (GitHub Desktop : commit puis push ; Vercel déploie le contenu tel quel). Rien n'a été publié
+   pour toi.
+Retour arrière : « Revert » du commit dans GitHub Desktop, ou remets ta sauvegarde. Les clés de stockage du navigateur (lk_*) sont
+inchangées : aucune donnée de progression, de carnet, de souhait ou de calcul n'est touchée.
+
+POURQUOI L'ARCHIVE EST GROSSE (411 pages régénérées) : en vérifiant les artefacts, j'ai trouvé que ton dépôt superposait deux
+« v7.54 » — celle du 30 septembre (mode Expert, business plan, carnets, Tuto, Léo) et mon lot 1 du 1er octobre, construit sur le
+zip v7.53 que tu m'avais donné. Les archives des lots 1 et 2 avaient écrasé une partie de la première ; 44 de ses fichiers
+étaient restés. Résultat : empreintes ?v= fausses, Tuto et À propos régénérés depuis d'anciennes sources, 8 tests en échec.
+Le site complet a donc été régénéré depuis les fichiers présents (rien du 30/09 n'est supprimé) et quatre retouches de pages du
+30/09 ont été reposées (comparateur, collectibles, calculateurs, un test). Détail : outils/CHANGEMENTS-v7.56.txt, § 0.
+
+CE QUE CE LOT CHANGE (détail : outils/CHANGEMENTS-v7.56.txt ; preuves : outils/PREUVES-v7.56.md ; suivi des 44 points :
+outils/MATRICE-FLUIDITE.md) :
+- Les 237 « Fiche complète » des six listes (Consommables, Coiffures, Tatouages, Tenues et accessoires, Personnalisation des
+  véhicules et des armes) ouvrent une fiche paysage : visuel et identité à gauche, faits et rubriques à droite ; plein écran
+  empilé sur téléphone ; Échap, croix ou fond pour fermer ; sans script, la boîte de la ligne s'ouvre comme avant.
+- Les statuts sont des badges colorés avec pictogramme et libellé, identiques sur les trois pages ; une légende en tête de
+  chaque liste explique chacun et filtre la liste au clic.
+- Les lignes apparaissent en montant (liste initiale, résultats filtrés, onglets, liens) ; rien ne bouge en « réduire les
+  animations ».
+- Consommables : les 30 descriptions sont repliées, un bouton « Description » par ligne les ouvre et les referme (clavier
+  compris), distinct de « Fiche complète » ; « Fiche complète » des cartes « En un regard » ouvre directement la fiche.
+- Vêtements et style : la liste Tatouages n'a plus les rails colorés sur ses côtés (sa section est opaque comme ses voisines) ;
+  les trois cartes « Adresses » sont des carrousels (flèches, position, points, clavier, balayage, légende et crédits par vue,
+  transition rétro), avec la 4e vue officielle de Stock 305 qui manquait ; « Les articles du bonheur » a sa capture officielle
+  « Goodtime Gear » ; les trois collections tiennent sur une rangée (troisième centrée quand la rangée se replie).
+- Personnalisation : les deux listes et les 98 fiches reçoivent le même traitement, filtres de compatibilité compris.
+
+POUR VÉRIFIER (3 minutes) : ouvre nourriture.html, déplie « Tous les consommables » : la légende en tête, les badges dans la
+colonne Statut, les descriptions repliées ; clique « Description » sur une ligne (elle se déplie seule), puis « Fiche complète »
+(fiche paysage, Échap pour fermer, le focus revient sur le bouton). Ouvre style.html : descends à « Tous les tatouages » (plus de
+rails sur les côtés), puis « Les adresses » (flèches sur les images, compteur « 1 / 4 » sur Stock 305), puis « Collections
+annoncées » (trois cartes illustrées, de front). Ouvre personnalisations.html#perso-vehicules=sport : la liste s'ouvre filtrée,
+« Fiche complète » montre la compatibilité. Réduis la fenêtre à 390 px : la fiche prend tout l'écran, la croix reste visible.
+
+PROCHAIN LOT : lot 4 (À propos sans ton prénom, Mentions, décision sur les cookies : ABOUT-01, ABOUT-02, LEGAL-01, COOKIE-01,
+COOKIE-02), à partir de cette v7.56 — de préférence dans une nouvelle conversation, avec le message de reprise du dossier de
+contrôle.

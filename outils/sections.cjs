@@ -251,10 +251,12 @@ function columns(cards) {
 /* ---------- v7.41 (lot 4) : compositions des hubs du monde ---------- */
 /* v7.42 : « serie » = repère de la série (ce que GTA V, GTA Online, GTA IV ou San Andreas font, présenté comme tel). */
 const STATUS_LABEL = { officiel: 'Officiel', vu: 'Vu dans un média', comm: 'Identification communautaire', serie: 'Repère de la série', conf: 'À confirmer' };
+/* v7.56 (lot 3, UI-02) : la pastille avec libellé porte aussi la classe ed-status--<statut>, pour que les pages de section
+   (Consommables, Vêtements et style, Personnalisation) la dessinent en badge coloré ; ailleurs, rien ne change. */
 function pip(statut, withLabel) {
   const s = STATUS_LABEL[statut] ? statut : 'conf';
   const dot = '<span class="pip pip--' + s + '" aria-hidden="true"></span>';
-  return withLabel ? '<span class="ed-status">' + dot + '<i class="ed-st">' + esc(STATUS_LABEL[s]) + '</i></span>' : dot;
+  return withLabel ? '<span class="ed-status ed-status--' + s + '">' + dot + '<i class="ed-st">' + esc(STATUS_LABEL[s]) + '</i></span>' : dot;
 }
 /* Frise datée : items : [{date, titre, statut, texte, media, alt}] ; le visuel vient de outils/medias-officiels.json. */
 function timeline(items, opts = {}) {

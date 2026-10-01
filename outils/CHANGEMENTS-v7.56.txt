@@ -1,0 +1,121 @@
+LEONIDAKIT v7.56 — mission « corrections visuelles, fluidité et Léo », lot 3 : Consommables, Vêtements et style,
+Personnalisation (1er octobre 2026)
+
+Base : dépôt GitHub TevaWendt/Leonidadex au commit « LeonidaKit_v7.55_Lot2_Modifications » (0be6825, 1er octobre 2026, 13 h 30),
+c'est-à-dire ce que le site en ligne sert. Suivi des 44 exigences : outils/MATRICE-FLUIDITE.md ; preuves : outils/PREUVES-v7.56.md.
+
+0. ÉTAT DU DÉPÔT REMIS EN COHÉRENCE (constaté en vérifiant les artefacts, avant le lot)
+- Le dépôt contenait deux « v7.54 » : celle du 30/09 (archive « Leonidakit-v7.54-modifs », 454 fichiers : mode Expert
+  restauré, business plan, carnets, Tuto, Léo) poussée à 17 h, puis mon lot 1 (construit sur le zip v7.53 fourni) poussé le
+  1er/10, puis le lot 2. Les archives des lots 1 et 2 ont écrasé 48 fichiers que la v7.54 du 30/09 avait aussi modifiés
+  (pages, common.js, catalogue.js, hubs-editoriaux.json…) ; 44 autres fichiers de cette v7.54 (calculateurs-engine/plan/
+  scenario/workspace.js, carnets.js, progression.js, leo-core.js, modele-donnees.json, redaction.cjs, tuto.json, captures
+  Tuto, six tests…) étaient restés en place. Résultat : empreintes ?v= calculées sur d'anciens fichiers, pages Tuto, À propos,
+  carnets et fiches régénérées depuis des sources plus anciennes, 8 tests du dépôt en échec.
+- Décision : rien n'est supprimé (le travail du 30/09 sur le calculateur reste), le site complet est régénéré depuis les
+  sources présentes (node outils/regenerer.cjs) : empreintes exactes, Tuto et À propos à jour, 332 fiches véhicules et armes
+  avec les textes de redaction.cjs du 30/09 (« sans objet » pour les armes de mêlée…), carnets, Léo.
+- Quatre petites retouches de pages que la v7.54 du 30/09 avait faites à la main et que les lots 1 et 2 avaient perdues sont
+  reposées : comparateur.html (deux liens « Quel achat choisir ? » et « Lequel puis-je acheter ? », attendus par
+  comparateur.js), collectibles.html (lien « Ouvrir mon carnet des collectibles »), calculateurs.html (phrase de l'outil
+  « Quoi acheter d'abord ? » : « le tien, l'inverse, les prix croissants et le meilleur trouvé »), outils/tests/regression.test.cjs
+  (étiquette « CALCULÉ AVEC LES EXEMPLES » au chargement, comportement voulu le 30/09).
+- Un point tranché plutôt que fusionné : la v7.54 du 30/09 disait « le nombre exact d'armes de poing reste à confirmer » ;
+  le lot 2 a sourcé le contraire (Rob Nelson via GamingBolt, 07/09/2026 : deux armes de poing dissimulées et deux armes
+  longues). L'affirmation sourcée est gardée partout, l'ancien « Nombre non limité annoncé » du bloc Inventaire est remplacé par
+  le renvoi à cette source, et le test conformite-v754 est aligné (commenté).
+
+A. RÈGLES COMMUNES AUX TROIS SECTIONS
+[UI-01] Fiche paysage commune (catalogue.js, acquisitions.css, outils/catalogues.cjs)
+- « Fiche complète » (237 lignes : consommables 30, coiffures 55, tatouages 24, tenues et accessoires 30, personnalisation
+  des véhicules 58, des armes 40) ouvre un <dialog class="cat-dlg"> en deux colonnes sur ordinateur : à gauche visuel
+  officiel en grande taille (ou pictogramme de catégorie, dit comme tel), statut, catégorie, personnage, nom, description,
+  variantes / compatibilité / note, sources, bouton « Je l'ai » (ou case « J'ai obtenu » reliée à la carte Rockstar) ; à
+  droite les quatre faits de la ligne (Effet, GTA VI, Repère de la série, Où le trouver) puis les rubriques documentaires en
+  colonnes. Sous 761 px : plein écran, une colonne, croix fixe. Échap, la croix ou un clic sur le fond referment ; le focus
+  revient sur le déclencheur ; les colonnes défilent séparément, la molette sur le fond ne fait rien.
+- Le contenu documentaire (.cat-fiche-body) est déplacé depuis la ligne puis remis à sa place : rien n'est écrit deux fois
+  dans la page (poids HTML +15 à +35 Kio seulement, dû à la légende, aux boutons et aux carrousels), et les bonnes données
+  suivent la bonne ligne après filtre ou tri. Sans <dialog> ou sans script, la boîte details de la ligne s'ouvre comme avant.
+- Les cartes « En un regard » (Consommables) : « Fiche complète » ouvre directement la fiche de la ligne, focus de retour sur
+  le lien. Une adresse qui vise une ligne (#consommables-sprunk, recherche, Léo, Progression) pose la ligne sous les bandeaux
+  collants et ouvre sa fiche (comportement de la v7.54 du 30/09, repris en fiche paysage).
+[UI-02] Légendes (outils/sections.cjs, outils/catalogues.cjs, outils/gen-acquisitions.cjs, acquisitions.css)
+- Les cinq statuts sont des badges pleins, mêmes couleurs partout : Officiel (encre), Vu dans un média (ambre), Identification
+  communautaire (violet), Repère de la série (sarcelle), À confirmer (tirets) ; chacun porte un pictogramme (sceau, œil,
+  silhouettes, horloge, point d'interrogation) et son libellé : la couleur n'est jamais seule. La pastille avec libellé porte
+  désormais la classe ed-status--<statut> (sections.cjs) ; le dessin en badge ne s'applique qu'aux pages de section
+  (.ed-zone--acq) et à la fiche paysage ; ailleurs rien ne change.
+- Une légende en tête de chaque liste (après les outils, avant le tableau) : un badge par statut présent, son sens en une
+  ligne, son nombre de lignes ; avec script, un clic filtre la liste (second clic : tout revient), synchronisé avec le menu
+  « Statut ». La ligne de pastilles de l'ancienne légende du bas est retirée ; ses explications restent.
+- Mêmes badges dans la colonne Statut de chaque ligne, dans la fiche, sur les cartes « En un regard », dans la frise Rockstar,
+  les ateliers et les sources de ces pages ; les cinq cartes « niveaux » de la section Sources reçoivent le pictogramme.
+[UI-03] Apparitions verticales (catalogue.js, common.js, acquisitions.css)
+- Chaque ligne entre par le moteur commun LKMotion (classe lk-reveal : translation de 12 px + opacité, vagues de 60 ms,
+  300 ms au plus), pour la liste initiale, les lignes réaffichées par un filtre, un groupe (onglet) ou un lien ; après un tri,
+  rappel court des lignes visibles (Web Animations, 340 ms). Motion+ n'empile plus les tableaux des catalogues d'un bloc
+  (common.js : .cat-table exclu), ce qui couvre aussi les listes de plus de 40 lignes (coiffures, personnalisation véhicules),
+  qui n'avaient aucune apparition.
+- Réduction des mouvements : tout est visible, rien ne bouge ; sans script : tout est visible. La fiche paysage et les
+  descriptions ont leur propre apparition courte (260 ms / 240 ms).
+[UI-04] Calibrage (acquisitions.css)
+- Colonnes du tableau rééquilibrées pour le badge de statut (11 / 26 / 14 / 11 / 12 / 14 / 12 %, et 12 / 23 / 13 / 12 / 12 /
+  14 / 14 % entre 901 et 1 100 px) ; pastille « Prix à venir » / « Ne s'achète pas » resserrée ; téléphone : le badge ouvre la
+  carte, légende serrée. Six largeurs contrôlées (360, 390, 768, 1024, 1280, 1440) : aucun défilement horizontal, rien ne
+  dépasse, fiche ouverte dans l'écran.
+
+B. CONSOMMABLES
+[CONSO-01] Descriptions repliées (outils/catalogues.cjs FOLDED, catalogue.js, gen-acquisitions.cjs)
+- Description, variantes et note de chaque ligne forment un bloc (.cat-more) écrit masqué (hidden) ; un bouton
+  « Description » propre à la ligne (aria-expanded, aria-controls) le déplie et le replie, au clavier aussi ; libellé
+  « Masquer la description » et fond teinté quand c'est ouvert. Sans script : une feuille <noscript> montre les descriptions et
+  cache le bouton. Les autres familles gardent leurs descriptions visibles.
+[CONSO-02] Révélation : apparition courte, bloc ambré à filet, ligne légèrement teintée quand ouvert ; « Description » et
+  « Fiche complète » sont deux boutons distincts de la barre d'actions ; aucun clic ne déclenche les deux.
+[CONSO-03] Section contrôlée en entier : 30 lignes, 5 catégories, 4 statuts, 29 cartes « En un regard » reliées, légende,
+  apparitions, fiches (recette navigateur, inventaire dans les preuves).
+
+C. VÊTEMENTS ET STYLE
+[STYLE-01] Bordure latérale de Tatouages : cause réelle = la section de cette liste avait le fond « papier » (transparent) alors
+  que ses voisines (Coiffures, Tenues) ont le fond « papier 2 » opaque ; les rails colorés animés des bords de page passaient
+  donc derrière elle seule. Correction : toute section de liste porte ed--list et un fond opaque (même chose pour la liste
+  « armes » de Personnalisation) ; rien d'autre n'est masqué.
+[STYLE-02] Les trois listes (coiffures 55, tatouages 24, tenues et accessoires 30 ; 18 catégories) reçoivent UI-01 à UI-04.
+[STYLE-03] Carrousels des trois cartes « Adresses » (gen-acquisitions.cjs carousel(), acquisitions.js, acquisitions.css)
+- Les vues officielles se parcourent sur l'image : flèches dès la première vue, position « 2 / 4 », points cliquables, flèches
+  du clavier, balayage au doigt ; légende et lien « crédits et source » (medias.html#media-…) suivent la vue ; transition rétro
+  de 360 ms (glissement + balayage de lignes d'écran et trait ambre), coupée en « réduire les animations » ; cadrage 16/9 et
+  hauteur de carte inchangés ; l'ancien bouton « Voir les N autres vues officielles » disparaît, « Source et niveau de
+  confirmation » reste. Sans script : toutes les vues sont visibles, empilées, aucune flèche.
+- Rockstar publie 4 vues de Stock 305 (01 à 04) ; le site n'en avait que 3. La vue 02 (Jason devant le mur de bombes de
+  peinture) est ajoutée depuis la galerie officielle (img/officiel/stock-305-clothing-store-02-480/1280.webp, registre
+  outils/medias-officiels.json avec l'URL d'origine, consulté le 01/10/2026). Sara's Unisex Salon : 3 vues, Electric Fang : 4,
+  comme chez Rockstar.
+[STYLE-04] « Les articles du bonheur » : visuel officiel « Goodtime Gear » de l'Édition Ultimate (galerie Rockstar, section
+  « Ultimate Edition Benefits »), décliné en 480 / 1280 px, enregistré et crédité, légende sous l'image (« Capture officielle
+  « Goodtime Gear »… ») avec lien vers les crédits ; medias.html passe à 150 visuels.
+[STYLE-05] Collections : grille dédiée (d-grid--collections) : trois cartes de front dès 1 001 px ; deux colonnes de 701 à
+  1 000 px avec la troisième carte centrée à la même largeur ; une colonne jusqu'à 700 px ; ordre de lecture inchangé.
+
+D. PERSONNALISATION
+[PERSO-01] Les deux listes (véhicules 58 lignes / 18 catégories, armes 40 / 11) reçoivent légende, badges, apparitions, barre
+  d'actions ; le filtre de compatibilité par l'adresse (#perso-vehicules=sport, #perso-armes=girardi-es9) rejoue l'entrée
+  des lignes réaffichées.
+[PERSO-02] Les 98 fiches ouvrent la fiche paysage avec leurs propres données, compatibilité, visuel et case (« Je l'ai » ou
+  carte Rockstar pour le kit Ganado et le motif Vintage) ; vérifié après tri et après filtre.
+
+FICHIERS
+- Modifiés : outils/sections.cjs, outils/catalogues.cjs, outils/gen-acquisitions.cjs, outils/acquisitions.json,
+  outils/medias-officiels.json, outils/hubs-editoriaux.json, catalogue.js, acquisitions.js, acquisitions.css, common.js,
+  comparateur.html, collectibles.html, calculateurs.html, outils/tests/regression.test.cjs, outils/tests/conformite-v754.test.cjs,
+  outils/tests/catalogues-v750.test.cjs, outils/MATRICE-FLUIDITE.md, README.md ; pages régénérées (415) et empreintes ?v=.
+- Nouveaux : img/officiel/goodtime-gear-01-480.webp, -1280.webp, img/officiel/stock-305-clothing-store-02-480.webp,
+  -1280.webp, outils/tests/catalogues-lot3.test.cjs, outils/CHANGEMENTS-v7.56.txt, outils/PREUVES-v7.56.md, LISEZ-MOI-v7.56.txt.
+- À supprimer (déjà demandé en v7.55, toujours présent sur GitHub) : img/leonida-silhouette.svg.
+
+HORS PÉRIMÈTRE, NOTÉ POUR LA SUITE
+- Les rails des bords de page restent visibles derrière les sections au fond « papier » qui ne sont pas des listes (Rockstar,
+  Collections, Pour toi, hubs) : c'est le dessin voulu de ces rails ; seul le cas des listes, signalé, est corrigé.
+- Le mode sans script montre les 237 fiches dépliables dans leurs lignes (comme avant) ; la fiche paysage demande <dialog>
+  (Chrome 37+, Firefox 98+, Safari 15.4+) ; en dessous, la boîte de la ligne s'ouvre.

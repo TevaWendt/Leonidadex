@@ -138,7 +138,7 @@ test('Vêtements et style : carnet de style (5 planches), visuels existants et d
   }
   const nav = [...d.querySelectorAll('.ed-nav a')].map(a => a.getAttribute('href'));
   assert.ok(nav.includes('#collections') && nav.includes('#carnet-de-style'), 'sous-navigation complète');
-  assert.equal(d.querySelectorAll('#collections .d-card img').length, 2, 'les collections illustrées par un visuel officiel');
+  assert.equal(d.querySelectorAll('#collections .d-card img').length, 3, 'les trois collections illustrées par un visuel officiel (v7.56, STYLE-04 : « Les articles du bonheur » a reçu la capture Goodtime Gear)');
   const p = await load(root, 'style.html');
   const wish = p.d.querySelector('.lb-wish'); assert.equal(wish.hidden, false);
   fire(p, wish);

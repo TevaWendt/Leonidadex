@@ -607,6 +607,28 @@
    }
   ]
  },
+ "stock-305-clothing-store-02": {
+  "id": "stock-305-clothing-store-02",
+  "titre": "Stock 305 Clothing Store 02",
+  "alt": "Jason, veste en jean grise, adossé à un mur de bombes de peinture colorées dans la boutique Stock 305 (capture officielle de l’Édition Ultimate).",
+  "source": "https://www.rockstargames.com/VI/media/screenshots",
+  "original": "https://www.rockstargames.com/VI/_next/static/media/ULTIMATE_EDITION_STOCK_305_02.0va5ldrhsejht.jpg?akim=1&imdensity=1&imwidth=1920",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/stock-305-clothing-store-02-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/stock-305-clothing-store-02-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-screenshot",
+  "consultedAt": "2026-10-01"
+ },
  "67-vapid-dominator-buggy-01": {
   "id": "67-vapid-dominator-buggy-01",
   "titre": "’67 Vapid Dominator Buggy 01",
@@ -2960,5 +2982,27 @@
   "timeSeconds": 85.2,
   "timePrecision": "Extraction directe à 85,2 secondes dans le fichier MP4",
   "recadrage": "bandes noires du format cinéma retirées (72 px haut et bas)"
+ },
+ "goodtime-gear-01": {
+  "id": "goodtime-gear-01",
+  "titre": "Goodtime Gear",
+  "alt": "Jason et Lucia en casquettes et tee-shirts Vice City illustrés de Macca the Gator, devant une fresque de l’alligator (capture officielle « Goodtime Gear » de l’Édition Ultimate).",
+  "source": "https://www.rockstargames.com/VI/media/screenshots",
+  "original": "https://www.rockstargames.com/VI/_next/static/media/ULTIMATE_EDITION_GOODTIME_GEAR_01.0t7de8dow381q.jpg?akim=1&imdensity=1&imwidth=1920",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/goodtime-gear-01-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/goodtime-gear-01-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-screenshot",
+  "consultedAt": "2026-10-01"
  }
 }
