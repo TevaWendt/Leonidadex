@@ -68,7 +68,7 @@ Lecture : **kind** = type de contrôle ; **field** = chemin dans le scénario v6
 | onglets | button | tab-roi | Ça vaut le coup ? | tab=roi | selected=false controls=panel-roi |
 | onglets | button | tab-activities | Mes activités | tab=activities | selected=false controls=panel-activities |
 | onglets | button | tab-compare | Quel achat choisir ? | tab=compare | selected=false controls=panel-compare |
-| onglets | button | tab-plan | Mon business plan | tab=plan | selected=false controls=panel-plan |
+| onglets | button | tab-plan | Mon business plan | tab=plan kicker=2 · MON BUSINESS PLAN | selected=false controls=panel-plan |
 | modes | button |  | Simple | mode=quick | pressed=true |
 | modes | button |  | Pas à pas | mode=guided | pressed=false |
 | modes | button |  | Expert | mode=advanced | pressed=false |

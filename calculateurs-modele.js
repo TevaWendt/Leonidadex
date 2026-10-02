@@ -25,6 +25,8 @@
   /* statut d’une valeur publiée (schéma des sources) → statut du modèle */
   var PUBLISHED_STATUS = { officiel: 'official', official: 'official', verified: 'measured', confirmed: 'measured', measured: 'measured', estimated: 'estimated', manual: 'personal', hypothetical: 'personal', unverified: 'estimated' };
   var EPS = 1e-9;
+  /* v7.60 : montant brut avec le dollar à sa place selon la langue de la page (« 1500 $ » / « $1500 ») */
+  function money$(n) { return E && E.dollars ? E.dollars(String(n), ' ') : String(n) + ' $'; }
 
   /* ---------- Valeurs avec statut ---------- */
   function isValue(x) { return !!x && typeof x === 'object' && !Array.isArray(x) && typeof x.s === 'string' && Object.prototype.hasOwnProperty.call(x, 'v'); }
@@ -111,7 +113,7 @@
     if (a.complete && b.complete) {
       var d = a.value - b.value;
       if (Math.abs(d) <= EPS * Math.max(1, Math.abs(a.value), Math.abs(b.value))) return { decided: true, lower: 'equal', gap: 0, reason: 'Même coût.', needed: [] };
-      return { decided: true, lower: d < 0 ? 'a' : 'b', gap: Math.abs(d), reason: (d < 0 ? labels[0] : labels[1]) + ' coûte ' + Math.abs(d) + ' $ de moins.', needed: [] };
+      return { decided: true, lower: d < 0 ? 'a' : 'b', gap: Math.abs(d), reason: (d < 0 ? labels[0] : labels[1]) + ' coûte ' + money$(Math.abs(d)) + ' de moins.', needed: [] };
     }
     if (a.complete && !b.complete && b.value > a.value + EPS) return { decided: true, lower: 'a', gap: null, atLeast: b.value - a.value, reason: 'Même sans ses coûts inconnus, ' + labels[1] + ' coûte déjà plus cher.', needed: [] };
     if (b.complete && !a.complete && a.value > b.value + EPS) return { decided: true, lower: 'b', gap: null, atLeast: a.value - b.value, reason: 'Même sans ses coûts inconnus, ' + labels[0] + ' coûte déjà plus cher.', needed: [] };
@@ -156,7 +158,7 @@
     // Le total garde le détail des manques de l’achat et de l’usage.
     var all = total(acq.rows.map(function (r) { return { label: r.label, value: r.value, field: r.field }; }).concat(recurringParts));
     var resale = o.resale === undefined ? V.na() : V.from(o.resale), futureNet = null, resaleNote;
-    if (V.usable(resale)) { futureNet = all.complete ? all.value - resale.v : null; resaleNote = 'La revente (' + resale.v + ' $, ' + V.statusLabel(resale) + ') baisse le coût net futur seulement le jour où tu revends ; elle ne baisse pas l’argent à payer aujourd’hui.'; }
+    if (V.usable(resale)) { futureNet = all.complete ? all.value - resale.v : null; resaleNote = 'La revente (' + money$(resale.v) + ', ' + V.statusLabel(resale) + ') baisse le coût net futur seulement le jour où tu revends ; elle ne baisse pas l’argent à payer aujourd’hui.'; }
     else if (resale.s === 'unconfirmed' || resale.s === 'unknown') resaleNote = 'Revente non comptée : ' + (resale.s === 'unconfirmed' ? 'rien ne dit qu’elle existe dans GTA VI.' : 'son prix est inconnu.');
     return { acquisition: acq, recurring: recurring, total: all, payNow: acq, lines: lines, resale: resale, futureNet: futureNet, resaleNote: resaleNote || null, horizon: { sessions: horizonNumber(h, 'sessions'), uses: horizonNumber(h, 'uses'), hours: horizonNumber(h, 'hours') } };
   }
@@ -181,10 +183,10 @@
     var spends = total((o.spends || []).map(function (s) { return { label: s.label, value: s.value, field: s.field }; }));
     var available = cash - reserve, required = spends.value, gap = required - available;
     if (!spends.complete) {
-      if (gap > EPS) return { state: 'short', exact: false, shortfall: gap, required: required, available: available, after: null, unknown: spends.missing, reason: 'Il manque au moins ' + gap + ' $ (et une dépense obligatoire est encore inconnue).' };
+      if (gap > EPS) return { state: 'short', exact: false, shortfall: gap, required: required, available: available, after: null, unknown: spends.missing, reason: 'Il manque au moins ' + money$(gap) + ' (et une dépense obligatoire est encore inconnue).' };
       return { state: 'unknown', exact: false, shortfall: null, required: required, available: available, after: null, unknown: spends.missing, reason: 'Une dépense obligatoire est inconnue : on ne peut pas dire si tu peux payer maintenant.' };
     }
-    if (gap > EPS) return { state: 'short', exact: true, shortfall: gap, required: required, available: available, after: cash - required, unknown: [], reason: 'Il manque ' + gap + ' $ pour payer sans toucher à l’argent gardé de côté.' };
+    if (gap > EPS) return { state: 'short', exact: true, shortfall: gap, required: required, available: available, after: cash - required, unknown: [], reason: 'Il manque ' + money$(gap) + ' pour payer sans toucher à l’argent gardé de côté.' };
     return { state: 'ok', exact: true, shortfall: 0, required: required, available: available, after: cash - required, unknown: [], reason: null };
   }
 

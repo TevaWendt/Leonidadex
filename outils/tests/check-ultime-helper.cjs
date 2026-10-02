@@ -9,7 +9,12 @@ const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
 const root=path.resolve(__dirname,'../..');
 function siteData(){const ctx={window:{}};vm.createContext(ctx);for(const f of ['vehicules-data.js','armes-data.js','acquisitions-data.js','calculateurs-catalogue.js','calculateurs-activites.js','calculateurs-data.js'])vm.runInContext(fs.readFileSync(path.join(root,f),'utf8'),ctx);const D=ctx.window.LKCalcData;return {D,catalogue:D.catalogue(),sourceActivities:D.activities(),presets:JSON.parse(JSON.stringify(D.presets))};}
 /* Empreinte des données, calculée comme dans calculateurs.js (dataVersion) : une sauvegarde faite avec cette empreinte ne déclenche pas « les données ont changé ». */
-function dataVersion(D,catalogue,sourceActivities){let fp=2166136261;for(const c of JSON.stringify([catalogue.map(({imageFallback,schemaImage,...e})=>e),sourceActivities])){fp^=c.charCodeAt(0);fp=Math.imul(fp,16777619);}return 'schema'+D.meta.schemaVersion+'-'+(fp>>>0).toString(16);}
+/* v7.60 : empreinte des seules données de calcul (même formule que calculateurs.js), identique dans toutes les langues ;
+   legacyDataVersion = l'ancienne formule (libellés compris), toujours reconnue. */
+const fnv=str=>{let h=2166136261;for(const c of str){h^=c.charCodeAt(0);h=Math.imul(h,16777619);}return (h>>>0).toString(16);};
+const FP_KEYS=['id','type','price','fieldMeta','purchasable','purchaseCandidate','evidenceLevel','activityIds','categoryId','status','verifiedAt','speed','acceleration','seats'];
+function dataVersion(D,catalogue,sourceActivities){return 'schema'+D.meta.schemaVersion+'-'+fnv(JSON.stringify([catalogue.map(e=>FP_KEYS.map(k=>e[k]===undefined?null:e[k])),sourceActivities.map(({name,source,note,...a})=>a)]));}
+function legacyDataVersion(D,catalogue,sourceActivities){return 'schema'+D.meta.schemaVersion+'-'+fnv(JSON.stringify([catalogue.map(({imageFallback,schemaImage,...e})=>e),sourceActivities]));}
 const VEHICLES=['albany-emperor','albany-primo'];
 /* État de base : tous les outils répondent ; les achats partagés sont deux véhicules du site (prix personnels) et un achat libre. */
 function baseState(B,initial,catalogue){
@@ -42,4 +47,4 @@ function rng(seed){let a=seed>>>0;return function(){a|=0;a=a+0x6D2B79F5|0;let t=
 const pick=(r,arr)=>arr[Math.floor(r()*arr.length)];
 /* Nombre « réaliste » entre 0 et max, souvent rond, parfois décimal, parfois extrême. */
 function amount(r,max=1e12){const k=r();if(k<0.05)return 0;if(k<0.1)return max;if(k<0.15)return Math.round(r()*1000)/100;if(k<0.6)return Math.round(r()*1e6/1000)*1000;if(k<0.9)return Math.round(r()*1e8);return Math.round(r()*max);}
-module.exports={root,siteData,dataVersion,baseState,planWithMissions,ZONES,readZones,mirrors,flat,rng,pick,amount,VEHICLES};
+module.exports={root,siteData,dataVersion,legacyDataVersion,baseState,planWithMissions,ZONES,readZones,mirrors,flat,rng,pick,amount,VEHICLES};

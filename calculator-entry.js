@@ -51,7 +51,9 @@
     return (hours ? format.format(hours) + ' h' : '') + (remainder ? (hours ? ' ' : '') + remainder + ' min' : '');
   }
   function words(n) { if (n === null || n < 1000) return ''; if (n >= 1e9) return format.format(n / 1e9) + (n / 1e9 >= 2 ? ' milliards' : ' milliard'); if (n >= 1e6) return format.format(n / 1e6) + (n / 1e6 >= 2 ? ' millions' : ' million'); return format.format(n / 1e3) + ' mille'; }
-  function echoes() { keys.forEach(key => { const node = document.getElementById('lk-mini-echo-' + key); if (!node) return; const field = form.elements.namedItem(key), v = parse(field.value), w = words(v); node.textContent = w ? '= ' + w + ' $' : ''; if (v !== null && v >= 1000 && Number.isInteger(v) && document.activeElement !== field && /^[\d\s\u00a0\u202f]+$/.test(field.value)) { const g = String(v).replace(/\B(?=(\d{3})+(?!\d))/g, ' '); if (field.value !== g) field.value = g; } }); }
+  /* v7.60 (langues) : en anglais, « 200,000 » ; en français, « 200 000 » comme avant */
+  const en = !!(E && E.lang && E.lang !== 'fr');
+  function echoes() { keys.forEach(key => { const node = document.getElementById('lk-mini-echo-' + key); if (!node) return; const field = form.elements.namedItem(key), v = parse(field.value), w = words(v); node.textContent = w ? '= ' + (E && E.dollars ? E.dollars(w, ' ') : w + ' $') : ''; if (v !== null && v >= 1000 && Number.isInteger(v) && document.activeElement !== field && (/^[\d\s\u00a0\u202f]+$/.test(field.value) || (en && /^[\d,]+$/.test(field.value)))) { const g = en ? format.format(v) : String(v).replace(/\B(?=(\d{3})+(?!\d))/g, ' '); if (field.value !== g) field.value = g; } }); }
   function preview() {
     echoes();
     const values = inputs(false);
@@ -65,7 +67,7 @@
     const caption = document.createElement('span'); caption.textContent = result.totalMinutes === 0 ? 'Tu as déjà assez d’argent.' : 'de jeu';
     main.append(big, caption);
     const detail = document.createElement('p');
-    const missing = document.createElement('b'); missing.textContent = format.format(result.missing) + ' $';
+    const missing = document.createElement('b'); missing.textContent = E && E.dollars ? E.dollars(format.format(result.missing), ' ') : format.format(result.missing) + ' $';
     detail.append(document.createTextNode('Il te manque '), missing);
     output.append(main, detail);
   }

@@ -347,7 +347,7 @@ const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)')
       if(card.hidden !== hidden) card.hidden = hidden;
       if(show){ rang++; if(!hidden && !card.classList.contains('in')) card.classList.add('in'); }
     });
-    if(plusBt){ const reste = shown - Math.min(shown, limite); plusBt.hidden = reste <= 0; plusBt.textContent = 'Afficher ' + Math.min(reste, LOT) + ' de plus (' + reste + ' restant' + (reste > 1 ? 's' : '') + ')'; }
+    if(plusBt){ const reste = shown - Math.min(shown, limite); plusBt.hidden = reste <= 0; plusBt.textContent = 'Afficher ' + Math.min(reste, LOT) + ' de plus (' + reste + (reste > 1 ? ' restants' : ' restant') + ')'; }
     const countHTML = '<strong>' + shown + '</strong> ' + motCarte + (shown > 1 ? 's' : '');
     if(countEl.innerHTML !== countHTML) countEl.innerHTML = countHTML;
     emptyEl.hidden = shown > 0;

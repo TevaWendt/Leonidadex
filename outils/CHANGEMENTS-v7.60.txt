@@ -1,0 +1,84 @@
+LEONIDAKIT v7.60 — langues : sélecteur « Changer la langue » et version anglaise (lot 1), 2 octobre 2026
+
+Base : v7.59 (check ultime du calculateur), elle-même construite sur le commit 8c1ddd30 (v7.58). L'archive « modifs » de cette
+version est cumulative depuis 8c1ddd30 : elle contient aussi tout ce que la v7.59 a changé. Rien n'est publié.
+Procédure et fonctionnement : outils/LANGUES.md ; preuves : outils/PREUVES-v7.60.md.
+
+Décisions (validées avant le travail) : pages anglaises dans un dossier /en/ (vraies pages générées, référencées) ; lot 1 =
+socle + pages clés (accueil, calculateur complet, Tuto, À propos, Contact, Mentions ; hubs, listes et fiches en lots 2 et 3) ;
+Léo absent des pages anglaises (Léo anglais = lot à part) ; détection de la langue par un petit bandeau, jamais de redirection.
+
+1. CE QUE VOIT LE VISITEUR
+- Barre « Changer la langue » tout en haut de chacune des 415 pages françaises (hors redirections) et des 6 pages anglaises :
+  globe, libellé, code de la langue ; menu Français / English (langue affichée cochée) ; <details> natif (marche sans
+  JavaScript), Échap et clic à côté ferment, liens du menu hauts de 44 px, absente à l’impression. Une page sans traduction mène à l'accueil
+  anglais (« home page »).
+- Bandeau de suggestion (common.js) : si la langue choisie avant, ou à défaut la première langue du navigateur parmi celles
+  publiées, a une version de la page, un bandeau ambre la propose dans cette langue (« This page is also available in English.
+  Read in English · No thanks » / « Cette page existe aussi en français. Lire en français · Non merci »). Jamais de redirection.
+- Stockage : une seule clé nouvelle, lk_lang_v1 (la langue choisie), écrite seulement après un clic (menu, « Read in English »,
+  « No thanks »). Mentions : ligne « Langue » dans la liste des données du navigateur, entrée v7.60 de l'historique, « Dernière
+  mise à jour : 2 octobre 2026 ».
+- Pages anglaises : accueil, calculateur (9 outils × 3 modes, business plan, carnets, hub), Tuto (15 chapitres, captures du
+  calculateur anglais), À propos, Contact, Mentions et confidentialité (« la version française fait foi »). Liens vers une page
+  encore en français : hreflang="fr", badge FR (liens de texte), « (in French) » lu par les lecteurs d'écran (tous).
+- Léo : non chargé sur une page anglaise ; les textes qui le présentent disent « French only for now ».
+- Référencement : canonical et og:url en /en/, hreflang fr / en / x-default sur les 6 paires, og:locale en_US, inLanguage,
+  6 adresses anglaises dans sitemap.xml.
+
+2. LE GÉNÉRATEUR (nouveau : outils/langues.json, outils/langues.cjs, outils/langues/en/)
+- Appelé à la fin de outils/sync-site.cjs (donc par node outils/regenerer.cjs), qui pose aussi la barre de langue sur chaque page.
+- Pages : segmentation parse5 (une phrase et ses balises en ligne = une clé avec repères <1>…</1>), attributs lus, métas,
+  JSON-LD, liens réécrits, nombres français des champs (value="200 000" → 200,000), options de formulaire sans value : la valeur
+  française est gardée (celle qu'attend api/contact.js), captures du Tuto remplacées par celles de la langue
+  (outils/tuto-captures-en.json), badge FR posé sur la page finie.
+- Scripts : lecture jeton par jeton (acorn) ; seules les chaînes connues de la mémoire changent ; HTML dans une chaîne traduit
+  zone par zone (y compris un attribut ouvert ou une fin d'attribut) ; JSON porté par un script traduit valeur par valeur sauf
+  les clés d'identifiants (jsonCode) ; adresses des pages traduites réécrites ; script traduit copié dans /en/ avec son empreinte.
+- Mémoire : 4 115 entrées (16 lots + code.json), glossaire _glossaire.md. Clés par fichier (« fichier.js::texte »), règles selon
+  le code qui précède ({ "si", "texte" }), nombres qui changent reconnus (« 617 tests » sert pour « 620 tests »), _ignorer
+  pour les identifiants qui ressemblent à du français.
+- Commandes : --extraire en [--tout], --verifier en ; mode sans écriture (tests : en/ à jour).
+
+3. SOURCES RENDUES TRADUISIBLES (le français ne change pas, sauf les corrections du § 4)
+- calculateurs-engine.js : LKCalcEngine.dollars(texte) (« 1 250 $ » / « $1,250 »), plural(n) (français n > 1 ; anglais n ≠ 1),
+  dateText(date, options) (« 1er décembre 2026 à 9 h 05 » / « Dec 1, 2026, 9:05 AM »), lang ; parseLocalizedNumber lit
+  « 1,250.5 » sur une page anglaise. Ajouts non énumérables (la liste des fonctions publiques ne change pas).
+- 48 pluriels « + 's' » : nom → E.plural ; adjectif accordé écrit en entier (« finie / finies », « notée / notées », « Écartée
+  / Écartées », état des conditions « remplie / remplies »…) ; plural() du plan accepte la forme plurielle.
+- Argent écrit par E.dollars dans calculateurs.js, -scenario.js (30 endroits), -modele.js, -simple.js, -visuals.js,
+  calculator-entry.js, tuto.js ; préréglages « 100 k $ » ; séparateurs de milliers des champs (simple.js, calculator-entry.js)
+  selon la langue ; dates du carnet (longDate, dayText) par E.dateText.
+- calculateurs.js : empreinte des données (dataVersion) calculée sur les seuls champs économiques et identifiants : un calcul
+  enregistré ou partagé s'ouvre dans les deux langues ; l'ancienne empreinte reste reconnue.
+- calculateurs-hub.js : phrases anglaises comprises (« I have $200,000 », « 1.5 million », « 250k », « 2 hours a day »,
+  « is it worth it », « which one should I choose »…). calculateurs-workspace.js, -scenario.js, -motion.js : expressions qui
+  lisent un libellé acceptent aussi le libellé anglais.
+- calculateurs.html / calculateurs-brand.css : les deux textes posés par la feuille de style (« 2 · MON BUSINESS PLAN », « : mon
+  but, mes chiffres… ») viennent d'attributs de la page (data-kicker, data-desc) ; même affichage en français.
+- contact.js : motif prérempli par sa valeur ; sur une page traduite, le message d'erreur du serveur est affiché dans la langue
+  de la page (mêmes textes que api/contact.js).
+- outils/gen-tuto.cjs : data-capture sur chaque capture ; outils/tuto-shots.py <racine> <langue> (captures img/tuto/en/).
+- outils/gen-informations.cjs, outils/site-informations.json : ligne « Langue », historique v7.60, date du 2 octobre 2026.
+
+4. CORRECTIONS DU FRANÇAIS TROUVÉES EN TRADUISANT
+- « Il se rembourse après jamais de jeu » → « Il ne se rembourse jamais avec ces chiffres » (Ça vaut le coup ?, seuils).
+- « soit 1 parties » → « soit 1 partie » (même endroit).
+- Terrain affiché par son code (« Ne convient pas : il va sur eau ») → en mots (« il va sur l’eau », « hors des routes »,
+  « dans les airs », « sur la route »).
+- « doit rapporter plus que ses frais (plus que ses frais) » → sans la répétition (moteur, rotation).
+- « Joue 1 h : +100 000 $ environ. » → « Joue 1 h : environ +100 000 $. » (plan).
+- Achat libre sans nom (nom par défaut) : « Oui, tu peux l’acheter. » au lieu de « Oui, tu peux acheter Mon achat libre. »
+  (même règle que D-05 en v7.59, ici dans le détail de l'achat).
+
+5. TESTS
+- Nouveaux : outils/tests/langues.test.cjs (14 tests) ; outils/tests/langues-helper.cjs (repère du français) ;
+  outils/tests/langues-browser.cjs (Chromium, 491 contrôles ; LK_LANGUES_TEXTES=<fichier> pour la relecture).
+- Adaptés : coverage.test.cjs (une adresse de dossier /en/ du sitemap se lit en/index.html), outils/preuve-confidentialite.cjs
+  (l'accueil anglais porte le même formulaire d'alerte), calculateurs-astra.test.cjs (« tu peux l’acheter »),
+  check-ultime-helper.cjs (nouvelle empreinte), inventaire du calculateur régénéré (attribut data-kicker).
+
+6. LIMITES (voir outils/LANGUES.md)
+- Les autres pages restent en français (badge FR) ; la recherche cherche dans les noms français ; les emails d'alerte et de
+  contact restent en français ; Léo n'existe qu'en français. Quand Rockstar publiera des prix, les nouvelles phrases des données
+  (donnees-publiees) devront être traduites : l'extraction les signalera et le test langues échouera tant qu'elles manquent.

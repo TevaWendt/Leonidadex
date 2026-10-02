@@ -110,6 +110,9 @@ for(const file of htmlFiles){let s=fs.readFileSync(file,'utf8');if(file.startsWi
  if(canonical&&!/name="robots" content="[^"]*noindex/.test(s)&&!s.includes('http-equiv="refresh"')&&file!=='404.html')canonicals.push(canonical);
  // Navigation principale : toutes les pages importantes, onglet actif selon la page
  {const ul=require('./site-shell.cjs').nav(file,prefix);s=s.replace(/(<nav id="nav" aria-label="Navigation principale">)[\s\S]*?<\/nav>/,'$1'+ul+'</nav>');}
+ // v7.60 : barre « Changer la langue » tout en haut de chaque page (outils/langues.cjs, langues publiées de outils/langues.json) ;
+ // pas sur une page de renvoi (meta refresh) ni sur le fichier de vérification Google.
+ if(!s.includes('http-equiv="refresh"'))s=require('./langues.cjs').placeLangBar(s,file,'fr');
  // v7.40 : puces « Explorer les contenus documentés » identiques en bas de chaque page de section (site-shell.cjs)
  if(!file.includes('/'))s=require('./site-shell.cjs').placeChips(s,file);
  // v7.41 : encart calculateur, même composant et même position (avant les puces) sur toutes les pages de section (site-shell.cjs)
@@ -249,3 +252,7 @@ require('child_process').execFileSync(process.execPath,[path.join(__dirname,'gen
 /* v7.59 (check ultime, D-03) : fiches.js charge calculator-entry.css à la demande ; son empreinte suit la feuille (jamais écrite à la main). */
 {const css=path.join(root,'calculator-entry.css'),js=path.join(root,'fiches.js');if(fs.existsSync(css)&&fs.existsSync(js)){const v=crypto.createHash('sha256').update(fs.readFileSync(css)).digest('hex').slice(0,12);const cur=fs.readFileSync(js,'utf8'),next=cur.replace(/calculator-entry\.css\?v=(?:ENTRYCSS|[a-f0-9]{12}|\d{8})/g,'calculator-entry.css?v='+v);if(next!==cur)fs.writeFileSync(js,next);}}
 {const hashes=new Map();for(const file of htmlFiles){let html=fs.readFileSync(file,'utf8');html=html.replace(/((?:href|src)=")([^"?#]+\.(?:css|js))(?:\?v=[a-f0-9]+)?("[^>]*>)/g,(match,start,url,end)=>{if(/^(?:https?:)?\/\//.test(url))return match;const target=url.startsWith('/')?path.join(root,url.slice(1)):path.resolve(root,path.dirname(file),url);if(!fs.existsSync(target))return match;if(!hashes.has(target))hashes.set(target,crypto.createHash('sha256').update(fs.readFileSync(target)).digest('hex').slice(0,12));return start+url+'?v='+hashes.get(target)+end;});fs.writeFileSync(file,html);}}
+
+// v7.60 : langues publiées (outils/langues.json) : pages traduites dans /en/…, scripts traduits, hreflang, sitemap.
+// Fait en dernier, à partir des pages françaises finales (empreintes comprises).
+{const L=require('./langues.cjs');const r=L.toutGenerer(root);for(const x of r.summary)console.log('Langue '+x.code+' : '+x.pages+' pages, '+x.scripts+' scripts traduits, '+x.manques+' texte(s) sans traduction'+(x.casses?', '+x.casses+' repère(s) cassé(s)':'')+(x.conflits?', '+x.conflits+' conflit(s)':'')+'.');}

@@ -8,7 +8,7 @@
  "contactRetentionDecidedAt": "2026-10-01",
  "publicationDirector": null,
  "editorContact": "contact@leonidakit.com",
- "checkedAt": "2026-10-01",
+ "checkedAt": "2026-10-02",
  "hosting": {
   "name": "Vercel Inc.",
   "address": "440 N Barranca Avenue #4133, Covina, CA 91723, États-Unis",
@@ -39,6 +39,11 @@
   }
  },
  "history": [
+  {
+   "date": "2026-10-02",
+   "version": "v7.60",
+   "text": "Langues : version anglaise de l’accueil, du calculateur, du Tuto, d’À propos, de Contact et de ces Mentions ; une seule clé de plus dans ton navigateur (lk_lang_v1, la langue choisie), écrite seulement après un clic ; aucun cookie, aucun service extérieur. En cas de différence, la version française de ces Mentions fait foi."
+  },
   {
    "date": "2026-10-01",
    "version": "v7.58",
@@ -82,6 +87,6 @@
   "serviceWorkers": 0,
   "thirdPartyBeforeAction": "aucune",
   "thirdPartyOnAction": "envoi de l’alerte de l’accueil : navigation POST vers affd58b3.sibforms.com (Brevo), déclenchée par le bouton « Me prévenir » et la case cochée",
-  "storages": "localStorage et sessionStorage, clés « lk » seulement, écrites après une action (saisie du calculateur, « Je l’ai », brouillon de Contact, sélection à comparer, conversation avec Léo)"
+  "storages": "localStorage et sessionStorage, clés « lk » seulement, écrites après une action (saisie du calculateur, « Je l’ai », brouillon de Contact, sélection à comparer, conversation avec Léo, choix de la langue)"
  }
 }

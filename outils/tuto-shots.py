@@ -2,7 +2,12 @@
 import json, threading, functools, http.server, socketserver, os
 from PIL import Image
 from playwright.sync_api import sync_playwright
-import sys; ROOT=sys.argv[1] if len(sys.argv)>1 else '.'; OUT=ROOT+'/img/tuto'; os.makedirs(OUT,exist_ok=True)
+import sys; ROOT=sys.argv[1] if len(sys.argv)>1 else '.'
+# v7.60 (langues) : python3 outils/tuto-shots.py <racine> en → captures de /en/calculateurs.html dans img/tuto/en et outils/tuto-captures-en.json
+LANG=sys.argv[2] if len(sys.argv)>2 else 'fr'; SUB='' if LANG=='fr' else '/'+LANG
+OUT=ROOT+'/img/tuto'+SUB; os.makedirs(OUT,exist_ok=True)
+# noms écrits par le joueur dans les exemples (jamais traduits par le site) : écrits dans la langue de la capture
+NOMS={'fr':{'Livraison':'Livraison','Braquage':'Braquage','Normal':'Normal','Prudent':'Prudent'},'en':{'Livraison':'Delivery','Braquage':'Heist','Normal':'Normal','Prudent':'Cautious'}}[LANG]
 class Q(http.server.SimpleHTTPRequestHandler):
     def log_message(self,*a): pass
 srv=socketserver.ThreadingTCPServer(('127.0.0.1',0),functools.partial(Q,directory=ROOT)); port=srv.server_address[1]
@@ -24,9 +29,9 @@ SPEC={
  'roi-simple':([TAB('roi'),"(()=>{document.querySelector('[data-b-roi-manual]').click();})()",SET('f-roi-purchase','120000'),SET('roi-capital','500000'),"(()=>{const s=document.getElementById('f-roi-mode');if(s){s.value='continuous';s.dispatchEvent(new Event('change',{bubbles:true}));}})()",SET('f-roi-revenueHourly','20000'),SET('f-roi-hours','10')],'#panel-roi','#panel-roi .calc-card:not(.calc-result)','#roi-results'),
  'budget-simple':([TAB('budget'),SET('budget-reserve','30000'),"(()=>{const s=document.getElementById('f-budget-source');s.value='manual';s.dispatchEvent(new Event('change',{bubbles:true}));})()",SET('f-budget-extra','0'),SET('f-budget-allocations-1','0'),SET('f-budget-allocations-2','0'),SET('f-budget-allocations-3','0'),SET('f-budget-allocations-4','0'),SET('f-budget-allocations-0','140000')],'#panel-budget','#panel-budget .calc-card:not(.calc-result)','#budget-results'),
  'compare-simple':([TAB('compare'),PICK('compare-search','kamacho'),PICK('compare-search','bati'),SET('compare-price-0','150000'),SET('compare-price-1','50000'),"document.querySelector('[data-field=\"assets.1.utility\"]')&&(()=>{const el=document.querySelector('[data-field=\"assets.1.utility\"]');el.value='5';el.dispatchEvent(new Event('change',{bubbles:true}));})()","(()=>{const el=document.querySelector('[data-field=\"assets.2.utility\"]');if(el){el.value='3';el.dispatchEvent(new Event('change',{bubbles:true}));}})()"],'#panel-compare','#panel-compare .calc-card:not(.calc-result)','#compare-results'),
- 'plan':([TAB('plan'),"(()=>{const s=document.getElementById('f-plan-goal-kind');if(s){s.value='purchase';s.dispatchEvent(new Event('change',{bubbles:true}));}})()",PICK('plan-search','kamacho'),SET('plan-price','1000000'),"(()=>{const s=document.getElementById('f-plan-source');if(s){s.value='missions';s.dispatchEvent(new Event('change',{bubbles:true}));}})()","document.querySelector('[data-b-plan-m-add]').click()",SET('plan-m-0-name','Livraison'),SET('plan-m-0-reward','60000'),SET('plan-m-0-cost','5000'),SET('plan-m-0-duration','20'),"document.querySelector('[data-b-plan-m-add]').click()",SET('plan-m-1-name','Braquage'),SET('plan-m-1-reward','150000'),SET('plan-m-1-cost','20000'),SET('plan-m-1-duration','40'),"(()=>{document.querySelectorAll('.b-plan-mission').forEach(d=>d.open=false);})()","document.querySelector('[data-fold-head=\"plan-program\"]')?.click()"],'#panel-plan','#panel-plan .calc-card:not(.calc-result)','#plan-results'),
+ 'plan':([TAB('plan'),"(()=>{const s=document.getElementById('f-plan-goal-kind');if(s){s.value='purchase';s.dispatchEvent(new Event('change',{bubbles:true}));}})()",PICK('plan-search','kamacho'),SET('plan-price','1000000'),"(()=>{const s=document.getElementById('f-plan-source');if(s){s.value='missions';s.dispatchEvent(new Event('change',{bubbles:true}));}})()","document.querySelector('[data-b-plan-m-add]').click()",SET('plan-m-0-name',NOMS['Livraison']),SET('plan-m-0-reward','60000'),SET('plan-m-0-cost','5000'),SET('plan-m-0-duration','20'),"document.querySelector('[data-b-plan-m-add]').click()",SET('plan-m-1-name',NOMS['Braquage']),SET('plan-m-1-reward','150000'),SET('plan-m-1-cost','20000'),SET('plan-m-1-duration','40'),"(()=>{document.querySelectorAll('.b-plan-mission').forEach(d=>d.open=false);})()","document.querySelector('[data-fold-head=\"plan-program\"]')?.click()"],'#panel-plan','#panel-plan .calc-card:not(.calc-result)','#plan-results'),
  # v7.47 : « Mes calculs enregistrés » est un tiroir ; deux essais (Normal, Prudent) cochés pour la comparaison
- 'carnets':([TAB('goal'),SET('calc-name','Normal'),"document.getElementById('calc-save').click()",SET('f-goal-hourly','80000'),SET('calc-name','Prudent'),"document.getElementById('calc-saved-open').click()","document.querySelector('#saved-now [data-b-save-copy]').click()","(()=>{document.querySelectorAll('#saved-list [data-b-pick]').forEach(i=>{i.checked=true;i.dispatchEvent(new Event('change',{bubbles:true}));});document.querySelector('.calc-drawer-in').scrollTop=0;})()"],'#calc-drawer','#saved-now','#saved-list'),
+ 'carnets':([TAB('goal'),SET('calc-name',NOMS['Normal']),"document.getElementById('calc-save').click()",SET('f-goal-hourly','80000'),SET('calc-name',NOMS['Prudent']),"document.getElementById('calc-saved-open').click()","document.querySelector('#saved-now [data-b-save-copy]').click()","(()=>{document.querySelectorAll('#saved-list [data-b-pick]').forEach(i=>{i.checked=true;i.dispatchEvent(new Event('change',{bubbles:true}));});document.querySelector('.calc-drawer-in').scrollTop=0;})()"],'#calc-drawer','#saved-now','#saved-list'),
 }
 manifest={};answers={}
 def rect(pg,sel):
@@ -42,7 +47,7 @@ with sync_playwright() as p:
             w,h=(390,844) if mobile else (1440,900)
             ctx=b.new_context(viewport={'width':w,'height':h},device_scale_factor=(2 if key=='carnets' and not mobile else 1),is_mobile=mobile,has_touch=mobile,reduced_motion='reduce')
             pg=ctx.new_page(); pg.route('**/*',lambda r: r.abort() if 'fonts.g' in r.request.url else r.continue_())
-            pg.goto(f'http://127.0.0.1:{port}/calculateurs.html',wait_until='load'); pg.wait_for_timeout(500)
+            pg.goto(f'http://127.0.0.1:{port}{SUB}/calculateurs.html',wait_until='load'); pg.wait_for_timeout(500)
             for s in steps: pg.evaluate(s); pg.wait_for_timeout(350)
             pg.evaluate("document.querySelectorAll('.lk-sticky').forEach(e=>e.hidden=true);const st=document.createElement('style');st.textContent='header,.lk-rails,.calc-wizard{visibility:hidden!important}#lk-status,.lk-status,#leo-launch,.leo-launch,.b-drawer-status,.calc-reminder{display:none!important}';document.head.appendChild(st)")
             pg.wait_for_selector(sel.split(',')[0].strip(),state='visible',timeout=8000)
@@ -52,12 +57,12 @@ with sync_playwright() as p:
             if not mobile and im.size[0]>1208: im=im.resize((1208,int(im.size[1]*1208/im.size[0])))
             if mobile and im.size[0]>356: im=im.resize((356,int(im.size[1]*356/im.size[0])))
             im.save(path,'WEBP',quality=82)
-            manifest[name]={'src':'/img/tuto/'+name+'.webp','width':im.size[0],'height':im.size[1],'regions':{'inputs':pct(box,ri),'results':pct(box,rr)}}
+            manifest[name]={'src':'/img/tuto'+SUB+'/'+name+'.webp','width':im.size[0],'height':im.size[1],'regions':{'inputs':pct(box,ri),'results':pct(box,rr)}}
             answers[name]=pg.evaluate("s=>{const e=document.querySelector(s);return e?e.innerText.replace(/\\s+/g,' ').trim().slice(0,1500):null}",zr)
             print(name,im.size); ctx.close()
     b.close()
 srv.shutdown()
-json.dump(manifest,open(ROOT+'/outils/tuto-captures.json','w'),ensure_ascii=False,indent=1)
+json.dump(manifest,open(ROOT+'/outils/tuto-captures'+('' if LANG=='fr' else '-'+LANG)+'.json','w'),ensure_ascii=False,indent=1)
 print('manifeste',len(manifest))
 # v7.53 : le texte de chaque réponse capturée, pour vérifier que le Tuto dit ce que montre la capture (hors dépôt si demandé)
 if os.environ.get('TUTO_TEXTES'): json.dump(answers,open(os.environ['TUTO_TEXTES'],'w'),ensure_ascii=False,indent=1)

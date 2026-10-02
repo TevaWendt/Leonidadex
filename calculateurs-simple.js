@@ -6,6 +6,8 @@
 (function () {
   'use strict';
   var E = window.LKCalcEngine, panels = document.getElementById('calc-panels');
+  /* v7.60 : le dollar à sa place selon la langue de la page */
+  var dollars = function (t) { return E && E.dollars ? E.dollars(t, ' ') : t + ' $'; };
   if (!panels) return;
   var nf = new Intl.NumberFormat('fr-FR', { maximumFractionDigits: 2 });
   var $ = function (id) { return document.getElementById(id); };
@@ -21,14 +23,16 @@
     if (n >= 1e6) return nf.format(n / 1e6) + (n / 1e6 >= 2 ? ' millions' : ' million');
     return nf.format(n / 1e3) + ' mille';
   }
-  function group(n) { return Number.isInteger(n) ? String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') : String(n).replace('.', ','); }
+  /* v7.60 (langues) : « 200 000 » en français, « 200,000 » en anglais */
+  var en = !!(E && E.lang && E.lang !== 'fr');
+  function group(n) { if (en) return nf.format(n); return Number.isInteger(n) ? String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') : String(n).replace('.', ','); }
   function echoes() {
     document.querySelectorAll('.lk-echo[data-echo]').forEach(function (node) {
       var input = $(node.dataset.echo); if (!input) return;
       var n = parse(input.value), w = words(n);
-      node.textContent = w ? '= ' + w + ' $' : '';
+      node.textContent = w ? '= ' + dollars(w) : '';
       /* séparateurs de milliers, uniquement quand on n'est pas en train d'écrire dans la case */
-      if (n !== null && n >= 1000 && Number.isInteger(n) && document.activeElement !== input && /^[\d\s\u00a0\u202f]+$/.test(input.value)) { var g = group(n); if (input.value !== g) input.value = g; }
+      if (n !== null && n >= 1000 && Number.isInteger(n) && document.activeElement !== input && (/^[\d\s\u00a0\u202f]+$/.test(input.value) || (en && /^[\d,]+$/.test(input.value)))) { var g = group(n); if (input.value !== g) input.value = g; }
     });
   }
   /* Réglette d'objectif : 10 000 $ à 10 000 000 $, échelle logarithmique, liée dans les deux sens. */
@@ -38,7 +42,7 @@
   function slider() {
     var range = $('lk-goal-range'), target = $('f-goal-target'), out = $('lk-goal-range-v'); if (!range || !target) return;
     var v = parse(target.value);
-    if (v !== null && v > 0) { if (document.activeElement !== range) range.value = toPos(v); if (out) out.textContent = nf.format(v) + ' $'; }
+    if (v !== null && v > 0) { if (document.activeElement !== range) range.value = toPos(v); if (out) out.textContent = dollars(nf.format(v)); }
     document.querySelectorAll('[data-target]').forEach(function (b) { b.setAttribute('aria-pressed', String(Number(b.dataset.target) === v)); });
     var daily = $('f-goal-dailyMinutes'), d = daily ? parse(daily.value) : null;
     document.querySelectorAll('[data-daily]').forEach(function (b) { b.setAttribute('aria-pressed', String(Number(b.dataset.daily) === d)); });
@@ -55,7 +59,7 @@
     var r = parse(reward.value), m = parse(minutes.value); helped = null;
     if (reward.value.trim() === '' || minutes.value.trim() === '') out.textContent = 'Écris les deux nombres : on calcule ton gain par heure.';
     else if (r === null || m === null || r < 0 || m <= 0) out.textContent = 'Écris des nombres plus grands que 0, par exemple 25 000 et 15.';
-    else { helped = Math.round(r / m * 60); out.textContent = 'Ça fait environ ' + nf.format(helped) + ' $ par heure de jeu.'; }
+    else { helped = Math.round(r / m * 60); out.textContent = 'Ça fait environ ' + dollars(nf.format(helped)) + ' par heure de jeu.'; }
     apply.disabled = helped === null;
   }
   function fire(node, type) { node.dispatchEvent(new Event(type, { bubbles: true })); }

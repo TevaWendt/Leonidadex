@@ -1,0 +1,20 @@
+{
+ "_note": "v7.60 — lot 16 : messages d'erreur du formulaire de contact (page traduite : même message que le serveur, dans la langue de la page) et Mentions datées du 2 octobre 2026.",
+ ": ton texte est prêt à copier.": ": your text is ready to copy.",
+ "Choisis un motif dans la liste.": "Choose a reason from the list.",
+ "L’adresse de la page n’est pas valide.": "The page address isn’t valid.",
+ "Le lien de la source n’est pas valide.": "The source link isn’t valid.",
+ "Ton adresse e-mail ne semble pas valide (elle est facultative).": "Your email address doesn’t look valid (it’s optional).",
+ "Le message n’a pas pu être lu.": "The message couldn’t be read.",
+ "Le message n’a pas pu être envoyé.": "The message couldn’t be sent.",
+ "Envoi trop rapide : relis ton message puis réessaie dans quelques secondes.": "Sent too fast: read your message again, then try again in a few seconds.",
+ "La page est ouverte depuis trop longtemps : recharge-la puis réessaie.": "This page has been open too long: reload it, then try again.",
+ "Seul l’envoi du formulaire est accepté ici.": "Only form submissions are accepted here.",
+ "Envoi refusé depuis cette adresse.": "Sending refused from this address.",
+ "Le message est trop long.": "The message is too long.",
+ "Trop d’envois en peu de temps : réessaie dans dix minutes, ou écris directement à": "Too many messages in a short time: try again in ten minutes, or write directly to",
+ "L’envoi n’est pas disponible pour le moment. Écris directement à": "Sending isn’t available right now. Write directly to",
+ "Le message n’est pas parti. Écris directement à": "The message didn’t go through. Write directly to",
+ "Qui publie le site, qui l’héberge, ce qui reste dans ton navigateur et ce qui part. Vérifié dans le code du site le 2 octobre 2026.": "Who publishes the site, who hosts it, what stays in your browser and what leaves it. Checked against the site’s code on October 2, 2026.",
+ "Dernière mise à jour : <1>2 octobre 2026</1>.": "Last updated: <1>October 2, 2026</1>."
+}

@@ -108,7 +108,7 @@ function scan(){
   zones.forEach((el,i)=>{if(!seen.has(el)&&!waiting.has(el)&&visible(el))queue(el,()=>{seen.add(el);if(!location.hash||!el.closest(location.hash==='#atelier'?'#atelier':'.not-a-real-target'))reveal(el,i%4);});});
   main.querySelectorAll('.calc-result').forEach((el,i)=>{if(!observed.has(el)){el.style.setProperty('--c-phase',String(-(i%4)*2)+'s');watch(el);if(!intersections)el.classList.toggle('c-inview',inside(el));}});
   main.querySelectorAll('[data-c-stage]').forEach(el=>{const key='stage:'+el.dataset.cStage,value=el.dataset.cStageState;const old=states.get(key);states.set(key,value);if(old&&old!==value&&inside(el))play(el,[{backgroundColor:value==='Terminé'?'#d7eae0':'#eee0e9'},{backgroundColor:'#fff9fc'}],times.standard);});
-  const saved=main.querySelector('.b-save-state');if(saved){saved.dataset.cDirty=String(/non enregistr|mémoire seulement/.test(saved.textContent));stateEffect(saved,'saved-status',saved.textContent);}
+  const saved=main.querySelector('.b-save-state');if(saved){saved.dataset.cDirty=String(/non enregistr|mémoire seulement|not saved|memory only/.test(saved.textContent));stateEffect(saved,'saved-status',saved.textContent);}
   const ref=panel?.querySelector('[data-b-reference]')?.value;
   main.querySelectorAll('.b-notebook-entry').forEach(el=>{const id=el.querySelector('[data-b-rename]')?.dataset.bRename;const tag=el.querySelector('.c-reference-tag');if(id===ref&&!tag){const t=document.createElement('span');t.className='c-reference-tag';t.textContent='Référence de comparaison';el.append(t);}else if(id!==ref)tag?.remove();});
  });

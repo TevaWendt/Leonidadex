@@ -1,0 +1,16 @@
+{
+ "_note": "Valeurs de code (pas de texte) : format des nombres et des dates. « _ignorer » : chaînes qui ressemblent à du français mais sont des identifiants (chapitres du Tuto, familles des carnets, clés de données) : jamais traduites, jamais signalées.",
+ "fr-FR": "en-US",
+ "_ignorer": [
+  "$/partie",
+  "[object Date]",
+  "achats",
+  "armes",
+  "aucun",
+  "calcul",
+  "fiche",
+  "objectif",
+  "prix",
+  "temps"
+ ]
+}

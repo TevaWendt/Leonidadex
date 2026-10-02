@@ -306,7 +306,7 @@
 })();
 
 /* Léo : amorçage isolé. Les données ne se chargent qu'à l'ouverture du panneau. */
-(function(){'use strict';if(!document.querySelector('main')||document.getElementById('leo-style'))return;const base=(document.currentScript&&document.currentScript.src||'').replace(/[^/]*$/,'')||'/';const css=document.createElement('link');css.id='leo-style';css.rel='stylesheet';css.href=base+'leo.css?v=4a0ef6f82ce6';css.onload=()=>{const script=document.createElement('script');script.src=base+'leo-loader.js?v=4a0ef6f82ce6';document.head.append(script);};document.head.append(css);})();
+(function(){'use strict';if(!document.querySelector('main')||document.getElementById('leo-style'))return;/* v7.60 : Léo ne parle que français pour l’instant (outils/langues.json → leo) : pas de Léo sur une page traduite */if(!/^fr\b/i.test(document.documentElement.lang||'fr'))return;const base=(document.currentScript&&document.currentScript.src||'').replace(/[^/]*$/,'')||'/';const css=document.createElement('link');css.id='leo-style';css.rel='stylesheet';css.href=base+'leo.css?v=17a89479c8a1';css.onload=()=>{const script=document.createElement('script');script.src=base+'leo-loader.js?v=17a89479c8a1';document.head.append(script);};document.head.append(css);})();
 
 /* Lot C (v7.32) : du mouvement sur toutes les pages. Les blocs de contenu apparaissent au défilement (par vagues,
    avec un léger décalage), les piles d'images s'ouvrent, les titres de section tirent leur trait, l'en-tête prend
@@ -599,4 +599,26 @@
     window.addEventListener('resize', function () { clearTimeout(timer); timer = setTimeout(arm, 150); });
     arm();
   });
+})();
+/* v7.60 (langues) : menu « Changer la langue » (barre tout en haut, posée par outils/sync-site.cjs) et bandeau de suggestion.
+   Le choix n'est écrit (clé lk_lang_v1) qu'après un clic : une langue du menu, « Lire en … » ou « Non merci ». Jamais de
+   redirection : le bandeau propose la même page dans la langue choisie (ou celle du navigateur) quand elle existe. */
+(function(){'use strict';
+ const bar=document.querySelector('[data-lk-langbar]');if(!bar)return;
+ const KEY='lk_lang_v1',here=(document.documentElement.lang||'fr').slice(0,2).toLowerCase(),menu=bar.querySelector('details');
+ const read=()=>{try{return localStorage.getItem(KEY);}catch(e){return null;}};
+ const keep=v=>{try{localStorage.setItem(KEY,v);}catch(e){/* stockage indisponible : le lien fonctionne quand même */}};
+ bar.addEventListener('click',e=>{const a=e.target.closest('a[data-lk-lang][href]');if(a)keep(a.dataset.lkLang);});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&menu&&menu.open){menu.open=false;const s=menu.querySelector('summary');if(s)s.focus();}});
+ document.addEventListener('click',e=>{if(menu&&menu.open&&!menu.contains(e.target))menu.open=false;});
+ const offers=[...bar.querySelectorAll('a[data-lk-equiv][href]')];if(!offers.length)return;
+ const pref=read();let target=null;
+ if(pref){if(pref!==here)target=offers.find(a=>a.dataset.lkLang===pref)||null;}
+ else{const wanted=(navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'']).map(l=>String(l).slice(0,2).toLowerCase()).find(l=>l===here||offers.some(a=>a.dataset.lkLang===l));if(wanted&&wanted!==here)target=offers.find(a=>a.dataset.lkLang===wanted)||null;}
+ if(!target||!target.dataset.offre)return;
+ const box=document.createElement('div');box.className='lk-lang-offer';box.lang=target.dataset.lkLang;box.setAttribute('role','region');box.setAttribute('aria-label',target.dataset.offre);
+ const p=document.createElement('p');p.textContent=target.dataset.offre+' ';
+ const go=document.createElement('a');go.href=target.getAttribute('href');go.hreflang=target.dataset.lkLang;go.setAttribute('data-lk-lang',target.dataset.lkLang);go.textContent=target.dataset.aller;go.addEventListener('click',()=>keep(target.dataset.lkLang));
+ const no=document.createElement('button');no.type='button';no.textContent=target.dataset.rester||'×';no.addEventListener('click',()=>{keep(here);box.remove();});
+ p.append(go);box.append(p,no);bar.insertAdjacentElement('afterend',box);
 })();

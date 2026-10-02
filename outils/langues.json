@@ -1,0 +1,151 @@
+{
+ "_note": "v7.60 : langues du site. Le français est la source : toutes les pages sont écrites et générées en français, puis outils/langues.cjs produit chaque langue publiée dans son dossier (/en/…) à partir des pages françaises finales et de la mémoire de traduction outils/langues/<code>/*.json. « etat » : publiee (dans le sélecteur « Changer la langue »), prevue (préparée, pas encore montrée). « pages » : les pages traduites ; une page absente de la liste renvoie vers la page française (lien marqué FR). Léo n'est proposé que dans les langues de « leo ». « scriptsPartages » : scripts jamais copiés ni traduits (index de recherche, manifeste) : la page traduite charge ceux du site. « scriptsDonnees » : fichiers de données ; seules les chaînes nommées dans la mémoire (libellés affichés) y sont traduites, les autres (descriptions des fiches) ne sont pas signalées. « jsonCode » : clés des données JSON portées par un script (modele-donnees.js) qui contiennent des identifiants, jamais traduites.",
+ "source": "fr",
+ "leo": [
+  "fr"
+ ],
+ "langues": [
+  {
+   "code": "fr",
+   "nom": "Français",
+   "locale": "fr-FR",
+   "og": "fr_FR",
+   "etat": "publiee",
+   "dossier": "",
+   "libelles": {
+    "changer": "Changer la langue",
+    "accueil": "page d’accueil",
+    "offre": "Cette page existe aussi en français.",
+    "aller": "Lire en français",
+    "rester": "Non merci"
+   }
+  },
+  {
+   "code": "en",
+   "nom": "English",
+   "locale": "en-US",
+   "og": "en_US",
+   "etat": "publiee",
+   "dossier": "en",
+   "libelles": {
+    "changer": "Change language",
+    "accueil": "home page",
+    "offre": "This page is also available in English.",
+    "aller": "Read in English",
+    "rester": "No thanks",
+    "versFr": "in French"
+   },
+   "pages": [
+    "index.html",
+    "calculateurs.html",
+    "tuto.html",
+    "a-propos.html",
+    "contact.html",
+    "mentions-legales.html"
+   ]
+  },
+  {
+   "code": "es",
+   "nom": "Español",
+   "locale": "es-ES",
+   "og": "es_ES",
+   "etat": "prevue",
+   "dossier": "es"
+  },
+  {
+   "code": "it",
+   "nom": "Italiano",
+   "locale": "it-IT",
+   "og": "it_IT",
+   "etat": "prevue",
+   "dossier": "it"
+  },
+  {
+   "code": "de",
+   "nom": "Deutsch",
+   "locale": "de-DE",
+   "og": "de_DE",
+   "etat": "prevue",
+   "dossier": "de"
+  },
+  {
+   "code": "pt",
+   "nom": "Português",
+   "locale": "pt-BR",
+   "og": "pt_BR",
+   "etat": "prevue",
+   "dossier": "pt"
+  }
+ ],
+ "attributs": [
+  "title",
+  "alt",
+  "aria-label",
+  "aria-description",
+  "aria-roledescription",
+  "placeholder",
+  "data-short",
+  "data-label",
+  "data-teaser",
+  "data-vide-txt",
+  "data-nom",
+  "data-title",
+  "data-legend",
+  "data-hint",
+  "data-empty",
+  "data-unit-label",
+  "data-ask",
+  "data-kicker",
+  "data-desc"
+ ],
+ "metas": [
+  "description",
+  "og:title",
+  "og:description",
+  "twitter:title",
+  "twitter:description",
+  "og:image:alt",
+  "twitter:image:alt"
+ ],
+ "jsonld": [
+  "name",
+  "description",
+  "text",
+  "headline",
+  "alternateName",
+  "caption",
+  "abstract",
+  "disambiguatingDescription"
+ ],
+ "scriptsPartages": [
+  "search-index.js",
+  "search-lieux.js",
+  "assets-manifest.js",
+  "carte-gtadb.js"
+ ],
+ "scriptsDonnees": [
+  "vehicules-data.js",
+  "armes-data.js",
+  "acquisitions-data.js",
+  "calculateurs-catalogue.js",
+  "calculateurs-activites.js"
+ ],
+ "jsonCode": [
+  "id",
+  "genre",
+  "outils",
+  "mecanique",
+  "categories",
+  "statut",
+  "version",
+  "origine",
+  "rubrique",
+  "vide",
+  "valeurs",
+  "url",
+  "familles",
+  "nature",
+  "catalogue",
+  "categorie"
+ ]
+}

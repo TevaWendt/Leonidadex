@@ -94,7 +94,7 @@ test('Un seul outil, session vide : « Ça vaut le coup ? » répond avec une re
  clean(p);});
 test('Achat plaisir : accessibilité, ce qui reste, temps pour retrouver son argent, aucun remboursement inventé',async()=>{const p=await page('roi');
  clickSel(p,'[data-b-roi-manual]');edit(p,'f-roi-purchase',150000);edit(p,'roi-capital',200000);edit(p,'roi-reserve',20000);
- let t=text(p,'roi-results');assert.match(t,/Oui, tu peux acheter/);assert.match(t,/ne rapporte rien/);assert.doesNotMatch(t,/Remboursé après \d/);assert.doesNotMatch(t,/rendement|score/i);
+ let t=text(p,'roi-results');assert.match(t,/Oui, tu peux (?:l’)?acheter/,'v7.60 : un achat libre sans nom : « tu peux l’acheter »');assert.match(t,/ne rapporte rien/);assert.doesNotMatch(t,/Remboursé après \d/);assert.doesNotMatch(t,/rendement|score/i);
  assert.match(t,/Pour aller plus loin\s: Ce que tu gagnes par heure — pour savoir en combien de temps/,'v7.49');
  edit(p,'roi-recovery-hourly',50000);t=text(p,'roi-results');assert.match(t,/3 h de jeu pour retrouver ton argent/);
  edit(p,'f-roi-purchase',300000);t=text(p,'roi-results');assert.match(t,/Pas encore : il te manque 120\s000/);assert.match(t,/joue encore 2 h 24/i);

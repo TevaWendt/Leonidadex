@@ -11,6 +11,33 @@
   var MAX_MIXED_RUNS = 100000;
   var SESSION_BEAM_WIDTH = 24;
   var SESSION_MAX_RUNS = 256;
+  /* v7.60 (langues) : la langue de la page (<html lang>) règle la saisie et l'affichage des nombres. Le français reste la
+     référence (Node, tests) ; une page anglaise accepte « 1,250.50 » et écrit « $1,250 ». */
+  var LANG = (function () { try { var l = typeof document !== 'undefined' && document.documentElement && document.documentElement.lang; return l ? String(l).slice(0, 2).toLowerCase() : 'fr'; } catch (e) { return 'fr'; } }());
+  /* Un montant déjà mis en forme (« 1 250 », « 1,250 ») → avec le signe dollar à la place d'usage : après en français
+     (séparateur choisi par l'appelant, inchangé), devant en anglais (« -$1,250 »). */
+  /* Pluriel du nom qui suit un nombre : règle française (plus de 1) ou anglaise (tout sauf 1). */
+  function plural(n, lang) { var l = lang || LANG; return l === 'fr' ? n > 1 : Math.abs(n) !== 1; }
+  /* Date lisible : « 3 décembre 2026 » (« 1er » le premier du mois) en français, « December 3, 2026 » ailleurs ;
+     opts.time ajoute l'heure, opts.short le mois abrégé, opts.year:false retire l'année. */
+  var MONTHS_FR = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
+  var MONTHS_FR_SHORT = ['janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.'];
+  function dateText(d, opts, lang) {
+    var l = lang || LANG, o = opts || {}; if (Object.prototype.toString.call(d) !== '[object Date]' || !Number.isFinite(d.getTime())) return '';
+    if (l === 'fr') {
+      var day = d.getDate() === 1 ? '1er' : String(d.getDate()), sp = o.nbsp ? '\u00a0' : ' ';
+      var txt = day + sp + (o.short ? MONTHS_FR_SHORT : MONTHS_FR)[d.getMonth()] + (o.year === false ? '' : sp + d.getFullYear());
+      return o.time ? txt + ' à ' + d.getHours() + sp + 'h' + sp + String(d.getMinutes()).padStart(2, '0') : txt;
+    }
+    var f = { month: o.short ? 'short' : 'long', day: 'numeric' }; if (o.year !== false) f.year = 'numeric';
+    if (o.time) { f.hour = 'numeric'; f.minute = '2-digit'; }
+    try { return d.toLocaleString(l === 'en' ? 'en-US' : l, f); } catch (e) { return d.toISOString().slice(0, 10); }
+  }
+  function dollars(numberText, sep, lang) {
+    var l = lang || LANG, t = String(numberText);
+    if (l === 'fr') return t + (sep === undefined ? '\u00a0' : sep) + '$';
+    return t.replace(/^([-\u2212]?)\s*/, '$1$$');
+  }
 
   function fail(shape, reason) { return Object.assign({}, shape, { valid: false, reason: reason }); }
   function finish(result, shape) {
@@ -47,11 +74,16 @@
 
   // Parse only unambiguous French grouping and French/decimal-point fractions.
   // This boundary helper never turns a blank or a missing value into zero.
-  function parseLocalizedNumber(input) {
+  function parseLocalizedNumber(input, lang) {
     var shape = { value: null };
     if (typeof input === 'number') return Number.isFinite(input) ? finish({ value: input }, shape) : fail(shape, 'Saisissez un nombre fini.');
     if (typeof input !== 'string' || !input.trim()) return fail(shape, 'Écris un nombre.');
     var text = input.trim();
+    /* v7.60 : hors du français, la virgule groupe les milliers et le point sépare les décimales (« 1,250.50 ») */
+    if ((lang || LANG) !== 'fr') {
+      if (!/^[+-]?(?:\d+|\d{1,3}(?:[, \u00a0\u202f]\d{3})+)(?:\.\d+)?$/.test(text)) return fail(shape, 'Écris un nombre comme 1 250,50, sans unité.');
+      return finish({ value: Number(text.replace(/[, \u00a0\u202f]/g, '')) }, shape);
+    }
     if (!/^[+-]?(?:\d+|\d{1,3}(?:[ \u00a0\u202f]\d{3})+)(?:[,.]\d+)?$/.test(text)) return fail(shape, 'Écris un nombre comme 1 250,50, sans unité.');
     return finish({ value: Number(text.replace(/[ \u00a0\u202f]/g, '').replace(',', '.')) }, shape);
   }
@@ -126,7 +158,7 @@
       var investment = activities.reduce(function (sum, a) { return sum + a.investment; }, 0);
       var spendable = subtract(capital, reserve);
       if (spendable < investment && !equal(spendable, investment)) return fail(shape, 'Pas assez d’argent pour acheter ce qu’il faut avant de commencer toutes ces activités, sans toucher à l’argent mis de côté.');
-      if (activities.some(function (a) { return a.net <= 0; })) return fail(shape, 'Chaque activité de cette rotation doit rapporter plus que ses frais (plus que ses frais).');
+      if (activities.some(function (a) { return a.net <= 0; })) return fail(shape, 'Chaque activité de cette rotation doit rapporter plus que ses frais.');
       if (activities.some(function (a) { return a.activeMinutes > daily; })) return fail(shape, 'Une activité de la rotation ne tient pas dans ton temps de jeu par jour.');
       var cash = capital - investment;
       var ready = activities.map(function () { return 0; });
@@ -392,7 +424,7 @@
       for (var i = 0; i < items.length; i += 1) {
         var item = items[i];
         var wait = timeTo(item.price + reserve, cash, hourly);
-        if (wait === null) return fail(Object.assign({}, orderShape, {steps: steps, blockedIndex: i, shortfall: item.price + reserve - cash}), 'Étape ' + (i + 1) + ' bloquée : il manque ' + (item.price + reserve - cash).toLocaleString('fr-FR') + ' $ pour « ' + item.name + ' ». ' + (hourly !== null && hourly < 0 ? 'Tes achats d’avant coûtent plus à l’usage qu’ils ne rapportent : tu perds de l’argent en jouant.' : 'Tu ne gagnes rien par heure avant cet achat.'));
+        if (wait === null) return fail(Object.assign({}, orderShape, {steps: steps, blockedIndex: i, shortfall: item.price + reserve - cash}), 'Étape ' + (i + 1) + ' bloquée : il manque ' + dollars((item.price + reserve - cash).toLocaleString('fr-FR'), ' ') + ' pour « ' + item.name + ' ». ' + (hourly !== null && hourly < 0 ? 'Tes achats d’avant coûtent plus à l’usage qu’ils ne rapportent : tu perds de l’argent en jouant.' : 'Tu ne gagnes rien par heure avant cet achat.'));
         time += wait;
         // Waiting ends exactly at the price: avoid residual floating-point debt.
         cash = wait > 0 ? reserve : cash - item.price;
@@ -517,7 +549,7 @@
         if (missingAfter > 0 && rate <= 0) return fail(planShape, 'Avec ce gain par heure, la somme visée ne peut pas être atteinte.');
         finalTargetHours = missingAfter > 0 ? missingAfter / rate : 0;
         totalHours += finalTargetHours;
-        steps.push({ name: 'Avoir ' + goalTarget.toLocaleString('fr-FR') + ' $', kind: 'goal', waitHours: finalTargetHours, atHours: totalHours, capitalAfter: goalTarget + reserve, hourlyAfter: rate });
+        steps.push({ name: 'Avoir ' + dollars(goalTarget.toLocaleString('fr-FR'), ' ') + '', kind: 'goal', waitHours: finalTargetHours, atHours: totalHours, capitalAfter: goalTarget + reserve, hourlyAfter: rate });
       }
       var totalMinutes = totalHours * 60;
       var sessions = totalMinutes === 0 ? 0 : ceil(totalMinutes / dailyMinutes);
@@ -1000,7 +1032,7 @@
           : needUnits && !(unitsGain > 0 || passiveUnits > 0) && sessionGain + passive - upkeepNow > 1e-9 ? 'Aucune de tes missions ne donne de points : écris les points gagnés par mission (ou par heure).'
           : !available.length && locked.length ? 'Aucune mission n’est possible au départ : « ' + locked[0].name + ' » demande d’abord ' + lockedReason(c, st, locked[0]).join(', ') + '. Ajoute une mission faisable tout de suite, ou coche « je l’ai déjà » sur ce qu’il te faut.'
           : pendingOnce.length && !available.length ? 'La mission de déblocage « ' + pendingOnce[0].name + ' » ne peut pas se faire : ' + (lockedReason(c, st, pendingOnce[0]).length ? 'il faut d’abord ' + lockedReason(c, st, pendingOnce[0]).join(', ') + '.' : 'elle ne tient pas dans une partie ou ses frais dépassent ton argent disponible.')
-          : available.length && available.every(function (a) { return !affordableStart(c, st, a); }) ? '« ' + available[0].name + ' » demande ' + ((available[0].entry.cost || 0) + (available[0].paid ? 0 : available[0].entry.investment || 0)).toLocaleString('fr-FR') + ' $ avant de commencer, et il ne te reste que ' + Math.max(0, subtract(st.cash, c.reserve)).toLocaleString('fr-FR') + ' $ utilisables' + (st.route.some(function (r) { return r.type === 'acquire'; }) ? ' après tes achats d’avant' : '') + ' : baisse l’argent gardé de côté ou ajoute une mission moins chère à lancer.'
+          : available.length && available.every(function (a) { return !affordableStart(c, st, a); }) ? '« ' + available[0].name + ' » demande ' + dollars(((available[0].entry.cost || 0) + (available[0].paid ? 0 : available[0].entry.investment || 0)).toLocaleString('fr-FR'), ' ') + ' avant de commencer, et il ne te reste que ' + dollars(Math.max(0, subtract(st.cash, c.reserve)).toLocaleString('fr-FR'), ' ') + ' utilisables' + (st.route.some(function (r) { return r.type === 'acquire'; }) ? ' après tes achats d’avant' : '') + ' : baisse l’argent gardé de côté ou ajoute une mission moins chère à lancer.'
           : 'Aucune mission ne rentre dans une partie avec ce que tu as : ajoute du temps, choisis une mission plus courte, ou vérifie tes frais et tes achats.';
         return fail(Object.assign({}, missionShape, { sessions: sessions, route: st.route }), why);
       }
@@ -1084,9 +1116,9 @@
       var poor = c.acts.filter(function (a) { return !a.once && a.res.net > 0 && satisfied(a.requires, st) && satisfied(a.requiresMissions, st) && !affordableStart(c, st, a); })[0];
       var nextBuy2 = c.purchases.filter(function (x) { return !x.owned; })[0];
       var why = nextBuy2 && !satisfied(nextBuy2.requires, st) ? 'L’achat « ' + nextBuy2.name + ' » attend d’abord ' + lockedReason(c, st, { requires: nextBuy2.requires.filter(function (id) { return c.purchases.some(function (y) { return y.id === id; }); }), requiresMissions: nextBuy2.requires.filter(function (id) { return c.acts.some(function (y) { return y.id === id; }); }) }).join(', ') + ', qui ne peut pas se faire.'
-        : nextBuy2 ? 'Il manque ' + Math.max(0, nextBuy2.price + c.reserve - st.cash).toLocaleString('fr-FR') + ' $ pour « ' + nextBuy2.name + ' », et aucune mission possible sans lui ne rapporte : ajoute une mission faisable maintenant (financement), ou baisse la réserve.'
+        : nextBuy2 ? 'Il manque ' + dollars(Math.max(0, nextBuy2.price + c.reserve - st.cash).toLocaleString('fr-FR'), ' ') + ' pour « ' + nextBuy2.name + ' », et aucune mission possible sans lui ne rapporte : ajoute une mission faisable maintenant (financement), ou baisse la réserve.'
         : locked.length ? '« ' + locked[0].name + ' » demande d’abord ' + lockedReason(c, st, locked[0]).join(', ') + '.'
-        : poor ? '« ' + poor.name + ' » demande ' + Math.round((poor.entry.cost || 0) + (poor.paid ? 0 : poor.entry.investment || 0)).toLocaleString('fr-FR') + ' $ de frais avant de commencer ; en gardant ' + Math.round(c.reserve).toLocaleString('fr-FR') + ' $ de côté, il ne te reste que ' + Math.round(Math.max(0, st.cash - c.reserve)).toLocaleString('fr-FR') + ' $. Baisse la réserve ou les frais, ou ajoute une mission moins chère pour démarrer.'
+        : poor ? '« ' + poor.name + ' » demande ' + dollars(Math.round((poor.entry.cost || 0) + (poor.paid ? 0 : poor.entry.investment || 0)).toLocaleString('fr-FR'), ' ') + ' de frais avant de commencer ; en gardant ' + dollars(Math.round(c.reserve).toLocaleString('fr-FR'), ' ') + ' de côté, il ne te reste que ' + dollars(Math.round(Math.max(0, st.cash - c.reserve)).toLocaleString('fr-FR'), ' ') + '. Baisse la réserve ou les frais, ou ajoute une mission moins chère pour démarrer.'
         : 'Aucune mission possible ne rapporte plus que ses frais avec ce que tu as.';
       return fail(Object.assign({}, missionShape, { route: st.route, continuous: true }), why);
     }
@@ -1152,7 +1184,7 @@
       // Parcours sans parties : une marche par dépense ou récompense (l’argent n’arrive jamais « petit à petit »).
       if (result.continuous) {
         var pts = [{ hours: 0, cash: result.startCash, units: result.startUnits, label: 'Départ', purchase: null }], prev = result.startCash;
-        (result.events || []).forEach(function (e) { var h = e.t / 60; if (e.cash !== prev) { pts.push({ hours: h, cash: prev, label: null, purchase: null, hold: true }); pts.push({ hours: h, cash: e.cash, label: e.label, purchase: e.type === 'spend' && /^Achat/.test(e.label) ? e.label.replace(/^Achat « |»$/g, '') : null }); prev = e.cash; } });
+        (result.events || []).forEach(function (e) { var h = e.t / 60; if (e.cash !== prev) { pts.push({ hours: h, cash: prev, label: null, purchase: null, hold: true }); pts.push({ hours: h, cash: e.cash, label: e.label, purchase: e.type === 'spend' && /^(?:Achat|Purchase)\b/.test(e.label) ? e.label.replace(/^(?:Achat « |Purchase “)|[»”]$/g, '') : null }); prev = e.cash; } });
         return finish({ points: pts, stepped: true }, shape);
       }
       var minutes = result.totalSessions ? result.totalMinutes / result.totalSessions : 0;
@@ -1162,5 +1194,6 @@
     } catch (error) { return fail(shape, error.message); }
   }
 
-  return Object.freeze({ missionPlan:missionPlan, missionAlternatives:missionAlternatives, missionDeadline:missionDeadline, missionCurve:missionCurve, investmentCompare:investmentCompare, planCurve:planCurve, planCashAt:planCashAt, planStrategies:planStrategies, planDeadline:planDeadline, nextSession:nextSession, choose:choose, businessPlan:businessPlan, worth:worth, investmentActivities: investmentActivities, sessionProjection: sessionProjection, activity: activity, goal: goal, goalMixed: goalMixed, inverse: inverse, roi: roi, purchase: purchase, budget: budget, order: order, compareBuy: compareBuy, goalContinuous: goalContinuous, sessionPlan: sessionPlan, parseLocalizedNumber: parseLocalizedNumber });
+  /* v7.60 : dollars et lang sont des aides d’affichage, pas des calculs : non énumérables (l’API des calculs reste la même). */
+  return Object.freeze(Object.defineProperties({ missionPlan:missionPlan, missionAlternatives:missionAlternatives, missionDeadline:missionDeadline, missionCurve:missionCurve, investmentCompare:investmentCompare, planCurve:planCurve, planCashAt:planCashAt, planStrategies:planStrategies, planDeadline:planDeadline, nextSession:nextSession, choose:choose, businessPlan:businessPlan, worth:worth, investmentActivities: investmentActivities, sessionProjection: sessionProjection, activity: activity, goal: goal, goalMixed: goalMixed, inverse: inverse, roi: roi, purchase: purchase, budget: budget, order: order, compareBuy: compareBuy, goalContinuous: goalContinuous, sessionPlan: sessionPlan, parseLocalizedNumber: parseLocalizedNumber }, { dollars: { value: dollars }, lang: { value: LANG }, plural: { value: plural }, dateText: { value: dateText } }));
 }));

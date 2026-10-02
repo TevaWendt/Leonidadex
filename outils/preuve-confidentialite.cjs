@@ -45,7 +45,7 @@ if(!/connect-src 'self'(?:;|$)/.test(csp))fail('CSP',"vercel.json","connect-src 
 if(!/script-src 'self'(?:;|$)/.test(csp))fail('CSP','vercel.json',"script-src n’est pas limité à 'self'");
 /* 5. formulaires qui postent ailleurs */
 const forms=[];for(const f of html)for(const m of text(f).matchAll(/<form\b[^>]*\saction="([^"]+)"/gi))if(EXT.test(m[1])&&!OWN.test(m[1]))forms.push({file:f,action:m[1]});
-facts.externalForms=forms;for(const x of forms)if(!(x.file==='index.html'&&/^https:\/\/[a-z0-9]+\.sibforms\.com\//.test(x.action)))fail('formulaire externe',x.file,x.action);
+facts.externalForms=forms;/* v7.60 : l'accueil traduit (en/index.html) porte le même formulaire d'alerte que l'accueil */for(const x of forms)if(!(/^(?:[a-z]{2}\/)?index\.html$/.test(x.file)&&/^https:\/\/[a-z0-9]+\.sibforms\.com\//.test(x.action)))fail('formulaire externe',x.file,x.action);
 /* 6. une seule fonction serveur, pas de package.json */
 if(files.includes('package.json'))fail('build','package.json','présent');
 if(JSON.stringify(api)!==JSON.stringify(['api/contact.js']))fail('fonction serveur','api/',api.join(', '));

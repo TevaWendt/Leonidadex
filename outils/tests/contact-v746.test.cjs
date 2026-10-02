@@ -104,7 +104,7 @@ test('Mentions : complètes (éditeur non professionnel, hébergeur, propriété
 
 test('Preuve de confidentialité : aucun cookie, aucune ressource ni requête vers un autre site, stockage « lk », formulaires connus',()=>{
  const out=execFileSync(process.execPath,[path.join(root,'outils/preuve-confidentialite.cjs'),'--json'],{cwd:root,encoding:'utf8'});const r=JSON.parse(out);
- assert.deepEqual(r.problems,[]);assert.equal(r.facts.externalResources,0);assert.deepEqual(r.facts.externalForms.map(x=>x.file),['index.html']);assert.deepEqual(r.facts.api,['api/contact.js']);
+ assert.deepEqual(r.problems,[]);assert.equal(r.facts.externalResources,0);/* v7.60 : l’accueil traduit (en/index.html) porte le même formulaire d’alerte */const forms=r.facts.externalForms.map(x=>x.file);assert.ok(forms.includes('index.html')&&forms.every(f=>/^(?:[a-z]{2}\/)?index\.html$/.test(f)),forms.join(', '));assert.deepEqual(r.facts.api,['api/contact.js']);
  assert.ok(r.facts.storageKeys.every(k=>k.startsWith('lk')));assert.ok(r.facts.storageKeys.includes('lk_contact_draft_v1'));});
 
 test('Alerte de l’accueil : case de consentement obligatoire (non transmise), texte vrai, lien vers les données',async()=>{

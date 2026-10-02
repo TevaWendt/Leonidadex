@@ -5,7 +5,7 @@
 (function () {
   'use strict';
   var E = window.LKCalcEngine, nf = new Intl.NumberFormat('fr-FR', { maximumFractionDigits: 0 });
-  var money = function (n) { return nf.format(Math.round(n)) + ' $'; };
+  var money = function (n) { return E && E.dollars ? E.dollars(nf.format(Math.round(n)), ' ') : nf.format(Math.round(n)) + ' $'; };
   var hours = function (h) { var m = Math.round(h * 60), H = Math.floor(m / 60), M = m % 60; return H ? H + ' h' + (M ? ' ' + String(M).padStart(2, '0') : '') : M + ' min'; };
   function parse(v) { if (E && E.parseLocalizedNumber) { var r = E.parseLocalizedNumber(v); return r.valid ? r.value : null; } var t = String(v).replace(/[\s\u00a0\u202f]/g, '').replace(',', '.'); return /^\d+(\.\d+)?$/.test(t) ? Number(t) : null; }
   /* 1. Exercice de démarrage : la réponse s'affiche ici avant d'ouvrir le calculateur. */
@@ -17,7 +17,7 @@
     if (!E || !E.goalContinuous) { msg.textContent = 'Clique sur le bouton : la réponse s’affiche dans le calculateur.'; return; }
     var r = E.goalContinuous({ capital: capital, target: target, hourly: hourly, reserve: 0, dailyMinutes: 60 });
     if (!r.valid) { msg.textContent = r.reason || 'Vérifie tes trois nombres.'; return; }
-    msg.textContent = r.missing === 0 ? 'Tu as déjà assez d’argent pour cet objectif.' : 'Il te manque ' + money(r.missing) + '. En jouant 1 h par jour, tu y arrives en ' + r.days + ' jour' + (r.days > 1 ? 's' : '') + ' (' + hours(r.hours) + ' de jeu).';
+    msg.textContent = r.missing === 0 ? 'Tu as déjà assez d’argent pour cet objectif.' : 'Il te manque ' + money(r.missing) + '. En jouant 1 h par jour, tu y arrives en ' + r.days + ' jour' + (E && E.plural ? (E.plural(r.days) ? 's' : '') : (r.days > 1 ? 's' : '')) + ' (' + hours(r.hours) + ' de jeu).';
   }
   if (form) { form.addEventListener('input', preview); preview(); }
   /* 2. Zones sur les captures : « Repérer les champs », « Repérer la réponse », « Tout voir ». */
