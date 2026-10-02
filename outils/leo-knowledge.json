@@ -1,5 +1,5 @@
 {
- "_note": "v7.45 (lot 8) : base de questions rédigées de Léo. Chaque sujet : id, theme, q (question canonique), f (5 à 15 formulations, dont abrégées et fautives), k (mots-clés hérités, facultatif), text (réponse en « tu »), status, links (la première entrée est la page source), source (lien officiel Rockstar, facultatif), action (map / tool / page, facultatif), checkedAt (date de vérification du sujet ; sinon celle du fichier). Aucune réponse ne doit dire autre chose que ce que le site dit : le lien de la page source est obligatoire. Projeté dans leo-index.json par outils/gen-leo.cjs (typographie appliquée à la génération).",
+ "_note": "v7.45 (lot 8) : base de questions rédigées de Léo. Chaque sujet : id, theme, q (question canonique), f (5 à 15 formulations, dont abrégées et fautives), k (mots-clés hérités, facultatif), text (réponse en « tu »), status, links (la première entrée est la page source), source (lien officiel Rockstar, facultatif), action (map / tool / page, facultatif), checkedAt (date de vérification du sujet ; sinon celle du fichier). Aucune réponse ne doit dire autre chose que ce que le site dit : le lien de la page source est obligatoire. Projeté dans leo-index.json par outils/gen-leo.cjs (typographie appliquée à la génération). v7.59 : « absence » (prix | prix:<type> | prix:<type>:<id> | activites | catalogue:<famille>) marque un sujet qui affirme qu’un chiffre n’est pas publié ; quand la donnée du site existe, gen-leo.cjs prend « textKnown » (avec {prix} / {activites}) ou s’arrête en listant les sujets à réécrire.",
  "schemaVersion": 2,
  "checkedAt": "2026-10-01",
  "topics": [
@@ -1601,6 +1601,11 @@
    ],
    "text": "Manger, boire ou se soigner rend de la vie dans les GTA ; le kit de soin et le gilet pare-balles sont décrits dans l’armurerie de GTA VI. Aucun article ni prix n’est publié pour l’instant.",
    "status": "Repère de la série + Extended Look",
+   "absence": [
+    "catalogue:consommables"
+   ],
+   "textKnown": "Manger, boire ou se soigner rend de la vie dans les GTA ; le kit de soin et le gilet pare-balles sont décrits dans l’armurerie de GTA VI. Certains prix GTA VI sont désormais relevés dans la liste des consommables, chacun avec sa source ; les autres restent « à confirmer ».",
+   "statusKnown": "Repère de la série + Extended Look · prix publiés en partie",
    "links": [
     {
      "label": "Page Consommables",
@@ -1703,6 +1708,12 @@
    ],
    "text": "Rockstar n’a publié aucun prix en jeu : ni voitures, ni armes, ni maisons, ni revenus des missions. C’est pour ça que le calculateur du site te demande tes propres chiffres et te dit toujours d’où vient chaque valeur.",
    "status": "Non publié",
+   "absence": [
+    "prix",
+    "activites"
+   ],
+   "textKnown": "{prix} {activites} Le calculateur te dit toujours d’où vient chaque valeur : publiée avec sa source, ou écrite par toi.",
+   "statusKnown": "Publié en partie",
    "links": [
     {
      "label": "Ouvrir le calculateur",
@@ -1869,6 +1880,12 @@
    ],
    "text": "Rideout Customs (voitures classiques) et One-Eyed Willie’s (tout-terrain) sont les ateliers présentés par Rockstar. Un kit rétro pour le Ganado et un motif d’arme sont décrits avec les éditions. Les prix ne sont pas publiés.",
    "status": "Officiel Rockstar",
+   "absence": [
+    "catalogue:perso-vehicules",
+    "catalogue:perso-armes"
+   ],
+   "textKnown": "Rideout Customs (voitures classiques) et One-Eyed Willie’s (tout-terrain) sont les ateliers présentés par Rockstar. Un kit rétro pour le Ganado et un motif d’arme sont décrits avec les éditions. Certains prix de personnalisation sont désormais relevés dans les listes du site, avec leur source ; les autres restent « à confirmer ».",
+   "statusKnown": "Officiel Rockstar",
    "links": [
     {
      "label": "Les personnalisations",
@@ -1935,6 +1952,11 @@
    ],
    "text": "Oui : le site recense des embarcations vues dans les médias, et Rockstar décrit l’obtention du Crest Kayak et du Shitzu Squalo avec l’Édition Ultimate. Les prix en jeu ne sont pas publiés.",
    "status": "Officiel (obtention) · identification (autres)",
+   "absence": [
+    "prix:vehicle"
+   ],
+   "textKnown": "Oui : le site recense des embarcations vues dans les médias, et Rockstar décrit l’obtention du Crest Kayak et du Shitzu Squalo avec l’Édition Ultimate. Certains prix de véhicules sont désormais publiés sur le site, avec leur source : la fiche de chaque bateau dit si le sien est connu.",
+   "statusKnown": "Officiel (obtention) · identification (autres)",
    "links": [
     {
      "label": "Les bateaux",
@@ -2845,6 +2867,11 @@
    ],
    "text": "Aucun prix n’est connu : la maison de Jason appartient à Brian Heder, qui la lui prête sans loyer, et Rockstar n’a publié aucun prix de logement pour GTA VI. Sur le site, la fiche dit exactement ce qu’on sait. Si tu veux tester un achat avec un prix que tu imagines, le calculateur le fait avec tes chiffres à toi.",
    "status": "Prix inconnu · Rockstar n’a rien publié",
+   "absence": [
+    "prix:property"
+   ],
+   "textKnown": "La maison de Jason appartient à Brian Heder, qui la lui prête sans loyer. Certains prix de demeures sont désormais publiés sur le site, avec leur source : la fiche de chaque demeure dit si le sien est connu. Si tu veux tester un achat, le calculateur propose le prix publié quand il existe, sinon celui que tu imagines.",
+   "statusKnown": "Le site · prix de demeures publiés en partie",
    "links": [
     {
      "label": "La fiche de la maison de Jason",
@@ -3847,6 +3874,11 @@
    ],
    "text": "Oui, d’après la FAQ des planques : Rob Nelson a dit à Famitsu (28 août 2026) qu’on démarre avec trois places de véhicule et qu’on achète des garages sur la carte pour en avoir plus. Aucun prix n’est publié. Les deux garages décrits avec les éditions (Paradise, Shore Court) ont leur fiche.",
    "status": "Officiel (entretien) · prix non publiés",
+   "absence": [
+    "prix:hideout"
+   ],
+   "textKnown": "Oui, d’après la FAQ des planques : Rob Nelson a dit à Famitsu (28 août 2026) qu’on démarre avec trois places de véhicule et qu’on achète des garages sur la carte pour en avoir plus. Certains prix de planques ou de garages sont désormais publiés sur le site, avec leur source : la fiche de chacun dit si le sien est connu. Les deux garages décrits avec les éditions (Paradise, Shore Court) ont leur fiche.",
+   "statusKnown": "Officiel (entretien) · prix publiés en partie",
    "links": [
     {
      "label": "La FAQ des planques",
@@ -4730,6 +4762,11 @@
    ],
    "text": "Rockstar n’a publié aucun prix en jeu : tant que c’est le cas, chaque fiche affiche « pas encore connu » et c’est toi qui écris le prix que tu imagines. Le calcul devient une simulation personnelle, jamais une donnée du jeu. Un prix de l’édition en euros n’est pas un prix d’objet en dollars dans le jeu.",
    "status": "Le site",
+   "absence": [
+    "prix"
+   ],
+   "textKnown": "{prix} Quand une fiche n’a pas de prix publié, elle affiche « pas encore connu » et c’est toi qui écris le prix que tu imagines : le calcul devient une simulation personnelle. Un prix de l’édition en euros n’est pas un prix d’objet en dollars dans le jeu.",
+   "statusKnown": "Le site",
    "links": [
     {
      "label": "Questions et problèmes courants",
@@ -5569,6 +5606,12 @@
    ],
    "text": "Non. Les exemples du Tuto et du calculateur sont des chiffres à changer : aucun n’est un prix ou un gain officiel du jeu. Rockstar n’a publié aucun chiffre économique ; c’est toi qui écris les tiens.",
    "status": "Le site",
+   "absence": [
+    "prix",
+    "activites"
+   ],
+   "textKnown": "Non. Les exemples du Tuto et du calculateur restent des chiffres à changer : aucun n’est un prix ou un gain officiel du jeu. {prix} {activites}",
+   "statusKnown": "Le site",
    "links": [
     {
      "label": "Ton premier calcul (Tuto)",
@@ -7316,6 +7359,11 @@
    ],
    "text": "Oui : le site recense 19 deux-roues et quads vus dans les médias officiels, dont la Dinka Enduro de Jason, une Avarus dans la poursuite du second trailer et des motos enduro à Mount Kalaga. Aucun prix n’est publié.",
    "status": "Identification à partir des médias officiels",
+   "absence": [
+    "prix:vehicle"
+   ],
+   "textKnown": "Oui : le site recense des deux-roues et quads vus dans les médias officiels, dont la Dinka Enduro de Jason, une Avarus dans la poursuite du second trailer et des motos enduro à Mount Kalaga. Certains prix de véhicules sont désormais publiés sur le site, avec leur source : chaque fiche dit si le sien est connu.",
+   "statusKnown": "Identification à partir des médias officiels",
    "links": [
     {
      "label": "Deux-roues et quads",
@@ -7510,6 +7558,11 @@
    ],
    "text": "Oui : d’après les textes officiels relevés dans la liste des personnalisations d’armes, chaque Ammu-Nation a un casier où tu gères et récupères tes armes longues, et certains magasins vendent des armes exclusives. Trois armureries sont placées sur la carte. Aucun prix n’est publié.",
    "status": "Officiel Rockstar",
+   "absence": [
+    "prix:weapon"
+   ],
+   "textKnown": "Oui : d’après les textes officiels relevés dans la liste des personnalisations d’armes, chaque Ammu-Nation a un casier où tu gères et récupères tes armes longues, et certains magasins vendent des armes exclusives. Trois armureries sont placées sur la carte. Certains prix d’armes sont désormais publiés sur le site, avec leur source : la fiche de chaque arme dit si le sien est connu.",
+   "statusKnown": "Officiel Rockstar",
    "links": [
     {
      "label": "Armurerie et casier",
@@ -7563,6 +7616,11 @@
    ],
    "text": "D’après la FAQ des consommables, Rockstar montre Jason et Lucia qui mangent et boivent, et Rob Nelson dit que la nourriture renforce les jauges et joue sur le poids : trop manger fait grossir, la salle de sport muscle. Aucun chiffre n’est publié ; dans GTA V, une canette au distributeur rendait toute la vie.",
    "status": "Officiel (entretien) · repère de la série",
+   "absence": [
+    "catalogue:consommables"
+   ],
+   "textKnown": "D’après la FAQ des consommables, Rockstar montre Jason et Lucia qui mangent et boivent, et Rob Nelson dit que la nourriture renforce les jauges et joue sur le poids : trop manger fait grossir, la salle de sport muscle. Aucun chiffre d’effet n’est publié ; certains prix GTA VI sont désormais relevés dans la liste, avec leur source ; dans GTA V, une canette au distributeur rendait toute la vie.",
+   "statusKnown": "Officiel (entretien) · repère de la série",
    "links": [
     {
      "label": "La FAQ des consommables",
@@ -7591,6 +7649,11 @@
    ],
    "text": "Rockstar n’a publié aucun prix. Repère de la série : dans GTA V, une canette au distributeur coûte 1 $ et rend toute la vie ; P’s & Q’s 1 $, EgoChaser 2 $, Meteorite 4 $ ; dans GTA IV, un burger Bleeder coûte 1 $. La colonne GTA VI de la liste reste « à confirmer ».",
    "status": "Repère de la série · GTA VI à confirmer",
+   "absence": [
+    "catalogue:consommables"
+   ],
+   "textKnown": "Certains prix GTA VI sont désormais relevés dans la liste des consommables, chacun avec sa source ; les autres lignes restent « à confirmer ». Repère de la série : dans GTA V, une canette au distributeur coûte 1 $ et rend toute la vie ; P’s & Q’s 1 $, EgoChaser 2 $, Meteorite 4 $ ; dans GTA IV, un burger Bleeder coûte 1 $.",
+   "statusKnown": "Repère de la série · prix GTA VI publiés en partie",
    "links": [
     {
      "label": "La FAQ des consommables",
@@ -7751,6 +7814,11 @@
    ],
    "text": "Oui : à la planque avec un choix limité, ou dans un salon pour beaucoup plus de coupes, d’après Rob Nelson (FAQ de Vêtements et style). Sara’s Unisex Salon (Édition Ultimate) ajoute des coiffures signature, la barbe de Jason, le maquillage et les ongles de Lucia. Aucun prix GTA VI n’est publié.",
    "status": "Officiel (entretien et textes des éditions)",
+   "absence": [
+    "catalogue:coiffures"
+   ],
+   "textKnown": "Oui : à la planque avec un choix limité, ou dans un salon pour beaucoup plus de coupes, d’après Rob Nelson (FAQ de Vêtements et style). Sara’s Unisex Salon (Édition Ultimate) ajoute des coiffures signature, la barbe de Jason, le maquillage et les ongles de Lucia. Certains prix GTA VI sont désormais relevés dans la liste des coiffures, avec leur source.",
+   "statusKnown": "Officiel (entretien et textes des éditions)",
    "links": [
     {
      "label": "La FAQ de Vêtements et style",
@@ -7779,6 +7847,11 @@
    ],
    "text": "Aucun prix GTA VI n’est publié : c’est même l’exemple du statut « à confirmer » sur la page À propos. Repères de la série : dans GTA V, un fade coûte 25 $, un mullet 60 $, l’Abstraction 450 $ chez Bob Mulét ; dans GTA Online, de 170 $ (buzzcut) à 6 770 $ (baby braids).",
    "status": "À confirmer · repère de la série",
+   "absence": [
+    "catalogue:coiffures"
+   ],
+   "textKnown": "Certains prix GTA VI sont désormais relevés dans la liste des coiffures, chacun avec sa source ; les autres lignes restent « à confirmer ». Repères de la série : dans GTA V, un fade coûte 25 $, un mullet 60 $, l’Abstraction 450 $ chez Bob Mulét ; dans GTA Online, de 170 $ (buzzcut) à 6 770 $ (baby braids).",
+   "statusKnown": "Prix GTA VI publiés en partie · repère de la série",
    "links": [
     {
      "label": "Toutes les coiffures",
@@ -7831,6 +7904,11 @@
    ],
    "text": "Oui. D’après la FAQ de Vêtements et style, Rockstar cite les bras, les jambes et le dos ; Electric Fang Tattoo (Stockyard, Édition Ultimate) propose plus de 50 tatouages dessinés par le collectif FAILE. Prix non publiés ; dans GTA V, un motif va de 50 $ (smiley) à 550 $ (Families Kings), et le retrait est gratuit.",
    "status": "Officiel Rockstar · repère de la série",
+   "absence": [
+    "catalogue:tatouages"
+   ],
+   "textKnown": "Oui. D’après la FAQ de Vêtements et style, Rockstar cite les bras, les jambes et le dos ; Electric Fang Tattoo (Stockyard, Édition Ultimate) propose plus de 50 tatouages dessinés par le collectif FAILE. Certains prix GTA VI sont désormais relevés dans la liste des tatouages, avec leur source ; dans GTA V, un motif va de 50 $ (smiley) à 550 $ (Families Kings), et le retrait est gratuit.",
+   "statusKnown": "Officiel Rockstar · repère de la série",
    "links": [
     {
      "label": "La FAQ de Vêtements et style",
@@ -8144,6 +8222,11 @@
    ],
    "text": "Aucun prix GTA VI n’est publié. Repères de GTA V relevés sur la Bravado Gauntlet : turbo 2 500 $, blindage de 500 à 5 000 $, moteur EMS de 900 à 3 350 $, freins de 2 000 à 3 500 $, transmission de 2 950 à 4 000 $. Chaque ligne de la liste donne son repère et sa source.",
    "status": "Repère de la série · GTA VI à confirmer",
+   "absence": [
+    "catalogue:perso-vehicules"
+   ],
+   "textKnown": "Certains prix GTA VI sont désormais relevés dans la liste des personnalisations de véhicules, chacun avec sa source ; les autres lignes restent « à confirmer ». Repères de GTA V relevés sur la Bravado Gauntlet : turbo 2 500 $, blindage de 500 à 5 000 $, moteur EMS de 900 à 3 350 $, freins de 2 000 à 3 500 $, transmission de 2 950 à 4 000 $. Chaque ligne de la liste donne son repère et sa source.",
+   "statusKnown": "Prix GTA VI publiés en partie · repère de la série",
    "links": [
     {
      "label": "Personnalisation des véhicules",
@@ -8362,6 +8445,11 @@
    ],
    "text": "La page Bateaux décrit les deux embarcations dont Rockstar décrit l’obtention (Crest Kayak et Shitzu Squalo, bonus de l’Édition Ultimate) et renvoie vers les 37 bateaux et jet-skis vus dans les médias, recensés dans les véhicules. Les prix en jeu ne sont pas publiés.",
    "status": "Officiel (obtention) · identification (autres)",
+   "absence": [
+    "prix:vehicle"
+   ],
+   "textKnown": "La page Bateaux décrit les deux embarcations dont Rockstar décrit l’obtention (Crest Kayak et Shitzu Squalo, bonus de l’Édition Ultimate) et renvoie vers les bateaux et jet-skis vus dans les médias, recensés dans les véhicules. Certains prix de véhicules sont désormais publiés sur le site, avec leur source : chaque fiche dit si le sien est connu.",
+   "statusKnown": "Officiel (obtention) · identification (autres)",
    "links": [
     {
      "label": "La page Bateaux",
@@ -8446,6 +8534,11 @@
    ],
    "text": "Chaque fiche véhicule donne la marque et le modèle, la catégorie, le niveau de certitude (nommé par Rockstar, vu dans un média, identification communautaire), l’inspiration réelle avec un lien de recherche d’images, où il a été vu, un texte de présentation, la capture officielle ou un schéma dessiné, la case « Je l’ai » pour ton garage, « Personnaliser ce véhicule » et une carte « Le calculateur » (« Est-ce que je peux l’acheter ? »). Vitesse, places et prix restent « pas encore connus ».",
    "status": "Le site",
+   "absence": [
+    "prix:vehicle"
+   ],
+   "textKnown": "Chaque fiche véhicule donne la marque et le modèle, la catégorie, le niveau de certitude (nommé par Rockstar, vu dans un média, identification communautaire), l’inspiration réelle avec un lien de recherche d’images, où il a été vu, un texte de présentation, la capture officielle ou un schéma dessiné, la case « Je l’ai » pour ton garage, « Personnaliser ce véhicule » et une carte « Le calculateur ». Quand son prix en jeu est publié, la fiche l’affiche avec son statut, sa source et sa date ; sinon vitesse, places et prix restent « pas encore connus ».",
+   "statusKnown": "Le site",
    "links": [
     {
      "label": "Comment lire cette page",
@@ -8474,6 +8567,11 @@
    ],
    "text": "Chaque fiche d’arme donne son nom (officiel ou descriptif), sa classe, si elle se porte en main ou dans le dos, sa munition, sa portée en mots, le contexte où Rockstar l’a montrée, son inspiration réelle, le personnage qui la porte quand il est connu, la case « Je l’ai » pour ton arsenal, « Accessoires compatibles » et une carte « Le calculateur ». Aucune statistique ni prix n’est publié.",
    "status": "Le site",
+   "absence": [
+    "prix:weapon"
+   ],
+   "textKnown": "Chaque fiche d’arme donne son nom (officiel ou descriptif), sa classe, si elle se porte en main ou dans le dos, sa munition, sa portée en mots, le contexte où Rockstar l’a montrée, son inspiration réelle, le personnage qui la porte quand il est connu, la case « Je l’ai » pour ton arsenal, « Accessoires compatibles » et une carte « Le calculateur ». Quand son prix en jeu est publié, la fiche l’affiche avec son statut, sa source et sa date ; aucune statistique n’est publiée.",
+   "statusKnown": "Le site",
    "links": [
     {
      "label": "L’Armurerie",
@@ -9058,6 +9156,11 @@
    ],
    "text": "Les hydroglisseurs apparaissent dans les trailers sur les canaux de Grassrivers, d’après la fiche de la région, et le site en recense dans les bateaux et jet-skis. Leur obtention et leur prix ne sont pas publiés.",
    "status": "Vu dans les médias officiels",
+   "absence": [
+    "prix:vehicle"
+   ],
+   "textKnown": "Les hydroglisseurs apparaissent dans les trailers sur les canaux de Grassrivers, d’après la fiche de la région, et le site en recense dans les bateaux et jet-skis. Certains prix de véhicules sont désormais publiés sur le site : la fiche de chaque hydroglisseur dit si le sien est connu ; son obtention n’est pas publiée.",
+   "statusKnown": "Vu dans les médias officiels",
    "links": [
     {
      "label": "La fiche de Grassrivers",
@@ -9085,6 +9188,11 @@
    ],
    "text": "Le Canis Kamacho est le pick-up tout-terrain qu’un atelier remonte de fond en comble dans les visuels de One-Eyed Willie’s (Édition Ultimate), en vert sur la capture. Sa fiche le rapproche du concept Jeep Crew Chief 715, avec le statut « vu dans un média » ; son prix n’est pas publié (les exemples du Tuto qui l’utilisent sont des chiffres inventés).",
    "status": "Vu dans les médias officiels",
+   "absence": [
+    "prix:vehicle:canis-kamacho"
+   ],
+   "textKnown": "Le Canis Kamacho est le pick-up tout-terrain qu’un atelier remonte de fond en comble dans les visuels de One-Eyed Willie’s (Édition Ultimate), en vert sur la capture. Sa fiche le rapproche du concept Jeep Crew Chief 715, avec le statut « vu dans un média » ; son prix en jeu est publié sur sa fiche, avec sa source et sa date (les exemples du Tuto qui l’utilisent restent des chiffres inventés).",
+   "statusKnown": "Vu dans les médias officiels · prix publié",
    "links": [
     {
      "label": "La fiche du Canis Kamacho",
@@ -9113,6 +9221,11 @@
    ],
    "text": "La Grotti Cheetah ’95 est une voiture de sport dont le nom est confirmé par Rockstar avec l’Édition Ultimate (quatre captures officielles lui sont consacrées dans Médias et crédits). Sa fiche la rapproche des Ferrari Testarossa et 512 BB ; aucune vitesse ni prix n’est publié.",
    "status": "Officiel Rockstar (nom) · Édition Ultimate",
+   "absence": [
+    "prix:vehicle:grotti-cheetah-classic"
+   ],
+   "textKnown": "La Grotti Cheetah ’95 est une voiture de sport dont le nom est confirmé par Rockstar avec l’Édition Ultimate (quatre captures officielles lui sont consacrées dans Médias et crédits). Sa fiche la rapproche des Ferrari Testarossa et 512 BB ; son prix en jeu est publié sur sa fiche, avec sa source et sa date ; aucune vitesse n’est publiée.",
+   "statusKnown": "Officiel Rockstar (nom) · Édition Ultimate · prix publié",
    "links": [
     {
      "label": "La fiche de la Grotti Cheetah ’95",

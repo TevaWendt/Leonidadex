@@ -365,7 +365,7 @@
       },
       {
         "q": "Les prix affichés sont-ils ceux de GTA VI ?",
-        "a": "Non. Rockstar n’a publié aucun prix. Ceux que tu vois viennent de GTA V ou GTA Online, marqués « repère de la série » ; dans le calculateur, ce sont tes chiffres."
+        "a": "{donnees:faqApropos}"
       },
       {
         "q": "D’où viennent les informations ?",

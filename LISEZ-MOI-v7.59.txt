@@ -1,0 +1,79 @@
+LEONIDAKIT v7.59 — CHECK ULTIME DU CALCULATEUR (un seul lot, sous-étapes A → E) — archive « modifs » (2 octobre 2026)
+
+Base attendue : ton dépôt GitHub tel qu'il est au commit 8c1ddd30 (v7.58, lot 5 ; identique au ZIP complet que tu m'as joint).
+L'archive LeonidaKit_v7.59_CheckUltime_Modifications.zip contient seulement les fichiers créés ou modifiés depuis ce commit, aux
+chemins exacts depuis la racine. Rien à supprimer. Aucune commande de build, pas de package.json ; api/, vercel.json et
+.vercelignore ne changent pas ; rien à régler dans Vercel. Rien n'a été publié pour toi.
+
+1. Note le commit courant dans GitHub Desktop (ou copie le dossier).
+2. Extrais l'archive dans la racine du site, écrase les fichiers homonymes (garde le dossier .git).
+3. Vérifie 3 minutes en local ou sur la prévisualisation Vercel (voir « Pour vérifier »).
+4. Mets en ligne quand tu le décides (GitHub Desktop : commit puis push ; Vercel déploie tel quel).
+Retour arrière : « Revert » du commit dans GitHub Desktop. Les clés de stockage du navigateur (lk_*, lk-calculator-*) et leurs
+formats sont inchangés : aucune donnée de progression, de carnet, de souhait ou de calcul n'est touchée.
+
+POURQUOI L'ARCHIVE CONTIENT TOUTES LES PAGES : common.js (version de Léo), calculateurs*.js, fiches.js, leo-core.js et
+calculateurs-brand.css changent ; 397 des 415 pages portent une empreinte ?v= qui change (anti-cache) et sont donc régénérées. Leur texte est
+identique à l'octet, sauf calculateurs.html et index.html (attributs data-lk-donnees sur quatre phrases) et a-propos.html (le
+compteur de tests, calculé par script).
+
+CE QUE CE LOT FAIT (détail : outils/CHANGEMENTS-v7.59.txt ; preuves : outils/PREUVES-v7.59.md ; matrice : outils/MATRICE-CHECK-ULTIME.md)
+- Contrôle total : inventaire des 9 outils × 3 modes (581 contrôles Expert + 47 communs, outils/CALCULATEUR-INVENTAIRE.md), matrice
+  de causalité de 139 attentes vérifiées par variation réelle (outils/CALCULATEUR-CAUSALITE.md), 12 propriétés du moteur × 3 000 cas,
+  contrôle croisé (modes, rechargement, partage, import, migrations, ARIA, clavier, carnets, raccords, graphiques, textes), hub et
+  Léo, navigateur Chromium (360 → 1440, seuil 700 px, tactile, mouvement réduit, sans JavaScript, stockage bloqué, latence CPU ×4).
+- 12 défauts trouvés et corrigés, chacun avec son test : garde CSS.escape (3 tests rouges au départ) ; champs « me fera gagner en
+  plus » du business plan masqués ; empreinte de calculator-entry.css posée à la main dans fiches.js ; « heures de jeu » de Quel
+  achat choisir ? sans effet ; réponse de Mes achats qui ne nomme pas l'achat ; carnet de Ça vaut le coup ? (nouvelle activité)
+  différent de l'écran ; minutes non bornées ; sauvegarde v1/v2 → plan sans tes chiffres ; en-tête de comparaison non rafraîchi ;
+  fenêtre Léo sans garde ; « ES9 / K17 » lus comme des montants par Léo ; prix publié derrière une question rédigée.
+- Améliorations modestes : provenance d'un prix écrite une seule fois (statut en français, source, « vérifié le … ») dans Mes
+  achats Simple / Expert et le plan ; la barre « Que veux-tu calculer ? » remplit « J'ai déjà », le prix de Ça vaut le coup ? et les
+  minutes des activités ; vocabulaire (« hypothèse » → « à condition que ça se vérifie dans le jeu ») ; boutons « Fiche ↗ » ≥ 28 px.
+- Prêt pour le jour où Rockstar publie (outils/QUAND-ROCKSTAR-PUBLIE.md) : un seul schéma { value, status, source, verifiedAt,
+  unit } lu partout ; toutes les phrases « Rockstar n'a publié aucun prix » viennent désormais des données (calculateur, accueil, À
+  propos, Achats, hubs, listes, Léo) et changent d'elles-mêmes ; fiches, hubs, listes, calculateur et Léo affichent un prix publié
+  avec son statut, sa source et sa date ; une valeur mal formée arrête la régénération. Répétition générale sur une copie
+  temporaire avec des valeurs fictives : 46 / 46, aucune trace dans cette livraison. Aucune donnée de GTA VI n'a été ajoutée.
+
+RÉSULTATS : tests Node 663 / 663 (624 au départ, dont 3 rouges) ; node outils/verifier.js 0 erreur (48 355 références, 415 pages) ;
+évaluation de Léo 512 / 512 ; régénération ok ; parcours Chromium : parcours 161 / 161, lot B 140 / 140, v2 142 / 142,
+calculateur 278 / 278, carnets 94 / 94, Tuto 22 / 22, Léo tenu, check ultime 1 120 / 1 120 ; latence à CPU ×4 : pas de régression
+au-delà du bruit de mesure (détail dans PREUVES § 3).
+
+POUR VÉRIFIER (3 minutes)
+- calculateurs.html → Mes achats : choisis une fiche, écris un prix ; la réponse nomme l'achat ; la carte de la fiche dit
+  « Prix pas encore connu · Achat dans GTA VI non confirmé » (provenance) ; « Que veux-tu calculer ? » : « j'ai 300 000 $, comment
+  les répartir ? » → Mon budget avec « J'ai déjà » rempli.
+- Mon business plan → Expert → « Un achat » : le champ « Une fois acheté, il me fera gagner en plus » est visible.
+- Quel achat choisir ? (Expert) avec deux achats et des prix : ligne « Après N h de jeu, prix enlevé » dans le tableau.
+- Une fiche véhicule : l'encart « Le calculateur » dit toujours « Son prix n'est pas encore connu » ; rien ne change à l'écran.
+- Léo : « quel est le prix du Girardi ES9 ? » → « n'a pas de prix connu » (plus la fiche de Jason).
+
+ÉTAT DE REPRISE
+- Version : v7.59 (base v7.58 = commit 8c1ddd30). Décisions prises seul (aucune question bloquante) : (1) un nombre nu dans une
+  source reste « non confirmé », jamais officiel par défaut ; (2) status « unknown » annule la valeur ; (3) un prix publié répond
+  à « combien coûte ? » avant une question rédigée de Léo ; (4) les phrases d'absence qui décrivent une annonce précise (« aucun
+  prix dans cette annonce ») restent écrites à la main et sont listées par node outils/donnees-publiees.cjs --absences.
+- Points ouverts (aucun bloquant) : relire les 22 « textKnown » de Léo le jour venu avec les vrais chiffres ; la liste
+  « à relire » de --absences ; les mesures de latence sont de laboratoire.
+- Fichiers sources modifiés (33) : calculateurs.js, calculateurs-workspace.js, calculateurs-scenario.js, calculateurs-hub.js,
+  calculateurs-data.js, calculateurs-modele.js, calculateurs-brand.css, fiches.js, leo-calculator.js, leo-core.js, README.md,
+  outils/sync-site.cjs, gen.js, gen-armes.cjs, lore-gen.js, site-shell.cjs, gen-achats.cjs, gen-acquisitions.cjs, gen-leo.cjs,
+  fiche-doc.cjs, catalogues.cjs, catalogues/schema.json, acquisitions.json, achats-editorial.json, editorial-hubs.json,
+  informations-editorial.json, catalogues/editorial.json, leo-knowledge.json, leo-editorial.json, CALCULATEUR-V2.md,
+  CALCULATEURS-DONNEES.md, tests/calculateurs-integration.test.cjs, tests/calculateurs-parcours-browser.cjs ; générés : common.js,
+  leo-ui.js, leo-loader.js, leo.css, leo-index.json, leo/*.json (7), outils/leo-index-manifest.json (13 fichiers), 397 pages.
+- Fichiers créés (17) : LISEZ-MOI-v7.59.txt ; outils/calculateur-inventaire.cjs, calculateur-causalite.cjs, donnees-publiees.cjs,
+  CALCULATEUR-INVENTAIRE.md, CALCULATEUR-CAUSALITE.md, QUAND-ROCKSTAR-PUBLIE.md, MATRICE-CHECK-ULTIME.md, CHANGEMENTS-v7.59.txt,
+  PREUVES-v7.59.md ; outils/tests/calculateurs-proprietes.test.cjs, calculateurs-check-ultime.test.cjs, calculateurs-hub-leo.test.cjs,
+  donnees-publiees.test.cjs, check-ultime-helper.cjs, calculateurs-check-ultime-browser.cjs, repetition-generale.cjs.
+- Commandes : NODE_PATH=<deps>/node_modules SITE_ROOT=$PWD node --test outils/tests/*.test.cjs ; node outils/verifier.js ;
+  NODE_PATH=… node outils/tests/leo-eval.cjs ; node outils/regenerer.cjs ; node outils/calculateur-inventaire.cjs --check ;
+  node outils/calculateur-causalite.cjs ; NODE_PATH=… LK_CHROMIUM=<chromium> node outils/tests/calculateurs-check-ultime-browser.cjs <dossier> ;
+  NODE_PATH=… node outils/tests/repetition-generale.cjs --rapport <fichier>.
+- Message prêt à copier pour une nouvelle conversation :
+  « Base : LeonidaKit v7.59 (check ultime du calculateur appliqué sur la v7.58, commit 8c1ddd30). Lis README.md (section v7.59),
+  outils/MATRICE-CHECK-ULTIME.md, outils/CHANGEMENTS-v7.59.txt, outils/QUAND-ROCKSTAR-PUBLIE.md. Vérifie : 663 tests, verifier.js 0
+  erreur, leo-eval 512/512, calculateur-inventaire --check à jour, calculateur-causalite 139/139. Règles : jamais de build ni de
+  package.json, ne pas éditer les fichiers générés, aucun chiffre GTA VI inventé, clés lk_* intactes, rien publié sans mon accord. »

@@ -5,6 +5,7 @@
    « Récupération de vie : à confirmer », « Emplacement à venir », « Ne s’applique pas »…) ; un chiffre d’un autre jeu
    n’est jamais la valeur de GTA VI, il s’affiche à part comme « repère de la série ». Sortie HTML statique, déterministe. */
 const M = require('../calculateurs-modele.js');
+const DP = require('./donnees-publiees.cjs');
 const V = M.V;
 const esc = s => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const nf = new Intl.NumberFormat('fr-FR', { maximumFractionDigits: 2 });
@@ -39,7 +40,9 @@ function render(categoryId, known, opts = {}) {
     const ctx = ch.value.ctx ? '<small class="doc-ctx">' + esc(ch.value.ctx) + '</small>' : '';
     const rep = ch.repere ? '<small class="doc-rep"><b>Repère de la série :</b> ' + esc(repereText(ch.repere)) + '</small>' : '';
     const note = ch.value.note && !ch.known ? '<small class="doc-ctx">' + esc(ch.value.note) + '</small>' : (!ch.known && ch.note ? '<small class="doc-ctx">' + esc(ch.note) + '</small>' : '');
-    return '<div class="doc-row ' + cls + '"><dt>' + esc(ch.label) + '</dt><dd><span class="doc-v">' + esc(shown) + '</span>' + badge + ctx + rep + note + '</dd></div>';
+    /* v7.59 (check ultime, CALC-13) : une valeur publiée porte sa source et sa date de vérification (schéma unique, V.published). */
+    const prov = ch.known && (ch.value.source || ch.value.verifiedAt) ? '<small class="doc-ctx doc-prov">' + [ch.value.source ? 'Source : ' + (/^https?:\/\//.test(ch.value.source) ? '<a href="' + esc(ch.value.source) + '" target="_blank" rel="noopener nofollow">' + esc(ch.value.source.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')) + '</a>' : esc(ch.value.source)) : '', ch.value.verifiedAt ? 'vérifié le ' + esc(DP.texteDate(ch.value.verifiedAt)) : ''].filter(Boolean).join(' · ') + '</small>' : '';
+    return '<div class="doc-row ' + cls + '"><dt>' + esc(ch.label) + '</dt><dd><span class="doc-v">' + esc(shown) + '</span>' + badge + ctx + prov + rep + note + '</dd></div>';
   }).join('') + '</dl></section>').join('');
   const head = opts.title ? '<p class="doc-head"><b>' + esc(opts.title) + '</b> <span class="doc-count">' + (total - waiting) + ' connu' + (total - waiting > 1 ? 's' : '') + ' sur ' + total + '</span></p>' : '';
   return '<div class="doc-fiche' + (opts.compact ? ' doc-fiche--compact' : '') + '" data-doc="' + esc(categoryId) + '">' + head + (opts.lead ? '<p class="doc-lead">' + esc(opts.lead) + '</p>' : '') + '<div class="doc-rubs">' + body + '</div></div>';
@@ -60,7 +63,7 @@ function whereText(it, placeName) {
 }
 function knownOfRow(fam, it, placeName) {
   const st = statusOf(it), bonus = notBought(it), where = whereText(it, placeName);
-  const base = { price: V.unknown(), purchasable: bonus ? V.na('Obtenu autrement qu’en boutique : ' + it.ou_le_trouver.map(o => o.type).join(', ') + '.') : V.unknown() };
+  const base = { price: publishedRow(it) || V.unknown(), purchasable: bonus ? V.na('Obtenu autrement qu’en boutique : ' + it.ou_le_trouver.map(o => o.type).join(', ') + '.') : V.unknown() };
   if (bonus) base.price = V.na();
   if (fam === 'consommables') {
     const e = it.effet || {};
@@ -95,6 +98,15 @@ const CATEGORY_OF = { consommables: 'consumable', coiffures: 'style', tatouages:
 /* Colonne « GTA VI » d’une ligne : prix et achat, dits séparément. */
 function accessCell(it) {
   if (notBought(it)) return { price: 'Ne s’achète pas', buy: it.ou_le_trouver.map(o => o.type).join(', ') };
+  /* v7.59 (check ultime, CALC-13) : un prix GTA VI publié (prix_gta6, schéma unique) s'affiche avec son statut ; sinon « Prix à venir ». */
+  const p = publishedRow(it);
+  if (p) return { price: nf.format(p.v) + ' $ · ' + V.statusLabel(p), buy: p.verifiedAt ? 'vérifié le ' + DP.texteDate(p.verifiedAt) : M.modele.vides.achat, known: true };
   return { price: M.modele.vides.prix, buy: M.modele.vides.achat };
+}
+function publishedRow(it) {
+  const r = it && it.prix_gta6;
+  if (!r || typeof r.valeur !== 'number') return null;
+  const v = V.published({ value: r.valeur, status: r.statut === 'officiel' || r.statut === 'vu' ? 'official' : r.statut === 'serie' ? 'unverified' : r.statut || 'unverified', source: r.source, verifiedAt: r.verifiedAt });
+  return V.usable(v) ? v : null;
 }
 module.exports = { render, knownOfRow, accessCell, notBought, CATEGORY_OF, valueText, esc };

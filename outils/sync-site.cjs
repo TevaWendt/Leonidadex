@@ -212,6 +212,18 @@ require('child_process').execFileSync(process.execPath,[path.join(__dirname,'gen
  fs.writeFileSync(path.join(root,'search-index.js'),'/* Généré depuis les pages, catalogues et acquisitions. */\nwindow.LK_INDEX = '+JSON.stringify(index)+';\n');
 }
 
+// v7.59 (check ultime) : les phrases qui affirment aujourd'hui qu'aucun prix / aucun gain n'est publié ne sont plus figées :
+// chaque élément [data-lk-donnees="clé"] reçoit la phrase calculée par outils/donnees-publiees.cjs depuis les données du site
+// (prix des fiches, activités du calculateur). Avant le bloc FAQ, pour que le JSON-LD reflète le texte réel.
+// Une valeur publiée mal formée (statut inconnu, source absente…) arrête la régénération.
+{const DP=require('./donnees-publiees.cjs');const e=DP.etat(root);if(e.errors.length)throw new Error('Valeurs publiées mal formées (outils/donnees-publiees.cjs) :\n- '+e.errors.join('\n- '));
+ const ph=DP.phrases(e),escTxt=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+ for(const file of htmlFiles){if(file.startsWith('google'))continue;const html=fs.readFileSync(file,'utf8');if(!html.includes('data-lk-donnees=')&&!html.includes('{donnees:'))continue;
+  let next=html.replace(/(<(span|div|p|li|em|strong)\b[^>]*\bdata-lk-donnees="([a-zA-Z]+)"[^>]*>)([\s\S]*?)(<\/\2>)/g,(m,open,tag,key,inner,close)=>{if(!(key in ph))throw new Error(file+' : data-lk-donnees="'+key+'" inconnu (clés : '+Object.keys(ph).join(', ')+')');return open+escTxt(ph[key])+close;});
+  /* marqueurs {donnees:clé} laissés par les textes éditoriaux (outils/*.json) : remplacés dans le texte des pages, jamais dans les attributs */
+  next=next.replace(/\{donnees:([a-zA-Z]+)\}/g,(m,key)=>{if(!(key in ph))throw new Error(file+' : marqueur '+m+' inconnu (clés : '+Object.keys(ph).join(', ')+')');return escTxt(ph[key]);});
+  if(next!==html)fs.writeFileSync(file,next);}}
+
 // v7.37 : données structurées FAQPage générées depuis les questions visibles (div.faq > details), pages indexables seulement.
 // Le bloc est reconstruit à chaque régénération : il ne peut pas diverger du texte de la page.
 {const strip=h=>h.replace(/<[^>]+>/g,' ').replace(/&nbsp;/g,' ').replace(/&#x27;|&#39;/g,'’').replace(/&quot;/g,'"').replace(/&amp;/g,'&').replace(/\s+/g,' ').trim();
@@ -219,7 +231,7 @@ require('child_process').execFileSync(process.execPath,[path.join(__dirname,'gen
   if(/name="robots" content="[^"]*noindex/.test(html)||html.includes('http-equiv="refresh"'))continue;
   html=html.replace(/<script type="application\/ld\+json" data-lk="faq">[\s\S]*?<\/script>\n?/,'');
   const faq=html.match(/<div class="faq(?: [^"]*)?"[^>]*>([\s\S]*?)<\/div>\s*<\/div>\s*<\/section>/);
-  const qa=[];if(faq&&!/"@type":\s*"FAQPage"/.test(html.replace(/data-lk="faq"[\s\S]*?<\/script>/,'')))for(const m of faq[1].matchAll(/<details[^>]*>\s*<summary>([\s\S]*?)<\/summary>\s*<div class="ans">([\s\S]*?)<\/div>\s*<\/details>/g)){const q=strip(m[1]),a=strip(m[2]);if(q&&a)qa.push({'@type':'Question',name:q,acceptedAnswer:{'@type':'Answer',text:a}});}
+  const qa=[];if(faq&&!/"@type":\s*"FAQPage"/.test(html.replace(/data-lk="faq"[\s\S]*?<\/script>/,'')))for(const m of faq[1].matchAll(/<details[^>]*>\s*<summary>([\s\S]*?)<\/summary>\s*<div class="ans"[^>]*>([\s\S]*?)<\/div>\s*<\/details>/g)){const q=strip(m[1]),a=strip(m[2]);if(q&&a)qa.push({'@type':'Question',name:q,acceptedAnswer:{'@type':'Answer',text:a}});}
   if(qa.length>=2){const ld='<script type="application/ld+json" data-lk="faq">'+JSON.stringify({'@context':'https://schema.org','@type':'FAQPage',mainEntity:qa})+'</script>\n';html=html.replace('</head>',ld+'</head>');}
   fs.writeFileSync(file,html);}}
 
@@ -234,4 +246,6 @@ require('child_process').execFileSync(process.execPath,[path.join(__dirname,'gen
 // Empreintes finales : ne dépendent pas de l’état antérieur des autres fichiers.
 // v7.38 : chaque image d'une pile (.lk-stack) est un lien vers ce qu'elle représente (outils/lot-c-visuals.cjs).
 {const visuals=require('./lot-c-visuals.cjs');for(const file of htmlFiles){const html=fs.readFileSync(file,'utf8');if(!html.includes('class="lk-stack'))continue;const prefix=file.includes('/')?'../':'';const next=visuals.linkify(html,prefix);if(next!==html)fs.writeFileSync(file,next);}}
+/* v7.59 (check ultime, D-03) : fiches.js charge calculator-entry.css à la demande ; son empreinte suit la feuille (jamais écrite à la main). */
+{const css=path.join(root,'calculator-entry.css'),js=path.join(root,'fiches.js');if(fs.existsSync(css)&&fs.existsSync(js)){const v=crypto.createHash('sha256').update(fs.readFileSync(css)).digest('hex').slice(0,12);const cur=fs.readFileSync(js,'utf8'),next=cur.replace(/calculator-entry\.css\?v=(?:ENTRYCSS|[a-f0-9]{12}|\d{8})/g,'calculator-entry.css?v='+v);if(next!==cur)fs.writeFileSync(js,next);}}
 {const hashes=new Map();for(const file of htmlFiles){let html=fs.readFileSync(file,'utf8');html=html.replace(/((?:href|src)=")([^"?#]+\.(?:css|js))(?:\?v=[a-f0-9]+)?("[^>]*>)/g,(match,start,url,end)=>{if(/^(?:https?:)?\/\//.test(url))return match;const target=url.startsWith('/')?path.join(root,url.slice(1)):path.resolve(root,path.dirname(file),url);if(!fs.existsSync(target))return match;if(!hashes.has(target))hashes.set(target,crypto.createHash('sha256').update(fs.readFileSync(target)).digest('hex').slice(0,12));return start+url+'?v='+hashes.get(target)+end;});fs.writeFileSync(file,html);}}

@@ -172,7 +172,7 @@
       "items": [
         {
           "q": "Combien coûte un soda, un repas, un gilet ?",
-          "etat": "Aucun prix GTA VI publié. La colonne GTA VI reste « à confirmer » sur les {nConsommables} lignes."
+          "etat": "{donnees:etatConsommables}"
         },
         {
           "q": "Combien de vie rend un en-cas ?",
@@ -276,7 +276,7 @@
       },
       {
         "q": "Combien coûte un soda ou un en-cas dans GTA 6 ?",
-        "a": "Rockstar n’a publié aucun prix. Repère de la série : dans GTA V, une canette au distributeur coûte 1 $ et rend toute la vie ; P’s & Q’s 1 $, EgoChaser 2 $, Meteorite 4 $ en supérette.",
+        "a": "{donnees:prixNourritureCourt} Repère de la série : dans GTA V, une canette au distributeur coûte 1 $ et rend toute la vie ; P’s & Q’s 1 $, EgoChaser 2 $, Meteorite 4 $ en supérette.",
         "k": [
           "prix d un soda",
           "prix soda",
@@ -456,7 +456,7 @@
       "items": [
         {
           "q": "Combien coûte une tenue, une coupe, un tatouage ?",
-          "etat": "Aucun prix GTA VI publié. Les {nStyle} lignes des trois listes gardent la colonne GTA VI « à confirmer »."
+          "etat": "{donnees:etatStyle}"
         },
         {
           "q": "Quelles pièces contiennent Vice City Style et Goodtime Gear ?",
@@ -744,7 +744,7 @@
       "items": [
         {
           "q": "Peut-on acheter un bateau ?",
-          "etat": "Les deux embarcations documentées sont des bonus d’édition. Aucune concession ni aucun prix n’est publié."
+          "etat": "Les deux embarcations documentées sont des bonus d’édition. {donnees:prixBateaux}"
         },
         {
           "q": "Où amarrer ?",
@@ -958,7 +958,7 @@
       "items": [
         {
           "q": "Combien coûte une modification ?",
-          "etat": "Aucun prix publié. Les {nPerso} lignes des deux listes gardent la colonne GTA VI « à confirmer » ; les prix de GTA V et GTA Online sont dans la colonne repère."
+          "etat": "{donnees:etatPerso}"
         },
         {
           "q": "Une modification change-t-elle les performances ?",
@@ -1025,7 +1025,7 @@
     "faq": [
       {
         "q": "Peut-on personnaliser sa voiture dans GTA 6 ?",
-        "a": "Oui : Rockstar présente deux ateliers, Rideout Customs (intérieurs, jantes, style donk) et One-Eyed Willie’s (tout-terrain, peinture à la main), avec « a wide selection of artistic and performance-based vehicle mods ». Les deux ouvrent avec l’Édition Ultimate ; aucun prix n’est publié. Dans GTA V, un turbo coûte 2 500 $ et un blindage complet 5 000 $.",
+        "a": "Oui : Rockstar présente deux ateliers, Rideout Customs (intérieurs, jantes, style donk) et One-Eyed Willie’s (tout-terrain, peinture à la main), avec « a wide selection of artistic and performance-based vehicle mods ». Les deux ouvrent avec l’Édition Ultimate ; {donnees:prixPersoCourtMin} Dans GTA V, un turbo coûte 2 500 $ et un blindage complet 5 000 $.",
         "k": [
           "personnaliser sa voiture",
           "personnaliser une voiture",

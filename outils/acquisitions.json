@@ -67,11 +67,11 @@
       "route": "/style.html",
       "type": "style",
       "intro": "Coiffures, tatouages, tenues et accessoires : tout ce qui change l’apparence de Jason et Lucia, en trois listes dépliables, avec les collections annoncées et les adresses présentées par Rockstar.",
-      "limit": "Aucun prix GTA VI n’est publié : chaque ligne porte son statut, et les prix de GTA V et GTA Online restent dans leur colonne de repère. Les collections décrites ne sont pas une liste de pièces achetables.",
+      "limit": "{donnees:limiteStyle} Les collections décrites ne sont pas une liste de pièces achetables.",
       "empty": "En attente de données officielles pour les pièces individuelles. Les collections et services annoncés sont présentés ci-dessous, sans fausse fiche ni case à cocher.",
       "menu": true,
       "menuOrder": 2,
-      "description": "Trois listes dépliables (coiffures, tatouages, tenues et accessoires) avec statut, effet, prix repère de la série, lieu et lien vers la carte, plus les collections annoncées (Édition Ultimate, Pack Vintage Vice City) et les adresses Stock 305, Sara’s Unisex Salon et Electric Fang Tattoo. Aucun prix GTA VI. Tu peux filtrer, trier et cocher ce que tu portes."
+      "description": "Trois listes dépliables (coiffures, tatouages, tenues et accessoires) avec statut, effet, prix repère de la série, lieu et lien vers la carte, plus les collections annoncées (Édition Ultimate, Pack Vintage Vice City) et les adresses Stock 305, Sara’s Unisex Salon et Electric Fang Tattoo. {donnees:prixStyle} Tu peux filtrer, trier et cocher ce que tu portes."
     },
     {
       "id": "customizations",
@@ -139,7 +139,7 @@
       "empty": "Pas encore d’article vérifié à cocher : dès qu’un consommable sera nommé officiellement avec ses conditions d’obtention, il apparaîtra ici.",
       "menu": true,
       "menuOrder": 1,
-      "description": "Manger, boire, se soigner, se protéger : une liste dépliable complète (café du matin, shake protéiné, Sprunk, bière au comptoir, gilets, kits…) avec statut, effet, prix repère de la série, lieu et lien vers la carte. Aucun prix GTA VI publié. Tu peux filtrer, trier et cocher ce que tu as goûté."
+      "description": "Manger, boire, se soigner, se protéger : une liste dépliable complète (café du matin, shake protéiné, Sprunk, bière au comptoir, gilets, kits…) avec statut, effet, prix repère de la série, lieu et lien vers la carte. {donnees:prixNourriture} Tu peux filtrer, trier et cocher ce que tu as goûté."
     },
     {
       "id": "munitions",
@@ -393,19 +393,19 @@
     "hawk-little-morgan"
   ],
   "hub": {
-    "_note": "v7.40 (lot 3) : descriptions des cartes du hub « Tout ce qui s’achète » (achats.html) qui ne sont pas des catégories d’acquisition ; {n} et {nOfficiel} sont remplis par gen-achats.cjs. Les catégories portent leur propre champ description.",
+    "_note": "v7.40 (lot 3) : descriptions des cartes du hub « Tout ce qui s’achète » (achats.html) qui ne sont pas des catégories d’acquisition ; {n} et {nOfficiel} sont remplis par gen-achats.cjs. Les catégories portent leur propre champ description. v7.59 : {prix} est remplacé par gen-achats.cjs depuis les données du site (outils/donnees-publiees.cjs) : phrase d’absence tant qu’aucun prix n’est publié, décompte avec source ensuite.",
     "cards": {
       "vehicules": {
-        "description": "{n} fiches ({nOfficiel} véhicules nommés par Rockstar, les autres vus dans les médias officiels ou identifiés par la communauté), avec un statut et une source sur chaque carte. Aucun prix ni chiffre de performance avant la sortie. Tu peux cocher ton garage, comparer jusqu’à trois modèles et simuler un achat au prix que tu imagines."
+        "description": "{n} fiches ({nOfficiel} véhicules nommés par Rockstar, les autres vus dans les médias officiels ou identifiés par la communauté), avec un statut et une source sur chaque carte. {prix} Tu peux cocher ton garage, comparer jusqu’à trois modèles et simuler un achat au prix que tu imagines."
       },
       "armes": {
-        "description": "{n} armes identifiées dans les trailers, les captures et l’Extended Look ({nOfficiel} nommées par Rockstar), plus les équipements et les types de munitions. Aucun prix publié. Tu peux cocher ton arsenal, ton équipement et tes munitions, et composer ton chargement avec le constructeur d’équipement."
+        "description": "{n} armes identifiées dans les trailers, les captures et l’Extended Look ({nOfficiel} nommées par Rockstar), plus les équipements et les types de munitions. {prix} Tu peux cocher ton arsenal, ton équipement et tes munitions, et composer ton chargement avec le constructeur d’équipement."
       },
       "entreprises": {
-        "description": "Les commerces présentés par Rockstar, avec une fiche et un emplacement sur la carte. Leur achat par le joueur n’est pas confirmé : aucune entreprise n’est proposée avec un prix. Tu peux ouvrir chaque fiche et tester ton hypothèse avec « Ça vaut le coup ? »."
+        "description": "Les commerces présentés par Rockstar, avec une fiche et un emplacement sur la carte. {prix} Tu peux ouvrir chaque fiche et tester ton hypothèse avec « Ça vaut le coup ? »."
       },
       "demeures": {
-        "description": "Où vivent les personnages d’après ce que Rockstar a montré, avec une fiche et un lien vers la carte. Ce ne sont pas des logements à acheter : aucun prix, aucune condition d’accès. Tu peux ouvrir la fiche de chaque demeure et la repérer sur la carte."
+        "description": "Où vivent les personnages d’après ce que Rockstar a montré, avec une fiche et un lien vers la carte. {prix} Tu peux ouvrir la fiche de chaque demeure et la repérer sur la carte."
       },
       "collectibles": {
         "description": "Le catalogue et le carnet de suivi sont prêts ; aucun objet à collectionner vérifiable n’est publié par Rockstar pour l’instant. Ce n’est pas une catégorie d’achat. Tu peux voir les familles prévues et le fonctionnement du suivi."

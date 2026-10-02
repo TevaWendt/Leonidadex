@@ -6,6 +6,7 @@ const HUB_NOTES={"lieux": "Ouvre une fiche pour retrouver ses médias et ses rep
 const fs=require('fs'),path=require('path');
 process.chdir(path.join(__dirname,'..'));
 const visuals=require('./lot-c-visuals.cjs');
+const DP=require('./donnees-publiees.cjs');
 /* v7.41 (lot 4) : zones éditoriales des cinq hubs du monde (outils/editorial-hubs.json → outils/hubs-monde.cjs) et
    contrôle anti-doublon hubs ↔ fiches (outils/hubs-doublons.cjs) : la génération refuse toute phrase identique. */
 const MONDE=require('./hubs-monde.cjs'),DOUBLONS=require('./hubs-doublons.cjs');
@@ -187,9 +188,16 @@ ${S.hub==='planques'?'<!-- lot-d-garages:start --><!-- lot-d-garages:end -->\n':
     const calcKind = key === 'businesses' ? 'business' : key === 'residences' ? 'property' : key === 'hideouts' ? 'hideout' : null;
     const calcTool = calcKind === 'business' ? 'roi' : 'purchase';
     const calcTitle = calcKind === 'business' ? 'Est-ce que ça vaudrait le coup ?' : 'Combien faudrait-il pour l’avoir ?';
-    const calcDescription = calcKind === 'business' ? 'On ne sait pas encore si ce lieu peut s’acheter dans le jeu. Tu peux quand même écrire tes propres chiffres : ce que ça coûte, ce que ça rapporte, et voir quand ce serait remboursé.' : 'On ne sait pas encore si ce lieu peut s’acheter, ni à quel prix. Écris le prix que tu imagines : le calculateur te dit combien de temps de jeu il te faudrait.';
+    /* v7.59 (check ultime, CALC-13) : la phrase vient de la donnée (outils/editorial.json : purchasable, price) : un prix publié est annoncé
+       avec son statut ; un achat confirmé sans prix le dit ; sinon l'absence reste explicite. Rien n'est figé. */
+    const prixPub = DP.prixDe(x), achatConfirme = x.purchasable === true;
+    const calcDescription = prixPub
+      ? (calcKind === 'business' ? DP.phrasePrix(prixPub) + '. Le calculateur le propose comme prix de référence : écris ce que ça rapporte, et vois quand ce serait remboursé.' : DP.phrasePrix(prixPub) + '. Le calculateur le propose comme prix de référence : il te dit combien de temps de jeu il te faudrait, et tu peux écrire un autre prix.')
+      : achatConfirme
+        ? (calcKind === 'business' ? 'Ce lieu peut s’acheter dans le jeu, mais son prix n’est pas encore publié. Écris tes propres chiffres : ce que ça coûte, ce que ça rapporte, et vois quand ce serait remboursé.' : 'Ce lieu peut s’acheter dans le jeu, mais son prix n’est pas encore publié. Écris le prix que tu imagines : le calculateur te dit combien de temps de jeu il te faudrait.')
+        : (calcKind === 'business' ? 'On ne sait pas encore si ce lieu peut s’acheter dans le jeu. Tu peux quand même écrire tes propres chiffres : ce que ça coûte, ce que ça rapporte, et voir quand ce serait remboursé.' : 'On ne sait pas encore si ce lieu peut s’acheter, ni à quel prix. Écris le prix que tu imagines : le calculateur te dit combien de temps de jeu il te faudrait.');
     const calcAction = calcKind === 'business' ? 'Est-ce que ça vaut le coup ?' : 'Faire le calcul';
-    const calcBridge = calcKind ? `<section class="shell" aria-labelledby="lore-calculator-title"><div class="lk-entry-card"><div><p class="lk-entry-eyebrow">LE CALCULATEUR</p><h2 id="lore-calculator-title">${calcTitle}</h2><p>${calcDescription}</p></div><a class="lk-entry-button" href="../calculateurs.html?tool=${calcTool}&amp;type=${calcKind}&amp;id=${encodeURIComponent(x.id)}&amp;from=fiche#atelier">${calcAction} <span aria-hidden="true">↗</span></a></div></section>` : '';
+    const calcBridge = calcKind ? `<section class="shell" aria-labelledby="lore-calculator-title"><div class="lk-entry-card"><div><p class="lk-entry-eyebrow">LE CALCULATEUR</p><h2 id="lore-calculator-title">${calcTitle}</h2><p${prixPub?` data-prix="${prixPub.value}" data-prix-statut="${prixPub.status}"`:''}>${esc(calcDescription)}</p></div><a class="lk-entry-button" href="../calculateurs.html?tool=${calcTool}&amp;type=${calcKind}&amp;id=${encodeURIComponent(x.id)}&amp;from=fiche#atelier">${calcAction} <span aria-hidden="true">↗</span></a></div></section>` : '';
     const body=`<section class="page-head shell">
   <nav class="crumbs" aria-label="Fil d’Ariane"><a href="../index.html">Accueil</a> / <a href="../${S.hub}.html">${esc(S.label)}</a> / <span>${esc(x.name)}</span></nav>
   <div class="lore-hero lore-enter">

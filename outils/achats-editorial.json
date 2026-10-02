@@ -96,7 +96,7 @@
  "faq": [
   [
    "Pourquoi il n’y a aucun prix ?",
-   "Aucun prix séparé en jeu n’est vérifié dans le catalogue actuel. La sortie de GTA VI est annoncée le 19 novembre 2026. Dès qu’un prix sera connu et vérifié, il sera ajouté avec sa source. En attendant, le calculateur te laisse écrire le prix que tu imagines."
+   "{donnees:prixAchats}"
   ],
   [
    "Que veut dire « À confirmer » ?",

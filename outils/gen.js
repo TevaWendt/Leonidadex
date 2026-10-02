@@ -191,6 +191,7 @@ const FAV=MOD.match(/<link rel="icon"[^>]*>/)[0];
 /* v7.50 (lot 3) : localisateur illustré (lieux liés au type du véhicule, jamais un emplacement inventé) et fiche
    documentaire (modèle commun : prix, achat, obtention, performances, capacités, coûts d’usage). */
 const LOC=require('./localisateur.cjs'),FD=require('./fiche-doc.cjs'),MODEL=require('../calculateurs-modele.js');
+const DP=require('./donnees-publiees.cjs');
 LOC.writeReference(); // v7.55 : fond commun img/leonida-carte.svg dérivé de carte.html
 const V_CARTE_TYPE={bateau:'Les marinas repérées sur notre carte. Où trouver ce bateau exactement, nous le saurons à la sortie.',avion:'Les aérodromes repérés sur notre carte. Où trouver cet appareil exactement, nous le saurons à la sortie.',helicoptere:'Les aérodromes repérés sur notre carte. Où trouver cet appareil exactement, nous le saurons à la sortie.',service:'Aucun lieu d’achat n’est repéré pour les véhicules de service, et rien ne dit qu’ils s’achètent.'};
 const carteV=v=>(V_CARTE_TYPE[v.cat]||pioche(v.id,'carte',V_CARTE))+'</p>\n  '+LOC.single({item:LOC.vehicleItem(v,'../'),places:LOC.data().placesV,prefix:'../',caption:'Lieux de notre carte liés à ce type de véhicule : pas un emplacement confirmé.',placesTitle:'Lieux liés sur notre carte',mapLabel:'Carte de Leonida : lieux liés à ce véhicule'});
@@ -220,7 +221,9 @@ function fiche(v,i){
  const available=(v.vues||[]).filter(view=>fs.existsSync('img/vehicules/'+v.id+'-'+view+'.jpg'));
  const meds=medList(v);
  const img=available.length>0, vues=img?available.join(','):'';
+ const prixPub=DP.prixDe(v); /* v7.59 : un prix publié dans outils/v-corrige.json s'affiche avec son statut ; sinon rien n'est inventé */
  const tags=['<span class="chip live">'+st.c+'</span>']
+  .concat(prixPub?['<span class="chip chip-prix" data-prix-statut="'+prixPub.status+'">'+esc('Prix publié : '+DP.fmt(prixPub.value)+' '+prixPub.unit+' · '+prixPub.label)+'</span>']:[])
   .concat(ed?['<span class="chip">'+ed+'</span>']:[])
   .concat((img||meds.length)?['<span class="chip">Images officielles</span>']:[])
   .concat(v.slot?['<span class="chip">'+SLOT[v.slot]+'</span>']:[]).join('\n          ');
@@ -286,7 +289,7 @@ ${HEADER}
         <div class="fiche-tags">
           ${tags}
         </div>
-        <div class="fiche-liens"><button type="button" class="own-bt" id="own-bt" data-id="${v.id}"><span class="ck"></span><span>Ajouter à mon garage</span></button><a href="../comparateur.html?type=vehicules&amp;ids=${v.id}">Comparer</a>${PERSO_COVER.has(v.cat)?'<a href="../personnalisations.html#perso-vehicules='+v.cat+'">Personnaliser ce véhicule</a>':''}${v.reel?'<a href="#modele-reel">Le modèle réel</a>':''}${v.perso?'<a href="../personnages/'+v.perso+'.html">Véhicule de '+esc(PERSO_NOM[v.perso]||v.perso)+'</a>':''}</div>
+        <div class="fiche-liens"><button type="button" class="own-bt" id="own-bt" data-id="${v.id}"${prixPub?` data-prix="${prixPub.value}" data-prix-statut="${prixPub.status}"`:''}><span class="ck"></span><span>Ajouter à mon garage</span></button><a href="../comparateur.html?type=vehicules&amp;ids=${v.id}">Comparer</a>${PERSO_COVER.has(v.cat)?'<a href="../personnalisations.html#perso-vehicules='+v.cat+'">Personnaliser ce véhicule</a>':''}${v.reel?'<a href="#modele-reel">Le modèle réel</a>':''}${v.perso?'<a href="../personnages/'+v.perso+'.html">Véhicule de '+esc(PERSO_NOM[v.perso]||v.perso)+'</a>':''}</div>
       </div>
       <div class="fhero-art fhero-art--gal">
         <div class="gal" data-base="../img/vehicules/${v.id}" data-vues="${vues}" data-nom="${esc(nom)}" data-vide="${img?0:1}"${meds.length?` data-medias="${medAttr(v)}"`:''}
@@ -323,7 +326,8 @@ ${HEADER}
       <tbody>
         <tr><th scope="row">Modèle</th><td>${esc(v.nom)}${v.alias?' <span class="unknown">(anciennement '+esc(v.alias)+')</span>':''}</td></tr>
         <tr><th scope="row">Constructeur</th><td>${esc(v.marque||'Non identifié')}</td></tr>
-        <tr><th scope="row">Statut</th><td>${st.l}</td></tr>
+        <tr><th scope="row">Statut</th><td>${st.l}</td></tr>${prixPub?`
+        <tr><th scope="row">Prix en jeu</th><td>${esc(DP.phrasePrix(prixPub))}</td></tr>`:''}
         <tr><th scope="row">Catégorie</th><td><a href="../vehicules.html#cat=${v.cat}">${esc(cat)}</a></td></tr>
         <tr><th scope="row">Inspiration réelle</th><td>${mod?esc(mod)+' <span class="unknown">(rapprochement communautaire)</span>':'<span class="unknown">Non identifiée</span>'}</td></tr>${v.slot?`
         <tr><th scope="row">Origine du modèle</th><td><a href="../vehicules.html#slot=${v.slot}">${SLOT[v.slot]}</a></td></tr>`:''}${ed?`

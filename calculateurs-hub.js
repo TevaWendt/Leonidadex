@@ -53,7 +53,10 @@
     const q = String(value || '').trim();
     if (!q) return null;
     const text = normalize(q);
-    const intent = /objectif|million|atteindre|epargn|economis/.test(text) ? rules[rules.length - 1] : rules.find(rule => rule.re.test(text)) || rules[rules.length - 1];
+    let intent = /objectif|million|atteindre|epargn|economis/.test(text) ? rules[rules.length - 1] : rules.find(rule => rule.re.test(text)) || rules[rules.length - 1];
+    /* v7.59 (check ultime, CALC-11) : « quelle mission rapporte le plus en 90 minutes ? » parle d'activités, pas d'une partie ;
+       le mot « minutes » seul ne suffit plus à ouvrir Mon temps de jeu quand la phrase parle de missions ou de gains. */
+    if (intent.tab === 'session' && !/session|j'ai du temps|temps disponible|ce soir/.test(text) && rules.find(r => r.tab === 'activities').re.test(text)) intent = rules.find(r => r.tab === 'activities');
     const amount = parseMoney(text), minutes = parseMinutesPerDay(text), changed = [];
     openTab(intent.tab);
     if (intent.tab === 'goal') {
@@ -75,6 +78,16 @@
       if (minutes !== null && minutes <= 1440 && field('plan-daily', minutes)) changed.push('la durée de tes parties est remplie');
     }
     if (intent.tab === 'purchase' && amount !== null && field('f-purchase-price', amount)) changed.push('le prix est rempli');
+    /* v7.59 (check ultime, CALC-11) : « j'ai X $ » remplit « J'ai déjà » dans l'outil ouvert (même case partagée) ; un prix
+       va aussi dans « Ça vaut le coup ? » ; un temps en minutes va dans « Mes activités ». Rien d'autre n'est deviné. */
+    if (intent.tab !== 'goal' && intent.tab !== 'plan') {
+      const have = text.match(/j['’]ai\s+(\d[\d\s.,]*?)\s*(millions?|mille|k(?![a-z])|m(?![a-z])|\$)/);
+      const capital = have ? parseMoney(have[0]) : null;
+      const capField = document.querySelector('#panel-' + intent.tab + ' input[data-field="goal.capital"]');
+      if (capital !== null && capField && field(capField.id, capital)) changed.push('ton argent est rempli');
+      if (intent.tab === 'roi' && amount !== null && amount !== capital && field('f-roi-purchase', amount)) changed.push('le prix est rempli');
+      if (intent.tab === 'activities' && minutes !== null && minutes <= 1000000 && field('f-inverse-minutes', minutes)) changed.push('ton temps est rempli');
+    }
     return { tab: intent.tab, label: intent.label, done: changed };
   }
   function focusWorkshop() {

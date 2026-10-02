@@ -48,6 +48,7 @@
     var value = number(owns(wrapped, 'value') ? wrapped.value : selected, integer);
     var meta = Object.assign({}, object(object(economy.fieldMeta)[name]), object(economy[name + 'Meta']), object(object(entry.fieldMeta)[name]), object(entry[name + 'Meta']), object(wrapped.meta));
     for (var k of ['status', 'source', 'verifiedAt', 'unit']) if (owns(wrapped, k)) meta[k] = wrapped[k];
+    if (value !== null && status(meta.status, 'unverified') === 'unknown') value = null; // v7.59 : un chiffre marqué « inconnu » n'est pas une valeur (même règle que calculateurs-modele.js et donnees-publiees.cjs)
     return {
       value: value,
       meta: {

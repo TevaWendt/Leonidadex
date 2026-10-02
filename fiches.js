@@ -14,10 +14,13 @@
     url.hash = 'atelier';
     return url.href;
   }
+  /* v7.59 (check ultime, D-03) : la feuille n'est ajoutée que si la page ne la charge pas déjà (sinon elle était chargée
+     deux fois, la seconde avec une empreinte écrite à la main, « ?v=20260921 », qui pouvait servir une version en cache
+     périmée par-dessus la bonne). L'empreinte ci-dessous est posée par outils/sync-site.cjs à chaque régénération. */
   function calculatorStyle() {
-    if (document.querySelector('link[data-calculator-entry]')) return;
+    if (document.querySelector('link[data-calculator-entry], link[rel="stylesheet"][href*="calculator-entry.css"]')) return;
     const link = document.createElement('link'); link.rel = 'stylesheet';
-    link.href = new URL('calculator-entry.css?v=20260921', calculatorBase).href;
+    link.href = new URL('calculator-entry.css?v=cf94b45f1d2d', calculatorBase).href;
     link.dataset.calculatorEntry = 'true'; document.head.appendChild(link);
   }
 
@@ -179,7 +182,10 @@
       card.className = 'lk-entry-card lk-fiche-calculator';
       const eyebrow = document.createElement('p'); eyebrow.className = 'lk-entry-eyebrow'; eyebrow.textContent = 'LE CALCULATEUR';
       const title = document.createElement('h2'); title.textContent = type === 'armes' ? 'Tu veux cette arme ?' : 'Tu veux ce véhicule ?';
-      const explanation = document.createElement('p'); explanation.textContent = 'Regarde si tu as assez d’argent, et sinon combien de temps de jeu il te faut. Son prix n’est pas encore connu : tu peux écrire celui que tu imagines.';
+      /* v7.59 (check ultime, CALC-13) : la phrase dépend de la fiche : un prix publié (data-prix posé par le générateur) est annoncé
+         comme prix de référence ; sinon le prix reste « pas encore connu ». Rien n’est figé dans ce script. */
+      const prix = Number(bt.dataset.prix), prixStatut = bt.dataset.prixStatut || '';
+      const explanation = document.createElement('p'); explanation.textContent = 'Regarde si tu as assez d’argent, et sinon combien de temps de jeu il te faut. ' + (bt.dataset.prix !== undefined && Number.isFinite(prix) && prix >= 0 ? 'Son prix publié (' + new Intl.NumberFormat('fr-FR').format(prix) + ' $' + (prixStatut === 'official' ? ', officiel' : prixStatut === 'verified' ? ', mesuré et vérifié' : '') + ') est proposé comme prix de référence : tu peux en écrire un autre.' : 'Son prix n’est pas encore connu : tu peux écrire celui que tu imagines.');
       const link = document.createElement('a'); link.className = 'lk-entry-button'; link.href = calculatorLink(type, { id }, 'fiche'); link.textContent = 'Est-ce que je peux l’acheter ? ↗';
       card.append(eyebrow, title, explanation, link);
       (bt.closest('.fiche-liens') || bt).insertAdjacentElement('afterend', card);

@@ -164,7 +164,7 @@ test('manual purchase prices override a reference only in the scenario and can b
   assert.equal(page.node('f-purchase-price').readOnly, false);
   assert.match(page.node('purchase-selection').innerHTML, /vérifié/i);
   assert.match(page.node('purchase-selection').innerHTML, /Source de test/);
-  assert.match(page.node('purchase-selection').innerHTML, /2026-09-19/);
+  assert.match(page.node('purchase-selection').innerHTML, /vérifié le 19 septembre 2026/); // v7.59 : la date de vérification s'écrit en français, comme sur les fiches
   assert.equal(JSON.parse(page.storage()['lk-calculator-v1']).assets.find(a=>a.key===JSON.parse(page.storage()['lk-calculator-v1']).purchase.key).price, 1);
   assert.equal(page.window.LKCalcData.catalogue()[0].price, 125000, 'scenario override cannot mutate source data');
   assert.match(page.node('purchase-results').textContent, /prix personnel remplace la référence/);

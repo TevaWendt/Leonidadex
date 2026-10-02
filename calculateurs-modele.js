@@ -22,6 +22,8 @@
   var STATUS = {};
   (M.statuts || []).forEach(function (s) { STATUS[s.id] = s; });
   var CALC = { official: 1, measured: 1, estimated: 1, personal: 1, simulated: 1, example: 1 };
+  /* statut d’une valeur publiée (schéma des sources) → statut du modèle */
+  var PUBLISHED_STATUS = { officiel: 'official', official: 'official', verified: 'measured', confirmed: 'measured', measured: 'measured', estimated: 'estimated', manual: 'personal', hypothetical: 'personal', unverified: 'estimated' };
   var EPS = 1e-9;
 
   /* ---------- Valeurs avec statut ---------- */
@@ -55,6 +57,27 @@
     origin: function (x) { var s = STATUS[V.from(x).s]; return s ? s.origine : 'toi'; },
     statusLabel: function (x) { var s = STATUS[V.from(x).s]; return s ? s.court : 'À confirmer'; },
     /* Texte d’un état vide selon la catégorie de champ (outils/modele-donnees.json → vides). */
+    /* v7.59 (check ultime, CALC-13) : une valeur chiffrée publiée par le site, lue avec le même schéma partout
+       (calculateurs-data.js, outils/donnees-publiees.cjs, fiches, Léo) : un nombre nu, ou { value, status, source, verifiedAt, unit }.
+       Le statut de la source devient un statut du modèle ; sans statut, la valeur reste « non confirmée » (estimation),
+       jamais officielle par défaut. La source et la date de vérification sont gardées pour l’affichage. */
+    published: function (raw, defaults) {
+      if (isValue(raw)) return raw;
+      if (raw === null || raw === undefined || raw === '') return V.unknown();
+      var w = raw && typeof raw === 'object' && !Array.isArray(raw) ? raw : { value: raw };
+      var m = Object.assign({}, defaults || null, w.meta && typeof w.meta === 'object' ? w.meta : null);
+      ['status', 'source', 'verifiedAt', 'unit'].forEach(function (k) { if (w[k] !== undefined && w[k] !== null) m[k] = w[k]; });
+      var value = typeof w.value === 'number' && Number.isFinite(w.value) && w.value >= 0 ? w.value : null;
+      if (value === null || m.status === 'unknown') return V.unknown(); /* un chiffre marqué « inconnu » n’est pas une valeur */
+      var status = PUBLISHED_STATUS[m.status] || 'estimated';
+      var ctx = m.status === undefined || m.status === null ? 'Statut non précisé dans la source : à confirmer.' : !PUBLISHED_STATUS[m.status] ? 'Statut « ' + m.status + ' » inconnu : traité comme non confirmé.' : m.status === 'unverified' ? 'Chiffre relevé mais pas encore vérifié.' : null;
+      var meta = {};
+      if (ctx) meta.ctx = ctx;
+      if (typeof m.source === 'string' && m.source.trim()) meta.source = m.source.trim().slice(0, 1000);
+      if (typeof m.verifiedAt === 'string' && /^\d{4}-\d{2}-\d{2}/.test(m.verifiedAt)) meta.verifiedAt = m.verifiedAt.slice(0, 10);
+      if (typeof m.unit === 'string' && m.unit.trim()) meta.unit = m.unit.trim().slice(0, 40);
+      return make(value, status, meta);
+    },
     emptyText: function (x, vide) {
       x = V.from(x);
       if (x.s === 'na') return (M.vides && M.vides.na) || 'Ne s’applique pas';
@@ -401,7 +424,7 @@
   function fromVehicle(v) {
     var cat = v && v.cat, terrain = cat === 'bateau' ? 'eau' : cat === 'avion' || cat === 'helicoptere' ? 'air' : cat ? 'route' : null;
     var outV = {
-      price: v && typeof v.price === 'number' ? V.official(v.price) : V.unknown(),
+      price: V.published(v && (v.price !== undefined ? v.price : v.prix)),
       purchasable: typeof (v && v.purchasable) === 'boolean' ? V.official(v.purchasable) : V.unknown(),
       terrain: terrain ? V.estimated(terrain, { ctx: 'Déduit du type de véhicule (catégorie du site), pas d’une fiche technique.' }) : V.unknown(),
       // v7.54 : vélo, kayak, trottinette, train ou monorail : pas de carburant à payer, « sans objet » plutôt que « mécanique non confirmée » (revue v7.53).
@@ -416,7 +439,7 @@
     var noAmmo = a && (a.cat === 'melee' || a.cat === 'projectile');
     var naText = a && a.cat === 'melee' ? 'Arme de mêlée : ni munitions, ni chargeur.' : 'Arme de jet : chaque exemplaire se lance, sans chargeur ni rechargement.';
     var out = {
-      price: a && typeof a.price === 'number' ? V.official(a.price) : V.unknown(),
+      price: V.published(a && (a.price !== undefined ? a.price : a.prix)),
       purchasable: V.unknown(),
       ammoType: noAmmo ? V.na(naText) : a && a.mun ? make(a.mun, SITE_STATUS[a.st] || 'estimated', { ctx: 'Type de munitions écrit sur la fiche.' }) : V.unknown(),
       ammoCost: noAmmo ? V.na(naText) : undefined,
@@ -431,7 +454,7 @@
     var effet = row && row.effet || {};
     var health = typeof effet.valeur === 'number' && effet.jeu && effet.unite === 'sante' ? V.series(effet.valeur, { ctx: 'Chiffre de ' + effet.jeu + ', pas de GTA VI.', unit: effet.unite || null }) : V.unknown();
     return {
-      price: row && row.prix_gta6 && typeof row.prix_gta6.valeur === 'number' ? V.official(row.prix_gta6.valeur) : V.unknown(),
+      price: row && row.prix_gta6 && typeof row.prix_gta6.valeur === 'number' ? V.published({ value: row.prix_gta6.valeur, status: row.prix_gta6.statut === 'officiel' || row.prix_gta6.statut === 'vu' ? 'official' : row.prix_gta6.statut === 'serie' ? 'unverified' : row.prix_gta6.statut || 'official', source: row.prix_gta6.source, verifiedAt: row.prix_gta6.verifiedAt }) : V.unknown(),
       purchasable: V.unknown(),
       effectType: effet.texte ? make(effet.texte, SITE_STATUS[row.statut] || 'estimated') : V.unknown(),
       health: health, unit: V.unknown(), duration: V.unknown(), conditions: V.unknown(), limits: V.unknown()

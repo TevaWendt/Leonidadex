@@ -52,6 +52,9 @@ function check(value, schema, at, errors) {
       else if (schema.additionalProperties === false) errors.push(at + ' : champ inconnu « ' + k + ' »');
     }
   }
+  /* v7.59 (check ultime) : « if / then » minimal (JSON Schema) : quand la condition est tenue, les contraintes de « then » s'appliquent
+     (sert à prix_gta6 : une valeur écrite exige un statut publié, une source et une date). */
+  if (schema.if && schema.then) { const cond = []; check(value, schema.if, at, cond); if (!cond.length) { const sub = []; check(value, schema.then, at, sub); for (const e of sub) errors.push(e.replace(/^([^:]+) :/, '$1 (prix_gta6.valeur écrit) :')); } }
 }
 
 let cache = null;
@@ -97,7 +100,15 @@ function load(options = {}) {
       if (ids.has(it.id)) errors.push(at + ' : identifiant déjà utilisé dans ' + ids.get(it.id)); else ids.set(it.id, fam);
       if (ctx.taken.has(it.id)) errors.push(at + ' : identifiant déjà pris par un véhicule, une arme ou un équipement');
       if (!cats.has(it.categorie)) errors.push(at + ' : catégorie inconnue « ' + it.categorie + ' »');
-      if (it.prix_gta6 && it.prix_gta6.valeur !== null) errors.push(at + ' : un prix GTA VI ne peut pas être écrit tant que Rockstar n’a rien publié');
+      /* v7.59 (check ultime, CALC-15) : un prix GTA VI s'écrit le jour où Rockstar le publie — avec le schéma unique : statut
+         « officiel » (publié) ou « verified » (relevé dans le jeu), une source et une date ; sinon la génération s'arrête. */
+      if (it.prix_gta6 && it.prix_gta6.valeur !== null && it.prix_gta6.valeur !== undefined) {
+        const p = it.prix_gta6;
+        if (typeof p.valeur !== 'number' || !Number.isFinite(p.valeur) || p.valeur < 0 || p.valeur > 1e12) errors.push(at + ' : prix_gta6.valeur illisible (nombre ≥ 0 attendu)');
+        if (!['officiel', 'official', 'verified', 'vu'].includes(p.statut)) errors.push(at + ' : prix_gta6.valeur écrit exige le statut « officiel » (publié par Rockstar) ou « verified » (relevé dans le jeu), trouvé « ' + p.statut + ' »');
+        if (!p.source || typeof p.source !== 'string') errors.push(at + ' : prix_gta6.valeur écrit exige une source (URL ou référence précise)');
+        if (!/^\d{4}-\d{2}-\d{2}/.test(p.verifiedAt || '')) errors.push(at + ' : prix_gta6.valeur écrit exige verifiedAt (AAAA-MM-JJ)');
+      }
       if (it.effet && it.effet.valeur !== null && !it.effet.jeu) errors.push(at + ' : un chiffre d’effet doit dire de quel jeu il vient');
       if (it.effet && it.effet.valeur !== null && !it.effet.unite) errors.push(at + ' : un chiffre d’effet doit avoir une unité');
       if (it.statut === 'serie' && !it.prix_repere_serie) errors.push(at + ' : un repère de la série doit porter prix_repere_serie (valeur ou note)');
@@ -229,7 +240,7 @@ function keyStrip(fam) {
     + STATUS_ORDER.filter(s => c[s]).map(s => '<button type="button" class="cat-key-bt" data-cat-key="' + s + '" aria-pressed="false" disabled title="' + esc(KEY[s]) + '">' + S.pip(s, true) + '<span class="cat-key-d">' + esc(KEY[s]) + '</span><span class="cat-key-n">' + c[s] + ' ligne' + (c[s] > 1 ? 's' : '') + '</span></button>').join('')
     + '</div>';
 }
-function accessHtml(it) { const a = FD.accessCell(it); return '<span class="cat-conf">' + S.pip('conf') + esc(a.price) + '</span><small class="cat-buy">' + esc(a.buy) + '</small>'; }
+function accessHtml(it) { const a = FD.accessCell(it); return '<span class="cat-conf">' + S.pip(a.known ? 'officiel' : 'conf') + esc(a.price) + '</span><small class="cat-buy">' + esc(a.buy) + '</small>'; }
 function row(fam, it, cat, sources) {
   const d = load(), media = it.media ? d.ctx.medias[it.media] : null, ci = d.families[fam].categories.findIndex(x => x.id === cat.id);
   const srcLinks = it.sources.map((id, i) => '<a href="#src-' + esc(id) + '" class="cat-src" aria-label="Source : ' + esc(sources[id].title) + '">source' + (it.sources.length > 1 ? ' ' + (i + 1) : '') + '</a>').join(' ');

@@ -1,0 +1,114 @@
+LEONIDAKIT v7.59 — mission « check ultime du calculateur » (un seul lot, sous-étapes A → E), 2 octobre 2026
+
+Base : dépôt GitHub TevaWendt/Leonidadex au commit 8c1ddd30 (v7.58, lot 5 de la mission précédente ; identique au ZIP complet
+joint, SHA-256 55d7dd5d…40be). L'archive « modifs » est construite depuis cette base. Rien n'est publié.
+Suivi des 20 exigences : outils/MATRICE-CHECK-ULTIME.md ; preuves : outils/PREUVES-v7.59.md ; inventaire : outils/CALCULATEUR-INVENTAIRE.md ;
+matrice de causalité : outils/CALCULATEUR-CAUSALITE.md ; procédure : outils/QUAND-ROCKSTAR-PUBLIE.md.
+
+A. COMPRENDRE ET INVENTORIER (CALC-01)
+- outils/calculateur-inventaire.cjs (nouveau) ouvre calculateurs.html dans un navigateur simulé (jsdom), pour chaque outil × mode
+  × variante d'état (objectif continu / par missions ; achat libre / fiche avec gain ; budget manuel / panier ; ordre avec éditeur ;
+  « Ça vaut le coup ? » dans ses six formes ; comparaison ; plan montant-par-heure / achat-missions / déblocage) et écrit
+  outils/CALCULATEUR-INVENTAIRE.md : états partagés, entrées d'adresse, Léo, clés de stockage, barre commune, puis par outil les
+  étapes, sorties, zones, liens et le tableau de chaque contrôle (type, id, champ data-field, libellé, data-*, aria, mode, réglage).
+  Résultat : 581 contrôles (Expert) sur 9 outils, 47 contrôles communs, 0 erreur JS ; reproductible à l'octet (--check).
+- Lecture intégrale du moteur (calculateurs-engine.js), du scénario, du modèle, des sept scripts d'interface, des raccords
+  (fiches.js, comparateur.js, carnets.js, leo-link.js, leo-calculator.js, calculator-entry.js) et des cinq documents.
+
+B. MATRICE DE CAUSALITÉ ET VÉRIFICATION EXHAUSTIVE (CALC-02 → CALC-12)
+- outils/calculateur-causalite.cjs (nouveau) : 139 attentes « cette entrée change ces sorties, dans ce sens, par cette fonction du
+  moteur, et ne change pas celles-là », vérifiées par variation réelle (valeur avant / après, zones comparées, métrique recalculée par
+  calculateurs-scenario.evaluate, miroirs Simple / Expert, erreurs JS). Écrit outils/CALCULATEUR-CAUSALITE.md. Résultat : 139 / 139.
+  Les attentes fausses de la première rédaction ont été corrigées d'après le moteur (joueurs masqués en continu, rôle plaisir déjà
+  par défaut, budget manuel indépendant de l'ordre, usage ignoré quand un coût horaire est écrit, etc.) : aucune n'a été « ajustée »
+  pour faire passer un défaut.
+- Propriétés du moteur (outils/tests/calculateurs-proprietes.test.cjs, générateur déterministe mulberry32, 3 000 cas par
+  propriété) : monotonie (gain horaire ↑ → temps ↓ ; capital ↑ → manque ↓ ; prix ↑ → temps ≥), bornes (jamais NaN / Infinity /
+  temps négatif / réserve entamée), identités (continu = par missions quand la durée vaut l'heure ; inverse ∘ goal), limites de
+  sessionPlan (12 activités, 1 440 min, 256 réalisations), parseLocalizedNumber (formats français), evaluate jamais non fini,
+  « inconnu » jamais 0, migrations v1 → v6 sans perte.
+- Contrôle croisé (outils/tests/calculateurs-check-ultime.test.cjs, 15 tests) : inventaire == régénéré ; matrice == conforme ;
+  changement de mode sans perte ; rechargement ; lien #plan= (≤ 24 000) ; export / import (≤ 200 000, version 6) ; migrations v3 /
+  v5 ; onglets (aria-selected, flèches, Début / Fin), puces, boutons (aria-pressed), repliables (aria-expanded, double clic), pas à
+  pas (Entrée), combobox ; carnets (160 maximum, renommer, dupliquer, supprimer, stockage cassé) ; 13 entrées d'adresse (accueil,
+  fiches, comparateur, carnets, progression, Léo, Tuto, ?voir=) ; liens sortants et ancres ; empreinte de calculator-entry.css ;
+  graphiques (tableau des valeurs, mouvement réduit) ; réponse en une phrase pour chaque outil et vocabulaire (jargon chassé).
+- Barre « Que veux-tu calculer ? » et Léo (outils/tests/calculateurs-hub-leo.test.cjs) : 13 phrases naturelles (k, M, million,
+  heures, minutes), demandes incohérentes (temps négatif, 30 h par jour, 5 000 milliards) laissées de côté sans rien inventer,
+  aller-retour Léo → calculateur → Léo sans perte (fenêtre de décision, copie « avant Léo » dans Mes plans, lien de retour).
+- Navigateur (outils/tests/calculateurs-check-ultime-browser.cjs, Chromium) : 9 outils × 3 modes × largeurs 360 / 390 / 700 /
+  701 / 1024 / 1440 (débordement, hors écran, textes tronqués, boutons < 24 px), résumé collant ≤ 700 px, tactile 390, clavier,
+  mouvement réduit, sans JavaScript, stockage bloqué (lecture, enregistrement, export), latence CPU ×4 avant / après.
+  Résultat v7.58 : 1 096 contrôles, 24 échecs (boutons « Fiche ↗ » de 15 à 21 px). v7.59 : 1 120 contrôles, 0 échec.
+
+C. DÉFAUTS TROUVÉS ET CORRIGÉS (chacun avec son test)
+- D-01 calculateurs-workspace.js : CSS.escape appelé sans garde → 3 tests ergonomie-v35 rouges sous jsdom et, dans un navigateur
+  sans CSS.escape, replis et flèches de l'ordre cassés. cssEscape() de repli. Test : ergonomie-v35 (3) verts.
+- D-02 calculateurs-workspace.js : les champs « me fera gagner en plus » du plan (plan-boost, plan-p-N-boost) étaient masqués par
+  un sélecteur trop large ([data-field$=".boostHourly"] visait aussi assets.N.boostHourly). Sélecteur borné aux achats. Test :
+  check-ultime (plan, champ visible) ; captures 360 / 1440 dans le dossier de contrôle.
+- D-03 fiches.js / outils/sync-site.cjs : calculator-entry.css chargé avec ?v=20260921 posé à la main (et deux fois si la page
+  portait déjà la feuille). Empreinte ENTRYCSS remplacée par sync-site.cjs (sha256 de la feuille), détection de la feuille déjà
+  chargée. Test : check-ultime (empreinte = sha256 courant).
+- D-04 calculateurs-workspace.js : « Quel achat choisir ? » — la case « heures de jeu » n'avait aucun effet. Ligne « Après N h
+  de jeu, prix enlevé » (gainOverHorizon) ajoutée au tableau. Test : causalité compare.hours.
+- D-05 calculateurs.js : la réponse de Mes achats ne nommait pas l'achat (« il te manque X » sans dire pour quoi). Nom de
+  l'achat (fiche ou achat libre) dans la phrase. Test : check-ultime (réponses).
+- D-06 calculateurs-scenario.js : en mode « nouvelle activité » de « Ça vaut le coup ? », la métrique du carnet (gain net) ne
+  correspondait pas à la phrase de l'écran (gain en plus). metric() retourne marginalNetProfit en mode new. Test : causalité roi/new.
+- D-07 calculateurs-workspace.js : minutes d'une activité écrite en ligne non bornées (1e9 accepté). Borne 1 000 000 comme ailleurs.
+- D-08 calculateurs-scenario.js : une sauvegarde v1 / v2 restaurait un business plan sans l'argent ni l'objectif du joueur (exemple
+  du site à la place). Copie goal → plan.situation / plan.goal. Test : check-ultime (migrations).
+- D-09 calculateurs-workspace.js : l'en-tête d'un achat comparé (nom, prix) restait ancien jusqu'au rechargement après un
+  changement de prix. render() rafraîchit [data-b-compare-key]. Test : causalité compare.
+- D-10 leo-calculator.js : dialog.close() / showModal() appelés sans garde (jsdom, vieux navigateurs). Gardes + attribut open.
+- D-11 leo-core.js : « quel est le prix du Girardi ES9 ? » lisait « 9 » (de ES9) comme un montant, ce qui faisait passer une question
+  rédigée devant la fiche. Un chiffre collé à une lettre (ES9, K17, F-150, gta6) n'est plus un montant. Test : répétition générale ;
+  évaluation de Léo 512 / 512.
+- D-12 leo-core.js : une fiche dont le prix est publié répond elle-même à « combien coûte ? » avant une question rédigée (règle
+  pricedEntity). Sans prix publié (aujourd'hui), rien ne change. Test : répétition générale (Sprunk).
+- Tests existants adaptés (1) : calculateurs-integration « manual purchase prices override… » attendait la date brute
+  2026-09-19 ; la date s'écrit désormais « vérifié le 19 septembre 2026 » (comme sur les fiches).
+
+D. AMÉLIORATIONS MODESTES (CALC-17 ; besoin constaté pendant le contrôle)
+- Provenance d'un prix, une seule écriture (calculateurs-workspace.js priceProvenance, reprise par Mes achats Simple et le
+  plan) : statut en français (Officiel, Mesuré et vérifié, Estimation, Valeur personnelle, Non confirmé, Prix pas encore connu),
+  source, « vérifié le … ». Avant : statut brut ou absent, date ISO, « Aucune source » répété.
+- Hub « Que veux-tu calculer ? » (calculateurs-hub.js) : « j'ai X » remplit « J'ai déjà » dans l'outil ouvert (budget, ordre,
+  comparaison…), « ça vaut le coup d'acheter X à 2 M » remplit le prix de « Ça vaut le coup ? », « en 90 minutes » remplit la
+  session des activités. Avant : seule la réponse de Mon objectif recevait ces chiffres.
+- Vocabulaire (CALC-12) : « hypothèse » → « à condition que ça se vérifie dans le jeu » dans les explications ; icônes d'état avec
+  libellé lisible (« inconnue », « pas encore confirmée ») ; pluriels des réponses.
+- Boutons « Fiche ↗ » des cartes du catalogue : hauteur tactile ≥ 28 px (calculateurs-brand.css). Avant : 15 à 21 px.
+- Phrase du catalogue de Mes achats calculée depuis les données (« Les prix du jeu ne sont pas encore connus » →
+  « N prix publiés sur T fiches… » le jour venu), sans toucher au texte figé.
+- Fiches (encart calculateur) : la phrase dépend de la fiche (data-prix) ; entreprises / demeures / planques : « achat confirmé,
+  prix pas encore publié » quand purchasable est vrai.
+
+E. PRÉPARATION DE L'AVENIR (CALC-13 → CALC-16)
+- Schéma unique { value, status, source, verifiedAt, unit } lu de la même façon par calculateurs-data.js (exécution),
+  calculateurs-modele.js (V.published : fiches documentaires, analyse du scénario — priceV ne marque plus « officiel » un prix du
+  site non officiel) et outils/donnees-publiees.cjs (générateurs). Un nombre nu reste non confirmé ; status unknown annule la
+  valeur ; official / verified exigent source et date (sinon la régénération s'arrête).
+- outils/donnees-publiees.cjs (nouveau) : etat() (prix connus par type, officiels, activités complètes, colonnes GTA VI des listes,
+  erreurs de forme), phrases() (18 phrases, singulier / pluriel), remplir() ({donnees:clé}), prixDe(), phrasePrix(), verifierPrix(),
+  verifierActivite(), --absences (inventaire des phrases d'absence : mécaniques / à relire).
+- Textes d'absence reliés à la donnée : calculateurs.html (3 phrases, data-lk-donnees), index.html (1), À propos (FAQ prix),
+  Achats (FAQ, note, cartes, statuts), hubs (encarts demeures / bateaux / logements, FAQ demeures et planques, encart Lieux),
+  listes (consommables, style, personnalisations : descriptions, limites, sections « À confirmer », FAQ), Léo (22 sujets marqués
+  absence + textKnown ; gen-leo.cjs s'arrête si un sujet contredit les données sans textKnown). Aujourd'hui : texte identique à
+  l'octet (vérifié page par page).
+- Fiches prêtes : puce « Prix publié », ligne « Prix en jeu », fiche documentaire (source en lien, date), data-prix ; listes
+  dépliables : colonne GTA VI, fiche complète (prix_gta6 : schéma ouvert, validé : officiel / verified + source + date).
+- Léo prêt : price, priceStatus (français), priceSource, priceVerifiedAt dans l'index (0 octet de plus tant que rien n'est
+  publié) ; gabarits priceKnown pour véhicule, arme, monde, lignes de liste ; leo-core knownPrice().
+- Répétition générale (outils/tests/repetition-generale.cjs) : copie temporaire du site, prix fictifs clairement marqués
+  (Albany Emperor 35 000 $, Girardi ES9 1 250 $, Rideout Customs 2 500 000 $ + purchasable, Sprunk 3 $ dans la liste) et une
+  activité fictive (« Convoyage (répétition générale) », 18 000 $ / 20 min), régénération, 46 vérifications (fiches, hubs, Achats,
+  listes, phrases, FAQ JSON-LD, Mes achats Simple / Expert, Ça vaut le coup ?, Comparer, Classer, Mes activités, Mon temps de jeu,
+  carnets, export, partage, Léo, deux garde-fous), empreinte du dossier réel identique avant / après, aucun marqueur fictif dans le
+  dossier livré. Résultat : 46 / 46.
+- Procédure outils/QUAND-ROCKSTAR-PUBLIE.md : où écrire, 5 commandes, ce qui suit tout seul, ce qui demande une relecture, interdits.
+
+F. VÉRIFICATION FINALE (CALC-18 → CALC-20) : voir outils/PREUVES-v7.59.md (tests, verifier.js, évaluation de Léo, régénération,
+   parcours navigateur, latence, diff listé et justifié).

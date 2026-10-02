@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "leonidakit-catalogue",
   "title": "Catalogue Leonidakit (v7.42, lot 5 ; v7.43, lot 6) : une famille de listes dépliables",
-  "description": "Modèle commun aux familles consommables, coiffures, tatouages, tenues (lot 5) et perso-vehicules, perso-armes (lot 6). Validé par outils/catalogues.cjs (sous-ensemble de JSON Schema) et par outils/tests/catalogues-v742.test.cjs et catalogues-v743.test.cjs. Règles hors schéma vérifiées par le module : identifiants uniques sur toutes les familles, catégorie connue de la famille, sources connues du registre (sources.json) et cohérentes avec le statut, lieu connu de la carte, visuel connu de outils/medias-officiels.json, prix_gta6.valeur toujours null tant que Rockstar n’a rien publié ; lot 6 : compat.vehicules et compat.armes limités aux catégories du site, compat.ids aux armes recensées, acq à une acquisition suivable (la ligne renvoie alors sa case à la carte Rockstar : suivi false).",
+  "description": "Modèle commun aux familles consommables, coiffures, tatouages, tenues (lot 5) et perso-vehicules, perso-armes (lot 6). Validé par outils/catalogues.cjs (sous-ensemble de JSON Schema) et par outils/tests/catalogues-v742.test.cjs et catalogues-v743.test.cjs. Règles hors schéma vérifiées par le module : identifiants uniques sur toutes les familles, catégorie connue de la famille, sources connues du registre (sources.json) et cohérentes avec le statut, lieu connu de la carte, visuel connu de outils/medias-officiels.json, prix_gta6.valeur null tant que Rockstar n’a rien publié, sinon statut officiel/verified avec source et verifiedAt (v7.59) ; lot 6 : compat.vehicules et compat.armes limités aux catégories du site, compat.ids aux armes recensées, acq à une acquisition suivable (la ligne renvoie alors sa case à la carte Rockstar : suivi false).",
   "type": "object",
   "required": [
     "famille",
@@ -224,11 +224,51 @@
             "additionalProperties": false,
             "properties": {
               "valeur": {
-                "type": "null"
+                "type": [
+                  "null",
+                  "number"
+                ],
+                "minimum": 0
               },
               "statut": {
                 "type": "string",
-                "const": "conf"
+                "enum": [
+                  "conf",
+                  "officiel",
+                  "verified"
+                ]
+              },
+              "source": {
+                "type": "string"
+              },
+              "verifiedAt": {
+                "type": "string",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}"
+              }
+            },
+            "description": "v7.59 : valeur null + statut « conf » tant que rien n’est publié ; le jour venu : valeur (nombre), statut « officiel » (publié par Rockstar) ou « verified » (relevé dans le jeu), source et verifiedAt obligatoires (vérifiés par outils/catalogues.cjs).",
+            "if": {
+              "properties": {
+                "valeur": {
+                  "type": "number"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "valeur",
+                "statut",
+                "source",
+                "verifiedAt"
+              ],
+              "properties": {
+                "statut": {
+                  "type": "string",
+                  "enum": [
+                    "officiel",
+                    "verified"
+                  ]
+                }
               }
             }
           },

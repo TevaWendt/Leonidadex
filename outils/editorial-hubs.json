@@ -694,7 +694,7 @@
         },
         {
           "q": "Acheter dans une région",
-          "etat": "Aucun prix de maison ou de commerce n’est publié. Seul l’achat de garages est évoqué par Rockstar (Famitsu, 28 août 2026)."
+          "etat": "{donnees:prixMaisonsCommerces} Seul l’achat de garages est évoqué par Rockstar (Famitsu, 28 août 2026)."
         }
       ]
     },
@@ -1236,7 +1236,7 @@
     "faq": [
       {
         "q": "Peut-on acheter une maison dans GTA VI ?",
-        "a": "Rien n’est annoncé. Rob Nelson a dit à Famitsu (28 août 2026) que les planques changent avec l’histoire et que seuls les garages s’achètent. Aucun prix de logement n’existe ; le calculateur te laisse écrire le tien.",
+        "a": "Rien n’est annoncé. Rob Nelson a dit à Famitsu (28 août 2026) que les planques changent avec l’histoire et que seuls les garages s’achètent. {donnees:prixLogement}",
         "k": [
           "acheter une maison",
           "acheter un appartement",
@@ -1491,7 +1491,7 @@
       },
       {
         "q": "Peut-on acheter des garages ?",
-        "a": "Oui, d’après Rob Nelson (Famitsu, 28 août 2026) : on démarre avec trois places de véhicule et on achète des garages sur la carte pour en avoir plus. Aucun prix n’est publié.",
+        "a": "Oui, d’après Rob Nelson (Famitsu, 28 août 2026) : on démarre avec trois places de véhicule et on achète des garages sur la carte pour en avoir plus. {donnees:prixPlanques}",
         "k": [
           "acheter un garage",
           "acheter des garages",

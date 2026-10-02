@@ -25,6 +25,7 @@ const PERSO_NOM=Object.fromEntries(JSON.parse(fs.readFileSync('outils/editorial.
 /* v7.50 (lot 3) : « Sur la carte de Leonida » devient un localisateur illustré (carte cadrée, repères numérotés, résumé,
    lieux en texte) ; l’emplacement de l’arme reste « Emplacement à venir ». La silhouette vient d’un fichier commun. */
 const LOC=require('./localisateur.cjs'),FD=require('./fiche-doc.cjs'),MODEL=require('../calculateurs-modele.js');
+const DP=require('./donnees-publiees.cjs');
 LOC.writeReference(); // v7.55 : fond commun img/leonida-carte.svg dérivé de carte.html
 const carteOf=a=>'<section class="shell reveal" id="carte">\n  <h2 class="sec-h">Sur la carte de Leonida</h2>\n  <p class="fiche-txt rise">Les armureries repérées sur notre carte. L’emplacement et le prix de cette arme seront ajoutés quand Rockstar les publiera.</p>\n  '
  +LOC.single({item:LOC.weaponItem(a,'../',(id,h)=>schema(id,h)),places:LOC.data().placesA,prefix:'../',caption:'Armureries repérées sur notre carte : pas un point de vente confirmé pour cette arme.',placesTitle:'Armureries repérées',mapLabel:'Carte de Leonida : armureries repérées'})+'\n</section>';
@@ -73,13 +74,14 @@ function fiche(a,i){
   {'@type':'ListItem',position:1,name:'Accueil',item:'https://www.leonidakit.com/'},
   {'@type':'ListItem',position:2,name:'Armes',item:'https://www.leonidakit.com/armes.html'},
   {'@type':'ListItem',position:3,name:a.nom,item:url}]},null,2);
+ const prixPub=DP.prixDe(a); /* v7.59 : un prix publié dans armes-data.js s'affiche avec son statut ; sinon rien n'est inventé */
  const tags=[...(meds.length?['<span class="chip">Images officielles</span>','']:[]),
-  '<span class="chip live">'+st.chip+'</span>','<span class="chip">'+esc(a.src)+'</span>','<span class="chip">'+SLOTL[a.slot]+'</span>'].join('\n          ');
+  '<span class="chip live">'+st.chip+'</span>',...(prixPub?['<span class="chip chip-prix" data-prix-statut="'+prixPub.status+'">'+esc('Prix publié : '+DP.fmt(prixPub.value)+' '+prixPub.unit+' · '+prixPub.label)+'</span>']:[]),'<span class="chip">'+esc(a.src)+'</span>','<span class="chip">'+SLOTL[a.slot]+'</span>'].join('\n          ');
  const insp=a.insp?esc(a.insp)+' <span class="unknown">— rapprochement communautaire</span>':a.fam?esc(a.fam)+' <span class="unknown">— famille d’objet</span>':'<span class="unknown">Objet du quotidien</span>';
  const rows=[['Nom',esc(a.nom)+(a.perso?' <span class="perso-tag">Arme de '+esc(PERSO_NOM[a.perso]||a.perso)+'</span>':'')],...(a.fr?[['Désignation courante',esc(a.fr)]]:[]),['Statut',st.l],
   ['Catégorie','<a href="../armes.html#'+a.cat+'">'+esc(cat)+'</a>'],['Emplacement',SLOTL[a.slot]],
   ...(a.portee?[['Portée estimée',esc(a.portee)]]:[]),['Inspiration réelle',insp],...(a.mun?[['Munitions',esc(a.mun)]]:[]),
-  ...(a.ue?[['Édition Ultimate','Version exclusive ou mise en avant']]:[]),['Source',esc(a.src)]];
+  ...(a.ue?[['Édition Ultimate','Version exclusive ou mise en avant']]:[]),...(prixPub?[['Prix en jeu',esc(DP.phrasePrix(prixPub))]]:[]),['Source',esc(a.src)]];
  const gal=`<div class="gal" data-base="../img/armes/${a.id}" data-vues="" data-nom="${esc(a.nom)}"
              data-art="${esc(art(a,150))}" data-vide-txt="${esc(VIDE_TXT)}" aria-label="Schéma : ${esc(a.nom)}" data-vide="1"><div class="gal-track"><div class="gal-item"><div class="gal-vide">${art(a,150)}<span>${esc(VIDE_TXT)}</span></div></div></div></div>`;
  const rel=related(a).map(x=>'<a class="rel-card" href="'+x.id+'.html"><span class="rel-art">'+art(x,108)+'</span><span class="rel-txt"><span class="rel-marque">'+esc(CATL[x.cat])+'</span><span class="rel-nom">'+esc(x.nom)+'</span></span></a>').join('');
@@ -126,7 +128,7 @@ ${HEADER}
         <div class="fiche-tags">
           ${tags}
         </div>
-        <div class="fiche-liens"><button type="button" class="own-bt" id="own-bt" data-id="${a.id}"><span class="ck"></span><span>Ajouter à mon arsenal</span></button><a href="../comparateur.html?type=armes&amp;ids=${a.id}">Comparer</a>${PERSO_COVER.has(a.cat)?'<a href="../personnalisations.html#perso-armes='+a.cat+'">Accessoires compatibles</a>':''}</div>
+        <div class="fiche-liens"><button type="button" class="own-bt" id="own-bt" data-id="${a.id}"${prixPub?` data-prix="${prixPub.value}" data-prix-statut="${prixPub.status}"`:''}><span class="ck"></span><span>Ajouter à mon arsenal</span></button><a href="../comparateur.html?type=armes&amp;ids=${a.id}">Comparer</a>${PERSO_COVER.has(a.cat)?'<a href="../personnalisations.html#perso-armes='+a.cat+'">Accessoires compatibles</a>':''}</div>
       </div>
       <div class="fhero-art fhero-art--gal">
         ${gal}

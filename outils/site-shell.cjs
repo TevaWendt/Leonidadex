@@ -93,6 +93,15 @@ const ENTRY = {
 };
 const ENTRY_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="5" y="3" width="14" height="18" rx="2"/><rect x="8" y="6" width="8" height="3" rx=".6"/><path d="M8.5 13h1M12 13h1M15.5 13h1M8.5 17h1M12 17h1"/><rect x="15" y="16" width="2" height="2" rx=".5" fill="currentColor" stroke="none"/></svg>';
 function entryPages() { return Object.keys(ENTRY); }
+/* v7.59 (check ultime, CALC-13) : « Aucun prix n’est publié » n'est plus figé : la phrase est recalculée depuis les données
+   du site (outils/donnees-publiees.cjs) pour le type d'achat de la page ; une seule lecture par exécution. */
+let _etat = null;
+function prixConnus(type) { if (!_etat) _etat = require('./donnees-publiees.cjs').etat(path.resolve(__dirname, '..')); const t = type === 'housing' ? 'property' : type; const n = _etat.prix.parType[t]; return n ? n.connus : 0; }
+function entryText(e) {
+  if (!/^Aucun prix n’est publié/.test(e.d) || !e.type) return e.d;
+  const n = prixConnus(e.type); if (!n) return e.d;
+  return n + ' prix publié' + (n > 1 ? 's' : '') + ' sur le site, avec leur source : le calculateur les propose comme référence. Pour les autres, écris le prix que tu imagines, ton argent et ce que tu gagnes par partie.';
+}
 function entry(file) {
   const e = ENTRY[file]; if (!e) return '';
   const from = file.replace(/\.html$/, '');
@@ -100,7 +109,7 @@ function entry(file) {
   const href = 'calculateurs.html?' + params.toString().replace(/&/g, '&amp;') + '#atelier';
   return '<section class="shell lk-entry-hub" aria-labelledby="lk-entry-hub-t"><div class="lk-entry-card lk-entry-card--hub">'
     + '<span class="lk-entry-hub-ico" aria-hidden="true">' + ENTRY_ICON + '</span>'
-    + '<div class="lk-entry-hub-body"><p class="lk-entry-eyebrow">Le calculateur</p><h2 id="lk-entry-hub-t">' + esc(e.q) + '</h2><p>' + esc(e.d) + '</p></div>'
+    + '<div class="lk-entry-hub-body"><p class="lk-entry-eyebrow">Le calculateur</p><h2 id="lk-entry-hub-t">' + esc(e.q) + '</h2><p>' + esc(entryText(e)) + '</p></div>'
     + '<a class="lk-entry-button" href="' + href + '">' + esc(e.cta) + ' <span aria-hidden="true">↗</span></a></div></section>';
 }
 /* Pose (ou remplace) l'encart en bas de <main>, avant les puces, sinon avant le bandeau de fin, sinon avant </main> ;

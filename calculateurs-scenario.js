@@ -92,6 +92,8 @@ function migrate(raw,initial){
  s.roi={...copy(initial.roi),...r,key:'legacy-roi',mode:'continuous',activityIds:[]};
  s.order={keys:[]};(raw.order?.items||[]).forEach((item,i)=>{const a={...copy(assetTemplate),...item,key:'legacy-order-'+i,itemId:'',incomeMode:item.boostHourly?'personal':'none'};s.assets.push(a);s.order.keys.push(a.key);});
  s.budget={...copy(initial.budget),...raw.budget,source:'manual'};s.completed=[];
+ /* v7.59 (check ultime, D-08) : comme pour une sauvegarde v3/v4, le business plan reçoit une copie des chiffres du joueur (jamais l’exemple du site). */
+ s.plan.situation={...s.plan.situation,capital:s.goal.capital??null,reserve:s.goal.reserve??0,hourly:s.goal.hourly??null,dailyMinutes:s.goal.dailyMinutes??null};s.plan.goal.target=s.goal.target??null;
  // Shared goal values are authoritative; historical copies stay in the untouched v1 storage.
  return s;
 }
@@ -300,7 +302,8 @@ function itemOf(a,ctx){return a&&a.itemId&&ctx&&Array.isArray(ctx.catalogue)?ctx
 const num=x=>typeof x==='number'&&Number.isFinite(x);
 const fmt=n=>num(n)?new Intl.NumberFormat('fr-FR',{maximumFractionDigits:0}).format(Math.round(n)):'?';
 // Prix d’un achat avec son statut : le prix du site (officiel) seulement s’il est connu et repris tel quel.
-function priceV(a,item){if(!a||a.price===null||a.price===undefined)return V.blank();if(item&&num(item.price)&&a.price===item.price)return V.official(a.price,{src:item.fieldMeta?.price?.source||null});return V.personal(a.price);}
+/* v7.59 (check ultime, CALC-13) : le prix du site garde son statut réel (officiel, mesuré, estimation…) via le schéma unique (V.published), jamais « officiel » par défaut. */
+function priceV(a,item){if(!a||a.price===null||a.price===undefined)return V.blank();if(item&&num(item.price)&&a.price===item.price){const m=item.fieldMeta?.price||{};const v=V.published({value:a.price,status:m.status||'unverified',source:m.source||null,verifiedAt:m.verifiedAt||null});if(v.source)v.src=v.source;return v;}return V.personal(a.price);}
 function totalAcq(a,item){if(!a)return M.total([]);if(a.owned)return M.total([{label:'Déjà à toi',value:V.personal(0)}]);return M.total([{label:'Prix',value:priceV(a,item),field:'price'},{label:'Options',value:a.extras===null?V.blank():V.personal(a.extras||0),field:'extras'},{label:'Frais obligatoires au départ',value:a.fees===null?V.blank():V.personal(a.fees||0),field:'fees'}]);}
 // Coût d’usage par partie : ton chiffre s’il est écrit ; sinon les mécaniques que tu as choisi de simuler (véhicule) ;
 // sinon « mécanique non confirmée » (véhicule, arme) ou « sans objet » (le reste). Jamais les deux à la fois.
@@ -693,7 +696,8 @@ function evaluate(tool,s,source=[],ctx={}){
  return{valid:false,reason:'Choisis un outil.'};
 }
 const metrics={compare:['bestWaitHours','Temps de jeu avant d’avoir le choix retenu','h',-1],goal:['totalMinutes','Temps de jeu pour mon objectif','min',-1],session:['profit','Gagné pendant la partie','$',1],activities:['profit','Gagné, achat de départ enlevé','$',1],roi:['netProfit','Gagné au final, prix enlevé','$',1],purchase:['remaining','Ce qu’il me reste après l’achat','$',1],order:['totalHours','Temps de jeu jusqu’au dernier achat','h',-1],budget:['available','Ce qu’il me reste, sans l’argent mis de côté','$',1]};
-function metric(tool,s){return tool==='roi'&&s.roi.mode==='estimate'?['remaining','Ce qu’il me reste après cet achat','$',1]:metrics[tool];}
+/* v7.59 (check ultime, D-06) : en « nouvelle activité » avec ton gain actuel écrit, l’écran répond avec le gain EN PLUS de ce que tu gagnais déjà (marginalNetProfit) ; le chiffre gardé dans Mes calculs et comparé en mode Expert est le même. */
+function metric(tool,s){if(tool==='roi'&&s.roi.mode==='estimate')return ['remaining','Ce qu’il me reste après cet achat','$',1];if(tool==='roi'&&s.roi.mode==='new'&&typeof s.goal.hourly==='number'&&Number.isFinite(s.goal.hourly))return ['marginalNetProfit','Gagné en plus de ce que je gagnais déjà, prix enlevé','$',1];return metrics[tool];}
 function sensitivity(tool,s,source=[]){
  let path,label,sourceInput=false;
  function reward(id){let i=s.activities.findIndex(a=>a.id===id),a=s.activities[i];if(i<0){i=source.findIndex(a=>a.id===id);a=source[i];sourceInput=true;}if(!a)return;path=sourceInput?[i,'reward']:['activities',i,'reward'];label='Récompense de « '+a.name+' » seulement';}

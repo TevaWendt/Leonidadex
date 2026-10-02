@@ -38,7 +38,7 @@ async function closeDrawer(page){await page.keyboard.press('Escape');await page.
 /* Chaque outil : de quoi le remplir, et où lire la réponse. */
 const TOOLS={
  goal:{fill:async p=>{await fill(p,'f-goal-capital','250 000');await fill(p,'f-goal-target','1 250 000');await fill(p,'f-goal-hourly','125 000');await fill(p,'f-goal-dailyMinutes','60');},answer:'#goal-results .calc-answer',expect:/Il te manque 1 000 000 \$.*8 jours/},
- purchase:{fill:async p=>{await fill(p,'purchase-name','Voiture témoin');await fill(p,'f-purchase-price','150 000');await fill(p,'f-purchase-capital','250 000');},answer:'#purchase-results .calc-answer',expect:/Oui, tu peux l’acheter maintenant/},
+ purchase:{fill:async p=>{await fill(p,'purchase-name','Voiture témoin');await fill(p,'f-purchase-price','150 000');await fill(p,'f-purchase-capital','250 000');},answer:'#purchase-results .calc-answer',expect:/Oui, tu peux (?:l’acheter|acheter .+?) maintenant/ /* v7.59 (D-05) : la réponse nomme l'achat */},
  session:{fill:async p=>{await p.locator('[data-session-minutes="45"]').click();},answer:'#session-results .calc-answer',expect:/En 45 min/},
  budget:{fill:async p=>{await p.locator('#f-budget-source').selectOption('manual').catch(()=>{});await fill(p,'f-budget-extra','20 000');},answer:'#budget-results .calc-answer',expect:/reste|dépens|manque/i},
  order:{fill:async p=>{await fill(p,'order-search','fe');await p.locator('#order-search').press('ArrowDown');await p.locator('#order-search').press('Enter');await p.locator('.b-order-editor:not([hidden]) [data-number]').first().fill('50 000');},answer:'#order-results .calc-answer',expect:/Tout est à toi|tu peux tout acheter|maintenant|\$/},

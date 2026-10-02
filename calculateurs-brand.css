@@ -182,7 +182,7 @@
 .calculator-page .calc-product>div{padding:16px}
 .calculator-page .calc-product h4{font-size:16px;line-height:1.4;letter-spacing:-.02em;margin:7px 0;color:#35215f}
 .calculator-page .calc-product p{color:var(--coral-text,#bf3422);font-size:12.5px;line-height:1.5}
-.calculator-page .calc-product a{color:var(--coral-text,#bf3422);font-size:13.5px}
+.calculator-page .calc-product a{color:var(--coral-text,#bf3422);font-size:13.5px;display:inline-block;min-height:28px;padding:5px 0;line-height:18px}/* v7.59 (check ultime, CALC-06) : « Fiche ↗ » tenait 15 à 21 px de haut : zone tactile élargie, sans changer sa place */
 .calculator-page .calc-check{font-size:13.5px;color:#a62d1d;line-height:1.5}
 .calculator-page .calc-check input{accent-color:var(--coral-text,#bf3422);width:18px;height:18px}
 .calculator-page .calc-provenance{color:#bc3321;font-size:13.5px;line-height:1.7}

@@ -8,6 +8,9 @@
 const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
 const root=path.resolve(__dirname,'..'),read=f=>fs.readFileSync(path.join(root,f),'utf8');
 const source=JSON.parse(read('outils/acquisitions.json')),ed=JSON.parse(read('outils/editorial.json')),media=JSON.parse(read('outils/medias-officiels.json'));
+/* v7.59 (check ultime, CALC-13) : les textes des catégories (outils/acquisitions.json) peuvent porter {donnees:clé} : la phrase vient
+   des données du site (outils/donnees-publiees.cjs), jamais d'un texte figé. Remplacé ici pour acquisitions-data.js et les pages. */
+{const DP=require('./donnees-publiees.cjs');const ph=DP.phrases(DP.etat(root));const fillObj=o=>{for(const k of Object.keys(o))if(typeof o[k]==='string')o[k]=DP.remplir(o[k],ph);};for(const c of source.categories)fillObj(c);if(source.hub&&source.hub.cards)for(const c of Object.values(source.hub.cards))fillObj(c);}
 const EDITO=JSON.parse(read('outils/catalogues/editorial.json'));
 const S=require('./sections.cjs'),C=require('./catalogues.cjs');
 const context={window:{}};vm.createContext(context);
