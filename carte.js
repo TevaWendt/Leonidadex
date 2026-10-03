@@ -1,5 +1,3 @@
-/* v7.61 : pluriel selon la langue de la page : français n > 1 (« 0 coché », « 1,5 million ») ; anglais, espagnol n ≠ 1 (« 0 marcados ») */
-var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.documentElement&&document.documentElement.lang)||'fr').slice(0,2)==='fr'?n>1:n!==1;};
 /* ============================================================
    LEONIDAKIT — moteur de carte
    Déplacement, zoom, marqueurs, filtres, suivi, distance.
@@ -377,7 +375,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
         document.querySelectorAll('.map-filter').forEach(function(input){ if(pts.some(p => p.c === input.dataset.cat)) input.checked = true; });
         refreshVisibility();
         ouvertId = null;
-        panelIn.innerHTML = '<p class="mp-cat">' + esc(titre) + '</p><h3>' + pts.length + (lkPluriel(pts.length)?' lieux' : ' lieu') + ' sur la carte</h3>' +
+        panelIn.innerHTML = '<p class="mp-cat">' + esc(titre) + '</p><h3>' + pts.length + (pts.length > 1 ? ' lieux sur la carte' : ' lieu sur la carte') + '</h3>' +
           '<p class="mp-d">Chaque lieu ouvre sa fiche et centre la carte dessus.</p>' +
           pts.map(function(p){ return '<a class="mp-link" href="#lieu=' + p.id + '">' + esc(p.n) + '</a>'; }).join('');
         panel.classList.add('open'); panel.inert = false;
@@ -792,7 +790,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
                    '</button>';
           };
           h += '<div class="mp-kids"><p class="mp-kids-h">Contient ' + kids.length +
-               (lkPluriel(kids.length)?' lieux' : ' lieu') + '</p>' +
+               (kids.length > 1 ? ' lieux' : ' lieu') + '</p>' +
                tries.slice(0, LIM).map(ligne).join('') +
                (tries.length > LIM
                  ? '<div id="mp-kids-suite" hidden>' + tries.slice(LIM).map(ligne).join('') + '</div>' +
@@ -1346,7 +1344,8 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     rulerBx.innerHTML =
       '<p class="rl-pair">' + chemin + '</p>' +
       '<p class="rl-dist">' + fmtDist(m) + '</p>' +
-      (lkPluriel(etapes.length)?'<p class="rl-seg">' + etapes.length + ' segments · le plus long ' + fmtDist(Math.max.apply(null, etapes)) + '</p>'
+      (etapes.length > 1
+        ? '<p class="rl-seg">' + etapes.length + ' segments · le plus long ' + fmtDist(Math.max.apply(null, etapes)) + '</p>'
         : '') +
       /* Revue de conformité (v7.53) : aucun temps de trajet par défaut (ni la vitesse ni l’échelle ne sont calibrées sur
          GTA VI). La simulation se demande, et se lit comme telle. */

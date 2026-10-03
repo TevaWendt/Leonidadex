@@ -1,5 +1,3 @@
-/* v7.61 : pluriel selon la langue de la page : français n > 1 (« 0 coché », « 1,5 million ») ; anglais, espagnol n ≠ 1 (« 0 marcados ») */
-var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.documentElement&&document.documentElement.lang)||'fr').slice(0,2)==='fr'?n>1:n!==1;};
 /* Leonidakit — catalogue.js (v7.42, lot 5 ; v7.43, lot 6 ; v7.54, lot 1 performance ; v7.56, lot 3 fiches et légendes)
    Listes dépliables des catalogues (Consommables, Coiffures, Tatouages, Tenues et accessoires, Personnalisation des
    véhicules et des armes) : la liste complète est écrite dans la page à la génération (lisible sans script) ; ce module
@@ -23,6 +21,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
      clavier, avec une apparition courte ; distinct de « Fiche complète ». */
 (function () {
   'use strict';
+  var lkPl = function (n) { return /^fr/.test(document.documentElement.lang || "fr") ? n > 1 : n !== 1; }; /* pluriel selon la langue de la page (français : n > 1) */
   const fold = s => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[’]/g, "'").toLowerCase().trim();
   const boxes = Array.from(document.querySelectorAll('details.cat-box[data-catalogue]'));
   if (!boxes.length) return;
@@ -97,7 +96,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
         tbody.appendChild(fragment);
         lastSort = state.sort; sorted = true;
       }
-      if (count) count.textContent = shown === rows.length ? nf.format(rows.length) + ' lignes' : nf.format(shown) + ' ligne' + (lkPluriel(shown)?'s' : '') + ' sur ' + nf.format(rows.length);
+      if (count) count.textContent = shown === rows.length ? nf.format(rows.length) + ' lignes' : nf.format(shown) + (lkPl(shown) ? ' lignes' : ' ligne') + ' sur ' + nf.format(rows.length);
       if (empty) empty.hidden = shown > 0;
       chips.forEach(c => c.setAttribute('aria-pressed', String(c.dataset.catGroup === state.group)));
       keys.forEach(k => k.setAttribute('aria-pressed', String(!!state.st && k.dataset.catKey === state.st)));

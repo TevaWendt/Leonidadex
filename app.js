@@ -1,8 +1,7 @@
-/* v7.61 : pluriel selon la langue de la page : français n > 1 (« 0 coché », « 1,5 million ») ; anglais, espagnol n ≠ 1 (« 0 marcados ») */
-var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.documentElement&&document.documentElement.lang)||'fr').slice(0,2)==='fr'?n>1:n!==1;};
 (function(){
 'use strict';
 const esc = window.LK.esc;
+const lkPl = n => /^fr/.test(document.documentElement.lang || 'fr') ? n > 1 : n !== 1; /* pluriel selon la langue de la page (français : n > 1) */
 const el = id => document.getElementById(id);
 const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -349,8 +348,8 @@ const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)')
       if(card.hidden !== hidden) card.hidden = hidden;
       if(show){ rang++; if(!hidden && !card.classList.contains('in')) card.classList.add('in'); }
     });
-    if(plusBt){ const reste = shown - Math.min(shown, limite); plusBt.hidden = reste <= 0; plusBt.textContent = 'Afficher ' + Math.min(reste, LOT) + ' de plus (' + reste + (lkPluriel(reste)?' restants' : ' restant') + ')'; }
-    const countHTML = '<strong>' + shown + '</strong> ' + motCarte + (lkPluriel(shown)?'s' : '');
+    if(plusBt){ const reste = shown - Math.min(shown, limite); plusBt.hidden = reste <= 0; plusBt.textContent = 'Afficher ' + Math.min(reste, LOT) + ' de plus (' + reste + (lkPl(reste) ? ' restants' : ' restant') + ')'; }
+    const countHTML = '<strong>' + shown + '</strong> ' + motCarte + (lkPl(shown) ? 's' : '');
     if(countEl.innerHTML !== countHTML) countEl.innerHTML = countHTML;
     emptyEl.hidden = shown > 0;
     if(clearBt) clearBt.hidden = !query.trim();

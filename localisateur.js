@@ -46,7 +46,7 @@
       var t = el('div', 'lk-loc-sum-t');
       t.appendChild(el('p', 'lk-loc-kicker', it.getAttribute('data-loc-catlabel')));
       t.appendChild(el('p', 'lk-loc-name', it.querySelector('.lk-loc-txt b').textContent));
-      var st = el('p', 'lk-loc-status'); st.appendChild(el('b', null, (it.getAttribute('data-loc-where') || 'Où le trouver :'))); st.appendChild(document.createTextNode(' ' + it.getAttribute('data-loc-status'))); t.appendChild(st);
+      var st = el('p', 'lk-loc-status'); st.appendChild(el('b', null, it.getAttribute('data-loc-pronoun') === 'la' ? 'Où la trouver :' : 'Où le trouver :')); st.appendChild(document.createTextNode(' ' + it.getAttribute('data-loc-status'))); t.appendChild(st);
       t.appendChild(el('p', 'lk-loc-note', linked.length ? it.getAttribute('data-loc-linked') + ' ' + linked.map(function (id) { return names[id] || id; }).join(', ') + '.' : it.getAttribute('data-loc-none')));
       var act = el('p', 'lk-loc-actions'), a = el('a', 'lk-loc-btn lk-loc-btn--main', 'Ouvrir la fiche'); a.href = it.getAttribute('data-loc-url'); act.appendChild(a);
       if (linked.length) { var m = el('a', 'lk-loc-btn', 'Voir ces lieux sur la carte'); m.href = (root.getAttribute('data-loc-prefix') || '') + 'carte.html#pins=' + linked.map(encodeURIComponent).join(',') + '&t=' + encodeURIComponent(it.getAttribute('data-loc-title')); act.appendChild(m); }

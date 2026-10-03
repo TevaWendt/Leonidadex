@@ -1,54 +1,60 @@
-LEONIDAKIT v7.61 — TOUT LE SITE EN ESPAGNOL, LÉO EN ESPAGNOL — archive « modifs » (2 octobre 2026)
+LEONIDAKIT v7.61 — TOUT LE SITE ET LÉO EN ANGLAIS — archive « modifs » (2 octobre 2026)
 
-Base attendue : ton dépôt tel que dans l'archive Leonidadex-main (13) que tu m'as envoyée (v7.60 appliquée). Seulement des
-fichiers créés ou modifiés, aux chemins exacts depuis la racine. Rien à supprimer. Aucune commande de build, pas de
-package.json ; api/, vercel.json et .vercelignore ne changent pas ; rien à régler dans Vercel. Rien n'a été publié pour toi.
+Base attendue : ton dépôt GitHub au commit 8c1ddd30 (v7.58), avec ou sans les archives v7.59 et v7.60 déjà appliquées : cette
+archive est cumulative depuis 8c1ddd30 (elle contient aussi tout ce que les v7.59 et v7.60 changent). Seulement des fichiers
+créés ou modifiés, aux chemins exacts depuis la racine. Rien à supprimer. Aucune commande de build, pas de package.json ; api/,
+vercel.json et .vercelignore ne changent pas ; rien à régler dans Vercel. Rien n'a été publié pour toi.
 
 1. Note le commit courant dans GitHub Desktop (ou copie le dossier).
 2. Extrais l'archive dans la racine du site, écrase les fichiers homonymes (garde le dossier .git).
-3. Vérifie 3 minutes en local ou sur la prévisualisation Vercel (voir « Pour vérifier »).
+3. Vérifie 5 minutes en local ou sur la prévisualisation Vercel (voir « Pour vérifier »).
 4. Mets en ligne quand tu le décides (GitHub Desktop : commit puis push ; Vercel déploie tel quel).
-Retour arrière : « Revert » du commit dans GitHub Desktop. Aucune clé de stockage nouvelle (lk_lang_v1 existe depuis la v7.60) ;
-ce que les visiteurs ont coché ou enregistré reste valable, dans les trois langues.
+Retour arrière : « Revert » du commit dans GitHub Desktop. Les clés de stockage existantes (lk_*, lk-calculator-*) et leurs
+formats sont inchangés ; aucune clé nouvelle en v7.61. Progression, carnets, envies et calculs des joueurs ne sont pas touchés
+(les pages anglaises lisent les mêmes clés : ce qui est coché en français l'est aussi en anglais).
 
-POURQUOI L'ARCHIVE CONTIENT TOUTES LES PAGES FRANÇAISES : le menu « Changer la langue » de chaque page gagne « Español », chaque
-page reçoit son lien hreflang vers la version espagnole, et des scripts communs changent (empreintes ?v= anti-cache). Le texte
-français des pages est identique à l'octet, sauf mentions-legales.html (historique v7.61), a-propos.html (compteur de tests) et,
-dans armes.html et vehicules.html, un attribut technique du localisateur (data-loc-where).
+POURQUOI L'ARCHIVE EST GROSSE : le dossier en/ contient maintenant les 414 pages anglaises, leurs scripts et les fichiers de Léo
+en anglais ; les pages françaises portent leurs liens hreflang vers l'anglais et des empreintes ?v= qui changent. Le texte
+français des pages est identique, sauf : 30 fiches véhicules (« Autres modèles japonaiss » → « japonais »), personnalisations.html
+(3 notes « Repère de la série » qui s'arrêtaient sur « jusqu'à — » donnent leur chiffre), mentions-legales.html (historique
+v7.61) et a-propos.html (compteur de tests).
 
 CE QUE CE LOT FAIT (détail : outils/CHANGEMENTS-v7.61.txt ; fonctionnement : outils/LANGUES.md ; preuves : outils/PREUVES-v7.61.md)
-- Nouveau dossier es/ : les 403 pages du site en espagnol d'Espagne (tutoiement), sous-dossiers compris : accueil, calculateur
-  complet, Tuto (avec ses captures du calculateur espagnol), carte (2 547 lieux), catalogues, les 302 fiches véhicules, les 27
-  armes, lieux, personnages, entreprises, demeures, planques, les 9 carnets, Progression, comparateur, classement, médias,
-  À propos, Contact, Mentions. Montants « 200.000 $ », nombres « 1.500 » et « 1,5 » compris dans les champs.
-- Léo parle espagnol sur les pages espagnoles : il comprend « ¿cuánto cuesta la casa de Jason? » ou « tengo 200.000 $ y quiero
-  1 millón », répond en espagnol, avec les fiches et les liens espagnols. Toujours dans le navigateur, rien n'est envoyé.
-- Le menu « Changer la langue » propose Français / English / Español partout ; un navigateur réglé en espagnol voit le bandeau
-  « Esta página también está disponible en español » (jamais de redirection).
-- Google : adresses /es/, hreflang entre les versions, 391 adresses espagnoles dans sitemap.xml.
-- Tu continues à écrire seulement en français : les pages espagnoles se refont toutes seules à chaque régénération à partir de
-  la mémoire de traduction (outils/langues/es/, 17 930 entrées). Si un texte français nouveau n'a pas encore sa traduction, la
-  régénération le dit (« 1 texte(s) sans traduction ») et un test échoue : rien de français ne part en douce sur une page
-  espagnole.
-- En chemin : le comparateur affichait « Comparateur · vehicules » (sans accent) → « Comparateur · véhicules ».
+- « Changer la langue » → English : chacune des 414 pages existe en anglais (hubs, listes, les 302 fiches véhicules, les 27 fiches
+  armes, lieux, personnages, entreprises, demeures, planques, les 9 carnets, la carte et ses 2 547 lieux, collectibles,
+  progression, médias, comparateur, catalogues, recherche du site, page introuvable). Plus aucun lien d'une page anglaise ne
+  ramène au français, sauf le menu de langue.
+- Tout est traduit, y compris ce qu'on ne voit qu'en ouvrant ou en survolant : bulles d'aide, textes pour lecteurs d'écran,
+  titres de boutons, compteurs (« 1 vehicle », « 3 vehicles »), montants (« $1,250 »), dates (« May 6, 2025 »), fiches des lieux
+  de la carte, chaînes de recherche, données pour Google (JSON-LD), plan du site.
+- Léo répond en anglais sur les pages anglaises : il comprend les questions anglaises (« how much is the Ultimate », « $200k »,
+  « 2 hours a day », fautes et style SMS), répond, propose ses suggestions et ses liens en anglais, vers les pages anglaises.
+  Toujours dans le navigateur, rien n'est envoyé.
+- Tu continues à écrire seulement en français : l'anglais se refait tout seul à chaque régénération à partir de la mémoire de
+  traduction (outils/langues/en/, ≈ 21 000 entrées). Un texte français nouveau sans traduction est signalé (« 1 texte(s) sans
+  traduction ») et un test échoue : rien de français ne part en douce sur une page anglaise.
+- En traduisant, quelques fautes du français ont été corrigées (« japonaiss », « Choisir un arme », « Comparateur · vehicules »,
+  « Ça vaut le coup ?. », notes de personnalisation coupées). Signalé sans y toucher (c'est à toi de trancher) : la FAQ
+  d'armes.html dit que le fusil-harpon « apparaît dans les séquences sous-marines », alors que la carte de combat de la même page
+  dit qu'aucune image officielle ne montre une arme sous l'eau.
 
-RÉSULTATS : voir outils/PREUVES-v7.61.md (tests Node, vérificateur, Léo espagnol 511 / 512 et français 512 / 512, parcours
-navigateur des 403 pages espagnoles et du calculateur espagnol dans ses 9 outils × 3 modes, sans un mot de français visible).
+RÉSULTATS : tests Node 680 / 680 ; vérificateur 0 erreur (829 pages) ; 0 texte sans traduction ; parcours des 414 pages anglaises :
+0 texte français repéré, 0 erreur ; parcours navigateur des langues 1 664 / 1 664 ; Léo français 512 / 512 ; Léo anglais
+501 / 512 (97,9 %) et 79 % sur 140 questions jamais vues ; parcours français (Léo, carnets, calculateur, Tuto, contact) verts ;
+anglais relu par deux relecteurs indépendants : 39 remarques, 39 corrigées.
 
-POUR VÉRIFIER (3 minutes)
-- N'importe quelle page : « Changer la langue » → Español. Tu arrives sur la même page en espagnol (une fiche véhicule, une
-  arme, un carnet, la carte…).
-- /es/calculateurs.html : écris « Tengo 200.000 $ y quiero llegar a 1 millón » dans la barre de questions → « Mi objetivo »
-  rempli ; les montants s'écrivent « 800.000 $ ».
-- /es/ : ouvre Léo, demande « ¿Cuándo sale GTA 6? » puis « cuánto cuesta la casa de Jason » : réponses en espagnol, liens
-  vers /es/.
-- Coche une voiture « Añadir a mi garaje » sur une fiche espagnole : elle apparaît aussi dans /carnets/garage.html en français.
+POUR VÉRIFIER (5 minutes)
+- Ouvre une fiche véhicule française, « Changer la langue » → English : la même fiche en anglais, menus, boutons, bulles compris.
+- /en/carte.html : clique un lieu, ouvre les filtres, mesure une distance : tout est en anglais.
+- Sur une page anglaise, ouvre Léo : « how much does the game cost », « where is jason's house », « i have 200k and want 1
+  million » → réponses anglaises, liens /en/, le calcul s'ouvre dans le calculateur anglais.
+- Coche un véhicule sur la fiche anglaise, reviens en français : il est coché aussi.
+- Une adresse inexistante sous /en/ (ex. /en/xyz.html) : la page introuvable s'affiche en anglais.
 
 ÉTAT DE REPRISE
-- Version : v7.61 (base : archive Leonidadex-main (13), v7.60). Choix faits avec toi : espagnol, tout le site d'un coup, Léo
-  traduit aussi, l'anglais étendu à tout le site ensuite (lot suivant). Choix faits seul : espagnol d'Espagne et tutoiement ;
-  la page 404 reste française (Vercel n'en sert qu'une) ; les noms de marques, de modèles et de lieux anglais de la carte
-  restent tels quels ; les noms saisis par le visiteur ne sont jamais traduits.
-- Points ouverts (aucun bloquant) : quelques fautes du texte français repérées en traduisant, non corrigées pour ne rien
-  changer sans ton accord (liste dans outils/PREUVES-v7.61.md § 6) ; chaque nouvelle fiche ou question de Léo demandera sa
-  traduction (node outils/langues.cjs es --extraire la liste).
+- Version : v7.61 (base v7.58 = commit 8c1ddd30, v7.59 et v7.60 incluses).
+- Seul texte qui reste en français pour un visiteur anglais, parce qu'il n'est pas dans le site : l'email d'alerte
+  (« Get notified when the tools open ») et la page de confirmation de Brevo, écrits dans ton compte Brevo. La page anglaise le
+  dit (« One email (in French) »).
+- Points ouverts (aucun bloquant) : quand Rockstar publiera des prix, les nouvelles phrases des données devront être traduites
+  (l'extraction les listera) ; une autre langue (espagnol, italien, allemand, portugais) suit la procédure de outils/LANGUES.md.

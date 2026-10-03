@@ -17,12 +17,10 @@
     return /^\d+(?:[,.]\d+)?$/.test(t) ? Number(t.replace(',', '.')) : null;
   }
   /* « 1 000 000 » se lit mal pour un enfant : on l'écrit aussi en mots. */
-  /* v7.61 : pluriel selon la langue de la page (« 1,5 million » en français, « 1,5 millones » en espagnol) */
-  function many(x) { return /^fr/i.test(document.documentElement.lang || 'fr') ? x >= 2 : x !== 1; }
   function words(n) {
     if (n === null || !isFinite(n) || n < 1000) return '';
-    if (n >= 1e9) return nf.format(n / 1e9) + (many(n / 1e9) ? ' milliards' : ' milliard');
-    if (n >= 1e6) return nf.format(n / 1e6) + (many(n / 1e6) ? ' millions' : ' million');
+    if (n >= 1e9) return nf.format(n / 1e9) + (n / 1e9 >= 2 ? ' milliards' : ' milliard');
+    if (n >= 1e6) return nf.format(n / 1e6) + (n / 1e6 >= 2 ? ' millions' : ' million');
     return nf.format(n / 1e3) + ' mille';
   }
   /* v7.60 (langues) : « 200 000 » en français, « 200,000 » en anglais */

@@ -1,9 +1,7 @@
 /* Keep static HTML, search, images and sitemaps consistent. No runtime framework. */
 /* Lot E : version des fichiers de Léo (chargés dynamiquement, hors empreintes des pages). Doit précéder les empreintes des pages. v7.45 : leo-nlp.js et les morceaux leo/*.json entrent dans l'empreinte. */
 {const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');const root=path.resolve(__dirname,'..'),read=f=>fs.readFileSync(path.join(root,f),'utf8');
- const inputs=['leo-index.json','leo-core.js','leo-nlp.js','leo-link.js','leo-ui.js','leo-loader.js','leo-calculator.js','leo.css','calculateurs-engine.js','motion-tokens.css',...(fs.existsSync(path.join(root,'leo'))?fs.readdirSync(path.join(root,'leo')).filter(f=>f.endsWith('.json')).sort().map(f=>'leo/'+f):[]),
-  /* v7.61 : Léo des autres langues (outils/langues.json → leo) : leur index et leurs morceaux entrent aussi dans la version */
-  ...(()=>{try{const L=JSON.parse(read('outils/langues.json'));return (L.leo||[]).filter(c=>c!==L.source).map(c=>(L.langues.find(l=>l.code===c)||{}).dossier).filter(Boolean).flatMap(d=>[d+'/leo-index.json',...(fs.existsSync(path.join(root,d,'leo'))?fs.readdirSync(path.join(root,d,'leo')).filter(f=>f.endsWith('.json')).sort().map(f=>d+'/leo/'+f):[])]);}catch{return [];}})()].filter(f=>fs.existsSync(path.join(root,f)));
+ const inputs=['leo-index.json','leo-core.js','leo-nlp.js','leo-link.js','leo-ui.js','leo-loader.js','leo-calculator.js','leo.css','calculateurs-engine.js','motion-tokens.css',...(fs.existsSync(path.join(root,'leo'))?fs.readdirSync(path.join(root,'leo')).filter(f=>f.endsWith('.json')).sort().map(f=>'leo/'+f):[])].filter(f=>fs.existsSync(path.join(root,f)));
  const norm=t=>t.replace(/\?v=(?:LEO|__LEO_VERSION__|[a-f0-9]{12})/g,'?v=LEO');
  const version=crypto.createHash('sha256').update(inputs.map(f=>f+'\n'+norm(read(f))).join('\n')).digest('hex').slice(0,12);
  for(const f of ['common.js','leo-ui.js','leo-loader.js','leo.css'])if(fs.existsSync(path.join(root,f))){const cur=read(f),next=cur.replace(/\?v=(?:LEO|__LEO_VERSION__|[a-f0-9]{12})/g,'?v='+version);if(next!==cur)fs.writeFileSync(path.join(root,f),next);}}
