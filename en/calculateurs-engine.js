@@ -35,7 +35,8 @@
   }
   function dollars(numberText, sep, lang) {
     var l = lang || LANG, t = String(numberText);
-    if (l === 'fr') return t + (sep === undefined ? '\u00a0' : sep) + '$';
+    /* v7.61 : l'espagnol écrit aussi le signe après le nombre (« 200.000 $ ») */
+    if (l === 'fr' || l === 'es') return t + (sep === undefined ? '\u00a0' : sep) + '$';
     return t.replace(/^([-\u2212]?)\s*/, '$1$$');
   }
 
@@ -80,6 +81,12 @@
     if (typeof input !== 'string' || !input.trim()) return fail(shape, 'Enter a number.');
     var text = input.trim();
     /* v7.60 : hors du français, la virgule groupe les milliers et le point sépare les décimales (« 1,250.50 ») */
+    /* v7.61 : en espagnol, le point groupe les milliers et la virgule sépare les décimales (« 1.250,50 ») ; « 1.5 » reste un décimal */
+    if ((lang || LANG) === 'es') {
+      if (/^[+-]?\d+\.\d{1,2}$/.test(text)) return finish({ value: Number(text) }, shape);
+      if (!/^[+-]?(?:\d+|\d{1,3}(?:[. \u00a0\u202f]\d{3})+)(?:,\d+)?$/.test(text)) return fail(shape, 'Enter a number like 1,250.50, with no unit.');
+      return finish({ value: Number(text.replace(/[. \u00a0\u202f]/g, '').replace(',', '.')) }, shape);
+    }
     if ((lang || LANG) !== 'fr') {
       if (!/^[+-]?(?:\d+|\d{1,3}(?:[, \u00a0\u202f]\d{3})+)(?:\.\d+)?$/.test(text)) return fail(shape, 'Enter a number like 1,250.50, with no unit.');
       return finish({ value: Number(text.replace(/[, \u00a0\u202f]/g, '')) }, shape);
@@ -1032,7 +1039,7 @@
           : needUnits && !(unitsGain > 0 || passiveUnits > 0) && sessionGain + passive - upkeepNow > 1e-9 ? 'None of your missions give points: enter the points earned per mission (or per hour).'
           : !available.length && locked.length ? 'No mission is possible at the start: “' + locked[0].name + '” first needs ' + lockedReason(c, st, locked[0]).join(', ') + '. Add a mission you can do right away, or check “I already have it” on what you need.'
           : pendingOnce.length && !available.length ? 'The unlock mission “' + pendingOnce[0].name + '” can’t be done: ' + (lockedReason(c, st, pendingOnce[0]).length ? 'you first need ' + lockedReason(c, st, pendingOnce[0]).join(', ') + '.' : 'it doesn’t fit in a session or its fees are more than your available money.')
-          : available.length && available.every(function (a) { return !affordableStart(c, st, a); }) ? '“' + available[0].name + '” needs ' + dollars(((available[0].entry.cost || 0) + (available[0].paid ? 0 : available[0].entry.investment || 0)).toLocaleString('en-US'), ' ') + ' before starting, and all you have left is ' + dollars(Math.max(0, subtract(st.cash, c.reserve)).toLocaleString('en-US'), ' ') + ' usable' + (st.route.some(function (r) { return r.type === 'acquire'; }) ? ' after your earlier purchases' : '') + ' — lower the money set aside or add a mission that’s cheaper to start.'
+          : available.length && available.every(function (a) { return !affordableStart(c, st, a); }) ? '“' + available[0].name + '” needs ' + dollars(((available[0].entry.cost || 0) + (available[0].paid ? 0 : available[0].entry.investment || 0)).toLocaleString('en-US'), ' ') + ' before starting, and all you have left is ' + dollars(Math.max(0, subtract(st.cash, c.reserve)).toLocaleString('en-US'), ' ') + ' utilisables' + (st.route.some(function (r) { return r.type === 'acquire'; }) ? ' after your earlier purchases' : '') + ' — lower the money set aside or add a mission that’s cheaper to start.'
           : 'No mission fits in a session with what you have: add time, choose a shorter mission, or check your fees and purchases.';
         return fail(Object.assign({}, missionShape, { sessions: sessions, route: st.route }), why);
       }
@@ -1184,7 +1191,7 @@
       // Parcours sans parties : une marche par dépense ou récompense (l’argent n’arrive jamais « petit à petit »).
       if (result.continuous) {
         var pts = [{ hours: 0, cash: result.startCash, units: result.startUnits, label: 'Start', purchase: null }], prev = result.startCash;
-        (result.events || []).forEach(function (e) { var h = e.t / 60; if (e.cash !== prev) { pts.push({ hours: h, cash: prev, label: null, purchase: null, hold: true }); pts.push({ hours: h, cash: e.cash, label: e.label, purchase: e.type === 'spend' && /^(?:Achat|Purchase)\b/.test(e.label) ? e.label.replace(/^(?:Achat « |Purchase “)|[»”]$/g, '') : null }); prev = e.cash; } });
+        (result.events || []).forEach(function (e) { var h = e.t / 60; if (e.cash !== prev) { pts.push({ hours: h, cash: prev, label: null, purchase: null, hold: true }); pts.push({ hours: h, cash: e.cash, label: e.label, purchase: e.type === 'spend' && /^(?:Achat|Purchase|Compra)\b/.test(e.label) ? e.label.replace(/^(?:Achat « |Purchase “|Compra “)|[»”]$/g, '') : null }); prev = e.cash; } });
         return finish({ points: pts, stepped: true }, shape);
       }
       var minutes = result.totalSessions ? result.totalMinutes / result.totalSessions : 0;

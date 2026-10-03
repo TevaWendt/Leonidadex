@@ -1,98 +1,100 @@
-LEONIDAKIT v7.61 — langues : tout le site en anglais, et Léo en anglais, 2 octobre 2026
+LEONIDAKIT v7.61 — langues : tout le site en espagnol, Léo en espagnol, 2 octobre 2026
 
-Base : v7.60 (sélecteur « Changer la langue », version anglaise lot 1), elle-même construite sur la v7.59 et le commit 8c1ddd30
-(v7.58). L'archive « modifs » de cette version est cumulative depuis 8c1ddd30. Rien n'est publié.
-Demande : « quand on clique sur changement de langue, puis qu'on mette en anglais, je veux que tout soit en anglais, absolument
-tout, sans aucune exception. » Procédure et fonctionnement : outils/LANGUES.md ; preuves : outils/PREUVES-v7.61.md.
+Base : ton dépôt tel que dans l'archive Leonidadex-main (13) (v7.60 appliquée). L'archive « modifs » de cette version contient
+seulement ce qui change depuis cette base. Rien n'est publié.
+Procédure et fonctionnement : outils/LANGUES.md ; preuves : outils/PREUVES-v7.61.md.
+
+Décisions (validées avant le travail) : espagnol ; tout le site d'un coup ; Léo traduit aussi (il répond en espagnol et
+comprend les questions en espagnol) ; l'anglais sera étendu à tout le site ensuite, dans un lot à part.
 
 1. CE QUE VOIT LE VISITEUR
-- Les 415 pages du site existent en anglais (414 pages + la vérification Google, exclue) : hubs, listes, les 302 fiches
-  véhicules et les 27 fiches armes, lieux, personnages, entreprises, demeures, planques, les 9 carnets, la carte (2 547 lieux,
-  catégories, filtres, fiches des lieux, mesures, repères perso), les collectibles, la progression, les médias, la recherche du
-  site (index et lieux), le comparateur, les catalogues (consommables, style, personnalisations), la page introuvable.
-  Plus aucun lien d'une page anglaise ne mène au français (hors le menu de langue).
-- Léo répond en anglais sur les pages anglaises : il comprend les questions anglaises (montants « $200,000 », « 200k »,
-  « 1.5 million », « 2 hours a day », fautes et style SMS), ses réponses, ses suggestions, ses boutons et ses liens sont
-  anglais et mènent aux pages anglaises ; le calcul préparé s'ouvre dans le calculateur anglais et y revient.
-  Toujours local : rien ne quitte le navigateur. La conversation garde sa langue (même clé de session qu'avant).
-- Page introuvable : sous /en/…, la page 404 anglaise s'affiche.
-- Référencement : chaque adresse indexable a son adresse anglaise dans sitemap.xml et sitemap-fiches.xml ; hreflang sur
-  toutes les paires de pages ; canonical et og:url anglais (une page qui renvoie vers une autre garde ce renvoi en /en/).
-- Mentions : entrée v7.61 de l'historique. Aucune clé nouvelle, aucun cookie, aucun service extérieur.
+- Menu « Changer la langue » : Français / English / Español sur chaque page. Sur une page espagnole : « Cambiar idioma ».
+- Dossier es/ : les 403 pages du site (toutes les pages françaises sauf la page 404, le fichier de vérification Google et les
+  anciennes adresses qui redirigent) : accueil, calculateur complet (9 outils × 3 modes, business plan, carnets, barre de
+  questions qui comprend l'espagnol), Tuto (captures du calculateur espagnol), carte (2 547 lieux, fenêtres, filtres, recherche),
+  listes et hubs, les 302 fiches véhicules, 27 armes, lieux, personnages, entreprises, demeures, planques, les 9 carnets,
+  Progression, comparateur, classement, catalogues (style, nourriture, personnalisations…), médias, À propos, Contact,
+  Mentions et confidentialité (« la versión francesa de este Aviso legal prevalece »).
+- Espagnol d'Espagne, tutoiement (« tú »), « coche », titres en minuscules à l'espagnole, « ¿…? » ; argent « 200.000 $ »,
+  « 1,5 millones », nombres « 1.500 » / « 1,5 » lus dans les champs ; dates « 1 de diciembre de 2026 ».
+- Léo en espagnol sur les pages espagnoles : interface, réponses, fiches, preuves, suggestions, liens vers /es/ ; il comprend
+  les questions en espagnol (« ¿cuánto cuesta la casa de Jason? », « tengo 200.000 $ y quiero 1 millón »). Toujours local.
+- Ce que le visiteur coche (garage, arsenal, carnets, calculs, progression) est commun aux trois langues.
+- Bandeau de suggestion en espagnol (« Esta página también está disponible en español. Leer en español · No, gracias »).
+- Recherche du site (en-tête) : libellés espagnols ; on trouve une fiche en tapant l'espagnol ou le français.
+- Référencement : canonical et og:url en /es/, hreflang fr / en / es / x-default (selon les versions existantes),
+  og:locale es_ES, inLanguage, 391 adresses espagnoles ajoutées à sitemap.xml.
+- Mentions : entrée v7.61 de l'historique (aucune clé de stockage nouvelle).
 
 2. LE GÉNÉRATEUR (outils/langues.cjs, outils/langues.json)
-- langues[en].pages = "*" : chaque page française (sauf « exclure ») ; liens, scripts de chaque page, sous-dossiers.
-- Attributs de données traduits (data-l, data-loc-*, data-one/-many, data-tip, data-mot, data-wish-*, data-reel-nom,
-  data-car-title) ; chaînes de recherche (data-search, data-q, data-loc-q, data-n, data-help-keywords) écrites en anglais sans
-  accents ; attributs JSON (attributsJson : data-medias, data-cat-tags) ; JSON posé dans la page (carnets ; jsonCodePages) ;
-  titre d'une liste de repères dans l'adresse (#pins=…&t=) ; recherche d'images et Wikipédia anglaise.
-- Identifiants protégés dans les scripts (minuscules sans espace : traduits seulement par une entrée propre au fichier ou une
-  règle) ; repérage des petits textes manquants par le lexique français de la mémoire ; adresses jamais signalées.
-- Trous de motif traduits morceau par morceau ; phrases neutres (noms propres) gardées dans un paragraphe ; nombres écrits sans
-  séparateur gardés tels quels (« 2026 » n'est plus écrit « 2,026 »).
-- Léo : leoScripts copiés et traduits dans /en/ (adresses du français gardées) ; en/leo-index.json et en/leo/*.json
-  (leoDonnees : textes affichés traduits, jetons de reconnaissance français, nameFr, vocabulaire des morceaux complété) ; table
-  de réécriture des questions (outils/langues/en/leo-pivot.json + libellés + noms protégés) ; textes des pages lus « à plat ».
-- Plan du site : adresses anglaises des seules pages indexables. Page 404 : liens de langue absolus.
-- Données structurées (JSON-LD) : aussi « value » (inspiration réelle, catégorie des fiches), « featureList »,
-  « browserRequirements » et « contactType » ; plus aucun texte français dans le JSON-LD des pages anglaises.
+- « pages »: "*" : toutes les pages, sous-dossiers compris (es/vehicules/x.html…) ; liens relatifs recalculés (page ou script
+  traduit : même adresse ; feuilles, images, données : un « ../ » de plus).
+- Données de page lues par un script (« jsonPages » : <script type="application/json" id="lk-carnet-data"> des carnets) :
+  textes traduits, adresses portées, identifiants intacts.
+- Scripts partagés traduits pour une langue (« traduireAussi » : search-index.js, search-lieux.js, carte-gtadb.js) ; scripts
+  chargés par d'autres (« scriptsEnPlus » : Léo, moteur du calculateur) ; clés figées par fichier (« clesFigees » : données de
+  la carte, catégories et statuts des véhicules et des armes).
+- Un nom de propriété écrit entre guillemets ({ "sport": … }) n'est jamais traduit (il l'était dans vehicules-data.js :
+  catégorie « sport » devenue « deportivo » d'un seul côté).
+- Typographie hors du français : un morceau fait seulement d'une balise et d'une ponctuation (« </b> : ») perd l'espace avant
+  « : » ; l'espagnol garde l'espace devant « % » (« 20 % »).
+- Mémoire : règles à trous (« re: », {1} recopié, {t1} traduit), phrases enchaînées traduites une à une, « _scriptsJamais »
+  (mots traduits dans les pages mais identifiants dans les scripts), clés propres à une page (« carnets/garage.html::… »).
+- outils/leo-langues.cjs (nouveau) : Léo de chaque langue de « leo » (es/leo-index.json, es/leo/*.json, passages des pages
+  espagnoles) ; pont espagnol → français (outils/langues/es/_leo-pont.json, 6 796 expressions).
+- Mémoire espagnole : 17 930 entrées (outils/langues/es/, 55 fichiers + glossaire + pont). Anglais : entrée v7.61 des Mentions.
 
-3. MÉMOIRE (outils/langues/en/)
-- site-01 → site-42.json (pages du site, ≈ 9 000 entrées), recherche-01/02.json (chaînes de recherche), leo-01 → leo-10.json
-  (Léo, ≈ 2 400 entrées), motifs.json (motifs des lieux, des liens de carte, « {1} evokes {2} »…), noms.json relu (192 entrées
-  qui étaient gardées en français à tort : Cartouches, Famille, Coupes, Plaques, Repas, « Vider « »…), code.json (_ignorer
-  complété : identifiants, mots outils de Léo), leo-pivot.json (≈ 1 550 expressions).
-- Dates des sources écrites en toutes lettres à l'américaine (« May 6, 2025 »), plus de jj/mm/aaaa ni de mm/jj/aaaa.
-- Relecture : 7 523 textes anglais différents (pages, états ouverts, réponses de Léo) relus par deux relecteurs indépendants ;
-  39 défauts signalés, 39 corrigés : français resté (« Tri » → « Sort », « Pack Vintage Vice City », « Revolver Morgan »,
-  « Conversion Mk II », « course », « batte »), ordre des mots, « Show the 138 more », « 0 item tracked », « Category sedans:
-  that’s where… », « assumed name » (= pseudonyme) → « presumed name », un même élément nommé de deux façons (« Glimpsed » /
-  « Seen », « Leftover entries », « View my tracker », « Customization », « from prison to Vice City »), « Lucia opens the
-  game » → « opens the trailer »… La même correction est reportée dans les chaînes de recherche et les textes de Léo.
-- Comtés écrits comme sur les panneaux officiels du Trailer 1 (« Kelly County ») : « Leonard County », « Mariana County »,
-  « Vice-Dale County » (et non « County of … »).
+3. SOURCES RENDUES TRADUISIBLES (le français affiché ne change pas, sauf le § 4)
+- calculateurs-engine.js : espagnol dans dollars (« 1.250 $ »), plural (n ≠ 1), dateText, parseLocalizedNumber (« 1.500 »,
+  « 1,5 »), étiquettes « Compra “… ” ».
+- calculateurs-hub.js, -workspace.js, -scenario.js, -motion.js : phrases et libellés espagnols compris (« tengo 200.000 $ »,
+  « 1,5 millones », « 2 horas al día », « ¿vale la pena? », « ¿cuál debería elegir? »…).
+- Pluriels écrits en entier (jamais « + 's' ») : calculateurs.js, -workspace.js, -scenario.js, -plan.js, progression.js ;
+  grands nombres en mots selon la langue (« 1,5 millones ») : calculateurs-simple.js, calculator-entry.js ; carte.js
+  (« 3 lieux sur la carte »).
+- comparateur.js : le type affiché (« véhicules », « armes ») est un libellé distinct de l'identifiant de l'adresse.
+- Pluriel selon la langue de la page (français n > 1, anglais et espagnol n ≠ 1 : « 0 marcados », « 0 deseos ») : petite fonction
+  lkPluriel dans progression.js, app.js, calculateurs.js, -workspace.js, -plan.js, -scenario.js, -notebooks.js, carte.js,
+  catalogue.js, collectibles*.js, consommables.js, fiches.js ; compteurs des carnets (carnets.js).
+- fiches.js : la clé du lien de partage (#garage=… / #arsenal=…) est séparée du mot affiché (« Añadir a mi garaje ») : un lien
+  partagé depuis une page française s'ouvre sur la page espagnole, et l'inverse.
+- localisateur.js, outils/localisateur.cjs : « Où la trouver » / « Où le trouver » vient de la page (data-loc-where).
+- fiches.js : calculator-entry.css chargée à côté de style.css (une page traduite charge un fiches.js rangé dans /es/).
+- Léo : leo-core.js (pont, langue, préfixe, passages cherchés avec la question d'origine, signalement avec la question
+  d'origine), leo-nlp.js (mots vides de la langue), leo-ui.js (index du dossier de la langue), leo-loader.js (modules du
+  dossier de la langue, leo-nlp.js pris à la racine), leo-link.js (retour vers une page /es/), common.js (Léo amorcé en
+  français et en espagnol).
+- outils/sync-site.cjs : empreinte de Léo calculée aussi sur l'index espagnol. outils/verifier.js : ancres de catégorie des
+  pages de langue (es/armes.html#melee). outils/tuto-shots.py : captures du calculateur espagnol (img/tuto/es/).
 
-4. SOURCES RENDUES TRADUISIBLES (le français ne change pas, sauf ce qui est noté)
-- Pluriels : lkPl(n) (français n > 1, anglais n ≠ 1) dans app.js, catalogue.js, collectibles*.js, consommables.js, fiches.js,
-  progression.js ; carnets.js (compteurs) ; adjectifs accordés écrits en entier (« sélectionnés / sélectionné », « cochés »,
-  « rubriques exportées »…) ; « lieux sur la carte / lieu sur la carte » en entier (carte.js).
-- Argent : lkDollars (fiches.js « Son prix publié (… $ », consommables.js « par point ») ; Léo : E.dollars partout.
-- consommables.js : « 1,500 » lu à l'anglaise sur une page anglaise. collectibles-help.js : mots outils anglais ignorés dans la
-  recherche de l'aide. localisateur.js : « Où le trouver : » / « Où la trouver : » en entier.
-- comparateur.js : libellés écrits en entier.
-- Léo : leo-nlp.js (pivot, pivotTable ; « (real name) » retiré d'un nom comme « (nom réel) ») ; leo-core.js (question réécrite
-  à l'entrée, question telle qu'écrite gardée pour « Signaler », nameFr, montants) ; leo-ui.js (langue de la page : noyau,
-  morceaux, liens, retour du calculateur, date de vérification « October 1, 2026 », conversation de la même langue) ;
-  leo-loader.js (fichiers de la langue de la page) ; leo-link.js (retour vers une page /en/ accepté) ; common.js (Léo amorcé en
-  français et en anglais, feuille de Léo à la racine, page introuvable de la langue).
-- fiches.js : feuille calculator-entry.css lue à la racine depuis une page traduite ; titre du bouton « Modèle réel » écrit
-  comme un modèle (« Voir le {nom} en photo ») : français identique, anglais « Real-world model photos: {nom} » au lieu de
-  « See the Previous-generation Toyota Camry in photos ».
-- outils/verifier.js : pages traduites comprises (404 de chaque langue, catégories des hubs traduits).
-- outils/site-informations.json : entrée v7.61 de l'historique des Mentions.
+4. CORRECTION DU FRANÇAIS
+- Comparateur de véhicules : « Comparateur · vehicules » (identifiant sans accent affiché) → « Comparateur · véhicules » ; même
+  mot dans la légende du tableau.
 
-5. CORRECTIONS DU FRANÇAIS TROUVÉES EN TRADUISANT
-- « Autres modèles japonaiss » → « Autres modèles japonais » (30 fiches véhicules ; outils/gen.js).
-- Comparateur : « Comparateur · vehicules » (identifiant affiché) → « Comparateur · véhicules » ; « Choisir un arme » →
-  « Choisir une arme » ; « Comparaison des armes sélectionnés » → « … sélectionnées ».
-- Léo : « puis ouvre Ça vaut le coup ?. Le reste » → « puis ouvre Ça vaut le coup ? Le reste ».
-- Léo, lieux de la carte : la zone écrite dans la réponse était un identifiant (« dans la région key lento », « g vice city
-  southside ») ; c'est maintenant le nom affiché sur la carte (« Key Lento », « Southside », « Comté de Mariana ») :
-  outils/gen-leo.cjs. Les 512 questions de l'évaluation donnent les mêmes réponses.
-- Personnalisations : la note « Repère de la série » de 3 postes s'arrêtait avant son chiffre (« Encaisse plus de dégâts,
-  jusqu’à — Ce que fait l’objet… ») ; le chiffre que la liste montre déjà est écrit à la suite (« jusqu’à 100 % d’armure dans
-  GTA V », « jusqu’à 300 % de capacité dans GTA V », « conservés à 50 % dans GTA Online ») : outils/fiche-doc.cjs.
-- Signalé, non modifié (décision éditoriale) : la FAQ d'armes.html dit que le fusil-harpon « apparaît dans les séquences
-  sous-marines », alors que la carte de combat de la même page dit qu'aucune image officielle ne montre une arme sous l'eau.
+5. RELECTURE DE L'ESPAGNOL
+- Tous les textes vus dans le calculateur espagnol (9 outils × 3 modes, rempli et vide) et un échantillon de pages (accueil,
+  Vehículos, une fiche, Armería, carte, Progreso, carnets, Tuto, Contacto) : 3 142 textes relus par trois relecteurs
+  indépendants. 36 défauts signalés (accords, « Sin él » pour « esta compra », « Quiero este » → « Lo quiero », « Dime » →
+  « Dinos », noms d'armes différents d'une page à l'autre, « garage » → « garaje », « tráilers » → « tráileres », « 0 marcado »,
+  « 20% » → « el 20 % », noms de boutons cités dans le Tuto…) : tous corrigés. Puis contrôle automatique des termes traduits
+  différemment seuls et dans une phrase (153 écarts, les gênants corrigés : noms réels « Mercedes-Benz Clase C »,
+  « Hidrodeslizador… », « Locomotora GE Genesis », « Torres gemelas »).
 
 6. TESTS
-- langues.test.cjs (17 tests) : toutes les pages traduites, en/ à jour (sous-dossiers compris), canonical/og:url suivent le
-  français, aucun français visible (attributs de données et JSON de la page compris), Léo amorcé en anglais, Léo anglais
-  (textes traduits, jetons français gardés, mêmes révisions), Léo anglais dans jsdom (512 questions anglaises : seuils),
-  page introuvable et plan du site.
-- leo-eval.cjs : --lang en, --questions=<fichier> ; jeux outils/tests/leo-questions-en.json (512) et
-  leo-questions-en-inedites.json (140 questions jamais vues).
-- langues-browser.cjs : échantillon de 17 pages × 5 largeurs, chaque page anglaise à 1 280 px, états ouverts (Léo, carte,
-  carnets remplis et vides, comparateur, progression, collectibles, listes filtrées, consommables, localisateur, recherche,
-  page introuvable).
-- langues-helper.cjs : noms propres cités (Übermacht, Le Mans, Sedan de Ville, points cardinaux des adresses…).
+- outils/tests/langues.test.cjs : chaque langue publiée (anglais, espagnol) ; dossier à jour, canonical et og:url portés,
+  hreflang de chaque version, aucun français visible (pages et données de page), scripts, contact, badge FR, Tuto ;
+  calculateur espagnol dans jsdom ; Léo présent en espagnol, absent en anglais ; bandeau espagnol ; toutes les pages en
+  espagnol.
+- outils/tests/langues-helper.cjs : frenchHits(texte, langue) sait lire l'espagnol (mots partagés, accents propres au
+  français, deux accents dans un mot, finales -ité / -ée).
+- outils/tests/langues-browser.cjs : calculateur anglais et espagnol (9 outils × 3 modes, rempli et vide, tiroir, hub),
+  échantillon de pages espagnoles de 360 à 1 440 px, bandeau espagnol, menu à trois langues.
+- outils/tests/langues-pages-browser.cjs (nouveau) : les 403 pages espagnoles dans Chromium à 1 280 et 390 px.
+- outils/tests/leo-eval.cjs --langue es, outils/tests/leo-questions-es.json (512 questions) ; leo-v745.test.cjs : loader.
+
+7. LIMITES (voir outils/LANGUES.md)
+- L'anglais reste à 6 pages (lot suivant). Emails d'alerte et de contact en français.
+- Une nouvelle fiche, un nouveau lieu, une nouvelle question de Léo ou un prix publié ajoutent du français à traduire :
+  node outils/langues.cjs es --extraire liste ce qui manque ; la régénération le dit et le test langues échoue en attendant.
+- Léo espagnol : 511 / 512 sur le jeu d'essai (la question « ¿el combustible es una mecánica del juego? » reçoit un passage
+  au lieu de la fiche « mécaniques de conduite »).

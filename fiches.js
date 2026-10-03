@@ -1,11 +1,11 @@
+/* v7.61 : pluriel selon la langue de la page : français n > 1 (« 0 coché », « 1,5 million ») ; anglais, espagnol n ≠ 1 (« 0 marcados ») */
+var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.documentElement&&document.documentElement.lang)||'fr').slice(0,2)==='fr'?n>1:n!==1;};
 /* ============================================================
    LEONIDAKIT — fiches.js : galerie, arsenal / garage, comparaison
    Chargé après app.js sur les fiches et les pages hub.
    ============================================================ */
 (function(){
   'use strict';
-  var lkPl = function (n) { return /^fr/.test(document.documentElement.lang || "fr") ? n > 1 : n !== 1; }; /* pluriel selon la langue de la page (français : n > 1) */
-  var lkDollars = function (s) { return /^fr/.test(document.documentElement.lang || "fr") ? s + "\u00a0$" : "$" + s; }; /* « 1 250 $ » ou « $1,250 » selon la langue de la page */
   const calculatorBase = new URL('calculateurs.html', document.currentScript?.src || document.querySelector('script[src*="fiches.js"]')?.src || new URL('/fiches.js', location.href).href);
   function calculatorLink(type, values, origin) {
     const url = new URL(calculatorBase);
@@ -22,7 +22,10 @@
   function calculatorStyle() {
     if (document.querySelector('link[data-calculator-entry], link[rel="stylesheet"][href*="calculator-entry.css"]')) return;
     const link = document.createElement('link'); link.rel = 'stylesheet';
-    link.href = new URL('calculator-entry.css?v=cf94b45f1d2d', calculatorBase).href.replace(/\/[a-z]{2}\/(?=calculator-entry\.css)/, '/'); /* v7.61 : la feuille est à la racine, y compris pour une page traduite (/en/) */
+    /* v7.61 : la feuille est à la racine du site, à côté de style.css (une page traduite /es/… charge un fiches.js
+       traduit, rangé dans /es/ : la feuille n'y est pas) */
+    const main = Array.from(document.querySelectorAll('link[rel="stylesheet"]')).find(l => /(?:^|\/)style\.css(?:\?|$)/.test(l.getAttribute('href') || ''));
+    link.href = new URL('calculator-entry.css?v=cf94b45f1d2d', main ? main.href : calculatorBase).href;
     link.dataset.calculatorEntry = 'true'; document.head.appendChild(link);
   }
 
@@ -151,6 +154,8 @@
   const ecrire = o => { const saved = window.LK.write(KEY,o); document.dispatchEvent(new CustomEvent('lk-owned', { detail: { type } })); return saved; };
   let own = lire();
   const MOT = type === 'armes' ? ['arme', 'armes', 'arsenal'] : ['véhicule', 'véhicules', 'garage'];
+  /* v7.61 : clé du lien de partage (#garage=… / #arsenal=…), identique dans toutes les langues ; MOT[2] est le mot affiché */
+  const PARTAGE = type === 'armes' ? 'arsenal' : 'garage';
 
   /* bouton de fiche */
   const bt = document.getElementById('own-bt');
@@ -187,7 +192,7 @@
       /* v7.59 (check ultime, CALC-13) : la phrase dépend de la fiche : un prix publié (data-prix posé par le générateur) est annoncé
          comme prix de référence ; sinon le prix reste « pas encore connu ». Rien n’est figé dans ce script. */
       const prix = Number(bt.dataset.prix), prixStatut = bt.dataset.prixStatut || '';
-      const explanation = document.createElement('p'); explanation.textContent = 'Regarde si tu as assez d’argent, et sinon combien de temps de jeu il te faut. ' + (bt.dataset.prix !== undefined && Number.isFinite(prix) && prix >= 0 ? 'Son prix publié (' + lkDollars(new Intl.NumberFormat('fr-FR').format(prix)) + (prixStatut === 'official' ? ', officiel' : prixStatut === 'verified' ? ', mesuré et vérifié' : '') + ') est proposé comme prix de référence : tu peux en écrire un autre.' : 'Son prix n’est pas encore connu : tu peux écrire celui que tu imagines.');
+      const explanation = document.createElement('p'); explanation.textContent = 'Regarde si tu as assez d’argent, et sinon combien de temps de jeu il te faut. ' + (bt.dataset.prix !== undefined && Number.isFinite(prix) && prix >= 0 ? 'Son prix publié (' + new Intl.NumberFormat('fr-FR').format(prix) + ' $' + (prixStatut === 'official' ? ', officiel' : prixStatut === 'verified' ? ', mesuré et vérifié' : '') + ') est proposé comme prix de référence : tu peux en écrire un autre.' : 'Son prix n’est pas encore connu : tu peux écrire celui que tu imagines.');
       const link = document.createElement('a'); link.className = 'lk-entry-button'; link.href = calculatorLink(type, { id }, 'fiche'); link.textContent = 'Est-ce que je peux l’acheter ? ↗';
       card.append(eyebrow, title, explanation, link);
       (bt.closest('.fiche-liens') || bt).insertAdjacentElement('afterend', card);
@@ -263,17 +268,17 @@
       const exp = bar.querySelector('[data-export]');
       if(exp) exp.addEventListener('click', function(){
         const ids = Object.keys(own).join(',');
-        const url = location.origin + location.pathname + '#' + MOT[2] + '=' + ids;
+        const url = location.origin + location.pathname + '#' + PARTAGE + '=' + ids;
         window.LK.copy(url,exp,'Lien copié');
       });
     }
     /* import depuis un lien partagé */
     const hp = new URLSearchParams(location.hash.slice(1));
-    const incoming = hp.get(MOT[2]);
+    const incoming = hp.get(PARTAGE);
     if(incoming !== null){
       const valid = new Set(cards.map(c=>c.dataset.id));
       incoming.split(',').filter(id=>valid.has(id)).forEach(id=>{own[id]=1;}); ecrire(own);
-      hp.delete(MOT[2]); history.replaceState(null,'',location.pathname+location.search+(hp.size?'#'+hp.toString():''));
+      hp.delete(PARTAGE); history.replaceState(null,'',location.pathname+location.search+(hp.size?'#'+hp.toString():''));
     }
     majCartes();
     /* v7.54 : une possession cochée dans un autre onglet est reflétée ici */
@@ -318,7 +323,7 @@
       });
       if(!tray) return;
       tray.classList.toggle('on', sel.length > 0);
-      tray.querySelector('b').textContent = sel.length + (lkPl(sel.length) ? ' sélectionnés' : ' sélectionné');
+      tray.querySelector('b').textContent = sel.length + ' sélectionné' + (lkPluriel(sel.length)?'s' : '');
       tray.querySelector('a').href = 'comparateur.html?type=' + type + '&ids=' + sel.join(',');
       tray.querySelector('a').style.visibility = sel.length >= 2 ? 'visible' : 'hidden';
     }
@@ -334,7 +339,7 @@
       const tools = c.querySelector('.veh-tools'); if(!tools) return;
       const b = document.createElement('button'); b.type = 'button'; b.className = 'reel-card';
       b.innerHTML = '<span class="reel-ico" aria-hidden="true">↗</span><span>Modèle réel</span>';
-      b.title = 'Voir le {nom} en photo'.replace('{nom}', c.dataset.reelNom || 'modèle réel');
+      b.title = 'Voir le ' + (c.dataset.reelNom || 'modèle réel') + ' en photo';
       b.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation();
         window.open(url, '_blank', 'noopener'); });
       tools.appendChild(b);
