@@ -78,3 +78,39 @@ Officiel → Official · Vu dans un média → Seen in media · Identification c
 ## Legal page (Mentions et confidentialité)
 
 éditeur → publisher · hébergeur → host · responsable du traitement → data controller · délégué à la protection des données → data protection officer · base légale → legal basis · intérêt légitime → legitimate interest · consentement → consent · loi Informatique et Libertés → French Data Protection Act (loi Informatique et Libertés) · LCEN keep the acronym · CNIL keep. Keep every date, address and number.
+
+## Whole site (v7.61)
+
+Same rules as above. Additional fixed vocabulary for hubs, lists, item pages, the map, trackers and search:
+
+| French | English |
+|---|---|
+| fiche (page about one item) | page (« Voir la fiche » → "Open the page", « fiche véhicule » → "vehicle page") |
+| hub / page de section | section page |
+| liste dépliable | expandable list |
+| carnet, carnets de progression | tracker, progress trackers (« Mon garage » → "My garage", « Mon arsenal » → "My arsenal", « Ma garde-robe » → "My wardrobe", « Mes consommables » → "My consumables", « Mes personnalisations » → "My customizations", « Mes propriétés » → "My properties", « Mes lieux » → "My places", « Mes collectibles » → "My collectibles", « Mes calculs » → "My calculations") |
+| possédé / à obtenir / envie | owned / to get / wishlist (« Je l’ai » → "I have it", « J’en ai envie » → "I want it") |
+| repéré (lieu, véhicule) | spotted |
+| rapprochement (inspiration réelle) | match (« rapprochement communautaire » → "community match") |
+| modèle réel, inspiration réelle | real-world model, real-world inspiration |
+| Équivalent réel | Real-world equivalent |
+| Nom en jeu inconnu à ce jour | In-game name not known yet |
+| bâtiment, comté, ville, quartier | building, county, city, district |
+| Comtés / Villes / Quartiers / Bâtiments / Transports / Nature / Lieu / Planques (catégories de la carte) | Counties / Cities / Districts / Buildings / Transport / Nature / Place / Safehouses |
+| Voir sur la carte | See on the map |
+| Personnages, Demeures, Planques, Entreprises, Lieux, Régions | Characters, Residences, Safehouses, Businesses, Places, Regions |
+| Armurerie, Armes, Munitions, Équipement | Armory, Weapons, Ammo, Gear |
+| Véhicules : Berlines, Voitures de sport, Supercars, Muscle cars, SUV et 4x4, Pickups et tout-terrain, Vans et cargos, Deux-roues et quads, Hélicoptères, Avions, Bateaux et jet-skis, Service et urgence, Divers | Sedans, Sports cars, Supercars, Muscle cars, SUVs and 4x4s, Pickups and off-roaders, Vans and cargo vans, Two-wheelers and quads, Helicopters, Planes, Boats and jet skis, Service and emergency, Misc. |
+| Armes : Pistolets, Fusils à pompe, Pistolets-mitrailleurs, Fusils d’assaut, Précision, Mitrailleuses, Mêlée, Projectiles, Spéciales | Pistols, Shotguns, Submachine guns, Assault rifles, Precision rifles, Machine guns, Melee, Throwables, Special |
+| Consommables, Vêtements et style, Coiffures, Tatouages, Tenues, Accessoires, Personnalisations, Logements, Garages | Consumables, Clothing and style, Hairstyles, Tattoos, Outfits, Accessories, Customization, Housing, Garages |
+| Édition Standard / Édition Ultimate / précommande | Standard Edition / Ultimate Edition / pre-order |
+| bande-annonce, trailer, capture officielle, visuel officiel | trailer, trailer, official screenshot, official image |
+| Repère de la série (chiffre d’un autre GTA) | Series benchmark |
+| marque inconnue | unknown brand |
+| Ajouter à mon garage | Add to my garage |
+| Comparer, Personnaliser | Compare, Customize |
+| Classement | Ranking |
+
+Search keywords (strings of lowercase words with no accents, used only for matching, e.g. « lexington (michael) coupe classique de michael : 40 $ en salon courant ») : translate into lowercase English keywords, keep every name, no accents, plain spaces, prices as "$40".
+
+Numbers: keep every number of the French text, in the same order whenever the sentence allows (counts change from one update to the next and are matched automatically). « 1 250 » → "1,250", « 2,5 » → "2.5", « 20 % » → "20%", « 1 250 $ » → "$1,250", dates « 19 novembre 2026 » → "November 19, 2026", « 1er » → "1st" only in dates written out (« le 1er octobre » → "on October 1").

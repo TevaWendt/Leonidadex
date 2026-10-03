@@ -4,6 +4,8 @@
    ============================================================ */
 (function(){
   'use strict';
+  var lkPl = function (n) { return /^fr/.test(document.documentElement.lang || "fr") ? n > 1 : n !== 1; }; /* pluriel selon la langue de la page (français : n > 1) */
+  var lkDollars = function (s) { return /^fr/.test(document.documentElement.lang || "fr") ? s + "\u00a0$" : "$" + s; }; /* « 1 250 $ » ou « $1,250 » selon la langue de la page */
   const calculatorBase = new URL('calculateurs.html', document.currentScript?.src || document.querySelector('script[src*="fiches.js"]')?.src || new URL('/fiches.js', location.href).href);
   function calculatorLink(type, values, origin) {
     const url = new URL(calculatorBase);
@@ -20,7 +22,7 @@
   function calculatorStyle() {
     if (document.querySelector('link[data-calculator-entry], link[rel="stylesheet"][href*="calculator-entry.css"]')) return;
     const link = document.createElement('link'); link.rel = 'stylesheet';
-    link.href = new URL('calculator-entry.css?v=cf94b45f1d2d', calculatorBase).href;
+    link.href = new URL('calculator-entry.css?v=cf94b45f1d2d', calculatorBase).href.replace(/\/[a-z]{2}\/(?=calculator-entry\.css)/, '/'); /* v7.61 : la feuille est à la racine, y compris pour une page traduite (/en/) */
     link.dataset.calculatorEntry = 'true'; document.head.appendChild(link);
   }
 
@@ -185,7 +187,7 @@
       /* v7.59 (check ultime, CALC-13) : la phrase dépend de la fiche : un prix publié (data-prix posé par le générateur) est annoncé
          comme prix de référence ; sinon le prix reste « pas encore connu ». Rien n’est figé dans ce script. */
       const prix = Number(bt.dataset.prix), prixStatut = bt.dataset.prixStatut || '';
-      const explanation = document.createElement('p'); explanation.textContent = 'Regarde si tu as assez d’argent, et sinon combien de temps de jeu il te faut. ' + (bt.dataset.prix !== undefined && Number.isFinite(prix) && prix >= 0 ? 'Son prix publié (' + new Intl.NumberFormat('fr-FR').format(prix) + ' $' + (prixStatut === 'official' ? ', officiel' : prixStatut === 'verified' ? ', mesuré et vérifié' : '') + ') est proposé comme prix de référence : tu peux en écrire un autre.' : 'Son prix n’est pas encore connu : tu peux écrire celui que tu imagines.');
+      const explanation = document.createElement('p'); explanation.textContent = 'Regarde si tu as assez d’argent, et sinon combien de temps de jeu il te faut. ' + (bt.dataset.prix !== undefined && Number.isFinite(prix) && prix >= 0 ? 'Son prix publié (' + lkDollars(new Intl.NumberFormat('fr-FR').format(prix)) + (prixStatut === 'official' ? ', officiel' : prixStatut === 'verified' ? ', mesuré et vérifié' : '') + ') est proposé comme prix de référence : tu peux en écrire un autre.' : 'Son prix n’est pas encore connu : tu peux écrire celui que tu imagines.');
       const link = document.createElement('a'); link.className = 'lk-entry-button'; link.href = calculatorLink(type, { id }, 'fiche'); link.textContent = 'Est-ce que je peux l’acheter ? ↗';
       card.append(eyebrow, title, explanation, link);
       (bt.closest('.fiche-liens') || bt).insertAdjacentElement('afterend', card);
@@ -316,7 +318,7 @@
       });
       if(!tray) return;
       tray.classList.toggle('on', sel.length > 0);
-      tray.querySelector('b').textContent = sel.length + ' sélectionné' + (sel.length > 1 ? 's' : '');
+      tray.querySelector('b').textContent = sel.length + (lkPl(sel.length) ? ' sélectionnés' : ' sélectionné');
       tray.querySelector('a').href = 'comparateur.html?type=' + type + '&ids=' + sel.join(',');
       tray.querySelector('a').style.visibility = sel.length >= 2 ? 'visible' : 'hidden';
     }
@@ -332,7 +334,7 @@
       const tools = c.querySelector('.veh-tools'); if(!tools) return;
       const b = document.createElement('button'); b.type = 'button'; b.className = 'reel-card';
       b.innerHTML = '<span class="reel-ico" aria-hidden="true">↗</span><span>Modèle réel</span>';
-      b.title = 'Voir le ' + (c.dataset.reelNom || 'modèle réel') + ' en photo';
+      b.title = 'Voir le {nom} en photo'.replace('{nom}', c.dataset.reelNom || 'modèle réel');
       b.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation();
         window.open(url, '_blank', 'noopener'); });
       tools.appendChild(b);

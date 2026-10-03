@@ -67,7 +67,7 @@
     const promise = new Promise((resolve, reject) => {
       if (!tag) { reject(new Error(name + ' not declared')); return; }
       const s = document.createElement('script'); s.src = tag.getAttribute('src'); s.async = true; s.id = 'lk-lazy-' + name.replace(/[^a-z0-9]+/gi, '-');
-      s.onload = () => resolve(); s.onerror = () => { lazyScripts.delete(name); s.remove(); reject(new Error(name + ' indisponible')); };
+      s.onload = () => resolve(); s.onerror = () => { lazyScripts.delete(name); s.remove(); reject(new Error(name + ' unavailable')); };
       document.head.appendChild(s);
     });
     lazyScripts.set(name, promise);
@@ -306,7 +306,18 @@
 })();
 
 /* Léo : amorçage isolé. Les données ne se chargent qu'à l'ouverture du panneau. */
-(function(){'use strict';if(!document.querySelector('main')||document.getElementById('leo-style'))return;/* v7.60 : Léo ne parle que français pour l’instant (outils/langues.json → leo) : pas de Léo sur une page traduite */if(!/^fr\b/i.test(document.documentElement.lang||'fr'))return;const base=(document.currentScript&&document.currentScript.src||'').replace(/[^/]*$/,'')||'/';const css=document.createElement('link');css.id='leo-style';css.rel='stylesheet';css.href=base+'leo.css?v=17a89479c8a1';css.onload=()=>{const script=document.createElement('script');script.src=base+'leo-loader.js?v=17a89479c8a1';document.head.append(script);};document.head.append(css);})();
+(function(){'use strict';if(!document.querySelector('main')||document.getElementById('leo-style'))return;/* v7.61 : Léo parle français et anglais (outils/langues.json → leo) ; pas de Léo sur une page d’une autre langue */if(!/^(?:fr|en)\b/i.test(document.documentElement.lang||'fr'))return;const base=(document.currentScript&&document.currentScript.src||'').replace(/[^/]*$/,'')||'/';const css=document.createElement('link');css.id='leo-style';css.rel='stylesheet';css.href=base.replace(/\/[a-z]{2}\/$/,'/')+'leo.css?v=3b48c14c3f5d';css.onload=()=>{const script=document.createElement('script');script.src=base+'leo-loader.js?v=3b48c14c3f5d';document.head.append(script);};document.head.append(css);})();
+
+/* v7.61 (langues) : page introuvable. Le serveur renvoie la page 404 française pour toute adresse inconnue ; sous
+   /en/… (une adresse d'une langue publiée), c'est la page introuvable de cette langue qui s'affiche. */
+(function () {
+  'use strict';
+  if (!document.querySelector('.e404')) return;
+  const m = location.pathname.match(/^\/([a-z]{2})\//), here = (document.documentElement.lang || 'fr').slice(0, 2);
+  if (!m || m[1] === here) return;
+  const a = document.querySelector('[data-lk-langbar] a[data-lk-lang="' + m[1] + '"][href]');
+  if (a) location.replace(a.getAttribute('href'));
+})();
 
 /* Lot C (v7.32) : du mouvement sur toutes les pages. Les blocs de contenu apparaissent au défilement (par vagues,
    avec un léger décalage), les piles d'images s'ouvrent, les titres de section tirent leur trait, l'en-tête prend
@@ -549,7 +560,7 @@
         const ok = (!letter || t.dataset.letter === letter) && (!needle || t.dataset.n.indexOf(needle) !== -1);
         if (t.hidden === ok) t.hidden = !ok; if (ok) shown++;
       });
-      if (count) count.textContent = (needle || letter) ? shown + ' for ' + tiles.length : '';
+      if (count) count.textContent = (needle || letter) ? shown + ' of ' + tiles.length : '';
       if (empty) empty.hidden = shown > 0;
       letters.forEach(function (b) {
         b.classList.toggle('is-on', b.dataset.letter === letter);

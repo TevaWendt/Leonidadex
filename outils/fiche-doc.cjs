@@ -54,6 +54,10 @@ function notBought(it) { return it.ou_le_trouver.length > 0 && it.ou_le_trouver.
 function statusOf(it) { return it.statut === 'officiel' || it.statut === 'vu' ? 'official' : it.statut === 'serie' ? 'series' : 'estimated'; }
 function mk(v, s, ctx) { return s === 'series' ? V.series(v, { ctx: ctx || 'Vu dans un autre jeu de la série, pas dans GTA VI.' }) : s === 'official' ? V.official(v, ctx ? { ctx } : null) : V.estimated(v, ctx ? { ctx } : null); }
 /* Une description d’effet écrite par le site n’est pas une donnée officielle : « estimé », ou repère si la ligne vient de la série. */
+/* Texte d'effet qui attend sa valeur (« Encaisse plus de dégâts, jusqu’à ») : la valeur chiffrée du repère de la série, que la
+   liste montre à part (catalogues.cjs, .cat-eff-n), est écrite à la suite, avec son jeu. */
+const EFF_UNITS = { graisse: ' % de graisse', sante: ' % de vie', armure: ' % d’armure', capacite: ' % de capacité', pourcent: ' %', duree: ' min' };
+function effectText(e) { return /(?:’|'|\s)à$/.test(e.texte) && typeof e.valeur === 'number' ? e.texte + ' ' + e.valeur + (EFF_UNITS[e.unite] || '') + (e.jeu ? ' dans ' + e.jeu : '') : e.texte; }
 function describe(text, st) { return st === 'series' ? V.series(text, { ctx: 'Ce que fait l’objet dans un autre jeu de la série.' }) : V.estimated(text, { ctx: 'Description du site d’après les sources citées ; aucun chiffre de GTA VI.' }); }
 /* v7.52 : deux lieux du même nom ne s’écrivent qu’une fois, avec leur nombre (« Xero Gas Station (2 lieux) »). */
 function whereText(it, placeName) {
@@ -69,7 +73,7 @@ function knownOfRow(fam, it, placeName) {
     const e = it.effet || {};
     return Object.assign(base, {
       unit: V.unknown(),
-      effectType: e.texte ? describe(e.texte, st) : V.unknown(),
+      effectType: e.texte ? describe(effectText(e), st) : V.unknown(),
       health: typeof e.valeur === 'number' && e.unite === 'sante' && e.jeu ? V.series(e.valeur, { ctx: 'Chiffre de ' + e.jeu + ', pas de GTA VI.', unit: 'sante' }) : V.unknown(),
       duration: V.unknown(), conditions: V.unknown(), limits: V.unknown(),
       location: where ? mk(where, st === 'official' ? 'estimated' : st, st === 'official' ? 'Lieu vu ou annoncé ; la vente de cet objet à cet endroit reste à confirmer.' : null) : V.unknown()
@@ -87,7 +91,7 @@ function knownOfRow(fam, it, placeName) {
     return Object.assign(base, {
       compat: it.compat ? V.estimated(compatText(it.compat), { ctx: 'D’après la source citée ; à confirmer pour GTA VI.' }) : V.unknown(),
       prereq: V.unknown(),
-      effect: it.effet && it.effet.texte ? describe(it.effet.texte, st) : V.unknown(),
+      effect: it.effet && it.effet.texte ? describe(effectText(it.effet), st) : V.unknown(),
       restrictions: V.unknown()
     });
   }

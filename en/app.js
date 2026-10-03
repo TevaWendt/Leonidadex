@@ -1,6 +1,7 @@
 (function(){
 'use strict';
 const esc = window.LK.esc;
+const lkPl = n => /^fr/.test(document.documentElement.lang || 'fr') ? n > 1 : n !== 1; /* pluriel selon la langue de la page (français : n > 1) */
 const el = id => document.getElementById(id);
 const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -347,8 +348,8 @@ const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)')
       if(card.hidden !== hidden) card.hidden = hidden;
       if(show){ rang++; if(!hidden && !card.classList.contains('in')) card.classList.add('in'); }
     });
-    if(plusBt){ const reste = shown - Math.min(shown, limite); plusBt.hidden = reste <= 0; plusBt.textContent = 'Show ' + Math.min(reste, LOT) + ' more (' + reste + (reste > 1 ? ' left' : ' left') + ')'; }
-    const countHTML = '<strong>' + shown + '</strong> ' + motCarte + (shown > 1 ? 's' : '');
+    if(plusBt){ const reste = shown - Math.min(shown, limite); plusBt.hidden = reste <= 0; plusBt.textContent = 'Show ' + Math.min(reste, LOT) + ' more (' + reste + (lkPl(reste) ? ' left' : ' left') + ')'; }
+    const countHTML = '<strong>' + shown + '</strong> ' + motCarte + (lkPl(shown) ? 's' : '');
     if(countEl.innerHTML !== countHTML) countEl.innerHTML = countHTML;
     emptyEl.hidden = shown > 0;
     if(clearBt) clearBt.hidden = !query.trim();

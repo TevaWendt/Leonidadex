@@ -8,12 +8,15 @@
 const fs=require('node:fs'),path=require('node:path'),{JSDOM}=require('jsdom');
 const root=path.resolve(__dirname,'../..'),read=f=>fs.readFileSync(path.join(root,f),'utf8');
 const verbose=process.argv.includes('--verbose'),asJSON=process.argv.includes('--json');
-async function run(){
- const dom=new JSDOM('<!doctype html><html><body><main></main></body></html>',{runScripts:'outside-only',url:'https://www.leonidakit.com/index.html'});const w=dom.window;
+/* v7.61 : --lang en rejoue le jeu anglais (outils/tests/leo-questions-en.json) avec le Léo anglais : en/leo-index.json, en/leo/*.json, scripts traduits de en/, page lang="en" */
+const ARG_LANG=(process.argv.find(a=>a.startsWith('--lang='))||'').slice(7)||(process.argv.includes('--lang')?process.argv[process.argv.indexOf('--lang')+1]:'fr');
+async function run(opts={}){
+ const LANG=opts.lang||ARG_LANG,PFX=LANG==='fr'?'':LANG+'/';
+ const dom=new JSDOM('<!doctype html><html lang="'+LANG+'"><body><main></main></body></html>',{runScripts:'outside-only',url:'https://www.leonidakit.com/'+PFX+'index.html'});const w=dom.window;
  w.fetch=async url=>{const p=String(url).replace(/^https:\/\/www\.leonidakit\.com/,'').replace(/\?.*$/,'');const file=path.join(root,p.replace(/^\//,''));if(!fs.existsSync(file))return {ok:false,status:404,headers:{get:()=>'0'},text:async()=>''};const text=fs.readFileSync(file,'utf8');return {ok:true,status:200,headers:{get:()=>String(Buffer.byteLength(text))},text:async()=>text};};
- for(const f of ['calculateurs-engine.js','leo-link.js','leo-nlp.js','leo-core.js'])w.eval(read(f));
- const data=JSON.parse(read('leo-index.json')),loads=[];const core=w.LKLeoCore.create(data,{load:async(name,file)=>{const r=await w.fetch(file);if(!r.ok)throw Error('Morceau absent : '+file);loads.push(name);return JSON.parse(await r.text());}});
- const set=JSON.parse(read('outils/tests/leo-questions.json')).questions,results=[],now='2026-10-01T12:00:00Z';
+ for(const f of ['calculateurs-engine.js','leo-link.js','leo-nlp.js','leo-core.js'])w.eval(read(PFX+f));
+ const data=JSON.parse(read(PFX+'leo-index.json')),loads=[];const core=w.LKLeoCore.create(data,{load:async(name,file)=>{const r=await w.fetch((PFX?'/'+LANG:'')+file);if(!r.ok)throw Error('Morceau absent : '+file);loads.push(name);return JSON.parse(await r.text());}});
+ const QFILE=opts.questions||(process.argv.find(a=>a.startsWith('--questions='))||'').slice(12),set=JSON.parse(QFILE?fs.readFileSync(QFILE,'utf8'):read(LANG==='fr'?'outils/tests/leo-questions.json':'outils/tests/leo-questions-'+LANG+'.json')).questions,results=[],now='2026-10-01T12:00:00Z';
  const hasSource=a=>(a.links||[]).length>0||!!a.source||(a.external||[]).length>0||!!a.request||(a.results||[]).length>0;
  /* une réponse « Tu voulais dire… ? » compte comme bonne si le sujet attendu est l'une des deux puces */
  const check=(exp,a)=>{if(exp.any)return exp.any.some(e=>check(e,a));if(exp.offtopic)return a.kind==='refusal'&&(a.external||[]).some(x=>/rockstargames\.com/.test(x.url));if(exp.topic&&a.kind==='choices'&&(a.topics||[]).includes(exp.topic))return true;if(exp.kind&&a.kind!==exp.kind)return false;if(exp.topic&&a.topic!==exp.topic)return false;if(exp.tool&&(!a.request||a.request.tool!==exp.tool))return false;

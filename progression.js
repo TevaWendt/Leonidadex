@@ -6,6 +6,7 @@
    (#garage, #arsenal, #tenues…) mènent à la carte du carnet qui les contient. */
 (function(){
   'use strict';
+  var lkPl = function (n) { return /^fr/.test(document.documentElement.lang || "fr") ? n > 1 : n !== 1; }; /* pluriel selon la langue de la page (français : n > 1) */
   const M=window.LK_MODELE, K=window.LKCarnets, ids=Object.assign({},window.LK_PROGRESS_IDS||{}), nf=new Intl.NumberFormat('fr-FR');
   if(!M||!K) return;
   /* Contenus documentés : éléments suivables sans renvoi vers un véhicule ou une arme (ceux-là comptent dans le garage ou l’arsenal). */
@@ -20,8 +21,8 @@
       const card=document.getElementById('carnet-'+k.id);if(!card)return;
       if(k.nature==='document'){
         const all=storage?notebooks():[],plans=all.filter(e=>e.tool==='plan').length,calcs=all.length-plans;
-        set(card,'#progress-calc-n',calcs?nf.format(calcs)+' calcul'+(calcs>1?'s':''):'Aucun calcul');
-        set(card,'[data-cn-plans-n]',plans?nf.format(plans)+' plan'+(plans>1?'s':''):'Aucun plan');
+        set(card,'#progress-calc-n',calcs?nf.format(calcs)+' calcul'+(lkPl(calcs)?'s':''):'Aucun calcul');
+        set(card,'[data-cn-plans-n]',plans?nf.format(plans)+' plan'+(lkPl(plans)?'s':''):'Aucun plan');
         return;
       }
       let done=0,total=0,wishes=0,toFill=0,orphans=0;
@@ -37,9 +38,9 @@
       const nline=card.querySelector('.cn-dcard-n'),bbar=card.querySelector('.cn-dcard-bar');if(nline&&!total){nline.textContent='À documenter';if(bbar)bbar.hidden=true;}
       const bar=card.querySelector('[data-cn-bar]');if(bar)bar.style.width=(total?done/total*100:0)+'%';
       const extra=[];
-      if(wishes)extra.push(nf.format(wishes)+(k.id==='lieux'?' à visiter':k.id==='consommables'?' à essayer':' envie'+(wishes>1?'s':'')));
-      if(toFill)extra.push(nf.format(toFill)+' stock'+(toFill>1?'s':'')+' à renseigner');
-      if(orphans)extra.push(nf.format(orphans)+' saisie'+(orphans>1?'s':'')+' à part');
+      if(wishes)extra.push(nf.format(wishes)+(k.id==='lieux'?' à visiter':k.id==='consommables'?' à essayer':' envie'+(lkPl(wishes)?'s':'')));
+      if(toFill)extra.push(nf.format(toFill)+' stock'+(lkPl(toFill)?'s':'')+' à renseigner');
+      if(orphans)extra.push(nf.format(orphans)+(lkPl(orphans)?' saisies à part':' saisie à part'));
       if(!total)extra.push('La liste se remplira avec le jeu');
       set(card,'[data-cn-extra]',extra.join(' · '));
     });
@@ -60,6 +61,7 @@
 /* Progression v2 : contenus documentés, total et export / import versionné (progression-core.js). */
 (function(){
   const P=window.LKProgression, msg=document.getElementById('save-msg');
+  var lkPl = function (n) { return /^fr/.test(document.documentElement.lang || "fr") ? n > 1 : n !== 1; }; /* pluriel selon la langue de la page (français : n > 1) */
   if(!P) return;
   const notice=m=>{ if(msg) msg.textContent=m; };
   /* v7.54 : stockage du navigateur refusé (navigation privée stricte, réglage) : la page reste lisible et le dit, au lieu de planter (revue v7.53). */
@@ -72,7 +74,7 @@
   function render(){
     const s=store.summary();
     const v=document.getElementById('progress-global-value'), bar=document.getElementById('progress-global-bar'), t=document.getElementById('progress-global-text');
-    if(v){ v.textContent=nf.format(Math.floor(s.percent))+' %'; bar.value=Math.max(0,Math.min(100,s.percent)); t.textContent=nf.format(s.done)+' coché'+(s.done>1?'s':'')+' sur '+nf.format(s.total)+' recensés. Ce suivi est personnel : ce n’est pas la progression officielle du jeu.'; }
+    if(v){ v.textContent=nf.format(Math.floor(s.percent))+' %'; bar.value=Math.max(0,Math.min(100,s.percent)); t.textContent=nf.format(s.done)+(lkPl(s.done)?' cochés':' coché')+' sur '+nf.format(s.total)+' recensés. Ce suivi est personnel : ce n’est pas la progression officielle du jeu.'; }
   }
   store.subscribe(render); window.addEventListener('storage',render); window.addEventListener('pageshow',render); render();
 
@@ -82,7 +84,7 @@
     const out=store.exportData(), n=Object.keys(out.data).length;
     const blob=new Blob([JSON.stringify(out,null,1)],{type:'application/json'});
     const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='leonidakit-suivi-'+new Date().toISOString().slice(0,10)+'.json'; document.body.appendChild(a); a.click(); a.remove();
-    notice(n?n+' rubrique'+(n>1?'s':'')+' exportée'+(n>1?'s':'')+' (version 2).':'Rien à exporter pour le moment.');
+    notice(n?n+(lkPl(n)?' rubriques exportées':' rubrique exportée')+' (version 2).':'Rien à exporter pour le moment.');
   });
   let plan=null;
   function closePreview(){ plan=null; pv.hidden=true; im.value=''; }
@@ -104,7 +106,7 @@
   document.getElementById('save-cancel').addEventListener('click',()=>{ closePreview(); notice('Import annulé : rien n’a été modifié.'); });
   ['merge','replace'].forEach(mode=>{ document.getElementById('save-'+mode).addEventListener('click',()=>{
     if(!plan) return;
-    try{ const r=store.applyImport(plan,mode); closePreview(); notice(r.written.length+' rubrique'+(r.written.length>1?'s':'')+(mode==='merge'?' fusionnée':' remplacée')+(r.written.length>1?'s':'')+'. Rechargement…'); setTimeout(()=>location.reload(),700); }
+    try{ const r=store.applyImport(plan,mode); closePreview(); notice(r.written.length+(lkPl(r.written.length)?(mode==='merge'?' rubriques fusionnées':' rubriques remplacées'):(mode==='merge'?' rubrique fusionnée':' rubrique remplacée'))+'. Rechargement…'); setTimeout(()=>location.reload(),700); }
     catch(e){ closePreview(); }
   }); });
 })();

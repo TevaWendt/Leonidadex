@@ -1,0 +1,6209 @@
+{
+"_note": "v7.61 : réécriture d’une question anglaise en français pour Léo (leo-nlp.js → pivot). Chaque entrée : [expression anglaise, forme française lue par Léo] ; \"\" = mot ignoré.",
+"expressions": [
+[
+"when",
+"quand"
+],
+[
+"when does",
+"quand"
+],
+[
+"when do",
+"quand"
+],
+[
+"when is",
+"quand"
+],
+[
+"when's",
+"quand"
+],
+[
+"whens",
+"quand"
+],
+[
+"wens",
+"quand"
+],
+[
+"wen",
+"quand"
+],
+[
+"wehn",
+"quand"
+],
+[
+"when will",
+"quand"
+],
+[
+"when can i",
+"quand est ce que je peux"
+],
+[
+"when can we",
+"quand est ce qu on peut"
+],
+[
+"what time",
+"a quelle heure"
+],
+[
+"wat time",
+"a quelle heure"
+],
+[
+"what day",
+"quel jour"
+],
+[
+"what date",
+"quelle date"
+],
+[
+"which day",
+"quel jour"
+],
+[
+"exact date",
+"date exacte"
+],
+[
+"release date",
+"date de sortie"
+],
+[
+"launch date",
+"date de sortie"
+],
+[
+"exactly",
+"exactement"
+],
+[
+"come out",
+"sort"
+],
+[
+"comes out",
+"sort"
+],
+[
+"coming out",
+"sortir"
+],
+[
+"came out",
+"est sorti"
+],
+[
+"be out",
+"sortir"
+],
+[
+"is out",
+"sort"
+],
+[
+"gonna be out",
+"va sortir"
+],
+[
+"will be out",
+"sortira"
+],
+[
+"gta 6 out",
+"gta 6 sort"
+],
+[
+"gta6 out",
+"gta6 sort"
+],
+[
+"gta vi out",
+"gta vi sort"
+],
+[
+"drop",
+"sortie"
+],
+[
+"drops",
+"sort"
+],
+[
+"dropping",
+"sortie"
+],
+[
+"release",
+"sortie"
+],
+[
+"released",
+"sorti"
+],
+[
+"releases",
+"sort"
+],
+[
+"releasing",
+"sort"
+],
+[
+"launch",
+"sortie"
+],
+[
+"launches",
+"sort"
+],
+[
+"launched",
+"sorti"
+],
+[
+"launching",
+"sortie"
+],
+[
+"available",
+"disponible"
+],
+[
+"avail",
+"disponible"
+],
+[
+"availability",
+"disponibilite"
+],
+[
+"unlock",
+"debloque"
+],
+[
+"unlocks",
+"debloque"
+],
+[
+"midnight",
+"minuit"
+],
+[
+"where",
+"ou"
+],
+[
+"where is",
+"ou est"
+],
+[
+"where's",
+"ou est"
+],
+[
+"wheres",
+"ou est"
+],
+[
+"wher",
+"ou"
+],
+[
+"where are",
+"ou sont"
+],
+[
+"where r",
+"ou sont"
+],
+[
+"where can i find",
+"ou trouver"
+],
+[
+"where can you find",
+"ou trouver"
+],
+[
+"where do i find",
+"ou trouver"
+],
+[
+"where to find",
+"ou trouver"
+],
+[
+"where do you find",
+"ou trouver"
+],
+[
+"find",
+"trouver"
+],
+[
+"where can i get",
+"ou trouver"
+],
+[
+"where do i get",
+"ou trouver"
+],
+[
+"where to get",
+"ou trouver"
+],
+[
+"where can you get",
+"ou trouver"
+],
+[
+"where to buy",
+"ou acheter"
+],
+[
+"where can i buy",
+"ou acheter"
+],
+[
+"where do i buy",
+"ou acheter"
+],
+[
+"where can you buy",
+"ou acheter"
+],
+[
+"located",
+"situe"
+],
+[
+"location",
+"emplacement"
+],
+[
+"locations",
+"emplacements"
+],
+[
+"how much",
+"combien"
+],
+[
+"hw much",
+"combien"
+],
+[
+"how much is",
+"combien coute"
+],
+[
+"how much does",
+"combien coute"
+],
+[
+"how much do",
+"combien coute"
+],
+[
+"how much are",
+"combien coutent"
+],
+[
+"how much for",
+"combien pour"
+],
+[
+"how much will",
+"combien coutera"
+],
+[
+"how much would",
+"combien couterait"
+],
+[
+"cost",
+"coute"
+],
+[
+"costs",
+"coute"
+],
+[
+"costing",
+"coute"
+],
+[
+"price",
+"prix"
+],
+[
+"prices",
+"prix"
+],
+[
+"pricing",
+"prix"
+],
+[
+"priced",
+"prix"
+],
+[
+"pricey",
+"cher"
+],
+[
+"how many",
+"combien"
+],
+[
+"how many times",
+"combien de fois"
+],
+[
+"how long",
+"combien de temps"
+],
+[
+"how long until",
+"combien de temps avant"
+],
+[
+"how long before",
+"combien de temps avant"
+],
+[
+"how long ago",
+"il y a combien de temps"
+],
+[
+"how",
+"comment"
+],
+[
+"hw",
+"comment"
+],
+[
+"how do i",
+"comment"
+],
+[
+"how do you",
+"comment"
+],
+[
+"how can i",
+"comment"
+],
+[
+"how to",
+"comment"
+],
+[
+"how does",
+"comment"
+],
+[
+"how do",
+"comment"
+],
+[
+"why",
+"pourquoi"
+],
+[
+"y is",
+"pourquoi"
+],
+[
+"why is",
+"pourquoi"
+],
+[
+"why are",
+"pourquoi"
+],
+[
+"why does",
+"pourquoi"
+],
+[
+"why do",
+"pourquoi"
+],
+[
+"why doesn't",
+"pourquoi ne pas"
+],
+[
+"why don't",
+"pourquoi pas"
+],
+[
+"who",
+"qui"
+],
+[
+"who is",
+"qui est"
+],
+[
+"who's",
+"qui est"
+],
+[
+"whos",
+"qui est"
+],
+[
+"who are",
+"qui sont"
+],
+[
+"who r",
+"qui sont"
+],
+[
+"what",
+"quel"
+],
+[
+"wat",
+"quel"
+],
+[
+"wut",
+"quel"
+],
+[
+"wht",
+"quel"
+],
+[
+"what is",
+"c est quoi"
+],
+[
+"what's",
+"c est quoi"
+],
+[
+"whats",
+"c est quoi"
+],
+[
+"wats",
+"c est quoi"
+],
+[
+"wat is",
+"c est quoi"
+],
+[
+"what are",
+"c est quoi"
+],
+[
+"what r",
+"c est quoi"
+],
+[
+"what was",
+"c etait quoi"
+],
+[
+"which",
+"quel"
+],
+[
+"which one",
+"lequel"
+],
+[
+"which is",
+"lequel est"
+],
+[
+"what does",
+"que veut dire"
+],
+[
+"what do",
+"que"
+],
+[
+"is there",
+"il y a"
+],
+[
+"are there",
+"il y a"
+],
+[
+"is there a",
+"il y a un"
+],
+[
+"are there any",
+"il y a des"
+],
+[
+"there is",
+"il y a"
+],
+[
+"there are",
+"il y a"
+],
+[
+"can you",
+"on peut"
+],
+[
+"can i",
+"je peux"
+],
+[
+"can we",
+"on peut"
+],
+[
+"could i",
+"je pourrais"
+],
+[
+"can u",
+"on peut"
+],
+[
+"will i be able to",
+"je pourrai"
+],
+[
+"will we be able to",
+"on pourra"
+],
+[
+"will you be able to",
+"on pourra"
+],
+[
+"be able to",
+"pouvoir"
+],
+[
+"is it possible to",
+"est ce possible de"
+],
+[
+"is it possible",
+"est ce possible"
+],
+[
+"possible",
+"possible"
+],
+[
+"do i need",
+"faut il"
+],
+[
+"do you need",
+"faut il"
+],
+[
+"need",
+"besoin"
+],
+[
+"should i",
+"je dois"
+],
+[
+"should",
+"devrais"
+],
+[
+"must",
+"dois"
+],
+[
+"have to",
+"dois"
+],
+[
+"has to",
+"doit"
+],
+[
+"is it worth it",
+"ca vaut le coup"
+],
+[
+"worth it",
+"vaut le coup"
+],
+[
+"is it worth",
+"ca vaut le coup"
+],
+[
+"worth",
+"vaut le coup"
+],
+[
+"tell me about",
+"parle moi de"
+],
+[
+"tell me",
+"dis moi"
+],
+[
+"talk about",
+"parle moi de"
+],
+[
+"explain",
+"explique"
+],
+[
+"explanation",
+"explication"
+],
+[
+"what does it mean",
+"ca veut dire quoi"
+],
+[
+"mean",
+"veut dire"
+],
+[
+"means",
+"veut dire"
+],
+[
+"meaning",
+"signifie"
+],
+[
+"definition",
+"definition"
+],
+[
+"define",
+"definis"
+],
+[
+"is it",
+"est ce"
+],
+[
+"is that",
+"est ce"
+],
+[
+"does it",
+"est ce que"
+],
+[
+"do they",
+"est ce qu ils"
+],
+[
+"did",
+"est ce que"
+],
+[
+"does",
+""
+],
+[
+"do",
+""
+],
+[
+"is",
+"est"
+],
+[
+"are",
+"sont"
+],
+[
+"was",
+"etait"
+],
+[
+"were",
+"etaient"
+],
+[
+"been",
+"ete"
+],
+[
+"be",
+"etre"
+],
+[
+"will",
+"va"
+],
+[
+"would",
+"voudrait"
+],
+[
+"could",
+"pourrait"
+],
+[
+"can",
+"peut"
+],
+[
+"show me",
+"montre moi"
+],
+[
+"show",
+"montre"
+],
+[
+"open",
+"ouvre"
+],
+[
+"take me to",
+"emmene moi a"
+],
+[
+"bring me to",
+"emmene moi a"
+],
+[
+"go to",
+"aller a"
+],
+[
+"get to",
+"atteindre"
+],
+[
+"how to get to",
+"comment aller a"
+],
+[
+"how do i get to",
+"comment aller a"
+],
+[
+"how do i go to",
+"comment aller a"
+],
+[
+"directions",
+"itineraire"
+],
+[
+"route",
+"trajet"
+],
+[
+"way to",
+"chemin vers"
+],
+[
+"navigate",
+"aller"
+],
+[
+"i",
+"je"
+],
+[
+"i'm",
+"je suis"
+],
+[
+"im",
+"je suis"
+],
+[
+"i am",
+"je suis"
+],
+[
+"i've got",
+"j ai"
+],
+[
+"ive got",
+"j ai"
+],
+[
+"i've",
+"j ai"
+],
+[
+"ive",
+"j ai"
+],
+[
+"i have",
+"j ai"
+],
+[
+"i got",
+"j ai"
+],
+[
+"i already have",
+"j ai deja"
+],
+[
+"i already got",
+"j ai deja"
+],
+[
+"already have",
+"ai deja"
+],
+[
+"i had",
+"j avais"
+],
+[
+"my",
+"mon"
+],
+[
+"mine",
+"le mien"
+],
+[
+"me",
+"moi"
+],
+[
+"myself",
+"moi"
+],
+[
+"you",
+"tu"
+],
+[
+"u",
+"tu"
+],
+[
+"ya",
+"tu"
+],
+[
+"your",
+"ton"
+],
+[
+"ur",
+"ton"
+],
+[
+"yours",
+"le tien"
+],
+[
+"we",
+"on"
+],
+[
+"our",
+"notre"
+],
+[
+"they",
+"ils"
+],
+[
+"them",
+"eux"
+],
+[
+"their",
+"leur"
+],
+[
+"it",
+"ca"
+],
+[
+"its",
+"son"
+],
+[
+"it's",
+"c est"
+],
+[
+"thats",
+"c est"
+],
+[
+"that's",
+"c est"
+],
+[
+"this",
+"ce"
+],
+[
+"that",
+"ce"
+],
+[
+"these",
+"ces"
+],
+[
+"those",
+"ces"
+],
+[
+"he",
+"il"
+],
+[
+"she",
+"elle"
+],
+[
+"his",
+"son"
+],
+[
+"her",
+"sa"
+],
+[
+"him",
+"lui"
+],
+[
+"the",
+""
+],
+[
+"a",
+""
+],
+[
+"an",
+""
+],
+[
+"some",
+"des"
+],
+[
+"any",
+""
+],
+[
+"of",
+"de"
+],
+[
+"for",
+"pour"
+],
+[
+"with",
+"avec"
+],
+[
+"w/",
+"avec"
+],
+[
+"without",
+"sans"
+],
+[
+"in",
+"dans"
+],
+[
+"inside",
+"dans"
+],
+[
+"on",
+"sur"
+],
+[
+"at",
+"a"
+],
+[
+"to",
+"a"
+],
+[
+"from",
+"de"
+],
+[
+"about",
+"a propos"
+],
+[
+"by",
+"par"
+],
+[
+"and",
+"et"
+],
+[
+"&",
+"et"
+],
+[
+"or",
+"ou"
+],
+[
+"vs",
+"vs"
+],
+[
+"versus",
+"vs"
+],
+[
+"than",
+"que"
+],
+[
+"then",
+"puis"
+],
+[
+"also",
+"aussi"
+],
+[
+"too",
+"trop"
+],
+[
+"very",
+"tres"
+],
+[
+"really",
+"vraiment"
+],
+[
+"just",
+"juste"
+],
+[
+"only",
+"seulement"
+],
+[
+"all",
+"tous"
+],
+[
+"every",
+"chaque"
+],
+[
+"each",
+"chaque"
+],
+[
+"other",
+"autre"
+],
+[
+"another",
+"autre"
+],
+[
+"more",
+"plus"
+],
+[
+"most",
+"plus"
+],
+[
+"less",
+"moins"
+],
+[
+"least",
+"moins"
+],
+[
+"much",
+"beaucoup"
+],
+[
+"many",
+"beaucoup"
+],
+[
+"lot",
+"beaucoup"
+],
+[
+"lots",
+"beaucoup"
+],
+[
+"a lot",
+"beaucoup"
+],
+[
+"again",
+"encore"
+],
+[
+"still",
+"encore"
+],
+[
+"yet",
+"encore"
+],
+[
+"already",
+"deja"
+],
+[
+"now",
+"maintenant"
+],
+[
+"rn",
+"maintenant"
+],
+[
+"right now",
+"maintenant"
+],
+[
+"today",
+"aujourd hui"
+],
+[
+"tonight",
+"ce soir"
+],
+[
+"tomorrow",
+"demain"
+],
+[
+"soon",
+"bientot"
+],
+[
+"later",
+"plus tard"
+],
+[
+"before",
+"avant"
+],
+[
+"after",
+"apres"
+],
+[
+"first",
+"premier"
+],
+[
+"second",
+"deuxieme"
+],
+[
+"last",
+"dernier"
+],
+[
+"next",
+"prochain"
+],
+[
+"new",
+"nouveau"
+],
+[
+"newest",
+"nouveau"
+],
+[
+"old",
+"vieux"
+],
+[
+"same",
+"meme"
+],
+[
+"different",
+"different"
+],
+[
+"like",
+"comme"
+],
+[
+"real",
+"vrai"
+],
+[
+"actual",
+"vrai"
+],
+[
+"whole",
+"tout"
+],
+[
+"everything",
+"tout"
+],
+[
+"anything",
+"quelque chose"
+],
+[
+"something",
+"quelque chose"
+],
+[
+"nothing",
+"rien"
+],
+[
+"everywhere",
+"partout"
+],
+[
+"anywhere",
+"quelque part"
+],
+[
+"somewhere",
+"quelque part"
+],
+[
+"here",
+"ici"
+],
+[
+"there",
+"la"
+],
+[
+"yes",
+"oui"
+],
+[
+"yeah",
+"oui"
+],
+[
+"yep",
+"oui"
+],
+[
+"no",
+"non"
+],
+[
+"nope",
+"non"
+],
+[
+"not",
+"pas"
+],
+[
+"don't",
+"pas"
+],
+[
+"dont",
+"pas"
+],
+[
+"doesn't",
+"pas"
+],
+[
+"doesnt",
+"pas"
+],
+[
+"isn't",
+"pas"
+],
+[
+"isnt",
+"pas"
+],
+[
+"aren't",
+"pas"
+],
+[
+"can't",
+"peux pas"
+],
+[
+"cant",
+"peux pas"
+],
+[
+"won't",
+"pas"
+],
+[
+"wont",
+"pas"
+],
+[
+"didn't",
+"pas"
+],
+[
+"never",
+"jamais"
+],
+[
+"always",
+"toujours"
+],
+[
+"ever",
+"deja"
+],
+[
+"please",
+""
+],
+[
+"pls",
+""
+],
+[
+"plz",
+""
+],
+[
+"pleas",
+""
+],
+[
+"bro",
+""
+],
+[
+"dude",
+""
+],
+[
+"man",
+""
+],
+[
+"guys",
+""
+],
+[
+"lol",
+""
+],
+[
+"lmao",
+""
+],
+[
+"ok",
+""
+],
+[
+"okay",
+""
+],
+[
+"so",
+""
+],
+[
+"well",
+""
+],
+[
+"um",
+""
+],
+[
+"uh",
+""
+],
+[
+"hey leo",
+"salut leo"
+],
+[
+"leo",
+"leo"
+],
+[
+"gonna",
+"va"
+],
+[
+"wanna",
+"veux"
+],
+[
+"gotta",
+"dois"
+],
+[
+"dunno",
+"je sais pas"
+],
+[
+"idk",
+"je sais pas"
+],
+[
+"cuz",
+"parce que"
+],
+[
+"cause",
+"parce que"
+],
+[
+"bc",
+"parce que"
+],
+[
+"because",
+"parce que"
+],
+[
+"if",
+"si"
+],
+[
+"whether",
+"si"
+],
+[
+"while",
+"pendant"
+],
+[
+"during",
+"pendant"
+],
+[
+"until",
+"jusqu a"
+],
+[
+"since",
+"depuis"
+],
+[
+"around",
+"environ"
+],
+[
+"approx",
+"environ"
+],
+[
+"roughly",
+"environ"
+],
+[
+"almost",
+"presque"
+],
+[
+"enough",
+"assez"
+],
+[
+"together",
+"ensemble"
+],
+[
+"money",
+"argent"
+],
+[
+"cash",
+"argent"
+],
+[
+"bucks",
+"dollars"
+],
+[
+"dollars",
+"dollars"
+],
+[
+"dollar",
+"dollar"
+],
+[
+"million",
+"million"
+],
+[
+"millions",
+"millions"
+],
+[
+"mil",
+"million"
+],
+[
+"mill",
+"million"
+],
+[
+"milli",
+"million"
+],
+[
+"thousand",
+"mille"
+],
+[
+"thousands",
+"milliers"
+],
+[
+"grand",
+"mille"
+],
+[
+"billion",
+"milliard"
+],
+[
+"budget",
+"budget"
+],
+[
+"my budget",
+"mon budget"
+],
+[
+"save",
+"sauvegarder"
+],
+[
+"save up",
+"economiser"
+],
+[
+"saving up",
+"economiser"
+],
+[
+"savings",
+"economies"
+],
+[
+"set aside",
+"garder de cote"
+],
+[
+"keep aside",
+"garder de cote"
+],
+[
+"put aside",
+"garder de cote"
+],
+[
+"keep",
+"garder"
+],
+[
+"reserve",
+"reserve"
+],
+[
+"spend",
+"depenser"
+],
+[
+"spending",
+"depenser"
+],
+[
+"afford",
+"me payer"
+],
+[
+"can i afford",
+"est ce que je peux acheter"
+],
+[
+"enough money",
+"assez d argent"
+],
+[
+"missing",
+"manque"
+],
+[
+"i'm missing",
+"il me manque"
+],
+[
+"you still need",
+"il te manque"
+],
+[
+"still need",
+"il manque"
+],
+[
+"left",
+"reste"
+],
+[
+"remaining",
+"restant"
+],
+[
+"earn",
+"gagne"
+],
+[
+"earns",
+"rapporte"
+],
+[
+"earning",
+"gagne"
+],
+[
+"earnings",
+"gains"
+],
+[
+"i earn",
+"je gagne"
+],
+[
+"i make",
+"je gagne"
+],
+[
+"make money",
+"gagner de l argent"
+],
+[
+"making money",
+"gagner de l argent"
+],
+[
+"income",
+"revenu"
+],
+[
+"profit",
+"benefice"
+],
+[
+"profitable",
+"rentable"
+],
+[
+"pay off",
+"se rembourser"
+],
+[
+"pays off",
+"se rembourse"
+],
+[
+"pay for itself",
+"se rembourser"
+],
+[
+"pays for itself",
+"se rembourse"
+],
+[
+"break even",
+"rentabiliser"
+],
+[
+"return on investment",
+"rentabilite"
+],
+[
+"roi",
+"rentabilite"
+],
+[
+"goal",
+"objectif"
+],
+[
+"target",
+"objectif"
+],
+[
+"aim",
+"vise"
+],
+[
+"aiming for",
+"vise"
+],
+[
+"reach",
+"contacter"
+],
+[
+"want",
+"je veux"
+],
+[
+"i want",
+"je veux"
+],
+[
+"i want to",
+"je veux"
+],
+[
+"i'd like",
+"je voudrais"
+],
+[
+"id like",
+"je voudrais"
+],
+[
+"i would like",
+"je voudrais"
+],
+[
+"want to have",
+"veux avoir"
+],
+[
+"i want to have",
+"je veux avoir"
+],
+[
+"buy",
+"acheter"
+],
+[
+"buying",
+"acheter"
+],
+[
+"bought",
+"achete"
+],
+[
+"purchase",
+"achat"
+],
+[
+"purchases",
+"achats"
+],
+[
+"purchasing",
+"acheter"
+],
+[
+"order",
+"ordre"
+],
+[
+"in what order",
+"dans quel ordre"
+],
+[
+"what order",
+"quel ordre"
+],
+[
+"buy first",
+"acheter en premier"
+],
+[
+"which first",
+"lequel en premier"
+],
+[
+"pay",
+"payer"
+],
+[
+"paid",
+"paye"
+],
+[
+"cheap",
+"pas cher"
+],
+[
+"cheaper",
+"moins cher"
+],
+[
+"cheapest",
+"moins cher"
+],
+[
+"expensive",
+"cher"
+],
+[
+"more expensive",
+"plus cher"
+],
+[
+"most expensive",
+"plus cher"
+],
+[
+"free",
+"gratuit"
+],
+[
+"per hour",
+"par heure"
+],
+[
+"an hour",
+"par heure"
+],
+[
+"a hour",
+"par heure"
+],
+[
+"hourly",
+"par heure"
+],
+[
+"/hr",
+"par heure"
+],
+[
+"/h",
+"par heure"
+],
+[
+"per hr",
+"par heure"
+],
+[
+"a day",
+"par jour"
+],
+[
+"per day",
+"par jour"
+],
+[
+"daily",
+"par jour"
+],
+[
+"every day",
+"chaque jour"
+],
+[
+"each day",
+"chaque jour"
+],
+[
+"a week",
+"par semaine"
+],
+[
+"per week",
+"par semaine"
+],
+[
+"hour",
+"heure"
+],
+[
+"hours",
+"heures"
+],
+[
+"hr",
+"heure"
+],
+[
+"hrs",
+"heures"
+],
+[
+"minute",
+"minute"
+],
+[
+"minutes",
+"minutes"
+],
+[
+"min",
+"minutes"
+],
+[
+"mins",
+"minutes"
+],
+[
+"day",
+"jour"
+],
+[
+"days",
+"jours"
+],
+[
+"week",
+"semaine"
+],
+[
+"weeks",
+"semaines"
+],
+[
+"month",
+"mois"
+],
+[
+"months",
+"mois"
+],
+[
+"year",
+"an"
+],
+[
+"years",
+"ans"
+],
+[
+"time",
+"temps"
+],
+[
+"play time",
+"temps de jeu"
+],
+[
+"playtime",
+"temps de jeu"
+],
+[
+"session",
+"partie"
+],
+[
+"sessions",
+"parties"
+],
+[
+"play",
+"jouer"
+],
+[
+"playing",
+"jouer"
+],
+[
+"played",
+"joue"
+],
+[
+"player",
+"joueur"
+],
+[
+"players",
+"joueurs"
+],
+[
+"people",
+"personnes"
+],
+[
+"friends",
+"amis"
+],
+[
+"buddies",
+"amis"
+],
+[
+"buddy",
+"ami"
+],
+[
+"friend",
+"ami"
+],
+[
+"with friends",
+"a plusieurs"
+],
+[
+"in a group",
+"a plusieurs"
+],
+[
+"group",
+"groupe"
+],
+[
+"alone",
+"seul"
+],
+[
+"solo",
+"seul"
+],
+[
+"split",
+"repartir"
+],
+[
+"share",
+"partager"
+],
+[
+"plan",
+"plan"
+],
+[
+"business plan",
+"business plan"
+],
+[
+"schedule",
+"programme"
+],
+[
+"calculate",
+"calculer"
+],
+[
+"calculation",
+"calcul"
+],
+[
+"calculations",
+"calculs"
+],
+[
+"calc",
+"calculateur"
+],
+[
+"calculator",
+"calculateur"
+],
+[
+"calculators",
+"calculateurs"
+],
+[
+"tool",
+"outil"
+],
+[
+"tools",
+"outils"
+],
+[
+"result",
+"resultat"
+],
+[
+"results",
+"resultats"
+],
+[
+"number",
+"chiffre"
+],
+[
+"numbers",
+"chiffres"
+],
+[
+"figures",
+"chiffres"
+],
+[
+"amount",
+"montant"
+],
+[
+"rejected",
+"refuse"
+],
+[
+"accepted",
+"accepte"
+],
+[
+"game",
+"jeu"
+],
+[
+"games",
+"jeux"
+],
+[
+"gta",
+"gta"
+],
+[
+"gta online",
+"gta online"
+],
+[
+"online",
+"online"
+],
+[
+"multiplayer",
+"multijoueur"
+],
+[
+"story",
+"histoire"
+],
+[
+"story mode",
+"mode histoire"
+],
+[
+"single player",
+"solo"
+],
+[
+"campaign",
+"histoire"
+],
+[
+"main story",
+"histoire principale"
+],
+[
+"mission",
+"mission"
+],
+[
+"missions",
+"missions"
+],
+[
+"quest",
+"mission"
+],
+[
+"quests",
+"missions"
+],
+[
+"side missions",
+"missions secondaires"
+],
+[
+"activity",
+"activite"
+],
+[
+"activities",
+"activites"
+],
+[
+"heist",
+"braquage"
+],
+[
+"heists",
+"braquages"
+],
+[
+"robbery",
+"braquage"
+],
+[
+"robberies",
+"braquages"
+],
+[
+"rob",
+"braquer"
+],
+[
+"robbing",
+"braquer"
+],
+[
+"steal",
+"voler"
+],
+[
+"crime",
+"crime"
+],
+[
+"cops",
+"police"
+],
+[
+"police",
+"police"
+],
+[
+"wanted level",
+"niveau de recherche"
+],
+[
+"trailer",
+"trailer"
+],
+[
+"trailers",
+"trailers"
+],
+[
+"first trailer",
+"premier trailer"
+],
+[
+"second trailer",
+"deuxieme trailer"
+],
+[
+"third trailer",
+"troisieme trailer"
+],
+[
+"song",
+"musique"
+],
+[
+"songs",
+"musiques"
+],
+[
+"music",
+"musique"
+],
+[
+"track",
+"suivre"
+],
+[
+"soundtrack",
+"musique"
+],
+[
+"radio",
+"radio"
+],
+[
+"delay",
+"report"
+],
+[
+"delays",
+"reports"
+],
+[
+"delayed",
+"repousse"
+],
+[
+"postponed",
+"repousse"
+],
+[
+"pushed back",
+"repousse"
+],
+[
+"push back",
+"repousser"
+],
+[
+"announced",
+"annonce"
+],
+[
+"announce",
+"annonce"
+],
+[
+"announcement",
+"annonce"
+],
+[
+"reveal",
+"annonce"
+],
+[
+"revealed",
+"annonce"
+],
+[
+"confirmed",
+"confirme"
+],
+[
+"confirm",
+"confirme"
+],
+[
+"official",
+"officiel"
+],
+[
+"officially",
+"officiellement"
+],
+[
+"leak",
+"fuite"
+],
+[
+"leaks",
+"fuites"
+],
+[
+"leaked",
+"fuite"
+],
+[
+"rumor",
+"rumeur"
+],
+[
+"rumors",
+"rumeurs"
+],
+[
+"rumour",
+"rumeur"
+],
+[
+"news",
+"actualites"
+],
+[
+"update",
+"mettre a jour"
+],
+[
+"updated",
+"mis a jour"
+],
+[
+"up to date",
+"a jour"
+],
+[
+"size",
+"taille"
+],
+[
+"file size",
+"taille"
+],
+[
+"download size",
+"taille"
+],
+[
+"gb",
+"go"
+],
+[
+"weight",
+"poids"
+],
+[
+"preload",
+"prechargement"
+],
+[
+"pre load",
+"prechargement"
+],
+[
+"pre-load",
+"prechargement"
+],
+[
+"download",
+"telecharger"
+],
+[
+"physical",
+"physique"
+],
+[
+"physical copy",
+"version physique"
+],
+[
+"disc",
+"boite"
+],
+[
+"digital",
+"numerique"
+],
+[
+"console",
+"console"
+],
+[
+"consoles",
+"consoles"
+],
+[
+"platform",
+"plateforme"
+],
+[
+"platforms",
+"plateformes"
+],
+[
+"systems",
+"consoles"
+],
+[
+"system",
+"console"
+],
+[
+"pc",
+"pc"
+],
+[
+"computer",
+"ordinateur"
+],
+[
+"steam",
+"steam"
+],
+[
+"playstation",
+"playstation"
+],
+[
+"xbox",
+"xbox"
+],
+[
+"switch",
+"switch"
+],
+[
+"ps4",
+"ps4"
+],
+[
+"ps5",
+"ps5"
+],
+[
+"ps5 pro",
+"ps5 pro"
+],
+[
+"budget to make",
+"budget"
+],
+[
+"cost to make",
+"budget de developpement"
+],
+[
+"to make",
+"developpement"
+],
+[
+"development",
+"developpement"
+],
+[
+"develop",
+"developper"
+],
+[
+"made",
+"fait"
+],
+[
+"rockstar",
+"rockstar"
+],
+[
+"take two",
+"take two"
+],
+[
+"take-two",
+"take two"
+],
+[
+"edition",
+"edition"
+],
+[
+"editions",
+"editions"
+],
+[
+"ultimate edition",
+"edition ultimate"
+],
+[
+"ultimate",
+"ultimate"
+],
+[
+"ue",
+"edition ultimate"
+],
+[
+"standard edition",
+"edition standard"
+],
+[
+"standard",
+"standard"
+],
+[
+"pre-order",
+"precommande"
+],
+[
+"preorder",
+"precommande"
+],
+[
+"pre order",
+"precommande"
+],
+[
+"pre-orders",
+"precommandes"
+],
+[
+"preordering",
+"precommande"
+],
+[
+"pre-ordering",
+"precommande"
+],
+[
+"bonus",
+"bonus"
+],
+[
+"bonuses",
+"bonus"
+],
+[
+"exclusive",
+"exclusif"
+],
+[
+"exclusives",
+"exclusifs"
+],
+[
+"vintage pack",
+"pack vintage"
+],
+[
+"vintage vice city pack",
+"pack vintage vice city"
+],
+[
+"pack",
+"pack"
+],
+[
+"content",
+"contenu"
+],
+[
+"contents",
+"contenus"
+],
+[
+"included",
+"inclus"
+],
+[
+"include",
+"contient"
+],
+[
+"includes",
+"contient"
+],
+[
+"what's included",
+"ce qui est inclus"
+],
+[
+"what's in",
+"ce que contient"
+],
+[
+"get",
+"avoir"
+],
+[
+"map",
+"carte"
+],
+[
+"maps",
+"cartes"
+],
+[
+"world",
+"monde"
+],
+[
+"open world",
+"monde ouvert"
+],
+[
+"city",
+"ville"
+],
+[
+"cities",
+"villes"
+],
+[
+"town",
+"ville"
+],
+[
+"state",
+"etat"
+],
+[
+"region",
+"region"
+],
+[
+"regions",
+"regions"
+],
+[
+"area",
+"zone"
+],
+[
+"areas",
+"zones"
+],
+[
+"zone",
+"zone"
+],
+[
+"place",
+"lieu"
+],
+[
+"places",
+"lieux"
+],
+[
+"spot",
+"endroit"
+],
+[
+"spots",
+"endroits"
+],
+[
+"county",
+"comte"
+],
+[
+"counties",
+"comtes"
+],
+[
+"district",
+"quartier"
+],
+[
+"districts",
+"quartiers"
+],
+[
+"neighborhood",
+"quartier"
+],
+[
+"neighborhoods",
+"quartiers"
+],
+[
+"neighbourhood",
+"quartier"
+],
+[
+"island",
+"ile"
+],
+[
+"islands",
+"iles"
+],
+[
+"beach",
+"plage"
+],
+[
+"beaches",
+"plages"
+],
+[
+"swamp",
+"marecage"
+],
+[
+"swamps",
+"marecages"
+],
+[
+"everglades",
+"everglades"
+],
+[
+"keys",
+"keys"
+],
+[
+"mountain",
+"montagne"
+],
+[
+"park",
+"parc"
+],
+[
+"building",
+"batiment"
+],
+[
+"buildings",
+"batiments"
+],
+[
+"landmark",
+"lieu notable"
+],
+[
+"landmarks",
+"lieux notables"
+],
+[
+"real life",
+"vraie vie"
+],
+[
+"in real life",
+"dans la vraie vie"
+],
+[
+"irl",
+"dans la vraie vie"
+],
+[
+"real world",
+"vraie vie"
+],
+[
+"based on",
+"base sur"
+],
+[
+"inspired by",
+"inspire de"
+],
+[
+"inspiration",
+"inspiration"
+],
+[
+"look like",
+"ressemble"
+],
+[
+"looks like",
+"ressemble"
+],
+[
+"real car",
+"vraie voiture"
+],
+[
+"real model",
+"vrai modele"
+],
+[
+"which car",
+"quelle voiture"
+],
+[
+"what car",
+"quelle voiture"
+],
+[
+"florida",
+"floride"
+],
+[
+"miami",
+"miami"
+],
+[
+"airport",
+"aeroport"
+],
+[
+"airports",
+"aeroports"
+],
+[
+"hospital",
+"hopital"
+],
+[
+"police station",
+"commissariat"
+],
+[
+"prison",
+"prison"
+],
+[
+"jail",
+"prison"
+],
+[
+"penitentiary",
+"penitencier"
+],
+[
+"gas station",
+"station service"
+],
+[
+"gas stations",
+"stations service"
+],
+[
+"gas",
+"essence"
+],
+[
+"fuel",
+"carburant"
+],
+[
+"bar",
+"bar"
+],
+[
+"bars",
+"bars"
+],
+[
+"club",
+"boite de nuit"
+],
+[
+"nightclub",
+"boite de nuit"
+],
+[
+"restaurant",
+"restaurant"
+],
+[
+"restaurants",
+"restaurants"
+],
+[
+"store",
+"magasin"
+],
+[
+"stores",
+"magasins"
+],
+[
+"shop",
+"magasin"
+],
+[
+"shops",
+"magasins"
+],
+[
+"gun store",
+"armurerie"
+],
+[
+"gun stores",
+"armureries"
+],
+[
+"gun shop",
+"armurerie"
+],
+[
+"gun shops",
+"armureries"
+],
+[
+"ammu-nation",
+"ammu nation"
+],
+[
+"dealership",
+"concession"
+],
+[
+"dealerships",
+"concessions"
+],
+[
+"car dealer",
+"concession"
+],
+[
+"mod shop",
+"atelier"
+],
+[
+"mod shops",
+"ateliers"
+],
+[
+"workshop",
+"atelier"
+],
+[
+"workshops",
+"ateliers"
+],
+[
+"tattoo parlor",
+"salon de tatouage"
+],
+[
+"tattoo shop",
+"salon de tatouage"
+],
+[
+"barber",
+"coiffeur"
+],
+[
+"barbershop",
+"coiffeur"
+],
+[
+"salon",
+"salon"
+],
+[
+"business",
+"entreprise"
+],
+[
+"businesses",
+"entreprises"
+],
+[
+"company",
+"entreprise"
+],
+[
+"companies",
+"entreprises"
+],
+[
+"properties",
+"logements"
+],
+[
+"property",
+"logement"
+],
+[
+"house",
+"maison"
+],
+[
+"houses",
+"maisons"
+],
+[
+"home",
+"maison"
+],
+[
+"crib",
+"maison"
+],
+[
+"apartment",
+"appartement"
+],
+[
+"apartments",
+"appartements"
+],
+[
+"housing",
+"logement"
+],
+[
+"safehouse",
+"planque"
+],
+[
+"safehouses",
+"planques"
+],
+[
+"hideout",
+"planque"
+],
+[
+"hideouts",
+"planques"
+],
+[
+"residence",
+"demeure"
+],
+[
+"residences",
+"demeures"
+],
+[
+"live",
+"habite"
+],
+[
+"lives",
+"habite"
+],
+[
+"living",
+"vit"
+],
+[
+"stay",
+"loge"
+],
+[
+"character",
+"personnage"
+],
+[
+"characters",
+"personnages"
+],
+[
+"chars",
+"personnages"
+],
+[
+"char",
+"personnage"
+],
+[
+"main character",
+"personnage principal"
+],
+[
+"main characters",
+"personnages principaux"
+],
+[
+"main chars",
+"personnages principaux"
+],
+[
+"protagonist",
+"protagoniste"
+],
+[
+"protagonists",
+"protagonistes"
+],
+[
+"playable",
+"jouable"
+],
+[
+"switch characters",
+"changer de personnage"
+],
+[
+"switch chars",
+"changer de personnage"
+],
+[
+"girlfriend",
+"copine"
+],
+[
+"boyfriend",
+"copain"
+],
+[
+"couple",
+"couple"
+],
+[
+"duo",
+"duo"
+],
+[
+"gang",
+"gang"
+],
+[
+"cop",
+"flic"
+],
+[
+"boss",
+"patron"
+],
+[
+"vehicle",
+"vehicule"
+],
+[
+"vehicles",
+"vehicules"
+],
+[
+"car",
+"voiture"
+],
+[
+"cars",
+"voitures"
+],
+[
+"ride",
+"voiture"
+],
+[
+"rides",
+"voitures"
+],
+[
+"whip",
+"voiture"
+],
+[
+"bike",
+"moto"
+],
+[
+"bikes",
+"motos"
+],
+[
+"motorcycle",
+"moto"
+],
+[
+"motorcycles",
+"motos"
+],
+[
+"motorbike",
+"moto"
+],
+[
+"bicycle",
+"velo"
+],
+[
+"boat",
+"bateau"
+],
+[
+"boats",
+"bateaux"
+],
+[
+"plane",
+"avion"
+],
+[
+"planes",
+"avions"
+],
+[
+"airplane",
+"avion"
+],
+[
+"aircraft",
+"avion"
+],
+[
+"jet",
+"jet"
+],
+[
+"helicopter",
+"helicoptere"
+],
+[
+"helicopters",
+"helicopteres"
+],
+[
+"heli",
+"helicoptere"
+],
+[
+"chopper",
+"helicoptere"
+],
+[
+"truck",
+"camion"
+],
+[
+"trucks",
+"camions"
+],
+[
+"pickup",
+"pickup"
+],
+[
+"pickups",
+"pickups"
+],
+[
+"van",
+"van"
+],
+[
+"vans",
+"vans"
+],
+[
+"suv",
+"suv"
+],
+[
+"suvs",
+"suv"
+],
+[
+"sedan",
+"berline"
+],
+[
+"sedans",
+"berlines"
+],
+[
+"sports car",
+"voiture de sport"
+],
+[
+"sports cars",
+"voitures de sport"
+],
+[
+"supercar",
+"supercar"
+],
+[
+"supercars",
+"supercars"
+],
+[
+"muscle car",
+"muscle car"
+],
+[
+"muscle cars",
+"muscle cars"
+],
+[
+"jet ski",
+"jet ski"
+],
+[
+"jetski",
+"jet ski"
+],
+[
+"airboat",
+"hydroglisseur"
+],
+[
+"scooter",
+"scooter"
+],
+[
+"quad",
+"quad"
+],
+[
+"fly",
+"piloter"
+],
+[
+"flying",
+"piloter"
+],
+[
+"drive",
+"conduit"
+],
+[
+"driving",
+"conduire"
+],
+[
+"swim",
+"nager"
+],
+[
+"swimming",
+"nager"
+],
+[
+"underwater",
+"sous l eau"
+],
+[
+"fastest",
+"plus rapide"
+],
+[
+"fast",
+"rapide"
+],
+[
+"faster",
+"plus rapide"
+],
+[
+"speed",
+"vitesse"
+],
+[
+"top speed",
+"vitesse de pointe"
+],
+[
+"acceleration",
+"acceleration"
+],
+[
+"best",
+"meilleur"
+],
+[
+"better",
+"meilleur"
+],
+[
+"good",
+"bon"
+],
+[
+"stats",
+"stats"
+],
+[
+"statistics",
+"statistiques"
+],
+[
+"performance",
+"performance"
+],
+[
+"powerful",
+"puissant"
+],
+[
+"most powerful",
+"plus puissant"
+],
+[
+"strongest",
+"plus puissant"
+],
+[
+"tune",
+"personnaliser"
+],
+[
+"tuning",
+"personnalisation"
+],
+[
+"customize",
+"personnaliser"
+],
+[
+"customise",
+"personnaliser"
+],
+[
+"customization",
+"personnalisation"
+],
+[
+"customizations",
+"personnalisations"
+],
+[
+"customization options",
+"postes de personnalisation"
+],
+[
+"mods",
+"modifs"
+],
+[
+"mod",
+"modif"
+],
+[
+"upgrade",
+"amelioration"
+],
+[
+"upgrades",
+"ameliorations"
+],
+[
+"paint",
+"peinture"
+],
+[
+"paint job",
+"peinture"
+],
+[
+"rims",
+"jantes"
+],
+[
+"wheels",
+"jantes"
+],
+[
+"engine",
+"moteur"
+],
+[
+"turbo",
+"turbo"
+],
+[
+"armor",
+"gilet"
+],
+[
+"weapon",
+"arme"
+],
+[
+"weapons",
+"armes"
+],
+[
+"gun",
+"arme"
+],
+[
+"guns",
+"armes"
+],
+[
+"gat",
+"arme"
+],
+[
+"gats",
+"armes"
+],
+[
+"firearm",
+"arme"
+],
+[
+"firearms",
+"armes"
+],
+[
+"pistol",
+"pistolet"
+],
+[
+"pistols",
+"pistolets"
+],
+[
+"handgun",
+"pistolet"
+],
+[
+"handguns",
+"pistolets"
+],
+[
+"sidearm",
+"arme de poing"
+],
+[
+"rifle",
+"fusil"
+],
+[
+"rifles",
+"fusils"
+],
+[
+"shotgun",
+"fusil a pompe"
+],
+[
+"shotguns",
+"fusils a pompe"
+],
+[
+"sniper",
+"fusil de precision"
+],
+[
+"sniper rifle",
+"fusil de precision"
+],
+[
+"smg",
+"pistolet mitrailleur"
+],
+[
+"smgs",
+"pistolets mitrailleurs"
+],
+[
+"submachine gun",
+"pistolet mitrailleur"
+],
+[
+"machine gun",
+"mitrailleuse"
+],
+[
+"machine guns",
+"mitrailleuses"
+],
+[
+"lmg",
+"mitrailleuse"
+],
+[
+"mg",
+"mitrailleuse"
+],
+[
+"assault rifle",
+"fusil d assaut"
+],
+[
+"knife",
+"couteau"
+],
+[
+"melee",
+"melee"
+],
+[
+"grenade",
+"grenade"
+],
+[
+"grenades",
+"grenades"
+],
+[
+"grenade launcher",
+"lance grenades"
+],
+[
+"molotov",
+"molotov"
+],
+[
+"ammo",
+"munitions"
+],
+[
+"ammunition",
+"munitions"
+],
+[
+"bullets",
+"munitions"
+],
+[
+"rounds",
+"munitions"
+],
+[
+"range",
+"portee"
+],
+[
+"damage",
+"degats"
+],
+[
+"fire rate",
+"cadence"
+],
+[
+"attachments",
+"accessoires"
+],
+[
+"scope",
+"lunette"
+],
+[
+"suppressor",
+"silencieux"
+],
+[
+"silencer",
+"silencieux"
+],
+[
+"magazine",
+"chargeur"
+],
+[
+"owner",
+"proprietaire"
+],
+[
+"whose",
+"a qui"
+],
+[
+"belongs to",
+"appartient a"
+],
+[
+"food",
+"nourriture"
+],
+[
+"eat",
+"manger"
+],
+[
+"eating",
+"manger"
+],
+[
+"drink",
+"boire"
+],
+[
+"drinks",
+"boissons"
+],
+[
+"snack",
+"en cas"
+],
+[
+"snacks",
+"en cas"
+],
+[
+"meal",
+"repas"
+],
+[
+"meals",
+"repas"
+],
+[
+"heal",
+"soigner"
+],
+[
+"healing",
+"soins"
+],
+[
+"health",
+"vie"
+],
+[
+"consumable",
+"consommable"
+],
+[
+"consumables",
+"consommables"
+],
+[
+"effect",
+"effet"
+],
+[
+"effects",
+"effets"
+],
+[
+"what does it do",
+"ca fait quoi"
+],
+[
+"what is it for",
+"ca sert a quoi"
+],
+[
+"fat",
+"gros"
+],
+[
+"get fat",
+"grossir"
+],
+[
+"gym",
+"salle de sport"
+],
+[
+"clothes",
+"vetements"
+],
+[
+"clothing",
+"vetements"
+],
+[
+"outfit",
+"tenue"
+],
+[
+"outfits",
+"tenues"
+],
+[
+"style",
+"style"
+],
+[
+"hairstyle",
+"coiffure"
+],
+[
+"hairstyles",
+"coiffures"
+],
+[
+"haircut",
+"coiffure"
+],
+[
+"hair",
+"cheveux"
+],
+[
+"tattoo",
+"tatouage"
+],
+[
+"tattoos",
+"tatouages"
+],
+[
+"accessories",
+"accessoires"
+],
+[
+"glasses",
+"lunettes"
+],
+[
+"shoes",
+"chaussures"
+],
+[
+"hat",
+"chapeau"
+],
+[
+"look",
+"look"
+],
+[
+"looks",
+"looks"
+],
+[
+"social media",
+"reseaux sociaux"
+],
+[
+"social network",
+"reseau social"
+],
+[
+"phone",
+"telephone"
+],
+[
+"internet",
+"internet"
+],
+[
+"animals",
+"animaux"
+],
+[
+"animal",
+"animal"
+],
+[
+"alligator",
+"alligator"
+],
+[
+"alligators",
+"alligators"
+],
+[
+"gator",
+"alligator"
+],
+[
+"gators",
+"alligators"
+],
+[
+"weather",
+"meteo"
+],
+[
+"hurricane",
+"ouragan"
+],
+[
+"dog",
+"chien"
+],
+[
+"pets",
+"animaux"
+],
+[
+"site",
+"site"
+],
+[
+"website",
+"site"
+],
+[
+"web site",
+"site"
+],
+[
+"this site",
+"ce site"
+],
+[
+"the site",
+"le site"
+],
+[
+"leonidakit",
+"leonidakit"
+],
+[
+"page",
+"fiche"
+],
+[
+"pages",
+"fiches"
+],
+[
+"item page",
+"fiche"
+],
+[
+"sheet",
+"fiche"
+],
+[
+"entry",
+"fiche"
+],
+[
+"card",
+"fiche"
+],
+[
+"section",
+"section"
+],
+[
+"sections",
+"sections"
+],
+[
+"hub",
+"section"
+],
+[
+"list",
+"liste"
+],
+[
+"lists",
+"listes"
+],
+[
+"catalog",
+"catalogue"
+],
+[
+"catalogue",
+"catalogue"
+],
+[
+"tutorial",
+"tuto"
+],
+[
+"tuto",
+"tuto"
+],
+[
+"guide",
+"guide"
+],
+[
+"help",
+"aide"
+],
+[
+"faq",
+"faq"
+],
+[
+"about the site",
+"a propos du site"
+],
+[
+"who made",
+"qui a fait"
+],
+[
+"who runs",
+"qui gere"
+],
+[
+"contact",
+"contact"
+],
+[
+"legal notice",
+"mentions legales"
+],
+[
+"legal",
+"mentions legales"
+],
+[
+"privacy",
+"confidentialite"
+],
+[
+"data",
+"donnees"
+],
+[
+"my data",
+"mes donnees"
+],
+[
+"stored",
+"stocke"
+],
+[
+"store data",
+"stocker"
+],
+[
+"account",
+"compte"
+],
+[
+"login",
+"compte"
+],
+[
+"log in",
+"connexion"
+],
+[
+"cookies",
+"cookies"
+],
+[
+"report",
+"signaler"
+],
+[
+"report a bug",
+"signaler un bug"
+],
+[
+"bug",
+"bug"
+],
+[
+"error",
+"erreur"
+],
+[
+"mistake",
+"erreur"
+],
+[
+"wrong",
+"faux"
+],
+[
+"search",
+"chercher"
+],
+[
+"search for",
+"chercher"
+],
+[
+"look for",
+"chercher"
+],
+[
+"looking for",
+"je cherche"
+],
+[
+"progress",
+"progression"
+],
+[
+"progress page",
+"page progression"
+],
+[
+"progression",
+"progression"
+],
+[
+"tracker",
+"carnet"
+],
+[
+"trackers",
+"carnets"
+],
+[
+"notebook",
+"carnet"
+],
+[
+"my garage",
+"mon garage"
+],
+[
+"my arsenal",
+"mon arsenal"
+],
+[
+"my wardrobe",
+"ma garde robe"
+],
+[
+"wishlist",
+"envies"
+],
+[
+"wish list",
+"envies"
+],
+[
+"check off",
+"cocher"
+],
+[
+"check",
+"cocher"
+],
+[
+"tick",
+"cocher"
+],
+[
+"mark",
+"marquer"
+],
+[
+"mark as found",
+"marquer comme repere"
+],
+[
+"found",
+"trouve"
+],
+[
+"spotted",
+"repere"
+],
+[
+"export",
+"exporter"
+],
+[
+"import",
+"importer"
+],
+[
+"backup",
+"sauvegarde"
+],
+[
+"transfer",
+"transferer"
+],
+[
+"print",
+"imprimer"
+],
+[
+"delete",
+"supprimer"
+],
+[
+"deleted",
+"supprime"
+],
+[
+"clear",
+"effacer"
+],
+[
+"erase",
+"effacer"
+],
+[
+"reset",
+"remettre a zero"
+],
+[
+"start over",
+"repartir de zero"
+],
+[
+"from scratch",
+"de zero"
+],
+[
+"compare",
+"comparer"
+],
+[
+"comparing",
+"comparer"
+],
+[
+"comparison",
+"comparaison"
+],
+[
+"comparator",
+"comparateur"
+],
+[
+"side by side",
+"cote a cote"
+],
+[
+"filter",
+"filtre"
+],
+[
+"filters",
+"filtres"
+],
+[
+"sort",
+"trier"
+],
+[
+"ranking",
+"classement"
+],
+[
+"rank",
+"rang"
+],
+[
+"pins",
+"marqueurs"
+],
+[
+"pin",
+"marqueur"
+],
+[
+"markers",
+"marqueurs"
+],
+[
+"marker",
+"marqueur"
+],
+[
+"distance",
+"distance"
+],
+[
+"measure",
+"mesurer"
+],
+[
+"photos",
+"photos"
+],
+[
+"photo",
+"photo"
+],
+[
+"images",
+"images"
+],
+[
+"image",
+"image"
+],
+[
+"pictures",
+"images"
+],
+[
+"screenshots",
+"captures"
+],
+[
+"screenshot",
+"capture"
+],
+[
+"notify",
+"prevenir"
+],
+[
+"notified",
+"prevenu"
+],
+[
+"notification",
+"alerte"
+],
+[
+"notifications",
+"alertes"
+],
+[
+"alert",
+"alerte"
+],
+[
+"email",
+"mail"
+],
+[
+"e-mail",
+"mail"
+],
+[
+"newsletter",
+"newsletter"
+],
+[
+"sign up",
+"inscrire"
+],
+[
+"subscribe",
+"inscrire"
+],
+[
+"link",
+"lien"
+],
+[
+"links",
+"liens"
+],
+[
+"share link",
+"lien de partage"
+],
+[
+"example",
+"exemple"
+],
+[
+"examples",
+"exemples"
+],
+[
+"graph",
+"graphique"
+],
+[
+"graphs",
+"graphiques"
+],
+[
+"chart",
+"graphique"
+],
+[
+"charts",
+"graphiques"
+],
+[
+"settings",
+"reglages"
+],
+[
+"advanced settings",
+"reglages avances"
+],
+[
+"option",
+"option"
+],
+[
+"options",
+"options"
+],
+[
+"box",
+"case"
+],
+[
+"field",
+"case"
+],
+[
+"fields",
+"cases"
+],
+[
+"message",
+"message"
+],
+[
+"sensitivity",
+"sensibilite"
+],
+[
+"path",
+"chemin"
+],
+[
+"paths",
+"chemins"
+],
+[
+"try",
+"essai"
+],
+[
+"tries",
+"essais"
+],
+[
+"attempt",
+"essai"
+],
+[
+"attempts",
+"essais"
+],
+[
+"reload",
+"recharger"
+],
+[
+"refresh",
+"recharger"
+],
+[
+"mode",
+"mode"
+],
+[
+"modes",
+"modes"
+],
+[
+"simple",
+"simple"
+],
+[
+"step by step",
+"pas a pas"
+],
+[
+"expert",
+"expert"
+],
+[
+"hi",
+"salut"
+],
+[
+"hey",
+"salut"
+],
+[
+"hello",
+"salut"
+],
+[
+"sup",
+"salut"
+],
+[
+"wassup",
+"salut"
+],
+[
+"whats up",
+"salut"
+],
+[
+"what's up",
+"salut"
+],
+[
+"yo",
+"salut"
+],
+[
+"good morning",
+"bonjour"
+],
+[
+"thanks",
+"merci"
+],
+[
+"thank you",
+"merci"
+],
+[
+"thx",
+"merci"
+],
+[
+"ty",
+"merci"
+],
+[
+"bye",
+"au revoir"
+],
+[
+"goodbye",
+"au revoir"
+],
+[
+"see ya",
+"au revoir"
+],
+[
+"cya",
+"au revoir"
+],
+[
+"are you an ai",
+"qui es tu"
+],
+[
+"are you a bot",
+"qui es tu"
+],
+[
+"are you a robot",
+"qui es tu"
+],
+[
+"are you human",
+"qui es tu"
+],
+[
+"who are you",
+"qui es tu"
+],
+[
+"what are you",
+"qui es tu"
+],
+[
+"your name",
+"ton nom"
+],
+[
+"do you send",
+"tu envoies"
+],
+[
+"send",
+"envoyer"
+],
+[
+"sent",
+"envoye"
+],
+[
+"conversation",
+"conversation"
+],
+[
+"chat",
+"discussion"
+],
+[
+"messages",
+"messages"
+],
+[
+"abbreviations",
+"abreviations"
+],
+[
+"slang",
+"argot"
+],
+[
+"you got it wrong",
+"tu t es trompe"
+],
+[
+"that's wrong",
+"c est faux"
+],
+[
+"wrong answer",
+"mauvaise reponse"
+],
+[
+"do you know",
+"tu connais"
+],
+[
+"know",
+"sais"
+],
+[
+"i don't know",
+"je sais pas"
+],
+[
+"understand",
+"comprends"
+],
+[
+"smart",
+"intelligent"
+],
+[
+"january",
+"janvier"
+],
+[
+"february",
+"fevrier"
+],
+[
+"march",
+"mars"
+],
+[
+"april",
+"avril"
+],
+[
+"may",
+"mai"
+],
+[
+"june",
+"juin"
+],
+[
+"july",
+"juillet"
+],
+[
+"august",
+"aout"
+],
+[
+"september",
+"septembre"
+],
+[
+"october",
+"octobre"
+],
+[
+"november",
+"novembre"
+],
+[
+"december",
+"decembre"
+],
+[
+"monday",
+"lundi"
+],
+[
+"tuesday",
+"mardi"
+],
+[
+"wednesday",
+"mercredi"
+],
+[
+"thursday",
+"jeudi"
+],
+[
+"friday",
+"vendredi"
+],
+[
+"saturday",
+"samedi"
+],
+[
+"sunday",
+"dimanche"
+],
+[
+"take place",
+"se passe"
+],
+[
+"takes place",
+"se passe"
+],
+[
+"set in",
+"se passe a"
+],
+[
+"what kind of",
+"quel genre de"
+],
+[
+"kind of",
+"genre de"
+],
+[
+"type of",
+"type de"
+],
+[
+"what's new",
+"quoi de neuf"
+],
+[
+"whats new",
+"quoi de neuf"
+],
+[
+"compared to",
+"par rapport a"
+],
+[
+"difference",
+"difference"
+],
+[
+"differences",
+"differences"
+],
+[
+"different from",
+"different de"
+],
+[
+"for real",
+"fiable"
+],
+[
+"reliable",
+"fiable"
+],
+[
+"definitive",
+"definitive"
+],
+[
+"final",
+"definitive"
+],
+[
+"whenever",
+"quand"
+],
+[
+"whenever you want",
+"quand on veut"
+],
+[
+"go everywhere",
+"aller partout"
+],
+[
+"from the start",
+"des le debut"
+],
+[
+"at the start",
+"au debut"
+],
+[
+"start",
+"debut"
+],
+[
+"beginning",
+"debut"
+],
+[
+"locked",
+"fermee"
+],
+[
+"locked areas",
+"zones fermees"
+],
+[
+"closed",
+"fermes"
+],
+[
+"work",
+"marche"
+],
+[
+"works",
+"marche"
+],
+[
+"how does it work",
+"comment ca marche"
+],
+[
+"between",
+"entre"
+],
+[
+"points",
+"points"
+],
+[
+"point",
+"point"
+],
+[
+"show only",
+"afficher seulement"
+],
+[
+"assumed",
+"suppose"
+],
+[
+"glimpsed",
+"apercu"
+],
+[
+"seen",
+"vu"
+],
+[
+"come from",
+"viennent"
+],
+[
+"comes from",
+"vient"
+],
+[
+"where do",
+"ou"
+],
+[
+"get gas",
+"faire le plein"
+],
+[
+"fill up",
+"faire le plein"
+],
+[
+"refuel",
+"faire le plein"
+],
+[
+"page not found",
+"page introuvable"
+],
+[
+"full page",
+"fiche complete"
+],
+[
+"from a page",
+"depuis une fiche"
+],
+[
+"what do i put in",
+"que mettre dans"
+],
+[
+"what to put in",
+"que mettre dans"
+],
+[
+"put",
+"mettre"
+],
+[
+"restore",
+"remettre"
+],
+[
+"suggested",
+"propose"
+],
+[
+"the best one",
+"le meilleur"
+],
+[
+"custom purchase",
+"achat libre"
+],
+[
+"fun purchase",
+"achat plaisir"
+],
+[
+"time you use it",
+"temps ou tu t en sers"
+],
+[
+"time u use it",
+"temps ou tu t en sers"
+],
+[
+"three",
+"trois"
+],
+[
+"two",
+"deux"
+],
+[
+"one",
+"un"
+],
+[
+"four",
+"quatre"
+],
+[
+"five",
+"cinq"
+],
+[
+"rank goal",
+"objectif de rang"
+],
+[
+"example numbers",
+"chiffres d exemple"
+],
+[
+"the real ones",
+"les vrais"
+],
+[
+"split my",
+"repartir mon"
+],
+[
+"my report",
+"mon signalement"
+],
+[
+"happens to",
+"devient"
+],
+[
+"what happens to",
+"que devient"
+],
+[
+"read",
+"lit"
+],
+[
+"reads",
+"lit"
+],
+[
+"ps5 save",
+"sauvegarde ps5"
+],
+[
+"my save",
+"ma sauvegarde"
+],
+[
+"game save",
+"sauvegarde"
+],
+[
+"save file",
+"sauvegarde"
+],
+[
+"can you open",
+"tu peux ouvrir"
+],
+[
+"can u open",
+"tu peux ouvrir"
+],
+[
+"can you do",
+"tu peux faire"
+],
+[
+"can you show",
+"tu peux montrer"
+],
+[
+"can you help",
+"tu peux m aider"
+],
+[
+"can you make",
+"tu peux faire"
+],
+[
+"everything you can buy",
+"tout ce qui s achete"
+],
+[
+"everything u can buy",
+"tout ce qui s achete"
+],
+[
+"evrything u can buy",
+"tout ce qui s achete"
+],
+[
+"everything to buy",
+"tout ce qui s achete"
+],
+[
+"evrything",
+"tout"
+],
+[
+"ultimate shops",
+"magasins ultimate"
+],
+[
+"in standard",
+"en standard"
+],
+[
+"engraved",
+"graves"
+],
+[
+"brand",
+"marque"
+],
+[
+"brands",
+"marques"
+],
+[
+"car brands",
+"marques de voitures"
+],
+[
+"carry",
+"porter"
+],
+[
+"to read",
+"lire"
+],
+[
+"how to read",
+"comment lire"
+],
+[
+"japanese",
+"japonaises"
+],
+[
+"american",
+"americaines"
+],
+[
+"european",
+"europeennes"
+],
+[
+"german",
+"allemandes"
+],
+[
+"italian",
+"italiennes"
+],
+[
+"mechanic",
+"mecanique"
+],
+[
+"mechanics",
+"mecaniques"
+],
+[
+"drawing",
+"dessin"
+],
+[
+"drawings",
+"dessins"
+],
+[
+"instead of",
+"au lieu de"
+],
+[
+"preorders",
+"precommandes"
+],
+[
+"pre orders",
+"precommandes"
+],
+[
+"preorders open",
+"precommandes ouvertes"
+],
+[
+"did preorders open",
+"precommandes ouvertes"
+],
+[
+"open up",
+"ouvrir"
+],
+[
+"trunk",
+"coffre"
+],
+[
+"locker",
+"casier"
+],
+[
+"work as",
+"sert de"
+],
+[
+"body armor",
+"gilet pare balles"
+],
+[
+"body armour",
+"gilet pare balles"
+],
+[
+"bulletproof vest",
+"gilet pare balles"
+],
+[
+"armor vest",
+"gilet pare balles"
+],
+[
+"armour",
+"gilet"
+],
+[
+"car armor",
+"blindage"
+],
+[
+"vehicle armor",
+"blindage"
+],
+[
+"alcohol",
+"alcool"
+],
+[
+"beer",
+"biere"
+],
+[
+"listed",
+"listes"
+],
+[
+"sunglasses",
+"lunettes de soleil"
+],
+[
+"car tuning",
+"personnalisation voiture"
+],
+[
+"car mods",
+"personnalisation voiture"
+],
+[
+"weapon mods",
+"personnalisation arme"
+],
+[
+"weapon mod",
+"personnalisation arme"
+],
+[
+"gun mods",
+"personnalisation arme"
+],
+[
+"luxury cars",
+"voitures de luxe"
+],
+[
+"luxury",
+"luxe"
+],
+[
+"alarm",
+"alarme"
+],
+[
+"tracker device",
+"traceur"
+],
+[
+"bun",
+"chignon"
+],
+[
+"pay n spray",
+"pay n spray"
+],
+[
+"pay and spray",
+"pay and spray"
+],
+[
+"pay 'n' spray",
+"pay n spray"
+],
+[
+"name",
+"nom"
+],
+[
+"helis",
+"helicopteres"
+],
+[
+"choppers",
+"helicopteres"
+],
+[
+"open the shop",
+"ouvre les achats"
+],
+[
+"open the store",
+"ouvre la boutique"
+],
+[
+"the shop",
+"la boutique"
+],
+[
+"to open",
+"ouvrir"
+],
+[
+"hw much is",
+"combien coute"
+],
+[
+"hw much r",
+"combien coutent"
+],
+[
+"hw many",
+"combien"
+],
+[
+"ult ed",
+"edition ultimate"
+],
+[
+"ult edition",
+"edition ultimate"
+],
+[
+"ult",
+"ultimate"
+],
+[
+"wats in",
+"ce que contient"
+],
+[
+"what's in the",
+"ce que contient"
+],
+[
+"whats in",
+"ce que contient"
+],
+[
+"what are you for",
+"a quoi tu sers"
+],
+[
+"what r u for",
+"a quoi tu sers"
+],
+[
+"wat r u for",
+"a quoi tu sers"
+],
+[
+"what do you do",
+"a quoi tu sers"
+],
+[
+"what can you do",
+"qu est ce que tu sais faire"
+],
+[
+"you suck",
+"tu es nul"
+],
+[
+"u suck",
+"tu es nul"
+],
+[
+"suck",
+"nul"
+],
+[
+"sucks",
+"nul"
+],
+[
+"sry",
+""
+],
+[
+"sorry",
+""
+],
+[
+"but",
+"mais"
+],
+[
+"how big",
+"quelle taille"
+],
+[
+"hw big",
+"quelle taille"
+],
+[
+"big",
+"grand"
+],
+[
+"bigger",
+"plus grand"
+],
+[
+"biggest",
+"plus grand"
+],
+[
+"large",
+"grand"
+],
+[
+"small",
+"petit"
+],
+[
+"n",
+"et"
+],
+[
+"aiming 4",
+"vise"
+],
+[
+"aim for",
+"vise"
+],
+[
+"aiming",
+"vise"
+],
+[
+"2nite",
+"ce soir"
+],
+[
+"tonite",
+"ce soir"
+],
+[
+"capital",
+"capitale"
+],
+[
+"capital of",
+"capitale de"
+],
+[
+"germany",
+"allemagne"
+],
+[
+"france",
+"france"
+],
+[
+"in paris",
+"a paris"
+],
+[
+"paris",
+"paris"
+],
+[
+"london",
+"londres"
+],
+[
+"hotel",
+"hotel"
+],
+[
+"cheap hotel",
+"hotel pas cher"
+],
+[
+"what time is it",
+"quelle heure il est"
+],
+[
+"what day is it",
+"quel jour on est"
+],
+[
+"solve",
+"resous"
+],
+[
+"write me",
+"ecris moi un"
+],
+[
+"write",
+"ecris"
+],
+[
+"poem",
+"poeme"
+],
+[
+"translate",
+"traduis"
+],
+[
+"recipe",
+"recette"
+],
+[
+"homework",
+"devoirs"
+],
+[
+"math",
+"maths"
+],
+[
+"maths",
+"maths"
+],
+[
+"times",
+"fois"
+],
+[
+"who won",
+"qui a gagne"
+],
+[
+"conjugate",
+"conjugaison"
+],
+[
+"verb",
+"verbe"
+],
+[
+"lose weight",
+"maigrir"
+],
+[
+"lose weight fast",
+"maigrir vite"
+],
+[
+"god",
+"dieu"
+],
+[
+"politics",
+"politique"
+],
+[
+"opinion",
+"avis"
+],
+[
+"your opinion on politics",
+"ton avis sur la politique"
+],
+[
+"make a gun",
+"fabriquer une arme"
+],
+[
+"build a gun",
+"fabriquer une arme"
+],
+[
+"bomb",
+"explosif"
+],
+[
+"president",
+"president"
+],
+[
+"movie",
+"film"
+],
+[
+"movies",
+"films"
+],
+[
+"tv show",
+"serie tv"
+],
+[
+"football",
+"foot"
+],
+[
+"soccer",
+"foot"
+],
+[
+"stock market",
+"bourse"
+],
+[
+"the game",
+"le jeu"
+],
+[
+"this game",
+"ce jeu"
+],
+[
+"the map",
+"la carte"
+],
+[
+"the first",
+"le premier"
+],
+[
+"where to get gas",
+"ou faire le plein"
+],
+[
+"where can i get gas",
+"ou faire le plein"
+],
+[
+"where do i get gas",
+"ou faire le plein"
+],
+[
+"update my",
+"mettre a jour mon"
+],
+[
+"saved",
+"sauvegarde"
+],
+[
+"saving",
+"sauvegarder"
+],
+[
+"tuning options",
+"postes de tuning"
+],
+[
+"mod options",
+"postes de perso"
+],
+[
+"armor upgrade",
+"blindage"
+],
+[
+"earns me extra",
+"me fait gagner en plus"
+],
+[
+"earn me extra",
+"me fait gagner en plus"
+],
+[
+"extra",
+"en plus"
+],
+[
+"paid back",
+"amorti"
+],
+[
+"pay back",
+"rembourser"
+],
+[
+"payback",
+"amorti"
+],
+[
+"that's my capital",
+"c est mon capital"
+],
+[
+"thats my capital",
+"c est mon capital"
+],
+[
+"it's my capital",
+"c est mon capital"
+],
+[
+"my capital",
+"mon capital"
+],
+[
+"that's what i already have",
+"c est mon capital"
+],
+[
+"that's what i have",
+"c est mon capital"
+],
+[
+"that's my goal",
+"c est mon objectif"
+],
+[
+"thats my goal",
+"c est mon objectif"
+],
+[
+"it's my goal",
+"c est mon objectif"
+],
+[
+"that's what i want",
+"c est mon objectif"
+],
+[
+"open shop",
+"ouvre les achats"
+],
+[
+"collectibles page",
+"page collectibles"
+],
+[
+"map page",
+"page carte"
+],
+[
+"recover",
+"recuperer"
+],
+[
+"space",
+"place"
+],
+[
+"garage space",
+"place au garage"
+],
+[
+"regular edition",
+"edition standard"
+],
+[
+"basic edition",
+"edition standard"
+],
+[
+"base game",
+"edition standard"
+],
+[
+"homepage",
+"accueil"
+],
+[
+"home page",
+"accueil"
+],
+[
+"mini calculator",
+"mini calculateur"
+],
+[
+"store robberies",
+"braquer des magasins"
+],
+[
+"drinking",
+"boire"
+],
+[
+"recent",
+"a jour"
+],
+[
+"how recent",
+"a jour"
+],
+[
+"footage",
+"images"
+],
+[
+"first confirm",
+"annonce"
+],
+[
+"hardest",
+"plus puissant"
+],
+[
+"hits hardest",
+"plus puissant"
+],
+[
+"strongest gun",
+"arme la plus puissante"
+],
+[
+"best gun",
+"meilleure arme"
+],
+[
+"narrow down",
+"filtrer"
+],
+[
+"shows up",
+"affiche"
+],
+[
+"show up",
+"affiche"
+],
+[
+"lucia's place",
+"maison de lucia"
+],
+[
+"jason's place",
+"maison de jason"
+],
+[
+"people see",
+"les autres voient"
+],
+[
+"jewelry",
+"bijoux"
+],
+[
+"run this site",
+"gerent le site"
+],
+[
+"people who run",
+"qui gere"
+],
+[
+"track me",
+"me suit"
+],
+[
+"tracking",
+"suivi"
+],
+[
+"license",
+"licence"
+],
+[
+"licenses",
+"licences"
+],
+[
+"font",
+"police"
+],
+[
+"fonts",
+"polices"
+],
+[
+"typos",
+"fautes"
+],
+[
+"typo",
+"faute"
+],
+[
+"misspellings",
+"fautes"
+],
+[
+"gotta go",
+"au revoir"
+],
+[
+"color",
+"couleur"
+],
+[
+"colour",
+"couleur"
+],
+[
+"change the color",
+"repeindre"
+],
+[
+"repaint",
+"repeindre"
+],
+[
+"first-person",
+"premiere personne"
+],
+[
+"first person",
+"premiere personne"
+],
+[
+"view",
+"vue"
+],
+[
+"swap",
+"changer"
+],
+[
+"swap between",
+"changer entre"
+],
+[
+"total number",
+"nombre"
+],
+[
+"mapped",
+"sur la carte"
+],
+[
+"fill in",
+"remplir"
+],
+[
+"store gear",
+"ranger"
+],
+[
+"gear",
+"equipement"
+],
+[
+"gadgets",
+"gadgets"
+],
+[
+"owned",
+"possede"
+],
+[
+"own",
+"posseder"
+],
+[
+"return",
+"rendement"
+],
+[
+"how far",
+"distance"
+],
+[
+"how far apart",
+"distance entre"
+],
+[
+"get delayed",
+"etre repousse"
+],
+[
+"delayed again",
+"encore repousse"
+],
+[
+"play with friends",
+"joue a plusieurs"
+],
+[
+"whole map",
+"toute la carte"
+],
+[
+"open from the start",
+"ouverte des le debut"
+],
+[
+"named",
+"nomme"
+],
+[
+"actually",
+"vraiment"
+],
+[
+"was in",
+"etait"
+],
+[
+"up or down",
+"en plus ou en moins"
+],
+[
+"swap characters",
+"changer de personnage"
+],
+[
+"sync",
+"synchroniser"
+],
+[
+"send someone",
+"envoyer a quelqu un"
+],
+[
+"fit",
+"convient"
+],
+[
+"fits",
+"convient"
+],
+[
+"shooting",
+"tir"
+],
+[
+"combat",
+"combat"
+],
+[
+"fighting",
+"combat"
+],
+[
+"plot",
+"histoire"
+],
+[
+"storyline",
+"histoire"
+],
+[
+"story about",
+"histoire"
+],
+[
+"in-game prices",
+"prix dans le jeu"
+],
+[
+"in game",
+"dans le jeu"
+],
+[
+"in-game",
+"dans le jeu"
+],
+[
+"add",
+"ajouter"
+],
+[
+"isn't on the site",
+"pas sur le site"
+],
+[
+"chat with leo",
+"discussion avec leo"
+],
+[
+"my chat",
+"ma discussion"
+],
+[
+"toward",
+"vers"
+],
+[
+"towards",
+"vers"
+],
+[
+"drives",
+"conduit"
+],
+[
+"cars does jason drive",
+"vehicules de jason"
+],
+[
+"cover",
+"couvre"
+],
+[
+"covers",
+"couvre"
+],
+[
+"can you carry",
+"on peut porter"
+],
+[
+"my own",
+"mes propres"
+],
+[
+"your own",
+"tes propres"
+],
+[
+"own pins",
+"propres marqueurs"
+],
+[
+"attachments fit",
+"accessoires compatibles"
+],
+[
+"which attachments fit",
+"quels accessoires sont compatibles"
+],
+[
+"yesterday",
+"hier"
+],
+[
+"won the game",
+"a gagne le match"
+],
+[
+"the game yesterday",
+"le match hier"
+],
+[
+"match",
+"match"
+],
+[
+"score",
+"score"
+],
+[
+"and want",
+"et je veux"
+],
+[
+"wants",
+"veut"
+]
+]
+}

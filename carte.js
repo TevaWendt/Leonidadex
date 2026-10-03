@@ -375,7 +375,7 @@
         document.querySelectorAll('.map-filter').forEach(function(input){ if(pts.some(p => p.c === input.dataset.cat)) input.checked = true; });
         refreshVisibility();
         ouvertId = null;
-        panelIn.innerHTML = '<p class="mp-cat">' + esc(titre) + '</p><h3>' + pts.length + ' lieu' + (pts.length > 1 ? 'x' : '') + ' sur la carte</h3>' +
+        panelIn.innerHTML = '<p class="mp-cat">' + esc(titre) + '</p><h3>' + pts.length + (pts.length > 1 ? ' lieux sur la carte' : ' lieu sur la carte') + '</h3>' +
           '<p class="mp-d">Chaque lieu ouvre sa fiche et centre la carte dessus.</p>' +
           pts.map(function(p){ return '<a class="mp-link" href="#lieu=' + p.id + '">' + esc(p.n) + '</a>'; }).join('');
         panel.classList.add('open'); panel.inert = false;

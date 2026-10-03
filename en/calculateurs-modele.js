@@ -146,7 +146,7 @@
         recurringParts.push({ label: label, value: make(amount, rate.s, { note: rate.note }) });
         lines.push({ label: label, rate: rate.v, count: count, unit: d[3], amount: amount, status: rate.s, formula: rate.v + ' × ' + count + ' ' + d[3] });
       } else if (V.usable(rate)) {
-        recurringParts.push({ label: label + ' (number of ' + d[3] + ' manquant)', value: V.blank(), field: (o.fields && o.fields[d[1]]) || null });
+        recurringParts.push({ label: label + ' (number of ' + d[3] + ' missing)', value: V.blank(), field: (o.fields && o.fields[d[1]]) || null });
       } else recurringParts.push({ label: label, value: rate, field: o.fields && o.fields[d[0]] });
     });
     (o.triggered || []).forEach(function (t) {

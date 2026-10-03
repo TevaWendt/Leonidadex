@@ -3,6 +3,8 @@
    n’utilise que les chiffres que TU écris, et le dit : sans les deux chiffres, rien n’est calculé (jamais un zéro). */
 (function () {
   'use strict';
+  var lkPl = function (n) { return /^fr/.test(document.documentElement.lang || "fr") ? n > 1 : n !== 1; }; /* pluriel selon la langue de la page (français : n > 1) */
+  var lkDollars = function (s) { return /^fr/.test(document.documentElement.lang || "fr") ? s + "\u00a0$" : "$" + s; }; /* « 1 250 $ » ou « $1,250 » selon la langue de la page */
   var root = document.getElementById('en-un-regard'); if (!root) return;
   var tools = root.querySelector('[data-cg-tools]'), box = root.querySelector('[data-cg-compare]'), status = root.querySelector('[data-cg-status]');
   var checks = Array.prototype.slice.call(root.querySelectorAll('[data-cg-cmp]'));
@@ -10,13 +12,13 @@
   tools.hidden = false; checks.forEach(function (c) { c.closest('label').hidden = false; });
   var sim = {}; // id → {price, heal} écrits par le joueur, pour cette visite seulement
   function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text !== undefined) n.textContent = text; return n; }
-  function num(v) { var t = String(v || '').trim().replace(/[\s  ]/g, '').replace(',', '.'); if (!/^\d+(\.\d+)?$/.test(t)) return null; var n = Number(t); return Number.isFinite(n) ? n : null; }
+  function num(v) { var t = String(v || '').trim().replace(/[\s  ]/g, ''); t = /^fr/.test(document.documentElement.lang || 'fr') ? t.replace(',', '.') : t.replace(/,/g, ''); if (!/^\d+(\.\d+)?$/.test(t)) return null; var n = Number(t); return Number.isFinite(n) ? n : null; }
   function facts(card) { var out = {}; Array.prototype.forEach.call(card.querySelectorAll('.cg-facts > div'), function (d) { out[d.querySelector('dt').textContent] = d.querySelector('dd').textContent; }); return out; }
   function chosen() { return checks.filter(function (c) { return c.checked; }).map(function (c) { return c.closest('.cg-card'); }); }
   function render() {
     var cards = chosen();
     checks.forEach(function (c) { c.disabled = !c.checked && cards.length >= 3; });
-    status.textContent = cards.length ? cards.length + ' sur 3 comparé' + (cards.length > 1 ? 's' : '') + '.' : 'Coche jusqu’à trois consommables pour les comparer.';
+    status.textContent = cards.length ? cards.length + (lkPl(cards.length) ? ' sur 3 comparés.' : ' sur 3 comparé.') : 'Coche jusqu’à trois consommables pour les comparer.';
     box.hidden = cards.length < 2; box.replaceChildren();
     if (cards.length < 2) return;
     var table = el('table', 'cg-table'), cap = el('caption', null, 'Comparaison : ce qu’on sait de chaque consommable'), thead = el('thead'), tr = el('tr');
@@ -32,7 +34,7 @@
     });
     var th3 = el('th', null, 'Coût par point de vie (ta simulation)'); th3.scope = 'row'; s3.appendChild(th3);
     var outs = cards.map(function () { var td = el('td', 'cg-out'); s3.appendChild(td); return td; });
-    function result() { cards.forEach(function (c, i) { var id = c.getAttribute('data-cg-id'), p = num(sim[id] && sim[id].price), h = num(sim[id] && sim[id].heal); outs[i].textContent = p === null || h === null ? 'Écris les deux chiffres' : h === 0 ? 'Ne rend pas de vie : pas de coût par point' : (Math.round(p / h * 100) / 100).toLocaleString('fr-FR') + ' $ par point · simulation'; }); }
+    function result() { cards.forEach(function (c, i) { var id = c.getAttribute('data-cg-id'), p = num(sim[id] && sim[id].price), h = num(sim[id] && sim[id].heal); outs[i].textContent = p === null || h === null ? 'Écris les deux chiffres' : h === 0 ? 'Ne rend pas de vie : pas de coût par point' : lkDollars((Math.round(p / h * 100) / 100).toLocaleString('fr-FR')) + ' par point · simulation'; }); }
     tb.appendChild(s1); tb.appendChild(s2); tb.appendChild(s3); table.appendChild(tb); result();
     var wrap = el('div', 'cg-table-wrap'); wrap.tabIndex = 0; wrap.appendChild(table);
     box.appendChild(el('h3', 'ed-h3', 'Côte à côte'));

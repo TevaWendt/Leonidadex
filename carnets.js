@@ -249,8 +249,8 @@
     keys.forEach(function (k) { var o = el('option', null, seen.has(k) ? seen.get(k).label + ' (' + seen.get(k).n + ')' : k.split(':')[1] + ' (0)'); o.value = k; opts.push(o); });
     E.cat.replaceChildren.apply(E.cat, opts); E.cat.value = state.cat;
   }
-  /* Libellé d’un compteur accordé au nombre (0 et 1 au singulier). */
-  function plural(n, v) { var l = n.nextElementSibling; if (l && l.hasAttribute('data-one')) l.textContent = v > 1 ? l.getAttribute('data-many') : l.getAttribute('data-one'); }
+  /* Libellé d’un compteur accordé au nombre (français : 0 et 1 au singulier ; anglais : 1 seulement). */
+  function plural(n, v) { var l = n.nextElementSibling; if (l && l.hasAttribute('data-one')) l.textContent = (/^fr/.test(document.documentElement.lang || 'fr') ? v > 1 : v !== 1) ? l.getAttribute('data-many') : l.getAttribute('data-one'); }
   function headCounters(s) {
     var total = items.length, done = items.filter(function (it) { return isOwn(it, s); }).length;
     /* v7.54 : les repères de la série sont dits et comptés à part du total GTA VI. */

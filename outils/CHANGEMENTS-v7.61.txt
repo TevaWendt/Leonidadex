@@ -1,0 +1,98 @@
+LEONIDAKIT v7.61 — langues : tout le site en anglais, et Léo en anglais, 2 octobre 2026
+
+Base : v7.60 (sélecteur « Changer la langue », version anglaise lot 1), elle-même construite sur la v7.59 et le commit 8c1ddd30
+(v7.58). L'archive « modifs » de cette version est cumulative depuis 8c1ddd30. Rien n'est publié.
+Demande : « quand on clique sur changement de langue, puis qu'on mette en anglais, je veux que tout soit en anglais, absolument
+tout, sans aucune exception. » Procédure et fonctionnement : outils/LANGUES.md ; preuves : outils/PREUVES-v7.61.md.
+
+1. CE QUE VOIT LE VISITEUR
+- Les 415 pages du site existent en anglais (414 pages + la vérification Google, exclue) : hubs, listes, les 302 fiches
+  véhicules et les 27 fiches armes, lieux, personnages, entreprises, demeures, planques, les 9 carnets, la carte (2 547 lieux,
+  catégories, filtres, fiches des lieux, mesures, repères perso), les collectibles, la progression, les médias, la recherche du
+  site (index et lieux), le comparateur, les catalogues (consommables, style, personnalisations), la page introuvable.
+  Plus aucun lien d'une page anglaise ne mène au français (hors le menu de langue).
+- Léo répond en anglais sur les pages anglaises : il comprend les questions anglaises (montants « $200,000 », « 200k »,
+  « 1.5 million », « 2 hours a day », fautes et style SMS), ses réponses, ses suggestions, ses boutons et ses liens sont
+  anglais et mènent aux pages anglaises ; le calcul préparé s'ouvre dans le calculateur anglais et y revient.
+  Toujours local : rien ne quitte le navigateur. La conversation garde sa langue (même clé de session qu'avant).
+- Page introuvable : sous /en/…, la page 404 anglaise s'affiche.
+- Référencement : chaque adresse indexable a son adresse anglaise dans sitemap.xml et sitemap-fiches.xml ; hreflang sur
+  toutes les paires de pages ; canonical et og:url anglais (une page qui renvoie vers une autre garde ce renvoi en /en/).
+- Mentions : entrée v7.61 de l'historique. Aucune clé nouvelle, aucun cookie, aucun service extérieur.
+
+2. LE GÉNÉRATEUR (outils/langues.cjs, outils/langues.json)
+- langues[en].pages = "*" : chaque page française (sauf « exclure ») ; liens, scripts de chaque page, sous-dossiers.
+- Attributs de données traduits (data-l, data-loc-*, data-one/-many, data-tip, data-mot, data-wish-*, data-reel-nom,
+  data-car-title) ; chaînes de recherche (data-search, data-q, data-loc-q, data-n, data-help-keywords) écrites en anglais sans
+  accents ; attributs JSON (attributsJson : data-medias, data-cat-tags) ; JSON posé dans la page (carnets ; jsonCodePages) ;
+  titre d'une liste de repères dans l'adresse (#pins=…&t=) ; recherche d'images et Wikipédia anglaise.
+- Identifiants protégés dans les scripts (minuscules sans espace : traduits seulement par une entrée propre au fichier ou une
+  règle) ; repérage des petits textes manquants par le lexique français de la mémoire ; adresses jamais signalées.
+- Trous de motif traduits morceau par morceau ; phrases neutres (noms propres) gardées dans un paragraphe ; nombres écrits sans
+  séparateur gardés tels quels (« 2026 » n'est plus écrit « 2,026 »).
+- Léo : leoScripts copiés et traduits dans /en/ (adresses du français gardées) ; en/leo-index.json et en/leo/*.json
+  (leoDonnees : textes affichés traduits, jetons de reconnaissance français, nameFr, vocabulaire des morceaux complété) ; table
+  de réécriture des questions (outils/langues/en/leo-pivot.json + libellés + noms protégés) ; textes des pages lus « à plat ».
+- Plan du site : adresses anglaises des seules pages indexables. Page 404 : liens de langue absolus.
+- Données structurées (JSON-LD) : aussi « value » (inspiration réelle, catégorie des fiches), « featureList »,
+  « browserRequirements » et « contactType » ; plus aucun texte français dans le JSON-LD des pages anglaises.
+
+3. MÉMOIRE (outils/langues/en/)
+- site-01 → site-42.json (pages du site, ≈ 9 000 entrées), recherche-01/02.json (chaînes de recherche), leo-01 → leo-10.json
+  (Léo, ≈ 2 400 entrées), motifs.json (motifs des lieux, des liens de carte, « {1} evokes {2} »…), noms.json relu (192 entrées
+  qui étaient gardées en français à tort : Cartouches, Famille, Coupes, Plaques, Repas, « Vider « »…), code.json (_ignorer
+  complété : identifiants, mots outils de Léo), leo-pivot.json (≈ 1 550 expressions).
+- Dates des sources écrites en toutes lettres à l'américaine (« May 6, 2025 »), plus de jj/mm/aaaa ni de mm/jj/aaaa.
+- Relecture : 7 523 textes anglais différents (pages, états ouverts, réponses de Léo) relus par deux relecteurs indépendants ;
+  39 défauts signalés, 39 corrigés : français resté (« Tri » → « Sort », « Pack Vintage Vice City », « Revolver Morgan »,
+  « Conversion Mk II », « course », « batte »), ordre des mots, « Show the 138 more », « 0 item tracked », « Category sedans:
+  that’s where… », « assumed name » (= pseudonyme) → « presumed name », un même élément nommé de deux façons (« Glimpsed » /
+  « Seen », « Leftover entries », « View my tracker », « Customization », « from prison to Vice City »), « Lucia opens the
+  game » → « opens the trailer »… La même correction est reportée dans les chaînes de recherche et les textes de Léo.
+- Comtés écrits comme sur les panneaux officiels du Trailer 1 (« Kelly County ») : « Leonard County », « Mariana County »,
+  « Vice-Dale County » (et non « County of … »).
+
+4. SOURCES RENDUES TRADUISIBLES (le français ne change pas, sauf ce qui est noté)
+- Pluriels : lkPl(n) (français n > 1, anglais n ≠ 1) dans app.js, catalogue.js, collectibles*.js, consommables.js, fiches.js,
+  progression.js ; carnets.js (compteurs) ; adjectifs accordés écrits en entier (« sélectionnés / sélectionné », « cochés »,
+  « rubriques exportées »…) ; « lieux sur la carte / lieu sur la carte » en entier (carte.js).
+- Argent : lkDollars (fiches.js « Son prix publié (… $ », consommables.js « par point ») ; Léo : E.dollars partout.
+- consommables.js : « 1,500 » lu à l'anglaise sur une page anglaise. collectibles-help.js : mots outils anglais ignorés dans la
+  recherche de l'aide. localisateur.js : « Où le trouver : » / « Où la trouver : » en entier.
+- comparateur.js : libellés écrits en entier.
+- Léo : leo-nlp.js (pivot, pivotTable ; « (real name) » retiré d'un nom comme « (nom réel) ») ; leo-core.js (question réécrite
+  à l'entrée, question telle qu'écrite gardée pour « Signaler », nameFr, montants) ; leo-ui.js (langue de la page : noyau,
+  morceaux, liens, retour du calculateur, date de vérification « October 1, 2026 », conversation de la même langue) ;
+  leo-loader.js (fichiers de la langue de la page) ; leo-link.js (retour vers une page /en/ accepté) ; common.js (Léo amorcé en
+  français et en anglais, feuille de Léo à la racine, page introuvable de la langue).
+- fiches.js : feuille calculator-entry.css lue à la racine depuis une page traduite ; titre du bouton « Modèle réel » écrit
+  comme un modèle (« Voir le {nom} en photo ») : français identique, anglais « Real-world model photos: {nom} » au lieu de
+  « See the Previous-generation Toyota Camry in photos ».
+- outils/verifier.js : pages traduites comprises (404 de chaque langue, catégories des hubs traduits).
+- outils/site-informations.json : entrée v7.61 de l'historique des Mentions.
+
+5. CORRECTIONS DU FRANÇAIS TROUVÉES EN TRADUISANT
+- « Autres modèles japonaiss » → « Autres modèles japonais » (30 fiches véhicules ; outils/gen.js).
+- Comparateur : « Comparateur · vehicules » (identifiant affiché) → « Comparateur · véhicules » ; « Choisir un arme » →
+  « Choisir une arme » ; « Comparaison des armes sélectionnés » → « … sélectionnées ».
+- Léo : « puis ouvre Ça vaut le coup ?. Le reste » → « puis ouvre Ça vaut le coup ? Le reste ».
+- Léo, lieux de la carte : la zone écrite dans la réponse était un identifiant (« dans la région key lento », « g vice city
+  southside ») ; c'est maintenant le nom affiché sur la carte (« Key Lento », « Southside », « Comté de Mariana ») :
+  outils/gen-leo.cjs. Les 512 questions de l'évaluation donnent les mêmes réponses.
+- Personnalisations : la note « Repère de la série » de 3 postes s'arrêtait avant son chiffre (« Encaisse plus de dégâts,
+  jusqu’à — Ce que fait l’objet… ») ; le chiffre que la liste montre déjà est écrit à la suite (« jusqu’à 100 % d’armure dans
+  GTA V », « jusqu’à 300 % de capacité dans GTA V », « conservés à 50 % dans GTA Online ») : outils/fiche-doc.cjs.
+- Signalé, non modifié (décision éditoriale) : la FAQ d'armes.html dit que le fusil-harpon « apparaît dans les séquences
+  sous-marines », alors que la carte de combat de la même page dit qu'aucune image officielle ne montre une arme sous l'eau.
+
+6. TESTS
+- langues.test.cjs (17 tests) : toutes les pages traduites, en/ à jour (sous-dossiers compris), canonical/og:url suivent le
+  français, aucun français visible (attributs de données et JSON de la page compris), Léo amorcé en anglais, Léo anglais
+  (textes traduits, jetons français gardés, mêmes révisions), Léo anglais dans jsdom (512 questions anglaises : seuils),
+  page introuvable et plan du site.
+- leo-eval.cjs : --lang en, --questions=<fichier> ; jeux outils/tests/leo-questions-en.json (512) et
+  leo-questions-en-inedites.json (140 questions jamais vues).
+- langues-browser.cjs : échantillon de 17 pages × 5 largeurs, chaque page anglaise à 1 280 px, états ouverts (Léo, carte,
+  carnets remplis et vides, comparateur, progression, collectibles, listes filtrées, consommables, localisateur, recherche,
+  page introuvable).
+- langues-helper.cjs : noms propres cités (Übermacht, Le Mans, Sedan de Ville, points cardinaux des adresses…).

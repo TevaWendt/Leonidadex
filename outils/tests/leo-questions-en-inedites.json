@@ -1,0 +1,1264 @@
+{
+  "questions": [
+    {
+      "q": "What's the GTA 6 release date?",
+      "expect": {
+        "topic": "sortie"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Is there a way to restore a calculation I deleted?",
+      "expect": {
+        "topic": "supprimer-carnet"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "whats the difference between glimpsed and assumed on the map",
+      "expect": {
+        "topic": "carte-statuts"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "How do I get more garage space in GTA VI?",
+      "expect": {
+        "topic": "garages-achat"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "What cars come with the regular edition?",
+      "expect": {
+        "topic": "edition-standard-vehicules"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Since when can you preorder GTA 6?",
+      "expect": {
+        "topic": "precommande-date"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "What kind of store is Stock 305?",
+      "expect": {
+        "topic": "stock-305"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "How do I use the Leonida map on here?",
+      "expect": {
+        "topic": "carte-quoi"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "whats that mini calculator on the homepage",
+      "expect": {
+        "topic": "mini-calculateur"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Are store robberies a thing in GTA VI?",
+      "expect": {
+        "topic": "braquer-magasins"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Why does my business plan show plans A, B and C?",
+      "expect": {
+        "topic": "plan-secours"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Is there drinking at bars in GTA 6?",
+      "expect": {
+        "topic": "alcool"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "What can I do on the vehicle Ranking page?",
+      "expect": {
+        "topic": "classement"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "How recent is the info on this site?",
+      "expect": {
+        "topic": "mise-a-jour"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Is there a full list of tattoos on here?",
+      "expect": {
+        "topic": "tatouages-liste"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Are the pictures on this site official Rockstar ones?",
+      "expect": {
+        "topic": "medias"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Is any of this info from leaked footage?",
+      "expect": {
+        "topic": "fuites"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "When did Rockstar first confirm GTA 6?",
+      "expect": {
+        "topic": "annonce"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "gta 6 radio station list?",
+      "expect": {
+        "topic": "radio"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Is GTA 6 getting an online mode?",
+      "expect": {
+        "topic": "online"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "What's on the site's Boats page?",
+      "expect": {
+        "topic": "bateaux-page"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Tell me about Only Raw Records",
+      "expect": {
+        "topic": "only-raw"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "which gun hits hardest in gta 6",
+      "expect": {
+        "topic": "arme-puissante"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Can I narrow down what shows up on the map?",
+      "expect": {
+        "topic": "carte-filtres"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "wheres lucia's place",
+      "expect": {
+        "topic": "lucia-maison"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "What gun does Lucia use?",
+      "expect": {
+        "topic": "lucia-arme"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "If I share a calc link, can people see my numbers?",
+      "expect": {
+        "topic": "lien-partage-donnees"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "How do the three calculator modes differ?",
+      "expect": {
+        "topic": "modes"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Where's the full list of outfits and accessories?",
+      "expect": {
+        "topic": "tenues-liste"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Can you wear sunglasses or jewelry in GTA 6?",
+      "expect": {
+        "topic": "accessoires"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "how many official pics does leonidakit have",
+      "expect": {
+        "topic": "visuels-nombre"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Why does the calculator say I still need money?",
+      "expect": {
+        "topic": "msg-il-te-manque"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "How many clothes can you get in GTA 6?",
+      "expect": {
+        "topic": "tenues-nombre"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "How can I reach the people who run this site?",
+      "expect": {
+        "topic": "contact-page"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Where's Jason's house?",
+      "expect": {
+        "topic": "jason-maison"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Can I put two of my saved calculations side by side?",
+      "expect": {
+        "topic": "comparer-essais"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "What's covered in the calculator tutorial?",
+      "expect": {
+        "topic": "tuto-quoi"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Where can I find Rideout Customs on the map?",
+      "expect": {
+        "topic": "rideout-ou"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Where do I find car dealerships and marinas on the map?",
+      "expect": {
+        "topic": "vehicules-lieux-lies"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "what song plays in the gta 6 trailers",
+      "expect": {
+        "topic": "musique-trailer"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Does this site track me?",
+      "expect": {
+        "topic": "cookies"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Can I send my calculation to a friend?",
+      "expect": {
+        "topic": "partager-calcul"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Show me all the gun customization options you have listed",
+      "expect": {
+        "topic": "perso-armes-liste"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "take me to the calculator",
+      "expect": {
+        "topic": "ouvrir-calculateur"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Are there tattoo parlors in GTA 6?",
+      "expect": {
+        "topic": "tatouer"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Show me the Leonida Keys on the map",
+      "expect": {
+        "topic": "ou-keys"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "how many characters can u play as",
+      "expect": {
+        "topic": "personnages-jouables"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "What info does a weapon page show?",
+      "expect": {
+        "topic": "lire-fiche-arme"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "How many regions does Leonida have?",
+      "expect": {
+        "topic": "regions"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "What pistol does Jason carry?",
+      "expect": {
+        "topic": "jason-arme"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Will there be car customization in GTA 6?",
+      "expect": {
+        "topic": "personnalisation"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "What's the Tommy Vercetti shirt pattern for guns?",
+      "expect": {
+        "topic": "motif-vintage"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Under what license are the site's font, data and photos?",
+      "expect": {
+        "topic": "licences"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Can my business plan goal be a rank instead of money?",
+      "expect": {
+        "topic": "plan-experience"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "What are the graphs in the calculator for?",
+      "expect": {
+        "topic": "graphiques"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "What outfits and tattoos come with the Ultimate Edition?",
+      "expect": {
+        "topic": "ultimate-style"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Why is there no option to buy a region in the calculator?",
+      "expect": {
+        "topic": "lieu-pas-achat"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Whose houses does the site cover?",
+      "expect": {
+        "topic": "demeures-hub"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Show me every car customization option you've listed",
+      "expect": {
+        "topic": "perso-vehicules-liste"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "can you eat food to heal in gta 6",
+      "expect": {
+        "topic": "consommables"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "can u understand typos and slang",
+      "expect": {
+        "topic": "leo-abreviations"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "gotta go, bye",
+      "expect": {
+        "topic": "au-revoir"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Can I change my car's color in GTA 6?",
+      "expect": {
+        "topic": "repeindre"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "What do we know about GTA 6's driving?",
+      "expect": {
+        "topic": "conduite"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "What does it mean when a purchase pays for itself?",
+      "expect": {
+        "topic": "def-amorti"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "What do the status tags like \"Seen in media\" mean?",
+      "expect": {
+        "topic": "statuts"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Is there fuel or a first-person view when driving?",
+      "expect": {
+        "topic": "conduite-mecaniques"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "when can i preload gta 6",
+      "expect": {
+        "topic": "precharge"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "What does the \"Your next session\" box show?",
+      "expect": {
+        "topic": "plan-prochaine-partie"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Can I swap between Jason and Lucia whenever I want?",
+      "expect": {
+        "topic": "changer-perso"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Is this site run by Rockstar?",
+      "expect": {
+        "topic": "site-officiel"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "can i buy an apartment in gta 6",
+      "expect": {
+        "topic": "logements-page"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "What's the total number of places mapped?",
+      "expect": {
+        "topic": "carte-lieux-nombre"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "How should I fill in \"Earns me extra\"?",
+      "expect": {
+        "topic": "rapporte-en-plus"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "gta 6 vs gta 5 whats new",
+      "expect": {
+        "topic": "gta5-diff"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Can you store gear in your car trunk?",
+      "expect": {
+        "topic": "coffre-casier"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Can I mark ammo and gadgets as owned?",
+      "expect": {
+        "topic": "equipements-cocher"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "What neighborhoods are in Vice City?",
+      "expect": {
+        "topic": "quartiers-vice-city"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Is there a weapon carry limit in GTA 6?",
+      "expect": {
+        "topic": "armes-longues"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "What does the site's Places page cover?",
+      "expect": {
+        "topic": "lieux-hub"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "What does return mean in the calculator?",
+      "expect": {
+        "topic": "def-rendement"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "What do I get for preordering GTA 6, and where?",
+      "expect": {
+        "topic": "precommande"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "how much is a turbo upgrade in gta 6",
+      "expect": {
+        "topic": "prix-tuning"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "How do I add a car to my garage on the site?",
+      "expect": {
+        "topic": "cocher-vehicule"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Can I measure how far apart two places are?",
+      "expect": {
+        "topic": "carte-distance"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "could gta 6 get delayed again",
+      "expect": {
+        "topic": "date-fiable"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Who made this site?",
+      "expect": {
+        "topic": "qui-derriere"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "How do I tell the calculator I play with friends?",
+      "expect": {
+        "topic": "joueurs"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Does Léo have a message limit?",
+      "expect": {
+        "topic": "leo-limite"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "How smart are the cops in GTA 6?",
+      "expect": {
+        "topic": "police"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Is the whole map open from the start?",
+      "expect": {
+        "topic": "zones-fermees"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "can you get a boat in gta 6",
+      "expect": {
+        "topic": "bateaux"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "what time does gta 6 unlock on launch day",
+      "expect": {
+        "topic": "heure"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Which guns has Rockstar actually named?",
+      "expect": {
+        "topic": "armes-nommees"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Tell me about Port Gellhorn",
+      "expect": {
+        "topic": "gellhorn"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "What's the Leonida Keys area like?",
+      "expect": {
+        "topic": "keys"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Why does a car page list a real car as inspiration?",
+      "expect": {
+        "topic": "inspiration-reelle"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Can I open my plan as a full document?",
+      "expect": {
+        "topic": "fiche-plan"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Léo gave me a wrong answer, how do I flag it?",
+      "expect": {
+        "topic": "leo-signaler"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Where's the prison Lucia was in?",
+      "expect": {
+        "topic": "penitencier"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "any news on a gta 6 pc version",
+      "expect": {
+        "topic": "pc"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Tell me about Cal Hampton",
+      "expect": {
+        "topic": "cal"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Describe Vice City in GTA 6",
+      "expect": {
+        "topic": "vice-city"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Can I use cheats in GTA 6?",
+      "expect": {
+        "topic": "mods"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Are you an AI chatbot?",
+      "expect": {
+        "topic": "leo-qui"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "is there french dubbing for gta 6",
+      "expect": {
+        "topic": "vf"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "What does the 20% up or down button do?",
+      "expect": {
+        "topic": "sensibilite"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Why do I see \"Changed in Expert mode\" in Simple?",
+      "expect": {
+        "topic": "reglages-avances"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Will you be able to own businesses in GTA 6?",
+      "expect": {
+        "topic": "entreprises-achat"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "How do the expandable lists work?",
+      "expect": {
+        "topic": "aide-listes"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "How long is GTA 6's story?",
+      "expect": {
+        "topic": "mission-solo"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Does progress tracking sync with my PS5 save?",
+      "expect": {
+        "topic": "suivi-console"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Can I compare two cars side by side?",
+      "expect": {
+        "topic": "comparateur-fiches"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "which car has the best top speed",
+      "expect": {
+        "topic": "vehicule-rapide"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "are there planes or helis in gta 6",
+      "expect": {
+        "topic": "avions"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "What are the in-game prices in GTA 6?",
+      "expect": {
+        "topic": "argent"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "What's the plot of GTA 6?",
+      "expect": {
+        "topic": "histoire"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Can Jason and Lucia stay at the Starlet Motel?",
+      "expect": {
+        "topic": "starlet-motel"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "what do you get in the vintage vice city pack",
+      "expect": {
+        "topic": "vintage"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Tell me about Dre'Quan",
+      "expect": {
+        "topic": "drequan"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Can I add a purchase that isn't on the site?",
+      "expect": {
+        "topic": "achat-libre"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "What's Boobie Ike's story?",
+      "expect": {
+        "topic": "boobie"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Can I sort the expandable lists by price?",
+      "expect": {
+        "topic": "filtrer-liste"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "What info do I need to fill in the business plan?",
+      "expect": {
+        "topic": "plan-questions"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Can I send someone my garage list?",
+      "expect": {
+        "topic": "partager-garage"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "What can I track on the Progress page?",
+      "expect": {
+        "topic": "progression-cartes"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Are there clothing stores in GTA 6?",
+      "expect": {
+        "topic": "vetements"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Which cars does Jason drive?",
+      "expect": {
+        "topic": "jason-vehicules"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "What's the legend at the top of each list?",
+      "expect": {
+        "topic": "legende-badges"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "What does PTT YOUNGIN$ sell?",
+      "expect": {
+        "topic": "ptt-youngin"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "What's Newswire, and why do you cite it?",
+      "expect": {
+        "topic": "newswire"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "How do I see which attachments fit my gun?",
+      "expect": {
+        "topic": "compat-filtre"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Is there a print version of my plan?",
+      "expect": {
+        "topic": "imprimer"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "does your character get fat in gta 6 lol",
+      "expect": {
+        "topic": "poids"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "Will expensive cars have alarms?",
+      "expect": {
+        "topic": "alarme-traceur"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "How do I reset my chat with Léo?",
+      "expect": {
+        "topic": "leo-effacer"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "is gta 6 rated 18+",
+      "expect": {
+        "topic": "pegi"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "What's the Grassrivers region like?",
+      "expect": {
+        "topic": "grassrivers"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "How does shooting work in GTA 6?",
+      "expect": {
+        "topic": "combat"
+      },
+      "tags": [
+        "heldout"
+      ]
+    },
+    {
+      "q": "What's the \"% toward your goal\" line in My play time?",
+      "expect": {
+        "topic": "avance-objectif"
+      },
+      "tags": [
+        "heldout"
+      ]
+    }
+  ]
+}

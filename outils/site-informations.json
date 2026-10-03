@@ -41,6 +41,11 @@
  "history": [
   {
    "date": "2026-10-02",
+   "version": "v7.61",
+   "text": "Langues : tout le site existe en anglais (fiches, carte, carnets, recherche, page introuvable) et Léo répond en anglais sur les pages anglaises, toujours depuis ton navigateur ; aucune clé nouvelle (la conversation de Léo garde sa langue dans la même clé de session), aucun cookie, aucun service extérieur."
+  },
+  {
+   "date": "2026-10-02",
    "version": "v7.60",
    "text": "Langues : version anglaise de l’accueil, du calculateur, du Tuto, d’À propos, de Contact et de ces Mentions ; une seule clé de plus dans ton navigateur (lk_lang_v1, la langue choisie), écrite seulement après un clic ; aucun cookie, aucun service extérieur. En cas de différence, la version française de ces Mentions fait foi."
   },

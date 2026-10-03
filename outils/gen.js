@@ -231,7 +231,7 @@ function fiche(v,i){
 <section class="shell reveal" id="modele-reel">
   <h2 class="sec-h">${esc(red.h2[1])}</h2>
   <p class="fiche-txt rise">Le rapprochement retenu pour ce véhicule est <strong>${esc(v.insp||v.fam)}</strong>. ${esc(pioche(v.id,'insp',V_INSP))}</p>
-  <div class="fiche-liens rise"><a id="reel-bt" href="${esc(v.reel)}" target="_blank" rel="noopener nofollow">Voir ${esc(v.reelNom)} en photo</a><a href="https://fr.wikipedia.org/w/index.php?search=${encodeURIComponent(v.reelNom)}" target="_blank" rel="noopener nofollow">Fiche encyclopédique</a>${v.slot?'<a href="../vehicules.html#slot='+v.slot+'">Autres modèles '+SLOT[v.slot].replace('Modèle ','')+'s</a>':''}</div>
+  <div class="fiche-liens rise"><a id="reel-bt" href="${esc(v.reel)}" target="_blank" rel="noopener nofollow">Voir ${esc(v.reelNom)} en photo</a><a href="https://fr.wikipedia.org/w/index.php?search=${encodeURIComponent(v.reelNom)}" target="_blank" rel="noopener nofollow">Fiche encyclopédique</a>${v.slot?'<a href="../vehicules.html#slot='+v.slot+'">Autres '+SLOTP[v.slot].charAt(0).toLowerCase()+SLOTP[v.slot].slice(1)+'</a>':''}</div>
 </section>`:'';
  return `<!DOCTYPE html>
 <html lang="fr">

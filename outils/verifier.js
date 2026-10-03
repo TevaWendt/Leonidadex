@@ -53,7 +53,7 @@ for(const [file,{text}] of documents){
     if((text.match(/<h1\b/gi)||[]).length!==1)bad(file,'nombre de H1 différent de 1');
     if(!/<meta\b[^>]*name=["']description["']/i.test(text))bad(file,'description absente');
   }
-  if(file!=='404.html'&&!/<link\b[^>]*rel=["']canonical["']/i.test(text))bad(file,'canonical absent');
+  if(!/(?:^|\/)404\.html$/.test(file)&&!/<link\b[^>]*rel=["']canonical["']/i.test(text))bad(file,'canonical absent');/* v7.61 : la page introuvable de chaque langue (en/404.html) */
 }
 for(const file of files.filter(f=>f.endsWith('.css'))){const css=fs.readFileSync(file,'utf8');for(const m of css.matchAll(/url\(\s*(["']?)(.*?)\1\s*\)/g))reference(m[2],file,'CSS');}
 const data={window:{}};
@@ -74,7 +74,8 @@ for(const [file,{text}] of documents)for(const m of text.matchAll(/<a\b[^>]*>/gi
   if(u.hash.startsWith('#lieu=')){if(!mapIds.has(decodeURIComponent(u.hash.slice(6))))bad(file,'lieu de carte absent : '+raw);continue;}
   if(u.hash.includes('='))continue;
   const rel=u.pathname.slice(1)||'index.html';let id;try{id=decodeURIComponent(u.hash.slice(1));}catch{continue;}
-  const cats=rel==='vehicules.html'?data.window.LK_VEHICULES_CATS:rel==='armes.html'?data.window.LK_ARMES_CATS:null;
+  /* v7.61 : une page traduite (en/vehicules.html) a les mêmes catégories que la page française */
+  const base=rel.replace(/^[a-z]{2}\//,''),cats=base==='vehicules.html'?data.window.LK_VEHICULES_CATS:base==='armes.html'?data.window.LK_ARMES_CATS:null;
   if(documents.has(rel)&&!documents.get(rel).ids.has(id)&&!Object.hasOwn(cats||{},id))bad(file,'ancre absente : '+raw);
 }
 /* v7.45 (lot 8) : la base de Léo. Chaque route interne (questions rédigées, actions, fiches des morceaux, passages) doit exister ;

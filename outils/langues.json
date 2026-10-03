@@ -2,7 +2,8 @@
  "_note": "v7.60 : langues du site. Le français est la source : toutes les pages sont écrites et générées en français, puis outils/langues.cjs produit chaque langue publiée dans son dossier (/en/…) à partir des pages françaises finales et de la mémoire de traduction outils/langues/<code>/*.json. « etat » : publiee (dans le sélecteur « Changer la langue »), prevue (préparée, pas encore montrée). « pages » : les pages traduites ; une page absente de la liste renvoie vers la page française (lien marqué FR). Léo n'est proposé que dans les langues de « leo ». « scriptsPartages » : scripts jamais copiés ni traduits (index de recherche, manifeste) : la page traduite charge ceux du site. « scriptsDonnees » : fichiers de données ; seules les chaînes nommées dans la mémoire (libellés affichés) y sont traduites, les autres (descriptions des fiches) ne sont pas signalées. « jsonCode » : clés des données JSON portées par un script (modele-donnees.js) qui contiennent des identifiants, jamais traduites.",
  "source": "fr",
  "leo": [
-  "fr"
+  "fr",
+  "en"
  ],
  "langues": [
   {
@@ -35,14 +36,7 @@
     "rester": "No thanks",
     "versFr": "in French"
    },
-   "pages": [
-    "index.html",
-    "calculateurs.html",
-    "tuto.html",
-    "a-propos.html",
-    "contact.html",
-    "mentions-legales.html"
-   ]
+   "pages": "*"
   },
   {
    "code": "es",
@@ -96,7 +90,27 @@
   "data-unit-label",
   "data-ask",
   "data-kicker",
-  "data-desc"
+  "data-desc",
+  "data-l",
+  "data-loc-status",
+  "data-loc-linked",
+  "data-loc-none",
+  "data-loc-title",
+  "data-loc-catlabel",
+  "data-loc-q",
+  "data-search",
+  "data-reel-nom",
+  "data-q",
+  "data-track-name",
+  "data-n",
+  "data-car-title",
+  "data-one",
+  "data-many",
+  "data-help-keywords",
+  "data-wish-off",
+  "data-wish-on",
+  "data-tip",
+  "data-mot"
  ],
  "metas": [
   "description",
@@ -115,21 +129,16 @@
   "alternateName",
   "caption",
   "abstract",
-  "disambiguatingDescription"
+  "disambiguatingDescription",
+  "value",
+  "featureList",
+  "contactType",
+  "browserRequirements"
  ],
  "scriptsPartages": [
-  "search-index.js",
-  "search-lieux.js",
-  "assets-manifest.js",
-  "carte-gtadb.js"
+  "assets-manifest.js"
  ],
- "scriptsDonnees": [
-  "vehicules-data.js",
-  "armes-data.js",
-  "acquisitions-data.js",
-  "calculateurs-catalogue.js",
-  "calculateurs-activites.js"
- ],
+ "scriptsDonnees": [],
  "jsonCode": [
   "id",
   "genre",
@@ -147,5 +156,88 @@
   "nature",
   "catalogue",
   "categorie"
- ]
+ ],
+ "exclure": [
+  "googleea0091a4822a39f7.html"
+ ],
+ "attributsJson": [
+  "data-medias",
+  "data-cat-tags"
+ ],
+ "jsonCodePages": [
+  "f",
+  "g",
+  "u",
+  "x",
+  "img",
+  "ico",
+  "svg",
+  "fams",
+  "prefix",
+  "href",
+  "dot",
+  "calc",
+  "ext"
+ ],
+ "leoScripts": [
+  "leo-loader.js",
+  "leo-ui.js",
+  "leo-core.js",
+  "leo-nlp.js",
+  "leo-link.js",
+  "calculateurs-engine.js"
+ ],
+ "leoDonnees": {
+  "_note": "v7.61 : données de Léo traduites dans le dossier de la langue (en/leo-index.json, en/leo/*.json). « cles » : champs affichés (traduits) ; « arbres » : sections dont chaque texte est affiché ; le reste (jetons, termes, expressions, identifiants, adresses) ne change pas.",
+  "fichiers": [
+   "leo-index.json",
+   "leo/armes.json",
+   "leo/calculateur.json",
+   "leo/catalogues.json",
+   "leo/lieux.json",
+   "leo/monde.json",
+   "leo/passages.json",
+   "leo/vehicules.json"
+  ],
+  "cles": [
+   "label",
+   "title",
+   "text",
+   "q",
+   "status",
+   "name",
+   "category",
+   "seen",
+   "range",
+   "context",
+   "ammo",
+   "inspiration",
+   "owner",
+   "proofs",
+   "labels",
+   "description",
+   "effect",
+   "repere",
+   "edition",
+   "note",
+   "tagline",
+   "ultimate",
+   "t",
+   "h",
+   "x",
+   "famLabel",
+   "catLabel",
+   "condition"
+  ],
+  "arbres": [
+   "texts",
+   "templates",
+   "suggestions"
+  ],
+  "clesParFichier": {
+   "leo/catalogues.json": [
+    "type"
+   ]
+  }
+ }
 }

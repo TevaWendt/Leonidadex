@@ -21,6 +21,7 @@
      clavier, avec une apparition courte ; distinct de « Fiche complète ». */
 (function () {
   'use strict';
+  var lkPl = function (n) { return /^fr/.test(document.documentElement.lang || "fr") ? n > 1 : n !== 1; }; /* pluriel selon la langue de la page (français : n > 1) */
   const fold = s => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[’]/g, "'").toLowerCase().trim();
   const boxes = Array.from(document.querySelectorAll('details.cat-box[data-catalogue]'));
   if (!boxes.length) return;
@@ -95,7 +96,7 @@
         tbody.appendChild(fragment);
         lastSort = state.sort; sorted = true;
       }
-      if (count) count.textContent = shown === rows.length ? nf.format(rows.length) + ' lignes' : nf.format(shown) + ' ligne' + (shown > 1 ? 's' : '') + ' sur ' + nf.format(rows.length);
+      if (count) count.textContent = shown === rows.length ? nf.format(rows.length) + ' lignes' : nf.format(shown) + (lkPl(shown) ? ' lignes' : ' ligne') + ' sur ' + nf.format(rows.length);
       if (empty) empty.hidden = shown > 0;
       chips.forEach(c => c.setAttribute('aria-pressed', String(c.dataset.catGroup === state.group)));
       keys.forEach(k => k.setAttribute('aria-pressed', String(!!state.st && k.dataset.catKey === state.st)));

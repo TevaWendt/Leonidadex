@@ -1,5 +1,7 @@
 'use strict';
 /* v7.60 (langues) : versions traduites du site (/en/…), sélecteur « Changer la langue », bandeau de suggestion.
+   v7.61 : tout le site en anglais (toutes les pages, données posées dans les pages, attributs lus), Léo anglais (noyau
+   en/leo-index.json, morceaux en/leo/*.json, question réécrite en français), page introuvable, plan du site.
    Vérifie sans navigateur : configuration, en/ à jour avec la mémoire de traduction, pages anglaises (langue, liens,
    hreflang, Léo absent, aucun français visible), pages françaises (barre de langue, hreflang, plan du site), scripts
    traduits (seules des chaînes changent, aucun identifiant comparé par le code n'est traduit d'un seul côté), calculateur
@@ -22,7 +24,7 @@ function walk(node, fn, ctx = {}) {
   const el = node.tagName ? node : null;
   let c = ctx;
   if (el) {
-    const skip = ['script', 'style', 'template', 'svg'].includes(el.tagName) || attr(el, 'translate') === 'no' || attr(el, 'data-lk-langbar') !== undefined || attr(el, 'lang') === 'fr' || attr(el, 'hreflang') === 'fr' && el.tagName === 'link';
+    const skip = ['script', 'style', 'template', 'svg'].includes(el.tagName) || attr(el, 'translate') === 'no' || attr(el, 'data-lk-langbar') !== undefined || attr(el, 'lang') === 'fr' || attr(el, 'hreflang') === 'fr' && el.tagName === 'link' || /\bed-brand-mono\b/.test(attr(el, 'class') || ''); /* monogramme de marque (« DE » pour Declasse) */
     c = { ...ctx, skip: ctx.skip || skip };
     fn(el, c);
   } else if (node.nodeName === '#text') fn(node, ctx);
@@ -45,7 +47,8 @@ test('langues.json : le français est la source, chaque langue publiée a un dos
     for (const p of l.pages) assert.ok(fs.existsSync(path.join(root, p)), l.code + ' : la page française ' + p + ' existe');
   }
   for (const l of cfg.langues.filter(x => x.etat === 'prevue')) assert.ok(!fs.existsSync(path.join(root, l.dossier)), l.code + ' prévue : aucun dossier publié');
-  assert.deepEqual(cfg.leo, ['fr'], 'Léo seulement en français pour l’instant');
+  assert.deepEqual(cfg.leo, ['fr', 'en'], 'Léo en français et en anglais');
+  assert.deepEqual(EN.pages.slice().sort(), frPages().filter(p => !(cfg.exclure || []).includes(p) && /<body[\s>]/.test(read(p))).sort(), 'v7.61 : toutes les pages françaises ont leur version anglaise');
 });
 
 test('en/ est à jour : la génération sans écriture donne exactement les fichiers présents ; rien sans traduction, aucune balise cassée, aucun conflit', () => {
@@ -55,19 +58,23 @@ test('en/ est à jour : la génération sans écriture donne exactement les fich
   assert.deepEqual(r.conflicts, [], 'une seule traduction par texte');
   for (const [rel, content] of r.outputs) assert.ok(fs.existsSync(path.join(root, rel)) && read(rel) === content, rel + ' à jour (relancer node outils/regenerer.cjs)');
   const expected = new Set([...r.outputs.keys()].filter(k => k.startsWith('en/')).map(k => k.slice(3)));
-  for (const f of fs.readdirSync(path.join(root, 'en'))) assert.ok(expected.has(f), 'en/' + f + ' est attendu (aucun fichier en trop)');
+  (function rec(d) { for (const e of fs.readdirSync(path.join(root, 'en', d), { withFileTypes: true })) { const rel = d ? d + '/' + e.name : e.name; if (e.isDirectory()) rec(rel); else assert.ok(expected.has(rel), 'en/' + rel + ' est attendu (aucun fichier en trop)'); } })('');
 });
 
-test('pages anglaises : lang="en", canonical et og:url en /en/, hreflang fr/en/x-default, og:locale en_US, Léo absent', () => {
+test('pages anglaises : lang="en", canonical et og:url en /en/, hreflang fr/en/x-default, og:locale en_US, Léo amorcé par common.js', () => {
   for (const p of EN.pages) {
     const html = read('en/' + p), url = SITE + 'en/' + (p === 'index.html' ? '' : p), frUrl = SITE + (p === 'index.html' ? '' : p);
     assert.match(html, /<html lang="en"/, p);
-    assert.ok(html.includes('<link rel="canonical" href="' + url + '">'), p + ' : canonical');
+    const frCanon = (read(p).match(/<link rel="canonical" href="https:\/\/www\.leonidakit\.com\/([^"]*)">/) || [])[1];
+    if (frCanon !== undefined) assert.ok(html.includes('<link rel="canonical" href="' + SITE + 'en/' + frCanon + '">'), p + ' : canonical');
+    else assert.ok(!/<link rel="canonical"/.test(html), p + ' : pas de canonical (comme en français)');
     assert.ok(html.includes('<link rel="alternate" hreflang="fr" href="' + frUrl + '">') && html.includes('<link rel="alternate" hreflang="en" href="' + url + '">') && html.includes('<link rel="alternate" hreflang="x-default" href="' + frUrl + '">'), p + ' : hreflang');
-    if (/property="og:url"/.test(html)) assert.ok(html.includes('property="og:url" content="' + url + '"'), p + ' : og:url');
+    const frOg = (read(p).match(/property="og:url" content="https:\/\/www\.leonidakit\.com\/([^"]*)"/) || [])[1];
+    if (frOg !== undefined) assert.ok(html.includes('property="og:url" content="' + SITE + 'en/' + frOg + '"'), p + ' : og:url');
     if (/property="og:locale"/.test(html)) assert.ok(html.includes('property="og:locale" content="en_US"'), p + ' : og:locale');
     assert.ok(!/<script[^>]+src="[^"]*leo(?:-widget|-core|\.js)/.test(html), p + ' : aucun script de Léo');
     assert.ok(!/leo-index\.json/.test(html), p + ' : index de Léo non chargé');
+    if (html.includes('http-equiv="refresh"')) continue; // redirection : pas de barre (comme en français)
     assert.match(html, /<div class="lk-langbar" data-lk-langbar translate="no">/, p + ' : barre de langue');
     assert.match(html, /<a aria-current="true" hreflang="en" lang="en" data-lk-lang="en">English<\/a>/, p + ' : anglais coché');
   }
@@ -94,10 +101,13 @@ test('pages anglaises : chaque lien mène à un fichier qui existe ; page tradui
   }
 });
 
-test('pages anglaises : aucun français visible (textes, attributs lus, titre, description, données structurées)', () => {
-  const READ = ['title', 'alt', 'aria-label', 'placeholder', 'aria-description', 'data-short', 'data-label', 'data-ask'];
+test('pages anglaises : aucun français visible (textes, attributs lus, titre, description, données structurées, données JSON de la page)', () => {
+  /* v7.61 : tous les attributs traduits (data-l, data-loc-*, data-one…), sauf les chaînes de recherche (mots sans accent) */
+  const READ = cfg.attributs.filter(a => !/^data-(?:q|search|loc-q|n|help-keywords)$/.test(a));
+  const CODE = new Set([...(cfg.jsonCode || []), ...(cfg.jsonCodePages || [])]);
   for (const p of EN.pages) {
-    const html = read('en/' + p), doc = parse5.parse(html), hits = [];
+    const html = read('en/' + p), doc = parse5.parse(html, { scriptingEnabled: false }), hits = [];
+    if (html.includes('http-equiv="refresh"')) continue; // redirection immédiate : rien n'est lu
     const see = (text, where) => { const h = frenchHits(text); if (h.length) hits.push(where + ' « ' + String(text).trim().slice(0, 90) + ' » [' + h.slice(0, 4).join(', ') + ']'); };
     walk(doc, (n, c) => {
       if (c.skip) return;
@@ -107,6 +117,9 @@ test('pages anglaises : aucun français visible (textes, attributs lus, titre, d
     });
     for (const m of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) {
       (function visit(o, k) { if (Array.isArray(o)) o.forEach(x => visit(x, k)); else if (o && typeof o === 'object') for (const [kk, v] of Object.entries(o)) visit(v, kk); else if (typeof o === 'string' && cfg.jsonld.includes(k)) see(o, 'JSON-LD ' + k); })(JSON.parse(m[1]), '');
+    }
+    for (const m of html.matchAll(/<script type="application\/json"[^>]*>([\s\S]*?)<\/script>/g)) {
+      (function visit(o, k) { if (Array.isArray(o)) o.forEach(x => visit(x, k)); else if (o && typeof o === 'object') for (const [kk, v] of Object.entries(o)) visit(v, kk); else if (typeof o === 'string' && !CODE.has(k) && !/^\s*</.test(o) && !/^[a-z0-9-]+$/.test(o)) see(o, 'JSON ' + k); })(JSON.parse(m[1]), '');
     }
     assert.deepEqual(hits.slice(0, 12), [], p);
   }
@@ -122,14 +135,14 @@ test('pages françaises : barre « Changer la langue » en haut de chaque page (
     if (!/<div class="lk-langbar" data-lk-langbar translate="no">/.test(html)) { missing.push(p); continue; }
     assert.ok(/<a aria-current="true" hreflang="fr" lang="fr" data-lk-lang="fr">Français<\/a>/.test(html), p + ' : français coché');
     const depth = p.split('/').length - 1, en = EN.pages.includes(p);
-    const href = '../'.repeat(depth) + 'en/' + (en ? p : 'index.html').replace(/(^|\/)index\.html$/, '$1');
+    const href = p === '404.html' ? '/en/404.html' : '../'.repeat(depth) + 'en/' + (en ? p : 'index.html').replace(/(^|\/)index\.html$/, '$1');
     assert.ok(html.includes('href="' + (href || './') + '" hreflang="en" lang="en" data-lk-lang="en"'), p + ' : lien vers l’anglais ' + href);
     if (en) assert.ok(html.includes('<link rel="alternate" hreflang="en" href="' + SITE + 'en/' + (p === 'index.html' ? '' : p) + '">'), p + ' : hreflang en');
     else assert.ok(!/hreflang="en" href="https/.test(html), p + ' : pas de hreflang sans traduction');
   }
   assert.deepEqual(missing.slice(0, 10), [], 'pages sans barre de langue');
   const sm = read('sitemap.xml');
-  for (const p of EN.pages) assert.ok(sm.includes('<loc>' + SITE + 'en/' + (p === 'index.html' ? '' : p) + '</loc>'), 'sitemap : en/' + p);
+  for (const p of EN.pages) { const u = p === 'index.html' ? '' : p; if (sm.includes('<loc>' + SITE + u + '</loc>')) assert.ok(sm.includes('<loc>' + SITE + 'en/' + u + '</loc>'), 'sitemap : en/' + p); }
 });
 
 test('scripts traduits : mêmes jetons que la source (seules des chaînes changent) ; un identifiant comparé par le code est traduit partout ou nulle part', () => {
@@ -188,14 +201,39 @@ test('calculateur anglais (jsdom) : démarre sans erreur, montants « $1,250 »,
   } finally { p.close(); }
 });
 
-test('Léo n’est pas chargé sur une page anglaise ; il l’est sur la même page en français', async () => {
+test('Léo s’amorce sur la page anglaise (fichiers de /en/) comme sur la page française (fichiers de la racine)', async () => {
   const en = await load(root, 'en/index.html'), fr = await load(root, 'index.html');
   try {
-    /* l'amorce de Léo (common.js) pose #leo-style puis charge son script : rien de cela sur une page anglaise */
-    assert.equal(en.d.getElementById('leo-style'), null, 'anglais : pas de Léo');
-    assert.ok(en.requests.every(u => !/leo/.test(u)), 'anglais : rien de Léo téléchargé');
+    assert.ok(en.d.getElementById('leo-style'), 'anglais : Léo s’amorce');
     assert.ok(fr.d.getElementById('leo-style'), 'français : Léo s’amorce');
+    assert.match(en.d.getElementById('leo-style').getAttribute('href'), /^\/leo\.css\?v=/, 'anglais : la feuille de Léo vient de la racine');
   } finally { en.close(); fr.close(); }
+  for (const f of cfg.leoScripts) assert.ok(fs.existsSync(path.join(root, 'en', f)), 'en/' + f);
+  const loader = read('en/leo-loader.js'), ui = read('en/leo-ui.js');
+  assert.match(loader, /href=name=>\(LANG==='fr'\?'\/':'\/'\+LANG\+'\/'\)\+name/, 'leo-loader.js : fichiers de la langue de la page');
+  assert.match(ui, /fetchJSON\(PFX\+'\/'\+'leo-index\.json'\+V\)/, 'leo-ui.js : noyau de la langue de la page');
+});
+
+test('Léo anglais : noyau et morceaux traduits (textes affichés), jetons de reconnaissance français, table de réécriture, adresses du français', () => {
+  const fr = JSON.parse(read('leo-index.json')), en = JSON.parse(read('en/leo-index.json'));
+  assert.equal(fr.lang, undefined, 'noyau français sans langue ni table'); assert.equal(fr.pivot, undefined);
+  assert.equal(en.lang, 'en'); assert.ok(Array.isArray(en.pivot) && en.pivot.length > 1000, 'table de réécriture');
+  assert.equal(en.revision, fr.revision, 'même révision : les morceaux restent valables');
+  const hits = [], see = (t, w) => { const h = frenchHits(t); if (h.length) hits.push(w + ' « ' + String(t).slice(0, 80) + ' » [' + h.slice(0, 3).join(', ') + ']'); };
+  (function v(o, k) { if (Array.isArray(o)) o.forEach(x => v(x, k)); else if (o && typeof o === 'object') for (const [kk, x] of Object.entries(o)) v(x, kk); else if (typeof o === 'string') see(o, k); })({ texts: en.texts, templates: en.templates, suggestions: en.suggestions }, '');
+  en.knowledge.forEach((k, i) => { see(k.q, 'q ' + k.id); see(k.text, 'text ' + k.id); assert.deepEqual(k.d, fr.knowledge[i].d, 'jetons français gardés : ' + k.id); (k.links || []).forEach(l => assert.ok(!l.url.startsWith('/en/'), 'adresse du français : ' + l.url)); });
+  en.categories.forEach((c, i) => { see(c.label, 'catégorie'); assert.deepEqual(c.terms, fr.categories[i].terms); assert.equal(c.route, fr.categories[i].route); });
+  for (const f of cfg.leoDonnees.fichiers.filter(x => x !== 'leo-index.json')) { const a = JSON.parse(read(f)), b = JSON.parse(read('en/' + f)); assert.equal(b.revision, a.revision, f); assert.equal((b.items || []).length, (a.items || []).length, f + ' : même nombre de fiches'); }
+  const veh = JSON.parse(read('en/leo/vehicules.json')).items; veh.slice(0, 40).forEach(x => { see(x.category, 'category'); see(x.proof || '', 'proof'); });
+  assert.deepEqual(hits.slice(0, 10), [], 'aucun français dans les textes de Léo anglais');
+});
+
+test('Léo anglais (jsdom) : la question anglaise est comprise, la réponse est en anglais ; le jeu de 512 questions anglaises tient les seuils', async () => {
+  const { run } = require('./leo-eval.cjs');
+  const r = await run({ lang: 'en' });
+  assert.ok(r.accuracy >= 95, 'au moins 95 % de bonnes réponses en anglais (' + r.accuracy + ' %)');
+  assert.equal(r.offtopic.refused, r.offtopic.n, 'hors sujet refusés');
+  assert.equal(r.withoutSource, 0, 'réponses sourcées');
 });
 
 test('clé lk_lang_v1 : rien n’est écrit à l’ouverture (même avec un navigateur anglais) ; un clic dans le menu, « Read in English » ou « No thanks » l’écrit', async () => {
@@ -243,6 +281,17 @@ test('formulaire de contact anglais : chaque motif garde sa valeur française (c
   for (const t of topics) assert.ok(opts.some(o => o[1] === t && o[2] !== t), 'motif « ' + t + ' » : valeur française, libellé anglais');
   const js = read('en/contact.js');
   assert.ok(/localMessage/.test(js) && !/'Choisis un motif dans la liste\.'/.test(js), 'messages du serveur traduits dans en/contact.js');
+});
+
+test('page introuvable : sous /en/…, la page 404 anglaise ; liens de langue absolus ; plan du site avec les adresses anglaises indexables', () => {
+  assert.match(read('common.js'), /document\.querySelector\('\.e404'\)/, 'common.js : bascule de la page introuvable');
+  assert.ok(read('404.html').includes('href="/en/404.html" hreflang="en"'), 'lien absolu vers la 404 anglaise');
+  assert.ok(read('en/404.html').includes('href="/404.html" hreflang="fr"'), 'lien absolu vers la 404 française');
+  const sm = read('sitemap.xml'), locs = [...sm.matchAll(/<loc>https:\/\/www\.leonidakit\.com\/([^<]*)<\/loc>/g)].map(m => m[1]);
+  const fr = locs.filter(u => !u.startsWith('en/')), en = locs.filter(u => u.startsWith('en/'));
+  assert.equal(en.length, fr.length, 'une adresse anglaise par adresse française');
+  for (const u of en) { const f = 'en/' + (u.slice(3) || 'index.html'); assert.ok(fs.existsSync(path.join(root, f.endsWith('/') ? f + 'index.html' : f)), u); assert.ok(fr.includes(u.slice(3)), 'même page en français : ' + u); }
+  assert.ok(!en.some(u => /404\.html$/.test(u)), 'pas de page introuvable dans le plan du site');
 });
 
 test('liens vers une page encore en français : badge FR sur les liens de texte, « (in French) » pour les lecteurs d’écran sur tous', () => {

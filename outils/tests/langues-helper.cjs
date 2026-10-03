@@ -13,14 +13,21 @@ const FR_WORDS = new Set(('le la les des du de et est une un pour avec dans tu t
 for (const w of ['a', 'en', 'on', 'son', 'ton', 'ma', 'par']) FR_WORDS.delete(w); FR_WORDS.delete('plan'); FR_WORDS.delete('budget'); FR_WORDS.delete('mission'); FR_WORDS.delete('missions');
 const ALLOW = new Set(['léo', 'pokémon', 'café', 'résumé', 'décor', 'naïve', 'fiancé', 'fiancée', 'rosé', 'touché', 'déjà-vu', 'protégé',
   'lürssen', 'crème', 'brûlée', 'piñata', 'señor', 'jalapeño', 'josé', 'andré', 'cliché', 'entrée', 'expo', 'vu',
-  'française', 'français', 'françois', 'québec', 'élysée', 'mêlée']);
+  'française', 'français', 'françois', 'québec', 'élysée', 'mêlée',
+  /* v7.61 : noms propres du jeu et du monde réel cités sur tout le site */
+  'übermacht', 'mulét', 'lârss', 'elbö', 'pérez', 'trésor', 'škorpion', 'pißwasser', 'huracán', 'hellión']);
 /* noms propres français cités tels quels (adresses, nom officiel d'une loi ou d'une autorité) */
-const PROPER = ['Commission Nationale de l’Informatique et des Libertés', 'loi Informatique et Libertés', 'rue de Salneuve', 'place de Fontenoy'];
+const PROPER = ['Commission Nationale de l’Informatique et des Libertés', 'loi Informatique et Libertés', 'rue de Salneuve', 'place de Fontenoy',
+  /* v7.61 : noms de modèles, de lieux et de marques qui contiennent un mot outil français */
+  'Sedan de Ville', 'De Havilland', 'De Hoop', 'Stanier LE', 'La Perle', 'La Quinta', 'La Mesa', 'Herzog and de Meuron', 'Y Vice City', 'Safari Y6', 'UH-1Y', 'SE280LC', 'Ctrl+Y', 'mud parties', 'Le Mans'];
 function words(text) { return String(text || '').toLowerCase().replace(/[\u00a0\u202f]/g, ' ').split(/[^a-zà-öø-ÿœæ’'-]+/).map(w => w.replace(/^[’'-]+|[’'-]+$/g, '')).filter(Boolean); }
 /* Renvoie la liste des mots qui trahissent du français (vide = rien trouvé). */
 function frenchHits(text) {
   const hits = [];
   let t = String(text || ''); for (const p of PROPER) t = t.split(p).join(' ');
+  /* v7.61 : points cardinaux des adresses réelles (« 109 NE 2nd Ave ») et morceaux de noms isolés dans leur balise
+     (« De » de De Hoop, « LE » de Stanier LE, monogrammes « DE », « LA ») */
+  t = t.replace(/\b(?:NE|NW|SE|SW)\b/g, ' '); if (/^(?:De|LE\)?|DE|DU|LA|ÜB)$/.test(t.trim())) return [];
   for (const w of words(t)) {
     if (ALLOW.has(w) || ALLOW.has(w.replace(/’s$/, ''))) continue;   // nom propre, aussi au possessif anglais (Léo’s)
     const base = w.replace(/^(?:l|d|j|t|s|n|qu|c)’/, '');

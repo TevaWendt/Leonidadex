@@ -22,7 +22,7 @@ Hébergé sur Vercel, qui publie tel quel le contenu de ce dépôt : **aucune co
 | `lieux/`, `personnages/`, `entreprises/`, `demeures/`, `planques/` | 29 fiches générées depuis `outils/editorial.json` (régions, personnages, entreprises), avec hubs `lieux.html`, `personnages.html`, `entreprises.html` |
 | `photos/` | 3 185 photos de la carte en WebP, 960 px max, qualité 82 (gtadb.org, CC BY 4.0). C'est la totalité de ce que le dépôt gtadb propose pour nos 2 474 bâtiments : les autres bâtiments n'ont pas de photo chez eux non plus. |
 | `img/` | carte sociale et `img/officiel/` : 148 visuels officiels Rockstar en deux tailles (captures, artworks et photogrammes des trailers, recadrés sans bandes noires) (crédits dans `outils/medias-officiels.json`) |
-| `en/` | **version anglaise** (v7.60) : pages et scripts **générés** par `outils/langues.cjs` depuis les pages françaises et la mémoire `outils/langues/en/` (ne pas éditer à la main). Lot 1 : accueil, calculateur, Tuto, À propos, Contact, Mentions. Voir « Langues » plus bas et `outils/LANGUES.md`. |
+| `en/` | **version anglaise** (v7.60, tout le site en v7.61) : pages, scripts et données de Léo **générés** par `outils/langues.cjs` depuis les pages françaises et la mémoire `outils/langues/en/` (ne pas éditer à la main). Voir « Langues » plus bas et `outils/LANGUES.md`. |
 | `outils/` | scripts de génération, données sources (dont `outils/catalogues/` : listes dépliables des sections) et tests automatisés (`outils/tests/`). Ne sert pas au site en ligne (exclu par `.vercelignore`). |
 
 ## Règles
@@ -43,6 +43,12 @@ Hébergé sur Vercel, qui publie tel quel le contenu de ce dépôt : **aucune co
 - Langues : le français est la seule langue écrite à la main. Une page traduite ne se corrige jamais dans `en/` : corriger la mémoire `outils/langues/en/*.json` (ou la source française), puis `node outils/regenerer.cjs`. Un texte français nouveau dans une page traduite est signalé par `node outils/langues.cjs --extraire en` et fait échouer `langues.test.cjs` tant qu’il n’est pas traduit.
 - Aucune donnée issue de fuites. Crédit gtadb.org conservé sur la carte et dans les mentions légales.
 
+
+## Langues : tout le site et Léo en anglais (v7.61, 2 octobre 2026)
+
+- **Pour le visiteur** : « Changer la langue » → English ouvre la même page en anglais, pour chacune des 414 pages (hubs, listes, 302 fiches véhicules, 27 fiches armes, lieux, personnages, entreprises, demeures, planques, carnets, carte et ses 2 547 lieux, collectibles, progression, médias, comparateur, recherche du site, page introuvable). Léo répond en anglais sur les pages anglaises (questions anglaises comprises, réponses, suggestions et liens anglais), toujours depuis le navigateur. Plus aucun texte français sur une page anglaise (hors noms propres et le menu de langue).
+- **Comment** : `langues[en].pages = "*"` ; attributs de données, JSON posé dans les pages, chaînes de recherche et adresses porteuses de texte traduits ; identifiants de code protégés ; Léo : `en/leo-index.json` et `en/leo/*.json` (textes affichés traduits, reconnaissance française), question anglaise réécrite en français par `leo-nlp.js` (table `outils/langues/en/leo-pivot.json`). Mémoire ≈ 21 000 entrées (dont 1 551 expressions de Léo) ; données structurées (JSON-LD) comprises. Hors site : l’email d’alerte et la page de confirmation de Brevo, écrits dans le compte Brevo, restent en français. Détail : `outils/CHANGEMENTS-v7.61.txt` ; fonctionnement : `outils/LANGUES.md` ; preuves : `outils/PREUVES-v7.61.md`.
+- **Mesures** : `node outils/tests/leo-eval.cjs --lang en` (512 questions anglaises), `--questions=outils/tests/leo-questions-en-inedites.json` (140 questions jamais vues) ; `langues.test.cjs` (17 tests) ; navigateur `langues-browser.cjs` (chaque page anglaise, états ouverts, Léo).
 
 ## Langues : version anglaise, lot 1 (v7.60, 2 octobre 2026)
 
