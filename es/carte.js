@@ -377,7 +377,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
         document.querySelectorAll('.map-filter').forEach(function(input){ if(pts.some(p => p.c === input.dataset.cat)) input.checked = true; });
         refreshVisibility();
         ouvertId = null;
-        panelIn.innerHTML = '<p class="mp-cat">' + esc(titre) + '</p><h3>' + pts.length + (lkPluriel(pts.length)?' lieux' : ' lugar') + ' en el mapa</h3>' +
+        panelIn.innerHTML = '<p class="mp-cat">' + esc(titre) + '</p><h3>' + pts.length + (lkPluriel(pts.length)?' lugares en el mapa' : ' lugar en el mapa') + '</h3>' +
           '<p class="mp-d">Cada lugar abre su ficha y centra el mapa en él.</p>' +
           pts.map(function(p){ return '<a class="mp-link" href="#lieu=' + p.id + '">' + esc(p.n) + '</a>'; }).join('');
         panel.classList.add('open'); panel.inert = false;
@@ -697,7 +697,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
              '<span class="fd-dot" style="background:' + CATS[p.c].col + '"></span>' +
              '<span class="fd-n">' + esc(p.n) + '</span></button>' +
              '<button type="button" class="fd-un" data-un="' + p.id + '" ' +
-             'aria-label="Desmarcar ' + esc(p.n) + '" title="Desmarcar">&times;</button></li>';
+             'aria-label="' + 'Desmarcar {nom}'.replace('{nom}', esc(p.n)) + '" title="Desmarcar">&times;</button></li>';
     }).join('') + '</ul>';
   }
 
@@ -1236,7 +1236,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
   /* ============================================================
      RECHERCHE
      ============================================================ */
-  const norm = s => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[’‘]/g,"'").replace(/[\u00a0\u202f]/g," ");
+  const norm = s => s.toLowerCase().replace(/ß/g,'ss').normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[’‘]/g,"'").replace(/[\u00a0\u202f]/g," ");
 
   function goTo(p, z, showPanel = true){
     scale = z || 0.7;
@@ -1325,7 +1325,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       rulerBx.innerHTML = '<p class="rl-hint">' +
         (rulerPts.length === 0
           ? "Haz clic en un primer punto <b>en cualquier parte</b> del mapa, o directamente en un marcador."
-          : "Haz clic en el siguiente punto. Puedes encadenar hasta " + MAX_ETAPES + " etapas.") + '</p>';
+          : "Haz clic en el siguiente punto. Puedes encadenar hasta {n} etapas.".replace('{n}', MAX_ETAPES)) + '</p>';
       return;
     }
 
@@ -1670,7 +1670,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
   if(clearAll){
     clearAll.addEventListener('click', function(){
       if(!perso.length) return;
-      if(!confirm('¿Eliminar tus ' + perso.length + ' marcadores?')) return;
+      if(!confirm('¿Eliminar tus {n} marcadores?'.replace('{n}', perso.length))) return;
       perso = []; savePerso(); renderPerso(); M.closePanel();
     });
   }

@@ -16,7 +16,7 @@
     /* v7.42 (lot 5) : familles des catalogues en listes dépliables (outils/catalogues/*.json) ; une clé par famille. */
     consommables:{ key: 'lk_own_consommables',label: 'My consumables',done: 'tried',    page: 'nourriture.html#liste-consommables', anchor: 'consommables' },
     coiffures:   { key: 'lk_own_coiffures',   label: 'My hairstyles',   done: 'tried',  page: 'style.html#coiffures', anchor: 'coiffures' },
-    tatouages:   { key: 'lk_own_tatouages',   label: 'My tattoos',   done: 'done',     page: 'style.html#tatouages', anchor: 'tatouages' },
+    tatouages:   { key: 'lk_own_tatouages',   label: 'My tattoos',   done: 'inked',     page: 'style.html#tatouages', anchor: 'tatouages' },
     tenues:      { key: 'lk_own_tenues',      label: 'My wardrobe',   done: 'worn',   page: 'style.html#tenues',    anchor: 'tenues' },
     /* v7.43 (lot 6) : personnalisations des véhicules et des armes (outils/catalogues/perso-*.json). */
     'perso-vehicules': { key: 'lk_own_perso-vehicules', label: 'My vehicle mods', done: 'installed', page: 'personnalisations.html#perso-vehicules', anchor: 'perso-vehicules' },
@@ -78,7 +78,7 @@
     }
     bars.forEach(bar => {
       const f = bar.dataset.trackBar, raz = bar.querySelector('[data-raz]');
-      if (raz && !raz.dataset.bound) { raz.dataset.bound = '1'; raz.addEventListener('click', () => { if (!FAMILIES[f] || !confirm('Clear “' + FAMILIES[f].label + '” on this device?')) return; if (write(f, {})) emit(f); }); }
+      if (raz && !raz.dataset.bound) { raz.dataset.bound = '1'; raz.addEventListener('click', () => { if (!FAMILIES[f] || !confirm('Clear “{nom}” on this device?'.replace('{nom}', FAMILIES[f].label))) return; if (write(f, {})) emit(f); }); }
     });
     listeners.add(refresh); refresh();
   }

@@ -5,7 +5,7 @@
    Rien n’est écrit en HTML depuis les données : tout passe par textContent. Sans script, le premier objet reste montré. */
 (function () {
   'use strict';
-  function fold(s) { return String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase(); }
+  function fold(s) { return String(s || '').replace(/ß/g,'ss').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase(); }
   function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text !== undefined) n.textContent = text; return n; }
   function store(kind) {
     var k = 'lk_loc_' + kind;

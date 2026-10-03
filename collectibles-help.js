@@ -3,8 +3,9 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
 /* Fast answers, optional compact view and accessible local-image viewer. */
 (function () {
   'use strict';
+  var lkPl = function (n) { return /^fr/.test(document.documentElement.lang || "fr") ? n > 1 : n !== 1; }; /* pluriel selon la langue de la page (français : n > 1) */
   const $ = id => document.getElementById(id);
-  const norm = value => String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('fr').replace(/[’‘]/g, "'").replace(/[\u00a0\u202f]/g, ' ').trim();
+  const norm = value => String(value || '').replace(/ß/g,'ss').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('fr').replace(/[’‘]/g, "'").replace(/[\u00a0\u202f]/g, ' ').trim();
   const feedback = message => {
     const node = document.querySelector('[data-col-feedback]');
     if (node) node.textContent = message;
@@ -42,7 +43,9 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     $('col-help-catalogue-state').textContent = 'Le catalogue recense ' + published.length + ' fiche(s), dont ' + confirmed + ' confirmée(s) officiellement. Chaque fiche indique son statut et ses sources. Le nombre documenté reste distinct du total des collectibles du jeu.';
   }
   const answerIndex = new Map(answers.map(answer => [answer.id, norm(answer.textContent + ' ' + answer.dataset.helpKeywords)]));
-  const questionWords = new Set(['a','au','aux','avec','ce','ces','c','comment','d','dans','de','des','du','en','est','et','il','ils','je','l','la','le','les','m','ma','mes','moi','mon','ne','on','ou','par','pas','peut','peux','pour','puis','qu','que','quel','quelle','quelles','quels','s','se','son','sont','sur','t','tu','un','une','vos','votre']);
+  const questionWords = new Set(['a','au','aux','avec','ce','ces','c','comment','d','dans','de','des','du','en','est','et','il','ils','je','l','la','le','les','m','ma','mes','moi','mon','ne','on','ou','par','pas','peut','peux','pour','puis','qu','que','quel','quelle','quelles','quels','s','se','son','sont','sur','t','tu','un','une','vos','votre',
+    /* v7.61 : mots outils anglais (page anglaise) */ 'the','an','and','or','of','to','in','at','for','with','is','are','can','do','does','how','what','where','which','who','why','i','my','me','it','its','be','you','your','there',
+    /* v7.62 : mots outils allemands (page allemande) */ 'der','die','das','den','dem','und','oder','wie','wo','was','wer','wann','welche','welcher','welches','ich','mein','meine','mir','mich','ist','sind','ein','eine','einen','zu','im','am','mit','fur','auf','kann','muss','gibt','es','von','bei','nach','sich','dein','deine']);
   let beforeSearch = null;
   function searchAnswers() {
     if (!query) return;
@@ -55,7 +58,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       else if (!words.length && beforeSearch) answer.open = beforeSearch.get(answer.id) || false;
     });
     if (!words.length) beforeSearch = null;
-    if (count) count.textContent = matches.length + ' réponse' + (lkPluriel(matches.length)?'s' : '') + (words.length ? ' correspondante' + (lkPluriel(matches.length)?'s' : '') : ' disponible' + (lkPluriel(matches.length)?'s' : ''));
+    if (count) count.textContent = matches.length + (words.length ? (lkPl(matches.length) ? ' réponses correspondantes' : ' réponse correspondante') : (lkPl(matches.length) ? ' réponses disponibles' : ' réponse disponible'));
     if (noMatch) noMatch.hidden = matches.length > 0;
   }
   document.querySelectorAll('[data-col-help-controls]').forEach(node => { node.hidden = false; });

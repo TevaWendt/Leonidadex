@@ -34,7 +34,7 @@
       var n = parse(input.value), w = words(n);
       node.textContent = w ? '= ' + dollars(w) : '';
       /* séparateurs de milliers, uniquement quand on n'est pas en train d'écrire dans la case */
-      if (n !== null && n >= 1000 && Number.isInteger(n) && document.activeElement !== input && (/^[\d\s\u00a0\u202f]+$/.test(input.value) || (en && /^[\d,]+$/.test(input.value)))) { var g = group(n); if (input.value !== g) input.value = g; }
+      if (n !== null && n >= 1000 && Number.isInteger(n) && document.activeElement !== input && (/^[\d\s\u00a0\u202f]+$/.test(input.value) || (en && (E.lang === 'de' ? /^[\d.]+$/ : /^[\d,]+$/).test(input.value)))) { var g = group(n); if (input.value !== g) input.value = g; }
     });
   }
   /* Réglette d'objectif : 10 000 $ à 10 000 000 $, échelle logarithmique, liée dans les deux sens. */

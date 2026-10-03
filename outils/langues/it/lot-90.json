@@ -1,0 +1,165 @@
+{
+ "_note": "v7.63 : entrées propres à un fichier, règles selon le code qui précède, motifs (re:) des données de la carte, identifiants protégés dans les scripts (_scriptsJamais) ; reprises de l’espagnol (es/lot-45, lot-46, lot-54, lot-55).",
+ "_scriptsJamais": [
+  "source",
+  "aucun",
+  "aucune",
+  "fiche",
+  "fiches",
+  "calcul",
+  "calculs",
+  "restants",
+  "$/partie",
+  "mission",
+  "missions",
+  "plans",
+  "plan"
+ ],
+ "calculateurs-scenario.js::joueurs": [
+  {
+   "si": "(?:\\+|unit:|\\?)\\s*$",
+   "texte": "giocatori"
+  }
+ ],
+ "calculateurs-plan.js::missions": [
+  {
+   "si": "(?:' ?mission',|\\?)\\s*$",
+   "texte": "missioni"
+  }
+ ],
+ "calculateurs.js::missions": [
+  {
+   "si": "\\?\\s*$",
+   "texte": "missioni"
+  }
+ ],
+ "calculateurs.js::mission": [
+  {
+   "si": "missions'\\s*:\\s*$",
+   "texte": "missione"
+  }
+ ],
+ "calculateurs-workspace.js::missions": [
+  {
+   "si": "\\?\\s*$",
+   "texte": "missioni"
+  }
+ ],
+ "calculateurs-workspace.js::mission": [
+  {
+   "si": "missions'\\s*:\\s*$",
+   "texte": "missione"
+  }
+ ],
+ "calculateurs-scenario.js::missions": [
+  {
+   "si": "\\?\\s*$",
+   "texte": "missioni"
+  }
+ ],
+ "calculateurs-scenario.js::mission": [
+  {
+   "si": "missions'\\s*:\\s*$",
+   "texte": "missione"
+  }
+ ],
+ "carnets.js::calcul": [
+  {
+   "si": "'plans'\\]\\s*:\\s*\\[\\s*$",
+   "texte": "calcolo"
+  }
+ ],
+ "carnets.js::calculs": [
+  {
+   "si": "'calcul',\\s*$",
+   "texte": "calcoli"
+  }
+ ],
+ "carnets.js::plans": [
+  {
+   "si": "\\['plan',\\s*$",
+   "texte": "piani"
+  }
+ ],
+ "leo-core.js::pour": [],
+ "leo-core.js::dans": [
+  {
+   "si": "\\.name\\+\\s*$",
+   "texte": "in"
+  }
+ ],
+ "leo-core.js::maintenant": [],
+ "leo-core.js::je veux": [],
+ "leo-core.js::je sais pas": [],
+ "leo-core.js::argent": [],
+ "leo-core.js::j ai": [],
+ "leo-core.js::combien": [],
+ "leo-core.js::qui": [],
+ "leo-core.js::ou": [],
+ "leo-core.js::quand": [],
+ "leo-core.js::quoi": [],
+ "leo-core.js::pourquoi": [],
+ "leo-core.js::comment": [],
+ "leo-core.js::quel": [],
+ "leo-core.js::quelle": [],
+ "leo-core.js::quels": [],
+ "leo-core.js::quelles": [],
+ "leo-core.js::que": [],
+ "leo-core.js::est ce": [],
+ "leo-core.js::c est": [],
+ "comparateur.js::armes": [
+  {
+   "si": "\\?'véhicules':\\s*$",
+   "texte": "armi"
+  }
+ ],
+ "carte.js::lieux": [
+  {
+   "si": ">\\s*1\\s*\\?\\s*$",
+   "texte": "luoghi"
+  }
+ ],
+ "carte.js::lieu": [
+  {
+   "si": "'\\s*lieux'\\s*:\\s*$",
+   "texte": "luogo"
+  }
+ ],
+ "calculateurs.js::Tu as déjà": [
+  {
+   "si": "au départ':\\s*$",
+   "texte": "Hai già il"
+  },
+  {
+   "texte": "Hai già"
+  }
+ ],
+ "fiches.js::garage": [
+  {
+   "si": "'véhicules',\\s*$",
+   "texte": "garage"
+  }
+ ],
+ "re:^Bâtiment (L\\d+)$": "Edificio {1}",
+ "re:^(.+) \\(nom réel\\)$": "{t1} (nome reale)",
+ "re:^(.+) \\(nom supposé\\)$": "{t1} (nome presunto)",
+ "re:^Regroupe 1 bâtiments? repérés\\.$": "Raggruppa 1 edificio individuato.",
+ "re:^Regroupe (\\d+) bâtiments? repérés\\.$": "Raggruppa {1} edifici individuati.",
+ "re:^Équivalent réel : (.+)\\.$": "Equivalente reale: {1}.",
+ "re:^((?:[A-Z0-9][^\\s]*)(?:\\s(?:[A-Z0-9][^\\s]*|of|de|du|the|and|&))*) dans GTA VI$": "{1} in GTA VI",
+ "re:^(.+) : armureries repérées$": "{1}: armerie individuate",
+ "re:^(.+) : lieux liés$": "{1}: luoghi collegati",
+ "progression.js::plan": [
+  {
+   "si": "plans'\\s*:\\s*$",
+   "texte": "piano"
+  }
+ ],
+ "fiches.js::arsenal": [
+  {
+   "si": "'armes',\\s*$",
+   "texte": "arsenale"
+  }
+ ],
+ "collectibles-help.js::or": "="
+}

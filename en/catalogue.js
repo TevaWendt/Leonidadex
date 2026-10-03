@@ -1,3 +1,5 @@
+/* v7.61 : pluriel selon la langue de la page : français n > 1 (« 0 coché », « 1,5 million ») ; anglais, espagnol n ≠ 1 (« 0 marcados ») */
+var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.documentElement&&document.documentElement.lang)||'fr').slice(0,2)==='fr'?n>1:n!==1;};
 /* Leonidakit — catalogue.js (v7.42, lot 5 ; v7.43, lot 6 ; v7.54, lot 1 performance ; v7.56, lot 3 fiches et légendes)
    Listes dépliables des catalogues (Consommables, Coiffures, Tatouages, Tenues et accessoires, Personnalisation des
    véhicules et des armes) : la liste complète est écrite dans la page à la génération (lisible sans script) ; ce module
@@ -22,7 +24,7 @@
 (function () {
   'use strict';
   var lkPl = function (n) { return /^fr/.test(document.documentElement.lang || "fr") ? n > 1 : n !== 1; }; /* pluriel selon la langue de la page (français : n > 1) */
-  const fold = s => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[’]/g, "'").toLowerCase().trim();
+  const fold = s => String(s || '').replace(/ß/g,'ss').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[’]/g, "'").toLowerCase().trim();
   const boxes = Array.from(document.querySelectorAll('details.cat-box[data-catalogue]'));
   if (!boxes.length) return;
   const nf = new Intl.NumberFormat('en-US');
@@ -96,7 +98,7 @@
         tbody.appendChild(fragment);
         lastSort = state.sort; sorted = true;
       }
-      if (count) count.textContent = shown === rows.length ? nf.format(rows.length) + ' rows' : nf.format(shown) + (lkPl(shown) ? ' rows' : ' row') + ' of ' + nf.format(rows.length);
+      if (count) count.textContent = shown === rows.length ? nf.format(rows.length) + ' rows' : nf.format(shown) + (lkPluriel(shown)?' rows':' row') + ' of ' + nf.format(rows.length);
       if (empty) empty.hidden = shown > 0;
       chips.forEach(c => c.setAttribute('aria-pressed', String(c.dataset.catGroup === state.group)));
       keys.forEach(k => k.setAttribute('aria-pressed', String(!!state.st && k.dataset.catKey === state.st)));
@@ -188,7 +190,7 @@
     const img = row.querySelector('.cat-thumb img'), ico = row.querySelector('.cat-thumb--ico');
     const fig = el('figure', 'cat-dlg-media' + (img ? '' : ' cat-dlg-media--ico'));
     if (img) { const i = document.createElement('img'); i.src = img.dataset.big || img.src; i.alt = img.alt; i.decoding = 'async'; i.width = 1280; i.height = 720; fig.appendChild(i); const c = el('figcaption', 'cat-dlg-media-c', 'Official Rockstar Games image'); fig.appendChild(c); }
-    else if (ico) { fig.innerHTML = ico.innerHTML; const c = el('figcaption', 'cat-dlg-media-c', 'Category icon: not an image of the item'); fig.appendChild(c); }
+    else if (ico) { fig.innerHTML = ico.innerHTML; const c = el('figcaption', 'cat-dlg-media-c', 'Category icon: not a picture of the item'); fig.appendChild(c); }
     side.appendChild(fig);
     const head = el('div', 'cat-dlg-head');
     const st = row.querySelector('.cat-c-st .ed-status'); if (st) head.appendChild(st.cloneNode(true));

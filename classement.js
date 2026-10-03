@@ -106,9 +106,9 @@
 (function () {
   const q = document.getElementById('cl-q'), sel = document.getElementById('cl-sel'), add = document.getElementById('cl-add');
   if (!q || !sel || !add) return;
-  const all = Array.from(sel.options).map(o => ({ value: o.value, text: o.textContent, norm: o.textContent.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[’‘]/g, "'") }));
+  const all = Array.from(sel.options).map(o => ({ value: o.value, text: o.textContent, norm: o.textContent.replace(/ß/g,'ss').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[’‘]/g, "'") }));
   function filtre() {
-    const t = q.value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[’‘]/g, "'").trim();
+    const t = q.value.replace(/ß/g,'ss').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[’‘]/g, "'").trim();
     const hits = t ? all.filter(o => o.norm.includes(t)) : all;
     sel.innerHTML = ''; hits.forEach(o => { const op = document.createElement('option'); op.value = o.value; op.textContent = o.text; sel.appendChild(op); });
     sel.size = t && hits.length ? Math.min(6, hits.length) : 0;

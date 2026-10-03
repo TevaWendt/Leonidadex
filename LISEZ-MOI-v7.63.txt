@@ -1,0 +1,50 @@
+LEONIDAKIT v7.63 — TOUT LE SITE EN ITALIEN, LÉO EN ITALIEN — archive « modifs » (3 octobre 2026)
+
+Base attendue : ton dépôt avec la v7.62 appliquée (archives « Leonidakit-v7.61-espagnol-modifs.zip » puis
+« Leonidakit-v7.62-anglais-modifs.zip » extraites sur l'archive Leonidadex-main (13)). Applique-les d'abord si ce n'est pas
+fait. Seulement des fichiers créés ou modifiés, aux chemins exacts depuis la racine. Rien à supprimer. Aucune commande de
+build, pas de package.json ; api/, vercel.json et .vercelignore ne changent pas ; rien à régler dans Vercel. Rien n'a été
+publié pour toi.
+
+1. Note le commit courant dans GitHub Desktop (ou copie le dossier).
+2. Extrais l'archive dans la racine du site, écrase les fichiers homonymes (garde le dossier .git).
+3. Vérifie 3 minutes en local ou sur la prévisualisation Vercel (voir « Pour vérifier »).
+4. Mets en ligne quand tu le décides (GitHub Desktop : commit puis push ; Vercel déploie tel quel).
+Retour arrière : « Revert » du commit dans GitHub Desktop. Aucune clé de stockage nouvelle.
+
+POURQUOI L'ARCHIVE EST GROSSE : le nouveau dossier it/ (403 pages, leurs scripts, Léo italien), les captures du Tuto italien
+(img/tuto/it/), et chaque page française, espagnole et anglaise qui gagne « Italiano » dans le menu « Changer la langue » et
+son lien hreflang vers la version italienne. Le texte français des pages est identique à l'octet, sauf mentions-legales.html
+(historique v7.63).
+
+CE QUE CE LOT FAIT (détail : outils/CHANGEMENTS-v7.63.txt ; fonctionnement : outils/LANGUES.md ; preuves : outils/PREUVES-v7.63.md)
+- it/ : tout le site en italien, comme l'espagnol et l'anglais : accueil, calculateur (9 outils, 3 modes), Tuto avec captures
+  italiennes, carte (2 547 lieux), catalogues, les 302 fiches véhicules, les 27 armes, lieux, personnages, entreprises,
+  demeures, planques, carnets, Progression, comparateur, À propos, Contact, Mentions. Italien standard, « tu », « 200.000 $ ».
+- Léo comprend et répond en italien (« Quanto costa il Pegassi Zentorno? », « dov'è Vice City? », « ho 200.000 $ e voglio
+  un milione ») : 512 questions d'essai sur 512.
+- Le calculateur comprend les phrases italiennes du hub (« Ne vale la pena? », « In che ordine compro? », « 2 ore al giorno »).
+- En espagnol, Léo ne colle plus deux phrases (« comprar.Inspiración ») et affiche le modèle réel en espagnol ; dans les trois
+  langues, quelques libellés fermaient une citation par « » » : c'est corrigé.
+- Google : 391 adresses italiennes dans sitemap.xml, hreflang fr / en / es / it / x-default sur toutes les pages.
+- Tu continues à écrire seulement en français : une nouvelle fiche part dans les trois langues à la régénération ; s'il manque
+  une traduction, la régénération le dit et un test échoue (procédure dans outils/LANGUES.md).
+
+RÉSULTATS : voir outils/PREUVES-v7.63.md (tests Node, vérificateur, parcours navigateur des 403 pages de chaque langue sans
+un mot de français visible, calculateur italien dans chaque outil et chaque mode, Léo italien 512/512, relecture de
+l'italien : 207 défauts relevés, tous traités).
+
+POUR VÉRIFIER (3 minutes)
+- N'importe quelle fiche : « Changer la langue » → Italiano. Tu arrives sur la même fiche en italien.
+- /it/calculateurs.html : écris « Ho 200.000 $ e voglio 1,5 milioni » dans la question en haut : l'outil « Il mio obiettivo »
+  s'ouvre avec tes chiffres.
+- /it/ : ouvre Léo et demande « quanto costa il Kamacho? » ou « dov'è Vice City? ».
+- /it/carte.html : ouvre un lieu, la fenêtre est en italien (« Equivalente reale: … »).
+
+ÉTAT DE REPRISE
+- Version : v7.63 (base v7.62). Choix faits avec toi : l'italien « absolument tout comme l'espagnol » (site entier + Léo).
+  Choix faits seul : italien standard d'Italie, « tu », point des milliers dès 1 000 (« 1.250 $ », comme l'affichent les
+  navigateurs en italien), véhicules du jeu au masculin (« il Kamacho »).
+- Points ouverts (aucun bloquant) : les fautes du français relevées en traduisant (outils/PREUVES-v7.61.md § 6 et
+  outils/PREUVES-v7.63.md § 6) restent à corriger si tu le souhaites, elles sont traduites telles quelles ; Léo en anglais si
+  tu le veux un jour.

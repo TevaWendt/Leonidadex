@@ -1,0 +1,73 @@
+LEONIDAKIT v7.64 — LES CINQ LANGUES RÉUNIES, LÉO DANS LES CINQ, RÉFÉRENCEMENT — archive « modifs » en deux parties (3 octobre 2026)
+
+POURQUOI L'ANGLAIS S'EFFAÇAIT
+Deux séries d'archives avaient été faites en parallèle à partir de la même v7.60 :
+- « Leonidakit-v7.61-espagnol », « Leonidakit-v7.62-anglais », « Leonidakit-v7.63-italien » ;
+- « LeonidaKit_v7.61_ToutEnAnglais » et « LeonidaKit_v7.62_Allemand ».
+Elles portaient les mêmes numéros et chacune contenait SA version des fichiers communs (common.js, leo-core.js,
+outils/langues.json, outils/langues.cjs, les scripts du calculateur et toutes les pages françaises, qui portent le menu des
+langues). Extraire l'une écrasait ces fichiers : la langue de l'autre série perdait ses réglages (l'anglais complet revenait
+aux six pages de la v7.60). La v7.64 réunit les deux séries en une seule version : français, anglais, espagnol, italien et
+allemand sur toutes les pages, Léo dans les cinq langues.
+
+CE QU'IL FAUT FAIRE
+Base attendue : ton dépôt dans N'IMPORTE QUEL état depuis l'archive Leonidadex-main (13) : sans aucune des cinq archives
+ci-dessus, avec certaines, avec toutes, dans n'importe quel ordre. Ses deux parties contiennent chaque fichier changé depuis (13)
+et chaque fichier livré par l'une des cinq archives : une fois extraites par-dessus, ton dépôt est en v7.64. N'applique plus les
+anciennes archives (elles referaient le problème). Aucune commande de build, pas de package.json ; api/, vercel.json et
+.vercelignore ne changent pas ; rien à régler dans Vercel. Rien n'a été publié pour toi.
+
+1. Note le commit courant dans GitHub Desktop (ou copie le dossier).
+2. Extrais les DEUX parties dans la racine du site, dans n'importe quel ordre, en écrasant les fichiers homonymes (garde le
+   dossier .git) : « …-partie-1-site.zip » (pages françaises, outils, anglais, espagnol) et « …-partie-2-langues.zip »
+   (italien, allemand, images du Tuto). Elles ne contiennent aucun fichier en commun ; il faut les deux avant le commit.
+3. Facultatif : supprime en/leo-nlp.js et de/leo-nlp.js s'ils existent (venus de la série allemande, plus utilisés : Léo prend
+   leo-nlp.js à la racine). Ils ne gênent pas s'ils restent.
+4. Vérifie 3 minutes en local ou sur la prévisualisation Vercel (voir « Pour vérifier »).
+5. Mets en ligne quand tu le décides (GitHub Desktop : commit puis push ; Vercel déploie tel quel).
+Retour arrière : « Revert » du commit dans GitHub Desktop. Aucune clé de stockage nouvelle.
+
+POURQUOI DEUX PARTIES : l'ensemble pèse 45 Mo, trop pour un seul envoi. Il contient les quatre langues complètes (en/, es/,
+it/, de/ : 414 pages chacune, leurs scripts, Léo), les captures du Tuto de chaque langue et toutes les pages françaises (menu
+des cinq langues, liens hreflang, titres). Le texte français affiché est celui des deux séries réunies (corrections de la série allemande comprises :
+« japonais », date du Trailer 2…).
+
+CE QUE CE LOT FAIT (détail : outils/CHANGEMENTS-v7.64.txt ; fonctionnement : outils/LANGUES.md ; preuves : outils/PREUVES-v7.64.md)
+- Cinq langues sur toutes les pages : menu « Changer la langue » Français / English / Español / Italiano / Deutsch partout,
+  bandeau de suggestion dans chaque langue, page introuvable dans chaque langue.
+- Léo comprend et répond en français, anglais, espagnol, italien et allemand.
+- La recherche des listes (véhicules, armes, catalogues, carte) comprend les mots de chaque langue.
+- Référencement Google, sans toucher au texte affiché, aux animations, aux visuels ni aux liens :
+  · chaque page indique à Google ses versions dans les cinq langues (hreflang ; « x-default » = anglais pour les autres pays) ;
+  · titres des pages avec « GTA 6 » (ce que les joueurs tapent dans Google), la page gardant « GTA VI » ;
+  · titres trop longs raccourcis (le « | Leonidakit » final tombe quand Google aurait coupé), descriptions de 155 signes au plus
+    dans chaque langue (92 raccourcies) ;
+  · plan du site avec les 1 955 adresses des cinq langues, leurs versions, leur date de dernière modification et leur image ;
+  · aperçus de partage complets (langues, nom du site) ; pages introuvables et redirections hors de l'index.
+
+POUR ÊTRE INDEXÉ VITE (à faire une fois, après la mise en ligne, 10 minutes)
+1. Google Search Console (search.google.com/search-console), propriété www.leonidakit.com (déjà vérifiée par le fichier
+   googleea0091a4822a39f7.html) → Sitemaps → ajoute « sitemap.xml » → Envoyer.
+2. Inspection de l'URL → colle https://www.leonidakit.com/en/ → « Demander l'indexation » ; même chose pour /es/, /it/, /de/
+   et, si tu veux, pour /en/calculateurs.html, /en/carte.html, /en/vehicules.html (et leurs équivalents es, it, de).
+3. Facultatif : Bing Webmaster Tools → « Importer depuis Google Search Console » (Bing et DuckDuckGo).
+Google met de quelques jours à quelques semaines à montrer les nouvelles pages ; le rapport « Pages » de Search Console dit où
+il en est.
+
+RÉSULTATS : voir outils/PREUVES-v7.64.md.
+
+POUR VÉRIFIER (3 minutes)
+- N'importe quelle page : « Changer la langue » → cinq langues ; Deutsch ouvre la même page en allemand, English en anglais.
+- /de/calculateurs.html : écris « Ich habe 200.000 $ und will 1 Million » dans la question en haut : l'outil « Mein Ziel »
+  s'ouvre avec tes chiffres. /en/ : ouvre Léo et demande « where is vice city? » ; /es/ : « ¿cuánto cuesta el Kamacho? ».
+- /it/armes.html : tape « pistola » dans la recherche de la liste (en allemand, /de/armes.html : « Pistole »).
+- Code source d'une page (clic droit → Afficher la source) : le <title> dit « GTA 6 », et six lignes <link rel="alternate"
+  hreflang=…> listent les versions.
+
+ÉTAT DE REPRISE
+- Version : v7.64 (base v7.60 + les deux séries). Choix faits seul : pour l'anglais, la traduction de la série espagnole/
+  italienne est gardée là où les deux séries différaient (celle de l'autre série complète ce qui manquait) ; « x-default »
+  vise l'anglais ; les titres disent « GTA 6 » ; l'historique des Mentions garde les deux séries (deux « v7.61 », deux
+  « v7.62 ») et l'entrée v7.64 l'explique.
+- Points ouverts (aucun bloquant) : quelques questions anglaises et allemandes très libres restent mal comprises par Léo
+  (outils/PREUVES-v7.64.md) ; les fautes du français relevées en traduisant restent à corriger si tu le souhaites.

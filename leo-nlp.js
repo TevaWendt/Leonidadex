@@ -4,7 +4,7 @@
 (function(root,factory){'use strict';if(typeof module==='object'&&module.exports)module.exports=factory();else root.LKLeoNLP=factory();})(typeof globalThis!=='undefined'?globalThis:this,function(){
 'use strict';
 const STOP=new Set(['le','la','les','l','un','une','des','de','du','d','et','a','au','aux','en','y','il','elle','ils','elles','on','je','j','tu','t','nous','vous','ce','c','cet','cette','ces','ca','sa','son','ses','mon','ma','mes','ton','ta','tes','leur','leurs','notre','nos','votre','vos','se','s','me','m','te','moi','toi','lui','eux','est','sont','ete','etre','suis','es','sera','seront','serait','etait','etaient','ai','as','avons','avez','ont','avoir','pour','par','sur','dans','avec','sans','pas','ne','n','non','oui','plus','moins','tres','bien','mal','que','qu','dont','si','donc','alors','mais','car','comme','aussi','encore','deja','ici','la','peut','peux','peuvent','pouvoir','faire','fait','fais','dis','dire','dit','va','vais','vas','vont','aller','veux','veut','voudrais','vouloir','the','of','to','in','is','are','it','i','you','my','and','or','for','with','on','at','do','does','can','there','this','that','what','how','de','vers','chez','entre','puis','tout','tous','toute','toutes','meme','ma','mon','vraiment','juste','un','peu','trop','assez','autre','autres','chaque','quelque','quelques','rien','jamais','toujours','beaucoup','maintenant','aujourd','hui','stp','svp']);
-const norm=s=>String(s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[œ]/g,'oe').replace(/[æ]/g,'ae').replace(/[’‘`´]/g,"'").replace(/[‐‑–—]/g,'-').replace(/\s+/g,' ').trim();
+const norm=s=>String(s||'').replace(/ß/g,'ss').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[œ]/g,'oe').replace(/[æ]/g,'ae').replace(/[’‘`´]/g,"'").replace(/[‐‑–—]/g,'-').replace(/\s+/g,' ').trim();
 /* Découpage : apostrophes et tirets deviennent des espaces ; « $ », « € », « % », « gta+ » et « r* » sont transcrits avant. */
 function raw(text){let s=norm(text).replace(/\bgta\s*\+/g,' gtaplus ').replace(/\br\*/g,' rockstar ').replace(/\$/g,' $ ').replace(/€/g,' € ').replace(/%/g,' pourcent ').replace(/['-]/g,' ');
  s=s.replace(/(\d)\s*(?:h|heures?)\s*(\d{1,2})\b/g,'$1h$2');
@@ -62,8 +62,26 @@ function createIndex(options={}){
    sans les nombres s'il reste un mot), repères courts (numéros, lettres seules) qui départagent des fiches de même nom, et suite de
    lettres pour un nom sans mot de deux lettres (« P’s & Q’s »). null si le nom ne peut pas être reconnu. */
 const SIG=t=>t&&t.length>=2&&!/^(?:\$|€|dollars|euros)$/.test(t);
-function nameTokens(analyzer,label){const name=String(label).replace(/\s*\((?:nom r[ée]el|nom suppos[ée])\)\s*$/i,'')||String(label);const all=analyzer.analyze(name).terms.filter(SIG),words=all.filter(t=>!/^\d+$/.test(t)),toks=words.length?words:all;const r=raw(name);
+function nameTokens(analyzer,label){const name=String(label).replace(/\s*\((?:nom r[ée]el|nom suppos[ée]|real name|assumed name|presumed name)\)\s*$/i,'')||String(label);const all=analyzer.analyze(name).terms.filter(SIG),words=all.filter(t=>!/^\d+$/.test(t)),toks=words.length?words:all;const r=raw(name);
  if(!toks.length){const r2=raw(name.replace(/[’']/g,''));if(r.length>=2&&r.join('').length>=3&&r.every(t=>t.length===1)&&!r.every(t=>/^\d$/.test(t)))return {toks:[...new Set([...r,...r2])],minor:[],seqs:[...new Set([r.join(' '),r2.join(' ')])]};return null;}
  return {toks,minor:r.filter(t=>/^\d+$/.test(t)||(t.length===1&&/[a-z]/.test(t))),seqs:null};}
-return Object.freeze({STOP,norm,raw,stem,phonetic,distance,createAnalyzer,createIndex,nameTokens,SIG});
+/* v7.61 (langues) : une question écrite dans une autre langue (anglais) est d'abord réécrite dans la forme française que Léo
+   lit : montants (« $200,000 » → « 200000 $ »), puis expressions de la table (les plus longues d'abord, en un seul passage).
+   La table vient du noyau de la langue (en/leo-index.json → pivot) ; une entrée identité protège un nom de fiche
+   (« Ocean Beach » n'est pas réécrit). Rien n'est appelé sur le site français. */
+function pivotTable(list,lang){const map=new Map(),parts=[];for(const e of list||[]){if(!Array.isArray(e))continue;const k=norm(e[0]).replace(/[^a-z0-9$'& ]+/g,' ').replace(/\s+/g,' ').trim();if(!k||map.has(k))continue;map.set(k,String(e[1]||''));parts.push(k);}
+ parts.sort((a,b)=>b.length-a.length);const esc=s=>s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&').replace(/ /g,'\\s+');
+ return {map,lang:lang||'en',re:parts.length?new RegExp("(^|[^a-z0-9'])("+parts.map(esc).join('|')+")(?=$|[^a-z0-9'])",'g'):null};}
+function pivot(text,table){if(!table||!table.re)return String(text||'');
+ let s=norm(text).replace(/[’‘`´]/g,"'");const de=table.lang==='de';
+ /* montants à l'américaine : séparateurs de milliers retirés, « $ » placé après le nombre (« $1.5m » → « 1.5m $ ») ;
+    v7.62, allemand : point des milliers retiré, virgule décimale gardée (« 1.250,50 $ » → « 1250,50 $ », lu comme en français) */
+ if(de)s=s.replace(/(\d)\.(?=\d{3}(?!\d))/g,'$1').replace(/\$\s*(\d+(?:,\d+)?)\s*(k|m|mio|mrd|millionen|million|tausend|milliarden?)?(?![a-z0-9])/g,(m,n,u)=>n+(u?' '+u:'')+' $');
+ else s=s.replace(/(\d),(?=\d{3}(?!\d))/g,'$1').replace(/\$\s*(\d+(?:\.\d+)?)\s*(k|m|bn|mil|million|millions|thousand|grand|billion|billions)?(?![a-z0-9])/g,(m,n,u)=>n+(u?' '+u:'')+' $');
+ /* calcul hors sujet (« what's 12 times 12 », « was ist 12 mal 12 ») : lu comme « combien font … » */
+ const math=de?/\d\s*(?:mal|plus|minus|geteilt durch|durch|x|\*|\+|\/)\s*\d/.test(s)&&!/\$|\bk\b|mio|million|stunden?|std|min/.test(s):/\d\s*(?:times|plus|minus|divided by|multiplied by|x|\*|\+|\/)\s*\d/.test(s)&&!/\$|\bk\b|million|hours?|min/.test(s);
+ s=de?s.replace(/(\d)\s*(?:std|stunden?|stdn?|h)(?![a-z])/g,'$1 heures').replace(/(\d)\s*(?:min|minuten?|mins?)(?![a-z])/g,'$1 minutes'):s.replace(/(\d)\s*(?:hrs?|hours?)(?![a-z])/g,'$1 heures').replace(/(\d)\s*(?:mins?|minutes?)(?![a-z])/g,'$1 minutes');
+ s=s.replace(table.re,(m,pre,w)=>{const to=table.map.get(w.replace(/\s+/g,' '));return pre+(to===undefined?w:to===''?' ':' '+to+' ');});
+ s=s.replace(/\s+/g,' ').trim();return math?'combien font '+s:s;}
+return Object.freeze({STOP,norm,raw,stem,phonetic,distance,createAnalyzer,createIndex,nameTokens,SIG,pivotTable,pivot});
 });

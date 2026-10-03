@@ -22,8 +22,7 @@ Hébergé sur Vercel, qui publie tel quel le contenu de ce dépôt : **aucune co
 | `lieux/`, `personnages/`, `entreprises/`, `demeures/`, `planques/` | 29 fiches générées depuis `outils/editorial.json` (régions, personnages, entreprises), avec hubs `lieux.html`, `personnages.html`, `entreprises.html` |
 | `photos/` | 3 185 photos de la carte en WebP, 960 px max, qualité 82 (gtadb.org, CC BY 4.0). C'est la totalité de ce que le dépôt gtadb propose pour nos 2 474 bâtiments : les autres bâtiments n'ont pas de photo chez eux non plus. |
 | `img/` | carte sociale et `img/officiel/` : 148 visuels officiels Rockstar en deux tailles (captures, artworks et photogrammes des trailers, recadrés sans bandes noires) (crédits dans `outils/medias-officiels.json`) |
-| `en/` | **version anglaise** (v7.60) : pages et scripts **générés** par `outils/langues.cjs` depuis les pages françaises et la mémoire `outils/langues/en/` (ne pas éditer à la main). Lot 1 : accueil, calculateur, Tuto, À propos, Contact, Mentions. Voir « Langues » plus bas et `outils/LANGUES.md`. |
-| `es/` | **version espagnole** (v7.61) : **toutes** les pages du site (403, sous-dossiers compris) et leurs scripts, **générés** par `outils/langues.cjs` depuis les pages françaises et la mémoire `outils/langues/es/` (ne pas éditer à la main) ; Léo en espagnol (`es/leo-index.json`, `es/leo/`, générés par `outils/leo-langues.cjs`). Voir `outils/LANGUES.md`. |
+| `en/`, `es/`, `it/`, `de/` | **versions anglaise, espagnole, italienne et allemande** (v7.60 à v7.64) : **toutes** les pages du site (414 chacune, page introuvable et redirections comprises) et leurs scripts, **générées** par `outils/langues.cjs` depuis les pages françaises et la mémoire `outils/langues/<code>/` (ne pas éditer à la main) ; Léo dans chaque langue (`<code>/leo-index.json`, `<code>/leo/`, générés par `outils/leo-langues.cjs`). Voir `outils/LANGUES.md`. |
 | `outils/` | scripts de génération, données sources (dont `outils/catalogues/` : listes dépliables des sections) et tests automatisés (`outils/tests/`). Ne sert pas au site en ligne (exclu par `.vercelignore`). |
 
 ## Règles
@@ -41,9 +40,24 @@ Hébergé sur Vercel, qui publie tel quel le contenu de ce dépôt : **aucune co
 - Collectibles : `outils/collectibles.json` (catalogue vide tant que Rockstar n'a rien publié de vérifiable, format décrit dans `outils/COLLECTIBLES.md` et `outils/collectibles.schema.json`), `node outils/gen-collectibles.cjs` régénère `collectibles-data.js`, les fiches et `sitemap-collectibles.xml` ; lancé automatiquement par `sync-site.cjs`. Le carnet (trouvés, favoris, notes, sorties, sauvegarde JSON) reste local au navigateur.
 - Vignettes : `img/schemas/<id>.svg` (302 fichiers écrits par `gen.js`) servent au top 10 et aux véhicules rares ; `vehicules-data.js` porte pour chaque véhicule un champ `thumb` (photo officielle 480 px sinon schéma).
 - Photos de la carte : `outils/data/carte-gtadb-source.json` doit référencer les fichiers WebP réellement présents (`photos/L…,ig.webp`). Une référence `.jpg` est considérée comme une photo absente et disparaît de `carte-gtadb.js` à la régénération (défaut corrigé en v7.2, protégé par un test).
-- Langues : le français est la seule langue écrite à la main. Une page traduite ne se corrige jamais dans `en/` ou `es/` : corriger la mémoire `outils/langues/<code>/*.json` (ou la source française), puis `node outils/regenerer.cjs`. Un texte français nouveau dans une page traduite est signalé par `node outils/langues.cjs es --extraire` (ou `en`) et fait échouer `langues.test.cjs` tant qu’il n’est pas traduit.
+- Langues : le français est la seule langue écrite à la main. Une page traduite ne se corrige jamais dans `en/`, `es/`, `it/` ou `de/` : corriger la mémoire `outils/langues/<code>/*.json` (ou la source française), puis `node outils/regenerer.cjs`. Un texte français nouveau dans une page traduite est signalé par `node outils/langues.cjs es --extraire` (ou `en`, `it`, `de`) et fait échouer `langues.test.cjs` tant qu’il n’est pas traduit.
 - Aucune donnée issue de fuites. Crédit gtadb.org conservé sur la carte et dans les mentions légales.
 
+
+## Cinq langues réunies, Léo dans les cinq, référencement (v7.64, 3 octobre 2026)
+
+- **Pourquoi** : deux séries d’archives avaient été faites en parallèle depuis la v7.60 (espagnol v7.61, anglais v7.62, italien v7.63 d’un côté ; anglais v7.61 et allemand v7.62 de l’autre). Elles se recouvraient (mêmes fichiers, mêmes numéros) : appliquer l’une effaçait l’autre (l’anglais complet revenait à six pages). La v7.64 réunit tout : une seule configuration (`outils/langues.json`), un seul générateur, les cinq langues sur toutes les pages, Léo dans les cinq (anglais et allemand : table de réécriture `leo-pivot.json` ; espagnol et italien : pont `_leo-pont.json`).
+- **Référencement** (sans changer le texte affiché) : hreflang complets sur chaque page (fr, en, es, it, de, x-default anglais), aucun sur les pages non indexées ; titres en « GTA 6 » (la page garde « GTA VI ») ; descriptions de 155 signes au plus dans chaque langue ; `og:locale:alternate`, `og:site_name` ; plan du site avec les cinq langues, leurs liens hreflang, `lastmod` et images. Détail : `outils/CHANGEMENTS-v7.64.txt`, procédure : `outils/LANGUES.md`, preuves : `outils/PREUVES-v7.64.md`.
+
+## Langues : tout le site en italien, Léo en italien (v7.63, 3 octobre 2026)
+
+- **Pour le visiteur** : menu « Changer la langue » Français / English / Español / Italiano sur chaque page ; `it/` contient les 403 pages du site (accueil, calculateur, Tuto avec captures italiennes `img/tuto/it/`, carte, catalogues, toutes les fiches, carnets, Progression, À propos, Contact, Mentions). Italien standard, « tu », « 200.000 $ », « 1.250 $ », « 19 novembre 2026 ». Léo comprend et répond en italien (512 questions d’essai sur 512).
+- **Comment** : même générateur ; mémoire italienne ≈ 18 000 entrées (`outils/langues/it/`, glossaire `_glossaire.md`), règles et clés de fichier reprises de l’espagnol (`it/lot-90.json`), pont de Léo de 14 248 expressions. Pluriels du code écrits en entier (plus de `+ 's'`), mots italiens reconnus par le calculateur, milliers italiens dès 1 000 (`"milliers": "toujours"`). Détail : `outils/CHANGEMENTS-v7.63.txt`, preuves : `outils/PREUVES-v7.63.md`.
+
+## Langues : tout le site en anglais (v7.62, 3 octobre 2026)
+
+- **Pour le visiteur** : `en/` contient maintenant les 403 pages du site, comme `es/` (carte, catalogues, toutes les fiches, carnets, Progression…). Anglais américain, « $200,000 », « Trailer 1 / Trailer 2 », « Ultimate Edition ». Léo reste en français et en espagnol : en anglais, les invitations à lui parler disent « (in French) ».
+- **Comment** : `"pages": "*"` pour l’anglais, mémoire anglaise ≈ 16 400 entrées (`outils/langues/en/`, glossaire complété), règles et clés de fichier reprises de l’espagnol (`en/lot-27.json`), légendes et textes alternatifs des galeries traduits dans les deux langues (`attributsJson`). Détail : `outils/CHANGEMENTS-v7.62.txt`, preuves : `outils/PREUVES-v7.62.md`.
 
 ## Langues : tout le site en espagnol, Léo en espagnol (v7.61, 2 octobre 2026)
 

@@ -8,15 +8,18 @@
 const fs=require('node:fs'),path=require('node:path'),{JSDOM}=require('jsdom');
 const root=path.resolve(__dirname,'../..'),read=f=>fs.readFileSync(path.join(root,f),'utf8');
 const verbose=process.argv.includes('--verbose'),asJSON=process.argv.includes('--json');
-/* v7.61 : « --langue es » rejoue le jeu de questions de cette langue (outils/tests/leo-questions-es.json) avec l'index et les
-   scripts traduits de son dossier (/es/) : la question passe par le pont vers le français, la réponse est dans la langue. */
-const LANGUE=(()=>{const i=process.argv.indexOf('--langue');return i>=0?process.argv[i+1]:null;})(),D=LANGUE?LANGUE+'/':'',own=f=>fs.existsSync(path.join(root,D+f))?D+f:f;
-async function run(){
+/* v7.61 : « --langue es » (ou « --lang en », « --lang=de ») rejoue le jeu de questions de cette langue
+   (outils/tests/leo-questions-<code>.json, ou --questions=<fichier>) avec l'index et les scripts traduits de son dossier (/es/) :
+   la question passe par le pont (espagnol, italien) ou la table de réécriture (anglais, allemand) vers le français, la
+   réponse est dans la langue. */
+const argOf=n=>{const eq=process.argv.find(a=>a.startsWith(n+'='));if(eq)return eq.slice(n.length+1);const i=process.argv.indexOf(n);return i>=0?process.argv[i+1]:null;};
+async function run(opts={}){
+ const L0=opts.lang||argOf('--langue')||argOf('--lang')||'fr',LANGUE=L0==='fr'?null:L0,D=LANGUE?LANGUE+'/':'',own=f=>fs.existsSync(path.join(root,D+f))?D+f:f;
  const dom=new JSDOM('<!doctype html><html lang="'+(LANGUE||'fr')+'"><body><main></main></body></html>',{runScripts:'outside-only',url:'https://www.leonidakit.com/'+D+'index.html'});const w=dom.window;
  w.fetch=async url=>{const p=String(url).replace(/^https:\/\/www\.leonidakit\.com/,'').replace(/\?.*$/,'');const file=path.join(root,p.replace(/^\//,''));if(!fs.existsSync(file))return {ok:false,status:404,headers:{get:()=>'0'},text:async()=>''};const text=fs.readFileSync(file,'utf8');return {ok:true,status:200,headers:{get:()=>String(Buffer.byteLength(text))},text:async()=>text};};
  for(const f of ['calculateurs-engine.js','leo-link.js','leo-nlp.js','leo-core.js'])w.eval(read(own(f)));
  const data=JSON.parse(read(D+'leo-index.json')),loads=[];const core=w.LKLeoCore.create(data,{load:async(name,file)=>{const r=await w.fetch(file);if(!r.ok)throw Error('Morceau absent : '+file);loads.push(name);return JSON.parse(await r.text());}});
- const set=JSON.parse(read('outils/tests/leo-questions'+(LANGUE?'-'+LANGUE:'')+'.json')).questions,results=[],now='2026-10-01T12:00:00Z';
+ const QFILE=opts.questions||argOf('--questions'),set=JSON.parse(QFILE?fs.readFileSync(QFILE,'utf8'):read('outils/tests/leo-questions'+(LANGUE?'-'+LANGUE:'')+'.json')).questions,results=[],now='2026-10-01T12:00:00Z';
  const hasSource=a=>(a.links||[]).length>0||!!a.source||(a.external||[]).length>0||!!a.request||(a.results||[]).length>0;
  /* une réponse « Tu voulais dire… ? » compte comme bonne si le sujet attendu est l'une des deux puces */
  const check=(exp,a)=>{if(exp.any)return exp.any.some(e=>check(e,a));if(exp.offtopic)return a.kind==='refusal'&&(a.external||[]).some(x=>/rockstargames\.com/.test(x.url));if(exp.topic&&a.kind==='choices'&&(a.topics||[]).includes(exp.topic))return true;if(exp.kind&&a.kind!==exp.kind)return false;if(exp.topic&&a.topic!==exp.topic)return false;if(exp.tool&&(!a.request||a.request.tool!==exp.tool))return false;

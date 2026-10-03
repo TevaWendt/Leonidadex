@@ -33,10 +33,11 @@
     if (o.time) { f.hour = 'numeric'; f.minute = '2-digit'; }
     try { return d.toLocaleString(l === 'en' ? 'en-US' : l, f); } catch (e) { return d.toISOString().slice(0, 10); }
   }
+  /* v7.62 : l'allemand place aussi le signe après le nombre (« 1.250 $ ») */
   function dollars(numberText, sep, lang) {
     var l = lang || LANG, t = String(numberText);
-    /* v7.61 : l'espagnol écrit aussi le signe après le nombre (« 200.000 $ ») */
-    if (l === 'fr' || l === 'es') return t + (sep === undefined ? '\u00a0' : sep) + '$';
+    /* v7.61, v7.63 : l'espagnol et l'italien écrivent aussi le signe après le nombre (« 200.000 $ ») */
+    if (l === 'fr' || l === 'es' || l === 'it' || l === 'de') return t + (sep === undefined ? '\u00a0' : sep) + '$';
     return t.replace(/^([-\u2212]?)\s*/, '$1$$');
   }
 
@@ -80,9 +81,15 @@
     if (typeof input === 'number') return Number.isFinite(input) ? finish({ value: input }, shape) : fail(shape, 'Saisissez un nombre fini.');
     if (typeof input !== 'string' || !input.trim()) return fail(shape, 'Écris un nombre.');
     var text = input.trim();
+    /* v7.62 : en allemand, le point groupe les milliers et la virgule sépare les décimales (« 1.250,50 ») */
+    if ((lang || LANG) === 'de') {
+      if (!/^[+-]?(?:\d+|\d{1,3}(?:[. \u00a0\u202f]\d{3})+)(?:,\d+)?$/.test(text)) return fail(shape, 'Écris un nombre comme 1 250,50, sans unité.');
+      return finish({ value: Number(text.replace(/[. \u00a0\u202f]/g, '').replace(',', '.')) }, shape);
+    }
     /* v7.60 : hors du français, la virgule groupe les milliers et le point sépare les décimales (« 1,250.50 ») */
-    /* v7.61 : en espagnol, le point groupe les milliers et la virgule sépare les décimales (« 1.250,50 ») ; « 1.5 » reste un décimal */
-    if ((lang || LANG) === 'es') {
+    /* v7.61, v7.63 : en espagnol et en italien, le point groupe les milliers et la virgule sépare les décimales (« 1.250,50 ») ;
+       « 1.5 » reste un décimal */
+    if ((lang || LANG) === 'es' || (lang || LANG) === 'it') {
       if (/^[+-]?\d+\.\d{1,2}$/.test(text)) return finish({ value: Number(text) }, shape);
       if (!/^[+-]?(?:\d+|\d{1,3}(?:[. \u00a0\u202f]\d{3})+)(?:,\d+)?$/.test(text)) return fail(shape, 'Écris un nombre comme 1 250,50, sans unité.');
       return finish({ value: Number(text.replace(/[. \u00a0\u202f]/g, '').replace(',', '.')) }, shape);
@@ -1191,7 +1198,7 @@
       // Parcours sans parties : une marche par dépense ou récompense (l’argent n’arrive jamais « petit à petit »).
       if (result.continuous) {
         var pts = [{ hours: 0, cash: result.startCash, units: result.startUnits, label: 'Départ', purchase: null }], prev = result.startCash;
-        (result.events || []).forEach(function (e) { var h = e.t / 60; if (e.cash !== prev) { pts.push({ hours: h, cash: prev, label: null, purchase: null, hold: true }); pts.push({ hours: h, cash: e.cash, label: e.label, purchase: e.type === 'spend' && /^(?:Achat|Purchase|Compra)\b/.test(e.label) ? e.label.replace(/^(?:Achat « |Purchase “|Compra “)|[»”]$/g, '') : null }); prev = e.cash; } });
+        (result.events || []).forEach(function (e) { var h = e.t / 60; if (e.cash !== prev) { pts.push({ hours: h, cash: prev, label: null, purchase: null, hold: true }); pts.push({ hours: h, cash: e.cash, label: e.label, purchase: e.type === 'spend' && /^(?:Achat|Purchase|Compra|Acquisto|Kauf)\b/.test(e.label) ? e.label.replace(/^(?:Achat « |Purchase “|Compra “|Acquisto “|Kauf „)|[»”“]$/g, '') : null }); prev = e.cash; } });
         return finish({ points: pts, stepped: true }, shape);
       }
       var minutes = result.totalSessions ? result.totalMinutes / result.totalSessions : 0;

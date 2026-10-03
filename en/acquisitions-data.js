@@ -23,7 +23,7 @@ window.LK_ACQUISITIONS = {
       "publishedAt": null,
       "consultedAt": "2026-09-23",
       "context": "GTA VI, pre-order bonus",
-      "claim": "The presentation describes a vehicle and its garage, outfits and hairstyles, plus a weapon pattern. It doesn’t confirm you can buy them separately in the game."
+      "claim": "The showcase describes a vehicle and its garage, outfits and hairstyles, plus a weapon pattern. It doesn’t confirm you can buy them separately in the game."
     },
     "preorder": {
       "url": "https://www.rockstargames.com/newswire/article/5171972o3ak5oa/pre-order-grand-theft-auto-vi-on-june-25",
@@ -39,7 +39,7 @@ window.LK_ACQUISITIONS = {
       "publishedAt": null,
       "consultedAt": "2026-09-23",
       "context": "Official GTA VI gallery",
-      "claim": "The screenshots document what the content looks like. An image alone confirms neither a price nor that you can buy it."
+      "claim": "The screenshots document what the content looks like. An image alone confirms neither a price nor that it can be bought."
     },
     "extended": {
       "url": "https://www.rockstargames.com/newswire/article/4k138k8okkk483/grand-theft-auto-vi-an-extended-look-now-playing",
@@ -47,7 +47,7 @@ window.LK_ACQUISITIONS = {
       "publishedAt": "2026-08-27",
       "consultedAt": "2026-09-23",
       "context": "Official presentation",
-      "claim": "Announcement of a presentation recorded in-game on PS5. No list of purchases is inferred from the announcement alone."
+      "claim": "Announcement of a presentation recorded in the game on PS5. No shopping list is inferred from the announcement alone."
     }
   },
   "categories": [
@@ -56,11 +56,11 @@ window.LK_ACQUISITIONS = {
       "label": "Boats",
       "route": "/en/bateaux.html",
       "type": "vehicle",
-      "intro": "Kayak or motorboat: find the boats whose unlock Rockstar describes, then the sightings already listed in Vehicles.",
-      "limit": "The bonuses below are tied to an edition. Buying them separately and their in-game price aren’t confirmed.",
+      "intro": "Kayak or motorboat: find the boats Rockstar explains how to get, then the sightings already listed in Vehicles.",
+      "limit": "The bonuses below are tied to an edition. Whether you can buy them separately, and their in-game price, aren’t confirmed.",
       "empty": "No boat with an officially documented way to get it is available yet.",
       "menuOrder": 99,
-      "description": "The boats whose unlock Rockstar describes: the Crest Kayak and the Shitzu Squalo, Ultimate Edition bonuses linked to the Vehicles pages. Buying them separately and their in-game price aren’t confirmed. You can check them off and find the other boats in the Vehicles catalog."
+      "description": "The boats Rockstar says how to get: the Crest Kayak and the Shitzu Squalo, Ultimate Edition bonuses linked to their Vehicles pages. Buying them separately and their in-game price aren’t confirmed. You can check them off and find the other boats in the Vehicles catalog."
     },
     {
       "id": "style",
@@ -68,23 +68,23 @@ window.LK_ACQUISITIONS = {
       "route": "/en/style.html",
       "type": "style",
       "intro": "Hairstyles, tattoos, outfits and accessories: everything that changes how Jason and Lucia look, in three expandable lists, with the announced collections and the shops Rockstar has shown.",
-      "limit": "No GTA VI price has been published: each row shows its status, and GTA V and GTA Online prices stay in their benchmark column. The described collections aren’t a list of items you can buy.",
+      "limit": "No GTA VI prices have been published: each row shows its status, and GTA V and GTA Online prices stay in their benchmark column. The collections described aren’t a list of items you can buy.",
       "empty": "Waiting for official data on individual items. The announced collections and services are shown below, with no fake pages or checkboxes.",
       "menu": true,
       "menuOrder": 2,
-      "description": "Three expandable lists (hairstyles, tattoos, outfits and accessories) with status, effect, series benchmark price, place and a link to the map, plus the announced collections (Ultimate Edition, Vintage Vice City Pack) and the shops Stock 305, Sara’s Unisex Salon and Electric Fang Tattoo. No GTA VI prices. You can filter, sort and check off what you wear."
+      "description": "Three expandable lists (hairstyles, tattoos, outfits and accessories) with status, effect, series benchmark price, location and a link to the map, plus the announced collections (Ultimate Edition, Vintage Vice City Pack) and the addresses of Stock 305, Sara’s Unisex Salon and Electric Fang Tattoo. No GTA VI prices. You can filter, sort and check off what you wear."
     },
     {
       "id": "customizations",
       "label": "Customization",
       "route": "/en/personnalisations.html",
       "type": "customization",
-      "intro": "Everything you can customize on a vehicle or weapon, option by option: what Rockstar has said or shown for GTA VI (Rideout Customs, One-Eyed Willie’s, Ganado kit, engraved weapons, Vintage pattern), and what the series already did, with its prices shown as benchmarks.",
+      "intro": "Everything you can customize on a vehicle or a weapon, item by item: what Rockstar has said or shown for GTA VI (Rideout Customs, One-Eyed Willie’s, the Ganado kit, engraved weapons, the Vintage pattern), and what the series already did, with its prices shown as benchmarks.",
       "limit": "A cosmetic mod doesn’t prove any gain in speed or income. No GTA VI price or numbered effect is assumed: a GTA V or GTA Online number stays in its own column.",
       "empty": "Waiting for official data on an identifiable customization.",
       "menu": true,
       "menuOrder": 3,
-      "description": "Two expandable lists, vehicles and weapons, with each option’s status, effect, series benchmark price, the shop where you get it done and a link to the map. The Ganado kit and the Vintage pattern described by Rockstar are there to check off; every vehicle page and weapon page links to its filtered list."
+      "description": "Two expandable lists, vehicles and weapons, with each mod’s status, effect, series benchmark price, the workshop where you get it done and a link to the map. The Ganado kit and the Vintage pattern described by Rockstar are there to check off; every vehicle page and every weapon page links to its filtered list."
     },
     {
       "id": "garages",
@@ -95,7 +95,7 @@ window.LK_ACQUISITIONS = {
       "limit": "Access depends on the announced content. No separate property purchase, rental income or in-game price is confirmed.",
       "empty": "Waiting for official data on an identifiable garage.",
       "menuOrder": 99,
-      "description": "The hideouts seen in the media and the two garages described with the editions: Paradise in Watson Bay (Ultimate Edition) and Shore Court near Ocean Beach (Vintage Pack). Rockstar describes a weapon locker and a drop-off for a fence there; no separate property purchase, price or income is confirmed. You can check off the documented garages."
+      "description": "The hideouts seen in media and the two garages described with the editions: Paradise in Watson Bay (Ultimate Edition) and Shore Court near Ocean Beach (Vintage Pack). Rockstar describes a weapon locker and a drop-off for a fence there; no separate property purchase, price or income is confirmed. You can check off the documented garages."
     },
     {
       "id": "vetements",
@@ -104,7 +104,7 @@ window.LK_ACQUISITIONS = {
       "type": "style",
       "intro": "Individual clothing items: this category is ready for identified items and how to get them.",
       "limit": "The announced collections are in “Clothing and style”. No individual item with a verified separate price is currently published here.",
-      "empty": "No verified individual entry is published in this category. Being in the menu doesn’t confirm you can buy it in GTA VI.",
+      "empty": "No verified individual entry is published in this category. Its place in the menu doesn’t confirm that you can buy one in GTA VI.",
       "alias": "/en/style.html#tenues",
       "menuOrder": 99
     },
@@ -115,7 +115,7 @@ window.LK_ACQUISITIONS = {
       "type": "style",
       "intro": "Glasses, watches, jewelry, bags, caps: a category still to document, with no confirmed shopping list.",
       "limit": "No individual accessory with verified purchase conditions is currently published in this section.",
-      "empty": "No verified individual entry is published in this category. Being in the menu doesn’t confirm you can buy it in GTA VI.",
+      "empty": "No verified individual entry is published in this category. Its place in the menu doesn’t confirm that you can buy one in GTA VI.",
       "alias": "/en/style.html#accessoires",
       "menuOrder": 99
     },
@@ -126,7 +126,7 @@ window.LK_ACQUISITIONS = {
       "type": "style",
       "intro": "Tattoos: the designs and how to get them are still to be documented in this catalog.",
       "limit": "The announced style services are shown in “Clothing and style”. No design with a verified price is published here.",
-      "empty": "No verified individual entry is published in this category. Being in the menu doesn’t confirm you can buy it in GTA VI.",
+      "empty": "No verified individual entry is published in this category. Its place in the menu doesn’t confirm that you can buy one in GTA VI.",
       "alias": "/en/style.html#tatouages",
       "menuOrder": 99
     },
@@ -135,12 +135,12 @@ window.LK_ACQUISITIONS = {
       "label": "Consumables",
       "route": "/en/nourriture.html",
       "type": "consumable",
-      "intro": "Eat, drink, heal, protect yourself: consumables help you get health back and hold out during a mission. Here’s the full list of what we know for GTA VI, with what the series did before.",
-      "limit": "Rockstar hasn’t published any price or numbered effect for GTA VI: each row shows its status, and the numbers from GTA V, GTA IV or San Andreas stay in their benchmark column.",
+      "intro": "Eating, drinking, healing, protecting yourself: consumables help you get health back and hold out during a mission. Here’s the full list of what we know for GTA VI, along with what the series did before.",
+      "limit": "Rockstar hasn’t published any prices or effect numbers for GTA VI: each row shows its status, and numbers from GTA V, GTA IV or San Andreas stay in their benchmark column.",
       "empty": "No verified item to check off yet: as soon as a consumable is officially named with how to get it, it’ll show up here.",
       "menu": true,
       "menuOrder": 1,
-      "description": "Eat, drink, heal, protect yourself: a full expandable list (morning coffee, protein shake, Sprunk, beer at the bar, armor vests, kits…) with status, effect, series benchmark price, place and a link to the map. No GTA VI prices published. You can filter, sort and check off what you’ve tried."
+      "description": "Eat, drink, heal, protect yourself: a full expandable list (morning coffee, protein shake, Sprunk, beer at the bar, armor vests, kits…) with status, effect, series benchmark price, location and a link to the map. No GTA VI prices published. You can filter, sort and check off what you’ve tasted."
     },
     {
       "id": "munitions",
@@ -149,7 +149,7 @@ window.LK_ACQUISITIONS = {
       "type": "ammo",
       "intro": "Ammo and weapon gear: items, compatibility and how to get them are still to be documented.",
       "limit": "The documented weapon patterns and variants are in “Customization”. No verified ammo price is published in this catalog.",
-      "empty": "No verified individual entry is published in this category. Being in the menu doesn’t confirm you can buy it in GTA VI.",
+      "empty": "No verified individual entry is published in this category. Its place in the menu doesn’t confirm that you can buy one in GTA VI.",
       "alias": "/en/armes.html#munitions",
       "menuOrder": 99
     },
@@ -159,11 +159,11 @@ window.LK_ACQUISITIONS = {
       "label": "Housing and apartments",
       "route": "/en/logements.html",
       "type": "housing",
-      "intro": "Housing and apartments: any properties open to the player still need to be told apart from places shown in the media.",
-      "limit": "Characters’ homes are in “Residences” and the documented garages in “Safehouses”. No home for sale with a verified price is published here.",
-      "empty": "No verified individual entry is published in this category. Being in the menu doesn’t confirm you can buy it in GTA VI.",
+      "intro": "Housing and apartments: any properties the player might be able to get still have to be told apart from the places shown in the media.",
+      "limit": "Character residences are in “Residences” and documented garages are in “Safehouses”. No home for sale with a verified price is listed here.",
+      "empty": "No verified individual entry is published in this category. Its place in the menu doesn’t confirm that you can buy one in GTA VI.",
       "menuOrder": 99,
-      "description": "The category is ready for properties a player could buy. No housing offer with a verified price is published: being in the menu doesn’t confirm you can buy anything. Characters’ homes are in “Residences”, the documented garages in “Safehouses”."
+      "description": "The category is ready for property a player might buy. No housing offer with a verified price has been published: being in the menu doesn’t confirm you can buy it. The characters’ residences are in “Residences”, the documented garages in “Safehouses”."
     }
   ],
   "items": [
@@ -178,7 +178,7 @@ window.LK_ACQUISITIONS = {
       "evidenceLevel": 1,
       "acquisition": "edition-bonus",
       "condition": "Ultimate Edition bonus",
-      "description": "Boat announced with the vehicles at Jason’s safehouse.",
+      "description": "A boat announced with the vehicles at Jason’s safehouse.",
       "media": [
         "crest-kayak",
         "jason-s-safehouse-vehicles"
@@ -246,7 +246,7 @@ window.LK_ACQUISITIONS = {
       "evidenceLevel": 1,
       "acquisition": "edition-bonus",
       "condition": "Ultimate Edition bonus",
-      "description": "Boat announced at Washington Beach with a weapons crate. Its separate price is still unknown.",
+      "description": "A boat announced at Washington Beach with a weapons crate. Its separate price is still unknown.",
       "media": [
         "shitzu-squalo-01",
         "shitzu-squalo-02",
@@ -352,7 +352,7 @@ window.LK_ACQUISITIONS = {
       "evidenceLevel": 1,
       "acquisition": "edition-bonus",
       "condition": "Ultimate Edition collection",
-      "description": "A selection of outfits and tattoos for both protagonists. The item-by-item breakdown isn’t published.",
+      "description": "A selection of outfits and tattoos for both protagonists. The item breakdown isn’t published.",
       "media": [
         "ultimate-edition-02"
       ],
@@ -366,7 +366,7 @@ window.LK_ACQUISITIONS = {
         {
           "id": "ultimate-edition-02",
           "titre": "Ultimate Edition 02",
-          "alt": "Jason and Lucia in front of the green coupe matched to a Kellison J4 in the Ultimate Edition image",
+          "alt": "Jason and Lucia in front of the green coupe matched to a Kellison J4 in the Ultimate Edition artwork",
           "source": "https://www.rockstargames.com/VI/media/screenshots",
           "original": "https://www.rockstargames.com/VI/_next/static/media/ULTIMATE_EDITION_02.0q-6.nrtf~jj0.jpg?akim=1&imdensity=1&imwidth=1920",
           "credit": "© Rockstar Games / Take-Two Interactive",
@@ -398,7 +398,7 @@ window.LK_ACQUISITIONS = {
       "evidenceLevel": 1,
       "acquisition": "edition-bonus",
       "condition": "Ultimate Edition collection",
-      "description": "Clothing and accessories inspired by Macca the Gator. The item-by-item catalog is still to be documented.",
+      "description": "Clothing and accessories inspired by Macca the Gator. The individual catalog is still to be documented.",
       "media": [
         "goodtime-gear-01"
       ],
@@ -461,7 +461,7 @@ window.LK_ACQUISITIONS = {
         {
           "id": "vintage-vice-city-pack-exclusive-looks-03",
           "titre": "Vintage Vice City Pack Exclusive Looks 03",
-          "alt": "Jason holds a turquoise compact SMG with a palm-tree pattern in a Vintage Vice City image.",
+          "alt": "Jason holds a turquoise compact SMG with a palm-tree pattern in Vintage Vice City artwork.",
           "source": "https://www.rockstargames.com/VI/media/screenshots",
           "original": "https://www.rockstargames.com/VI/_next/static/media/VINTAGE_VICE_CITY_PACK_EXCLUSIVE_LOOKS_03.0au1tphsftqm5.jpg?akim=1&imdensity=1&imwidth=1920",
           "credit": "© Rockstar Games / Take-Two Interactive",
@@ -493,7 +493,7 @@ window.LK_ACQUISITIONS = {
       "evidenceLevel": 1,
       "acquisition": "edition-bonus",
       "condition": "Ultimate Edition kit · Jason’s Vapid Ganado",
-      "description": "Mod kit made for Jason’s pickup. Performance and the separate cost aren’t published.",
+      "description": "Mod kit made for Jason’s pickup. Its performance and separate cost aren’t published.",
       "media": [
         "ganado-retro-build"
       ],
@@ -539,7 +539,7 @@ window.LK_ACQUISITIONS = {
       "evidenceLevel": 1,
       "acquisition": "preorder-bonus",
       "condition": "Vintage Vice City Pack · most weapons",
-      "description": "Tropical pattern inspired by Tommy Vercetti’s shirt. Weapon-by-weapon compatibility isn’t detailed.",
+      "description": "Tropical pattern inspired by Tommy Vercetti’s shirt. Gun-by-gun compatibility isn’t detailed.",
       "media": [
         "vintage-vice-city-weapon-pattern-01"
       ],
@@ -553,7 +553,7 @@ window.LK_ACQUISITIONS = {
         {
           "id": "vintage-vice-city-weapon-pattern-01",
           "titre": "Vintage Vice City Weapon Pattern 01",
-          "alt": "Modern SMG with a folded stock and a turquoise pistol on a car’s bench seat, next to cash.",
+          "alt": "Modern SMG with a folded stock and a turquoise pistol on a car’s bench seat, near some cash.",
           "source": "https://www.rockstargames.com/VI/media/screenshots",
           "original": "https://www.rockstargames.com/VI/_next/static/media/VINTAGE_VICE_CITY_WEAPON_PATTERN_01.0gybtumgwdcoi.jpg?akim=1&imdensity=1&imwidth=1920",
           "credit": "© Rockstar Games / Take-Two Interactive",
@@ -586,7 +586,7 @@ window.LK_ACQUISITIONS = {
       "evidenceLevel": 1,
       "acquisition": "edition-bonus",
       "condition": "Ultimate Edition · Watson Bay",
-      "description": "Tied to the Dominator Buggy: parking, a weapon locker and a drop-off for goods meant for a fence.",
+      "description": "Tied to the Dominator Buggy: parking, a weapon locker and a stash for goods to sell to a fence.",
       "media": [],
       "trackable": true,
       "calculatorCompatible": true,
@@ -610,7 +610,7 @@ window.LK_ACQUISITIONS = {
       "evidenceLevel": 1,
       "acquisition": "preorder-bonus",
       "condition": "Vintage Vice City Pack · near Ocean Beach",
-      "description": "Private garage tied to the Stanier: a weapon locker and a drop-off for goods meant for a fence.",
+      "description": "Private garage tied to the Stanier: a weapon locker and a stash for goods to sell to a fence.",
       "media": [],
       "trackable": true,
       "calculatorCompatible": true,
@@ -707,7 +707,7 @@ window.LK_ACQUISITIONS = {
       "ref": "stock-305",
       "category": "style",
       "sourceId": "ultimate",
-      "description": "Streetwear shop offering looks for Jason and Lucia.",
+      "description": "Streetwear store offering looks for Jason and Lucia.",
       "media": [
         "stock-305-clothing-store-01",
         "stock-305-clothing-store-02",
@@ -807,7 +807,7 @@ window.LK_ACQUISITIONS = {
       "ref": "electric-fang",
       "category": "style",
       "sourceId": "ultimate",
-      "description": "Tattoo parlor in Stockyard, with designs by the FAILE collective. No list of individual tattoos is published here.",
+      "description": "Stockyard tattoo parlor, with designs by the FAILE collective. No list of individual tattoos is published here.",
       "media": [
         "electric-fang-tattoo-01",
         "electric-fang-tattoo-02",
@@ -957,7 +957,7 @@ window.LK_ACQUISITIONS = {
         {
           "id": "ultimate-edition-rideout-customs-03",
           "titre": "Ultimate Edition, Rideout Customs 03",
-          "alt": "Lifted yellow coupe in the Rideout Customs shop, identified as an Albany Manana",
+          "alt": "Raised yellow coupe in the Rideout Customs shop, identified as an Albany Manana",
           "source": "https://www.rockstargames.com/VI/media/screenshots",
           "original": "https://www.rockstargames.com/VI/_next/static/media/ULTIMATE_EDITION_RIDEOUT_CUSTOMS_03.0_n4oqh5f_ar4.jpg?akim=1&imdensity=1&imwidth=1920",
           "credit": "© Rockstar Games / Take-Two Interactive",
@@ -1034,7 +1034,7 @@ window.LK_ACQUISITIONS = {
         {
           "id": "ultimate-edition-one-eyed-willie-03",
           "titre": "One-Eyed Willie 03",
-          "alt": "Green Canis pickup in the One-Eyed Willie shop in GTA VI.",
+          "alt": "Green Canis pickup at One-Eyed Willie’s in GTA VI.",
           "source": "https://www.rockstargames.com/VI/media/screenshots",
           "original": "https://www.rockstargames.com/VI/_next/static/media/ULTIMATE_EDITION_ONE_EYED_WILLIE_03.0mhil16bnp3m2.jpg?akim=1&imdensity=1&imwidth=1920",
           "credit": "© Rockstar Games / Take-Two Interactive",

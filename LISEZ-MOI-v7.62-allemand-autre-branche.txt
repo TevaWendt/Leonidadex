@@ -1,0 +1,59 @@
+LEONIDAKIT v7.62 — TOUT LE SITE ET LÉO EN ALLEMAND — archive « modifs » (3 octobre 2026)
+
+Base attendue : ton dépôt GitHub au commit 8c1ddd30 (v7.58), avec ou sans les archives v7.59, v7.60 et v7.61 déjà appliquées :
+cette archive est cumulative depuis 8c1ddd30 (elle contient aussi tout ce que les v7.59 à v7.61 changent, l'anglais compris).
+Seulement des fichiers créés ou modifiés, aux chemins exacts depuis la racine. Rien à supprimer. Aucune commande de build, pas
+de package.json ; api/, vercel.json et .vercelignore ne changent pas ; rien à régler dans Vercel. Rien n'a été publié pour toi.
+
+1. Note le commit courant dans GitHub Desktop (ou copie le dossier).
+2. Extrais l'archive dans la racine du site, écrase les fichiers homonymes (garde le dossier .git).
+3. Vérifie 5 minutes en local ou sur la prévisualisation Vercel (voir « Pour vérifier »).
+4. Mets en ligne quand tu le décides (GitHub Desktop : commit puis push ; Vercel déploie tel quel).
+Retour arrière : « Revert » du commit dans GitHub Desktop. Les clés de stockage (lk_*, lk-calculator-*) et leurs formats sont
+inchangés ; aucune clé nouvelle. Progression, carnets, envies et calculs des joueurs ne sont pas touchés (les pages allemandes
+lisent les mêmes clés : ce qui est coché en français ou en anglais l'est aussi en allemand).
+
+POURQUOI L'ARCHIVE EST GROSSE : le nouveau dossier de/ contient les 414 pages allemandes, leurs scripts, les fichiers de Léo en
+allemand et les captures du Tuto allemand (img/tuto/de/) ; en/ est aussi régénéré (le menu propose Deutsch, liens hreflang) ;
+les pages françaises portent leurs liens vers l'allemand et des empreintes ?v= qui changent. Le texte français des pages est
+identique à la v7.61, sauf : 16 fiches véhicules (« second trailer de mai 2026 » → « mai 2025 », le Trailer 2 date du 6 mai
+2025), vehicules.html et armes.html (un attribut invisible) et mentions-legales.html (historique v7.62).
+
+CE QUE CE LOT FAIT (détail : outils/CHANGEMENTS-v7.62.txt ; fonctionnement : outils/LANGUES.md ; preuves : outils/PREUVES-v7.62.md)
+- « Changer la langue » propose Français, English, Deutsch. Chacune des 414 pages existe en allemand (hubs, listes, 302 fiches
+  véhicules, 27 fiches armes, lieux, personnages, entreprises, demeures, planques, 9 carnets, carte et ses 2 547 lieux,
+  collectibles, progression, médias, comparateur, catalogues, recherche, Tuto, À propos, Contact, Mentions, page introuvable).
+- Tout est en allemand, y compris les bulles d'aide, les textes pour lecteurs d'écran, les compteurs (« 3 Fahrzeuge »), les
+  montants (« 1.250 $ »), les nombres que tu tapes (« 1.500 » = mille cinq cents), les dates (« 19. November 2026 »), les durées
+  (« 1 h 30 min »), les données pour Google. On tutoie (« du »), comme sur le site français.
+- Léo répond en allemand sur les pages allemandes : il comprend « wann kommt gta 6 raus », « wv kostet das », « ich habe
+  200.000 $ und will 1 Mio », répond et propose ses liens en allemand. Toujours dans le navigateur, rien n'est envoyé.
+- Un navigateur réglé en allemand voit le petit bandeau « Diese Seite gibt es auch auf Deutsch. » (jamais de redirection).
+- Tu continues à écrire seulement en français : l'anglais et l'allemand se refont tout seuls à chaque régénération (mémoires
+  outils/langues/en/ et outils/langues/de/). Un texte français nouveau sans traduction est signalé et un test échoue.
+- Le code du site a été rendu « traduisible » sans changer le français affiché : pluriels écrits en entier (l'allemand ne fait
+  pas son pluriel avec un « s »), phrases à trous quand l'ordre des mots change, montants et nombres à l'allemande.
+
+RÉSULTATS : tests Node 693 / 693 ; vérificateur 0 erreur (1 243 pages) ; 0 texte sans traduction en anglais et en allemand ;
+parcours navigateur des langues 3 652 / 3 652 (chaque page anglaise et allemande, calculateur, Léo : aucun mot français, aucun
+anglais resté sur une page allemande) ; Léo français 512 / 512, anglais 501 / 512, allemand 512 / 512 et 69 % sur 140 questions
+allemandes jamais vues ; parcours français du calculateur, du Tuto, des carnets, du contact et de Léo verts ; allemand relu en
+deux passes par huit relecteurs : 320 remarques, toutes traitées.
+
+POUR VÉRIFIER (5 minutes)
+- N'importe quelle page : « Changer la langue » → Deutsch : la même page en allemand, menus, boutons et bulles compris.
+- /de/calculateurs.html : écris « Ich habe 200.000 $ und will 1 Million haben » dans la barre de questions → Mein Ziel rempli,
+  montants « 800.000 $ ».
+- Sur une page allemande, ouvre Léo : « wann kommt gta 6 raus », « wo wohnt jason », « was kostet der albany emperor ».
+- /de/carte.html : clique un lieu, ouvre les filtres : tout est en allemand.
+- Une adresse inexistante sous /de/ (ex. /de/xyz.html) : la page introuvable s'affiche en allemand.
+
+ÉTAT DE REPRISE
+- Version : v7.62 (base v7.58 = commit 8c1ddd30, v7.59 à v7.61 incluses).
+- Seul texte qui reste en français pour un visiteur anglais ou allemand, parce qu'il n'est pas dans le site : l'email d'alerte
+  (« Get notified » / « Lass dich benachrichtigen ») et la page de confirmation de Brevo, écrits dans ton compte Brevo. Les pages le
+  disent (« One email (in French) », « Eine E-Mail (auf Französisch) »).
+- Signalé sans y toucher (à toi de trancher) : la FAQ d'armes.html dit que le fusil-harpon « apparaît dans les séquences
+  sous-marines », alors que la même page dit qu'aucune image officielle ne montre une arme sous l'eau.
+- Une autre langue (espagnol, italien, portugais) suit la même procédure (outils/LANGUES.md) ; le code est maintenant prêt pour
+  des langues dont le pluriel et l'ordre des mots diffèrent du français.

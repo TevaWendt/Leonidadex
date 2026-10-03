@@ -6,6 +6,8 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
    ============================================================ */
 (function(){
   'use strict';
+  var lkPl = function (n) { return /^fr/.test(document.documentElement.lang || "fr") ? n > 1 : n !== 1; }; /* pluriel selon la langue de la page (français : n > 1) */
+  var lkDollars = function (s) { return /^(fr|de)/.test(document.documentElement.lang || "fr") ? s + "\u00a0$" : "$" + s; }; /* « 1 250 $ », « 1.250 $ » (allemand) ou « $1,250 » selon la langue de la page */
   const calculatorBase = new URL('calculateurs.html', document.currentScript?.src || document.querySelector('script[src*="fiches.js"]')?.src || new URL('/fiches.js', location.href).href);
   function calculatorLink(type, values, origin) {
     const url = new URL(calculatorBase);
@@ -25,7 +27,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     /* v7.61 : la feuille est à la racine du site, à côté de style.css (une page traduite /es/… charge un fiches.js
        traduit, rangé dans /es/ : la feuille n'y est pas) */
     const main = Array.from(document.querySelectorAll('link[rel="stylesheet"]')).find(l => /(?:^|\/)style\.css(?:\?|$)/.test(l.getAttribute('href') || ''));
-    link.href = new URL('calculator-entry.css?v=cf94b45f1d2d', main ? main.href : calculatorBase).href;
+    link.href = new URL('calculator-entry.css?v=cf94b45f1d2d', main ? main.href : calculatorBase).href.replace(/\/[a-z]{2}\/(?=calculator-entry\.css)/, '/'); /* v7.61 : la feuille est à la racine, y compris pour une page traduite (/en/) */
     link.dataset.calculatorEntry = 'true'; document.head.appendChild(link);
   }
 
@@ -156,13 +158,17 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
   const MOT = type === 'armes' ? ['arme', 'armes', 'arsenal'] : ['véhicule', 'véhicules', 'garage'];
   /* v7.61 : clé du lien de partage (#garage=… / #arsenal=…), identique dans toutes les langues ; MOT[2] est le mot affiché */
   const PARTAGE = type === 'armes' ? 'arsenal' : 'garage';
+  /* v7.62 : phrases écrites en entier pour chaque carnet (en allemand, « meine Garage » / « mein Arsenal » n'ont pas le même genre) */
+  const TXT = type === 'armes'
+    ? { dans: 'Dans mon arsenal', ajouter: 'Ajouter à mon arsenal', range: 'Rangé dans ton arsenal et retiré de tes envies.', envie: 'Gardé dans tes envies. Ce n’est pas une possession : rien n’est coché dans ton arsenal.', vider: 'Vider mon arsenal ?' }
+    : { dans: 'Dans mon garage', ajouter: 'Ajouter à mon garage', range: 'Rangé dans ton garage et retiré de tes envies.', envie: 'Gardé dans tes envies. Ce n’est pas une possession : rien n’est coché dans ton garage.', vider: 'Vider mon garage ?' };
 
   /* bouton de fiche */
   const bt = document.getElementById('own-bt');
   if(bt){
     const id = bt.dataset.id;
     const maj = () => { const on = !!own[id]; bt.classList.toggle('on', on); bt.setAttribute('aria-pressed',String(on));
-      bt.querySelector('span:last-child').textContent = on ? 'Dans mon ' + MOT[2] : 'Ajouter à mon ' + MOT[2]; };
+      bt.querySelector('span:last-child').textContent = on ? TXT.dans : TXT.ajouter; };
     /* v7.51 (lot 4) : envie (« Je le veux », lk_wish_v1 via carnets-core.js : une envie n’est jamais une possession) et lien
        « Voir mon garage » / « Voir mon arsenal » vers la page du carnet. Une envie devenue possession quitte les envies. */
     const carnet = type === 'armes' ? ['arsenal', 'Voir mon arsenal'] : ['garage', 'Voir mon garage'];
@@ -171,13 +177,13 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     const wished = () => { try { return !!wstore && wstore.isWished(type, id); } catch (e) { return false; } };
     const paintW = () => { if (!wb) return; const on = wished(); wb.setAttribute('aria-pressed', String(on)); wb.textContent = on ? 'Dans mes envies' : (type === 'armes' ? 'Je la veux' : 'Je le veux'); };
     bt.addEventListener('click', function(){ if(own[id]) delete own[id]; else own[id] = 1; ecrire(own); maj();
-      if (own[id] && wished()) { let ok = false; try { ok = wstore.setWish(type, id, false); } catch (e) { ok = false; } if (ok) window.LK.status('Rangé dans ton ' + MOT[2] + ' et retiré de tes envies.'); paintW(); } });
+      if (own[id] && wished()) { let ok = false; try { ok = wstore.setWish(type, id, false); } catch (e) { ok = false; } if (ok) window.LK.status(TXT.range); paintW(); } });
     maj();
     if (wstore && /^[a-z0-9][a-z0-9-]{0,99}$/.test(id)) {
       wb = document.createElement('button'); wb.type = 'button'; wb.className = 'wish-bt';
       wb.addEventListener('click', function(){ const on = wb.getAttribute('aria-pressed') !== 'true'; let ok = false; try { ok = wstore.setWish(type, id, on, 'fiche'); } catch (e) { ok = false; }
         if (!ok) { window.LK.status('Impossible de garder cette envie : le stockage du navigateur est indisponible.'); return; }
-        paintW(); window.LK.status(on ? 'Gardé dans tes envies. Ce n’est pas une possession : rien n’est coché dans ton ' + MOT[2] + '.' : 'Retiré de tes envies.'); });
+        paintW(); window.LK.status(on ? TXT.envie : 'Retiré de tes envies.'); });
       paintW(); window.addEventListener('storage', e => { if (e.key === 'lk_wish_v1') paintW(); });
     }
     const see = document.createElement('a'); see.className = 'own-see'; see.href = '../carnets/' + carnet[0] + '.html'; see.textContent = carnet[1];
@@ -192,7 +198,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       /* v7.59 (check ultime, CALC-13) : la phrase dépend de la fiche : un prix publié (data-prix posé par le générateur) est annoncé
          comme prix de référence ; sinon le prix reste « pas encore connu ». Rien n’est figé dans ce script. */
       const prix = Number(bt.dataset.prix), prixStatut = bt.dataset.prixStatut || '';
-      const explanation = document.createElement('p'); explanation.textContent = 'Regarde si tu as assez d’argent, et sinon combien de temps de jeu il te faut. ' + (bt.dataset.prix !== undefined && Number.isFinite(prix) && prix >= 0 ? 'Son prix publié (' + new Intl.NumberFormat('fr-FR').format(prix) + ' $' + (prixStatut === 'official' ? ', officiel' : prixStatut === 'verified' ? ', mesuré et vérifié' : '') + ') est proposé comme prix de référence : tu peux en écrire un autre.' : 'Son prix n’est pas encore connu : tu peux écrire celui que tu imagines.');
+      const explanation = document.createElement('p'); explanation.textContent = 'Regarde si tu as assez d’argent, et sinon combien de temps de jeu il te faut. ' + (bt.dataset.prix !== undefined && Number.isFinite(prix) && prix >= 0 ? 'Son prix publié (' + lkDollars(new Intl.NumberFormat('fr-FR').format(prix)) + (prixStatut === 'official' ? ', officiel' : prixStatut === 'verified' ? ', mesuré et vérifié' : '') + ') est proposé comme prix de référence : tu peux en écrire un autre.' : 'Son prix n’est pas encore connu : tu peux écrire celui que tu imagines.');
       const link = document.createElement('a'); link.className = 'lk-entry-button'; link.href = calculatorLink(type, { id }, 'fiche'); link.textContent = 'Est-ce que je peux l’acheter ? ↗';
       card.append(eyebrow, title, explanation, link);
       (bt.closest('.fiche-liens') || bt).insertAdjacentElement('afterend', card);
@@ -264,7 +270,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       bar.querySelector('.own-total').textContent = cards.length;
       const raz = bar.querySelector('[data-raz]');
       if(raz) raz.addEventListener('click', function(){
-        if(!confirm('Vider mon ' + MOT[2] + ' ?')) return; own = {}; ecrire(own); majCartes(); });
+        if(!confirm(TXT.vider)) return; own = {}; ecrire(own); majCartes(); });
       const exp = bar.querySelector('[data-export]');
       if(exp) exp.addEventListener('click', function(){
         const ids = Object.keys(own).join(',');
@@ -323,7 +329,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       });
       if(!tray) return;
       tray.classList.toggle('on', sel.length > 0);
-      tray.querySelector('b').textContent = sel.length + ' sélectionné' + (lkPluriel(sel.length)?'s' : '');
+      tray.querySelector('b').textContent = sel.length + (lkPluriel(sel.length)?' sélectionnés':' sélectionné');
       tray.querySelector('a').href = 'comparateur.html?type=' + type + '&ids=' + sel.join(',');
       tray.querySelector('a').style.visibility = sel.length >= 2 ? 'visible' : 'hidden';
     }
@@ -339,7 +345,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       const tools = c.querySelector('.veh-tools'); if(!tools) return;
       const b = document.createElement('button'); b.type = 'button'; b.className = 'reel-card';
       b.innerHTML = '<span class="reel-ico" aria-hidden="true">↗</span><span>Modèle réel</span>';
-      b.title = 'Voir le ' + (c.dataset.reelNom || 'modèle réel') + ' en photo';
+      b.title = 'Voir le {nom} en photo'.replace('{nom}', c.dataset.reelNom || 'modèle réel');
       b.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation();
         window.open(url, '_blank', 'noopener'); });
       tools.appendChild(b);

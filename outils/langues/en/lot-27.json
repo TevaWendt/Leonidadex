@@ -1,0 +1,85 @@
+{
+ "_note": "v7.62 : clés propres à un fichier, règles à trous et mots jamais traduits dans un script, repris de l’espagnol (outils/langues/es/lot-45, lot-46, lot-54, lot-55) pour l’anglais.",
+ "_scriptsJamais": [
+  "source",
+  "aucun",
+  "aucune",
+  "fiche",
+  "fiches",
+  "calcul",
+  "calculs",
+  "restants",
+  "$/partie",
+  "mission",
+  "missions",
+  "plans",
+  "plan",
+  "tatouages",
+  "lieux",
+  "lieu",
+  "base",
+  "consommables",
+  "course",
+  "batte",
+  "coiffures"
+ ],
+ "progression.js::calculs": "calculations",
+ "progression.js::calcul": "calculation",
+ "progression.js::envies": "wishes",
+ "progression.js::envie": "wish",
+ "collectibles-tools.js::fiche": "page",
+ "collectibles.js::fiche": "page",
+ "app.js::restants": "remaining",
+ "app.js::restant": "remaining",
+ "carnets.js::calcul": [
+  {
+   "si": "'plans'\\]\\s*:\\s*\\[\\s*$",
+   "texte": "calculation"
+  }
+ ],
+ "carnets.js::calculs": [
+  {
+   "si": "'calcul',\\s*$",
+   "texte": "calculations"
+  }
+ ],
+ "comparateur.js::armes": [
+  {
+   "si": "\\?'véhicules':\\s*$",
+   "texte": "weapons"
+  }
+ ],
+ "comparateur.js::véhicules": "vehicles",
+ "carte.js::lieux": [
+  {
+   "si": ">\\s*1\\s*\\?\\s*$",
+   "texte": "places"
+  }
+ ],
+ "carnets/arsenal.html::armes": "weapons",
+ "carnets/arsenal.html::arme": "weapon",
+ "re:^Bâtiment (L\\d+)$": "Building {1}",
+ "re:^(.+) \\(nom réel\\)$": "{t1} (real name)",
+ "re:^(.+) \\(nom supposé\\)$": "{t1} (assumed name)",
+ "re:^Regroupe 1 bâtiments? repérés\\.$": "Groups 1 spotted building.",
+ "re:^Regroupe (\\d+) bâtiments? repérés\\.$": "Groups {1} spotted buildings.",
+ "re:^Équivalent réel : (.+)\\.$": "Real-world equivalent: {1}.",
+ "re:^((?:[A-Z0-9][^\\s]*)(?:\\s(?:[A-Z0-9][^\\s]*|of|de|du|the|and|&))*) dans GTA VI$": "{1} in GTA VI",
+ "re:^(.+) : armureries repérées$": "{1}: spotted gun stores",
+ "re:^(.+) : lieux liés$": "{1}: linked places",
+ "Gilet pare-balles dans GTA VI": "Body armor in GTA VI",
+ "Kit de soin dans GTA VI": "Health kit in GTA VI",
+ "Munitions spéciales dans GTA VI": "Special ammo in GTA VI",
+ "Tout ce qui s’achète dans GTA VI": "Everything you can buy in GTA VI",
+ "Carte de Leonida : armureries repérées": "Leonida map: spotted gun stores",
+ "Bateaux : ce qu’on sait dans GTA VI": "Boats: what we know in GTA VI",
+ "dont <1>0</1> repères de la série (GTA V, GTA Online), pas encore vus dans GTA VI": "including <1>0</1> series benchmarks (GTA V, GTA Online), not seen in GTA VI yet",
+ "Logements et appartements : ce qu’on sait dans GTA VI": "Housing and apartments: what we know in GTA VI",
+ "Consommables : ce qu’on sait dans GTA VI": "Consumables: what we know in GTA VI",
+ "Fiche complète : Kit de soin dans GTA VI": "Full page: Health kit in GTA VI",
+ "Fiche complète : Gilet pare-balles dans GTA VI": "Full page: Body armor in GTA VI",
+ "Personnalisations : ce qu’on sait dans GTA VI": "Customization: what we know in GTA VI",
+ "Fiche complète : Munitions spéciales dans GTA VI": "Full page: Special ammo in GTA VI",
+ "Vêtements et style : ce qu’on sait dans GTA VI": "Clothing and style: what we know in GTA VI",
+ "collectibles-help.js::or": "="
+}

@@ -11,7 +11,9 @@
 const fs = require('fs'), path = require('path'), http = require('http'); const { chromium } = require('playwright');
 const root = path.resolve(process.env.SITE_ROOT || path.join(__dirname, '../..')), out = path.resolve(process.argv[2] || path.join(root, '../../qa/langues'));
 fs.mkdirSync(out, { recursive: true });
-const { frenchHits } = require('./langues-helper.cjs');
+const { frenchHits: frOnly, foreignHits } = require('./langues-helper.cjs');
+/* v7.64 : une page allemande ne doit montrer ni français ni anglais */
+const frenchHits = (text, code = 'en') => code === 'de' ? foreignHits(text, code) : frOnly(text, code);
 const L = require(path.join(root, 'outils/langues.cjs')), CFG = L.config(root);
 const LANGS = CFG.langues.filter(l => l.etat === 'publiee' && l.code !== CFG.source && (!process.env.LK_LANGUE || l.code === process.env.LK_LANGUE));
 const vercel = JSON.parse(fs.readFileSync(path.join(root, 'vercel.json'), 'utf8')), HDR = Object.fromEntries((vercel.headers.find(r => r.source === '/(.*)')?.headers || []).map(h => [h.key, h.value]));
@@ -22,7 +24,7 @@ function check(ok, label, detail = '') { ok ? passed++ : failed++; const t = (ok
 const VISIBLE = `()=>{const out=[];
   const shown=el=>{for(let e=el;e&&e!==document.documentElement;e=e.parentElement){const cs=getComputedStyle(e);if(cs.display==='none'||cs.visibility==='hidden'||e.hidden)return false;}return true;};
   const skip=el=>el.closest('[data-lk-langbar],[lang="fr"],[hreflang="fr"],[translate="no"],script,style,svg,.lk-lang-offer,noscript');
-  const w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);let n;while((n=w.nextNode())){const t=n.nodeValue.trim();if(!t)continue;const el=n.parentElement;if(!el||skip(el)||!shown(el))continue;out.push(t);}
+  const seenW=new Set();const w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);let n;while((n=w.nextNode())){const t=n.nodeValue.trim();if(!t)continue;const el=n.parentElement;if(!el||skip(el)||!shown(el))continue;const wd=el.closest('[data-lk-words]');if(wd){if(!seenW.has(wd)){seenW.add(wd);out.push(wd.textContent.replace(/\\s+/g,' ').trim());}continue;}out.push(t);}
   for(const el of document.body.querySelectorAll('[aria-label],[title],[placeholder]')){if(skip(el)||!shown(el))continue;for(const a of ['aria-label','title','placeholder']){const v=el.getAttribute(a);if(v)out.push(v);}}
   for(const el of document.body.querySelectorAll('*')){if(skip(el)||!shown(el))continue;for(const ps of ['::before','::after']){let c=getComputedStyle(el,ps).content;if(!c||c==='none'||c==='normal')continue;c=c.replace(/attr\\(([\\w-]+)\\)/g,(m,a)=>JSON.stringify(el.getAttribute(a)||''));const t=[...c.matchAll(/"((?:[^"\\\\]|\\\\.)*)"/g)].map(m=>m[1]).join('');if(/[A-Za-zÀ-ÿ]{2}/.test(t))out.push(t);}}
   return out;}`;
@@ -33,7 +35,9 @@ const VISIBLE = `()=>{const out=[];
     for (const LG of LANGS) {
       const code = LG.code, dir = LG.dossier, only = process.env.LK_PAGES ? process.env.LK_PAGES.split(',') : null;
       for (const W of [1280, 390]) {
-        const queue = (only || LG.pages).slice(), errors = [], fails = [], french = [], overflow = [], meta = [];
+        /* v7.64 : les redirections (meta refresh) quittent la page aussitôt : contrôlées par langues.test.cjs, pas ici */
+        const PAGES = (only || LG.pages).filter(p => !/http-equiv="refresh"/i.test(fs.readFileSync(path.join(root, dir, p), 'utf8')));
+        const queue = PAGES.slice(), errors = [], fails = [], french = [], overflow = [], meta = [];
         async function worker() {
           const ctx = await browser.newContext({ viewport: { width: W, height: 900 }, locale: LG.locale, serviceWorkers: 'block' });
           await ctx.route('**/*', r => r.request().url().startsWith(base) ? r.continue() : r.abort());
@@ -65,7 +69,7 @@ const VISIBLE = `()=>{const out=[];
           await ctx.close();
         }
         await Promise.all(Array.from({ length: Number(process.env.LK_PARALLELE || 6) }, worker));
-        const n = (only || LG.pages).length, tag = dir + '/ (' + n + ' pages, ' + W + ' px)';
+        const n = PAGES.length, tag = dir + '/ (' + n + ' pages, ' + W + ' px)';
         check(!errors.length, tag + ' : aucune erreur JavaScript', errors.slice(0, 6).join(' ; '));
         check(!fails.length, tag + ' : aucune requête du site en échec', fails.slice(0, 6).join(' ; '));
         if (W === 1280) {

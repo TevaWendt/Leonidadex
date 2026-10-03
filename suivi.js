@@ -78,7 +78,7 @@
     }
     bars.forEach(bar => {
       const f = bar.dataset.trackBar, raz = bar.querySelector('[data-raz]');
-      if (raz && !raz.dataset.bound) { raz.dataset.bound = '1'; raz.addEventListener('click', () => { if (!FAMILIES[f] || !confirm('Vider « ' + FAMILIES[f].label + ' » sur cet appareil ?')) return; if (write(f, {})) emit(f); }); }
+      if (raz && !raz.dataset.bound) { raz.dataset.bound = '1'; raz.addEventListener('click', () => { if (!FAMILIES[f] || !confirm('Vider « {nom} » sur cet appareil ?'.replace('{nom}', FAMILIES[f].label))) return; if (write(f, {})) emit(f); }); }
     });
     listeners.add(refresh); refresh();
   }

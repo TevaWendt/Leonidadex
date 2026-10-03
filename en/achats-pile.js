@@ -59,7 +59,7 @@
     var key = 'lk_achats_vue';
     btn.hidden = false;
     function set(on, save) {
-      stack.classList.toggle('is-grid', on); btn.setAttribute('aria-pressed', String(on)); btn.textContent = on ? 'Back to the stack' : 'See everything in a grid';
+      stack.classList.toggle('is-grid', on); btn.setAttribute('aria-pressed', String(on)); btn.textContent = on ? 'Back to the stack' : 'View everything as a grid';
       if (save) { try { sessionStorage.setItem(key, on ? 'grille' : 'pile'); } catch (e) { /* choix valable pour cette page seulement */ } }
       queue();
     }

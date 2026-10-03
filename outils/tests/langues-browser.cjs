@@ -15,7 +15,9 @@
 const fs = require('fs'), path = require('path'), http = require('http'); const { chromium } = require('playwright');
 const root = path.resolve(process.env.SITE_ROOT || path.join(__dirname, '../..')), out = path.resolve(process.argv[2] || path.join(root, '../../qa/langues'));
 fs.mkdirSync(out, { recursive: true });
-const { frenchHits } = require('./langues-helper.cjs');
+const { frenchHits: frOnly, foreignHits } = require('./langues-helper.cjs');
+/* v7.64 : une page allemande ne doit montrer ni français ni anglais */
+const frenchHits = (text, code = 'en') => code === 'de' ? foreignHits(text, code) : frOnly(text, code);
 const L = require(path.join(root, 'outils/langues.cjs')), CFG = L.config(root), EN = CFG.langues.find(l => l.code === 'en');
 const LANGS = CFG.langues.filter(l => l.etat === 'publiee' && l.code !== CFG.source), PUB = CFG.langues.filter(l => l.etat === 'publiee');
 /* pages vues à chaque largeur : toutes pour une langue partielle, un échantillon pour une langue complète */
@@ -30,7 +32,7 @@ const H = require('./check-ultime-helper.cjs'); const B = require(path.join(root
 const { D, catalogue, sourceActivities, presets } = H.siteData(), DV = H.dataVersion(D, catalogue, sourceActivities), initial = B.initial(DV, presets);
 const TOOLS = ['goal', 'purchase', 'session', 'budget', 'order', 'roi', 'activities', 'compare', 'plan'];
 /* état rempli, avec des noms écrits par un joueur de la langue (les noms saisis ne sont jamais traduits) */
-const NAMES = { en: ['Check', 'My custom purchase', 'My car', 'Races', 'Heist', 'Garage'], es: ['Prueba', 'Mi compra', 'Mi coche', 'Carreras', 'Golpe', 'Garaje'] };
+const NAMES = { en: ['Check', 'My custom purchase', 'My car', 'Races', 'Heist', 'Garage'], es: ['Prueba', 'Mi compra', 'Mi coche', 'Carreras', 'Golpe', 'Garaje'], it: ['Prova', 'Il mio acquisto', 'La mia auto', 'Gare', 'Colpo', 'Garage'], de: ['Test', 'Mein eigener Kauf', 'Mein Auto', 'Rennen', 'Raubzug', 'Garage'] };
 function filledState(code) {
   const s = H.planWithMissions(B, H.baseState(B, initial, catalogue)), n = NAMES[code] || NAMES.en;
   s.name = n[0]; s.assets[0].name = n[1];
@@ -40,16 +42,18 @@ function filledState(code) {
 /* questions du hub et onglet attendu */
 const HUB = {
   en: [['How long to reach 1 million playing 1 hour a day?', 'goal'], ['Can I afford a vehicle that costs $250,000?', 'purchase'], ['I have 30 minutes for my session', 'session'], ['Is it worth it to buy a $500,000 business?', 'roi'], ['Which one should I choose?', 'compare']],
-  es: [['¿Cuánto tiempo para llegar a 1 millón jugando 1 hora al día?', 'goal'], ['¿Puedo comprar un vehículo que cuesta 250.000 $?', 'purchase'], ['Tengo 30 minutos para mi sesión', 'session'], ['¿Vale la pena comprar un negocio de 500.000 $?', 'roi'], ['¿Cuál debería elegir?', 'compare'], ['¿En qué orden compro?', 'order'], ['Quiero repartir mi presupuesto', 'budget'], ['¿Qué actividad da más?', 'activities'], ['Quiero hacer un plan de negocio', 'plan']]
+  es: [['¿Cuánto tiempo para llegar a 1 millón jugando 1 hora al día?', 'goal'], ['¿Puedo comprar un vehículo que cuesta 250.000 $?', 'purchase'], ['Tengo 30 minutos para mi sesión', 'session'], ['¿Vale la pena comprar un negocio de 500.000 $?', 'roi'], ['¿Cuál debería elegir?', 'compare'], ['¿En qué orden compro?', 'order'], ['Quiero repartir mi presupuesto', 'budget'], ['¿Qué actividad da más?', 'activities'], ['Quiero hacer un plan de negocio', 'plan']],
+  it: [['Quanto tempo per arrivare a 1 milione giocando 1 ora al giorno?', 'goal'], ['Posso comprare un veicolo che costa 250.000 $?', 'purchase'], ['Ho 30 minuti per la mia sessione', 'session'], ['Vale la pena comprare un’attività da 500.000 $?', 'roi'], ['Quale dovrei scegliere?', 'compare'], ['In che ordine compro?', 'order'], ['Voglio dividere il mio budget', 'budget'], ['Quale attività rende di più?', 'activities'], ['Voglio fare un business plan', 'plan']],
+  de: [['Ich habe 200.000 $ und will 1 Million haben', 'goal'], ['Wie lange brauche ich für 1 Million, wenn ich 2 Stunden am Tag spiele?', 'goal'], ['Kann ich mir ein Fahrzeug für 250.000 $ leisten?', 'purchase'], ['Ich habe 30 Minuten für meine Session', 'session'], ['Lohnt es sich, ein Geschäft für 500.000 $ zu kaufen?', 'roi'], ['Welches soll ich wählen?', 'compare']]
 };
 /* « 1 500 » écrit dans la langue, et la saisie attendue */
-const NUM = { en: '1,500', es: '1.500' };
+const NUM = { en: '1,500', es: '1.500', it: '1.500', de: '1.500' };
 /* texte visible d'une zone : nœuds texte des éléments affichés + aria-label, title, placeholder ; hors barre de langue,
    hors liens et éléments marqués lang="fr" (lien vers une page française, nom de langue) */
 const VISIBLE = `(sel)=>{const rootEl=document.querySelector(sel)||document.body,out=[];
   const shown=el=>{for(let e=el;e&&e!==document.documentElement;e=e.parentElement){const cs=getComputedStyle(e);if(cs.display==='none'||cs.visibility==='hidden'||e.hidden)return false;}return true;};
   const skip=el=>el.closest('[data-lk-langbar],[lang="fr"],[hreflang="fr"],[translate="no"],script,style,svg,.lk-lang-offer');
-  const w=document.createTreeWalker(rootEl,NodeFilter.SHOW_TEXT);let n;while((n=w.nextNode())){const t=n.nodeValue.trim();if(!t)continue;const el=n.parentElement;if(!el||skip(el)||!shown(el))continue;out.push(t);}
+  const seenW=new Set();const w=document.createTreeWalker(rootEl,NodeFilter.SHOW_TEXT);let n;while((n=w.nextNode())){const t=n.nodeValue.trim();if(!t)continue;const el=n.parentElement;if(!el||skip(el)||!shown(el))continue;const wd=el.closest('[data-lk-words]');if(wd){if(!seenW.has(wd)){seenW.add(wd);out.push(wd.textContent.replace(/\\s+/g,' ').trim());}continue;}out.push(t);}
   for(const el of rootEl.querySelectorAll('[aria-label],[title],[placeholder]')){if(skip(el)||!shown(el))continue;for(const a of ['aria-label','title','placeholder']){const v=el.getAttribute(a);if(v)out.push(v);}}
   /* texte posé par une feuille de style (::before, ::after) */
   for(const el of rootEl.querySelectorAll('*')){if(skip(el)||!shown(el))continue;for(const ps of ['::before','::after']){let c=getComputedStyle(el,ps).content;if(!c||c==='none'||c==='normal')continue;c=c.replace(/attr\(([\w-]+)\)/g,(m,a)=>JSON.stringify(el.getAttribute(a)||''));const t=[...c.matchAll(/"((?:[^"\\\\]|\\\\.)*)"/g)].map(m=>m[1]).join('');if(/[A-Za-zÀ-ÿ]{2}/.test(t))out.push(t);}}
@@ -61,11 +65,11 @@ async function frenchIn(page, sel, label, code = 'en') {
   if (DUMP) DUMP.push('## ' + label, ...[...new Set(texts)].map(t => '- ' + t.replace(/\s+/g, ' ')), '');
   const hits = []; for (const t of texts) { const h = frenchHits(t, code); if (h.length) hits.push('« ' + t.slice(0, 100) + ' » [' + h.slice(0, 3).join(', ') + ']'); }
   /* anglais : « $1,250 », jamais « 1 250 $ » ; espagnol : « 1.250 $ », jamais « $1,250 » ni « 1 250 $ » (espaces à la française) */
-  const money = code === 'es'
+  const money = code === 'es' || code === 'it' || code === 'de'
     ? texts.filter(t => /\$\d/.test(t) || /\d{1,3}(?:[\u00a0\u202f ]\d{3})+\s*\$/.test(t)).slice(0, 3)
     : texts.filter(t => /\d[\d.,]*[\s\u00a0\u202f]?\$(?![\d{])/.test(t) && !/\$\d/.test(t.replace(/\d[\d.,]*[\s\u00a0\u202f]?\$(?![\d{])/, ''))).slice(0, 3);
   check(!hits.length, label + ' : aucun mot français visible', [...new Set(hits)].slice(0, 8).join(' ; '));
-  check(!money.length, label + (code === 'es' ? ' : montants écrits 1.250 $ (jamais « $1,250 » ni « 1 250 $ »)' : ' : montants écrits $1,250 (jamais « 1 250 $ »)'), money.join(' ; '));
+  check(!money.length, label + (code === 'es' || code === 'it' || code === 'de' ? ' : montants écrits 1.250 $ (jamais « $1,250 » ni « 1 250 $ »)' : ' : montants écrits $1,250 (jamais « 1 250 $ »)'), money.join(' ; '));
   return texts;
 }
 async function openPage(ctx, url, storage) {
@@ -149,6 +153,22 @@ async function bar(page, label, expect) {
       await Promise.all([page.waitForNavigation({ waitUntil: 'load' }), page.click('.lk-lang-offer a')]);
       check(/\/es\/vehicules\.html$/.test(page.url()), '« Leer en español » ouvre la même page en espagnol', page.url());
       check(await page.evaluate(() => localStorage.getItem('lk_lang_v1')) === 'es', 'choix « es » écrit après le clic');
+      await ctx.close(); }
+    if (LANGS.some(l => l.code === 'it')) { const ctx = await browser.newContext({ viewport: { width: 390, height: 800 }, locale: 'it-IT' }); const page = await openPage(ctx, '/armes.html');
+      const offer = await page.evaluate(() => { const o = document.querySelector('.lk-lang-offer'); return o && { text: o.textContent, lang: o.lang, href: o.querySelector('a').getAttribute('href') }; });
+      check(!!offer && /Questa pagina è disponibile anche in italiano/.test(offer.text) && offer.lang === 'it' && offer.href === 'it/armes.html', 'navigateur italien sur une page française : bandeau italien vers la même page', JSON.stringify(offer));
+      await page.screenshot({ path: path.join(out, 'bandeau-it-390.png') });
+      await Promise.all([page.waitForNavigation({ waitUntil: 'load' }), page.click('.lk-lang-offer a')]);
+      check(/\/it\/armes\.html$/.test(page.url()), '« Leggi in italiano » ouvre la même page en italien', page.url());
+      check(await page.evaluate(() => localStorage.getItem('lk_lang_v1')) === 'it', 'choix « it » écrit après le clic');
+      await ctx.close(); }
+    if (LANGS.some(l => l.code === 'de')) { const ctx = await browser.newContext({ viewport: { width: 390, height: 800 }, locale: 'de-DE' }); const page = await openPage(ctx, '/carte.html');
+      const offer = await page.evaluate(() => { const o = document.querySelector('.lk-lang-offer'); return o && { text: o.textContent, lang: o.lang, href: o.querySelector('a').getAttribute('href') }; });
+      check(!!offer && /Diese Seite gibt es auch auf Deutsch\./.test(offer.text) && offer.lang === 'de' && offer.href === 'de/carte.html', 'navigateur allemand sur une page française : bandeau allemand vers la même page', JSON.stringify(offer));
+      await page.screenshot({ path: path.join(out, 'bandeau-de-390.png') });
+      await Promise.all([page.waitForNavigation({ waitUntil: 'load' }), page.click('.lk-lang-offer a')]);
+      check(/\/de\/carte\.html$/.test(page.url()), '« Auf Deutsch lesen » ouvre la même page en allemand', page.url());
+      check(await page.evaluate(() => localStorage.getItem('lk_lang_v1')) === 'de', 'choix « de » écrit après le clic');
       await ctx.close(); }
     { const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 }, locale: 'fr-FR' }); const page = await openPage(ctx, '/en/tuto.html');
       const offer = await page.evaluate(() => document.querySelector('.lk-lang-offer')?.textContent || '');

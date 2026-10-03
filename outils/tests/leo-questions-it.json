@@ -1,0 +1,5788 @@
+{
+ "_note": "Versione italiana di leo-questions.json: le stesse domande di prova di Léo, nello stesso ordine e con le stesse attese ed etichette, scritte come le digiterebbe un giocatore italiano e rigiocate con node outils/tests/leo-eval.cjs --langue it.",
+ "schemaVersion": 1,
+ "questions": [
+  {
+   "q": "gta 6 quando esce esattamente",
+   "expect": {
+    "topic": "sortie"
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "data gtavi",
+   "expect": {
+    "topic": "sortie"
+   },
+   "tags": [
+    "jeu",
+    "abrev"
+   ]
+  },
+  {
+   "q": "qnd esce gta6",
+   "expect": {
+    "topic": "sortie"
+   },
+   "tags": [
+    "sms"
+   ]
+  },
+  {
+   "q": "x qnd e gta 6 ?",
+   "expect": {
+    "topic": "sortie"
+   },
+   "tags": [
+    "sms"
+   ]
+  },
+  {
+   "q": "quante volte è stato rinviato il gioco",
+   "expect": {
+    "topic": "reports"
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "xke hanno rimandato gta6",
+   "expect": {
+    "topic": "reports"
+   },
+   "tags": [
+    "sms"
+   ]
+  },
+  {
+   "q": "a ke ora sara dispo gta 6",
+   "expect": {
+    "topic": "heure"
+   },
+   "tags": [
+    "sms"
+   ]
+  },
+  {
+   "q": "quando si può precaricare gta 6",
+   "expect": {
+    "topic": "precharge"
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "gta6 quanti giga pesa",
+   "expect": {
+    "topic": "taille"
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "su quali piattaforme esce gta 6",
+   "expect": {
+    "topic": "plateformes"
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "gta 6 uscira mai su pc ?",
+   "expect": {
+    "topic": "pc"
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "gta6 pc qnd",
+   "expect": {
+    "topic": "pc"
+   },
+   "tags": [
+    "sms"
+   ]
+  },
+  {
+   "q": "gta 6 esce anche su ps4",
+   "expect": {
+    "topic": "ps4"
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "gta 6 su switch 2 ?",
+   "expect": {
+    "topic": "ps4"
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "gta 6 gira a 60fps ?",
+   "expect": {
+    "topic": "ps5pro"
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "crossplay tra ps5 e xbox su gta 6",
+   "expect": {
+    "topic": "crossplay"
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "prezzo gta 6 in euro",
+   "expect": {
+    "topic": "prix"
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "qnt costa gta6",
+   "expect": {
+    "topic": "prix"
+   },
+   "tags": [
+    "sms"
+   ]
+  },
+  {
+   "q": "il gioco quanto costa",
+   "expect": {
+    "topic": "prix"
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "che edizioni ci sono di gta 6",
+   "expect": {
+    "topic": "editions"
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "cs c e nell ed ultimate",
+   "expect": {
+    "any": [
+     {
+      "topic": "ultime-contenu"
+     },
+     {
+      "topic": "editions"
+     }
+    ]
+   },
+   "tags": [
+    "sms"
+   ]
+  },
+  {
+   "q": "contenuto edizione ultimate",
+   "expect": {
+    "any": [
+     {
+      "topic": "ultime-contenu"
+     },
+     {
+      "topic": "editions"
+     }
+    ]
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "dove preordinare gta6",
+   "expect": {
+    "topic": "precommande"
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "bonus preorder gta6",
+   "expect": {
+    "any": [
+     {
+      "topic": "precommande"
+     },
+     {
+      "topic": "vintage"
+     }
+    ]
+   },
+   "tags": [
+    "abrev"
+   ]
+  },
+  {
+   "q": "pack vintage vice city che cos'è",
+   "expect": {
+    "topic": "vintage"
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "gta+ è incluso ?",
+   "expect": {
+    "topic": "gtaplus"
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "c'è il disco nella scatola di gta 6",
+   "expect": {
+    "topic": "physique"
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "da quando e stato annunciato gta 6",
+   "expect": {
+    "topic": "annonce"
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "il primo trailer di gta 6 quando è uscito",
+   "expect": {
+    "topic": "trailer1"
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "trailer 2 gta6 data",
+   "expect": {
+    "topic": "trailer2"
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "cos'è l'extended look",
+   "expect": {
+    "topic": "extended"
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "ce del gameplay di gta 6 ?",
+   "expect": {
+    "topic": "extended"
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "il trailer 3 quando arriva",
+   "expect": {
+    "topic": "trailer3"
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "che canzone c'è nel trailer 1",
+   "expect": {
+    "topic": "musique-trailer"
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "chi fa gta 6",
+   "expect": {
+    "topic": "developpeur"
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "quanto è costato fare gta 6",
+   "expect": {
+    "topic": "budget-dev"
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "gta 7 quando esce",
+   "expect": {
+    "topic": "gta7"
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "gta6 è in italiano ?",
+   "expect": {
+    "topic": "vf"
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "gta 6 dove e ambientato",
+   "expect": {
+    "topic": "leonida"
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "leonida ke roba e",
+   "expect": {
+    "topic": "leonida"
+   },
+   "tags": [
+    "sms"
+   ]
+  },
+  {
+   "q": "quante regioni ci sono in gta 6",
+   "expect": {
+    "any": [
+     {
+      "topic": "regions"
+     },
+     {
+      "topic": "hub-lieux-2"
+     }
+    ]
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "le keys cosa sono",
+   "expect": {
+    "topic": "keys"
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "grassrivers ke e",
+   "expect": {
+    "topic": "grassrivers"
+   },
+   "tags": [
+    "sms"
+   ]
+  },
+  {
+   "q": "port gelhorn cosè",
+   "expect": {
+    "topic": "gellhorn"
+   },
+   "tags": [
+    "faute"
+   ]
+  },
+  {
+   "q": "ambrosia che tipo di regione è",
+   "expect": {
+    "topic": "ambrosia"
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "monte kalaga ke e",
+   "expect": {
+    "topic": "kalaga"
+   },
+   "tags": [
+    "sms"
+   ]
+  },
+  {
+   "q": "la mappa di gta 6 è grande ?",
+   "expect": {
+    "any": [
+     {
+      "topic": "taille-carte"
+     },
+     {
+      "topic": "carte-plus-grande"
+     },
+     {
+      "topic": "hub-lieux-4"
+     }
+    ]
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "ci sono animali in gta 6",
+   "expect": {
+    "topic": "animaux"
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "gta online di gta 6 quando",
+   "expect": {
+    "topic": "online"
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "gli sbirri in gta 6 come funzionano",
+   "expect": {
+    "topic": "police"
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "la pula su gta6",
+   "expect": {
+    "topic": "police"
+   },
+   "tags": [
+    "sms"
+   ]
+  },
+  {
+   "q": "come si ruba una macchina in gta 6",
+   "expect": {
+    "topic": "vol-voiture"
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "si possono rapinare i negozi ?",
+   "expect": {
+    "any": [
+     {
+      "topic": "braquage"
+     },
+     {
+      "topic": "braquer-magasins"
+     },
+     {
+      "topic": "hub-entreprises-3"
+     }
+    ]
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "si puo ingrassare in gta 6",
+   "expect": {
+    "any": [
+     {
+      "topic": "poids"
+     },
+     {
+      "topic": "acq-nourriture-2"
+     }
+    ]
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "ci sono i social in gta 6",
+   "expect": {
+    "topic": "reseaux"
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "che radio ci sono in gta 6",
+   "expect": {
+    "topic": "radio"
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "quanto costa una macchina in gta 6",
+   "expect": {
+    "any": [
+     {
+      "topic": "argent"
+     },
+     {
+      "topic": "vehicules-nombre"
+     }
+    ]
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "si può comprare una casa in gta 6 ?",
+   "expect": {
+    "any": [
+     {
+      "topic": "entreprises-achat"
+     },
+     {
+      "topic": "hub-demeures-1"
+     },
+     {
+      "topic": "logements-page"
+     }
+    ]
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "quante armi ci sono in gta 6",
+   "expect": {
+    "topic": "armes-nombre"
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "quanti veicoli ci sono nel gioco",
+   "expect": {
+    "topic": "vehicules-nombre"
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "si può truccare l'auto ?",
+   "expect": {
+    "any": [
+     {
+      "topic": "personnalisation"
+     },
+     {
+      "topic": "acq-customizations-1"
+     }
+    ]
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "ci sono le barche in gta 6",
+   "expect": {
+    "topic": "bateaux"
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "si puo pilotare un elicottero",
+   "expect": {
+    "topic": "avions"
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "pegi di gta 6",
+   "expect": {
+    "topic": "pegi"
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "codici dei trucchi gta 6",
+   "expect": {
+    "topic": "mods"
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "gta 6 in vr ?",
+   "expect": {
+    "topic": "vr"
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "è la stessa vice city del gioco del 2002",
+   "expect": {
+    "topic": "vice-city-2002"
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "cosa c'è di nuovo rispetto a gta 5",
+   "expect": {
+    "topic": "gta5-diff"
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "la data è sicura o lo rinviano di nuovo",
+   "expect": {
+    "topic": "date-fiable"
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "gta 6 su ps6",
+   "expect": {
+    "topic": "ps6"
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "quante ore di gioco dura gta 6",
+   "expect": {
+    "topic": "mission-solo"
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "chi sono i 2 pg principali",
+   "expect": {
+    "any": [
+     {
+      "topic": "protagonistes"
+     },
+     {
+      "topic": "personnages-jouables"
+     },
+     {
+      "topic": "hub-personnages-3"
+     }
+    ]
+   },
+   "tags": [
+    "abrev"
+   ]
+  },
+  {
+   "q": "lucia caminos chi è",
+   "expect": {
+    "topic": "lucia"
+   },
+   "tags": [
+    "personnages"
+   ]
+  },
+  {
+   "q": "parlami di jason duval",
+   "expect": {
+    "topic": "jason"
+   },
+   "tags": [
+    "personnages"
+   ]
+  },
+  {
+   "q": "ki e cal",
+   "expect": {
+    "any": [
+     {
+      "topic": "cal"
+     },
+     {
+      "entity": "character:cal"
+     }
+    ]
+   },
+   "tags": [
+    "sms"
+   ]
+  },
+  {
+   "q": "dre quan priest chi è",
+   "expect": {
+    "topic": "drequan"
+   },
+   "tags": [
+    "personnages"
+   ]
+  },
+  {
+   "q": "chi sono real dimez",
+   "expect": {
+    "topic": "dimez"
+   },
+   "tags": [
+    "personnages"
+   ]
+  },
+  {
+   "q": "raul bautista ki e",
+   "expect": {
+    "topic": "raul"
+   },
+   "tags": [
+    "sms"
+   ]
+  },
+  {
+   "q": "brian heder chi e",
+   "expect": {
+    "topic": "lori"
+   },
+   "tags": [
+    "personnages"
+   ]
+  },
+  {
+   "q": "chi è boobie ike",
+   "expect": {
+    "topic": "boobie"
+   },
+   "tags": [
+    "personnages"
+   ]
+  },
+  {
+   "q": "la lista di tutti i personaggi",
+   "expect": {
+    "any": [
+     {
+      "topic": "personnages"
+     },
+     {
+      "topic": "personnages-hub"
+     }
+    ]
+   },
+   "tags": [
+    "personnages"
+   ]
+  },
+  {
+   "q": "dove vive jason",
+   "expect": {
+    "any": [
+     {
+      "topic": "jason-maison"
+     },
+     {
+      "topic": "hub-demeures-2"
+     }
+    ]
+   },
+   "tags": [
+    "personnages"
+   ]
+  },
+  {
+   "q": "qnt costa la villa d jason",
+   "expect": {
+    "topic": "jason-maison-prix"
+   },
+   "tags": [
+    "sms"
+   ]
+  },
+  {
+   "q": "dove abita lucia",
+   "expect": {
+    "any": [
+     {
+      "topic": "lucia-maison"
+     },
+     {
+      "topic": "hub-demeures-3"
+     }
+    ]
+   },
+   "tags": [
+    "personnages"
+   ]
+  },
+  {
+   "q": "che arma ha jason",
+   "expect": {
+    "topic": "jason-arme"
+   },
+   "tags": [
+    "personnages"
+   ]
+  },
+  {
+   "q": "il ferro di lucia",
+   "expect": {
+    "topic": "lucia-arme"
+   },
+   "tags": [
+    "abrev"
+   ]
+  },
+  {
+   "q": "jason e lucia stanno insieme ?",
+   "expect": {
+    "any": [
+     {
+      "topic": "couple"
+     },
+     {
+      "topic": "hub-personnages-6"
+     }
+    ]
+   },
+   "tags": [
+    "personnages"
+   ]
+  },
+  {
+   "q": "si puo switchare pg quando si vuole ?",
+   "expect": {
+    "any": [
+     {
+      "topic": "changer-perso"
+     },
+     {
+      "topic": "hub-personnages-5"
+     }
+    ]
+   },
+   "tags": [
+    "abrev"
+   ]
+  },
+  {
+   "q": "chi fa la voce di lucia",
+   "expect": {
+    "any": [
+     {
+      "topic": "voix"
+     },
+     {
+      "topic": "hub-personnages-4"
+     }
+    ]
+   },
+   "tags": [
+    "personnages"
+   ]
+  },
+  {
+   "q": "di cosa parla la storia",
+   "expect": {
+    "topic": "histoire"
+   },
+   "tags": [
+    "personnages"
+   ]
+  },
+  {
+   "q": "lucia viene da liberty city ?",
+   "expect": {
+    "topic": "liberty-city"
+   },
+   "tags": [
+    "personnages"
+   ]
+  },
+  {
+   "q": "chi è dwnply",
+   "expect": {
+    "topic": "dwnply"
+   },
+   "tags": [
+    "personnages"
+   ]
+  },
+  {
+   "q": "only raw records cos'è",
+   "expect": {
+    "topic": "only-raw"
+   },
+   "tags": [
+    "personnages"
+   ]
+  },
+  {
+   "q": "vice city dov'è sulla mappa",
+   "expect": {
+    "any": [
+     {
+      "topic": "ou-vice-city"
+     },
+     {
+      "entity": "place:vice-city"
+     }
+    ]
+   },
+   "tags": [
+    "lieux"
+   ]
+  },
+  {
+   "q": "dv e vc",
+   "expect": {
+    "any": [
+     {
+      "topic": "ou-vice-city"
+     },
+     {
+      "entity": "place:vice-city"
+     }
+    ]
+   },
+   "tags": [
+    "sms"
+   ]
+  },
+  {
+   "q": "fammi vedere le keys sulla map",
+   "expect": {
+    "any": [
+     {
+      "topic": "ou-keys"
+     },
+     {
+      "entity": "place:leonida-keys"
+     }
+    ]
+   },
+   "tags": [
+    "abrev"
+   ]
+  },
+  {
+   "q": "grassrivers dov e",
+   "expect": {
+    "any": [
+     {
+      "topic": "ou-grassrivers"
+     },
+     {
+      "entity": "place:grassrivers"
+     }
+    ]
+   },
+   "tags": [
+    "lieux"
+   ]
+  },
+  {
+   "q": "port gellhorn sulla mappa",
+   "expect": {
+    "any": [
+     {
+      "topic": "ou-gellhorn"
+     },
+     {
+      "entity": "place:port-gellhorn"
+     }
+    ]
+   },
+   "tags": [
+    "lieux"
+   ]
+  },
+  {
+   "q": "dove si trova ambrosia",
+   "expect": {
+    "any": [
+     {
+      "topic": "ou-ambrosia"
+     },
+     {
+      "entity": "place:ambrosia"
+     }
+    ]
+   },
+   "tags": [
+    "lieux"
+   ]
+  },
+  {
+   "q": "kalaga dove sta",
+   "expect": {
+    "any": [
+     {
+      "topic": "ou-kalaga"
+     },
+     {
+      "entity": "place:mount-kalaga"
+     }
+    ]
+   },
+   "tags": [
+    "lieux"
+   ]
+  },
+  {
+   "q": "leonida è la florida nella realtà ?",
+   "expect": {
+    "any": [
+     {
+      "topic": "leonida-floride"
+     },
+     {
+      "topic": "hub-lieux-3"
+     },
+     {
+      "topic": "leonida"
+     }
+    ]
+   },
+   "tags": [
+    "lieux"
+   ]
+  },
+  {
+   "q": "si puo andare ovunque dall inizio del gioco",
+   "expect": {
+    "any": [
+     {
+      "topic": "zones-fermees"
+     },
+     {
+      "topic": "hub-lieux-5"
+     }
+    ]
+   },
+   "tags": [
+    "lieux"
+   ]
+  },
+  {
+   "q": "come funziona la mappa",
+   "expect": {
+    "topic": "carte-quoi"
+   },
+   "tags": [
+    "carte"
+   ]
+  },
+  {
+   "q": "calcolare la distanza tra due punti",
+   "expect": {
+    "topic": "carte-distance"
+   },
+   "tags": [
+    "carte"
+   ]
+  },
+  {
+   "q": "mostrare solo i luoghi ufficiali sulla mappa",
+   "expect": {
+    "any": [
+     {
+      "topic": "carte-filtres"
+     },
+     {
+      "topic": "carte-statuts"
+     }
+    ]
+   },
+   "tags": [
+    "carte"
+   ]
+  },
+  {
+   "q": "presunto cosa vuol dire sulla mappa",
+   "expect": {
+    "topic": "carte-statuts"
+   },
+   "tags": [
+    "carte"
+   ]
+  },
+  {
+   "q": "le foto degli edifici da dove vengono",
+   "expect": {
+    "topic": "carte-photos"
+   },
+   "tags": [
+    "carte"
+   ]
+  },
+  {
+   "q": "qnti luoghi ci sn sulla mappa",
+   "expect": {
+    "topic": "carte-lieux-nombre"
+   },
+   "tags": [
+    "sms"
+   ]
+  },
+  {
+   "q": "posso mettere i miei punti sulla mappa ?",
+   "expect": {
+    "topic": "carte-marqueurs"
+   },
+   "tags": [
+    "carte"
+   ]
+  },
+  {
+   "q": "come segno un luogo come trovato",
+   "expect": {
+    "topic": "carte-cocher"
+   },
+   "tags": [
+    "carte"
+   ]
+  },
+  {
+   "q": "le contee di leonida",
+   "expect": {
+    "topic": "carte-comtes"
+   },
+   "tags": [
+    "lieux"
+   ]
+  },
+  {
+   "q": "sahara arena cos e",
+   "expect": {
+    "topic": "sahara-arena"
+   },
+   "tags": [
+    "lieux"
+   ]
+  },
+  {
+   "q": "i quartieri di vice city",
+   "expect": {
+    "topic": "quartiers-vice-city"
+   },
+   "tags": [
+    "lieux"
+   ]
+  },
+  {
+   "q": "lo starlet motel è un rifugio ?",
+   "expect": {
+    "any": [
+     {
+      "topic": "starlet-motel"
+     },
+     {
+      "topic": "hub-planques-4"
+     }
+    ]
+   },
+   "tags": [
+    "lieux"
+   ]
+  },
+  {
+   "q": "cos'è il jack of hearts",
+   "expect": {
+    "any": [
+     {
+      "topic": "jack-of-hearts-quoi"
+     },
+     {
+      "topic": "hub-entreprises-4"
+     }
+    ]
+   },
+   "tags": [
+    "lieux"
+   ]
+  },
+  {
+   "q": "rideout customs dove si trova",
+   "expect": {
+    "any": [
+     {
+      "topic": "rideout-ou"
+     },
+     {
+      "entity": "business:rideout-customs"
+     }
+    ]
+   },
+   "tags": [
+    "lieux"
+   ]
+  },
+  {
+   "q": "dove sono le armerie",
+   "expect": {
+    "any": [
+     {
+      "topic": "ateliers-ou"
+     },
+     {
+      "topic": "acq-customizations-5"
+     },
+     {
+      "topic": "ammunation"
+     }
+    ]
+   },
+   "tags": [
+    "lieux"
+   ]
+  },
+  {
+   "q": "si può comprare un garage ?",
+   "expect": {
+    "any": [
+     {
+      "topic": "garages-achat"
+     },
+     {
+      "topic": "hub-planques-2"
+     }
+    ]
+   },
+   "tags": [
+    "lieux"
+   ]
+  },
+  {
+   "q": "a cosa serve un garage in gta 6",
+   "expect": {
+    "any": [
+     {
+      "topic": "garage-contenu"
+     },
+     {
+      "topic": "hub-planques-3"
+     }
+    ]
+   },
+   "tags": [
+    "lieux"
+   ]
+  },
+  {
+   "q": "quanti rifugi ci sono",
+   "expect": {
+    "any": [
+     {
+      "topic": "planques-nombre"
+     },
+     {
+      "topic": "hub-planques-1"
+     }
+    ]
+   },
+   "tags": [
+    "lieux"
+   ]
+  },
+  {
+   "q": "dove fare il pieno",
+   "expect": {
+    "any": [
+     {
+      "topic": "stations-service"
+     },
+     {
+      "topic": "hub-entreprises-5"
+     }
+    ]
+   },
+   "tags": [
+    "lieux"
+   ]
+  },
+  {
+   "q": "quali attività commerciali ci sono sul sito",
+   "expect": {
+    "topic": "entreprises-hub"
+   },
+   "tags": [
+    "lieux"
+   ]
+  },
+  {
+   "q": "apri le residenze",
+   "expect": {
+    "page": "/demeures.html"
+   },
+   "tags": [
+    "nav"
+   ]
+  },
+  {
+   "q": "apri i rifugi",
+   "expect": {
+    "page": "/planques.html"
+   },
+   "tags": [
+    "nav"
+   ]
+  },
+  {
+   "q": "dov'è ocean beach",
+   "expect": {
+    "entity": "map:ocean-beach"
+   },
+   "tags": [
+    "lieux"
+   ]
+  },
+  {
+   "q": "dove sta il penitenziario",
+   "expect": {
+    "any": [
+     {
+      "topic": "penitencier"
+     },
+     {
+      "entity": "map:leonida-penitentiary"
+     }
+    ]
+   },
+   "tags": [
+    "lieux"
+   ]
+  },
+  {
+   "q": "ptt youngin che roba è",
+   "expect": {
+    "any": [
+     {
+      "topic": "ptt-youngin"
+     },
+     {
+      "entity": "business:ptt-youngin"
+     }
+    ]
+   },
+   "tags": [
+    "lieux"
+   ]
+  },
+  {
+   "q": "c'è un aeroporto ?",
+   "expect": {
+    "topic": "aeroport"
+   },
+   "tags": [
+    "lieux"
+   ]
+  },
+  {
+   "q": "braccialetto di lucia che teoria è",
+   "expect": {
+    "any": [
+     {
+      "topic": "bracelet-lucia"
+     },
+     {
+      "topic": "zones-fermees"
+     }
+    ]
+   },
+   "tags": [
+    "lieux"
+   ]
+  },
+  {
+   "q": "che calcoli offre il sito",
+   "expect": {
+    "topic": "outils-liste"
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "il mio obiettivo a cosa serve",
+   "expect": {
+    "topic": "outil-objectif"
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "a cosa serve le mie attivita",
+   "expect": {
+    "topic": "outil-activites"
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "il mio tempo di gioco che strumento è",
+   "expect": {
+    "topic": "outil-temps"
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "i miei acquisti cosa fa",
+   "expect": {
+    "topic": "outil-achats"
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "cosa compro prima che cos'è",
+   "expect": {
+    "topic": "outil-ordre"
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "il mio budget a cosa serve",
+   "expect": {
+    "topic": "outil-budget"
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "quale acquisto scelgo come funziona",
+   "expect": {
+    "topic": "outil-choisir"
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "confrontare 2 schede fianco a fianco",
+   "expect": {
+    "topic": "comparateur-fiches"
+   },
+   "tags": [
+    "abrev"
+   ]
+  },
+  {
+   "q": "che differenza c'è tra semplice ed esperto",
+   "expect": {
+    "any": [
+     {
+      "topic": "modes"
+     },
+     {
+      "topic": "msg-meme-resultat"
+     }
+    ]
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "impostazioni avanzate cambiate cosa vuol dire",
+   "expect": {
+    "topic": "reglages-avances"
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "cosa metto in ho gia",
+   "expect": {
+    "topic": "case-jai-deja"
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "la casella guadagno più o meno",
+   "expect": {
+    "topic": "case-gagne"
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "cos'è una ricompensa",
+   "expect": {
+    "any": [
+     {
+      "topic": "def-recompense"
+     },
+     {
+      "kind": "answer"
+     }
+    ]
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "il roi cos e",
+   "expect": {
+    "any": [
+     {
+      "topic": "def-roi"
+     },
+     {
+      "kind": "answer"
+     }
+    ]
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "cosa vuol dire ripagato",
+   "expect": {
+    "any": [
+     {
+      "topic": "def-amorti"
+     },
+     {
+      "kind": "answer"
+     }
+    ]
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "il messaggio ti mancano",
+   "expect": {
+    "topic": "msg-il-te-manque"
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "il mio numero viene rifiutato",
+   "expect": {
+    "any": [
+     {
+      "topic": "msg-nombre-refuse"
+     },
+     {
+      "kind": "answer"
+     }
+    ]
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "perche non entra nessuna attivita",
+   "expect": {
+    "any": [
+     {
+      "topic": "msg-aucune-activite"
+     },
+     {
+      "kind": "answer"
+     }
+    ]
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "perché il mio risultato cambia in un altro strumento",
+   "expect": {
+    "any": [
+     {
+      "topic": "msg-resultat-change"
+     },
+     {
+      "kind": "answer"
+     }
+    ]
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "xke il prezzo nn si sa",
+   "expect": {
+    "any": [
+     {
+      "topic": "msg-prix-inconnu"
+     },
+     {
+      "kind": "answer"
+     }
+    ]
+   },
+   "tags": [
+    "sms"
+   ]
+  },
+  {
+   "q": "rimetti il prezzo del sito cosa fa",
+   "expect": {
+    "topic": "msg-vrai-prix"
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "come rimetto tutto a zero nel calcolatore",
+   "expect": {
+    "topic": "msg-partir-zero"
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "la barra hai una domanda a cosa serve",
+   "expect": {
+    "any": [
+     {
+      "topic": "msg-question-bar"
+     },
+     {
+      "kind": "answer"
+     }
+    ]
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "che numeri metto per una missione",
+   "expect": {
+    "topic": "activite-chiffres"
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "come dico che siamo 4 giocatori",
+   "expect": {
+    "topic": "joueurs"
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "il programma proposto è il migliore ?",
+   "expect": {
+    "topic": "programme-unique"
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "cos'è un acquisto libero",
+   "expect": {
+    "topic": "achat-libre"
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "perché non posso comprare una regione",
+   "expect": {
+    "any": [
+     {
+      "topic": "lieu-pas-achat"
+     },
+     {
+      "kind": "answer"
+     }
+    ]
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "acquisto per piacere cosa vuol dire",
+   "expect": {
+    "topic": "achat-plaisir"
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "mi fa guadagnare in piu cosa ci metto",
+   "expect": {
+    "topic": "rapporte-en-plus"
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "tempo in cui lo usi ke e",
+   "expect": {
+    "topic": "temps-sers"
+   },
+   "tags": [
+    "sms"
+   ]
+  },
+  {
+   "q": "aprire il calcolatore da una scheda",
+   "expect": {
+    "topic": "roi-depuis-fiche"
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "sensibilita 20 per cento cos'è",
+   "expect": {
+    "topic": "sensibilite"
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "tre attivita per lo stesso obiettivo",
+   "expect": {
+    "topic": "trois-chemins"
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "come salvo un calcolo",
+   "expect": {
+    "topic": "enregistrer-calcul"
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "confrontare due prove",
+   "expect": {
+    "topic": "comparer-essais"
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "vedere la scheda di un piano",
+   "expect": {
+    "topic": "fiche-plan"
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "esportare i miei calcoli su un altro pc",
+   "expect": {
+    "any": [
+     {
+      "topic": "export-calcul"
+     },
+     {
+      "topic": "exporter-suivi"
+     },
+     {
+      "topic": "faq-export"
+     }
+    ]
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "ho cancellato un calcolo per sbaglio",
+   "expect": {
+    "topic": "supprimer-carnet"
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "condividere il mio calcolo con un amico",
+   "expect": {
+    "topic": "partager-calcul"
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "le 5 domande del business plan",
+   "expect": {
+    "topic": "plan-questions"
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "il piano b cos'è",
+   "expect": {
+    "topic": "plan-secours"
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "aggiornare il mio piano dopo una partita",
+   "expect": {
+    "topic": "plan-maj"
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "mettere una deadline nel mio piano",
+   "expect": {
+    "topic": "plan-echeance"
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "obiettivo di livello nel business plan",
+   "expect": {
+    "topic": "plan-experience"
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "la tua prossima partita cos e",
+   "expect": {
+    "topic": "plan-prochaine-partie"
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "business plan vs progressi",
+   "expect": {
+    "any": [
+     {
+      "topic": "plan-vs-progression"
+     },
+     {
+      "kind": "answer"
+     }
+    ]
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "un acquisto si paga con quello che fa guadagnare ?",
+   "expect": {
+    "topic": "plan-payer-achat"
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "le curve del calcolatore cosa mostrano",
+   "expect": {
+    "topic": "graphiques"
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "il tutorial che cos'è",
+   "expect": {
+    "topic": "tuto-quoi"
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "i numeri degli esempi sono quelli veri ?",
+   "expect": {
+    "topic": "exemple-tuto"
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "il mini calcolatore della home",
+   "expect": {
+    "topic": "mini-calculateur"
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "i miei calcoli restano salvati senza account ?",
+   "expect": {
+    "topic": "calc-sans-compte"
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "come funziona il business plan",
+   "expect": {
+    "topic": "site-plan"
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "ne vale la pena come funziona",
+   "expect": {
+    "any": [
+     {
+      "topic": "site-roi"
+     },
+     {
+      "topic": "def-amorti"
+     }
+    ]
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "Ho 200.000 $ e punto a 1 milione",
+   "expect": {
+    "tool": "goal"
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "ho 300k ne voglio 2 milioni",
+   "expect": {
+    "tool": "goal"
+   },
+   "tags": [
+    "sms"
+   ]
+  },
+  {
+   "q": "ho 45 minuti stasera",
+   "expect": {
+    "tool": "session"
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "voglio comprare rideout customs",
+   "expect": {
+    "tool": "purchase"
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "kamacho o bati 801",
+   "expect": {
+    "topic": "comparaison",
+    "entity": "vehicle:canis-kamacho"
+   },
+   "tags": [
+    "calc",
+    "lot7"
+   ]
+  },
+  {
+   "q": "in che ordine compro il kamacho e il bati 801",
+   "expect": {
+    "tool": "order"
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "fammi un business plan per comprare il kamacho",
+   "expect": {
+    "tool": "plan"
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "ripartire il mio budget di $200.000",
+   "expect": {
+    "tool": "budget"
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "confrontare le mie attività",
+   "expect": {
+    "tool": "activities"
+   },
+   "tags": [
+    "calc"
+   ]
+  },
+  {
+   "q": "info sul sito",
+   "expect": {
+    "topic": "apropos"
+   },
+   "tags": [
+    "site"
+   ]
+  },
+  {
+   "q": "chi ha fatto leonidakit",
+   "expect": {
+    "any": [
+     {
+      "topic": "site-qui"
+     },
+     {
+      "topic": "qui-derriere"
+     }
+    ]
+   },
+   "tags": [
+    "site"
+   ]
+  },
+  {
+   "q": "chi è teva",
+   "expect": {
+    "kind": "unknown",
+    "page": "/personnages.html"
+   },
+   "tags": [
+    "site",
+    "inconnu"
+   ]
+  },
+  {
+   "q": "leonidakit e il sito ufficiale ?",
+   "expect": {
+    "any": [
+     {
+      "topic": "site-officiel"
+     },
+     {
+      "topic": "site-qui"
+     }
+    ]
+   },
+   "tags": [
+    "site"
+   ]
+  },
+  {
+   "q": "gli stati cosa vogliono dire",
+   "expect": {
+    "any": [
+     {
+      "topic": "statuts"
+     },
+     {
+      "topic": "carte-statuts"
+     }
+    ]
+   },
+   "tags": [
+    "site"
+   ]
+  },
+  {
+   "q": "riferimento della serie ke e",
+   "expect": {
+    "topic": "repere-serie"
+   },
+   "tags": [
+    "sms"
+   ]
+  },
+  {
+   "q": "usate i leak ?",
+   "expect": {
+    "any": [
+     {
+      "topic": "fuites"
+     },
+     {
+      "topic": "site-donnees"
+     }
+    ]
+   },
+   "tags": [
+    "site"
+   ]
+  },
+  {
+   "q": "che fine fa la mia segnalazione",
+   "expect": {
+    "topic": "correction"
+   },
+   "tags": [
+    "site"
+   ]
+  },
+  {
+   "q": "cos'è una buona fonte",
+   "expect": {
+    "topic": "bonne-source"
+   },
+   "tags": [
+    "site"
+   ]
+  },
+  {
+   "q": "quante pagine ha il sito",
+   "expect": {
+    "topic": "chiffres-site"
+   },
+   "tags": [
+    "site"
+   ]
+  },
+  {
+   "q": "il sito cambierà all'uscita del gioco ?",
+   "expect": {
+    "topic": "calendrier-site"
+   },
+   "tags": [
+    "site"
+   ]
+  },
+  {
+   "q": "il sito è aggiornato ?",
+   "expect": {
+    "topic": "mise-a-jour"
+   },
+   "tags": [
+    "site"
+   ]
+  },
+  {
+   "q": "come vi contatto",
+   "expect": {
+    "any": [
+     {
+      "topic": "contact-page"
+     },
+     {
+      "topic": "site-erreur"
+     }
+    ]
+   },
+   "tags": [
+    "site"
+   ]
+  },
+  {
+   "q": "dove sono le note legali",
+   "expect": {
+    "topic": "mentions"
+   },
+   "tags": [
+    "site"
+   ]
+  },
+  {
+   "q": "ci sono cookie sul sito",
+   "expect": {
+    "topic": "cookies"
+   },
+   "tags": [
+    "site"
+   ]
+  },
+  {
+   "q": "i miei dati dove vengono salvati",
+   "expect": {
+    "topic": "donnees-navigateur"
+   },
+   "tags": [
+    "site"
+   ]
+  },
+  {
+   "q": "essere avvisato quando esce il gioco",
+   "expect": {
+    "topic": "alerte-sortie"
+   },
+   "tags": [
+    "site"
+   ]
+  },
+  {
+   "q": "da dove vengono le immagini",
+   "expect": {
+    "topic": "medias"
+   },
+   "tags": [
+    "site"
+   ]
+  },
+  {
+   "q": "cos'è il menu esplora",
+   "expect": {
+    "topic": "menu"
+   },
+   "tags": [
+    "site"
+   ]
+  },
+  {
+   "q": "come cerco una scheda",
+   "expect": {
+    "topic": "recherche"
+   },
+   "tags": [
+    "site"
+   ]
+  },
+  {
+   "q": "funziona sul telefono ?",
+   "expect": {
+    "topic": "site-telephone"
+   },
+   "tags": [
+    "site"
+   ]
+  },
+  {
+   "q": "togliere le animazioni",
+   "expect": {
+    "any": [
+     {
+      "topic": "animations-off"
+     },
+     {
+      "kind": "answer"
+     }
+    ]
+   },
+   "tags": [
+    "site"
+   ]
+  },
+  {
+   "q": "pagina non trovata",
+   "expect": {
+    "topic": "page-404"
+   },
+   "tags": [
+    "site"
+   ]
+  },
+  {
+   "q": "stampare il mio piano",
+   "expect": {
+    "any": [
+     {
+      "topic": "imprimer"
+     },
+     {
+      "topic": "fiche-plan"
+     }
+    ]
+   },
+   "tags": [
+    "site"
+   ]
+  },
+  {
+   "q": "come aggiungo una macchina al mio garage",
+   "expect": {
+    "topic": "cocher-vehicule"
+   },
+   "tags": [
+    "suivi"
+   ]
+  },
+  {
+   "q": "il mio garage dov'è",
+   "expect": {
+    "topic": "voir-garage"
+   },
+   "tags": [
+    "suivi"
+   ]
+  },
+  {
+   "q": "vedere il mio arsenale",
+   "expect": {
+    "topic": "voir-arsenal"
+   },
+   "tags": [
+    "suivi"
+   ]
+  },
+  {
+   "q": "condividere il mio garage",
+   "expect": {
+    "topic": "partager-garage"
+   },
+   "tags": [
+    "suivi"
+   ]
+  },
+  {
+   "q": "spuntare le munizioni",
+   "expect": {
+    "topic": "equipements-cocher"
+   },
+   "tags": [
+    "suivi"
+   ]
+  },
+  {
+   "q": "la pagina progressi cosa contiene",
+   "expect": {
+    "topic": "progression-cartes"
+   },
+   "tags": [
+    "suivi"
+   ]
+  },
+  {
+   "q": "esportare i miei progressi",
+   "expect": {
+    "any": [
+     {
+      "topic": "exporter-suivi"
+     },
+     {
+      "topic": "faq-export"
+     }
+    ]
+   },
+   "tags": [
+    "suivi"
+   ]
+  },
+  {
+   "q": "cancellare tutto",
+   "expect": {
+    "topic": "effacer-suivi"
+   },
+   "tags": [
+    "suivi"
+   ]
+  },
+  {
+   "q": "il sito legge il mio salvataggio ps5 ?",
+   "expect": {
+    "topic": "suivi-console"
+   },
+   "tags": [
+    "suivi"
+   ]
+  },
+  {
+   "q": "spuntare un'acconciatura",
+   "expect": {
+    "any": [
+     {
+      "topic": "suivi-listes"
+     },
+     {
+      "topic": "progression-listes"
+     }
+    ]
+   },
+   "tags": [
+    "suivi",
+    "lot5"
+   ]
+  },
+  {
+   "q": "pagina collezionabili",
+   "expect": {
+    "topic": "collectibles-page"
+   },
+   "tags": [
+    "suivi"
+   ]
+  },
+  {
+   "q": "ki sei",
+   "expect": {
+    "topic": "leo-qui"
+   },
+   "tags": [
+    "sms"
+   ]
+  },
+  {
+   "q": "sei un'ia ?",
+   "expect": {
+    "topic": "leo-qui"
+   },
+   "tags": [
+    "leo"
+   ]
+  },
+  {
+   "q": "mandi i miei messaggi da qualche parte",
+   "expect": {
+    "topic": "leo-donnees"
+   },
+   "tags": [
+    "leo"
+   ]
+  },
+  {
+   "q": "cancellare la conversazione",
+   "expect": {
+    "topic": "leo-effacer"
+   },
+   "tags": [
+    "leo"
+   ]
+  },
+  {
+   "q": "capisci le abbreviazioni",
+   "expect": {
+    "topic": "leo-abreviations"
+   },
+   "tags": [
+    "leo"
+   ]
+  },
+  {
+   "q": "ti sei sbagliato",
+   "expect": {
+    "topic": "leo-signaler"
+   },
+   "tags": [
+    "leo"
+   ]
+  },
+  {
+   "q": "puoi aprire la mappa",
+   "expect": {
+    "topic": "leo-ouvrir-carte"
+   },
+   "tags": [
+    "leo"
+   ]
+  },
+  {
+   "q": "puoi fare un calcolo",
+   "expect": {
+    "topic": "leo-calcul"
+   },
+   "tags": [
+    "leo"
+   ]
+  },
+  {
+   "q": "sai tutto su gta 6 ?",
+   "expect": {
+    "topic": "leo-tout"
+   },
+   "tags": [
+    "leo"
+   ]
+  },
+  {
+   "q": "do you speak english",
+   "expect": {
+    "topic": "leo-anglais"
+   },
+   "tags": [
+    "anglais"
+   ]
+  },
+  {
+   "q": "buongiorno",
+   "expect": {
+    "topic": "bonjour"
+   },
+   "tags": [
+    "leo"
+   ]
+  },
+  {
+   "q": "we",
+   "expect": {
+    "topic": "bonjour"
+   },
+   "tags": [
+    "sms"
+   ]
+  },
+  {
+   "q": "grz mille",
+   "expect": {
+    "topic": "merci"
+   },
+   "tags": [
+    "sms"
+   ]
+  },
+  {
+   "q": "alla prossima",
+   "expect": {
+    "topic": "au-revoir"
+   },
+   "tags": [
+    "leo"
+   ]
+  },
+  {
+   "q": "apri il tutorial",
+   "expect": {
+    "page": "/tuto.html"
+   },
+   "tags": [
+    "nav"
+   ]
+  },
+  {
+   "q": "apri il calcolatore",
+   "expect": {
+    "page": "/calculateurs.html"
+   },
+   "tags": [
+    "nav"
+   ]
+  },
+  {
+   "q": "apri i miei progressi",
+   "expect": {
+    "page": "/progression.html"
+   },
+   "tags": [
+    "nav"
+   ]
+  },
+  {
+   "q": "apri la mappa",
+   "expect": {
+    "page": "/carte.html"
+   },
+   "tags": [
+    "nav"
+   ]
+  },
+  {
+   "q": "tutto cio che si compra",
+   "expect": {
+    "page": "/achats.html"
+   },
+   "tags": [
+    "nav"
+   ]
+  },
+  {
+   "q": "quanti messaggi conservi",
+   "expect": {
+    "topic": "leo-limite"
+   },
+   "tags": [
+    "leo"
+   ]
+  },
+  {
+   "q": "licenza del font del sito",
+   "expect": {
+    "topic": "licences"
+   },
+   "tags": [
+    "site"
+   ]
+  },
+  {
+   "q": "un link condiviso contiene i miei numeri ?",
+   "expect": {
+    "topic": "lien-partage-donnees"
+   },
+   "tags": [
+    "site"
+   ]
+  },
+  {
+   "q": "che macchine con la ultimate",
+   "expect": {
+    "topic": "ultimate-vehicules"
+   },
+   "tags": [
+    "editions"
+   ]
+  },
+  {
+   "q": "i negozi ultimate sono chiusi nella standard ?",
+   "expect": {
+    "any": [
+     {
+      "topic": "ultimate-magasins"
+     },
+     {
+      "topic": "hub-entreprises-2"
+     }
+    ]
+   },
+   "tags": [
+    "editions"
+   ]
+  },
+  {
+   "q": "gli outfit della ultimate",
+   "expect": {
+    "topic": "ultimate-style"
+   },
+   "tags": [
+    "editions"
+   ]
+  },
+  {
+   "q": "kit retro ganado",
+   "expect": {
+    "any": [
+     {
+      "topic": "ganado-kit"
+     },
+     {
+      "topic": "acq-customizations-4"
+     }
+    ]
+   },
+   "tags": [
+    "editions",
+    "lot6"
+   ]
+  },
+  {
+   "q": "motivo tropicale delle armi",
+   "expect": {
+    "topic": "motif-vintage"
+   },
+   "tags": [
+    "editions",
+    "lot6"
+   ]
+  },
+  {
+   "q": "le pistole incise",
+   "expect": {
+    "topic": "armes-gravees"
+   },
+   "tags": [
+    "editions",
+    "lot6"
+   ]
+  },
+  {
+   "q": "garage paradise cos'è",
+   "expect": {
+    "topic": "garage-paradise"
+   },
+   "tags": [
+    "editions"
+   ]
+  },
+  {
+   "q": "standard o ultimate cosa prendo",
+   "expect": {
+    "topic": "standard-vs-ultimate"
+   },
+   "tags": [
+    "editions"
+   ]
+  },
+  {
+   "q": "che categorie di auto ci sono",
+   "expect": {
+    "topic": "vehicules-categories"
+   },
+   "tags": [
+    "vehicules"
+   ]
+  },
+  {
+   "q": "le marche delle macchine nel gioco",
+   "expect": {
+    "any": [
+     {
+      "topic": "vehicules-marques"
+     },
+     {
+      "topic": "vehicules-nombre"
+     }
+    ]
+   },
+   "tags": [
+    "vehicules"
+   ]
+  },
+  {
+   "q": "qual è la macchina più veloce",
+   "expect": {
+    "topic": "vehicule-rapide"
+   },
+   "tags": [
+    "vehicules"
+   ]
+  },
+  {
+   "q": "veicoli rari",
+   "expect": {
+    "topic": "vehicules-rares"
+   },
+   "tags": [
+    "vehicules"
+   ]
+  },
+  {
+   "q": "a cosa serve la classifica",
+   "expect": {
+    "topic": "classement"
+   },
+   "tags": [
+    "vehicules"
+   ]
+  },
+  {
+   "q": "ispirazione cosa vuol dire su una scheda",
+   "expect": {
+    "topic": "inspiration-reelle"
+   },
+   "tags": [
+    "vehicules"
+   ]
+  },
+  {
+   "q": "ci sono le moto ?",
+   "expect": {
+    "topic": "motos"
+   },
+   "tags": [
+    "vehicules"
+   ]
+  },
+  {
+   "q": "la guida com'è",
+   "expect": {
+    "any": [
+     {
+      "topic": "conduite"
+     },
+     {
+      "topic": "conduite-mecaniques"
+     }
+    ]
+   },
+   "tags": [
+    "vehicules"
+   ]
+  },
+  {
+   "q": "che classi di armi ci sono",
+   "expect": {
+    "topic": "armes-classes"
+   },
+   "tags": [
+    "armes"
+   ]
+  },
+  {
+   "q": "le armi con un nome ufficiale",
+   "expect": {
+    "topic": "armes-nommees"
+   },
+   "tags": [
+    "armes"
+   ]
+  },
+  {
+   "q": "quante armi si possono portare",
+   "expect": {
+    "topic": "armes-longues"
+   },
+   "tags": [
+    "armes"
+   ]
+  },
+  {
+   "q": "i gadget dell'armeria",
+   "expect": {
+    "topic": "equipements-gadgets"
+   },
+   "tags": [
+    "armes"
+   ]
+  },
+  {
+   "q": "il combattimento com e",
+   "expect": {
+    "topic": "combat"
+   },
+   "tags": [
+    "armes"
+   ]
+  },
+  {
+   "q": "l'arma più forte",
+   "expect": {
+    "topic": "arme-puissante"
+   },
+   "tags": [
+    "armes"
+   ]
+  },
+  {
+   "q": "ammu nation esiste ?",
+   "expect": {
+    "topic": "ammunation"
+   },
+   "tags": [
+    "armes"
+   ]
+  },
+  {
+   "q": "come leggere una scheda veicolo",
+   "expect": {
+    "topic": "lire-fiche-vehicule"
+   },
+   "tags": [
+    "vehicules"
+   ]
+  },
+  {
+   "q": "come si legge la scheda di un arma",
+   "expect": {
+    "topic": "lire-fiche-arme"
+   },
+   "tags": [
+    "armes"
+   ]
+  },
+  {
+   "q": "quanti veicoli sono nominati da rockstar",
+   "expect": {
+    "topic": "fiabilite-vehicules"
+   },
+   "tags": [
+    "vehicules"
+   ]
+  },
+  {
+   "q": "quante auto giapponesi",
+   "expect": {
+    "topic": "vehicules-origines"
+   },
+   "tags": [
+    "vehicules"
+   ]
+  },
+  {
+   "q": "dove sono le concessionarie",
+   "expect": {
+    "topic": "vehicules-lieux-lies"
+   },
+   "tags": [
+    "vehicules"
+   ]
+  },
+  {
+   "q": "il carburante è una meccanica ?",
+   "expect": {
+    "topic": "conduite-mecaniques"
+   },
+   "tags": [
+    "vehicules"
+   ]
+  },
+  {
+   "q": "perche un disegno invece di una foto",
+   "expect": {
+    "topic": "schemas"
+   },
+   "tags": [
+    "vehicules"
+   ]
+  },
+  {
+   "q": "veicoli edizione standard",
+   "expect": {
+    "topic": "edition-standard-vehicules"
+   },
+   "tags": [
+    "editions"
+   ]
+  },
+  {
+   "q": "quando hanno aperto i preordini",
+   "expect": {
+    "any": [
+     {
+      "topic": "precommande-date"
+     },
+     {
+      "topic": "precommande"
+     }
+    ]
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "cos'è il newswire",
+   "expect": {
+    "topic": "newswire"
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "quante immagini ufficiali",
+   "expect": {
+    "topic": "visuels-nombre"
+   },
+   "tags": [
+    "site"
+   ]
+  },
+  {
+   "q": "il bagagliaio fa da armadietto ?",
+   "expect": {
+    "topic": "coffre-casier"
+   },
+   "tags": [
+    "vehicules"
+   ]
+  },
+  {
+   "q": "idroscivolante",
+   "expect": {
+    "topic": "hydroglisseur"
+   },
+   "tags": [
+    "vehicules"
+   ]
+  },
+  {
+   "q": "canis kamacho cos'è",
+   "expect": {
+    "any": [
+     {
+      "topic": "kamacho"
+     },
+     {
+      "entity": "vehicle:canis-kamacho"
+     }
+    ]
+   },
+   "tags": [
+    "vehicules"
+   ]
+  },
+  {
+   "q": "grotti cheetah",
+   "expect": {
+    "any": [
+     {
+      "topic": "cheetah"
+     },
+     {
+      "entity": "vehicle:grotti-cheetah-classic"
+     }
+    ]
+   },
+   "tags": [
+    "vehicules"
+   ]
+  },
+  {
+   "q": "stanier 55",
+   "expect": {
+    "any": [
+     {
+      "topic": "stanier-55"
+     },
+     {
+      "topic": "vintage"
+     },
+     {
+      "entity": "vehicle:vapid-stanier"
+     }
+    ]
+   },
+   "tags": [
+    "vehicules"
+   ]
+  },
+  {
+   "q": "la lista dei consumabili",
+   "expect": {
+    "topic": "consommables-liste"
+   },
+   "tags": [
+    "lot5"
+   ]
+  },
+  {
+   "q": "mangiare a cosa serve",
+   "expect": {
+    "any": [
+     {
+      "topic": "manger-effet"
+     },
+     {
+      "topic": "acq-nourriture-1"
+     }
+    ]
+   },
+   "tags": [
+    "lot5"
+   ]
+  },
+  {
+   "q": "quanto costa uno sprunk",
+   "expect": {
+    "any": [
+     {
+      "topic": "prix-soda"
+     },
+     {
+      "topic": "acq-nourriture-3"
+     },
+     {
+      "entity": "catalogue:sprunk"
+     }
+    ]
+   },
+   "tags": [
+    "lot5"
+   ]
+  },
+  {
+   "q": "ci sono i giubbotti antiproiettile",
+   "expect": {
+    "any": [
+     {
+      "topic": "gilet"
+     },
+     {
+      "topic": "acq-nourriture-4"
+     }
+    ]
+   },
+   "tags": [
+    "lot5"
+   ]
+  },
+  {
+   "q": "kit medico gta 6",
+   "expect": {
+    "any": [
+     {
+      "topic": "kit-de-soin"
+     },
+     {
+      "entity": "catalogue:kit-de-soin-gta6"
+     }
+    ]
+   },
+   "tags": [
+    "lot5"
+   ]
+  },
+  {
+   "q": "si puo bere alcol",
+   "expect": {
+    "any": [
+     {
+      "topic": "alcool"
+     },
+     {
+      "topic": "acq-nourriture-5"
+     }
+    ]
+   },
+   "tags": [
+    "lot5"
+   ]
+  },
+  {
+   "q": "dove si mangia nel gioco",
+   "expect": {
+    "topic": "ou-manger"
+   },
+   "tags": [
+    "lot5"
+   ]
+  },
+  {
+   "q": "lista delle acconciature",
+   "expect": {
+    "topic": "coiffures-liste"
+   },
+   "tags": [
+    "lot5"
+   ]
+  },
+  {
+   "q": "si può cambiare taglio",
+   "expect": {
+    "any": [
+     {
+      "topic": "coiffure-changer"
+     },
+     {
+      "topic": "acq-style-1"
+     }
+    ]
+   },
+   "tags": [
+    "lot5"
+   ]
+  },
+  {
+   "q": "prezzo di un taglio di capelli",
+   "expect": {
+    "topic": "prix-coiffure"
+   },
+   "tags": [
+    "lot5"
+   ]
+  },
+  {
+   "q": "i tatuaggi elencati",
+   "expect": {
+    "topic": "tatouages-liste"
+   },
+   "tags": [
+    "lot5"
+   ]
+  },
+  {
+   "q": "ci si può tatuare ?",
+   "expect": {
+    "any": [
+     {
+      "topic": "tatouer"
+     },
+     {
+      "topic": "acq-style-2"
+     }
+    ]
+   },
+   "tags": [
+    "lot5"
+   ]
+  },
+  {
+   "q": "gli outfit e gli accessori del sito",
+   "expect": {
+    "topic": "tenues-liste"
+   },
+   "tags": [
+    "lot5"
+   ]
+  },
+  {
+   "q": "quanti vestiti ci sono nel gioco",
+   "expect": {
+    "any": [
+     {
+      "topic": "tenues-nombre"
+     },
+     {
+      "topic": "acq-style-3"
+     }
+    ]
+   },
+   "tags": [
+    "lot5"
+   ]
+  },
+  {
+   "q": "ci sono gli occhiali da sole",
+   "expect": {
+    "any": [
+     {
+      "topic": "accessoires"
+     },
+     {
+      "topic": "acq-style-4"
+     }
+    ]
+   },
+   "tags": [
+    "lot5"
+   ]
+  },
+  {
+   "q": "stock 305 cos'è",
+   "expect": {
+    "any": [
+     {
+      "topic": "stock-305"
+     },
+     {
+      "entity": "business:stock-305"
+     }
+    ]
+   },
+   "tags": [
+    "lot5"
+   ]
+  },
+  {
+   "q": "sara s unisex salon",
+   "expect": {
+    "any": [
+     {
+      "topic": "saras"
+     },
+     {
+      "entity": "business:saras-unisex-salon"
+     }
+    ]
+   },
+   "tags": [
+    "lot5"
+   ]
+  },
+  {
+   "q": "electric fang cos e",
+   "expect": {
+    "any": [
+     {
+      "topic": "electric-fang"
+     },
+     {
+      "entity": "business:electric-fang"
+     }
+    ]
+   },
+   "tags": [
+    "lot5"
+   ]
+  },
+  {
+   "q": "le voci di tuning delle macchine",
+   "expect": {
+    "topic": "perso-vehicules-liste"
+   },
+   "tags": [
+    "lot6"
+   ]
+  },
+  {
+   "q": "le voci di personalizzazione delle armi",
+   "expect": {
+    "topic": "perso-armes-liste"
+   },
+   "tags": [
+    "lot6"
+   ]
+  },
+  {
+   "q": "riverniciare la mia macchina",
+   "expect": {
+    "any": [
+     {
+      "topic": "repeindre"
+     },
+     {
+      "topic": "acq-customizations-2"
+     }
+    ]
+   },
+   "tags": [
+    "lot6"
+   ]
+  },
+  {
+   "q": "customizzare le armi",
+   "expect": {
+    "any": [
+     {
+      "topic": "perso-armes-possible"
+     },
+     {
+      "topic": "acq-customizations-3"
+     }
+    ]
+   },
+   "tags": [
+    "lot6"
+   ]
+  },
+  {
+   "q": "qnt costa un turbo",
+   "expect": {
+    "any": [
+     {
+      "topic": "prix-tuning"
+     },
+     {
+      "entity": "catalogue:turbo"
+     }
+    ]
+   },
+   "tags": [
+    "sms",
+    "lot6"
+   ]
+  },
+  {
+   "q": "prezzo della blindatura",
+   "expect": {
+    "any": [
+     {
+      "topic": "prix-tuning"
+     },
+     {
+      "entity": "catalogue:blindage"
+     }
+    ]
+   },
+   "tags": [
+    "lot6"
+   ]
+  },
+  {
+   "q": "rideout customs cos'è",
+   "expect": {
+    "any": [
+     {
+      "topic": "rideout-quoi"
+     },
+     {
+      "entity": "business:rideout-customs"
+     }
+    ]
+   },
+   "tags": [
+    "lot6"
+   ]
+  },
+  {
+   "q": "one eyed willie cos e",
+   "expect": {
+    "any": [
+     {
+      "topic": "one-eyed-willie"
+     },
+     {
+      "entity": "business:one-eyed-willie"
+     }
+    ]
+   },
+   "tags": [
+    "lot6"
+   ]
+  },
+  {
+   "q": "le auto di lusso hanno l'allarme ?",
+   "expect": {
+    "topic": "alarme-traceur"
+   },
+   "tags": [
+    "lot6"
+   ]
+  },
+  {
+   "q": "si possono tunare le moto ?",
+   "expect": {
+    "topic": "perso-moto-bateau"
+   },
+   "tags": [
+    "lot6"
+   ]
+  },
+  {
+   "q": "tenere traccia dei miei consumabili",
+   "expect": {
+    "any": [
+     {
+      "topic": "progression-listes"
+     },
+     {
+      "topic": "suivi-listes"
+     }
+    ]
+   },
+   "tags": [
+    "lot5"
+   ]
+  },
+  {
+   "q": "ordinare la lista delle acconciature",
+   "expect": {
+    "topic": "filtrer-liste"
+   },
+   "tags": [
+    "lot5"
+   ]
+  },
+  {
+   "q": "quali modifiche vanno sulla mia supercar",
+   "expect": {
+    "any": [
+     {
+      "topic": "compat-filtre"
+     },
+     {
+      "topic": "perso-vehicules-liste"
+     }
+    ]
+   },
+   "tags": [
+    "lot6"
+   ]
+  },
+  {
+   "q": "le barche documentate",
+   "expect": {
+    "any": [
+     {
+      "topic": "bateaux-page"
+     },
+     {
+      "topic": "bateaux"
+     }
+    ]
+   },
+   "tags": [
+    "vehicules"
+   ]
+  },
+  {
+   "q": "comprare un appartamento",
+   "expect": {
+    "any": [
+     {
+      "topic": "logements-page"
+     },
+     {
+      "topic": "entreprises-achat"
+     },
+     {
+      "topic": "hub-demeures-1"
+     },
+     {
+      "tool": "purchase"
+     }
+    ]
+   },
+   "tags": [
+    "lieux"
+   ]
+  },
+  {
+   "q": "dove sono le fonti di una pagina",
+   "expect": {
+    "topic": "sources-page"
+   },
+   "tags": [
+    "site"
+   ]
+  },
+  {
+   "q": "macca the gator",
+   "expect": {
+    "topic": "macca"
+   },
+   "tags": [
+    "lot5"
+   ]
+  },
+  {
+   "q": "silenziatore gta 6",
+   "expect": {
+    "any": [
+     {
+      "topic": "perso-armes-possible"
+     },
+     {
+      "entity": "catalogue:silencieux"
+     },
+     {
+      "topic": "perso-armes-liste"
+     }
+    ]
+   },
+   "tags": [
+    "lot6"
+   ]
+  },
+  {
+   "q": "caricatore esteso",
+   "expect": {
+    "any": [
+     {
+      "entity": "catalogue:chargeur-etendu"
+     },
+     {
+      "topic": "perso-armes-liste"
+     },
+     {
+      "topic": "perso-armes-possible"
+     }
+    ]
+   },
+   "tags": [
+    "lot6"
+   ]
+  },
+  {
+   "q": "mirino olografico prezzo",
+   "expect": {
+    "any": [
+     {
+      "entity": "catalogue:viseur-holographique"
+     },
+     {
+      "topic": "perso-armes-liste"
+     }
+    ]
+   },
+   "tags": [
+    "lot6"
+   ]
+  },
+  {
+   "q": "fari xeno",
+   "expect": {
+    "any": [
+     {
+      "entity": "catalogue:phares-xenon"
+     },
+     {
+      "topic": "perso-vehicules-liste"
+     }
+    ]
+   },
+   "tags": [
+    "lot6"
+   ]
+  },
+  {
+   "q": "neon prezzo",
+   "expect": {
+    "any": [
+     {
+      "entity": "catalogue:neons-couleur"
+     },
+     {
+      "entity": "catalogue:neons-disposition"
+     },
+     {
+      "topic": "prix-tuning"
+     },
+     {
+      "topic": "perso-vehicules-liste"
+     }
+    ]
+   },
+   "tags": [
+    "lot6"
+   ]
+  },
+  {
+   "q": "ecola",
+   "expect": {
+    "any": [
+     {
+      "entity": "catalogue:ecola"
+     },
+     {
+      "topic": "prix-soda"
+     }
+    ]
+   },
+   "tags": [
+    "lot5"
+   ]
+  },
+  {
+   "q": "frullato proteico",
+   "expect": {
+    "any": [
+     {
+      "entity": "catalogue:shake-proteine"
+     },
+     {
+      "topic": "consommables-liste"
+     }
+    ]
+   },
+   "tags": [
+    "lot5"
+   ]
+  },
+  {
+   "q": "lucia chignon",
+   "expect": {
+    "any": [
+     {
+      "entity": "catalogue:lucia-chignon-haut"
+     },
+     {
+      "topic": "coiffures-liste"
+     }
+    ]
+   },
+   "tags": [
+    "lot5"
+   ]
+  },
+  {
+   "q": "tatuaggio braccio",
+   "expect": {
+    "any": [
+     {
+      "entity": "catalogue:zone-bras"
+     },
+     {
+      "topic": "tatouer"
+     },
+     {
+      "topic": "tatouages-liste"
+     }
+    ]
+   },
+   "tags": [
+    "lot5"
+   ]
+  },
+  {
+   "q": "cappellino di jason",
+   "expect": {
+    "any": [
+     {
+      "entity": "catalogue:jason-casquette"
+     },
+     {
+      "topic": "accessoires"
+     }
+    ]
+   },
+   "tags": [
+    "lot5"
+   ]
+  },
+  {
+   "q": "pay n spray",
+   "expect": {
+    "any": [
+     {
+      "entity": "catalogue:pay-n-spray"
+     },
+     {
+      "topic": "repeindre"
+     },
+     {
+      "topic": "acq-customizations-2"
+     }
+    ]
+   },
+   "tags": [
+    "lot6"
+   ]
+  },
+  {
+   "q": "emperor",
+   "expect": {
+    "entity": "vehicle:albany-emperor"
+   },
+   "tags": [
+    "fiche"
+   ]
+  },
+  {
+   "q": "emperr",
+   "expect": {
+    "entity": "vehicle:albany-emperor"
+   },
+   "tags": [
+    "faute"
+   ]
+  },
+  {
+   "q": "albany emperor a cosa si ispira",
+   "expect": {
+    "entity": "vehicle:albany-emperor"
+   },
+   "tags": [
+    "fiche"
+   ]
+  },
+  {
+   "q": "kamasho ne vale la pena",
+   "expect": {
+    "any": [
+     {
+      "entity": "vehicle:canis-kamacho"
+     },
+     {
+      "tool": "roi"
+     },
+     {
+      "tool": "purchase"
+     }
+    ]
+   },
+   "tags": [
+    "faute"
+   ]
+  },
+  {
+   "q": "il kamacho è nella ultimate ?",
+   "expect": {
+    "entity": "vehicle:canis-kamacho"
+   },
+   "tags": [
+    "fiche"
+   ]
+  },
+  {
+   "q": "velocita del kamacho",
+   "expect": {
+    "entity": "vehicle:canis-kamacho"
+   },
+   "tags": [
+    "fiche"
+   ]
+  },
+  {
+   "q": "girardi es9",
+   "expect": {
+    "any": [
+     {
+      "entity": "weapon:girardi-es9"
+     },
+     {
+      "topic": "jason-arme"
+     }
+    ]
+   },
+   "tags": [
+    "fiche"
+   ]
+  },
+  {
+   "q": "klose k17 a cosa si ispira",
+   "expect": {
+    "entity": "weapon:klose-k17"
+   },
+   "tags": [
+    "fiche"
+   ]
+  },
+  {
+   "q": "munizioni del nipper 38",
+   "expect": {
+    "entity": "weapon:nipper-38"
+   },
+   "tags": [
+    "fiche"
+   ]
+  },
+  {
+   "q": "personalizzare il mustang 357",
+   "expect": {
+    "entity": "weapon:mustang-357"
+   },
+   "tags": [
+    "fiche"
+   ]
+  },
+  {
+   "q": "la casa di jason è nella ultimate ?",
+   "expect": {
+    "any": [
+     {
+      "entity": "property:jason-keys"
+     },
+     {
+      "topic": "jason-maison"
+     }
+    ]
+   },
+   "tags": [
+    "fiche"
+   ]
+  },
+  {
+   "q": "dov'è casa di brian",
+   "expect": {
+    "any": [
+     {
+      "entity": "property:brian-keys"
+     },
+     {
+      "topic": "brian-maison"
+     }
+    ]
+   },
+   "tags": [
+    "fiche"
+   ]
+  },
+  {
+   "q": "il cantiere navale di brian",
+   "expect": {
+    "any": [
+     {
+      "entity": "hideout:chantier-brian"
+     },
+     {
+      "topic": "brian-maison"
+     }
+    ]
+   },
+   "tags": [
+    "fiche"
+   ]
+  },
+  {
+   "q": "crest kayak",
+   "expect": {
+    "any": [
+     {
+      "entity": "vehicle:crest-kayak"
+     },
+     {
+      "topic": "ultimate-vehicules"
+     }
+    ]
+   },
+   "tags": [
+    "fiche"
+   ]
+  },
+  {
+   "q": "shitzu squalo cos'è",
+   "expect": {
+    "any": [
+     {
+      "entity": "vehicle:shitzu-squalo"
+     },
+     {
+      "topic": "ultimate-vehicules"
+     }
+    ]
+   },
+   "tags": [
+    "fiche"
+   ]
+  },
+  {
+   "q": "dinka enduro",
+   "expect": {
+    "any": [
+     {
+      "entity": "vehicle:dinka-enduro"
+     },
+     {
+      "topic": "jason-vehicules"
+     }
+    ]
+   },
+   "tags": [
+    "fiche"
+   ]
+  },
+  {
+   "q": "dov'è il jack of hearts",
+   "expect": {
+    "any": [
+     {
+      "topic": "jack-of-hearts-quoi"
+     },
+     {
+      "entity": "business:jack-of-hearts"
+     }
+    ]
+   },
+   "tags": [
+    "fiche"
+   ]
+  },
+  {
+   "q": "trovami la ferrari",
+   "expect": {
+    "kind": "results"
+   },
+   "tags": [
+    "fiche"
+   ]
+  },
+  {
+   "q": "dov e girardi",
+   "expect": {
+    "any": [
+     {
+      "kind": "results"
+     },
+     {
+      "entity": "weapon:girardi-es9"
+     }
+    ]
+   },
+   "tags": [
+    "fiche"
+   ]
+  },
+  {
+   "q": "vapid dealership",
+   "expect": {
+    "any": [
+     {
+      "entity": "map:g-L120"
+     },
+     {
+      "topic": "vehicules-lieux-lies"
+     }
+    ]
+   },
+   "tags": [
+    "fiche",
+    "lieux"
+   ]
+  },
+  {
+   "q": "e il prezzo ?",
+   "expect": {
+    "any": [
+     {
+      "entity": "vehicle:canis-kamacho"
+     },
+     {
+      "tool": "purchase"
+     }
+    ]
+   },
+   "tags": [
+    "suite"
+   ],
+   "prev": "canis kamacho cos'è"
+  },
+  {
+   "q": "e la sua ispirazione ?",
+   "expect": {
+    "entity": "vehicle:canis-kamacho"
+   },
+   "tags": [
+    "suite"
+   ],
+   "prev": "canis kamacho che cos e"
+  },
+  {
+   "q": "e la velocita",
+   "expect": {
+    "entity": "vehicle:canis-kamacho"
+   },
+   "tags": [
+    "suite"
+   ],
+   "prev": "kamacho"
+  },
+  {
+   "q": "e la sua arma ?",
+   "expect": {
+    "entity": "character:jason"
+   },
+   "tags": [
+    "suite"
+   ],
+   "prev": "chi è jason"
+  },
+  {
+   "q": "e casa sua ?",
+   "expect": {
+    "entity": "character:jason"
+   },
+   "tags": [
+    "suite"
+   ],
+   "prev": "chi e jason"
+  },
+  {
+   "q": "e la sua macchina",
+   "expect": {
+    "entity": "character:jason"
+   },
+   "tags": [
+    "suite"
+   ],
+   "prev": "chi è jason"
+  },
+  {
+   "q": "e a vice city ?",
+   "expect": {
+    "entity": "place:vice-city"
+   },
+   "tags": [
+    "suite"
+   ],
+   "prev": "dov'è ocean beach"
+  },
+  {
+   "q": "e grassrivers ?",
+   "expect": {
+    "entity": "place:grassrivers"
+   },
+   "tags": [
+    "suite"
+   ],
+   "prev": "dove sta vice city"
+  },
+  {
+   "q": "e la klose k17 ?",
+   "expect": {
+    "entity": "weapon:klose-k17"
+   },
+   "tags": [
+    "suite"
+   ],
+   "prev": "girardi es9 a cosa si ispira"
+  },
+  {
+   "q": "e lucia ?",
+   "expect": {
+    "any": [
+     {
+      "entity": "character:lucia"
+     },
+     {
+      "topic": "lucia"
+     }
+    ]
+   },
+   "tags": [
+    "suite"
+   ],
+   "prev": "chi e jason"
+  },
+  {
+   "q": "e come munizioni ?",
+   "expect": {
+    "entity": "weapon:girardi-es9"
+   },
+   "tags": [
+    "suite"
+   ],
+   "prev": "girardi es9"
+  },
+  {
+   "q": "e il suo prezzo",
+   "expect": {
+    "any": [
+     {
+      "entity": "weapon:girardi-es9"
+     },
+     {
+      "tool": "purchase"
+     }
+    ]
+   },
+   "tags": [
+    "suite"
+   ],
+   "prev": "girardi es9"
+  },
+  {
+   "q": "e dove abita",
+   "expect": {
+    "entity": "character:cal"
+   },
+   "tags": [
+    "suite"
+   ],
+   "prev": "chi è cal hampton"
+  },
+  {
+   "q": "e la sua casa",
+   "expect": {
+    "entity": "character:lucia"
+   },
+   "tags": [
+    "suite"
+   ],
+   "prev": "chi e lucia"
+  },
+  {
+   "q": "e nella ultimate ?",
+   "expect": {
+    "entity": "vehicle:dinka-enduro"
+   },
+   "tags": [
+    "suite"
+   ],
+   "prev": "dinka enduro"
+  },
+  {
+   "q": "e la sua ispirazione",
+   "expect": {
+    "entity": "vehicle:dinka-enduro"
+   },
+   "tags": [
+    "suite"
+   ],
+   "prev": "dinka enduro"
+  },
+  {
+   "q": "e dove si trova",
+   "expect": {
+    "entity": "vehicle:dinka-enduro"
+   },
+   "tags": [
+    "suite"
+   ],
+   "prev": "dinka enduro"
+  },
+  {
+   "q": "e per personalizzarla ?",
+   "expect": {
+    "entity": "vehicle:dinka-enduro"
+   },
+   "tags": [
+    "suite"
+   ],
+   "prev": "dinka enduro"
+  },
+  {
+   "q": "È il mio capitale",
+   "expect": {
+    "tool": "goal"
+   },
+   "tags": [
+    "suite"
+   ],
+   "prev": "200k"
+  },
+  {
+   "q": "Ne vale la pena?",
+   "expect": {
+    "tool": "roi"
+   },
+   "tags": [
+    "suite"
+   ],
+   "prev": "Voglio comprare Rideout Customs"
+  },
+  {
+   "q": "e rideout customs ?",
+   "expect": {
+    "any": [
+     {
+      "entity": "business:rideout-customs"
+     },
+     {
+      "topic": "rideout-quoi"
+     }
+    ]
+   },
+   "tags": [
+    "suite"
+   ],
+   "prev": "dov'è il jack of hearts"
+  },
+  {
+   "q": "capitale della francia",
+   "expect": {
+    "offtopic": true
+   },
+   "tags": [
+    "horssujet"
+   ]
+  },
+  {
+   "q": "qual è la capitale della germania",
+   "expect": {
+    "offtopic": true
+   },
+   "tags": [
+    "horssujet"
+   ]
+  },
+  {
+   "q": "chi e il presidente degli stati uniti",
+   "expect": {
+    "offtopic": true
+   },
+   "tags": [
+    "horssujet"
+   ]
+  },
+  {
+   "q": "che ore sono",
+   "expect": {
+    "offtopic": true
+   },
+   "tags": [
+    "horssujet"
+   ]
+  },
+  {
+   "q": "risolvi 2x+3=7",
+   "expect": {
+    "offtopic": true
+   },
+   "tags": [
+    "horssujet"
+   ]
+  },
+  {
+   "q": "2+2",
+   "expect": {
+    "offtopic": true
+   },
+   "tags": [
+    "horssujet"
+   ]
+  },
+  {
+   "q": "scrivimi una poesia sul mare",
+   "expect": {
+    "offtopic": true
+   },
+   "tags": [
+    "horssujet"
+   ]
+  },
+  {
+   "q": "traduci ciao in inglese",
+   "expect": {
+    "offtopic": true
+   },
+   "tags": [
+    "horssujet"
+   ]
+  },
+  {
+   "q": "che tempo fa domani",
+   "expect": {
+    "offtopic": true
+   },
+   "tags": [
+    "horssujet"
+   ]
+  },
+  {
+   "q": "ricetta delle crepes",
+   "expect": {
+    "offtopic": true
+   },
+   "tags": [
+    "horssujet"
+   ]
+  },
+  {
+   "q": "fammi i compiti di mate",
+   "expect": {
+    "offtopic": true
+   },
+   "tags": [
+    "horssujet"
+   ]
+  },
+  {
+   "q": "programmami un sito in python",
+   "expect": {
+    "offtopic": true
+   },
+   "tags": [
+    "horssujet"
+   ]
+  },
+  {
+   "q": "cos'è javascript",
+   "expect": {
+    "offtopic": true
+   },
+   "tags": [
+    "horssujet"
+   ]
+  },
+  {
+   "q": "minecraft è bello ?",
+   "expect": {
+    "offtopic": true
+   },
+   "tags": [
+    "horssujet"
+   ]
+  },
+  {
+   "q": "fortnite o gta",
+   "expect": {
+    "offtopic": true
+   },
+   "tags": [
+    "horssujet"
+   ]
+  },
+  {
+   "q": "zelda tears of the kingdom",
+   "expect": {
+    "offtopic": true
+   },
+   "tags": [
+    "horssujet"
+   ]
+  },
+  {
+   "q": "fifa 26 quando esce",
+   "expect": {
+    "offtopic": true
+   },
+   "tags": [
+    "horssujet"
+   ]
+  },
+  {
+   "q": "elden ring è difficile ?",
+   "expect": {
+    "offtopic": true
+   },
+   "tags": [
+    "horssujet"
+   ]
+  },
+  {
+   "q": "il pokemon piu forte",
+   "expect": {
+    "offtopic": true
+   },
+   "tags": [
+    "horssujet"
+   ]
+  },
+  {
+   "q": "quanto fa 12 per 12",
+   "expect": {
+    "offtopic": true
+   },
+   "tags": [
+    "horssujet"
+   ]
+  },
+  {
+   "q": "chi ha vinto la partita ieri",
+   "expect": {
+    "offtopic": true
+   },
+   "tags": [
+    "horssujet"
+   ]
+  },
+  {
+   "q": "il bitcoin salirà ?",
+   "expect": {
+    "offtopic": true
+   },
+   "tags": [
+    "horssujet"
+   ]
+  },
+  {
+   "q": "oroscopo di oggi",
+   "expect": {
+    "offtopic": true
+   },
+   "tags": [
+    "horssujet"
+   ]
+  },
+  {
+   "q": "come aggiusto il wifi",
+   "expect": {
+    "offtopic": true
+   },
+   "tags": [
+    "horssujet"
+   ]
+  },
+  {
+   "q": "coniugazione del verbo andare",
+   "expect": {
+    "offtopic": true
+   },
+   "tags": [
+    "horssujet"
+   ]
+  },
+  {
+   "q": "tema su napoleone",
+   "expect": {
+    "offtopic": true
+   },
+   "tags": [
+    "horssujet"
+   ]
+  },
+  {
+   "q": "come dimagrire in fretta",
+   "expect": {
+    "offtopic": true
+   },
+   "tags": [
+    "horssujet"
+   ]
+  },
+  {
+   "q": "dio esiste ?",
+   "expect": {
+    "offtopic": true
+   },
+   "tags": [
+    "horssujet"
+   ]
+  },
+  {
+   "q": "cosa ne pensi della politica",
+   "expect": {
+    "offtopic": true
+   },
+   "tags": [
+    "horssujet"
+   ]
+  },
+  {
+   "q": "cyberpunk 2077 vs gta",
+   "expect": {
+    "offtopic": true
+   },
+   "tags": [
+    "horssujet"
+   ]
+  },
+  {
+   "q": "roblox",
+   "expect": {
+    "offtopic": true
+   },
+   "tags": [
+    "horssujet"
+   ]
+  },
+  {
+   "q": "mario kart",
+   "expect": {
+    "offtopic": true
+   },
+   "tags": [
+    "horssujet"
+   ]
+  },
+  {
+   "q": "call of duty",
+   "expect": {
+    "offtopic": true
+   },
+   "tags": [
+    "horssujet"
+   ]
+  },
+  {
+   "q": "come costruire un'arma",
+   "expect": {
+    "offtopic": true
+   },
+   "tags": [
+    "horssujet"
+   ]
+  },
+  {
+   "q": "the sims 5",
+   "expect": {
+    "offtopic": true
+   },
+   "tags": [
+    "horssujet"
+   ]
+  },
+  {
+   "q": "hotel economico a parigi",
+   "expect": {
+    "offtopic": true
+   },
+   "tags": [
+    "horssujet"
+   ]
+  },
+  {
+   "q": "quale iphone comprare",
+   "expect": {
+    "offtopic": true
+   },
+   "tags": [
+    "horssujet"
+   ]
+  },
+  {
+   "q": "red dead online",
+   "expect": {
+    "offtopic": true
+   },
+   "tags": [
+    "horssujet"
+   ]
+  },
+  {
+   "q": "skyrim",
+   "expect": {
+    "offtopic": true
+   },
+   "tags": [
+    "horssujet"
+   ]
+  },
+  {
+   "q": "when is gta 6 release",
+   "expect": {
+    "topic": "sortie"
+   },
+   "tags": [
+    "anglais"
+   ]
+  },
+  {
+   "q": "how much is gta 6",
+   "expect": {
+    "topic": "prix"
+   },
+   "tags": [
+    "anglais"
+   ]
+  },
+  {
+   "q": "who is lucia",
+   "expect": {
+    "topic": "lucia"
+   },
+   "tags": [
+    "anglais"
+   ]
+  },
+  {
+   "q": "where is vice city",
+   "expect": {
+    "any": [
+     {
+      "topic": "ou-vice-city"
+     },
+     {
+      "entity": "place:vice-city"
+     }
+    ]
+   },
+   "tags": [
+    "anglais"
+   ]
+  },
+  {
+   "q": "price of a haircut",
+   "expect": {
+    "any": [
+     {
+      "topic": "prix-coiffure"
+     },
+     {
+      "topic": "coiffure-changer"
+     }
+    ]
+   },
+   "tags": [
+    "anglais"
+   ]
+  },
+  {
+   "q": "gta6 esce su pc o nn",
+   "expect": {
+    "topic": "pc"
+   },
+   "tags": [
+    "sms"
+   ]
+  },
+  {
+   "q": "ke cos e il pack vintage",
+   "expect": {
+    "topic": "vintage"
+   },
+   "tags": [
+    "sms"
+   ]
+  },
+  {
+   "q": "ke console x gta 6",
+   "expect": {
+    "topic": "plateformes"
+   },
+   "tags": [
+    "sms"
+   ]
+  },
+  {
+   "q": "si puo comprare na casa",
+   "expect": {
+    "any": [
+     {
+      "topic": "entreprises-achat"
+     },
+     {
+      "topic": "hub-demeures-1"
+     },
+     {
+      "topic": "logements-page"
+     }
+    ]
+   },
+   "tags": [
+    "sms"
+   ]
+  },
+  {
+   "q": "nn so se il gioco esce su ps4",
+   "expect": {
+    "topic": "ps4"
+   },
+   "tags": [
+    "sms"
+   ]
+  },
+  {
+   "q": "qnt costa sto gioco",
+   "expect": {
+    "topic": "prix"
+   },
+   "tags": [
+    "sms"
+   ]
+  },
+  {
+   "q": "ke cos e l ultimate",
+   "expect": {
+    "any": [
+     {
+      "topic": "editions"
+     },
+     {
+      "topic": "ultime-contenu"
+     }
+    ]
+   },
+   "tags": [
+    "sms"
+   ]
+  },
+  {
+   "q": "ci sn animmali in gta6",
+   "expect": {
+    "topic": "animaux"
+   },
+   "tags": [
+    "sms",
+    "faute"
+   ]
+  },
+  {
+   "q": "il veiclo + veloce",
+   "expect": {
+    "topic": "vehicule-rapide"
+   },
+   "tags": [
+    "sms",
+    "faute"
+   ]
+  },
+  {
+   "q": "domanda : dovè vice citi",
+   "expect": {
+    "any": [
+     {
+      "topic": "ou-vice-city"
+     },
+     {
+      "entity": "place:vice-city"
+     }
+    ]
+   },
+   "tags": [
+    "faute"
+   ]
+  },
+  {
+   "q": "jayson duval ki e",
+   "expect": {
+    "topic": "jason"
+   },
+   "tags": [
+    "faute",
+    "sms"
+   ]
+  },
+  {
+   "q": "luccia caminos",
+   "expect": {
+    "any": [
+     {
+      "topic": "lucia"
+     },
+     {
+      "entity": "character:lucia"
+     }
+    ]
+   },
+   "tags": [
+    "faute"
+   ]
+  },
+  {
+   "q": "prezzo delle aconciature",
+   "expect": {
+    "any": [
+     {
+      "topic": "prix-coiffure"
+     },
+     {
+      "topic": "coiffures-liste"
+     }
+    ]
+   },
+   "tags": [
+    "faute"
+   ]
+  },
+  {
+   "q": "i tatuagi",
+   "expect": {
+    "any": [
+     {
+      "topic": "tatouages-liste"
+     },
+     {
+      "topic": "tatouer"
+     },
+     {
+      "topic": "acq-style-2"
+     }
+    ]
+   },
+   "tags": [
+    "faute"
+   ]
+  },
+  {
+   "q": "grasrivers dovè",
+   "expect": {
+    "any": [
+     {
+      "topic": "ou-grassrivers"
+     },
+     {
+      "entity": "place:grassrivers"
+     }
+    ]
+   },
+   "tags": [
+    "faute"
+   ]
+  },
+  {
+   "q": "conprare una casa è possibile",
+   "expect": {
+    "any": [
+     {
+      "topic": "entreprises-achat"
+     },
+     {
+      "topic": "hub-demeures-1"
+     },
+     {
+      "topic": "logements-page"
+     }
+    ]
+   },
+   "tags": [
+    "faute"
+   ]
+  },
+  {
+   "q": "la macchina di jasson",
+   "expect": {
+    "any": [
+     {
+      "topic": "jason-vehicules"
+     },
+     {
+      "entity": "character:jason"
+     }
+    ]
+   },
+   "tags": [
+    "faute"
+   ]
+  },
+  {
+   "q": "cm spunto un veicolo",
+   "expect": {
+    "topic": "cocher-vehicule"
+   },
+   "tags": [
+    "sms"
+   ]
+  },
+  {
+   "q": "cm esporto i miei progressi",
+   "expect": {
+    "any": [
+     {
+      "topic": "exporter-suivi"
+     },
+     {
+      "topic": "faq-export"
+     }
+    ]
+   },
+   "tags": [
+    "sms"
+   ]
+  },
+  {
+   "q": "xke nn c e il prezzo",
+   "expect": {
+    "any": [
+     {
+      "topic": "msg-prix-inconnu"
+     },
+     {
+      "topic": "argent"
+     },
+     {
+      "topic": "faq-prix"
+     }
+    ]
+   },
+   "tags": [
+    "sms"
+   ]
+  },
+  {
+   "q": "dove trovo le munizioni",
+   "expect": {
+    "any": [
+     {
+      "topic": "munitions"
+     },
+     {
+      "topic": "ammunation"
+     }
+    ]
+   },
+   "tags": [
+    "jeu"
+   ]
+  },
+  {
+   "q": "qnd esce gta6 pls",
+   "expect": {
+    "topic": "sortie"
+   },
+   "tags": [
+    "sms"
+   ]
+  },
+  {
+   "q": "gta 6 data d uscita ???",
+   "expect": {
+    "topic": "sortie"
+   },
+   "tags": [
+    "sms"
+   ]
+  },
+  {
+   "q": "GTA VI QUANDO ESCE",
+   "expect": {
+    "topic": "sortie"
+   },
+   "tags": [
+    "sms"
+   ]
+  },
+  {
+   "q": "vc ke e",
+   "expect": {
+    "any": [
+     {
+      "topic": "vice-city"
+     },
+     {
+      "entity": "place:vice-city"
+     }
+    ]
+   },
+   "tags": [
+    "sms"
+   ]
+  },
+  {
+   "q": "lk ke e",
+   "expect": {
+    "topic": "site-qui"
+   },
+   "tags": [
+    "sms"
+   ]
+  },
+  {
+   "q": "il bp ke e",
+   "expect": {
+    "any": [
+     {
+      "topic": "site-plan"
+     },
+     {
+      "topic": "plan-questions"
+     }
+    ]
+   },
+   "tags": [
+    "sms"
+   ]
+  },
+  {
+   "q": "l ed ultim ke contiene",
+   "expect": {
+    "any": [
+     {
+      "topic": "ultime-contenu"
+     },
+     {
+      "topic": "editions"
+     }
+    ]
+   },
+   "tags": [
+    "sms"
+   ]
+  },
+  {
+   "q": "i ferri del gioco",
+   "expect": {
+    "any": [
+     {
+      "topic": "armes-nombre"
+     },
+     {
+      "topic": "armes-classes"
+     }
+    ]
+   },
+   "tags": [
+    "abrev"
+   ]
+  },
+  {
+   "q": "la grana in gta6",
+   "expect": {
+    "any": [
+     {
+      "topic": "argent"
+     }
+    ]
+   },
+   "tags": [
+    "sms"
+   ]
+  },
+  {
+   "q": "la mia macchina la posso tunare ?",
+   "expect": {
+    "any": [
+     {
+      "topic": "personnalisation"
+     },
+     {
+      "topic": "acq-customizations-1"
+     }
+    ]
+   },
+   "tags": [
+    "abrev"
+   ]
+  },
+  {
+   "q": "ahah a ke servi",
+   "expect": {
+    "topic": "leo-quoi"
+   },
+   "tags": [
+    "sms"
+   ]
+  },
+  {
+   "q": "ahahah sei scarso",
+   "expect": {
+    "any": [
+     {
+      "kind": "unknown"
+     },
+     {
+      "kind": "refusal"
+     },
+     {
+      "topic": "leo-signaler"
+     },
+     {
+      "topic": "leo-qui"
+     }
+    ]
+   },
+   "tags": [
+    "sms"
+   ]
+  },
+  {
+   "q": "tranqui voglio solo sapere qnd esce gta 6",
+   "expect": {
+    "topic": "sortie"
+   },
+   "tags": [
+    "sms"
+   ]
+  },
+  {
+   "q": "scs ma gta 6 qnt costa",
+   "expect": {
+    "topic": "prix"
+   },
+   "tags": [
+    "sms"
+   ]
+  },
+  {
+   "q": "we leo",
+   "expect": {
+    "topic": "bonjour"
+   },
+   "tags": [
+    "sms"
+   ]
+  },
+  {
+   "q": "ue",
+   "expect": {
+    "topic": "bonjour"
+   },
+   "tags": [
+    "sms"
+   ]
+  },
+  {
+   "q": "buondi, la mappa qnt e grande ?",
+   "expect": {
+    "any": [
+     {
+      "topic": "taille-carte"
+     },
+     {
+      "topic": "carte-plus-grande"
+     },
+     {
+      "topic": "hub-lieux-4"
+     }
+    ]
+   },
+   "tags": [
+    "sms"
+   ]
+  },
+  {
+   "q": "buonasera ci sn le moto",
+   "expect": {
+    "topic": "motos"
+   },
+   "tags": [
+    "sms"
+   ]
+  },
+  {
+   "q": "tt cio ke si compra",
+   "expect": {
+    "page": "/achats.html"
+   },
+   "tags": [
+    "sms"
+   ]
+  },
+  {
+   "q": "mo si puo precaricare ?",
+   "expect": {
+    "topic": "precharge"
+   },
+   "tags": [
+    "sms"
+   ]
+  },
+  {
+   "q": "ho 200k e punto a 1M",
+   "expect": {
+    "tool": "goal"
+   },
+   "tags": [
+    "sms"
+   ]
+  },
+  {
+   "q": "c ho 45 min stasera",
+   "expect": {
+    "tool": "session"
+   },
+   "tags": [
+    "sms"
+   ]
+  },
+  {
+   "q": "vorrei comprarmi 1 kamacho",
+   "expect": {
+    "tool": "purchase"
+   },
+   "tags": [
+    "sms"
+   ]
+  },
+  {
+   "q": "dove sta il mio garage",
+   "expect": {
+    "topic": "voir-garage"
+   },
+   "tags": [
+    "abrev"
+   ]
+  },
+  {
+   "q": "cheat gta6",
+   "expect": {
+    "topic": "mods"
+   },
+   "tags": [
+    "anglais"
+   ]
+  },
+  {
+   "q": "release date gta vi",
+   "expect": {
+    "topic": "sortie"
+   },
+   "tags": [
+    "anglais"
+   ]
+  },
+  {
+   "q": "ultimate edition content",
+   "expect": {
+    "any": [
+     {
+      "topic": "ultime-contenu"
+     },
+     {
+      "topic": "editions"
+     }
+    ]
+   },
+   "tags": [
+    "anglais"
+   ]
+  },
+  {
+   "q": "gta6 map size",
+   "expect": {
+    "any": [
+     {
+      "topic": "taille-carte"
+     },
+     {
+      "topic": "carte-plus-grande"
+     },
+     {
+      "topic": "hub-lieux-4"
+     }
+    ]
+   },
+   "tags": [
+    "anglais"
+   ]
+  },
+  {
+   "q": "best car",
+   "expect": {
+    "any": [
+     {
+      "topic": "vehicule-rapide"
+     }
+    ]
+   },
+   "tags": [
+    "anglais"
+   ]
+  },
+  {
+   "q": "jason house",
+   "expect": {
+    "any": [
+     {
+      "topic": "jason-maison"
+     },
+     {
+      "entity": "character:jason"
+     },
+     {
+      "entity": "property:jason-keys"
+     },
+     {
+      "topic": "hub-demeures-2"
+     }
+    ]
+   },
+   "tags": [
+    "anglais"
+   ]
+  },
+  {
+   "q": "cerco il luogo cosopolis",
+   "expect": {
+    "kind": "unknown"
+   },
+   "tags": [
+    "inconnu"
+   ]
+  },
+  {
+   "q": "cos'è lo zorglub di gta 6",
+   "expect": {
+    "kind": "unknown"
+   },
+   "tags": [
+    "inconnu"
+   ]
+  },
+  {
+   "q": "dov'è il mc di vice city",
+   "expect": {
+    "any": [
+     {
+      "kind": "unknown"
+     },
+     {
+      "entity": "place:vice-city"
+     },
+     {
+      "topic": "ou-vice-city"
+     }
+    ]
+   },
+   "tags": [
+    "inconnu"
+   ]
+  },
+  {
+   "q": "nome del cane di jason",
+   "expect": {
+    "any": [
+     {
+      "kind": "unknown"
+     },
+     {
+      "topic": "animaux"
+     },
+     {
+      "entity": "character:jason"
+     }
+    ]
+   },
+   "tags": [
+    "inconnu"
+   ]
+  },
+  {
+   "q": "martello",
+   "expect": {
+    "entity": "weapon:marteau"
+   },
+   "tags": [
+    "noms"
+   ]
+  },
+  {
+   "q": "molotov",
+   "expect": {
+    "entity": "weapon:molotov"
+   },
+   "tags": [
+    "noms"
+   ]
+  },
+  {
+   "q": "mitraglietta compatta",
+   "expect": {
+    "entity": "weapon:smg-compact"
+   },
+   "tags": [
+    "noms"
+   ]
+  },
+  {
+   "q": "lucia",
+   "expect": {
+    "any": [
+     {
+      "topic": "lucia"
+     },
+     {
+      "entity": "character:lucia"
+     }
+    ]
+   },
+   "tags": [
+    "noms"
+   ]
+  },
+  {
+   "q": "jason",
+   "expect": {
+    "any": [
+     {
+      "topic": "jason"
+     },
+     {
+      "entity": "character:jason"
+     }
+    ]
+   },
+   "tags": [
+    "noms"
+   ]
+  },
+  {
+   "q": "cos'è lo sprunk",
+   "expect": {
+    "entity": "catalogue:sprunk"
+   },
+   "tags": [
+    "noms"
+   ]
+  },
+  {
+   "q": "p's & q's",
+   "expect": {
+    "entity": "catalogue:ps-and-qs"
+   },
+   "tags": [
+    "noms"
+   ]
+  },
+  {
+   "q": "100 fisher island dr",
+   "expect": {
+    "entity": "map:g-L759"
+   },
+   "tags": [
+    "noms"
+   ]
+  },
+  {
+   "q": "bravado bison 1800",
+   "expect": {
+    "entity": "vehicle:bravado-bison-1800"
+   },
+   "tags": [
+    "noms"
+   ]
+  },
+  {
+   "q": "vapid dominator 67",
+   "expect": {
+    "entity": "vehicle:vapid-dominator-67"
+   },
+   "tags": [
+    "noms"
+   ]
+  },
+  {
+   "q": "voglio comprare leonida keys",
+   "expect": {
+    "page": "/lieux/leonida-keys.html"
+   },
+   "tags": [
+    "noms"
+   ]
+  },
+  {
+   "q": "quanto costa un kamacho",
+   "expect": {
+    "any": [
+     {
+      "tool": "purchase"
+     },
+     {
+      "entity": "vehicle:canis-kamacho"
+     }
+    ]
+   },
+   "tags": [
+    "noms"
+   ]
+  },
+  {
+   "q": "il kamacho è nella ultimate edition ?",
+   "expect": {
+    "entity": "vehicle:canis-kamacho"
+   },
+   "tags": [
+    "noms"
+   ]
+  },
+  {
+   "q": "trova sprunk",
+   "expect": {
+    "entity": "catalogue:sprunk"
+   },
+   "tags": [
+    "noms"
+   ]
+  },
+  {
+   "q": "chi è jason",
+   "expect": {
+    "topic": "jason"
+   },
+   "tags": [
+    "personnages"
+   ]
+  },
+  {
+   "q": "i suv",
+   "expect": {
+    "page": "/vehicules.html"
+   },
+   "tags": [
+    "nav",
+    "lot7"
+   ]
+  },
+  {
+   "q": "un'auto sportiva",
+   "expect": {
+    "page": "/vehicules.html"
+   },
+   "tags": [
+    "nav",
+    "lot7"
+   ]
+  },
+  {
+   "q": "i pickup",
+   "expect": {
+    "page": "/vehicules.html"
+   },
+   "tags": [
+    "nav",
+    "lot7"
+   ]
+  },
+  {
+   "q": "gli elicotteri",
+   "expect": {
+    "page": "/vehicules.html"
+   },
+   "tags": [
+    "nav",
+    "lot7"
+   ]
+  },
+  {
+   "q": "apri i tatuaggi",
+   "expect": {
+    "page": "/style.html"
+   },
+   "tags": [
+    "nav",
+    "lot7"
+   ]
+  },
+  {
+   "q": "apri le acconciature",
+   "expect": {
+    "page": "/style.html"
+   },
+   "tags": [
+    "nav",
+    "lot7"
+   ]
+  },
+  {
+   "q": "apri la personalizzazione delle armi",
+   "expect": {
+    "page": "/personnalisations.html"
+   },
+   "tags": [
+    "nav",
+    "lot7"
+   ]
+  },
+  {
+   "q": "apri gli acquisti",
+   "expect": {
+    "page": "/achats.html"
+   },
+   "tags": [
+    "nav",
+    "lot7"
+   ]
+  },
+  {
+   "q": "apri la scheda del dinka enduro",
+   "expect": {
+    "entity": "vehicle:dinka-enduro"
+   },
+   "tags": [
+    "nav",
+    "lot7"
+   ]
+  },
+  {
+   "q": "le armi da mischia",
+   "expect": {
+    "page": "/armes.html"
+   },
+   "tags": [
+    "nav",
+    "lot7"
+   ]
+  },
+  {
+   "q": "kit carrozzeria",
+   "expect": {
+    "page": "/personnalisations.html"
+   },
+   "tags": [
+    "nav",
+    "lot7"
+   ]
+  },
+  {
+   "q": "oggetti da collezione",
+   "expect": {
+    "page": "/collectibles.html"
+   },
+   "tags": [
+    "nav",
+    "lot7"
+   ]
+  },
+  {
+   "q": "la mitraglia",
+   "expect": {
+    "entity": "weapon:mitrailleuse"
+   },
+   "tags": [
+    "abrev",
+    "lot7"
+   ]
+  },
+  {
+   "q": "confronta dominator e banshee",
+   "expect": {
+    "topic": "comparaison"
+   },
+   "tags": [
+    "lot7"
+   ]
+  },
+  {
+   "q": "il più veloce tra il kamacho e il bati 801",
+   "expect": {
+    "topic": "comparaison"
+   },
+   "tags": [
+    "lot7"
+   ]
+  },
+  {
+   "q": "cosa sono i badge",
+   "expect": {
+    "topic": "legende-badges"
+   },
+   "tags": [
+    "site",
+    "lot7"
+   ]
+  },
+  {
+   "q": "a cosa serve la legenda",
+   "expect": {
+    "topic": "legende-badges"
+   },
+   "tags": [
+    "site",
+    "lot7"
+   ]
+  },
+  {
+   "q": "come apro la scheda completa",
+   "expect": {
+    "topic": "fiche-complete"
+   },
+   "tags": [
+    "site",
+    "lot7"
+   ]
+  },
+  {
+   "q": "aiuto veicoli",
+   "expect": {
+    "topic": "aide-vehicules"
+   },
+   "tags": [
+    "site",
+    "lot7"
+   ]
+  },
+  {
+   "q": "aiuto armeria",
+   "expect": {
+    "topic": "aide-armurerie"
+   },
+   "tags": [
+    "site",
+    "lot7"
+   ]
+  },
+  {
+   "q": "come si usa la lista",
+   "expect": {
+    "topic": "aide-listes"
+   },
+   "tags": [
+    "site",
+    "lot7"
+   ]
+  }
+ ]
+}

@@ -377,7 +377,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
         document.querySelectorAll('.map-filter').forEach(function(input){ if(pts.some(p => p.c === input.dataset.cat)) input.checked = true; });
         refreshVisibility();
         ouvertId = null;
-        panelIn.innerHTML = '<p class="mp-cat">' + esc(titre) + '</p><h3>' + pts.length + (lkPluriel(pts.length)?' lieux' : ' lieu') + ' sur la carte</h3>' +
+        panelIn.innerHTML = '<p class="mp-cat">' + esc(titre) + '</p><h3>' + pts.length + (lkPluriel(pts.length)?' lieux sur la carte' : ' lieu sur la carte') + '</h3>' +
           '<p class="mp-d">Chaque lieu ouvre sa fiche et centre la carte dessus.</p>' +
           pts.map(function(p){ return '<a class="mp-link" href="#lieu=' + p.id + '">' + esc(p.n) + '</a>'; }).join('');
         panel.classList.add('open'); panel.inert = false;
@@ -697,7 +697,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
              '<span class="fd-dot" style="background:' + CATS[p.c].col + '"></span>' +
              '<span class="fd-n">' + esc(p.n) + '</span></button>' +
              '<button type="button" class="fd-un" data-un="' + p.id + '" ' +
-             'aria-label="Décocher ' + esc(p.n) + '" title="Décocher">&times;</button></li>';
+             'aria-label="' + 'Décocher {nom}'.replace('{nom}', esc(p.n)) + '" title="Décocher">&times;</button></li>';
     }).join('') + '</ul>';
   }
 
@@ -1236,7 +1236,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
   /* ============================================================
      RECHERCHE
      ============================================================ */
-  const norm = s => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[’‘]/g,"'").replace(/[\u00a0\u202f]/g," ");
+  const norm = s => s.toLowerCase().replace(/ß/g,'ss').normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[’‘]/g,"'").replace(/[\u00a0\u202f]/g," ");
 
   function goTo(p, z, showPanel = true){
     scale = z || 0.7;
@@ -1325,7 +1325,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       rulerBx.innerHTML = '<p class="rl-hint">' +
         (rulerPts.length === 0
           ? "Clique un premier point <b>n’importe où</b> sur la carte, ou directement sur un marqueur."
-          : "Clique le point suivant. Tu peux enchaîner jusqu’à " + MAX_ETAPES + " étapes.") + '</p>';
+          : "Clique le point suivant. Tu peux enchaîner jusqu’à {n} étapes.".replace('{n}', MAX_ETAPES)) + '</p>';
       return;
     }
 
@@ -1670,7 +1670,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
   if(clearAll){
     clearAll.addEventListener('click', function(){
       if(!perso.length) return;
-      if(!confirm('Supprimer tes ' + perso.length + ' marqueurs ?')) return;
+      if(!confirm('Supprimer tes {n} marqueurs ?'.replace('{n}', perso.length))) return;
       perso = []; savePerso(); renderPerso(); M.closePanel();
     });
   }

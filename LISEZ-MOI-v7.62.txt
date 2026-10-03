@@ -1,0 +1,44 @@
+LEONIDAKIT v7.62 — TOUT LE SITE EN ANGLAIS — archive « modifs » (3 octobre 2026)
+
+Base attendue : ton dépôt avec la v7.61 appliquée (archive « Leonidakit-v7.61-espagnol-modifs.zip » extraite sur l'archive
+Leonidadex-main (13)). Applique d'abord la v7.61 si ce n'est pas fait. Seulement des fichiers créés ou modifiés, aux chemins
+exacts depuis la racine. Rien à supprimer. Aucune commande de build, pas de package.json ; api/, vercel.json et .vercelignore ne
+changent pas ; rien à régler dans Vercel. Rien n'a été publié pour toi.
+
+1. Note le commit courant dans GitHub Desktop (ou copie le dossier).
+2. Extrais l'archive dans la racine du site, écrase les fichiers homonymes (garde le dossier .git).
+3. Vérifie 3 minutes en local ou sur la prévisualisation Vercel (voir « Pour vérifier »).
+4. Mets en ligne quand tu le décides (GitHub Desktop : commit puis push ; Vercel déploie tel quel).
+Retour arrière : « Revert » du commit dans GitHub Desktop. Aucune clé de stockage nouvelle.
+
+POURQUOI L'ARCHIVE CONTIENT TOUTES LES PAGES : chaque page française et espagnole a maintenant son lien hreflang vers la
+version anglaise, et le menu « Changer la langue » mène à la même page en anglais (avant : à l'accueil anglais). Le texte
+français des pages est identique à l'octet, sauf mentions-legales.html (historique v7.62, date du 3 octobre).
+
+CE QUE CE LOT FAIT (détail : outils/CHANGEMENTS-v7.62.txt ; fonctionnement : outils/LANGUES.md ; preuves : outils/PREUVES-v7.62.md)
+- Le dossier en/ passe de 6 pages à tout le site : les 403 pages, comme l'espagnol (carte, catalogues, les 302 fiches
+  véhicules, les 27 armes, lieux, personnages, entreprises, demeures, planques, carnets, Progression, comparateur…). Anglais
+  américain : « $200,000 », « Trailer 1 / Trailer 2 », « Ultimate Edition ».
+- Léo reste en français et en espagnol (l'anglais n'était pas demandé pour lui) : il n'apparaît pas sur les pages anglaises
+  et les invitations à lui parler disent « (in French) ». Il peut être fait plus tard, de la même façon que l'espagnol.
+- Dans les deux langues : les légendes et les textes alternatifs des galeries des fiches sont maintenant traduits, ainsi que
+  quelques familles d'armes et de véhicules qui restaient en français dans le comparateur.
+- Google : 391 adresses anglaises dans sitemap.xml, hreflang fr / en / es / x-default sur toutes les pages.
+- Tu continues à écrire seulement en français : une nouvelle fiche part dans les deux langues à la régénération ; s'il manque
+  une traduction, la régénération le dit et un test échoue (procédure dans outils/LANGUES.md, « Une page ou un texte français
+  nouveau »).
+
+RÉSULTATS : voir outils/PREUVES-v7.62.md (tests Node, vérificateur, parcours navigateur des 403 pages anglaises et des 403
+pages espagnoles sans un mot de français visible, relecture de l'anglais : 99 défauts relevés, tous corrigés).
+
+POUR VÉRIFIER (3 minutes)
+- N'importe quelle fiche : « Changer la langue » → English. Tu arrives sur la même fiche en anglais.
+- /en/carte.html : ouvre un lieu, la fenêtre est en anglais (« Real-world equivalent: … », « Note: location not confirmed. »).
+- /en/vehicules.html : filtres et catégories en anglais ; « Compare » ouvre le comparateur anglais.
+- /en/ : pas de bouton Léo (normal) ; /es/ : Léo est là et parle espagnol.
+
+ÉTAT DE REPRISE
+- Version : v7.62 (base v7.61). Choix faits avec toi : anglais étendu à tout le site après l'espagnol. Choix faits seul :
+  Léo non traduit en anglais (non demandé), anglais américain, dates des sources au format américain (09/23/2026).
+- Points ouverts (aucun bloquant) : les fautes du français relevées en v7.61 (outils/PREUVES-v7.61.md § 6) restent à
+  corriger si tu le souhaites, elles sont traduites telles quelles ; Léo en anglais si tu le veux un jour.

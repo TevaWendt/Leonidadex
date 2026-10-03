@@ -3,6 +3,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
 (function(){
 'use strict';
 const esc = window.LK.esc;
+const lkPl = n => /^fr/.test(document.documentElement.lang || 'fr') ? n > 1 : n !== 1; /* pluriel selon la langue de la page (français : n > 1) */
 const el = id => document.getElementById(id);
 const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -114,7 +115,7 @@ const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)')
     if(!q || !box) return;
     const lazy = !!document.querySelector('script[type="lk/lazy"][src*="search-index.js"]');
     if(!window.LK_INDEX && !lazy) return;
-    const norm = s => String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,' ').trim();
+    const norm = s => String(s || '').toLowerCase().replace(/ß/g,'ss').normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,' ').trim();
     /* chaque entrée est normalisée une fois, à l'arrivée de l'index (plus rien n'est recalculé à la frappe) */
     const indexEntry = e => { const text = norm(e.s+' '+e.l); return {...e, text, label:norm(e.l), words:text.split(' ')}; };
     let index = null, loading = null, lieux = false;
@@ -263,8 +264,8 @@ const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)')
   const LOT = 48; let limite = LOT, derniereSig = null;
   let plusBt = document.getElementById('vplus');
   if(!plusBt && emptyEl){ plusBt = document.createElement('button'); plusBt.type = 'button'; plusBt.id = 'vplus'; plusBt.className = 'vplus'; plusBt.hidden = true; emptyEl.parentNode.insertBefore(plusBt, emptyEl); }
-  const norm = s => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[’‘]/g,"'").replace(/[  ]/g," ");
-  const motCarte = grid.dataset.mot || 'vehicle';
+  const norm = s => s.toLowerCase().replace(/ß/g,'ss').normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[’‘]/g,"'").replace(/[  ]/g," ");
+  const motCarte = grid.dataset.mot || 'vehicle', motsCarte = grid.dataset.mots || 'vehicles';
   /* index des cartes, construit une fois : plus aucune lecture du DOM à la frappe */
   const ordreInitial = cards.map(card => ({
     card, id: card.dataset.id, cat: card.dataset.cat, st: card.dataset.st, slot: card.dataset.slot, ed: card.dataset.ed,
@@ -349,8 +350,8 @@ const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)')
       if(card.hidden !== hidden) card.hidden = hidden;
       if(show){ rang++; if(!hidden && !card.classList.contains('in')) card.classList.add('in'); }
     });
-    if(plusBt){ const reste = shown - Math.min(shown, limite); plusBt.hidden = reste <= 0; plusBt.textContent = 'Show ' + Math.min(reste, LOT) + ' more (' + reste + (lkPluriel(reste)?' left' : ' left') + ')'; }
-    const countHTML = '<strong>' + shown + '</strong> ' + motCarte + (lkPluriel(shown)?'s' : '');
+    if(plusBt){ const reste = shown - Math.min(shown, limite); plusBt.hidden = reste <= 0; plusBt.textContent = (lkPl(reste) ? 'Show {n} more ({r} left)' : 'Show {n} more ({r} left)').replace('{n}', Math.min(reste, LOT)).replace('{r}', reste); }
+    const countHTML = '<strong>' + shown + '</strong> ' + (lkPluriel(shown) ? motsCarte : motCarte);
     if(countEl.innerHTML !== countHTML) countEl.innerHTML = countHTML;
     emptyEl.hidden = shown > 0;
     if(clearBt) clearBt.hidden = !query.trim();

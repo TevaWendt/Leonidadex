@@ -5,7 +5,7 @@
    Rien n’est écrit en HTML depuis les données : tout passe par textContent. Sans script, le premier objet reste montré. */
 (function () {
   'use strict';
-  function fold(s) { return String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase(); }
+  function fold(s) { return String(s || '').replace(/ß/g,'ss').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase(); }
   function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text !== undefined) n.textContent = text; return n; }
   function store(kind) {
     var k = 'lk_loc_' + kind;
@@ -46,7 +46,7 @@
       var t = el('div', 'lk-loc-sum-t');
       t.appendChild(el('p', 'lk-loc-kicker', it.getAttribute('data-loc-catlabel')));
       t.appendChild(el('p', 'lk-loc-name', it.querySelector('.lk-loc-txt b').textContent));
-      var st = el('p', 'lk-loc-status'); st.appendChild(el('b', null, it.getAttribute('data-loc-pronoun') === 'la' ? 'Where to find it:' : 'Where to find it:')); st.appendChild(document.createTextNode(' ' + it.getAttribute('data-loc-status'))); t.appendChild(st);
+      var st = el('p', 'lk-loc-status'); st.appendChild(el('b', null, (it.getAttribute('data-loc-where') || 'Where to find it:'))); st.appendChild(document.createTextNode(' ' + it.getAttribute('data-loc-status'))); t.appendChild(st);
       t.appendChild(el('p', 'lk-loc-note', linked.length ? it.getAttribute('data-loc-linked') + ' ' + linked.map(function (id) { return names[id] || id; }).join(', ') + '.' : it.getAttribute('data-loc-none')));
       var act = el('p', 'lk-loc-actions'), a = el('a', 'lk-loc-btn lk-loc-btn--main', 'Open the page'); a.href = it.getAttribute('data-loc-url'); act.appendChild(a);
       if (linked.length) { var m = el('a', 'lk-loc-btn', 'See these places on the map'); m.href = (root.getAttribute('data-loc-prefix') || '') + 'carte.html#pins=' + linked.map(encodeURIComponent).join(',') + '&t=' + encodeURIComponent(it.getAttribute('data-loc-title')); act.appendChild(m); }

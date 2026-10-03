@@ -224,7 +224,7 @@ window.LK_CALCULATEURS_CATALOGUE = {
     {
       "id": "lucia-avant",
       "type": "property",
-      "name": "Lucia, from prison to Vice City",
+      "name": "Lucia, from the penitentiary to Vice City",
       "category": "Residence",
       "url": "/en/demeures/lucia-avant.html",
       "image": "/img/officiel/lucia-caminos-05-480.webp",
@@ -260,7 +260,7 @@ window.LK_CALCULATEURS_CATALOGUE = {
     {
       "id": "starlet-motel",
       "type": "hideout",
-      "name": "The motel from the first trailer",
+      "name": "The motel from Trailer 1",
       "category": "Safehouse",
       "url": "/en/planques/starlet-motel.html",
       "image": "/img/officiel/port-gellhorn-01-480.webp",

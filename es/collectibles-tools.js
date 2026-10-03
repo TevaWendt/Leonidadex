@@ -3,6 +3,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
 /* Optional local tools. No account, network service, guessed route or external notes. */
 (function () {
   'use strict';
+  var lkPl = function (n) { return /^fr/.test(document.documentElement.lang || "fr") ? n > 1 : n !== 1; }; /* pluriel selon la langue de la page (français : n > 1) */
   const core = window.LKCollectibles, view = window.LKCollectiblesView;
   if (!core?.getToolsState) return;
   const host = document.getElementById('col-tools');
@@ -109,7 +110,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     if (!host || !view) return;
     renderSavedViews(); renderPlan();
     const count = items().length;
-    $('col-tools-result-count').textContent = count + ' ficha' + (lkPluriel(count)?'s' : '') + ' en la vista actual';
+    $('col-tools-result-count').textContent = count + (lkPluriel(count)?' fichas':' ficha') + ' en la vista actual';
     ['col-export-csv','col-print-checklist'].forEach(id => { $(id).disabled = count === 0; });
     if ($('col-tools-storage')) { const warning = core.getStorageStatus().message; $('col-tools-storage').hidden = !warning; $('col-tools-storage').textContent = warning; }
   }

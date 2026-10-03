@@ -1,0 +1,88 @@
+LEONIDAKIT v7.62 — langues : tout le site et Léo en allemand, 3 octobre 2026
+
+Base : v7.61 (tout le site et Léo en anglais), elle-même construite sur les v7.60, v7.59 et le commit 8c1ddd30 (v7.58).
+L'archive « modifs » de cette version est cumulative depuis 8c1ddd30. Rien n'est publié.
+Demande : « la même chose, absolument tout le site internet de A à Z en allemand ». Procédure et fonctionnement :
+outils/LANGUES.md ; preuves : outils/PREUVES-v7.62.md.
+
+1. CE QUE VOIT LE VISITEUR
+- « Changer la langue » propose maintenant Français, English et Deutsch. Les 415 pages du site existent en allemand sous /de/
+  (414 pages + la vérification Google, exclue) : hubs, listes, les 302 fiches véhicules et les 27 fiches armes, lieux,
+  personnages, entreprises, demeures, planques, les 9 carnets, la carte (2 547 lieux, filtres, fiches des lieux, mesures,
+  repères perso), collectibles, progression, médias, comparateur, catalogues, recherche du site, Tuto (avec ses propres
+  captures du calculateur allemand), À propos, Contact, Mentions, page introuvable.
+- Tout est en allemand, y compris les bulles d'aide, les textes pour lecteurs d'écran, les compteurs (« 1 Fahrzeug »,
+  « 3 Fahrzeuge »), les montants (« 1.250 $ »), les nombres saisis (« 1.500 » = mille cinq cents, « 2,5 »), les dates
+  (« 19. November 2026 »), les durées (« 1 h 30 min »), les données pour Google (JSON-LD), le plan du site (adresses /de/),
+  hreflang fr / en / de / x-default. Tutoiement (« du »), comme le « tu » du site.
+- Léo répond en allemand sur les pages allemandes : il comprend les questions allemandes (« wann kommt gta 6 raus »,
+  « wv kostet », « ich habe 200.000 $ und will 1 Mio », « 2 Std. am Tag », umlauts écrits ou non), répond, propose ses
+  suggestions et ses liens en allemand, vers les pages allemandes. Toujours dans le navigateur, rien n'est envoyé.
+- Bandeau : un navigateur réglé en allemand voit « Diese Seite gibt es auch auf Deutsch. » (« Auf Deutsch lesen » / « Nein
+  danke ») ; aucune redirection ; aucune clé nouvelle (lk_lang_v1 existe depuis la v7.60).
+- Mentions : entrée v7.62 de l'historique. Aucun cookie, aucun service extérieur.
+
+2. MÉMOIRE (outils/langues/de/)
+- Même découpage que l'anglais : lot-01 → lot-16 (calculateur, accueil, Tuto), site-01 → site-43 (pages du site ; site-43 :
+  chaînes du code ajoutées en v7.62), recherche-01/02/03 (chaînes de recherche, sans umlaut ni ß), leo-01 → leo-10 (Léo),
+  motifs.json, noms.json (relu : un nom propre reste tel quel, un mot courant anglais est traduit), code.json, et
+  leo-pivot.json (≈ 5 600 expressions allemandes → forme française pour Léo). ≈ 19 700 traductions.
+- Glossaire _glossaire.md (en allemand) : règles, mots que le code cherche, vocabulaire fixe, statuts, Mentions.
+- Relecture : 10 833 textes allemands différents vus dans le navigateur (toutes les pages, états ouverts, calculateur dans
+  ses 9 outils × 3 modes, Léo) relus par six relecteurs, puis une deuxième passe sur les 2 023 textes changés et sur le
+  calculateur et Léo par deux autres relecteurs : 320 défauts signalés (français ou anglais restés, cas et genre faux après
+  assemblage, libellés cités qui ne correspondaient pas au vrai bouton, faux sens), corrigés dans la mémoire (281) ou dans le
+  code (pluriels, phrases à trous, voir § 4).
+
+3. LE GÉNÉRATEUR (outils/langues.cjs, outils/langues.json)
+- langues.json : « de » publiée (libellés « Sprache ändern », bandeau), pages "*", Léo en allemand (leo : fr, en, de),
+  attribut data-mots (pluriel d'un compteur de liste).
+- Guillemets de chaque langue (anglais “ ”, allemand „ “), y compris un morceau fait seulement de ponctuation et la fin
+  d'une valeur d'attribut (« aria-label="Supprimer « ' + nom + ' »" ») ; « 50 % » garde son espace en allemand.
+- Trous de motif : la traduction garde sa majuscule en allemand (noms communs).
+- Découpage des phrases allemandes : « am 1. Oktober », « z. B. », « 2 Std. » ne finissent pas une phrase.
+- Chemins avec virgule (« photos/L832,ig.webp ») jamais signalés comme texte.
+- Données de Léo : espaces de début et de fin d'origine gardés (« {tagline} » collait la phrase suivante, en anglais aussi).
+
+4. SOURCES RENDUES TRADUISIBLES (le français affiché ne change pas, sauf ce qui est noté au § 5)
+- Montants et nombres : calculateurs-engine.js (dollars : signe après le nombre en allemand ; parseLocalizedNumber : « 1.250,50 »),
+  calculateurs-simple.js et calculator-entry.js (groupement « 200.000 », « 1,5 Millionen »), consommables.js et fiches.js
+  (lkDollars, lecture de « 1.500 »), calculateurs.js (raccourcis « 100 Tsd. $ », « 1 Mio. $ »).
+- Hub du calculateur (calculateurs-hub.js) : questions allemandes (« Ich habe 200.000 $ und will 1 Million haben »,
+  « 2 Stunden am Tag », « lohnt sich… », « was zuerst kaufen »).
+- Libellés reconnus par le code : mots allemands ajoutés (calculateurs-workspace.js : case à corriger, « DEINEN ZAHLEN » ;
+  calculateurs-scenario.js : « Weg vervollständigen », « Gib… / Wähle… » ; calculateurs-motion.js : « nicht gespeichert » ;
+  calculateurs-engine.js : « Kauf „… “ »).
+- Pluriels écrits en entier au lieu d'un « s » ajouté par le code (allemand « Tage », « Käufe », « Missionen ») : 35 endroits
+  dans calculateurs*.js et progression.js, plural(n, ' jour', ' jours') dans calculateurs-plan.js et calculateurs-workspace.js,
+  tuto.js, leo-core.js ; compteur des listes (app.js, data-mots="véhicules" / "armes").
+- Phrases à trous au lieu de morceaux collés quand l'ordre des mots change en allemand : carte.js (« Supprimer tes {n}
+  marqueurs ? », « … jusqu'à {n} étapes. », « Décocher {nom} »), suivi.js (« Vider « {nom} » sur cet appareil ? »),
+  progression.js (« {n} cochés sur {t} recensés. »), carnets.js (« {n} sur {t} {mots} affichés »), app.js (« Afficher {n} de
+  plus ({r} restants) »), fiches.js (phrases « mon garage » / « mon arsenal » écrites en entier), calculateurs.js (« {nom} est
+  déjà dans ton garage… »), calculateurs-plan.js (« Pour {but}, il te manque… »), calculateurs-scenario.js (classement des
+  activités), leo-core.js (« Ouvrir {l} », « … puis ouvre {l} »), fiches.js (« Voir le {nom} en photo » était déjà en v7.61).
+- Durées : « 1 h 36 min » en allemand (calculateurs.js, calculateurs-scenario.js, calculateurs-motion.js, tuto.js, leo-core.js).
+- Recherche : « ß » lu « ss » (app.js, carte.js, catalogue.js, collectibles*.js, carnets.js, localisateur.js, common.js,
+  classement.js, calculateurs*.js, leo-core.js, leo-nlp.js) ; mots outils allemands ignorés dans l'aide des collectibles.
+- Léo : common.js (Léo amorcé en allemand), leo-nlp.js (pivotTable(liste, langue) : nombres et durées allemands, « 12 mal 12 »
+  hors sujet), leo-core.js (table selon la langue).
+- outils/tuto-shots.py : noms des exemples en allemand (« Lieferung », « Raubüberfall », « Vorsichtig »).
+- Tests : langues.test.cjs, langues-browser.cjs et langues-helper.cjs couvrent chaque langue publiée ; détection de l'anglais
+  resté sur une page allemande ; jeux de questions de Léo en allemand (outils/tests/leo-questions-de.json,
+  leo-questions-de-inedites.json).
+
+5. CORRECTIONS DU FRANÇAIS ET DE L'ANGLAIS TROUVÉES EN TRADUISANT
+- Fiches véhicules (16) : « Il apparaît dans le second trailer de mai 2026 » → « de mai 2025 » (le site date lui-même le
+  Trailer 2 du 6 mai 2025) : outils/redaction.cjs.
+- Anglais : « My saved calculations: 0 calculs » → « 0 calculations » ; compteurs « envie(s) », « achats », « calcul(s) » de
+  la page Progression traduits ; « … ever.Vice City » (espace perdue dans les réponses de Léo) ; « Compare “Name » » dans le
+  tiroir des calculs (guillemet fermant) ; « Comté de » → « Leonard County » déjà en v7.61.
+- Signalé, non modifié (décision éditoriale, comme en v7.61) : la FAQ d'armes.html dit que le fusil-harpon « apparaît dans
+  les séquences sous-marines », alors que la même page dit qu'aucune image officielle ne montre une arme sous l'eau.
+
+6. TESTS
+- langues.test.cjs : 30 tests (anglais et allemand). leo-eval.cjs --lang de : 512 questions allemandes, seuils 95 % et 100 %
+  hors sujet ; --questions=outils/tests/leo-questions-de-inedites.json : 140 questions jamais vues.
+- langues-browser.cjs : anglais et allemand (LK_LANGUES=en,de pour n'en lancer qu'une) ; chaque page allemande ouverte,
+  états ouverts, calculateur 9 outils × 3 modes rempli et vide, Léo, bandeau, 404, hreflang.

@@ -1,9 +1,11 @@
+/* v7.61 : pluriel selon la langue de la page : français n > 1 (« 0 coché », « 1,5 million ») ; anglais, espagnol n ≠ 1 (« 0 marcados ») */
+var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.documentElement&&document.documentElement.lang)||'fr').slice(0,2)==='fr'?n>1:n!==1;};
 /* Fast answers, optional compact view and accessible local-image viewer. */
 (function () {
   'use strict';
   var lkPl = function (n) { return /^fr/.test(document.documentElement.lang || "fr") ? n > 1 : n !== 1; }; /* pluriel selon la langue de la page (français : n > 1) */
   const $ = id => document.getElementById(id);
-  const norm = value => String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('fr').replace(/[’‘]/g, "'").replace(/[\u00a0\u202f]/g, ' ').trim();
+  const norm = value => String(value || '').replace(/ß/g,'ss').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('fr').replace(/[’‘]/g, "'").replace(/[\u00a0\u202f]/g, ' ').trim();
   const feedback = message => {
     const node = document.querySelector('[data-col-feedback]');
     if (node) node.textContent = message;
@@ -23,8 +25,8 @@
   expressButton?.addEventListener('click', () => {
     express = !express; applyExpress();
     try { localStorage.setItem(EXPRESS_KEY, express ? '1' : '0'); }
-    catch (_) { feedback('Mode applied in this tab. The browser doesn’t allow saving this preference.'); return; }
-    feedback(express ? 'Express mode on: mood images hidden and compact results.' : 'Illustrated layout restored.');
+    catch (_) { feedback('Mode applied in this tab. The browser doesn’t let us save this preference.'); return; }
+    feedback(express ? 'Express mode on: ambient images hidden and compact results.' : 'Illustrated layout restored.');
   });
   window.addEventListener('storage', event => {
     if (event.key === EXPRESS_KEY || event.key === null) { express = event.newValue === '1'; applyExpress(); }
@@ -41,8 +43,9 @@
     $('col-help-catalogue-state').textContent = 'The catalog lists ' + published.length + ' page(s), including ' + confirmed + ' officially confirmed. Each page shows its status and sources. The documented count is separate from the game’s total number of collectibles.';
   }
   const answerIndex = new Map(answers.map(answer => [answer.id, norm(answer.textContent + ' ' + answer.dataset.helpKeywords)]));
-  const questionWords = new Set(['a','au','aux','avec','ce','ces','c','comment','d','dans','de','des','du','en','est','et','il','ils','je','l','la','le','les','m','ma','mes','moi','mon','ne','on','ou','par','pas','peut','peux','pour','puis','qu','que','quel','quelle','quelles','quels','s','se','son','sont','sur','t','tu','un','une','vos','votre',
-    /* v7.61 : mots outils anglais (page anglaise) */ 'the','an','and','or','of','to','in','at','for','with','is','are','can','do','does','how','what','where','which','who','why','i','my','me','it','its','be','you','your','there']);
+  const questionWords = new Set(['a','to','at','with','this','these','c','comment','d','in','de','some','from','en','is','and','it','ils','i','l','the','an','are','m','my','me','moi','how','don','on','or','by','not','peut','peux','for','then','qu','what','quel','quelle','quelles','quels','s','does','which','sont','of','t','you','can','do','vos','votre',
+    /* v7.61 : mots outils anglais (page anglaise) */ 'the','an','and','or','of','to','in','at','for','with','is','are','can','do','does','how','what','where','which','who','why','i','my','me','it','its','be','you','your','there',
+    /* v7.62 : mots outils allemands (page allemande) */ 'der','die','das','den','dem','und','oder','wie','wo','was','wer','wann','welche','welcher','welches','ich','mein','meine','mir','mich','ist','sind','ein','eine','einen','zu','im','am','mit','fur','auf','kann','muss','gibt','es','von','bei','nach','sich','dein','deine']);
   let beforeSearch = null;
   function searchAnswers() {
     if (!query) return;
@@ -71,7 +74,7 @@
     share.addEventListener('click', async () => {
       const url = new URL(location.pathname, location.origin); url.hash = answer.id;
       try { await navigator.clipboard.writeText(url.href); feedback('Answer link copied.'); }
-      catch (_) { feedback('Copying isn’t available. Link to the answer: ' + url.href); }
+      catch (_) { feedback('Can’t copy. Answer address: ' + url.href); }
     });
     content.appendChild(share);
   });

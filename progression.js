@@ -8,6 +8,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
    (#garage, #arsenal, #tenues…) mènent à la carte du carnet qui les contient. */
 (function(){
   'use strict';
+  var lkPl = function (n) { return /^fr/.test(document.documentElement.lang || "fr") ? n > 1 : n !== 1; }; /* pluriel selon la langue de la page (français : n > 1) */
   const M=window.LK_MODELE, K=window.LKCarnets, ids=Object.assign({},window.LK_PROGRESS_IDS||{}), nf=new Intl.NumberFormat('fr-FR');
   if(!M||!K) return;
   /* Contenus documentés : éléments suivables sans renvoi vers un véhicule ou une arme (ceux-là comptent dans le garage ou l’arsenal). */
@@ -62,6 +63,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
 /* Progression v2 : contenus documentés, total et export / import versionné (progression-core.js). */
 (function(){
   const P=window.LKProgression, msg=document.getElementById('save-msg');
+  var lkPl = function (n) { return /^fr/.test(document.documentElement.lang || "fr") ? n > 1 : n !== 1; }; /* pluriel selon la langue de la page (français : n > 1) */
   if(!P) return;
   const notice=m=>{ if(msg) msg.textContent=m; };
   /* v7.54 : stockage du navigateur refusé (navigation privée stricte, réglage) : la page reste lisible et le dit, au lieu de planter (revue v7.53). */
@@ -74,7 +76,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
   function render(){
     const s=store.summary();
     const v=document.getElementById('progress-global-value'), bar=document.getElementById('progress-global-bar'), t=document.getElementById('progress-global-text');
-    if(v){ v.textContent=nf.format(Math.floor(s.percent))+' %'; bar.value=Math.max(0,Math.min(100,s.percent)); t.textContent=nf.format(s.done)+(lkPluriel(s.done)?' cochés':' coché')+' sur '+nf.format(s.total)+' recensés. Ce suivi est personnel : ce n’est pas la progression officielle du jeu.'; }
+    if(v){ v.textContent=nf.format(Math.floor(s.percent))+' %'; bar.value=Math.max(0,Math.min(100,s.percent)); t.textContent=(lkPl(s.done)?'{n} cochés sur {t} recensés.':'{n} coché sur {t} recensés.').replace('{n}',nf.format(s.done)).replace('{t}',nf.format(s.total))+' Ce suivi est personnel : ce n’est pas la progression officielle du jeu.'; }
   }
   store.subscribe(render); window.addEventListener('storage',render); window.addEventListener('pageshow',render); render();
 

@@ -1,9 +1,12 @@
 {
- "_note": "v7.60 : langues du site. Le français est la source : toutes les pages sont écrites et générées en français, puis outils/langues.cjs produit chaque langue publiée dans son dossier (/en/…) à partir des pages françaises finales et de la mémoire de traduction outils/langues/<code>/*.json. « etat » : publiee (dans le sélecteur « Changer la langue »), prevue (préparée, pas encore montrée). « pages » : les pages traduites ; une page absente de la liste renvoie vers la page française (lien marqué FR). Léo n'est proposé que dans les langues de « leo ». « scriptsPartages » : scripts jamais copiés ni traduits (index de recherche, manifeste) : la page traduite charge ceux du site. « scriptsDonnees » : fichiers de données ; seules les chaînes nommées dans la mémoire (libellés affichés) y sont traduites, les autres (descriptions des fiches) ne sont pas signalées. « jsonCode » : clés des données JSON portées par un script (modele-donnees.js) qui contiennent des identifiants, jamais traduites. v7.61 : « pages »: \"*\" = toutes les pages du site (sous-dossiers compris) ; « traduireAussi » : scripts partagés traduits pour cette langue (index de recherche, carte) ; « scriptsEnPlus » : scripts chargés par d’autres scripts (Léo, moteur du calculateur) ; « clesFigees » : clés d’un fichier de données dont la valeur est un identifiant ; « jsonPages » : données de page (<script type=\"application/json\" id=…>) — clés de texte, clés d’adresse, clés figées. Léo est proposé dans les langues de « leo » (outils/leo-langues.cjs).",
+ "_note": "v7.60 : langues du site. Le français est la source : toutes les pages sont écrites et générées en français, puis outils/langues.cjs produit chaque langue publiée dans son dossier (/en/…) à partir des pages françaises finales et de la mémoire de traduction outils/langues/<code>/*.json. « etat » : publiee (dans le sélecteur « Changer la langue »), prevue (préparée, pas encore montrée). « pages » : les pages traduites ; une page absente de la liste renvoie vers la page française (lien marqué FR). Léo n'est proposé que dans les langues de « leo ». « scriptsPartages » : scripts jamais copiés ni traduits (index de recherche, manifeste) : la page traduite charge ceux du site. « scriptsDonnees » : fichiers de données ; seules les chaînes nommées dans la mémoire (libellés affichés) y sont traduites, les autres (descriptions des fiches) ne sont pas signalées. « jsonCode » : clés des données JSON portées par un script (modele-donnees.js) qui contiennent des identifiants, jamais traduites. v7.61 : « pages »: \"*\" = toutes les pages du site (sous-dossiers compris) ; « traduireAussi » : scripts partagés traduits pour cette langue (index de recherche, carte) ; « scriptsEnPlus » : scripts chargés par d’autres scripts (Léo, moteur du calculateur) ; « clesFigees » : clés d’un fichier de données dont la valeur est un identifiant ; « jsonPages » : données de page (<script type=\"application/json\" id=…>) — clés de texte, clés d’adresse, clés figées. Léo est proposé dans les langues de « leo » (outils/leo-langues.cjs). v7.63 : italien publié (tout le site, Léo) ; « milliers »: \"toujours\" : point des milliers dès 1 000 comme les navigateurs (« 2.547 ») ; « data-mot » / « data-mots » : mot singulier et pluriel des listes de véhicules et d’armes. v7.64 : fusion des deux branches : allemand publié (tout le site, Léo) et Léo en anglais ; Léo dans les cinq langues ; « pages »: \"*\" comprend aussi les redirections et la page 404 (sauf « exclure ») ; « motsCodeGardes » (allemand) : un mot en minuscules sans espace dans un script reste du code sauf entrée « fichier.js::mot » ; « attributsJson » : { attribut : [clés] } ou { attribut : \"*\" } ; « pivot » de Léo (anglais, allemand) : outils/langues/<code>/leo-pivot.json.",
  "source": "fr",
  "leo": [
   "fr",
-  "es"
+  "es",
+  "it",
+  "en",
+  "de"
  ],
  "langues": [
   {
@@ -36,13 +39,19 @@
     "rester": "No thanks",
     "versFr": "in French"
    },
-   "pages": [
-    "index.html",
-    "calculateurs.html",
-    "tuto.html",
-    "a-propos.html",
-    "contact.html",
-    "mentions-legales.html"
+   "pages": "*",
+   "traduireAussi": [
+    "search-index.js",
+    "search-lieux.js",
+    "carte-gtadb.js"
+   ],
+   "scriptsEnPlus": [
+    "leo-loader.js",
+    "leo-ui.js",
+    "leo-core.js",
+    "leo-link.js",
+    "leo-calculator.js",
+    "calculateurs-engine.js"
    ]
   },
   {
@@ -79,17 +88,63 @@
    "code": "it",
    "nom": "Italiano",
    "locale": "it-IT",
+   "milliers": "toujours",
    "og": "it_IT",
-   "etat": "prevue",
-   "dossier": "it"
+   "etat": "publiee",
+   "dossier": "it",
+   "libelles": {
+    "changer": "Cambia lingua",
+    "accueil": "pagina iniziale",
+    "offre": "Questa pagina è disponibile anche in italiano.",
+    "aller": "Leggi in italiano",
+    "rester": "No, grazie",
+    "versFr": "in francese"
+   },
+   "pages": "*",
+   "traduireAussi": [
+    "search-index.js",
+    "search-lieux.js",
+    "carte-gtadb.js"
+   ],
+   "scriptsEnPlus": [
+    "leo-loader.js",
+    "leo-ui.js",
+    "leo-core.js",
+    "leo-link.js",
+    "leo-calculator.js",
+    "calculateurs-engine.js"
+   ]
   },
   {
    "code": "de",
    "nom": "Deutsch",
    "locale": "de-DE",
    "og": "de_DE",
-   "etat": "prevue",
-   "dossier": "de"
+   "etat": "publiee",
+   "dossier": "de",
+   "libelles": {
+    "changer": "Sprache ändern",
+    "accueil": "Startseite",
+    "offre": "Diese Seite gibt es auch auf Deutsch.",
+    "aller": "Auf Deutsch lesen",
+    "rester": "Nein danke",
+    "versFr": "auf Französisch"
+   },
+   "pages": "*",
+   "traduireAussi": [
+    "search-index.js",
+    "search-lieux.js",
+    "carte-gtadb.js"
+   ],
+   "scriptsEnPlus": [
+    "leo-loader.js",
+    "leo-ui.js",
+    "leo-core.js",
+    "leo-link.js",
+    "leo-calculator.js",
+    "calculateurs-engine.js"
+   ],
+   "motsCodeGardes": true
   },
   {
    "code": "pt",
@@ -136,7 +191,18 @@
   "data-wish-off",
   "data-wish-on",
   "data-tip",
-  "data-mot"
+  "data-mot",
+  "data-mots",
+  "data-loc-q",
+  "data-search",
+  "data-q",
+  "data-n",
+  "data-help-keywords"
+ ],
+ "attributsCherches": [
+  "data-q",
+  "data-loc-q",
+  "data-n"
  ],
  "metas": [
   "description",
@@ -155,7 +221,11 @@
   "alternateName",
   "caption",
   "abstract",
-  "disambiguatingDescription"
+  "disambiguatingDescription",
+  "value",
+  "featureList",
+  "contactType",
+  "browserRequirements"
  ],
  "scriptsPartages": [
   "search-index.js",
@@ -257,5 +327,30 @@
     "nature"
    ]
   }
- }
+ },
+ "attributsJson": {
+  "data-medias": [
+   "a",
+   "t"
+  ],
+  "data-cat-tags": "*"
+ },
+ "exclure": [
+  "googleea0091a4822a39f7.html"
+ ],
+ "jsonCodePages": [
+  "f",
+  "g",
+  "u",
+  "x",
+  "img",
+  "ico",
+  "svg",
+  "fams",
+  "prefix",
+  "href",
+  "dot",
+  "calc",
+  "ext"
+ ]
 }

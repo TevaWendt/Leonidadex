@@ -21,9 +21,9 @@
     b.addEventListener('click', function () {
       var fam = b.getAttribute('data-wish-fam'), id = b.getAttribute('data-wish-id'), on = b.getAttribute('aria-pressed') !== 'true';
       var ok = false; try { ok = store.setWish(fam, id, on, 'catalogue'); } catch (e) { ok = false; }
-      if (!ok) { say('Couldn’t keep this choice: browser storage isn’t available.'); return; }
+      if (!ok) { say('Can’t keep this choice: your browser’s storage is unavailable.'); return; }
       paint(b);
-      say(on ? 'Saved to your wishlist. It’s not marked as owned: nothing is checked in your progress.' : 'Removed from your wishlist.');
+      say(on ? 'Kept in your wishlist. This doesn’t mean you own it: nothing is checked in your progress.' : 'Removed from your wishlist.');
     });
   });
   window.addEventListener('storage', function (ev) { if (ev.key === 'lk_wish_v1') buttons.forEach(paint); });

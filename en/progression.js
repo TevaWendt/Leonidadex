@@ -1,3 +1,5 @@
+/* v7.61 : pluriel selon la langue de la page : français n > 1 (« 0 coché », « 1,5 million ») ; anglais, espagnol n ≠ 1 (« 0 marcados ») */
+var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.documentElement&&document.documentElement.lang)||'fr').slice(0,2)==='fr'?n>1:n!==1;};
 /* LEONIDAKIT — page Progression : tableau de bord des carnets (v7.51, lot 4).
    Chaque carnet (outils/modele-donnees.json) a sa page dédiée (carnets/<id>.html) ; ici, une carte par carnet compte ce
    qui est coché, famille par famille, avec les mêmes identifiants et les mêmes clés que les fiches, les carnets et le
@@ -21,8 +23,8 @@
       const card=document.getElementById('carnet-'+k.id);if(!card)return;
       if(k.nature==='document'){
         const all=storage?notebooks():[],plans=all.filter(e=>e.tool==='plan').length,calcs=all.length-plans;
-        set(card,'#progress-calc-n',calcs?nf.format(calcs)+' calcul'+(lkPl(calcs)?'s':''):'No calculations');
-        set(card,'[data-cn-plans-n]',plans?nf.format(plans)+' plan'+(lkPl(plans)?'s':''):'No plans');
+        set(card,'#progress-calc-n',calcs?nf.format(calcs)+(lkPluriel(calcs)?' calculations':' calculation'):'No calculations');
+        set(card,'[data-cn-plans-n]',plans?nf.format(plans)+(lkPluriel(plans)?' plans':' plan'):'No plans');
         return;
       }
       let done=0,total=0,wishes=0,toFill=0,orphans=0;
@@ -38,10 +40,10 @@
       const nline=card.querySelector('.cn-dcard-n'),bbar=card.querySelector('.cn-dcard-bar');if(nline&&!total){nline.textContent='To be documented';if(bbar)bbar.hidden=true;}
       const bar=card.querySelector('[data-cn-bar]');if(bar)bar.style.width=(total?done/total*100:0)+'%';
       const extra=[];
-      if(wishes)extra.push(nf.format(wishes)+(k.id==='lieux'?' to visit':k.id==='consommables'?' to try':' envie'+(lkPl(wishes)?'s':'')));
-      if(toFill)extra.push(nf.format(toFill)+' stock'+(lkPl(toFill)?'s':'')+' to fill in');
-      if(orphans)extra.push(nf.format(orphans)+(lkPl(orphans)?' leftover entries':' leftover entry'));
-      if(!total)extra.push('The list will fill up with the game');
+      if(wishes)extra.push(nf.format(wishes)+(k.id==='lieux'?' to visit':k.id==='consommables'?' to try':(lkPluriel(wishes)?' wishes':' wish')));
+      if(toFill)extra.push(nf.format(toFill)+(lkPluriel(toFill)?' stock counts to fill in':' stock count to fill in'));
+      if(orphans)extra.push(nf.format(orphans)+(lkPluriel(orphans)?' separate entries':' separate entry'));
+      if(!total)extra.push('The list will fill in once the game is out');
       set(card,'[data-cn-extra]',extra.join(' · '));
     });
   }
@@ -66,7 +68,7 @@
   const notice=m=>{ if(msg) msg.textContent=m; };
   /* v7.54 : stockage du navigateur refusé (navigation privée stricte, réglage) : la page reste lisible et le dit, au lieu de planter (revue v7.53). */
   let storage=null;try{storage=window.localStorage;const probe='lk_probe';storage.setItem(probe,'1');storage.removeItem(probe);}catch(e){storage=null;}
-  if(!storage){const memory={};storage={getItem:k=>Object.prototype.hasOwnProperty.call(memory,k)?memory[k]:null,setItem:(k,v)=>{memory[k]=String(v);},removeItem:k=>{delete memory[k];},key:i=>Object.keys(memory)[i]??null,get length(){return Object.keys(memory).length;}};notice('This browser’s storage is unavailable: your progress shows but won’t be kept. Allow storage for the site, or export it from another browser.');}
+  if(!storage){const memory={};storage={getItem:k=>Object.prototype.hasOwnProperty.call(memory,k)?memory[k]:null,setItem:(k,v)=>{memory[k]=String(v);},removeItem:k=>{delete memory[k];},key:i=>Object.keys(memory)[i]??null,get length(){return Object.keys(memory).length;}};notice('This browser’s storage is unavailable: your progress is shown but won’t be kept. Allow the site to use storage, or export your progress from another browser.');}
   const store=P.create({storage,acquisitions:window.LK_ACQUISITIONS,ids:window.LK_PROGRESS_IDS,collectibles:(window.LK_COLLECTIBLES&&window.LK_COLLECTIBLES.items)||[],notice});
   try{ store.migrate(); }catch(e){}
   const nf=new Intl.NumberFormat('en-US',{maximumFractionDigits:0});
@@ -74,7 +76,7 @@
   function render(){
     const s=store.summary();
     const v=document.getElementById('progress-global-value'), bar=document.getElementById('progress-global-bar'), t=document.getElementById('progress-global-text');
-    if(v){ v.textContent=nf.format(Math.floor(s.percent))+'%'; bar.value=Math.max(0,Math.min(100,s.percent)); t.textContent=nf.format(s.done)+(lkPl(s.done)?' checked':' checked')+' of '+nf.format(s.total)+' listed. This tracking is personal: it’s not the game’s official progress.'; }
+    if(v){ v.textContent=nf.format(Math.floor(s.percent))+'%'; bar.value=Math.max(0,Math.min(100,s.percent)); t.textContent=(lkPl(s.done)?'{n} checked out of {t} listed.':'{n} checked out of {t} listed.').replace('{n}',nf.format(s.done)).replace('{t}',nf.format(s.total))+' This tracking is personal: it’s not the game’s official progress.'; }
   }
   store.subscribe(render); window.addEventListener('storage',render); window.addEventListener('pageshow',render); render();
 
@@ -84,7 +86,7 @@
     const out=store.exportData(), n=Object.keys(out.data).length;
     const blob=new Blob([JSON.stringify(out,null,1)],{type:'application/json'});
     const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='leonidakit-suivi-'+new Date().toISOString().slice(0,10)+'.json'; document.body.appendChild(a); a.click(); a.remove();
-    notice(n?n+(lkPl(n)?' sections exported':' section exported')+' (version 2).':'Nothing to export yet.');
+    notice(n?n+(lkPluriel(n)?' sections exported':' section exported')+' (version 2).':'Nothing to export yet.');
   });
   let plan=null;
   function closePreview(){ plan=null; pv.hidden=true; im.value=''; }
@@ -106,7 +108,7 @@
   document.getElementById('save-cancel').addEventListener('click',()=>{ closePreview(); notice('Import canceled: nothing was changed.'); });
   ['merge','replace'].forEach(mode=>{ document.getElementById('save-'+mode).addEventListener('click',()=>{
     if(!plan) return;
-    try{ const r=store.applyImport(plan,mode); closePreview(); notice(r.written.length+(lkPl(r.written.length)?(mode==='merge'?' sections merged':' sections replaced'):(mode==='merge'?' section merged':' section replaced'))+'. Reloading…'); setTimeout(()=>location.reload(),700); }
+    try{ const r=store.applyImport(plan,mode); closePreview(); notice(r.written.length+(r.written.length>1?(mode==='merge'?' sections merged':' sections replaced'):(mode==='merge'?' section merged':' section replaced'))+'. Reloading…'); setTimeout(()=>location.reload(),700); }
     catch(e){ closePreview(); }
   }); });
 })();

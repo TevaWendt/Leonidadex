@@ -1,0 +1,79 @@
+LEONIDAKIT v7.63 — langues : tout le site en italien, Léo en italien, 3 octobre 2026
+
+Base : v7.62 (tout le site en anglais), livrée le 3 octobre. L'archive « modifs » de cette version contient seulement ce qui
+change depuis la v7.62. Rien n'est publié. Procédure : outils/LANGUES.md ; preuves : outils/PREUVES-v7.63.md.
+
+Demande : « absolument tout comme tu viens de faire là, mais en italien ». Pris comme l'espagnol : tout le site (403 pages) et
+Léo qui comprend et répond en italien, calculateur complet, captures du Tuto, relecture, tests, documentation.
+
+1. CE QUE VOIT LE VISITEUR
+- Menu « Changer la langue » : Français / English / Español / Italiano sur chaque page. Le bandeau de suggestion propose
+  l'italien à un navigateur italien (« Questa pagina è disponibile anche in italiano. Leggi in italiano / No, grazie »).
+- Dossier it/ : les 403 pages, comme es/ et en/ : accueil, calculateur (9 outils × 3 modes), Tuto avec captures italiennes
+  (img/tuto/it/), carte (2 547 lieux), catalogues, listes, les 302 fiches véhicules, les 27 armes, lieux, personnages,
+  entreprises, demeures, planques, les 9 carnets, Progression, comparateur, classement, médias, À propos, Contact, Mentions.
+- Italien standard, « tu », titres à l'italienne (« I miei acquisti »), « 200.000 $ », « 1.250 $ » (point des milliers dès
+  1 000, comme l'écrit le navigateur en italien), « 1,5 milioni », « 19 novembre 2026 », « 20% » ; noms de marques, de
+  modèles et de lieux gardés ; « Trailer 1 / Trailer 2 », « Ultimate Edition », « Pack Vintage Vice City ».
+- Léo en italien : il comprend les questions italiennes (pont outils/langues/it/_leo-pont.json : 14 248 expressions italiennes
+  → français, 239 mots vides ; « dov'è », « quant'è », « cmq », « xké », « 200.000 $ », « 1,5 milioni ») et répond en italien
+  avec les fiches et liens /it/.
+- Le calculateur italien comprend les phrases du hub en italien (« Ho 200.000 $ e voglio 1,5 milioni », « 250 mila »,
+  « 2 ore al giorno », « Ne vale la pena? », « In che ordine compro? »…), lit « 1.250,5 », « 200.000 » et « 1,5 ».
+- Référencement : canonical, hreflang fr / en / es / it / x-default sur toutes les pages, og:locale it_IT, 391 adresses
+  italiennes dans sitemap.xml.
+- Mentions : entrée v7.63 de l'historique (dans les quatre langues), « Dernière mise à jour : 3 octobre 2026 ». Aucune clé de
+  stockage nouvelle (lk_lang_v1 garde aussi « it »), aucun cookie, aucun service extérieur.
+
+2. TRADUCTION
+- 15 822 textes traduits du français (avec l'espagnol et l'anglais relus comme repères pour les morceaux assemblés par le
+  code), 2 143 noms vérifiés un par un (gardés ou traduits) ; glossaire italien (outils/langues/it/_glossaire.md : règles,
+  mots que le code cherche, vocabulaire fixe, termes fixés pendant la traduction) ; règles à trous italiennes de la carte
+  (« Edificio L… », « Equivalente reale: … », « X in GTA VI ») ; clés propres aux fichiers et règles reprises de l'espagnol
+  (outils/langues/it/lot-90.json) ; mémoire italienne ≈ 18 000 entrées.
+- Harmonisation : les termes qui variaient d'un lot à l'autre ont été alignés (statuts Ufficiale / Avvistato / Presunto,
+  « individuato » pour un lieu placé par le site et « scoperto » pour un lieu coché par toi, « segnaposto » sur la carte,
+  « Voce enciclopedica », « l'Ultimate Edition », « Della community », noms des objets identiques dans les listes, les
+  boutons « Ce l'ho » et les libellés « Scheda completa »).
+- Relecture : 9 relecteurs (5 sur 38 pages : hubs, carte, catalogues, fiches, carnets, Tuto, À propos, Contact, Mentions ;
+  3 sur le calculateur ; 1 sur 389 réponses de Léo) : 207 défauts signalés, tous traités (corrigés dans la mémoire, ou dans
+  le code quand la cause était là ; 5 remarques sur « 2547 » écartées parce que la règle des milliers a changé, voir 1).
+
+3. CODE (le français affiché ne change pas)
+- Pluriels : plus aucun pluriel formé en ajoutant « s » dans le code (l'italien ne fait pas ses pluriels ainsi) : app.js,
+  calculateurs.js, -plan.js, -scenario.js, -workspace.js, catalogue.js, collectibles.js, collectibles-help.js,
+  collectibles-tools.js, consommables.js, fiches.js, leo-core.js, tuto.js écrivent les deux formes (« ' jours' : ' jour' ») ;
+  les listes de véhicules et d'armes portent data-mot et data-mots (gen.js, gen-armes.cjs, vehicules.html, armes.html).
+- comparateur.js : « Choisir un arme » / « Choisir un véhicule » écrits en entier (l'italien dit « Scegli un'arma »).
+- Calculateur : calculateurs-engine.js (montants « 1.250 $ », lecture « 1.250,5 », libellés « Acquisto “ ” »), -hub.js
+  (mots italiens des neuf outils, milioni / mila, ore / ora, « Ho … »), -workspace.js, -scenario.js, -motion.js (mots que le
+  code cherche dans les messages italiens).
+- Léo : leo-core.js lit les élisions italiennes (apostrophe = espace) et les montants « 200.000 $ » ; catégories italiennes
+  (« Veicolo · », « Luogo censito · ») ; common.js charge Léo sur les pages italiennes.
+- outils/langues.cjs : « milliers »: "toujours" (point des milliers dès 1 000 pour l'italien) ; outils/leo-langues.cjs :
+  majuscules italiennes, modèle réel (inspiration), type des lieux des catalogues et note de compatibilité traduits, espaces
+  du début et de la fin des gabarits gardés.
+- outils/tuto-shots.py : noms italiens des exemples ; python3 outils/tuto-shots.py . it : captures du Tuto italien.
+
+4. CORRIGÉ AUSSI EN ESPAGNOL ET EN ANGLAIS
+- Léo espagnol : les phrases assemblées ne se collent plus (« …comprar. Inspiración… » au lieu de « …comprar.Inspiración… ») ;
+  le modèle réel d'un véhicule et le type des lieux des catalogues s'affichent en espagnol (ils restaient en français).
+- Fin des citations dans quelques libellés (« Abrir “X” », export du plan « compra “X” (−…) ») : le guillemet fermant
+  français » est remplacé par ” dans les trois langues.
+- Les nouvelles formes écrites en entier ont leur traduction (« étapes », « résultats », « réponses », « sélectionnés »… :
+  outils/langues/es/lot-56.json, outils/langues/en/lot-29.json) ; le compteur de la liste des armes dit « 27 armas » /
+  « 27 weapons ».
+
+5. TESTS
+- langues-helper.cjs : frenchHits(texte, 'it') (mots partagés avec le français ignorés, élisions italiennes admises, accent
+  ailleurs que sur la dernière voyelle = français ; coupé, fumé, art déco admis).
+- langues.test.cjs : calculateur italien dans jsdom (montants, nombres, date, hub, route), bandeau italien ; vérifie les
+  403 pages italiennes comme les autres langues.
+- langues-browser.cjs : noms, questions du hub et nombre « 1.500 » italiens, bandeau italien ; le calculateur italien est
+  parcouru dans chaque outil et chaque mode.
+- outils/tests/leo-questions-it.json : les 512 questions d'essai de Léo en italien (node outils/tests/leo-eval.cjs --langue it).
+
+6. LIMITES
+- Léo n'existe toujours pas en anglais (pas demandé).
+- Les fautes du français relevées en v7.61 (outils/PREUVES-v7.61.md § 6) et les nouvelles relevées en traduisant
+  (outils/PREUVES-v7.63.md § 6) sont traduites telles quelles.

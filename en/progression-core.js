@@ -16,7 +16,7 @@
   /* v7.51 (lot 4) : ce qui n’est pas du suivi ne voyage jamais dans le fichier, ni à l’export ni à l’import : le brouillon du
      formulaire de contact (il contient une adresse e-mail) et les sondes techniques du navigateur. */
   var PRIVATE = /^(lk_contact_|lk_probe$)/;
-  var LABELS = { vehicules: 'Vehicles', armes: 'Weapons', lieux: 'Map places', equipements: 'Gear and gadgets', munitions: 'Ammo types', consommables: 'Consumables', coiffures: 'Hairstyles', tatouages: 'Tattoos', tenues: 'Outfits and accessories', 'perso-vehicules': 'Vehicle customization', 'perso-armes': 'Weapon customization', collectibles: 'Collectibles' };
+  var LABELS = { vehicules: 'Vehicles', armes: 'Weapons', lieux: 'Places on the map', equipements: 'Gear and gadgets', munitions: 'Ammo types', consommables: 'Consumables', coiffures: 'Hairstyles', tatouages: 'Tattoos', tenues: 'Outfits and accessories', 'perso-vehicules': 'Vehicle customization', 'perso-armes': 'Weapon customization', collectibles: 'Collectibles' };
   function isChecked(v) { return v === true || v === 1; }
   function parseMap(raw) {
     /* Retourne {map, corrupt} : les entrées illisibles ne comptent pas mais ne sont jamais perdues. */
@@ -123,7 +123,7 @@
       var state = v2(); if (state.migrated) return false;
       if (!hasAnything()) return false;
       var data = { version: VERSION, migratedAt: new Date().toISOString(), checked: state.checked };
-      try { storage.setItem(KEY, JSON.stringify(data)); } catch (e) { notice('Can’t set up tracking: browser storage is unavailable.'); return false; }
+      try { storage.setItem(KEY, JSON.stringify(data)); } catch (e) { notice('Can’t set up tracking: your browser’s storage is unavailable.'); return false; }
       return true;
     }
     function exportData() {
@@ -153,7 +153,7 @@
         if (PRIVATE.test(key)) { issues.push('Private section skipped (never imported): ' + key); return; }
         if (typeof raw !== 'string') { issues.push('Unreadable section skipped: ' + key); return; }
         if (allowed.indexOf(key) === -1) {
-          if (key.indexOf('lk_') === 0 || key.indexOf('lk-') === 0) { issues.push('Unrecognized section kept as is, not counted: ' + key); rubrics[key] = raw; }
+          if (key.indexOf('lk_') === 0 || key.indexOf('lk-') === 0) { issues.push('Unrecognized section kept as is, without being counted: ' + key); rubrics[key] = raw; }
           else issues.push('Unknown section skipped: ' + key);
           return;
         }
@@ -193,7 +193,7 @@
         /* Retour à l'état d'avant : rien n'est appliqué à moitié. */
         Object.keys(before).forEach(function (k) { try { storage.setItem(k, before[k]); } catch (e2) { /* on continue */ } });
         for (var i = 0; i < storage.length; i++) { var k2 = storage.key(i); if (!(k2 in before)) { try { storage.removeItem(k2); } catch (e3) { /* on continue */ } i--; } }
-        notice('Import canceled: browser storage refused to save. Nothing was changed.');
+        notice('Import canceled: your browser’s storage refused the write. Nothing was changed.');
         throw e;
       }
       emit();

@@ -78,7 +78,7 @@
     }
     bars.forEach(bar => {
       const f = bar.dataset.trackBar, raz = bar.querySelector('[data-raz]');
-      if (raz && !raz.dataset.bound) { raz.dataset.bound = '1'; raz.addEventListener('click', () => { if (!FAMILIES[f] || !confirm('¿Vaciar “' + FAMILIES[f].label + '” en este dispositivo?')) return; if (write(f, {})) emit(f); }); }
+      if (raz && !raz.dataset.bound) { raz.dataset.bound = '1'; raz.addEventListener('click', () => { if (!FAMILIES[f] || !confirm('¿Vaciar “{nom}” en este dispositivo?'.replace('{nom}', FAMILIES[f].label))) return; if (write(f, {})) emit(f); }); }
     });
     listeners.add(refresh); refresh();
   }

@@ -1,3 +1,5 @@
+/* v7.61 : pluriel selon la langue de la page : français n > 1 (« 0 coché », « 1,5 million ») ; anglais, espagnol n ≠ 1 (« 0 marcados ») */
+var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.documentElement&&document.documentElement.lang)||'fr').slice(0,2)==='fr'?n>1:n!==1;};
 /* Progressive enhancement: catalogue HTML remains useful without JavaScript. */
 (function () {
   'use strict';
@@ -6,14 +8,14 @@
   if (!core || !Array.isArray(window.LK_COLLECTIBLES?.items)) return;
   const $ = id => document.getElementById(id);
   const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[c]));
-  const norm = value => String(value ?? '').toLocaleLowerCase('fr').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[’‘]/g, "'").replace(/[\u00a0\u202f]/g, ' ').trim();
+  const norm = value => String(value ?? '').toLocaleLowerCase('fr').replace(/ß/g,'ss').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[’‘]/g, "'").replace(/[\u00a0\u202f]/g, ' ').trim();
   const data = window.LK_COLLECTIBLES;
   const items = data.items.filter(item => item && item.published !== false && item.status !== 'placeholder' && core.validId(item.id));
   const categories = new Map((data.categories || []).map(category => [category.id, category.name]));
   const statusLabels = {confirmed: 'Confirmed', established: 'Strongly established', unconfirmed: 'Unconfirmed'};
-  const categoryName = item => categories.get(item.category) || item.category || 'Category to be specified';
+  const categoryName = item => categories.get(item.category) || item.category || 'Category not set yet';
   const fields = ['category', 'region', 'status', 'progress', 'subcategory', 'zone', 'difficulty', 'availability', 'reward'];
-  const filterLabels = {q: 'Search', category: 'Category', region: 'Region', status: 'Status', progress: 'Collection', subcategory: 'Subcategory', zone: 'Area', difficulty: 'Difficulty', availability: 'Availability', reward: 'Reward'};
+  const filterLabels = {q: 'Search', category: 'Category', region: 'Region', status: 'Status', progress: 'Collection', subcategory: 'Subcategory', zone: 'Zone', difficulty: 'Difficulty', availability: 'Availability', reward: 'Reward'};
   const progressLabels = {missing: 'To find', found: 'Found', favorites: 'Favorites', notes: 'With a note'};
   const sortModes = ['name', 'updated', 'category', 'region', 'order', 'difficulty'];
   const PREF_KEY = 'lk_collectibles_prefs_v1';
@@ -35,7 +37,7 @@
   }
   function savePrefs() {
     try { localStorage.setItem(PREF_KEY, JSON.stringify(prefs)); }
-    catch (_) { feedback('This preference applies to this tab; the browser doesn’t let it be saved.'); }
+    catch (_) { feedback('This preference applies to this tab; the browser doesn’t allow saving it.'); }
   }
   function readParams(params) {
     filters = {...defaults, view: params.get('view') === 'list' ? 'list' : params.get('view') === 'grid' ? 'grid' : prefs.view};
@@ -129,14 +131,14 @@
     setText('col-confirmed', items.filter(item => item.status === 'confirmed').length);
     setText('col-located', items.filter(item => core.mapUrl(item)).length);
     setText('col-found-count', found);
-    setText('col-trackable-label', trackable.length ? '/ ' + trackable.length + (lkPl(trackable.length) ? ' found' : ' found') : 'items tracked');
+    setText('col-trackable-label', trackable.length ? '/ ' + trackable.length + (lkPluriel(trackable.length)?' found':' found') : 'items tracked');
     setText('col-percent', percent === null ? '—' : percent + '%');
     if ($('col-progress-fill')) $('col-progress-fill').style.width = (percent || 0) + '%';
     if ($('col-progress-meter')) {
       $('col-progress-meter').setAttribute('aria-valuenow', percent || 0);
-      $('col-progress-meter').setAttribute('aria-valuetext', percent === null ? 'Progress unavailable: no tracked collectibles' : found + ' of ' + trackable.length + ' tracked pages, ' + percent + '%');
+      $('col-progress-meter').setAttribute('aria-valuetext', percent === null ? 'Progress unavailable: no collectible tracked' : found + ' of ' + trackable.length + ' tracked pages, ' + percent + '%');
     }
-    setText('col-progress-caption', trackable.length ? 'Progress across the eligible pages of this catalog. This percentage doesn’t represent full game completion.' : 'Tracking will start with the first eligible pages. The game’s total is unknown.');
+    setText('col-progress-caption', trackable.length ? 'Progress on the eligible pages of this catalog. This percentage doesn’t represent full completion of the game.' : 'Tracking will start with the first eligible pages. The game’s total is unknown.');
     setText('col-favorite-count', items.filter(item => state.favorites[item.id]).length);
     setText('col-note-count', items.filter(item => state.notes[item.id]).length);
     if ($('col-breakdowns')) {
@@ -160,13 +162,13 @@
     const spoilers = location || item.reward || map;
     return '<article class="col-card" data-col-item="' + esc(item.id) + '">' +
       '<div class="col-card-media">' + (image ? '<img src="' + esc(image) + '" alt="' + esc(item.image.alt || item.name) + '" width="' + (Number(item.image.width) || 480) + '" height="' + (Number(item.image.height) || 270) + '" loading="lazy" decoding="async">' : '<span class="col-no-image">GTA VI image not documented</span>') + '</div>' +
-      '<div class="col-card-body"><div class="col-tags"><span class="col-tag col-tag-' + esc(item.status) + '">' + esc(statusLabels[item.status] || 'Status to be specified') + '</span></div>' +
+      '<div class="col-card-body"><div class="col-tags"><span class="col-tag col-tag-' + esc(item.status) + '">' + esc(statusLabels[item.status] || 'Status not set yet') + '</span></div>' +
       '<h3>' + (url ? '<a href="' + esc(url) + '">' + esc(item.name) + '</a>' : esc(item.name)) + '</h3>' +
       '<p class="col-card-location">' + esc([categoryName(item), item.region].filter(Boolean).join(' · ')) + '</p>' +
       (item.summary ? '<p class="col-card-summary">' + esc(item.summary) + '</p>' : '') +
       (spoilers ? '<details class="col-card-spoilers" data-col-spoiler' + (prefs.spoilers ? ' open' : '') + '><summary>Location &amp; reward</summary>' + (location ? '<p>' + esc(location) + '</p>' : '') + (item.reward ? '<p>Reward: ' + esc(item.reward) + '</p>' : '') + (map ? '<a href="' + esc(map) + '">See on the map ↗</a>' : '') + '</details>' : '') +
-      '<div class="col-card-actions"><button type="button" data-col-found="' + esc(item.id) + '" aria-pressed="false">Mark as found</button><button type="button" data-col-favorite="' + esc(item.id) + '" aria-pressed="false">☆ Favorite</button><button type="button" data-col-plan="' + esc(item.id) + '" aria-pressed="false">Add to my run</button></div>' +
-      '<details class="col-card-note"><summary>Personal note' + (state.notes[item.id] ? ' · saved' : '') + '</summary><label for="' + esc(noteId) + '">Your note (2,000 characters max)</label><textarea id="' + esc(noteId) + '" data-col-note="' + esc(item.id) + '" maxlength="2000" rows="3" placeholder="Your notes for the next visit…">' + esc(state.notes[item.id] || '') + '</textarea></details></div></article>';
+      '<div class="col-card-actions"><button type="button" data-col-found="' + esc(item.id) + '" aria-pressed="false">Mark as found</button><button type="button" data-col-favorite="' + esc(item.id) + '" aria-pressed="false">☆ Favorite</button><button type="button" data-col-plan="' + esc(item.id) + '" aria-pressed="false">Add to my route</button></div>' +
+      '<details class="col-card-note"><summary>Personal note' + (state.notes[item.id] ? ' · saved' : '') + '</summary><label for="' + esc(noteId) + '">Your note (2,000 characters max)</label><textarea id="' + esc(noteId) + '" data-col-note="' + esc(item.id) + '" maxlength="2000" rows="3" placeholder="Notes for your next visit…">' + esc(state.notes[item.id] || '') + '</textarea></details></div></article>';
   }
   function ordered(list) {
     const alpha = (a,b) => String(a || '').localeCompare(String(b || ''), 'fr', {numeric: true, sensitivity: 'base'});
@@ -193,10 +195,10 @@
     results.querySelectorAll('.col-card-note').forEach(node => { node.open = openNotes.has(node.querySelector('[data-col-note]')?.dataset.colNote); });
     results.classList.toggle('is-list', filters.view === 'list');
     const activeFilters = ['q', ...fields].filter(key => filters[key]);
-    setText('col-result-count', items.length ? list.length + (lkPl(list.length) ? ' results' : ' result') + ' of ' + items.length + (lkPl(items.length) ? ' pages' : ' fiche') : 'No documented pages');
+    setText('col-result-count', items.length ? list.length + (lkPluriel(list.length)?' results':' result') + ' of ' + items.length + (lkPluriel(items.length)?' pages':' page') : 'No documented pages');
     if ($('col-empty')) $('col-empty').hidden = list.length > 0;
-    setText('col-empty-title', items.length ? 'No finds with these filters.' : 'Still ground to explore.');
-    setText('col-empty-text', items.length ? 'Try another search or remove a filter. Your finds and notes are kept.' : 'We’re waiting for well-documented items before publishing the first pages. No item, location or total is made up to fill the catalog.');
+    setText('col-empty-title', items.length ? 'No finds with these filters.' : 'The terrain is still unexplored.');
+    setText('col-empty-text', items.length ? 'Try another search or remove a filter. Your finds and notes are kept.' : 'We’re waiting for well-documented info before publishing the first pages. No item, location or total is made up to fill the catalog.');
     if ($('col-empty-link')) $('col-empty-link').hidden = items.length > 0;
     if ($('col-empty-reset')) $('col-empty-reset').hidden = !activeFilters.length;
     if ($('col-active-filters')) $('col-active-filters').innerHTML = activeFilters.map(key => {
@@ -303,7 +305,7 @@
       try {
         if (file.size > core.maxImportBytes) throw new Error('The file is over the 2 MB limit.');
         const counts = core.importData(await file.text(), 'merge');
-        feedback('Import merged: ' + counts.found + ' found, ' + counts.favorites + ' favorite(s), ' + counts.notes + ' note(s).' + (counts.tools ? ' Tools included: ' + counts.tools.savedViews + ' search(es), ' + counts.tools.plan + ' step(s).' : '') + ' IDs missing from the catalog are kept for future pages.');
+        feedback('Import merged: ' + counts.found + ' found, ' + counts.favorites + ' favorite(s), ' + counts.notes + ' note(s).' + (counts.tools ? ' Tools included: ' + counts.tools.savedViews + ' search(es), ' + counts.tools.plan + ' stop(s).' : '') + ' IDs missing from the catalog are kept for future pages.');
       } catch (error) { feedback('Import rejected. ' + error.message); }
       input.value = '';
     });

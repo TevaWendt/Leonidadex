@@ -3,11 +3,12 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
 /* Progressive enhancement: catalogue HTML remains useful without JavaScript. */
 (function () {
   'use strict';
+  var lkPl = function (n) { return /^fr/.test(document.documentElement.lang || "fr") ? n > 1 : n !== 1; }; /* pluriel selon la langue de la page (français : n > 1) */
   const core = window.LKCollectibles;
   if (!core || !Array.isArray(window.LK_COLLECTIBLES?.items)) return;
   const $ = id => document.getElementById(id);
   const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[c]));
-  const norm = value => String(value ?? '').toLocaleLowerCase('fr').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[’‘]/g, "'").replace(/[\u00a0\u202f]/g, ' ').trim();
+  const norm = value => String(value ?? '').toLocaleLowerCase('fr').replace(/ß/g,'ss').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[’‘]/g, "'").replace(/[\u00a0\u202f]/g, ' ').trim();
   const data = window.LK_COLLECTIBLES;
   const items = data.items.filter(item => item && item.published !== false && item.status !== 'placeholder' && core.validId(item.id));
   const categories = new Map((data.categories || []).map(category => [category.id, category.name]));
@@ -130,7 +131,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     setText('col-confirmed', items.filter(item => item.status === 'confirmed').length);
     setText('col-located', items.filter(item => core.mapUrl(item)).length);
     setText('col-found-count', found);
-    setText('col-trackable-label', trackable.length ? '/ ' + trackable.length + ' encontrado' + (lkPluriel(trackable.length)?'s' : '') : 'objetos con seguimiento');
+    setText('col-trackable-label', trackable.length ? '/ ' + trackable.length + (lkPluriel(trackable.length)?' encontrados':' encontrado') : 'objetos con seguimiento');
     setText('col-percent', percent === null ? '—' : percent + ' %');
     if ($('col-progress-fill')) $('col-progress-fill').style.width = (percent || 0) + '%';
     if ($('col-progress-meter')) {
@@ -194,7 +195,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     results.querySelectorAll('.col-card-note').forEach(node => { node.open = openNotes.has(node.querySelector('[data-col-note]')?.dataset.colNote); });
     results.classList.toggle('is-list', filters.view === 'list');
     const activeFilters = ['q', ...fields].filter(key => filters[key]);
-    setText('col-result-count', items.length ? list.length + ' resultado' + (lkPluriel(list.length)?'s' : '') + ' de ' + items.length + ' ficha' + (lkPluriel(items.length)?'s' : '') : 'Ninguna ficha documentada');
+    setText('col-result-count', items.length ? list.length + (lkPluriel(list.length)?' resultados':' resultado') + ' de ' + items.length + (lkPluriel(items.length)?' fichas':' ficha') : 'Ninguna ficha documentada');
     if ($('col-empty')) $('col-empty').hidden = list.length > 0;
     setText('col-empty-title', items.length ? 'Ningún hallazgo con estos filtros.' : 'El terreno está por explorar.');
     setText('col-empty-text', items.length ? 'Prueba otra búsqueda o quita un filtro. Tus hallazgos y tus notas se conservan.' : 'Esperamos datos lo bastante documentados para publicar las primeras fichas. No inventamos ningún objeto, ubicación ni total para llenar el catálogo.');

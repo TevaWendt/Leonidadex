@@ -1,0 +1,50 @@
+LEONIDAKIT v7.62 — langues : tout le site en anglais, 3 octobre 2026
+
+Base : v7.61 (tout le site en espagnol), livrée le 2 octobre. L'archive « modifs » de cette version contient seulement ce qui
+change depuis la v7.61. Rien n'est publié. Procédure : outils/LANGUES.md ; preuves : outils/PREUVES-v7.62.md.
+
+Décision (validée avant le travail) : après l'espagnol, l'anglais passe de 6 pages à tout le site. Léo reste en français et en
+espagnol (l'anglais n'était pas demandé pour lui) : en anglais, il n'est pas chargé et les invitations à lui parler disent
+« Ask Léo (in French) ».
+
+1. CE QUE VOIT LE VISITEUR
+- Dossier en/ : les 403 pages (comme es/) : carte (2 547 lieux), catalogues, listes et hubs, les 302 fiches véhicules, les 27
+  armes, lieux, personnages, entreprises, demeures, planques, les 9 carnets, Progression, comparateur, classement, médias,
+  en plus de l'accueil, du calculateur, du Tuto, d'À propos, de Contact et des Mentions (déjà anglais depuis la v7.60).
+- Anglais américain, « you », « $200,000 », « Trailer 1 / Trailer 2 », « Ultimate Edition », « Price to come », « page »
+  pour une fiche ; noms de marques, de modèles et de lieux gardés.
+- Plus aucun badge « FR » dans les pages anglaises : toutes les pages liées existent en anglais.
+- Recherche du site et carte en anglais (libellés, catégories, descriptions des lieux).
+- Référencement : canonical, hreflang fr / en / es / x-default sur toutes les pages, 391 adresses anglaises dans sitemap.xml
+  (6 avant).
+- Mentions : entrée v7.62 de l'historique, « Dernière mise à jour : 3 octobre 2026 » (aucune clé de stockage nouvelle).
+
+2. TRADUCTION
+- 10 101 textes traduits du français (avec l'espagnol relu comme repère pour les morceaux assemblés par le code), glossaire
+  anglais complété pour tout le site ; noms identiques gardés tels quels (2 003) ; phrases des lieux de la carte traduites
+  phrase par phrase et règles à trous anglaises (« Building L…», « Real-world equivalent: … ») ; clés propres aux fichiers
+  et règles reprises de l'espagnol (outils/langues/en/lot-27.json) ; mémoire anglaise ≈ 16 400 entrées.
+- Harmonisation : mêmes noms partout pour les catégories (Two-wheelers and quads, Vans and cargo vans, Misc.), les armes
+  (Sidearm), les statuts, « official images », « View on the map », « The motel from Trailer 1 », dates des sources au
+  format américain (« accessed 09/23/2026 »).
+- Relecture : 5 978 textes de 36 pages (hubs, carte, catalogues, fiches, carnets) relus par quatre relecteurs : 99 défauts
+  signalés (surtout un même objet nommé de deux façons, « Accuracy » / « Precision », « Medkit » / « Health kit », un ordre
+  de mots, quelques phrases calquées du français), tous corrigés.
+
+3. ESPAGNOL ET ANGLAIS : CE QUI S'AJOUTE AUX DEUX
+- Galeries des fiches : légendes et textes alternatifs des vues officielles (attribut data-medias, lu par fiches.js) traduits
+  (« attributsJson » de outils/langues.json) ; 8 textes nouveaux traduits dans chaque langue.
+- Données : familles d'armes et de véhicules encore en français dans le comparateur (« Batte de baseball en aluminium »,
+  « Bateau de pêche côtier à cabine »…) traduites dans les deux langues.
+- La règle à trous « X dans GTA VI » ne s'applique plus qu'à un nom propre (« Vice City dans GTA VI ») : une phrase française
+  qui finit pareil (« Tout ce qui s'achète dans GTA VI ») est signalée comme manquante au lieu de passer à moitié traduite.
+
+4. TESTS
+- langues.test.cjs vérifie maintenant 403 pages anglaises (langue, liens, hreflang, aucun français visible, scripts).
+- langues-helper.cjs : noms propres cités tels quels (De Hoop, De Havilland, Sedan de Ville, La Perle, Le Mans, Übermacht…).
+- langues-browser.cjs et langues-pages-browser.cjs : un titre animé mot par mot (« De Hoop Brion ») se lit en entier.
+- outils/tuto-shots.py . en : captures du Tuto anglais refaites.
+
+5. LIMITES
+- Léo n'existe pas en anglais (pas demandé ; même méthode que l'espagnol si tu le veux : pont anglais → français).
+- Les fautes du français relevées en v7.61 (outils/PREUVES-v7.61.md § 6) sont traduites telles quelles dans les deux langues.

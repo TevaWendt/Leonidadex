@@ -81,7 +81,7 @@ const nSt={officiel:0,vu:0,comm:0}; V.forEach(v=>nSt[v.st]++);
 const nSlot={}; V.forEach(v=>{if(v.slot)nSlot[v.slot]=(nSlot[v.slot]||0)+1;});
 const parCat={}; V.forEach(v=>parCat[v.cat]=(parCat[v.cat]||0)+1);
 
-H=H.replace(/(<div class="veh-grid" id="vgrid" data-mot="véhicule">)[\s\S]*?(<\/div>\n\n  <p class="vempty")/,
+H=H.replace(/(<div class="veh-grid" id="vgrid" data-mot="véhicule"[^>]*>)[\s\S]*?(<\/div>\n\n  <p class="vempty")/,
   '$1'+V.map(carte).join('')+'<i class="veh-spacer" aria-hidden="true"></i>'.repeat(3)+'$2');
 /* v7.54 : marques du bandeau de l'en-tête écrites dans la page (app.js les lit ; vehicules-data.js n'est plus chargé ici) */
 {const marques=[...new Set(V.map(v=>v.marque).filter(m=>m&&m!=='Marque'&&m!=='Marque inconnue'))].sort((a,b)=>a.localeCompare(b,'fr'));

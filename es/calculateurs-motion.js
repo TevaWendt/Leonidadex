@@ -46,7 +46,7 @@ const intersections=typeof IntersectionObserver==='function'?new IntersectionObs
   else cancel(el);
  }
 }),{threshold:.02}):null;
-function durationText(value,signed){const n=Math.round(Math.abs(value)),sign=value<0&&n?'−':signed?'+':'';return sign+(n<60?n+' min':Math.floor(n/60)+' h'+(n%60?' '+String(n%60).padStart(2,'0'):''));}
+function durationText(value,signed){const n=Math.round(Math.abs(value)),sign=value<0&&n?'−':signed?'+':'';return sign+(n<60?n+' min':Math.floor(n/60)+' h'+(n%60?' '+String(n%60).padStart(2,'0')+(typeof document!=='undefined'&&/^de/.test(document.documentElement.lang||'')?' min':''):''));}
 function parse(text){
  const s=text.trim().replace(/\u2212/g,'-');let m=s.match(/^([+-]?\d+)\s*h(?:\s*(\d{1,2}))?$/);
  if(m){const value=Number(m[1])*60+(s.startsWith('-')?-1:1)*Number(m[2]||0);return {value,type:'time',format:v=>durationText(v,s.startsWith('+'))};}
@@ -108,7 +108,7 @@ function scan(){
   zones.forEach((el,i)=>{if(!seen.has(el)&&!waiting.has(el)&&visible(el))queue(el,()=>{seen.add(el);if(!location.hash||!el.closest(location.hash==='#atelier'?'#atelier':'.not-a-real-target'))reveal(el,i%4);});});
   main.querySelectorAll('.calc-result').forEach((el,i)=>{if(!observed.has(el)){el.style.setProperty('--c-phase',String(-(i%4)*2)+'s');watch(el);if(!intersections)el.classList.toggle('c-inview',inside(el));}});
   main.querySelectorAll('[data-c-stage]').forEach(el=>{const key='stage:'+el.dataset.cStage,value=el.dataset.cStageState;const old=states.get(key);states.set(key,value);if(old&&old!==value&&inside(el))play(el,[{backgroundColor:value==='Hecho'?'#d7eae0':'#eee0e9'},{backgroundColor:'#fff9fc'}],times.standard);});
-  const saved=main.querySelector('.b-save-state');if(saved){saved.dataset.cDirty=String(/non enregistr|mémoire seulement|not saved|memory only|no guardad|solo en memoria/.test(saved.textContent));stateEffect(saved,'saved-status',saved.textContent);}
+  const saved=main.querySelector('.b-save-state');if(saved){saved.dataset.cDirty=String(/non enregistr|mémoire seulement|not saved|memory only|no guardad|solo en memoria|non salvat|solo in memoria|nicht gespeichert|nur im Speicher/.test(saved.textContent));stateEffect(saved,'saved-status',saved.textContent);}
   const ref=panel?.querySelector('[data-b-reference]')?.value;
   main.querySelectorAll('.b-notebook-entry').forEach(el=>{const id=el.querySelector('[data-b-rename]')?.dataset.bRename;const tag=el.querySelector('.c-reference-tag');if(id===ref&&!tag){const t=document.createElement('span');t.className='c-reference-tag';t.textContent='Referencia de comparación';el.append(t);}else if(id!==ref)tag?.remove();});
  });

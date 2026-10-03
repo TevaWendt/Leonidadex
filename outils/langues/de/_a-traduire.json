@@ -1,0 +1,32 @@
+{
+ "<1>3 octobre 2026</1> · v7.63 — Langues : tout le site existe aussi en italien, comme en espagnol et en anglais (accueil, calculateur, Tuto, carte, catalogues, listes, toutes les fiches, carnets, À propos, Contact et ces Mentions), et Léo répond en italien, toujours depuis ton navigateur.": {
+  "kind": "page",
+  "where": [
+   "mentions-legales.html · li"
+  ]
+ },
+ "Aucune clé de plus, aucun cookie, aucun service extérieur.": {
+  "kind": "page",
+  "where": [
+   "mentions-legales.html · li"
+  ]
+ },
+ "En cas de différence, la version française de ces Mentions fait foi.": {
+  "kind": "page",
+  "where": [
+   "mentions-legales.html · li"
+  ]
+ },
+ "<1>3 octobre 2026</1> · v7.62 — Langues : tout le site existe aussi en anglais, comme en espagnol (accueil, calculateur, Tuto, carte, catalogues, listes, toutes les fiches, carnets, À propos, Contact et ces Mentions) ; Léo répond en français et en espagnol.": {
+  "kind": "page",
+  "where": [
+   "mentions-legales.html · li"
+  ]
+ },
+ "<1>2 octobre 2026</1> · v7.61 — Langues : tout le site existe aussi en espagnol (accueil, calculateur, Tuto, carte, catalogues, listes, toutes les fiches, carnets, À propos, Contact et ces Mentions), et Léo répond en espagnol, toujours depuis ton navigateur ; aucune clé de plus (lk_lang_v1 garde la langue choisie), aucun cookie, aucun service extérieur.": {
+  "kind": "page",
+  "where": [
+   "mentions-legales.html · li"
+  ]
+ }
+}

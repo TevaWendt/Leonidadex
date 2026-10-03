@@ -1,0 +1,78 @@
+LEONIDAKIT v7.64 — langues : les cinq langues réunies, Léo dans les cinq, référencement, 3 octobre 2026
+
+Base : la v7.60 (archive Leonidadex-main (13)) et les deux séries d'archives faites ensuite en parallèle :
+- série A : v7.61 espagnol (tout le site, Léo espagnol), v7.62 anglais (tout le site), v7.63 italien (tout le site, Léo italien) ;
+- série B : v7.61 « tout en anglais » (tout le site, Léo anglais), v7.62 allemand (tout le site, Léo allemand).
+Les deux séries partaient de la même v7.60, portaient les mêmes numéros et réécrivaient les mêmes fichiers (common.js, leo-core.js,
+outils/langues.json, outils/langues.cjs, les scripts du calculateur, toutes les pages françaises pour le menu des langues…) :
+la dernière archive appliquée gagnait, l'autre langue disparaissait (« l'anglais revient à six pages quand j'ajoute
+l'espagnol »). Rien n'est publié. Procédure : outils/LANGUES.md ; preuves : outils/PREUVES-v7.64.md.
+
+Demande : « faire en sorte que tous ces fichiers puissent s'ajouter » ; « l'optimisation SEO la plus parfaite possible dans
+absolument chaque langue, sur absolument chaque page », sans changer la forme du texte, les animations, les visuels ni ce qui est
+cliquable ; « un audit final du site pour les langues ».
+
+1. FUSION DES DEUX SÉRIES
+- Une seule archive qui contient tout (fichiers changés depuis la v7.60 et tout fichier livré par l'une des quatre archives
+  précédentes) : appliquée sur n'importe quel état (13 seule, 13 + n'importe lesquelles des quatre archives, dans n'importe quel
+  ordre), elle donne la même v7.64.
+- Scripts du site (fusion ligne par ligne, puis morceau par morceau dans chaque conflit) : les mots allemands du calculateur
+  (hub, moteur « 1.250 $ », « 1,5 Millionen », « 2 Stunden am Tag », « Kauf „…“ »), les corrections de la série B
+  (comparateur « Choisir une arme », réponses de l'aide des collectibles, pluriels), les pluriels écrits en entier et les mots
+  espagnols et italiens de la série A sont tous gardés. Corrigé pendant la fusion : le compteur de Progression qui aurait
+  affiché « 5 cochés sur 20 cochés sur {t} recensés ».
+- Générateur (outils/langues.cjs) : celui de la série A, avec ce qu'il fallait à l'allemand : guillemets „ “, découpage des
+  phrases allemandes (« am 1. Oktober », « z. B. »), motifs à trous (_motifs), recherche phrase par phrase et morceau par
+  morceau, textes portés par une adresse (titre de la carte, recherche Wikipédia dans la langue), attributs JSON
+  (data-cat-tags), redirections et page introuvable traduites, identifiants en minuscules gardés en allemand
+  (« motsCodeGardes »). Ajouté : un code de langue (« de », « it ») n'est jamais traduit dans un script ; un nombre sans
+  séparateur garde la forme choisie par la traduction ; le lexique français de la mémoire ne sert qu'en allemand.
+- Mémoires : l'anglais garde la mémoire de la série A (validée sur tout le site) et prend de la série B ce qui lui manquait
+  (Léo, mots de recherche, page introuvable) ; les traductions de la série B qui auraient remplacé celles de la série A, ou
+  traduit un identifiant de code (« lieu », « tatouages », « lieux »…), ne sont pas reprises. Allemand : la mémoire de la
+  série B. Espagnol et italien : 1 045 textes nouveaux traduits chacun (listes de mots de recherche des pages, page
+  introuvable, redirections, morceaux de scripts de la série B), relus par le validateur.
+- Léo : un seul moteur (outils/leo-langues.cjs) pour les quatre langues ; anglais et allemand gardent leur table de
+  réécriture (leo-pivot.json), espagnol et italien leur pont (_leo-pont.json) ; les noms traduits restent reconnus en entier et
+  sous leur nom français (nameFr) ; les jetons des noms traduits désignent leur morceau.
+- Recherche dans les listes : les mots cherchés (data-search, data-q, data-loc-q, data-n, data-help-keywords) sont traduits
+  dans les cinq langues ; data-q, data-loc-q et data-n sont écrits sans accents ni majuscules, comme la saisie que les scripts
+  comparent (« größe » se trouve en tapant « grosse »).
+- Mentions : entrée v7.64 de l'historique, dans les cinq langues ; les entrées des deux séries restent.
+- Documents de la série B gardés sous un nom à part (LISEZ-MOI-v7.61-anglais-autre-branche.txt,
+  LISEZ-MOI-v7.62-allemand-autre-branche.txt, outils/CHANGEMENTS-v7.6x-…-autre-branche.txt, outils/PREUVES-v7.6x-…-autre-branche.md,
+  outils/LANGUES-autre-branche.md, outils/langues/en/_glossaire-autre-branche.md).
+
+2. RÉFÉRENCEMENT (le texte affiché, les animations, les visuels et les liens ne changent pas)
+- hreflang : chaque page indexable de chaque langue liste ses cinq versions et « x-default » (version anglaise, pour un visiteur
+  dont la langue n'est pas publiée) ; aucune balise hreflang sur une page non indexée (page introuvable, redirections).
+- Titres pour les moteurs (<title>, og:title, twitter:title) : « GTA 6 » (ce que les joueurs tapent), la page gardant
+  « GTA VI » (titre h1, textes, description) ; un titre de plus de 65 signes perd « | Leonidakit » (Google affiche le nom du site
+  à part).
+- Descriptions : 92 descriptions traduites trop longues (au-delà de 160 signes, coupées par Google) ont une version de 155 signes
+  au plus, réservée à la balise (allemand 42, italien 25, espagnol 17, anglais 8).
+- og:locale:alternate (les autres langues de la page), og:site_name ; achats.html : og:locale ajouté, image de partage sur
+  www.leonidakit.com (et non leonidakit.com).
+- Plan du site (sitemap.xml, sitemap-fiches.xml) : les cinq langues (1 955 adresses dans sitemap.xml), pour chaque adresse ses
+  versions (xhtml:link hreflang), sa date de dernière modification réelle (lastmod, tenue par outils/sitemap-dates.json : la date
+  ne change que si le contenu de la page change) et son image de partage propre (image:image).
+
+3. AUDIT FINAL DES LANGUES (détail : outils/PREUVES-v7.64.md)
+- Chaque page de chaque langue : titre, description, un seul h1, canonical, Open Graph, données structurées lisibles, textes
+  alternatifs des images ; aucun texte sans traduction ; aucun mot français visible (allemand : ni français ni anglais).
+- Corrigé : la règle « missions » du business plan en espagnol et en italien (pluriel désormais écrit avec une espace), la
+  fin de citation « Kauf „…“ » dans le graphique du calculateur allemand, le code de langue « de » que les scripts italiens
+  traduisaient en « da » (sans effet visible), la recherche des listes allemandes avec trémas (« größe »), l'image de partage
+  d'achats.html (adresse sans « www »).
+- Léo anglais : 511 questions d'essai sur 512 (série B : 501) grâce à 18 expressions de plus dans sa table de réécriture.
+
+4. TESTS
+- langues.test.cjs : allemand (calculateur dans jsdom, page introuvable de chaque langue, ni français ni anglais visible),
+  hreflang complets et absents des pages non indexées, x-default anglais, og:locale:alternate, titres « GTA 6 ».
+- langues-helper.cjs : frenchHits(texte, 'de'), englishHits, foreignHits ; langues-browser.cjs : bandeau allemand, noms, questions
+  du hub et nombres allemands ; leo-eval.cjs : --langue ou --lang, --questions.
+- coverage.test.cjs : le plan du site ne compte que ses adresses (pas les images).
+
+5. LIMITES
+- Léo anglais : voir outils/PREUVES-v7.64.md (quelques questions anglaises encore comprises de travers).
+- L'historique des Mentions garde deux « v7.61 » et deux « v7.62 » (les deux séries) ; la v7.64 les explique.

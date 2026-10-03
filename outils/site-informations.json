@@ -8,7 +8,7 @@
  "contactRetentionDecidedAt": "2026-10-01",
  "publicationDirector": null,
  "editorContact": "contact@leonidakit.com",
- "checkedAt": "2026-10-02",
+ "checkedAt": "2026-10-03",
  "hosting": {
   "name": "Vercel Inc.",
   "address": "440 N Barranca Avenue #4133, Covina, CA 91723, États-Unis",
@@ -40,9 +40,34 @@
  },
  "history": [
   {
+   "date": "2026-10-03",
+   "version": "v7.64",
+   "text": "Langues : le site existe maintenant en cinq langues sur toutes ses pages (français, anglais, espagnol, italien, allemand), et Léo répond dans chacune ; les versions anglaise et allemande livrées à part sont réunies avec l’espagnol et l’italien. Référencement : chaque page signale ses versions dans les autres langues aux moteurs de recherche, et le plan du site les liste toutes. Aucune clé de plus, aucun cookie, aucun service extérieur."
+  },
+  {
+   "date": "2026-10-03",
+   "version": "v7.63",
+   "text": "Langues : tout le site existe aussi en italien, comme en espagnol et en anglais (accueil, calculateur, Tuto, carte, catalogues, listes, toutes les fiches, carnets, À propos, Contact et ces Mentions), et Léo répond en italien, toujours depuis ton navigateur. Aucune clé de plus, aucun cookie, aucun service extérieur. En cas de différence, la version française de ces Mentions fait foi."
+  },
+  {
+   "date": "2026-10-03",
+   "version": "v7.62",
+   "text": "Langues : tout le site existe aussi en anglais, comme en espagnol (accueil, calculateur, Tuto, carte, catalogues, listes, toutes les fiches, carnets, À propos, Contact et ces Mentions) ; Léo répond en français et en espagnol. Aucune clé de plus, aucun cookie, aucun service extérieur. En cas de différence, la version française de ces Mentions fait foi."
+  },
+  {
+   "date": "2026-10-03",
+   "version": "v7.62",
+   "text": "Langues : tout le site existe aussi en allemand (fiches, carte, carnets, recherche, page introuvable) et Léo répond en allemand sur les pages allemandes, toujours depuis ton navigateur ; aucune clé nouvelle, aucun cookie, aucun service extérieur."
+  },
+  {
    "date": "2026-10-02",
    "version": "v7.61",
    "text": "Langues : tout le site existe aussi en espagnol (accueil, calculateur, Tuto, carte, catalogues, listes, toutes les fiches, carnets, À propos, Contact et ces Mentions), et Léo répond en espagnol, toujours depuis ton navigateur ; aucune clé de plus (lk_lang_v1 garde la langue choisie), aucun cookie, aucun service extérieur. En cas de différence, la version française de ces Mentions fait foi."
+  },
+  {
+   "date": "2026-10-02",
+   "version": "v7.61",
+   "text": "Langues : tout le site existe en anglais (fiches, carte, carnets, recherche, page introuvable) et Léo répond en anglais sur les pages anglaises, toujours depuis ton navigateur ; aucune clé nouvelle (la conversation de Léo garde sa langue dans la même clé de session), aucun cookie, aucun service extérieur."
   },
   {
    "date": "2026-10-02",

@@ -6,7 +6,7 @@
   'use strict';
   var E = window.LKCalcEngine, nf = new Intl.NumberFormat('es-ES', { maximumFractionDigits: 0 });
   var money = function (n) { return E && E.dollars ? E.dollars(nf.format(Math.round(n)), ' ') : nf.format(Math.round(n)) + ' $'; };
-  var hours = function (h) { var m = Math.round(h * 60), H = Math.floor(m / 60), M = m % 60; return H ? H + ' h' + (M ? ' ' + String(M).padStart(2, '0') : '') : M + ' min'; };
+  var hours = function (h) { var m = Math.round(h * 60), H = Math.floor(m / 60), M = m % 60; return H ? H + ' h' + (M ? ' ' + String(M).padStart(2, '0') + (typeof document!=='undefined'&&/^de/.test(document.documentElement.lang||'')?' min':'') : '') : M + ' min'; };
   function parse(v) { if (E && E.parseLocalizedNumber) { var r = E.parseLocalizedNumber(v); return r.valid ? r.value : null; } var t = String(v).replace(/[\s\u00a0\u202f]/g, '').replace(',', '.'); return /^\d+(\.\d+)?$/.test(t) ? Number(t) : null; }
   /* 1. Exercice de démarrage : la réponse s'affiche ici avant d'ouvrir le calculateur. */
   var form = document.querySelector('.t-start-form'), msg = document.getElementById('t-start-message');
@@ -17,7 +17,7 @@
     if (!E || !E.goalContinuous) { msg.textContent = 'Haz clic en el botón: la respuesta aparece en la calculadora.'; return; }
     var r = E.goalContinuous({ capital: capital, target: target, hourly: hourly, reserve: 0, dailyMinutes: 60 });
     if (!r.valid) { msg.textContent = r.reason || 'Comprueba tus tres números.'; return; }
-    msg.textContent = r.missing === 0 ? 'Ya tienes suficiente dinero para este objetivo.' : 'Te faltan ' + money(r.missing) + '. Jugando 1 h por día, lo consigues en ' + r.days + ' día' + (E && E.plural ? (E.plural(r.days) ? 's' : '') : (r.days > 1 ? 's' : '')) + ' (' + hours(r.hours) + ' de juego).';
+    msg.textContent = r.missing === 0 ? 'Ya tienes suficiente dinero para este objetivo.' : 'Te faltan ' + money(r.missing) + '. Jugando 1 h por día, lo consigues en ' + r.days + ((E && E.plural ? E.plural(r.days) : r.days > 1) ? ' días' : ' día') + ' (' + hours(r.hours) + ' de juego).';
   }
   if (form) { form.addEventListener('input', preview); preview(); }
   /* 2. Zones sur les captures : « Repérer les champs », « Repérer la réponse », « Tout voir ». */

@@ -4,11 +4,11 @@ from PIL import Image
 from playwright.sync_api import sync_playwright
 import sys; ROOT=sys.argv[1] if len(sys.argv)>1 else '.'
 # v7.60 (langues) : python3 outils/tuto-shots.py <racine> en → captures de /en/calculateurs.html dans img/tuto/en et outils/tuto-captures-en.json
-# v7.61 : même chose en espagnol (es)
+# v7.61 : même chose en espagnol (es) ; v7.63 : italien (it) ; allemand (de)
 LANG=sys.argv[2] if len(sys.argv)>2 else 'fr'; SUB='' if LANG=='fr' else '/'+LANG
 OUT=ROOT+'/img/tuto'+SUB; os.makedirs(OUT,exist_ok=True)
 # noms écrits par le joueur dans les exemples (jamais traduits par le site) : écrits dans la langue de la capture
-NOMS={'fr':{'Livraison':'Livraison','Braquage':'Braquage','Normal':'Normal','Prudent':'Prudent'},'en':{'Livraison':'Delivery','Braquage':'Heist','Normal':'Normal','Prudent':'Cautious'},'es':{'Livraison':'Entrega','Braquage':'Golpe','Normal':'Normal','Prudent':'Prudente'}}[LANG]
+NOMS={'fr':{'Livraison':'Livraison','Braquage':'Braquage','Normal':'Normal','Prudent':'Prudent'},'en':{'Livraison':'Delivery','Braquage':'Heist','Normal':'Normal','Prudent':'Cautious'},'es':{'Livraison':'Entrega','Braquage':'Golpe','Normal':'Normal','Prudent':'Prudente'},'it':{'Livraison':'Consegna','Braquage':'Colpo','Normal':'Normale','Prudent':'Prudente'},'de':{'Livraison':'Lieferung','Braquage':'Raubüberfall','Normal':'Normal','Prudent':'Vorsichtig'}}[LANG]
 class Q(http.server.SimpleHTTPRequestHandler):
     def log_message(self,*a): pass
 srv=socketserver.ThreadingTCPServer(('127.0.0.1',0),functools.partial(Q,directory=ROOT)); port=srv.server_address[1]

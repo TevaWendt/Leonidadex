@@ -1,4 +1,4 @@
-# English glossary and rules — Leonidakit (v7.60)
+# English glossary and rules — Leonidakit (v7.60, v7.62: whole site)
 
 Source language: French (informal « tu »). Target: **US English**, informal "you", short plain sentences, words a gamer uses. The French site deliberately avoids jargon (no "ROI", no "capital", no "amortization" in the interface): keep that spirit.
 
@@ -79,38 +79,47 @@ Officiel → Official · Vu dans un média → Seen in media · Identification c
 
 éditeur → publisher · hébergeur → host · responsable du traitement → data controller · délégué à la protection des données → data protection officer · base légale → legal basis · intérêt légitime → legitimate interest · consentement → consent · loi Informatique et Libertés → French Data Protection Act (loi Informatique et Libertés) · LCEN keep the acronym · CNIL keep. Keep every date, address and number.
 
-## Whole site (v7.61)
+## Whole site (v7.62)
 
-Same rules as above. Additional fixed vocabulary for hubs, lists, item pages, the map, trackers and search:
+Every page of the site now exists in English (catalogues, map, vehicle and weapon pages, characters, places, trackers…).
+Léo is **not** available in English: never write that Léo answers in English; texts that present Léo stay as they are
+(where the French says Léo answers, keep it; the English pages simply don't load him).
 
 | French | English |
 |---|---|
-| fiche (page about one item) | page (« Voir la fiche » → "Open the page", « fiche véhicule » → "vehicle page") |
-| hub / page de section | section page |
-| liste dépliable | expandable list |
-| carnet, carnets de progression | tracker, progress trackers (« Mon garage » → "My garage", « Mon arsenal » → "My arsenal", « Ma garde-robe » → "My wardrobe", « Mes consommables » → "My consumables", « Mes personnalisations » → "My customizations", « Mes propriétés » → "My properties", « Mes lieux » → "My places", « Mes collectibles » → "My collectibles", « Mes calculs » → "My calculations") |
-| possédé / à obtenir / envie | owned / to get / wishlist (« Je l’ai » → "I have it", « J’en ai envie » → "I want it") |
-| repéré (lieu, véhicule) | spotted |
-| rapprochement (inspiration réelle) | match (« rapprochement communautaire » → "community match") |
-| modèle réel, inspiration réelle | real-world model, real-world inspiration |
+| fiche (véhicule, arme, lieu…) | page (« la fiche de l’Emperor » → "the Emperor page") |
+| Voir la fiche / Retour à la fiche | Open the page / Back to the page |
+| Nommé par Rockstar | Named by Rockstar |
+| Vu dans un support officiel / Aperçu officiel / Aperçu | Seen in official media / Official sighting / Sighted |
+| Identification communautaire / Rapprochement de la communauté / Communautaire | Community identification / Community match / Community |
+| Supposé | Assumed |
+| Inspiration réelle / Inspiration | Real-world inspiration / Inspiration |
 | Équivalent réel | Real-world equivalent |
-| Nom en jeu inconnu à ce jour | In-game name not known yet |
-| bâtiment, comté, ville, quartier | building, county, city, district |
-| Comtés / Villes / Quartiers / Bâtiments / Transports / Nature / Lieu / Planques (catégories de la carte) | Counties / Cities / Districts / Buildings / Transport / Nature / Place / Safehouses |
-| Voir sur la carte | See on the map |
-| Personnages, Demeures, Planques, Entreprises, Lieux, Régions | Characters, Residences, Safehouses, Businesses, Places, Regions |
-| Armurerie, Armes, Munitions, Équipement | Armory, Weapons, Ammo, Gear |
-| Véhicules : Berlines, Voitures de sport, Supercars, Muscle cars, SUV et 4x4, Pickups et tout-terrain, Vans et cargos, Deux-roues et quads, Hélicoptères, Avions, Bateaux et jet-skis, Service et urgence, Divers | Sedans, Sports cars, Supercars, Muscle cars, SUVs and 4x4s, Pickups and off-roaders, Vans and cargo vans, Two-wheelers and quads, Helicopters, Planes, Boats and jet skis, Service and emergency, Misc. |
-| Armes : Pistolets, Fusils à pompe, Pistolets-mitrailleurs, Fusils d’assaut, Précision, Mitrailleuses, Mêlée, Projectiles, Spéciales | Pistols, Shotguns, Submachine guns, Assault rifles, Precision rifles, Machine guns, Melee, Throwables, Special |
-| Consommables, Vêtements et style, Coiffures, Tatouages, Tenues, Accessoires, Personnalisations, Logements, Garages | Consumables, Clothing and style, Hairstyles, Tattoos, Outfits, Accessories, Customization, Housing, Garages |
-| Édition Standard / Édition Ultimate / précommande | Standard Edition / Ultimate Edition / pre-order |
-| bande-annonce, trailer, capture officielle, visuel officiel | trailer, trailer, official screenshot, official image |
-| Repère de la série (chiffre d’un autre GTA) | Series benchmark |
-| marque inconnue | unknown brand |
-| Ajouter à mon garage | Add to my garage |
-| Comparer, Personnaliser | Compare, Customize |
-| Classement | Ranking |
+| Édition Ultimate / édition Standard / précommande / bonus de précommande | Ultimate Edition / Standard Edition / pre-order / pre-order bonus |
+| Premier trailer / Second trailer / Trailer 1 / Trailer 2 | Trailer 1 / Trailer 2 (always this form) |
+| Captures officielles / capture officielle / visuels officiels | Official screenshots / official screenshot / official artwork |
+| Prix à venir / Emplacement à venir / Achat à confirmer | Price to come / Location to come / Purchase to be confirmed |
+| Je le veux / Je la veux / Je l’ai / Mes envies / envie(s) | I want it / I want it / I have it / My wishlist / wish(es) |
+| Ajouter à mon garage / Dans mon garage / Pas encore dans mon garage | Add to my garage / In my garage / Not in my garage yet |
+| Mon garage, Mon arsenal, Ma garde-robe, Mes lieux repérés | My garage, My arsenal, My wardrobe, My spotted places |
+| repéré (lieu) / Marquer comme repéré | spotted / Mark as spotted |
+| possédé / obtenu / trouvé / goûté / posé (modif) / porté | owned / obtained / found / tasted / installed / worn |
+| Carnet de style | Style notebook |
+| Comparateur / Classement / Véhicules rares | Comparison / Ranking / Rare vehicles |
+| Armurerie / Équipements / Munitions / Mêlée / Projectiles / Armes spéciales | Armory / Gear / Ammo / Melee / Throwables / Special weapons |
+| Planques / Demeures / Entreprises / Lieux / Personnages / Collectibles | Safehouses / Residences / Businesses / Places / Characters / Collectibles |
+| Consommables / Nourriture / Coiffures / Tatouages / Tenues / Accessoires | Consumables / Food / Hairstyles / Tattoos / Outfits / Accessories |
+| Personnalisations / modif(s) | Customization / mod(s) |
+| comté, région, quartier, ville, localité | county, region, neighborhood, city, town |
+| la carte, un lieu, un bâtiment, une enseigne | the map, a place, a building, a storefront |
+| Remarque : … / Type : … | Note: … / Type: … |
+| Nom en jeu inconnu à ce jour. | In-game name unknown so far. |
+| Bâtiment repéré dans les trailers et captures officielles. | Building spotted in the trailers and official screenshots. |
+| les fuites (leaks) | the leaks |
 
-Search keywords (strings of lowercase words with no accents, used only for matching, e.g. « lexington (michael) coupe classique de michael : 40 $ en salon courant ») : translate into lowercase English keywords, keep every name, no accents, plain spaces, prices as "$40".
+Vehicle, weapon, brand, shop and English place names stay as they are. Real-world model names (« Cadillac Sedan de Ville
+1977-1980 ») keep the model; translate only the French words around it (« Pontiac Bonneville fin des années 80 » → "late-80s
+Pontiac Bonneville", « Mercedes-Benz Classe C » → "Mercedes-Benz C-Class").
 
-Numbers: keep every number of the French text, in the same order whenever the sentence allows (counts change from one update to the next and are matched automatically). « 1 250 » → "1,250", « 2,5 » → "2.5", « 20 % » → "20%", « 1 250 $ » → "$1,250", dates « 19 novembre 2026 » → "November 19, 2026", « 1er » → "1st" only in dates written out (« le 1er octobre » → "on October 1").
+Dates: « 2 octobre 2026 » → "October 2, 2026"; « 1er octobre » → "October 1"; « mai 2025 » → "May 2025".
+Numbers: thousands with a comma (`2,547`), decimals with a point (`1.5`).

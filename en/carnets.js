@@ -26,7 +26,7 @@
   };
   var nf = new Intl.NumberFormat('en-US');
   var reduce = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : { matches: false };
-  function fold(s) { return String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase(); }
+  function fold(s) { return String(s || '').replace(/ß/g,'ss').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase(); }
   function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text !== undefined && text !== null) n.textContent = text; return n; }
   function cap(s) { s = String(s || ''); return s.charAt(0).toUpperCase() + s.slice(1); }
   function uid() { return Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8); }
@@ -67,7 +67,7 @@
   var index = {};
   items.concat(styles).forEach(function (it) { index[it.f + ':' + it.id] = it; it._q = fold(it.n + ' ' + it.c + ' ' + (it.k || '') + ' ' + ((D.meta[it.f] || {}).label || '')); });
   var multi = D.fams.length > 1;
-  function meta(f) { return D.meta[f] || { label: 'Style tracker', one: 'style', many: 'styles', done: 'kept', doneP: 'kept', wish: 'Keep' }; }
+  function meta(f) { return D.meta[f] || { label: 'Style notebook', one: 'style', many: 'styles', done: 'saved', doneP: 'saved', wish: 'Keep' }; }
 
   /* ---------- lecture de l’état (une fois par affichage) ---------- */
   function ownedMap(f) { var out = {}; if (!store) return out; try { store.owned(f).forEach(function (id) { out[id] = true; }); } catch (e) { /* clé illisible : rien de coché */ } return out; }
@@ -91,7 +91,7 @@
   function setWish(it, on) { if (readOnly) return false; try { return store.setWish(it.f, it.id, on, 'catalogue'); } catch (e) { return false; } }
 
   /* ---------- état de la page (adresse) ---------- */
-  var VIEWS = Object.keys(D.vues), SLUG = { own: 'possedes', wish: 'envies', rest: 'restants', calcs: 'calculs', plans: 'plans' };
+  var VIEWS = Object.keys(D.vues), SLUG = { own: 'possedes', wish: 'wishes', rest: 'restants', calcs: 'calculs', plans: 'plans' };
   var PAGE = 48;
   var state = { view: VIEWS[0], q: '', f: '', cat: '', sort: doc ? 'recent' : 'nom', stock: '', shown: PAGE };
   function readHash() {
@@ -174,8 +174,8 @@
     body.appendChild(h);
     var badges = el('p', 'cn-badges');
     if (own) badges.appendChild(el('span', 'cn-stamp', cap(m.done)));
-    if (wish) badges.appendChild(el('span', 'cn-wishb', it.f === 'lieux' ? 'To visit' : it.f === 'consommables' ? 'To try' : 'Wishlist'));
-    if (it.sr) { var sb = el('span', 'cn-serieb', 'Series benchmark'); sb.title = 'Seen in GTA V or GTA Online, not shown yet in GTA VI: counted separately.'; badges.appendChild(sb); }
+    if (wish) badges.appendChild(el('span', 'cn-wishb', it.f === 'lieux' ? 'To visit' : it.f === 'consommables' ? 'To try' : 'Want score'));
+    if (it.sr) { var sb = el('span', 'cn-serieb', 'Series benchmark'); sb.title = 'Seen in GTA V or GTA Online, not shown in GTA VI yet: counted separately.'; badges.appendChild(sb); }
     if (it.f === 'collectibles' && window.LKCollectibles) { try { var cs = window.LKCollectibles.getState(); if (cs.favorites && cs.favorites[it.id]) badges.appendChild(el('span', 'cn-favb', 'Favorite')); if (cs.notes && cs.notes[it.id]) body.appendChild(el('p', 'cn-note', cs.notes[it.id])); } catch (e) { /* carnet illisible */ } }
     if (badges.childNodes.length) body.appendChild(badges);
     if (own && m.stock) body.appendChild(stockBlock(it));
@@ -185,13 +185,13 @@
     else {
       if (!own) acts.appendChild(button(ownLabel(it), 'own', 'cn-act--main', ownLabel(it) + ': ' + it.n));
       if (D.vues.wish) {
-        var w = button(wish ? (state.view === 'wish' ? 'Remove from my wishlist' : 'In my wishlist') : m.wish, wish ? 'unwish' : 'wish', wish ? 'cn-act--ghost' : '', (wish ? 'Remove “' + it.n + '” from my wishlist' : m.wish + ': ' + it.n));
+        var w = button(wish ? (state.view === 'wish' ? 'Remove from my wishlist' : 'On my wishlist') : m.wish, wish ? 'unwish' : 'wish', wish ? 'cn-act--ghost' : '', (wish ? 'Remove “' + it.n + '” from my wishlist' : m.wish + ': ' + it.n));
         w.setAttribute('aria-pressed', String(wish)); acts.appendChild(w);
       }
     }
     var ch = !own && calcHref(it);
     if (ch && state.view !== 'own') { var c = el('a', 'cn-act cn-act--link', 'How long to get it?'); c.href = ch; acts.appendChild(c); }
-    if (it.f === 'lieux' && it.x === 'fiche') { var mp = el('a', 'cn-act cn-act--link', 'See on the map'); mp.href = P + 'carte.html#lieu=' + encodeURIComponent(it.id); acts.appendChild(mp); }
+    if (it.f === 'lieux' && it.x === 'fiche') { var mp = el('a', 'cn-act cn-act--link', 'View on the map'); mp.href = P + 'carte.html#lieu=' + encodeURIComponent(it.id); acts.appendChild(mp); }
     body.appendChild(acts);
     li.appendChild(body);
     return li;
@@ -201,18 +201,18 @@
     var box = el('div', 'cn-stock'); box.setAttribute('data-state', kind || 'a-renseigner');
     var line = el('p', 'cn-stock-state');
     line.appendChild(document.createTextNode('Stock: '));
-    line.appendChild(el('b', null, kind === 'a-renseigner' || !kind ? 'to fill in' : kind === 'epuise' ? 'out of stock (0)' : nf.format(st.qty) + ' in stock'));
+    line.appendChild(el('b', null, kind === 'a-renseigner' || !kind ? 'not set' : kind === 'epuise' ? 'out of stock (0)' : nf.format(st.qty) + ' in stock'));
     box.appendChild(line);
     var form = el('form', 'cn-stock-form'); form.setAttribute('data-cn-stock-form', it.f + ':' + it.id); form.noValidate = true;
     var lab = el('label', null, st.qty === null ? 'How many you have left' : 'Fix the quantity'); lab.htmlFor = idBase;
     var inp = el('input'); inp.id = idBase; inp.type = 'number'; inp.min = '0'; inp.max = '1000000'; inp.step = '1'; inp.inputMode = 'numeric'; if (st.qty !== null) inp.value = String(st.qty); if (readOnly) inp.disabled = true;
-    var sub = el('button', 'cn-act', 'Save note'); sub.type = 'submit'; if (readOnly) sub.disabled = true;
+    var sub = el('button', 'cn-act', 'Save'); sub.type = 'submit'; if (readOnly) sub.disabled = true;
     form.appendChild(lab); form.appendChild(inp); form.appendChild(sub); box.appendChild(form);
     if (st.qty !== null) {
       var qk = el('div', 'cn-stock-q');
       qk.appendChild(button('I used one', 'use', '', 'I used one: ' + it.n));
-      qk.appendChild(button('I bought one more', 'buy', '', 'I bought one more: ' + it.n));
-      qk.appendChild(button('Forget the quantity', 'forget', 'cn-act--ghost', 'Forget the quantity of ' + it.n));
+      qk.appendChild(button('I bought another one', 'buy', '', 'I bought another one: ' + it.n));
+      qk.appendChild(button('Clear the quantity', 'forget', 'cn-act--ghost', 'Clear the quantity for ' + it.n));
       box.appendChild(qk);
     } else box.appendChild(el('p', 'cn-stock-hint', 'The site never guesses a quantity: enter it when you know it.'));
     return box;
@@ -250,7 +250,8 @@
     E.cat.replaceChildren.apply(E.cat, opts); E.cat.value = state.cat;
   }
   /* Libellé d’un compteur accordé au nombre (français : 0 et 1 au singulier ; anglais : 1 seulement). */
-  function plural(n, v) { var l = n.nextElementSibling; if (l && l.hasAttribute('data-one')) l.textContent = (/^fr/.test(document.documentElement.lang || 'fr') ? v > 1 : v !== 1) ? l.getAttribute('data-many') : l.getAttribute('data-one'); }
+  /* v7.61 : français n > 1 ; anglais, espagnol n ≠ 1 (« 0 deseos ») */
+  function plural(n, v) { var l = n.nextElementSibling, fr = (document.documentElement.lang || 'fr').slice(0, 2) === 'fr'; if (l && l.hasAttribute('data-one')) l.textContent = (fr ? v > 1 : v !== 1) ? l.getAttribute('data-many') : l.getAttribute('data-one'); }
   function headCounters(s) {
     var total = items.length, done = items.filter(function (it) { return isOwn(it, s); }).length;
     /* v7.54 : les repères de la série sont dits et comptés à part du total GTA VI. */
@@ -272,7 +273,7 @@
     Object.keys(s.wish).forEach(function (k) { var p = k.split(':'); if ((D.fams.indexOf(p[0]) >= 0 || (p[0] === 'styles' && styles.length)) && !index[k]) rows.push({ f: p[0], id: p[1], kind: 'wish' }); });
     E.orphans.hidden = !rows.length; E.orphanList.replaceChildren();
     rows.forEach(function (r) {
-      var li = el('li'); li.appendChild(el('code', null, r.id)); li.appendChild(el('span', null, ' ' + meta(r.f).label + (r.kind === 'wish' ? ' · wishlist' : '')));
+      var li = el('li'); li.appendChild(el('code', null, r.id)); li.appendChild(el('span', null, ' ' + meta(r.f).label + (r.kind === 'wish' ? ' · wish' : '')));
       if (r.f === 'collectibles') li.appendChild(el('span', 'cn-orphan-keep', ' · kept as is'));
       else { var b = button('Remove', r.kind === 'wish' ? 'orphan-unwish' : 'orphan-unown', 'cn-act--ghost', 'Remove the entry ' + r.id); b.setAttribute('data-f', r.f); b.setAttribute('data-id', r.id); li.appendChild(b); }
       E.orphanList.appendChild(li);
@@ -280,7 +281,8 @@
   }
   function countText(n, total) {
     var f = state.f || (D.fams.length === 1 ? D.fams[0] : null), m = f ? meta(f) : { one: 'item', many: 'items' };
-    return (n === total ? '' : nf.format(n) + ' of ') + nf.format(total) + ' ' + (total > 1 || n > 1 ? m.many : m.one) + (n === total ? '' : ' shown');
+    /* v7.62 : phrase entière avec trous (en allemand « Elemente: 3 von 10 angezeigt ») */
+    return n === total ? nf.format(total) + ' ' + (total > 1 ? m.many : m.one) : '{n} of {t} {mots} shown'.replace('{n}', nf.format(n)).replace('{t}', nf.format(total)).replace('{mots}', total > 1 || n > 1 ? m.many : m.one);
   }
   function calcLink(list) {
     if (!E.calc) return;
@@ -292,7 +294,7 @@
     /* v7.53 : envies sans fiche dans le calculateur (tenues, coiffures, tatouages, consommables, personnalisations) :
        elles partent dans « Mon budget » comme achats libres, prix à venir (jamais comptés à 0). Les styles gardés n’en sont pas. */
     var free = list.filter(function (it) { return !meta(it.f).calc && it.f !== 'styles' && it.f !== 'lieux' && it.f !== 'collectibles'; }).slice(0, 12);
-    if (state.view === 'wish' && free.length) { E.calc.hidden = false; E.calc.textContent = 'Fit these wishlist items into my budget'; E.calc.href = P + 'calculateurs.html?tool=budget&achats=' + encodeURIComponent(free.map(function (it) { return it.n; }).join('|')) + '&from=carnet#atelier'; }
+    if (state.view === 'wish' && free.length) { E.calc.hidden = false; E.calc.textContent = 'Plan these wishes in my budget'; E.calc.href = P + 'calculateurs.html?tool=budget&achats=' + encodeURIComponent(free.map(function (it) { return it.n; }).join('|')) + '&from=carnet#atelier'; }
   }
   function render(opts) {
     opts = opts || {};
@@ -315,7 +317,7 @@
     E.empty.hidden = list.length > 0;
     if (!list.length) emptyState(state.view, base.length > 0 && filtering, s);
     E.more.hidden = list.length <= state.shown;
-    if (!E.more.hidden) E.more.textContent = 'Show more (' + nf.format(Math.min(PAGE, list.length - state.shown)) + ' more out of ' + nf.format(list.length - state.shown) + ')';
+    if (!E.more.hidden) E.more.textContent = 'Show more (' + nf.format(Math.min(PAGE, list.length - state.shown)) + ' of the remaining ' + nf.format(list.length - state.shown) + ')';
     calcLink(list);
     if (focusKey) {
       var target = E.list.querySelector('[data-key="' + (window.CSS && CSS.escape ? CSS.escape(focusKey) : focusKey) + '"]');
@@ -367,7 +369,7 @@
     });
     E.list.classList.toggle('is-anim', !!opts.animate && !reduce.matches);
     var word = state.view === 'plans' ? ['plan', 'plans'] : ['calculation', 'calculations'];
-    E.count.textContent = base.length ? (list.length === base.length ? '' : nf.format(list.length) + ' of ') + nf.format(base.length) + ' ' + (base.length > 1 ? word[1] : word[0]) + (list.length === base.length ? '' : ' shown') : '';
+    E.count.textContent = base.length ? (list.length === base.length ? nf.format(base.length) + ' ' + (base.length > 1 ? word[1] : word[0]) : '{n} of {t} {mots} shown'.replace('{n}', nf.format(list.length)).replace('{t}', nf.format(base.length)).replace('{mots}', base.length > 1 ? word[1] : word[0])) : '';
     var filtering = !!(state.q || state.cat);
     if (E.reset) E.reset.hidden = !filtering;
     E.empty.hidden = list.length > 0;
@@ -388,7 +390,7 @@
     var ok = true, s = snapshot();
     if (isOwn(it, s) !== before.own && it.f !== 'styles') ok = setOwn(it, before.own) && ok;
     if (!!s.wish[it.f + ':' + it.id] !== before.wish) ok = setWish(it, before.wish) && ok;
-    say(ok ? 'Undone: “' + it.n + '” is back the way it was.' : 'Couldn’t undo: the browser storage refused the change.');
+    say(ok ? 'Undone: “' + it.n + '” is back the way it was.' : 'Can’t undo: the browser’s storage blocked the write.');
     render({ focusKey: it.f + ':' + it.id });
   }
   function onAction(btn) {
@@ -397,7 +399,7 @@
       var f = btn.getAttribute('data-f'), id = btn.getAttribute('data-id'), ok2 = false;
       if (act === 'orphan-unown') ok2 = f === 'acquisitions' ? !!(prog() && prog().toggle(id, false) !== false) : store.setOwned(f, id, false);
       else { try { ok2 = store.setWish(f, id, false); } catch (e) { ok2 = false; } }
-      say(ok2 ? 'Entry “' + id + '” removed.' : 'Couldn’t remove this entry: browser storage isn’t available.');
+      say(ok2 ? 'Entry “' + id + '” removed.' : 'Can’t remove this entry: the browser’s storage is unavailable.');
       render(); return;
     }
     if (!li) return;
@@ -409,12 +411,12 @@
     if (act === 'own') {
       ok = setOwn(it, true);
       if (ok && before.wish) ok = setWish(it, false);
-      msg = '“' + it.n + '”: ' + m.done + '. ' + (before.wish ? 'Removed from your wishlist, ' : '') + 'filed in “' + D.titre + '”.';
+      msg = '“' + it.n + '”: ' + m.done + '. ' + (before.wish ? 'Removed from your wishlist. ' : '') + 'Added to “' + D.titre + '”.';
     } else if (act === 'unown') { ok = setOwn(it, false); msg = '“' + it.n + '” removed from “' + D.titre + '”.'; }
-    else if (act === 'wish') { ok = setWish(it, true); msg = '“' + it.n + '” kept in your wishlist. It’s not marked as owned: nothing is checked.'; }
+    else if (act === 'wish') { ok = setWish(it, true); msg = '“' + it.n + '” saved to your wishlist. That doesn’t mean you own it: nothing gets checked.'; }
     else if (act === 'unwish') { ok = setWish(it, false); msg = '“' + it.n + '” removed from your wishlist.'; }
     else return;
-    if (!ok) { say('Couldn’t save: the browser storage refused the change. Nothing changed.'); render(); return false; }
+    if (!ok) { say('Can’t save: the browser’s storage blocked the write. Nothing changed.'); render(); return false; }
     var stays = (act === 'wish' && state.view !== 'wish') || (act === 'unwish' && state.view !== 'wish');
     var done = function () { render({ focusKey: key, focusAct: act === 'wish' ? 'unwish' : act === 'unwish' ? 'wish' : null, focusIndex: idx }); say(msg, function () { restore(it, before); }); };
     if (stays) { done(); return false; }
@@ -422,12 +424,12 @@
   }
   function stockAction(it, act) {
     var st = stockOf(it), key = it.f + ':' + it.id;
-    if (act === 'forget') { var ok0 = store.clearStock(it.f, it.id); say(ok0 ? 'Quantity forgotten: “' + it.n + '” stays ' + meta(it.f).done + ', stock to fill in.' : 'Couldn’t save: browser storage isn’t available.'); render({ focusKey: key }); return; }
+    if (act === 'forget') { var ok0 = store.clearStock(it.f, it.id); say(ok0 ? 'Quantity cleared: “' + it.n + '” stays ' + meta(it.f).done + ', stock not set.' : 'Can’t save: the browser’s storage is unavailable.'); render({ focusKey: key }); return; }
     if (!st || st.qty === null) { say('Enter your quantity first: we never subtract from a made-up number.'); return; }
     if (act === 'use' && st.qty === 0) { say('Your stock of “' + it.n + '” is already at zero.'); return; }
     var r; try { r = store.applyEvent('carnet:' + key + ':' + uid(), [{ type: 'stock', famille: it.f, id: it.id, delta: act === 'use' ? -1 : 1 }]); } catch (e) { r = null; }
     var after = stockOf(it);
-    if (!r || !r.applied || !after || after.qty === null) { say('Couldn’t save: browser storage isn’t available.'); render({ focusKey: key }); return; }
+    if (!r || !r.applied || !after || after.qty === null) { say('Can’t save: the browser’s storage is unavailable.'); render({ focusKey: key }); return; }
     say((act === 'use' ? 'One less' : 'One more') + ': ' + nf.format(after.qty) + ' in stock for “' + it.n + '”.');
     render({ focusKey: key, focusAct: act });
   }
@@ -436,7 +438,7 @@
     var inp = form.querySelector('input'), raw = String(inp.value).trim();
     if (!/^\d{1,7}$/.test(raw) || Number(raw) > 1000000) { say('Enter a whole number, 0 or more (1,000,000 max).'); inp.focus(); return; }
     var ok; try { ok = store.setStock(it.f, it.id, Number(raw)); } catch (e) { ok = false; }
-    say(ok ? 'Stock noted: ' + nf.format(Number(raw)) + ' for “' + it.n + '”.' : 'Couldn’t save: browser storage isn’t available.');
+    say(ok ? 'Stock saved: ' + nf.format(Number(raw)) + ' for “' + it.n + '”.' : 'Can’t save: the browser’s storage is unavailable.');
     render({ focusKey: key, focusAct: 'use' });
   }
   function resetFilters() { state.q = ''; state.f = ''; state.cat = ''; state.stock = ''; state.shown = PAGE; if (E.q) E.q.value = ''; if (E.fam) E.fam.value = ''; if (E.stockf) E.stockf.value = ''; render(); if (E.q) E.q.focus(); }
@@ -472,7 +474,7 @@
     var a = document.activeElement, card = a && a.closest && a.closest('.cn-card');
     if (a && a.tagName === 'INPUT' && card) return; // une quantité en cours d’écriture n’est pas effacée
     render({ focusKey: card ? card.getAttribute('data-key') : null, focusAct: a && a.getAttribute ? a.getAttribute('data-cn-act') : null });
-    say('Updated: your tracking changed in another tab.');
+    say('Updated: your progress changed in another tab.');
   });
   window.addEventListener('pageshow', function (ev) { if (ev.persisted) render(); });
   window.addEventListener('hashchange', function () { var before = state.view; readHash(); if (E.q) E.q.value = state.q; if (E.fam) E.fam.value = state.f; if (E.sort) E.sort.value = state.sort; if (E.stockf) E.stockf.value = state.stock; render({ animate: before !== state.view }); });

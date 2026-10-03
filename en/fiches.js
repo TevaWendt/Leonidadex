@@ -1,3 +1,5 @@
+/* v7.61 : pluriel selon la langue de la page : français n > 1 (« 0 coché », « 1,5 million ») ; anglais, espagnol n ≠ 1 (« 0 marcados ») */
+var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.documentElement&&document.documentElement.lang)||'fr').slice(0,2)==='fr'?n>1:n!==1;};
 /* ============================================================
    LEONIDAKIT — fiches.js : galerie, arsenal / garage, comparaison
    Chargé après app.js sur les fiches et les pages hub.
@@ -5,7 +7,7 @@
 (function(){
   'use strict';
   var lkPl = function (n) { return /^fr/.test(document.documentElement.lang || "fr") ? n > 1 : n !== 1; }; /* pluriel selon la langue de la page (français : n > 1) */
-  var lkDollars = function (s) { return /^fr/.test(document.documentElement.lang || "fr") ? s + "\u00a0$" : "$" + s; }; /* « 1 250 $ » ou « $1,250 » selon la langue de la page */
+  var lkDollars = function (s) { return /^(fr|de)/.test(document.documentElement.lang || "fr") ? s + "\u00a0$" : "$" + s; }; /* « 1 250 $ », « 1.250 $ » (allemand) ou « $1,250 » selon la langue de la page */
   const calculatorBase = new URL('calculateurs.html', document.currentScript?.src || document.querySelector('script[src*="fiches.js"]')?.src || new URL('/fiches.js', location.href).href);
   function calculatorLink(type, values, origin) {
     const url = new URL(calculatorBase);
@@ -22,7 +24,10 @@
   function calculatorStyle() {
     if (document.querySelector('link[data-calculator-entry], link[rel="stylesheet"][href*="calculator-entry.css"]')) return;
     const link = document.createElement('link'); link.rel = 'stylesheet';
-    link.href = new URL('calculator-entry.css?v=cf94b45f1d2d', calculatorBase).href.replace(/\/[a-z]{2}\/(?=calculator-entry\.css)/, '/'); /* v7.61 : la feuille est à la racine, y compris pour une page traduite (/en/) */
+    /* v7.61 : la feuille est à la racine du site, à côté de style.css (une page traduite /es/… charge un fiches.js
+       traduit, rangé dans /es/ : la feuille n'y est pas) */
+    const main = Array.from(document.querySelectorAll('link[rel="stylesheet"]')).find(l => /(?:^|\/)style\.css(?:\?|$)/.test(l.getAttribute('href') || ''));
+    link.href = new URL('calculator-entry.css?v=cf94b45f1d2d', main ? main.href : calculatorBase).href.replace(/\/[a-z]{2}\/(?=calculator-entry\.css)/, '/'); /* v7.61 : la feuille est à la racine, y compris pour une page traduite (/en/) */
     link.dataset.calculatorEntry = 'true'; document.head.appendChild(link);
   }
 
@@ -150,29 +155,35 @@
   /* v7.54 : la page (puce « Mon garage / Mon arsenal », app.js) est prévenue par un événement, plus par un écouteur de clic global */
   const ecrire = o => { const saved = window.LK.write(KEY,o); document.dispatchEvent(new CustomEvent('lk-owned', { detail: { type } })); return saved; };
   let own = lire();
-  const MOT = type === 'armes' ? ['arme', 'armes', 'arsenal'] : ['vehicle', 'vehicles', 'garage'];
+  const MOT = type === 'armes' ? ['weapon', 'armes', 'arsenal'] : ['vehicle', 'vehicles', 'garage'];
+  /* v7.61 : clé du lien de partage (#garage=… / #arsenal=…), identique dans toutes les langues ; MOT[2] est le mot affiché */
+  const PARTAGE = type === 'armes' ? 'arsenal' : 'garage';
+  /* v7.62 : phrases écrites en entier pour chaque carnet (en allemand, « meine Garage » / « mein Arsenal » n'ont pas le même genre) */
+  const TXT = type === 'armes'
+    ? { dans: 'In my arsenal', ajouter: 'Add to my arsenal', range: 'Added to your arsenal and removed from your wishlist.', envie: 'Saved to your wishlist. It isn’t something you own: nothing is checked in your arsenal.', vider: 'Clear my arsenal?' }
+    : { dans: 'In my garage', ajouter: 'Add to my garage', range: 'Added to your garage and removed from your wishlist.', envie: 'Saved to your wishlist. It isn’t something you own: nothing is checked in your garage.', vider: 'Clear my garage?' };
 
   /* bouton de fiche */
   const bt = document.getElementById('own-bt');
   if(bt){
     const id = bt.dataset.id;
     const maj = () => { const on = !!own[id]; bt.classList.toggle('on', on); bt.setAttribute('aria-pressed',String(on));
-      bt.querySelector('span:last-child').textContent = on ? 'In my ' + MOT[2] : 'Add to my ' + MOT[2]; };
+      bt.querySelector('span:last-child').textContent = on ? TXT.dans : TXT.ajouter; };
     /* v7.51 (lot 4) : envie (« Je le veux », lk_wish_v1 via carnets-core.js : une envie n’est jamais une possession) et lien
        « Voir mon garage » / « Voir mon arsenal » vers la page du carnet. Une envie devenue possession quitte les envies. */
     const carnet = type === 'armes' ? ['arsenal', 'Open my arsenal'] : ['garage', 'Open my garage'];
     let wstore = null, wb = null;
     if (window.LKCarnets) { try { wstore = window.LKCarnets.create({ storage: localStorage, notice: m => window.LK.status(m) }); } catch (e) { wstore = null; } }
     const wished = () => { try { return !!wstore && wstore.isWished(type, id); } catch (e) { return false; } };
-    const paintW = () => { if (!wb) return; const on = wished(); wb.setAttribute('aria-pressed', String(on)); wb.textContent = on ? 'In my wishlist' : (type === 'armes' ? 'I want it' : 'I want it'); };
+    const paintW = () => { if (!wb) return; const on = wished(); wb.setAttribute('aria-pressed', String(on)); wb.textContent = on ? 'On my wishlist' : (type === 'armes' ? 'I want it' : 'I want it'); };
     bt.addEventListener('click', function(){ if(own[id]) delete own[id]; else own[id] = 1; ecrire(own); maj();
-      if (own[id] && wished()) { let ok = false; try { ok = wstore.setWish(type, id, false); } catch (e) { ok = false; } if (ok) window.LK.status('Moved to your ' + MOT[2] + ' and removed from your wishlist.'); paintW(); } });
+      if (own[id] && wished()) { let ok = false; try { ok = wstore.setWish(type, id, false); } catch (e) { ok = false; } if (ok) window.LK.status(TXT.range); paintW(); } });
     maj();
     if (wstore && /^[a-z0-9][a-z0-9-]{0,99}$/.test(id)) {
       wb = document.createElement('button'); wb.type = 'button'; wb.className = 'wish-bt';
       wb.addEventListener('click', function(){ const on = wb.getAttribute('aria-pressed') !== 'true'; let ok = false; try { ok = wstore.setWish(type, id, on, 'fiche'); } catch (e) { ok = false; }
-        if (!ok) { window.LK.status('Can’t add this to your wishlist: browser storage is unavailable.'); return; }
-        paintW(); window.LK.status(on ? 'Saved to your wishlist. It’s not marked as owned: nothing is checked in your ' + MOT[2] + '.' : 'Removed from your wishlist.'); });
+        if (!ok) { window.LK.status('Can’t keep this wish: browser storage is unavailable.'); return; }
+        paintW(); window.LK.status(on ? TXT.envie : 'Removed from your wishlist.'); });
       paintW(); window.addEventListener('storage', e => { if (e.key === 'lk_wish_v1') paintW(); });
     }
     const see = document.createElement('a'); see.className = 'own-see'; see.href = '../carnets/' + carnet[0] + '.html'; see.textContent = carnet[1];
@@ -187,7 +198,7 @@
       /* v7.59 (check ultime, CALC-13) : la phrase dépend de la fiche : un prix publié (data-prix posé par le générateur) est annoncé
          comme prix de référence ; sinon le prix reste « pas encore connu ». Rien n’est figé dans ce script. */
       const prix = Number(bt.dataset.prix), prixStatut = bt.dataset.prixStatut || '';
-      const explanation = document.createElement('p'); explanation.textContent = 'See if you have enough money, and if not, how much play time you need. ' + (bt.dataset.prix !== undefined && Number.isFinite(prix) && prix >= 0 ? 'Its published price (' + lkDollars(new Intl.NumberFormat('en-US').format(prix)) + (prixStatut === 'official' ? ', officiel' : prixStatut === 'verified' ? ', measured and verified' : '') + ') is suggested as the reference price: you can enter another one.' : 'Its price isn’t known yet: you can enter the price you imagine.');
+      const explanation = document.createElement('p'); explanation.textContent = 'See if you have enough money, and if not, how much play time you need. ' + (bt.dataset.prix !== undefined && Number.isFinite(prix) && prix >= 0 ? 'Its published price (' + lkDollars(new Intl.NumberFormat('en-US').format(prix)) + (prixStatut === 'official' ? ', official' : prixStatut === 'verified' ? ', measured and verified' : '') + ') is suggested as the reference price: you can enter a different one.' : 'Its price isn’t known yet: you can enter the price you imagine.');
       const link = document.createElement('a'); link.className = 'lk-entry-button'; link.href = calculatorLink(type, { id }, 'fiche'); link.textContent = 'Can I buy it? ↗';
       card.append(eyebrow, title, explanation, link);
       (bt.closest('.fiche-liens') || bt).insertAdjacentElement('afterend', card);
@@ -259,21 +270,21 @@
       bar.querySelector('.own-total').textContent = cards.length;
       const raz = bar.querySelector('[data-raz]');
       if(raz) raz.addEventListener('click', function(){
-        if(!confirm('Empty my ' + MOT[2] + '?')) return; own = {}; ecrire(own); majCartes(); });
+        if(!confirm(TXT.vider)) return; own = {}; ecrire(own); majCartes(); });
       const exp = bar.querySelector('[data-export]');
       if(exp) exp.addEventListener('click', function(){
         const ids = Object.keys(own).join(',');
-        const url = location.origin + location.pathname + '#' + MOT[2] + '=' + ids;
+        const url = location.origin + location.pathname + '#' + PARTAGE + '=' + ids;
         window.LK.copy(url,exp,'Link copied');
       });
     }
     /* import depuis un lien partagé */
     const hp = new URLSearchParams(location.hash.slice(1));
-    const incoming = hp.get(MOT[2]);
+    const incoming = hp.get(PARTAGE);
     if(incoming !== null){
       const valid = new Set(cards.map(c=>c.dataset.id));
       incoming.split(',').filter(id=>valid.has(id)).forEach(id=>{own[id]=1;}); ecrire(own);
-      hp.delete(MOT[2]); history.replaceState(null,'',location.pathname+location.search+(hp.size?'#'+hp.toString():''));
+      hp.delete(PARTAGE); history.replaceState(null,'',location.pathname+location.search+(hp.size?'#'+hp.toString():''));
     }
     majCartes();
     /* v7.54 : une possession cochée dans un autre onglet est reflétée ici */
@@ -318,7 +329,7 @@
       });
       if(!tray) return;
       tray.classList.toggle('on', sel.length > 0);
-      tray.querySelector('b').textContent = sel.length + (lkPl(sel.length) ? ' selected' : ' selected');
+      tray.querySelector('b').textContent = sel.length + (lkPluriel(sel.length)?' selected items':' selected item');
       tray.querySelector('a').href = 'comparateur.html?type=' + type + '&ids=' + sel.join(',');
       tray.querySelector('a').style.visibility = sel.length >= 2 ? 'visible' : 'hidden';
     }

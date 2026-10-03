@@ -42,7 +42,7 @@
  "calculateurs-plan.js::mission": "misión",
  "calculateurs-plan.js::missions": [
   {
-   "si": "(?:'mission',|\\?)\\s*$",
+   "si": "(?:' ?mission',|\\?)\\s*$",
    "texte": "misiones"
   }
  ],
@@ -197,5 +197,6 @@
  "leo-core.js::quelles": [],
  "leo-core.js::que": [],
  "leo-core.js::est ce": [],
- "leo-core.js::c est": []
+ "leo-core.js::c est": [],
+ "collectibles-help.js::or": "="
 }

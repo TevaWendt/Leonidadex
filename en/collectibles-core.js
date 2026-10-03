@@ -30,7 +30,7 @@
   function validateTools(value) {
     if (!record(value) || value.version !== 1 || !Array.isArray(value.savedViews) || !Array.isArray(value.plan)) throw new Error('Invalid collection tools format.');
     if (value.savedViews.length > 12 || value.plan.length > 30) throw new Error('Limit exceeded: 12 searches and 30 stops max.');
-    if (value.plan.some(id => !validId(id)) || new Set(value.plan).size !== value.plan.length) throw new Error('The run contains invalid or repeated IDs.');
+    if (value.plan.some(id => !validId(id)) || new Set(value.plan).size !== value.plan.length) throw new Error('The route contains invalid or repeated IDs.');
     const ids = new Set();
     const savedViews = value.savedViews.map(view => {
       if (!record(view) || !validId(view.id) || ids.has(view.id) || typeof view.name !== 'string' || !view.name.trim() || view.name.length > 64 || typeof view.createdAt !== 'string' || view.createdAt.length > 32 || !Number.isFinite(Date.parse(view.createdAt))) throw new Error('A saved search is invalid.');
@@ -43,19 +43,19 @@
   const getItem = id => getItems().find(item => item.id === id);
   const utf8Bytes = text => typeof Blob === 'function' ? new Blob([text]).size : new TextEncoder().encode(text).length;
   function validate(value) {
-    if (!record(value) || value.version !== 1) throw new Error('Incompatible format: a version 1 Collectibles backup is expected.');
+    if (!record(value) || value.version !== 1) throw new Error('Incompatible format: a Collectibles version 1 backup is expected.');
     const result = empty();
     for (const field of ['found', 'favorites', 'notes']) {
       if (!record(value[field])) throw new Error('Incomplete backup: field “' + field + '” missing or invalid.');
       const entries = Object.entries(value[field]);
-      if (entries.length > MAX_ENTRIES) throw new Error('This backup has too many entries.');
+      if (entries.length > MAX_ENTRIES) throw new Error('This backup contains too many entries.');
       for (const [id, entry] of entries) {
         if (!validId(id)) throw new Error('A collectible ID is invalid.');
         if (field === 'notes') {
           if (typeof entry !== 'string' || entry.length > MAX_NOTE) throw new Error('A note is over 2,000 characters or has an invalid format.');
           if (entry.trim()) result.notes[id] = entry;
         } else {
-          if (typeof entry !== 'boolean') throw new Error('Progress states must be true or false.');
+          if (typeof entry !== 'boolean') throw new Error('Progress states must be booleans.');
           if (entry) result[field][id] = true;
         }
       }
@@ -78,7 +78,7 @@
       return result;
     } catch (error) {
       storageStatus = 'unavailable';
-      storageMessage = 'The local save is unavailable or unreadable. Your changes stay in this tab: export them before you close it.';
+      storageMessage = 'Local saving is unavailable or unreadable. Your changes stay in this tab: export them before closing it.';
       return null;
     }
   }
@@ -86,13 +86,13 @@
   function readTools() {
     try {
       const raw = window.localStorage.getItem(TOOLS_KEY);
-      if (raw && raw.length > 100000) throw new Error('Tools data too large.');
+      if (raw && raw.length > 100000) throw new Error('Tools too large.');
       const result = raw ? validateTools(JSON.parse(raw)) : emptyTools();
       toolsStorageStatus = 'available'; toolsStorageMessage = '';
       return result;
     } catch (_) {
       toolsStorageStatus = 'unavailable';
-      toolsStorageMessage = 'The tools are still available in this tab, but they can’t be saved locally. Export your tracker before you close the page.';
+      toolsStorageMessage = 'The tools are still available in this tab, but their local save is unavailable. Export your tracker before closing the page.';
       return null;
     }
   }
@@ -120,7 +120,7 @@
       toolsStorageStatus = 'available'; toolsStorageMessage = '';
     } catch (_) {
       toolsStorageStatus = 'unavailable';
-      toolsStorageMessage = 'Your searches and your run stay in this tab. Export your tracker: the browser can’t save them.';
+      toolsStorageMessage = 'Your searches and your route stay in this tab. Export your tracker: the browser can’t save them.';
     }
     emitTools(); return toolsSnapshot();
   }
@@ -135,7 +135,7 @@
       storageStatus = 'available'; storageMessage = '';
     } catch (_) {
       storageStatus = 'unavailable';
-      storageMessage = 'The browser can’t save your changes. Export your progress before you close this tab.';
+      storageMessage = 'The browser can’t save your changes. Export your progress before closing this tab.';
     }
     emit();
   }
@@ -198,7 +198,7 @@
         if (wroteTools) { if (previousTools === null) window.localStorage.removeItem(TOOLS_KEY); else window.localStorage.setItem(TOOLS_KEY, previousTools); }
       } catch (_) { rolledBack = false; }
       storageStatus = 'unavailable';
-      storageMessage = rolledBack ? 'The import wasn’t applied: the browser can’t save the backup. Your current tracker is kept.' : 'The import failed and restoring the storage couldn’t be guaranteed. Export the current tracker before you close the page.';
+      storageMessage = rolledBack ? 'The import wasn’t applied: the browser can’t save the backup. Your current tracker is kept.' : 'The import failed and restoring the storage couldn’t be guaranteed. Export your current tracker before closing the page.';
       emit(); throw new Error(storageMessage);
     }
     state = next; toolsState = nextTools;
@@ -212,7 +212,7 @@
   window.addEventListener('storage', event => {
     if (event.key === TOOLS_KEY || event.key === null) {
       try { toolsState = event.newValue ? validateTools(JSON.parse(event.newValue)) : emptyTools(); toolsStorageStatus = 'available'; toolsStorageMessage = ''; emitTools(); }
-      catch (_) { toolsStorageMessage = 'The tools received from another tab can’t be read; your current tools are kept.'; emitTools(); }
+      catch (_) { toolsStorageMessage = 'The tools received from another tab are unreadable; your current tools are kept.'; emitTools(); }
       if (event.key === TOOLS_KEY) return;
     }
     if (event.key !== KEY && event.key !== null) return;
@@ -220,7 +220,7 @@
       state = event.newValue ? parse(event.newValue) : empty(); delete state.tools;
       storageStatus = 'available'; storageMessage = ''; emit();
     } catch (_) {
-      storageMessage = 'A save received from another tab can’t be read. Your current progress is kept.'; emit();
+      storageMessage = 'A save received from another tab is unreadable. Your current progress is kept.'; emit();
     }
   });
   window.LKCollectibles = Object.freeze({

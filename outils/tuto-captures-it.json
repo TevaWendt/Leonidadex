@@ -1,0 +1,496 @@
+{
+ "goal-simple": {
+  "src": "/img/tuto/it/goal-simple.webp",
+  "width": 1208,
+  "height": 1174,
+  "regions": {
+   "inputs": {
+    "x": 0,
+    "y": 0,
+    "width": 48.2950872656755,
+    "height": 100
+   },
+   "results": {
+    "x": 49.772601348231596,
+    "y": 0,
+    "width": 50.2262443438914,
+    "height": 51.673145275370594
+   }
+  }
+ },
+ "goal-simple-mobile": {
+  "src": "/img/tuto/it/goal-simple-mobile.webp",
+  "width": 356,
+  "height": 2364,
+  "regions": {
+   "inputs": {
+    "x": 0,
+    "y": 0,
+    "width": 100,
+    "height": 64.66006270911254
+   },
+   "results": {
+    "x": 0,
+    "y": 65.2910978038664,
+    "width": 100,
+    "height": 34.70890219613359
+   }
+  }
+ },
+ "goal-expert": {
+  "src": "/img/tuto/it/goal-expert.webp",
+  "width": 1208,
+  "height": 2691,
+  "regions": {
+   "inputs": {
+    "x": 0,
+    "y": 2.655550489139446,
+    "width": 48.2950872656755,
+    "height": 61.33052147239264
+   },
+   "results": {
+    "x": 49.772601348231596,
+    "y": 2.655550489139446,
+    "width": 50.2262443438914,
+    "height": 39.25758580666556
+   }
+  }
+ },
+ "goal-expert-mobile": {
+  "src": "/img/tuto/it/goal-expert-mobile.webp",
+  "width": 356,
+  "height": 5514,
+  "regions": {
+   "inputs": {
+    "x": 0,
+    "y": 2.274264647853978,
+    "width": 100,
+    "height": 39.96550130215673
+   },
+   "results": {
+    "x": 0,
+    "y": 42.51034397231085,
+    "width": 100,
+    "height": 22.362709838893334
+   }
+  }
+ },
+ "activities-simple": {
+  "src": "/img/tuto/it/activities-simple.webp",
+  "width": 1208,
+  "height": 2097,
+  "regions": {
+   "inputs": {
+    "x": 0,
+    "y": 0,
+    "width": 48.2950872656755,
+    "height": 36.56029099807819
+   },
+   "results": {
+    "x": 49.772601348231596,
+    "y": 0,
+    "width": 50.2262443438914,
+    "height": 27.587628591758158
+   }
+  }
+ },
+ "activities-simple-mobile": {
+  "src": "/img/tuto/it/activities-simple-mobile.webp",
+  "width": 356,
+  "height": 3803,
+  "regions": {
+   "inputs": {
+    "x": 0,
+    "y": 0,
+    "width": 100,
+    "height": 26.940366822506295
+   },
+   "results": {
+    "x": 0,
+    "y": 27.3326903586491,
+    "width": 100,
+    "height": 22.846307254716056
+   }
+  }
+ },
+ "activities-editor": {
+  "src": "/img/tuto/it/activities-editor.webp",
+  "width": 1208,
+  "height": 3805,
+  "regions": {
+   "inputs": {
+    "x": 2.068519715578539,
+    "y": 27.53544585368714,
+    "width": 95.86296056884292,
+    "height": 50.776712193227084
+   },
+   "results": {
+    "x": 2.068519715578539,
+    "y": 80.14152689267483,
+    "width": 95.86296056884292,
+    "height": 5.457690348540206
+   }
+  }
+ },
+ "activities-editor-mobile": {
+  "src": "/img/tuto/it/activities-editor-mobile.webp",
+  "width": 356,
+  "height": 6267,
+  "regions": {
+   "inputs": {
+    "x": 5.865921787709497,
+    "y": 40.87812207131488,
+    "width": 88.26815642458101,
+    "height": 39.40020528688098
+   },
+   "results": {
+    "x": 5.865921787709497,
+    "y": 81.51599898844145,
+    "width": 88.26815642458101,
+    "height": 6.894217752852446
+   }
+  }
+ },
+ "session-simple": {
+  "src": "/img/tuto/it/session-simple.webp",
+  "width": 1208,
+  "height": 1240,
+  "regions": {
+   "inputs": {
+    "x": 0,
+    "y": 0,
+    "width": 48.2950872656755,
+    "height": 83.50582729604464
+   },
+   "results": {
+    "x": 49.772601348231596,
+    "y": 0,
+    "width": 50.2262443438914,
+    "height": 72.97732079377222
+   }
+  }
+ },
+ "session-simple-mobile": {
+  "src": "/img/tuto/it/session-simple-mobile.webp",
+  "width": 356,
+  "height": 2809,
+  "regions": {
+   "inputs": {
+    "x": 0,
+    "y": 0,
+    "width": 100,
+    "height": 44.45157684454012
+   },
+   "results": {
+    "x": 0,
+    "y": 44.98281767925228,
+    "width": 100,
+    "height": 46.93568112268897
+   }
+  }
+ },
+ "purchase-simple": {
+  "src": "/img/tuto/it/purchase-simple.webp",
+  "width": 1208,
+  "height": 2665,
+  "regions": {
+   "inputs": {
+    "x": 0,
+    "y": 0,
+    "width": 48.2950872656755,
+    "height": 37.38555389299877
+   },
+   "results": {
+    "x": 49.772601348231596,
+    "y": 0,
+    "width": 50.2262443438914,
+    "height": 21.6252131967479
+   }
+  }
+ },
+ "purchase-simple-mobile": {
+  "src": "/img/tuto/it/purchase-simple-mobile.webp",
+  "width": 356,
+  "height": 4514,
+  "regions": {
+   "inputs": {
+    "x": 0,
+    "y": 0,
+    "width": 100,
+    "height": 26.876559998622895
+   },
+   "results": {
+    "x": 0,
+    "y": 27.20706453445338,
+    "width": 100,
+    "height": 20.12359492537827
+   }
+  }
+ },
+ "comparateur": {
+  "src": "/img/tuto/it/comparateur.webp",
+  "width": 1208,
+  "height": 2218,
+  "regions": {
+   "inputs": {
+    "x": 2.068519715578539,
+    "y": 22.830335708809372,
+    "width": 95.86296056884292,
+    "height": 42.07483377952063
+   },
+   "results": {
+    "x": 2.068519715578539,
+    "y": 68.44450309817377,
+    "width": 95.86296056884292,
+    "height": 30.429345298694116
+   }
+  }
+ },
+ "comparateur-mobile": {
+  "src": "/img/tuto/it/comparateur-mobile.webp",
+  "width": 356,
+  "height": 3004,
+  "regions": {
+   "inputs": {
+    "x": 5.865921787709497,
+    "y": 21.48592715231788,
+    "width": 88.26815642458101,
+    "height": 48.34281870860927
+   },
+   "results": {
+    "x": 5.865921787709497,
+    "y": 72.74265314569537,
+    "width": 88.26815642458101,
+    "height": 26.561982615894042
+   }
+  }
+ },
+ "order-simple": {
+  "src": "/img/tuto/it/order-simple.webp",
+  "width": 1208,
+  "height": 1524,
+  "regions": {
+   "inputs": {
+    "x": 0,
+    "y": 0,
+    "width": 48.2950872656755,
+    "height": 96.25279028067479
+   },
+   "results": {
+    "x": 49.772601348231596,
+    "y": 0,
+    "width": 50.2262443438914,
+    "height": 42.19270318732389
+   }
+  }
+ },
+ "order-simple-mobile": {
+  "src": "/img/tuto/it/order-simple-mobile.webp",
+  "width": 356,
+  "height": 3119,
+  "regions": {
+   "inputs": {
+    "x": 0,
+    "y": 0,
+    "width": 100,
+    "height": 61.34928978192743
+   },
+   "results": {
+    "x": 0,
+    "y": 61.827584660684664,
+    "width": 100,
+    "height": 36.13169052328449
+   }
+  }
+ },
+ "roi-simple": {
+  "src": "/img/tuto/it/roi-simple.webp",
+  "width": 1208,
+  "height": 1464,
+  "regions": {
+   "inputs": {
+    "x": 0,
+    "y": 0,
+    "width": 48.2950872656755,
+    "height": 96.09979051609217
+   },
+   "results": {
+    "x": 49.772601348231596,
+    "y": 0,
+    "width": 50.2262443438914,
+    "height": 66.98057512854695
+   }
+  }
+ },
+ "roi-simple-mobile": {
+  "src": "/img/tuto/it/roi-simple-mobile.webp",
+  "width": 356,
+  "height": 3094,
+  "regions": {
+   "inputs": {
+    "x": 0,
+    "y": 0,
+    "width": 100,
+    "height": 55.23807132094425
+   },
+   "results": {
+    "x": 0,
+    "y": 55.72024108488197,
+    "width": 100,
+    "height": 42.22250125565042
+   }
+  }
+ },
+ "budget-simple": {
+  "src": "/img/tuto/it/budget-simple.webp",
+  "width": 1208,
+  "height": 964,
+  "regions": {
+   "inputs": {
+    "x": 0,
+    "y": 0,
+    "width": 48.2950872656755,
+    "height": 94.07330236865332
+   },
+   "results": {
+    "x": 49.772601348231596,
+    "y": 0,
+    "width": 50.2262443438914,
+    "height": 57.083532288637116
+   }
+  }
+ },
+ "budget-simple-mobile": {
+  "src": "/img/tuto/it/budget-simple-mobile.webp",
+  "width": 356,
+  "height": 2009,
+  "regions": {
+   "inputs": {
+    "x": 0,
+    "y": 0,
+    "width": 100,
+    "height": 55.11146521449899
+   },
+   "results": {
+    "x": 0,
+    "y": 55.854050959946775,
+    "width": 100,
+    "height": 40.9775831928093
+   }
+  }
+ },
+ "compare-simple": {
+  "src": "/img/tuto/it/compare-simple.webp",
+  "width": 1208,
+  "height": 2169,
+  "regions": {
+   "inputs": {
+    "x": 0,
+    "y": 0,
+    "width": 48.2950872656755,
+    "height": 97.36723701294527
+   },
+   "results": {
+    "x": 49.772601348231596,
+    "y": 0,
+    "width": 50.2262443438914,
+    "height": 38.006659039195775
+   }
+  }
+ },
+ "compare-simple-mobile": {
+  "src": "/img/tuto/it/compare-simple-mobile.webp",
+  "width": 356,
+  "height": 4359,
+  "regions": {
+   "inputs": {
+    "x": 0,
+    "y": 0,
+    "width": 100,
+    "height": 63.43239147874142
+   },
+   "results": {
+    "x": 0,
+    "y": 63.77466797397272,
+    "width": 100,
+    "height": 34.764952313040375
+   }
+  }
+ },
+ "plan": {
+  "src": "/img/tuto/it/plan.webp",
+  "width": 1208,
+  "height": 4153,
+  "regions": {
+   "inputs": {
+    "x": 0,
+    "y": 0,
+    "width": 48.2950872656755,
+    "height": 66.10824309718652
+   },
+   "results": {
+    "x": 49.772601348231596,
+    "y": 0,
+    "width": 50.2262443438914,
+    "height": 29.96992501392982
+   }
+  }
+ },
+ "plan-mobile": {
+  "src": "/img/tuto/it/plan-mobile.webp",
+  "width": 356,
+  "height": 7975,
+  "regions": {
+   "inputs": {
+    "x": 0,
+    "y": 0,
+    "width": 100,
+    "height": 47.3306418929451
+   },
+   "results": {
+    "x": 0,
+    "y": 47.517691804096394,
+    "width": 100,
+    "height": 21.793263085700033
+   }
+  }
+ },
+ "carnets": {
+  "src": "/img/tuto/it/carnets.webp",
+  "width": 1040,
+  "height": 1800,
+  "regions": {
+   "inputs": {
+    "x": 4.423076923076923,
+    "y": 10.543402777777777,
+    "width": 91.73076923076923,
+    "height": 17.53472222222222
+   },
+   "results": {
+    "x": 4.423076923076923,
+    "y": 37.63368055555556,
+    "width": 91.73076923076923,
+    "height": 76.10416666666666
+   }
+  }
+ },
+ "carnets-mobile": {
+  "src": "/img/tuto/it/carnets-mobile.webp",
+  "width": 356,
+  "height": 770,
+  "regions": {
+   "inputs": {
+    "x": 4.102564102564102,
+    "y": 17.167135663507107,
+    "width": 91.7948717948718,
+    "height": 21.567683649289098
+   },
+   "results": {
+    "x": 4.102564102564102,
+    "y": 48.92439277251185,
+    "width": 91.7948717948718,
+    "height": 92.05420616113744
+   }
+  }
+ }
+}

@@ -1,3 +1,5 @@
+/* v7.61 : pluriel selon la langue de la page : français n > 1 (« 0 coché », « 1,5 million ») ; anglais, espagnol n ≠ 1 (« 0 marcados ») */
+var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.documentElement&&document.documentElement.lang)||'fr').slice(0,2)==='fr'?n>1:n!==1;};
 /* ============================================================
    LEONIDAKIT — moteur de carte
    Déplacement, zoom, marqueurs, filtres, suivi, distance.
@@ -54,16 +56,16 @@
   const STATUTS = {
     officiel: { nom:'Named by Rockstar', court:'Official',
                 d:"Place explicitly named by Rockstar, on its website or in its official material." },
-    vu:       { nom:'Glimpsed in official material', court:'Glimpsed',
-                d:"Visible or named in a trailer, a screenshot or an official image, with no description released by Rockstar." },
+    vu:       { nom:'Sighted in official media', court:'Sighted',
+                d:"Visible or named in a trailer, a screenshot or an official image, with no description published by Rockstar." },
     spec:     { nom:'Community reconstruction', court:'Assumed',
-                d:"Position or existence inferred by the community. Treat with caution." }
+                d:"Position or existence inferred by the community. Take it with a grain of salt." }
   };
 
   const SOURCES = {
     SITE:  'Rockstar’s official website',
-    T1:    'First trailer',
-    T2:    'Second trailer',
+    T1:    'Trailer 1',
+    T2:    'Trailer 2',
     EL:    'An Extended Look, August 27, 2026',
     SHOT:  'Official screenshots',
     COMM:  'Community analysis',
@@ -73,24 +75,24 @@
 
   /* ---- personnages officiels ---- */
   const PERSOS = {
-    jason:  { n:'Jason Duval',      r:"Former soldier turned courier for smugglers in the Keys." },
-    lucia:  { n:'Lucia Caminos',    r:"From Liberty City, released from the Leonida penitentiary." },
-    cal:    { n:'Cal Hampton',      r:"Jason’s friend, paranoid and a conspiracy theorist." },
+    jason:  { n:'Jason Duval',      r:"Ex-military turned courier for traffickers in the Keys." },
+    lucia:  { n:'Lucia Caminos',    r:"From Liberty City, released from the Leonida Penitentiary." },
+    cal:    { n:'Cal Hampton',      r:"Jason’s friend, paranoid and into conspiracy theories." },
     boobie: { n:'Boobie Ike',       r:"Boss of a business empire in Vice City." },
     drequan:{ n:"Dre’Quan Priest",  r:"Co-owner of the Only Raw Records label." },
     dimez:  { n:'Real Dimez',       r:"Music duo Bae-Luxe and Roxy, signed to Only Raw." },
     raul:   { n:'Raul Bautista',    r:"Seasoned bank robber." },
-    brian:  { n:'Brian Heder',      r:"Longtime Keys smuggler, owner of the place where Jason lives." }
+    brian:  { n:'Brian Heder',      r:"Longtime Keys trafficker and Jason’s landlord." }
   };
 
   /* ---- catégories ---- */
   const CATS = {
     region:      { nom:'Regions',            col:'#E8452C' },
     ville:       { nom:'Cities',             col:'#F5A524' },
-    quartier:    { nom:'Districts',          col:'#D96A2C' },
+    quartier:    { nom:'Neighborhoods',          col:'#D96A2C' },
     comte:       { nom:'Counties',             col:'#8A6A45' },
     batiment:    { nom:'Identified buildings',col:'#5B4E8C' },
-    transport:   { nom:'Transport',         col:'#2F6F8F' },
+    transport:   { nom:'Transportation',         col:'#2F6F8F' },
     nature:      { nom:'Nature and terrain',   col:'#4C7A50' },
     lieu:        { nom:'Notable places',     col:'#B5762A' },
     activite:    { nom:'Activities',          col:'#2A9D8F' },
@@ -104,91 +106,91 @@
   const POINTS = [
     /* ============ RÉGIONS OFFICIELLES ============ */
     { id:'vice-city', n:'Vice City', c:'ville', x:3517, y:3214, s:'officiel', src:'SITE', z:0, pers:['boobie','drequan','dimez'],
-      d:"Leonida’s big city and the heart of the game. Rockstar presents it as the country’s sunny party capital, and as the densest city the studio has ever built." },
+      d:"Leonida’s metropolis and the heart of the game. Rockstar presents it as the country’s sunny party capital, and as the densest city the studio has ever built." },
     { id:'leonida-keys', n:'Leonida Keys', c:'region', x:2889, y:5404, s:'officiel', src:'SITE', z:0, pers:['jason','brian'],
       d:"Tropical archipelago in the south of the state, linked by long roads over the water. Diving, fishing, boating and smuggling." },
     { id:'grassrivers', n:'Grassrivers', c:'region', x:2280, y:4017, s:'officiel', src:'SITE', z:0,
-      d:"Leonida’s great wetland. Thick vegetation, low visibility, airboats and alligators." },
+      d:"Leonida’s big wetland. Thick vegetation, low visibility, airboats and alligators." },
     { id:'port-gellhorn', n:'Port Gellhorn', c:'ville', x:1560, y:1988, s:'officiel', src:'SITE', z:0,
-      d:"Coastal town that has seen better days. Cheap motels, closed-down attractions and an underground economy." },
+      d:"Coastal city that has seen better days. Cheap motels, closed attractions and an underground economy." },
     { id:'ambrosia', n:'Ambrosia', c:'region', x:2805, y:1898, s:'officiel', src:'SITE', z:0,
       d:"Rural, industrial county. The Allied Crystal refinery provides the jobs, the local biker gang provides pretty much everything else." },
     { id:'mount-kalaga', n:'Mount Kalaga National Park', c:'region', x:2692, y:922, s:'officiel', src:'SITE', z:0,
-      d:"National park on the northern border, built around hunting, fishing and off-road trails. In its backcountry, people who choose to live far from the authorities." },
+      d:"National park on the northern border, built around hunting, fishing and off-road trails. Out in its backcountry live people who choose to stay far from the authorities." },
 
     /* ============ VICE CITY : QUARTIERS ============ */
     { id:'ocean-beach', n:'Ocean Beach', c:'quartier', x:4295, y:2957, s:'officiel', src:'SITE', p:'vice-city', z:1,
-      d:"District named by Rockstar: pastel art deco hotels, white sand, a palm-lined promenade. It’s the opening scene of the first trailer." },
+      d:"Neighborhood named by Rockstar: pastel Art Deco hotels, white sand, a palm-lined promenade. It’s the opening scene of Trailer 1." },
     { id:'little-cuba', n:'Little Cuba', c:'quartier', x:3331, y:3170, s:'officiel', src:'SITE', p:'vice-city', z:1,
-      d:"District named by Rockstar, known for its bakeries and Cuban-American culture." },
+      d:"Neighborhood named by Rockstar, known for its bakeries and its Cuban-American culture." },
     { id:'vice-beach', n:'Vice Beach', c:'quartier', x:4258, y:2813, s:'officiel', src:'T1', p:'vice-city', z:1,
-      d:"Barrier island linked to the mainland by a causeway. The only Vice City subregion confirmed by the official material." },
+      d:"Barrier island linked to the mainland by a causeway. The only Vice City sub-region confirmed by official media." },
     { id:'south-beach', n:'South Beach', c:'quartier', x:4295, y:3177, s:'vu', src:'T1', p:'vice-city', z:1,
-      d:"Waterfront strip packed with neon-lit bars and hotels. Several night shots in the trailers come from here." },
+      d:"Waterfront strip packed with bars and neon-lit hotels. Several night shots from the trailers come from here." },
     { id:'downtown', n:'Downtown', c:'quartier', x:3517, y:3214, s:'vu', src:'T2', p:'vice-city', z:1,
-      d:"The financial center: glass towers and elevated highways, visible in the aerial shots of the second trailer." },
+      d:"The financial center: glass towers and elevated highways, seen in the aerial shots of Trailer 2." },
     { id:'stockyard', n:'Stockyard', c:'quartier', x:3601, y:2609, s:'officiel', src:'SITE', p:'vice-city', z:1,
-      d:"District of converted warehouses covered in murals. Rockstar confirmed it’s inspired by Wynwood and brought in more than fifty street artists for its walls. A car meet takes place there in the first trailer." },
+      d:"Neighborhood of converted warehouses covered in murals. Rockstar confirmed it’s inspired by Wynwood and brought in more than fifty street artists for its walls. A car meet takes place there in Trailer 1." },
     { id:'vc-port', n:'Port of Vice City', c:'transport', x:3971, y:3358, s:'vu', src:'T1', p:'vice-city', z:1,
-      d:"Industrial port area: containers, warehouses and bridges, seen in both trailers." },
+      d:"Industrial port area: containers, warehouses and bridges, sighted in both trailers." },
     { id:'marina', n:'Marina', c:'quartier', x:3603, y:2854, s:'vu', src:'T2', p:'vice-city', z:1,
-      d:"Wealthy waterfront residential area: boats, jet skis and luxury homes." },
+      d:"Wealthy residential area on the water: boats, jet skis and luxury properties." },
     { id:'vcia', n:'International Airport', c:'transport', x:2960, y:3435, s:'vu', src:'T2', p:'vice-city', z:1,
-      d:"The city’s main airport, identified by the VCIA train seen in the second trailer." },
+      d:"The city’s main airport, identified by the VCIA train sighted in Trailer 2." },
     { id:'causeway', n:'Vice Beach Causeway', c:'transport', x:4058, y:2813, s:'vu', src:'T1', p:'vice-city', z:1,
       d:"Causeway bridge linking the mainland to Vice Beach island, with a toll at the entrance." },
 
     /* ============ VICE CITY : BÂTIMENTS IDENTIFIÉS ============ */
     { id:'galina-opera', n:'Galina Ballet Opera House', c:'batiment', x:3557, y:2956, s:'vu', src:'T2', p:'downtown', z:2,
-      d:"Opera house with an angular silhouette and a lively plaza, matched by observers with the Adrienne Arsht Center." },
+      d:"Opera house with an angular silhouette and a lively plaza, matched by observers to the Adrienne Arsht Center." },
     { id:'sahara-arena', n:'Sahara Arena', c:'batiment', x:3624, y:3053, s:'vu', src:'T2', p:'downtown', z:2,
-      d:"Waterfront multi-sport arena, home of the Vice City Narcos. Shape matched with the Kaseya Center." },
+      d:"Waterfront arena, home of the Vice City Narcos. Its shape is matched to the Kaseya Center." },
     { id:'twin-towers', n:'Twin Towers', c:'batiment', x:3584, y:3123, s:'vu', src:'T2', p:'downtown', z:2,
-      d:"Twin towers joined by an open-work roof, matched with 500 Brickell." },
+      d:"Two towers joined by a latticed roof, matched to 500 Brickell." },
     { id:'autograph-flight', n:'Autograph Flight Support', c:'batiment', x:2927, y:3231, s:'vu', src:'T2', p:'vcia', z:2,
       d:"Private aviation terminal with an overhanging roof and a curved glass facade." },
     { id:'tisha-wocka', n:'Tisha-Wocka Flea Market', c:'lieu', x:2798, y:2948, s:'vu', src:'T1', p:'south-beach', z:2,
-      d:"Flea market named in the official material, near South Beach." },
+      d:"Flea market named in official media, near South Beach." },
     { id:'ptt-youngin', n:'PTT YOUNGIN$', c:'lieu', x:3331, y:3170, s:'officiel', src:'SITE', p:'little-cuba', z:2,
-      d:"Shop selling illicit goods, the setting of a mission exclusive to the Ultimate Edition." },
+      d:"Shop for illicit goods, setting of a mission exclusive to the Ultimate Edition." },
     { id:'penthouse', n:'Vice Beach Penthouse', c:'batiment', x:4335, y:2807, s:'vu', src:'T1', p:'vice-beach', z:2,
-      d:"Luxury terrace with a private pool and an outdoor shower, matched with the Trésor Tower." },
+      d:"Luxury terrace with a private pool and an outdoor shower, matched to the Trésor Tower." },
     { id:'jade-condos', n:'Wavy Towers', c:'batiment', x:4355, y:2697, s:'vu', src:'T1', p:'vice-beach', z:2,
-      d:"Buildings with wave-shaped facades, visible in the Vice Beach skyline." },
+      d:"Buildings with a wave-shaped facade, visible in the Vice Beach skyline." },
 
     /* ============ AUTRES VILLES ============ */
     { id:'waning-sands', n:'Waning Sands', c:'ville', x:3681, y:1860, s:'vu', src:'T1', z:0,
       d:"Sprawling suburb: expressways, malls and huge parking lots." },
     { id:'hamlet', n:'Hamlet', c:'ville', x:2832, y:4258, s:'vu', src:'T1', z:0,
-      d:"Town named in the first trailer, in a residential street scene." },
+      d:"Town named in Trailer 1, in a residential street scene." },
     { id:'key-lento', n:'Key Lento', c:'quartier', x:2889, y:5144, s:'officiel', src:'T2', p:'leonida-keys', z:1,
       d:"Named island in the Leonida Keys archipelago." },
 
     /* ============ LIEUX NOTABLES ============ */
-    { id:'allied-crystal', n:'Allied Crystal Refinery', c:'lieu', x:2773, y:2004, s:'officiel', src:'SITE', p:'ambrosia', z:1,
+    { id:'allied-crystal', n:'Raffinerie Allied Crystal', c:'lieu', x:2773, y:2004, s:'officiel', src:'SITE', p:'ambrosia', z:1,
       d:"Sugar refinery cited by Rockstar as Ambrosia’s main employer." },
     { id:'leonida-penitentiary', n:'Leonida Penitentiary', c:'lieu', x:2805, y:4133, s:'officiel', src:'SITE', z:0, pers:['lucia'],
-      d:"The state penitentiary where Lucia is serving her sentence at the start of the story, after fighting for her family in Liberty City. Name confirmed by Rockstar. Matched with Florida State Prison." },
+      d:"The state penitentiary where Lucia is serving her sentence at the start of the story, after fighting for her family in Liberty City. Name confirmed by Rockstar. Matched to the Florida State Prison." },
     { id:'tv-tower', n:'TV Tower', c:'batiment', x:3365, y:2037, s:'spec', src:'COMM', z:0,
-      d:"Community theory of a very tall antenna, inspired by the WTVY tower. Unconfirmed." },
+      d:"Community theory about a very tall antenna, inspired by the WTVY tower. Not confirmed." },
 
     /* ============ COMTÉS ============ */
     { id:'vice-dale', n:'Vice-Dale County', c:'comte', x:3431, y:3189, s:'vu', src:'T1', z:0,
       d:"Inferred from the Vice-Dale Police Department markings on a police vehicle." },
     { id:'leonard-county', n:'Leonard County', c:'comte', x:3132, y:1989, s:'vu', src:'T1', z:0,
-      d:"Identified through the Leonard County Sheriff’s Office. Includes Waning Sands." },
+      d:"Identified by the Leonard County Sheriff’s Office. Contains Waning Sands." },
     { id:'kelly-county', n:'Kelly County', c:'comte', x:1865, y:2298, s:'vu', src:'T1', z:0,
       d:"Named on a road sign. One of the least documented areas." },
     { id:'mariana-county', n:'Mariana County', c:'comte', x:2360, y:4317, s:'spec', src:'COMM', z:0,
-      d:"County suggested by the community for the Grassrivers area. Unconfirmed." },
+      d:"County suggested by the community for the Grassrivers area. Not confirmed." },
 
     /* ============ NATURE ============ */
-    { id:'grand-lac', n:'Large inland lake', c:'nature', x:3075, y:1639, s:'spec', src:'COMM', z:0,
+    { id:'grand-lac', n:'Great inland lake', c:'nature', x:3075, y:1639, s:'spec', src:'COMM', z:0,
       d:"Central body of water inferred from the images. Neither its name nor its outline is confirmed." },
     { id:'kalaga-summit', n:'Kalaga Summit', c:'nature', x:2732, y:762, s:'spec', src:'COMM', p:'mount-kalaga', z:1,
       d:"Assumed highest point of the national park." },
     { id:'gloriana', n:'Gloriana', c:'region', x:1765, y:1398, s:'spec', src:'COMM', z:0,
-      d:"Name seen on license plates. Rockstar has never announced it as an explorable region." }
+      d:"Name sighted on license plates. Rockstar has never announced that it’s an explorable region." }
   ];
 
   /* ---- bâtiments de la communauté gtadb (CC BY 4.0), voir carte-gtadb.js ---- */
@@ -375,7 +377,7 @@
         document.querySelectorAll('.map-filter').forEach(function(input){ if(pts.some(p => p.c === input.dataset.cat)) input.checked = true; });
         refreshVisibility();
         ouvertId = null;
-        panelIn.innerHTML = '<p class="mp-cat">' + esc(titre) + '</p><h3>' + pts.length + (pts.length > 1 ? ' places on the map' : ' place on the map') + '</h3>' +
+        panelIn.innerHTML = '<p class="mp-cat">' + esc(titre) + '</p><h3>' + pts.length + (lkPluriel(pts.length)?' places on the map' : ' place on the map') + '</h3>' +
           '<p class="mp-d">Each place opens its page and centers the map on it.</p>' +
           pts.map(function(p){ return '<a class="mp-link" href="#lieu=' + p.id + '">' + esc(p.n) + '</a>'; }).join('');
         panel.classList.add('open'); panel.inert = false;
@@ -412,7 +414,7 @@
       const item = collectibleById.get(id);
       ouvertId = null;
       panelIn.innerHTML = '<p class="mp-cat">Collectibles</p><h3>' + esc(item ? item.name : 'Collectible unavailable') + '</h3>' +
-        '<p class="mp-d" role="status">' + (item ? 'No exact, verified location is available for this page.' :
+        '<p class="mp-d" role="status">' + (item ? 'No precise, verified location is available for this page.' :
         'This link doesn’t match any published collectible with a verified location.') + '</p>' +
         '<a class="mp-link" href="' + (item ? '/collectibles/' + encodeURIComponent(item.slug) + '.html' : '/en/collectibles.html') + '">' +
         (item ? 'Open the page' : 'Browse the collectibles') + '</a>';
@@ -686,7 +688,7 @@
     if(fdCnt) fdCnt.textContent = liste.length;
 
     if(!liste.length){
-      fdList.innerHTML = '<p class="fd-empty">No spotted places yet. Open a marker on the map and check it.</p>';
+      fdList.innerHTML = '<p class="fd-empty">No places spotted yet. Open a marker on the map and check it off.</p>';
       return;
     }
     if(sec && !sec.open) sec.open = true;
@@ -695,7 +697,7 @@
              '<span class="fd-dot" style="background:' + CATS[p.c].col + '"></span>' +
              '<span class="fd-n">' + esc(p.n) + '</span></button>' +
              '<button type="button" class="fd-un" data-un="' + p.id + '" ' +
-             'aria-label="Uncheck ' + esc(p.n) + '" title="Uncheck">&times;</button></li>';
+             'aria-label="' + 'Uncheck {nom}'.replace('{nom}', esc(p.n)) + '" title="Uncheck">&times;</button></li>';
     }).join('') + '</ul>';
   }
 
@@ -748,7 +750,7 @@
       Math.abs(Number(String(p.sv).split(',')[0])) <= 90 && Math.abs(Number(String(p.sv).split(',')[1])) <= 180;
     const streetView = svOk
       ? '<div><span>Real-world place</span><b><a href="https://www.google.com/maps/search/?api=1&amp;query=' + encodeURIComponent(p.sv) +
-        '" target="_blank" rel="noopener noreferrer">See on Google Maps</a></b></div>'
+        '" target="_blank" rel="noopener noreferrer">View on Google Maps</a></b></div>'
       : '';
 
     const persos = (p.pers || []).map(function(k){
@@ -790,11 +792,11 @@
                    '</button>';
           };
           h += '<div class="mp-kids"><p class="mp-kids-h">Contains ' + kids.length +
-               (kids.length > 1 ? ' places' : ' place') + '</p>' +
+               (lkPluriel(kids.length)?' lieux' : ' lieu') + '</p>' +
                tries.slice(0, LIM).map(ligne).join('') +
                (tries.length > LIM
                  ? '<div id="mp-kids-suite" hidden>' + tries.slice(LIM).map(ligne).join('') + '</div>' +
-                   '<button type="button" class="mp-kids-more" id="mp-kids-more">Show ' + (tries.length - LIM) + ' more</button>'
+                   '<button type="button" class="mp-kids-more" id="mp-kids-more">Show the ' + (tries.length - LIM) + ' more</button>'
                  : '') +
                '</div>';
         }
@@ -890,7 +892,7 @@
       '<p class="mp-d">' + esc(item.summary || item.description || '') + '</p>' +
       '<div class="mp-meta"><div><span>Reliability</span><b>' + esc(st.nom) + '</b></div>' +
       '<div><span>Location</span><b>Verified coordinates</b></div>' +
-      '<div><span>Position source</span><b><a href="' + esc(coordinateSource) + '" target="_blank" rel="noopener noreferrer">View the source</a></b></div></div>' +
+      '<div><span>Location source</span><b><a href="' + esc(coordinateSource) + '" target="_blank" rel="noopener noreferrer">View the source</a></b></div></div>' +
       '<a class="mp-link" href="' + esc(itemHref) + '">Open the collectible’s page →</a>' +
       (trackable ? '<button type="button" class="mp-btn' + (isFound ? ' on' : '') + '" id="mp-collectible-found" aria-pressed="' + isFound + '">' +
         (isFound ? 'Found' : 'Mark as found') + '</button>' : '<p class="mp-d">Collection tracking isn’t available for this page.</p>') +
@@ -910,7 +912,7 @@
     document.getElementById('mp-collectible-share').addEventListener('click', function(){
       window.LK.copy(location.origin + location.pathname + '#collectible=' + encodeURIComponent(item.id)).then(function(ok){
         const status = document.getElementById('mp-collectible-status');
-        if(status && ouvertId === p.id) status.textContent = ok ? 'Link copied.' : 'Copying isn’t available. The link is in the address bar.';
+        if(status && ouvertId === p.id) status.textContent = ok ? 'Link copied.' : 'Can’t copy. The link is in the address bar.';
       });
     });
     refreshVisibility();
@@ -1234,7 +1236,7 @@
   /* ============================================================
      RECHERCHE
      ============================================================ */
-  const norm = s => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[’‘]/g,"'").replace(/[\u00a0\u202f]/g," ");
+  const norm = s => s.toLowerCase().replace(/ß/g,'ss').normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[’‘]/g,"'").replace(/[\u00a0\u202f]/g," ");
 
   function goTo(p, z, showPanel = true){
     scale = z || 0.7;
@@ -1323,7 +1325,7 @@
       rulerBx.innerHTML = '<p class="rl-hint">' +
         (rulerPts.length === 0
           ? "Click a first point <b>anywhere</b> on the map, or right on a marker."
-          : "Click the next point. You can chain up to " + MAX_ETAPES + " steps.") + '</p>';
+          : "Click the next point. You can chain up to {n} legs.".replace('{n}', MAX_ETAPES)) + '</p>';
       return;
     }
 
@@ -1344,15 +1346,14 @@
     rulerBx.innerHTML =
       '<p class="rl-pair">' + chemin + '</p>' +
       '<p class="rl-dist">' + fmtDist(m) + '</p>' +
-      (etapes.length > 1
-        ? '<p class="rl-seg">' + etapes.length + ' segments · longest ' + fmtDist(Math.max.apply(null, etapes)) + '</p>'
+      (lkPluriel(etapes.length)?'<p class="rl-seg">' + etapes.length + ' segments · longest ' + fmtDist(Math.max.apply(null, etapes)) + '</p>'
         : '') +
       /* Revue de conformité (v7.53) : aucun temps de trajet par défaut (ni la vitesse ni l’échelle ne sont calibrées sur
          GTA VI). La simulation se demande, et se lit comme telle. */
-      '<p class="rl-note">Estimated distance as the crow flies, based on the base map’s scale (to be confirmed after November 19, 2026), without accounting for roads or terrain.</p>' +
+      '<p class="rl-note">Estimated distance as the crow flies, based on the base map’s scale (to be confirmed after November 19, 2026), not counting roads or terrain.</p>' +
       '<label class="rl-sim"><input type="checkbox" id="rl-sim"' + (simTrajets ? ' checked' : '') + '> Simulate travel times (GTA V speeds: an assumption, not GTA VI data)</label>' +
       (simTrajets
-        ? '<p class="rl-sim-t"><span class="rl-sim-tag">Simulation</span> Times calculated with GTA V speeds, over the as-the-crow-flies distance.</p>' +
+        ? '<p class="rl-sim-t"><span class="rl-sim-tag">Simulation</span> Times calculated with GTA V speeds, over the distance as the crow flies.</p>' +
           '<ul class="rl-list rl-list--sim">' +
           VITESSES.map(function(v){
             return '<li><span class="rl-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
@@ -1519,7 +1520,7 @@
     getFound: function(){ return found; },
     cleanFound: f=>Object.fromEntries(Object.entries(f).filter(([id])=>Object.hasOwn(BY_ID,id) && !BY_ID[id].collectible)),
     setFound: function(f,persist=true){
-      if(!window.LK.own(f))throw new Error('Invalid progress');
+      if(!window.LK.own(f))throw new Error('Invalid progress data');
       found = Object.fromEntries(Object.entries(f).filter(([id])=>Object.hasOwn(BY_ID,id) && !BY_ID[id].collectible)); if(persist)save();
       Object.keys(MK).map(k => MK[k]).forEach(function(el){
         el.classList.toggle('is-found', pointFound(BY_ID[el.dataset.id]));
@@ -1669,7 +1670,7 @@
   if(clearAll){
     clearAll.addEventListener('click', function(){
       if(!perso.length) return;
-      if(!confirm('Delete your ' + perso.length + ' markers?')) return;
+      if(!confirm('Delete your {n} markers?'.replace('{n}', perso.length))) return;
       perso = []; savePerso(); renderPerso(); M.closePanel();
     });
   }
@@ -1695,7 +1696,7 @@
     const n = prompt('Marker name', 'New point');
     if(n === null) return;
     const note = prompt('Note (optional)', '');
-    perso.push({ n: n.trim().slice(0,200) || 'Untitled', note: (note||'').trim().slice(0,4000), x: w.x, y: w.y });
+    perso.push({ n: n.trim().slice(0,200) || 'Unnamed', note: (note||'').trim().slice(0,4000), x: w.x, y: w.y });
     savePerso(); renderPerso();
   }, true);
 
@@ -1729,13 +1730,13 @@
       if(!f) return;
       if(f.size > 5*1024*1024){alert('File too large (5 MB max).'); impIn.value=''; return;}
       const fr = new FileReader();
-      fr.onerror = function(){alert('Couldn’t read the file.');impIn.value='';};
+      fr.onerror = function(){alert('Can’t read the file.');impIn.value='';};
       fr.onload = function(){
         try{
           const d = window.LK.mapImport(JSON.parse(fr.result));
           if((perso.length || Object.keys(M.getFound()).length || M.getDraw?.().length) && !confirm('Replace your markers, spotted places and drawings with this backup?')) return;
           d.repere=M.cleanFound(d.repere);
-          if(!window.LK.writeBatch({lk_map_perso:d.marqueurs,lk_map_found:d.repere,lk_map_draw:d.traces}))throw new Error('Saving unavailable; import not applied.');
+          if(!window.LK.writeBatch({lk_map_perso:d.marqueurs,lk_map_found:d.repere,lk_map_draw:d.traces}))throw new Error('Can’t save; import not applied.');
           perso=d.marqueurs; M.setFound(d.repere,false); if(M.setDraw)M.setDraw(d.traces,false);
           M.closePanel(); renderPerso(); alert('Import successful.');
         }catch(err){alert('Import rejected: '+err.message);}

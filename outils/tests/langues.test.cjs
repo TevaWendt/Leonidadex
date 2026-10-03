@@ -5,11 +5,15 @@
    aucun français visible), pages françaises (barre de langue, hreflang, plan du site), scripts traduits (seules des
    chaînes changent, aucun identifiant comparé par le code n'est traduit d'un seul côté), calculateur anglais et espagnol
    dans jsdom (montants « $1,250 » / « 1.250 $ », nombres de la langue, phrases du hub), clé lk_lang_v1 écrite seulement
-   après un clic. Le parcours de chaque outil dans un vrai navigateur est dans langues-browser.cjs. */
+   après un clic. Le parcours de chaque outil dans un vrai navigateur est dans langues-browser.cjs.
+   v7.64 (fusion) : allemand (calculateur « 1.250 $ », « 1. Oktober 2026 », phrases du hub en allemand ; pages sans
+   français ni anglais visible : foreignHits) ; page introuvable de chaque langue ; Léo dans les cinq langues. */
 const test = require('node:test'), assert = require('node:assert/strict'), fs = require('fs'), path = require('path');
 const root = path.resolve(process.env.SITE_ROOT || path.join(__dirname, '../..'));
 const L = require(path.join(root, 'outils/langues.cjs'));
-const { frenchHits } = require('./langues-helper.cjs');
+const { frenchHits: frOnly, foreignHits } = require('./langues-helper.cjs');
+/* une page allemande ne doit montrer ni français ni anglais ; les autres langues : pas de français */
+const frenchHits = (text, code = 'en') => code === 'de' ? foreignHits(text, code) : frOnly(text, code);
 const { load } = require('./runtime-helper.cjs');
 const parse5 = require('parse5');
 const ACORN = require('acorn');
@@ -39,8 +43,10 @@ function frPages() {
   return out;
 }
 
-const OG = { en: 'en_US', es: 'es_ES' };
+const OG = { en: 'en_US', es: 'es_ES', it: 'it_IT', de: 'de_DE' };
+const LANG_CODES = new Set(cfg.langues.map(l => l.code));
 const PARSE = h => parse5.parse(h, { scriptingEnabled: false });
+const NOT_INDEXED = h => /<meta name="robots" content="[^"]*noindex/i.test(h) || /http-equiv="refresh"/i.test(h);
 
 test('langues.json : le français est la source, chaque langue publiée a un dossier, des libellés complets et des pages françaises existantes', () => {
   assert.equal(cfg.source, 'fr');
@@ -86,10 +92,21 @@ for (const LG of LANGS) {
       const frHtml = read(p), frCanon = (frHtml.match(/<link rel="canonical" href="([^"]+)">/) || [])[1], frOg = (frHtml.match(/property="og:url" content="([^"]+)"/) || [])[1];
       if (frCanon) assert.ok(html.includes('<link rel="canonical" href="' + port(frCanon) + '">'), p + ' : canonical ' + port(frCanon));
       if (frOg) assert.ok(html.includes('property="og:url" content="' + port(frOg) + '"'), p + ' : og:url ' + port(frOg));
-      assert.ok(html.includes('<link rel="alternate" hreflang="fr" href="' + frUrl + '">') && html.includes('<link rel="alternate" hreflang="' + code + '" href="' + u + '">') && html.includes('<link rel="alternate" hreflang="x-default" href="' + frUrl + '">'), p + ' : hreflang');
-      for (const o of LANGS.filter(x => x.code !== code)) assert.equal(html.includes('<link rel="alternate" hreflang="' + o.code + '" href="' + url(o, p) + '">'), o.pages.includes(p), p + ' : hreflang ' + o.code + ' seulement si la page existe');
+      /* v7.64 : une page non indexée (introuvable, redirection) n'a aucun hreflang ; sinon chaque version, x-default = anglais */
+      if (NOT_INDEXED(html)) assert.ok(!/<link rel="alternate" hreflang=/.test(html), p + ' : pas de hreflang sur une page non indexée');
+      else {
+        const xdef = EN && EN.pages.includes(p) ? url(EN, p) : frUrl;
+        assert.ok(html.includes('<link rel="alternate" hreflang="fr" href="' + frUrl + '">') && html.includes('<link rel="alternate" hreflang="' + code + '" href="' + u + '">') && html.includes('<link rel="alternate" hreflang="x-default" href="' + xdef + '">'), p + ' : hreflang');
+        for (const o of LANGS.filter(x => x.code !== code)) assert.equal(html.includes('<link rel="alternate" hreflang="' + o.code + '" href="' + url(o, p) + '">'), o.pages.includes(p), p + ' : hreflang ' + o.code + ' seulement si la page existe');
+        /* og:locale:alternate : les autres versions de la page */
+        if (/property="og:locale"/.test(html)) for (const o of [cfg.langues.find(l => l.code === cfg.source), ...LANGS.filter(x => x.code !== code && x.pages.includes(p))]) assert.ok(html.includes('<meta property="og:locale:alternate" content="' + o.og + '">'), p + ' : og:locale:alternate ' + o.og);
+      }
+      /* v7.64 : titres pour les moteurs de recherche en « GTA 6 » (la page garde « GTA VI ») */
+      const tt = (html.match(/<title>([^<]*)<\/title>/) || [])[1] || '';
+      assert.ok(!/\bGTA VI\b/.test(tt), p + ' : titre en « GTA 6 » : ' + tt);
       if (/property="og:locale"/.test(html)) assert.ok(html.includes('property="og:locale" content="' + (LG.og || OG[code]) + '"'), p + ' : og:locale');
       if (!leo) { assert.ok(!/<script[^>]+src="[^"]*leo(?:-widget|-core|\.js)/.test(html), p + ' : aucun script de Léo'); assert.ok(!/leo-index\.json/.test(html), p + ' : index de Léo non chargé'); }
+      if (/http-equiv="refresh"/i.test(html)) { assert.ok(!html.includes('data-lk-langbar'), p + ' : redirection sans barre'); continue; }
       assert.match(html, /<div class="lk-langbar" data-lk-langbar translate="no">/, p + ' : barre de langue');
       assert.ok(html.includes('<a aria-current="true" hreflang="' + code + '" lang="' + code + '" data-lk-lang="' + code + '">' + LG.nom + '</a>'), p + ' : ' + LG.nom + ' coché');
     }
@@ -154,9 +171,10 @@ for (const LG of LANGS) {
         const x = ta[i], y = tb[i], label = x.type.label;
         assert.equal(label, y.type.label, f + ' : jeton ' + i);
         if (label !== 'string' && label !== 'template') { if (label === 'regexp') continue; assert.equal(String(x.value ?? x.type.label), String(y.value ?? y.type.label), f + ' : seul le texte des chaînes change (' + a.slice(x.start, x.end) + ')'); continue; }
-        const v = String(x.value || '').trim(); if (!v || /\s/.test(v)) continue;
-        const k = f + '|' + v;
-        if (!seen.has(k)) seen.set(k, new Set()); seen.get(k).add(String(y.value || '').trim());
+        const v0 = String(x.value || ''), v = v0.trim(); if (!v || /\s/.test(v) || LANG_CODES.has(v)) continue;
+        /* v7.64 : la chaîne exacte (« missions » identifiant et « missions » précédé d'une espace, texte lu, sont deux chaînes) */
+        const k = f + '|' + v0;
+        if (!seen.has(k)) seen.set(k, new Set()); seen.get(k).add(String(y.value || ''));
         if (COMPARE.test(a.slice(Math.max(0, x.start - 40), x.start))) compared.set(k, f + ':' + a.slice(0, x.start).split('\n').length);
       }
     }
@@ -213,9 +231,9 @@ test('pages françaises : barre « Changer la langue » en haut de chaque page (
     const depth = p.split('/').length - 1;
     for (const LG of LANGS) {
       const tr = LG.pages.includes(p), code = LG.code;
-      const href = '../'.repeat(depth) + LG.dossier + '/' + (tr ? p : 'index.html').replace(/(^|\/)index\.html$/, '$1');
+      const href = (p === '404.html' ? '/' : '../'.repeat(depth)) + LG.dossier + '/' + (tr ? p : 'index.html').replace(/(^|\/)index\.html$/, '$1');
       assert.ok(html.includes('href="' + href + '" hreflang="' + code + '" lang="' + code + '" data-lk-lang="' + code + '"'), p + ' : lien vers ' + code + ' ' + href);
-      assert.equal(html.includes('<link rel="alternate" hreflang="' + code + '" href="' + url(LG, p) + '">'), tr, p + ' : hreflang ' + code + (tr ? '' : ' absent sans traduction'));
+      assert.equal(html.includes('<link rel="alternate" hreflang="' + code + '" href="' + url(LG, p) + '">'), tr && !NOT_INDEXED(html), p + ' : hreflang ' + code + (tr ? ' (aucun sur une page non indexée)' : ' absent sans traduction'));
     }
   }
   assert.deepEqual(missing.slice(0, 10), [], 'pages sans barre de langue');
@@ -278,6 +296,86 @@ test('calculateur espagnol (jsdom) : démarre sans erreur, montants « 1.250 $ �
   } finally { p.close(); }
 });
 
+test('calculateur italien (jsdom) : démarre sans erreur, montants « 12.500 $ », nombres italiens, grands nombres en mots, phrases du hub en italien', async () => {
+  if (!LANGS.some(l => l.code === 'it')) return;
+  const p = await load(root, 'it/calculateurs.html');
+  try {
+    assert.deepEqual(p.errors.filter(e => !/Not implemented|Could not load/.test(e)), [], 'aucune erreur');
+    const E = p.w.LKCalcEngine;
+    assert.equal(E.lang, 'it');
+    assert.equal(E.dollars('12.500', ' '), '12.500 $');
+    assert.equal(E.parseLocalizedNumber('1.250,5').value, 1250.5);
+    assert.equal(E.parseLocalizedNumber('200.000').value, 200000);
+    assert.equal(E.parseLocalizedNumber('1,5').value, 1.5);
+    assert.equal(E.plural(0), true); assert.equal(E.plural(1), false); assert.equal(E.plural(2), true);
+    assert.equal(E.dateText(new Date(2026, 11, 1)), '1 dicembre 2026');
+    const H = p.w.LKCalcHub;
+    assert.equal(H.parseMoney('Ho 200.000 $ e voglio 1,5 milioni'), 1500000);
+    assert.equal(H.parseMoney('250 mila'), 250000);
+    assert.equal(H.parseMinutesPerDay('2 ore al giorno'), 120);
+    const r = H.route('Ho 200.000 $ e voglio arrivare a 1 milione');
+    assert.equal(r.tab, 'goal');
+    assert.equal(p.d.getElementById('f-goal-capital')?.value, '200000');
+    const out = p.d.getElementById('calc-ask-out');
+    if (out) { p.d.getElementById('calc-ask-input').value = 'ne vale la pena?'; p.d.getElementById('calc-ask').dispatchEvent(new p.w.Event('submit', { cancelable: true })); assert.deepEqual(frenchHits(out.textContent, 'it'), [], 'réponse du hub : ' + out.textContent); }
+    const text = p.d.querySelector('main').textContent.replace(/\s+/g, ' ');
+    assert.ok(!/\d million\b|\bmillions\b|\bmilliards?\b/.test(text), 'grands nombres en mots italiens');
+    const bad = text.match(/\d{1,3}(?:[ \u00a0\u202f]\d{3})+\s*\$/); assert.ok(!bad, 'aucun montant écrit « 1 250 $ » à la française : ' + (bad ? bad[0] : ''));
+    assert.deepEqual(frenchHits(p.d.title, 'it'), [], 'titre');
+  } finally { p.close(); }
+});
+
+test('calculateur allemand (jsdom) : démarre sans erreur, montants « 1.250 $ », nombres allemands, date « 1. Oktober 2026 », phrases du hub en allemand', async () => {
+  if (!LANGS.some(l => l.code === 'de')) return;
+  const p = await load(root, 'de/calculateurs.html');
+  try {
+    assert.deepEqual(p.errors.filter(e => !/Not implemented|Could not load/.test(e)), [], 'aucune erreur');
+    const E = p.w.LKCalcEngine;
+    assert.equal(E.lang, 'de');
+    assert.equal(E.dollars('1.250', ' '), '1.250 $');
+    /* « 1.500 » tapé vaut 1 500 (le point groupe les milliers), jamais 1,5 */
+    assert.equal(E.parseLocalizedNumber('1.250,5').value, 1250.5);
+    assert.equal(E.parseLocalizedNumber('200.000').value, 200000);
+    assert.equal(E.parseLocalizedNumber('1.500').value, 1500);
+    assert.equal(E.parseLocalizedNumber('1,5').value, 1.5);
+    assert.equal(E.plural(0), true); assert.equal(E.plural(1), false); assert.equal(E.plural(2), true);
+    assert.equal(E.dateText(new Date(2026, 9, 1)), '1. Oktober 2026');
+    const H = p.w.LKCalcHub;
+    assert.equal(H.parseMoney('Ich habe 200.000 $ und will 1,5 Millionen'), 1500000);
+    assert.equal(H.parseMoney('250 Tausend'), 250000);
+    assert.equal(H.parseMoney('250k'), 250000);
+    assert.equal(H.parseMinutesPerDay('2 Stunden am Tag'), 120);
+    const r = H.route('Ich habe 200.000 $ und will 1 Million haben, 2 Stunden am Tag');
+    assert.equal(r.tab, 'goal');
+    assert.equal(p.d.getElementById('f-goal-capital')?.value, '200000');
+    assert.equal(p.d.getElementById('f-goal-target')?.value, '1000000');
+    assert.equal(p.d.getElementById('f-goal-dailyMinutes')?.value, '120');
+    const out = p.d.getElementById('calc-ask-out');
+    if (out) { p.d.getElementById('calc-ask-input').value = 'Lohnt sich das?'; p.d.getElementById('calc-ask').dispatchEvent(new p.w.Event('submit', { cancelable: true })); assert.deepEqual(frenchHits(out.textContent, 'de'), [], 'réponse du hub : ' + out.textContent); }
+    /* chaque texte de la page à part : jamais « $1,250 » (anglais), ni « 1 250 $ » (français), ni « 1,250 $ » */
+    const main = p.d.querySelector('main'), bad = [];
+    { const w = p.d.createTreeWalker(main, p.w.NodeFilter.SHOW_TEXT); let n; while ((n = w.nextNode())) { const t = n.nodeValue.replace(/\s+/g, ' ').trim(); if (!t || n.parentElement.closest('script,style,template')) continue;
+      if (/\$[   ]?\d/.test(t)) bad.push('« $1,250 » : ' + t.slice(0, 80));
+      if (/\d{1,3}(?:[   ]\d{3})+[   ]?\$/.test(t)) bad.push('« 1 250 $ » : ' + t.slice(0, 80));
+      if (/\d{1,3}(?:,\d{3})+(?![\d,])[   ]?\$/.test(t)) bad.push('« 1,250 $ » : ' + t.slice(0, 80)); } }
+    assert.deepEqual(bad.slice(0, 6), [], 'montants écrits à l’allemande');
+    assert.deepEqual(frenchHits(p.d.title, 'de'), [], 'titre');
+  } finally { p.close(); }
+});
+
+test('page introuvable : sous /<langue>/…, la page 404 de la langue ; liens de langue absolus ; jamais dans le plan du site', () => {
+  assert.match(read('common.js'), /document\.querySelector\('\.e404'\)/, 'common.js : bascule de la page introuvable');
+  for (const LG of LANGS) {
+    const dir = LG.dossier, code = LG.code;
+    assert.ok(fs.existsSync(path.join(root, dir, '404.html')), dir + '/404.html');
+    assert.ok(read('404.html').includes('href="/' + dir + '/404.html" hreflang="' + code + '"'), 'lien absolu vers la 404 ' + code);
+    assert.ok(read(dir + '/404.html').includes('href="/404.html" hreflang="fr"'), code + ' : lien absolu vers la 404 française');
+    for (const O of LANGS.filter(l => l !== LG)) assert.ok(read(dir + '/404.html').includes('href="/' + O.dossier + '/404.html" hreflang="' + O.code + '"'), code + ' : lien absolu vers la 404 ' + O.code);
+    assert.match(read(dir + '/404.html'), /<meta name="robots" content="noindex/, code + ' : 404 non indexée');
+  }
+  for (const name of ['sitemap.xml', 'sitemap-fiches.xml']) if (fs.existsSync(path.join(root, name))) assert.ok(!/404\.html<\/loc>/.test(read(name)), name + ' : pas de page introuvable');
+});
+
 test('Léo : absent d’une page dans une langue hors de « leo » ; présent en français et dans chaque langue de « leo » (index de la langue)', async () => {
   for (const LG of LANGS) {
     const page = LG.pages.includes('index.html') ? 'index.html' : LG.pages[0];
@@ -300,7 +398,7 @@ test('Léo : absent d’une page dans une langue hors de « leo » ; présent en
   try { assert.ok(fr.d.getElementById('leo-style'), 'français : Léo s’amorce'); } finally { fr.close(); }
 });
 
-test('clé lk_lang_v1 : rien n’est écrit à l’ouverture (même avec un navigateur dans une autre langue) ; un clic dans le menu, « Read in English » / « Leer en español » ou « No thanks » l’écrit', async () => {
+test('clé lk_lang_v1 : rien n’est écrit à l’ouverture (même avec un navigateur dans une autre langue) ; un clic dans le menu, « Read in English » / « Leer en español » / « Leggi in italiano » / « Auf Deutsch lesen » ou « No thanks » l’écrit', async () => {
   const nav = langs => w => Object.defineProperty(w.navigator, 'languages', { value: langs, configurable: true });
   const p = await load(root, 'index.html', { before: nav(['en-US', 'en']) });
   try {
@@ -325,6 +423,16 @@ test('clé lk_lang_v1 : rien n’est écrit à l’ouverture (même avec un navi
       assert.equal(offer.querySelector('a').getAttribute('href'), 'es/vehicules.html');
       assert.equal(e.w.localStorage.getItem('lk_lang_v1'), null);
     } finally { e.close(); }
+    if (LANGS.some(l => l.code === 'it')) {
+      const i = await load(root, 'armes.html', { url: 'https://www.leonidakit.com/armes.html', before: nav(['it-IT', 'it']) });
+      try {
+        const offer = i.d.querySelector('.lk-lang-offer'); assert.ok(offer, 'navigateur italien : bandeau proposé');
+        assert.equal(offer.lang, 'it'); assert.match(offer.textContent, /Questa pagina è disponibile anche in italiano\.\s*Leggi in italiano/);
+        assert.equal(offer.querySelector('button').textContent, 'No, grazie');
+        assert.equal(offer.querySelector('a').getAttribute('href'), 'it/armes.html');
+        assert.equal(i.w.localStorage.getItem('lk_lang_v1'), null);
+      } finally { i.close(); }
+    }
     const s = await load(root, 'es/vehicules.html', { before: nav(['fr-FR']) });
     try {
       const offer = s.d.querySelector('.lk-lang-offer'); assert.ok(offer, 'page espagnole, navigateur français : français proposé');
@@ -340,7 +448,7 @@ test('clé lk_lang_v1 : rien n’est écrit à l’ouverture (même avec un navi
     const fr = r.d.querySelector('.lk-langbar a[data-lk-lang="fr"]'); fr.addEventListener('click', e => e.preventDefault()); fr.click();
     assert.equal(r.w.localStorage.getItem('lk_lang_v1'), 'fr', 'clic sur « Français » : choix écrit');
   } finally { r.close(); }
-  const s = await load(root, 'contact.html', { before: nav(['de-DE', 'fr']) });
+  const s = await load(root, 'contact.html', { before: nav(['pt-BR', 'fr']) });
   try { assert.equal(s.d.querySelector('.lk-lang-offer'), null, 'langue du navigateur non publiée, puis français : rien à proposer'); } finally { s.close(); }
 });
 
@@ -348,7 +456,7 @@ test('pages françaises inchangées par les langues : seule la barre de langue e
   const strip = h => h.replace(/<div class="lk-langbar"[^>]*>[\s\S]*?<\/details><\/div><\/div>\n?/g, '').replace(/<link rel="alternate" hreflang="[^"]+" href="[^"]*">\n?/g, '');
   for (const p of ['index.html', 'calculateurs.html', 'vehicules.html', 'contact.html']) {
     const h = read(p), s = strip(h);
-    assert.ok(!s.includes('data-lk-langbar') && !/hreflang="(?:en|es)" href/.test(s), p);
+    assert.ok(!s.includes('data-lk-langbar') && !/hreflang="(?:en|es|it)" href/.test(s), p);
     assert.equal((h.match(/data-lk-langbar/g) || []).length, 1, p + ' : une seule barre');
   }
 });

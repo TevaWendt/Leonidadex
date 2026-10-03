@@ -6,7 +6,7 @@
   'use strict';
   var E = window.LKCalcEngine, nf = new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 });
   var money = function (n) { return E && E.dollars ? E.dollars(nf.format(Math.round(n)), ' ') : nf.format(Math.round(n)) + ' $'; };
-  var hours = function (h) { var m = Math.round(h * 60), H = Math.floor(m / 60), M = m % 60; return H ? H + ' h' + (M ? ' ' + String(M).padStart(2, '0') : '') : M + ' min'; };
+  var hours = function (h) { var m = Math.round(h * 60), H = Math.floor(m / 60), M = m % 60; return H ? H + ' h' + (M ? ' ' + String(M).padStart(2, '0') + (typeof document!=='undefined'&&/^de/.test(document.documentElement.lang||'')?' min':'') : '') : M + ' min'; };
   function parse(v) { if (E && E.parseLocalizedNumber) { var r = E.parseLocalizedNumber(v); return r.valid ? r.value : null; } var t = String(v).replace(/[\s\u00a0\u202f]/g, '').replace(',', '.'); return /^\d+(\.\d+)?$/.test(t) ? Number(t) : null; }
   /* 1. Exercice de démarrage : la réponse s'affiche ici avant d'ouvrir le calculateur. */
   var form = document.querySelector('.t-start-form'), msg = document.getElementById('t-start-message');
@@ -17,7 +17,7 @@
     if (!E || !E.goalContinuous) { msg.textContent = 'Click the button: the answer shows up in the calculator.'; return; }
     var r = E.goalContinuous({ capital: capital, target: target, hourly: hourly, reserve: 0, dailyMinutes: 60 });
     if (!r.valid) { msg.textContent = r.reason || 'Check your three numbers.'; return; }
-    msg.textContent = r.missing === 0 ? 'You already have enough money for this goal.' : 'You still need ' + money(r.missing) + '. Playing 1 h per day, you’ll get there in ' + r.days + ' day' + (E && E.plural ? (E.plural(r.days) ? 's' : '') : (r.days > 1 ? 's' : '')) + ' (' + hours(r.hours) + ' of play).';
+    msg.textContent = r.missing === 0 ? 'You already have enough money for this goal.' : 'You still need ' + money(r.missing) + '. Playing 1 h per day, you’ll get there in ' + r.days + ((E && E.plural ? E.plural(r.days) : r.days > 1) ? ' days' : ' day') + ' (' + hours(r.hours) + ' of play).';
   }
   if (form) { form.addEventListener('input', preview); preview(); }
   /* 2. Zones sur les captures : « Repérer les champs », « Repérer la réponse », « Tout voir ». */

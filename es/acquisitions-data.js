@@ -100,7 +100,7 @@ window.LK_ACQUISITIONS = {
     {
       "id": "vetements",
       "label": "Prendas sueltas",
-      "route": "/vetements.html",
+      "route": "/es/vetements.html",
       "type": "style",
       "intro": "Vêtements à l’unité : cette catégorie est prête à accueillir des pièces identifiées et leurs conditions d’obtention.",
       "limit": "Les collections annoncées sont dans « Vêtements et style ». Aucune pièce à l’unité avec un prix séparé vérifié n’est actuellement publiée ici.",
@@ -111,7 +111,7 @@ window.LK_ACQUISITIONS = {
     {
       "id": "accessoires",
       "label": "Accesorios",
-      "route": "/accessoires.html",
+      "route": "/es/accessoires.html",
       "type": "style",
       "intro": "Lunettes, montres, bijoux, sacs, casquettes : une catégorie à documenter, sans liste d’achats confirmée.",
       "limit": "Aucun accessoire individuel avec des conditions d’achat vérifiées n’est actuellement publié dans cette section.",
@@ -122,7 +122,7 @@ window.LK_ACQUISITIONS = {
     {
       "id": "tatouages",
       "label": "Tatuajes",
-      "route": "/tatouages.html",
+      "route": "/es/tatouages.html",
       "type": "style",
       "intro": "Tatouages : les motifs et leurs conditions d’accès restent à documenter dans ce catalogue.",
       "limit": "Les services de style annoncés sont présentés dans « Vêtements et style ». Aucun motif avec un prix vérifié n’est publié ici.",
@@ -145,7 +145,7 @@ window.LK_ACQUISITIONS = {
     {
       "id": "munitions",
       "label": "Munición y equipo",
-      "route": "/munitions.html",
+      "route": "/es/munitions.html",
       "type": "ammo",
       "intro": "Munitions et équipement d’arme : articles, compatibilités et conditions d’acquisition restent à documenter.",
       "limit": "Les motifs et variantes d’armes documentés sont dans « Personnalisations ». Aucun prix de munition vérifié n’est publié dans ce catalogue.",

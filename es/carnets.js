@@ -26,7 +26,7 @@
   };
   var nf = new Intl.NumberFormat('es-ES');
   var reduce = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : { matches: false };
-  function fold(s) { return String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase(); }
+  function fold(s) { return String(s || '').replace(/ß/g,'ss').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase(); }
   function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text !== undefined && text !== null) n.textContent = text; return n; }
   function cap(s) { s = String(s || ''); return s.charAt(0).toUpperCase() + s.slice(1); }
   function uid() { return Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8); }
@@ -249,7 +249,7 @@
     keys.forEach(function (k) { var o = el('option', null, seen.has(k) ? seen.get(k).label + ' (' + seen.get(k).n + ')' : k.split(':')[1] + ' (0)'); o.value = k; opts.push(o); });
     E.cat.replaceChildren.apply(E.cat, opts); E.cat.value = state.cat;
   }
-  /* Libellé d’un compteur accordé au nombre (0 et 1 au singulier). */
+  /* Libellé d’un compteur accordé au nombre (français : 0 et 1 au singulier ; anglais : 1 seulement). */
   /* v7.61 : français n > 1 ; anglais, espagnol n ≠ 1 (« 0 deseos ») */
   function plural(n, v) { var l = n.nextElementSibling, fr = (document.documentElement.lang || 'fr').slice(0, 2) === 'fr'; if (l && l.hasAttribute('data-one')) l.textContent = (fr ? v > 1 : v !== 1) ? l.getAttribute('data-many') : l.getAttribute('data-one'); }
   function headCounters(s) {
@@ -281,7 +281,8 @@
   }
   function countText(n, total) {
     var f = state.f || (D.fams.length === 1 ? D.fams[0] : null), m = f ? meta(f) : { one: 'elemento', many: 'elementos' };
-    return (n === total ? '' : nf.format(n) + ' de ') + nf.format(total) + ' ' + (total > 1 || n > 1 ? m.many : m.one) + (n === total ? '' : ' visibles');
+    /* v7.62 : phrase entière avec trous (en allemand « Elemente: 3 von 10 angezeigt ») */
+    return n === total ? nf.format(total) + ' ' + (total > 1 ? m.many : m.one) : '{n} de {t} {mots} visibles'.replace('{n}', nf.format(n)).replace('{t}', nf.format(total)).replace('{mots}', total > 1 || n > 1 ? m.many : m.one);
   }
   function calcLink(list) {
     if (!E.calc) return;
@@ -368,7 +369,7 @@
     });
     E.list.classList.toggle('is-anim', !!opts.animate && !reduce.matches);
     var word = state.view === 'plans' ? ['plan', 'planes'] : ['cálculo', 'cálculos'];
-    E.count.textContent = base.length ? (list.length === base.length ? '' : nf.format(list.length) + ' de ') + nf.format(base.length) + ' ' + (base.length > 1 ? word[1] : word[0]) + (list.length === base.length ? '' : ' visibles') : '';
+    E.count.textContent = base.length ? (list.length === base.length ? nf.format(base.length) + ' ' + (base.length > 1 ? word[1] : word[0]) : '{n} de {t} {mots} visibles'.replace('{n}', nf.format(list.length)).replace('{t}', nf.format(base.length)).replace('{mots}', base.length > 1 ? word[1] : word[0])) : '';
     var filtering = !!(state.q || state.cat);
     if (E.reset) E.reset.hidden = !filtering;
     E.empty.hidden = list.length > 0;
