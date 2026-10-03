@@ -31,25 +31,22 @@ function deps() {
   return { P5, ACORN };
 }
 const readJSON = (root, f) => JSON.parse(fs.readFileSync(path.join(root, f), 'utf8'));
-/* « pages » : une liste, ou "*" = toutes les pages françaises du site (dossiers compris), sauf « exclure » et les dossiers
-   qui ne sont pas des pages (outils, api, images, Léo, dossiers des langues). Lu une fois par processus et par racine. */
-const CFG = new Map();
-function frPages(root, cfg) {
-  const skip = new Set(['outils', 'api', 'node_modules', 'img', 'photos', 'fonts', 'leo', 'data', ...cfg.langues.map(l => l.dossier).filter(Boolean)]);
-  const out = [];
-  (function rec(dir) {
-    for (const e of fs.readdirSync(path.join(root, dir), { withFileTypes: true })) {
-      const rel = dir ? dir + '/' + e.name : e.name;
-      if (e.isDirectory()) { if (!skip.has(e.name) && !e.name.startsWith('.')) rec(rel); }
-      else if (e.name.endsWith('.html') && !(cfg.exclure || []).includes(rel)) out.push(rel);
-    }
-  })('');
-  return out.sort();
+/* v7.61 : « pages »: "*" = toutes les pages françaises publiées (racine et dossiers des fiches), sauf les redirections, la
+   page 404 et la vérification Google. La liste est calculée une fois par racine (les redirections ne changent pas pendant
+   une génération). Une langue peut aussi exclure des pages (« exclure »). */
+const DOSSIERS = ['armes', 'vehicules', 'lieux', 'personnages', 'entreprises', 'demeures', 'planques', 'carnets'];
+const toutesCache = new Map();
+function toutesLesPages(root = ROOT) {
+  if (toutesCache.has(root)) return toutesCache.get(root);
+  const list = [...fs.readdirSync(root).filter(f => f.endsWith('.html')), ...DOSSIERS.filter(d => fs.existsSync(path.join(root, d))).flatMap(d => fs.readdirSync(path.join(root, d)).filter(f => f.endsWith('.html')).map(f => d + '/' + f))]
+    .filter(f => !/^google/.test(f) && f !== '404.html' && !/http-equiv="refresh"/i.test(fs.readFileSync(path.join(root, f), 'utf8'))).sort();
+  toutesCache.set(root, list);
+  return list;
 }
 function config(root = ROOT) {
-  const f = path.join(root, 'outils/langues.json'), key = root + '|' + fs.statSync(f).mtimeMs;
-  if (!CFG.has(key)) { const c = readJSON(root, 'outils/langues.json'); for (const l of c.langues) if (l.pages === '*') l.pages = frPages(root, c); CFG.clear(); CFG.set(key, c); }
-  return CFG.get(key);
+  const cfg = readJSON(root, 'outils/langues.json');
+  for (const l of cfg.langues) if (l.pages === '*') { const ex = new Set(l.exclure || []); l.pages = toutesLesPages(root).filter(p => !ex.has(p)); l.toutes = true; }
+  return cfg;
 }
 function langue(cfg, code) { const l = cfg.langues.find(x => x.code === code); if (!l) throw new Error('Langue inconnue : ' + code); return l; }
 const publiees = cfg => cfg.langues.filter(l => l.etat === 'publiee' && l.code !== cfg.source);
@@ -72,16 +69,21 @@ const typo = (s, code) => code === 'fr' ? s : String(s).replace(/(?<=[\p{L}\p{N}
    est testé sur le code qui précède la chaîne (80 caractères ; pour une valeur JSON, le nom de sa clé). Aucune règle
    vérifiée : la chaîne reste telle quelle (c'est du code), sans être signalée. */
 function memoire(root, code) {
-  const dir = path.join(root, 'outils/langues', code), map = new Map(), from = new Map(), ignore = new Set(), conflicts = [], motifs = [];
-  if (!fs.existsSync(dir)) return { map, from, ignore, conflicts, files: [], motifs: [], nums: new Map() };
+  const dir = path.join(root, 'outils/langues', code), map = new Map(), from = new Map(), ignore = new Set(), conflicts = [], rules = [], noScript = new Set();
+  if (!fs.existsSync(dir)) return { map, from, ignore, conflicts, files: [], rules, noScript };
   const files = fs.readdirSync(dir).filter(f => f.endsWith('.json') && !f.startsWith('_')).sort();
   for (const f of files) {
     const data = readJSON(root, 'outils/langues/' + code + '/' + f);
     for (const [k, v] of Object.entries(data)) {
       if (k === '_ignorer') { for (const x of v) ignore.add(String(x)); continue; }
-      if (k === '_motifs') { for (const [pk, pv] of Object.entries(v)) if (typeof pv === 'string' && pv) motifs.push({ key: norm(pk), value: pv, from: f }); continue; }
+      /* v7.61 : « _scriptsJamais » : textes traduits dans les pages mais qui, dans un script, sont des identifiants (« source »,
+         « fiche », « calculs ») : jamais remplacés dans un script, sauf entrée propre au fichier (« fichier.js::texte »). */
+      if (k === '_scriptsJamais') { for (const x of v) noScript.add(norm(x)); continue; }
       if (k.startsWith('_')) continue;
       if (typeof v === 'string' ? !v.length : !(v && typeof v === 'object')) continue;
+      /* v7.61 : « re:<expression> » : motif (données de la carte : « Bâtiment L1441 », « … (nom réel) ») ; la traduction
+         reprend les groupes : {1} tel quel, {t1} traduit par la mémoire (ou tel quel s'il n'y est pas). */
+      if (k.startsWith('re:')) { rules.push({ re: new RegExp(k.slice(3)), v, key: k }); map.set(k, v); from.set(k, f); continue; }
       const key = k.includes('::') ? k.split('::')[0] + '::' + norm(k.split('::').slice(1).join('::')) : norm(k);
       if (map.has(key) && JSON.stringify(map.get(key)) !== JSON.stringify(v)) conflicts.push(key + ' (' + from.get(key) + ' / ' + f + ')');
       map.set(key, v); from.set(key, f);
@@ -93,41 +95,48 @@ function memoire(root, code) {
   const fmt = new Intl.NumberFormat(locale, { maximumFractionDigits: 6 });
   const nums = new Map();
   for (const [key, v] of map) {
-    if (typeof v !== 'string' || v === '=') continue;
+    if (typeof v !== 'string' || v === '=' || key.startsWith('re:')) continue;
     const found = [...key.matchAll(NUM)].map(m => m[0]); if (!found.length) continue;
     let rest = v, out = '', ok = true;
     for (const n of found) { const t = numText(n, fmt), i = rest.indexOf(t); if (i < 0) { ok = false; break; } out += rest.slice(0, i) + '⟨#⟩'; rest = rest.slice(i + t.length); }
     if (ok) nums.set(key.replace(NUM, '⟨#⟩'), { v: out + rest, key });
   }
-  /* Motifs (« _motifs » d'un fichier de la mémoire) : une phrase fabriquée par un générateur, avec des trous {1}, {2}…
-     (« Nom en jeu inconnu à ce jour. Équivalent réel : {1}. Type : {2}. ») ; chaque trou est traduit à son tour s'il est
-     dans la mémoire (« naturel » → « natural »), sinon gardé tel quel (nom propre, adresse). Les plus longs d'abord. */
-  const esc = x => x.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  for (const m of motifs) m.re = new RegExp('^' + m.key.split(/(\{\d+\})/).map(part => /^\{\d+\}$/.test(part) ? '(.+?)' : esc(part)).join('') + '$');
-  motifs.sort((a, b) => b.key.replace(/\{\d+\}/g, '').length - a.key.replace(/\{\d+\}/g, '').length);
-  /* lexique français de la mémoire : mots des textes français absents de toutes les traductions (« villes », « quartiers ») ;
-     sert à repérer un petit texte lu (un seul mot, sans accent) qui manque, comme une étiquette d'un fichier de données */
-  const lex = new Set(), seen = new Set(), wordsOf = t => String(t).toLowerCase().replace(/<\/?\d+\/?>/g, ' ').split(/[^a-zà-öø-ÿœæ’'-]+/).filter(w => w.length > 2);
-  for (const [key, v] of map) { if (typeof v !== 'string') continue; const k = key.includes('::') ? key.split('::').slice(1).join('::') : key; if (v === '=') { for (const w of wordsOf(k)) seen.add(w); continue; } for (const w of wordsOf(v)) seen.add(w); for (const w of wordsOf(k)) lex.add(w); }
-  for (const w of seen) lex.delete(w);
-  return { map, from, ignore, conflicts, files, nums, fmt, motifs, lex };
+  return { map, from, ignore, conflicts, files, nums, fmt, rules, noScript };
 }
 const NUM = /(?<![<\/\d])(?:\d{1,3}(?:[ \u00a0\u202f]\d{3})+(?:,\d+)?|\d+(?:,\d+)?)(?![\d\/>])/g;
-/* nombre \u00e9crit sans s\u00e9parateur (\u00ab 2026 \u00bb, \u00ab 2547 \u00bb) : gard\u00e9 tel quel (ann\u00e9e, mod\u00e8le, compteur \u00e9crit ainsi en fran\u00e7ais aussi) */
-const numText = (n, fmt) => /^\d+$/.test(n) ? n : fmt.format(Number(n.replace(/[ \u00a0\u202f]/g, '').replace(',', '.')));
+const numText = (n, fmt) => fmt.format(Number(n.replace(/[ \u00a0\u202f]/g, '').replace(',', '.')));
 /* Traduction d'un texte (clé normalisée) ; ctx.file pour les entrées propres à un fichier ; « = » garde le texte ;
    KEEP : une règle « si » existe mais ne s'applique pas ici (identifiant de code). */
 const KEEP = Symbol('garder');
-function lookup(mem, key, file, before) {
+/* fin de phrase : pas après une abréviation d'adresse (« St. », « Jr. », « U.S. », une initiale) */
+const SENTENCE = /(?<=[.!?])(?<!\b(?:St|Jr|Sr|Dr|Mr|Mrs|Ms|Mt|Ft|Ave|Blvd|Rd|[A-Z])\.)\s+(?=[A-ZÀ-ÝÉ«“(])/;
+function lookup(mem, key, file, before, noSplit) {
   const k = norm(key); if (!k) return null;
+  if (file && /\.js$/.test(file) && mem.noScript && mem.noScript.has(k) && !mem.map.has(file + '::' + k)) return KEEP;
   let v = (file && mem.map.get(file + '::' + k)) ?? mem.map.get(k);
   if (v === undefined && mem.nums && NUM.test(k)) {
     NUM.lastIndex = 0;
     const w = k.replace(NUM, '⟨#⟩'), hit = (file && mem.nums.get(file + '::' + w)) || mem.nums.get(w);
-    if (!hit) return null;
-    mem.used.add(hit.key);
-    const list = [...k.matchAll(NUM)].map(m => numText(m[0], mem.fmt)); let i = 0;
-    return hit.v.replace(/⟨#⟩/g, () => list[i++]);
+    if (hit) {
+      mem.used.add(hit.key);
+      const list = [...k.matchAll(NUM)].map(m => numText(m[0], mem.fmt)); let i = 0;
+      return hit.v.replace(/⟨#⟩/g, () => list[i++]);
+    }
+  }
+  NUM.lastIndex = 0;
+  if (v === undefined && mem.rules && mem.rules.length) {
+    for (const r of mem.rules) {
+      const m = k.match(r.re); if (!m) continue;
+      mem.used.add(r.key);
+      return String(r.v).replace(/\{(t?)(\d+)\}/g, (x, t, n) => { const g = m[n] || ''; if (!t) return g; const tv = lookup(mem, g, file, before, true); return typeof tv === 'string' ? tv : g; });
+    }
+  }
+  /* v7.61 : un texte sans balise fait de plusieurs phrases, toutes connues de la mémoire une à une (descriptions
+     assemblées des données : « Bâtiment repéré… . Équivalent réel : … . Type : … . ») */
+  if (v === undefined && !noSplit && !/[<>]/.test(k) && SENTENCE.test(k)) {
+    const parts = k.split(SENTENCE), out = [];
+    for (const part of parts) { const t = lookup(mem, part, file, before, true); if (typeof t !== 'string') return null; out.push(t); }
+    return out.join(' ');
   }
   if (v === undefined) return null;
   mem.used.add((file && mem.map.has(file + '::' + k)) ? file + '::' + k : k);
@@ -138,93 +147,21 @@ function lookup(mem, key, file, before) {
   }
   return v === '=' ? k : v;
 }
-/* Traduction complète d'un texte : entrée exacte (ou nombres), puis motif, puis phrase par phrase (un paragraphe fabriqué
-   par un générateur se traduit avec des phrases déjà connues). onMiss reçoit chaque morceau qui manque (la plus petite unité :
-   la phrase ou le trou d'un motif) ; le texte reste alors tel quel (null). */
-const SENT = /(?<=[.!?…»”)])\s+(?=[A-ZÀ-ÖØ-Þ«“"(0-9<])/g;
-function sentences(k) {
-  const out = []; let depth = 0, last = 0;
-  const marks = [...k.matchAll(/<(\/?)\d+(\/?)>/g)];
-  for (const m of k.matchAll(SENT)) {
-    depth = 0; for (const t of marks) { if (t.index >= m.index) break; if (t[2]) continue; depth += t[1] ? -1 : 1; }
-    if (depth === 0) { out.push(k.slice(last, m.index)); last = m.index + m[0].length; }
-  }
-  out.push(k.slice(last));
-  return out.filter(x => x.trim());
-}
-/* français probable (accent, mot outil, vocabulaire du site) : la règle de uiLike sans « mot à majuscule », qui prendrait
-   un nom propre (« Azimut 85 ») pour du texte */
-function frenchy(v) { const s = String(v); if (/[À-ÖØ-öø-ÿŒœ«»]/.test(s.replace(/[’]/g, ''))) return true; return s.toLowerCase().split(/[\s,.;:!?()\/]+/).some(w => STOP.has(w) || FR_VOCAB.has(w) || /^[ldjtsnqc]’/.test(w)); }
-/* mot du lexique français de la mémoire (« concessions », « villes ») */
-function lexHit(v, mem) { return !!(mem && mem.lex) && String(v).toLowerCase().split(/[^a-zà-öø-ÿœæ’'-]+/).some(w => mem.lex.has(w)); }
-const neutral = (v, mem) => !frenchy(v) && !lexHit(v, mem);
-/* trou de motif fait de morceaux (« Concessions · Southside », « Fusil semi-automatique, Grassrivers 01 ») : chaque morceau
-   traduit s'il est connu, gardé s'il est neutre (nom propre) ; null si un morceau français reste inconnu */
-function partsOf(mem, slot, file) {
-  const bits = slot.split(/( · |, | \/ | – | — )/); if (bits.length < 3) return null;
-  let any = false; const out = [];
-  for (let i = 0; i < bits.length; i++) {
-    if (i % 2) { out.push(bits[i]); continue; }
-    const b = bits[i]; if (!b.trim()) { out.push(b); continue; }
-    let t = deep(mem, b, file, null, () => {}, true);
-    if ((t === null || t === KEEP) && /^[a-zà-ÿ]/.test(b)) { const u = lowerMap(mem).get(b.toLowerCase()); if (typeof u === 'string' && u !== '=') t = /^[A-Z][a-z]/.test(u) ? u.charAt(0).toLowerCase() + u.slice(1) : u; }
-    if (t !== null && t !== KEEP) { out.push(t); any = true; continue; }
-    if (neutral(b, mem)) { out.push(b); continue; }
-    return null;
-  }
-  return any ? out.join('') : null;
-}
-function lowerMap(mem) { if (!mem.lower) { mem.lower = new Map(); for (const [k, v] of mem.map) if (!k.includes('::') && typeof v === 'string' && !mem.lower.has(k.toLowerCase())) mem.lower.set(k.toLowerCase(), v === '=' ? k : v); } return mem.lower; }
-function motif(mem, k, file, onMiss) {
-  for (const m of mem.motifs || []) {
-    const r = k.match(m.re); if (!r) continue;
-    const slots = []; let ok = true;
-    for (const slot of r.slice(1)) {
-      /* nombre à la française (« 1 250 », « 2,5 ») : au format de la langue */
-      if (/^\d{1,3}(?:[ \u00a0\u202f]\d{3})+(?:,\d+)?$|^\d+,\d+$/.test(slot)) { slots.push(numText(slot, mem.fmt)); continue; }
-      if (!LETTERS.test(slot) || /^[\d\s.,:;%$€+×–—-]+$/.test(slot)) { slots.push(slot); continue; }
-      let t = deep(mem, slot, file, null, () => {}, true);
-      /* trou en minuscules (« bateaux et jet-skis », « suv et 4x4 ») : l'entrée de même texte à la casse près, rendue en minuscules */
-      if ((t === null || t === KEEP) && /^[a-zà-ÿ]/.test(slot)) { const u = lowerMap(mem).get(slot.toLowerCase()); if (typeof u === 'string' && u !== '=') t = /^[A-Z][a-z]/.test(u) ? u.charAt(0).toLowerCase() + u.slice(1) : u; }
-      if (t === null || t === KEEP) { const pv = partsOf(mem, slot, file); if (pv !== null) t = pv; }
-      if (t !== null && t !== KEEP) { slots.push(t); continue; }
-      if ((frenchy(slot) || lexHit(slot, mem)) && !mem.ignore.has(norm(slot))) { onMiss(slot); ok = false; }
-      slots.push(slot);
-    }
-    if (!ok) return null;
-    return m.value.replace(/\{(\d+)\}/g, (x, i) => slots[i - 1] ?? x);
-  }
-  return null;
-}
-function deep(mem, key, file, before, onMiss, noSplit) {
-  const k = norm(key); if (!k) return null;
-  const v = lookup(mem, k, file, before); if (v !== null) return v;
-  if (!noSplit) {
-    const parts = sentences(k);
-    if (parts.length > 1) {
-      const lost = [], out = parts.map(p => { const lp = [], t = deep(mem, p, file, before, x => lp.push(x), true); if (t !== null && t !== KEEP) return t; if (neutral(p, mem)) return p; lost.push(...lp); return null; });
-      if (out.every((x, i) => x === parts[i])) { onMiss(k); return null; }
-      if (!lost.length && out.every(x => x !== null)) return out.join(' ');
-      for (const x of lost) onMiss(x);
-      return null;
-    }
-  }
-  const lost = [], mv = motif(mem, k, file, x => lost.push(x)); if (mv !== null) return mv;
-  if (lost.length) { for (const x of lost) onMiss(x); return null; }
-  onMiss(k); return null;
-}
 /* Garde les espaces du début et de la fin d'origine autour d'une traduction. */
 function wrap(original, translated, code) {
   let lead = original.match(/^\s*/)[0].replace(/[\u00a0\u202f]/g, ' '), tail = original.match(/\s*$/)[0].replace(/[\u00a0\u202f]/g, ' ');
   /* hors du français : pas d'espace devant : ; ? ! % , . ) ” ni après “ ( (l'espace d'origine venait de la typographie française) */
   if (code && code !== 'fr') { if (/^[:;?!%,.)”]/.test(translated)) lead = ''; if (/[“(]$/.test(translated)) tail = ''; }
+  /* v7.61 : l'espagnol garde l'espace (insécable) devant « % » : « 20 % » */
+  if (code === 'es' && /^%/.test(translated)) lead = original.match(/^\s*/)[0];
   return lead + translated + tail;
 }
 /* Chaîne de ponctuation seule (« « », « » », « : », « % ») : sa typographie française devient anglaise. */
 const PUNCT_ONLY = /^[\s\u00a0\u202f]*[«»:;?!%][\s\u00a0\u202f«»:;?!%.,×()]*$/;
 function punct(value, code) {
   if (code === 'fr' || !PUNCT_ONLY.test(value) || !/[«»]|[\s\u00a0\u202f][:;?!%]/.test(value)) return null;
-  return value.replace(/[\u00a0\u202f]/g, ' ').replace(/«\s*/g, '“').replace(/\s*»/g, '”').replace(/\s+([:;?!%])/g, '$1');
+  /* v7.61 : l'espagnol garde l'espace devant « % » (« 20 % ») */
+  return value.replace(/[\u00a0\u202f]/g, ' ').replace(/«\s*/g, '“').replace(/\s*»/g, '”').replace(code === 'es' ? /\s+([:;?!])/g : /\s+([:;?!%])/g, '$1');
 }
 
 /* ---------- pages : segments ---------- */
@@ -304,34 +241,35 @@ const marks = s => (String(s).match(/<\/?\d+\/?>/g) || []).sort().join(',');
 function linker(cfg, lang, root) {
   const pages = new Set(lang.pages || []), dir = lang.dossier;
   const isPage = p => /\.html$/.test(p);
-  /* chemin depuis la racine d'une adresse écrite dans la page française « file » (« ../style.css » dans vehicules/x.html →
-     style.css ; « carnets/ » → carnets/index.html) ; null si l'adresse sort du site */
-  function target(p, file) {
-    let t = p.startsWith('/') ? p.slice(1) : path.posix.normalize(path.posix.join(path.posix.dirname(file || 'index.html'), p));
-    if (t === '.' || t === './') t = '';
-    if (t.startsWith('../')) return null;
-    if (t === '' || t.endsWith('/')) t += 'index.html';
-    return t;
-  }
-  /* La langue reproduit l'arborescence du français dans /<dir>/ : une page traduite (ou un fichier traduit) garde son adresse
-     relative ; tout le reste (images, styles, pages pas encore traduites) remonte d'un dossier (« ../ ») ou garde son adresse
-     absolue. */
+  /* url telle qu'écrite dans une page française (opts.from : son chemin, racine par défaut) → url dans /<dir>/.
+     v7.61 : pages des dossiers (vehicules/x.html…). La page traduite est rangée un dossier plus bas que la française
+     (es/vehicules/x.html) : un lien vers une page traduite ou un script traduit garde la même adresse relative (la même
+     arborescence existe dans /<dir>/) ; tout le reste (feuilles, images, données, pages non traduites) prend un « ../ »
+     de plus. */
   function rel(url, opts = {}) {
     if (!url || /^(?:[a-z]+:|\/\/|#|data:|blob:|javascript:)/i.test(url)) return { url };
     const m = url.match(/^([^?#]*)(.*)$/), p = m[1], rest = m[2];
     if (!p) return { url };
-    const t = target(p, opts.file); if (t === null) return { url };
-    const own = (isPage(t) && pages.has(t)) || (opts.translated && opts.translated.has(t));
-    if (p.startsWith('/')) return own ? { url: '/' + dir + p + rest, own: true } : { url, fr: isPage(t) };
-    return own ? { url, own: true } : { url: '../' + url, fr: isPage(t) };
+    if (p.startsWith('/')) {
+      let q = p.slice(1) || 'index.html'; if (q.endsWith('/')) q += 'index.html';
+      if (isPage(q) && pages.has(q)) return { url: '/' + dir + '/' + (q.endsWith('index.html') && p.endsWith('/') ? q.slice(0, -'index.html'.length) : q) + rest, own: true };
+      if (p === '/') return { url: '/' + dir + '/' + rest, own: true };
+      return { url, fr: isPage(q) };
+    }
+    const fromDir = path.posix.dirname(opts.from || 'index.html');
+    let target = path.posix.normalize(path.posix.join(fromDir, p)); if (p.endsWith('/') || p === '.' || p === './') target = path.posix.join(target, 'index.html');
+    if (target.startsWith('../')) return { url: '../' + url, fr: isPage(target) };
+    if (isPage(target) && pages.has(target)) return { url, own: true };
+    if (opts.script && opts.translated && opts.translated.has(target)) return { url, own: true };
+    return { url: '../' + url, fr: isPage(target) };
   }
   function abs(u) { /* https://www.leonidakit.com/x → /en/x si la page est traduite */
     const m = String(u).match(/^(https:\/\/www\.leonidakit\.com)(\/[^?#]*)?(.*)$/); if (!m) return u;
-    const p = m[2] || '/', t = target(p, '');
-    if (t !== null && pages.has(t)) return m[1] + '/' + dir + p + m[3];
+    const p = (m[2] || '/').slice(1) || 'index.html';
+    if (pages.has(p)) return m[1] + '/' + dir + '/' + (p === 'index.html' ? '' : p) + m[3];
     return u;
   }
-  return { rel, abs, pages, dir, target };
+  return { rel, abs, pages, dir };
 }
 
 /* ---------- barre « Changer la langue » (posée sur toutes les pages par sync-site.cjs via site-shell.cjs) ---------- */
@@ -343,8 +281,7 @@ function langBar(file, code, root = ROOT) {
   const cfg = config(root), here = langue(cfg, code), list = cfg.langues.filter(l => l.etat === 'publiee');
   if (list.length < 2) return '';
   const depth = file.split('/').length - 1, inLang = code !== cfg.source;
-  /* 404.html est servie à n'importe quelle adresse : liens absolus */
-  const toRoot = file === '404.html' ? '/' : (inLang ? '../' : '') + '../'.repeat(depth);
+  const toRoot = (inLang ? '../' : '') + '../'.repeat(depth);
   const items = list.map(l => {
     const has = l.code === cfg.source || (l.pages || []).includes(file);
     const target = l.code === cfg.source ? file : has ? file : 'index.html';
@@ -381,13 +318,6 @@ function placeAlternates(html, file, root = ROOT) {
   return /<link rel="canonical"[^>]*>\n?/.test(html) ? html.replace(/(<link rel="canonical"[^>]*>\n?)/, '$1' + a) : html.replace('</head>', a + '</head>');
 }
 
-/* JSON porté par un attribut : chaque texte traduit, sauf les clés d'identifiants (jsonCode) et les adresses */
-function jsonText(o, cfg, tr, key = '') {
-  if (Array.isArray(o)) return o.map(x => jsonText(x, cfg, tr, key));
-  if (o && typeof o === 'object') return Object.fromEntries(Object.entries(o).map(([k, v]) => [k, jsonText(v, cfg, tr, k)]));
-  if (typeof o !== 'string' || (cfg.jsonCode || []).includes(key) || !textual(o)) return o;
-  const t = tr(o); return t === null ? o : t;
-}
 /* ---------- traduction d'une page ---------- */
 function translatePage(html, file, code, ctx) {
   const { P5 } = deps(), { cfg, mem, link, translatedScripts, report } = ctx;
@@ -395,20 +325,7 @@ function translatePage(html, file, code, ctx) {
   const doc = P5.parse(html, { sourceCodeLocationInfo: true, scriptingEnabled: false });
   const edits = [], tagOverride = new Map();
   const miss = (kind, text, where) => report.missing.push({ kind, text: norm(text), where: file + (where ? ' · ' + where : '') });
-  const tr = (text, where) => { if (!textual(text)) return null; let v = deep(mem, text, file, null, t => miss('page', t, where)); if (v === KEEP) v = null; if (v === null) return null; return typo(v, code); };
-  const JSON_ATTRS = new Set(cfg.attributsJson || []);
-  /* texte porté par une adresse : titre de la carte (« carte.html#pins=…&t=Concessions »), recherche d'images ou Wikipédia
-     (« …?q=Pontiac Bonneville fin des années 80 », Wikipédia en anglais pour une page anglaise) */
-  const urlPart = enc => { let d; try { d = decodeURIComponent(enc.replace(/\+/g, ' ')); } catch (e) { return null; } if (!textual(d)) return null; const t = tr(d, '@href'); return t === null || t === d ? null : encodeURIComponent(t); };
-  function urlText(u) {
-    let m = String(u).match(/^([^#]*#(?:[^#]*&)?t=)([^&]*)(.*)$/);
-    if (m) { const t = urlPart(m[2]); return t === null ? u : m[1] + t + m[3]; }
-    m = String(u).match(/^https:\/\/fr\.wikipedia\.org(\/w\/index\.php\?search=)([^&#]*)(.*)$/);
-    if (m && code !== 'fr') { const t = frenchy(decodeURIComponent(m[2])) ? urlPart(m[2]) : null; return 'https://' + code + '.wikipedia.org' + m[1] + (t ?? m[2]) + m[3]; }
-    m = String(u).match(/^(https:\/\/www\.google\.com\/search\?(?:[^#]*&)?q=)([^&#]*)(.*)$/);
-    if (m && frenchy(decodeURIComponent(m[2]))) { const t = urlPart(m[2]); return t === null ? u : m[1] + t + m[3]; }
-    return u;
-  }
+  const tr = (text, where) => { if (!textual(text)) return null; let v = lookup(mem, text, file); if (v === KEEP) v = null; if (v === null) { miss('page', text, where); return null; } return typo(v, code); };
   /* attributs d'un élément → nouvelle balise ouvrante (ou null si rien ne change) */
   function startTag(el) {
     const loc = el.sourceCodeLocation; if (!loc || !loc.startTag) return null;
@@ -422,22 +339,17 @@ function translatePage(html, file, code, ctx) {
         || (name === 'content' && tag === 'meta' && (METAS.has(attr(el, 'name') || '') || METAS.has(attr(el, 'property') || ''))) || (name === 'label' && /^(?:optgroup|track|option)$/.test(tag))) {
         const t = tr(a.value, '@' + name); if (t !== null) v = t;
       }
-      /* attribut qui porte du JSON (« data-medias », « data-cat-tags ») : valeur par valeur, sauf identifiants et adresses */
-      if (JSON_ATTRS.has(name)) { let j = null; try { j = JSON.parse(a.value); } catch (e) { j = null; } if (j !== null) { const nj = jsonText(j, cfg, t => tr(t, '@' + name)); if (JSON.stringify(nj) !== JSON.stringify(j)) v = JSON.stringify(nj); } }
       if (name === 'lang' && tag === 'html') v = code;
-      if (name === 'content' && tag === 'meta' && /refresh/i.test(attr(el, 'http-equiv') || '')) v = a.value.replace(/(url=)(\S+)/i, (mm, k, u) => k + link.rel(u, { file, translated: translatedScripts }).url);
       if (name === 'value' && tag === 'input' && /^\d{1,3}(?:[ \u00a0\u202f]\d{3})+$/.test(a.value)) v = new Intl.NumberFormat(langue(cfg, code).locale).format(Number(a.value.replace(/\D/g, '')));
       if (name === 'content' && tag === 'meta' && attr(el, 'property') === 'og:locale') v = langue(cfg, code).og;
       if (name === 'content' && tag === 'meta' && /^(?:og:url)$/.test(attr(el, 'property') || '')) v = link.abs(a.value);
       if (name === 'href' && tag === 'link' && /canonical/.test(attr(el, 'rel') || '')) v = link.abs(a.value);
       if ((name === 'href' && tag !== 'link') || (name === 'href' && tag === 'link' && !/canonical|alternate/.test(attr(el, 'rel') || '')) || name === 'src' || name === 'action' || name === 'poster' || name === 'data-base' || name === 'data-big') {
-        const r = link.rel(a.value, { file, translated: translatedScripts });
+        const r = link.rel(a.value, { script: tag === 'script', translated: translatedScripts, from: file });
         if (r.url !== a.value) v = r.url;
-        if (name === 'href') { const w = urlText(v ?? a.value); if (w !== (v ?? a.value)) v = w; }
         if (tag === 'a' && r.fr && attr(el, 'hreflang') === undefined) extra += ' hreflang="fr"';
       }
-      if (name === 'data-reel') { const w = urlText(a.value); if (w !== a.value) v = w; }
-      if (name === 'srcset' || name === 'imagesrcset') { const nv = a.value.split(',').map(part => { const [u, ...d] = part.trim().split(/\s+/); return [link.rel(u, { file }).url, ...d].join(' '); }).join(', '); if (nv !== a.value.split(',').map(p => p.trim()).join(', ')) v = nv; }
+      if (name === 'srcset' || name === 'imagesrcset') { const nv = a.value.split(',').map(part => { const [u, ...d] = part.trim().split(/\s+/); return [link.rel(u, { from: file }).url, ...d].join(' '); }).join(', '); if (nv !== a.value.split(',').map(p => p.trim()).join(', ')) v = nv; }
       if (v !== null && v !== a.value) changes.push([al.startOffset - base, al.endOffset - base, name + '="' + escAttr(v) + '"']);
     }
     /* <option> sans value : le formulaire envoie le texte de l'option ; la page traduite garde le texte français comme valeur
@@ -463,9 +375,8 @@ function translatePage(html, file, code, ctx) {
     const srcOf = t => (t.t === 'open' || t.t === 'void') && tagOverride.has(t.el) ? tagOverride.get(t.el) : t.src;
     let out = null;
     if (seg.key && textual(rawText)) {
-      const where = (run[0].parentNode && run[0].parentNode.tagName) || '';
-      let v = deep(mem, seg.key, file, null, t => miss('page', t, where)); if (v === KEEP) v = null;
-      if (v === null) { /* morceaux manquants déjà signalés */ }
+      let v = lookup(mem, seg.key, file); if (v === KEEP) v = null;
+      if (v === null) miss('page', seg.key, (run[0].parentNode && run[0].parentNode.tagName) || '');
       else if (marks(v) !== marks(seg.key)) report.broken.push({ where: file, key: seg.key, value: v });
       else {
         const byId = new Map(); for (const t of seg.inner) if (t.t !== 'text') { const i = seg.ids.get(t.el); byId.set((t.t === 'close' ? '/' : '') + i + (t.t === 'void' ? '/' : ''), srcOf(t)); }
@@ -482,25 +393,6 @@ function translatePage(html, file, code, ctx) {
     }
     edits.push([start, end, out]);
   }
-  /* données JSON posées dans la page (<script type="application/json">, carnets) : chaque texte traduit, sauf les clés
-     d'identifiants (jsonCode, jsonCodePages), les adresses et le SVG */
-  const PAGE_CODE = new Set([...(cfg.jsonCode || []), ...(cfg.jsonCodePages || [])]);
-  (function pj(node) {
-    for (const c of kids(node)) {
-      if (c.tagName === 'script' && attr(c, 'type') === 'application/json' && c.childNodes[0]) {
-        const t = c.childNodes[0], loc = t.sourceCodeLocation; let data;
-        try { data = JSON.parse(t.value); } catch { continue; }
-        const fix = (o, k) => {
-          if (Array.isArray(o)) return o.map(x => fix(x, k));
-          if (o && typeof o === 'object') { const r = {}; for (const [kk, vv] of Object.entries(o)) r[kk] = fix(vv, kk); return r; }
-          if (typeof o !== 'string' || PAGE_CODE.has(k) || /^\s*</.test(o) || (/^[\w.#=?&\/-]+$/.test(o) && /[\/.]\w/.test(o))) return o;
-          const v = tr(o, 'json:' + k); return v === null ? o : v;
-        };
-        const next = JSON.stringify(fix(data)).replace(/</g, '\\u003c');
-        if (next !== JSON.stringify(data).replace(/</g, '\\u003c')) edits.push([loc.startOffset, loc.endOffset, next]);
-      } else pj(c);
-    }
-  })(doc);
   /* JSON-LD */
   (function ld(node) {
     for (const c of kids(node)) {
@@ -518,6 +410,23 @@ function translatePage(html, file, code, ctx) {
         };
         const next = JSON.stringify(fix(data));
         edits.push([loc.startOffset, loc.endOffset, (t.value.startsWith('\n') ? '\n' : '') + next + (t.value.endsWith('\n') ? '\n' : '')]);
+      } else if (c.tagName === 'script' && attr(c, 'type') === 'application/json' && c.childNodes[0] && (cfg.jsonPages || {})[attr(c, 'id')]) {
+        /* v7.61 : données d'une page lues par son script (carnets : <script type="application/json" id="lk-carnet-data">).
+           langues.json → « jsonPages » : clés affichées (« textes », traduites par la mémoire) et clés d'adresse
+           (« chemins », écrites depuis la racine du site : une page traduite garde son adresse, le reste prend « ../ »). */
+        const spec = cfg.jsonPages[attr(c, 'id')], TX = new Set(spec.textes || []), PATHS = new Set(spec.chemins || []);
+        const t = c.childNodes[0], loc = t.sourceCodeLocation; let data;
+        try { data = JSON.parse(t.value); } catch { continue; }
+        const fix = (o, k) => {
+          if (Array.isArray(o)) return o.map(x => fix(x, k));
+          if (o && typeof o === 'object') { const r = {}; for (const [kk, vv] of Object.entries(o)) r[kk] = (spec.figees || []).includes(kk) ? vv : fix(vv, kk); return r; }
+          if (typeof o !== 'string') return o;
+          if (PATHS.has(k)) return link.rel(o, { from: 'index.html' }).url;
+          if (TX.has(k)) { const v = tr(o, 'json:' + k); return v === null ? o : v; }
+          return o;
+        };
+        const next = JSON.stringify(fix(data)).replace(/</g, '\\u003c').replace(/\u2028/g, '\\u2028').replace(/\u2029/g, '\\u2029');
+        edits.push([loc.startOffset, loc.endOffset, (t.value.startsWith('\n') ? '\n' : '') + next + (t.value.endsWith('\n') ? '\n' : '')]);
       } else if (c.tagName || c.nodeName === '#document') ld(c);
     }
   })(doc);
@@ -526,7 +435,7 @@ function translatePage(html, file, code, ctx) {
   let out = html, lastStart = Infinity;
   for (const [a, b, r] of edits) { if (b > lastStart) { report.broken.push({ where: file, key: 'chevauchement', value: a + '-' + b }); continue; } out = out.slice(0, a) + r + out.slice(b); lastStart = a; }
   /* barre de langue, hreflang, lien de retour */
-  if (!/http-equiv="refresh"/i.test(out)) out = placeLangBar(out, file, code, ctx.root);
+  out = placeLangBar(out, file, code, ctx.root);
   out = placeAlternates(out, file, ctx.root);
   return markFrench(captures(out, code, ctx.root), code, cfg);
 }
@@ -581,31 +490,24 @@ const JS_ATTR = /((?:^|\s)(?:title|aria-label|alt|placeholder|aria-description|d
 /* mots français courants du site (sans accent ni mot outil) : « 8 parties », « (8 jours) », « 60 minutes = 1 heure ». */
 const FR_VOCAB = new Set('prix achat achats argent gagner gagne jeu partie parties jour jours heure heures oui non rien aucun aucune temps joueur joueurs arme armes objectif calcul calculs fiche fiches avant puis soit dont entre vers chez environ trop tard semaine semaines sem mille milliard milliards'.split(' '));
 const STOP = new Set('de la le les du des un une et ou à au aux pour en ton ta tes mon ma mes est sur par avec sans ce cette ces qui que plus pas ne il elle tu je on se sa son ses te ça y dans tout tous toute toutes quand comme si mais donc car déjà encore'.split(' '));
-function uiLike(v, lex) {
+function uiLike(v) {
   const s = String(v); if (!LETTERS.test(s)) return false;
-  if (lex && s.toLowerCase().split(/[^a-zà-öø-ÿœæ’'-]+/).some(w => lex.has(w))) return true;
   if (/[À-ÖØ-öø-ÿŒœ’«»]/.test(s) || FRNUM.test(s)) return true;
   const plain = s.replace(/<[^>]*>/g, ' '), words = plain.toLowerCase().split(/[\s,.;:!?()\/]+/).filter(Boolean);
   if (words.some(w => STOP.has(w) || FR_VOCAB.has(w) || /^[ldjtsnqc]’/.test(w))) return true;
   return /(^|\s|>)[A-ZÀ-Ý][a-zà-ÿ]{2,}/.test(plain) && /\s/.test(plain.trim());
 }
-/* Identifiant en minuscules sans espace (« divers », « capot », « calcul ») dans un script : c'est presque toujours une clé de
-   code (catégorie, famille, adresse) ; il ne change que si la mémoire a une entrée propre au fichier (« fichier.js::mot ») */
-const SLUG = /^[a-z0-9]+(?:[-_][a-z0-9]+)*$/;
-function slugKept(value, file, mem) { return SLUG.test(value) && !mem.map.has(file + '::' + value); }
 function translateText(value, file, ctx, where, before) {
   /* chaîne entière d'abord ; sinon, si elle contient du HTML, ses morceaux de texte et ses attributs lisibles */
   const { mem, code } = ctx, report = (ctx.cfg.scriptsDonnees || []).includes(file) ? { missing: [] } : ctx.report;
   /* manque : texte qui ressemble à du français lu ; en mode « tout » (--extraire en --tout), toute chaîne avec des lettres
      est proposée (candidats), pour trier à la main les petits mots (« Oui », « jour », « puis ») que la règle ne voit pas. */
-  const miss = t => { if (mem.ignore.has(norm(t))) return; if (/^[\w.#=?&\/-]+$/.test(t) && /[\/.]\w/.test(t)) return; /* adresse ou chemin (« vehicules/x.html ») */ if (uiLike(t, mem.lex)) report.missing.push({ kind: 'script', text: norm(t), where: file + where }); else if (ctx.candidates && !(ctx.cfg.scriptsDonnees || []).includes(file)) ctx.candidates.push({ kind: 'script', text: norm(t), where: file + where }); };
+  const miss = t => { if (mem.ignore.has(norm(t))) return; if (uiLike(t)) report.missing.push({ kind: 'script', text: norm(t), where: file + where }); else if (ctx.candidates && !(ctx.cfg.scriptsDonnees || []).includes(file)) ctx.candidates.push({ kind: 'script', text: norm(t), where: file + where }); };
   const p = punct(value, code); if (p !== null) return p;
   if (!textual(value)) return value;
   const whole = lookup(mem, value, file, before);
   if (whole === KEEP) return value;
   if (whole !== null) return wrap(value, typo(whole, code), code);
-  /* phrase entière fabriquée (motif) ou paragraphe (phrase par phrase), seulement pour une chaîne sans HTML */
-  if (!/[<>]/.test(value) && uiLike(value, mem.lex)) { const lost = [], dv = deep(mem, value, file, before, x => lost.push(x)); if (dv !== null && dv !== KEEP) return wrap(value, typo(dv, code), code); if (lost.length && !(lost.length === 1 && lost[0] === norm(value))) { for (const x of lost) miss(x); return value; } }
   /* « " aria-label="Retirer » : attribut lisible ouvert à la fin d'une chaîne sans balise */
   if (!/[<>]/.test(value) && JS_ATTR_OPEN.test(value)) return value.replace(JS_ATTR_OPEN, (m, a, v) => { if (!textual(v)) return m; const tv = lookup(mem, v, file, before); if (tv === KEEP) return m; if (tv === null) { miss(v); return m; } return a + escAttr(wrap(v, typo(tv, code), code)); });
   if (/<[a-z/!][^>]*>|^[^<]*">|<[a-z][^>]*$/i.test(value)) {
@@ -616,7 +518,7 @@ function translateText(value, file, ctx, where, before) {
     const flushText = t => {
       const pp = punct(t, code); if (pp !== null) return pp;
       if (!textual(t)) return t;
-      const v = deep(mem, t, file, before, x => miss(x)); if (v === KEEP || v === null) return t;
+      const v = lookup(mem, t, file, before); if (v === KEEP) return t; if (v === null) { miss(t); return t; }
       return wrap(t, typo(v, code), code);
     };
     const flushTag = t => t.replace(JS_ATTR_OPEN, (m, a, v) => { if (!textual(v)) return m; const tv = lookup(mem, v, file, before); if (tv === KEEP) return m; if (tv === null) { miss(v); return m; } return a + escAttr(wrap(v, typo(tv, code), code)); }).replace(JS_ATTR, (m, a, v, b) => { if (!textual(v)) return m; const tv = lookup(mem, v, file, before); if (tv === KEEP) return m; if (tv === null) { miss(v); return m; } return a + escAttr(typo(tv, code)) + b; });
@@ -643,13 +545,20 @@ function translateScript(code0, file, ctx) {
   const { ACORN } = deps(), { link, code } = ctx;
   const edits = []; let changed = false;
   const pages = link.pages, dir = link.dir;
-  /* adresses absolues de pages dans une chaîne (« /vehicules/x.html », « /carte.html#lieu=… ») → /<dir>/… si la page est traduite */
-  /* Léo garde les adresses du français (« /vehicules/x.html ») : leo-ui.js ajoute la langue à l'affichage */
-  const keepURL = (ctx.cfg.leoScripts || []).includes(file) && /^leo-/.test(file);
-  const urls = v => keepURL ? v : v.replace(/(^|[^\w./-])\/((?:[a-z0-9-]+\/)*[a-z0-9-]+\.html)(?=[?#"'\s)]|$)/g, (m, pre, p) => pages.has(p) ? pre + '/' + dir + '/' + p : m);
-  for (const t of ACORN.tokenizer(code0, { ecmaVersion: 'latest', allowHashBang: true })) {
-    const label = t.type.label;
+  const urls = v => v.replace(/(^|[^\w./-])\/((?:[a-z0-9-]+\/)?(?:[a-z0-9-]+)\.html)(?=[?#"'\s)]|$)/g, (m, pre, p) => pages.has(p) ? pre + '/' + dir + '/' + p : m);
+  /* v7.61 : clés dont la valeur est un identifiant ou une donnée brute dans un fichier de données (« clesFigees » de
+     langues.json : adresse réelle, catégorie, statut de la carte) : jamais traduites, jamais signalées */
+  const frozen = new Set(((ctx.cfg.clesFigees || {})[file]) || []); let p1 = null, p2 = null;
+  const toks = [...ACORN.tokenizer(code0, { ecmaVersion: 'latest', allowHashBang: true })];
+  for (let i = 0; i < toks.length; i++) {
+    const t = toks[i], label = t.type.label;
+    const keyed = frozen.size && p1 && p1.type.label === ':' && p2 && (p2.type.label === 'string' || p2.type.label === 'name') && frozen.has(String(p2.value));
+    /* v7.61 : un nom de propriété écrit entre guillemets ({ "sport": …, 'a': … }) est du code : jamais traduit (une clé
+       traduite d'un seul côté casse la recherche par identifiant : LK_VEHICULES_CATS[x.cat]) */
+    const propName = label === 'string' && p1 && (p1.type.label === '{' || p1.type.label === ',') && toks[i + 1] && toks[i + 1].type.label === ':';
+    p2 = p1; p1 = t;
     if (label !== 'string' && label !== 'template') continue;
+    if (keyed || propName) continue;
     const raw = code0.slice(t.start, t.end);
     let value = t.value; if (typeof value !== 'string') continue;
     let next = value;
@@ -658,10 +567,13 @@ function translateScript(code0, file, ctx) {
       /* les clés qui portent un identifiant (jsonCode de langues.json : id, genre, rubrique…) ne sont jamais traduites ;
          une unité avec $ ou / (« $/partie ») est comparée par le code : gardée */
       const codeKeys = new Set(ctx.cfg.jsonCode || []);
-      try { let touched = false; const data = JSON.parse(value); const fix = (o, key) => { if (Array.isArray(o)) return o.map(x => fix(x, key)); if (o && typeof o === 'object') return Object.fromEntries(Object.entries(o).map(([k, v]) => [k, fix(v, k)])); if (typeof o !== 'string' || codeKeys.has(key) || (key === 'unite' && /[$\/]/.test(o)) || slugKept(o, file, ctx.mem)) return o; const t = translateText(o, file, ctx, ' (JSON ' + key + ')', key); if (t !== o) touched = true; return t; }; const out = fix(data, ''); next = touched ? JSON.stringify(out) : value; } catch { next = value; }
+      try { let touched = false; const data = JSON.parse(value); const fix = (o, key) => { if (Array.isArray(o)) return o.map(x => fix(x, key)); if (o && typeof o === 'object') return Object.fromEntries(Object.entries(o).map(([k, v]) => [k, fix(v, k)])); if (typeof o !== 'string' || codeKeys.has(key) || (key === 'unite' && /[$\/]/.test(o))) return o; const t = translateText(o, file, ctx, ' (JSON ' + key + ')', key); if (t !== o) touched = true; return t; }; const out = fix(data, ''); next = touched ? JSON.stringify(out) : value; } catch { next = value; }
     } else {
       const line = code0.slice(0, t.start).split('\n').length, ex = code0.slice(Math.max(0, t.start - 70), Math.min(code0.length, t.end + 50)).replace(/\s+/g, ' ');
-      next = slugKept(value, file, ctx.mem) ? value : translateText(value, file, ctx, ':' + line + ' · ' + ex, code0.slice(Math.max(0, t.start - 80), t.start));
+      /* v7.61 : un morceau fait seulement d'une balise et d'une ponctuation à la française (« </b> : ») perd l'espace avant
+         « : ; ? ! » hors du français (« <b>X</b>: … ») */
+      if (code !== 'fr' && /^(?:<[^>]+>)*[\s\u00a0\u202f]+[:;?!][\s\u00a0\u202f]*$/.test(value)) next = value.replace(/[\s\u00a0\u202f]+([:;?!])/, '$1');
+      else next = translateText(value, file, ctx, ':' + line + ' · ' + ex, code0.slice(Math.max(0, t.start - 80), t.start));
     }
     next = urls(next);
     if (next === value) continue;
@@ -674,10 +586,36 @@ function translateScript(code0, file, ctx) {
   return out;
 }
 
+/* ---------- index de recherche (v7.61) ----------
+   search-index.js et search-lieux.js : { l: libellé affiché, k: type, u: adresse, s: texte cherché }. Le libellé et le type
+   passent par la mémoire (un nom propre absent reste tel quel) ; l'adresse va vers la page traduite ; le texte cherché
+   reçoit le libellé et la description traduits, et garde le texte français (on trouve une page dans les deux langues). */
+function translateSearch(code0, file, ctx) {
+  const m = code0.match(/^([\s\S]*?window\.LK_INDEX(?:_LIEUX)?\s*=\s*)(\[[\s\S]*\])(\s*;?\s*)$/); if (!m) return null;
+  const { mem, link, code } = ctx; let list; try { list = JSON.parse(m[2]); } catch { return null; }
+  const T = (t, where, quiet) => { if (!textual(t)) return null; const v = lookup(mem, t, file); if (v === KEEP) return null; if (v === null) { if (!quiet && uiLike(t)) ctx.report.missing.push({ kind: 'script', text: norm(t), where: file + where }); return null; } return typo(v, code); };
+  const fold = x => String(x).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  const out = list.map(e => {
+    const r = { ...e };
+    const l = typeof e.l === 'string' ? T(e.l, ' (l)', /LIEUX/.test(m[1])) : null; if (l !== null) r.l = l;
+    const k = typeof e.k === 'string' ? T(e.k, ' (k)') : null; if (k !== null) r.k = k;
+    if (typeof e.u === 'string') r.u = link.abs('https://www.leonidakit.com' + e.u).replace(/^https:\/\/www\.leonidakit\.com/, '');
+    if (typeof e.s === 'string') {
+      let desc = null;
+      if (typeof e.l === 'string' && e.s.startsWith(e.l + ' ')) desc = T(e.s.slice(e.l.length + 1).trim(), ' (s)', true);
+      r.s = [r.l !== e.l ? r.l : '', r.k !== e.k ? fold(r.k) : '', desc || '', e.s].filter(Boolean).join(' ');
+    }
+    return r;
+  });
+  return m[1] + JSON.stringify(out) + m[3];
+}
+
 /* ---------- génération d'une langue ---------- */
 const hash = s => crypto.createHash('sha256').update(s).digest('hex').slice(0, 12);
-/* scripts locaux d'une page (chemins depuis la racine : « ../fiches.js » dans vehicules/x.html → fiches.js) */
-function localScripts(html, file = 'index.html') { return [...html.matchAll(/<script\b[^>]*\ssrc="([^"?#]+)(?:\?v=[a-f0-9]+)?"/g)].map(m => m[1]).filter(u => !/^(?:[a-z]+:|\/\/)/.test(u)).map(u => { const t = u.startsWith('/') ? u.slice(1) : path.posix.normalize(path.posix.join(path.posix.dirname(file), u)); return t.startsWith('../') ? null : t; }).filter(Boolean); }
+/* scripts locaux d'une page, en chemins depuis la racine (v7.61 : une page d'un dossier les charge par « ../x.js ») */
+function localScripts(html, file = 'index.html') { const dir = path.posix.dirname(file); return [...html.matchAll(/<script\b[^>]*\ssrc="([^"?#]+)(?:\?v=[a-f0-9]+)?"/g)].map(m => m[1]).filter(u => !/^(?:[a-z]+:|\/\/|\/)/.test(u)).map(u => path.posix.normalize(path.posix.join(dir, u))).filter(u => !u.startsWith('../')); }
+/* fichiers d'un dossier de langue, sous-dossiers compris (chemins relatifs) */
+function filesIn(dir, base = '') { if (!fs.existsSync(dir)) return []; return fs.readdirSync(dir, { withFileTypes: true }).flatMap(x => x.isDirectory() ? filesIn(path.join(dir, x.name), base + x.name + '/') : [base + x.name]); }
 function generer(code, root = ROOT, opts = {}) {
   const cfg = config(root), lang = langue(cfg, code);
   if (lang.etat !== 'publiee' && !opts.force) return null;
@@ -686,147 +624,57 @@ function generer(code, root = ROOT, opts = {}) {
   const link = linker(cfg, lang, root), dir = path.join(root, lang.dossier);
   /* opts.ecrire === false : rien n'est écrit ; report.outputs donne chaque fichier attendu (tests : en/ est-il à jour ?) */
   const dry = opts.ecrire === false, outputs = new Map();
-  const put = (rel, content) => { outputs.set(rel, content); if (!dry) fs.writeFileSync(path.join(root, rel), content); };
+  const put = (rel, content) => { outputs.set(rel, content); if (!dry) { fs.mkdirSync(path.dirname(path.join(root, rel)), { recursive: true }); fs.writeFileSync(path.join(root, rel), content); } };
   if (!dry) fs.mkdirSync(dir, { recursive: true });
   const ctx = { cfg, mem, link, report, code, root, translatedScripts: new Set(), candidates: opts.tout ? [] : null };
   /* 1. scripts locaux utilisés par les pages traduites */
   const scripts = new Set();
   for (const p of lang.pages) for (const s of localScripts(fs.readFileSync(path.join(root, p), 'utf8'), p)) scripts.add(s);
+  /* v7.61 : scripts chargés par un autre script (Léo : leo-loader.js, leo-ui.js…) : « scriptsEnPlus » de la langue */
+  for (const s of lang.scriptsEnPlus || []) scripts.add(s);
   const keepScripts = new Set();
   const shared = new Set(cfg.scriptsPartages || []);
   for (const s of [...scripts].sort()) {
-    const src = path.join(root, s); if (!fs.existsSync(src) || shared.has(s)) continue;
-    const out = translateScript(fs.readFileSync(src, 'utf8'), s, ctx);
-    if (out !== null) { if (!dry) fs.mkdirSync(path.dirname(path.join(dir, s)), { recursive: true }); put(lang.dossier + '/' + s, out); ctx.translatedScripts.add(s); keepScripts.add(s); report.scripts.push(s); }
+    const src = path.join(root, s); if (!fs.existsSync(src)) continue;
+    /* v7.61 : une langue peut traduire aussi des scripts partagés (« traduireAussi » : index de recherche, données de la carte) */
+    const also = (lang.traduireAussi || []).includes(s);
+    if (shared.has(s) && !also) continue;
+    const out = /^search-(?:index|lieux)\.js$/.test(s) && also ? translateSearch(fs.readFileSync(src, 'utf8'), s, ctx) : translateScript(fs.readFileSync(src, 'utf8'), s, ctx);
+    if (out !== null) { put(lang.dossier + '/' + s, out); ctx.translatedScripts.add(s); keepScripts.add(s); report.scripts.push(s); }
   }
-  /* 1 bis. Léo (outils/langues.json → leo) : ses scripts, chargés à l'ouverture (leo-loader.js), et ses données traduites */
-  if ((cfg.leo || []).includes(code) && code !== cfg.source) {
-    for (const s of cfg.leoScripts || []) {
-      if (ctx.translatedScripts.has(s)) continue; const src = path.join(root, s); if (!fs.existsSync(src)) continue;
-      const original = fs.readFileSync(src, 'utf8'), out = translateScript(original, s, ctx);
-      put(lang.dossier + '/' + s, out === null ? original : out); ctx.translatedScripts.add(s); report.scripts.push(s);
-    }
-    const spec = cfg.leoDonnees || {}, files = (spec.fichiers || []).filter(f => fs.existsSync(path.join(root, f))), names = [], data = {};
-    for (const f of files) data[f] = leoData(JSON.parse(fs.readFileSync(path.join(root, f), 'utf8')), f, ctx, names);
-    const core = data['leo-index.json'];
-    if (core) {
-      const fr = JSON.parse(fs.readFileSync(path.join(root, 'leo-index.json'), 'utf8')), N = require(path.join(root, 'leo-nlp.js'));
-      const A = N.createAnalyzer({ abbreviations: fr.lexique.abbreviations.map(([f, to]) => ({ f, to })), english: fr.lexique.english.map(([f, to]) => ({ f, to })), concepts: fr.lexique.concepts });
-      /* vocabulaire des morceaux : les jetons des noms traduits désignent aussi leur morceau */
-      for (const x of names) if (x.changed && core.shards[x.shard] && Array.isArray(core.shards[x.shard].vocab)) { const t = N.nameTokens(A, x.name); if (t) for (const w of t.toks) { const p = w.slice(0, 6); if (p.length >= 3 && !core.shards[x.shard].vocab.includes(p)) core.shards[x.shard].vocab.push(p); } }
-      core.lang = code; core.pivot = leoPivot(root, code, fr, core, names);
-    }
-    for (const f of files) { if (!dry) fs.mkdirSync(path.dirname(path.join(dir, f)), { recursive: true }); put(lang.dossier + '/' + f, JSON.stringify(data[f])); }
-  }
+  /* scripts copiés qui ne sont plus traduits : retirés */
+  if (!dry) for (const f of fs.readdirSync(dir)) if (f.endsWith('.js') && !keepScripts.has(f)) fs.rmSync(path.join(dir, f));
   /* 2. pages */
   const keepPages = new Set();
   for (const p of lang.pages) {
     let html = translatePage(fs.readFileSync(path.join(root, p), 'utf8'), p, code, ctx);
     /* empreintes des scripts traduits (les autres gardent celle de la page française) */
-    html = html.replace(/(<script\b[^>]*\ssrc=")([^"?#]+)(?:\?v=[a-f0-9]+)?(")/g, (m, a, u, b) => { const t = link.target(u, p); return t && ctx.translatedScripts.has(t) ? a + u + '?v=' + hash(outputs.get(lang.dossier + '/' + t)) + b : m; });
-    if (!dry) fs.mkdirSync(path.dirname(path.join(dir, p)), { recursive: true });
+    html = html.replace(/(<script\b[^>]*\ssrc=")([^"?#]+)(?:\?v=[a-f0-9]+)?(")/g, (m, a, u, b) => { const t = path.posix.normalize(path.posix.join(path.posix.dirname(p), u)); return ctx.translatedScripts.has(t) ? a + u + '?v=' + hash(outputs.get(lang.dossier + '/' + t)) + b : m; });
     put(lang.dossier + '/' + p, html); keepPages.add(p); report.pages.push(lang.dossier + '/' + p);
   }
-  /* fichiers du dossier de la langue qui ne sont plus produits : retirés (pages, scripts, données) */
-  if (!dry) (function clean(d) {
-    for (const e of fs.readdirSync(path.join(dir, d), { withFileTypes: true })) {
-      const rel = d ? d + '/' + e.name : e.name;
-      if (e.isDirectory()) { clean(rel); if (!fs.readdirSync(path.join(dir, rel)).length) fs.rmdirSync(path.join(dir, rel)); }
-      else if (!outputs.has(lang.dossier + '/' + rel)) fs.rmSync(path.join(dir, rel));
-    }
-  })('');
+  if (!dry) for (const f of filesIn(dir)) if (f.endsWith('.html') && !keepPages.has(f)) fs.rmSync(path.join(dir, f));
   /* 3. pages françaises traduites : hreflang ; sitemap */
   for (const p of lang.pages) { const f = path.join(root, p), s = fs.readFileSync(f, 'utf8'), n = placeAlternates(s, p, root); if (n !== s) put(p, n); }
+  /* 4. v7.61 : Léo dans cette langue (outils/langues.json → leo) : index et morceaux tirés de l'index français */
+  if ((cfg.leo || []).includes(code) && code !== cfg.source) {
+    const r = require('./leo-langues.cjs').build(code, root, module.exports, { mem, outputs });
+    for (const [f, content] of r.outputs) put(f, content);
+    for (const m of r.missing) report.missing.push(m);
+    report.leo = r.outputs.size;
+  }
   report.outputs = outputs;
   report.unused = [...mem.map.keys()].filter(k => !mem.used.has(k));
   if (ctx.candidates) report.candidates = ctx.candidates;
   return report;
 }
-/* ---------- Léo dans une autre langue (v7.61) ----------
-   en/leo-index.json et en/leo/*.json : les textes affichés sont traduits (clés « cles » et arbres « arbres » de
-   langues.json → leoDonnees) ; tout ce qui sert à reconnaître une question reste français (jetons d, dq, dk, terms, re…),
-   car la question est d'abord réécrite en français (leo-nlp.js → pivot). Un nom traduit devient le nom affiché et reconnu,
-   le nom français reste reconnu (alias). Les adresses restent celles du français : leo-ui.js ajoute /en à l'affichage. */
-function leoData(json, file, ctx, names) {
-  const { cfg, mem, report, code } = ctx, spec = cfg.leoDonnees || {};
-  const keys = new Set([...(spec.cles || []), ...((spec.clesParFichier || {})[file] || [])]), trees = new Set(spec.arbres || []);
-  const miss = (t, where) => report.missing.push({ kind: 'leo', text: norm(t), where: file + ' · ' + where });
-  const tr = (s, where) => {
-    if (typeof s !== 'string' || !textual(s) || /^(?:\/|https?:)/.test(s)) return s;
-    const lost = []; let v = deep(mem, s, file, null, t => lost.push(t));
-    if (v === null || v === KEEP) { const fv = flatLookup(mem, s); if (fv !== null) v = fv; }
-    if (v === null || v === KEEP) { const pv = partsOf(mem, norm(s), file); if (pv !== null) v = pv; }
-    if (v === null || v === KEEP) { for (const t of lost) miss(t, where); return s; }
-    return typo(v, code);
-  };
-  const plus = (list, extra) => [...new Set([...(list || []), ...extra.filter(x => typeof x === 'string' && x)])];
-  const item = (o, shard) => {
-    const r = walk(o, '', false); if (typeof o.name !== 'string') return r;
-    const al = (o.aliases || []).map(a => tr(a, 'aliases')).filter((a, i) => a !== o.aliases[i]);
-    /* nom traduit : affiché ; le nom français reste celui que Léo reconnaît (nameFr, jetons nt inchangés), le nom traduit est aussi reconnu en entier (alias) */
-    if (r.name !== o.name) { r.nameFr = o.name; r.aliases = plus(o.aliases, [r.name, ...al]); } else if (al.length) r.aliases = plus(o.aliases, al);
-    names.push({ shard, name: r.name, changed: r.name !== o.name }); return r;
-  };
-  const walk = (o, k, all) => {
-    if (Array.isArray(o)) return o.map(x => walk(x, k, all));
-    if (o && typeof o === 'object') { const r = {}; for (const [kk, v] of Object.entries(o)) r[kk] = walk(v, kk, all || trees.has(kk)); return r; }
-    if (typeof o === 'string' && (all || keys.has(k))) return tr(o, k);
-    return o;
-  };
-  const out = {};
-  for (const [k, v] of Object.entries(json)) {
-    if (k === 'names' && Array.isArray(v)) out.names = v.map(([key, label, kind, aliases]) => { const nl = tr(label, 'names'), al = (aliases || []).map(a => tr(a, 'aliases')).filter((a, i) => a !== aliases[i]); names.push({ shard: kind === 'weapon' ? 'armes' : 'monde', name: nl, changed: nl !== label }); return nl !== label ? [key, nl, kind, plus(aliases, [nl, ...al]), label] : [key, nl, kind, plus(aliases, al)]; });
-    else if (k === 'items' && Array.isArray(v) && Array.isArray(json.packed)) {
-      const iName = json.packed.indexOf('name'), iNt = json.packed.indexOf('nt'), iReg = json.packed.indexOf('region'), iReal = json.packed.indexOf('real');
-      out.items = v.map(row => { const r = row.slice(); if (iName >= 0 && typeof r[iName] === 'string') { const n = tr(r[iName], 'name'); if (n !== r[iName]) r[iName] = n; names.push({ shard: json.shard, name: r[iName], changed: n !== row[iName] }); } if (iReg >= 0 && typeof r[iReg] === 'string') r[iReg] = tr(r[iReg], 'region'); if (iReal >= 0 && typeof r[iReal] === 'string') r[iReal] = tr(r[iReal], 'real'); return r; });
-    }
-    else if (k === 'items' && Array.isArray(v)) out.items = v.map(x => x && typeof x === 'object' && !Array.isArray(x) ? item(x, json.shard) : walk(x, k, false));
-    else out[k] = walk(v, k, trees.has(k));
-  }
-  return out;
-}
-/* Texte de page « à plat » (sans les balises en ligne, comme le lit Léo : « Blouson noir de Jason La fiche … ») : la
-   mémoire est relue sans ses repères <n>, entrée par entrée puis phrase par phrase quand les deux langues ont le même
-   nombre de phrases. */
-const flatText = s => String(s).replace(/<\/?\d+\/?>/g, ' ').replace(/[  ]/g, ' ').replace(/\s+/g, ' ').replace(/ ([,.;:!?…)»”])/g, '$1').replace(/([«“(]) /g, '$1').trim();
-function flatMem(mem) {
-  if (mem.flat) return mem.flat; const m = new Map();
-  const add = (a, b) => { if (a && b && !m.has(a)) m.set(a, b); };
-  for (const [k, v] of mem.map) { if (typeof v !== 'string' || k.includes('::')) continue; const fk = flatText(k), fv = flatText(v === '=' ? k : v); add(fk, fv); const sk = sentences(fk), sv = sentences(fv); if (sk.length > 1 && sk.length === sv.length) sk.forEach((x, i) => add(x.trim(), sv[i].trim())); }
-  return (mem.flat = m);
-}
-function flatLookup(mem, text) {
-  const m = flatMem(mem), t = flatText(norm(text)); if (m.has(t)) return m.get(t);
-  const parts = sentences(t); if (parts.length < 2) return null;
-  const out = parts.map(p => { const x = p.trim(); if (m.has(x)) return m.get(x); const v = deep(mem, x, null, null, () => {}, true); return v === null || v === KEEP ? (neutral(x, mem) ? x : null) : v; });
-  return out.every(x => x !== null) ? out.join(' ') : null;
-}
-/* table de réécriture de la question (leo-nlp.js → pivot) : expressions écrites à la main (outils/langues/<code>/leo-pivot.json),
-   libellés des catégories et des outils, et une entrée identité pour chaque nom de fiche qui contient un mot de la table */
-function leoPivot(root, code, core, enCore, names) {
-  const f = path.join(root, 'outils/langues', code, 'leo-pivot.json'); if (!fs.existsSync(f)) return [];
-  const N = require(path.join(root, 'leo-nlp.js')), n = s => N.norm(s).replace(/[’‘]/g, "'").replace(/[^a-z0-9$'& ]+/g, ' ').replace(/\s+/g, ' ').trim();
-  const list = JSON.parse(fs.readFileSync(f, 'utf8')).expressions || [], words = new Set(list.flatMap(([a]) => n(a).split(' ')));
-  const out = list.map(([a, b]) => [n(a), b]);
-  const pair = (en, fr) => { const a = n(en), b = n(fr); if (a && b && a !== b && !out.some(x => x[0] === a)) out.push([a, b]); };
-  core.categories.forEach((c, i) => pair(enCore.categories[i].label, c.terms[0] || c.label));
-  core.tools.forEach((t, i) => pair(enCore.tools[i].label, t.label));
-  for (const x of names) { const a = n(x.name); if (a && a.includes(' ') && a.split(' ').some(w => words.has(w)) && !out.some(e => e[0] === a)) out.push([a, a]); }
-  return out;
-}
 function sitemap(root = ROOT) {
-  /* v7.61 : chaque adresse française du plan du site (pages indexables : ni redirection, ni noindex, ni 404) a sa version
-     dans chaque langue publiée, ajoutée au même fichier (sitemap.xml, sitemap-fiches.xml) */
-  const cfg = config(root);
-  for (const name of ['sitemap.xml', 'sitemap-fiches.xml']) {
-    const f = path.join(root, name); if (!fs.existsSync(f)) continue;
-    let s = fs.readFileSync(f, 'utf8').replace(/\s*<url><loc>https:\/\/www\.leonidakit\.com\/(?:[a-z]{2})\/[^<]*<\/loc><\/url>/g, '');
-    const fr = [...s.matchAll(/<loc>https:\/\/www\.leonidakit\.com\/([^<]*)<\/loc>/g)].map(m => m[1]);
-    const urls = [];
-    for (const l of publiees(cfg)) { if (l.code === cfg.source) continue; const pages = new Set(l.pages || []); for (const u of fr) { const p = u === '' ? 'index.html' : u.endsWith('/') ? u + 'index.html' : u; if (pages.has(p)) urls.push('https://www.leonidakit.com/' + l.dossier + '/' + u); } }
-    s = s.replace('</urlset>', urls.map(u => '  <url><loc>' + u + '</loc></url>').join('\n') + '\n</urlset>');
-    fs.writeFileSync(f, s);
-  }
+  const cfg = config(root), f = path.join(root, 'sitemap.xml'); if (!fs.existsSync(f)) return;
+  let s = fs.readFileSync(f, 'utf8').replace(/\s*<url><loc>https:\/\/www\.leonidakit\.com\/(?:[a-z]{2})\/[^<]*<\/loc><\/url>/g, '');
+  /* v7.61 : une page traduite n'entre dans le plan du site que si sa page française y est (pages « noindex » exclues) */
+  const fr = new Set([...s.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m => m[1]));
+  const urls = []; for (const l of publiees(cfg)) for (const p of l.pages || []) { const tail = p === 'index.html' ? '' : p; if (fr.has('https://www.leonidakit.com/' + tail)) urls.push('https://www.leonidakit.com/' + l.dossier + '/' + tail); }
+  s = s.replace('</urlset>', urls.map(u => '  <url><loc>' + u + '</loc></url>').join('\n') + '\n</urlset>');
+  fs.writeFileSync(f, s);
 }
 /* Appelé par sync-site.cjs : toutes les langues publiées ; écrit outils/langues/_rapport.json (manques). */
 function toutGenerer(root = ROOT) {
@@ -847,7 +695,7 @@ function extraire(code, root = ROOT, opts = {}) {
   return { total: seen.size, report: r };
 }
 
-module.exports = { config, memoire, norm, textual, typo, langBar, placeLangBar, alternates, placeAlternates, translatePage, translateScript, generer, toutGenerer, extraire, sitemap, linker, segmentOf, tokens, marks };
+module.exports = { config, memoire, norm, textual, typo, langBar, placeLangBar, alternates, placeAlternates, translatePage, translateScript, generer, toutGenerer, extraire, sitemap, linker, segmentOf, tokens, marks, lookup, KEEP, uiLike, langue };
 
 if (require.main === module) {
   const args = process.argv.slice(2), code = args.find(a => !a.startsWith('--'));

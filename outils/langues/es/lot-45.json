@@ -1,0 +1,201 @@
+{
+ "_note": "v7.61 : entrées propres à un fichier, règles selon le code qui précède, motifs (re:) des données de la carte, identifiants protégés dans les scripts (_scriptsJamais).",
+ "_scriptsJamais": [
+  "source",
+  "aucun",
+  "aucune",
+  "fiche",
+  "fiches",
+  "calcul",
+  "calculs",
+  "restants",
+  "$/partie",
+  "mission",
+  "missions",
+  "plans",
+  "plan"
+ ],
+ "calculateurs-engine.js::entier": "entero",
+ "calculateurs-plan.js::prévues": "pendientes",
+ "calculateurs-plan.js::aucune": "ninguna",
+ "calculateurs-plan.js::aucun": "ninguna",
+ "calculateurs-workspace.js::aucun": "ninguna",
+ "calculateurs-scenario.js::joueurs": [
+  {
+   "si": "(?:\\+|unit:|\\?)\\s*$",
+   "texte": "jugadores"
+  }
+ ],
+ "calculateurs-simple.js::sur": "de",
+ "calculateurs-workspace.js::exemple": "ejemplo",
+ "calculateurs-workspace.js::frais": "gastos",
+ "calculateurs-workspace.js::attente": "espera",
+ "calculateurs-workspace.js::mise": "inversión",
+ "calculateurs-workspace.js::connues": "conocidos",
+ "calculateurs-workspace.js::calcul": "cálculo",
+ "calculateurs.js::fiches": "fichas",
+ "calculateurs.js::fiche": "ficha",
+ "calculateurs.js::officiels": "oficiales",
+ "calculateurs.js::officiel": "oficial",
+ "calculateurs-plan.js::Pour": "Para",
+ "armes-data.js::Précision": "Fusiles de precisión",
+ "calculateurs-plan.js::mission": "misión",
+ "calculateurs-plan.js::missions": [
+  {
+   "si": "(?:'mission',|\\?)\\s*$",
+   "texte": "misiones"
+  }
+ ],
+ "calculateurs-plan.js::points": "puntos",
+ "calculateurs.js::missions": [
+  {
+   "si": "\\?\\s*$",
+   "texte": "misiones"
+  }
+ ],
+ "calculateurs.js::mission": [
+  {
+   "si": "missions'\\s*:\\s*$",
+   "texte": "misión"
+  }
+ ],
+ "calculateurs-workspace.js::missions": [
+  {
+   "si": "\\?\\s*$",
+   "texte": "misiones"
+  }
+ ],
+ "calculateurs-workspace.js::mission": [
+  {
+   "si": "missions'\\s*:\\s*$",
+   "texte": "misión"
+  }
+ ],
+ "calculateurs-scenario.js::missions": [
+  {
+   "si": "\\?\\s*$",
+   "texte": "misiones"
+  }
+ ],
+ "calculateurs-scenario.js::mission": [
+  {
+   "si": "missions'\\s*:\\s*$",
+   "texte": "misión"
+  }
+ ],
+ "business plans": "planes de negocio",
+ "progression.js::calculs": "cálculos",
+ "progression.js::calcul": "cálculo",
+ "progression.js::plans": "planes",
+ "progression.js::plan": "plan",
+ "progression.js::envies": "deseos",
+ "progression.js::envie": "deseo",
+ "stocks à renseigner": "existencias por completar",
+ "stock à renseigner": "existencia por completar",
+ "saisies à part": "entradas aparte",
+ "saisie à part": "entrada aparte",
+ "cochés": "marcados",
+ "rubriques exportées": "categorías exportadas",
+ "rubrique exportée": "categoría exportada",
+ "rubriques fusionnées": "categorías fusionadas",
+ "rubriques remplacées": "categorías reemplazadas",
+ "rubrique fusionnée": "categoría fusionada",
+ "rubrique remplacée": "categoría reemplazada",
+ "collectibles-tools.js::fiche": "ficha",
+ "collectibles.js::fiche": "ficha",
+ "app.js::restants": "restantes",
+ "carnets.js::calcul": [
+  {
+   "si": "'plans'\\]\\s*:\\s*\\[\\s*$",
+   "texte": "cálculo"
+  }
+ ],
+ "carnets.js::calculs": [
+  {
+   "si": "'calcul',\\s*$",
+   "texte": "cálculos"
+  }
+ ],
+ "carnets.js::plans": [
+  {
+   "si": "\\['plan',\\s*$",
+   "texte": "planes"
+  }
+ ],
+ "lignes": "filas",
+ "ligne": "fila",
+ "correspondante": "coincidente",
+ "disponible": "disponible",
+ "obtenus": "conseguidos",
+ "faits": "hechos",
+ "utilisables": "utilizables",
+ "Où le trouver :": "Dónde encontrarlo:",
+ "Où la trouver :": "Dónde encontrarla:",
+ "re:^Bâtiment (L\\d+)$": "Edificio {1}",
+ "re:^(.+) \\(nom réel\\)$": "{t1} (nombre real)",
+ "re:^(.+) \\(nom supposé\\)$": "{t1} (nombre supuesto)",
+ "collectibles-help.js::au": "al",
+ "collectibles-help.js::aux": "los",
+ "collectibles-help.js::ce": "este",
+ "collectibles-help.js::ces": "estos",
+ "collectibles-help.js::des": "unos",
+ "collectibles-help.js::du": "del",
+ "collectibles-help.js::est": "es",
+ "collectibles-help.js::il": "el",
+ "collectibles-help.js::je": "yo",
+ "collectibles-help.js::la": "=",
+ "collectibles-help.js::le": "lo",
+ "collectibles-help.js::les": "las",
+ "collectibles-help.js::ma": "mi",
+ "collectibles-help.js::mes": "mis",
+ "collectibles-help.js::mon": "mi",
+ "collectibles-help.js::ne": "no",
+ "collectibles-help.js::ou": "donde",
+ "collectibles-help.js::par": "por",
+ "collectibles-help.js::pas": "no",
+ "collectibles-help.js::que": "=",
+ "collectibles-help.js::se": "=",
+ "collectibles-help.js::son": "su",
+ "collectibles-help.js::tu": "=",
+ "collectibles-help.js::un": "=",
+ "collectibles-help.js::une": "una",
+ "collectibles-help.js::comment": "como",
+ "collectibles-help.js::ils": "ellos",
+ "collectibles-help.js::moi": "yo",
+ "collectibles-help.js::peut": "puede",
+ "collectibles-help.js::peux": "puedo",
+ "collectibles-help.js::qu": "que",
+ "collectibles-help.js::quel": "cual",
+ "collectibles-help.js::quelle": "cuales",
+ "collectibles-help.js::quelles": "cuantos",
+ "collectibles-help.js::quels": "cuanto",
+ "collectibles-help.js::sont": "son",
+ "collectibles-help.js::vos": "vuestro",
+ "collectibles-help.js::votre": "vuestra",
+ "leo-core.js::pour": [],
+ "leo-core.js::dans": [
+  {
+   "si": "\\.name\\+\\s*$",
+   "texte": "en"
+  }
+ ],
+ "leo-core.js::maintenant": [],
+ "leo-core.js::je veux": [],
+ "leo-core.js::je sais pas": [],
+ "leo-core.js::argent": [],
+ "leo-core.js::j ai": [],
+ "leo-core.js::combien": [],
+ "leo-core.js::qui": [],
+ "leo-core.js::ou": [],
+ "leo-core.js::quand": [],
+ "leo-core.js::quoi": [],
+ "leo-core.js::pourquoi": [],
+ "leo-core.js::comment": [],
+ "leo-core.js::quel": [],
+ "leo-core.js::quelle": [],
+ "leo-core.js::quels": [],
+ "leo-core.js::quelles": [],
+ "leo-core.js::que": [],
+ "leo-core.js::est ce": [],
+ "leo-core.js::c est": []
+}

@@ -1,0 +1,18 @@
+{
+ "calculateurs-workspace.js::Encore": "Aún necesitas",
+ "calculateurs.js::Tu as déjà": [
+  {
+   "si": "au départ':\\s*$",
+   "texte": "Ya tienes el"
+  },
+  {
+   "texte": "Ya tienes"
+  }
+ ],
+ "fiches.js::garage": [
+  {
+   "si": "'véhicules',\\s*$",
+   "texte": "garaje"
+  }
+ ]
+}

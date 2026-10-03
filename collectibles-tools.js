@@ -1,7 +1,8 @@
+/* v7.61 : pluriel selon la langue de la page : français n > 1 (« 0 coché », « 1,5 million ») ; anglais, espagnol n ≠ 1 (« 0 marcados ») */
+var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.documentElement&&document.documentElement.lang)||'fr').slice(0,2)==='fr'?n>1:n!==1;};
 /* Optional local tools. No account, network service, guessed route or external notes. */
 (function () {
   'use strict';
-  var lkPl = function (n) { return /^fr/.test(document.documentElement.lang || "fr") ? n > 1 : n !== 1; }; /* pluriel selon la langue de la page (français : n > 1) */
   const core = window.LKCollectibles, view = window.LKCollectiblesView;
   if (!core?.getToolsState) return;
   const host = document.getElementById('col-tools');
@@ -108,7 +109,7 @@
     if (!host || !view) return;
     renderSavedViews(); renderPlan();
     const count = items().length;
-    $('col-tools-result-count').textContent = count + (lkPl(count) ? ' fiches' : ' fiche') + ' dans la vue actuelle';
+    $('col-tools-result-count').textContent = count + ' fiche' + (lkPluriel(count)?'s' : '') + ' dans la vue actuelle';
     ['col-export-csv','col-print-checklist'].forEach(id => { $(id).disabled = count === 0; });
     if ($('col-tools-storage')) { const warning = core.getStorageStatus().message; $('col-tools-storage').hidden = !warning; $('col-tools-storage').textContent = warning; }
   }

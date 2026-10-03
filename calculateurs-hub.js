@@ -4,22 +4,23 @@
   const $ = id => document.getElementById(id);
   const normalize = value => String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[’‘]/g, "'").replace(/[\u00a0\u202f]/g, ' ');
   const rules = [
-    { tab: 'plan', label: 'Mon business plan', re: /business plan|mon plan|plan complet|etape par etape|quoi faire en premier|plan d'action|echeance|d'ici (le|la|\d)|en \d+ jours|avant le \d|prochaine partie|programme de la semaine|ou en suis-je|mission par mission|partie par partie|plan de secours|plan b|debloquer|rang \d|niveau \d|\bxp\b|my plan|step by step|what (?:should i|to) do first|action plan|deadline|in \d+ days|by (?:the )?\d|next session|weekly schedule|backup plan|\bunlock|\brank \d|\blevel \d/ },
-    { tab: 'compare', label: 'Quel achat choisir ?', re: /choisir|comparer|lequel|laquelle|le mieux|meilleur achat|rapport qualite|le plus rentable|le moins cher|\bou\b.*\bou\b|\bchoose|\bcompare|\bwhich (?:one|is|should)|best (?:buy|purchase|value)|value for money|most profitable|\bcheapest/ },
-    { tab: 'order', label: 'Quoi acheter d’abord ?', re: /\bordre\b|priorit|d'abord|en premier|sequence|\border\b|buy first|\bfirst\b/ },
-    { tab: 'roi', label: 'Ça vaut le coup ?', re: /rentab|\broi\b|amorti|retour sur|investi|seuil|vaut le coup|a partir de quand|rembours|vaut-il|ca vaut|profitab|worth it|is it worth|pay(?:s)? (?:for itself|back|off)|break.?even|return on|\binvest/ },
-    { tab: 'session', label: 'Mon temps de jeu', re: /session|j'ai du temps|minutes?\b|temps disponible|i have (?:some )?time|time (?:i have|available)|available time|tonight/ },
-    { tab: 'budget', label: 'Mon budget', re: /repart|reserve|enveloppe|poste de depense|\bsplit\b|\bspread\b|allocat|divide (?:it|my)/ },
-    { tab: 'purchase', label: 'Mes achats', re: /achet|achat|prix|cout|permettre|vehicule|voiture|moto|bateau|propriete|maison|arme|budget|\bbuy|purchase|price|\bcost|afford|vehicle|\bcar\b|\bbike|motorcycle|\bboat|property|\bhouse|weapon|\bgun/ },
-    { tab: 'activities', label: 'Mes activités', re: /activit|grind|mission|par heure|rapporte|farm|braquage|gain net|per hour|an hour|\bearn|heist|payout|net gain/ },
-    { tab: 'goal', label: 'Mon objectif', re: /objectif|million|atteindre|capital|economis|epargn|combien de temps|\bgoal|\breach|\bsave|saving|how long/ }
+    { tab: 'plan', label: 'Mon business plan', re: /business plan|mon plan|plan complet|etape par etape|quoi faire en premier|plan d'action|echeance|d'ici (le|la|\d)|en \d+ jours|avant le \d|prochaine partie|programme de la semaine|ou en suis-je|mission par mission|partie par partie|plan de secours|plan b|debloquer|rang \d|niveau \d|\bxp\b|my plan|step by step|what (?:should i|to) do first|action plan|deadline|in \d+ days|by (?:the )?\d|next session|weekly schedule|backup plan|\bunlock|\brank \d|\blevel \d|plan de negocio|mi plan|paso a paso|que (?:hago|hacer|compro) primero|plan de accion|fecha limite|en \d+ dias|antes del \d|proxima partida|programa de la semana|mision por mision|partida por partida|plan (?:alternativo|de emergencia)|desbloquear|rango \d|nivel \d/ },
+    { tab: 'compare', label: 'Quel achat choisir ?', re: /choisir|comparer|lequel|laquelle|le mieux|meilleur achat|rapport qualite|le plus rentable|le moins cher|\bou\b.*\bou\b|\bchoose|\bcompare|\bwhich (?:one|is|should)|best (?:buy|purchase|value)|value for money|most profitable|\bcheapest|elegir|\belijo\b|comparar|\bcual (?:compro|elijo|es mejor|me conviene)|el mejor|mejor compra|calidad.precio|mas rentable|mas barato|\bo (?:el|la)\b/ },
+    { tab: 'order', label: 'Quoi acheter d’abord ?', re: /\bordre\b|priorit|d'abord|en premier|sequence|\border\b|buy first|\bfirst\b|\borden\b|prioridad|primero|antes que nada/ },
+    { tab: 'roi', label: 'Ça vaut le coup ?', re: /rentab|\broi\b|amorti|retour sur|investi|seuil|vaut le coup|a partir de quand|rembours|vaut-il|ca vaut|profitab|worth it|is it worth|pay(?:s)? (?:for itself|back|off)|break.?even|return on|\binvest|amortiz|retorno|inversion|vale la pena|merece la pena|compensa|a partir de cuando|recupero|recuperar/ },
+    { tab: 'session', label: 'Mon temps de jeu', re: /session|j'ai du temps|minutes?\b|temps disponible|i have (?:some )?time|time (?:i have|available)|available time|tonight|partida|tengo tiempo|tiempo disponible|esta noche|minutos?\b/ },
+    { tab: 'budget', label: 'Mon budget', re: /repart|reserve|enveloppe|poste de depense|\bsplit\b|\bspread\b|allocat|divide (?:it|my)|repart|presupuesto|dividir/ },
+    { tab: 'purchase', label: 'Mes achats', re: /achet|achat|prix|cout|permettre|vehicule|voiture|moto|bateau|propriete|maison|arme|budget|\bbuy|purchase|price|\bcost|afford|vehicle|\bcar\b|\bbike|motorcycle|\bboat|property|\bhouse|weapon|\bgun|compr|precio|cuesta|coste|permitirme|vehiculo|coche|\bcarro\b|\bauto\b|barco|propiedad|\bcasa\b|\barma\b|pistola/ },
+    { tab: 'activities', label: 'Mes activités', re: /activit|grind|mission|par heure|rapporte|farm|braquage|gain net|per hour|an hour|\bearn|heist|payout|net gain|actividad|farmear|mision|por hora|rinde|golpe|atraco|ganancia neta|\bganar\b/ },
+    { tab: 'goal', label: 'Mon objectif', re: /objectif|million|atteindre|capital|economis|epargn|combien de temps|\bgoal|\breach|\bsave|saving|how long|objetivo|millon|llegar a|ahorr|cuanto tiempo|\bmeta\b/ }
   ];
   /* v7.60 (langues) : la page dit sa langue (<html lang>) : en français « 1 000 000 », « 1,5 million », « 250 k », « j'ai… » ;
      en anglais « 1,000,000 », « 1.5 million », « $200,000 », « 250k », « I have… », « 2 hours a day ». */
   const LANG = (document.documentElement.lang || 'fr').slice(0, 2).toLowerCase();
-  const toNumber = raw => { const t = String(raw).replace(/[\s  ]/g, ''); return Number(LANG === 'fr' ? t.replace(',', '.') : t.replace(/,/g, '')); };
-  const UNIT = 'millions?|mille|thousand|billions?|k(?![a-z])|m(?![a-z])';
-  const scale = unit => /^(m|millions?)$/.test(unit) ? 1e6 : /^(k|mille|thousand)$/.test(unit) ? 1e3 : /^billions?$/.test(unit) ? 1e9 : 1;
+  /* v7.61 : en espagnol, « 200.000 », « 1,5 millones », « 250 mil » (point des milliers, virgule décimale ; « 1.5 » reste un décimal) */
+  const toNumber = raw => { const t = String(raw).replace(/[\s  ]/g, ''); if (LANG === 'es') return Number(/^\d+\.\d{1,2}$/.test(t) ? t : t.replace(/\./g, '').replace(',', '.')); return Number(LANG === 'fr' ? t.replace(',', '.') : t.replace(/,/g, '')); };
+  const UNIT = 'millions?|mille|thousand|billions?|millones|millon|mil(?![a-z])|k(?![a-z])|m(?![a-z])';
+  const scale = unit => /^(m|millions?|millones|millon)$/.test(unit) ? 1e6 : /^(k|mille|thousand|mil)$/.test(unit) ? 1e3 : /^billions?$/.test(unit) ? 1e9 : 1;
   const SUFFIX = new RegExp('(\\d[\\d\\s\\u00a0\\u202f.,]*?)\\s*(' + UNIT + '|\\$)', 'g');
   const PREFIX = new RegExp('\\$\\s*(\\d[\\d,.]*\\d|\\d)\\s*(' + UNIT + ')?', 'g');
   function parseMoney(value) {
@@ -31,7 +32,7 @@
     return amounts.length ? Math.max(...amounts) : null;
   }
   function parseMinutesPerDay(value) {
-    const match = normalize(value).match(/(\d+(?:[.,]\d+)?)\s*(heures?|hours?|hrs?|h|min(?:utes?)?|mins?)\b/);
+    const match = normalize(value).match(/(\d+(?:[.,]\d+)?)\s*(heures?|hours?|horas?|hrs?|h|min(?:utes?|utos?)?|mins?)\b/);
     if (!match) return null;
     const minutes = Number(match[1].replace(',', '.')) * (match[2].startsWith('h') ? 60 : 1);
     return Number.isFinite(minutes) && minutes > 0 && minutes <= 1e6 ? minutes : null;
@@ -39,7 +40,9 @@
   /* L'argent que le joueur a déjà : « j'ai 200 000 $ » ; « I have $200,000 », « I've got 250k » */
   const HAVE_FR = /j'ai\s+(\d[\d\s.,]*?)\s*(millions?|mille|k(?![a-z])|m(?![a-z])|\$)/;
   const HAVE_EN = new RegExp("\\bi(?: have| ve got| ve| got| own)\\s+(?:got\\s+)?(\\$\\s*\\d[\\d,.]*(?:\\s*(?:" + UNIT + "))?|\\d[\\d\\s.,]*?\\s*(?:" + UNIT + "|\\$))");
-  function haveAmount(text) { const m = text.match(HAVE_FR) || (LANG !== 'fr' ? text.replace(/i'/g, 'i ').match(HAVE_EN) : null); return m ? parseMoney(m[0].replace(/^.*?(?=\$|\d)/, '')) : null; }
+  /* v7.61 : « tengo 200.000 $ », « tengo 1,5 millones » */
+  const HAVE_ES = new RegExp('\\btengo\\s+(\\$\\s*\\d[\\d.,]*|\\d[\\d\\s.,]*?\\s*(?:millones|millon|mil(?![a-z])|k(?![a-z])|m(?![a-z])|\\$))');
+  function haveAmount(text) { const m = text.match(HAVE_FR) || (LANG === 'es' ? text.match(HAVE_ES) : null) || (LANG !== 'fr' && LANG !== 'es' ? text.replace(/i'/g, 'i ').match(HAVE_EN) : null); return m ? parseMoney(m[0].replace(/^.*?(?=\$|\d)/, '')) : null; }
   function field(id, value) {
     const input = $(id);
     if (!input || value === null || value === undefined) return false;
@@ -61,10 +64,10 @@
     const q = String(value || '').trim();
     if (!q) return null;
     const text = normalize(q);
-    let intent = /objectif|million|atteindre|epargn|economis|\bgoal\b/.test(text) ? rules[rules.length - 1] : rules.find(rule => rule.re.test(text)) || rules[rules.length - 1];
+    let intent = /objectif|million|atteindre|epargn|economis|\bgoal\b|objetivo|millon|ahorr|\bmeta\b/.test(text) ? rules[rules.length - 1] : rules.find(rule => rule.re.test(text)) || rules[rules.length - 1];
     /* v7.59 (check ultime, CALC-11) : « quelle mission rapporte le plus en 90 minutes ? » parle d'activités, pas d'une partie ;
        le mot « minutes » seul ne suffit plus à ouvrir Mon temps de jeu quand la phrase parle de missions ou de gains. */
-    if (intent.tab === 'session' && !/session|j'ai du temps|temps disponible|ce soir|i have (?:some )?time|tonight/.test(text) && rules.find(r => r.tab === 'activities').re.test(text)) intent = rules.find(r => r.tab === 'activities');
+    if (intent.tab === 'session' && !/session|j'ai du temps|temps disponible|ce soir|i have (?:some )?time|tonight|partida|tengo tiempo|tiempo disponible|esta noche/.test(text) && rules.find(r => r.tab === 'activities').re.test(text)) intent = rules.find(r => r.tab === 'activities');
     const amount = parseMoney(text), minutes = parseMinutesPerDay(text), changed = [];
     openTab(intent.tab);
     if (intent.tab === 'goal') {

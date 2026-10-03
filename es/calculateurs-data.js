@@ -1,0 +1,160 @@
+/* LEONIDAKIT — adaptateur du calculateur. Sources originales inchangées.
+   Les champs inconnus restent null : une fiche reconnue n'a pas nécessairement de prix connu. */
+(function (global) {
+  'use strict';
+  var owns = function (o, k) { return !!o && Object.prototype.hasOwnProperty.call(o, k); };
+  var text = function (value, limit) { return typeof value === 'string' && value.trim() ? value.trim().slice(0, limit || 300) : null; };
+  var object = function (value) { return value && typeof value === 'object' && !Array.isArray(value) ? value : {}; };
+  function number(value, integer) {
+    if (typeof value === 'string' && /^\d+(?:[.,]\d+)?$/.test(value.trim())) value = Number(value.trim().replace(',', '.'));
+    if (typeof value !== 'number' || !Number.isFinite(value) || value < 0 || (integer && !Number.isInteger(value))) return null;
+    return value;
+  }
+  function safeLocal(value) {
+    if (typeof value !== 'string' || !/^\/(?!\/)[a-z0-9][a-z0-9/_.%~-]*$/i.test(value)) return null;
+    try {
+      var decoded = decodeURIComponent(value);
+      if (/[\\\s<>"'`?#]/.test(decoded) || decoded.indexOf('//') >= 0 || decoded.split('/').some(function (p) { return p === '.' || p === '..'; })) return null;
+      return value;
+    } catch (_) { return null; }
+  }
+  function date(value) {
+    return typeof value === 'string' && /^\d{4}-\d{2}-\d{2}(?:T[\d:.+-]+Z?)?$/.test(value) && Number.isFinite(Date.parse(value)) ? value : null;
+  }
+  function status(value, fallback) {
+    var statuses = { officiel: 'official', official: 'official', vu: 'observed', observed: 'observed', comm: 'community', community: 'community', manual: 'manual', hypothetical: 'manual', verified: 'verified', confirmed: 'verified', estimated: 'estimated', unverified: 'unverified', 'source-listed': 'source-listed', unknown: 'unknown' };
+    return statuses[value] || fallback || 'unknown';
+  }
+  var assets = Array.isArray(global.LK_ASSETS) ? new Set(global.LK_ASSETS) : null;
+  function mediaFor(entry, type, fallbackImage) {
+    var available = function (url) { return url && (!assets || assets.has(url)); };
+    var linked = [entry.image, entry.thumb, fallbackImage].map(safeLocal).filter(available);
+    // Le schéma de repli suit le même identifiant que la fiche et le générateur véhicules.
+    var schema = type === 'vehicle' ? '/img/schemas/' + entry.id + '.svg' : null;
+    if (!assets || !assets.has(schema)) schema = null;
+    var image = linked.find(function (url) { return url.indexOf('/img/officiel/') === 0; }) || linked[0] || schema;
+    return { image: image || null, imageFallback: schema !== image ? schema : null };
+  }
+  function numericField(entry, name, aliases, integer) {
+    var economy = object(entry.economy), selected, selectedKey, containers = [entry, economy];
+    for (var i = 0; i < containers.length && selectedKey === undefined; i++) {
+      for (var j = 0; j < aliases.length; j++) {
+        if (owns(containers[i], aliases[j]) && containers[i][aliases[j]] !== null && containers[i][aliases[j]] !== undefined) {
+          selected = containers[i][aliases[j]]; selectedKey = aliases[j]; break;
+        }
+      }
+    }
+    var wrapped = object(selected);
+    var value = number(owns(wrapped, 'value') ? wrapped.value : selected, integer);
+    var meta = Object.assign({}, object(object(economy.fieldMeta)[name]), object(economy[name + 'Meta']), object(object(entry.fieldMeta)[name]), object(entry[name + 'Meta']), object(wrapped.meta));
+    for (var k of ['status', 'source', 'verifiedAt', 'unit']) if (owns(wrapped, k)) meta[k] = wrapped[k];
+    if (value !== null && status(meta.status, 'unverified') === 'unknown') value = null; // v7.59 : un chiffre marqué « inconnu » n'est pas une valeur (même règle que calculateurs-modele.js et donnees-publiees.cjs)
+    return {
+      value: value,
+      meta: {
+        status: value === null ? 'unknown' : status(meta.status, 'unverified'),
+        source: text(meta.source, 1000),
+        verifiedAt: date(meta.verifiedAt),
+        unit: text(meta.unit, 40)
+      }
+    };
+  }
+  function normalize(entry, type, fallbackImage, fallbackSchema) {
+    if (!entry || !/^[a-z0-9][a-z0-9-]*$/i.test(entry.id || '')) return null;
+    function safeRoute(value) {
+      if (typeof value !== 'string') return null;
+      var parts = value.split('#');
+      if (parts.length > 2 || (parts.length === 2 && !/^[a-z0-9][a-z0-9-]*$/i.test(parts[1]))) return null;
+      var route = safeLocal(parts[0]);
+      return route ? route + (parts.length === 2 ? '#' + parts[1] : '') : null;
+    }
+    var folders = { vehicle: 'vehicules', weapon: 'armes', property: 'demeures', business: 'entreprises', place: 'lieux', hideout: 'planques', style: 'style', customization: 'personnalisations' };
+    var price = numericField(entry, 'price', ['price', 'prix', 'prixAchat']);
+    var speed = numericField(entry, 'speed', ['speed', 'vitesseMax', 'vitesse']);
+    var acceleration = numericField(entry, 'acceleration', ['acceleration']);
+    var seats = numericField(entry, 'seats', ['seats', 'places'], true);
+    var media = mediaFor(entry, type, fallbackImage);
+    var schemaImage = typeof fallbackSchema === 'string' && fallbackSchema.indexOf('<svg ') === 0 ? 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(fallbackSchema) : null;
+    if (seats.value === 0) { seats.value = null; seats.meta.status = 'unknown'; }
+    return {
+      id: entry.id, type: type,
+      name: text(entry.name || entry.nom, 200) || entry.id,
+      brand: text(entry.marque, 100),
+      aliases: [entry.aliases,entry.insp,entry.search].flat().filter(function(v){return typeof v==='string';}).join(' ').slice(0,1500),
+      purchasable: typeof entry.purchasable === 'boolean' ? entry.purchasable : null,
+      purchaseCandidate: type==='place'||entry.purchasable===false?false:typeof entry.calculatorCompatible === 'boolean' ? entry.calculatorCompatible : entry.purchasable === true || ['vehicle','weapon','business','property','hideout'].includes(type),
+      acquisition: text(entry.acquisition, 80),
+      acquisitionCondition: text(entry.condition, 300),
+      evidenceLevel: [1,2,3].includes(entry.evidenceLevel) ? entry.evidenceLevel : null,
+      activityIds: Array.isArray(entry.activityIds) ? entry.activityIds.filter(function(v){return typeof v==='string';}) : [],
+      categoryId: text(entry.cat || entry.category, 60) || null,
+      category: catLabel(type, entry.cat) || text(entry.category || entry.cat, 100) || type, // v7.53 : libellé du site, jamais l’identifiant brut (« melee », « muscle »)
+      image: media.image, imageFallback: media.imageFallback || (media.image ? schemaImage : null), schemaImage: schemaImage,
+      url: safeRoute(entry.url) || '/' + folders[type] + '/' + entry.id + '.html',
+      price: price.value, speed: speed.value, acceleration: acceleration.value, seats: seats.value,
+      status: status(entry.status || entry.st),
+      source: text(entry.source || entry.src, 1000),
+      verifiedAt: date(entry.verifiedAt),
+      fieldMeta: { price: price.meta, speed: speed.meta, acceleration: acceleration.meta, seats: seats.meta },
+      provenance: text(entry.provenance, 300) || (type === 'vehicle' ? 'vehicules-data.js#' : type === 'weapon' ? 'armes-data.js#' : 'outils/editorial.json#') + entry.id
+    };
+  }
+  /* v7.53 : libellés lus dans les tables du site (armes-data.js, vehicules-data.js) : aucun libellé recopié ici. */
+  function catLabel(type, id) { var t = type === 'weapon' ? global.LK_ARMES_CATS : type === 'vehicle' ? global.LK_VEHICULES_CATS : null; var v = t && id ? t[id] : null; return typeof v === 'string' ? v : v && typeof v === 'object' ? (v.nom || v.label || v.titre || null) : null; }
+  function catalogue() {
+    var generated = object(global.LK_CALCULATEURS_CATALOGUE), images = object(generated.weaponImages), schemas = object(generated.weaponSchemas);
+    var rows = [];
+    (Array.isArray(global.LK_VEHICULES) ? global.LK_VEHICULES : []).forEach(function (entry) { rows.push(normalize(entry, 'vehicle')); });
+    (Array.isArray(global.LK_ARMES) ? global.LK_ARMES : []).forEach(function (entry) { rows.push(normalize(entry, 'weapon', images[entry.id], schemas[entry.id])); });
+    (Array.isArray(generated.entries) ? generated.entries : []).forEach(function (entry) {
+      if (['property', 'business', 'place', 'hideout'].indexOf(entry.type) !== -1) rows.push(normalize(entry, entry.type));
+    });
+    // Métadonnées d'obtention vérifiées ; les références existantes gardent leur identité.
+    // Les collections non détaillées ne deviennent pas des achats fictifs.
+    (Array.isArray(global.LK_ACQUISITIONS?.items) ? global.LK_ACQUISITIONS.items : []).forEach(function (entry) {
+      if (entry.evidenceLevel !== 1 || entry.calculatorCompatible !== true) return;
+      var at = rows.findIndex(function (row) { return row && row.id === entry.id && row.type === entry.type; });
+      var image = entry.images?.[0]?.variants?.[0]?.src || null;
+      var item = normalize(Object.assign({}, entry, {image:image, category:global.LK_ACQUISITIONS.categories.find(function (c) { return c.id === entry.category; })?.label}), entry.type);
+      if (!item) return;
+      if (at >= 0) rows[at] = Object.assign({}, rows[at], {acquisition:item.acquisition,acquisitionCondition:item.acquisitionCondition,evidenceLevel:item.evidenceLevel,source:item.source,verifiedAt:item.verifiedAt});
+      else rows.push(item);
+    });
+    return rows.filter(Boolean);
+  }
+  // Relations économiques : identifiants canoniques uniquement, jamais déduits des catégories.
+  // catalogue.activityIds / activité.purchaseIds : association documentée (effet non présumé).
+  // activité.requiresPurchaseIds : achats devant être marqués possédés pour jouer l’activité.
+  function activities() {
+    // Absence de table publiée et sourcée : aucun gain fictif ne devient une activité GTA VI.
+    return (Array.isArray(global.LK_ACTIVITIES) ? global.LK_ACTIVITIES : []).map(function (entry) {
+      if (!entry || !/^[a-z0-9][a-z0-9-]*$/i.test(entry.id || '')) return null;
+      var out = {
+        id: entry.id, name: text(entry.name || entry.nom, 200) || entry.id,
+        requiresPurchaseIds: Array.isArray(entry.requiresPurchaseIds) ? entry.requiresPurchaseIds.filter(function(v){return typeof v==='string';}) : [],
+        purchaseIds: Array.isArray(entry.purchaseIds) ? entry.purchaseIds.filter(function(v){return typeof v==='string';}) : [],
+        prepOnce: entry.prepOnce === true,
+        beginner: typeof entry.beginner === 'boolean' ? entry.beginner : null,
+        source: text(entry.source, 1000), status: status(entry.status, 'unverified'),
+        verifiedAt: date(entry.verifiedAt), fieldMeta: {}
+      };
+      ['reward', 'cost', 'duration', 'prep', 'cooldown', 'share', 'investment', 'players'].forEach(function (key) {
+        var field = numericField(entry, key, [key], key === 'players');
+        if ((key === 'share' && field.value > 100) || (key === 'players' && field.value === 0)) { field.value = null; field.meta.status = 'unknown'; }
+        out[key] = field.value; out.fieldMeta[key] = field.meta;
+      });
+      return out;
+    }).filter(Boolean);
+  }
+  var presets = [
+    { id: 'scenario-a', example: { capital: 200000, minutes: 60 }, name: 'Ejemplo A: misiones cortas', reward: 25000, cost: 2500, duration: 12, prep: 3, cooldown: 5, share: 100, investment: 0, players: 1, beginner: true },
+    { id: 'scenario-b', example: { capital: 200000, minutes: 60 }, name: 'Ejemplo B: misiones largas', reward: 120000, cost: 10000, duration: 40, prep: 10, cooldown: 10, share: 100, investment: 0, players: 1, beginner: false },
+    { id: 'scenario-c', example: { capital: 600000, minutes: 480 }, name: 'Ejemplo C: con una compra inicial', reward: 90000, cost: 15000, duration: 45, prep: 15, cooldown: 0, share: 100, investment: 500000, players: 1, beginner: false }
+  ].map(function (entry) {
+    return Object.freeze(Object.assign(entry, { status: 'manual', source: null, verifiedAt: null, hypothetical: true, note: 'Hipótesis de ejemplo que puedes cambiar. Ninguna cantidad ni ritmo de GTA VI está confirmado.' }));
+  });
+  global.LKCalcData = Object.freeze({
+    catalogue: catalogue, activities: activities, presets: Object.freeze(presets),
+    meta: Object.freeze({ schemaVersion: 1, currency: '$', durationUnit: 'minute', shareUnit: 'percent', unknown: null, activitiesSource: 'window.LK_ACTIVITIES', presetsAreHypothetical: true, catalogueIsRuntime: true })
+  });
+})(window);

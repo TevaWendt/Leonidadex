@@ -25,6 +25,7 @@ function distance(a,b,max=3){if(a===b)return 0;const la=a.length,lb=b.length;if(
  return prev[lb];}
 const allowed=w=>w.length<4?0:w.length<=6?1:2;
 function createAnalyzer(lexique){
+ /* v7.61 : mots vides en plus (index d'une autre langue : « el », « los », « para »…) */const stopX=new Set((lexique?.stop||[]).map(w=>norm(w)));
  const map=new Map(),concepts=new Map(),conceptPhrases=[],phraseByFirst=new Map(),firstMax=new Map();let longest=1;
  /* firstMax : pour chaque premier mot d'une forme, la longueur de sa plus longue forme ; les autres mots ne sont pas cherchés (analyse en temps linéaire) */
  const add=(f,to)=>{const r=raw(f),key=r.join(' ');if(!key)return;map.set(key,raw(to));longest=Math.max(longest,r.length);firstMax.set(r[0],Math.max(firstMax.get(r[0])||0,r.length));};
@@ -34,7 +35,7 @@ function createAnalyzer(lexique){
  function expand(tokens){const out=[];let replaced=0;for(let i=0;i<tokens.length;){let hit=null;for(let n=Math.min(firstMax.get(tokens[i])||0,tokens.length-i);n>=1;n--){const key=tokens.slice(i,i+n).join(' ');if(map.has(key)){hit={n,to:map.get(key)};break;}}if(hit){const identity=hit.to.join(' ')===tokens.slice(i,i+hit.n).join(' ');if(!identity)replaced++;/* second passe : un mot issu d'un remplacement peut lui-même être une forme du lexique (« combien coute » → « combien prix ») ; une entrée identité (nom de fiche protégé, « vice city ») est gardée telle quelle */for(const t of hit.to){const again=identity?null:map.get(t);if(again&&again.length===1&&again[0]!==t&&!map.has(again[0]))out.push(again[0]);else out.push(t);}i+=hit.n;}else{out.push(tokens[i]);i++;}}return {tokens:out,replaced};}
  function analyze(text){const r=raw(text),{tokens:expanded,replaced}=expand(r),stems=expanded.map(stem),tags=new Set();
   for(let i=0;i<stems.length;i++){for(const id of concepts.get(stems[i])||[])tags.add(id);for(const p of phraseByFirst.get(stems[i])||[])if(p.parts.every((w,k)=>stems[i+k]===w))tags.add(p.id);}
-  return {raw:r,expanded,stems,terms:stems.filter(t=>!STOP.has(t)),concepts:[...tags],replaced};}
+  return {raw:r,expanded,stems,terms:stems.filter(t=>!STOP.has(t)&&!stopX.has(t)),concepts:[...tags],replaced};}
  return Object.freeze({analyze,expand,stem,concepts:w=>concepts.get(stem(w))||[]});
 }
 /* Index BM25 : documents = suites de jetons ; recherche avec rapprochement des mots inconnus (distance ≤ 1 pour 4 à 6 lettres, ≤ 2 au-delà, ou même repère phonétique). */
@@ -61,24 +62,8 @@ function createIndex(options={}){
    sans les nombres s'il reste un mot), repères courts (numéros, lettres seules) qui départagent des fiches de même nom, et suite de
    lettres pour un nom sans mot de deux lettres (« P’s & Q’s »). null si le nom ne peut pas être reconnu. */
 const SIG=t=>t&&t.length>=2&&!/^(?:\$|€|dollars|euros)$/.test(t);
-function nameTokens(analyzer,label){const name=String(label).replace(/\s*\((?:nom r[ée]el|nom suppos[ée]|real name|assumed name|presumed name)\)\s*$/i,'')||String(label);const all=analyzer.analyze(name).terms.filter(SIG),words=all.filter(t=>!/^\d+$/.test(t)),toks=words.length?words:all;const r=raw(name);
+function nameTokens(analyzer,label){const name=String(label).replace(/\s*\((?:nom r[ée]el|nom suppos[ée])\)\s*$/i,'')||String(label);const all=analyzer.analyze(name).terms.filter(SIG),words=all.filter(t=>!/^\d+$/.test(t)),toks=words.length?words:all;const r=raw(name);
  if(!toks.length){const r2=raw(name.replace(/[’']/g,''));if(r.length>=2&&r.join('').length>=3&&r.every(t=>t.length===1)&&!r.every(t=>/^\d$/.test(t)))return {toks:[...new Set([...r,...r2])],minor:[],seqs:[...new Set([r.join(' '),r2.join(' ')])]};return null;}
  return {toks,minor:r.filter(t=>/^\d+$/.test(t)||(t.length===1&&/[a-z]/.test(t))),seqs:null};}
-/* v7.61 (langues) : une question écrite dans une autre langue (anglais) est d'abord réécrite dans la forme française que Léo
-   lit : montants (« $200,000 » → « 200000 $ »), puis expressions de la table (les plus longues d'abord, en un seul passage).
-   La table vient du noyau de la langue (en/leo-index.json → pivot) ; une entrée identité protège un nom de fiche
-   (« Ocean Beach » n'est pas réécrit). Rien n'est appelé sur le site français. */
-function pivotTable(list){const map=new Map(),parts=[];for(const e of list||[]){if(!Array.isArray(e))continue;const k=norm(e[0]).replace(/[^a-z0-9$'& ]+/g,' ').replace(/\s+/g,' ').trim();if(!k||map.has(k))continue;map.set(k,String(e[1]||''));parts.push(k);}
- parts.sort((a,b)=>b.length-a.length);const esc=s=>s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&').replace(/ /g,'\\s+');
- return {map,re:parts.length?new RegExp("(^|[^a-z0-9'])("+parts.map(esc).join('|')+")(?=$|[^a-z0-9'])",'g'):null};}
-function pivot(text,table){if(!table||!table.re)return String(text||'');
- let s=norm(text).replace(/[’‘`´]/g,"'");
- /* montants à l'américaine : séparateurs de milliers retirés, « $ » placé après le nombre (« $1.5m » → « 1.5m $ ») */
- s=s.replace(/(\d),(?=\d{3}(?!\d))/g,'$1').replace(/\$\s*(\d+(?:\.\d+)?)\s*(k|m|bn|mil|million|millions|thousand|grand|billion|billions)?(?![a-z0-9])/g,(m,n,u)=>n+(u?' '+u:'')+' $');
- /* calcul hors sujet (« what's 12 times 12 ») : lu comme « combien font … » */
- const math=/\d\s*(?:times|plus|minus|divided by|multiplied by|x|\*|\+|\/)\s*\d/.test(s)&&!/\$|\bk\b|million|hours?|min/.test(s);
- s=s.replace(/(\d)\s*(?:hrs?|hours?)(?![a-z])/g,'$1 heures').replace(/(\d)\s*(?:mins?|minutes?)(?![a-z])/g,'$1 minutes');
- s=s.replace(table.re,(m,pre,w)=>{const to=table.map.get(w.replace(/\s+/g,' '));return pre+(to===undefined?w:to===''?' ':' '+to+' ');});
- s=s.replace(/\s+/g,' ').trim();return math?'combien font '+s:s;}
-return Object.freeze({STOP,norm,raw,stem,phonetic,distance,createAnalyzer,createIndex,nameTokens,SIG,pivotTable,pivot});
+return Object.freeze({STOP,norm,raw,stem,phonetic,distance,createAnalyzer,createIndex,nameTokens,SIG});
 });

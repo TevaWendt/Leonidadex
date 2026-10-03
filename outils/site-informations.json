@@ -42,7 +42,7 @@
   {
    "date": "2026-10-02",
    "version": "v7.61",
-   "text": "Langues : tout le site existe en anglais (fiches, carte, carnets, recherche, page introuvable) et Léo répond en anglais sur les pages anglaises, toujours depuis ton navigateur ; aucune clé nouvelle (la conversation de Léo garde sa langue dans la même clé de session), aucun cookie, aucun service extérieur."
+   "text": "Langues : tout le site existe aussi en espagnol (accueil, calculateur, Tuto, carte, catalogues, listes, toutes les fiches, carnets, À propos, Contact et ces Mentions), et Léo répond en espagnol, toujours depuis ton navigateur ; aucune clé de plus (lk_lang_v1 garde la langue choisie), aucun cookie, aucun service extérieur. En cas de différence, la version française de ces Mentions fait foi."
   },
   {
    "date": "2026-10-02",
