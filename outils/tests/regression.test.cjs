@@ -150,7 +150,7 @@ test('Every vehicle gets a distinct schematic',()=>{
 // v7.11 : aucune fiche ne déclare un type dérivé de Product (Google exigerait prix, avis ou note, qui n'existent pas ici).
 test('Structured data avoids Product-derived types',()=>{
  const bad=/"@type":\s*"(Product|Vehicle|Car|Motorcycle|BusOrCoach|Offer|IndividualProduct|ProductModel)"/;
- const dirs=['vehicules','armes','lieux','personnages','entreprises','demeures','planques'];
+ const dirs=['vehicules','armes','lieux','personnages','entreprises','demeures','planques','gangs'];
  const files=[...dirs.flatMap(d=>fs.readdirSync(path.join(root,d)).filter(f=>f.endsWith('.html')).map(f=>d+'/'+f)),'index.html','vehicules.html','armes.html','carte.html'];
  for(const f of files){const html=fs.readFileSync(path.join(root,f),'utf8');
   for(const m of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)){

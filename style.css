@@ -3297,3 +3297,7 @@ a.ed-brand:hover,a.ed-brand:focus-visible{border-color:var(--ink);box-shadow:5px
 .lk-fr{display:inline-block;margin-left:.35em;padding:1px 4px;border:1px solid currentColor;border-radius:3px;font-size:.62em;font-weight:800;line-height:1.2;vertical-align:.12em;opacity:.75;letter-spacing:.02em;text-decoration:none;}
 @media (prefers-reduced-motion:reduce){.lk-lang>summary{transition:none;}}
 @media print{.lk-langbar,.lk-lang-offer{display:none;}}
+/* v7.65 : accueil, « Le monde de Leonida » en cinq cartes (gangs et factions ajoutés) : trois puis deux centrées, jamais de carte seule
+   sur sa rangée ; même largeur de carte que les rangées pleines. */
+@media(min-width:960px){.lore-grid--five{grid-template-columns:repeat(6,minmax(0,1fr));}.lore-grid--five>*{grid-column:span 2;}.lore-grid--five>:nth-child(4){grid-column:2/span 2;}}
+@media(min-width:640px) and (max-width:959px){.lore-grid--five{grid-template-columns:repeat(4,minmax(0,1fr));}.lore-grid--five>*{grid-column:span 2;}.lore-grid--five>:nth-child(5){grid-column:2/span 2;}}

@@ -1,5 +1,5 @@
 {
-  "_note": "v7.41 (lot 4) : contenu éditorial des cinq hubs du monde (lieux, personnages, demeures, planques, entreprises), rendu sous la grille des fiches par outils/hubs-monde.cjs avec le système de sections du lot 3 (outils/sections.cjs), appelé par outils/lore-gen.js. Chaque hub : « Ce que Rockstar a montré » (frise datée, visuels par identifiant de outils/medias-officiels.json), « Ce que la communauté a identifié » (paires fiction ↔ réel, source citée), « Ce qui reste à confirmer », « Ce que ça change pour toi » (carte avec repères préréglés, calculateur, suivi), une FAQ (reprise en FAQPage par sync-site et dans Léo par gen-leo) et le bloc « Sources et statuts » (registre commun ci-dessous). Aucune phrase ne doit être identique à une phrase des fiches (outils/editorial.json) : lore-gen.js refuse la génération sinon. Registre « tu », mots simples ; chaque paragraphe apporte un fait daté ou un usage. rockstargames.com n’étant pas joignable depuis l’atelier le 27/09/2026, les textes officiels ont été relus dans des pages qui les citent (presse, gta.wiki, GTABase), toutes ouvertes ce jour-là.",
+  "_note": "v7.41 (lot 4) : contenu éditorial des hubs du monde (lieux, personnages, demeures, planques, entreprises ; gangs et factions depuis la v7.65), rendu sous la grille des fiches par outils/hubs-monde.cjs avec le système de sections du lot 3 (outils/sections.cjs), appelé par outils/lore-gen.js. Chaque hub : « Ce que Rockstar a montré » (frise datée, visuels par identifiant de outils/medias-officiels.json), « Ce que la communauté a identifié » (paires fiction ↔ réel, source citée), « Ce qui reste à confirmer », « Ce que ça change pour toi » (carte avec repères préréglés, calculateur, suivi), une FAQ (reprise en FAQPage par sync-site et dans Léo par gen-leo) et le bloc « Sources et statuts » (registre commun ci-dessous). Aucune phrase ne doit être identique à une phrase des fiches (outils/editorial.json) : lore-gen.js refuse la génération sinon. Registre « tu », mots simples ; chaque paragraphe apporte un fait daté ou un usage. rockstargames.com n’étant pas joignable depuis l’atelier le 27/09/2026, les textes officiels ont été relus dans des pages qui les citent (presse, gta.wiki, GTABase), toutes ouvertes ce jour-là.",
   "statuts": [
     {
       "statut": "officiel",
@@ -534,6 +534,70 @@
       "consultedAt": "2026-09-27",
       "statut": "comm",
       "claim": "Rapproche l’arène du Kaseya Center de Miami ; son nom, non publié par Rockstar, n’est pas repris ici."
+    },
+    "xbox-ultimate": {
+      "url": "https://www.xbox.com/en-us/games/store/grand-theft-auto-vi-ultimate-edition/9nnzsnhlr63l",
+      "title": "Microsoft Store : Grand Theft Auto VI, Ultimate Edition (fiche officielle de l’édition)",
+      "publishedAt": null,
+      "consultedAt": "2026-10-03",
+      "statut": "officiel",
+      "claim": "« PTT YOUNGIN$ COMPOUND » : piller ce repaire de gang et s’enfuir sans encombre avec des objets spéciaux et une contrebande à part."
+    },
+    "gtabase-ptt": {
+      "url": "https://www.gtabase.com/gangs/gta-6/ptt-youngin",
+      "title": "GTABase : PTT Youngin$",
+      "publishedAt": null,
+      "consultedAt": "2026-10-03",
+      "statut": "officiel",
+      "claim": "Reprend le texte de Rockstar : piller le repaire de l’un des gangs les plus bruyants de Southside, à Vice City, puis s’enfuir."
+    },
+    "svg-wanted": {
+      "url": "https://www.svg.com/2246084/gta-6-wanted-system-explained-rockstar/",
+      "title": "SVG : GTA 6’s wanted system explained, everything Rockstar has confirmed",
+      "publishedAt": "2026-08-28",
+      "consultedAt": "2026-10-03",
+      "statut": "officiel",
+      "claim": "Rob Nelson (IGN) : un crime doit avoir un témoin ou déclencher une alarme ; lunettes et coiffure ne suffisent pas, la police connaît tes vêtements."
+    },
+    "wikipedia-extended": {
+      "url": "https://en.wikipedia.org/wiki/Grand_Theft_Auto_VI:_An_Extended_Look",
+      "title": "Wikipedia : Grand Theft Auto VI, An Extended Look",
+      "publishedAt": null,
+      "consultedAt": "2026-10-03",
+      "statut": "vu",
+      "claim": "Résumé des scènes : livraison pour Boobie interrompue par la police, Raul qui fait entrer le duo dans son équipe, Brian qui confie une affaire au dîner."
+    },
+    "gtawiki-final-chapter": {
+      "url": "https://gta.wiki/w/Final_Chapter_MC",
+      "title": "GTA Wiki : Final Chapter MC",
+      "publishedAt": "2026-08-30",
+      "consultedAt": "2026-10-03",
+      "statut": "comm",
+      "claim": "Nom tiré d’une capture officielle d’Ambrosia ; fondé en 1982 d’après les écussons ; rapproché des Bandidos et des Warlocks."
+    },
+    "gtawiki-san4san": {
+      "url": "https://gta.wiki/w/San4San",
+      "title": "GTA Wiki : San4San",
+      "publishedAt": "2026-09-11",
+      "consultedAt": "2026-10-03",
+      "statut": "comm",
+      "claim": "Chaîne au rassemblement de voitures du Trailer 1 (1:08), fresque de La Perle dans le Trailer 2 (0:46) ; nom d’abord connu par les fuites de 2022 ; gang rattaché à Venture Apartments."
+    },
+    "gtabase-gangs": {
+      "url": "https://www.gtabase.com/gta-6/gangs/",
+      "title": "GTABase : GTA 6 gangs & factions",
+      "publishedAt": null,
+      "consultedAt": "2026-10-03",
+      "statut": "comm",
+      "claim": "Final Chapter MC, PTT Youngin$ et San4San présentés comme confirmés ; douze services de police recensés ; gangs de GTA Vice City rangés dans les spéculations."
+    },
+    "gta6explained-gangs": {
+      "url": "https://gta6explained.com/blog/gta-6-gangs-factions-confirmed-rumors",
+      "title": "GTA 6 Explained : gangs and factions, confirmed groups vs rumors",
+      "publishedAt": "2026-08-01",
+      "consultedAt": "2026-10-03",
+      "statut": "comm",
+      "claim": "L’équipe de Raul et le réseau de Brian sont confirmés mais sans nom ; leur prêter un nom inventé par les fans serait inexact."
     }
   },
   "lieux": {
@@ -1818,5 +1882,267 @@
       "miaminewtimes-flanigans",
       "gtaintel-businesses"
     ]
+  },
+  "gangs": {
+    "nav": [
+      {
+        "href": "#fiches",
+        "label": "Les six fiches"
+      },
+      {
+        "href": "#rockstar",
+        "label": "Rockstar"
+      },
+      {
+        "href": "#communaute",
+        "label": "Communauté"
+      },
+      {
+        "href": "#a-confirmer",
+        "label": "À confirmer"
+      },
+      {
+        "href": "#pour-toi",
+        "label": "Pour toi"
+      },
+      {
+        "href": "#faq",
+        "label": "FAQ"
+      },
+      {
+        "href": "#sources",
+        "label": "Sources"
+      }
+    ],
+    "rockstar": {
+      "lede": "Aucun texte de Rockstar ne liste les gangs. Des écussons, une enseigne, un texte d’édition et une interview dessinent pourtant le paysage.",
+      "items": [
+        {
+          "date": "4 décembre 2023",
+          "titre": "Trailer 1",
+          "statut": "vu",
+          "texte": "Une voiture du Vice-Dale Police Department et le bureau du shérif du comté de Leonard : les premiers noms de forces de l’ordre lisibles."
+        },
+        {
+          "date": "6 mai 2025",
+          "titre": "Régions et personnages",
+          "statut": "officiel",
+          "texte": "Pour Rockstar, à Ambrosia, la raffinerie donne les emplois et le gang de motards local s’occupe du reste ; sur la capture, les gilets portent « Final Chapter ». Raul recrute des braqueurs, Jason travaille pour les trafiquants des Keys.",
+          "media": "ambrosia-01",
+          "alt": "Motards du Final Chapter MC en cortège dans une rue d’Ambrosia, devant le panneau du bureau du shérif du comté, capture officielle"
+        },
+        {
+          "date": "6 mai 2025",
+          "titre": "Trailer 2",
+          "statut": "vu",
+          "texte": "Un fourgon blindé de la police fait face à Lucia vers 1:59 ; vers 1:25, le chantier de Brian charge de nuit.",
+          "media": "trailer-2-police-riot-119",
+          "alt": "Fourgon blindé noir de la police face à Lucia pendant la poursuite du second trailer, vers 1:59"
+        },
+        {
+          "date": "24 juin 2026",
+          "titre": "Édition Ultimate",
+          "statut": "officiel",
+          "texte": "Premier gang nommé dans un texte officiel : les PTT Youngin$ de Southside, dont on pille le repaire avant de fuir. Une autre capture montre une vedette marquée Vice City Police.",
+          "media": "ptt-youngin-illegal-goods-store",
+          "alt": "Le repaire des PTT Youngin$ de nuit, moto tout-terrain décorée et foule qui filme, capture officielle de l’Édition Ultimate"
+        },
+        {
+          "date": "27 août 2026",
+          "titre": "Extended Look",
+          "statut": "vu",
+          "texte": "Une livraison pour Boobie à Venture Apartments tourne à la descente de police ; Raul prend Jason et Lucia dans son équipe ; Brian leur confie une affaire à table."
+        },
+        {
+          "date": "28 août 2026",
+          "titre": "Famitsu",
+          "statut": "officiel",
+          "texte": "Rob Nelson (Rockstar North) : on s’infiltre dans les repaires de gangs pour voler argent ou drogue, que la carte chiffre d’avance ; la drogue se revend à un receleur. Sans témoin ni alarme, pas d’avis de recherche."
+        }
+      ],
+      "p": [
+        "Ici, un nom « lu à l’image » vient d’un écusson, d’un marquage ou d’une enseigne : Rockstar ne l’a pas pour autant présenté."
+      ]
+    },
+    "communaute": {
+      "lede": "Les wikis vont plus loin que les images. Voici ce qu’ils avancent.",
+      "pairs": [
+        {
+          "fiction": "Final Chapter MC",
+          "reel": "Couleurs rapprochées de celles des Bandidos, terrain de celui des Warlocks, deux clubs réels (GTA Wiki).",
+          "src": "gtawiki-final-chapter"
+        },
+        {
+          "fiction": "San4San",
+          "reel": "Nom lu sur une chaîne (Trailer 1, 1:08) et une fresque de La Perle (Trailer 2, 0:46) selon le wiki ; d’abord apparu dans les fuites de 2022.",
+          "src": "gtawiki-san4san"
+        },
+        {
+          "fiction": "Les revendeurs de Venture Apartments",
+          "reel": "Rattachés à San4San par le wiki ; la vidéo ne nomme pas leur groupe.",
+          "src": "gtawiki-san4san"
+        },
+        {
+          "fiction": "Les gangs de 2002",
+          "reel": "Le retour des Cubains ou du cartel colombien de GTA Vice City reste une hypothèse de GTABase.",
+          "src": "gtabase-gangs"
+        },
+        {
+          "fiction": "L’équipe de Raul, le réseau de Brian",
+          "reel": "Aucun nom officiel : leur prêter un nom de fan serait inexact, rappelle un guide.",
+          "src": "gta6explained-gangs"
+        },
+        {
+          "fiction": "Les forces de l’ordre",
+          "reel": "GTABase en recense une douzaine ; ce site ne garde que les noms lisibles.",
+          "src": "gtabase-gangs"
+        }
+      ],
+      "p": [
+        "Un nom lu par un wiki reste une identification communautaire tant que Rockstar ne l’écrit pas."
+      ]
+    },
+    "confirmer": {
+      "lede": "Les gangs sont montrés, pas expliqués.",
+      "items": [
+        {
+          "q": "Combien de gangs ?",
+          "etat": "Aucune liste : Rob Nelson parle de repaires de gangs, sans les nommer."
+        },
+        {
+          "q": "Rejoindre un gang, prendre un territoire ?",
+          "etat": "Rien d’annoncé. Seul le pillage des repaires est décrit."
+        },
+        {
+          "q": "Le butin d’un repaire",
+          "etat": "Argent et drogue, chiffrés par la carte ; aucun montant publié."
+        },
+        {
+          "q": "Le repaire des PTT Youngin$ sans l’Édition Ultimate",
+          "etat": "Rangé dans l’édition ; rien ne dit qu’il existe sans elle."
+        },
+        {
+          "q": "Les autres polices",
+          "etat": "Vice City, Vice-Dale et deux bureaux de shérif se lisent ; le reste n’est pas publié."
+        }
+      ]
+    },
+    "toi": {
+      "lede": "À préparer dès maintenant avec ces six fiches.",
+      "actions": [
+        {
+          "k": "Calculateur",
+          "t": "Un repaire de gang, ça vaut le détour ?",
+          "d": "Aucun butin publié : écris ce qu’un pillage rapporterait et sa durée, le calculateur le compare à tes autres activités.",
+          "href": "calculateurs.html?tool=activities&from=gangs#atelier"
+        },
+        {
+          "k": "Carte",
+          "t": "Les territoires repérés",
+          "d": "Ambrosia, les PTT Youngin$, Venture Apartments, le chantier de Brian et le pénitencier.",
+          "pins": [
+            "ambrosia",
+            "ptt-youngin",
+            "g-L192",
+            "g-L1421",
+            "leonida-penitentiary"
+          ],
+          "pinsTitle": "Gangs et forces de l’ordre"
+        },
+        {
+          "k": "Armurerie",
+          "t": "Le revolver des motards",
+          "d": "Le Mustang .357 de la capture d’Ambrosia, nom gravé sur l’arme.",
+          "href": "armes/mustang-357.html"
+        },
+        {
+          "k": "Véhicules",
+          "t": "Patrouilles, hélicoptères, vedettes",
+          "d": "Chaque véhicule de police ou des garde-côtes vu à l’image a sa fiche.",
+          "href": "vehicules.html"
+        }
+      ]
+    },
+    "faq": [
+      {
+        "q": "Quels gangs sont confirmés dans GTA VI ?",
+        "a": "Deux groupes ont un nom dans les médias officiels : le Final Chapter MC, lu sur les gilets d’une capture d’Ambrosia, et les PTT Youngin$ de Southside, nommés dans le texte de l’Édition Ultimate. San4San n’est qu’une lecture des joueurs.",
+        "k": [
+          "gangs confirmes",
+          "quels gangs",
+          "liste des gangs",
+          "gangs gta 6",
+          "factions",
+          "bandes"
+        ]
+      },
+      {
+        "q": "Peut-on attaquer les repaires de gangs ?",
+        "a": "Oui, selon Rob Nelson (Famitsu) : on s’introduit dans un repaire pour voler argent ou drogue. La carte indique ce qu’il contient ; la drogue se revend à un receleur.",
+        "k": [
+          "repaire de gang",
+          "attaquer un gang",
+          "voler un gang",
+          "cambrioler un gang",
+          "piller un repaire",
+          "planque de gang"
+        ]
+      },
+      {
+        "q": "Qui sont les motards d’Ambrosia ?",
+        "a": "Le Final Chapter MC, fondé en 1982 d’après ses écussons : pour Rockstar, le gang de motards local fournit à peu près tout ce que la raffinerie ne fournit pas.",
+        "k": [
+          "motards",
+          "bikers",
+          "final chapter",
+          "gang de motards",
+          "club de motards",
+          "ambrosia gang"
+        ]
+      },
+      {
+        "q": "Comment fonctionne l’avis de recherche ?",
+        "a": "Un crime n’est signalé que si quelqu’un le voit ou si une alarme sonne, et les étoiles montent sans excès (Rob Nelson). Lunettes ou coupe ne suffisent pas : la police connaît tes vêtements.",
+        "k": [
+          "avis de recherche",
+          "etoiles de recherche",
+          "wanted",
+          "temoin",
+          "alarme",
+          "semer la police",
+          "niveau de recherche"
+        ]
+      },
+      {
+        "q": "Peut-on rejoindre l’équipe de Raul ?",
+        "a": "Dans l’histoire, oui : l’Extended Look montre Raul prendre Jason et Lucia dans son équipe après une fuite réussie. La suite n’est pas publiée.",
+        "k": [
+          "equipe de raul",
+          "braquages",
+          "rejoindre raul",
+          "crew raul",
+          "braqueurs"
+        ]
+      }
+    ],
+    "sources": [
+      "rs-vi",
+      "rs-screens",
+      "rs-videos",
+      "rs-extended",
+      "xbox-ultimate",
+      "gtabase-ptt",
+      "famitsu-nelson",
+      "gtavice-famitsu",
+      "svg-wanted",
+      "wikipedia-extended",
+      "gtawiki-extended",
+      "gtawiki-final-chapter",
+      "gtawiki-san4san",
+      "gtabase-gangs",
+      "gta6explained-gangs",
+      "gtawiki-counties"
+    ],
+    "sourcesLede": "Chaque affirmation de cette page porte un statut et vient d’une page ouverte à la date indiquée. Le texte de l’Édition Ultimate et les propos de Rob Nelson ont été relus le 3 octobre 2026 dans les sources qui les reproduisent."
   }
 }

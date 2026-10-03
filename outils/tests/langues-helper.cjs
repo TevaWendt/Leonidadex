@@ -97,6 +97,7 @@ const EN_KEEP = {
   /* titres d'articles et de vidéos cités en source (« Quelle: Kotaku: … ») */
   titres: [
     'GTA 6 just revealed a massive number of new gameplay details',
+    'GTA 6’s wanted system explained, everything Rockstar has confirmed', 'gangs and factions, confirmed groups vs rumors', 'GTA 6 gangs & factions' /* v7.65 */,
     'GTA VI reveals pricing, editions, and emphasis on immersion',
     'everything revealed from the GTA 6 Extended Look',
     'every new location Rockstar showed in the Extended Look',

@@ -5608,6 +5608,10 @@
 ["dieser typ", "ce personnage"],
 ["zahlt man", "coute"],
 ["zahle ich", "coute"],
-["zahl ich", "coute"]
+["zahl ich", "coute"],
+["gangverstecke", "repaires de gangs"],
+["gangversteck", "repaire de gang"],
+["verstecke der gangs", "repaires de gangs"],
+["verstecke von gangs", "repaires de gangs"]
 ]
 }

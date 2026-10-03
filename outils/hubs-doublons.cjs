@@ -1,6 +1,6 @@
 'use strict';
 /* v7.41 (lot 4) : aucune phrase des zones éditoriales des hubs du monde (outils/editorial-hubs.json) ne doit être
-   identique à une phrase des 29 fiches (outils/editorial.json : description, tagline, facts, texte, contexte, pratique)
+   identique à une phrase des fiches (outils/editorial.json : description, tagline, facts, texte, contexte, pratique)
    ni aux textes d'en-tête des hubs. Comparaison après normalisation (minuscules, accents, ponctuation, apostrophes,
    espaces) sur les phrases d'au moins quatre mots. Utilisé par lore-gen.js (refus de générer) et par les tests.
    Usage direct : node outils/hubs-doublons.cjs  → liste les doublons, code de sortie 1 s'il y en a. */
@@ -35,7 +35,7 @@ function check(opts = {}) {
   const ed = opts.editorial || JSON.parse(fs.readFileSync(path.join(root, 'outils/editorial.json'), 'utf8'));
   const ficheSet = new Set(collectFicheStrings(ed, opts.extra || []).flatMap(sentences));
   const dupes = [], seen = new Map();
-  for (const hub of ['lieux', 'personnages', 'demeures', 'planques', 'entreprises']) {
+  for (const hub of ['lieux', 'personnages', 'demeures', 'planques', 'entreprises', 'gangs']) {
     if (!hubs[hub]) continue;
     for (const s of collectHubStrings(hubs[hub]).flatMap(sentences)) {
       if (ficheSet.has(s)) dupes.push({ hub, phrase: s, ou: 'fiche' });

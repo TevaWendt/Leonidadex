@@ -7,7 +7,7 @@ const fs = require('node:fs'), path = require('node:path');
 const acquisition = JSON.parse(fs.readFileSync(path.join(__dirname, 'acquisitions.json'), 'utf8')).categories;
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
-const world = [['lieux.html', 'Lieux'], ['personnages.html', 'Personnages'], ['demeures.html', 'Demeures'], ['planques.html', 'Planques'], ['entreprises.html', 'Entreprises'], ['collectibles.html', 'Collectibles']];
+const world = [['lieux.html', 'Lieux'], ['personnages.html', 'Personnages'], ['gangs.html', 'Gangs et factions'] /* v7.65 */, ['demeures.html', 'Demeures'], ['planques.html', 'Planques'], ['entreprises.html', 'Entreprises'], ['collectibles.html', 'Collectibles']];
 // Menu « S’équiper » : seules les catégories marquées menu:true dans acquisitions.json (pas de doublon avec Véhicules,
 // Planques ou Armurerie, pas de catégorie vide). Le hub « Tout ce qui s’achète » reste dans la barre (Achats) et le pied de page.
 const shopping = acquisition.filter(c => c.menu && !c.alias).sort((a, b) => (a.menuOrder || 99) - (b.menuOrder || 99)).map(c => [c.route.slice(1), c.label]);
@@ -79,6 +79,7 @@ const ENTRY = {
   'personnages.html': { q: 'Ton premier gros achat, mission par mission ?', d: 'Le business plan pose ses propres questions et te dit quoi faire en premier, avec un plan de secours.', tool: 'plan', cta: 'Ouvrir mon business plan' },
   'demeures.html': { q: 'Combien de temps pour t’offrir une maison comme celle de Jason ?', d: 'Aucun prix n’est publié : écris celui que tu imagines, ton argent et ce que tu gagnes par partie.', tool: 'purchase', type: 'property', cta: 'Faire le calcul' },
   'planques.html': { q: 'Combien de temps pour t’offrir une planque ou un garage ?', d: 'Écris un prix et ton rythme de jeu : tu obtiens le temps qu’il faut, et quand ce serait bon.', tool: 'purchase', type: 'hideout', cta: 'Faire le calcul' },
+  'gangs.html': { q: 'Piller un repaire de gang, ça rapporte plus qu’une mission ?', d: 'Aucun butin n’est publié. Écris ce qu’un coup rapporterait, sa durée et ta part : le calculateur compare tes activités à l’heure de jeu.', tool: 'activities', cta: 'Comparer mes activités' } /* v7.65 */,
   'entreprises.html': { q: 'Une entreprise comme celle de Boobie, ça vaudrait le coup ?', d: 'Ce que ça coûte, ce que ça rapporte : le calculateur te dit quand ce serait remboursé, et si ça vaut mieux que de jouer sans.', tool: 'roi', type: 'business', cta: 'Est-ce que ça vaut le coup ?' },
   'vehicules.html': { q: 'Quel véhicule acheter en premier ?', d: 'Mets tes envies dans l’ordre : le calculateur classe tes achats selon ton budget et ton temps de jeu.', tool: 'order', type: 'vehicle', cta: 'Classer mes achats' },
   'armes.html': { q: 'Quel budget pour ton arsenal ?', d: 'Armes, munitions, équipement : écris ce que tu veux et ce que tu gagnes, tu vois ce qui rentre dans ton budget.', tool: 'budget', type: 'weapon', cta: 'Faire mon budget' },

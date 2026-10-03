@@ -1,4 +1,4 @@
-# Langues du site (v7.60 à v7.64)
+# Langues du site (v7.60 à v7.65)
 
 Le français reste la seule langue que l’on écrit. Chaque langue publiée est **générée** à partir des pages françaises finales,
 dans son dossier (`/en/…`, `/es/…`, `/it/…`, `/de/…`), par `outils/langues.cjs`, avec une mémoire de traduction
@@ -8,7 +8,7 @@ française), puis on régénère.
 | Langue | Dossier | Pages | Léo | Depuis |
 |---|---|---|---|---|
 | Français | `/` | toutes (source) | oui | — |
-| English | `/en/` | **toutes** (`"pages": "*"` : 414 pages, page introuvable et redirections comprises) | **oui, en anglais** | v7.60 (6 pages), tout le site en v7.62, Léo en v7.64 |
+| English | `/en/` | **toutes** (`"pages": "*"` : 421 pages depuis la v7.65, page introuvable et redirections comprises) | **oui, en anglais** | v7.60 (6 pages), tout le site en v7.62, Léo en v7.64 |
 | Español | `/es/` | **toutes** | **oui, en espagnol** | v7.61 |
 | Italiano | `/it/` | **toutes** | **oui, en italien** | v7.63 |
 | Deutsch | `/de/` | **toutes** | **oui, en allemand** | v7.64 (livrée à part en « v7.62 allemand », réunie ici) |
@@ -125,7 +125,7 @@ tire `<dossier>/leo-index.json` et `<dossier>/leo/*.json` pour chaque langue de 
 ## Commandes
 
 ```
-node outils/regenerer.cjs                     # tout, langues comprises (« Langue de : 414 pages, 53 scripts traduits, 0 texte(s) sans traduction »)
+node outils/regenerer.cjs                     # tout, langues comprises (« Langue de : 421 pages, 53 scripts traduits, 0 texte(s) sans traduction »)
 node outils/langues.cjs de --extraire         # ce qui manque → outils/langues/de/_a-traduire.json
 node outils/langues.cjs de --verifier         # 0 manque, 0 balise cassée, 0 conflit (code de sortie 1 sinon)
 python3 outils/tuto-shots.py . de             # captures du Tuto allemand (img/tuto/de, outils/tuto-captures-de.json)
@@ -155,6 +155,12 @@ régénération suivante. Ses textes encore inconnus restent en français à leu
 2. Traduire chaque entrée dans un fichier de la mémoire de la langue (respecter `_glossaire.md`) ; une date écrite en lettres
    se retraduit quand elle change.
 3. Régénérer, relancer `langues.test.cjs` et `langues-pages-browser.cjs`.
+
+Exemple (v7.65, section « Gangs et factions ») : sept pages nouvelles et le menu de toutes les pages ; environ 300 textes par
+langue dans `outils/langues/<code>/lot-66.json`, puis les alias et réponses de Léo (extraction suivante, après `gen-leo.cjs`).
+En allemand, un mot isolé en minuscules dans un script reste du code (`motsCodeGardes`) : pour le traduire dans un fichier de
+données, écrire `fichier.js::mot` (`carte-gtadb.js::commerce` → « Einzelhandel ») ; les noms fabriqués de la carte
+(« … (nom réel) », « Bâtiment L… ») se traduisent par des règles `re:` (comme en anglais, espagnol et italien).
 
 ## Ajouter une langue (portugais…)
 

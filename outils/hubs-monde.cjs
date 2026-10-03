@@ -9,7 +9,7 @@ const S = require('./sections.cjs');
 const root = path.resolve(__dirname, '..');
 const DATA = JSON.parse(fs.readFileSync(path.join(root, 'outils/editorial-hubs.json'), 'utf8'));
 const esc = S.esc;
-const HUBS = ['lieux', 'personnages', 'demeures', 'planques', 'entreprises'];
+const HUBS = ['lieux', 'personnages', 'demeures', 'planques', 'entreprises', 'gangs']; /* v7.65 : gangs et factions */
 
 const para = list => (list || []).map(p => '<p>' + esc(p) + '</p>').join('');
 const pinsHref = a => a.pins ? 'carte.html#pins=' + a.pins.join(',') + (a.pinsTitle ? '&t=' + encodeURIComponent(a.pinsTitle) : '') : a.href;
@@ -25,7 +25,7 @@ function sources(hub) {
   const list = sourcesOf(hub);
   const legend = '<div class="ed-levels">' + DATA.statuts.map(n => '<div class="ed-level"><h3>' + S.pip(n.statut) + esc(n.titre) + '</h3><p>' + esc(n.texte) + '</p></div>').join('') + '</div>';
   return S.section({ id: 'sources', num: 6, kicker: list.length + ' sources ouvertes', title: 'Sources et statuts', icon: 'lire', tone: 'night', accent: 'coral',
-    lede: esc('Chaque affirmation de cette page porte un statut et vient d’une page ouverte à la date indiquée. Les pages Rockstar sont citées avec leur dernière ouverture directe ; leurs textes ont été relus le 27 septembre 2026 dans les sources qui les reproduisent.') },
+    lede: esc(DATA[hub].sourcesLede || 'Chaque affirmation de cette page porte un statut et vient d’une page ouverte à la date indiquée. Les pages Rockstar sont citées avec leur dernière ouverture directe ; leurs textes ont été relus le 27 septembre 2026 dans les sources qui les reproduisent.') /* v7.65 : phrase propre au hub (sourcesLede) quand ses sources ont été relues à une autre date */ },
     legend + '<h3 class="ed-h3">Pages consultées</h3>' + S.sourceList(list) + '<div class="ed-callout"><p><strong>Ce qu’on ne fait pas.</strong> Aucune donnée issue des fuites de 2022 ou de 2026, aucun prix inventé, aucun rapprochement présenté comme confirmé. Les statuts sont expliqués dans le <a href="tuto.html#sources">Tuto</a>.</p></div>');
 }
 

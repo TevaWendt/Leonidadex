@@ -11,8 +11,8 @@ const M=require(path.join(root,'outils/hubs-monde.cjs'));
 const D=require(path.join(root,'outils/hubs-doublons.cjs'));
 const shell=require(path.join(root,'outils/site-shell.cjs'));
 const ED=JSON.parse(read('outils/editorial.json')),HUBS=JSON.parse(read('outils/editorial-hubs.json'));
-const HUB_FILES={lieux:'lieux.html',personnages:'personnages.html',demeures:'demeures.html',planques:'planques.html',entreprises:'entreprises.html'};
-const N={lieux:ED.regions.length,personnages:ED.characters.length,demeures:ED.residences.length,planques:ED.hideouts.length,entreprises:ED.businesses.length};
+const HUB_FILES={lieux:'lieux.html',personnages:'personnages.html',demeures:'demeures.html',planques:'planques.html',entreprises:'entreprises.html',gangs:'gangs.html'};
+const N={lieux:ED.regions.length,personnages:ED.characters.length,demeures:ED.residences.length,planques:ED.hideouts.length,entreprises:ED.businesses.length,gangs:ED.factions.length};
 const ld=d=>[...d.querySelectorAll('script[type="application/ld+json"]')].map(s=>JSON.parse(s.textContent));
 const words=(d,ids)=>{let n=0;for(const id of ids){const s=d.getElementById(id).cloneNode(true);s.querySelectorAll('.ed-st,.ed-pair-src,.veh-go,figcaption,.ed-num,.ed-kicker,.ed-title').forEach(x=>x.remove());n+=(s.textContent.match(/[\p{L}\p{N}’'-]+/gu)||[]).length;}return n;};
 
@@ -29,7 +29,7 @@ test('sections.cjs : compositions du lot 4 (frise, paires, questions, actions, s
   assert.match(sl,/<li id="src-a">/);assert.match(sl,/publié le 02\/01\/2026 · consulté le 27\/09\/2026/);assert.match(sl,/rel="noopener nofollow"/);assert.match(sl,/Identification communautaire/);
 });
 
-test('editorial-hubs.json : cinq hubs complets, FAQ de 4 à 6 questions avec mots-clés, sources datées et connues, actions avec lien',()=>{
+test('editorial-hubs.json : hubs complets (six depuis la v7.65), FAQ de 4 à 6 questions avec mots-clés, sources datées et connues, actions avec lien',()=>{
   for(const s of Object.values(HUBS.sources)){assert.match(s.url,/^https:\/\//);assert.ok(s.title&&s.claim,s.url);assert.match(s.consultedAt,/^2026-\d\d-\d\d$/);assert.ok(['officiel','vu','comm','conf'].includes(s.statut),s.url);}
   assert.equal(HUBS.statuts.length,4);
   for(const hub of M.HUBS){const H=HUBS[hub];
@@ -45,7 +45,7 @@ test('editorial-hubs.json : cinq hubs complets, FAQ de 4 à 6 questions avec mot
     const wc=M.words(hub);assert.ok(wc>=500&&wc<=800,hub+' : '+wc+' mots dans le JSON');}
 });
 
-test('hubs-doublons.cjs : aucune phrase des hubs identique à une phrase des 29 fiches ; le contrôle détecte bien une copie',()=>{
+test('hubs-doublons.cjs : aucune phrase des hubs identique à une phrase des fiches ; le contrôle détecte bien une copie',()=>{
   assert.deepEqual(D.check(),[]);
   const copy=JSON.parse(JSON.stringify(HUBS));copy.lieux.rockstar.p=[ED.regions[0].facts[0]];
   const d=D.check({hubs:copy});assert.ok(d.length>=1);assert.ok(d.every(x=>x.hub==='lieux'&&x.ou==='fiche'));
@@ -101,14 +101,14 @@ test('Encart calculateur : un composant unique (site-shell.cjs), même position 
   assert.equal(shell.entry('inconnue.html'),'');
 });
 
-test('Léo : les FAQ des cinq hubs sont dans l’index (après les sujets rédigés), avec lien vers la FAQ du hub, et répondent',()=>{
+test('Léo : les FAQ des hubs du monde sont dans l’index (après les sujets rédigés), avec lien vers la FAQ du hub, et répondent',()=>{
   const idx=JSON.parse(read('leo-index.json'));
   const hubTopics=idx.knowledge.filter(x=>/^hub-/.test(x.id));
   assert.equal(hubTopics.length,M.HUBS.reduce((n,h)=>n+HUBS[h].faq.length,0));
   const firstHub=idx.knowledge.findIndex(x=>/^hub-/.test(x.id));assert.ok(idx.knowledge.slice(0,firstHub).every(x=>!/^hub-/.test(x.id)));
-  for(const t of hubTopics){assert.match(t.links[0].url,/^\/(lieux|personnages|demeures|planques|entreprises)\.html#faq$/);assert.ok(t.text.length<=900);}
+  for(const t of hubTopics){assert.match(t.links[0].url,/^\/(lieux|personnages|demeures|planques|entreprises|gangs)\.html#faq$/);assert.ok(t.text.length<=900);}
   const core=require(path.join(root,'outils/tests/leo-complet.cjs')).fullCore(root)/* v7.45 : noyau + morceaux */;
-  for(const [q,re,url] of [['combien de planques dans gta 6 ?',/Jason’s Safehouse/,'/planques.html#faq'],['ou habite jason ?',/Key Lento/,'/demeures.html#faq'],['on peut changer de personnage quand on veut ?',/Pas toujours/,'/personnages.html#faq'],['la carte est plus grande que gta 5 ?',/Red Dead Redemption 2/,'/lieux.html#faq'],['ou faire le plein ?',/stations-service/,'/entreprises.html#faq']]){
+  for(const [q,re,url] of [['combien de planques dans gta 6 ?',/Jason’s Safehouse/,'/planques.html#faq'],['ou habite jason ?',/Key Lento/,'/demeures.html#faq'],['on peut changer de personnage quand on veut ?',/Pas toujours/,'/personnages.html#faq'],['la carte est plus grande que gta 5 ?',/Red Dead Redemption 2/,'/lieux.html#faq'],['ou faire le plein ?',/stations-service/,'/entreprises.html#faq'],['peut-on attaquer les repaires de gangs ?',/Famitsu/,'/gangs.html#faq']]){
     const a=core.answer(q);assert.equal(a.kind,'answer',q);assert.match(a.text,re,q);/* v7.45 : la réponse rédigée peut viser une fiche du même hub */assert.ok(a.links[0].url.startsWith(url.replace(/\.html#faq$/,'')),q+' → '+a.links[0].url);}
   for(const [q,re] of [['combien de régions ?',/Six régions/],['c est quoi leonida',/Floride/],['qui sont jason et lucia ?',/Lucia Caminos/]]){const a=core.answer(q);assert.equal(a.kind,'answer',q);assert.match(a.text,re,q);}
 });

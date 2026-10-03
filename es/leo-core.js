@@ -382,10 +382,10 @@ function create(data,options={}){
  function suggest(info={}){const S=data.suggestions||{},path=String(unprefix(info.path)||'/'),name=info.name||null;const pick=k=>(S[k]||S.default||[]).slice(0,6);
   if(/^\/(?:vehicules|armes)\/[a-z0-9-]+\.html$/.test(path)&&name)return pick('fiche').map(s=>fill(s,{name}));
   if(/^\/(?:lieux)\/[a-z0-9-]+\.html$/.test(path)&&name)return pick('lieu').map(s=>fill(s,{name}));
-  if(/^\/(?:personnages|entreprises|demeures|planques)\/[a-z0-9-]+\.html$/.test(path)&&name)return [fill('¿Qué es {name}?',{name}),fill('¿Dónde está {name}?',{name}),...pick('monde').slice(0,4)];
+  if(/^\/(?:personnages|entreprises|demeures|planques|gangs)\/[a-z0-9-]+\.html$/.test(path)&&name)return [fill('¿Qué es {name}?',{name}),fill('¿Dónde está {name}?',{name}),...pick('monde').slice(0,4)];
   if(path==='/'||path==='/es/index.html')return pick('home');if(path==='/es/calculateurs.html')return pick('calculateurs');if(path==='/es/tuto.html')return pick('tuto');if(path==='/es/carte.html')return pick('carte');
   if(/^\/(?:vehicules|classement-vehicules|vehicules-rares|comparateur|bateaux)\.html$/.test(path))return pick('vehicules');if(path==='/es/armes.html')return pick('armes');if(path==='/es/progression.html')return pick('progression');
-  if(/^\/(?:lieux|personnages|demeures|planques|entreprises|collectibles)\.html$/.test(path))return pick('monde');if(/^\/(?:nourriture|style|personnalisations)\.html$/.test(path))return pick('listes');if(/^\/(?:achats|logements)\.html$/.test(path))return pick('achats');if(/^\/(?:a-propos|contact|mentions-legales|medias)\.html$/.test(path))return pick('info');return pick('default');}
+  if(/^\/(?:lieux|personnages|demeures|planques|entreprises|gangs|collectibles)\.html$/.test(path))return pick('monde');if(/^\/(?:nourriture|style|personnalisations)\.html$/.test(path))return pick('listes');if(/^\/(?:achats|logements)\.html$/.test(path))return pick('achats');if(/^\/(?:a-propos|contact|mentions-legales|medias)\.html$/.test(path))return pick('info');return pick('default');}
  function attach(name,json){if(loaded.has(name))return false;addShard(name,json);loaded.add(name);return true;}
  return Object.freeze({answer,ask,prepare,needs,loadShard,loadAll,attach,search,choose,suggest,items,byKey,categories,tools,data,knowledge:()=>knowledge,loaded:()=>[...loaded],analyze:q=>analyzer.analyze(q),detectEntities:q=>detectEntities(analyzer.analyze(q)),intents:q=>[...intentsOf(analyzer.analyze(q),norm(q))],reportLink});
 }

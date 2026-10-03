@@ -41,6 +41,11 @@
  "history": [
   {
    "date": "2026-10-03",
+   "version": "v7.65",
+   "text": "Contenu : nouvelle section « Gangs et factions » (Final Chapter MC, PTT Youngin$, San4San, l’équipe de Raul, le réseau de Brian, les forces de l’ordre), dans les cinq langues, reliée aux personnages, aux lieux, à la carte, au calculateur et à Léo. Aucune clé de plus, aucun cookie, aucun service extérieur."
+  },
+  {
+   "date": "2026-10-03",
    "version": "v7.64",
    "text": "Langues : le site existe maintenant en cinq langues sur toutes ses pages (français, anglais, espagnol, italien, allemand), et Léo répond dans chacune ; les versions anglaise et allemande livrées à part sont réunies avec l’espagnol et l’italien. Référencement : chaque page signale ses versions dans les autres langues aux moteurs de recherche, et le plan du site les liste toutes. Aucune clé de plus, aucun cookie, aucun service extérieur."
   },

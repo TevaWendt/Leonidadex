@@ -1302,6 +1302,10 @@
     {
      "label": "Fiche Ambrosia",
      "url": "/lieux/ambrosia.html"
+    },
+    {
+     "label": "Le Final Chapter MC",
+     "url": "/gangs/final-chapter-mc.html"
     }
    ],
    "source": "https://www.rockstargames.com/VI/only-in-leonida/ambrosia"
@@ -1449,7 +1453,10 @@
     "echapper a la police gta6",
     "poursuite police gta 6",
     "les keufs gta 6",
-    "comment semer la police"
+    "comment semer la police",
+    "comment marche le niveau de recherche",
+    "niveau de recherche gta 6",
+    "comment on devient recherche par la police"
    ],
    "k": [
     "police",
@@ -1465,9 +1472,13 @@
     "les flics",
     "recherche par la police"
    ],
-   "text": "D’après l’Extended Look, la police identifie le suspect avec plus d’indices qu’avant : le véhicule, les vêtements et l’apparence. Changer de voiture ou de tenue aide à se faire oublier. Le système d’étoiles précis n’est pas détaillé.",
-   "status": "Vu dans l’Extended Look",
+   "text": "Rob Nelson (Rockstar North) l’a précisé à IGN et à Famitsu : un crime n’est signalé que si quelqu’un le voit ou si une alarme se déclenche, et les étoiles montent selon la gravité, sans excès. La police connaît ton véhicule et tes vêtements : lunettes, casquette ou coupe ne suffisent pas, il faut changer de tenue, en boutique ou avec celle du coffre de ton véhicule personnel.",
+   "status": "Propos de Rob Nelson (Rockstar North)",
    "links": [
+    {
+     "label": "Les forces de l’ordre",
+     "url": "/gangs/forces-de-l-ordre.html"
+    },
     {
      "label": "La FAQ des personnalisations",
      "url": "/personnalisations.html#faq"
@@ -8929,7 +8940,7 @@
     "ptt young in",
     "biens pas legaux vice city"
    ],
-   "text": "PTT YOUNGIN$ est l’enseigne de biens « pas tout à fait légaux » de Vice City, nommée par Rockstar, avec sa moto tout-terrain décorée en vitrine. Elle est placée sur la carte de Leonidakit.",
+   "text": "PTT YOUNGIN$ est l’enseigne de biens « pas tout à fait légaux » de Vice City, nommée par Rockstar, avec sa moto tout-terrain décorée en vitrine. Elle est placée sur la carte de Leonidakit. C’est aussi le repaire d’un gang de Southside, que l’Édition Ultimate propose de piller.",
    "status": "Officiel Rockstar (enseigne nommée)",
    "links": [
     {
@@ -8937,11 +8948,15 @@
      "url": "/entreprises/ptt-youngin.html"
     },
     {
+     "label": "Le gang PTT Youngin$",
+     "url": "/gangs/ptt-youngin-gang.html"
+    },
+    {
      "label": "Le repère sur la carte",
      "url": "/carte.html#lieu=ptt-youngin"
     }
    ],
-   "checkedAt": "2026-09-28",
+   "checkedAt": "2026-10-03",
    "source": "https://www.rockstargames.com/VI/media/screenshots",
    "action": {
     "type": "map",

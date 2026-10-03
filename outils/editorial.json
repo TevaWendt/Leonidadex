@@ -790,5 +790,280 @@
       "contexte": "Le Starlet Motel est le motel du premier trailer : Jason et Lucia y partagent une chambre, rideau tiré, avant de repartir. Son enseigne en néon, lisible dans les captures officielles de Port Gellhorn, a permis de placer l’établissement sur la carte.",
       "pratique": "Rockstar n’a rien publié d’autre sur cet endroit : rien n’est affirmé au-delà de l’image. Il illustre le type de refuge bon marché que le jeu associe à Port Gellhorn ; la fiche est reliée à Jason, à Lucia et à la région."
     }
+  ],
+  "factions": [
+    {
+      "id": "final-chapter-mc",
+      "name": "Final Chapter MC",
+      "kind": "Club de motards",
+      "aliases": [
+        "Final Chapter",
+        "Final Chapter Motorcycle Club",
+        "motards d’Ambrosia",
+        "gang de motards",
+        "bikers d’Ambrosia",
+        "club de motards"
+      ],
+      "media": [
+        "ambrosia-01",
+        "ambrosia-03"
+      ],
+      "imageAlt": "Cortège de motards du Final Chapter MC dans une rue d’Ambrosia, gilets noirs aux écussons « Final Chapter », « 1982 », « MC » et « Ambrosia », capture officielle de GTA VI",
+      "source": "https://www.rockstargames.com/VI/only-in-leonida/ambrosia",
+      "places": [
+        "ambrosia"
+      ],
+      "characters": [],
+      "vehicles": [
+        "western-sovereign"
+      ],
+      "weapons": [
+        "mustang-357"
+      ],
+      "relatedPlaces": [
+        "ambrosia",
+        "allied-crystal"
+      ],
+      "tagline": "La raffinerie donne le travail, le club fournit le reste.",
+      "description": "Le club de motards d’Ambrosia, fondé en 1982 selon ses écussons noir et or : le gang de motards local dont parle la présentation officielle de la région.",
+      "facts": [
+        "Le nom se lit sur les gilets d’une capture officielle d’Ambrosia : « Final Chapter » en haut, « Ambrosia » en bas, « 1982 » et « MC » sur les côtés.",
+        "Son emblème est une tête de mort encapuchonnée qui tient un livre ouvert entre des mains de squelette.",
+        "Rockstar décrit un gang de motards local qui fournit à Ambrosia à peu près tout ce que la raffinerie ne fournit pas.",
+        "Une autre capture de la région montre un motard à l’écusson « Enforcer » et une motarde armée d’un revolver Mustang .357."
+      ],
+      "texte": "Le Final Chapter MC est le club de motards d’Ambrosia, la région de la raffinerie sucrière Allied Crystal. Rockstar ne le nomme pas dans ses textes, mais résume la région d’une formule : la raffinerie fournit les emplois, un gang de motards local fournit à peu près tout le reste. Le nom du club se lit sur la première capture officielle de la région, dans le dos des gilets : « Final Chapter » sur l’arc du haut, « Ambrosia » sur celui du bas, « 1982 » et « MC » de part et d’autre d’une tête de mort encapuchonnée qui tient un livre ouvert. Une seconde capture montre un barbu à l’écusson « Enforcer », un titre courant dans les clubs de motards, enlacé par une motarde qui brandit un revolver Mustang .357.",
+      "contexte": "Sur la capture, un cortège de motards remonte une rue commerçante d’Ambrosia en cruisers chromés, sous les drapeaux américains, devant une station-service Xero et un panneau qui indique le bureau du shérif du comté d’Ambrosia. Les gilets sont noirs, les écussons jaunes et noirs. Rien dans l’image ne dit si le club sera un allié, un employeur ou une cible pour Jason et Lucia.",
+      "pratique": "Rockstar n’a rien publié sur le rôle du club dans l’histoire, ni sur ses repaires ou son territoire exact. Rob Nelson a expliqué à Famitsu qu’on peut repérer des repaires de gangs, s’y introduire et y voler argent ou drogue ; on ne sait pas encore si ceux du Final Chapter en font partie. Les motos Western Sovereign de la capture et le revolver Mustang .357 ont chacun leur fiche."
+    },
+    {
+      "id": "ptt-youngin-gang",
+      "name": "Le gang PTT Youngin$",
+      "kind": "Gang de rue",
+      "aliases": [
+        "PTT Youngin$",
+        "PTT Youngin",
+        "PTT Youngins",
+        "gang PTT",
+        "repaire des PTT Youngin$",
+        "PTT Youngin$ Compound",
+        "gang de Southside"
+      ],
+      "media": [
+        "ptt-youngin-illegal-goods-store"
+      ],
+      "imageAlt": "Le repaire des PTT Youngin$ à Southside, de nuit : une moto tout-terrain rose et turquoise fume devant un local tagué « PTT », une petite foule filme au téléphone, capture officielle de GTA VI",
+      "source": "https://www.rockstargames.com/VI",
+      "mapId": "ptt-youngin",
+      "places": [
+        "vice-city"
+      ],
+      "businesses": [
+        "ptt-youngin"
+      ],
+      "characters": [],
+      "vehicles": [
+        "maibatsu-manchez"
+      ],
+      "tagline": "Un repaire à piller, puis la fuite.",
+      "description": "Le gang de Southside dont l’Édition Ultimate propose de piller le repaire. Rockstar le décrit comme l’un des plus bruyants et des plus en vue de Vice City.",
+      "facts": [
+        "Nommé par Rockstar dans le contenu de l’Édition Ultimate annoncé le 24 juin 2026.",
+        "Son repaire est la boutique de biens illicites PTT YOUNGIN$, à Southside.",
+        "L’édition propose de piller ce repaire et de s’enfuir sans encombre avec des objets spéciaux et une contrebande à part.",
+        "La capture officielle montre une moto tout-terrain décorée, des téléphones levés et un tag « PTT » rouge sur le mur."
+      ],
+      "texte": "Les PTT Youngin$ sont un gang de Southside, à Vice City, que Rockstar nomme dans le contenu de l’Édition Ultimate annoncé le 24 juin 2026. Le texte invite à piller le repaire de l’un des gangs les plus bruyants et les plus en vue du quartier, puis à s’enfuir sans encombre pour emporter des objets spéciaux et une contrebande à part. Ce repaire, c’est la boutique de biens illicites PTT YOUNGIN$. La capture officielle la montre de nuit : une moto tout-terrain rose et turquoise qui fume au milieu d’un parking couvert, une petite foule qui filme au téléphone, un tag « PTT » rouge sur le mur et, au premier plan, un jeune torse nu qui pose avec un pistolet aux couleurs vives.",
+      "contexte": "La boutique a sa propre fiche parmi les entreprises : c’est le même lieu, vu comme un commerce. Ici, il s’agit du groupe qui la tient. L’image ne montre pas de couleurs de gang au sens classique, plutôt une bande de jeunes de Southside réunie autour d’une moto et des téléphones qui filment.",
+      "pratique": "Le pillage fait partie des contenus de l’Édition Ultimate : le texte ne dit ni à quel moment de l’histoire il s’ouvre, ni s’il existe une version sans cette édition. Rob Nelson a précisé à Famitsu que la carte indique ce qu’un repaire de gang contient avant d’y entrer, et que la drogue volée se revend à un receleur. Aucun montant n’est publié."
+    },
+    {
+      "id": "san4san",
+      "name": "San4San",
+      "kind": "Gang de rue",
+      "aliases": [
+        "San 4 San",
+        "S4S",
+        "gang San4San",
+        "Venture Apartments",
+        "Raymond"
+      ],
+      "media": [],
+      "mapId": "g-L192",
+      "imageAlt": "Venture Apartments vu d’en haut, de nuit, capture officielle placée sur la carte",
+      "source": null,
+      "places": [],
+      "characters": [],
+      "relatedPlaces": [
+        "g-L192",
+        "g-L193"
+      ],
+      "calc": false,
+      "tagline": "Un nom lu par les joueurs, jamais présenté par Rockstar.",
+      "description": "Un gang de Vice City identifié par les joueurs : son nom se lirait sur une chaîne et une fresque des trailers. Rockstar ne l’a jamais présenté dans un texte.",
+      "facts": [
+        "Le nom se lit, selon le GTA Wiki, sur la chaîne d’un homme au rassemblement de voitures du Trailer 1, vers 1:08.",
+        "Il apparaîtrait aussi sur une fresque du quartier de La Perle dans le Trailer 2, vers 0:46.",
+        "Le wiki rattache au gang les revendeurs de Venture Apartments que Jason et Lucia viennent voir au début de l’Extended Look.",
+        "Le nom avait d’abord circulé avec les fuites de 2022, que Leonidakit n’utilise pas."
+      ],
+      "texte": "San4San est un nom que les joueurs lisent dans les vidéos officielles de GTA VI, sans que Rockstar l’ait jamais écrit dans un texte. D’après le GTA Wiki et GTABase, un homme porte une chaîne San4San au rassemblement de voitures modifiées du premier trailer, vers 1:08, et le nom revient sur une fresque du quartier de La Perle dans le second, vers 0:46. Le wiki y rattache aussi les revendeurs de Venture Apartments, dans le quartier de Rockridge, chez qui Jason et Lucia viennent récupérer une livraison pour le compte de Boobie Ike au début de l’Extended Look. La scène tourne court : une descente de police armée les oblige à fuir.",
+      "contexte": "L’Extended Look du 27 août 2026 s’ouvre sur cette scène : un immeuble d’habitation de Vice City, des guetteurs au pied des escaliers, un contact que Jason demande sous le nom de Raymond et dont l’associé a disparu, puis l’arrivée d’une unité de police armée. La vidéo ne nomme pas le groupe : le rapprochement avec San4San vient des joueurs.",
+      "pratique": "Tant que Rockstar n’en dit rien, cette fiche reste une identification communautaire : ni territoire officiel, ni chef, ni rôle connu dans l’histoire. Elle sera corrigée, ou retirée, selon ce que le jeu montrera à sa sortie."
+    },
+    {
+      "id": "equipe-raul",
+      "name": "L’équipe de Raul Bautista",
+      "kind": "Équipe de braqueurs",
+      "aliases": [
+        "équipe de Raul",
+        "crew de Raul",
+        "braqueurs de Raul",
+        "gang de Raul",
+        "Raul crew"
+      ],
+      "media": [
+        "raul-bautista-02",
+        "raul-bautista-01",
+        "raul-bautista-04"
+      ],
+      "imageAlt": "Raul Bautista au volant, un pistolet marqué CAPO contre la jambe, capture officielle de GTA VI",
+      "source": "https://www.rockstargames.com/VI/only-in-leonida/raul",
+      "characters": [
+        "raul",
+        "jason",
+        "lucia"
+      ],
+      "places": [
+        "vice-city"
+      ],
+      "tagline": "Suivre, ou se retirer.",
+      "description": "Les braqueurs que recrute Raul Bautista, toujours en quête de talents prêts à prendre les plus gros risques. Dans l’Extended Look, Jason et Lucia y entrent après une fuite réussie.",
+      "facts": [
+        "Son chef, Raul Bautista, est présenté par Rockstar comme un braqueur de banques chevronné qui recrute sans cesse.",
+        "Rockstar prévient que chaque coup de Raul est plus risqué que le précédent : ses partenaires suivent, ou partent.",
+        "Dans l’Extended Look, Jason et Lucia conduisent la voiture de fuite après un braquage de Raul, qui les prend dans son équipe.",
+        "L’équipe n’a pas de nom publié."
+      ],
+      "texte": "Raul Bautista ne travaille jamais seul. Sa présentation officielle le décrit en quête permanente de partenaires prêts à prendre les risques qui rapportent gros, et prévient que son goût du danger fait grimper les enjeux à chaque coup : ceux qui l’entourent devront suivre, ou s’en aller. L’Extended Look du 27 août 2026 montre comment on y entre. Jason et Lucia servent de chauffeurs pour la fuite après un braquage de Raul ; impressionné par leur conduite, il les fait entrer dans son équipe. Rockstar ne lui donne pas d’autre nom que le sien : cette fiche parle donc de l’équipe de Raul.",
+      "contexte": "Les captures officielles montrent Raul au téléphone devant des écrans de surveillance, au volant avec un pistolet marqué CAPO, sur le pont d’un bateau face aux tours de Vice City et devant les néons d’un bar. Les autres membres de l’équipe ne sont ni montrés ni nommés.",
+      "pratique": "On ne sait ni combien de coups l’équipe prépare, ni comment le butin se partage. Rob Nelson a précisé à Famitsu qu’une bijouterie ou une petite banque se braque seul ou à deux, et que les missions ne suffisent pas à financer l’histoire : l’argent gagné dans le monde ouvert la fait avancer. Le calculateur aide à estimer ce qu’un coup doit rapporter pour valoir le temps passé.",
+      "accord": "f"
+    },
+    {
+      "id": "reseau-brian",
+      "name": "Le réseau de Brian Heder",
+      "kind": "Réseau de contrebande",
+      "aliases": [
+        "trafiquants des Keys",
+        "réseau de Brian",
+        "contrebandiers des Keys",
+        "trafiquants locaux",
+        "drug runners"
+      ],
+      "media": [
+        "brian-heder-03",
+        "trailer-2-brian-boatyard-085",
+        "brian-heder-02"
+      ],
+      "imageAlt": "Brian Heder, lunettes sur la tête, tient un paquet blanc emballé sous film et donne ses consignes, capture officielle de GTA VI",
+      "source": "https://www.rockstargames.com/VI/only-in-leonida/brian",
+      "characters": [
+        "brian",
+        "jason",
+        "cal"
+      ],
+      "places": [
+        "leonida-keys"
+      ],
+      "hideouts": [
+        "chantier-brian"
+      ],
+      "residences": [
+        "brian-keys",
+        "jason-keys"
+      ],
+      "vehicles": [
+        "vapid-caracara-4x4"
+      ],
+      "relatedPlaces": [
+        "g-L1421",
+        "key-lento"
+      ],
+      "tagline": "La contrebande à l’ancienne, depuis les Keys.",
+      "description": "Les trafiquants des Keys pour qui travaille Jason, autour de Brian Heder, contrebandier de l’âge d’or qui passe sa marchandise par son chantier naval.",
+      "facts": [
+        "Jason travaille pour des trafiquants locaux des Keys, d’après sa présentation officielle.",
+        "Leur figure connue est Brian Heder, formé pendant l’âge d’or de la contrebande dans l’archipel.",
+        "La marchandise transite par le chantier naval de Brian, tenu avec Lori, sa troisième épouse.",
+        "Dans l’Extended Look, Brian confie une affaire à Jason et Lucia au cours d’un dîner."
+      ],
+      "texte": "Avant de rencontrer Lucia, Jason a déjà un employeur : les trafiquants des Keys. Rockstar le présente travaillant pour eux parce que c’est ce qu’il sait faire de mieux, et nomme le plus ancien d’entre eux, Brian Heder, formé pendant l’âge d’or de la contrebande. Brian fait toujours transiter sa marchandise par son chantier naval avec Lori, sa troisième épouse, et laisse désormais les autres faire le sale boulot. Il loge Jason gratuitement contre des coups de main sur les recouvrements du coin. Cal Hampton, ami de Jason et associé de Brian, gravite dans le même cercle. Rockstar ne donne pas d’autre nom à ce groupe que celui de trafiquants locaux.",
+      "contexte": "Le second trailer montre le chantier de nuit, enseigne Brian’s Boat Works & Marina allumée, pendant un chargement. Une capture officielle montre Brian, un paquet blanc emballé sous film à la main, qui donne ses consignes à un homme au casque ; d’autres le montrent à son ponton ou au volant de son pick-up. Dans l’Extended Look, il reçoit Jason et Lucia à dîner pour leur confier une affaire.",
+      "pratique": "On ne sait pas encore quelles missions le réseau confie, ni comment elles s’enchaînent avec celles de Raul ou de Boobie. Le chantier et la maison de Jason dans les Keys sont repérés sur la carte ; la fiche les relie, avec le pick-up Caracara 4x4 de Brian."
+    },
+    {
+      "id": "forces-de-l-ordre",
+      "name": "Les forces de l’ordre de Leonida",
+      "kind": "Police, shérifs et garde-côtes",
+      "aliases": [
+        "police",
+        "Vice City Police",
+        "Vice City Police Department",
+        "Vice-Dale Police Department",
+        "shérif",
+        "sheriff",
+        "garde-côtes",
+        "avis de recherche"
+      ],
+      "media": [
+        "shitzu-squalo-04",
+        "trailer-2-police-riot-119"
+      ],
+      "imageAlt": "Vue d’en haut, de nuit : une vedette marquée Vice City Police, un bateau de plaisance et un hélicoptère aux couleurs de Vice City, capture officielle de GTA VI",
+      "source": "https://www.rockstargames.com/VI/media/screenshots",
+      "characters": [
+        "lucia",
+        "cal"
+      ],
+      "places": [],
+      "vehicles": [
+        "lure-predator-l35p-police",
+        "rb-s",
+        "rb-s-ii",
+        "brute-police-riot",
+        "vapid-police-cruiser-stanier-le",
+        "vapid-police-ghost",
+        "bravado-police-cruiser-buffalo",
+        "bravado-buffalo-stx-pursuit",
+        "bravado-gauntlet-interceptor",
+        "vapid-police-cruiser-interceptor",
+        "ford-explorer-police",
+        "dundreary-police-landstalker-xl",
+        "bravado-bison-1800-police",
+        "buckingham-police-maverick",
+        "nagasaki-police-buzzard"
+      ],
+      "relatedPlaces": [
+        "vice-dale",
+        "leonard-county",
+        "ambrosia",
+        "leonida-penitentiary"
+      ],
+      "calc": false,
+      "tagline": "Sans témoin ni alarme, pas de recherche.",
+      "description": "Police de Vice City, shérifs de comté, police maritime et garde-côtes : ce que les trailers et les captures montrent de ceux qui poursuivent Jason et Lucia.",
+      "facts": [
+        "Une vedette marquée Vice City Police, avec l’écusson du Vice City Police Dept, se voit sur une capture de l’Édition Ultimate.",
+        "Le premier trailer montre une voiture du Vice-Dale Police Department et le bureau du shérif du comté de Leonard.",
+        "Un panneau d’Ambrosia indique le bureau du shérif du comté d’Ambrosia.",
+        "Rockstar présente Cal Hampton à l’écoute des communications des garde-côtes, dont les vedettes apparaissent sur les captures.",
+        "Selon Rob Nelson, un crime sans témoin ni alarme n’est pas signalé."
+      ],
+      "texte": "GTA VI ne présente ses polices dans aucun texte, mais elles sont partout dans les images. Une capture de l’Édition Ultimate montre une vedette marquée Vice City Police, avec l’écusson du Vice City Police Dept, et un hélicoptère aux mêmes couleurs. Le premier trailer montre une voiture du Vice-Dale Police Department et le bureau du shérif du comté de Leonard ; une capture d’Ambrosia affiche le panneau du bureau du shérif du comté d’Ambrosia. Le site recense une quinzaine de véhicules de service vus à l’image : voitures de patrouille, SUV, pick-up, fourgon blindé, hélicoptères, vedettes de police et des garde-côtes, que Cal Hampton écoute à la radio selon sa présentation officielle. Lucia, elle, sort du pénitencier de Leonida.",
+      "contexte": "Dans le second trailer, un fourgon blindé fait face à Lucia pendant sa fuite, vers 1:59. L’Extended Look du 27 août 2026 s’ouvre sur une descente armée qui interrompt une livraison à Venture Apartments, et montre plus tard une course-poursuite avec la police dans Vice City. Le nom des autres services et la place des garde-côtes dans l’histoire ne sont pas publiés.",
+      "pratique": "Rob Nelson a donné quelques règles à IGN et à Famitsu. Un crime n’est signalé que si quelqu’un le voit ou si une alarme se déclenche, et les étoiles montent selon la gravité, sans excès. Lunettes, casquette ou nouvelle coupe ne suffisent pas à se faire oublier : la police connaît tes vêtements, il faut en changer dans une boutique ou avec la tenue de rechange du coffre de ton véhicule personnel.",
+      "accord": "fp"
+    }
   ]
 }

@@ -6276,6 +6276,22 @@
   [
    "body kits",
    "kits carrosserie"
+  ],
+  [
+   "gang hideouts",
+   "repaires de gangs"
+  ],
+  [
+   "gang hideout",
+   "repaire de gang"
+  ],
+  [
+   "gang compounds",
+   "repaires de gangs"
+  ],
+  [
+   "gang compound",
+   "repaire de gang"
   ]
  ]
 }

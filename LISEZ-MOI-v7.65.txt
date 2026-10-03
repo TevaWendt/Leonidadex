@@ -1,0 +1,50 @@
+LEONIDAKIT v7.65 — NOUVELLE SECTION « GANGS ET FACTIONS » — archive « modifs » (3 octobre 2026)
+
+CE QUE CE LOT AJOUTE
+Une sixième section du monde, dans les cinq langues : la page « Gangs et factions » (gangs.html) et six fiches.
+- Final Chapter MC : le club de motards d’Ambrosia (nom lu sur les écussons d’une capture officielle).
+- Le gang PTT Youngin$ : nommé par Rockstar dans l’Édition Ultimate (son repaire est à piller).
+- San4San : nom lu par les joueurs dans les trailers, affiché comme tel (jamais présenté par Rockstar).
+- L’équipe de Raul Bautista, le réseau de Brian Heder (les trafiquants des Keys pour qui travaille Jason).
+- Les forces de l’ordre de Leonida : Vice City Police (lisible sur une capture), shérifs de comté, garde-côtes, et les règles
+  données par Rob Nelson (il faut un témoin ou une alarme pour être recherché, la police retient tes vêtements).
+Chaque fiche dit d’où vient l’information (texte de Rockstar, image officielle, joueurs), avec ses sources datées en bas du hub.
+Rien n’est inventé : pas de mission, pas de montant, pas de territoire tant que Rockstar n’en publie pas.
+
+Ailleurs sur le site : « Gangs et factions » dans le menu « Explorer → Le monde » et dans le pied de page de toutes les pages ;
+une cinquième carte dans « Le monde de Leonida » sur l’accueil ; un encadré « Gangs et factions » dans « En lien » sur les
+fiches concernées (Ambrosia, Vice City, Leonida Keys, Jason, Lucia, Cal, Raul, Brian, maisons de Jason et de Brian, chantier
+de Brian, commerce PTT YOUNGIN$) ; le calculateur (« Mes activités ») depuis le hub et quatre fiches ; Léo répond aux
+questions sur les gangs, les repaires et la police ; plan du site et recherche.
+En passant, version allemande : la recherche des lieux et les types de lieux de la carte, restés en français, sont traduits.
+
+CE QU’IL FAUT FAIRE
+Base attendue : ton dépôt en v7.64 (les deux parties « Leonidakit-v7.64-partie-1-site.zip » et « …-partie-2-langues.zip »
+déjà extraites). Si ce n’est pas encore fait, extrais d’abord la v7.64, puis cette archive.
+1. Note le commit courant dans GitHub Desktop (ou copie le dossier).
+2. Extrais « Leonidakit-v7.65-gangs-modifs.zip » (24 Mo, un seul fichier) dans la racine du site, en écrasant les fichiers
+   homonymes (garde le dossier .git). Il contient les 2 148 fichiers ajoutés ou changés depuis la v7.64, rien d’autre.
+3. Vérifie 3 minutes en local ou sur la prévisualisation Vercel (voir « Pour vérifier »).
+4. Mets en ligne quand tu le décides (GitHub Desktop : commit puis push ; Vercel déploie tel quel).
+Aucune commande de build, pas de package.json ; api/, vercel.json et .vercelignore ne changent pas ; rien à régler dans
+Vercel. Retour arrière : « Revert » du commit dans GitHub Desktop. Aucune clé de stockage nouvelle, aucun cookie.
+
+POURQUOI PRESQUE TOUTES LES PAGES CHANGENT : le menu et le pied de page de chaque page (cinq langues) portent maintenant le
+lien « Gangs et factions ». Le texte des pages existantes ne change pas, sauf les ajouts listés plus haut.
+
+POUR VÉRIFIER (3 minutes)
+- /gangs.html : six fiches, puis « Ce que Rockstar a montré », « À confirmer », la FAQ et les sources.
+- Menu « Explorer » de n’importe quelle page : « Gangs et factions » sous « Le monde ».
+- /de/gangs/forces-de-l-ordre.html (ou /en/, /es/, /it/) : la fiche dans la langue.
+- Léo : « peut-on attaquer les repaires de gangs ? », « c’est quoi le Final Chapter MC ? ».
+- Search Console (facultatif) : demander l’indexation de https://www.leonidakit.com/gangs.html et /en/gangs.html.
+
+DÉTAIL : outils/CHANGEMENTS-v7.65.txt ; PREUVES : outils/PREUVES-v7.65.md.
+
+ÉTAT DE REPRISE
+- Version : v7.65 (base v7.64). Sections suivantes prévues, dans l’ordre annoncé : Missions et leurs solutions (structure,
+  fiche type, lien avec le calculateur), activités annexes, animaux, radios et musique, codes de triche et trophées (avec effets
+  de motion design), GTA Online à part.
+- Choix faits seul : San4San a sa fiche, marquée « identification des joueurs » (le nom vient des trailers lus par les wikis
+  et, d’abord, des fuites de 2022, que le site n’utilise pas) ; « l’équipe de Raul » et « le réseau de Brian » gardent ces
+  noms descriptifs, Rockstar ne leur en donnant pas d’autre.

@@ -67,7 +67,7 @@ test('CALC-13 : chaque phrase d’absence des pages est bien celle calculée (da
  const typo=require(path.join(root,'outils/typographie.cjs'));
  let n=0;for(const f of ['calculateurs.html','index.html']){const html=fs.readFileSync(path.join(root,f),'utf8');for(const m of html.matchAll(/data-lk-donnees="([a-zA-Z]+)"[^>]*>([\s\S]*?)<\/(?:span|div|p)>/g)){n++;assert.ok(ph[m[1]],f+' : clé '+m[1]);assert.equal(norm(m[2]),norm(typo.html('<p>'+ph[m[1]]+'</p>').replace(/<\/?p>/g,'')),f+' : '+m[1]);}}
  assert.ok(n>=4,'au moins quatre phrases reliées');
- const files=[...fs.readdirSync(root).filter(x=>/\.(html|js|json)$/.test(x)),...['armes','vehicules','lieux','entreprises','demeures','planques','carnets','leo'].flatMap(d=>fs.existsSync(path.join(root,d))?fs.readdirSync(path.join(root,d)).map(x=>d+'/'+x):[])].filter(x=>/\.(html|js|json)$/.test(x));
+ const files=[...fs.readdirSync(root).filter(x=>/\.(html|js|json)$/.test(x)),...['armes','vehicules','lieux','entreprises','demeures','planques','gangs','carnets','leo'].flatMap(d=>fs.existsSync(path.join(root,d))?fs.readdirSync(path.join(root,d)).map(x=>d+'/'+x):[])].filter(x=>/\.(html|js|json)$/.test(x));
  for(const f of files){const c=fs.readFileSync(path.join(root,f),'utf8');assert.ok(!c.includes('{donnees:'),f+' : marqueur {donnees:…} resté dans un fichier généré');}
  /* la page Achats et la FAQ À propos reflètent bien la phrase calculée */
  const ach=norm(fs.readFileSync(path.join(root,'achats.html'),'utf8')),apr=norm(fs.readFileSync(path.join(root,'a-propos.html'),'utf8'));

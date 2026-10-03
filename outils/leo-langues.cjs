@@ -119,7 +119,7 @@ function build(code, root, L, ctx) {
   {
     const { JSDOM } = require('jsdom');
     const flat = s => String(s ?? '').replace(/\s+/g, ' ').trim();
-    const pages = lang.pages.filter(p => !p.includes('/') || /^(?:lieux|personnages|entreprises|demeures|planques)\//.test(p)).sort();
+    const pages = lang.pages.filter(p => !p.includes('/') || /^(?:lieux|personnages|entreprises|demeures|planques|gangs)\//.test(p)).sort();
     for (const file of pages) {
       const f = path.join(root, dir, file); if (!fs.existsSync(f)) continue;
       const html = (ctx.outputs && ctx.outputs.get(dir + '/' + file)) || fs.readFileSync(f, 'utf8');

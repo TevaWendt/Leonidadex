@@ -1,0 +1,67 @@
+LEONIDAKIT v7.65 — nouvelle section « Gangs et factions », 3 octobre 2026
+
+Base : v7.64 (cinq langues réunies). Demande : créer les sections manquantes par ordre d’importance et d’urgence, en
+commençant par celle qui complète le mieux personnages, lieux et demeures : les gangs et factions (« important à 9 »).
+Rien n’est publié. Preuves : outils/PREUVES-v7.65.md.
+
+1. LA SECTION
+- Hub gangs.html « Les gangs et factions de GTA VI » et six fiches gangs/ :
+  · Final Chapter MC (gangs/final-chapter-mc.html) : le club de motards d’Ambrosia. Nom lu sur les gilets de la première
+    capture officielle de la région (« Final Chapter », « 1982 », « MC », « Ambrosia ») ; Rockstar parle d’un « gang de motards
+    local » qui fournit à peu près tout ce que la raffinerie ne fournit pas. Liens : Ambrosia, Western Sovereign, Mustang .357.
+  · Le gang PTT Youngin$ (gangs/ptt-youngin-gang.html) : nommé dans le texte de l’Édition Ultimate (« PTT YOUNGIN$ Compound » :
+    piller le repaire de l’un des gangs les plus bruyants de Southside et s’enfuir avec la contrebande). Lien vers la fiche
+    commerce PTT YOUNGIN$ (même lieu, vu comme un commerce), la Manchez et la carte.
+  · San4San (gangs/san4san.html) : identification des joueurs, affichée comme telle (« Un nom lu par les joueurs, jamais
+    présenté par Rockstar ») ; chaîne du Trailer 1, fresque du Trailer 2 et revendeurs de Venture Apartments selon le GTA Wiki ;
+    le nom a d’abord circulé avec les fuites de 2022, que le site n’utilise pas. Aucun lien vers les fiches officielles.
+  · L’équipe de Raul Bautista (gangs/equipe-raul.html) : présentation officielle de Raul ; dans l’Extended Look, Jason et Lucia
+    entrent dans son équipe après une fuite réussie.
+  · Le réseau de Brian Heder (gangs/reseau-brian.html) : les trafiquants des Keys pour qui travaille Jason ; chantier naval,
+    maisons des Keys, Caracara 4x4.
+  · Les forces de l’ordre de Leonida (gangs/forces-de-l-ordre.html) : vedette « Vice City Police » et écusson « Vice City Police
+    Dept » lisibles sur une capture de l’Édition Ultimate, Vice-Dale Police Department et shérif du comté de Leonard (Trailer 1),
+    panneau du bureau du shérif du comté d’Ambrosia, garde-côtes (Cal), pénitencier (Lucia), les quinze véhicules de service vus,
+    et les règles données par Rob Nelson (témoin ou alarme, étoiles, tenue à changer).
+- Sous la grille, la zone éditoriale commune aux hubs du monde : « Ce que Rockstar a montré » (six dates), « Ce que la
+  communauté a identifié » (six rapprochements avec leur source), « Ce qui reste à confirmer », « Ce que ça change pour toi »
+  (calculateur, carte avec repères, Mustang .357, véhicules), FAQ de cinq questions, seize sources datées (huit nouvelles,
+  consultées le 3 octobre 2026).
+- Nouveau fait officiel repris : Rob Nelson (Famitsu, traduit par GTAVice.net) : on repère les repaires de gangs, on s’y
+  introduit, on vole argent ou drogue ; la carte indique ce qu’ils contiennent ; la drogue se revend à un receleur ; les
+  missions seules ne suffisent pas à financer l’histoire (repris dans la fiche de l’équipe de Raul).
+
+2. INTÉGRATION
+- Menu « Explorer → Le monde » et pied de page de toutes les pages : « Gangs et factions » après « Personnages ».
+- Accueil, « Le monde de Leonida » : cinq cartes (Personnages, Gangs et factions, Demeures, Planques, Entreprises), trois puis
+  deux centrées (style.css, .lore-grid--five) ; texte d’introduction complété.
+- Fiches existantes : un groupe « Gangs et factions » s’ajoute dans « En lien » quand une faction les cite (Ambrosia, Vice City,
+  Leonida Keys, Jason, Lucia, Cal, Raul, Brian, maisons de Jason et de Brian, chantier de Brian, commerce PTT YOUNGIN$). Leur
+  texte ne change pas.
+- Calculateur : encart du hub « Piller un repaire de gang, ça rapporte plus qu’une mission ? » (outil Mes activités) et encart
+  « Ce que ça rapporterait, à l’heure ? » sur quatre fiches (pas sur San4San ni sur les forces de l’ordre).
+- Léo : six fiches « Gang ou faction » (noms et alias), les cinq questions de la FAQ, sujet « police » mis à jour (propos de
+  Rob Nelson, lien vers les forces de l’ordre), lien vers le Final Chapter MC depuis la réponse sur Ambrosia ; pages /gangs
+  dans le morceau « monde » (leo-ui.js, leo-core.js, leo-langues.cjs).
+- Recherche du site (search-index.js), plan du site (sitemap.xml, sitemap-fiches.xml : 7 adresses de plus par langue),
+  Mentions (historique v7.65), À propos (nombre de pages recalculé).
+- Code : outils/lore-gen.js (section factions → hub gangs ; « kind » : étiquette propre à une fiche ; « weapons » : fiches
+  armes liées ; « calc: false » ; « accord » : accord de « relié » dans le résumé), outils/hubs-monde.cjs (hub gangs,
+  « sourcesLede »), outils/hubs-doublons.cjs, outils/site-shell.cjs, outils/sync-site.cjs, outils/gen-leo.cjs.
+
+3. LANGUES
+- Toute la section en anglais, espagnol, italien et allemand : outils/langues/<code>/lot-66.json (≈ 300 textes par langue,
+  noms propres gardés, prudences gardées : « selon », « se lirait »…). 0 texte sans traduction dans chaque langue.
+- Allemand, corrigé en passant (défauts de la v7.64 repérés pendant ce lot) :
+  · la recherche des lieux montrait 1 870 noms en français (« … (nom réel) », « Bâtiment L… ») : règles « re: » ajoutées ;
+  · les types de lieux de la carte restaient en français (« Typ: commerce », « transport », « naturel », « administration »,
+    « restaurant », « monument », « service », « bureaux ») : entrées « carte-gtadb.js::… » ajoutées.
+- Tests : trois titres anglais de sources ajoutés aux titres gardés en anglais (langues-helper.cjs).
+
+4. TESTS
+- Listes de dossiers des tests (gangs/) et hubs du monde (six hubs) mis à jour ; Léo : « peut-on attaquer les repaires de
+  gangs ? » répond depuis la FAQ du hub.
+
+5. LIMITES
+- Aucune mission, aucun montant, aucun territoire officiel : Rockstar n’en a pas publié. Les fiches se compléteront à la sortie.
+- San4San reste une identification communautaire tant que Rockstar ne l’écrit pas.
