@@ -1,0 +1,69 @@
+{
+ "_note": "Section codes : questions de test de Léo en espagnol pour la section « Codes de triche » (présence de codes, argent infini, trophées, téléphone, en ligne). Rejoué par node outils/tests/leo-eval.cjs --lang es --questions=outils/tests/leo-questions-section-codes-es.json.",
+ "schemaVersion": 1,
+ "questions": [
+  {
+   "q": "hay trucos en gta 6",
+   "expect": {
+    "topic": "mods"
+   },
+   "tags": [
+    "section-codes"
+   ]
+  },
+  {
+   "q": "trucos gta 6",
+   "expect": {
+    "topic": "mods"
+   },
+   "tags": [
+    "section-codes"
+   ]
+  },
+  {
+   "q": "truco de dinero infinito gta 6",
+   "expect": {
+    "topic": "codes-faq-1"
+   },
+   "tags": [
+    "section-codes"
+   ]
+  },
+  {
+   "q": "hay un truco para tener dinero",
+   "expect": {
+    "topic": "codes-faq-1"
+   },
+   "tags": [
+    "section-codes"
+   ]
+  },
+  {
+   "q": "los trucos desactivan los trofeos",
+   "expect": {
+    "topic": "codes-faq-2"
+   },
+   "tags": [
+    "section-codes"
+   ]
+  },
+  {
+   "q": "como poner un truco con el telefono",
+   "expect": {
+    "topic": "codes-faq-3"
+   },
+   "tags": [
+    "section-codes"
+   ]
+  },
+  {
+   "q": "los trucos funcionan en linea",
+   "expect": {
+    "topic": "codes-faq-4"
+   },
+   "tags": [
+    "section-codes"
+   ]
+  }
+ ]
+}

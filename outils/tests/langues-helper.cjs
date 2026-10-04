@@ -45,7 +45,7 @@ const ALLOW = new Set(['léo', 'pokémon', 'café', 'résumé', 'décor', 'naïv
 /* noms propres français cités tels quels (adresses, nom officiel d'une loi ou d'une autorité) et citations anglaises
    gardées dans leur langue (propos de Rob Nelson) */
 const PROPER = ['You’ll obtain outfits by completing missions or purchasing them from stores', 'Le Mans', 'De Hoop', 'De Havilland', 'Sedan de Ville', 'La Perle', 'La Mesa', 'Ctrl+Y', 'UH-1Y', 'Safari Y6', 'Commission Nationale de l’Informatique et des Libertés', 'Commission nationale de l’informatique et des libertés', 'loi Informatique et Libertés', 'Informatique et Libertés', 'rue de Salneuve', 'place de Fontenoy',
-  'Stanier LE', 'La Quinta', 'Herzog and de Meuron', 'Y Vice City', 'SE280LC', 'mud parties', 'Strg+Y', 'Eau de Cologne', 'eau de cologne'];
+  'Stanier LE', 'La Quinta', 'Herzog and de Meuron', 'Y Vice City', 'SE280LC', 'mud parties', 'Strg+Y', 'Eau de Cologne', 'eau de cologne', 'Michael De Santa' /* section online */];
 /* v7.62 (allemand) : mots outils français qui sont aussi des mots allemands (« du » = tu, « des » = génitif, « je » = chaque,
    « Partie » = partie de jeu) et lettres accentuées qui appartiennent à l'allemand (trémas) */
 const SAME_AS_FR = { de: new Set(['du', 'des', 'je', 'partie', 'quelle', 'arme']) };
@@ -111,7 +111,12 @@ const EN_KEEP = {
     'GTA 6 Extended Look, everything we learned',
     'the whole map is three times larger than Red Dead Redemption 2',
     'GTA 6 extended look, the actors fans think they recognise',
-    'the first GTA 6 actor has confirmed his involvement'
+    'the first GTA 6 actor has confirmed his involvement',
+    'Will GTA 6 Have Cheat Codes? What We Know So Far', 'Unbeatable GTA 5 Cheats: Every Cheat Code Available for Xbox and PlayStation' /* section codes */,
+    'Will GTA 6 Have Achievements and Trophies?' /* section trophees */,
+    'GTA VI Gets Its ESRB Rating: Missing Label Confirms No Online Mode at Launch', 'GTA 6 is a ’singleplayer experience,’ GTA Online may be sold separately',
+    'Report: Rockstar Won’t Talk About GTA 6 Online Soon, Game Will Be Marketed as a Single-Player Experience',
+    'Will Your GTA Online Character Transfer to GTA 6? What Rockstar Has Confirmed' /* section online */
   ],
   /* noms de lieux réels (Floride, carte : « Reales Gegenstück », « (echter Name) ») et morceaux d'adresses réelles */
   lieux: [

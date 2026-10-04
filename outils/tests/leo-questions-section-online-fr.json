@@ -1,0 +1,96 @@
+{
+ "_note": "Section online : questions de test de Léo en français pour la section « GTA Online » (mode en ligne, date, transfert de personnage, GTA Online actuel, GTA+, abonnements). Rejoué par node outils/tests/leo-eval.cjs --questions=outils/tests/leo-questions-section-online-fr.json.",
+ "schemaVersion": 1,
+ "questions": [
+  {
+   "q": "y aura-t-il un GTA Online pour GTA 6 ?",
+   "expect": {
+    "topic": "online"
+   },
+   "tags": [
+    "section-online"
+   ]
+  },
+  {
+   "q": "GTA 6 online sortira quand ?",
+   "expect": {
+    "topic": "online"
+   },
+   "tags": [
+    "section-online"
+   ]
+  },
+  {
+   "q": "gta 6 aura t il un mode multijoueur",
+   "expect": {
+    "topic": "online"
+   },
+   "tags": [
+    "section-online"
+   ]
+  },
+  {
+   "q": "mon personnage de GTA Online sera-t-il transféré ?",
+   "expect": {
+    "topic": "online-faq-1"
+   },
+   "tags": [
+    "section-online"
+   ]
+  },
+  {
+   "q": "est ce que je garde mon personnage gta online dans gta 6",
+   "expect": {
+    "topic": "online-faq-1"
+   },
+   "tags": [
+    "section-online"
+   ]
+  },
+  {
+   "q": "le gta online actuel va-t-il continuer ?",
+   "expect": {
+    "topic": "online-faq-2"
+   },
+   "tags": [
+    "section-online"
+   ]
+  },
+  {
+   "q": "gta online va t il fermer avec gta 6",
+   "expect": {
+    "topic": "online-faq-2"
+   },
+   "tags": [
+    "section-online"
+   ]
+  },
+  {
+   "q": "a quoi sert le mois de gta+ offert avec la précommande",
+   "expect": {
+    "topic": "gtaplus"
+   },
+   "tags": [
+    "section-online"
+   ]
+  },
+  {
+   "q": "faut il le playstation plus pour jouer a gta 6",
+   "expect": {
+    "topic": "online-faq-3"
+   },
+   "tags": [
+    "section-online"
+   ]
+  },
+  {
+   "q": "gta 6 sans abonnement",
+   "expect": {
+    "topic": "online-faq-3"
+   },
+   "tags": [
+    "section-online"
+   ]
+  }
+ ]
+}

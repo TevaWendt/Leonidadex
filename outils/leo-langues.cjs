@@ -71,7 +71,7 @@ function build(code, root, L, ctx) {
     file = 'leo/' + f;
     const o = { ...sh };
     if (name === 'calculateur') o.knowledge = (sh.knowledge || []).map(topic);
-    if (name !== 'calculateur' && Array.isArray(sh.knowledge)) o.knowledge = sh.knowledge.map(topic); /* sections missions, activites, radios, animaux : morceau de questions de chaque section (leo/<id>.json) */
+    if (name !== 'calculateur' && Array.isArray(sh.knowledge)) o.knowledge = sh.knowledge.map(topic); /* sections missions, activites, radios, animaux, codes, trophees, online : morceau de questions de chaque section (leo/<id>.json) */
     if (Array.isArray(sh.proofs)) o.proofs = sh.proofs.map(p => T(p, 'preuve'));
     if (Array.isArray(sh.labels)) o.labels = sh.labels.map(p => T(p, 'libellé'));
     if (Array.isArray(sh.items)) {
@@ -120,7 +120,7 @@ function build(code, root, L, ctx) {
   {
     const { JSDOM } = require('jsdom');
     const flat = s => String(s ?? '').replace(/\s+/g, ' ').trim();
-    const pages = lang.pages.filter(p => !p.includes('/') || /^(?:lieux|personnages|entreprises|demeures|planques|gangs|missions|activites|radios|animaux)\//.test(p)/* sections missions, activites, radios, animaux */).sort();
+    const pages = lang.pages.filter(p => !p.includes('/') || /^(?:lieux|personnages|entreprises|demeures|planques|gangs|missions|activites|radios|animaux|codes-de-triche|trophees|online)\//.test(p)/* sections missions, activites, radios, animaux, codes, trophees, online */).sort();
     for (const file of pages) {
       const f = path.join(root, dir, file); if (!fs.existsSync(f)) continue;
       const html = (ctx.outputs && ctx.outputs.get(dir + '/' + file)) || fs.readFileSync(f, 'utf8');

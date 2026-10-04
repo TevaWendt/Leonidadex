@@ -1,5 +1,5 @@
 {
- "_note": "Assemblage des sections missions, activites, radios : libellés du groupe « Jouer » quand il réunit les trois sections (menu « Explorer » et pied de page), en anglais. Les fichiers section-<id>.json gardent la forme à une seule section.",
- "<1>Jouer</1><2>Missions</2><3>Activités annexes</3><4>Radios et musique</4>": "<1>Play</1><2>Missions</2><3>Side activities</3><4>Radio and music</4>",
- "<1>Missions</1><2>Activités annexes</2><3>Radios et musique</3>": "<1>Missions</1><2>Side activities</2><3>Radio and music</3>"
+ "_note": "Assemblage des sections missions, activites, radios, codes, trophees, online : libellés du groupe « Jouer » quand il réunit les six sections (menu « Explorer » et pied de page), en anglais. Les fichiers section-<id>.json gardent la forme à une seule section.",
+ "<1>Jouer</1><2>Missions</2><3>Activités annexes</3><4>Radios et musique</4><5>Codes de triche</5><6>Trophées et succès</6><7>GTA Online</7>": "<1>Play</1><2>Missions</2><3>Side activities</3><4>Radio and music</4><5>Cheat codes</5><6>Trophies and achievements</6><7>GTA Online</7>",
+ "<1>Missions</1><2>Activités annexes</2><3>Radios et musique</3><4>Codes de triche</4><5>Trophées et succès</5><6>GTA Online</6>": "<1>Missions</1><2>Side activities</2><3>Radio and music</3><4>Cheat codes</4><5>Trophies and achievements</5><6>GTA Online</6>"
 }

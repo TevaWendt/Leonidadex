@@ -1,0 +1,59 @@
+{
+ "_note": "Section « GTA Online » (section online) : les pages online/<id>.html qui ont dès aujourd’hui du contenu sourcé, lues par outils/gen-online.cjs. Une page n’existe que si elle a au moins trois éléments sourcés (pas de page creuse). Sources : outils/online/hub.json (« sources »).",
+ "pages": [
+  {
+   "id": "annonces", "sommaire": "annonces",
+   "label": "Annonces",
+   "titre": "Les annonces, une par une",
+   "lede": "Ce que Rockstar, Take-Two et les boutiques ont dit du jeu en ligne en 2026, dans l’ordre, avec la source. Rien n’annonce encore un GTA Online pour GTA VI.",
+   "desc": "Les annonces sur le jeu en ligne de GTA VI et l’avenir de GTA Online, de février à octobre 2026 : Rockstar, Take-Two, boutiques, chacune avec sa source.",
+   "kind": "annonces",
+   "items": [
+    { "date": "2026-02-03", "dateTexte": "3 février 2026", "qui": "Take-Two, résultats du trimestre", "titre": "« Toutes les raisons de croire » que GTA Online continuera", "texte": "Strauss Zelnick dit avoir toutes les raisons de croire que Take-Two continuera de soutenir GTA Online, porté par une communauté fidèle. Il cite NBA 2K Online : sa deuxième version est sortie en Chine en 2017 sans que la première ferme, et les deux restent en service.", "statut": "officiel", "sources": ["gamingbible-fev", "kotaku-fev"] },
+    { "date": "2026-05-21", "dateTexte": "21 mai 2026", "qui": "Take-Two, résultats de l’année", "titre": "GTA Online restera sur le marché", "texte": "Difficile de prévoir comment GTA Online se portera après GTA VI, dit Strauss Zelnick, mais le jeu restera sur le marché, avec beaucoup de joueurs fidèles. GTA Online a progressé de 6 % sur l’exercice.", "statut": "officiel", "sources": ["marketbeat-mai"] },
+    { "date": "2026-06-24", "dateTexte": "24 juin 2026", "qui": "Rockstar Games, précommandes", "titre": "« Une expérience solo »", "texte": "Le communiqué des précommandes présente GTA VI comme une expérience solo, le 19 novembre sur PS5 et Xbox Series X|S, sans un mot sur GTA Online. Les précommandes numériques donnent un mois de GTA+, qui sert dans le GTA Online actuel.", "statut": "officiel", "sources": ["businesswire-precommandes", "rs-precommandes", "rs-support-gtaplus-preco"] },
+    { "date": "2026-06-24", "dateTexte": "24 juin 2026", "qui": "PlayStation et Xbox", "titre": "Les boutiques disent « solo »", "texte": "Le PlayStation Blog promet une expérience solo ; la FAQ de la page PlayStation répond « expérience solo » à la question du multijoueur, et la fiche Xbox n’indique que le jeu solo.", "statut": "officiel", "sources": ["ps-blog", "insider-faq-ps", "purexbox-solo"] },
+    { "date": "2026-08-07", "dateTexte": "7 août 2026", "qui": "Take-Two, résultats du trimestre", "titre": "Un rythme de mises à jour stable", "texte": "Strauss Zelnick : le rythme des mises à jour de GTA Online n’a pas vraiment changé, Take-Two y met des moyens importants et compte continuer à soutenir le jeu.", "statut": "officiel", "sources": ["tweaktown-aout"] },
+    { "date": "2026-08", "dateTexte": "Août 2026", "qui": "Jason Schreier, Bloomberg", "titre": "Rien sur le jeu en ligne de sitôt", "texte": "Selon le journaliste, Take-Two ne parle de GTA VI que pour sa partie solo, et Rockstar ne parlera pas du jeu en ligne avant longtemps.", "statut": "comm", "sources": ["mp1st-schreier"] },
+    { "date": "2026-09-17", "dateTexte": "17 septembre 2026", "qui": "Take-Two, assemblée des actionnaires", "titre": "GTA Online « après la sortie de GTA 6 et au-delà »", "texte": "Take-Two répète que GTA VI est un jeu solo, qui sort en novembre, et que GTA Online sera soutenu après sa sortie et au-delà. Strauss Zelnick ajoute qu’aucune dépense récurrente n’est prévue pour ce lancement.", "statut": "officiel", "sources": ["sec-def14a", "techradar-assemblee", "inven-zelnick"] },
+    { "date": "2026-09", "dateTexte": "Septembre 2026", "qui": "Dan Clancy, patron de Twitch", "titre": "Un multijoueur « l’an prochain » ?", "texte": "À Bloomberg, le patron de Twitch dit avoir beaucoup parlé avec Rockstar et attendre un pic d’audience avec GTA VI, puis un plus grand avec le multijoueur, l’an prochain. Rockstar et Take-Two n’ont rien confirmé.", "statut": "comm", "sources": ["gamespot-twitch", "pcgamer-twitch"] },
+    { "date": "2026-10-01", "dateTexte": "1er octobre 2026", "qui": "Classification ESRB", "titre": "M, avec des achats en jeu", "texte": "Le site officiel affiche la classification ESRB M (17 ans et plus), avec la mention des achats en jeu. Tech Times y lit l’absence de jeu en ligne au lancement ; ni Rockstar ni l’ESRB ne l’ont dit.", "statut": "vu", "sources": ["howtovideogame-esrb", "techtimes-esrb"] }
+   ]
+  },
+  {
+   "id": "gta-online-actuel", "sommaire": "gta-online-actuel",
+   "label": "Le GTA Online actuel",
+   "titre": "Le GTA Online actuel, celui de GTA V",
+   "lede": "Le jeu en ligne de GTA V, lancé en 2013, continue. Il sert de repère pour imaginer celui de GTA VI : un ordre d’idée, jamais un chiffre de GTA VI.",
+   "desc": "Le GTA Online de GTA V en 2026 : ses débuts, les Shark Cards et GTA+, ses dernières mises à jour, le mois offert avec GTA VI. Un repère, avec ses sources.",
+   "kind": "blocs",
+   "blocs": [
+    { "id": "debuts", "titre": "Ses débuts", "items": [
+     { "texte": "GTA V sort le 17 septembre 2013 sur PS3 et Xbox 360 : plus de 800 millions de dollars de ventes le premier jour, selon Take-Two.", "statut": "officiel", "sources": ["sec-gtav-2013"] },
+     { "texte": "GTA Online ouvre le 1er octobre 2013, deux semaines après l’histoire, inclus avec le jeu.", "statut": "comm", "sources": ["nbc-2013"] },
+     { "texte": "Une partie réunit alors jusqu’à 16 joueurs : missions en coopération, affrontements, courses et exploration libre.", "statut": "comm", "sources": ["cheatcc-timeline"] }
+    ] },
+    { "id": "achats", "titre": "Ce qui s’y achète", "items": [
+     { "texte": "Les Shark Cards ajoutent des GTA$ au solde du jeu en ligne, contre de l’argent réel ; elles s’achètent dans le jeu ou dans les boutiques.", "statut": "officiel", "sources": ["rs-support-shark"] },
+     { "texte": "Du 18 juin au 22 juillet 2026, les plus grosses Shark Cards donnaient 40 % de GTA$ en plus.", "statut": "officiel", "sources": ["rs-support-shark-bonus"] },
+     { "texte": "GTA+, un abonnement lancé le 29 mars 2022 sur PS5 et Xbox Series, coûtait 5,99 $ par mois, avec 500 000 GTA$ chaque mois ; il est passé à 7,99 $ en 2024.", "statut": "comm", "sources": ["gematsu-gtaplus", "pushsquare-gtaplus-prix"] },
+     { "texte": "Depuis le 6 novembre 2025, GTA+ inclut l’accès à GTA Online sur PS5 et Xbox Series X|S, où le jeu en ligne se vend aussi seul.", "statut": "comm", "sources": ["pushsquare-gtaplus-launcher", "tweaktown-separe"] }
+    ] },
+    { "id": "mises-a-jour", "titre": "Ses dernières mises à jour", "items": [
+     { "date": "2025-12-10", "titre": "A Safehouse in the Hills", "texte": "Le 10 décembre 2025 : le retour de Michael De Santa, des manoirs à Vinewood Hills, un nouveau créateur de missions et des véhicules.", "statut": "comm", "sources": ["worthplaying-safehouse"] },
+     { "date": "2026-07-14", "titre": "The Kortz Center Heist", "texte": "Le 14 juillet 2026 : un braquage d’œuvres d’art au Kortz Center, seul ou jusqu’à quatre joueurs, pour qui possède un manoir et son extension Art Studio.", "statut": "officiel", "sources": ["rs-kortz"] },
+     { "texte": "Pour l’accompagner, GTA Online était jouable sans PS Plus ni Game Pass du 14 au 20 juillet 2026, sur PS5 et Xbox Series.", "statut": "comm", "sources": ["psls-gratuit"] }
+    ] },
+    { "id": "gta-plus", "titre": "Le mois de GTA+ offert avec GTA VI", "items": [
+     { "texte": "Une précommande numérique de GTA VI faite avant le 20 novembre 2026 donne un mois de GTA+. Il s’active dans la boutique de la console et sert dans ce GTA Online-ci, pas dans GTA VI.", "statut": "officiel", "sources": ["rs-support-gtaplus-preco", "businesswire-precommandes"] },
+     { "texte": "À activer au plus tard le 31 mars 2027 sur PS5, ou dans les 180 jours sur Xbox ; une fois par compte ; il se renouvelle ensuite au prix normal si tu ne l’arrêtes pas.", "statut": "officiel", "sources": ["rs-support-gtaplus-preco", "ps-gtaplus-offre"] },
+     { "texte": "Sur PlayStation, l’offre ne vaut pas à Bahreïn, en Chine, au Koweït, au Liban, à Oman, au Qatar, en Russie ni à Taïwan.", "statut": "officiel", "sources": ["ps-gtaplus-offre"] }
+    ] },
+    { "id": "avenir", "titre": "Et après GTA VI ?", "items": [
+     { "texte": "Take-Two promet de continuer GTA Online après la sortie de GTA VI, « et au-delà », avec le même rythme de mises à jour.", "statut": "officiel", "sources": ["techradar-assemblee", "tweaktown-aout"] },
+     { "texte": "Aucun transfert de personnage, d’argent ou de biens vers GTA VI n’est annoncé. Seul précédent : la version Enhanced de GTA V sur PC, en mars 2025, qui a permis de reprendre sa progression.", "statut": "comm", "sources": ["gta6explained-transfert", "guru3d-enhanced"] }
+    ] }
+   ]
+  }
+ ]
+}

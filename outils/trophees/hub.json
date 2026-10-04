@@ -1,0 +1,168 @@
+{
+ "_note": "Section « Trophées et succès » (section trophees) : textes de trophees.html, lus par outils/gen-trophees.cjs. Les trophées eux-mêmes sont dans outils/trophees/trophees.json (liste non publiée au 4 octobre 2026) ; la page de démonstration du gabarit (trophees/modele.html, noindex) dans outils/trophees/modele.json. Rien d’inventé : chaque phrase porte un statut et des sources de « sources ». Aucune liste « attendue » des sites de fans ou de boosting, aucun élément des fuites. Sources relevées le 4 octobre 2026 par moteur de recherche (ouverture directe des pages bloquée depuis l’atelier ce jour-là).",
+ "hub": {
+  "label": "Trophées et succès",
+  "title": "Les trophées et succès de GTA VI",
+  "lede": "La liste des trophées PlayStation et des succès Xbox n’est pas encore publiée. Voici ce qu’on sait au 4 octobre 2026, ce que comptait GTA V, et ton suivi, prêt à s’allumer avec la liste.",
+  "desc": "Trophées PS5 et succès Xbox de GTA VI : liste pas encore publiée au 4 octobre 2026. Ce qu’on sait, GTA V pour comparer, et ton suivi sur l’appareil.",
+  "note": "Chaque information dit d’où elle vient : boutique, règle de console, presse ou site de chasseurs de trophées. Aucune liste « attendue » n’est reprise : un trophée n’entrera ici que publié par PlayStation, Xbox ou Rockstar.",
+  "pile": [
+   { "media": "classic-car-collection-01", "caption": "Des voitures de collection", "alt": "Un homme en débardeur et casquette pose devant des voitures anciennes, dont une voiture de course rouge numérotée, visuel officiel Rockstar Games" },
+   { "media": "lucia-caminos-03", "caption": "Lucia", "alt": "Lucia assise sur une moto jaune devant l’enseigne lumineuse d’un bar, la nuit, visuel officiel Rockstar Games" },
+   { "media": "leonida-keys-02", "caption": "Les Keys", "alt": "Une rue animée des Keys : des passants, un homme en scooter électrique et un iguane au premier plan, visuel officiel Rockstar Games" }
+  ]
+ },
+ "etat": {
+  "kicker": "Ce qu’on sait",
+  "titre": "GTA VI : la liste n’est pas publiée",
+  "carte": {
+   "titre": "Pas encore publiée",
+   "date": "Au 4 octobre 2026",
+   "texte": "Ni PlayStation, ni Xbox, ni Rockstar n’ont publié la liste des trophées et succès de GTA VI : pas de nombre, pas de grades, pas de points, aucun nom. Les sites spécialisés, comme TrueAchievements et PlayStationTrophies.org, ont ouvert leur page et l’attendent.",
+   "statut": "conf", "sources": ["tra-gta6", "pst-gta6", "gtabase-trophees"]
+  },
+  "faits": [
+   { "titre": "Des succès sur Xbox", "texte": "La fiche Xbox du jeu annonce des succès, sans en donner le nombre ni les points.", "statut": "officiel", "sources": ["xbox-store"], "icon": "liste" },
+   { "titre": "Un jeu solo à sa sortie", "texte": "Rockstar présente GTA VI comme une expérience solo ; la fiche PlayStation indique un joueur et un jeu hors ligne, sans parler des trophées.", "statut": "officiel", "sources": ["rs-support-plateformes", "ps-store"], "icon": "navigateur" },
+   { "titre": "1 000 points sur Xbox", "texte": "Les règles de Microsoft limitent un jeu à 1 000 points de succès à sa sortie, répartis sur 10 à 100 succès. Le détail pour GTA VI n’est pas publié.", "statut": "officiel", "sources": ["ms-xr055"], "icon": "chiffres" },
+   { "titre": "Le platine, une règle de PlayStation", "texte": "Sur PlayStation, les trophées ont quatre grades, et le platine se débloque quand on a tous les autres. Rien ne dit encore si GTA VI en aura un.", "statut": "comm", "sources": ["psnprofiles-systeme"], "icon": "statuts" }
+  ]
+ },
+ "grades": {
+  "kicker": "Les grades",
+  "titre": "Quatre grades, et des points sur Xbox",
+  "lede": "Les badges sont dessinés pour le site : ce ne sont pas les icônes des consoles.",
+  "items": [
+   { "grade": "platine", "label": "Platine", "texte": "Un par jeu au plus ; il demande tous les autres trophées." },
+   { "grade": "or", "label": "Or", "texte": "Le grade le plus haut après le platine." },
+   { "grade": "argent", "label": "Argent", "texte": "Le grade du milieu." },
+   { "grade": "bronze", "label": "Bronze", "texte": "Le premier grade." },
+   { "grade": "xbox", "label": "Points Xbox", "texte": "Chaque succès vaut des points ; leur total fait le score du profil." }
+  ],
+  "statut": "comm", "sources": ["psnprofiles-systeme", "trueach-gamerscore"]
+ },
+ "gtav": {
+  "kicker": "Pour comparer",
+  "titre": "Les trophées de GTA V",
+  "lede": "Les chiffres de GTA V, pour te faire une idée : ils ne disent rien de la liste de GTA VI.",
+  "chiffres": [
+   { "n": "51", "l": "trophées dans le jeu de base : 1 platine, 3 or, 5 argent, 42 bronze", "statut": "comm", "sources": ["powerpyx-gtav", "techradar-gtav-trophees"] },
+   { "n": "78", "l": "trophées avec les contenus ajoutés, sur PS4 comme sur PS5", "statut": "comm", "sources": ["psthc-gtav"] },
+   { "n": "34", "l": "de ces 78 trophées liés à GTA Online", "statut": "comm", "sources": ["psthc-gtav"] },
+   { "n": "1 750", "l": "points pour 77 succès sur Xbox Series X|S", "statut": "comm", "sources": ["trueach-gtav"] }
+  ],
+  "items": [
+   { "texte": "Le platine, « Los Santos Legend » (« Légende de Los Santos » en français), demande tous les autres trophées.", "statut": "comm", "sources": ["techradar-gtav-trophees", "psthc-gtav"] },
+   { "texte": "Les trois trophées d’or sont réputés les plus longs : « Career Criminal » (100 % du jeu), « Solid Gold, Baby! » (70 médailles d’or) et « Above the Law » (rang 100 dans GTA Online).", "statut": "comm", "sources": ["powerpyx-gtav"] },
+   { "texte": "PowerPyx compte six trophées manquables, dont « Kifflom! » (toutes les missions d’Epsilon) et « Red Mist » (tous les Rampages) : au choix final, l’option C les garde accessibles.", "statut": "comm", "sources": ["powerpyx-gtav"] },
+   { "texte": "Les codes de triche y désactivaient les succès pour un temps, selon Rockstar.", "statut": "officiel", "sources": ["rs-support-codes-v"] }
+  ]
+ },
+ "liste": {
+  "kicker": "Ton suivi",
+  "titre": "La liste et ta progression",
+  "vide": "La liste arrivera ici dès sa publication par PlayStation, Xbox ou Rockstar. Chaque trophée aura son grade, ses points Xbox, sa condition officielle, s’il est manquable ou caché, et ta case « Obtenu », gardée sur ton appareil, avec le pourcentage et l’anneau de progression. Ceux qui demandent une méthode auront leur fiche pas à pas.",
+  "champsTitre": "Ce que dira chaque trophée",
+  "champs": [
+   { "t": "Nom officiel", "d": "En anglais, et dans chaque langue du site quand il est publié." },
+   { "t": "Grade et points", "d": "Platine, or, argent ou bronze ; points Xbox." },
+   { "t": "Condition officielle", "d": "Le texte publié par PlayStation ou Xbox." },
+   { "t": "Méthode", "d": "Les étapes, sur une fiche, quand il en faut." },
+   { "t": "Manquable ou caché", "d": "Signalé d’avance, avec sa source." },
+   { "t": "Liens", "d": "Vers les collectibles, la carte, les véhicules ou ta progression." }
+  ],
+  "note": "Les filtres (grade, manquable, catégorie) et le suivi s’allument avec la liste.",
+  "bilan": { "libelle": "trophées obtenus", "note": "Gardé sur cet appareil seulement." },
+  "filtres": { "titre": "Filtrer la liste", "grade": "Grade", "manquable": "Manquable", "categorie": "Catégorie", "etat": "Suivi", "tous": "Tous", "oui": "Manquables", "non": "Non manquables", "obtenus": "Obtenus", "restants": "À obtenir", "visibles": "Trophées affichés :" }
+ },
+ "zone": {
+  "nav": [
+   { "href": "#etat", "label": "Ce qu’on sait" },
+   { "href": "#grades", "label": "Les grades" },
+   { "href": "#gtav", "label": "GTA V, pour comparer" },
+   { "href": "#liste", "label": "Ton suivi" },
+   { "href": "#rockstar", "label": "Rockstar" },
+   { "href": "#communaute", "label": "Communauté" },
+   { "href": "#a-confirmer", "label": "À confirmer" },
+   { "href": "#pour-toi", "label": "Pour toi" },
+   { "href": "#faq", "label": "FAQ" },
+   { "href": "#sources", "label": "Sources" }
+  ],
+  "rockstar": {
+   "lede": "Rockstar, Sony et Microsoft ont présenté le jeu sans dire un mot de ses trophées.",
+   "items": [
+    { "date": "24 juin 2026", "titre": "Précommandes", "statut": "officiel", "texte": "GTA VI est présenté comme une expérience solo, le 19 novembre sur PS5 et Xbox Series X|S." },
+    { "date": "Boutique Xbox", "titre": "Des succès annoncés", "statut": "officiel", "texte": "La fiche du jeu liste des succès, sans nombre ni points." },
+    { "date": "Boutique PlayStation", "titre": "Un joueur, hors ligne", "statut": "officiel", "texte": "La fiche indique un joueur et le jeu hors ligne ; rien sur les trophées." },
+    { "date": "27 août 2026", "titre": "Extended Look", "statut": "vu", "texte": "Environ 26 minutes de jeu capturées sur PS5, sans rien sur les trophées." },
+    { "date": "29 septembre 2026", "titre": "Game Informer", "statut": "vu", "texte": "Le dossier parle de la carte, de la météo et de la faune ; rien sur les trophées." }
+   ],
+   "p": []
+  },
+  "communaute": {
+   "lede": "Les chasseurs de trophées guettent la liste. Voici ce qu’ils avancent, cité comme tel.",
+   "pairs": [
+    { "fiction": "Un platine en une centaine d’heures", "reel": "Propos d’un créateur brésilien invité par Rockstar, rapportés par Gameblog : rien d’officiel, malgré le titre de l’article.", "src": "gameblog-platine" },
+    { "fiction": "55 à 60 trophées « attendus »", "reel": "Des estimations de sites de fans, sans aucune source officielle : le site n’en reprend aucune.", "src": "gtabase-trophees" },
+    { "fiction": "Les pages « GTA VI » des sites de trophées", "reel": "TrueAchievements et PlayStationTrophies.org les ont ouvertes ; elles restent vides en attendant la liste.", "src": "tra-gta6" },
+    { "fiction": "La liste quelques jours avant la sortie", "reel": "C’est l’habitude constatée par les sites de suivi, pas une annonce.", "src": "gtaintel-trophees" }
+   ],
+   "p": []
+  },
+  "confirmer": {
+   "lede": "Le suivi est prêt ; il lui manque la liste.",
+   "items": [
+    { "q": "Le nombre de trophées", "etat": "Non publié, pas plus que les points Xbox." },
+    { "q": "Un platine", "etat": "Attendu, mais pas confirmé." },
+    { "q": "Des trophées en ligne", "etat": "Aucun mode en ligne n’est annoncé au lancement." },
+    { "q": "Les trophées manquables", "etat": "On le saura avec la liste." },
+    { "q": "Les noms en français", "etat": "Ils arriveront avec la liste, dans chaque langue de la console." }
+   ],
+   "p": ["Chaque réponse rejoindra la page avec sa source dès qu’elle sera publiée."]
+  },
+  "toi": {
+   "lede": "En attendant la liste, suis déjà ce que le site te permet de cocher.",
+   "actions": [
+    { "k": "Progression", "t": "Ma progression", "d": "Coche ce que tu fais, gardé sur ton appareil.", "href": "progression.html" },
+    { "k": "Collectibles", "t": "Les collectibles", "d": "La collection de Wyman et le carnet des objets à trouver.", "href": "collectibles.html" },
+    { "k": "Carte", "t": "La carte", "d": "Les lieux repérés, à cocher un par un.", "href": "carte.html" },
+    { "k": "Statuts", "t": "Comprendre les statuts", "d": "Officiel, vu, communauté, à confirmer : ce que veut dire chaque pastille.", "href": "tuto.html#sources" }
+   ],
+   "p": ["À la sortie, chaque trophée aura sa case « Obtenu » : coche-la, son badge s’allume et l’anneau se remplit."]
+  },
+  "faq": [
+   { "q": "Combien de trophées y a-t-il dans GTA 6 ?", "a": "Le nombre n’est pas publié au 4 octobre 2026 : ni PlayStation, ni Xbox, ni Rockstar n’ont sorti la liste. On sait seulement que la fiche Xbox annonce des succès, et que Microsoft limite un jeu à 1 000 points de succès à sa sortie. Pour comparer, GTA V comptait 51 trophées dans son jeu de base.", "k": ["combien de trophees", "nombre de trophees", "liste des trophees", "trophees", "trophee", "combien de succes", "liste des succes", "achievements"], "f": ["combien de trophees", "combien de succes", "liste des trophees", "il y a combien de trophees", "nombre de succes xbox", "quels sont les trophees"] },
+   { "q": "Comment avoir le trophée platine de GTA 6 ?", "a": "Sur PlayStation, le platine se débloque quand on a obtenu tous les autres trophées du jeu. Pour GTA VI, ni la liste ni le platine ne sont publiés. Un créateur invité par Rockstar parle d’une centaine d’heures, en solo, mais ce n’est pas une annonce officielle. Dans GTA V, le platine « Los Santos Legend » demandait aussi des trophées de GTA Online.", "k": ["platine", "trophee platine", "avoir le platine", "platiner", "difficulte du platine", "temps pour le platine"], "f": ["comment avoir le platine", "comment avoir le platine de gta 6", "le platine est il dur", "combien de temps pour le platine", "platine gta 6", "comment platiner gta 6"] },
+   { "q": "Y a-t-il des trophées manquables dans GTA 6 ?", "a": "Rien n’est publié : on le saura avec la liste, et chaque trophée manquable sera signalé ici. Dans GTA V, PowerPyx en comptait six, surtout liés au choix final de l’histoire.", "k": ["manquable", "manquables", "trophees manquables", "trophee manquable", "succes manquables", "rater un trophee"], "f": ["y a t il des trophees manquables", "trophees manquables gta 6", "peut on rater un trophee", "succes manquables gta 6"] },
+   { "q": "Y aura-t-il des trophées en ligne dans GTA 6 ?", "a": "Aucun n’est annoncé. Rockstar présente GTA VI comme une expérience solo à sa sortie, et la liste n’est pas publiée. Dans GTA V, 34 des 78 trophées étaient liés à GTA Online.", "k": ["trophees en ligne", "trophees online", "succes en ligne", "trophees multijoueur", "trophee gta online", "succes online"], "f": ["y aura t il des trophees en ligne", "trophees online gta 6", "faut il jouer en ligne pour le platine", "succes multijoueur gta 6"] },
+   { "q": "Quand la liste des trophées sera-t-elle publiée ?", "a": "Aucune date n’est annoncée. Les sites spécialisés notent que ces listes apparaissent en général quelques jours avant la sortie ; GTA VI sort le 19 novembre 2026, et la version en boîte, un code de téléchargement, arrive dès le 12 novembre pour le préchargement.", "k": ["date de la liste", "quand la liste"], "f": ["quand sortira la liste des trophees", "quand aura t on la liste des trophees", "liste des trophees quand", "quand la liste des succes"] },
+   { "q": "Comment suivre mes trophées sur Leonidakit ?", "a": "Chaque trophée aura sa case « Obtenu », gardée sur ton appareil seulement, avec le pourcentage et l’anneau de progression. Rien n’est envoyé ailleurs, et aucun compte n’est nécessaire.", "k": ["suivre mes trophees", "suivi des trophees", "trophees obtenus"], "f": ["comment suivre mes trophees", "cocher mes trophees", "suivre ma progression des trophees"] }
+  ],
+  "sourcesLede": "Chaque phrase de cette page renvoie à une source datée. Les pages ont été relevées le 4 octobre 2026 par moteur de recherche : leur ouverture directe était bloquée depuis l’atelier ce jour-là.",
+  "sources": ["xbox-store", "ps-store", "rs-support-plateformes", "rs-precommandes", "ms-xr055", "rs-extended", "purexbox-gi", "rs-support-codes-v", "tra-gta6", "pst-gta6", "gtabase-trophees", "gtaintel-trophees", "psnprofiles-systeme", "trueach-gamerscore", "gameblog-platine", "powerpyx-gtav", "techradar-gtav-trophees", "psthc-gtav", "trueach-gtav"]
+ },
+ "sources": {
+  "xbox-store": { "url": "https://www.xbox.com/en-US/games/store/grand-theft-auto-vi/9nl3wwnzlzzn", "title": "Buy Grand Theft Auto VI", "lang": "en", "publisher": "Microsoft Store", "consultedAt": "2026-10-04", "statut": "officiel", "claim": "La fiche Xbox du jeu annonce un jeu solo, des succès Xbox et des sauvegardes dans le cloud, pour une sortie le 19 novembre 2026 ; ni nombre de succès ni points." },
+  "ps-store": { "url": "https://store.playstation.com/fr-fr/product/EP1004-PPSA01547_00-GTAVISTANDARD001/", "title": "PlayStation Store : Grand Theft Auto VI (édition Standard)", "consultedAt": "2026-10-04", "statut": "officiel", "claim": "La fiche indique 1 joueur et un jeu hors ligne, avec un préchargement de 7 jours ; elle ne parle pas des trophées." },
+  "rs-support-plateformes": { "url": "https://support.rockstargames.com/articles/4QfG4FmZCf5W1gS8jy4UVT/grand-theft-auto-vi-platform-editions-and-versions", "title": "Grand Theft Auto VI Platforms, Editions, and Versions", "lang": "en", "publisher": "Rockstar Games, assistance", "consultedAt": "2026-10-04", "statut": "officiel", "claim": "GTA VI est présenté comme une expérience solo, le 19 novembre sur PlayStation 5 et Xbox Series X|S ; la version en boîte est un code de téléchargement, disponible dès le 12 novembre pour le préchargement." },
+  "rs-precommandes": { "url": "https://www.rockstargames.com/newswire/article/517oa135328155/grand-theft-auto-vi-pre-orders-begin-on-june-25", "title": "Grand Theft Auto VI Pre-Orders Begin on June 25", "lang": "en", "publisher": "Rockstar Newswire", "publishedAt": "2026-06-24", "consultedAt": "2026-10-04", "statut": "officiel", "claim": "L’annonce des précommandes présente GTA VI comme une expérience solo, sur PS5 et Xbox Series X|S, sans parler des trophées." },
+  "ms-xr055": { "url": "https://learn.microsoft.com/en-us/gaming/gdk/docs/store/policies/fma/xr055-achievements?view=gdk-2604", "title": "XR055 Achievements and Gamerscore - Microsoft Game Development Kit", "lang": "en", "publisher": "Microsoft Learn", "consultedAt": "2026-10-04", "statut": "officiel", "claim": "Règle Xbox : à sa sortie, un jeu propose de 10 à 100 succès, pour 1 000 points au total." },
+  "rs-extended": { "url": "https://www.rockstargames.com/newswire/article/4k138k8okkk483/grand-theft-auto-vi-an-extended-look-now-playing", "title": "Rockstar Newswire : Grand Theft Auto VI, An Extended Look", "publishedAt": "2026-08-27", "consultedAt": "2026-10-04", "statut": "officiel", "claim": "La présentation d’environ 26 minutes, capturée sur PS5 : rien sur les trophées." },
+  "purexbox-gi": { "url": "https://www.purexbox.com/news/2026/09/five-key-things-we-learned-about-gta-6-from-the-game-informer-cover-story", "title": "Five Key Things We Learned About GTA 6 From The Game Informer Cover Story", "lang": "en", "publisher": "Pure Xbox", "consultedAt": "2026-10-04", "statut": "vu", "claim": "Compte rendu du dossier de Game Informer du 29 septembre 2026 : carte, régions, météo, faune ; rien sur les trophées." },
+  "rs-support-codes-v": { "url": "https://support.rockstargames.com/articles/4ewFY12QOE4O7V1uWDEekt/information-about-saving-and-achievements-while-using-gta-v-cheat-codes", "title": "Information about saving and achievements while using GTA V cheat codes", "lang": "en", "publisher": "Rockstar Games, assistance", "consultedAt": "2026-10-04", "statut": "officiel", "claim": "Dans GTA V, on peut sauvegarder avec des codes de triche actifs, mais les succès sont désactivés pour un temps." },
+  "tra-gta6": { "url": "https://www.trueachievements.com/game/Grand-Theft-Auto-VI/achievements", "title": "Grand Theft Auto VI Achievements", "lang": "en", "publisher": "TrueAchievements", "consultedAt": "2026-10-04", "statut": "comm", "claim": "La page des succès de GTA VI existe mais n’en liste aucun : ils apparaîtront dès leur publication." },
+  "pst-gta6": { "url": "https://www.playstationtrophies.org/game/grand-theft-auto-6/trophies/", "title": "Grand Theft Auto VI Trophies - View all Trophies", "lang": "en", "publisher": "PlayStationTrophies.org", "consultedAt": "2026-10-04", "statut": "comm", "claim": "Les trophées ne sont pas encore sortis ; le site les attend à l’approche du lancement." },
+  "gtabase-trophees": { "url": "https://www.gtabase.com/articles/gta-6/gta-6-achievements-trophies-list-ps5-xbox-series", "title": "GTA 6 Achievements & Trophies List (PS5 & Xbox Series)", "lang": "en", "publisher": "GTABase", "consultedAt": "2026-10-04", "statut": "comm", "claim": "Rockstar n’a pas encore dévoilé la liste officielle ; les chiffres « attendus » de la page sont des estimations, non reprises ici." },
+  "gtaintel-trophees": { "url": "https://gtaintel.com/news/gta-6-achievements-and-trophies", "title": "Will GTA 6 Have Achievements and Trophies?", "lang": "en", "publisher": "GTA Intel, site de fans", "consultedAt": "2026-10-04", "statut": "comm", "claim": "La liste n’est pas publiée ; les sites de suivi notent qu’elle arrive en général quelques jours avant la sortie, avec les données des boutiques." },
+  "psnprofiles-systeme": { "url": "https://psnprofiles.com/guide/18274-the-trophy-system-explained", "title": "The Trophy System Explained", "lang": "en", "publisher": "PSNProfiles", "consultedAt": "2026-10-04", "statut": "comm", "claim": "Quatre grades (bronze, argent, or, platine) ; le platine se débloque quand on a obtenu tous les autres trophées d’un jeu, et un jeu en a un au plus." },
+  "trueach-gamerscore": { "url": "https://www.trueachievements.com/n39996/how-to-see-achievements-and-delete-achievements-on-xbox-series-x", "title": "What are Xbox achievements? A beginner's guide to Gamerscore", "lang": "en", "publisher": "TrueAchievements", "consultedAt": "2026-10-04", "statut": "comm", "claim": "Chaque succès Xbox rapporte des points, qui s’additionnent dans le score du profil (Gamerscore)." },
+  "gameblog-platine": { "url": "https://www.gameblog.fr/jeu-video/ed/news/gta-6-trophee-platine-100-722091", "title": "GTA 6 : quelle sera la difficulté du trophée Platine ? Rockstar donne une réponse aux chasseurs de trophées", "publisher": "Gameblog", "consultedAt": "2026-10-04", "statut": "comm", "claim": "Propos rapportés de Davy Jones, créateur brésilien invité par Rockstar : un platine difficile mais pas insurmontable, une centaine d’heures, entièrement en solo. Rien d’officiel, malgré le titre." },
+  "powerpyx-gtav": { "url": "https://www.powerpyx.com/gta-v-trophy-guide-roadmap/", "title": "GTA V Trophy Guide & Roadmap", "lang": "en", "publisher": "PowerPyx", "consultedAt": "2026-10-04", "statut": "comm", "claim": "Jeu de base de GTA V : 51 trophées (1 platine, 3 or, 5 argent, 42 bronze) ; six trophées manquables ; les trois trophées d’or sont les plus longs." },
+  "techradar-gtav-trophees": { "url": "https://www.techradar.com/news/gta-5-on-ps5-and-xbox-series-x-trophy-guide-all-51-achievements-revealed", "title": "GTA 5 on PS5 and Xbox Series X trophy guide: all 51 achievements revealed", "lang": "en", "publisher": "TechRadar", "consultedAt": "2026-10-04", "statut": "comm", "claim": "La liste de base de GTA V sur PS5 et Xbox Series : 51 trophées et succès, dont le platine « Los Santos Legend »." },
+  "psthc-gtav": { "url": "https://www.psthc.fr/unjeu/gta5-ps4/liste-trophees.htm", "title": "Grand Theft Auto V : liste des trophées (PS4)", "publisher": "PSTHC", "consultedAt": "2026-10-04", "statut": "comm", "claim": "Avec les contenus ajoutés : 78 trophées, dont 34 en ligne et 21 cachés ; le platine s’appelle « Légende de Los Santos » en français." },
+  "trueach-gtav": { "url": "https://www.trueachievements.com/n48963/gta-5-xbox-achievements", "title": "1,750G up for grabs with Grand Theft Auto V Xbox Series X|S achievements", "lang": "en", "publisher": "TrueAchievements", "consultedAt": "2026-10-04", "statut": "comm", "claim": "Sur Xbox Series X|S, GTA V compte 77 succès pour 1 750 points, dont 50 succès et 1 000 points dans le jeu de base." }
+ },
+ "leo": {
+  "suggestions": ["Combien de trophées dans GTA 6 ?", "Comment avoir le platine ?", "Y a-t-il des trophées manquables ?", "Y aura-t-il des trophées en ligne ?", "Quand sortira la liste des trophées ?"]
+ }
+}

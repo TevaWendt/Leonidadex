@@ -1,0 +1,117 @@
+/* Section « GTA Online » (section online) : online.html et les pages de online/. Chargée par les pages de l’espace seulement.
+   Un espace à part, même site : couleur d’accent propre, prise dans la palette du site (le néon --c-neon de motion-tokens.css
+   sur la nuit de Vice City, le prune --night-2 pour les textes), bandeau « GTA Online, pas l’histoire » et sommaire en haut de
+   chaque page. Mouvement : réseau décoratif qui pulse doucement (transform et opacity, jetons de motion-tokens.css), coupé
+   avec prefers-reduced-motion: reduce ; aucun décalage de mise en page. */
+.online-page{--online-accent:var(--c-neon,#97dfcf);--online-deep:var(--night-deep,#241740);--online-text:var(--night-2,#5A2358);}
+
+/* ---------- l’espace : bandeau et sommaire ---------- */
+.online-espace{background:linear-gradient(120deg,var(--online-deep),var(--night) 70%);color:var(--paper);border-bottom:3px solid var(--online-accent);}
+.online-espace-in{display:flex;flex-direction:column;gap:10px;padding-top:12px;padding-bottom:12px;}
+.online-bandeau{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;margin:0;font-size:.92rem;}
+.online-bandeau-k{display:inline-flex;align-items:center;gap:8px;padding:3px 12px;border:1.5px solid var(--online-accent);border-radius:999px;color:var(--online-accent);
+  font:800 .76rem/1.4 var(--font-mono);letter-spacing:.1em;text-transform:uppercase;}
+.online-bandeau-k::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--online-accent);box-shadow:0 0 8px var(--online-accent);}
+.online-bandeau-t{color:rgba(253,251,247,.88);}
+.online-espace .online-bandeau a{color:var(--amber-2);font-weight:700;text-decoration:underline;text-underline-offset:3px;}
+.online-nav{display:flex;flex-wrap:wrap;gap:6px;}
+.online-nav a{display:inline-flex;align-items:center;min-height:36px;padding:4px 12px;border:1.5px solid rgba(151,223,207,.55);border-radius:999px;color:var(--paper);font-size:.88rem;font-weight:700;
+  transition:transform var(--c-fast) var(--c-ease-control);}
+.online-nav a:hover{transform:translateY(-1px);background:rgba(151,223,207,.14);}
+.online-nav a:focus-visible{outline:3px solid var(--amber-2);outline-offset:2px;}
+.online-nav a[aria-current="page"],.online-nav a.is-ici{background:var(--online-accent);border-color:var(--online-accent);color:var(--online-deep);}
+
+/* ---------- en-tête : le réseau de joueurs (décoratif) ---------- */
+.online-signal{position:relative;align-self:center;max-width:420px;width:100%;margin:0 auto;padding:18px;border:2px solid var(--ink);border-radius:var(--radius);
+  background:radial-gradient(circle at 50% 45%,#3a2a66,var(--online-deep) 70%);box-shadow:var(--shadow-hard);}
+.online-signal svg{display:block;width:100%;height:auto;}
+.online-liens line{stroke:var(--online-accent);stroke-width:1.4;opacity:.45;}
+.online-noeud{fill:var(--online-deep);stroke:var(--online-accent);stroke-width:2.2;transform-box:fill-box;transform-origin:center;}
+.online-noeud--centre{fill:var(--online-accent);stroke:var(--paper);}
+.online-signal-k{position:absolute;left:18px;bottom:12px;color:var(--online-accent);font:800 .72rem/1 var(--font-mono);letter-spacing:.14em;text-transform:uppercase;}
+.online-joue .online-noeud{animation:online-pouls 2.6s var(--c-ease-soft) infinite;animation-delay:calc(var(--i,0) * 260ms);}
+.online-joue .online-liens line{animation:online-lien 3.2s var(--c-ease-soft) infinite;animation-delay:calc(var(--i,0) * 180ms);}
+@keyframes online-pouls{0%,100%{transform:scale(1);opacity:1}45%{transform:scale(1.35);opacity:.75}}
+@keyframes online-lien{0%,100%{opacity:.25}50%{opacity:.75}}
+
+/* ---------- sections de l’espace ---------- */
+.online-sec{padding-top:clamp(30px,4vw,52px);}
+.online-kicker{font:700 var(--fs-kicker)/1.2 var(--font-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--online-text);margin:0 0 6px;}
+.online-lede{color:var(--ink-soft);max-width:var(--measure);margin:6px 0 18px;}
+.online-sous-t{font-size:var(--fs-h3);line-height:1.2;margin:26px 0 10px;}
+.online-st{display:inline-flex;flex-wrap:wrap;align-items:center;gap:6px 8px;font-size:.82rem;}
+.online-src{display:inline-flex;gap:4px;}
+.online-src a{display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 5px;border:1px solid var(--ink-soft);border-radius:999px;font:700 .7rem/1 var(--font-mono);color:var(--ink);}
+.online-src a:hover,.online-src a:focus-visible{background:var(--ink);color:var(--paper);}
+.online-statut{display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px 18px;align-items:start;max-width:880px;padding:18px clamp(14px,3vw,24px);
+  border:2px solid var(--ink);border-left:8px solid var(--online-accent);border-radius:var(--radius);background:linear-gradient(160deg,var(--paper),var(--paper-2));box-shadow:var(--shadow-hard);}
+.online-statut-ico{display:grid;place-items:center;width:54px;height:54px;border-radius:50%;background:var(--online-deep);color:var(--online-accent);}
+.online-statut-ico svg{width:28px;height:28px;}
+.online-statut h3{font-size:var(--fs-h3);line-height:1.2;margin:0 0 6px;}
+.online-statut p{margin:0 0 8px;}
+.online-statut-date{margin:0 0 4px!important;font:700 .78rem/1.2 var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--online-text);}
+.online-faits{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:14px;margin-top:22px;}
+.online-fait{padding:16px 16px 14px;border:2px solid var(--ink);border-radius:var(--radius);background:var(--paper);box-shadow:var(--shadow-soft);}
+.online-fait-ico{display:inline-grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--online-deep);color:var(--online-accent);margin-bottom:8px;}
+.online-fait-ico svg{width:22px;height:22px;}
+.online-fait h3{font-size:1.08rem;margin:0 0 6px;}
+.online-fait p{margin:0 0 8px;font-size:.95rem;}
+
+/* ce qui change : trois côtés */
+.online-cotes{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:14px;}
+.online-cote{display:flex;flex-direction:column;gap:6px;padding:16px;border:2px solid var(--ink);border-radius:var(--radius);background:var(--paper);box-shadow:var(--shadow-soft);}
+.online-cote h3{font-size:1.12rem;margin:0;}
+.online-cote p{margin:0;}
+.online-cote-k{font:700 .74rem/1.2 var(--font-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);}
+.online-cote--2{background:var(--online-deep);color:var(--paper);border-color:var(--ink);}
+.online-cote--2 .online-cote-k{color:var(--online-accent);}
+.online-cote--2 .online-st,.online-cote--2 .online-src a{color:var(--paper);border-color:rgba(253,251,247,.6);}
+.online-cote--2 .online-liens-l a{color:var(--online-accent);}
+.online-liens-l{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:auto!important;padding-top:6px;}
+.online-liens-l a{color:var(--online-text);font-weight:700;text-decoration:underline;text-underline-offset:3px;}
+.online-regle{max-width:var(--measure);margin:16px 0 0;padding:12px 16px;border-left:4px solid var(--online-accent);background:var(--paper-2);font-weight:600;}
+
+/* activités, achats, mises à jour */
+.online-vide{max-width:var(--measure);padding:16px 18px;border:2px dashed var(--ink-soft);border-radius:var(--radius);background:var(--paper-2);margin:8px 0 14px;}
+.online-vide a{color:var(--online-text);font-weight:700;text-decoration:underline;}
+.online-repere{max-width:var(--measure);margin:8px 0 0;color:var(--ink-soft);}
+.online-v{display:inline-flex;align-items:center;padding:1px 9px;margin-right:4px;border-radius:999px;background:var(--online-deep);color:var(--online-accent);font:700 .7rem/1.5 var(--font-mono);letter-spacing:.06em;text-transform:uppercase;vertical-align:1px;}
+.online-items{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));gap:12px;}
+.online-items li{display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:14px 16px;border:1.5px solid var(--ink);border-radius:var(--radius-s);background:var(--paper);}
+.online-items h3{font-size:1.04rem;margin:0;overflow-wrap:anywhere;}
+.online-items p{margin:0;}
+.online-items a{color:var(--online-text);text-decoration:underline;}
+.online-vals{display:flex;flex-wrap:wrap;gap:6px;}
+.online-vals span{padding:2px 8px;border:1px solid var(--rule);border-radius:999px;font-size:.84rem;}
+.online-plus{margin-top:14px;}
+.online-plus a{color:var(--online-text);font-weight:700;text-decoration:underline;text-underline-offset:3px;}
+.online-champs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:10px;margin:10px 0 0;}
+.online-champs>div{padding:10px 12px;border:1.5px solid var(--rule);border-radius:var(--radius-s);background:var(--paper);}
+.online-champs dt{font:700 .72rem/1.3 var(--font-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:4px;}
+.online-champs dd{margin:0;font-size:.94rem;}
+
+/* ---------- page des annonces : une frise ---------- */
+.online-annonces{list-style:none;margin:0;padding:0 0 0 18px;border-left:3px solid var(--online-accent);display:grid;gap:14px;}
+.online-annonce{position:relative;display:grid;grid-template-columns:150px minmax(0,1fr);gap:8px 18px;padding:14px 16px;border:1.5px solid var(--ink);border-radius:var(--radius-s);background:var(--paper);}
+.online-annonce::before{content:'';position:absolute;left:-28px;top:20px;width:14px;height:14px;border-radius:50%;background:var(--online-deep);border:3px solid var(--online-accent);}
+.online-annonce time{font:800 .82rem/1.3 var(--font-mono);color:var(--online-text);}
+.online-annonce h3{font-size:1.06rem;margin:2px 0 6px;}
+.online-annonce p{margin:0 0 6px;}
+.online-annonce-qui{font:700 .74rem/1.3 var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);}
+.online-bloc{padding-top:clamp(22px,3vw,36px);}
+.online-fiche-src{--ed-line:var(--rule);--ed-card:var(--paper-2);--ed-soft:var(--ink-soft);--ed-fg:var(--ink);padding-top:22px;}
+.online-fiche-src .ed-srcs{margin-top:12px;}
+.online-crumbs a{color:var(--online-text);}
+
+@media (max-width:600px){
+  .online-statut{grid-template-columns:minmax(0,1fr);}
+  .online-annonce{grid-template-columns:minmax(0,1fr);}
+  .online-nav a{font-size:.84rem;padding:4px 10px;}
+}
+
+/* ---------- mouvement réduit : le réseau ne bouge pas ---------- */
+@media (prefers-reduced-motion:reduce){
+  .online-joue .online-noeud,.online-joue .online-liens line{animation:none!important;}
+  .online-nav a{transition:none!important;}
+  .online-nav a:hover{transform:none;}
+}

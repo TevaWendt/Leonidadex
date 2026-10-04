@@ -1,0 +1,219 @@
+LEONIDAKIT — TROIS SECTIONS NOUVELLES : « CODES DE TRICHE », « TROPHÉES ET SUCCÈS », « GTA ONLINE »
+Archive « tout en un » (4 octobre 2026), à poser PAR-DESSUS l’assemblage des quatre sections déjà reçu.
+
+CE QUE CES SECTIONS AJOUTENT
+Trois pages de plus dans le groupe « Jouer » du menu « Explorer » (après Missions, Activités annexes, Radios et musique),
+dans les cinq langues, et une colonne « Jouer » à six liens au pied de page.
+
+1. CODES DE TRICHE (codes-de-triche.html)
+- Ce qu’on sait au 4 octobre 2026 : aucun code de triche n’est annoncé pour GTA VI, ni pour dire qu’il y en aura, ni pour
+  dire qu’il n’y en aura pas. Aucun code « supposé », aucune liste « GTA 6 » des sites de fans (elles mélangent
+  spéculations et fuites).
+- Comment marchaient les codes dans GTA V, « pour comparer » : à la manette, au téléphone du jeu (numéros en 1-999), sur PC
+  dans la console ; ce que Rockstar en dit sur sa page d’aide (on peut sauvegarder, les succès sont désactivés pour un
+  temps, une mission coupe les codes) ; quatre codes de GTA V en cartes animées : la séquence s’affiche touche après
+  touche comme si on la tapait, puis la carte s’allume (« Activé ») ; le numéro se copie d’un clic ; « Rejouer la
+  séquence » la retape. Chaque carte porte « GTA V, pour comparer ». Les touches sont dessinées pour le site (formes
+  simples, aucun logo PlayStation ou Xbox) et se lisent aussi en texte.
+- Le guide prêt pour la sortie : quatre catégories (armes, véhicules, joueur, monde) qui recevront chacune leur fiche dès
+  leur premier code. Un code de GTA VI n’y entrera que publié par Rockstar ou vérifié en jeu (le générateur refuse le reste).
+- Une page de démonstration, codes-de-triche/modele.html (cachée des moteurs, absente des menus) : trois codes
+  inventés et marqués « Code fictif », avec le choix de la console (PlayStation / Xbox), pour valider le rendu.
+- Pas d’encart du calculateur (aucun usage réel) ; dans « Pour toi », un lien vers l’outil « Mon objectif » pour qui
+  cherchait un « code d’argent ».
+
+2. TROPHÉES ET SUCCÈS (trophees.html)
+- Ce qu’on sait : la liste n’est pas publiée (ni par PlayStation, ni par Xbox, ni par Rockstar) ; la fiche Xbox annonce des
+  succès sans en donner le nombre ; Rockstar présente le jeu comme une expérience solo ; la règle Xbox limite un jeu à
+  1 000 points à sa sortie.
+- Les grades, dessinés pour le site (coupes simples, pas les icônes des consoles) ; GTA V « pour comparer » (51 trophées
+  dans le jeu de base, 78 avec les contenus ajoutés, 34 liés à GTA Online, six manquables selon PowerPyx).
+- Ton suivi, prêt pour la liste : une case « Obtenu » par trophée, gardée sur ton appareil seulement, le pourcentage et un
+  anneau de progression qui se remplit ; quand on coche, le badge s’allume avec un éclat bref ; des filtres (grade,
+  manquable, catégorie, obtenus) ; une fiche « méthode pas à pas » pour chaque trophée qui en demande une.
+- Une page de démonstration, trophees/modele.html (cachée des moteurs) : huit trophées inventés pour tout essayer
+  (rien n’y est enregistré).
+
+3. GTA ONLINE (online.html et son espace)
+- Un espace à part, dans le même site : en haut de chaque page, un bandeau « GTA Online, pas l’histoire » et le sommaire
+  de l’espace (L’espace, Annonces, Ce qui change, Activités, Achats et entreprises, Mises à jour, Le GTA Online actuel) ;
+  sa propre couleur (le vert néon et le prune de la palette du site) ; le fil d’Ariane de ses pages part de « GTA Online ».
+- Ce qu’on sait : aucun mode en ligne n’est annoncé pour GTA VI (« une expérience solo » pour Rockstar, Sony et
+  Microsoft) ; Take-Two continue le GTA Online de GTA V « après la sortie de GTA 6 et au-delà » ; le patron de Twitch a
+  évoqué un multijoueur en 2027, sans confirmation.
+- Deux pages avec du vrai contenu sourcé : « Les annonces, une par une » (neuf annonces de février à octobre 2026) et
+  « Le GTA Online actuel » (ses débuts, Shark Cards et GTA+, ses dernières mises à jour, le mois de GTA+ offert avec la
+  précommande, qui sert dans ce GTA Online-là). Les rubriques Activités, Achats et entreprises, Mises à jour sont sur la
+  page principale et disent « rien de publié » ; leurs données sont prêtes (et ne se mêleront jamais à celles de
+  l’histoire : les achats de l’histoire restent sur achats.html).
+- Un encart du calculateur « Une entreprise en ligne, ça vaut le coup ? » (outil existant, rien de changé dans le moteur).
+
+Partout : Léo répond aux questions des trois sections dans les cinq langues (et trois réponses existantes sont mises à
+jour : codes de triche, GTA Online, GTA+) ; recherche du site ; plan du site. Le texte des pages existantes ne change pas,
+sauf les compteurs d’À propos (pages, sujets de Léo, tests : recomptés tout seuls). Aucune nouvelle image.
+
+CE QU’IL FAUT FAIRE
+Base attendue : ton site avec l’assemblage des quatre sections déjà posé (Leonidakit-4-sections-modifs.zip).
+1. Note le commit courant dans GitHub Desktop (ou copie le dossier).
+2. Extrais « Leonidakit-3-sections-modifs.zip » dans la racine du site, en écrasant les fichiers homonymes (garde le
+   dossier .git). Il contient seulement les fichiers ajoutés ou changés depuis l’assemblage des quatre sections, aucun
+   fichier supprimé.
+3. Vérifie 3 minutes en local ou sur la prévisualisation Vercel (voir « Pour vérifier »).
+4. Mets en ligne quand tu le décides (GitHub Desktop : commit puis push ; Vercel déploie tel quel).
+Aucune commande de build, pas de package.json ; vercel.json et api/ ne changent pas ; index.html ne change que par son
+menu et son pied de page (comme toutes les pages). Aucun cookie, rien de chargé depuis un autre site. Une seule clé de
+stockage nouvelle, sur l’appareil : lk-trophees-obtenus-v1 (les trophées cochés).
+
+POURQUOI PRESQUE TOUTES LES PAGES CHANGENT : le menu et le pied de page de chaque page (cinq langues) ont trois liens de
+plus dans « Jouer ». Le texte des pages ne change pas.
+
+POUR VÉRIFIER (3 minutes)
+- /codes-de-triche.html : descends jusqu’à « Quatre codes de GTA V, pour voir » : les touches arrivent une à une, la carte
+  s’allume ; clique « Copier le numéro », puis « Rejouer la séquence ».
+- /codes-de-triche/modele.html : choisis « Xbox » en haut des cartes : les séquences changent et se retapent.
+- /trophees/modele.html : coche deux ou trois trophées (badge qui s’allume, éclat, anneau qui se remplit), essaie les filtres.
+- /online.html : le bandeau et le sommaire en haut ; « Annonces » ; « Le GTA Online actuel ».
+- Menu « Explorer », groupe « Jouer » : six liens. Pied de page : colonne « Jouer ».
+- /de/online.html (ou /en/, /es/, /it/) : la page dans la langue.
+- Léo : « y a-t-il des codes de triche dans GTA 6 ? », « code argent infini gta 6 », « combien de trophées dans GTA 6 ? »,
+  « comment avoir le platine ? », « y aura-t-il un GTA Online pour GTA 6 ? », « mon personnage de GTA Online sera-t-il
+  transféré ? ».
+Avec le réglage « réduire les animations » de ton appareil, rien ne bouge et tout reste lisible.
+
+DÉTAIL : outils/CHANGEMENTS-3-sections.txt ; PREUVES : outils/PREUVES-3-sections.md ; correctif des fichiers communs :
+outils/assemblage/3-sections.diff.
+
+SOURCES CONSULTÉES (date de consultation entre parenthèses ; les pages ont été relevées le 4 octobre 2026 par moteur de
+recherche, leur ouverture directe étant bloquée depuis l’atelier ce jour-là ; statut : officiel, vu, communauté, à confirmer)
+- CODES DE TRICHE (22 sources)
+  · Rockstar Games, assistance : Information about saving and achievements while using GTA V cheat codes — https://support.rockstargames.com/articles/4ewFY12QOE4O7V1uWDEekt/information-about-saving-and-achievements-while-using-gta-v-cheat-codes (consulté le 04/10/2026 ; officiel)
+  · Rockstar Games, assistance : Grand Theft Auto VI Platforms, Editions, and Versions — https://support.rockstargames.com/articles/4QfG4FmZCf5W1gS8jy4UVT/grand-theft-auto-vi-platform-editions-and-versions (consulté le 04/10/2026 ; officiel)
+  · Rockstar Newswire : Grand Theft Auto VI Pre-Orders Begin on June 25 — https://www.rockstargames.com/newswire/article/517oa135328155/grand-theft-auto-vi-pre-orders-begin-on-june-25 (publié le 24/06/2026, consulté le 04/10/2026 ; officiel)
+  · Rockstar Newswire : Grand Theft Auto VI, An Extended Look — https://www.rockstargames.com/newswire/article/4k138k8okkk483/grand-theft-auto-vi-an-extended-look-now-playing (publié le 27/08/2026, consulté le 04/10/2026 ; officiel)
+  · Game Informer : Rockstar Had To 'Remove A Couple' Of Cheats From Grand Theft Auto: The Trilogy — https://gameinformer.com/2021/11/11/rockstar-had-to-remove-a-couple-of-cheats-from-grand-theft-auto-the-trilogy-the (publié le 11/11/2021, consulté le 04/10/2026 ; officiel)
+  · Pure Xbox : Five Key Things We Learned About GTA 6 From The Game Informer Cover Story — https://www.purexbox.com/news/2026/09/five-key-things-we-learned-about-gta-6-from-the-game-informer-cover-story (consulté le 04/10/2026 ; vu)
+  · Red Bull France : les codes de triche de GTA VI — https://www.redbull.com/fr-fr/gta-vi-codes-triche (consulté le 04/10/2026 ; communauté)
+  · Twinfinite : y aura-t-il des codes de triche dans GTA 6 ? — https://twinfinite.net/guides/will-there-be-gta-6-cheats/ (consulté le 04/10/2026 ; communauté)
+  · GTA Intel, site de fans : Will GTA 6 Have Cheat Codes? What We Know So Far — https://gtaintel.com/news/gta-6-will-have-cheat-codes (consulté le 04/10/2026 ; communauté)
+  · Tom’s Guide : GTA 5 : tous les codes de triche pour PC, PS4, PS5 et Xbox — https://www.tomsguide.fr/gta-5-tous-les-codes-de-triche-pour-pc-ps4-ps5-et-xbox/ (consulté le 04/10/2026 ; communauté)
+  · GamesRadar+ : All GTA 5 cheats, codes and phone numbers on PS4, PS5, Xbox and PC — https://www.gamesradar.com/gta-5-cheats/ (consulté le 04/10/2026 ; communauté)
+  · PC Gamer : All GTA 5 cheat codes and phone numbers for invincibility, weapons, and vehicles — https://www.pcgamer.com/gta-5-cheats/ (consulté le 04/10/2026 ; communauté)
+  · Red Bull France : les codes de triche de GTA 5 — https://www.redbull.com/fr-fr/gta-5-codes-triche (consulté le 04/10/2026 ; communauté)
+  · GTABoom : Last GTA V Cellphone and PC Cheats Discovered — https://www.gtaboom.com/Last_GTA_V_Cellphone_and_PC_Cheats_Discovered (consulté le 04/10/2026 ; communauté)
+  · Sportskeeda : GTA 5 Invincibility cheat code: How to enter God Mode on all platforms — https://www.sportskeeda.com/gta/gta-5-invincibility-cheat-code-how-enter-god-mode-platforms (consulté le 04/10/2026 ; communauté)
+  · GTABase : les codes de GTA 5 sur PS5, PS4 et PS3 — https://www.gtabase.com/articles/grand-theft-auto-v/gta-5-cheats-for-ps5-ps4-ps3-all-cheat-codes-phone-numbers (consulté le 04/10/2026 ; communauté)
+  · PlayStationTrophies.org : Unbeatable GTA 5 Cheats: Every Cheat Code Available for Xbox and PlayStation — https://www.playstationtrophies.org/game/grand-theft-auto-5-ps4/guide/gta-5-cheats (consulté le 04/10/2026 ; communauté)
+  · GTAForums : GTA 5 Online Rockstar supplied cheats — https://gtaforums.com/topic/984720-gta-5-online-rockstar-supplied-cheats/ (consulté le 04/10/2026 ; communauté)
+  · GameFAQs : Grand Theft Auto IV Cheats, Codes, and Secrets for PC — https://gamefaqs.gamespot.com/pc/952150-grand-theft-auto-iv/cheats (consulté le 04/10/2026 ; communauté)
+  · Grand Theft Wiki : Cheats in GTA IV — https://www.grandtheftwiki.com/Cheats_in_GTA_IV (consulté le 04/10/2026 ; communauté)
+  · GTA Wiki : Cheats in GTA San Andreas — https://gta.fandom.com/wiki/Cheats_in_GTA_San_Andreas (consulté le 04/10/2026 ; communauté)
+  · Game Informer : Every Cheat Code For Grand Theft Auto: The Trilogy — https://gameinformer.com/2021/11/12/every-cheat-code-for-grand-theft-auto-the-trilogy-the-definitive-edition (publié le 12/11/2021, consulté le 04/10/2026 ; communauté)
+
+- TROPHÉES ET SUCCÈS (19 sources)
+  · Microsoft Store : Buy Grand Theft Auto VI — https://www.xbox.com/en-US/games/store/grand-theft-auto-vi/9nl3wwnzlzzn (consulté le 04/10/2026 ; officiel)
+  · PlayStation Store : Grand Theft Auto VI (édition Standard) — https://store.playstation.com/fr-fr/product/EP1004-PPSA01547_00-GTAVISTANDARD001/ (consulté le 04/10/2026 ; officiel)
+  · Rockstar Games, assistance : Grand Theft Auto VI Platforms, Editions, and Versions — https://support.rockstargames.com/articles/4QfG4FmZCf5W1gS8jy4UVT/grand-theft-auto-vi-platform-editions-and-versions (consulté le 04/10/2026 ; officiel)
+  · Rockstar Newswire : Grand Theft Auto VI Pre-Orders Begin on June 25 — https://www.rockstargames.com/newswire/article/517oa135328155/grand-theft-auto-vi-pre-orders-begin-on-june-25 (publié le 24/06/2026, consulté le 04/10/2026 ; officiel)
+  · Microsoft Learn : XR055 Achievements and Gamerscore - Microsoft Game Development Kit — https://learn.microsoft.com/en-us/gaming/gdk/docs/store/policies/fma/xr055-achievements?view=gdk-2604 (consulté le 04/10/2026 ; officiel)
+  · Rockstar Newswire : Grand Theft Auto VI, An Extended Look — https://www.rockstargames.com/newswire/article/4k138k8okkk483/grand-theft-auto-vi-an-extended-look-now-playing (publié le 27/08/2026, consulté le 04/10/2026 ; officiel)
+  · Pure Xbox : Five Key Things We Learned About GTA 6 From The Game Informer Cover Story — https://www.purexbox.com/news/2026/09/five-key-things-we-learned-about-gta-6-from-the-game-informer-cover-story (consulté le 04/10/2026 ; vu)
+  · Rockstar Games, assistance : Information about saving and achievements while using GTA V cheat codes — https://support.rockstargames.com/articles/4ewFY12QOE4O7V1uWDEekt/information-about-saving-and-achievements-while-using-gta-v-cheat-codes (consulté le 04/10/2026 ; officiel)
+  · TrueAchievements : Grand Theft Auto VI Achievements — https://www.trueachievements.com/game/Grand-Theft-Auto-VI/achievements (consulté le 04/10/2026 ; communauté)
+  · PlayStationTrophies.org : Grand Theft Auto VI Trophies - View all Trophies — https://www.playstationtrophies.org/game/grand-theft-auto-6/trophies/ (consulté le 04/10/2026 ; communauté)
+  · GTABase : GTA 6 Achievements & Trophies List (PS5 & Xbox Series) — https://www.gtabase.com/articles/gta-6/gta-6-achievements-trophies-list-ps5-xbox-series (consulté le 04/10/2026 ; communauté)
+  · GTA Intel, site de fans : Will GTA 6 Have Achievements and Trophies? — https://gtaintel.com/news/gta-6-achievements-and-trophies (consulté le 04/10/2026 ; communauté)
+  · PSNProfiles : The Trophy System Explained — https://psnprofiles.com/guide/18274-the-trophy-system-explained (consulté le 04/10/2026 ; communauté)
+  · TrueAchievements : What are Xbox achievements? A beginner's guide to Gamerscore — https://www.trueachievements.com/n39996/how-to-see-achievements-and-delete-achievements-on-xbox-series-x (consulté le 04/10/2026 ; communauté)
+  · Gameblog : GTA 6 : quelle sera la difficulté du trophée Platine ? Rockstar donne une réponse aux chasseurs de trophées — https://www.gameblog.fr/jeu-video/ed/news/gta-6-trophee-platine-100-722091 (consulté le 04/10/2026 ; communauté)
+  · PowerPyx : GTA V Trophy Guide & Roadmap — https://www.powerpyx.com/gta-v-trophy-guide-roadmap/ (consulté le 04/10/2026 ; communauté)
+  · TechRadar : GTA 5 on PS5 and Xbox Series X trophy guide: all 51 achievements revealed — https://www.techradar.com/news/gta-5-on-ps5-and-xbox-series-x-trophy-guide-all-51-achievements-revealed (consulté le 04/10/2026 ; communauté)
+  · PSTHC : Grand Theft Auto V : liste des trophées (PS4) — https://www.psthc.fr/unjeu/gta5-ps4/liste-trophees.htm (consulté le 04/10/2026 ; communauté)
+  · TrueAchievements : 1,750G up for grabs with Grand Theft Auto V Xbox Series X|S achievements — https://www.trueachievements.com/n48963/gta-5-xbox-achievements (consulté le 04/10/2026 ; communauté)
+
+- GTA ONLINE (35 sources)
+  · Business Wire, communiqué de Rockstar Games : Rockstar Games Announces Pre-Orders for Grand Theft Auto VI — https://www.businesswire.com/news/home/20260624539426/en/Rockstar-Games-Announces-Pre-Orders-for-Grand-Theft-Auto-VI (publié le 24/06/2026, consulté le 04/10/2026 ; officiel)
+  · Rockstar Newswire : Grand Theft Auto VI Pre-Orders Begin on June 25 — https://www.rockstargames.com/newswire/article/517oa135328155/grand-theft-auto-vi-pre-orders-begin-on-june-25 (publié le 24/06/2026, consulté le 04/10/2026 ; officiel)
+  · Rockstar Games, assistance : Grand Theft Auto VI Platforms, Editions, and Versions — https://support.rockstargames.com/articles/4QfG4FmZCf5W1gS8jy4UVT/grand-theft-auto-vi-platform-editions-and-versions (consulté le 04/10/2026 ; officiel)
+  · PlayStation Blog : Grand Theft Auto VI plays best on PS5 November 19 — https://blog.playstation.com/2026/06/24/grand-theft-auto-vi-plays-best-on-ps5-november-19/ (publié le 24/06/2026, consulté le 04/10/2026 ; officiel)
+  · Insider Gaming : GTA 6 is a 'Single-Player Experience' With No Mention of GTA Online — https://insider-gaming.com/gta-6-single-player-experience-gta-online/ (consulté le 04/10/2026 ; vu)
+  · Pure Xbox : GTA 6 Costs $80, Described As A 'Single-Player Experience' — https://www.purexbox.com/news/2026/06/gta-6-costs-usd80-described-as-a-single-player-experience (consulté le 04/10/2026 ; vu)
+  · TheSixthAxis : GTA 6 is "a single-player experience" with no mention of a new GTA Online — https://www.thesixthaxis.com/2026/06/24/gta-6-is-a-single-player-experience-with-no-mention-of-a-new-gta-online/ (publié le 24/06/2026, consulté le 04/10/2026 ; communauté)
+  · GamingBible : GTA Online's Fate After GTA 6 Confirmed By Rockstar, It Changes Everything — https://www.gamingbible.com/news/gta-online-future-confirmed-306552-20260204 (publié le 04/02/2026, consulté le 04/10/2026 ; officiel)
+  · Kotaku : GTA 6 Doesn't Mean The End Of GTA Online, Says Take-Two CEO — https://kotaku.com/gta-6-gta-online-support-2027-november-post-launch-take-two-ceo-strauss-2000665489 (consulté le 04/10/2026 ; officiel)
+  · MarketBeat : Take-Two Interactive Software Q4 Earnings Call Highlights — https://www.marketbeat.com/instant-alerts/take-two-interactive-software-q4-earnings-call-highlights-2026-05-21/ (publié le 21/05/2026, consulté le 04/10/2026 ; officiel)
+  · TweakTown : GTA Online will continue after GTA 6's release, Take-Two reiterates — https://www.tweaktown.com/news/113044/gta-online-will-continue-after-gta-6s-release-take-two-reiterates/index.html (consulté le 04/10/2026 ; officiel)
+  · MP1st : Report: Rockstar Won't Talk About GTA 6 Online Soon, Game Will Be Marketed as a Single-Player Experience — https://mp1st.com/news/rockstar-wont-talk-about-gta-6-online-game-marketed-as-single-player-experience (consulté le 04/10/2026 ; communauté)
+  · SEC : Take-Two Interactive Software, Form DEF 14A (FY2026) — https://www.sec.gov/Archives/edgar/data/0000946581/000162828026049813/ttwo-20260727.htm (publié le 27/07/2026, consulté le 04/10/2026 ; officiel)
+  · TechRadar : GTA 6 Online might not be coming anytime soon, as Take-Two confirms GTA Online support will 'continue' after GTA 6 launches 'and beyond' — https://www.techradar.com/gaming/gta-6-online-might-not-be-coming-anytime-soon-as-take-two-confirms-gta-online-support-will-continue-after-gta-6-launches-and-beyond (consulté le 04/10/2026 ; officiel)
+  · Inven Global : Take-Two CEO addresses GTA 6 monetisation and management criticism at shareholder meeting — https://www.invenglobal.com/articles/26226/take-two-ceo-addresses-gta-6-monetisation-and-management-criticism-at-shareholder-meeting (consulté le 04/10/2026 ; officiel)
+  · GameSpot : GTA 6 Multiplayer Could Launch In 2027, Twitch CEO Says — https://www.gamespot.com/articles/gta-6-multiplayer-could-launch-in-2027-twitch-ceo-says/ (consulté le 04/10/2026 ; communauté)
+  · PC Gamer : Twitch CEO says GTA 6 multiplayer will launch in 2027 — https://www.pcgamer.com/games/grand-theft-auto/twitch-ceo-says-gta-6-multiplayer-will-launch-in-2027/ (consulté le 04/10/2026 ; communauté)
+  · How To Video Game : Rockstar's GTA 6 Site Now Shows Its M Rating, With In-Game Purchases Listed — https://howtovideogame.com/gta-6-rated-mature/ (consulté le 04/10/2026 ; vu)
+  · Tech Times : GTA VI Gets Its ESRB Rating: Missing Label Confirms No Online Mode at Launch — https://www.techtimes.com/articles/328437/20261002/gta-vi-gets-its-esrb-rating-missing-label-confirms-no-online-mode-launch.htm (publié le 02/10/2026, consulté le 04/10/2026 ; communauté)
+  · TweakTown : GTA 6 is a 'singleplayer experience,' GTA Online may be sold separately — https://www.tweaktown.com/news/112343/gta-6-is-a-singleplayer-experience-gta-online-may-be-sold-separately/index.html (consulté le 04/10/2026 ; communauté)
+  · gta6explained.com, site de fans : Will Your GTA Online Character Transfer to GTA 6? What Rockstar Has Confirmed — https://gta6explained.com/blog/gta-online-character-transfer-to-gta-6 (consulté le 04/10/2026 ; communauté)
+  · Guru3D : Rockstar Games Releases Free Upgrade for Grand Theft Auto V on PC — https://www.guru3d.com/story/rockstar-games-releases-free-upgrade-for-grand-theft-auto-v-on-pc/ (consulté le 04/10/2026 ; communauté)
+  · SEC : Take-Two Interactive : communiqué du 18 septembre 2013 sur les ventes de GTA V — https://www.sec.gov/Archives/edgar/data/946581/000110465913070819/a13-20938_1ex99d1.htm (publié le 18/09/2013, consulté le 04/10/2026 ; officiel)
+  · NBC News : 'Grand Theft Auto Online' launches Oct. 1 — https://www.nbcnews.com/technolog/grand-theft-auto-online-launches-oct-1-6c10925356 (consulté le 04/10/2026 ; communauté)
+  · Cheat Code Central : The Timeline of Grand Theft Auto V and GTA Online — https://www.cheatcc.com/articles/the-timeline-of-grand-theft-auto-v-and-gta-online/ (consulté le 04/10/2026 ; communauté)
+  · Rockstar Games, assistance : How to Purchase Shark Cards for Grand Theft Auto Online on PlayStation — https://support.rockstargames.com/articles/2y8VEHyqrGUU9ADdkh4dvC/how-to-purchase-shark-cards-for-grand-theft-auto-online-on-playstation (consulté le 04/10/2026 ; officiel)
+  · Rockstar Games, assistance : 40% GTA$ Shark Card Bonus Offer FAQ — https://support.rockstargames.com/articles/6Ydv7cvqIkwQzv5aOugFTy/40-gtausd-shark-card-bonus-offer-faq (consulté le 04/10/2026 ; officiel)
+  · Gematsu : Grand Theft Auto Online – GTA+ subscription service announced for PS5, Xbox Series — https://www.gematsu.com/2022/03/grand-theft-auto-online-gta-subscription-service-announced-for-ps5-xbox-series (consulté le 04/10/2026 ; communauté)
+  · Push Square : GTA+ augmente son prix (avril 2024) — https://www.pushsquare.com/news/2024/04/rockstars-gtaplus-membership-putting-its-price-up (consulté le 04/10/2026 ; communauté)
+  · Push Square : Standalone GTA Online PS5 Launcher Added to GTA+ Subscription Service — https://www.pushsquare.com/news/2025/11/standalone-gta-online-ps5-launcher-added-to-gtaplus-subscription-service (consulté le 04/10/2026 ; communauté)
+  · Worthplaying : la mise à jour « A Safehouse in the Hills » de GTA Online — https://worthplaying.com/article/2025/12/5/news/148413-grand-theft-auto-online-to-get-a-safehouse-in-the-hills-update-next-week-adds-high-end-mansions-vehicles-new-missionscreator-trailer/ (publié le 05/12/2025, consulté le 04/10/2026 ; communauté)
+  · Rockstar Newswire : The Kortz Center Heist Now Available in GTA Online — https://www.rockstargames.com/newswire/article/2525o93834o413/the-kortz-center-heist-now-available-in-gta-online (consulté le 04/10/2026 ; officiel)
+  · PlayStation LifeStyle : PlayStation 5 Players Can Get GTA Online Without PS Plus for Limited Time — https://www.playstationlifestyle.net/2026/07/15/playstation-5-players-can-get-gta-online-without-ps-plus-for-limited-time/ (publié le 15/07/2026, consulté le 04/10/2026 ; communauté)
+  · Rockstar Games, assistance : Activer le mois d’abonnement à GTA+ inclus dans votre précommande de Grand Theft Auto VI — https://support.rockstargames.com/articles/3SZF8cy8dG7lHsLf38uWK1/activer-le-mois-d-abonnement-%C3%A0-gta-inclus-dans-votre-pr%C3%A9commande-de-grand-theft-auto-vi (consulté le 04/10/2026 ; officiel)
+  · PlayStation : How to claim the Grand Theft Auto VI pre-order bonus offer for one month of GTA+ — https://www.playstation.com/en-us/support/games/gta-vi-offer-terms/ (consulté le 04/10/2026 ; officiel)
+
+CHOIX FAITS SEUL
+- Codes de triche : quatre codes de GTA V seulement, ceux dont la séquence ou le numéro est donné par plusieurs guides
+  (invincibilité, armes, santé et armure, une étoile en moins) ; les séquences Xbox de GTA V ne sont pas reprises (sources
+  trop faibles) : le choix de la console ne s’affiche donc que sur la page de démonstration, où chaque carte a ses deux
+  séquences. Les fiches seront par catégorie (armes, véhicules, joueur, monde) plutôt qu’une par code : plus utile pour
+  chercher un code, et pas de page trop courte. Numéros de la démonstration en 0-000-… (impossibles à confondre).
+- Trophées : sur la page de démonstration, rien n’est enregistré (comme la démonstration des missions) ; le test
+  automatique vérifie la case gardée après rechargement en simulant une vraie liste. Les noms des trophées : nom anglais
+  officiel toujours ; nom français affiché quand il sera publié.
+- GTA Online : pas de domaine séparé (tu as choisi « Dans Leonidakit ») ; deux pages seulement, celles qui ont dès
+  aujourd’hui assez de contenu sourcé ; « Activités », « Achats et entreprises », « Mises à jour » sont des rubriques de
+  la page principale tant que rien n’est publié. L’encart du calculateur utilise l’outil existant « Est-ce que ça vaut le
+  coup ? » (entreprise en ligne).
+- Léo : les questions « y a-t-il des codes ? », « y aura-t-il un GTA Online ? », « quand ? » et « le mois de GTA+ »
+  répondent par les réponses existantes du site, mises à jour avec les faits sourcés du 4 octobre 2026 et un lien vers la
+  section (pour ne rien casser des questions déjà testées). Une question qui parle du jeu en ligne (« GTA 6 online sortira
+  quand ? ») n’est plus prise pour la date de sortie du jeu.
+- Citations anglaises (Rockstar, Take-Two) reformulées en français dans les textes : la page allemande ne doit montrer ni
+  français ni anglais. Les titres anglais des sources restent tels quels.
+- Traductions : dans les autres langues, le nom français du platine de GTA V (« Légende de Los Santos ») n’est pas repris
+  (il n’intéresse que le lecteur français). « Argent » (le grade) et « Bas » (la flèche de la croix) ont une traduction
+  propre aux pages des trophées et des codes : le site les traduisait déjà dans un autre sens (l’argent qu’on gagne, le
+  vêtement).
+- Le patron de Twitch (multijoueur en 2027), le créateur brésilien (platine en 100 heures), Tech Times (classification ESRB) :
+  présentés comme « communauté », jamais comme une annonce.
+
+POUR L’ASSEMBLAGE (et la suite)
+Fichiers communs modifiés, et pourquoi (tous marqués « section codes », « section trophees », « section online » ou
+« sections … ») : voir outils/CHANGEMENTS-3-sections.txt, partie 2, et outils/assemblage/3-sections.diff.
+Ce qui reste à faire, avec ton accord (rien n’a été changé pour ne pas toucher aux sections sans toi) :
+- Liens entre les sections nouvelles :
+  · codes-de-triche.html (« Les codes désactivent-ils les trophées ? ») → trophees.html ;
+  · trophees.html (« Les codes de triche y désactivaient les succès ») → codes-de-triche.html#gtav ;
+  · trophees.html (« Y aura-t-il des trophées en ligne ? ») → online.html ;
+  · online.html (« Ce qui change », côté histoire) → missions.html et activites.html ;
+  · codes-de-triche.html (« Les codes marchent-ils en ligne ? ») → online.html ;
+  · collectibles.html et progression.html → trophees.html (les trophées de collection, le suivi).
+- Accueil : proposition de cartes dans « Jouer » : « Codes de triche — rien d’annoncé, ce qu’en disait GTA V » ;
+  « Trophées et succès — ton suivi, prêt pour la liste » ; « GTA Online — l’espace à part, ce qu’a dit Take-Two ».
+- Trophées dans la page Progression et les carnets : lire la clé lk-trophees-obtenus-v1 (liste d’identifiants) pour
+  afficher le pourcentage obtenu et proposer l’export ; la clé reste propre à la section.
+- Calculateur : un mode « en ligne » (prix et gains du jeu en ligne à part de ceux de l’histoire) quand Rockstar publiera
+  des chiffres ; les données sont prêtes dans outils/online/donnees.json.
+- Léo : une abréviation « ps plus » → « playstation plus » dans outils/leo-lexique.json permettrait de répondre aussi à
+  « faut-il le ps plus ? » (aujourd’hui, la question doit dire « PlayStation Plus » ou « abonnement »).
+- Le jour où la liste des trophées sort : la remplir dans outils/trophees/trophees.json (nom anglais officiel, noms par
+  langue, grade, points, condition, méthode, manquable, caché, liens, source), puis régénérer ; les noms officiels
+  espagnols, italiens et allemands vont dans outils/langues/<code>/section-trophees.json, en face du nom français.
+- Le jour où un code de GTA VI est publié ou vérifié en jeu : outils/codes/codes.json (séquences PS5 et Xbox Series,
+  téléphone, limites, source, date de vérification), puis régénérer : la fiche de sa catégorie se crée seule.

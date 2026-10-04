@@ -1,0 +1,96 @@
+{
+ "_note": "Section trophees : questions de test de Léo en français pour la section « Trophées et succès » (nombre, platine, manquables, en ligne, date de la liste, suivi). Rejoué par node outils/tests/leo-eval.cjs --questions=outils/tests/leo-questions-section-trophees-fr.json.",
+ "schemaVersion": 1,
+ "questions": [
+  {
+   "q": "combien de trophées dans GTA 6 ?",
+   "expect": {
+    "topic": "trophees-faq-1"
+   },
+   "tags": [
+    "section-trophees"
+   ]
+  },
+  {
+   "q": "liste des trophées gta 6",
+   "expect": {
+    "topic": "trophees-faq-1"
+   },
+   "tags": [
+    "section-trophees"
+   ]
+  },
+  {
+   "q": "combien de succès xbox dans gta 6",
+   "expect": {
+    "topic": "trophees-faq-1"
+   },
+   "tags": [
+    "section-trophees"
+   ]
+  },
+  {
+   "q": "comment avoir le platine ?",
+   "expect": {
+    "topic": "trophees-faq-2"
+   },
+   "tags": [
+    "section-trophees"
+   ]
+  },
+  {
+   "q": "le platine de gta 6 est il dur",
+   "expect": {
+    "topic": "trophees-faq-2"
+   },
+   "tags": [
+    "section-trophees"
+   ]
+  },
+  {
+   "q": "y a-t-il des trophées manquables ?",
+   "expect": {
+    "topic": "trophees-faq-3"
+   },
+   "tags": [
+    "section-trophees"
+   ]
+  },
+  {
+   "q": "peut on rater un trophée",
+   "expect": {
+    "topic": "trophees-faq-3"
+   },
+   "tags": [
+    "section-trophees"
+   ]
+  },
+  {
+   "q": "y aura-t-il des trophées en ligne ?",
+   "expect": {
+    "topic": "trophees-faq-4"
+   },
+   "tags": [
+    "section-trophees"
+   ]
+  },
+  {
+   "q": "quand sortira la liste des trophées",
+   "expect": {
+    "topic": "trophees-faq-5"
+   },
+   "tags": [
+    "section-trophees"
+   ]
+  },
+  {
+   "q": "comment suivre mes trophées",
+   "expect": {
+    "topic": "trophees-faq-6"
+   },
+   "tags": [
+    "section-trophees"
+   ]
+  }
+ ]
+}

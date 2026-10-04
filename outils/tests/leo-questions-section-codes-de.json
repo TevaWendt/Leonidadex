@@ -1,0 +1,60 @@
+{
+ "_note": "Section codes : questions de test de Léo en allemand pour la section « Codes de triche » (présence de codes, argent infini, trophées, téléphone, en ligne). Rejoué par node outils/tests/leo-eval.cjs --lang de --questions=outils/tests/leo-questions-section-codes-de.json.",
+ "schemaVersion": 1,
+ "questions": [
+  {
+   "q": "gibt es cheats in gta 6",
+   "expect": {
+    "topic": "mods"
+   },
+   "tags": [
+    "section-codes"
+   ]
+  },
+  {
+   "q": "cheatcodes gta 6",
+   "expect": {
+    "topic": "mods"
+   },
+   "tags": [
+    "section-codes"
+   ]
+  },
+  {
+   "q": "cheat für unendlich geld gta 6",
+   "expect": {
+    "topic": "codes-faq-1"
+   },
+   "tags": [
+    "section-codes"
+   ]
+  },
+  {
+   "q": "deaktivieren cheats die trophäen",
+   "expect": {
+    "topic": "codes-faq-2"
+   },
+   "tags": [
+    "section-codes"
+   ]
+  },
+  {
+   "q": "wie gibt man einen cheat mit dem handy ein",
+   "expect": {
+    "topic": "codes-faq-3"
+   },
+   "tags": [
+    "section-codes"
+   ]
+  },
+  {
+   "q": "funktionieren cheats online",
+   "expect": {
+    "topic": "codes-faq-4"
+   },
+   "tags": [
+    "section-codes"
+   ]
+  }
+ ]
+}

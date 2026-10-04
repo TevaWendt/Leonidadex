@@ -1,0 +1,158 @@
+/* Section « Trophées et succès » (section trophees) : trophees.html, fiches trophees/<id>.html et page de démonstration
+   trophees/modele.html. Chargée par les pages de la section seulement.
+   Mouvement (trophees.js) : cartes qui arrivent en cascade, badge qui apparaît avec un éclat bref quand on coche
+   « Obtenu », anneau de progression qui se remplit (deux demi-disques qui tournent : transform seulement). Jetons de
+   motion-tokens.css, transform et opacity uniquement, cadre fixe (aucun décalage de mise en page), tout coupé avec
+   prefers-reduced-motion: reduce. Les grades sont des coupes génériques dessinées pour le site (aucun logo de console). */
+.trophees-page{--trophees-platine:#9fb3c8;--trophees-or:var(--amber);--trophees-argent:#b8bcc6;--trophees-bronze:#c27b46;--trophees-fill:var(--amber);}
+.trophees-kicker{font:700 var(--fs-kicker)/1.2 var(--font-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--coral-text);margin:0 0 6px;}
+.trophees-lede{color:var(--ink-soft);max-width:var(--measure);margin:6px 0 18px;}
+.trophees-note{color:var(--ink-soft);max-width:var(--measure);margin-top:16px;font-size:.94rem;}
+.trophees-etat,.trophees-grades,.trophees-gtav,.trophees-liste-sec,.trophees-modele{padding-top:clamp(30px,4vw,52px);}
+
+/* ---------- ce qu’on sait ---------- */
+.trophees-statut{display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px 18px;align-items:start;max-width:880px;padding:18px clamp(14px,3vw,24px);
+  border:2px solid var(--ink);border-radius:var(--radius);background:linear-gradient(160deg,var(--paper),var(--paper-2));box-shadow:var(--shadow-hard);}
+.trophees-statut-ico{display:grid;place-items:center;width:54px;height:54px;border-radius:50%;background:var(--night);color:var(--amber-2);}
+.trophees-statut-ico svg{width:28px;height:28px;}
+.trophees-statut h3{font-size:var(--fs-h3);line-height:1.2;margin:0 0 6px;}
+.trophees-statut p{margin:0 0 8px;}
+.trophees-faits{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:14px;margin-top:22px;}
+.trophees-fait{padding:16px 16px 14px;border:2px solid var(--ink);border-radius:var(--radius);background:var(--paper);box-shadow:var(--shadow-soft);}
+.trophees-fait-ico{display:inline-grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--amber);color:var(--ink);margin-bottom:8px;}
+.trophees-fait-ico svg{width:22px;height:22px;}
+.trophees-fait h3{font-size:1.08rem;margin:0 0 6px;}
+.trophees-fait p{margin:0 0 8px;font-size:.95rem;}
+.trophees-st{display:inline-flex;flex-wrap:wrap;align-items:center;gap:6px 8px;font-size:.82rem;}
+.trophees-src{display:inline-flex;gap:4px;}
+.trophees-src a{display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 5px;border:1px solid var(--ink-soft);border-radius:999px;font:700 .7rem/1 var(--font-mono);color:var(--ink);}
+.trophees-src a:hover,.trophees-src a:focus-visible{background:var(--ink);color:var(--paper);}
+
+/* ---------- badges de grade (coupes génériques) ---------- */
+.trophees-badge{position:relative;flex:none;display:grid;place-items:center;width:52px;height:52px;border:2px solid var(--ink);border-radius:50%;background:var(--paper-2);color:var(--ink);}
+.trophees-badge svg{width:28px;height:28px;}
+.trophees-badge--platine{background:radial-gradient(circle at 35% 30%,#eef3f8,var(--trophees-platine) 70%);}
+.trophees-badge--or{background:radial-gradient(circle at 35% 30%,#ffe1a3,var(--trophees-or) 70%);}
+.trophees-badge--argent{background:radial-gradient(circle at 35% 30%,#f4f5f7,var(--trophees-argent) 70%);}
+.trophees-badge--bronze{background:radial-gradient(circle at 35% 30%,#efc19c,var(--trophees-bronze) 70%);}
+.trophees-badge--xbox{border-radius:12px;background:var(--night);color:var(--paper);}
+.trophees-grades-l{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr));gap:12px;}
+.trophees-grades-l li{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border:2px solid var(--ink);border-radius:var(--radius-s);background:var(--paper);}
+.trophees-grades-l b{display:block;font-size:1.02rem;}
+.trophees-grades-l span{font-size:.9rem;color:var(--ink-soft);}
+
+/* ---------- GTA V, pour comparer ---------- */
+.trophees-v{display:inline-flex;align-items:center;padding:2px 10px;border-radius:999px;background:var(--night);color:var(--paper);font:700 .72rem/1.4 var(--font-mono);letter-spacing:.06em;text-transform:uppercase;}
+.trophees-chiffres{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:12px;margin:14px 0 0;}
+.trophees-chiffre{padding:14px;border:2px solid var(--ink);border-radius:var(--radius-s);background:var(--paper);}
+.trophees-chiffre b{display:block;font:800 clamp(1.6rem,1.2rem + 1.4vw,2.2rem)/1 var(--font-mono);}
+.trophees-chiffre span{display:block;margin-top:6px;font-size:.9rem;color:var(--ink-soft);}
+.trophees-gtav-l{margin:14px 0 0;padding-left:1.2em;max-width:var(--measure);}
+.trophees-gtav-l li{margin:6px 0;}
+
+/* ---------- bilan : anneau de progression ---------- */
+.trophees-bilan{display:flex;flex-wrap:wrap;align-items:center;gap:16px 24px;margin:6px 0 18px;padding:16px clamp(14px,3vw,22px);border:2px solid var(--ink);border-radius:var(--radius);
+  background:linear-gradient(160deg,var(--night-deep),var(--night) 60%,var(--night-2));color:var(--paper);box-shadow:var(--shadow-hard);}
+.trophees-anneau{position:relative;flex:none;width:112px;height:112px;border-radius:50%;background:rgba(253,251,247,.16);}
+.trophees-anneau-d,.trophees-anneau-g{position:absolute;top:0;width:50%;height:100%;overflow:hidden;}
+.trophees-anneau-d{right:0;}
+.trophees-anneau-g{left:0;}
+.trophees-anneau-d i,.trophees-anneau-g i{position:absolute;top:0;width:100%;height:100%;background:var(--trophees-fill);transition:transform var(--c-narrative) var(--c-ease-result);}
+.trophees-anneau-d i{left:0;border-radius:0 56px 56px 0;transform-origin:0 50%;transform:rotate(calc(-180deg + min(var(--p,0),.5) * 360deg));}
+.trophees-anneau-g i{right:0;border-radius:56px 0 0 56px;transform-origin:100% 50%;transform:rotate(calc(-180deg + max(calc(var(--p,0) - .5),0) * 360deg));}
+.trophees-anneau-c{position:absolute;inset:11px;display:grid;place-items:center;border-radius:50%;background:var(--night-deep);}
+.trophees-anneau-c b{font:800 1.3rem/1 var(--font-mono);color:var(--paper);}
+.trophees-bilan.is-complet .trophees-anneau{box-shadow:0 0 0 3px var(--amber-2),0 0 24px rgba(247,182,69,.55);}
+.trophees-bilan-t{display:flex;flex-direction:column;gap:4px;min-width:0;}
+.trophees-bilan-n{margin:0;font:800 1.6rem/1 var(--font-mono);}
+.trophees-bilan-n span{margin:0 4px;opacity:.7;}
+.trophees-bilan-l{margin:0;font-weight:700;color:var(--amber-2);}
+.trophees-bilan-note{margin:0;font-size:.84rem;opacity:.85;}
+
+/* ---------- filtres (trophees.js) ---------- */
+.trophees-filtres{display:flex;flex-direction:column;gap:10px;margin:0 0 16px;}
+.trophees-filtre{display:flex;flex-wrap:wrap;align-items:center;gap:6px;}
+.trophees-filtre-l{min-width:96px;font:700 .74rem/1.2 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);}
+.trophees-filtre button{min-height:36px;padding:4px 12px;border:1.5px solid var(--ink);border-radius:999px;background:var(--paper);font:inherit;font-size:.86rem;font-weight:700;cursor:pointer;
+  transition:transform var(--c-fast) var(--c-ease-control);}
+.trophees-filtre button:hover{transform:translateY(-1px);}
+.trophees-filtre button[aria-pressed="true"]{background:var(--ink);color:var(--paper);}
+.trophees-filtre button:focus-visible{outline:3px solid var(--coral);outline-offset:2px;}
+.trophees-visibles{margin:0;font-size:.88rem;color:var(--ink-soft);}
+.trophees-visibles b{color:var(--ink);font-family:var(--font-mono);}
+
+/* ---------- cartes de trophées ---------- */
+.trophees-cartes{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr));gap:14px;}
+.trophees-carte{position:relative;display:flex;gap:14px;align-items:flex-start;padding:14px 16px;border:2px solid var(--ink);border-radius:var(--radius);background:var(--paper);box-shadow:var(--shadow-soft);isolation:isolate;}
+.trophees-carte[hidden],.trophees-case[hidden],.trophees-filtres[hidden],.trophees-bilan[hidden]{display:none;}
+.trophees-carte-b{display:flex;flex-direction:column;gap:6px;min-width:0;flex:1;}
+.trophees-carte h3{font-size:1.06rem;line-height:1.25;margin:0;overflow-wrap:anywhere;}
+.trophees-carte p{margin:0;}
+.trophees-nom-l{font-size:.86rem;color:var(--ink-soft);}
+.trophees-meta{display:flex;flex-wrap:wrap;gap:4px 10px;font-size:.84rem;}
+.trophees-meta>span{display:inline-flex;align-items:center;gap:4px;}
+.trophees-tag{padding:1px 8px;border:1px dashed var(--ink);border-radius:999px;font-size:.74rem;font-weight:700;}
+.trophees-tag--manquable{border-style:solid;border-color:var(--coral-text);color:var(--coral-text);}
+.trophees-methode{font-weight:700;color:var(--coral-text);text-decoration:underline;text-underline-offset:3px;}
+.trophees-case{align-self:flex-start;display:inline-flex;align-items:center;gap:8px;margin-top:4px;padding:6px 10px;border:2px solid var(--ink);border-radius:var(--radius-s);background:var(--paper-2);font-weight:800;cursor:pointer;}
+.trophees-case input{width:20px;height:20px;accent-color:var(--coral);cursor:pointer;}
+.trophees-case-note{font-size:.8rem;color:var(--ink-soft);}
+.trophees-carte.is-obtenu{background:#fff8e8;border-color:var(--ink);}
+.trophees-carte.is-obtenu .trophees-case{background:var(--amber);}
+/* sceau « obtenu » : posé sur le badge, il apparaît quand la case est cochée (opacity et transform) */
+.trophees-sceau{position:absolute;right:-4px;bottom:-4px;display:grid;place-items:center;width:22px;height:22px;border:2px solid var(--ink);border-radius:50%;background:var(--coral);color:var(--paper);
+  opacity:0;transform:scale(.4);transition:opacity var(--c-fast) var(--c-ease-control),transform var(--c-standard) var(--c-ease-result);}
+.trophees-sceau svg{width:12px;height:12px;}
+.trophees-carte.is-obtenu .trophees-sceau{opacity:1;transform:none;}
+/* éclat bref au déblocage */
+.trophees-eclat-r{position:absolute;left:40px;top:40px;width:0;height:0;pointer-events:none;z-index:2;}
+.trophees-eclat-r i{position:absolute;left:-3px;top:-14px;width:6px;height:14px;border-radius:3px;background:var(--amber);opacity:0;transform-origin:3px 14px;transform:rotate(var(--r,0deg)) translateY(-18px) scaleY(.4);}
+.trophees-eclat-r i:nth-child(2n){background:var(--coral);}
+.trophees-eclat-r i:nth-child(1){--r:0deg}.trophees-eclat-r i:nth-child(2){--r:45deg}.trophees-eclat-r i:nth-child(3){--r:90deg}.trophees-eclat-r i:nth-child(4){--r:135deg}
+.trophees-eclat-r i:nth-child(5){--r:180deg}.trophees-eclat-r i:nth-child(6){--r:225deg}.trophees-eclat-r i:nth-child(7){--r:270deg}.trophees-eclat-r i:nth-child(8){--r:315deg}
+.trophees-eclat .trophees-eclat-r i{animation:trophees-rayon 700ms var(--c-ease-result) both;}
+@keyframes trophees-rayon{0%{opacity:0;transform:rotate(var(--r)) translateY(-14px) scaleY(.3)}25%{opacity:1}100%{opacity:0;transform:rotate(var(--r)) translateY(-40px) scaleY(1)}}
+.trophees-eclat .trophees-badge{animation:trophees-badge 620ms var(--c-ease-result) both;}
+@keyframes trophees-badge{0%{transform:scale(1)}30%{transform:scale(.86) rotate(-8deg)}65%{transform:scale(1.14) rotate(4deg)}100%{transform:none}}
+/* arrivée des cartes en cascade */
+.trophees-attend .trophees-carte{opacity:0;transform:translateY(var(--c-rise,10px));}
+.trophees-arrivee .trophees-carte{animation:trophees-arrive var(--c-narrative) var(--c-ease-result) both;animation-delay:calc(var(--i,0) * var(--c-stagger,35ms) * 2);}
+@keyframes trophees-arrive{from{opacity:0;transform:translateY(var(--c-rise,10px)) scale(.985)}to{opacity:1;transform:none}}
+
+/* ---------- guide à venir, fiche, démonstration, sources ---------- */
+.trophees-vide{max-width:var(--measure);padding:16px 18px;border:2px dashed var(--ink-soft);border-radius:var(--radius);background:var(--paper-2);margin:8px 0 18px;}
+.trophees-champs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:10px;margin:14px 0 0;}
+.trophees-champs>div{padding:10px 12px;border:1.5px solid var(--rule);border-radius:var(--radius-s);background:var(--paper);}
+.trophees-champs dt{font:700 .72rem/1.3 var(--font-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:4px;}
+.trophees-champs dd{margin:0;font-size:.94rem;}
+.trophees-bref{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:10px;margin:8px 0 0;}
+.trophees-bref>div{padding:10px 12px;border:1.5px solid var(--rule);border-radius:var(--radius-s);background:var(--paper);}
+.trophees-bref dt{font:700 .72rem/1.3 var(--font-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:4px;}
+.trophees-bref dd{margin:0;display:flex;flex-wrap:wrap;align-items:center;gap:6px;}
+.trophees-etapes{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:10px;}
+.trophees-etapes li{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border:2px solid var(--ink);border-radius:var(--radius-s);background:var(--paper);}
+.trophees-etape-n{flex:none;display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--amber);font:800 .9rem/1 var(--font-mono);}
+.trophees-etapes h3{margin:0 0 4px;font-size:1rem;}
+.trophees-etapes p{margin:0;}
+.trophees-fiche-carte{max-width:560px;}
+.trophees-demo{margin:18px 0 0;padding:12px 16px;border:2px dashed var(--coral);border-radius:var(--radius-s);background:#fff2ee;font-weight:700;color:var(--coral-deep);}
+.trophees-fiche-src{--ed-line:var(--rule);--ed-card:var(--paper-2);--ed-soft:var(--ink-soft);--ed-fg:var(--ink);padding-top:8px;}
+.trophees-fiche-src .ed-srcs{margin-top:12px;}
+
+@media (max-width:600px){
+  .trophees-statut{grid-template-columns:minmax(0,1fr);}
+  .trophees-filtre-l{min-width:100%;}
+  .trophees-bilan{gap:12px 16px;}
+  .trophees-anneau{width:96px;height:96px;}
+  .trophees-anneau-d i{border-radius:0 48px 48px 0;}
+  .trophees-anneau-g i{border-radius:48px 0 0 48px;}
+}
+
+/* ---------- mouvement réduit : rien ne bouge, tout reste lisible ---------- */
+@media (prefers-reduced-motion:reduce){
+  .trophees-attend .trophees-carte{opacity:1;transform:none;}
+  .trophees-arrivee .trophees-carte,.trophees-eclat .trophees-eclat-r i,.trophees-eclat .trophees-badge{animation:none!important;}
+  .trophees-anneau-d i,.trophees-anneau-g i,.trophees-sceau,.trophees-filtre button{transition:none!important;}
+  .trophees-filtre button:hover{transform:none;}
+}
+@media print{.trophees-filtres,.trophees-eclat-r{display:none!important;}.trophees-carte[hidden]{display:flex!important;}.trophees-attend .trophees-carte{opacity:1;transform:none;}}

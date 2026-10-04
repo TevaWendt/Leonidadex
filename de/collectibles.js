@@ -15,7 +15,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
   const statusLabels = {confirmed: 'Bestätigt', established: 'Stark belegt', unconfirmed: 'Unbestätigt'};
   const categoryName = item => categories.get(item.category) || item.category || 'Kategorie noch zu klären';
   const fields = ['category', 'region', 'status', 'progress', 'subcategory', 'zone', 'difficulty', 'availability', 'reward'];
-  const filterLabels = {q: 'Suche', category: 'Kategorie', region: 'Region', status: 'Status', progress: 'Collection', subcategory: 'Unterkategorie', zone: 'Gebiet', difficulty: 'Schwierigkeit', availability: 'Verfügbarkeit', reward: 'Belohnung'};
+  const filterLabels = {q: 'Suche', category: 'Kategorie', region: 'Region', status: 'Status', progress: 'Sammlung', subcategory: 'Unterkategorie', zone: 'Gebiet', difficulty: 'Schwierigkeit', availability: 'Verfügbarkeit', reward: 'Belohnung'};
   const progressLabels = {missing: 'Zu finden', found: 'Gefunden', favorites: 'Favoriten', notes: 'Mit Notiz'};
   const sortModes = ['name', 'updated', 'category', 'region', 'order', 'difficulty'];
   const PREF_KEY = 'lk_collectibles_prefs_v1';

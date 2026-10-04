@@ -1,0 +1,546 @@
+diff --git a/leo-core.js b/leo-core.js
+index ea44bba2..36c3d912 100644
+--- a/leo-core.js
++++ b/leo-core.js
+@@ -229,7 +229,7 @@ function create(data,options={}){
+   if(typeof query!=='string'||query.length>MAX_INPUT)return {kind:'error',text:'600 lettres maximum par question. Garde les noms et les chiffres utiles.'};lastOriginal=query.trim();if(bridge)query=bridge(query);let raw=query.trim();{/* « bjr, la map elle fait cb ? » : la salutation en tête est mise de côté quand une vraie question suit */const m=raw.match(/^(?:bonjour|salut|hello|bonsoir|yo|coucou|hey|slt|bjr|bsr|cc|wesh)\b[ ,!:.-]*(?:l[ée]o\b[ ,!:.-]*)?/i);if(m&&raw.length-m[0].length>=4)raw=raw.slice(m[0].length);}const q=norm(raw),n=clean(raw);if(!n)return {kind:'intro',text:'Je peux t’aider à trouver une fiche, comprendre un terme et préparer un calcul.'};
+   const page=options.page||null,A=analyzer.analyze(raw),recent=Array.isArray(context.recent)?context.recent:[],last=recent.length?recent[recent.length-1]:null;
+   if(/^(?:(?:bonjour|salut|hello|bonsoir|yo|coucou|hey|slt|bjr|bsr|cc|wesh|hi)(?: leo| lolo)?|merci(?: beaucoup| bcp| leo| bien)?|mrc|thx|thanks|au revoir|a plus|bye|ciao|a bientot|bonne journee|bonne soiree)$/.test(n)){const t=kById.get(/merci|mrc|thx|thanks/.test(n)?'merci':/au revoir|a plus|bye|ciao|a bientot|bonne/.test(n)?'au-revoir':'bonjour');if(t)return knowledgeAnswer(t,context);return {kind:'intro',text:'Salut ! Pose-moi une question sur GTA VI (sortie, consoles, prix, personnages, régions…), demande une fiche du site, ou donne-moi tes chiffres pour un calcul.',context:empty()};}
+-  if(/(?:sort|sortie|date|disponib)/.test(q)&&(/gta\s*(?:vi|6)|jeu/.test(q)||/^date de sortie/.test(q))&&!/pc|ordinateur|steam|ps4|ps6|switch|xbox one|physique|boite|precommande|preco|heure|minuit|precharg|report|repouss|definitive|fiable|trailer|prevenu|alerte|mail|inscri|newsletter|prix|combien|cb |console|plateforme|contenu|edition|apres la sortie|a la sortie|changera|site/.test(q)){const r=data.release,today=options.now?new Date(options.now):new Date(),at=r?.verifiedAt&&Date.parse(r.verifiedAt+'T00:00:00Z'),date=r?.date&&Date.parse(r.date+'T00:00:00Z'),age=(today-at)/86400000,fresh=Number.isFinite(at)&&Number.isFinite(date)&&age>=0&&age<=(r.maxAgeDays||30)&&today.getTime()<date&&safeSource(r.source);return {kind:'answer',topic:'sortie',text:fresh?'Rockstar annonce GTA VI pour le '+new Intl.DateTimeFormat('fr-FR',{dateStyle:'long',timeZone:'UTC'}).format(new Date(date))+'.':'La date de sortie doit être revérifiée : ma donnée locale est absente ou trop ancienne. Je ne peux pas confirmer la disponibilité du jeu.',source:fresh?r.source:safeSource(r?.source),verifiedAt:r?.verifiedAt||null,status:fresh?'Date annoncée · source officielle':'À vérifier',links:[{label:'Le calendrier',url:'/a-propos.html#calendrier'},{label:'Compter les jours sur l’accueil',url:'/index.html'}],context:{...empty(),recent:remember(context,{topic:'sortie'})}};}
++  if(/(?:sort|sortie|date|disponib)/.test(q)&&(/gta\s*(?:vi|6)|jeu/.test(q)||/^date de sortie/.test(q))&&!/pc|ordinateur|steam|ps4|ps6|switch|xbox one|physique|boite|precommande|preco|heure|minuit|precharg|report|repouss|definitive|fiable|trailer|prevenu|alerte|mail|inscri|newsletter|prix|combien|cb |console|plateforme|contenu|edition|apres la sortie|a la sortie|changera|site/.test(q)&&!/online|en ligne|multijoueur/.test(q)/* section online : « GTA 6 online sortira quand ? » vise le jeu en ligne, pas la sortie du jeu */){const r=data.release,today=options.now?new Date(options.now):new Date(),at=r?.verifiedAt&&Date.parse(r.verifiedAt+'T00:00:00Z'),date=r?.date&&Date.parse(r.date+'T00:00:00Z'),age=(today-at)/86400000,fresh=Number.isFinite(at)&&Number.isFinite(date)&&age>=0&&age<=(r.maxAgeDays||30)&&today.getTime()<date&&safeSource(r.source);return {kind:'answer',topic:'sortie',text:fresh?'Rockstar annonce GTA VI pour le '+new Intl.DateTimeFormat('fr-FR',{dateStyle:'long',timeZone:'UTC'}).format(new Date(date))+'.':'La date de sortie doit être revérifiée : ma donnée locale est absente ou trop ancienne. Je ne peux pas confirmer la disponibilité du jeu.',source:fresh?r.source:safeSource(r?.source),verifiedAt:r?.verifiedAt||null,status:fresh?'Date annoncée · source officielle':'À vérifier',links:[{label:'Le calendrier',url:'/a-propos.html#calendrier'},{label:'Compter les jours sur l’accueil',url:'/index.html'}],context:{...empty(),recent:remember(context,{topic:'sortie'})}};}
+   const def=data.definitions.find(x=>x.terms.some(t=>new RegExp('(?:^| )'+escape(clean(t))+'(?: |$)').test(n)));if(def&&(/c'est quoi|c est quoi|quoi un|qu'est|qu est|veut dire|signifi|defini|explique|c koi|ckoi/.test(q)||def.terms.some(t=>n===clean(t))))return {kind:'answer',topic:'def-'+def.id,text:def.text,links:[{label:'Lire dans le Tuto',url:def.url}],status:'Définition du calculateur',context:{...empty(),recent:remember(context,{topic:'def-'+def.id})}};
+   let faq;if(/pourquoi.*prix|pas.*prix|prix.*(?:manqu|inconnu|absen)/.test(q))faq=data.faq.find(x=>x.id==='prix');else faq=data.faq.find(x=>x.terms.some(t=>n.includes(clean(t))));if(faq&&!/je veux acheter|je souhaite acheter/.test(q))return {kind:'answer',topic:'faq-'+faq.id,text:faq.text,links:[{label:'Voir l’explication',url:faq.url}],status:'Réponse du Tuto',context:{...empty(),recent:remember(context,{topic:'faq-'+faq.id})}};
+   const nav=/^(?:ouvre|ouvrir|aller|va |montre|ou est mon|ou sont mes|acces|emmene)/.test(q),ct=category(q),nt=tools.find(t=>t.terms.some(x=>n.includes(clean(x))));
+@@ -385,7 +385,7 @@ function create(data,options={}){
+   if(/^\/(?:personnages|entreprises|demeures|planques|gangs)\/[a-z0-9-]+\.html$/.test(path)&&name)return [fill('C’est quoi {name} ?',{name}),fill('Où est {name} ?',{name}),...pick('monde').slice(0,4)];
+   if(path==='/'||path==='/index.html')return pick('home');if(path==='/calculateurs.html')return pick('calculateurs');if(path==='/tuto.html')return pick('tuto');if(path==='/carte.html')return pick('carte');
+   if(/^\/(?:vehicules|classement-vehicules|vehicules-rares|comparateur|bateaux)\.html$/.test(path))return pick('vehicules');if(path==='/armes.html')return pick('armes');if(path==='/progression.html')return pick('progression');
+-  if(/^\/(?:lieux|personnages|demeures|planques|entreprises|gangs|collectibles)\.html$/.test(path))return pick('monde');if(/^\/(?:nourriture|style|personnalisations)\.html$/.test(path))return pick('listes');if(/^\/(?:achats|logements)\.html$/.test(path))return pick('achats');if(/^\/(?:a-propos|contact|mentions-legales|medias)\.html$/.test(path))return pick('info');if(/^\/missions(?:\/[a-z0-9-]+)?\.html$/.test(path))return pick('missions');/* section missions */if(/^\/activites(?:\/[a-z0-9-]+)?\.html$/.test(path))return pick('activites');/* section activites */if(/^\/radios(?:\/[a-z0-9-]+)?\.html$/.test(path))return pick('radios');/* section radios */if(/^\/animaux(?:\/[a-z0-9-]+)?\.html$/.test(path))return pick('animaux');/* section animaux */return pick('default');}
++  if(/^\/(?:lieux|personnages|demeures|planques|entreprises|gangs|collectibles)\.html$/.test(path))return pick('monde');if(/^\/(?:nourriture|style|personnalisations)\.html$/.test(path))return pick('listes');if(/^\/(?:achats|logements)\.html$/.test(path))return pick('achats');if(/^\/(?:a-propos|contact|mentions-legales|medias)\.html$/.test(path))return pick('info');if(/^\/missions(?:\/[a-z0-9-]+)?\.html$/.test(path))return pick('missions');/* section missions */if(/^\/activites(?:\/[a-z0-9-]+)?\.html$/.test(path))return pick('activites');/* section activites */if(/^\/radios(?:\/[a-z0-9-]+)?\.html$/.test(path))return pick('radios');/* section radios */if(/^\/animaux(?:\/[a-z0-9-]+)?\.html$/.test(path))return pick('animaux');/* section animaux */if(/^\/codes-de-triche(?:\/[a-z0-9-]+)?\.html$/.test(path))return pick('codes');/* section codes */if(/^\/trophees(?:\/[a-z0-9-]+)?\.html$/.test(path))return pick('trophees');/* section trophees */if(/^\/online(?:\/[a-z0-9-]+)?\.html$/.test(path))return pick('online');/* section online */return pick('default');}
+  function attach(name,json){if(loaded.has(name))return false;addShard(name,json);loaded.add(name);return true;}
+  return Object.freeze({answer,ask,prepare,needs,loadShard,loadAll,attach,search,choose,suggest,items,byKey,categories,tools,data,knowledge:()=>knowledge,loaded:()=>[...loaded],analyze:q=>analyzer.analyze(q),detectEntities:q=>detectEntities(analyzer.analyze(q)),intents:q=>[...intentsOf(analyzer.analyze(q),norm(q))],reportLink});
+ }
+diff --git a/leo-ui.js b/leo-ui.js
+index 285756bc..d2f15340 100644
+--- a/leo-ui.js
++++ b/leo-ui.js
+@@ -5,14 +5,14 @@
+ (function(){'use strict';
+ /* v7.61 : l'index est celui de la langue de la page (/es/leo-index.json sur une page espagnole) : dossier de ce script */
+ const LEO_BASE=(document.currentScript&&document.currentScript.src||'').replace(/^https?:\/\/[^/]+/,'').replace(/[^/]*$/,'')||'/';
+-const LANG_UI=(document.documentElement.lang||'fr').slice(0,2).toLowerCase(),C=window.LKLeoCore,L=window.LKLeoLink,launch=document.getElementById('leo-launch'),KEY='lk_leo_session_v2',TTL=30*60*1000,MAX_MESSAGES=32,V='?v=a8f86fa573e9',MAX_BYTES=1500000;
++const LANG_UI=(document.documentElement.lang||'fr').slice(0,2).toLowerCase(),C=window.LKLeoCore,L=window.LKLeoLink,launch=document.getElementById('leo-launch'),KEY='lk_leo_session_v2',TTL=30*60*1000,MAX_MESSAGES=32,V='?v=f56ceeb120b0',MAX_BYTES=1500000;
+ const names={capital:'J’ai déjà ($)',target:'Je veux avoir ($)',hourly:'Gain net estimé ($ / h)',price:'Prix que j’imagine ($)',reserve:'Réserve à garder ($)',minutes:'Session (min)',dailyMinutes:'Temps par jour (min)',players:'Joueurs, moi compris'};
+ const preferred={goal:['capital','target','hourly'],session:['minutes','capital','players'],activities:['capital','minutes','players'],purchase:['price','capital'],roi:['price','capital'],order:['capital','hourly'],budget:['capital','reserve'],plan:['capital','target','minutes']};
+ const el=(tag,text,cls)=>{const node=document.createElement(tag);if(text!==undefined&&text!==null)node.textContent=text;if(cls)node.className=cls;return node;};
+ const button=(text,cls,fn)=>{const b=el('button',text,cls);b.type='button';if(fn)b.addEventListener('click',fn);return b;};
+ /* v7.45 : les morceaux de l'index que vise une question sont préparés pendant la frappe, au survol ou au focus d'une suggestion : la réponse est prête à l'envoi. Ce sont des fichiers du site ; rien ne part du navigateur. */
+ /* famille de la page ouverte → morceau de l'index à préparer à l'ouverture */
+-function pageShard(path){if(/^\/(?:calculateurs|tuto)\.html$/.test(path))return 'calculateur';if(/^\/(?:vehicules\/|vehicules\.html|vehicules-rares\.html|classement-vehicules\.html|comparateur\.html|bateaux\.html)/.test(path))return 'vehicules';if(/^\/(?:armes\/|armes\.html|munitions\.html)/.test(path))return 'armes';if(/^\/(?:lieux|personnages|entreprises|demeures|planques|gangs)(?:\/|\.html)/.test(path))return 'monde';if(/^\/carte\.html/.test(path))return 'lieux';if(/^\/(?:nourriture|style|personnalisations|tatouages|vetements|accessoires)\.html/.test(path))return 'catalogues';if(/^\/missions(?:\/|\.html)/.test(path))return 'missions';/* section missions */if(/^\/activites(?:\/|\.html)/.test(path))return 'activites';/* section activites */if(/^\/radios(?:\/|\.html)/.test(path))return 'radios';/* section radios */if(/^\/animaux(?:\/|\.html)/.test(path))return 'animaux';/* section animaux */return null;}
++function pageShard(path){if(/^\/(?:calculateurs|tuto)\.html$/.test(path))return 'calculateur';if(/^\/(?:vehicules\/|vehicules\.html|vehicules-rares\.html|classement-vehicules\.html|comparateur\.html|bateaux\.html)/.test(path))return 'vehicules';if(/^\/(?:armes\/|armes\.html|munitions\.html)/.test(path))return 'armes';if(/^\/(?:lieux|personnages|entreprises|demeures|planques|gangs)(?:\/|\.html)/.test(path))return 'monde';if(/^\/carte\.html/.test(path))return 'lieux';if(/^\/(?:nourriture|style|personnalisations|tatouages|vetements|accessoires)\.html/.test(path))return 'catalogues';if(/^\/missions(?:\/|\.html)/.test(path))return 'missions';/* section missions */if(/^\/activites(?:\/|\.html)/.test(path))return 'activites';/* section activites */if(/^\/radios(?:\/|\.html)/.test(path))return 'radios';/* section radios */if(/^\/animaux(?:\/|\.html)/.test(path))return 'animaux';/* section animaux */if(/^\/codes-de-triche(?:\/|\.html)/.test(path))return 'codes';/* section codes */if(/^\/trophees(?:\/|\.html)/.test(path))return 'trophees';/* section trophees */if(/^\/online(?:\/|\.html)/.test(path))return 'online';/* section online */return null;}
+ let pageReady=null;
+ function preload(text){if(!core)return;let list=[];try{list=core.needs(String(text).slice(0,C.MAX_INPUT));}catch{list=[];}for(const n of list)core.loadShard(n).catch(()=>{});}
+ const questionButton=(q,cls)=>{const b=button(q,cls,()=>ask(q));const warm=()=>preload(q);for(const ev of ['pointerenter','focus','touchstart'])b.addEventListener(ev,warm,{once:true,passive:true});return b;};
+diff --git a/outils/gen-leo.cjs b/outils/gen-leo.cjs
+index 2ee34dbc..6f309d52 100644
+--- a/outils/gen-leo.cjs
++++ b/outils/gen-leo.cjs
+@@ -100,10 +100,10 @@ function generate(options={}){
+   const acqEd=json('outils/catalogues/editorial.json');const acqVer=Object.values(require('./catalogues.cjs').load().sources).map(s=>s.consultedAt).sort().pop();const PAGES={nourriture:['Consommables','/nourriture.html'],style:['Vêtements et style','/style.html'],customizations:['Personnalisations','/personnalisations.html']};
+   for(const [key,[label,page]] of Object.entries(PAGES))(acqEd[key]?.faq||[]).forEach((x,i)=>{if(!Array.isArray(x.k)||!x.k.length||typeof x.a!=='string'||x.a.length>900)throw Error('FAQ de '+key+' sans mots-clés ou trop longue : '+x.q);
+    knowledge.push({id:'acq-'+key+'-'+(i+1),q:tx(x.q),f:[x.q],k:x.k,text:tx(x.a),status:tx('Réponse de la FAQ « '+label+' », sources en bas de la page'),links:[{label:'La FAQ et ses sources',url:routeOK(page+'#faq')}],verifiedAt:acqVer,min:Number.isInteger(x.min)?x.min:2});});}
+- /* sections missions, activites, radios, animaux : fiches (morceau « monde ») et questions de chaque section (morceau leo/<id>.json), lues dans outils/gen-<id>.cjs */
+- const sectionTopics={};for(const sec of ['missions','activites','radios','animaux'/* sections missions, activites, radios, animaux */]){const L=require('./gen-'+sec+'.cjs').leo(r);for(const x of L.fiches)add(x);inputFiles.push(...L.inputs);Object.assign(defs.suggestions,L.suggestions||{});sectionTopics[sec]=L.topics.map(t=>{if(!/^[a-z0-9-]+$/.test(t.id)||ids.has(t.id))throw Error('Identifiant de sujet invalide ou en double : '+t.id);ids.add(t.id);if(typeof t.text!=='string'||!t.text||t.text.length>900)throw Error('Réponse absente ou trop longue : '+t.id);return {...t,q:tx(t.q),text:tx(t.text),status:tx(t.status),links:t.links.map(l=>({label:tx(l.label),url:routeOK(l.url)}))};});}
++ /* sections missions, activites, radios, animaux, codes, trophees, online : fiches (morceau « monde ») et questions de chaque section (morceau leo/<id>.json), lues dans outils/gen-<id>.cjs */
++ const sectionTopics={};for(const sec of ['missions','activites','radios','animaux'/* sections missions, activites, radios, animaux */,'codes','trophees','online'/* sections codes, trophees, online */]){const L=require('./gen-'+sec+'.cjs').leo(r);for(const x of L.fiches)add(x);inputFiles.push(...L.inputs);Object.assign(defs.suggestions,L.suggestions||{});sectionTopics[sec]=L.topics.map(t=>{if(!/^[a-z0-9-]+$/.test(t.id)||ids.has(t.id))throw Error('Identifiant de sujet invalide ou en double : '+t.id);ids.add(t.id);if(typeof t.text!=='string'||!t.text||t.text.length>900)throw Error('Réponse absente ou trop longue : '+t.id);return {...t,q:tx(t.q),text:tx(t.text),status:tx(t.status),links:t.links.map(l=>({label:tx(l.label),url:routeOK(l.url)}))};});}
+  /* ---------- passages des pages ---------- */
+- const passages=[];{const pages=[...fs.readdirSync(r).filter(f=>f.endsWith('.html')&&!f.startsWith('google')&&f!=='404.html'),...['lieux','personnages','entreprises','demeures','planques','gangs','missions'/* section missions */,'activites'/* section activites */,'radios'/* section radios */,'animaux'/* section animaux */].filter(dir=>fs.existsSync(path.join(r,dir))).flatMap(dir=>fs.readdirSync(path.join(r,dir)).filter(f=>f.endsWith('.html')).map(f=>dir+'/'+f))].sort();
++ const passages=[];{const pages=[...fs.readdirSync(r).filter(f=>f.endsWith('.html')&&!f.startsWith('google')&&f!=='404.html'),...['lieux','personnages','entreprises','demeures','planques','gangs','missions'/* section missions */,'activites'/* section activites */,'radios'/* section radios */,'animaux'/* section animaux */,'codes-de-triche'/* section codes */,'trophees'/* section trophees */,'online'/* section online */].filter(dir=>fs.existsSync(path.join(r,dir))).flatMap(dir=>fs.readdirSync(path.join(r,dir)).filter(f=>f.endsWith('.html')).map(f=>dir+'/'+f))].sort();
+   for(const file of pages){const html=read(file);if(/http-equiv=["']refresh/i.test(html)||/name=["']robots["'][^>]*noindex/i.test(html))continue;const dd=doc(file),main=dd.querySelector('main');if(!main)continue;const title=flat(dd.querySelector('title')?.textContent||'').replace(/\s*\|\s*Leonidakit$/,'');
+    for(const s of main.querySelectorAll('script,style,noscript,form,nav,table,figure,.lk-stack,.veh-grid,.arm-grid,.cmp-tray,.own-bar,#suggest,.leo-panel,[aria-hidden="true"],#sources,#sources-calc,[id^="src-"],[class*="ed-src"],.ed-sources'))s.remove();
+    const textOf=node=>{let out='';const visit=n=>{for(const ch of n.childNodes){if(ch.nodeType===3)out+=ch.nodeValue;else if(ch.nodeType===1){if(ch.tagName==='BR')out+=' ';else{out+=' ';visit(ch);out+=' ';}}}};visit(node);return flat(out);};
+@@ -134,7 +134,7 @@ function generate(options={}){
+  /* Le thème « calculateur » (une soixantaine de questions) est un morceau à part, chargé dès qu'une question en parle ou dès l'ouverture sur le calculateur et le Tuto : il allège le noyau. */
+  const calcTopics=knowledge.filter(t=>t._theme==='calculateur'),coreTopics=knowledge.filter(t=>t._theme!=='calculateur'),stripTheme=t=>{/* les formulations sont livrées déjà analysées (d, dq, dk : jetons séparés par des espaces, même analyseur que dans le navigateur) : le navigateur n'a rien à réanalyser à l'ouverture */const o={...t},terms=x=>analyzer.analyze(x).terms.join(' ');delete o._theme;o.d=t.f.map(terms);o.dq=terms(t.q);if(t.k&&t.k.length)o.dk=[...new Set(t.k.flatMap(k=>analyzer.analyze(k).terms))].join(' ');delete o.f;delete o.k;return o;};
+  const shards={calculateur:{file:'/leo/calculateur.json',knowledge:true,vocab:vocabOf(calcTopics.flatMap(t=>[t.q,...t.f,...(t.k||[])]))},vehicules:{file:'/leo/vehicules.json',vocab:vocab.vehicules},armes:{file:'/leo/armes.json'},monde:{file:'/leo/monde.json'},lieux:{file:'/leo/lieux.json',vocab:vocab.lieux,packed:['id','name','region','st','image','real','proof','nt']},catalogues:{file:'/leo/catalogues.json',vocab:vocab.catalogues},passages:{file:'/leo/passages.json'}};
+- /* sections missions, activites, radios, animaux : un morceau de questions par section (chargé quand une question en parle, comme le calculateur) ; son vocabulaire vient des mots-clés de ses questions, sans les mots courants des sujets du noyau (« combien », « comment », « argent »…) : une question générale ne le charge pas, et chaque question de la section le charge */
++ /* sections missions, activites, radios, animaux, codes, trophees, online : un morceau de questions par section (chargé quand une question en parle, comme le calculateur) ; son vocabulaire vient des mots-clés de ses questions, sans les mots courants des sujets du noyau (« combien », « comment », « argent »…) : une question générale ne le charge pas, et chaque question de la section le charge */
+  const dfCore=new Map();for(const t of knowledge)for(const w of new Set(vocabOf([t.q,...(t.f||[]),...(t.k||[])])))dfCore.set(w,(dfCore.get(w)||0)+1);
+  for(const [sec,list] of Object.entries(sectionTopics)){const v=vocabOf(list.flatMap(t=>t.k||[])).filter(w=>(dfCore.get(w)||0)<=8);for(const t of list)for(const f of [t.q,...(t.f||[])])if(!vocabOf([f]).some(w=>v.includes(w)))throw Error('Section '+sec+' : la formulation « '+f+' » ne charge pas son morceau (mots-clés trop courants)');shards[sec]={file:'/leo/'+sec+'.json',knowledge:true,vocab:v};}
+  const core={schemaVersion:2,checkedAt:DEFAULT_DATE,release,categories,tools:defs.tools,definitions,faq,texts:deepTx(defs.texts),templates:deepTx(defs.templates),suggestions:deepTx(defs.suggestions),help:helpMap,offtopic:defs.offtopic,lexique:compactLex,seqNames,official:officialLinks,knowledge:coreTopics.map(stripTheme),names,shards};
+diff --git a/outils/langues/de/leo-pivot.json b/outils/langues/de/leo-pivot.json
+index d20f6df6..3c3c969e 100644
+--- a/outils/langues/de/leo-pivot.json
++++ b/outils/langues/de/leo-pivot.json
+@@ -5633,6 +5633,16 @@
+ ["sendernamen", "noms de stations"],
+ ["geleakten radiosender", "radios des fuites"],
+ ["geleakten sender", "stations des fuites"],
+-["welche tiere", "quels animaux"]
++["welche tiere", "quels animaux"],
++["trophaenliste", "liste des trophees"],
++["trophaen", "trophees"],
++["trophae", "trophee"],
++["verpassbare trophaen", "trophees manquables"],
++["verpassbare", "manquables"],
++["verpassbar", "manquable"],
++["online trophaen", "trophees en ligne"],
++["unendlich geld", "argent infini"],
++["unendliches geld", "argent infini"],
++["nach gta 6 weiter", "continue apres gta 6"]
+ ]
+ }
+diff --git a/outils/langues/de/section-jouer.json b/outils/langues/de/section-jouer.json
+index f7690bf0..12a8e08c 100644
+--- a/outils/langues/de/section-jouer.json
++++ b/outils/langues/de/section-jouer.json
+@@ -1,5 +1,5 @@
+ {
+- "_note": "Assemblage des sections missions, activites, radios : libellés du groupe « Jouer » quand il réunit les trois sections (menu « Explorer » et pied de page), en allemand. Les fichiers section-<id>.json gardent la forme à une seule section.",
+- "<1>Jouer</1><2>Missions</2><3>Activités annexes</3><4>Radios et musique</4>": "<1>Spiele</1><2>Missionen</2><3>Nebenaktivitäten</3><4>Radio und Musik</4>",
+- "<1>Missions</1><2>Activités annexes</2><3>Radios et musique</3>": "<1>Missionen</1><2>Nebenaktivitäten</2><3>Radio und Musik</3>"
++ "_note": "Assemblage des sections missions, activites, radios, codes, trophees, online : libellés du groupe « Jouer » quand il réunit les six sections (menu « Explorer » et pied de page), en allemand. Les fichiers section-<id>.json gardent la forme à une seule section.",
++ "<1>Jouer</1><2>Missions</2><3>Activités annexes</3><4>Radios et musique</4><5>Codes de triche</5><6>Trophées et succès</6><7>GTA Online</7>": "<1>Spiele</1><2>Missionen</2><3>Nebenaktivitäten</3><4>Radio und Musik</4><5>Cheatcodes</5><6>Trophäen und Erfolge</6><7>GTA Online</7>",
++ "<1>Missions</1><2>Activités annexes</2><3>Radios et musique</3><4>Codes de triche</4><5>Trophées et succès</5><6>GTA Online</6>": "<1>Missionen</1><2>Nebenaktivitäten</2><3>Radio und Musik</3><4>Cheatcodes</4><5>Trophäen und Erfolge</5><6>GTA Online</6>"
+ }
+diff --git a/outils/langues/en/leo-pivot.json b/outils/langues/en/leo-pivot.json
+index 20cb6975..126c3c50 100644
+--- a/outils/langues/en/leo-pivot.json
++++ b/outils/langues/en/leo-pivot.json
+@@ -6396,6 +6396,34 @@
+   [
+    "leaked stations",
+    "stations des fuites"
++  ],
++  [
++   "missable trophies",
++   "trophees manquables"
++  ],
++  [
++   "missable trophy",
++   "trophee manquable"
++  ],
++  [
++   "missable achievements",
++   "succes manquables"
++  ],
++  [
++   "missable",
++   "manquable"
++  ],
++  [
++   "phone numbers",
++   "numeros de telephone"
++  ],
++  [
++   "phone number",
++   "numero de telephone"
++  ],
++  [
++   "rated",
++   "pegi"
+   ]
+  ]
+ }
+diff --git a/outils/langues/en/section-jouer.json b/outils/langues/en/section-jouer.json
+index bcc16b2f..9fc49815 100644
+--- a/outils/langues/en/section-jouer.json
++++ b/outils/langues/en/section-jouer.json
+@@ -1,5 +1,5 @@
+ {
+- "_note": "Assemblage des sections missions, activites, radios : libellés du groupe « Jouer » quand il réunit les trois sections (menu « Explorer » et pied de page), en anglais. Les fichiers section-<id>.json gardent la forme à une seule section.",
+- "<1>Jouer</1><2>Missions</2><3>Activités annexes</3><4>Radios et musique</4>": "<1>Play</1><2>Missions</2><3>Side activities</3><4>Radio and music</4>",
+- "<1>Missions</1><2>Activités annexes</2><3>Radios et musique</3>": "<1>Missions</1><2>Side activities</2><3>Radio and music</3>"
++ "_note": "Assemblage des sections missions, activites, radios, codes, trophees, online : libellés du groupe « Jouer » quand il réunit les six sections (menu « Explorer » et pied de page), en anglais. Les fichiers section-<id>.json gardent la forme à une seule section.",
++ "<1>Jouer</1><2>Missions</2><3>Activités annexes</3><4>Radios et musique</4><5>Codes de triche</5><6>Trophées et succès</6><7>GTA Online</7>": "<1>Play</1><2>Missions</2><3>Side activities</3><4>Radio and music</4><5>Cheat codes</5><6>Trophies and achievements</6><7>GTA Online</7>",
++ "<1>Missions</1><2>Activités annexes</2><3>Radios et musique</3><4>Codes de triche</4><5>Trophées et succès</5><6>GTA Online</6>": "<1>Missions</1><2>Side activities</2><3>Radio and music</3><4>Cheat codes</4><5>Trophies and achievements</5><6>GTA Online</6>"
+ }
+diff --git a/outils/langues/es/_leo-pont.json b/outils/langues/es/_leo-pont.json
+index d206003c..95bb50c3 100644
+--- a/outils/langues/es/_leo-pont.json
++++ b/outils/langues/es/_leo-pont.json
+@@ -6810,4 +6810,9 @@
+ ["canta","chante"],
+ ["emisoras filtradas","stations des fuites"],
+ ["nombres de las emisoras","noms de stations"],
+-["que circulan","qui circulent"]]}
++["que circulan","qui circulent"],
++["lista de trofeos","liste des trophees"],
++["trofeos perdibles","trophees manquables"],
++["perdibles","manquables"],
++["perdible","manquable"],
++["playstation plus","abonnement playstation plus"]]}
+diff --git a/outils/langues/es/section-jouer.json b/outils/langues/es/section-jouer.json
+index 66068f3c..d5dc0f13 100644
+--- a/outils/langues/es/section-jouer.json
++++ b/outils/langues/es/section-jouer.json
+@@ -1,5 +1,5 @@
+ {
+- "_note": "Assemblage des sections missions, activites, radios : libellés du groupe « Jouer » quand il réunit les trois sections (menu « Explorer » et pied de page), en espagnol. Les fichiers section-<id>.json gardent la forme à une seule section.",
+- "<1>Jouer</1><2>Missions</2><3>Activités annexes</3><4>Radios et musique</4>": "<1>Jugar</1><2>Misiones</2><3>Actividades secundarias</3><4>Radios y música</4>",
+- "<1>Missions</1><2>Activités annexes</2><3>Radios et musique</3>": "<1>Misiones</1><2>Actividades secundarias</2><3>Radios y música</3>"
++ "_note": "Assemblage des sections missions, activites, radios, codes, trophees, online : libellés du groupe « Jouer » quand il réunit les six sections (menu « Explorer » et pied de page), en espagnol. Les fichiers section-<id>.json gardent la forme à une seule section.",
++ "<1>Jouer</1><2>Missions</2><3>Activités annexes</3><4>Radios et musique</4><5>Codes de triche</5><6>Trophées et succès</6><7>GTA Online</7>": "<1>Jugar</1><2>Misiones</2><3>Actividades secundarias</3><4>Radios y música</4><5>Trucos</5><6>Trofeos y logros</6><7>GTA Online</7>",
++ "<1>Missions</1><2>Activités annexes</2><3>Radios et musique</3><4>Codes de triche</4><5>Trophées et succès</5><6>GTA Online</6>": "<1>Misiones</1><2>Actividades secundarias</2><3>Radios y música</3><4>Trucos</4><5>Trofeos y logros</5><6>GTA Online</6>"
+ }
+diff --git a/outils/langues/it/_leo-pont.json b/outils/langues/it/_leo-pont.json
+index 28806cf8..2fbd6b89 100644
+--- a/outils/langues/it/_leo-pont.json
++++ b/outils/langues/it/_leo-pont.json
+@@ -14266,5 +14266,12 @@
+ ["canta","chante"],
+ ["nomi delle stazioni","noms de stations"],
+ ["che circolano","qui circulent"],
+-["radio dei leak","radios des leaks"]
++["radio dei leak","radios des leaks"],
++["lista trofei","liste des trophees"],
++["lista dei trofei","liste des trophees"],
++["trofei mancabili","trophees manquables"],
++["mancabili","manquables"],
++["mancabile","manquable"],
++["inserire un trucco","entrer un code de triche"],
++["trucco con il telefono","code de triche avec le telephone"]
+ ]}
+diff --git a/outils/langues/it/section-jouer.json b/outils/langues/it/section-jouer.json
+index 017bb6ac..632461ff 100644
+--- a/outils/langues/it/section-jouer.json
++++ b/outils/langues/it/section-jouer.json
+@@ -1,5 +1,5 @@
+ {
+- "_note": "Assemblage des sections missions, activites, radios : libellés du groupe « Jouer » quand il réunit les trois sections (menu « Explorer » et pied de page), en italien. Les fichiers section-<id>.json gardent la forme à une seule section.",
+- "<1>Jouer</1><2>Missions</2><3>Activités annexes</3><4>Radios et musique</4>": "<1>Giocare</1><2>Missioni</2><3>Attività secondarie</3><4>Radio e musica</4>",
+- "<1>Missions</1><2>Activités annexes</2><3>Radios et musique</3>": "<1>Missioni</1><2>Attività secondarie</2><3>Radio e musica</3>"
++ "_note": "Assemblage des sections missions, activites, radios, codes, trophees, online : libellés du groupe « Jouer » quand il réunit les six sections (menu « Explorer » et pied de page), en italien. Les fichiers section-<id>.json gardent la forme à une seule section.",
++ "<1>Jouer</1><2>Missions</2><3>Activités annexes</3><4>Radios et musique</4><5>Codes de triche</5><6>Trophées et succès</6><7>GTA Online</7>": "<1>Giocare</1><2>Missioni</2><3>Attività secondarie</3><4>Radio e musica</4><5>Trucchi</5><6>Trofei e obiettivi</6><7>GTA Online</7>",
++ "<1>Missions</1><2>Activités annexes</2><3>Radios et musique</3><4>Codes de triche</4><5>Trophées et succès</5><6>GTA Online</6>": "<1>Missioni</1><2>Attività secondarie</2><3>Radio e musica</3><4>Trucchi</4><5>Trofei e obiettivi</5><6>GTA Online</6>"
+ }
+diff --git a/outils/leo-knowledge.json b/outils/leo-knowledge.json
+index ad1461c4..c9ad3ca2 100644
+--- a/outils/leo-knowledge.json
++++ b/outils/leo-knowledge.json
+@@ -555,7 +555,10 @@
+     "c est quoi gta plus",
+     "gtaplus gta6",
+     "gta+ 30 jours",
+-    "gta + precommande"
++    "gta + precommande",
++    "a quoi sert le mois de gta+ offert",
++    "mois de gta+ offert avec la precommande",
++    "gta+ offert precommande"
+    ],
+    "k": [
+     "gta+",
+@@ -563,14 +566,19 @@
+     "abonnement",
+     "gta+ inclus"
+    ],
+-   "text": "D’après les boutiques, une précommande numérique inclut 30 jours d’abonnement GTA+. Rockstar n’a pas détaillé ce que GTA+ apportera dans GTA VI : vérifie les conditions sur la page d’achat.",
+-   "status": "Boutiques, à vérifier",
++   "text": "Une précommande numérique faite avant le 20 novembre 2026 donne un mois de GTA+. D’après l’assistance de Rockstar, ce mois sert dans le GTA Online actuel, celui de GTA V : à activer avant le 31 mars 2027 sur PS5, ou dans les 180 jours sur Xbox, puis renouvelé au prix normal si tu ne l’arrêtes pas. Rien n’est dit de GTA+ dans GTA VI.",
++   "status": "Officiel Rockstar (assistance)",
+    "links": [
++    {
++     "label": "Le mois de GTA+ offert",
++     "url": "/online/gta-online-actuel.html#gta-plus"
++    },
+     {
+      "label": "Tout ce qui s’achète",
+      "url": "/achats.html"
+     }
+-   ]
++   ],
++   "checkedAt": "2026-10-04"
+   },
+   {
+    "id": "physique",
+@@ -1441,7 +1449,10 @@
+     "jouer a plusieurs gta 6",
+     "gta 6 multi",
+     "gta6 online quand",
+-    "ya du online dans gta 6"
++    "ya du online dans gta 6",
++    "gta 6 online sortira quand",
++    "quand sortira gta 6 online",
++    "date de sortie de gta 6 online"
+    ],
+    "k": [
+     "gta online",
+@@ -1452,15 +1463,21 @@
+     "jouer a plusieurs",
+     "mode en ligne"
+    ],
+-   "text": "Rockstar n’a encore rien annoncé sur le mode en ligne de GTA VI. Le calculateur du site sert à préparer tes choix dans l’histoire ou en ligne, avec tes propres chiffres.",
+-   "status": "Non annoncé",
++   "text": "Rockstar n’a encore rien annoncé sur le mode en ligne de GTA VI, pas même une date : au 4 octobre 2026, le jeu est présenté comme une expérience solo, le 19 novembre sur PS5 et Xbox Series X|S. Le patron de Twitch a évoqué un multijoueur en 2027, sans confirmation de Rockstar. Take-Two dit continuer le GTA Online de GTA V après la sortie.",
++   "status": "Officiel Rockstar et Take-Two · aucun mode en ligne annoncé",
+    "links": [
++    {
++     "label": "L’espace GTA Online",
++     "url": "/online.html"
++    },
+     {
+      "label": "Ouvrir le calculateur",
+      "url": "/calculateurs.html"
+     }
+    ],
+-   "min": 1
++   "min": 1,
++   "checkedAt": "2026-10-04",
++   "source": "https://www.rockstargames.com/newswire/article/517oa135328155/grand-theft-auto-vi-pre-orders-begin-on-june-25"
+   },
+   {
+    "id": "police",
+@@ -2100,15 +2117,20 @@
+     "cheat",
+     "codes de triche"
+    ],
+-   "text": "Rockstar n’a rien annoncé sur les mods ni sur les codes de triche pour GTA VI.",
+-   "status": "Non annoncé",
++   "text": "Rockstar n’a rien annoncé sur les mods ni sur les codes de triche pour GTA VI (au 4 octobre 2026), et les listes « GTA 6 » qui circulent ne sont pas officielles. Dans GTA V, les codes se tapaient à la manette, au téléphone du jeu ou, sur PC, dans la console ; Rockstar précise qu’ils désactivaient les succès pour un temps.",
++   "status": "Non annoncé · règles de GTA V publiées par Rockstar",
+    "links": [
++    {
++     "label": "Les codes de triche",
++     "url": "/codes-de-triche.html"
++    },
+     {
+      "label": "Comment on vérifie",
+      "url": "/a-propos.html#comment-on-verifie"
+     }
+    ],
+-   "min": 1
++   "min": 1,
++   "checkedAt": "2026-10-04"
+   },
+   {
+    "id": "vr",
+diff --git a/outils/leo-langues.cjs b/outils/leo-langues.cjs
+index a1cea463..7f970857 100644
+--- a/outils/leo-langues.cjs
++++ b/outils/leo-langues.cjs
+@@ -71,7 +71,7 @@ function build(code, root, L, ctx) {
+     file = 'leo/' + f;
+     const o = { ...sh };
+     if (name === 'calculateur') o.knowledge = (sh.knowledge || []).map(topic);
+-    if (name !== 'calculateur' && Array.isArray(sh.knowledge)) o.knowledge = sh.knowledge.map(topic); /* sections missions, activites, radios, animaux : morceau de questions de chaque section (leo/<id>.json) */
++    if (name !== 'calculateur' && Array.isArray(sh.knowledge)) o.knowledge = sh.knowledge.map(topic); /* sections missions, activites, radios, animaux, codes, trophees, online : morceau de questions de chaque section (leo/<id>.json) */
+     if (Array.isArray(sh.proofs)) o.proofs = sh.proofs.map(p => T(p, 'preuve'));
+     if (Array.isArray(sh.labels)) o.labels = sh.labels.map(p => T(p, 'libellé'));
+     if (Array.isArray(sh.items)) {
+@@ -120,7 +120,7 @@ function build(code, root, L, ctx) {
+   {
+     const { JSDOM } = require('jsdom');
+     const flat = s => String(s ?? '').replace(/\s+/g, ' ').trim();
+-    const pages = lang.pages.filter(p => !p.includes('/') || /^(?:lieux|personnages|entreprises|demeures|planques|gangs|missions|activites|radios|animaux)\//.test(p)/* sections missions, activites, radios, animaux */).sort();
++    const pages = lang.pages.filter(p => !p.includes('/') || /^(?:lieux|personnages|entreprises|demeures|planques|gangs|missions|activites|radios|animaux|codes-de-triche|trophees|online)\//.test(p)/* sections missions, activites, radios, animaux, codes, trophees, online */).sort();
+     for (const file of pages) {
+       const f = path.join(root, dir, file); if (!fs.existsSync(f)) continue;
+       const html = (ctx.outputs && ctx.outputs.get(dir + '/' + file)) || fs.readFileSync(f, 'utf8');
+diff --git a/outils/regenerer.cjs b/outils/regenerer.cjs
+index 978904db..583a577e 100644
+--- a/outils/regenerer.cjs
++++ b/outils/regenerer.cjs
+@@ -2,6 +2,6 @@
+ 'use strict';
+ // Commande de maintenance, jamais une commande de build Vercel.
+ const {execFileSync}=require('node:child_process'),path=require('node:path'),root=path.resolve(__dirname,'..');
+-const steps=['gen-modele.cjs','final.js','gen.js','gen-armes.cjs','gen-armurerie.cjs','lore-gen.js','gen-missions.cjs'/* section missions */,'gen-activites.cjs'/* section activites */,'gen-radios.cjs'/* section radios */,'gen-animaux.cjs'/* section animaux */,'gen-acquisitions.cjs','gen-informations.cjs','gen-tuto.cjs','gen-achats.cjs','gen-carnets.cjs','sync-site.cjs','gen-leo.cjs','sync-site.cjs'];
++const steps=['gen-modele.cjs','final.js','gen.js','gen-armes.cjs','gen-armurerie.cjs','lore-gen.js','gen-missions.cjs'/* section missions */,'gen-activites.cjs'/* section activites */,'gen-radios.cjs'/* section radios */,'gen-animaux.cjs'/* section animaux */,'gen-codes.cjs'/* section codes */,'gen-trophees.cjs'/* section trophees */,'gen-online.cjs'/* section online */,'gen-acquisitions.cjs','gen-informations.cjs','gen-tuto.cjs','gen-achats.cjs','gen-carnets.cjs','sync-site.cjs','gen-leo.cjs','sync-site.cjs'];
+ for(const file of steps)execFileSync(process.execPath,[path.join(__dirname,file)],{cwd:root,stdio:'inherit'});
+ execFileSync(process.execPath,[path.join(__dirname,'gen-leo.cjs'),'--check'],{cwd:root,stdio:'inherit'});
+diff --git a/outils/site-shell.cjs b/outils/site-shell.cjs
+index 9290212c..97e5298b 100644
+--- a/outils/site-shell.cjs
++++ b/outils/site-shell.cjs
+@@ -8,7 +8,7 @@ const acquisition = JSON.parse(fs.readFileSync(path.join(__dirname, 'acquisition
+ const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+ 
+ const world = [['lieux.html', 'Lieux'], ['personnages.html', 'Personnages'], ['gangs.html', 'Gangs et factions'] /* v7.65 */, ['demeures.html', 'Demeures'], ['planques.html', 'Planques'], ['entreprises.html', 'Entreprises'], ['animaux.html', 'Animaux'] /* section animaux */, ['collectibles.html', 'Collectibles']];
+-const play = [['missions.html', 'Missions'] /* section missions */, ['activites.html', 'Activités annexes'] /* section activites */, ['radios.html', 'Radios et musique'] /* section radios */];
++const play = [['missions.html', 'Missions'] /* section missions */, ['activites.html', 'Activités annexes'] /* section activites */, ['radios.html', 'Radios et musique'] /* section radios */, ['codes-de-triche.html', 'Codes de triche'] /* section codes */, ['trophees.html', 'Trophées et succès'] /* section trophees */, ['online.html', 'GTA Online'] /* section online */];
+ // Menu « S’équiper » : seules les catégories marquées menu:true dans acquisitions.json (pas de doublon avec Véhicules,
+ // Planques ou Armurerie, pas de catégorie vide). Le hub « Tout ce qui s’achète » reste dans la barre (Achats) et le pied de page.
+ const shopping = acquisition.filter(c => c.menu && !c.alias).sort((a, b) => (a.menuOrder || 99) - (b.menuOrder || 99)).map(c => [c.route.slice(1), c.label]);
+@@ -28,7 +28,7 @@ function currentOf(file) {
+ }
+ function nav(file, prefix) {
+   const current = currentOf(file);
+-  const groups = [['Le monde', world], ['Jouer', play] /* sections missions, activites, radios */, ['S’équiper', shopping], ['Le site', info]];
++  const groups = [['Le monde', world], ['Jouer', play] /* sections missions, activites, radios, codes, trophees, online */, ['S’équiper', shopping], ['Le site', info]];
+   return '<ul>' + top.map(x => '<li>' + link(x, prefix, current) + '</li>').join('')
+     + '<li><details class="nav-more"><summary>Explorer</summary><div class="nav-more-panel">'
+     + groups.map(([label, list]) => '<div><strong>' + esc(label) + '</strong>' + list.map(x => link(x, prefix, current)).join('') + '</div>').join('')
+@@ -38,7 +38,7 @@ function footer(existing, prefix) {
+   const art = existing.match(/<svg class="foot-art"[\s\S]*?<\/svg>/)?.[0] || '';
+   const groups = [
+     ['Explorer', [['carte.html', 'Carte'], ['vehicules.html', 'Véhicules'], ['armes.html', 'Armurerie'], ...world]],
+-    ['Jouer', play] /* sections missions, activites, radios */,
++    ['Jouer', play] /* sections missions, activites, radios, codes, trophees, online */,
+     ['S’équiper', footShopping],
+     ['Outils et aide', [['calculateurs.html', 'Calculateur'], ['tuto.html', 'Tuto'], ['progression.html', 'Progression'], ...info]]
+   ];
+@@ -55,7 +55,7 @@ function footer(existing, prefix) {
+ const chipList = [['achats.html', 'Tout ce qui s’achète'], ['vehicules.html', 'Véhicules'], ['armes.html', 'Armurerie'],
+   ...acquisition.filter(c => !c.alias).map(c => [c.route.slice(1), c.label]),
+   ['progression.html#carnets', 'Mes carnets'], ['tuto.html#sources', 'Comprendre les statuts']];
+-const sectionPages = new Set([...world.map(x => x[0]), ...play.map(x => x[0]) /* sections missions, activites, radios */, ...acquisition.map(c => c.route.slice(1).split('#')[0]), 'vehicules.html', 'armes.html', 'achats.html', 'progression.html']);
++const sectionPages = new Set([...world.map(x => x[0]), ...play.map(x => x[0]) /* sections missions, activites, radios, codes, trophees, online */, ...acquisition.map(c => c.route.slice(1).split('#')[0]), 'vehicules.html', 'armes.html', 'achats.html', 'progression.html']);
+ function chips(file) {
+   if (!sectionPages.has(file)) return '';
+   const alias = acquisition.find(c => c.alias && c.route.slice(1) === file);
+@@ -95,7 +95,8 @@ const ENTRY = {
+   'logements.html': { q: 'Combien de temps pour t’offrir un logement ?', d: 'Aucun prix n’est publié : écris celui que tu imagines, ton argent et ce que tu gagnes par partie.', tool: 'purchase', type: 'housing', cta: 'Faire le calcul' },
+   'missions.html': { q: 'Une mission, ça rapporte combien à l’heure ?', d: 'Les gains des missions arrivent avec le jeu. Écris ce qu’une mission rapporterait, sa durée et ta part : le calculateur la compare à tes autres activités, à l’heure de jeu.', tool: 'activities', cta: 'Comparer mes activités' }, /* section missions */
+   'activites.html': { q: 'Une activité annexe, ça rapporte plus qu’une mission ?', d: 'Les gains arrivent avec le jeu. Écris ce qu’un braquage, une course ou une revente rapporterait, sa durée et ta part : le calculateur compare tes activités à l’heure de jeu.', tool: 'activities', cta: 'Comparer mes activités' }, /* section activites */
+-  'animaux.html': { q: 'La chasse, ça rapporte plus qu’une mission ?', d: 'Rockstar dit que la chasse rapporte, sans montant. Écris ce qu’une sortie te rapporterait et sa durée : le calculateur la compare à tes autres activités, à l’heure de jeu.', tool: 'activities', cta: 'Comparer mes activités' } /* section animaux */
++  'animaux.html': { q: 'La chasse, ça rapporte plus qu’une mission ?', d: 'Rockstar dit que la chasse rapporte, sans montant. Écris ce qu’une sortie te rapporterait et sa durée : le calculateur la compare à tes autres activités, à l’heure de jeu.', tool: 'activities', cta: 'Comparer mes activités' } /* section animaux */,
++  'online.html': { q: 'Une entreprise en ligne, ça vaut le coup ?', d: 'Aucun prix du jeu en ligne de GTA VI n’est publié. Écris ce qu’une entreprise coûterait et ce qu’elle rapporterait : le calculateur te dit en combien de temps elle se rembourse, sans rien mêler à tes chiffres de l’histoire.', tool: 'roi', cta: 'Est-ce que ça vaut le coup ?' } /* section online */
+ };
+ const ENTRY_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="5" y="3" width="14" height="18" rx="2"/><rect x="8" y="6" width="8" height="3" rx=".6"/><path d="M8.5 13h1M12 13h1M15.5 13h1M8.5 17h1M12 17h1"/><rect x="15" y="16" width="2" height="2" rx=".5" fill="currentColor" stroke="none"/></svg>';
+ function entryPages() { return Object.keys(ENTRY); }
+@@ -129,4 +130,4 @@ function placeEntry(html, file, prefix = '') {
+   if (/<section class="lk-outro"/.test(html)) return html.replace(/<section class="lk-outro"/, block + '\n<section class="lk-outro"');
+   return html.replace(/<\/main>/, block + '\n</main>');
+ }
+-module.exports = { nav, footer, top, world, play /* sections missions, activites, radios */, shopping, info, chips, placeChips, chipList, sectionPages, ENTRY, entry, placeEntry, entryPages };
++module.exports = { nav, footer, top, world, play /* sections missions, activites, radios, codes, trophees, online */, shopping, info, chips, placeChips, chipList, sectionPages, ENTRY, entry, placeEntry, entryPages };
+diff --git a/outils/sync-site.cjs b/outils/sync-site.cjs
+index 7e1cf653..8bd6b2dc 100644
+--- a/outils/sync-site.cjs
++++ b/outils/sync-site.cjs
+@@ -64,7 +64,7 @@ const mapData=JSON.parse(fs.readFileSync(rawPath,'utf8'));
+ for(const p of [...mapData.groupes,...mapData.lieux,...Object.values(mapData.enrichit)])for(const key of ['img','img2'])if(p[key]&&!available('carte.html',p[key]))delete p[key];
+ fs.writeFileSync('carte-gtadb.js','/* Generated from data/carte-gtadb-source.json. gtadb.org et ses contributeurs, CC BY 4.0; adapté pour Leonidakit. */\nwindow.LK_GTADB = '+JSON.stringify(mapData)+';\n');
+ 
+-const htmlFiles=[...fs.readdirSync('.').filter(x=>x.endsWith('.html')),...['armes','vehicules','lieux','personnages','entreprises','demeures','planques','gangs','carnets','missions'/* section missions */,'activites'/* section activites */,'radios'/* section radios */,'animaux'/* section animaux */].filter(d=>fs.existsSync(d)).flatMap(d=>fs.readdirSync(d).filter(f=>f.endsWith('.html')).map(f=>d+'/'+f))].sort();
++const htmlFiles=[...fs.readdirSync('.').filter(x=>x.endsWith('.html')),...['armes','vehicules','lieux','personnages','entreprises','demeures','planques','gangs','carnets','missions'/* section missions */,'activites'/* section activites */,'radios'/* section radios */,'animaux'/* section animaux */,'codes-de-triche'/* section codes */,'trophees'/* section trophees */,'online'/* section online */].filter(d=>fs.existsSync(d)).flatMap(d=>fs.readdirSync(d).filter(f=>f.endsWith('.html')).map(f=>d+'/'+f))].sort();
+ const canonicals=[];
+ for(const file of htmlFiles){let s=fs.readFileSync(file,'utf8');if(file.startsWith('google'))continue;const prefix=file==='404.html'?'/':file.includes('/')?'../':'';
+  if(s.includes('app.js')){
+@@ -121,7 +121,7 @@ for(const file of htmlFiles){let s=fs.readFileSync(file,'utf8');if(file.startsWi
+  if(!file.includes('/'))s=require('./site-shell.cjs').placeEntry(s,file,prefix);
+  fs.writeFileSync(file,s);
+ }
+-const urls=[...new Set(canonicals)].sort();for(const f of ['sitemap.xml','sitemap-fiches.xml']){const list=f==='sitemap-fiches.xml'?urls.filter(u=>/\/(armes|vehicules|lieux|personnages|entreprises|demeures|planques|gangs|missions|activites|radios|animaux)\//.test(u)):urls;/* sections missions, activites, radios, animaux : leurs dossiers dans sitemap-fiches.xml *//* section activites : activites/ dans sitemap-fiches.xml *//* section radios : radios/ dans sitemap-fiches.xml *//* section animaux : animaux/ dans sitemap-fiches.xml */fs.writeFileSync(f,'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+list.map(u=>'  <url><loc>'+esc(u)+'</loc></url>').join('\n')+'\n</urlset>\n');}
++const urls=[...new Set(canonicals)].sort();for(const f of ['sitemap.xml','sitemap-fiches.xml']){const list=f==='sitemap-fiches.xml'?urls.filter(u=>/\/(armes|vehicules|lieux|personnages|entreprises|demeures|planques|gangs|missions|activites|radios|animaux|codes-de-triche|trophees|online)\//.test(u)):urls;/* sections codes, trophees, online : codes-de-triche/, trophees/ et online/ dans sitemap-fiches.xml *//* sections missions, activites, radios, animaux : leurs dossiers dans sitemap-fiches.xml *//* section activites : activites/ dans sitemap-fiches.xml *//* section radios : radios/ dans sitemap-fiches.xml *//* section animaux : animaux/ dans sitemap-fiches.xml */fs.writeFileSync(f,'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+list.map(u=>'  <url><loc>'+esc(u)+'</loc></url>').join('\n')+'\n</urlset>\n');}
+ // Rebuild search terms from current names and aliases; exclude old retired pages.
+ // Une page devenue un simple renvoi (meta refresh) sort de l’index interne : sa cible y est déjà.
+ const redirectPage=u=>{const f=u.replace(/^\//,'').split('#')[0];return /\.html$/.test(f)&&!f.includes('/')&&fs.existsSync(f)&&/http-equiv="refresh"/.test(fs.readFileSync(f,'utf8'));};
+@@ -134,6 +134,12 @@ if(fs.existsSync('outils/missions-index.json'))index=index.concat(JSON.parse(fs.
+ if(fs.existsSync('outils/activites-index.json'))index=index.concat(JSON.parse(fs.readFileSync('outils/activites-index.json','utf8')));
+ /* section radios : hub et fiches de la section (outils/radios-index.json, écrit par outils/gen-radios.cjs) */
+ if(fs.existsSync('outils/radios-index.json'))index=index.concat(JSON.parse(fs.readFileSync('outils/radios-index.json','utf8')));
++/* section codes : page principale et fiches de catégorie (outils/codes-index.json, écrit par outils/gen-codes.cjs ; sans la page modèle) */
++if(fs.existsSync('outils/codes-index.json'))index=index.concat(JSON.parse(fs.readFileSync('outils/codes-index.json','utf8')));
++/* section trophees : page principale et fiches de méthode (outils/trophees-index.json, écrit par outils/gen-trophees.cjs ; sans la page modèle) */
++if(fs.existsSync('outils/trophees-index.json'))index=index.concat(JSON.parse(fs.readFileSync('outils/trophees-index.json','utf8')));
++/* section online : l’espace GTA Online et ses pages (outils/online-index.json, écrit par outils/gen-online.cjs) */
++if(fs.existsSync('outils/online-index.json'))index=index.concat(JSON.parse(fs.readFileSync('outils/online-index.json','utf8')));
+ /* Revue de conformité (v7.53) : chaque calcul et le business plan sont trouvables avec les mots du joueur, vers le bon outil. */
+ {const CALC=[['goal','Mon objectif : combien de temps pour mon but','objectif premier million combien de temps atteindre somme argent vise'],
+  ['purchase','Mes achats : est-ce que je peux l’acheter','acheter achat payer peux je acheter tresorerie frais obligatoires reserve deja possede'],
+diff --git a/outils/tests/a-propos-v744.test.cjs b/outils/tests/a-propos-v744.test.cjs
+index aae54ba2..811351ce 100644
+--- a/outils/tests/a-propos-v744.test.cjs
++++ b/outils/tests/a-propos-v744.test.cjs
+@@ -59,7 +59,7 @@ test('À propos : aucun nombre tapé à la main — les chiffres viennent des do
+   assert.equal(stat('vehicules'),c.window.LK_VEHICULES.length);assert.equal(stat('armes'),c.window.LK_ARMES.length);assert.equal(stat('lieux'),new Set(c.window.LK_PROGRESS_IDS.lieux).size);
+   assert.equal(stat('lignes'),C.FAMILIES.reduce((n,f)=>n+C.counts(f).n,0));assert.equal(stat('visuels'),Object.keys(medias).length);assert.equal(stat('leo'),leo.knowledge.length+Object.values(leo.shards||{}).filter(x=>x.knowledge).reduce((n,x)=>n+JSON.parse(read(x.file.slice(1))).knowledge.length,0))/* v7.45 : noyau + morceau calculateur */;
+   const tests=fs.readdirSync(path.join(root,'outils/tests')).filter(f=>f.endsWith('.test.cjs')).reduce((n,f)=>n+(read('outils/tests/'+f).match(/^\s*test\(/gm)||[]).length,0);assert.equal(stat('tests'),tests);
+-  const pages=fs.readdirSync(root).filter(f=>f.endsWith('.html')&&!f.startsWith('google')).length+['armes','vehicules','lieux','personnages','entreprises','demeures','planques','gangs','carnets','missions'/* section missions */,'activites'/* section activites */,'radios'/* section radios */,'animaux'/* section animaux */].reduce((n,x)=>n+fs.readdirSync(path.join(root,x)).filter(f=>f.endsWith('.html')).length,0);
++  const pages=fs.readdirSync(root).filter(f=>f.endsWith('.html')&&!f.startsWith('google')).length+['armes','vehicules','lieux','personnages','entreprises','demeures','planques','gangs','carnets','missions'/* section missions */,'activites'/* section activites */,'radios'/* section radios */,'animaux'/* section animaux */,'codes-de-triche'/* section codes */,'trophees'/* section trophees */,'online'/* section online */].reduce((n,x)=>n+fs.readdirSync(path.join(root,x)).filter(f=>f.endsWith('.html')).length,0);
+   assert.equal(stat('pages'),pages);
+   for(const b of d.querySelectorAll('.fig-n'))assert.equal(b.textContent.replace(/[  ]/g,''),b.dataset.count,'texte sans JS = valeur');
+   const acq=JSON.parse(read('outils/acquisitions.json'));const fr=iso=>new Intl.DateTimeFormat('fr-FR',{day:'numeric',month:'long',year:'numeric',timeZone:'UTC'}).format(new Date(iso+'T12:00:00Z'));
+diff --git a/outils/tests/coverage.test.cjs b/outils/tests/coverage.test.cjs
+index e2ff3d50..90f2b753 100644
+--- a/outils/tests/coverage.test.cjs
++++ b/outils/tests/coverage.test.cjs
+@@ -2,7 +2,7 @@
+ const test=require('node:test'),assert=require('node:assert/strict'),fs=require('fs'),path=require('path'),vm=require('vm');
+ const {JSDOM}=require('jsdom'),{load}=require('./runtime-helper.cjs');
+ const root=process.env.SITE_ROOT||path.resolve(__dirname,'../..');
+-const pages=[...fs.readdirSync(root).filter(f=>f.endsWith('.html')),...['vehicules','armes','lieux','personnages','entreprises','demeures','planques','gangs','missions'/* section missions */,'activites'/* section activites */,'radios'/* section radios */,'animaux'/* section animaux */].flatMap(dir=>fs.readdirSync(path.join(root,dir)).filter(f=>f.endsWith('.html')).map(f=>dir+'/'+f))];
++const pages=[...fs.readdirSync(root).filter(f=>f.endsWith('.html')),...['vehicules','armes','lieux','personnages','entreprises','demeures','planques','gangs','missions'/* section missions */,'activites'/* section activites */,'radios'/* section radios */,'animaux'/* section animaux */,'codes-de-triche'/* section codes */,'trophees'/* section trophees */,'online'/* section online */].flatMap(dir=>fs.readdirSync(path.join(root,dir)).filter(f=>f.endsWith('.html')).map(f=>dir+'/'+f))];
+ const ctx={window:{}};for(const file of ['vehicules-data.js','armes-data.js','carte-gtadb.js','search-index.js','assets-manifest.js','progression-data.js'])vm.runInNewContext(fs.readFileSync(path.join(root,file),'utf8'),ctx);
+ const docs=new Map();const errors=[];
+ function checkUrl(url,file){if(!url)return;const u=new URL(url,'https://www.leonidakit.com/'+file);if(u.origin!=='https://www.leonidakit.com')return;const rel=decodeURIComponent(u.pathname.slice(1))||'index.html';assert.ok(fs.existsSync(path.join(root,rel)),file+' → '+rel);if(!u.hash)return;if(u.hash.startsWith('#lieu='))assert.ok(ctx.window.LK_PROGRESS_IDS.lieux.includes(u.hash.slice(6)),file+' → '+u.hash);else if(!u.hash.includes('=')&&rel.endsWith('.html')){const d=docs.get(rel);if(d&&!d.getElementById(u.hash.slice(1))){const cat=u.hash.slice(1);assert.ok((rel==='vehicules.html'&&Object.hasOwn(ctx.window.LK_VEHICULES_CATS,cat))||(rel==='armes.html'&&Object.hasOwn(ctx.window.LK_ARMES_CATS,cat)),file+' → '+rel+u.hash);}}}
+diff --git a/outils/tests/donnees-publiees.test.cjs b/outils/tests/donnees-publiees.test.cjs
+index 1dc692d7..589ffe6c 100644
+--- a/outils/tests/donnees-publiees.test.cjs
++++ b/outils/tests/donnees-publiees.test.cjs
+@@ -67,7 +67,7 @@ test('CALC-13 : chaque phrase d’absence des pages est bien celle calculée (da
+  const typo=require(path.join(root,'outils/typographie.cjs'));
+  let n=0;for(const f of ['calculateurs.html','index.html']){const html=fs.readFileSync(path.join(root,f),'utf8');for(const m of html.matchAll(/data-lk-donnees="([a-zA-Z]+)"[^>]*>([\s\S]*?)<\/(?:span|div|p)>/g)){n++;assert.ok(ph[m[1]],f+' : clé '+m[1]);assert.equal(norm(m[2]),norm(typo.html('<p>'+ph[m[1]]+'</p>').replace(/<\/?p>/g,'')),f+' : '+m[1]);}}
+  assert.ok(n>=4,'au moins quatre phrases reliées');
+- const files=[...fs.readdirSync(root).filter(x=>/\.(html|js|json)$/.test(x)),...['armes','vehicules','lieux','entreprises','demeures','planques','gangs','carnets','leo','missions'/* section missions */,'activites'/* section activites */,'radios'/* section radios */,'animaux'/* section animaux */].flatMap(d=>fs.existsSync(path.join(root,d))?fs.readdirSync(path.join(root,d)).map(x=>d+'/'+x):[])].filter(x=>/\.(html|js|json)$/.test(x));
++ const files=[...fs.readdirSync(root).filter(x=>/\.(html|js|json)$/.test(x)),...['armes','vehicules','lieux','entreprises','demeures','planques','gangs','carnets','leo','missions'/* section missions */,'activites'/* section activites */,'radios'/* section radios */,'animaux'/* section animaux */,'codes-de-triche'/* section codes */,'trophees'/* section trophees */,'online'/* section online */].flatMap(d=>fs.existsSync(path.join(root,d))?fs.readdirSync(path.join(root,d)).map(x=>d+'/'+x):[])].filter(x=>/\.(html|js|json)$/.test(x));
+  for(const f of files){const c=fs.readFileSync(path.join(root,f),'utf8');assert.ok(!c.includes('{donnees:'),f+' : marqueur {donnees:…} resté dans un fichier généré');}
+  /* la page Achats et la FAQ À propos reflètent bien la phrase calculée */
+  const ach=norm(fs.readFileSync(path.join(root,'achats.html'),'utf8')),apr=norm(fs.readFileSync(path.join(root,'a-propos.html'),'utf8'));
+diff --git a/outils/tests/langues-helper.cjs b/outils/tests/langues-helper.cjs
+index b9ed3317..f5ce8e2d 100644
+--- a/outils/tests/langues-helper.cjs
++++ b/outils/tests/langues-helper.cjs
+@@ -45,7 +45,7 @@ const ALLOW = new Set(['léo', 'pokémon', 'café', 'résumé', 'décor', 'naïv
+ /* noms propres français cités tels quels (adresses, nom officiel d'une loi ou d'une autorité) et citations anglaises
+    gardées dans leur langue (propos de Rob Nelson) */
+ const PROPER = ['You’ll obtain outfits by completing missions or purchasing them from stores', 'Le Mans', 'De Hoop', 'De Havilland', 'Sedan de Ville', 'La Perle', 'La Mesa', 'Ctrl+Y', 'UH-1Y', 'Safari Y6', 'Commission Nationale de l’Informatique et des Libertés', 'Commission nationale de l’informatique et des libertés', 'loi Informatique et Libertés', 'Informatique et Libertés', 'rue de Salneuve', 'place de Fontenoy',
+-  'Stanier LE', 'La Quinta', 'Herzog and de Meuron', 'Y Vice City', 'SE280LC', 'mud parties', 'Strg+Y', 'Eau de Cologne', 'eau de cologne'];
++  'Stanier LE', 'La Quinta', 'Herzog and de Meuron', 'Y Vice City', 'SE280LC', 'mud parties', 'Strg+Y', 'Eau de Cologne', 'eau de cologne', 'Michael De Santa' /* section online */];
+ /* v7.62 (allemand) : mots outils français qui sont aussi des mots allemands (« du » = tu, « des » = génitif, « je » = chaque,
+    « Partie » = partie de jeu) et lettres accentuées qui appartiennent à l'allemand (trémas) */
+ const SAME_AS_FR = { de: new Set(['du', 'des', 'je', 'partie', 'quelle', 'arme']) };
+@@ -111,7 +111,12 @@ const EN_KEEP = {
+     'GTA 6 Extended Look, everything we learned',
+     'the whole map is three times larger than Red Dead Redemption 2',
+     'GTA 6 extended look, the actors fans think they recognise',
+-    'the first GTA 6 actor has confirmed his involvement'
++    'the first GTA 6 actor has confirmed his involvement',
++    'Will GTA 6 Have Cheat Codes? What We Know So Far', 'Unbeatable GTA 5 Cheats: Every Cheat Code Available for Xbox and PlayStation' /* section codes */,
++    'Will GTA 6 Have Achievements and Trophies?' /* section trophees */,
++    'GTA VI Gets Its ESRB Rating: Missing Label Confirms No Online Mode at Launch', 'GTA 6 is a ’singleplayer experience,’ GTA Online may be sold separately',
++    'Report: Rockstar Won’t Talk About GTA 6 Online Soon, Game Will Be Marketed as a Single-Player Experience',
++    'Will Your GTA Online Character Transfer to GTA 6? What Rockstar Has Confirmed' /* section online */
+   ],
+   /* noms de lieux réels (Floride, carte : « Reales Gegenstück », « (echter Name) ») et morceaux d'adresses réelles */
+   lieux: [
+diff --git a/outils/tests/performance-lot1.test.cjs b/outils/tests/performance-lot1.test.cjs
+index fa90903d..728e3001 100644
+--- a/outils/tests/performance-lot1.test.cjs
++++ b/outils/tests/performance-lot1.test.cjs
+@@ -6,7 +6,7 @@ const { load } = require('./runtime-helper.cjs');
+ const root = process.env.SITE_ROOT || path.resolve(__dirname, '../..');
+ const read = f => fs.readFileSync(path.join(root, f), 'utf8');
+ const walk = d => fs.readdirSync(path.join(root, d), { withFileTypes: true }).flatMap(x => x.isDirectory() ? walk(path.join(d, x.name)) : [path.join(d, x.name)]);
+-const pages = ['', 'armes', 'vehicules', 'lieux', 'personnages', 'entreprises', 'demeures', 'planques', 'gangs', 'carnets', 'missions' /* section missions */, 'activites' /* section activites */, 'radios' /* section radios */, 'animaux' /* section animaux */].flatMap(d => (d ? walk(d) : fs.readdirSync(root)).filter(f => f.endsWith('.html') && !path.basename(f).startsWith('google')));
++const pages = ['', 'armes', 'vehicules', 'lieux', 'personnages', 'entreprises', 'demeures', 'planques', 'gangs', 'carnets', 'missions' /* section missions */, 'activites' /* section activites */, 'radios' /* section radios */, 'animaux' /* section animaux */, 'codes-de-triche' /* section codes */, 'trophees' /* section trophees */, 'online' /* section online */].flatMap(d => (d ? walk(d) : fs.readdirSync(root)).filter(f => f.endsWith('.html') && !path.basename(f).startsWith('google')));
+ 
+ test('PERF-04 : aucune page ne télécharge l’index de recherche au chargement ; il est déclaré en différé, versionné, avec les lieux', () => {
+   let lazy = 0;
+diff --git a/outils/tests/regression.test.cjs b/outils/tests/regression.test.cjs
+index a1aa6eaf..7449e060 100644
+--- a/outils/tests/regression.test.cjs
++++ b/outils/tests/regression.test.cjs
+@@ -150,7 +150,7 @@ test('Every vehicle gets a distinct schematic',()=>{
+ // v7.11 : aucune fiche ne déclare un type dérivé de Product (Google exigerait prix, avis ou note, qui n'existent pas ici).
+ test('Structured data avoids Product-derived types',()=>{
+  const bad=/"@type":\s*"(Product|Vehicle|Car|Motorcycle|BusOrCoach|Offer|IndividualProduct|ProductModel)"/;
+- const dirs=['vehicules','armes','lieux','personnages','entreprises','demeures','planques','gangs','missions'/* section missions */,'activites'/* section activites */,'radios'/* section radios */,'animaux'/* section animaux */];
++ const dirs=['vehicules','armes','lieux','personnages','entreprises','demeures','planques','gangs','missions'/* section missions */,'activites'/* section activites */,'radios'/* section radios */,'animaux'/* section animaux */,'codes-de-triche'/* section codes */,'trophees'/* section trophees */,'online'/* section online */];
+  const files=[...dirs.flatMap(d=>fs.readdirSync(path.join(root,d)).filter(f=>f.endsWith('.html')).map(f=>d+'/'+f)),'index.html','vehicules.html','armes.html','carte.html'];
+  for(const f of files){const html=fs.readFileSync(path.join(root,f),'utf8');
+   for(const m of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)){
+diff --git a/style.css b/style.css
+index baa04b7f..1c66be93 100644
+--- a/style.css
++++ b/style.css
+@@ -3301,7 +3301,7 @@ a.ed-brand:hover,a.ed-brand:focus-visible{border-color:var(--ink);box-shadow:5px
+    sur sa rangée ; même largeur de carte que les rangées pleines. */
+ @media(min-width:960px){.lore-grid--five{grid-template-columns:repeat(6,minmax(0,1fr));}.lore-grid--five>*{grid-column:span 2;}.lore-grid--five>:nth-child(4){grid-column:2/span 2;}}
+ @media(min-width:640px) and (max-width:959px){.lore-grid--five{grid-template-columns:repeat(4,minmax(0,1fr));}.lore-grid--five>*{grid-column:span 2;}.lore-grid--five>:nth-child(5){grid-column:2/span 2;}}
+-/* sections missions, activites, radios : quatre groupes dans « Explorer » (Le monde, Jouer, S’équiper, Le site) et quatre colonnes au pied de page */
++/* sections missions, activites, radios, codes, trophees, online : quatre groupes dans « Explorer » (Le monde, Jouer, S’équiper, Le site) et quatre colonnes au pied de page */
+ @media(min-width:1081px){.nav-more-panel{width:min(1000px,calc(100vw - 48px));grid-template-columns:repeat(4,minmax(0,1fr))}.foot-cols{grid-template-columns:repeat(4,minmax(0,1fr))}}
+ @media(min-width:601px) and (max-width:1080px){.nav-more-panel{grid-template-columns:repeat(2,minmax(0,1fr))}}
+ @media(min-width:821px) and (max-width:1080px){.foot-cols{grid-template-columns:repeat(2,minmax(0,1fr))}}

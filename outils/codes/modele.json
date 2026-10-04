@@ -1,0 +1,28 @@
+{
+ "_note": "Section « Codes de triche » (section codes) : codes FICTIFS qui servent seulement à la page de démonstration du gabarit, codes-de-triche/modele.html (noindex, reliée d’aucun menu, hors plan du site, hors recherche, hors Léo). Les séquences sont volontairement artificielles et les numéros commencent par 0-000 : rien ici n’est un code de GTA VI ni d’un autre jeu.",
+ "bandeau": "Page de démonstration : ces codes sont inventés pour montrer le rendu et l’animation. Ce ne sont pas des codes de GTA VI, ni d’aucun autre jeu : ils ne marchent nulle part.",
+ "categorie": { "id": "modele", "label": "Catégorie de démonstration", "titre": "Codes de triche de démonstration", "lede": "Une fiche de catégorie telle qu’elle sera à la sortie, remplie de codes inventés : choisis ta console, regarde la séquence se taper, copie un numéro." },
+ "codes": [
+  {
+   "id": "fictif-armes", "effet": "Code fictif : un lot d’armes", "categorie": "armes",
+   "texte": "Effet inventé, pour voir une carte complète avec ses deux séquences.",
+   "ps5": ["l1", "l1", "l1", "l1", "r1", "r1"], "xbox": ["lb", "lb", "lb", "lb", "rb", "rb"], "telephone": "0-000-000-001",
+   "limites": { "texte": "trophées et succès coupés, sauvegarde possible (limites inventées).", "trophees": true, "sauvegarde": "Possible", "statut": "conf", "sources": [] },
+   "statut": "conf", "sources": []
+  },
+  {
+   "id": "fictif-vehicule", "effet": "Code fictif : un véhicule", "categorie": "vehicules",
+   "texte": "Effet inventé : la séquence est faite pour se voir, pas pour marcher.",
+   "ps5": ["triangle", "triangle", "triangle", "croix", "croix", "croix", "rond", "carre"], "xbox": ["y", "y", "y", "a", "a", "a", "b", "x"], "telephone": "0-000-000-002",
+   "limites": { "texte": "trophées et succès coupés (limites inventées).", "trophees": true, "sauvegarde": null, "statut": "conf", "sources": [] },
+   "statut": "conf", "sources": []
+  },
+  {
+   "id": "fictif-monde", "effet": "Code fictif : le temps qui change", "categorie": "monde",
+   "texte": "Effet inventé ; sa séquence fait le tour de la croix directionnelle.",
+   "ps5": ["haut", "droite", "bas", "gauche", "haut", "droite", "bas", "gauche", "r2", "l2"], "xbox": ["haut", "droite", "bas", "gauche", "haut", "droite", "bas", "gauche", "rt", "lt"], "telephone": null,
+   "limites": null,
+   "statut": "conf", "sources": []
+  }
+ ]
+}

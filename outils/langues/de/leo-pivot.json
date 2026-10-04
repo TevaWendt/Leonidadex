@@ -5633,6 +5633,16 @@
 ["sendernamen", "noms de stations"],
 ["geleakten radiosender", "radios des fuites"],
 ["geleakten sender", "stations des fuites"],
-["welche tiere", "quels animaux"]
+["welche tiere", "quels animaux"],
+["trophaenliste", "liste des trophees"],
+["trophaen", "trophees"],
+["trophae", "trophee"],
+["verpassbare trophaen", "trophees manquables"],
+["verpassbare", "manquables"],
+["verpassbar", "manquable"],
+["online trophaen", "trophees en ligne"],
+["unendlich geld", "argent infini"],
+["unendliches geld", "argent infini"],
+["nach gta 6 weiter", "continue apres gta 6"]
 ]
 }
