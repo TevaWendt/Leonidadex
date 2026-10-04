@@ -5612,6 +5612,27 @@
 ["gangverstecke", "repaires de gangs"],
 ["gangversteck", "repaire de gang"],
 ["verstecke der gangs", "repaires de gangs"],
-["verstecke von gangs", "repaires de gangs"]
+["verstecke von gangs", "repaires de gangs"],
+["kapitel", "chapitres"],
+["komplettlosung", "soluce"],
+["komplettloesung", "soluce"],
+["lukrativste", "la plus rentable"],
+["lukrativ", "rentable"],
+["mission gesperrt", "mission bloquee"],
+["gesperrte mission", "mission bloquee"],
+["schalte ich eine mission frei", "debloquer une mission"],
+["schaltet man eine mission frei", "debloquer une mission"],
+["nebenaktivitaten", "activites annexes"],
+["nebenaktivitaeten", "activites annexes"],
+["nebenaktivitat", "activite annexe"],
+["minispiele", "mini jeux"],
+["minispiel", "mini jeu"],
+["wer singt", "qui chante"],
+["singt", "chante"],
+["kursierenden sendernamen", "noms de stations qui circulent"],
+["sendernamen", "noms de stations"],
+["geleakten radiosender", "radios des fuites"],
+["geleakten sender", "stations des fuites"],
+["welche tiere", "quels animaux"]
 ]
 }

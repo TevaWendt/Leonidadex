@@ -1,0 +1,119 @@
+{
+ "_note": "Section radios : questions de test de Léo en allemand pour la section « Radios et musique » (radios, musique des trailers et de l’Extended Look, album officiel, stations des fuites). Rejoué par node outils/tests/leo-eval.cjs --lang de --questions=outils/tests/leo-questions-section-radios-de.json.",
+ "schemaVersion": 1,
+ "questions": [
+  {
+   "q": "welche radiosender gibt es in gta 6",
+   "expect": {
+    "topic": "radio"
+   },
+   "tags": [
+    "section-radios"
+   ]
+  },
+  {
+   "q": "liste der radiosender gta 6",
+   "expect": {
+    "topic": "radio"
+   },
+   "tags": [
+    "section-radios"
+   ]
+  },
+  {
+   "q": "wer singt im trailer 1",
+   "expect": {
+    "topic": "musique-trailer"
+   },
+   "tags": [
+    "section-radios"
+   ]
+  },
+  {
+   "q": "song aus trailer 2",
+   "expect": {
+    "topic": "musique-trailer"
+   },
+   "tags": [
+    "section-radios"
+   ]
+  },
+  {
+   "q": "musik im trailer 2 von gta 6",
+   "expect": {
+    "topic": "musique-trailer"
+   },
+   "tags": [
+    "section-radios"
+   ]
+  },
+  {
+   "q": "songs im extended look",
+   "expect": {
+    "topic": "radios-faq-1"
+   },
+   "tags": [
+    "section-radios"
+   ]
+  },
+  {
+   "q": "musik im extended look",
+   "expect": {
+    "topic": "radios-faq-1"
+   },
+   "tags": [
+    "section-radios"
+   ]
+  },
+  {
+   "q": "was ist gta vi the album",
+   "expect": {
+    "any": [
+     {
+      "entity": "album:gta-vi-the-album"
+     },
+     {
+      "topic": "radios-faq-2"
+     }
+    ]
+   },
+   "tags": [
+    "section-radios"
+   ]
+  },
+  {
+   "q": "offizielles album gta 6",
+   "expect": {
+    "any": [
+     {
+      "entity": "album:gta-vi-the-album"
+     },
+     {
+      "topic": "radios-faq-2"
+     }
+    ]
+   },
+   "tags": [
+    "section-radios"
+   ]
+  },
+  {
+   "q": "sind die kursierenden sendernamen bestätigt",
+   "expect": {
+    "topic": "radios-faq-3"
+   },
+   "tags": [
+    "section-radios"
+   ]
+  },
+  {
+   "q": "sind die geleakten radiosender echt",
+   "expect": {
+    "topic": "radios-faq-3"
+   },
+   "tags": [
+    "section-radios"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,95 @@
+{
+ "_note": "Section activites : questions de test de Léo en anglais pour la section « Activités annexes » (liste des activités, pêche, chasse, salle de sport, gains, braquages, vol de voitures, fiches). Rejoué par node outils/tests/leo-eval.cjs --lang en --questions=outils/tests/leo-questions-section-activites-en.json.",
+ "schemaVersion": 1,
+ "questions": [
+  {
+   "q": "what side activities are in gta 6",
+   "expect": {
+    "topic": "activites-faq-1"
+   },
+   "tags": [
+    "section-activites"
+   ]
+  },
+  {
+   "q": "gta 6 minigames",
+   "expect": {
+    "topic": "activites-faq-1"
+   },
+   "tags": [
+    "section-activites"
+   ]
+  },
+  {
+   "q": "can you fish in gta 6",
+   "expect": {
+    "topic": "activites-faq-2"
+   },
+   "tags": [
+    "section-activites"
+   ]
+  },
+  {
+   "q": "can you hunt in gta 6",
+   "expect": {
+    "topic": "activites-faq-3"
+   },
+   "tags": [
+    "section-activites"
+   ]
+  },
+  {
+   "q": "do side activities make money",
+   "expect": {
+    "topic": "activites-faq-4"
+   },
+   "tags": [
+    "section-activites"
+   ]
+  },
+  {
+   "q": "can you go to the gym",
+   "expect": {
+    "any": [
+     {
+      "topic": "poids"
+     },
+     {
+      "entity": "activite:salle-de-sport"
+     }
+    ]
+   },
+   "tags": [
+    "section-activites"
+   ]
+  },
+  {
+   "q": "can you rob stores",
+   "expect": {
+    "any": [
+     {
+      "topic": "braquer-magasins"
+     },
+     {
+      "topic": "braquage"
+     },
+     {
+      "topic": "hub-entreprises-3"
+     }
+    ]
+   },
+   "tags": [
+    "section-activites"
+   ]
+  },
+  {
+   "q": "how to steal a car in gta 6",
+   "expect": {
+    "topic": "vol-voiture"
+   },
+   "tags": [
+    "section-activites"
+   ]
+  }
+ ]
+}

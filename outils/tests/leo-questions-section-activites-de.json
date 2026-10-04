@@ -1,0 +1,95 @@
+{
+ "_note": "Section activites : questions de test de Léo en allemand pour la section « Activités annexes » (liste des activités, pêche, chasse, salle de sport, gains, braquages, vol de voitures, fiches). Rejoué par node outils/tests/leo-eval.cjs --lang de --questions=outils/tests/leo-questions-section-activites-de.json.",
+ "schemaVersion": 1,
+ "questions": [
+  {
+   "q": "welche nebenaktivitäten gibt es in gta 6",
+   "expect": {
+    "topic": "activites-faq-1"
+   },
+   "tags": [
+    "section-activites"
+   ]
+  },
+  {
+   "q": "minispiele gta 6",
+   "expect": {
+    "topic": "activites-faq-1"
+   },
+   "tags": [
+    "section-activites"
+   ]
+  },
+  {
+   "q": "kann man in gta 6 angeln",
+   "expect": {
+    "topic": "activites-faq-2"
+   },
+   "tags": [
+    "section-activites"
+   ]
+  },
+  {
+   "q": "kann man in gta 6 jagen",
+   "expect": {
+    "topic": "activites-faq-3"
+   },
+   "tags": [
+    "section-activites"
+   ]
+  },
+  {
+   "q": "bringen nebenaktivitäten geld",
+   "expect": {
+    "topic": "activites-faq-4"
+   },
+   "tags": [
+    "section-activites"
+   ]
+  },
+  {
+   "q": "kann man ins fitnessstudio gehen",
+   "expect": {
+    "any": [
+     {
+      "topic": "poids"
+     },
+     {
+      "entity": "activite:salle-de-sport"
+     }
+    ]
+   },
+   "tags": [
+    "section-activites"
+   ]
+  },
+  {
+   "q": "kann man läden ausrauben",
+   "expect": {
+    "any": [
+     {
+      "topic": "braquer-magasins"
+     },
+     {
+      "topic": "braquage"
+     },
+     {
+      "topic": "hub-entreprises-3"
+     }
+    ]
+   },
+   "tags": [
+    "section-activites"
+   ]
+  },
+  {
+   "q": "wie klaut man ein auto in gta 6",
+   "expect": {
+    "topic": "vol-voiture"
+   },
+   "tags": [
+    "section-activites"
+   ]
+  }
+ ]
+}

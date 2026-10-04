@@ -1,0 +1,86 @@
+/* Section « Missions et leurs solutions » (section missions) : hub missions.html, fiches missions/<id>.html et page de
+   démonstration missions/modele.html. Chargée par les pages de la section seulement. Mouvement : apparition du site
+   (.reveal, .rise de common.js) et survol des cartes (transform) ; rien d’autre ne bouge, tout est coupé avec
+   prefers-reduced-motion: reduce. */
+.missions-kicker{font:700 var(--fs-kicker)/1.2 var(--font-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--coral-text);margin:0 0 6px;}
+.missions-lede{color:var(--ink-soft);max-width:var(--measure);margin:6px 0 18px;}
+.missions-note{color:var(--ink-soft);max-width:var(--measure);margin-top:16px;font-size:.94rem;}
+.missions-histoire,.missions-sequences,.missions-edition,.missions-liste{padding-top:clamp(30px,4vw,52px);}
+
+/* ---------- l’histoire ---------- */
+.missions-recit{max-width:var(--measure);margin-top:10px;}
+.missions-recit p{margin:0 0 12px;font-size:1.04rem;}
+.missions-recit-src{display:flex;align-items:center;gap:8px;font-size:.84rem;}
+.missions-meca{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:14px;margin-top:22px;}
+.missions-meca-item{position:relative;padding:16px 16px 14px;border:2px solid var(--ink);border-radius:var(--radius);background:var(--paper);box-shadow:var(--shadow-soft);}
+.missions-meca-ico{display:inline-grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--amber);color:var(--ink);margin-bottom:8px;}
+.missions-meca-ico svg{width:22px;height:22px;}
+.missions-meca-item h3{font-size:1.08rem;margin:0 0 6px;}
+.missions-meca-item p{margin:0 0 8px;font-size:.95rem;}
+.missions-st{display:inline-flex;flex-wrap:wrap;align-items:center;gap:6px 8px;font-size:.82rem;}
+.missions-src{display:inline-flex;gap:4px;}
+.missions-src a{display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 5px;border:1px solid var(--ink-soft);border-radius:999px;font:700 .7rem/1 var(--font-mono);color:var(--ink);}
+.missions-src a:hover,.missions-src a:focus-visible{background:var(--ink);color:var(--paper);}
+.missions-src-txt{font-size:.8rem;color:var(--ink-soft);overflow-wrap:anywhere;}
+
+/* ---------- séquences montrées ---------- */
+.missions-seqs{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr));gap:16px;}
+.missions-seq{display:flex;flex-direction:column;border:2px solid var(--ink);border-radius:var(--radius);background:var(--paper);overflow:hidden;box-shadow:var(--shadow-soft);}
+.missions-seq-fig{margin:0;border-bottom:2px solid var(--ink);}
+.missions-seq-fig img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;}
+.missions-seq-body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:8px;flex:1;}
+.missions-seq-body h3{font-size:1.1rem;line-height:1.25;margin:0;}
+.missions-seq-body p{margin:0;}
+.missions-seq-when{display:flex;align-items:center;gap:8px;font-size:.86rem;color:var(--ink-soft);}
+.missions-seq-when b{color:var(--ink);}
+.missions-seq-n{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--ink);color:var(--paper);font:700 .76rem/1 var(--font-mono);}
+.missions-seq-links{display:flex;flex-wrap:wrap;gap:6px;}
+.missions-chip{display:inline-flex;align-items:center;padding:3px 10px;border:1.5px solid var(--ink);border-radius:999px;font-size:.82rem;font-weight:700;background:var(--paper-2);transition:transform var(--c-fast) var(--c-ease-control);}
+.missions-chip:hover{transform:translateY(-1px);}
+.missions-chip--carte::before{content:'';width:8px;height:8px;margin-right:6px;border-radius:50%;background:var(--coral);}
+
+/* ---------- Édition Ultimate ---------- */
+.missions-ed{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:16px;}
+.missions-ed-item{padding:16px;border:2px solid var(--ink);border-radius:var(--radius);background:linear-gradient(160deg,var(--paper),var(--paper-2));box-shadow:var(--shadow-amber);}
+.missions-ed-item h3{margin:0 0 6px;font-size:1.12rem;overflow-wrap:anywhere;}
+.missions-ed-item p{margin:0 0 8px;}
+.missions-ed-links{display:flex;flex-wrap:wrap;gap:8px 16px;}
+.missions-ed-links a{color:var(--coral-text);font-weight:700;text-decoration:underline;text-underline-offset:3px;}
+
+/* ---------- le guide ---------- */
+.missions-vide{max-width:var(--measure);padding:16px 18px;border:2px dashed var(--ink-soft);border-radius:var(--radius);background:var(--paper-2);margin:8px 0 18px;}
+.missions-chap{font-size:var(--fs-h3);margin:18px 0 10px;}
+.missions-types-t{font-size:1.05rem;margin:18px 0 10px;}
+.missions-types{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr));gap:10px;}
+.missions-types li{position:relative;display:flex;flex-direction:column;gap:4px;padding:12px 44px 12px 14px;border:1.5px solid var(--ink);border-radius:var(--radius-s);background:var(--paper);}
+.missions-types li span{font-size:.9rem;color:var(--ink-soft);}
+.missions-types li i{position:absolute;right:12px;top:12px;display:grid;place-items:center;min-width:26px;height:26px;border-radius:999px;background:var(--ink);color:var(--paper);font:700 .76rem/1 var(--font-mono);font-style:normal;}
+
+/* ---------- fiche d’une mission ---------- */
+.missions-bref{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:10px;margin:8px 0 0;}
+.missions-bref>div{padding:10px 12px;border:1.5px solid var(--rule);border-radius:var(--radius-s);background:var(--paper);}
+.missions-bref dt{font:700 .72rem/1.3 var(--font-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:4px;}
+.missions-bref dd{margin:0;display:flex;flex-wrap:wrap;align-items:center;gap:6px;}
+.missions-obj,.missions-med{margin:6px 0 0;padding-left:1.3em;}
+.missions-obj li,.missions-med li{margin:4px 0;}
+.missions-fac{display:inline-block;margin-left:6px;padding:1px 8px;border:1px dashed var(--ink);border-radius:999px;font-size:.74rem;font-weight:700;}
+.missions-etapes{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:10px;}
+.missions-etapes li{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border:2px solid var(--ink);border-radius:var(--radius-s);background:var(--paper);}
+.missions-etape-n{flex:none;display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--amber);font:800 .9rem/1 var(--font-mono);}
+.missions-etapes h3{margin:0 0 4px;font-size:1rem;}
+.missions-etapes p{margin:0;}
+.missions-vide-fig{aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;color:var(--paper);}
+
+/* case « mission terminée » (missions.js) */
+.missions-fait{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-top:14px;padding:10px 14px;border:2px solid var(--ink);border-radius:var(--radius-s);background:var(--paper-2);}
+.missions-fait input{width:22px;height:22px;accent-color:var(--coral);}
+.missions-fait label{font-weight:800;cursor:pointer;}
+.missions-fait-note{font-size:.82rem;color:var(--ink-soft);}
+.missions-fait.is-done{background:#e6f4ee;border-color:#1f6b4a;}
+
+/* page de démonstration */
+.missions-demo{margin:18px 0 0;padding:12px 16px;border:2px dashed var(--coral);border-radius:var(--radius-s);background:#fff2ee;font-weight:700;color:var(--coral-deep);}
+.missions-fiche-src{--ed-line:var(--rule);--ed-card:var(--paper-2);--ed-soft:var(--ink-soft);--ed-fg:var(--ink);padding-top:8px;}
+.missions-fiche-src .ed-srcs{margin-top:12px;}
+
+@media (prefers-reduced-motion:reduce){.missions-chip{transition:none!important;}.missions-chip:hover{transform:none;}}

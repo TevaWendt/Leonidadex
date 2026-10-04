@@ -1,0 +1,58 @@
+{
+ "_note": "Section animaux : questions de test de Léo en anglais pour la section « Animaux » (faune annoncée, alligators, chasse, chiens, animaux marins, fiches). Rejoué par node outils/tests/leo-eval.cjs --lang en --questions=outils/tests/leo-questions-section-animaux-en.json.",
+ "schemaVersion": 1,
+ "questions": [
+  {
+   "q": "are there animals in gta 6",
+   "expect": {
+    "topic": "animaux"
+   },
+   "tags": [
+    "section-animaux"
+   ]
+  },
+  {
+   "q": "are there alligators in gta 6",
+   "expect": {
+    "topic": "animaux-faq-1"
+   },
+   "tags": [
+    "section-animaux"
+   ]
+  },
+  {
+   "q": "what animals can you hunt",
+   "expect": {
+    "topic": "animaux-faq-2"
+   },
+   "tags": [
+    "section-animaux"
+   ]
+  },
+  {
+   "q": "are there sharks in gta 6",
+   "expect": {
+    "any": [
+     {
+      "topic": "animaux-faq-3"
+     },
+     {
+      "entity": "animal:faune-marine"
+     }
+    ]
+   },
+   "tags": [
+    "section-animaux"
+   ]
+  },
+  {
+   "q": "can you have a dog in gta 6",
+   "expect": {
+    "topic": "animaux"
+   },
+   "tags": [
+    "section-animaux"
+   ]
+  }
+ ]
+}

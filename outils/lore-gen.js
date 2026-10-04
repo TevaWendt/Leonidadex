@@ -12,6 +12,7 @@ const DP=require('./donnees-publiees.cjs');
 const MONDE=require('./hubs-monde.cjs'),DOUBLONS=require('./hubs-doublons.cjs');
 const esc=t=>String(t==null?'':t).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 const ED=JSON.parse(fs.readFileSync('outils/editorial.json','utf8'));
+const EDA=JSON.parse(fs.readFileSync('outils/editorial-animaux.json','utf8'));ED.animals=EDA.fiches;HUB_NOTES.animaux=EDA.note;/* section animaux : fiches et texte d’en-tête du hub Animaux (outils/editorial-animaux.json) */
 /* v7.43 (lot 6) : ateliers de personnalisation (fiches entreprises reliées à personnalisations.html). */
 const ATELIERS=(JSON.parse(fs.readFileSync('outils/catalogues/editorial.json','utf8')).customizations.ateliers||{groups:[]}).groups.flatMap(g=>g.items).filter(a=>a.business);
 const MED=JSON.parse(fs.readFileSync('outils/medias-officiels.json','utf8'));
@@ -56,6 +57,7 @@ const SECTIONS={
     lede:"Motards d’Ambrosia, gang de Southside, braqueurs de Raul, trafiquants des Keys et forces de l’ordre : les groupes que Rockstar a montrés, et ce qui reste à confirmer.",
     desc:'Les gangs et factions de GTA VI : Final Chapter MC, PTT Youngin$, San4San, l’équipe de Raul, le réseau de Brian et la police, avec leurs sources.'},
 };
+SECTIONS.animals=EDA.section;/* section animaux : animaux.html et animaux/<id>.html, après les gangs (statut, sources et gros plans ajoutés par outils/gen-animaux.cjs) */
 const byId={};for(const k of Object.keys(SECTIONS))for(const x of ED[k])byId[x.id]=Object.assign({sec:k},x);
 {const dupes=DOUBLONS.check({editorial:ED,extra:[...Object.values(HUB_NOTES),...Object.values(SECTIONS).flatMap(S=>[S.lede,S.desc,S.title])]});
  if(dupes.length)throw new Error('Hubs du monde : phrases identiques aux fiches ou à un autre hub, corrige outils/editorial-hubs.json :\n'+dupes.map(x=>'  '+x.hub+' ↔ '+x.ou+' : « '+x.phrase+' »').join('\n'));}
@@ -67,7 +69,7 @@ const ENR=GT.enrichit||{};const LORE_BY_MAP={};for(const k of Object.keys(ED))fo
 const placeImage=id=>{const e=ENR[id];if(e&&e.img&&/^img\/officiel\//.test(e.img)&&fs.existsSync(e.img))return {variants:[{src:'/'+e.img.replace('-1280.webp','-480.webp'),w:480,h:270}]};const l=LORE_BY_MAP[id];if(l&&l.variants)return l;return mapPhoto(id);};
 const mapPhoto=id=>{const q=GTBY[id];if(!q||!q.img||!/\.webp$/.test(q.img)||!fs.existsSync(q.img.replace(/^\//,'')))return null;return {variants:[{src:'/'+q.img.replace(/^\//,''),w:q.imgW||960,h:q.imgH||540}],titre:q.n.replace(/&#x27;/g,"'").replace(/&quot;/g,'"').replace(/&amp;/g,'&'),alt:q.imgAlt||null};};
 const visual=x=>media(x)||(x.mapId?mapPhoto(x.mapId):null);
-const RELATED=[['regions','Régions'],['characters','Personnages'],['factions','Gangs et factions'],['residences','Demeures'],['hideouts','Planques'],['businesses','Entreprises']];
+const RELATED=[['regions','Régions'],['characters','Personnages'],['factions','Gangs et factions'],['residences','Demeures'],['hideouts','Planques'],['businesses','Entreprises'],['animals','Animaux']/* section animaux */];
 const kindOf=(x,S)=>x&&x.kind||(S?S.one:'Leonida');/* v7.65 : étiquette propre à une fiche (« Club de motards »), sinon celle de la section */
 const gtName=id=>{const q=GTBY[id];return q?q.n.replace(/&#x27;/g,"'").replace(/&quot;/g,'"').replace(/&amp;/g,'&').replace(/ \(nom réel\)$/,''):id;};
 const LOCAL={'vice-city':'Vice City','leonida-keys':'Leonida Keys','grassrivers':'Grassrivers','port-gellhorn':'Port Gellhorn','ambrosia':'Ambrosia','mount-kalaga':'Mount Kalaga','ocean-beach':'Ocean Beach','little-cuba':'Little Cuba','tisha-wocka':'Tisha-Wocka','vc-port':'VC Port','key-lento':'Key Lento','allied-crystal':'Allied Crystal','leonida-penitentiary':'Pénitencier de Leonida','ptt-youngin':'PTT Youngin$','vice-dale':'Comté de Vice-Dale','leonard-county':'Comté de Leonard'};
@@ -88,7 +90,7 @@ const EXPLORE=pre=>`<section class="shell reveal lk-explore">
   <div class="lk-links rise"><a class="lk-link" href="${pre}carte.html"><img src="/img/officiel/leonida-keys-01-480.webp" width="480" height="270" alt="" loading="lazy" decoding="async"><span><b>La carte</b><i>2 547 lieux repérés, à cocher</i></span></a><a class="lk-link" href="${pre}vehicules.html"><img src="/img/officiel/one-eyed-willie-s-mod-shop-01-480.webp" width="480" height="270" alt="" loading="lazy" decoding="async"><span><b>Les 302 véhicules</b><i>Fiches, photos officielles et schémas</i></span></a><a class="lk-link" href="${pre}collectibles.html"><img src="/img/officiel/classic-car-collection-04-480.webp" width="480" height="270" alt="" loading="lazy" decoding="async"><span><b>Collectibles</b><i>La collection de Wyman et le carnet</i></span></a></div>
 </section>`;
 const recapOf=(x,S)=>{const f=(x&&x.facts||[]).map(t=>String(t).trim().replace(/\s*[.;]$/,''));if(!f.length)return '';
-  const intro={regions:'Ce qu’il faut retenir de cette région',characters:'Ce qu’il faut retenir de ce personnage',businesses:'Ce qu’il faut retenir de cette adresse',residences:'Ce qu’il faut retenir de ce lieu',hideouts:'Ce qu’il faut retenir de ce lieu',factions:'Ce qu’il faut retenir de ce groupe'}[S]||'À retenir';
+  const intro={regions:'Ce qu’il faut retenir de cette région',characters:'Ce qu’il faut retenir de ce personnage',businesses:'Ce qu’il faut retenir de cette adresse',residences:'Ce qu’il faut retenir de ce lieu',hideouts:'Ce qu’il faut retenir de ce lieu',factions:'Ce qu’il faut retenir de ce groupe',animals:'L’essentiel de cette fiche'/* section animaux */}[S]||'À retenir';
   return `<section class="shell reveal lk-recap"><h2 class="sec-h">${intro}</h2><p class="fiche-txt rise">${esc(f.join('. ')+'.')} ${esc(x.name)} ${({f:'est reliée',mp:'sont reliés',fp:'sont reliées'})[x&&x.accord]||'est relié'} aux fiches voisines ci-dessous : les fiches se complètent avec le jeu, et ce résumé se mettra à jour avec elles.</p></section>`;};
 const metaDesc=t=>{t=String(t||'').replace(/\s+/g,' ').trim();if(t.length<=158)return t;const ph=t.split(/(?<=[.!?])\s+/);let d='';for(const q of ph){if(d&&(d+' '+q).length>158)break;d=d?d+' '+q:q;}return d.length<=158&&d.length>=60?d:t.slice(0,155).replace(/\s+\S*$/,'')+'…';};
 function page({p,title,desc,canonical,ogImg,body,crumbs,hub,RECAP='',ld=''}){desc=metaDesc(desc);
@@ -226,8 +228,8 @@ ${S.hub==='planques'?'<!-- lot-d-garages:start --><!-- lot-d-garages:end -->\n':
 ${calcBridge}${factionBridge}
 <section class="shell lore-body">
   ${x.texte?`<div class="lore-texte reveal"><h2>Présentation</h2><p class="rise">${esc(x.texte)}</p></div>`:''}
-  ${x.contexte?`<div class="lore-texte reveal"><h2>${{regions:'Dans les visuels et dans l’histoire',characters:'Dans l’histoire',businesses:'Ce que montrent les visuels',residences:'Ce qu’on en sait',hideouts:'Ce qu’on en sait',factions:'Ce que montrent les médias officiels'}[key]||'Dans l’histoire'}</h2><p class="rise">${esc(x.contexte)}</p></div>`:''}
-  ${x.pratique?`<div class="lore-texte reveal"><h2>${{regions:'Sur le terrain',characters:'Sur les captures et dans les fiches',businesses:'Dans le jeu',residences:'Dans le jeu',hideouts:'Dans le jeu',factions:'Ce qu’on sait pour le jeu'}[key]||'Dans le jeu'}</h2><p class="rise">${esc(x.pratique)}</p></div>`:''}
+  ${x.contexte?`<div class="lore-texte reveal"><h2>${{regions:'Dans les visuels et dans l’histoire',characters:'Dans l’histoire',businesses:'Ce que montrent les visuels',residences:'Ce qu’on en sait',hideouts:'Ce qu’on en sait',factions:'Ce que montrent les médias officiels',animals:'Ce que montrent les images'/* section animaux */}[key]||'Dans l’histoire'}</h2><p class="rise">${esc(x.contexte)}</p></div>`:''}
+  ${x.pratique?`<div class="lore-texte reveal"><h2>${{regions:'Sur le terrain',characters:'Sur les captures et dans les fiches',businesses:'Dans le jeu',residences:'Dans le jeu',hideouts:'Dans le jeu',factions:'Ce qu’on sait pour le jeu',animals:'Ce que le jeu en fait'/* section animaux */}[key]||'Dans le jeu'}</h2><p class="rise">${esc(x.pratique)}</p></div>`:''}
   ${facts}
   ${(relBlocks||vehBlock||armBlock||mapBlock)?`<div class="lore-related"><h2>En lien</h2>${relBlocks}${vehBlock}${armBlock}${mapBlock}</div>`:''}
 </section>${galleryBlock(x,S)}`;

@@ -11,6 +11,7 @@ const M=require(path.join(root,'outils/hubs-monde.cjs'));
 const D=require(path.join(root,'outils/hubs-doublons.cjs'));
 const shell=require(path.join(root,'outils/site-shell.cjs'));
 const ED=JSON.parse(read('outils/editorial.json')),HUBS=JSON.parse(read('outils/editorial-hubs.json'));
+HUBS.animaux=M.DATA.animaux;Object.assign(HUBS.sources,M.DATA.sources);/* section animaux : zone de animaux.html (outils/editorial-animaux.json, chargée par hubs-monde.cjs) contrôlée comme les autres */
 const HUB_FILES={lieux:'lieux.html',personnages:'personnages.html',demeures:'demeures.html',planques:'planques.html',entreprises:'entreprises.html',gangs:'gangs.html'};
 const N={lieux:ED.regions.length,personnages:ED.characters.length,demeures:ED.residences.length,planques:ED.hideouts.length,entreprises:ED.businesses.length,gangs:ED.factions.length};
 const ld=d=>[...d.querySelectorAll('script[type="application/ld+json"]')].map(s=>JSON.parse(s.textContent));
@@ -104,7 +105,7 @@ test('Encart calculateur : un composant unique (site-shell.cjs), même position 
 test('Léo : les FAQ des hubs du monde sont dans l’index (après les sujets rédigés), avec lien vers la FAQ du hub, et répondent',()=>{
   const idx=JSON.parse(read('leo-index.json'));
   const hubTopics=idx.knowledge.filter(x=>/^hub-/.test(x.id));
-  assert.equal(hubTopics.length,M.HUBS.reduce((n,h)=>n+HUBS[h].faq.length,0));
+  assert.equal(hubTopics.length,M.HUBS.filter(h=>h!=='animaux'/* section animaux : FAQ dans le morceau leo/animaux.json */).reduce((n,h)=>n+HUBS[h].faq.length,0));
   const firstHub=idx.knowledge.findIndex(x=>/^hub-/.test(x.id));assert.ok(idx.knowledge.slice(0,firstHub).every(x=>!/^hub-/.test(x.id)));
   for(const t of hubTopics){assert.match(t.links[0].url,/^\/(lieux|personnages|demeures|planques|entreprises|gangs)\.html#faq$/);assert.ok(t.text.length<=900);}
   const core=require(path.join(root,'outils/tests/leo-complet.cjs')).fullCore(root)/* v7.45 : noyau + morceaux */;

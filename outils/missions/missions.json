@@ -1,0 +1,38 @@
+{
+ "_note": "Section « Missions et leurs solutions » (section missions) : le modèle de données des missions de GTA VI, lu par outils/gen-missions.cjs. Une entrée par mission dont le NOM est publié (jeu, vidéo ou texte de Rockstar) : aucune au 4 octobre 2026, donc aucune fiche. Chaque information porte son statut (officiel, vu, comm, conf) et ses sources (identifiants de outils/missions/hub.json → sources). Chaque valeur chiffrée suit le schéma des valeurs publiées du site (outils/donnees-publiees.cjs) : { value, status, source, verifiedAt, unit }, status parmi official, verified, estimated, unverified, unknown ; official et verified exigent source et verifiedAt. Quand une mission a un gain (recompenses.argent) ET une durée (duree) publiés, gen-missions.cjs l’ajoute aux activités du calculateur (calculateurs-activites.js, identifiant « mission-<id> »). Page de démonstration du gabarit : outils/missions/modele.json → missions/modele.html (noindex).",
+ "_schema": {
+  "id": "identifiant de la fiche (lettres, chiffres, tirets) : missions/<id>.html",
+  "nom": "nom affiché en jeu, tel quel",
+  "statutNom": "officiel | vu (d’où vient le nom)",
+  "type": "un identifiant de « types »",
+  "chapitre": "{ numero, titre, statut, sources } ou null",
+  "ordre": "nombre : place dans l’ordre conseillé (null = non publié)",
+  "resume": "une phrase (160 signes au plus), sert de description",
+  "personnages": "identifiants de outils/editorial.json → characters (liens vers personnages/<id>.html)",
+  "lieux": "identifiants de régions (lieux/<id>.html)",
+  "carte": "[{ id, nom }] : repères de la carte (carte.html#lieu=<id>)",
+  "gangs": "identifiants de outils/editorial.json → factions (gangs/<id>.html)",
+  "deblocage": "{ texte, statut, sources }",
+  "objectifs": "[{ texte, facultatif }]",
+  "medailles": "[{ texte, statut, sources }] : objectifs facultatifs ou médailles s’il y en a",
+  "recompenses": "{ argent: valeur publiée, vehicules: [identifiants de vehicules-data.js], armes: [identifiants de armes-data.js], proprietes: [textes], deblocages: [textes], statut, sources }",
+  "duree": "valeur publiée, unit « min »",
+  "joueurs": "nombre de joueurs (1 = solo)",
+  "manquable": "{ value: true | false | null, statut, sources }",
+  "solution": "[{ titre, texte }] : la solution pas à pas",
+  "astuces": "[textes]",
+  "media": "identifiants de outils/medias-officiels.json",
+  "calc": "{ tool: activities | order | goal | session } : outil du calculateur proposé sur la fiche (sinon selon le type)",
+  "sources": "identifiants de sources",
+  "statut": "officiel | vu | comm | conf (la fiche dans son ensemble)",
+  "aliases": "autres noms tapés par les joueurs (Léo, recherche)"
+ },
+ "types": [
+  { "id": "histoire", "label": "Histoire principale", "texte": "Les missions de l’histoire de Jason et Lucia, chapitre par chapitre.", "calc": "session" },
+  { "id": "secondaire", "label": "Mission secondaire", "texte": "Les missions proposées par d’autres personnages, à côté de l’histoire.", "calc": "activities" },
+  { "id": "braquage", "label": "Braquage", "texte": "Les coups préparés : banques, bijouteries, commerces, repaires.", "calc": "activities" },
+  { "id": "rencontre", "label": "Rencontre", "texte": "Les rencontres et événements croisés en route.", "calc": "activities" },
+  { "id": "edition", "label": "Contenu d’édition", "texte": "Les contenus rangés dans une édition du jeu.", "calc": "goal" }
+ ],
+ "missions": []
+}

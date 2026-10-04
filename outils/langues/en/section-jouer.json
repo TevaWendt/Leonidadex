@@ -1,0 +1,5 @@
+{
+ "_note": "Assemblage des sections missions, activites, radios : libellés du groupe « Jouer » quand il réunit les trois sections (menu « Explorer » et pied de page), en anglais. Les fichiers section-<id>.json gardent la forme à une seule section.",
+ "<1>Jouer</1><2>Missions</2><3>Activités annexes</3><4>Radios et musique</4>": "<1>Play</1><2>Missions</2><3>Side activities</3><4>Radio and music</4>",
+ "<1>Missions</1><2>Activités annexes</2><3>Radios et musique</3>": "<1>Missions</1><2>Side activities</2><3>Radio and music</3>"
+}

@@ -1,0 +1,284 @@
+{
+ "_note": "Section « Activités annexes » (section activites) : une fiche activites/<id>.html par activité qui a assez de matière sourcée (texte ou propos de Rockstar, et au moins une image officielle). Lu par outils/gen-activites.cjs. Les sources sont celles de outils/activites/hub.json. « gain » et « duree » suivent le schéma des valeurs publiées de outils/donnees-publiees.cjs ({ value, status, source, verifiedAt, unit }) : null tant que Rockstar n’a rien publié. Les autres activités restent des lignes de la page principale.",
+ "_schema": {
+  "id": "identifiant (minuscules, tirets) = nom du fichier activites/<id>.html",
+  "famille": "crime | nature | ville (familles de outils/activites/hub.json)",
+  "statut": "officiel | vu | comm | conf (statut le plus sûr de l’activité elle-même)",
+  "resume": "160 signes au plus (description de la page)",
+  "montre": "[{ texte, statut, sources }] : ce que Rockstar a dit ou montré, phrase par phrase",
+  "ou": "{ texte, statut, sources, regions: [id de outils/editorial.json], carte: [{ id du lieu de la carte, nom }] }",
+  "besoin": "[{ texte, statut, sources, liens: [{ href, label }], vehicules: [id], armes: [id] }]",
+  "rapporte": "{ texte, statut, sources, gain: valeur publiée ou null ($), duree: valeur publiée ou null (min) }",
+  "confirmer": "[{ q, etat }]",
+  "liens": "[{ href, label, texte }] : pages du site qui couvrent déjà une partie (on y renvoie au lieu de répéter)",
+  "rel": "{ characters, regions, businesses, hideouts, factions } : fiches du monde liées",
+  "calc": "{ tool: activities | session | roi, type, q, d, cta } : encart du calculateur"
+ },
+ "activites": [
+  {
+   "id": "braquages-commerces",
+   "nom": "Braquer un commerce",
+   "famille": "crime",
+   "statut": "officiel",
+   "tagline": "Seul ou à deux, de la supérette à la bijouterie.",
+   "resume": "Braquer un commerce dans GTA VI : ce que Rockstar a montré, seul ou à deux, les cibles mieux gardées et le butin à revendre.",
+   "media": "jason-and-lucia-02",
+   "alt": "Jason, masque à tête de mort, et Lucia, armés devant la porte ouverte d’une chambre forte où volent des billets, visuel officiel Rockstar Games",
+   "galerie": [
+    { "media": "extended-look-stockade", "alt": "Hommes masqués autour d’un fourgon blindé ouvert sous un viaduc, motos garées à côté, photogramme de l’Extended Look", "legende": "Un fourgon blindé attaqué, dans l’Extended Look" }
+   ],
+   "montre": [
+    { "texte": "Le Trailer 1 montre, vers 1:16, le duo qui braque un magasin Uncle Jack’s Liquor, visage couvert, avant de s’enfuir.", "statut": "vu", "sources": ["rs-videos", "gtawiki-trailers"] },
+    { "texte": "L’Extended Look enchaîne des braquages de stations-service, bandana sur le visage ; vers 17:57, Lucia cache son arme dans son dos avant d’entrer dans une boutique.", "statut": "vu", "sources": ["gamesradar-live", "engadget-missed"] },
+    { "texte": "Rob Nelson, de Rockstar North, confirme à Famitsu qu’on braque un commerce seul ou avec l’autre personnage, et que bijouteries et petites banques sont mieux gardées que les boutiques.", "statut": "officiel", "sources": ["famitsu-nelson", "gtavice-famitsu"] },
+    { "texte": "Il ajoute que détruire les caméras de surveillance permet de repartir sans être vu.", "statut": "officiel", "sources": ["gtavice-famitsu"] },
+    { "texte": "Un photogramme de l’Extended Look montre des hommes masqués autour d’un fourgon blindé ouvert ; rien ne dit si c’est une activité libre ou une scène de l’histoire.", "statut": "vu", "sources": ["rs-extended"] }
+   ],
+   "ou": { "texte": "Rockstar n’a pas publié la liste des commerces qu’on peut braquer. Le seul identifié à l’image est l’Uncle Jack’s Liquor du Trailer 1, que la carte des joueurs place à Port Gellhorn.", "statut": "vu", "sources": ["rs-videos", "gtadb"], "regions": ["port-gellhorn"], "carte": [{ "id": "g-L313", "nom": "Uncle Jack’s Liquor" }] },
+   "besoin": [
+    { "texte": "Une arme : pistolets et fusils dans les vidéos.", "statut": "vu", "sources": ["rs-videos"], "liens": [{ "href": "armes.html", "label": "L’armurerie" }] },
+    { "texte": "De quoi cacher ton visage : masques dans le Trailer 1, bandana dans l’Extended Look.", "statut": "vu", "sources": ["rs-videos", "gamesradar-live"] },
+    { "texte": "Un complice si tu veux : Jason et Lucia peuvent braquer ensemble.", "statut": "officiel", "sources": ["famitsu-nelson"] }
+   ],
+   "rapporte": { "texte": "Du liquide, et parfois un butin à revendre : les garages ont une cache pour les objets volés, qu’un receleur rachète moins cher qu’ils ne valent. Ni le contenu d’une caisse ni le taux de cette décote ne sont publiés.", "statut": "officiel", "sources": ["vgc-editions", "famitsu-nelson"], "gain": null, "duree": null },
+   "confirmer": [
+    { "q": "La liste des commerces", "etat": "Presque toutes les boutiques, selon des aperçus de presse ; pas de liste officielle." },
+    { "q": "Le butin", "etat": "Aucun montant, pour une supérette comme pour une banque." },
+    { "q": "Les fourgons blindés", "etat": "Vus dans une vidéo ; rien ne dit qu’on peut les attaquer librement." }
+   ],
+   "liens": [
+    { "href": "gangs.html", "label": "Piller un repaire de gang", "texte": "Le pillage des repaires, gang par gang." },
+    { "href": "planques.html", "label": "Planques et garages", "texte": "Où déposer le butin avant de le revendre." },
+    { "href": "entreprises.html#faq", "label": "La FAQ des entreprises", "texte": "Les commerces de Leonida et ce qu’on y fait." }
+   ],
+   "rel": { "characters": ["jason", "lucia"], "regions": ["port-gellhorn"] },
+   "calc": { "tool": "activities", "q": "Un braquage, ça rapporte plus qu’une mission ?", "d": "Aucun butin n’est publié. Écris ce qu’un braquage rapporterait, sa durée, tes frais et ta part : le calculateur le compare à tes autres activités, à l’heure de jeu.", "cta": "Comparer mes activités" },
+   "aliases": ["braquer un commerce", "braquage de commerce", "braquer une superette", "braquer une station service", "braquer une bijouterie"],
+   "sources": ["rs-videos", "gtawiki-trailers", "gamesradar-live", "engadget-missed", "famitsu-nelson", "gtavice-famitsu", "rs-extended", "gtadb", "vgc-editions"]
+  },
+  {
+   "id": "vol-de-voitures",
+   "nom": "Voler une voiture",
+   "famille": "crime",
+   "statut": "officiel",
+   "tagline": "Une vitre, un slim jim ou une clé clonée.",
+   "resume": "Voler une voiture dans GTA VI : les trois méthodes montrées, les outils à obtenir, alarmes et traceurs, et la revente au receleur.",
+   "media": "trailer-1-vehicles-071",
+   "alt": "Jason au volant d’une berline rouge cabossée, vue de profil sur une route de Leonida, photogramme du Trailer 1 vers 1:11",
+   "galerie": [],
+   "montre": [
+    { "texte": "Vers 6:05 de l’Extended Look, devant une Declasse Tulip, deux choix s’affichent : le slim jim ou la vitre brisée.", "statut": "vu", "sources": ["gamespot-vol-voiture"] },
+    { "texte": "Rob Nelson prévient que certaines voitures garées restent fermées tant que tu n’as pas obtenu les outils pour y entrer : fini le démarrage d’un simple bouton.", "statut": "officiel", "sources": ["kotaku-vol", "gamesradar-outils-vol"] },
+    { "texte": "Les voitures récentes demandent un cloneur de clé : briser la vitre ne suffit pas à les démarrer, d’après les comptes rendus de la démonstration.", "statut": "vu", "sources": ["gamespot-vol-voiture"] },
+    { "texte": "À Famitsu, Rob Nelson ajoute que les voitures de luxe ont une alarme et un traceur, qu’un receleur peut s’en charger, et que le Pay ’n’ Spray indique ce qu’une voiture volée vaut à la revente.", "statut": "officiel", "sources": ["famitsu-nelson", "gtavice-famitsu"] }
+   ],
+   "ou": { "texte": "Sur les voitures garées dans la rue, d’après Rob Nelson. Aucun Pay ’n’ Spray ni aucun receleur n’est encore placé sur la carte.", "statut": "officiel", "sources": ["kotaku-vol"], "regions": [], "carte": [] },
+   "besoin": [
+    { "texte": "Un slim jim pour les modèles anciens, un cloneur de clé pour les récents : ces outils s’obtiennent en avançant dans l’histoire.", "statut": "vu", "sources": ["gamespot-vol-voiture", "kotaku-vol"], "vehicules": ["declasse-tulip"] },
+    { "texte": "Pour une voiture de luxe, un receleur qui s’occupe de l’alarme et du traceur.", "statut": "officiel", "sources": ["gtavice-famitsu"], "liens": [{ "href": "personnalisations.html", "label": "Personnalisations" }] }
+   ],
+   "rapporte": { "texte": "La revente à un receleur, avec la valeur que donne le Pay ’n’ Spray avant. Aucun prix de revente n’est publié.", "statut": "officiel", "sources": ["gtavice-famitsu"], "gain": null, "duree": null },
+   "confirmer": [
+    { "q": "Quel outil pour quelle voiture", "etat": "Aucune liste des modèles qui demandent un slim jim ou un cloneur." },
+    { "q": "Le scan avant le vol", "etat": "Un aperçu décrit un scan du modèle et de sa valeur, et une revente qui baisse avec les dégâts." },
+    { "q": "Garder une voiture volée", "etat": "Ce qu’il faut pour la ranger dans un garage n’est pas détaillé." }
+   ],
+   "liens": [
+    { "href": "vehicules.html#conduite", "label": "Conduire et voler", "texte": "La conduite et le vol, sur la page des véhicules." },
+    { "href": "personnalisations.html", "label": "Personnalisations", "texte": "Ce qu’on change sur une voiture, et où." },
+    { "href": "planques.html", "label": "Planques et garages", "texte": "Les garages et leur cache pour le butin." }
+   ],
+   "rel": { "characters": ["jason"] },
+   "calc": { "tool": "activities", "q": "Revendre une voiture volée, ça vaut une mission ?", "d": "Aucun prix de revente n’est publié. Écris ce qu’une voiture te rapporterait chez le receleur et le temps qu’il faut : le calculateur la compare à tes autres activités.", "cta": "Comparer mes activités" },
+   "aliases": ["vol de voitures", "voler des voitures", "slim jim", "cloneur de cle"],
+   "sources": ["gamespot-vol-voiture", "kotaku-vol", "gamesradar-outils-vol", "famitsu-nelson", "gtavice-famitsu"]
+  },
+  {
+   "id": "peche",
+   "nom": "La pêche",
+   "famille": "nature",
+   "statut": "officiel",
+   "tagline": "Aussi poussée que dans Red Dead Redemption 2, mais on relâche tout.",
+   "resume": "La pêche dans GTA VI : où Rockstar la place, ce qu’en dit Rob Nelson, pourquoi les prises sont relâchées et ce qu’elle débloque.",
+   "media": "jason-duval-03",
+   "alt": "Jason pêche à la canne à l’arrière d’un bateau, Cal regarde aux jumelles derrière lui, capture officielle Rockstar Games",
+   "galerie": [],
+   "montre": [
+    { "texte": "La page officielle de Mount Kalaga National Park en fait un coin de pêche, de chasse et de tout-terrain.", "statut": "officiel", "sources": ["rs-vi"] },
+    { "texte": "Une capture officielle montre Jason qui pêche depuis un bateau, Cal aux jumelles à ses côtés.", "statut": "vu", "sources": ["rs-screens"] },
+    { "texte": "Rob Nelson, reçu par le créateur TGG à Rockstar North, promet une pêche aussi poussée que dans Red Dead Redemption 2.", "statut": "officiel", "sources": ["notebookcheck-peche"] },
+    { "texte": "Les prises sont toujours relâchées : les garder « n’allait pas avec ce jeu », dit-il. La pêche est liée à des défis, à des collectibles et à des moments de l’histoire.", "statut": "officiel", "sources": ["notebookcheck-peche", "beebom-peche-chasse"] }
+   ],
+   "ou": { "texte": "Mount Kalaga, d’après Rockstar ; en mer depuis un bateau, d’après la capture. Aucun coin de pêche n’est encore placé sur la carte.", "statut": "officiel", "sources": ["rs-vi", "rs-screens"], "regions": ["mount-kalaga"], "carte": [] },
+   "besoin": [
+    { "texte": "Une canne à pêche, vue sur la capture ; un bateau pour pêcher au large.", "statut": "vu", "sources": ["rs-screens"], "liens": [{ "href": "bateaux.html", "label": "Bateaux et jet-skis" }] }
+   ],
+   "rapporte": { "texte": "Rien à la revente : le poisson ne se garde pas. La pêche fait avancer des défis et des collectibles, dont les récompenses ne sont pas publiées.", "statut": "officiel", "sources": ["notebookcheck-peche"], "gain": null, "duree": null },
+   "confirmer": [
+    { "q": "Les espèces", "etat": "Aucune liste de poissons ; Game Informer annonce plus de 170 espèces animales en tout." },
+    { "q": "Les défis", "etat": "Leur nombre et ce qu’ils rapportent ne sont pas publiés." },
+    { "q": "Les meilleurs coins", "etat": "Ils seront placés sur la carte avec le jeu." }
+   ],
+   "liens": [
+    { "href": "collectibles.html", "label": "Collectibles", "texte": "La pêche mène à des collectibles : la page suit leur méthode." },
+    { "href": "lieux/mount-kalaga.html", "label": "Mount Kalaga National Park", "texte": "La région que Rockstar associe à la pêche." }
+   ],
+   "rel": { "characters": ["jason", "cal"], "regions": ["mount-kalaga"] },
+   "calc": { "tool": "session", "q": "Combien de parties pour finir tes défis de pêche ?", "d": "Leur nombre n’est pas publié. Écris ton temps de jeu par partie et le temps que tu veux y passer : le calculateur te dit en combien de sessions tu y arrives.", "cta": "Compter mes parties" },
+   "aliases": ["peche", "pecher", "canne a peche"],
+   "sources": ["rs-vi", "rs-screens", "notebookcheck-peche", "beebom-peche-chasse"]
+  },
+  {
+   "id": "chasse",
+   "nom": "La chasse",
+   "famille": "nature",
+   "statut": "officiel",
+   "tagline": "Un terrain de chasse au nord, et une prise qui se revend.",
+   "resume": "La chasse dans GTA VI : Mount Kalaga, ce qu’elle rapporte selon Rob Nelson, les animaux rares à pister et ce qui reste à publier.",
+   "media": "mount-kalaga-national-park-03",
+   "alt": "Deux chasseurs armés de fusils avancent dans un sous-bois du Mount Kalaga National Park, l’un en gilet orange, capture officielle Rockstar Games",
+   "galerie": [
+    { "media": "grassrivers-01", "alt": "Trois habitants de Grassrivers armés, assis près d’un hydroglisseur, un alligator mort à leurs pieds, capture officielle Rockstar Games", "legende": "À Grassrivers, un alligator rapporté au ponton" }
+   ],
+   "montre": [
+    { "texte": "Rockstar présente Mount Kalaga comme un terrain de chasse de premier choix.", "statut": "officiel", "sources": ["rs-vi"] },
+    { "texte": "Les captures montrent des chasseurs armés en sous-bois, et à Grassrivers des habitants armés près d’un alligator mort ; aucun texte officiel ne parle de chasse pour cette région.", "statut": "vu", "sources": ["rs-screens"] },
+    { "texte": "D’après les propos de Rob Nelson rapportés par le créateur TGG, la chasse rapporte de l’argent : on revend ce qu’on récupère.", "statut": "officiel", "sources": ["gamespot-peche-chasse", "beebom-peche-chasse"] },
+    { "texte": "Selon TGG, c’est un personnage que Jason connaît qui fait découvrir la chasse ; Rockstar ne l’a pas présenté.", "statut": "comm", "sources": ["beebom-peche-chasse"] },
+    { "texte": "Game Informer annonce plus de 170 espèces ; certaines, rares, à découvrir ou légendaires, se pistent.", "statut": "officiel", "sources": ["gameinformer-faune"] }
+   ],
+   "ou": { "texte": "Mount Kalaga, d’après Rockstar. Grassrivers est montré avec des chasseurs, sans texte officiel.", "statut": "officiel", "sources": ["rs-vi", "rs-screens"], "regions": ["mount-kalaga", "grassrivers"], "carte": [] },
+   "besoin": [
+    { "texte": "Une arme longue : les chasseurs des captures portent des fusils.", "statut": "vu", "sources": ["rs-screens"], "liens": [{ "href": "armes.html", "label": "L’armurerie" }] }
+   ],
+   "rapporte": { "texte": "De l’argent, en revendant ce que tu récupères. Aucun prix n’est publié, ni pour une prise courante ni pour un animal rare.", "statut": "officiel", "sources": ["gamespot-peche-chasse"], "gain": null, "duree": null },
+   "confirmer": [
+    { "q": "Le gibier", "etat": "Les espèces qu’on peut chasser ne sont pas listées." },
+    { "q": "Les règles", "etat": "Saisons, permis ou zones protégées : rien n’est dit." },
+    { "q": "Le personnage qui l’ouvre", "etat": "Seul TGG en parle ; il n’a ni nom ni visage officiels." }
+   ],
+   "liens": [
+    { "href": "lieux/mount-kalaga.html", "label": "Mount Kalaga National Park", "texte": "Le terrain de chasse présenté par Rockstar." },
+    { "href": "lieux/grassrivers.html", "label": "Grassrivers", "texte": "Les marais aux alligators." }
+   ],
+   "rel": { "characters": ["jason"], "regions": ["mount-kalaga", "grassrivers"] },
+   "calc": { "tool": "activities", "q": "La chasse, ça rapporte plus qu’une mission ?", "d": "Le prix des prises n’est pas publié. Écris ce qu’une sortie te rapporterait et sa durée : le calculateur la compare à tes autres activités, à l’heure de jeu.", "cta": "Comparer mes activités" },
+   "aliases": ["chasse", "chasser", "chasseur"],
+   "sources": ["rs-vi", "rs-screens", "gamespot-peche-chasse", "beebom-peche-chasse", "gameinformer-faune"]
+  },
+  {
+   "id": "activites-nautiques",
+   "nom": "Jet-ski, kayak, plongée et hydroglisseur",
+   "famille": "nature",
+   "statut": "officiel",
+   "tagline": "Leonida se vit aussi sur l’eau, et dessous.",
+   "resume": "Activités nautiques de GTA VI : jet-ski, kayak, plongée et hydroglisseur, confirmés par Rockstar, avec les véhicules et les lieux montrés.",
+   "media": "trailer-2-seashark-141",
+   "alt": "Jason et Lucia sur un jet-ski Seashark vert qui file sur l’eau devant Vice City, photogramme du Trailer 2",
+   "galerie": [
+    { "media": "crest-kayak", "alt": "Jason pagaie dans un kayak Crest orange au coucher du soleil, près de la côte, capture officielle Rockstar Games", "legende": "Le kayak Crest" },
+    { "media": "leonida-keys-04", "alt": "Deux plongeurs nagent au-dessus d’un récif, près d’une tortue de mer, dans les Leonida Keys, capture officielle Rockstar Games", "legende": "Plongée dans les Keys" },
+    { "media": "grassrivers-03", "alt": "Hydroglisseur vu du ciel, avec ses passagers, au milieu des plantes aquatiques de Grassrivers, capture officielle Rockstar Games", "legende": "Un hydroglisseur à Grassrivers" },
+    { "media": "leonida-keys-05", "alt": "Bateaux amarrés côte à côte, bouée flamant rose et jet-skis au loin, dans les Leonida Keys, capture officielle Rockstar Games", "legende": "Une fête en bateau dans les Keys" }
+   ],
+   "montre": [
+    { "texte": "Le dossier de Game Informer cite le jet-ski, le kayak, la plongée et l’hydroglisseur parmi les activités confirmées par Rockstar.", "statut": "officiel", "sources": ["insider-activites", "psls-activites"] },
+    { "texte": "Vers 2:21 du Trailer 2, Jason et Lucia filent sur un jet-ski Seashark.", "statut": "vu", "sources": ["rs-videos"] },
+    { "texte": "La planque de Jason a son kayak Crest, d’après les textes du 24 juin 2026.", "statut": "officiel", "sources": ["gamesradar-63"] },
+    { "texte": "Les captures montrent des plongeurs sur un récif des Keys, une bouteille de plongée sur le pont du Shitzu Squalo et des hydroglisseurs dans les marais de Grassrivers.", "statut": "vu", "sources": ["rs-screens"] }
+   ],
+   "ou": { "texte": "Les Keys pour la plongée et le jet-ski, Grassrivers pour l’hydroglisseur, la côte et les rivières de Mount Kalaga pour le kayak, d’après les captures.", "statut": "vu", "sources": ["rs-screens"], "regions": ["leonida-keys", "grassrivers", "mount-kalaga"], "carte": [] },
+   "besoin": [
+    { "texte": "Un véhicule : le Seashark pour le jet-ski, le Crest pour le kayak, un hydroglisseur pour les marais.", "statut": "vu", "sources": ["rs-videos", "rs-screens"], "vehicules": ["speedophile-seashark", "crest-kayak", "airboat-09", "vortex-airboat"] },
+    { "texte": "Un équipement de plongée, vu sur les captures, et un bateau pour rejoindre les récifs.", "statut": "vu", "sources": ["rs-screens"], "vehicules": ["shitzu-squalo"] }
+   ],
+   "rapporte": { "texte": "Rien n’est publié : ni gain, ni défi, ni course sur l’eau.", "statut": "conf", "sources": ["insider-activites"], "gain": null, "duree": null },
+   "confirmer": [
+    { "q": "Les courses sur l’eau", "etat": "Rien ne dit s’il y a des courses de jet-ski ou de bateau." },
+    { "q": "Sous l’eau", "etat": "La durée de plongée, la faune à voir et ce qu’on peut trouver ne sont pas publiés." }
+   ],
+   "liens": [
+    { "href": "bateaux.html", "label": "Bateaux et jet-skis", "texte": "Tous les bateaux repérés, avec leur fiche." },
+    { "href": "planques/planque-jason.html", "label": "La planque de Jason", "texte": "La maison sur pilotis et son kayak." },
+    { "href": "lieux/leonida-keys.html", "label": "Leonida Keys", "texte": "Les îles des récifs et des fêtes en bateau." }
+   ],
+   "rel": { "characters": ["jason", "lucia"], "regions": ["leonida-keys", "grassrivers"], "hideouts": ["planque-jason"] },
+   "calc": { "tool": "session", "q": "Combien de parties pour tout essayer sur l’eau ?", "d": "Jet-ski, kayak, plongée, hydroglisseur : écris ton temps de jeu par partie et le temps que tu veux y consacrer, le calculateur te dit en combien de sessions tu en fais le tour.", "cta": "Compter mes parties" },
+   "aliases": ["activites nautiques", "sports nautiques", "loisirs nautiques"],
+   "sources": ["insider-activites", "psls-activites", "rs-videos", "gamesradar-63", "rs-screens"]
+  },
+  {
+   "id": "salle-de-sport",
+   "nom": "La salle de sport",
+   "famille": "nature",
+   "statut": "officiel",
+   "tagline": "Du muscle, de la force, et ça se voit.",
+   "resume": "La salle de sport dans GTA VI : ce qu’en dit Rob Nelson, ce que montre l’Extended Look, les effets sur Jason et Lucia et ce qui reste à publier.",
+   "media": "lucia-caminos-01",
+   "alt": "Lucia, gants aux poings, frappe un sac de boxe dans une salle de sport, capture officielle Rockstar Games",
+   "galerie": [],
+   "montre": [
+    { "texte": "Rob Nelson, de Rockstar North : ce que mangent Jason et Lucia joue sur leur poids, et le sport les muscle de façon visible.", "statut": "officiel", "sources": ["vgc-details", "dazed-nelson"] },
+    { "texte": "Il confirme des salles de sport où l’on s’entraîne pour gagner en muscle et en force.", "statut": "officiel", "sources": ["insider-sommeil"] },
+    { "texte": "L’Extended Look montre Lucia au développé couché, en appuyant en rythme sur deux boutons.", "statut": "vu", "sources": ["gamesradar-live"] },
+    { "texte": "Une capture officielle montre Lucia qui frappe un sac de boxe.", "statut": "vu", "sources": ["rs-screens"] },
+    { "texte": "Les salles de sport figurent dans la liste d’activités confirmées du dossier de Game Informer.", "statut": "officiel", "sources": ["insider-activites"] }
+   ],
+   "ou": { "texte": "Rockstar n’a nommé aucune salle. La carte des joueurs en repère plusieurs à Vice City, dont l’Ajax Gym à Vice Beach.", "statut": "comm", "sources": ["gtadb"], "regions": ["vice-city"], "carte": [{ "id": "g-L1869", "nom": "Ajax Gym" }] },
+   "besoin": [
+    { "texte": "L’accès à une salle : des aperçus parlent d’un abonnement, sans confirmation de Rockstar.", "statut": "conf", "sources": ["insider-sommeil"] }
+   ],
+   "rapporte": { "texte": "Pas d’argent : du muscle et de la force, visibles sur le personnage. Les aperçus parlent aussi de santé et d’endurance qui montent ; aucun chiffre n’est publié.", "statut": "officiel", "sources": ["vgc-details", "insider-sommeil"], "gain": null, "duree": null },
+   "confirmer": [
+    { "q": "La séance", "etat": "Des aperçus décrivent trois exercices pour une séance du jour et des mini-jeux de rythme." },
+    { "q": "S’entraîner à deux", "etat": "Une séance commune compterait comme un rendez-vous, d’après des aperçus." },
+    { "q": "Les salles", "etat": "Leur nombre et leurs noms en jeu ne sont pas publiés." }
+   ],
+   "liens": [
+    { "href": "nourriture.html", "label": "Les consommables", "texte": "Le shake et la barre protéinés, et ce qu’on sait de leurs effets." }
+   ],
+   "rel": { "characters": ["lucia", "jason"], "regions": ["vice-city"] },
+   "calc": { "tool": "session", "q": "Le sport prend du temps : combien de parties pour ton objectif ?", "d": "Écris ton temps de jeu par partie et ce que tu veux faire en plus de l’histoire : le calculateur te dit en combien de sessions tu y arrives.", "cta": "Compter mes parties" },
+   "aliases": ["salle de musculation", "faire de la musculation"],
+   "sources": ["vgc-details", "dazed-nelson", "insider-sommeil", "gamesradar-live", "rs-screens", "insider-activites", "gtadb"]
+  },
+  {
+   "id": "courses",
+   "nom": "Les courses et le tout-terrain",
+   "famille": "nature",
+   "statut": "officiel",
+   "tagline": "De nuit en ville, dans la boue au nord.",
+   "resume": "Courses de rue et tout-terrain dans GTA VI : ce que Rockstar a confirmé, ce que montre l’Extended Look, les pistes de Mount Kalaga et les circuits repérés.",
+   "media": "mount-kalaga-national-park-01",
+   "alt": "Motos tout-terrain et quad lancés dans la boue près de vieux silos, au Mount Kalaga National Park, capture officielle Rockstar Games",
+   "galerie": [
+    { "media": "ambrosia-06", "alt": "Fête dans la boue à Ambrosia : un homme couvert de boue, chapeau de cow-boy sur la tête, fait des signes au milieu de buggys et de quads, capture officielle Rockstar Games", "legende": "Une fête dans la boue à Ambrosia" }
+   ],
+   "montre": [
+    { "texte": "Les courses de rue et tout-terrain figurent dans la liste d’activités confirmées du dossier de Game Informer.", "statut": "officiel", "sources": ["insider-activites"] },
+    { "texte": "La page officielle de Mount Kalaga promet des pistes tout-terrain.", "statut": "officiel", "sources": ["rs-vi"] },
+    { "texte": "D’après Game Informer, l’Extended Look montre des voitures modifiées qui courent de nuit, des courses de motos, un stock-car et une voiture de rallye sur circuit.", "statut": "vu", "sources": ["gi-activites-el"] },
+    { "texte": "Les captures montrent des motos et un quad dans la boue à Mount Kalaga, et une fête dans la boue à Ambrosia, au milieu des buggys et des quads.", "statut": "vu", "sources": ["rs-screens"] }
+   ],
+   "ou": { "texte": "Les rues de Vice City pour les courses de nuit, Mount Kalaga pour le tout-terrain. La carte des joueurs repère aussi des circuits, comme le Gellhorn International Raceway et le Boone Speedway.", "statut": "vu", "sources": ["gi-activites-el", "rs-vi", "gtadb"], "regions": ["vice-city", "mount-kalaga", "ambrosia"], "carte": [{ "id": "g-L281", "nom": "Gellhorn International Raceway" }, { "id": "g-L1570", "nom": "Boone Speedway" }] },
+   "besoin": [
+    { "texte": "Un véhicule adapté : voiture modifiée en ville, moto ou quad dans la boue.", "statut": "vu", "sources": ["gi-activites-el", "rs-screens"], "liens": [{ "href": "vehicules.html", "label": "Les véhicules" }, { "href": "personnalisations.html", "label": "Personnalisations" }] }
+   ],
+   "rapporte": { "texte": "Rien n’est publié : ni prime, ni pari, ni classement.", "statut": "conf", "sources": ["insider-activites"], "gain": null, "duree": null },
+   "confirmer": [
+    { "q": "Les épreuves", "etat": "Leur liste, leurs règles et leurs récompenses ne sont pas publiées." },
+    { "q": "Les circuits", "etat": "Repérés par les joueurs ; rien ne dit qu’on y court." },
+    { "q": "Les paris", "etat": "Aucune mention dans les sources consultées." }
+   ],
+   "liens": [
+    { "href": "vehicules.html", "label": "Les véhicules", "texte": "Motos, quads, voitures de sport : les fiches et les photos officielles." },
+    { "href": "lieux/mount-kalaga.html", "label": "Mount Kalaga National Park", "texte": "Les pistes tout-terrain du nord." },
+    { "href": "lieux/ambrosia.html", "label": "Ambrosia", "texte": "La région des fêtes dans la boue." }
+   ],
+   "rel": { "regions": ["mount-kalaga", "ambrosia", "vice-city"] },
+   "calc": { "tool": "activities", "q": "Une course, ça rapporte plus qu’une mission ?", "d": "Aucune prime n’est publiée. Écris ce qu’une course te rapporterait et sa durée : le calculateur la compare à tes autres activités, à l’heure de jeu.", "cta": "Comparer mes activités" },
+   "aliases": ["courses de rue", "course de rue", "tout terrain", "courses tout terrain"],
+   "sources": ["insider-activites", "rs-vi", "gi-activites-el", "rs-screens", "gtadb"]
+  }
+ ]
+}

@@ -1,0 +1,119 @@
+{
+ "_note": "Section radios : questions de test de Léo en italien pour la section « Radios et musique » (radios, musique des trailers et de l’Extended Look, album officiel, stations des fuites). Rejoué par node outils/tests/leo-eval.cjs --lang it --questions=outils/tests/leo-questions-section-radios-it.json.",
+ "schemaVersion": 1,
+ "questions": [
+  {
+   "q": "quali radio ci sono in gta 6",
+   "expect": {
+    "topic": "radio"
+   },
+   "tags": [
+    "section-radios"
+   ]
+  },
+  {
+   "q": "elenco delle stazioni radio gta 6",
+   "expect": {
+    "topic": "radio"
+   },
+   "tags": [
+    "section-radios"
+   ]
+  },
+  {
+   "q": "chi canta nel trailer 1",
+   "expect": {
+    "topic": "musique-trailer"
+   },
+   "tags": [
+    "section-radios"
+   ]
+  },
+  {
+   "q": "canzone del trailer 2",
+   "expect": {
+    "topic": "musique-trailer"
+   },
+   "tags": [
+    "section-radios"
+   ]
+  },
+  {
+   "q": "musica del trailer 2 di gta 6",
+   "expect": {
+    "topic": "musique-trailer"
+   },
+   "tags": [
+    "section-radios"
+   ]
+  },
+  {
+   "q": "canzoni dell extended look",
+   "expect": {
+    "topic": "radios-faq-1"
+   },
+   "tags": [
+    "section-radios"
+   ]
+  },
+  {
+   "q": "musica dell extended look",
+   "expect": {
+    "topic": "radios-faq-1"
+   },
+   "tags": [
+    "section-radios"
+   ]
+  },
+  {
+   "q": "cos è gta vi the album",
+   "expect": {
+    "any": [
+     {
+      "entity": "album:gta-vi-the-album"
+     },
+     {
+      "topic": "radios-faq-2"
+     }
+    ]
+   },
+   "tags": [
+    "section-radios"
+   ]
+  },
+  {
+   "q": "album ufficiale di gta 6",
+   "expect": {
+    "any": [
+     {
+      "entity": "album:gta-vi-the-album"
+     },
+     {
+      "topic": "radios-faq-2"
+     }
+    ]
+   },
+   "tags": [
+    "section-radios"
+   ]
+  },
+  {
+   "q": "i nomi delle stazioni che circolano sono confermati",
+   "expect": {
+    "topic": "radios-faq-3"
+   },
+   "tags": [
+    "section-radios"
+   ]
+  },
+  {
+   "q": "le radio dei leak sono vere",
+   "expect": {
+    "topic": "radios-faq-3"
+   },
+   "tags": [
+    "section-radios"
+   ]
+  }
+ ]
+}

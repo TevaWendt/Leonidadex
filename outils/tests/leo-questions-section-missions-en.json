@@ -1,0 +1,103 @@
+{
+ "_note": "Section missions : questions de test de Léo en anglais pour la section « Missions » (nombre de missions, déblocage, gains, braquages, durée, changement de personnage, guide). Rejoué par node outils/tests/leo-eval.cjs --lang en --questions=outils/tests/leo-questions-section-missions-en.json.",
+ "schemaVersion": 1,
+ "questions": [
+  {
+   "q": "how many missions are in gta 6",
+   "expect": {
+    "topic": "missions-faq-1"
+   },
+   "tags": [
+    "section-missions"
+   ]
+  },
+  {
+   "q": "how many chapters in gta 6",
+   "expect": {
+    "topic": "missions-faq-1"
+   },
+   "tags": [
+    "section-missions"
+   ]
+  },
+  {
+   "q": "how do i unlock a mission",
+   "expect": {
+    "topic": "missions-faq-2"
+   },
+   "tags": [
+    "section-missions"
+   ]
+  },
+  {
+   "q": "mission locked gta 6",
+   "expect": {
+    "topic": "missions-faq-2"
+   },
+   "tags": [
+    "section-missions"
+   ]
+  },
+  {
+   "q": "which missions pay the most",
+   "expect": {
+    "topic": "missions-faq-3"
+   },
+   "tags": [
+    "section-missions"
+   ]
+  },
+  {
+   "q": "most profitable mission gta 6",
+   "expect": {
+    "topic": "missions-faq-3"
+   },
+   "tags": [
+    "section-missions"
+   ]
+  },
+  {
+   "q": "what do we know about heists",
+   "expect": {
+    "any": [
+     {
+      "topic": "braquage"
+     },
+     {
+      "topic": "braquer-magasins"
+     }
+    ]
+   },
+   "tags": [
+    "section-missions"
+   ]
+  },
+  {
+   "q": "how long is gta 6 story",
+   "expect": {
+    "topic": "mission-solo"
+   },
+   "tags": [
+    "section-missions"
+   ]
+  },
+  {
+   "q": "can i switch characters during a mission",
+   "expect": {
+    "topic": "changer-perso"
+   },
+   "tags": [
+    "section-missions"
+   ]
+  },
+  {
+   "q": "gta 6 mission walkthrough",
+   "expect": {
+    "page": "/missions.html"
+   },
+   "tags": [
+    "section-missions"
+   ]
+  }
+ ]
+}

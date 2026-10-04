@@ -1,0 +1,212 @@
+{
+ "_note": "Section « Activités annexes » (section activites) : textes de activites.html, lus par outils/gen-activites.cjs. Les fiches (une par activité qui a assez de matière sourcée) sont dans outils/activites/activites.json. Rien d’inventé : chaque ligne porte un statut et des sources de « sources ». Aucun montant n’est publié pour aucune activité au 4 octobre 2026. Sources relevées le 4 octobre 2026 par moteur de recherche (ouverture directe des pages bloquée depuis l’atelier ce jour-là).",
+ "hub": {
+  "label": "Activités annexes",
+  "title": "Les activités annexes de GTA VI",
+  "lede": "Pêcher, chasser, plonger, braquer une supérette ou voler une voiture : tout ce que Rockstar a montré ou annoncé à côté de l’histoire, avec ce que ça rapporte quand c’est publié.",
+  "desc": "Activités annexes de GTA VI : pêche, chasse, jet-ski, salle de sport, courses, braquages et vol de voitures, avec sources datées et ce que ça rapporte.",
+  "note": "Chaque activité dit d’où elle vient : texte de Rockstar, image officielle ou relevé de joueurs. Aucun montant n’est publié à ce jour : le site n’en invente aucun.",
+  "pile": [
+   { "media": "jason-duval-03", "caption": "La pêche", "alt": "Jason pêche à la canne à l’arrière d’un bateau, Cal regarde aux jumelles derrière lui, capture officielle Rockstar Games" },
+   { "media": "trailer-2-seashark-141", "caption": "Le jet-ski", "alt": "Jason et Lucia sur un jet-ski Seashark vert qui file sur l’eau devant Vice City, photogramme du Trailer 2" },
+   { "media": "lucia-caminos-01", "caption": "La salle de sport", "alt": "Lucia, gants aux poings, frappe un sac de boxe dans une salle de sport, capture officielle Rockstar Games" }
+  ]
+ },
+ "fiches": {
+  "kicker": "Les fiches",
+  "titre": "Les activités qui ont leur fiche",
+  "lede": "Une fiche par activité dont Rockstar a dit ou montré assez : ce que c’est, où la pratiquer, ce qu’il faut et ce que ça rapporte."
+ },
+ "liste": {
+  "kicker": "Toutes les activités",
+  "titre": "Tout ce que Rockstar a montré ou annoncé",
+  "lede": "Une ligne par activité, avec son statut et ses sources. Quand une autre page du site la couvre déjà, la ligne y renvoie.",
+  "familles": [
+   {
+    "id": "crime",
+    "titre": "Crime et argent",
+    "icon": "masque",
+    "items": [
+     { "nom": "Braquer un commerce", "statut": "officiel", "texte": "Supérettes, stations-service, magasin d’alcool : Rockstar montre des braquages depuis le Trailer 1, et Rob Nelson confirme qu’on les fait seul ou à deux.", "fiche": "braquages-commerces", "sources": ["rs-videos", "famitsu-nelson", "gamesradar-live"] },
+     { "nom": "Braquer une bijouterie ou une petite banque", "statut": "officiel", "texte": "Des cibles mieux gardées que les boutiques, selon Rob Nelson ; là aussi, seul ou à deux.", "fiche": "braquages-commerces", "sources": ["famitsu-nelson", "gtavice-famitsu"] },
+     { "nom": "Attaquer un fourgon blindé", "statut": "vu", "texte": "Un photogramme de l’Extended Look montre des hommes masqués autour d’un fourgon ouvert. Activité libre ou scène de l’histoire : rien ne le dit.", "fiche": "braquages-commerces", "sources": ["rs-extended"] },
+     { "nom": "Piller un repaire de gang", "statut": "officiel", "texte": "La carte signale les repaires et ce qu’ils renferment, argent ou drogue. Chaque gang concerné est détaillé sur sa propre page.", "liens": [{ "href": "gangs.html", "label": "Gangs et factions" }, { "href": "gangs/ptt-youngin-gang.html", "label": "Le repaire des PTT Youngin$" }], "sources": ["famitsu-nelson", "xbox-ultimate"] },
+     { "nom": "Voler une voiture", "statut": "officiel", "texte": "Briser la vitre, glisser un slim jim ou cloner une clé : la méthode dépend de la voiture, et certains outils arrivent avec l’histoire.", "fiche": "vol-de-voitures", "sources": ["gamespot-vol-voiture", "kotaku-vol"] },
+     { "nom": "Revendre au receleur", "statut": "officiel", "texte": "Les garages ont une cache pour le butin, qu’un receleur du coin rachète moins cher qu’il ne vaut ; la drogue des repaires lui revient aussi.", "liens": [{ "href": "planques.html", "label": "Planques et garages" }], "sources": ["vgc-editions", "famitsu-nelson"] }
+    ]
+   },
+   {
+    "id": "nature",
+    "titre": "Nature, eau et sport",
+    "icon": "eau",
+    "items": [
+     { "nom": "Pêcher", "statut": "officiel", "texte": "Rockstar présente Mount Kalaga comme un coin de pêche ; Rob Nelson promet une pêche aussi poussée que dans Red Dead Redemption 2, prises relâchées.", "fiche": "peche", "sources": ["rs-vi", "notebookcheck-peche"] },
+     { "nom": "Chasser", "statut": "officiel", "texte": "Mount Kalaga est aussi un terrain de chasse, et la chasse rapporte de l’argent d’après Rob Nelson.", "fiche": "chasse", "sources": ["rs-vi", "gamespot-peche-chasse"] },
+     { "nom": "Pister les animaux rares", "statut": "officiel", "texte": "Plus de 170 espèces annoncées, dont certaines rares, à découvrir ou légendaires, qu’on peut suivre à la trace.", "fiche": "chasse", "sources": ["gameinformer-faune"] },
+     { "nom": "Jet-ski", "statut": "officiel", "texte": "Confirmé dans le dossier de Game Informer ; Jason et Lucia filent en Seashark dans le Trailer 2.", "fiche": "activites-nautiques", "sources": ["insider-activites", "rs-videos"] },
+     { "nom": "Kayak", "statut": "officiel", "texte": "Dans la liste de Game Informer ; un kayak Crest attend devant la planque de Jason.", "fiche": "activites-nautiques", "sources": ["insider-activites", "gamesradar-63"] },
+     { "nom": "Plongée sous-marine", "statut": "officiel", "texte": "Dans la liste de Game Informer ; une capture des Keys montre des plongeurs sur un récif, près d’une tortue.", "fiche": "activites-nautiques", "sources": ["insider-activites", "rs-screens"] },
+     { "nom": "Hydroglisseur", "statut": "officiel", "texte": "Dans la liste de Game Informer ; les captures de Grassrivers le montrent au milieu des marais.", "fiche": "activites-nautiques", "sources": ["insider-activites", "rs-screens"] },
+     { "nom": "Salle de sport", "statut": "officiel", "texte": "On s’y entraîne pour gagner en muscle et en force, et le résultat se voit sur Jason et Lucia, selon Rob Nelson.", "fiche": "salle-de-sport", "sources": ["insider-sommeil", "vgc-details"] },
+     { "nom": "Courses de rue et tout-terrain", "statut": "officiel", "texte": "Dans la liste de Game Informer ; l’Extended Look montre des voitures modifiées qui courent de nuit.", "fiche": "courses", "sources": ["insider-activites", "gi-activites-el"] },
+     { "nom": "Mini-golf", "statut": "officiel", "texte": "Dans la liste de Game Informer ; une capture montre Cal, putter en main, sur un parcours décoré d’un alligator.", "liens": [{ "href": "personnages/cal.html", "label": "Cal Hampton" }], "sources": ["insider-activites", "rs-screens"] },
+     { "nom": "Billard", "statut": "officiel", "texte": "Dans la liste de Game Informer ; une capture montre Jason penché sur la table d’un bar, Cal à côté, une queue à la main.", "liens": [{ "href": "armes/queue-billard.html", "label": "La queue de billard, arme de mêlée" }], "sources": ["insider-activites", "rs-screens"] },
+     { "nom": "Base jump", "statut": "officiel", "texte": "Dans la liste de Game Informer ; l’Extended Look montre un saut depuis un immeuble.", "sources": ["insider-activites", "gi-activites-el"] },
+     { "nom": "Zoos", "statut": "officiel", "texte": "Dans la liste de Game Informer, sans nom ni adresse. La carte des joueurs en place un dans le comté de Leonard, à titre de supposition.", "sources": ["insider-activites", "gtadb"] },
+     { "nom": "Randonnées à deux", "statut": "officiel", "texte": "Le dossier de Game Informer cite des randonnées parmi les rendez-vous de Jason et Lucia.", "sources": ["psls-activites"] },
+     { "nom": "Basket", "statut": "vu", "texte": "Jason joue au basket devant sa planque dans l’Extended Look ; une capture montre aussi des passants sur un terrain de Vice City.", "liens": [{ "href": "planques/planque-jason.html", "label": "La planque de Jason" }], "sources": ["engadget-missed", "rs-screens"] },
+     { "nom": "Stand de tir", "statut": "vu", "texte": "Vers 18:31 de l’Extended Look, un tir chronométré au pistolet et à l’arme automatique.", "liens": [{ "href": "armes.html", "label": "L’armurerie" }], "sources": ["engadget-missed"] }
+    ]
+   },
+   {
+    "id": "ville",
+    "titre": "Ville, nuit et style",
+    "icon": "boisson",
+    "items": [
+     { "nom": "Club de strip-tease", "statut": "vu", "texte": "Le Jack of Hearts de Boobie s’ouvre au joueur dans l’Extended Look ; on y dépense de l’argent, d’après Game Informer.", "liens": [{ "href": "entreprises/jack-of-hearts.html", "label": "Le Jack of Hearts" }], "sources": ["gi-activites-el", "rs-videos"] },
+     { "nom": "Bars et clubs", "statut": "vu", "texte": "Comptoirs, toits-terrasses et pistes de danse reviennent dans les captures ; danser soi-même reste à confirmer.", "liens": [{ "href": "nourriture.html", "label": "Boire et manger" }], "sources": ["rs-screens", "engadget-missed"] },
+     { "nom": "Tatouages, coiffure et vêtements", "statut": "officiel", "texte": "Salons, tatoueurs et boutiques ont déjà leur page ; plusieurs ne s’ouvrent qu’avec l’Édition Ultimate.", "liens": [{ "href": "style.html", "label": "Vêtements et style" }], "sources": ["gtavice-famitsu", "xbox-ultimate"] },
+     { "nom": "Personnaliser véhicules et armes", "statut": "officiel", "texte": "Ateliers de l’Édition Ultimate, Pay ’n’ Spray pour la couleur, casiers d’Ammu-Nation : tout est sur la page des personnalisations.", "liens": [{ "href": "personnalisations.html", "label": "Personnalisations" }], "sources": ["gtavice-famitsu", "xbox-ultimate"] },
+     { "nom": "Restaurer les voitures de Wyman", "statut": "officiel", "texte": "Une commande de l’Édition Ultimate : retrouver des voitures classiques laissées à l’abandon et les remettre en état.", "liens": [{ "href": "collectibles.html", "label": "Collectibles" }], "sources": ["xbox-ultimate"] },
+     { "nom": "Réseau social", "statut": "vu", "texte": "Un fil de réseau social s’affiche à l’écran dans le Trailer 1 ; ce qu’on peut y faire n’est pas publié.", "sources": ["rs-videos"] },
+     { "nom": "Regarder la télévision", "statut": "vu", "texte": "Jason devant des publicités parodiques, dans l’Extended Look.", "sources": ["gi-activites-el"] }
+    ]
+   }
+  ]
+ },
+ "rapporte": {
+  "kicker": "L’argent",
+  "titre": "Ce que ça rapporte",
+  "lede": "Rockstar décrit des mécanismes, jamais des montants. Voici, activité par activité, ce qui est publié.",
+  "lignes": [
+   { "activite": "Braquages de commerces", "fiche": "braquages-commerces", "texte": "Du liquide et un butin à revendre ; aucun montant.", "statut": "officiel", "sources": ["famitsu-nelson"] },
+   { "activite": "Repaires de gangs", "texte": "Argent ou drogue, estimés sur la carte avant d’entrer ; aucun chiffre.", "statut": "officiel", "sources": ["famitsu-nelson"] },
+   { "activite": "Voitures volées", "fiche": "vol-de-voitures", "texte": "Revendues au receleur ; le Pay ’n’ Spray donne leur valeur. Aucun montant.", "statut": "officiel", "sources": ["gtavice-famitsu"] },
+   { "activite": "Objets volés", "texte": "Rachetés par le receleur avec une décote dont le taux n’est pas publié.", "statut": "officiel", "sources": ["vgc-editions"] },
+   { "activite": "Chasse", "fiche": "chasse", "texte": "De l’argent en revendant ce qu’on récupère ; aucun montant.", "statut": "officiel", "sources": ["gamespot-peche-chasse"] },
+   { "activite": "Pêche", "fiche": "peche", "texte": "Rien à revendre : les prises sont relâchées. Des défis et des collectibles à la clé.", "statut": "officiel", "sources": ["notebookcheck-peche"] },
+   { "activite": "Salle de sport", "fiche": "salle-de-sport", "texte": "Pas d’argent : du muscle et de la force.", "statut": "officiel", "sources": ["insider-sommeil"] },
+   { "activite": "Clubs, salons et boutiques", "texte": "Ils coûtent de l’argent ; aucun tarif publié.", "statut": "vu", "sources": ["gi-activites-el"] },
+   { "activite": "Voitures de Wyman", "texte": "Des voitures classiques remises en état ; aucune somme annoncée.", "statut": "officiel", "sources": ["xbox-ultimate"] }
+  ],
+  "p": [
+   "Rob Nelson prévient aussi que l’histoire attend parfois que tu aies réuni assez d’argent : les activités annexes servent à ça. {donnees:activites}"
+  ],
+  "sources": ["notebookcheck-money"]
+ },
+ "zone": {
+  "nav": [
+   { "href": "#fiches", "label": "Les fiches" },
+   { "href": "#toutes", "label": "Toutes les activités" },
+   { "href": "#rapporte", "label": "Ce que ça rapporte" },
+   { "href": "#rockstar", "label": "Rockstar" },
+   { "href": "#communaute", "label": "Communauté" },
+   { "href": "#a-confirmer", "label": "À confirmer" },
+   { "href": "#pour-toi", "label": "Pour toi" },
+   { "href": "#faq", "label": "FAQ" },
+   { "href": "#sources", "label": "Sources" }
+  ],
+  "rockstar": {
+   "lede": "Les activités annexes sont arrivées par petites touches : une scène de trailer, une page de région, un texte d’édition, une démonstration, puis un dossier de magazine.",
+   "items": [
+    { "date": "4 décembre 2023", "titre": "Trailer 1", "statut": "vu", "texte": "Le duo braque un magasin d’alcool, visage couvert, avant de s’enfuir." },
+    { "date": "6 mai 2025", "titre": "Trailer 2 et régions", "statut": "officiel", "texte": "Jason et Lucia filent en jet-ski ; la page de Mount Kalaga promet chasse, pêche et pistes tout-terrain.", "media": "mount-kalaga-national-park-01", "alt": "Motos tout-terrain et quad lancés dans la boue près de vieux silos, au Mount Kalaga National Park, capture officielle" },
+    { "date": "24 juin 2026", "titre": "Éditions", "statut": "officiel", "texte": "Des garages avec une cache pour le butin, un repaire de gang à piller et des voitures de Wyman à restaurer." },
+    { "date": "27 août 2026", "titre": "Extended Look", "statut": "vu", "texte": "Salle de sport, basket, stand de tir, courses de nuit, vol de voiture et braquages de stations-service." },
+    { "date": "28 août 2026", "titre": "Famitsu", "statut": "officiel", "texte": "Rob Nelson détaille les braquages, les receleurs et les voitures de luxe protégées par alarme et traceur." },
+    { "date": "Septembre 2026", "titre": "Pêche et chasse", "statut": "officiel", "texte": "Une pêche sans revente et une chasse qui rapporte : les propos de Rob Nelson, rapportés par le créateur TGG reçu à Rockstar North." },
+    { "date": "29 septembre 2026", "titre": "Game Informer", "statut": "officiel", "texte": "Le dossier du magazine liste les activités confirmées et annonce plus de 170 espèces animales." }
+   ],
+   "p": [
+    "Une activité « vue » vient d’une image ou d’une vidéo officielle : rien ne dit encore comment elle se joue."
+   ]
+  },
+  "communaute": {
+   "lede": "Les joueurs repèrent les lieux et les détails des aperçus. Voici ce qu’ils avancent, cité comme tel.",
+   "pairs": [
+    { "fiction": "Ajax Gym, Iron City Gym, Flamingo Fitness Center", "reel": "Des salles de sport repérées sur les images et rapprochées de lieux réels par gtadb.org ; leurs noms en jeu restent à confirmer.", "src": "gtadb" },
+    { "fiction": "Gellhorn International Raceway, Boone Speedway", "reel": "Deux circuits placés sur la carte des joueurs ; rien ne dit encore qu’on y court.", "src": "gtadb" },
+    { "fiction": "Un mode photo", "reel": "Le créateur TGG dit en avoir vu un, sans mode réalisateur ; Rockstar n’a rien annoncé.", "src": "x-rockstarintel-photo" },
+    { "fiction": "Un receleur par type de butin", "reel": "Drogue, bijoux, voitures : un receleur pour chacun, d’après des aperçus de presse ; aucune liste officielle.", "src": "tweaktown-economie" },
+    { "fiction": "Scanner une voiture avant de la voler", "reel": "Un aperçu décrit un scan du modèle et de sa valeur, et une revente qui baisse avec les dégâts ; à confirmer.", "src": "tweaktown-economie" },
+    { "fiction": "Braquer presque n’importe quelle boutique", "reel": "Une promesse relayée par GTABase d’après des aperçus, jusqu’aux salons de coiffure ; Rockstar ne l’a pas dit.", "src": "gtabase-boutiques" }
+   ],
+   "p": [
+    "Ces pistes restent hors du calculateur et hors des fiches tant que Rockstar ne les confirme pas."
+   ]
+  },
+  "confirmer": {
+   "lede": "La liste est déjà longue ; il lui manque surtout les chiffres et les règles du jeu.",
+   "items": [
+    { "q": "Ce que rapportent les activités", "etat": "Aucun montant n’est publié : ni butin, ni prime de course, ni prix de revente." },
+    { "q": "Golf, tennis, bowling, fléchettes", "etat": "Jamais annoncés. Des courts de tennis et un golf figurent sur la carte des joueurs, sans dire qu’on peut y jouer." },
+    { "q": "Petits boulots", "etat": "Taxi, remorquage, livraisons, chasseur de primes : aucune mention dans les sources consultées." },
+    { "q": "Acheter une entreprise", "etat": "Rien d’annoncé : seules les planques et les garages sont décrits." },
+    { "q": "Combats en cage, réalité virtuelle, arcade", "etat": "Cités dans des comptes rendus ou visibles au fond d’une capture, sans confirmation." },
+    { "q": "Rassemblements de voitures et catch", "etat": "Vus dans les vidéos ; rien ne dit qu’on peut y prendre part." },
+    { "q": "Sans l’Édition Ultimate", "etat": "Le pillage du repaire des PTT Youngin$ et la restauration des voitures de Wyman font partie de l’édition ; leur accès sans elle n’est pas dit." }
+   ],
+   "p": [
+    "Chaque réponse rejoindra la liste des activités, avec sa source, dès que Rockstar l’aura publiée."
+   ]
+  },
+  "toi": {
+   "lede": "En attendant les chiffres, compare tes activités, repère les lieux et retrouve ce que d’autres pages détaillent déjà.",
+   "actions": [
+    { "k": "Calculateur", "t": "Comparer mes activités", "d": "Écris ce qu’un braquage, une course ou une revente te rapporterait, et sa durée : tu vois ce qui vaut le plus à l’heure.", "href": "calculateurs.html?tool=activities&from=activites#atelier" },
+    { "k": "Carte", "t": "Les lieux des activités", "d": "Le magasin braqué du Trailer 1, une salle de sport, deux circuits, un bar des Keys et le Jack of Hearts.", "pins": ["g-L313", "g-L1869", "g-L281", "g-L1570", "g-L325", "g-L172"], "pinsTitle": "Lieux des activités annexes" },
+    { "k": "Collectibles", "t": "Les collectibles", "d": "La pêche mène à des collectibles, et la collection de Wyman y a déjà son bloc.", "href": "collectibles.html" },
+    { "k": "Gangs", "t": "Les repaires de gangs", "d": "Le pillage des repaires, détaillé gang par gang.", "href": "gangs.html" }
+   ],
+   "p": [
+    "Chaque fiche d’activité a son propre encart du calculateur, avec la question qui lui correspond."
+   ]
+  },
+  "faq": [
+   { "q": "Quelles activités annexes y a-t-il dans GTA 6 ?", "a": "Beaucoup. Le dossier de Game Informer (29 septembre 2026) cite le base jump, le billard, les salles de sport, le kayak, le mini-golf, la plongée, les courses de rue et tout-terrain, les zoos, l’hydroglisseur et le jet-ski. S’y ajoutent la pêche et la chasse à Mount Kalaga, les braquages de commerces, le vol de voitures et le pillage des repaires de gangs, montrés ou décrits par Rockstar. Le golf, le tennis et le bowling n’ont jamais été annoncés.", "k": ["activites annexes", "activites secondaires", "mini jeux", "loisirs", "side activities", "a faire a part l histoire"], "f": ["quelles activites annexes", "quel activite annexe", "quelles activites annexes il y a", "activites secondaires", "mini jeux", "que faire a part les missions", "quoi faire dans gta 6 a part l histoire", "loisirs", "liste des activites annexes", "side activities", "ya quoi comme activites annexes"] },
+   { "q": "Peut-on pêcher dans GTA 6 ?", "a": "Oui. Rockstar présente Mount Kalaga comme un coin de pêche, et une capture montre Jason qui pêche depuis un bateau. Rob Nelson, de Rockstar North, promet une pêche aussi poussée que dans Red Dead Redemption 2, avec une différence : on relâche toujours sa prise, on ne la garde ni ne la revend. La pêche mène à des défis, à des collectibles et à des moments de l’histoire ; ni les espèces ni les récompenses ne sont publiées.", "k": ["peche", "pecher", "poisson", "canne a peche"], "f": ["peut on pecher", "la peche", "pecher", "on peut pecher", "poisson", "canne a peche", "la peche rapporte de l argent", "garder les poissons"] },
+   { "q": "Peut-on chasser dans GTA 6 ?", "a": "Oui. Rockstar présente Mount Kalaga comme un terrain de chasse de premier choix, et les captures montrent des chasseurs armés en sous-bois. D’après les propos de Rob Nelson rapportés par le créateur TGG, la chasse rapporte de l’argent : on revend ce qu’on récupère. Game Informer annonce plus de 170 espèces, dont certaines rares ou légendaires qu’on peut pister. Ni le gibier autorisé ni les prix ne sont publiés.", "k": ["chasse", "chasser", "chasseur", "gibier"], "f": ["peut on chasser", "la chasse", "chasser", "on peut chasser des animaux", "la chasse rapporte de l argent", "gibier", "chasseur"] },
+   { "q": "Peut-on aller à la salle de sport dans GTA 6 ?", "a": "Oui. Rob Nelson l’a confirmé : il y a des salles où s’entraîner pour gagner en muscle et en force, et le sport muscle visiblement Jason et Lucia, comme ce qu’ils mangent joue sur leur poids. L’Extended Look montre Lucia au développé couché. La salle ne rapporte pas d’argent, et ses effets chiffrés ne sont pas publiés.", "k": ["salle de sport", "musculation", "sport", "muscles"], "leo": "poids" },
+   { "q": "Les activités annexes rapportent-elles de l’argent ?", "a": "Certaines, d’après Rockstar : les braquages, le pillage des repaires de gangs, les voitures et objets volés revendus au receleur, et la chasse. La pêche, non : les prises sont relâchées. Rob Nelson ajoute que l’histoire attend parfois que tu aies réuni assez d’argent. {donnees:activites}", "k": ["activites annexes rapportent", "activite annexe rentable", "argent des activites annexes"], "f": ["les activites annexes rapportent elles de l argent", "activites annexes rentables", "ca rapporte quoi les activites annexes", "quelles activites annexes rapportent", "les loisirs rapportent de l argent", "activite annexe la plus rentable"] },
+   { "q": "Peut-on braquer des magasins dans GTA 6 ?", "a": "Oui. Le Trailer 1 montre déjà Jason et Lucia dans un magasin d’alcool, et l’Extended Look enchaîne les braquages de stations-service. Rob Nelson précise qu’on braque un commerce seul ou à deux, que bijouteries et petites banques sont mieux gardées, et que détruire les caméras de surveillance évite d’être vu. Une partie du butin se revend au receleur ; aucun montant n’est publié.", "k": ["braquer", "braquage", "magasin", "station service", "bijouterie"], "leo": "braquer-magasins" }
+  ],
+  "sources": ["rs-vi", "rs-videos", "rs-screens", "rs-extended", "xbox-ultimate", "famitsu-nelson", "gtavice-famitsu", "vgc-editions", "sixthaxis-editions", "gamesradar-63", "kotaku-vol", "gamesradar-outils-vol", "gamespot-vol-voiture", "notebookcheck-peche", "gamespot-peche-chasse", "beebom-peche-chasse", "gameinformer-faune", "insider-activites", "psls-activites", "vgc-details", "dazed-nelson", "insider-sommeil", "gamesradar-live", "engadget-missed", "gi-activites-el", "gtawiki-trailers", "notebookcheck-money", "tweaktown-economie", "gtabase-boutiques", "gtadb", "x-rockstarintel-photo"],
+  "sourcesLede": "Chaque activité et chaque phrase de cette page renvoie à une source datée. Les pages ont été relevées le 4 octobre 2026 par moteur de recherche : leur ouverture directe était bloquée depuis l’atelier ce jour-là."
+ },
+ "sources": {
+  "rs-vi": { "url": "https://www.rockstargames.com/VI", "title": "Rockstar Games : site officiel de Grand Theft Auto VI (pages des régions)", "publishedAt": "2025-05-06", "consultedAt": "2026-10-04", "statut": "officiel", "claim": "La page de Mount Kalaga National Park en fait un terrain de chasse de premier choix, de pêche et de pistes tout-terrain." },
+  "rs-videos": { "url": "https://www.rockstargames.com/VI/media/videos", "title": "Rockstar Games : vidéos officielles de GTA VI (Trailer 1, Trailer 2)", "publishedAt": "2023-12-04", "consultedAt": "2026-10-04", "statut": "officiel", "claim": "Le braquage du magasin d’alcool (Trailer 1), le jet-ski de Jason et Lucia et le club de Boobie (Trailer 2)." },
+  "rs-screens": { "url": "https://www.rockstargames.com/VI/media/screenshots", "title": "Rockstar Games : captures officielles de GTA VI", "publishedAt": "2025-05-06", "consultedAt": "2026-10-04", "statut": "officiel", "claim": "Les captures de cette page : pêche, chasseurs, kayak, plongée, hydroglisseur, salle de sport, tout-terrain, mini-golf, billard, bars." },
+  "rs-extended": { "url": "https://www.rockstargames.com/newswire/article/4k138k8okkk483/grand-theft-auto-vi-an-extended-look-now-playing", "title": "Rockstar Newswire : Grand Theft Auto VI, An Extended Look", "publishedAt": "2026-08-27", "consultedAt": "2026-10-04", "statut": "officiel", "claim": "La démonstration d’environ 26 minutes : salle de sport, basket, stand de tir, courses, vol de voiture, braquages, fourgon blindé." },
+  "xbox-ultimate": { "url": "https://www.xbox.com/en-us/games/store/grand-theft-auto-vi-ultimate-edition/9nnzsnhlr63l", "title": "Microsoft Store : Grand Theft Auto VI, Ultimate Edition (fiche de l’édition)", "publishedAt": null, "consultedAt": "2026-10-04", "statut": "officiel", "claim": "Le repaire des PTT Youngin$ à piller, la collection de voitures classiques de Wyman, les boutiques et ateliers de l’édition." },
+  "famitsu-nelson": { "url": "https://www.famitsu.com/article/202608/85753", "title": "Famitsu : interview de Rob Nelson (Rockstar North)", "publishedAt": "2026-08-28", "consultedAt": "2026-10-04", "statut": "officiel", "claim": "Braquages seul ou à deux, bijouteries et petites banques mieux gardées, repaires signalés sur la carte, receleurs, voitures de luxe avec alarme et traceur." },
+  "gtavice-famitsu": { "url": "https://www.gtavice.net/news/gta-6-famitsus-full-rob-nelson-interview-translated-into-english", "title": "GTAVice.net : traduction anglaise de l’interview Famitsu", "publishedAt": "2026-09-09", "consultedAt": "2026-10-04", "statut": "officiel", "claim": "La même interview en anglais : caméras de surveillance à détruire, valeur de revente donnée par le Pay ’n’ Spray, boutiques et salons." },
+  "vgc-editions": { "url": "https://www.videogameschronicle.com/news/rockstar-confirms-grand-theft-auto-6-ultimate-edition-and-pre-order-bonuses-but-still-no-price/", "title": "VGC : l’Édition Ultimate et les bonus de précommande confirmés", "publishedAt": "2026-06-24", "consultedAt": "2026-10-04", "statut": "officiel", "claim": "Reprend les textes des éditions : chaque garage a une cache pour les objets volés, rachetés par un receleur local avec une décote." },
+  "sixthaxis-editions": { "url": "https://www.thesixthaxis.com/2026/06/24/gta-6-ultimate-edition-pre-order-bonus-and-vintage-vice-city-pack-revealed/", "title": "TheSixthAxis : l’Édition Ultimate et le Pack Vintage Vice City", "publishedAt": "2026-06-24", "consultedAt": "2026-10-04", "statut": "officiel", "claim": "Le garage de Shore Court : casier d’armes et dépôt pour le receleur." },
+  "gamesradar-63": { "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-new-gameplay-details-activities-customization-confirmed-63-screenshots/", "title": "GamesRadar+ : activités et personnalisation dévoilées avec 63 captures", "publishedAt": "2026-06-24", "consultedAt": "2026-10-04", "statut": "officiel", "claim": "La planque de Jason, avec son kayak Crest et sa Dinka Enduro, et les garages des éditions." },
+  "kotaku-vol": { "url": "https://kotaku.com/for-the-first-time-in-25-years-gta-6-will-make-stealing-cars-hard-2000729419", "title": "Kotaku : GTA 6 rend le vol de voitures plus difficile", "publishedAt": null, "consultedAt": "2026-10-04", "statut": "officiel", "claim": "Rob Nelson : certaines voitures garées restent fermées tant que tu n’as pas les outils pour y entrer." },
+  "gamesradar-outils-vol": { "url": "https://www.gamesradar.com/games/grand-theft-auto/rockstar-says-gta-6-wont-let-you-magically-hotwire-every-car-you-acquire-certain-tools-to-get-into-them/", "title": "GamesRadar+ : pas de démarrage magique pour toutes les voitures", "publishedAt": null, "consultedAt": "2026-10-04", "statut": "officiel", "claim": "Les mêmes propos de Rob Nelson sur les outils à obtenir pour certaines voitures." },
+  "gamespot-vol-voiture": { "url": "https://www.gamespot.com/articles/gta-6-how-to-steal-cars/", "title": "GameSpot : la nouvelle façon de voler une voiture", "publishedAt": null, "consultedAt": "2026-10-04", "statut": "vu", "claim": "Vers 6:05 de l’Extended Look : le choix entre slim jim et vitre brisée ; les voitures récentes demandent un cloneur de clé." },
+  "notebookcheck-peche": { "url": "https://www.notebookcheck.net/Fishing-in-GTA-6-will-be-as-extensive-as-in-RDR2-but-there-s-a-catch.1391730.0.html", "title": "Notebookcheck : une pêche aussi poussée que dans Red Dead Redemption 2, avec une limite", "publishedAt": "2026-09-07", "consultedAt": "2026-10-04", "statut": "officiel", "claim": "Rob Nelson à TGG : les prises sont toujours relâchées ; la pêche mène à des défis, des collectibles et des moments de l’histoire." },
+  "gamespot-peche-chasse": { "url": "https://www.gamespot.com/articles/gta-6-fishing-and-hunting-doesnt-work-like-you-think-it-does/", "title": "GameSpot : la pêche et la chasse ne marchent pas comme on le croit", "publishedAt": null, "consultedAt": "2026-10-04", "statut": "officiel", "claim": "Propos rapportés de Rob Nelson : pêche sans revente, chasse qui rapporte de l’argent." },
+  "beebom-peche-chasse": { "url": "https://beebom.com/gta-6-fishing-and-hunting-will-be-more-detailed-but-have-a-weird-twist/", "title": "Beebom : une pêche et une chasse plus détaillées, avec une surprise", "publishedAt": null, "consultedAt": "2026-10-04", "statut": "officiel", "claim": "Le compte rendu de TGG : la chasse rapporte en revendant ce qu’on récupère, et passe par un personnage que Jason connaît." },
+  "gameinformer-faune": { "url": "https://gameinformer.com/exclusive/2026/09/29/exclusive-grand-theft-auto-vi-includes-over-170-animal-species", "title": "Game Informer : plus de 170 espèces animales dans GTA VI", "publishedAt": "2026-09-29", "consultedAt": "2026-10-04", "statut": "officiel", "claim": "Plus de 170 espèces ; certaines, rares, à découvrir ou légendaires, se pistent." },
+  "insider-activites": { "url": "https://insider-gaming.com/new-gta-6-activities-confirmed/", "title": "Insider Gaming : les nouvelles activités confirmées par Game Informer", "publishedAt": null, "consultedAt": "2026-10-04", "statut": "officiel", "claim": "La liste du dossier Game Informer : base jump, billard, salles de sport, kayak, mini-golf, plongée, courses de rue et tout-terrain, zoos, hydroglisseur et jet-ski." },
+  "psls-activites": { "url": "https://www.playstationlifestyle.net/2026/09/29/gta-6-jet-skiing-mini-golf-side-activities-rockstar", "title": "PlayStation LifeStyle : jet-ski, mini-golf et autres activités confirmées par Rockstar", "publishedAt": "2026-09-29", "consultedAt": "2026-10-04", "statut": "officiel", "claim": "La même liste, avec les randonnées parmi les rendez-vous de Jason et Lucia." },
+  "vgc-details": { "url": "https://www.videogameschronicle.com/news/rockstar-reveals-a-swathe-of-new-gta-6-details-ahead-of-the-netflix-extended-look/", "title": "VGC : Rockstar dévoile une foule de détails avant l’Extended Look", "publishedAt": "2026-08-27", "consultedAt": "2026-10-04", "statut": "officiel", "claim": "Rob Nelson : la nourriture joue sur le poids de Jason et Lucia, et le sport les muscle visiblement." },
+  "dazed-nelson": { "url": "https://www.dazeddigital.com/life-culture/article/70859/1/gta-6-grand-theft-auto-vi-rockstar-exclusive-deep-dive-game-unparalleled-world", "title": "Dazed : dossier exclusif sur GTA VI", "publishedAt": "2026-09-06", "consultedAt": "2026-10-04", "statut": "officiel", "claim": "Les mêmes propos de Rob Nelson sur le poids et les muscles." },
+  "insider-sommeil": { "url": "https://insider-gaming.com/gta-6-will-track-lots-of-things-including-the-characters-sleep/", "title": "Insider Gaming : GTA 6 suivra le sommeil des personnages, entre autres", "publishedAt": null, "consultedAt": "2026-10-04", "statut": "officiel", "claim": "Rob Nelson : des salles de sport où l’on s’entraîne pour gagner en muscle et en force ; l’article parle aussi d’abonnements." },
+  "gamesradar-live": { "url": "https://www.gamesradar.com/news/live/gta-6-extended-look-showcase-live-coverage-2026-everything-announced/", "title": "GamesRadar+ : tout ce que montre l’Extended Look, en direct", "publishedAt": "2026-08-27", "consultedAt": "2026-10-04", "statut": "vu", "claim": "Lucia au développé couché, en appuyant en rythme ; braquages de stations-service, bandana sur le visage." },
+  "engadget-missed": { "url": "https://www.engadget.com/2246846/things-you-may-have-missed-gta-6-extended-look/", "title": "Engadget : plus de 20 détails à ne pas manquer dans l’Extended Look", "publishedAt": "2026-08-28", "consultedAt": "2026-10-04", "statut": "vu", "claim": "Le basket devant la planque de Jason, le stand de tir chronométré, l’arme cachée de Lucia avant une boutique." },
+  "gi-activites-el": { "url": "https://gameinformer.com/2026/08/27/every-potential-side-activity-we-saw-in-the-grand-theft-auto-vi-extended-look", "title": "Game Informer : les activités aperçues dans l’Extended Look", "publishedAt": "2026-08-27", "consultedAt": "2026-10-04", "statut": "vu", "claim": "Courses de nuit, motos, stock-car et rallye, base jump, télévision, club de strip-tease où l’on dépense de l’argent." },
+  "gtawiki-trailers": { "url": "https://gta.wiki/w/Grand_Theft_Auto_VI/Trailers", "title": "GTA Wiki : plans des trailers, minutés", "publishedAt": null, "consultedAt": "2026-10-04", "statut": "vu", "claim": "Le braquage du magasin d’alcool du Trailer 1, vers 1:16." },
+  "notebookcheck-money": { "url": "https://www.notebookcheck.net/GTA-6-Story-missions-alone-apparently-won-t-be-enough-to-finish-the-game.1395809.0.html", "title": "Notebookcheck : les missions seules ne suffiront pas à financer l’histoire", "publishedAt": null, "consultedAt": "2026-10-04", "statut": "officiel", "claim": "Reprend la phrase de Rob Nelson : il faudra gagner de l’argent hors des missions pour faire avancer l’histoire." },
+  "tweaktown-economie": { "url": "https://www.tweaktown.com/news/113368/gta-6s-illicit-criminal-economy-robberies-and-money-explained-by-rockstar/index.html", "title": "TweakTown : l’économie criminelle de GTA 6, braquages et argent", "publishedAt": null, "consultedAt": "2026-10-04", "statut": "conf", "claim": "Mêle des propos de Rob Nelson et des détails d’aperçus : un receleur par type de butin, scan d’une voiture avant le vol." },
+  "gtabase-boutiques": { "url": "https://www.gtabase.com/articles/gta-6/gta-6-will-let-you-rob-almost-any-store", "title": "GTABase : braquer presque n’importe quelle boutique", "publishedAt": null, "consultedAt": "2026-10-04", "statut": "conf", "claim": "D’après des aperçus, presque toutes les boutiques se braquent ; aucune confirmation de Rockstar." },
+  "gtadb": { "url": "https://gtadb.org/", "title": "gtadb.org : bâtiments de Leonida repérés dans les médias", "publishedAt": null, "consultedAt": "2026-10-04", "statut": "comm", "claim": "Salles de sport, circuits, zoo et magasin braqué placés sur la carte et rapprochés de lieux réels ; les noms en jeu restent à confirmer." },
+  "x-rockstarintel-photo": { "url": "https://x.com/GTAonlineNews/status/2093075571358028159", "title": "RockstarINTEL (X) : un mode photo, selon TGG", "publishedAt": null, "consultedAt": "2026-10-04", "statut": "conf", "claim": "Le créateur TGG dit avoir vu un mode photo, sans mode réalisateur ; rien de Rockstar." }
+ },
+ "leo": {
+  "suggestions": ["Quelles activités annexes dans GTA 6 ?", "Peut-on pêcher dans GTA 6 ?", "Peut-on chasser dans GTA 6 ?", "Peut-on aller à la salle de sport ?", "Comment voler une voiture ?", "Les activités annexes rapportent-elles de l’argent ?"]
+ }
+}

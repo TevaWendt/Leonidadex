@@ -1,0 +1,103 @@
+{
+ "_note": "Section missions : questions de test de Léo en allemand pour la section « Missions » (nombre de missions, déblocage, gains, braquages, durée, changement de personnage, guide). Rejoué par node outils/tests/leo-eval.cjs --lang de --questions=outils/tests/leo-questions-section-missions-de.json.",
+ "schemaVersion": 1,
+ "questions": [
+  {
+   "q": "wie viele missionen gibt es in gta 6",
+   "expect": {
+    "topic": "missions-faq-1"
+   },
+   "tags": [
+    "section-missions"
+   ]
+  },
+  {
+   "q": "wie viele kapitel hat gta 6",
+   "expect": {
+    "topic": "missions-faq-1"
+   },
+   "tags": [
+    "section-missions"
+   ]
+  },
+  {
+   "q": "wie schalte ich eine mission frei",
+   "expect": {
+    "topic": "missions-faq-2"
+   },
+   "tags": [
+    "section-missions"
+   ]
+  },
+  {
+   "q": "mission gesperrt gta 6",
+   "expect": {
+    "topic": "missions-faq-2"
+   },
+   "tags": [
+    "section-missions"
+   ]
+  },
+  {
+   "q": "welche missionen bringen am meisten",
+   "expect": {
+    "topic": "missions-faq-3"
+   },
+   "tags": [
+    "section-missions"
+   ]
+  },
+  {
+   "q": "lukrativste mission gta 6",
+   "expect": {
+    "topic": "missions-faq-3"
+   },
+   "tags": [
+    "section-missions"
+   ]
+  },
+  {
+   "q": "was weiß man über raubüberfälle",
+   "expect": {
+    "any": [
+     {
+      "topic": "braquage"
+     },
+     {
+      "topic": "braquer-magasins"
+     }
+    ]
+   },
+   "tags": [
+    "section-missions"
+   ]
+  },
+  {
+   "q": "wie viele stunden dauert gta 6",
+   "expect": {
+    "topic": "mission-solo"
+   },
+   "tags": [
+    "section-missions"
+   ]
+  },
+  {
+   "q": "kann man während einer mission die figur wechseln",
+   "expect": {
+    "topic": "changer-perso"
+   },
+   "tags": [
+    "section-missions"
+   ]
+  },
+  {
+   "q": "komplettlösung missionen gta 6",
+   "expect": {
+    "page": "/missions.html"
+   },
+   "tags": [
+    "section-missions"
+   ]
+  }
+ ]
+}

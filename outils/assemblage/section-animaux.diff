@@ -1,0 +1,370 @@
+diff --git a/leo-core.js b/leo-core.js
+index a7aef49e..59066e0f 100644
+--- a/leo-core.js
++++ b/leo-core.js
+@@ -385,7 +385,7 @@ function create(data,options={}){
+   if(/^\/(?:personnages|entreprises|demeures|planques|gangs)\/[a-z0-9-]+\.html$/.test(path)&&name)return [fill('C’est quoi {name} ?',{name}),fill('Où est {name} ?',{name}),...pick('monde').slice(0,4)];
+   if(path==='/'||path==='/index.html')return pick('home');if(path==='/calculateurs.html')return pick('calculateurs');if(path==='/tuto.html')return pick('tuto');if(path==='/carte.html')return pick('carte');
+   if(/^\/(?:vehicules|classement-vehicules|vehicules-rares|comparateur|bateaux)\.html$/.test(path))return pick('vehicules');if(path==='/armes.html')return pick('armes');if(path==='/progression.html')return pick('progression');
+-  if(/^\/(?:lieux|personnages|demeures|planques|entreprises|gangs|collectibles)\.html$/.test(path))return pick('monde');if(/^\/(?:nourriture|style|personnalisations)\.html$/.test(path))return pick('listes');if(/^\/(?:achats|logements)\.html$/.test(path))return pick('achats');if(/^\/(?:a-propos|contact|mentions-legales|medias)\.html$/.test(path))return pick('info');return pick('default');}
++  if(/^\/(?:lieux|personnages|demeures|planques|entreprises|gangs|collectibles)\.html$/.test(path))return pick('monde');if(/^\/(?:nourriture|style|personnalisations)\.html$/.test(path))return pick('listes');if(/^\/(?:achats|logements)\.html$/.test(path))return pick('achats');if(/^\/(?:a-propos|contact|mentions-legales|medias)\.html$/.test(path))return pick('info');if(/^\/animaux(?:\/[a-z0-9-]+)?\.html$/.test(path))return pick('animaux');/* section animaux */return pick('default');}
+  function attach(name,json){if(loaded.has(name))return false;addShard(name,json);loaded.add(name);return true;}
+  return Object.freeze({answer,ask,prepare,needs,loadShard,loadAll,attach,search,choose,suggest,items,byKey,categories,tools,data,knowledge:()=>knowledge,loaded:()=>[...loaded],analyze:q=>analyzer.analyze(q),detectEntities:q=>detectEntities(analyzer.analyze(q)),intents:q=>[...intentsOf(analyzer.analyze(q),norm(q))],reportLink});
+ }
+diff --git a/leo-ui.js b/leo-ui.js
+index b6ac79df..07b4d7d1 100644
+--- a/leo-ui.js
++++ b/leo-ui.js
+@@ -5,14 +5,14 @@
+ (function(){'use strict';
+ /* v7.61 : l'index est celui de la langue de la page (/es/leo-index.json sur une page espagnole) : dossier de ce script */
+ const LEO_BASE=(document.currentScript&&document.currentScript.src||'').replace(/^https?:\/\/[^/]+/,'').replace(/[^/]*$/,'')||'/';
+-const LANG_UI=(document.documentElement.lang||'fr').slice(0,2).toLowerCase(),C=window.LKLeoCore,L=window.LKLeoLink,launch=document.getElementById('leo-launch'),KEY='lk_leo_session_v2',TTL=30*60*1000,MAX_MESSAGES=32,V='?v=ea0eb950238a',MAX_BYTES=1500000;
++const LANG_UI=(document.documentElement.lang||'fr').slice(0,2).toLowerCase(),C=window.LKLeoCore,L=window.LKLeoLink,launch=document.getElementById('leo-launch'),KEY='lk_leo_session_v2',TTL=30*60*1000,MAX_MESSAGES=32,V='?v=f5a3ac975ad6',MAX_BYTES=1500000;
+ const names={capital:'J’ai déjà ($)',target:'Je veux avoir ($)',hourly:'Gain net estimé ($ / h)',price:'Prix que j’imagine ($)',reserve:'Réserve à garder ($)',minutes:'Session (min)',dailyMinutes:'Temps par jour (min)',players:'Joueurs, moi compris'};
+ const preferred={goal:['capital','target','hourly'],session:['minutes','capital','players'],activities:['capital','minutes','players'],purchase:['price','capital'],roi:['price','capital'],order:['capital','hourly'],budget:['capital','reserve'],plan:['capital','target','minutes']};
+ const el=(tag,text,cls)=>{const node=document.createElement(tag);if(text!==undefined&&text!==null)node.textContent=text;if(cls)node.className=cls;return node;};
+ const button=(text,cls,fn)=>{const b=el('button',text,cls);b.type='button';if(fn)b.addEventListener('click',fn);return b;};
+ /* v7.45 : les morceaux de l'index que vise une question sont préparés pendant la frappe, au survol ou au focus d'une suggestion : la réponse est prête à l'envoi. Ce sont des fichiers du site ; rien ne part du navigateur. */
+ /* famille de la page ouverte → morceau de l'index à préparer à l'ouverture */
+-function pageShard(path){if(/^\/(?:calculateurs|tuto)\.html$/.test(path))return 'calculateur';if(/^\/(?:vehicules\/|vehicules\.html|vehicules-rares\.html|classement-vehicules\.html|comparateur\.html|bateaux\.html)/.test(path))return 'vehicules';if(/^\/(?:armes\/|armes\.html|munitions\.html)/.test(path))return 'armes';if(/^\/(?:lieux|personnages|entreprises|demeures|planques|gangs)(?:\/|\.html)/.test(path))return 'monde';if(/^\/carte\.html/.test(path))return 'lieux';if(/^\/(?:nourriture|style|personnalisations|tatouages|vetements|accessoires)\.html/.test(path))return 'catalogues';return null;}
++function pageShard(path){if(/^\/(?:calculateurs|tuto)\.html$/.test(path))return 'calculateur';if(/^\/(?:vehicules\/|vehicules\.html|vehicules-rares\.html|classement-vehicules\.html|comparateur\.html|bateaux\.html)/.test(path))return 'vehicules';if(/^\/(?:armes\/|armes\.html|munitions\.html)/.test(path))return 'armes';if(/^\/(?:lieux|personnages|entreprises|demeures|planques|gangs)(?:\/|\.html)/.test(path))return 'monde';if(/^\/carte\.html/.test(path))return 'lieux';if(/^\/(?:nourriture|style|personnalisations|tatouages|vetements|accessoires)\.html/.test(path))return 'catalogues';if(/^\/animaux(?:\/|\.html)/.test(path))return 'animaux';/* section animaux */return null;}
+ let pageReady=null;
+ function preload(text){if(!core)return;let list=[];try{list=core.needs(String(text).slice(0,C.MAX_INPUT));}catch{list=[];}for(const n of list)core.loadShard(n).catch(()=>{});}
+ const questionButton=(q,cls)=>{const b=button(q,cls,()=>ask(q));const warm=()=>preload(q);for(const ev of ['pointerenter','focus','touchstart'])b.addEventListener(ev,warm,{once:true,passive:true});return b;};
+diff --git a/outils/gen-leo.cjs b/outils/gen-leo.cjs
+index cee4ef6c..55f22603 100644
+--- a/outils/gen-leo.cjs
++++ b/outils/gen-leo.cjs
+@@ -100,8 +100,10 @@ function generate(options={}){
+   const acqEd=json('outils/catalogues/editorial.json');const acqVer=Object.values(require('./catalogues.cjs').load().sources).map(s=>s.consultedAt).sort().pop();const PAGES={nourriture:['Consommables','/nourriture.html'],style:['Vêtements et style','/style.html'],customizations:['Personnalisations','/personnalisations.html']};
+   for(const [key,[label,page]] of Object.entries(PAGES))(acqEd[key]?.faq||[]).forEach((x,i)=>{if(!Array.isArray(x.k)||!x.k.length||typeof x.a!=='string'||x.a.length>900)throw Error('FAQ de '+key+' sans mots-clés ou trop longue : '+x.q);
+    knowledge.push({id:'acq-'+key+'-'+(i+1),q:tx(x.q),f:[x.q],k:x.k,text:tx(x.a),status:tx('Réponse de la FAQ « '+label+' », sources en bas de la page'),links:[{label:'La FAQ et ses sources',url:routeOK(page+'#faq')}],verifiedAt:acqVer,min:Number.isInteger(x.min)?x.min:2});});}
++ /* section animaux : fiches (morceau « monde ») et questions de la section « Animaux » (morceau leo/animaux.json), lues dans outils/gen-animaux.cjs */
++ const sectionTopics={};for(const sec of ['animaux']){const L=require('./gen-'+sec+'.cjs').leo(r);for(const x of L.fiches)add(x);inputFiles.push(...L.inputs);Object.assign(defs.suggestions,L.suggestions||{});sectionTopics[sec]=L.topics.map(t=>{if(!/^[a-z0-9-]+$/.test(t.id)||ids.has(t.id))throw Error('Identifiant de sujet invalide ou en double : '+t.id);ids.add(t.id);if(typeof t.text!=='string'||!t.text||t.text.length>900)throw Error('Réponse absente ou trop longue : '+t.id);return {...t,q:tx(t.q),text:tx(t.text),status:tx(t.status),links:t.links.map(l=>({label:tx(l.label),url:routeOK(l.url)}))};});}
+  /* ---------- passages des pages ---------- */
+- const passages=[];{const pages=[...fs.readdirSync(r).filter(f=>f.endsWith('.html')&&!f.startsWith('google')&&f!=='404.html'),...['lieux','personnages','entreprises','demeures','planques','gangs'].filter(dir=>fs.existsSync(path.join(r,dir))).flatMap(dir=>fs.readdirSync(path.join(r,dir)).filter(f=>f.endsWith('.html')).map(f=>dir+'/'+f))].sort();
++ const passages=[];{const pages=[...fs.readdirSync(r).filter(f=>f.endsWith('.html')&&!f.startsWith('google')&&f!=='404.html'),...['lieux','personnages','entreprises','demeures','planques','gangs','animaux'/* section animaux */].filter(dir=>fs.existsSync(path.join(r,dir))).flatMap(dir=>fs.readdirSync(path.join(r,dir)).filter(f=>f.endsWith('.html')).map(f=>dir+'/'+f))].sort();
+   for(const file of pages){const html=read(file);if(/http-equiv=["']refresh/i.test(html)||/name=["']robots["'][^>]*noindex/i.test(html))continue;const dd=doc(file),main=dd.querySelector('main');if(!main)continue;const title=flat(dd.querySelector('title')?.textContent||'').replace(/\s*\|\s*Leonidakit$/,'');
+    for(const s of main.querySelectorAll('script,style,noscript,form,nav,table,figure,.lk-stack,.veh-grid,.arm-grid,.cmp-tray,.own-bar,#suggest,.leo-panel,[aria-hidden="true"],#sources,#sources-calc,[id^="src-"],[class*="ed-src"],.ed-sources'))s.remove();
+    const textOf=node=>{let out='';const visit=n=>{for(const ch of n.childNodes){if(ch.nodeType===3)out+=ch.nodeValue;else if(ch.nodeType===1){if(ch.tagName==='BR')out+=' ';else{out+=' ';visit(ch);out+=' ';}}}};visit(node);return flat(out);};
+@@ -132,6 +134,9 @@ function generate(options={}){
+  /* Le thème « calculateur » (une soixantaine de questions) est un morceau à part, chargé dès qu'une question en parle ou dès l'ouverture sur le calculateur et le Tuto : il allège le noyau. */
+  const calcTopics=knowledge.filter(t=>t._theme==='calculateur'),coreTopics=knowledge.filter(t=>t._theme!=='calculateur'),stripTheme=t=>{/* les formulations sont livrées déjà analysées (d, dq, dk : jetons séparés par des espaces, même analyseur que dans le navigateur) : le navigateur n'a rien à réanalyser à l'ouverture */const o={...t},terms=x=>analyzer.analyze(x).terms.join(' ');delete o._theme;o.d=t.f.map(terms);o.dq=terms(t.q);if(t.k&&t.k.length)o.dk=[...new Set(t.k.flatMap(k=>analyzer.analyze(k).terms))].join(' ');delete o.f;delete o.k;return o;};
+  const shards={calculateur:{file:'/leo/calculateur.json',knowledge:true,vocab:vocabOf(calcTopics.flatMap(t=>[t.q,...t.f,...(t.k||[])]))},vehicules:{file:'/leo/vehicules.json',vocab:vocab.vehicules},armes:{file:'/leo/armes.json'},monde:{file:'/leo/monde.json'},lieux:{file:'/leo/lieux.json',vocab:vocab.lieux,packed:['id','name','region','st','image','real','proof','nt']},catalogues:{file:'/leo/catalogues.json',vocab:vocab.catalogues},passages:{file:'/leo/passages.json'}};
++ /* section animaux : un morceau de questions par section (chargé quand une question en parle, comme le calculateur) ; son vocabulaire vient des mots-clés de ses questions, sans les mots courants des sujets du noyau (« combien », « comment », « argent »…) : une question générale ne le charge pas, et chaque question de la section le charge */
++ const dfCore=new Map();for(const t of knowledge)for(const w of new Set(vocabOf([t.q,...(t.f||[]),...(t.k||[])])))dfCore.set(w,(dfCore.get(w)||0)+1);
++ for(const [sec,list] of Object.entries(sectionTopics)){const v=vocabOf(list.flatMap(t=>t.k||[])).filter(w=>(dfCore.get(w)||0)<=8);for(const t of list)for(const f of [t.q,...(t.f||[])])if(!vocabOf([f]).some(w=>v.includes(w)))throw Error('Section '+sec+' : la formulation « '+f+' » ne charge pas son morceau (mots-clés trop courants)');shards[sec]={file:'/leo/'+sec+'.json',knowledge:true,vocab:v};}
+  const core={schemaVersion:2,checkedAt:DEFAULT_DATE,release,categories,tools:defs.tools,definitions,faq,texts:deepTx(defs.texts),templates:deepTx(defs.templates),suggestions:deepTx(defs.suggestions),help:helpMap,offtopic:defs.offtopic,lexique:compactLex,seqNames,official:officialLinks,knowledge:coreTopics.map(stripTheme),names,shards};
+  core.revision=crypto.createHash('sha256').update(JSON.stringify(core)).digest('hex').slice(0,12);
+  const outputs=new Map();outputs.set('leo-index.json',JSON.stringify(core));
+@@ -147,6 +152,7 @@ function generate(options={}){
+   const packed=list.map(x=>strip({...x,proof:proofs.indexOf(x.proof),source:x.source?sources.indexOf(x.source):null,famLabel:x.famLabel?labels.indexOf(x.famLabel):null,catLabel:x.catLabel?labels.indexOf(x.catLabel):null,nt:name==='vehicules'||name==='catalogues'?ntOf(x):null}));
+   outputs.set('leo/'+name+'.json',JSON.stringify({schemaVersion:2,shard:name,revision:core.revision,proofs,sources,labels,items:packed}));}
+  outputs.set('leo/calculateur.json',JSON.stringify({schemaVersion:2,shard:'calculateur',revision:core.revision,knowledge:calcTopics.map(stripTheme)}));
++ for(const [sec,list] of Object.entries(sectionTopics))outputs.set('leo/'+sec+'.json',JSON.stringify({schemaVersion:2,shard:sec,revision:core.revision,knowledge:list.map(stripTheme)}));/* section animaux */
+  /* passages : jetons calculés d'avance (s), même analyseur que dans le navigateur */
+  outputs.set('leo/passages.json',JSON.stringify({schemaVersion:2,shard:'passages',revision:core.revision,items:passages.map(p=>({...p,s:analyzer.analyze(p.h+' '+p.x).terms.join(' ')}))}));
+  const coreBytes=Buffer.byteLength(outputs.get('leo-index.json'));if(coreBytes>CORE_MAX)throw Error('Noyau de Léo trop lourd : '+coreBytes+' octets (maximum '+CORE_MAX+').');
+diff --git a/outils/hubs-doublons.cjs b/outils/hubs-doublons.cjs
+index d4e5fc72..5e22b08c 100644
+--- a/outils/hubs-doublons.cjs
++++ b/outils/hubs-doublons.cjs
+@@ -33,9 +33,11 @@ function collectFicheStrings(ed, extra = []) {
+ function check(opts = {}) {
+   const hubs = opts.hubs || JSON.parse(fs.readFileSync(path.join(root, 'outils/editorial-hubs.json'), 'utf8'));
+   const ed = opts.editorial || JSON.parse(fs.readFileSync(path.join(root, 'outils/editorial.json'), 'utf8'));
++  /* section animaux : le hub et les fiches Animaux (outils/editorial-animaux.json) sont comparés comme les autres */
++  if (!opts.hubs || !opts.editorial) { const A = JSON.parse(fs.readFileSync(path.join(root, 'outils/editorial-animaux.json'), 'utf8')); if (!opts.hubs) hubs.animaux = A.hub; if (!opts.editorial) ed.animals = A.fiches; }
+   const ficheSet = new Set(collectFicheStrings(ed, opts.extra || []).flatMap(sentences));
+   const dupes = [], seen = new Map();
+-  for (const hub of ['lieux', 'personnages', 'demeures', 'planques', 'entreprises', 'gangs']) {
++  for (const hub of ['lieux', 'personnages', 'demeures', 'planques', 'entreprises', 'gangs', 'animaux' /* section animaux */]) {
+     if (!hubs[hub]) continue;
+     for (const s of collectHubStrings(hubs[hub]).flatMap(sentences)) {
+       if (ficheSet.has(s)) dupes.push({ hub, phrase: s, ou: 'fiche' });
+diff --git a/outils/hubs-monde.cjs b/outils/hubs-monde.cjs
+index 205996ae..4aa88aa2 100644
+--- a/outils/hubs-monde.cjs
++++ b/outils/hubs-monde.cjs
+@@ -8,8 +8,10 @@ const fs = require('node:fs'), path = require('node:path');
+ const S = require('./sections.cjs');
+ const root = path.resolve(__dirname, '..');
+ const DATA = JSON.parse(fs.readFileSync(path.join(root, 'outils/editorial-hubs.json'), 'utf8'));
++/* section animaux : zone éditoriale de animaux.html et ses sources nouvelles (outils/editorial-animaux.json) ; une source déjà définie ici n’est jamais redéfinie */
++{ const A = JSON.parse(fs.readFileSync(path.join(root, 'outils/editorial-animaux.json'), 'utf8')); DATA.animaux = A.hub; for (const [id, s] of Object.entries(A.sources)) { if (DATA.sources[id]) throw Error('Source déjà définie dans editorial-hubs.json : ' + id); DATA.sources[id] = s; } }
+ const esc = S.esc;
+-const HUBS = ['lieux', 'personnages', 'demeures', 'planques', 'entreprises', 'gangs']; /* v7.65 : gangs et factions */
++const HUBS = ['lieux', 'personnages', 'demeures', 'planques', 'entreprises', 'gangs', 'animaux' /* section animaux */]; /* v7.65 : gangs et factions */
+ 
+ const para = list => (list || []).map(p => '<p>' + esc(p) + '</p>').join('');
+ const pinsHref = a => a.pins ? 'carte.html#pins=' + a.pins.join(',') + (a.pinsTitle ? '&t=' + encodeURIComponent(a.pinsTitle) : '') : a.href;
+diff --git a/outils/langues/en/leo-pivot.json b/outils/langues/en/leo-pivot.json
+index 810990fc..9c872d3e 100644
+--- a/outils/langues/en/leo-pivot.json
++++ b/outils/langues/en/leo-pivot.json
+@@ -6292,6 +6292,14 @@
+   [
+    "gang compound",
+    "repaire de gang"
++  ],
++  [
++   "hunt",
++   "chasser"
++  ],
++  [
++   "hunting",
++   "chasse"
+   ]
+  ]
+ }
+diff --git a/outils/leo-knowledge.json b/outils/leo-knowledge.json
+index d858c70e..e2d273a2 100644
+--- a/outils/leo-knowledge.json
++++ b/outils/leo-knowledge.json
+@@ -1388,7 +1388,9 @@
+     "crocodile gta 6",
+     "ya des animaux",
+     "les animaux du jeu",
+-    "gta6 animaux"
++    "gta6 animaux",
++    "quels animaux dans gta 6",
++    "quels animaux y a t il dans gta 6"
+    ],
+    "k": [
+     "animaux",
+@@ -1398,14 +1400,19 @@
+     "faune",
+     "animal"
+    ],
+-   "text": "Oui : les alligators de Grassrivers sont l’attraction la plus célèbre de la région, et l’Extended Look montre Jason caresser un chien. Le détail de la faune n’est pas publié.",
+-   "status": "Vu dans les présentations officielles",
++   "text": "Oui, plus de 170 espèces, selon Michael Kane, de Rockstar, dans le dossier de Game Informer (29 septembre 2026) : alligators, lamantins, flamants, pélicans, et des espèces invasives comme l’iguane vert. Les images officielles montrent déjà alligators, iguanes, cerfs, puma, dauphins et chiens ; dans l’Extended Look, Jason caresse un chien. Aucun animal de compagnie à adopter n’est annoncé.",
++   "status": "Dossier Game Informer avec Rockstar, et images officielles",
+    "links": [
++    {
++     "label": "Les animaux de GTA VI",
++     "url": "/animaux.html"
++    },
+     {
+      "label": "Grassrivers",
+      "url": "/lieux/grassrivers.html"
+     }
+    ],
++   "checkedAt": "2026-10-04",
+    "source": "https://www.rockstargames.com/VI/only-in-leonida/grassrivers"
+   },
+   {
+diff --git a/outils/leo-langues.cjs b/outils/leo-langues.cjs
+index a405dab5..83d48d56 100644
+--- a/outils/leo-langues.cjs
++++ b/outils/leo-langues.cjs
+@@ -71,6 +71,7 @@ function build(code, root, L, ctx) {
+     file = 'leo/' + f;
+     const o = { ...sh };
+     if (name === 'calculateur') o.knowledge = (sh.knowledge || []).map(topic);
++    if (name !== 'calculateur' && Array.isArray(sh.knowledge)) o.knowledge = sh.knowledge.map(topic); /* section animaux : morceau de questions de la section (leo/animaux.json) */
+     if (Array.isArray(sh.proofs)) o.proofs = sh.proofs.map(p => T(p, 'preuve'));
+     if (Array.isArray(sh.labels)) o.labels = sh.labels.map(p => T(p, 'libellé'));
+     if (Array.isArray(sh.items)) {
+@@ -119,7 +120,7 @@ function build(code, root, L, ctx) {
+   {
+     const { JSDOM } = require('jsdom');
+     const flat = s => String(s ?? '').replace(/\s+/g, ' ').trim();
+-    const pages = lang.pages.filter(p => !p.includes('/') || /^(?:lieux|personnages|entreprises|demeures|planques|gangs)\//.test(p)).sort();
++    const pages = lang.pages.filter(p => !p.includes('/') || /^(?:lieux|personnages|entreprises|demeures|planques|gangs|animaux)\//.test(p)/* section animaux */).sort();
+     for (const file of pages) {
+       const f = path.join(root, dir, file); if (!fs.existsSync(f)) continue;
+       const html = (ctx.outputs && ctx.outputs.get(dir + '/' + file)) || fs.readFileSync(f, 'utf8');
+diff --git a/outils/lore-gen.js b/outils/lore-gen.js
+index f3c3c861..999db762 100644
+--- a/outils/lore-gen.js
++++ b/outils/lore-gen.js
+@@ -12,6 +12,7 @@ const DP=require('./donnees-publiees.cjs');
+ const MONDE=require('./hubs-monde.cjs'),DOUBLONS=require('./hubs-doublons.cjs');
+ const esc=t=>String(t==null?'':t).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+ const ED=JSON.parse(fs.readFileSync('outils/editorial.json','utf8'));
++const EDA=JSON.parse(fs.readFileSync('outils/editorial-animaux.json','utf8'));ED.animals=EDA.fiches;HUB_NOTES.animaux=EDA.note;/* section animaux : fiches et texte d’en-tête du hub Animaux (outils/editorial-animaux.json) */
+ /* v7.43 (lot 6) : ateliers de personnalisation (fiches entreprises reliées à personnalisations.html). */
+ const ATELIERS=(JSON.parse(fs.readFileSync('outils/catalogues/editorial.json','utf8')).customizations.ateliers||{groups:[]}).groups.flatMap(g=>g.items).filter(a=>a.business);
+ const MED=JSON.parse(fs.readFileSync('outils/medias-officiels.json','utf8'));
+@@ -56,6 +57,7 @@ const SECTIONS={
+     lede:"Motards d’Ambrosia, gang de Southside, braqueurs de Raul, trafiquants des Keys et forces de l’ordre : les groupes que Rockstar a montrés, et ce qui reste à confirmer.",
+     desc:'Les gangs et factions de GTA VI : Final Chapter MC, PTT Youngin$, San4San, l’équipe de Raul, le réseau de Brian et la police, avec leurs sources.'},
+ };
++SECTIONS.animals=EDA.section;/* section animaux : animaux.html et animaux/<id>.html, après les gangs (statut, sources et gros plans ajoutés par outils/gen-animaux.cjs) */
+ const byId={};for(const k of Object.keys(SECTIONS))for(const x of ED[k])byId[x.id]=Object.assign({sec:k},x);
+ {const dupes=DOUBLONS.check({editorial:ED,extra:[...Object.values(HUB_NOTES),...Object.values(SECTIONS).flatMap(S=>[S.lede,S.desc,S.title])]});
+  if(dupes.length)throw new Error('Hubs du monde : phrases identiques aux fiches ou à un autre hub, corrige outils/editorial-hubs.json :\n'+dupes.map(x=>'  '+x.hub+' ↔ '+x.ou+' : « '+x.phrase+' »').join('\n'));}
+@@ -67,7 +69,7 @@ const ENR=GT.enrichit||{};const LORE_BY_MAP={};for(const k of Object.keys(ED))fo
+ const placeImage=id=>{const e=ENR[id];if(e&&e.img&&/^img\/officiel\//.test(e.img)&&fs.existsSync(e.img))return {variants:[{src:'/'+e.img.replace('-1280.webp','-480.webp'),w:480,h:270}]};const l=LORE_BY_MAP[id];if(l&&l.variants)return l;return mapPhoto(id);};
+ const mapPhoto=id=>{const q=GTBY[id];if(!q||!q.img||!/\.webp$/.test(q.img)||!fs.existsSync(q.img.replace(/^\//,'')))return null;return {variants:[{src:'/'+q.img.replace(/^\//,''),w:q.imgW||960,h:q.imgH||540}],titre:q.n.replace(/&#x27;/g,"'").replace(/&quot;/g,'"').replace(/&amp;/g,'&'),alt:q.imgAlt||null};};
+ const visual=x=>media(x)||(x.mapId?mapPhoto(x.mapId):null);
+-const RELATED=[['regions','Régions'],['characters','Personnages'],['factions','Gangs et factions'],['residences','Demeures'],['hideouts','Planques'],['businesses','Entreprises']];
++const RELATED=[['regions','Régions'],['characters','Personnages'],['factions','Gangs et factions'],['residences','Demeures'],['hideouts','Planques'],['businesses','Entreprises'],['animals','Animaux']/* section animaux */];
+ const kindOf=(x,S)=>x&&x.kind||(S?S.one:'Leonida');/* v7.65 : étiquette propre à une fiche (« Club de motards »), sinon celle de la section */
+ const gtName=id=>{const q=GTBY[id];return q?q.n.replace(/&#x27;/g,"'").replace(/&quot;/g,'"').replace(/&amp;/g,'&').replace(/ \(nom réel\)$/,''):id;};
+ const LOCAL={'vice-city':'Vice City','leonida-keys':'Leonida Keys','grassrivers':'Grassrivers','port-gellhorn':'Port Gellhorn','ambrosia':'Ambrosia','mount-kalaga':'Mount Kalaga','ocean-beach':'Ocean Beach','little-cuba':'Little Cuba','tisha-wocka':'Tisha-Wocka','vc-port':'VC Port','key-lento':'Key Lento','allied-crystal':'Allied Crystal','leonida-penitentiary':'Pénitencier de Leonida','ptt-youngin':'PTT Youngin$','vice-dale':'Comté de Vice-Dale','leonard-county':'Comté de Leonard'};
+@@ -88,7 +90,7 @@ const EXPLORE=pre=>`<section class="shell reveal lk-explore">
+   <div class="lk-links rise"><a class="lk-link" href="${pre}carte.html"><img src="/img/officiel/leonida-keys-01-480.webp" width="480" height="270" alt="" loading="lazy" decoding="async"><span><b>La carte</b><i>2 547 lieux repérés, à cocher</i></span></a><a class="lk-link" href="${pre}vehicules.html"><img src="/img/officiel/one-eyed-willie-s-mod-shop-01-480.webp" width="480" height="270" alt="" loading="lazy" decoding="async"><span><b>Les 302 véhicules</b><i>Fiches, photos officielles et schémas</i></span></a><a class="lk-link" href="${pre}collectibles.html"><img src="/img/officiel/classic-car-collection-04-480.webp" width="480" height="270" alt="" loading="lazy" decoding="async"><span><b>Collectibles</b><i>La collection de Wyman et le carnet</i></span></a></div>
+ </section>`;
+ const recapOf=(x,S)=>{const f=(x&&x.facts||[]).map(t=>String(t).trim().replace(/\s*[.;]$/,''));if(!f.length)return '';
+-  const intro={regions:'Ce qu’il faut retenir de cette région',characters:'Ce qu’il faut retenir de ce personnage',businesses:'Ce qu’il faut retenir de cette adresse',residences:'Ce qu’il faut retenir de ce lieu',hideouts:'Ce qu’il faut retenir de ce lieu',factions:'Ce qu’il faut retenir de ce groupe'}[S]||'À retenir';
++  const intro={regions:'Ce qu’il faut retenir de cette région',characters:'Ce qu’il faut retenir de ce personnage',businesses:'Ce qu’il faut retenir de cette adresse',residences:'Ce qu’il faut retenir de ce lieu',hideouts:'Ce qu’il faut retenir de ce lieu',factions:'Ce qu’il faut retenir de ce groupe',animals:'L’essentiel de cette fiche'/* section animaux */}[S]||'À retenir';
+   return `<section class="shell reveal lk-recap"><h2 class="sec-h">${intro}</h2><p class="fiche-txt rise">${esc(f.join('. ')+'.')} ${esc(x.name)} ${({f:'est reliée',mp:'sont reliés',fp:'sont reliées'})[x&&x.accord]||'est relié'} aux fiches voisines ci-dessous : les fiches se complètent avec le jeu, et ce résumé se mettra à jour avec elles.</p></section>`;};
+ const metaDesc=t=>{t=String(t||'').replace(/\s+/g,' ').trim();if(t.length<=158)return t;const ph=t.split(/(?<=[.!?])\s+/);let d='';for(const q of ph){if(d&&(d+' '+q).length>158)break;d=d?d+' '+q:q;}return d.length<=158&&d.length>=60?d:t.slice(0,155).replace(/\s+\S*$/,'')+'…';};
+ function page({p,title,desc,canonical,ogImg,body,crumbs,hub,RECAP='',ld=''}){desc=metaDesc(desc);
+@@ -226,8 +228,8 @@ ${S.hub==='planques'?'<!-- lot-d-garages:start --><!-- lot-d-garages:end -->\n':
+ ${calcBridge}${factionBridge}
+ <section class="shell lore-body">
+   ${x.texte?`<div class="lore-texte reveal"><h2>Présentation</h2><p class="rise">${esc(x.texte)}</p></div>`:''}
+-  ${x.contexte?`<div class="lore-texte reveal"><h2>${{regions:'Dans les visuels et dans l’histoire',characters:'Dans l’histoire',businesses:'Ce que montrent les visuels',residences:'Ce qu’on en sait',hideouts:'Ce qu’on en sait',factions:'Ce que montrent les médias officiels'}[key]||'Dans l’histoire'}</h2><p class="rise">${esc(x.contexte)}</p></div>`:''}
+-  ${x.pratique?`<div class="lore-texte reveal"><h2>${{regions:'Sur le terrain',characters:'Sur les captures et dans les fiches',businesses:'Dans le jeu',residences:'Dans le jeu',hideouts:'Dans le jeu',factions:'Ce qu’on sait pour le jeu'}[key]||'Dans le jeu'}</h2><p class="rise">${esc(x.pratique)}</p></div>`:''}
++  ${x.contexte?`<div class="lore-texte reveal"><h2>${{regions:'Dans les visuels et dans l’histoire',characters:'Dans l’histoire',businesses:'Ce que montrent les visuels',residences:'Ce qu’on en sait',hideouts:'Ce qu’on en sait',factions:'Ce que montrent les médias officiels',animals:'Ce que montrent les images'/* section animaux */}[key]||'Dans l’histoire'}</h2><p class="rise">${esc(x.contexte)}</p></div>`:''}
++  ${x.pratique?`<div class="lore-texte reveal"><h2>${{regions:'Sur le terrain',characters:'Sur les captures et dans les fiches',businesses:'Dans le jeu',residences:'Dans le jeu',hideouts:'Dans le jeu',factions:'Ce qu’on sait pour le jeu',animals:'Ce que le jeu en fait'/* section animaux */}[key]||'Dans le jeu'}</h2><p class="rise">${esc(x.pratique)}</p></div>`:''}
+   ${facts}
+   ${(relBlocks||vehBlock||armBlock||mapBlock)?`<div class="lore-related"><h2>En lien</h2>${relBlocks}${vehBlock}${armBlock}${mapBlock}</div>`:''}
+ </section>${galleryBlock(x,S)}`;
+diff --git a/outils/regenerer.cjs b/outils/regenerer.cjs
+index b5c0259b..deb49841 100644
+--- a/outils/regenerer.cjs
++++ b/outils/regenerer.cjs
+@@ -2,6 +2,6 @@
+ 'use strict';
+ // Commande de maintenance, jamais une commande de build Vercel.
+ const {execFileSync}=require('node:child_process'),path=require('node:path'),root=path.resolve(__dirname,'..');
+-const steps=['gen-modele.cjs','final.js','gen.js','gen-armes.cjs','gen-armurerie.cjs','lore-gen.js','gen-acquisitions.cjs','gen-informations.cjs','gen-tuto.cjs','gen-achats.cjs','gen-carnets.cjs','sync-site.cjs','gen-leo.cjs','sync-site.cjs'];
++const steps=['gen-modele.cjs','final.js','gen.js','gen-armes.cjs','gen-armurerie.cjs','lore-gen.js','gen-animaux.cjs'/* section animaux */,'gen-acquisitions.cjs','gen-informations.cjs','gen-tuto.cjs','gen-achats.cjs','gen-carnets.cjs','sync-site.cjs','gen-leo.cjs','sync-site.cjs'];
+ for(const file of steps)execFileSync(process.execPath,[path.join(__dirname,file)],{cwd:root,stdio:'inherit'});
+ execFileSync(process.execPath,[path.join(__dirname,'gen-leo.cjs'),'--check'],{cwd:root,stdio:'inherit'});
+diff --git a/outils/site-shell.cjs b/outils/site-shell.cjs
+index c1d7ca40..86dc4a6e 100644
+--- a/outils/site-shell.cjs
++++ b/outils/site-shell.cjs
+@@ -7,7 +7,7 @@ const fs = require('node:fs'), path = require('node:path');
+ const acquisition = JSON.parse(fs.readFileSync(path.join(__dirname, 'acquisitions.json'), 'utf8')).categories;
+ const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+ 
+-const world = [['lieux.html', 'Lieux'], ['personnages.html', 'Personnages'], ['gangs.html', 'Gangs et factions'] /* v7.65 */, ['demeures.html', 'Demeures'], ['planques.html', 'Planques'], ['entreprises.html', 'Entreprises'], ['collectibles.html', 'Collectibles']];
++const world = [['lieux.html', 'Lieux'], ['personnages.html', 'Personnages'], ['gangs.html', 'Gangs et factions'] /* v7.65 */, ['demeures.html', 'Demeures'], ['planques.html', 'Planques'], ['entreprises.html', 'Entreprises'], ['animaux.html', 'Animaux'] /* section animaux */, ['collectibles.html', 'Collectibles']];
+ // Menu « S’équiper » : seules les catégories marquées menu:true dans acquisitions.json (pas de doublon avec Véhicules,
+ // Planques ou Armurerie, pas de catégorie vide). Le hub « Tout ce qui s’achète » reste dans la barre (Achats) et le pied de page.
+ const shopping = acquisition.filter(c => c.menu && !c.alias).sort((a, b) => (a.menuOrder || 99) - (b.menuOrder || 99)).map(c => [c.route.slice(1), c.label]);
+@@ -90,7 +90,8 @@ const ENTRY = {
+   'style.html': { q: 'Quel budget pour tes tenues ?', d: 'Écris ce que tu veux acheter et ce que tu gagnes : tu vois ce qui rentre dans ton budget.', tool: 'budget', type: 'style', cta: 'Faire mon budget' },
+   'personnalisations.html': { q: 'Personnaliser ton véhicule, ça vaut le coup ?', d: 'Écris ce que ça coûterait et ce que ça t’apporterait : le calculateur te répond en une phrase.', tool: 'roi', type: 'customization', cta: 'Est-ce que ça vaut le coup ?' },
+   'nourriture.html': { q: 'Quel budget pour manger et récupérer ?', d: 'Écris ce que tu dépenses par partie : tu vois ce que ça pèse sur ton objectif.', tool: 'budget', type: 'consumable', cta: 'Faire mon budget' },
+-  'logements.html': { q: 'Combien de temps pour t’offrir un logement ?', d: 'Aucun prix n’est publié : écris celui que tu imagines, ton argent et ce que tu gagnes par partie.', tool: 'purchase', type: 'housing', cta: 'Faire le calcul' }
++  'logements.html': { q: 'Combien de temps pour t’offrir un logement ?', d: 'Aucun prix n’est publié : écris celui que tu imagines, ton argent et ce que tu gagnes par partie.', tool: 'purchase', type: 'housing', cta: 'Faire le calcul' },
++  'animaux.html': { q: 'La chasse, ça rapporte plus qu’une mission ?', d: 'Rockstar dit que la chasse rapporte, sans montant. Écris ce qu’une sortie te rapporterait et sa durée : le calculateur la compare à tes autres activités, à l’heure de jeu.', tool: 'activities', cta: 'Comparer mes activités' } /* section animaux */
+ };
+ const ENTRY_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="5" y="3" width="14" height="18" rx="2"/><rect x="8" y="6" width="8" height="3" rx=".6"/><path d="M8.5 13h1M12 13h1M15.5 13h1M8.5 17h1M12 17h1"/><rect x="15" y="16" width="2" height="2" rx=".5" fill="currentColor" stroke="none"/></svg>';
+ function entryPages() { return Object.keys(ENTRY); }
+diff --git a/outils/sync-site.cjs b/outils/sync-site.cjs
+index b1df2817..d1fd483b 100644
+--- a/outils/sync-site.cjs
++++ b/outils/sync-site.cjs
+@@ -64,7 +64,7 @@ const mapData=JSON.parse(fs.readFileSync(rawPath,'utf8'));
+ for(const p of [...mapData.groupes,...mapData.lieux,...Object.values(mapData.enrichit)])for(const key of ['img','img2'])if(p[key]&&!available('carte.html',p[key]))delete p[key];
+ fs.writeFileSync('carte-gtadb.js','/* Generated from data/carte-gtadb-source.json. gtadb.org et ses contributeurs, CC BY 4.0; adapté pour Leonidakit. */\nwindow.LK_GTADB = '+JSON.stringify(mapData)+';\n');
+ 
+-const htmlFiles=[...fs.readdirSync('.').filter(x=>x.endsWith('.html')),...['armes','vehicules','lieux','personnages','entreprises','demeures','planques','gangs','carnets'].filter(d=>fs.existsSync(d)).flatMap(d=>fs.readdirSync(d).filter(f=>f.endsWith('.html')).map(f=>d+'/'+f))].sort();
++const htmlFiles=[...fs.readdirSync('.').filter(x=>x.endsWith('.html')),...['armes','vehicules','lieux','personnages','entreprises','demeures','planques','gangs','carnets','animaux'/* section animaux */].filter(d=>fs.existsSync(d)).flatMap(d=>fs.readdirSync(d).filter(f=>f.endsWith('.html')).map(f=>d+'/'+f))].sort();
+ const canonicals=[];
+ for(const file of htmlFiles){let s=fs.readFileSync(file,'utf8');if(file.startsWith('google'))continue;const prefix=file==='404.html'?'/':file.includes('/')?'../':'';
+  if(s.includes('app.js')){
+@@ -121,7 +121,7 @@ for(const file of htmlFiles){let s=fs.readFileSync(file,'utf8');if(file.startsWi
+  if(!file.includes('/'))s=require('./site-shell.cjs').placeEntry(s,file,prefix);
+  fs.writeFileSync(file,s);
+ }
+-const urls=[...new Set(canonicals)].sort();for(const f of ['sitemap.xml','sitemap-fiches.xml']){const list=f==='sitemap-fiches.xml'?urls.filter(u=>/\/(armes|vehicules|lieux|personnages|entreprises|demeures|planques|gangs)\//.test(u)):urls;fs.writeFileSync(f,'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+list.map(u=>'  <url><loc>'+esc(u)+'</loc></url>').join('\n')+'\n</urlset>\n');}
++const urls=[...new Set(canonicals)].sort();for(const f of ['sitemap.xml','sitemap-fiches.xml']){const list=f==='sitemap-fiches.xml'?urls.filter(u=>/\/(armes|vehicules|lieux|personnages|entreprises|demeures|planques|gangs|animaux)\//.test(u)):urls;/* section animaux : animaux/ dans sitemap-fiches.xml */fs.writeFileSync(f,'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+list.map(u=>'  <url><loc>'+esc(u)+'</loc></url>').join('\n')+'\n</urlset>\n');}
+ // Rebuild search terms from current names and aliases; exclude old retired pages.
+ // Une page devenue un simple renvoi (meta refresh) sort de l’index interne : sa cible y est déjà.
+ const redirectPage=u=>{const f=u.replace(/^\//,'').split('#')[0];return /\.html$/.test(f)&&!f.includes('/')&&fs.existsSync(f)&&/http-equiv="refresh"/.test(fs.readFileSync(f,'utf8'));};
+diff --git a/outils/tests/a-propos-v744.test.cjs b/outils/tests/a-propos-v744.test.cjs
+index 0aa3a721..748f72b6 100644
+--- a/outils/tests/a-propos-v744.test.cjs
++++ b/outils/tests/a-propos-v744.test.cjs
+@@ -59,7 +59,7 @@ test('À propos : aucun nombre tapé à la main — les chiffres viennent des do
+   assert.equal(stat('vehicules'),c.window.LK_VEHICULES.length);assert.equal(stat('armes'),c.window.LK_ARMES.length);assert.equal(stat('lieux'),new Set(c.window.LK_PROGRESS_IDS.lieux).size);
+   assert.equal(stat('lignes'),C.FAMILIES.reduce((n,f)=>n+C.counts(f).n,0));assert.equal(stat('visuels'),Object.keys(medias).length);assert.equal(stat('leo'),leo.knowledge.length+Object.values(leo.shards||{}).filter(x=>x.knowledge).reduce((n,x)=>n+JSON.parse(read(x.file.slice(1))).knowledge.length,0))/* v7.45 : noyau + morceau calculateur */;
+   const tests=fs.readdirSync(path.join(root,'outils/tests')).filter(f=>f.endsWith('.test.cjs')).reduce((n,f)=>n+(read('outils/tests/'+f).match(/^\s*test\(/gm)||[]).length,0);assert.equal(stat('tests'),tests);
+-  const pages=fs.readdirSync(root).filter(f=>f.endsWith('.html')&&!f.startsWith('google')).length+['armes','vehicules','lieux','personnages','entreprises','demeures','planques','gangs','carnets'].reduce((n,x)=>n+fs.readdirSync(path.join(root,x)).filter(f=>f.endsWith('.html')).length,0);
++  const pages=fs.readdirSync(root).filter(f=>f.endsWith('.html')&&!f.startsWith('google')).length+['armes','vehicules','lieux','personnages','entreprises','demeures','planques','gangs','carnets','animaux'/* section animaux */].reduce((n,x)=>n+fs.readdirSync(path.join(root,x)).filter(f=>f.endsWith('.html')).length,0);
+   assert.equal(stat('pages'),pages);
+   for(const b of d.querySelectorAll('.fig-n'))assert.equal(b.textContent.replace(/[  ]/g,''),b.dataset.count,'texte sans JS = valeur');
+   const acq=JSON.parse(read('outils/acquisitions.json'));const fr=iso=>new Intl.DateTimeFormat('fr-FR',{day:'numeric',month:'long',year:'numeric',timeZone:'UTC'}).format(new Date(iso+'T12:00:00Z'));
+diff --git a/outils/tests/coverage.test.cjs b/outils/tests/coverage.test.cjs
+index 207d8548..a1b54b27 100644
+--- a/outils/tests/coverage.test.cjs
++++ b/outils/tests/coverage.test.cjs
+@@ -2,7 +2,7 @@
+ const test=require('node:test'),assert=require('node:assert/strict'),fs=require('fs'),path=require('path'),vm=require('vm');
+ const {JSDOM}=require('jsdom'),{load}=require('./runtime-helper.cjs');
+ const root=process.env.SITE_ROOT||path.resolve(__dirname,'../..');
+-const pages=[...fs.readdirSync(root).filter(f=>f.endsWith('.html')),...['vehicules','armes','lieux','personnages','entreprises','demeures','planques','gangs'].flatMap(dir=>fs.readdirSync(path.join(root,dir)).filter(f=>f.endsWith('.html')).map(f=>dir+'/'+f))];
++const pages=[...fs.readdirSync(root).filter(f=>f.endsWith('.html')),...['vehicules','armes','lieux','personnages','entreprises','demeures','planques','gangs','animaux'/* section animaux */].flatMap(dir=>fs.readdirSync(path.join(root,dir)).filter(f=>f.endsWith('.html')).map(f=>dir+'/'+f))];
+ const ctx={window:{}};for(const file of ['vehicules-data.js','armes-data.js','carte-gtadb.js','search-index.js','assets-manifest.js','progression-data.js'])vm.runInNewContext(fs.readFileSync(path.join(root,file),'utf8'),ctx);
+ const docs=new Map();const errors=[];
+ function checkUrl(url,file){if(!url)return;const u=new URL(url,'https://www.leonidakit.com/'+file);if(u.origin!=='https://www.leonidakit.com')return;const rel=decodeURIComponent(u.pathname.slice(1))||'index.html';assert.ok(fs.existsSync(path.join(root,rel)),file+' → '+rel);if(!u.hash)return;if(u.hash.startsWith('#lieu='))assert.ok(ctx.window.LK_PROGRESS_IDS.lieux.includes(u.hash.slice(6)),file+' → '+u.hash);else if(!u.hash.includes('=')&&rel.endsWith('.html')){const d=docs.get(rel);if(d&&!d.getElementById(u.hash.slice(1))){const cat=u.hash.slice(1);assert.ok((rel==='vehicules.html'&&Object.hasOwn(ctx.window.LK_VEHICULES_CATS,cat))||(rel==='armes.html'&&Object.hasOwn(ctx.window.LK_ARMES_CATS,cat)),file+' → '+rel+u.hash);}}}
+diff --git a/outils/tests/donnees-publiees.test.cjs b/outils/tests/donnees-publiees.test.cjs
+index e2bed790..28de0dfd 100644
+--- a/outils/tests/donnees-publiees.test.cjs
++++ b/outils/tests/donnees-publiees.test.cjs
+@@ -67,7 +67,7 @@ test('CALC-13 : chaque phrase d’absence des pages est bien celle calculée (da
+  const typo=require(path.join(root,'outils/typographie.cjs'));
+  let n=0;for(const f of ['calculateurs.html','index.html']){const html=fs.readFileSync(path.join(root,f),'utf8');for(const m of html.matchAll(/data-lk-donnees="([a-zA-Z]+)"[^>]*>([\s\S]*?)<\/(?:span|div|p)>/g)){n++;assert.ok(ph[m[1]],f+' : clé '+m[1]);assert.equal(norm(m[2]),norm(typo.html('<p>'+ph[m[1]]+'</p>').replace(/<\/?p>/g,'')),f+' : '+m[1]);}}
+  assert.ok(n>=4,'au moins quatre phrases reliées');
+- const files=[...fs.readdirSync(root).filter(x=>/\.(html|js|json)$/.test(x)),...['armes','vehicules','lieux','entreprises','demeures','planques','gangs','carnets','leo'].flatMap(d=>fs.existsSync(path.join(root,d))?fs.readdirSync(path.join(root,d)).map(x=>d+'/'+x):[])].filter(x=>/\.(html|js|json)$/.test(x));
++ const files=[...fs.readdirSync(root).filter(x=>/\.(html|js|json)$/.test(x)),...['armes','vehicules','lieux','entreprises','demeures','planques','gangs','carnets','leo','animaux'/* section animaux */].flatMap(d=>fs.existsSync(path.join(root,d))?fs.readdirSync(path.join(root,d)).map(x=>d+'/'+x):[])].filter(x=>/\.(html|js|json)$/.test(x));
+  for(const f of files){const c=fs.readFileSync(path.join(root,f),'utf8');assert.ok(!c.includes('{donnees:'),f+' : marqueur {donnees:…} resté dans un fichier généré');}
+  /* la page Achats et la FAQ À propos reflètent bien la phrase calculée */
+  const ach=norm(fs.readFileSync(path.join(root,'achats.html'),'utf8')),apr=norm(fs.readFileSync(path.join(root,'a-propos.html'),'utf8'));
+diff --git a/outils/tests/hubs-monde-v741.test.cjs b/outils/tests/hubs-monde-v741.test.cjs
+index 1529a5cd..f3faba9f 100644
+--- a/outils/tests/hubs-monde-v741.test.cjs
++++ b/outils/tests/hubs-monde-v741.test.cjs
+@@ -11,6 +11,7 @@ const M=require(path.join(root,'outils/hubs-monde.cjs'));
+ const D=require(path.join(root,'outils/hubs-doublons.cjs'));
+ const shell=require(path.join(root,'outils/site-shell.cjs'));
+ const ED=JSON.parse(read('outils/editorial.json')),HUBS=JSON.parse(read('outils/editorial-hubs.json'));
++HUBS.animaux=M.DATA.animaux;Object.assign(HUBS.sources,M.DATA.sources);/* section animaux : zone de animaux.html (outils/editorial-animaux.json, chargée par hubs-monde.cjs) contrôlée comme les autres */
+ const HUB_FILES={lieux:'lieux.html',personnages:'personnages.html',demeures:'demeures.html',planques:'planques.html',entreprises:'entreprises.html',gangs:'gangs.html'};
+ const N={lieux:ED.regions.length,personnages:ED.characters.length,demeures:ED.residences.length,planques:ED.hideouts.length,entreprises:ED.businesses.length,gangs:ED.factions.length};
+ const ld=d=>[...d.querySelectorAll('script[type="application/ld+json"]')].map(s=>JSON.parse(s.textContent));
+@@ -104,7 +105,7 @@ test('Encart calculateur : un composant unique (site-shell.cjs), même position
+ test('Léo : les FAQ des hubs du monde sont dans l’index (après les sujets rédigés), avec lien vers la FAQ du hub, et répondent',()=>{
+   const idx=JSON.parse(read('leo-index.json'));
+   const hubTopics=idx.knowledge.filter(x=>/^hub-/.test(x.id));
+-  assert.equal(hubTopics.length,M.HUBS.reduce((n,h)=>n+HUBS[h].faq.length,0));
++  assert.equal(hubTopics.length,M.HUBS.filter(h=>h!=='animaux'/* section animaux : FAQ dans le morceau leo/animaux.json */).reduce((n,h)=>n+HUBS[h].faq.length,0));
+   const firstHub=idx.knowledge.findIndex(x=>/^hub-/.test(x.id));assert.ok(idx.knowledge.slice(0,firstHub).every(x=>!/^hub-/.test(x.id)));
+   for(const t of hubTopics){assert.match(t.links[0].url,/^\/(lieux|personnages|demeures|planques|entreprises|gangs)\.html#faq$/);assert.ok(t.text.length<=900);}
+   const core=require(path.join(root,'outils/tests/leo-complet.cjs')).fullCore(root)/* v7.45 : noyau + morceaux */;
+diff --git a/outils/tests/performance-lot1.test.cjs b/outils/tests/performance-lot1.test.cjs
+index a57852b9..1337847b 100644
+--- a/outils/tests/performance-lot1.test.cjs
++++ b/outils/tests/performance-lot1.test.cjs
+@@ -6,7 +6,7 @@ const { load } = require('./runtime-helper.cjs');
+ const root = process.env.SITE_ROOT || path.resolve(__dirname, '../..');
+ const read = f => fs.readFileSync(path.join(root, f), 'utf8');
+ const walk = d => fs.readdirSync(path.join(root, d), { withFileTypes: true }).flatMap(x => x.isDirectory() ? walk(path.join(d, x.name)) : [path.join(d, x.name)]);
+-const pages = ['', 'armes', 'vehicules', 'lieux', 'personnages', 'entreprises', 'demeures', 'planques', 'gangs', 'carnets'].flatMap(d => (d ? walk(d) : fs.readdirSync(root)).filter(f => f.endsWith('.html') && !path.basename(f).startsWith('google')));
++const pages = ['', 'armes', 'vehicules', 'lieux', 'personnages', 'entreprises', 'demeures', 'planques', 'gangs', 'carnets', 'animaux' /* section animaux */].flatMap(d => (d ? walk(d) : fs.readdirSync(root)).filter(f => f.endsWith('.html') && !path.basename(f).startsWith('google')));
+ 
+ test('PERF-04 : aucune page ne télécharge l’index de recherche au chargement ; il est déclaré en différé, versionné, avec les lieux', () => {
+   let lazy = 0;
+diff --git a/outils/tests/regression.test.cjs b/outils/tests/regression.test.cjs
+index 6015ac77..42307669 100644
+--- a/outils/tests/regression.test.cjs
++++ b/outils/tests/regression.test.cjs
+@@ -150,7 +150,7 @@ test('Every vehicle gets a distinct schematic',()=>{
+ // v7.11 : aucune fiche ne déclare un type dérivé de Product (Google exigerait prix, avis ou note, qui n'existent pas ici).
+ test('Structured data avoids Product-derived types',()=>{
+  const bad=/"@type":\s*"(Product|Vehicle|Car|Motorcycle|BusOrCoach|Offer|IndividualProduct|ProductModel)"/;
+- const dirs=['vehicules','armes','lieux','personnages','entreprises','demeures','planques','gangs'];
++ const dirs=['vehicules','armes','lieux','personnages','entreprises','demeures','planques','gangs','animaux'/* section animaux */];
+  const files=[...dirs.flatMap(d=>fs.readdirSync(path.join(root,d)).filter(f=>f.endsWith('.html')).map(f=>d+'/'+f)),'index.html','vehicules.html','armes.html','carte.html'];
+  for(const f of files){const html=fs.readFileSync(path.join(root,f),'utf8');
+   for(const m of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)){

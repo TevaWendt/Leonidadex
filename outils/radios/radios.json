@@ -1,0 +1,941 @@
+{
+ "_note": "Section « Radios et musique » (section radios) : données de radios.html et des fiches radios/<id>.html, lues par outils/gen-radios.cjs. Rien d’inventé : chaque morceau, chaque phrase porte un statut (officiel, vu, comm, conf) et des sources de « sources ». Aucune station tirée des fuites de 2022 ou d’août 2026. Pas de paroles, pas d’extrait audio ni vidéo, pas de pochette. Les titres de morceaux et les noms d’artistes restent tels quels dans les cinq langues (translate=\"no\"). Sources relevées le 4 octobre 2026 par moteur de recherche (pages non ouvertes depuis l’atelier : accès réseau bloqué).",
+ "hub": {
+  "label": "Radios et musique",
+  "title": "Les radios et la musique de GTA VI",
+  "lede": "Aucune station de radio n’est encore annoncée. Voici ce que Rockstar a vraiment fait entendre : les morceaux des trailers et de l’Extended Look, l’album officiel du jeu et ce qu’il promet pour la radio.",
+  "desc": "Radios de GTA VI : aucune station annoncée. Les morceaux des trailers et de l’Extended Look, l’album officiel et ce que Rockstar promet pour la radio.",
+  "note": "Chaque morceau dit d’où il vient : crédité par Rockstar, ou entendu dans une vidéo officielle et identifié par la presse. Les listes de stations tirées des fuites ne sont pas reprises.",
+  "pile": [
+   {
+    "media": "real-dimez-04",
+    "caption": "Real Dimez au micro",
+    "alt": "Les deux rappeuses de Real Dimez au micro dans une cabine d’enregistrement, casques sur les oreilles, visuel officiel Rockstar Games"
+   },
+   {
+    "media": "dre-quan-priest-04",
+    "caption": "Dre’Quan en studio",
+    "alt": "Dre’Quan Priest debout près d’une console de mixage où travaille un ingénieur du son, visuel officiel Rockstar Games"
+   },
+   {
+    "media": "dre-quan-priest-03",
+    "caption": "Un club de Vice City",
+    "alt": "Dre’Quan Priest au milieu d’un club baigné de lumière violette, visuel officiel Rockstar Games"
+   }
+  ]
+ },
+ "poste": {
+  "kicker": "Le poste de Leonida",
+  "titre": "Ce que Rockstar a fait entendre",
+  "lede": "Pas encore de stations : le poste parcourt les quatre sources officielles de musique. Choisis une vidéo ou l’album, ses morceaux s’affichent avec leur moment, leur statut et leur source.",
+  "choisir": "Choisir une source de musique",
+  "sansJs": "Les quatre sources, l’une après l’autre :",
+  "video": "Voir la vidéo officielle",
+  "morceau": "morceau",
+  "morceaux": "morceaux"
+ },
+ "videos": [
+  {
+   "id": "trailer-1",
+   "nom": "Trailer 1",
+   "court": "Trailer 1",
+   "date": "2023-12-04",
+   "dateTexte": "4 décembre 2023",
+   "statut": "officiel",
+   "resume": "Le premier trailer se déroule tout entier sur un seul morceau, crédité par Rockstar dans la description de la vidéo.",
+   "lien": "https://www.rockstargames.com/VI/media/videos",
+   "morceaux": [
+    {
+     "titre": "Love Is a Long Road",
+     "artiste": "Tom Petty",
+     "infos": "Album Full Moon Fever, 1989",
+     "moment": "Toute la vidéo",
+     "statut": "officiel",
+     "sources": [
+      "rs-videos",
+      "louder-petty"
+     ],
+     "liens": [
+      {
+       "label": "L’éditeur de Tom Petty sur ce choix",
+       "url": "https://www.umusicpub.com/us/news/grand-theft-auto-vi-trailer-tom-petty"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "trailer-2",
+   "nom": "Trailer 2",
+   "court": "Trailer 2",
+   "date": "2025-05-06",
+   "dateTexte": "6 mai 2025",
+   "statut": "officiel",
+   "resume": "Un morceau principal, crédité par Rockstar, et de courtes bribes d’autoradio pendant que Jason conduit, identifiées par la presse.",
+   "lien": "https://www.rockstargames.com/VI/media/videos",
+   "morceaux": [
+    {
+     "titre": "Hot Together",
+     "artiste": "The Pointer Sisters",
+     "infos": "Album Hot Together, 1986",
+     "moment": "Morceau principal",
+     "statut": "officiel",
+     "sources": [
+      "rs-videos",
+      "gamespot-t2-song"
+     ]
+    },
+    {
+     "titre": "Child Support",
+     "artiste": "Zenglen",
+     "infos": "Compas haïtien",
+     "moment": "Vers 0:27, à l’autoradio",
+     "statut": "vu",
+     "sources": [
+      "nme-t2",
+      "pcgamer-songs"
+     ]
+    },
+    {
+     "titre": "Everybody Have Fun Tonight",
+     "artiste": "Wang Chung",
+     "infos": "1986",
+     "moment": "Vers 0:34, à l’autoradio",
+     "statut": "vu",
+     "sources": [
+      "nme-t2",
+      "pcgamer-songs"
+     ]
+    },
+    {
+     "titre": "Talkin’ to Myself Again",
+     "artiste": "Tammy Wynette",
+     "infos": "1987",
+     "moment": "Vers 0:41, à l’autoradio",
+     "statut": "vu",
+     "sources": [
+      "nme-t2",
+      "pcgamer-songs"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "extended-look",
+   "nom": "Extended Look",
+   "court": "Extended Look",
+   "date": "2026-08-27",
+   "dateTexte": "27 août 2026",
+   "statut": "vu",
+   "resume": "Quatorze morceaux sous licence entendus au fil des 26 minutes, relevés avec leurs minutages par plusieurs médias. Rockstar n’en a pas publié la liste.",
+   "lien": "https://www.rockstargames.com/newswire/article/4k138k8okkk483/grand-theft-auto-vi-an-extended-look-now-playing",
+   "morceaux": [
+    {
+     "titre": "Pop Bottles",
+     "artiste": "Birdman, Lil Wayne",
+     "infos": "2007",
+     "moment": "0:06 à 0:45",
+     "statut": "vu",
+     "sources": [
+      "gamerant-extended",
+      "svg-extended-songs"
+     ]
+    },
+    {
+     "titre": "Pound Town",
+     "artiste": "Sexyy Red, Tay Keith",
+     "infos": "2023",
+     "moment": "0:46 à 1:33",
+     "statut": "vu",
+     "sources": [
+      "gamerant-extended",
+      "svg-extended-songs"
+     ]
+    },
+    {
+     "titre": "Skrilla",
+     "artiste": "Kodak Black",
+     "infos": "2015",
+     "moment": "1:45 à 2:34",
+     "statut": "vu",
+     "sources": [
+      "gamerant-extended",
+      "svg-extended-songs"
+     ]
+    },
+    {
+     "titre": "Let Your Love Flow",
+     "artiste": "The Bellamy Brothers",
+     "infos": "1976",
+     "moment": "6:00 à 6:42",
+     "statut": "vu",
+     "sources": [
+      "gamerant-extended",
+      "svg-extended-songs"
+     ]
+    },
+    {
+     "titre": "Love Bites",
+     "artiste": "Def Leppard",
+     "infos": "1987",
+     "moment": "6:43 à 7:25",
+     "statut": "vu",
+     "sources": [
+      "gamerant-extended",
+      "svg-extended-songs"
+     ]
+    },
+    {
+     "titre": "People Are People",
+     "artiste": "Depeche Mode",
+     "moment": "8:21 à 9:50",
+     "statut": "vu",
+     "sources": [
+      "gamerant-extended",
+      "svg-extended-songs"
+     ]
+    },
+    {
+     "titre": "But I Think It’s a Dream",
+     "artiste": "Captain & Tennille",
+     "moment": "9:49 à 10:38",
+     "statut": "vu",
+     "sources": [
+      "gamerant-extended",
+      "svg-extended-songs"
+     ]
+    },
+    {
+     "titre": "Cars and Girls",
+     "artiste": "Prefab Sprout",
+     "moment": "10:39 à 12:24",
+     "statut": "vu",
+     "sources": [
+      "gamerant-extended",
+      "svg-extended-songs"
+     ]
+    },
+    {
+     "titre": "Off the Grid",
+     "artiste": "!!!, Meah Pace",
+     "moment": "12:25 à 13:10",
+     "statut": "vu",
+     "sources": [
+      "gamerant-extended",
+      "svg-extended-songs"
+     ]
+    },
+    {
+     "titre": "Devil Woman",
+     "artiste": "Cliff Richard",
+     "moment": "16:49 à 19:36",
+     "statut": "vu",
+     "sources": [
+      "gamerant-extended",
+      "svg-extended-songs",
+      "musically-extended"
+     ]
+    },
+    {
+     "titre": "Se Me Nota (Agárrame)",
+     "artiste": "Chimbala, Omega",
+     "moment": "20:07 à 21:32",
+     "statut": "vu",
+     "sources": [
+      "gamerant-extended",
+      "svg-extended-songs"
+     ]
+    },
+    {
+     "titre": "Against All Odds (Take a Look at Me Now)",
+     "artiste": "Phil Collins",
+     "infos": "1984",
+     "moment": "21:33 à 21:56",
+     "statut": "vu",
+     "sources": [
+      "gamerant-extended",
+      "kotaku-collins"
+     ]
+    },
+    {
+     "titre": "Mine O’ Mine",
+     "artiste": "Aluna, Jayda G",
+     "moment": "21:55 à 22:53",
+     "statut": "vu",
+     "sources": [
+      "gamerant-extended",
+      "svg-extended-songs"
+     ]
+    },
+    {
+     "titre": "Inner Light",
+     "artiste": "Elderbrook, Bob Moses",
+     "moment": "De 25:44 à la fin",
+     "statut": "vu",
+     "sources": [
+      "gamerant-extended",
+      "svg-extended-songs"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "album",
+   "nom": "Grand Theft Auto VI: The Album",
+   "court": "L’album",
+   "date": "2026-09-17",
+   "dateTexte": "17 septembre 2026",
+   "statut": "officiel",
+   "resume": "Les six premiers titres de l’album officiel, sortis le jour de son annonce. Les 34 titres arrivent le 19 novembre 2026, avec le jeu.",
+   "lien": "https://www.rockstargames.com/newswire/article/7599a881942544/announcing-grand-theft-auto-vi-the-album-coming-november-19",
+   "lienLabel": "Lire l’annonce officielle",
+   "fiche": "gta-vi-the-album",
+   "morceaux": [
+    {
+     "titre": "That’s It",
+     "artiste": "Yung Lean, Future, Metro Boomin",
+     "moment": "Single",
+     "statut": "officiel",
+     "sources": [
+      "rs-album",
+      "mbw-album"
+     ],
+     "liens": [
+      {
+       "label": "Apple Music",
+       "url": "https://music.apple.com/us/album/thats-it-feat-future-from-gtavi-the-album-single/6812477089"
+      }
+     ]
+    },
+    {
+     "titre": "RHYNO",
+     "artiste": "Travis Scott",
+     "infos": "Produit par",
+     "moment": "Single",
+     "statut": "officiel",
+     "sources": [
+      "rs-album",
+      "mbw-album"
+     ],
+     "liens": [
+      {
+       "label": "Spotify",
+       "url": "https://open.spotify.com/track/2QrLrUqdSg5njDVEqq5QFp"
+      }
+     ],
+     "infosNom": "Guy-Manuel de Homem-Christo"
+    },
+    {
+     "titre": "Sexy Magic",
+     "artiste": "CA7RIEL & Paco Amoroso, PinkPantheress, Fred again.., Étienne de Crécy",
+     "moment": "Single",
+     "statut": "officiel",
+     "sources": [
+      "rs-album",
+      "mbw-album"
+     ],
+     "liens": [
+      {
+       "label": "Spotify",
+       "url": "https://open.spotify.com/track/62hqNk13CuFLOpCw1cPMAF"
+      }
+     ]
+    },
+    {
+     "titre": "Last Thing You Need",
+     "artiste": "Morgan Wallen",
+     "moment": "Single",
+     "statut": "officiel",
+     "sources": [
+      "rs-album",
+      "mbw-album"
+     ]
+    },
+    {
+     "titre": "Macacoa 2000",
+     "artiste": "Rauw Alejandro",
+     "moment": "Single",
+     "statut": "officiel",
+     "sources": [
+      "rs-album",
+      "mbw-album"
+     ]
+    },
+    {
+     "titre": "Bright Lights, Big City",
+     "artiste": "Keith Richards",
+     "moment": "Single",
+     "statut": "officiel",
+     "sources": [
+      "rs-album",
+      "mbw-album"
+     ]
+    }
+   ]
+  }
+ ],
+ "fichesTitre": "L’album officiel",
+ "fichesLede": "Aucune station n’a encore de nom officiel : la seule fiche de la section est celle de l’album. Une fiche par station s’ajoutera quand Rockstar les présentera.",
+ "fiches": [
+  {
+   "id": "gta-vi-the-album",
+   "name": "Grand Theft Auto VI: The Album",
+   "kind": "Album officiel",
+   "tagline": "34 titres originaux, le 19 novembre 2026.",
+   "description": "L’album officiel de GTA VI, annoncé par Rockstar et Atlantic Records le 17 septembre 2026 : 34 titres originaux, six déjà sortis, le reste le jour du jeu.",
+   "media": [
+    "dre-quan-priest-04"
+   ],
+   "imageAlt": "Dre’Quan Priest près d’une console de mixage dans un studio d’enregistrement, capture officielle Rockstar Games (aucune pochette n’est reprise ici)",
+   "source": "https://www.rockstargames.com/newswire/article/7599a881942544/announcing-grand-theft-auto-vi-the-album-coming-november-19",
+   "texte": "Rockstar Games et Atlantic Records ont annoncé l’album le 17 septembre 2026. Il réunit 34 titres originaux, écrits pour le jeu, qui doivent « capturer l’énergie électrique de Vice City et de Leonida », selon le message officiel. Il sort le 19 novembre 2026, le même jour que GTA VI, en écoute en ligne, en CD et en vinyle. Six titres sont sortis dès l’annonce, de Yung Lean à Keith Richards.",
+   "contexte": "Le même jour, Rockstar a promis d’en dire plus sur la musique du jeu : une partition dynamique et « la prochaine évolution de la radio en jeu ». L’album n’en dit pas plus : ses titres ne sont rattachés à aucune station, et rien ne dit encore dans quelles situations on les entendra en jouant. Trois éditions physiques sont réservées au site d’Atlantic Records ; le vinyle en édition limitée a été épuisé en quelques minutes, selon TechRadar.",
+   "pratique": "Pour l’instant, c’est un album à écouter en dehors du jeu. Quand Rockstar présentera les stations, cette fiche dira lesquelles diffusent ces titres. Les autres morceaux connus, ceux des trailers et de l’Extended Look, sont dans le poste de la page Radios et musique.",
+   "facts": [
+    "Annoncé le 17 septembre 2026 par Rockstar Games et Atlantic Records.",
+    "34 titres originaux, à paraître le 19 novembre 2026, le jour du jeu.",
+    "Six titres sortis dès l’annonce : Yung Lean, Travis Scott, CA7RIEL & Paco Amoroso, Morgan Wallen, Rauw Alejandro et Keith Richards.",
+    "Aucune station de radio n’est rattachée à ces titres pour l’instant."
+   ],
+   "characters": [
+    "drequan",
+    "dimez",
+    "boobie"
+   ],
+   "businesses": [
+    "only-raw-records"
+   ],
+   "liens": [
+    {
+     "label": "Apple Music",
+     "url": "https://music.apple.com/us/album/grand-theft-auto-vi-the-album/6812476961"
+    }
+   ],
+   "sources": [
+    "rs-album",
+    "mbw-album",
+    "billboard-album",
+    "techradar-album",
+    "gamespot-radio-evolution"
+   ],
+   "aliases": [
+    "gta 6 the album",
+    "gta vi the album",
+    "album gta 6",
+    "album officiel gta 6",
+    "the album",
+    "bande originale gta 6",
+    "album atlantic records"
+   ]
+  }
+ ],
+ "zone": {
+  "nav": [
+   {
+    "href": "#poste",
+    "label": "Le poste"
+   },
+   {
+    "href": "#fiches",
+    "label": "L’album"
+   },
+   {
+    "href": "#rockstar",
+    "label": "Rockstar"
+   },
+   {
+    "href": "#communaute",
+    "label": "Communauté"
+   },
+   {
+    "href": "#a-confirmer",
+    "label": "À confirmer"
+   },
+   {
+    "href": "#pour-toi",
+    "label": "Pour toi"
+   },
+   {
+    "href": "#faq",
+    "label": "FAQ"
+   },
+   {
+    "href": "#sources",
+    "label": "Sources"
+   }
+  ],
+  "rockstar": {
+   "lede": "Rockstar n’a présenté aucune station. Il a fait entendre des morceaux dans trois vidéos, publié un album et promis une radio repensée.",
+   "items": [
+    {
+     "date": "4 décembre 2023",
+     "titre": "Trailer 1",
+     "statut": "officiel",
+     "texte": "Tout le trailer se joue sur « Love Is a Long Road » de Tom Petty, crédité dans la description de la vidéo officielle."
+    },
+    {
+     "date": "6 mai 2025",
+     "titre": "Trailer 2",
+     "statut": "officiel",
+     "texte": "« Hot Together » des Pointer Sisters porte la vidéo ; trois bribes d’autoradio passent pendant que Jason conduit dans les Keys."
+    },
+    {
+     "date": "27 août 2026",
+     "titre": "Extended Look",
+     "statut": "vu",
+     "texte": "Quatorze morceaux sous licence, et une musique originale aux synthétiseurs dans les moments tendus, d’après les relevés de la presse.",
+     "media": "real-dimez-01",
+     "alt": "Une rappeuse de Real Dimez assise dans un studio, un casque à la main, devant une console, capture officielle"
+    },
+    {
+     "date": "Automne 2026",
+     "titre": "Dazed",
+     "statut": "officiel",
+     "texte": "Rupert Humphries, de la narration de Rockstar, résume l’esprit musical : « We love Miami music, particularly Miami bass ». Il cite Kodak Black et Sexyy Red."
+    },
+    {
+     "date": "17 septembre 2026",
+     "titre": "L’album et la radio",
+     "statut": "officiel",
+     "texte": "Annonce de « Grand Theft Auto VI: The Album », avec Atlantic Records. Le Newswire promet aussi une partition dynamique et « la prochaine évolution de la radio en jeu », sans détail."
+    }
+   ],
+   "p": [
+    "Un morceau « vu » a été entendu dans une vidéo officielle et reconnu par plusieurs médias, sans crédit publié par Rockstar."
+   ]
+  },
+  "communaute": {
+   "lede": "Joueurs et médias vont plus loin que les annonces. Voici ce qu’ils avancent, et ce que le site écarte.",
+   "pairs": [
+    {
+     "fiction": "V-Rock",
+     "reel": "La station rock de GTA Vice City (2002). Des médias disent voir son logo sur un t-shirt de Jason, dans un clip du site officiel ; rien ne confirme son retour à l’antenne.",
+     "src": "gtafandom-vrock"
+    },
+    {
+     "fiction": "Vice City FM",
+     "reel": "Une affiche à ce nom serait visible dans l’Extended Look selon un relevé de joueurs ; le plan exact reste à retrouver.",
+     "src": "postmode-24things"
+    },
+    {
+     "fiction": "Des listes de stations",
+     "reel": "Ces noms de stations viennent du menu radio de vidéos volées en août 2026, pas d’une présentation officielle : le site ne les reprend pas.",
+     "src": "consequence-every-song"
+    },
+    {
+     "fiction": "Un DJ célèbre à l’antenne",
+     "reel": "La rumeur d’une station animée par DJ Khaled vient d’un compte d’informateur, en février 2025 ; personne ne l’a confirmée.",
+     "src": "gamespot-khaled"
+    },
+    {
+     "fiction": "Spotify",
+     "reel": "Panneaux GTA VI aux couleurs de Spotify et playlist officielle en septembre 2026 ; aucune écoute de Spotify dans le jeu n’est annoncée.",
+     "src": "rockstarintel-spotify"
+    }
+   ],
+   "p": [
+    "Une liste de stations n’entrera sur cette page qu’avec une présentation de Rockstar : une capture, une vidéo ou un texte officiel."
+   ]
+  },
+  "confirmer": {
+   "lede": "La musique du jeu est annoncée, pas encore expliquée.",
+   "items": [
+    {
+     "q": "Les stations et leurs animateurs",
+     "etat": "Aucun nom publié. Rockstar promet seulement une radio en jeu repensée."
+    },
+    {
+     "q": "La partition dynamique",
+     "etat": "Annoncée le 17 septembre 2026, sans un mot sur son fonctionnement."
+    },
+    {
+     "q": "L’album à l’antenne",
+     "etat": "Ses 34 titres sont écrits pour Vice City et Leonida ; on ne sait pas sur quelles stations ils passeront."
+    },
+    {
+     "q": "Le compositeur",
+     "etat": "Aucun nom n’est donné pour la musique originale entendue dans l’Extended Look."
+    },
+    {
+     "q": "Sa propre musique",
+     "etat": "Ni playlist personnelle ni écoute de Spotify dans le jeu ne sont annoncées."
+    }
+   ],
+   "p": [
+    "Chaque réponse rejoindra la page avec sa source dès qu’elle sera publiée."
+   ]
+  },
+  "toi": {
+   "lede": "La musique tient déjà une place dans l’histoire. Voici où la retrouver sur le site.",
+   "actions": [
+    {
+     "k": "Personnage",
+     "t": "Dre’Quan Priest",
+     "d": "Le producteur d’Only Raw Records veut conquérir la scène de Vice City.",
+     "href": "personnages/drequan.html"
+    },
+    {
+     "k": "Label",
+     "t": "Only Raw Records",
+     "d": "Le label de Boobie et Dre’Quan, où Real Dimez est signé.",
+     "href": "entreprises/only-raw-records.html"
+    },
+    {
+     "k": "Album",
+     "t": "Grand Theft Auto VI: The Album",
+     "d": "Les six premiers titres et ce que l’annonce dit vraiment.",
+     "href": "radios/gta-vi-the-album.html"
+    },
+    {
+     "k": "Carte",
+     "t": "Le club de Boobie",
+     "d": "Le Jack of Hearts, dont l’argent finance le studio du label.",
+     "href": "carte.html#lieu=g-L172"
+    }
+   ],
+   "p": [
+    "Quand les stations seront connues, chacune aura sa fiche ici, avec son style et ses animateurs."
+   ]
+  },
+  "faq": [
+   {
+    "q": "Quelles radios y aura-t-il dans GTA 6 ?",
+    "a": "Aucune station n’est annoncée à ce jour. Rockstar promet seulement « la prochaine évolution de la radio en jeu » et une partition dynamique (17 septembre 2026). Les noms de stations qui circulent viennent de vidéos volées en août 2026 : on ne les reprend pas.",
+    "k": [
+     "radios gta 6",
+     "stations de radio",
+     "quelles radios",
+     "liste des radios",
+     "radio du jeu"
+    ],
+    "leo": "radio"
+   },
+   {
+    "q": "Quelle est la musique du Trailer 2 ?",
+    "a": "« Hot Together » des Pointer Sisters (1986), créditée par Rockstar. On entend aussi de courtes bribes à l’autoradio pendant que Jason conduit : Zenglen, Wang Chung et Tammy Wynette, relevés par la presse.",
+    "k": [
+     "musique trailer 2",
+     "chanson trailer 2",
+     "hot together",
+     "pointer sisters"
+    ],
+    "leo": "musique-trailer"
+   },
+   {
+    "q": "Qui chante dans le Trailer 1 ?",
+    "a": "Tom Petty, avec « Love Is a Long Road », tiré de l’album Full Moon Fever (1989). C’est le seul morceau de la vidéo, crédité dans sa description officielle.",
+    "k": [
+     "chanson trailer 1",
+     "qui chante trailer 1",
+     "tom petty",
+     "love is a long road"
+    ],
+    "leo": "musique-trailer"
+   },
+   {
+    "q": "Quelles chansons entend-on dans l’Extended Look ?",
+    "a": "Quatorze morceaux sous licence, de Birdman et Lil Wayne à Phil Collins, en passant par Def Leppard, Depeche Mode et Cliff Richard. La presse les a relevés avec leurs minutages ; Rockstar n’en a pas publié la liste.",
+    "k": [
+     "chansons extended look",
+     "musique extended look",
+     "morceaux extended look",
+     "phil collins",
+     "cliff richard",
+     "depeche mode"
+    ],
+    "f": [
+     "quelles chansons dans l extended look",
+     "musique de l extended look",
+     "les chansons de l extended look",
+     "quels morceaux dans l extended look",
+     "la musique de la video du 27 aout"
+    ]
+   },
+   {
+    "q": "C’est quoi « Grand Theft Auto VI: The Album » ?",
+    "a": "L’album officiel du jeu, annoncé par Rockstar et Atlantic Records le 17 septembre 2026 : 34 titres originaux, à paraître le 19 novembre 2026 avec le jeu. Six titres sont déjà sortis, dont ceux de Travis Scott, Yung Lean et Keith Richards.",
+    "k": [
+     "album gta 6",
+     "the album",
+     "atlantic records",
+     "travis scott",
+     "bande originale",
+     "album officiel"
+    ],
+    "f": [
+     "c est quoi gta vi the album",
+     "album officiel",
+     "la bande originale",
+     "quand sort l album",
+     "l album de gta 6 avec travis scott"
+    ]
+   },
+   {
+    "q": "Les noms de stations qui circulent sont-ils confirmés ?",
+    "a": "Non. Ces noms viennent du menu radio de vidéos volées en août 2026, pas d’une présentation de Rockstar. Le site ne les reprend pas et attend l’annonce officielle des stations.",
+    "k": [
+     "noms de stations",
+     "stations des fuites",
+     "radios des leaks",
+     "stations confirmees",
+     "noms des radios"
+    ],
+    "f": [
+     "les noms de stations qui circulent sont ils confirmes",
+     "les radios des fuites sont elles vraies",
+     "les stations des fuites sont confirmees",
+     "les noms de radios du leak sont vrais",
+     "les radios qui circulent sont officielles"
+    ]
+   }
+  ],
+  "sourcesLede": "Chaque morceau et chaque phrase de cette page renvoie à une source datée. Les pages ont été relevées le 4 octobre 2026 par moteur de recherche : leur ouverture directe était bloquée depuis l’atelier ce jour-là.",
+  "sources": [
+   "rs-videos",
+   "rs-extended",
+   "rs-album",
+   "mbw-album",
+   "billboard-album",
+   "techradar-album",
+   "gamespot-radio-evolution",
+   "louder-petty",
+   "gamespot-t2-song",
+   "nme-t2",
+   "pcgamer-songs",
+   "gamerant-extended",
+   "svg-extended-songs",
+   "musically-extended",
+   "kotaku-collins",
+   "gamingbolt-extended",
+   "dazed-deepdive",
+   "rockstarintel-spotify",
+   "consequence-every-song",
+   "gtafandom-vrock",
+   "postmode-24things",
+   "gamespot-khaled"
+  ]
+ },
+ "sources": {
+  "rs-videos": {
+   "url": "https://www.rockstargames.com/VI/media/videos",
+   "title": "Rockstar Games : vidéos officielles GTA VI (Trailer 1, Trailer 2, An Extended Look)",
+   "publishedAt": "2023-12-04",
+   "consultedAt": "2026-10-04",
+   "statut": "officiel",
+   "claim": "Les trois vidéos dont viennent les morceaux. Les descriptions des Trailers 1 et 2 créditent « Love Is a Long Road » et « Hot Together »."
+  },
+  "rs-extended": {
+   "url": "https://www.rockstargames.com/newswire/article/4k138k8okkk483/grand-theft-auto-vi-an-extended-look-now-playing",
+   "title": "Rockstar Newswire : Grand Theft Auto VI, An Extended Look",
+   "publishedAt": "2026-08-27",
+   "consultedAt": "2026-10-04",
+   "statut": "officiel",
+   "claim": "Annonce de la présentation d’environ 26 minutes, d’abord sur Netflix puis sur YouTube."
+  },
+  "rs-album": {
+   "url": "https://www.rockstargames.com/newswire/article/7599a881942544/announcing-grand-theft-auto-vi-the-album-coming-november-19",
+   "title": "Rockstar Newswire : Announcing Grand Theft Auto VI: The Album, Coming November 19",
+   "lang": "en",
+   "publishedAt": "2026-09-17",
+   "consultedAt": "2026-10-04",
+   "statut": "officiel",
+   "claim": "34 titres originaux avec Atlantic Records, sortie le 19 novembre 2026, six titres disponibles ; la musique du jeu, sa partition dynamique et « la prochaine évolution de la radio en jeu » seront détaillées plus tard."
+  },
+  "mbw-album": {
+   "url": "https://www.musicbusinessworldwide.com/atlantic-records-to-release-grand-theft-auto-vi-the-album-featuring-travis-scott-pinkpantheress-morgan-wallen-and-keith-richards/",
+   "title": "Atlantic Records to release Grand Theft Auto VI: The Album",
+   "lang": "en",
+   "publisher": "Music Business Worldwide",
+   "publishedAt": null,
+   "consultedAt": "2026-10-04",
+   "statut": "officiel",
+   "claim": "Reprend l’annonce : les six singles, leurs artistes et les éditions CD et vinyle."
+  },
+  "billboard-album": {
+   "url": "https://www.billboard.com/music/music-news/grand-theft-auto-vi-the-album-videogame-soundtrack-1236342337/",
+   "title": "‘Grand Theft Auto VI: The Album’ Will Feature 34 New Songs",
+   "lang": "en",
+   "publisher": "Billboard",
+   "publishedAt": "2026-09-17",
+   "consultedAt": "2026-10-04",
+   "statut": "officiel",
+   "claim": "Reprend l’annonce officielle : 34 titres originaux, sortie avec le jeu."
+  },
+  "techradar-album": {
+   "url": "https://www.techradar.com/gaming/rockstar-announces-grand-theft-auto-vi-the-album-featuring-34-original-tracks-from-artists-like-pinkpantheress-and-travis-scott-but-the-limited-edition-vinyl-collection-has-already-sold-out",
+   "title": "Rockstar announces Grand Theft Auto 6: The Album",
+   "lang": "en",
+   "publisher": "TechRadar",
+   "publishedAt": "2026-09-17",
+   "consultedAt": "2026-10-04",
+   "statut": "comm",
+   "claim": "Le vinyle en édition limitée épuisé en quelques minutes : un constat de la presse, pas une annonce de Rockstar."
+  },
+  "gamespot-radio-evolution": {
+   "url": "https://www.gamespot.com/articles/gta-6-will-feature-the-next-evolution-of-in-game-radio-rockstar-says/",
+   "title": "GTA 6 Will Feature The “Next Evolution Of In-Game Radio,” Rockstar Says",
+   "lang": "en",
+   "publisher": "GameSpot",
+   "publishedAt": null,
+   "consultedAt": "2026-10-04",
+   "statut": "officiel",
+   "claim": "Reprend la phrase du Newswire sur la partition dynamique et la radio en jeu."
+  },
+  "louder-petty": {
+   "url": "https://www.loudersound.com/news/gta-6-trailer-tom-petty",
+   "title": "The first GTA 6 trailer has launched, and Tom Petty is all over it",
+   "lang": "en",
+   "publisher": "Louder",
+   "publishedAt": null,
+   "consultedAt": "2026-10-04",
+   "statut": "officiel",
+   "claim": "« Love Is a Long Road » (Full Moon Fever, 1989) dans le Trailer 1 ; message des ayants droit de Tom Petty."
+  },
+  "gamespot-t2-song": {
+   "url": "https://www.gamespot.com/articles/gta-6-trailer-2-song-whats-the-tune-playing-and-do-the-lyrics-connect-to-the-story/1100-6531338/",
+   "title": "GTA 6 Trailer 2 Song: What’s The Tune Playing",
+   "lang": "en",
+   "publisher": "GameSpot",
+   "publishedAt": null,
+   "consultedAt": "2026-10-04",
+   "statut": "officiel",
+   "claim": "« Hot Together » des Pointer Sisters, morceau principal du Trailer 2."
+  },
+  "nme-t2": {
+   "url": "https://www.nme.com/news/gaming-news/what-song-grand-theft-auto-6-trailer-2-3860654",
+   "title": "What song soundtracks ‘Grand Theft Auto 6’s Trailer 2?",
+   "lang": "en",
+   "publisher": "NME",
+   "publishedAt": null,
+   "consultedAt": "2026-10-04",
+   "statut": "vu",
+   "claim": "Les bribes d’autoradio du Trailer 2 : Zenglen, Wang Chung et Tammy Wynette."
+  },
+  "pcgamer-songs": {
+   "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-radio-songs/",
+   "title": "Every GTA 6 song confirmed so far",
+   "lang": "en",
+   "publisher": "PC Gamer",
+   "publishedAt": null,
+   "consultedAt": "2026-10-04",
+   "statut": "vu",
+   "claim": "Relevé des morceaux des vidéos officielles, mis à jour en 2026."
+  },
+  "gamerant-extended": {
+   "url": "https://gamerant.com/all-songs-featured-in-gta-6-extended-look-showcase-timestamps/",
+   "title": "All Songs Featured in GTA 6 Extended Look (With Timestamps)",
+   "lang": "en",
+   "publisher": "Game Rant",
+   "publishedAt": null,
+   "consultedAt": "2026-10-04",
+   "statut": "vu",
+   "claim": "Les quatorze morceaux de l’Extended Look et leurs minutages, repris sur cette page."
+  },
+  "svg-extended-songs": {
+   "url": "https://www.svg.com/2246046/gta-6-extended-look-soundtrack-songs/",
+   "title": "GTA 6 Extended Look Soundtrack: Every Song We Heard",
+   "lang": "en",
+   "publisher": "SVG",
+   "publishedAt": null,
+   "consultedAt": "2026-10-04",
+   "statut": "vu",
+   "claim": "La même liste de quatorze morceaux, relevée de son côté."
+  },
+  "musically-extended": {
+   "url": "https://musically.com/2026/08/28/music-features-prominently-in-grand-theft-auto-vi-extended-look/",
+   "title": "Music features prominently in Grand Theft Auto VI ‘extended look’",
+   "lang": "en",
+   "publisher": "Music Ally",
+   "publishedAt": "2026-08-28",
+   "consultedAt": "2026-10-04",
+   "statut": "vu",
+   "claim": "La musique mêlée au récit ; « Devil Woman » parmi les titres les plus présents."
+  },
+  "kotaku-collins": {
+   "url": "https://kotaku.com/phil-collins-returns-to-vice-city-with-an-ominous-song-choice-for-jason-and-lucia-2000729601",
+   "title": "Phil Collins Returns To Vice City With An Ominous Song Choice For Jason And Lucia",
+   "lang": "en",
+   "publisher": "Kotaku",
+   "publishedAt": null,
+   "consultedAt": "2026-10-04",
+   "statut": "vu",
+   "claim": "« Against All Odds » de Phil Collins sur des images de Jason et Lucia."
+  },
+  "gamingbolt-extended": {
+   "url": "https://gamingbolt.com/grand-theft-auto-6-extended-looks-song-choices-revealed",
+   "title": "Grand Theft Auto 6 Extended Look’s Song Choices Revealed",
+   "lang": "en",
+   "publisher": "GamingBolt",
+   "publishedAt": null,
+   "consultedAt": "2026-10-04",
+   "statut": "vu",
+   "claim": "Entre les morceaux sous licence, une musique originale aux synthétiseurs accompagne les moments tendus."
+  },
+  "dazed-deepdive": {
+   "url": "https://www.dazeddigital.com/life-culture/article/70859/1/gta-6-grand-theft-auto-vi-rockstar-exclusive-deep-dive-game-unparalleled-world",
+   "title": "GTAVI: An exclusive deep dive into the video game of the decade",
+   "lang": "en",
+   "publisher": "Dazed",
+   "publishedAt": null,
+   "consultedAt": "2026-10-04",
+   "statut": "officiel",
+   "claim": "Entretien avec Rupert Humphries (Rockstar) : la musique de Miami, en particulier la Miami bass, Kodak Black et Sexyy Red."
+  },
+  "rockstarintel-spotify": {
+   "url": "https://rockstarintel.com/new-gta-6-billboards-appear-as-rockstar-teams-up-with-spotify/",
+   "title": "New GTA 6 Billboards Appear As Rockstar Teams Up With Spotify",
+   "lang": "en",
+   "publisher": "RockstarINTEL",
+   "publishedAt": null,
+   "consultedAt": "2026-10-04",
+   "statut": "vu",
+   "claim": "Panneaux GTA VI aux couleurs de Spotify à Los Angeles, New York et Miami ; aucune intégration dans le jeu n’est annoncée."
+  },
+  "consequence-every-song": {
+   "url": "https://consequence.net/2026/09/grand-theft-auto-6-every-song-so-far/",
+   "title": "Grand Theft Auto 6: Every Song Revealed So Far",
+   "lang": "en",
+   "publisher": "Consequence",
+   "publishedAt": null,
+   "consultedAt": "2026-10-04",
+   "statut": "comm",
+   "claim": "Sépare les morceaux des vidéos officielles de ceux des fuites ; les noms de stations ne viennent que des fuites."
+  },
+  "gtafandom-vrock": {
+   "url": "https://gta.fandom.com/wiki/V-Rock_(HD_Universe)",
+   "title": "GTA Wiki : V-Rock (HD Universe)",
+   "publishedAt": null,
+   "consultedAt": "2026-10-04",
+   "statut": "comm",
+   "claim": "Le logo V-Rock sur un vêtement de Jason, d’après les joueurs ; la station n’est pas annoncée."
+  },
+  "postmode-24things": {
+   "url": "https://postmode.substack.com/p/gta-6-extended-look-24-things-you-missed",
+   "title": "Postmode : 24 détails à revoir dans l’Extended Look",
+   "publishedAt": null,
+   "consultedAt": "2026-10-04",
+   "statut": "comm",
+   "claim": "Relève une publicité « Vice City FM » dans l’Extended Look, sans minutage."
+  },
+  "gamespot-khaled": {
+   "url": "https://www.gamespot.com/articles/gta-6-will-have-dj-khaled-in-game-radio-station-report/1100-6529567/",
+   "title": "GTA 6 Will Have DJ Khaled In-Game Radio Station, Report",
+   "lang": "en",
+   "publisher": "GameSpot",
+   "publishedAt": null,
+   "consultedAt": "2026-10-04",
+   "statut": "conf",
+   "claim": "Rapporte une rumeur d’informateur ; rien n’est confirmé par Rockstar ni par l’artiste."
+  }
+ },
+ "leo": {
+  "suggestions": [
+   "Quelles radios dans GTA 6 ?",
+   "Quelle musique dans le Trailer 2 ?",
+   "Qui chante dans le Trailer 1 ?",
+   "Quelles chansons dans l’Extended Look ?",
+   "C’est quoi GTA VI: The Album ?",
+   "Les stations qui circulent sont-elles confirmées ?"
+  ]
+ }
+}

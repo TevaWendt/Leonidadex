@@ -1,0 +1,112 @@
+{
+ "_note": "Section missions : questions de test de Léo en français pour la section « Missions » (nombre de missions, déblocage, gains, braquages, durée, changement de personnage, guide). Rejoué par node outils/tests/leo-eval.cjs --questions=outils/tests/leo-questions-section-missions-fr.json.",
+ "schemaVersion": 1,
+ "questions": [
+  {
+   "q": "combien de missions dans gta 6",
+   "expect": {
+    "topic": "missions-faq-1"
+   },
+   "tags": [
+    "section-missions"
+   ]
+  },
+  {
+   "q": "il y a combien de missions",
+   "expect": {
+    "topic": "missions-faq-1"
+   },
+   "tags": [
+    "section-missions"
+   ]
+  },
+  {
+   "q": "combien de chapitres dans gta 6",
+   "expect": {
+    "topic": "missions-faq-1"
+   },
+   "tags": [
+    "section-missions"
+   ]
+  },
+  {
+   "q": "comment debloquer une mission",
+   "expect": {
+    "topic": "missions-faq-2"
+   },
+   "tags": [
+    "section-missions"
+   ]
+  },
+  {
+   "q": "mission bloquee gta 6",
+   "expect": {
+    "topic": "missions-faq-2"
+   },
+   "tags": [
+    "section-missions"
+   ]
+  },
+  {
+   "q": "quelles missions rapportent le plus",
+   "expect": {
+    "topic": "missions-faq-3"
+   },
+   "tags": [
+    "section-missions"
+   ]
+  },
+  {
+   "q": "mission la plus rentable gta 6",
+   "expect": {
+    "topic": "missions-faq-3"
+   },
+   "tags": [
+    "section-missions"
+   ]
+  },
+  {
+   "q": "qu est ce qu on sait des braquages",
+   "expect": {
+    "any": [
+     {
+      "topic": "braquage"
+     },
+     {
+      "topic": "braquer-magasins"
+     }
+    ]
+   },
+   "tags": [
+    "section-missions"
+   ]
+  },
+  {
+   "q": "combien d heures dure gta 6",
+   "expect": {
+    "topic": "mission-solo"
+   },
+   "tags": [
+    "section-missions"
+   ]
+  },
+  {
+   "q": "on peut changer de personnage pendant une mission",
+   "expect": {
+    "topic": "changer-perso"
+   },
+   "tags": [
+    "section-missions"
+   ]
+  },
+  {
+   "q": "soluce des missions gta 6",
+   "expect": {
+    "page": "/missions.html"
+   },
+   "tags": [
+    "section-missions"
+   ]
+  }
+ ]
+}

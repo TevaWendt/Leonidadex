@@ -1,0 +1,166 @@
+{
+ "_note": "Section « Missions et leurs solutions » (section missions) : textes de missions.html, lus par outils/gen-missions.cjs. Les missions elles-mêmes sont dans outils/missions/missions.json (aucune n’a de nom officiel au 4 octobre 2026) ; la page de démonstration du gabarit (missions/modele.html, noindex) dans outils/missions/modele.json. Rien d’inventé : chaque phrase porte un statut et des sources de « sources ». Aucun nom de mission tiré des wikis ou des fuites. Sources relevées le 4 octobre 2026 par moteur de recherche (ouverture directe des pages bloquée depuis l’atelier ce jour-là).",
+ "hub": {
+  "label": "Missions",
+  "title": "Les missions de GTA VI et leurs solutions",
+  "lede": "Aucune mission n’a encore de nom officiel. Voici l’histoire de Jason et Lucia telle que Rockstar la raconte, ce que les vidéos montrent des missions et le guide qui se remplira dès le 19 novembre 2026.",
+  "desc": "Missions de GTA VI : l’histoire selon Rockstar, les séquences des trailers et de l’Extended Look, et le guide des solutions prêt pour la sortie.",
+  "note": "Chaque séquence dit d’où elle vient : texte de Rockstar, image officielle ou relevé de joueurs. Aucun nom de mission n’est inventé ni tiré des fuites ; les solutions arriveront avec le jeu.",
+  "pile": [
+   { "media": "jason-and-lucia-02", "caption": "Un braquage à deux", "alt": "Jason et Lucia armés et masqués devant la porte ouverte d’une chambre forte, billets en l’air, visuel officiel Rockstar Games" },
+   { "media": "raul-bautista-01", "caption": "Raul au téléphone", "alt": "Raul Bautista au téléphone devant des écrans de surveillance, visuel officiel Rockstar Games" },
+   { "media": "jason-and-lucia-09", "caption": "La fuite", "alt": "Jason et Lucia à moto, Lucia tirant au pistolet, poursuivis par une voiture de police, visuel officiel Rockstar Games" }
+  ]
+ },
+ "histoire": {
+  "kicker": "L’histoire",
+  "titre": "Jason et Lucia, selon Rockstar",
+  "p": [
+   "Jason Duval et Lucia Caminos savent depuis toujours que les cartes sont truquées contre eux. Quand un coup censé être facile tourne mal, ils basculent du côté sombre de l’endroit le plus ensoleillé d’Amérique, au cœur d’une conspiration criminelle qui s’étend à tout l’État de Leonida. Pour s’en sortir, ils vont devoir compter l’un sur l’autre plus que jamais.",
+   "Jason a grandi parmi les escrocs, est passé par l’armée et travaille dans les Keys pour des trafiquants locaux ; Lucia sort du pénitencier de Leonida, où l’avait menée un combat pour sa famille. Rob Nelson, de Rockstar North, résume la suite à Famitsu : après le coup raté, plusieurs personnes les traquent, ils se cachent à Vice City et cherchent assez d’argent pour s’en sortir.",
+   "Rockstar assume le modèle de Bonnie et Clyde : Rupert Humphries, chargé de la narration, le dit à Dazed. Comment ils se rencontrent, qui les poursuit et comment tout finit : rien n’est publié."
+  ],
+  "sources": ["rs-vi", "famitsu-nelson", "dazed-deepdive"],
+  "mecaniques": [
+   { "titre": "Une histoire en chapitres", "texte": "Le texte de l’Édition Ultimate parle de bonus qui se découvrent « à chaque chapitre ». Le nombre de chapitres n’est pas publié.", "statut": "officiel", "sources": ["xbox-ultimate"], "icon": "lire" },
+   { "titre": "Deux personnages, parfois imposés", "texte": "On passe de Jason à Lucia quand ils sont ensemble, mais certaines missions imposent l’un des deux : Rob Nelson cite une mission du début, dans une grande cité, réservée à Jason.", "statut": "officiel", "sources": ["famitsu-nelson", "gamesradar-switch2"], "icon": "nommes" },
+   { "titre": "L’argent fait avancer l’histoire", "texte": "Selon Rob Nelson, enchaîner les missions ne rapportera pas assez d’argent pour faire avancer l’histoire : il faudra aussi en gagner en dehors, en braquant des commerces ou des repaires de gangs.", "statut": "officiel", "sources": ["famitsu-nelson", "notebookcheck-money"], "icon": "argent" },
+   { "titre": "Ta façon de jouer compte", "texte": "Un profil criminel garde la trace de tes actes et ne s’efface pas comme les étoiles de recherche ; certains objectifs facultatifs ont des conséquences sur le récit.", "statut": "officiel", "sources": ["gamespot-extended", "svg-length"], "icon": "statuts" }
+  ]
+ },
+ "sequences": {
+  "kicker": "Les vidéos officielles",
+  "titre": "Ce que les vidéos montrent des missions",
+  "lede": "Rockstar n’a nommé aucune mission. Les intitulés ci-dessous décrivent ce qu’on voit : ce ne sont pas des noms de missions.",
+  "items": [
+   { "id": "liquor", "video": "Trailer 1", "moment": "Vers 1:16", "titre": "Un braquage de magasin d’alcool", "texte": "Jason et Lucia entrent masqués, arme au poing, dans un Uncle Jack’s Liquor, avant de prendre la fuite.", "personnages": ["jason", "lucia"], "carte": [{ "id": "g-L313", "nom": "Uncle Jack’s Liquor" }], "statut": "vu", "sources": ["rs-videos", "gtawiki-trailers"] },
+   { "id": "brian-tournee", "video": "Trailer 2", "moment": "Vers 0:16", "titre": "Une tournée pour Brian", "texte": "Brian, au volant de son pick-up, envoie Jason encaisser ; la tournée tourne mal : poursuite à moto, puis fuite en scooter des mers avec Lucia. La présentation officielle de Jason confirme ces recouvrements pour Brian.", "personnages": ["jason", "brian", "lucia"], "lieux": ["leonida-keys"], "statut": "vu", "media": "trailer-2-caracara-016", "alt": "Brian Heder devant son pick-up dans les Keys, photogramme du Trailer 2 vers 0:16", "sources": ["rs-videos", "gamespot-t2", "rs-vi"] },
+   { "id": "banque", "video": "Trailer 2", "moment": "Vers 1:15", "titre": "Un braquage de banque masqué", "texte": "Lucia, masque à tête de mort, tient des employés en joue dans une pièce éclairée de rouge pendant que Jason déplace des otages. L’enseigne Sinfrontera National Bank se lirait à l’image, selon GameSpot. Rien d’officiel ne relie ce coup à Raul.", "personnages": ["lucia", "jason"], "statut": "vu", "media": "trailer-2-lucia-pm", "alt": "Lucia masquée tient un pistolet-mitrailleur dans une pièce éclairée en rouge, photogramme du Trailer 2 vers 1:15", "sources": ["rs-videos", "gamespot-t2"] },
+   { "id": "fuite-police", "video": "Trailer 2", "moment": "Vers 1:58", "titre": "Une fuite sous le feu de la police", "texte": "Lucia tire au lance-grenades depuis un véhicule criblé de balles, face à un fourgon blindé de la police.", "personnages": ["lucia", "jason"], "statut": "vu", "media": "trailer-2-lucia-grenade-launcher", "alt": "Lucia tire au lance-grenades depuis un véhicule pendant une poursuite, photogramme du Trailer 2 vers 1:58", "sources": ["rs-videos"] },
+   { "id": "descente", "video": "Extended Look", "moment": "Ouverture", "titre": "Une livraison qui tourne à la descente de police", "texte": "Le duo vient récupérer de la marchandise pour Boobie Ike dans une cité d’immeubles ; l’arrivée d’une unité de police tourne à la fusillade, puis à la fuite par une fenêtre. Rob Nelson cite une mission du début, dans une grande cité, réservée à Jason : le rapprochement est probable, pas confirmé.", "personnages": ["jason", "lucia", "boobie"], "lieux": ["vice-city"], "carte": [{ "id": "g-L192", "nom": "Venture Apts North" }], "statut": "vu", "sources": ["rs-extended", "gamespot-extended", "gtawiki-extended"] },
+   { "id": "effluvia", "video": "Extended Look", "moment": "Vers 10:50", "titre": "Un rendez-vous avec Brian et Lori", "texte": "Sur le toit-terrasse du bar Effluvia, Brian et Lori reçoivent le duo ; d’après les relevés, le contact de Brian ne veut employer qu’un des deux. Un montage de braquages de stations-service suit.", "personnages": ["jason", "lucia", "brian"], "lieux": ["vice-city"], "carte": [{ "id": "g-L104", "nom": "Effluvia" }], "statut": "vu", "sources": ["engadget-missed", "gtawiki-extended"] },
+   { "id": "raul-fuite", "video": "Extended Look", "moment": "Jusqu’à 16:49", "titre": "La fuite après un coup de Raul", "texte": "Lucia conduit la voiture de Raul pendant une longue poursuite ; le jeu passe seul de Jason, qui tire depuis la banquette arrière, à Lucia au volant. À la fin, Raul paie Jason et leur demande de garder leur téléphone allumé.", "personnages": ["lucia", "jason", "raul"], "lieux": ["vice-city"], "statut": "vu", "sources": ["gtawiki-extended", "pcgamer-switch"] },
+   { "id": "megamundo", "video": "Extended Look", "moment": "Vers 20:00 à 25:40", "titre": "Une protection qui tourne à l’assaut", "texte": "Le duo escorte un dirigeant du groupe de médias Megamundo de l’aéroport à une fête d’inauguration ; des assaillants armés attaquent. Jason intercepte leurs radios et fait sauter une charge pour faire diversion. Selon Rob Nelson, on change librement de personnage dans cette mission.", "personnages": ["jason", "lucia"], "lieux": ["vice-city"], "carte": [{ "id": "g-L208", "nom": "Megamundo" }], "statut": "vu", "sources": ["insider-extended", "gtawiki-extended", "pcgamer-switch"] }
+  ]
+ },
+ "edition": {
+  "kicker": "Édition Ultimate",
+  "titre": "Les deux contenus nommés par Rockstar",
+  "lede": "Les seuls contenus de jeu qui ont un nom officiel sont rangés dans l’Édition Ultimate. Ils ont déjà leur page sur le site.",
+  "items": [
+   { "titre": "PTT YOUNGIN$ Compound", "texte": "Piller le repaire de l’un des gangs les plus bruyants de Southside, puis s’enfuir avec des objets spéciaux et de la contrebande, selon le texte de l’édition.", "statut": "officiel", "sources": ["xbox-ultimate"], "liens": [{ "label": "La fiche du gang", "href": "gangs/ptt-youngin-gang.html" }, { "label": "Le repère sur la carte", "href": "carte.html#lieu=ptt-youngin" }] },
+   { "titre": "Classic Car Collection", "texte": "Retrouver des voitures classiques abandonnées pour Wyman, collectionneur excentrique et « fixer » du coin, et leur rendre leur éclat.", "statut": "officiel", "sources": ["xbox-ultimate", "gamingbible-ultimate"], "liens": [{ "label": "Les collectibles", "href": "collectibles.html" }] }
+  ],
+  "p": "Le moment où ces contenus se débloquent, et leur existence sans l’Édition Ultimate, ne sont pas publiés."
+ },
+ "liste": {
+  "kicker": "Le guide",
+  "titre": "Les missions, par chapitre et par type",
+  "vide": "Aucune mission n’est encore publiée avec son nom. Dès la sortie, chaque mission aura sa fiche : chapitre, type, personnages, lieux, conditions, objectifs, récompenses, durée, solution pas à pas et astuces, chacun avec sa source.",
+  "ordre": "L’ordre conseillé se fera mission par mission, d’après le jeu lui-même : rien n’est publié à ce jour.",
+  "typesTitre": "Les types de missions prévus dans le guide"
+ },
+ "zone": {
+  "nav": [
+   { "href": "#histoire", "label": "L’histoire" },
+   { "href": "#sequences", "label": "Les séquences" },
+   { "href": "#edition", "label": "Édition Ultimate" },
+   { "href": "#liste", "label": "Le guide" },
+   { "href": "#rockstar", "label": "Rockstar" },
+   { "href": "#communaute", "label": "Communauté" },
+   { "href": "#a-confirmer", "label": "À confirmer" },
+   { "href": "#pour-toi", "label": "Pour toi" },
+   { "href": "#faq", "label": "FAQ" },
+   { "href": "#sources", "label": "Sources" }
+  ],
+  "rockstar": {
+   "lede": "Rockstar raconte l’histoire par touches : deux trailers, des présentations de personnages, un texte d’édition et une longue démonstration.",
+   "items": [
+    { "date": "4 décembre 2023", "titre": "Trailer 1", "statut": "officiel", "texte": "Le premier trailer pose Lucia, Jason et Vice City, et montre déjà le duo en plein braquage." },
+    { "date": "6 mai 2025", "titre": "Trailer 2 et personnages", "statut": "officiel", "texte": "Jason travaille pour les trafiquants des Keys, Raul recrute des braqueurs, Brian fait passer sa marchandise par son chantier naval.", "media": "raul-bautista-02", "alt": "Raul Bautista au volant, un pistolet à la main, capture officielle" },
+    { "date": "24 juin 2026", "titre": "Éditions", "statut": "officiel", "texte": "L’Édition Ultimate nomme deux contenus, le repaire des PTT Youngin$ et la collection de Wyman, et parle de bonus qui se découvrent à chaque chapitre." },
+    { "date": "27 août 2026", "titre": "Extended Look", "statut": "vu", "texte": "Quatre séquences d’histoire, de la descente de police à l’assaut du Megamundo, sans aucun nom de mission à l’écran." },
+    { "date": "28 août 2026", "titre": "Famitsu", "statut": "officiel", "texte": "Rob Nelson détaille les changements de personnage, les braquages seul ou à deux, les repaires de gangs repérés sur la carte et le rôle de l’argent." },
+    { "date": "Août 2026", "titre": "New York Times", "statut": "officiel", "texte": "Rob Nelson dit avoir fini sa partie en environ 80 heures, histoire principale et une partie des objectifs facultatifs compris." }
+   ],
+   "p": [
+    "Une séquence « vue » vient d’une vidéo officielle ; son intitulé reste descriptif tant que Rockstar ne donne pas le nom de la mission."
+   ]
+  },
+  "communaute": {
+   "lede": "Les joueurs décortiquent chaque plan. Voici ce qu’ils avancent, cité comme tel.",
+   "pairs": [
+    { "fiction": "Le Trailer 1 à l’envers", "reel": "Des joueurs pensent que le Trailer 1 raconte l’histoire à rebours, d’après le bracelet électronique de Lucia ; ce n’est qu’une théorie.", "src": "gamesradar-anklet" },
+    { "fiction": "Sinfrontera National Bank", "reel": "GameSpot lit ce nom d’enseigne pendant le braquage du Trailer 2 ; des sites de fans en font un coup de Raul, sans source officielle.", "src": "gamespot-t2" },
+    { "fiction": "Raymond, Mendez, Venture Apartments", "reel": "Les noms relevés dans l’ouverture de l’Extended Look viennent des wikis ; ils restent à vérifier sur la vidéo.", "src": "gtawiki-extended" },
+    { "fiction": "Les listes de missions des wikis", "reel": "Leurs noms de missions ne viennent pas de Rockstar, et certains sortent des fuites : le site n’en reprend aucun.", "src": "gtabase-missions" },
+    { "fiction": "Environ 1 000 $ par petit commerce", "reel": "Un chiffre avancé par un créateur invité chez Rockstar, pas par Rockstar : il n’entre pas dans le calculateur.", "src": "tweaktown-economy" },
+    { "fiction": "Cinq niveaux de braquages", "reel": "Des repaires de gangs aux banques et aux bijouteries, selon des aperçus de presse ; aucune liste officielle.", "src": "tweaktown-economy" }
+   ],
+   "p": [
+    "Un nom de mission n’entrera dans le guide qu’avec une source officielle : le jeu lui-même, une vidéo ou un texte de Rockstar."
+   ]
+  },
+  "confirmer": {
+   "lede": "Le guide est prêt ; il lui manque les chiffres du jeu.",
+   "items": [
+    { "q": "Le nombre de missions", "etat": "Ni nombre de missions ni nombre de chapitres : seul le découpage en chapitres est officiel." },
+    { "q": "Les récompenses", "etat": "Aucun montant n’est publié pour une mission, un braquage ou un repaire." },
+    { "q": "Les missions manquables", "etat": "Rien ne dit si une mission peut être ratée pour de bon, ou rejouée." },
+    { "q": "Les objectifs facultatifs", "etat": "Ils existent et pèsent sur le récit ; leur forme exacte n’est pas détaillée." },
+    { "q": "Sans l’Édition Ultimate", "etat": "Le repaire des PTT Youngin$ et la collection de Wyman sont rangés dans l’édition." }
+   ],
+   "p": [
+    "Chaque réponse rejoindra le guide avec sa source dès qu’elle sera publiée."
+   ]
+  },
+  "toi": {
+   "lede": "En attendant les missions, prépare tes calculs et retrouve les personnages qui donnent du travail au duo.",
+   "actions": [
+    { "k": "Calculateur", "t": "Comparer mes activités", "d": "Écris ce qu’une mission rapporterait et sa durée : tu vois ce qu’elle vaut à l’heure.", "href": "calculateurs.html?tool=activities&from=missions#atelier" },
+    { "k": "Personnages", "t": "Les personnages", "d": "Raul, Brian, Boobie, Cal : qui croise la route de Jason et Lucia.", "href": "personnages.html" },
+    { "k": "Gang", "t": "L’équipe de Raul", "d": "Le braqueur qui recrute, et ce que Rockstar en dit.", "href": "gangs/equipe-raul.html" },
+    { "k": "Carte", "t": "Les lieux des séquences", "d": "La cité de la descente de police, le bar Effluvia, le Megamundo et le motel du premier trailer.", "pins": ["g-L192", "g-L104", "g-L208", "g-L304"], "pinsTitle": "Lieux des séquences de missions" }
+   ],
+   "p": [
+    "À la sortie, chaque fiche de mission aura son encart du calculateur et une case à cocher pour suivre ta progression."
+   ]
+  },
+  "faq": [
+   { "q": "Combien de missions y a-t-il dans GTA 6 ?", "a": "Rockstar n’a publié ni le nombre de missions ni le nombre de chapitres. On sait seulement que l’histoire est découpée en chapitres, et que Rob Nelson a mis environ 80 heures pour finir sa partie, histoire et objectifs facultatifs compris. La liste se remplira à la sortie.", "k": ["combien de missions", "nombre de missions", "missions gta 6", "liste des missions", "chapitres", "soluce des missions", "guide des missions", "solution des missions", "premiere mission"], "f": ["combien de missions", "il y a combien de missions", "nombre de missions", "combien de chapitres", "liste des missions", "soluce des missions", "guide des missions", "solution des missions", "ou trouver la solution des missions", "c est quoi la premiere mission", "quelle est la premiere mission"] },
+   { "q": "Comment débloquer une mission dans GTA 6 ?", "a": "Les conditions ne sont pas publiées mission par mission. Rob Nelson prévient que les missions seules ne rapportent pas assez pour faire avancer l’histoire : il faudra aussi gagner de l’argent en dehors, en braquant des commerces ou des repaires de gangs.", "k": ["debloquer une mission", "deblocage", "condition de mission", "mission bloquee", "faire avancer l histoire"], "f": ["comment debloquer une mission", "comment on debloque les missions", "mission bloquee", "debloquer la suite de l histoire", "conditions pour debloquer une mission"] },
+   { "q": "Quelles missions rapportent le plus dans GTA 6 ?", "a": "Impossible de les classer pour l’instant. {donnees:activites} Dès qu’une mission aura un gain et une durée publiés, elle rejoindra « Mes activités », qui compare ce que tout rapporte à l’heure.", "k": ["missions qui rapportent", "mission la plus rentable", "rapporte le plus", "argent des missions", "recompense de mission"], "f": ["quelles missions rapportent le plus", "mission la plus rentable", "quelle mission donne le plus d argent", "combien rapporte une mission", "recompense des missions"] },
+   { "q": "Qu’est-ce qu’on sait des braquages de GTA 6 ?", "a": "Les trailers montrent un braquage de magasin d’alcool et un braquage de banque masqué. Rob Nelson explique qu’on peut braquer une bijouterie ou une petite banque seul ou à deux, couper l’alarme et détruire les caméras pour repartir sans être vu, et piller des repaires de gangs repérés sur la carte.", "k": ["braquages", "braquage de banque", "bijouterie", "casse", "hold up"], "leo": "braquage" },
+   { "q": "Combien d’heures dure l’histoire de GTA 6 ?", "a": "Rockstar n’a pas donné de durée. Seul repère : Rob Nelson dit avoir fini sa partie en environ 80 heures, histoire principale et une partie des objectifs facultatifs compris (New York Times, août 2026).", "k": ["duree de vie", "combien d heures", "duree de l histoire", "80 heures"], "leo": "mission-solo" },
+   { "q": "Peut-on changer de personnage pendant une mission ?", "a": "Parfois. Quand Jason et Lucia sont ensemble, on passe de l’un à l’autre ; mais certaines missions imposent un personnage, et le jeu bascule parfois tout seul, comme pendant la fuite avec Raul de l’Extended Look.", "k": ["changer de personnage", "switch", "jason ou lucia", "personnage impose"], "leo": "changer-perso" }
+  ],
+  "sourcesLede": "Chaque séquence et chaque phrase de cette page renvoie à une source datée. Les pages ont été relevées le 4 octobre 2026 par moteur de recherche : leur ouverture directe était bloquée depuis l’atelier ce jour-là.",
+  "sources": ["rs-vi", "rs-videos", "rs-extended", "xbox-ultimate", "famitsu-nelson", "gtavice-famitsu", "notebookcheck-money", "gamesradar-switch2", "pcgamer-switch", "dazed-deepdive", "svg-length", "gamespot-t2", "gamespot-extended", "insider-extended", "engadget-missed", "gtawiki-trailers", "gtawiki-extended", "gamingbible-ultimate", "gamesradar-anklet", "gtabase-missions", "tweaktown-economy"]
+ },
+ "sources": {
+  "rs-vi": { "url": "https://www.rockstargames.com/VI", "title": "Site officiel Grand Theft Auto VI (pages « Only in Leonida », éditions, précommandes)", "publishedAt": "2025-05-06", "consultedAt": "2026-10-04", "statut": "officiel", "claim": "Le résumé officiel de l’histoire et les présentations de Jason, Lucia, Raul, Brian et Boobie." },
+  "rs-videos": { "url": "https://www.rockstargames.com/VI/media/videos", "title": "Rockstar Games : vidéos officielles GTA VI (Trailer 1, Trailer 2, An Extended Look)", "publishedAt": "2023-12-04", "consultedAt": "2026-10-04", "statut": "officiel", "claim": "Les trailers dont viennent les séquences et les photogrammes de cette page." },
+  "rs-extended": { "url": "https://www.rockstargames.com/newswire/article/4k138k8okkk483/grand-theft-auto-vi-an-extended-look-now-playing", "title": "Rockstar Newswire : Grand Theft Auto VI, An Extended Look", "publishedAt": "2026-08-27", "consultedAt": "2026-10-04", "statut": "officiel", "claim": "La présentation d’environ 26 minutes, capturée sur PS5, d’où viennent les quatre séquences d’histoire." },
+  "xbox-ultimate": { "url": "https://www.xbox.com/en-us/games/store/grand-theft-auto-vi-ultimate-edition/9nnzsnhlr63l", "title": "Microsoft Store : Grand Theft Auto VI, Ultimate Edition (fiche officielle de l’édition)", "publishedAt": null, "consultedAt": "2026-10-04", "statut": "officiel", "claim": "Bonus « à chaque chapitre », repaire des PTT Youngin$ à piller et collection de Wyman." },
+  "famitsu-nelson": { "url": "https://www.famitsu.com/article/202608/85753", "title": "Famitsu : interview de Rob Nelson (Rockstar North) après la démonstration", "publishedAt": "2026-08-28", "consultedAt": "2026-10-04", "statut": "officiel", "claim": "Le coup raté et la fuite à Vice City, le personnage parfois imposé, les braquages seul ou à deux, les repaires de gangs et le rôle de l’argent." },
+  "gtavice-famitsu": { "url": "https://www.gtavice.net/news/gta-6-famitsus-full-rob-nelson-interview-translated-into-english", "title": "GTAVice.net : traduction anglaise de l’interview Famitsu", "publishedAt": "2026-09-09", "consultedAt": "2026-10-04", "statut": "officiel", "claim": "La même interview, en anglais ; les propos de Rob Nelson repris ici en viennent." },
+  "notebookcheck-money": { "url": "https://www.notebookcheck.net/GTA-6-Story-missions-alone-apparently-won-t-be-enough-to-finish-the-game.1395809.0.html", "title": "Notebookcheck : les missions seules ne suffiront pas à financer l’histoire", "publishedAt": null, "consultedAt": "2026-10-04", "statut": "officiel", "claim": "Reprend la phrase de Rob Nelson à Famitsu : il faudra gagner de l’argent hors des missions pour faire avancer l’histoire." },
+  "gamesradar-switch2": { "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-wont-let-you-switch-between-lucia-and-jason-whenever-you-want-because-it-would-be-unnatural-for-story-progression/", "title": "GamesRadar+ : le changement de personnage parfois imposé par l’histoire", "publishedAt": null, "consultedAt": "2026-10-04", "statut": "officiel", "claim": "Rob Nelson (Famitsu) : une mission du début, dans une grande cité, réservée à Jason." },
+  "pcgamer-switch": { "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6s-story-is-too-important-for-rockstar-to-let-you-swap-between-lucia-and-jason-whenever-you-want/", "title": "PC Gamer : quand l’histoire choisit le personnage", "publishedAt": null, "consultedAt": "2026-10-04", "statut": "officiel", "claim": "Le passage automatique de Jason à Lucia pendant la fuite avec Raul, et le changement libre pendant la mission du Megamundo." },
+  "dazed-deepdive": { "url": "https://www.dazeddigital.com/life-culture/article/70859/1/gta-6-grand-theft-auto-vi-rockstar-exclusive-deep-dive-game-unparalleled-world", "title": "Dazed : dossier exclusif sur GTA VI, avec Rockstar", "publishedAt": null, "consultedAt": "2026-10-04", "statut": "officiel", "claim": "Rupert Humphries, chargé de la narration chez Rockstar, sur un récit construit comme une histoire « à la Bonnie et Clyde »." },
+  "svg-length": { "url": "https://www.svg.com/2246065/gta-6-game-length-confirmed-rockstar-games/", "title": "SVG : Rob Nelson a fini sa partie en environ 80 heures", "publishedAt": "2026-08-27", "consultedAt": "2026-10-04", "statut": "officiel", "claim": "Environ 80 heures, histoire principale et une partie des objectifs facultatifs, dont certains pèsent sur le récit (New York Times)." },
+  "gamespot-t2": { "url": "https://www.gamespot.com/gallery/gta-6-trailer-2-breakdown-whats-happening-in-leonida/2900-6542/", "title": "GameSpot : GTA 6 Trailer 2 breakdown", "publishedAt": "2025-05-06", "consultedAt": "2026-10-04", "statut": "vu", "claim": "Le Trailer 2 plan par plan : la tournée pour Brian, l’enseigne de la banque braquée, la fuite." },
+  "gamespot-extended": { "url": "https://www.gamespot.com/articles/gta-6s-big-reveal-all-the-things-we-learned/", "title": "GameSpot : ce qu’on a appris de l’Extended Look", "publishedAt": null, "consultedAt": "2026-10-04", "statut": "vu", "claim": "Le profil criminel qui garde la trace de tes actes, et l’ouverture de la démonstration." },
+  "insider-extended": { "url": "https://insider-gaming.com/gta-6-extended-look-jason-lucia-story/", "title": "Insider Gaming : l’histoire de Jason et Lucia dans l’Extended Look", "publishedAt": null, "consultedAt": "2026-10-04", "statut": "vu", "claim": "La mission de protection au Megamundo et l’assaut qui la coupe." },
+  "engadget-missed": { "url": "https://www.engadget.com/2246846/things-you-may-have-missed-gta-6-extended-look/", "title": "Engadget : plus de 20 détails à ne pas manquer dans l’Extended Look", "publishedAt": "2026-08-28", "consultedAt": "2026-10-04", "statut": "vu", "claim": "Le rendez-vous au bar Effluvia vers 10:50 et le montage de braquages qui suit." },
+  "gtawiki-trailers": { "url": "https://gta.wiki/w/Grand_Theft_Auto_VI/Trailers", "title": "GTA Wiki : plans des trailers, minutés", "publishedAt": null, "consultedAt": "2026-10-04", "statut": "vu", "claim": "Le braquage du magasin d’alcool du Trailer 1, avec son minutage." },
+  "gtawiki-extended": { "url": "https://gta.wiki/wiki/An_Extended_Look", "title": "GTA Wiki : Grand Theft Auto VI, An Extended Look", "publishedAt": "2026-09-25", "consultedAt": "2026-10-04", "statut": "vu", "claim": "Les quatre séquences d’histoire de l’Extended Look ; les noms de personnages secondaires qu’il donne restent à vérifier sur la vidéo." },
+  "gamingbible-ultimate": { "url": "https://www.gamingbible.com/news/gta-6-exclusive-missions-story-content-ultimate-edition-921026-20260624", "title": "GamingBible : le contenu réservé à l’Édition Ultimate", "publishedAt": "2026-06-24", "consultedAt": "2026-10-04", "statut": "officiel", "claim": "Reprend le texte de l’édition : le repaire des PTT Youngin$ et la collection de Wyman, réservés à l’Édition Ultimate." },
+  "gamesradar-anklet": { "url": "https://www.gamesradar.com/gta-6-detectives-think-the-trailer-is-telling-the-story-of-the-game-in-reverse-because-of-lucias-ankle-monitor/", "title": "GamesRadar+ : le bracelet de Lucia et l’ordre des scènes du Trailer 1", "publishedAt": null, "consultedAt": "2026-10-04", "statut": "comm", "claim": "Des joueurs déduisent l’ordre des scènes de l’absence du bracelet pendant le braquage." },
+  "gtabase-missions": { "url": "https://www.gtabase.com/gta-6/missions/", "title": "GTABase : liste des missions de GTA 6", "publishedAt": null, "consultedAt": "2026-10-04", "statut": "comm", "claim": "Liste de missions sans nom officiel ni source Rockstar ; le site n’en reprend aucune." },
+  "tweaktown-economy": { "url": "https://www.tweaktown.com/news/113368/gta-6s-illicit-criminal-economy-robberies-and-money-explained-by-rockstar/index.html", "title": "TweakTown : l’économie criminelle de GTA 6, braquages et argent", "publishedAt": null, "consultedAt": "2026-10-04", "statut": "conf", "claim": "Mêle des propos de Rockstar et ceux d’un créateur invité : les paliers de braquages et le montant d’environ 1 000 $ restent à confirmer." }
+ },
+ "leo": {
+  "suggestions": ["Combien de missions dans GTA 6 ?", "Comment débloquer une mission ?", "Quelles missions rapportent le plus ?", "Qu’est-ce qu’on sait des braquages ?", "Combien d’heures dure l’histoire ?", "Peut-on changer de personnage en mission ?"]
+ }
+}

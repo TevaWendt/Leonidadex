@@ -98,7 +98,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     activite:    { nom:'Aktivitäten',          col:'#2A9D8F' },
     collectible: { nom:'Sammelobjekte',       col:'#C2452C' },
     planque:     { nom:'Unterschlüpfe',           col:'#A85B33' },
-    mission:     { nom:'Missions',           col:'#CE4B33' }
+    mission:     { nom:'Missionen',           col:'#CE4B33' }
   };
 
   /* ---- points confirmés par Rockstar ----
