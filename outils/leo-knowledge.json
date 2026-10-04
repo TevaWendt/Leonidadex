@@ -555,7 +555,10 @@
     "c est quoi gta plus",
     "gtaplus gta6",
     "gta+ 30 jours",
-    "gta + precommande"
+    "gta + precommande",
+    "a quoi sert le mois de gta+ offert",
+    "mois de gta+ offert avec la precommande",
+    "gta+ offert precommande"
    ],
    "k": [
     "gta+",
@@ -563,14 +566,19 @@
     "abonnement",
     "gta+ inclus"
    ],
-   "text": "D’après les boutiques, une précommande numérique inclut 30 jours d’abonnement GTA+. Rockstar n’a pas détaillé ce que GTA+ apportera dans GTA VI : vérifie les conditions sur la page d’achat.",
-   "status": "Boutiques, à vérifier",
+   "text": "Une précommande numérique faite avant le 20 novembre 2026 donne un mois de GTA+. D’après l’assistance de Rockstar, ce mois sert dans le GTA Online actuel, celui de GTA V : à activer avant le 31 mars 2027 sur PS5, ou dans les 180 jours sur Xbox, puis renouvelé au prix normal si tu ne l’arrêtes pas. Rien n’est dit de GTA+ dans GTA VI.",
+   "status": "Officiel Rockstar (assistance)",
    "links": [
+    {
+     "label": "Le mois de GTA+ offert",
+     "url": "/online/gta-online-actuel.html#gta-plus"
+    },
     {
      "label": "Tout ce qui s’achète",
      "url": "/achats.html"
     }
-   ]
+   ],
+   "checkedAt": "2026-10-04"
   },
   {
    "id": "physique",
@@ -1441,7 +1449,10 @@
     "jouer a plusieurs gta 6",
     "gta 6 multi",
     "gta6 online quand",
-    "ya du online dans gta 6"
+    "ya du online dans gta 6",
+    "gta 6 online sortira quand",
+    "quand sortira gta 6 online",
+    "date de sortie de gta 6 online"
    ],
    "k": [
     "gta online",
@@ -1452,15 +1463,21 @@
     "jouer a plusieurs",
     "mode en ligne"
    ],
-   "text": "Rockstar n’a encore rien annoncé sur le mode en ligne de GTA VI. Le calculateur du site sert à préparer tes choix dans l’histoire ou en ligne, avec tes propres chiffres.",
-   "status": "Non annoncé",
+   "text": "Rockstar n’a encore rien annoncé sur le mode en ligne de GTA VI, pas même une date : au 4 octobre 2026, le jeu est présenté comme une expérience solo, le 19 novembre sur PS5 et Xbox Series X|S. Le patron de Twitch a évoqué un multijoueur en 2027, sans confirmation de Rockstar. Take-Two dit continuer le GTA Online de GTA V après la sortie.",
+   "status": "Officiel Rockstar et Take-Two · aucun mode en ligne annoncé",
    "links": [
+    {
+     "label": "L’espace GTA Online",
+     "url": "/online.html"
+    },
     {
      "label": "Ouvrir le calculateur",
      "url": "/calculateurs.html"
     }
    ],
-   "min": 1
+   "min": 1,
+   "checkedAt": "2026-10-04",
+   "source": "https://www.rockstargames.com/newswire/article/517oa135328155/grand-theft-auto-vi-pre-orders-begin-on-june-25"
   },
   {
    "id": "police",
@@ -2100,15 +2117,20 @@
     "cheat",
     "codes de triche"
    ],
-   "text": "Rockstar n’a rien annoncé sur les mods ni sur les codes de triche pour GTA VI.",
-   "status": "Non annoncé",
+   "text": "Rockstar n’a rien annoncé sur les mods ni sur les codes de triche pour GTA VI (au 4 octobre 2026), et les listes « GTA 6 » qui circulent ne sont pas officielles. Dans GTA V, les codes se tapaient à la manette, au téléphone du jeu ou, sur PC, dans la console ; Rockstar précise qu’ils désactivaient les succès pour un temps.",
+   "status": "Non annoncé · règles de GTA V publiées par Rockstar",
    "links": [
+    {
+     "label": "Les codes de triche",
+     "url": "/codes-de-triche.html"
+    },
     {
      "label": "Comment on vérifie",
      "url": "/a-propos.html#comment-on-verifie"
     }
    ],
-   "min": 1
+   "min": 1,
+   "checkedAt": "2026-10-04"
   },
   {
    "id": "vr",

@@ -1,0 +1,60 @@
+{
+ "_note": "Section trophees : questions de test de Léo en italien pour la section « Trophées et succès » (nombre, platine, manquables, en ligne, date de la liste, suivi). Rejoué par node outils/tests/leo-eval.cjs --lang it --questions=outils/tests/leo-questions-section-trophees-it.json.",
+ "schemaVersion": 1,
+ "questions": [
+  {
+   "q": "quanti trofei ci sono in gta 6",
+   "expect": {
+    "topic": "trophees-faq-1"
+   },
+   "tags": [
+    "section-trophees"
+   ]
+  },
+  {
+   "q": "lista trofei gta 6",
+   "expect": {
+    "topic": "trophees-faq-1"
+   },
+   "tags": [
+    "section-trophees"
+   ]
+  },
+  {
+   "q": "come ottenere il platino",
+   "expect": {
+    "topic": "trophees-faq-2"
+   },
+   "tags": [
+    "section-trophees"
+   ]
+  },
+  {
+   "q": "ci sono trofei mancabili",
+   "expect": {
+    "topic": "trophees-faq-3"
+   },
+   "tags": [
+    "section-trophees"
+   ]
+  },
+  {
+   "q": "ci saranno trofei online",
+   "expect": {
+    "topic": "trophees-faq-4"
+   },
+   "tags": [
+    "section-trophees"
+   ]
+  },
+  {
+   "q": "quando esce la lista dei trofei",
+   "expect": {
+    "topic": "trophees-faq-5"
+   },
+   "tags": [
+    "section-trophees"
+   ]
+  }
+ ]
+}

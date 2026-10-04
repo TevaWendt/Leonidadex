@@ -1,0 +1,53 @@
+{
+ "_note": "Section « Codes de triche » (section codes) : les codes, lus par outils/gen-codes.cjs. « codes » : les codes de GTA VI, aucun au 4 octobre 2026 ; un code n’y entre que publié par Rockstar (statut « officiel », source officielle) ou vérifié en jeu (statut « vu » et date verifieEnJeu), jamais un code supposé ni tiré des fuites. Chaque catégorie qui a au moins un code reçoit sa fiche codes-de-triche/<categorie>.html. « gtav » : quelques codes de GTA V, montrés sur la page principale « pour comparer », jamais présentés comme des codes de GTA VI. Touches : ps = croix, rond, carre, triangle, l1, r1, l2, r2, l3, r3, haut, bas, gauche, droite ; xbox = a, b, x, y, lb, rb, lt, rt, ls, rs, haut, bas, gauche, droite.",
+ "_schema": {
+  "id": "identifiant (minuscules, chiffres, tirets), unique",
+  "effet": "nom court de l’effet (titre de la carte)",
+  "texte": "ce que fait le code, en une ou deux phrases",
+  "categorie": "armes | vehicules | joueur | monde",
+  "ps5": "séquence PlayStation 5 : liste de touches (voir _note), ou null",
+  "xbox": "séquence Xbox Series : liste de touches (voir _note), ou null",
+  "telephone": "numéro à composer sur le téléphone du jeu, ou null",
+  "limites": "{ texte, trophees: true (désactivés) | false | null, sauvegarde: texte ou null, statut, sources } ou null",
+  "statut": "officiel (publié par Rockstar) ou vu (vérifié en jeu, avec verifieEnJeu : AAAA-MM-JJ)",
+  "verifieEnJeu": "date de la vérification en jeu (AAAA-MM-JJ), obligatoire avec le statut « vu »",
+  "sources": "identifiants de sources de outils/codes/hub.json",
+  "aliases": "autres noms, pour la recherche et Léo"
+ },
+ "categories": [
+  { "id": "armes", "label": "Armes", "texte": "Armes, munitions, explosifs." },
+  { "id": "vehicules", "label": "Véhicules", "texte": "Faire apparaître un véhicule." },
+  { "id": "joueur", "label": "Joueur", "texte": "Santé, armure, invincibilité, niveau de recherche." },
+  { "id": "monde", "label": "Monde", "texte": "Ce qui change autour de toi : météo, circulation…" }
+ ],
+ "codes": [],
+ "gtav": [
+  {
+   "id": "gtav-invincibilite", "effet": "Invincibilité, cinq minutes", "categorie": "joueur",
+   "texte": "Tu ne perds plus de santé pendant cinq minutes ; ensuite, il faut retaper le code.",
+   "ps": ["droite", "croix", "droite", "gauche", "droite", "r1", "droite", "gauche", "croix", "triangle"],
+   "pc": "PAINKILLER", "telephone": "1-999-724-654-5537",
+   "statut": "comm", "sources": ["tomsguide-gtav", "gamesradar-gtav", "sportskeeda-invincibilite"]
+  },
+  {
+   "id": "gtav-armes", "effet": "Armes et munitions", "categorie": "armes",
+   "texte": "Donne un lot d’armes, avec leurs munitions.",
+   "ps": ["triangle", "r2", "gauche", "l1", "croix", "droite", "triangle", "bas", "carre", "l1", "l1", "l1"],
+   "pc": "TOOLUP", "telephone": "1-999-866-587",
+   "statut": "comm", "sources": ["pcgamer-gtav", "gamesradar-gtav", "gtaboom-tel"]
+  },
+  {
+   "id": "gtav-sante", "effet": "Santé et armure au maximum", "categorie": "joueur",
+   "texte": "Remplit d’un coup la santé et l’armure.",
+   "pc": "TURTLE", "telephone": "1-999-887-853",
+   "statut": "comm", "sources": ["gamesradar-gtav", "gtaboom-tel"]
+  },
+  {
+   "id": "gtav-recherche", "effet": "Une étoile de recherche en moins", "categorie": "joueur",
+   "texte": "Fait baisser d’une étoile le niveau de recherche de la police.",
+   "pc": "LAWYERUP", "telephone": "1-999-5299-3787",
+   "statut": "comm", "sources": ["gamesradar-gtav", "gtaboom-tel"]
+  }
+ ],
+ "gtavLimites": { "texte": "succès et trophées désactivés pour un temps, comme pour tous les codes.", "statut": "officiel", "sources": ["rs-support-codes-v"] }
+}

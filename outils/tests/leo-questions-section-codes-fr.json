@@ -1,0 +1,105 @@
+{
+ "_note": "Section codes : questions de test de Léo en français pour la section « Codes de triche » (présence de codes, argent infini, trophées, téléphone, en ligne). Rejoué par node outils/tests/leo-eval.cjs --questions=outils/tests/leo-questions-section-codes-fr.json.",
+ "schemaVersion": 1,
+ "questions": [
+  {
+   "q": "y a-t-il des codes de triche dans GTA 6 ?",
+   "expect": {
+    "topic": "mods"
+   },
+   "tags": [
+    "section-codes"
+   ]
+  },
+  {
+   "q": "codes de triche gta 6",
+   "expect": {
+    "topic": "mods"
+   },
+   "tags": [
+    "section-codes"
+   ]
+  },
+  {
+   "q": "est ce qu il y aura des cheats dans gta 6",
+   "expect": {
+    "topic": "mods"
+   },
+   "tags": [
+    "section-codes"
+   ]
+  },
+  {
+   "q": "code argent infini gta 6",
+   "expect": {
+    "topic": "codes-faq-1"
+   },
+   "tags": [
+    "section-codes"
+   ]
+  },
+  {
+   "q": "y a t il un code pour avoir de l argent",
+   "expect": {
+    "topic": "codes-faq-1"
+   },
+   "tags": [
+    "section-codes"
+   ]
+  },
+  {
+   "q": "code argent illimité gta 6",
+   "expect": {
+    "topic": "codes-faq-1"
+   },
+   "tags": [
+    "section-codes"
+   ]
+  },
+  {
+   "q": "les codes désactivent-ils les trophées ?",
+   "expect": {
+    "topic": "codes-faq-2"
+   },
+   "tags": [
+    "section-codes"
+   ]
+  },
+  {
+   "q": "est ce que les codes de triche bloquent les succès",
+   "expect": {
+    "topic": "codes-faq-2"
+   },
+   "tags": [
+    "section-codes"
+   ]
+  },
+  {
+   "q": "comment entrer un code de triche avec le téléphone",
+   "expect": {
+    "topic": "codes-faq-3"
+   },
+   "tags": [
+    "section-codes"
+   ]
+  },
+  {
+   "q": "numéro de téléphone triche gta",
+   "expect": {
+    "topic": "codes-faq-3"
+   },
+   "tags": [
+    "section-codes"
+   ]
+  },
+  {
+   "q": "les codes de triche marchent ils en ligne",
+   "expect": {
+    "topic": "codes-faq-4"
+   },
+   "tags": [
+    "section-codes"
+   ]
+  }
+ ]
+}

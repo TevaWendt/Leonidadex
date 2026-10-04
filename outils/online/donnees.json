@@ -1,0 +1,14 @@
+{
+ "_note": "Section « GTA Online » (section online) : le modèle de données du jeu en ligne de GTA VI, lu par outils/gen-online.cjs. Vide au 4 octobre 2026 : aucun jeu en ligne n’est annoncé. Les valeurs chiffrées suivent le schéma de outils/donnees-publiees.cjs ({ value, status, source, verifiedAt, unit }) mais restent ici : elles n’entrent jamais dans les catalogues, les achats ni le calculateur de l’histoire. Une activité, une entreprise ou une mise à jour qui a un texte (« texte ») reçoit sa page online/<id>.html ; toutes sont listées sur online.html.",
+ "_schema": {
+  "activites": "[{ id, nom, resume, joueurs (nombre ou null), gain (valeur $), duree (valeur min), texte, statut, sources }]",
+  "achats": "[{ id, nom, categorie, resume, prix (valeur $), statut, sources }]",
+  "entreprises": "[{ id, nom, resume, prix (valeur $), revenu (valeur $/h), texte, statut, sources }]",
+  "misesAJour": "[{ id, nom, date (AAAA-MM-JJ), resume, texte, statut, sources }]",
+  "valeur": "{ value: nombre ou null, status: officiel | official | verified | estimated | unverified | unknown, source, verifiedAt: AAAA-MM-JJ, unit }"
+ },
+ "activites": [],
+ "achats": [],
+ "entreprises": [],
+ "misesAJour": []
+}

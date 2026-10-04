@@ -1,0 +1,169 @@
+{
+ "_note": "Section « Codes de triche » (section codes) : textes de codes-de-triche.html, lus par outils/gen-codes.cjs. Les codes eux-mêmes sont dans outils/codes/codes.json (aucun code de GTA VI au 4 octobre 2026 ; quelques codes de GTA V « pour comparer ») ; la page de démonstration du gabarit (codes-de-triche/modele.html, noindex) dans outils/codes/modele.json. Rien d’inventé : chaque phrase porte un statut et des sources de « sources ». Aucune liste « GTA 6 » des sites de fans, aucun élément des fuites. Sources relevées le 4 octobre 2026 par moteur de recherche (ouverture directe des pages bloquée depuis l’atelier ce jour-là).",
+ "hub": {
+  "label": "Codes de triche",
+  "title": "Les codes de triche de GTA VI",
+  "lede": "Aucun code de triche n’est annoncé pour GTA VI. Voici ce qu’on sait au 4 octobre 2026, comment les codes marchaient dans GTA V, et le guide qui se remplira dès qu’un code sera publié par Rockstar ou vérifié en jeu.",
+  "desc": "Codes de triche de GTA VI : rien d’annoncé au 4 octobre 2026. Comment ils marchaient dans GTA V (touches, téléphone, trophées), avec des sources datées.",
+  "note": "Chaque information dit d’où elle vient : page de Rockstar, presse ou guide de joueurs. Aucun code supposé, aucune liste tirée des fuites : un code de GTA VI n’entrera ici que publié par Rockstar ou vérifié en jeu.",
+  "pile": [
+   { "media": "personalized-weapon-variants", "caption": "Les armes", "alt": "Deux pistolets gravés, l’un chromé, l’autre rouge, posés au bord d’une piscine, visuel officiel Rockstar Games" },
+   { "media": "95-grotti-cheetah-01", "caption": "Les véhicules", "alt": "Une Grotti Cheetah de 1995 blanche à bandes rouges garée devant un immeuble rond, entre des palmiers, visuel officiel Rockstar Games" },
+   { "media": "vice-city-01", "caption": "Le monde", "alt": "Les grandes lettres de Vice City au coucher du soleil, un avion dans le ciel, visuel officiel Rockstar Games" }
+  ]
+ },
+ "etat": {
+  "kicker": "Ce qu’on sait",
+  "titre": "GTA VI : aucun code annoncé",
+  "carte": {
+   "titre": "Pas encore annoncé",
+   "date": "Au 4 octobre 2026",
+   "texte": "Rockstar n’a dit ni qu’il y aurait des codes de triche, ni qu’il n’y en aurait pas. L’Extended Look du 27 août 2026, le dossier de Game Informer du 29 septembre et les interviews de Rockstar et de Take-Two n’en parlent pas.",
+   "statut": "conf", "sources": ["rs-extended", "purexbox-gi", "redbull-gta6"]
+  },
+  "faits": [
+   { "titre": "Une tradition de la série", "texte": "Depuis GTA III, chaque grand GTA a eu ses codes : la presse en déduit qu’il y en aura sans doute, sans annonce pour autant.", "statut": "comm", "sources": ["redbull-gta6", "twinfinite-gta6"], "icon": "liste" },
+   { "titre": "Les listes « GTA 6 » en ligne", "texte": "Elles mélangent spéculations, anciens codes et éléments de fuite : aucune n’est officielle, et le site n’en reprend aucune.", "statut": "comm", "sources": ["redbull-gta6", "gtaintel-codes"], "icon": "loupe" },
+   { "titre": "Un jeu solo, sur deux consoles", "texte": "Rockstar présente GTA VI comme une expérience solo, le 19 novembre 2026 sur PlayStation 5 et Xbox Series X|S. Aucune version PC n’est annoncée.", "statut": "officiel", "sources": ["rs-support-plateformes"], "icon": "navigateur" },
+   { "titre": "Ce qu’il manque", "texte": "Comment entrer un code, ce qu’il coupe (trophées, succès, sauvegarde) : rien n’est publié. La page se complète dès que ça l’est.", "statut": "conf", "sources": ["redbull-gta6"], "icon": "sablier" }
+  ]
+ },
+ "serie": {
+  "kicker": "Pour comparer",
+  "titre": "Comment marchaient les codes dans GTA V",
+  "lede": "Des codes de GTA V, montrés pour comparer : ils ne marchent pas dans GTA VI. Trois façons de les entrer, et des règles écrites par Rockstar.",
+  "facons": [
+   { "titre": "À la manette", "texte": "En pleine partie, on tapait une suite de touches : croix directionnelle, boutons et gâchettes.", "statut": "comm", "sources": ["tomsguide-gtav", "gamesradar-gtav"], "icon": "main" },
+   { "titre": "Au téléphone du jeu", "texte": "On composait un numéro en 1-999 : les chiffres suivants épellent le nom du code sur le clavier du téléphone. Sur PS3 et Xbox 360, seules les touches marchaient.", "statut": "comm", "sources": ["gamesradar-gtav", "pcgamer-gtav", "gtabase-gtav"], "icon": "envoi" },
+   { "titre": "Sur PC, dans la console", "texte": "La touche ² d’un clavier français, ou ~, ouvre une console où l’on tape le nom du code, comme TOOLUP.", "statut": "comm", "sources": ["redbull-gtav", "gamesradar-gtav"], "icon": "serveur" }
+  ],
+  "regles": {
+   "titre": "Ce que Rockstar en dit",
+   "items": [
+    "On peut sauvegarder avec un code actif, mais les succès sont désactivés pour un temps.",
+    "Taper deux fois le même code l’annule en général, mais pas toujours.",
+    "Lancer une mission coupe les codes actifs ; recharger une sauvegarde ou redémarrer la console les annule tous."
+   ],
+   "statut": "officiel", "sources": ["rs-support-codes-v"]
+  },
+  "cartesTitre": "Quatre codes de GTA V, pour voir",
+  "cartesLede": "Les séquences s’affichent touche après touche, comme si tu les tapais. Les séquences Xbox de ces codes ne sont pas reprises : les sources trouvées étaient trop faibles.",
+  "avant": {
+   "titre": "Avant GTA V",
+   "items": [
+    { "texte": "GTA IV : les codes se composaient comme des numéros sur le téléphone de Niko, par exemple 482-555-0100 pour la santé, l’armure et les munitions. Certains bloquaient des succès.", "statut": "comm", "sources": ["gamefaqs-gta4", "grandtheftwiki-gta4"] },
+    { "texte": "GTA San Andreas : sur PC, on tapait le code au clavier en pleine partie. HESOYAM rendait la santé et l’armure, réparait le véhicule et donnait 250 000 $.", "statut": "comm", "sources": ["gtafandom-sa"] },
+    { "texte": "La Trilogy en Definitive Edition (2021) : Rockstar a dû retirer quelques codes qui ne marchaient pas bien dans la nouvelle version.", "statut": "officiel", "sources": ["gi-trilogy-codes"] },
+    { "texte": "Dans cette Trilogy, sur console, les codes se tapent encore en séquences de boutons, et s’en servir verrouille certains trophées et succès.", "statut": "comm", "sources": ["gi-trilogy-liste"] }
+   ]
+  }
+ },
+ "liste": {
+  "kicker": "Le guide des codes",
+  "titre": "Les codes de GTA VI, par catégorie",
+  "vide": "Aucun code de GTA VI n’est publié. Dès qu’un code l’est par Rockstar, ou qu’il est vérifié en jeu après la sortie, il arrive ici avec sa séquence PlayStation 5 et Xbox Series, son numéro de téléphone s’il y en a un, ses limites et sa source.",
+  "categoriesTitre": "Quatre catégories prêtes",
+  "champsTitre": "Ce que dira chaque code",
+  "champs": [
+   { "t": "L’effet", "d": "Ce que le code change, en une phrase." },
+   { "t": "PlayStation 5", "d": "La suite de touches, touche après touche." },
+   { "t": "Xbox Series", "d": "La même chose pour la manette Xbox." },
+   { "t": "Téléphone", "d": "Le numéro à composer s’il y en a un, avec un bouton pour le copier." },
+   { "t": "Les limites", "d": "Trophées et succès coupés ou non, sauvegarde, durée." },
+   { "t": "Statut et source", "d": "Publié par Rockstar ou vérifié en jeu, avec la date." }
+  ],
+  "note": "Chaque catégorie aura sa fiche dès son premier code."
+ },
+ "zone": {
+  "nav": [
+   { "href": "#etat", "label": "Ce qu’on sait" },
+   { "href": "#gtav", "label": "GTA V, pour comparer" },
+   { "href": "#liste", "label": "Les codes de GTA VI" },
+   { "href": "#rockstar", "label": "Rockstar" },
+   { "href": "#communaute", "label": "Communauté" },
+   { "href": "#a-confirmer", "label": "À confirmer" },
+   { "href": "#pour-toi", "label": "Pour toi" },
+   { "href": "#faq", "label": "FAQ" },
+   { "href": "#sources", "label": "Sources" }
+  ],
+  "rockstar": {
+   "lede": "Rockstar n’a rien dit des codes de GTA VI. Ce qu’il a publié sur ceux de la série tient en peu de pages.",
+   "items": [
+    { "date": "11 novembre 2021", "titre": "Trilogy, Definitive Edition", "statut": "officiel", "texte": "Rich Rosado, producteur chez Rockstar, explique avoir retiré quelques codes qui ne marchaient pas bien dans la nouvelle version." },
+    { "date": "Page d’aide", "titre": "Les codes de GTA V", "statut": "officiel", "texte": "Rockstar précise qu’on peut sauvegarder avec un code actif, que les succès sont désactivés pour un temps, et qu’une mission coupe les codes actifs." },
+    { "date": "24 juin 2026", "titre": "Précommandes", "statut": "officiel", "texte": "GTA VI est présenté comme une expérience solo, sur PS5 et Xbox Series X|S ; pas un mot sur des codes." },
+    { "date": "27 août 2026", "titre": "Extended Look", "statut": "vu", "texte": "Environ 26 minutes de jeu capturées sur PS5, sans aucun code de triche à l’écran." },
+    { "date": "29 septembre 2026", "titre": "Game Informer", "statut": "vu", "texte": "Le dossier de 14 pages parle de la carte, de la météo et de la faune ; rien sur les codes." }
+   ],
+   "p": []
+  },
+  "communaute": {
+   "lede": "Joueurs et presse en parlent beaucoup. Voici ce qu’ils avancent, cité comme tel.",
+   "pairs": [
+    { "fiction": "Des codes, c’est sûr", "reel": "La presse les juge probables parce que tous les grands GTA en avaient ; Rockstar n’a rien confirmé.", "src": "redbull-gta6" },
+    { "fiction": "Les listes « GTA 6 cheats »", "reel": "Spéculations, anciens codes ou éléments de fuite : aucune n’est officielle, le site n’en reprend aucune.", "src": "gtaintel-codes" },
+    { "fiction": "Un code d’argent", "reel": "Les guides de joueurs le rappellent : aucun code de GTA V ne donnait d’argent.", "src": "gtaintel-codes" },
+    { "fiction": "Les codes en ligne", "reel": "Dans GTA V, les codes ne servaient qu’en mode histoire, d’après les joueurs : GTA Online ne les acceptait pas.", "src": "gtaforums-online" },
+    { "fiction": "Le message à l’activation", "reel": "Selon PlayStationTrophies.org, GTA V prévenait que les succès ne seraient pas attribués pendant la session ; à vérifier en jeu.", "src": "pst-gtav-codes" }
+   ],
+   "p": []
+  },
+  "confirmer": {
+   "lede": "Le guide est prêt ; il lui manque une annonce, ou le jeu.",
+   "items": [
+    { "q": "Des codes dans GTA VI", "etat": "Ni oui ni non : rien n’est annoncé." },
+    { "q": "Comment les entrer", "etat": "Touches, téléphone du jeu ou autre chose : inconnu." },
+    { "q": "Trophées et succès", "etat": "Dans GTA V, un code les coupait pour un temps ; pour GTA VI, aucune règle n’est publiée." },
+    { "q": "La sauvegarde", "etat": "GTA V laissait sauvegarder avec un code actif ; rien n’est dit pour GTA VI." },
+    { "q": "Un code d’argent", "etat": "Aucun n’est annoncé, et GTA V n’en avait pas." }
+   ],
+   "p": ["Chaque réponse rejoindra la page avec sa source dès qu’elle sera publiée."]
+  },
+  "toi": {
+   "lede": "Sans code, le site t’aide quand même à préparer ta partie.",
+   "actions": [
+    { "k": "Calculateur", "t": "Mon objectif", "d": "Pas de code d’argent : vois en combien de temps tu atteins une somme, avec tes propres chiffres.", "href": "calculateurs.html?tool=goal&from=codes#atelier" },
+    { "k": "Armurerie", "t": "Les armes de GTA VI", "d": "Ce qu’on sait de chaque arme, sans code.", "href": "armes.html" },
+    { "k": "Véhicules", "t": "Les véhicules", "d": "Les fiches des véhicules repérés, avec leurs sources.", "href": "vehicules.html" },
+    { "k": "Progression", "t": "Ma progression", "d": "Coche ce que tu fais, gardé sur ton appareil.", "href": "progression.html" }
+   ],
+   "p": ["À la sortie, chaque code aura sa carte, avec sa séquence qui se tape sous tes yeux et un bouton pour copier son numéro."]
+  },
+  "faq": [
+   { "q": "Y a-t-il des codes de triche dans GTA 6 ?", "a": "Rien n’est annoncé au 4 octobre 2026 : ni Rockstar ni Take-Two n’ont parlé de codes de triche pour GTA VI, et ni l’Extended Look ni le dossier de Game Informer n’en montrent. Les listes « GTA 6 » qui circulent sont des spéculations ou viennent des fuites : le site n’en reprend aucune. Depuis GTA III, chaque grand GTA en a eu ; dans GTA V, on les tapait à la manette, au téléphone du jeu ou, sur PC, dans la console.", "leo": "mods", "k": ["codes de triche", "triche", "cheat", "cheats", "code de triche"] },
+   { "q": "Existe-t-il un code d’argent infini dans GTA 6 ?", "leoQ": "Existe-t-il un code de triche d’argent infini ?", "a": "Non. Aucun code n’est annoncé pour GTA VI, et donc aucun code d’argent. Dans GTA V, aucun code ne donnait d’argent, d’après les guides de joueurs ; dans San Andreas, HESOYAM donnait 250 000 $ avec la santé et l’armure. Pour préparer tes achats, le calculateur part de tes propres chiffres.", "k": ["code argent infini", "code argent", "code d argent", "money cheat", "triche argent", "code argent illimite", "cheat argent"], "f": ["code argent infini", "code de triche argent", "triche argent infini", "y a t il un code pour l argent", "code d argent illimite", "cheat argent"] },
+   { "q": "Les codes de triche désactivent-ils les trophées ?", "a": "Dans GTA V, oui, pour un temps : Rockstar précise qu’on peut sauvegarder avec un code actif, mais que les succès sont désactivés ; recharger une sauvegarde ou redémarrer la console annule tous les codes. Pour GTA VI, rien n’est publié : ni codes, ni règle sur les trophées et les succès.", "k": ["desactivent les trophees", "desactive les trophees", "codes et trophees", "triche trophees", "triche succes", "cheat trophees", "codes et succes", "bloquent les trophees"], "f": ["les codes desactivent ils les trophees", "est ce que les codes bloquent les trophees", "triche et trophees", "les cheats desactivent les succes", "peut on avoir les trophees avec des codes", "code de triche trophee"] },
+   { "q": "Comment entrer un code de triche avec le téléphone ?", "a": "Dans GTA V, on ouvrait le téléphone du jeu et on composait un numéro en 1-999 : les chiffres suivants épellent le nom du code, comme 1-999-866-587 pour TOOLUP, les armes. Sur PC, la console s’ouvre avec la touche ² d’un clavier français, ou ~. Pour GTA VI, la façon d’entrer d’éventuels codes n’est pas connue.", "k": ["code telephone", "numero de telephone", "numeros de triche", "telephone du jeu", "1 999", "taper un code", "entrer un code"], "f": ["comment entrer un code de triche", "comment mettre un code avec le telephone", "numero de telephone triche", "ou taper les codes de triche", "comment activer un code de triche", "comment on tape un code"] },
+   { "q": "Les codes de triche marchent-ils en ligne ?", "a": "Dans GTA V, non : d’après les joueurs, les codes ne servaient qu’en mode histoire, et GTA Online ne les acceptait pas. GTA VI sort d’abord comme une expérience solo, sans code annoncé.", "k": ["triche en ligne", "codes en ligne", "cheat online", "codes gta online", "triche online", "codes multijoueur"], "f": ["les codes marchent ils en ligne", "peut on tricher en ligne", "codes de triche gta online", "cheat en ligne", "triche en multijoueur"] }
+  ],
+  "sourcesLede": "Chaque phrase de cette page renvoie à une source datée. Les pages ont été relevées le 4 octobre 2026 par moteur de recherche : leur ouverture directe était bloquée depuis l’atelier ce jour-là.",
+  "sources": ["rs-support-codes-v", "rs-support-plateformes", "rs-precommandes", "rs-extended", "gi-trilogy-codes", "purexbox-gi", "redbull-gta6", "twinfinite-gta6", "gtaintel-codes", "tomsguide-gtav", "gamesradar-gtav", "pcgamer-gtav", "redbull-gtav", "gtaboom-tel", "sportskeeda-invincibilite", "gtabase-gtav", "pst-gtav-codes", "gtaforums-online", "gamefaqs-gta4", "grandtheftwiki-gta4", "gtafandom-sa", "gi-trilogy-liste"]
+ },
+ "sources": {
+  "rs-support-codes-v": { "url": "https://support.rockstargames.com/articles/4ewFY12QOE4O7V1uWDEekt/information-about-saving-and-achievements-while-using-gta-v-cheat-codes", "title": "Information about saving and achievements while using GTA V cheat codes", "lang": "en", "publisher": "Rockstar Games, assistance", "consultedAt": "2026-10-04", "statut": "officiel", "claim": "Dans GTA V, on peut sauvegarder avec des codes actifs ; les succès sont désactivés pour un temps ; taper deux fois un code l’annule en général ; une mission coupe les codes actifs ; recharger une sauvegarde ou redémarrer la console les annule tous." },
+  "rs-support-plateformes": { "url": "https://support.rockstargames.com/articles/4QfG4FmZCf5W1gS8jy4UVT/grand-theft-auto-vi-platform-editions-and-versions", "title": "Grand Theft Auto VI Platforms, Editions, and Versions", "lang": "en", "publisher": "Rockstar Games, assistance", "consultedAt": "2026-10-04", "statut": "officiel", "claim": "GTA VI est présenté comme une expérience solo, le 19 novembre sur PlayStation 5 et Xbox Series X|S." },
+  "rs-precommandes": { "url": "https://www.rockstargames.com/newswire/article/517oa135328155/grand-theft-auto-vi-pre-orders-begin-on-june-25", "title": "Grand Theft Auto VI Pre-Orders Begin on June 25", "lang": "en", "publisher": "Rockstar Newswire", "publishedAt": "2026-06-24", "consultedAt": "2026-10-04", "statut": "officiel", "claim": "L’annonce des précommandes présente GTA VI comme une expérience solo, sur PS5 et Xbox Series X|S, sans parler de codes de triche." },
+  "rs-extended": { "url": "https://www.rockstargames.com/newswire/article/4k138k8okkk483/grand-theft-auto-vi-an-extended-look-now-playing", "title": "Rockstar Newswire : Grand Theft Auto VI, An Extended Look", "publishedAt": "2026-08-27", "consultedAt": "2026-10-04", "statut": "officiel", "claim": "La présentation d’environ 26 minutes, capturée sur PS5 : aucun code de triche n’y apparaît." },
+  "gi-trilogy-codes": { "url": "https://gameinformer.com/2021/11/11/rockstar-had-to-remove-a-couple-of-cheats-from-grand-theft-auto-the-trilogy-the", "title": "Rockstar Had To 'Remove A Couple' Of Cheats From Grand Theft Auto: The Trilogy", "lang": "en", "publisher": "Game Informer", "publishedAt": "2021-11-11", "consultedAt": "2026-10-04", "statut": "officiel", "claim": "Rich Rosado, producteur chez Rockstar, dit à USA Today que quelques codes ont été retirés de la Definitive Edition parce qu’ils ne marchaient pas bien dans la nouvelle version." },
+  "purexbox-gi": { "url": "https://www.purexbox.com/news/2026/09/five-key-things-we-learned-about-gta-6-from-the-game-informer-cover-story", "title": "Five Key Things We Learned About GTA 6 From The Game Informer Cover Story", "lang": "en", "publisher": "Pure Xbox", "consultedAt": "2026-10-04", "statut": "vu", "claim": "Compte rendu du dossier de Game Informer du 29 septembre 2026 : carte, régions, météo, faune ; aucun mot sur les codes de triche." },
+  "redbull-gta6": { "url": "https://www.redbull.com/fr-fr/gta-vi-codes-triche", "title": "Red Bull France : les codes de triche de GTA VI", "consultedAt": "2026-10-04", "statut": "comm", "claim": "Rockstar n’a publié aucun détail sur les codes de GTA VI ; les listes qui circulent sont des fuites non vérifiées ou des spéculations. L’article juge leur présence probable, chaque grand GTA en ayant eu depuis GTA III." },
+  "twinfinite-gta6": { "url": "https://twinfinite.net/guides/will-there-be-gta-6-cheats/", "title": "Twinfinite : y aura-t-il des codes de triche dans GTA 6 ?", "consultedAt": "2026-10-04", "statut": "comm", "claim": "Pas encore confirmé : la présence de codes n’est qu’une supposition tirée des jeux précédents." },
+  "gtaintel-codes": { "url": "https://gtaintel.com/news/gta-6-will-have-cheat-codes", "title": "Will GTA 6 Have Cheat Codes? What We Know So Far", "lang": "en", "publisher": "GTA Intel, site de fans", "consultedAt": "2026-10-04", "statut": "comm", "claim": "Aucun code de GTA VI n’est publié ; le site rappelle que GTA V n’avait aucun code pour obtenir de l’argent." },
+  "tomsguide-gtav": { "url": "https://www.tomsguide.fr/gta-5-tous-les-codes-de-triche-pour-pc-ps4-ps5-et-xbox/", "title": "GTA 5 : tous les codes de triche pour PC, PS4, PS5 et Xbox", "publisher": "Tom’s Guide", "consultedAt": "2026-10-04", "statut": "comm", "claim": "Les codes de GTA V se tapent à la manette ou au téléphone du jeu, et dans la console sur PC ; ils coupent trophées et succès tant qu’ils sont actifs. Séquence PlayStation de l’invincibilité." },
+  "gamesradar-gtav": { "url": "https://www.gamesradar.com/gta-5-cheats/", "title": "All GTA 5 cheats, codes and phone numbers on PS4, PS5, Xbox and PC", "lang": "en", "publisher": "GamesRadar+", "consultedAt": "2026-10-04", "statut": "comm", "claim": "Guide des codes de GTA V : séquences de touches, numéros en 1-999 qui épellent le nom du code, console du PC." },
+  "pcgamer-gtav": { "url": "https://www.pcgamer.com/gta-5-cheats/", "title": "All GTA 5 cheat codes and phone numbers for invincibility, weapons, and vehicles", "lang": "en", "publisher": "PC Gamer", "consultedAt": "2026-10-04", "statut": "comm", "claim": "Guide des codes de GTA V : noms à taper dans la console du PC, numéros de téléphone et séquences." },
+  "redbull-gtav": { "url": "https://www.redbull.com/fr-fr/gta-5-codes-triche", "title": "Red Bull France : les codes de triche de GTA 5", "consultedAt": "2026-10-04", "statut": "comm", "claim": "Sur un clavier français, la touche ² ouvre la console de GTA V sur PC ; le téléphone du jeu marche aussi." },
+  "gtaboom-tel": { "url": "https://www.gtaboom.com/Last_GTA_V_Cellphone_and_PC_Cheats_Discovered", "title": "Last GTA V Cellphone and PC Cheats Discovered", "lang": "en", "publisher": "GTABoom", "consultedAt": "2026-10-04", "statut": "comm", "claim": "Numéros de téléphone et noms PC des codes de GTA V, dont TOOLUP, TURTLE et LAWYERUP." },
+  "sportskeeda-invincibilite": { "url": "https://www.sportskeeda.com/gta/gta-5-invincibility-cheat-code-how-enter-god-mode-platforms", "title": "GTA 5 Invincibility cheat code: How to enter God Mode on all platforms", "lang": "en", "publisher": "Sportskeeda", "consultedAt": "2026-10-04", "statut": "comm", "claim": "L’invincibilité dure cinq minutes et se retape ensuite ; numéro 1-999-724-654-5537." },
+  "gtabase-gtav": { "url": "https://www.gtabase.com/articles/grand-theft-auto-v/gta-5-cheats-for-ps5-ps4-ps3-all-cheat-codes-phone-numbers", "title": "GTABase : les codes de GTA 5 sur PS5, PS4 et PS3", "consultedAt": "2026-10-04", "statut": "comm", "claim": "Les numéros de téléphone n’existent pas sur PS3 et Xbox 360, où seules les séquences de touches marchent." },
+  "pst-gtav-codes": { "url": "https://www.playstationtrophies.org/game/grand-theft-auto-5-ps4/guide/gta-5-cheats", "title": "Unbeatable GTA 5 Cheats: Every Cheat Code Available for Xbox and PlayStation", "lang": "en", "publisher": "PlayStationTrophies.org", "consultedAt": "2026-10-04", "statut": "comm", "claim": "Message rapporté à l’activation d’un code dans GTA V : les succès ne sont pas attribués pendant la session." },
+  "gtaforums-online": { "url": "https://gtaforums.com/topic/984720-gta-5-online-rockstar-supplied-cheats/", "title": "GTA 5 Online Rockstar supplied cheats", "lang": "en", "publisher": "GTAForums", "consultedAt": "2026-10-04", "statut": "comm", "claim": "Des joueurs rappellent que les codes de GTA V ne marchent qu’en mode histoire, pas dans GTA Online." },
+  "gamefaqs-gta4": { "url": "https://gamefaqs.gamespot.com/pc/952150-grand-theft-auto-iv/cheats", "title": "Grand Theft Auto IV Cheats, Codes, and Secrets for PC", "lang": "en", "publisher": "GameFAQs", "consultedAt": "2026-10-04", "statut": "comm", "claim": "Les codes de GTA IV se composent comme des numéros sur le téléphone de Niko ; 482-555-0100 rend santé, armure et munitions." },
+  "grandtheftwiki-gta4": { "url": "https://www.grandtheftwiki.com/Cheats_in_GTA_IV", "title": "Cheats in GTA IV", "lang": "en", "publisher": "Grand Theft Wiki", "consultedAt": "2026-10-04", "statut": "comm", "claim": "Les numéros de GTA IV et les succès que certains codes bloquent." },
+  "gtafandom-sa": { "url": "https://gta.fandom.com/wiki/Cheats_in_GTA_San_Andreas", "title": "Cheats in GTA San Andreas", "lang": "en", "publisher": "GTA Wiki", "consultedAt": "2026-10-04", "statut": "comm", "claim": "HESOYAM rend la santé et l’armure, répare le véhicule et donne 250 000 $ ; sur PC, le code se tape au clavier." },
+  "gi-trilogy-liste": { "url": "https://gameinformer.com/2021/11/12/every-cheat-code-for-grand-theft-auto-the-trilogy-the-definitive-edition", "title": "Every Cheat Code For Grand Theft Auto: The Trilogy", "lang": "en", "publisher": "Game Informer", "publishedAt": "2021-11-12", "consultedAt": "2026-10-04", "statut": "comm", "claim": "Sur console, des séquences de boutons ; utiliser des codes verrouille certains trophées et succès." }
+ },
+ "leo": {
+  "suggestions": ["Y a-t-il des codes de triche dans GTA 6 ?", "Existe-t-il un code d’argent infini ?", "Les codes désactivent-ils les trophées ?", "Comment entrer un code avec le téléphone ?", "Les codes marchent-ils en ligne ?"]
+ }
+}

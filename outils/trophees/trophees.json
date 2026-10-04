@@ -1,0 +1,25 @@
+{
+ "_note": "Section « Trophées et succès » (section trophees) : les trophées PlayStation et succès Xbox de GTA VI, lus par outils/gen-trophees.cjs. Liste vide au 4 octobre 2026 : ni PlayStation, ni Xbox, ni Rockstar ne l’ont publiée. Un trophée n’entre ici que publié par l’un d’eux (statut « officiel ») ou relevé par un site de trophées cité comme tel (statut « comm ») ; jamais une liste « attendue » ni un élément des fuites. Chaque trophée qui a une méthode reçoit sa fiche trophees/<id>.html ; tous sont sur trophees.html, avec filtres, case « Obtenu » et anneau de progression. Noms : le nom anglais officiel (nom.en) est toujours là ; les noms publiés dans les langues du site (nom.fr, nom.es, nom.it, nom.de) s’ajoutent quand ils le sont. La page française montre nom.fr s’il existe, sinon nom.en (gardé tel quel dans toutes les langues) ; les noms officiels espagnols, italiens et allemands vont dans outils/langues/<code>/section-trophees.json, en face du nom français.",
+ "_schema": {
+  "id": "identifiant (minuscules, chiffres, tirets), unique ; « modele » est réservé",
+  "nom": "{ en: nom officiel anglais (obligatoire), fr, es, it, de : noms officiels quand ils sont publiés }",
+  "grade": "platine | or | argent | bronze",
+  "points": "points du succès Xbox (nombre entier), ou null s’ils ne sont pas publiés",
+  "condition": "{ en: condition officielle en anglais, fr: condition officielle française si elle est publiée }",
+  "categorie": "histoire | activites | collection | defis | divers",
+  "methode": "[{ titre, texte }] : la méthode pas à pas ; un trophée qui en a une reçoit sa fiche trophees/<id>.html",
+  "manquable": "{ value: true | false | null, texte, statut, sources } : null tant que ce n’est pas publié",
+  "cache": "true si le trophée est caché",
+  "liens": "[{ href, label }] : pages du site (collectibles.html, carte.html#lieu=…, vehicules/<id>.html, progression.html…), vérifiées à la génération",
+  "statut": "officiel (liste de PlayStation, Xbox ou Rockstar) | comm (site de trophées, cité comme tel)",
+  "sources": "identifiants de sources de outils/trophees/hub.json"
+ },
+ "categories": [
+  { "id": "histoire", "label": "Histoire" },
+  { "id": "activites", "label": "Activités" },
+  { "id": "collection", "label": "Collection" },
+  { "id": "defis", "label": "Défis" },
+  { "id": "divers", "label": "Divers" }
+ ],
+ "trophees": []
+}

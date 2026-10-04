@@ -1,0 +1,96 @@
+{
+ "_note": "Section codes : questions de test de Léo en anglais pour la section « Codes de triche » (présence de codes, argent infini, trophées, téléphone, en ligne). Rejoué par node outils/tests/leo-eval.cjs --lang en --questions=outils/tests/leo-questions-section-codes-en.json.",
+ "schemaVersion": 1,
+ "questions": [
+  {
+   "q": "are there cheat codes in GTA 6?",
+   "expect": {
+    "topic": "mods"
+   },
+   "tags": [
+    "section-codes"
+   ]
+  },
+  {
+   "q": "gta 6 cheat codes",
+   "expect": {
+    "topic": "mods"
+   },
+   "tags": [
+    "section-codes"
+   ]
+  },
+  {
+   "q": "will gta 6 have cheats",
+   "expect": {
+    "topic": "mods"
+   },
+   "tags": [
+    "section-codes"
+   ]
+  },
+  {
+   "q": "infinite money cheat gta 6",
+   "expect": {
+    "topic": "codes-faq-1"
+   },
+   "tags": [
+    "section-codes"
+   ]
+  },
+  {
+   "q": "is there a money cheat in gta 6",
+   "expect": {
+    "topic": "codes-faq-1"
+   },
+   "tags": [
+    "section-codes"
+   ]
+  },
+  {
+   "q": "do cheats disable trophies?",
+   "expect": {
+    "topic": "codes-faq-2"
+   },
+   "tags": [
+    "section-codes"
+   ]
+  },
+  {
+   "q": "do cheat codes block achievements",
+   "expect": {
+    "topic": "codes-faq-2"
+   },
+   "tags": [
+    "section-codes"
+   ]
+  },
+  {
+   "q": "how to enter a cheat code with the phone",
+   "expect": {
+    "topic": "codes-faq-3"
+   },
+   "tags": [
+    "section-codes"
+   ]
+  },
+  {
+   "q": "gta cheat phone numbers",
+   "expect": {
+    "topic": "codes-faq-3"
+   },
+   "tags": [
+    "section-codes"
+   ]
+  },
+  {
+   "q": "do cheats work online",
+   "expect": {
+    "topic": "codes-faq-4"
+   },
+   "tags": [
+    "section-codes"
+   ]
+  }
+ ]
+}

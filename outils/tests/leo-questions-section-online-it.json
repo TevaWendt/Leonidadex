@@ -1,0 +1,51 @@
+{
+ "_note": "Section online : questions de test de Léo en italien pour la section « GTA Online » (mode en ligne, date, transfert de personnage, GTA Online actuel, GTA+, abonnements). Rejoué par node outils/tests/leo-eval.cjs --lang it --questions=outils/tests/leo-questions-section-online-it.json.",
+ "schemaVersion": 1,
+ "questions": [
+  {
+   "q": "ci sara un gta online per gta 6",
+   "expect": {
+    "topic": "online"
+   },
+   "tags": [
+    "section-online"
+   ]
+  },
+  {
+   "q": "quando esce gta 6 online",
+   "expect": {
+    "topic": "online"
+   },
+   "tags": [
+    "section-online"
+   ]
+  },
+  {
+   "q": "il mio personaggio di gta online verra trasferito",
+   "expect": {
+    "topic": "online-faq-1"
+   },
+   "tags": [
+    "section-online"
+   ]
+  },
+  {
+   "q": "gta online continuera dopo gta 6",
+   "expect": {
+    "topic": "online-faq-2"
+   },
+   "tags": [
+    "section-online"
+   ]
+  },
+  {
+   "q": "serve il playstation plus per giocare a gta 6",
+   "expect": {
+    "topic": "online-faq-3"
+   },
+   "tags": [
+    "section-online"
+   ]
+  }
+ ]
+}

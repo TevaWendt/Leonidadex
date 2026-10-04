@@ -1,0 +1,60 @@
+{
+ "_note": "Section codes : questions de test de Léo en italien pour la section « Codes de triche » (présence de codes, argent infini, trophées, téléphone, en ligne). Rejoué par node outils/tests/leo-eval.cjs --lang it --questions=outils/tests/leo-questions-section-codes-it.json.",
+ "schemaVersion": 1,
+ "questions": [
+  {
+   "q": "ci sono trucchi in gta 6",
+   "expect": {
+    "topic": "mods"
+   },
+   "tags": [
+    "section-codes"
+   ]
+  },
+  {
+   "q": "trucchi gta 6",
+   "expect": {
+    "topic": "mods"
+   },
+   "tags": [
+    "section-codes"
+   ]
+  },
+  {
+   "q": "trucco soldi infiniti gta 6",
+   "expect": {
+    "topic": "codes-faq-1"
+   },
+   "tags": [
+    "section-codes"
+   ]
+  },
+  {
+   "q": "i trucchi disattivano i trofei",
+   "expect": {
+    "topic": "codes-faq-2"
+   },
+   "tags": [
+    "section-codes"
+   ]
+  },
+  {
+   "q": "come inserire un trucco con il telefono",
+   "expect": {
+    "topic": "codes-faq-3"
+   },
+   "tags": [
+    "section-codes"
+   ]
+  },
+  {
+   "q": "i trucchi funzionano online",
+   "expect": {
+    "topic": "codes-faq-4"
+   },
+   "tags": [
+    "section-codes"
+   ]
+  }
+ ]
+}

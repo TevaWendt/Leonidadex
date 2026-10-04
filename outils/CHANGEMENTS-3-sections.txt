@@ -1,0 +1,82 @@
+LEONIDAKIT — TROIS SECTIONS NOUVELLES : « CODES DE TRICHE », « TROPHÉES ET SUCCÈS », « GTA ONLINE » (4 octobre 2026)
+Détail technique. À appliquer sur l’assemblage des quatre sections (Missions, Activités annexes, Radios et musique,
+Animaux : commit « Assemblage des sections… », zip Leonidakit-4-sections-modifs.zip). Ce qu’il faut faire et vérifier :
+LISEZ-MOI-3-sections.txt ; contrôles : outils/PREUVES-3-sections.md ; correctif des fichiers communs :
+outils/assemblage/3-sections.diff.
+
+1. FICHIERS NOUVEAUX, PROPRES À CHAQUE SECTION
+Codes de triche (identifiant codes)
+- outils/gen-codes.cjs : génère codes-de-triche.html, une fiche codes-de-triche/<catégorie>.html par catégorie qui a un
+  code de GTA VI publié (aucune au 4 octobre 2026), la page de démonstration codes-de-triche/modele.html (noindex) et
+  outils/codes-index.json (recherche). Refuse un code de GTA VI qui n’est ni publié par Rockstar (statut « officiel »,
+  source officielle) ni vérifié en jeu (statut « vu » et date verifieEnJeu) : pas de code supposé.
+- outils/codes/hub.json (textes, 22 sources datées, FAQ, Léo), outils/codes/codes.json (modèle de données : effet,
+  séquences PlayStation 5 et Xbox Series, téléphone, limites, catégorie, statut, source ; 4 codes de GTA V « pour
+  comparer »), outils/codes/modele.json (3 codes fictifs, numéros en 0-000).
+- codes.css, codes.js : cartes de codes, touches dessinées pour le site (formes génériques), séquence qui se tape touche
+  après touche, carte qui s’allume, « Copier le numéro », « Rejouer la séquence », choix de la console.
+- outils/tests/section-codes.test.cjs ; outils/tests/leo-questions-section-codes-<fr|en|es|it|de>.json.
+- outils/langues/<en|es|it|de>/section-codes.json (traductions ; « Bas », flèche de la croix, a une entrée propre aux pages
+  des codes, la mémoire ayant déjà « Bas » au sens vêtement).
+Trophées et succès (identifiant trophees)
+- outils/gen-trophees.cjs : génère trophees.html, une fiche trophees/<id>.html par trophée qui a une méthode (liste non
+  publiée au 4 octobre 2026), la page de démonstration trophees/modele.html (noindex) et outils/trophees-index.json.
+  Refuse un trophée qui ne vient pas d’une liste publiée (officiel) ou d’un site de trophées cité comme tel (comm).
+- outils/trophees/hub.json (19 sources datées), outils/trophees/trophees.json (modèle : nom officiel anglais et noms par
+  langue, grade, points Xbox, condition, catégorie, méthode, manquable, caché, liens vers le site, statut, sources),
+  outils/trophees/modele.json (8 trophées fictifs et une méthode d’exemple).
+- trophees.css, trophees.js : case « Obtenu » gardée sur l’appareil (clé lk-trophees-obtenus-v1), bilan, anneau de
+  progression (deux demi-disques qui tournent : transform seulement), badge et éclat au déblocage, cartes en cascade,
+  filtres (grade, manquable, catégorie, suivi).
+- outils/tests/section-trophees.test.cjs ; outils/tests/leo-questions-section-trophees-<code>.json ;
+  outils/langues/<code>/section-trophees.json (« Argent », le grade, et les libellés des filtres ont des entrées propres
+  aux pages des trophées ; « tous » et « obtenus », valeurs comparées par trophees.js, ne sont jamais traduits).
+GTA Online (identifiant online)
+- outils/gen-online.cjs : génère online.html, les pages de l’espace qui ont du contenu sourcé (online/annonces.html,
+  online/gta-online-actuel.html), une page par activité, entreprise ou mise à jour du jeu en ligne de GTA VI qui a un texte
+  (aucune au 4 octobre 2026) et outils/online-index.json. Chaque page porte le bandeau « GTA Online, pas l’histoire » et
+  le sommaire de l’espace ; le fil d’Ariane des pages de online/ part de « GTA Online ».
+- outils/online/hub.json (35 sources datées), outils/online/pages.json (les deux pages sourcées),
+  outils/online/donnees.json (modèle vide : activités, achats, entreprises, mises à jour ; valeurs au schéma de
+  outils/donnees-publiees.cjs, jamais mêlées aux catalogues, aux achats ni au calculateur de l’histoire).
+- online.css, online.js : couleur d’accent de l’espace (néon --c-neon et prune --night-2 de la palette), bandeau, sommaire
+  qui suit la page, réseau décoratif qui pulse à l’écran seulement.
+- outils/tests/section-online.test.cjs ; outils/tests/leo-questions-section-online-<code>.json ;
+  outils/langues/<code>/section-online.json.
+Communs aux trois
+- LISEZ-MOI-3-sections.txt, outils/CHANGEMENTS-3-sections.txt, outils/PREUVES-3-sections.md,
+  outils/assemblage/3-sections.diff.
+
+2. FICHIERS COMMUNS MODIFIÉS (chaque ajout marqué « section codes », « section trophees », « section online » ou
+   « sections … » quand une ligne sert à plusieurs sections ; ajouts en fin de liste ; rien de reformaté)
+- outils/site-shell.cjs : groupe « Jouer » à six entrées (Missions, Activités annexes, Radios et musique, Codes de triche,
+  Trophées et succès, GTA Online), dans le menu « Explorer », la colonne « Jouer » du pied de page et sectionPages ;
+  ligne ENTRY de online.html (encart du calculateur « Est-ce que ça vaut le coup ? », tool=roi&from=online#atelier).
+- outils/regenerer.cjs : gen-codes.cjs, gen-trophees.cjs, gen-online.cjs après gen-animaux.cjs.
+- outils/sync-site.cjs : dossiers codes-de-triche/, trophees/, online/ (pages, plan du site, sitemap-fiches.xml) ;
+  outils/codes-index.json, outils/trophees-index.json, outils/online-index.json dans la recherche.
+- outils/gen-leo.cjs : les trois sections dans la boucle des sections (morceaux leo/codes.json, leo/trophees.json,
+  leo/online.json) et dans les dossiers des passages.
+- outils/leo-langues.cjs : les trois dossiers parmi les pages lues pour les passages traduits.
+- leo-ui.js, leo-core.js : morceau préparé et suggestions de Léo sur les pages de chaque section ; leo-core.js : une
+  question qui parle du jeu en ligne (« GTA 6 online sortira quand ? ») n’est plus prise pour la date de sortie du jeu.
+- outils/leo-knowledge.json : trois réponses existantes mises à jour avec les faits sourcés du 4 octobre 2026 et un lien
+  vers la section (« mods » et « online » gardent leur première phrase, « Rockstar n’a (encore) rien annoncé sur… ») :
+  « mods » (codes de triche) → codes-de-triche.html ; « online » → online.html (et trois formulations) ; « gtaplus » (le
+  mois de GTA+ des précommandes sert dans le GTA Online actuel) → online/gta-online-actuel.html#gta-plus (et trois
+  formulations).
+- style.css : le bloc « quatre groupes dans Explorer » (déjà là) porte la marque des six sections.
+- outils/langues/<code>/section-jouer.json : libellés du groupe « Jouer » à six entrées (menu et pied de page).
+- outils/langues/en|de/leo-pivot.json, outils/langues/es|it/_leo-pont.json : expressions des trois sections pour Léo
+  dans les autres langues (ajouts en fin de liste) : anglais « missable », « phone number(s) », « rated » (→ PEGI) ;
+  allemand « Trophäen », « Trophäenliste », « verpassbar(e) », « Online-Trophäen », « unendlich(es) Geld », « nach GTA 6
+  weiter » ; espagnol « lista de trofeos », « perdible(s) », « playstation plus » (→ abonnement) ; italien « lista (dei)
+  trofei », « mancabile/i », « inserire un trucco », « trucco con il telefono ».
+- Tests communs : a-propos-v744, coverage, donnees-publiees, performance-lot1, regression (les trois dossiers à la suite).
+- outils/tests/langues-helper.cjs : titres anglais des sources citées tels quels (liste EN_KEEP.titres, sept titres) et
+  « Michael De Santa » (liste PROPER), pour le contrôle « ni français ni anglais » des pages traduites.
+
+3. CE QUI NE CHANGE PAS
+vercel.json, api/, .vercelignore, index.html (son menu et son pied de page se mettent à jour à la régénération), le
+moteur du calculateur, la carte, la progression, les catalogues. Aucun cookie, rien de chargé depuis un autre site, aucun
+script en ligne. Une seule clé de stockage nouvelle : lk-trophees-obtenus-v1.
