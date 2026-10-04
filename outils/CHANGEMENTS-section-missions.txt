@@ -1,0 +1,54 @@
+LEONIDAKIT — section « Missions » (section missions), 4 octobre 2026
+
+Base : zip main v7.65 (régénéré tel quel au départ : commit « base régénérée »). Demande : construire la section
+« Missions et leurs solutions » (identifiant missions), prête à publier et facile à assembler avec les autres sections
+construites en même temps. Aucun numéro de version. Preuves : outils/PREUVES-section-missions.md.
+
+1. LA SECTION
+- missions.html « Les missions de GTA VI et leurs solutions » (générée par outils/gen-missions.cjs, textes dans
+  outils/missions/hub.json) :
+  · « Jason et Lucia, selon Rockstar » : trois paragraphes (textes officiels, Rob Nelson à Famitsu, Rupert Humphries à
+    Dazed) et quatre mécaniques confirmées : histoire en chapitres (texte de l’Édition Ultimate), personnage parfois imposé
+    (Rob Nelson), l’argent qui fait avancer l’histoire (Rob Nelson), profil criminel et objectifs facultatifs.
+  · « Ce que les vidéos montrent des missions » : huit séquences (Trailer 1, Trailer 2, Extended Look), chacune avec son
+    moment, ses personnages, ses lieux, ses repères de carte, son statut et ses sources ; intitulés descriptifs, aucun nom de
+    mission.
+  · « Les deux contenus nommés par Rockstar » : PTT YOUNGIN$ Compound et Classic Car Collection (Édition Ultimate), reliés à
+    la fiche du gang, à la carte et aux collectibles.
+  · « Le guide » : état vide honnête, cinq types de missions avec leur compteur (0), ordre conseillé à venir.
+  · Zone éditoriale des hubs : Rockstar (six dates), communauté (six rapprochements sourcés), à confirmer (cinq questions),
+    pour toi (calculateur, personnages, équipe de Raul, carte avec quatre repères), FAQ de six questions (dont une phrase
+    calculée {donnees:activites}), 21 sources datées du 4 octobre 2026.
+- Modèle de données : outils/missions/missions.json (schéma documenté, types, aucune mission), outils/missions/modele.json
+  (page de démonstration). Valeurs chiffrées au schéma des valeurs publiées (outils/donnees-publiees.cjs).
+- missions/modele.html : démonstration du gabarit de fiche (noindex, aucun lien, hors plan du site, recherche et Léo).
+- Gabarit de fiche (missions/<id>.html, dès qu’une mission est documentée) : « La mission en bref » (type, chapitre,
+  personnages, lieux, déblocage, récompense, durée, manquable, chacun avec statut et sources), objectifs, médailles,
+  déblocages (véhicules, armes, propriétés), solution pas à pas, astuces, « En lien » (personnages, régions, gangs), sources,
+  encart du calculateur selon le type, case « J’ai terminé cette mission ».
+- missions.css et missions.js (pages de la section seulement) ; missions.js garde la case cochée sous la clé
+  lk-missions-terminees-v1, n’écrit aucun mot et n’envoie rien.
+
+2. INTÉGRATION
+- Menu « Explorer » : nouveau groupe « Jouer » (Missions) ; pied de page : colonne « Jouer » ; style.css : quatre groupes et
+  quatre colonnes (bloc commun aux sections « Jouer »).
+- Calculateur : encart du hub (site-shell.cjs, ENTRY) ; pont gen-missions.cjs → calculateurs-activites.js (« mission-<id> »),
+  écrit seulement quand une mission a un gain et une durée publiés ; aujourd’hui le fichier n’est pas touché.
+- Léo : morceau leo/missions.json (trois questions de la section) ; sujets « braquage », « mission-solo » et « histoire »
+  reliés à missions.html ; suggestions sur les pages de la section.
+- Recherche du site (outils/missions-index.json), plan du site (missions.html ; la démonstration n’y est pas).
+
+3. LANGUES
+- outils/langues/<code>/section-missions.json : ≈ 280 textes par langue (en, es, it, de), noms propres et prudences gardés ;
+  une description de page allemande raccourcie pour la balise (« @meta:: »). 0 texte sans traduction dans chaque langue.
+
+4. TESTS
+- outils/tests/section-missions.test.cjs : modèle de données (et ses refus), générateur avec 0 mission, avec une mission
+  fictive de test (jamais publiée), pont du calculateur sur une copie, hub, démonstration hors index, menu, recherche, plan du
+  site, Léo, cinq langues, case « mission terminée » (enregistre, ne fait rien en démonstration, cachée sans stockage).
+- outils/tests/leo-questions-section-missions-<code>.json : questions de Léo de la section dans les cinq langues.
+- Listes de dossiers des tests communs : missions/ ajouté.
+
+5. LIMITES
+- Aucun nom de mission, aucune récompense, aucune durée : rien n’est publié. Les fiches arriveront avec le jeu.
+- Sources relevées par moteur de recherche le 4 octobre 2026 : l’ouverture directe des pages était bloquée depuis l’atelier.

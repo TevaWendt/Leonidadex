@@ -1,0 +1,124 @@
+LEONIDAKIT — NOUVELLE SECTION « RADIOS ET MUSIQUE » — archive « modifs » (4 octobre 2026)
+
+CE QUE CETTE SECTION AJOUTE
+Une page « Les radios et la musique de GTA VI » (radios.html), dans les cinq langues, troisième du nouveau groupe « Jouer »
+du menu « Explorer », et une fiche pour l’album officiel (radios/gta-vi-the-album.html).
+- Rockstar n’a annoncé aucune station de radio à ce jour : la page le dit, sans aucun nom de station tiré des fuites.
+- Le « poste » de Leonida, façon autoradio : quatre sources de musique (Trailer 1, Trailer 2, Extended Look, l’album officiel)
+  à choisir comme des présélections ; à chaque choix, la molette tourne, l’aiguille du cadran glisse, le nom défile sur
+  l’écran, l’égaliseur bat et les morceaux arrivent en cascade. 25 morceaux en tout, chacun avec son titre, son artiste, le
+  moment de la vidéo, son statut (crédité par Rockstar, ou entendu dans une vidéo officielle et identifié par la presse) et ses sources.
+  L’animation est décorative : tout se lit et se choisit au clavier et au lecteur d’écran, et tout s’arrête avec le réglage
+  « réduire les animations » de l’appareil. Aucun son, aucun extrait, aucune parole, aucune pochette : des liens vers les
+  vidéos officielles et les pages des artistes, ouverts dans un nouvel onglet.
+- La fiche de « Grand Theft Auto VI: The Album » (Atlantic Records, 34 titres originaux, le 19 novembre 2026) : les six
+  titres déjà sortis, avec leurs liens d’écoute officiels.
+- La zone éditoriale des hubs : « Ce que Rockstar a montré », « Ce que la communauté a identifié », « Ce qui reste à
+  confirmer », « Ce que ça change pour toi », six questions fréquentes, 22 sources datées.
+- Léo : réponses sur les radios, la musique des trailers, l’Extended Look, l’album et les noms de stations qui circulent ;
+  l’album comme fiche de Léo ; la réponse « radio » existante corrigée (elle citait des stations venues des fuites).
+  Dans les cinq langues.
+
+Ailleurs sur le site : « Jouer → Radios et musique » dans le menu « Explorer » et une colonne « Jouer » au pied de page de
+toutes les pages (cinq langues) ; recherche du site ; plan du site. Le texte des pages existantes ne change pas (voir PREUVES).
+
+CE QU’IL FAUT FAIRE
+Base attendue : ton dépôt main en v7.65 (celui du zip reçu).
+1. Note le commit courant dans GitHub Desktop (ou copie le dossier).
+2. Extrais « Leonidakit-section-radios-modifs.zip » dans la racine du site, en écrasant les fichiers homonymes (garde le
+   dossier .git). Il contient les 2 164 fichiers ajoutés ou changés depuis le zip main, rien d’autre, aucun fichier supprimé.
+3. Vérifie 3 minutes en local ou sur la prévisualisation Vercel (voir « Pour vérifier »).
+4. Mets en ligne quand tu le décides (GitHub Desktop : commit puis push ; Vercel déploie tel quel).
+Aucune commande de build, pas de package.json ; vercel.json, api/ et .vercelignore ne changent pas. Aucune clé de stockage,
+aucun cookie, rien de chargé depuis un autre site.
+Si tu assembles plusieurs sections : lis plutôt « Pour l’assemblage » plus bas et outils/assemblage/section-radios.diff.
+
+POURQUOI PRESQUE TOUTES LES PAGES CHANGENT : le menu et le pied de page de chaque page (cinq langues) portent maintenant le
+groupe « Jouer ». Le texte des pages existantes ne change pas.
+
+POUR VÉRIFIER (3 minutes)
+- /radios.html : le poste (choisis « Trailer 2 », puis « Extended Look » : la molette tourne, les morceaux arrivent), puis la
+  zone éditoriale. Avec « réduire les animations » activé dans ton système, rien ne bouge et tout reste lisible.
+- /radios/gta-vi-the-album.html : les six titres sortis et leurs liens.
+- Menu « Explorer » de n’importe quelle page : groupe « Jouer », « Radios et musique ».
+- /de/radios.html (ou /en/, /es/, /it/) : la page dans la langue, titres et artistes gardés tels quels.
+- Léo : « quelles radios dans GTA 6 ? », « qui chante dans le trailer 1 ? ».
+
+DÉTAIL : outils/CHANGEMENTS-section-radios.txt ; PREUVES : outils/PREUVES-section-radios.md.
+
+SOURCES CONSULTÉES (date de consultation entre parenthèses ; les pages ont été relevées le 4 octobre 2026 par moteur de
+recherche, leur ouverture directe étant bloquée depuis l’atelier ce jour-là)
+- Rockstar Games : vidéos officielles GTA VI (Trailer 1, Trailer 2, An Extended Look) — https://www.rockstargames.com/VI/media/videos (publié le 04/12/2023, consulté le 04/10/2026 ; officiel)
+- Rockstar Newswire : Grand Theft Auto VI, An Extended Look — https://www.rockstargames.com/newswire/article/4k138k8okkk483/grand-theft-auto-vi-an-extended-look-now-playing (publié le 27/08/2026, consulté le 04/10/2026 ; officiel)
+- Rockstar Newswire : Announcing Grand Theft Auto VI: The Album, Coming November 19 — https://www.rockstargames.com/newswire/article/7599a881942544/announcing-grand-theft-auto-vi-the-album-coming-november-19 (publié le 17/09/2026, consulté le 04/10/2026 ; officiel)
+- Atlantic Records to release Grand Theft Auto VI: The Album — https://www.musicbusinessworldwide.com/atlantic-records-to-release-grand-theft-auto-vi-the-album-featuring-travis-scott-pinkpantheress-morgan-wallen-and-keith-richards/ (consulté le 04/10/2026 ; officiel)
+- ‘Grand Theft Auto VI: The Album’ Will Feature 34 New Songs — https://www.billboard.com/music/music-news/grand-theft-auto-vi-the-album-videogame-soundtrack-1236342337/ (publié le 17/09/2026, consulté le 04/10/2026 ; officiel)
+- Rockstar announces Grand Theft Auto 6: The Album — https://www.techradar.com/gaming/rockstar-announces-grand-theft-auto-vi-the-album-featuring-34-original-tracks-from-artists-like-pinkpantheress-and-travis-scott-but-the-limited-edition-vinyl-collection-has-already-sold-out (publié le 17/09/2026, consulté le 04/10/2026 ; communauté)
+- GTA 6 Will Feature The “Next Evolution Of In-Game Radio,” Rockstar Says — https://www.gamespot.com/articles/gta-6-will-feature-the-next-evolution-of-in-game-radio-rockstar-says/ (consulté le 04/10/2026 ; officiel)
+- The first GTA 6 trailer has launched, and Tom Petty is all over it — https://www.loudersound.com/news/gta-6-trailer-tom-petty (consulté le 04/10/2026 ; officiel)
+- GTA 6 Trailer 2 Song: What’s The Tune Playing — https://www.gamespot.com/articles/gta-6-trailer-2-song-whats-the-tune-playing-and-do-the-lyrics-connect-to-the-story/1100-6531338/ (consulté le 04/10/2026 ; officiel)
+- What song soundtracks ‘Grand Theft Auto 6’s Trailer 2? — https://www.nme.com/news/gaming-news/what-song-grand-theft-auto-6-trailer-2-3860654 (consulté le 04/10/2026 ; vu)
+- Every GTA 6 song confirmed so far — https://www.pcgamer.com/games/grand-theft-auto/gta-6-radio-songs/ (consulté le 04/10/2026 ; vu)
+- All Songs Featured in GTA 6 Extended Look (With Timestamps) — https://gamerant.com/all-songs-featured-in-gta-6-extended-look-showcase-timestamps/ (consulté le 04/10/2026 ; vu)
+- GTA 6 Extended Look Soundtrack: Every Song We Heard — https://www.svg.com/2246046/gta-6-extended-look-soundtrack-songs/ (consulté le 04/10/2026 ; vu)
+- Music features prominently in Grand Theft Auto VI ‘extended look’ — https://musically.com/2026/08/28/music-features-prominently-in-grand-theft-auto-vi-extended-look/ (publié le 28/08/2026, consulté le 04/10/2026 ; vu)
+- Phil Collins Returns To Vice City With An Ominous Song Choice For Jason And Lucia — https://kotaku.com/phil-collins-returns-to-vice-city-with-an-ominous-song-choice-for-jason-and-lucia-2000729601 (consulté le 04/10/2026 ; vu)
+- Grand Theft Auto 6 Extended Look’s Song Choices Revealed — https://gamingbolt.com/grand-theft-auto-6-extended-looks-song-choices-revealed (consulté le 04/10/2026 ; vu)
+- GTAVI: An exclusive deep dive into the video game of the decade — https://www.dazeddigital.com/life-culture/article/70859/1/gta-6-grand-theft-auto-vi-rockstar-exclusive-deep-dive-game-unparalleled-world (consulté le 04/10/2026 ; officiel)
+- New GTA 6 Billboards Appear As Rockstar Teams Up With Spotify — https://rockstarintel.com/new-gta-6-billboards-appear-as-rockstar-teams-up-with-spotify/ (consulté le 04/10/2026 ; vu)
+- Grand Theft Auto 6: Every Song Revealed So Far — https://consequence.net/2026/09/grand-theft-auto-6-every-song-so-far/ (consulté le 04/10/2026 ; communauté)
+- GTA Wiki : V-Rock (HD Universe) — https://gta.fandom.com/wiki/V-Rock_(HD_Universe) (consulté le 04/10/2026 ; communauté)
+- Postmode : 24 détails à revoir dans l’Extended Look — https://postmode.substack.com/p/gta-6-extended-look-24-things-you-missed (consulté le 04/10/2026 ; communauté)
+- GTA 6 Will Have DJ Khaled In-Game Radio Station, Report — https://www.gamespot.com/articles/gta-6-will-have-dj-khaled-in-game-radio-station-report/1100-6529567/ (consulté le 04/10/2026 ; à confirmer)
+
+CHOIX FAITS SEUL
+- Aucune fiche de station (Rockstar n’en a nommé aucune) ; une seule fiche, celle de l’album officiel. Les morceaux restent
+  une liste sur le hub, dans le poste.
+- Aucun nom de station tiré des fuites, même pour le démentir : la page parle seulement de « listes de stations qui
+  circulent », venues de vidéos volées en août 2026. Le test de la section vérifie leur absence par empreintes, sans les
+  écrire.
+- Statuts des morceaux : « officiel » quand Rockstar crédite le morceau (Trailer 1, Hot Together, l’album), « vu » quand il
+  est entendu dans une vidéo officielle et identifié par la presse. Un morceau relevé par une seule page de joueurs qui
+  mêle aussi des noms tirés des fuites (« Thunder Island », d’après GTABase) n’est pas repris, ni cette page en source.
+- La réponse « radio » de Léo est corrigée : elle reprenait des noms de stations venus des fuites. Son ancienne traduction,
+  devenue inutile, est retirée des quatre fichiers de mémoire qui la gardaient (outils/langues/de/leo-02.json,
+  en/leo-02.json, es/lot-50.json, it/lot-05.json : une entrée chacun, rien d’autre ne change).
+- Le producteur de « RHYNO » (Guy-Manuel de Homem-Christo) est écrit tel quel dans toutes les langues.
+- Pas d’encart du calculateur : aucun usage chiffré n’est publié pour la musique.
+
+POUR L’ASSEMBLAGE
+Fichiers communs modifiés (chaque ajout est marqué « section radios » ; le détail ligne par ligne est dans
+outils/assemblage/section-radios.diff) :
+- outils/site-shell.cjs : constante « play » (groupe « Jouer ») avec ['radios.html', 'Radios et musique'] ; groupe « Jouer »
+  dans le menu « Explorer » ; colonne « Jouer » au pied de page ; sectionPages ; « play » exporté. À l’assemblage : une seule
+  liste « play » dans l’ordre Missions, Activités annexes, Radios et musique.
+- style.css : le bloc « quatre groupes dans Explorer » en fin de fichier (le même dans chaque section : n’en garder qu’un).
+- outils/sync-site.cjs : dossier radios/ dans la liste des pages et dans sitemap-fiches.xml ; index de recherche de la section
+  (outils/radios-index.json).
+- outils/regenerer.cjs : gen-radios.cjs juste après lore-gen.js.
+- outils/gen-leo.cjs : boucle des sections (['radios'] : à réunir avec les autres sections), dossier radios/ des passages,
+  morceau leo/radios.json. outils/leo-langues.cjs, leo-ui.js, leo-core.js : morceau et suggestions de la section.
+- outils/langues/de/leo-02.json, en/leo-02.json, es/lot-50.json, it/lot-05.json : l’ancienne traduction de la réponse
+  « radio » retirée (une entrée chacun). Dans outils/assemblage/section-radios.diff, les lignes retirées qui citaient ces
+  noms sont remplacées par une mention : pour ces fichiers, reprendre ceux de l’archive.
+- outils/leo-knowledge.json : sujets « radio » (réécrit sans les stations des fuites, lien vers radios.html) et
+  « musique-trailer » (Trailer 2, Extended Look, lien vers le poste ; formulations « qui chante dans le trailer 1 »,
+  « chanson du trailer 2 »).
+- Léo dans les autres langues : quelques expressions ajoutées en fin de liste pour comprendre les questions de la section
+  (anglais et allemand : outils/langues/en/leo-pivot.json et de/leo-pivot.json ; espagnol et italien :
+  outils/langues/es/_leo-pont.json et it/_leo-pont.json) : « qui chante », noms de stations « qui circulent », radios
+  « des fuites ».
+- outils/gen-leo.cjs : le vocabulaire qui charge le morceau d’une section vient des mots-clés de ses questions, sans les
+  mots courants des sujets du noyau (« combien », « comment »…) ; une formulation de la section qui ne le chargerait pas
+  arrête la génération. Même ligne dans les quatre sections : n’en garder qu’une.
+- Tests communs : dossier radios/ ajouté aux listes de a-propos-v744, coverage, donnees-publiees, performance-lot1,
+  regression.
+- Traductions : outils/langues/<code>/section-radios.json (fichiers nouveaux). Les libellés du menu changent de forme quand
+  les groupes se réunissent : les entrées « <1>Jouer</1>… » sont à compléter avec les autres sections (même traduction de
+  « Jouer » partout : Play, Jugar, Giocare, Spiele, déjà dans la mémoire de traduction).
+Liens souhaités vers les autres sections nouvelles (non faits ici) :
+- radios.html, Extended Look → missions.html#sequences (les séquences où passent les morceaux).
+- radios.html, « Ce que ça change pour toi » → activites.html (les clubs et bars de la liste « Ville, nuit et style »).
+Proposition pour l’accueil : une carte « Radios et musique » dans un bloc « Jouer » (« Les morceaux des trailers et de
+l’Extended Look, l’album officiel, et ce que Rockstar promet pour la radio »).
+Mentions et page Médias : rien à ajouter (aucune image nouvelle : les visuels sont ceux de outils/medias-officiels.json).

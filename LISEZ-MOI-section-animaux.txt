@@ -1,0 +1,121 @@
+LEONIDAKIT — NOUVELLE SECTION « ANIMAUX » — archive « modifs » (4 octobre 2026)
+
+CE QUE CETTE SECTION AJOUTE
+Une page « Les animaux de GTA VI » (animaux.html) et sept fiches, dans les cinq langues ; elle est rangée dans « Le monde »,
+après « Entreprises », avec le même rendu que « Gangs et factions » (même mécanique des hubs du monde).
+- Les sept fiches, une par animal ou groupe d’animaux vraiment visible sur une image officielle : l’alligator, l’iguane
+  vert, les chiens, les cerfs, le puma, le raton laveur et les autres mammifères sauvages, les oiseaux du littoral et des
+  marais, la faune marine (dauphins, requins, tortues). Chacune dit où on le voit (vidéo et moment, ou capture), dans
+  quelles régions, ce que l’image montre, ce que Rockstar a dit que le jeu en fait (chasse, pêche, caresser un chien), avec
+  son statut (« officiel » quand Rockstar le nomme ou le décrit, « vu » quand seule l’image le montre) et ses sources.
+- Quatre gros plans nouveaux (img/animaux/) : recadrages de visuels officiels, avec leur crédit Rockstar Games et leur
+  source sur la fiche.
+- La zone éditoriale des hubs : « Ce que Rockstar a montré » (du Trailer 1 aux plus de 170 espèces annoncées), « Ce que la
+  communauté a identifié » (cité comme tel), « Ce qui reste à confirmer », « Ce que ça change pour toi », cinq questions
+  fréquentes, 14 sources datées.
+- Le calculateur : un encart sur la page (« La chasse, ça rapporte plus qu’une mission ? », Mes activités), parce que
+  Rockstar dit que la chasse rapporte de l’argent (sans montant).
+- « En lien » : le groupe « Animaux » apparaît sur les fiches des régions concernées (Grassrivers, Mount Kalaga, Leonida
+  Keys, Vice City…), comme le groupe « Gangs et factions » en v7.65.
+- Léo : les sept fiches (noms et alias en français et en anglais), des réponses sur les alligators, la chasse et la faune
+  marine, et la réponse « animaux » existante réécrite avec les chiffres de Rockstar ; dans les cinq langues.
+
+Ailleurs sur le site : « Le monde → Animaux » dans le menu « Explorer » et dans la colonne « Explorer » du pied de page de
+toutes les pages (cinq langues) ; recherche du site ; plan du site ; groupe « Animaux » dans « En lien » des fiches des
+régions. Le texte des autres pages existantes ne change pas (voir PREUVES).
+
+À SAVOIR : la réponse « radio » de Léo, déjà en ligne en v7.65 (outils/leo-knowledge.json), cite des noms de stations
+venus des fuites. Cette section n’y touche pas : l’index de Léo régénéré (leo-index.json, cinq langues) la contient donc
+toujours. Elle est corrigée par la section « Radios et musique » et dans l’archive tout-en-un : installe l’une des deux
+pour qu’elle disparaisse.
+
+CE QU’IL FAUT FAIRE
+Base attendue : ton dépôt main en v7.65 (celui du zip reçu).
+1. Note le commit courant dans GitHub Desktop (ou copie le dossier).
+2. Extrais « Leonidakit-section-animaux-modifs.zip » dans la racine du site, en écrasant les fichiers homonymes (garde le
+   dossier .git). Il contient les 2 174 fichiers ajoutés ou changés depuis le zip main, rien d’autre, aucun fichier supprimé.
+3. Vérifie 3 minutes en local ou sur la prévisualisation Vercel (voir « Pour vérifier »).
+4. Mets en ligne quand tu le décides (GitHub Desktop : commit puis push ; Vercel déploie tel quel).
+Aucune commande de build, pas de package.json ; vercel.json, api/ et .vercelignore ne changent pas. Aucune clé de stockage,
+aucun cookie, rien de chargé depuis un autre site.
+Si tu assembles plusieurs sections : lis plutôt « Pour l’assemblage » plus bas et outils/assemblage/section-animaux.diff.
+
+POURQUOI PRESQUE TOUTES LES PAGES CHANGENT : le menu et le pied de page de chaque page (cinq langues) portent maintenant
+« Animaux ». Le texte des pages existantes ne change pas, sauf « En lien » des fiches des régions.
+
+POUR VÉRIFIER (3 minutes)
+- /animaux.html : les sept fiches, puis la zone éditoriale et l’encart du calculateur.
+- /animaux/alligator.html : une fiche complète, son gros plan, « Statut et sources ».
+- /lieux/grassrivers.html : « En lien » → groupe « Animaux ».
+- Menu « Explorer » de n’importe quelle page : « Le monde » → « Animaux ».
+- /de/animaux.html (ou /en/, /es/, /it/) : la page dans la langue.
+- Léo : « quels animaux dans GTA 6 ? », « y a-t-il des alligators ? », « peut-on chasser ? ».
+
+DÉTAIL : outils/CHANGEMENTS-section-animaux.txt ; PREUVES : outils/PREUVES-section-animaux.md.
+
+SOURCES CONSULTÉES (date de consultation entre parenthèses ; les pages nouvelles ont été relevées le 4 octobre 2026 par
+moteur de recherche, leur ouverture directe étant bloquée depuis l’atelier ce jour-là ; les pages déjà citées par le site
+gardent leur date)
+- Rockstar Games : page officielle de Grassrivers — https://www.rockstargames.com/VI/only-in-leonida/grassrivers (publié le 06/05/2025, consulté le 04/10/2026 ; officiel)
+- Rockstar Games : page officielle de Mount Kalaga National Park — https://www.rockstargames.com/VI/only-in-leonida/kalaga (publié le 06/05/2025, consulté le 04/10/2026 ; officiel)
+- Site officiel Grand Theft Auto VI (pages « Only in Leonida », éditions, précommandes) — https://www.rockstargames.com/VI (publié le 06/05/2025, consulté le 23/09/2026 ; officiel)
+- Rockstar Games : captures officielles GTA VI — https://www.rockstargames.com/VI/media/screenshots (consulté le 23/09/2026 ; officiel)
+- Rockstar Games : vidéos officielles GTA VI (Trailer 1, Trailer 2, An Extended Look) — https://www.rockstargames.com/VI/media/videos (publié le 04/12/2023, consulté le 23/09/2026 ; officiel)
+- Rockstar Newswire : Grand Theft Auto VI, An Extended Look — https://www.rockstargames.com/newswire/article/4k138k8okkk483/grand-theft-auto-vi-an-extended-look-now-playing (publié le 27/08/2026, consulté le 23/09/2026 ; officiel)
+- Microsoft Store : Grand Theft Auto VI, Ultimate Edition (fiche officielle de l’édition) — https://www.xbox.com/en-us/games/store/grand-theft-auto-vi-ultimate-edition/9nnzsnhlr63l (consulté le 03/10/2026 ; officiel)
+- Insider Gaming : plus de 170 espèces animales dans GTA 6 — https://insider-gaming.com/gta-6-features-over-170-different-wildlife-species/ (consulté le 04/10/2026 ; officiel)
+- Beebom : un écosystème de plus de 170 espèces — https://beebom.com/gta-6s-massive-animal-ecosystem-includes-over-170-species/ (consulté le 04/10/2026 ; officiel)
+- GameSpot : la pêche et la chasse ne marchent pas comme on le croit — https://www.gamespot.com/articles/gta-6-fishing-and-hunting-doesnt-work-like-you-think-it-does/ (consulté le 04/10/2026 ; officiel)
+- TheWrap : tout ce que montre l’Extended Look — https://www.thewrap.com/culture-lifestyle/culture/grand-theft-auto-6-netflix-extended-look-gta-gameplay/ (publié le 27/08/2026, consulté le 04/10/2026 ; vu)
+- Engadget : breaking down the GTA 6 extended look — https://www.engadget.com/2245942/guns-cars-and-chihuahuas-breaking-down-the-gta-6-extended-look/ (publié le 27/08/2026, consulté le 27/09/2026 ; vu)
+- GTABase : liste des animaux de GTA 6 — https://www.gtabase.com/gta-6/animals/ (consulté le 04/10/2026 ; communauté)
+- GTA Intel : Grassrivers, les marais façon Everglades — https://gtaintel.com/news/gta-6-grassrivers-swamp-everglades (consulté le 04/10/2026 ; communauté)
+
+CHOIX FAITS SEUL
+- Sept fiches : une par animal bien visible (alligator, iguane vert, chiens, cerfs) et trois groupes pour les espèces peu
+  visibles (mammifères sauvages, oiseaux, faune marine), pour éviter des fiches creuses.
+- Statuts : « officiel » quand Rockstar nomme ou décrit l’animal (pages des régions, propos de Michael Kane rapportés par
+  Game Informer), « vu » quand seule une image le montre. Les identifications des joueurs (pythons, sangliers, le requin de
+  Brian, « Macca the Gator ») restent dans « Ce que la communauté a identifié », citées comme telles.
+- Montrer un animal ne dit pas qu’on pourra le chasser : chaque fiche le précise ; la chasse est annoncée à Mount Kalaga,
+  sans liste de gibier.
+- Gros plans : quatre recadrages de visuels officiels déjà sur le site (captures des alligators de Grassrivers, du chien de
+  Vice City et du raton laveur de Mount Kalaga, photogramme des dauphins du Trailer 1), en webp de 480 × 270.
+- Calculateur : un encart sur animaux.html (la chasse rapporte, selon Rob Nelson) ; aucun sur les fiches.
+
+POUR L’ASSEMBLAGE
+Fichiers communs modifiés (chaque ajout est marqué « section animaux » ; le détail ligne par ligne est dans
+outils/assemblage/section-animaux.diff) :
+- outils/site-shell.cjs : ['animaux.html', 'Animaux'] en fin de la liste « world » (après Entreprises) ; ligne ENTRY de
+  animaux.html (encart du calculateur).
+- outils/lore-gen.js : chargement de outils/editorial-animaux.json (fiches, texte d’en-tête), SECTIONS.animals,
+  ['animals','Animaux'] dans RELATED (groupe « En lien » des fiches des régions), intitulés des blocs pour les animaux.
+- outils/hubs-monde.cjs : zone éditoriale de animaux.html et ses sources nouvelles ; 'animaux' dans HUBS.
+- outils/hubs-doublons.cjs : le hub et les fiches Animaux comparés comme les autres.
+- outils/regenerer.cjs : gen-animaux.cjs juste après lore-gen.js.
+- outils/sync-site.cjs : dossier animaux/ dans la liste des pages et dans sitemap-fiches.xml.
+- outils/gen-leo.cjs : boucle des sections (['animaux'] : à réunir avec les autres sections), dossier animaux/ des
+  passages, morceau leo/animaux.json. outils/leo-langues.cjs, leo-ui.js, leo-core.js : morceau et suggestions.
+- outils/leo-knowledge.json : sujet « animaux » réécrit (plus de 170 espèces, Michael Kane, lien vers animaux.html ;
+  formulations « quels animaux dans gta 6 »).
+- outils/gen-leo.cjs : le vocabulaire qui charge le morceau d’une section vient des mots-clés de ses questions, sans les
+  mots courants des sujets du noyau (« combien », « comment »…) ; une formulation de la section qui ne le chargerait pas
+  arrête la génération. Même ligne dans les quatre sections : n’en garder qu’une.
+- Léo en anglais : « hunt » et « hunting » ajoutés en fin de outils/langues/en/leo-pivot.json (la section Activités
+  annexes ajoute les mêmes : n’en garder qu’une fois).
+- Tests communs : dossier animaux/ ajouté aux listes de a-propos-v744, coverage, donnees-publiees, performance-lot1,
+  regression ; hubs-monde-v741 contrôle la zone de animaux.html comme les autres.
+- Traductions : outils/langues/<code>/section-animaux.json (fichiers nouveaux).
+Liens souhaités (non faits ici) :
+- animaux/cerfs.html, animaux/mammiferes-sauvages.html (chasse) → activites/chasse.html ; animaux/faune-marine.html (pêche,
+  plongée) → activites/peche.html et activites/activites-nautiques.html ; animaux/alligator.html (hydroglisseurs de
+  Grassrivers) → activites/activites-nautiques.html.
+- animaux.html, « Ce que ça change pour toi » → activites.html.
+Page Médias (non modifiée ici) : ajouter les quatre gros plans de img/animaux/ (recadrages de captures officielles, crédit
+Rockstar Games) à la liste des visuels.
+Proposition pour l’accueil : une carte « Animaux » dans le bloc « Le monde » (« Alligators, iguanes, cerfs, dauphins : la
+faune de Leonida d’après les images officielles »).
+Remarques pour la relecture du site existant (rien n’a été modifié) : le texte alternatif de la capture leonida-keys-02
+(outils/medias-officiels.json) parle d’un alligator, alors que l’animal est un iguane ; le lexique de Léo
+(outils/leo-lexique.json) réécrit « tortue » en « alligator » : la fiche Faune marine garde donc l’alias « tortue marine »
+seulement.

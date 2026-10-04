@@ -1,0 +1,58 @@
+{
+ "_note": "Section animaux : questions de test de Léo en allemand pour la section « Animaux » (faune annoncée, alligators, chasse, chiens, animaux marins, fiches). Rejoué par node outils/tests/leo-eval.cjs --lang de --questions=outils/tests/leo-questions-section-animaux-de.json.",
+ "schemaVersion": 1,
+ "questions": [
+  {
+   "q": "gibt es tiere in gta 6",
+   "expect": {
+    "topic": "animaux"
+   },
+   "tags": [
+    "section-animaux"
+   ]
+  },
+  {
+   "q": "gibt es alligatoren in gta 6",
+   "expect": {
+    "topic": "animaux-faq-1"
+   },
+   "tags": [
+    "section-animaux"
+   ]
+  },
+  {
+   "q": "welche tiere kann man jagen",
+   "expect": {
+    "topic": "animaux-faq-2"
+   },
+   "tags": [
+    "section-animaux"
+   ]
+  },
+  {
+   "q": "gibt es haie in gta 6",
+   "expect": {
+    "any": [
+     {
+      "topic": "animaux-faq-3"
+     },
+     {
+      "entity": "animal:faune-marine"
+     }
+    ]
+   },
+   "tags": [
+    "section-animaux"
+   ]
+  },
+  {
+   "q": "kann man einen hund haben in gta 6",
+   "expect": {
+    "topic": "animaux"
+   },
+   "tags": [
+    "section-animaux"
+   ]
+  }
+ ]
+}

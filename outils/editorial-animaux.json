@@ -1,0 +1,264 @@
+{
+ "_note": "Section « Animaux » (section animaux) : fiches animaux/<id>.html et zone éditoriale de animaux.html, chargées par outils/lore-gen.js (fiches, comme outils/editorial.json) et outils/hubs-monde.cjs (zone, comme outils/editorial-hubs.json), contrôlées et complétées par outils/gen-animaux.cjs (statut, sources et gros plans de chaque fiche, Léo). Une espèce n’est nommée que si Rockstar l’a nommée ; sinon, la fiche décrit ce qui se voit et le dit. Rien des fuites de 2022 ou de 2026. Sources relevées le 4 octobre 2026 par moteur de recherche (ouverture directe des pages bloquée depuis l’atelier ce jour-là) ; les sources reprises de outils/editorial-hubs.json gardent leur date.",
+ "section": {
+  "hub": "animaux",
+  "label": "Animaux",
+  "one": "Animal",
+  "title": "Les animaux de GTA VI",
+  "lede": "Alligators, iguanes, cerfs, dauphins et chiens : la faune de Leonida telle que la montrent les images officielles, et les plus de 170 espèces annoncées par Rockstar.",
+  "desc": "Les animaux de GTA VI : alligators, iguanes, chiens, cerfs, oiseaux et faune marine vus sur les images officielles, et les 170 espèces annoncées par Rockstar."
+ },
+ "note": "Chaque fiche sépare ce qui se voit à l’image de ce que Rockstar a écrit. Une espèce reconnue par le site ou par les joueurs reste à confirmer, et montrer un animal ne dit pas qu’on pourra le chasser.",
+ "fiches": [
+  {
+   "id": "alligator",
+   "name": "Alligator",
+   "kind": "Reptile",
+   "accord": "m",
+   "aliases": ["alligators", "gators", "alligator de Grassrivers", "alligator des marais"],
+   "media": ["grassrivers-03", "grassrivers-04", "grassrivers-06", "grassrivers-01"],
+   "imageAlt": "Hydroglisseur vu du ciel au milieu des plantes aquatiques de Grassrivers, entouré de trois alligators qui nagent, capture officielle Rockstar Games",
+   "source": "https://www.rockstargames.com/VI/only-in-leonida/grassrivers",
+   "places": ["grassrivers"],
+   "relatedPlaces": ["grassrivers"],
+   "vehicles": ["airboat-09", "vortex-airboat"],
+   "tagline": "La star des marais, et pas le seul prédateur des mangroves.",
+   "description": "L’attraction la plus célèbre de Grassrivers selon Rockstar : on le voit nager autour des hydroglisseurs, et pendu chez les chasseurs des marais.",
+   "facts": [
+    "Rockstar le présente comme l’attraction la plus célèbre de Grassrivers, en prévenant que des prédateurs bien plus dangereux vivent dans les mangroves.",
+    "Michael Kane, de Rockstar, le cite parmi les espèces natives de Leonida dans le dossier de Game Informer.",
+    "Quatre captures officielles le montrent, toutes à Grassrivers : vivant dans l’eau, ou rapporté par des chasseurs."
+   ],
+   "texte": "L’alligator est l’animal que Rockstar met en avant pour Grassrivers, les marais de Leonida : sa page officielle en fait l’attraction la plus célèbre de la région, avant d’ajouter que des prédateurs bien plus dangereux et des découvertes plus étranges attendent dans les mangroves. Dans le dossier de Game Informer publié le 29 septembre 2026, Michael Kane, vice-président de Rockstar chargé de l’art dynamique, le range parmi les espèces natives de l’État, avec les lamantins, les flamants et les pélicans.",
+   "contexte": "Vue du ciel, une capture montre trois alligators qui nagent entre les plantes aquatiques autour d’un hydroglisseur. Une autre en place deux dans l’eau pendant une poursuite entre un pick-up, un hydroglisseur et la police. Chez les habitants des marais, un alligator mort gît sur le pont de l’hydroglisseur Airgator 09, et un plus petit pend à une chaîne sous un abri, à côté d’un homme armé.",
+   "pratique": "Rockstar n’a rien publié sur ce que l’alligator fait au joueur : ni attaque, ni chasse dédiée, ni prise à revendre. La chasse est annoncée en général, et les captures de Grassrivers montrent des prises exhibées, sans dire si l’alligator est un gibier du jeu. Les hydroglisseurs vus à ses côtés ont leur fiche.",
+   "statut": "officiel",
+   "sources": ["rs-grassrivers", "insider-faune", "rs-screens"],
+   "zoom": [{ "src": "/img/animaux/alligator-grassrivers-04.webp", "w": 480, "h": 270, "media": "grassrivers-04", "alt": "Gros plan sur deux alligators à la surface d’un canal de Grassrivers, entre les nénuphars, recadrage d’une capture officielle", "legende": "Deux alligators pendant la poursuite dans les marais" }]
+  },
+  {
+   "id": "iguane-vert",
+   "name": "Iguane vert",
+   "kind": "Reptile",
+   "accord": "m",
+   "aliases": ["iguane", "iguanes", "iguane des Keys", "green iguana", "iguana"],
+   "media": ["leonida-keys-06"],
+   "imageAlt": "Iguane vert en gros plan, agrippé à un tronc au bord de l’eau, un îlot de palmiers au loin dans les Leonida Keys, capture officielle Rockstar Games",
+   "places": ["leonida-keys"],
+   "relatedPlaces": ["leonida-keys"],
+   "tagline": "Une espèce invasive qui prend le soleil dans les Keys.",
+   "description": "Rockstar le cite parmi les espèces invasives de Leonida ; deux captures des Keys le montrent, l’une en gros plan sur un tronc, l’autre en pleine rue.",
+   "facts": [
+    "Michael Kane, de Rockstar, le classe parmi les espèces invasives de Leonida, avec le crapaud-buffle, le chat haret et le macaque rhésus.",
+    "Une capture des Keys le montre en gros plan, agrippé à un tronc au bord de l’eau.",
+    "Une autre le montre au milieu d’une rue des Keys, parmi les passants."
+   ],
+   "texte": "L’iguane vert est l’une des rares espèces que Rockstar nomme précisément. Dans le dossier de Game Informer, Michael Kane le cite parmi les espèces invasives qui cohabitent avec la faune native de Leonida, comme dans la Floride réelle. C’est aussi l’un des animaux les mieux montrés : une capture officielle des Leonida Keys lui est entièrement consacrée.",
+   "contexte": "Sur la capture des Keys, l’iguane occupe tout le premier plan, accroché à un tronc penché au-dessus de l’eau claire, avec un îlot de palmiers et des oiseaux en vol au loin. Une autre capture de l’archipel en montre un au milieu de la chaussée, entre un cycliste, des passants et un conducteur de scooter de mobilité.",
+   "pratique": "Rien n’est publié sur un rôle de l’iguane dans le jeu. Il fait partie du décor vivant des Keys, aux côtés des oiseaux du littoral.",
+   "statut": "officiel",
+   "sources": ["insider-faune", "rs-screens"]
+  },
+  {
+   "id": "chiens",
+   "name": "Chiens",
+   "kind": "Animal domestique",
+   "accord": "mp",
+   "aliases": ["chiens de Leonida", "caresser un chien", "chihuahua", "dog", "dogs"],
+   "media": ["vice-city-09", "grassrivers-06"],
+   "imageAlt": "Un chien noir assis contre une personne au pied d’un pilier peint, sous le viaduc de Vice City, pendant que des motos font des roues arrière, capture officielle Rockstar Games",
+   "places": ["vice-city", "grassrivers", "leonida-keys"],
+   "relatedPlaces": ["vice-city"],
+   "tagline": "On peut les caresser, et le jeu le remarque.",
+   "description": "Dans l’Extended Look, Jason caresse un chien et une icône d’ange s’affiche ; d’autres se croisent à Vice City et chez les chasseurs des marais.",
+   "facts": [
+    "Dans l’Extended Look, Jason caresse un chien croisé dans un immeuble, et une icône d’ange apparaît à l’écran.",
+    "Un chihuahua en tutu violet et ailes de fée passe dans le montage final de la vidéo.",
+    "Aucun animal de compagnie à adopter n’est annoncé."
+   ],
+   "texte": "Les chiens sont les animaux avec lesquels on interagit dans les vidéos officielles. Au début de l’Extended Look, diffusé le 27 août 2026, Jason et Lucia traversent un immeuble pour récupérer un colis pour Boobie ; en chemin, Jason caresse un chien, et une icône d’ange s’affiche avec un petit son. Les comptes rendus y voient la trace du profil criminel, qui retient tes actes, et parlent aussi de gronder ou d’observer l’animal. Le montage final montre un chihuahua habillé d’un tutu violet et d’ailes de fée, en plein Vice City.",
+   "contexte": "Sur les captures, un chien noir est assis contre une personne au pied d’un pilier peint, sous le viaduc de Vice City. À Grassrivers, un chien brun renifle le sol derrière un chasseur, près d’un alligator suspendu. Dans les Keys, un chien fauve et noir se tient sur la chaussée, parmi les passants.",
+   "pratique": "Caresser un chien est montré ; le gronder ou l’observer n’est décrit que par la presse. Rien ne dit qu’on pourra adopter un chien, le nourrir ou le garder à la planque.",
+   "statut": "vu",
+   "sources": ["rs-extended", "thewrap-extended", "engadget-breakdown", "rs-screens"],
+   "zoom": [{ "src": "/img/animaux/chien-vice-city-09.webp", "w": 480, "h": 270, "media": "vice-city-09", "alt": "Gros plan sur un chien noir assis contre une personne au pied d’un pilier, sous le viaduc de Vice City, recadrage d’une capture officielle", "legende": "Sous le viaduc de Vice City" }]
+  },
+  {
+   "id": "cerfs",
+   "name": "Cerfs",
+   "kind": "Mammifère",
+   "accord": "mp",
+   "aliases": ["cerf", "biche", "cerf de Virginie", "cerfs de Mount Kalaga", "deer"],
+   "media": ["mount-kalaga-national-park-05"],
+   "imageAlt": "Une biche boit à un point d’eau de Mount Kalaga, d’autres cerfs se reposent derrière elle, pendant qu’un puma s’avance au premier plan, capture officielle Rockstar Games",
+   "places": ["mount-kalaga"],
+   "relatedPlaces": ["mount-kalaga"],
+   "tagline": "Au point d’eau de Mount Kalaga, sous l’œil d’un puma.",
+   "description": "Quatre cerfs boivent et se reposent au bord de l’eau à Mount Kalaga, le parc que Rockstar présente comme un terrain de chasse ; leur espèce n’est pas nommée.",
+   "facts": [
+    "Une capture de Mount Kalaga montre quatre cerfs au bord de l’eau : une biche qui boit, un jeune, un adulte et un mâle couché avec ses bois.",
+    "Leur silhouette rappelle le cerf de Virginie de la Floride réelle ; Rockstar n’a pas nommé l’espèce.",
+    "Mount Kalaga est présenté comme un terrain de chasse, sans liste de gibier."
+   ],
+   "texte": "Les cerfs sont les grands herbivores des images officielles. Une capture de Mount Kalaga National Park, le parc du nord de Leonida, en montre quatre réunis au bord d’un point d’eau. Leur allure rappelle le cerf de Virginie, l’espèce de la Floride réelle, mais Rockstar ne l’a pas nommée : le site les appelle simplement des cerfs. Le dossier de Game Informer annonce plus de 30 mammifères terrestres.",
+   "contexte": "Une biche boit au point d’eau ; derrière elle, un jeune et un adulte se tiennent debout, et un mâle aux bois est couché dans l’herbe. Au premier plan, un puma avance à pas comptés, les pattes dans l’eau : la scène suggère une chasse, sans la montrer.",
+   "pratique": "Rockstar présente Mount Kalaga comme un terrain de chasse de premier choix, et la chasse rapporte de l’argent selon Rob Nelson, cité par le créateur TGG. Rien ne dit pour autant que le cerf est un gibier du jeu.",
+   "statut": "vu",
+   "sources": ["rs-screens", "rs-kalaga", "insider-faune"]
+  },
+  {
+   "id": "mammiferes-sauvages",
+   "name": "Puma, raton laveur et mammifères sauvages",
+   "kind": "Mammifères",
+   "accord": "mp",
+   "aliases": ["puma", "raton laveur", "cougar", "mammiferes", "lynx", "raccoon", "bobcat", "macaque", "chat haret"],
+   "media": ["mount-kalaga-national-park-01", "mount-kalaga-national-park-05"],
+   "imageAlt": "Motos tout-terrain et quad dans la boue près de vieux silos à Mount Kalaga, un raton laveur détale sur les gravats à gauche, capture officielle Rockstar Games",
+   "places": ["mount-kalaga", "grassrivers"],
+   "relatedPlaces": ["mount-kalaga"],
+   "tagline": "Un puma à l’affût, un raton laveur dans la boue.",
+   "description": "Un puma à l’affût et un raton laveur qui détale : les mammifères sauvages des captures, parmi la trentaine d’espèces terrestres que Rockstar annonce.",
+   "facts": [
+    "Un puma s’avance vers des cerfs au bord de l’eau, sur une capture de Mount Kalaga.",
+    "Un raton laveur détale sur des gravats au passage d’une course tout-terrain, au même endroit.",
+    "Rockstar annonce plus de 30 mammifères terrestres, dont le chat haret et le macaque rhésus, pas encore montrés."
+   ],
+   "texte": "Les captures officielles montrent deux mammifères sauvages sans les nommer : un puma et un raton laveur, tous deux à Mount Kalaga. Le dossier de Game Informer annonce plus de 30 mammifères terrestres et cite, parmi les espèces invasives, le chat haret et le macaque rhésus, qu’aucune image n’a encore montrés.",
+   "contexte": "Au point d’eau de Mount Kalaga, un puma avance au premier plan, face à un groupe de cerfs. Sur la capture de la course tout-terrain, un raton laveur au masque bien net court sur un tas de gravats, entre les motos et les quads. À Grassrivers, un félin mort est étendu sur la banquette d’un hydroglisseur, à côté d’un alligator : un lynx roux, d’après sa silhouette, sans certitude.",
+   "pratique": "Rien n’est publié sur ces animaux dans le jeu : ni danger, ni chasse, ni rencontre. Le texte officiel de Grassrivers évoque des prédateurs bien plus dangereux que l’alligator, sans les nommer.",
+   "statut": "vu",
+   "sources": ["rs-screens", "insider-faune", "rs-grassrivers"],
+   "zoom": [{ "src": "/img/animaux/raton-laveur-mount-kalaga-01.webp", "w": 480, "h": 270, "media": "mount-kalaga-national-park-01", "alt": "Gros plan sur un raton laveur qui court sur des gravats au passage des motos, recadrage d’une capture officielle", "legende": "Le raton laveur de la course tout-terrain" }]
+  },
+  {
+   "id": "oiseaux",
+   "name": "Oiseaux du littoral et des marais",
+   "kind": "Oiseaux",
+   "accord": "mp",
+   "aliases": ["oiseaux", "pelican", "pelicans", "flamant", "flamants", "goeland", "mouette", "canard", "birds", "flamingo"],
+   "media": ["grassrivers-05", "grassrivers-02", "leonida-keys-03"],
+   "imageAlt": "Vue des marais de Grassrivers vers les tours de Vice City, des oiseaux en vol au-dessus des cabanes et d’un hydravion, capture officielle Rockstar Games",
+   "places": ["grassrivers", "leonida-keys", "vice-city"],
+   "relatedPlaces": ["grassrivers"],
+   "tagline": "Pélicans, flamants et une soixantaine d’espèces annoncées.",
+   "description": "Rockstar annonce plus de 60 sortes d’oiseaux, dont flamants et pélicans ; les captures montrent goélands, canards, échassiers et vols au-dessus des marais.",
+   "facts": [
+    "Michael Kane, de Rockstar, annonce plus de 60 sortes d’oiseaux et cite les flamants et les pélicans parmi les espèces natives.",
+    "Les captures montrent des goélands sur un poste de sauveteurs et sur un toit des Keys, des canards et des échassiers à Grassrivers.",
+    "Aucun flamant vivant n’apparaît encore sur les captures : ceux qu’on y voit sont des bouées gonflables."
+   ],
+   "texte": "Les oiseaux sont partout sur les images officielles, mais rarement de près. Dans le dossier de Game Informer, Michael Kane annonce plus de 60 sortes d’oiseaux et cite les flamants et les pélicans parmi les espèces natives de Leonida. Le site les regroupe sur une seule fiche tant qu’aucune espèce n’est montrée assez nettement pour en mériter une.",
+   "contexte": "À Grassrivers, des canards nagent près des pilotis, des oiseaux blancs se posent sur des pieux, et des échassiers pataugent dans l’eau basse pendant une poursuite : un rose, qui rappelle la spatule rosée, et un gris, comme un héron. Des goélands se posent sur le poste de sauveteurs d’Ocean Beach et sur le toit du Rusty Anchor, dans les Keys. Les flamants roses visibles sur les captures sont des bouées gonflables.",
+   "pratique": "Rien n’est publié sur ce que le jeu fait des oiseaux : ni observation, ni chasse, ni collection. Les noms d’espèces reconnues à la silhouette restent à confirmer.",
+   "statut": "officiel",
+   "sources": ["insider-faune", "rs-screens"]
+  },
+  {
+   "id": "faune-marine",
+   "name": "Faune marine",
+   "kind": "Animaux marins",
+   "accord": "f",
+   "aliases": ["requins", "requin", "dauphins", "dauphin", "tortue marine", "lamantin", "poissons", "baleine", "raie", "shark", "sharks", "dolphin", "dolphins", "manatee", "sea turtle"],
+   "media": ["leonida-keys-04", "trailer-1-tropic-011", "shitzu-squalo-03"],
+   "imageAlt": "Plongeurs au-dessus d’un récif des Leonida Keys, une tortue de mer au premier plan au milieu des poissons, capture officielle Rockstar Games",
+   "places": ["leonida-keys"],
+   "relatedPlaces": ["leonida-keys"],
+   "tagline": "Requins, baleines et lamantins annoncés sous la surface.",
+   "description": "Rockstar annonce requins, baleines, raies, tortues, méduses et lamantins ; les images montrent déjà des dauphins, une tortue de mer et des poissons de récif.",
+   "facts": [
+    "Michael Kane, de Rockstar, annonce plusieurs espèces de requins, des baleines, des raies, des tortues et des méduses, chacune avec ses propres mouvements.",
+    "Les lamantins sont cités parmi les espèces natives de Leonida.",
+    "Des dauphins nagent dans le sillage d’un catamaran dans le Trailer 1, vers 0:11, et près du Shitzu Squalo sur une capture."
+   ],
+   "texte": "La faune marine est la plus détaillée de ce que Rockstar a dit des animaux. Dans le dossier de Game Informer, Michael Kane annonce plusieurs espèces de requins, des baleines, des raies, des tortues et des méduses, avec des mouvements propres à chacune, et cite les lamantins parmi les espèces natives. La plongée sous-marine figure parmi les activités confirmées dans le même dossier.",
+   "contexte": "Dès le Trailer 1, vers 0:11, un groupe de dauphins nage dans le sillage d’un catamaran, vu du ciel. Une capture de l’Édition Ultimate en montre deux tout près du Shitzu Squalo, devant le couple installé à la poupe. Sous l’eau, dans les Keys, une tortue de mer nage au premier plan d’une plongée sur récif, entre des bancs de poissons et ce qui ressemble à une murène.",
+   "pratique": "La pêche est annoncée, mais les prises sont toujours relâchées, d’après Rob Nelson cité par le créateur TGG. Rien n’est publié sur des rencontres dangereuses sous l’eau ni sur des animaux marins à pister.",
+   "statut": "officiel",
+   "sources": ["insider-faune", "rs-videos", "rs-screens", "gamespot-peche-chasse"],
+   "zoom": [{ "src": "/img/animaux/dauphins-trailer-1.webp", "w": 480, "h": 270, "media": "trailer-1-tropic-011", "alt": "Gros plan sur quatre dauphins qui nagent dans une eau turquoise, vus du ciel, recadrage d’un photogramme du Trailer 1", "legende": "Les dauphins du Trailer 1, vers 0:11" }]
+  }
+ ],
+ "hub": {
+  "nav": [
+   { "href": "#fiches", "label": "Les sept fiches" },
+   { "href": "#rockstar", "label": "Rockstar" },
+   { "href": "#communaute", "label": "Communauté" },
+   { "href": "#a-confirmer", "label": "À confirmer" },
+   { "href": "#pour-toi", "label": "Pour toi" },
+   { "href": "#faq", "label": "FAQ" },
+   { "href": "#sources", "label": "Sources" }
+  ],
+  "rockstar": {
+   "lede": "Rockstar a d’abord montré ses animaux sans en parler, puis les a comptés : plus de 170 espèces.",
+   "items": [
+    { "date": "4 décembre 2023", "titre": "Trailer 1", "statut": "vu", "texte": "Un groupe de dauphins nage dans le sillage d’un catamaran, vers 0:11.", "media": "trailer-1-tropic-011", "alt": "Catamaran blanc vu du ciel sur une eau turquoise, des dauphins dans son sillage, photogramme du Trailer 1" },
+    { "date": "6 mai 2025", "titre": "Pages des régions", "statut": "officiel", "texte": "L’alligator devient l’attraction la plus célèbre de Grassrivers, et Mount Kalaga un terrain de chasse et de pêche." },
+    { "date": "6 mai 2025", "titre": "Captures officielles", "statut": "vu", "texte": "Un iguane dans les Keys, des cerfs et un puma au nord, des alligators autour des hydroglisseurs." },
+    { "date": "27 août 2026", "titre": "Extended Look", "statut": "vu", "texte": "Jason caresse un chien, une icône d’ange s’affiche ; un chihuahua déguisé passe dans le montage final." },
+    { "date": "29 septembre 2026", "titre": "Game Informer", "statut": "officiel", "texte": "Michael Kane annonce plus de 170 espèces, dont plus de 60 sortes d’oiseaux et plus de 30 mammifères terrestres." }
+   ],
+   "p": [
+    "Une espèce n’est nommée sur le site que si Rockstar l’a nommée ; sinon, la fiche décrit ce qui se voit."
+   ]
+  },
+  "communaute": {
+   "lede": "Les joueurs scrutent chaque arrière-plan. Ce qu’ils avancent reste cité comme tel.",
+   "pairs": [
+    { "fiction": "Un carnet d’animaux à compléter", "reel": "GTABase évoque une liste d’animaux à cocher, comme dans Red Dead Redemption 2 ; Rockstar parle seulement d’animaux à découvrir et à pister.", "src": "gtabase-animaux" },
+    { "fiction": "Pythons, sangliers, serpents venimeux", "reel": "Des articles de fans les ajoutent aux marais de Grassrivers ; aucune image ni aucun texte de Rockstar ne les montre.", "src": "gtaintel-grassrivers" },
+    { "fiction": "Le grand requin blanc de Brian", "reel": "Une image de sa présentation officielle, pas un animal du jeu ; les requins sont annoncés à part, sans espèce précise.", "src": "rs-vi" },
+    { "fiction": "Macca the Gator", "reel": "La mascotte télé de la ligne Goodtime Gear de l’Édition Ultimate : un personnage, pas un alligator du jeu.", "src": "xbox-ultimate" }
+   ],
+   "p": [
+    "Les espèces reconnues à la silhouette, comme la spatule rosée ou le lynx roux, restent à confirmer sur leur fiche."
+   ]
+  },
+  "confirmer": {
+   "lede": "La liste des espèces est longue ; ce que le jeu en fait reste à découvrir.",
+   "items": [
+    { "q": "Quels animaux se chassent", "etat": "La chasse est annoncée à Mount Kalaga, sans liste de gibier." },
+    { "q": "Un animal de compagnie", "etat": "Caresser un chien, oui ; en adopter un, rien n’est dit." },
+    { "q": "Rares et légendaires", "etat": "Des animaux à pister sont annoncés, sans liste ni récompense." },
+    { "q": "Lamantins, crapauds-buffles, macaques", "etat": "Nommés par Rockstar, jamais montrés." },
+    { "q": "Les prédateurs", "etat": "Le texte de Grassrivers en promet de plus dangereux que l’alligator, sans les nommer." }
+   ],
+   "p": [
+    "Chaque réponse rejoindra la fiche de l’espèce, avec sa source, dès sa publication."
+   ]
+  },
+  "toi": {
+   "lede": "En attendant le jeu, repère les régions les plus sauvages et prépare tes sorties.",
+   "actions": [
+    { "k": "Carte", "t": "Où croiser la faune", "d": "Les marais de Grassrivers, les forêts de Mount Kalaga et les récifs des Keys.", "pins": ["grassrivers", "mount-kalaga", "leonida-keys"], "pinsTitle": "Régions de la faune" },
+    { "k": "Calculateur", "t": "La chasse, ça vaut le coup ?", "d": "Elle rapporte selon Rob Nelson, sans montant : écris ce qu’une sortie te rapporterait et compare-la à tes autres activités.", "href": "calculateurs.html?tool=activities&from=animaux#atelier" },
+    { "k": "Région", "t": "Grassrivers", "d": "Les marais des alligators, des hydroglisseurs et des chasseurs.", "href": "lieux/grassrivers.html" },
+    { "k": "Collectibles", "t": "La pêche et ses défis", "d": "La famille « Faune et pêche » du carnet, et ce qu’on sait de ses collectibles.", "href": "collectibles.html" }
+   ],
+   "p": [
+    "Les fiches d’animaux se compléteront avec le jeu, sans rien inventer d’ici là."
+   ]
+  },
+  "faq": [
+   { "q": "Quels animaux y a-t-il dans GTA 6 ?", "a": "Plus de 170 espèces, selon Michael Kane, de Rockstar, dans le dossier de Game Informer : plus de 60 sortes d’oiseaux, plus de 30 mammifères terrestres, des poissons et des reptiles. Il cite les lamantins, flamants, pélicans et alligators, et des espèces invasives comme l’iguane vert, le crapaud-buffle, le chat haret et le macaque rhésus. Les images officielles montrent déjà alligators, iguanes, cerfs, puma, chiens, dauphins et oiseaux.", "k": ["animaux", "faune", "especes", "quels animaux"], "leo": "animaux" },
+   { "q": "Y a-t-il des alligators dans GTA 6 ?", "a": "Oui. Rockstar en fait l’attraction la plus célèbre de Grassrivers, les marais de Leonida, et les captures officielles en montrent qui nagent autour des hydroglisseurs. Le même texte prévient que des prédateurs bien plus dangereux vivent dans les mangroves, sans les nommer. Rien n’est publié sur une attaque ni sur une chasse à l’alligator.", "k": ["alligator", "alligators", "gator", "gators", "crocodile"], "f": ["y a t il des alligators dans gta 6", "alligator gta 6", "les alligators de grassrivers", "gators gta 6", "ou voir des alligators"] },
+   { "q": "Quels animaux peut-on chasser dans GTA 6 ?", "a": "Rockstar ne l’a pas dit. Mount Kalaga est présenté comme un terrain de chasse, et Rob Nelson, cité par le créateur TGG, explique que la chasse rapporte de l’argent. Les captures montrent des chasseurs armés en forêt et, à Grassrivers, un alligator et un félin rapportés au ponton. Aucune espèce n’est confirmée comme gibier.", "k": ["gibier", "animaux chassables", "chasser des animaux"], "f": ["quels animaux peut on chasser", "quel gibier dans gta 6", "on peut chasser le cerf", "chasser des alligators gta 6", "animaux a chasser gta 6"] },
+   { "q": "Peut-on avoir un chien dans GTA 6 ?", "a": "Rien ne le dit. Dans l’Extended Look, Jason caresse un chien croisé dans un immeuble et une icône d’ange s’affiche ; les comptes rendus parlent aussi de le gronder ou de l’observer. Aucun animal de compagnie à adopter ou à garder à la planque n’est annoncé.", "k": ["chien", "animal de compagnie", "caresser"], "leo": "animaux" },
+   { "q": "Y a-t-il des requins et des animaux marins ?", "a": "Oui, d’après Michael Kane : plusieurs espèces de requins, des baleines, des raies, des tortues et des méduses, chacune avec sa façon de bouger, plus les lamantins. Les images montrent déjà des dauphins dans le Trailer 1 et une tortue de mer au milieu des poissons de récif dans les Keys.", "k": ["requin", "requins", "dauphin", "baleine", "animaux marins", "fonds marins"], "f": ["y a t il des requins dans gta 6", "requins gta 6", "dauphins gta 6", "animaux marins gta 6", "baleine gta 6", "faune marine gta 6"] }
+  ],
+  "sources": ["rs-grassrivers", "rs-kalaga", "rs-vi", "rs-screens", "rs-videos", "rs-extended", "xbox-ultimate", "insider-faune", "beebom-faune", "gamespot-peche-chasse", "thewrap-extended", "engadget-breakdown", "gtabase-animaux", "gtaintel-grassrivers"],
+  "sourcesLede": "Chaque affirmation de cette page porte un statut et une source datée. Les pages nouvelles ont été relevées le 4 octobre 2026 par moteur de recherche, leur ouverture directe étant bloquée depuis l’atelier ce jour-là ; les pages déjà citées par le site gardent leur date."
+ },
+ "sources": {
+  "rs-grassrivers": { "url": "https://www.rockstargames.com/VI/only-in-leonida/grassrivers", "title": "Rockstar Games : page officielle de Grassrivers", "publishedAt": "2025-05-06", "consultedAt": "2026-10-04", "statut": "officiel", "claim": "L’alligator, attraction la plus célèbre des marais, et des prédateurs bien plus dangereux dans les mangroves." },
+  "rs-kalaga": { "url": "https://www.rockstargames.com/VI/only-in-leonida/kalaga", "title": "Rockstar Games : page officielle de Mount Kalaga National Park", "publishedAt": "2025-05-06", "consultedAt": "2026-10-04", "statut": "officiel", "claim": "Un parc présenté comme un terrain de chasse de premier choix, de pêche et de pistes tout-terrain." },
+  "insider-faune": { "url": "https://insider-gaming.com/gta-6-features-over-170-different-wildlife-species/", "title": "Insider Gaming : plus de 170 espèces animales dans GTA 6", "publishedAt": null, "consultedAt": "2026-10-04", "statut": "officiel", "claim": "Reprend le dossier de Game Informer : Michael Kane, de Rockstar, annonce plus de 170 espèces, dont plus de 60 oiseaux et plus de 30 mammifères terrestres, et nomme lamantins, flamants, pélicans, alligators et espèces invasives." },
+  "beebom-faune": { "url": "https://beebom.com/gta-6s-massive-animal-ecosystem-includes-over-170-species/", "title": "Beebom : un écosystème de plus de 170 espèces", "publishedAt": null, "consultedAt": "2026-10-04", "statut": "officiel", "claim": "La même annonce : espèces natives et invasives, requins, baleines, raies, tortues et méduses aux mouvements propres." },
+  "gamespot-peche-chasse": { "url": "https://www.gamespot.com/articles/gta-6-fishing-and-hunting-doesnt-work-like-you-think-it-does/", "title": "GameSpot : la pêche et la chasse ne marchent pas comme on le croit", "publishedAt": null, "consultedAt": "2026-10-04", "statut": "officiel", "claim": "Propos rapportés de Rob Nelson : prises de pêche relâchées, chasse qui rapporte de l’argent." },
+  "thewrap-extended": { "url": "https://www.thewrap.com/culture-lifestyle/culture/grand-theft-auto-6-netflix-extended-look-gta-gameplay/", "title": "TheWrap : tout ce que montre l’Extended Look", "publishedAt": "2026-08-27", "consultedAt": "2026-10-04", "statut": "vu", "claim": "Jason caresse un chien dans l’immeuble de l’ouverture, et une icône d’ange s’affiche." },
+  "gtabase-animaux": { "url": "https://www.gtabase.com/gta-6/animals/", "title": "GTABase : liste des animaux de GTA 6", "publishedAt": null, "consultedAt": "2026-10-04", "statut": "comm", "claim": "Liste de fans ; évoque une liste d’animaux à cocher, sans source officielle." },
+  "gtaintel-grassrivers": { "url": "https://gtaintel.com/news/gta-6-grassrivers-swamp-everglades", "title": "GTA Intel : Grassrivers, les marais façon Everglades", "publishedAt": null, "consultedAt": "2026-10-04", "statut": "comm", "claim": "Cite le texte officiel de la région et y ajoute des espèces que Rockstar n’a pas montrées." }
+ },
+ "leo": {
+  "suggestions": ["Quels animaux dans GTA 6 ?", "Y a-t-il des alligators ?", "Quels animaux peut-on chasser ?", "Peut-on avoir un chien ?", "Y a-t-il des requins ?", "C’est quoi l’iguane vert ?"]
+ }
+}

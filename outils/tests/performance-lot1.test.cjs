@@ -6,7 +6,7 @@ const { load } = require('./runtime-helper.cjs');
 const root = process.env.SITE_ROOT || path.resolve(__dirname, '../..');
 const read = f => fs.readFileSync(path.join(root, f), 'utf8');
 const walk = d => fs.readdirSync(path.join(root, d), { withFileTypes: true }).flatMap(x => x.isDirectory() ? walk(path.join(d, x.name)) : [path.join(d, x.name)]);
-const pages = ['', 'armes', 'vehicules', 'lieux', 'personnages', 'entreprises', 'demeures', 'planques', 'gangs', 'carnets'].flatMap(d => (d ? walk(d) : fs.readdirSync(root)).filter(f => f.endsWith('.html') && !path.basename(f).startsWith('google')));
+const pages = ['', 'armes', 'vehicules', 'lieux', 'personnages', 'entreprises', 'demeures', 'planques', 'gangs', 'carnets', 'missions' /* section missions */, 'activites' /* section activites */, 'radios' /* section radios */, 'animaux' /* section animaux */].flatMap(d => (d ? walk(d) : fs.readdirSync(root)).filter(f => f.endsWith('.html') && !path.basename(f).startsWith('google')));
 
 test('PERF-04 : aucune page ne télécharge l’index de recherche au chargement ; il est déclaré en différé, versionné, avec les lieux', () => {
   let lazy = 0;

@@ -1,0 +1,39 @@
+{
+ "_note": "Section « Missions et leurs solutions » (section missions) : mission FICTIVE qui sert seulement à la page de démonstration du gabarit, missions/modele.html (noindex, hors menu, hors plan du site, hors recherche, hors Léo). Tous les libellés disent qu’ils sont des exemples : aucune donnée de GTA VI ici.",
+ "bandeau": "Page de démonstration : tout ce qui suit est fictif. Elle montre comment s’afficheront les fiches de missions à la sortie du jeu, sans aucune donnée de GTA VI.",
+ "mission": {
+  "id": "modele",
+  "nom": "Nom de la mission",
+  "statutNom": "conf",
+  "type": "histoire",
+  "chapitre": { "numero": null, "titre": "Chapitre publié à la sortie", "statut": "conf", "sources": [] },
+  "ordre": null,
+  "resume": "Résumé de la mission publié à la sortie : qui la confie, où elle se passe et ce qu’il faut faire, en une phrase.",
+  "tagline": "Exemple de fiche, sans donnée du jeu.",
+  "personnages": ["jason", "lucia"],
+  "lieux": ["vice-city"],
+  "carte": [{ "id": "vice-city", "nom": "Lieu publié à la sortie" }],
+  "gangs": [],
+  "deblocage": { "texte": "Condition de déblocage publiée à la sortie.", "statut": "conf", "sources": [] },
+  "objectifs": [
+   { "texte": "Premier objectif, publié à la sortie." },
+   { "texte": "Deuxième objectif, publié à la sortie." },
+   { "texte": "Objectif facultatif, publié à la sortie.", "facultatif": true }
+  ],
+  "medailles": [{ "texte": "Médaille ou défi facultatif, s’il y en a.", "statut": "conf", "sources": [] }],
+  "recompenses": { "argent": { "value": null, "status": "unknown", "source": null, "verifiedAt": null, "unit": "$" }, "vehicules": [], "armes": [], "proprietes": ["Propriété débloquée, publiée à la sortie"], "deblocages": ["Déblocage publié à la sortie"], "statut": "conf", "sources": [] },
+  "duree": { "value": null, "status": "unknown", "source": null, "verifiedAt": null, "unit": "min" },
+  "joueurs": 1,
+  "manquable": { "value": null, "statut": "conf", "sources": [] },
+  "solution": [
+   { "titre": "Étape 1", "texte": "Première étape de la solution, publiée à la sortie." },
+   { "titre": "Étape 2", "texte": "Deuxième étape de la solution, publiée à la sortie." },
+   { "titre": "Étape 3", "texte": "Dernière étape de la solution, publiée à la sortie." }
+  ],
+  "astuces": ["Astuce publiée à la sortie.", "Deuxième astuce publiée à la sortie."],
+  "media": [],
+  "calc": { "tool": "activities" },
+  "sources": [],
+  "statut": "conf"
+ }
+}

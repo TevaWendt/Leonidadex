@@ -1,0 +1,128 @@
+{
+ "_note": "Section radios : questions de test de Léo en français pour la section « Radios et musique » (radios, musique des trailers et de l’Extended Look, album officiel, stations des fuites). Rejoué par node outils/tests/leo-eval.cjs --questions=outils/tests/leo-questions-section-radios-fr.json.",
+ "schemaVersion": 1,
+ "questions": [
+  {
+   "q": "quelles radios dans gta 6",
+   "expect": {
+    "topic": "radio"
+   },
+   "tags": [
+    "section-radios"
+   ]
+  },
+  {
+   "q": "liste des stations de radio gta 6",
+   "expect": {
+    "topic": "radio"
+   },
+   "tags": [
+    "section-radios"
+   ]
+  },
+  {
+   "q": "ya des radios dans gta6",
+   "expect": {
+    "topic": "radio"
+   },
+   "tags": [
+    "section-radios"
+   ]
+  },
+  {
+   "q": "qui chante dans le trailer 1",
+   "expect": {
+    "topic": "musique-trailer"
+   },
+   "tags": [
+    "section-radios"
+   ]
+  },
+  {
+   "q": "musique du trailer 2",
+   "expect": {
+    "topic": "musique-trailer"
+   },
+   "tags": [
+    "section-radios"
+   ]
+  },
+  {
+   "q": "chanson du trailer 2 gta 6",
+   "expect": {
+    "topic": "musique-trailer"
+   },
+   "tags": [
+    "section-radios"
+   ]
+  },
+  {
+   "q": "quelles chansons dans l extended look",
+   "expect": {
+    "topic": "radios-faq-1"
+   },
+   "tags": [
+    "section-radios"
+   ]
+  },
+  {
+   "q": "musique de l extended look",
+   "expect": {
+    "topic": "radios-faq-1"
+   },
+   "tags": [
+    "section-radios"
+   ]
+  },
+  {
+   "q": "c est quoi gta vi the album",
+   "expect": {
+    "any": [
+     {
+      "entity": "album:gta-vi-the-album"
+     },
+     {
+      "topic": "radios-faq-2"
+     }
+    ]
+   },
+   "tags": [
+    "section-radios"
+   ]
+  },
+  {
+   "q": "album officiel gta 6",
+   "expect": {
+    "any": [
+     {
+      "entity": "album:gta-vi-the-album"
+     },
+     {
+      "topic": "radios-faq-2"
+     }
+    ]
+   },
+   "tags": [
+    "section-radios"
+   ]
+  },
+  {
+   "q": "les noms de stations qui circulent sont confirmes ?",
+   "expect": {
+    "topic": "radios-faq-3"
+   },
+   "tags": [
+    "section-radios"
+   ]
+  },
+  {
+   "q": "les radios des fuites sont vraies ?",
+   "expect": {
+    "topic": "radios-faq-3"
+   },
+   "tags": [
+    "section-radios"
+   ]
+  }
+ ]
+}

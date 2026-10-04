@@ -7,7 +7,8 @@ const fs = require('node:fs'), path = require('node:path');
 const acquisition = JSON.parse(fs.readFileSync(path.join(__dirname, 'acquisitions.json'), 'utf8')).categories;
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
-const world = [['lieux.html', 'Lieux'], ['personnages.html', 'Personnages'], ['gangs.html', 'Gangs et factions'] /* v7.65 */, ['demeures.html', 'Demeures'], ['planques.html', 'Planques'], ['entreprises.html', 'Entreprises'], ['collectibles.html', 'Collectibles']];
+const world = [['lieux.html', 'Lieux'], ['personnages.html', 'Personnages'], ['gangs.html', 'Gangs et factions'] /* v7.65 */, ['demeures.html', 'Demeures'], ['planques.html', 'Planques'], ['entreprises.html', 'Entreprises'], ['animaux.html', 'Animaux'] /* section animaux */, ['collectibles.html', 'Collectibles']];
+const play = [['missions.html', 'Missions'] /* section missions */, ['activites.html', 'Activités annexes'] /* section activites */, ['radios.html', 'Radios et musique'] /* section radios */];
 // Menu « S’équiper » : seules les catégories marquées menu:true dans acquisitions.json (pas de doublon avec Véhicules,
 // Planques ou Armurerie, pas de catégorie vide). Le hub « Tout ce qui s’achète » reste dans la barre (Achats) et le pied de page.
 const shopping = acquisition.filter(c => c.menu && !c.alias).sort((a, b) => (a.menuOrder || 99) - (b.menuOrder || 99)).map(c => [c.route.slice(1), c.label]);
@@ -27,7 +28,7 @@ function currentOf(file) {
 }
 function nav(file, prefix) {
   const current = currentOf(file);
-  const groups = [['Le monde', world], ['S’équiper', shopping], ['Le site', info]];
+  const groups = [['Le monde', world], ['Jouer', play] /* sections missions, activites, radios */, ['S’équiper', shopping], ['Le site', info]];
   return '<ul>' + top.map(x => '<li>' + link(x, prefix, current) + '</li>').join('')
     + '<li><details class="nav-more"><summary>Explorer</summary><div class="nav-more-panel">'
     + groups.map(([label, list]) => '<div><strong>' + esc(label) + '</strong>' + list.map(x => link(x, prefix, current)).join('') + '</div>').join('')
@@ -37,6 +38,7 @@ function footer(existing, prefix) {
   const art = existing.match(/<svg class="foot-art"[\s\S]*?<\/svg>/)?.[0] || '';
   const groups = [
     ['Explorer', [['carte.html', 'Carte'], ['vehicules.html', 'Véhicules'], ['armes.html', 'Armurerie'], ...world]],
+    ['Jouer', play] /* sections missions, activites, radios */,
     ['S’équiper', footShopping],
     ['Outils et aide', [['calculateurs.html', 'Calculateur'], ['tuto.html', 'Tuto'], ['progression.html', 'Progression'], ...info]]
   ];
@@ -53,7 +55,7 @@ function footer(existing, prefix) {
 const chipList = [['achats.html', 'Tout ce qui s’achète'], ['vehicules.html', 'Véhicules'], ['armes.html', 'Armurerie'],
   ...acquisition.filter(c => !c.alias).map(c => [c.route.slice(1), c.label]),
   ['progression.html#carnets', 'Mes carnets'], ['tuto.html#sources', 'Comprendre les statuts']];
-const sectionPages = new Set([...world.map(x => x[0]), ...acquisition.map(c => c.route.slice(1).split('#')[0]), 'vehicules.html', 'armes.html', 'achats.html', 'progression.html']);
+const sectionPages = new Set([...world.map(x => x[0]), ...play.map(x => x[0]) /* sections missions, activites, radios */, ...acquisition.map(c => c.route.slice(1).split('#')[0]), 'vehicules.html', 'armes.html', 'achats.html', 'progression.html']);
 function chips(file) {
   if (!sectionPages.has(file)) return '';
   const alias = acquisition.find(c => c.alias && c.route.slice(1) === file);
@@ -90,7 +92,10 @@ const ENTRY = {
   'style.html': { q: 'Quel budget pour tes tenues ?', d: 'Écris ce que tu veux acheter et ce que tu gagnes : tu vois ce qui rentre dans ton budget.', tool: 'budget', type: 'style', cta: 'Faire mon budget' },
   'personnalisations.html': { q: 'Personnaliser ton véhicule, ça vaut le coup ?', d: 'Écris ce que ça coûterait et ce que ça t’apporterait : le calculateur te répond en une phrase.', tool: 'roi', type: 'customization', cta: 'Est-ce que ça vaut le coup ?' },
   'nourriture.html': { q: 'Quel budget pour manger et récupérer ?', d: 'Écris ce que tu dépenses par partie : tu vois ce que ça pèse sur ton objectif.', tool: 'budget', type: 'consumable', cta: 'Faire mon budget' },
-  'logements.html': { q: 'Combien de temps pour t’offrir un logement ?', d: 'Aucun prix n’est publié : écris celui que tu imagines, ton argent et ce que tu gagnes par partie.', tool: 'purchase', type: 'housing', cta: 'Faire le calcul' }
+  'logements.html': { q: 'Combien de temps pour t’offrir un logement ?', d: 'Aucun prix n’est publié : écris celui que tu imagines, ton argent et ce que tu gagnes par partie.', tool: 'purchase', type: 'housing', cta: 'Faire le calcul' },
+  'missions.html': { q: 'Une mission, ça rapporte combien à l’heure ?', d: 'Les gains des missions arrivent avec le jeu. Écris ce qu’une mission rapporterait, sa durée et ta part : le calculateur la compare à tes autres activités, à l’heure de jeu.', tool: 'activities', cta: 'Comparer mes activités' }, /* section missions */
+  'activites.html': { q: 'Une activité annexe, ça rapporte plus qu’une mission ?', d: 'Les gains arrivent avec le jeu. Écris ce qu’un braquage, une course ou une revente rapporterait, sa durée et ta part : le calculateur compare tes activités à l’heure de jeu.', tool: 'activities', cta: 'Comparer mes activités' }, /* section activites */
+  'animaux.html': { q: 'La chasse, ça rapporte plus qu’une mission ?', d: 'Rockstar dit que la chasse rapporte, sans montant. Écris ce qu’une sortie te rapporterait et sa durée : le calculateur la compare à tes autres activités, à l’heure de jeu.', tool: 'activities', cta: 'Comparer mes activités' } /* section animaux */
 };
 const ENTRY_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="5" y="3" width="14" height="18" rx="2"/><rect x="8" y="6" width="8" height="3" rx=".6"/><path d="M8.5 13h1M12 13h1M15.5 13h1M8.5 17h1M12 17h1"/><rect x="15" y="16" width="2" height="2" rx=".5" fill="currentColor" stroke="none"/></svg>';
 function entryPages() { return Object.keys(ENTRY); }
@@ -124,4 +129,4 @@ function placeEntry(html, file, prefix = '') {
   if (/<section class="lk-outro"/.test(html)) return html.replace(/<section class="lk-outro"/, block + '\n<section class="lk-outro"');
   return html.replace(/<\/main>/, block + '\n</main>');
 }
-module.exports = { nav, footer, top, world, shopping, info, chips, placeChips, chipList, sectionPages, ENTRY, entry, placeEntry, entryPages };
+module.exports = { nav, footer, top, world, play /* sections missions, activites, radios */, shopping, info, chips, placeChips, chipList, sectionPages, ENTRY, entry, placeEntry, entryPages };

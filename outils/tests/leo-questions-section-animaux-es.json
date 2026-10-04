@@ -1,0 +1,58 @@
+{
+ "_note": "Section animaux : questions de test de Léo en espagnol pour la section « Animaux » (faune annoncée, alligators, chasse, chiens, animaux marins, fiches). Rejoué par node outils/tests/leo-eval.cjs --lang es --questions=outils/tests/leo-questions-section-animaux-es.json.",
+ "schemaVersion": 1,
+ "questions": [
+  {
+   "q": "hay animales en gta 6",
+   "expect": {
+    "topic": "animaux"
+   },
+   "tags": [
+    "section-animaux"
+   ]
+  },
+  {
+   "q": "hay caimanes en gta 6",
+   "expect": {
+    "topic": "animaux-faq-1"
+   },
+   "tags": [
+    "section-animaux"
+   ]
+  },
+  {
+   "q": "qué animales se pueden cazar",
+   "expect": {
+    "topic": "animaux-faq-2"
+   },
+   "tags": [
+    "section-animaux"
+   ]
+  },
+  {
+   "q": "hay tiburones en gta 6",
+   "expect": {
+    "any": [
+     {
+      "topic": "animaux-faq-3"
+     },
+     {
+      "entity": "animal:faune-marine"
+     }
+    ]
+   },
+   "tags": [
+    "section-animaux"
+   ]
+  },
+  {
+   "q": "se puede tener un perro en gta 6",
+   "expect": {
+    "topic": "animaux"
+   },
+   "tags": [
+    "section-animaux"
+   ]
+  }
+ ]
+}

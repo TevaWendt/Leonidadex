@@ -1,0 +1,95 @@
+{
+ "_note": "Section activites : questions de test de Léo en italien pour la section « Activités annexes » (liste des activités, pêche, chasse, salle de sport, gains, braquages, vol de voitures, fiches). Rejoué par node outils/tests/leo-eval.cjs --lang it --questions=outils/tests/leo-questions-section-activites-it.json.",
+ "schemaVersion": 1,
+ "questions": [
+  {
+   "q": "quali attività secondarie ci sono in gta 6",
+   "expect": {
+    "topic": "activites-faq-1"
+   },
+   "tags": [
+    "section-activites"
+   ]
+  },
+  {
+   "q": "minigiochi gta 6",
+   "expect": {
+    "topic": "activites-faq-1"
+   },
+   "tags": [
+    "section-activites"
+   ]
+  },
+  {
+   "q": "si può pescare in gta 6",
+   "expect": {
+    "topic": "activites-faq-2"
+   },
+   "tags": [
+    "section-activites"
+   ]
+  },
+  {
+   "q": "si può cacciare in gta 6",
+   "expect": {
+    "topic": "activites-faq-3"
+   },
+   "tags": [
+    "section-activites"
+   ]
+  },
+  {
+   "q": "le attività secondarie fanno guadagnare",
+   "expect": {
+    "topic": "activites-faq-4"
+   },
+   "tags": [
+    "section-activites"
+   ]
+  },
+  {
+   "q": "si può andare in palestra",
+   "expect": {
+    "any": [
+     {
+      "topic": "poids"
+     },
+     {
+      "entity": "activite:salle-de-sport"
+     }
+    ]
+   },
+   "tags": [
+    "section-activites"
+   ]
+  },
+  {
+   "q": "si possono rapinare i negozi",
+   "expect": {
+    "any": [
+     {
+      "topic": "braquer-magasins"
+     },
+     {
+      "topic": "braquage"
+     },
+     {
+      "topic": "hub-entreprises-3"
+     }
+    ]
+   },
+   "tags": [
+    "section-activites"
+   ]
+  },
+  {
+   "q": "come rubare un auto in gta 6",
+   "expect": {
+    "topic": "vol-voiture"
+   },
+   "tags": [
+    "section-activites"
+   ]
+  }
+ ]
+}

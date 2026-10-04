@@ -773,7 +773,11 @@
     "pointer sisters gta6",
     "hot together",
     "la chanson de la ba gta 6",
-    "musique trailer 1"
+    "musique trailer 1",
+    "qui chante dans le trailer 1",
+    "chanson du trailer 2",
+    "musique du trailer 2",
+    "qui chante dans le trailer 2"
    ],
    "k": [
     "musique du trailer",
@@ -782,16 +786,22 @@
     "tom petty",
     "pointer sisters",
     "hot together",
-    "love is a long road"
+    "love is a long road",
+    "qui chante"
    ],
-   "text": "Trailer 1 : « Love Is a Long Road » de Tom Petty. Trailer 2 : « Hot Together » des Pointer Sisters.",
-   "status": "Officiel Rockstar",
+   "text": "Trailer 1 : « Love Is a Long Road » de Tom Petty. Trailer 2 : « Hot Together » des Pointer Sisters, avec de courtes bribes d’autoradio (Zenglen, Wang Chung, Tammy Wynette). L’Extended Look fait entendre quatorze autres morceaux, de Phil Collins à Depeche Mode. La liste complète, avec les moments et les sources, est dans le poste de la page Radios et musique.",
+   "status": "Officiel Rockstar (trailers) · relevés de presse (Extended Look)",
    "links": [
+    {
+     "label": "Le poste de Leonida",
+     "url": "/radios.html#poste"
+    },
     {
      "label": "Médias et crédits",
      "url": "/medias.html"
     }
-   ]
+   ],
+   "checkedAt": "2026-10-04"
   },
   {
    "id": "developpeur",
@@ -1048,6 +1058,10 @@
     {
      "label": "Les personnages",
      "url": "/personnages.html"
+    },
+    {
+     "label": "L’histoire et les missions",
+     "url": "/missions.html#histoire"
     }
    ],
    "source": "https://www.rockstargames.com/VI"
@@ -1388,7 +1402,9 @@
     "crocodile gta 6",
     "ya des animaux",
     "les animaux du jeu",
-    "gta6 animaux"
+    "gta6 animaux",
+    "quels animaux dans gta 6",
+    "quels animaux y a t il dans gta 6"
    ],
    "k": [
     "animaux",
@@ -1398,14 +1414,19 @@
     "faune",
     "animal"
    ],
-   "text": "Oui : les alligators de Grassrivers sont l’attraction la plus célèbre de la région, et l’Extended Look montre Jason caresser un chien. Le détail de la faune n’est pas publié.",
-   "status": "Vu dans les présentations officielles",
+   "text": "Oui, plus de 170 espèces, selon Michael Kane, de Rockstar, dans le dossier de Game Informer (29 septembre 2026) : alligators, lamantins, flamants, pélicans, et des espèces invasives comme l’iguane vert. Les images officielles montrent déjà alligators, iguanes, cerfs, puma, dauphins et chiens ; dans l’Extended Look, Jason caresse un chien. Aucun animal de compagnie à adopter n’est annoncé.",
+   "status": "Dossier Game Informer avec Rockstar, et images officielles",
    "links": [
+    {
+     "label": "Les animaux de GTA VI",
+     "url": "/animaux.html"
+    },
     {
      "label": "Grassrivers",
      "url": "/lieux/grassrivers.html"
     }
    ],
+   "checkedAt": "2026-10-04",
    "source": "https://www.rockstargames.com/VI/only-in-leonida/grassrivers"
   },
   {
@@ -1509,14 +1530,19 @@
     "cle numerique",
     "ouvrir une voiture"
    ],
-   "text": "L’Extended Look montre plusieurs façons de voler un véhicule : casser une vitre, utiliser un slim jim sur certains modèles ou cloner une clé numérique.",
-   "status": "Vu dans l’Extended Look",
+   "text": "L’Extended Look montre trois façons de voler une voiture : briser la vitre, glisser un slim jim sur les modèles anciens ou cloner la clé des modèles récents. Rob Nelson précise que certaines voitures restent fermées tant que tu n’as pas les bons outils, et que les voitures de luxe ont alarme et traceur : un receleur peut s’en charger. Le montant d’une revente n’est pas publié.",
+   "status": "Vu dans l’Extended Look, propos de Rob Nelson",
    "links": [
+    {
+     "label": "La fiche du vol de voitures",
+     "url": "/activites/vol-de-voitures.html"
+    },
     {
      "label": "Les véhicules",
      "url": "/vehicules.html"
     }
    ],
+   "checkedAt": "2026-10-04",
    "min": 1
   },
   {
@@ -1542,14 +1568,19 @@
     "magasin",
     "restaurant"
    ],
-   "text": "Jason et Lucia peuvent braquer des restaurants, des magasins et d’autres établissements, avec des masques. Les gros casses de l’histoire ne sont pas détaillés.",
-   "status": "Vu dans l’Extended Look",
+   "text": "Jason et Lucia peuvent braquer des restaurants, des magasins et d’autres établissements, avec des masques. Rob Nelson cite aussi les bijouteries et les petites banques, seul ou à deux, et le Trailer 2 montre un braquage de banque masqué. Les gros casses de l’histoire ne sont pas détaillés.",
+   "status": "Vu dans l’Extended Look · propos de Rob Nelson (Famitsu)",
    "links": [
     {
      "label": "La FAQ des entreprises",
      "url": "/entreprises.html#faq"
+    },
+    {
+     "label": "Les braquages montrés (Missions)",
+     "url": "/missions.html#sequences"
     }
-   ]
+   ],
+   "checkedAt": "2026-10-04"
   },
   {
    "id": "poids",
@@ -1575,14 +1606,19 @@
     "manger",
     "forme physique"
    ],
-   "text": "D’après les comptes rendus de l’Extended Look, le personnage prend ou perd du poids selon ce qu’il mange et son activité physique, et sa condition physique joue sur ses capacités, un peu comme dans San Andreas.",
-   "status": "Comptes rendus de l’Extended Look",
+   "text": "Oui. Rob Nelson, de Rockstar North, l’a confirmé : ce que Jason et Lucia mangent joue sur leur poids, et le sport les muscle visiblement. Il y a des salles où s’entraîner pour gagner en muscle et en force ; l’Extended Look montre Lucia au développé couché. Aucun chiffre n’est publié.",
+   "status": "Propos de Rob Nelson (Rockstar North)",
    "links": [
+    {
+     "label": "La fiche de la salle de sport",
+     "url": "/activites/salle-de-sport.html"
+    },
     {
      "label": "Les consommables",
      "url": "/nourriture.html"
     }
-   ]
+   ],
+   "checkedAt": "2026-10-04"
   },
   {
    "id": "consommables",
@@ -1681,15 +1717,21 @@
     "v rock",
     "album"
    ],
-   "text": "D’après les relevés de l’Extended Look, plusieurs stations sont visibles (V-Rock, Emotion 98.3, Stockyard FM, Symphony FM, Kaleidoscope FM, WorldWide FM, CircoLoco Records Radio). Un album « GTA VI : The Album » est annoncé. La liste complète n’est pas officielle.",
-   "status": "Relevé communautaire, à vérifier",
+   "text": "Rockstar n’a encore annoncé aucune station de radio. Le 17 septembre 2026, en annonçant « Grand Theft Auto VI: The Album » (34 titres originaux, le 19 novembre 2026), il a promis « la prochaine évolution de la radio en jeu » et une partition dynamique. Le logo de V-Rock, la station rock de GTA Vice City, serait visible sur un t-shirt de Jason selon des joueurs, sans que la station soit confirmée. Les noms de stations qui circulent viennent de vidéos volées en août 2026 : le site ne les reprend pas.",
+   "status": "Officiel Rockstar (album) · aucune station annoncée",
    "links": [
+    {
+     "label": "Radios et musique",
+     "url": "/radios.html"
+    },
     {
      "label": "Médias et crédits",
      "url": "/medias.html"
     }
    ],
-   "min": 1
+   "min": 1,
+   "checkedAt": "2026-10-04",
+   "source": "https://www.rockstargames.com/newswire/article/7599a881942544/announcing-grand-theft-auto-vi-the-album-coming-november-19"
   },
   {
    "id": "argent",
@@ -2636,14 +2678,19 @@
     "combien d heures",
     "longueur"
    ],
-   "text": "GTA VI a un mode histoire avec Jason et Lucia. Rockstar n’a pas donné de durée de vie. Le calculateur du site a un outil « Mon temps de jeu » pour organiser tes sessions.",
+   "text": "GTA VI a un mode histoire avec Jason et Lucia. Rockstar n’a pas donné de durée de vie ; seul repère, Rob Nelson dit avoir fini sa partie en environ 80 heures, histoire et une partie des objectifs facultatifs compris. Le calculateur du site a un outil « Mon temps de jeu » pour organiser tes sessions.",
    "status": "Officiel (histoire) · durée non publiée",
    "links": [
     {
      "label": "Mon temps de jeu",
      "url": "/calculateurs.html?tool=session#atelier"
+    },
+    {
+     "label": "L’histoire et les missions",
+     "url": "/missions.html#histoire"
     }
-   ]
+   ],
+   "checkedAt": "2026-10-04"
   },
   {
    "id": "site-plan",
@@ -3997,15 +4044,19 @@
     "voler un magasin gta 6",
     "braquer seul ou avec lucia"
    ],
-   "text": "Oui. D’après la FAQ des entreprises, l’Extended Look (27 août 2026) montre des braquages de stations-service et de boutiques, seul ou avec Lucia. Le détail des cibles possibles n’est pas publié.",
-   "status": "Vu dans l’Extended Look",
+   "text": "Oui. Le Trailer 1 montre déjà Jason et Lucia dans un magasin d’alcool, et l’Extended Look (27 août 2026) enchaîne les braquages de stations-service. Rob Nelson précise à Famitsu qu’on braque un commerce seul ou à deux, que bijouteries et petites banques sont mieux gardées, et que détruire les caméras évite d’être vu. Aucun montant de butin n’est publié.",
+   "status": "Propos de Rob Nelson (Famitsu) et vidéos officielles",
    "links": [
+    {
+     "label": "La fiche des braquages",
+     "url": "/activites/braquages-commerces.html"
+    },
     {
      "label": "La FAQ des entreprises",
      "url": "/entreprises.html#faq"
     }
    ],
-   "checkedAt": "2026-09-28",
+   "checkedAt": "2026-10-04",
    "source": "https://www.rockstargames.com/VI/an-extended-look"
   },
   {

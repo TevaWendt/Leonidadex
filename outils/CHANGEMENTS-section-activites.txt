@@ -1,0 +1,56 @@
+LEONIDAKIT — section « Activités annexes » (section activites), 4 octobre 2026
+
+Base : zip main v7.65 (régénéré tel quel au départ : commit « base régénérée »). Demande : construire la section
+« Activités annexes » (identifiant activites), prête à publier et facile à assembler avec les autres sections construites en
+même temps. Aucun numéro de version. Preuves : outils/PREUVES-section-activites.md.
+
+1. LA SECTION
+- activites.html « Les activités annexes de GTA VI » (générée par outils/gen-activites.cjs, textes dans
+  outils/activites/hub.json) :
+  · « Les sept activités qui ont leur fiche » : cartes vers les fiches, avec leur statut ;
+  · « Tout ce que Rockstar a montré ou annoncé » : 29 activités en trois familles (crime et argent ; nature, eau et sport ;
+    ville, nuit et style), chacune avec statut, sources et, quand une page du site la couvre déjà, un lien vers elle ;
+    filtre (Toutes, Annoncées par Rockstar, Vues dans les médias, Avec une fiche) et compteur, cachés sans JavaScript ;
+  · « Ce que ça rapporte » : tableau activité par activité ; aucun montant publié, une phrase calculée {donnees:activites} ;
+  · zone éditoriale des hubs : Rockstar (sept relevés), communauté (six rapprochements sourcés), à confirmer (sept
+    questions), pour toi (calculateur, carte avec six repères déjà dans ses données), FAQ de six questions, 31 sources
+    datées du 4 octobre 2026.
+- activites/<id>.html : sept fiches (braquages-commerces, vol-de-voitures, peche, chasse, activites-nautiques,
+  salle-de-sport, courses), données dans outils/activites/activites.json (schéma documenté) : « Ce que Rockstar a dit et
+  montré » (phrase par phrase, statut et sources), « Où la pratiquer », « Ce qu’il faut », « Ce que ça rapporte » (cases
+  « Gain » et « Durée » au schéma des valeurs publiées, vides tant que rien n’est publié), captures officielles, « Ce qui
+  reste à confirmer », « En lien », sources, encart du calculateur avec sa question.
+- activites.css et activites.js (pages de la section seulement) : apparitions du site, survol des cartes et des puces,
+  entrée douce des lignes quand on change de filtre, en transform et opacity seulement, tout coupé avec
+  prefers-reduced-motion: reduce ; activites.js (le filtre) n’écrit aucun mot, ne garde rien sur l’appareil et n’envoie
+  rien.
+
+2. INTÉGRATION
+- Menu « Explorer » : nouveau groupe « Jouer » (Activités annexes) ; pied de page : colonne « Jouer » ; style.css : quatre
+  groupes et quatre colonnes (bloc commun aux sections « Jouer »).
+- Calculateur : encart du hub (site-shell.cjs, ENTRY : « Une activité annexe, ça rapporte plus qu’une mission ? », Mes
+  activités) et un encart par fiche. gen-activites.cjs prépare, par activitesCalculateur(), les activités qui auraient un
+  gain et une durée publiés ; calculateurs-activites.js n’est pas touché.
+- Léo : morceau leo/activites.json (quatre questions de la section), sept fiches (morceau « monde » ; « où… ? » ouvre la
+  carte sur le repère de la fiche quand elle en a un : Uncle Jack’s Liquor, Ajax Gym, Gellhorn International Raceway),
+  sujets « braquer-magasins », « vol-voiture » et « poids » mis à jour (propos de Rob Nelson, statut, lien vers la
+  fiche) ; suggestions sur les pages de la section.
+- Recherche du site (outils/activites-index.json), plan du site (activites.html et les sept fiches).
+
+3. LANGUES
+- outils/langues/<code>/section-activites.json : ≈ 565 textes par langue (en, es, it, de), noms propres gardés tels quels ;
+  descriptions trop longues raccourcies pour la balise (« @meta:: »). 0 texte sans traduction dans chaque langue.
+
+4. TESTS
+- outils/tests/section-activites.test.cjs : données (et leurs refus), hub, fiches,
+  calculateur (format vérifié sur une activité fictive, jamais publiée ; fichier jamais écrit), sécurité et droits (aucun
+  script en ligne, rien de chargé ailleurs, aucun lecteur), menu, recherche, plan du site, Léo, cinq langues, mouvement
+  (seuls transform et opacity bougent ; tout s’arrête avec prefers-reduced-motion), activites.js (filtre au clavier et à
+  la souris, compteur, familles vides cachées, rien d’enregistré).
+- outils/tests/leo-questions-section-activites-<code>.json : questions de Léo de la section dans les cinq langues.
+- Listes de dossiers des tests communs : activites/ ajouté.
+
+5. LIMITES
+- Aucun gain ni aucune durée d’activité ne sont publiés : les cases restent vides, le tableau le dit.
+- Les noms de salles de sport et de circuits viennent de la carte des joueurs (gtadb.org) : cités comme tels.
+- Sources relevées par moteur de recherche le 4 octobre 2026 : l’ouverture directe des pages était bloquée depuis l’atelier.

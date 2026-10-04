@@ -1,0 +1,51 @@
+LEONIDAKIT — section « Animaux » (section animaux), 4 octobre 2026
+
+Base : zip main v7.65 (régénéré tel quel au départ : commit « base régénérée »). Demande : construire la section « Animaux »
+(identifiant animaux), la faune de Leonida d’après les images officielles, comme une section du monde, prête à publier et
+facile à assembler avec les autres sections construites en même temps. Aucun numéro de version. Preuves :
+outils/PREUVES-section-animaux.md.
+
+1. LA SECTION
+- animaux.html « Les animaux de GTA VI », construite par la mécanique des hubs du monde (outils/lore-gen.js pour la grille
+  et les fiches, outils/hubs-monde.cjs pour la zone éditoriale), données dans un fichier nouveau,
+  outils/editorial-animaux.json : grille de sept fiches, zone éditoriale (Rockstar : cinq dates, du Trailer 1 aux plus de
+  170 espèces ; communauté : quatre identifications citées comme telles ; à confirmer : cinq questions ; pour toi : carte
+  avec trois régions, calculateur, Grassrivers, collectibles), FAQ de cinq questions, 14 sources datées.
+- animaux/<id>.html : sept fiches au gabarit des fiches du monde (alligator, iguane-vert, chiens, cerfs,
+  mammiferes-sauvages, oiseaux, faune-marine) : l’essentiel, « Ce que montrent les images », « Ce que le jeu en fait »,
+  visuels officiels, « En lien » (régions et lieux), plus deux blocs ajoutés par outils/gen-animaux.cjs : le gros plan
+  (recadrage d’un visuel officiel, crédit Rockstar Games et source) et « Statut et sources ».
+- img/animaux/ : quatre recadrages webp de 480 × 270 (alligators de Grassrivers, chien de Vice City, raton laveur de Mount
+  Kalaga, dauphins du Trailer 1).
+- animaux.css (pages de la section seulement) : gros plan et bloc « Statut et sources », au style des fiches du monde ;
+  aucun script nouveau.
+
+2. INTÉGRATION
+- Menu « Explorer » → « Le monde » : Animaux, après Entreprises ; pied de page : colonne « Explorer ».
+- « En lien » : groupe « Animaux » sur les fiches des régions où on les voit (RELATED de lore-gen.js, comme les gangs en
+  v7.65).
+- Calculateur : encart de animaux.html (site-shell.cjs, ENTRY : « La chasse, ça rapporte plus qu’une mission ? », Mes
+  activités), la chasse rapportant de l’argent selon Rob Nelson (sans montant).
+- Léo : sept fiches (morceau « monde », noms et alias en français et en anglais), morceau leo/animaux.json (questions de la
+  FAQ qui n’ont pas déjà leur sujet), sujet « animaux » réécrit (plus de 170 espèces, Michael Kane, lien vers la page) ;
+  suggestions sur les pages de la section.
+- Recherche du site (index des fiches du monde), plan du site (animaux.html et les sept fiches).
+
+3. LANGUES
+- outils/langues/<code>/section-animaux.json : textes de la section en anglais, espagnol, italien et allemand, noms
+  d’espèces exacts dans chaque langue ; descriptions trop longues raccourcies pour la balise (« @meta:: »). 0 texte sans
+  traduction dans chaque langue.
+
+4. TESTS
+- outils/tests/section-animaux.test.cjs : données (statuts, sources, visuels, recadrages, et leurs refus), hub et zone
+  éditoriale, fiches, gros plans, « En lien » des régions, calculateur, sécurité et droits, menu, recherche, plan du site,
+  Léo, cinq langues.
+- outils/tests/leo-questions-section-animaux-<code>.json : questions de Léo de la section dans les cinq langues.
+- Tests communs : dossier animaux/ ajouté aux listes de a-propos-v744, coverage, donnees-publiees, performance-lot1,
+  regression ; hubs-monde-v741 contrôle la zone de animaux.html comme celle des autres hubs.
+
+5. LIMITES
+- Aucune liste officielle d’espèces : les fiches suivent les images et ce que Rockstar a écrit ; le reste attend le jeu.
+- La chasse est annoncée sans liste de gibier ni montant ; aucune fiche ne dit qu’un animal se chasse sans source.
+- Sources nouvelles relevées par moteur de recherche le 4 octobre 2026 : l’ouverture directe des pages était bloquée depuis
+  l’atelier.

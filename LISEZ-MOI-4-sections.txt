@@ -1,0 +1,67 @@
+LEONIDAKIT — QUATRE SECTIONS NOUVELLES RÉUNIES — archive « tout-en-un » (4 octobre 2026)
+
+CE QUE CETTE ARCHIVE AJOUTE
+Les quatre sections construites le 4 octobre 2026, déjà assemblées et régénérées ensemble, dans les cinq langues :
+- « Missions » (missions.html) : l’histoire de Jason et Lucia selon Rockstar, huit séquences des vidéos officielles, les
+  deux contenus nommés de l’Édition Ultimate, le guide prêt à recevoir les missions dès la sortie, un gabarit de fiche.
+- « Activités annexes » (activites.html et sept fiches) : braquer un commerce, voler une voiture, la pêche, la chasse, les
+  activités nautiques, la salle de sport, les courses ; la liste filtrable des 29 activités montrées ou annoncées.
+- « Radios et musique » (radios.html et la fiche de l’album) : le poste de Leonida, 25 morceaux des vidéos officielles,
+  l’album officiel ; aucune station n’est annoncée, aucun nom tiré des fuites.
+- « Animaux » (animaux.html et sept fiches) : la faune de Leonida d’après les images officielles, dans « Le monde ».
+Dans le menu « Explorer » : un groupe nouveau « Jouer » (Missions, Activités annexes, Radios et musique) et « Animaux »
+dans « Le monde », entre Entreprises et Collectibles ; au pied de page, une colonne « Jouer » et « Animaux » dans
+« Explorer ». Léo répond aux questions des quatre sections dans les cinq langues.
+
+CE QU’IL FAUT FAIRE
+Base attendue : ton dépôt main en v7.65 (celui du zip reçu).
+1. Note le commit courant dans GitHub Desktop (ou copie le dossier).
+2. Extrais « Leonidakit-4-sections-modifs.zip » dans la racine du site, en écrasant les fichiers homonymes (garde le
+   dossier .git). Il contient les 2 347 fichiers ajoutés ou changés depuis le zip main, rien d’autre, aucun fichier supprimé.
+   N’extrais pas en plus les archives d’une seule section : celle-ci les contient toutes, déjà réunies.
+3. Vérifie quelques minutes en local ou sur la prévisualisation Vercel (voir « Pour vérifier »).
+4. Mets en ligne quand tu le décides (GitHub Desktop : commit puis push ; Vercel déploie tel quel).
+Aucune commande de build, pas de package.json ; vercel.json, api/ et .vercelignore ne changent pas. Seule la case « Mission
+terminée » des futures fiches de mission garde quelque chose sur l’appareil (clé lk-missions-terminees-v1) ; aucun cookie,
+rien de chargé depuis un autre site.
+
+POURQUOI PRESQUE TOUTES LES PAGES CHANGENT : le menu et le pied de page de chaque page (cinq langues) portent maintenant le
+groupe « Jouer » et « Animaux ». Le texte des pages existantes ne change pas, sauf « En lien » de quatre fiches de régions
+(groupe « Animaux »), Médias (« Utilisé sur ») et À propos (nombre de pages, recompté tout seul).
+
+POUR VÉRIFIER (5 minutes)
+- Menu « Explorer » de n’importe quelle page : groupe « Jouer » (trois liens) et « Animaux » dans « Le monde ».
+- /missions.html, /activites.html (essaie le filtre « Avec une fiche »), /radios.html (choisis « Extended Look » sur le
+  poste), /animaux.html et /animaux/alligator.html.
+- /de/radios.html ou /en/activites.html : les pages dans la langue.
+- Léo : « combien de missions dans GTA 6 ? », « peut-on pêcher ? », « quelles radios dans GTA 6 ? », « y a-t-il des
+  alligators ? ».
+
+DÉTAIL DE CHAQUE SECTION (dans l’archive) : LISEZ-MOI-section-missions.txt, LISEZ-MOI-section-activites.txt,
+LISEZ-MOI-section-radios.txt, LISEZ-MOI-section-animaux.txt (ce que chacune ajoute, sources consultées avec leur date,
+choix faits seul), outils/CHANGEMENTS-section-<id>.txt et outils/PREUVES-section-<id>.md. Contrôles de l’ensemble :
+outils/PREUVES-4-sections.md.
+
+CE QUI A ÉTÉ RÉUNI À L’ASSEMBLAGE
+- outils/site-shell.cjs : une seule liste « play » dans l’ordre Missions, Activités annexes, Radios et musique ; Animaux dans
+  « world » ; encarts du calculateur de missions.html, activites.html et animaux.html.
+- style.css : un seul bloc « quatre groupes dans Explorer » (il était identique dans les trois sections « Jouer »).
+- outils/gen-leo.cjs : une seule boucle des sections (missions, activites, radios, animaux) et une seule règle du
+  vocabulaire des morceaux de section ; outils/leo-langues.cjs, leo-ui.js, leo-core.js, sync-site.cjs, regenerer.cjs et
+  les tests communs : les dossiers des quatre sections à la suite.
+- Léo dans les autres langues : les expressions ajoutées par chaque section mises bout à bout, « hunt » et « hunting »
+  (ajoutés par Activités annexes et par Animaux) gardés une seule fois.
+- Traductions : les fichiers outils/langues/<code>/section-<id>.json des quatre sections, sans conflit entre eux, et un
+  fichier nouveau outils/langues/<code>/section-jouer.json pour les deux libellés du groupe « Jouer » à trois entrées (menu
+  et pied de page).
+- Léo en allemand : « welche Tiere » → « quels animaux » ajouté à l’assemblage (outils/langues/de/leo-pivot.json), pour
+  que « welche Tiere kann man jagen » vise la question des Animaux et non celle de la chasse des Activités annexes.
+- Tests des sections « Jouer » : leurs contrôles du menu acceptent le groupe à une ou à trois entrées (même version dans
+  chaque section et ici).
+Chaque ajout reste marqué « section <id> » (ou « sections … » quand une ligne sert à plusieurs sections).
+
+CE QUI RESTE À FAIRE (rien n’a été changé ici, pour ne pas toucher aux sections sans ton accord)
+- Liens entre les sections nouvelles (listés dans « Pour l’assemblage » de chaque LISEZ-MOI) : par exemple
+  activites/chasse.html → animaux.html, radios.html → missions.html#sequences, missions.html → activites/braquages-commerces.html.
+- Accueil : les cartes proposées (« Jouer » : Missions, Activités annexes, Radios et musique ; « Animaux » dans « Le monde »).
+- Page Médias : les quatre gros plans de img/animaux/.

@@ -1,0 +1,52 @@
+LEONIDAKIT — section « Radios et musique » (section radios), 4 octobre 2026
+
+Base : zip main v7.65 (régénéré tel quel au départ : commit « base régénérée »). Demande : construire la section « Radios et
+musique » (identifiant radios), avec un vrai travail de motion design, prête à publier et facile à assembler. Aucun numéro
+de version. Preuves : outils/PREUVES-section-radios.md.
+
+1. LA SECTION
+- radios.html « Les radios et la musique de GTA VI » (générée par outils/gen-radios.cjs, données dans
+  outils/radios/radios.json) :
+  · le poste de Leonida : quatre présélections (Trailer 1, Trailer 2, Extended Look, l’album officiel) en onglets
+    accessibles (flèches, Début, Fin), cadran, molette, écran qui défile, égaliseur, arrivée des morceaux en cascade ;
+    25 morceaux avec titre, artiste, moment, statut et sources, liens officiels (Rockstar, artistes, plateformes) ;
+  · « L’album officiel » : carte vers la fiche de l’album ;
+  · zone éditoriale des hubs : Rockstar (dates de l’album et des vidéos), communauté (cinq relevés sourcés, dont V-Rock et
+    Vice City FM), à confirmer, pour toi (Dre’Quan, Only Raw Records, l’album, le club de Boobie sur la carte), FAQ de six
+    questions, 22 sources datées du 4 octobre 2026.
+- radios/gta-vi-the-album.html : fiche de « Grand Theft Auto VI: The Album » (gabarit des fiches du monde), six titres sortis,
+  personnages et entreprise liés, sources.
+- radios.css et radios.js (pages de la section seulement) : animations en transform et opacity, variables de
+  motion-tokens.css, lancées seulement quand le poste est visible, toutes coupées avec prefers-reduced-motion: reduce ;
+  radios.js n’écrit aucun mot (le texte de l’écran vient de la page, donc de la langue de la page), ne garde rien et
+  n’envoie rien.
+
+2. INTÉGRATION
+- Menu « Explorer » : nouveau groupe « Jouer » (Radios et musique) ; pied de page : colonne « Jouer » ; style.css : quatre
+  groupes et quatre colonnes (bloc commun aux sections « Jouer »).
+- Léo : morceau leo/radios.json (trois questions de la section), fiche de l’album (morceau « monde »), sujets « radio »
+  (réécrit : plus aucune station venue des fuites) et « musique-trailer » reliés à la page ; suggestions sur les pages de la
+  section.
+- Recherche du site (outils/radios-index.json), plan du site (radios.html, radios/gta-vi-the-album.html).
+- Pas d’encart du calculateur (aucun usage chiffré publié).
+
+3. LANGUES
+- outils/langues/<code>/section-radios.json : ≈ 250 textes par langue (en, es, it, de) ; titres de morceaux, artistes, noms
+  d’albums gardés tels quels (translate="no") ; descriptions trop longues raccourcies pour la balise (« @meta:: »).
+  0 texte sans traduction dans chaque langue.
+- L’ancienne traduction de la réponse « radio » (qui citait des stations des fuites) est retirée des fichiers de mémoire
+  de/leo-02.json, en/leo-02.json, es/lot-50.json et it/lot-05.json ; elle ne servait plus.
+
+4. TESTS
+- outils/tests/section-radios.test.cjs : données, hub, fiche de l’album, sécurité et droits (aucun script en ligne, rien de
+  chargé ailleurs, aucun lecteur), menu, recherche, plan du site, Léo, cinq langues, mouvement (seuls transform et opacity
+  bougent ; tout s’arrête avec prefers-reduced-motion), radios.js (onglets au clavier, animation arrêtée ou lancée selon le
+  réglage), absence des noms de stations des fuites (par empreintes, aussi dans les index de Léo des autres langues, la
+  mémoire de traduction et les documents de la section).
+- outils/tests/leo-questions-section-radios-<code>.json : questions de Léo de la section dans les cinq langues.
+- Listes de dossiers des tests communs : radios/ ajouté.
+
+5. LIMITES
+- Aucune station de radio n’est annoncée : aucune fiche de station tant que Rockstar n’en nomme pas.
+- Les morceaux de l’Extended Look sont identifiés par la presse ; leurs minutages viennent de Game Rant.
+- Sources relevées par moteur de recherche le 4 octobre 2026 : l’ouverture directe des pages était bloquée depuis l’atelier.

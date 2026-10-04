@@ -1,0 +1,95 @@
+{
+ "_note": "Section activites : questions de test de Léo en espagnol pour la section « Activités annexes » (liste des activités, pêche, chasse, salle de sport, gains, braquages, vol de voitures, fiches). Rejoué par node outils/tests/leo-eval.cjs --lang es --questions=outils/tests/leo-questions-section-activites-es.json.",
+ "schemaVersion": 1,
+ "questions": [
+  {
+   "q": "qué actividades secundarias hay en gta 6",
+   "expect": {
+    "topic": "activites-faq-1"
+   },
+   "tags": [
+    "section-activites"
+   ]
+  },
+  {
+   "q": "minijuegos gta 6",
+   "expect": {
+    "topic": "activites-faq-1"
+   },
+   "tags": [
+    "section-activites"
+   ]
+  },
+  {
+   "q": "se puede pescar en gta 6",
+   "expect": {
+    "topic": "activites-faq-2"
+   },
+   "tags": [
+    "section-activites"
+   ]
+  },
+  {
+   "q": "se puede cazar en gta 6",
+   "expect": {
+    "topic": "activites-faq-3"
+   },
+   "tags": [
+    "section-activites"
+   ]
+  },
+  {
+   "q": "las actividades secundarias dan dinero",
+   "expect": {
+    "topic": "activites-faq-4"
+   },
+   "tags": [
+    "section-activites"
+   ]
+  },
+  {
+   "q": "se puede ir al gimnasio",
+   "expect": {
+    "any": [
+     {
+      "topic": "poids"
+     },
+     {
+      "entity": "activite:salle-de-sport"
+     }
+    ]
+   },
+   "tags": [
+    "section-activites"
+   ]
+  },
+  {
+   "q": "se pueden atracar tiendas",
+   "expect": {
+    "any": [
+     {
+      "topic": "braquer-magasins"
+     },
+     {
+      "topic": "braquage"
+     },
+     {
+      "topic": "hub-entreprises-3"
+     }
+    ]
+   },
+   "tags": [
+    "section-activites"
+   ]
+  },
+  {
+   "q": "cómo robar un coche en gta 6",
+   "expect": {
+    "topic": "vol-voiture"
+   },
+   "tags": [
+    "section-activites"
+   ]
+  }
+ ]
+}

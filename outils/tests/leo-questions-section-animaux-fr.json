@@ -1,0 +1,101 @@
+{
+ "_note": "Section animaux : questions de test de Léo en français pour la section « Animaux » (faune annoncée, alligators, chasse, chiens, animaux marins, fiches). Rejoué par node outils/tests/leo-eval.cjs --questions=outils/tests/leo-questions-section-animaux-fr.json.",
+ "schemaVersion": 1,
+ "questions": [
+  {
+   "q": "ya des animaux dans gta 6",
+   "expect": {
+    "topic": "animaux"
+   },
+   "tags": [
+    "section-animaux"
+   ]
+  },
+  {
+   "q": "quels animaux dans gta 6",
+   "expect": {
+    "topic": "animaux"
+   },
+   "tags": [
+    "section-animaux"
+   ]
+  },
+  {
+   "q": "y a t il des alligators dans gta 6",
+   "expect": {
+    "topic": "animaux-faq-1"
+   },
+   "tags": [
+    "section-animaux"
+   ]
+  },
+  {
+   "q": "alligator gta 6",
+   "expect": {
+    "any": [
+     {
+      "topic": "animaux-faq-1"
+     },
+     {
+      "entity": "animal:alligator"
+     }
+    ]
+   },
+   "tags": [
+    "section-animaux"
+   ]
+  },
+  {
+   "q": "quels animaux peut on chasser",
+   "expect": {
+    "topic": "animaux-faq-2"
+   },
+   "tags": [
+    "section-animaux"
+   ]
+  },
+  {
+   "q": "y a t il des requins dans gta 6",
+   "expect": {
+    "topic": "animaux-faq-3"
+   },
+   "tags": [
+    "section-animaux"
+   ]
+  },
+  {
+   "q": "dauphins gta 6",
+   "expect": {
+    "any": [
+     {
+      "topic": "animaux-faq-3"
+     },
+     {
+      "entity": "animal:faune-marine"
+     }
+    ]
+   },
+   "tags": [
+    "section-animaux"
+   ]
+  },
+  {
+   "q": "peut on avoir un chien dans gta 6",
+   "expect": {
+    "topic": "animaux"
+   },
+   "tags": [
+    "section-animaux"
+   ]
+  },
+  {
+   "q": "iguane vert gta 6",
+   "expect": {
+    "entity": "animal:iguane-vert"
+   },
+   "tags": [
+    "section-animaux"
+   ]
+  }
+ ]
+}

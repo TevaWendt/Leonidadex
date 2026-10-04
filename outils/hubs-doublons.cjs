@@ -33,9 +33,11 @@ function collectFicheStrings(ed, extra = []) {
 function check(opts = {}) {
   const hubs = opts.hubs || JSON.parse(fs.readFileSync(path.join(root, 'outils/editorial-hubs.json'), 'utf8'));
   const ed = opts.editorial || JSON.parse(fs.readFileSync(path.join(root, 'outils/editorial.json'), 'utf8'));
+  /* section animaux : le hub et les fiches Animaux (outils/editorial-animaux.json) sont comparés comme les autres */
+  if (!opts.hubs || !opts.editorial) { const A = JSON.parse(fs.readFileSync(path.join(root, 'outils/editorial-animaux.json'), 'utf8')); if (!opts.hubs) hubs.animaux = A.hub; if (!opts.editorial) ed.animals = A.fiches; }
   const ficheSet = new Set(collectFicheStrings(ed, opts.extra || []).flatMap(sentences));
   const dupes = [], seen = new Map();
-  for (const hub of ['lieux', 'personnages', 'demeures', 'planques', 'entreprises', 'gangs']) {
+  for (const hub of ['lieux', 'personnages', 'demeures', 'planques', 'entreprises', 'gangs', 'animaux' /* section animaux */]) {
     if (!hubs[hub]) continue;
     for (const s of collectHubStrings(hubs[hub]).flatMap(sentences)) {
       if (ficheSet.has(s)) dupes.push({ hub, phrase: s, ou: 'fiche' });

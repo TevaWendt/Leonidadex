@@ -1,0 +1,119 @@
+{
+ "_note": "Section radios : questions de test de Léo en espagnol pour la section « Radios et musique » (radios, musique des trailers et de l’Extended Look, album officiel, stations des fuites). Rejoué par node outils/tests/leo-eval.cjs --lang es --questions=outils/tests/leo-questions-section-radios-es.json.",
+ "schemaVersion": 1,
+ "questions": [
+  {
+   "q": "qué radios hay en gta 6",
+   "expect": {
+    "topic": "radio"
+   },
+   "tags": [
+    "section-radios"
+   ]
+  },
+  {
+   "q": "lista de emisoras de radio gta 6",
+   "expect": {
+    "topic": "radio"
+   },
+   "tags": [
+    "section-radios"
+   ]
+  },
+  {
+   "q": "quién canta en el tráiler 1",
+   "expect": {
+    "topic": "musique-trailer"
+   },
+   "tags": [
+    "section-radios"
+   ]
+  },
+  {
+   "q": "canción del tráiler 2",
+   "expect": {
+    "topic": "musique-trailer"
+   },
+   "tags": [
+    "section-radios"
+   ]
+  },
+  {
+   "q": "música del tráiler 2 de gta 6",
+   "expect": {
+    "topic": "musique-trailer"
+   },
+   "tags": [
+    "section-radios"
+   ]
+  },
+  {
+   "q": "canciones del extended look",
+   "expect": {
+    "topic": "radios-faq-1"
+   },
+   "tags": [
+    "section-radios"
+   ]
+  },
+  {
+   "q": "música del extended look",
+   "expect": {
+    "topic": "radios-faq-1"
+   },
+   "tags": [
+    "section-radios"
+   ]
+  },
+  {
+   "q": "qué es gta vi the album",
+   "expect": {
+    "any": [
+     {
+      "entity": "album:gta-vi-the-album"
+     },
+     {
+      "topic": "radios-faq-2"
+     }
+    ]
+   },
+   "tags": [
+    "section-radios"
+   ]
+  },
+  {
+   "q": "álbum oficial de gta 6",
+   "expect": {
+    "any": [
+     {
+      "entity": "album:gta-vi-the-album"
+     },
+     {
+      "topic": "radios-faq-2"
+     }
+    ]
+   },
+   "tags": [
+    "section-radios"
+   ]
+  },
+  {
+   "q": "están confirmados los nombres de emisoras que circulan",
+   "expect": {
+    "topic": "radios-faq-3"
+   },
+   "tags": [
+    "section-radios"
+   ]
+  },
+  {
+   "q": "las emisoras filtradas son reales",
+   "expect": {
+    "topic": "radios-faq-3"
+   },
+   "tags": [
+    "section-radios"
+   ]
+  }
+ ]
+}

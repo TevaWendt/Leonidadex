@@ -8,8 +8,10 @@ const fs = require('node:fs'), path = require('node:path');
 const S = require('./sections.cjs');
 const root = path.resolve(__dirname, '..');
 const DATA = JSON.parse(fs.readFileSync(path.join(root, 'outils/editorial-hubs.json'), 'utf8'));
+/* section animaux : zone éditoriale de animaux.html et ses sources nouvelles (outils/editorial-animaux.json) ; une source déjà définie ici n’est jamais redéfinie */
+{ const A = JSON.parse(fs.readFileSync(path.join(root, 'outils/editorial-animaux.json'), 'utf8')); DATA.animaux = A.hub; for (const [id, s] of Object.entries(A.sources)) { if (DATA.sources[id]) throw Error('Source déjà définie dans editorial-hubs.json : ' + id); DATA.sources[id] = s; } }
 const esc = S.esc;
-const HUBS = ['lieux', 'personnages', 'demeures', 'planques', 'entreprises', 'gangs']; /* v7.65 : gangs et factions */
+const HUBS = ['lieux', 'personnages', 'demeures', 'planques', 'entreprises', 'gangs', 'animaux' /* section animaux */]; /* v7.65 : gangs et factions */
 
 const para = list => (list || []).map(p => '<p>' + esc(p) + '</p>').join('');
 const pinsHref = a => a.pins ? 'carte.html#pins=' + a.pins.join(',') + (a.pinsTitle ? '&t=' + encodeURIComponent(a.pinsTitle) : '') : a.href;

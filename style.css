@@ -3301,3 +3301,7 @@ a.ed-brand:hover,a.ed-brand:focus-visible{border-color:var(--ink);box-shadow:5px
    sur sa rangée ; même largeur de carte que les rangées pleines. */
 @media(min-width:960px){.lore-grid--five{grid-template-columns:repeat(6,minmax(0,1fr));}.lore-grid--five>*{grid-column:span 2;}.lore-grid--five>:nth-child(4){grid-column:2/span 2;}}
 @media(min-width:640px) and (max-width:959px){.lore-grid--five{grid-template-columns:repeat(4,minmax(0,1fr));}.lore-grid--five>*{grid-column:span 2;}.lore-grid--five>:nth-child(5){grid-column:2/span 2;}}
+/* sections missions, activites, radios : quatre groupes dans « Explorer » (Le monde, Jouer, S’équiper, Le site) et quatre colonnes au pied de page */
+@media(min-width:1081px){.nav-more-panel{width:min(1000px,calc(100vw - 48px));grid-template-columns:repeat(4,minmax(0,1fr))}.foot-cols{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(min-width:601px) and (max-width:1080px){.nav-more-panel{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(min-width:821px) and (max-width:1080px){.foot-cols{grid-template-columns:repeat(2,minmax(0,1fr))}}
