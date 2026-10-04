@@ -73,7 +73,11 @@
   ],
   "note": "Les filtres (grade, manquable, catégorie) et le suivi s’allument avec la liste.",
   "bilan": { "libelle": "trophées obtenus", "note": "Gardé sur cet appareil seulement." },
-  "filtres": { "titre": "Filtrer la liste", "grade": "Grade", "manquable": "Manquable", "categorie": "Catégorie", "etat": "Suivi", "tous": "Tous", "oui": "Manquables", "non": "Non manquables", "obtenus": "Obtenus", "restants": "À obtenir", "visibles": "Trophées affichés :" }
+  "filtres": { "titre": "Filtrer la liste", "grade": "Grade", "manquable": "Manquable", "categorie": "Catégorie", "etat": "Suivi", "tous": "Tous", "oui": "Manquables", "non": "Non manquables", "obtenus": "Obtenus", "restants": "À obtenir", "visibles": "Trophées affichés :" },
+  "apercuK": "Le squelette, prêt pour la liste",
+  "apercuT": "Aperçu d’une fiche trophée",
+  "apercuGo": "Voir le squelette",
+  "sortie": "À la sortie"
  },
  "zone": {
   "nav": [
@@ -91,11 +95,11 @@
   "rockstar": {
    "lede": "Rockstar, Sony et Microsoft ont présenté le jeu sans dire un mot de ses trophées.",
    "items": [
-    { "date": "24 juin 2026", "titre": "Précommandes", "statut": "officiel", "texte": "GTA VI est présenté comme une expérience solo, le 19 novembre sur PS5 et Xbox Series X|S." },
-    { "date": "Boutique Xbox", "titre": "Des succès annoncés", "statut": "officiel", "texte": "La fiche du jeu liste des succès, sans nombre ni points." },
-    { "date": "Boutique PlayStation", "titre": "Un joueur, hors ligne", "statut": "officiel", "texte": "La fiche indique un joueur et le jeu hors ligne ; rien sur les trophées." },
-    { "date": "27 août 2026", "titre": "Extended Look", "statut": "vu", "texte": "Environ 26 minutes de jeu capturées sur PS5, sans rien sur les trophées." },
-    { "date": "29 septembre 2026", "titre": "Game Informer", "statut": "vu", "texte": "Le dossier parle de la carte, de la météo et de la faune ; rien sur les trophées." }
+    { "date": "24 juin 2026", "titre": "Précommandes", "media": "classic-car-collection-01", "alt": "Un homme au débardeur « Wyman’s World Auto Salvage » salue devant des voitures classiques, capture officielle de l’Édition Ultimate", "statut": "officiel", "texte": "GTA VI est présenté comme une expérience solo, le 19 novembre sur PS5 et Xbox Series X|S." },
+    { "date": "Boutique Xbox", "titre": "Des succès annoncés", "media": "jason-and-lucia-02", "alt": "Jason et Lucia armés et masqués devant la porte ouverte d’une chambre forte, billets en l’air, visuel officiel Rockstar Games", "statut": "officiel", "texte": "La fiche du jeu liste des succès, sans nombre ni points." },
+    { "date": "Boutique PlayStation", "titre": "Un joueur, hors ligne", "media": "trailer-1-vehicles-071", "alt": "Jason au volant d’une berline rouge cabossée, vue de profil sur une route de Leonida, photogramme du Trailer 1 vers 1:11", "statut": "officiel", "texte": "La fiche indique un joueur et le jeu hors ligne ; rien sur les trophées." },
+    { "date": "27 août 2026", "titre": "Extended Look", "media": "extended-look-sentinel-classic-rear", "alt": "Une voiture rouge garée dans une rue ensoleillée de Vice City, photogramme de l’Extended Look", "statut": "vu", "texte": "Environ 26 minutes de jeu capturées sur PS5, sans rien sur les trophées." },
+    { "date": "29 septembre 2026", "titre": "Game Informer", "media": "leonida-keys-06", "alt": "Un iguane vert sur un rocher au bord de l’eau, dans les Leonida Keys, capture officielle Rockstar Games", "statut": "vu", "texte": "Le dossier parle de la carte, de la météo et de la faune ; rien sur les trophées." }
    ],
    "p": []
   },

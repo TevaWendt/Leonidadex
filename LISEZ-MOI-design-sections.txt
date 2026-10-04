@@ -37,8 +37,8 @@ ACTIVITÉS ANNEXES
 
 RADIOS ET MUSIQUE
 - Chaque morceau a un bouton « Écouter » : le lien d’écoute officiel quand il existe, et une recherche du titre sur
-  Spotify, Apple Music, YouTube et Deezer. Le site ne diffuse aucun son (règle du site : rien de chargé depuis un autre site) et ne
-  montre aucune parole.
+  Spotify, Apple Music, YouTube et Deezer. Aucune parole n’est montrée. (Depuis, « Écouter ici »
+  ajoute un lecteur officiel au clic : voir LISEZ-MOI-assemblage-7-sections.txt.)
 - Morceaux en liste compacte façon playlist, avec petit égaliseur animé au survol.
 - « L’album officiel » devient une grande vitrine : image, vinyle qui tourne, chiffres clés, bouton vers sa page.
 - Page de l’album : en-tête de nuit avec vinyle, bouton « Écouter » sur chaque titre, galerie « En images » (6 images).

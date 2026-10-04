@@ -227,7 +227,10 @@
     "t": "Mises à jour",
     "d": "La date, ce qu’elle ajoute, la source officielle."
    }
-  ]
+  ],
+  "apercuGo": "Aperçu de la fiche",
+  "apercuK": "Rubrique de l’espace",
+  "sortie": "À la sortie"
  },
  "zone": {
   "nav": [
@@ -282,30 +285,40 @@
     {
      "date": "3 février 2026",
      "titre": "Take-Two, résultats",
+     "media": "vice-city-10",
+     "alt": "Deux tours ondulées dominent la baie de Vice City et ses bateaux, capture officielle Rockstar Games",
      "statut": "officiel",
      "texte": "Strauss Zelnick dit avoir « toutes les raisons de croire » que GTA Online continuera, et cite NBA 2K Online, dont deux versions restent en service."
     },
     {
      "date": "24 juin 2026",
      "titre": "Précommandes",
+     "media": "ultimate-edition-02",
+     "alt": "Jason et Lucia devant le coupé vert rapproché d’un Kellison J4 dans le visuel Ultimate Edition",
      "statut": "officiel",
      "texte": "GTA VI, « une expérience solo », le 19 novembre sur PS5 et Xbox Series X|S ; un mois de GTA+ offert avec les précommandes numériques."
     },
     {
      "date": "7 août 2026",
      "titre": "Take-Two, résultats",
+     "media": "trailer-1-vehicles-033",
+     "alt": "Des voitures de sport sous les néons d’Ocean Beach, la nuit, photogramme du Trailer 1 (0:33)",
      "statut": "officiel",
      "texte": "Un rythme de mises à jour stable pour GTA Online, que Take-Two compte continuer."
     },
     {
      "date": "17 septembre 2026",
      "titre": "Assemblée de Take-Two",
+     "media": "vice-city-03",
+     "alt": "Vue aérienne d’un quartier de Vice City et de ses terrains de sport au pied des immeubles, capture officielle Rockstar Games",
      "statut": "officiel",
      "texte": "GTA VI est un jeu solo ; GTA Online sera soutenu après sa sortie, « et au-delà » ; aucune dépense récurrente prévue au lancement."
     },
     {
      "date": "1er octobre 2026",
      "titre": "Classification",
+     "media": "jason-and-lucia-09",
+     "alt": "Jason et Lucia à moto, Lucia tirant au pistolet, poursuivis par une voiture de police, visuel officiel Rockstar Games",
      "statut": "vu",
      "texte": "Le site officiel affiche la classification ESRB M, avec des achats en jeu."
     }

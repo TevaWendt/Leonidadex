@@ -13,6 +13,7 @@
 const fs = require('node:fs'), path = require('node:path');
 const ROOT = path.resolve(__dirname, '..');
 const S = require('./sections.cjs');
+const LKX = require('./lk-sections.cjs');
 const esc = S.esc;
 const SITE = 'https://www.leonidakit.com', HUB = 'trophees', ID = 'trophees';
 const FILES = { hub: 'outils/trophees/hub.json', trophees: 'outils/trophees/trophees.json', modele: 'outils/trophees/modele.json' };
@@ -125,6 +126,7 @@ ${bc(crumbs)}${ld ? '\n' + ld : ''}
 <link rel="stylesheet" href="${p}motion-tokens.css">
 <link rel="stylesheet" href="${p}acquisitions.css">
 <link rel="stylesheet" href="${p}trophees.css">
+<link rel="stylesheet" href="${p}lk-sections.css">
 <meta property="og:image" content="${SITE}${ogImg || '/img/social-card.png'}">
 <meta name="twitter:card" content="summary_large_image">
 <meta property="og:url" content="${SITE}${canonical}">
@@ -136,16 +138,17 @@ ${bc(crumbs)}${ld ? '\n' + ld : ''}
 
 ${C.header.replace(/ class="here"/g, '')}
 
-<main id="main" class="lore-page trophees-page">
+<main id="main" class="lore-page trophees-page lkx-page">
 ${body}
 ${EXPLORE(p ? '../' : '')}
 <section class="lk-outro" aria-label="Et après"><div class="shell lk-outro-in"><p class="lk-outro-k">Et après ?</p><h2>La suite s’écrit le 19 novembre 2026.</h2><p>Chaque fiche se complète avec le jeu : ce qu’on y trouve, ce qu’on y fait, ce que ça rapporte. Rien d’inventé d’ici là.</p><div class="lk-outro-links"><a href="${p ? '../' : ''}carte.html">Ouvrir la carte</a><a href="${p ? '../' : ''}progression.html">Ma progression</a></div></div></section>
 </main>
-
+${LKX.dialog()}
 ${C.footer}
 
 ${C.scripts}
 <script src="${p}trophees.js"></script>
+<script src="${p}lk-sections.js"></script>
 </body>
 </html>
 `;
@@ -205,23 +208,30 @@ function suivi(ctx, list, opts = {}) {
 }
 
 /* ---------- hub ---------- */
+/* aperçu d’une fiche trophée : une carte qui ouvre, en plein écran, le squelette de chaque fiche (rien d’inventé : la liste
+   n’est pas publiée) */
+function apercu(LI) {
+  const summary = '<span class="lkx-card lkx-card--trophee"><span class="lkx-card-media">' + badgeHtml('platine') + '</span><span class="lkx-card-body"><b>' + esc(LI.apercuT) + '</b><span>' + esc(LI.champsTitre) + '</span><span class="lkx-card-go">' + esc(LI.apercuGo) + '</span></span></span>';
+  const body = '<p class="lkx-sheet-vide">' + esc(LI.vide) + '</p><h4>' + esc(LI.champsTitre) + '</h4>' + LKX.skel(LI.champs, LI.sortie) + '<p class="trophees-note">' + esc(LI.note) + '</p>';
+  return '<div class="lkx-cards lkx-cards--solo lkx-unlock lk-arrive" data-lkx-in>' + LKX.sheet({ id: 'apercu-fiche', cls: 'trophees-apercu', summary, icon: badgeHtml('platine'), kicker: esc(LI.kicker) + ' · <span>' + esc(LI.apercuK) + '</span>', title: LI.apercuT, body }) + '</div>';
+}
 function hubPage(ctx) {
   const { H, T, MED, STATUTS, ROOTC } = ctx, X = H.hub, E = H.etat, G = H.gtav, GR = H.grades, LI = H.liste;
   const pile = require('./lot-c-visuals.cjs').stack(X.pile.map(p => { const m = imgOf(MED, p.media); return { src: m.a.src, big: m.b.src, alt: p.alt, caption: p.caption }; }), { label: 'Trois visuels officiels de cette section' });
-  const fait = x => '<article class="trophees-fait rise"><span class="trophees-fait-ico">' + S.icon(x.icon) + '</span><h3>' + esc(x.titre) + '</h3><p>' + esc(x.texte) + '</p><p>' + st(x.statut, x.sources) + '</p></article>';
+  const fait = x => '<article class="trophees-fait"><span class="trophees-fait-ico">' + S.icon(x.icon) + '</span><h3>' + esc(x.titre) + '</h3><p>' + esc(x.texte) + '</p><p>' + st(x.statut, x.sources) + '</p></article>';
   const etat = '<section class="shell trophees-etat" id="etat" aria-labelledby="etat-t"><div class="reveal"><p class="trophees-kicker">' + esc(E.kicker) + '</p><h2 class="sec-h" id="etat-t">' + esc(E.titre) + '</h2></div>'
     + '<div class="trophees-statut rise"><span class="trophees-statut-ico" aria-hidden="true">' + S.icon('sablier') + '</span><div><p class="trophees-statut-date">' + esc(E.carte.date) + '</p><h3>' + esc(E.carte.titre) + '</h3><p>' + esc(E.carte.texte) + '</p><p>' + st(E.carte.statut, E.carte.sources) + '</p></div></div>'
-    + '<div class="trophees-faits">' + E.faits.map(fait).join('') + '</div></section>';
+    + '<div class="trophees-faits lkx-unlock lk-arrive" data-lkx-in>' + E.faits.map(fait).join('') + '</div></section>';
   const grades = '<section class="shell trophees-grades" id="grades" aria-labelledby="grades-t"><div class="reveal"><p class="trophees-kicker">' + esc(GR.kicker) + '</p><h2 class="sec-h" id="grades-t">' + esc(GR.titre) + '</h2><p class="trophees-lede">' + esc(GR.lede) + '</p></div>'
-    + '<ul class="trophees-grades-l">' + GR.items.map(x => '<li class="rise">' + badgeHtml(x.grade).replace('<span class="trophees-sceau">' + SCEAU + '</span>', '') + '<div><b>' + esc(x.label) + '</b><span>' + esc(x.texte) + '</span></div></li>').join('') + '</ul>'
+    + '<ul class="trophees-grades-l lkx-unlock lk-arrive" data-lkx-in>' + GR.items.map(x => '<li>' + badgeHtml(x.grade).replace('<span class="trophees-sceau">' + SCEAU + '</span>', '') + '<div><b>' + esc(x.label) + '</b><span>' + esc(x.texte) + '</span></div></li>').join('') + '</ul>'
     + '<p class="trophees-note">' + st(GR.statut, GR.sources) + '</p></section>';
   const gtav = '<section class="shell trophees-gtav" id="gtav" aria-labelledby="gtav-t"><div class="reveal"><p class="trophees-kicker">' + esc(G.kicker) + '</p><h2 class="sec-h" id="gtav-t">' + esc(G.titre) + '</h2><p class="trophees-lede">' + esc(G.lede) + '</p></div>'
-    + '<div class="trophees-chiffres">' + G.chiffres.map(x => '<div class="trophees-chiffre rise"><span class="trophees-v">GTA V</span><b>' + esc(x.n) + '</b><span>' + esc(x.l) + '</span><p>' + st(x.statut, x.sources) + '</p></div>').join('') + '</div>'
-    + '<ul class="trophees-gtav-l">' + G.items.map(x => '<li><p>' + esc(x.texte) + '</p><p>' + st(x.statut, x.sources) + '</p></li>').join('') + '</ul></section>';
+    + '<div class="trophees-chiffres lkx-unlock lk-arrive" data-lkx-in>' + G.chiffres.map(x => '<div class="trophees-chiffre"><span class="trophees-v">GTA V</span><b>' + esc(x.n) + '</b><span>' + esc(x.l) + '</span><p>' + st(x.statut, x.sources) + '</p></div>').join('') + '</div>'
+    + '<ul class="trophees-gtav-l lkx-wave lk-arrive" data-lkx-in>' + G.items.map(x => '<li><p>' + esc(x.texte) + '</p><p>' + st(x.statut, x.sources) + '</p></li>').join('') + '</ul></section>';
   const list = T.trophees;
   const liste = '<section class="shell trophees-liste-sec" id="liste" aria-labelledby="liste-t"><div class="reveal"><p class="trophees-kicker">' + esc(LI.kicker) + '</p><h2 class="sec-h" id="liste-t">' + esc(LI.titre) + '</h2></div>'
     + (list.length ? suivi(ctx, list) : '<p class="trophees-vide">' + esc(LI.vide) + '</p>')
-    + '<h3 class="trophees-sous-t">' + esc(LI.champsTitre) + '</h3><dl class="trophees-champs">' + LI.champs.map(x => '<div><dt>' + esc(x.t) + '</dt><dd>' + esc(x.d) + '</dd></div>').join('') + '</dl>'
+    + apercu(LI) + '<h3 class="trophees-sous-t">' + esc(LI.champsTitre) + '</h3><dl class="trophees-champs">' + LI.champs.map(x => '<div><dt>' + esc(x.t) + '</dt><dd>' + esc(x.d) + '</dd></div>').join('') + '</dl>'
     + '<p class="trophees-note">' + esc(LI.note) + '</p></section>';
   const body = `<section class="page-head shell lk-glow"><div class="lk-head-grid"><div>
   <p class="fiche-cat">${esc(X.label)} · GTA VI</p>

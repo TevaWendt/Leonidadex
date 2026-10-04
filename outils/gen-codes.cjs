@@ -14,6 +14,7 @@
 const fs = require('node:fs'), path = require('node:path');
 const ROOT = path.resolve(__dirname, '..');
 const S = require('./sections.cjs');
+const LKX = require('./lk-sections.cjs');
 const esc = S.esc;
 const SITE = 'https://www.leonidakit.com', HUB = 'codes-de-triche', ID = 'codes';
 const FILES = { hub: 'outils/codes/hub.json', codes: 'outils/codes/codes.json', modele: 'outils/codes/modele.json' };
@@ -147,6 +148,7 @@ ${bc(crumbs)}${ld ? '\n' + ld : ''}
 <link rel="stylesheet" href="${p}motion-tokens.css">
 <link rel="stylesheet" href="${p}acquisitions.css">
 <link rel="stylesheet" href="${p}codes.css">
+<link rel="stylesheet" href="${p}lk-sections.css">
 <meta property="og:image" content="${SITE}${ogImg || '/img/social-card.png'}">
 <meta name="twitter:card" content="summary_large_image">
 <meta property="og:url" content="${SITE}${canonical}">
@@ -158,16 +160,17 @@ ${bc(crumbs)}${ld ? '\n' + ld : ''}
 
 ${C.header.replace(/ class="here"/g, '')}
 
-<main id="main" class="lore-page codes-page">
+<main id="main" class="lore-page codes-page lkx-page">
 ${body}
 ${EXPLORE(p ? '../' : '')}
 <section class="lk-outro" aria-label="Et après"><div class="shell lk-outro-in"><p class="lk-outro-k">Et après ?</p><h2>La suite s’écrit le 19 novembre 2026.</h2><p>Chaque fiche se complète avec le jeu : ce qu’on y trouve, ce qu’on y fait, ce que ça rapporte. Rien d’inventé d’ici là.</p><div class="lk-outro-links"><a href="${p ? '../' : ''}carte.html">Ouvrir la carte</a><a href="${p ? '../' : ''}progression.html">Ma progression</a></div></div></section>
 </main>
-
+${LKX.dialog()}
 ${C.footer}
 
 ${C.scripts}
 <script src="${p}codes.js"></script>
+<script src="${p}lk-sections.js"></script>
 </body>
 </html>
 `;
@@ -218,24 +221,35 @@ const consoles = list => list.length && list.every(c => c.ps5 && c.xbox) ? '<div
 const live = '<p class="sr-only" aria-live="polite" data-codes-annonce></p>';
 
 /* ---------- hub ---------- */
+/* carte d’une catégorie du guide : image officielle et nombre de codes publiés ; elle ouvre la fiche prête en plein écran
+   (ce que dira chaque code, en attente de la sortie) ; une catégorie qui a des codes renvoie aussi à sa fiche */
+function catSheet(ctx, c, codes) {
+  const { H, MED } = ctx, LI = H.liste, V = (LI.categoriesMedia || {})[c.id] || {}, n = codes.length, ok = !!(V.media && MED[V.media]);
+  const summary = '<span class="lkx-card"><span class="lkx-card-media">' + (ok ? LKX.img(MED, V.media, V.alt, { sizes: '(max-width:560px) 100vw, (max-width:980px) 50vw, 300px' }) : '') + '<i class="lkx-card-n">' + n + '</i></span><span class="lkx-card-body"><b class="codes-cat-t">' + esc(c.label) + '</b><span>' + esc(c.texte) + '</span><span class="lkx-card-go">' + esc(LI.catGo) + '</span></span></span>';
+  const body = '<p>' + esc(c.texte) + '</p>' + (n ? '' : '<p class="lkx-sheet-vide">' + esc(LI.catVide) + '</p>')
+    + '<h4>' + esc(LI.champsTitre) + '</h4>' + LKX.skel(LI.champs, LI.sortie)
+    + '<p class="codes-note">' + esc(LI.note) + '</p>'
+    + (n ? '<div class="lkx-sheet-cta"><a class="lkx-btn" href="' + HUB + '/' + c.id + '.html">' + esc(c.label) + '</a></div>' : '');
+  return LKX.sheet({ id: 'categorie-' + c.id, cls: 'codes-cat-det', summary, fig: ok ? LKX.img(MED, V.media, V.alt, { big: true, sizes: '(max-width:760px) 100vw, 600px' }) : '', kicker: esc(LI.kicker) + ' · <span>' + esc(LI.catK) + '</span>', title: c.label, body });
+}
 function hubPage(ctx) {
   const { H, C, MED, STATUTS, ROOTC } = ctx, X = H.hub, E = H.etat, SE = H.serie, LI = H.liste;
   const pile = require('./lot-c-visuals.cjs').stack(X.pile.map(p => { const m = imgOf(MED, p.media); return { src: m.a.src, big: m.b.src, alt: p.alt, caption: p.caption }; }), { label: 'Trois visuels officiels de cette section' });
-  const fait = x => '<article class="codes-fait rise"><span class="codes-fait-ico">' + S.icon(x.icon) + '</span><h3>' + esc(x.titre) + '</h3><p>' + esc(x.texte) + '</p><p>' + st(x.statut, x.sources) + '</p></article>';
+  const fait = x => '<article class="codes-fait"><span class="codes-fait-ico">' + S.icon(x.icon) + '</span><h3>' + esc(x.titre) + '</h3><p>' + esc(x.texte) + '</p><p>' + st(x.statut, x.sources) + '</p></article>';
   const etat = '<section class="shell codes-etat" id="etat" aria-labelledby="etat-t"><div class="reveal"><p class="codes-kicker">' + esc(E.kicker) + '</p><h2 class="sec-h" id="etat-t">' + esc(E.titre) + '</h2></div>'
     + '<div class="codes-statut rise"><span class="codes-statut-ico" aria-hidden="true">' + S.icon('sablier') + '</span><div><p class="codes-statut-date">' + esc(E.carte.date) + '</p><h3>' + esc(E.carte.titre) + '</h3><p>' + esc(E.carte.texte) + '</p><p>' + st(E.carte.statut, E.carte.sources) + '</p></div></div>'
-    + '<div class="codes-faits">' + E.faits.map(fait).join('') + '</div></section>';
+    + '<div class="codes-faits lkx-crt lk-arrive" data-lkx-in>' + E.faits.map(fait).join('') + '</div></section>';
   const serie = '<section class="shell codes-gtav" id="gtav" aria-labelledby="gtav-t"><div class="reveal"><p class="codes-kicker">' + esc(SE.kicker) + '</p><h2 class="sec-h" id="gtav-t">' + esc(SE.titre) + '</h2><p class="codes-lede">' + esc(SE.lede) + '</p></div>'
-    + '<div class="codes-faits">' + SE.facons.map(fait).join('') + '</div>'
+    + '<div class="codes-faits lkx-crt lk-arrive" data-lkx-in>' + SE.facons.map(fait).join('') + '</div>'
     + '<div class="codes-regles reveal"><h3>' + esc(SE.regles.titre) + '</h3><ul>' + SE.regles.items.map(t => '<li>' + esc(t) + '</li>').join('') + '</ul><p>' + st(SE.regles.statut, SE.regles.sources) + '</p></div>'
     + '<div class="reveal"><h3 class="codes-sous-t">' + esc(SE.cartesTitre) + '</h3><p class="codes-lede">' + esc(SE.cartesLede) + '</p></div>'
     + consoles(C.gtav) + live + '<div class="codes-cartes">' + C.gtav.map(c => card(ctx, c, 'gtav')).join('') + '</div>'
-    + '<div class="codes-avant reveal"><h3>' + esc(SE.avant.titre) + '</h3><ul>' + SE.avant.items.map(x => '<li><p>' + esc(x.texte) + '</p><p>' + st(x.statut, x.sources) + '</p></li>').join('') + '</ul></div></section>';
+    + '<div class="codes-avant reveal"><h3>' + esc(SE.avant.titre) + '</h3><ul class="lkx-wave lk-arrive" data-lkx-in>' + SE.avant.items.map(x => '<li><p>' + esc(x.texte) + '</p><p>' + st(x.statut, x.sources) + '</p></li>').join('') + '</ul></div></section>';
   const byCat = Object.fromEntries(CATS.map(id => [id, C.codes.filter(c => c.categorie === id)]));
   const groupes = CATS.filter(id => byCat[id].length).map(id => '<h3 class="codes-sous-t"><a href="' + HUB + '/' + id + '.html">' + esc(catOf(C, id).label) + '</a></h3><div class="codes-cartes">' + byCat[id].map(c => card(ctx, c, 'gta6')).join('') + '</div>').join('');
   const liste = '<section class="shell codes-liste" id="liste" aria-labelledby="liste-t"><div class="reveal"><p class="codes-kicker">' + esc(LI.kicker) + '</p><h2 class="sec-h" id="liste-t">' + esc(LI.titre) + '</h2></div>'
     + (C.codes.length ? consoles(C.codes) + groupes : '<p class="codes-vide">' + esc(LI.vide) + '</p>')
-    + '<h3 class="codes-sous-t">' + esc(LI.categoriesTitre) + '</h3><ul class="codes-cats">' + C.categories.map(c => '<li>' + (byCat[c.id].length ? '<a href="' + HUB + '/' + c.id + '.html"><b>' + esc(c.label) + '</b></a>' : '<b>' + esc(c.label) + '</b>') + '<span>' + esc(c.texte) + '</span><i>' + byCat[c.id].length + '</i></li>').join('') + '</ul>'
+    + '<h3 class="codes-sous-t">' + esc(LI.categoriesTitre) + '</h3><ul class="codes-cats lkx-cards lkx-crt lk-arrive" data-lkx-in>' + C.categories.map(c => '<li>' + catSheet(ctx, c, byCat[c.id]) + '</li>').join('') + '</ul>'
     + '<h3 class="codes-sous-t">' + esc(LI.champsTitre) + '</h3><dl class="codes-champs">' + LI.champs.map(x => '<div><dt>' + esc(x.t) + '</dt><dd>' + esc(x.d) + '</dd></div>').join('') + '</dl>'
     + '<p class="codes-note">' + esc(LI.note) + '</p></section>';
   const body = `<section class="page-head shell lk-glow"><div class="lk-head-grid"><div>

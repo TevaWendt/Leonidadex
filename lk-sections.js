@@ -1,7 +1,8 @@
 /* LEONIDAKIT — motion design et fiches plein écran des sections Gangs et factions, Missions, Activités annexes, Radios
    et musique (lk-sections.css). Amélioration progressive : sans ce script, tout est visible et chaque fiche s’ouvre dans
-   la page (details). Ce script n’écrit aucun mot (les textes sont dans la page, déjà traduite), ne garde rien sur
-   l’appareil et n’envoie aucune requête. Mouvement coupé avec prefers-reduced-motion: reduce. */
+   la page (details). Ce script n’écrit aucun mot (les textes sont dans la page, déjà traduite ; seul le titre d’un morceau
+   est recopié dans le lecteur), ne garde rien sur l’appareil et n’envoie aucune requête : le lecteur officiel (YouTube ou
+   Spotify) ne se charge qu’après un clic sur « Écouter ici ». Mouvement coupé avec prefers-reduced-motion: reduce. */
 (function () {
   'use strict';
   var mq = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : { matches: false };
@@ -121,11 +122,56 @@
     window.addEventListener('hashchange', function () { if (!dlg.open) fromHash(); });
   }
 
-  /* ---------- 4. menus « Écouter » (details.lkx-listen) : un seul ouvert, fermé par un clic ailleurs ou Échap ---------- */
-  var listens = document.querySelectorAll('details.lkx-listen');
-  if (listens.length) {
-    each(listens, function (d) { d.addEventListener('toggle', function () { if (d.open) each(listens, function (o) { if (o !== d) o.open = false; }); }); });
-    document.addEventListener('click', function (e) { each(listens, function (d) { if (d.open && !d.contains(e.target)) d.open = false; }); });
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') each(listens, function (d) { if (d.open) { d.open = false; var s = d.querySelector('summary'); if (s) s.focus(); } }); });
+  /* ---------- 4. menus « Écouter » (popover : au-dessus de la page, jamais coupés par une carte) ---------- */
+  var menus = document.querySelectorAll('.lkx-listen-menu[popover]');
+  var hasPopover = typeof HTMLElement !== 'undefined' && Object.prototype.hasOwnProperty.call(HTMLElement.prototype, 'popover');
+  var isOpen = function (m) { try { return m.matches(':popover-open'); } catch (e) { return false; } };
+  function place(m) {
+    m.style.left = ''; m.style.top = '';
+    if (window.matchMedia && window.matchMedia('(max-width:560px)').matches) return;
+    var b = document.querySelector('[popovertarget="' + m.id + '"]'); if (!b) return;
+    var r = b.getBoundingClientRect(), w = m.offsetWidth, h = m.offsetHeight, vw = document.documentElement.clientWidth, vh = window.innerHeight;
+    var left = Math.max(8, Math.min(r.right - w, vw - w - 8)), top = r.bottom + 8;
+    if (top + h > vh - 8 && r.top - h - 8 >= 8) top = r.top - h - 8;
+    m.style.left = Math.round(left) + 'px'; m.style.top = Math.round(Math.max(8, top)) + 'px';
+  }
+  if (menus.length && hasPopover) {
+    each(menus, function (m) {
+      m.addEventListener('beforetoggle', function (e) { if (e.newState === 'open') window.requestAnimationFrame(function () { place(m); }); });
+      m.addEventListener('toggle', function (e) { if (e.newState === 'open') place(m); });
+    });
+    var reflow = function () { each(menus, function (m) { if (isOpen(m)) place(m); }); };
+    window.addEventListener('scroll', reflow, { passive: true });
+    window.addEventListener('resize', reflow);
+  }
+
+  /* ---------- 5. lecteur au clic : rien ne se charge avant « Écouter ici » (lecteur officiel YouTube ou Spotify) ---------- */
+  var player = document.getElementById('lkx-player');
+  if (player) {
+    var box = player.querySelector('[data-lkx-player-f]'), label = player.querySelector('[data-lkx-player-t]');
+    var stop = function () { if (box) box.replaceChildren(); player.hidden = true; };
+    document.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-lkx-play]');
+      if (b && box) {
+        var src = b.getAttribute('data-lkx-src') || '';
+        if (!/^https:\/\/(www\.youtube-nocookie\.com|open\.spotify\.com)\/embed\//.test(src)) return;
+        var f = document.createElement('iframe');
+        f.src = src;
+        f.title = b.getAttribute('data-lkx-title') || '';
+        f.setAttribute('allow', 'autoplay; encrypted-media; picture-in-picture; fullscreen');
+        f.setAttribute('allowfullscreen', '');
+        f.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+        box.replaceChildren(f);
+        if (label) label.textContent = f.title;
+        player.classList.remove('lkx-player--yt', 'lkx-player--sp');
+        player.classList.add('lkx-player--' + (b.getAttribute('data-lkx-play') === 'sp' ? 'sp' : 'yt'));
+        player.hidden = false;
+        var menu = b.closest('[popover]'); if (menu && menu.hidePopover) { try { menu.hidePopover(); } catch (x) { /* rien */ } }
+        var x = player.querySelector('[data-lkx-player-close]'); if (x) x.focus({ preventScroll: true });
+        return;
+      }
+      if (e.target.closest('[data-lkx-player-close]')) stop();
+    });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !player.hidden && player.contains(document.activeElement)) stop(); });
   }
 })();

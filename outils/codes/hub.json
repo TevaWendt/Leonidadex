@@ -72,7 +72,12 @@
    { "t": "Les limites", "d": "Trophées et succès coupés ou non, sauvegarde, durée." },
    { "t": "Statut et source", "d": "Publié par Rockstar ou vérifié en jeu, avec la date." }
   ],
-  "note": "Chaque catégorie aura sa fiche dès son premier code."
+  "note": "Chaque catégorie aura sa fiche dès son premier code.",
+  "catK": "Catégorie",
+  "catGo": "Voir la fiche prête",
+  "catVide": "Aucun code de cette catégorie n’est publié : la fiche ci-dessous montre ce que chacun contiendra.",
+  "sortie": "À la sortie",
+  "categoriesMedia": {"armes": {"media": "personalized-weapon-variants", "alt": "Deux pistolets gravés, l’un chromé, l’autre rouge, posés au bord d’une piscine, visuel officiel Rockstar Games"}, "vehicules": {"media": "95-grotti-cheetah-01", "alt": "Une Grotti Cheetah blanche à bandes rouges devant un immeuble en spirale, capture officielle Rockstar Games"}, "joueur": {"media": "trailer-2-police-riot-119", "alt": "Fourgon blindé noir de la police face à Lucia pendant la poursuite du second trailer, vers 1:59"}, "monde": {"media": "port-gellhorn-06", "alt": "Port Gellhorn au coucher du soleil, vu du ciel, capture officielle Rockstar Games"}}
  },
  "zone": {
   "nav": [
@@ -89,11 +94,11 @@
   "rockstar": {
    "lede": "Rockstar n’a rien dit des codes de GTA VI. Ce qu’il a publié sur ceux de la série tient en peu de pages.",
    "items": [
-    { "date": "11 novembre 2021", "titre": "Trilogy, Definitive Edition", "statut": "officiel", "texte": "Rich Rosado, producteur chez Rockstar, explique avoir retiré quelques codes qui ne marchaient pas bien dans la nouvelle version." },
-    { "date": "Page d’aide", "titre": "Les codes de GTA V", "statut": "officiel", "texte": "Rockstar précise qu’on peut sauvegarder avec un code actif, que les succès sont désactivés pour un temps, et qu’une mission coupe les codes actifs." },
-    { "date": "24 juin 2026", "titre": "Précommandes", "statut": "officiel", "texte": "GTA VI est présenté comme une expérience solo, sur PS5 et Xbox Series X|S ; pas un mot sur des codes." },
-    { "date": "27 août 2026", "titre": "Extended Look", "statut": "vu", "texte": "Environ 26 minutes de jeu capturées sur PS5, sans aucun code de triche à l’écran." },
-    { "date": "29 septembre 2026", "titre": "Game Informer", "statut": "vu", "texte": "Le dossier de 14 pages parle de la carte, de la météo et de la faune ; rien sur les codes." }
+    { "date": "11 novembre 2021", "titre": "Trilogy, Definitive Edition", "media": "vice-city-01", "alt": "Les grandes lettres de Vice City au coucher du soleil, un avion dans le ciel, visuel officiel Rockstar Games", "statut": "officiel", "texte": "Rich Rosado, producteur chez Rockstar, explique avoir retiré quelques codes qui ne marchaient pas bien dans la nouvelle version." },
+    { "date": "Page d’aide", "titre": "Les codes de GTA V", "media": "personalized-weapon-variants", "alt": "Deux pistolets gravés, l’un chromé, l’autre rouge, posés au bord d’une piscine, visuel officiel Rockstar Games", "statut": "officiel", "texte": "Rockstar précise qu’on peut sauvegarder avec un code actif, que les succès sont désactivés pour un temps, et qu’une mission coupe les codes actifs." },
+    { "date": "24 juin 2026", "titre": "Précommandes", "media": "ultimate-edition-02", "alt": "Jason et Lucia devant le coupé vert rapproché d’un Kellison J4 dans le visuel Ultimate Edition", "statut": "officiel", "texte": "GTA VI est présenté comme une expérience solo, sur PS5 et Xbox Series X|S ; pas un mot sur des codes." },
+    { "date": "27 août 2026", "titre": "Extended Look", "media": "extended-look-coquette-d10", "alt": "Une décapotable rouge arrêtée dans une rue de Vice City de nuit, devant une bagarre, photogramme de l’Extended Look", "statut": "vu", "texte": "Environ 26 minutes de jeu capturées sur PS5, sans aucun code de triche à l’écran." },
+    { "date": "29 septembre 2026", "titre": "Game Informer", "media": "mount-kalaga-national-park-05", "alt": "Des cervidés et d’autres animaux sauvages au bord d’une rivière du Mount Kalaga National Park, capture officielle Rockstar Games", "statut": "vu", "texte": "Le dossier de 14 pages parle de la carte, de la météo et de la faune ; rien sur les codes." }
    ],
    "p": []
   },

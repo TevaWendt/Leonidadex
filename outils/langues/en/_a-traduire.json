@@ -1,1 +1,284 @@
-{}
+{
+ "{donnees:faqApropos}": {
+  "kind": "page",
+  "where": [
+   "a-propos.html · div"
+  ]
+ },
+ "Les armes": {
+  "kind": "page",
+  "where": [
+   "codes-de-triche.html · figcaption"
+  ]
+ },
+ "Le monde": {
+  "kind": "page",
+  "where": [
+   "codes-de-triche.html · figcaption"
+  ]
+ },
+ "<1><2/><3>0</3></1><4><5>Armes</5><6>Armes, munitions, explosifs.</6><7>Voir la fiche prête</7></4>": {
+  "kind": "page",
+  "where": [
+   "codes-de-triche.html · summary"
+  ]
+ },
+ "Le guide des codes · <1>Catégorie</1>": {
+  "kind": "page",
+  "where": [
+   "codes-de-triche.html · p"
+  ]
+ },
+ "Armes, munitions, explosifs.": {
+  "kind": "page",
+  "where": [
+   "codes-de-triche.html · p"
+  ]
+ },
+ "Aucun code de cette catégorie n’est publié : la fiche ci-dessous montre ce que chacun contiendra.": {
+  "kind": "page",
+  "where": [
+   "codes-de-triche.html · p"
+  ]
+ },
+ "<1><2/><3>0</3></1><4><5>Véhicules</5><6>Faire apparaître un véhicule.</6><7>Voir la fiche prête</7></4>": {
+  "kind": "page",
+  "where": [
+   "codes-de-triche.html · summary"
+  ]
+ },
+ "Faire apparaître un véhicule.": {
+  "kind": "page",
+  "where": [
+   "codes-de-triche.html · p"
+  ]
+ },
+ "<1><2/><3>0</3></1><4><5>Joueur</5><6>Santé, armure, invincibilité, niveau de recherche.</6><7>Voir la fiche prête</7></4>": {
+  "kind": "page",
+  "where": [
+   "codes-de-triche.html · summary"
+  ]
+ },
+ "Joueur": {
+  "kind": "page",
+  "where": [
+   "codes-de-triche.html · h3"
+  ]
+ },
+ "Santé, armure, invincibilité, niveau de recherche.": {
+  "kind": "page",
+  "where": [
+   "codes-de-triche.html · p"
+  ]
+ },
+ "<1><2/><3>0</3></1><4><5>Monde</5><6>Ce qui change autour de toi : météo, circulation…</6><7>Voir la fiche prête</7></4>": {
+  "kind": "page",
+  "where": [
+   "codes-de-triche.html · summary"
+  ]
+ },
+ "Monde": {
+  "kind": "page",
+  "where": [
+   "codes-de-triche.html · h3"
+  ]
+ },
+ "Ce qui change autour de toi : météo, circulation…": {
+  "kind": "page",
+  "where": [
+   "codes-de-triche.html · p"
+  ]
+ },
+ "Un message reçu": {
+  "kind": "page",
+  "where": [
+   "contact.html · figcaption"
+  ]
+ },
+ "Pas de compte, pas de publicité, pas de mesure d’audience, pas de script d’un autre site : aucun bandeau n’est donc nécessaire.": {
+  "kind": "page",
+  "where": [
+   "mentions-legales.html · p"
+  ]
+ },
+ "Seule exception, si tu la choisis : le lecteur de musique de la page Radios et musique, chargé après ton clic.": {
+  "kind": "page",
+  "where": [
+   "mentions-legales.html · p"
+  ]
+ },
+ "Seule exception, si tu la choisis : le lecteur de musique.": {
+  "kind": "page",
+  "where": [
+   "mentions-legales.html · p"
+  ]
+ },
+ "Vérifié de deux façons.": {
+  "kind": "page",
+  "where": [
+   "mentions-legales.html · p"
+  ]
+ },
+ "Dans le code livré (script <1>outils/preuve-confidentialite.cjs</1>, lancé à chaque contrôle) : aucune page ne dépose de cookie (aucun <2>document.cookie</2>, aucun en-tête <3>Set-Cookie</3> dans la configuration ni dans la fonction d’envoi), aucune page ne charge de script, de feuille de style, de police ou d’image d’un autre site, et aucun outil de mesure d’audience ou de publicité n’est présent ; la police est hébergée sur le site.": {
+  "kind": "page",
+  "where": [
+   "mentions-legales.html · p"
+  ]
+ },
+ "Puis dans un navigateur, le 1er octobre 2026, sur 17 pages avant toute action puis pendant les usages principaux (calculateur, carte, listes, « Je l’ai », Léo, brouillon de Contact, alerte) : 0 cookie, aucune base <4>IndexedDB</4>, aucun cache ni <5>service worker</5>, aucune requête vers un autre site.": {
+  "kind": "page",
+  "where": [
+   "mentions-legales.html · p"
+  ]
+ },
+ "Une sortie du site : l’envoi de l’alerte de l’accueil, quand tu cliques « Me prévenir » après avoir coché la case : ton navigateur se rend alors sur la page de Brevo.": {
+  "kind": "page",
+  "where": [
+   "mentions-legales.html · p"
+  ]
+ },
+ "Une autre sortie, elle aussi à ta demande : sur la page <1>Radios et musique</1>, le bouton « Écouter ici » charge le lecteur officiel de YouTube (Google, en mode de confidentialité renforcée) ou de Spotify.": {
+  "kind": "page",
+  "where": [
+   "mentions-legales.html · p"
+  ]
+ },
+ "Rien n’en est chargé avant ce clic.": {
+  "kind": "page",
+  "where": [
+   "mentions-legales.html · p"
+  ]
+ },
+ "Une fois le lecteur lancé, ces services peuvent déposer leurs propres cookies, selon leurs règles.": {
+  "kind": "page",
+  "where": [
+   "mentions-legales.html · p"
+  ]
+ },
+ "Fermer le lecteur l’arrête et le retire de la page.": {
+  "kind": "page",
+  "where": [
+   "mentions-legales.html · p"
+  ]
+ },
+ "<1>Les activités du jeu en ligne</1><2>Ce que dira chaque fiche, le jour venu</2><3>Aperçu de la fiche</3>": {
+  "kind": "page",
+  "where": [
+   "online.html · span"
+  ]
+ },
+ "Rubrique de l’espace · <1>Activités</1>": {
+  "kind": "page",
+  "where": [
+   "online.html · p"
+  ]
+ },
+ "<1>Ce qui s’achètera en ligne</1><2>Ce que dira chaque fiche, le jour venu</2><3>Aperçu de la fiche</3>": {
+  "kind": "page",
+  "where": [
+   "online.html · span"
+  ]
+ },
+ "Rubrique de l’espace · <1>Achats et entreprises</1>": {
+  "kind": "page",
+  "where": [
+   "online.html · p"
+  ]
+ },
+ "<1>Les mises à jour</1><2>Ce que dira chaque fiche, le jour venu</2><3>Aperçu de la fiche</3>": {
+  "kind": "page",
+  "where": [
+   "online.html · span"
+  ]
+ },
+ "Rubrique de l’espace · <1>Mises à jour</1>": {
+  "kind": "page",
+  "where": [
+   "online.html · p"
+  ]
+ },
+ "Lecteur": {
+  "kind": "page",
+  "where": [
+   "radios.html · @aria-label",
+   "radios/gta-vi-the-album.html · @aria-label"
+  ]
+ },
+ "Fermer le lecteur": {
+  "kind": "page",
+  "where": [
+   "radios.html · @aria-label",
+   "radios/gta-vi-the-album.html · @aria-label"
+  ]
+ },
+ "Dre’Quan en studio": {
+  "kind": "page",
+  "where": [
+   "radios.html · figcaption"
+  ]
+ },
+ "<1>Écouter ici</1><2>Dans la vidéo officielle de Rockstar, au moment du morceau</2>": {
+  "kind": "page",
+  "where": [
+   "radios.html · button"
+  ]
+ },
+ "<1>Écouter ici</1><2>Lecteur Spotify : un extrait de 30 secondes sans compte</2>": {
+  "kind": "page",
+  "where": [
+   "radios.html · button",
+   "radios/gta-vi-the-album.html · button"
+  ]
+ },
+ "En lecture": {
+  "kind": "page",
+  "where": [
+   "radios.html · p",
+   "radios/gta-vi-the-album.html · p"
+  ]
+ },
+ "Lecteur officiel de YouTube (Google) ou de Spotify, chargé seulement après ton clic : ils peuvent alors déposer leurs propres cookies.": {
+  "kind": "page",
+  "where": [
+   "radios.html · p",
+   "radios/gta-vi-the-album.html · p"
+  ]
+ },
+ "<1>Mentions et confidentialité</1>": {
+  "kind": "page",
+  "where": [
+   "radios.html · p",
+   "radios/gta-vi-the-album.html · p"
+  ]
+ },
+ "Des voitures de collection": {
+  "kind": "page",
+  "where": [
+   "trophees.html · figcaption"
+  ]
+ },
+ "Les Keys": {
+  "kind": "page",
+  "where": [
+   "trophees.html · figcaption"
+  ]
+ },
+ "<1>Aperçu d’une fiche trophée</1><2>Ce que dira chaque trophée</2><3>Voir le squelette</3>": {
+  "kind": "page",
+  "where": [
+   "trophees.html · span"
+  ]
+ },
+ "Ton suivi · <1>Le squelette, prêt pour la liste</1>": {
+  "kind": "page",
+  "where": [
+   "trophees.html · p"
+  ]
+ },
+ "Aperçu d’une fiche trophée": {
+  "kind": "page",
+  "where": [
+   "trophees.html · h3"
+  ]
+ }
+}

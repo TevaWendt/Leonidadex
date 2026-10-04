@@ -83,7 +83,7 @@ const EXPLORE = pre => `<section class="shell reveal lk-explore">
   <h2 class="sec-h">Continuer la visite</h2>
   <div class="lk-links rise"><a class="lk-link" href="${pre}carte.html"><img src="/img/officiel/leonida-keys-01-480.webp" width="480" height="270" alt="" loading="lazy" decoding="async"><span><b>La carte</b><i>2 547 lieux repérés, à cocher</i></span></a><a class="lk-link" href="${pre}vehicules.html"><img src="/img/officiel/one-eyed-willie-s-mod-shop-01-480.webp" width="480" height="270" alt="" loading="lazy" decoding="async"><span><b>Les 302 véhicules</b><i>Fiches, photos officielles et schémas</i></span></a><a class="lk-link" href="${pre}collectibles.html"><img src="/img/officiel/classic-car-collection-04-480.webp" width="480" height="270" alt="" loading="lazy" decoding="async"><span><b>Collectibles</b><i>La collection de Wyman et le carnet</i></span></a></div>
 </section>`;
-function page(C, { p, title, desc, canonical, ogImg, body, crumbs, ld = '', cls = '' }) {
+function page(C, { p, title, desc, canonical, ogImg, body, crumbs, ld = '', cls = '', player = '' }) {
   desc = metaDesc(desc);
   return `<!DOCTYPE html>
 <html lang="fr">
@@ -122,7 +122,7 @@ ${body}
 ${EXPLORE(p ? '../' : '')}
 <section class="lk-outro" aria-label="Et après"><div class="shell lk-outro-in"><p class="lk-outro-k">Et après ?</p><h2>La suite s’écrit le 19 novembre 2026.</h2><p>Chaque fiche se complète avec le jeu : ce qu’on y trouve, ce qu’on y fait, ce que ça rapporte. Rien d’inventé d’ici là.</p><div class="lk-outro-links"><a href="${p ? '../' : ''}carte.html">Ouvrir la carte</a><a href="${p ? '../' : ''}progression.html">Ma progression</a></div></div></section>
 </main>
-
+${player}
 ${C.footer}
 
 ${C.scripts}
@@ -152,16 +152,29 @@ const srcLinks = (D, ids) => '<span class="radios-src">' + ids.map((id, i) => '<
 const plural = (n, one, many) => n + ' ' + (n > 1 ? many : one);
 /* infos d’un morceau ; un nom propre qui suit (producteur…) reste tel quel dans toutes les langues */
 /* un nom propre (infosNom) reste tel quel dans toutes les langues ; sans lui, une seule balise (mêmes textes à traduire que la ligne du moment) */
-/* « Écouter » : l’écoute officielle quand Rockstar ou l’artiste la donne, sinon une recherche sur les plateformes (liens
-   sortants : le site n’héberge ni n’intègre aucun extrait) */
+/* « Écouter » : un menu (popover, au-dessus de tout : jamais coupé par une carte) avec, quand c’est possible, « Écouter ici »
+   (lecteur officiel chargé seulement après le clic : vidéo YouTube de Rockstar au moment du morceau, ou lecteur Spotify d’un
+   single), l’écoute officielle quand Rockstar ou l’artiste la donne, puis une recherche sur les plateformes. Le site
+   n’héberge aucun extrait. */
 const PLATFORMS = [['Spotify', q => 'https://open.spotify.com/search/' + encodeURIComponent(q)], ['Apple Music', q => 'https://music.apple.com/search?term=' + encodeURIComponent(q)], ['YouTube', q => 'https://www.youtube.com/results?search_query=' + encodeURIComponent(q)], ['Deezer', q => 'https://www.deezer.com/search/' + encodeURIComponent(q)]];
-function listen(P, m) {
-  const q = m.artiste + ' ' + m.titre, official = (m.liens || []).filter(l => /spotify|apple|youtube|deezer|tidal|soundcloud/i.test(l.url));
-  return '<details class="lkx-listen"><summary><span class="lkx-listen-ico" aria-hidden="true">' + LKX.ICO.play + '</span><span>' + esc(P.ecouter) + '</span><span class="sr-only" translate="no"> ' + esc(m.titre) + '</span></summary><div class="lkx-listen-menu">'
+/* moment d’un morceau en secondes : « 0:06 à 0:45 », « Vers 0:27, à l’autoradio », « De 25:44 à la fin » ; sinon le début */
+function secs(t) { const m = String(t || '').match(/(\d+):(\d{2})(?:\s*à\s*(\d+):(\d{2}))?/); if (!m) return { s: 0, e: 0 }; return { s: +m[1] * 60 + +m[2], e: m[3] ? +m[3] * 60 + +m[4] : 0 }; }
+function playable(m, v) {
+  const sp = (m.liens || []).map(l => (String(l.url).match(/open\.spotify\.com\/track\/([A-Za-z0-9]+)/) || [])[1]).find(Boolean);
+  if (sp) return { kind: 'sp', src: 'https://open.spotify.com/embed/track/' + sp };
+  if (v && v.youtube) { const t = secs(m.moment); return { kind: 'yt', src: 'https://www.youtube-nocookie.com/embed/' + v.youtube + '?start=' + t.s + (t.e > t.s ? '&end=' + t.e : '') + '&autoplay=1&rel=0&playsinline=1' }; }
+  return null;
+}
+function listen(P, m, v, uid) {
+  const q = m.artiste + ' ' + m.titre, official = (m.liens || []).filter(l => /spotify|apple|youtube|deezer|tidal|soundcloud/i.test(l.url)), pl = playable(m, v);
+  return '<div class="lkx-listen"><button type="button" class="lkx-listen-b" popovertarget="' + esc(uid) + '"><span class="lkx-listen-ico" aria-hidden="true">' + LKX.ICO.play + '</span><span>' + esc(P.ecouter) + '</span><span class="sr-only" translate="no"> ' + esc(m.titre) + '</span></button><div class="lkx-listen-menu" id="' + esc(uid) + '" popover>'
+    + (pl ? '<button type="button" class="lkx-listen-here" data-lkx-play="' + pl.kind + '" data-lkx-src="' + esc(pl.src) + '" data-lkx-title="' + esc(m.titre + ' · ' + m.artiste) + '"><span class="lkx-listen-ico" aria-hidden="true">' + LKX.ICO.play + '</span><span><b>' + esc(P.ici) + '</b><small>' + esc(pl.kind === 'sp' ? P.iciSp : P.iciYt) + '</small></span></button>' : '')
     + (official.length ? '<p class="lkx-listen-k">' + esc(P.ecouteOff) + '</p>' + official.map(l => '<a href="' + esc(l.url) + '" target="_blank" rel="noopener nofollow" translate="no">' + esc(l.label) + ' <span aria-hidden="true">↗</span></a>').join('') : '')
     + PLATFORMS.map(([n, u]) => '<a href="' + esc(u(q)) + '" target="_blank" rel="noopener nofollow" translate="no">' + esc(n) + ' <span aria-hidden="true">↗</span></a>').join('')
-    + '<p class="lkx-listen-note">' + esc(P.ecouterNote) + '</p></div></details>';
+    + '<p class="lkx-listen-note">' + esc(P.ecouterNote) + '</p></div></div>';
 }
+/* lecteur de la page (un seul), rempli par lk-sections.js au clic sur « Écouter ici » */
+const playerBox = (P, p) => '<div class="lkx-player" id="lkx-player" role="region" aria-label="' + esc(P.lecteur) + '" hidden><div class="lkx-player-top"><span class="lkx-player-eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span><p><span class="lkx-player-k">' + esc(P.lecteurK) + '</span><b class="lkx-player-t" translate="no" data-lkx-player-t></b></p><button type="button" class="lkx-player-x" data-lkx-player-close aria-label="' + esc(P.lecteurFermer) + '"><span aria-hidden="true">×</span></button></div><div class="lkx-player-f" data-lkx-player-f></div><p class="lkx-player-n">' + esc(P.lecteurNote) + ' <a href="' + p + 'mentions-legales.html#cookies">' + esc(P.lecteurLien) + '</a></p></div>';
 const infosHtml = m => !m.infos ? '' : m.infosNom ? '<span class="radios-infos"><span>' + esc(m.infos) + '</span> <span translate="no">' + esc(m.infosNom) + '</span></span>' : '<span class="radios-infos">' + esc(m.infos) + '</span>';
 
 /* ---------- le poste de Leonida (hub) ---------- */
@@ -180,7 +193,7 @@ function poste(D) {
       + '<p class="radios-morceau-meta">' + infosHtml(m) + '<span class="radios-moment">' + esc(m.moment) + '</span></p>'
       + '<p class="radios-morceau-st">' + S.pip(m.statut, true) + srcLinks(D, m.sources) + '</p>'
       + ((m.liens || []).filter(l => !/spotify|apple|youtube|deezer/i.test(l.url)).length ? '<p class="radios-morceau-liens">' + m.liens.filter(l => !/spotify|apple|youtube|deezer/i.test(l.url)).map(l => '<a href="' + esc(l.url) + '" target="_blank" rel="noopener nofollow">' + esc(l.label) + ' <span aria-hidden="true">↗</span></a>').join('') + '</p>' : '')
-      + '</div>' + listen(P, m) + '</li>').join('');
+      + '</div>' + listen(P, m, v, 'ecouter-' + v.id + '-' + (j + 1)) + '</li>').join('');
     return '<section class="radios-panneau" id="radios-' + v.id + '" aria-labelledby="radios-' + v.id + '-t" data-radios-panneau="' + i + '">'
       + '<header class="radios-panneau-h"><h3 id="radios-' + v.id + '-t">' + (v.id === 'album' ? '<span translate="no">' + esc(v.nom) + '</span>' : esc(v.nom)) + '</h3>'
       + '<p class="radios-panneau-meta"><time datetime="' + v.date + '">' + esc(v.dateTexte) + '</time> · ' + esc(plural(v.morceaux.length, P.morceau, P.morceaux)) + ' · ' + S.pip(v.statut, true) + '</p>'
@@ -239,7 +252,7 @@ ${albumSec}
 ${zone(D, STATUTS)}`;
   const collection = '<script type="application/ld+json">' + JSON.stringify({ '@context': 'https://schema.org', '@type': 'CollectionPage', name: H.title, description: metaDesc(H.desc), url: SITE + '/' + HUB + '.html', inLanguage: 'fr', isPartOf: { '@type': 'WebSite', name: 'Leonidakit', url: SITE + '/' }, mainEntity: { '@type': 'ItemList', numberOfItems: D.fiches.length, itemListElement: D.fiches.map((x, i) => ({ '@type': 'ListItem', position: i + 1, name: x.name, url: SITE + '/' + HUB + '/' + x.id + '.html' })) } }) + '</script>';
   const og = imgOf(MED, H.pile[0].media);
-  return page(ROOTC, { p: '', title: H.title + ' | Leonidakit', desc: H.desc, canonical: '/' + HUB + '.html', ogImg: og.b.src, body, crumbs: [['Accueil', '/'], [H.label, '/' + HUB + '.html']], ld: collection });
+  return page(ROOTC, { player: playerBox(D.poste, ''), p: '', title: H.title + ' | Leonidakit', desc: H.desc, canonical: '/' + HUB + '.html', ogImg: og.b.src, body, crumbs: [['Accueil', '/'], [H.label, '/' + HUB + '.html']], ld: collection });
 }
 
 function fichePage(ctx, x) {
@@ -249,7 +262,7 @@ function fichePage(ctx, x) {
     return '<div class="lore-rel-group"><h3>' + label + '</h3><div class="lore-mini">' + l.map(y => { const m = (y.media || []).map(id => MED[id]).filter(Boolean)[0];
       return '<a class="lore-minicard" href="../' + folder + '/' + y.id + '.html">' + (m ? '<img src="' + m.variants[0].src + '" width="' + m.variants[0].w + '" height="' + m.variants[0].h + '" alt="" loading="lazy" decoding="async">' : '<i class="lore-minivide"></i>') + '<span><b>' + esc(y.name) + '</b><i>' + esc(kindLabel) + '</i></span></a>'; }).join('') + '</div></div>'; };
   const album = D.videos.find(v => v.fiche === x.id);
-  const singles = album ? '<div class="lore-texte reveal"><h2>Les titres déjà sortis</h2><ol class="radios-morceaux radios-morceaux--fiche">' + album.morceaux.map((m, j) => '<li class="radios-morceau" style="--i:' + j + '"><span class="radios-morceau-n" aria-hidden="true">' + String(j + 1).padStart(2, '0') + '</span><span class="radios-mini-eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span><div class="radios-morceau-body"><p class="radios-morceau-t"><cite translate="no">' + esc(m.titre) + '</cite></p><p class="radios-morceau-a" translate="no">' + esc(m.artiste) + '</p>' + (m.infos ? '<p class="radios-morceau-meta">' + infosHtml(m) + '</p>' : '') + '</div>' + listen(D.poste, m) + '</li>').join('') + '</ol></div>' : '';
+  const singles = album ? '<div class="lore-texte reveal"><h2>Les titres déjà sortis</h2><ol class="radios-morceaux radios-morceaux--fiche">' + album.morceaux.map((m, j) => '<li class="radios-morceau" style="--i:' + j + '"><span class="radios-morceau-n" aria-hidden="true">' + String(j + 1).padStart(2, '0') + '</span><span class="radios-mini-eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span><div class="radios-morceau-body"><p class="radios-morceau-t"><cite translate="no">' + esc(m.titre) + '</cite></p><p class="radios-morceau-a" translate="no">' + esc(m.artiste) + '</p>' + (m.infos ? '<p class="radios-morceau-meta">' + infosHtml(m) + '</p>' : '') + '</div>' + listen(D.poste, m, album, 'ecouter-' + album.id + '-' + (j + 1)) + '</li>').join('') + '</ol></div>' : '';
   const links = [];
   if (x.source) links.push('<a href="' + esc(x.source) + '" target="_blank" rel="noopener nofollow">Annonce officielle</a>');
   for (const l of x.liens || []) links.push('<a href="' + esc(l.url) + '" target="_blank" rel="noopener nofollow">' + esc(l.label) + '</a>');
@@ -282,7 +295,7 @@ function fichePage(ctx, x) {
 ${LKX.gallery(MED, (x.galerie || []).map(g => ({ media: g.media, alt: g.alt, legende: g.legende })), { name: x.name, kicker: x.kind })}
 ${srcs}`;
   const og = m ? imgOf(MED, m) : null;
-  return page(SUBC, { p, title: x.name + ' — GTA VI | Leonidakit', desc: x.description, canonical: '/' + HUB + '/' + x.id + '.html', ogImg: og ? og.b.src : null, body, crumbs: [['Accueil', '/'], [H.label, '/' + HUB + '.html'], [x.name, '/' + HUB + '/' + x.id + '.html']], cls: album ? 'radios-page--album' : '' });
+  return page(SUBC, { player: playerBox(D.poste, p), p, title: x.name + ' — GTA VI | Leonidakit', desc: x.description, canonical: '/' + HUB + '/' + x.id + '.html', ogImg: og ? og.b.src : null, body, crumbs: [['Accueil', '/'], [H.label, '/' + HUB + '.html'], [x.name, '/' + HUB + '/' + x.id + '.html']], cls: album ? 'radios-page--album' : '' });
 }
 
 /* ---------- recherche du site (outils/radios-index.json, lu par sync-site.cjs) ---------- */

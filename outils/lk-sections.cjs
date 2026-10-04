@@ -68,4 +68,9 @@ function gallery(MED, list, { name, kicker }) {
         + img(MED, x.media, x.alt, { big: true, sizes: '(max-width:820px) 100vw, 560px' }) + '</a><div class="lore-slide-txt" aria-hidden="true"><span class="lst-k">' + esc(x.legende || kicker) + '</span><strong>' + esc(name) + '</strong><em>' + pad(i + 1) + ' / ' + pad(n) + '</em></div></figure>'; }).join('')
     + '</div></div></section>';
 }
-module.exports = { esc, ICO, imgOf, img, thumb, dialog, sheet, chip, linkCard, place, miniMap, locate, gallery };
+/* squelette d’une fiche à venir (guide des codes, trophées, rubriques de GTA Online) : chaque rubrique, ce qu’elle dira, et
+   une barre qui attend la sortie ; aucun contenu inventé */
+function skel(fields, sortie) {
+  return '<dl class="lkx-skel">' + fields.map(f => '<div><dt>' + esc(f.t) + '</dt>' + (f.d ? '<dd class="lkx-skel-d">' + esc(f.d) + '</dd>' : '') + '<dd class="lkx-skel-w"><span class="lkx-skel-bar" aria-hidden="true"></span><span>' + esc(sortie) + '</span></dd></div>').join('') + '</dl>';
+}
+module.exports = { esc, ICO, imgOf, img, thumb, dialog, sheet, chip, linkCard, place, miniMap, locate, gallery, skel };

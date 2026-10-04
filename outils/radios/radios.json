@@ -35,7 +35,15 @@
   "morceaux": "morceaux",
   "ecouter": "Écouter",
   "ecouterNote": "Recherche sur la plateforme : le site n’héberge aucun extrait.",
-  "ecouteOff": "Écoute officielle"
+  "ecouteOff": "Écoute officielle",
+  "ici": "Écouter ici",
+  "iciYt": "Dans la vidéo officielle de Rockstar, au moment du morceau",
+  "iciSp": "Lecteur Spotify : un extrait de 30 secondes sans compte",
+  "lecteur": "Lecteur",
+  "lecteurK": "En lecture",
+  "lecteurFermer": "Fermer le lecteur",
+  "lecteurNote": "Lecteur officiel de YouTube (Google) ou de Spotify, chargé seulement après ton clic : ils peuvent alors déposer leurs propres cookies.",
+  "lecteurLien": "Mentions et confidentialité"
  },
  "videos": [
   {
@@ -47,6 +55,7 @@
    "statut": "officiel",
    "resume": "Le premier trailer se déroule tout entier sur un seul morceau, crédité par Rockstar dans la description de la vidéo.",
    "lien": "https://www.rockstargames.com/VI/media/videos",
+   "youtube": "QdBZY2fkU-0",
    "morceaux": [
     {
      "titre": "Love Is a Long Road",
@@ -76,6 +85,7 @@
    "statut": "officiel",
    "resume": "Un morceau principal, crédité par Rockstar, et de courtes bribes d’autoradio pendant que Jason conduit, identifiées par la presse.",
    "lien": "https://www.rockstargames.com/VI/media/videos",
+   "youtube": "VQRLujxTm3c",
    "morceaux": [
     {
      "titre": "Hot Together",
@@ -132,6 +142,7 @@
    "statut": "vu",
    "resume": "Quatorze morceaux sous licence entendus au fil des 26 minutes, relevés avec leurs minutages par plusieurs médias. Rockstar n’en a pas publié la liste.",
    "lien": "https://www.rockstargames.com/newswire/article/4k138k8okkk483/grand-theft-auto-vi-an-extended-look-now-playing",
+   "youtube": "tJbzMqJGH4k",
    "morceaux": [
     {
      "titre": "Pop Bottles",
@@ -990,5 +1001,6 @@
   ],
   "cta": "Ouvrir la fiche de l’album",
   "ecouter": "Écouter les titres déjà sortis"
- }
+ },
+ "_noteLecteur": "Lecteur au clic (v7.66) : « youtube » = identifiant de la vidéo officielle sur la chaîne YouTube de Rockstar Games (vérifié par oEmbed le 4 octobre 2026 : Trailer 1, Trailer 2, An Extended Look) ; le morceau démarre à son moment. Les singles se lisent avec le lecteur Spotify quand un lien officiel open.spotify.com/track est connu. Rien ne se charge avant le clic."
 }

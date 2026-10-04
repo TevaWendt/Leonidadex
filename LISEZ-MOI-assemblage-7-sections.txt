@@ -1,0 +1,57 @@
+LEONIDAKIT — ASSEMBLAGE DES 7 SECTIONS + DESIGN + LECTEUR DE MUSIQUE — archive « modifs » unique (4 octobre 2026)
+
+POURQUOI LES DEUX ZIP S’ÉCRASAIENT
+Le zip « design des sections » et le zip « 3 sections » (Codes de triche, Trophées et succès, GTA Online) avaient été
+faits chacun de leur côté, sur la même base. Ils contenaient tous les deux les mêmes ~2 200 pages (menu, pied de page,
+numéros de version) : le deuxième extrait remplaçait donc le travail du premier (par exemple, « GTA Online » disparaissait
+du menu, ou le design des sections revenait en arrière). Cette archive-ci réunit les deux travaux, régénérés ensemble.
+
+CE QU’IL FAUT FAIRE
+Base attendue : v7.65 + « Leonidakit-4-sections-modifs.zip ». Peu importe si tu as déjà extrait, en plus, le zip
+« design des sections » ou le zip « 3 sections », ou les deux, dans n’importe quel ordre : cette archive les contient
+tous les deux et remet chaque fichier dans son état final.
+1. Note le commit courant dans GitHub Desktop (ou copie le dossier).
+2. Extrais « Leonidakit-assemblage-7-sections-modifs.zip » à la racine du site en écrasant les fichiers homonymes (garde
+   le dossier .git). Aucun fichier à supprimer.
+3. Vérifie en local ou sur la prévisualisation Vercel (voir « Pour vérifier »), puis commit et push quand tu le décides.
+
+CE QUI EST NOUVEAU DANS CETTE ARCHIVE
+1. Les trois sections de l’autre conversation (Codes de triche, Trophées et succès, GTA Online), telles quelles, avec leur
+   LISEZ-MOI-3-sections.txt.
+2. Le même travail de design que pour Missions, Activités et Radios, appliqué à ces trois sections :
+   - une entrée animée propre à chacune : « allumage d’un vieil écran » pour les codes, « succès débloqué » pour les
+     trophées, « réseau néon » pour GTA Online ;
+   - une image officielle sur chaque ligne de « Ce que Rockstar a montré » ;
+   - Codes de triche : les quatre catégories du guide en cartes illustrées ; un clic ouvre la fiche prête en plein écran
+     (ce que dira chaque code, en attente de la sortie) ;
+   - Trophées : une carte « Aperçu d’une fiche trophée » qui ouvre le squelette de chaque fiche en plein écran ;
+   - GTA Online : chaque rubrique encore vide (activités, achats et entreprises, mises à jour) a sa carte « Aperçu de la
+     fiche » ; les annonces et le GTA Online actuel arrivent en cascade ;
+   - les renvois de sources en « tickets » (§ 1, § 2…), comme dans les autres sections.
+3. Radios et musique, menu « Écouter » réparé : il s’ouvre maintenant au-dessus de tout (il n’est plus coupé par la carte
+   ni caché derrière le morceau suivant) ; sur téléphone, il s’ouvre en bas de l’écran.
+4. Radios et musique, écoute sur le site : « Écouter ici », en haut du menu, ouvre un petit lecteur en bas de l’écran.
+   - Morceaux des trailers et de l’Extended Look (19 morceaux) : la vidéo officielle de Rockstar sur YouTube démarre au
+     moment où le morceau joue (et s’arrête à sa fin quand elle est connue).
+   - RHYNO et Sexy Magic (album) : le lecteur Spotify (un extrait de 30 secondes si on n’est pas connecté à Spotify).
+   - Les quatre autres titres déjà sortis gardent leurs liens (Spotify, Apple Music, YouTube, Deezer ; et l’écoute
+     officielle Apple Music pour That’s It).
+   Héberger les chansons sur le site est interdit (droits d’auteur) : ce sont donc les lecteurs officiels de YouTube et
+   de Spotify. Rien ne se charge avant le clic ; une fois lancés, ces services peuvent déposer leurs propres cookies. La
+   page « Mentions et confidentialité » et la réponse de Léo sur les cookies le disent maintenant (cinq langues), et
+   vercel.json autorise ces deux lecteurs (ligne « Content-Security-Policy », ajout de « frame-src »).
+5. Tout est traduit en anglais, espagnol, italien et allemand.
+
+POURQUOI PRESQUE TOUTES LES PAGES SONT DANS L’ARCHIVE : le menu « Jouer » (six liens), le pied de page et les numéros de
+version (« ?v=… ») changent sur toutes les pages des cinq langues. Le texte des pages existantes ne change pas, sauf la
+page Mentions et confidentialité (le lecteur de musique) et les compteurs de la page À propos (recomptés tout seuls).
+
+POUR VÉRIFIER
+- radios.html : choisis « Extended Look », clique « Écouter » sur un morceau : le menu s’affiche en entier ; clique
+  « Écouter ici » : le lecteur s’ouvre en bas à droite et la vidéo démarre au bon moment ; « × » le ferme.
+- radios/gta-vi-the-album.html : « Écouter » → « Écouter ici » sur RHYNO (lecteur Spotify).
+- codes-de-triche.html : les cartes « allumées » en arrivant ; clique une catégorie (fiche plein écran, Échap pour fermer).
+- trophees.html : les badges qui « se débloquent » ; « Aperçu d’une fiche trophée ».
+- online.html : le menu « Explorer » → « Jouer » a bien GTA Online ; les cartes « Aperçu de la fiche » des rubriques.
+- missions.html, activites.html, gangs.html : le design du zip précédent est bien là.
+- mentions-legales.html#cookies : le paragraphe sur le lecteur de musique.

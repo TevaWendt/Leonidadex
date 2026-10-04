@@ -102,11 +102,11 @@
 .lkx-chip--page .lkx-chip-ico{background:var(--amber);color:var(--ink);}
 .lkx-chip--plain{padding-left:14px;}
 /* renvois de sources : petites étiquettes « billet » */
-.lkx-page .missions-src a,.lkx-page .activites-src a,.lkx-page .radios-src a{position:relative;display:inline-flex;align-items:center;justify-content:center;min-width:30px;height:24px;padding:0 7px 0 9px;border:1.5px solid var(--ink);border-radius:5px;background:var(--paper);color:var(--ink);font:800 .68rem/1 var(--font-mono);
+.lkx-page .missions-src a,.lkx-page .activites-src a,.lkx-page .radios-src a,.lkx-page .codes-src a,.lkx-page .trophees-src a,.lkx-page .online-src a{position:relative;display:inline-flex;align-items:center;justify-content:center;min-width:30px;height:24px;padding:0 7px 0 9px;border:1.5px solid var(--ink);border-radius:5px;background:var(--paper);color:var(--ink);font:800 .68rem/1 var(--font-mono);
   background-image:radial-gradient(circle at 0 50%,var(--paper-2) 3.5px,transparent 4px);transition:transform var(--c-fast,190ms) var(--lkx-ease);}
-.lkx-page .missions-src a::before,.lkx-page .activites-src a::before,.lkx-page .radios-src a::before{content:'§';margin-right:3px;color:var(--coral-text);}
-.lkx-page .missions-src a:hover,.lkx-page .activites-src a:hover,.lkx-page .radios-src a:hover,.lkx-page .missions-src a:focus-visible,.lkx-page .activites-src a:focus-visible,.lkx-page .radios-src a:focus-visible{transform:translateY(-2px) rotate(-3deg);background-color:var(--ink);color:var(--paper);}
-.lkx-page .missions-src a:hover::before,.lkx-page .activites-src a:hover::before,.lkx-page .radios-src a:hover::before{color:var(--amber);}
+.lkx-page .missions-src a::before,.lkx-page .activites-src a::before,.lkx-page .radios-src a::before,.lkx-page .codes-src a::before,.lkx-page .trophees-src a::before,.lkx-page .online-src a::before{content:'§';margin-right:3px;color:var(--coral-text);}
+.lkx-page .missions-src a:hover,.lkx-page .activites-src a:hover,.lkx-page .radios-src a:hover,.lkx-page .codes-src a:hover,.lkx-page .trophees-src a:hover,.lkx-page .online-src a:hover,.lkx-page .missions-src a:focus-visible,.lkx-page .activites-src a:focus-visible,.lkx-page .radios-src a:focus-visible,.lkx-page .codes-src a:focus-visible,.lkx-page .trophees-src a:focus-visible,.lkx-page .online-src a:focus-visible{transform:translateY(-2px) rotate(-3deg);background-color:var(--ink);color:var(--paper);}
+.lkx-page .missions-src a:hover::before,.lkx-page .activites-src a:hover::before,.lkx-page .radios-src a:hover::before,.lkx-page .codes-src a:hover::before,.lkx-page .trophees-src a:hover::before,.lkx-page .online-src a:hover::before{color:var(--amber);}
 /* liens « Ailleurs sur le site » : cartes avec flèche */
 .lkx-links{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr));gap:10px;margin-top:8px;}
 .lkx-link{position:relative;display:flex;align-items:center;gap:12px;min-height:64px;padding:8px 40px 8px 8px;border:2px solid var(--ink);border-radius:12px;background:var(--paper);box-shadow:3px 3px 0 var(--ink);overflow:hidden;transition:transform var(--c-fast,190ms) var(--lkx-ease);}
@@ -159,22 +159,52 @@
 }
 @media print{.lkx-sheet{display:none;}.lkx-js [data-lkx-in]>*{opacity:1!important;animation:none!important;}}
 
-/* ---------- 9. « Écouter » : menu de liens sortants (aucun extrait hébergé ni intégré) ---------- */
+/* ---------- 9. « Écouter » : menu (popover : au-dessus de tout, jamais coupé) et lecteur au clic ---------- */
 .lkx-listen{position:relative;}
-.lkx-listen>summary{list-style:none;display:inline-flex;align-items:center;gap:7px;min-height:38px;padding:6px 13px 6px 7px;border:2px solid var(--ink);border-radius:999px;background:var(--ink);color:var(--paper);font-weight:800;font-size:.84rem;cursor:pointer;box-shadow:2px 2px 0 var(--amber);transition:transform var(--c-fast,190ms) var(--lkx-ease);}
-.lkx-listen>summary::-webkit-details-marker{display:none;}
-.lkx-listen>summary:hover{transform:translateY(-2px);background:var(--night-2);}
-.lkx-listen>summary:focus-visible{outline:3px solid var(--coral);outline-offset:2px;}
-.lkx-listen-ico{display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--amber);color:var(--ink);}
+.lkx-listen-b{display:inline-flex;align-items:center;gap:7px;min-height:38px;padding:6px 13px 6px 7px;border:2px solid var(--ink);border-radius:999px;background:var(--ink);color:var(--paper);font:inherit;font-weight:800;font-size:.84rem;cursor:pointer;box-shadow:2px 2px 0 var(--amber);transition:transform var(--c-fast,190ms) var(--lkx-ease);}
+.lkx-listen-b:hover{transform:translateY(-2px);background:var(--night-2);}
+.lkx-listen-b:focus-visible{outline:3px solid var(--coral);outline-offset:2px;}
+.lkx-listen-b[aria-expanded="true"]{background:var(--coral-deep);}
+.lkx-listen-ico{display:grid;place-items:center;flex:none;width:24px;height:24px;border-radius:50%;background:var(--amber);color:var(--ink);}
 .lkx-listen-ico svg{width:12px;height:12px;margin-left:2px;}
-.lkx-listen[open]>summary{background:var(--coral-deep);}
-.lkx-listen-menu{position:absolute;right:0;top:calc(100% + 8px);z-index:30;display:grid;gap:4px;min-width:230px;padding:10px;border:2px solid var(--ink);border-radius:12px;background:var(--paper);box-shadow:5px 5px 0 var(--ink);animation:lkx-wave .35s var(--lkx-ease) both;}
+.lkx-listen-menu{gap:4px;min-width:230px;padding:10px;border:2px solid var(--ink);border-radius:12px;background:var(--paper);color:var(--ink);box-shadow:5px 5px 0 var(--ink);}
+.lkx-listen-menu[popover]{position:fixed;inset:auto;margin:0;width:272px;max-width:calc(100vw - 16px);max-height:calc(100vh - 16px);overflow:auto;}
+.lkx-listen-menu:popover-open{display:grid;animation:lkx-wave .3s var(--lkx-ease) both;}
 .lkx-listen-menu a{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 10px;border-radius:8px;font-weight:800;font-size:.88rem;color:var(--ink);}
 .lkx-listen-menu a:hover,.lkx-listen-menu a:focus-visible{background:var(--amber);}
+.lkx-listen-here{display:flex;align-items:center;gap:10px;width:100%;margin:0 0 4px;padding:10px;border:2px solid var(--ink);border-radius:10px;background:linear-gradient(135deg,var(--amber-2,#ffd27a),var(--amber));color:var(--ink);font:inherit;text-align:left;cursor:pointer;box-shadow:3px 3px 0 var(--ink);transition:transform var(--c-fast,190ms) var(--lkx-ease);}
+.lkx-listen-here:hover{transform:translateY(-2px);}
+.lkx-listen-here:focus-visible{outline:3px solid var(--coral);outline-offset:2px;}
+.lkx-listen-here .lkx-listen-ico{width:34px;height:34px;background:var(--ink);color:var(--amber);}
+.lkx-listen-here .lkx-listen-ico svg{width:15px;height:15px;}
+.lkx-listen-here b{display:block;font-size:.95rem;}
+.lkx-listen-here small{display:block;margin-top:2px;font-size:.72rem;line-height:1.3;font-weight:600;}
 .lkx-listen-k{margin:0 0 2px;padding:0 4px;font:800 .62rem/1.2 var(--font-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--coral-text);}
 .lkx-listen-note{margin:4px 0 0;padding:6px 4px 0;border-top:1px solid var(--rule);font-size:.72rem;color:var(--ink-soft);line-height:1.35;}
-@media (max-width:560px){.lkx-listen-menu{position:fixed;left:12px;right:12px;top:auto;bottom:12px;min-width:0;}}
-@media (prefers-reduced-motion:reduce){.lkx-listen-menu{animation:none;}.lkx-listen>summary{transition:none;}}
+@media (max-width:560px){.lkx-listen-menu[popover]{inset:auto 8px 8px 8px!important;width:auto;max-width:none;}}
+/* lecteur : en bas à droite de l’écran, au-dessus de la page ; l’iframe n’existe qu’après le clic */
+.lkx-player{position:fixed;right:16px;bottom:16px;z-index:900;width:min(360px,calc(100vw - 32px));padding:12px;border:2px solid var(--ink);border-radius:16px;background:linear-gradient(160deg,var(--night,#1b1033),var(--night-2,#2a1748));color:var(--paper);box-shadow:6px 6px 0 var(--amber);animation:lkx-rise .45s var(--lkx-ease) both;}
+@keyframes lkx-rise{from{opacity:0;transform:translate3d(0,24px,0) scale(.97);}to{opacity:1;transform:none;}}
+.lkx-player[hidden]{display:none;}
+.lkx-player-top{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.lkx-player-top p{flex:1;min-width:0;margin:0;display:grid;}
+.lkx-player-k{font:800 .6rem/1.2 var(--font-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--amber);}
+.lkx-player-t{overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:.92rem;}
+.lkx-player-x{flex:none;display:grid;place-items:center;width:34px;height:34px;border:2px solid var(--paper);border-radius:50%;background:transparent;color:var(--paper);font:800 1.2rem/1 inherit;cursor:pointer;}
+.lkx-player-x:hover,.lkx-player-x:focus-visible{background:var(--amber);color:var(--ink);border-color:var(--amber);}
+.lkx-player-eq{display:flex;align-items:flex-end;gap:2px;height:20px;}
+.lkx-player-eq i{width:4px;height:100%;border-radius:2px 2px 0 0;background:linear-gradient(0deg,var(--coral),var(--amber));transform-origin:50% 100%;animation:lkx-eq .9s ease-in-out infinite alternate;}
+.lkx-player-eq i:nth-child(2){animation-delay:-.3s;}.lkx-player-eq i:nth-child(3){animation-delay:-.6s;animation-duration:.7s;}.lkx-player-eq i:nth-child(4){animation-delay:-.15s;animation-duration:1.1s;}
+@keyframes lkx-eq{from{transform:scaleY(.25);}to{transform:scaleY(1);}}
+.lkx-player-f{overflow:hidden;border-radius:10px;background:#000;}
+.lkx-player-f iframe{display:block;width:100%;border:0;}
+.lkx-player--yt .lkx-player-f iframe{aspect-ratio:16/9;height:auto;}
+.lkx-player--sp .lkx-player-f{background:transparent;}
+.lkx-player--sp .lkx-player-f iframe{height:152px;}
+.lkx-player-n{margin:8px 0 0;font-size:.7rem;line-height:1.35;color:rgba(253,251,247,.75);}
+.lkx-player-n a{color:var(--amber);font-weight:800;}
+@media (max-width:560px){.lkx-player{left:8px;right:8px;bottom:8px;width:auto;}}
+@media (prefers-reduced-motion:reduce){.lkx-listen-menu:popover-open,.lkx-player{animation:none;}.lkx-player-eq i{animation:none;transform:scaleY(.6);}.lkx-listen-b,.lkx-listen-here{transition:none;}}
 
 /* ---------- 10. cartes du hub des gangs : image qui s’anime, bande de couleur, étiquette ---------- */
 .lkx-deal>.lore-card{position:relative;overflow:hidden;}
@@ -185,3 +215,81 @@
 .lkx-deal>.lore-card .veh-marque{display:inline-block;padding:3px 9px;border-radius:999px;background:var(--ink);color:var(--amber-2);}
 .lkx-deal>.lore-card:hover{box-shadow:8px 8px 0 var(--amber);}
 @media (prefers-reduced-motion:reduce){.lkx-deal>.lore-card img,.lkx-deal>.lore-card::after{transition:none;}}
+
+/* ---------- 11. sections « Jouer » : Codes de triche, Trophées et succès, GTA Online ---------- */
+/* trois entrées propres : allumage d’un vieil écran (codes), succès débloqué (trophées), réseau néon (GTA Online) */
+.lkx-js .lkx-crt:not(.is-in)>*,.lkx-js .lkx-unlock:not(.is-in)>*,.lkx-js .lkx-net:not(.is-in)>*{opacity:0;}
+.lkx-crt.is-in>*{transform-origin:50% 50%;animation:lkx-crt .95s var(--lkx-ease) backwards;animation-delay:calc(var(--i,0) * 120ms);}
+@keyframes lkx-crt{0%{opacity:0;transform:scale(1.06,.02);}22%{opacity:1;transform:scale(1.06,.02);}48%{transform:scale(.98,1.05);}60%{opacity:.55;}68%{opacity:1;transform:scale(1.01,.99);}100%{opacity:1;transform:none;}}
+.lkx-unlock.is-in>*{animation:lkx-unlock .85s cubic-bezier(.34,1.56,.64,1) backwards;animation-delay:calc(var(--i,0) * 110ms);}
+@keyframes lkx-unlock{0%{opacity:0;transform:translate3d(0,26px,0) scale(.6) rotate(-7deg);}62%{opacity:1;transform:scale(1.06) rotate(1.5deg);}100%{opacity:1;transform:none;}}
+.lkx-unlock.is-in .trophees-badge{animation:lkx-badge 1.1s cubic-bezier(.34,1.56,.64,1) backwards;animation-delay:calc(var(--i,0) * 110ms + .35s);}
+@keyframes lkx-badge{0%{transform:scale(.4) rotate(-30deg);}55%{transform:scale(1.18) rotate(8deg);}100%{transform:none;}}
+.lkx-net>*:nth-child(odd){--nx:-48px;}.lkx-net>*:nth-child(even){--nx:48px;}
+.lkx-net.is-in>*{animation:lkx-net .9s var(--lkx-ease) backwards;animation-delay:calc(var(--i,0) * 120ms);}
+@keyframes lkx-net{0%{opacity:0;transform:translate3d(var(--nx,0),0,0) skewX(-5deg);}45%{opacity:.7;}55%{opacity:.2;}66%{opacity:1;}100%{opacity:1;transform:none;}}
+/* squelette d’une fiche à venir */
+.lkx-skel{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:0;}
+.lkx-skel>div{padding:10px 12px;border:1.5px solid var(--rule);border-radius:10px;background:var(--paper);}
+.lkx-skel dt{font:800 .66rem/1.2 var(--font-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);}
+.lkx-skel-d{margin:5px 0 0;font-size:.82rem;line-height:1.35;color:var(--ink);}
+.lkx-skel-w{margin:8px 0 0;display:flex;align-items:center;gap:10px;font-size:.74rem;color:var(--ink-soft);}
+.lkx-skel-bar{position:relative;flex:1;height:9px;border-radius:999px;background:var(--paper-2);overflow:hidden;}
+.lkx-skel-bar::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.9),transparent);transform:translateX(-100%);animation:lkx-skel 1.7s linear infinite;}
+@keyframes lkx-skel{to{transform:translateX(100%);}}
+@media (max-width:560px){.lkx-skel{grid-template-columns:1fr;}}
+.lkx-sheet-vide{padding:10px 12px;border:1.5px dashed var(--ink-soft);border-radius:10px;background:var(--paper-2);}
+/* cartes cliquables (catégories de codes, aperçu d’une fiche trophée, rubriques de GTA Online) */
+.lkx-cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin:14px 0 8px;padding:0;list-style:none;}
+.lkx-cards--3{grid-template-columns:repeat(3,minmax(0,1fr));}
+@media (max-width:980px){.lkx-cards{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media (max-width:560px){.lkx-cards,.lkx-cards--3{grid-template-columns:1fr;}}
+.lkx-card{position:relative;display:flex;flex-direction:column;height:100%;border:2px solid var(--ink);border-radius:14px;background:var(--paper);color:var(--ink);box-shadow:4px 4px 0 var(--ink);overflow:hidden;transition:transform var(--c-fast,190ms) var(--lkx-ease);}
+.lkx-det>summary:hover .lkx-card,.lkx-det>summary:focus-visible .lkx-card{transform:translate(-3px,-3px);}
+.lkx-det>summary:focus-visible{outline:none;}
+.lkx-det>summary:focus-visible .lkx-card{outline:3px solid var(--coral);outline-offset:3px;}
+.lkx-card-media{position:relative;display:block;aspect-ratio:16/10;overflow:hidden;background:var(--night-deep);}
+.lkx-card-media img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .9s var(--lkx-ease);}
+.lkx-det>summary:hover .lkx-card-media img{transform:scale(1.07);}
+.lkx-card-media::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(18,10,34,0) 40%,rgba(18,10,34,.7));}
+.lkx-card-n{position:absolute;right:10px;top:10px;z-index:2;display:grid;place-items:center;min-width:34px;height:34px;padding:0 8px;border:2px solid var(--ink);border-radius:999px;background:var(--amber);font:800 .9rem/1 var(--font-mono);}
+.lkx-card-tag{position:absolute;left:12px;bottom:10px;z-index:2;color:var(--paper);font:800 .64rem/1.2 var(--font-mono);letter-spacing:.14em;text-transform:uppercase;}
+.lkx-card-body{display:flex;flex-direction:column;gap:6px;flex:1;padding:14px 14px 16px;}
+.lkx-card-body h3,.lkx-card-body h4{margin:0;font-size:1.05rem;line-height:1.15;}
+.lkx-card-body p{margin:0;font-size:.86rem;line-height:1.4;color:var(--ink-soft);}
+.lkx-card-go{margin-top:auto;padding-top:6px;font-weight:800;font-size:.84rem;color:var(--coral-text);}
+.lkx-card-go::after{content:' ›';}
+.lkx-card--ico .lkx-card-media{display:grid;place-items:center;aspect-ratio:auto;min-height:120px;background:linear-gradient(150deg,var(--night-deep),var(--night-2) 60%,var(--night-3,#3a2a66));color:var(--amber);}
+.lkx-card--ico .lkx-card-media svg{width:54px;height:54px;}
+.lkx-card--ico .lkx-card-media::after{display:none;}
+/* GTA Online : la couleur de l’espace (néon) */
+.online-page .lkx-card{border-color:var(--online-deep);box-shadow:4px 4px 0 var(--online-accent);}
+.online-page .lkx-card--ico .lkx-card-media{background:radial-gradient(circle at 50% 45%,#3a2a66,var(--online-deep) 72%);color:var(--online-accent);}
+.online-page .lkx-card-go{color:var(--online-text);}
+.online-page .lkx-sheet-fig--ico{background:radial-gradient(circle at 50% 45%,#3a2a66,var(--online-deep) 72%);color:var(--online-accent);}
+/* trophées : l’aperçu porte un badge dessiné pour le site */
+.lkx-card--trophee .lkx-card-media{display:grid;place-items:center;aspect-ratio:auto;min-height:140px;background:radial-gradient(circle at 50% 40%,#4b3a1a,var(--night-deep) 70%);}
+.lkx-card--trophee .lkx-card-media::after{display:none;}
+.lkx-card--trophee .trophees-badge{width:84px;height:84px;}
+@media (prefers-reduced-motion:reduce){
+  .lkx-js .lkx-crt:not(.is-in)>*,.lkx-js .lkx-unlock:not(.is-in)>*,.lkx-js .lkx-net:not(.is-in)>*{opacity:1;}
+  .lkx-crt.is-in>*,.lkx-unlock.is-in>*,.lkx-unlock.is-in .trophees-badge,.lkx-net.is-in>*,.lkx-skel-bar::after{animation:none;}
+  .lkx-card,.lkx-card-media img{transition:none;}
+}
+.lkx-cards--solo{grid-template-columns:minmax(0,340px);margin:12px 0;}
+.lkx-rubrique{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,320px);gap:18px;align-items:start;}
+.lkx-rubrique>.online-vide{margin:12px 0;}
+.lkx-rubrique .lkx-cards--solo{grid-template-columns:1fr;}
+@media (max-width:760px){.lkx-rubrique{grid-template-columns:1fr;gap:0;}}
+.lkx-card--trophee .trophees-badge{width:84px;height:84px;}
+.lkx-card--trophee .trophees-badge svg{width:42px;height:42px;}
+.lkx-sheet-fig--ico .trophees-badge{width:150px;height:150px;}
+.lkx-sheet-fig--ico .trophees-badge svg{width:76px;height:76px;}
+.lkx-sheet-fig--ico .trophees-badge .trophees-sceau{display:none;}
+.codes-cats.lkx-cards{grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;}
+.codes-cats.lkx-cards>li{display:block;padding:0;border:0;background:transparent;border-radius:0;}
+.codes-cats.lkx-cards .lkx-card-body>span{font-size:.86rem;}
+.codes-cats.lkx-cards .lkx-card-go{color:var(--coral-text);font-size:.84rem;}
+@media (max-width:980px){.codes-cats.lkx-cards{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media (max-width:560px){.codes-cats.lkx-cards{grid-template-columns:1fr;}}
+.lkx-sheet-fig--ico .trophees-badge{background:radial-gradient(circle at 35% 30%,#fff7e0,var(--amber-2) 55%,#c98a1c);border-color:var(--paper);color:var(--ink);box-shadow:0 0 0 10px rgba(247,182,69,.18),0 0 60px rgba(247,182,69,.45);}

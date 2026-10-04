@@ -15,6 +15,7 @@
 const fs = require('node:fs'), path = require('node:path');
 const ROOT = path.resolve(__dirname, '..');
 const S = require('./sections.cjs');
+const LKX = require('./lk-sections.cjs');
 const DP = require('./donnees-publiees.cjs');
 const esc = S.esc;
 const SITE = 'https://www.leonidakit.com', HUB = 'online', ID = 'online';
@@ -133,6 +134,7 @@ ${bc(crumbs)}${ld ? '\n' + ld : ''}
 <link rel="stylesheet" href="${p}motion-tokens.css">
 <link rel="stylesheet" href="${p}acquisitions.css">
 <link rel="stylesheet" href="${p}online.css">
+<link rel="stylesheet" href="${p}lk-sections.css">
 <meta property="og:image" content="${SITE}/img/social-card.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta property="og:url" content="${SITE}${canonical}">
@@ -144,17 +146,18 @@ ${bc(crumbs)}${ld ? '\n' + ld : ''}
 
 ${C.header.replace(/ class="here"/g, '')}
 
-<main id="main" class="lore-page online-page">
+<main id="main" class="lore-page online-page lkx-page">
 ${espace}
 ${body}
 ${EXPLORE(p ? '../' : '')}
 <section class="lk-outro" aria-label="Et après"><div class="shell lk-outro-in"><p class="lk-outro-k">Et après ?</p><h2>La suite s’écrit le 19 novembre 2026.</h2><p>Chaque fiche se complète avec le jeu : ce qu’on y trouve, ce qu’on y fait, ce que ça rapporte. Rien d’inventé d’ici là.</p><div class="lk-outro-links"><a href="${p ? '../' : ''}carte.html">Ouvrir la carte</a><a href="${p ? '../' : ''}progression.html">Ma progression</a></div></div></section>
 </main>
-
+${LKX.dialog()}
 ${C.footer}
 
 ${C.scripts}
 <script src="${p}online.js"></script>
+<script src="${p}lk-sections.js"></script>
 </body>
 </html>
 `;
@@ -194,30 +197,38 @@ function rows(D, kind, pre) {
   const list = kind === 'misesAJour' ? [...D[kind]].sort((a, b) => b.date.localeCompare(a.date)) : D[kind];
   if (!list.length) return '';
   const val = x => kind === 'activites' ? [valText(x.gain, 'Gain publié plus tard'), valText(x.duree, 'Durée publiée plus tard')] : kind === 'achats' ? [valText(x.prix, 'Prix publié plus tard')] : kind === 'entreprises' ? [valText(x.prix, 'Prix publié plus tard'), valText(x.revenu, 'Revenu publié plus tard')] : [frDate(x.date)];
-  return '<ul class="online-items">' + list.map(x => '<li class="rise"><h3>' + (x.texte ? '<a href="' + pre + HUB + '/' + esc(x.id) + '.html">' + esc(x.nom) + '</a>' : esc(x.nom)) + '</h3><p>' + esc(x.resume) + '</p><p class="online-vals">' + val(x).map(v => '<span>' + esc(v) + '</span>').join('') + '</p><p>' + st(x.statut, x.sources) + '</p></li>').join('') + '</ul>';
+  return '<ul class="online-items lkx-wave lk-arrive" data-lkx-in>' + list.map(x => '<li><h3>' + (x.texte ? '<a href="' + pre + HUB + '/' + esc(x.id) + '.html">' + esc(x.nom) + '</a>' : esc(x.nom)) + '</h3><p>' + esc(x.resume) + '</p><p class="online-vals">' + val(x).map(v => '<span>' + esc(v) + '</span>').join('') + '</p><p>' + st(x.statut, x.sources) + '</p></li>').join('') + '</ul>';
 }
 
 /* ---------- hub ---------- */
+/* rubrique encore vide : le texte « rien de publié » reste dans la page ; à côté, une carte ouvre en plein écran le
+   squelette de ses fiches (ce que chacune dira, en attente de la sortie) */
+function rubrique(H, R, vide, champs, icon) {
+  const C = H.champs, f = C.items.filter(x => champs.includes(x.t)), ico = S.icon(icon) || LKX.ICO.page;
+  const summary = '<span class="lkx-card lkx-card--ico"><span class="lkx-card-media" aria-hidden="true">' + ico + '</span><span class="lkx-card-body"><b>' + esc(R.titre) + '</b><span>' + esc(C.titre) + '</span><span class="lkx-card-go">' + esc(C.apercuGo) + '</span></span></span>';
+  const body = '<p class="lkx-sheet-vide">' + esc(R.vide) + '</p><h4>' + esc(C.titre) + '</h4>' + LKX.skel(f, C.sortie);
+  return '<div class="lkx-rubrique">' + vide + '<div class="lkx-cards lkx-cards--solo lkx-net lk-arrive" data-lkx-in>' + LKX.sheet({ id: 'apercu-' + String(R.titre).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''), cls: 'online-apercu', summary, icon: ico, kicker: esc(C.apercuK) + ' · <span>' + esc(R.kicker) + '</span>', title: R.titre, body }) + '</div></div>';
+}
 function hubPage(ctx) {
   const { H, P, D, STATUTS, ROOTC } = ctx, X = H.hub, E = H.etat, CH = H.change;
-  const fait = x => '<article class="online-fait rise"><span class="online-fait-ico">' + S.icon(x.icon) + '</span><h3>' + esc(x.titre) + '</h3><p>' + esc(x.texte) + '</p><p>' + st(x.statut, x.sources) + '</p></article>';
+  const fait = x => '<article class="online-fait"><span class="online-fait-ico">' + S.icon(x.icon) + '</span><h3>' + esc(x.titre) + '</h3><p>' + esc(x.texte) + '</p><p>' + st(x.statut, x.sources) + '</p></article>';
   const etat = '<section class="shell online-sec" id="etat" aria-labelledby="etat-t">' + head(E.kicker, E.titre, 'etat')
     + '<div class="online-statut rise"><span class="online-statut-ico" aria-hidden="true">' + S.icon('sablier') + '</span><div><p class="online-statut-date">' + esc(E.carte.date) + '</p><h3>' + esc(E.carte.titre) + '</h3><p>' + esc(E.carte.texte) + '</p><p>' + st(E.carte.statut, E.carte.sources) + '</p></div></div>'
-    + '<div class="online-faits">' + E.faits.map(fait).join('') + '</div></section>';
+    + '<div class="online-faits lkx-net lk-arrive" data-lkx-in>' + E.faits.map(fait).join('') + '</div></section>';
   const change = '<section class="shell online-sec" id="ce-qui-change" aria-labelledby="ce-qui-change-t">' + head(CH.kicker, CH.titre, 'ce-qui-change', CH.lede)
-    + '<div class="online-cotes">' + CH.cartes.map((x, i) => '<article class="online-cote online-cote--' + (i + 1) + ' rise"><p class="online-cote-k">' + esc(x.k) + '</p><h3>' + esc(x.titre) + '</h3><p>' + esc(x.texte) + '</p><p>' + st(x.statut, x.sources) + '</p><p class="online-liens-l">' + x.liens.map(l => '<a href="' + esc(l.href) + '">' + esc(l.label) + '</a>').join('') + '</p></article>').join('') + '</div>'
+    + '<div class="online-cotes lkx-net lk-arrive" data-lkx-in>' + CH.cartes.map((x, i) => '<article class="online-cote online-cote--' + (i + 1) + '"><p class="online-cote-k">' + esc(x.k) + '</p><h3>' + esc(x.titre) + '</h3><p>' + esc(x.texte) + '</p><p>' + st(x.statut, x.sources) + '</p><p class="online-liens-l">' + x.liens.map(l => '<a href="' + esc(l.href) + '">' + esc(l.label) + '</a>').join('') + '</p></article>').join('') + '</div>'
     + '<p class="online-regle">' + esc(CH.regle) + '</p></section>';
   const A = H.activites, AC = H.achats, M = H.misesAJour;
   const repere = r => '<p class="online-repere"><span class="online-v">GTA V</span> ' + esc(r.texte) + ' ' + st(r.statut, r.sources) + '</p>';
   const activites = '<section class="shell online-sec" id="activites" aria-labelledby="activites-t">' + head(A.kicker, A.titre, 'activites')
-    + (D.activites.length ? rows(D, 'activites', '') : '<p class="online-vide">' + esc(A.vide) + '</p>') + repere(A.repere) + '</section>';
+    + (D.activites.length ? rows(D, 'activites', '') : rubrique(H, A, '<p class="online-vide">' + esc(A.vide) + '</p>', ['Activités'], 'zone')) + repere(A.repere) + '</section>';
   const achats = '<section class="shell online-sec" id="achats" aria-labelledby="achats-t">' + head(AC.kicker, AC.titre, 'achats')
-    + (D.achats.length || D.entreprises.length ? rows(D, 'achats', '') + rows(D, 'entreprises', '') : '<p class="online-vide">' + esc(AC.vide) + ' <a href="achats.html">Les achats de l’histoire</a></p>')
+    + (D.achats.length || D.entreprises.length ? rows(D, 'achats', '') + rows(D, 'entreprises', '') : rubrique(H, AC, '<p class="online-vide">' + esc(AC.vide) + ' <a href="achats.html">Les achats de l’histoire</a></p>', ['Achats', 'Entreprises'], 'achats'))
     + repere(AC.repere) + '<p class="online-repere">' + esc(AC.monetisation.texte) + ' ' + st(AC.monetisation.statut, AC.monetisation.sources) + '</p></section>';
   const actuel = P.pages.find(p => p.id === 'gta-online-actuel'), maj = actuel ? actuel.blocs.find(b => b.id === 'mises-a-jour') : null;
   const misesAJour = '<section class="shell online-sec" id="mises-a-jour" aria-labelledby="mises-a-jour-t">' + head(M.kicker, M.titre, 'mises-a-jour')
-    + (D.misesAJour.length ? rows(D, 'misesAJour', '') : '<p class="online-vide">' + esc(M.vide) + '</p>')
-    + (maj ? '<h3 class="online-sous-t">' + esc(M.titreActuel) + '</h3><ul class="online-items">' + maj.items.filter(x => x.titre).map(x => '<li class="rise"><span class="online-v">GTA V</span><h3 translate="no">' + esc(x.titre) + '</h3><p>' + esc(x.texte) + '</p><p>' + st(x.statut, x.sources) + '</p></li>').join('') + '</ul><p class="online-plus"><a href="online/gta-online-actuel.html#mises-a-jour">Le GTA Online actuel en détail</a></p>' : '')
+    + (D.misesAJour.length ? rows(D, 'misesAJour', '') : rubrique(H, M, '<p class="online-vide">' + esc(M.vide) + '</p>', ['Mises à jour'], 'horloge'))
+    + (maj ? '<h3 class="online-sous-t">' + esc(M.titreActuel) + '</h3><ul class="online-items lkx-net lk-arrive" data-lkx-in>' + maj.items.filter(x => x.titre).map(x => '<li><span class="online-v">GTA V</span><h3 translate="no">' + esc(x.titre) + '</h3><p>' + esc(x.texte) + '</p><p>' + st(x.statut, x.sources) + '</p></li>').join('') + '</ul><p class="online-plus"><a href="online/gta-online-actuel.html#mises-a-jour">Le GTA Online actuel en détail</a></p>' : '')
     + '<h3 class="online-sous-t">' + esc(H.champs.titre) + '</h3><dl class="online-champs">' + H.champs.items.map(x => '<div><dt>' + esc(x.t) + '</dt><dd>' + esc(x.d) + '</dd></div>').join('') + '</dl></section>';
   const body = `<section class="page-head shell lk-glow"><div class="lk-head-grid"><div>
   <p class="fiche-cat">${esc(X.label)} · GTA VI</p>
@@ -259,8 +270,8 @@ function subPage(ctx, pg) {
   const items = pg.kind === 'annonces' ? pg.items : pg.blocs.flatMap(b => b.items);
   const ids = [...new Set(items.flatMap(x => x.sources))];
   const content = pg.kind === 'annonces'
-    ? '<ol class="online-annonces">' + pg.items.map(x => '<li class="online-annonce rise"><time datetime="' + esc(x.date) + '">' + esc(x.dateTexte) + '</time><div><p class="online-annonce-qui">' + esc(x.qui) + '</p><h3>' + esc(x.titre) + '</h3><p>' + esc(x.texte) + '</p><p>' + st(x.statut, x.sources) + '</p></div></li>').join('') + '</ol>'
-    : pg.blocs.map(b => '<section class="online-bloc" id="' + esc(b.id) + '" aria-labelledby="' + esc(b.id) + '-t"><h2 class="sec-h reveal" id="' + esc(b.id) + '-t">' + esc(b.titre) + '</h2><ul class="online-items">' + b.items.map(x => '<li class="rise">' + (x.titre ? '<span class="online-v">GTA V</span><h3 translate="no">' + esc(x.titre) + '</h3>' : '') + '<p>' + esc(x.texte) + '</p><p>' + st(x.statut, x.sources) + '</p></li>').join('') + '</ul></section>').join('');
+    ? '<ol class="online-annonces lkx-wave lk-arrive" data-lkx-in>' + pg.items.map(x => '<li class="online-annonce"><time datetime="' + esc(x.date) + '">' + esc(x.dateTexte) + '</time><div><p class="online-annonce-qui">' + esc(x.qui) + '</p><h3>' + esc(x.titre) + '</h3><p>' + esc(x.texte) + '</p><p>' + st(x.statut, x.sources) + '</p></div></li>').join('') + '</ol>'
+    : pg.blocs.map(b => '<section class="online-bloc" id="' + esc(b.id) + '" aria-labelledby="' + esc(b.id) + '-t"><h2 class="sec-h reveal" id="' + esc(b.id) + '-t">' + esc(b.titre) + '</h2><ul class="online-items lkx-net lk-arrive" data-lkx-in>' + b.items.map(x => '<li>' + (x.titre ? '<span class="online-v">GTA V</span><h3 translate="no">' + esc(x.titre) + '</h3>' : '') + '<p>' + esc(x.texte) + '</p><p>' + st(x.statut, x.sources) + '</p></li>').join('') + '</ul></section>').join('');
   const body = `<section class="page-head shell">
   <nav class="crumbs online-crumbs" aria-label="Fil d’Ariane"><a href="../${HUB}.html">${esc(H.espace.nom)}</a> / <span>${esc(pg.label)}</span></nav>
   <div class="lore-copy lore-enter">
