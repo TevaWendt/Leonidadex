@@ -49,5 +49,105 @@
    "statut": "comm", "sources": ["gamesradar-gtav", "gtaboom-tel"]
   }
  ],
+ "gtavFiche": [
+  {
+   "id": "gtav-comet",
+   "effet": "Une Comet devant toi",
+   "categorie": "vehicules",
+   "texte": "Fait apparaître une Pfister Comet, la sportive, juste à côté du personnage.",
+   "ps": [
+    "r1",
+    "rond",
+    "r2",
+    "droite",
+    "l1",
+    "l2",
+    "croix",
+    "croix",
+    "carre",
+    "r1"
+   ],
+   "pc": "COMET",
+   "telephone": "1-999-266-38",
+   "statut": "comm",
+   "sources": [
+    "gamesradar-gtav",
+    "pcgamer-gtav"
+   ]
+  },
+  {
+   "id": "gtav-bmx",
+   "effet": "Un BMX",
+   "categorie": "vehicules",
+   "texte": "Fait apparaître un vélo BMX, le plus discret des véhicules à code.",
+   "ps": [
+    "gauche",
+    "gauche",
+    "droite",
+    "droite",
+    "gauche",
+    "droite",
+    "carre",
+    "rond",
+    "triangle",
+    "r1",
+    "r2"
+   ],
+   "pc": "BANDIT",
+   "telephone": "1-999-226-348",
+   "statut": "comm",
+   "sources": [
+    "gamesradar-gtav",
+    "pcgamer-gtav"
+   ]
+  },
+  {
+   "id": "gtav-meteo",
+   "effet": "Changer la météo",
+   "categorie": "monde",
+   "texte": "Passe au temps suivant à chaque saisie : soleil, nuages, pluie, orage, brouillard…",
+   "ps": [
+    "r2",
+    "croix",
+    "l1",
+    "l1",
+    "l2",
+    "l2",
+    "l2",
+    "carre"
+   ],
+   "pc": "MAKEITRAIN",
+   "telephone": "1-999-625-348-7246",
+   "statut": "comm",
+   "sources": [
+    "gamesradar-gtav",
+    "pcgamer-gtav"
+   ]
+  },
+  {
+   "id": "gtav-gravite",
+   "effet": "Gravité lunaire",
+   "categorie": "monde",
+   "texte": "Les sauts montent plus haut et les véhicules flottent, comme sur la Lune.",
+   "ps": [
+    "gauche",
+    "gauche",
+    "l1",
+    "r1",
+    "l1",
+    "droite",
+    "gauche",
+    "l1",
+    "gauche"
+   ],
+   "pc": "FLOATER",
+   "telephone": "1-999-356-2837",
+   "statut": "comm",
+   "sources": [
+    "gamesradar-gtav",
+    "pcgamer-gtav"
+   ]
+  }
+ ],
  "gtavLimites": { "texte": "succès et trophées désactivés pour un temps, comme pour tous les codes.", "statut": "officiel", "sources": ["rs-support-codes-v"] }
 }

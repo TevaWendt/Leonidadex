@@ -107,7 +107,7 @@ test('menu, pied de page, recherche et plan du site : « Radios et musique » da
   for (const u of ['/radios.html', ...FICHES.map(f => '/' + f)]) assert.ok(ctx.window.LK_INDEX.some(e => e.u === u), 'recherche : ' + u);
   for (const f of PAGES) assert.ok(read('sitemap.xml').includes('<loc>https://www.leonidakit.com/' + f + '</loc>'), 'plan du site : ' + f);
   for (const f of FICHES) assert.ok(read('sitemap-fiches.xml').includes('<loc>https://www.leonidakit.com/' + f + '</loc>'), 'sitemap-fiches : ' + f);
-  assert.match(read('style.css'), /sections? [a-z, ]*\bradios\b[a-z, ]* : quatre groupes dans « Explorer »/); /* un seul bloc, marqué « section radios » ou « sections …, radios, … » une fois les sections réunies */
+  assert.match(read('style.css'), /sections? [a-z, ]*\bradios\b[a-z, ]* : cinq groupes dans « Explorer »/); /* un seul bloc, marqué « section radios » ou « sections …, radios, … » une fois les sections réunies */
 });
 
 test('Léo : morceau de questions de la section, fiche de l’album, réponses sourcées (radios, Trailer 1 et 2, Extended Look, album, fuites)', () => {

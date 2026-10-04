@@ -8,7 +8,9 @@ const acquisition = JSON.parse(fs.readFileSync(path.join(__dirname, 'acquisition
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
 const world = [['lieux.html', 'Lieux'], ['personnages.html', 'Personnages'], ['gangs.html', 'Gangs et factions'] /* v7.65 */, ['demeures.html', 'Demeures'], ['planques.html', 'Planques'], ['entreprises.html', 'Entreprises'], ['animaux.html', 'Animaux'] /* section animaux */, ['collectibles.html', 'Collectibles']];
-const play = [['missions.html', 'Missions'] /* section missions */, ['activites.html', 'Activités annexes'] /* section activites */, ['radios.html', 'Radios et musique'] /* section radios */, ['codes-de-triche.html', 'Codes de triche'] /* section codes */, ['trophees.html', 'Trophées et succès'] /* section trophees */, ['online.html', 'GTA Online'] /* section online */];
+const play = [['missions.html', 'Missions'] /* section missions */, ['activites.html', 'Activités annexes'] /* section activites */, ['radios.html', 'Radios et musique'] /* section radios */, ['codes-de-triche.html', 'Codes de triche'] /* section codes */, ['trophees.html', 'Trophées et succès'] /* section trophees */];
+/* section online : un espace à part, son propre groupe dans « Explorer » et sa colonne au pied de page */
+const online = [['online.html', 'L’espace GTA Online'], ['online/annonces.html', 'Les annonces'], ['online/gta-online-actuel.html', 'Le GTA Online actuel']];
 // Menu « S’équiper » : seules les catégories marquées menu:true dans acquisitions.json (pas de doublon avec Véhicules,
 // Planques ou Armurerie, pas de catégorie vide). Le hub « Tout ce qui s’achète » reste dans la barre (Achats) et le pied de page.
 const shopping = acquisition.filter(c => c.menu && !c.alias).sort((a, b) => (a.menuOrder || 99) - (b.menuOrder || 99)).map(c => [c.route.slice(1), c.label]);
@@ -28,17 +30,18 @@ function currentOf(file) {
 }
 function nav(file, prefix) {
   const current = currentOf(file);
-  const groups = [['Le monde', world], ['Jouer', play] /* sections missions, activites, radios, codes, trophees, online */, ['S’équiper', shopping], ['Le site', info]];
+  const groups = [['Le monde', world], ['Jouer', play] /* sections missions, activites, radios, codes, trophees */, ['S’équiper', shopping], ['Le site', info], ['GTA Online', online, 'nav-online'] /* section online */];
   return '<ul>' + top.map(x => '<li>' + link(x, prefix, current) + '</li>').join('')
     + '<li><details class="nav-more"><summary>Explorer</summary><div class="nav-more-panel">'
-    + groups.map(([label, list]) => '<div><strong>' + esc(label) + '</strong>' + list.map(x => link(x, prefix, current)).join('') + '</div>').join('')
+    + groups.map(([label, list, cls]) => '<div' + (cls ? ' class="' + cls + '"' : '') + '><strong>' + esc(label) + '</strong>' + list.map(x => link(x, prefix, current)).join('') + '</div>').join('')
     + '</div></details></li></ul>';
 }
 function footer(existing, prefix) {
   const art = existing.match(/<svg class="foot-art"[\s\S]*?<\/svg>/)?.[0] || '';
   const groups = [
     ['Explorer', [['carte.html', 'Carte'], ['vehicules.html', 'Véhicules'], ['armes.html', 'Armurerie'], ...world]],
-    ['Jouer', play] /* sections missions, activites, radios, codes, trophees, online */,
+    ['Jouer', play] /* sections missions, activites, radios, codes, trophees */,
+    ['GTA Online', online] /* section online */,
     ['S’équiper', footShopping],
     ['Outils et aide', [['calculateurs.html', 'Calculateur'], ['tuto.html', 'Tuto'], ['progression.html', 'Progression'], ...info]]
   ];
@@ -55,7 +58,7 @@ function footer(existing, prefix) {
 const chipList = [['achats.html', 'Tout ce qui s’achète'], ['vehicules.html', 'Véhicules'], ['armes.html', 'Armurerie'],
   ...acquisition.filter(c => !c.alias).map(c => [c.route.slice(1), c.label]),
   ['progression.html#carnets', 'Mes carnets'], ['tuto.html#sources', 'Comprendre les statuts']];
-const sectionPages = new Set([...world.map(x => x[0]), ...play.map(x => x[0]) /* sections missions, activites, radios, codes, trophees, online */, ...acquisition.map(c => c.route.slice(1).split('#')[0]), 'vehicules.html', 'armes.html', 'achats.html', 'progression.html']);
+const sectionPages = new Set([...world.map(x => x[0]), ...play.map(x => x[0]) /* sections missions, activites, radios, codes, trophees */, ...online.map(x => x[0]).filter(f => !f.includes('/')) /* section online : le hub seul */, ...acquisition.map(c => c.route.slice(1).split('#')[0]), 'vehicules.html', 'armes.html', 'achats.html', 'progression.html']);
 function chips(file) {
   if (!sectionPages.has(file)) return '';
   const alias = acquisition.find(c => c.alias && c.route.slice(1) === file);
@@ -130,4 +133,4 @@ function placeEntry(html, file, prefix = '') {
   if (/<section class="lk-outro"/.test(html)) return html.replace(/<section class="lk-outro"/, block + '\n<section class="lk-outro"');
   return html.replace(/<\/main>/, block + '\n</main>');
 }
-module.exports = { nav, footer, top, world, play /* sections missions, activites, radios, codes, trophees, online */, shopping, info, chips, placeChips, chipList, sectionPages, ENTRY, entry, placeEntry, entryPages };
+module.exports = { nav, footer, top, world, play /* sections missions, activites, radios, codes, trophees */, online /* section online */, shopping, info, chips, placeChips, chipList, sectionPages, ENTRY, entry, placeEntry, entryPages };

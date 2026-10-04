@@ -49,6 +49,105 @@
    }
   ]
  },
+ "intro": {
+  "k": "Avant l’espace, en quelques écrans",
+  "marque": "GTA Online · l’espace à part",
+  "defiler": "Défile pour lire",
+  "passer": "Passer à l’espace",
+  "scenes": [
+   {
+    "id": "solo",
+    "k": "19 novembre 2026",
+    "t": "GTA VI arrive en solo.",
+    "p": "Rockstar, Sony et Microsoft présentent le jeu comme une expérience solo, sur PlayStation 5 et Xbox Series X|S.",
+    "statut": "officiel",
+    "sources": [
+     "businesswire-precommandes",
+     "rs-support-plateformes",
+     "ps-blog"
+    ],
+    "media": "ultimate-edition-02",
+    "alt": "Jason et Lucia devant le coupé vert rapproché d’un Kellison J4 dans le visuel Ultimate Edition"
+   },
+   {
+    "id": "rien",
+    "k": "Le jeu en ligne",
+    "t": "Rien d’annoncé.",
+    "p": "Ni nom, ni date, ni prix, ni plateformes : aucun mode en ligne n’est annoncé pour GTA VI. Take-Two ne parle que de la partie solo.",
+    "statut": "conf",
+    "sources": [
+     "mp1st-schreier",
+     "thesixthaxis-solo"
+    ]
+   },
+   {
+    "id": "continue",
+    "k": "Pendant ce temps",
+    "t": "GTA Online continue.",
+    "p": "Take-Two l’a redit le 17 septembre 2026 : le GTA Online de GTA V reste soutenu après la sortie de GTA VI, « et au-delà ».",
+    "statut": "officiel",
+    "sources": [
+     "techradar-assemblee"
+    ],
+    "signal": true
+   },
+   {
+    "id": "2027",
+    "k": "Une rumeur, rien de plus",
+    "t": "Un multijoueur en 2027 ?",
+    "p": "Le patron de Twitch l’a laissé entendre à Bloomberg en septembre 2026. Rockstar et Take-Two n’ont rien confirmé.",
+    "statut": "comm",
+    "sources": [
+     "gamespot-twitch",
+     "pcgamer-twitch"
+    ]
+   },
+   {
+    "id": "pret",
+    "k": "Ici, sur Leonidakit",
+    "t": "L’espace est prêt.",
+    "p": "Le jour où Rockstar parlera, chaque annonce, chaque activité, chaque prix arrivera ici, avec sa source et son statut. En attendant, voici ce qu’on sait, en clair.",
+    "cta": {
+     "href": "#etat",
+     "label": "Ce qu’on sait, en clair"
+    }
+   }
+  ]
+ },
+ "rubriques": {
+  "activites": {
+   "media": "trailer-2-seashark-141",
+   "alt": "Jason et Lucia sur un jet-ski Seashark vert qui file sur l’eau devant Vice City, photogramme du Trailer 2",
+   "legende": "Illustration : un visuel officiel de GTA VI, pas du jeu en ligne",
+   "apercu": "Courses, missions à plusieurs, affrontements : rien de tout cela n’est annoncé pour GTA VI. Cette rubrique s’ouvrira à la première activité publiée, avec son nombre de joueurs, son gain et sa durée.",
+   "repereTitre": "Dans le GTA Online actuel",
+   "blocs": [
+    "debuts"
+   ]
+  },
+  "achats": {
+   "media": "classic-car-collection-01",
+   "alt": "Un homme au débardeur « Wyman’s World Auto Salvage » salue devant des voitures classiques, capture officielle de l’Édition Ultimate",
+   "legende": "Illustration : un visuel officiel de GTA VI, pas du jeu en ligne",
+   "apercu": "Véhicules, entreprises, abonnement : aucun prix du jeu en ligne de GTA VI n’existe. Quand ils arriveront, ils auront leur propre mode dans le calculateur, sans se mêler aux prix de l’histoire.",
+   "repereTitre": "Dans le GTA Online actuel",
+   "blocs": [
+    "achats",
+    "gta-plus"
+   ]
+  },
+  "mises-a-jour": {
+   "media": "vice-city-01",
+   "alt": "Les grandes lettres de Vice City au coucher du soleil, un avion dans le ciel, visuel officiel Rockstar Games",
+   "legende": "Illustration : un visuel officiel de GTA VI, pas du jeu en ligne",
+   "apercu": "Un jeu en ligne vit par ses mises à jour. Celui de GTA VI n’existe pas ; celui de GTA V, lui, en reçoit toujours, et chacune a sa page officielle.",
+   "repereTitre": "Dans le GTA Online actuel",
+   "blocs": [
+    "mises-a-jour",
+    "avenir"
+   ]
+  }
+ },
  "hub": {
   "label": "GTA Online",
   "title": "GTA Online et GTA VI, ce qu’on sait",

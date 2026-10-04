@@ -38,8 +38,9 @@ test('générateur, 0 code : le hub dit qu’aucun code n’est publié, aucune 
   const d = doc('codes-de-triche.html');
   assert.ok(d.querySelector('#liste .codes-vide'));
   assert.equal(d.querySelectorAll('#liste .codes-carte').length, 0);
-  assert.equal(d.querySelectorAll('#liste .codes-cats li').length, 4);
-  for (const i of d.querySelectorAll('#liste .codes-cats li i')) assert.equal(i.textContent, '0');
+  assert.equal(d.querySelectorAll('#liste .codes-cats > li').length, 4);
+  for (const i of d.querySelectorAll('#liste .codes-cats li .lkx-card-n')) assert.equal(i.textContent, '0');
+  for (const v of d.querySelectorAll('#liste .codes-v')) assert.equal(v.textContent, 'GTA V', 'un code de GTA V dans une fiche de catégorie est marqué comme tel');
   for (const f of fs.readdirSync(root).filter(f => f.endsWith('.html'))) assert.ok(!/codes-de-triche\/modele\.html/.test(read(f)), 'la page modèle n’est reliée d’aucune page : ' + f);
 });
 
@@ -122,7 +123,7 @@ test('menu, pied de page, recherche (« cheat » dans chaque langue) et plan du 
     assert.ok(list.length, 'recherche ' + l.code); assert.ok(list.some(e => words[l.code].test(e.s)), 'recherche ' + l.code + ' : « cheat » ou sa variante');
   }
   assert.ok(read('sitemap.xml').includes('<loc>https://www.leonidakit.com/codes-de-triche.html</loc>'));
-  assert.match(read('style.css'), /sections? [a-z, ]*\bcodes\b[a-z, ]* : quatre groupes dans « Explorer »/); /* un seul bloc, marqué « section codes » ou « sections …, codes, … » une fois les sections réunies */
+  assert.match(read('style.css'), /sections? [a-z, ]*\bcodes\b[a-z, ]* : cinq groupes dans « Explorer »/); /* un seul bloc, marqué « section codes » ou « sections …, codes, … » une fois les sections réunies */
 });
 
 test('Léo : morceau de questions de la section, sujet « mods » relié au hub, réponses honnêtes (présence, argent infini, trophées)', () => {

@@ -143,7 +143,7 @@ test('menu, pied de page, recherche et plan du site : « Activités annexes » d
   for (const u of ['/activites.html', ...FICHES.map(f => '/' + f)]) assert.ok(ctx.window.LK_INDEX.some(e => e.u === u), u);
   assert.ok(read('sitemap.xml').includes('<loc>https://www.leonidakit.com/activites.html</loc>'));
   for (const f of FICHES) assert.ok(read('sitemap-fiches.xml').includes('<loc>https://www.leonidakit.com/' + f + '</loc>'), f);
-  assert.match(read('style.css'), /sections? [a-z, ]*\bactivites\b[a-z, ]* : quatre groupes dans « Explorer »/); /* un seul bloc, marqué « section activites » ou « sections …, activites, … » une fois les sections réunies */
+  assert.match(read('style.css'), /sections? [a-z, ]*\bactivites\b[a-z, ]* : cinq groupes dans « Explorer »/); /* un seul bloc, marqué « section activites » ou « sections …, activites, … » une fois les sections réunies */
 });
 
 test('Léo : morceau de questions de la section, fiches des activités, sujets existants reliés aux fiches, réponses honnêtes', () => {

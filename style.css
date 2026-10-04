@@ -3301,7 +3301,13 @@ a.ed-brand:hover,a.ed-brand:focus-visible{border-color:var(--ink);box-shadow:5px
    sur sa rangée ; même largeur de carte que les rangées pleines. */
 @media(min-width:960px){.lore-grid--five{grid-template-columns:repeat(6,minmax(0,1fr));}.lore-grid--five>*{grid-column:span 2;}.lore-grid--five>:nth-child(4){grid-column:2/span 2;}}
 @media(min-width:640px) and (max-width:959px){.lore-grid--five{grid-template-columns:repeat(4,minmax(0,1fr));}.lore-grid--five>*{grid-column:span 2;}.lore-grid--five>:nth-child(5){grid-column:2/span 2;}}
-/* sections missions, activites, radios, codes, trophees, online : quatre groupes dans « Explorer » (Le monde, Jouer, S’équiper, Le site) et quatre colonnes au pied de page */
-@media(min-width:1081px){.nav-more-panel{width:min(1000px,calc(100vw - 48px));grid-template-columns:repeat(4,minmax(0,1fr))}.foot-cols{grid-template-columns:repeat(4,minmax(0,1fr))}}
+/* sections missions, activites, radios, codes, trophees, online : cinq groupes dans « Explorer » (Le monde, Jouer, S’équiper, Le site, puis GTA Online en bande à part) et cinq colonnes au pied de page */
+@media(min-width:1081px){.nav-more-panel{width:min(1000px,calc(100vw - 48px));grid-template-columns:repeat(4,minmax(0,1fr))}.foot-cols{grid-template-columns:repeat(5,minmax(0,1fr))}}
+.nav-more-panel .nav-online{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;gap:4px 18px;margin-top:4px;padding:12px 14px;border:2px solid var(--night);border-radius:10px;background:linear-gradient(120deg,var(--night-deep),var(--night) 70%);color:var(--paper);}
+.nav-more-panel .nav-online strong{display:inline-flex;align-items:center;gap:9px;margin:0 10px 0 0;color:var(--amber-2);font-weight:800;}
+.nav-more-panel .nav-online strong::before{content:'';width:8px;height:8px;border-radius:50%;background:#97DFCF;box-shadow:0 0 8px #97DFCF;}
+#nav .nav-more-panel .nav-online a{display:inline-block;min-height:0;padding:6px 0;color:var(--paper);}
+#nav .nav-more-panel .nav-online a.here{color:var(--amber-2);}
+@media(max-width:600px){.nav-more-panel .nav-online{flex-direction:column;align-items:flex-start;gap:0;}}
 @media(min-width:601px) and (max-width:1080px){.nav-more-panel{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(min-width:821px) and (max-width:1080px){.foot-cols{grid-template-columns:repeat(2,minmax(0,1fr))}}

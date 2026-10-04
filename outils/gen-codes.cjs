@@ -85,7 +85,7 @@ function check(ctx) {
   if (JSON.stringify(C.categories.map(c => c.id)) !== JSON.stringify(CATS)) err.push('catégories attendues : ' + CATS.join(', '));
   const ids = new Set();
   for (const c of C.codes) { if (ids.has(c.id)) err.push('code en double : ' + c.id); ids.add(c.id); if (CATS.includes(c.id) || c.id === 'modele') err.push('« ' + c.id + ' » est réservé (fiche de catégorie ou page de démonstration)'); err.push(...checkCode(c, ctx)); }
-  for (const c of C.gtav) {
+  for (const c of [...C.gtav, ...(C.gtavFiche || [])]) {
     const L = 'code de GTA V ' + c.id;
     if (!/^gtav-[a-z0-9-]+$/.test(c.id)) err.push(L + ' : identifiant « gtav-… » attendu');
     if (!c.effet || !c.texte || !CATS.includes(c.categorie) || !ST.includes(c.statut) || !(c.sources || []).length) err.push(L + ' : effet, texte, catégorie, statut ou sources');
@@ -164,8 +164,9 @@ ${C.header.replace(/ class="here"/g, '')}
 ${body}
 ${EXPLORE(p ? '../' : '')}
 <section class="lk-outro" aria-label="Et après"><div class="shell lk-outro-in"><p class="lk-outro-k">Et après ?</p><h2>La suite s’écrit le 19 novembre 2026.</h2><p>Chaque fiche se complète avec le jeu : ce qu’on y trouve, ce qu’on y fait, ce que ça rapporte. Rien d’inventé d’ici là.</p><div class="lk-outro-links"><a href="${p ? '../' : ''}carte.html">Ouvrir la carte</a><a href="${p ? '../' : ''}progression.html">Ma progression</a></div></div></section>
-</main>
 ${LKX.dialog()}
+</main>
+
 ${C.footer}
 
 ${C.scripts}
@@ -223,14 +224,33 @@ const live = '<p class="sr-only" aria-live="polite" data-codes-annonce></p>';
 /* ---------- hub ---------- */
 /* carte d’une catégorie du guide : image officielle et nombre de codes publiés ; elle ouvre la fiche prête en plein écran
    (ce que dira chaque code, en attente de la sortie) ; une catégorie qui a des codes renvoie aussi à sa fiche */
+function miniKey(plat, k) {
+  if (PAD[k]) return '<li class="codes-key"><span class="codes-cap codes-cap--croix" aria-hidden="true">' + GLYPH[k] + '</span><span class="codes-key-t">' + esc(PAD[k]) + '</span></li>';
+  const [f, t] = KEYS[plat][k];
+  if (f === 'forme') return '<li class="codes-key"><span class="codes-cap codes-cap--forme" aria-hidden="true">' + GLYPH[k] + '</span><span class="codes-key-t">' + esc(t) + '</span></li>';
+  return '<li class="codes-key"><span class="codes-cap codes-cap--' + f + '" translate="no">' + esc(t) + '</span></li>';
+}
+/* un code de GTA V dans une fiche de catégorie : la séquence PlayStation en pictogrammes (lisible en texte), le mot PC, le
+   numéro ; toujours marqué « GTA V », jamais un code de GTA VI */
+function miniCode(c) {
+  return '<li class="codes-mini"><div class="codes-mini-h"><span class="codes-v">GTA V</span><b>' + esc(c.effet) + '</b></div><p>' + esc(c.texte) + '</p>'
+    + (c.ps ? '<p class="codes-mini-l">Manette PlayStation</p><ol class="codes-keys codes-keys--mini">' + c.ps.map(k => miniKey('ps', k)).join('') + '</ol>' : '')
+    + '<div class="codes-mini-f">' + (c.pc ? '<span class="codes-pc" translate="no">' + esc(c.pc) + '</span>' : '') + (c.telephone ? '<span class="codes-mini-tel"><span aria-hidden="true">' + PHONE + '</span><span translate="no">' + esc(c.telephone) + '</span></span>' : '') + '</div>'
+    + '<p class="codes-mini-st">' + st(c.statut, c.sources) + '</p></li>';
+}
+/* carte d’une catégorie du guide : image officielle et nombre de codes publiés ; elle ouvre la fiche en plein écran : ce que
+   couvre la catégorie, ce qu’on sait pour GTA VI, les codes de GTA V du même genre « pour comparer », ce que dira chaque code */
 function catSheet(ctx, c, codes) {
-  const { H, MED } = ctx, LI = H.liste, V = (LI.categoriesMedia || {})[c.id] || {}, n = codes.length, ok = !!(V.media && MED[V.media]);
-  const summary = '<span class="lkx-card"><span class="lkx-card-media">' + (ok ? LKX.img(MED, V.media, V.alt, { sizes: '(max-width:560px) 100vw, (max-width:980px) 50vw, 300px' }) : '') + '<i class="lkx-card-n">' + n + '</i></span><span class="lkx-card-body"><b class="codes-cat-t">' + esc(c.label) + '</b><span>' + esc(c.texte) + '</span><span class="lkx-card-go">' + esc(LI.catGo) + '</span></span></span>';
-  const body = '<p>' + esc(c.texte) + '</p>' + (n ? '' : '<p class="lkx-sheet-vide">' + esc(LI.catVide) + '</p>')
+  const { H, C, MED } = ctx, LI = H.liste, E = H.etat, V = (LI.categoriesMedia || {})[c.id] || {}, n = codes.length, ok = !!(V.media && MED[V.media]);
+  const gtav = [...C.gtav, ...(C.gtavFiche || [])].filter(x => x.categorie === c.id);
+  const summary = '<span class="lkx-card"><span class="lkx-card-media">' + (ok ? LKX.img(MED, V.media, V.alt, { sizes: '(max-width:560px) 100vw, (max-width:980px) 50vw, 300px' }) : '') + '<span class="lkx-card-n">' + n + '</span><span class="lkx-card-tag">' + esc(LI.catK) + '</span></span><span class="lkx-card-body"><b class="codes-cat-t">' + esc(c.label) + '</b><span>' + esc(c.texte) + '</span><span class="lkx-card-go">' + esc(LI.catGo) + '</span></span></span>';
+  const body = '<p>' + esc((LI.catTextes || {})[c.id] || c.texte) + '</p>'
+    + '<h4>' + esc(LI.catVI) + '</h4><p class="lkx-sheet-vide">' + esc(n ? c.texte : LI.catVide) + ' ' + st(E.carte.statut, E.carte.sources) + '</p>'
+    + '<h4>' + esc(LI.catGtav) + '</h4>' + (gtav.length ? '<ul class="codes-minis">' + gtav.map(miniCode).join('') + '</ul><p class="codes-note">' + esc(C.gtavLimites.texte.charAt(0).toUpperCase() + C.gtavLimites.texte.slice(1)) + ' ' + st(C.gtavLimites.statut, C.gtavLimites.sources) + '</p>' : '<p class="codes-note">' + esc(LI.catGtavVide) + '</p>')
     + '<h4>' + esc(LI.champsTitre) + '</h4>' + LKX.skel(LI.champs, LI.sortie)
     + '<p class="codes-note">' + esc(LI.note) + '</p>'
     + (n ? '<div class="lkx-sheet-cta"><a class="lkx-btn" href="' + HUB + '/' + c.id + '.html">' + esc(c.label) + '</a></div>' : '');
-  return LKX.sheet({ id: 'categorie-' + c.id, cls: 'codes-cat-det', summary, fig: ok ? LKX.img(MED, V.media, V.alt, { big: true, sizes: '(max-width:760px) 100vw, 600px' }) : '', kicker: esc(LI.kicker) + ' · <span>' + esc(LI.catK) + '</span>', title: c.label, body });
+  return LKX.sheet({ id: 'categorie-' + c.id, cls: 'codes-cat-det', summary, fig: ok ? LKX.img(MED, V.media, V.alt, { big: true, sizes: '(max-width:760px) 100vw, 600px' }) : '', caption: ok ? (MED[V.media].credit || '') : '', kicker: esc(LI.kicker) + ' · <span>' + esc(LI.catK) + '</span>', title: c.label, body });
 }
 function hubPage(ctx) {
   const { H, C, MED, STATUTS, ROOTC } = ctx, X = H.hub, E = H.etat, SE = H.serie, LI = H.liste;

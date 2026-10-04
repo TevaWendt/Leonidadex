@@ -140,7 +140,7 @@ test('menu, pied de page, recherche et plan du site : « Missions » en tête du
   assert.match(read('missions.html'), /<a href="missions\.html" class="here" aria-current="page">Missions<\/a>/);
   const ctx = { window: {} }; vm.runInNewContext(read('search-index.js'), ctx); assert.ok(ctx.window.LK_INDEX.some(e => e.u === '/missions.html'));
   assert.ok(read('sitemap.xml').includes('<loc>https://www.leonidakit.com/missions.html</loc>'));
-  assert.match(read('style.css'), /sections? [a-z, ]*\bmissions\b[a-z, ]* : quatre groupes dans « Explorer »/); /* un seul bloc, marqué « section missions » ou « sections …, missions, … » une fois les sections réunies */
+  assert.match(read('style.css'), /sections? [a-z, ]*\bmissions\b[a-z, ]* : cinq groupes dans « Explorer »/); /* un seul bloc, marqué « section missions » ou « sections …, missions, … » une fois les sections réunies */
 });
 
 test('Léo : morceau de questions de la section, sujets existants reliés au hub, réponses honnêtes (nombre, déblocage, gains, braquages, durée)', () => {

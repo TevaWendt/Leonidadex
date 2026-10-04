@@ -142,8 +142,9 @@ ${C.header.replace(/ class="here"/g, '')}
 ${body}
 ${EXPLORE(p ? '../' : '')}
 <section class="lk-outro" aria-label="Et après"><div class="shell lk-outro-in"><p class="lk-outro-k">Et après ?</p><h2>La suite s’écrit le 19 novembre 2026.</h2><p>Chaque fiche se complète avec le jeu : ce qu’on y trouve, ce qu’on y fait, ce que ça rapporte. Rien d’inventé d’ici là.</p><div class="lk-outro-links"><a href="${p ? '../' : ''}carte.html">Ouvrir la carte</a><a href="${p ? '../' : ''}progression.html">Ma progression</a></div></div></section>
-</main>
 ${LKX.dialog()}
+</main>
+
 ${C.footer}
 
 ${C.scripts}
@@ -211,9 +212,17 @@ function suivi(ctx, list, opts = {}) {
 /* aperçu d’une fiche trophée : une carte qui ouvre, en plein écran, le squelette de chaque fiche (rien d’inventé : la liste
    n’est pas publiée) */
 function apercu(LI) {
-  const summary = '<span class="lkx-card lkx-card--trophee"><span class="lkx-card-media">' + badgeHtml('platine') + '</span><span class="lkx-card-body"><b>' + esc(LI.apercuT) + '</b><span>' + esc(LI.champsTitre) + '</span><span class="lkx-card-go">' + esc(LI.apercuGo) + '</span></span></span>';
-  const body = '<p class="lkx-sheet-vide">' + esc(LI.vide) + '</p><h4>' + esc(LI.champsTitre) + '</h4>' + LKX.skel(LI.champs, LI.sortie) + '<p class="trophees-note">' + esc(LI.note) + '</p>';
-  return '<div class="lkx-cards lkx-cards--solo lkx-unlock lk-arrive" data-lkx-in>' + LKX.sheet({ id: 'apercu-fiche', cls: 'trophees-apercu', summary, icon: badgeHtml('platine'), kicker: esc(LI.kicker) + ' · <span>' + esc(LI.apercuK) + '</span>', title: LI.apercuT, body }) + '</div>';
+  const X = LI.exemple || { items: [] };
+  const row = t => '<li class="trophees-ex' + (t.manquable ? ' trophees-ex--manquable' : '') + '">' + badgeHtml(t.grade)
+    + '<div class="trophees-ex-b"><p class="trophees-ex-n"><b translate="no">' + esc(t.nom) + '</b><span class="trophees-v">GTA V</span>' + (t.manquable ? '<span class="trophees-ex-tag">' + esc(X.manquable) + '</span>' : '') + '</p><p class="trophees-ex-t">' + esc(t.texte) + '</p><p class="trophees-ex-st">' + st(t.statut, t.sources) + '</p></div>'
+    + '<span class="trophees-ex-case" aria-hidden="true"><i></i><span>' + esc(X.obtenu) + '</span></span></li>';
+  const summary = '<span class="lkx-card lkx-card--trophee"><span class="lkx-card-media">' + badgeHtml('platine') + badgeHtml('or') + badgeHtml('bronze') + '</span><span class="lkx-card-body"><b>' + esc(LI.apercuT) + '</b><span>' + esc(X.titre || LI.champsTitre) + '</span><span class="lkx-card-go">' + esc(LI.apercuGo) + '</span></span></span>';
+  const body = '<p>' + esc(X.lede || LI.vide) + '</p>'
+    + (X.items.length ? '<h4>' + esc(X.titre) + '</h4><ol class="trophees-exs">' + X.items.map(row).join('') + '</ol>' : '')
+    + '<p class="lkx-sheet-vide">' + esc(LI.vide) + '</p>'
+    + '<h4>' + esc(LI.champsTitre) + '</h4>' + LKX.skel(LI.champs, LI.sortie) + '<p class="trophees-note">' + esc(LI.note) + '</p>'
+    + '<div class="lkx-sheet-cta"><a class="lkx-btn" href="progression.html">Ma progression</a><a class="lkx-btn lkx-btn--ghost" href="collectibles.html">Les collectibles</a></div>';
+  return '<div class="lkx-cards lkx-cards--solo lkx-unlock lk-arrive" data-lkx-in>' + LKX.sheet({ id: 'apercu-fiche', cls: 'trophees-apercu', summary, icon: '<div class="trophees-podium">' + badgeHtml('or') + badgeHtml('platine') + badgeHtml('argent') + badgeHtml('bronze') + '</div>', kicker: esc(LI.kicker) + ' · <span>' + esc(LI.apercuK) + '</span>', title: LI.apercuT, body }) + '</div>';
 }
 function hubPage(ctx) {
   const { H, T, MED, STATUTS, ROOTC } = ctx, X = H.hub, E = H.etat, G = H.gtav, GR = H.grades, LI = H.liste;

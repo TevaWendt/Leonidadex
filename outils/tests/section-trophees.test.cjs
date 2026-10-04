@@ -111,7 +111,7 @@ test('menu, pied de page, recherche et plan du site : « Trophées et succès »
   assert.ok(ctx.window.LK_INDEX.some(e => e.u === '/trophees.html'), 'la page');
   assert.ok(ctx.window.LK_INDEX.some(e => e.u === '/trophees.html#liste' && /\bplatine\b/.test(e.s) && /\bachievements\b/.test(e.s)), 'les mots du joueur');
   assert.ok(read('sitemap.xml').includes('<loc>https://www.leonidakit.com/trophees.html</loc>'));
-  assert.match(read('style.css'), /sections? [a-z, ]*\btrophees\b[a-z, ]* : quatre groupes dans « Explorer »/); /* un seul bloc, marqué « section trophees » ou « sections …, trophees, … » une fois les sections réunies */
+  assert.match(read('style.css'), /sections? [a-z, ]*\btrophees\b[a-z, ]* : cinq groupes dans « Explorer »/); /* un seul bloc, marqué « section trophees » ou « sections …, trophees, … » une fois les sections réunies */
 });
 
 test('Léo : morceau de questions de la section, réponses honnêtes et sourcées (nombre, platine, manquables)', () => {

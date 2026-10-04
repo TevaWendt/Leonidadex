@@ -293,3 +293,98 @@
 @media (max-width:980px){.codes-cats.lkx-cards{grid-template-columns:repeat(2,minmax(0,1fr));}}
 @media (max-width:560px){.codes-cats.lkx-cards{grid-template-columns:1fr;}}
 .lkx-sheet-fig--ico .trophees-badge{background:radial-gradient(circle at 35% 30%,#fff7e0,var(--amber-2) 55%,#c98a1c);border-color:var(--paper);color:var(--ink);box-shadow:0 0 0 10px rgba(247,182,69,.18),0 0 60px rgba(247,182,69,.45);}
+
+/* ---------- 12. charte renforcée des sections « Jouer » : Codes de triche, Trophées et succès, GTA Online ----------
+   Rappels de la charte Leonidakit sur ces pages : bandes de nuit, corail et ambre, ombres dures, étiquettes mono. */
+/* carte « ce qu’on sait » (pas encore annoncé / publié) : bande de nuit, date ambre, liseré corail */
+.lkx-page .codes-statut,.lkx-page .trophees-statut,.lkx-page .online-statut{border:2px solid var(--ink);border-left:10px solid var(--coral);border-radius:14px;background:linear-gradient(135deg,var(--night-deep),var(--night) 60%,var(--night-2));color:var(--paper);box-shadow:6px 6px 0 var(--amber);}
+.lkx-page .codes-statut h3,.lkx-page .trophees-statut h3,.lkx-page .online-statut h3{color:var(--paper);font-size:clamp(1.3rem,1.1rem + .8vw,1.7rem);}
+.lkx-page .codes-statut p,.lkx-page .trophees-statut p,.lkx-page .online-statut p{color:rgba(253,251,247,.9);}
+.lkx-page .codes-statut-date,.lkx-page .trophees-statut-date,.lkx-page .online-statut-date{color:var(--amber-2)!important;}
+.lkx-page .codes-statut-ico,.lkx-page .trophees-statut-ico,.lkx-page .online-statut-ico{background:var(--amber);color:var(--ink);border:2px solid var(--ink);box-shadow:3px 3px 0 var(--coral);}
+.lkx-page .codes-statut .ed-status,.lkx-page .trophees-statut .ed-status,.lkx-page .online-statut .ed-status{color:var(--paper);}
+.lkx-page .codes-statut .codes-src a,.lkx-page .trophees-statut .trophees-src a,.lkx-page .online-statut .online-src a{background:var(--amber-2);color:var(--ink);}
+/* faits : bande dégradée en tête, ombre dure, icône cerclée */
+.lkx-page .codes-fait,.lkx-page .trophees-fait,.lkx-page .online-fait{position:relative;overflow:hidden;border-radius:14px;box-shadow:4px 4px 0 var(--ink);padding-top:22px;}
+.lkx-page .codes-fait::before,.lkx-page .trophees-fait::before,.lkx-page .online-fait::before{content:'';position:absolute;left:0;right:0;top:0;height:7px;background:linear-gradient(90deg,var(--coral),var(--amber) 55%,var(--night-2));}
+.lkx-page .online-fait::before{background:linear-gradient(90deg,var(--c-neon,#97dfcf),var(--amber) 55%,var(--coral));}
+.lkx-page .codes-fait-ico,.lkx-page .trophees-fait-ico,.lkx-page .online-fait-ico{border:2px solid var(--ink);box-shadow:2px 2px 0 var(--ink);}
+.lkx-page .online-fait-ico{background:var(--c-neon,#97dfcf);}
+/* champs « ce que dira chaque … » : bordure encre, petite ombre */
+.lkx-page .codes-champs>div,.lkx-page .trophees-champs>div,.lkx-page .online-champs>div{border:2px solid var(--ink);box-shadow:3px 3px 0 var(--ink);border-radius:10px;}
+.lkx-page .codes-champs dt,.lkx-page .trophees-champs dt,.lkx-page .online-champs dt{color:var(--coral-text);}
+/* codes : la vitrine GTA V façon borne d’arcade */
+.lkx-page .codes-cartes .codes-carte{border-radius:14px;box-shadow:5px 5px 0 var(--coral);padding-top:0;overflow:hidden;}
+.lkx-page .codes-cartes .codes-carte-h{margin:0 calc(-1 * clamp(14px,2.4vw,20px));padding:12px clamp(14px,2.4vw,20px) 10px;background:linear-gradient(120deg,var(--night-deep),var(--night) 65%,var(--night-2));color:var(--paper);}
+.lkx-page .codes-cartes .codes-carte-h h3{color:var(--paper);}
+.lkx-page .codes-cartes .codes-v{background:var(--amber);color:var(--ink);}
+.lkx-page .codes-cartes .codes-cat{background:rgba(253,251,247,.16);color:var(--paper);}
+.lkx-page .codes-cartes .codes-actif{top:auto;}
+.lkx-page .codes-consoles button[aria-pressed="true"]{background:var(--coral);color:var(--paper);}
+.lkx-page .codes-regles{border-left-color:var(--amber);box-shadow:4px 4px 0 var(--ink);border-radius:14px;}
+.lkx-page .codes-avant li{border:2px solid var(--ink);border-left:6px solid var(--coral);box-shadow:3px 3px 0 var(--ink);background:var(--paper);}
+/* codes : les codes de GTA V dans une fiche de catégorie */
+.codes-minis{list-style:none;margin:0;padding:0;display:grid;gap:10px;}
+.codes-mini{padding:12px 14px;border:2px solid var(--ink);border-radius:12px;background:var(--paper);box-shadow:4px 4px 0 var(--coral);}
+.codes-mini-h{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:4px;}
+.codes-mini-h b{font-size:1rem;}
+.codes-mini>p{margin:0 0 8px;font-size:.88rem;color:var(--ink-soft);}
+.codes-mini-l{margin:0 0 6px!important;font:700 .64rem/1.2 var(--font-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft)!important;}
+.codes-keys--mini{gap:6px 5px;margin-bottom:10px;}
+.codes-keys--mini .codes-cap{width:32px;height:32px;box-shadow:0 2px 0 var(--ink);}
+.codes-keys--mini .codes-cap svg{width:17px;height:17px;}
+.codes-keys--mini .codes-cap--epaule{min-width:38px;height:24px;font-size:.72rem;margin-top:4px;}
+.codes-keys--mini .codes-cap--gachette{min-width:38px;height:30px;font-size:.72rem;}
+.codes-keys--mini .codes-key-t{font-size:.56rem;}
+.codes-mini-f{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;}
+.codes-mini-f .codes-pc{padding:6px 10px;font-size:.88rem;}
+.codes-mini-tel{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border:1.5px dashed var(--ink-soft);border-radius:8px;font:800 .86rem/1.2 var(--font-mono);}
+.codes-mini-tel svg{width:15px;height:15px;}
+.codes-mini-st{margin:8px 0 0!important;}
+/* trophées : badges métal, chiffres de GTA V sur une bande de nuit, lignes d’exemple */
+.lkx-page .trophees-badge{box-shadow:3px 3px 0 var(--ink),inset 0 -3px 0 rgba(0,0,0,.14);}
+.lkx-page .trophees-badge--platine{background:radial-gradient(circle at 35% 28%,#ffffff,#dbe8f3 45%,#8fa8c0 100%);}
+.lkx-page .trophees-badge--or{background:radial-gradient(circle at 35% 28%,#fff3c4,var(--amber-2) 50%,#b8731c 100%);}
+.lkx-page .trophees-badge--argent{background:radial-gradient(circle at 35% 28%,#ffffff,#d9dbe0 50%,#8c9199 100%);}
+.lkx-page .trophees-badge--bronze{background:radial-gradient(circle at 35% 28%,#ffd9bd,#d08a5a 55%,#7d4a2a 100%);}
+.lkx-page .trophees-grades-l li{border-radius:12px;box-shadow:4px 4px 0 var(--ink);}
+.lkx-page .trophees-chiffres{gap:14px;}
+.lkx-page .trophees-chiffre{position:relative;overflow:hidden;border-radius:14px;background:linear-gradient(150deg,var(--night-deep),var(--night) 60%,var(--night-2));color:var(--paper);box-shadow:5px 5px 0 var(--amber);}
+.lkx-page .trophees-chiffre b{color:var(--amber-2);font-family:'Archivo',system-ui,sans-serif;font-weight:900;font-size:clamp(2.2rem,1.6rem + 2vw,3.2rem);letter-spacing:-.03em;}
+.lkx-page .trophees-chiffre span{color:rgba(253,251,247,.86);}
+.lkx-page .trophees-chiffre .trophees-v{background:var(--amber);color:var(--ink);}
+.lkx-page .trophees-chiffre .ed-status{color:var(--paper);}
+.lkx-page .trophees-chiffre .trophees-src a{background:var(--amber-2);color:var(--ink);}
+.lkx-page .trophees-gtav-l li{border:2px solid var(--ink);border-left:6px solid var(--amber);border-radius:10px;background:var(--paper);box-shadow:3px 3px 0 var(--ink);padding:10px 14px;}
+.lkx-card--trophee .lkx-card-media{gap:0;grid-auto-flow:column;place-items:center;}
+.lkx-card--trophee .trophees-badge{width:64px;height:64px;margin:0 -8px;}
+.lkx-card--trophee .trophees-badge:nth-child(2){width:84px;height:84px;z-index:1;}
+.lkx-card--trophee .trophees-badge svg{width:34px;height:34px;}
+.lkx-card--trophee .trophees-badge:nth-child(2) svg{width:42px;height:42px;}
+.lkx-card--trophee .trophees-sceau{display:none;}
+.trophees-exs{list-style:none;margin:0;padding:0;display:grid;gap:8px;counter-reset:none;}
+.trophees-ex{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:12px;padding:10px 12px;border:2px solid var(--ink);border-radius:12px;background:var(--paper);box-shadow:4px 4px 0 var(--ink);}
+.trophees-ex .trophees-badge{width:46px;height:46px;}
+.trophees-ex .trophees-badge svg{width:24px;height:24px;}
+.trophees-ex .trophees-sceau{display:none;}
+.trophees-ex-n{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:0 0 2px;}
+.trophees-ex-n b{font-size:.98rem;}
+.trophees-ex-tag{display:inline-flex;align-items:center;padding:2px 9px;border:1.5px solid var(--coral);border-radius:999px;color:var(--coral-text);font:800 .64rem/1.4 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;}
+.trophees-ex-t{margin:0;font-size:.86rem;color:var(--ink-soft);}
+.trophees-ex-st{margin:4px 0 0;}
+.trophees-ex-case{display:grid;justify-items:center;gap:4px;font:800 .6rem/1.2 var(--font-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);}
+.trophees-ex-case i{display:block;width:26px;height:26px;border:2px solid var(--ink);border-radius:7px;background:var(--paper-2);box-shadow:2px 2px 0 var(--ink);}
+@media (max-width:560px){.trophees-ex{grid-template-columns:auto minmax(0,1fr);}.trophees-ex-case{display:none;}}
+/* GTA Online : carte « ce qu’on sait » au néon, faits de l’espace */
+.lkx-page.online-page .online-statut{border-left-color:var(--c-neon,#97dfcf);box-shadow:6px 6px 0 var(--c-neon,#97dfcf);}
+.lkx-page.online-page .online-statut-ico{background:var(--c-neon,#97dfcf);box-shadow:3px 3px 0 var(--amber);}
+.lkx-page.online-page .online-items li{border:2px solid var(--ink);border-left:6px solid var(--c-neon,#97dfcf);border-radius:10px;box-shadow:3px 3px 0 var(--ink);}
+.lkx-page.online-page .online-cote{border-radius:14px;box-shadow:5px 5px 0 var(--ink);}
+.lkx-sheet-fig--ico{align-content:center;justify-content:center;}
+.trophees-podium{display:flex;align-items:flex-end;justify-content:center;gap:0;padding:0 0 30px;}
+.trophees-podium .trophees-badge{margin:0 -6px;border-color:var(--paper);width:84px;height:84px;box-shadow:4px 4px 0 rgba(0,0,0,.35),0 0 40px rgba(247,182,69,.35);}
+.trophees-podium .trophees-badge svg{width:40px;height:40px;}
+.trophees-podium .trophees-badge:nth-child(2){width:150px;height:150px;z-index:2;margin:0 -10px 24px;box-shadow:6px 6px 0 rgba(0,0,0,.35),0 0 70px rgba(247,182,69,.5);}
+.trophees-podium .trophees-badge:nth-child(2) svg{width:76px;height:76px;}
+.trophees-podium .trophees-badge:nth-child(1){margin-bottom:10px;z-index:1;}
+.trophees-podium .trophees-sceau{display:none;}

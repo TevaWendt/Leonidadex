@@ -90,19 +90,20 @@ test('online.html : ce qu’on sait, ce qui change, activités, achats et entrep
   for (const a of main.querySelectorAll('a[href]')) assert.doesNotMatch(a.getAttribute('href'), /^(?:\.\.\/)?(?:codes-de-triche|trophees|missions|activites|radios|animaux)(?:\.html|\/)/, a.getAttribute('href'));
 });
 
-test('menu, pied de page, recherche et plan du site : « GTA Online » en dernier du groupe « Jouer »', () => {
+test('menu, pied de page, recherche et plan du site : « GTA Online » est un groupe à part (bande sous les quatre groupes, colonne au pied de page)', () => {
   const shell = require(path.join(root, 'outils/site-shell.cjs'));
-  assert.deepEqual(shell.play[shell.play.length - 1], ['online.html', 'GTA Online']);
-  assert.ok(shell.sectionPages.has('online.html'));
-  assert.match(shell.nav('index.html', ''), /<strong>Jouer<\/strong>(?:<a [^>]*>[^<]*<\/a>)*<a href="online\.html">GTA Online<\/a><\/div>/);
-  assert.ok(shell.footer('', '').includes('href="online.html"'));
+  assert.ok(!shell.play.some(x => x[0] === 'online.html'), 'plus dans « Jouer »');
+  assert.deepEqual(shell.online[0], ['online.html', 'L’espace GTA Online']);
+  assert.ok(shell.sectionPages.has('online.html') && !shell.sectionPages.has('online/annonces.html'));
+  assert.match(shell.nav('index.html', ''), /<div class="nav-online"><strong>GTA Online<\/strong><a href="online\.html">L’espace GTA Online<\/a><a href="online\/annonces\.html">Les annonces<\/a><a href="online\/gta-online-actuel\.html">Le GTA Online actuel<\/a><\/div><\/div><\/details>/);
+  assert.match(shell.footer('', ''), /<h2>GTA Online<\/h2><nav [^>]*><a href="online\.html">L’espace GTA Online<\/a>/);
   assert.ok(shell.ENTRY['online.html'] && shell.ENTRY['online.html'].tool === 'roi');
-  assert.match(read('online.html'), /<a href="online\.html" class="here" aria-current="page">GTA Online<\/a>/);
+  assert.match(read('online.html'), /<a href="online\.html" class="here" aria-current="page">L’espace GTA Online<\/a>/);
   const ctx = { window: {} }; vm.runInNewContext(read('search-index.js'), ctx);
   for (const u of ['/online.html', '/online/annonces.html', '/online/gta-online-actuel.html']) assert.ok(ctx.window.LK_INDEX.some(e => e.u === u), u);
   assert.ok(ctx.window.LK_INDEX.some(e => e.u === '/online.html#etat' && /\bmultijoueur\b/.test(e.s)), 'les mots du joueur');
   for (const u of ['online.html', 'online/annonces.html', 'online/gta-online-actuel.html']) assert.ok(read(u.includes('/') ? 'sitemap-fiches.xml' : 'sitemap.xml').includes('<loc>https://www.leonidakit.com/' + u + '</loc>'), u);
-  assert.match(read('style.css'), /sections? [a-z, ]*\bonline\b[a-z, ]* : quatre groupes dans « Explorer »/); /* un seul bloc, marqué « section online » ou « sections …, online, … » une fois les sections réunies */
+  assert.match(read('style.css'), /sections? [a-z, ]*\bonline\b[a-z, ]* : cinq groupes dans « Explorer »/); /* un seul bloc, marqué « section online » ou « sections …, online, … » une fois les sections réunies */
 });
 
 test('Léo : morceau de questions de la section, sujets « online » et « gtaplus » reliés à l’espace, réponses sourcées et datées', () => {

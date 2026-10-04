@@ -74,6 +74,52 @@
   "note": "Les filtres (grade, manquable, catégorie) et le suivi s’allument avec la liste.",
   "bilan": { "libelle": "trophées obtenus", "note": "Gardé sur cet appareil seulement." },
   "filtres": { "titre": "Filtrer la liste", "grade": "Grade", "manquable": "Manquable", "categorie": "Catégorie", "etat": "Suivi", "tous": "Tous", "oui": "Manquables", "non": "Non manquables", "obtenus": "Obtenus", "restants": "À obtenir", "visibles": "Trophées affichés :" },
+  "exemple": {
+   "titre": "À quoi ressemblera ta liste",
+   "lede": "Quatre trophées de GTA V, pour voir la forme d’une ligne : le grade, le nom, la condition, et la case « Obtenu » qui restera sur ton appareil.",
+   "obtenu": "Obtenu",
+   "manquable": "Manquable",
+   "items": [
+    {
+     "nom": "Los Santos Legend",
+     "grade": "platine",
+     "texte": "Tous les autres trophées du jeu de base.",
+     "statut": "comm",
+     "sources": [
+      "techradar-gtav-trophees",
+      "psthc-gtav"
+     ]
+    },
+    {
+     "nom": "Career Criminal",
+     "grade": "or",
+     "texte": "Finir le jeu à 100 %.",
+     "statut": "comm",
+     "sources": [
+      "powerpyx-gtav"
+     ]
+    },
+    {
+     "nom": "Solid Gold, Baby!",
+     "grade": "or",
+     "texte": "Obtenir 70 médailles d’or dans les missions et les activités.",
+     "statut": "comm",
+     "sources": [
+      "powerpyx-gtav"
+     ]
+    },
+    {
+     "nom": "Kifflom!",
+     "grade": "bronze",
+     "manquable": true,
+     "texte": "Terminer toutes les missions d’Epsilon ; manquable selon le choix final.",
+     "statut": "comm",
+     "sources": [
+      "powerpyx-gtav"
+     ]
+    }
+   ]
+  },
   "apercuK": "Le squelette, prêt pour la liste",
   "apercuT": "Aperçu d’une fiche trophée",
   "apercuGo": "Voir le squelette",

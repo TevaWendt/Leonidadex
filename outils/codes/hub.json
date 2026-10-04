@@ -73,6 +73,15 @@
    { "t": "Statut et source", "d": "Publié par Rockstar ou vérifié en jeu, avec la date." }
   ],
   "note": "Chaque catégorie aura sa fiche dès son premier code.",
+  "catTextes": {
+   "armes": "Munitions pleines, lot d’armes, explosifs : dans GTA V, un seul code armait le personnage de pied en cap. Pour GTA VI, rien n’est publié ; si Rockstar donne un code de ce genre, il arrivera ici avec sa séquence et ses limites.",
+   "vehicules": "Faire apparaître une sportive, une moto ou un vélo devant soi : la tradition la plus connue de la série. Aucun code de véhicule n’est annoncé pour GTA VI ; les exemples de GTA V ci-dessous montrent la forme qu’il prendrait.",
+   "joueur": "Santé, armure, invincibilité pour un temps, niveau de recherche : les codes qui changent le personnage lui-même. Dans GTA V, ils coupaient aussi les trophées de la session ; ce que fera GTA VI reste à publier.",
+   "monde": "Météo, gravité, circulation : les codes qui changent Leonida autour de toi plutôt que le personnage. Rien de tel n’est annoncé pour GTA VI ; dans GTA V, la pluie et la gravité lunaire se commandaient d’une séquence."
+  },
+  "catGtav": "Dans GTA V, pour comparer",
+  "catGtavVide": "Aucun code de GTA V de cette catégorie n’est repris ici.",
+  "catVI": "Pour GTA VI",
   "catK": "Catégorie",
   "catGo": "Voir la fiche prête",
   "catVide": "Aucun code de cette catégorie n’est publié : la fiche ci-dessous montre ce que chacun contiendra.",

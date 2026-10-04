@@ -24,7 +24,7 @@ const ST = ['officiel', 'vu', 'comm', 'conf'];
 
 function load(root = ROOT) {
   const read = f => fs.readFileSync(path.join(root, f), 'utf8');
-  return { H: JSON.parse(read(FILES.hub)), P: JSON.parse(read(FILES.pages)), D: JSON.parse(read(FILES.donnees)), STATUTS: JSON.parse(read('outils/editorial-hubs.json')).statuts, read };
+  return { H: JSON.parse(read(FILES.hub)), P: JSON.parse(read(FILES.pages)), D: JSON.parse(read(FILES.donnees)), STATUTS: JSON.parse(read('outils/editorial-hubs.json')).statuts, MED: JSON.parse(read('outils/medias-officiels.json')), read };
 }
 
 /* ---------- valeurs publiées (schéma de outils/donnees-publiees.cjs) ---------- */
@@ -84,6 +84,14 @@ function check(ctx) {
   }
   for (const href of E.sommaire.map(x => x.href).filter(h => /^online\//.test(h))) if (!ids.has(href.slice(7, -5))) err.push('sommaire : page absente ' + href);
   for (const kind of Object.keys(KINDS)) for (const x of D[kind]) { if (reserved(ctx).has(x.id)) err.push(kind + ' ' + x.id + ' : identifiant déjà pris par une page'); err.push(...checkItem(kind, x, ctx)); }
+  /* présentation (écrans défilés) : chaque écran qui affirme quelque chose porte un statut et des sources ; un visuel est un média officiel */
+  for (const sc of (H.intro || {}).scenes || []) {
+    if (!sc.id || !sc.t || !sc.p) err.push('présentation : écran sans titre ou texte');
+    if (sc.statut !== undefined && (!ST.includes(sc.statut) || !(sc.sources || []).length)) err.push('présentation ' + sc.id + ' : statut ou sources');
+    for (const id of sc.sources || []) if (!H.sources[id]) err.push('présentation ' + sc.id + ' : source inconnue ' + id);
+    if (sc.media && (!ctx.MED[sc.media] || !sc.alt)) err.push('présentation ' + sc.id + ' : visuel inconnu ou sans texte alternatif');
+  }
+  for (const [id, r] of Object.entries(H.rubriques || {})) { if (r.media && (!ctx.MED[r.media] || !r.alt || !r.legende)) err.push('rubrique ' + id + ' : visuel inconnu ou sans légende'); for (const b of r.blocs || []) if (!P.pages.find(p => p.id === 'gta-online-actuel').blocs.some(x => x.id === b)) err.push('rubrique ' + id + ' : bloc inconnu ' + b); }
   const Z = H.zone;
   for (const k of ['nav', 'rockstar', 'communaute', 'confirmer', 'toi', 'faq', 'sources']) if (!Z[k]) err.push('zone : bloc manquant ' + k);
   Z.sources.forEach(id => { if (!H.sources[id]) err.push('zone : source inconnue ' + id); });
@@ -151,8 +159,9 @@ ${espace}
 ${body}
 ${EXPLORE(p ? '../' : '')}
 <section class="lk-outro" aria-label="Et après"><div class="shell lk-outro-in"><p class="lk-outro-k">Et après ?</p><h2>La suite s’écrit le 19 novembre 2026.</h2><p>Chaque fiche se complète avec le jeu : ce qu’on y trouve, ce qu’on y fait, ce que ça rapporte. Rien d’inventé d’ici là.</p><div class="lk-outro-links"><a href="${p ? '../' : ''}carte.html">Ouvrir la carte</a><a href="${p ? '../' : ''}progression.html">Ma progression</a></div></div></section>
-</main>
 ${LKX.dialog()}
+</main>
+
 ${C.footer}
 
 ${C.scripts}
@@ -203,11 +212,37 @@ function rows(D, kind, pre) {
 /* ---------- hub ---------- */
 /* rubrique encore vide : le texte « rien de publié » reste dans la page ; à côté, une carte ouvre en plein écran le
    squelette de ses fiches (ce que chacune dira, en attente de la sortie) */
-function rubrique(H, R, vide, champs, icon) {
-  const C = H.champs, f = C.items.filter(x => champs.includes(x.t)), ico = S.icon(icon) || LKX.ICO.page;
-  const summary = '<span class="lkx-card lkx-card--ico"><span class="lkx-card-media" aria-hidden="true">' + ico + '</span><span class="lkx-card-body"><b>' + esc(R.titre) + '</b><span>' + esc(C.titre) + '</span><span class="lkx-card-go">' + esc(C.apercuGo) + '</span></span></span>';
-  const body = '<p class="lkx-sheet-vide">' + esc(R.vide) + '</p><h4>' + esc(C.titre) + '</h4>' + LKX.skel(f, C.sortie);
-  return '<div class="lkx-rubrique">' + vide + '<div class="lkx-cards lkx-cards--solo lkx-net lk-arrive" data-lkx-in>' + LKX.sheet({ id: 'apercu-' + String(R.titre).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''), cls: 'online-apercu', summary, icon: ico, kicker: esc(C.apercuK) + ' · <span>' + esc(R.kicker) + '</span>', title: R.titre, body }) + '</div></div>';
+function rubrique(ctx, id, R, vide, champs, icon) {
+  const { H, P, MED } = ctx, C = H.champs, f = C.items.filter(x => champs.includes(x.t)), ico = S.icon(icon) || LKX.ICO.page, V = (H.rubriques || {})[id] || {}, ok = !!(V.media && MED[V.media]);
+  const actuel = P.pages.find(p => p.id === 'gta-online-actuel');
+  const blocs = (V.blocs || []).map(b => actuel.blocs.find(x => x.id === b)).filter(Boolean);
+  const summary = '<span class="lkx-card' + (ok ? '' : ' lkx-card--ico') + '"><span class="lkx-card-media"' + (ok ? '' : ' aria-hidden="true"') + '>' + (ok ? LKX.img(MED, V.media, V.alt, { sizes: '(max-width:560px) 100vw, 320px' }) : ico) + '</span><span class="lkx-card-body"><b>' + esc(R.titre) + '</b><span>' + esc(V.apercu ? V.apercu.split(/(?<=\.)\s/)[0] : C.titre) + '</span><span class="lkx-card-go">' + esc(C.apercuGo) + '</span></span></span>';
+  const body = (V.apercu ? '<p>' + esc(V.apercu) + '</p>' : '') + '<p class="lkx-sheet-vide">' + esc(R.vide) + '</p>'
+    + (blocs.length ? '<h4><span class="online-v">GTA V</span> ' + esc(V.repereTitre || 'Dans le GTA Online actuel') + '</h4><ul class="online-sheet-l">' + blocs.flatMap(b => b.items).map(x => '<li>' + (x.titre ? '<b translate="no">' + esc(x.titre) + '</b> ' : '') + esc(x.texte) + ' ' + st(x.statut, x.sources) + '</li>').join('') + '</ul>' : '')
+    + (R.repere ? '<p class="online-sheet-r"><span class="online-v">GTA V</span> ' + esc(R.repere.texte) + ' ' + st(R.repere.statut, R.repere.sources) + '</p>' : '')
+    + '<h4>' + esc(C.titre) + '</h4>' + LKX.skel(f, C.sortie)
+    + '<div class="lkx-sheet-cta"><a class="lkx-btn lkx-btn--night" href="online/gta-online-actuel.html">' + esc(H.espace.sommaire.find(x => x.id === 'gta-online-actuel').label) + '</a><a class="lkx-btn lkx-btn--ghost" href="online/annonces.html">' + esc(H.zone.toi.actions.find(a => a.href === 'online/annonces.html').t) + '</a></div>';
+  return '<div class="lkx-rubrique">' + vide + '<div class="lkx-cards lkx-cards--solo lkx-net lk-arrive" data-lkx-in>' + LKX.sheet({ id: 'apercu-' + id, cls: 'online-apercu', summary, fig: ok ? LKX.img(MED, V.media, V.alt, { big: true, sizes: '(max-width:760px) 100vw, 600px' }) : '', caption: ok ? V.legende : '', icon: ico, kicker: esc(C.apercuK) + ' · <span>' + esc(R.kicker) + '</span>', title: R.titre, body }) + '</div></div>';
+}
+/* présentation de l’espace : des écrans qui se lisent en défilant (online.js pose --p, la progression de chaque écran ; sans
+   script ou en mouvement réduit, tout est affiché). Chaque écran qui affirme quelque chose porte son statut et ses sources ;
+   le dernier conduit à l’information claire (« Ce qu’on sait »). */
+function cine(ctx) {
+  const { H, MED } = ctx, I = H.intro, X = H.hub, n = I.scenes.length;
+  const scene = (sc, i) => '<section class="online-scene online-scene--' + esc(sc.id) + (sc.media ? ' online-scene--img' : '') + '" data-online-scene style="--i:' + i + '" aria-labelledby="scene-' + esc(sc.id) + '-t"><div class="online-scene-in">'
+    + '<div class="online-scene-txt"><p class="online-scene-k"><span class="online-scene-n" aria-hidden="true" translate="no">' + String(i + 1).padStart(2, '0') + ' / ' + String(n).padStart(2, '0') + '</span> <span>' + esc(sc.k) + '</span></p>'
+    + '<h2 class="online-scene-t" id="scene-' + esc(sc.id) + '-t">' + esc(sc.t) + '</h2>'
+    + '<p class="online-scene-p">' + esc(sc.p) + '</p>'
+    + (sc.statut ? '<p class="online-scene-st">' + st(sc.statut, sc.sources) + '</p>' : '')
+    + (sc.cta ? '<p class="online-scene-cta"><a class="lkx-btn" href="' + esc(sc.cta.href) + '">' + esc(sc.cta.label) + '</a></p>' : '') + '</div>'
+    + (sc.media && MED[sc.media] ? '<figure class="online-scene-fig"><div class="online-scene-img">' + LKX.img(MED, sc.media, sc.alt, { big: true, sizes: '(max-width:820px) 100vw, 560px', eager: i === 0 }) + '</div><figcaption>' + esc(MED[sc.media].credit || 'Visuel officiel Rockstar Games') + '</figcaption></figure>' : sc.signal ? SIGNAL : sc.id === 'rien' ? '<div class="online-scene-art online-scene-art--vide" aria-hidden="true"><span>?</span></div>' : sc.id === '2027' ? '<div class="online-scene-art online-scene-art--date" aria-hidden="true"><span>20</span><span>27</span><span>?</span></div>' : sc.cta ? '<div class="online-scene-art online-scene-art--pret" aria-hidden="true" translate="no"><span class="brand">Leonida<span>kit</span></span><i></i><i></i><i></i></div>' : '')
+    + '</div></section>';
+  return '<div class="online-cine" id="presentation" data-online-cine><div class="online-cine-bg" aria-hidden="true"><div class="online-cine-grid"></div><div class="online-cine-glow"></div><div class="online-cine-scan"></div></div>'
+    + '<section class="page-head shell lk-glow online-scene online-scene--hero" data-online-scene aria-labelledby="online-h1"><div class="online-scene-in online-scene-in--hero"><div><p class="fiche-cat"><span class="online-marque"><span class="brand" translate="no">Leonida<span>kit</span></span> · <span>' + esc(I.marque) + '</span></span></p>'
+    + '<h1 id="online-h1">' + esc(X.title) + '</h1>'
+    + '<p class="lede">' + esc(X.lede) + '</p><p class="d-intro-note">' + esc(X.note) + ' <a href="tuto.html#sources">Comprendre les statuts</a>.</p>'
+    + '<p class="online-defiler" aria-hidden="true">' + esc(I.defiler) + '<i></i></p><p class="online-passer"><a href="#etat">' + esc(I.passer) + '</a></p></div></div></section>'
+    + I.scenes.map(scene).join('') + '</div>';
 }
 function hubPage(ctx) {
   const { H, P, D, STATUTS, ROOTC } = ctx, X = H.hub, E = H.etat, CH = H.change;
@@ -221,21 +256,16 @@ function hubPage(ctx) {
   const A = H.activites, AC = H.achats, M = H.misesAJour;
   const repere = r => '<p class="online-repere"><span class="online-v">GTA V</span> ' + esc(r.texte) + ' ' + st(r.statut, r.sources) + '</p>';
   const activites = '<section class="shell online-sec" id="activites" aria-labelledby="activites-t">' + head(A.kicker, A.titre, 'activites')
-    + (D.activites.length ? rows(D, 'activites', '') : rubrique(H, A, '<p class="online-vide">' + esc(A.vide) + '</p>', ['Activités'], 'zone')) + repere(A.repere) + '</section>';
+    + (D.activites.length ? rows(D, 'activites', '') : rubrique(ctx, 'activites', A, '<p class="online-vide">' + esc(A.vide) + '</p>', ['Activités'], 'zone')) + repere(A.repere) + '</section>';
   const achats = '<section class="shell online-sec" id="achats" aria-labelledby="achats-t">' + head(AC.kicker, AC.titre, 'achats')
-    + (D.achats.length || D.entreprises.length ? rows(D, 'achats', '') + rows(D, 'entreprises', '') : rubrique(H, AC, '<p class="online-vide">' + esc(AC.vide) + ' <a href="achats.html">Les achats de l’histoire</a></p>', ['Achats', 'Entreprises'], 'achats'))
+    + (D.achats.length || D.entreprises.length ? rows(D, 'achats', '') + rows(D, 'entreprises', '') : rubrique(ctx, 'achats', AC, '<p class="online-vide">' + esc(AC.vide) + ' <a href="achats.html">Les achats de l’histoire</a></p>', ['Achats', 'Entreprises'], 'achats'))
     + repere(AC.repere) + '<p class="online-repere">' + esc(AC.monetisation.texte) + ' ' + st(AC.monetisation.statut, AC.monetisation.sources) + '</p></section>';
   const actuel = P.pages.find(p => p.id === 'gta-online-actuel'), maj = actuel ? actuel.blocs.find(b => b.id === 'mises-a-jour') : null;
   const misesAJour = '<section class="shell online-sec" id="mises-a-jour" aria-labelledby="mises-a-jour-t">' + head(M.kicker, M.titre, 'mises-a-jour')
-    + (D.misesAJour.length ? rows(D, 'misesAJour', '') : rubrique(H, M, '<p class="online-vide">' + esc(M.vide) + '</p>', ['Mises à jour'], 'horloge'))
+    + (D.misesAJour.length ? rows(D, 'misesAJour', '') : rubrique(ctx, 'mises-a-jour', M, '<p class="online-vide">' + esc(M.vide) + '</p>', ['Mises à jour'], 'horloge'))
     + (maj ? '<h3 class="online-sous-t">' + esc(M.titreActuel) + '</h3><ul class="online-items lkx-net lk-arrive" data-lkx-in>' + maj.items.filter(x => x.titre).map(x => '<li><span class="online-v">GTA V</span><h3 translate="no">' + esc(x.titre) + '</h3><p>' + esc(x.texte) + '</p><p>' + st(x.statut, x.sources) + '</p></li>').join('') + '</ul><p class="online-plus"><a href="online/gta-online-actuel.html#mises-a-jour">Le GTA Online actuel en détail</a></p>' : '')
     + '<h3 class="online-sous-t">' + esc(H.champs.titre) + '</h3><dl class="online-champs">' + H.champs.items.map(x => '<div><dt>' + esc(x.t) + '</dt><dd>' + esc(x.d) + '</dd></div>').join('') + '</dl></section>';
-  const body = `<section class="page-head shell lk-glow"><div class="lk-head-grid"><div>
-  <p class="fiche-cat">${esc(X.label)} · GTA VI</p>
-  <h1>${esc(X.title)}</h1>
-  <p class="lede">${esc(X.lede)}</p>
-  <p class="d-intro-note">${esc(X.note)} <a href="tuto.html#sources">Comprendre les statuts</a>.</p>
-</div>${SIGNAL}</div></section>
+  const body = `${cine(ctx)}
 ${etat}
 ${change}
 ${activites}

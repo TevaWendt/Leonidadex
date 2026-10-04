@@ -42,6 +42,32 @@ CE QUI EST NOUVEAU DANS CETTE ARCHIVE
    vercel.json autorise ces deux lecteurs (ligne « Content-Security-Policy », ajout de « frame-src »).
 5. Tout est traduit en anglais, espagnol, italien et allemand.
 
+DEUXIÈME PASSE (même archive, 4 octobre au soir)
+- Menu « Explorer » : « GTA Online » est maintenant un groupe à part, en gras comme Le monde, Jouer et S’équiper : une bande
+  de nuit sous les quatre groupes (L’espace GTA Online, Les annonces, Le GTA Online actuel). Au pied de page, sa propre colonne.
+  Le groupe « Jouer » garde Missions, Activités annexes, Radios et musique, Codes de triche, Trophées et succès.
+- GTA Online, la présentation : avant l’espace, cinq écrans qui se lisent en défilant (le titre arrive mot à mot, puis le
+  texte, le statut et les sources ; une image officielle, le réseau de joueurs, un « ? » au néon, « 2027 ? », puis la marque).
+  Chaque écran dit une chose vraie et sourcée (expérience solo, rien d’annoncé, GTA Online continue, la rumeur 2027), et le
+  dernier mène à « Ce qu’on sait, en clair » : là, le mouvement s’arrête et l’information est nette. Sol en grille façon
+  arcade, scanlines, néon de l’espace, et les rappels de la charte : corail, ambre, Archivo, étiquettes mono, marque
+  Leonidakit. « Passer à l’espace » saute la présentation ; sans JavaScript ou en mouvement réduit, tout est affiché d’un coup.
+- GTA Online, les fiches des rubriques (Activités, Achats et entreprises, Mises à jour) : une image officielle de GTA VI
+  (dite « illustration »), un texte propre à la rubrique, ce qu’en dit le GTA Online actuel (toujours marqué « GTA V », avec
+  statut et sources), ce que dira chaque fiche, et deux boutons (Le GTA Online actuel, Les annonces).
+- Codes de triche, les fiches de catégorie : ce que couvre la catégorie, ce qu’on sait pour GTA VI, puis les codes de GTA V du
+  même genre « pour comparer » avec leur séquence PlayStation en pictogrammes, le mot PC et le numéro de téléphone. Quatre
+  codes de GTA V de plus pour les catégories Véhicules et Monde (Comet, BMX, météo, gravité lunaire ; GamesRadar et PC Gamer,
+  déjà en sources), visibles seulement dans ces fiches : la page garde ses quatre cartes.
+- Trophées et succès, la fiche « Aperçu » : quatre trophées de GTA V (Los Santos Legend, Career Criminal, Solid Gold, Baby!,
+  Kifflom!) montrés comme des lignes de la future liste, avec le grade, la condition, l’étiquette « Manquable » et la case
+  « Obtenu » dessinée (rien n’est enregistré : ce sont des exemples).
+- Charte renforcée sur les trois pages : carte « ce qu’on sait » sur bande de nuit avec liseré corail et ombre ambre, faits
+  avec bande dégradée et ombre dure, cartes GTA V des codes avec en-tête de nuit (façon borne d’arcade), badges de trophées
+  métallisés, chiffres de GTA V en gros sur bande de nuit, renvois de sources en tickets.
+- Images : uniquement des visuels officiels déjà présents sur le site (médias et crédits inchangés). Rien n’est pris sur un
+  autre site : la règle du site l’interdit, et le droit d’auteur aussi.
+
 POURQUOI PRESQUE TOUTES LES PAGES SONT DANS L’ARCHIVE : le menu « Jouer » (six liens), le pied de page et les numéros de
 version (« ?v=… ») changent sur toutes les pages des cinq langues. Le texte des pages existantes ne change pas, sauf la
 page Mentions et confidentialité (le lecteur de musique) et les compteurs de la page À propos (recomptés tout seuls).
@@ -53,5 +79,7 @@ POUR VÉRIFIER
 - codes-de-triche.html : les cartes « allumées » en arrivant ; clique une catégorie (fiche plein écran, Échap pour fermer).
 - trophees.html : les badges qui « se débloquent » ; « Aperçu d’une fiche trophée ».
 - online.html : le menu « Explorer » → « Jouer » a bien GTA Online ; les cartes « Aperçu de la fiche » des rubriques.
+- online.html : la présentation en défilant ; « Explorer » → la bande « GTA Online » ; les fiches « Aperçu de la fiche ».
+- codes-de-triche.html : une catégorie du guide (fiche avec les codes de GTA V) ; trophees.html : « Aperçu d’une fiche trophée ».
 - missions.html, activites.html, gangs.html : le design du zip précédent est bien là.
 - mentions-legales.html#cookies : le paragraphe sur le lecteur de musique.
