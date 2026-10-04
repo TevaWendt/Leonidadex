@@ -32,7 +32,10 @@
   "sansJs": "Les quatre sources, l’une après l’autre :",
   "video": "Voir la vidéo officielle",
   "morceau": "morceau",
-  "morceaux": "morceaux"
+  "morceaux": "morceaux",
+  "ecouter": "Écouter",
+  "ecouterNote": "Recherche sur la plateforme : le site n’héberge aucun extrait.",
+  "ecouteOff": "Écoute officielle"
  },
  "videos": [
   {
@@ -426,6 +429,38 @@
     "the album",
     "bande originale gta 6",
     "album atlantic records"
+   ],
+   "galerie": [
+    {
+     "media": "dre-quan-priest-04",
+     "alt": "Dre’Quan Priest debout près d’une console de mixage où travaille un ingénieur du son, visuel officiel Rockstar Games",
+     "legende": "Dre’Quan Priest en studio"
+    },
+    {
+     "media": "real-dimez-04",
+     "alt": "Les deux rappeuses de Real Dimez au micro dans une cabine d’enregistrement, casques sur les oreilles, visuel officiel Rockstar Games",
+     "legende": "Real Dimez au micro"
+    },
+    {
+     "media": "dre-quan-priest-03",
+     "alt": "Dre’Quan Priest au milieu d’un club baigné de lumière violette, visuel officiel Rockstar Games",
+     "legende": "Un club de Vice City"
+    },
+    {
+     "media": "real-dimez-01",
+     "alt": "Une rappeuse de Real Dimez assise dans un studio, un casque à la main, devant une console, capture officielle",
+     "legende": "Real Dimez en studio"
+    },
+    {
+     "media": "dre-quan-priest-02",
+     "alt": "Dre’Quan Priest en veste bleue dans un club au bord d’une piscine, de nuit, visuel officiel Rockstar Games",
+     "legende": "Une soirée au bord de l’eau"
+    },
+    {
+     "media": "real-dimez-03",
+     "alt": "Les deux rappeuses de Real Dimez à bord d’une voiture, l’une en manteau de fourrure jaune, visuel officiel Rockstar Games",
+     "legende": "Real Dimez en ville"
+    }
    ]
   }
  ],
@@ -471,13 +506,17 @@
      "date": "4 décembre 2023",
      "titre": "Trailer 1",
      "statut": "officiel",
-     "texte": "Tout le trailer se joue sur « Love Is a Long Road » de Tom Petty, crédité dans la description de la vidéo officielle."
+     "texte": "Tout le trailer se joue sur « Love Is a Long Road » de Tom Petty, crédité dans la description de la vidéo officielle.",
+     "media": "trailer-1-vehicles-025",
+     "alt": "Lucia debout sur le toit d’une voiture rouge devant les tours de Vice City de nuit, photogramme du Trailer 1 (0:25)"
     },
     {
      "date": "6 mai 2025",
      "titre": "Trailer 2",
      "statut": "officiel",
-     "texte": "« Hot Together » des Pointer Sisters porte la vidéo ; trois bribes d’autoradio passent pendant que Jason conduit dans les Keys."
+     "texte": "« Hot Together » des Pointer Sisters porte la vidéo ; trois bribes d’autoradio passent pendant que Jason conduit dans les Keys.",
+     "media": "trailer-2-caracara-016",
+     "alt": "Brian Heder devant son pick-up dans les Keys, photogramme du Trailer 2 vers 0:16"
     },
     {
      "date": "27 août 2026",
@@ -491,13 +530,17 @@
      "date": "Automne 2026",
      "titre": "Dazed",
      "statut": "officiel",
-     "texte": "Rupert Humphries, de la narration de Rockstar, résume l’esprit musical : « We love Miami music, particularly Miami bass ». Il cite Kodak Black et Sexyy Red."
+     "texte": "Rupert Humphries, de la narration de Rockstar, résume l’esprit musical : « We love Miami music, particularly Miami bass ». Il cite Kodak Black et Sexyy Red.",
+     "media": "dre-quan-priest-03",
+     "alt": "Dre’Quan Priest au milieu d’un club baigné de lumière violette, visuel officiel Rockstar Games"
     },
     {
      "date": "17 septembre 2026",
      "titre": "L’album et la radio",
      "statut": "officiel",
-     "texte": "Annonce de « Grand Theft Auto VI: The Album », avec Atlantic Records. Le Newswire promet aussi une partition dynamique et « la prochaine évolution de la radio en jeu », sans détail."
+     "texte": "Annonce de « Grand Theft Auto VI: The Album », avec Atlantic Records. Le Newswire promet aussi une partition dynamique et « la prochaine évolution de la radio en jeu », sans détail.",
+     "media": "real-dimez-04",
+     "alt": "Les deux rappeuses de Real Dimez au micro dans une cabine d’enregistrement, casques sur les oreilles, visuel officiel Rockstar Games"
     }
    ],
    "p": [
@@ -937,5 +980,15 @@
    "C’est quoi GTA VI: The Album ?",
    "Les stations qui circulent sont-elles confirmées ?"
   ]
+ },
+ "album": {
+  "kicker": "L’album officiel",
+  "stats": [
+   "34 titres originaux",
+   "6 titres déjà sortis",
+   "Sortie le 19 novembre 2026"
+  ],
+  "cta": "Ouvrir la fiche de l’album",
+  "ecouter": "Écouter les titres déjà sortis"
  }
 }

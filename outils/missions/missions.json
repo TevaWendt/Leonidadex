@@ -28,11 +28,11 @@
   "aliases": "autres noms tapés par les joueurs (Léo, recherche)"
  },
  "types": [
-  { "id": "histoire", "label": "Histoire principale", "texte": "Les missions de l’histoire de Jason et Lucia, chapitre par chapitre.", "calc": "session" },
-  { "id": "secondaire", "label": "Mission secondaire", "texte": "Les missions proposées par d’autres personnages, à côté de l’histoire.", "calc": "activities" },
-  { "id": "braquage", "label": "Braquage", "texte": "Les coups préparés : banques, bijouteries, commerces, repaires.", "calc": "activities" },
-  { "id": "rencontre", "label": "Rencontre", "texte": "Les rencontres et événements croisés en route.", "calc": "activities" },
-  { "id": "edition", "label": "Contenu d’édition", "texte": "Les contenus rangés dans une édition du jeu.", "calc": "goal" }
+  { "id": "histoire", "media": "artwork-jason-lucia-beach", "alt": "Lucia tient un petit pistolet contre Jason sur une illustration officielle de GTA VI.", "label": "Histoire principale", "texte": "Les missions de l’histoire de Jason et Lucia, chapitre par chapitre.", "calc": "session" },
+  { "id": "secondaire", "media": "boobie-ike-01", "alt": "Boobie Ike assis dans un fauteuil de son bureau, une liasse de billets à la main, visuel officiel Rockstar Games", "label": "Mission secondaire", "texte": "Les missions proposées par d’autres personnages, à côté de l’histoire.", "calc": "activities" },
+  { "id": "braquage", "media": "jason-and-lucia-02", "alt": "Jason et Lucia armés et masqués devant la porte ouverte d’une chambre forte, billets en l’air, visuel officiel Rockstar Games", "label": "Braquage", "texte": "Les coups préparés : banques, bijouteries, commerces, repaires.", "calc": "activities" },
+  { "id": "rencontre", "media": "ambrosia-06", "alt": "Fête dans la boue à Ambrosia : un homme couvert de boue, chapeau de cow-boy sur la tête, fait des signes au milieu de buggys et de quads, capture officielle Rockstar Games", "label": "Rencontre", "texte": "Les rencontres et événements croisés en route.", "calc": "activities" },
+  { "id": "edition", "media": "goodtime-gear-01", "alt": "Jason et Lucia en casquettes et tee-shirts Vice City illustrés de Macca the Gator, devant une fresque de l’alligator (capture officielle « Goodtime Gear » de l’Édition Ultimate).", "label": "Contenu d’édition", "texte": "Les contenus rangés dans une édition du jeu.", "calc": "goal" }
  ],
  "missions": []
 }

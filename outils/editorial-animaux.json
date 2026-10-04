@@ -192,10 +192,10 @@
    "lede": "Rockstar a d’abord montré ses animaux sans en parler, puis les a comptés : plus de 170 espèces.",
    "items": [
     { "date": "4 décembre 2023", "titre": "Trailer 1", "statut": "vu", "texte": "Un groupe de dauphins nage dans le sillage d’un catamaran, vers 0:11.", "media": "trailer-1-tropic-011", "alt": "Catamaran blanc vu du ciel sur une eau turquoise, des dauphins dans son sillage, photogramme du Trailer 1" },
-    { "date": "6 mai 2025", "titre": "Pages des régions", "statut": "officiel", "texte": "L’alligator devient l’attraction la plus célèbre de Grassrivers, et Mount Kalaga un terrain de chasse et de pêche." },
-    { "date": "6 mai 2025", "titre": "Captures officielles", "statut": "vu", "texte": "Un iguane dans les Keys, des cerfs et un puma au nord, des alligators autour des hydroglisseurs." },
-    { "date": "27 août 2026", "titre": "Extended Look", "statut": "vu", "texte": "Jason caresse un chien, une icône d’ange s’affiche ; un chihuahua déguisé passe dans le montage final." },
-    { "date": "29 septembre 2026", "titre": "Game Informer", "statut": "officiel", "texte": "Michael Kane annonce plus de 170 espèces, dont plus de 60 sortes d’oiseaux et plus de 30 mammifères terrestres." }
+    { "date": "6 mai 2025", "titre": "Pages des régions", "media": "grassrivers-01", "alt": "Trois habitants de Grassrivers armés, assis près d’un hydroglisseur, un alligator mort à leurs pieds, capture officielle Rockstar Games", "statut": "officiel", "texte": "L’alligator devient l’attraction la plus célèbre de Grassrivers, et Mount Kalaga un terrain de chasse et de pêche." },
+    { "date": "6 mai 2025", "titre": "Captures officielles", "media": "leonida-keys-06", "alt": "Un iguane vert sur un rocher au bord de l’eau, dans les Leonida Keys, capture officielle Rockstar Games", "statut": "vu", "texte": "Un iguane dans les Keys, des cerfs et un puma au nord, des alligators autour des hydroglisseurs." },
+    { "date": "27 août 2026", "titre": "Extended Look", "media": "vice-city-09", "alt": "Berline bleue au premier plan, sous le viaduc de Vice City dans GTA VI.", "statut": "vu", "texte": "Jason caresse un chien, une icône d’ange s’affiche ; un chihuahua déguisé passe dans le montage final." },
+    { "date": "29 septembre 2026", "titre": "Game Informer", "media": "mount-kalaga-national-park-05", "alt": "Des cervidés et d’autres animaux sauvages au bord d’une rivière du Mount Kalaga National Park, capture officielle Rockstar Games", "statut": "officiel", "texte": "Michael Kane annonce plus de 170 espèces, dont plus de 60 sortes d’oiseaux et plus de 30 mammifères terrestres." }
    ],
    "p": [
     "Une espèce n’est nommée sur le site que si Rockstar l’a nommée ; sinon, la fiche décrit ce qui se voit."

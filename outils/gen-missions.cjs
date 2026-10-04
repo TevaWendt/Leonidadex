@@ -13,6 +13,7 @@
 const fs = require('node:fs'), path = require('node:path'), vm = require('node:vm');
 const ROOT = path.resolve(__dirname, '..');
 const S = require('./sections.cjs');
+const LKX = require('./lk-sections.cjs'); /* fiches plein écran, puces, mini-carte, entrées animées (lk-sections.css, lk-sections.js) */
 const DP = require('./donnees-publiees.cjs');
 const esc = S.esc;
 const SITE = 'https://www.leonidakit.com', HUB = 'missions';
@@ -137,6 +138,7 @@ ${bc(crumbs)}${ld ? '\n' + ld : ''}
 <link rel="stylesheet" href="${p}motion-tokens.css">
 <link rel="stylesheet" href="${p}acquisitions.css">
 ${body.includes('lk-entry-card') ? `<link rel="stylesheet" href="${p}calculator-entry.css">\n` : ''}<link rel="stylesheet" href="${p}missions.css">
+<link rel="stylesheet" href="${p}lk-sections.css">
 <meta property="og:image" content="${SITE}${ogImg || '/img/social-card.png'}">
 <meta name="twitter:card" content="summary_large_image">
 <meta property="og:url" content="${SITE}${canonical}">
@@ -148,8 +150,9 @@ ${body.includes('lk-entry-card') ? `<link rel="stylesheet" href="${p}calculator-
 
 ${C.header.replace(/ class="here"/g, '')}
 
-<main id="main" class="lore-page missions-page">
+<main id="main" class="lore-page missions-page lkx-page">
 ${body}
+${LKX.dialog()}
 ${EXPLORE(p ? '../' : '')}
 <section class="lk-outro" aria-label="Et après"><div class="shell lk-outro-in"><p class="lk-outro-k">Et après ?</p><h2>La suite s’écrit le 19 novembre 2026.</h2><p>Chaque fiche se complète avec le jeu : ce qu’on y trouve, ce qu’on y fait, ce que ça rapporte. Rien d’inventé d’ici là.</p><div class="lk-outro-links"><a href="${p ? '../' : ''}carte.html">Ouvrir la carte</a><a href="${p ? '../' : ''}progression.html">Ma progression</a></div></div></section>
 </main>
@@ -158,6 +161,7 @@ ${C.footer}
 
 ${C.scripts}
 <script src="${p}missions.js"></script>
+<script src="${p}lk-sections.js"></script>
 </body>
 </html>
 `;
@@ -196,25 +200,49 @@ function hubPage(ctx) {
     + '<div class="missions-recit">' + HI.p.map(t => '<p>' + esc(t) + '</p>').join('') + '<p class="missions-recit-src">' + S.pip('officiel', true) + srcLinks(HI.sources) + '</p></div>'
     + '<div class="missions-meca">' + HI.mecaniques.map(x => '<article class="missions-meca-item rise"><span class="missions-meca-ico">' + S.icon(x.icon) + '</span><h3>' + esc(x.titre) + '</h3><p>' + esc(x.texte) + '</p><p class="missions-st">' + S.pip(x.statut, true) + srcLinks(x.sources) + '</p></article>').join('') + '</div></section>';
   const seq = H.sequences;
-  const seqCard = (x, i) => '<li class="missions-seq rise' + (x.media ? ' missions-seq--media' : '') + '" id="seq-' + esc(x.id) + '">'
-    + (x.media ? '<figure class="missions-seq-fig">' + imgTag(MED, x.media, x.alt, false) + '</figure>' : '')
-    + '<div class="missions-seq-body"><p class="missions-seq-when"><span class="missions-seq-n" aria-hidden="true">' + String(i + 1).padStart(2, '0') + '</span><b>' + esc(x.video) + '</b> · <span>' + esc(x.moment) + '</span></p>'
-    + '<h3>' + esc(x.titre) + '</h3><p>' + esc(x.texte) + '</p>'
-    + '<p class="missions-seq-links">' + chips(ED, 'characters', x.personnages, '') + chips(ED, 'regions', x.lieux, '') + (x.carte || []).map(c => '<a class="missions-chip missions-chip--carte" href="carte.html#lieu=' + esc(c.id) + '">' + esc(c.nom) + '</a>').join('') + '</p>'
-    + '<p class="missions-st">' + S.pip(x.statut, true) + srcLinks(x.sources) + '</p></div></li>';
+  /* séquences : huit cartes illustrées, entrée « balayage vidéo » (lk-sections.css) ; un clic ouvre la séquence en grand
+     (fiche plein écran : image, récit, personnages, lieux sur la carte de Leonida, statut et sources) */
+  const avatar = (group, id) => { const y = (ED[group] || []).find(z => z.id === id); return y ? LKX.thumb(MED, (y.media || [])[0]) : ''; };
+  const richChips = (x, pre) => (x.personnages || []).map(id => LKX.chip({ href: pre + 'personnages/' + id + '.html', label: nameOf(ED, 'characters', id), img: avatar('characters', id), kind: 'perso' })).join('')
+    + (x.lieux || []).map(id => LKX.chip({ href: pre + 'lieux/' + id + '.html', label: nameOf(ED, 'regions', id), img: avatar('regions', id), kind: 'region' })).join('')
+    + (x.carte || []).map(c => LKX.chip({ href: pre + 'carte.html#lieu=' + c.id, label: c.nom, kind: 'place', small: 'Sur la carte' })).join('');
+  const seqCard = (x, i) => {
+    const n = String(i + 1).padStart(2, '0'), places = (x.carte || []).map(c => LKX.place(c.id, { [c.id]: c.nom }));
+    const summary = '<span class="missions-seq-media lkx-scan-media">' + imgTag(MED, x.media, x.alt, false) + '<span class="missions-rec" aria-hidden="true"><i></i>REC</span>' + (x.illustration ? '<span class="missions-illu">Illustration</span>' : '') + '<span class="missions-seq-tc">' + esc(x.moment) + '</span></span>'
+      + '<span class="missions-seq-body"><span class="missions-seq-when"><span class="missions-seq-n" aria-hidden="true">' + n + '</span><b>' + esc(x.video) + '</b></span>'
+      + '<h3 class="missions-seq-h">' + esc(x.titre) + '</h3><span class="missions-seq-x">' + esc(x.texte) + '</span><span class="missions-seq-go">Ouvrir la séquence</span></span>';
+    const body = '<p>' + esc(x.texte) + '</p>'
+      + (richChips(x, '') ? '<h4>Qui et où</h4><div class="lkx-chips">' + richChips(x, '') + '</div>' : '')
+      + (places.length ? '<h4>Sur la carte de Leonida</h4>' + LKX.miniMap(places, { label: 'Carte de Leonida : lieux de la séquence', note: 'Lieux repérés sur notre carte, d’après la vidéo : rien n’est placé au hasard.' }) : '')
+      + '<p class="missions-st">' + S.pip(x.statut, true) + srcLinks(x.sources) + '</p>';
+    return '<li class="missions-seq" id="seq-' + esc(x.id) + '">' + LKX.sheet({ id: 'sequence-' + x.id, cls: 'missions-seq-det', summary: '<span class="missions-seq-card lkx-tilt">' + summary + '</span>', fig: imgTag(MED, x.media, x.alt, true), caption: x.illustration ? 'Illustration : visuel officiel Rockstar Games' : 'Visuel officiel Rockstar Games', kicker: esc(x.video) + ' · ' + esc(x.moment) + ' · <span>Séquence ' + n + '</span>', title: x.titre, body }) + '</li>';
+  };
   const sequences = '<section class="shell missions-sequences" id="sequences" aria-labelledby="sequences-t"><div class="reveal"><p class="missions-kicker">' + esc(seq.kicker) + '</p><h2 class="sec-h" id="sequences-t">' + esc(seq.titre) + '</h2><p class="missions-lede">' + esc(seq.lede) + '</p></div>'
-    + '<ol class="missions-seqs">' + seq.items.map(seqCard).join('') + '</ol></section>';
+    + '<ol class="missions-seqs lkx-scan lk-arrive" data-lkx-in>' + seq.items.map(seqCard).join('') + '</ol></section>';
+  /* Édition Ultimate : vedette haut de gamme (bandeau, or, grandes images, reflet au survol) */
   const E = H.edition;
-  const edition = '<section class="shell missions-edition reveal" id="edition" aria-labelledby="edition-t"><p class="missions-kicker">' + esc(E.kicker) + '</p><h2 class="sec-h" id="edition-t">' + esc(E.titre) + '</h2><p class="missions-lede">' + esc(E.lede) + '</p>'
-    + '<div class="missions-ed">' + E.items.map(x => '<article class="missions-ed-item rise"><h3 translate="no">' + esc(x.titre) + '</h3><p>' + esc(x.texte) + '</p><p class="missions-st">' + S.pip(x.statut, true) + srcLinks(x.sources) + '</p><p class="missions-ed-links">' + x.liens.map(l => '<a href="' + esc(l.href) + '">' + esc(l.label) + '</a>').join('') + '</p></article>').join('') + '</div>'
-    + '<p class="missions-note">' + esc(E.p) + '</p></section>';
+  const edition = '<section class="missions-edition lk-arrive" id="edition" aria-labelledby="edition-t"><div class="missions-ult-band">' + (E.media ? '<div class="missions-ult-bg" aria-hidden="true">' + LKX.img(MED, E.media, '', { big: true, sizes: '100vw' }) + '</div>' : '') + '<div class="shell missions-ult-in">'
+    + '<div class="missions-ult-head lkx-up" data-lkx-in><p class="missions-ult-k"><span class="missions-ult-crown" aria-hidden="true">✦</span>' + esc(E.kicker) + '</p><h2 class="sec-h" id="edition-t"><span class="lkx-gold-text">' + esc(E.titre) + '</span></h2><p class="missions-ult-lede">' + esc(E.lede) + '</p></div>'
+    + '<div class="missions-ult lkx-deal" data-lkx-in>' + E.items.map((x, i) => '<article class="missions-ult-card lkx-sweep lkx-tilt">' + (x.media ? '<figure class="missions-ult-fig">' + LKX.img(MED, x.media, x.alt, { big: true, sizes: '(max-width:820px) 100vw, 600px' }) + '<span class="missions-ult-n" aria-hidden="true">0' + (i + 1) + '</span></figure>' : '')
+      + '<div class="missions-ult-body"><p class="missions-ult-tag">Édition Ultimate</p><h3 translate="no">' + esc(x.titre) + '</h3><p>' + esc(x.texte) + '</p><p class="missions-st">' + S.pip(x.statut, true) + srcLinks(x.sources) + '</p><p class="missions-ult-links">' + x.liens.map((l, j) => '<a class="lkx-btn' + (j ? ' lkx-btn--ghost' : '') + '" href="' + esc(l.href) + '">' + esc(l.label) + '</a>').join('') + '</p></div></article>').join('') + '</div>'
+    + '<p class="missions-ult-note">' + esc(E.p) + '</p></div></div></section>';
+  /* le guide : un type de mission par carte illustrée ; un clic ouvre la fiche du type (squelette de la future fiche de mission) */
   const LI = H.liste, list = M.missions;
   const byChap = {}; for (const m of list) { const k = m.chapitre && m.chapitre.titre || ''; (byChap[k] = byChap[k] || []).push(m); }
   const missionCard = m => '<a class="lore-card rise" href="missions/' + esc(m.id) + '.html">' + (m.media && m.media[0] ? imgTag(MED, m.media[0], m.nom, false) : '<div class="lore-vide">Visuel officiel à venir</div>') + '<div class="veh-body"><span class="veh-marque">' + esc((M.types.find(t => t.id === m.type) || {}).label || '') + '</span><h3>' + esc(m.nom) + '</h3><p>' + esc(m.resume) + '</p><span class="veh-go">Voir la fiche</span></div></a>';
+  const SKEL = ['Chapitre', 'Personnages', 'Lieux', 'Déblocage', 'Objectifs', 'Récompense', 'Durée', 'Manquable', 'Solution pas à pas', 'Astuces'];
+  const typeCard = t => {
+    const n = list.filter(m => m.type === t.id).length, c = CALC[t.calc] || CALC.activities;
+    const summary = '<span class="missions-type-card lkx-tilt">' + (t.media ? '<span class="missions-type-fig">' + imgTag(MED, t.media, t.alt, false) + '</span>' : '') + '<span class="missions-type-body"><span class="missions-type-n" translate="no">' + n + '</span><h4>' + esc(t.label) + '</h4><span>' + esc(t.texte) + '</span><span class="missions-seq-go">Voir la fiche du guide</span></span></span>';
+    const body = '<p>' + esc(t.texte) + '</p><p class="missions-type-vide">' + esc(n ? LI.typeDoc : LI.typeVide) + '</p>'
+      + '<h4>' + esc(LI.squelette) + '</h4><dl class="missions-skel">' + SKEL.map(k => '<div><dt>' + esc(k) + '</dt><dd><span class="missions-skel-bar" aria-hidden="true"></span><span>' + esc(LI.sortie) + '</span></dd></div>').join('') + '</dl>'
+      + '<p class="lkx-sheet-cta"><a class="lkx-btn" href="calculateurs.html?tool=' + esc(t.calc || 'activities') + '&amp;from=missions#atelier">' + esc(c.cta) + '</a></p>';
+    return LKX.sheet({ id: 'type-' + t.id, cls: 'missions-type', summary, fig: t.media ? imgTag(MED, t.media, t.alt, true) : null, caption: 'Visuel officiel Rockstar Games', kicker: esc(LI.kicker) + ' · ' + esc(LI.typeK), title: t.label, body });
+  };
   const liste = '<section class="shell missions-liste" id="liste" aria-labelledby="liste-t"><div class="reveal"><p class="missions-kicker">' + esc(LI.kicker) + '</p><h2 class="sec-h" id="liste-t">' + esc(LI.titre) + '</h2></div>'
     + (list.length ? Object.entries(byChap).map(([chap, ms]) => (chap ? '<h3 class="missions-chap">' + esc(chap) + '</h3>' : '') + '<div class="lore-grid lore-grid--center">' + ms.sort((a, b) => (a.ordre || 999) - (b.ordre || 999)).map(missionCard).join('') + '</div>').join('')
-      : '<p class="missions-vide">' + esc(LI.vide) + '</p>')
-    + '<h3 class="missions-types-t">' + esc(LI.typesTitre) + '</h3><ul class="missions-types">' + M.types.map(t => '<li><b>' + esc(t.label) + '</b><span>' + esc(t.texte) + '</span><i>' + list.filter(m => m.type === t.id).length + '</i></li>').join('') + '</ul>'
+      : '<div class="missions-vide lkx-up" data-lkx-in><span class="missions-vide-k">' + esc(LI.videK) + '</span><p>' + esc(LI.vide) + '</p></div>')
+    + '<h3 class="missions-types-t">' + esc(LI.typesTitre) + '</h3><div class="missions-types lkx-iris lk-arrive" data-lkx-in>' + M.types.map(typeCard).join('') + '</div>'
     + '<p class="missions-note">' + esc(LI.ordre) + '</p></section>';
   const body = `<section class="page-head shell lk-glow"><div class="lk-head-grid"><div>
   <p class="fiche-cat">${esc(X.label)} · GTA VI</p>

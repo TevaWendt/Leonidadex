@@ -12,6 +12,10 @@
 const fs = require('node:fs'), path = require('node:path'), vm = require('node:vm');
 const ROOT = path.resolve(__dirname, '..');
 const S = require('./sections.cjs');
+const LKX = require('./lk-sections.cjs'), LOC = require('./localisateur.cjs'); /* fiches plein écran, mini-cartes, entrées animées (lk-sections.css, lk-sections.js) */
+/* visuel des pages du site citées dans « Sur le site » et « Ailleurs sur le site » (cartes de liens) */
+const PAGE_IMG = { 'gangs.html': 'ambrosia-01', 'planques.html': 'jason-s-safehouse-vehicles', 'entreprises.html': 'rideout-customs-mod-shop-01', 'armes.html': 'hawk-little-morgan-revolvers-01', 'vehicules.html': 'one-eyed-willie-s-mod-shop-01', 'personnalisations.html': 'ultimate-edition-rideout-customs-02', 'collectibles.html': 'classic-car-collection-04', 'lieux/mount-kalaga.html': 'mount-kalaga-national-park-01', 'bateaux.html': 'shitzu-squalo-01', 'lieux/grassrivers.html': 'grassrivers-03', 'planques/planque-jason.html': 'jason-s-safehouse-vehicles', 'lieux/leonida-keys.html': 'leonida-keys-01', 'nourriture.html': 'jason-duval-06', 'lieux/ambrosia.html': 'ambrosia-01', 'gangs/ptt-youngin-gang.html': 'ptt-youngin-illegal-goods-store', 'personnages/cal.html': 'cal-hampton-01', 'armes/queue-billard.html': 'cal-hampton-02', 'entreprises/jack-of-hearts.html': 'boobie-ike-02', 'style.html': 'stock-305-clothing-store-01' };
+const slug = t => 'act-' + String(t).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[’']/g, '-').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 const DP = require('./donnees-publiees.cjs');
 const esc = S.esc;
 const SITE = 'https://www.leonidakit.com', HUB = 'activites';
@@ -157,6 +161,7 @@ ${bc(crumbs)}${ld ? '\n' + ld : ''}
 <link rel="stylesheet" href="${p}motion-tokens.css">
 <link rel="stylesheet" href="${p}acquisitions.css">
 ${body.includes('lk-entry-card') ? `<link rel="stylesheet" href="${p}calculator-entry.css">\n` : ''}<link rel="stylesheet" href="${p}activites.css">
+<link rel="stylesheet" href="${p}lk-sections.css">
 <meta property="og:image" content="${SITE}${ogImg || '/img/social-card.png'}">
 <meta name="twitter:card" content="summary_large_image">
 <meta property="og:url" content="${SITE}${canonical}">
@@ -168,8 +173,9 @@ ${body.includes('lk-entry-card') ? `<link rel="stylesheet" href="${p}calculator-
 
 ${C.header.replace(/ class="here"/g, '')}
 
-<main id="main" class="lore-page activites-page">
+<main id="main" class="lore-page activites-page lkx-page">
 ${body}
+${LKX.dialog()}
 ${EXPLORE(p ? '../' : '')}
 <section class="lk-outro" aria-label="Et après"><div class="shell lk-outro-in"><p class="lk-outro-k">Et après ?</p><h2>La suite s’écrit le 19 novembre 2026.</h2><p>Chaque fiche se complète avec le jeu : ce qu’on y trouve, ce qu’on y fait, ce que ça rapporte. Rien d’inventé d’ici là.</p><div class="lk-outro-links"><a href="${p ? '../' : ''}carte.html">Ouvrir la carte</a><a href="${p ? '../' : ''}progression.html">Ma progression</a></div></div></section>
 </main>
@@ -178,6 +184,7 @@ ${C.footer}
 
 ${C.scripts}
 <script src="${p}activites.js"></script>
+${body.includes('data-lk-loc=') ? `<script src="${p}localisateur.js"></script>\n` : ''}<script src="${p}lk-sections.js"></script>
 </body>
 </html>
 `;
@@ -215,32 +222,55 @@ function hubPage(ctx) {
   const order = H.zone.sources;
   const pile = require('./lot-c-visuals.cjs').stack(X.pile.map(p => { const m = imgOf(MED, p.media); return { src: m.a.src, big: m.b.src, alt: p.alt, caption: p.caption }; }), { label: 'Trois visuels officiels de cette section' });
   const F = H.fiches;
-  const card = a => '<a class="lore-card rise" href="' + HUB + '/' + esc(a.id) + '.html">' + imgTag(MED, a.media, a.alt, false) + '<div class="veh-body"><span class="veh-marque">' + esc(famille(H, a.famille).titre) + '</span><h3>' + esc(a.nom) + '</h3><p>' + esc(a.tagline) + '</p><span class="veh-go">Voir la fiche</span></div></a>';
+  /* les fiches : mosaïque de grandes images, entrée « iris » (lk-sections.css) */
+  const tile = (a, i) => '<a class="activites-tile activites-tile--' + esc(a.famille) + (i === 0 ? ' activites-tile--big' : '') + ' lkx-tilt" href="' + HUB + '/' + esc(a.id) + '.html"><span class="activites-tile-media">' + LKX.img(MED, a.media, a.alt, { big: i === 0, sizes: i === 0 ? '(max-width:820px) 100vw, 640px' : '(max-width:820px) 100vw, 360px' }) + '</span>'
+    + '<span class="activites-tile-body"><span class="activites-tile-fam">' + esc(famille(H, a.famille).titre) + '</span><h3>' + esc(a.nom) + '</h3><span class="activites-tile-tag">' + esc(a.tagline) + '</span><span class="activites-tile-go">Voir la fiche</span></span></a>';
   const fiches = '<section class="shell activites-fiches" id="fiches" aria-labelledby="fiches-t"><div class="reveal"><p class="activites-kicker">' + esc(F.kicker) + '</p><h2 class="sec-h" id="fiches-t">' + esc(F.titre) + '</h2><p class="activites-lede">' + esc(F.lede) + '</p></div>'
-    + '<div class="lore-grid lore-grid--center">' + A.activites.map(card).join('') + '</div></section>';
+    + '<div class="activites-bento lkx-iris lk-arrive" data-lkx-in>' + A.activites.map(tile).join('') + '</div></section>';
   const LI = H.liste;
   const total = LI.familles.reduce((n, f) => n + f.items.length, 0);
   /* filtre (activites.js) : boutons écrits dans la page, montrés seulement quand le script tourne ; sans script, tout est visible */
   const filtre = '<div class="activites-filtre" data-activites-filtre hidden><p class="activites-filtre-t" id="activites-filtre-t">Afficher</p><div class="activites-filtre-b" role="group" aria-labelledby="activites-filtre-t">'
-    + [['all', 'Toutes'], ['officiel', 'Annoncées par Rockstar'], ['vu', 'Vues dans les médias'], ['fiche', 'Avec une fiche']].map(([k, t], i) => '<button type="button" data-filtre="' + k + '" aria-pressed="' + (i ? 'false' : 'true') + '">' + esc(t) + '</button>').join('')
+    + [['all', 'Toutes'], ['officiel', 'Annoncées par Rockstar'], ['vu', 'Vues dans les médias'], ['fiche', 'Avec une fiche'], ['carte', 'Sur la carte']].map(([k, t], i) => '<button type="button" data-filtre="' + k + '" aria-pressed="' + (i ? 'false' : 'true') + '">' + esc(t) + '</button>').join('')
     + '</div><p class="activites-filtre-n" aria-live="polite">Activités affichées : <b data-activites-n translate="no">' + total + '</b></p></div>';
-  const ligne = x => {
-    /* une activité qui a sa fiche : son nom est le lien vers la fiche */
-    const nom = x.fiche ? '<a href="' + HUB + '/' + esc(x.fiche) + '.html">' + esc(x.nom) + '</a>' : esc(x.nom);
-    const autres = (x.liens || []).map(l => '<a class="activites-sur" href="' + esc(l.href) + '">' + esc(l.label) + '</a>').join('');
-    return '<li class="activites-item' + (x.fiche ? ' activites-item--fiche' : '') + '" data-statut="' + esc(x.statut) + '"' + (x.fiche ? ' data-fiche' : '') + '><div class="activites-item-h"><h4>' + nom + '</h4>' + S.pip(x.statut, true) + '</div>'
-      + '<p>' + esc(x.texte) + ' ' + srcLinks(x.sources, order) + '</p>'
-      + (autres ? '<p class="activites-item-links"><span class="activites-sur-t">Sur le site :</span>' + autres + '</p>' : '') + '</li>';
+  const placesOf = x => (x.carte || []).map(c => LKX.place(c.id, c.nom ? { [c.id]: c.nom } : {}));
+  const pageLink = l => { const h = l.href.split('#')[0]; return LKX.linkCard({ href: l.href, title: l.label, text: l.texte, img: PAGE_IMG[h] ? LKX.thumb(MED, PAGE_IMG[h]) : null }); };
+  /* une ligne = une activité ; un clic l’ouvre en grand : image, texte, statut et sources, lieux sur la carte de Leonida, pages liées */
+  const ligne = (x, f) => {
+    const id = slug(x.nom), places = placesOf(x);
+    const summary = '<span class="activites-row">' + (x.media ? '<span class="activites-row-img">' + LKX.thumb(MED, x.media) + '</span>' : '<span class="activites-row-img activites-row-img--ico" aria-hidden="true">' + S.icon(f.icon) + '</span>')
+      + '<span class="activites-row-body"><h4>' + esc(x.nom) + '</h4><span class="activites-row-x">' + esc(x.texte) + '</span></span>'
+      + '<span class="activites-row-tags">' + S.pip(x.statut, true) + (x.fiche ? '<span class="activites-tag activites-tag--fiche">Fiche</span>' : '') + (places.length ? '<span class="activites-tag activites-tag--carte">' + LKX.ICO.pin + '<b translate="no">' + places.length + '</b></span>' : '') + '</span><span class="activites-row-chev" aria-hidden="true"></span></span>';
+    const body = '<p>' + esc(x.texte) + ' ' + srcLinks(x.sources, order) + '</p>'
+      + (places.length ? '<h4>Sur la carte de Leonida</h4>' + LKX.miniMap(places, { label: 'Carte de Leonida : ' + x.nom, note: 'Lieux repérés sur notre carte : pas un emplacement confirmé pour l’activité.' }) : '<p class="activites-nomap">' + LKX.ICO.map + 'Aucun lieu n’est encore placé pour cette activité : rien n’est mis au hasard.</p>')
+      + ((x.liens || []).length ? '<h4>Sur le site</h4><div class="lkx-links">' + x.liens.map(pageLink).join('') + '</div>' : '')
+      + '<p class="lkx-sheet-cta">' + (x.fiche ? '<a class="lkx-btn" href="' + HUB + '/' + esc(x.fiche) + '.html">Voir la fiche complète</a>' : '') + '<a class="lkx-btn lkx-btn--ghost" href="calculateurs.html?tool=activities&amp;from=activites#atelier">Comparer mes activités</a></p>';
+    return '<li class="activites-item activites-item--' + esc(f.id) + (x.fiche ? ' activites-item--fiche' : '') + '" data-statut="' + esc(x.statut) + '"' + (x.fiche ? ' data-fiche' : '') + (places.length ? ' data-carte' : '') + '>'
+      + LKX.sheet({ id, cls: 'activites-det', summary, fig: x.media ? LKX.img(MED, x.media, x.alt, { big: true, sizes: '(max-width:760px) 100vw, 600px' }) : null, icon: S.icon(f.icon), caption: 'Visuel officiel Rockstar Games', kicker: esc(f.titre) + ' · ' + S.pip(x.statut, true), title: x.nom, body }) + '</li>';
   };
   const liste = '<section class="shell activites-liste" id="toutes" aria-labelledby="toutes-t"><div class="reveal"><p class="activites-kicker">' + esc(LI.kicker) + '</p><h2 class="sec-h" id="toutes-t">' + esc(LI.titre) + '</h2><p class="activites-lede">' + esc(LI.lede) + '</p></div>'
     + filtre
-    + LI.familles.map(f => '<div class="activites-fam" data-famille="' + esc(f.id) + '"><h3 class="activites-fam-t"><span class="activites-fam-ico">' + S.icon(f.icon) + '</span>' + esc(f.titre) + '</h3><ul class="activites-items">' + f.items.map(ligne).join('') + '</ul></div>').join('')
+    + LI.familles.map(f => '<div class="activites-fam activites-fam--' + esc(f.id) + '" data-famille="' + esc(f.id) + '"><h3 class="activites-fam-t"><span class="activites-fam-ico">' + S.icon(f.icon) + '</span>' + esc(f.titre) + '<span class="activites-fam-n" translate="no">' + f.items.length + '</span></h3><ul class="activites-items lkx-wave lk-arrive" data-lkx-in>' + f.items.map(x => ligne(x, f)).join('') + '</ul></div>').join('')
     + '</section>';
-  const R = H.rapporte;
-  const rapporte = '<section class="shell activites-rapporte" id="rapporte" aria-labelledby="rapporte-t"><div class="reveal"><p class="activites-kicker">' + esc(R.kicker) + '</p><h2 class="sec-h" id="rapporte-t">' + esc(R.titre) + '</h2><p class="activites-lede">' + esc(R.lede) + '</p></div>'
-    + '<table class="activites-table rise"><thead><tr><th scope="col">Activité</th><th scope="col">Ce qui est publié</th><th scope="col">Statut</th></tr></thead><tbody>'
-    + R.lignes.map(r => '<tr><th scope="row">' + (r.fiche ? '<a href="' + HUB + '/' + esc(r.fiche) + '.html">' + esc(r.activite) + '</a>' : esc(r.activite)) + '</th><td>' + esc(r.texte) + ' ' + srcLinks(r.sources || [], order) + '</td><td>' + S.pip(r.statut, true) + '</td></tr>').join('')
-    + '</tbody></table>' + R.p.map(t => '<p class="activites-note">' + esc(t) + ' ' + srcLinks(R.sources || [], order) + '</p>').join('') + '</section>';
+  /* où pratiquer : le localisateur du site (même composant que les armes et les véhicules), une activité à la fois */
+  const allPlaces = [], seenP = new Set();
+  for (const f of LI.familles) for (const x of f.items) for (const p of placesOf(x)) if (!seenP.has(p.id)) { seenP.add(p.id); allPlaces.push({ ...p, group: f.titre }); }
+  const locItems = LI.familles.flatMap(f => f.items.map(x => { const pl = placesOf(x);
+    return { id: slug(x.nom), name: x.nom, cat: f.id, catLabel: f.titre, thumb: x.media ? LKX.thumb(MED, x.media) : S.icon(f.icon), url: x.fiche ? HUB + '/' + x.fiche + '.html' : HUB + '.html#' + slug(x.nom), places: pl.map(p => p.id), status: pl.length ? 'Lieux repérés sur notre carte' : 'Emplacement à venir', linkedText: 'Lieux de notre carte liés à cette activité :', noneText: 'Aucun lieu n’est encore placé pour cette activité : rien n’est mis au hasard.', mapTitle: x.nom, pronoun: 'la', search: x.texte }; }));
+  const carteSec = '<section class="shell activites-carte" id="carte-activites" aria-labelledby="carte-activites-t"><div class="reveal"><p class="activites-kicker">' + esc(LI.carteK) + '</p><h2 class="sec-h" id="carte-activites-t">' + esc(LI.carteT) + '</h2><p class="activites-lede">' + esc(LI.carteL) + '</p></div>'
+    + LOC.hub({ kind: 'activites', prefix: '', items: locItems, places: allPlaces, cats: LI.familles.map(f => [f.id, f.titre]), catsLabel: 'Familles d’activités', searchLabel: 'Chercher une activité', noun: 'activités', listLabel: 'Les activités', mapLabel: 'Carte de Leonida : lieux liés aux activités annexes', caption: 'Lieux repérés sur notre carte : pas un emplacement confirmé pour chaque activité.', initial: slug('Club de strip-tease') }) + '</section>';
+  /* ce que ça rapporte : cartes façon calculateur ; chaque carte ouvre la fiche ou la ligne de l’activité */
+  const R = H.rapporte, itemByNom = Object.fromEntries(LI.familles.flatMap(f => f.items.map(x => [x.nom, x])));
+  const cash = r => { const ft = r.fiche && A.activites.find(a => a.id === r.fiche), it = r.cible && itemByNom[r.cible], media = ft ? ft.media : it ? it.media : null;
+    const href = ft ? HUB + '/' + ft.id + '.html' : it ? '#' + slug(it.nom) : null;
+    return '<article class="activites-cash-card lkx-tilt">' + (media ? '<span class="activites-cash-img">' + LKX.thumb(MED, media) + '</span>' : '')
+      + '<p class="activites-cash-k"><span class="activites-cash-ico" aria-hidden="true">$</span>' + esc(R.kicker) + '</p>'
+      + '<h3>' + (href ? '<a class="activites-cash-a" href="' + href + '">' + esc(r.activite) + '</a>' : esc(r.activite)) + '</h3>'
+      + '<p class="activites-cash-screen"><span class="activites-cash-val" aria-hidden="true">— — — $</span><span class="activites-cash-lbl">' + esc(R.ecran) + '</span></p>'
+      + '<p class="activites-cash-txt">' + esc(r.texte) + ' ' + srcLinks(r.sources || [], order) + '</p><p class="activites-cash-st">' + S.pip(r.statut, true) + (href ? '<span class="activites-cash-go">' + esc(ft ? 'Voir la fiche' : R.ouvrir) + '</span>' : '') + '</p></article>'; };
+  const rapporte = '<section class="activites-rapporte lk-arrive" id="rapporte" aria-labelledby="rapporte-t"><div class="shell activites-rapporte-in"><div class="activites-rapporte-head"><p class="activites-kicker">' + esc(R.kicker) + '</p><h2 class="sec-h" id="rapporte-t">' + esc(R.titre) + '</h2><p class="activites-lede">' + esc(R.lede) + '</p><a class="lkx-btn" href="calculateurs.html?tool=activities&amp;from=activites#atelier">' + esc(R.calc) + '</a></div>'
+    + '<div class="activites-cash lkx-deal" data-lkx-in>' + R.lignes.map(cash).join('') + '</div>'
+    + R.p.map(t => '<p class="activites-note">' + esc(t) + ' ' + srcLinks(R.sources || [], order) + '</p>').join('') + '</div></section>';
   const body = `<section class="page-head shell lk-glow"><div class="lk-head-grid"><div>
   <p class="fiche-cat">${esc(X.label)} · GTA VI</p>
   <h1>${esc(X.title)}</h1>
@@ -249,6 +279,7 @@ function hubPage(ctx) {
 </div>${pile}</div></section>
 ${fiches}
 ${liste}
+${carteSec}
 ${rapporte}
 ${zone(H, STATUTS)}`;
   const collection = '<script type="application/ld+json">' + JSON.stringify({ '@context': 'https://schema.org', '@type': 'CollectionPage', name: X.title, description: metaDesc(X.desc), url: SITE + '/' + HUB + '.html', inLanguage: 'fr', isPartOf: { '@type': 'WebSite', name: 'Leonidakit', url: SITE + '/' }, mainEntity: { '@type': 'ItemList', name: F.titre, numberOfItems: A.activites.length, itemListElement: A.activites.map((a, i) => ({ '@type': 'ListItem', position: i + 1, name: a.nom, url: SITE + '/' + HUB + '/' + a.id + '.html' })) } }) + '</script>';
@@ -285,21 +316,27 @@ function fichePage(ctx, a) {
   const links = l => (l || []).map(x => '<a class="activites-chip" href="' + p + esc(x.href) + '">' + esc(x.label) + '</a>').join('');
   const vehs = ids => (ids || []).map(id => '<a class="activites-chip activites-chip--veh" href="' + p + 'vehicules/' + esc(id) + '.html">' + esc(W.vn[id] || id) + '</a>').join('');
   const arms = ids => (ids || []).map(id => '<a class="activites-chip activites-chip--veh" href="' + p + 'armes/' + esc(id) + '.html">' + esc(W.an[id] || id) + '</a>').join('');
-  const R = a.rapporte, O = a.ou;
-  const montre = '<div class="lore-texte reveal"><h2>Ce que Rockstar a dit et montré</h2><ul class="activites-montre">' + a.montre.map(x => '<li class="rise"><p>' + esc(x.texte) + '</p><p class="activites-st">' + st(x) + '</p></li>').join('') + '</ul></div>';
-  const ouChips = chips(ED, 'regions', O.regions, p) + carteChips(O.carte, p);
-  const ou = '<div class="lore-texte reveal"><h2>Où la pratiquer</h2><p>' + esc(O.texte) + '</p>' + (ouChips ? '<p class="activites-chips">' + ouChips + '</p>' : '') + '<p class="activites-st">' + st(O) + '</p></div>';
-  const besoin = '<div class="lore-texte reveal"><h2>Ce qu’il faut</h2><ul class="activites-besoin">' + a.besoin.map(b => { const extra = vehs(b.vehicules) + arms(b.armes) + links(b.liens); return '<li><p>' + esc(b.texte) + '</p>' + (extra ? '<p class="activites-chips">' + extra + '</p>' : '') + '<p class="activites-st">' + st(b) + '</p></li>'; }).join('') + '</ul></div>';
-  const chiffres = '<dl class="activites-chiffres"><div><dt>Gain</dt><dd>' + esc(valText(R.gain, 'Pas encore publié')) + '</dd></div><div><dt>Durée</dt><dd>' + esc(valText(R.duree, 'Pas encore publiée')) + '</dd></div></dl>';
+  const R = a.rapporte, O = a.ou, fam = famille(H, a.famille);
+  const regionChip = id => { const y = (ED.regions || []).find(z => z.id === id); return LKX.chip({ href: p + 'lieux/' + id + '.html', label: y ? y.name : id, img: y ? LKX.thumb(MED, (y.media || [])[0]) : null, kind: 'region', small: 'Région' }); };
+  const placeChips = list => (list || []).map(c => LKX.chip({ href: p + 'carte.html#lieu=' + c.id, label: c.nom, kind: 'place', small: 'Sur la carte' })).join('');
+  /* l’essentiel : le récit de la fiche en quelques phrases, tiré des faits sourcés ci-dessous */
+  const essentiel = a.essentiel ? '<section class="shell activites-essentiel"><div class="activites-essentiel-in lkx-up" data-lkx-in><p class="activites-essentiel-k">L’essentiel</p><p class="activites-essentiel-t">' + esc(a.essentiel) + '</p></div></section>' : '';
+  const montre = '<div class="lore-texte reveal"><h2>Ce que Rockstar a dit et montré</h2><ol class="activites-montre lkx-wave lk-arrive" data-lkx-in>' + a.montre.map(x => '<li class="activites-montre-i activites-montre-i--' + esc(x.statut) + '"><span class="activites-montre-dot" aria-hidden="true"></span><p>' + esc(x.texte) + '</p><p class="activites-st">' + st(x) + '</p></li>').join('') + '</ol></div>';
+  const ouChips = (O.regions || []).map(regionChip).join('') + placeChips((O.carte || []).filter(c => !(O.regions || []).includes(c.id)));
+  const ou = '<div class="lore-texte reveal"><h2>Où la pratiquer</h2><p>' + esc(O.texte) + '</p>' + (ouChips ? '<div class="lkx-chips activites-ou-chips">' + ouChips + '</div>' : '') + '<p class="activites-st">' + st(O) + '</p></div>';
+  const besoin = '<div class="lore-texte reveal"><h2>Ce qu’il faut</h2><ul class="activites-besoin">' + a.besoin.map((b, i) => { const extra = vehs(b.vehicules) + arms(b.armes) + links(b.liens); return '<li><span class="activites-besoin-n" aria-hidden="true">' + (i + 1) + '</span><div><p>' + esc(b.texte) + '</p>' + (extra ? '<p class="activites-chips">' + extra + '</p>' : '') + '<p class="activites-st">' + st(b) + '</p></div></li>'; }).join('') + '</ul></div>';
+  const chiffres = '<dl class="activites-chiffres"><div><dt>Gain</dt><dd><span class="activites-ecran" aria-hidden="true">— $</span><span>' + esc(valText(R.gain, 'Pas encore publié')) + '</span></dd></div><div><dt>Durée</dt><dd><span class="activites-ecran" aria-hidden="true">— min</span><span>' + esc(valText(R.duree, 'Pas encore publiée')) + '</span></dd></div></dl>';
   const rapporte = '<div class="lore-texte reveal activites-fiche-rapporte"><h2>Ce que ça rapporte</h2><p>' + esc(R.texte) + '</p>' + chiffres + '<p class="activites-st">' + st(R) + '</p></div>';
-  const galerie = (a.galerie || []).length ? '<div class="lore-texte reveal"><h2>Captures officielles</h2><div class="activites-galerie">' + a.galerie.map(g => '<figure class="rise">' + imgTag(MED, g.media, g.alt, false) + '<figcaption>' + esc(g.legende) + '</figcaption></figure>').join('') + '</div></div>' : '';
   const confirmer = (a.confirmer || []).length ? '<div class="lore-facts"><h2>Ce qui reste à confirmer</h2><ul>' + a.confirmer.map(x => '<li class="rise"><b>' + esc(x.q) + '</b> ' + esc(x.etat) + '</li>').join('') + '</ul></div>' : '';
-  const ailleurs = (a.liens || []).length ? '<div class="lore-texte reveal"><h2>Ailleurs sur le site</h2><ul class="activites-ailleurs">' + a.liens.map(l => '<li><a href="' + p + esc(l.href) + '">' + esc(l.label) + '</a><span>' + esc(l.texte) + '</span></li>').join('') + '</ul></div>' : '';
+  const ailleurs = (a.liens || []).length ? '<div class="lore-texte reveal"><h2>Ailleurs sur le site</h2><div class="lkx-links">' + a.liens.map(l => { const h = l.href.split('#')[0]; return LKX.linkCard({ href: p + l.href, title: l.label, text: l.texte, img: PAGE_IMG[h] ? LKX.thumb(MED, PAGE_IMG[h]) : null }); }).join('') + '</div></div>' : '';
   const rel = (group, ids) => { const l = (ids || []).map(id => (ED[group] || []).find(y => y.id === id)).filter(Boolean); if (!l.length) return '';
     return '<div class="lore-rel-group"><h3>' + REL_LABEL[group] + '</h3><div class="lore-mini">' + l.map(y => { const mm = (y.media || []).map(id => MED[id]).filter(Boolean)[0]; return '<a class="lore-minicard" href="../' + FOLDER[group] + '/' + y.id + '.html">' + (mm ? '<img src="' + mm.variants[0].src + '" width="' + mm.variants[0].w + '" height="' + mm.variants[0].h + '" alt="" loading="lazy" decoding="async">' : '<i class="lore-minivide"></i>') + '<span><b>' + esc(y.name) + '</b><i>' + REL_LABEL[group] + '</i></span></a>'; }).join('') + '</div></div>'; };
   const relBlocks = Object.keys(FOLDER).map(g => rel(g, (a.rel || {})[g])).join('');
+  /* sur la carte : le localisateur du site, avec les lieux de la fiche ; en images : la galerie animée des fiches du monde */
+  const places = (O.carte || []).map(c => LKX.place(c.id, { [c.id]: c.nom }));
+  const locate = LKX.locate({ lede: 'Les lieux de notre carte liés à cette activité. Ce sont des repères pour t’y rendre, pas des emplacements confirmés par Rockstar pour l’activité.', item: { name: a.nom, catLabel: fam.titre, thumb: LKX.thumb(MED, a.media), status: 'Lieux repérés sur notre carte', linkedText: 'Lieux de notre carte liés à cette activité :', noneText: 'Aucun lieu n’est encore placé pour cette activité : rien n’est mis au hasard.', mapTitle: a.nom, pronoun: 'la', url: HUB + '/' + a.id + '.html' }, places, caption: 'Lieux repérés sur notre carte : pas un emplacement confirmé pour l’activité.', placesTitle: 'Lieux repérés' });
+  const gal = LKX.gallery(MED, [{ media: a.media, alt: a.alt, legende: fam.titre }, ...(a.galerie || []).map(g => ({ media: g.media, alt: g.alt, legende: g.legende }))], { name: a.nom, kicker: fam.titre });
   const srcs = '<section class="shell activites-fiche-src reveal" aria-labelledby="sources-t"><h2 class="sec-h" id="sources-t">Sources</h2>' + sourceList(H, a.sources) + '</section>';
-  const fam = famille(H, a.famille);
   const body = `<section class="page-head shell">
   <nav class="crumbs" aria-label="Fil d’Ariane"><a href="../index.html">Accueil</a> / <a href="../${HUB}.html">${esc(H.hub.label)}</a> / <span>${esc(a.nom)}</span></nav>
   <div class="lore-hero lore-enter">
@@ -314,10 +351,13 @@ function fichePage(ctx, a) {
   </div>
 </section>
 ${calcBridge(a, p)}
+${essentiel}
 <section class="shell lore-body activites-fiche">
-  ${montre}${ou}${besoin}${rapporte}${galerie}${confirmer}${ailleurs}
+  ${montre}${ou}${besoin}${rapporte}${confirmer}${ailleurs}
   ${relBlocks ? `<div class="lore-related"><h2>En lien</h2>${relBlocks}</div>` : ''}
 </section>
+${locate}
+${gal}
 ${srcs}`;
   const og = imgOf(MED, a.media);
   return page(SUBC, { p, title: a.nom + ' — GTA VI | Leonidakit', desc: a.resume, canonical: '/' + HUB + '/' + a.id + '.html', ogImg: og.b.src, body, crumbs: [['Accueil', '/'], [H.hub.label, '/' + HUB + '.html'], [a.nom, '/' + HUB + '/' + a.id + '.html']] });

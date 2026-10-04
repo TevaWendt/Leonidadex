@@ -662,7 +662,9 @@
           "date": "27 août 2026",
           "titre": "Extended Look",
           "statut": "vu",
-          "texte": "Vingt-six minutes de jeu : une poursuite avec la police dans Vice City, le quartier de Bayside nommé par Lucia, un bar sur un toit à Vice Beach, une course tout-terrain à Mount Kalaga (18:35), le Starlet Motel de Port Gellhorn (25:58)."
+          "texte": "Vingt-six minutes de jeu : une poursuite avec la police dans Vice City, le quartier de Bayside nommé par Lucia, un bar sur un toit à Vice Beach, une course tout-terrain à Mount Kalaga (18:35), le Starlet Motel de Port Gellhorn (25:58).",
+          "media": "extended-look-coquette-d10",
+          "alt": "Une décapotable rouge arrêtée dans une rue de Vice City de nuit, devant une bagarre, photogramme de l’Extended Look"
         }
       ],
       "p": [
@@ -933,7 +935,9 @@
           "date": "24 juin 2026",
           "titre": "Éditions",
           "statut": "officiel",
-          "texte": "Les textes des éditions parlent du duo au présent du jeu : tenues, tatouages et coiffures « pour Jason et Lucia », pick-up et planque « de Jason ». Aucun nouveau personnage."
+          "texte": "Les textes des éditions parlent du duo au présent du jeu : tenues, tatouages et coiffures « pour Jason et Lucia », pick-up et planque « de Jason ». Aucun nouveau personnage.",
+          "media": "goodtime-gear-01",
+          "alt": "Jason et Lucia en casquettes et tee-shirts Vice City illustrés de Macca the Gator, devant une fresque de l’alligator (capture officielle « Goodtime Gear » de l’Édition Ultimate)."
         },
         {
           "date": "27 août 2026",
@@ -1198,7 +1202,9 @@
           "date": "27 août 2026",
           "titre": "Extended Look, puis Famitsu",
           "statut": "vu",
-          "texte": "Un appartement décoré en rose, où Lucia choisit une tenue pendant que Jason s’inquiète d’être en retard ; un frigo, une télé qui passe les émissions du jeu. Le lendemain, Rob Nelson (Rockstar North) précise à Famitsu : les planques changent au fil des chapitres, comme les campements de Red Dead Redemption 2 ; on se coupe les cheveux à la maison avec peu d’options ; on démarre avec trois places de véhicule, extensibles en achetant des garages."
+          "texte": "Un appartement décoré en rose, où Lucia choisit une tenue pendant que Jason s’inquiète d’être en retard ; un frigo, une télé qui passe les émissions du jeu. Le lendemain, Rob Nelson (Rockstar North) précise à Famitsu : les planques changent au fil des chapitres, comme les campements de Red Dead Redemption 2 ; on se coupe les cheveux à la maison avec peu d’options ; on démarre avec trois places de véhicule, extensibles en achetant des garages.",
+          "media": "lucia-caminos-02",
+          "alt": "Lucia accoudée au bord d’une piscine, un cocktail à côté d’elle, capture officielle Rockstar Games"
         }
       ],
       "p": [
@@ -1443,7 +1449,9 @@
           "date": "27 août 2026",
           "titre": "Extended Look et démonstration",
           "statut": "vu",
-          "texte": "Le Starlet Motel réapparaît vers 25:58. Le lendemain, Rob Nelson (Rockstar North) explique à Famitsu qu’on change de planque au fil des chapitres, qu’on démarre avec trois places de véhicule et qu’on achète des garages pour en avoir plus ; les armes longues se rangent dans un casier chez Ammu-Nation."
+          "texte": "Le Starlet Motel réapparaît vers 25:58. Le lendemain, Rob Nelson (Rockstar North) explique à Famitsu qu’on change de planque au fil des chapitres, qu’on démarre avec trois places de véhicule et qu’on achète des garages pour en avoir plus ; les armes longues se rangent dans un casier chez Ammu-Nation.",
+          "media": "port-gellhorn-06",
+          "alt": "Port Gellhorn au coucher du soleil, vu du ciel, capture officielle Rockstar Games"
         }
       ],
       "p": [
@@ -1654,7 +1662,9 @@
           "date": "4 décembre 2023",
           "titre": "Trailer 1",
           "statut": "vu",
-          "texte": "Un magasin Uncle Jack’s Liquor braqué par Jason et Lucia (vers 1:16) et une banderole d’avion pour le club NINE 1 NINE."
+          "texte": "Un magasin Uncle Jack’s Liquor braqué par Jason et Lucia (vers 1:16) et une banderole d’avion pour le club NINE 1 NINE.",
+          "media": "lucia-caminos-03",
+          "alt": "Lucia assise sur une moto jaune, rapprochée d’une Suzuki GSX-R1000"
         },
         {
           "date": "6 mai 2025",
@@ -1676,7 +1686,9 @@
           "date": "27 août 2026",
           "titre": "Extended Look, Famitsu et après",
           "statut": "vu",
-          "texte": "Braquages de stations-service, Lucia qui cache son arme dans le dos avant d’entrer dans une boutique (17:57), stand de tir, salle de sport, l’intérieur du Jack of Hearts, le bar Effluvia. Rob Nelson ajoute dans Famitsu : d’innombrables magasins et salons, des Ammu-Nation avec casier, un Pay ’n’ Spray qui indique ce qu’une voiture volée vaut à la revente, des receleurs, des bijouteries bien gardées. Début septembre : un plein prend une dizaine de secondes."
+          "texte": "Braquages de stations-service, Lucia qui cache son arme dans le dos avant d’entrer dans une boutique (17:57), stand de tir, salle de sport, l’intérieur du Jack of Hearts, le bar Effluvia. Rob Nelson ajoute dans Famitsu : d’innombrables magasins et salons, des Ammu-Nation avec casier, un Pay ’n’ Spray qui indique ce qu’une voiture volée vaut à la revente, des receleurs, des bijouteries bien gardées. Début septembre : un plein prend une dizaine de secondes.",
+          "media": "extended-look-sentinel-classic-front",
+          "alt": "Une voiture garée devant une rangée de boutiques, dont une bijouterie, photogramme de l’Extended Look"
         }
       ],
       "p": [
@@ -1921,7 +1933,9 @@
           "date": "4 décembre 2023",
           "titre": "Trailer 1",
           "statut": "vu",
-          "texte": "Une voiture du Vice-Dale Police Department et le bureau du shérif du comté de Leonard : les premiers noms de forces de l’ordre lisibles."
+          "texte": "Une voiture du Vice-Dale Police Department et le bureau du shérif du comté de Leonard : les premiers noms de forces de l’ordre lisibles.",
+          "media": "trailer-1-vehicles-064",
+          "alt": "Un journal télévisé de Weazel News montre une arrestation au milieu de voitures de police, photogramme du Trailer 1 (1:04)"
         },
         {
           "date": "6 mai 2025",
@@ -1951,13 +1965,17 @@
           "date": "27 août 2026",
           "titre": "Extended Look",
           "statut": "vu",
-          "texte": "Une livraison pour Boobie à Venture Apartments tourne à la descente de police ; Raul prend Jason et Lucia dans son équipe ; Brian leur confie une affaire à table."
+          "texte": "Une livraison pour Boobie à Venture Apartments tourne à la descente de police ; Raul prend Jason et Lucia dans son équipe ; Brian leur confie une affaire à table.",
+          "media": "extended-look-stockade",
+          "alt": "Hommes masqués autour d’un fourgon blindé ouvert sous un viaduc, motos garées à côté, photogramme de l’Extended Look"
         },
         {
           "date": "28 août 2026",
           "titre": "Famitsu",
           "statut": "officiel",
-          "texte": "Rob Nelson (Rockstar North) : on s’infiltre dans les repaires de gangs pour voler argent ou drogue, que la carte chiffre d’avance ; la drogue se revend à un receleur. Sans témoin ni alarme, pas d’avis de recherche."
+          "texte": "Rob Nelson (Rockstar North) : on s’infiltre dans les repaires de gangs pour voler argent ou drogue, que la carte chiffre d’avance ; la drogue se revend à un receleur. Sans témoin ni alarme, pas d’avis de recherche.",
+          "media": "vice-city-12",
+          "alt": "Un homme tient une arme dorée de silhouette AK à chargeur courbe dans Vice City."
         }
       ],
       "p": [

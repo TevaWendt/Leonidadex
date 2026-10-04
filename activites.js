@@ -15,6 +15,7 @@
   function keep(item, f) {
     if (f === 'all') return true;
     if (f === 'fiche') return item.hasAttribute('data-fiche');
+    if (f === 'carte') return item.hasAttribute('data-carte');
     return item.getAttribute('data-statut') === f;
   }
   function apply(f) {

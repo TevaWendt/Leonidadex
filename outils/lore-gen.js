@@ -76,7 +76,7 @@ const LOCAL={'vice-city':'Vice City','leonida-keys':'Leonida Keys','grassrivers'
 const placeName=id=>LOCAL[id]||gtName(id);
 const IMG_ALT=(m,x)=>x.imageAlt||m.alt||(x.name+', capture officielle Rockstar Games');
 /* Galerie « En images » : les visuels au-delà du premier, en grille, sans légende (crédits sur medias.html). Chaque vignette ouvre la version 1280 px. */
-const galleryBlock=(x,S)=>{const g=(x.media||[]).map(id=>MED[id]).filter(Boolean);if(g.length<2)return '';
+const galleryBlock=(x,S)=>{if(x.galerie)return LKX.gallery(MED,x.galerie.map(g=>({media:g.media,alt:g.alt||IMG_ALT(MED[g.media]||{},x),legende:g.legende})),{name:x.name,kicker:'GTA VI · '+kindOf(x,S)});const g=(x.media||[]).map(id=>MED[id]).filter(Boolean);if(g.length<2)return '';
   const n=g.length,pad=k=>String(k).padStart(2,'0');
   return `<section class="shell lore-gallery reveal"><h2 class="sec-h">En images</h2><div class="lore-stack" style="--n:${n}"><div class="lore-stage" aria-label="Galerie de ${n} images">${g.map((m,i)=>'<figure class="lore-slide lore-slide--'+['z','tl','br','tr','bl'][i%5]+(i===0?' is-active':'')+'" data-i="'+i+'"><a href="'+(m.variants[1]||m.variants[0]).src+'" target="_blank" rel="noopener" aria-label="Agrandir : '+esc(m.titre)+'">'+imgTag(m,m.alt||(x.name+', '+m.titre+', capture officielle Rockstar Games'),true).replace('loading="eager"','loading="lazy"')+'</a><div class="lore-slide-txt" aria-hidden="true"><span class="lst-k">GTA VI &middot; '+esc(kindOf(x,S))+'</span><strong>'+esc(x.name)+'</strong><em>'+pad(i+1)+' / '+pad(n)+'</em></div></figure>').join('')}</div></div></section>`;};
 const imgTag=(m,alt,big)=>{if(!m)return '';const a=m.variants[0],b=m.variants[1]||a;
@@ -93,7 +93,7 @@ const recapOf=(x,S)=>{const f=(x&&x.facts||[]).map(t=>String(t).trim().replace(/
   const intro={regions:'Ce qu’il faut retenir de cette région',characters:'Ce qu’il faut retenir de ce personnage',businesses:'Ce qu’il faut retenir de cette adresse',residences:'Ce qu’il faut retenir de ce lieu',hideouts:'Ce qu’il faut retenir de ce lieu',factions:'Ce qu’il faut retenir de ce groupe',animals:'L’essentiel de cette fiche'/* section animaux */}[S]||'À retenir';
   return `<section class="shell reveal lk-recap"><h2 class="sec-h">${intro}</h2><p class="fiche-txt rise">${esc(f.join('. ')+'.')} ${esc(x.name)} ${({f:'est reliée',mp:'sont reliés',fp:'sont reliées'})[x&&x.accord]||'est relié'} aux fiches voisines ci-dessous : les fiches se complètent avec le jeu, et ce résumé se mettra à jour avec elles.</p></section>`;};
 const metaDesc=t=>{t=String(t||'').replace(/\s+/g,' ').trim();if(t.length<=158)return t;const ph=t.split(/(?<=[.!?])\s+/);let d='';for(const q of ph){if(d&&(d+' '+q).length>158)break;d=d?d+' '+q:q;}return d.length<=158&&d.length>=60?d:t.slice(0,155).replace(/\s+\S*$/,'')+'…';};
-function page({p,title,desc,canonical,ogImg,body,crumbs,hub,RECAP='',ld=''}){desc=metaDesc(desc);
+function page({p,title,desc,canonical,ogImg,body,crumbs,hub,RECAP='',ld='',lkx=false}){desc=metaDesc(desc);
   const C=p?SUB:ROOT;const header=hub?withHere(C.header,hub):C.header.replace(/ class="here"/g,'');
   return `<!DOCTYPE html>
 <html lang="fr">
@@ -114,7 +114,7 @@ ${bc(crumbs)}${ld?'\n'+ld:''}
 <link rel="stylesheet" href="${p}style.css">
 <link rel="stylesheet" href="${p}motion-tokens.css">
 <link rel="stylesheet" href="${p}acquisitions.css">
-${body.includes('lk-entry-card') ? `<link rel="stylesheet" href="${p}calculator-entry.css">` : ''}
+${body.includes('lk-entry-card') ? `<link rel="stylesheet" href="${p}calculator-entry.css">` : ''}${lkx?`\n<link rel="stylesheet" href="${p}lk-sections.css">`:''}
 <meta property="og:image" content="${SITE}${ogImg||'/img/social-card.png'}">
 <meta name="twitter:card" content="summary_large_image">
 <meta property="og:url" content="${SITE}${canonical}">
@@ -126,7 +126,7 @@ ${body.includes('lk-entry-card') ? `<link rel="stylesheet" href="${p}calculator-
 
 ${header}
 
-<main id="main" class="lore-page">
+<main id="main" class="lore-page${lkx?' lkx-page':''}">
 ${body}
 ${RECAP}
 ${EXPLORE(p?'../':'')}
@@ -135,10 +135,14 @@ ${EXPLORE(p?'../':'')}
 
 ${C.footer}
 
-${C.scripts}
+${C.scripts}${lkx?`\n<script src="${p}lk-sections.js"></script>`:''}
 </body>
 </html>
 `;}
+/* gangs et factions : entrée « donne » des six cartes, reflet au survol (lk-sections.css, lk-sections.js) ; fiches de lieux
+   (gangs, demeures, planques, entreprises) : carte de Leonida avec leurs repères, même dessin que le localisateur des armes */
+const LKX=require('./lk-sections.cjs');
+const LKX_HUBS=new Set(['gangs']),LOCATE_KEYS={factions:'le',residences:'la',hideouts:'la',businesses:'la'};
 
 /* ---------- hubs ---------- */
 const index=[];
@@ -146,7 +150,7 @@ const cardOf=(x,S,pfx,extraCls)=>{const m=visual(x);
   return `<a class="lore-card rise${extraCls||''}" href="${pfx}${S.hub}/${x.id}.html">${m?imgTag(m,IMG_ALT(m,x),false):'<div class="lore-vide">Visuel officiel à venir</div>'}<div class="veh-body"><span class="veh-marque">${esc(kindOf(x,S))}</span><h3>${esc(x.name)}</h3>${x.tagline?'<p class="lore-cardtag">'+esc(x.tagline)+'</p>':''}<p>${esc(x.description)}</p><span class="veh-go">Voir la fiche</span></div></a>`;};
 for(const [key,S] of Object.entries(SECTIONS)){
   const items=ED[key];
-  const cards=items.map(x=>cardOf(x,S,'')).join('\n');
+  const cards=items.map(x=>LKX_HUBS.has(S.hub)?cardOf(x,S,'',' lkx-tilt lk-arrive').replace('lore-card rise ','lore-card '):cardOf(x,S,'')).join('\n');
   /* lot C : pile de trois visuels officiels des fiches du hub, à droite du titre */
   /* de préférence le deuxième visuel de chaque fiche (le premier est déjà sur la carte juste dessous) ; sinon le visuel des dernières fiches */
   const second=items.map(x=>({x,m:(x.media||[]).map(id=>MED[id]).filter(Boolean)[1]})).filter(o=>o.m&&o.m.variants&&o.m.variants[0]);
@@ -161,7 +165,7 @@ for(const [key,S] of Object.entries(SECTIONS)){
 ${pile?'</div>'+pile+'</div>':''}</section>
 <section class="shell" id="fiches">
   <h2 class="sr-only">Les ${items.length} fiches</h2>
-  <div class="lore-grid lore-grid--center lore-grid--n${items.length}">
+  <div class="lore-grid lore-grid--center lore-grid--n${items.length}${LKX_HUBS.has(S.hub)?' lkx-deal lk-arrive" data-lkx-in="':''}">
 ${cards}
   </div>
 </section>
@@ -169,7 +173,7 @@ ${S.hub==='planques'?'<!-- lot-d-garages:start --><!-- lot-d-garages:end -->\n':
   /* v7.41 : CollectionPage (la liste des fiches) à côté du fil d'Ariane ; la FAQPage est posée par sync-site depuis les questions visibles. */
   const collection='<script type="application/ld+json">'+JSON.stringify({"@context":"https://schema.org","@type":"CollectionPage","name":S.title,"description":metaDesc(S.desc),"url":SITE+'/'+S.hub+'.html',"inLanguage":"fr","isPartOf":{"@type":"WebSite","name":"Leonidakit","url":SITE+'/'},"mainEntity":{"@type":"ItemList","numberOfItems":items.length,"itemListElement":items.map((x,i)=>({"@type":"ListItem","position":i+1,"name":x.name,"url":SITE+'/'+S.hub+'/'+x.id+'.html'}))}})+'</script>';
   console.log(S.hub+' : zone éditoriale de '+MONDE.words(S.hub)+' mots, '+MONDE.DATA[S.hub].faq.length+' questions, '+MONDE.sourcesOf(S.hub).length+' sources');
-  fs.writeFileSync(S.hub+'.html',page({p:'',title:S.title+' | Leonidakit',desc:S.desc,canonical:'/'+S.hub+'.html',ogImg:visual(items[0])?(visual(items[0]).variants[1]||visual(items[0]).variants[0]).src:null,body,crumbs:[['Accueil','/'],[S.label,'/'+S.hub+'.html']],hub:S.hub,ld:collection}));
+  fs.writeFileSync(S.hub+'.html',page({p:'',title:S.title+' | Leonidakit',desc:S.desc,canonical:'/'+S.hub+'.html',ogImg:visual(items[0])?(visual(items[0]).variants[1]||visual(items[0]).variants[0]).src:null,body,crumbs:[['Accueil','/'],[S.label,'/'+S.hub+'.html']],hub:S.hub,ld:collection,lkx:LKX_HUBS.has(S.hub)}));
   index.push({l:S.title,k:S.label,u:'/'+S.hub+'.html',s:(S.title+' '+S.label+' leonida gta vi').toLowerCase(),w:1});
 
   /* ---------- fiches ---------- */
@@ -188,7 +192,9 @@ ${S.hub==='planques'?'<!-- lot-d-garages:start --><!-- lot-d-garages:end -->\n':
     const armBlock=(x.weapons&&x.weapons.length)?`<div class="lore-rel-group"><h3>Armes</h3><ul class="lore-chips">${x.weapons.map(id=>{if(!ANOM[id])throw new Error('Arme inconnue dans '+x.id+' : '+id);return '<li><a href="../armes/'+id+'.html">'+esc(ANOM[id])+'</a></li>';}).join('')}</ul></div>`:'';
     /* sur la carte : lieu principal + lieux gtadb/local cités, avec la capture de carte quand elle existe */
     const mapIds=[...new Set([].concat(x.mapId?[x.mapId]:[],x.mapPlaces||[],x.relatedPlaces||[]))];
-    const mapBlock=mapIds.length?`<div class="lore-rel-group lore-rel-group--map"><h3>Sur la carte</h3><div class="lore-map">${mapIds.map(id=>{const ph=placeImage(id);return '<a class="lore-mapcard" href="'+mapHref(id,p)+'">'+(ph?'<img src="'+ph.variants[0].src+'" width="320" height="180" alt="" loading="lazy" decoding="async">':'<i class="lore-mapvide"></i>')+'<span>'+esc(placeName(id))+'</span></a>';}).join('')}</div></div>`:'';
+    const locKey=LOCATE_KEYS[key];
+    const locate=locKey&&mapIds.length?LKX.locate({lede:{factions:'Les lieux de notre carte liés à ce groupe : territoire, repaire ou scènes où on le voit. Ce sont des repères, pas un territoire confirmé par Rockstar.',residences:'L’emplacement de cette demeure sur notre carte de Leonida.',hideouts:'L’emplacement de cette planque sur notre carte de Leonida.',businesses:'L’emplacement de ce commerce sur notre carte de Leonida.'}[key],item:{name:x.name,catLabel:kindOf(x,S),thumb:m?'<img src="'+m.variants[0].src+'" width="'+m.variants[0].w+'" height="'+m.variants[0].h+'" alt="" loading="lazy" decoding="async">':'',status:mapIds.map(placeName).join(', '),linkedText:'Lieux de notre carte liés à cette fiche :',noneText:'',mapTitle:x.name,pronoun:locKey,url:S.hub+'/'+x.id+'.html'},places:mapIds.map(id=>({id,name:placeName(id),where:null})),caption:'Repères de notre carte de Leonida.',placesTitle:'Sur la carte',mapLabel:'Carte de Leonida : '+x.name}):'';
+    const mapBlock=locate?'':mapIds.length?`<div class="lore-rel-group lore-rel-group--map"><h3>Sur la carte</h3><div class="lore-map">${mapIds.map(id=>{const ph=placeImage(id);return '<a class="lore-mapcard" href="'+mapHref(id,p)+'">'+(ph?'<img src="'+ph.variants[0].src+'" width="320" height="180" alt="" loading="lazy" decoding="async">':'<i class="lore-mapvide"></i>')+'<span>'+esc(placeName(id))+'</span></a>';}).join('')}</div></div>`:'';
     const facts=(x.facts&&x.facts.length)?`<div class="lore-facts"><h2>À retenir</h2><ul>${x.facts.map(f=>'<li class="rise">'+esc(f)+'</li>').join('')}</ul></div>`:'';
     const links=[];
     if(x.mapId)links.push(`<a href="${mapHref(x.mapId,p)}">Voir sur la carte</a>`);
@@ -232,8 +238,8 @@ ${calcBridge}${factionBridge}
   ${x.pratique?`<div class="lore-texte reveal"><h2>${{regions:'Sur le terrain',characters:'Sur les captures et dans les fiches',businesses:'Dans le jeu',residences:'Dans le jeu',hideouts:'Dans le jeu',factions:'Ce qu’on sait pour le jeu',animals:'Ce que le jeu en fait'/* section animaux */}[key]||'Dans le jeu'}</h2><p class="rise">${esc(x.pratique)}</p></div>`:''}
   ${facts}
   ${(relBlocks||vehBlock||armBlock||mapBlock)?`<div class="lore-related"><h2>En lien</h2>${relBlocks}${vehBlock}${armBlock}${mapBlock}</div>`:''}
-</section>${galleryBlock(x,S)}`;
-    fs.writeFileSync(S.hub+'/'+x.id+'.html',page({p,RECAP:recapOf(x,key),title:x.name+' — GTA VI | Leonidakit',desc:x.description,canonical:'/'+S.hub+'/'+x.id+'.html',ogImg:m?(m.variants[1]||m.variants[0]).src:null,body,crumbs:[['Accueil','/'],[S.label,'/'+S.hub+'.html'],[x.name,'/'+S.hub+'/'+x.id+'.html']],hub:S.hub}));
+</section>${locate}${galleryBlock(x,S)}`;
+    fs.writeFileSync(S.hub+'/'+x.id+'.html',page({p,lkx:!!locate||LKX_HUBS.has(S.hub)||!!x.galerie,RECAP:recapOf(x,key),title:x.name+' — GTA VI | Leonidakit',desc:x.description,canonical:'/'+S.hub+'/'+x.id+'.html',ogImg:m?(m.variants[1]||m.variants[0]).src:null,body,crumbs:[['Accueil','/'],[S.label,'/'+S.hub+'.html'],[x.name,'/'+S.hub+'/'+x.id+'.html']],hub:S.hub}));
     index.push({l:x.name,k:S.one,u:'/'+S.hub+'/'+x.id+'.html',s:(x.name+' '+S.one+' '+x.description+' '+(x.tagline||'')+(key==='factions'?' '+(x.kind||'')+' '+(x.aliases||[]).join(' '):'')).toLowerCase(),w:1});
   }
   console.log(S.hub+' : '+items.length+' fiches');

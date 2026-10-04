@@ -47,8 +47,8 @@ test('générateur, 0 mission : le hub dit qu’aucune mission n’est publiée,
   const d = doc('missions.html');
   assert.ok(d.querySelector('#liste .missions-vide'));
   assert.equal(d.querySelectorAll('#liste .lore-card').length, 0);
-  assert.equal(d.querySelectorAll('#liste .missions-types li').length, M.types.length);
-  for (const i of d.querySelectorAll('#liste .missions-types li i')) assert.equal(i.textContent, '0');
+  assert.equal(d.querySelectorAll('#liste .missions-type').length, M.types.length); /* une carte cliquable par type (fiche plein écran) */
+  for (const i of d.querySelectorAll('#liste .missions-type-n')) assert.equal(i.textContent, '0');
   assert.ok(!/href="missions\/modele\.html"/.test(read('missions.html')), 'la page modèle n’est reliée d’aucune page');
 });
 
@@ -100,8 +100,9 @@ test('missions.html : histoire, séquences, Édition Ultimate, guide, zone édit
   for (const id of ['histoire', 'sequences', 'edition', 'liste']) assert.ok(d.getElementById(id), id);
   assert.equal(d.querySelectorAll('#sequences .missions-seq').length, H.sequences.items.length);
   assert.equal(d.querySelectorAll('#histoire .missions-meca-item').length, 4);
-  assert.equal(d.querySelectorAll('#edition .missions-ed-item').length, 2);
-  for (const a of d.querySelectorAll('#sequences a.missions-chip')) { const h = a.getAttribute('href'); assert.ok(fs.existsSync(path.join(root, h.split('#')[0])), h); }
+  assert.equal(d.querySelectorAll('#edition .missions-ult-card').length, 2);
+  for (const li of d.querySelectorAll('#sequences .missions-seq')) assert.ok(li.querySelector('details.lkx-det .lkx-sheet-src') && li.querySelector('img'), 'séquence illustrée, ouvrable en grand');
+  for (const a of d.querySelectorAll('#sequences a.lkx-chip')) { const h = a.getAttribute('href'); assert.ok(fs.existsSync(path.join(root, h.split('#')[0])), h); }
   for (const a of d.querySelectorAll('.missions-src a')) assert.ok(d.getElementById(a.getAttribute('href').slice(1)), a.getAttribute('href'));
   assert.deepEqual([...d.querySelectorAll('.ed-zone--monde section.ed')].map(s => s.id), ['rockstar', 'communaute', 'a-confirmer', 'pour-toi', 'faq', 'sources']);
   for (const a of d.querySelectorAll('.ed-nav a')) assert.ok(d.getElementById(a.getAttribute('href').slice(1)), a.getAttribute('href'));

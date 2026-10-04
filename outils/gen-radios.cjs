@@ -10,6 +10,7 @@
 const fs = require('node:fs'), path = require('node:path');
 const ROOT = path.resolve(__dirname, '..');
 const S = require('./sections.cjs');
+const LKX = require('./lk-sections.cjs'); /* écoute des morceaux, vedette de l’album, galerie (lk-sections.css, lk-sections.js) */
 const esc = S.esc;
 const SITE = 'https://www.leonidakit.com', HUB = 'radios';
 const DATA_FILE = 'outils/radios/radios.json';
@@ -82,7 +83,7 @@ const EXPLORE = pre => `<section class="shell reveal lk-explore">
   <h2 class="sec-h">Continuer la visite</h2>
   <div class="lk-links rise"><a class="lk-link" href="${pre}carte.html"><img src="/img/officiel/leonida-keys-01-480.webp" width="480" height="270" alt="" loading="lazy" decoding="async"><span><b>La carte</b><i>2 547 lieux repérés, à cocher</i></span></a><a class="lk-link" href="${pre}vehicules.html"><img src="/img/officiel/one-eyed-willie-s-mod-shop-01-480.webp" width="480" height="270" alt="" loading="lazy" decoding="async"><span><b>Les 302 véhicules</b><i>Fiches, photos officielles et schémas</i></span></a><a class="lk-link" href="${pre}collectibles.html"><img src="/img/officiel/classic-car-collection-04-480.webp" width="480" height="270" alt="" loading="lazy" decoding="async"><span><b>Collectibles</b><i>La collection de Wyman et le carnet</i></span></a></div>
 </section>`;
-function page(C, { p, title, desc, canonical, ogImg, body, crumbs, ld = '' }) {
+function page(C, { p, title, desc, canonical, ogImg, body, crumbs, ld = '', cls = '' }) {
   desc = metaDesc(desc);
   return `<!DOCTYPE html>
 <html lang="fr">
@@ -104,6 +105,7 @@ ${bc(crumbs)}${ld ? '\n' + ld : ''}
 <link rel="stylesheet" href="${p}motion-tokens.css">
 <link rel="stylesheet" href="${p}acquisitions.css">
 <link rel="stylesheet" href="${p}radios.css">
+<link rel="stylesheet" href="${p}lk-sections.css">
 <meta property="og:image" content="${SITE}${ogImg || '/img/social-card.png'}">
 <meta name="twitter:card" content="summary_large_image">
 <meta property="og:url" content="${SITE}${canonical}">
@@ -115,7 +117,7 @@ ${bc(crumbs)}${ld ? '\n' + ld : ''}
 
 ${C.header.replace(/ class="here"/g, '')}
 
-<main id="main" class="lore-page radios-page">
+<main id="main" class="lore-page radios-page lkx-page${cls ? ' ' + cls : ''}">
 ${body}
 ${EXPLORE(p ? '../' : '')}
 <section class="lk-outro" aria-label="Et après"><div class="shell lk-outro-in"><p class="lk-outro-k">Et après ?</p><h2>La suite s’écrit le 19 novembre 2026.</h2><p>Chaque fiche se complète avec le jeu : ce qu’on y trouve, ce qu’on y fait, ce que ça rapporte. Rien d’inventé d’ici là.</p><div class="lk-outro-links"><a href="${p ? '../' : ''}carte.html">Ouvrir la carte</a><a href="${p ? '../' : ''}progression.html">Ma progression</a></div></div></section>
@@ -125,6 +127,7 @@ ${C.footer}
 
 ${C.scripts}
 <script src="${p}radios.js"></script>
+<script src="${p}lk-sections.js"></script>
 </body>
 </html>
 `;
@@ -149,6 +152,16 @@ const srcLinks = (D, ids) => '<span class="radios-src">' + ids.map((id, i) => '<
 const plural = (n, one, many) => n + ' ' + (n > 1 ? many : one);
 /* infos d’un morceau ; un nom propre qui suit (producteur…) reste tel quel dans toutes les langues */
 /* un nom propre (infosNom) reste tel quel dans toutes les langues ; sans lui, une seule balise (mêmes textes à traduire que la ligne du moment) */
+/* « Écouter » : l’écoute officielle quand Rockstar ou l’artiste la donne, sinon une recherche sur les plateformes (liens
+   sortants : le site n’héberge ni n’intègre aucun extrait) */
+const PLATFORMS = [['Spotify', q => 'https://open.spotify.com/search/' + encodeURIComponent(q)], ['Apple Music', q => 'https://music.apple.com/search?term=' + encodeURIComponent(q)], ['YouTube', q => 'https://www.youtube.com/results?search_query=' + encodeURIComponent(q)], ['Deezer', q => 'https://www.deezer.com/search/' + encodeURIComponent(q)]];
+function listen(P, m) {
+  const q = m.artiste + ' ' + m.titre, official = (m.liens || []).filter(l => /spotify|apple|youtube|deezer|tidal|soundcloud/i.test(l.url));
+  return '<details class="lkx-listen"><summary><span class="lkx-listen-ico" aria-hidden="true">' + LKX.ICO.play + '</span><span>' + esc(P.ecouter) + '</span><span class="sr-only" translate="no"> ' + esc(m.titre) + '</span></summary><div class="lkx-listen-menu">'
+    + (official.length ? '<p class="lkx-listen-k">' + esc(P.ecouteOff) + '</p>' + official.map(l => '<a href="' + esc(l.url) + '" target="_blank" rel="noopener nofollow" translate="no">' + esc(l.label) + ' <span aria-hidden="true">↗</span></a>').join('') : '')
+    + PLATFORMS.map(([n, u]) => '<a href="' + esc(u(q)) + '" target="_blank" rel="noopener nofollow" translate="no">' + esc(n) + ' <span aria-hidden="true">↗</span></a>').join('')
+    + '<p class="lkx-listen-note">' + esc(P.ecouterNote) + '</p></div></details>';
+}
 const infosHtml = m => !m.infos ? '' : m.infosNom ? '<span class="radios-infos"><span>' + esc(m.infos) + '</span> <span translate="no">' + esc(m.infosNom) + '</span></span>' : '<span class="radios-infos">' + esc(m.infos) + '</span>';
 
 /* ---------- le poste de Leonida (hub) ---------- */
@@ -162,18 +175,18 @@ function poste(D) {
     + '</div>';
   const presets = '<nav class="radios-presets" aria-label="' + esc(P.choisir) + '" data-radios-presets>' + V.map((v, i) => '<a class="radios-preset" href="#radios-' + v.id + '" data-radios-preset="' + i + '"><span class="radios-preset-n" aria-hidden="true">' + (i + 1) + '</span><span class="radios-preset-t">' + esc(v.court) + '</span></a>').join('') + '</nav>';
   const panel = (v, i) => {
-    const tracks = v.morceaux.map((m, j) => '<li class="radios-morceau" style="--i:' + j + '"><span class="radios-morceau-n" aria-hidden="true">' + String(j + 1).padStart(2, '0') + '</span>'
+    const tracks = v.morceaux.map((m, j) => '<li class="radios-morceau" style="--i:' + j + '"><span class="radios-morceau-n" aria-hidden="true">' + String(j + 1).padStart(2, '0') + '</span><span class="radios-mini-eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>'
       + '<div class="radios-morceau-body"><p class="radios-morceau-t"><cite translate="no">' + esc(m.titre) + '</cite></p><p class="radios-morceau-a" translate="no">' + esc(m.artiste) + '</p>'
       + '<p class="radios-morceau-meta">' + infosHtml(m) + '<span class="radios-moment">' + esc(m.moment) + '</span></p>'
       + '<p class="radios-morceau-st">' + S.pip(m.statut, true) + srcLinks(D, m.sources) + '</p>'
-      + ((m.liens || []).length ? '<p class="radios-morceau-liens">' + m.liens.map(l => '<a href="' + esc(l.url) + '" target="_blank" rel="noopener nofollow">' + esc(l.label) + ' <span aria-hidden="true">↗</span></a>').join('') + '</p>' : '')
-      + '</div></li>').join('');
+      + ((m.liens || []).filter(l => !/spotify|apple|youtube|deezer/i.test(l.url)).length ? '<p class="radios-morceau-liens">' + m.liens.filter(l => !/spotify|apple|youtube|deezer/i.test(l.url)).map(l => '<a href="' + esc(l.url) + '" target="_blank" rel="noopener nofollow">' + esc(l.label) + ' <span aria-hidden="true">↗</span></a>').join('') + '</p>' : '')
+      + '</div>' + listen(P, m) + '</li>').join('');
     return '<section class="radios-panneau" id="radios-' + v.id + '" aria-labelledby="radios-' + v.id + '-t" data-radios-panneau="' + i + '">'
       + '<header class="radios-panneau-h"><h3 id="radios-' + v.id + '-t">' + (v.id === 'album' ? '<span translate="no">' + esc(v.nom) + '</span>' : esc(v.nom)) + '</h3>'
       + '<p class="radios-panneau-meta"><time datetime="' + v.date + '">' + esc(v.dateTexte) + '</time> · ' + esc(plural(v.morceaux.length, P.morceau, P.morceaux)) + ' · ' + S.pip(v.statut, true) + '</p>'
       + '<p class="radios-panneau-txt">' + esc(v.resume) + '</p>'
       + '<p class="radios-panneau-liens"><a href="' + esc(v.lien) + '" target="_blank" rel="noopener nofollow">' + esc(v.lienLabel || P.video) + ' <span aria-hidden="true">↗</span></a>' + (v.fiche ? '<a href="radios/' + esc(v.fiche) + '.html">' + esc('La fiche de l’album') + '</a>' : '') + '</p></header>'
-      + '<ol class="radios-morceaux">' + tracks + '</ol></section>';
+      + '<ol class="radios-morceaux' + (v.morceaux.length > 6 ? ' radios-morceaux--long' : '') + '">' + tracks + '</ol></section>';
   };
   return '<section class="shell radios-poste-sec" id="poste" aria-labelledby="poste-t">'
     + '<div class="radios-poste-head reveal"><p class="ed-kicker">' + esc(P.kicker) + '</p><h2 class="sec-h" id="poste-t">' + esc(P.titre) + '</h2><p class="radios-lede">' + esc(P.lede) + '</p></div>'
@@ -204,8 +217,17 @@ function zone(D, STATUTS) {
 function hubPage(ctx) {
   const { D, MED, STATUTS, ROOTC } = ctx, H = D.hub;
   const pile = require('./lot-c-visuals.cjs').stack(H.pile.map(p => { const m = imgOf(MED, p.media); return { src: m.a.src, big: m.b.src, alt: p.alt, caption: p.caption }; }), { label: 'Trois visuels officiels de cette section' });
-  const card = x => '<a class="lore-card rise" href="radios/' + x.id + '.html">' + (x.media && x.media[0] ? imgTag(MED, x.media[0], x.imageAlt, false) : '<div class="lore-vide">Visuel officiel à venir</div>')
-    + '<div class="veh-body"><span class="veh-marque">' + esc(x.kind) + '</span><h3 translate="no">' + esc(x.name) + '</h3>' + (x.tagline ? '<p class="lore-cardtag">' + esc(x.tagline) + '</p>' : '') + '<p>' + esc(x.description) + '</p><span class="veh-go">Voir la fiche</span></div></a>';
+  /* l’album : grande vedette (image, disque qui sort de sa pochette, chiffres de l’annonce) ; d’éventuelles autres fiches en grille */
+  const A = D.album || {}, [al, ...others] = D.fiches;
+  const vedette = al ? '<a class="radios-album lkx-tilt lkx-sweep" href="radios/' + esc(al.id) + '.html"><span class="radios-album-art"><span class="radios-album-img">' + LKX.img(MED, (al.media || [])[0], al.imageAlt, { big: true, sizes: '(max-width:900px) 100vw, 640px' }) + '</span><span class="radios-vinyl" aria-hidden="true"><span class="radios-vinyl-label"></span></span></span>'
+    + '<span class="radios-album-body"><span class="radios-album-k">' + esc(al.kind) + '</span><h3 translate="no">' + esc(al.name) + '</h3>' + (al.tagline ? '<span class="radios-album-tag">' + esc(al.tagline) + '</span>' : '') + '<span class="radios-album-desc">' + esc(al.description) + '</span>'
+    + '<span class="radios-album-stats">' + (A.stats || []).map(t => '<span>' + esc(t) + '</span>').join('') + '</span><span class="radios-album-cta">' + esc(A.cta || 'Voir la fiche') + '</span></span></a>' : '';
+  const albumSec = '<section class="radios-album-sec" id="fiches" aria-labelledby="fiches-t"><div class="shell"><div class="radios-album-head reveal"><p class="ed-kicker">' + esc(A.kicker || '') + '</p><h2 class="sec-h" id="fiches-t">' + esc(D.fichesTitre) + '</h2><p class="radios-lede">' + esc(D.fichesLede) + '</p></div>'
+    + '<div class="radios-album-wrap lkx-up lk-arrive" data-lkx-in>' + vedette + '</div>'
+    + (A.ecouter ? '<p class="radios-album-more"><a class="lkx-btn lkx-btn--ghost" href="#radios-album">' + esc(A.ecouter) + '</a></p>' : '')
+    + (others.length ? '<div class="lore-grid lore-grid--center lore-grid--n' + others.length + '">' + others.map(x => card(x)).join('') + '</div>' : '') + '</div></section>';
+  function card(x) { return '<a class="lore-card rise" href="radios/' + x.id + '.html">' + (x.media && x.media[0] ? imgTag(MED, x.media[0], x.imageAlt, false) : '<div class="lore-vide">Visuel officiel à venir</div>')
+    + '<div class="veh-body"><span class="veh-marque">' + esc(x.kind) + '</span><h3 translate="no">' + esc(x.name) + '</h3>' + (x.tagline ? '<p class="lore-cardtag">' + esc(x.tagline) + '</p>' : '') + '<p>' + esc(x.description) + '</p><span class="veh-go">Voir la fiche</span></div></a>'; }
   const body = `<section class="page-head shell lk-glow"><div class="lk-head-grid"><div>
   <p class="fiche-cat">${esc(H.label)} · GTA VI</p>
   <h1>${esc(H.title)}</h1>
@@ -213,13 +235,7 @@ function hubPage(ctx) {
   <p class="d-intro-note">${esc(H.note)} <a href="tuto.html#sources">Comprendre les statuts</a>.</p>
 </div>${pile}</div></section>
 ${poste(D)}
-<section class="shell radios-fiches reveal" id="fiches" aria-labelledby="fiches-t">
-  <h2 class="sec-h" id="fiches-t">${esc(D.fichesTitre)}</h2>
-  <p class="radios-lede">${esc(D.fichesLede)}</p>
-  <div class="lore-grid lore-grid--center lore-grid--n${D.fiches.length}">
-${D.fiches.map(card).join('\n')}
-  </div>
-</section>
+${albumSec}
 ${zone(D, STATUTS)}`;
   const collection = '<script type="application/ld+json">' + JSON.stringify({ '@context': 'https://schema.org', '@type': 'CollectionPage', name: H.title, description: metaDesc(H.desc), url: SITE + '/' + HUB + '.html', inLanguage: 'fr', isPartOf: { '@type': 'WebSite', name: 'Leonidakit', url: SITE + '/' }, mainEntity: { '@type': 'ItemList', numberOfItems: D.fiches.length, itemListElement: D.fiches.map((x, i) => ({ '@type': 'ListItem', position: i + 1, name: x.name, url: SITE + '/' + HUB + '/' + x.id + '.html' })) } }) + '</script>';
   const og = imgOf(MED, H.pile[0].media);
@@ -233,7 +249,7 @@ function fichePage(ctx, x) {
     return '<div class="lore-rel-group"><h3>' + label + '</h3><div class="lore-mini">' + l.map(y => { const m = (y.media || []).map(id => MED[id]).filter(Boolean)[0];
       return '<a class="lore-minicard" href="../' + folder + '/' + y.id + '.html">' + (m ? '<img src="' + m.variants[0].src + '" width="' + m.variants[0].w + '" height="' + m.variants[0].h + '" alt="" loading="lazy" decoding="async">' : '<i class="lore-minivide"></i>') + '<span><b>' + esc(y.name) + '</b><i>' + esc(kindLabel) + '</i></span></a>'; }).join('') + '</div></div>'; };
   const album = D.videos.find(v => v.fiche === x.id);
-  const singles = album ? '<div class="lore-texte reveal"><h2>Les titres déjà sortis</h2><ol class="radios-morceaux radios-morceaux--fiche">' + album.morceaux.map((m, j) => '<li class="radios-morceau" style="--i:' + j + '"><span class="radios-morceau-n" aria-hidden="true">' + String(j + 1).padStart(2, '0') + '</span><div class="radios-morceau-body"><p class="radios-morceau-t"><cite translate="no">' + esc(m.titre) + '</cite></p><p class="radios-morceau-a" translate="no">' + esc(m.artiste) + '</p>' + (m.infos ? '<p class="radios-morceau-meta">' + infosHtml(m) + '</p>' : '') + ((m.liens || []).length ? '<p class="radios-morceau-liens">' + m.liens.map(l => '<a href="' + esc(l.url) + '" target="_blank" rel="noopener nofollow">' + esc(l.label) + ' <span aria-hidden="true">↗</span></a>').join('') + '</p>' : '') + '</div></li>').join('') + '</ol></div>' : '';
+  const singles = album ? '<div class="lore-texte reveal"><h2>Les titres déjà sortis</h2><ol class="radios-morceaux radios-morceaux--fiche">' + album.morceaux.map((m, j) => '<li class="radios-morceau" style="--i:' + j + '"><span class="radios-morceau-n" aria-hidden="true">' + String(j + 1).padStart(2, '0') + '</span><span class="radios-mini-eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span><div class="radios-morceau-body"><p class="radios-morceau-t"><cite translate="no">' + esc(m.titre) + '</cite></p><p class="radios-morceau-a" translate="no">' + esc(m.artiste) + '</p>' + (m.infos ? '<p class="radios-morceau-meta">' + infosHtml(m) + '</p>' : '') + '</div>' + listen(D.poste, m) + '</li>').join('') + '</ol></div>' : '';
   const links = [];
   if (x.source) links.push('<a href="' + esc(x.source) + '" target="_blank" rel="noopener nofollow">Annonce officielle</a>');
   for (const l of x.liens || []) links.push('<a href="' + esc(l.url) + '" target="_blank" rel="noopener nofollow">' + esc(l.label) + '</a>');
@@ -252,7 +268,7 @@ function fichePage(ctx, x) {
       <p class="lede">${esc(x.description)}</p>
       <div class="lore-links">${links.join('')}</div>
     </div>
-    ${m ? `<figure class="lore-fig">${imgTag(MED, m, x.imageAlt, true)}</figure>` : ''}
+    ${m ? `<figure class="lore-fig radios-fig">${imgTag(MED, m, x.imageAlt, true)}<span class="radios-vinyl radios-vinyl--fiche" aria-hidden="true"><span class="radios-vinyl-label"></span></span></figure>` : ''}
   </div>
 </section>
 <section class="shell lore-body">
@@ -263,9 +279,10 @@ function fichePage(ctx, x) {
   ${facts}
   ${relBlocks ? `<div class="lore-related"><h2>En lien</h2>${relBlocks}</div>` : ''}
 </section>
+${LKX.gallery(MED, (x.galerie || []).map(g => ({ media: g.media, alt: g.alt, legende: g.legende })), { name: x.name, kicker: x.kind })}
 ${srcs}`;
   const og = m ? imgOf(MED, m) : null;
-  return page(SUBC, { p, title: x.name + ' — GTA VI | Leonidakit', desc: x.description, canonical: '/' + HUB + '/' + x.id + '.html', ogImg: og ? og.b.src : null, body, crumbs: [['Accueil', '/'], [H.label, '/' + HUB + '.html'], [x.name, '/' + HUB + '/' + x.id + '.html']] });
+  return page(SUBC, { p, title: x.name + ' — GTA VI | Leonidakit', desc: x.description, canonical: '/' + HUB + '/' + x.id + '.html', ogImg: og ? og.b.src : null, body, crumbs: [['Accueil', '/'], [H.label, '/' + HUB + '.html'], [x.name, '/' + HUB + '/' + x.id + '.html']], cls: album ? 'radios-page--album' : '' });
 }
 
 /* ---------- recherche du site (outils/radios-index.json, lu par sync-site.cjs) ---------- */

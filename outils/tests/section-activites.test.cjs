@@ -65,14 +65,17 @@ test('activites.html : fiches, liste complète par famille, ce que ça rapporte,
   assert.equal(d.querySelectorAll('h1').length, 1);
   assert.ok(d.querySelector('meta[name="description"]').content.length <= 160);
   assert.equal(d.querySelector('link[rel="canonical"]').href, 'https://www.leonidakit.com/activites.html');
-  assert.equal(d.querySelectorAll('#fiches .lore-card').length, A.activites.length);
+  assert.equal(d.querySelectorAll('#fiches .activites-tile').length, A.activites.length); /* mosaïque de grandes images (lk-sections) */
   for (const a of A.activites) assert.ok(d.querySelector('#fiches a[href="activites/' + a.id + '.html"]'), a.id);
   assert.deepEqual([...d.querySelectorAll('#toutes .activites-fam')].map(f => f.dataset.famille), ['crime', 'nature', 'ville']);
   assert.equal(d.querySelectorAll('#toutes .activites-item').length, H.liste.familles.reduce((n, f) => n + f.items.length, 0));
   for (const li of d.querySelectorAll('#toutes .activites-item')) { assert.ok(li.querySelector('.ed-status'), 'statut affiché'); assert.ok(li.querySelector('.activites-src a'), 'sources'); }
   /* pas de doublon : les activités déjà couvertes renvoient aux pages existantes */
   for (const href of ['gangs.html', 'planques.html', 'collectibles.html', 'style.html', 'personnalisations.html', 'entreprises/jack-of-hearts.html']) assert.ok(d.querySelector('#toutes a[href="' + href + '"]'), href);
-  assert.equal(d.querySelectorAll('#rapporte tbody tr').length, H.rapporte.lignes.length);
+  assert.equal(d.querySelectorAll('#rapporte .activites-cash-card').length, H.rapporte.lignes.length); /* cartes façon calculateur */
+  for (const a of d.querySelectorAll('#rapporte .activites-cash-a')) { const h = a.getAttribute('href'); assert.ok(h.startsWith('#') ? d.getElementById(h.slice(1)) : fs.existsSync(path.join(root, h)), h); }
+  assert.ok(d.querySelector('#carte-activites [data-lk-loc="activites"]'), 'carte des activités (localisateur)');
+  for (const li of d.querySelectorAll('#toutes .activites-item')) assert.ok(li.querySelector('details.lkx-det[id^="act-"] .lkx-sheet-src'), 'fiche plein écran de chaque activité');
   for (const a of d.querySelectorAll('.activites-src a')) assert.ok(d.getElementById(a.getAttribute('href').slice(1)), a.getAttribute('href'));
   assert.deepEqual([...d.querySelectorAll('.ed-zone--monde section.ed')].map(s => s.id), ['rockstar', 'communaute', 'a-confirmer', 'pour-toi', 'faq', 'sources']);
   for (const a of d.querySelectorAll('.ed-nav a')) assert.ok(d.getElementById(a.getAttribute('href').slice(1)), a.getAttribute('href'));
@@ -83,7 +86,7 @@ test('activites.html : fiches, liste complète par famille, ce que ça rapporte,
   const u = new URL(hub[0].querySelector('a').getAttribute('href'), 'https://www.leonidakit.com/activites.html'); assert.equal(u.searchParams.get('tool'), 'activities'); assert.equal(u.searchParams.get('from'), 'activites');
   assert.equal(d.querySelectorAll('nav.lk-chips').length, 1);
   /* filtre : écrit dans la page, caché sans script */
-  const f = d.querySelector('[data-activites-filtre]'); assert.ok(f && f.hidden); assert.equal(f.querySelectorAll('button[data-filtre]').length, 4);
+  const f = d.querySelector('[data-activites-filtre]'); assert.ok(f && f.hidden); assert.equal(f.querySelectorAll('button[data-filtre]').length, 5); /* + « Sur la carte » */
   assert.ok(!read('activites.html').includes('{donnees:'));
   const ph = DP.phrases(DP.etat(root)), norm = s => s.replace(/[  ]/g, ' ').replace(/\s+/g, ' ');
   assert.ok(norm(d.getElementById('rapporte').textContent).includes(norm(ph.activites)));
@@ -108,8 +111,8 @@ test('activites/ : une fiche par activité sourcée, gabarit des fiches, encart 
     for (const s of d.querySelectorAll('.activites-src a')) assert.ok(d.getElementById(s.getAttribute('href').slice(1)), f + ' ' + s.getAttribute('href'));
     for (const img of d.querySelectorAll('main img')) { assert.ok(img.getAttribute('width') && img.getAttribute('height'), f + ' : dimensions'); assert.ok(img.hasAttribute('alt'), f + ' : alt'); }
     assert.equal(d.querySelector('.lore-fig img').getAttribute('loading'), 'eager');
-    for (const img of d.querySelectorAll('.activites-galerie img')) assert.equal(img.getAttribute('loading'), 'lazy');
-    for (const el of d.querySelectorAll('main a[href]')) { const h = el.getAttribute('href'); if (/^(https?:|#|mailto:)/.test(h)) continue; const p = path.posix.normalize(path.posix.join('activites', h.split(/[?#]/)[0])); assert.ok(fs.existsSync(path.join(root, p)), f + ' → ' + p); }
+    for (const img of d.querySelectorAll('.lore-gallery img')) assert.equal(img.getAttribute('loading'), 'lazy');
+    for (const el of d.querySelectorAll('main a[href]')) { const h = el.getAttribute('href'); if (/^(https?:|#|mailto:)/.test(h)) continue; const p = h.startsWith('/') ? h.split(/[?#]/)[0].slice(1) : path.posix.normalize(path.posix.join('activites', h.split(/[?#]/)[0])); assert.ok(fs.existsSync(path.join(root, p)), f + ' → ' + p); }
     assert.doesNotMatch(d.querySelector('main').textContent, /\d[\d\s  ]* \$/, f + ' : aucun montant');
     const types = ld(d).map(x => x['@type']); assert.ok(types.includes('BreadcrumbList'));
   }

@@ -413,7 +413,7 @@ window.LK_ACQUISITIONS = {
         {
           "id": "goodtime-gear-01",
           "titre": "Goodtime Gear",
-          "alt": "Jason et Lucia en casquettes et tee-shirts Vice City illustrés de Macca the Gator, devant une fresque de l’alligator (capture officielle « Goodtime Gear » de l’Édition Ultimate).",
+          "alt": "Jason e Lucia con cappellini e magliette di Vice City con Macca the Gator, davanti a un murale dell’alligatore (screenshot ufficiale “Goodtime Gear” dell’Edizione Ultimate).",
           "source": "https://www.rockstargames.com/VI/media/screenshots",
           "original": "https://www.rockstargames.com/VI/_next/static/media/ULTIMATE_EDITION_GOODTIME_GEAR_01.0t7de8dow381q.jpg?akim=1&imdensity=1&imwidth=1920",
           "credit": "© Rockstar Games / Take-Two Interactive",

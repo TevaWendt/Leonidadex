@@ -1,0 +1,74 @@
+LEONIDAKIT — DESIGN, ANIMATIONS ET CARTES DES SECTIONS — archive « modifs » (4 octobre 2026)
+
+CE QUE CETTE ARCHIVE AJOUTE
+Plus de mouvement, d’images et de couleur dans Gangs et factions, Missions, Activités annexes et Radios et musique, des
+cartes de Leonida là où il en manquait, et une image sur chaque ligne des frises « Ce que Rockstar a montré ». Aucun texte
+existant n’est réécrit, aucune animation, aucun visuel et aucun lien existant n’est retiré. Rien n’est inventé : chaque
+image est un visuel officiel déjà présent sur le site, chaque repère de carte est un lieu de notre carte, dit comme tel.
+
+GANGS ET FACTIONS
+- Page d’accueil : les six cartes arrivent comme un jeu de cartes qu’on distribue ; au survol, elles s’inclinent avec un
+  reflet de lumière et l’image zoome.
+- Fiches des six groupes : galerie « En images » qui défile comme sur les fiches des personnages (3 à 6 images), et bloc
+  « Sur la carte de Leonida » (même carte que les armes et les véhicules) quand des lieux sont connus.
+
+MISSIONS
+- Les 8 séquences : toutes avec une image (cinq portent l’étiquette « Illustration » : visuel officiel proche, pas le plan
+  exact), en grille 4 × 2. Effet nouveau sur le site : « scan vidéo » (une ligne balaie chaque carte, l’image passe du noir
+  et blanc à la couleur, une carte après l’autre), badge REC et minutage.
+- Un clic sur une séquence ouvre sa fiche en plein écran : texte, personnages et lieux avec vignettes, mini-carte
+  numérotée, statut et sources.
+- Édition Ultimate : bandeau pleine largeur haut de gamme (image de fond, titre doré, deux grandes cartes illustrées).
+- Le guide : les 5 types de missions avec image ; un clic ouvre la fiche en plein écran avec le squelette de chaque
+  future fiche (10 rubriques remplies à la sortie).
+- Liens de sources en « tickets » (§ 1, § 2…) ; liens vers personnages, lieux et demeures en puces avec vignette.
+
+ACTIVITÉS ANNEXES
+- Les 7 fiches en mosaïque d’images, qui s’ouvrent en cercle à l’arrivée et s’inclinent au survol.
+- « Toutes les activités » : 29 lignes avec vignette, statut et chevron ; chacune s’ouvre en fiche plein écran (image,
+  texte, sources, mini-carte, liens vers planques, garages, gangs…). Nouveau filtre « Sur la carte ».
+- Nouveau bloc « Où pratiquer, activité par activité » : la carte de Leonida du site (comme armes et véhicules) ; on
+  choisit une activité et ses lieux s’allument (club de strip-tease → Jack of Hearts et Delights, etc.). Une activité sans
+  lieu le dit.
+- « Ce que ça rapporte » : bandeau « argent » façon écran de calculatrice ; chaque carte est cliquable ; bouton « Faire mes
+  calculs ». Aucun montant n’est inventé (« Montant publié : aucun »).
+- Les 7 fiches d’activité (voler une voiture, pêche…) : paragraphe « L’essentiel », frise animée, « Où la pratiquer »,
+  bloc calculatrice, carte de Leonida et galerie « En images » (3 images au moins).
+
+RADIOS ET MUSIQUE
+- Chaque morceau a un bouton « Écouter » : le lien d’écoute officiel quand il existe, et une recherche du titre sur
+  Spotify, Apple Music, YouTube et Deezer. Le site ne diffuse aucun son (règle du site : rien de chargé depuis un autre site) et ne
+  montre aucune parole.
+- Morceaux en liste compacte façon playlist, avec petit égaliseur animé au survol.
+- « L’album officiel » devient une grande vitrine : image, vinyle qui tourne, chiffres clés, bouton vers sa page.
+- Page de l’album : en-tête de nuit avec vinyle, bouton « Écouter » sur chaque titre, galerie « En images » (6 images).
+
+PARTOUT
+- Frises « Ce que Rockstar a montré » : une image sur chaque ligne (Missions, Activités, Radios, Gangs, Lieux,
+  Personnages, Demeures, Planques, Entreprises, Animaux) ; dans les quatre sections, elle se révèle au défilement.
+- Fiches de Demeures, Planques et Entreprises : bloc « Sur la carte de Leonida » (même carte que les armes et véhicules)
+  quand des lieux sont connus.
+- Tout est traduit en anglais, espagnol, italien et allemand (0 texte sans traduction).
+- Mouvement coupé si l’appareil demande moins d’animations ; sans JavaScript tout reste visible et chaque fiche s’ouvre
+  dans la page. Rien n’est gardé sur l’appareil, aucun cookie, aucune requête vers un autre site.
+
+CE QU’IL FAUT FAIRE
+Base attendue : v7.65 + l’archive « Leonidakit-4-sections-modifs.zip » déjà extraite.
+1. Note le commit courant dans GitHub Desktop (ou copie le dossier).
+2. Extrais « Leonidakit-design-sections-modifs.zip » dans la racine du site en écrasant les fichiers homonymes (garde le
+   dossier .git). Aucun fichier à supprimer.
+3. Vérifie en local ou sur la prévisualisation Vercel, puis commit et push quand tu le décides.
+
+POURQUOI PRESQUE TOUTES LES PAGES CHANGENT : le numéro de version de common.js (« ?v=… », en haut de chaque page) change
+quand Léo ou les traductions changent. Le contenu de ces pages-là ne change pas.
+
+NOUVEAUX FICHIERS : lk-sections.css et lk-sections.js (chargés seulement par les pages des sections concernées),
+outils/lk-sections.cjs (briques communes des générateurs), outils/langues/<langue>/section-design.json (traductions).
+
+POUR VÉRIFIER
+- missions.html : cliquer une séquence, puis un type de mission du guide (fiche plein écran, Échap pour fermer).
+- activites.html : cliquer une ligne de « Toutes les activités » ; dans « Où pratiquer », choisir « Club de strip-tease ».
+- radios.html : bouton « Écouter » d’un morceau ; la vitrine de l’album ; radios/gta-vi-the-album.html.
+- gangs.html (arrivée des cartes), gangs/final-chapter-mc.html (galerie et carte), demeures/jason-keys.html (carte).
+- Contrôles passés : tous les tests outils/tests/*.test.cjs, outils/verifier.js (aucune erreur), gen-leo --check, Léo
+  évalué dans les cinq langues.
