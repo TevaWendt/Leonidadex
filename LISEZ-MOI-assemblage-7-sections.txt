@@ -57,6 +57,12 @@ DEUXIÈME PASSE (même archive, 4 octobre au soir)
   trois barres de la charte. Un rail à droite (01 à 05) montre où on en est et permet de sauter d’un écran à l’autre ; le
   dernier écran mène à « Ce qu’on sait, en clair », où le mouvement s’arrête. « Passer à l’espace » saute la présentation ;
   sans JavaScript ou en mouvement réduit, tout est affiché d’un coup. Toutes les images sont des visuels officiels du site.
+- GTA Online, troisième passe (5 octobre) : les écrans se fondent l’un dans l’autre (le suivant apparaît en opacité
+  par-dessus le précédent, plus de rideau qui monte) ; la présentation tient en une seule scène collée à l’écran, environ
+  sept écrans de défilement. La partie claire est refaite : titres à la taille des hubs, carte « ce qu’on sait » plus
+  grande, et pour chaque rubrique (Activités, Achats et entreprises, Mises à jour) un dossier avec un grand visuel officiel
+  à gauche, le texte propre, l’état d’aujourd’hui et le bouton « Aperçu de la fiche » ; repères « GTA V » en notes
+  encadrées ; « Ce que dira chaque fiche » en quatre tuiles numérotées.
 - GTA Online, les fiches des rubriques (Activités, Achats et entreprises, Mises à jour) : une image officielle de GTA VI
   (dite « illustration »), un texte propre à la rubrique, ce qu’en dit le GTA Online actuel (toujours marqué « GTA V », avec
   statut et sources), ce que dira chaque fiche, et deux boutons (Le GTA Online actuel, Les annonces).

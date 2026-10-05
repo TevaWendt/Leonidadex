@@ -278,6 +278,7 @@
 }
 .lkx-cards--solo{grid-template-columns:minmax(0,340px);margin:12px 0;}
 .lkx-rubrique{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,320px);gap:18px;align-items:start;}
+.online-page .lkx-rubrique{display:block;}
 .lkx-rubrique>.online-vide{margin:12px 0;}
 .lkx-rubrique .lkx-cards--solo{grid-template-columns:1fr;}
 @media (max-width:760px){.lkx-rubrique{grid-template-columns:1fr;gap:0;}}

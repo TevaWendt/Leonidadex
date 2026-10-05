@@ -28,10 +28,12 @@
     Object.keys(byId).forEach(function (id) { io.observe(byId[id].sec); });
   }
 
-  /* présentation : progression de chaque écran, posée en --p (lue par online.css) */
+  /* présentation : une scène collée à l’écran (la « scène »), les écrans empilés dedans ; le défilement du conteneur
+     donne à chaque écran sa progression --p (0 : il commence, 1 : il finit ; au-delà, il s’efface pendant que le suivant
+     apparaît : fondu enchaîné) et au conteneur --cp (progression de toute la présentation) */
   var scenes = Array.prototype.slice.call(document.querySelectorAll('[data-online-scene]'));
   var cine = document.querySelector('[data-online-cine]');
-  var rail = document.querySelector('[data-online-rail]'), railLinks = rail ? Array.prototype.slice.call(rail.querySelectorAll('a[href^="#"]')) : [];
+  var rail = document.querySelector('[data-online-rail]'), railLinks = rail ? Array.prototype.slice.call(rail.querySelectorAll('a[data-online-go]')) : [];
   if (scenes.length && cine && !reduced() && 'requestAnimationFrame' in window) {
     document.documentElement.classList.add('online-cine-js');
     /* titres des écrans, mot à mot (le texte est seulement enveloppé, jamais réécrit) */
@@ -45,33 +47,33 @@
       });
       t.replaceChildren(frag); t.dataset.onlineWords = '1';
     });
-    var raf = 0;
+    var n = scenes.length, raf = 0;
+    /* position de défilement qui montre l’écran k en entier (son début) */
+    var slotTop = function (k) { var vh = window.innerHeight || 1, r = cine.getBoundingClientRect(), total = r.height - vh; return r.top + window.pageYOffset + (total * k) / n; };
     var tick = function () {
       raf = 0;
-      var vh = window.innerHeight || 1;
-      scenes.forEach(function (sc) {
-        var r = sc.getBoundingClientRect();
-        /* 0 quand le haut de l’écran entre par le bas, 1 quand son bas sort par le haut ; les écrans collants (sticky)
-           prennent leur progression sur toute leur hauteur de défilement */
-        var p = (vh - r.top) / (vh + r.height);
-        p = p < 0 ? 0 : p > 1 ? 1 : p;
-        sc.style.setProperty('--p', p.toFixed(4));
-        sc.classList.toggle('is-on', p > 0.08 && p < 0.97);
-      });
-      var cr = cine.getBoundingClientRect();
-      var cp = (vh - cr.top) / (vh + cr.height); cp = cp < 0 ? 0 : cp > 1 ? 1 : cp;
+      var vh = window.innerHeight || 1, r = cine.getBoundingClientRect(), total = Math.max(1, r.height - vh);
+      var t = (-r.top) / total; /* 0 : la scène arrive en haut ; 1 : elle repart */
+      var cp = t < 0 ? 0 : t > 1 ? 1 : t;
       cine.style.setProperty('--cp', cp.toFixed(4));
-      /* repères : visibles pendant la présentation, l’écran collé à l’écran est marqué */
+      var pos = cp * n, on = Math.min(n - 1, Math.max(0, Math.floor(pos + 0.5)));
+      scenes.forEach(function (sc, k) {
+        var p = pos - k; /* 0 → 1 pendant son créneau, négatif avant, > 1 après */
+        sc.style.setProperty('--p', p.toFixed(4));
+        var vis = p > -0.3 && p < 1.3;
+        sc.classList.toggle('is-on', vis);
+        sc.classList.toggle('is-off', !vis);
+      });
       if (rail) {
-        rail.classList.toggle('is-on', cr.top < vh * 0.5 && cr.bottom > vh * 0.9);
-        var on = null;
-        scenes.forEach(function (sc) { var r = sc.getBoundingClientRect(); if (r.top <= vh * 0.5 && r.bottom > vh * 0.5) on = sc.id; });
-        railLinks.forEach(function (a) { var hit = on && a.getAttribute('href') === '#' + on; if (hit) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
+        rail.classList.toggle('is-on', r.top < vh * 0.5 && r.bottom > vh * 0.92);
+        railLinks.forEach(function (a, k) { if (k === on) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
       }
     };
     var ask = function () { if (!raf) raf = window.requestAnimationFrame(tick); };
     window.addEventListener('scroll', ask, { passive: true });
     window.addEventListener('resize', ask);
+    /* repères : aller au début d’un écran (le lien reste utilisable sans script) */
+    railLinks.forEach(function (a) { a.addEventListener('click', function (e) { var k = +a.getAttribute('data-online-go'); if (!isNaN(k)) { e.preventDefault(); window.scrollTo({ top: Math.round(slotTop(k) + 2), behavior: 'smooth' }); } }); });
     tick();
   }
 
