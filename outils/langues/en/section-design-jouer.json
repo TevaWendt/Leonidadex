@@ -134,5 +134,8 @@
  "<1>Aperçu d’une fiche trophée</1><2>À quoi ressemblera ta liste</2><3>Voir le squelette</3>": "<1>Preview of a trophy page</1><2>What your list will look like</2><3>See the outline</3>",
  "<1></1><2>Obtenu</2>": "<1></1><2>Obtained</2>",
  "<1>GTA V</1><2>Manquable</2>": "<1>GTA V</1><2>Missable</2>",
- "<1>Ma progression</1><2>Les collectibles</2>": "<1>My progress</1><2>The collectibles</2>"
+ "<1>Ma progression</1><2>Les collectibles</2>": "<1>My progress</1><2>The collectibles</2>",
+ "Aucun signal": "No signal",
+ "Écrans de la présentation": "Presentation screens",
+ "<1>?</1><2></2><3>Aucun signal</3>": "<1>?</1><2></2><3>No signal</3>"
 }

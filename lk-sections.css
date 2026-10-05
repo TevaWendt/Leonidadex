@@ -388,3 +388,9 @@
 .trophees-podium .trophees-badge:nth-child(2) svg{width:76px;height:76px;}
 .trophees-podium .trophees-badge:nth-child(1){margin-bottom:10px;z-index:1;}
 .trophees-podium .trophees-sceau{display:none;}
+/* GTA Online, pages de l’espace : annonces en cartes à ombre dure, date au corail, point de frise au néon */
+.lkx-page.online-page .online-annonce{border:2px solid var(--ink);border-radius:12px;box-shadow:4px 4px 0 var(--ink);}
+.lkx-page.online-page .online-annonce time{color:var(--coral-text);font-size:.92rem;}
+.lkx-page.online-page .online-annonce::before{box-shadow:0 0 12px rgba(151,223,207,.8);}
+.lkx-page.online-page .online-annonces{border-left-width:4px;}
+.lkx-page.online-page .online-bloc .sec-h{font-size:var(--fs-h2);}

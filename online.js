@@ -31,6 +31,7 @@
   /* présentation : progression de chaque écran, posée en --p (lue par online.css) */
   var scenes = Array.prototype.slice.call(document.querySelectorAll('[data-online-scene]'));
   var cine = document.querySelector('[data-online-cine]');
+  var rail = document.querySelector('[data-online-rail]'), railLinks = rail ? Array.prototype.slice.call(rail.querySelectorAll('a[href^="#"]')) : [];
   if (scenes.length && cine && !reduced() && 'requestAnimationFrame' in window) {
     document.documentElement.classList.add('online-cine-js');
     /* titres des écrans, mot à mot (le texte est seulement enveloppé, jamais réécrit) */
@@ -60,6 +61,13 @@
       var cr = cine.getBoundingClientRect();
       var cp = (vh - cr.top) / (vh + cr.height); cp = cp < 0 ? 0 : cp > 1 ? 1 : cp;
       cine.style.setProperty('--cp', cp.toFixed(4));
+      /* repères : visibles pendant la présentation, l’écran collé à l’écran est marqué */
+      if (rail) {
+        rail.classList.toggle('is-on', cr.top < vh * 0.5 && cr.bottom > vh * 0.9);
+        var on = null;
+        scenes.forEach(function (sc) { var r = sc.getBoundingClientRect(); if (r.top <= vh * 0.5 && r.bottom > vh * 0.5) on = sc.id; });
+        railLinks.forEach(function (a) { var hit = on && a.getAttribute('href') === '#' + on; if (hit) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
+      }
     };
     var ask = function () { if (!raf) raf = window.requestAnimationFrame(tick); };
     window.addEventListener('scroll', ask, { passive: true });

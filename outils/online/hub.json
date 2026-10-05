@@ -100,7 +100,10 @@
     "sources": [
      "gamespot-twitch",
      "pcgamer-twitch"
-    ]
+    ],
+    "media": "jason-and-lucia-09",
+    "alt": "Jason et Lucia à moto, Lucia tirant au pistolet, poursuivis par une voiture de police, visuel officiel Rockstar Games",
+    "fond": true
    },
    {
     "id": "pret",
@@ -110,9 +113,16 @@
     "cta": {
      "href": "#etat",
      "label": "Ce qu’on sait, en clair"
-    }
+    },
+    "media": "trailer-1-vehicles-025",
+    "alt": "Lucia debout sur le toit d’une voiture rouge devant les tours de Vice City de nuit, photogramme du Trailer 1 (0:25)",
+    "fond": true
    }
-  ]
+  ],
+  "media": "trailer-1-vehicles-033",
+  "alt": "Des voitures de sport sous les néons d’Ocean Beach, la nuit, photogramme du Trailer 1 (0:33)",
+  "vide": "Aucun signal",
+  "rail": "Écrans de la présentation"
  },
  "rubriques": {
   "activites": {

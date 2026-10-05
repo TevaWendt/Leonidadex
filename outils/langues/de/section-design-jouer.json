@@ -134,5 +134,8 @@
  "<1>Aperçu d’une fiche trophée</1><2>À quoi ressemblera ta liste</2><3>Voir le squelette</3>": "<1>Vorschau eines Trophäen-Steckbriefs</1><2>So wird deine Liste aussehen</2><3>Gerüst ansehen</3>",
  "<1></1><2>Obtenu</2>": "<1></1><2>Erhalten</2>",
  "<1>GTA V</1><2>Manquable</2>": "<1>GTA V</1><2>Verpassbar</2>",
- "<1>Ma progression</1><2>Les collectibles</2>": "<1>Mein Fortschritt</1><2>Die Sammelobjekte</2>"
+ "<1>Ma progression</1><2>Les collectibles</2>": "<1>Mein Fortschritt</1><2>Die Sammelobjekte</2>",
+ "Aucun signal": "Kein Signal",
+ "Écrans de la présentation": "Bildschirme der Präsentation",
+ "<1>?</1><2></2><3>Aucun signal</3>": "<1>?</1><2></2><3>Kein Signal</3>"
 }

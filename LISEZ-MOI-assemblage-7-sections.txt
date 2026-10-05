@@ -46,12 +46,17 @@ DEUXIÈME PASSE (même archive, 4 octobre au soir)
 - Menu « Explorer » : « GTA Online » est maintenant un groupe à part, en gras comme Le monde, Jouer et S’équiper : une bande
   de nuit sous les quatre groupes (L’espace GTA Online, Les annonces, Le GTA Online actuel). Au pied de page, sa propre colonne.
   Le groupe « Jouer » garde Missions, Activités annexes, Radios et musique, Codes de triche, Trophées et succès.
-- GTA Online, la présentation : avant l’espace, cinq écrans qui se lisent en défilant (le titre arrive mot à mot, puis le
-  texte, le statut et les sources ; une image officielle, le réseau de joueurs, un « ? » au néon, « 2027 ? », puis la marque).
-  Chaque écran dit une chose vraie et sourcée (expérience solo, rien d’annoncé, GTA Online continue, la rumeur 2027), et le
-  dernier mène à « Ce qu’on sait, en clair » : là, le mouvement s’arrête et l’information est nette. Sol en grille façon
-  arcade, scanlines, néon de l’espace, et les rappels de la charte : corail, ambre, Archivo, étiquettes mono, marque
-  Leonidakit. « Passer à l’espace » saute la présentation ; sans JavaScript ou en mouvement réduit, tout est affiché d’un coup.
+- GTA Online, la présentation (version plein cadre) : avant l’espace, un accueil et cinq écrans qui occupent tout
+  l’écran et se lisent en défilant. L’accueil : photo officielle de nuit (les néons d’Ocean Beach) en fond, titre géant,
+  mot fantôme « GTA Online » qui glisse, sol en grille façon arcade, lueurs corail et ambre, scanlines. Puis, écran par
+  écran, le titre arrive mot à mot (le dernier mot en ambre), le texte, le statut et les sources : « GTA VI arrive en
+  solo » sur la photo officielle de Jason et Lucia qui zoome et glisse ; « Rien d’annoncé » sur écran noir, point
+  d’interrogation géant au néon qui clignote, barre de balayage, « Aucun signal » ; « GTA Online continue » avec un réseau de
+  joueurs plein cadre qui se dessine trait par trait en défilant ; « Un multijoueur en 2027 ? » avec des chiffres qui
+  basculent de 2026 à 2027 comme un panneau d’aéroport ; « L’espace est prêt » avec la marque Leonidakit en grand et les
+  trois barres de la charte. Un rail à droite (01 à 05) montre où on en est et permet de sauter d’un écran à l’autre ; le
+  dernier écran mène à « Ce qu’on sait, en clair », où le mouvement s’arrête. « Passer à l’espace » saute la présentation ;
+  sans JavaScript ou en mouvement réduit, tout est affiché d’un coup. Toutes les images sont des visuels officiels du site.
 - GTA Online, les fiches des rubriques (Activités, Achats et entreprises, Mises à jour) : une image officielle de GTA VI
   (dite « illustration »), un texte propre à la rubrique, ce qu’en dit le GTA Online actuel (toujours marqué « GTA V », avec
   statut et sources), ce que dira chaque fiche, et deux boutons (Le GTA Online actuel, Les annonces).

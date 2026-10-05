@@ -224,25 +224,50 @@ function rubrique(ctx, id, R, vide, champs, icon) {
     + '<div class="lkx-sheet-cta"><a class="lkx-btn lkx-btn--night" href="online/gta-online-actuel.html">' + esc(H.espace.sommaire.find(x => x.id === 'gta-online-actuel').label) + '</a><a class="lkx-btn lkx-btn--ghost" href="online/annonces.html">' + esc(H.zone.toi.actions.find(a => a.href === 'online/annonces.html').t) + '</a></div>';
   return '<div class="lkx-rubrique">' + vide + '<div class="lkx-cards lkx-cards--solo lkx-net lk-arrive" data-lkx-in>' + LKX.sheet({ id: 'apercu-' + id, cls: 'online-apercu', summary, fig: ok ? LKX.img(MED, V.media, V.alt, { big: true, sizes: '(max-width:760px) 100vw, 600px' }) : '', caption: ok ? V.legende : '', icon: ico, kicker: esc(C.apercuK) + ' · <span>' + esc(R.kicker) + '</span>', title: R.titre, body }) + '</div></div>';
 }
-/* présentation de l’espace : des écrans qui se lisent en défilant (online.js pose --p, la progression de chaque écran ; sans
-   script ou en mouvement réduit, tout est affiché). Chaque écran qui affirme quelque chose porte son statut et ses sources ;
-   le dernier conduit à l’information claire (« Ce qu’on sait »). */
+/* présentation de l’espace : des écrans plein cadre qui se lisent en défilant (online.js pose --p, la progression de
+   chaque écran, et --cp celle de l’ensemble ; sans script ou en mouvement réduit, tout est affiché, rien ne colle).
+   Chaque écran qui affirme quelque chose porte son statut et ses sources ; le dernier conduit à l’information claire. */
+/* réseau de joueurs plein cadre (décoratif) : nœuds sur une grille un peu déformée, chaque nœud relié à ses deux voisins
+   les plus proches ; les traits se dessinent en défilant (pathLength, online.css) */
+const SIGNAL_BIG = (() => {
+  const N = []; let seed = 7; const rnd = () => { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; };
+  for (let r = 0; r < 5; r++) for (let c = 0; c < 7; c++) N.push([Math.round(90 + c * 210 + (rnd() - .5) * 110), Math.round(90 + r * 180 + (rnd() - .5) * 90)]);
+  const E = [], has = new Set();
+  N.forEach((a, i) => { N.map((b, k) => [k, (a[0] - b[0]) ** 2 + (a[1] - b[1]) ** 2]).filter(x => x[0] !== i).sort((x, y) => x[1] - y[1]).slice(0, 2).forEach(([k]) => { const key = i < k ? i + '-' + k : k + '-' + i; if (!has.has(key)) { has.add(key); E.push([i, k]); } }); });
+  const centre = 17;
+  return '<div class="online-signal online-signal--big" aria-hidden="true"><svg viewBox="0 0 1440 820" preserveAspectRatio="xMidYMid slice" focusable="false">'
+    + '<g class="online-liens">' + E.map(([a, b], i) => '<line x1="' + N[a][0] + '" y1="' + N[a][1] + '" x2="' + N[b][0] + '" y2="' + N[b][1] + '" pathLength="1" style="--i:' + i + '"/>').join('') + '</g>'
+    + '<g class="online-noeuds">' + N.map(([x, y], i) => '<circle class="online-noeud' + (i === centre ? ' online-noeud--centre' : '') + '" cx="' + x + '" cy="' + y + '" r="' + (i === centre ? 16 : 7) + '" style="--i:' + i + '"/>').join('') + '</g>'
+    + '</svg><span class="online-signal-k">GTA Online</span></div>';
+})();
 function cine(ctx) {
-  const { H, MED } = ctx, I = H.intro, X = H.hub, n = I.scenes.length;
-  const scene = (sc, i) => '<section class="online-scene online-scene--' + esc(sc.id) + (sc.media ? ' online-scene--img' : '') + '" data-online-scene style="--i:' + i + '" aria-labelledby="scene-' + esc(sc.id) + '-t"><div class="online-scene-in">'
-    + '<div class="online-scene-txt"><p class="online-scene-k"><span class="online-scene-n" aria-hidden="true" translate="no">' + String(i + 1).padStart(2, '0') + ' / ' + String(n).padStart(2, '0') + '</span> <span>' + esc(sc.k) + '</span></p>'
-    + '<h2 class="online-scene-t" id="scene-' + esc(sc.id) + '-t">' + esc(sc.t) + '</h2>'
-    + '<p class="online-scene-p">' + esc(sc.p) + '</p>'
-    + (sc.statut ? '<p class="online-scene-st">' + st(sc.statut, sc.sources) + '</p>' : '')
-    + (sc.cta ? '<p class="online-scene-cta"><a class="lkx-btn" href="' + esc(sc.cta.href) + '">' + esc(sc.cta.label) + '</a></p>' : '') + '</div>'
-    + (sc.media && MED[sc.media] ? '<figure class="online-scene-fig"><div class="online-scene-img">' + LKX.img(MED, sc.media, sc.alt, { big: true, sizes: '(max-width:820px) 100vw, 560px', eager: i === 0 }) + '</div><figcaption>' + esc(MED[sc.media].credit || 'Visuel officiel Rockstar Games') + '</figcaption></figure>' : sc.signal ? SIGNAL : sc.id === 'rien' ? '<div class="online-scene-art online-scene-art--vide" aria-hidden="true"><span>?</span></div>' : sc.id === '2027' ? '<div class="online-scene-art online-scene-art--date" aria-hidden="true"><span>20</span><span>27</span><span>?</span></div>' : sc.cta ? '<div class="online-scene-art online-scene-art--pret" aria-hidden="true" translate="no"><span class="brand">Leonida<span>kit</span></span><i></i><i></i><i></i></div>' : '')
-    + '</div></section>';
-  return '<div class="online-cine" id="presentation" data-online-cine><div class="online-cine-bg" aria-hidden="true"><div class="online-cine-grid"></div><div class="online-cine-glow"></div><div class="online-cine-scan"></div></div>'
-    + '<section class="page-head shell lk-glow online-scene online-scene--hero" data-online-scene aria-labelledby="online-h1"><div class="online-scene-in online-scene-in--hero"><div><p class="fiche-cat"><span class="online-marque"><span class="brand" translate="no">Leonida<span>kit</span></span> · <span>' + esc(I.marque) + '</span></span></p>'
+  const { H, MED } = ctx, I = H.intro, X = H.hub, n = I.scenes.length, pad = k => String(k).padStart(2, '0');
+  const bg = (id, alt, eager, cls) => MED[id] ? '<div class="online-scene-bg' + (cls ? ' ' + cls : '') + '" aria-hidden="true">' + LKX.img(MED, id, alt, { big: true, sizes: '100vw', eager }) + '</div>' : '';
+  const scene = (sc, i) => {
+    let art = '';
+    if (sc.media && MED[sc.media] && !sc.fond) art = '<figure class="online-scene-fig">' + bg(sc.media, sc.alt, i === 0) + '<figcaption>' + esc(MED[sc.media].credit || 'Visuel officiel Rockstar Games') + '</figcaption></figure>';
+    else if (sc.media && MED[sc.media] && sc.fond) art = bg(sc.media, sc.alt, false, 'online-scene-bg--fond');
+    if (sc.signal) art += SIGNAL_BIG;
+    if (sc.id === 'rien') art += '<div class="online-scene-art online-scene-art--vide" aria-hidden="true"><span class="online-vide-q">?</span><span class="online-vide-bar"></span><span class="online-vide-l">' + esc(I.vide) + '</span></div>';
+    if (sc.id === '2027') art += '<div class="online-scene-art online-scene-art--date" aria-hidden="true" translate="no"><span class="online-flap"><span class="online-flap-s"><b>2026</b><b>2027</b></span></span><span class="online-flap-q">?</span></div>';
+    if (sc.cta) art += '<div class="online-scene-art online-scene-art--pret" aria-hidden="true" translate="no"><span class="online-pret-plate"><span class="brand">Leonida<span>kit</span></span><span class="online-pret-bars"><i></i><i></i><i></i></span></span></div>';
+    return '<section class="online-scene online-scene--' + esc(sc.id) + (sc.media && !sc.fond ? ' online-scene--img' : '') + '" id="ecran-' + esc(sc.id) + '" data-online-scene style="--i:' + i + '" aria-labelledby="scene-' + esc(sc.id) + '-t"><div class="online-scene-in">' + art
+      + '<div class="online-scene-txt"><p class="online-scene-k"><span class="online-scene-n" aria-hidden="true" translate="no">' + pad(i + 1) + ' / ' + pad(n) + '</span> <span>' + esc(sc.k) + '</span></p>'
+      + '<h2 class="online-scene-t" id="scene-' + esc(sc.id) + '-t">' + esc(sc.t) + '</h2>'
+      + '<p class="online-scene-p">' + esc(sc.p) + '</p>'
+      + (sc.statut ? '<p class="online-scene-st">' + st(sc.statut, sc.sources) + '</p>' : '')
+      + (sc.cta ? '<p class="online-scene-cta"><a class="lkx-btn" href="' + esc(sc.cta.href) + '">' + esc(sc.cta.label) + '</a></p>' : '') + '</div></div></section>';
+  };
+  const rail = '<nav class="online-rail" aria-label="' + esc(I.rail) + '" data-online-rail><ol>' + I.scenes.map((sc, i) => '<li><a href="#ecran-' + esc(sc.id) + '" aria-label="' + esc(sc.t) + '"><span translate="no" aria-hidden="true">' + pad(i + 1) + '</span></a></li>').join('') + '</ol></nav>';
+  return '<div class="online-cine lk-arrive" id="presentation" data-online-cine>'
+    + '<section class="page-head lk-glow online-scene online-scene--hero" data-online-scene aria-labelledby="online-h1"><div class="online-scene-in online-scene-in--hero">' + bg(I.media, I.alt, true, 'online-scene-bg--hero')
+    + '<div class="online-cine-bg" aria-hidden="true"><div class="online-cine-grid"></div><div class="online-cine-glow"></div><div class="online-cine-scan"></div></div>'
+    + '<p class="online-ghost" aria-hidden="true" translate="no">GTA Online · GTA Online · GTA Online · GTA Online</p>'
+    + '<div class="online-scene-txt online-scene-txt--hero"><p class="fiche-cat"><span class="online-marque"><span class="brand" translate="no">Leonida<span>kit</span></span> · <span>' + esc(I.marque) + '</span></span></p>'
     + '<h1 id="online-h1">' + esc(X.title) + '</h1>'
     + '<p class="lede">' + esc(X.lede) + '</p><p class="d-intro-note">' + esc(X.note) + ' <a href="tuto.html#sources">Comprendre les statuts</a>.</p>'
     + '<p class="online-defiler" aria-hidden="true">' + esc(I.defiler) + '<i></i></p><p class="online-passer"><a href="#etat">' + esc(I.passer) + '</a></p></div></div></section>'
-    + I.scenes.map(scene).join('') + '</div>';
+    + I.scenes.map(scene).join('') + rail + '</div>';
 }
 function hubPage(ctx) {
   const { H, P, D, STATUTS, ROOTC } = ctx, X = H.hub, E = H.etat, CH = H.change;

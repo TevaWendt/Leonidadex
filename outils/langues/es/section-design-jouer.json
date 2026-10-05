@@ -136,5 +136,8 @@
  "<1>Aperçu d’une fiche trophée</1><2>À quoi ressemblera ta liste</2><3>Voir le squelette</3>": "<1>Vista previa de una ficha de trofeo</1><2>Cómo será tu lista</2><3>Ver el esqueleto</3>",
  "<1></1><2>Obtenu</2>": "<1></1><2>Conseguido</2>",
  "<1>GTA V</1><2>Manquable</2>": "<1>GTA V</1><2>Perdible</2>",
- "<1>Ma progression</1><2>Les collectibles</2>": "<1>Mi progreso</1><2>Los coleccionables</2>"
+ "<1>Ma progression</1><2>Les collectibles</2>": "<1>Mi progreso</1><2>Los coleccionables</2>",
+ "Aucun signal": "Sin señal",
+ "Écrans de la présentation": "Pantallas de la presentación",
+ "<1>?</1><2></2><3>Aucun signal</3>": "<1>?</1><2></2><3>Sin señal</3>"
 }
