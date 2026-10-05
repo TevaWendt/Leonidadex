@@ -1,4 +1,4 @@
-LEONIDAKIT — ASSEMBLAGE DES 7 SECTIONS + DESIGN + LECTEUR DE MUSIQUE — archive « modifs » unique (4 octobre 2026)
+LEONIDAKIT — ASSEMBLAGE DES 7 SECTIONS + DESIGN + LECTEUR DE MUSIQUE — archive « modifs » unique (4–5 octobre 2026)
 
 POURQUOI LES DEUX ZIP S’ÉCRASAIENT
 Le zip « design des sections » et le zip « 3 sections » (Codes de triche, Trophées et succès, GTA Online) avaient été
@@ -79,6 +79,25 @@ DEUXIÈME PASSE (même archive, 4 octobre au soir)
 - Images : uniquement des visuels officiels déjà présents sur le site (médias et crédits inchangés). Rien n’est pris sur un
   autre site : la règle du site l’interdit, et le droit d’auteur aussi.
 
+QUATRIÈME PASSE (5 octobre, midi) : les deux pages de l’espace GTA Online
+- online/annonces.html (Les annonces) et online/gta-online-actuel.html (Le GTA Online actuel) sont refaites avec la même
+  charte que la présentation : un bandeau de nuit plein cadre avec un visuel officiel (étiqueté « Illustration : un visuel
+  officiel de GTA VI, pas du jeu en ligne », zoom très lent), le titre géant, le chapeau, et trois chiffres de la page en
+  tickets (annonces / officielles / sources ; chapitres / repères / sources), comptés par le générateur, jamais écrits à la main.
+- Les annonces : une chronologie numérotée (01 à 09) le long d’une ligne néon, chaque annonce en grande carte avec sa date,
+  qui parle, le titre en grand, le texte, le statut et les sources en tickets.
+- Le GTA Online actuel : une rangée de pastilles pour sauter d’un chapitre à l’autre, puis cinq chapitres numérotés (01 / 05…)
+  dont le titre reste collé à gauche en défilant ; trois chapitres portent l’illustration de la rubrique correspondante de
+  l’espace (même étiquette « Illustration ») ; chaque repère est une carte numérotée, les mises à jour nommées gardent leur
+  badge « GTA V ».
+- En bas des deux pages, « La suite » : trois boutons (Ce qu’on sait, en clair ; l’autre page de l’espace ; Les questions
+  fréquentes), puis les sources à la taille des hubs.
+- online.html : un peu d’air entre les quatre tuiles « Ce que dira chaque fiche » et la barre des sections (« Ce qu’on sait ·
+  Ce qui change · … · Sources »), qui les touchait.
+- Textes nouveaux (titres des parties, étiquettes des chiffres, « La suite ») : dans outils/online/pages.json, traduits dans
+  les quatre langues. Aucun texte existant n’est réécrit, aucune information n’est ajoutée : les mêmes annonces et les mêmes
+  repères, avec les mêmes sources.
+
 POURQUOI PRESQUE TOUTES LES PAGES SONT DANS L’ARCHIVE : le menu « Jouer » (six liens), le pied de page et les numéros de
 version (« ?v=… ») changent sur toutes les pages des cinq langues. Le texte des pages existantes ne change pas, sauf la
 page Mentions et confidentialité (le lecteur de musique) et les compteurs de la page À propos (recomptés tout seuls).
@@ -91,6 +110,8 @@ POUR VÉRIFIER
 - trophees.html : les badges qui « se débloquent » ; « Aperçu d’une fiche trophée ».
 - online.html : le menu « Explorer » → « Jouer » a bien GTA Online ; les cartes « Aperçu de la fiche » des rubriques.
 - online.html : la présentation en défilant ; « Explorer » → la bande « GTA Online » ; les fiches « Aperçu de la fiche ».
+- online/annonces.html : le bandeau, les trois chiffres, la chronologie 01 à 09 ; online/gta-online-actuel.html : les
+  pastilles des chapitres, le titre qui reste collé à gauche en défilant, les trois illustrations, les boutons « La suite ».
 - codes-de-triche.html : une catégorie du guide (fiche avec les codes de GTA V) ; trophees.html : « Aperçu d’une fiche trophée ».
 - missions.html, activites.html, gangs.html : le design du zip précédent est bien là.
 - mentions-legales.html#cookies : le paragraphe sur le lecteur de musique.

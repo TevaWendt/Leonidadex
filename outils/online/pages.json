@@ -1,12 +1,19 @@
 {
  "_note": "Section « GTA Online » (section online) : les pages online/<id>.html qui ont dès aujourd’hui du contenu sourcé, lues par outils/gen-online.cjs. Une page n’existe que si elle a au moins trois éléments sourcés (pas de page creuse). Sources : outils/online/hub.json (« sources »).",
+ "legende": "Illustration : un visuel officiel de GTA VI, pas du jeu en ligne",
+ "chapitre": "Chapitre",
+ "suite": "La suite",
  "pages": [
   {
    "id": "annonces", "sommaire": "annonces",
+   "media": "trailer-1-vehicles-064",
+   "alt": "Un journal télévisé de Weazel News montre une arrestation au milieu de voitures de police, photogramme du Trailer 1 (1:04)",
    "label": "Annonces",
    "titre": "Les annonces, une par une",
    "lede": "Ce que Rockstar, Take-Two et les boutiques ont dit du jeu en ligne en 2026, dans l’ordre, avec la source. Rien n’annonce encore un GTA Online pour GTA VI.",
    "desc": "Les annonces sur le jeu en ligne de GTA VI et l’avenir de GTA Online, de février à octobre 2026 : Rockstar, Take-Two, boutiques, chacune avec sa source.",
+   "sectionK": "Chronologie 2026",
+   "sectionT": "Les prises de parole, dans l’ordre",
    "kind": "annonces",
    "items": [
     { "date": "2026-02-03", "dateTexte": "3 février 2026", "qui": "Take-Two, résultats du trimestre", "titre": "« Toutes les raisons de croire » que GTA Online continuera", "texte": "Strauss Zelnick dit avoir toutes les raisons de croire que Take-Two continuera de soutenir GTA Online, porté par une communauté fidèle. Il cite NBA 2K Online : sa deuxième version est sortie en Chine en 2017 sans que la première ferme, et les deux restent en service.", "statut": "officiel", "sources": ["gamingbible-fev", "kotaku-fev"] },
@@ -22,10 +29,15 @@
   },
   {
    "id": "gta-online-actuel", "sommaire": "gta-online-actuel",
+   "media": "vice-city-10",
+   "alt": "Deux tours ondulées dominent la baie de Vice City et ses bateaux, capture officielle Rockstar Games",
    "label": "Le GTA Online actuel",
    "titre": "Le GTA Online actuel, celui de GTA V",
    "lede": "Le jeu en ligne de GTA V, lancé en 2013, continue. Il sert de repère pour imaginer celui de GTA VI : un ordre d’idée, jamais un chiffre de GTA VI.",
    "desc": "Le GTA Online de GTA V en 2026 : ses débuts, les Shark Cards et GTA+, ses dernières mises à jour, le mois offert avec GTA VI. Un repère, avec ses sources.",
+   "sectionK": "Le repère",
+   "sectionT": "Le jeu en ligne de GTA V, chapitre par chapitre",
+   "navLabel": "Les chapitres de la page",
    "kind": "blocs",
    "blocs": [
     { "id": "debuts", "titre": "Ses débuts", "items": [

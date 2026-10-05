@@ -70,6 +70,7 @@ function check(ctx) {
     if (s.publishedAt && !/^\d{4}-\d\d-\d\d$/.test(s.publishedAt)) err.push('source ' + id + ' : date de publication mal formée');
   }
   const E = H.espace;
+  if (!P.legende || !P.chapitre || !P.suite) err.push('pages : textes communs manquants (legende, chapitre, suite)');
   if (!E.bandeau || !E.bandeau.k || !E.sommaire.length) err.push('espace : bandeau ou sommaire manquant');
   for (const x of E.sommaire) if (!x.label || !/^online(?:\.html(?:#[a-z0-9-]+)?|\/[a-z0-9-]+\.html)$/.test(x.href)) err.push('sommaire : lien hors de l’espace ' + x.href);
   const used = new Set(), ids = new Set();
@@ -80,6 +81,8 @@ function check(ctx) {
     const items = p.kind === 'annonces' ? p.items : p.blocs.flatMap(b => b.items);
     if (items.length < 3) err.push('page ' + p.id + ' : moins de trois éléments sourcés (page creuse)');
     for (const x of items) { if (!x.texte || !ST.includes(x.statut) || !(x.sources || []).length) err.push('page ' + p.id + ' : élément sans texte, statut ou source'); (x.sources || []).forEach(id => { used.add(id); if (!H.sources[id]) err.push('page ' + p.id + ' : source inconnue ' + id); }); }
+    if (p.media && (!ctx.MED[p.media] || !p.alt)) err.push('page ' + p.id + ' : visuel inconnu ou sans texte alternatif');
+    if (!p.sectionK || !p.sectionT || (p.kind !== 'annonces' && !p.navLabel)) err.push('page ' + p.id + ' : titre de la partie (sectionK, sectionT, navLabel)');
     if (p.kind === 'annonces') for (const x of p.items) if (!/^\d{4}-\d\d(?:-\d\d)?$/.test(x.date) || !x.dateTexte || !x.qui || !x.titre) err.push('annonce mal formée : ' + (x.titre || '?'));
   }
   for (const href of E.sommaire.map(x => x.href).filter(h => /^online\//.test(h))) if (!ids.has(href.slice(7, -5))) err.push('sommaire : page absente ' + href);
@@ -325,27 +328,48 @@ function zone(H, STATUTS) {
   return out.join('\n');
 }
 
-/* ---------- pages de l’espace (online/<id>.html) ---------- */
+/* ---------- pages de l’espace (online/<id>.html) ----------
+   Même charte que la présentation du hub : un bandeau de nuit plein cadre avec un visuel officiel (dit « illustration »),
+   titre géant, les chiffres de la page (comptés, jamais écrits à la main) ; puis l’information nette. Les annonces : une
+   chronologie numérotée (date, qui parle, titre, texte, statut, sources). Le GTA Online actuel : des chapitres numérotés,
+   titre collé à gauche en défilant, chaque repère en carte numérotée ; l’illustration d’une rubrique du hub accompagne le
+   premier chapitre qu’elle couvre (hub.json « rubriques »). */
 function subPage(ctx, pg) {
-  const { H, SUBC } = ctx, p = '../';
+  const { H, P, MED, SUBC } = ctx, p = '../', pad = k => String(k).padStart(2, '0');
   const items = pg.kind === 'annonces' ? pg.items : pg.blocs.flatMap(b => b.items);
   const ids = [...new Set(items.flatMap(x => x.sources))];
-  const content = pg.kind === 'annonces'
-    ? '<ol class="online-annonces lkx-wave lk-arrive" data-lkx-in>' + pg.items.map(x => '<li class="online-annonce"><time datetime="' + esc(x.date) + '">' + esc(x.dateTexte) + '</time><div><p class="online-annonce-qui">' + esc(x.qui) + '</p><h3>' + esc(x.titre) + '</h3><p>' + esc(x.texte) + '</p><p>' + st(x.statut, x.sources) + '</p></div></li>').join('') + '</ol>'
-    : pg.blocs.map(b => '<section class="online-bloc" id="' + esc(b.id) + '" aria-labelledby="' + esc(b.id) + '-t"><h2 class="sec-h reveal" id="' + esc(b.id) + '-t">' + esc(b.titre) + '</h2><ul class="online-items lkx-net lk-arrive" data-lkx-in>' + b.items.map(x => '<li>' + (x.titre ? '<span class="online-v">GTA V</span><h3 translate="no">' + esc(x.titre) + '</h3>' : '') + '<p>' + esc(x.texte) + '</p><p>' + st(x.statut, x.sources) + '</p></li>').join('') + '</ul></section>').join('');
-  const body = `<section class="page-head shell">
-  <nav class="crumbs online-crumbs" aria-label="Fil d’Ariane"><a href="../${HUB}.html">${esc(H.espace.nom)}</a> / <span>${esc(pg.label)}</span></nav>
-  <div class="lore-copy lore-enter">
-    <p class="fiche-cat">${esc(H.espace.nom)} · GTA VI</p>
-    <h1>${esc(pg.titre)}</h1>
-    <p class="lede">${esc(pg.lede)}</p>
-  </div>
-</section>
-<section class="shell online-sec online-page-${esc(pg.id)}" aria-label="${esc(pg.label)}">
-  ${content}
-  <p class="online-plus"><a href="../${HUB}.html">L’espace GTA Online</a> · <a href="../${HUB}.html#faq">Les questions fréquentes</a></p>
-</section>
-<section class="shell online-fiche-src" aria-labelledby="sources-t"><h2 class="sec-h" id="sources-t">Sources</h2>${sourceList(H, ids)}<p class="online-plus">Les statuts sont expliqués dans le <a href="../tuto.html#sources">Tuto</a>.</p></section>`;
+  const ok = !!(pg.media && MED[pg.media]);
+  const chiffre = (n, t) => '<li><b translate="no">' + n + '</b><span>' + esc(t) + '</span></li>';
+  const chiffres = pg.kind === 'annonces'
+    ? [chiffre(pg.items.length, 'annonces'), chiffre(pg.items.filter(x => x.statut === 'officiel').length, 'officielles'), chiffre(ids.length, 'sources')]
+    : [chiffre(pg.blocs.length, 'chapitres'), chiffre(items.length, 'repères'), chiffre(ids.length, 'sources')];
+  const hero = '<section class="page-head online-hero lk-arrive" aria-labelledby="online-h1">'
+    + (ok ? '<figure class="online-hero-fig">' + LKX.img(MED, pg.media, pg.alt, { big: true, sizes: '100vw', eager: true }) + '<figcaption><span>' + esc(P.legende) + '</span><span translate="no">' + esc(MED[pg.media].credit || 'Rockstar Games') + '</span></figcaption></figure>' : '')
+    + '<div class="online-cine-bg online-hero-fx" aria-hidden="true"><div class="online-cine-grid"></div><div class="online-cine-glow"></div><div class="online-cine-scan"></div></div>'
+    + '<div class="shell online-hero-in"><nav class="crumbs online-crumbs" aria-label="Fil d’Ariane"><a href="../' + HUB + '.html">' + esc(H.espace.nom) + '</a> / <span>' + esc(pg.label) + '</span></nav>'
+    + '<div class="lore-copy lore-enter"><p class="fiche-cat"><span class="online-marque"><span class="brand" translate="no">Leonida<span>kit</span></span> · <span>' + esc(H.intro.marque) + '</span></span></p>'
+    + '<h1 id="online-h1">' + esc(pg.titre) + '</h1><p class="lede">' + esc(pg.lede) + '</p>'
+    + '<ul class="online-hero-chiffres">' + chiffres.join('') + '</ul></div></div></section>';
+  /* la suite : ce qu’on sait en clair, l’autre page de l’espace, la FAQ */
+  const pret = H.intro.scenes.find(sc => sc.cta), autre = pg.kind === 'annonces' ? ['gta-online-actuel.html', H.espace.sommaire.find(x => x.id === 'gta-online-actuel').label] : ['annonces.html', H.zone.toi.actions.find(a => a.href === 'online/annonces.html').t];
+  const suite = '<div class="online-suite reveal"><p class="online-kicker">' + esc(P.suite) + '</p><ul class="online-suite-l"><li><a class="lkx-btn lkx-btn--night" href="../' + HUB + '.html#etat">' + esc(pret.cta.label) + '</a></li><li><a class="lkx-btn lkx-btn--ghost" href="' + autre[0] + '">' + esc(autre[1]) + '</a></li><li><a class="lkx-btn lkx-btn--ghost" href="../' + HUB + '.html#faq">Les questions fréquentes</a></li></ul></div>';
+  let content;
+  if (pg.kind === 'annonces') {
+    content = '<section class="shell online-sec online-page-annonces" aria-labelledby="chrono-t">' + head(pg.sectionK, pg.sectionT, 'chrono')
+      + '<ol class="online-chrono lkx-wave lk-arrive" data-lkx-in>' + pg.items.map((x, i) => '<li class="online-annonce" id="annonce-' + (i + 1) + '"><div class="online-annonce-date"><span class="online-annonce-n" aria-hidden="true" translate="no">' + pad(i + 1) + '</span><time datetime="' + esc(x.date) + '">' + esc(x.dateTexte) + '</time></div>'
+        + '<div class="online-annonce-body"><p class="online-annonce-qui">' + esc(x.qui) + '</p><h3>' + esc(x.titre) + '</h3><p class="online-annonce-p">' + esc(x.texte) + '</p><p>' + st(x.statut, x.sources) + '</p></div></li>').join('') + '</ol>' + suite + '</section>';
+  } else {
+    const n = pg.blocs.length, rub = Object.values(H.rubriques || {});
+    const chap = (b, i) => {
+      const R = rub.find(r => (r.blocs || [])[0] === b.id), fig = R && R.media && MED[R.media] ? '<figure class="online-chap-fig">' + LKX.img(MED, R.media, R.alt, { big: true, sizes: '(max-width:820px) 100vw, 440px' }) + '<figcaption>' + esc(R.legende) + '</figcaption></figure>' : '';
+      return '<section class="online-chap" id="' + esc(b.id) + '" aria-labelledby="' + esc(b.id) + '-t"><div class="online-chap-head reveal"><p class="online-chap-k"><span class="online-chap-n" aria-hidden="true" translate="no">' + pad(i + 1) + ' / ' + pad(n) + '</span> <span>' + esc(P.chapitre) + '</span></p><h2 class="sec-h" id="' + esc(b.id) + '-t">' + esc(b.titre) + '</h2>' + fig + '</div>'
+        + '<ol class="online-reps lkx-net lk-arrive" data-lkx-in>' + b.items.map((x, j) => '<li class="online-rep"><span class="online-rep-n" aria-hidden="true" translate="no">' + pad(j + 1) + '</span>' + (x.titre ? '<p class="online-rep-k"><span class="online-v">GTA V</span></p><h3 translate="no">' + esc(x.titre) + '</h3>' : '') + '<p class="online-rep-p">' + esc(x.texte) + '</p><p>' + st(x.statut, x.sources) + '</p></li>').join('') + '</ol></section>';
+    };
+    content = '<section class="shell online-sec online-page-gta-online-actuel" aria-labelledby="chapitres-t">' + head(pg.sectionK, pg.sectionT, 'chapitres')
+      + '<nav class="online-chapitres reveal" aria-label="' + esc(pg.navLabel) + '"><ol>' + pg.blocs.map((b, i) => '<li><a href="#' + esc(b.id) + '"><span aria-hidden="true" translate="no">' + pad(i + 1) + '</span>' + esc(b.titre) + '</a></li>').join('') + '</ol></nav>'
+      + pg.blocs.map(chap).join('') + suite + '</section>';
+  }
+  const body = hero + '\n' + content + '\n<section class="shell online-sec online-fiche-src" aria-labelledby="sources-t"><div class="reveal"><p class="online-kicker">' + ids.length + ' sources ouvertes</p><h2 class="sec-h" id="sources-t">Sources</h2></div>' + sourceList(H, ids) + '<p class="online-plus">Les statuts sont expliqués dans le <a href="../tuto.html#sources">Tuto</a>.</p></section>';
   const ld = pg.kind === 'annonces' ? '<script type="application/ld+json">' + JSON.stringify({ '@context': 'https://schema.org', '@type': 'ItemList', name: pg.titre, numberOfItems: pg.items.length, itemListElement: pg.items.map((x, i) => ({ '@type': 'ListItem', position: i + 1, name: x.dateTexte + ' : ' + x.titre })) }) + '</script>' : '';
   return page(SUBC, { p, title: pg.titre + ' — GTA Online | Leonidakit', desc: pg.desc, canonical: '/' + HUB + '/' + pg.id + '.html', body, crumbs: [[H.espace.nom, '/' + HUB + '.html'], [pg.label, '/' + HUB + '/' + pg.id + '.html']], ld, espace: espace(H, pg.sommaire, p) });
 }

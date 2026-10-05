@@ -42,7 +42,9 @@ test('fil d’Ariane des pages de online/ : il part de « GTA Online » (page et
 test('pages de l’espace : seulement celles qui ont du contenu sourcé, chaque élément avec statut et source', () => {
   assert.deepEqual(fs.readdirSync(path.join(root, 'online')).filter(f => f.endsWith('.html')).sort(), P.pages.map(p => p.id + '.html').sort());
   for (const p of P.pages) {
-    const d = doc('online/' + p.id + '.html'), items = d.querySelectorAll('.online-annonce, .online-items li');
+    const d = doc('online/' + p.id + '.html'), items = d.querySelectorAll('.online-annonce, .online-rep, .online-items li');
+    assert.ok(d.querySelector('.online-hero .online-hero-fig img[alt]') && d.querySelectorAll('.online-hero-chiffres li').length === 3, p.id + ' : bandeau avec visuel officiel et chiffres');
+    assert.ok(d.querySelector('.online-suite .lkx-btn[href="../online.html#etat"]'), p.id + ' : bouton vers « Ce qu’on sait »');
     assert.ok(items.length >= 3, p.id + ' : page creuse');
     for (const li of items) { assert.ok(li.querySelector('.ed-status'), p.id + ' : statut'); assert.ok(li.querySelector('.online-src a'), p.id + ' : source'); }
     for (const a of d.querySelectorAll('.online-src a')) assert.ok(d.getElementById(a.getAttribute('href').slice(1)), p.id + ' ' + a.getAttribute('href'));
@@ -50,6 +52,11 @@ test('pages de l’espace : seulement celles qui ont du contenu sourcé, chaque 
   }
   assert.equal(doc('online/annonces.html').querySelectorAll('.online-annonce').length, P.pages.find(p => p.id === 'annonces').items.length);
   assert.ok(doc('online/gta-online-actuel.html').getElementById('gta-plus'));
+  const act = doc('online/gta-online-actuel.html');
+  assert.equal(act.querySelectorAll('.online-chap').length, P.pages.find(p => p.id === 'gta-online-actuel').blocs.length);
+  assert.equal(act.querySelectorAll('.online-chapitres a').length, act.querySelectorAll('.online-chap').length);
+  for (const a of act.querySelectorAll('.online-chapitres a')) assert.ok(act.getElementById(a.getAttribute('href').slice(1)), a.getAttribute('href'));
+  for (const fig of act.querySelectorAll('.online-chap-fig')) assert.match(fig.querySelector('figcaption').textContent, /Illustration/);
 });
 
 test('modèle de données : vide au 4 octobre 2026, valeurs au schéma de donnees-publiees.cjs, rien de mêlé à l’histoire', () => {
