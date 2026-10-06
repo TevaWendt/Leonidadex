@@ -345,7 +345,7 @@
       timeline.reverse();
       var note = best.runs ? 'Ablauf aus den getesteten Kombinationen: die besten gefundenen Einnahmen pro Session, ohne Garantie, dass es keinen besseren gibt.' : 'Kein Ablauf gefunden, der Geld einbringt. Prüfe die verfügbare Zeit, die vorzustreckenden Kosten, die Startkäufe und die Rücklage.';
       if (capped) note += ' Es werden höchstens 256 Missionen pro Session geprüft.';
-      return finish({ profit: subtract(best.cash, capital), finalCapital: best.cash, reserve: reserve, investment: best.investment, runs: best.runs, activeMinutes: best.active, waitMinutes: best.wait, unusedMinutes: Math.max(0, subtract(available, best.time)), totalMinutes: best.time, timeline: timeline, breakdown: activities.map(function (a, index) { return { id: a.id, name: a.name, runs: best.counts[index], net: best.counts[index] * a.net, investment: best.counts[index] ? a.investment : 0 }; }), method: 'bounded-beam', limited: pruned || capped, limits: sessionShape.limits, note: note }, sessionShape);
+      return finish({ profit: subtract(best.cash, capital), finalCapital: best.cash, reserve: reserve, investment: best.investment, runs: best.runs, activeMinutes: best.active, waitMinutes: best.wait, unusedMinutes: Math.max(0, subtract(available, best.time)), totalMinutes: best.time, timeline: timeline, breakdown: activities.map(function (a, index) { return { id: a.id, name: a.name, runs: best.counts[index], net: best.counts[index] * a.net, investment: best.counts[index] ? a.investment : 0 }; }), method: 'bounded-beam', limited: pruned || capped, exhaustive: !pruned && !capped, limits: sessionShape.limits, note: note }, sessionShape); /* lot 3 : exhaustive = aucune suite de missions écartée (faisceau jamais plein, aucune limite de longueur atteinte) : le programme gardé est le meilleur possible dans ce modèle (gain, puis temps) */
     } catch (error) { return fail(sessionShape, error.message); }
   }
 
@@ -363,7 +363,7 @@
       var netHourly = subtract(revenue, cost);
       var operatingProfit = netHourly * hours;
       var netProfit = subtract(operatingProfit, investment);
-      return finish({ investment: investment, netHourly: netHourly, grossProfit: revenue * hours, operatingProfit: operatingProfit, netProfit: netProfit, roiPercent: investment > 0 ? netProfit / investment * 100 : null, paybackHours: investment === 0 ? 0 : ratio(investment, netHourly) }, roiShape);
+      return finish({ investment: investment, netHourly: netHourly, grossProfit: revenue * hours, operatingProfit: operatingProfit, netProfit: netProfit, roiPercent: investment > 0 ? netProfit / investment * 100 : null, paybackHours: investment === 0 ? (netHourly >= 0 ? 0 : null) : ratio(investment, netHourly) }, roiShape); /* lot 3 (E) : gratuit mais perdant à l’usage → jamais « remboursé après 0 min » */
     } catch (error) { return fail(roiShape, error.message); }
   }
 
@@ -435,16 +435,29 @@
       });
       var time = 0;
       var steps = [];
+      /* lot 3 : deferLosses (« Quoi acheter d’abord ? ») : un achat qui coûte plus à l’usage qu’il ne rapporte (gain net < 0) se paie
+         en même temps que les achats suivants de l’ordre, jusqu’à ce que le groupe ne fasse plus baisser le gain par heure (ou tout à
+         la fin) : payé plus tôt, il ralentirait l’attente des suivants. Jamais plus lent que « dès que possible » ni que « tout d’un
+         coup à la fin » (preuve dans CALCULATEUR-LOT3.md). L’ordre reste celui donné ; sans l’option, comportement d’avant (Léo). */
+      var defer = p.deferLosses === true;
       for (var i = 0; i < items.length; i += 1) {
-        var item = items[i];
-        var wait = timeTo(item.price + reserve, cash, hourly);
-        if (wait === null) return fail(Object.assign({}, orderShape, {steps: steps, blockedIndex: i, shortfall: item.price + reserve - cash}), 'Schritt ' + (i + 1) + ' blockiert: Dir fehlen ' + dollars((item.price + reserve - cash).toLocaleString('de-DE'), ' ') + ' für „' + item.name + '“. ' + (hourly !== null && hourly < 0 ? 'Deine Käufe davor kosten bei der Nutzung mehr, als sie einbringen: Du verlierst beim Spielen Geld.' : 'Vor diesem Kauf verdienst du nichts pro Stunde.'));
+        var last = i;
+        if (defer) { var net = subtract(items[i].boostHourly, items[i].costHourly); while (net < 0 && last < items.length - 1) { last += 1; net += subtract(items[last].boostHourly, items[last].costHourly); } }
+        var need = 0; for (var g = i; g <= last; g += 1) need += items[g].price;
+        var wait = timeTo(need + reserve, cash, hourly);
+        if (wait === null) return fail(Object.assign({}, orderShape, {steps: steps, blockedIndex: i, shortfall: need + reserve - cash}), 'Schritt ' + (i + 1) + ' blockiert: Dir fehlen ' + dollars((need + reserve - cash).toLocaleString('de-DE'), ' ') + ' für ' + items.slice(i, last + 1).map(function (x) { return '„' + x.name + '“'; }).join(' und ') + '. ' + (hourly !== null && hourly < 0 ? 'Deine Käufe davor kosten bei der Nutzung mehr, als sie einbringen: Du verlierst beim Spielen Geld.' : hourly === null ? 'Trag ein, was du pro Stunde verdienst, um die Wartezeit vor diesem Kauf zu berechnen.' /* lot 2 (C11.5) : un gain vide n’est pas un gain nul */ : 'Vor diesem Kauf verdienst du nichts pro Stunde.'));
         time += wait;
-        // Waiting ends exactly at the price: avoid residual floating-point debt.
-        cash = wait > 0 ? reserve : cash - item.price;
-        // Un revenu inconnu ne devient pas implicitement zéro.
-        if(hourly!==null)hourly = subtract(hourly + item.boostHourly, item.costHourly);
-        steps.push({ name: item.name, waitHours: wait, timeHours: time, capital: cash, hourly: hourly });
+        var left = wait > 0 ? reserve + need : cash;
+        for (var k = i; k <= last; k += 1) {
+          var item = items[k];
+          left -= item.price;
+          // Waiting ends exactly at the price: avoid residual floating-point debt.
+          if (k === last && wait > 0) left = reserve;
+          // Un revenu inconnu ne devient pas implicitement zéro.
+          if(hourly!==null)hourly = subtract(hourly + item.boostHourly, item.costHourly);
+          steps.push(Object.assign({ name: item.name, waitHours: k === i ? wait : 0, timeHours: time, capital: left, hourly: hourly }, k < last ? { withNext: true } : {}));
+        }
+        cash = left; i = last;
       }
       return finish({ steps: steps, totalHours: time, finalCapital: cash, finalHourly: hourly }, orderShape);
     } catch (error) { return fail(orderShape, error.message); }
@@ -510,7 +523,8 @@
         return top[0].name;
       }
       var byCriterion = {
-        value: pick('value', function (x) { return x.valueScore; }, true),
+        /* lot 3 : un achat gratuit (ou déjà à toi) noté a le meilleur rapport envie / prix possible : il n’est plus écarté du critère */
+        value: pick('value', function (x) { return x.valueScore !== null ? x.valueScore : x.total === 0 && x.utility !== null ? 1e300 : null; }, true),
         cheapest: pick('cheapest', function (x) { return x.total; }, false),
         fastest: pick('fastest', function (x) { return x.waitHours; }, false),
         profit: pick('profit', function (x) { return x.paybackHours; }, false),
@@ -569,10 +583,11 @@
       var sessions = totalMinutes === 0 ? 0 : ceil(totalMinutes / dailyMinutes);
       var weeks = sessions === 0 ? 0 : Math.floor((sessions - 1) / daysPerWeek);
       // Jour calendaire de chaque étape, avec la même règle de semaine que les jalons.
-      steps.forEach(function (st) { var sess = st.atHours === 0 ? 0 : ceil(st.atHours * 60 / dailyMinutes); var wk = sess === 0 ? 0 : Math.floor((sess - 1) / daysPerWeek); st.sessions = sess; st.days = sess === 0 ? 0 : wk * 7 + ((sess - 1) % daysPerWeek) + 1; });
-      var days = sessions === 0 ? 0 : weeks * 7 + ((sessions - 1) % daysPerWeek) + 1;
+      /* lot 2 (C1) : même calendrier que le plan (calendarDays), valeur inchangée. */
+      steps.forEach(function (st) { var sess = st.atHours === 0 ? 0 : ceil(st.atHours * 60 / dailyMinutes); st.sessions = sess; st.days = calendarDays(sess, daysPerWeek); });
+      var days = calendarDays(sessions, daysPerWeek);
       var missing = Math.max(0, subtract(items.reduce(function (a, x) { return a + x.price; }, 0) + (goalPrice || 0) + (goalTarget || 0) + reserve, capital));
-      var milestones = [0.25, 0.5, 0.75, 1].map(function (f) { var h = totalHours * f; var sess = h === 0 ? 0 : ceil(h * 60 / dailyMinutes); var wk = sess === 0 ? 0 : Math.floor((sess - 1) / daysPerWeek); return { fraction: f, hours: h, sessions: sess, days: sess === 0 ? 0 : wk * 7 + ((sess - 1) % daysPerWeek) + 1 }; });
+      var milestones = [0.25, 0.5, 0.75, 1].map(function (f) { var h = totalHours * f; var sess = h === 0 ? 0 : ceil(h * 60 / dailyMinutes); return { fraction: f, hours: h, sessions: sess, days: calendarDays(sess, daysPerWeek) }; });
       var payback = goalItem && goalIncome > 0 ? goalPrice / goalIncome : null;
       function variant(priceFactor, hourlyFactor) {
         var alt = businessPlan(Object.assign({}, p, { hourly: hourly * hourlyFactor, goalPrice: goalPrice === null ? null : goalPrice * priceFactor, prerequisites: prerequisites.map(function (x) { return Object.assign({}, x, { price: x.price * priceFactor }); }), variants: false }));
@@ -598,24 +613,32 @@
   }
 
 
+  /* lot 2 (C1) : un seul calendrier pour Mon temps de jeu et le plan : jour de la n-ième partie quand on joue les dpw premiers
+     jours de chaque semaine (partie 1 = jour 1). (6, 5) → 8 : jours 1 à 5 puis 8 ; ceil(6 × 7 ÷ 5) = 9 comptait un jour sans partie. */
+  function calendarDays(n, dpw) { return n <= 0 ? 0 : Math.floor((n - 1) / dpw) * 7 + ((n - 1) % dpw) + 1; }
+
   function sessionProjection(input) {
     var shape = { missingBefore: null, missingAfter: null, progressPercent: null, sessionsLeft: null, calendarDays: null, calendarReason: null, calendarField: null };
     try {
       var p = data(input), capital = money(p.capital, 'dein Geld'), reserve = money(p.reserve, 'das zurückgelegte Geld', 0);
       var target = money(p.target, 'das Ziel');
       if (!p.session || !p.session.valid) return fail(shape, 'Füll zuerst deine Session aus.');
-      var before = Math.max(0, target - (capital - reserve)), after = Math.max(0, target - (p.session.finalCapital - reserve));
-      var next = p.repeatProfit === undefined ? p.session.profit + (p.session.investment || 0) : p.repeatProfit;
+      /* lot 2 (C11) : les dépenses par partie (facultatives, défaut 0) sont retirées de la partie faite, des suivantes et de l’avancement. */
+      var up = money(p.upkeepPerSession, 'die Ausgaben pro Session', 0);
+      var before = Math.max(0, target - (capital - reserve)), after = Math.max(0, target - (p.session.finalCapital - up - reserve));
+      var base = p.repeatProfit === undefined ? p.session.profit + (p.session.investment || 0) : p.repeatProfit;
+      /* lot 2 (C11) : une partie suivante inconnue (repeatProfit null, repeatReason) reste inconnue ; connue, elle est nette des dépenses par partie (next ≤ 0 → pas de nombre de parties, sans raison de calendrier). */
+      var next = typeof base === 'number' && Number.isFinite(base) ? base - up : base;
       var count = after === 0 ? 0 : Number.isFinite(next) && next > 0 ? ceil(after / next) : null;
       var calendar = count === 0 ? 0 : null, calendarReason = null, calendarField = null;
       if (after > 0 && !Number.isFinite(next)) {
         calendarReason = 'Die nächsten Sessions lassen sich nicht berechnen. ' + (p.repeatReason || 'Gib ein, wie lange eine Session normalerweise dauert.');
         calendarField = 'usualMinutes';
       } else if (count > 0) {
-        try { var days = number(p.daysPerWeek, 'die gespielten Tage pro Woche', 7, {positive:true,integer:true,defaultValue:7}); calendar = ceil(count * 7 / days); }
+        try { var days = number(p.daysPerWeek, 'die gespielten Tage pro Woche', 7, {positive:true,integer:true,defaultValue:7}); calendar = calendarDays(count, days); /* lot 2 (C1) */ }
         catch(error) { calendarReason = error.message; calendarField = 'daysPerWeek'; }
       }
-      return finish({missingBefore:before, missingAfter:after, progressPercent:before === 0 ? 100 : Math.max(0, Math.min(100, p.session.profit / before * 100)), sessionsLeft:count, calendarDays:calendar, calendarReason:calendarReason, calendarField:calendarField}, shape);
+      return finish({missingBefore:before, missingAfter:after, progressPercent:before === 0 ? 100 : Math.max(0, Math.min(100, (p.session.profit - up) / before * 100)), sessionsLeft:count, calendarDays:calendar, calendarReason:calendarReason, calendarField:calendarField}, shape);
     } catch(error) { return fail(shape, error.message); }
   }
 
@@ -636,29 +659,74 @@
       var after = original.map(function(a){var out=Object.assign({},a);if(improve){out.reward*=1+gain/100;out.duration*=1-reduction/100;}out.net=out.reward*out.share/100-out.cost;out.active=out.duration+out.prep;return out;});
       function rate(list){var net=list.reduce(function(t,a){return t+a.net;},0), duration=list.reduce(function(t,a){return t+a.active+a.cooldown;},0);return duration>0?net*60/duration:0;}
       var approximate = rate(after) - (improve ? rate(original) : 0);
-      var longest = Math.max.apply(null,after.map(function(a){return a.active+a.cooldown;}));
-      var until = Math.min(MINUTES_MAX, Math.max(horizon, approximate > 0 ? investment / approximate * 120 + longest * 4 : longest * 4));
-      function stream(list) {
+      var longest = Math.max.apply(null,after.concat(improve?original:[]).map(function(a){return a.active+a.cooldown;}));
+      /* lot 5 (relecture, L5) : avec le gain d’avant, la fenêtre se règle sur ce que l’activité rapporte EN PLUS de lui, pour voir où la
+         différence se stabilise (avant : réglée sur le gain brut, elle pouvait finir avant le dernier creux) */
+      var spare = !improve && baseline !== null ? approximate - baseline : approximate;
+      var until = Math.min(MINUTES_MAX, Math.max(horizon, spare > 0 ? investment / spare * 120 + longest * 4 : approximate > 0 ? investment / approximate * 120 + longest * 4 : longest * 4));
+      /* chaque mission finie, à sa fin, avec ses frais (ce que compte la réponse sur le temps d’usage) */
+      function stream(list, limit) {
         var events=[], ready=list.map(function(){return 0;}), counts=ready.slice(), time=0, gross=0,costs=0,runs=0;
         for(var n=0;n<100000;n++){
           var i=n%list.length,a=list[i],start=Math.max(time,ready[i]);
           var end=start+a.active-(a.prepOnce&&counts[i]?a.prep:0);
-          if(end>until) return {events:events,gross:gross,costs:costs,runs:runs,limited:false};
-          events.push({time:start,value:-a.cost,run:0});events.push({time:end,value:a.reward*a.share/100,run:1});
+          if(end>limit) return {events:events,gross:gross,costs:costs,runs:runs,limited:false};
+          events.push({time:end,net:a.reward*a.share/100-a.cost});
           if(end<=horizon){gross+=a.reward*a.share/100;costs+=a.cost;runs++;}
           ready[i]=end+a.cooldown;counts[i]++;time=end;
         }
         if(time<horizon) throw Error('Der Zeitraum übersteigt 100.000 Aktivitäten. Verkürze die Zeit, in der du es nutzt.');
         return {events:events,gross:gross,costs:costs,runs:runs,limited:true};
       }
-      var a=stream(after),b=improve?stream(original):{events:[],gross:0,costs:0,runs:0};
-      var events=a.events.map(function(e){return Object.assign({side:1},e);}).concat(b.events.map(function(e){return {time:e.time,value:-e.value,run:0,completion:e.run===1,side:-1};})).sort(function(x,y){return x.time-y.time;});
-      var cumulative=0,cycles=0,payback=investment===0?0:null,paybackCycles=investment===0?0:null,marginalPayback=investment===0?0:null,marginalCycles=investment===0?0:null;
-      for(var i=0;i<events.length;){var time=events[i].time,starts=0;do{if(events[i].run||events[i].completion)cumulative+=events[i].value;else starts+=events[i].value;cycles+=events[i].run;i++;}while(i<events.length&&equal(events[i].time,time));if(payback===null&&cumulative>=investment){payback=time/60;paybackCycles=cycles;}if(marginalPayback===null&&baseline!==null&&cumulative-baseline*time/60>=investment){marginalPayback=time/60;marginalCycles=cycles;}cumulative+=starts;}
+      function simulate(limit){
+        var A=stream(after,limit),B=improve?stream(original,limit):{events:[],gross:0,costs:0,runs:0,limited:false};
+        var done=A.events.map(function(e){return {time:e.time,value:e.net,run:1};}).concat(B.events.map(function(e){return {time:e.time,value:-e.net,run:0};})).sort(function(x,y){return x.time-y.time;});
+        return {a:A,b:B,done:done};
+      }
+      /* lot 5 (seconde relecture) : « remboursé après » suit la même comptabilité que la réponse : l’argent des missions FINIES (frais compris),
+         moins celui des missions sans l’achat (amélioration), moins le gain d’avant jusqu’à cet instant (nouvelle activité, s’il est connu),
+         moins le prix. Cette différence monte à la fin de chaque mission et baisse entre deux (gain d’avant) : on la regarde juste avant
+         chaque fin de mission (ses creux). Règle unique :
+         - devant à la fin du temps d’usage : début de la dernière période où l’achat reste devant jusqu’à cette fin ; ce temps n’est
+           jamais plus long que le temps d’usage, comme la réponse « Oui » (avant : un « pour de bon » plus tard, 4 h pour 3 h) ;
+         - derrière ou à égalité à la fin du temps d’usage : l’instant où il passe devant POUR DE BON (scénario I : 4 h 15), seulement s’il
+           le reste au moins deux cycles entiers et que la différence ne baisse pas sur la seconde moitié de la période regardée (la
+           fenêtre double tant qu’elle monte) ; sinon « pas atteint » (à égalité : l’équilibre sur le temps d’usage). Avant : le premier
+           passage, même pour un achat jamais remboursé, et un passage au bout de la fenêtre pris pour « pour de bon ».
+         Achat gratuit : 0, inchangé. */
+      var first=simulate(until),tol=0.005+1e-9*investment,searched=until;
+      function scan(done,perMinute,limit){
+        var cum=0,cyc=0,ahead=-investment>=-tol,start=ahead?0:null,startC=0;
+        for(var i=0;i<done.length&&done[i].time<=limit+1e-9;){
+          var t=done[i].time;
+          if(cum-perMinute*t-investment<-tol){ahead=false;start=null;}
+          do{cum+=done[i].value;cyc+=done[i].run;i++;}while(i<done.length&&equal(done[i].time,t));
+          if(cum-perMinute*t-investment>=-tol){if(!ahead){ahead=true;start=t;startC=cyc;}}else{ahead=false;start=null;}
+        }
+        var end=cum-perMinute*limit-investment;
+        if(end<-tol){ahead=false;start=null;}
+        return {start:ahead?start:null,cycles:startC,end:end};
+      }
+      function paybackFor(perMinute){
+        if(investment===0)return {hours:0,cycles:0};
+        var r=scan(first.done,perMinute,horizon);
+        if(r.end>tol)return {hours:r.start/60,cycles:r.cycles};
+        var W=until,sim=first;
+        for(var k=0;k<8;k++){
+          var w=scan(sim.done,perMinute,W),mid=scan(sim.done,perMinute,W/2);
+          if(w.start!==null&&W-w.start>=2*longest-1e-9&&w.end>=mid.end-tol)return {hours:w.start/60,cycles:w.cycles};
+          if(w.end<mid.end-tol||W>=MINUTES_MAX)break;
+          W=Math.min(MINUTES_MAX,W*2);sim=simulate(W);searched=Math.max(searched,W);
+        }
+        /* à égalité à la fin du temps d’usage sans jamais rester devant ensuite : l’équilibre sur ce temps-là, rien au-delà */
+        return r.end>=-tol?{hours:r.start/60,cycles:r.cycles}:{hours:null,cycles:null};
+      }
+      var plain=paybackFor(0),marginalPb=baseline===null?{hours:null,cycles:null}:paybackFor(baseline/60);
+      var a=first.a,b=first.b,payback=plain.hours,paybackCycles=plain.cycles,marginalPayback=marginalPb.hours,marginalCycles=marginalPb.cycles;
       var gross=a.gross-b.gross,costs=a.costs-b.costs,operating=gross-costs;
       // Gain marginal : ce que l'achat rapporte en plus de ce que le joueur gagnait déjà pendant le même temps (horizon entier consacré à ces activités).
       var opportunity=baseline===null?null:baseline*horizon/60,marginal=opportunity===null?null:operating-opportunity;
-      return finish({investment:investment,grossProfit:gross,costs:costs,operatingProfit:operating,netProfit:operating-investment,paybackHours:payback,paybackCycles:paybackCycles,netHourly:horizon>0?operating*60/horizon:null,runs:a.runs,beforeNet:b.gross-b.costs,afterNet:a.gross-a.costs,roiPercent:investment>0?(operating-investment)/investment*100:null,limited:a.limited||b.limited||payback===null, searchedMinutes:until,mode:improve?'improve':p.mode||'estimate',baselineHourly:baseline,opportunityCost:opportunity,marginalProfit:marginal,marginalNetProfit:marginal===null?null:marginal-investment,marginalPaybackHours:baseline===null?null:marginalPayback,marginalPaybackCycles:baseline===null?null:marginalCycles},shape);
+      return finish({investment:investment,grossProfit:gross,costs:costs,operatingProfit:operating,netProfit:operating-investment,paybackHours:payback,paybackCycles:paybackCycles,netHourly:horizon>0?operating*60/horizon:null,runs:a.runs,beforeNet:b.gross-b.costs,afterNet:a.gross-a.costs,roiPercent:investment>0?(operating-investment)/investment*100:null,limited:a.limited||b.limited||payback===null, searchedMinutes:searched,mode:improve?'improve':p.mode||'estimate',baselineHourly:baseline,opportunityCost:opportunity,marginalProfit:marginal,marginalNetProfit:marginal===null?null:marginal-investment,marginalPaybackHours:baseline===null?null:marginalPayback,marginalPaybackCycles:baseline===null?null:marginalCycles},shape);
     } catch(error){return fail(shape,error.message);}
   }
 
@@ -676,24 +744,50 @@
       if (reserve > capital) return fail(compareShapeInvest, 'Das zurückgelegte Geld übersteigt das, was du hast.');
       var investment = money(p.price, 'die Preisangabe für den Kauf') + money(p.extras, 'die Optionen', 0) + money(p.fees, 'die Kosten', 0);
       var baseline = p.baselineHourly == null ? null : money(p.baselineHourly, 'deine bisherigen Einnahmen pro Stunde');
-      var extra = money(p.extraHourly, 'die Extra-Einnahmen pro Stunde durch den Kauf');
+      /* lot 3 (scénario G) : un gain en plus pas écrit n’est ni une erreur ni un zéro : la réponse reste conditionnelle et le
+         gain en plus minimal qui la ferait basculer est rendu (thresholds.extraHourlyForHorizon). */
+      var extraKnown = p.extraHourly !== null && p.extraHourly !== undefined && p.extraHourly !== '';
+      var extra = extraKnown ? money(p.extraHourly, 'die Extra-Einnahmen pro Stunde durch den Kauf') : null;
       var costHourly = money(p.costHourly, 'die Kosten des Kaufs pro Stunde', 0);
       var hours = p.hours == null ? null : number(p.hours, 'die Zeit, in der du es nutzt,', MINUTES_MAX / 60);
       var daily = p.dailyMinutes == null ? null : number(p.dailyMinutes, 'die Spielzeit pro Tag', 1440, { positive: true });
-      var marginal = subtract(extra, costHourly);
-      var shortfall = Math.max(0, subtract(investment, subtract(capital, reserve)));
-      var breakEven = investment === 0 ? 0 : marginal > 0 ? investment / marginal : null;
+      var marginal = extraKnown ? subtract(extra, costHourly) : null;
+      var available = subtract(capital, reserve);
+      var shortfall = Math.max(0, subtract(investment, available));
+      /* lot 3 : pas assez d’argent maintenant : l’achat se fait quand l’argent le permet, en jouant comme aujourd’hui
+         (attente = manque ÷ gain actuel), jamais au départ ; la comparaison garde le même horizon depuis maintenant. Sans gain
+         actuel connu, le moment de l’achat est inconnu : rien n’est chiffré. */
+      var wait = shortfall === 0 ? 0 : baseline === null || baseline <= 0 ? null : shortfall / baseline;
+      var usable = hours === null || wait === null ? null : Math.max(0, subtract(hours, wait));
+      // E : sans gain en plus (ou avec une perte), aucun délai fini ; un achat gratuit qui coûte à l’usage ne se « rembourse » pas en 0 h.
+      var breakEven = !extraKnown ? null : investment === 0 ? (marginal >= 0 ? 0 : null) : marginal > 0 ? investment / marginal : null;
       var withoutCash = baseline === null || hours === null ? null : capital + baseline * hours;
-      var withCash = hours === null ? null : capital - investment + ((baseline || 0) + marginal) * hours;
-      var difference = hours === null ? null : marginal * hours - investment;
+      var withCash = null, difference = null;
+      if (extraKnown && hours !== null) {
+        if (shortfall === 0) { difference = marginal * hours - investment; withCash = capital - investment + ((baseline || 0) + marginal) * hours; }
+        else if (usable !== null && usable > 0) { difference = marginal * usable - investment; withCash = capital - investment + baseline * hours + marginal * usable; }
+        else if (usable !== null) { difference = 0; withCash = withoutCash; } // l’argent n’est pas là avant la fin de l’horizon : pas d’achat sur ce temps
+      }
+      /* lot 3 (§ 8, sensibilité) : prix total au-delà duquel l’achat n’est plus remboursé sur l’horizon (différence nulle), en
+         tenant compte de l’attente quand ce prix dépasse l’argent disponible : m·(H − (P − A)/b) = P ⇒ P = m·(b·H + A)/(b + m). */
+      var maxPrice = null;
+      if (extraKnown && hours !== null && marginal > 0) {
+        if (marginal * hours <= available + 1e-9) maxPrice = marginal * hours;
+        else if (baseline !== null && baseline > 0) maxPrice = marginal * (baseline * hours + available) / (baseline + marginal);
+        // sans gain actuel connu (ou nul), on ne sait pas quand un prix plus haut que l’argent disponible serait payable : pas de seuil
+      }
       var thresholds = {
         hoursForPayback: breakEven,
         sessionsForPayback: breakEven === null || daily === null ? null : ceil(breakEven * 60 / daily),
-        extraHourlyForHorizon: hours === null || hours <= 0 ? null : investment / hours + costHourly,
-        waitHours: shortfall === 0 ? 0 : baseline === null || baseline <= 0 ? null : shortfall / baseline
+        extraHourlyForHorizon: usable === null || usable <= 0 ? null : investment / usable + costHourly,
+        waitHours: wait,
+        usableHours: usable,
+        maxPriceForHorizon: maxPrice
       };
-      var verdict = marginal <= 0 && investment > 0 ? 'never' : shortfall > 0 ? 'wait' : hours === null ? 'unknown-horizon' : difference >= 0 ? 'buy' : 'not-yet';
-      return finish({ investment: investment, capital: capital, reserve: reserve, affordable: shortfall === 0, shortfall: shortfall, baselineHourly: baseline, extraHourly: extra, costHourly: costHourly, marginalHourly: marginal, hours: hours, withoutCash: withoutCash, withCash: withCash, difference: difference, breakEvenHours: breakEven, thresholds: thresholds, verdict: verdict }, compareShapeInvest);
+      /* lot 3 : à la différence nulle (seuil exact), l’achat n’est ni gagnant ni perdant : « even », vérifié de part et d’autre */
+      var even = difference !== null && Math.abs(difference) <= 0.005 + 1e-9 * investment;
+      var verdict = !extraKnown ? 'unknown-gain' : marginal < 0 || (marginal === 0 && investment > 0) ? 'never' : shortfall > 0 ? 'wait' : hours === null ? 'unknown-horizon' : even ? 'even' : difference > 0 ? 'buy' : 'not-yet';
+      return finish({ investment: investment, capital: capital, reserve: reserve, affordable: shortfall === 0, shortfall: shortfall, baselineHourly: baseline, extraHourly: extra, extraKnown: extraKnown, costHourly: costHourly, marginalHourly: marginal, hours: hours, withoutCash: withoutCash, withCash: withCash, difference: difference, breakEvenHours: breakEven, thresholds: thresholds, verdict: verdict }, compareShapeInvest);
     } catch (error) { return fail(compareShapeInvest, error.message); }
   }
 
@@ -852,7 +946,7 @@
   // ce qu'il rapportera.
   var MISSION_MAX_SESSIONS = 400;
   var FLOW_MAX_STEPS = 20000;
-  var missionShape = { sessions: [], totalSessions: null, totalMinutes: null, activeMinutes: null, days: null, weeks: null, phases: [], purchases: [], reached: null, finalCash: null, finalUnits: null, missing: null, missingUnits: null, averagePerSession: null, goalMoney: null, startCash: null, startUnits: null, limited: false, note: null, route: [], events: [], lowPoint: null, earned: null, conserved: null, continuous: false, goalMeaning: null, onceDone: [] };
+  var missionShape = { sessions: [], totalSessions: null, totalMinutes: null, activeMinutes: null, days: null, weeks: null, phases: [], purchases: [], reached: null, finalCash: null, finalUnits: null, missing: null, missingUnits: null, averagePerSession: null, goalMoney: null, startCash: null, startUnits: null, limited: false, note: null, route: [], events: [], lowPoint: null, earned: null, conserved: null, continuous: false, goalMeaning: null, onceDone: [], journal: [], journalComplete: false, rules: null, acquisitionMinutes: null, pendingAcquisitions: [], pendingAcquisitionMinutes: null, goalIncomeHourly: null, goalPaybackHours: null, unpaid: [], needAtStart: null };
   // v7.49 : un achat d’avant peut demander du temps pour l’obtenir (minutes), d’autres achats ou des missions faites avant
   // (requires), et coûter à chaque partie une fois possédé (usagePerSession). Une mission peut être une mission de
   // déblocage faite une seule fois (once), déjà faite (done), et demander d’autres missions faites avant (requiresMissions).
@@ -877,7 +971,8 @@
     if (goalPrice === null && goalTarget === null && goalUnits === null) throw new Error('Sag mir dein Ziel: einen Kauf mit Preis, eine Summe, die du haben willst, oder Punkte, die du erreichen willst.');
     var list = Array.isArray(p.activities) ? p.activities : [];
     if (list.length > 12) throw new Error('Wähle höchstens zwölf Missionen.');
-    if (!list.length && !(hourly > 0) && !(unitsHourly > 0)) throw new Error('Sag mir, wie du dein Geld verdienst: Wähle mindestens eine Mission oder gib ein, was du pro Stunde verdienst.');
+    /* lot 2 (C6) : « une fois acheté, il me fera gagner en plus » du but, lu par le moteur (remboursement calculé ici). */
+    var goalIncome = p.goalIncomeHourly == null ? 0 : money(p.goalIncomeHourly, 'die Einnahmen durch dein Ziel');
     var acts = list.map(function (entry, index) {
       var r = activity(entry);
       if (!r.valid) throw new Error('Mission ' + (index + 1) + (entry && typeof entry.name === 'string' && entry.name.trim() ? ' (' + entry.name.trim().slice(0, 40) + ')' : '') + ': ' + r.reason);
@@ -885,9 +980,17 @@
     });
     var purchases = (Array.isArray(p.purchases) ? p.purchases : []).map(function (x, i) { x = data(x); var nm = typeof x.name === 'string' && x.name.trim() ? x.name.trim().slice(0, 120) : 'Kauf ' + (i + 1); return { id: typeof x.id === 'string' ? x.id : 'achat-' + i, name: nm, price: money(x.price, 'die Preisangabe für den Kauf „' + nm.slice(0, 40) + '“'), boostHourly: money(x.boostHourly, 'die Einnahmen durch Kauf ' + (i + 1), 0), minutes: number(x.minutes, 'die Zeit bis zum Erhalt von „' + nm.slice(0, 40) + '“', MINUTES_MAX, { defaultValue: 0 }), usage: money(x.usagePerSession, 'die Kosten von „' + nm.slice(0, 40) + '“ pro Session', 0), requires: Array.isArray(x.requires) ? x.requires.filter(function (id) { return typeof id === 'string'; }) : [], owned: x.owned === true, at: null, atMinute: null, before: false }; });
     if (purchases.length > 20) throw new Error('Höchstens zwanzig Käufe vor dem Ziel.');
+    /* lot 2 (J) : un achat d’avant qui rapporte est une source de revenu : le refus « comment tu gagnes » vient après les achats. */
+    if (!list.length && !(hourly > 0) && !(unitsHourly > 0) && !purchases.some(function (x) { return !x.owned && x.boostHourly > 0; })) throw new Error('Sag mir, wie du dein Geld verdienst: Wähle mindestens eine Mission oder gib ein, was du pro Stunde verdienst.');
     if (continuous && (upkeep > 0 || purchases.some(function (x) { return x.usage > 0; }))) throw new Error('Ausgaben „pro Session“ brauchen die Dauer einer Session: Gib sie ein oder setz diese Ausgaben auf 0.');
     if (goalUnits !== null && units < goalUnits - 1e-9 && !(unitsHourly > 0) && !acts.some(function (a) { return a.res.units > 0; })) throw new Error('Keine deiner Missionen bringt Punkte: Gib die Punkte pro Mission (oder pro Stunde) ein, sonst ist das Ziel nicht erreichbar.');
-    return { capital: capital, reserve: reserve, continuous: continuous, sessionMinutes: sessionMinutes, daysPerWeek: daysPerWeek, upkeep: upkeep, hourly: hourly, unitsHourly: unitsHourly, maxRepeat: maxRepeat, goalPrice: goalPrice, goalTarget: goalTarget, goalUnits: goalUnits, units: units, meaning: meaning, acts: acts, purchases: purchases, names: knownNames(p, purchases) };
+    /* lot 2 (C7) : journal complet sauf journal:false (calculs exploratoires) ; possédés au départ et achats à faire, figés avant tout calcul. */
+    var c = { capital: capital, reserve: reserve, continuous: continuous, sessionMinutes: sessionMinutes, daysPerWeek: daysPerWeek, upkeep: upkeep, hourly: hourly, unitsHourly: unitsHourly, maxRepeat: maxRepeat, goalPrice: goalPrice, goalTarget: goalTarget, goalUnits: goalUnits, units: units, meaning: meaning, acts: acts, purchases: purchases, names: knownNames(p, purchases),
+      /* correctif lot 2 (ARI2-4) : identifiants connus comme missions, même retirées par un plan de secours « Seulement … » : un message dit « la mission (…) », jamais « un achat (…) ». */
+      missionIds: acts.concat(Array.isArray(p.knownMissions) ? p.knownMissions.filter(function (id) { return typeof id === 'string'; }).map(function (id) { return { id: id }; }) : []).reduce(function (o, a) { o[a.id] = true; return o; }, {}),
+      goalIncome: goalIncome, journal: p.journal !== false, owned0: purchases.filter(function (x) { return x.owned; }).map(function (x) { return x.id; }).concat(acts.filter(function (a) { return a.done; }).map(function (a) { return a.id; })), after: purchases.filter(function (x) { return !x.owned; }).map(function (x) { return x.id; }) };
+    missionChecks(c);
+    return c;
   }
   function missionPlan(input) {
     try {
@@ -902,15 +1005,17 @@
       var byRate = acts.slice().sort(function (a, b) { return rateOf(b) - rateOf(a); }), subsets = [], seen = {};
       if (acts.length <= 4) { for (var mask = 1; mask < (1 << acts.length) - 1; mask++) subsets.push(acts.filter(function (a, i) { return mask & (1 << i); })); }
       else { for (var k = 1; k < byRate.length; k++) subsets.push(byRate.slice(0, k)); byRate.forEach(function (a) { subsets.push([a]); }); }
-      var best = full, bestKeep = null, better = function (r) { return r.valid && r.reached && (!best.valid || !best.reached || r.totalMinutes < best.totalMinutes - 1e-9 || (Math.abs(r.totalMinutes - best.totalMinutes) < 1e-9 && r.finalCash > best.finalCash)); };
+      var best = full, bestKeep = null, bestSub = null, better = function (r) { return r.valid && r.reached && (!best.valid || !best.reached || r.totalMinutes < best.totalMinutes - 1e-9 || (Math.abs(r.totalMinutes - best.totalMinutes) < 1e-9 && r.finalCash > best.finalCash)); };
       subsets.forEach(function (keep) {
         var key = keep.map(function (a) { return a.id; }).sort().join('|'); if (seen[key]) return; seen[key] = true;
         var ids = {}; keep.forEach(function (a) { ids[a.id] = true; });
         var sub = (p.activities || []).filter(function (a) { return a.once || ids[a.id]; });
-        var r; try { r = missionFlow(missionPrep(Object.assign({}, p, { activities: sub }))); } catch (e) { return; }
-        if (better(r)) { best = r; bestKeep = keep; }
+        /* lot 2 (C7.7) : les sous-ensembles sont explorés sans journal ; le meilleur est recalculé une fois avec. */
+        var r; try { r = missionFlow(missionPrep(Object.assign({}, p, { activities: sub, journal: false }))); } catch (e) { return; }
+        if (better(r)) { best = r; bestKeep = keep; bestSub = sub; }
       });
       if (bestKeep) {
+        best = missionFlow(missionPrep(Object.assign({}, p, { activities: bestSub })));
         var left = acts.filter(function (a) { return bestKeep.indexOf(a) < 0; }).map(function (a) { return '„' + a.name + '“'; });
         best = Object.assign({}, best, { method: 'flow-subset', leftOut: left, note: (best.note ? best.note + ' ' : '') + 'Schnellster Weg ohne ' + left.join(', ') + ': ' + (left.length > 1 ? 'sie verlangsamten' : 'sie verlangsamte') + ' das Ganze' + (full.valid && full.reached ? ' (' + Math.round(full.totalMinutes) + ' min mit allen deinen Missionen)' : '') + '.' });
       }
@@ -918,14 +1023,20 @@
     } catch (error) { return fail(missionShape, error.message); }
   }
   // Commun aux deux modes : état, but, achats, grand livre.
+  /* lot 2 : plafond du journal complet (entrées d’argent, occupations et points de contrôle, en ordre d’insertion). */
+  var JOURNAL_MAX = 60000;
   function missionState(c) {
-    var st = { cash: c.capital, units: c.units, earned: 0, boost: 0, upkeepOwned: 0, owned: {}, done: {}, events: [], low: { cash: c.capital, at: 'Start' }, receipts: 0, spends: 0, route: [] };
+    var st = { cash: c.capital, units: c.units, earned: 0, boost: 0, upkeepOwned: 0, owned: {}, done: {}, events: [], low: { cash: c.capital, at: 'Start' }, receipts: 0, spends: 0, route: [],
+      /* lot 2 : journal daté en absolu (at = minutes de jeu depuis le départ, session = partie en cours), obtentions en attente, achats de départ déjà payés. */
+      journal: [], complete: true, at: 0, session: 1, journalOn: c.journal !== false, acq: [], invPaid: {} };
     c.purchases.forEach(function (x) { if (x.owned) { st.owned[x.id] = true; st.boost += x.boostHourly; st.upkeepOwned += x.usage; } });
     c.acts.forEach(function (a) { if (a.done) st.done[a.id] = true; });
     return st;
   }
   function goalMoneyOf(c) { return (c.goalPrice !== null ? c.goalPrice : 0) + (c.goalTarget !== null ? c.goalTarget : 0); }
   function reachedOf(c, st) {
+    /* lot 2 : le but exige les achats d’avant (H) ; un achat retiré par une stratégie n’est pas dans c.purchases. */
+    if (c.purchases.some(function (x) { return !x.owned; })) return false;
     if (c.goalUnits !== null && st.units < c.goalUnits - 1e-9) return false;
     var need = goalMoneyOf(c);
     if (c.goalTarget !== null && c.goalPrice === null) {
@@ -934,12 +1045,28 @@
     }
     return subtract(st.cash, c.reserve) >= need - 1e-9;
   }
-  function ledgerAdd(st, t, type, amount, label) {
+  /* lot 2 : argent qu’il manque encore pour le but (sens du but compris), sans les achats ; null si le but est en points seulement. */
+  function goalNeedOf(c, st) {
+    if (c.goalPrice === null && c.goalTarget === null) return null;
+    if (c.meaning === 'cumulative' && c.goalPrice === null) return Math.max(0, goalMoneyOf(c) - st.earned);
+    return goalMoneyOf(c) + (c.meaning === 'held' && c.goalPrice === null ? 0 : c.reserve) - st.cash;
+  }
+  function journalPush(st, e) { if (!st.journalOn) return; if (st.journal.length < JOURNAL_MAX) st.journal.push(e); else st.complete = false; }
+  function withMeta(e, meta) { if (meta) Object.keys(meta).forEach(function (k) { if (meta[k] !== undefined) e[k] = meta[k]; }); return e; }
+  /* lot 2 : chaque événement d’argent porte aussi at (minutes absolues), session, et les champs utiles au vérificateur (needs, unlocks,
+     asset, id, passive, minutes, upkeep). Avec le journal : events et journal reçoivent le même objet, chacun plafonné à JOURNAL_MAX ;
+     sans journal (journal:false, calculs exploratoires) : events plafonné à 600 comme avant, journal vide et incomplet. */
+  function ledgerAdd(st, t, type, amount, label, meta) {
     if (!(amount > 0)) return;
     if (type === 'spend') { st.cash = subtract(st.cash, amount); st.spends += amount; if (st.cash < st.low.cash - 1e-9) st.low = { cash: st.cash, at: label, t: t }; }
     else { st.cash += amount; st.receipts += amount; }
-    if (st.events.length < 600) st.events.push({ t: t, type: type, amount: amount, label: label, cash: st.cash });
+    var e = withMeta({ t: t, type: type, amount: amount, label: label, cash: st.cash, at: st.at + t, session: st.session }, meta);
+    if (st.journalOn) { if (st.events.length < JOURNAL_MAX) st.events.push(e); journalPush(st, e); }
+    else if (st.events.length < 600) st.events.push(e);
   }
+  /* lot 2 : occupation (mission ou obtention d’un achat) et point de contrôle (fin de partie), dans le journal seulement. */
+  function actAdd(st, at, until, meta) { journalPush(st, withMeta({ kind: 'act', at: at, until: until, session: st.session }, meta)); }
+  function checkAdd(st, at, session) { journalPush(st, { kind: 'check', at: at, session: session === undefined ? st.session : session }); }
   function satisfied(ids, st) { return ids.every(function (id) { return st.owned[id] || st.done[id]; }); }
   // Achats d’avant dans l’ordre donné (la stratégie) : on paie dès que possible, sans jamais descendre sous la réserve ;
   // un achat dont les prérequis ne sont pas faits attend, et ceux d’après aussi (l’ordre est respecté).
@@ -948,72 +1075,199 @@
     for (var k = 0; k < c.purchases.length; k += 1) {
       var x = c.purchases[k]; if (x.owned) continue;
       if (!satisfied(x.requires, st)) break;
+      /* lot 3 (ARI-4 du lot 2) : un achat qui demande un autre achat attend que celui-ci soit OBTENU (fin de son obtention), pas seulement payé */
+      if (x.requires.some(function (id) { return (st.acq || []).some(function (q) { return q.id === id && q.left > 1e-9; }); })) break;
       if (subtract(st.cash, c.reserve) < x.price - 1e-9) break;
-      ledgerAdd(st, cursor, 'spend', x.price, 'Kauf „' + x.name + '“');
+      /* lot 3 : la dépense porte les achats qu’elle demande (needs) : le vérificateur contrôle qu’ils sont possédés avant le paiement (R3) */
+      var needP = x.requires.filter(function (id) { return c.purchases.some(function (y) { return y.id === id; }); });
+      ledgerAdd(st, cursor, 'spend', x.price, 'Kauf „' + x.name + '“', { asset: true, id: x.id, unlocks: x.minutes > 0 ? undefined : x.id, needs: needP.length ? needP : undefined });
       x.owned = true; x.at = session; x.atMinute = cursor; x.before = where === 'before'; st.owned[x.id] = true; st.boost += x.boostHourly; st.upkeepOwned += x.usage;
       bought.push(x);
       st.route.push({ type: 'acquire', id: x.id, name: x.name, session: session, start: cursor, minutes: x.minutes, spend: x.price, receive: 0, cashAfter: st.cash, requires: x.requires.slice(), where: where });
-      if (advance) cursor += x.minutes;
+      /* lot 2 : une obtention immédiate rend l’achat possédé à la dépense (unlocks sur la dépense) ; une obtention qui dure occupe le
+         temps de jeu et ne rend l’achat possédé qu’à sa fin (unlocks sur l’occupation) : en parcours tout de suite, en parties au début
+         de la partie suivante (file st.acq). */
+      if (x.minutes > 0 && advance) { actAdd(st, st.at + cursor, st.at + cursor + x.minutes, { id: x.id, blocking: true, unlocks: x.id }); cursor += x.minutes; }
+      else if (x.minutes > 0) { st.acq.push({ id: x.id, left: x.minutes }); if (!(x.price > 0)) actAdd(st, st.at + cursor, st.at + cursor, { id: x.id }); /* correctif lot 2 : achat gratuit à obtenir : aucune dépense inscrite (montant 0) ; une occupation de durée 0 date son paiement pour le coût d’usage (R10) ; la possession reste datée par la fin de l’obtention */ }
+      else if (!(x.price > 0)) actAdd(st, st.at + cursor, st.at + cursor, { id: x.id, unlocks: x.id }); /* achat gratuit : aucune dépense inscrite, la possession vient d’une occupation de durée 0 */
     }
     return bought;
   }
+  /* lot 2 : une exécution d’une mission dans le grand livre : occupation (needs = ce qu’elle demande, + son achat de départ dès la
+     2e fois), frais à son début, achat de départ séparé (une seule fois, asset), récompense à sa fin. */
+  function runStep(c, st, a, start, end, cost, invest, reward, n, unlocks) {
+    var tag = c.continuous ? '' : ' (Session ' + n + ')';
+    var needs = a.requires.concat(a.requiresMissions); if (st.invPaid[a.id]) needs = needs.concat(['inv:' + a.id]);
+    actAdd(st, st.at + start, st.at + end, { id: a.id, needs: needs.length ? needs.slice() : undefined, unlocks: unlocks });
+    ledgerAdd(st, start, 'spend', cost, 'Kosten für „' + a.name + '“' + tag, { needs: needs.length ? needs.slice() : undefined });
+    if (invest > 0) { ledgerAdd(st, start, 'spend', invest, 'Startkauf für „' + a.name + '“' + tag, { asset: true, id: 'inv:' + a.id, unlocks: 'inv:' + a.id }); st.invPaid[a.id] = true; }
+    ledgerAdd(st, end, 'receive', reward, 'Belohnung für „' + a.name + '“' + tag);
+    st.earned += reward - cost;
+  }
   function runOnce(c, st, a, t, session) {
-    var invest = a.paid ? 0 : a.entry.investment || 0, cost = (a.entry.cost || 0) + invest;
-    ledgerAdd(st, t, 'spend', cost, 'Kosten für „' + a.name + '“');
+    var invest = a.paid ? 0 : a.entry.investment || 0, cost0 = a.entry.cost || 0, cost = cost0 + invest;
     var end = t + a.res.activeMinutes, reward = (a.entry.reward || 0) * (a.entry.share === undefined ? 100 : a.entry.share) / 100;
-    ledgerAdd(st, end, 'receive', reward, 'Belohnung für „' + a.name + '“');
-    st.earned += reward - cost + invest; a.paid = true; st.done[a.id] = true; st.units += a.res.units > 0 ? a.res.units : 0;
+    runStep(c, st, a, t, end, cost0, invest, reward, session, a.id);
+    a.paid = true; st.done[a.id] = true; st.units += a.res.units > 0 ? a.res.units : 0;
     st.route.push({ type: 'unlock', id: a.id, name: a.name, session: session, start: t, minutes: a.res.activeMinutes, spend: cost, receive: reward, cashAfter: st.cash, requires: a.requires.concat(a.requiresMissions) });
     return end;
   }
   function onceReady(c, st, a) { return a.once && !st.done[a.id] && satisfied(a.requires, st) && satisfied(a.requiresMissions, st); }
+  /* correctif lot 2 (ARI5-1) : tout ce qu’un achat d’avant impayé attend encore, de proche en proche (achats et missions qu’il demande, et ce
+     qu’elles demandent) : sans ces missions « une fois », le but ne se fera pas (C2 : le but exige les achats d’avant). */
+  function neededIds(c, st) {
+    var need = {}, stack = [];
+    c.purchases.forEach(function (x) { if (!x.owned) x.requires.forEach(function (id) { stack.push(id); }); });
+    while (stack.length) {
+      var id = stack.pop(); if (need[id] || st.owned[id] || st.done[id]) continue; need[id] = true;
+      c.acts.filter(function (y) { return y.id === id; }).forEach(function (a) { a.requires.concat(a.requiresMissions).forEach(function (r) { stack.push(r); }); });
+      c.purchases.filter(function (y) { return y.id === id; }).forEach(function (x) { x.requires.forEach(function (r) { stack.push(r); }); });
+    }
+    return need;
+  }
   function affordableStart(c, st, a) { var invest = a.paid ? 0 : a.entry.investment || 0; return subtract(st.cash, c.reserve) >= (a.entry.cost || 0) + invest - 1e-9; }
   // « un achat (Garage) », « la mission (Déblocage) » : ce qui manque, dit avec les noms.
   // Noms des achats, même retirés d’un plan de secours (« Sans les achats d’avant ») : un message ne montre jamais un identifiant.
   function knownNames(p, purchases) { var names = {}; purchases.forEach(function (x) { names[x.id] = x.name; }); var k = p.knownNames && typeof p.knownNames === 'object' ? p.knownNames : {}; Object.keys(k).forEach(function (id) { if (typeof k[id] === 'string' && !names[id]) names[id] = k[id].slice(0, 120); }); return names; }
   function lockedReason(c, st, a) {
-    var need = (a.requires || []).filter(function (id) { return !st.owned[id] && !st.done[id]; }).map(function (id) { var x = c.purchases.filter(function (y) { return y.id === id; })[0]; var m = c.acts.filter(function (y) { return y.id === id; })[0]; return x ? { k: 'p', n: x.name } : m ? { k: 'm', n: m.name } : { k: 'p', n: (c.names && c.names[id]) || id }; });
+    var need = (a.requires || []).filter(function (id) { return !st.owned[id] && !st.done[id]; }).map(function (id) { var x = c.purchases.filter(function (y) { return y.id === id; })[0]; var m = c.acts.filter(function (y) { return y.id === id; })[0]; return x ? { k: 'p', n: x.name } : m ? { k: 'm', n: m.name } : { k: c.missionIds && c.missionIds[id] ? 'm' : 'p', n: (c.names && c.names[id]) || id }; });
     (a.requiresMissions || []).filter(function (id) { return !st.done[id]; }).forEach(function (id) { var x = c.acts.filter(function (y) { return y.id === id; })[0]; need.push({ k: 'm', n: x ? x.name : (c.names && c.names[id]) || id }); });
     var ps = need.filter(function (x) { return x.k === 'p'; }).map(function (x) { return x.n; }), ms = need.filter(function (x) { return x.k === 'm'; }).map(function (x) { return x.n; });
     return [(ps.length ? (ps.length > 1 ? 'die Käufe (' : 'einen Kauf (') + ps.join(', ') + ')' : '') + (ps.length && ms.length ? ' und ' : '') + (ms.length ? (ms.length > 1 ? 'die Missionen (' : 'die Mission (') + ms.join(', ') + ')' : '')];
   }
+  /* lot 2 (J) : pourquoi le plan n’avance plus à cause du premier achat non possédé, dit pareil dans les deux modes (phrases du
+     parcours v7.52) : ses prérequis ne peuvent pas se faire, ou l’argent manque et rien ne rapporte sans lui. Sinon null. */
+  function stuckReason(c, st) {
+    var nb = c.purchases.filter(function (x) { return !x.owned; })[0];
+    if (!nb) return null;
+    var isMission = function (id) { return c.acts.some(function (y) { return y.id === id; }) || !!(c.missionIds && c.missionIds[id]); };
+    if (!satisfied(nb.requires, st)) return 'Der Kauf „' + nb.name + '“ braucht zuerst ' + lockedReason(c, st, { requires: nb.requires.filter(function (id) { return !isMission(id); }), requiresMissions: nb.requires.filter(isMission) }).join(', ') + ', was nicht machbar ist.';
+    if (subtract(st.cash, c.reserve) < nb.price - 1e-9) return 'Dir fehlen ' + dollars(Math.max(0, nb.price + c.reserve - st.cash).toLocaleString('de-DE'), ' ') + ' für „' + nb.name + '“, und keine Mission, die ohne diesen Kauf machbar ist, bringt Geld ein: Nimm eine Mission dazu, die du jetzt machen kannst (zur Finanzierung), oder senke die Reserve.';
+    return null;
+  }
+  /* lot 2 : un achat non possédé qui demande quelque chose qui n’existe ni parmi les achats ni parmi les missions de ce plan
+     (retiré par une stratégie) ne se fera jamais : on le dit tout de suite plutôt que de jouer 400 parties.
+     Correctif lot 2 (ARI2-1) : même règle pour ce que ce plan ne pourra jamais satisfaire — un achat listé après l’achat qui attend
+     (l’ordre donné est tenu : rien ne s’achète tant qu’il attend), une mission répétable (jamais « faite »), une mission « une fois »
+     plus longue que la partie, ou une mission qui demande elle-même l’impossible. Les deux modes répondent pareil, tout de suite,
+     au lieu de « réduis le but » après 400 parties ou 20 000 étapes avec l’argent du but déjà en poche. */
+  function impossibleReq(c, st, id, seen) {
+    if (st.owned[id] || st.done[id]) return false;
+    if (seen[id]) return true;
+    seen[id] = true;
+    if (c.purchases.some(function (y) { return y.id === id; })) return true;
+    var a = c.acts.filter(function (y) { return y.id === id; })[0];
+    if (!a || !a.once) return true;
+    if (!c.continuous && a.res.activeMinutes > c.sessionMinutes + 1e-9) return true;
+    return a.requires.concat(a.requiresMissions).some(function (r) { return impossibleReq(c, st, r, seen); });
+  }
+  function neverSatisfied(c, st) {
+    var nb = c.purchases.filter(function (x) { return !x.owned; })[0];
+    return !!nb && nb.requires.some(function (id) { return impossibleReq(c, st, id, {}); });
+  }
+  /* lot 2 (C2.3) : références absentes et dépendances circulaires refusées avant tout calcul, avec les phrases de M.prerequisites.
+     Achats : requires vers un achat, une mission ou un nom connu (achat retiré par une stratégie) ; missions : requiresMissions vers
+     une mission ou un nom connu (mission retirée par un plan de secours « Seulement … ») ; les requiresPurchaseIds d’une mission
+     vers un achat retiré restent « demande d’abord un achat (…) ». */
+  function missionChecks(c) {
+    var nodes = {};
+    c.purchases.forEach(function (x) { nodes['p:' + x.id] = { name: x.name, leaf: x.owned, edges: [] }; });
+    c.acts.forEach(function (a) { nodes['m:' + a.id] = { name: a.name, leaf: a.done, edges: [] }; });
+    var isP = function (id) { return !!nodes['p:' + id]; }, isM = function (id) { return !!nodes['m:' + id]; };
+    c.purchases.forEach(function (x) { if (x.owned) return; x.requires.forEach(function (id) {
+      if (isP(id)) nodes['p:' + x.id].edges.push('p:' + id); else if (isM(id)) nodes['p:' + x.id].edges.push('m:' + id);
+      else if (!(c.names && c.names[id])) throw new Error('Fehlender Verweis: „' + id + '“ gibt es in den Daten nicht.');
+    }); });
+    c.acts.forEach(function (a) { if (a.done) return;
+      a.requiresMissions.forEach(function (id) { if (isM(id)) nodes['m:' + a.id].edges.push('m:' + id); else if (!(c.names && c.names[id])) throw new Error('Fehlender Verweis: „' + id + '“ gibt es in den Daten nicht.'); });
+      a.requires.forEach(function (id) { if (isP(id)) nodes['m:' + a.id].edges.push('p:' + id); });
+    });
+    var state = {};
+    function visit(key, path) {
+      var n = nodes[key]; if (n.leaf || state[key] === 'done') return;
+      if (state[key] === 'active') { var at = path.indexOf(key); throw new Error('Zirkuläre Abhängigkeit: ' + path.slice(at).concat(key).map(function (k) { return nodes[k].name; }).join(' → ') + '.'); }
+      state[key] = 'active'; n.edges.forEach(function (e) { visit(e, path.concat(key)); }); state[key] = 'done';
+    }
+    c.purchases.forEach(function (x) { visit('p:' + x.id, []); });
+    c.acts.forEach(function (a) { visit('m:' + a.id, []); });
+  }
   function missionResult(c, st, sessions, extra) {
-    var ok = reachedOf(c, st), total = sessions.length;
-    var weeks = total === 0 ? 0 : Math.floor((total - 1) / c.daysPerWeek);
-    var days = c.continuous ? null : total === 0 ? 0 : weeks * 7 + ((total - 1) % c.daysPerWeek) + 1;
+    var ok = reachedOf(c, st) && !(extra.pendingAcquisition > 1e-9), total = sessions.length;
+    var days = c.continuous ? null : calendarDays(total, c.daysPerWeek);
     var phases = [];
     sessions.forEach(function (se) {
-      var key = se.steps.map(function (s2) { return s2.id + '×' + s2.runs; }).join('|') + '#' + Math.round(se.gain);
+      var key = se.steps.map(function (s2) { return s2.id + '×' + s2.runs; }).join('|') + '#' + Math.round(se.gain) + '#' + (se.acquisitions || []).map(function (a) { return a.id + ':' + Math.round(a.minutes); }).join(',') + '#' + Math.round(se.boostPart || 0);
       var last = phases[phases.length - 1];
       if (last && last.key === key && !last.purchasesAfter.length && !(se.purchasesBefore || []).length && !(se.onceSteps || []).length) { last.to = se.index; last.count += 1; last.cashAfter = se.cashAfter; last.unitsAfter = se.unitsAfter; last.purchasesAfter = se.purchasesAfterOnly.slice(); }
-      else phases.push({ key: key, from: se.index, to: se.index, count: 1, steps: se.steps, gain: se.gain, unitsGain: se.unitsGain, cashBefore: se.cashBefore, cashAfter: se.cashAfter, unitsAfter: se.unitsAfter, purchasesAfter: se.purchasesAfterOnly.slice(), purchasesBefore: (se.purchasesBefore || []).slice(), onceSteps: (se.onceSteps || []).slice() });
+      else phases.push({ key: key, from: se.index, to: se.index, count: 1, steps: se.steps, gain: se.gain, unitsGain: se.unitsGain, cashBefore: se.cashBefore, cashAfter: se.cashAfter, unitsAfter: se.unitsAfter, purchasesAfter: se.purchasesAfterOnly.slice(), purchasesBefore: (se.purchasesBefore || []).slice(), onceSteps: (se.onceSteps || []).slice(), acquisitions: (se.acquisitions || []).slice(), acquisitionMinutes: se.acquisitionMinutes || 0, hourlyPart: se.hourlyPart || 0, boostPart: se.boostPart || 0, boosters: (se.boosters || []).slice(), upkeep: se.upkeep || 0 });
     });
-    var missing = Math.max(0, subtract(goalMoneyOf(c) + (c.meaning === 'held' && c.goalPrice === null ? 0 : c.reserve), c.meaning === 'cumulative' && c.goalPrice === null ? st.earned + c.reserve : st.cash));
-    var conserved = Math.abs(c.capital + st.receipts - st.spends - st.cash) <= 1e-6 * Math.max(1, Math.abs(st.cash));
-    return finish({ sessions: sessions, totalSessions: c.continuous ? null : total, totalMinutes: extra.totalMinutes, activeMinutes: extra.activeMinutes, days: days, weeks: c.continuous ? null : total === 0 ? 0 : ceil(total / c.daysPerWeek),
-      phases: phases.map(function (ph) { return { from: ph.from, to: ph.to, count: ph.count, steps: ph.steps, gain: ph.gain, unitsGain: ph.unitsGain, cashBefore: ph.cashBefore, cashAfter: ph.cashAfter, unitsAfter: ph.unitsAfter, purchasesAfter: ph.purchasesAfter, purchasesBefore: ph.purchasesBefore, onceSteps: ph.onceSteps }; }),
-      purchases: c.purchases.map(function (x) { return { id: x.id, name: x.name, price: x.price, boostHourly: x.boostHourly, minutes: x.minutes, usagePerSession: x.usage, atSession: x.at, atMinute: x.atMinute, before: x.before, owned: x.owned }; }),
-      reached: ok, finalCash: st.cash, finalUnits: st.units, missing: ok ? 0 : missing, missingUnits: c.goalUnits === null ? 0 : Math.max(0, c.goalUnits - st.units), averagePerSession: c.continuous ? null : total ? subtract(st.cash, c.capital) / total : null, goalMoney: goalMoneyOf(c), startCash: c.capital, startUnits: c.units, limited: extra.limited || !ok,
-      note: ok ? (extra.limited ? extra.limitNote : null) : extra.failNote,
-      route: st.route, events: st.events, lowPoint: { cash: st.low.cash, at: st.low.at, t: st.low.t === undefined ? null : st.low.t }, earned: st.earned, conserved: conserved, continuous: c.continuous, goalMeaning: c.meaning, onceDone: Object.keys(st.done), method: extra.method }, missionShape);
+    /* lot 2 (C2.4) : ce qui manque compte les achats d’avant non payés (U) ; unpaid les nomme. */
+    var unpaid = c.purchases.filter(function (x) { return !x.owned; }).map(function (x) { return { id: x.id, name: x.name, price: x.price }; });
+    var U = unpaid.reduce(function (s2, x) { return s2 + x.price; }, 0), sum = c.goalTarget !== null && c.goalPrice === null;
+    var missing = sum && c.meaning === 'held' ? Math.max(0, goalMoneyOf(c) + U - st.cash)
+      : sum && c.meaning === 'cumulative' ? Math.max(0, goalMoneyOf(c) - st.earned, U + c.reserve - st.cash)
+      : Math.max(0, goalMoneyOf(c) + c.reserve + U - st.cash);
+    /* correctif lot 2 (PER5-1) : le manque au départ (même formule que missing, sur l’état initial : argent de départ, rien de gagné, tous les achats
+       d’avant impayés U0), lu par l’affichage (« il te manque X $ ») pour les trois sens du but, au lieu d’être recalculé là-bas sans les achats. */
+    var U0 = c.purchases.filter(function (x) { return c.after.indexOf(x.id) >= 0; }).reduce(function (s2, x) { return s2 + x.price; }, 0);
+    var needAtStart = sum && c.meaning === 'held' ? Math.max(0, goalMoneyOf(c) + U0 - c.capital)
+      : sum && c.meaning === 'cumulative' ? Math.max(0, goalMoneyOf(c), U0 + c.reserve - c.capital)
+      : Math.max(0, goalMoneyOf(c) + c.reserve + U0 - c.capital);
+    var conserved =Math.abs(c.capital + st.receipts - st.spends - st.cash) <= 1e-6 * Math.max(1, Math.abs(st.cash));
+    /* correctif lot 2 (ARI2-1) : « non atteint » avec l’argent du but en poche (manque 0) et des achats d’avant jamais payés : la vraie
+       cause est l’achat qui attend, jamais « réduis le but ». */
+    /* correctif lot 2 (ARI3-3) : « non atteint » avec l’argent du but en poche (manque 0) et une obtention encore en cours après la dernière
+       partie : la vraie cause est l’obtention, dite avec le temps de jeu restant (pendingAcquisitions, pendingAcquisitionMinutes), jamais
+       « réduis le but ». En parcours, l’obtention est toujours prise en entier (file vide). */
+    var pendingList = (st.acq || []).filter(function (q) { return q.left > 1e-9; }).map(function (q) { var x = c.purchases.filter(function (y) { return y.id === q.id; })[0]; return { id: q.id, name: x ? x.name : q.id, minutes: q.left }; });
+    var pendingMinutes = pendingList.reduce(function (s2, q) { return s2 + q.minutes; }, 0);
+    var failNote = !ok && pendingMinutes > 1e-9 && missing <= 1e-9 ? 'Der Erhalt von „' + pendingList[0].name + '“ ist nach ' + MISSION_MAX_SESSIONS + ' Sessions (' + durationText(pendingMinutes / 60) + ' Spielzeit verbleibend) nicht abgeschlossen: Plane mehr Zeit pro Session ein.'
+      : !ok && unpaid.length && missing <= 1e-9 ? stuckReason(c, st) || extra.failNote : extra.failNote;
+    return finish({ sessions: sessions, totalSessions: c.continuous ? null : total, totalMinutes: extra.totalMinutes, activeMinutes: extra.activeMinutes, acquisitionMinutes: extra.acquisitionMinutes || 0, pendingAcquisitions: pendingList, pendingAcquisitionMinutes: pendingMinutes, days: days, weeks: c.continuous ? null : total === 0 ? 0 : ceil(total / c.daysPerWeek),
+      phases: phases.map(function (ph) { return { from: ph.from, to: ph.to, count: ph.count, steps: ph.steps, gain: ph.gain, unitsGain: ph.unitsGain, cashBefore: ph.cashBefore, cashAfter: ph.cashAfter, unitsAfter: ph.unitsAfter, purchasesAfter: ph.purchasesAfter, purchasesBefore: ph.purchasesBefore, onceSteps: ph.onceSteps, acquisitions: ph.acquisitions, acquisitionMinutes: ph.acquisitionMinutes, hourlyPart: ph.hourlyPart, boostPart: ph.boostPart, boosters: ph.boosters, upkeep: ph.upkeep }; }),
+      /* lot 2 (C6) : remboursement d’un achat qui rapporte, calculé ici (null = aucun délai fini, jamais « 0 h »). */
+      purchases: c.purchases.map(function (x) { return { id: x.id, name: x.name, price: x.price, boostHourly: x.boostHourly, minutes: x.minutes, usagePerSession: x.usage, atSession: x.at, atMinute: x.atMinute, before: x.before, owned: x.owned, paybackHours: x.boostHourly > 0 && x.price > 0 ? x.price / x.boostHourly : null }; }),
+      reached: ok, finalCash: st.cash, finalUnits: st.units, missing: ok ? 0 : missing, needAtStart: needAtStart, missingUnits: c.goalUnits === null ? 0 : Math.max(0, c.goalUnits - st.units), unpaid: unpaid, averagePerSession: c.continuous ? null : total ? subtract(st.cash, c.capital) / total : null, goalMoney: goalMoneyOf(c), startCash: c.capital, startUnits: c.units, limited: extra.limited || !ok,
+      note: ok ? (extra.limited ? extra.limitNote : null) : failNote,
+      goalIncomeHourly: c.goalIncome, goalPaybackHours: c.goalPrice !== null && c.goalPrice > 0 && c.goalIncome > 0 ? c.goalPrice / c.goalIncome : null,
+      route: st.route, events: st.events, journal: st.journal, journalComplete: !!(st.journalOn && st.complete),
+      /* lot 2 (C7.6) : ce que le vérificateur indépendant doit savoir du plan, sans rien lire de sa conclusion. */
+      rules: { reserve: c.reserve, sessionMinutes: c.sessionMinutes, hourly: c.hourly, upkeepPerSession: c.upkeep, purchases: c.purchases.map(function (x) { return { id: x.id, boostHourly: x.boostHourly, usagePerSession: x.usage }; }), owned0: c.owned0.slice(), after: c.after.slice(), meaning: c.meaning, goalMoney: goalMoneyOf(c), goalPrice: c.goalPrice, units: c.goalUnits !== null },
+      lowPoint: { cash: st.low.cash, at: st.low.at, t: st.low.t === undefined ? null : st.low.t }, earned: st.earned, conserved: conserved, continuous: c.continuous, goalMeaning: c.meaning, onceDone: Object.keys(st.done), method: extra.method }, missionShape);
   }
   // Mode « parties » (comme avant) : partie après partie ; achats au début de la partie 1 si possible, puis entre deux
   // parties ; le temps d’obtention d’un achat se prend au début de la partie suivante ; missions de déblocage d’abord.
   function missionSessions(c) {
-    var st = missionState(c), sessions = [], totalActive = 0, limited = false, carry = 0;
+    var st = missionState(c), sessions = [], totalActive = 0, totalAcq = 0, limited = false, lastUsed = {};
+    var carryOf = function () { return st.acq.reduce(function (s2, q) { return s2 + q.left; }, 0); };
     var first = buyPurchases(c, st, 0, 1, 'before');
-    first.forEach(function (x) { carry += x.minutes; });
-    for (var n = 1; n <= MISSION_MAX_SESSIONS && !reachedOf(c, st); n += 1) {
-      var cashBefore = st.cash, unitsBefore = st.units, t = Math.min(c.sessionMinutes, carry), onceSteps = [], before = n === 1 ? first.map(function (x) { return x.name; }) : [], acquiring = t > 0;
-      carry -= t;
+    checkAdd(st, 0, 0);
+    if (neverSatisfied(c, st)) return fail(Object.assign({}, missionShape, { route: st.route }), stuckReason(c, st));
+    /* lot 2 (C2.2) : la boucle continue tant que le but n’est pas atteint OU qu’une obtention est en cours (H). */
+    for (var n = 1; n <= MISSION_MAX_SESSIONS && !(reachedOf(c, st) && carryOf() <= 1e-9); n += 1) {
+      st.at = (n - 1) * c.sessionMinutes; st.session = n;
+      /* lot 2 (C5) : une mission jouée à une partie d’avant dont l’attente dépasse la pause jusqu’à cette partie (k parties plus tard : k × 1 440 − S)
+         n’est pas prête. Correctif lot 2 (ARI5-3) : elle est simplement écartée de la partie (une autre mission peut suffire, ou le but est déjà
+         atteint et seule une obtention reste) ; le refus « attente plus longue que la pause » (phrase de Mon objectif) ne vient que si la partie
+         n’avance plus sans elle (T2-10). Avant, tout le plan était refusé dès qu’elle avait été jouée à la partie d’avant. */
+      var notReady = c.acts.filter(function (a) { return !a.once && lastUsed[a.id] !== undefined && a.res.cycleMinutes - a.res.activeMinutes > (n - lastUsed[a.id]) * 1440 - c.sessionMinutes; });
+      /* correctif lot 2 (ARI5-3) : but déjà atteint (la boucle ne continue que pour finir une obtention) : la partie ne sert qu’à l’obtention, aucune mission
+         n’est planifiée — sauf si les dépenses de la partie dépassent le gain par heure du temps libre (le but retomberait : les missions restent planifiées, comme avant). */
+      var onlyAcq = reachedOf(c, st) && (st.boost + c.hourly) * subtract(c.sessionMinutes, Math.min(c.sessionMinutes, carryOf())) / 60 >= c.upkeep + st.upkeepOwned - 1e-9;
+      var cashBefore = st.cash, unitsBefore = st.units, tAcq = Math.min(c.sessionMinutes, carryOf()), t = tAcq, onceSteps = [], before = n === 1 ? first.map(function (x) { return x.name; }) : [], acquiring = tAcq > 0;
+      /* lot 2 (C3b, C7) : l’obtention en attente occupe le début de la partie, achat par achat, bout à bout ; le dernier morceau
+         rend l’achat possédé (unlocks). Pendant ce temps, aucun gain par heure. */
+      var taken = []; /* correctif lot 2 (revue 7) : les morceaux d’obtention pris dans cette partie, rendus par la partie et sa phase (l’affichage les nomme) */
+      if (tAcq > 0) { var cur = 0, left = tAcq; while (left > 1e-9 && st.acq.length) { var q = st.acq[0], take = Math.min(q.left, left); q.left = subtract(q.left, take); actAdd(st, st.at + cur, st.at + cur + take, { id: q.id, blocking: true, unlocks: q.left <= 1e-9 ? q.id : undefined }); taken.push({ id: q.id, name: (c.purchases.filter(function (y) { return y.id === q.id; })[0] || { name: q.id }).name, minutes: take, done: q.left <= 1e-9 }); cur += take; left = subtract(left, take); if (q.left <= 1e-9) st.acq.shift(); } }
+      totalAcq += tAcq;
       // Missions de déblocage prêtes : une seule fois chacune, si elles tiennent dans la partie et se paient.
       for (var guard = 0; guard < c.acts.length; guard += 1) {
-        var once = c.acts.filter(function (a) { return onceReady(c, st, a) && t + a.res.activeMinutes <= c.sessionMinutes + 1e-9 && affordableStart(c, st, a); })[0];
+        var once = onlyAcq ? null : c.acts.filter(function (a) { return onceReady(c, st, a) && t + a.res.activeMinutes <= c.sessionMinutes + 1e-9 && affordableStart(c, st, a); })[0];
         if (!once) break;
         t = runOnce(c, st, once, t, n); onceSteps.push({ id: once.id, name: once.name });
         totalActive += once.res.activeMinutes;
       }
-      var available = c.acts.filter(function (a) { return !a.once && satisfied(a.requires, st) && satisfied(a.requiresMissions, st); });
+      var available = onlyAcq ? [] : c.acts.filter(function (a) { return !a.once && notReady.indexOf(a) < 0 && satisfied(a.requires, st) && satisfied(a.requiresMissions, st); });
       var entries = available.map(function (a) { return Object.assign({}, a.entry, { id: a.id, name: a.name, investment: a.paid ? 0 : a.entry.investment }); });
       var session = null, unitsGain = 0, used = [], remaining = subtract(c.sessionMinutes, t);
       var needUnits = c.goalUnits !== null && st.units < c.goalUnits - 1e-9;
@@ -1034,15 +1288,42 @@
           if (sp.valid && sp.runs) { session = sp; used = available.filter(function (a) { return sp.breakdown.some(function (b) { return b.id === a.id && b.runs; }); }); if (sp.limited) limited = true; unitsGain = sp.breakdown.reduce(function (sum, b) { var a = available.filter(function (x) { return x.id === b.id; })[0]; return sum + (a && a.res.units > 0 ? a.res.units * b.runs : 0); }, 0); }
         }
       }
-      var passive = (st.boost + c.hourly) * c.sessionMinutes / 60;
-      var passiveUnits = c.unitsHourly * c.sessionMinutes / 60;
+      /* lot 2 (C3b) : aucun gain par heure pendant l’obtention d’un achat (I, H). */
+      var passive = (st.boost + c.hourly) * subtract(c.sessionMinutes, tAcq) / 60;
+      /* même taux que passive, figé ici (les achats d’après-partie s’ajoutent plus bas) : l’affichage lit ces parts au lieu de les recalculer */
+      var boostNow = st.boost, boostersNow = c.purchases.filter(function (x) { return st.owned[x.id] && x.boostHourly > 0; }).map(function (x) { return { id: x.id, name: x.name, boostHourly: x.boostHourly }; });
+      var passiveUnits = c.unitsHourly * subtract(c.sessionMinutes, tAcq) / 60;
       var upkeepNow = c.upkeep + st.upkeepOwned;
       var sessionGain = session ? session.profit : 0;
       // Une partie prise par l’obtention d’un achat avance le parcours, même sans gain.
       var progress = sessionGain + passive - upkeepNow > 1e-9 || onceSteps.length > 0 || acquiring || (needUnits && (unitsGain > 0 || passiveUnits > 0));
+      /* correctif lot 2 (ARI5-4, préexistant) : un achat de départ qui ne se rembourse pas dans la partie (−200 000 + 100 000) : sessionPlan ne garde
+         qu’un programme qui augmente l’argent, donc 0 mission et « Aucune mission ne rentre » (faux), alors que le parcours atteint le but en 420 min.
+         Quand la partie n’avance pas autrement, le bien est payé une seule fois, comme en parcours : la mission la plus rentable par minute, payable
+         et qui tient dans la partie, est essayée avec son achat de départ compté payé d’avance ; si un programme en sort, la dépense est inscrite au
+         début des missions (même entrée de journal que runStep : asset, inv:id) et le programme est joué avec cet achat à 0. Une partie qui avance
+         déjà (gain par heure) n’est pas changée : le remboursement d’un achat de départ sur plusieurs parties relève de l’optimisation (lot 3). */
+      if (!progress && !session && remaining > 0) {
+        var pre = available.filter(function (a) { return !a.paid && a.entry.investment > 0 && a.res.net > 0 && affordableStart(c, st, a) && a.res.activeMinutes <= remaining + 1e-9; })
+          .sort(function (a, b) { return b.res.net / b.res.cycleMinutes - a.res.net / a.res.cycleMinutes || c.acts.indexOf(a) - c.acts.indexOf(b); })[0];
+        if (pre) {
+          var preAmt = pre.entry.investment, sp2 = sessionPlan({ capital: subtract(st.cash, preAmt), reserve: c.reserve, minutes: remaining, maxRepeat: c.maxRepeat, activities: entries.map(function (e) { return e.id === pre.id ? Object.assign({}, e, { investment: 0 }) : e; }) });
+          if (sp2.valid && sp2.runs && sp2.breakdown.some(function (b) { return b.id === pre.id && b.runs; })) {
+            ledgerAdd(st, t, 'spend', preAmt, 'Startkauf für „' + pre.name + '“' + ' (Session ' + n + ')', { asset: true, id: 'inv:' + pre.id, unlocks: 'inv:' + pre.id }); st.invPaid[pre.id] = true; pre.paid = true;
+            session = sp2; used = available.filter(function (a) { return sp2.breakdown.some(function (b) { return b.id === a.id && b.runs; }); }); if (sp2.limited) limited = true; unitsGain = sp2.breakdown.reduce(function (sum, b) { var a = available.filter(function (x) { return x.id === b.id; })[0]; return sum + (a && a.res.units > 0 ? a.res.units * b.runs : 0); }, 0);
+            sessionGain = session.profit; progress = sessionGain + passive - upkeepNow > 1e-9 || (needUnits && (unitsGain > 0 || passiveUnits > 0));
+          }
+        }
+      }
       if (!progress) {
         var locked = c.acts.filter(function (a) { return !a.once && available.indexOf(a) < 0; }), pendingOnce = c.acts.filter(function (a) { return a.once && !st.done[a.id]; });
-        var why = n !== 1 ? 'In Session ' + n + ': Keine Mission passt mehr hinein oder bringt noch Geld. Kontrolliere deine Missionen und deine Käufe.'
+        /* lot 2 : d’abord les dépenses par partie qui mangent le gain (C3e), puis l’achat qui bloque (J, seulement si aucune mission
+           n’attend cet achat : la phrase « demande d’abord un achat (…) » reste), puis les raisons d’avant dans leur ordre. */
+        var stuck = locked.length ? null : stuckReason(c, st);
+        var why = notReady.length ? 'Die Wartezeit bis zum nächsten Durchgang ist länger als die Pause zwischen zwei Sessions. Dieser Fall wird hier nicht berechnet.'
+          : sessionGain + passive > 1e-9 && sessionGain + passive - upkeepNow <= 1e-9 ? 'Deine Ausgaben pro Session (' + dollars(Math.round(upkeepNow).toLocaleString('de-DE')) + ') sind höher als das, was eine Session einbringt (' + dollars(Math.round(sessionGain + passive).toLocaleString('de-DE')) + '): Senke sie oder wähle Missionen, die mehr einbringen.'
+          : stuck ? stuck
+          : n !== 1 ? 'In Session ' + n + ': Keine Mission passt mehr hinein oder bringt noch Geld. Kontrolliere deine Missionen und deine Käufe.'
           : needUnits && !(unitsGain > 0 || passiveUnits > 0) && sessionGain + passive - upkeepNow > 1e-9 ? 'Keine deiner Missionen bringt Punkte: Gib die Punkte pro Mission (oder pro Stunde) ein.'
           : !available.length && locked.length ? 'Zu Beginn ist keine Mission möglich: „' + locked[0].name + '“ braucht zuerst ' + lockedReason(c, st, locked[0]).join(', ') + '. Füge eine Mission hinzu, die du sofort machen kannst, oder hake bei dem, was du brauchst, „hab ich schon“ an.'
           : pendingOnce.length && !available.length ? 'Die Freischalt-Mission „' + pendingOnce[0].name + '“ ist nicht machbar: ' + (lockedReason(c, st, pendingOnce[0]).length ? 'zuerst brauchst du ' + lockedReason(c, st, pendingOnce[0]).join(', ') + '.' : 'sie passt in keine Session oder kostet mehr, als du gerade ausgeben kannst.')
@@ -1051,38 +1332,57 @@
         return fail(Object.assign({}, missionShape, { sessions: sessions, route: st.route }), why);
       }
       // Grand livre de la partie : frais avant chaque mission, récompense à la fin ; revenus « par heure » et dépenses par partie à la fin.
-      if (session && session.timeline) session.timeline.forEach(function (s2) { ledgerAdd(st, s2.start + t, 'spend', s2.cost + s2.investment, 'Kosten für „' + s2.name + '“ (Session ' + n + ')'); ledgerAdd(st, s2.end + t, 'receive', s2.reward, 'Belohnung für „' + s2.name + '“ (Session ' + n + ')'); st.earned += s2.reward - s2.cost; });
+      if (session && session.timeline) session.timeline.forEach(function (s2) { var a2 = available.filter(function (x) { return x.id === s2.id; })[0]; runStep(c, st, a2, s2.start + t, s2.end + t, s2.cost, s2.investment, s2.reward, n); });
       else if (session && session.single) {
         var a0 = session.single.a, inv0 = a0.paid ? 0 : a0.entry.investment || 0, rew0 = (a0.entry.reward || 0) * (a0.entry.share === undefined ? 100 : a0.entry.share) / 100, cost0 = a0.entry.cost || 0, t0 = t;
-        for (var k0 = 0; k0 < session.runs; k0 += 1) { ledgerAdd(st, t0, 'spend', cost0 + (k0 === 0 ? inv0 : 0), 'Kosten für „' + a0.name + '“ (Session ' + n + ')'); t0 += a0.res.activeMinutes; ledgerAdd(st, t0, 'receive', rew0, 'Belohnung für „' + a0.name + '“ (Session ' + n + ')'); st.earned += rew0 - cost0; t0 += a0.res.cycleMinutes - a0.res.activeMinutes; }
+        /* correctif lot 2 (ARI2-5) : préparation « une seule fois » (prepOnce) : dès la 2e répétition, la durée est activeMinutes − prep et
+           l’espacement = durée + attente (comme inverse et le parcours) ; avant, chaque répétition était espacée du cycle entier, et les
+           actes sortaient de la partie (R8). */
+        for (var k0 = 0; k0 < session.runs; k0 += 1) { var dur0 = k0 && a0.entry.prepOnce ? a0.res.activeMinutes - (a0.entry.prep || 0) : a0.res.activeMinutes; runStep(c, st, a0, t0, t0 + dur0, cost0, k0 === 0 ? inv0 : 0, rew0, n); t0 += dur0 + (a0.res.cycleMinutes - a0.res.activeMinutes); }
       }
-      ledgerAdd(st, c.sessionMinutes, 'receive', passive, 'Einnahmen pro Stunde (Session ' + n + ')'); st.earned += passive;
-      ledgerAdd(st, c.sessionMinutes, 'spend', upkeepNow, 'Ausgaben in Session ' + n);
+      ledgerAdd(st, c.sessionMinutes, 'receive', passive, 'Einnahmen pro Stunde (Session ' + n + ')', { passive: true });
+      /* lot 2 (C3d) : les dépenses de la partie ne passent jamais sous l’argent gardé de côté : refus nommé. */
+      /* correctif lot 2 (ARI5-5) : sans argent gardé de côté (réserve 0), la phrase ne parle ni de « 0 $ gardés de côté » ni de « garder moins de côté » :
+         les dépenses de la partie dépassent l’argent qu’il resterait (argent après le gain par heure de la partie, réserve retirée). */
+      if (subtract(st.cash, c.reserve) < upkeepNow - 1e-9) return fail(Object.assign({}, missionShape, { sessions: sessions, route: st.route }), c.reserve > 0
+        ? 'Die Ausgaben in Session ' + n + ' (' + dollars(Math.round(upkeepNow).toLocaleString('de-DE')) + ') würden dein Geld unter die ' + dollars(Math.round(c.reserve).toLocaleString('de-DE')) + ' bringen, die du zurückgelegt hast: Senke sie, lege weniger zurück oder wähle Missionen, die mehr einbringen.'
+        : 'Die Ausgaben in Session ' + n + ' (' + dollars(Math.round(upkeepNow).toLocaleString('de-DE')) + ') sind höher als das Geld, das dir übrig bliebe (' + dollars(Math.round(Math.max(0, subtract(st.cash, c.reserve))).toLocaleString('de-DE')) + '): Senke sie oder wähle Missionen, die mehr einbringen.');
+      ledgerAdd(st, c.sessionMinutes, 'spend', upkeepNow, 'Ausgaben in Session ' + n, { upkeep: true });
+      /* lot 2 (C3a) : « gagné » est net des dépenses par partie et du coût d’usage des achats (comme en parcours, où il n’y en a pas). */
+      st.earned = subtract(st.earned + passive, upkeepNow);
       used.forEach(function (a) { a.paid = true; });
       st.units += unitsGain + passiveUnits;
       var active = session ? session.activeMinutes : (c.hourly > 0 || passiveUnits > 0 || st.boost > 0 ? subtract(c.sessionMinutes, t) : 0);
       totalActive += active;
       var boughtAfter = buyPurchases(c, st, c.sessionMinutes, n, 'after');
-      boughtAfter.forEach(function (x) { carry += x.minutes; });
-      sessions.push({ index: n, steps: session ? session.breakdown.filter(function (b) { return b.runs; }).map(function (b) { return { id: b.id, name: b.name, runs: b.runs, net: b.net }; }) : [], onceSteps: onceSteps, gain: subtract(st.cash + boughtAfter.reduce(function (sum, x) { return sum + x.price; }, 0), cashBefore), passive: passive, upkeep: upkeepNow, cashBefore: cashBefore, cashAfter: st.cash, unitsAfter: st.units, unitsGain: st.units - unitsBefore, purchases: before.concat(boughtAfter.map(function (x) { return x.name; })), purchasesBefore: before, purchasesAfterOnly: boughtAfter.map(function (x) { return x.name; }), activeMinutes: active });
+      checkAdd(st, n * c.sessionMinutes);
+      sessions.push({ index: n, steps: session ? session.breakdown.filter(function (b) { return b.runs; }).map(function (b) { return { id: b.id, name: b.name, runs: b.runs, net: b.net }; }) : [], onceSteps: onceSteps, gain: subtract(st.cash + boughtAfter.reduce(function (sum, x) { return sum + x.price; }, 0), cashBefore), passive: passive, upkeep: upkeepNow, cashBefore: cashBefore, cashAfter: st.cash, unitsAfter: st.units, unitsGain: st.units - unitsBefore, purchases: before.concat(boughtAfter.map(function (x) { return x.name; })), purchasesBefore: before, purchasesAfterOnly: boughtAfter.map(function (x) { return x.name; }), activeMinutes: active, acquisitionMinutes: tAcq, acquisitions: taken, hourlyPart: c.hourly * subtract(c.sessionMinutes, tAcq) / 60, boostPart: boostNow * subtract(c.sessionMinutes, tAcq) / 60, boosters: boostersNow });
+      used.forEach(function (a) { lastUsed[a.id] = n; });
+      if (neverSatisfied(c, st)) return fail(Object.assign({}, missionShape, { sessions: sessions, route: st.route }), stuckReason(c, st));
     }
-    var ok = reachedOf(c, st);
-    return missionResult(c, st, sessions, { totalMinutes: sessions.length * c.sessionMinutes, activeMinutes: totalActive, limited: limited, limitNote: 'Ablauf aus den in jeder Session getesteten Abfolgen; es kann einen schnelleren geben.', failNote: ok ? null : 'Das Ziel wird in ' + MISSION_MAX_SESSIONS + ' Sessions nicht erreicht: Senke das Ziel, plane mehr Zeit pro Session ein oder nimm andere Missionen.', method: 'sessions' });
+    var ok = reachedOf(c, st) && carryOf() <= 1e-9;
+    return missionResult(c, st, sessions, { totalMinutes: sessions.length * c.sessionMinutes, activeMinutes: totalActive, acquisitionMinutes: totalAcq, pendingAcquisition: carryOf(), limited: limited, limitNote: 'Ablauf aus den in jeder Session getesteten Abfolgen; es kann einen schnelleren geben.', failNote: ok ? null : 'Das Ziel wird in ' + MISSION_MAX_SESSIONS + ' Sessions nicht erreicht: Senke das Ziel, plane mehr Zeit pro Session ein oder nimm andere Missionen.', method: 'sessions' });
   }
   // Mode « parcours » (sans durée de partie) : une étape après l’autre, sans calendrier. À chaque étape : acheter ce qui
   // peut l’être (dans l’ordre donné), faire une mission de déblocage prête, sinon la mission répétable qui rapporte le
   // plus par minute parmi celles qui sont possibles maintenant ; on s’arrête dès que le but est atteint. Méthode simple et
   // annoncée : elle ne prétend pas trouver l’optimum.
   function missionFlow(c) {
-    var st = missionState(c), t = 0, active = 0, runs = {}, ready = {}, streak = { id: null, n: 0 }, steps = 0, limited = false;
+    var st = missionState(c), t = 0, active = 0, acq = 0, runs = {}, ready = {}, streak = { id: null, n: 0 }, steps = 0, limited = false;
     c.acts.forEach(function (a) { runs[a.id] = 0; ready[a.id] = 0; });
-    function acquire() { var b = buyPurchases(c, st, t, 1, 'flow', true); b.forEach(function (x) { t += x.minutes; active += x.minutes; }); return b.length; }
-    function accrue(dt, label) { var rate = st.boost + c.hourly; if (rate > 0 && dt > 0) { ledgerAdd(st, t, 'receive', rate * dt / 60, label || 'Einnahmen pro Stunde'); st.earned += rate * dt / 60; } }
-    while (!reachedOf(c, st) && steps < FLOW_MAX_STEPS) {
+    /* lot 2 (C3c) : l’obtention d’un achat est comptée à part (acquisitionMinutes), plus dans activeMinutes. */
+    function acquire() { var b = buyPurchases(c, st, t, 1, 'flow', true); b.forEach(function (x) { t += x.minutes; acq += x.minutes; }); return b.length; }
+    /* correctif lot 2 (ARI2-6) : les points par heure courent aussi pendant les missions et les attentes, comme en parties (C3b : seule
+       l’obtention d’un achat interrompt le gain) ; avant, seule la branche « gain continu » les créditait. */
+    function accrue(dt, label) { if (!(dt > 0)) return; var rate = st.boost + c.hourly; if (rate > 0) { ledgerAdd(st, t, 'receive', rate * dt / 60, label || 'Einnahmen pro Stunde', { passive: true, minutes: dt }); st.earned += rate * dt / 60; } st.units += c.unitsHourly * dt / 60; }
+    /* correctif lot 2 (ARI2-1) : un achat d’avant que ce plan ne pourra jamais payer (voir neverSatisfied) est refusé tout de suite,
+       comme en parties, au lieu de 20 000 étapes « réduis le but » avec l’argent du but en poche. */
+    var stuck = neverSatisfied(c, st);
+    while (!stuck && !reachedOf(c, st) && steps < FLOW_MAX_STEPS) {
       steps += 1;
-      if (acquire()) continue;
+      if (acquire()) { stuck = neverSatisfied(c, st); continue; }
       var once = c.acts.filter(function (a) { return onceReady(c, st, a) && affordableStart(c, st, a); })[0];
-      if (once) { t = runOnce(c, st, once, t, 1); active += once.res.activeMinutes; continue; }
+      if (once) { t = runOnce(c, st, once, t, 1); active += once.res.activeMinutes; accrue(once.res.activeMinutes); /* correctif lot 2 : le gain par heure court aussi pendant une mission « une fois », comme pendant une mission répétable et comme en parties (C3b : seule l’obtention d’un achat l’interrompt) */ continue; }
       var candidates = c.acts.filter(function (a) { return !a.once && a.res.net > 0 && satisfied(a.requires, st) && satisfied(a.requiresMissions, st) && affordableStart(c, st, a) && !(streak.id === a.id && streak.n >= c.maxRepeat && c.acts.some(function (o) { return o !== a && !o.once && o.res.net > 0 && satisfied(o.requires, st) && satisfied(o.requiresMissions, st); })); });
       if (!candidates.length) {
         var rate = st.boost + c.hourly;
@@ -1091,13 +1391,36 @@
           var nextBuy = c.purchases.filter(function (x) { return !x.owned; })[0], needCash = null;
           if (nextBuy && satisfied(nextBuy.requires, st)) needCash = nextBuy.price + c.reserve;
           var goalCash = c.goalPrice !== null || c.goalTarget !== null ? goalMoneyOf(c) + (c.meaning === 'held' && c.goalPrice === null ? 0 : c.reserve) : null;
-          var target = [needCash, goalCash].filter(function (x) { return x !== null && x > st.cash; }).sort(function (a, b) { return a - b; })[0];
+          /* correctif lot 2 (ARI3-1) : troisième seuil — une mission répétable rentable et débloquée mais pas encore payable (frais + achat de
+             départ restant + réserve) : le bloc s’arrête dès qu’elle devient payable et la boucle reprend avec des candidats. Avant, le temps
+             avançait d’un seul bloc jusqu’au but au seul gain par heure (1 000 min au lieu de 110 ; les parties répondaient 120). Tolérance
+             1e-9 comme affordableStart et buyPurchases : un seuil atteint à l’arrondi près n’est pas revisé. */
+          var needMission = c.acts.filter(function (a) { return !a.once && a.res.net > 0 && satisfied(a.requires, st) && satisfied(a.requiresMissions, st) && !affordableStart(c, st, a); })
+            .map(function (a) { return (a.entry.cost || 0) + (a.paid ? 0 : a.entry.investment || 0) + c.reserve; }).sort(function (a, b) { return a - b; })[0];
+          var target = [needCash, goalCash, needMission === undefined ? null : needMission].filter(function (x) { return x !== null && x > st.cash + 1e-9; }).sort(function (a, b) { return a - b; })[0];
+          /* correctif lot 2 (ARI5-1) : quatrième seuil — une mission « une fois » prête mais pas encore payable (frais + achat de départ + réserve) quand
+             un achat d’avant impayé l’attend, de proche en proche (le but ne se fera pas sans elle), ou quand elle rapporte (frais et achat de départ
+             compris) et finit avant le seuil suivant (le gain par heure court pendant la mission : la faire d’abord n’est jamais plus lent). Avant, le
+             bloc sautait au but et le parcours finissait sur « L’achat « P » attend d’abord la mission (M), qui ne peut pas se faire. » (110 min à la
+             main, 3 parties de 60 min en parties), ou prenait 200 min là où les parties de 10 min en prennent 160. */
+          var onceWait = rate > 0 ? c.acts.filter(function (a) { return a.once && onceReady(c, st, a) && !affordableStart(c, st, a); }).map(function (a) { var inv = a.paid ? 0 : a.entry.investment || 0; return { id: a.id, th: (a.entry.cost || 0) + inv + c.reserve, net: a.res.net - inv, d: a.res.activeMinutes }; }).filter(function (o) { return o.th > st.cash + 1e-9; }) : [];
+          if (onceWait.length) {
+            var needed = neededIds(c, st);
+            var needOnce = onceWait.filter(function (o) { return needed[o.id] || (o.net > 0 && (target === undefined || o.th - st.cash + o.d * rate / 60 <= target - st.cash + 1e-9)); }).map(function (o) { return o.th; }).sort(function (a, b) { return a - b; })[0];
+            if (needOnce !== undefined) target = target === undefined ? needOnce : Math.min(target, needOnce);
+          }
           var dt = null;
-          if (c.meaning === 'cumulative' && c.goalPrice === null && c.goalTarget !== null && rate > 0) dt = Math.max(0, goalMoneyOf(c) - st.earned) * 60 / rate;
+          /* correctif lot 2 (ARI4-1) : un but « gagné à partir de maintenant » déjà couvert par les gains ne borne plus le bloc à 0 min (le parcours
+             s’arrêtait sur « Il manque X $ pour « P » » alors que le gain par heure finance l’achat d’avant encore impayé qu’exige le but, C2) :
+             seul ce qui reste à gagner borne le bloc ; sinon le prochain seuil (achat, mission payable, argent du but) fixe dt. */
+          if (c.meaning === 'cumulative' && c.goalPrice === null && c.goalTarget !== null && rate > 0 && goalMoneyOf(c) - st.earned > 1e-9) dt = (goalMoneyOf(c) - st.earned) * 60 / rate;
           if (target !== undefined && rate > 0) dt = dt === null ? (target - st.cash) * 60 / rate : Math.min(dt, (target - st.cash) * 60 / rate);
           if (c.goalUnits !== null && st.units < c.goalUnits && c.unitsHourly > 0) { var du = (c.goalUnits - st.units) * 60 / c.unitsHourly; dt = dt === null ? du : Math.max(dt, du); }
+          /* correctif lot 2 (ARI5-1) : rien d’autre ne borne le bloc (l’argent du but est là, l’achat attend une mission « une fois ») : financer la moins
+             chère des missions « une fois » prêtes, au lieu de s’arrêter sur « qui ne peut pas se faire » alors que le gain par heure la paie. */
+          if (dt === null && onceWait.length) dt = (onceWait.map(function (o) { return o.th; }).sort(function (a, b) { return a - b; })[0] - st.cash) * 60 / rate;
           if (dt === null || !(dt > 0)) break;
-          ledgerAdd(st, t + dt, 'receive', rate * dt / 60, 'Einnahmen pro Stunde'); st.earned += rate * dt / 60; st.units += c.unitsHourly * dt / 60; t += dt; active += dt;
+          ledgerAdd(st, t + dt, 'receive', rate * dt / 60, 'Einnahmen pro Stunde', { passive: true, minutes: dt }); st.earned += rate * dt / 60; st.units += c.unitsHourly * dt / 60; t += dt; active += dt;
           continue;
         }
         break;
@@ -1108,14 +1431,20 @@
       var waitOf = function (a) { return Math.max(0, ready[a.id] - t); };
       candidates.sort(function (a, b) { return b.res.net / (waitOf(b) + b.res.activeMinutes) - a.res.net / (waitOf(a) + a.res.activeMinutes) || c.acts.indexOf(a) - c.acts.indexOf(b); });
       var pick = candidates[0];
-      if (ready[pick.id] > t) { var wait = ready[pick.id] - t; t = ready[pick.id]; accrue(wait, 'Einnahmen pro Stunde während der Wartezeit'); }
+      if (ready[pick.id] > t) {
+        var wait = ready[pick.id] - t;
+        /* lot 2 (C3f) : si le gain par heure atteint le but pendant l’attente, on ne prend que le temps nécessaire, sans relancer la mission. */
+        var rate0 = st.boost + c.hourly, need0 = rate0 > 0 && c.purchases.every(function (x) { return x.owned; }) && (c.goalUnits === null || st.units >= c.goalUnits - 1e-9) ? goalNeedOf(c, st) : null;
+        var dtGoal = need0 !== null && need0 > 0 ? (function (x) { var r = Math.round(x); return Math.abs(x - r) <= 1e-9 * Math.max(1, Math.abs(x)) ? r : x; }(need0 * 60 / rate0)) : null; /* bruit flottant d’une division (19,99999999999997 → 20) */
+        if (dtGoal !== null && dtGoal > 1e-9 && dtGoal <= wait + 1e-9) { var dtg = Math.min(dtGoal, wait); t += dtg; accrue(dtg, 'Einnahmen pro Stunde während der Wartezeit'); continue; }
+        t = ready[pick.id]; accrue(wait, 'Einnahmen pro Stunde während der Wartezeit');
+      }
       var invest = pick.paid ? 0 : pick.entry.investment || 0, cost = (pick.entry.cost || 0) + invest;
-      ledgerAdd(st, t, 'spend', cost, 'Kosten für „' + pick.name + '“');
       var duration = pick.res.activeMinutes - (pick.entry.prepOnce && runs[pick.id] ? pick.entry.prep || 0 : 0), reward = (pick.entry.reward || 0) * (pick.entry.share === undefined ? 100 : pick.entry.share) / 100;
+      runStep(c, st, pick, t, t + duration, pick.entry.cost || 0, invest, reward, 1);
       t += duration; active += duration;
-      ledgerAdd(st, t, 'receive', reward, 'Belohnung für „' + pick.name + '“');
       accrue(duration);
-      st.earned += reward - (pick.entry.cost || 0); st.units += pick.res.units > 0 ? pick.res.units : 0; pick.paid = true;
+      st.units += pick.res.units > 0 ? pick.res.units : 0; pick.paid = true;
       runs[pick.id] += 1; ready[pick.id] = t + (pick.res.cycleMinutes - pick.res.activeMinutes);
       streak = streak.id === pick.id ? { id: pick.id, n: streak.n + 1 } : { id: pick.id, n: 1 };
       var last = st.route[st.route.length - 1];
@@ -1128,17 +1457,16 @@
       var locked = c.acts.filter(function (a) { return !satisfied(a.requires, st) || !satisfied(a.requiresMissions, st); });
       /* v7.52 : une mission rentable et débloquée mais trop chère à lancer sans toucher à la réserve : on le dit avec les chiffres. */
       var poor = c.acts.filter(function (a) { return !a.once && a.res.net > 0 && satisfied(a.requires, st) && satisfied(a.requiresMissions, st) && !affordableStart(c, st, a); })[0];
-      var nextBuy2 = c.purchases.filter(function (x) { return !x.owned; })[0];
-      var why = nextBuy2 && !satisfied(nextBuy2.requires, st) ? 'Der Kauf „' + nextBuy2.name + '“ braucht zuerst ' + lockedReason(c, st, { requires: nextBuy2.requires.filter(function (id) { return c.purchases.some(function (y) { return y.id === id; }); }), requiresMissions: nextBuy2.requires.filter(function (id) { return c.acts.some(function (y) { return y.id === id; }); }) }).join(', ') + ', was nicht machbar ist.'
-        : nextBuy2 ? 'Dir fehlen ' + dollars(Math.max(0, nextBuy2.price + c.reserve - st.cash).toLocaleString('de-DE'), ' ') + ' für „' + nextBuy2.name + '“, und keine Mission, die ohne diesen Kauf machbar ist, bringt Geld ein: Nimm eine Mission dazu, die du jetzt machen kannst (zur Finanzierung), oder senke die Reserve.'
-        : locked.length ? '„' + locked[0].name + '“ braucht zuerst ' + lockedReason(c, st, locked[0]).join(', ') + '.'
+      /* lot 2 (J) : l’achat qui bloque est dit par stuckReason, commun aux deux modes (mêmes phrases qu’avant). */
+      var why = stuckReason(c, st)
+        || (locked.length ? '„' + locked[0].name + '“ braucht zuerst ' + lockedReason(c, st, locked[0]).join(', ') + '.'
         : poor ? '„' + poor.name + '“ braucht ' + dollars(Math.round((poor.entry.cost || 0) + (poor.paid ? 0 : poor.entry.investment || 0)).toLocaleString('de-DE'), ' ') + ' an Kosten vor dem Start; wenn du ' + dollars(Math.round(c.reserve).toLocaleString('de-DE'), ' ') + ' zurücklegst, bleiben dir nur ' + dollars(Math.round(Math.max(0, st.cash - c.reserve)).toLocaleString('de-DE'), ' ') + '. Senke die Rücklage oder die Kosten, oder füge eine günstigere Mission zum Starten hinzu.'
-        : 'Keine mögliche Mission bringt mit dem, was du hast, mehr ein als ihre Kosten.';
+        : 'Keine mögliche Mission bringt mit dem, was du hast, mehr ein als ihre Kosten.');
       return fail(Object.assign({}, missionShape, { route: st.route, continuous: true }), why);
     }
     var steps2 = Object.keys(runs).filter(function (id) { return runs[id] > 0; }).map(function (id) { var a = c.acts.filter(function (x) { return x.id === id; })[0]; return { id: id, name: a.name, runs: runs[id], net: runs[id] * a.res.net }; });
     var one = { index: 1, steps: steps2, onceSteps: st.route.filter(function (r) { return r.type === 'unlock'; }).map(function (r) { return { id: r.id, name: r.name }; }), gain: subtract(st.cash, c.capital) + c.purchases.filter(function (x) { return x.at !== null; }).reduce(function (s2, x) { return s2 + x.price; }, 0), passive: 0, upkeep: 0, cashBefore: c.capital, cashAfter: st.cash, unitsAfter: st.units, unitsGain: st.units - c.units, purchases: c.purchases.filter(function (x) { return x.at !== null; }).map(function (x) { return x.name; }), purchasesBefore: [], purchasesAfterOnly: [], activeMinutes: active };
-    return missionResult(c, st, t > 0 || steps2.length ? [one] : [], { totalMinutes: t, activeMinutes: active, limited: limited, limitNote: 'Weg gestoppt nach ' + FLOW_MAX_STEPS + ' Etappen.', failNote: limited ? 'Der Weg übersteigt ' + FLOW_MAX_STEPS + ' Etappen: Senke das Ziel oder nimm Missionen, die mehr einbringen.' : null, method: 'flow' });
+    return missionResult(c, st, t > 0 || steps2.length ? [one] : [], { totalMinutes: t, activeMinutes: active, acquisitionMinutes: acq, limited: limited, limitNote: 'Weg gestoppt nach ' + FLOW_MAX_STEPS + ' Etappen.', failNote: limited ? 'Der Weg übersteigt ' + FLOW_MAX_STEPS + ' Etappen: Senke das Ziel oder nimm Missionen, die mehr einbringen.' : null, method: 'flow' });
   }
 
   // Plans A, B, C : le programme complet, puis chaque mission seule, puis sans
@@ -1146,13 +1474,16 @@
   // « au rythme que tu as vraiment eu »). Classés par nombre de parties, sans
   // doublon. Aucun optimum garanti.
   function missionAlternatives(input) {
-    var shape = { plans: [], results: {} };
+    var shape = { plans: [], results: {}, inputs: {} };
     try {
       var p = data(input);
       var acts = Array.isArray(p.activities) ? p.activities : [];
-      var plans = [];
+      var plans = [], inputs = {};
       var allNames = (p.purchases || []).concat(acts).reduce(function (o, x) { if (x && typeof x.id === 'string' && typeof x.name === 'string') o[x.id] = x.name; return o; }, {});
-      function add(id, label, changes, note) { var r = missionPlan(Object.assign({}, p, { knownNames: allNames }, changes)); plans.push({ id: id, label: label, note: note || null, valid: r.valid && r.reached, reason: r.valid ? (r.reached ? null : r.note) : r.reason, totalSessions: r.valid && r.reached ? r.totalSessions : null, totalMinutes: r.valid && r.reached ? r.totalMinutes : null, days: r.valid && r.reached ? r.days : null, activeMinutes: r.valid ? r.activeMinutes : null, finalCash: r.valid ? r.finalCash : null, phases: r.valid ? r.phases.slice(0, 6) : [], result: r }); }
+      /* lot 2 (C7.7) : chaque plan de secours est calculé sans journal ; inputs[id] permet de le recalculer avec. */
+      /* correctif lot 2 (ARI2-4) : les missions du plan complet restent connues comme missions dans chaque plan de secours (« la mission (…) »). */
+      var allMissions = acts.filter(function (a) { return a && typeof a.id === 'string'; }).map(function (a) { return a.id; });
+      function add(id, label, changes, note) { var used = Object.assign({}, p, { knownNames: allNames, knownMissions: allMissions }, changes); inputs[id] = JSON.parse(JSON.stringify(used)); /* copie inerte : aucun undefined dans un résultat */ var r = missionPlan(Object.assign({}, used, { journal: false })); plans.push({ id: id, label: label, note: note || null, valid: r.valid && r.reached, reason: r.valid ? (r.reached ? null : r.note) : r.reason, totalSessions: r.valid && r.reached ? r.totalSessions : null, totalMinutes: r.valid && r.reached ? r.totalMinutes : null, days: r.valid && r.reached ? r.days : null, activeMinutes: r.valid ? r.activeMinutes : null, finalCash: r.valid ? r.finalCash : null, phases: r.valid ? r.phases.slice(0, 6) : [], result: r }); }
       add('all', acts.length > 1 ? 'Die beste Mischung deiner Missionen' : (acts.length ? 'Deine Mission, wiederholt' : 'Deine Einnahmen pro Stunde, Session für Session'), {}, acts.length > 1 ? 'In jeder Session die Missionen, die in der verfügbaren Zeit am meisten einbringen.' : null);
       if (!plans[0].result.valid) return fail(shape, plans[0].result.reason);
       if (acts.length > 1) acts.forEach(function (a, i) { add('only-' + (typeof a.id === 'string' ? a.id : i), 'Nur „' + (a && a.name ? String(a.name).slice(0, 60) : 'Mission ' + (i + 1)) + '“', { activities: [a] }, 'Dieselbe Mission, wiederholt, solange sie in die Session passt.'); });
@@ -1163,7 +1494,7 @@
       ranked.forEach(function (x) { var key = x.totalSessions + '|' + x.totalMinutes + '|' + x.phases.map(function (ph) { return ph.steps.map(function (st) { return st.id + st.runs; }).join(','); }).join('/'); if (!seen[key]) { seen[key] = true; distinct.push(x); } });
       var failed = plans.filter(function (x) { return !x.valid; });
       var results = {}; plans.forEach(function (x) { results[x.id] = x.result; });
-      return finish({ plans: distinct.concat(failed).map(function (x) { var out = Object.assign({}, x); delete out.result; return out; }), results: results }, shape);
+      return finish({ plans: distinct.concat(failed).map(function (x) { var out = Object.assign({}, x); delete out.result; return out; }), results: results, inputs: inputs }, shape);
     } catch (error) { return fail(shape, error.message); }
   }
 
@@ -1174,11 +1505,13 @@
     var shape = { feasible: null, days: null, spareDays: null, everydayDays: null, requiredSessionMinutes: null, requiredHourly: null };
     try {
       var d = number(days, 'die Frist in Tagen', 36500, { positive: true, integer: true });
-      var base = missionPlan(input);
+      /* lot 2 (C7.7) : calculs exploratoires sans journal. */
+      var q = Object.assign({}, data(input), { journal: false });
+      var base = missionPlan(q);
       if (!base.valid) return fail(shape, base.reason);
       if (!base.reached) return fail(shape, base.note);
       if (base.continuous) return fail(shape, 'Eine Frist in Tagen braucht einen Kalender: Gib die Dauer einer Session und deine Spieltage pro Woche ein.');
-      var p = data(input);
+      var p = q;
       if (base.days <= d) return finish({ feasible: true, days: base.days, spareDays: d - base.days, everydayDays: null, requiredSessionMinutes: null, requiredHourly: null }, shape);
       var every = null, dpw = number(p.daysPerWeek, 'die Tage pro Woche', 7, { defaultValue: 7, integer: true, positive: true });
       if (dpw < 7) { var e = missionPlan(Object.assign({}, p, { daysPerWeek: 7 })); if (e.valid && e.reached) every = e.days; }
@@ -1198,16 +1531,277 @@
       // Parcours sans parties : une marche par dépense ou récompense (l’argent n’arrive jamais « petit à petit »).
       if (result.continuous) {
         var pts = [{ hours: 0, cash: result.startCash, units: result.startUnits, label: 'Start', purchase: null }], prev = result.startCash;
-        (result.events || []).forEach(function (e) { var h = e.t / 60; if (e.cash !== prev) { pts.push({ hours: h, cash: prev, label: null, purchase: null, hold: true }); pts.push({ hours: h, cash: e.cash, label: e.label, purchase: e.type === 'spend' && /^(?:Achat|Purchase|Compra|Acquisto|Kauf)\b/.test(e.label) ? e.label.replace(/^(?:Achat « |Purchase “|Compra “|Acquisto “|Kauf „)|[»”“]$/g, '') : null }); prev = e.cash; } });
-        return finish({ points: pts, stepped: true }, shape);
+        var isBuy = function (e) { return e.type === 'spend' && (e.asset === true || /^(?:Achat|Purchase|Compra|Acquisto|Kauf)\b/.test(e.label)); };
+        var buyName = function (e) { return e.asset === true ? e.label.replace(/^[^«“„]*[«“„]\s?|\s?[»”“]$/g, '') : e.label.replace(/^(?:Achat « |Purchase “|Compra “|Acquisto “|Kauf „)|[»”“]$/g, ''); };
+        /* lot 2 (C9) : tous les événements, jamais tronqués ; au-delà de 600, un sur k, en gardant les achats, le premier et le dernier. */
+        var evs = result.events || [], sampled = false;
+        if (evs.length > 600) { var k = Math.ceil(evs.length / 600), kept = []; evs.forEach(function (e, i) { if (i === 0 || i === evs.length - 1 || isBuy(e) || i % k === 0) kept.push(e); }); evs = kept; sampled = true; }
+        evs.forEach(function (e) { var h = e.t / 60; if (e.cash !== prev) { pts.push({ hours: h, cash: prev, label: null, purchase: null, hold: true }); pts.push({ hours: h, cash: e.cash, label: e.label, purchase: isBuy(e) ? buyName(e) : null }); prev = e.cash; } });
+        /* correctif lot 2 (REG4-1) : journal plafonné (journalComplete false) et dernier événement gardé avant la fin du parcours : un dernier point
+           aux valeurs annoncées par le résultat (temps total, argent final), dit tronqué (truncated) ; rien d’inventé entre les deux. */
+        var cut = result.journalComplete === false && evs.length > 0 && evs[evs.length - 1].t < result.totalMinutes - 1e-9;
+        if (cut) pts.push({ hours: result.totalMinutes / 60, cash: result.finalCash, units: result.finalUnits, label: 'Ende', purchase: null, truncated: true });
+        return finish({ points: pts, stepped: true, sampled: sampled, truncated: cut }, shape);
       }
       var minutes = result.totalSessions ? result.totalMinutes / result.totalSessions : 0;
       var points = [{ hours: 0, cash: result.startCash, units: result.startUnits, label: 'Start', purchase: null }];
+      /* correctif lot 2 (ARI2-7) : 0 partie avec un achat d’avant payé tout de suite : une marche à 0 h (même libellé qu’une partie, numéro 0),
+         pour que la courbe finisse à l’argent annoncé (« À la fin ») et non à l’argent de départ. */
+      var paid0 = !result.sessions.length ? (result.purchases || []).filter(function (x) { return x.before === true; }).map(function (x) { return x.name; }) : [];
+      if (paid0.length) points.push({ hours: 0, cash: result.finalCash, units: result.startUnits, label: 'Session ' + 0 + ' · ' + paid0.join(', '), purchase: paid0.join(', ') });
       result.sessions.forEach(function (se) { points.push({ hours: se.index * minutes / 60, cash: se.cashAfter, units: se.unitsAfter, label: 'Session ' + se.index + (se.purchases.length ? ' · ' + se.purchases.join(', ') : ''), purchase: se.purchases.length ? se.purchases.join(', ') : null }); });
-      return finish({ points: points }, shape);
+      return finish({ points: points, sampled: false }, shape);
     } catch (error) { return fail(shape, error.message); }
   }
 
   /* v7.60 : dollars et lang sont des aides d’affichage, pas des calculs : non énumérables (l’API des calculs reste la même). */
-  return Object.freeze(Object.defineProperties({ missionPlan:missionPlan, missionAlternatives:missionAlternatives, missionDeadline:missionDeadline, missionCurve:missionCurve, investmentCompare:investmentCompare, planCurve:planCurve, planCashAt:planCashAt, planStrategies:planStrategies, planDeadline:planDeadline, nextSession:nextSession, choose:choose, businessPlan:businessPlan, worth:worth, investmentActivities: investmentActivities, sessionProjection: sessionProjection, activity: activity, goal: goal, goalMixed: goalMixed, inverse: inverse, roi: roi, purchase: purchase, budget: budget, order: order, compareBuy: compareBuy, goalContinuous: goalContinuous, sessionPlan: sessionPlan, parseLocalizedNumber: parseLocalizedNumber }, { dollars: { value: dollars }, lang: { value: LANG }, plural: { value: plural }, dateText: { value: dateText } }));
+
+  /** Lot 1 (calculateur) : vérificateur de plan indépendant de l’optimiseur. Rejoue un journal d’événements datés en minutes
+   * de jeu, sans rien lire du score ni de la conclusion de la fonction qui l’a produit :
+   * R1 instants lisibles et jamais en arrière ; R2 avant chaque dépense, l’argent couvre la réserve + la dépense (aucune
+   * recette future dépensée) ; R3 chaque prérequis (needs) payé plus tôt ; R4 un achat (unlocks) payé une seule fois ;
+   * R5 deux activités (act) jamais en même temps ; R6 argent final rejoué = argent final annoncé ; R7 instant d’atteinte
+   * rejoué (premier instant où argent − réserve ≥ but, prérequis du but possédés) = instant annoncé.
+   * Rend ok:false avec la liste des règles violées ; valid:false seulement si l’entrée est illisible. */
+  var verifyShape = { ok: false, finalCash: null, reachedAt: null, violations: [] };
+  /* lot 2 (C8) : options ADDITIVES (sans elles, comportement du lot 1) : owned (possédés au départ) ; act.unlocks (effectif à la
+     fin de l’occupation, dans l’ordre des fins) ; check (points de contrôle, acceptés seulement avec claim.checkpoints : l’atteinte
+     n’est alors regardée qu’à ces instants) ; spend.asset (hors « gagné ») ; claim.earnedTarget (but en gains cumulés) ;
+     claim.sessionMinutes → R8 (chaque occupation tient dans sa partie). Tolérance : 1e-6 relatif, jamais plus stricte que le moteur. */
+  function cashJournalVerify(input) {
+    try {
+      var p = data(input);
+      var capital = money(p.capital, 'dein Geld');
+      var reserve = money(p.reserve, 'das zurückgelegte Geld', 0);
+      if (!Array.isArray(p.events) || p.events.length > 1000000) throw new Error('Das Protokoll des Plans ist nicht lesbar.');
+      var claim = p.claim && typeof p.claim === 'object' ? p.claim : {};
+      var goal = Number.isFinite(claim.target) ? claim.target : null, after = Array.isArray(claim.after) ? claim.after : [];
+      var earnedTarget = Number.isFinite(claim.earnedTarget) ? claim.earnedTarget : null, checkpoints = claim.checkpoints === true;
+      var S = Number.isFinite(claim.sessionMinutes) && claim.sessionMinutes > 0 ? claim.sessionMinutes : null, hasGoal = goal !== null || earnedTarget !== null;
+      var cash = capital, earned = 0, last = 0, owned = {}, busyUntil = -Infinity, violations = [], reachedAt = null, pending = [];
+      (Array.isArray(p.owned) ? p.owned : []).forEach(function (id) { owned[String(id)] = true; });
+      var tol = function (x) { return 1e-6 * Math.max(1, Math.abs(x)); };
+      var reached = function () { return hasGoal && (earnedTarget !== null ? earned >= earnedTarget - tol(earnedTarget) : cash - reserve >= goal - tol(goal)) && after.every(function (id) { return owned[id]; }); };
+      var flush = function (upTo) {
+        pending.sort(function (a, b) { return a.until - b.until || a.index - b.index; });
+        while (pending.length && (upTo === null || pending[0].until <= upTo + 1e-9)) {
+          var u = pending.shift();
+          if (owned[u.id]) violations.push({ rule: 'R4', index: u.index, detail: String(u.id) });
+          owned[u.id] = true;
+          if (!checkpoints && reachedAt === null && reached()) reachedAt = u.until;
+        }
+      };
+      if (!checkpoints && reached()) reachedAt = 0;
+      for (var i = 0; i < p.events.length; i += 1) {
+        var e = p.events[i] || {}, at = e.at;
+        if (typeof at !== 'number' || !Number.isFinite(at) || at < 0) { violations.push({ rule: 'R1', index: i, detail: 'instant illisible' }); continue; }
+        if (at < last - 1e-9) violations.push({ rule: 'R1', index: i, detail: 'instant antérieur à l’événement précédent' });
+        last = Math.max(last, at);
+        flush(at);
+        (Array.isArray(e.needs) ? e.needs : []).forEach(function (id) { if (!owned[id]) violations.push({ rule: 'R3', index: i, detail: String(id) }); });
+        var amount = e.amount === undefined ? 0 : e.amount;
+        if (typeof amount !== 'number' || !Number.isFinite(amount) || amount < 0) { violations.push({ rule: 'R6', index: i, detail: 'montant illisible' }); continue; }
+        if (e.kind === 'spend') {
+          if (cash - amount < reserve - tol(amount + reserve)) violations.push({ rule: 'R2', index: i, detail: 'dépense de ' + amount + ' mit ' + cash + ' in der Tasche' });
+          if (e.unlocks) { if (owned[e.unlocks]) violations.push({ rule: 'R4', index: i, detail: String(e.unlocks) }); owned[e.unlocks] = true; }
+          cash -= amount; if (e.asset !== true) earned -= amount;
+        } else if (e.kind === 'earn') { cash += amount; earned += amount; }
+        /* correctif lot 2 (ARI3-4) : un événement d’argent daté d’une partie (session) doit tomber dans cette partie, comme une action (R8) ;
+           sans numéro de partie (Mon temps de jeu), rien ne change. */
+        if ((e.kind === 'spend' || e.kind === 'earn') && S !== null && Number.isInteger(e.session) && e.session >= 1 && (at < (e.session - 1) * S - tol((e.session - 1) * S) || at > e.session * S + tol(e.session * S))) violations.push({ rule: 'R8', index: i, detail: 'argent hors de sa partie' });
+        if (e.kind === 'act') {
+          if (typeof e.until !== 'number' || !Number.isFinite(e.until) || e.until < at) violations.push({ rule: 'R1', index: i, detail: 'fin d’activité illisible' });
+          else {
+            if (at < busyUntil - 1e-9) violations.push({ rule: 'R5', index: i, detail: 'deux activités en même temps' });
+            busyUntil = Math.max(busyUntil, e.until);
+            if (e.unlocks) pending.push({ until: e.until, id: String(e.unlocks), index: i });
+            if (S !== null) {
+              var sn = e.session;
+              if (!(Number.isInteger(sn) && sn >= 1)) violations.push({ rule: 'R1', index: i, detail: 'partie illisible' });
+              else if (at < (sn - 1) * S - tol((sn - 1) * S) || e.until > sn * S + tol(sn * S)) violations.push({ rule: 'R8', index: i, detail: 'action hors de sa partie' });
+            }
+          }
+        } else if (e.kind === 'check' && checkpoints) { if (reachedAt === null && reached()) reachedAt = at; }
+        else if (e.kind !== 'spend' && e.kind !== 'earn') violations.push({ rule: 'R1', index: i, detail: 'événement inconnu' });
+        if (!checkpoints && reachedAt === null && reached()) reachedAt = at;
+      }
+      flush(null);
+      if (claim.finalCash !== undefined && claim.finalCash !== null && !(Number.isFinite(claim.finalCash) && Math.abs(claim.finalCash - cash) <= tol(cash) + 0.005)) violations.push({ rule: 'R6', index: -1, detail: 'argent final annoncé ' + claim.finalCash + ', rejoué ' + cash });
+      if (claim.reachedAt !== undefined && hasGoal && !(claim.reachedAt === null ? reachedAt === null : reachedAt !== null && Math.abs(claim.reachedAt - reachedAt) <= 1e-6 * Math.max(1, reachedAt))) violations.push({ rule: 'R7', index: -1, detail: 'atteinte annoncée ' + claim.reachedAt + ', rejouée ' + reachedAt });
+      return finish({ ok: violations.length === 0, finalCash: cash, reachedAt: reachedAt, violations: violations }, verifyShape);
+    } catch (error) { return fail(verifyShape, error.message); }
+  }
+
+  /** lot 2 (C8) : vérification indépendante d’un programme de E.missionPlan. Lit le journal complet et les règles du plan
+   * (rules : réserve, durée d’une partie, gain par heure, dépenses par partie, achats, possédés au départ, sens du but), et comme
+   * affirmations seulement l’argent final, l’atteinte et les totaux annoncés. R1 à R8 par cashJournalVerify (points de contrôle en
+   * parties) ; R9 : chaque gain par heure = taux (gain + achats obtenus) × temps hors obtention ; R10 : les dépenses de chaque
+   * partie = dépenses par partie + coût d’usage des achats payés avant le début de la partie (un achat gratuit est daté par sa
+   * première occupation, puisqu’aucune dépense à 0 $ n’est inscrite). ok:null si le journal est incomplet
+   * (journal:false ou plus de 60 000 entrées) ; skipped:'reach' quand le but est en points (l’argent est rejoué, pas les points). */
+  var missionVerifyShape = { ok: null, skipped: null, violations: [], finalCash: null, reachedAt: null, checked: 0 };
+  function missionVerify(result) {
+    try {
+      if (!result || typeof result !== 'object' || Array.isArray(result)) throw new Error('Ablauf nicht berechnet.');
+      if (!result.valid) return fail(missionVerifyShape, result.reason || 'Ablauf nicht berechnet.');
+      var rules = result.rules;
+      if (!rules || typeof rules !== 'object' || !Array.isArray(result.journal)) throw new Error('Das Protokoll des Plans ist nicht lesbar.');
+      if (!result.journalComplete) return finish({ ok: null, skipped: 'journal', violations: [], finalCash: null, reachedAt: null, checked: 0 }, missionVerifyShape);
+      var S = Number.isFinite(rules.sessionMinutes) && rules.sessionMinutes > 0 ? rules.sessionMinutes : null, sessions = S !== null;
+      var keep = ['needs', 'unlocks', 'asset', 'id', 'passive', 'minutes', 'upkeep', 'session'];
+      var events = result.journal.map(function (e) {
+        if (e.kind === 'act' || e.kind === 'check') return e;
+        var o = { at: e.at, kind: e.type === 'spend' ? 'spend' : 'earn', amount: e.amount };
+        keep.forEach(function (k) { if (e[k] !== undefined) o[k] = e[k]; });
+        return o;
+      });
+      var claim = { finalCash: result.finalCash, after: Array.isArray(rules.after) ? rules.after : [] }, skipped = null;
+      if (sessions) { claim.sessionMinutes = S; claim.checkpoints = true; }
+      if (rules.units) skipped = 'reach';
+      else if (rules.meaning === 'cumulative' && rules.goalPrice === null) claim.earnedTarget = rules.goalMoney;
+      else if (rules.meaning === 'held' && rules.goalPrice === null) claim.target = rules.goalMoney - rules.reserve;
+      else claim.target = rules.goalMoney;
+      if (!skipped) claim.reachedAt = result.reached ? (sessions ? result.totalSessions * S : result.totalMinutes) : null;
+      var v = cashJournalVerify({ capital: result.startCash, reserve: rules.reserve, owned: rules.owned0, events: events, claim: claim });
+      if (!v.valid) return fail(missionVerifyShape, v.reason);
+      var violations = v.violations.slice(), tol = function (x) { return 1e-6 * Math.max(1, Math.abs(x)); };
+      /* R9 et R10 : rejeu des possessions (obtention finie = unlocks traité) et des achats payés, dans l’ordre du journal. */
+      var purchases = Array.isArray(rules.purchases) ? rules.purchases : [], byId = {};
+      purchases.forEach(function (x) { byId[x.id] = x; });
+      var owned = {}; (Array.isArray(rules.owned0) ? rules.owned0 : []).forEach(function (id) { owned[id] = true; });
+      var pending = [], blockingBySession = {}, upkeepBySession = {}, checks = [];
+      var blockingActs = [];
+      events.forEach(function (e, i) { if (e.kind === 'act' && e.blocking === true && Number.isFinite(e.until) && Number.isFinite(e.at)) { blockingBySession[e.session] = (blockingBySession[e.session] || 0) + (e.until - e.at); blockingActs.push(e); } });
+      /* correctif lot 2 (ARI3-4) : en parcours, un gain par heure couvre [at − minutes, at] (accrue est appelé après l’avance du temps) ; le
+         recouvrement avec une obtention (acte bloquant) est retiré, comme en parties (C3b : aucun gain par heure pendant l’obtention). */
+      var overlapBlocking = function (from, to) { return blockingActs.reduce(function (s2, a) { return s2 + Math.max(0, Math.min(a.until, to) - Math.max(a.at, from)); }, 0); };
+      /* correctif lot 2 (R10) : le coût d’usage d’un achat compte dès la partie qui suit son paiement (règle du moteur : upkeepOwned dès
+         l’achat, obtention finie ou non) ; le paiement est daté par la première entrée du journal qui porte l’achat (dépense asset, ou
+         occupation : un achat gratuit n’a aucune dépense inscrite), les achats possédés au départ à 0. */
+      var paidAt = {}; (Array.isArray(rules.owned0) ? rules.owned0 : []).forEach(function (id) { if (byId[id]) paidAt[id] = 0; });
+      events.forEach(function (e) { if (!Number.isFinite(e.at)) return; var pid = e.kind === 'act' ? e.id : (e.kind === 'spend' && e.asset === true ? e.id : undefined); if (pid !== undefined && byId[pid] && paidAt[pid] === undefined) paidAt[pid] = e.at; });
+      var hourly = Number.isFinite(rules.hourly) ? rules.hourly : 0, upkeep = Number.isFinite(rules.upkeepPerSession) ? rules.upkeepPerSession : 0;
+      /* correctif lot 2 (ARI4-2) : en parties, la partie d’un gain par heure se lit sur sa date (at = n × S, règle du moteur), jamais sur parole, et
+         chaque partie à taux > 0 en porte exactement un (comme R10 pour les dépenses) : un gain daté dans une autre partie ou omis viole R9.
+         Possession datée (unlockAt) : dépense avec unlocks à sa date, obtention à sa fin, possédé au départ à 0. */
+      var unlockAt = {}; (Array.isArray(rules.owned0) ? rules.owned0 : []).forEach(function (id) { unlockAt[id] = 0; });
+      var own = function (id, at) { owned[id] = true; if (unlockAt[id] === undefined) unlockAt[id] = at; };
+      var flush = function (upTo) { pending.sort(function (a, b) { return a.until - b.until; }); while (pending.length && pending[0].until <= upTo + 1e-9) { var q = pending.shift(); own(q.id, q.until); } };
+      var passiveBySession = {}, passiveSum = {}, lastPassiveEnd = 0;
+      events.forEach(function (e, i) {
+        if (!Number.isFinite(e.at)) return;
+        flush(e.at);
+        if (e.kind === 'act') { if (e.unlocks) pending.push({ until: e.until, id: String(e.unlocks) }); return; }
+        if (e.kind === 'check') { checks.push({ index: i, session: e.session, at: e.at }); return; }
+        if (e.kind === 'spend') {
+          if (e.unlocks) own(String(e.unlocks), e.at);
+          if (e.upkeep === true) (upkeepBySession[e.session] = upkeepBySession[e.session] || []).push(e.amount);
+          return;
+        }
+        if (e.kind === 'earn' && e.passive === true) {
+          if (sessions && !(Number.isInteger(e.session) && e.session >= 1 && Math.abs(e.at - e.session * S) <= tol(e.session * S))) { violations.push({ rule: 'R9', index: i, detail: 'gain par heure différent du taux' }); return; }
+          if (sessions) { passiveBySession[e.session] = (passiveBySession[e.session] || 0) + 1; passiveSum[e.session] = (passiveSum[e.session] || 0) + e.amount; }
+          /* correctif lot 2 (ARI5-2) : en parcours, un gain par heure couvre [at − minutes, at] : jamais avant le départ, jamais sur un temps déjà crédité
+             (les intervalles se suivent dans l’ordre du journal) ; sinon le même temps compterait deux fois, ou plus de minutes que de temps joué (R9 :
+             « gain par heure ≠ taux × temps joué »). */
+          if (!sessions) { var from9 = Number.isFinite(e.minutes) ? e.at - e.minutes : NaN; if (!(from9 >= -tol(e.at) && from9 >= lastPassiveEnd - tol(e.at))) { violations.push({ rule: 'R9', index: i, detail: 'gain par heure différent du taux' }); return; } lastPassiveEnd = e.at; }
+          var rate = hourly + purchases.filter(function (x) { return owned[x.id]; }).reduce(function (s2, x) { return s2 + (x.boostHourly || 0); }, 0);
+          var minutes = sessions ? S - (blockingBySession[e.session] || 0) : (Number.isFinite(e.minutes) ? e.minutes - overlapBlocking(e.at - e.minutes, e.at) : NaN);
+          var expected = rate * minutes / 60;
+          if (!(Math.abs(expected - e.amount) <= tol(expected))) violations.push({ rule: 'R9', index: i, detail: 'gain par heure différent du taux' });
+        }
+      });
+      /* correctif lot 2 (ARI6-1) : recensement des points de contrôle avant R9/R10 par partie (spec C8.6 : « pour chaque partie n ≥ 1 ») : chaque partie
+         annoncée 0…N (N = totalSessions, affirmation seulement) porte exactement un point de contrôle daté n × S, lisible et sans doublon (sinon R1) ;
+         une partie sans point de contrôle n’est plus contrôlée par personne → R10 (avant : une partie dont le check ET la dépense de partie ou le gain
+         par heure disparaissaient passait la vérification). */
+      if (sessions) {
+        var N = Number.isInteger(result.totalSessions) ? result.totalSessions : -1, seenCk = {};
+        checks.forEach(function (ck) {
+          if (!(Number.isInteger(ck.session) && ck.session >= 0 && ck.session <= N) || seenCk[ck.session] || Math.abs(ck.at - ck.session * S) > tol(ck.session * S)) violations.push({ rule: 'R1', index: ck.index, detail: 'partie illisible' });
+          seenCk[ck.session] = true;
+        });
+        for (var n0 = 0; n0 <= N; n0 += 1) if (!seenCk[n0]) violations.push({ rule: 'R10', index: -1, detail: 'dépenses par partie absentes ou différentes' });
+      }
+      if (sessions) checks.forEach(function (ck) {
+        if (!(Number.isInteger(ck.session) && ck.session >= 1)) return;
+        /* R9 (ARI4-2) : taux de la partie n = gain par heure + achats possédés avant sa fin (nS), hors ceux payés à nS après la partie ; temps = S − obtention ;
+           un gain attendu → exactement un gain par heure de partie n ; aucun attendu → au plus un, infime (montant déjà contrôlé plus haut). */
+        var endAt = ck.session * S, rate9 = hourly + purchases.filter(function (x) { return unlockAt[x.id] !== undefined && unlockAt[x.id] < endAt - tol(endAt); }).reduce(function (s2, x) { return s2 + (x.boostHourly || 0); }, 0);
+        var want9 = rate9 * Math.max(0, S - (blockingBySession[ck.session] || 0)) / 60, got9 = passiveBySession[ck.session] || 0;
+        /* correctif lot 2 (ARI6-2) : le MONTANT de la partie est comparé lui aussi (somme des gains par heure de la partie = taux × temps hors obtention) : un achat
+           d’après-partie avancé devant le gain de la même partie (même instant n × S) gonflait le gain de son boost sans que le nombre de gains ne bouge. */
+        if (got9 > 1 || (want9 > tol(want9) && got9 !== 1) || Math.abs((passiveSum[ck.session] || 0) - want9) > tol(want9)) violations.push({ rule: 'R9', index: ck.index, detail: 'gain par heure différent du taux' });
+        var startAt = (ck.session - 1) * S, expected = upkeep + purchases.filter(function (x) { return paidAt[x.id] !== undefined && paidAt[x.id] <= startAt + tol(startAt); }).reduce(function (s2, x) { return s2 + (x.usagePerSession || 0); }, 0), got = upkeepBySession[ck.session] || [];
+        var fine = expected > tol(expected) ? got.length === 1 && Math.abs(got[0] - expected) <= tol(expected) : got.length === 0;
+        if (!fine) violations.push({ rule: 'R10', index: ck.index, detail: 'dépenses par partie absentes ou différentes' });
+      });
+      return finish({ ok: violations.length === 0, skipped: skipped, violations: violations, finalCash: v.finalCash, reachedAt: v.reachedAt, checked: events.length }, missionVerifyShape);
+    } catch (error) { return fail(missionVerifyShape, error.message); }
+  }
+
+  /** Lot 1 : « Mon objectif si j’achète », modèle continu (je gagne à peu près tant par heure). Dollars et heures de jeu.
+   * Entrées : capital, reserve, target (argent disponible visé, après la réserve, dépenses prévues comprises), hourly (gain net
+   * par heure avant l’achat), price (prix total), extraHourly (gain en plus avec l’achat ; null = inconnu, compté 0 et signalé),
+   * usageHourly (coût d’usage de l’achat ramené à l’heure).
+   * Acheter à l’instant τ (au plus tôt quand l’argent disponible couvre le prix, au plus tard juste avant le but) donne un temps
+   * total linéaire en τ : la meilleure date est à une des deux bornes. Les deux sont calculées et la plus courte est gardée :
+   * c’est l’optimum de ce modèle (un gain par heure constant, aucune autre dépense), pas une vérité sur le jeu.
+   * extraThreshold : gain en plus minimal pour que l’achat ne recule pas le but (null si aucun gain ne suffit ou sans objet). */
+  var timingShape = { saveHours: null, buyHours: null, delayHours: null, strategy: null, buyAtHours: null, affordHours: null, affordableNow: null, extraKnown: null, extraThreshold: null, optimal: false, journal: [], claim: null };
+  function purchaseGoalTiming(input) {
+    try {
+      var p = data(input);
+      var capital = money(p.capital, 'dein Geld');
+      var reserve = money(p.reserve, 'das zurückgelegte Geld', 0);
+      var target = money(p.target, 'das Ziel');
+      var hourly = money(p.hourly, 'deine Einnahmen pro Stunde');
+      var price = money(p.price, 'die Preisangabe für den Kauf');
+      var extraKnown = p.extraHourly !== null && p.extraHourly !== undefined;
+      var extra = extraKnown ? money(p.extraHourly, 'die Extra-Einnahmen pro Stunde durch den Kauf') : 0;
+      var usage = money(p.usageHourly, 'die laufenden Kosten pro Stunde', 0);
+      if (reserve > capital) return fail(timingShape, 'Das zurückgelegte Geld (deine Rücklage) übersteigt das, was du hast. Senke die Rücklage.');
+      var available = subtract(capital, reserve), rateAfter = hourly + extra - usage;
+      var save = target <= available ? 0 : hourly > 0 ? (target - available) / hourly : null;
+      var affordableNow = price <= available;
+      var options = [];
+      /* au plus tôt : dès que l’argent disponible couvre le prix */
+      var tauSoon = affordableNow ? 0 : hourly > 0 ? (price - available) / hourly : null;
+      if (tauSoon !== null) {
+        var left = Math.max(0, subtract(target, available + hourly * tauSoon - price));
+        if (left === 0 || rateAfter > 0) options.push({ strategy: affordableNow ? 'now' : 'soon', buyAt: tauSoon, hours: tauSoon + (left === 0 ? 0 : left / rateAfter), rate: rateAfter });
+      }
+      /* au plus tard : juste avant d’atteindre le but (argent disponible = but + prix), donc sans gain ni coût d’usage avant */
+      var gap = subtract(target + price, available);
+      var tauLate = gap <= 0 ? 0 : hourly > 0 ? gap / hourly : null;
+      if (tauLate !== null && !(tauSoon !== null && tauLate <= tauSoon)) options.push({ strategy: 'late', buyAt: tauLate, hours: tauLate, rate: rateAfter });
+      else if (tauLate !== null && !options.length) options.push({ strategy: tauLate === 0 ? 'now' : 'late', buyAt: tauLate, hours: tauLate, rate: rateAfter });
+      if (!options.length) return finish(Object.assign({}, timingShape, { saveHours: save, affordHours: tauSoon, affordableNow: affordableNow, extraKnown: extraKnown, optimal: true }), timingShape);
+      options.sort(function (a, b) { return a.hours - b.hours || a.buyAt - b.buyAt; });
+      var best = options[0];
+      /* journal de la stratégie gardée (minutes de jeu), pour le vérificateur */
+      var journal = [], buyMin = best.buyAt * 60, endMin = best.hours * 60, before = hourly * best.buyAt;
+      if (before > 0) journal.push({ at: buyMin, kind: 'earn', amount: before, label: 'gains avant l’achat' });
+      journal.push({ at: buyMin, kind: 'spend', amount: price, label: 'achat', unlocks: 'achat' });
+      var afterGain = (best.hours - best.buyAt) * best.rate;
+      if (afterGain > 0) journal.push({ at: endMin, kind: 'earn', amount: afterGain, label: 'gains après l’achat', needs: ['achat'] });
+      var threshold = null;
+      if (target > available) {
+        if (affordableNow) threshold = hourly * price / (target - available) + usage;
+        else if (target > price && hourly > 0) threshold = hourly * price / (target - price) + usage;
+      }
+      /* écart minuscule entre le but et l’argent disponible : seuil hors d’échelle, non rendu plutôt que de faire échouer le calcul */
+      if (threshold !== null && !(Math.abs(threshold) <= RESULT_MAX)) threshold = null;
+      return finish({ saveHours: save, buyHours: best.hours, delayHours: save === null ? null : best.hours - save, strategy: best.strategy, buyAtHours: best.buyAt, affordHours: tauSoon, affordableNow: affordableNow, extraKnown: extraKnown, extraThreshold: threshold, optimal: hourly > 0 || affordableNow, journal: journal, claim: { finalCash: capital + before + Math.max(0, afterGain) - price, target: target, after: ['achat'], reachedAt: endMin } }, timingShape);
+    } catch (error) { return fail(timingShape, error.message); }
+  }
+
+  /** Lot 1 : durée de jeu lisible, comme dans l’interface (minutes arrondies au-dessus ; « 1 h 05 », « 1 h 05 min » en allemand). */
+  function durationText(hoursValue, lang) {
+    if (typeof hoursValue !== 'number' || !Number.isFinite(hoursValue)) return '—';
+    var m = Math.ceil(hoursValue * 60 - 1e-8), l = lang || LANG;
+    return m < 60 ? m + ' min' : Math.floor(m / 60) + ' h' + (m % 60 ? ' ' + String(m % 60).padStart(2, '0') + (l === 'de' ? ' min' : '') : '');
+  }
+
+  return Object.freeze(Object.defineProperties({ missionPlan:missionPlan, missionAlternatives:missionAlternatives, missionDeadline:missionDeadline, missionCurve:missionCurve, missionVerify:missionVerify, investmentCompare:investmentCompare, planCurve:planCurve, planCashAt:planCashAt, planStrategies:planStrategies, planDeadline:planDeadline, nextSession:nextSession, choose:choose, businessPlan:businessPlan, worth:worth, investmentActivities: investmentActivities, sessionProjection: sessionProjection, activity: activity, goal: goal, goalMixed: goalMixed, inverse: inverse, roi: roi, purchase: purchase, budget: budget, order: order, compareBuy: compareBuy, goalContinuous: goalContinuous, sessionPlan: sessionPlan, parseLocalizedNumber: parseLocalizedNumber, cashJournalVerify: cashJournalVerify, purchaseGoalTiming: purchaseGoalTiming }, { dollars: { value: dollars }, lang: { value: LANG }, plural: { value: plural }, dateText: { value: dateText }, durationText: { value: durationText }, calendarDays: { value: calendarDays } /* lot 2 : aide de calendrier (rend un nombre), non énumérable comme durationText */ }));
 }));

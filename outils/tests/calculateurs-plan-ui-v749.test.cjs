@@ -23,7 +23,7 @@ function million(){const s=blank();s.name='Un million';s.plan.goal={...s.plan.go
 test('sans durée de partie : un parcours en temps de jeu (4 h), sans calendrier, avec son point bas et sa chaîne d’étapes',async()=>{
  const p=await page(million(),{all:true});
  const res=text(p,'plan-results');
- assert.match(res,/tu y arrives en 4 h de jeu/);assert.match(res,/il te manque 900\s000 \$/,'« en tout » : l’argent gardé de côté compte dans le million');assert.match(res,/Sans durée de partie, il n’y a pas de calendrier/);
+ assert.match(res,/tu y arrives en 4 h de jeu/);assert.match(res,/il te manque 970\s000 \$/,'« en tout » : l’argent gardé de côté compte dans le million ; lot 2 (REG2-1) : correction, pas régression : + 70 000 $ d’achats d’avant non possédés (60 000 + 10 000), comme la cible affichée « achats d’avant compris » et le moteur : 1 000 000 + 70 000 − 100 000');assert.match(res,/Sans durée de partie, il n’y a pas de calendrier/);
  assert.match(res,/Au plus bas\s: 25\s000 \$/);assert.match(res,/jamais sous l’argent gardé de côté/);
  assert.doesNotMatch(res,/\bjours?\b.*vers le/,'aucune date inventée sans durée de partie');
  const rep=text(p,'plan-report');assert.match(rep,/Ton parcours, dans l’ordre/);
@@ -125,6 +125,6 @@ test('saisies rapides : la dernière valeur écrite gagne, partout (réponse, st
  const cap=p.d.getElementById('plan-capital');
  for(const v of ['1','12','120','1200','12000','120000','200000']){cap.value=v;fire(p,cap,'input');}
  assert.equal(stored(p).plan.situation.capital,200000);
- const res=text(p,'plan-results');assert.match(res,/il te manque 800\s000 \$/,'le résultat affiché est celui de la dernière saisie');
+ const res=text(p,'plan-results');assert.match(res,/il te manque 870\s000 \$/,'le résultat affiché est celui de la dernière saisie ; lot 2 (REG2-1) : 1 000 000 + 70 000 d’achats d’avant − 200 000 = 870 000 (correction, pas régression)');
  assert.doesNotMatch(res,/999\s880|988\s000/,'aucun résultat d’une saisie intermédiaire ne reste');
  clean(p);});

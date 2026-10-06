@@ -325,7 +325,7 @@ test('une incompatibilité ou une dépendance circulaire donne un blocage expliq
 });
 
 test('mise à jour identifiable : les versions du modèle et des données sont gardées ; un prix du site changé est signalé', () => {
-  const s = fresh(); assert.equal(s.modelVersion, 1); assert.equal(s.dataVersion, 'v749');
+  const s = fresh(); assert.equal(s.modelVersion, 2); /* lot 2 (C13) : les règles de calcul ont changé : version du modèle 1 → 2 (B.MODEL_VERSION), lue par la migration */ assert.equal(s.dataVersion, 'v749');
   s.assets = [asset('x', 'Supercar X', 300000, { itemId: 'supercar-x', referencePrice: 250000 })]; s.purchase.key = 'x'; s.roi.key = 'x';
   const w = B.referenceWarnings(s, [{ id: 'supercar-x', name: 'Supercar X', price: 280000 }]);
   assert.match(w[0], /prix du site a changé/);

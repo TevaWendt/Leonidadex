@@ -22,7 +22,7 @@ function asV5(s) {
 const TOOLS = ['goal', 'purchase', 'session', 'budget', 'order', 'roi', 'activities', 'compare', 'plan'];
 
 test('v6 : l’état de départ est en version 6 avec les versions du modèle et des données', () => {
-  assert.equal(initial.version, 6); assert.equal(initial.modelVersion, 1); assert.equal(initial.dataVersion, 'test-data');
+  assert.equal(initial.version, 6); assert.equal(initial.modelVersion, 2); /* lot 2 (C13) : les règles de calcul ont changé (plan, Mon temps de jeu, Mon budget, Quoi acheter d’abord ?) : version du modèle 1 → 2, lue par la migration */ assert.equal(initial.dataVersion, 'test-data');
   assert.deepEqual(initial.analysis.horizon, { sessions: null, uses: null, hours: null });
   assert.ok(Object.values(initial.analysis.simulations).every(v => v === false), 'aucune mécanique simulée sans ton choix');
   assert.equal(initial.assets[0].role, 'unknown'); assert.deepEqual(initial.assets[0].usage, { perSession: null, perUse: null, uses: null });

@@ -18,7 +18,8 @@
 }(typeof globalThis !== 'undefined' ? globalThis : this, function (E, M) {
   'use strict';
   M = M || { statuts: [], facteurs: [], mecaniques: [], vides: {}, categories: [], carnets: [], genres: [], etatsAdmission: [] };
-  var MODEL_VERSION = 1;
+  var MODEL_VERSION = 2; /* lot 2 (C13) : les règles du plan, de Mon temps de jeu, de Mon budget et de Quoi acheter d’abord ? changent des résultats ;
+     lots 3 à 5 (livrés avec le lot 2, jamais publiés à part) : mêmes règles de version, aucune sauvegarde n’existe sous une version intermédiaire */
   var STATUS = {};
   (M.statuts || []).forEach(function (s) { STATUS[s.id] = s; });
   var CALC = { official: 1, measured: 1, estimated: 1, personal: 1, simulated: 1, example: 1 };

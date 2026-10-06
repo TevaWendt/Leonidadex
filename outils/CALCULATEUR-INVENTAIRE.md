@@ -459,7 +459,7 @@ Lecture : **kind** = type de contrôle ; **field** = chemin dans le scénario v6
 | button |  |  | Rétablir cette valeur | bDefault=assets.1.extras bDefaultValue=0 |  | Simple + Expert (E) | deux achats, éditeur ouvert |
 | text | f-assets-1-fees | assets.1.fees | Autres frais au départ ($) | field=assets.1.fees number min=0 max=1000000000000 |  | Simple + Expert (E) | deux achats, éditeur ouvert |
 | button |  |  | Rétablir cette valeur | bDefault=assets.1.fees bDefaultValue=0 |  | Simple + Expert (E) | deux achats, éditeur ouvert |
-| select | f-assets-1-incomeMode | assets.1.incomeMode | Ce que je gagne après cet achat | field=assets.1.incomeMode |  | Simple + Expert (E) | deux achats, éditeur ouvert |
+| select | order-assets-1-incomeMode | assets.1.incomeMode | Ce que je gagne après cet achat | field=assets.1.incomeMode |  | Simple + Expert (E) | deux achats, éditeur ouvert |
 | text | f-assets-1-boostHourly | assets.1.boostHourly | Il me fait gagner en plus ($ par heure) | field=assets.1.boostHourly number min=0 max=1000000000000 |  | Simple + Expert (E) (masqué par un réglage) | deux achats, éditeur ouvert |
 | button |  |  | Rétablir cette valeur | bDefault=assets.1.boostHourly bDefaultValue=0 |  | Simple + Expert (E) (masqué par un réglage) | deux achats, éditeur ouvert |
 | checkbox |  |  | Achat déjà possédé (prérequis d’activité satisfait) | bOwned=free-<id> |  | Simple + Expert (E) | deux achats, éditeur ouvert |
@@ -472,7 +472,7 @@ Lecture : **kind** = type de contrôle ; **field** = chemin dans le scénario v6
 | button |  |  | Rétablir cette valeur | bDefault=assets.2.extras bDefaultValue=0 |  | Simple + Expert (E) (masqué par un réglage) | deux achats, éditeur ouvert |
 | text | f-assets-2-fees | assets.2.fees | Autres frais au départ ($) | field=assets.2.fees number min=0 max=1000000000000 |  | Simple + Expert (E) (masqué par un réglage) | deux achats, éditeur ouvert |
 | button |  |  | Rétablir cette valeur | bDefault=assets.2.fees bDefaultValue=0 |  | Simple + Expert (E) (masqué par un réglage) | deux achats, éditeur ouvert |
-| select | f-assets-2-incomeMode | assets.2.incomeMode | Ce que je gagne après cet achat | field=assets.2.incomeMode |  | Simple + Expert (E) (masqué par un réglage) | deux achats, éditeur ouvert |
+| select | order-assets-2-incomeMode | assets.2.incomeMode | Ce que je gagne après cet achat | field=assets.2.incomeMode |  | Simple + Expert (E) (masqué par un réglage) | deux achats, éditeur ouvert |
 | text | f-assets-2-boostHourly | assets.2.boostHourly | Il me fait gagner en plus ($ par heure) | field=assets.2.boostHourly number min=0 max=1000000000000 |  | Simple + Expert (E) (masqué par un réglage) | deux achats, éditeur ouvert |
 | button |  |  | Rétablir cette valeur | bDefault=assets.2.boostHourly bDefaultValue=0 |  | Simple + Expert (E) (masqué par un réglage) | deux achats, éditeur ouvert |
 | text | order-usage-1 | assets.2.usage.perSession | Il me coûte à chaque partie ($) | field=assets.2.usage.perSession number min=0 max=1000000000000 |  | Simple + Expert (E) (masqué par un réglage) | deux achats, éditeur ouvert |
@@ -514,12 +514,12 @@ Lecture : **kind** = type de contrôle ; **field** = chemin dans le scénario v6
 | text | f-roi-resale | assets.0.resale | Je pourrais le revendre ($, mon hypothèse) | field=assets.0.resale number min=0 max=1000000000000 |  | Simple + Expert (opt) | achat plaisir (estimate), estimate + activité pour regagner, nouvelle activité (new), activité améliorée (improve), chiffre par heure (continuous), deuxième achat comparé |
 | button |  |  | Le mettre dans mon business plan | bRoiToPlan |  | Simple + Expert | achat plaisir (estimate), estimate + activité pour regagner, deuxième achat comparé |
 | button |  |  | Acheter maintenant ou attendre ? | foldHead=roi-d0 | expanded=false controls=fold-roi-d0 | Simple + Expert | achat plaisir (estimate), estimate + activité pour regagner, deuxième achat comparé |
-| button |  |  | Ce qui compte dans ce calcul | foldHead=roi-assumptions | expanded=false controls=fold-roi-assumptions | Simple + Expert | achat plaisir (estimate), estimate + activité pour regagner, deuxième achat comparé |
-| button |  |  | Modifier | bFocus=f-roi-purchase |  | Simple + Expert | achat plaisir (estimate), estimate + activité pour regagner, deuxième achat comparé |
-| button |  |  | Modifier | bFocus=roi-capital |  | Simple + Expert | achat plaisir (estimate), estimate + activité pour regagner, deuxième achat comparé |
-| button |  |  | Modifier | bFocus=roi-reserve |  | Simple + Expert | achat plaisir (estimate), estimate + activité pour regagner, deuxième achat comparé |
-| button |  |  | Modifier | bFocus=f-roi-hours |  | Simple + Expert | achat plaisir (estimate), estimate + activité pour regagner, deuxième achat comparé |
-| button |  |  | Comment est-ce calculé ? | foldHead=roi-d1 | expanded=false controls=fold-roi-d1 | Simple + Expert | achat plaisir (estimate), estimate + activité pour regagner, deuxième achat comparé |
+| button |  |  | Ce qui compte dans ce calcul | foldHead=roi-assumptions | expanded=false controls=fold-roi-assumptions | Simple + Expert | achat plaisir (estimate), estimate + activité pour regagner, chiffre par heure (continuous), deuxième achat comparé |
+| button |  |  | Modifier | bFocus=f-roi-purchase |  | Simple + Expert | achat plaisir (estimate), estimate + activité pour regagner, chiffre par heure (continuous), deuxième achat comparé |
+| button |  |  | Modifier | bFocus=roi-capital |  | Simple + Expert | achat plaisir (estimate), estimate + activité pour regagner, chiffre par heure (continuous), deuxième achat comparé |
+| button |  |  | Modifier | bFocus=roi-reserve |  | Simple + Expert | achat plaisir (estimate), estimate + activité pour regagner, chiffre par heure (continuous), deuxième achat comparé |
+| button |  |  | Modifier | bFocus=f-roi-hours |  | Simple + Expert | achat plaisir (estimate), estimate + activité pour regagner, chiffre par heure (continuous), deuxième achat comparé |
+| button |  |  | Comment est-ce calculé ? | foldHead=roi-d1 | expanded=false controls=fold-roi-d1 | Simple + Expert | achat plaisir (estimate), estimate + activité pour regagner, chiffre par heure (continuous), deuxième achat comparé |
 | button |  |  | Ajouter à « Quoi acheter d’abord ? » | bOrderRoi |  | Simple + Expert | achat plaisir (estimate), estimate + activité pour regagner, nouvelle activité (new), activité améliorée (improve), chiffre par heure (continuous), deuxième achat comparé |
 | button |  |  | Et si le chiffre bouge de 20 % ? | foldHead=roi-sensitivity | expanded=false controls=fold-roi-sensitivity | Expert (E) | achat plaisir (estimate), estimate + activité pour regagner, nouvelle activité (new), activité améliorée (improve), chiffre par heure (continuous), deuxième achat comparé |
 | button |  |  | Comparer avec un calcul gardé | foldHead=roi-reference | expanded=false controls=fold-roi-reference | Expert (E) | achat plaisir (estimate), estimate + activité pour regagner, nouvelle activité (new), activité améliorée (improve), chiffre par heure (continuous), deuxième achat comparé |
@@ -572,10 +572,11 @@ Lecture : **kind** = type de contrôle ; **field** = chemin dans le scénario v6
 | text | roi-activity-2-players | activities.2.players | Joueurs nécessaires | field=activities.2.players number integer min max=100 |  | Simple + Expert | nouvelle activité (new), activité améliorée (improve) |
 | checkbox |  |  | Je l’ai déjà acheté | owned=2 |  | Simple + Expert | nouvelle activité (new), activité améliorée (improve) |
 | checkbox |  |  | Je prépare une seule fois par partie | bPrepOnce=2 |  | Simple + Expert | nouvelle activité (new), activité améliorée (improve) |
-| button |  |  | Comment est-ce calculé ? | foldHead=roi-d0 | expanded=false controls=fold-roi-d0 | Simple + Expert | nouvelle activité (new), activité améliorée (improve), chiffre par heure (continuous) |
+| button |  |  | Comment est-ce calculé ? | foldHead=roi-d0 | expanded=false controls=fold-roi-d0 | Simple + Expert | nouvelle activité (new), activité améliorée (improve) |
 | text | f-roi-revenueHourly | roi.revenueHourly | Il me fait gagner en plus ($ par heure) | field=roi.revenueHourly number min=0 max=1000000000000 |  | Simple + Expert | chiffre par heure (continuous) |
 | text | f-roi-costHourly | roi.costHourly | Il me coûte en plus ($ par heure) | field=roi.costHourly number min=0 max=1000000000000 |  | Simple + Expert | chiffre par heure (continuous) |
-| button |  |  | Aller à la case à corriger | bFocus=f-roi-revenueHourly |  | Simple + Expert | chiffre par heure (continuous) |
+| button |  |  | Avec ou sans cet achat, après 10 h de jeu | foldHead=roi-d0 | expanded=false controls=fold-roi-d0 | Simple + Expert | chiffre par heure (continuous) |
+| button |  |  | Écrire | bFocus=f-roi-revenueHourly |  | Simple + Expert | chiffre par heure (continuous) |
 | text | roi-alternative-name | assets.1.name | Nom du deuxième achat | field=assets.1.name |  | Simple + Expert (opt) | deuxième achat comparé |
 | text | roi-alternative-price | assets.1.price | Ça coûte, d’après ce que tu imagines ($) | field=assets.1.price number min=0 max=1000000000000 |  | Simple + Expert (opt) | deuxième achat comparé |
 | button |  |  | Retirer cette comparaison | bRoiRemoveComparison |  | Simple + Expert (opt) | deuxième achat comparé |
@@ -685,20 +686,20 @@ Lecture : **kind** = type de contrôle ; **field** = chemin dans le scénario v6
 | text | compare-price-0 | assets.1.price | Ça coûte, d’après ce que tu imagines ($) | field=assets.1.price number min=0 max=1000000000000 |  | Simple + Expert | deux achats libres |
 | select | f-assets-1-utility | assets.1.utility | Mon envie, de 1 à 5 (facultatif) | field=assets.1.utility |  | Simple + Expert | deux achats libres |
 | text | compare-usage-0 | assets.1.usage.perSession | Il me coûte à chaque partie ($) | field=assets.1.usage.perSession number min=0 max=1000000000000 |  | Simple + Expert | deux achats libres |
-| select | f-assets-1-incomeMode | assets.1.incomeMode | Est-ce que cet achat me fait gagner de l’argent ? | field=assets.1.incomeMode |  | Simple + Expert (E) | deux achats libres |
+| select | compare-assets-1-incomeMode | assets.1.incomeMode | Est-ce que cet achat me fait gagner de l’argent ? | field=assets.1.incomeMode |  | Simple + Expert (E) | deux achats libres |
 | text | compare-boost-0 | assets.1.boostHourly | Il me fait gagner en plus ($ par heure) | field=assets.1.boostHourly number min=0 max=1000000000000 |  | Simple + Expert (E) (masqué par un réglage) | deux achats libres |
 | button |  |  | Rétablir cette valeur | bDefault=assets.1.boostHourly bDefaultValue=0 |  | Simple + Expert (E) (masqué par un réglage) | deux achats libres |
-| select | f-assets-1-capabilities-terrain | assets.1.capabilities.terrain | Il va (si tu le sais) | field=assets.1.capabilities.terrain |  | Simple + Expert (opt) | deux achats libres |
+| select | compare-cap-0-terrain | assets.1.capabilities.terrain | Il va (si tu le sais) | field=assets.1.capabilities.terrain |  | Simple + Expert (opt) | deux achats libres |
 | text | compare-cap-0-seats | assets.1.capabilities.seats | Places, toi compris (si tu le sais) | field=assets.1.capabilities.seats number integer min=0 max=100 |  | Simple + Expert (opt) | deux achats libres |
 | button |  |  | Retirer | bCompareRemove=free-<id> |  | Simple + Expert | deux achats libres |
 | text | compare-name-1 | assets.2.name | Nom de cet achat | field=assets.2.name |  | Simple + Expert | deux achats libres |
 | text | compare-price-1 | assets.2.price | Ça coûte, d’après ce que tu imagines ($) | field=assets.2.price number min=0 max=1000000000000 |  | Simple + Expert | deux achats libres |
 | select | f-assets-2-utility | assets.2.utility | Mon envie, de 1 à 5 (facultatif) | field=assets.2.utility |  | Simple + Expert | deux achats libres |
 | text | compare-usage-1 | assets.2.usage.perSession | Il me coûte à chaque partie ($) | field=assets.2.usage.perSession number min=0 max=1000000000000 |  | Simple + Expert | deux achats libres |
-| select | f-assets-2-incomeMode | assets.2.incomeMode | Est-ce que cet achat me fait gagner de l’argent ? | field=assets.2.incomeMode |  | Simple + Expert (E) | deux achats libres |
+| select | compare-assets-2-incomeMode | assets.2.incomeMode | Est-ce que cet achat me fait gagner de l’argent ? | field=assets.2.incomeMode |  | Simple + Expert (E) | deux achats libres |
 | text | compare-boost-1 | assets.2.boostHourly | Il me fait gagner en plus ($ par heure) | field=assets.2.boostHourly number min=0 max=1000000000000 |  | Simple + Expert (E) (masqué par un réglage) | deux achats libres |
 | button |  |  | Rétablir cette valeur | bDefault=assets.2.boostHourly bDefaultValue=0 |  | Simple + Expert (E) (masqué par un réglage) | deux achats libres |
-| select | f-assets-2-capabilities-terrain | assets.2.capabilities.terrain | Il va (si tu le sais) | field=assets.2.capabilities.terrain |  | Simple + Expert (opt) | deux achats libres |
+| select | compare-cap-1-terrain | assets.2.capabilities.terrain | Il va (si tu le sais) | field=assets.2.capabilities.terrain |  | Simple + Expert (opt) | deux achats libres |
 | text | compare-cap-1-seats | assets.2.capabilities.seats | Places, toi compris (si tu le sais) | field=assets.2.capabilities.seats number integer min=0 max=100 |  | Simple + Expert (opt) | deux achats libres |
 | button |  |  | Ce qui compte dans ce calcul | foldHead=compare-assumptions | expanded=false controls=fold-compare-assumptions | Simple + Expert | deux achats libres |
 | button |  |  | Modifier | bFocus=compare-capital |  | Simple + Expert | deux achats libres |

@@ -1,0 +1,15 @@
+{
+ "_note": "Calculateur, lot 5 (« Même interface, intelligence renforcée ») : notes de la barre « Que veux-tu calculer ? » quand une demande reste ambiguë ou incomplète (cahier § 11).",
+ "écris aussi ton argent : l’objectif sera ton argent + ce montant": "schreib auch dein Geld dazu: Das Ziel ist dann dein Geld + dieser Betrag",
+ "nombre de joueurs pas clair : écris-le dans sa case": "Spielerzahl unklar: trag sie in ihr Feld ein",
+ "prix = ton argent + ce qui te manque": "Preis = dein Geld + was dir fehlt",
+ "ton argent = objectif − ce qui te manque": "dein Geld = Ziel − was dir fehlt",
+ "objectif = 2 × ton argent": "Ziel = 2 × dein Geld",
+ "objectif = 3 × ton argent": "Ziel = 3 × dein Geld",
+ "écris aussi ton argent : le prix sera ton argent + ce montant": "schreib auch dein Geld dazu: Der Preis ist dann dein Geld + dieser Betrag",
+ "j’ai pris la durée corrigée": "ich habe die korrigierte Dauer genommen",
+ "deux durées différentes : écris la bonne dans sa case": "zwei verschiedene Dauern: trag die richtige in ihr Feld ein",
+ "ton argent = la somme de ces montants": "dein Geld = die Summe dieser Beträge",
+ "ton argent = ce que tu as − les frais à payer": "dein Geld = was du hast − die zu zahlenden Gebühren",
+ "mission faite": "erledigte Mission"
+}
