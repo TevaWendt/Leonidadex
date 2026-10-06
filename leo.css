@@ -1,4 +1,4 @@
-@import url('/motion-tokens.css?v=fa3d4e82918c');
+@import url('/motion-tokens.css?v=338cea6ab47b');
 /* Léo partage les tokens du Lot C ; tous ses sélecteurs restent isolés. */
 #leo-launch{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:850;display:flex;align-items:center;gap:9px;min-height:48px;padding:7px 16px 7px 8px;border:1px solid var(--amber-2,#f7b645);border-radius:28px;background:var(--night-deep,#241740);color:#fff9ef;box-shadow:0 5px 22px #24174030;font:700 16.5px/1.3 'Archivo',sans-serif;cursor:pointer;touch-action:manipulation;max-width:calc(100vw - 32px)}
 #leo-launch[hidden]{display:none!important}#leo-launch.leo-compact{padding:7px 8px;gap:0}#leo-launch.leo-compact>span:last-child{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}#leo-launch:hover{background:#35215f;border-color:var(--c-neon,#f7b23b)}#leo-launch:focus-visible,.leo-panel :is(a,button,input,select,summary):focus-visible,.leo-transfer :is(a,button):focus-visible{outline:3px solid #f6ab2a;outline-offset:4px}
@@ -26,3 +26,5 @@
 @media(max-height:480px){.leo-panel{height:var(--leo-vheight,100dvh);bottom:auto;top:var(--leo-vtop,0px)}.leo-header{padding:8px 14px}.leo-notice{padding-block:6px}.leo-compose{padding-block:7px}}
 @media(prefers-reduced-motion:reduce){.leo-panel,.leo-panel *,#leo-launch,.leo-transfer{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 @media print{#leo-launch,.leo-panel,.leo-transfer{display:none!important}}
+/* v7.68 (téléphone) : le bouton glisse hors de l’écran quand on descend dans la page (voir leo-loader.js) */
+@media(max-width:600px){#leo-launch{transition:transform .25s ease,opacity .25s ease}#leo-launch.leo-away:not(:focus-visible){transform:translateY(calc(100% + 40px));opacity:0;pointer-events:none}}

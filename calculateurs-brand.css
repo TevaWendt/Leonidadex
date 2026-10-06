@@ -658,3 +658,8 @@ body.calculator-page main .calc-panel>details.calc-advanced[open]>summary::befor
 body.calculator-page main .calc-panel>details.calc-advanced[open]>summary{margin-bottom:12px;border-bottom:1px solid var(--rule)}
 body.calculator-page main .calc-panel>details.calc-advanced>summary:focus-visible{outline:3px solid var(--amber);outline-offset:4px;border-radius:8px}
 @media(max-width:700px){body.calculator-page main .calc-panel>details.calc-advanced{padding:4px 16px 16px;border-radius:12px}}
+
+/* v7.68 (téléphone) : sur un écran de 400 px ou moins, les trois boutons de mode tiennent dans la largeur (« Schritt für
+   Schritt » en allemand faisait sortir « Experte » de 7 px à 360 px) */
+@media(max-width:400px){body.calculator-page .calc-mode-switch button{padding-inline:11px;}}
+@media(max-width:340px){body.calculator-page .calc-mode-switch button{padding-inline:8px;font-size:.86rem;}}

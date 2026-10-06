@@ -1479,7 +1479,7 @@ body.map-full-on{overflow:hidden;}
    CARTE — colonne en sections repliables
    ============================================================ */
 .map-side{
-  max-height:calc(100vh - 100px); overflow-y:auto; scrollbar-width:thin;
+  max-height:calc(100vh - 100px); max-height:calc(100dvh - 100px); overflow-y:auto; scrollbar-width:thin;
   padding:16px 15px;
 }
 .map-side::-webkit-scrollbar{width:6px;}
@@ -3317,3 +3317,18 @@ a.ed-brand:hover,a.ed-brand:focus-visible{border-color:var(--ink);box-shadow:5px
 @media(min-width:640px) and (max-width:959px){.lore-grid--center.lore-grid--n7{grid-template-columns:repeat(2,minmax(0,320px));}.lore-grid--center.lore-grid--n7>:nth-child(7){grid-column:1/-1;justify-self:center;width:calc(50% - 9px);}}
 /* pied de page sur tablette : la cinquième colonne (« Le site ») occupe toute la rangée au lieu de rester seule à gauche */
 @media(min-width:601px) and (max-width:1080px){.foot-cols>div:last-child:nth-child(odd){grid-column:1/-1;}.foot-cols>div:last-child:nth-child(odd) nav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px 18px;}}
+
+/* v7.68 (téléphone) — rien ne change au-dessus de 600 px */
+@media(max-width:600px){
+  /* champs de saisie : 16 px au moins, sinon Safari sur iPhone agrandit la page au toucher */
+  :is(#q,#vq,#vtri,#lo-dos,#lo-main,#lo-poing,#activity-filter,#map-search,#dr-hex,#cl-sel,#col-search,#col-view-name,#col-share-url,#col-help-query,#mail,#cn-q,#cn-fam,#cn-cat,#cn-stock,#cn-sort){font-size:16px!important;}
+  :is(select[id^="col-"],.cmp-pick select,.cat-search input,.cat-sel select,.ed-brandsearch input){font-size:16px!important;}
+  /* quatre adresses vues sur la carte : une par rangée (sur deux colonnes, les noms étaient coupés) */
+  .ed-places:has(>:nth-child(4):last-child){grid-template-columns:1fr;}
+  /* cibles tactiles d’au moins 24 px (WCAG 2.5.8) */
+  .map-close{min-width:32px;min-height:32px;display:grid;place-items:center;}
+  .col-help-answer a{display:inline-flex;align-items:center;min-height:24px;}
+}
+/* très petits écrans (320 px) : un mot plus long que la ligne dans le grand titre (« Personnalisations », « Nebenaktivitäten »)
+   se coupe au lieu d’élargir l’en-tête et de rogner les liens voisins */
+@media(max-width:360px){.page-head :is(h1,.lk-hero-item){overflow-wrap:anywhere;-webkit-hyphens:auto;hyphens:auto;}}

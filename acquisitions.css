@@ -570,3 +570,6 @@
 /* v7.67 (finitions) : pas de carte isolée sur la dernière rangée. 4 cartes : 4, 2 ou 1 par rangée ; 3 cartes : 3 ou 1 ;
    6 cartes : 3, 2 ou 1 (navigateurs sans :has() : disposition précédente). */
 .cg-grid:has(>:last-child:nth-child(6)){grid-template-columns:repeat(auto-fit,minmax(max(min(100%,250px),calc((100% - 24px)/3 - 1px)),1fr));}
+
+/* v7.68 (téléphone) : liens « source », « visuel officiel », « Carte Rockstar » et case « J’ai obtenu » : cibles d’au moins 24 px */
+@media(max-width:600px){.cat-meta a,a.cat-media,.cat-acq-link{display:inline-flex;align-items:center;min-height:24px;}.cat-acq{min-height:28px;}}

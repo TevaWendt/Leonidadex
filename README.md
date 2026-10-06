@@ -384,3 +384,7 @@ Contrôle du calculateur (scénarios fictifs A–L, `outils/tests/calculateurs-c
 ## v7.67 (06/10/2026)
 
 IA Claude (API d’Anthropic) par la fonction `api/ia.js` : la barre « Que veux-tu calculer ? » répond d’abord localement et ne consulte l’IA que pour ce que la lecture locale ne place pas (l’IA remplit des cases, le moteur calcule) ; Léo rédige ses réponses à partir des seuls extraits du site. Sans `ANTHROPIC_API_KEY` dans Vercel, tout reste local. Modèle : `LK_IA_MODELE` (défaut `claude-haiku-4-5-20251001`). Finitions : tailles d’images justes (galeries nettes), grilles sans carte isolée, contrastes, allemand harmonisé. Détail : `LISEZ-MOI-v7.67.txt` et `outils/CHANGEMENTS-v7.67.txt` ; tests `outils/tests/ia-v767.test.cjs`.
+
+## v7.68 (06/10/2026)
+
+Téléphone (sous 600 px seulement, ordinateur inchangé) : bouton de Léo réduit à son symbole et qui s’efface quand on descend, champs de saisie à 16 px (pas de zoom automatique sur iPhone), tableau des Mentions en fiches avec intitulés (`data-label` traduit), adresses de Vêtements et style sur une colonne, cibles tactiles de 24 px au moins, hauteurs en `dvh`. Détail : `LISEZ-MOI-v7.68.txt` et `outils/CHANGEMENTS-v7.68.txt`.

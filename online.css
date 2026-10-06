@@ -244,7 +244,7 @@
   .online-cine-js .online-cine{height:auto;}
   .online-cine-js .online-stage{position:static;height:auto;overflow:visible;}
   .online-cine-js .online-scene{position:relative;opacity:1;visibility:visible;}
-  .online-cine-js .online-scene-in{height:auto;min-height:100vh;}
+  .online-cine-js .online-scene-in{height:auto;min-height:100vh;min-height:100dvh;}
   .online-scene *{--vis:1!important;--el:1!important;--z:1!important;--draw:1!important;animation:none!important;}
   .online-defiler i,.is-on .online-vide-q,.is-on .online-vide-l,.is-on .online-flap-q{animation:none!important;}
   .online-cine-grid,.online-scene-bg img,.online-scene-art,.online-w,.online-flap-s,.online-vide-bar,.online-ghost{transform:none!important;}
@@ -452,3 +452,7 @@
   .online-annonce,.online-chapitres a,.online-chap-fig img{transition:none;}
   .online-annonce:hover,.online-chapitres a:hover,.online-chap-fig:hover img{transform:none;}
 }
+
+/* v7.68 (téléphone) : sur un écran de 400 px ou moins, le grand titre des pages GTA Online ne force plus l’en-tête à déborder
+   (« Announcements, » en anglais dépassait de 20 px à 360 px) */
+@media(max-width:400px){.online-page .online-hero>*{min-width:0;}.online-page .online-hero h1{font-size:min(2.5rem,10.4vw);overflow-wrap:anywhere;}}

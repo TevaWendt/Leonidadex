@@ -24,7 +24,18 @@ const dateSources=frDate(Object.values(JSON.parse(fs.readFileSync(path.join(__di
 const VARS={dateSources,releaseDate:frDate(acq.game.releaseDate),releaseChecked:frDate(acq.game.checkedAt)};
 const ORG={'@type':'Organization','@id':'https://www.leonidakit.com/#organization',name:'Leonidakit',url:'https://www.leonidakit.com/',logo:{'@type':'ImageObject',url:'https://www.leonidakit.com/img/social-card.png'}};
 
+/* v7.68 (téléphone) : chaque case d’un tableau porte l’intitulé de sa colonne (data-label, traduit comme les autres attributs) ;
+   sous 600 px, une ligne devient une fiche et l’intitulé s’affiche au-dessus de la case (informations.css). Les rôles ARIA
+   gardent la lecture en tableau quand l’affichage change. */
+function labelCells(html){
+ return html.replace(/<table>([\s\S]*?)<\/table>/g,(all,inner)=>{
+  const head=(inner.match(/<thead>([\s\S]*?)<\/thead>/)||[])[1];if(!head)return all;
+  const labels=[...head.matchAll(/<th[^>]*>([\s\S]*?)<\/th>/g)].map(m=>m[1].replace(/<[^>]+>/g,'').trim());
+  const rows=inner.replace(/<tr([^>]*)>([\s\S]*?)<\/tr>/g,(r,attrs,cells)=>{let i=0;return '<tr'+attrs+' role="row">'+cells.replace(/<(th|td)((?:\s[^>]*)?)>/g,(c,tag,a)=>{const k=i++;if(tag==='th')return '<th'+a+' role="'+(/scope="col"/.test(a)?'columnheader':'rowheader')+'">';return '<td'+a+' role="cell"'+(labels[k]?' data-label="'+esc(labels[k])+'"':'')+'>';})+'</tr>';});
+  return '<table role="table">'+rows.replace(/<(thead|tbody)>/g,'<$1 role="rowgroup">')+'</table>';});
+}
 function page(file,title,description,content,opts={}){
+ content=labelCells(content);
  const url='https://www.leonidakit.com/'+file;
  const crumbs={'@context':'https://schema.org','@type':'BreadcrumbList',itemListElement:[{'@type':'ListItem',position:1,name:'Accueil',item:'https://www.leonidakit.com/'},{'@type':'ListItem',position:2,name:title,item:url}]};
  const ld=[crumbs].concat(opts.ld||[]).map(x=>'<script type="application/ld+json">'+JSON.stringify(x)+'</script>').join('');

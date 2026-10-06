@@ -199,3 +199,16 @@
 .info-prose-in code{padding:1px 4px;}
 @media (min-width:1000px){.info-illus--5{grid-template-columns:repeat(6,minmax(0,1fr));}.info-illus--5 li{grid-column:span 2;}.info-illus--5 li:nth-child(4){grid-column:2/span 2;}}
 @media (min-width:640px) and (max-width:999px){.info-illus--5{grid-template-columns:repeat(2,minmax(0,1fr));}.info-illus--5 li:last-child{grid-column:1/-1;}}
+/* v7.68 (téléphone) : un tableau des informations devient une fiche par ligne ; chaque case affiche l’intitulé de sa colonne
+   (data-label posé par outils/gen-informations.cjs). Rien ne change au-dessus de 600 px. */
+@media(max-width:600px){
+ .info-table{overflow:visible;border:0;border-radius:0;background:none;}
+ .info-table table{min-width:0;}
+ .info-table thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;}
+ .info-table :is(tbody,tr,th,td){display:block;}
+ .info-table tbody tr{margin:0 0 12px;border:2px solid var(--ink);border-radius:12px;background:#fff;overflow:hidden;}
+ .info-table tbody th{background:var(--paper-2,#F4F0E7);min-width:0;}
+ .info-table tbody tr :is(th,td),.info-table tbody tr:last-child :is(th,td){border-bottom:1px solid var(--rule);}
+ .info-table tbody tr :is(th,td):last-child,.info-table tbody tr:last-child :is(th,td):last-child{border-bottom:0;}
+ .info-table td[data-label]::before{content:attr(data-label);content:attr(data-label) / "";display:block;margin-bottom:2px;font-size:.78rem;font-weight:800;letter-spacing:.02em;color:var(--ink-soft);}
+}

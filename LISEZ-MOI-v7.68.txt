@@ -1,0 +1,23 @@
+LEONIDAKIT v7.68 — tout optimisé pour téléphone, ordinateur inchangé
+À appliquer APRÈS la v7.67 (archive Leonidakit-v7.67-modifs.zip, à copier d'abord). Rien à supprimer.
+
+CE QUI CHANGE SUR TÉLÉPHONE (écran de 600 px de large ou moins)
+- Léo : le bouton est réduit à son symbole et s'efface quand tu descends dans la page ; il revient dès que tu remontes,
+  en bas de page ou au clavier. Il ne cache plus le texte que tu lis.
+- Champs de saisie à 16 px au moins (recherche, filtres et tris des catalogues, armes, véhicules, carte, collectibles,
+  carnets, comparateur, alerte de l'accueil) : Safari sur iPhone n'agrandit plus la page quand on touche un champ.
+- Mentions et confidentialité : le tableau des données devient une fiche par ligne, chaque case avec son intitulé
+  (plus de défilement de côté). L'intitulé est traduit dans les cinq langues.
+- Vêtements et style : les quatre enseignes vues sur la carte s'affichent une par rangée (les noms étaient coupés).
+- Cibles tactiles d'au moins 24 px : liens « source », « visuel officiel » et « Carte Rockstar » des catalogues, case
+  « J'ai obtenu », bouton de fermeture de la fiche sur la carte, liens de l'aide des collectibles.
+- Hauteur réelle de l'écran (barres du navigateur déduites) pour la colonne de la carte, le menu d'écoute des radios et
+  les scènes fixes de la page GTA Online.
+- Petits écrans (400 px et moins) : titre des pages GTA Online, boutons de mode du calculateur en allemand, grands titres
+  et liens à mot long (320 px) tiennent dans la largeur.
+
+SUR ORDINATEUR : rien ne change. Toutes les nouvelles règles ne s'appliquent que sous 600 px ; captures pleine page à
+1 280 px comparées pixel par pixel avant et après, sur 20 pages (dont 4 traduites). Détail : outils/CHANGEMENTS-v7.68.txt.
+
+Mise en ligne : copier le contenu de l'archive à la racine du dossier GitHub (remplacer), valider, pousser.
+Retour arrière : commit précédent dans GitHub Desktop.

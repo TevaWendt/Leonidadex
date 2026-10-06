@@ -168,7 +168,7 @@
 .lkx-listen-ico{display:grid;place-items:center;flex:none;width:24px;height:24px;border-radius:50%;background:var(--amber);color:var(--ink);}
 .lkx-listen-ico svg{width:12px;height:12px;margin-left:2px;}
 .lkx-listen-menu{gap:4px;min-width:230px;padding:10px;border:2px solid var(--ink);border-radius:12px;background:var(--paper);color:var(--ink);box-shadow:5px 5px 0 var(--ink);}
-.lkx-listen-menu[popover]{position:fixed;inset:auto;margin:0;width:272px;max-width:calc(100vw - 16px);max-height:calc(100vh - 16px);overflow:auto;}
+.lkx-listen-menu[popover]{position:fixed;inset:auto;margin:0;width:272px;max-width:calc(100vw - 16px);max-height:calc(100vh - 16px);max-height:calc(100dvh - 16px);overflow:auto;}
 .lkx-listen-menu:popover-open{display:grid;animation:lkx-wave .3s var(--lkx-ease) both;}
 .lkx-listen-menu a{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 10px;border-radius:8px;font-weight:800;font-size:.88rem;color:var(--ink);}
 .lkx-listen-menu a:hover,.lkx-listen-menu a:focus-visible{background:var(--amber);}
@@ -395,3 +395,5 @@
 .lkx-page.online-page .online-annonce::before{box-shadow:0 0 12px rgba(151,223,207,.8);}
 .lkx-page.online-page .online-annonces{border-left-width:4px;}
 .lkx-page.online-page .online-bloc .sec-h{font-size:var(--fs-h2);}
+/* v7.68 (téléphone) : très petits écrans (320 px) : un long nom de lien (« Personnalisations ») se coupe au lieu d’être rogné */
+@media(max-width:360px){.lkx-link{padding-right:32px;}.lkx-link b{overflow-wrap:anywhere;-webkit-hyphens:auto;hyphens:auto;}}

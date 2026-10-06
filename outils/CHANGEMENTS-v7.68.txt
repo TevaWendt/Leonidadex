@@ -1,0 +1,40 @@
+LEONIDAKIT v7.68 — téléphone, 6 octobre 2026
+
+Base : v7.67. Demande : « un autre fichier zip où tout est optimisé pour téléphone sans pour autant casser le truc du PC ».
+Toutes les règles ajoutées sont sous @media(max-width:600px) ou ne jouent que sous 600 px (Léo). Rien n’est publié.
+
+1. CE QUI CHANGE (téléphone)
+- Léo (leo-loader.js, leo.css) : sous 600 px, le bouton est d’emblée réduit à son symbole (nom lu par les lecteurs
+  d’écran) ; il glisse hors de l’écran quand on descend de plus de 12 px, revient quand on remonte, à 120 px du bas de la
+  page, au focus, ou si l’écran s’élargit. Mouvement réduit : sans transition. Au-dessus de 600 px : logique inchangée.
+- Champs de saisie (style.css) : 16 px au moins sous 600 px (#q, #vq, #vtri, #lo-*, #activity-filter, #map-search,
+  #dr-hex, #cl-sel, champs et listes des collectibles, #cn-*, #mail, listes du comparateur, recherches et listes des
+  catalogues, recherche des marques). Safari iOS n’agrandit plus la page au toucher. Les champs déjà plus grands
+  (calculateur : 17,92 px) ne sont pas touchés.
+- Mentions et confidentialité (outils/gen-informations.cjs, informations.css) : chaque case porte data-label (intitulé
+  de sa colonne, traduit par outils/langues.cjs comme les autres attributs) ; rôles ARIA table/rowgroup/row/
+  columnheader/rowheader/cell explicites ; sous 600 px, une ligne = une fiche, intitulé au-dessus de chaque case,
+  en-tête de colonnes masqué visuellement mais lu.
+- Vêtements et style (style.css) : liste de quatre adresses .ed-places sur une colonne sous 600 px.
+- Cibles tactiles de 24 px au moins (acquisitions.css, style.css) : .cat-meta a, a.cat-media, .cat-acq-link (24 px),
+  .cat-acq (28 px), .map-close (32 px), liens de .col-help-answer (24 px).
+- Hauteur dynamique (100dvh après 100vh) : .map-side, .lkx-listen-menu[popover], scènes fixes de online.html. Sur
+  ordinateur, dvh = vh : rien ne bouge.
+- Petits écrans : titre des pages GTA Online à min(2,5rem ; 10,4vw) sous 400 px (online.css) ; boutons de mode du
+  calculateur à 11 px de marge intérieure sous 400 px, 8 px et 0,86rem sous 340 px (calculateurs-brand.css) ; grands
+  titres d’en-tête (style.css) et noms des liens .lkx-link (lk-sections.css) coupables sous 360 px.
+
+2. CONTRÔLES
+- Tests Node : 962 sur 962 (901 + calculateurs-check-ultime 16 + langues 42 + coverage 3) ; outils/verifier.js : aucune
+  erreur (303 680 références, 2 241 pages) ; preuve-confidentialite.cjs et gen-leo.cjs --check : conformes.
+- Cadre du calculateur : seules changent les empreintes de style.css, calculateurs-brand.css et leo.css (règles sous
+  400 px) ; aucune case, aucun bouton, aucun texte.
+- Téléphone, 240 pages (5 langues) à 320, 360, 390 et 414 px : aucune page plus large que l’écran, aucun texte rogné
+  (hors bandeaux à défilement prévus), aucune erreur JavaScript ; à 390 px, plus aucun champ sous 16 px. Cibles encore
+  signalées par l’outil : cases dans une étiquette cliquable plus grande, cartes « L’argent » entièrement cliquables.
+- Corrigés au passage sous 400 px : titre des pages GTA Online (« Announcements, » débordait de 20 px à 360 px),
+  boutons de mode du calculateur en allemand (« Experte » sortait de 7 px à 360 px), grands titres et liens à mot long
+  à 320 px (« Personnalisations », « Nebenaktivitäten »).
+- Ordinateur : 20 pages pleine page à 1 280 px (dont 4 traduites) comparées pixel par pixel avant et après : identiques,
+  sauf le compte à rebours de la sortie (l’heure tourne) et une image chargée à la demande, mêmes écarts que deux
+  captures successives de la v7.67.
