@@ -112,7 +112,7 @@
 .codes-cats{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr));gap:12px;}
 .codes-cats li{position:relative;display:flex;flex-direction:column;gap:6px;padding:14px 48px 14px 14px;border:2px solid var(--ink);border-radius:var(--radius-s);background:var(--paper);}
 .codes-cats li b{font-size:1.04rem;}
-.codes-cats li span{font-size:.92rem;color:var(--ink-soft);}
+.codes-cats li span:not(.lkx-card-tag):not(.codes-v){font-size:.92rem;color:var(--ink-soft);}
 .codes-cats li i{position:absolute;right:12px;top:12px;display:grid;place-items:center;min-width:28px;height:28px;border-radius:999px;background:var(--ink);color:var(--paper);font:700 .78rem/1 var(--font-mono);font-style:normal;}
 .codes-cats a{color:var(--coral-text);font-weight:700;text-decoration:underline;text-underline-offset:3px;}
 .codes-vide{max-width:var(--measure);padding:16px 18px;border:2px dashed var(--ink-soft);border-radius:var(--radius);background:var(--paper-2);margin:8px 0 18px;}
@@ -162,3 +162,11 @@
 .codes-avant li p{margin:0 0 6px;}
 .codes-avant li p:last-child{margin:0;}
 .codes-statut-date{margin:0 0 4px!important;}
+
+/* v7.67 (finitions) : pas de carte isolée sur la dernière rangée. 4 cartes : 4, 2 ou 1 par rangée ; 3 cartes : 3 ou 1 ;
+   6 cartes : 3, 2 ou 1 (navigateurs sans :has() : disposition précédente). */
+.codes-faits:has(>:last-child:nth-child(4)){grid-template-columns:repeat(auto-fit,minmax(clamp(calc((100% - 42px)/4 - 1px),calc((1042px - 100%)*999),clamp(calc((100% - 14px)/2 - 1px),calc((514px - 100%)*999),100%)),1fr));}
+.codes-faits:has(>:last-child:nth-child(3)){grid-template-columns:repeat(auto-fit,minmax(clamp(calc((100% - 28px)/3 - 1px),calc((778px - 100%)*999),100%),1fr));}
+.codes-cartes:has(>:last-child:nth-child(4)){grid-template-columns:repeat(auto-fit,minmax(clamp(calc((100% - 48px)/4 - 1px),calc((1488px - 100%)*999),clamp(calc((100% - 16px)/2 - 1px),calc((736px - 100%)*999),100%)),1fr));}
+.codes-cartes:has(>:last-child:nth-child(3)){grid-template-columns:repeat(auto-fit,minmax(clamp(calc((100% - 32px)/3 - 1px),calc((1112px - 100%)*999),100%),1fr));}
+.codes-champs:has(>:last-child:nth-child(6)){grid-template-columns:repeat(auto-fit,minmax(max(min(100%,230px),calc((100% - 20px)/3 - 1px)),1fr));}

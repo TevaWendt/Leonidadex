@@ -412,15 +412,63 @@
     if (workshop) workshop.scrollIntoView({ behavior: 'auto', block: 'start' });
   }
   const form = $('calc-ask'), input = $('calc-ask-input'), out = $('calc-ask-out');
-  function answer(value) {
+  /* v7.67 : IA de la barre (API Claude, par la fonction /api/ia du site). La lecture locale répond d’abord, tout de suite, comme
+     avant. L’IA n’est appelée que si cette lecture laisse quelque chose de côté : rien de rempli, une ambiguïté, plus de
+     nombres dans la phrase que de cases remplies, ou ce que les cases ne disent pas directement (taux de réussite, intervalle,
+     variante « et si », gain par mission, préparation, attente). Elle dit quelles cases remplir ; les chiffres viennent du
+     moteur, comme pour une saisie à la main. Sans clé, hors ligne, trop lente (15 s) ou en erreur : la réponse locale reste.
+     Les exemples restent locaux. */
+  const IA_OFF = 'lk_ia_off';
+  const BEYOND = /%|pour ?cent|percent|por ?ciento|per ?cento|prozent|\bchances?\b|\btaux\b|\brate\b|\btasa\b|\btasso\b|\bquote\b|\b\d+ (?:fois )?sur \d+\b|\b\d+ (?:times )?(?:out )?of \d+\b|\bde cada \d+\b|\bsu \d+\b|\bvon \d+\b|\b(?:entre|between|tra|zwischen) \d[^?.!;]{0,40}?\b(?:et|and|y|e|und) \d|\bet si\b|\bwhat if\b|\by si\b|\be se\b|\bund wenn\b|\bpar (?:mission|braquage|coup|course|livraison)\b|\bper (?:mission|heist|run|job|missione|colpo)\b|\bpor (?:mision|golpe|atraco)\b|\bpro (?:mission|coup|raub)\b|\bprepa|\bprep\b|\bsetup\b|\bpreparaci|\bpreparazion|\bvorbereit|\bcooldown|\battente\b|\bespera\b|\battesa\b|\bwartezeit\b|\bechou|\bfail|\bfalla|\bfalli|\bscheiter/;
+  let asked = 0;
+  function iaOn() { try { return sessionStorage.getItem(IA_OFF) !== '1'; } catch (e) { return true; } }
+  function needsAI(q, result) {
+    if (!result.done.length || result.notes.length) return true;
+    const x = interpret(q);
+    if (!x) return false;
+    const quantities = x.mentions.filter(m => !m.replaced && m.role !== 'excluded').length + (x.minutes !== null ? 1 : 0) + (x.players !== null ? 1 : 0) + (result.values.deadlineDays !== null ? 1 : 0);
+    return quantities > result.done.length || BEYOND.test(x.text);
+  }
+  async function iaCalc(text) {
+    const calc = window.LKCalculator;
+    if (!iaOn() || typeof fetch !== 'function' || !calc || typeof calc.applyAI !== 'function') return null;
+    const ctl = typeof AbortController === 'function' ? new AbortController() : null, timer = setTimeout(() => { if (ctl) ctl.abort(); }, 15000);
+    try {
+      const r = await fetch('/api/ia', { method: 'POST', headers: { 'Content-Type': 'application/json' }, signal: ctl ? ctl.signal : undefined, body: JSON.stringify({ mode: 'calcul', question: text, lang: (document.documentElement.lang || 'fr').slice(0, 2), page: location.pathname, state: calc.brief() }) });
+      if (r.status === 503 || r.status === 404 || r.status === 405) { try { sessionStorage.setItem(IA_OFF, '1'); } catch (e) { /* stockage indisponible : on réessaiera */ } return null; }
+      if (!r.ok) return null;
+      const j = await r.json();
+      return j && j.ok && j.mode === 'calcul' && Array.isArray(j.cases) ? j : null;
+    } catch (e) { return null; } finally { clearTimeout(timer); }
+  }
+  async function answer(value, localOnly) {
     const result = route(value);
     if (!result) return;
-    if (out) { out.textContent = result.label + (result.done.length ? ' · ' + result.done.join(' · ') : ': rellena las casillas de justo debajo.') + (result.notes.length ? ' · ' + result.notes.join(' · ') : ''); out.hidden = false; }
+    if (out) { out.textContent = result.label + (result.done.length ? ' · ' + result.done.join(' · ') : ': rellena las casillas de justo debajo.') + (result.notes.length ? ' · ' + result.notes.join(' · ') : ''); out.hidden = false; out.removeAttribute('aria-busy'); }
     focusWorkshop();
+    const text = String(value || '').trim(), calc = window.LKCalculator;
+    const turn = ++asked;
+    if (localOnly || text.length < 2 || !calc || !iaOn() || typeof fetch !== 'function' || !needsAI(text, result)) return;
+    let wait = null;
+    if (out) { wait = document.createElement('span'); wait.className = 'calc-ask-wait'; wait.textContent = ' · ' + 'Leyendo tu petición…'; out.appendChild(wait); out.setAttribute('aria-busy', 'true'); }
+    const r = await iaCalc(text);
+    if (wait) wait.remove();
+    /* une demande plus récente a déjà répondu : cette réponse arrive trop tard */
+    if (turn !== asked) return;
+    if (out) out.removeAttribute('aria-busy');
+    if (!r || !(r.cases.length || r.question)) return;
+    const parts = [];
+    if (r.note) parts.push(r.note);
+    if (r.cases.length) calc.applyAI(r.outil, r.cases, 'Casillas rellenadas a partir de tu frase.');
+    for (const s of r.scenarios || []) { const v = calc.scenarioSummary(r.outil, s.cases); if (v) parts.push(s.nom + ': ' + v); }
+    if (r.question) parts.push(r.question);
+    if (!parts.length) parts.push('Casillas rellenadas a partir de tu frase.');
+    if (out) { out.textContent = parts.join(' · '); out.hidden = false; }
+    if (r.cases.length) focusWorkshop();
   }
   if (form && input) {
     form.addEventListener('submit', event => { event.preventDefault(); answer(input.value); });
-    document.querySelectorAll('[data-ask]').forEach(button => button.addEventListener('click', () => { input.value = button.dataset.ask; answer(input.value); }));
+    document.querySelectorAll('[data-ask]').forEach(button => button.addEventListener('click', () => { input.value = button.dataset.ask; answer(input.value, true); }));
   }
   document.querySelectorAll('[data-goal-preset]').forEach(button => button.addEventListener('click', () => {
     const target = Number(button.dataset.goalPreset);
@@ -428,5 +476,5 @@
     openTab('goal'); applyGoal({ target }); focusWorkshop();
   }));
   document.querySelectorAll('[data-open-tab]').forEach(button => button.addEventListener('click', event => { event.preventDefault(); openTab(button.dataset.openTab); focusWorkshop(); }));
-  window.LKCalcHub = { route, interpret, parseMoney, parseMinutesPerDay };
+  window.LKCalcHub = { route, interpret, parseMoney, parseMinutesPerDay, needsAI };
 }());

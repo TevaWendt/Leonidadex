@@ -4,6 +4,9 @@ const HUB_NOTES={"lieux": "Ouvre une fiche pour retrouver ses médias et ses rep
    et les scripts déjà utilisés par le site (copiés depuis a-propos.html et une fiche véhicule).
    Usage : node outils/lore-gen.js   (depuis la racine du dépôt, après gen.js) */
 const fs=require('fs'),path=require('path');
+// v7.67 : la galerie « En images » occupe environ 90 % de l’écran (1 508 px au plus) ; annoncer 560 px faisait choisir
+// la variante 800 px, agrandie et floue sur ordinateur.
+const SLIDE_SIZES='(max-width:1680px) 90vw, 1508px';
 process.chdir(path.join(__dirname,'..'));
 const visuals=require('./lot-c-visuals.cjs');
 const DP=require('./donnees-publiees.cjs');
@@ -78,7 +81,7 @@ const IMG_ALT=(m,x)=>x.imageAlt||m.alt||(x.name+', capture officielle Rockstar G
 /* Galerie « En images » : les visuels au-delà du premier, en grille, sans légende (crédits sur medias.html). Chaque vignette ouvre la version 1280 px. */
 const galleryBlock=(x,S)=>{if(x.galerie)return LKX.gallery(MED,x.galerie.map(g=>({media:g.media,alt:g.alt||IMG_ALT(MED[g.media]||{},x),legende:g.legende})),{name:x.name,kicker:'GTA VI · '+kindOf(x,S)});const g=(x.media||[]).map(id=>MED[id]).filter(Boolean);if(g.length<2)return '';
   const n=g.length,pad=k=>String(k).padStart(2,'0');
-  return `<section class="shell lore-gallery reveal"><h2 class="sec-h">En images</h2><div class="lore-stack" style="--n:${n}"><div class="lore-stage" aria-label="Galerie de ${n} images">${g.map((m,i)=>'<figure class="lore-slide lore-slide--'+['z','tl','br','tr','bl'][i%5]+(i===0?' is-active':'')+'" data-i="'+i+'"><a href="'+(m.variants[1]||m.variants[0]).src+'" target="_blank" rel="noopener" aria-label="Agrandir : '+esc(m.titre)+'">'+imgTag(m,m.alt||(x.name+', '+m.titre+', capture officielle Rockstar Games'),true).replace('loading="eager"','loading="lazy"')+'</a><div class="lore-slide-txt" aria-hidden="true"><span class="lst-k">GTA VI &middot; '+esc(kindOf(x,S))+'</span><strong>'+esc(x.name)+'</strong><em>'+pad(i+1)+' / '+pad(n)+'</em></div></figure>').join('')}</div></div></section>`;};
+  return `<section class="shell lore-gallery reveal"><h2 class="sec-h">En images</h2><div class="lore-stack" style="--n:${n}"><div class="lore-stage" aria-label="Galerie de ${n} images">${g.map((m,i)=>'<figure class="lore-slide lore-slide--'+['z','tl','br','tr','bl'][i%5]+(i===0?' is-active':'')+'" data-i="'+i+'"><a href="'+(m.variants[1]||m.variants[0]).src+'" target="_blank" rel="noopener" aria-label="Agrandir : '+esc(m.titre)+'">'+imgTag(m,m.alt||(x.name+', '+m.titre+', capture officielle Rockstar Games'),true).replace('loading="eager"','loading="lazy"').replace('sizes="(max-width:820px) 100vw, 560px"','sizes="'+SLIDE_SIZES+'"')+'</a><div class="lore-slide-txt" aria-hidden="true"><span class="lst-k">GTA VI &middot; '+esc(kindOf(x,S))+'</span><strong>'+esc(x.name)+'</strong><em>'+pad(i+1)+' / '+pad(n)+'</em></div></figure>').join('')}</div></div></section>`;};
 const imgTag=(m,alt,big)=>{if(!m)return '';const a=m.variants[0],b=m.variants[1]||a;
   const ss=u=>u.replace(/,/g,'%2C');/* v7.65 : une adresse avec virgule (photos/L192,ig.webp) couperait srcset */
   return '<img src="'+a.src+'" srcset="'+ss(a.src)+' '+a.w+'w, '+ss(b.src)+' '+b.w+'w" sizes="'+(big?'(max-width:820px) 100vw, 560px':'(max-width:600px) 100vw, 300px')+'" width="'+(big?b.w:a.w)+'" height="'+(big?b.h:a.h)+'" alt="'+esc(alt)+'" loading="'+(big?'eager':'lazy')+'" decoding="async">';};

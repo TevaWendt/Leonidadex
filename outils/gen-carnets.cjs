@@ -262,7 +262,7 @@ function dashboard() {
     const href = k.url.replace(/^\//, '');
     if (k.nature === 'document') {
       return `<article class="cn-dcard" id="carnet-${k.id}" data-carnet="${k.id}">${ANCHORS[k.id].map(a => `<span class="lk-anchor" id="${a}"></span>`).join('')}
-<a class="cn-dcard-cover" href="${href}" tabindex="-1" aria-hidden="true"><img src="${img480.slice(1)}" srcset="${img480.slice(1)} 480w, ${img1280.slice(1)} 1280w" sizes="(max-width: 700px) 100vw, 360px" width="480" height="270" alt="" loading="lazy" decoding="async"></a>
+<a class="cn-dcard-cover" href="${href}" tabindex="-1" aria-hidden="true"><img src="${img480.slice(1)}" srcset="${img480.slice(1)} 480w, ${img1280.slice(1)} 1280w" sizes="(max-width:719px) 94vw, (max-width:1119px) 46vw, 456px" width="480" height="270" alt="" loading="lazy" decoding="async"></a>
 <div class="cn-dcard-body"><h3><a href="${href}">${esc(k.titre)}</a></h3>
 <ul class="cn-dcard-fams"><li id="progress-calc"><span>Calculs enregistrés</span> <strong class="suivi-n" id="progress-calc-n">Aucun calcul</strong></li><li data-cn-plans><span>Business plans</span> <strong class="suivi-n" data-cn-plans-n>Aucun plan</strong></li></ul>
 <p class="cn-dcard-extra" data-cn-extra></p>
@@ -275,7 +275,7 @@ function dashboard() {
     }).join('');
     const total = k.familles.reduce((a, f) => a + (f === 'lieux' ? S.lieux().items.length : S.items(f).length), 0);
     return `<article class="cn-dcard" id="carnet-${k.id}" data-carnet="${k.id}">${ANCHORS[k.id].map(a => `<span class="lk-anchor" id="${a}"></span>`).join('')}
-<a class="cn-dcard-cover" href="${href}" tabindex="-1" aria-hidden="true"><img src="${img480.slice(1)}" srcset="${img480.slice(1)} 480w, ${img1280.slice(1)} 1280w" sizes="(max-width: 700px) 100vw, 360px" width="480" height="270" alt="" loading="lazy" decoding="async"></a>
+<a class="cn-dcard-cover" href="${href}" tabindex="-1" aria-hidden="true"><img src="${img480.slice(1)}" srcset="${img480.slice(1)} 480w, ${img1280.slice(1)} 1280w" sizes="(max-width:719px) 94vw, (max-width:1119px) 46vw, 456px" width="480" height="270" alt="" loading="lazy" decoding="async"></a>
 <div class="cn-dcard-body"><h3><a href="${href}">${esc(k.titre)}</a></h3>
 <p class="cn-dcard-n"><strong data-cn-done>0</strong> / <span data-cn-total>${nf(total)}</span> <span>${esc(ED.carnets[k.id].compteurs.done)}</span></p>
 <span class="cn-dcard-bar" aria-hidden="true"><i data-cn-bar style="width:0%"></i></span>

@@ -3311,3 +3311,9 @@ a.ed-brand:hover,a.ed-brand:focus-visible{border-color:var(--ink);box-shadow:5px
 @media(max-width:600px){.nav-more-panel .nav-online{flex-direction:column;align-items:flex-start;gap:0;}}
 @media(min-width:601px) and (max-width:1080px){.nav-more-panel{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(min-width:821px) and (max-width:1080px){.foot-cols{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* v7.67 (finitions) : grille de 7 cartes (les animaux) : la carte seule de la dernière rangée est centrée */
+@media(min-width:960px){.lore-grid--center.lore-grid--n7{grid-template-columns:repeat(3,minmax(250px,320px));}.lore-grid--center.lore-grid--n7>:nth-child(7){grid-column:2;}}
+@media(min-width:640px) and (max-width:959px){.lore-grid--center.lore-grid--n7{grid-template-columns:repeat(2,minmax(0,320px));}.lore-grid--center.lore-grid--n7>:nth-child(7){grid-column:1/-1;justify-self:center;width:calc(50% - 9px);}}
+/* pied de page sur tablette : la cinquième colonne (« Le site ») occupe toute la rangée au lieu de rester seule à gauche */
+@media(min-width:601px) and (max-width:1080px){.foot-cols>div:last-child:nth-child(odd){grid-column:1/-1;}.foot-cols>div:last-child:nth-child(odd) nav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px 18px;}}

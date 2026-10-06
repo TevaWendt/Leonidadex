@@ -566,3 +566,7 @@
 /* UI-03 : une ligne de liste entre par une translation courte (12 px) ; la colonne reste alignée puisque la ligne bouge d'un bloc */
 .js tr.cat-row.lk-reveal:not(.lk-settled){transform:translate3d(0,12px,0);}
 .js tr.cat-row.lk-reveal.is-in:not(.lk-settled){transform:none;}
+
+/* v7.67 (finitions) : pas de carte isolée sur la dernière rangée. 4 cartes : 4, 2 ou 1 par rangée ; 3 cartes : 3 ou 1 ;
+   6 cartes : 3, 2 ou 1 (navigateurs sans :has() : disposition précédente). */
+.cg-grid:has(>:last-child:nth-child(6)){grid-template-columns:repeat(auto-fit,minmax(max(min(100%,250px),calc((100% - 24px)/3 - 1px)),1fr));}

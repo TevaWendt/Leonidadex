@@ -169,9 +169,9 @@ ${C.scripts}
 
 /* ---------- briques ---------- */
 const imgOf = (MED, id) => { const m = MED[id]; if (!m) return null; return { a: m.variants[0], b: m.variants[1] || m.variants[0] }; };
-function imgTag(MED, id, alt, big) {
+function imgTag(MED, id, alt, big, sizes) {
   const m = imgOf(MED, id); if (!m) return '';
-  return '<img src="' + m.a.src + '" srcset="' + m.a.src + ' ' + m.a.w + 'w, ' + m.b.src + ' ' + m.b.w + 'w" sizes="' + (big ? '(max-width:820px) 100vw, 560px' : '(max-width:600px) 100vw, 360px') + '" width="' + (big ? m.b.w : m.a.w) + '" height="' + (big ? m.b.h : m.a.h) + '" alt="' + esc(alt) + '" loading="' + (big ? 'eager' : 'lazy') + '" decoding="async">';
+  return '<img src="' + m.a.src + '" srcset="' + m.a.src + ' ' + m.a.w + 'w, ' + m.b.src + ' ' + m.b.w + 'w" sizes="' + (sizes || (big ? '(max-width:820px) 100vw, 560px' : '(max-width:600px) 100vw, 360px')) + '" width="' + (big ? m.b.w : m.a.w) + '" height="' + (big ? m.b.h : m.a.h) + '" alt="' + esc(alt) + '" loading="' + (big ? 'eager' : 'lazy') + '" decoding="async">';
 }
 function sourceList(H, ids) {
   return '<ol class="ed-srcs">' + ids.map(id => { const s = H.sources[id];
@@ -208,7 +208,7 @@ function hubPage(ctx) {
     + (x.carte || []).map(c => LKX.chip({ href: pre + 'carte.html#lieu=' + c.id, label: c.nom, kind: 'place', small: 'Sur la carte' })).join('');
   const seqCard = (x, i) => {
     const n = String(i + 1).padStart(2, '0'), places = (x.carte || []).map(c => LKX.place(c.id, { [c.id]: c.nom }));
-    const summary = '<span class="missions-seq-media lkx-scan-media">' + imgTag(MED, x.media, x.alt, false) + '<span class="missions-rec" aria-hidden="true"><i></i>REC</span>' + (x.illustration ? '<span class="missions-illu">Illustration</span>' : '') + '<span class="missions-seq-tc">' + esc(x.moment) + '</span></span>'
+    const summary = '<span class="missions-seq-media lkx-scan-media">' + imgTag(MED, x.media, x.alt, false, '(max-width:639px) 94vw, (max-width:1199px) 46vw, 336px') + '<span class="missions-rec" aria-hidden="true"><i></i>REC</span>' + (x.illustration ? '<span class="missions-illu">Illustration</span>' : '') + '<span class="missions-seq-tc">' + esc(x.moment) + '</span></span>'
       + '<span class="missions-seq-body"><span class="missions-seq-when"><span class="missions-seq-n" aria-hidden="true">' + n + '</span><b>' + esc(x.video) + '</b></span>'
       + '<h3 class="missions-seq-h">' + esc(x.titre) + '</h3><span class="missions-seq-x">' + esc(x.texte) + '</span><span class="missions-seq-go">Ouvrir la séquence</span></span>';
     const body = '<p>' + esc(x.texte) + '</p>'

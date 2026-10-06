@@ -1,0 +1,63 @@
+LEONIDAKIT v7.67 — IA Claude (calculateur et Léo), calculateur sans limite, finitions, 6 octobre 2026
+
+Base : v7.66. Demande : « les finitions partout (visuels, traduction…) », « pour le calculateur, aucune limite sans changer
+l’interface », « l’accès au calculateur et la puissance et l’intelligence d’une IA » ; choix : « vraie IA, API Claude, pour le
+calculateur et pour Léo ». Rien n’est publié ni poussé. Réglage de la clé : LISEZ-MOI-v7.67.txt.
+
+1. IA (API Claude d’Anthropic)
+- api/ia.js (nouvelle fonction Vercel, sans dépendance) : deux usages, « calcul » et « leo ». Sans ANTHROPIC_API_KEY elle
+  répond 503 et les pages restent locales, comme avant. Modèle : LK_IA_MODELE dans Vercel, sinon claude-haiku-4-5-20251001.
+  Consigne mise en cache, sortie structurée par outil imposé, température 0 (calcul) ou 0,3 (Léo), 15 à 18 s au plus.
+  Contrôles : origine du site, JSON, 24 Ko, question de 400 caractères, 30 demandes par empreinte d’IP et par 10 minutes.
+  Filtrage de la réponse : chemins de cases d’une forme connue, nombres bornés, textes courts ; liens de Léo limités aux
+  pages envoyées et à rockstargames.com.
+- Calculateur : la barre « Que veux-tu calculer ? » répond d’abord par sa lecture locale, tout de suite, comme avant
+  (rien ne part pour une phrase qu’elle place en entier). Si la phrase va au-delà (rien de rempli, une ambiguïté, plus de
+  nombres que de cases remplies, un taux, un intervalle, une variante « et si », un gain par mission, une préparation),
+  elle envoie la phrase et un résumé des cases ; l’IA ne calcule rien, elle remplit des cases (liste blanche AI_PATHS de
+  calculateurs.js, chaque case validée par validConfig, une case refusée est ignorée) ; le moteur calcule. Les variantes
+  (« entre 20 000 et 40 000 », « si je gagne plus ») sont calculées par le moteur et résumées sous la barre. Une réponse
+  arrivée après une phrase plus récente est ignorée. Les puces d’exemple restent locales.
+- Léo : extraits des pages (leo-core.js, evidence) + réponse locale → l’IA rédige à partir de ces seuls éléments ; si elle
+  ne trouve pas, la réponse locale reste. Mention sous la réponse : « Réponse rédigée par une IA (Claude) à partir des pages
+  de Leonidakit. » Navigation, ouverture du calculateur et listes restent locales.
+- Mentions et confidentialité : ligne « Tu poses une question à Léo ou à la barre… » (données, destinataires, finalité,
+  durée), troisième prestataire (Anthropic, adresses relevées le 6/10/2026), textes « Ce qui part », hébergement,
+  responsabilité ; À propos et réponses de Léo sur les données mis à jour. preuve-confidentialite.cjs autorise api/ia.js.
+
+2. CALCULATEUR SANS LIMITE (interface inchangée)
+- Scénarios I (activité continue avec préparation unique) et M (équipement commun puis missions) : cases existantes.
+- Scénarios K (intervalle de gain) et N (taux de réussite → tentatives ratées simulées) : par la barre IA.
+- Tests : calculateurs-controle-v766.test.cjs (11), ia-v767.test.cjs (11, dont la barre : réponse locale immédiate,
+  appel seulement au-delà, cases complétées ensuite).
+- Cadre du calculateur (outils/calculateur-cadre.json) : seuls changent le libellé allemand « Modus Experte » et
+  l’empreinte de style.css (grilles et pied de page) ; aucune case, aucun bouton, aucun texte français.
+
+3. FINITIONS
+- Images (régression v7.66 corrigée) : les galeries « En images » des fiches (lieux, personnages, entreprises, gangs,
+  demeures, planques, activités, radios, animaux…) annonçaient 560 px alors qu’elles occupent 90 % de l’écran : la variante
+  800 px était agrandie et floue sur ordinateur. Taille annoncée juste (lore-gen.js, lk-sections.cjs).
+  Tailles mesurées aussi pour les tuiles des activités, les médias des armes, les séquences des missions et les couvertures
+  des carnets (gen-activites, sections, gen-missions, gen-carnets) : plus aucune image agrandie à 1 280, 1 920 (×1),
+  1 024 (×2) ni 390 px (×3) sur les pages contrôlées.
+- Grilles sans carte isolée : animaux (7 cartes : la dernière centrée), codes (faits, cartes, champs), trophées (faits,
+  chiffres, champs, grades : 3 puis 2 centrés sur tablette), nourriture (6 cartes : 3 + 3), pied de page sur tablette
+  (la colonne « Outils et aide » prend toute la rangée).
+- Contrastes : étiquettes « Catégorie » et « GTA V » des cartes de codes (2,4 et 2,3 → 16 et 14,9 : une règle
+  « .codes-cats li span » les recouvrait), préréglage radio sélectionné (3,3 → 8,5).
+- Allemand : « Modus Experte » partout (mélangé avec « Expertenmodus »).
+- Vérifiés, laissés tels quels : cartes « L’argent » des activités (toute la carte est cliquable), résumé des séquences de
+  missions coupé à 4 lignes (texte entier dans la séquence ouverte), scènes de la page GTA Online (les 6 apparaissent).
+
+4. TRADUCTIONS
+- outils/langues/<code>/calculateur-v767.json : 34 (en, de) à 38 (es, it) textes ; 0 texte sans traduction.
+
+5. CONTRÔLES
+- Tests Node : 962 sur 962 (901 + calculateurs-check-ultime 16 + langues 42 + coverage 3).
+- outils/verifier.js : aucune erreur, 303 680 références dans 2 241 pages ; preuve-confidentialite.cjs : toutes les
+  affirmations des Mentions tenues (fonctions api/contact.js et api/ia.js) ; gen-leo.cjs --check : index à jour.
+- Chromium avec un faux service Claude (aucune clé réelle) : barre (phrase simple → aucun appel ; phrase plus riche →
+  réponse locale immédiate puis cases complétées, variante calculée par le moteur, valeurs invalides ignorées), Léo
+  (réponse rédigée, mention sous la réponse, liens filtrés), sans clé (tout reste local) ; aucune erreur JavaScript.
+- Images : aucune image agrandie sur 48 pages françaises et 12 anglaises, à 1 280 et 1 920 px (×1), 1 024 px (×2) et
+  390 px (×3). Grilles corrigées contrôlées à 1 920, 1 280, 1 024, 768 et 390 px.

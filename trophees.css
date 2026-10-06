@@ -156,3 +156,11 @@
   .trophees-filtre button:hover{transform:none;}
 }
 @media print{.trophees-filtres,.trophees-eclat-r{display:none!important;}.trophees-carte[hidden]{display:flex!important;}.trophees-attend .trophees-carte{opacity:1;transform:none;}}
+
+/* v7.67 (finitions) : pas de carte isolée sur la dernière rangée. 4 cartes : 4, 2 ou 1 par rangée ; 3 cartes : 3 ou 1 ;
+   6 cartes : 3, 2 ou 1 (navigateurs sans :has() : disposition précédente). */
+.trophees-faits:has(>:last-child:nth-child(4)){grid-template-columns:repeat(auto-fit,minmax(clamp(calc((100% - 42px)/4 - 1px),calc((1042px - 100%)*999),clamp(calc((100% - 14px)/2 - 1px),calc((514px - 100%)*999),100%)),1fr));}
+.trophees-chiffres:has(>:last-child:nth-child(4)){grid-template-columns:repeat(auto-fit,minmax(clamp(calc((100% - 42px)/4 - 1px),calc((762px - 100%)*999),clamp(calc((100% - 14px)/2 - 1px),calc((374px - 100%)*999),100%)),1fr));}
+.trophees-champs:has(>:last-child:nth-child(6)){grid-template-columns:repeat(auto-fit,minmax(max(min(100%,230px),calc((100% - 20px)/3 - 1px)),1fr));}
+/* 5 grades : 5 sur une rangée, sinon 3 puis 2 centrés, 1 par rangée sur téléphone */
+@media(min-width:601px) and (max-width:1240px){.trophees-grades-l:has(>:last-child:nth-child(5)){grid-template-columns:repeat(6,minmax(0,1fr));}.trophees-grades-l:has(>:last-child:nth-child(5))>li{grid-column:span 2;}.trophees-grades-l:has(>:last-child:nth-child(5))>li:nth-child(4){grid-column:2/span 2;}}

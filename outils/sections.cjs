@@ -210,7 +210,7 @@ function mediaFigure(id, alt, opts = {}) {
   const text = alt || m.alt; if (!text) throw Error('Texte alternatif manquant pour le visuel ' + id);
   for (const v of [small, big]) if (v && !fs.existsSync(path.join(root, v.src.replace(/^\//, '')))) throw Error('Fichier absent : ' + v.src);
   const prefix = opts.prefix || '';
-  return '<figure class="ed-media"><img src="' + prefix + small.src.replace(/^\//, '') + '"' + (big ? ' srcset="' + prefix + small.src.replace(/^\//, '') + ' 480w, ' + prefix + big.src.replace(/^\//, '') + ' 1280w" sizes="' + esc(opts.sizes || '(max-width:700px) 100vw, 400px') + '"' : '')
+  return '<figure class="ed-media"><img src="' + prefix + small.src.replace(/^\//, '') + '"' + (big ? ' srcset="' + prefix + small.src.replace(/^\//, '') + ' 480w, ' + prefix + big.src.replace(/^\//, '') + ' 1280w" sizes="' + esc(opts.sizes || '(max-width:719px) 94vw, (max-width:1119px) 46vw, 456px') + '"' : '')
     + ' width="' + small.w + '" height="' + small.h + '" alt="' + esc(text) + '" loading="lazy" decoding="async"><figcaption>' + esc(opts.caption || 'Visuel officiel Rockstar Games') + '</figcaption></figure>';
 }
 /* items : [{titre, texte, media, alt, icon}]

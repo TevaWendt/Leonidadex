@@ -1,0 +1,39 @@
+LEONIDAKIT v7.67 — IA Claude pour le calculateur et Léo, calculateur sans limite, finitions
+À appliquer APRÈS la v7.66 (archive Leonidakit-v7.66-modifs.zip, à copier d'abord si ce n'est pas déjà fait). Rien à supprimer.
+
+1. L'IA (API Claude d'Anthropic) — À ACTIVER PAR TOI DANS VERCEL
+   Tant que la clé n'est pas posée, le site fonctionne exactement comme avant (barre et Léo locaux).
+   a) Crée une clé sur https://console.anthropic.com (Settings → API Keys). Dans Billing, fixe un plafond mensuel.
+   b) Vercel → ton projet → Settings → Environment Variables :
+        ANTHROPIC_API_KEY = la clé (Production, et Preview si tu veux tester)
+        LK_IA_MODELE      = facultatif. Sans cette variable : claude-haiku-4-5-20251001 (conseillé).
+                            Autres choix : claude-sonnet-5-5 (environ 2 fois plus cher), claude-opus-5-5.
+   c) Redéploie (Deployments → … → Redeploy). Ne colle jamais la clé dans GitHub ni dans une conversation.
+   Ordre de grandeur (tarifs Anthropic consultés le 6/10/2026) : avec Haiku 4.5, environ 0,2 centime par phrase envoyée
+   par la barre du calculateur (seulement les phrases que la lecture locale ne place pas en entier) et 0,5 centime par
+   question à Léo. Limite anti-abus : 30 questions par visiteur et par 10 minutes.
+
+   Ce que fait l'IA :
+   - Barre « Que veux-tu calculer ? » : la lecture locale répond d'abord, tout de suite, comme avant. Si la phrase va
+     au-delà (un nombre non placé, rien de rempli, une ambiguïté, un taux, un intervalle, une variante « et si »), l'IA
+     la relit et complète les cases (fautes, abréviations, plusieurs langues) ; le MOTEUR fait tous les calculs. Elle
+     traduit ce que les cases ne disent pas directement : taux de réussite (→ tentatives ratées simulées), intervalle
+     (« entre 20 000 et 40 000 » → variantes calculées), activité continue avec préparation, et pose UNE question quand
+     la demande est floue.
+   - Léo : il rédige sa réponse à partir de sa réponse locale et des extraits des pages du site, jamais d'autre chose ;
+     liens limités aux pages du site et au site de Rockstar ; mention « Réponse rédigée par une IA (Claude) » sous la
+     réponse. Navigation, ouverture du calculateur et listes restent locales et immédiates.
+   - Repli : sans clé, panne, lenteur (15 s) → réponse locale, comme avant. Les Mentions décrivent ce qui part.
+
+2. CALCULATEUR SANS LIMITE (interface inchangée)
+   Scénarios I (préparation sans revenu) et M (équipement commun) réalisés avec les cases existantes ; K (intervalle) et
+   N (taux de réussite) passent par la barre IA. Tests : outils/tests/calculateurs-controle-v766.test.cjs (11 tests),
+   outils/tests/ia-v767.test.cjs (11 tests).
+
+3. FINITIONS (détail : outils/CHANGEMENTS-v7.67.txt)
+   Images des galeries nettes sur ordinateur (régression v7.66), tailles d'images justes partout ; grilles sans carte
+   isolée (animaux, codes, trophées, nourriture, pied de page sur tablette) ; trois contrastes corrigés ; allemand
+   harmonisé (« Modus Experte ») ; textes de l'IA traduits dans les quatre langues.
+
+Mise en ligne : copier le contenu de l'archive à la racine du dossier GitHub (remplacer), valider, pousser, puis poser
+la clé dans Vercel (point 1). Retour arrière : commit précédent dans GitHub Desktop.

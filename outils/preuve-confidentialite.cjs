@@ -4,7 +4,7 @@
    de ce que disent les Mentions : aucun cookie (ni document.cookie, ni cookieStore, ni en-tête Set-Cookie dans
    vercel.json ou api/), aucune ressource d'un autre site (script, feuille de style, police, image, cadre, média),
    aucun outil de mesure d'audience ou de publicité, aucune requête réseau du navigateur vers un autre site, CSP
-   connect-src 'self', formulaires : seul l'accueil poste vers Brevo, une seule fonction serveur (api/contact.js), pas de
+   connect-src 'self', formulaires : seul l'accueil poste vers Brevo, deux fonctions serveur (api/contact.js, api/ia.js depuis la v7.67), pas de
    package.json, stockage du navigateur : toutes les clés commencent par « lk ».
    Usage : node outils/preuve-confidentialite.cjs [--json]. Code 1 si une affirmation n'est plus vraie. */
 const fs=require('node:fs'),path=require('node:path');
@@ -46,9 +46,9 @@ if(!/script-src 'self'(?:;|$)/.test(csp))fail('CSP','vercel.json',"script-src n�
 /* 5. formulaires qui postent ailleurs */
 const forms=[];for(const f of html)for(const m of text(f).matchAll(/<form\b[^>]*\saction="([^"]+)"/gi))if(EXT.test(m[1])&&!OWN.test(m[1]))forms.push({file:f,action:m[1]});
 facts.externalForms=forms;/* v7.60 : l'accueil traduit (en/index.html) porte le même formulaire d'alerte que l'accueil */for(const x of forms)if(!(/^(?:[a-z]{2}\/)?index\.html$/.test(x.file)&&/^https:\/\/[a-z0-9]+\.sibforms\.com\//.test(x.action)))fail('formulaire externe',x.file,x.action);
-/* 6. une seule fonction serveur, pas de package.json */
+/* 6. fonctions serveur connues (contact, IA), pas de package.json */
 if(files.includes('package.json'))fail('build','package.json','présent');
-if(JSON.stringify(api)!==JSON.stringify(['api/contact.js']))fail('fonction serveur','api/',api.join(', '));
+if(JSON.stringify(api)!==JSON.stringify(['api/contact.js','api/ia.js']))fail('fonction serveur','api/',api.join(', ')); /* v7.67 : api/ia.js (IA Claude de Léo et du calculateur, déclarée dans les Mentions) */
 /* 7. stockage du navigateur : toutes les clés commencent par « lk » */
 const keys=new Set(),unresolved=[];
 for(const f of js.filter(f=>!f.startsWith('api/'))){const s=text(f),consts=new Map();for(const m of s.matchAll(/\b([A-Za-z_$][\w$]*)\s*=\s*['"`]([^'"`]*)['"`]/g))if(!consts.has(m[1]))consts.set(m[1],m[2]);

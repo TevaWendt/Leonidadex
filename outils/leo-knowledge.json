@@ -6144,7 +6144,7 @@
     "local storage",
     "serveur leonidakit"
    ],
-   "text": "Dans ton navigateur : calculs, carnets, favoris, possessions, lieux repérés, marqueurs et ma conversation. Rien ne part sans que tu envoies un formulaire : seuls Contact et l’alerte de l’accueil transmettent ce que tu y écris, par Brevo. Tu peux tout exporter ou effacer depuis la page Progression.",
+   "text": "Dans ton navigateur : calculs, carnets, favoris, possessions, lieux repérés, marqueurs et ma conversation. Ce qui part : ce que tu écris dans Contact ou l’alerte de l’accueil (par Brevo), et tes questions à moi ou à la barre du calculateur, envoyées à l’IA Claude d’Anthropic pour y répondre ; le site ne les garde pas. Tu peux tout exporter ou effacer depuis la page Progression.",
    "status": "Le site",
    "links": [
     {
@@ -6696,7 +6696,7 @@
     "tu utilises un serveur",
     "leo local"
    ],
-   "text": "Non. Je tourne entièrement dans ton navigateur : aucun appel à une API, aucun serveur, aucun service payant. La discussion reste dans cet onglet et s’efface toute seule après 30 minutes sans activité, ou quand tu cliques « Effacer ».",
+   "text": "Oui, quand l’IA est active : ta question, la page et des extraits du site partent vers la fonction du site, puis vers Claude (Anthropic), qui rédige la réponse ; le site ne garde rien. Si l’IA ne répond pas, je réponds seul, dans ton navigateur. La discussion reste dans cet onglet et s’efface toute seule après 30 minutes sans activité, ou quand tu cliques « Effacer ».",
    "status": "Léo",
    "links": [
     {

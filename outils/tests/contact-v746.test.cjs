@@ -16,7 +16,7 @@ const valid=(o={})=>({topic:'Erreur dans une fiche',page:'https://www.leonidakit
 function brevo(status=201){const calls=[];return {calls,fetch:async(url,init)=>{calls.push({url,init,body:JSON.parse(init.body)});return {status,ok:status<300,json:async()=>({messageId:'<x@relay>'})};}};}
 
 test('Fonction d’envoi : un seul fichier api/contact.js, sans dépendance ni package.json, détecté par Vercel',()=>{
- assert.deepEqual(fs.readdirSync(path.join(root,'api')),['contact.js']);assert.ok(!fs.existsSync(path.join(root,'package.json')));
+ assert.deepEqual(fs.readdirSync(path.join(root,'api')).sort(),['contact.js','ia.js']);/* v7.67 : fonction IA (api/ia.js), testée dans ia-v767.test.cjs */assert.ok(!fs.existsSync(path.join(root,'package.json')));
  const src=read('api/contact.js');for(const m of src.matchAll(/require\(\s*['"]([^'"]+)['"]\s*\)/g))assert.match(m[1],/^node:/,'dépendance : '+m[1]);
  assert.equal(typeof API,'function');assert.match(src,/https:\/\/api\.brevo\.com\/v3\/smtp\/email/);assert.match(src,/BREVO_API_KEY/);assert.match(src,/CONTACT_TO/);
  assert.ok(!/@gmail|@hotmail|@outlook|@yahoo/i.test(src),'aucune boîte personnelle dans le code');assert.ok(!read('.vercelignore').split('\n').includes('api'));
@@ -104,7 +104,7 @@ test('Mentions : complètes (éditeur non professionnel, hébergeur, propriété
 
 test('Preuve de confidentialité : aucun cookie, aucune ressource ni requête vers un autre site, stockage « lk », formulaires connus',()=>{
  const out=execFileSync(process.execPath,[path.join(root,'outils/preuve-confidentialite.cjs'),'--json'],{cwd:root,encoding:'utf8'});const r=JSON.parse(out);
- assert.deepEqual(r.problems,[]);assert.equal(r.facts.externalResources,0);/* v7.60 : l’accueil traduit (en/index.html) porte le même formulaire d’alerte */const forms=r.facts.externalForms.map(x=>x.file);assert.ok(forms.includes('index.html')&&forms.every(f=>/^(?:[a-z]{2}\/)?index\.html$/.test(f)),forms.join(', '));assert.deepEqual(r.facts.api,['api/contact.js']);
+ assert.deepEqual(r.problems,[]);assert.equal(r.facts.externalResources,0);/* v7.60 : l’accueil traduit (en/index.html) porte le même formulaire d’alerte */const forms=r.facts.externalForms.map(x=>x.file);assert.ok(forms.includes('index.html')&&forms.every(f=>/^(?:[a-z]{2}\/)?index\.html$/.test(f)),forms.join(', '));/* v7.67 : la fonction IA (api/ia.js) s’ajoute à celle du formulaire */assert.deepEqual(r.facts.api,['api/contact.js','api/ia.js']);
  assert.ok(r.facts.storageKeys.every(k=>k.startsWith('lk')));assert.ok(r.facts.storageKeys.includes('lk_contact_draft_v1'));});
 
 test('Alerte de l’accueil : case de consentement obligatoire (non transmise), texte vrai, lien vers les données',async()=>{
@@ -115,7 +115,7 @@ test('Alerte de l’accueil : case de consentement obligatoire (non transmise), 
 
 test('Cohérence : Léo pointe vers la section Données, À propos et Léo disent la même chose que les Mentions, pied de page',()=>{
  assert.match(read('leo-ui.js'),/mentions-legales\.html#confidentialite/);assert.ok(doc('mentions-legales.html').getElementById('confidentialite'));
- const about=doc('a-propos.html').body.textContent;assert.ok(about.includes('Deux formulaires envoient ce que tu y écris'));assert.ok(!about.includes('Seul le formulaire d’alerte'));
+ const about=doc('a-propos.html').body.textContent;/* v7.67 : À propos dit aussi ce qui part vers l’IA, comme les Mentions (#donnees-ia) et Léo */assert.ok(about.includes('l’alerte de l’accueil et le formulaire de Contact (par Brevo)'));assert.ok(about.includes('l’IA Claude'));assert.ok(doc('mentions-legales.html').getElementById('donnees-ia'));assert.ok(!about.includes('Seul le formulaire d’alerte'));
  const kb=JSON.parse(read('outils/leo-knowledge.json')).topics;const by=Object.fromEntries(kb.map(t=>[t.id,t]));assert.ok(!/pas encore (?:en place|confirmé)/.test(by['contact-page'].text+by['site-erreur'].text));assert.match(by['cookies'].text,/aucun cookie/);
  for(const t of kb)for(const l of t.links)assert.notEqual(l.url,'/mentions-legales.html#independance',t.id);
  for(const f of ['index.html','contact.html','vehicules/canis-kamacho.html']){const foot=doc(f).querySelector('footer');assert.ok(foot.querySelector('a[href$="contact.html"]')&&foot.querySelector('a[href$="mentions-legales.html"]'),f);}

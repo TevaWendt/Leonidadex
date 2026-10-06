@@ -123,5 +123,13 @@
   "thirdPartyBeforeAction": "aucune",
   "thirdPartyOnAction": "envoi de l’alerte de l’accueil : navigation POST vers affd58b3.sibforms.com (Brevo), déclenchée par le bouton « Me prévenir » et la case cochée",
   "storages": "localStorage et sessionStorage, clés « lk » seulement, écrites après une action (saisie du calculateur, « Je l’ai », brouillon de Contact, sélection à comparer, conversation avec Léo, choix de la langue)"
+ },
+ "ai": {
+  "name": "Anthropic",
+  "entity": "Anthropic PBC, 548 Market St, PMB 90375, San Francisco, CA 94104, États-Unis ; Anthropic Ireland, Limited, 6th Floor, South Bank House, Barrow Street, Dublin 4, D04 TR29, Irlande",
+  "source": "https://www.anthropic.com/legal/privacy",
+  "terms": "https://www.anthropic.com/legal/commercial-terms",
+  "sourceDate": "2026-09-10",
+  "checkedAt": "2026-10-06"
  }
 }

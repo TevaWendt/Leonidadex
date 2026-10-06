@@ -380,3 +380,7 @@ Le calculateur reste entièrement statique, gratuit et sans compte. Les sept cal
 ## v7.66 (06/10/2026)
 
 Contrôle du calculateur (scénarios fictifs A–L, `outils/tests/calculateurs-controle-v766.test.cjs`), options retirées en v7.47 rendues au mode Expert (`.b-expert-only`, mode posé sur `body[data-calc-mode]`), pile de la page Achats sur téléphone, variante d’image 800 px, liens d’accueil canoniques, redirections 301. Détail : `LISEZ-MOI-v7.66.txt`.
+
+## v7.67 (06/10/2026)
+
+IA Claude (API d’Anthropic) par la fonction `api/ia.js` : la barre « Que veux-tu calculer ? » répond d’abord localement et ne consulte l’IA que pour ce que la lecture locale ne place pas (l’IA remplit des cases, le moteur calcule) ; Léo rédige ses réponses à partir des seuls extraits du site. Sans `ANTHROPIC_API_KEY` dans Vercel, tout reste local. Modèle : `LK_IA_MODELE` (défaut `claude-haiku-4-5-20251001`). Finitions : tailles d’images justes (galeries nettes), grilles sans carte isolée, contrastes, allemand harmonisé. Détail : `LISEZ-MOI-v7.67.txt` et `outils/CHANGEMENTS-v7.67.txt` ; tests `outils/tests/ia-v767.test.cjs`.

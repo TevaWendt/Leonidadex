@@ -50,7 +50,7 @@
 .radios-preset:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink);}
 .radios-preset:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink);}
 .radios-preset-n{flex:none;display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--ink);color:var(--paper);font:700 .8rem/1 var(--font-mono);}
-.radios-preset[aria-selected="true"]{background:var(--amber);}
+.radios-preset[aria-selected="true"]{background:var(--amber);color:var(--ink);}
 .radios-preset[aria-selected="true"] .radios-preset-n{background:var(--coral-deep);}
 
 /* ---------- panneaux : une source de musique ---------- */
