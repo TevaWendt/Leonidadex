@@ -344,9 +344,15 @@
   .ak-stack .ak-card .d-card-body{padding:16px 16px 18px}
   .ak-stack.is-grid{grid-template-columns:minmax(0,1fr)}
 }
-/* Téléphone : une carte entière (image, texte, actions) ne tient pas sous l’en-tête ; les cartes se suivent donc sans se
-   superposer, pour que tout reste lisible au pouce (aucun texte coupé, aucune action cachée sous la carte suivante). */
-@media(max-width:600px){
+/* v7.66 : la pile vit aussi sur téléphone. Une carte plus haute que l’écran se colle par le bas (--ak-stick, calculé par
+   achats-pile.js) : on lit toute la carte (image, texte, actions) avant que la suivante ne vienne la recouvrir. */
+@media(max-width:600px) and (prefers-reduced-motion:no-preference) and (min-height:560px){
+  .ak-stack:not(.is-grid){gap:0;padding-bottom:6vh}
+  .ak-stack:not(.is-grid) .ak-slot{position:sticky;top:var(--ak-stick,calc(var(--lk-head-h,71px) + 8px + var(--i) * 6px));z-index:calc(var(--i) + 1);padding-bottom:18px}
+  .ak-stack:not(.is-grid) .ak-card{min-height:0;transform:translate3d(0,calc(var(--ak-cover,0) * -6px),0)}
+}
+/* Téléphone avec mouvement réduit ou écran très bas : les cartes se suivent sans se superposer. */
+@media(max-width:600px) and (prefers-reduced-motion:reduce),(max-width:600px) and (max-height:559px){
   .ak-stack:not(.is-grid){gap:22px;padding-bottom:0}
   .ak-stack:not(.is-grid) .ak-slot{position:static;padding-bottom:0}
   .ak-stack:not(.is-grid) .ak-card{min-height:0;transform:none}
@@ -433,7 +439,7 @@
 .cat-row.is-desc-open td{background:#FFFBF2;}
 /* la fiche complète : bouton plein, différent de « Description » */
 .cat-fiche{clear:none;margin:0;border:0;padding:0;}
-.cat-fiche>summary.cat-fiche-bt{display:inline-flex;align-items:center;gap:7px;min-height:34px;padding:5px 13px 5px 10px;border:2px solid var(--ink);border-radius:999px;background:var(--coral);color:#fff;font:800 .74rem/1.2 'Archivo',sans-serif;letter-spacing:.04em;text-transform:none;box-shadow:2px 2px 0 var(--ink);transition:transform var(--dur,.22s),box-shadow var(--dur,.22s),background var(--dur,.22s);}
+.cat-fiche>summary.cat-fiche-bt{display:inline-flex;align-items:center;gap:7px;min-height:34px;padding:5px 13px 5px 10px;border:2px solid var(--ink);border-radius:999px;background:var(--coral-text);color:#fff;font:800 .74rem/1.2 'Archivo',sans-serif;letter-spacing:.04em;text-transform:none;box-shadow:2px 2px 0 var(--ink);transition:transform var(--dur,.22s),box-shadow var(--dur,.22s),background var(--dur,.22s);}
 .cat-fiche>summary.cat-fiche-bt::before{content:'+';width:16px;height:16px;border:0;border-radius:50%;background:#fff;color:var(--coral-text);font-size:.85rem;font-weight:900;display:inline-grid;place-items:center;transition:none;}
 .cat-fiche>summary.cat-fiche-bt:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--ink);background:var(--coral-text);}
 .cat-fiche>summary.cat-fiche-bt:focus-visible{outline:3px solid var(--amber);outline-offset:3px;}
@@ -529,9 +535,11 @@
 .d-car-nav{position:absolute;left:0;right:0;bottom:10px;z-index:3;display:flex;align-items:center;justify-content:center;gap:10px;pointer-events:none;}
 .d-car-nav[hidden]{display:none;}
 .d-car-pos{font:800 .7rem/1 var(--font-mono,ui-monospace,monospace);letter-spacing:.08em;padding:5px 9px;border-radius:999px;background:rgba(26,26,30,.8);color:#fff;}
-.d-car-dots{display:flex;gap:7px;pointer-events:auto;}
-.d-car-dot{width:14px;height:14px;padding:0;border:2px solid #fff;border-radius:50%;background:rgba(26,26,30,.55);cursor:pointer;box-shadow:0 0 0 1px rgba(26,26,30,.5);}
-.d-car-dot[aria-current="true"]{background:var(--amber);border-color:var(--ink);}
+.d-car-dots{display:flex;gap:0;pointer-events:auto;}
+/* v7.66 (accessibilité) : cible de 24 × 24 px (WCAG 2.5.8) ; le point visible garde ses 14 px, dessiné par ::before */
+.d-car-dot{position:relative;width:24px;height:24px;padding:0;border:0;border-radius:50%;background:none;cursor:pointer;}
+.d-car-dot::before{content:'';position:absolute;inset:5px;border:2px solid #fff;border-radius:50%;background:rgba(26,26,30,.55);box-shadow:0 0 0 1px rgba(26,26,30,.5);}
+.d-car-dot[aria-current="true"]::before{background:var(--amber);border-color:var(--ink);}
 .d-car-dot:focus-visible{outline:3px solid var(--coral);outline-offset:2px;}
 .d-car-cap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 12px;padding:8px 14px;font-size:.74rem;line-height:1.45;color:var(--ink-soft);background:var(--paper);border-top:1.5px solid var(--ink);}
 .d-car-cap-t{font-weight:800;color:var(--ink);}

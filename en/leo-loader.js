@@ -4,7 +4,7 @@ const button=document.createElement('button');button.id='leo-launch';button.type
 /* v7.61 : les modules viennent du dossier de la langue (/es/…) ; un module identique dans toutes les langues (leo-nlp.js) n'y est pas copié : il est pris directement à la racine (un module
    absent du dossier de la langue y est aussi cherché en dernier recours) */
 const BASE=(document.currentScript&&document.currentScript.src||'').replace(/^https?:\/\/[^/]+/,'').replace(/[^/]*$/,'')||'/';
-const href=(name,root)=>(root?'/':BASE)+name+'?v=714c58a3c67d';let loading=null,frame=0;
+const href=(name,root)=>(root?'/':BASE)+name+'?v=6110f5efcd42';let loading=null,frame=0;
 function script(name,global,root){if(window[global])return Promise.resolve();return new Promise((resolve,reject)=>{const s=document.createElement('script');s.src=href(name,root);s.onload=()=>window[global]?resolve():reject(Error('Local module unavailable.'));s.onerror=()=>{s.remove();if(!root&&BASE!=='/'){script(name,global,true).then(resolve,reject);return;}reject(Error('One of Léo’s local files couldn’t be loaded.'));};document.head.append(s);});}
 async function open(){if(window.LKLeoUI){window.LKLeoUI.open();return;}if(loading)return;button.disabled=true;button.setAttribute('aria-busy','true');const label=button.lastElementChild;label.textContent='Opening';loading=(async()=>{await Promise.all([script('calculateurs-engine.js','LKCalcEngine'),script('leo-link.js','LKLeoLink'),script('leo-nlp.js','LKLeoNLP',true)]);await script('leo-core.js','LKLeoCore');await script('leo-ui.js','LKLeoUI');window.LKLeoUI.open();})();try{await loading;}catch(e){window.LK?.status(e.message+' You can keep using the site and try again.');}finally{loading=null;button.disabled=false;button.removeAttribute('aria-busy');label.textContent='Léo';}}
 button.addEventListener('click',()=>window.LKLeoUI?.isOpen()?window.LKLeoUI.close():open());
@@ -28,7 +28,9 @@ const schedule=()=>{if(scrollTimer){clearTimeout(scrollTimer);scrollTimer=0;}if(
 const onScroll=()=>{if(frame||scrollTimer||document.hidden)return;const wait=Math.max(0,120-(performance.now()-lastPlace));scrollTimer=setTimeout(()=>{scrollTimer=0;schedule();},wait);};
 window.addEventListener('scroll',onScroll,{passive:true});window.addEventListener('resize',()=>{position=null;schedule();});document.addEventListener('click',schedule);document.addEventListener('keydown',schedule);const menu=document.getElementById('burger');if(menu)new MutationObserver(schedule).observe(menu,{attributes:true,attributeFilter:['aria-expanded']});document.addEventListener('close',schedule,true);window.addEventListener('pageshow',schedule);
 /* v7.37 : le contenu rendu après le chargement (onglets du calculateur, listes filtrées) est pris en compte : la place du bouton est revue quand la page change. */
-if(window.MutationObserver){let t=0;new MutationObserver(()=>{if(t)return;t=setTimeout(()=>{t=0;schedule();},250);}).observe(document.body,{childList:true,subtree:true});}schedule();
+if(window.MutationObserver){let t=0;new MutationObserver(()=>{if(t)return;t=setTimeout(()=>{t=0;schedule();},250);}).observe(document.body,{childList:true,subtree:true});}
+/* v7.66 (latence) : la première place du bouton est cherchée quand le navigateur est libre (jusqu’à 168 tests de recouvrement), pas pendant le premier affichage */
+if(window.requestIdleCallback)requestIdleCallback(schedule,{timeout:1200});else setTimeout(schedule,300);
 window.LKLeoLoader={open,place:schedule};
 try{const raw=sessionStorage.getItem('lk_leo_session_v2');if(raw&&raw.length<100000){const r=JSON.parse(raw);if(r.resumeTo===location.pathname+location.hash&&r.at<=Date.now()&&Date.now()-r.at<1800000)open();}}catch{}
 })();

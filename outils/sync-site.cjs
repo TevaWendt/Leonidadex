@@ -260,6 +260,24 @@ require('child_process').execFileSync(process.execPath,[path.join(__dirname,'gen
 // (tablette, une colonne) n’affichent plus une image de 480 px étirée à 700 px.
 {for(const file of htmlFiles){if(file.startsWith('google'))continue;const html=fs.readFileSync(file,'utf8');const next=html.replace(/<img\b(?![^>]*\ssrcset=)([^>]*?)\ssrc="([^"]*?)-480\.webp"([^>]*)>/g,(m,a,base,b)=>{const rel=base.replace(/^(?:\.\.\/)+/,'').replace(/^\//,'');if(!fs.existsSync(rel+'-1280.webp'))return m;return '<img'+a+' src="'+base+'-480.webp" srcset="'+base+'-480.webp 480w, '+base+'-1280.webp 1280w" sizes="(max-width: 800px) 100vw, 480px"'+b+'>';});if(next!==html)fs.writeFileSync(file,next);}}
 
+// v7.66 (latence) : variante intermédiaire 800 px entre 480 et 1 280 px. Un téléphone (écran ×2 ou ×3) qui affiche une
+// image sur 250 à 400 px prenait la 1 280 px (≈ 3 fois plus lourde) ; il prend maintenant la 800 px quand elle existe.
+{const re=/([^\s",]+)-480\.webp 480w, \1-1280\.webp 1280w/g;for(const file of htmlFiles){if(file.startsWith('google'))continue;const html=fs.readFileSync(file,'utf8');if(!html.includes('-1280.webp 1280w'))continue;
+ const next=html.replace(re,(m,base)=>{const rel=base.replace(/^(?:\.\.\/)+/,'').replace(/^\//,'');return fs.existsSync(path.join(root,rel+'-800.webp'))?base+'-480.webp 480w, '+base+'-800.webp 800w, '+base+'-1280.webp 1280w':m;});
+ if(next!==html)fs.writeFileSync(file,next);}}
+
+// v7.66 (SEO et latence) : les liens vers l’accueil visent l’adresse canonique « / » et non « index.html » :
+// sur Vercel, /index.html répond par une redirection 308 (un aller-retour de plus à chaque clic sur le logo ou « Accueil »).
+{for(const file of htmlFiles){if(file.startsWith('google'))continue;const html=fs.readFileSync(file,'utf8');if(!html.includes('index.html'))continue;
+ const next=html.replace(/(<a\b[^>]*?\shref=")((?:\.\.\/)*)index\.html((?:[?#][^"]*)?)"/g,(m,start,up,rest)=>start+'/'+rest+'"');
+ if(next!==html)fs.writeFileSync(file,next);}}
+
+// v7.66 (latence) : la première image de la première pile (.lk-stack, en tête de page) est l’élément le plus grand du premier
+// écran (LCP) sur une vingtaine de pages : elle est demandée en priorité. Les autres restent en chargement différé.
+{for(const file of htmlFiles){if(file.startsWith('google'))continue;const html=fs.readFileSync(file,'utf8');const at=html.indexOf('class="lk-stack');if(at<0)continue;
+ const i=html.indexOf('<img',at),j=i<0?-1:html.indexOf('>',i);if(j<0)continue;const tag=html.slice(i,j+1);if(/fetchpriority=|loading="lazy"/.test(tag))continue;
+ fs.writeFileSync(file,html.slice(0,i)+tag.replace(/^<img\b/,'<img fetchpriority="high"')+html.slice(j+1));}}
+
 // Empreintes finales : ne dépendent pas de l’état antérieur des autres fichiers.
 // v7.38 : chaque image d'une pile (.lk-stack) est un lien vers ce qu'elle représente (outils/lot-c-visuals.cjs).
 {const visuals=require('./lot-c-visuals.cjs');for(const file of htmlFiles){const html=fs.readFileSync(file,'utf8');if(!html.includes('class="lk-stack'))continue;const prefix=file.includes('/')?'../':'';const next=visuals.linkify(html,prefix);if(next!==html)fs.writeFileSync(file,next);}}

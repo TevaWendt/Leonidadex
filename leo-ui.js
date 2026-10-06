@@ -5,7 +5,7 @@
 (function(){'use strict';
 /* v7.61 : l'index est celui de la langue de la page (/es/leo-index.json sur une page espagnole) : dossier de ce script */
 const LEO_BASE=(document.currentScript&&document.currentScript.src||'').replace(/^https?:\/\/[^/]+/,'').replace(/[^/]*$/,'')||'/';
-const LANG_UI=(document.documentElement.lang||'fr').slice(0,2).toLowerCase(),C=window.LKLeoCore,L=window.LKLeoLink,launch=document.getElementById('leo-launch'),KEY='lk_leo_session_v2',TTL=30*60*1000,MAX_MESSAGES=32,V='?v=714c58a3c67d',MAX_BYTES=1500000;
+const LANG_UI=(document.documentElement.lang||'fr').slice(0,2).toLowerCase(),C=window.LKLeoCore,L=window.LKLeoLink,launch=document.getElementById('leo-launch'),KEY='lk_leo_session_v2',TTL=30*60*1000,MAX_MESSAGES=32,V='?v=6110f5efcd42',MAX_BYTES=1500000;
 const names={capital:'J’ai déjà ($)',target:'Je veux avoir ($)',hourly:'Gain net estimé ($ / h)',price:'Prix que j’imagine ($)',reserve:'Réserve à garder ($)',minutes:'Session (min)',dailyMinutes:'Temps par jour (min)',players:'Joueurs, moi compris'};
 const preferred={goal:['capital','target','hourly'],session:['minutes','capital','players'],activities:['capital','minutes','players'],purchase:['price','capital'],roi:['price','capital'],order:['capital','hourly'],budget:['capital','reserve'],plan:['capital','target','minutes']};
 const el=(tag,text,cls)=>{const node=document.createElement(tag);if(text!==undefined&&text!==null)node.textContent=text;if(cls)node.className=cls;return node;};

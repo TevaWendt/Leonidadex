@@ -140,15 +140,23 @@
     if (!list.length) return;
     const vh = window.innerHeight || 800;
     const noMotion = reduced.matches || !io || opt.disabled;
+    /* v7.66 (latence) : trois passes au lieu d'une boucle qui alternait lecture de géométrie et écriture de classes
+       (une mise en page forcée par bloc : jusqu'à 1,1 s de calcul sur Vêtements et style, processeur ralenti ×4).
+       1) écritures du « replay », 2) toutes les lectures, 3) toutes les écritures : une seule mise en page. */
+    const todo = [], again = [];
     list.forEach(function (el) {
       if (!el || el.nodeType !== 1) return;
       /* bloc déjà suivi qui reçoit de nouvelles classes (lk-reveal posée après la première passe) : s'il est déjà montré
          par l'ancien langage, il le reste, sans transition ; sinon l'observateur en cours le montrera entièrement */
-      if (seen.has(el) && !opt.replay) { if (!shown(el) && legacy(el) && el.classList.contains('in')) show(el, 0, true); return; }
+      if (seen.has(el) && !opt.replay) { if (!shown(el) && legacy(el) && el.classList.contains('in')) again.push(el); return; }
       seen.add(el);
       if (opt.replay) { el.classList.remove('in', 'is-in', 'lk-settled'); if (io) io.unobserve(el); }
-      if (noMotion) { show(el, 0, true); return; }
-      if (opt.initial !== false && inView(el, vh)) { show(el, 0, true); return; }
+      todo.push(el);
+    });
+    const visible = !noMotion && opt.initial !== false ? todo.map(function (el) { return inView(el, vh); }) : null;
+    again.forEach(function (el) { show(el, 0, true); });
+    todo.forEach(function (el, i) {
+      if (noMotion || (visible && visible[i])) { show(el, 0, true); return; }
       pending++; io.observe(el);
     });
   }
@@ -306,7 +314,7 @@
 })();
 
 /* Léo : amorçage isolé. Les données ne se chargent qu'à l'ouverture du panneau. */
-(function(){'use strict';if(!document.querySelector('main')||document.getElementById('leo-style'))return;/* v7.60-v7.64 : Léo parle les langues de outils/langues.json → leo (français, espagnol, italien, anglais, allemand) : pas de Léo sur une page d’une autre langue */if(!/^(?:fr|es|it|en|de)\b/i.test(document.documentElement.lang||'fr'))return;const base=(document.currentScript&&document.currentScript.src||'').replace(/[^/]*$/,'')||'/';const css=document.createElement('link');css.id='leo-style';css.rel='stylesheet';css.href='/leo.css?v=714c58a3c67d';css.onload=()=>{const script=document.createElement('script');script.src=base+'leo-loader.js?v=714c58a3c67d';document.head.append(script);};document.head.append(css);})();
+(function(){'use strict';if(!document.querySelector('main')||document.getElementById('leo-style'))return;/* v7.60-v7.64 : Léo parle les langues de outils/langues.json → leo (français, espagnol, italien, anglais, allemand) : pas de Léo sur une page d’une autre langue */if(!/^(?:fr|es|it|en|de)\b/i.test(document.documentElement.lang||'fr'))return;const base=(document.currentScript&&document.currentScript.src||'').replace(/[^/]*$/,'')||'/';const css=document.createElement('link');css.id='leo-style';css.rel='stylesheet';css.href='/leo.css?v=6110f5efcd42';css.onload=()=>{const script=document.createElement('script');script.src=base+'leo-loader.js?v=6110f5efcd42';document.head.append(script);};document.head.append(css);})();
 
 /* v7.61 (langues) : page introuvable. Le serveur renvoie la page 404 française pour toute adresse inconnue ; sous
    /en/… (une adresse d'une langue publiée), c'est la page introuvable de cette langue qui s'affiche. */
@@ -608,7 +616,9 @@
       targets.forEach(function (t) { if (t) io.observe(t); });
     }
     window.addEventListener('resize', function () { clearTimeout(timer); timer = setTimeout(arm, 150); });
-    arm();
+    /* v7.66 (latence) : première mesure de la barre à la trame suivante, hors de la tâche de chargement (une mise en page
+       forcée de moins pendant l’exécution du script ; l’état actif arrive une trame plus tard, sans effet visible) */
+    requestAnimationFrame(arm);
   });
 })();
 /* v7.60 (langues) : menu « Changer la langue » (barre tout en haut, posée par outils/sync-site.cjs) et bandeau de suggestion.

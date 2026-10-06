@@ -199,7 +199,7 @@ function renderPurchase(){const p=B.purchase(state,sourceActivities),item=catalo
   if(px.sustain){const st=px.sustain;more.push(st.state==='insoutenable'?'<b>Jetzt bezahlbar, aber nicht durchzuhalten:</b> Jede Session kostet dich '+money(st.usagePerSession)+' an laufenden Kosten, und du verdienst nur '+money(st.earnPerSession)+' (−'+money(-st.netPerSession)+' pro Session).':'<b>Auf Dauer durchzuhalten:</b> Jede Session lässt dir '+money(st.netPerSession)+' mehr, nach laufenden Kosten.');if(st.sessions!==null&&st.after!==null)more.push('Nach '+st.sessions+' Sessions: '+money(st.after)+(st.breach?', also unter dem Betrag, den du beiseitelegst.':'.'));}
   if(px.sessions!==null&&MV_usable(px.usage.perSession)&&px.cost.total.complete)more.push('Gesamtkosten über '+px.sessions+' Sessions: <b>'+money(px.cost.total.value)+'</b> (Preis + laufende Kosten).');
   if(px.cost.resaleNote&&px.cost.futureNet!==null)more.push(esc(px.cost.resaleNote));
-  if(px.role==='pleasure')more.push('Spaßkauf: Es wird nicht berechnet, ob er sich lohnt, und das ist normal.');
+  if(px.role==='pleasure'||px.role==='comfort')more.push('Spaß- oder Komfortkauf: Es wird nicht berechnet, ob er sich lohnt, und das ist normal.');
   if(px.purchasable.state==='assumed')more.push('Kauf noch unbestätigt in GTA VI: Die Antwort geht davon aus, dass man es kaufen kann.');
   if(px.purchasable.state==='ko')more.push('<b>'+esc(px.purchasable.detail)+'</b>');
   if(more.length)html+='<p class="b-purchase-more">'+more.join('<br>')+'</p>';

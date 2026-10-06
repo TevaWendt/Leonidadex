@@ -90,15 +90,17 @@ test('Mots simples : plus de « capital », « moteur », « sensibilité » ni 
 test('Doublons (décision de Téva, 29/09/2026) : les copies inutiles sont retirées, les voisins utiles ont chacun leur nom',()=>{
  const p=app();const all=sel=>[...p.d.querySelectorAll(sel)];const label=el=>el.textContent.replace(/[\u00a0\u202f]/g,' ').replace(/\s+/g,' ').trim();
  /* « Partir de zéro » : un seul bouton, dans l’atelier, à côté de « Remettre les exemples » ; le tiroir ne garde que les calculs */
- assert.equal(all('button').filter(b=>label(b)==='Partir de zéro').length,1);assert.ok(p.$('calc-reset').closest('.calc-data-note'));
+ assert.equal(all('button').filter(b=>label(b)==='Partir de zéro'&&!b.closest('.b-expert-only')).length,1);/* v7.66 : le tiroir le propose de nouveau, en mode Expert seulement */assert.ok(p.d.querySelector('#calc-drawer .b-expert-only [data-calc-zero-proxy]'));assert.ok(p.$('calc-reset').closest('.calc-data-note'));
  assert.equal(label(p.$('calc-reset')),'Remettre les exemples');assert.equal(p.d.getElementById('calc-zero'),null);assert.doesNotMatch(label(p.$('calc-drawer')),/Recommencer/);
  p.type('f-goal-capital',123456);p.click('[data-calc-zero]');assert.ok(!/123/.test(p.$('f-goal-capital').value));p.click('#calc-reset');assert.equal(p.$('f-goal-capital').value.replace(/\D/g,''),'200000');
  /* business plan : plus de boutons Enregistrer / Imprimer en double ; le téléchargement en texte (autre fonction) reste, sous un nom clair */
- p.click('[data-tab="plan"]');const plan=label(p.$('panel-plan'));assert.doesNotMatch(plan,/Imprimer mon plan|Enregistrer mon plan \(avec sa fiche\)/);assert.match(plan,/Télécharger mon plan en texte/);
+ p.click('[data-tab="plan"]');const plan=label(p.$('panel-plan'));assert.match(plan,/Télécharger mon plan en texte/);
+ /* v7.66 (décision du 06/10/2026) : les options retirées en v7.47 reviennent, en mode Expert seulement (.b-expert-only, masqué hors Expert) */
+ for(const sel of ['[data-b-save="plan"]','[data-b-print="1"]'])assert.ok(p.d.querySelector('#panel-plan .b-expert-only '+sel),sel+' : seulement en Expert');
  assert.equal(label(p.$('calc-save')),'☆ Enregistrer le plan');
  assert.equal(p.d.querySelector('[data-b-plan-details]'),null,'plus de case « Afficher plus de détails » (même contenu que le mode Expert)');assert.ok(p.d.querySelector('#plan-report [data-b-mode="advanced"]'));assert.doesNotMatch(label(p.$('panel-plan')),/réserve/);
  /* Expert : un seul nom (« mode Expert ») ; plus de bouton « Voir les réglages avancés » qui doublait le choix du mode */
- p.click('[data-tab="goal"]');assert.equal(all('.b-simple-action').length,0);assert.doesNotMatch(label(p.$('calc-panels')),/[Rr]églages avancés/);assert.match(label(p.$('mode-summary-goal')),/Mode Expert : rien de changé/);
+ p.click('[data-tab="goal"]');assert.equal(all('.b-simple-action').length,0);/* v7.66 : « Voir les réglages avancés (mode Expert) » revient en bas de chaque outil (il passe en Expert et ouvre tout le détail) */assert.match(label(p.$('calc-panels')),/Voir les réglages avancés \(mode Expert\)/);assert.equal(p.d.querySelector('[data-b-advanced="goal"]').dataset.bMode,'advanced');assert.match(label(p.$('mode-summary-goal')),/Mode Expert : rien de changé/);
  /* Mon objectif : le « Et si » ±20 % n’est plus en double (il reste dans le mode Expert) ; la comparaison des activités a son propre nom */
  assert.equal(p.d.getElementById('goal-sensitivity'),null);assert.match(label(p.$('panel-goal')),/Avec quelle activité j’arrive le plus vite à mon objectif \?/);assert.doesNotMatch(label(p.$('panel-goal')),/Trois chemins|Et si je gagne plus/);
  /* tableau des activités du jeu : plus de colonnes vides (« À relever ») */

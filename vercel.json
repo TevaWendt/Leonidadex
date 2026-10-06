@@ -55,6 +55,81 @@
       "source": "/img/officiel/officiel/:path*",
       "destination": "/img/officiel/:path*",
       "permanent": true
+    },
+    {
+      "source": "/munitions.html",
+      "destination": "/armes.html#munitions",
+      "permanent": true
+    },
+    {
+      "source": "/vetements.html",
+      "destination": "/style.html#tenues",
+      "permanent": true
+    },
+    {
+      "source": "/accessoires.html",
+      "destination": "/style.html#accessoires",
+      "permanent": true
+    },
+    {
+      "source": "/tatouages.html",
+      "destination": "/style.html#tatouages",
+      "permanent": true
+    },
+    {
+      "source": "/:lang(en|es|it|de)/munitions.html",
+      "destination": "/:lang/armes.html#munitions",
+      "permanent": true
+    },
+    {
+      "source": "/:lang(en|es|it|de)/vetements.html",
+      "destination": "/:lang/style.html#tenues",
+      "permanent": true
+    },
+    {
+      "source": "/:lang(en|es|it|de)/accessoires.html",
+      "destination": "/:lang/style.html#accessoires",
+      "permanent": true
+    },
+    {
+      "source": "/:lang(en|es|it|de)/tatouages.html",
+      "destination": "/:lang/style.html#tatouages",
+      "permanent": true
+    },
+    {
+      "source": "/:lang(en|es|it|de)/index.html",
+      "destination": "/:lang/",
+      "permanent": true
+    },
+    {
+      "source": "/:lang(en|es|it|de)/vehicules/vehicules.html",
+      "destination": "/:lang/vehicules.html",
+      "permanent": true
+    },
+    {
+      "source": "/:lang(en|es|it|de)/vehicules/airgator-airboat-09.html",
+      "destination": "/:lang/vehicules/airboat-09.html",
+      "permanent": true
+    },
+    {
+      "source": "/:lang(en|es|it|de)/armes/pistolet-jason.html",
+      "destination": "/:lang/armes/girardi-es9.html",
+      "permanent": true
+    },
+    {
+      "source": "/:lang(en|es|it|de)/armes/pistolet-tactique.html",
+      "destination": "/:lang/armes/klose-k17.html",
+      "permanent": true
+    },
+    {
+      "source": "/:lang(en|es|it|de)/armes/pistolet-compact.html",
+      "destination": "/:lang/armes/nipper-38.html",
+      "permanent": true
+    },
+    {
+      "source": "/:lang(en|es|it|de)/armes/revolver-357.html",
+      "destination": "/:lang/armes/mustang-357.html",
+      "permanent": true
     }
   ],
   "headers": [

@@ -4,6 +4,8 @@
    une phrase de lecture et le tableau des chiffres. Prévu, réalisé et hypothèse ne se confondent pas. */
 (function(global){
 'use strict';
+/* v7.66 : mode effectif de « Ça vaut le coup ? » (achat plaisir ou confort : jamais de rentabilité) */
+const roiModeOf=s=>global.LKCalcScenario&&global.LKCalcScenario.roiMode?global.LKCalcScenario.roiMode(s):s.roi.mode;
 function create(h){
  const {esc,money,hours}=h,nf=new Intl.NumberFormat('it-IT',{maximumFractionDigits:2}),compact=new Intl.NumberFormat('it-IT',{notation:'compact',maximumFractionDigits:1});
  const fmt=(v,u)=>u==='$'?money(v):u==='h'?hours(v):u==='min'?hours(v/60):u==='%'?nf.format(v)+'%':nf.format(v)+(u?' '+u:'');
@@ -56,8 +58,8 @@ function create(h){
   if(!r.valid)return '';
   /* lot 3 (scénario I) : nouvelle activité avec ton gain actuel connu : le remboursement compte ce que tu aurais gagné de toute façon
      (même chiffre que la réponse) ; un achat gratuit n’a rien à rembourser (jamais « 0 min ») */
-  const marg=s.roi.mode==='new'&&Number.isFinite(r.baselineHourly)&&Number.isFinite(r.marginalProfit),pbH=marg?r.marginalPaybackHours:r.paybackHours,pbC=marg?r.marginalPaybackCycles:r.paybackCycles;
-  let html='<div class="c-payback"><span>Ripagato dopo</span><strong data-c-number="roi-payback">'+(pbH===null||pbH===undefined?'Non raggiunto con questi numeri':r.investment===0&&pbH===0?'Niente da ripagare':hours(pbH))+'</strong><small>'+(s.roi.mode==='continuous'?'di gioco, con il tuo numero all’ora':pbC===null||pbC===undefined?'Non sono state trovate abbastanza missioni':nf.format(pbC)+(/* lot 5 (seconde relecture) : « 1 mission faite », plus « 1 missions faites » */(global.LKCalcEngine&&global.LKCalcEngine.plural?global.LKCalcEngine.plural(pbC):pbC>1)?' missioni fatte':' missione fatta'))+'</small></div>';
+  const marg=roiModeOf(s)==='new'&&Number.isFinite(r.baselineHourly)&&Number.isFinite(r.marginalProfit),pbH=marg?r.marginalPaybackHours:r.paybackHours,pbC=marg?r.marginalPaybackCycles:r.paybackCycles;
+  let html='<div class="c-payback"><span>Ripagato dopo</span><strong data-c-number="roi-payback">'+(pbH===null||pbH===undefined?'Non raggiunto con questi numeri':r.investment===0&&pbH===0?'Niente da ripagare':hours(pbH))+'</strong><small>'+(roiModeOf(s)==='continuous'?'di gioco, con il tuo numero all’ora':pbC===null||pbC===undefined?'Non sono state trovate abbastanza missioni':nf.format(pbC)+(/* lot 5 (seconde relecture) : « 1 mission faite », plus « 1 missions faites » */(global.LKCalcEngine&&global.LKCalcEngine.plural?global.LKCalcEngine.plural(pbC):pbC>1)?' missioni fatte':' missione fatta'))+'</small></div>';
   html+=progress('roi-progress','Parte del prezzo già recuperata',marg?r.marginalProfit:r.operatingProfit,r.investment,'100% = quello che l’acquisto ha reso copre il suo prezzo iniziale ('+money(r.investment)+') nel tempo in cui lo usi.');
   if(d&&d.valid&&d.hours!==null&&d.hours>0&&d.baselineHourly===null&&d.difference!==null){ /* lot 3 : sans moment d’achat connu (attente inconnue), pas de courbe */
    // Sans le gain actuel du joueur, on ne dessine que l'avantage de l'achat : prix payé au départ, puis ce qu'il rapporte en plus.

@@ -202,7 +202,10 @@ test('une dépense de plaisir est analysée sans rentabilité fictive', () => {
   const s = fresh(); s.roi.mode = 'estimate'; s.assets[0].incomeMode = 'none';
   const x = B.analysis('roi', s, []), p = B.analysis('purchase', s, []);
   assert.ok(x.explain.excluded.some(e => e.id === 'gain-en-plus' && /aucune rentabilité/.test(e.why)));
-  assert.equal(p.role, 'pleasure'); assert.ok(p.explain.excluded.some(e => e.id === 'gain-en-plus'));
+  /* v7.66 : un rôle « je ne sais pas encore » sans gain reste inconnu (il était présenté comme « Achat plaisir ») ; le rôle
+     « plaisir » choisi par le joueur, lui, est bien un plaisir. Correction de logique documentée dans LISEZ-MOI-v7.66.txt. */
+  assert.equal(p.role, 'unknown'); assert.ok(p.explain.excluded.some(e => e.id === 'gain-en-plus' && /aucune rentabilité/.test(e.why)));
+  s.assets[0].role = 'pleasure'; const q = B.analysis('purchase', s, []); assert.equal(q.role, 'pleasure');
   const r = B.evaluate('roi', s, []); assert.equal(r.roiPercent, undefined);
 });
 

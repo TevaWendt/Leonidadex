@@ -159,7 +159,7 @@ function eligible(s,source=[]){
  const owned=s.assets.filter(a=>a.owned).map(a=>a.itemId).filter(Boolean);
  return activities(s,source).filter(a=>s.session.enabled.includes(a.id)&&a.players<=s.goal.players&&(a.requiresPurchaseIds||[]).every(id=>owned.includes(id)));
 }
-function purchase(s,source=[]){const a=asset(s,s.purchase.key)||{...assetTemplate,price:null};let boost=a.incomeMode==='personal'?a.boostHourly:0;if(a.incomeMode==='roi'){const r=roi(s,source);boost=s.roi.key===a.key&&['new','improve'].includes(s.roi.mode)&&r.valid&&Number.isFinite(r.netHourly)?Math.max(0,r.netHourly):null;}return {...a,extras:a.extras===null||a.fees===null?null:a.extras+a.fees,capital:s.goal.capital,reserve:s.goal.reserve,target:s.goal.target,hourly:s.goal.hourly,boostHourly:boost};}
+function purchase(s,source=[]){const a=asset(s,s.purchase.key)||{...assetTemplate,price:null};let boost=a.incomeMode==='personal'?a.boostHourly:0;if(a.incomeMode==='roi'){const r=roi(s,source);boost=s.roi.key===a.key&&['new','improve'].includes(roiMode(s))&&r.valid&&Number.isFinite(r.netHourly)?Math.max(0,r.netHourly):null;}return {...a,extras:a.extras===null||a.fees===null?null:a.extras+a.fees,capital:s.goal.capital,reserve:s.goal.reserve,target:s.goal.target,hourly:s.goal.hourly,boostHourly:boost};}
 /* lot 2 (C11) : un seul gain net par heure (gain − dépenses par partie ramenées à l’heure) pour Mon objectif, Quoi acheter d’abord ?
    et Mon temps de jeu ; sans temps de partie, le brut est gardé et dit (known:false, reason). net est null quand le gain est vide. */
 function hourlyNet(s){const g=s.goal,hourly=typeof g.hourly==='number'&&Number.isFinite(g.hourly)?g.hourly:null,daily=typeof g.dailyMinutes==='number'&&g.dailyMinutes>0?g.dailyMinutes:null,up=typeof g.upkeepPerSession==='number'&&g.upkeepPerSession>0?g.upkeepPerSession:0;
@@ -219,8 +219,11 @@ function projection(s,source=[],r=session(s,source)){
  /* lot 2 (C11) : même cible que Mon objectif (sens du but, dépense prévue) et dépenses par partie retirées de chaque partie. */
  return E.sessionProjection({capital:s.goal.capital,reserve:s.goal.reserve,target:goalTarget(s),upkeepPerSession:up,session:r,repeatProfit:next.valid?next.profit:null,repeatReason:next.valid?null:next.reason,daysPerWeek:s.session.daysPerWeek});
 }
+/* v7.66 (contrôle Astra) : un achat déclaré « pour le plaisir » ou « pour le confort » dans Mes achats n’est jamais jugé sur une
+   rentabilité, même si « Ça vaut le coup ? » était resté sur un mode à gain : le mode effectif est alors « estimate ». */
+function roiMode(s){const a=asset(s,s.roi.key);return a&&(a.role==='pleasure'||a.role==='comfort')?'estimate':s.roi.mode;}
 function roi(s,source=[],ctx={}){
- const r=s.roi,a=asset(s,r.key);if(!a)return{valid:false,reason:'Wähle einen Kauf aus der Liste.'};
+ const r={...s.roi,mode:roiMode(s)},a=asset(s,r.key);if(!a)return{valid:false,reason:'Wähle einen Kauf aus der Liste.'};
  if(r.mode==='estimate')return decision(s,source);
  const input={...r,purchase:a.price,upgrades:a.extras,fees:a.fees};
  if(r.mode==='continuous'){const u=usagePerHourOf(s,a,ctx);if(u!==null&&!(r.costHourly>0))return {...E.roi({...input,costHourly:u}),usageFromPurchase:u};return E.roi(input);}
@@ -257,7 +260,7 @@ const upkeepEats=s=>{const hn=hourlyNet(s);return hn.net!==null&&hn.net<=0&&hn.u
 function orderInput(s,source=[]){
  const items=s.order.keys.map(key=>{const a=asset(s,key);if(!a)return{name:'Kauf fehlt',price:null};let boost=0;
   if(a.incomeMode==='personal')boost=a.boostHourly;
-  if(a.incomeMode==='roi'){const r=roi(s,source);boost=s.roi.key===key&&['new','improve'].includes(s.roi.mode)&&r.valid&&Number.isFinite(r.netHourly)?Math.max(0,r.netHourly):null;}
+  if(a.incomeMode==='roi'){const r=roi(s,source);boost=s.roi.key===key&&['new','improve'].includes(roiMode(s))&&r.valid&&Number.isFinite(r.netHourly)?Math.max(0,r.netHourly):null;}
   return{name:a.name+(a.owned?' (schon besessen)':''),price:a.owned?0:a.price===null||a.extras===null||a.fees===null?null:a.price+a.extras+a.fees,boostHourly:a.owned?0:boost};});
  return {capital:s.goal.capital,reserve:s.goal.reserve,hourly:orderHourly(s)/* lot 2 (C11) : gain net, dépenses par partie retirées ; jamais négatif (correctif : même règle que goal()) */,items};
 }
@@ -267,7 +270,7 @@ function budgetInput(s){const allocations=s.budget.source==='basket'?s.order.key
 function compareNames(s){const out={},used=new Set();s.compare.keys.forEach((k,i)=>{const a=asset(s,k);if(!a)return;const base=(typeof a.name==='string'&&a.name.trim()?a.name.trim().slice(0,120):'Kauf '+(i+1));let name=base,n=1;while(used.has(name)){n+=1;name=base+' ('+n+')';}used.add(name);out[k]=name;});return out;}
 function chooseInput(s,source=[]){
  const names=compareNames(s);
- const items=s.compare.keys.map(k=>{const a=asset(s,k);if(!a)return null;let income=null;if(a.incomeMode==='personal'&&a.boostHourly>0)income=a.boostHourly;if(a.incomeMode==='roi'){const r=roi(s,source);if(s.roi.key===k&&['new','improve','continuous'].includes(s.roi.mode)&&r.valid&&Number.isFinite(r.netHourly)&&r.netHourly>0)income=r.netHourly;}
+ const items=s.compare.keys.map(k=>{const a=asset(s,k);if(!a)return null;let income=null;if(a.incomeMode==='personal'&&a.boostHourly>0)income=a.boostHourly;if(a.incomeMode==='roi'){const r=roi(s,source);if(s.roi.key===k&&['new','improve','continuous'].includes(roiMode(s))&&r.valid&&Number.isFinite(r.netHourly)&&r.netHourly>0)income=r.netHourly;}
   return {name:names[k],price:a.owned?0:a.price,extras:a.extras,fees:a.fees,utility:a.utility,incomeHourly:income};}).filter(Boolean);
  return {capital:s.goal.capital,reserve:s.goal.reserve,hourly:s.goal.hourly,dailyMinutes:s.goal.dailyMinutes,hours:s.compare.hours,criterion:s.compare.criterion,items};
 }
@@ -419,7 +422,8 @@ function purchaseAnalysis(s,source,ctx){
  const a=asset(s,s.purchase.key),item=itemOf(a,ctx),acq=totalAcq(a,item),cc=cashFor(s,acq,a),use=usageOf(s,a,item),sessions=horizonSessions(s);
  const cost=M.usageCost({initial:acq.complete?V.personal(acq.value):V.unknown(),perSession:use.perSession,resale:resaleOf(s,a)},{sessions});
  const pc=purchasableCheck(item,a),need=needChecks(s,a,item),conditions=[cashCond(cc),pc,...need].filter(Boolean),adm=M.admission(conditions);
- const role=a?(a.role!=='unknown'?a.role:a.incomeMode==='none'?'pleasure':'income'):'unknown';
+ /* v7.66 : un rôle « je ne sais pas encore » sans gain écrit reste inconnu (il n’est plus présenté comme un achat plaisir) */
+ const role=a?(a.role!=='unknown'?a.role:a.incomeMode==='none'?'unknown':'income'):'unknown';
  const st=sustain(s,acq.complete?acq.value:null,use.perSession,sessions);
  const used=['argent-disponible','reserve','cout-acquisition'],excluded={};
  if(pc.state==='na')excluded.achetable='Eigener Kauf: Du beschreibst ihn selbst.';else used.push('achetable');
@@ -428,7 +432,7 @@ function purchaseAnalysis(s,source,ctx){
  else{excluded['cout-usage']=use.source==='na'?'Diese Art von Kauf hat keine laufenden Kosten, außer du trägst welche ein.':use.note||'Laufende Kosten nicht eingetragen.';excluded['cout-complet']='Ohne laufende Kosten geht die Rechnung nicht über den Preis hinaus.';excluded.horizon='Nur mit laufenden Kosten relevant.';excluded.frequence='Nur mit laufenden Kosten relevant.';}
  if(num(s.goal.hourly)){used.push('delai-recuperation');}else excluded['delai-recuperation']='Gib ein, was du pro Stunde verdienst, um zu sehen, wie schnell du dein Geld wieder einspielst.';
  used.push('argent-restant');
- if(role==='income'&&a&&a.incomeMode!=='none')used.push('gain-en-plus');else excluded['gain-en-plus']=role==='pleasure'?'Spaßkauf: Es wird keine Rentabilität berechnet.':'Keine zusätzlichen Einnahmen eingetragen.';
+ if(role==='income'&&a&&a.incomeMode!=='none')used.push('gain-en-plus');else excluded['gain-en-plus']=role==='pleasure'||role==='comfort'?'Spaß- oder Komfortkauf: Es wird nicht berechnet, ob er sich lohnt.':'Kein Zusatzgewinn eingetragen: Es wird nicht berechnet, ob er sich lohnt.';
  if(V.usable(cost.resale))used.push('revente-prevue');else excluded['revente-prevue']='Wiederverkauf: Mechanik unbestätigt; zählt nur, wenn du einen Wiederverkaufspreis einträgst.';
  const mechanicsOn=Object.keys(s.analysis.simulations).filter(k=>s.analysis.simulations[k]);
  if(use.source==='simulated')used.push('mecanique-simulee');else excluded['mecanique-simulee']=mechanicsOn.length?'Du hast deine eigenen Kosten pro Session eingetragen: Die Simulation kommt nicht dazu.':'Keine simulierte Mechanik (Sprit, Wartung …): Nichts wird erfunden.';
@@ -496,7 +500,7 @@ function compareAnalysis(s,source,ctx){
 /* ----- Quoi acheter d’abord ? ----- */
 function orderAnalysis(s,source,ctx){
  const keys=s.order.keys.filter(k=>asset(s,k)),d=sessionMinutesOf(s),objective=OBJECTIVES.includes(s.order.objective)?s.order.objective:'all';
- const items=keys.map(k=>{const a=asset(s,k),item=itemOf(a,ctx),use=usageOf(s,a,item);let boost=a.owned?0:a.incomeMode==='personal'?a.boostHourly:0;if(a.incomeMode==='roi'){const r=roi(s,source);boost=s.roi.key===k&&['new','improve'].includes(s.roi.mode)&&r.valid&&Number.isFinite(r.netHourly)?Math.max(0,r.netHourly):null;}
+ const items=keys.map(k=>{const a=asset(s,k),item=itemOf(a,ctx),use=usageOf(s,a,item);let boost=a.owned?0:a.incomeMode==='personal'?a.boostHourly:0;if(a.incomeMode==='roi'){const r=roi(s,source);boost=s.roi.key===k&&['new','improve'].includes(roiMode(s))&&r.valid&&Number.isFinite(r.netHourly)?Math.max(0,r.netHourly):null;}
   const costHourly=V.usable(use.perSession)&&d?use.perSession.v*60/d:0;
   return {id:k,name:a.name+(a.owned?' (schon besessen)':''),price:a.owned?0:a.price===null||a.extras===null||a.fees===null?null:a.price+a.extras+a.fees,boostHourly:a.owned?0:boost,costHourly:a.owned?0:costHourly,before:(a.requires||[]).filter(r=>keys.includes(r)),unlocks:a.unlocks||[],owned:a.owned,usage:use};});
  const unknown=items.filter(x=>x.price===null);
@@ -722,7 +726,7 @@ function roiChanges(c){if(!c||!c.valid||c.hours===null)return [];const t=c.thres
   t.extraHourlyForHorizon!=null&&t.extraHourlyForHorizon>0&&v!=='unknown-gain'?(ahead?'Unter '+m(t.extraHourlyForHorizon)+' zusätzlichem Gewinn pro Stunde ist er nicht mehr wieder eingespielt in '+H+'.':'Ab '+m(t.extraHourlyForHorizon)+' zusätzlichem Gewinn pro Stunde wäre er wieder eingespielt in '+H+'.'):null,
   c.breakEvenHours!=null&&c.breakEvenHours>0?(ahead?'Nutzt du ihn kürzer als '+E.durationText(c.breakEvenHours)+', ist er nicht wieder eingespielt.':'Nutzt du ihn mindestens '+E.durationText(c.breakEvenHours)+' nach dem Kauf, ist er wieder eingespielt.'):null].filter(Boolean);}
 function explainRoi(s,source,r,x,ctx={}){
- const mode=s.roi.mode,used=['argent-disponible','reserve','cout-acquisition','argent-restant'],excluded={},drivers=[],missing=[];
+ const mode=roiMode(s),used=['argent-disponible','reserve','cout-acquisition','argent-restant'],excluded={},drivers=[],missing=[];
  if(['new','improve'].includes(mode))used.push('joueurs','gain-net');else{excluded.joueurs='Keine Aktivität mit mehreren Spielern in diesem Modus.';excluded['gain-net']=mode==='estimate'?'Spaßkauf: keine Einnahmen berechnet.':'Du hast die zusätzlichen Einnahmen pro Stunde direkt eingetragen.';}
  if(mode==='estimate'){excluded['gain-en-plus']='Spaßkauf oder unbekannte Einnahmen: Es wird keine Rentabilität erfunden.';if(num(s.goal.hourly)||s.roi.recoveryActivity)used.push('delai-recuperation');else excluded['delai-recuperation']='Gib ein, was du pro Stunde verdienst, um zu sehen, wie schnell du dein Geld wieder einspielst.';}
  else used.push('gain-en-plus','delai-recuperation');
@@ -966,7 +970,7 @@ function evaluate(tool,s,source=[],ctx={}){
 }
 const metrics={compare:['bestWaitHours','Spielzeit, bis du die gewählte Option hast','h',-1],goal:['totalMinutes','Spielzeit für mein Ziel','min',-1],session:['profit','In der Session verdient','$',1],activities:['profit','Verdient, abzüglich Startkauf','$',1],roi:['netProfit','Am Ende verdient, abzüglich Preis','$',1],purchase:['remaining','Was mir nach dem Kauf bleibt','$',1],order:['totalHours','Spielzeit bis zum letzten Kauf','h',-1],budget:['available','Was mir bleibt, ohne das zurückgelegte Geld','$',1]};
 /* v7.59 (check ultime, D-06) : en « nouvelle activité » avec ton gain actuel écrit, l’écran répond avec le gain EN PLUS de ce que tu gagnais déjà (marginalNetProfit) ; le chiffre gardé dans Mes calculs et comparé en mode Expert est le même. */
-function metric(tool,s){if(tool==='roi'&&s.roi.mode==='estimate')return ['remaining','Was mir nach diesem Kauf bleibt','$',1];if(tool==='roi'&&s.roi.mode==='new'&&typeof s.goal.hourly==='number'&&Number.isFinite(s.goal.hourly))return ['marginalNetProfit','Zusätzlich zu dem verdient, was ich schon verdiente, abzüglich Preis','$',1];return metrics[tool];}
+function metric(tool,s){if(tool==='roi'&&roiMode(s)==='estimate')return ['remaining','Was mir nach diesem Kauf bleibt','$',1];if(tool==='roi'&&roiMode(s)==='new'&&typeof s.goal.hourly==='number'&&Number.isFinite(s.goal.hourly))return ['marginalNetProfit','Zusätzlich zu dem verdient, was ich schon verdiente, abzüglich Preis','$',1];return metrics[tool];}
 function sensitivity(tool,s,source=[]){
  let path,label,sourceInput=false;
  function reward(id){let i=s.activities.findIndex(a=>a.id===id),a=s.activities[i];if(i<0){i=source.findIndex(a=>a.id===id);a=source[i];sourceInput=true;}if(!a)return;path=sourceInput?[i,'reward']:['activities',i,'reward'];label='Belohnung für „'+a.name+'“ allein';}
@@ -986,5 +990,5 @@ function sensitivity(tool,s,source=[]){
 function signature(s){const c=copy(s);delete c.name;delete c.mode;delete c.views;delete c.tab;delete c.catalogue;delete c.completed;delete c.modelVersion;delete c.modelUpgradedFrom;/* lot 2 (C13) : la version du modèle ne rend pas un calcul « non enregistré » */return JSON.stringify(c);}
 function referenceWarnings(s,catalogue){const out=[];s.assets.forEach(a=>{if(!a.itemId)return;const item=catalogue.find(x=>x.id===a.itemId);if(!item)out.push(a.name+': Diese Seite gibt es nicht mehr, dein Preis bleibt erhalten.');else if(a.referencePrice!==item.price)out.push(item.name+': Der Preis auf der Seite ist jetzt ein anderer; kontrolliere deine Zahl.');});return out;}
 function initial(dataVersion,presets){return defaults({version:2,dataVersion,mode:'quick',model:'continuous',name:'Meine erste Million',tab:'goal',goal:{capital:200000,target:1000000,hourly:100000,reserve:0,dailyMinutes:60,players:1,selected:'scenario-a',meaning:'available',plannedSpend:null,upkeepPerSession:null,deadlineDays:null},activities:presets.map(a=>({id:a.id,name:a.name,reward:a.reward,cost:a.cost,duration:a.duration,prep:a.prep,cooldown:a.cooldown,share:a.share,investment:a.investment,players:a.players,owned:false})),session:{minutes:60,maxRepeat:100,enabled:['scenario-a','scenario-b','scenario-c']},inverse:{minutes:60,selected:'scenario-a'},purchase:{itemId:'',price:100000,hourly:50000,boostHourly:0,capital:200000,target:1000000,reserve:0,extras:0},catalogue:{query:'',type:'all',status:'all',maxPrice:null,sort:'name',favorites:[],compareIds:[],favoritesOnly:false}});}
-return Object.freeze({MODEL_VERSION,hourlyNet,compareNames,compareChanges,roiChanges,planLogId,analysis,goalTarget,goalPurchase,usageOf,terrainFits,OBJECTIVES,dependencyOrder,copy,tools,names,defaults,initial,validate,migrate,asset,addAsset,activities,eligible,purchase,goal,session,projection,roi,investment,decision,blank,orderInput,budgetInput,chooseInput,planInput,planMissing,planPurchases,planReserve,planGoalName,planStrategies,planAlternatives,planObserved,planNextSession,planDeadline,planCurve,planTemplate,planMissionTemplate,planPrereqTemplate,planLogTemplate,planVariantTemplate,analysisTemplate,assetTemplate,MECHANICS,ROLES,GOAL_MEANINGS,PRIORITIES,TERRAINS,STRATEGIES,STRATEGY_LABEL,PLAN_KINDS,PLAN_SOURCES,evaluate,metrics,metric,sensitivity,signature,referenceWarnings});
+return Object.freeze({MODEL_VERSION,roiMode,hourlyNet,compareNames,compareChanges,roiChanges,planLogId,analysis,goalTarget,goalPurchase,usageOf,terrainFits,OBJECTIVES,dependencyOrder,copy,tools,names,defaults,initial,validate,migrate,asset,addAsset,activities,eligible,purchase,goal,session,projection,roi,investment,decision,blank,orderInput,budgetInput,chooseInput,planInput,planMissing,planPurchases,planReserve,planGoalName,planStrategies,planAlternatives,planObserved,planNextSession,planDeadline,planCurve,planTemplate,planMissionTemplate,planPrereqTemplate,planLogTemplate,planVariantTemplate,analysisTemplate,assetTemplate,MECHANICS,ROLES,GOAL_MEANINGS,PRIORITIES,TERRAINS,STRATEGIES,STRATEGY_LABEL,PLAN_KINDS,PLAN_SOURCES,evaluate,metrics,metric,sensitivity,signature,referenceWarnings});
 });

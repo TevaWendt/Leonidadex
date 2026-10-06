@@ -1,0 +1,42 @@
+LEONIDAKIT v7.66 — contrôle du calculateur, options Expert rendues, pile Achats sur téléphone, SEO et latence
+Base : zip Leonidadex-main (9) = dépôt GitHub au commit a0ccedc (« assemblage-7-sections-modifs », après les lots 1 à 5 du calculateur).
+Archive « modifs » : fichiers ajoutés ou modifiés seulement, chemins exacts depuis la racine. Rien à supprimer.
+
+1. CALCULATEUR — CONTRÔLE (prompt « Intelligence avancée »)
+   Scénarios fictifs du prompt rejoués sur le moteur partagé avec des références écrites à la main : A, B, B bis, C, D, E, F, J, L
+   conformes ; modes Simple / Pas à pas / Expert : mêmes chiffres. Deux écarts corrigés :
+   - « Ça vaut le coup ? » jugeait encore la rentabilité d’un achat déclaré « Pour le plaisir » (ou confort) quand l’outil était
+     resté sur un mode à gain (« Non, garde ton argent ») : le mode effectif est maintenant « plaisir » (B.roiMode), partout.
+   - Un achat au rôle « Je ne sais pas encore » sans gain était présenté comme « Achat plaisir » : il reste « rôle inconnu ».
+   - ES et IT : le dernier assemblage avait remis d’anciens es/calculateurs.js et it/calculateurs.js (avant le lot 1) ; les
+     quatre langues sont régénérées depuis le français.
+   Test : outils/tests/calculateurs-controle-v766.test.cjs (9 tests).
+
+2. OPTIONS RETIRÉES EN v7.47, RENDUES AU MODE EXPERT (décision du 06/10/2026)
+   « Et si je gagne plus, ou moins ? » (Mon objectif) ; « Voir les réglages avancés (mode Expert) » en bas de chaque outil (en
+   Expert : ouvre tout le détail) ; « C’est bon pour cette étape ✓ » ; « Garder pour comparer » (bloc Expert et tiroir) ;
+   « Enregistrer mon plan (avec sa fiche) », « Imprimer mon plan » et la case « Afficher plus de détails » du business plan ;
+   « Partir de zéro » et « Recharger les exemples » dans le tiroir ; blocs « Mes calculs enregistrés » / « Mes business plans ».
+   Traductions : outils/langues/<langue>/calculateur-v766.json.
+
+3. PAGE ACHATS : la pile de cartes qui remontent et s’empilent fonctionne aussi sur téléphone (acquisitions.css,
+   achats-pile.js) ; une carte plus haute que l’écran se colle par le bas, ses actions restent visibles et cliquables.
+
+4. SEO ET LATENCE
+   - Variante 800 px des 150 visuels officiels (img/officiel/*-800.webp) ajoutée aux srcset (outils/sync-site.cjs).
+   - Première image des piles en tête de page demandée en priorité (fetchpriority).
+   - Liens vers l’accueil écrits « / » (plus de redirection /index.html) ; redirections 301 dans vercel.json pour les anciennes
+     pages (munitions, vêtements, accessoires, tatouages, anciennes armes) et leurs versions traduites.
+   - Notes de version et README exclus du déploiement (.vercelignore).
+   - common.js : lectures de géométrie groupées (une mise en page au lieu d’une par bloc) ; leo-loader.js : place du bouton
+     cherchée quand le navigateur est libre ; barre des sections mesurée à la trame suivante.
+   - Accessibilité (audit) : points des carrousels de Vêtements et style portés à une cible de 24 × 24 px (le point visible
+     garde 14 px) ; bouton « Fiche complète » des listes en corail foncé (contraste 5,9:1 au lieu de 3,95:1).
+
+5. TESTS MIS À JOUR (décision du 06/10/2026, pas des régressions)
+   calculateurs-v747 (options rendues en Expert), calculateurs-v749 (rôle inconnu ≠ plaisir), visuel-lot2 (common.js),
+   matrice de causalité (le rôle « confort » change aussi « Ça vaut le coup ? »), instantané du cadre et inventaire régénérés
+   (outils/calculateur-cadre.json, outils/CALCULATEUR-INVENTAIRE.md) : seuls les éléments rendus au mode Expert s’y ajoutent.
+
+Mise en ligne : copier le contenu de l’archive à la racine du dossier GitHub (remplacer), valider, pousser. Aucune commande de build.
+Retour arrière : revenir au commit précédent dans GitHub Desktop.

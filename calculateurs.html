@@ -40,7 +40,7 @@
 <link rel="stylesheet" href="style.css?v=6ca06c3e1f23">
 <link rel="stylesheet" href="calculateurs.css?v=c46e8092ecb1">
 <link rel="stylesheet" href="calculateurs-brand.css?v=f7ed71baf691">
-<link rel="stylesheet" href="calculateurs-workspace.css?v=165bd430343a">
+<link rel="stylesheet" href="calculateurs-workspace.css?v=19551dcd1e3e">
 <link rel="stylesheet" href="calculateurs-motion.css?v=673be6d00308">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta property="og:image" content="https://www.leonidakit.com/img/officiel/vice-city-11-1280.webp">
@@ -57,7 +57,7 @@
 
 <header>
   <div class="shell head-in">
-    <a href="index.html" class="brand">Leonida<span>kit</span></a>
+    <a href="/" class="brand">Leonida<span>kit</span></a>
     <nav id="nav" aria-label="Navigation principale"><ul><li><a href="calculateurs.html" class="here" aria-current="page">Calculateur</a></li><li><a href="tuto.html">Tuto</a></li><li><a href="carte.html">Carte</a></li><li><a href="vehicules.html">Véhicules</a></li><li><a href="armes.html">Armurerie</a></li><li><a href="achats.html">Achats</a></li><li><a href="progression.html">Progression</a></li><li><details class="nav-more"><summary>Explorer</summary><div class="nav-more-panel"><div><strong>Le monde</strong><a href="lieux.html">Lieux</a><a href="personnages.html">Personnages</a><a href="gangs.html">Gangs et factions</a><a href="demeures.html">Demeures</a><a href="planques.html">Planques</a><a href="entreprises.html">Entreprises</a><a href="animaux.html">Animaux</a><a href="collectibles.html">Collectibles</a></div><div><strong>Jouer</strong><a href="missions.html">Missions</a><a href="activites.html">Activités annexes</a><a href="radios.html">Radios et musique</a><a href="codes-de-triche.html">Codes de triche</a><a href="trophees.html">Trophées et succès</a></div><div><strong>S’équiper</strong><a href="nourriture.html">Consommables</a><a href="style.html">Vêtements et style</a><a href="personnalisations.html">Personnalisations</a></div><div><strong>Le site</strong><a href="a-propos.html">À propos</a><a href="contact.html">Contact</a><a href="medias.html">Médias et crédits</a><a href="mentions-legales.html">Mentions et confidentialité</a></div><div class="nav-online"><strong>GTA Online</strong><a href="online.html">L’espace GTA Online</a><a href="online/annonces.html">Les annonces</a><a href="online/gta-online-actuel.html">Le GTA Online actuel</a></div></div></details></li></ul></nav>
     <div class="head-search searchwrap">
       <div class="hs-bar">
@@ -154,7 +154,7 @@
       <div class="calc-drawer-foot">
         <h3>Sur un autre appareil</h3><p>Télécharge ton calcul dans un fichier. Ouvre ce fichier sur l’autre appareil.</p>
         <p class="calc-note">Tous tes enregistrements, avec leur résumé, sont aussi sur une page à part : <a class="calc-foot-link" href="carnets/calculs.html">Mes calculs et mes plans</a>.</p>
-        <div class="calc-carnet-actions"><button class="calc-button" id="calc-export" type="button">Télécharger mon calcul</button><label class="calc-button calc-import">Ouvrir un fichier de calcul<input id="calc-import" type="file" accept="application/json,.json"></label></div>
+        <div class="calc-carnet-actions"><button class="calc-button" id="calc-export" type="button">Télécharger mon calcul</button><label class="calc-button calc-import">Ouvrir un fichier de calcul<input id="calc-import" type="file" accept="application/json,.json"></label><span class="b-expert-only"><button class="calc-button" type="button" data-calc-zero-proxy="1">Partir de zéro</button><button class="calc-button" type="button" data-calc-reset-proxy="1">Recharger les exemples</button></span></div>
       </div>
     </div>
   </dialog>
@@ -205,7 +205,7 @@
 </section>
 
 <section class="calc-editorial calc-shell" aria-labelledby="calc-editorial-title">
-  <div class="calc-editorial-image"><img src="img/officiel/vice-city-06-480.webp" srcset="img/officiel/vice-city-06-480.webp 480w, img/officiel/vice-city-06-1280.webp 1280w" sizes="(max-width: 800px) 100vw, 680px" width="480" height="270" alt="La vie nocturne à Vice City" loading="lazy" decoding="async"></div>
+  <div class="calc-editorial-image"><img src="img/officiel/vice-city-06-480.webp" srcset="img/officiel/vice-city-06-480.webp 480w, img/officiel/vice-city-06-800.webp 800w, img/officiel/vice-city-06-1280.webp 1280w" sizes="(max-width: 800px) 100vw, 680px" width="480" height="270" alt="La vie nocturne à Vice City" loading="lazy" decoding="async"></div>
   <div><p class="calc-kicker">JOUE PLUS, CALCULE MOINS</p><h2 id="calc-editorial-title">Ton temps de jeu compte.</h2><p>Une petite partie ce soir, un gros achat ce week-end : regarde ce que chaque choix change pour toi. Enregistre ton calcul, reviens avec tes nouveaux chiffres, et continue.</p><a href="#atelier" data-open-tab="session">Préparer mon temps de jeu <span aria-hidden="true">↗</span></a></div>
 </section>
 
@@ -274,7 +274,7 @@
 
 <section class="shell lk-explore" aria-labelledby="calc-explore-title">
   <p class="calc-kicker">ET APRÈS ?</p><h2 id="calc-explore-title">Continuer la visite</h2>
-  <div class="lk-links"><a class="lk-link" href="vehicules.html"><img src="img/officiel/one-eyed-willie-s-mod-shop-01-480.webp" srcset="img/officiel/one-eyed-willie-s-mod-shop-01-480.webp 480w, img/officiel/one-eyed-willie-s-mod-shop-01-1280.webp 1280w" sizes="(max-width: 800px) 100vw, 480px" width="480" height="270" alt="" loading="lazy" decoding="async"><span><b>Les 302 véhicules</b><i>Trouver mon prochain achat ↗</i></span></a><a class="lk-link" href="carte.html"><img src="img/officiel/leonida-keys-01-480.webp" srcset="img/officiel/leonida-keys-01-480.webp 480w, img/officiel/leonida-keys-01-1280.webp 1280w" sizes="(max-width: 800px) 100vw, 480px" width="480" height="270" alt="" loading="lazy" decoding="async"><span><b>La carte de Leonida</b><i>Explorer les lieux ↗</i></span></a><a class="lk-link" href="progression.html"><img src="img/officiel/mount-kalaga-national-park-06-480.webp" srcset="img/officiel/mount-kalaga-national-park-06-480.webp 480w, img/officiel/mount-kalaga-national-park-06-1280.webp 1280w" sizes="(max-width: 800px) 100vw, 480px" width="480" height="270" alt="" loading="lazy" decoding="async"><span><b>Ma progression</b><i>Voir ce que j’ai déjà ↗</i></span></a></div>
+  <div class="lk-links"><a class="lk-link" href="vehicules.html"><img src="img/officiel/one-eyed-willie-s-mod-shop-01-480.webp" srcset="img/officiel/one-eyed-willie-s-mod-shop-01-480.webp 480w, img/officiel/one-eyed-willie-s-mod-shop-01-800.webp 800w, img/officiel/one-eyed-willie-s-mod-shop-01-1280.webp 1280w" sizes="(max-width: 800px) 100vw, 480px" width="480" height="270" alt="" loading="lazy" decoding="async"><span><b>Les 302 véhicules</b><i>Trouver mon prochain achat ↗</i></span></a><a class="lk-link" href="carte.html"><img src="img/officiel/leonida-keys-01-480.webp" srcset="img/officiel/leonida-keys-01-480.webp 480w, img/officiel/leonida-keys-01-800.webp 800w, img/officiel/leonida-keys-01-1280.webp 1280w" sizes="(max-width: 800px) 100vw, 480px" width="480" height="270" alt="" loading="lazy" decoding="async"><span><b>La carte de Leonida</b><i>Explorer les lieux ↗</i></span></a><a class="lk-link" href="progression.html"><img src="img/officiel/mount-kalaga-national-park-06-480.webp" srcset="img/officiel/mount-kalaga-national-park-06-480.webp 480w, img/officiel/mount-kalaga-national-park-06-800.webp 800w, img/officiel/mount-kalaga-national-park-06-1280.webp 1280w" sizes="(max-width: 800px) 100vw, 480px" width="480" height="270" alt="" loading="lazy" decoding="async"><span><b>Ma progression</b><i>Voir ce que j’ai déjà ↗</i></span></a></div>
 </section>
 </main>
 
@@ -304,11 +304,11 @@
     <g stroke="#1A1A1E" stroke-width="2" opacity=".2">
       <line x1="0" y1="132" x2="1200" y2="132"/><line x1="0" y1="142" x2="1200" y2="142"/>
     </g>
-  </svg><div class="shell"><div class="foot-top"><div class="foot-brand"><a class="brand" href="index.html">Leonida<span>kit</span></a><p>Une carte, des fiches, un calculateur. Prépare tes choix dans Leonida avec des sources claires et tes propres chiffres.</p><a class="foot-feature" href="calculateurs.html">Trouver mon calcul ↗</a></div><div class="foot-cols"><div><h2>Explorer</h2><nav aria-label="Explorer en pied de page"><a href="carte.html">Carte</a><a href="vehicules.html">Véhicules</a><a href="armes.html">Armurerie</a><a href="lieux.html">Lieux</a><a href="personnages.html">Personnages</a><a href="gangs.html">Gangs et factions</a><a href="demeures.html">Demeures</a><a href="planques.html">Planques</a><a href="entreprises.html">Entreprises</a><a href="animaux.html">Animaux</a><a href="collectibles.html">Collectibles</a></nav></div><div><h2>Jouer</h2><nav aria-label="Jouer en pied de page"><a href="missions.html">Missions</a><a href="activites.html">Activités annexes</a><a href="radios.html">Radios et musique</a><a href="codes-de-triche.html">Codes de triche</a><a href="trophees.html">Trophées et succès</a></nav></div><div><h2>GTA Online</h2><nav aria-label="GTA Online en pied de page"><a href="online.html">L’espace GTA Online</a><a href="online/annonces.html">Les annonces</a><a href="online/gta-online-actuel.html">Le GTA Online actuel</a></nav></div><div><h2>S’équiper</h2><nav aria-label="S’équiper en pied de page"><a href="achats.html">Tout ce qui s’achète</a><a href="nourriture.html">Consommables</a><a href="style.html">Vêtements et style</a><a href="personnalisations.html">Personnalisations</a><a href="armes.html#munitions">Munitions et équipement</a><a href="logements.html">Logements et appartements</a></nav></div><div><h2>Outils et aide</h2><nav aria-label="Outils et aide en pied de page"><a href="calculateurs.html">Calculateur</a><a href="tuto.html">Tuto</a><a href="progression.html">Progression</a><a href="a-propos.html">À propos</a><a href="contact.html">Contact</a><a href="medias.html">Médias et crédits</a><a href="mentions-legales.html">Mentions et confidentialité</a></nav></div></div></div><p class="legal">Leonidakit est un projet indépendant réalisé par un joueur, sans affiliation, approbation ni sponsoring de Rockstar Games ou Take-Two Interactive. Grand Theft Auto est une marque de Take-Two Interactive. Les crédits de chaque média restent consultables.</p></div></footer>
+  </svg><div class="shell"><div class="foot-top"><div class="foot-brand"><a class="brand" href="/">Leonida<span>kit</span></a><p>Une carte, des fiches, un calculateur. Prépare tes choix dans Leonida avec des sources claires et tes propres chiffres.</p><a class="foot-feature" href="calculateurs.html">Trouver mon calcul ↗</a></div><div class="foot-cols"><div><h2>Explorer</h2><nav aria-label="Explorer en pied de page"><a href="carte.html">Carte</a><a href="vehicules.html">Véhicules</a><a href="armes.html">Armurerie</a><a href="lieux.html">Lieux</a><a href="personnages.html">Personnages</a><a href="gangs.html">Gangs et factions</a><a href="demeures.html">Demeures</a><a href="planques.html">Planques</a><a href="entreprises.html">Entreprises</a><a href="animaux.html">Animaux</a><a href="collectibles.html">Collectibles</a></nav></div><div><h2>Jouer</h2><nav aria-label="Jouer en pied de page"><a href="missions.html">Missions</a><a href="activites.html">Activités annexes</a><a href="radios.html">Radios et musique</a><a href="codes-de-triche.html">Codes de triche</a><a href="trophees.html">Trophées et succès</a></nav></div><div><h2>GTA Online</h2><nav aria-label="GTA Online en pied de page"><a href="online.html">L’espace GTA Online</a><a href="online/annonces.html">Les annonces</a><a href="online/gta-online-actuel.html">Le GTA Online actuel</a></nav></div><div><h2>S’équiper</h2><nav aria-label="S’équiper en pied de page"><a href="achats.html">Tout ce qui s’achète</a><a href="nourriture.html">Consommables</a><a href="style.html">Vêtements et style</a><a href="personnalisations.html">Personnalisations</a><a href="armes.html#munitions">Munitions et équipement</a><a href="logements.html">Logements et appartements</a></nav></div><div><h2>Outils et aide</h2><nav aria-label="Outils et aide en pied de page"><a href="calculateurs.html">Calculateur</a><a href="tuto.html">Tuto</a><a href="progression.html">Progression</a><a href="a-propos.html">À propos</a><a href="contact.html">Contact</a><a href="medias.html">Médias et crédits</a><a href="mentions-legales.html">Mentions et confidentialité</a></nav></div></div></div><p class="legal">Leonidakit est un projet indépendant réalisé par un joueur, sans affiliation, approbation ni sponsoring de Rockstar Games ou Take-Two Interactive. Grand Theft Auto est une marque de Take-Two Interactive. Les crédits de chaque média restent consultables.</p></div></footer>
 
 <script type="lk/lazy" src="search-index.js?v=173c761892f1"></script><script type="lk/lazy" src="search-lieux.js?v=58e099262828"></script>
-<script src="assets-manifest.js?v=7e00bdc8990b"></script>
-<script src="common.js?v=3bc3988c44ab"></script>
+<script src="assets-manifest.js?v=241821d22e7b"></script>
+<script src="common.js?v=182e8157e83f"></script>
 <script src="app.js?v=6d2cf4d27670"></script>
 <script src="vehicules-data.js?v=915e9f454f92"></script>
 <script src="armes-data.js?v=756b55fd7990"></script>
@@ -316,18 +316,18 @@
 <script src="calculateurs-activites.js?v=80def6e8d122"></script>
 <script src="acquisitions-data.js?v=7e484ffb1c75"></script>
 <script src="calculateurs-data.js?v=29abe0a3a183"></script>
-<script src="calculateurs-engine.js?v=e7a60c5b2cde"></script><script src="modele-donnees.js?v=81e0c04b9533"></script><script src="calculateurs-modele.js?v=4253bdacaf6d"></script>
-<script src="calculateurs-scenario.js?v=5dca651c27aa"></script>
-<script src="calculateurs-notebooks.js?v=f24e7ce81e33"></script>
-<script src="calculateurs-visuals.js?v=a7757fbd178c"></script>
-<script src="calculateurs-workspace.js?v=7f75e080d61c"></script>
+<script src="calculateurs-engine.js?v=26d94b4ac7f5"></script><script src="modele-donnees.js?v=81e0c04b9533"></script><script src="calculateurs-modele.js?v=e1fb95d37dbd"></script>
+<script src="calculateurs-scenario.js?v=9443e43ad6ee"></script>
+<script src="calculateurs-notebooks.js?v=a77b89b2bf00"></script>
+<script src="calculateurs-visuals.js?v=b962ee640a7e"></script>
+<script src="calculateurs-workspace.js?v=bae72e17ab72"></script>
 <script src="carnets-core.js?v=8d3fba546489"></script>
-<script src="calculateurs-plan.js?v=6dc49349f2d7"></script>
+<script src="calculateurs-plan.js?v=88c26959d054"></script>
 <script src="leo-link.js?v=1509a700f658"></script>
-<script src="calculateurs.js?v=cc0e45ed5fc9"></script>
+<script src="calculateurs.js?v=bd17e540018f"></script>
 <script src="leo-calculator.js?v=105cde11ad74"></script>
 <script src="calculateurs-motion.js?v=1263daebfd54"></script>
-<script src="calculateurs-hub.js?v=05bfd16d486d"></script>
+<script src="calculateurs-hub.js?v=b3fe26ce5a29"></script>
 <script src="calculateurs-simple.js?v=379d3cfa01bf"></script>
 </body>
 </html>

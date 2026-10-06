@@ -4,6 +4,8 @@
    une phrase de lecture et le tableau des chiffres. Prévu, réalisé et hypothèse ne se confondent pas. */
 (function(global){
 'use strict';
+/* v7.66 : mode effectif de « Ça vaut le coup ? » (achat plaisir ou confort : jamais de rentabilité) */
+const roiModeOf=s=>global.LKCalcScenario&&global.LKCalcScenario.roiMode?global.LKCalcScenario.roiMode(s):s.roi.mode;
 function create(h){
  const {esc,money,hours}=h,nf=new Intl.NumberFormat('es-ES',{maximumFractionDigits:2}),compact=new Intl.NumberFormat('es-ES',{notation:'compact',maximumFractionDigits:1});
  const fmt=(v,u)=>u==='$'?money(v):u==='h'?hours(v):u==='min'?hours(v/60):u==='%'?nf.format(v)+' %':nf.format(v)+(u?' '+u:'');
@@ -56,8 +58,8 @@ function create(h){
   if(!r.valid)return '';
   /* lot 3 (scénario I) : nouvelle activité avec ton gain actuel connu : le remboursement compte ce que tu aurais gagné de toute façon
      (même chiffre que la réponse) ; un achat gratuit n’a rien à rembourser (jamais « 0 min ») */
-  const marg=s.roi.mode==='new'&&Number.isFinite(r.baselineHourly)&&Number.isFinite(r.marginalProfit),pbH=marg?r.marginalPaybackHours:r.paybackHours,pbC=marg?r.marginalPaybackCycles:r.paybackCycles;
-  let html='<div class="c-payback"><span>Recuperado tras</span><strong data-c-number="roi-payback">'+(pbH===null||pbH===undefined?'No se alcanza con estas cifras':r.investment===0&&pbH===0?'Nada que recuperar':hours(pbH))+'</strong><small>'+(s.roi.mode==='continuous'?'de juego, con tu cifra por hora':pbC===null||pbC===undefined?'No se han encontrado suficientes misiones':nf.format(pbC)+(/* lot 5 (seconde relecture) : « 1 mission faite », plus « 1 missions faites » */(global.LKCalcEngine&&global.LKCalcEngine.plural?global.LKCalcEngine.plural(pbC):pbC>1)?' misiones completadas':' misión completada'))+'</small></div>';
+  const marg=roiModeOf(s)==='new'&&Number.isFinite(r.baselineHourly)&&Number.isFinite(r.marginalProfit),pbH=marg?r.marginalPaybackHours:r.paybackHours,pbC=marg?r.marginalPaybackCycles:r.paybackCycles;
+  let html='<div class="c-payback"><span>Recuperado tras</span><strong data-c-number="roi-payback">'+(pbH===null||pbH===undefined?'No se alcanza con estas cifras':r.investment===0&&pbH===0?'Nada que recuperar':hours(pbH))+'</strong><small>'+(roiModeOf(s)==='continuous'?'de juego, con tu cifra por hora':pbC===null||pbC===undefined?'No se han encontrado suficientes misiones':nf.format(pbC)+(/* lot 5 (seconde relecture) : « 1 mission faite », plus « 1 missions faites » */(global.LKCalcEngine&&global.LKCalcEngine.plural?global.LKCalcEngine.plural(pbC):pbC>1)?' misiones completadas':' misión completada'))+'</small></div>';
   html+=progress('roi-progress','Parte del precio ya recuperada',marg?r.marginalProfit:r.operatingProfit,r.investment,'100 % = lo que ha generado la compra cubre su precio inicial ('+money(r.investment)+') durante el tiempo que lo usas.');
   if(d&&d.valid&&d.hours!==null&&d.hours>0&&d.baselineHourly===null&&d.difference!==null){ /* lot 3 : sans moment d’achat connu (attente inconnue), pas de courbe */
    // Sans le gain actuel du joueur, on ne dessine que l'avantage de l'achat : prix payé au départ, puis ce qu'il rapporte en plus.

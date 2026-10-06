@@ -214,7 +214,7 @@ function renderPurchase(){const p=B.purchase(state,sourceActivities),item=catalo
   if(px.sustain){const st=px.sustain;more.push(st.state==='insoutenable'?'<b>Payable maintenant, mais pas tenable :</b> chaque partie te coûte '+money(st.usagePerSession)+' à l’usage et ne te rapporte que '+money(st.earnPerSession)+' (−'+money(-st.netPerSession)+' par partie).':'<b>Tenable dans la durée :</b> chaque partie te laisse '+money(st.netPerSession)+' de plus, usage payé.');if(st.sessions!==null&&st.after!==null)more.push('Après '+st.sessions+' parties : '+money(st.after)+(st.breach?', sous ce que tu gardes de côté.':'.'));}
   if(px.sessions!==null&&MV_usable(px.usage.perSession)&&px.cost.total.complete)more.push('Coût complet sur '+px.sessions+' parties : <b>'+money(px.cost.total.value)+'</b> (prix + usage).');
   if(px.cost.resaleNote&&px.cost.futureNet!==null)more.push(esc(px.cost.resaleNote));
-  if(px.role==='pleasure')more.push('Achat plaisir : aucune rentabilité n’est calculée, et c’est normal.');
+  if(px.role==='pleasure'||px.role==='comfort')more.push('Achat plaisir ou confort : aucune rentabilité n’est calculée, et c’est normal.');
   if(px.purchasable.state==='assumed')more.push('Achat à confirmer dans GTA VI : la réponse suppose qu’il s’achète.');
   if(px.purchasable.state==='ko')more.push('<b>'+esc(px.purchasable.detail)+'</b>');
   if(more.length)html+='<p class="b-purchase-more">'+more.join('<br>')+'</p>';

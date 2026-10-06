@@ -8,14 +8,29 @@
   var stack = document.querySelector('[data-ak-stack]'); if (!stack) return;
   var slots = Array.prototype.slice.call(stack.children), btn = document.querySelector('[data-ak-view]');
   var reduce = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : { matches: false };
-  var tall = window.matchMedia ? window.matchMedia('(min-height: 600px) and (min-width: 601px)') : { matches: true };
+  /* v7.66 : la pile vit aussi sur téléphone (écran d’au moins 560 px de haut) */
+  var tall = window.matchMedia ? window.matchMedia('(min-height: 600px) and (min-width: 601px), (max-width: 600px) and (min-height: 560px)') : { matches: true };
+  var phone = window.matchMedia ? window.matchMedia('(max-width: 600px)') : { matches: false };
   function grid() { return stack.classList.contains('is-grid'); }
   function active() { return !reduce.matches && tall.matches && !grid(); }
   function stickTop(slot) { var t = parseFloat(getComputedStyle(slot).top); return Number.isFinite(t) ? t : 0; }
   function clear() { slots.forEach(function (s) { var c = s.firstElementChild; c.style.removeProperty('--ak-cover'); c.style.removeProperty('--ak-blur'); }); }
+  /* Téléphone : une carte plus haute que l’écran se colle par le bas (toute la carte a été lue quand la suivante arrive) ;
+     sinon sous l’en-tête, légèrement décalée de la précédente. Les hauteurs ne bougent pas au défilement : mesure au
+     chargement, au redimensionnement et au changement de vue seulement. */
+  var placed = '';
+  function place() {
+    var key = active() && phone.matches ? window.innerWidth + 'x' + window.innerHeight : '';
+    if (key === placed) return; placed = key;
+    if (!key) { slots.forEach(function (s) { s.style.removeProperty('--ak-stick'); }); return; }
+    var head = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--lk-head-h')) || 71, vh = window.innerHeight;
+    var hs = slots.map(function (s) { return s.firstElementChild.offsetHeight; });
+    slots.forEach(function (s, i) { s.style.setProperty('--ak-stick', Math.round(Math.min(head + 8 + i * 6, vh - hs[i] - 8)) + 'px'); });
+  }
   var queued = false;
   function frame() {
     queued = false;
+    place();
     if (!active()) { clear(); return; }
     var vh = window.innerHeight;
     for (var i = 0; i < slots.length; i += 1) {
@@ -59,7 +74,7 @@
     var key = 'lk_achats_vue';
     btn.hidden = false;
     function set(on, save) {
-      stack.classList.toggle('is-grid', on); btn.setAttribute('aria-pressed', String(on)); btn.textContent = on ? 'Torna alla pila' : 'Vedi tutto a griglia';
+      stack.classList.toggle('is-grid', on); placed = '-'; btn.setAttribute('aria-pressed', String(on)); btn.textContent = on ? 'Torna alla pila' : 'Vedi tutto a griglia';
       if (save) { try { sessionStorage.setItem(key, on ? 'grille' : 'pile'); } catch (e) { /* choix valable pour cette page seulement */ } }
       queue();
     }
@@ -68,5 +83,7 @@
     btn.addEventListener('click', function () { set(!grid(), true); });
     if (reduce.matches) btn.hidden = true;
   }
-  if (reduce.addEventListener) reduce.addEventListener('change', queue);
+  if (reduce.addEventListener) reduce.addEventListener('change', function () { placed = '-'; queue(); });
+  window.addEventListener('resize', function () { placed = '-'; queue(); });
+  window.addEventListener('load', function () { placed = '-'; queue(); });
 }());

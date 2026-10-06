@@ -376,3 +376,7 @@ Le calculateur reste entièrement statique, gratuit et sans compte. Les sept cal
 
 - Sauvegarde courante illisible ou ancienne : une copie brute datée est conservée avant remplacement. Une version future suspend l’enregistrement automatique ; l’original peut être téléchargé. Les carnets ont leur propre récupération.
 - Les mesures CPU Node/jsdom ne remplacent pas Lighthouse ni des tests sur appareils. Aucun score Web Vitals n’est annoncé.
+
+## v7.66 (06/10/2026)
+
+Contrôle du calculateur (scénarios fictifs A–L, `outils/tests/calculateurs-controle-v766.test.cjs`), options retirées en v7.47 rendues au mode Expert (`.b-expert-only`, mode posé sur `body[data-calc-mode]`), pile de la page Achats sur téléphone, variante d’image 800 px, liens d’accueil canoniques, redirections 301. Détail : `LISEZ-MOI-v7.66.txt`.

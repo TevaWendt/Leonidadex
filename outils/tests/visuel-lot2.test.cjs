@@ -21,7 +21,9 @@ test('v7.54 corrigée : un bloc « rise » qui reçoit aussi « lk-reveal » est
   }
   const js = read('common.js');
   assert.match(js, /const modern = el => el\.classList\.contains\('lk-reveal'\)/);
-  assert.match(js, /legacy\(el\) && el\.classList\.contains\('in'\)\) show\(el, 0, true\)/, 'bloc déjà suivi : montré sans transition quand il reçoit lk-reveal');
+  /* v7.66 (latence) : lectures puis écritures groupées ; le bloc déjà suivi est toujours montré sans transition (show(el, 0, true)) */
+  assert.match(js, /legacy\(el\) && el\.classList\.contains\('in'\)\) again\.push\(el\)/, 'bloc déjà suivi : mis de côté pour être montré');
+  assert.match(js, /again\.forEach\(function \(el\) \{ show\(el, 0, true\); \}\)/, 'bloc déjà suivi : montré sans transition quand il reçoit lk-reveal');
 });
 
 test('VIS-03 : les neuf cartes de Progression entrent par LKMotion (cascade), compteurs écrits sans attendre, données intactes', async () => {

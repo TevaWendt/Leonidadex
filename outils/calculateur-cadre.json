@@ -60,6 +60,15 @@
    "3 button.calc-text-button type=\"button\" «Partir de zéro»",
    "3 button#calc-reset.calc-text-button type=\"button\" «Remettre les exemples»",
    "1 div#calc-reminder.calc-reminder [hidden] ⟦zone dynamique⟧",
+   "1 div.b-expert-only.b-legacy-saved",
+   "2 details.calc-advanced",
+   "3 summary «Mes calculs enregistrés»",
+   "3 p.calc-note «Tes calculs gardés sur cet appareil, avec leur fiche.»",
+   "3 button.calc-button type=\"button\" «Voir mes calculs enregistrés»",
+   "2 details.calc-advanced",
+   "3 summary «Mes business plans»",
+   "3 p.calc-note «Tes plans gardés sur cet appareil, avec leur fiche.»",
+   "3 button.calc-button type=\"button\" «Voir mes business plans»",
    "1 noscript",
    "2 p.calc-warning «Active JavaScript pour utiliser le calculateur. Tous les calculs se font dans ton navigateur.»",
    "1 p#calc-live.calc-sr ⟦zone dynamique⟧",
@@ -117,6 +126,9 @@
    "5 button#calc-export.calc-button type=\"button\" «Télécharger mon calcul»",
    "5 label.calc-button.calc-import «Ouvrir un fichier de calcul»",
    "6 input#calc-import type=\"file\"",
+   "5 span.b-expert-only",
+   "6 button.calc-button type=\"button\" «Partir de zéro»",
+   "6 button.calc-button type=\"button\" «Recharger les exemples»",
    "1 dialog#calc-sheet.b-sheet-dialog",
    "2 div.b-sheet-bar",
    "3 button.calc-button.primary.lk-shine type=\"button\" «Imprimer la fiche»",
@@ -412,6 +424,9 @@
    "1 div#goal-routes.calc-routes ⟦zone dynamique⟧",
    "0 div#expert-goal.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Voir les réglages avancés (mode Expert)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «C’est bon pour cette étape ✓»",
    "1 button.calc-button type=\"button\" «Aller à mon business plan»"
   ],
   "fr/commun/guided": [
@@ -473,6 +488,15 @@
    "3 button.calc-text-button type=\"button\" «Partir de zéro»",
    "3 button#calc-reset.calc-text-button type=\"button\" «Remettre les exemples»",
    "1 div#calc-reminder.calc-reminder [hidden] ⟦zone dynamique⟧",
+   "1 div.b-expert-only.b-legacy-saved",
+   "2 details.calc-advanced",
+   "3 summary «Mes calculs enregistrés»",
+   "3 p.calc-note «Tes calculs gardés sur cet appareil, avec leur fiche.»",
+   "3 button.calc-button type=\"button\" «Voir mes calculs enregistrés»",
+   "2 details.calc-advanced",
+   "3 summary «Mes business plans»",
+   "3 p.calc-note «Tes plans gardés sur cet appareil, avec leur fiche.»",
+   "3 button.calc-button type=\"button\" «Voir mes business plans»",
    "1 noscript",
    "2 p.calc-warning «Active JavaScript pour utiliser le calculateur. Tous les calculs se font dans ton navigateur.»",
    "1 p#calc-live.calc-sr ⟦zone dynamique⟧",
@@ -530,6 +554,9 @@
    "5 button#calc-export.calc-button type=\"button\" «Télécharger mon calcul»",
    "5 label.calc-button.calc-import «Ouvrir un fichier de calcul»",
    "6 input#calc-import type=\"file\"",
+   "5 span.b-expert-only",
+   "6 button.calc-button type=\"button\" «Partir de zéro»",
+   "6 button.calc-button type=\"button\" «Recharger les exemples»",
    "1 dialog#calc-sheet.b-sheet-dialog",
    "2 div.b-sheet-bar",
    "3 button.calc-button.primary.lk-shine type=\"button\" «Imprimer la fiche»",
@@ -835,6 +862,9 @@
    "1 div#goal-routes.calc-routes ⟦zone dynamique⟧",
    "0 div#expert-goal.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Voir les réglages avancés (mode Expert)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «C’est bon pour cette étape ✓»",
    "1 button.calc-button type=\"button\" «Aller à mon business plan»"
   ],
   "fr/commun/advanced": [
@@ -896,6 +926,15 @@
    "3 button.calc-text-button type=\"button\" «Partir de zéro»",
    "3 button#calc-reset.calc-text-button type=\"button\" «Remettre les exemples»",
    "1 div#calc-reminder.calc-reminder [hidden] ⟦zone dynamique⟧",
+   "1 div.b-expert-only.b-legacy-saved",
+   "2 details.calc-advanced",
+   "3 summary «Mes calculs enregistrés»",
+   "3 p.calc-note «Tes calculs gardés sur cet appareil, avec leur fiche.»",
+   "3 button.calc-button type=\"button\" «Voir mes calculs enregistrés»",
+   "2 details.calc-advanced",
+   "3 summary «Mes business plans»",
+   "3 p.calc-note «Tes plans gardés sur cet appareil, avec leur fiche.»",
+   "3 button.calc-button type=\"button\" «Voir mes business plans»",
    "1 noscript",
    "2 p.calc-warning «Active JavaScript pour utiliser le calculateur. Tous les calculs se font dans ton navigateur.»",
    "1 p#calc-live.calc-sr ⟦zone dynamique⟧",
@@ -953,6 +992,9 @@
    "5 button#calc-export.calc-button type=\"button\" «Télécharger mon calcul»",
    "5 label.calc-button.calc-import «Ouvrir un fichier de calcul»",
    "6 input#calc-import type=\"file\"",
+   "5 span.b-expert-only",
+   "6 button.calc-button type=\"button\" «Partir de zéro»",
+   "6 button.calc-button type=\"button\" «Recharger les exemples»",
    "1 dialog#calc-sheet.b-sheet-dialog",
    "2 div.b-sheet-bar",
    "3 button.calc-button.primary.lk-shine type=\"button\" «Imprimer la fiche»",
@@ -1248,6 +1290,9 @@
    "1 div#goal-routes.calc-routes ⟦zone dynamique⟧",
    "0 div#expert-goal.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Voir les réglages avancés (mode Expert)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «C’est bon pour cette étape ✓»",
    "1 button.calc-button type=\"button\" «Aller à mon business plan»"
   ],
   "fr/purchase/quick": [
@@ -1401,6 +1446,9 @@
    "1 div#vehicle-comparison.calc-subsection ⟦zone dynamique⟧",
    "0 div#expert-purchase.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Voir les réglages avancés (mode Expert)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «C’est bon pour cette étape ✓»",
    "1 button.calc-button type=\"button\" «Aller à mon business plan»"
   ],
   "fr/purchase/guided": [
@@ -1564,6 +1612,9 @@
    "1 div#vehicle-comparison.calc-subsection ⟦zone dynamique⟧",
    "0 div#expert-purchase.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Voir les réglages avancés (mode Expert)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «C’est bon pour cette étape ✓»",
    "1 button.calc-button type=\"button\" «Aller à mon business plan»"
   ],
   "fr/purchase/advanced": [
@@ -1717,6 +1768,9 @@
    "1 div#vehicle-comparison.calc-subsection ⟦zone dynamique⟧",
    "0 div#expert-purchase.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Voir les réglages avancés (mode Expert)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «C’est bon pour cette étape ✓»",
    "1 button.calc-button type=\"button\" «Aller à mon business plan»"
   ],
   "fr/session/quick": [
@@ -1951,6 +2005,9 @@
    "0 div#session-timeline ⟦zone dynamique⟧",
    "0 div#expert-session.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Voir les réglages avancés (mode Expert)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «C’est bon pour cette étape ✓»",
    "1 button.calc-button type=\"button\" «Aller à mon business plan»"
   ],
   "fr/session/guided": [
@@ -2195,6 +2252,9 @@
    "0 div#session-timeline ⟦zone dynamique⟧",
    "0 div#expert-session.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Voir les réglages avancés (mode Expert)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «C’est bon pour cette étape ✓»",
    "1 button.calc-button type=\"button\" «Aller à mon business plan»"
   ],
   "fr/session/advanced": [
@@ -2429,6 +2489,9 @@
    "0 div#session-timeline ⟦zone dynamique⟧",
    "0 div#expert-session.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Voir les réglages avancés (mode Expert)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «C’est bon pour cette étape ✓»",
    "1 button.calc-button type=\"button\" «Aller à mon business plan»"
   ],
   "fr/budget/quick": [
@@ -2510,6 +2573,9 @@
    "1 div#budget-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-budget.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Voir les réglages avancés (mode Expert)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «C’est bon pour cette étape ✓»",
    "1 button.calc-button type=\"button\" «Aller à mon business plan»"
   ],
   "fr/budget/guided": [
@@ -2601,6 +2667,9 @@
    "1 div#budget-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-budget.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Voir les réglages avancés (mode Expert)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «C’est bon pour cette étape ✓»",
    "1 button.calc-button type=\"button\" «Aller à mon business plan»"
   ],
   "fr/budget/advanced": [
@@ -2682,6 +2751,9 @@
    "1 div#budget-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-budget.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Voir les réglages avancés (mode Expert)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «C’est bon pour cette étape ✓»",
    "1 button.calc-button type=\"button\" «Aller à mon business plan»"
   ],
   "fr/order/quick": [
@@ -2734,6 +2806,9 @@
    "1 div#order-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-order.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Voir les réglages avancés (mode Expert)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «C’est bon pour cette étape ✓»",
    "1 button.calc-button type=\"button\" «Aller à mon business plan»"
   ],
   "fr/order/guided": [
@@ -2796,6 +2871,9 @@
    "1 div#order-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-order.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Voir les réglages avancés (mode Expert)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «C’est bon pour cette étape ✓»",
    "1 button.calc-button type=\"button\" «Aller à mon business plan»"
   ],
   "fr/order/advanced": [
@@ -2848,6 +2926,9 @@
    "1 div#order-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-order.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Voir les réglages avancés (mode Expert)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «C’est bon pour cette étape ✓»",
    "1 button.calc-button type=\"button\" «Aller à mon business plan»"
   ],
   "fr/roi/quick": [
@@ -2971,6 +3052,9 @@
    "1 div#roi-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-roi.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Voir les réglages avancés (mode Expert)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «C’est bon pour cette étape ✓»",
    "1 button.calc-button type=\"button\" «Aller à mon business plan»"
   ],
   "fr/roi/guided": [
@@ -3104,6 +3188,9 @@
    "1 div#roi-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-roi.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Voir les réglages avancés (mode Expert)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «C’est bon pour cette étape ✓»",
    "1 button.calc-button type=\"button\" «Aller à mon business plan»"
   ],
   "fr/roi/advanced": [
@@ -3227,6 +3314,9 @@
    "1 div#roi-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-roi.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Voir les réglages avancés (mode Expert)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «C’est bon pour cette étape ✓»",
    "1 button.calc-button type=\"button\" «Aller à mon business plan»"
   ],
   "fr/activities/quick": [
@@ -3441,6 +3531,9 @@
    "1 div#activity-results ⟦zone dynamique⟧",
    "0 div#expert-activities.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Voir les réglages avancés (mode Expert)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «C’est bon pour cette étape ✓»",
    "1 button.calc-button type=\"button\" «Aller à mon business plan»"
   ],
   "fr/activities/guided": [
@@ -3665,6 +3758,9 @@
    "1 div#activity-results ⟦zone dynamique⟧",
    "0 div#expert-activities.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Voir les réglages avancés (mode Expert)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «C’est bon pour cette étape ✓»",
    "1 button.calc-button type=\"button\" «Aller à mon business plan»"
   ],
   "fr/activities/advanced": [
@@ -3879,6 +3975,9 @@
    "1 div#activity-results ⟦zone dynamique⟧",
    "0 div#expert-activities.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Voir les réglages avancés (mode Expert)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «C’est bon pour cette étape ✓»",
    "1 button.calc-button type=\"button\" «Aller à mon business plan»"
   ],
   "fr/compare/quick": [
@@ -3962,6 +4061,9 @@
    "1 div#compare-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-compare.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Voir les réglages avancés (mode Expert)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «C’est bon pour cette étape ✓»",
    "1 button.calc-button type=\"button\" «Aller à mon business plan»"
   ],
   "fr/compare/guided": [
@@ -4055,6 +4157,9 @@
    "1 div#compare-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-compare.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Voir les réglages avancés (mode Expert)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «C’est bon pour cette étape ✓»",
    "1 button.calc-button type=\"button\" «Aller à mon business plan»"
   ],
   "fr/compare/advanced": [
@@ -4138,6 +4243,9 @@
    "1 div#compare-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-compare.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Voir les réglages avancés (mode Expert)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «C’est bon pour cette étape ✓»",
    "1 button.calc-button type=\"button\" «Aller à mon business plan»"
   ],
   "fr/plan/quick": [
@@ -4258,6 +4366,9 @@
    "1 div#plan-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#plan-report ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 span.b-expert-only",
+   "2 button.calc-button.primary type=\"button\" «Enregistrer mon plan (avec sa fiche)»",
+   "2 button.calc-button type=\"button\" «Imprimer mon plan»",
    "1 button.calc-button type=\"button\" «Télécharger mon plan en texte (à lire ou à envoyer)»",
    "0 p.calc-note «Pour garder ce plan avec sa fiche : « ☆ Enregistrer le plan », en haut ou en bas de l’atelier. Tu le retrouves ensuite dans « Mes calculs ».»",
    "0 div#expert-plan.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧"
@@ -4390,6 +4501,9 @@
    "1 div#plan-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#plan-report ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 span.b-expert-only",
+   "2 button.calc-button.primary type=\"button\" «Enregistrer mon plan (avec sa fiche)»",
+   "2 button.calc-button type=\"button\" «Imprimer mon plan»",
    "1 button.calc-button type=\"button\" «Télécharger mon plan en texte (à lire ou à envoyer)»",
    "0 p.calc-note «Pour garder ce plan avec sa fiche : « ☆ Enregistrer le plan », en haut ou en bas de l’atelier. Tu le retrouves ensuite dans « Mes calculs ».»",
    "0 div#expert-plan.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧"
@@ -4512,6 +4626,9 @@
    "1 div#plan-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#plan-report ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 span.b-expert-only",
+   "2 button.calc-button.primary type=\"button\" «Enregistrer mon plan (avec sa fiche)»",
+   "2 button.calc-button type=\"button\" «Imprimer mon plan»",
    "1 button.calc-button type=\"button\" «Télécharger mon plan en texte (à lire ou à envoyer)»",
    "0 p.calc-note «Pour garder ce plan avec sa fiche : « ☆ Enregistrer le plan », en haut ou en bas de l’atelier. Tu le retrouves ensuite dans « Mes calculs ».»",
    "0 div#expert-plan.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧"
@@ -4575,6 +4692,15 @@
    "3 button.calc-text-button type=\"button\" «Start from scratch»",
    "3 button#calc-reset.calc-text-button type=\"button\" «Restore the examples»",
    "1 div#calc-reminder.calc-reminder [hidden] ⟦zone dynamique⟧",
+   "1 div.b-expert-only.b-legacy-saved",
+   "2 details.calc-advanced",
+   "3 summary «My saved calculations»",
+   "3 p.calc-note «Your calculations kept on this device, with their sheet.»",
+   "3 button.calc-button type=\"button\" «See my saved calculations»",
+   "2 details.calc-advanced",
+   "3 summary «My business plans»",
+   "3 p.calc-note «Your plans kept on this device, with their sheet.»",
+   "3 button.calc-button type=\"button\" «See my business plans»",
    "1 noscript",
    "2 p.calc-warning «Turn on JavaScript to use the calculator. All calculations happen in your browser.»",
    "1 p#calc-live.calc-sr ⟦zone dynamique⟧",
@@ -4632,6 +4758,9 @@
    "5 button#calc-export.calc-button type=\"button\" «Download my calculation»",
    "5 label.calc-button.calc-import «Open a calculation file»",
    "6 input#calc-import type=\"file\"",
+   "5 span.b-expert-only",
+   "6 button.calc-button type=\"button\" «Start from scratch»",
+   "6 button.calc-button type=\"button\" «Reload the examples»",
    "1 dialog#calc-sheet.b-sheet-dialog",
    "2 div.b-sheet-bar",
    "3 button.calc-button.primary.lk-shine type=\"button\" «Print the sheet»",
@@ -4927,6 +5056,9 @@
    "1 div#goal-routes.calc-routes ⟦zone dynamique⟧",
    "0 div#expert-goal.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «See advanced settings (Expert mode)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «This step is done ✓»",
    "1 button.calc-button type=\"button\" «Go to my business plan»"
   ],
   "en/commun/guided": [
@@ -4988,6 +5120,15 @@
    "3 button.calc-text-button type=\"button\" «Start from scratch»",
    "3 button#calc-reset.calc-text-button type=\"button\" «Restore the examples»",
    "1 div#calc-reminder.calc-reminder [hidden] ⟦zone dynamique⟧",
+   "1 div.b-expert-only.b-legacy-saved",
+   "2 details.calc-advanced",
+   "3 summary «My saved calculations»",
+   "3 p.calc-note «Your calculations kept on this device, with their sheet.»",
+   "3 button.calc-button type=\"button\" «See my saved calculations»",
+   "2 details.calc-advanced",
+   "3 summary «My business plans»",
+   "3 p.calc-note «Your plans kept on this device, with their sheet.»",
+   "3 button.calc-button type=\"button\" «See my business plans»",
    "1 noscript",
    "2 p.calc-warning «Turn on JavaScript to use the calculator. All calculations happen in your browser.»",
    "1 p#calc-live.calc-sr ⟦zone dynamique⟧",
@@ -5045,6 +5186,9 @@
    "5 button#calc-export.calc-button type=\"button\" «Download my calculation»",
    "5 label.calc-button.calc-import «Open a calculation file»",
    "6 input#calc-import type=\"file\"",
+   "5 span.b-expert-only",
+   "6 button.calc-button type=\"button\" «Start from scratch»",
+   "6 button.calc-button type=\"button\" «Reload the examples»",
    "1 dialog#calc-sheet.b-sheet-dialog",
    "2 div.b-sheet-bar",
    "3 button.calc-button.primary.lk-shine type=\"button\" «Print the sheet»",
@@ -5350,6 +5494,9 @@
    "1 div#goal-routes.calc-routes ⟦zone dynamique⟧",
    "0 div#expert-goal.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «See advanced settings (Expert mode)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «This step is done ✓»",
    "1 button.calc-button type=\"button\" «Go to my business plan»"
   ],
   "en/commun/advanced": [
@@ -5411,6 +5558,15 @@
    "3 button.calc-text-button type=\"button\" «Start from scratch»",
    "3 button#calc-reset.calc-text-button type=\"button\" «Restore the examples»",
    "1 div#calc-reminder.calc-reminder [hidden] ⟦zone dynamique⟧",
+   "1 div.b-expert-only.b-legacy-saved",
+   "2 details.calc-advanced",
+   "3 summary «My saved calculations»",
+   "3 p.calc-note «Your calculations kept on this device, with their sheet.»",
+   "3 button.calc-button type=\"button\" «See my saved calculations»",
+   "2 details.calc-advanced",
+   "3 summary «My business plans»",
+   "3 p.calc-note «Your plans kept on this device, with their sheet.»",
+   "3 button.calc-button type=\"button\" «See my business plans»",
    "1 noscript",
    "2 p.calc-warning «Turn on JavaScript to use the calculator. All calculations happen in your browser.»",
    "1 p#calc-live.calc-sr ⟦zone dynamique⟧",
@@ -5468,6 +5624,9 @@
    "5 button#calc-export.calc-button type=\"button\" «Download my calculation»",
    "5 label.calc-button.calc-import «Open a calculation file»",
    "6 input#calc-import type=\"file\"",
+   "5 span.b-expert-only",
+   "6 button.calc-button type=\"button\" «Start from scratch»",
+   "6 button.calc-button type=\"button\" «Reload the examples»",
    "1 dialog#calc-sheet.b-sheet-dialog",
    "2 div.b-sheet-bar",
    "3 button.calc-button.primary.lk-shine type=\"button\" «Print the sheet»",
@@ -5763,6 +5922,9 @@
    "1 div#goal-routes.calc-routes ⟦zone dynamique⟧",
    "0 div#expert-goal.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «See advanced settings (Expert mode)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «This step is done ✓»",
    "1 button.calc-button type=\"button\" «Go to my business plan»"
   ],
   "en/purchase/quick": [
@@ -5916,6 +6078,9 @@
    "1 div#vehicle-comparison.calc-subsection ⟦zone dynamique⟧",
    "0 div#expert-purchase.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «See advanced settings (Expert mode)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «This step is done ✓»",
    "1 button.calc-button type=\"button\" «Go to my business plan»"
   ],
   "en/purchase/guided": [
@@ -6079,6 +6244,9 @@
    "1 div#vehicle-comparison.calc-subsection ⟦zone dynamique⟧",
    "0 div#expert-purchase.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «See advanced settings (Expert mode)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «This step is done ✓»",
    "1 button.calc-button type=\"button\" «Go to my business plan»"
   ],
   "en/purchase/advanced": [
@@ -6232,6 +6400,9 @@
    "1 div#vehicle-comparison.calc-subsection ⟦zone dynamique⟧",
    "0 div#expert-purchase.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «See advanced settings (Expert mode)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «This step is done ✓»",
    "1 button.calc-button type=\"button\" «Go to my business plan»"
   ],
   "en/session/quick": [
@@ -6466,6 +6637,9 @@
    "0 div#session-timeline ⟦zone dynamique⟧",
    "0 div#expert-session.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «See advanced settings (Expert mode)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «This step is done ✓»",
    "1 button.calc-button type=\"button\" «Go to my business plan»"
   ],
   "en/session/guided": [
@@ -6710,6 +6884,9 @@
    "0 div#session-timeline ⟦zone dynamique⟧",
    "0 div#expert-session.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «See advanced settings (Expert mode)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «This step is done ✓»",
    "1 button.calc-button type=\"button\" «Go to my business plan»"
   ],
   "en/session/advanced": [
@@ -6944,6 +7121,9 @@
    "0 div#session-timeline ⟦zone dynamique⟧",
    "0 div#expert-session.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «See advanced settings (Expert mode)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «This step is done ✓»",
    "1 button.calc-button type=\"button\" «Go to my business plan»"
   ],
   "en/budget/quick": [
@@ -7025,6 +7205,9 @@
    "1 div#budget-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-budget.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «See advanced settings (Expert mode)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «This step is done ✓»",
    "1 button.calc-button type=\"button\" «Go to my business plan»"
   ],
   "en/budget/guided": [
@@ -7116,6 +7299,9 @@
    "1 div#budget-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-budget.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «See advanced settings (Expert mode)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «This step is done ✓»",
    "1 button.calc-button type=\"button\" «Go to my business plan»"
   ],
   "en/budget/advanced": [
@@ -7197,6 +7383,9 @@
    "1 div#budget-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-budget.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «See advanced settings (Expert mode)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «This step is done ✓»",
    "1 button.calc-button type=\"button\" «Go to my business plan»"
   ],
   "en/order/quick": [
@@ -7249,6 +7438,9 @@
    "1 div#order-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-order.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «See advanced settings (Expert mode)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «This step is done ✓»",
    "1 button.calc-button type=\"button\" «Go to my business plan»"
   ],
   "en/order/guided": [
@@ -7311,6 +7503,9 @@
    "1 div#order-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-order.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «See advanced settings (Expert mode)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «This step is done ✓»",
    "1 button.calc-button type=\"button\" «Go to my business plan»"
   ],
   "en/order/advanced": [
@@ -7363,6 +7558,9 @@
    "1 div#order-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-order.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «See advanced settings (Expert mode)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «This step is done ✓»",
    "1 button.calc-button type=\"button\" «Go to my business plan»"
   ],
   "en/roi/quick": [
@@ -7486,6 +7684,9 @@
    "1 div#roi-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-roi.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «See advanced settings (Expert mode)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «This step is done ✓»",
    "1 button.calc-button type=\"button\" «Go to my business plan»"
   ],
   "en/roi/guided": [
@@ -7619,6 +7820,9 @@
    "1 div#roi-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-roi.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «See advanced settings (Expert mode)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «This step is done ✓»",
    "1 button.calc-button type=\"button\" «Go to my business plan»"
   ],
   "en/roi/advanced": [
@@ -7742,6 +7946,9 @@
    "1 div#roi-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-roi.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «See advanced settings (Expert mode)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «This step is done ✓»",
    "1 button.calc-button type=\"button\" «Go to my business plan»"
   ],
   "en/activities/quick": [
@@ -7956,6 +8163,9 @@
    "1 div#activity-results ⟦zone dynamique⟧",
    "0 div#expert-activities.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «See advanced settings (Expert mode)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «This step is done ✓»",
    "1 button.calc-button type=\"button\" «Go to my business plan»"
   ],
   "en/activities/guided": [
@@ -8180,6 +8390,9 @@
    "1 div#activity-results ⟦zone dynamique⟧",
    "0 div#expert-activities.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «See advanced settings (Expert mode)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «This step is done ✓»",
    "1 button.calc-button type=\"button\" «Go to my business plan»"
   ],
   "en/activities/advanced": [
@@ -8394,6 +8607,9 @@
    "1 div#activity-results ⟦zone dynamique⟧",
    "0 div#expert-activities.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «See advanced settings (Expert mode)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «This step is done ✓»",
    "1 button.calc-button type=\"button\" «Go to my business plan»"
   ],
   "en/compare/quick": [
@@ -8477,6 +8693,9 @@
    "1 div#compare-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-compare.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «See advanced settings (Expert mode)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «This step is done ✓»",
    "1 button.calc-button type=\"button\" «Go to my business plan»"
   ],
   "en/compare/guided": [
@@ -8570,6 +8789,9 @@
    "1 div#compare-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-compare.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «See advanced settings (Expert mode)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «This step is done ✓»",
    "1 button.calc-button type=\"button\" «Go to my business plan»"
   ],
   "en/compare/advanced": [
@@ -8653,6 +8875,9 @@
    "1 div#compare-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-compare.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «See advanced settings (Expert mode)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «This step is done ✓»",
    "1 button.calc-button type=\"button\" «Go to my business plan»"
   ],
   "en/plan/quick": [
@@ -8773,6 +8998,9 @@
    "1 div#plan-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#plan-report ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 span.b-expert-only",
+   "2 button.calc-button.primary type=\"button\" «Save my plan (with its sheet)»",
+   "2 button.calc-button type=\"button\" «Print my plan»",
    "1 button.calc-button type=\"button\" «Download my plan as text (to read or send)»",
    "0 p.calc-note «To keep this plan with its sheet: “☆ Save the plan”, at the top or bottom of the workspace. You’ll find it later in “My calculations”.»",
    "0 div#expert-plan.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧"
@@ -8905,6 +9133,9 @@
    "1 div#plan-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#plan-report ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 span.b-expert-only",
+   "2 button.calc-button.primary type=\"button\" «Save my plan (with its sheet)»",
+   "2 button.calc-button type=\"button\" «Print my plan»",
    "1 button.calc-button type=\"button\" «Download my plan as text (to read or send)»",
    "0 p.calc-note «To keep this plan with its sheet: “☆ Save the plan”, at the top or bottom of the workspace. You’ll find it later in “My calculations”.»",
    "0 div#expert-plan.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧"
@@ -9027,6 +9258,9 @@
    "1 div#plan-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#plan-report ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 span.b-expert-only",
+   "2 button.calc-button.primary type=\"button\" «Save my plan (with its sheet)»",
+   "2 button.calc-button type=\"button\" «Print my plan»",
    "1 button.calc-button type=\"button\" «Download my plan as text (to read or send)»",
    "0 p.calc-note «To keep this plan with its sheet: “☆ Save the plan”, at the top or bottom of the workspace. You’ll find it later in “My calculations”.»",
    "0 div#expert-plan.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧"
@@ -9090,6 +9324,15 @@
    "3 button.calc-text-button type=\"button\" «Empezar de cero»",
    "3 button#calc-reset.calc-text-button type=\"button\" «Volver a poner los ejemplos»",
    "1 div#calc-reminder.calc-reminder [hidden] ⟦zone dynamique⟧",
+   "1 div.b-expert-only.b-legacy-saved",
+   "2 details.calc-advanced",
+   "3 summary «Mis cálculos guardados»",
+   "3 p.calc-note «Tus cálculos guardados en este dispositivo, con su ficha.»",
+   "3 button.calc-button type=\"button\" «Ver mis cálculos guardados»",
+   "2 details.calc-advanced",
+   "3 summary «Mis planes de negocio»",
+   "3 p.calc-note «Tus planes guardados en este dispositivo, con su ficha.»",
+   "3 button.calc-button type=\"button\" «Ver mis planes de negocio»",
    "1 noscript",
    "2 p.calc-warning «Activa JavaScript para usar la calculadora. Todos los cálculos se hacen en tu navegador.»",
    "1 p#calc-live.calc-sr ⟦zone dynamique⟧",
@@ -9147,6 +9390,9 @@
    "5 button#calc-export.calc-button type=\"button\" «Descargar mi cálculo»",
    "5 label.calc-button.calc-import «Abrir un archivo de cálculo»",
    "6 input#calc-import type=\"file\"",
+   "5 span.b-expert-only",
+   "6 button.calc-button type=\"button\" «Empezar de cero»",
+   "6 button.calc-button type=\"button\" «Volver a cargar los ejemplos»",
    "1 dialog#calc-sheet.b-sheet-dialog",
    "2 div.b-sheet-bar",
    "3 button.calc-button.primary.lk-shine type=\"button\" «Imprimir la ficha»",
@@ -9442,6 +9688,9 @@
    "1 div#goal-routes.calc-routes ⟦zone dynamique⟧",
    "0 div#expert-goal.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Ver los ajustes avanzados (modo Experto)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Esta etapa está lista ✓»",
    "1 button.calc-button type=\"button\" «Ir a mi plan de negocio»"
   ],
   "es/commun/guided": [
@@ -9503,6 +9752,15 @@
    "3 button.calc-text-button type=\"button\" «Empezar de cero»",
    "3 button#calc-reset.calc-text-button type=\"button\" «Volver a poner los ejemplos»",
    "1 div#calc-reminder.calc-reminder [hidden] ⟦zone dynamique⟧",
+   "1 div.b-expert-only.b-legacy-saved",
+   "2 details.calc-advanced",
+   "3 summary «Mis cálculos guardados»",
+   "3 p.calc-note «Tus cálculos guardados en este dispositivo, con su ficha.»",
+   "3 button.calc-button type=\"button\" «Ver mis cálculos guardados»",
+   "2 details.calc-advanced",
+   "3 summary «Mis planes de negocio»",
+   "3 p.calc-note «Tus planes guardados en este dispositivo, con su ficha.»",
+   "3 button.calc-button type=\"button\" «Ver mis planes de negocio»",
    "1 noscript",
    "2 p.calc-warning «Activa JavaScript para usar la calculadora. Todos los cálculos se hacen en tu navegador.»",
    "1 p#calc-live.calc-sr ⟦zone dynamique⟧",
@@ -9560,6 +9818,9 @@
    "5 button#calc-export.calc-button type=\"button\" «Descargar mi cálculo»",
    "5 label.calc-button.calc-import «Abrir un archivo de cálculo»",
    "6 input#calc-import type=\"file\"",
+   "5 span.b-expert-only",
+   "6 button.calc-button type=\"button\" «Empezar de cero»",
+   "6 button.calc-button type=\"button\" «Volver a cargar los ejemplos»",
    "1 dialog#calc-sheet.b-sheet-dialog",
    "2 div.b-sheet-bar",
    "3 button.calc-button.primary.lk-shine type=\"button\" «Imprimir la ficha»",
@@ -9865,6 +10126,9 @@
    "1 div#goal-routes.calc-routes ⟦zone dynamique⟧",
    "0 div#expert-goal.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Ver los ajustes avanzados (modo Experto)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Esta etapa está lista ✓»",
    "1 button.calc-button type=\"button\" «Ir a mi plan de negocio»"
   ],
   "es/commun/advanced": [
@@ -9926,6 +10190,15 @@
    "3 button.calc-text-button type=\"button\" «Empezar de cero»",
    "3 button#calc-reset.calc-text-button type=\"button\" «Volver a poner los ejemplos»",
    "1 div#calc-reminder.calc-reminder [hidden] ⟦zone dynamique⟧",
+   "1 div.b-expert-only.b-legacy-saved",
+   "2 details.calc-advanced",
+   "3 summary «Mis cálculos guardados»",
+   "3 p.calc-note «Tus cálculos guardados en este dispositivo, con su ficha.»",
+   "3 button.calc-button type=\"button\" «Ver mis cálculos guardados»",
+   "2 details.calc-advanced",
+   "3 summary «Mis planes de negocio»",
+   "3 p.calc-note «Tus planes guardados en este dispositivo, con su ficha.»",
+   "3 button.calc-button type=\"button\" «Ver mis planes de negocio»",
    "1 noscript",
    "2 p.calc-warning «Activa JavaScript para usar la calculadora. Todos los cálculos se hacen en tu navegador.»",
    "1 p#calc-live.calc-sr ⟦zone dynamique⟧",
@@ -9983,6 +10256,9 @@
    "5 button#calc-export.calc-button type=\"button\" «Descargar mi cálculo»",
    "5 label.calc-button.calc-import «Abrir un archivo de cálculo»",
    "6 input#calc-import type=\"file\"",
+   "5 span.b-expert-only",
+   "6 button.calc-button type=\"button\" «Empezar de cero»",
+   "6 button.calc-button type=\"button\" «Volver a cargar los ejemplos»",
    "1 dialog#calc-sheet.b-sheet-dialog",
    "2 div.b-sheet-bar",
    "3 button.calc-button.primary.lk-shine type=\"button\" «Imprimir la ficha»",
@@ -10278,6 +10554,9 @@
    "1 div#goal-routes.calc-routes ⟦zone dynamique⟧",
    "0 div#expert-goal.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Ver los ajustes avanzados (modo Experto)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Esta etapa está lista ✓»",
    "1 button.calc-button type=\"button\" «Ir a mi plan de negocio»"
   ],
   "es/purchase/quick": [
@@ -10431,6 +10710,9 @@
    "1 div#vehicle-comparison.calc-subsection ⟦zone dynamique⟧",
    "0 div#expert-purchase.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Ver los ajustes avanzados (modo Experto)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Esta etapa está lista ✓»",
    "1 button.calc-button type=\"button\" «Ir a mi plan de negocio»"
   ],
   "es/purchase/guided": [
@@ -10594,6 +10876,9 @@
    "1 div#vehicle-comparison.calc-subsection ⟦zone dynamique⟧",
    "0 div#expert-purchase.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Ver los ajustes avanzados (modo Experto)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Esta etapa está lista ✓»",
    "1 button.calc-button type=\"button\" «Ir a mi plan de negocio»"
   ],
   "es/purchase/advanced": [
@@ -10747,6 +11032,9 @@
    "1 div#vehicle-comparison.calc-subsection ⟦zone dynamique⟧",
    "0 div#expert-purchase.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Ver los ajustes avanzados (modo Experto)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Esta etapa está lista ✓»",
    "1 button.calc-button type=\"button\" «Ir a mi plan de negocio»"
   ],
   "es/session/quick": [
@@ -10981,6 +11269,9 @@
    "0 div#session-timeline ⟦zone dynamique⟧",
    "0 div#expert-session.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Ver los ajustes avanzados (modo Experto)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Esta etapa está lista ✓»",
    "1 button.calc-button type=\"button\" «Ir a mi plan de negocio»"
   ],
   "es/session/guided": [
@@ -11225,6 +11516,9 @@
    "0 div#session-timeline ⟦zone dynamique⟧",
    "0 div#expert-session.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Ver los ajustes avanzados (modo Experto)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Esta etapa está lista ✓»",
    "1 button.calc-button type=\"button\" «Ir a mi plan de negocio»"
   ],
   "es/session/advanced": [
@@ -11459,6 +11753,9 @@
    "0 div#session-timeline ⟦zone dynamique⟧",
    "0 div#expert-session.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Ver los ajustes avanzados (modo Experto)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Esta etapa está lista ✓»",
    "1 button.calc-button type=\"button\" «Ir a mi plan de negocio»"
   ],
   "es/budget/quick": [
@@ -11540,6 +11837,9 @@
    "1 div#budget-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-budget.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Ver los ajustes avanzados (modo Experto)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Esta etapa está lista ✓»",
    "1 button.calc-button type=\"button\" «Ir a mi plan de negocio»"
   ],
   "es/budget/guided": [
@@ -11631,6 +11931,9 @@
    "1 div#budget-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-budget.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Ver los ajustes avanzados (modo Experto)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Esta etapa está lista ✓»",
    "1 button.calc-button type=\"button\" «Ir a mi plan de negocio»"
   ],
   "es/budget/advanced": [
@@ -11712,6 +12015,9 @@
    "1 div#budget-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-budget.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Ver los ajustes avanzados (modo Experto)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Esta etapa está lista ✓»",
    "1 button.calc-button type=\"button\" «Ir a mi plan de negocio»"
   ],
   "es/order/quick": [
@@ -11764,6 +12070,9 @@
    "1 div#order-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-order.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Ver los ajustes avanzados (modo Experto)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Esta etapa está lista ✓»",
    "1 button.calc-button type=\"button\" «Ir a mi plan de negocio»"
   ],
   "es/order/guided": [
@@ -11826,6 +12135,9 @@
    "1 div#order-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-order.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Ver los ajustes avanzados (modo Experto)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Esta etapa está lista ✓»",
    "1 button.calc-button type=\"button\" «Ir a mi plan de negocio»"
   ],
   "es/order/advanced": [
@@ -11878,6 +12190,9 @@
    "1 div#order-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-order.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Ver los ajustes avanzados (modo Experto)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Esta etapa está lista ✓»",
    "1 button.calc-button type=\"button\" «Ir a mi plan de negocio»"
   ],
   "es/roi/quick": [
@@ -12001,6 +12316,9 @@
    "1 div#roi-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-roi.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Ver los ajustes avanzados (modo Experto)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Esta etapa está lista ✓»",
    "1 button.calc-button type=\"button\" «Ir a mi plan de negocio»"
   ],
   "es/roi/guided": [
@@ -12134,6 +12452,9 @@
    "1 div#roi-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-roi.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Ver los ajustes avanzados (modo Experto)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Esta etapa está lista ✓»",
    "1 button.calc-button type=\"button\" «Ir a mi plan de negocio»"
   ],
   "es/roi/advanced": [
@@ -12257,6 +12578,9 @@
    "1 div#roi-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-roi.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Ver los ajustes avanzados (modo Experto)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Esta etapa está lista ✓»",
    "1 button.calc-button type=\"button\" «Ir a mi plan de negocio»"
   ],
   "es/activities/quick": [
@@ -12471,6 +12795,9 @@
    "1 div#activity-results ⟦zone dynamique⟧",
    "0 div#expert-activities.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Ver los ajustes avanzados (modo Experto)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Esta etapa está lista ✓»",
    "1 button.calc-button type=\"button\" «Ir a mi plan de negocio»"
   ],
   "es/activities/guided": [
@@ -12695,6 +13022,9 @@
    "1 div#activity-results ⟦zone dynamique⟧",
    "0 div#expert-activities.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Ver los ajustes avanzados (modo Experto)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Esta etapa está lista ✓»",
    "1 button.calc-button type=\"button\" «Ir a mi plan de negocio»"
   ],
   "es/activities/advanced": [
@@ -12909,6 +13239,9 @@
    "1 div#activity-results ⟦zone dynamique⟧",
    "0 div#expert-activities.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Ver los ajustes avanzados (modo Experto)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Esta etapa está lista ✓»",
    "1 button.calc-button type=\"button\" «Ir a mi plan de negocio»"
   ],
   "es/compare/quick": [
@@ -12992,6 +13325,9 @@
    "1 div#compare-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-compare.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Ver los ajustes avanzados (modo Experto)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Esta etapa está lista ✓»",
    "1 button.calc-button type=\"button\" «Ir a mi plan de negocio»"
   ],
   "es/compare/guided": [
@@ -13085,6 +13421,9 @@
    "1 div#compare-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-compare.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Ver los ajustes avanzados (modo Experto)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Esta etapa está lista ✓»",
    "1 button.calc-button type=\"button\" «Ir a mi plan de negocio»"
   ],
   "es/compare/advanced": [
@@ -13168,6 +13507,9 @@
    "1 div#compare-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-compare.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Ver los ajustes avanzados (modo Experto)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Esta etapa está lista ✓»",
    "1 button.calc-button type=\"button\" «Ir a mi plan de negocio»"
   ],
   "es/plan/quick": [
@@ -13288,6 +13630,9 @@
    "1 div#plan-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#plan-report ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 span.b-expert-only",
+   "2 button.calc-button.primary type=\"button\" «Guardar mi plan (con su ficha)»",
+   "2 button.calc-button type=\"button\" «Imprimir mi plan»",
    "1 button.calc-button type=\"button\" «Descargar mi plan en texto (para leer o enviar)»",
    "0 p.calc-note «Para guardar este plan con su ficha: “☆ Guardar el plan”, arriba o abajo del taller. Luego lo encuentras en “Mis cálculos”.»",
    "0 div#expert-plan.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧"
@@ -13420,6 +13765,9 @@
    "1 div#plan-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#plan-report ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 span.b-expert-only",
+   "2 button.calc-button.primary type=\"button\" «Guardar mi plan (con su ficha)»",
+   "2 button.calc-button type=\"button\" «Imprimir mi plan»",
    "1 button.calc-button type=\"button\" «Descargar mi plan en texto (para leer o enviar)»",
    "0 p.calc-note «Para guardar este plan con su ficha: “☆ Guardar el plan”, arriba o abajo del taller. Luego lo encuentras en “Mis cálculos”.»",
    "0 div#expert-plan.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧"
@@ -13542,6 +13890,9 @@
    "1 div#plan-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#plan-report ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 span.b-expert-only",
+   "2 button.calc-button.primary type=\"button\" «Guardar mi plan (con su ficha)»",
+   "2 button.calc-button type=\"button\" «Imprimir mi plan»",
    "1 button.calc-button type=\"button\" «Descargar mi plan en texto (para leer o enviar)»",
    "0 p.calc-note «Para guardar este plan con su ficha: “☆ Guardar el plan”, arriba o abajo del taller. Luego lo encuentras en “Mis cálculos”.»",
    "0 div#expert-plan.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧"
@@ -13605,6 +13956,15 @@
    "3 button.calc-text-button type=\"button\" «Parti da zero»",
    "3 button#calc-reset.calc-text-button type=\"button\" «Rimetti gli esempi»",
    "1 div#calc-reminder.calc-reminder [hidden] ⟦zone dynamique⟧",
+   "1 div.b-expert-only.b-legacy-saved",
+   "2 details.calc-advanced",
+   "3 summary «I miei calcoli salvati»",
+   "3 p.calc-note «I tuoi calcoli salvati su questo dispositivo, con la loro scheda.»",
+   "3 button.calc-button type=\"button\" «Vedi i miei calcoli salvati»",
+   "2 details.calc-advanced",
+   "3 summary «I miei business plan»",
+   "3 p.calc-note «I tuoi piani salvati su questo dispositivo, con la loro scheda.»",
+   "3 button.calc-button type=\"button\" «Vedi i miei business plan»",
    "1 noscript",
    "2 p.calc-warning «Attiva JavaScript per usare il calcolatore. Tutti i calcoli si fanno nel tuo browser.»",
    "1 p#calc-live.calc-sr ⟦zone dynamique⟧",
@@ -13662,6 +14022,9 @@
    "5 button#calc-export.calc-button type=\"button\" «Scarica il mio calcolo»",
    "5 label.calc-button.calc-import «Apri un file di calcolo»",
    "6 input#calc-import type=\"file\"",
+   "5 span.b-expert-only",
+   "6 button.calc-button type=\"button\" «Parti da zero»",
+   "6 button.calc-button type=\"button\" «Ricarica gli esempi»",
    "1 dialog#calc-sheet.b-sheet-dialog",
    "2 div.b-sheet-bar",
    "3 button.calc-button.primary.lk-shine type=\"button\" «Stampa la scheda»",
@@ -13957,6 +14320,9 @@
    "1 div#goal-routes.calc-routes ⟦zone dynamique⟧",
    "0 div#expert-goal.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Vedi le impostazioni avanzate (modalità Esperto)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Questa tappa è fatta ✓»",
    "1 button.calc-button type=\"button\" «Vai al mio business plan»"
   ],
   "it/commun/guided": [
@@ -14018,6 +14384,15 @@
    "3 button.calc-text-button type=\"button\" «Parti da zero»",
    "3 button#calc-reset.calc-text-button type=\"button\" «Rimetti gli esempi»",
    "1 div#calc-reminder.calc-reminder [hidden] ⟦zone dynamique⟧",
+   "1 div.b-expert-only.b-legacy-saved",
+   "2 details.calc-advanced",
+   "3 summary «I miei calcoli salvati»",
+   "3 p.calc-note «I tuoi calcoli salvati su questo dispositivo, con la loro scheda.»",
+   "3 button.calc-button type=\"button\" «Vedi i miei calcoli salvati»",
+   "2 details.calc-advanced",
+   "3 summary «I miei business plan»",
+   "3 p.calc-note «I tuoi piani salvati su questo dispositivo, con la loro scheda.»",
+   "3 button.calc-button type=\"button\" «Vedi i miei business plan»",
    "1 noscript",
    "2 p.calc-warning «Attiva JavaScript per usare il calcolatore. Tutti i calcoli si fanno nel tuo browser.»",
    "1 p#calc-live.calc-sr ⟦zone dynamique⟧",
@@ -14075,6 +14450,9 @@
    "5 button#calc-export.calc-button type=\"button\" «Scarica il mio calcolo»",
    "5 label.calc-button.calc-import «Apri un file di calcolo»",
    "6 input#calc-import type=\"file\"",
+   "5 span.b-expert-only",
+   "6 button.calc-button type=\"button\" «Parti da zero»",
+   "6 button.calc-button type=\"button\" «Ricarica gli esempi»",
    "1 dialog#calc-sheet.b-sheet-dialog",
    "2 div.b-sheet-bar",
    "3 button.calc-button.primary.lk-shine type=\"button\" «Stampa la scheda»",
@@ -14380,6 +14758,9 @@
    "1 div#goal-routes.calc-routes ⟦zone dynamique⟧",
    "0 div#expert-goal.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Vedi le impostazioni avanzate (modalità Esperto)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Questa tappa è fatta ✓»",
    "1 button.calc-button type=\"button\" «Vai al mio business plan»"
   ],
   "it/commun/advanced": [
@@ -14441,6 +14822,15 @@
    "3 button.calc-text-button type=\"button\" «Parti da zero»",
    "3 button#calc-reset.calc-text-button type=\"button\" «Rimetti gli esempi»",
    "1 div#calc-reminder.calc-reminder [hidden] ⟦zone dynamique⟧",
+   "1 div.b-expert-only.b-legacy-saved",
+   "2 details.calc-advanced",
+   "3 summary «I miei calcoli salvati»",
+   "3 p.calc-note «I tuoi calcoli salvati su questo dispositivo, con la loro scheda.»",
+   "3 button.calc-button type=\"button\" «Vedi i miei calcoli salvati»",
+   "2 details.calc-advanced",
+   "3 summary «I miei business plan»",
+   "3 p.calc-note «I tuoi piani salvati su questo dispositivo, con la loro scheda.»",
+   "3 button.calc-button type=\"button\" «Vedi i miei business plan»",
    "1 noscript",
    "2 p.calc-warning «Attiva JavaScript per usare il calcolatore. Tutti i calcoli si fanno nel tuo browser.»",
    "1 p#calc-live.calc-sr ⟦zone dynamique⟧",
@@ -14498,6 +14888,9 @@
    "5 button#calc-export.calc-button type=\"button\" «Scarica il mio calcolo»",
    "5 label.calc-button.calc-import «Apri un file di calcolo»",
    "6 input#calc-import type=\"file\"",
+   "5 span.b-expert-only",
+   "6 button.calc-button type=\"button\" «Parti da zero»",
+   "6 button.calc-button type=\"button\" «Ricarica gli esempi»",
    "1 dialog#calc-sheet.b-sheet-dialog",
    "2 div.b-sheet-bar",
    "3 button.calc-button.primary.lk-shine type=\"button\" «Stampa la scheda»",
@@ -14793,6 +15186,9 @@
    "1 div#goal-routes.calc-routes ⟦zone dynamique⟧",
    "0 div#expert-goal.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Vedi le impostazioni avanzate (modalità Esperto)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Questa tappa è fatta ✓»",
    "1 button.calc-button type=\"button\" «Vai al mio business plan»"
   ],
   "it/purchase/quick": [
@@ -14946,6 +15342,9 @@
    "1 div#vehicle-comparison.calc-subsection ⟦zone dynamique⟧",
    "0 div#expert-purchase.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Vedi le impostazioni avanzate (modalità Esperto)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Questa tappa è fatta ✓»",
    "1 button.calc-button type=\"button\" «Vai al mio business plan»"
   ],
   "it/purchase/guided": [
@@ -15109,6 +15508,9 @@
    "1 div#vehicle-comparison.calc-subsection ⟦zone dynamique⟧",
    "0 div#expert-purchase.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Vedi le impostazioni avanzate (modalità Esperto)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Questa tappa è fatta ✓»",
    "1 button.calc-button type=\"button\" «Vai al mio business plan»"
   ],
   "it/purchase/advanced": [
@@ -15262,6 +15664,9 @@
    "1 div#vehicle-comparison.calc-subsection ⟦zone dynamique⟧",
    "0 div#expert-purchase.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Vedi le impostazioni avanzate (modalità Esperto)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Questa tappa è fatta ✓»",
    "1 button.calc-button type=\"button\" «Vai al mio business plan»"
   ],
   "it/session/quick": [
@@ -15496,6 +15901,9 @@
    "0 div#session-timeline ⟦zone dynamique⟧",
    "0 div#expert-session.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Vedi le impostazioni avanzate (modalità Esperto)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Questa tappa è fatta ✓»",
    "1 button.calc-button type=\"button\" «Vai al mio business plan»"
   ],
   "it/session/guided": [
@@ -15740,6 +16148,9 @@
    "0 div#session-timeline ⟦zone dynamique⟧",
    "0 div#expert-session.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Vedi le impostazioni avanzate (modalità Esperto)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Questa tappa è fatta ✓»",
    "1 button.calc-button type=\"button\" «Vai al mio business plan»"
   ],
   "it/session/advanced": [
@@ -15974,6 +16385,9 @@
    "0 div#session-timeline ⟦zone dynamique⟧",
    "0 div#expert-session.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Vedi le impostazioni avanzate (modalità Esperto)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Questa tappa è fatta ✓»",
    "1 button.calc-button type=\"button\" «Vai al mio business plan»"
   ],
   "it/budget/quick": [
@@ -16055,6 +16469,9 @@
    "1 div#budget-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-budget.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Vedi le impostazioni avanzate (modalità Esperto)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Questa tappa è fatta ✓»",
    "1 button.calc-button type=\"button\" «Vai al mio business plan»"
   ],
   "it/budget/guided": [
@@ -16146,6 +16563,9 @@
    "1 div#budget-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-budget.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Vedi le impostazioni avanzate (modalità Esperto)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Questa tappa è fatta ✓»",
    "1 button.calc-button type=\"button\" «Vai al mio business plan»"
   ],
   "it/budget/advanced": [
@@ -16227,6 +16647,9 @@
    "1 div#budget-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-budget.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Vedi le impostazioni avanzate (modalità Esperto)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Questa tappa è fatta ✓»",
    "1 button.calc-button type=\"button\" «Vai al mio business plan»"
   ],
   "it/order/quick": [
@@ -16279,6 +16702,9 @@
    "1 div#order-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-order.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Vedi le impostazioni avanzate (modalità Esperto)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Questa tappa è fatta ✓»",
    "1 button.calc-button type=\"button\" «Vai al mio business plan»"
   ],
   "it/order/guided": [
@@ -16341,6 +16767,9 @@
    "1 div#order-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-order.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Vedi le impostazioni avanzate (modalità Esperto)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Questa tappa è fatta ✓»",
    "1 button.calc-button type=\"button\" «Vai al mio business plan»"
   ],
   "it/order/advanced": [
@@ -16393,6 +16822,9 @@
    "1 div#order-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-order.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Vedi le impostazioni avanzate (modalità Esperto)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Questa tappa è fatta ✓»",
    "1 button.calc-button type=\"button\" «Vai al mio business plan»"
   ],
   "it/roi/quick": [
@@ -16516,6 +16948,9 @@
    "1 div#roi-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-roi.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Vedi le impostazioni avanzate (modalità Esperto)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Questa tappa è fatta ✓»",
    "1 button.calc-button type=\"button\" «Vai al mio business plan»"
   ],
   "it/roi/guided": [
@@ -16649,6 +17084,9 @@
    "1 div#roi-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-roi.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Vedi le impostazioni avanzate (modalità Esperto)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Questa tappa è fatta ✓»",
    "1 button.calc-button type=\"button\" «Vai al mio business plan»"
   ],
   "it/roi/advanced": [
@@ -16772,6 +17210,9 @@
    "1 div#roi-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-roi.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Vedi le impostazioni avanzate (modalità Esperto)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Questa tappa è fatta ✓»",
    "1 button.calc-button type=\"button\" «Vai al mio business plan»"
   ],
   "it/activities/quick": [
@@ -16986,6 +17427,9 @@
    "1 div#activity-results ⟦zone dynamique⟧",
    "0 div#expert-activities.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Vedi le impostazioni avanzate (modalità Esperto)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Questa tappa è fatta ✓»",
    "1 button.calc-button type=\"button\" «Vai al mio business plan»"
   ],
   "it/activities/guided": [
@@ -17210,6 +17654,9 @@
    "1 div#activity-results ⟦zone dynamique⟧",
    "0 div#expert-activities.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Vedi le impostazioni avanzate (modalità Esperto)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Questa tappa è fatta ✓»",
    "1 button.calc-button type=\"button\" «Vai al mio business plan»"
   ],
   "it/activities/advanced": [
@@ -17424,6 +17871,9 @@
    "1 div#activity-results ⟦zone dynamique⟧",
    "0 div#expert-activities.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Vedi le impostazioni avanzate (modalità Esperto)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Questa tappa è fatta ✓»",
    "1 button.calc-button type=\"button\" «Vai al mio business plan»"
   ],
   "it/compare/quick": [
@@ -17507,6 +17957,9 @@
    "1 div#compare-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-compare.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Vedi le impostazioni avanzate (modalità Esperto)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Questa tappa è fatta ✓»",
    "1 button.calc-button type=\"button\" «Vai al mio business plan»"
   ],
   "it/compare/guided": [
@@ -17600,6 +18053,9 @@
    "1 div#compare-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-compare.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Vedi le impostazioni avanzate (modalità Esperto)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Questa tappa è fatta ✓»",
    "1 button.calc-button type=\"button\" «Vai al mio business plan»"
   ],
   "it/compare/advanced": [
@@ -17683,6 +18139,9 @@
    "1 div#compare-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-compare.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Vedi le impostazioni avanzate (modalità Esperto)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Questa tappa è fatta ✓»",
    "1 button.calc-button type=\"button\" «Vai al mio business plan»"
   ],
   "it/plan/quick": [
@@ -17803,6 +18262,9 @@
    "1 div#plan-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#plan-report ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 span.b-expert-only",
+   "2 button.calc-button.primary type=\"button\" «Salva il mio piano (con la sua scheda)»",
+   "2 button.calc-button type=\"button\" «Stampa il mio piano»",
    "1 button.calc-button type=\"button\" «Scarica il mio piano in testo (da leggere o da inviare)»",
    "0 p.calc-note «Per tenere questo piano con la sua scheda: “☆ Salva il piano”, in alto o in basso nell’area di lavoro. Poi lo ritrovi in “I miei calcoli”.»",
    "0 div#expert-plan.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧"
@@ -17935,6 +18397,9 @@
    "1 div#plan-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#plan-report ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 span.b-expert-only",
+   "2 button.calc-button.primary type=\"button\" «Salva il mio piano (con la sua scheda)»",
+   "2 button.calc-button type=\"button\" «Stampa il mio piano»",
    "1 button.calc-button type=\"button\" «Scarica il mio piano in testo (da leggere o da inviare)»",
    "0 p.calc-note «Per tenere questo piano con la sua scheda: “☆ Salva il piano”, in alto o in basso nell’area di lavoro. Poi lo ritrovi in “I miei calcoli”.»",
    "0 div#expert-plan.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧"
@@ -18057,6 +18522,9 @@
    "1 div#plan-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#plan-report ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 span.b-expert-only",
+   "2 button.calc-button.primary type=\"button\" «Salva il mio piano (con la sua scheda)»",
+   "2 button.calc-button type=\"button\" «Stampa il mio piano»",
    "1 button.calc-button type=\"button\" «Scarica il mio piano in testo (da leggere o da inviare)»",
    "0 p.calc-note «Per tenere questo piano con la sua scheda: “☆ Salva il piano”, in alto o in basso nell’area di lavoro. Poi lo ritrovi in “I miei calcoli”.»",
    "0 div#expert-plan.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧"
@@ -18120,6 +18588,15 @@
    "3 button.calc-text-button type=\"button\" «Bei null anfangen»",
    "3 button#calc-reset.calc-text-button type=\"button\" «Beispiele wiederherstellen»",
    "1 div#calc-reminder.calc-reminder [hidden] ⟦zone dynamique⟧",
+   "1 div.b-expert-only.b-legacy-saved",
+   "2 details.calc-advanced",
+   "3 summary «Meine gespeicherten Berechnungen»",
+   "3 p.calc-note «Deine auf diesem Gerät gespeicherten Berechnungen, mit Datenblatt.»",
+   "3 button.calc-button type=\"button\" «Meine gespeicherten Berechnungen ansehen»",
+   "2 details.calc-advanced",
+   "3 summary «Meine Businesspläne»",
+   "3 p.calc-note «Deine auf diesem Gerät gespeicherten Pläne, mit Datenblatt.»",
+   "3 button.calc-button type=\"button\" «Meine Businesspläne ansehen»",
    "1 noscript",
    "2 p.calc-warning «Aktiviere JavaScript, um den Rechner zu nutzen. Alle Berechnungen laufen in deinem Browser.»",
    "1 p#calc-live.calc-sr ⟦zone dynamique⟧",
@@ -18177,6 +18654,9 @@
    "5 button#calc-export.calc-button type=\"button\" «Meine Berechnung herunterladen»",
    "5 label.calc-button.calc-import «Berechnungsdatei öffnen»",
    "6 input#calc-import type=\"file\"",
+   "5 span.b-expert-only",
+   "6 button.calc-button type=\"button\" «Bei null anfangen»",
+   "6 button.calc-button type=\"button\" «Beispiele neu laden»",
    "1 dialog#calc-sheet.b-sheet-dialog",
    "2 div.b-sheet-bar",
    "3 button.calc-button.primary.lk-shine type=\"button\" «Blatt drucken»",
@@ -18472,6 +18952,9 @@
    "1 div#goal-routes.calc-routes ⟦zone dynamique⟧",
    "0 div#expert-goal.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Erweiterte Einstellungen ansehen (Expertenmodus)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Dieser Schritt ist erledigt ✓»",
    "1 button.calc-button type=\"button\" «Zu meinem Businessplan»"
   ],
   "de/commun/guided": [
@@ -18533,6 +19016,15 @@
    "3 button.calc-text-button type=\"button\" «Bei null anfangen»",
    "3 button#calc-reset.calc-text-button type=\"button\" «Beispiele wiederherstellen»",
    "1 div#calc-reminder.calc-reminder [hidden] ⟦zone dynamique⟧",
+   "1 div.b-expert-only.b-legacy-saved",
+   "2 details.calc-advanced",
+   "3 summary «Meine gespeicherten Berechnungen»",
+   "3 p.calc-note «Deine auf diesem Gerät gespeicherten Berechnungen, mit Datenblatt.»",
+   "3 button.calc-button type=\"button\" «Meine gespeicherten Berechnungen ansehen»",
+   "2 details.calc-advanced",
+   "3 summary «Meine Businesspläne»",
+   "3 p.calc-note «Deine auf diesem Gerät gespeicherten Pläne, mit Datenblatt.»",
+   "3 button.calc-button type=\"button\" «Meine Businesspläne ansehen»",
    "1 noscript",
    "2 p.calc-warning «Aktiviere JavaScript, um den Rechner zu nutzen. Alle Berechnungen laufen in deinem Browser.»",
    "1 p#calc-live.calc-sr ⟦zone dynamique⟧",
@@ -18590,6 +19082,9 @@
    "5 button#calc-export.calc-button type=\"button\" «Meine Berechnung herunterladen»",
    "5 label.calc-button.calc-import «Berechnungsdatei öffnen»",
    "6 input#calc-import type=\"file\"",
+   "5 span.b-expert-only",
+   "6 button.calc-button type=\"button\" «Bei null anfangen»",
+   "6 button.calc-button type=\"button\" «Beispiele neu laden»",
    "1 dialog#calc-sheet.b-sheet-dialog",
    "2 div.b-sheet-bar",
    "3 button.calc-button.primary.lk-shine type=\"button\" «Blatt drucken»",
@@ -18895,6 +19390,9 @@
    "1 div#goal-routes.calc-routes ⟦zone dynamique⟧",
    "0 div#expert-goal.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Erweiterte Einstellungen ansehen (Expertenmodus)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Dieser Schritt ist erledigt ✓»",
    "1 button.calc-button type=\"button\" «Zu meinem Businessplan»"
   ],
   "de/commun/advanced": [
@@ -18956,6 +19454,15 @@
    "3 button.calc-text-button type=\"button\" «Bei null anfangen»",
    "3 button#calc-reset.calc-text-button type=\"button\" «Beispiele wiederherstellen»",
    "1 div#calc-reminder.calc-reminder [hidden] ⟦zone dynamique⟧",
+   "1 div.b-expert-only.b-legacy-saved",
+   "2 details.calc-advanced",
+   "3 summary «Meine gespeicherten Berechnungen»",
+   "3 p.calc-note «Deine auf diesem Gerät gespeicherten Berechnungen, mit Datenblatt.»",
+   "3 button.calc-button type=\"button\" «Meine gespeicherten Berechnungen ansehen»",
+   "2 details.calc-advanced",
+   "3 summary «Meine Businesspläne»",
+   "3 p.calc-note «Deine auf diesem Gerät gespeicherten Pläne, mit Datenblatt.»",
+   "3 button.calc-button type=\"button\" «Meine Businesspläne ansehen»",
    "1 noscript",
    "2 p.calc-warning «Aktiviere JavaScript, um den Rechner zu nutzen. Alle Berechnungen laufen in deinem Browser.»",
    "1 p#calc-live.calc-sr ⟦zone dynamique⟧",
@@ -19013,6 +19520,9 @@
    "5 button#calc-export.calc-button type=\"button\" «Meine Berechnung herunterladen»",
    "5 label.calc-button.calc-import «Berechnungsdatei öffnen»",
    "6 input#calc-import type=\"file\"",
+   "5 span.b-expert-only",
+   "6 button.calc-button type=\"button\" «Bei null anfangen»",
+   "6 button.calc-button type=\"button\" «Beispiele neu laden»",
    "1 dialog#calc-sheet.b-sheet-dialog",
    "2 div.b-sheet-bar",
    "3 button.calc-button.primary.lk-shine type=\"button\" «Blatt drucken»",
@@ -19308,6 +19818,9 @@
    "1 div#goal-routes.calc-routes ⟦zone dynamique⟧",
    "0 div#expert-goal.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Erweiterte Einstellungen ansehen (Expertenmodus)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Dieser Schritt ist erledigt ✓»",
    "1 button.calc-button type=\"button\" «Zu meinem Businessplan»"
   ],
   "de/purchase/quick": [
@@ -19461,6 +19974,9 @@
    "1 div#vehicle-comparison.calc-subsection ⟦zone dynamique⟧",
    "0 div#expert-purchase.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Erweiterte Einstellungen ansehen (Expertenmodus)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Dieser Schritt ist erledigt ✓»",
    "1 button.calc-button type=\"button\" «Zu meinem Businessplan»"
   ],
   "de/purchase/guided": [
@@ -19624,6 +20140,9 @@
    "1 div#vehicle-comparison.calc-subsection ⟦zone dynamique⟧",
    "0 div#expert-purchase.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Erweiterte Einstellungen ansehen (Expertenmodus)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Dieser Schritt ist erledigt ✓»",
    "1 button.calc-button type=\"button\" «Zu meinem Businessplan»"
   ],
   "de/purchase/advanced": [
@@ -19777,6 +20296,9 @@
    "1 div#vehicle-comparison.calc-subsection ⟦zone dynamique⟧",
    "0 div#expert-purchase.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Erweiterte Einstellungen ansehen (Expertenmodus)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Dieser Schritt ist erledigt ✓»",
    "1 button.calc-button type=\"button\" «Zu meinem Businessplan»"
   ],
   "de/session/quick": [
@@ -20011,6 +20533,9 @@
    "0 div#session-timeline ⟦zone dynamique⟧",
    "0 div#expert-session.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Erweiterte Einstellungen ansehen (Expertenmodus)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Dieser Schritt ist erledigt ✓»",
    "1 button.calc-button type=\"button\" «Zu meinem Businessplan»"
   ],
   "de/session/guided": [
@@ -20255,6 +20780,9 @@
    "0 div#session-timeline ⟦zone dynamique⟧",
    "0 div#expert-session.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Erweiterte Einstellungen ansehen (Expertenmodus)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Dieser Schritt ist erledigt ✓»",
    "1 button.calc-button type=\"button\" «Zu meinem Businessplan»"
   ],
   "de/session/advanced": [
@@ -20489,6 +21017,9 @@
    "0 div#session-timeline ⟦zone dynamique⟧",
    "0 div#expert-session.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Erweiterte Einstellungen ansehen (Expertenmodus)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Dieser Schritt ist erledigt ✓»",
    "1 button.calc-button type=\"button\" «Zu meinem Businessplan»"
   ],
   "de/budget/quick": [
@@ -20570,6 +21101,9 @@
    "1 div#budget-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-budget.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Erweiterte Einstellungen ansehen (Expertenmodus)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Dieser Schritt ist erledigt ✓»",
    "1 button.calc-button type=\"button\" «Zu meinem Businessplan»"
   ],
   "de/budget/guided": [
@@ -20661,6 +21195,9 @@
    "1 div#budget-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-budget.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Erweiterte Einstellungen ansehen (Expertenmodus)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Dieser Schritt ist erledigt ✓»",
    "1 button.calc-button type=\"button\" «Zu meinem Businessplan»"
   ],
   "de/budget/advanced": [
@@ -20742,6 +21279,9 @@
    "1 div#budget-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-budget.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Erweiterte Einstellungen ansehen (Expertenmodus)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Dieser Schritt ist erledigt ✓»",
    "1 button.calc-button type=\"button\" «Zu meinem Businessplan»"
   ],
   "de/order/quick": [
@@ -20794,6 +21334,9 @@
    "1 div#order-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-order.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Erweiterte Einstellungen ansehen (Expertenmodus)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Dieser Schritt ist erledigt ✓»",
    "1 button.calc-button type=\"button\" «Zu meinem Businessplan»"
   ],
   "de/order/guided": [
@@ -20856,6 +21399,9 @@
    "1 div#order-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-order.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Erweiterte Einstellungen ansehen (Expertenmodus)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Dieser Schritt ist erledigt ✓»",
    "1 button.calc-button type=\"button\" «Zu meinem Businessplan»"
   ],
   "de/order/advanced": [
@@ -20908,6 +21454,9 @@
    "1 div#order-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-order.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Erweiterte Einstellungen ansehen (Expertenmodus)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Dieser Schritt ist erledigt ✓»",
    "1 button.calc-button type=\"button\" «Zu meinem Businessplan»"
   ],
   "de/roi/quick": [
@@ -21031,6 +21580,9 @@
    "1 div#roi-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-roi.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Erweiterte Einstellungen ansehen (Expertenmodus)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Dieser Schritt ist erledigt ✓»",
    "1 button.calc-button type=\"button\" «Zu meinem Businessplan»"
   ],
   "de/roi/guided": [
@@ -21164,6 +21716,9 @@
    "1 div#roi-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-roi.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Erweiterte Einstellungen ansehen (Expertenmodus)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Dieser Schritt ist erledigt ✓»",
    "1 button.calc-button type=\"button\" «Zu meinem Businessplan»"
   ],
   "de/roi/advanced": [
@@ -21287,6 +21842,9 @@
    "1 div#roi-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-roi.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Erweiterte Einstellungen ansehen (Expertenmodus)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Dieser Schritt ist erledigt ✓»",
    "1 button.calc-button type=\"button\" «Zu meinem Businessplan»"
   ],
   "de/activities/quick": [
@@ -21501,6 +22059,9 @@
    "1 div#activity-results ⟦zone dynamique⟧",
    "0 div#expert-activities.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Erweiterte Einstellungen ansehen (Expertenmodus)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Dieser Schritt ist erledigt ✓»",
    "1 button.calc-button type=\"button\" «Zu meinem Businessplan»"
   ],
   "de/activities/guided": [
@@ -21725,6 +22286,9 @@
    "1 div#activity-results ⟦zone dynamique⟧",
    "0 div#expert-activities.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Erweiterte Einstellungen ansehen (Expertenmodus)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Dieser Schritt ist erledigt ✓»",
    "1 button.calc-button type=\"button\" «Zu meinem Businessplan»"
   ],
   "de/activities/advanced": [
@@ -21939,6 +22503,9 @@
    "1 div#activity-results ⟦zone dynamique⟧",
    "0 div#expert-activities.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Erweiterte Einstellungen ansehen (Expertenmodus)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Dieser Schritt ist erledigt ✓»",
    "1 button.calc-button type=\"button\" «Zu meinem Businessplan»"
   ],
   "de/compare/quick": [
@@ -22022,6 +22589,9 @@
    "1 div#compare-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-compare.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Erweiterte Einstellungen ansehen (Expertenmodus)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Dieser Schritt ist erledigt ✓»",
    "1 button.calc-button type=\"button\" «Zu meinem Businessplan»"
   ],
   "de/compare/guided": [
@@ -22115,6 +22685,9 @@
    "1 div#compare-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-compare.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Erweiterte Einstellungen ansehen (Expertenmodus)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Dieser Schritt ist erledigt ✓»",
    "1 button.calc-button type=\"button\" «Zu meinem Businessplan»"
   ],
   "de/compare/advanced": [
@@ -22198,6 +22771,9 @@
    "1 div#compare-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#expert-compare.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 button.calc-button type=\"button\" «Erweiterte Einstellungen ansehen (Expertenmodus)»",
+   "1 span.b-expert-only",
+   "2 button.calc-button type=\"button\" «Dieser Schritt ist erledigt ✓»",
    "1 button.calc-button type=\"button\" «Zu meinem Businessplan»"
   ],
   "de/plan/quick": [
@@ -22318,6 +22894,9 @@
    "1 div#plan-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#plan-report ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 span.b-expert-only",
+   "2 button.calc-button.primary type=\"button\" «Meinen Plan speichern (mit Datenblatt)»",
+   "2 button.calc-button type=\"button\" «Meinen Plan drucken»",
    "1 button.calc-button type=\"button\" «Meinen Plan als Text herunterladen (zum Lesen oder Verschicken)»",
    "0 p.calc-note «Um diesen Plan mit seinem Planblatt zu behalten: „☆ Plan speichern“, oben oder unten im Arbeitsbereich. Danach findest du ihn unter „Meine Berechnungen“.»",
    "0 div#expert-plan.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧"
@@ -22450,6 +23029,9 @@
    "1 div#plan-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#plan-report ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 span.b-expert-only",
+   "2 button.calc-button.primary type=\"button\" «Meinen Plan speichern (mit Datenblatt)»",
+   "2 button.calc-button type=\"button\" «Meinen Plan drucken»",
    "1 button.calc-button type=\"button\" «Meinen Plan als Text herunterladen (zum Lesen oder Verschicken)»",
    "0 p.calc-note «Um diesen Plan mit seinem Planblatt zu behalten: „☆ Plan speichern“, oben oder unten im Arbeitsbereich. Danach findest du ihn unter „Meine Berechnungen“.»",
    "0 div#expert-plan.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧"
@@ -22572,6 +23154,9 @@
    "1 div#plan-results.calc-card.calc-result.in.lk-reveal.lk-reveal--zoom ⟦zone dynamique⟧",
    "0 div#plan-report ⟦zone dynamique⟧",
    "0 div.b-stage-actions",
+   "1 span.b-expert-only",
+   "2 button.calc-button.primary type=\"button\" «Meinen Plan speichern (mit Datenblatt)»",
+   "2 button.calc-button type=\"button\" «Meinen Plan drucken»",
    "1 button.calc-button type=\"button\" «Meinen Plan als Text herunterladen (zum Lesen oder Verschicken)»",
    "0 p.calc-note «Um diesen Plan mit seinem Planblatt zu behalten: „☆ Plan speichern“, oben oder unten im Arbeitsbereich. Danach findest du ihn unter „Meine Berechnungen“.»",
    "0 div#expert-plan.b-expert.calc-card.calc-subsection.lk-reveal.lk-reveal--zoom.in ⟦zone dynamique⟧"
@@ -22582,7 +23167,7 @@
    "style.css 6ca06c3e1f23fe8b",
    "calculateurs.css c46e8092ecb197d6",
    "calculateurs-brand.css f7ed71baf691ad6f",
-   "calculateurs-workspace.css 165bd430343a7277",
+   "calculateurs-workspace.css 19551dcd1e3eb500",
    "calculateurs-motion.css 673be6d00308e05b",
    "/leo.css aabf9fd1a4a804a0"
   ],
@@ -22590,7 +23175,7 @@
    "../style.css 6ca06c3e1f23fe8b",
    "../calculateurs.css c46e8092ecb197d6",
    "../calculateurs-brand.css f7ed71baf691ad6f",
-   "../calculateurs-workspace.css 165bd430343a7277",
+   "../calculateurs-workspace.css 19551dcd1e3eb500",
    "../calculateurs-motion.css 673be6d00308e05b",
    "/leo.css aabf9fd1a4a804a0"
   ],
@@ -22598,7 +23183,7 @@
    "../style.css 6ca06c3e1f23fe8b",
    "../calculateurs.css c46e8092ecb197d6",
    "../calculateurs-brand.css f7ed71baf691ad6f",
-   "../calculateurs-workspace.css 165bd430343a7277",
+   "../calculateurs-workspace.css 19551dcd1e3eb500",
    "../calculateurs-motion.css 673be6d00308e05b",
    "/leo.css aabf9fd1a4a804a0"
   ],
@@ -22606,7 +23191,7 @@
    "../style.css 6ca06c3e1f23fe8b",
    "../calculateurs.css c46e8092ecb197d6",
    "../calculateurs-brand.css f7ed71baf691ad6f",
-   "../calculateurs-workspace.css 165bd430343a7277",
+   "../calculateurs-workspace.css 19551dcd1e3eb500",
    "../calculateurs-motion.css 673be6d00308e05b",
    "/leo.css aabf9fd1a4a804a0"
   ],
@@ -22614,7 +23199,7 @@
    "../style.css 6ca06c3e1f23fe8b",
    "../calculateurs.css c46e8092ecb197d6",
    "../calculateurs-brand.css f7ed71baf691ad6f",
-   "../calculateurs-workspace.css 165bd430343a7277",
+   "../calculateurs-workspace.css 19551dcd1e3eb500",
    "../calculateurs-motion.css 673be6d00308e05b",
    "/leo.css aabf9fd1a4a804a0"
   ]

@@ -566,3 +566,10 @@ body.calculator-page main .lk-act--3 td[data-l]::before{content:attr(data-l) "\0
 .b-tradeoff .b-order-actions{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 4px}
 .b-explain-keys{margin-top:10px}.b-explain-keys li{font-size:.9rem}.b-explain-keys .calc-button{padding:4px 10px;font-size:.78rem;min-height:30px}
 .calc-tag.is-example{background:#f5e6c8;color:#5a3d00}
+
+/* v7.66 : options retirées en v7.47 et rendues au mode Expert (tiroir, fin de chaque outil, business plan, blocs du bas).
+   Elles n’existent qu’en Expert ; le mode courant est posé sur <body data-calc-mode> par calculateurs-workspace.js. */
+.b-expert-only{display:contents}
+body:not([data-calc-mode="advanced"]) .b-expert-only{display:none!important}
+.b-legacy-saved.b-expert-only{display:grid;gap:12px;margin-top:22px}
+.b-legacy-saved .calc-button{margin-top:10px}

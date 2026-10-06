@@ -5,3 +5,6 @@ node_modules
 *.log
 coverage
 .cache
+# v7.66 : notes de version et documentation du dépôt (texte brut indexable, inutile aux visiteurs)
+LISEZ-MOI*
+README.md
