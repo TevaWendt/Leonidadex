@@ -419,6 +419,10 @@
               "note": {
                 "type": "string",
                 "minLength": 3
+              },
+              "exemples": {
+                "type": "boolean",
+                "description": "v7.69 : les armes de « ids » ne sont que des exemples vus (le poste vaut pour toute la catégorie) ; sans ce champ, « ids » ferme la compatibilité à ces armes."
               }
             }
           },

@@ -62,11 +62,20 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     const keys = Array.from(box.querySelectorAll('[data-cat-key]'));
     const filterNote = box.querySelector('[data-cat-filter]'), filterLabel = box.querySelector('[data-cat-filter-label]');
     let tags = {}; try { tags = box.dataset.catTags ? JSON.parse(box.dataset.catTags) : {}; } catch (_) { tags = {}; }
-    const state = { q: '', cat: '', st: '', group: '', tag: '', sort: 'statut' };
+    const state = { q: '', cat: '', st: '', group: '', tag: '', sort: 'statut', item: null, who: '' };
+    /* v7.69 : « Ton véhicule » / « Ton arme » (bloc data-cat-pick juste avant la boîte) et « Pour qui ? » (Jason, Lucia) */
+    const fam = box.dataset.catalogue, pick = document.querySelector('[data-cat-pick="' + fam + '"]');
+    const items = new Map();
+    if (pick) pick.querySelectorAll('datalist option[data-id]').forEach(o => items.set(o.dataset.id, { id: o.dataset.id, name: o.value, tag: o.dataset.tag || '', label: o.dataset.l || '', url: o.dataset.u || '', key: fold(o.value) }));
+    const pickQ = pick && pick.querySelector('[data-cat-pick-q]'), pickCard = pick && pick.querySelector('[data-cat-pick-card]');
+    const pickName = pick && pick.querySelector('[data-cat-pick-name]'), pickMeta = pick && pick.querySelector('[data-cat-pick-meta]'), pickFiche = pick && pick.querySelector('[data-cat-pick-fiche]');
+    const whoBts = Array.from(tools.querySelectorAll('[data-cat-who]'));
     /* v7.54 (lot 1) : les lignes sont lues une fois (texte, catégorie, statut, compatibilité) ; filtrer ne déplace aucune
        ligne dans la page (seul un changement de tri réordonne, chaque tri n'est calculé qu'une fois) ; l'attente de 80 ms
        à la frappe est retirée : le résultat suit la saisie. */
-    const meta = new Map(rows.map(r => [r, { q: r.dataset.q || '', cat: r.dataset.cat || '', group: r.dataset.group || '', st: r.dataset.st || '', compat: ' ' + (r.dataset.compat || '') + ' ' }]));
+    const meta = new Map(rows.map(r => [r, { q: r.dataset.q || '', cat: r.dataset.cat || '', group: r.dataset.group || '', st: r.dataset.st || '', compat: ' ' + (r.dataset.compat || '') + ' ', ids: r.dataset.ids ? ' ' + r.dataset.ids + ' ' : '', who: r.dataset.who || '' }]));
+    /* une ligne va à ce modèle : sa liste d’armes nommées le cite, sinon sa catégorie (ou son identifiant) est dans la compatibilité */
+    const fits = (m, it) => m.ids ? m.ids.indexOf(' ' + it.id + ' ') !== -1 : (m.compat.indexOf(' ' + it.tag + ' ') !== -1 || m.compat.indexOf(' ' + it.id + ' ') !== -1);
     const collator = new Intl.Collator('fr');
     const sortCache = new Map([['statut', rows]]);
     let lastSort = 'statut';
@@ -80,11 +89,23 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       rows.forEach(r => {
         const m = meta.get(r);
         const ok = (!needle || m.q.indexOf(needle) !== -1) && (!state.cat || m.cat === state.cat) && (!state.group || m.group === state.group) && (!state.st || m.st === state.st)
-          && (!tag || m.compat.indexOf(tag) !== -1);
+          && (!tag || m.compat.indexOf(tag) !== -1) && (!state.item || fits(m, state.item))
+          && (!state.who || m.who === state.who || m.who === 'jason-lucia');
         if (r.hidden === ok) { r.hidden = !ok; if (ok) revealed.push(r); }
         if (ok) shown++;
       });
-      if (filterNote) { filterNote.hidden = !state.tag; if (filterLabel) filterLabel.textContent = state.tag ? (tags[state.tag] || state.tag) : ''; }
+      if (filterNote) { filterNote.hidden = !(state.tag || state.item); if (filterLabel) filterLabel.textContent = state.item ? state.item.name : state.tag ? (tags[state.tag] || state.tag) : ''; }
+      if (pickCard) {
+        const was = !pickCard.hidden; pickCard.hidden = !state.item;
+        if (state.item) {
+          pickName.textContent = state.item.name;
+          pickMeta.textContent = (state.item.label ? state.item.label + ' · ' : '') + nf.format(shown) + ' ' + (lkPluriel(shown) ? 'elementos compatibles' : 'elemento compatible');
+          if (pickFiche && state.item.url) pickFiche.setAttribute('href', state.item.url);
+          if (!was && canAnimate()) pickCard.animate([{ opacity: 0, transform: 'translate3d(0,8px,0) scale(.98)' }, { opacity: 1, transform: 'none' }], { duration: 280, easing: 'cubic-bezier(.2,.7,.2,1)' });
+        }
+      }
+      whoBts.forEach(b => b.setAttribute('aria-pressed', String((b.dataset.catWho || '') === state.who)));
+      if (emptyPick) { const hit = !shown && needle.length >= 3 ? suggest(needle) : null; emptyPick.hidden = !hit; if (hit) { emptyPick.querySelector('button').textContent = 'Ver los elementos para ' + hit.name; emptyPick._hit = hit; } }
       let sorted = false;
       if (state.sort !== lastSort) {
         if (!sortCache.has(state.sort)) sortCache.set(state.sort, rows.slice().sort((a, b) => {
@@ -102,11 +123,34 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       if (empty) empty.hidden = shown > 0;
       chips.forEach(c => c.setAttribute('aria-pressed', String(c.dataset.catGroup === state.group)));
       keys.forEach(k => k.setAttribute('aria-pressed', String(!!state.st && k.dataset.catKey === state.st)));
-      box.classList.toggle('is-filtered', !!(needle || state.cat || state.st || state.group || state.tag));
+      box.classList.toggle('is-filtered', !!(needle || state.cat || state.st || state.group || state.tag || state.item || state.who));
       /* apparitions : lignes réaffichées (cascade d'entrée), ou rappel après un tri */
       if (cause !== 'init') { if (revealed.length) reveal(revealed); else if (sorted) cascade(rows.filter(r => !r.hidden)); }
     }
-    function reset() { state.q = ''; state.cat = ''; state.st = ''; state.group = ''; state.tag = ''; state.sort = 'statut'; if (q) q.value = ''; if (fCat) fCat.value = ''; if (fSt) fSt.value = ''; if (sort) sort.value = 'statut'; apply(); }
+    function reset() { state.q = ''; state.cat = ''; state.st = ''; state.group = ''; state.tag = ''; state.item = null; state.who = ''; state.sort = 'statut'; if (q) q.value = ''; if (fCat) fCat.value = ''; if (fSt) fSt.value = ''; if (sort) sort.value = 'statut'; if (pickQ) pickQ.value = ''; apply(); }
+    /* v7.69 : choisir un modèle (ou rien) : les autres filtres sont retirés, la boîte s’ouvre */
+    function choose(item) {
+      state.q = ''; state.cat = ''; state.st = ''; state.group = ''; state.tag = ''; state.item = item || null;
+      if (q) q.value = ''; if (fCat) fCat.value = ''; if (fSt) fSt.value = ''; if (pickQ) pickQ.value = item ? item.name : '';
+      if (item) box.open = true;
+      apply('pick');
+    }
+    function exact(v) { const k = fold(v); if (!k) return null; for (const x of items.values()) if (x.key === k) return x; return null; }
+    function suggest(k) { if (!items.size || k.length < 2) return null; let hit = null; for (const x of items.values()) { if (x.key === k) return x; if (!hit && x.key.indexOf(k) !== -1) hit = x; } return hit; }
+    let emptyPick = null;
+    if (items.size && empty) { emptyPick = document.createElement('span'); emptyPick.className = 'cat-empty-pick'; emptyPick.hidden = true; emptyPick.innerHTML = ' <button type="button" class="cat-reset"></button>'; empty.appendChild(emptyPick);
+      emptyPick.querySelector('button').addEventListener('click', () => { if (emptyPick._hit) { choose(emptyPick._hit); if (pick) pick.scrollIntoView({ block: 'start', behavior: canAnimate() ? 'smooth' : 'auto' }); } }); }
+    if (pick) {
+      pick.hidden = false;
+      if (pickQ) {
+        pickQ.addEventListener('input', () => { const x = exact(pickQ.value); if (x) choose(x); else if (!pickQ.value.trim() && state.item) choose(null); });
+        pickQ.addEventListener('change', () => { const x = exact(pickQ.value) || suggest(fold(pickQ.value)); if (x) choose(x); });
+        pickQ.addEventListener('keydown', e => { if (e.key !== 'Enter') return; e.preventDefault(); const x = exact(pickQ.value) || suggest(fold(pickQ.value)); if (x) choose(x); });
+      }
+      const clear = pick.querySelector('[data-cat-pick-clear]');
+      if (clear) clear.addEventListener('click', () => { choose(null); if (pickQ) pickQ.focus(); });
+    }
+    whoBts.forEach(b => b.addEventListener('click', () => { state.who = b.dataset.catWho || ''; apply(); }));
     if (q) q.addEventListener('input', () => { state.q = q.value; apply(); });
     if (fCat) fCat.addEventListener('change', () => { state.cat = fCat.value; if (state.cat) state.group = ''; apply(); });
     if (fSt) fSt.addEventListener('change', () => { state.st = fSt.value; apply(); });
@@ -120,7 +164,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     tools.hidden = false;
     apply('init');
     /* v7.58 : #<famille>=<catégorie> ouvre la liste filtrée sur une catégorie du menu (Léo, liens partagés) ; #<famille>=<statut> sur un statut */
-    return { box, rows, state, apply, reset, tags, setGroup(g) { state.group = g; state.cat = ''; if (fCat) fCat.value = ''; apply(); }, setTag(t) { reset(); state.tag = t; apply(); },
+    return { box, rows, state, apply, reset, tags, items, choose, pick, setGroup(g) { state.group = g; state.cat = ''; if (fCat) fCat.value = ''; apply(); }, setTag(t) { reset(); state.tag = t; apply(); },
       setCat(c) { if (!fCat || !Array.from(fCat.options).some(o => o.value === c)) return false; reset(); fCat.value = c; state.cat = c; apply(); return true; },
       setStatus(st) { if (!fSt || !Array.from(fSt.options).some(o => o.value === st)) return false; reset(); fSt.value = st; state.st = st; apply(); return true; } };
   }
@@ -254,6 +298,8 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     if (m) {
       const box = document.getElementById('box-' + m[1]), c = box && controllers.get(box);
       if (!c) return;
+      /* v7.69 : #perso-vehicules=<véhicule> ou #perso-armes=<arme> choisit ce modèle (lien « Personnaliser » de sa fiche) */
+      if (c.items && c.items.has(m[2])) { c.choose(c.items.get(m[2])); box.open = true; requestAnimationFrame(() => { (c.pick || box).scrollIntoView({ block: 'start' }); }); return; }
       if (c.tags[m[2]]) c.setTag(m[2]); else if (!c.setCat(m[2]) && !c.setStatus(m[2])) c.reset();
       box.open = true;
       requestAnimationFrame(() => { box.scrollIntoView({ block: 'start' }); });

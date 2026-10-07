@@ -59,11 +59,21 @@ const chipList = [['achats.html', 'Tout ce qui s’achète'], ['vehicules.html',
   ...acquisition.filter(c => !c.alias).map(c => [c.route.slice(1), c.label]),
   ['progression.html#carnets', 'Mes carnets'], ['tuto.html#sources', 'Comprendre les statuts']];
 const sectionPages = new Set([...world.map(x => x[0]), ...play.map(x => x[0]) /* sections missions, activites, radios, codes, trophees */, ...online.map(x => x[0]).filter(f => !f.includes('/')) /* section online : le hub seul */, ...acquisition.map(c => c.route.slice(1).split('#')[0]), 'vehicules.html', 'armes.html', 'achats.html', 'progression.html']);
+/* v7.69 : les puces suivent la famille de la page. Les pages du monde (lieux, personnages… animaux, collectibles) proposent
+   les autres pages du monde et la carte ; les pages « Jouer » (missions, activités, radios, codes, trophées, GTA Online)
+   les autres pages de jeu ; les pages d’achat et la Progression gardent la liste « S’équiper ». Une page de la faune ne
+   propose donc plus les catégories d’achat. Même ordre dans chaque famille, page courante retirée. */
+const chipSets = {
+  monde: [...world, ['carte.html', 'La carte de Leonida'], ['progression.html#carnets', 'Mes carnets'], ['tuto.html#sources', 'Comprendre les statuts']],
+  jouer: [...play, ['online.html', 'L’espace GTA Online'], ['progression.html#carnets', 'Mes carnets'], ['tuto.html#sources', 'Comprendre les statuts']],
+  equiper: chipList
+};
+const chipSetOf = file => world.some(([u]) => u === file) ? 'monde' : (play.some(([u]) => u === file) || file === 'online.html') ? 'jouer' : 'equiper';
 function chips(file) {
   if (!sectionPages.has(file)) return '';
   const alias = acquisition.find(c => c.alias && c.route.slice(1) === file);
   const currentFile = alias ? alias.alias.slice(1).split('#')[0] : file;
-  const items = chipList.filter(([url]) => url.split('#')[0] !== currentFile && url.split('#')[0] !== file);
+  const items = chipSets[chipSetOf(currentFile)].filter(([url]) => url.split('#')[0] !== currentFile && url.split('#')[0] !== file);
   return '<nav class="lk-chips shell" aria-label="Explorer les contenus documentés">' + items.map(([url, label]) => '<a href="' + url + '">' + esc(label) + '</a>').join('') + '</nav>';
 }
 /* Pose (ou remplace) les puces en bas de <main>, avant le bandeau de fin s'il existe. Idempotent. */
@@ -133,4 +143,4 @@ function placeEntry(html, file, prefix = '') {
   if (/<section class="lk-outro"/.test(html)) return html.replace(/<section class="lk-outro"/, block + '\n<section class="lk-outro"');
   return html.replace(/<\/main>/, block + '\n</main>');
 }
-module.exports = { nav, footer, top, world, play /* sections missions, activites, radios, codes, trophees */, online /* section online */, shopping, info, chips, placeChips, chipList, sectionPages, ENTRY, entry, placeEntry, entryPages };
+module.exports = { chipSets, chipSetOf, nav, footer, top, world, play /* sections missions, activites, radios, codes, trophees */, online /* section online */, shopping, info, chips, placeChips, chipList, sectionPages, ENTRY, entry, placeEntry, entryPages };

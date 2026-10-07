@@ -51,7 +51,8 @@
     "leo-core.js",
     "leo-link.js",
     "leo-calculator.js",
-    "calculateurs-engine.js"
+    "calculateurs-engine.js",
+    "lk-ia.js"
    ]
   },
   {
@@ -81,7 +82,8 @@
     "leo-core.js",
     "leo-link.js",
     "leo-calculator.js",
-    "calculateurs-engine.js"
+    "calculateurs-engine.js",
+    "lk-ia.js"
    ]
   },
   {
@@ -112,7 +114,8 @@
     "leo-core.js",
     "leo-link.js",
     "leo-calculator.js",
-    "calculateurs-engine.js"
+    "calculateurs-engine.js",
+    "lk-ia.js"
    ]
   },
   {
@@ -142,7 +145,8 @@
     "leo-core.js",
     "leo-link.js",
     "leo-calculator.js",
-    "calculateurs-engine.js"
+    "calculateurs-engine.js",
+    "lk-ia.js"
    ],
    "motsCodeGardes": true
   },
@@ -231,7 +235,9 @@
   "search-index.js",
   "search-lieux.js",
   "assets-manifest.js",
-  "carte-gtadb.js"
+  "carte-gtadb.js",
+  "carte-vehicules.js",
+  "armes-schemas.js"
  ],
  "scriptsDonnees": [
   "vehicules-data.js",

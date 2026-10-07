@@ -396,4 +396,5 @@
 .lkx-page.online-page .online-annonces{border-left-width:4px;}
 .lkx-page.online-page .online-bloc .sec-h{font-size:var(--fs-h2);}
 /* v7.68 (téléphone) : très petits écrans (320 px) : un long nom de lien (« Personnalisations ») se coupe au lieu d’être rogné */
-@media(max-width:360px){.lkx-link{padding-right:32px;}.lkx-link b{overflow-wrap:anywhere;-webkit-hyphens:auto;hyphens:auto;}}
+/* v7.69 : à 320 px, « Personnalisations » (et ses traductions) tient sur une ligne : vignette et marges un peu plus petites */
+@media(max-width:360px){.lkx-link{padding-right:26px;gap:10px;}.lkx-link::after{right:9px;}.lkx-link img,.lkx-link .lkx-link-ico{width:52px;height:40px;}.lkx-link b{overflow-wrap:anywhere;-webkit-hyphens:auto;hyphens:auto;}}

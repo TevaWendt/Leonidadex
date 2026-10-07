@@ -40,8 +40,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
      À vérifier sur les vraies distances après le 19 novembre. */
   const METRES_PAR_UNITE = 3.04;   /* 1 unité de carte = 3,04 m, calé sur les coordonnées du jeu */
 
-  /* vitesses de GTA V, en mètres par seconde : servent seulement à la simulation demandée par le joueur (v7.53) */
-  let simTrajets = false;
+  /* vitesses de GTA V, en mètres par seconde : références du calculateur de trajet (v7.69 : estimation affichée tout de suite, marquée comme telle) */
   const VITESSES = [
     { id:'pied',    nom:'On foot',     v: 2.0,  ico:'walk' },
     { id:'course',  nom:'Running', v: 6.0,  ico:'run'  },
@@ -367,6 +366,12 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
   }
 
   function readHash(){
+    /* v7.69 : #trajet ouvre le calculateur de trajet sur la carte (liens de l’accueil, du calculateur et de Léo) */
+    if(location.hash === '#trajet'){
+      setTrajet(true); const ms = document.getElementById('map-trajet-ms'); if(ms) ms.open = true;
+      requestAnimationFrame(function(){ stage.scrollIntoView({ block:'start', behavior:'auto' }); });
+      return false;
+    }
     /* plusieurs lieux à la fois : #pins=g-L1074,g-L1091&t=Armureries (liens « voir les armureries », « voir les concessions ») */
     const multi = location.hash.match(/^#pins=([\w,-]+)(?:&t=([^&]*))?$/);
     if(multi){
@@ -1320,15 +1325,95 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     plane:'<path d="M12 3l2 8 8 3v2l-8-1-1 5 3 2v1l-4-1-4 1v-1l3-2-1-5-8 1v-2l8-3z"/>'
   };
 
-  function renderRuler(){
-    if(rulerPts.length < 2){
-      rulerBx.innerHTML = '<p class="rl-hint">' +
-        (rulerPts.length === 0
-          ? "Click a first point <b>anywhere</b> on the map, or right on a marker."
-          : "Click the next point. You can chain up to {n} legs.".replace('{n}', MAX_ETAPES)) + '</p>';
-      return;
+  /* ============================================================
+     v7.69 : CALCULATEUR DE TRAJET (Téva : « combien ça met à pied, combien en voiture, mais toutes les voitures ne sont
+     pas pareilles » ; un outil à part, qui s’ouvre sur la carte). Les points se posent comme avant (départ, arrivée,
+     étapes) ; la distance est à vol d’oiseau ; les temps s’affichent tout de suite, marqués « estimation » : vitesses de
+     référence de GTA V (une hypothèse, pas des données de GTA VI). Jusqu’à trois véhicules du site à comparer, chacun avec
+     SA vitesse : la référence de sa famille, ou celle que tu as mesurée en jeu et écrite ici (gardée sur l’appareil,
+     lk_trajet_v1). Les hélicoptères n’ont pas de référence : tu écris la tienne. Lien direct : carte.html#trajet.
+     ============================================================ */
+  const trajetBox = document.getElementById('map-trajet');
+  const trajetFab = document.getElementById('map-trajet-fab');
+  const trajetX = document.getElementById('map-trajet-x');
+  const trajetLive = document.getElementById('map-trajet-live');
+  const rulerUndo = document.getElementById('map-ruler-undo');
+  const TRAJET_KEY = 'lk_trajet_v1';
+  const FAMILLE = { berline:'voiture', sport:'voiture', supercar:'voiture', muscle:'voiture', suv:'voiture', pickup:'voiture', van:'voiture', service:'voiture', divers:'voiture', moto:'moto', bateau:'bateau', avion:'avion', helicoptere:'helico' };
+  const GENERIQUES = [
+    { id:'voiture', nom:'Car (GTA V reference)' },
+    { id:'moto',    nom:'Motorcycle (GTA V reference)' },
+    { id:'bateau',  nom:'Boat (GTA V reference)' },
+    { id:'avion',   nom:'Plane (GTA V reference)' }
+  ];
+  const FAM_LABEL = { voiture:'average GTA V car', moto:'average GTA V motorcycle', bateau:'average GTA V boat', avion:'average GTA V plane' };
+  const ICO_FAM = { voiture:'car', moto:'moto', bateau:'boat', avion:'plane', helico:'plane' };
+  const SLUG = /^[a-z0-9][a-z0-9-]{0,79}$/;
+  const validTrajet = function(v){
+    return !!v && typeof v === 'object' && !Array.isArray(v) && Array.isArray(v.choix) && v.choix.length >= 1 && v.choix.length <= 3
+      && v.choix.every(function(c){ return typeof c === 'string' && SLUG.test(c); })
+      && !!v.vit && typeof v.vit === 'object' && !Array.isArray(v.vit) && Object.keys(v.vit).length <= 400
+      && Object.keys(v.vit).every(function(k){ return SLUG.test(k) && typeof v.vit[k] === 'number' && v.vit[k] > 0 && v.vit[k] <= 2000; });
+  };
+  let trajet = window.LK.read(TRAJET_KEY, { choix:['voiture'], vit:{} }, validTrajet);
+  let vehs = null, distM = 0, saveTimer = 0, lastLive = '';
+  function vehOf(id){
+    const g = GENERIQUES.find(function(x){ return x.id === id; }); if(g) return { id:id, nom:g.nom, fam:id };
+    const v = vehs && vehs.get(id); return v ? { id:id, nom:v[1], fam:FAMILLE[v[2]] || 'voiture' } : null;
+  }
+  function refKmh(fam){ const v = VITESSES.find(function(x){ return x.id === fam; }); return v ? Math.round(v.v * 3.6) : null; }
+  function kmhOf(id){ const c = vehOf(id); return c ? (trajet.vit[id] || refKmh(c.fam)) : null; }
+  function loadVehs(){
+    if(vehs) return Promise.resolve();
+    const done = function(){ vehs = new Map((window.LK_TRAJET_VEHICULES || []).map(function(v){ return [v[0], v]; })); };
+    if(window.LK_TRAJET_VEHICULES){ done(); return Promise.resolve(); }
+    return (window.LK && window.LK.lazyScript ? window.LK.lazyScript('carte-vehicules.js') : Promise.reject(new Error('lazy'))).then(done, function(){ vehs = new Map(); });
+  }
+  function saveTrajet(){ clearTimeout(saveTimer); saveTimer = setTimeout(function(){ window.LK.write(TRAJET_KEY, trajet); }, 300); }
+  function svgIco(k){ return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">' + ICONS[k] + '</svg>'; }
+  function duree(kmh){ return kmh ? '≈ ' + fmtDuree(distM / (kmh / 3.6)) : 'Enter a speed'; }
+  function chemin(){
+    return rulerPts.map(function(p, i){
+      return '<span class="rl-step"><b>' + LETTRES[i] + '</b>' + esc(p.lieu || (p.x + ' · ' + p.y)) + '</span>';
+    }).join('<i aria-hidden="true">→</i>');
+  }
+  function sourceOf(c){ return trajet.vit[c.id] ? 'Your speed, kept on this device' : (refKmh(c.fam) ? 'Reference: ' + FAM_LABEL[c.fam] : 'No published reference: enter your speed'); }
+  function vehRow(id, i){
+    const c = vehOf(id) || vehOf('voiture'), k = kmhOf(c.id);
+    return '<div class="rl-veh" data-i="' + i + '">'
+      + '<span class="rl-ico">' + svgIco(ICO_FAM[c.fam] || 'car') + '</span>'
+      + '<span class="rl-veh-main"><label class="sr-only" for="rl-veh-' + i + '">Vehicle ' + (i + 1) + ' to compare</label>'
+      + '<input class="rl-veh-in" id="rl-veh-' + i + '" list="rl-veh-list" value="' + esc(c.nom) + '" autocomplete="off" spellcheck="false" data-i="' + i + '">'
+      + '<span class="rl-veh-src" id="rl-src-' + i + '">' + esc(sourceOf(c)) + '</span></span>'
+      + '<span class="rl-kmh"><input type="number" class="rl-kmh-in" id="rl-kmh-' + i + '" min="1" max="2000" step="1" inputmode="numeric" value="' + (k || '') + '" placeholder="?" data-i="' + i + '" aria-label="Speed in km/h, ' + esc(c.nom) + '"><span aria-hidden="true">km/h</span></span>'
+      + '<span class="rl-t" id="rl-t-' + i + '">' + duree(k) + '</span>'
+      + (trajet.choix.length > 1 ? '<button type="button" class="rl-veh-x" data-x="' + i + '" aria-label="Remove ' + esc(c.nom) + ' from the comparison">&times;</button>' : '')
+      + '</div>';
+  }
+  function options(){
+    return GENERIQUES.map(function(g){ return '<option value="' + esc(g.nom) + '"></option>'; }).join('')
+      + (vehs ? Array.from(vehs.values()).map(function(v){ return '<option value="' + esc(v[1]) + '"></option>'; }).join('') : '');
+  }
+  function live(){
+    if(!trajetLive) return;
+    let t = '';
+    if(rulerPts.length >= 2){
+      const k = kmhOf(trajet.choix[0]), c = vehOf(trajet.choix[0]);
+      t = 'Distance: ' + fmtDist(distM) + '. On foot: ' + fmtDuree(distM / VITESSES[0].v) + '.' + (k && c ? ' ' + c.nom + ': ' + fmtDuree(distM / (k / 3.6)) + '.' : '');
     }
+    if(t !== lastLive){ lastLive = t; trajetLive.textContent = t; }
+  }
 
+  function renderRuler(){
+    if(rulerUndo) rulerUndo.hidden = !rulerPts.length;
+    if(rulerPts.length < 2){
+      distM = 0;
+      rulerBx.innerHTML = '<ol class="rl-how"><li class="' + (rulerPts.length ? 'is-done' : 'is-now') + '">Click your <b>start</b> anywhere on the map, or on a place.</li>'
+        + '<li class="' + (rulerPts.length ? 'is-now' : '') + '">Click your <b>finish</b>. You can add stops, up to ' + MAX_ETAPES + ' points.</li>'
+        + '<li>Compare the times on foot, by bike and for <b>your vehicle</b>.</li></ol>'
+        + (rulerPts.length ? '<p class="rl-pair">' + chemin() + '</p>' : '');
+      live(); return;
+    }
     /* distance cumulée sur l'ensemble du trajet */
     let du = 0;
     const etapes = [];
@@ -1337,34 +1422,62 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       du += seg;
       etapes.push(seg * METRES_PAR_UNITE);
     }
-    const m = du * METRES_PAR_UNITE;
-
-    const chemin = rulerPts.map(function(p, i){
-      return '<span class="rl-step"><b>' + LETTRES[i] + '</b>' + (p.lieu || (p.x + ' · ' + p.y)) + '</span>';
-    }).join('<i>→</i>');
-
+    distM = du * METRES_PAR_UNITE;
     rulerBx.innerHTML =
-      '<p class="rl-pair">' + chemin + '</p>' +
-      '<p class="rl-dist">' + fmtDist(m) + '</p>' +
-      (lkPluriel(etapes.length)?'<p class="rl-seg">' + etapes.length + ' segments · longest ' + fmtDist(Math.max.apply(null, etapes)) + '</p>'
-        : '') +
-      /* Revue de conformité (v7.53) : aucun temps de trajet par défaut (ni la vitesse ni l’échelle ne sont calibrées sur
-         GTA VI). La simulation se demande, et se lit comme telle. */
-      '<p class="rl-note">Estimated distance as the crow flies, based on the base map’s scale (to be confirmed after November 19, 2026), not counting roads or terrain.</p>' +
-      '<label class="rl-sim"><input type="checkbox" id="rl-sim"' + (simTrajets ? ' checked' : '') + '> Simulate travel times (GTA V speeds: an assumption, not GTA VI data)</label>' +
-      (simTrajets
-        ? '<p class="rl-sim-t"><span class="rl-sim-tag">Simulation</span> Times calculated with GTA V speeds, over the distance as the crow flies.</p>' +
-          '<ul class="rl-list rl-list--sim">' +
-          VITESSES.map(function(v){
-            return '<li><span class="rl-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
-                   'stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">' + ICONS[v.ico] + '</svg></span>' +
-                   '<span class="rl-nom">' + v.nom + '</span>' +
-                   '<span class="rl-t">≈ ' + fmtDuree(m / v.v) + '</span></li>';
-          }).join('') +
-          '</ul>'
-        : '');
-    const sim = document.getElementById('rl-sim');
-    if(sim) sim.addEventListener('change', function(){ simTrajets = sim.checked; renderRuler(); const again = document.getElementById('rl-sim'); if(again) again.focus(); });
+      '<p class="rl-pair">' + chemin() + '</p>' +
+      '<p class="rl-dist">' + fmtDist(distM) + ' <span class="rl-dist-k">as the crow flies</span></p>' +
+      (lkPluriel(etapes.length) ? '<p class="rl-seg">' + etapes.length + ' segments · longest ' + fmtDist(Math.max.apply(null, etapes)) + '</p>' : '') +
+      '<p class="rl-times-h"><span class="rl-sim-tag">Estimate</span> How long?</p>' +
+      '<ul class="rl-list">' + VITESSES.filter(function(v){ return ['pied','course','velo'].indexOf(v.id) !== -1; }).map(function(v){
+        return '<li><span class="rl-ico">' + svgIco(v.ico) + '</span><span class="rl-nom">' + v.nom + '</span><span class="rl-t">≈ ' + fmtDuree(distM / v.v) + '</span></li>';
+      }).join('') + '</ul>' +
+      '<p class="rl-vehs-h">With your vehicle <span>each has its own speed</span></p>' +
+      '<div class="rl-vehs">' + trajet.choix.map(vehRow).join('') + '</div>' +
+      (trajet.choix.length < 3 ? '<button type="button" class="rl-veh-add" id="rl-veh-add">+ Compare another vehicle</button>' : '') +
+      '<datalist id="rl-veh-list">' + options() + '</datalist>' +
+      '<p class="rl-note">Straight-line distance on the base map (scale to be confirmed after November 19, 2026), without roads or terrain: the real trip will be longer. Reference speeds: GTA V, an assumption until GTA VI. Measure your vehicles’ speed in-game and enter it: it stays on this device.</p>';
+    live();
+  }
+  function updateVeh(i){
+    const id = trajet.choix[i], c = vehOf(id); if(!c) return;
+    const t = document.getElementById('rl-t-' + i), src = document.getElementById('rl-src-' + i);
+    if(t) t.textContent = duree(kmhOf(id));
+    if(src) src.textContent = sourceOf(c);
+    live();
+  }
+  function findVeh(text){
+    const q = String(text || '').trim().toLowerCase(); if(!q) return null;
+    const g = GENERIQUES.find(function(x){ return x.nom.toLowerCase() === q; }); if(g) return g.id;
+    if(!vehs) return null;
+    let hit = null, n = 0;
+    vehs.forEach(function(v){ const name = v[1].toLowerCase(); if(name === q){ hit = v[0]; n = -1; } else if(n >= 0 && name.indexOf(q) !== -1){ hit = hit || v[0]; n++; } });
+    return n === -1 || n === 1 ? hit : null;
+  }
+  if(rulerBx){
+    rulerBx.addEventListener('change', function(e){
+      const inp = e.target.closest('.rl-veh-in'); if(!inp) return;
+      const i = +inp.dataset.i, id = findVeh(inp.value);
+      if(id){ trajet.choix[i] = id; saveTrajet(); renderRuler(); const again = document.getElementById('rl-kmh-' + i); if(again) again.focus(); }
+      else { const c = vehOf(trajet.choix[i]); inp.value = c ? c.nom : ''; }
+    });
+    rulerBx.addEventListener('input', function(e){
+      const inp = e.target.closest('.rl-kmh-in'); if(!inp) return;
+      const i = +inp.dataset.i, id = trajet.choix[i], n = Math.round(Number(inp.value));
+      if(inp.value === '' || !Number.isFinite(n) || n <= 0) delete trajet.vit[id];
+      else trajet.vit[id] = Math.min(2000, n);
+      saveTrajet(); updateVeh(i);
+    });
+    rulerBx.addEventListener('click', function(e){
+      const add = e.target.closest('#rl-veh-add'), x = e.target.closest('.rl-veh-x');
+      if(add){
+        const next = ['voiture','moto','bateau','avion'].find(function(id){ return trajet.choix.indexOf(id) === -1; }) || 'voiture';
+        trajet.choix.push(next); saveTrajet(); renderRuler();
+        const inp = document.getElementById('rl-veh-' + (trajet.choix.length - 1)); if(inp){ inp.focus(); inp.select(); }
+      } else if(x){
+        trajet.choix.splice(+x.dataset.x, 1); saveTrajet(); renderRuler();
+        const inp = document.getElementById('rl-veh-0'); if(inp) inp.focus();
+      }
+    });
   }
 
   function drawLine(){
@@ -1407,19 +1520,35 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     });
   }
 
-  if(rulerBt){
-    rulerBt.addEventListener('click', function(){
-      if(!rulerOn)document.querySelectorAll('#map-edit.on,#dr-on.on').forEach(b=>b.click());
-      rulerOn = !rulerOn;
-      rulerBt.classList.toggle('on', rulerOn);
-      rulerBt.setAttribute('aria-pressed', rulerOn);
-      document.getElementById('map-ruler-wrap').hidden = !rulerOn;
-      stage.classList.toggle('picking', rulerOn);
-      if(rulerOn){ closePanel(); renderRuler(); }
-      else{
-        rulerPts = []; drawLine(); drawPins();
-        Object.keys(MK).map(k => MK[k]).forEach(el => el.classList.remove('is-picked'));
-      }
+  function setTrajet(on){
+    if(on === rulerOn) return;
+    if(on) document.querySelectorAll('#map-edit.on,#dr-on.on').forEach(function(b){ b.click(); });
+    rulerOn = on;
+    if(rulerBt){ rulerBt.classList.toggle('on', rulerOn); rulerBt.setAttribute('aria-pressed', rulerOn); }
+    if(trajetBox) trajetBox.hidden = !rulerOn;
+    if(trajetFab){ trajetFab.hidden = rulerOn; trajetFab.setAttribute('aria-expanded', rulerOn); }
+    stage.classList.toggle('picking', rulerOn);
+    if(rulerOn){
+      closePanel(); renderRuler();
+      loadVehs().then(function(){ if(rulerOn && rulerPts.length >= 2) renderRuler(); });
+    } else {
+      rulerPts = []; drawLine(); drawPins(); distM = 0; live();
+      Object.keys(MK).map(k => MK[k]).forEach(el => el.classList.remove('is-picked'));
+    }
+  }
+  if(rulerBt) rulerBt.addEventListener('click', function(){ setTrajet(!rulerOn); if(rulerOn && trajetBox) trajetBox.querySelector('.map-trajet-x').focus({ preventScroll:true }); });
+  if(trajetFab) trajetFab.addEventListener('click', function(){ setTrajet(true); const ms = document.getElementById('map-trajet-ms'); if(ms) ms.open = true; if(trajetX) trajetX.focus({ preventScroll:true }); });
+  if(trajetX) trajetX.addEventListener('click', function(){ setTrajet(false); if(trajetFab) trajetFab.focus({ preventScroll:true }); });
+  if(trajetBox){
+    /* les interactions dans le calculateur ne déplacent pas la carte et ne posent pas de point */
+    ['click','pointerdown','pointerup','wheel','dblclick'].forEach(function(ev){ trajetBox.addEventListener(ev, function(e){ e.stopPropagation(); }); });
+    trajetBox.addEventListener('keydown', function(e){ if(e.key === 'Escape'){ e.stopPropagation(); setTrajet(false); if(trajetFab) trajetFab.focus({ preventScroll:true }); } });
+  }
+  if(trajetFab) ['click','pointerdown','pointerup','dblclick'].forEach(function(ev){ trajetFab.addEventListener(ev, function(e){ e.stopPropagation(); }); });
+  if(rulerUndo){
+    rulerUndo.addEventListener('click', function(){
+      rulerPts.pop(); drawLine(); drawPins(); renderRuler();
+      Object.keys(MK).map(k => MK[k]).forEach(function(el){ el.classList.toggle('is-picked', rulerPts.some(r => r.id === el.dataset.id)); });
     });
   }
   if(rulerRs){

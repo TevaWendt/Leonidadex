@@ -21,7 +21,8 @@ const STORE={lk_own_vehicules:'{"albany-emperor":1,"karin-sultan":1}',lk_own_arm
  lk_map_found:'{"vice-city":true}',lk_wish_v1:JSON.stringify({version:1,items:{'vehicules:vapid-dominator':{at:now,from:'fiche'},'styles:imprimes-stock-305':{at:now,from:'catalogue'}}}),lk_stock_v1:JSON.stringify({version:1,items:{'consommables:sprunk':{q:2,at:now}}})};
 function scan(){
   const found=[];
-  const rotated=el=>{for(let a=el;a&&a!==document.body;a=a.parentElement){const t=getComputedStyle(a).transform;if(t&&t!=='none'){const m=t.match(/matrix\(([^)]+)\)/);if(m){const v=m[1].split(',').map(Number);if(Math.abs(v[1])>0.001)return true;}}}return false;};
+  /* v7.69 : une carte tournée en 3D (matrix3d : rotation dans le plan ou perspective) range ses lettres sur des hauteurs différentes sans qu’aucun mot soit coupé */
+  const rotated=el=>{for(let a=el;a&&a!==document.body;a=a.parentElement){const t=getComputedStyle(a).transform;if(t&&t!=='none'){const m=t.match(/matrix\(([^)]+)\)/);if(m){const v=m[1].split(',').map(Number);if(Math.abs(v[1])>0.001)return true;}const m3=t.match(/matrix3d\(([^)]+)\)/);if(m3){const v=m3[1].split(',').map(Number);if([v[1],v[4],v[3],v[7]].some(x=>Math.abs(x)>0.0001))return true;}}}return false;};
   for(const el of document.querySelectorAll('button,a,label,summary,[role=tab],th,.cat-conf,.ed-st,.cn-stamp,.track-bt')){
     if(!el.getClientRects().length||rotated(el))continue;
     const walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT);let n;
@@ -43,7 +44,7 @@ function scan(){
   await ctx.addInitScript(s=>{try{if(!sessionStorage.getItem('__qa')){for(const k in s)localStorage.setItem(k,s[k]);sessionStorage.setItem('__qa','1');}}catch(e){}},STORE);
   const p=await ctx.newPage();
   for(const u of PAGES){
-   try{await p.goto(base+'/'+u,{waitUntil:'load'});await p.waitForTimeout(350);const r=await p.evaluate(scan);loads++;
+   try{await p.goto(base+'/'+u,{waitUntil:'load'});await p.waitForTimeout(350);/* v7.69 : on attend la fin des entrées animées (cartes distribuées, apparitions) : 3 s au plus */await p.evaluate(()=>Promise.race([Promise.all(document.getAnimations().filter(a=>{const t=a.effect&&a.effect.getComputedTiming?a.effect.getComputedTiming():null;return t&&Number.isFinite(t.endTime)&&a.playState!=='finished';}).map(a=>a.finished.catch(()=>{}))),new Promise(r=>setTimeout(r,3000))]));const r=await p.evaluate(scan);loads++;
     if(r.length){total+=r.length;report.push({w,u,words:r});console.log('COUPÉ '+w+' /'+u+' · '+r.slice(0,6).join(' ; '));}}
    catch(e){report.push({w,u,error:e.message.split('\n')[0]});console.log('ERREUR '+w+' /'+u+' · '+e.message.split('\n')[0]);total++;}
   }

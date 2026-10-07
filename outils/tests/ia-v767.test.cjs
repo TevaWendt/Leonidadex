@@ -13,13 +13,13 @@ test('sans clé : 503 « off », aucune requête vers le service',async()=>{T.re
 test('méthode, origine, format et demande invalides sont refusés',async()=>{T.reset();const h=API.createHandler({env:{ANTHROPIC_API_KEY:'k'},fetch:fakeService({})});
  assert.equal((await call(h,{method:'GET'})).status,405);assert.equal((await call(h,{body:{mode:'calcul',question:'x y'},headers:{origin:'https://evil.example'}})).status,403);
  assert.equal((await call(h,{body:{mode:'autre',question:'bonjour'}})).status,400);assert.equal((await call(h,{body:{mode:'leo',question:'x'.repeat(401)}})).status,400);});
-test('calcul : modèle par défaut Claude Haiku 4.5, consigne mise en cache, outil imposé, clé jamais renvoyée',async()=>{T.reset();const seen=[];
+test('calcul : modèle par défaut Claude Sonnet 5.5 (v7.69), consigne mise en cache, outil imposé, clé jamais renvoyée',async()=>{T.reset();const seen=[];
  const h=API.createHandler({env:{ANTHROPIC_API_KEY:'secret-key'},fetch:fakeService({outil:'goal',cases:[{chemin:'goal.capital',valeur:200000}],note:'Compris.'},seen)});
  const r=await call(h,{body:{mode:'calcul',question:'J’ai 200 000 et je veux 1 million',lang:'fr',state:'{"outil":"goal"}'}});
  assert.equal(r.status,200);assert.equal(seen[0].url,'https://api.anthropic.com/v1/messages');const b=seen[0].body;
- assert.equal(b.model,'claude-haiku-4-5-20251001');assert.equal(b.system[0].cache_control.type,'ephemeral');assert.equal(b.tool_choice.name,'remplir_calculateur');
+ assert.equal(b.model,'claude-sonnet-5-5');assert.equal(b.system[0].cache_control.type,'ephemeral');assert.equal(b.tool_choice.name,'remplir_calculateur');
  assert.equal(seen[0].opt.headers['x-api-key'],'secret-key');assert.ok(!JSON.stringify(r.body).includes('secret-key'));assert.match(b.messages[0].content,/J’ai 200 000 et je veux 1 million/);});
-test('modèle choisi dans Vercel (LK_IA_MODELE), valeur invalide ignorée',async()=>{for(const [m,expected] of [['claude-sonnet-5-5','claude-sonnet-5-5'],['rm -rf /','claude-haiku-4-5-20251001']]){T.reset();const seen=[];
+test('modèle choisi dans Vercel (LK_IA_MODELE), valeur invalide ignorée',async()=>{for(const [m,expected] of [['claude-haiku-4-5-20251001','claude-haiku-4-5-20251001'],['rm -rf /','claude-sonnet-5-5']]){T.reset();const seen=[];
  const h=API.createHandler({env:{ANTHROPIC_API_KEY:'k',LK_IA_MODELE:m},fetch:fakeService({outil:'goal',cases:[],note:''},seen)});await call(h,{body:{mode:'calcul',question:'bonjour'}});assert.equal(seen[0].body.model,expected);}});
 test('calcul : cases filtrées (chemin mal formé, valeur trop grande, texte trop long), outil inconnu ramené à goal',()=>{
  const d={mode:'calcul'};const s=T.shape(d,{outil:'pirate',cases:[{chemin:'goal.capital',valeur:5},{chemin:'__proto__.x',valeur:1},{chemin:'goal.target',valeur:1e15},{chemin:'assets.0.name',valeur:'x'.repeat(81)},{chemin:'order.keys',valeur:['a','b']}],scenarios:[{nom:'bas',cases:[{chemin:'goal.hourly',valeur:20000}]}],note:'ok'},'m');
@@ -29,11 +29,11 @@ test('Léo : liens limités aux éléments envoyés et au site de Rockstar ; « 
  const r=await call(h,{body:{mode:'leo',question:'C’est quoi le Jet ?',lang:'fr',local:{text:'Le Jet…',links:[{label:'Fiche',url:'/vehicules/jet.html'}]},passages:[]}});
  assert.equal(r.status,200);assert.deepEqual(r.body.liens.map(l=>l.url),['/vehicules/jet.html','https://www.rockstargames.com/VI']);assert.equal(r.body.trouve,true);});
 test('Léo : la consigne interdit les faits hors des éléments et GTA V présenté comme GTA VI',()=>{assert.match(T.SYSTEM_LEO,/uniquement à partir des ÉLÉMENTS/);assert.match(T.SYSTEM_LEO,/GTA V ou de GTA Online/);assert.match(T.SYSTEM_CALC,/Tu ne calcules JAMAIS/);assert.match(T.SYSTEM_CALC,/N'invente aucun chiffre/);});
-test('débit : 30 demandes par empreinte d’IP et par dix minutes',()=>{T.reset();let blocked=0;for(let i=0;i<32;i++)if(T.limited('9.9.9.9',1000))blocked++;assert.equal(blocked,2);});
+test('anti-rafale : 60 demandes par empreinte d’IP et par dix minutes (v7.69 ; les 30 gratuites par 9 heures sont comptées à part)',()=>{T.reset();let blocked=0;for(let i=0;i<62;i++)if(T.limited('9.9.9.9',1000))blocked++;assert.equal(blocked,2);});
 test('service en panne ou réponse sans outil : 502, la page garde sa réponse locale',async()=>{T.reset();const h=API.createHandler({env:{ANTHROPIC_API_KEY:'k'},fetch:async()=>({ok:false,status:529,json:async()=>({})})});
  const r=await call(h,{body:{mode:'leo',question:'bonjour Léo'}});assert.equal(r.status,502);assert.equal(r.body.code,'service');});
 test('fonction sans dépendance (node: seulement), pages : la barre et Léo gardent leur repli local',()=>{const src=fs.readFileSync(root+'/api/ia.js','utf8');for(const m of src.matchAll(/require\(\s*['"]([^'"]+)['"]\s*\)/g))assert.match(m[1],/^node:/);
- const hub=fs.readFileSync(root+'/calculateurs-hub.js','utf8'),ui=fs.readFileSync(root+'/leo-ui.js','utf8');assert.match(hub,/const result = route\(value\);/);assert.match(hub,/answer\(input\.value, true\)/);assert.match(ui,/if\(!r\.ok\)return local;/);assert.match(ui,/lk_ia_off/);});
+ const hub=fs.readFileSync(root+'/calculateurs-hub.js','utf8'),ui=fs.readFileSync(root+'/leo-ui.js','utf8');assert.match(hub,/const result = route\(value\);/);assert.match(hub,/answer\(input\.value, true\)/);assert.match(ui,/if\(!r\.ok\)return \{\.\.\.local,by:'local'/);assert.match(ui,/lk_ia_off/);});
 test('barre du calculateur : la lecture locale répond tout de suite ; l’IA n’est appelée que si la phrase va au-delà, puis complète les cases',async()=>{
  const {load}=require('./runtime-helper.cjs'),p=await load(root,'calculateurs.html',{});
  try{const H=p.w.LKCalcHub,stored=()=>JSON.parse(p.w.localStorage.getItem('lk-calculator-v1'));

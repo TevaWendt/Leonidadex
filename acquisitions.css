@@ -573,3 +573,110 @@
 
 /* v7.68 (téléphone) : liens « source », « visuel officiel », « Carte Rockstar » et case « J’ai obtenu » : cibles d’au moins 24 px */
 @media(max-width:600px){.cat-meta a,a.cat-media,.cat-acq-link{display:inline-flex;align-items:center;min-height:24px;}.cat-acq{min-height:28px;}}
+
+/* v7.69 : « Ton véhicule » / « Ton arme » (choisir un modèle précis dans Personnalisations) et « Pour qui ? » */
+.cat-pick{display:grid;gap:12px;margin:0 0 16px;padding:18px 20px;border:2px solid var(--ink);border-radius:16px;background:linear-gradient(135deg,var(--paper) 0%,var(--paper-2) 100%);box-shadow:4px 4px 0 var(--ink)}
+.cat-pick[hidden]{display:none}
+.cat-pick-in{display:grid;gap:10px}
+.cat-pick-k{display:flex;align-items:center;gap:8px;margin:0;font:800 .74rem/1 var(--font-mono,ui-monospace,monospace);letter-spacing:.14em;text-transform:uppercase;color:var(--coral-text)}
+.cat-pick-ico{width:18px;height:18px}
+.cat-pick-field{display:flex;align-items:center;gap:10px;padding:0 16px;min-height:54px;border:2px solid var(--ink);border-radius:12px;background:#fff;transition:box-shadow .2s ease}
+.cat-pick-field:focus-within{box-shadow:0 0 0 4px rgba(247,182,69,.55)}
+.cat-pick-field svg{width:20px;height:20px;flex:none;color:var(--ink-soft)}
+.cat-pick-field input{flex:1;min-width:0;border:0;background:none;font:600 1.06rem/1.2 'Archivo',sans-serif;color:var(--ink);outline:none}
+.cat-pick-field input::placeholder{color:#8a8590;font-weight:500}
+.cat-pick-field input:focus,.cat-pick-field input:focus-visible{outline:none!important}
+.cat-pick-hint{margin:0;font-size:.9rem;line-height:1.5;color:var(--ink-soft)}
+.cat-pick-card{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:14px 16px;border-radius:14px;background:linear-gradient(120deg,var(--night-deep,#241740),#35215f);color:#fff9ef;box-shadow:0 10px 28px rgba(36,23,64,.22)}
+.cat-pick-card[hidden]{display:none}
+.cat-pick-badge{display:grid;place-items:center;flex:none;width:46px;height:46px;border-radius:12px;background:var(--amber,#f7b645);color:var(--ink)}
+.cat-pick-badge-i{width:24px;height:24px}
+.cat-pick-txt{flex:1;min-width:190px}
+.cat-pick-name{margin:0;font:800 1.14rem/1.2 'Archivo',sans-serif}
+.cat-pick-meta{margin:3px 0 0;font-size:.88rem;color:#e7def3}
+.cat-pick-fiche{display:inline-flex;align-items:center;min-height:40px;color:var(--amber-2,#f7b645);font-weight:800;text-decoration:underline;text-underline-offset:3px}
+.cat-pick-fiche::after{content:' →'}
+.cat-pick-clear{min-height:40px;padding:0 16px;border:1.5px solid rgba(255,249,239,.8);border-radius:999px;background:none;color:#fff9ef;font:700 .9rem 'Archivo',sans-serif;cursor:pointer;transition:background .2s ease,color .2s ease}
+.cat-pick-clear:hover,.cat-pick-clear:focus-visible{background:#fff9ef;color:var(--ink)}
+.cat-empty-pick button{margin-left:6px}
+.cat-who-sw{display:flex;flex-wrap:wrap;align-items:center;gap:6px;width:100%}
+.cat-who-t{font:800 .72rem/1 var(--font-mono,ui-monospace,monospace);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);margin-right:4px}
+.cat-who-sw button{min-height:36px;padding:0 14px;border:1.5px solid var(--ink);border-radius:999px;background:var(--paper);color:var(--ink);font:700 .86rem 'Archivo',sans-serif;cursor:pointer;transition:background .18s ease,color .18s ease}
+.cat-who-sw button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+@media(max-width:600px){.cat-pick{padding:14px}.cat-pick-card{align-items:flex-start}.cat-pick-fiche,.cat-pick-clear{flex:1 1 auto;justify-content:center}}
+@media(prefers-reduced-motion:reduce){.cat-pick-field,.cat-pick-clear,.cat-who-sw button{transition:none}}
+
+/* v7.69 (Téva : « la partie consommable fait ultra brouillon ») : « En un regard » se lit d’un coup d’œil. Chaque carte
+   a le bandeau coloré de sa catégorie et son pictogramme, son nom, ce que la source en dit et où en trouver ; prix et effet,
+   encore inconnus pour tous, en petites lignes discrètes ; le repère de la série dans sa pastille. Filtre par catégorie
+   sans script (boutons radio, :has) ; transition de vue quand le navigateur la connaît (common.js, data-lk-vt). */
+.cg-cat-boissons{--cg:#a5dcf6;--cg-ink:#0d3550;}
+.cg-cat-snacks{--cg:#ffd77a;--cg-ink:#4a3200;}
+.cg-cat-repas{--cg:#f7b08a;--cg-ink:#4f1f05;}
+.cg-cat-soins{--cg:#a6e3be;--cg-ink:#0f3d22;}
+.cg-cat-protection{--cg:#c2cbea;--cg-ink:#1c2550;}
+.cg-filter{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 6px;padding:0;border:0;min-width:0;}
+.cg-filter input{position:absolute;opacity:0;width:1px;height:1px;margin:0;pointer-events:none;}
+.cg-filter label{display:inline-flex;align-items:center;gap:7px;min-height:42px;padding:5px 12px 5px 8px;border:2px solid var(--ink);border-radius:999px;background:var(--paper);color:var(--ink);font-weight:800;font-size:.86rem;cursor:pointer;user-select:none;transition:background .2s,color .2s,transform .2s var(--ease-out),box-shadow .2s;}
+.cg-filter label[for="cg-f-tout"]{padding-left:14px;}
+.cg-f-ico{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--cg);border:1.5px solid var(--ink);}
+.cg-f-ico .ed-ico{width:20px;height:20px;}
+.cg-n{display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 6px;border-radius:999px;background:var(--paper-2);border:1.5px solid var(--ink);font:800 .72rem/1 var(--font-mono,ui-monospace,monospace);}
+.cg-filter label:hover{transform:translateY(-2px);box-shadow:3px 3px 0 var(--ink);}
+.cg-filter input:checked+label{background:var(--ink);color:var(--paper);box-shadow:4px 4px 0 var(--amber);}
+.cg-filter input:checked+label .cg-n{background:var(--amber);color:var(--ink);border-color:var(--amber);}
+.cg-filter input:focus-visible+label{outline:3px solid var(--coral);outline-offset:3px;}
+#en-un-regard:has(#cg-f-boissons:checked) .cg-card:not([data-cg-cat="boissons"]),
+#en-un-regard:has(#cg-f-snacks:checked) .cg-card:not([data-cg-cat="snacks"]),
+#en-un-regard:has(#cg-f-repas:checked) .cg-card:not([data-cg-cat="repas"]),
+#en-un-regard:has(#cg-f-soins:checked) .cg-card:not([data-cg-cat="soins"]),
+#en-un-regard:has(#cg-f-protection:checked) .cg-card:not([data-cg-cat="protection"]),
+#en-un-regard:has(#cg-f-protection:checked) #besoin-recuperer,
+#en-un-regard:has(:is(#cg-f-boissons,#cg-f-snacks,#cg-f-repas,#cg-f-soins):checked) #besoin-proteger{display:none;}
+.ed-zone--acq .cg-grid,.cg-grid{grid-template-columns:repeat(auto-fill,minmax(min(100%,262px),1fr));gap:14px;}
+.cg-card{gap:0;padding:0;overflow:hidden;border-radius:16px;background:var(--paper);}
+.ed-zone--acq .cg-top,.cg-top{position:relative;flex-wrap:wrap;gap:10px;padding:12px 14px;background:var(--cg,var(--paper-2));color:var(--cg-ink,var(--ink));border-bottom:2px solid var(--ink);isolation:isolate;}
+.cg-top::after{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;background:repeating-linear-gradient(135deg,rgba(255,255,255,.22) 0 7px,transparent 7px 15px);}
+.cg-ico{width:50px;height:50px;border-radius:14px;background:var(--paper);box-shadow:3px 3px 0 var(--ink);transition:transform .45s var(--ease-spring);}
+.cg-ico .ed-ico{width:32px;height:32px;}
+.cg-cat{color:inherit;}
+.cg-body{display:flex;flex-direction:column;gap:9px;padding:14px 14px 12px;flex:1;}
+.cg-nom{font-size:1.12rem;}
+.cg-desc{margin:0;font-size:.87rem;line-height:1.45;color:var(--ink-soft);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+.cg-facts{gap:5px;font-size:.8rem;}
+.cg-facts div{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 8px;padding:0;border:0;}
+.cg-facts dt{font:700 .64rem/1.4 var(--font-mono,ui-monospace,monospace);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);}
+.cg-facts dd{display:block;color:var(--ink-soft);}
+.cg-facts .cg-f-ou{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:8px;padding:8px 10px;border-radius:10px;background:var(--paper-2);}
+.cg-facts .cg-f-ou dt{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--ink);color:transparent;overflow:hidden;font-size:0;}
+.cg-facts .cg-f-ou dt::before{content:'';width:12px;height:12px;background:var(--amber);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 22s-7-6-7-12a7 7 0 0 1 14 0c0 6-7 12-7 12zm0-9.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 22s-7-6-7-12a7 7 0 0 1 14 0c0 6-7 12-7 12zm0-9.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z'/%3E%3C/svg%3E") center/contain no-repeat;}
+.cg-facts .cg-f-ou dd{font-weight:800;color:var(--ink);font-size:.82rem;}
+.cg-facts .cg-f-use{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+.cg-facts small{display:inline-flex;align-self:flex-start;margin-top:4px;padding:3px 9px;border:1.5px solid #2F6F73;border-left-width:1.5px;border-radius:999px;background:#e5f3f0;color:#1d4f52;font-weight:800;font-size:.7rem;}
+.cg-actions{margin-top:auto;padding-top:10px;border-top:1.5px dashed var(--rule);}
+.cg-link{display:inline-flex;align-items:center;gap:5px;text-decoration:none;}
+.cg-link::after{content:'→';transition:transform .2s var(--ease-out);}
+@media(hover:hover){.cg-card:hover .cg-ico{transform:rotate(-8deg) scale(1.08);}.cg-link:hover::after{transform:translateX(3px);}}
+@supports (transition-behavior:allow-discrete) and (not (view-transition-name:none)){
+  .cg-card{transition:box-shadow var(--dur) var(--ease-out),transform var(--dur) var(--ease-out),opacity .3s var(--ease-out),display .3s allow-discrete;}
+  @starting-style{#en-un-regard .cg-card{opacity:0;transform:translateY(10px);}}
+}
+@media(max-width:560px){.cg-filter{flex-wrap:nowrap;overflow-x:auto;margin-inline:calc(-1 * var(--gutter));padding:2px var(--gutter) 8px;scrollbar-width:none;}.cg-filter::-webkit-scrollbar{display:none;}.cg-filter label{flex:none;}}
+@media(prefers-reduced-motion:reduce){.cg-ico,.cg-filter label,.cg-link::after{transition:none;}}
+/* v7.69 (« rien ne doit faire brouillon ») : section sans contenu vérifié (Logements) : gabarit des futures fiches, en pointillé,
+   sans nom, prix ni image inventés. */
+.d-empty .d-skel-note{margin-top:10px;font-size:.9rem;}
+.d-skel-grid{margin-top:22px;}
+.d-card--skel{border-style:dashed;box-shadow:none;background:rgba(255,255,255,.55);}
+.d-skel-img{position:relative;display:grid;place-items:center;aspect-ratio:16/9;border-bottom:2px dashed var(--ink);background:repeating-linear-gradient(135deg,rgba(26,26,30,.05) 0 12px,transparent 12px 24px);}
+.d-skel-tag{padding:5px 12px;border:1.5px dashed rgba(26,26,30,.45);border-radius:999px;background:var(--paper);font-weight:700;font-size:.78rem;color:var(--ink-soft);}
+.d-skel-line{display:block;height:11px;margin:10px 0;border-radius:6px;background:linear-gradient(90deg,rgba(26,26,30,.07),rgba(26,26,30,.14),rgba(26,26,30,.07));background-size:200% 100%;}
+.d-skel-line--title{width:62%;height:18px;margin-top:12px;}
+.d-skel-line--short{width:45%;}
+.d-card--skel .d-status{border-left-style:dashed;}
+.d-skel-check{display:inline-flex;align-items:center;gap:8px;margin-top:auto;padding-top:6px;font-size:.88rem;color:var(--ink-soft);}
+.d-skel-check::before{content:'';width:18px;height:18px;border:2px dashed rgba(26,26,30,.45);border-radius:4px;}
+@media(prefers-reduced-motion:no-preference){.d-skel-line{animation:d-skel 1.8s ease-in-out infinite;}@keyframes d-skel{to{background-position:-200% 0;}}}
+.ed-zone--acq .d-skel-grid{margin-top:22px;}
+@media(max-width:1000px){.d-skel-grid .d-card--skel:nth-child(3){display:none;}}
+@media(max-width:700px){.d-skel-grid .d-card--skel:nth-child(n+2){display:none;}}

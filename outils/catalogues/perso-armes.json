@@ -286,7 +286,8 @@
           "pm-tactique",
           "girardi-es9"
         ],
-        "note": "armes vues sur la capture ; « la plupart des armes » sans liste"
+        "note": "armes vues sur la capture ; « la plupart des armes » sans liste",
+        "exemples": true
       },
       "acq": "vintage-weapon-pattern",
       "notes": "La case « J’ai obtenu » est celle de la carte Rockstar plus haut."

@@ -4,7 +4,7 @@
   const par = Object.create(null); V.forEach(v => par[v.id] = v);
   const KEY = 'lk_classement';
   const liste = document.getElementById('cl-liste'), vide = document.getElementById('cl-vide');
-  const sel = document.getElementById('cl-sel');
+  const sel = document.getElementById('cl-sel'), count = document.getElementById('cl-count');
   let ordre = [];
   sel.replaceChildren(new Option('Añadir un vehículo',''));
   V.slice().sort((a,b)=>((a.marque||'')+a.nom).localeCompare((b.marque||'')+b.nom,'fr')).forEach(v=>sel.add(new Option((v.marque && v.marque!=='Marca desconocida'?v.marque+' ':'')+v.nom,v.id)));
@@ -46,6 +46,19 @@
           '<button type="button" data-del aria-label="Quitar">×</button></span>';
       liste.appendChild(li);
     });
+    /* v7.69 : les places encore libres restent visibles et numérotées : le top 10 se lit comme une grille à remplir */
+    for(let i = ordre.length; i < 10; i++){
+      const li = document.createElement('li'); li.className = 'cl-slot'; li.setAttribute('aria-hidden', 'true');
+      li.innerHTML = '<span class="cl-rang">' + (i+1) + '</span><span class="cl-slot-txt">Puesto libre</span>';
+      liste.appendChild(li);
+    }
+    if(count) count.textContent = ordre.length;
+    /* boutons « Ajouter à mon top 10 » des plus attendus */
+    document.querySelectorAll('[data-cl-add]').forEach(b => {
+      const dedans = ordre.indexOf(b.dataset.clAdd) >= 0;
+      b.disabled = dedans; b.classList.toggle('is-in', dedans);
+      b.textContent = dedans ? 'Ya está en tu top 10' : 'Añadir a mi top 10';
+    });
     /* le menu n'affiche plus ce qui est déjà classé */
     Array.from(sel.options).forEach(o => { if(o.value) o.hidden = ordre.indexOf(o.value) >= 0; });
   }
@@ -85,6 +98,13 @@
     if(ordre.length >= 10){ this.textContent = 'Diez como máximo'; setTimeout(() => this.textContent = 'Añadir', 1400); return; }
     ordre.push(id); sel.value = ''; ecrire(); rendre();
   });
+  /* v7.69 : « Ajouter à mon top 10 » depuis les plus attendus */
+  document.querySelectorAll('[data-cl-add]').forEach(b => b.addEventListener('click', function(){
+    const id = this.dataset.clAdd; if(!Object.hasOwn(par, id) || ordre.indexOf(id) >= 0) return;
+    if(ordre.length >= 10){ const t = this.textContent; this.textContent = 'Diez como máximo'; setTimeout(() => { this.textContent = t; }, 1400); return; }
+    ordre.push(id); ecrire(); rendre();
+    const v = par[id]; window.LK.status('Añadido a tu top 10: ' + (v.marque && v.marque !== 'Marca desconocida' ? v.marque + ' ' : '') + v.nom + '.');
+  }));
   document.getElementById('cl-raz').addEventListener('click', function(){
     if(ordre.length && !confirm('¿Vaciar tu clasificación?')) return;
     ordre = []; ecrire(); rendre();

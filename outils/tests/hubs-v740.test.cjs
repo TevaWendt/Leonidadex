@@ -25,7 +25,10 @@ test('sections.cjs : icônes connues, section complète (numéro, kicker, titre,
 test('carte-vignette.cjs : silhouette simplifiée déterministe, repère aux coordonnées de la carte, lieu inconnu refusé',()=>{
   const C=require(path.join(root,'outils/carte-vignette.cjs'));
   const land=C.land();assert.ok(land.length>4000&&land.length<12000,'silhouette : '+land.length);assert.equal(land,C.land());
-  const v=C.vignette('g-L1074');assert.match(v,/<use href="#lk-leonida"\/>/);assert.match(v,/cx="3121" cy="3990"/);
+  const v=C.vignette('g-L1074');assert.match(v,/<use href="#lk-leonida" width="5200" height="6000"\/>/);assert.match(v,/cx="3121" cy="3990"/);
+  /* v7.69 : vignette cadrée sur le lieu (fenêtre carrée gardée dans la carte, repère dedans) */
+  const vb=v.match(/viewBox="(\d+) (\d+) (\d+) (\d+)"/).slice(1).map(Number);assert.equal(vb[2],C.ZOOM);assert.equal(vb[3],C.ZOOM);
+  assert.ok(vb[0]>=0&&vb[1]>=0&&vb[0]+vb[2]<=C.W&&vb[1]+vb[3]<=C.H&&3121>vb[0]&&3121<vb[0]+vb[2]&&3990>vb[1]&&3990<vb[1]+vb[3],'fenêtre '+vb);
   assert.throws(()=>C.vignette('nulle-part'),/Lieu inconnu/);
   assert.equal(C.defs().match(/<symbol id="lk-leonida"/g).length,1);
 });
@@ -115,8 +118,8 @@ test('achats.html : description utile sous chaque carte (acquisitions.json), act
 
 test('Puces de navigation : un seul module, même liste et même ordre partout, page courante exclue, absentes ailleurs',()=>{
   const pages=[...shell.sectionPages];assert.ok(pages.includes('planques.html')&&pages.includes('vehicules.html')&&pages.includes('achats.html')&&pages.includes('progression.html'));
-  const expected=shell.chipList.map(x=>x[1]);
-  for(const f of pages){const d=doc(f);const navs=d.querySelectorAll('nav.lk-chips');assert.equal(navs.length,1,f);
+  /* v7.69 : une liste par famille de pages (monde, jouer, s’équiper), même ordre dans chaque famille */
+  for(const f of pages){const expected=shell.chipSets[shell.chipSetOf(f)].map(x=>x[1]);const d=doc(f);const navs=d.querySelectorAll('nav.lk-chips');assert.equal(navs.length,1,f);
     const labels=[...navs[0].querySelectorAll('a')].map(a=>a.textContent);
     assert.deepEqual(labels,expected.filter(l=>labels.includes(l)),'ordre : '+f);
     for(const a of navs[0].querySelectorAll('a')){const href=a.getAttribute('href');assert.notEqual(href.split('#')[0],f,'page courante listée : '+f);assert.ok(fs.existsSync(path.join(root,href.split('#')[0])),href);}

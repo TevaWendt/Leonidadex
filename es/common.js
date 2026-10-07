@@ -76,6 +76,73 @@
   window.LK = {esc,record,read,write,writeBatch,own,markers,strokes,mapImport,copy,status,hasAsset,safeUrl,lazyScript};
 })();
 
+/* v7.69 : visionneuse d'images. Un lien vers une image du site (galeries « En images », aperçus, captures du tuto) ouvre
+   l'image dans la page (lk-visionneuse.js, déclaré <script type="lk/lazy"> par outils/sync-site.cjs et chargé au premier
+   survol ou au premier clic) au lieu du fichier brut. Clic du milieu, Ctrl ou Maj : comportement normal du navigateur. */
+(function () {
+  'use strict';
+  const IMG = /\.(?:webp|avif|jpe?g|png)$/i;
+  const declared = () => !!document.querySelector('script[type="lk/lazy"][src*="lk-visionneuse.js"]');
+  const imageLink = function (el) {
+    const a = el && el.closest ? el.closest('a[href]') : null;
+    if (!a || a.hasAttribute('download') || a.closest('.lkv')) return null;
+    try { const u = new URL(a.href, location.href); return u.origin === location.origin && IMG.test(u.pathname) ? a : null; } catch (_) { return null; }
+  };
+  const load = function () { return window.LK && window.LK.lazyScript ? window.LK.lazyScript('lk-visionneuse.js') : Promise.reject(new Error('LK')); };
+  document.addEventListener('click', function (ev) {
+    if (ev.defaultPrevented || ev.button !== 0 || ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.altKey) return;
+    const a = imageLink(ev.target); if (!a || !declared()) return;
+    ev.preventDefault();
+    load().then(function () { window.LKViewer.open(a); }).catch(function () { location.href = a.href; });
+  });
+  /* préchargement discret au survol ou au focus : la visionneuse est prête avant le clic */
+  const warm = function (ev) {
+    if (!imageLink(ev.target) || !declared()) return;
+    document.removeEventListener('pointerover', warm); document.removeEventListener('focusin', warm);
+    load().catch(function () {});
+  };
+  document.addEventListener('pointerover', warm, { passive: true });
+  document.addEventListener('focusin', warm);
+})();
+
+/* v7.69 : deux petits mouvements partagés.
+   - [data-lk-count] : un nombre (« 170+ », « 7 ») défile de 0 à sa valeur quand il arrive à l'écran ; le texte final est
+     celui de la page, rien ne bouge s'il est déjà visible au chargement ou si « réduire les animations » est demandé.
+   - [data-lk-vt] : un groupe de boutons radio (filtre) change d'état dans une transition de vue quand le navigateur la
+     connaît : les cartes glissent à leur nouvelle place au lieu de sauter. */
+(function () {
+  'use strict';
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const counts = Array.prototype.slice.call(document.querySelectorAll('[data-lk-count]'));
+  if (counts.length && !reduce && 'IntersectionObserver' in window) {
+    const vh = window.innerHeight || 800;
+    const run = function (el) {
+      const final = el.dataset.lkFinal, m = final.match(/^(\D*)(\d+)(\D*)$/); if (!m) { el.textContent = final; return; }
+      const target = parseInt(m[2], 10), t0 = performance.now(), dur = Math.min(1500, 500 + target * 5);
+      const step = function (now) { const p = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - p, 3); el.textContent = p < 1 ? m[1] + Math.round(target * e) + m[3] : final; if (p < 1) requestAnimationFrame(step); };
+      requestAnimationFrame(step);
+    };
+    const io = new IntersectionObserver(function (entries) { entries.forEach(function (en) { if (!en.isIntersecting) return; io.unobserve(en.target); run(en.target); }); }, { threshold: 0.5 });
+    /* déjà à l'écran : on ne compte que si la page n'a pas encore été peinte (sinon 170 → 0 → 170 se verrait) */
+    const painted = !window.LKMotion || window.LKMotion.painted;
+    counts.forEach(function (el) {
+      const final = el.textContent.trim(), m = final.match(/^(\D*)(\d+)(\D*)$/), r = el.getBoundingClientRect();
+      if (!m || (painted && r.top < vh && r.bottom > 0)) return;
+      el.dataset.lkFinal = final; el.textContent = m[1] + '0' + m[3]; io.observe(el);
+    });
+    window.addEventListener('beforeprint', function () { counts.forEach(function (el) { if (el.dataset.lkFinal) el.textContent = el.dataset.lkFinal; }); });
+  }
+  document.addEventListener('click', function (ev) {
+    const label = ev.target && ev.target.closest ? ev.target.closest('[data-lk-vt] label[for]') : null;
+    if (!label || reduce || typeof document.startViewTransition !== 'function') return;
+    const input = document.getElementById(label.htmlFor);
+    if (!input || input.type !== 'radio' || input.checked || input.disabled) return;
+    ev.preventDefault();
+    document.startViewTransition(function () { input.checked = true; input.dispatchEvent(new Event('change', { bubbles: true })); });
+    try { input.focus({ preventScroll: true }); } catch (_) {}
+  });
+})();
+
 /* v7.54 (lot 1, PERF-05) : LKMotion, moteur d'apparition partagé par toutes les pages.
    - Un seul IntersectionObserver pour .reveal / .rise (classe « in »), .lk-reveal et [data-lk-reveal] (classe « is-in »).
    - Ce qui est déjà à l'écran quand la page s'ouvre est montré tout de suite, dans la même tâche que la pose de la classe
@@ -314,7 +381,7 @@
 })();
 
 /* Léo : amorçage isolé. Les données ne se chargent qu'à l'ouverture du panneau. */
-(function(){'use strict';if(!document.querySelector('main')||document.getElementById('leo-style'))return;/* v7.60-v7.64 : Léo parle les langues de outils/langues.json → leo (français, espagnol, italien, anglais, allemand) : pas de Léo sur une page d’une autre langue */if(!/^(?:fr|es|it|en|de)\b/i.test(document.documentElement.lang||'fr'))return;const base=(document.currentScript&&document.currentScript.src||'').replace(/[^/]*$/,'')||'/';const css=document.createElement('link');css.id='leo-style';css.rel='stylesheet';css.href='/leo.css?v=338cea6ab47b';css.onload=()=>{const script=document.createElement('script');script.src=base+'leo-loader.js?v=338cea6ab47b';document.head.append(script);};document.head.append(css);})();
+(function(){'use strict';if(!document.querySelector('main')||document.getElementById('leo-style'))return;/* v7.60-v7.64 : Léo parle les langues de outils/langues.json → leo (français, espagnol, italien, anglais, allemand) : pas de Léo sur une page d’une autre langue */if(!/^(?:fr|es|it|en|de)\b/i.test(document.documentElement.lang||'fr'))return;const base=(document.currentScript&&document.currentScript.src||'').replace(/[^/]*$/,'')||'/';const css=document.createElement('link');css.id='leo-style';css.rel='stylesheet';css.href='/leo.css?v=9d8394d2ec4c';css.onload=()=>{const script=document.createElement('script');script.src=base+'leo-loader.js?v=9d8394d2ec4c';document.head.append(script);};document.head.append(css);})();
 
 /* v7.61 (langues) : page introuvable. Le serveur renvoie la page 404 française pour toute adresse inconnue ; sous
    /en/… (une adresse d'une langue publiée), c'est la page introuvable de cette langue qui s'affiche. */

@@ -28,10 +28,10 @@
 {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.leonidakit.com/en/"},{"@type":"ListItem","position":2,"name":"Interactive map","item":"https://www.leonidakit.com/en/carte.html"}]}
 </script>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is this map official?","acceptedAnswer":{"@type":"Answer","text":"No. Rockstar has never released the full GTA VI map. The base map shown here is temporary and will be replaced after the game comes out, using screenshots we take ourselves."}},{"@type":"Question","name":"How big is the GTA VI map?","acceptedAnswer":{"@type":"Answer","text":"Rockstar hasn’t shared any size. The figures going around, including comparisons with GTA V, are player estimates, not official data."}},{"@type":"Question","name":"How many regions are confirmed?","acceptedAnswer":{"@type":"Answer","text":"Six: Vice City, the Leonida Keys, Grassrivers, Port Gellhorn, Ambrosia and Mount Kalaga National Park. Rockstar officially presented all of them."}},{"@type":"Question","name":"Does the site use the map that leaked in August 2026?","acceptedAnswer":{"@type":"Answer","text":"No, and that’s a deliberate choice. That material comes from a hack and is the subject of legal action by Take-Two. It also comes from a 2022-2023 development build, so it may be out of date."}},{"@type":"Question","name":"Where will the locations come from?","acceptedAnswer":{"@type":"Answer","text":"From our own surveys after the November 19, 2026 release, and from official sources like the trailers and the Extended Look, fully captured on PlayStation 5 and released by Rockstar."}},{"@type":"Question","name":"Will the whole map be open from the start of the game?","acceptedAnswer":{"@type":"Answer","text":"Rockstar hasn’t said. Some regions might be locked at the start of the story."}},{"@type":"Question","name":"How does the distance calculation work?","acceptedAnswer":{"@type":"Answer","text":"You pick two points on the map: the tool shows a distance as the crow flies, estimated from the base map’s scale (to be confirmed after release). No travel time is given by default: GTA VI hasn’t published any speeds. You can show a simulation with GTA V speeds, labeled as such."}}]}
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is this map official?","acceptedAnswer":{"@type":"Answer","text":"No. Rockstar has never released the full GTA VI map. The base map shown here is temporary and will be replaced after the game comes out, using screenshots we take ourselves."}},{"@type":"Question","name":"How big is the GTA VI map?","acceptedAnswer":{"@type":"Answer","text":"Rockstar hasn’t shared any size. The figures going around, including comparisons with GTA V, are player estimates, not official data."}},{"@type":"Question","name":"How many regions are confirmed?","acceptedAnswer":{"@type":"Answer","text":"Six: Vice City, the Leonida Keys, Grassrivers, Port Gellhorn, Ambrosia and Mount Kalaga National Park. Rockstar officially presented all of them."}},{"@type":"Question","name":"Does the site use the map that leaked in August 2026?","acceptedAnswer":{"@type":"Answer","text":"No, and that’s a deliberate choice. That material comes from a hack and is the subject of legal action by Take-Two. It also comes from a 2022-2023 development build, so it may be out of date."}},{"@type":"Question","name":"Where will the locations come from?","acceptedAnswer":{"@type":"Answer","text":"From our own surveys after the November 19, 2026 release, and from official sources like the trailers and the Extended Look, fully captured on PlayStation 5 and released by Rockstar."}},{"@type":"Question","name":"Will the whole map be open from the start of the game?","acceptedAnswer":{"@type":"Answer","text":"Rockstar hasn’t said. Some regions might be locked at the start of the story."}},{"@type":"Question","name":"How does the distance calculation work?","acceptedAnswer":{"@type":"Answer","text":"Click “Calculate a trip”, then your start and your finish (you can add stops): the tool shows the straight-line distance, estimated from the base map’s scale (to be confirmed after release), and times marked “Estimate” on foot, running, by bike and for up to three vehicles. GTA VI hasn’t published any speeds: the references are GTA V’s, and you can enter the one you measure in-game."}}]}
 </script>
 <link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../style.css?v=5aa24b63624b">
+<link rel="stylesheet" href="../style.css?v=9bb8ceccfb20">
 <link rel="stylesheet" href="../calculator-entry.css?v=cf94b45f1d2d">
 <meta property="og:image" content="https://www.leonidakit.com/img/social-card.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -131,20 +131,17 @@
         </div>
       </details>
 
-      <details class="ms ">
-        <summary>Measure a distance</summary>
+      <details class="ms" id="map-trajet-ms">
+        <summary>Trip calculator</summary>
         <div class="ms-in">
-<button type="button" class="map-tool" id="map-ruler" aria-pressed="false">
+<button type="button" class="map-tool" id="map-ruler" aria-pressed="false" aria-controls="map-trajet">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
               <path d="M3 15L15 3l6 6L9 21z"/><path d="M7 11l2 2M10 8l2 2M13 5l2 2"/>
             </svg>
-            Measure a distance
+            Calculate a trip
           </button>
 
-          <div class="map-ruler-wrap" id="map-ruler-wrap" hidden>
-            <div class="map-ruler-box" id="map-ruler-box"></div>
-            <button type="button" class="map-ruler-reset" id="map-ruler-reset">Start over</button>
-          </div>
+          <p class="map-note map-ruler-wrap" id="map-ruler-wrap">The calculator opens on the map: set the start and the finish, then compare the times on foot, by bike and with your vehicle.</p>
         </div>
       </details>
 
@@ -469,7 +466,7 @@
         </ul>
         <h3>Tools</h3>
         <ul>
-          <li><b>Measure</b> takes up to 50 stops</li>
+          <li>The <b>trip calculator</b> takes up to 50 stops</li>
           <li><b>?</b> opens this help</li>
         </ul>
       </div>
@@ -491,6 +488,14 @@
         <button type="button" class="map-copy" id="map-copy">Copy location</button>
       </div>
 
+      <button type="button" class="map-trajet-fab" id="map-trajet-fab" aria-controls="map-trajet" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="6" cy="18" r="2.4"/><circle cx="18" cy="6" r="2.4"/><path d="M8 16.5c3-1 2.5-4.5 5.5-5.5s2.6-3.6 3.2-3.9" stroke-dasharray="2.2 2.6"/></svg><span>Calculate a trip</span></button>
+      <section class="map-trajet" id="map-trajet" aria-labelledby="map-trajet-t" hidden>
+        <div class="map-trajet-head" id="trajet"><span class="map-trajet-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="6" cy="18" r="2.4"/><circle cx="18" cy="6" r="2.4"/><path d="M8 16.5c3-1 2.5-4.5 5.5-5.5s2.6-3.6 3.2-3.9" stroke-dasharray="2.2 2.6"/></svg></span><div><p class="map-trajet-k">Trip calculator</p><h2 id="map-trajet-t">Distance and travel time</h2></div><button type="button" class="map-trajet-x" id="map-trajet-x" aria-label="Close the trip calculator">&times;</button></div>
+        <div class="map-trajet-in" id="map-ruler-box"></div>
+        <p class="sr-only" id="map-trajet-live" aria-live="polite"></p>
+        <div class="map-trajet-foot"><button type="button" class="map-ruler-reset" id="map-ruler-undo" hidden>Remove the last point</button><button type="button" class="map-ruler-reset" id="map-ruler-reset">Start over</button></div>
+      </section>
+
       <div class="map-panel" id="map-panel" inert>
         <button type="button" class="map-close" id="map-close" aria-label="Close">&times;</button>
         <div id="map-panel-in"></div>
@@ -501,7 +506,7 @@
 
   <div class="note-box rise">
     <p><strong>How it works.</strong> Drag to move around, scroll wheel or pinch to zoom, double-click to zoom in. Click a marker to open it, then check it off: your progress stays saved on your device, no account needed.</p>
-    <p>The “Measure a distance” button lets you pick two points and get an estimated distance as the crow flies. Travel times only show up if you ask for the simulation (GTA V speeds, not GTA VI data).</p>
+    <p>The “Calculate a trip” button opens the calculator on the map: set the start and the finish (or stops), read the straight-line distance and compare the estimated times on foot, running, by bike and for each vehicle you pick. The reference speeds are those of GTA V, an assumption until GTA VI is out; you can enter the speed you measure in-game for each vehicle, and it stays on your device.</p>
   </div>
 </section>
 </div>
@@ -601,7 +606,7 @@
       </details>
       <details>
         <summary>How does the distance calculation work?</summary>
-        <div class="ans">You pick two points on the map: the tool shows a distance as the crow flies, estimated from the base map’s scale (to be confirmed after release). No travel time is given by default: GTA VI hasn’t published any speeds. You can show a simulation with GTA V speeds, labeled as such.</div>
+        <div class="ans">Click “Calculate a trip”, then your start and your finish (you can add stops): the tool shows the straight-line distance, estimated from the base map’s scale (to be confirmed after release), and times marked “Estimate” on foot, running, by bike and for up to three vehicles. GTA VI hasn’t published any speeds: the references are GTA V’s, and you can enter the one you measure in-game.</div>
       </details>
     </div>
   </div>
@@ -646,13 +651,13 @@
     </g>
   </svg><div class="shell"><div class="foot-top"><div class="foot-brand"><a class="brand" href="/en/">Leonida<span>kit</span></a><p>A map, pages, a calculator. Plan your moves in Leonida with clear sources and your own numbers.</p><a class="foot-feature" href="calculateurs.html">Find my calculation ↗</a></div><div class="foot-cols"><div><h2>Explore</h2><nav aria-label="Explore (footer)"><a href="carte.html">Map</a><a href="vehicules.html">Vehicles</a><a href="armes.html">Armory</a><a href="lieux.html">Places</a><a href="personnages.html">Characters</a><a href="gangs.html">Gangs and factions</a><a href="demeures.html">Residences</a><a href="planques.html">Safehouses</a><a href="entreprises.html">Businesses</a><a href="animaux.html">Animals</a><a href="collectibles.html">Collectibles</a></nav></div><div><h2>Play</h2><nav aria-label="Play (footer)"><a href="missions.html">Missions</a><a href="activites.html">Side activities</a><a href="radios.html">Radio and music</a><a href="codes-de-triche.html">Cheat codes</a><a href="trophees.html">Trophies and achievements</a></nav></div><div><h2>GTA Online</h2><nav aria-label="GTA Online (footer)"><a href="online.html">The GTA Online space</a><a href="online/annonces.html">The announcements</a><a href="online/gta-online-actuel.html">The current GTA Online</a></nav></div><div><h2>Gear up</h2><nav aria-label="Gear up (footer)"><a href="achats.html">Everything you can buy</a><a href="nourriture.html">Consumables</a><a href="style.html">Clothing and style</a><a href="personnalisations.html">Customization</a><a href="armes.html#munitions">Ammo and gear</a><a href="logements.html">Housing and apartments</a></nav></div><div><h2>Tools and help</h2><nav aria-label="Tools and help (footer)"><a href="calculateurs.html">Calculator</a><a href="tuto.html">Tutorial</a><a href="progression.html">Progress</a><a href="a-propos.html">About</a><a href="contact.html">Contact</a><a href="medias.html">Media and credits</a><a href="mentions-legales.html">Legal and privacy</a></nav></div></div></div><p class="legal">Leonidakit is an independent project made by a player, not affiliated with, endorsed or sponsored by Rockstar Games or Take-Two Interactive. Grand Theft Auto is a trademark of Take-Two Interactive. Credits for every media item remain available.</p></div></footer>
 
-<script type="lk/lazy" src="search-index.js?v=a54955b68c73"></script><script type="lk/lazy" src="search-lieux.js?v=be730d617c45"></script>
-<script src="../assets-manifest.js?v=241821d22e7b"></script>
-<script src="common.js?v=3c05440d0508"></script>
+<script type="lk/lazy" src="search-index.js?v=a54955b68c73"></script><script type="lk/lazy" src="search-lieux.js?v=be730d617c45"></script><script type="lk/lazy" src="../carte-vehicules.js?v=113ecfa572bb"></script>
+<script src="../assets-manifest.js?v=6af57ce07b3f"></script>
+<script src="common.js?v=699f40bb0e71"></script>
 <script src="app.js?v=08f08026097d"></script>
 <script src="carte-gtadb.js?v=fa3ce04e4038"></script>
 <script src="collectibles-data.js?v=60533f89e903"></script>
 <script src="collectibles-core.js?v=088b436855ae"></script>
-<script src="carte.js?v=197bd6d40747"></script>
+<script src="carte.js?v=573184eff607"></script>
 </body>
 </html>

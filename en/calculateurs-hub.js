@@ -429,26 +429,35 @@
     const quantities = x.mentions.filter(m => !m.replaced && m.role !== 'excluded').length + (x.minutes !== null ? 1 : 0) + (x.players !== null ? 1 : 0) + (result.values.deadlineDays !== null ? 1 : 0);
     return quantities > result.done.length || BEYOND.test(x.text);
   }
+  /* v7.69 : le visiteur choisit qui lit sa phrase (lk-ia.js : « IA Claude » ou « Local »), voit lequel a répondu, et a
+     30 questions IA gratuites par 9 heures ; ensuite la lecture locale répond seule (ou le crédit, si la vente est ouverte). */
+  const IA = () => window.LKIA || null;
+  const iaUsable = () => { const A = IA(); return A ? A.usable() : iaOn(); };
   async function iaCalc(text) {
-    const calc = window.LKCalculator;
-    if (!iaOn() || typeof fetch !== 'function' || !calc || typeof calc.applyAI !== 'function') return null;
+    const calc = window.LKCalculator, A = IA();
+    if (!iaUsable() || typeof fetch !== 'function' || !calc || typeof calc.applyAI !== 'function') return null;
     const ctl = typeof AbortController === 'function' ? new AbortController() : null, timer = setTimeout(() => { if (ctl) ctl.abort(); }, 15000);
     try {
-      const r = await fetch('/api/ia', { method: 'POST', headers: { 'Content-Type': 'application/json' }, signal: ctl ? ctl.signal : undefined, body: JSON.stringify({ mode: 'calcul', question: text, lang: (document.documentElement.lang || 'fr').slice(0, 2), page: location.pathname, state: calc.brief() }) });
+      const payload = { mode: 'calcul', question: text, lang: (document.documentElement.lang || 'fr').slice(0, 2), page: location.pathname, state: calc.brief() };
+      const r = await fetch('/api/ia', { method: 'POST', headers: { 'Content-Type': 'application/json' }, signal: ctl ? ctl.signal : undefined, body: JSON.stringify(A ? A.body(payload) : payload) });
+      let j = null; try { j = await r.json(); } catch (e) { j = null; }
+      if (A) A.learn(r.status, j);
       if (r.status === 503 || r.status === 404 || r.status === 405) { try { sessionStorage.setItem(IA_OFF, '1'); } catch (e) { /* stockage indisponible : on réessaiera */ } return null; }
+      if (r.status === 402) return { quota: true };
       if (!r.ok) return null;
-      const j = await r.json();
       return j && j.ok && j.mode === 'calcul' && Array.isArray(j.cases) ? j : null;
     } catch (e) { return null; } finally { clearTimeout(timer); }
   }
   async function answer(value, localOnly) {
     const result = route(value);
     if (!result) return;
-    if (out) { out.textContent = result.label + (result.done.length ? ' · ' + result.done.join(' · ') : ' — fill in the boxes just below.') + (result.notes.length ? ' · ' + result.notes.join(' · ') : ''); out.hidden = false; out.removeAttribute('aria-busy'); }
+    const localLine = result.label + (result.done.length ? ' · ' + result.done.join(' · ') : ' — fill in the boxes just below.') + (result.notes.length ? ' · ' + result.notes.join(' · ') : '');
+    const byLocal = () => { const A = IA(); if (!A) return ''; const st = A.status(); return ' · ' + (st.kind === 'quota' || st.kind === 'off' ? st.text : A.line(false)); };
+    if (out) { out.textContent = localLine + byLocal(); out.hidden = false; out.removeAttribute('aria-busy'); }
     focusWorkshop();
     const text = String(value || '').trim(), calc = window.LKCalculator;
     const turn = ++asked;
-    if (localOnly || text.length < 2 || !calc || !iaOn() || typeof fetch !== 'function' || !needsAI(text, result)) return;
+    if (localOnly || text.length < 2 || !calc || !iaUsable() || typeof fetch !== 'function' || !needsAI(text, result)) return;
     let wait = null;
     if (out) { wait = document.createElement('span'); wait.className = 'calc-ask-wait'; wait.textContent = ' · ' + 'Reading your request…'; out.appendChild(wait); out.setAttribute('aria-busy', 'true'); }
     const r = await iaCalc(text);
@@ -456,6 +465,7 @@
     /* une demande plus récente a déjà répondu : cette réponse arrive trop tard */
     if (turn !== asked) return;
     if (out) out.removeAttribute('aria-busy');
+    if (r && r.quota) { if (out) out.textContent = localLine + byLocal(); return; }
     if (!r || !(r.cases.length || r.question)) return;
     const parts = [];
     if (r.note) parts.push(r.note);
@@ -463,10 +473,13 @@
     for (const s of r.scenarios || []) { const v = calc.scenarioSummary(r.outil, s.cases); if (v) parts.push(s.nom + ': ' + v); }
     if (r.question) parts.push(r.question);
     if (!parts.length) parts.push('Fields filled in from your sentence.');
+    if (IA()) parts.push(IA().line(true));
     if (out) { out.textContent = parts.join(' · '); out.hidden = false; }
     if (r.cases.length) focusWorkshop();
   }
   if (form && input) {
+    /* v7.69 : « Qui répond ? » sous la barre */
+    if (IA()) { const help = $('calc-ask-help'); const ctl = IA().control('calcul'); if (help) help.after(ctl); else form.appendChild(ctl); input.addEventListener('focus', () => IA().refresh(false), { once: true }); }
     form.addEventListener('submit', event => { event.preventDefault(); answer(input.value); });
     document.querySelectorAll('[data-ask]').forEach(button => button.addEventListener('click', () => { input.value = button.dataset.ask; answer(input.value, true); }));
   }

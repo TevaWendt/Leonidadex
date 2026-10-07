@@ -1,0 +1,66 @@
+LEONIDAKIT v7.69 — l'IA par visiteur, et plus rien qui fait brouillon
+À appliquer APRÈS la v7.68 (archive Leonidakit-v7.68-modifs.zip). Rien à supprimer. Rien n'a été publié ni poussé.
+Livrée en DEUX archives (trop lourde pour une seule) : Leonidakit-v7.69-modifs-1-sur-2.zip (pages, scripts, outils) et
+Leonidakit-v7.69-modifs-2-sur-2.zip (captures du Tuto, dossier img/tuto). Il faut les deux.
+
+CE QUI CHANGE POUR LE VISITEUR
+- IA Claude ou Local : sous la barre « Que veux-tu calculer ? » et dans Léo, « Qui répond ? » laisse choisir. Une ligne dit
+  toujours lequel est en marche (« IA Claude : 30 questions gratuites toutes les 9 h », « Mode local… »), et chaque réponse
+  finit par « Réponse de l'IA Claude » ou « Réponse locale, sans IA ». 30 questions IA gratuites par visiteur toutes les
+  9 heures ; ensuite tout repasse en local jusqu'à l'heure indiquée, ou le visiteur achète du crédit si la vente est ouverte
+  (prix réel chez Anthropic + 20 %). En mode Local, rien ne part du navigateur. Le modèle par défaut est Claude Sonnet 5.5.
+- Images : un clic sur une image ouvre une visionneuse dans la page (fond sombre, zoom, galerie, glisser de côté, Échap).
+- Les trois cartes en haut des pages : quand on passe sur l'une, elle vient devant en glissant ; plus de carte qui
+  « traverse » l'autre.
+- Carte : nouveau « Calculer un trajet » (bouton sur la carte, lien direct carte.html#trajet) : départ, arrivée, étapes,
+  distance, temps à pied, en courant, à vélo et pour trois véhicules au plus, chacun avec sa vitesse (référence GTA V
+  marquée « Estimation », ou la vitesse que le joueur mesure et écrit).
+- Personnalisations : choisir son véhicule ou son arme ; la liste ne garde que ce qui lui va.
+- Retravaillés : Animaux (chiffres, mosaïque filtrable, régions, carte d'identité de chaque fiche), Consommables (cartes
+  lisibles, filtre par catégorie), Progression et carnets (anneau, illustrations, étapes), Collectibles (de retour à
+  l'accueil, familles en cartes), Comparateur (colonnes illustrées, comparaisons toutes prêtes, tableau par thèmes),
+  Classement (places libres visibles, plus attendus à ajouter en un clic), Logements (gabarit des futures fiches),
+  Véhicules rares (pile d'images), bandeau « Et après ? » (lisible partout).
+- Tuto adapté au calculateur actuel : toutes les captures refaites (cinq langues) et nouveau chapitre « Poser ta question ».
+- Tout est traduit en anglais, espagnol, italien et allemand (0 texte manquant).
+
+MARCHE À SUIVRE, DÉTAIL PAR DÉTAIL (à faire par toi, dans Vercel : les clés ne vont jamais dans GitHub ni dans une conversation)
+
+A. Mettre la version en ligne
+  1. Copie le contenu des deux archives à la racine du dossier GitHub (remplacer), valide, pousse. Vercel publie tout seul.
+
+B. Les 30 questions gratuites par visiteur (à faire maintenant)
+  1. Vercel → ton projet → onglet « Storage » → « Create Database » (ou « Browse Marketplace ») → « Upstash for Redis »
+     (offre gratuite) → crée la base et relie-la au projet Leonidakit.
+  2. Vérifie dans « Settings » → « Environment Variables » que KV_REST_API_URL et KV_REST_API_TOKEN sont apparues (Vercel
+     les ajoute seul en reliant la base). Ne les copie nulle part.
+  3. ANTHROPIC_API_KEY est déjà posée depuis la v7.67 (sinon : « Add » → nom ANTHROPIC_API_KEY → ta clé Anthropic).
+  4. « Deployments » → les trois points du dernier déploiement → « Redeploy » (les réglages ne comptent qu'après).
+  5. Essai : ouvre le calculateur et clique dans la barre : la ligne dit « IA Claude : 30 questions gratuites sur 30… ».
+     Pose une question que la lecture locale ne sait pas finir, par exemple « J'ai 200 000 $ et je joue 45 min par jour,
+     je veux 1 million. Et si je gagne 20 % de plus ? » : la réponse finit par « Réponse de l'IA Claude » et le compte
+     descend à 29.
+  Sans la base Upstash, l'IA marche quand même, mais le compte est gardé en mémoire vive (il peut repartir à zéro quand
+  Vercel relance la fonction) : la base est ce qui rend la limite fiable.
+  Facultatif : LK_IA_GRATUIT (30), LK_IA_HEURES (9), LK_IA_MODELE (claude-sonnet-5-5).
+
+C. Vendre du crédit au-delà des 30 questions (plus tard, seulement quand tout ce qui suit est prêt)
+  1. Avant tout : un statut pour vendre (par exemple micro-entreprise), l'offre Vercel Pro (l'offre gratuite Hobby est
+     réservée à un usage non commercial), et la page « Conditions de vente » : envoie-moi nom, adresse et numéro (SIRET)
+     du vendeur, je l'écris avec la partie « Achats » des Mentions. Attention : Rockstar et Take-Two tolèrent les sites de
+     fans non commerciaux ; vendre un service sur un site consacré à GTA VI les expose à une réclamation.
+  2. Stripe : crée et active ton compte (identité, IBAN), puis « Développeurs » → « Clés API » → copie la clé secrète
+     (sk_live_…) et pose-la dans Vercel sous le nom STRIPE_SECRET_KEY.
+  3. LK_IA_SEL : invente une phrase secrète d'au moins 16 caractères (par exemple quatre mots au hasard) et pose-la dans
+     Vercel. Ne la change jamais : les codes de crédit déjà vendus deviendraient introuvables.
+  4. LK_IA_VENTE = oui (c'est l'interrupteur : sans lui, la vente reste fermée).
+  5. Facultatif : LK_IA_MARGE (20), LK_IA_PACKS (montants proposés, « 3,5,10 » €), LK_IA_FRAIS (frais retenus,
+     « 0.25+1.5% »), LK_IA_EUR_PAR_USD (0.89), LK_SITE_URL (https://www.leonidakit.com).
+  6. « Redeploy ». Essai avec une vraie petite somme : le bouton « Plus de questions » apparaît quand les 30 questions sont
+     épuisées ; après paiement, le visiteur garde un code LK-… qui porte son crédit.
+  Pour fermer la vente : LK_IA_VENTE = non, puis « Redeploy ». Les crédits déjà achetés restent utilisables.
+
+SUR ORDINATEUR ET TÉLÉPHONE : vérifié écran par écran (1 440 et 390 px) sur toutes les pages principales ; tous les
+contrôles automatiques sont au vert (tests, navigateur, langues, liens, confidentialité : voir le détail technique).
+Détail technique : outils/CHANGEMENTS-v7.69.txt.
+Retour arrière : commit précédent dans GitHub Desktop.

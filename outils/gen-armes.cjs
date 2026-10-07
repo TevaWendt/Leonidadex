@@ -128,7 +128,7 @@ ${HEADER}
         <div class="fiche-tags">
           ${tags}
         </div>
-        <div class="fiche-liens"><button type="button" class="own-bt" id="own-bt" data-id="${a.id}"${prixPub?` data-prix="${prixPub.value}" data-prix-statut="${prixPub.status}"`:''}><span class="ck"></span><span>Ajouter à mon arsenal</span></button><a href="../comparateur.html?type=armes&amp;ids=${a.id}">Comparer</a>${PERSO_COVER.has(a.cat)?'<a href="../personnalisations.html#perso-armes='+a.cat+'">Accessoires compatibles</a>':''}</div>
+        <div class="fiche-liens"><button type="button" class="own-bt" id="own-bt" data-id="${a.id}"${prixPub?` data-prix="${prixPub.value}" data-prix-statut="${prixPub.status}"`:''}><span class="ck"></span><span>Ajouter à mon arsenal</span></button><a href="../comparateur.html?type=armes&amp;ids=${a.id}">Comparer</a>${(PERSO_COVER.has(a.cat)||PERSO_COVER.has(a.id))?'<a href="../personnalisations.html#perso-armes='+a.id+'">Personnaliser cette arme</a>':''}</div>
       </div>
       <div class="fhero-art fhero-art--gal">
         ${gal}
@@ -165,7 +165,7 @@ ${rows.map(([k,v])=>'        <tr><th scope="row">'+k+'</th><td>'+v+'</td></tr>')
 ${meds.length?`<section class="shell reveal" id="apercus">
   <h2 class="sec-h">Aperçus dans les supports officiels</h2>
   <p class="fiche-txt rise">Les captures où cette arme apparaît. Elles montrent la scène plus que l’arme : le schéma ci-dessus reste la référence visuelle tant que Rockstar n’a pas publié de vue détaillée.</p>
-  <div class="lore-gallery-grid rise">${meds.map(m=>'<a class="apercu" href="'+medBig(m).src+'" target="_blank" rel="noopener" aria-label="Agrandir : '+esc(m.titre)+'"><img src="'+m.variants[0].src+'" srcset="'+medSrcset(m)+'" sizes="(max-width:700px) 100vw, 560px" width="'+m.variants[0].w+'" height="'+m.variants[0].h+'" alt="'+esc(medAlt(a,m))+'" loading="lazy" decoding="async"></a>').join('')}</div>
+  <div class="lore-gallery-grid rise" data-kicker="${esc(a.nom)}">${meds.map(m=>'<a class="apercu" href="'+medBig(m).src+'" target="_blank" rel="noopener" aria-label="Agrandir : '+esc(medAlt(a,m))+'"><img src="'+m.variants[0].src+'" srcset="'+medSrcset(m)+'" sizes="(max-width:700px) 100vw, 560px" width="'+m.variants[0].w+'" height="'+m.variants[0].h+'" alt="'+esc(medAlt(a,m))+'" loading="lazy" decoding="async"></a>').join('')}</div>
 </section>`:''}
 
 ${carteOf(a)}

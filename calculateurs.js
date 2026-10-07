@@ -13,7 +13,7 @@ const stats=items=>'<div class="calc-stats">'+items.map(([label,value])=>'<div c
 const tabs=['goal','purchase','session','budget','order','roi','activities','compare','plan'];
 const tabNames=B.names;
 const labels={vehicle:'Véhicule',weapon:'Équipement',property:'Demeure',business:'Entreprise',place:'Lieu',hideout:'Planque',style:'Vêtements et style',customization:'Personnalisation',consumable:'Consommable',ammo:'Munitions',housing:'Logement',activity:'Activité'};
-const tutorialParams=new URLSearchParams(location.search),tutorialChapters=['demarrer','modes','objectif','activites','temps','achats','comparateur','choisir','ordre','rentabilite','budget','carnets','plan','sources','faq'];
+const tutorialParams=new URLSearchParams(location.search),tutorialChapters=['demarrer','poser-question','modes','objectif','activites','temps','achats','comparateur','choisir','ordre','rentabilite','budget','carnets','plan','sources','faq'];
 const tutorialChapter=tutorialParams.get('from')==='tuto'&&tutorialChapters.includes(tutorialParams.get('chapter'))?tutorialParams.get('chapter'):null;
 let leoPending=tutorialParams.has('leo'),leoReturn=tutorialParams.get('from')==='leo'?window.LKLeoLink?.safeReturn(tutorialParams.get('back')):null,leoStoragePresent=false,leoStorageBroken=false;
 const statusLabels={unknown:'À compléter',unverified:'Non confirmé',manual:'Valeur personnelle',official:'Officiel',verified:'Mesuré et vérifié',estimated:'Estimation',observed:'Repéré',community:'Communautaire','source-listed':'Source indiquée'};

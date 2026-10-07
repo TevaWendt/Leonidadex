@@ -121,8 +121,10 @@ test('navigateur : #perso-vehicules=sport ouvre la liste filtrée sur les voitur
   note.querySelector('[data-cat-reset]').click();assert.equal(visible().length,rows().length);assert.equal(note.hidden,true);
   a.w.location.hash='#perso-armes=girardi-es9';a.w.dispatchEvent(new a.w.Event('hashchange'));a.flush();
   const arm=a.d.getElementById('box-perso-armes');assert.equal(arm.open,true);
-  const shown=[...arm.querySelectorAll('tr.cat-row')].filter(r=>!r.hidden);assert.ok(shown.length>=3&&shown.every(r=>r.dataset.compat.split(' ').includes('girardi-es9')));
-  assert.equal(arm.querySelector('[data-cat-filter-label]').textContent,'Girardi ES9');
+  /* v7.69 : l’arme est choisie dans « Ton arme » : ses postes nommés et ceux des pistolets qui ne sont réservés à aucune autre arme */
+  const shown=[...arm.querySelectorAll('tr.cat-row')].filter(r=>!r.hidden);assert.ok(shown.length>=3&&shown.every(r=>r.dataset.ids?r.dataset.ids.split(' ').includes('girardi-es9'):r.dataset.compat.split(' ').some(t=>t==='girardi-es9'||t==='pistolet')));
+  assert.ok(shown.some(r=>(r.dataset.ids||'').split(' ').includes('girardi-es9')));assert.ok(!shown.some(r=>r.id.endsWith('variante-klose-k17')),'la variante d’une autre arme n’est pas proposée');
+  assert.equal(arm.querySelector('[data-cat-filter-label]').textContent,'Girardi ES9');assert.equal(a.d.querySelector('[data-cat-pick="perso-armes"] [data-cat-pick-name]').textContent,'Girardi ES9');
   a.w.location.hash='#perso-armes=pistolet';a.w.dispatchEvent(new a.w.Event('hashchange'));a.flush();
   const pist=[...arm.querySelectorAll('tr.cat-row')].filter(r=>!r.hidden);assert.ok(pist.length>shown.length&&pist.every(r=>r.dataset.compat.split(' ').includes('pistolet')));
   /* une catégorie inconnue dans l'adresse : la liste s'ouvre entière, sans note */
@@ -177,8 +179,9 @@ test('progression-core : les deux familles entrent dans le total, l’export et 
 });
 
 test('fiches : chaque fiche véhicule a « Personnaliser ce véhicule » vers sa catégorie filtrée, chaque fiche d’arme « Accessoires compatibles », les fiches des deux ateliers renvoient à la sous-section',()=>{
-  for(const v of vehicules()){const h=read('vehicules/'+v.id+'.html');const m=h.match(/<a href="\.\.\/personnalisations\.html#perso-vehicules=([a-z]+)">Personnaliser ce véhicule<\/a>/);assert.ok(m,v.id);assert.equal(m[1],v.cat);}
-  for(const a of armes()){const h=read('armes/'+a.id+'.html');const m=h.match(/<a href="\.\.\/personnalisations\.html#perso-armes=([a-z]+)">Accessoires compatibles<\/a>/);assert.ok(m,a.id);assert.equal(m[1],a.cat);}
+  /* v7.69 : le lien vise le modèle lui-même (#perso-vehicules=<véhicule>, #perso-armes=<arme>) : la section le choisit dans « Ton véhicule » / « Ton arme » */
+  for(const v of vehicules()){const h=read('vehicules/'+v.id+'.html');const m=h.match(/<a href="\.\.\/personnalisations\.html#perso-vehicules=([a-z0-9-]+)">Personnaliser ce véhicule<\/a>/);assert.ok(m,v.id);assert.equal(m[1],v.id);}
+  for(const a of armes()){const h=read('armes/'+a.id+'.html');const m=h.match(/<a href="\.\.\/personnalisations\.html#perso-armes=([a-z0-9-]+)">Personnaliser cette arme<\/a>/);assert.ok(m,a.id);assert.equal(m[1],a.id);}
   for(const b of ['rideout-customs','one-eyed-willie'])assert.ok(read('entreprises/'+b+'.html').includes('href="../personnalisations.html#perso-vehicules">Personnaliser mon véhicule</a>'),b);
   assert.ok(!read('entreprises/stock-305.html').includes('personnalisations.html#perso-'),'une boutique de vêtements ne renvoie pas aux ateliers');
   /* le lien reste dans le bloc de liens du bandeau, une fois */

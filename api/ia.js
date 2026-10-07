@@ -7,19 +7,33 @@
      du site) et de rien d'autre ; elle ne cite que des liens présents dans ces éléments, ou le site officiel de Rockstar.
    Fonction Node.js du dossier /api détectée par Vercel sans configuration (comme api/contact.js), fetch natif, aucune
    dépendance. Variables d'environnement Vercel : ANTHROPIC_API_KEY (obligatoire ; sans elle, réponse 503 et la page garde
-   son fonctionnement local), LK_IA_MODELE (facultatif, modèle utilisé ; par défaut Claude Haiku 4.5).
-   Rien n'est conservé par le site : pas de base, pas de fichier, aucune question dans les journaux. Le compteur anti-abus
-   garde en mémoire vive, dix minutes au plus, une empreinte (SHA-256 tronquée) de l'adresse IP. */
+   son fonctionnement local), LK_IA_MODELE (facultatif, modèle utilisé ; par défaut Claude Sonnet 5.5 depuis la v7.69, choix de Téva).
+   Aucune question n'est conservée par le site (pas de fichier, rien dans les journaux). Le compteur anti-rafale garde en
+   mémoire vive, dix minutes au plus, une empreinte (SHA-256 tronquée) de l'adresse IP.
+   v7.69 (demande de Téva du 06/10/2026) : accès à l'IA par visiteur.
+   - 30 questions gratuites par visiteur et par 9 heures (LK_IA_GRATUIT, LK_IA_HEURES). Le visiteur est compté par un
+     identifiant aléatoire de son appareil (lk_ia_appareil, envoyé par la page) et par une empreinte salée de son adresse
+     IP (plafond 5 fois plus haut, pour une box ou un réseau partagés). Les compteurs vivent dans la base Redis d'Upstash
+     reliée au projet Vercel (KV_REST_API_URL / KV_REST_API_TOKEN), effacés seuls au bout de 9 heures ; sans base, la
+     fonction compte en mémoire vive (moins fiable).
+   - Au-delà : crédit payant, si la vente est ouverte (LK_IA_VENTE=oui, STRIPE_SECRET_KEY, LK_IA_SEL, base Upstash ; achats par
+     api/ia-achat.js). Chaque question coûte son prix réel chez Anthropic (jetons lus et écrits, d'après la réponse de
+     l'API, convertis en euros par LK_IA_EUR_PAR_USD) plus la marge LK_IA_MARGE (20 % par défaut).
+   - Sinon : réponse 402 « quota » et la page repasse en mode local (Léo local, lecture locale du calculateur). */
 const crypto=require('node:crypto');
 
-const MODEL_DEFAULT='claude-haiku-4-5-20251001';
+const MODEL_DEFAULT='claude-sonnet-5-5';
 const MODELS=/^claude-[a-z0-9.-]{3,60}$/;
 const LANGS={fr:'français',en:'anglais',es:'espagnol',it:'italien',de:'allemand'};
 const TOOLS=['goal','purchase','session','budget','order','roi','activities','compare','plan'];
 const LIMITS={body:24000,question:400,page:200,local:1600,passages:6,passage:900,history:4,historyItem:400,state:3000};
-const WINDOW_MS=10*60*1000,MAX_PER_WINDOW=30,TIMEOUT_MS=18000;
+const WINDOW_MS=10*60*1000,MAX_PER_WINDOW=60,TIMEOUT_MS=18000; /* v7.69 : anti-rafale à 60 par 10 minutes (les 30 questions gratuites par 9 heures sont comptées à part) */
 const ORIGINS=[/^https:\/\/(?:www\.)?leonidakit\.com$/,/^https:\/\/[a-z0-9-]+\.vercel\.app$/,/^http:\/\/(?:localhost|127\.0\.0\.1)(?::\d+)?$/];
-const hits=new Map();
+const hits=new Map(),freeMem=new Map();
+const FREE_DEFAULT=30,HOURS_DEFAULT=9,IP_FACTOR=5,MARGIN_DEFAULT=20,EUR_PER_USD_DEFAULT=0.89,MIN_CREDIT=30000;
+/* prix Anthropic en dollars par million de jetons : lecture, écriture, écriture en cache, lecture en cache (tarifs consultés le 06/10/2026) */
+const PRICES={'claude-sonnet-5-5':[2,10,2.5,0.2],'claude-haiku-4-5-20251001':[1,5,1.25,0.1],'claude-opus-5-5':[4,20,5,0.2],'claude-fable-5-1':[10,50,12.5,0.25]};
+const DEVICE=/^[A-Za-z0-9_-]{16,64}$/,TOKEN=/^LK(?:-[A-Z2-7]{4}){4}$/;
 
 const clean=(v,max)=>typeof v==='string'?v.replace(/\r\n?/g,'\n').replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/g,'').trim().slice(0,max):'';
 
@@ -87,6 +101,11 @@ function safeLink(u,allowed){if(typeof u!=='string'||u.length>300)return null;if
 /* Contrôle de la demande : renvoie {ok, data} ou {ok:false, status, code}. */
 function validate(body){
  if(!body||typeof body!=='object'||Array.isArray(body))return {ok:false,status:400,code:'format'};
+ const who={appareil:typeof body.appareil==='string'&&DEVICE.test(body.appareil)?body.appareil:'',jeton:typeof body.jeton==='string'&&TOKEN.test(body.jeton)?body.jeton:''};
+ if(body.mode==='etat')return {ok:true,data:{mode:'etat',...who}};
+ const r=validateAsk(body);if(r.ok)Object.assign(r.data,who);return r;
+}
+function validateAsk(body){
  const mode=body.mode==='leo'?'leo':body.mode==='calcul'?'calcul':null;if(!mode)return {ok:false,status:400,code:'format'};
  const question=clean(body.question,LIMITS.question+1);if(question.length<2||question.length>LIMITS.question)return {ok:false,status:400,code:'question'};
  const lang=LANGS[body.lang]?body.lang:'fr',page=clean(body.page,LIMITS.page);
@@ -112,7 +131,7 @@ async function callClaude(d,env,fetchImpl){
    body:JSON.stringify({model,max_tokens:calc?900:700,temperature:calc?0:0.3,system:[{type:'text',text:calc?SYSTEM_CALC:SYSTEM_LEO,cache_control:{type:'ephemeral'}}],tools:[tool],tool_choice:{type:'tool',name:tool.name},messages:[{role:'user',content:userMessage(d)}]})});
   if(!r.ok)return {ok:false,status:r.status};
   const j=await r.json(),use=(j.content||[]).find(c=>c.type==='tool_use'&&c.name===tool.name);
-  return use&&use.input&&typeof use.input==='object'?{ok:true,input:use.input,model}:{ok:false,status:0};
+  return use&&use.input&&typeof use.input==='object'?{ok:true,input:use.input,model,usage:j.usage||{}}:{ok:false,status:0};
  }catch(e){return {ok:false,status:0};}
  finally{clearTimeout(timer);}
 }
@@ -132,6 +151,49 @@ async function readBody(req){
 }
 function reply(res,status,obj,extra={}){res.statusCode=status;res.setHeader('Content-Type','application/json; charset=utf-8');res.setHeader('Cache-Control','no-store');res.setHeader('X-Content-Type-Options','nosniff');for(const [k,v] of Object.entries(extra))res.setHeader(k,v);res.end(JSON.stringify(obj));}
 
+/* ---------- v7.69 : accès (gratuit, crédit) ---------- */
+function settings(env){
+ const n=(v,d,min,max)=>{const x=Number(v);return Number.isFinite(x)&&x>=min&&x<=max?x:d;};
+ const url=env.KV_REST_API_URL||env.UPSTASH_REDIS_REST_URL,token=env.KV_REST_API_TOKEN||env.UPSTASH_REDIS_REST_TOKEN;
+ const kv=url&&token&&/^https:\/\//.test(url)?{url:String(url).replace(/\/+$/,''),token:String(token)}:null;
+ return {free:Math.round(n(env.LK_IA_GRATUIT,FREE_DEFAULT,0,1000)),windowS:Math.round(n(env.LK_IA_HEURES,HOURS_DEFAULT,1,168)*3600),margin:n(env.LK_IA_MARGE,MARGIN_DEFAULT,0,500)/100,
+  eur:n(env.LK_IA_EUR_PAR_USD,EUR_PER_USD_DEFAULT,0.2,5),kv,sell:env.LK_IA_VENTE==='oui'&&!!env.STRIPE_SECRET_KEY&&!!kv&&String(env.LK_IA_SEL||'').length>=16,salt:String(env.LK_IA_SEL||env.ANTHROPIC_API_KEY||'leonidakit')};
+}
+const digest=(salt,v)=>crypto.createHash('sha256').update(salt+'|'+v).digest('hex').slice(0,32);
+async function kvRun(kv,fetchImpl,cmds){
+ const r=await fetchImpl(kv.url+'/pipeline',{method:'POST',headers:{Authorization:'Bearer '+kv.token,'Content-Type':'application/json'},body:JSON.stringify(cmds)});
+ if(!r.ok)throw Error('kv '+r.status);const j=await r.json();if(!Array.isArray(j))throw Error('kv');
+ return j.map(x=>{if(x&&x.error)throw Error('kv '+x.error);return x?x.result:null;});
+}
+/* compteur gratuit : un essai consomme une question (sauf lecture seule) ; au-delà de la limite, rien n'est retenu */
+function keysOf(st,who,ip){const ki='lkia:q:i:'+digest(st.salt,'ip:'+ip);return {ka:who.appareil?'lkia:q:a:'+digest(st.salt,'app:'+who.appareil):ki,ki,capA:st.free,capI:who.appareil?st.free*IP_FACTOR:st.free};}
+async function freeUse(st,who,ip,fetchImpl,now,take){
+ const {ka,ki,capA,capI}=keysOf(st,who,ip),W=String(st.windowS);
+ if(st.free<=0)return {ok:false,restant:0,reset:null};
+ if(st.kv){try{
+   if(!take){const [a,t]=await kvRun(st.kv,fetchImpl,[['GET',ka],['PTTL',ka]]);const used=Number(a)||0;return {ok:used<capA,restant:Math.max(0,st.free-Math.min(st.free,used)),reset:Number(t)>0?now+Number(t):null};}
+   const r=await kvRun(st.kv,fetchImpl,ka===ki?[['SET',ka,'0','EX',W,'NX'],['INCR',ka],['PTTL',ka]]:[['SET',ka,'0','EX',W,'NX'],['INCR',ka],['PTTL',ka],['SET',ki,'0','EX',W,'NX'],['INCR',ki]]);
+   const na=Number(r[1]),ni=ka===ki?na:Number(r[4]),reset=Number(r[2])>0?now+Number(r[2]):null;
+   if(na>capA||ni>capI){await kvRun(st.kv,fetchImpl,ka===ki?[['DECR',ka]]:[['DECR',ka],['DECR',ki]]).catch(()=>{});return {ok:false,restant:0,reset};}
+   return {ok:true,restant:Math.max(0,Math.min(st.free,capA)-na),reset,undo:()=>kvRun(st.kv,fetchImpl,ka===ki?[['DECR',ka]]:[['DECR',ka],['DECR',ki]]).catch(()=>{})};
+  }catch(e){console.error('ia: base des compteurs indisponible');}}
+ /* sans base : mémoire vive de cette instance */
+ for(const [k,v] of freeMem)if(v.until<=now)freeMem.delete(k);
+ const a=freeMem.get(ka)||{n:0,until:now+st.windowS*1000},i=ka===ki?a:(freeMem.get(ki)||{n:0,until:now+st.windowS*1000});
+ if(!take)return {ok:a.n<capA,restant:Math.max(0,st.free-Math.min(st.free,a.n)),reset:a.n?a.until:null};
+ if(a.n+1>capA||(ka!==ki&&i.n+1>capI))return {ok:false,restant:0,reset:a.until};
+ a.n++;freeMem.set(ka,a);if(ka!==ki){i.n++;freeMem.set(ki,i);}
+ return {ok:true,restant:Math.max(0,Math.min(st.free,capA)-a.n),reset:a.until,undo:()=>{a.n=Math.max(0,a.n-1);if(ka!==ki)i.n=Math.max(0,i.n-1);}};
+}
+async function balance(st,who,fetchImpl){if(!st.kv||!who.jeton)return null;try{const [b]=await kvRun(st.kv,fetchImpl,[['GET','lkia:b:'+digest(st.salt,'jeton:'+who.jeton)]]);return b===null?null:Number(b)||0;}catch{return null;}}
+/* prix d'une question en micro-euros : jetons réels × tarif du modèle, en euros, plus la marge */
+function priceOf(model,usage,st){
+ const p=PRICES[model]||PRICES[MODEL_DEFAULT],u=usage||{},n=x=>Math.max(0,Number(x)||0);
+ const usd=(n(u.input_tokens)*p[0]+n(u.output_tokens)*p[1]+n(u.cache_creation_input_tokens)*p[2]+n(u.cache_read_input_tokens)*p[3])/1e6;
+ return Math.ceil(usd*st.eur*(1+st.margin)*1e6);
+}
+async function charge(st,who,fetchImpl,cost){try{const [b]=await kvRun(st.kv,fetchImpl,[['DECRBY','lkia:b:'+digest(st.salt,'jeton:'+who.jeton),String(cost)]]);return Number(b);}catch{return null;}}
+
 function createHandler(options={}){
  const env=options.env||process.env,fetchImpl=options.fetch||globalThis.fetch,clock=options.now||(()=>Date.now());
  return async function handler(req,res){
@@ -143,13 +205,25 @@ function createHandler(options={}){
   let body;try{body=await readBody(req);}catch{body=null;}
   const v=validate(body);if(!v.ok)return reply(res,v.status,{ok:false,code:v.code});
   const ip=String(req.headers?.['x-forwarded-for']||'').split(',')[0].trim()||req.socket?.remoteAddress||'';
-  if(limited(ip,clock()))return reply(res,429,{ok:false,code:'rate'});
-  const r=await callClaude(v.data,env,fetchImpl);
-  if(!r.ok){console.error('ia: réponse refusée par le service ('+r.status+')');return reply(res,502,{ok:false,code:'service'});}
-  return reply(res,200,shape(v.data,r.input,r.model));
+  const st=settings(env),now=clock(),d=v.data,who={appareil:d.appareil,jeton:d.jeton};
+  const model=MODELS.test(String(env.LK_IA_MODELE||''))?env.LK_IA_MODELE:MODEL_DEFAULT;
+  /* v7.69 : état de l'accès (questions gratuites restantes, crédit, vente ouverte), sans rien consommer */
+  if(d.mode==='etat'){const f=await freeUse(st,who,ip,fetchImpl,now,false),b=await balance(st,who,fetchImpl);
+   return reply(res,200,{ok:true,mode:'etat',modele:model,gratuit:st.free,heures:st.windowS/3600,restant:f.restant,reset:f.reset,achat:st.sell,solde:b,marge:Math.round(st.margin*100)});}
+  if(limited(ip,now))return reply(res,429,{ok:false,code:'rate'});
+  let access=await freeUse(st,who,ip,fetchImpl,now,true),paid=false,bal=null;
+  if(!access.ok){bal=await balance(st,who,fetchImpl);
+   if(bal!==null&&bal>=MIN_CREDIT)paid=true;
+   else return reply(res,402,{ok:false,code:'quota',gratuit:st.free,heures:st.windowS/3600,restant:0,reset:access.reset,achat:st.sell,solde:bal});}
+  const r=await callClaude(d,env,fetchImpl);
+  if(!r.ok){if(access.undo)await access.undo();console.error('ia: réponse refusée par le service ('+r.status+')');return reply(res,502,{ok:false,code:'service'});}
+  const out=shape(d,r.input,r.model);
+  if(paid){const cost=priceOf(r.model,r.usage,st),left=await charge(st,who,fetchImpl,cost);out.acces={type:'credit',cout:cost,solde:left===null?bal-cost:left};}
+  else out.acces={type:'gratuit',gratuit:st.free,heures:st.windowS/3600,restant:access.restant,reset:access.reset};
+  return reply(res,200,out);
  };
 }
 
 module.exports=createHandler();
 module.exports.createHandler=createHandler;
-module.exports._test={validate,limited,cases,safeLink,shape,userMessage,SYSTEM_CALC,SYSTEM_LEO,MODEL_DEFAULT,reset:()=>hits.clear()};
+module.exports._test={validate,limited,cases,safeLink,shape,userMessage,SYSTEM_CALC,SYSTEM_LEO,MODEL_DEFAULT,PRICES,priceOf,settings,digest,reset:()=>{hits.clear();freeMem.clear();}};

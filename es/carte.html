@@ -28,10 +28,10 @@
 {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Inicio","item":"https://www.leonidakit.com/es/"},{"@type":"ListItem","position":2,"name":"Mapa interactivo","item":"https://www.leonidakit.com/es/carte.html"}]}
 </script>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"¿Este mapa es oficial?","acceptedAnswer":{"@type":"Answer","text":"No. Rockstar nunca ha publicado el mapa completo de GTA VI. El fondo que ves aquí es provisional y se sustituirá tras el lanzamiento del juego, a partir de capturas hechas por nosotros mismos."}},{"@type":"Question","name":"¿Qué tamaño tiene el mapa de GTA VI?","acceptedAnswer":{"@type":"Answer","text":"Rockstar no ha comunicado ninguna superficie. Las cifras que circulan, incluidas las comparaciones con GTA V, son estimaciones de jugadores y no datos oficiales."}},{"@type":"Question","name":"¿Cuántas regiones están confirmadas?","acceptedAnswer":{"@type":"Answer","text":"Seis: Vice City, los Leonida Keys, Grassrivers, Port Gellhorn, Ambrosia y Mount Kalaga National Park. Rockstar las ha presentado todas oficialmente."}},{"@type":"Question","name":"¿El sitio usa el mapa que se filtró en agosto de 2026?","acceptedAnswer":{"@type":"Answer","text":"No, y es una decisión asumida. Ese material procede de una intrusión informática y es objeto de acciones judiciales por parte de Take-Two. Además, procede de una versión de desarrollo de 2022-2023, así que puede estar obsoleto."}},{"@type":"Question","name":"¿De dónde saldrán las ubicaciones?","acceptedAnswer":{"@type":"Answer","text":"De nuestras propias mediciones tras el lanzamiento del 19 de noviembre de 2026, y de fuentes oficiales como los tráileres y el Extended Look, capturado íntegramente en PlayStation 5 y publicado por Rockstar."}},{"@type":"Question","name":"¿Todo el mapa será accesible desde el principio del juego?","acceptedAnswer":{"@type":"Answer","text":"Rockstar no lo ha precisado. Algunas regiones podrían estar bloqueadas al principio de la historia."}},{"@type":"Question","name":"¿Cómo funciona el cálculo de distancia?","acceptedAnswer":{"@type":"Answer","text":"Eliges dos puntos en el mapa: la herramienta muestra una distancia en línea recta, estimada a partir de la escala del fondo de mapa (por confirmar tras el lanzamiento). No se da ningún tiempo de trayecto por defecto: GTA VI no ha publicado ninguna velocidad. Puedes mostrar una simulación con las velocidades de GTA V, presentada como tal."}}]}
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"¿Este mapa es oficial?","acceptedAnswer":{"@type":"Answer","text":"No. Rockstar nunca ha publicado el mapa completo de GTA VI. El fondo que ves aquí es provisional y se sustituirá tras el lanzamiento del juego, a partir de capturas hechas por nosotros mismos."}},{"@type":"Question","name":"¿Qué tamaño tiene el mapa de GTA VI?","acceptedAnswer":{"@type":"Answer","text":"Rockstar no ha comunicado ninguna superficie. Las cifras que circulan, incluidas las comparaciones con GTA V, son estimaciones de jugadores y no datos oficiales."}},{"@type":"Question","name":"¿Cuántas regiones están confirmadas?","acceptedAnswer":{"@type":"Answer","text":"Seis: Vice City, los Leonida Keys, Grassrivers, Port Gellhorn, Ambrosia y Mount Kalaga National Park. Rockstar las ha presentado todas oficialmente."}},{"@type":"Question","name":"¿El sitio usa el mapa que se filtró en agosto de 2026?","acceptedAnswer":{"@type":"Answer","text":"No, y es una decisión asumida. Ese material procede de una intrusión informática y es objeto de acciones judiciales por parte de Take-Two. Además, procede de una versión de desarrollo de 2022-2023, así que puede estar obsoleto."}},{"@type":"Question","name":"¿De dónde saldrán las ubicaciones?","acceptedAnswer":{"@type":"Answer","text":"De nuestras propias mediciones tras el lanzamiento del 19 de noviembre de 2026, y de fuentes oficiales como los tráileres y el Extended Look, capturado íntegramente en PlayStation 5 y publicado por Rockstar."}},{"@type":"Question","name":"¿Todo el mapa será accesible desde el principio del juego?","acceptedAnswer":{"@type":"Answer","text":"Rockstar no lo ha precisado. Algunas regiones podrían estar bloqueadas al principio de la historia."}},{"@type":"Question","name":"¿Cómo funciona el cálculo de distancia?","acceptedAnswer":{"@type":"Answer","text":"Haz clic en “Calcular un trayecto” y luego en tu salida y tu llegada (puedes añadir etapas): la herramienta muestra la distancia en línea recta, estimada a partir de la escala del fondo de mapa (por confirmar tras el lanzamiento), y tiempos marcados como “Estimación” a pie, corriendo, en bici y para tres vehículos como máximo. GTA VI no ha publicado ninguna velocidad: las referencias son las de GTA V, y puedes escribir la que midas en el juego."}}]}
 </script>
 <link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../style.css?v=5aa24b63624b">
+<link rel="stylesheet" href="../style.css?v=9bb8ceccfb20">
 <link rel="stylesheet" href="../calculator-entry.css?v=cf94b45f1d2d">
 <meta property="og:image" content="https://www.leonidakit.com/img/social-card.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -131,20 +131,17 @@
         </div>
       </details>
 
-      <details class="ms ">
-        <summary>Medir una distancia</summary>
+      <details class="ms" id="map-trajet-ms">
+        <summary>Calculadora de trayectos</summary>
         <div class="ms-in">
-<button type="button" class="map-tool" id="map-ruler" aria-pressed="false">
+<button type="button" class="map-tool" id="map-ruler" aria-pressed="false" aria-controls="map-trajet">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
               <path d="M3 15L15 3l6 6L9 21z"/><path d="M7 11l2 2M10 8l2 2M13 5l2 2"/>
             </svg>
-            Medir una distancia
+            Calcular un trayecto
           </button>
 
-          <div class="map-ruler-wrap" id="map-ruler-wrap" hidden>
-            <div class="map-ruler-box" id="map-ruler-box"></div>
-            <button type="button" class="map-ruler-reset" id="map-ruler-reset">Volver a empezar</button>
-          </div>
+          <p class="map-note map-ruler-wrap" id="map-ruler-wrap">La calculadora se abre en el mapa: pon la salida y la llegada y compara los tiempos a pie, en bici y según tu vehículo.</p>
         </div>
       </details>
 
@@ -469,7 +466,7 @@
         </ul>
         <h3>Herramientas</h3>
         <ul>
-          <li><b>Medir</b> acepta hasta 50 etapas</li>
+          <li>La <b>calculadora de trayectos</b> admite hasta 50 etapas</li>
           <li><b>?</b> abre esta ayuda</li>
         </ul>
       </div>
@@ -491,6 +488,14 @@
         <button type="button" class="map-copy" id="map-copy">Copiar la posición</button>
       </div>
 
+      <button type="button" class="map-trajet-fab" id="map-trajet-fab" aria-controls="map-trajet" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="6" cy="18" r="2.4"/><circle cx="18" cy="6" r="2.4"/><path d="M8 16.5c3-1 2.5-4.5 5.5-5.5s2.6-3.6 3.2-3.9" stroke-dasharray="2.2 2.6"/></svg><span>Calcular un trayecto</span></button>
+      <section class="map-trajet" id="map-trajet" aria-labelledby="map-trajet-t" hidden>
+        <div class="map-trajet-head" id="trajet"><span class="map-trajet-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="6" cy="18" r="2.4"/><circle cx="18" cy="6" r="2.4"/><path d="M8 16.5c3-1 2.5-4.5 5.5-5.5s2.6-3.6 3.2-3.9" stroke-dasharray="2.2 2.6"/></svg></span><div><p class="map-trajet-k">Calculadora de trayectos</p><h2 id="map-trajet-t">Distancia y tiempo de trayecto</h2></div><button type="button" class="map-trajet-x" id="map-trajet-x" aria-label="Cerrar la calculadora de trayectos">&times;</button></div>
+        <div class="map-trajet-in" id="map-ruler-box"></div>
+        <p class="sr-only" id="map-trajet-live" aria-live="polite"></p>
+        <div class="map-trajet-foot"><button type="button" class="map-ruler-reset" id="map-ruler-undo" hidden>Quitar el último punto</button><button type="button" class="map-ruler-reset" id="map-ruler-reset">Volver a empezar</button></div>
+      </section>
+
       <div class="map-panel" id="map-panel" inert>
         <button type="button" class="map-close" id="map-close" aria-label="Cerrar">&times;</button>
         <div id="map-panel-in"></div>
@@ -501,7 +506,7 @@
 
   <div class="note-box rise">
     <p><strong>Cómo funciona.</strong> Arrastra para moverte, rueda o pellizco para hacer zoom, doble clic para acercar. Haz clic en un marcador para abrirlo y luego márcalo: tu progreso queda guardado en tu dispositivo, sin crear ninguna cuenta.</p>
-    <p>El botón “Medir una distancia” te deja elegir dos puntos y obtener una distancia estimada en línea recta. Los tiempos de trayecto solo se muestran si pides la simulación (velocidades de GTA V, no datos de GTA VI).</p>
+    <p>El botón “Calcular un trayecto” abre la calculadora en el mapa: pon la salida y la llegada (o etapas), lee la distancia en línea recta y compara los tiempos estimados a pie, corriendo, en bici y para cada vehículo que elijas. Las velocidades de referencia son las de GTA V, una hipótesis a la espera de GTA VI; puedes escribir la velocidad que midas en el juego para cada vehículo, y se queda en tu dispositivo.</p>
   </div>
 </section>
 </div>
@@ -601,7 +606,7 @@
       </details>
       <details>
         <summary>¿Cómo funciona el cálculo de distancia?</summary>
-        <div class="ans">Eliges dos puntos en el mapa: la herramienta muestra una distancia en línea recta, estimada a partir de la escala del fondo de mapa (por confirmar tras el lanzamiento). No se da ningún tiempo de trayecto por defecto: GTA VI no ha publicado ninguna velocidad. Puedes mostrar una simulación con las velocidades de GTA V, presentada como tal.</div>
+        <div class="ans">Haz clic en “Calcular un trayecto” y luego en tu salida y tu llegada (puedes añadir etapas): la herramienta muestra la distancia en línea recta, estimada a partir de la escala del fondo de mapa (por confirmar tras el lanzamiento), y tiempos marcados como “Estimación” a pie, corriendo, en bici y para tres vehículos como máximo. GTA VI no ha publicado ninguna velocidad: las referencias son las de GTA V, y puedes escribir la que midas en el juego.</div>
       </details>
     </div>
   </div>
@@ -646,13 +651,13 @@
     </g>
   </svg><div class="shell"><div class="foot-top"><div class="foot-brand"><a class="brand" href="/es/">Leonida<span>kit</span></a><p>Un mapa, fichas, una calculadora. Prepara tus decisiones en Leonida con fuentes claras y tus propias cifras.</p><a class="foot-feature" href="calculateurs.html">Encontrar mi cálculo ↗</a></div><div class="foot-cols"><div><h2>Explorar</h2><nav aria-label="Explorar en el pie de página"><a href="carte.html">Mapa</a><a href="vehicules.html">Vehículos</a><a href="armes.html">Armería</a><a href="lieux.html">Lugares</a><a href="personnages.html">Personajes</a><a href="gangs.html">Bandas y facciones</a><a href="demeures.html">Residencias</a><a href="planques.html">Escondites</a><a href="entreprises.html">Negocios</a><a href="animaux.html">Animales</a><a href="collectibles.html">Coleccionables</a></nav></div><div><h2>Jugar</h2><nav aria-label="Jugar en el pie de página"><a href="missions.html">Misiones</a><a href="activites.html">Actividades secundarias</a><a href="radios.html">Radios y música</a><a href="codes-de-triche.html">Trucos</a><a href="trophees.html">Trofeos y logros</a></nav></div><div><h2>GTA Online</h2><nav aria-label="GTA Online (pie de página)"><a href="online.html">El espacio GTA Online</a><a href="online/annonces.html">Los anuncios</a><a href="online/gta-online-actuel.html">El GTA Online actual</a></nav></div><div><h2>Equiparse</h2><nav aria-label="Equiparse en el pie de página"><a href="achats.html">Todo lo que se compra</a><a href="nourriture.html">Consumibles</a><a href="style.html">Ropa y estilo</a><a href="personnalisations.html">Personalización</a><a href="armes.html#munitions">Munición y equipo</a><a href="logements.html">Viviendas y apartamentos</a></nav></div><div><h2>Herramientas y ayuda</h2><nav aria-label="Herramientas y ayuda en el pie de página"><a href="calculateurs.html">Calculadora</a><a href="tuto.html">Tutorial</a><a href="progression.html">Progreso</a><a href="a-propos.html">Acerca de</a><a href="contact.html">Contacto</a><a href="medias.html">Medios y créditos</a><a href="mentions-legales.html">Aviso legal y privacidad</a></nav></div></div></div><p class="legal">Leonidakit es un proyecto independiente hecho por un jugador, sin afiliación, aprobación ni patrocinio de Rockstar Games o Take-Two Interactive. Grand Theft Auto es una marca de Take-Two Interactive. Los créditos de cada medio siguen disponibles.</p></div></footer>
 
-<script type="lk/lazy" src="search-index.js?v=cb0b967f86fe"></script><script type="lk/lazy" src="search-lieux.js?v=1c77232533a0"></script>
-<script src="../assets-manifest.js?v=241821d22e7b"></script>
-<script src="common.js?v=38efab33e6bd"></script>
+<script type="lk/lazy" src="search-index.js?v=cb0b967f86fe"></script><script type="lk/lazy" src="search-lieux.js?v=1c77232533a0"></script><script type="lk/lazy" src="../carte-vehicules.js?v=113ecfa572bb"></script>
+<script src="../assets-manifest.js?v=6af57ce07b3f"></script>
+<script src="common.js?v=3238226fa71e"></script>
 <script src="app.js?v=7fda90395779"></script>
 <script src="carte-gtadb.js?v=80f23fef9d2a"></script>
 <script src="collectibles-data.js?v=a98c84372759"></script>
 <script src="collectibles-core.js?v=954ccbfa7279"></script>
-<script src="carte.js?v=4f7d79c1a899"></script>
+<script src="carte.js?v=88b367a30339"></script>
 </body>
 </html>

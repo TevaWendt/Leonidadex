@@ -53,9 +53,15 @@ test('recherche du site : chaque calcul et le business plan ont leur entrée, v
   const find=q=>idx.filter(e=>e.s.includes(q)).map(e=>e.u);assert.ok(find('carburant').some(u=>/tool=compare/.test(u)));assert.ok(find('business plan').some(u=>/tool=plan/.test(u)));
 });
 
-test('carte : aucun temps de trajet par défaut ; la simulation se demande et se dit « GTA V »',()=>{
-  const js=read('carte.js'),html=read('carte.html');assert.match(js,/let simTrajets = false;/);assert.match(js,/Simuler des temps de trajet \(vitesses de GTA V/);
-  assert.doesNotMatch(html,/temps de trajet selon sept modes|modes de trajet/);assert.match(html,/Aucun temps de trajet n’est donné par défaut/);
+test('carte : les temps de trajet sont des estimations dites comme telles, d’après les vitesses de GTA V (v7.69 : affichées d’emblée, demande de Téva)',()=>{
+  /* v7.53 : aucun temps par défaut, simulation à demander. v7.69 (Téva : « combien ça met à pied, combien en voiture, mais
+     toutes les voitures ne sont pas pareilles ») : le calculateur de trajet montre tout de suite des temps, toujours marqués
+     « Estimation », avec la source des vitesses (GTA V) et la vitesse que le joueur mesure lui-même. */
+  const js=read('carte.js'),html=read('carte.html'),flat=html.replace(/\u00a0/g,' ');
+  assert.match(js,/<span class="rl-sim-tag">Estimation<\/span>/);assert.match(js,/Vitesses de référence : GTA V, une hypothèse en attendant GTA VI\./);
+  assert.match(js,/\(référence de GTA V\)/);assert.match(js,/Pas de référence publiée : écris ta vitesse/);
+  assert.doesNotMatch(flat,/temps de trajet selon sept modes|modes de trajet|Aucun temps de trajet n’est donné par défaut/);
+  assert.match(flat,/des temps marqués « Estimation »/);assert.match(flat,/les références sont celles de GTA V/);
 });
 
 test('Léo : un achat déjà au garage est « déjà possédé » comme au calculateur ; sinon, la même fonction du moteur et ce qui n’est pas compté',async()=>{

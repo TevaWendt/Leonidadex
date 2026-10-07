@@ -78,6 +78,11 @@ for(const file of htmlFiles){let s=fs.readFileSync(file,'utf8');if(file.startsWi
  s=s.replace(/<script(?: type="lk\/lazy")? src="((?:\.\.\/|\/)?)search-index\.js(?:\?v=[a-f0-9]+)?"><\/script>/g,(m,p)=>'<script type="lk/lazy" src="'+p+'search-index.js"></script><script type="lk/lazy" src="'+p+'search-lieux.js"></script>');
  // une page avec la recherche mais sans déclaration (gabarit qui ne la copie pas) la reçoit devant app.js
  if(/class="[^"]*\bsearchwrap\b/.test(s)&&!/search-index\.js/.test(s))s=s.replace(/(<script src="(?:\.\.\/|\/)?app\.js(?:\?v=[a-f0-9]+)?"><\/script>)/,'<script type="lk/lazy" src="'+prefix+'search-index.js"></script><script type="lk/lazy" src="'+prefix+'search-lieux.js"></script>\n$1');
+ // v7.69 : visionneuse d'images (lk-visionneuse.js) déclarée en lk/lazy sur toute page qui a un lien vers une image du site ;
+ // common.js la charge au premier survol ou clic d'un tel lien et l'image s'ouvre dans la page au lieu du fichier brut.
+ s=s.replace(/\n?<script type="lk\/lazy" src="(?:\.\.\/|\/)?lk-visionneuse\.js(?:\?v=[a-f0-9]+)?"><\/script>/g,'');
+ if(/<a\b[^>]*\shref="(?:\.\.\/|\/)?[^":]+\.(?:webp|avif|jpe?g|png)"/i.test(s)){const tag='<script type="lk/lazy" src="'+prefix+'lk-visionneuse.js"></script>';
+  s=/<script src="(?:\.\.\/|\/)?common\.js(?:\?v=[a-f0-9]+)?"><\/script>/.test(s)?s.replace(/(<script src="(?:\.\.\/|\/)?common\.js(?:\?v=[a-f0-9]+)?"><\/script>)/,'$1\n'+tag):s.replace('</body>',tag+'\n</body>');}
  if(!s.includes('name="viewport"'))s=s.replace('</head>','<meta name="viewport" content="width=device-width, initial-scale=1.0">\n</head>');
  // v7.37 : police Archivo hébergée sur le site (style.css) : plus aucun lien vers Google Fonts, préchargement du fichier latin.
  s=s.replace(/[ \t]*<link rel="preconnect" href="https:\/\/fonts\.googleapis\.com">\s*\n?/g,'').replace(/[ \t]*<link rel="preconnect" href="https:\/\/fonts\.gstatic\.com" crossorigin>\s*\n?/g,'').replace(/[ \t]*<link href="https:\/\/fonts\.googleapis\.com\/css2[^"]*" rel="stylesheet">\s*\n?/g,'');
@@ -164,6 +169,16 @@ const pointIds=allPoints.map(p=>p.id);
 const cats=vm.runInNewContext('('+mapSource.match(/const CATS = (\{[\s\S]*?\n  \});/)[1]+')');
 const mapCounts=[allPoints.length,allPoints.filter(p=>p.s==='officiel').length,7,Object.keys(cats).length];let mi=0;
 fs.writeFileSync('carte.html',fs.readFileSync('carte.html','utf8').replace(/(<span class="n" data-count=")\d+(">)\d+(<\/span>)/g,(_,a,b,c)=>{const n=mapCounts[mi++];return a+n+b+n+c;}));
+// v7.69 : calculateur de trajet de la carte : liste légère des véhicules du site (identifiant, marque et nom, catégorie),
+// sans les textes des fiches ; chargée par carte.js à l'ouverture du calculateur (lk/lazy, partagée par toutes les langues).
+{const c={window:{}};vm.runInNewContext(fs.readFileSync('vehicules-data.js','utf8'),c);const V=(c.window.LK_VEHICULES||[]).map(v=>[v.id,(v.marque&&!String(v.nom).startsWith(v.marque)?v.marque+' ':'')+v.nom,v.cat]).sort((a,b)=>a[1].localeCompare(b[1],'fr'));
+ if(V.length<100)throw Error('carte-vehicules.js : liste des véhicules introuvable');
+ fs.writeFileSync('carte-vehicules.js','/* Généré par outils/sync-site.cjs (v7.69) : véhicules du site pour le calculateur de trajet de la carte (identifiant, nom, catégorie). Aucune vitesse : GTA VI n’en a publié aucune. */\nwindow.LK_TRAJET_VEHICULES='+JSON.stringify(V)+';\n');}
+// v7.69 : comparateur : schéma de chaque arme (outils/armes-schemas.cjs, les mêmes que les cartes de l'Armurerie) pour ses colonnes
+// illustrées ; aucun texte, partagé par toutes les langues (outils/langues.json, scriptsPartages).
+{const {schema}=require('./armes-schemas.cjs');const c={window:{}};vm.runInNewContext(fs.readFileSync('armes-data.js','utf8'),c);const A={};for(const a of c.window.LK_ARMES||[]){const svg=schema(a.id,92);if(svg)A[a.id]=svg.replace(/ style="height:\d+px"/,'');}
+ if(Object.keys(A).length<20)throw Error('armes-schemas.js : schémas des armes introuvables');
+ fs.writeFileSync('armes-schemas.js','/* Généré par outils/sync-site.cjs (v7.69) : schéma SVG de chaque arme pour le comparateur (les mêmes que les cartes de l’Armurerie). */\nwindow.LK_ARMES_SCHEMAS='+JSON.stringify(A)+';\n');}
 // v7.37 : la carte d'outil de l'accueil affiche le même nombre de lieux que la carte.
 {const nb=String(allPoints.length).replace(/\B(?=(\d{3})+(?!\d))/g,'\u202f');fs.writeFileSync('index.html',fs.readFileSync('index.html','utf8').replace(/(<h3>Carte interactive <span class="chip live">)[^<]*lieux(<\/span>)/,'$1'+nb+' lieux$2'));}
 // v7.38 : familles suivies génériques (équipements, munitions) lues dans armes.html (data-track), et noms pour les listes de la page Progression.

@@ -290,14 +290,18 @@ if(!/<section class="counties-sec shell"[^>]*>[\s\S]*?<\/section>/.test(home))th
 home=home.replace(/<section class="counties-sec shell"[^>]*>[\s\S]*?<\/section>/,etat);
 
 /* 2. "Le monde de Leonida" : personnages, gangs et factions (v7.65), demeures, planques, entreprises (les lieux sont déjà au-dessus) ;
-   cinq cartes : trois puis deux centrées (style.css, .lore-grid--five) */
-const MONDE_HUBS=['characters','factions','residences','hideouts','businesses'];
+   v7.69 (Téva : « tu as enlevé la section collectible… il faudrait la remettre ») : la faune et les collectibles rejoignent
+   l’accueil ; sept cartes, quatre puis trois centrées (style.css, .lore-grid--seven) */
+const MONDE_HUBS=['characters','factions','residences','hideouts','businesses','animals'];
 const HUB_IMG={hideouts:'port-gellhorn-01',businesses:'rideout-customs-mod-shop-01',factions:'ambrosia-03'};
 const hubCard=k=>{const S=SECTIONS[k],x=ED[k][0],m=(HUB_IMG[k]&&MED[HUB_IMG[k]])||visual(x);return `    <a class="lore-card rise" href="${S.hub}.html">${imgTag(m,S.title+', capture officielle Rockstar Games',false)}<div class="veh-body"><span class="veh-marque">${ED[k].length} fiches</span><h3>${esc(S.label)}</h3><p>${esc(S.lede)}</p><span class="veh-go">Explorer</span></div></a>`;};
+const collectCard=`    <a class="lore-card rise" href="collectibles.html">${imgTag(MED['classic-car-collection-04'],'Les collectibles de GTA VI, capture officielle Rockstar Games',false)}<div class="veh-body"><span class="veh-marque">Collection confirmée</span><h3>Collectibles</h3><p>Les voitures classiques de Wyman, première collection confirmée par Rockstar, les repères de toute la série et ton carnet pour cocher chaque trouvaille.</p><span class="veh-go">Explorer</span></div></a>`;
+const nMonde=MONDE_HUBS.length+1;
 const block=`<section class="lore-sec shell" id="monde">
-  <div class="sec-head rise"><h2>Le monde de Leonida</h2><p>Personnages, gangs et factions, demeures, planques et entreprises présentés par Rockstar, avec leurs visuels officiels.</p></div>
-  <div class="lore-grid lore-grid--center lore-grid--${MONDE_HUBS.length===5?'five':'four'}">
+  <div class="sec-head rise"><h2>Le monde de Leonida</h2><p>Personnages, gangs et factions, demeures, planques, entreprises, animaux et collectibles présentés par Rockstar, avec leurs visuels officiels.</p></div>
+  <div class="lore-grid lore-grid--center lore-grid--${nMonde===7?'seven':nMonde===5?'five':'four'}">
 ${MONDE_HUBS.map(hubCard).join('\n')}
+${collectCard}
   </div>
 </section>
 `;
@@ -311,10 +315,10 @@ const tools=`<section class="tools-sec shell" id="outils">
     <h2>Les outils</h2>
     <p>La carte, les fiches et ton suivi pour explorer Leonida.</p>
   </div>
-  <div class="tools tools--three">
+  <div class="tools tools--four">
     <a class="tool reveal" href="carte.html">
       <h3>Carte interactive <span class="chip live">2 547 lieux</span></h3>
-      <p>Filtres, suivi de ce que tu as trouvé, et mesure de distance estimée entre deux points.</p>
+      <p>Filtres, suivi de ce que tu as trouvé, et calcul de trajet : distance et temps à pied ou selon le véhicule.</p>
     </a>
     <a class="tool reveal" href="vehicules.html">
       <h3>Fiches véhicules et armes <span class="chip live">324 fiches</span></h3>
@@ -323,6 +327,10 @@ const tools=`<section class="tools-sec shell" id="outils">
     <a class="tool reveal" href="progression.html#carnets">
       <h3>Mes carnets de progression <span class="chip live">Dès maintenant</span></h3>
       <p>Mon garage, mon arsenal, ma garde-robe, mes lieux repérés… Ce que tu as, tes envies et ce qui reste, sauvegardés sur ton appareil.</p>
+    </a>
+    <a class="tool reveal" href="collectibles.html">
+      <h3>Collectibles <span class="chip live">Carnet prêt</span></h3>
+      <p>La collection de Wyman confirmée, les repères de toute la série, la recherche, ta prochaine sortie et la checklist à emporter.</p>
     </a>
   </div>
 </section>`;

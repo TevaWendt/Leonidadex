@@ -152,18 +152,26 @@ function glanceSection(num){
   /* v7.52 : deux lieux du même nom (deux stations Xero) ne s’écrivent plus deux fois : « Xero Gas Station (2 lieux) ». */
   const seen=new Map();for(const o of it.ou_le_trouver){const n=o.lieu?C.place(o.lieu).name:o.type;if(n)seen.set(n,(seen.get(n)||0)+(o.lieu?1:0));}
   const where=[...seen].slice(0,2).map(([n,k])=>k>1?n+' ('+k+' lieux)':n).join(' · ');
-  return '<article class="cg-card" data-cg-id="'+esc(it.id)+'" data-cg-cat="'+esc(it.categorie)+'"><div class="cg-top"><span class="cg-ico" aria-hidden="true">'+S.icon(cat.icon)+'</span><span class="cg-cat">'+esc(cat.label)+'</span>'+glancePip(it.statut)+'</div>'
-   +'<h4 class="cg-nom">'+esc(it.nom)+'</h4><dl class="cg-facts">'
-   +'<div><dt>À quoi ça sert</dt><dd>'+esc(cat.id==='protection'?'Encaisser les coups':cat.id==='soins'?'Se soigner':'Manger ou boire pour récupérer')+'</dd></div>'
-   +'<div><dt>Prix</dt><dd>'+esc(acc.price)+'</dd></div>'
-   +'<div><dt>'+(cat.id==='protection'?'Protection':'Vie rendue')+'</dt><dd>'+(cat.id==='protection'?'Protection : à confirmer':'Récupération de vie : à confirmer')+(rep?'<small>Repère de la série : '+esc(rep)+'</small>':'')+'</dd></div>'
-   +'<div><dt>Où</dt><dd>'+esc(where||'Emplacement à venir')+'</dd></div></dl>'
-   +'<p class="cg-actions"><a class="cg-link" href="#'+esc('consommables-'+it.id)+'">Fiche complète</a><label class="cg-cmp" hidden><input type="checkbox" data-cg-cmp="'+esc(it.id)+'"> Comparer</label></p></article>';};
+  /* v7.69 (Téva : « la partie consommable fait ultra brouillon ») : carte lisible d’un coup d’œil. Bandeau coloré de la
+     catégorie avec son pictogramme, nom, ce que la source en dit (description de la liste), où en trouver ; prix et effet,
+     encore inconnus pour tous, en petites lignes discrètes ; repère de la série à part. Les quatre faits restent dans la
+     liste de définitions que lit la comparaison (consommables.js). */
+  return '<article class="cg-card cg-cat-'+esc(it.categorie)+'" data-cg-id="'+esc(it.id)+'" data-cg-cat="'+esc(it.categorie)+'" style="view-transition-name:cg-'+esc(it.id)+'"><div class="cg-top"><span class="cg-ico" aria-hidden="true">'+S.icon(cat.icon)+'</span><span class="cg-cat">'+esc(cat.label)+'</span>'+glancePip(it.statut)+'</div>'
+   +'<div class="cg-body"><h4 class="cg-nom">'+esc(it.nom)+'</h4>'+(it.description?'<p class="cg-desc">'+esc(it.description)+'</p>':'')+'<dl class="cg-facts">'
+   +'<div class="cg-f-ou"><dt>Où</dt><dd>'+esc(where||'Emplacement à venir')+'</dd></div>'
+   +'<div class="cg-f-use"><dt>À quoi ça sert</dt><dd>'+esc(cat.id==='protection'?'Encaisser les coups':cat.id==='soins'?'Se soigner':'Manger ou boire pour récupérer')+'</dd></div>'
+   +'<div class="cg-f-prix"><dt>Prix</dt><dd>'+esc(acc.price)+'</dd></div>'
+   +'<div class="cg-f-effet"><dt>'+(cat.id==='protection'?'Protection':'Vie rendue')+'</dt><dd>'+(cat.id==='protection'?'Protection : à confirmer':'Récupération de vie : à confirmer')+(rep?'<small>Repère de la série : '+esc(rep)+'</small>':'')+'</dd></div></dl>'
+   +'<p class="cg-actions"><a class="cg-link" href="#'+esc('consommables-'+it.id)+'">Fiche complète</a><label class="cg-cmp" hidden><input type="checkbox" data-cg-cmp="'+esc(it.id)+'"> Comparer</label></p></div></article>';};
+ /* v7.69 : filtre par catégorie (boutons radio, sans script : acquisitions.css masque les autres cartes avec :has) */
+ const tracked=d.items.filter(it=>it.suivi!==false),cnt=c=>tracked.filter(it=>it.categorie===c).length;
+ const filter='<fieldset class="cg-filter" data-lk-vt><legend class="sr-only">Filtrer les consommables par catégorie</legend><input type="radio" name="cg-f" id="cg-f-tout" value="tout" checked><label for="cg-f-tout">Tout <span class="cg-n">'+tracked.length+'</span></label>'
+  +d.categories.filter(c=>cnt(c.id)).map(c=>'<input type="radio" name="cg-f" id="cg-f-'+esc(c.id)+'" value="'+esc(c.id)+'"><label class="cg-cat-'+esc(c.id)+'" for="cg-f-'+esc(c.id)+'"><span class="cg-f-ico" aria-hidden="true">'+S.icon(c.icon)+'</span>'+esc(c.label)+' <span class="cg-n">'+cnt(c.id)+'</span></label>').join('')+'</fieldset>';
  const groups=NEED.map(n=>{const RANK={officiel:0,vu:1,comm:2,conf:3,serie:4},list=d.items.filter(it=>n.cats.includes(it.categorie)&&it.suivi!==false).sort((a,b)=>(RANK[a.statut]??5)-(RANK[b.statut]??5)||a.nom.localeCompare(b.nom,'fr'));return '<div class="cg-group" id="besoin-'+n.id+'"><h3 class="ed-h3"><span class="cg-need-ico" aria-hidden="true">'+S.icon(n.icon)+'</span>'+esc(n.titre)+' <small>'+list.length+'</small></h3><div class="cg-grid">'+list.map(card).join('')+'</div></div>';}).join('');
  return S.section({id:'en-un-regard',num,kicker:'Comparer',title:'En un regard',icon:'loupe',tone:'paper',accent:'amber',lede:esc('À quoi sert chaque consommable, combien il coûte, ce qu’on sait de son effet et où en trouver. Aucun effet n’est chiffré pour GTA VI : pas de fausse jauge, le repère d’un autre jeu est écrit à part.')},
   '<p class="cg-legend"><span>'+S.icon('kit-de-soin')+' Récupérer</span><span>'+S.icon('gilet-pare-balles')+' Se protéger</span>'+['officiel','vu','comm','conf','serie'].filter(st=>d.items.some(it=>it.suivi!==false&&(GLANCE_ST[it.statut]?it.statut:'conf')===st)).map(st=>'<span>'+S.pip(st,true)+'</span>').join('')+'</p>'
   +'<div class="cg-tools" data-cg-tools hidden><p class="cg-tools-t" role="status" aria-live="polite" data-cg-status>Coche jusqu’à trois consommables pour les comparer.</p><button type="button" class="cg-clear" data-cg-clear>Tout décocher</button></div>'
-  +groups+'<div class="cg-compare" data-cg-compare hidden></div>');
+  +filter+groups+'<div class="cg-compare" data-cg-compare hidden></div>');
 }
 function serieSection(num,Z){return S.section({id:Z.id,num,kicker:'Repères',title:'Ce que la série faisait déjà',icon:'statuts',tone:'paper',lede:esc(Z.lede)},S.columns(Z.cols)+para(Z.p));}
 function pendingSection(num,P,vars){return S.section({id:P.id,num,kicker:'Questions ouvertes',title:'Ce qui reste à confirmer',icon:'sablier',tone:'night',lede:esc(P.lede)},S.pending(P.items.map(x=>({q:x.q,etat:fill(x.etat,vars)}))));}
@@ -221,7 +229,10 @@ for(const c of source.categories.filter(c=>c.id!=='garages'&&!c.alias)){
   parts.push(faqSection(++n,E.faq));
   parts.push(sourcesSection(++n,[...C.sourcesOf(['coiffures','tatouages','tenues']),...acqSources(['ultimate','vintage'])]));
  }else{
-  const empty=`<div class="d-empty"><h3>En attente de données officielles</h3><p>${esc(c.empty)}</p></div>`;
+  /* v7.69 (« rien ne doit faire brouillon ») : une section sans contenu vérifié montre le gabarit de ses futures fiches
+     (visuel, nom, statut, case « J’ai obtenu »), sans aucun nom, prix ni image inventés ; les cartes sont décoratives (aria-hidden). */
+  const skel='<article class="d-card d-card--skel" aria-hidden="true"><div class="d-skel-img"><span class="d-skel-tag">Visuel officiel à venir</span></div><div class="d-card-body"><p class="d-label">Fiche à venir</p><span class="d-skel-line d-skel-line--title"></span><span class="d-skel-line"></span><span class="d-skel-line d-skel-line--short"></span><p class="d-status">Prix à venir · achat à confirmer</p><span class="d-skel-check">J’ai obtenu…</span></div></article>';
+  const empty=`<div class="d-empty"><h3>En attente de données officielles</h3><p>${esc(c.empty)}</p><p class="d-skel-note">Chaque fiche aura ce format : visuel officiel, nom, statut, prix quand il est publié, et une case « J’ai obtenu » qui compte dans Ma progression.</p></div><div class="d-grid d-grid--3 d-skel-grid">${skel.repeat(3)}</div>`;
   parts.push(cardsSection(++n,{id:'contenus',kicker:'Sources officielles',title:tracked.length?'Ce que Rockstar a décrit':'Où en est cette section',icon:'film',tone:'paper',lede:tracked.length?tracked.length+' contenus documentés, chacun avec sa source et son niveau de confirmation. Tu peux les cocher ; le compte se retrouve dans Ma progression.':c.empty},tracked.map(card),tracked.length?'':empty));
   if(c.id==='boats')parts.push(S.section({id:'observations',num:++n,kicker:'Dans les médias',title:'Aperçus dans les médias',icon:'loupe',tone:'paper2',accent:'coral',lede:esc('Les autres embarcations restent dans le catalogue Véhicules, avec leur niveau d’identification. Un nom reconnu ou une apparition dans un trailer ne prouve pas un achat.')},'<div class="d-actions"><a href="/vehicules.html#cat=bateau">Consulter les embarcations recensées</a><a href="/vehicules.html#cat=avion">Avions recensés</a><a href="/vehicules.html#cat=helico">Hélicoptères recensés</a></div>'));
   if(svc.length)parts.push(cardsSection(++n,{id:'services',kicker:'Adresses',title:'Ateliers et adresses',icon:'carte',tone:'paper2',accent:'coral',lede:'Ces établissements décrivent des possibilités de personnalisation. Ils ne forment pas un catalogue d’entreprises à acheter.'},svc.map(serviceCard)));

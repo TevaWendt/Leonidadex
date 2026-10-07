@@ -44,7 +44,17 @@ test('animaux.html : mécanique des hubs du monde (grille, zone éditoriale comp
   const d = doc('animaux.html');
   assert.equal(d.querySelectorAll('h1').length, 1); assert.equal(d.querySelector('h1').textContent, A.section.title);
   assert.ok(d.querySelector('meta[name="description"]').content.length <= 160);
-  assert.equal(d.querySelectorAll('#fiches .lore-card').length, A.fiches.length);
+  /* v7.69 : mosaïque de la section (outils/gen-animaux.cjs) : une carte par fiche, filtre par famille, chiffres sourcés, régions */
+  assert.equal(d.querySelectorAll('#fiches .an-card').length, A.fiches.length);
+  for (const x of A.fiches) assert.ok(d.querySelector('#fiches a.an-card[href="animaux/' + x.id + '.html"][data-fam="' + G.famOf(x.kind).id + '"]'), x.id);
+  const fams = [...d.querySelectorAll('.an-filter input[name="an-fam"]')].map(i => i.value);
+  assert.deepEqual(fams, ['tout', ...G.FAMILIES.filter(f => A.fiches.some(x => G.famOf(x.kind) === f)).map(f => f.id)]);
+  const css = read('animaux.css'); for (const f of fams.slice(1)) assert.ok(css.includes('#an-fam-' + f + ':checked) .an-card:not([data-fam="' + f + '"])'), 'filtre CSS ' + f);
+  assert.deepEqual([...d.querySelectorAll('.an-chiffres [data-lk-count]')].map(b => b.textContent), [...A.hub.chiffres.items.map(x => x.n), String(A.fiches.length)]);
+  assert.ok(d.querySelector('.an-chiffres a[href="#src-' + A.hub.chiffres.source + '"]') && d.getElementById('src-' + A.hub.chiffres.source), 'chiffres : source de la page');
+  for (const a of d.querySelectorAll('.an-regions a[href]')) { const h = a.getAttribute('href').split('#')[0]; assert.ok(fs.existsSync(path.join(root, h)), h); }
+  assert.ok(d.querySelector('link[href^="animaux.css"]'), 'feuille de la section sur la page');
+  assert.equal(read('animaux.html').split(G.HUB_START).length, 2, 'un seul bloc de la page');
   assert.deepEqual([...d.querySelectorAll('.ed-zone--monde section.ed')].map(s => s.id), ['rockstar', 'communaute', 'a-confirmer', 'pour-toi', 'faq', 'sources']);
   const w = M.words('animaux'); assert.ok(w >= 500 && w <= 800, w + ' mots');
   assert.equal(d.querySelectorAll('#sources .ed-srcs li').length, A.hub.sources.length);
@@ -65,6 +75,8 @@ test('fiches : gabarit des fiches du monde, statut et sources, gros plans crédi
     assert.ok(d.querySelector('nav.crumbs a[href="../animaux.html"]'));
     assert.ok(d.querySelector('link[href^="../animaux.css"]'), f + ' : feuille de la section');
     assert.equal(html.split(G.START).length, 2, f + ' : un seul bloc de la section');
+    assert.equal(html.split(G.ID_START).length, 2, f + ' : une seule carte d’identité');
+    assert.ok(d.querySelector('.an-id .an-id-stamp') && d.querySelector('.an-id .pip--' + x.statut), f + ' : carte d’identité et tampon du statut');
     assert.equal(d.querySelectorAll('.animaux-fiche-src .ed-srcs li').length, x.sources.length, f);
     assert.ok(d.querySelector('.animaux-statut .pip--' + x.statut), f + ' : statut');
     assert.equal(d.querySelectorAll('.animaux-zoom figure').length, (x.zoom || []).length, f);
@@ -109,7 +121,10 @@ test('menu, pied de page, recherche et plan du site : « Animaux » dans « Le m
   for (const u of ['/animaux.html', ...FICHES.map(f => '/' + f)]) assert.ok(ctx.window.LK_INDEX.some(e => e.u === u), u);
   assert.ok(read('sitemap.xml').includes('<loc>https://www.leonidakit.com/animaux.html</loc>'));
   for (const f of FICHES) assert.ok(read('sitemap-fiches.xml').includes('<loc>https://www.leonidakit.com/' + f + '</loc>'), f);
-  assert.doesNotMatch(read('index.html').match(/<section class="lore-sec shell" id="monde">[\s\S]*?<\/section>/)[0], /animaux\.html/, 'accueil : rien d’ajouté (proposition dans « Pour l’assemblage »)');
+  /* v7.69 (Téva : « tu as enlevé la section collectible… ») : « Le monde de Leonida » de l’accueil présente aussi la faune
+     et les collectibles (outils/lore-gen.js), une carte chacun */
+  const monde = read('index.html').match(/<section class="lore-sec shell" id="monde">[\s\S]*?<\/section>/)[0];
+  assert.equal((monde.match(/href="animaux\.html"/g) || []).length, 1, 'accueil : une carte « Animaux »');
 });
 
 test('Léo : fiches des animaux (alias français et anglais), questions de la section, sujet « animaux » relié au hub, réponses sourcées', () => {

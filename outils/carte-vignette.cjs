@@ -62,11 +62,15 @@ function point(id) { const p = points()[id]; if (!p) throw Error('Lieu inconnu s
 function defs() {
   return '<svg class="lk-defs" width="0" height="0" aria-hidden="true" focusable="false"><symbol id="lk-leonida" viewBox="0 0 ' + W + ' ' + H + '"><path d="' + land() + '" fill-rule="evenodd"/></symbol></svg>';
 }
-/* Vignette : la silhouette de Leonida et un repère sur le lieu. */
+/* Vignette : la silhouette de Leonida et un repère sur le lieu.
+   v7.69 : cadrée sur le lieu (fenêtre de ZOOM unités, gardée dans la carte) au lieu de Leonida entière : chaque carte-lieu
+   montre sa côte et son repère bien visible, au lieu de la même silhouette verte avec un point minuscule. */
+const ZOOM = 2200;
 function vignette(id) {
   const p = point(id);
-  return '<svg class="ed-map" viewBox="0 0 ' + W + ' ' + H + '" aria-hidden="true" focusable="false"><use href="#lk-leonida"/>'
-    + '<circle class="ed-map-halo" cx="' + p.x + '" cy="' + p.y + '" r="300"/><circle class="ed-map-pin" cx="' + p.x + '" cy="' + p.y + '" r="120"/></svg>';
+  const x0 = Math.max(0, Math.min(W - ZOOM, Math.round(p.x - ZOOM / 2))), y0 = Math.max(0, Math.min(H - ZOOM, Math.round(p.y - ZOOM / 2)));
+  return '<svg class="ed-map" viewBox="' + x0 + ' ' + y0 + ' ' + ZOOM + ' ' + ZOOM + '" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><use href="#lk-leonida" width="' + W + '" height="' + H + '"/>'
+    + '<circle class="ed-map-halo" cx="' + p.x + '" cy="' + p.y + '" r="230"/><circle class="ed-map-pin" cx="' + p.x + '" cy="' + p.y + '" r="90"/></svg>';
 }
-module.exports = { land, points, point, defs, vignette, W, H };
+module.exports = { land, points, point, defs, vignette, W, H, ZOOM };
 if (require.main === module) console.log('Silhouette : ' + land().length + ' caractères, ' + Object.keys(points()).length + ' lieux.');

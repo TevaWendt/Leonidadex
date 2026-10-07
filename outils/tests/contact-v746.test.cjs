@@ -16,7 +16,7 @@ const valid=(o={})=>({topic:'Erreur dans une fiche',page:'https://www.leonidakit
 function brevo(status=201){const calls=[];return {calls,fetch:async(url,init)=>{calls.push({url,init,body:JSON.parse(init.body)});return {status,ok:status<300,json:async()=>({messageId:'<x@relay>'})};}};}
 
 test('Fonction d’envoi : un seul fichier api/contact.js, sans dépendance ni package.json, détecté par Vercel',()=>{
- assert.deepEqual(fs.readdirSync(path.join(root,'api')).sort(),['contact.js','ia.js']);/* v7.67 : fonction IA (api/ia.js), testée dans ia-v767.test.cjs */assert.ok(!fs.existsSync(path.join(root,'package.json')));
+ assert.deepEqual(fs.readdirSync(path.join(root,'api')).sort(),['contact.js','ia-achat.js','ia.js']);/* v7.67 : fonction IA (api/ia.js), testée dans ia-v767.test.cjs ; v7.69 : crédit IA (api/ia-achat.js), testé dans ia-v769.test.cjs */assert.ok(!fs.existsSync(path.join(root,'package.json')));
  const src=read('api/contact.js');for(const m of src.matchAll(/require\(\s*['"]([^'"]+)['"]\s*\)/g))assert.match(m[1],/^node:/,'dépendance : '+m[1]);
  assert.equal(typeof API,'function');assert.match(src,/https:\/\/api\.brevo\.com\/v3\/smtp\/email/);assert.match(src,/BREVO_API_KEY/);assert.match(src,/CONTACT_TO/);
  assert.ok(!/@gmail|@hotmail|@outlook|@yahoo/i.test(src),'aucune boîte personnelle dans le code');assert.ok(!read('.vercelignore').split('\n').includes('api'));
@@ -104,7 +104,7 @@ test('Mentions : complètes (éditeur non professionnel, hébergeur, propriété
 
 test('Preuve de confidentialité : aucun cookie, aucune ressource ni requête vers un autre site, stockage « lk », formulaires connus',()=>{
  const out=execFileSync(process.execPath,[path.join(root,'outils/preuve-confidentialite.cjs'),'--json'],{cwd:root,encoding:'utf8'});const r=JSON.parse(out);
- assert.deepEqual(r.problems,[]);assert.equal(r.facts.externalResources,0);/* v7.60 : l’accueil traduit (en/index.html) porte le même formulaire d’alerte */const forms=r.facts.externalForms.map(x=>x.file);assert.ok(forms.includes('index.html')&&forms.every(f=>/^(?:[a-z]{2}\/)?index\.html$/.test(f)),forms.join(', '));/* v7.67 : la fonction IA (api/ia.js) s’ajoute à celle du formulaire */assert.deepEqual(r.facts.api,['api/contact.js','api/ia.js']);
+ assert.deepEqual(r.problems,[]);assert.equal(r.facts.externalResources,0);/* v7.60 : l’accueil traduit (en/index.html) porte le même formulaire d’alerte */const forms=r.facts.externalForms.map(x=>x.file);assert.ok(forms.includes('index.html')&&forms.every(f=>/^(?:[a-z]{2}\/)?index\.html$/.test(f)),forms.join(', '));/* v7.67 : la fonction IA (api/ia.js) s’ajoute à celle du formulaire */assert.deepEqual(r.facts.api,['api/contact.js','api/ia-achat.js','api/ia.js']);
  assert.ok(r.facts.storageKeys.every(k=>k.startsWith('lk')));assert.ok(r.facts.storageKeys.includes('lk_contact_draft_v1'));});
 
 test('Alerte de l’accueil : case de consentement obligatoire (non transmise), texte vrai, lien vers les données',async()=>{

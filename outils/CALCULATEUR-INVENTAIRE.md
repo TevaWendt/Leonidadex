@@ -99,6 +99,9 @@ Lecture : **kind** = type de contrôle ; **field** = chemin dans le scénario v6
 | atelier | a | calc-tuto-return |  |  |  |
 | Que veux-tu calculer ? | search | calc-ask-input | Écris ta question avec tes chiffres |  |  |
 | Que veux-tu calculer ? | button |  | Trouver le bon calcul ↗ |  |  |
+| Que veux-tu calculer ? | button |  | IA Claude | lkiaMode=ia | pressed=true |
+| Que veux-tu calculer ? | button |  | Local | lkiaMode=local | pressed=false |
+| Que veux-tu calculer ? | button |  | Plus de questions | lkiaShop |  |
 | Que veux-tu calculer ? | button |  | Mon premier million ↗ | ask=Combien de temps pour atteindre 1 millio |  |
 | Que veux-tu calculer ? | button |  | Est-ce que je peux l’acheter ? ↗ | ask=Puis-je me permettre d’acheter un véhicu |  |
 | Que veux-tu calculer ? | button |  | J’ai 30 minutes ↗ | ask=J’ai 30 minutes pour ma session |  |

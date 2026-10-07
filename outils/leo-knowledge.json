@@ -3508,7 +3508,7 @@
     "comment fonctionne la carte",
     "la carte fonctionne comment"
    ],
-   "text": "La carte de Leonida place 2 547 lieux référencés (dont 14 nommés par Rockstar) : tu la déplaces, tu zoomes, tu filtres par fiabilité, par source et par type, tu coches ce que tu as trouvé, tu mesures une distance entre deux points avec le temps de trajet selon le véhicule, et tu poses tes propres marqueurs et dessins. Tout reste sur ton appareil.",
+   "text": "La carte de Leonida place 2 547 lieux référencés (dont 14 nommés par Rockstar) : tu la déplaces, tu zoomes, tu filtres par fiabilité, par source et par type, tu coches ce que tu as trouvé, tu calcules un trajet entre deux points, avec le temps à pied et selon ton véhicule, et tu poses tes propres marqueurs et dessins. Tout reste sur ton appareil.",
    "status": "Le site",
    "links": [
     {
@@ -3521,7 +3521,7 @@
   {
    "id": "carte-distance",
    "theme": "carte",
-   "q": "Comment mesurer une distance sur la carte ?",
+   "q": "Comment calculer un trajet sur la carte ?",
    "f": [
     "mesurer une distance",
     "distance entre deux points",
@@ -3530,17 +3530,21 @@
     "combien de temps pour aller de vice city aux keys",
     "mesurer sur la carte",
     "outil distance",
-    "distance carte gta 6"
+    "distance carte gta 6",
+    "combien de temps a pied",
+    "combien de temps en voiture",
+    "temps de trajet en voiture",
+    "calculateur de trajet"
    ],
-   "text": "Sur la carte, ouvre « Mesurer une distance » : tu choisis deux points (jusqu’à 50 étapes) et tu obtiens une distance à vol d’oiseau, estimée d’après l’échelle du fond de carte du site (pas une donnée du jeu). Aucun temps de trajet par défaut : tu peux en afficher une simulation avec les vitesses de GTA V, présentée comme telle.",
+   "text": "Sur la carte, clique « Calculer un trajet » : pose ton départ et ton arrivée (jusqu’à 50 points), lis la distance à vol d’oiseau, estimée d’après l’échelle du fond de carte du site, et compare les temps estimés à pied, en courant, à vélo et pour chaque véhicule que tu choisis. Les vitesses de référence sont celles de GTA V, une hypothèse en attendant GTA VI : écris la vitesse que tu mesures en jeu pour chaque véhicule, elle reste sur ton appareil.",
    "status": "Le site",
    "links": [
     {
-     "label": "Ouvrir la carte",
-     "url": "/carte.html"
+     "label": "Calculer un trajet",
+     "url": "/carte.html#trajet"
     }
    ],
-   "checkedAt": "2026-09-28"
+   "checkedAt": "2026-10-06"
   },
   {
    "id": "carte-filtres",
@@ -6696,7 +6700,7 @@
     "tu utilises un serveur",
     "leo local"
    ],
-   "text": "Oui, quand l’IA est active : ta question, la page et des extraits du site partent vers la fonction du site, puis vers Claude (Anthropic), qui rédige la réponse ; le site ne garde rien. Si l’IA ne répond pas, je réponds seul, dans ton navigateur. La discussion reste dans cet onglet et s’efface toute seule après 30 minutes sans activité, ou quand tu cliques « Effacer ».",
+   "text": "Oui, quand l’IA est active : ta question, la page et des extraits du site partent vers la fonction du site, puis vers Claude (Anthropic), qui rédige la réponse ; le site ne garde pas ta question, il compte seulement tes 30 questions gratuites pendant 9 heures. Tu peux aussi me passer en mode local : alors rien ne part. Si l’IA ne répond pas, je réponds seul, dans ton navigateur. La discussion reste dans cet onglet et s’efface toute seule après 30 minutes sans activité, ou quand tu cliques « Effacer ».",
    "status": "Léo",
    "links": [
     {
@@ -6705,6 +6709,39 @@
     }
    ],
    "checkedAt": "2026-09-28"
+  },
+  {
+   "id": "ia-questions",
+   "theme": "leo",
+   "q": "Combien de questions puis-je poser à l’IA Claude ?",
+   "f": [
+    "combien de questions",
+    "questions gratuites",
+    "combien de questions il me reste",
+    "limite de questions",
+    "plus de questions",
+    "acheter des questions",
+    "payer pour avoir plus de questions",
+    "ia claude ou local",
+    "mode local ou ia",
+    "qui repond",
+    "c est l ia qui repond",
+    "questions epuisees",
+    "quota ia"
+   ],
+   "text": "Tu as 30 questions gratuites à l’IA Claude toutes les 9 heures, communes à moi et à la barre « Que veux-tu calculer ? » du calculateur. « Qui répond ? » te laisse choisir « IA Claude » ou « Local », et chaque réponse dit qui l’a écrite. Quand tes questions gratuites sont épuisées, tout repasse en local jusqu’à l’heure indiquée. Si l’achat de questions est ouvert, « Plus de questions » en propose d’autres, au prix réel plus 20 %.",
+   "status": "Léo",
+   "links": [
+    {
+     "label": "Poser ta question",
+     "url": "/tuto.html#poser-question"
+    },
+    {
+     "label": "Ce qui part avec une question",
+     "url": "/mentions-legales.html#donnees-ia"
+    }
+   ],
+   "checkedAt": "2026-10-06"
   },
   {
    "id": "leo-effacer",

@@ -986,6 +986,63 @@ table.spec td.unknown{font-weight:400; color:var(--ink-soft); font-style:italic;
 }
 .map-ruler-reset:hover{border-color:var(--ink); color:var(--ink);}
 
+/* v7.69 : calculateur de trajet — bouton sur la carte et panneau flottant (distance, temps à pied, à vélo, par véhicule) */
+.map-trajet-fab{position:absolute;top:12px;left:50%;z-index:6;transform:translateX(-50%);display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px 8px 12px;border:2px solid var(--ink);border-radius:999px;background:var(--amber);color:var(--ink);font:800 .9rem/1 'Archivo',sans-serif;box-shadow:4px 4px 0 var(--ink);cursor:pointer;transition:transform .2s var(--ease-out),box-shadow .2s var(--ease-out);}
+.map-trajet-fab svg{width:22px;height:22px;}
+.map-trajet-fab:hover{transform:translateX(-50%) translateY(-2px);box-shadow:5px 6px 0 var(--ink);}
+.map-trajet-fab:focus-visible,.map-trajet :focus-visible{outline:3px solid var(--coral);outline-offset:2px;}
+.map-trajet-fab[hidden]{display:none;}
+.map-trajet{position:absolute;left:12px;bottom:12px;z-index:8;display:flex;flex-direction:column;width:min(380px,calc(100% - 24px));max-height:calc(100% - 24px);background:#fff;border:2px solid var(--ink);border-radius:14px;box-shadow:6px 6px 0 var(--ink);animation:map-trajet-in .32s var(--ease-out);}
+.map-trajet[hidden]{display:none;}
+@keyframes map-trajet-in{from{opacity:0;transform:translateY(16px) scale(.98);}to{opacity:1;transform:none;}}
+.map-trajet-head{display:flex;align-items:center;gap:10px;padding:12px 12px 10px 14px;border-bottom:2px solid var(--ink);background:var(--paper-2);border-radius:12px 12px 0 0;}
+.map-trajet-ico{display:grid;place-items:center;flex:none;width:38px;height:38px;border:2px solid var(--ink);border-radius:50%;background:var(--amber);}
+.map-trajet-ico svg{width:22px;height:22px;}
+.map-trajet-head>div{flex:1;min-width:0;}
+.map-trajet-k{margin:0;font:800 .66rem/1.2 var(--font-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--coral-text);}
+.map-trajet-head h2{margin:2px 0 0;font-size:1.02rem;line-height:1.2;letter-spacing:-.01em;}
+.map-trajet-x{flex:none;width:40px;height:40px;border:2px solid var(--ink);border-radius:50%;background:#fff;font-size:1.3rem;line-height:1;cursor:pointer;}
+.map-trajet-x:hover{background:var(--coral);color:#fff;}
+.map-trajet-in{flex:1;min-height:0;overflow-y:auto;padding:12px 14px 4px;overscroll-behavior:contain;}
+.map-trajet-foot{display:flex;gap:8px;padding:8px 14px 12px;border-top:1px solid var(--rule);}
+.map-trajet-foot .map-ruler-reset{margin-top:0;}
+.rl-how{margin:0;padding:0;list-style:none;counter-reset:rl;display:grid;gap:8px;}
+.rl-how li{position:relative;padding:8px 10px 8px 40px;border:1.5px solid var(--rule);border-radius:10px;font-size:.86rem;line-height:1.45;color:var(--ink-soft);counter-increment:rl;}
+.rl-how li::before{content:counter(rl);position:absolute;left:9px;top:50%;transform:translateY(-50%);display:grid;place-items:center;width:22px;height:22px;border-radius:50%;border:1.5px solid var(--ink);font:800 .74rem/1 var(--font-mono);background:#fff;color:var(--ink);}
+.rl-how li.is-now{border-color:var(--ink);background:#FFF6E3;color:var(--ink);}
+.rl-how li.is-now::before{background:var(--amber);}
+.rl-how li.is-done{opacity:.6;}
+.rl-how li.is-done::before{content:'✓';background:var(--ink);color:#fff;}
+.rl-dist-k{font-size:.72rem;font-weight:700;color:var(--ink-soft);letter-spacing:0;}
+.rl-times-h,.rl-vehs-h{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:12px 0 4px;font-size:.84rem;font-weight:800;}
+.rl-vehs-h span{font-weight:600;color:var(--ink-soft);font-size:.76rem;}
+.rl-vehs{display:grid;gap:8px;}
+.rl-veh{position:relative;display:grid;grid-template-columns:auto minmax(0,1fr) auto;grid-template-areas:"ico main kmh" "ico main t";align-items:center;gap:4px 10px;padding:9px 10px;border:1.5px solid var(--ink);border-radius:10px;background:var(--paper);}
+.rl-veh .rl-ico{grid-area:ico;width:24px;height:24px;color:var(--ink);}
+.rl-veh-main{grid-area:main;display:flex;flex-direction:column;gap:3px;min-width:0;}
+.rl-veh-in{width:100%;min-width:0;min-height:36px;padding:5px 8px;border:1.5px solid var(--rule);border-radius:7px;background:#fff;font:inherit;font-size:.86rem;font-weight:700;color:var(--ink);}
+.rl-veh-in:hover{border-color:var(--ink);}
+.rl-veh-src{font-size:.7rem;line-height:1.35;color:var(--ink-soft);}
+.rl-kmh{grid-area:kmh;display:inline-flex;align-items:center;gap:4px;font-size:.74rem;font-weight:700;color:var(--ink-soft);}
+.rl-kmh-in{width:4.6em;min-height:34px;padding:4px 6px;border:1.5px solid var(--ink);border-radius:7px;font:inherit;font-weight:800;color:var(--ink);text-align:right;font-variant-numeric:tabular-nums;}
+.rl-veh .rl-t{grid-area:t;justify-self:end;margin:0;font-size:.95rem;}
+.rl-veh-x{position:absolute;top:-9px;right:-9px;width:26px;height:26px;border:1.5px solid var(--ink);border-radius:50%;background:#fff;font-size:1rem;line-height:1;cursor:pointer;}
+.rl-veh-x:hover{background:var(--coral);color:#fff;}
+.rl-veh-add{width:100%;margin-top:8px;min-height:40px;border:1.5px dashed var(--ink);border-radius:10px;background:none;font:inherit;font-weight:800;font-size:.84rem;cursor:pointer;}
+.rl-veh-add:hover{background:var(--paper-2);}
+.map-stage.picking .map-trajet-fab{display:none;}
+#map-stage{scroll-margin-top:calc(var(--lk-head-h,72px) + 8px);}
+@media (max-width:600px){
+  .map-trajet{left:8px;right:8px;bottom:8px;width:auto;max-height:48%;}
+  .rl-how li:not(.is-now){display:none;}
+  .rl-how li{padding:7px 9px 7px 38px;font-size:.82rem;}
+  .map-trajet-foot{padding:6px 10px 8px;}
+  .map-trajet-fab{top:auto;bottom:12px;}
+  .map-trajet-head{padding:8px 10px;}
+  .map-trajet-head h2{font-size:.94rem;}
+}
+@media (prefers-reduced-motion:reduce){.map-trajet{animation:none;}.map-trajet-fab{transition:none;}}
+
 .map-filters{margin-top:18px; padding-top:16px; border-top:1px solid var(--rule);}
 .fl{display:flex; align-items:center; gap:9px; padding:6px 0; font-size:.87rem; color:var(--ink-soft); cursor:pointer;}
 .fl input{width:15px; height:15px; accent-color:var(--coral-text,#B93220); cursor:pointer;}
@@ -1898,6 +1955,12 @@ body>header .head-search{flex:0 1 200px;max-width:200px;margin-left:auto;margin-
 .calc-sum{font-weight:900; font-size:2.2rem; letter-spacing:-.04em; color:var(--paper); align-self:flex-end; margin-top:4px;}
 @keyframes calcGrow{to{transform:scaleX(1);}}
 .tools--three{grid-template-columns:repeat(3,1fr);}
+/* v7.69 : quatre outils à l’accueil (les collectibles reviennent), sept cartes « Le monde de Leonida » : quatre puis trois centrées */
+.tools--four{grid-template-columns:repeat(4,minmax(0,1fr));}
+@media (max-width:1100px){.tools--four{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media (max-width:600px){.tools--four{grid-template-columns:1fr;}}
+@media(min-width:1100px){.lore-grid--seven{grid-template-columns:repeat(8,minmax(0,1fr));}.lore-grid--seven>*{grid-column:span 2;}.lore-grid--seven>:nth-child(5){grid-column:2/span 2;}}
+@media(min-width:640px) and (max-width:1099px){.lore-grid--seven{grid-template-columns:repeat(4,minmax(0,1fr));}.lore-grid--seven>*{grid-column:span 2;}.lore-grid--seven>:nth-child(7){grid-column:2/span 2;}}
 @media (max-width:900px){ .calc-feature{grid-template-columns:1fr; padding:22px;} .calc-art{display:none;} .tools--three{grid-template-columns:1fr;} }
 @media (prefers-reduced-motion:reduce){
   .lore-enter .lore-copy > *, .lore-enter .lore-fig{animation:none; opacity:1; transform:none; clip-path:none;}
@@ -2231,6 +2294,16 @@ main{position:relative;}
 .lk-outro-links a{display:inline-flex;font:800 .88rem 'Archivo',sans-serif;color:var(--ink);background:var(--amber);border:2px solid var(--ink);border-radius:8px;padding:11px 16px;box-shadow:3px 3px 0 var(--ink);text-decoration:none;transition:transform .15s,box-shadow .15s;}
 .lk-outro-links a:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--ink);}
 @media(max-width:800px){.lk-outro-in{grid-template-columns:1fr;} .lk-outro-links{justify-content:flex-start;}}
+/* v7.69 : bandeau « Et après ? ». Le titre tient la colonne de gauche ; le texte puis les boutons se suivent à droite (les
+   boutons flottaient au milieu de la page, sous la fin du titre). Titre toujours blanc, même quand la feuille d'une page colore
+   les h2 de main (Collectibles : titre sombre sur fond sombre). */
+.lk-outro .lk-outro-in>h2{color:#fff;}
+@media(min-width:801px){
+  .lk-outro .lk-outro-in{column-gap:clamp(28px,5vw,64px);row-gap:16px;align-items:start;}
+  .lk-outro .lk-outro-in>h2{grid-row:span 2;align-self:center;margin:0;}
+  .lk-outro .lk-outro-in>p:not(.lk-outro-k){align-self:end;}
+  .lk-outro .lk-outro-links{grid-column:2;justify-content:flex-start;align-self:start;}
+}
 
 /* ===================== v7.21 : rails plus fins, recherche du top 10, cartes ===================== */
 .lk-rail{width:6px;border:0;opacity:1;background:linear-gradient(180deg,var(--coral),var(--amber),#5A2358,var(--coral));background-size:100% 600px;animation:lk-rail 14s linear infinite;box-shadow:0 0 12px rgba(245,165,36,.45);border-radius:3px;}
@@ -2358,39 +2431,72 @@ html:not(.js) .lk-h2::after{transform:scaleX(1);}
   .lk-stack figure,.lk-stack img,.d-card>img,.lore-card img{transition:none !important;}
 }
 
-/* 4. Images superposées : pile de deux ou trois visuels officiels, cadre ink, ombre ambre, léger éventail au survol. */
-.lk-stack{position:relative;width:100%;aspect-ratio:5/4;min-width:0;margin:0;}
-.lk-stack figure{position:absolute;margin:0;width:66%;border:2px solid var(--ink);border-radius:var(--radius);overflow:hidden;background:var(--ink);box-shadow:var(--shadow-amber);transition:transform .55s var(--ease-out),box-shadow .3s;will-change:transform;}
+/* 4. Images superposées : pile de deux ou trois visuels officiels, cadre ink, ombre ambre.
+   v7.69 (Téva : « l'idée est cool, mais la carte passe par-dessus comme si elle traversait l'autre ») : la pile est un
+   petit espace 3D. Chaque carte a sa profondeur (--lk-sz) et le navigateur range les cartes par profondeur. La carte
+   survolée (ou atteinte au clavier) monte vers l'avant, 70 ms après que celles qui la couvraient ont commencé à reculer en
+   s'inclinant : elle passe devant en glissant, de bord à bord, plus aucun z-index ne bascule d'un coup. À l'arrivée, les cartes se posent une à
+   une sur la pile. Les z-index restent l'ordre de secours quand le rendu est à plat. Le conteneur laisse passer la souris
+   (pointer-events) : son plan, à la profondeur 0, masquerait sinon les cartes placées derrière lui. */
+.lk-stack{position:relative;width:100%;aspect-ratio:5/4;min-width:0;margin:0;perspective:1100px;transform-style:preserve-3d;pointer-events:none;}
+.lk-stack figure{--lk-sx:0%;--lk-sy:0%;--lk-sz:0px;--lk-sr:0deg;--lk-srx:0deg;--lk-sry:0deg;
+  position:absolute;margin:0;width:66%;border:2px solid var(--ink);border-radius:var(--radius);overflow:hidden;background:var(--ink);box-shadow:var(--shadow-amber);pointer-events:auto;
+  transform:translate3d(var(--lk-sx),var(--lk-sy),var(--lk-sz)) rotate(var(--lk-sr)) rotateX(var(--lk-srx)) rotateY(var(--lk-sry));
+  transition:transform .5s var(--ease-out),box-shadow .35s var(--ease-out),opacity .45s var(--ease-out);}
 .lk-stack img{display:block;width:100%;height:100%;aspect-ratio:16/10;object-fit:cover;}
 .lk-stack figcaption,.lk-stack .lk-stack-cap{position:absolute;left:0;right:0;bottom:0;padding:22px 12px 9px;font-size:.74rem;font-weight:700;color:#fff;background:linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.75));letter-spacing:.02em;}
 /* v7.38 : chaque image de la pile est un lien (figure entière cliquable, légende = texte du lien) */
 .lk-stack .lk-stack-link{display:block;position:relative;width:100%;height:100%;color:#fff;text-decoration:none;}
 .lk-stack .lk-stack-link:focus-visible{outline:3px solid var(--amber);outline-offset:-5px;border-radius:calc(var(--radius) - 2px);}
-.lk-stack figure:focus-within{z-index:5;box-shadow:8px 8px 0 var(--amber);}
+/* l'image animée (lk-kb) passe sur un calque au-dessus du contour du lien : l'anneau de focus est porté par la carte */
+.lk-stack figure:has(>.lk-stack-link:focus-visible){outline:3px solid var(--amber);outline-offset:4px;}
 .lk-stack .lk-stack-link::after{content:'→';position:absolute;right:10px;bottom:8px;font-size:.9rem;font-weight:900;opacity:0;transform:translateX(-4px);transition:opacity .2s,transform .2s;}
-.lk-stack figure:hover .lk-stack-link::after,.lk-stack .lk-stack-link:focus-visible::after{opacity:1;transform:none;}
+.lk-stack .lk-stack-link:focus-visible::after{opacity:1;transform:none;}
 @media(max-width:520px){.lk-stack .lk-stack-cap{display:none;}}
-.lk-stack figure:nth-child(1){left:0;top:6%;transform:rotate(-5deg) translateY(var(--lift,0));z-index:1;}
-.lk-stack figure:nth-child(2){right:0;top:0;transform:rotate(3deg) translateY(var(--lift,0));z-index:2;box-shadow:6px 6px 0 var(--coral);}
-.lk-stack figure:nth-child(3){left:17%;bottom:0;transform:rotate(-1.5deg) translateY(var(--lift,0));z-index:3;box-shadow:6px 6px 0 var(--ink);}
+.lk-stack figure:nth-child(1){left:0;top:6%;--lk-sr:-5deg;--lk-sz:-30px;z-index:1;}
+.lk-stack figure:nth-child(2){right:0;top:0;--lk-sr:3deg;z-index:2;box-shadow:6px 6px 0 var(--coral);}
+.lk-stack figure:nth-child(3){left:17%;bottom:0;--lk-sr:-1.5deg;--lk-sz:30px;z-index:3;box-shadow:6px 6px 0 var(--ink);}
 .lk-stack--2 figure:nth-child(1){top:14%;} .lk-stack--2 figure:nth-child(2){top:0;right:0;width:62%;}
 .lk-stack--2{aspect-ratio:4/3;}
+/* carte atteinte au clavier : même mouvement que le survol à la souris (ci-dessous) */
+.lk-stack figure:has(>.lk-stack-link:focus-visible){--lk-sz:56px;box-shadow:9px 9px 0 var(--amber),0 24px 40px -20px rgba(26,26,30,.6);transition:transform .55s cubic-bezier(.4,0,.2,1) .07s,box-shadow .35s var(--ease-out) .07s,opacity .45s var(--ease-out);}
+.lk-stack figure:nth-child(1):has(>.lk-stack-link:focus-visible){--lk-sr:-2.5deg;} .lk-stack figure:nth-child(2):has(>.lk-stack-link:focus-visible){--lk-sr:1.5deg;} .lk-stack figure:nth-child(3):has(>.lk-stack-link:focus-visible){--lk-sr:-.5deg;}
+.lk-stack:has(>figure:nth-child(1)>.lk-stack-link:focus-visible)>figure:nth-child(2){--lk-sz:-16px;--lk-sry:-22deg;}
+.lk-stack:has(>figure:nth-child(1)>.lk-stack-link:focus-visible)>figure:nth-child(3),.lk-stack:has(>figure:nth-child(2)>.lk-stack-link:focus-visible)>figure:nth-child(3){--lk-sz:12px;--lk-srx:16deg;}
+.lk-stack:has(>figure:nth-child(2)>.lk-stack-link:focus-visible)>figure:nth-child(1),.lk-stack:has(>figure:nth-child(3)>.lk-stack-link:focus-visible)>figure:nth-child(1){--lk-sz:-52px;}
+.lk-stack:has(>figure:nth-child(3)>.lk-stack-link:focus-visible)>figure:nth-child(2){--lk-sz:-22px;}
 @media(hover:hover){
-  .lk-stack:hover figure:nth-child(1){transform:rotate(-8deg) translate(-4%,-2%);}
-  .lk-stack:hover figure:nth-child(2){transform:rotate(6deg) translate(3%,-3%);}
-  .lk-stack:hover figure:nth-child(3){transform:rotate(0deg) translateY(3%);}
-  .lk-stack figure:hover{z-index:5;box-shadow:8px 8px 0 var(--amber);}
+  /* la pile s'ouvre un peu dès que la souris arrive */
+  .lk-stack:hover figure:nth-child(1){--lk-sx:-3%;--lk-sy:-2%;--lk-sr:-7deg;}
+  .lk-stack:hover figure:nth-child(2){--lk-sx:2.5%;--lk-sy:-3%;--lk-sr:5deg;}
+  .lk-stack:hover figure:nth-child(3){--lk-sy:2.5%;--lk-sr:-.5deg;}
+  /* la carte survolée monte vers l'avant et se redresse */
+  .lk-stack figure:hover{--lk-sz:56px;box-shadow:9px 9px 0 var(--amber),0 24px 40px -20px rgba(26,26,30,.6);transition:transform .55s cubic-bezier(.4,0,.2,1) .07s,box-shadow .35s var(--ease-out) .07s,opacity .45s var(--ease-out);}
+  .lk-stack figure:nth-child(1):hover{--lk-sr:-2.5deg;} .lk-stack figure:nth-child(2):hover{--lk-sr:1.5deg;} .lk-stack figure:nth-child(3):hover{--lk-sr:-.5deg;}
+  .lk-stack figure:hover .lk-stack-link::after{opacity:1;transform:none;}
+  /* celles qui la couvraient reculent ; le bord qui la recouvrait part vers l'arrière */
+  .lk-stack:has(>figure:nth-child(1):hover)>figure:nth-child(2){--lk-sz:-16px;--lk-sry:-22deg;}
+  .lk-stack:has(>figure:nth-child(1):hover)>figure:nth-child(3),.lk-stack:has(>figure:nth-child(2):hover)>figure:nth-child(3){--lk-sz:12px;--lk-srx:16deg;}
+  .lk-stack:has(>figure:nth-child(2):hover)>figure:nth-child(1),.lk-stack:has(>figure:nth-child(3):hover)>figure:nth-child(1){--lk-sz:-52px;}
+  .lk-stack:has(>figure:nth-child(3):hover)>figure:nth-child(2){--lk-sz:-22px;}
 }
+/* v7.69 : un lien vers une image du site s'ouvre dans la visionneuse de la page (lk-visionneuse.js) : curseur loupe */
+main a[href$=".webp"],main a[href$=".jpg"],main a[href$=".jpeg"],main a[href$=".png"],main a[href$=".avif"]{cursor:zoom-in;}
 /* entrée de page avec pile : texte à gauche, images à droite */
 .lk-head-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr);gap:clamp(24px,4vw,56px);align-items:center;}
 .lk-head-grid .lk-stack{max-width:520px;margin-left:auto;}
 @media(max-width:900px){.lk-head-grid{grid-template-columns:1fr;} .lk-head-grid .lk-stack{max-width:440px;margin:8px auto 0;}}
 @media(max-width:520px){.lk-stack figure{width:70%;} .lk-stack figcaption,.lk-stack .lk-stack-cap{display:none;}}
-/* apparition des piles : chaque visuel arrive de son côté */
-.js .lk-stack:not(.is-in) figure{opacity:0;--lift:34px;}
-.js .lk-stack figure{transition:opacity .6s var(--ease-out),transform .8s var(--ease-spring),box-shadow .3s;}
-.js .lk-stack.is-in figure:nth-child(2){transition-delay:.12s;} .js .lk-stack.is-in figure:nth-child(3){transition-delay:.24s;}
-@media(prefers-reduced-motion:reduce){.js .lk-stack:not(.is-in) figure{opacity:1;--lift:0px;}}
+/* apparition des piles : les cartes tombent une à une sur la pile, de plus haut et un peu tournées (animation sur les
+   propriétés translate/rotate/opacity, qui se composent avec transform : les transitions du survol n'ont aucun retard).
+   Le conteneur lui-même ne fond plus et ne glisse plus : une opacité animée ou un will-change:opacity sur lui aplatirait
+   la 3D (Chrome), et la carte survolée resterait derrière. Pile déjà à l'écran au chargement (lk-settled) : aucune chute. */
+.js .lk-stack.lk-reveal,.js .lk-stack.lk-reveal.is-in:not(.lk-settled),.js .lk-stack.lk-hero-item{opacity:1;transform:none;will-change:auto;animation:none;transition:none;}
+.js .lk-stack:not(.is-in) figure{opacity:0;}
+.js .lk-stack.is-in:not(.lk-settled) figure{animation:lk-deal .8s cubic-bezier(.22,1.2,.36,1) backwards;}
+.js .lk-stack.is-in:not(.lk-settled) figure:nth-child(2){animation-delay:.12s;--lk-deal-r:5deg;} .js .lk-stack.is-in:not(.lk-settled) figure:nth-child(3){animation-delay:.24s;--lk-deal-r:-4deg;}
+@keyframes lk-deal{from{opacity:0;translate:0 -14px 150px;rotate:var(--lk-deal-r,-6deg);}}
+@media(prefers-reduced-motion:reduce){.js .lk-stack:not(.is-in) figure{opacity:1;} .lk-stack figure{animation:none !important;--lk-srx:0deg !important;--lk-sry:0deg !important;}}
 /* classement : la pile prend une vraie colonne dans l'en-tête de fiche */
 .fhero-in:has(.lk-stack){grid-template-columns:minmax(0,1.1fr) minmax(280px,.9fr);}
 .fhero-in .lk-stack{max-width:480px;margin-left:auto;}
@@ -2835,7 +2941,10 @@ a.ed-brand:hover,a.ed-brand:focus-visible{border-color:var(--ink);box-shadow:5px
 .ed-place:hover,.ed-place:focus-visible{box-shadow:6px 6px 0 var(--amber);}
 .ed-map{flex:none;width:92px;background:#5FA8D3;border-right:2px solid var(--ink);display:block;}
 .ed-map use{fill:#95CB84;stroke:#5E9A66;stroke-width:14;}
-.ed-map-halo{fill:var(--amber);fill-opacity:.35;}
+.ed-map-halo{fill:var(--amber);fill-opacity:.38;transform-box:fill-box;transform-origin:center;}
+/* v7.69 : vignette cadrée sur le lieu ; au survol, le repère pulse */
+@media(hover:hover) and (prefers-reduced-motion:no-preference){.ed-place:hover .ed-map-halo,.ed-atelier:hover .ed-map-halo{animation:ed-map-pulse 1.4s var(--ease-out) infinite;}}
+@keyframes ed-map-pulse{from{transform:scale(.6);fill-opacity:.6;}to{transform:scale(1.9);fill-opacity:0;}}
 .ed-map-pin{fill:var(--amber);stroke:var(--ink);stroke-width:40;}
 .ed-place-body{display:flex;flex-direction:column;gap:3px;padding:12px 14px 12px 0;min-width:0;flex:1;}
 .ed-place b{font-size:.98rem;line-height:1.25;letter-spacing:-.01em;}
@@ -3332,3 +3441,4 @@ a.ed-brand:hover,a.ed-brand:focus-visible{border-color:var(--ink);box-shadow:5px
 /* très petits écrans (320 px) : un mot plus long que la ligne dans le grand titre (« Personnalisations », « Nebenaktivitäten »)
    se coupe au lieu d’élargir l’en-tête et de rogner les liens voisins */
 @media(max-width:360px){.page-head :is(h1,.lk-hero-item){overflow-wrap:anywhere;-webkit-hyphens:auto;hyphens:auto;}}
+.map-stage:has(.map-trajet:not([hidden])) .map-scale{opacity:0;}

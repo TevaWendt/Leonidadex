@@ -1,0 +1,136 @@
+LEONIDAKIT v7.69 — IA par visiteur, finitions « rien ne doit faire brouillon », 6 octobre 2026
+
+Base : v7.68 (commit 6b72727). Demandes de Téva du 06/10/2026 (messages 5 et 6). Rien n'est publié ni poussé.
+
+1. IA CLAUDE : 30 QUESTIONS PAR VISITEUR TOUTES LES 9 HEURES, CRÉDIT PAYANT, CHOIX IA OU LOCAL
+- api/ia.js : modèle par défaut claude-sonnet-5-5 (LK_IA_MODELE pour un autre) ; prix des modèles pour le crédit
+  (Fable 5.1 compris). Accès par visiteur : 30 questions gratuites par 9 heures (LK_IA_GRATUIT, LK_IA_HEURES), visiteur compté
+  par l'identifiant aléatoire de son appareil (lk_ia_appareil) et par une empreinte salée de son adresse IP (plafond × 5 pour
+  un réseau partagé). Compteurs dans la base Redis d'Upstash reliée au projet (KV_REST_API_URL / KV_REST_API_TOKEN, ou
+  UPSTASH_REDIS_REST_URL / UPSTASH_REDIS_REST_TOKEN), effacés seuls au bout de 9 heures ; sans base, comptage en mémoire vive.
+  Mode « etat » (questions restantes, crédit, vente ouverte) sans rien consommer. Au-delà : réponse 402 « quota » et la page
+  repasse en local, ou crédit si la vente est ouverte : chaque question coûte son prix réel (jetons lus et écrits, d'après la
+  réponse de l'API, convertis par LK_IA_EUR_PAR_USD) plus LK_IA_MARGE (20 % par défaut). Anti-rafale porté à 60 demandes par
+  10 minutes et par empreinte d'IP.
+- api/ia-achat.js (nouveau) : crédit payant par Stripe Checkout, fermé tant que LK_IA_VENTE=oui, STRIPE_SECRET_KEY, LK_IA_SEL
+  (16 caractères au moins, à ne jamais changer) et la base Upstash ne sont pas tous posés. Pas de compte : code de crédit
+  LK-XXXX-XXXX-XXXX-XXXX gardé dans le navigateur (lk_ia_jeton) ; la base ne garde que son empreinte salée, le solde et les
+  paiements en attente. Actions « creer » (session Checkout, renonciation au droit de rétractation cochée) et « verifier »
+  (crédite une seule fois chaque paiement réussi). Montants LK_IA_PACKS (3,5,10 €), frais retenus LK_IA_FRAIS (0.25+1.5%).
+- lk-ia.js (nouveau, chargé par le calculateur et par Léo) : « Qui répond ? IA Claude | Local » (lk_ia_mode), ligne d'état
+  (questions restantes et heure de retour, mode local, quota épuisé, crédit, IA indisponible), boîte « Plus de questions à
+  l'IA » (montants, renonciation, paiement, code de crédit, « J'ai déjà un code »), retour de paiement (?ia=paye / ?ia=annule).
+  Aucun cookie ; état mis en cache le temps de l'onglet (sessionStorage lk_ia_etat), écrit seulement après une action.
+  Mode local : aucune requête, pas même la lecture des compteurs (elle reprend quand le visiteur choisit « IA Claude ») ; en
+  mode IA Claude, l'état n'est lu qu'à l'ouverture de Léo ou à l'entrée dans la barre (clic, clavier), jamais au simple survol.
+  Mentions : « En mode IA Claude, ouvrir Léo ou cliquer dans la barre envoie seulement ces éléments (et ton code de crédit, si
+  tu en as acheté), pour t'afficher ce qui te reste. » (traduite dans les quatre langues).
+- calculateurs-hub.js, leo-ui.js, leo-loader.js : chaque réponse dit qui l'a écrite (« Réponse de l'IA Claude » / « Réponse
+  locale, sans IA ») ; phrase de confidentialité de Léo selon le mode ; quota épuisé : réponse locale avec la raison.
+- Mentions et confidentialité (outils/gen-informations.cjs, outils/site-informations.json) : ligne « Tu poses une question à
+  Léo ou à la barre » (ce qui part, pour qui, durée), Upstash ajouté aux prestataires (quatre), clés lk_ia_* et lk_trajet_v1
+  dans « Ce qui reste dans ton navigateur » ; outils/preuve-confidentialite.cjs connaît api/ia-achat.js.
+- Tests : outils/tests/ia-v769.test.cjs (7) ; ia-v767.test.cjs mis à jour (modèle par défaut, anti-rafale).
+- La page conditions-de-vente.html (citée par la boîte de paiement) sera écrite avec les informations du vendeur, avant
+  d'ouvrir la vente (LK_IA_VENTE=oui).
+
+2. PILE D'IMAGES EN 3D (en tête des pages)
+- style.css (section 4) : la pile est un petit espace 3D (perspective, preserve-3d) ; chaque carte a sa profondeur (--lk-sz)
+  et le navigateur range les cartes par profondeur : la carte survolée (ou atteinte au clavier) monte vers l'avant pendant
+  que celles qui la couvraient reculent en s'inclinant ; plus aucun z-index ne bascule d'un coup (« la carte traversait
+  l'autre »). Conteneur traversé par la souris (pointer-events) ; z-index gardés comme ordre de secours. Entrée en cascade.
+
+3. VISIONNEUSE D'IMAGES SUR TOUT LE SITE
+- lk-visionneuse.js (nouveau, lk/lazy) : un lien vers une image du site (galeries « En images », aperçus, captures du Tuto,
+  recadrages des animaux) s'ouvre dans la page : fond sombre, image qui grandit depuis sa vignette, légende et crédit,
+  galerie (boutons, flèches du clavier, Début/Fin, vignettes, glisser de côté), zoom (bouton, double-clic ou double tape, puis
+  glisser pour se déplacer), image d'origine dans un nouvel onglet ; Échap, clic à côté ou glisser vers le bas pour fermer,
+  focus rendu au lien d'origine. Mouvement réduit respecté. Rien n'est enregistré.
+- common.js : délégation du clic (préchargement au survol ou au focus) ; outils/sync-site.cjs pose
+  <script type="lk/lazy" src="lk-visionneuse.js"> sur toute page qui a un lien vers une image. Curseur loupe (style.css).
+- common.js : compteurs qui défilent ([data-lk-count]) et transitions de vue des filtres à boutons radio ([data-lk-vt]).
+
+4. CARTE : CALCULATEUR DE TRAJET
+- carte.html / carte.js : bouton « Calculer un trajet » et panneau à part sur la carte (#trajet, lien direct carte.html#trajet) :
+  départ, arrivée et étapes (50 points), distance à vol d'oiseau, temps estimés à pied, en courant, à vélo, et pour trois
+  véhicules du site au plus, chacun avec sa vitesse : référence de sa famille dans GTA V (marquée « Estimation ») ou vitesse
+  mesurée en jeu et écrite par le visiteur (gardée sur l'appareil : lk_trajet_v1, validée à la lecture). Hélicoptères : pas
+  de référence, le visiteur écrit la sienne. Annonce lisible par les lecteurs d'écran.
+- carte-vehicules.js (généré par outils/sync-site.cjs, partagé par les langues) : identifiant, nom, catégorie de chaque véhicule.
+- Liens : accueil, calculateur (« Calculer un trajet ↗ »), Léo (sujet carte-distance), FAQ du Tuto.
+- Vignettes des fiches de lieux cadrées sur le lieu (outils/carte-vignette.cjs, ZOOM 2200) ; repère qui pulse au survol.
+
+5. SECTIONS RETRAVAILLÉES
+- Animaux (outils/gen-animaux.cjs, outils/editorial-animaux.json, animaux.css) : chiffres sourcés (Game Informer, 29/09/2026),
+  mosaïque des sept fiches avec filtre par famille (sans script), régions ; sur chaque fiche : carte d'identité (famille,
+  statut, régions, visuels, sources datées), gros plan recadré avec la capture d'origine à côté.
+- Consommables (outils/gen-acquisitions.cjs, acquisitions.css) : « En un regard » en cartes lisibles (bandeau de catégorie,
+  statut, lieu), filtre par catégorie (boutons radio), « Pour qui ? » (Jason, Lucia) sur les listes qui le savent.
+- Personnalisations (catalogue.js, outils/catalogues.cjs) : « Ton véhicule » / « Ton arme » : choisir un modèle précis ; la
+  liste ne garde que les postes qui lui vont (#perso-vehicules=<véhicule>, #perso-armes=<arme> depuis la fiche).
+- Progression et carnets (outils/gen-carnets.cjs, carnets.js, carnets.css) : part cochée en anneau, compteurs, autres carnets
+  illustrés, étapes numérotées, états vides dessinés.
+- Collectibles : la carte revient à l'accueil (quatre outils ; « Le monde de Leonida » en sept cartes, faune et collectibles
+  compris : outils/lore-gen.js) ; familles du catalogue en cartes squelettes sur collectibles.html (collectibles-brand.css).
+- Pastilles de navigation selon la famille de la page (monde, jouer, s'équiper : outils/site-shell.cjs chipSets/chipSetOf),
+  « La carte de Leonida » comprise.
+- Comparateur (comparateur.html, comparateur.js, comparateur.css, armes-schemas.js généré par sync-site) : choix Véhicules /
+  Armes, trois colonnes illustrées (photo officielle, schéma du site ou silhouette de l'arme, statut), comparaisons toutes
+  prêtes (Édition Ultimate, tout-terrain, sur l'eau, deux-roues ; armes de poing nommées, fusils, mêlée), tableau par thèmes
+  (ce qu'on sait / l'achat / en jeu), « pas encore publié » en pointillé, squelette du tableau sans sélection.
+- Classement (classement-vehicules.html, classement.js, classement.css) : panneau d'ajout avec « x / 10 », top 10 en deux
+  colonnes où les places libres restent visibles (podium or, argent, bronze), les plus attendus en cartes illustrées avec
+  « Ajouter à mon top 10 », squelette de la future grille par catégorie (aucun chiffre avant le 19 novembre 2026).
+- Logements (et toute section sans contenu vérifié) : gabarit des futures fiches en pointillé, sans nom, prix ni image.
+- Véhicules rares : pile d'images reliée aux fiches. Bandeau « Et après ? » : titre à gauche, texte puis boutons à droite,
+  titre toujours blanc (il était sombre sur fond sombre dans Collectibles).
+
+6. TUTO ADAPTÉ AU CALCULATEUR ACTUEL
+- Captures refaites dans les cinq langues (outils/tuto-shots.py), dont la nouvelle « ask » / « ask-mobile » (la barre « Que
+  veux-tu calculer ? » après la phrase d'exemple, en mode Local).
+- outils/gen-tuto.cjs : chapitre 02 « Poser ta question » (IA Claude ou Local, 30 questions toutes les 9 h, exercice sans IA,
+  erreur fréquente, ce qui part de l'appareil avec lien vers mentions-legales.html#donnees-ia), FAQ « Que fait la barre… » et
+  « Où calculer un trajet… » (carte.html#trajet), lien « Agrandir la capture » sans flèche (la visionneuse s'ouvre dans la
+  page). calculateurs.js accepte le chapitre (retour « Revenir au chapitre du Tuto »).
+- Léo : sujet ia-questions (« Combien de questions puis-je poser à l'IA Claude ? »), sujet leo-donnees mis à jour.
+
+7. LANGUES
+- outils/langues/<en|es|it|de>/v769.json : ~320 textes nouveaux par langue (pages, scripts, Léo) ; feuilles de style et
+  sélecteurs des scripts dans « _ignorer » ; entrées propres à un fichier quand un mot est aussi du code
+  (comparateur.js::Ultimate Edition reste tel quel en espagnol et en italien, lk-ia.js::à → « at / a las / alle / um »).
+- outils/langues.json : carte-vehicules.js et armes-schemas.js partagés (sans texte).
+- Extraction : 0 texte sans traduction dans les quatre langues.
+
+8. FINITIONS RELEVÉES PAR LES CONTRÔLES NAVIGATEUR
+- carnets.css : lien « Combien de temps pour l'avoir » des carnets haut de 36 px (cible tactile ; 32 px avant).
+- lk-sections.css : à 360 px et moins, vignette (52 px) et marges des liens illustrés plus petites : « Personnalisations »
+  et ses traductions tiennent sur une ligne au lieu d'être coupées au milieu.
+- outils/gen-animaux.cjs : vignette « Capture d'origine » (92 px) avec srcset et sizes : le navigateur ne charge que la petite
+  variante, et la synchronisation n'y touche plus (génération idempotente).
+- collectibles-brand.css : étiquette « Confirmé » en vert foncé (5,1:1 au lieu de 3,3:1) ; liens des familles hauts de 32 px.
+- classement.css : noms des véhicules « les plus attendus » en cible de 27 px. comparateur.css : en-têtes « Colonne 1… » du
+  squelette en gris lisible.
+- outils/catalogues.cjs : la carte d'arme sans fiche renvoie vers armes.html (le lien visait armurerie.html, qui n'existe pas).
+- lk-ia.js : espaces insécables dans les lignes d'état et la boîte de crédit (« 9 h », « IA Claude : », « 20 % ») : plus de
+  « h. » seul en début de ligne sur téléphone.
+
+9. CONTRÔLES
+- outils/tests/v769.test.cjs (12 tests : pile, visionneuse, trajet, consommables et pastilles, Tuto, Léo, comparateur,
+  classement, Logements, Véhicules rares et bandeau, traductions) ; ia-v769.test.cjs (7 tests, dont « mode local : aucune
+  lecture de l'état ») ; tests existants mis à jour (section-animaux, hubs-v740, catalogues-v743, contact-v746, ia-v767,
+  conformite-v753, section-activites).
+- outils/tests/leo-browser.cjs : parties 1 à 5 en mode « Local » (aucune requête vers /api/ia), partie 6 avec la fonction
+  /api/ia simulée (état 30 sur 30, réponse de l'IA et sa mention, compteur à 29, quota épuisé → réponse locale avec la
+  raison, « Local » → plus rien ne part, même après rechargement ; « IA Claude » → l'état est lu une fois).
+- outils/tests/mots-coupes-browser.cjs : attend la fin des entrées animées (3 s au plus) et ignore les cartes tournées en 3D
+  (les cartes « distribuées » de gangs.html étaient lues en plein mouvement).
+- Résultats de la livraison (7 octobre 2026) :
+  · node --test : 920 tests légers réussis sur 920 ; langues.test 42/42, coverage.test 3/3, calculateurs-check-ultime 16/16.
+  · Léo (leo-eval) : 512/512 bonnes pages ou intentions, 39/39 hors sujet refusés, 0 réponse sans source.
+  · Navigateur : leo-browser tenu (0 erreur console, 0 débordement, IA simulée correcte) ; langues-browser 2 267 contrôles,
+    0 échec ; calculateurs-check-ultime-browser 1 120/1 120 ; tuto-essayer 23/23 ; carnets 94/94 ; mots-coupes : 230
+    chargements, 0 mot coupé ; zoom-hauteur 56/56 ; contact tenu ; audit de clôture (26 pages, 182 chargements) : 0
+    débordement, 0 cible sous 24 px, 0 contraste insuffisant, 0 erreur console ni requête en échec, fonctions 12/12.
+  · outils/verifier.js : 306 066 références dans 2 241 pages, 0 erreur ; preuve-confidentialite : toutes les affirmations
+    des Mentions tenues ; calculateur-inventaire --check à jour ; calculateur-cadre identique (150 vues).
+  · Langues : 0 texte sans traduction (anglais, espagnol, italien, allemand).

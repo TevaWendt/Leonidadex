@@ -125,7 +125,10 @@ test('sécurité et droits : aucun script en ligne, rien de chargé depuis un au
     for (const el of d.querySelectorAll('[src], link[href]')) { const u = el.getAttribute('src') || el.getAttribute('href'); if (el.tagName === 'LINK' && !/stylesheet|preload|icon/.test(el.rel)) continue; assert.doesNotMatch(u, /^(https?:)?\/\//, f + ' : ressource externe ' + u); }
     assert.equal(d.querySelectorAll('iframe, audio, video, embed, object').length, 0, f);
     assert.doesNotMatch(html, /\son[a-z]+="/, f + ' : gestionnaire en ligne');
-    assert.doesNotMatch(d.querySelector('main').innerHTML, AUTRES_SECTIONS, f + ' : lien vers une autre section nouvelle');
+    /* v7.69 : les pastilles de navigation (nav.lk-chips, posées par outils/site-shell.cjs selon la famille de la page)
+       relient maintenant les pages « Jouer » entre elles ; la règle vaut pour le contenu de la section. */
+    const main = d.querySelector('main').cloneNode(true); main.querySelectorAll('nav.lk-chips').forEach(n => n.remove());
+    assert.doesNotMatch(main.innerHTML, AUTRES_SECTIONS, f + ' : lien vers une autre section nouvelle');
   }
   for (const f of ['index.html', 'gangs.html', 'lieux/mount-kalaga.html', 'nourriture.html']) assert.doesNotMatch(read(f), /activites\.(css|js)/, f);
   assert.doesNotMatch(read('activites.js'), /localStorage|sessionStorage|document\.cookie|fetch\(|XMLHttpRequest/);

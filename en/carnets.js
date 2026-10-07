@@ -219,7 +219,7 @@
   }
 
   /* ---------- rendu de la page ---------- */
-  var EMPTY_ART = '<svg viewBox="0 0 120 90" aria-hidden="true" focusable="false"><rect x="18" y="10" width="70" height="72" rx="6" fill="#FDFBF7" stroke="#1A1A1E" stroke-width="2.5"/><path d="M30 10v72" stroke="#1A1A1E" stroke-width="2"/><path d="M40 28h36M40 40h36M40 52h24" stroke="#DFD9CC" stroke-width="3" stroke-linecap="round"/><path d="M84 58l20-20 6 6-20 20-9 3z" fill="#F5A524" stroke="#1A1A1E" stroke-width="2.5" stroke-linejoin="round"/><circle cx="96" cy="20" r="7" fill="#E8452C" opacity=".85"/></svg>';
+  var EMPTY_ART = '<svg viewBox="0 0 120 90" aria-hidden="true" focusable="false"><rect x="18" y="10" width="70" height="72" rx="6" fill="#FDFBF7" stroke="#1A1A1E" stroke-width="2.5"/><path d="M30 10v72" stroke="#1A1A1E" stroke-width="2"/><path class="cn-art-l" d="M40 28h36M40 40h36M40 52h24" stroke="#DFD9CC" stroke-width="3" stroke-linecap="round"/><g class="cn-art-pen"><path d="M84 58l20-20 6 6-20 20-9 3z" fill="#F5A524" stroke="#1A1A1E" stroke-width="2.5" stroke-linejoin="round"/></g><circle class="cn-art-dot" cx="96" cy="20" r="7" fill="#E8452C" opacity=".85"/></svg>'; /* v7.69 : classes pour l’animer (carnets.css) */
   function emptyState(view, filteredOut, s) {
     E.empty.replaceChildren();
     var art = el('span', 'cn-empty-art'); art.innerHTML = EMPTY_ART; E.empty.appendChild(art);
@@ -262,6 +262,8 @@
     set('done', done); set('total', total); set('wish', wish); set('rest', total - done);
     var pct = total ? Math.floor(done / total * 100) : 0;
     document.querySelectorAll('[data-cn-bar]').forEach(function (b) { b.style.width = (total ? done / total * 100 : 0) + '%'; });
+    /* v7.69 : anneau de l’en-tête (même part que la jauge) */
+    document.querySelectorAll('[data-cn-ring]').forEach(function (r) { r.style.setProperty('--p', String(total ? Math.round(done / total * 1000) / 10 : 0)); });
     document.querySelectorAll('[data-cn-pct]').forEach(function (b) { b.textContent = !total ? '—' : done && pct < 1 ? 'less than 1%' : pct + '%'; });
     var tn = { own: done, wish: wish, rest: total - done };
     VIEWS.forEach(function (v) { var n = app.querySelector('[data-cn-tabn="' + v + '"]'); if (n) n.textContent = nf.format(tn[v] || 0); });

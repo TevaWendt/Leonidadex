@@ -188,6 +188,16 @@
    { "href": "#faq", "label": "FAQ" },
    { "href": "#sources", "label": "Sources" }
   ],
+  "chiffres": {
+   "kicker": "La faune en chiffres",
+   "titre": "Plus de 170 espèces annoncées",
+   "texte": "Les nombres donnés par Michael Kane, de Rockstar, dans le dossier de Game Informer du 29 septembre 2026.",
+   "source": "insider-faune",
+   "items": [{ "n": "170+", "t": "espèces animales" }, { "n": "60+", "t": "sortes d’oiseaux" }, { "n": "30+", "t": "mammifères terrestres" }],
+   "site": "fiches sur Leonidakit"
+  },
+  "grille": { "kicker": "Les fiches", "titre": "Sept fiches, cinq familles", "texte": "Choisis une famille, ou parcours toute la faune que Rockstar a déjà montrée." },
+  "regions": { "kicker": "Habitats", "titre": "Où les croiser", "texte": "Les régions reliées à chaque fiche, d’après les images et les textes officiels." },
   "rockstar": {
    "lede": "Rockstar a d’abord montré ses animaux sans en parler, puis les a comptés : plus de 170 espèces.",
    "items": [

@@ -13,9 +13,10 @@
 <link rel="canonical" href="https://www.leonidakit.com/en/comparateur.html">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%231A1A1E'/%3E%3Ccircle cx='32' cy='28' r='16' fill='%23F5A524'/%3E%3Crect x='10' y='30' width='44' height='3' fill='%231A1A1E'/%3E%3Crect x='10' y='37' width='44' height='4' fill='%231A1A1E'/%3E%3Crect x='10' y='45' width='44' height='5' fill='%231A1A1E'/%3E%3C/svg%3E">
 <link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../style.css?v=5aa24b63624b">
+<link rel="stylesheet" href="../style.css?v=9bb8ceccfb20">
 <link rel="stylesheet" href="../fiches.css?v=1c6e35ad70b4">
 <link rel="stylesheet" href="../calculator-entry.css?v=cf94b45f1d2d">
+<link rel="stylesheet" href="../comparateur.css?v=218021d21b5b">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"GTA VI vehicle and weapon comparison","applicationCategory":"ReferenceApplication","operatingSystem":"Web","url":"https://www.leonidakit.com/en/comparateur.html","inLanguage":"en-US","isPartOf":{"@type":"WebSite","name":"Leonidakit","url":"https://www.leonidakit.com/en/"}}</script>
 <meta property="og:title" content="Comparison — GTA 6 vehicles and weapons | Leonidakit">
 <meta property="og:description" content="Compare up to three GTA VI vehicles or three weapons side by side: category, official source, real-world inspiration. Stats after launch.">
@@ -48,7 +49,7 @@
 
 <main id="main">
 
-<section class="fhero fhero--arme">
+<section class="fhero fhero--arme cmp-hero">
   <div class="fhero-bg" aria-hidden="true"></div>
   <div class="shell">
     <nav class="crumbs" aria-label="Breadcrumb">
@@ -59,25 +60,30 @@
         <p class="fiche-cat" id="cmp-type-lbl">Comparison</p>
         <h1>Side by side</h1>
         <p class="lede">Up to three pages side by side. Rows that differ are highlighted. In-game stats will join this table after November 19, 2026.</p>
-      </div>
+        <nav class="cmp-type" aria-label="What do you want to compare?"><a href="comparateur.html?type=vehicules" data-cmp-type="vehicules">Vehicles</a><a href="comparateur.html?type=armes" data-cmp-type="armes">Weapons</a></nav>
+      </div><div class="lk-stack lk-stack--3" aria-label="Three official vehicle and weapon images"><figure><a class="lk-stack-link" href="armes/hawk-little-morgan.html" aria-label="Morgan revolver: open the page"><img fetchpriority="high" src="../img/officiel/hawk-little-morgan-revolvers-01-480.webp" srcset="../img/officiel/hawk-little-morgan-revolvers-01-480.webp 480w, ../img/officiel/hawk-little-morgan-revolvers-01-800.webp 800w, ../img/officiel/hawk-little-morgan-revolvers-01-1280.webp 1280w" sizes="(max-width:440px) 64vw, (max-width:900px) 286px, 360px" width="480" height="270" alt="Scoped revolver held in hand, official Rockstar Games image" loading="eager" decoding="async"><span class="lk-stack-cap">Morgan revolver</span></a></figure><figure><a class="lk-stack-link" href="medias.html#media-95-grotti-cheetah-02" aria-label="Grotti Cheetah: see the image and its credits"><img src="../img/officiel/95-grotti-cheetah-02-480.webp" srcset="../img/officiel/95-grotti-cheetah-02-480.webp 480w, ../img/officiel/95-grotti-cheetah-02-800.webp 800w, ../img/officiel/95-grotti-cheetah-02-1280.webp 1280w" sizes="(max-width:440px) 64vw, (max-width:900px) 286px, 360px" width="480" height="270" alt="Grotti Cheetah from the front, official Rockstar Games image" loading="lazy" decoding="async"><span class="lk-stack-cap">Grotti Cheetah</span></a></figure><figure><a class="lk-stack-link" href="vehicules/vapid-dominator-buggy.html" aria-label="Dominator Buggy: open the page"><img src="../img/officiel/67-vapid-dominator-buggy-01-480.webp" srcset="../img/officiel/67-vapid-dominator-buggy-01-480.webp 480w, ../img/officiel/67-vapid-dominator-buggy-01-800.webp 800w, ../img/officiel/67-vapid-dominator-buggy-01-1280.webp 1280w" sizes="(max-width:440px) 64vw, (max-width:900px) 286px, 360px" width="480" height="270" alt="Dominator Buggy in the mud, official Rockstar Games image" loading="lazy" decoding="async"><span class="lk-stack-cap">Dominator Buggy</span></a></figure></div>
     </div>
   </div>
 </section>
 
-<section class="shell" style="padding-top:24px">
-  <div class="cmp-pick" id="cmp-pick"></div>
-  <div style="overflow-x:auto">
+<section class="shell cmp-zone" aria-labelledby="cmp-pick-t">
+  <div class="cmp-zone-head"><h2 class="sec-h" id="cmp-pick-t">Your three columns</h2><p id="cmp-pick-help">Pick one page per column, or start from a ready-made comparison. The page link keeps your selection.</p></div>
+  <div class="cmp-slots" id="cmp-pick"></div>
+  <div class="cmp-quick" id="cmp-quick" role="group" aria-labelledby="cmp-quick-k"><span class="cmp-quick-k" id="cmp-quick-k">Ready-made comparisons</span></div>
+  <div class="cmp-legend" aria-hidden="true"><span><i class="cmp-sw cmp-sw--diff"></i>Highlighted: the values differ</span><span><i class="cmp-sw cmp-sw--wait"></i>Dotted: not published yet</span></div>
+  <p class="cmp-empty" id="cmp-empty" role="status" hidden>Pick at least one page above: the table fills itself in.</p>
+  <div class="cmp-table-wrap" tabindex="0" role="region" aria-label="Comparison table">
     <table class="cmp-table" id="cmp-table" aria-live="polite"></table>
   </div>
   <div class="cmp-tools">
     <button type="button" id="cmp-share">Copy the link to this comparison</button>
-    <a href="armes.html" id="cmp-back">Back to the list</a> <a href="comparateur.html?type=armes" id="cmp-switch">Switch to weapons</a>
+    <a href="armes.html" id="cmp-back">Back to the list</a>
   </div>
   <aside class="lk-entry-card" id="cmp-calculator" hidden aria-labelledby="cmp-calculator-title">
     <div><p class="lk-entry-eyebrow">THE CALCULATOR</p><h2 id="cmp-calculator-title">Which one is right for me?</h2><p>Send your selection to “Which purchase should I pick?”: with the price you imagine, what each one costs to run and what you need (terrain, seats), the calculator compares them over time. An unknown price is never counted as free.</p></div>
     <div class="lk-entry-links"><a class="lk-entry-button" id="cmp-calculator-link" href="calculateurs.html?tool=compare#atelier">Which purchase should I pick? <span aria-hidden="true">↗</span></a> <a class="lk-entry-button lk-entry-button--second" id="cmp-purchase-link" href="calculateurs.html?tool=purchase#atelier">Which one can I buy? <span aria-hidden="true">↗</span></a></div>
   </aside>
-  <p class="fiche-txt" style="font-size:.85rem;color:#6B6874;margin-top:16px">Real-world inspirations are community matches, not info from Rockstar. No data from leaks.</p>
+  <p class="fiche-txt cmp-note">Real-world inspirations are community matches, not info from Rockstar. No data from leaks.</p>
 </section>
 
 
@@ -92,10 +98,11 @@
 <script type="lk/lazy" src="search-index.js?v=a54955b68c73"></script><script type="lk/lazy" src="search-lieux.js?v=be730d617c45"></script>
 <script src="armes-data.js?v=3a4d2bab7e69"></script>
 <script src="vehicules-data.js?v=ff7f4e713998"></script>
-<script src="../assets-manifest.js?v=241821d22e7b"></script>
-<script src="common.js?v=3c05440d0508"></script>
+<script src="../assets-manifest.js?v=6af57ce07b3f"></script>
+<script src="common.js?v=699f40bb0e71"></script>
 <script src="app.js?v=08f08026097d"></script>
-<script src="comparateur.js?v=d1f5ef2093f1"></script>
+<script src="../armes-schemas.js?v=6d3bcb83fc9e"></script>
+<script src="comparateur.js?v=f547f3544580"></script>
 
 </body>
 </html>

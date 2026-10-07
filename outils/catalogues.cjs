@@ -74,7 +74,7 @@ function site() {
   const acq = json('outils/acquisitions.json');
   const acquisitions = new Map(acq.items.filter(x => x.trackable === true).map(x => [x.id, x]));
   for (const x of acq.items) taken.add(x.id);
-  return { places, groups, medias, taken, weapons, acquisitions };
+  return { places, groups, medias, taken, weapons, acquisitions, vehicles: ctx.window.LK_VEHICULES };
 }
 
 /* Charge et valide toutes les familles. Renvoie {schema, sources, families:{id → données}, all:[…items avec famille]}. */
@@ -187,7 +187,8 @@ function compatOf(it) {
   const html = '<p class="cat-compat"><span>' + (c.vehicules ? 'Pour' : 'Armes') + ' :</span> ' + esc(labels.join(', '))
     + (fiches.length ? (labels.length ? ' · ' : '') + '<span>fiches :</span> ' + fiches.join(', ') : '')
     + (c.note ? ' <i>(' + esc(c.note) + ')</i>' : '') + '</p>';
-  return { attrs: ' data-compat="' + esc(tags.join(' ')) + '"', html };
+  /* v7.69 : une liste d’armes nommées (ids) ferme la compatibilité à ces armes, sauf si elles ne sont que des exemples (exemples:true) */
+  return { attrs: ' data-compat="' + esc(tags.join(' ')) + '"' + ((c.ids || []).length && !c.exemples ? ' data-ids="' + esc(c.ids.join(' ')) + '"' : ''), html };
 }
 /* Libellés des filtres de compatibilité d'une famille (catégorie → nom), pour catalogue.js. */
 function compatLabels(fam) {
@@ -246,7 +247,7 @@ function row(fam, it, cat, sources) {
   const srcLinks = it.sources.map((id, i) => '<a href="#src-' + esc(id) + '" class="cat-src" aria-label="Source : ' + esc(sources[id].title) + '">source' + (it.sources.length > 1 ? ' ' + (i + 1) : '') + '</a>').join(' ');
   const q = fold([it.nom, it.description, cat.label, it.effet.texte, ...(it.variantes || []), ...it.ou_le_trouver.map(o => o.lieu ? place(o.lieu).name : o.type), PERSON[it.personnage] || '', ...compatWords(it)].join(' '));
   const rep = repereText(it.prix_repere_serie), repV = repereValue(it.prix_repere_serie), compat = compatOf(it), folded = FOLDED.has(fam);
-  return '<tr class="cat-row" id="' + esc(rowId(fam, it)) + '" data-cat="' + esc(it.categorie) + '" data-st="' + esc(it.statut) + '" data-ci="' + ci + '"' + (cat.groupe ? ' data-group="' + esc(cat.groupe) + '"' : '') + ' data-nom="' + esc(fold(it.nom)) + '"' + (repV !== null ? ' data-prix="' + repV + '"' : '') + compat.attrs + ' data-q="' + esc(q) + '">'
+  return '<tr class="cat-row" id="' + esc(rowId(fam, it)) + '" data-cat="' + esc(it.categorie) + '" data-st="' + esc(it.statut) + '" data-ci="' + ci + '"' + (cat.groupe ? ' data-group="' + esc(cat.groupe) + '"' : '') + (it.personnage ? ' data-who="' + esc(it.personnage) + '"' : '') + ' data-nom="' + esc(fold(it.nom)) + '"' + (repV !== null ? ' data-prix="' + repV + '"' : '') + compat.attrs + ' data-q="' + esc(q) + '">'
     + '<td class="cat-c-st" data-l="Statut">' + S.pip(it.statut, true) + '</td>'
     + '<td class="cat-c-nom" data-l="Élément">' + thumb(it, cat, media) + '<b class="cat-nom">' + esc(it.nom) + '</b>'
     + '<span class="cat-cat">' + S.icon(cat.icon, 'cat-ico') + esc(cat.label) + '</span>'
@@ -273,6 +274,35 @@ function sortItems(d) {
 }
 /* La boîte dépliable d'une famille : summary avec compteur, barre de suivi, outils (inertes sans JS), tableau complet,
    légende. opts.open : ouverte par défaut. */
+/* v7.69 : « Ton véhicule » / « Ton arme » : choisir un modèle précis dans la section Personnalisations (comme le lien de sa fiche) ;
+   la liste ne garde que les postes qui lui vont (catalogue.js). Les noms viennent de vehicules-data.js et armes-data.js. */
+const PICK = {
+  'perso-vehicules': { k: 'Ton véhicule', sr: 'Choisir un véhicule', ph: 'Tape son nom ou sa marque', hint: 'Choisis un véhicule : la liste ne garde que les postes qui s’appliquent à sa catégorie.', clear: 'Changer de véhicule', icon: 'carrosserie' },
+  'perso-armes': { k: 'Ton arme', sr: 'Choisir une arme', ph: 'Tape son nom', hint: 'Choisis une arme : la liste ne garde que les postes qui lui vont.', clear: 'Changer d’arme', icon: 'viseur' }
+};
+function pickItems(fam) {
+  const ctx = load().ctx, tags = compatLabels(fam);
+  if (fam === 'perso-vehicules') return ctx.vehicles.filter(v => tags[v.cat]).map(v => ({ id: v.id, name: [v.marque, v.nom].filter(Boolean).join(' '), tag: v.cat, l: VEH_CATS[v.cat], u: 'vehicules/' + v.id + '.html' }));
+  if (fam === 'perso-armes') return [...ctx.weapons.values()].filter(a => tags[a.cat] || tags[a.id]).map(a => ({ id: a.id, name: a.nom, tag: a.cat, l: ARM_CATS[a.cat], u: 'armes/' + a.id + '.html' }));
+  return [];
+}
+function pickBlock(fam) {
+  const P = PICK[fam]; if (!P) return '';
+  const items = pickItems(fam), seen = new Map();
+  for (const x of items) seen.set(x.name, (seen.get(x.name) || 0) + 1);
+  const opts = items.sort((a, b) => a.name.localeCompare(b.name, 'fr')).map(x => '<option value="' + esc(seen.get(x.name) > 1 ? x.name + ' (' + x.l + ')' : x.name) + '" data-id="' + esc(x.id) + '" data-tag="' + esc(x.tag) + '" data-l="' + esc(x.l) + '" data-u="' + esc(x.u) + '"></option>').join('');
+  return '<div class="cat-pick" data-cat-pick="' + esc(fam) + '" hidden><div class="cat-pick-in"><p class="cat-pick-k">' + S.icon(P.icon, 'cat-pick-ico') + esc(P.k) + '</p>'
+    + '<label class="cat-pick-field"><span class="sr-only">' + esc(P.sr) + '</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg><input type="search" list="pick-' + esc(fam) + '" placeholder="' + esc(P.ph) + '" autocomplete="off" data-cat-pick-q></label>'
+    + '<datalist id="pick-' + esc(fam) + '">' + opts + '</datalist>'
+    + '<p class="cat-pick-hint">' + esc(P.hint) + '</p></div>'
+    + '<div class="cat-pick-card" data-cat-pick-card hidden><span class="cat-pick-badge" aria-hidden="true">' + S.icon(P.icon, 'cat-pick-badge-i') + '</span><div class="cat-pick-txt"><p class="cat-pick-name" data-cat-pick-name></p><p class="cat-pick-meta" data-cat-pick-meta role="status" aria-live="polite"></p></div>'
+    + '<a class="cat-pick-fiche" data-cat-pick-fiche href="' + esc(fam === 'perso-armes' ? 'armes.html' : 'vehicules.html') + '">Voir sa fiche</a><button type="button" class="cat-pick-clear" data-cat-pick-clear>' + esc(P.clear) + '</button></div></div>';
+}
+/* v7.69 : « Pour qui ? » sur les listes qui savent qui porte quoi (tatouages, coiffures, tenues) : Jason, Lucia ou tout */
+function whoSwitch(fam) {
+  const d = load(); if (!d.families[fam].items.some(it => it.personnage)) return '';
+  return '<div class="cat-who-sw" role="group" aria-label="Pour qui ?"><span class="cat-who-t">Pour qui ?</span><button type="button" data-cat-who="" aria-pressed="true">Tout</button><button type="button" data-cat-who="jason" aria-pressed="false">Vu sur Jason</button><button type="button" data-cat-who="lucia" aria-pressed="false">Vu sur Lucia</button></div>';
+}
 function listBox(fam, opts = {}) {
   const d = load(), data = d.families[fam], c = counts(fam), cats = new Map(data.categories.map(x => [x.id, x]));
   const groups = [...new Set(data.categories.map(x => x.groupe).filter(Boolean))];
@@ -283,7 +313,7 @@ function listBox(fam, opts = {}) {
   const rows = sortItems(data).map(it => row(fam, it, cats.get(it.categorie), d.sources)).join('\n');
   const chips = groups.length ? '<div class="cat-groups" role="group" aria-label="Filtrer par groupe">' + groups.map(g => '<button type="button" class="cat-chip" data-cat-group="' + esc(g) + '" id="' + esc(g === 'accessoires' ? 'accessoires' : fam + '-' + g) + '">' + esc({ vetements: 'Vêtements', accessoires: 'Accessoires', vehicules: 'Véhicules', armes: 'Armes' }[g] || g) + '</button>').join('') + '</div>' : '';
   const tags = compatLabels(fam);
-  return '<details class="cat-box" id="' + esc('box-' + fam) + '" data-catalogue="' + esc(fam) + '"' + (Object.keys(tags).length ? ' data-cat-tags="' + esc(JSON.stringify(tags)) + '"' : '') + (FOLDED.has(fam) ? ' data-cat-desc="fold"' : '') + (opts.open ? ' open' : '') + '>'
+  return pickBlock(fam) + '<details class="cat-box" id="' + esc('box-' + fam) + '" data-catalogue="' + esc(fam) + '"' + (Object.keys(tags).length ? ' data-cat-tags="' + esc(JSON.stringify(tags)) + '"' : '') + (FOLDED.has(fam) ? ' data-cat-desc="fold"' : '') + (opts.open ? ' open' : '') + '>'
     + '<summary class="cat-sum"><span class="cat-sum-t">' + esc(data.titre) + '</span><span class="cat-sum-n"><b>' + c.n + '</b> ' + esc(NOUN[fam] || '') + 'référencés · <b>' + c.confirmes + '</b> confirmés pour GTA VI · ' + c.serie + ' repères de la série</span><span class="cat-chev" aria-hidden="true"></span></summary>'
     + '<div class="cat-body">'
     + (Object.keys(tags).length ? '<p class="cat-filter" data-cat-filter hidden><span>Filtré pour :</span> <b data-cat-filter-label></b> <button type="button" class="cat-reset" data-cat-reset>Tout afficher</button></p>' : '')
@@ -295,7 +325,7 @@ function listBox(fam, opts = {}) {
     + '<label class="cat-sel"><span>Tri</span><select data-cat-sort><option value="statut">GTA VI d’abord</option><option value="nom">Nom (A → Z)</option><option value="cat">Catégorie</option><option value="prix">Repère de prix</option></select></label>'
     + '<button type="reset" class="cat-reset">Tout afficher</button>'
     + '<p class="cat-count" role="status" aria-live="polite" data-cat-count></p>'
-    + chips + '</form>'
+    + chips + whoSwitch(fam) + '</form>'
     + keyStrip(fam)
     + '<div class="cat-wrap"><table class="cat-table"><caption class="sr-only">' + esc(data.titre) + ' : ' + esc(counterText(fam)) + '</caption><thead><tr><th scope="col">Statut</th><th scope="col">Élément</th><th scope="col">Effet</th><th scope="col">GTA VI</th><th scope="col">Repère de la série</th><th scope="col">Où le trouver</th><th scope="col">Suivi</th></tr></thead><tbody>' + rows + '</tbody></table></div>'
     + '<p class="cat-empty" data-cat-empty hidden>Aucune ligne ne correspond. <button type="button" class="cat-reset" data-cat-reset>Tout afficher</button></p>'

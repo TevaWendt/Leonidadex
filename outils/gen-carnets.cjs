@@ -149,7 +149,8 @@ function page(k, footer) {
     : `<p class="cn-counter cn-counter--main"><b data-cn-n="done">0</b><span>${esc(E.compteurs.done)} sur <span data-cn-n="total">${nf(total)}</span></span></p><p class="cn-counter cn-counter--serie" data-cn-serie hidden>dont <b>0</b> repères de la série (GTA V, GTA Online), pas encore vus dans GTA VI</p>`
       + (E.compteurs.wish ? `<p class="cn-counter"><b data-cn-n="wish">0</b>${lab(E.compteurs.wish)}</p>` : '')
       + `<p class="cn-counter"><b data-cn-n="rest">${nf(total)}</b>${lab(E.compteurs.rest)}</p>`;
-  const meter = doc ? '' : `<div class="cn-meter" aria-hidden="true"><span class="cn-meter-bar"><i data-cn-bar style="width:0%"></i></span><span class="cn-meter-pct" data-cn-pct>0 %</span></div>`;
+  /* v7.69 : la part cochée en anneau (rempli par carnets.js, --p de 0 à 100) à côté des compteurs, au lieu d’une jauge en ligne */
+  const meter = doc ? '' : `<div class="cn-ring" data-cn-ring aria-hidden="true" style="--p:0"><svg viewBox="0 0 120 120" focusable="false"><circle class="cn-ring-bg" cx="60" cy="60" r="52"/><circle class="cn-ring-fg" cx="60" cy="60" r="52" pathLength="100"/></svg><span class="cn-ring-pct" data-cn-pct>0 %</span></div>`;
   const tabs = V2.map((v, i) => `<button type="button" role="tab" id="cn-tab-${v}" aria-controls="cn-panel" aria-selected="${i === 0}" tabindex="${i === 0 ? 0 : -1}" data-cn-view="${v}"><span class="cn-tab-l">${esc(E.vues[v])}</span> <span class="cn-tab-n" data-cn-tabn="${v}">0</span></button>`).join('');
   const famSelect = k.familles.length > 1 ? `<div class="cn-field"><label for="cn-fam">Famille</label><select id="cn-fam" data-cn-fam><option value="">Toutes</option>${k.familles.map(f => `<option value="${esc(f)}">${esc(S.FAM[f].label)}</option>`).join('')}</select></div>` : '';
   const stockSelect = k.familles.some(f => S.FAM[f].stock) ? `<div class="cn-field"><label for="cn-stock">Stock</label><select id="cn-stock" data-cn-stockf><option value="">Tous</option><option value="a-renseigner">Stock à renseigner</option><option value="en-stock">En stock</option><option value="epuise">Épuisé</option></select></div>` : '';
@@ -160,9 +161,10 @@ function page(k, footer) {
    <div class="cn-field"><label for="cn-sort">Trier</label><select id="cn-sort" data-cn-sort>${sortOpts}</select></div>
   </div>`;
   const catChips = doc ? '' : `<ul class="cn-cats" aria-label="Catégories recensées">${cats.map(c => `<li><span>${esc(c.c)}</span> <b>${nf(c.n)}</b></li>`).join('')}</ul>`;
-  const about = E.apropos.map(([h, p]) => `<div class="cn-about-card"><h3>${esc(h)}</h3><p>${esc(fill(p, vars))}</p></div>`).join('');
+  const about = E.apropos.map(([h, p], i) => `<div class="cn-about-card" style="--i:${i}"><span class="cn-about-n" aria-hidden="true">${String(i + 1).padStart(2, '0')}</span><h3>${esc(h)}</h3><p>${esc(fill(p, vars))}</p></div>`).join('');
   const faq = E.faq.map(([q, a]) => `<details><summary>${esc(q)}</summary><div class="ans"><p>${esc(a)}</p></div></details>`).join('');
-  const others = M.carnets.filter(o => o.id !== k.id).map(o => `<li><a href="${esc(o.url.replace('/carnets/', ''))}"><span class="cn-other-t">${esc(o.titre)}</span><span class="cn-other-b">${esc(o.bouton)}</span></a></li>`).join('');
+  /* v7.69 : chaque autre carnet avec le premier visuel de sa pile */
+  const others = M.carnets.filter(o => o.id !== k.id).map(o => { const f = stackOf(o.id, prefix).first; return `<li><a href="${esc(o.url.replace('/carnets/', ''))}"><span class="cn-other-img"><img src="${esc(prefix + f.src.replace(/^\//, ''))}" width="480" height="270" alt="" loading="lazy" decoding="async"></span><span class="cn-other-txt"><span class="cn-other-t">${esc(o.titre)}</span><span class="cn-other-b">${esc(o.bouton)}</span></span></a></li>`; }).join('');
   const scripts = ['search-index.js', 'app.js', 'modele-donnees.js', 'carnets-core.js']
     .concat(k.id === 'proprietes' ? ['acquisitions-data.js', 'progression-core.js'] : [])
     .concat(k.id === 'collectibles' ? ['collectibles-data.js', 'collectibles-core.js'] : [])
@@ -202,8 +204,7 @@ ${header(prefix)}
     <p class="fiche-cat">${esc(C.kicker)}</p>
     <h1>${esc(k.titre)}</h1>
     <p class="lede">${esc(E.lede)}</p>
-    <div class="cn-counters" data-cn-counters>${counters}</div>
-    ${meter}
+    <div class="cn-score">${meter}<div class="cn-counters" data-cn-counters>${counters}</div></div>
     <p class="cn-head-links"><a class="cn-btn cn-btn--main" href="#carnet">${doc ? 'Voir mes enregistrements' : 'Voir mon carnet'}</a><a class="cn-btn" href="${esc(catalogueHref)}">${esc(E.cta)}</a><a class="cn-btn cn-btn--ghost" href="${prefix}progression.html#carnets">Toute ma progression</a></p>
   </div>${st.html}</div>
 </section>

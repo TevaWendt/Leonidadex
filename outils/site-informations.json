@@ -130,6 +130,16 @@
   "source": "https://www.anthropic.com/legal/privacy",
   "terms": "https://www.anthropic.com/legal/commercial-terms",
   "sourceDate": "2026-09-10",
-  "checkedAt": "2026-10-06"
+  "checkedAt": "2026-10-06",
+  "gratuit": 30,
+  "heures": 9
+ },
+ "kv": {
+  "name": "Upstash",
+  "entity": "Upstash, Inc. (société du Delaware, États-Unis)",
+  "source": "https://upstash.com/trust/privacy.pdf",
+  "dpa": "https://upstash.com/trust/dpa.pdf",
+  "checkedAt": "2026-10-06",
+  "note": "Base Redis reliée au projet Vercel (intégration Upstash du Marketplace) ; région à choisir en Europe."
  }
 }
