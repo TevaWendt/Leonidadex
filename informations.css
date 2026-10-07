@@ -212,3 +212,53 @@
  .info-table tbody tr :is(th,td):last-child,.info-table tbody tr:last-child :is(th,td):last-child{border-bottom:0;}
  .info-table td[data-label]::before{content:attr(data-label);content:attr(data-label) / "";display:block;margin-bottom:2px;font-size:.78rem;font-weight:800;letter-spacing:.02em;color:var(--ink-soft);}
 }
+
+/* ============================================================
+   v7.70 (Téva : « toute la section Mentions fait brouillon, rien n'est aligné, beaucoup de texte part en bordel ») :
+   même largeur de lecture partout (860 px), tableau « Ce qui part, et où » en fiches à cinq cases lisibles sur toutes les
+   largeurs (plus de colonnes étroites), listes à puces en cartes, prestataires et hébergeur en fiches alignées, historique
+   en frise. Les rôles ARIA du tableau restent (lecteurs d'écran) ; seule la mise en page change.
+   ============================================================ */
+.ed-zone--legal .info-prose-in,.ed-zone--legal .info-dl,.ed-zone--legal .info-history,.ed-zone--legal .info-clair,.ed-zone--legal .info-table{max-width:860px;}
+.ed-zone--legal .info-prose-in h3{display:flex;align-items:center;gap:12px;margin:34px 0 14px;font-size:1.25rem;}
+.ed-zone--legal .info-prose-in h3::after{content:'';flex:1;height:1px;background:var(--rule);}
+/* listes à puces : cartes */
+.ed-zone--legal .info-prose-in ul{list-style:none;margin:12px 0 18px;padding:0;display:grid;gap:8px;}
+.ed-zone--legal .info-prose-in ul>li{position:relative;margin:0;padding:11px 14px 11px 40px;border:1.5px solid var(--rule);border-radius:12px;background:#fff;line-height:1.6;}
+.ed-zone--legal .info-prose-in ul>li::before{content:'';position:absolute;left:16px;top:19px;width:10px;height:10px;border-radius:50%;background:var(--amber);border:1.5px solid var(--ink);}
+.ed-zone--legal .ed--night .info-prose-in ul>li{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.25);}
+.ed-zone--legal .info-prose-in ul>li code{white-space:nowrap;}
+/* fiches clé / valeur (hébergeur, prestataires) */
+.ed-zone--legal .info-dl{gap:8px;border-top:0;}
+.ed-zone--legal .info-dl>div{grid-template-columns:minmax(150px,200px) minmax(0,1fr);gap:18px;padding:14px 16px;border:1.5px solid var(--rule);border-radius:12px;background:#fff;}
+.ed-zone--legal .info-dl dt{font:800 .72rem/1.5 var(--font-mono,ui-monospace,monospace);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);padding-top:2px;}
+.ed-zone--legal .info-dl dd{line-height:1.65;}
+.ed-zone--legal .ed--night .info-dl>div{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.25);}
+.ed-zone--legal .ed--night .info-dl dt{color:rgba(253,251,247,.75);}
+@media (max-width:900px){.ed-zone--legal .info-dl>div{grid-template-columns:1fr;gap:6px;}}/* la fiche s'empile sous 900 px, comme la liste d'origine : sinon « confidentialité » se coupe à 320 px */
+/* tableau des traitements : une fiche par ligne, cinq cases nommées */
+.ed-zone--legal .info-table{overflow:visible;border:0;border-radius:0;background:none;margin:12px 0 22px;}
+.ed-zone--legal .info-table table{min-width:0;display:block;}
+.ed-zone--legal .info-table thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;}
+.ed-zone--legal .info-table tbody{display:grid;gap:12px;}
+.ed-zone--legal .info-table tbody tr{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-areas:"h h" "d r" "f t";gap:10px 14px;margin:0;padding:16px 18px;border:2px solid var(--ink);border-radius:14px;background:#fff;box-shadow:4px 4px 0 rgba(26,26,30,.1);overflow:visible;}
+.ed-zone--legal .info-table tbody th{grid-area:h;display:block;min-width:0;padding:0 0 10px;margin:0 0 2px;border:0;border-bottom:1.5px dashed var(--rule);background:none;font:900 1.08rem/1.25 'Archivo',sans-serif;color:var(--ink);}
+.ed-zone--legal .info-table tbody td{display:block;padding:10px 12px;border:1.5px solid var(--rule);border-radius:10px;background:var(--paper);font-size:.92rem;line-height:1.55;}
+.ed-zone--legal .info-table tbody td:nth-of-type(1){grid-area:d;}
+.ed-zone--legal .info-table tbody td:nth-of-type(2){grid-area:r;}
+.ed-zone--legal .info-table tbody td:nth-of-type(3){grid-area:f;}
+.ed-zone--legal .info-table tbody td:nth-of-type(4){grid-area:t;}
+.ed-zone--legal .info-table td[data-label]::before{content:attr(data-label);display:block;margin-bottom:4px;font:800 .64rem/1.4 var(--font-mono,ui-monospace,monospace);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);}
+.ed-zone--legal .info-table tbody tr:target,.ed-zone--legal .info-table tbody tr.is-target{box-shadow:0 0 0 3px var(--amber),4px 4px 0 rgba(26,26,30,.1);}
+@media(max-width:600px){.ed-zone--legal .info-table tbody tr{grid-template-columns:1fr;grid-template-areas:"h" "d" "r" "f" "t";padding:14px;}.ed-zone--legal .info-table tbody th{font-size:1rem;}}
+/* historique : frise */
+.ed-zone--legal .info-history{list-style:none;padding:0 0 0 26px;margin:0;position:relative;display:grid;gap:12px;}
+.ed-zone--legal .info-history::before{content:'';position:absolute;left:8px;top:8px;bottom:8px;width:2px;background:var(--rule);}
+.ed-zone--legal .info-history li{position:relative;margin:0;padding:12px 16px;border:1.5px solid var(--rule);border-radius:12px;background:#fff;line-height:1.6;}
+.ed-zone--legal .info-history li::before{content:'';position:absolute;left:-23px;top:18px;width:10px;height:10px;border-radius:50%;background:var(--amber);border:1.5px solid var(--ink);}
+.ed-zone--legal .info-history li:first-child::before{background:var(--coral);}
+.ed-zone--legal .info-history time{font:800 .72rem/1.6 var(--font-mono,ui-monospace,monospace);letter-spacing:.06em;text-transform:uppercase;color:var(--ink);display:inline-block;margin-right:4px;}
+.ed-zone--legal .info-updated{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border:1.5px solid var(--ink);border-radius:999px;background:var(--paper);font-size:.9rem;margin:0 0 16px!important;}
+/* en bref : alignement des cinq cartes et de leurs textes */
+.ed-zone--legal .info-illus li{align-items:flex-start;}
+.ed-zone--legal .info-illus h3{min-height:0;}

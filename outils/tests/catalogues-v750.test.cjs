@@ -187,7 +187,7 @@ test('page Achats : un visuel par catégorie, comptes justes, accès rapide, pil
   assert.match(css, /\.ak-stack:not\(\.is-grid\) \.ak-slot\{position:sticky/); assert.match(css, /prefers-reduced-motion:reduce\)\{\.ak-stack\{grid-template-columns/);
   const p = await load(root, 'achats.html'), btn = p.d.querySelector('[data-ak-view]');
   assert.equal(btn.hidden, false); fire(p, btn);
-  assert.ok(p.d.querySelector('[data-ak-stack]').classList.contains('is-grid')); assert.equal(p.w.sessionStorage.getItem('lk_achats_vue'), 'grille');
+  assert.ok(p.d.querySelector('[data-ak-stack]').classList.contains('is-grid')); assert.equal(p.w.sessionStorage.getItem('lk_achats_vue'), null, 'v7.70 : le choix de la grille n’est plus gardé, la pile revient à chaque ouverture');
   assert.deepEqual(p.errors, []); p.close();
 });
 

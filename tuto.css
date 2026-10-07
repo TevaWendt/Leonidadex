@@ -103,3 +103,52 @@
 .t-counts>p{margin:0 0 8px}
 .t-count-list{margin:10px 0 0;padding-left:18px;display:grid;gap:6px;font-size:.92rem;line-height:1.5}
 .t-count-g{display:inline-block;padding:0 7px;border:1px solid var(--rule,#DFD9CC);border-radius:999px;font:700 .68rem/1.6 var(--font-mono,ui-monospace,monospace);text-transform:uppercase;letter-spacing:.04em;color:var(--ink-soft)}
+
+/* ============================================================
+   v7.70 (Téva : « le Tuto, fais-le plus joli ») : en-tête en deux colonnes avec une vraie capture qui se redresse, chiffres du
+   parcours ; sommaire avec barre de progression ; chapitres avec numéro en médaillon, titre souligné d'ambre, étapes à
+   pastilles décalées, exercice en « carte à bord », captures avec ombre portée. Mouvement réduit : tout est immobile.
+   ============================================================ */
+.t-hero{padding:48px 0 44px;}
+.t-hero-in{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:36px;align-items:center;}
+.t-hero-txt{min-width:0;}
+.t-hero-acts{display:flex;flex-wrap:wrap;align-items:center;gap:6px 18px;}
+.t-hero-acts .t-button{margin-right:0;}
+.t-hero-acts .t-hero-link{margin-top:18px;}
+.t-hero-facts{list-style:none;margin:26px 0 0;padding:18px 0 0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;border-top:1px solid rgba(255,255,255,.22);}
+.t-hero-facts li{display:flex;flex-direction:column;gap:2px;}
+.t-hero-facts b{font:900 1.7rem/1 'Archivo',sans-serif;color:var(--amber);letter-spacing:-.02em;}
+.t-hero-facts span{font-size:.8rem;line-height:1.3;color:#EBDDEE;}
+.t-hero-fig{position:relative;margin:0;justify-self:end;width:100%;max-width:460px;aspect-ratio:4/3;border:2px solid var(--ink);border-radius:16px;overflow:hidden;background:#fff;box-shadow:8px 8px 0 var(--amber),0 30px 60px rgba(0,0,0,.35);transform:perspective(1200px) rotateY(-8deg) rotateX(3deg);transition:transform .8s var(--ease-out,cubic-bezier(.16,1,.3,1));}
+.t-hero-fig img{display:block;width:100%;height:100%;object-fit:cover;object-position:top left;}
+.t-hero-fig figcaption{position:absolute;left:12px;bottom:10px;padding:5px 10px;border:1.5px solid var(--ink);border-radius:999px;background:rgba(253,251,247,.94);color:var(--ink);font:800 .64rem/1 var(--font-mono,ui-monospace,monospace);letter-spacing:.1em;text-transform:uppercase;}
+.t-hero:hover .t-hero-fig{transform:perspective(1200px) rotateY(-3deg) rotateX(1deg);}
+@media(max-width:900px){.t-hero-in{grid-template-columns:1fr;gap:24px;}.t-hero-fig{justify-self:start;max-width:420px;transform:none;}.t-hero-facts{grid-template-columns:repeat(2,minmax(0,1fr));}}
+/* sommaire */
+.t-aside details{padding:14px 14px 12px;}
+.t-aside summary{position:relative;flex-wrap:wrap;gap:8px 10px;}
+.t-aside-prog{display:block;flex-basis:100%;height:6px;border-radius:999px;background:#EFE9DD;overflow:hidden;}
+.t-aside-prog i{display:block;height:100%;width:6%;border-radius:999px;background:linear-gradient(90deg,var(--coral),var(--amber));transition:width .6s var(--ease-out,ease);}
+.t-aside-hint{margin:6px 0 2px;font:800 .66rem/1.4 var(--font-mono,ui-monospace,monospace);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);}
+.t-aside ol{counter-reset:t-toc;padding-left:0;list-style:none;}
+.t-aside li{counter-increment:t-toc;}
+.t-aside li a{position:relative;padding-left:34px;}
+.t-aside li a::before{content:counter(t-toc,decimal-leading-zero);position:absolute;left:8px;top:50%;transform:translateY(-50%);font:800 .64rem/1 var(--font-mono,ui-monospace,monospace);color:var(--ink-soft);}
+.t-aside li a.is-current::before{color:var(--amber);}
+/* chapitres */
+.t-chapter{position:relative;border-top-width:2px;padding:28px 30px 28px;}
+.t-chapter::before{content:'';position:absolute;left:-2px;top:-2px;width:72px;height:6px;border-radius:0 0 6px 0;background:var(--amber);}
+.t-chapter-n{display:inline-flex;align-items:center;gap:10px;margin:0 0 14px;padding:4px 10px 4px 4px;border:1.5px solid var(--ink);border-radius:999px;background:var(--paper);color:var(--ink);}
+.t-chapter h2{display:block;}
+.t-chapter-n::before{content:'';width:10px;height:10px;border-radius:50%;background:var(--coral);}
+.t-chapter h2{position:relative;padding-bottom:6px;background:linear-gradient(var(--amber),var(--amber)) left bottom/48px 5px no-repeat;}
+.t-steps li{box-shadow:3px 3px 0 rgba(26,26,30,.1);transition:transform .2s var(--ease-out,ease),box-shadow .2s;}
+.t-steps li:hover{transform:translateX(3px);box-shadow:5px 5px 0 var(--amber);}
+.t-example{position:relative;padding-left:22px;border:2px solid var(--ink);border-left:8px solid var(--amber);background:#FFF8E8;box-shadow:4px 4px 0 rgba(26,26,30,.12);}
+.t-figure{box-shadow:6px 6px 0 rgba(26,26,30,.14);}
+.t-figure-bar{background:linear-gradient(90deg,var(--ink),#2b1b4d);}
+.t-mode-fields>div{box-shadow:3px 3px 0 rgba(26,26,30,.1);}
+.t-pitfall{box-shadow:3px 3px 0 rgba(26,26,30,.1);}
+.t-pitfall summary::before{content:'!';display:inline-grid;place-items:center;width:22px;height:22px;margin-right:10px;border-radius:50%;background:var(--coral);color:#fff;font:900 .8rem/1 'Archivo',sans-serif;}
+.t-back{display:inline-flex;align-items:center;gap:6px;}
+@media(prefers-reduced-motion:reduce){.t-hero-fig,.t-aside-prog i,.t-steps li{transition:none;}.t-hero-fig,.t-hero:hover .t-hero-fig{transform:none;}.t-steps li:hover{transform:none;}}

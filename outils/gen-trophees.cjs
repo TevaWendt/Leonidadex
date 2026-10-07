@@ -209,6 +209,19 @@ function suivi(ctx, list, opts = {}) {
 }
 
 /* ---------- hub ---------- */
+/* v7.70 (Téva : « la partie suivi est moche, plus belle, plus moderne ») : tant que la liste n'est pas publiée, le suivi est un
+   tableau de bord en attente : l'anneau à zéro et « 0 / ? », un compteur par grade (0 / ?), et le squelette de la liste
+   (trois lignes fantômes : badge, nom, condition, case « Obtenu »), le tout rempli à la publication. Rien d'inventé. */
+function attente(LI) {
+  const B = LI.bilan;
+  const grade = g => '<li class="trophees-att-g trophees-att-g--' + g + '">' + badgeHtml(g).replace('<span class="trophees-sceau">' + SCEAU + '</span>', '') + '<b>0<span aria-hidden="true"> / </span><i>?</i></b><span>' + esc(GRADE_LABEL[g]) + '</span></li>';
+  const ghost = (g, i) => '<li class="trophees-ghost" style="--i:' + i + '" aria-hidden="true">' + badgeHtml(g).replace('<span class="trophees-sceau">' + SCEAU + '</span>', '') + '<span class="trophees-ghost-b"><span class="trophees-ghost-l trophees-ghost-l--t"></span><span class="trophees-ghost-l"></span><span class="trophees-ghost-l trophees-ghost-l--s"></span></span><span class="trophees-ghost-case"><i></i>' + esc((LI.exemple && LI.exemple.obtenu) || 'Obtenu') + '</span></li>';
+  return '<div class="trophees-att lkx-unlock lk-arrive" data-lkx-in>'
+    + '<div class="trophees-bilan trophees-bilan--att"><div class="trophees-anneau" aria-hidden="true"><span class="trophees-anneau-d"><i></i></span><span class="trophees-anneau-g"><i></i></span><span class="trophees-anneau-c"><b>—</b></span></div>'
+    + '<div class="trophees-bilan-t"><p class="trophees-bilan-n"><b>0</b><span aria-hidden="true">/</span><b>?</b></p><p class="trophees-bilan-l">' + esc(B.libelle) + '</p><p class="trophees-bilan-note">' + esc(B.note) + '</p></div>'
+    + '<ul class="trophees-att-grades" aria-label="Trophées par grade">' + GRADES.map(grade).join('') + '</ul></div>'
+    + '<div class="trophees-att-skel"><p class="trophees-att-vide">' + esc(LI.vide) + '</p><ol class="trophees-ghosts">' + ['platine', 'or', 'argent', 'bronze'].map(ghost).join('') + '</ol></div></div>';
+}
 /* aperçu d’une fiche trophée : une carte qui ouvre, en plein écran, le squelette de chaque fiche (rien d’inventé : la liste
    n’est pas publiée) */
 function apercu(LI) {
@@ -239,7 +252,7 @@ function hubPage(ctx) {
     + '<ul class="trophees-gtav-l lkx-wave lk-arrive" data-lkx-in>' + G.items.map(x => '<li><p>' + esc(x.texte) + '</p><p>' + st(x.statut, x.sources) + '</p></li>').join('') + '</ul></section>';
   const list = T.trophees;
   const liste = '<section class="shell trophees-liste-sec" id="liste" aria-labelledby="liste-t"><div class="reveal"><p class="trophees-kicker">' + esc(LI.kicker) + '</p><h2 class="sec-h" id="liste-t">' + esc(LI.titre) + '</h2></div>'
-    + (list.length ? suivi(ctx, list) : '<p class="trophees-vide">' + esc(LI.vide) + '</p>')
+    + (list.length ? suivi(ctx, list) : attente(LI))
     + apercu(LI) + '<h3 class="trophees-sous-t">' + esc(LI.champsTitre) + '</h3><dl class="trophees-champs">' + LI.champs.map(x => '<div><dt>' + esc(x.t) + '</dt><dd>' + esc(x.d) + '</dd></div>').join('') + '</dl>'
     + '<p class="trophees-note">' + esc(LI.note) + '</p></section>';
   const body = `<section class="page-head shell lk-glow"><div class="lk-head-grid"><div>

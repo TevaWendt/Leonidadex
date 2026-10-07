@@ -312,7 +312,7 @@
           "icon": "securite",
           "titre": "Tes données restent chez toi",
           "p": [
-            "Calculs, suivi et conversation avec Léo restent dans ton navigateur. Ce qui part, seulement si tu l’envoies : l’alerte de l’accueil et le formulaire de Contact (par Brevo), et tes questions à Léo ou à la barre du calculateur (vers l’IA Claude d’Anthropic, sans être gardées par le site)."
+            "Calculs, suivi et conversation avec Léo restent dans ton navigateur. Ce qui part, seulement si tu l’envoies : l’alerte de l’accueil et le formulaire de Contact (par Brevo), et tes questions à Léo ou à la barre du calculateur (vers l’IA du site, sans être gardées par le site)."
           ],
           "href": "mentions-legales.html#confidentialite",
           "label": "Lire la page Mentions et confidentialité"
@@ -373,7 +373,7 @@
       },
       {
         "q": "Que deviennent mes données ?",
-        "a": "Elles restent dans ton navigateur : calculs, suivi, favoris, conversation avec Léo. Ce qui part : un formulaire que tu envoies, et tes questions à Léo ou à la barre du calculateur, comprises par l’IA Claude (Anthropic). Mentions et confidentialité détaille ce qui est stocké et comment l’effacer."
+        "a": "Elles restent dans ton navigateur : calculs, suivi, favoris, conversation avec Léo. Ce qui part : un formulaire que tu envoies, et tes questions à Léo ou à la barre du calculateur, comprises par l’IA du site. Mentions et confidentialité détaille ce qui est stocké et comment l’effacer."
       },
       {
         "q": "Comment signaler une erreur ?",

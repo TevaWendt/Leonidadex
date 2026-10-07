@@ -1,5 +1,5 @@
-/* Leonidakit — lk-ia.js (v7.69) : accès à l'IA (Claude) de Léo et de la barre du calculateur, côté page.
-   - Le visiteur choisit qui répond : « IA Claude » ou « Local » (lk_ia_mode, sur cet appareil). Il voit toujours lequel
+/* Leonidakit — lk-ia.js (v7.69) : accès à l'IA de Léo et de la barre du calculateur, côté page.
+   - Le visiteur choisit qui répond : « IA » ou « Local » (lk_ia_mode, sur cet appareil). Il voit toujours lequel
      répond : un bandeau sous la barre et dans Léo, et une mention sous chaque réponse.
    - 30 questions IA gratuites par visiteur et par 9 heures (réglage du serveur) ; ensuite, mode local jusqu'au
      renouvellement, ou crédit payant si la vente est ouverte (api/ia-achat.js : paiement chez Stripe).
@@ -46,7 +46,7 @@
   }
   let refreshing = null;
   function refresh(force) {
-    /* mode local : rien ne part, pas même la lecture des compteurs (elle reprend quand le visiteur choisit « IA Claude ») */
+    /* mode local : rien ne part, pas même la lecture des compteurs (elle reprend quand le visiteur choisit « IA ») */
     if (mode() === 'local' && !force) return Promise.resolve(api.state());
     if (refreshing) return refreshing;
     if (!force && state.at && Date.now() - state.at < 60000 && state.on !== undefined) return Promise.resolve(api.state());
@@ -69,23 +69,23 @@
   function status() {
     if (state.on === false) return { kind: 'off', text: 'IA indisponible pour le moment : réponses locales du site.' };
     if (mode() === 'local') return { kind: 'local', text: 'Mode local : réponses du site, sans IA. Tes questions IA gratuites restent de côté.' };
-    if (typeof state.restant === 'number' && state.restant > 0) return { kind: 'ia', text: 'IA Claude : ' + nf(state.restant) + ' ' + (state.restant > 1 ? 'questions gratuites' : 'question gratuite') + ' sur ' + nf(state.gratuit || 30) + (state.reset ? ' (de nouveau ' + nf(state.gratuit || 30) + ' à ' + clock(state.reset) + ')' : ' toutes les ' + nf(state.heures || 9) + ' h') + '.' };
-    if (credit()) return { kind: 'ia', text: 'IA Claude : crédit ' + money(state.solde) + '. Chaque question coûte son prix réel plus ' + nf(state.marge || 20) + ' %.' };
+    if (typeof state.restant === 'number' && state.restant > 0) return { kind: 'ia', text: 'IA : ' + nf(state.restant) + ' ' + (state.restant > 1 ? 'questions gratuites' : 'question gratuite') + ' sur ' + nf(state.gratuit || 30) + (state.reset ? ' (de nouveau ' + nf(state.gratuit || 30) + ' à ' + clock(state.reset) + ')' : ' toutes les ' + nf(state.heures || 9) + ' h') + '.' };
+    if (credit()) return { kind: 'ia', text: 'IA : crédit ' + money(state.solde) + '. Chaque question coûte son prix réel plus ' + nf(state.marge || 20) + ' %.' };
     if (state.restant === 0) return { kind: 'quota', text: 'Questions IA gratuites épuisées : mode local' + (state.reset ? ' jusqu’à ' + clock(state.reset) : '') + '.' };
-    return { kind: 'ia', text: 'IA Claude : ' + nf(state.gratuit || 30) + ' questions gratuites toutes les ' + nf(state.heures || 9) + ' h.' };
+    return { kind: 'ia', text: 'IA : ' + nf(state.gratuit || 30) + ' questions gratuites toutes les ' + nf(state.heures || 9) + ' h.' };
   }
 
   /* ---------- commande « Qui répond ? » (barre du calculateur, Léo) ---------- */
   const controls = new Set();
   function control(where) {
     const box = document.createElement('div'); box.className = 'lkia lkia--' + where;
-    box.innerHTML = '<div class="lkia-sw" role="group" aria-label="Qui répond ?"><span class="lkia-t">Qui répond ?</span><button type="button" data-lkia-mode="ia">IA Claude</button><button type="button" data-lkia-mode="local">Local</button></div><p class="lkia-st" role="status" aria-live="polite"></p><button type="button" class="lkia-more" data-lkia-shop hidden>Plus de questions</button>';
+    box.innerHTML = '<div class="lkia-sw" role="group" aria-label="Qui répond ?"><span class="lkia-t">Qui répond ?</span><button type="button" data-lkia-mode="ia">IA</button><button type="button" data-lkia-mode="local">Local</button></div><p class="lkia-st" role="status" aria-live="polite"></p><button type="button" class="lkia-more" data-lkia-shop hidden>Plus de questions</button>';
     box.addEventListener('click', e => {
       const m = e.target.closest('[data-lkia-mode]'); if (m) { setMode(m.dataset.lkiaMode); return; }
       if (e.target.closest('[data-lkia-shop]')) shop();
     });
     controls.add(box); paintOne(box);
-    /* l'état réel (questions restantes) n'est lu qu'en mode IA Claude : à l'ouverture de Léo, ou quand le visiteur entre dans
+    /* l'état réel (questions restantes) n'est lu qu'en mode IA : à l'ouverture de Léo, ou quand le visiteur entre dans
        la barre du calculateur (clic, clavier) ; jamais au simple survol, jamais en mode local */
     const wake = () => refresh(false);
     if (where === 'leo') wake(); else box.addEventListener('focusin', wake, { once: true, passive: true });
@@ -102,7 +102,7 @@
   function setMode(m) { acted = true; put(() => { if (m === 'local') localStorage.setItem(KEY_MODE, 'local'); else localStorage.removeItem(KEY_MODE); }); emit(); if (m !== 'local') refresh(false); }
 
   /* mention sous une réponse : qui l'a écrite */
-  function credit_line(byAI) { return byAI ? 'Réponse de l’IA Claude.' : 'Réponse locale, sans IA.'; }
+  function credit_line(byAI) { return byAI ? 'Réponse de l’IA.' : 'Réponse locale, sans IA.'; }
 
   /* ---------- crédit payant (si la vente est ouverte) ---------- */
   let dlg = null;
@@ -113,7 +113,7 @@
     if (!dlg) {
       dlg = document.createElement('dialog'); dlg.className = 'lkia-dlg'; dlg.setAttribute('aria-labelledby', 'lkia-dlg-t');
       dlg.innerHTML = '<div class="lkia-dlg-in"><button type="button" class="lkia-x" data-lkia-close aria-label="Fermer"><span aria-hidden="true">×</span></button>'
-        + '<p class="lkia-k">IA Claude</p><h2 id="lkia-dlg-t">Plus de questions à l’IA</h2>'
+        + '<p class="lkia-k">IA</p><h2 id="lkia-dlg-t">Plus de questions à l’IA</h2>'
         + '<p class="lkia-p" data-lkia-intro></p>'
         + '<p class="lkia-solde" data-lkia-solde></p>'
         + '<div class="lkia-packs" data-lkia-packs role="group" aria-label="Montant"></div>'
@@ -142,7 +142,7 @@
   function fill() {
     if (!dlg) return;
     const packs = state.packs || [3, 5, 10];
-    dlg.querySelector('[data-lkia-intro]').textContent = 'Tes ' + nf(state.gratuit || 30) + ' questions gratuites reviennent toutes les ' + nf(state.heures || 9) + ' heures. Pour continuer tout de suite, ajoute du crédit : chaque question coûte son prix réel chez Anthropic (l’entreprise de Claude) plus ' + nf(state.marge || 20) + ' % pour le site, environ ' + money(perQuestion(), 3) + '. Les frais du paiement (0,25 € + 1,5 %) sont retirés du crédit.';
+    dlg.querySelector('[data-lkia-intro]').textContent = 'Tes ' + nf(state.gratuit || 30) + ' questions gratuites reviennent toutes les ' + nf(state.heures || 9) + ' heures. Pour continuer tout de suite, ajoute du crédit : chaque question coûte son prix réel chez le fournisseur de l’IA plus ' + nf(state.marge || 20) + ' % pour le site, environ ' + money(perQuestion(), 3) + '. Les frais du paiement (0,25 € + 1,5 %) sont retirés du crédit.';
     dlg.querySelector('[data-lkia-solde]').textContent = typeof state.solde === 'number' ? 'Ton crédit : ' + money(Math.max(0, state.solde)) + '.' : '';
     const wrap = dlg.querySelector('[data-lkia-packs]');
     if (!wrap.children.length || wrap.dataset.k !== packs.join(',')) { wrap.dataset.k = packs.join(','); wrap.innerHTML = packs.map(p => '<button type="button" data-lkia-pack="' + p + '" aria-pressed="false"><b>' + money(p * 1e6) + '</b><span>environ ' + nf(estimate(p)) + ' questions</span></button>').join(''); }

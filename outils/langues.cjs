@@ -120,7 +120,9 @@ function memoire(root, code) {
     /* v7.64 : un nombre écrit sans séparateur (« 2547 », « 2026 ») peut être repris tel quel par la traduction (allemand :
        « 2547 Orte ») ou au format de la langue (italien : « 2.547 luoghi ») : la forme choisie est gardée pour ce trou */
     const raw = [];
-    for (const n of found) { let t = numText(n, fmt), i = rest.indexOf(t), r = false; if (i < 0 && /^\d+$/.test(n)) { t = n; i = rest.indexOf(t); r = true; } if (i < 0) { ok = false; break; } raw.push(r); out += rest.slice(0, i) + '⟨#⟩'; rest = rest.slice(i + t.length); }
+    /* v7.70 : le nombre est cherché hors des repères (« <1>1</1> » : le 1 du texte, pas celui de la balise) */
+    const at = (s, t) => { for (let i = s.indexOf(t); i >= 0; i = s.indexOf(t, i + 1)) { const before = s[i - 1] || '', after = s[i + t.length] || ''; if (!/[<\/\d]/.test(before) && !/[>\/\d]/.test(after)) return i; } return -1; };
+    for (const n of found) { let t = numText(n, fmt), i = at(rest, t), r = false; if (i < 0 && /^\d+$/.test(n)) { t = n; i = at(rest, t); r = true; } if (i < 0) { ok = false; break; } raw.push(r); out += rest.slice(0, i) + '⟨#⟩'; rest = rest.slice(i + t.length); }
     if (ok) nums.set(key.replace(NUM, '⟨#⟩'), { v: out + rest, key, raw });
   }
   /* Motifs (« _motifs » d'un fichier de la mémoire) : une phrase fabriquée par un générateur, avec des trous {1}, {2}…

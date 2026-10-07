@@ -134,6 +134,8 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     setText('col-trackable-label', trackable.length ? '/ ' + trackable.length + (lkPluriel(trackable.length)?' trouvés':' trouvé') : 'objet suivi');
     setText('col-percent', percent === null ? '—' : percent + ' %');
     if ($('col-progress-fill')) $('col-progress-fill').style.width = (percent || 0) + '%';
+    /* v7.70 : l’anneau du carnet suit la même part que la barre */
+    document.querySelectorAll('.col-ring-fg').forEach(function (r) { r.style.setProperty('--p', String(percent || 0)); });
     if ($('col-progress-meter')) {
       $('col-progress-meter').setAttribute('aria-valuenow', percent || 0);
       $('col-progress-meter').setAttribute('aria-valuetext', percent === null ? 'Progression indisponible : aucun collectible suivi' : found + ' sur ' + trackable.length + ' fiches suivies, ' + percent + ' %');

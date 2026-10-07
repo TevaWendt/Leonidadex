@@ -98,10 +98,12 @@ test('page Personnalisations : gabarit du lot 5, deux listes dans l’ordre, car
   /* cartes Rockstar : deux cases (kit Ganado, motif Vintage), reprises une fois chacune dans les listes */
   assert.deepEqual([...d.querySelectorAll('#contenus .d-card')].map(x=>x.id),['ganado-retro-build','vintage-weapon-pattern']);
   assert.equal(d.querySelectorAll('input[data-acq-toggle="ganado-retro-build"]').length,2);assert.equal(d.querySelectorAll('input[data-acq-toggle="vintage-weapon-pattern"]').length,2);
-  /* ateliers : Rideout avec vignette et lien carte, One-Eyed Willie’s sans repère avec sa fiche, trois armureries */
-  const at=[...d.querySelectorAll('#ateliers .ed-atelier')];assert.ok(at.length>=9,'cartes-ateliers');
-  const rideout=at.find(x=>x.querySelector('b').textContent==='Rideout Customs');assert.ok(rideout.querySelector('svg.ed-map .ed-map-pin'));assert.ok(rideout.querySelector('a[href="carte.html#lieu=g-L2375"]'));assert.ok(rideout.querySelector('a[href="entreprises/rideout-customs.html"]'));
-  const willie=at.find(x=>x.querySelector('b').textContent==='One-Eyed Willie’s');assert.ok(willie.querySelector('svg.ed-map--vide'));assert.equal(willie.querySelector('.ed-map-pin'),null);assert.match(willie.textContent,/Pas encore placé/);assert.ok(willie.querySelector('a[href="entreprises/one-eyed-willie.html"]'));
+  /* ateliers (v7.70 : plateau avec une seule carte à repères numérotés) : Rideout avec vignette et lien carte, One-Eyed Willie’s
+     sans repère avec sa fiche, trois armureries */
+  const at=[...d.querySelectorAll('#ateliers li.ed-at')];assert.ok(at.length>=9,'cartes-ateliers');
+  assert.ok(d.querySelector('#ateliers .ed-at-board figure.ed-at-map svg .lk-loc-pin[data-place="g-L2375"]'),'repère de Rideout sur le plateau');
+  const rideout=at.find(x=>x.querySelector('b').textContent==='Rideout Customs');assert.equal(rideout.dataset.atelier,'g-L2375');assert.ok(rideout.querySelector('.ed-at-visual img'));assert.ok(rideout.querySelector('a[href="carte.html#lieu=g-L2375"]'));assert.ok(rideout.querySelector('a[href="entreprises/rideout-customs.html"]'));
+  const willie=at.find(x=>x.querySelector('b').textContent==='One-Eyed Willie’s');assert.equal(willie.querySelector('a[href^="carte.html#lieu="]'),null);assert.match(willie.textContent,/Pas encore placé/);assert.ok(willie.querySelector('a[href="entreprises/one-eyed-willie.html"]'));
   for(const name of ['Phil’s Ammu-Nation','Pawn & Gun'])assert.ok(at.some(x=>x.querySelector('b').textContent===name),name);
   for(const a of d.querySelectorAll('#ateliers a[href^="carte.html#lieu="]'))assert.ok(progress().LK_PROGRESS_IDS.lieux.includes(a.getAttribute('href').split('=')[1]),a.getAttribute('href'));
   const faq=ld(d).find(x=>x['@type']==='FAQPage');assert.ok(faq&&faq.mainEntity.length===5);

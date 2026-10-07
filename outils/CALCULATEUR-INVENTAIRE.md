@@ -99,7 +99,7 @@ Lecture : **kind** = type de contrôle ; **field** = chemin dans le scénario v6
 | atelier | a | calc-tuto-return |  |  |  |
 | Que veux-tu calculer ? | search | calc-ask-input | Écris ta question avec tes chiffres |  |  |
 | Que veux-tu calculer ? | button |  | Trouver le bon calcul ↗ |  |  |
-| Que veux-tu calculer ? | button |  | IA Claude | lkiaMode=ia | pressed=true |
+| Que veux-tu calculer ? | button |  | IA | lkiaMode=ia | pressed=true |
 | Que veux-tu calculer ? | button |  | Local | lkiaMode=local | pressed=false |
 | Que veux-tu calculer ? | button |  | Plus de questions | lkiaShop |  |
 | Que veux-tu calculer ? | button |  | Mon premier million ↗ | ask=Combien de temps pour atteindre 1 millio |  |
@@ -797,6 +797,7 @@ Lecture : **kind** = type de contrôle ; **field** = chemin dans le scénario v6
 | button |  |  | Télécharger mon plan en texte (à lire ou à envoyer) | bPlanExport |  | Simple + Expert | somme, gain par heure, achat, missions, achat d’avant, déblocage |
 | button |  |  | Les chiffres utilisés | foldHead=plan-x-inputs | expanded=true controls=fold-plan-x-inputs | Expert (E) | somme, gain par heure |
 | button |  |  | Tous les chiffres du calcul | foldHead=plan-x-raw | expanded=true controls=fold-plan-x-raw | Expert (E) | somme, gain par heure |
+| button |  |  | Et si le chiffre bouge de 20 % ? | foldHead=plan-sensitivity | expanded=true controls=fold-plan-sensitivity | Expert (E) | somme, gain par heure |
 | search | plan-search |  | Je veux acheter (cherche dans le site) | bCombo=plan | expanded=false controls=plan-search-list | Simple + Expert | achat, missions, achat d’avant |
 | button |  |  | Écrire un achat libre | bPlanFree |  | Simple + Expert | achat, missions, achat d’avant |
 | text | plan-name | plan.goal.name | Nom de mon achat | field=plan.goal.name |  | Simple + Expert | achat, missions, achat d’avant |

@@ -97,19 +97,28 @@ function placesSection(num,L,opts={}){
    carte ; vignette de la carte et lien carte.html#lieu=… quand le lieu est placé, silhouette sans repère et « pas encore placé »
    sinon (One-Eyed Willie’s). Chaque carte dit ce qu’on y fait, son statut, et renvoie à la sous-section de la liste. */
 const carteV=require('./carte-vignette.cjs');
-function atelierCard(a){
+/* v7.70 (Téva : « la partie les ateliers, c'est un peu brouillon aussi : innove en gardant l'idée ») : le tableau des ateliers.
+   Une seule carte de Leonida avec les enseignes numérotées (même dessin que le localisateur des armes), et à côté les fiches
+   numérotées par groupe : visuel officiel quand la fiche entreprise en a un, sinon le pictogramme de l'enseigne ; statut, ce
+   qu'on y fait, liens. Survoler une fiche allume son repère (catalogue.js) ; sans script, les numéros suffisent. */
+const LOCM=require('./localisateur.cjs');
+function atelierCard(a,n){
  const biz=a.business?ed.businesses.find(b=>b.id===a.business):null;if(a.business&&!biz)throw Error('Atelier inconnu : '+a.business);
  const name=biz?biz.name:a.name;const p=a.lieu?C.place(a.lieu):null;if(a.lieu&&!p)throw Error('Lieu inconnu : '+a.lieu);
  const where=p?'Sur la carte'+(p.region?' · '+p.region:''):'Pas encore placé sur la carte';
- const href=p?'carte.html#lieu='+esc(a.lieu):(biz?'entreprises/'+esc(biz.id)+'.html':'#'+esc(a.fam));
- const map=p?carteV.vignette(a.lieu):'<svg class="ed-map ed-map--vide" viewBox="0 0 '+carteV.W+' '+carteV.H+'" aria-hidden="true" focusable="false"><use href="#lk-leonida"/></svg>';
- return '<article class="ed-place ed-atelier"><a class="ed-atelier-map" href="'+href+'" aria-label="'+esc(name)+' : '+esc(p?'voir sur la carte':'fiche de l’atelier')+'">'+map+'</a>'
-  +'<div class="ed-place-body"><b>'+esc(name)+'</b><span class="ed-place-where">'+S.pip(a.statut,true)+' <span>'+esc(where)+'</span></span><span class="ed-atelier-fait">'+esc(a.fait)+'</span>'
-  +'<span class="ed-atelier-links">'+(p?'<a class="veh-go" href="carte.html#lieu='+esc(a.lieu)+'">Voir sur la carte</a>':'')+(biz?'<a class="veh-go" href="entreprises/'+esc(biz.id)+'.html">La fiche</a>':'')+'<a class="veh-go" href="#'+esc(a.fam)+'">La liste</a></span></div></article>';
+ const m=biz&&biz.media&&biz.media.length?MEDIAS[biz.media[0]]:null;
+ const visual=m?'<img src="'+esc(m.variants[0].src)+'" width="'+m.variants[0].w+'" height="'+m.variants[0].h+'" alt="" loading="lazy" decoding="async">':'<span class="ed-at-ico" aria-hidden="true">'+S.icon(a.fam==='perso-armes'?'viseur':'carrosserie')+'</span>';
+ return '<li class="ed-at'+(p?'':' ed-at--sans')+'"'+(p?' data-atelier="'+esc(a.lieu)+'"':'')+'><span class="ed-at-n" aria-hidden="true">'+(n||'·')+'</span><span class="ed-at-visual">'+visual+'</span>'
+  +'<div class="ed-at-body"><p class="ed-at-name"><b>'+esc(name)+'</b>'+S.pip(a.statut,true)+'</p><p class="ed-at-where">'+esc(where)+'</p><p class="ed-at-fait">'+esc(a.fait)+'</p>'
+  +'<p class="ed-at-links">'+(p?'<a class="veh-go" href="carte.html#lieu='+esc(a.lieu)+'">Voir sur la carte</a>':'')+(biz?'<a class="veh-go" href="entreprises/'+esc(biz.id)+'.html">La fiche</a>':'')+'<a class="veh-go" href="#'+esc(a.fam)+'">La liste</a></p></div></li>';
 }
 function ateliersSection(num,L){
+ const placed=[];for(const g of L.groups)for(const a of g.items)if(a.lieu){const p=C.place(a.lieu);placed.push({id:a.lieu,name:(a.business?ed.businesses.find(b=>b.id===a.business).name:a.name)});}
+ const numOf=new Map(placed.map((p,i)=>[p.id,i+1]));
+ const map='<figure class="ed-at-map">'+LOCM.mapSvg(placed,{label:'Carte de Leonida : ateliers et armureries repérés',prefix:''})+'<figcaption>'+placed.length+' enseignes placées sur notre carte de Leonida ; les numéros renvoient aux fiches. Une enseigne vue ne dit ni ses tarifs ni ses options.</figcaption></figure>';
+ const lists=L.groups.map(g=>'<div class="ed-at-group"><h3 class="ed-h3">'+esc(g.title)+' <small>'+g.items.length+'</small></h3><ol class="ed-at-list">'+g.items.map(a=>atelierCard(a,a.lieu?numOf.get(a.lieu):null)).join('')+'</ol></div>').join('');
  return S.section({id:L.id,num,kicker:'Sur la carte',title:'Les ateliers et les armureries',icon:'carte',tone:'paper2',accent:'coral',lede:esc(L.lede)},
-  S.defs()+L.groups.map(g=>'<h3 class="ed-h3">'+esc(g.title)+'</h3><div class="ed-places ed-places--ateliers">'+g.items.map(atelierCard).join('')+'</div>').join('')+para(L.p));
+  S.defs()+'<div class="ed-at-board">'+map+'<div class="ed-at-side">'+lists+'</div></div>'+para(L.p));
 }
 /* ---------- v7.50 (lot 3) : carnet de style (lookbook) ----------
    Planches composées par le site à partir des visuels officiels : ce qu’on voit (texte écrit en regardant les images),
@@ -156,19 +165,23 @@ function glanceSection(num){
      catégorie avec son pictogramme, nom, ce que la source en dit (description de la liste), où en trouver ; prix et effet,
      encore inconnus pour tous, en petites lignes discrètes ; repère de la série à part. Les quatre faits restent dans la
      liste de définitions que lit la comparaison (consommables.js). */
-  return '<article class="cg-card cg-cat-'+esc(it.categorie)+'" data-cg-id="'+esc(it.id)+'" data-cg-cat="'+esc(it.categorie)+'" style="view-transition-name:cg-'+esc(it.id)+'"><div class="cg-top"><span class="cg-ico" aria-hidden="true">'+S.icon(cat.icon)+'</span><span class="cg-cat">'+esc(cat.label)+'</span>'+glancePip(it.statut)+'</div>'
-   +'<div class="cg-body"><h4 class="cg-nom">'+esc(it.nom)+'</h4>'+(it.description?'<p class="cg-desc">'+esc(it.description)+'</p>':'')+'<dl class="cg-facts">'
+  /* v7.70 (Téva : « mal agencé, moche, pas facile à comprendre ») : carte sobre et uniforme : pictogramme dans un disque de la
+     couleur de la catégorie, nom en grand, catégorie en petites capitales, statut à droite, description sur deux lignes, « Où »
+     avec son repère, repère de la série en puce. Prix et effet, inconnus pour tous, restent dans la liste de définitions
+     (classe cg-f--unk, cachée : la comparaison de consommables.js les lit toujours) ; la page le dit une fois, en tête. */
+  return '<article class="cg-card cg-cat-'+esc(it.categorie)+'" data-cg-id="'+esc(it.id)+'" data-cg-cat="'+esc(it.categorie)+'" style="view-transition-name:cg-'+esc(it.id)+'"><div class="cg-top"><span class="cg-ico" aria-hidden="true">'+S.icon(cat.icon)+'</span><div class="cg-head"><h4 class="cg-nom">'+esc(it.nom)+'</h4><span class="cg-cat">'+esc(cat.label)+'</span></div>'+glancePip(it.statut)+'</div>'
+   +'<div class="cg-body">'+(it.description?'<p class="cg-desc">'+esc(it.description)+'</p>':'')+'<dl class="cg-facts">'
    +'<div class="cg-f-ou"><dt>Où</dt><dd>'+esc(where||'Emplacement à venir')+'</dd></div>'
-   +'<div class="cg-f-use"><dt>À quoi ça sert</dt><dd>'+esc(cat.id==='protection'?'Encaisser les coups':cat.id==='soins'?'Se soigner':'Manger ou boire pour récupérer')+'</dd></div>'
-   +'<div class="cg-f-prix"><dt>Prix</dt><dd>'+esc(acc.price)+'</dd></div>'
-   +'<div class="cg-f-effet"><dt>'+(cat.id==='protection'?'Protection':'Vie rendue')+'</dt><dd>'+(cat.id==='protection'?'Protection : à confirmer':'Récupération de vie : à confirmer')+(rep?'<small>Repère de la série : '+esc(rep)+'</small>':'')+'</dd></div></dl>'
+   +'<div class="cg-f-use cg-f--unk"><dt>À quoi ça sert</dt><dd>'+esc(cat.id==='protection'?'Encaisser les coups':cat.id==='soins'?'Se soigner':'Manger ou boire pour récupérer')+'</dd></div>'
+   +'<div class="cg-f-prix cg-f--unk"><dt>Prix</dt><dd>'+esc(acc.price)+'</dd></div>'
+   +'<div class="cg-f-effet'+(rep?'':' cg-f--unk')+'"><dt>'+(cat.id==='protection'?'Protection':'Vie rendue')+'</dt><dd><span class="cg-unk">'+(cat.id==='protection'?'Protection : à confirmer':'Récupération de vie : à confirmer')+'</span>'+(rep?'<small>Repère de la série : '+esc(rep)+'</small>':'')+'</dd></div></dl>'
    +'<p class="cg-actions"><a class="cg-link" href="#'+esc('consommables-'+it.id)+'">Fiche complète</a><label class="cg-cmp" hidden><input type="checkbox" data-cg-cmp="'+esc(it.id)+'"> Comparer</label></p></div></article>';};
  /* v7.69 : filtre par catégorie (boutons radio, sans script : acquisitions.css masque les autres cartes avec :has) */
  const tracked=d.items.filter(it=>it.suivi!==false),cnt=c=>tracked.filter(it=>it.categorie===c).length;
  const filter='<fieldset class="cg-filter" data-lk-vt><legend class="sr-only">Filtrer les consommables par catégorie</legend><input type="radio" name="cg-f" id="cg-f-tout" value="tout" checked><label for="cg-f-tout">Tout <span class="cg-n">'+tracked.length+'</span></label>'
   +d.categories.filter(c=>cnt(c.id)).map(c=>'<input type="radio" name="cg-f" id="cg-f-'+esc(c.id)+'" value="'+esc(c.id)+'"><label class="cg-cat-'+esc(c.id)+'" for="cg-f-'+esc(c.id)+'"><span class="cg-f-ico" aria-hidden="true">'+S.icon(c.icon)+'</span>'+esc(c.label)+' <span class="cg-n">'+cnt(c.id)+'</span></label>').join('')+'</fieldset>';
  const groups=NEED.map(n=>{const RANK={officiel:0,vu:1,comm:2,conf:3,serie:4},list=d.items.filter(it=>n.cats.includes(it.categorie)&&it.suivi!==false).sort((a,b)=>(RANK[a.statut]??5)-(RANK[b.statut]??5)||a.nom.localeCompare(b.nom,'fr'));return '<div class="cg-group" id="besoin-'+n.id+'"><h3 class="ed-h3"><span class="cg-need-ico" aria-hidden="true">'+S.icon(n.icon)+'</span>'+esc(n.titre)+' <small>'+list.length+'</small></h3><div class="cg-grid">'+list.map(card).join('')+'</div></div>';}).join('');
- return S.section({id:'en-un-regard',num,kicker:'Comparer',title:'En un regard',icon:'loupe',tone:'paper',accent:'amber',lede:esc('À quoi sert chaque consommable, combien il coûte, ce qu’on sait de son effet et où en trouver. Aucun effet n’est chiffré pour GTA VI : pas de fausse jauge, le repère d’un autre jeu est écrit à part.')},
+ return S.section({id:'en-un-regard',num,kicker:'Comparer',title:'En un regard',icon:'loupe',tone:'paper',accent:'amber',lede:esc('À quoi sert chaque consommable, où en trouver, et ce qu’on en sait. Rockstar n’a publié ni prix ni effet chiffré pour GTA VI : aucune carte n’en invente, et le repère d’un autre jeu est écrit à part.')},
   '<p class="cg-legend"><span>'+S.icon('kit-de-soin')+' Récupérer</span><span>'+S.icon('gilet-pare-balles')+' Se protéger</span>'+['officiel','vu','comm','conf','serie'].filter(st=>d.items.some(it=>it.suivi!==false&&(GLANCE_ST[it.statut]?it.statut:'conf')===st)).map(st=>'<span>'+S.pip(st,true)+'</span>').join('')+'</p>'
   +'<div class="cg-tools" data-cg-tools hidden><p class="cg-tools-t" role="status" aria-live="polite" data-cg-status>Coche jusqu’à trois consommables pour les comparer.</p><button type="button" class="cg-clear" data-cg-clear>Tout décocher</button></div>'
   +filter+groups+'<div class="cg-compare" data-cg-compare hidden></div>');

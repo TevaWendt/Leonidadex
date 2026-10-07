@@ -126,5 +126,5 @@ test('v7.69.2 : l’IA consultée sans rien ajouter (Léo « trouve » faux, cal
  assert.equal((await call(h,{mode:'etat',appareil:DEV})).body.restant,30,'non comptée');
  out={reponse:'Vice City est au sud-est.',liens:[],trouve:true};const r2=await call(h,{mode:'leo',question:'Où est Vice City ?',appareil:DEV});assert.equal(r2.body.compte,undefined);assert.equal(r2.body.acces.restant,29);
  out={outil:'goal',cases:[],scenarios:[],note:'Rien à remplir.',question:''};const r3=await call(h,{mode:'calcul',question:'Bonjour',appareil:DEV});assert.equal(r3.body.compte,false);assert.equal(r3.body.acces.restant,29);
- const fs=require('node:fs');assert.match(fs.readFileSync(root+'/leo-ui.js','utf8'),/j\.compte===false\)return \{\.\.\.local,by:'local',byNote:'Réponse locale de Léo : l’IA Claude n’avait rien à ajouter \(question non comptée\)\.'/);
- assert.match(fs.readFileSync(root+'/calculateurs-hub.js','utf8'),/r\.compte === false\) \{ if \(out\) out\.textContent = localLine \+ ' · ' \+ 'Réponse locale : l’IA Claude n’avait rien à ajouter/);});
+ const fs=require('node:fs');assert.match(fs.readFileSync(root+'/leo-ui.js','utf8'),/j\.compte===false\)return \{\.\.\.local,by:'local',byNote:'Réponse locale de Léo : l’IA n’avait rien à ajouter \(question non comptée\)\.'/);
+ assert.match(fs.readFileSync(root+'/calculateurs-hub.js','utf8'),/r\.compte === false\) \{ if \(out\) out\.textContent = localLine \+ ' · ' \+ 'Réponse locale : l’IA n’avait rien à ajouter/);});

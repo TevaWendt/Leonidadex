@@ -84,7 +84,7 @@ const report={date:new Date().toISOString(),widths:{},keyboard:{},reducedMotion:
   const p2=await ctx2.newPage();p2.setDefaultTimeout(20000);watch(p2);await p2.goto(base+'/calculateurs.html',{waitUntil:'load'});await p2.focus('#calc-ask-input');await openLeo(p2);await p2.waitForTimeout(700);const b0=calls.filter(c=>c.startsWith('b:')).length;const localStart=await line(p2);
   await p2.click('#leo-panel [data-lkia-mode="ia"]');await sur30(p2);const back=await line(p2);const b1=calls.filter(c=>c.startsWith('b:')).length;await ctx2.close();
   report.ia={start,ia,after,quota,quotaLine,localAns,localLine,privacy:privacy.slice(0,160),afterReload:nReload,reloadLine,localStart,back,openedLocal:b0,switchedToIA:b1-b0,modes:calls,errors:errs};
-  report.ia.ok=!!start&&start.kind==='ia'&&/IA Claude\s:\s30 questions gratuites sur 30/.test(start.text)&&/réponse simulée/.test(ia.text)&&ia.proof.some(t=>/IA \(Claude\)/.test(t))&&/29 questions gratuites sur 30/.test(after.text)
+  report.ia.ok=!!start&&start.kind==='ia'&&/IA\s:\s30 questions gratuites sur 30/.test(start.text)&&/réponse simulée/.test(ia.text)&&ia.proof.some(t=>/rédigée par l’IA/.test(t))&&/29 questions gratuites sur 30/.test(after.text)
    &&quotaLine.kind==='quota'&&quota.proof.some(t=>/épuisées/.test(t))&&localLine.kind==='local'&&localAns.proof.some(t=>/mode local choisi/.test(t))&&/rien n’est envoyé/.test(privacy)&&calls.length>=3&&nReload===0&&reloadLine&&reloadLine.kind==='local'
    &&localStart.kind==='local'&&b0===0&&b1-b0===1&&back.kind==='ia'&&/30 questions gratuites sur 30/.test(back.text)&&!errs.length;}
  await browser.close();server.close();

@@ -1,0 +1,51 @@
+LEONIDAKIT v7.70 — le monde au format des gangs, les pages qui faisaient brouillon, « Claude » retiré
+À appliquer APRÈS la v7.69.2 (archive Leonidakit-v7.69.2-modifs.zip). Rien à supprimer. Rien n'a été publié ni poussé.
+Livrée en DEUX archives « modifs » (seulement les fichiers qui changent) : Leonidakit-v7.70-modifs-1-sur-2.zip (pages
+françaises, scripts, styles, outils, captures du Tuto) et Leonidakit-v7.70-modifs-2-sur-2.zip (les quatre langues). Il faut
+les deux.
+
+CE QUI CHANGE POUR LE VISITEUR
+- Lieux, Personnages, Demeures, Planques, Entreprises : les cartes arrivent « distribuées » à l'ouverture de la section, comme
+  dans Gangs et factions, et chaque carte a le même reflet au survol.
+- Chaque fiche du monde reprend le format des fiches de gangs : galerie « En images » légendée vue par vue (83 légendes
+  écrites à la main), bloc « Sur la carte de Leonida » aussi pour les régions (ses lieux repérés) et les personnages (maison,
+  planques, commerces, régions liés), et données structurées pour Google (page, sujet, image principale, galerie créditée à
+  Rockstar Games). Rien d'inventé : seulement ce qui est déjà sur la page.
+- Collectibles : page réagencée (tableau de bord, plan de la future fiche, anneau de progression, carte en carte-photo,
+  « Ce que dit Rockstar » en frise), animations d'entrée, cartes propres.
+- Consommables : « En un regard » réécrit (cartes lisibles, lede honnête : aucun prix ni effet chiffré inventé), et les
+  listes de Consommables, Vêtements et style et Personnalisations ne sont plus des tableaux compacts : chaque ligne est une
+  carte lisible (vignette, nom, étiquettes, statut, effet, prix, achat, lieu, fiche dépliable, sources). « Voir la fiche »
+  ne change pas.
+- Vêtements et style : les trois cartes « Collection » ont leur relief (cadre, reflet, vignette qui se soulève, entrée en
+  cascade). Personnalisations : « Les ateliers » devient un plateau : la carte de Leonida avec les repères numérotés à
+  gauche, les fiches à droite ; survoler une fiche allume son repère.
+- Trophées : « Suivi » est un bilan dessiné en attendant la liste (anneau, 0 / ?, les quatre grades, lignes fantômes).
+- Achats : l'effet de pile des cartes (à la molette) revient à chaque visite. Piles d'images en haut à droite : −15 %.
+- Tuto : en-tête avec la capture en perspective et quatre repères, sommaire numéroté avec la progression de lecture,
+  chapitres plus jolis ; toutes les captures refaites (cinq langues).
+- Carte : « Calculer un trajet » donne un temps pour chaque moyen de déplacement (à pied, en courant, à vélo, moto,
+  voiture, bateau, hélicoptère, avion — vitesses de référence de GTA V, marquées « Estimation ») et pour tes véhicules.
+- Calculateur, mode Expert : le business plan a son bloc « Et si le chiffre bouge de 20 % ? » (gain par heure ou récompense
+  de la première mission), avec la courbe, comme les autres outils.
+- Mentions : page réalignée (titres, cartes, tableau en cartes, frise de l'historique) ; le texte ne change pas.
+- « Claude » n'apparaît plus nulle part pour le visiteur (« IA » tout court : bouton, lignes d'état, « Réponse de l'IA »,
+  Tuto, À propos, Léo), sauf dans les Mentions, qui doivent nommer le prestataire (Anthropic, modèle Claude).
+- Tout est traduit en anglais, espagnol, italien et allemand (0 texte manquant).
+
+MARCHE À SUIVRE
+  1. Copie le contenu des archives à la racine du dossier GitHub (remplacer), valide, pousse. Vercel publie tout seul.
+  2. Rien à régler dans Vercel : aucune clé ni variable nouvelle.
+  3. Essai rapide : ouvre Lieux (les cartes se distribuent), une fiche de personnage (galerie légendée, « Où le trouver »),
+     Collectibles, Consommables, Personnalisations (plateau des ateliers), Trophées, le Tuto, la carte (« Calculer un trajet »
+     : huit moyens de déplacement), le calculateur en mode Expert (Plan → « Et si… »), et Léo : le bouton dit « IA », plus
+     « IA Claude ».
+
+RAPPEL : Rockstar et Take-Two tolèrent les sites de fans non commerciaux ; les visuels officiels restent crédités sur chaque
+page (© Rockstar Games / Take-Two Interactive) et dans les données structurées. Vendre un service sur le site (crédit IA)
+reste à leurs risques : voir la section C de LISEZ-MOI-v7.69.txt avant d'ouvrir la vente.
+
+SUR ORDINATEUR ET TÉLÉPHONE : vérifié écran par écran (1 280 et 390 px) sur chaque page retravaillée ; tous les contrôles
+automatiques sont au vert (tests, navigateur, langues, liens, confidentialité : voir le détail technique).
+Détail technique : outils/CHANGEMENTS-v7.70.txt.
+Retour arrière : commit précédent dans GitHub Desktop.

@@ -37,7 +37,8 @@ test('modèle de données : liste vide au 4 octobre 2026, schéma documenté, un
 test('générateur, 0 trophée : le hub dit que la liste n’est pas publiée, aucune fiche, seule la page modèle, aucun suivi affiché', () => {
   assert.deepEqual(fs.readdirSync(path.join(root, 'trophees')).filter(f => f.endsWith('.html')), ['modele.html']);
   const d = doc('trophees.html');
-  assert.ok(d.querySelector('#liste .trophees-vide'));
+  assert.ok(d.querySelector('#liste .trophees-att .trophees-att-vide'), 'v7.70 : le suivi en attente est un bilan dessiné');
+  assert.equal(d.querySelectorAll('#liste .trophees-att-grades li').length, 4);
   assert.equal(d.querySelectorAll('[data-trophees-obtenu]').length, 0);
   assert.ok(!d.querySelector('[data-trophees-bilan]'));
   for (const f of fs.readdirSync(root).filter(f => f.endsWith('.html'))) assert.ok(!/trophees\/modele\.html/.test(read(f)), 'la page modèle n’est reliée d’aucune page : ' + f);

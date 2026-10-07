@@ -249,9 +249,11 @@ function row(fam, it, cat, sources) {
   const rep = repereText(it.prix_repere_serie), repV = repereValue(it.prix_repere_serie), compat = compatOf(it), folded = FOLDED.has(fam);
   return '<tr class="cat-row" id="' + esc(rowId(fam, it)) + '" data-cat="' + esc(it.categorie) + '" data-st="' + esc(it.statut) + '" data-ci="' + ci + '"' + (cat.groupe ? ' data-group="' + esc(cat.groupe) + '"' : '') + (it.personnage ? ' data-who="' + esc(it.personnage) + '"' : '') + ' data-nom="' + esc(fold(it.nom)) + '"' + (repV !== null ? ' data-prix="' + repV + '"' : '') + compat.attrs + ' data-q="' + esc(q) + '">'
     + '<td class="cat-c-st" data-l="Statut">' + S.pip(it.statut, true) + '</td>'
-    + '<td class="cat-c-nom" data-l="Élément">' + thumb(it, cat, media) + '<b class="cat-nom">' + esc(it.nom) + '</b>'
+    /* v7.70 : l'identité de la ligne (vignette, nom, catégorie, pour qui) forme un bloc .cat-id, placé par acquisitions.css
+       (chaque ligne est une fiche aérée : identité, statut et suivi en haut ; faits ; description ; sources et actions). */
+    + '<td class="cat-c-nom" data-l="Élément"><div class="cat-id">' + thumb(it, cat, media) + '<div class="cat-id-t"><b class="cat-nom">' + esc(it.nom) + '</b><span class="cat-tags">'
     + '<span class="cat-cat">' + S.icon(cat.icon, 'cat-ico') + esc(cat.label) + '</span>'
-    + (it.personnage ? '<span class="cat-who">' + esc(PERSON[it.personnage]) + '</span>' : '')
+    + (it.personnage ? '<span class="cat-who">' + esc(PERSON[it.personnage]) + '</span>' : '') + '</span></div></div>'
     /* v7.56 : description, variantes, compatibilité et note forment un bloc (.cat-more) ; repliée au départ pour les familles
        de FOLDED (attribut hidden retiré par le bouton « Description » de catalogue.js, ou par la feuille <noscript>). */
     + '<div class="cat-more" id="' + esc(rowId(fam, it)) + '-more"' + (folded ? ' hidden' : '') + '>'

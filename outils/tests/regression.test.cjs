@@ -115,7 +115,7 @@ test('Hub grids end with spacers and share the home FAQ markup',async()=>{
 test('World pages expose a presentation text, a stacked gallery and illustrated map cards',()=>{
  const {JSDOM}=require('jsdom');
  for(const file of ['lieux/vice-city.html','personnages/brian.html','planques/chantier-brian.html']){const dom=new JSDOM(fs.readFileSync(path.join(root,file),'utf8'));
-  try{const d=dom.window.document;assert.ok(d.querySelector('.lore-texte p').textContent.length>300,file);if(file!=='planques/chantier-brian.html')assert.ok(d.querySelectorAll('.lore-stack .lore-slide img').length>=1,file);assert.equal(d.querySelectorAll('.lore-slide figcaption').length,0);for(const t of d.querySelectorAll('.lore-slide-txt'))assert.match(t.textContent,/GTA VI/);
+  try{const d=dom.window.document;assert.ok(d.querySelector('.lore-texte p').textContent.length>300,file);if(file!=='planques/chantier-brian.html')assert.ok(d.querySelectorAll('.lore-stack .lore-slide img').length>=1,file);assert.equal(d.querySelectorAll('.lore-slide figcaption').length,0);for(const t of d.querySelectorAll('.lore-slide-txt')){assert.ok(t.querySelector('.lst-k').textContent.trim().length>2,file+' : légende de la vue (v7.70)');assert.match(t.querySelector('em').textContent,/^\d\d \/ \d\d$/);}
    const cards=[...d.querySelectorAll('.lore-mapcard')];if(cards.length)assert.ok(cards.some(c=>c.querySelector('img')),file+' : au moins une vignette de carte illustrée');}finally{dom.window.close();}}
  const map=fs.readFileSync(path.join(root,'carte.html'),'utf8');assert.equal((map.match(/class="reg reg--link rise"/g)||[]).length,6);
 });

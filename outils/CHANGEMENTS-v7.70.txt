@@ -1,0 +1,124 @@
+LEONIDAKIT v7.70 — le monde au format des gangs, les pages qui faisaient brouillon, « Claude » retiré, 7 octobre 2026
+
+Base : v7.69.2 (commit 0ab307f). Demande de Téva du 07/10/2026 (message « v7.70 »). Rien n'est publié ni poussé.
+
+1. LE MONDE : HUBS ANIMÉS ET FICHES AU FORMAT DES GANGS
+- outils/lore-gen.js : les six hubs (Lieux, Personnages, Demeures, Planques, Entreprises, Gangs) ont la même entrée que la
+  section Gangs : la grille des cartes est « distribuée » à l'arrivée dans l'écran (lkx-deal, lk-arrive, une carte après
+  l'autre), chaque carte a le reflet et l'inclinaison au survol (lkx-tilt). Avant, seule la page Gangs l'avait.
+- Chaque fiche du monde reprend le format des fiches de gangs :
+  · « En images » : galerie légendée (une légende propre à chaque vue, compteur « 01 / 04 », nom de la fiche en étiquette),
+    ouverte dans la visionneuse. Légendes et textes de remplacement écrits à la main pour les 83 visuels officiels :
+    outils/galeries-monde.json (nouveau), par identifiant de visuel ; une fiche qui n'a qu'un visuel garde sa grande image.
+  · « Sur la carte de Leonida » (localisateur illustré) étendu aux régions (la région et ses lieux repérés : « Où la
+    trouver : Vice City, Jack of Hearts, Vice Beach Marina… ») et aux personnages (maison, planques, commerces et régions
+    cités dans nos fiches : « Où le trouver : Key Lento, Brian's Marina, Pénitencier de Leonida… » ; « Où la trouver » pour
+    Lucia et Real Dimez). Les ledes disent que ce sont des repères de notre carte, pas des limites officielles ni un emploi
+    du temps.
+  · Référencement : données structurées schema.org sur chaque fiche (WebPage, son sujet « about » avec ses autres noms,
+    image principale, galerie ImageGallery dont chaque ImageObject est crédité « Rockstar Games » / © Rockstar Games /
+    Take-Two Interactive). Rien d'autre que ce qui est sur la page : aucune date ni fait inventé.
+- Les 11 lignes « Voir sur la carte » des régions et des personnages sont traduites comme celles des gangs.
+
+2. COLLECTIBLES (collectibles.html, collectibles.js, collectibles-brand.css)
+- Page réagencée : tableau de bord en tête (fiches documentées, confirmées par Rockstar, emplacements vérifiés, total dans
+  le jeu « ? ») avec le même « en attente » partout ; plan de fiche en pointillé (« Ce qu'affichera une fiche » : nom, famille,
+  région, emplacement, récompense, statut) ; état vide redessiné ; progression en anneau SVG (pathLength 100, --p) avec le
+  pourcentage au centre, l'ancienne barre reste lisible aux lecteurs d'écran ; carte de Leonida en carte-photo ; « Ce que
+  dit Rockstar » en frise numérotée (fait, prochaine étape, règle). Sections dans l'ordre : Wyman, familles, catalogue,
+  carnet, sorties, état, héritage, explorer, aide rapide, méthode et sources. Entrées en cascade (délais), rien n'est fabriqué.
+
+3. CONSOMMABLES, VÊTEMENTS ET STYLE, PERSONNALISATIONS (outils/gen-acquisitions.cjs, outils/catalogues.cjs, acquisitions.css,
+   catalogue.js)
+- Consommables, « En un regard » : cartes réécrites (nom et catégorie en tête, ligne de statut, lieu, effet « à confirmer »
+  marqué comme inconnu plutôt que vide), lede honnête : « Rockstar n'a publié ni prix ni effet chiffré pour GTA VI : aucune
+  carte n'en invente, et le repère d'un autre jeu est écrit à part. » La suite (« Où en trouver », fiche dépliable « Voir la
+  fiche ») ne change pas.
+- Les listes des trois sections (Consommables, Vêtements et style, Personnalisations) ne sont plus des tableaux compacts :
+  chaque ligne devient une carte (identité vignette + nom + étiquettes, puis statut et possession, puis effet, prix, achat,
+  lieu, puis la fiche dépliable, puis sources et actions ; zones nommées en CSS, repliées sur téléphone). Le tableau HTML et
+  ses en-têtes restent pour les lecteurs d'écran, le tri et les filtres.
+- Vêtements et style, « Collection » : les trois cartes ont leur relief (cadre, reflet au survol, vignette qui se soulève,
+  entrée en cascade), sans changer leur contenu.
+- Personnalisations, « Les ateliers » : plateau avec la carte de Leonida à gauche (repères numérotés) et les fiches à droite
+  (numéro, visuel officiel ou pictogramme, nom, statut « Officiel » / « Vu dans un média », une ligne, « Voir sur la carte »,
+  « La fiche », « La liste ») ; survoler ou atteindre une fiche au clavier allume son repère (catalogue.js, .is-hot).
+
+4. TROPHÉES : « SUIVI » EN ATTENTE (outils/gen-trophees.cjs, trophees.css)
+- Tant que la liste des trophées n'est pas publiée, « Suivi » est un bilan dessiné : anneau « — », « 0 / ? », les quatre
+  grades (Platine, Or, Argent, Bronze) à « 0 / ? », trois lignes fantômes « Obtenu », et « Gardé sur cet appareil seulement. »
+  Plus de tableau vide ni de texte gris. Le suivi réel (cases cochées, lk-trophees-obtenus-v1) reprend sa place dès qu'une
+  liste existe.
+
+5. ACHATS ET PILES D'IMAGES
+- achats-pile.js : l'effet de pile (cartes qui glissent au défilement à la molette) revient à chaque visite : le choix de la
+  grille n'est plus gardé (sessionStorage lk_achats_vue effacé), la pile est l'affichage par défaut. Test catalogues-v750 mis
+  à jour (plus aucune clé écrite).
+- style.css : piles en haut à droite réduites de 15 % (442 px au lieu de 520 ; 408 px au lieu de 480 dans les en-têtes de
+  fiches ; 374 / 357 px sur téléphone). Rien d'autre n'y change.
+
+6. TUTO (outils/gen-tuto.cjs, tuto.css, tuto.js)
+- En-tête : texte et boutons à gauche, capture réelle du calculateur en perspective à droite, quatre repères (chapitres,
+  outils, langues, « 0 chiffre officiel inventé »). Sommaire : chapitres numérotés, barre et texte de progression (« Chapitre 3
+  sur 16 ») qui suivent la lecture (IntersectionObserver), pastille de chapitre, étapes et exemples en relief, « erreur
+  fréquente » avec badge. Captures refaites dans les cinq langues (outils/tuto-shots.py) : la barre montre « IA | Local ».
+
+7. CARTE : TOUS LES MOYENS DE DÉPLACEMENT (carte.js, carte.html, style.css)
+- Le calcul de trajet donne un temps pour chaque moyen : à pied, en courant, à vélo, moto, voiture, bateau, hélicoptère
+  (nouveau, 60 m/s « hélicoptère moyen de GTA V »), avion, chacun marqué « réf. GTA V » (vitesses moyennes de GTA V,
+  « Estimation »), puis jusqu'à trois véhicules du visiteur. Grille .rl-list--all ; FAQ et données structurées de la carte
+  mises à jour.
+
+8. CALCULATEUR : « ET SI » DU BUSINESS PLAN EN MODE EXPERT (calculateurs-scenario.js, calculateurs-plan.js)
+- Le bloc « Et si le chiffre bouge de 20 % ? » existe maintenant pour l'outil Plan : gain par heure (« Ta situation ») ou
+  récompense de la première mission (« Tes missions ») ; courbe et points cliquables comme pour les autres outils ; message
+  d'attente quand la case n'est pas remplie. Inventaire du calculateur régénéré (outils/CALCULATEUR-INVENTAIRE.md).
+
+9. MENTIONS (informations.css)
+- Page légale réalignée (.ed-zone--legal) : titres de rubriques avec filet, listes et définitions en cartes, tableau « ce qui
+  part » en cartes de cinq cellules (qui, quoi, pour qui, pourquoi, combien de temps), historique en frise, pastille « mis à
+  jour ». Le contenu ne change pas.
+
+10. « CLAUDE » RETIRÉ PARTOUT SAUF DANS LES MENTIONS
+- lk-ia.js, leo-ui.js, calculateurs-hub.js, calculateurs.js, outils/gen-tuto.cjs, outils/gen-informations.cjs,
+  outils/informations-editorial.json, outils/leo-knowledge.json : « IA Claude » devient « IA » (bouton, lignes d'état
+  « IA : 30 questions gratuites sur 30 », « IA : crédit », « Réponse de l'IA. », « Réponse rédigée par l'IA… », « l'IA
+  n'avait rien à ajouter »), « Anthropic / Claude » devient « le fournisseur de l'IA » dans la boîte de crédit, la phrase de
+  confidentialité de Léo, le Tuto, À propos, En bref et les réponses de Léo (« Combien de questions puis-je poser à l'IA ? »).
+  Les Mentions gardent le nom du prestataire (Anthropic, modèle Claude) dans le tableau « Tu poses une question… » et la
+  liste des prestataires, comme la loi le demande. Commentaires de code alignés.
+- Traductions : bouton « AI / IA / IA / KI », « Answer from the AI. », « Antwort der KI. », etc.
+
+11. LANGUES
+- outils/langues/<en|es|it|de>/v770.json : 383 textes par langue (légendes et textes de remplacement des galeries, lignes
+  « Où la/le trouver », Collectibles, Consommables, Personnalisations, Trophées, Tuto, Mentions, « Et si », trajets, IA).
+- outils/langues.cjs : une entrée dont la traduction reprend un nombre (« <1>1</1>…Voir sur la carte ») cherche ce nombre hors
+  des repères de balises (« <1>2</1> » donnait « <2>1</1> » : 11 repères cassés dans les quatre langues, corrigés).
+- Extraction : 0 texte sans traduction, 0 repère cassé, 0 conflit (anglais, espagnol, italien, allemand).
+
+12. CONTRÔLES
+- outils/tests/v770.test.cjs (12 tests : hubs, fiches et données structurées, Collectibles, Consommables et listes, Style et
+  ateliers, Trophées, Achats et piles, Tuto, Mentions, « Et si » du plan, carte, « Claude » absent dans les cinq langues).
+- Tests mis à jour : catalogues-v750 (pile sans mémoire), contact-v746 et ia-v769 (textes IA), leo-browser (« IA : 30
+  questions gratuites sur 30 », « rédigée par l'IA »).
+- Résultats de la livraison : voir la fin de ce fichier.
+
+RÉSULTATS DE LA LIVRAISON (7 octobre 2026)
+- node --test : 934 tests légers réussis sur 934 ; langues.test, coverage.test et calculateurs-check-ultime : 61/61.
+  Tests mis à jour pour le nouveau dessin : calculateurs-ergonomie-v35 (troisième point du mode Expert du plan),
+  catalogues-v743 (plateau des ateliers), regression (légendes des vues), section-trophees (suivi en attente), visuel-lot2
+  (une fiche de planque à la place du hub, désormais « distribué »). Cadre du calculateur réécrit (outils/calculateur-cadre.json) :
+  seule l'empreinte de style.css change (piles −15 %, grille des moyens de déplacement), les 150 vues sont identiques.
+- Léo (leo-eval) : 512/512 bonnes pages ou intentions, 39/39 hors sujet refusés, 0 réponse sans source.
+- Navigateur : leo-browser tenu (0 erreur console, 0 débordement ; IA simulée : « IA : 30 questions gratuites sur 30 » → 29 →
+  quota → local) ; langues-browser 2 267 contrôles, 0 échec ; calculateurs-check-ultime-browser 1 120/1 120 ; tuto-essayer
+  23/23 ; carnets 94/94 ; mots-coupes : 230 chargements, 0 mot coupé (une fiche clé/valeur des Mentions s'empilait mal à
+  320 px : corrigé, informations.css) ; zoom-hauteur 56/56 ; contact tenu ; audit de clôture (26 pages, 182 chargements) :
+  0 débordement, 0 cible sous 24 px, 0 contraste insuffisant (11 929 vérifiés), 0 erreur console ni requête en échec,
+  fonctions 12/12.
+- outils/verifier.js : 306 566 références dans 2 241 pages, 0 erreur ; preuve-confidentialite : toutes les affirmations des
+  Mentions tenues ; calculateur-inventaire régénéré et à jour (bouton « IA », point « Et si le chiffre bouge de 20 % ? » du
+  plan) ; calculateur-cadre : 150 vues, 0 erreur.
+- Langues : 0 texte sans traduction, 0 repère cassé, 0 conflit (anglais, espagnol, italien, allemand).
+- Vérifié à l'écran (1 280 et 390 px) : hubs du monde, fiches (galerie, localisateur), Collectibles, Consommables (cartes et
+  liste), Vêtements et style, Personnalisations (plateau), Trophées, Tuto, Mentions, carte (trajet), calculateur (« Et si »).

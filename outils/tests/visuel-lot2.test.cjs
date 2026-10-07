@@ -12,7 +12,8 @@ const doc = f => new JSDOM(read(f)).window.document;
 const { load } = require('./runtime-helper.cjs');
 
 test('v7.54 corrigée : un bloc « rise » qui reçoit aussi « lk-reveal » est montré (in + is-in), rien ne reste à opacité 0', async () => {
-  for (const file of ['planques.html', 'index.html', 'collectibles.html', 'vehicules/vapid-stanier.html']) {
+  /* v7.70 : les hubs du monde (planques.html…) sont « distribués » comme les gangs (lkx-deal), sans bloc rise : une fiche de planque à la place */
+  for (const file of ['planques/starlet-motel.html', 'index.html', 'collectibles.html', 'vehicules/vapid-stanier.html']) {
     const p = await load(root, file);
     const both = [...p.d.querySelectorAll('.lk-reveal')].filter(el => el.classList.contains('rise') || el.classList.contains('reveal'));
     assert.ok(both.length > 0, file + ' : des blocs à double langage existent (' + both.length + ')');
