@@ -5,7 +5,7 @@
 (function(){'use strict';
 /* v7.61 : l'index est celui de la langue de la page (/es/leo-index.json sur une page espagnole) : dossier de ce script */
 const LEO_BASE=(document.currentScript&&document.currentScript.src||'').replace(/^https?:\/\/[^/]+/,'').replace(/[^/]*$/,'')||'/';
-const LANG_UI=(document.documentElement.lang||'fr').slice(0,2).toLowerCase(),C=window.LKLeoCore,L=window.LKLeoLink,launch=document.getElementById('leo-launch'),KEY='lk_leo_session_v2',TTL=30*60*1000,MAX_MESSAGES=32,V='?v=9d8394d2ec4c',MAX_BYTES=1500000;
+const LANG_UI=(document.documentElement.lang||'fr').slice(0,2).toLowerCase(),C=window.LKLeoCore,L=window.LKLeoLink,launch=document.getElementById('leo-launch'),KEY='lk_leo_session_v2',TTL=30*60*1000,MAX_MESSAGES=32,V='?v=bf322f8bbc09',MAX_BYTES=1500000;
 const names={capital:'I already have ($)',target:'I want to have ($)',hourly:'Estimated net earnings ($ / h)',price:'The price I imagine ($)',reserve:'Money to set aside ($)',minutes:'Session (min)',dailyMinutes:'Time per day (min)',players:'Players, including me'};
 const preferred={goal:['capital','target','hourly'],session:['minutes','capital','players'],activities:['capital','minutes','players'],purchase:['price','capital'],roi:['price','capital'],order:['capital','hourly'],budget:['capital','reserve'],plan:['capital','target','minutes']};
 const el=(tag,text,cls)=>{const node=document.createElement(tag);if(text!==undefined&&text!==null)node.textContent=text;if(cls)node.className=cls;return node;};
@@ -99,7 +99,7 @@ async function withAI(question,local){if(!local||!IA_KINDS.includes(local.kind)|
   let j=null;try{j=await r.json();}catch{j=null;}
   if(A)A.learn(r.status,j);
   if(r.status===503||r.status===404||r.status===405){try{sessionStorage.setItem(IA_OFF,'1');}catch{}return {...local,by:'local',byNote:localNote()};}
-  if(!r.ok)return {...local,by:'local',byNote:localNote()};if(!j||!j.ok||!j.trouve||typeof j.reponse!=='string'||!j.reponse.trim())return {...local,by:'local',byNote:localNote()};
+  if(!r.ok)return {...local,by:'local',byNote:localNote()};/* v7.69.2 : l'IA a lu la question mais n'avait rien à ajouter : réponse locale, dite comme telle, question non comptée */if(j&&j.ok&&j.compte===false)return {...local,by:'local',byNote:'Léo’s local answer: Claude AI had nothing to add (question not counted).'};if(!j||!j.ok||!j.trouve||typeof j.reponse!=='string'||!j.reponse.trim())return {...local,by:'local',byNote:localNote()};
   const inside=(j.liens||[]).filter(l=>l&&typeof l.url==='string'&&l.url.startsWith('/')).map(l=>({label:l.titre,url:l.url})),outside=(j.liens||[]).filter(l=>l&&typeof l.url==='string'&&/^https:\/\/www\.rockstargames\.com\//.test(l.url)).map(l=>({label:l.titre,url:l.url}));
   return {...local,kind:'answer',by:'ia',text:j.reponse.trim(),links:inside,external:[...outside,...(local.external||[])].slice(0,3),passage:null,note:'Answer written by an AI (Claude) from Leonidakit’s pages.',choices:[],request:null,results:[],total:0,status:null,source:null,verifiedAt:null};
  }catch{return {...local,by:'local',byNote:localNote()};}finally{clearTimeout(timer);const i=messages.indexOf(pending);if(i>=0)messages.splice(i,1);}}

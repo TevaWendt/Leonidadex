@@ -466,6 +466,8 @@
     if (turn !== asked) return;
     if (out) out.removeAttribute('aria-busy');
     if (r && r.quota) { if (out) out.textContent = localLine + byLocal(); return; }
+    /* v7.69.2 : l'IA a lu la phrase sans rien ajouter : la lecture locale reste, dite comme telle, question non comptée */
+    if (r && r.compte === false) { if (out) out.textContent = localLine + ' · ' + 'Local answer: Claude AI had nothing to add (question not counted).'; return; }
     if (!r || !(r.cases.length || r.question)) return;
     const parts = [];
     if (r.note) parts.push(r.note);

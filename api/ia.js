@@ -236,6 +236,12 @@ function createHandler(options={}){
   const r=await callClaude(d,env,fetchImpl);
   if(!r.ok){if(access.undo)await access.undo();console.error('ia: réponse refusée par le service ('+r.status+(r.why?' — '+r.why:'')+')');return reply(res,502,{ok:false,code:'service'});}
   const out=shape(d,r.input,r.model);
+  /* v7.69.2 : l'IA n'avait rien à ajouter (Léo : « trouve » faux ; calculateur : ni case, ni variante, ni question) : la page garde
+     sa réponse locale, la question n'est ni comptée ni facturée */
+  const empty=out.mode==='leo'?!out.trouve||!out.reponse:!out.cases.length&&!out.scenarios.length&&!out.question;
+  if(empty){if(access.undo)await access.undo();out.compte=false;
+   out.acces=paid?{type:'credit',cout:0,solde:bal}:{type:'gratuit',gratuit:st.free,heures:st.windowS/3600,restant:Math.min(st.free,access.restant+1),reset:access.reset};
+   return reply(res,200,out);}
   if(paid){const cost=priceOf(r.model,r.usage,st),left=await charge(st,who,fetchImpl,cost);out.acces={type:'credit',cout:cost,solde:left===null?bal-cost:left};}
   else out.acces={type:'gratuit',gratuit:st.free,heures:st.windowS/3600,restant:access.restant,reset:access.reset};
   return reply(res,200,out);

@@ -23,7 +23,7 @@ function fakeKV(){const db=new Map(),ttl=new Map();let now=0;
 const KV_ENV={KV_REST_API_URL:'https://kv.example',KV_REST_API_TOKEN:'t'};
 function services({kv,claude,stripe}={}){return async(url,opt)=>{
  if(url.startsWith('https://kv.example'))return kv.fetch(url,opt);
- if(url.startsWith('https://api.anthropic.com'))return claude?claude(url,opt):{ok:true,status:200,json:async()=>({content:[{type:'text',text:JSON.stringify({reponse:'Réponse.',liens:[],trouve:true})}],usage:{input_tokens:3000,output_tokens:400}})};
+ if(url.startsWith('https://api.anthropic.com'))return claude?claude(url,opt):{ok:true,status:200,json:async()=>({content:[{type:'text',text:JSON.stringify(JSON.parse(opt.body).output_config.format.schema.properties.outil?{outil:'goal',cases:[{chemin:'goal.capital',valeur:200000}],scenarios:[],note:'Compris.',question:''}:{reponse:'Réponse.',liens:[],trouve:true})}],usage:{input_tokens:3000,output_tokens:400}})};
  if(url.startsWith('https://api.stripe.com'))return stripe(url,opt);
  throw Error('appel inattendu '+url);};}
 function call(handler,body,{ip='1.2.3.4'}={}){return new Promise(resolve=>{const res={statusCode:0,headers:{},setHeader(k,v){this.headers[k.toLowerCase()]=v;},end(s){resolve({status:this.statusCode,body:s?JSON.parse(s):null});}};
@@ -119,3 +119,12 @@ test('correctif du 07/10/2026 : demande acceptée par Claude Sonnet 5.5 (schéma
   assert.equal((await call(h2,{mode:'leo',question:'Bonjour',appareil:DEV})).status,502);assert.match(logs[1],/réponse illisible \(max_tokens\)/);
   assert.equal((await call(h,{mode:'etat',appareil:DEV})).body.restant,30);
  }finally{console.error=orig;}});
+test('v7.69.2 : l’IA consultée sans rien ajouter (Léo « trouve » faux, calcul vide) : question rendue, réponse locale dite comme telle',async()=>{
+ T.reset();const kv=fakeKV();let out={reponse:'Les éléments ne le disent pas.',liens:[],trouve:false};
+ const h=IA.createHandler({env:{ANTHROPIC_API_KEY:'k',...KV_ENV},fetch:services({kv,claude:async()=>({ok:true,status:200,json:async()=>({content:[{type:'text',text:JSON.stringify(out)}],usage:{input_tokens:100,output_tokens:10}})})})});
+ const r=await call(h,{mode:'leo',question:'Bonjour Léo',appareil:DEV});assert.equal(r.status,200);assert.equal(r.body.compte,false);assert.equal(r.body.acces.restant,30);
+ assert.equal((await call(h,{mode:'etat',appareil:DEV})).body.restant,30,'non comptée');
+ out={reponse:'Vice City est au sud-est.',liens:[],trouve:true};const r2=await call(h,{mode:'leo',question:'Où est Vice City ?',appareil:DEV});assert.equal(r2.body.compte,undefined);assert.equal(r2.body.acces.restant,29);
+ out={outil:'goal',cases:[],scenarios:[],note:'Rien à remplir.',question:''};const r3=await call(h,{mode:'calcul',question:'Bonjour',appareil:DEV});assert.equal(r3.body.compte,false);assert.equal(r3.body.acces.restant,29);
+ const fs=require('node:fs');assert.match(fs.readFileSync(root+'/leo-ui.js','utf8'),/j\.compte===false\)return \{\.\.\.local,by:'local',byNote:'Réponse locale de Léo : l’IA Claude n’avait rien à ajouter \(question non comptée\)\.'/);
+ assert.match(fs.readFileSync(root+'/calculateurs-hub.js','utf8'),/r\.compte === false\) \{ if \(out\) out\.textContent = localLine \+ ' · ' \+ 'Réponse locale : l’IA Claude n’avait rien à ajouter/);});

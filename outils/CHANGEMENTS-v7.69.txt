@@ -146,3 +146,13 @@ Base : v7.68 (commit 6b72727). Demandes de Téva du 06/10/2026 (messages 5 et 6)
   refus (type et message d'Anthropic, jamais la question) ; un refus ne coûte toujours pas de question.
 - Tests : ia-v767.test.cjs (forme de la demande), ia-v769.test.cjs (schémas, réglages par modèle, raison du refus dans le
   journal, refus et réponse illisible non comptés).
+
+11. COMPLÉMENT DU 7 OCTOBRE 2026 (v7.69.2) : UNE QUESTION OÙ L'IA N'A RIEN À AJOUTER N'EST PAS COMPTÉE
+- Constat en ligne : l'IA répondait bien (compteur à 29), mais sur « la meilleure voiture pour débuter » elle n'avait rien
+  à ajouter aux éléments du site (« trouve » faux) : Léo gardait sa réponse locale avec la mention « Réponse locale de Léo,
+  sans IA », alors qu'une question avait été comptée. Trompeur pour le visiteur.
+- api/ia.js : quand l'IA n'a rien à ajouter (Léo : « trouve » faux ou réponse vide ; calculateur : ni case, ni variante, ni
+  question), la question est rendue au compteur (ou non facturée sur le crédit) et la réponse porte « compte: false ».
+- leo-ui.js, calculateurs-hub.js : mention « Réponse locale de Léo : l'IA Claude n'avait rien à ajouter (question non
+  comptée). » (calculateur : « Réponse locale : … »), traduite dans les quatre langues (outils/langues/<code>/v769.json).
+- Test : ia-v769.test.cjs (question rendue, mention dans les deux scripts).
