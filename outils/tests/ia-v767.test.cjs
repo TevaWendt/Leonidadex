@@ -6,21 +6,26 @@ const test=require('node:test'),assert=require('node:assert/strict'),fs=require(
 const root=path.resolve(__dirname,'../..'),API=require(root+'/api/ia.js'),T=API._test;
 function call(handler,{method='POST',body,headers={}}={}){return new Promise(resolve=>{const res={statusCode:0,headers:{},setHeader(k,v){this.headers[k.toLowerCase()]=v;},end(s){resolve({status:this.statusCode,body:s?JSON.parse(s):null,headers:this.headers});}};
  handler({method,headers:{'content-type':'application/json',origin:'https://www.leonidakit.com',...headers},body,socket:{remoteAddress:'1.2.3.4'}},res);});}
-function fakeService(input,seen=[]){return async(url,opt)=>{seen.push({url,opt,body:JSON.parse(opt.body)});const b=JSON.parse(opt.body);return {ok:true,status:200,json:async()=>({content:[{type:'tool_use',name:b.tool_choice.name,input}]})};};}
+/* v7.69 : le service répond en JSON imposé par le schéma (bloc de texte), comme Claude Sonnet 5.5 */
+function fakeService(input,seen=[]){return async(url,opt)=>{seen.push({url,opt,body:JSON.parse(opt.body)});return {ok:true,status:200,json:async()=>({content:[{type:'text',text:JSON.stringify(input)}],stop_reason:'end_turn'})};};}
 
 test('sans clé : 503 « off », aucune requête vers le service',async()=>{T.reset();const seen=[];const h=API.createHandler({env:{},fetch:fakeService({},seen)});
  const r=await call(h,{body:{mode:'calcul',question:'J’ai 200 000'}});assert.equal(r.status,503);assert.equal(r.body.code,'off');assert.equal(seen.length,0);});
 test('méthode, origine, format et demande invalides sont refusés',async()=>{T.reset();const h=API.createHandler({env:{ANTHROPIC_API_KEY:'k'},fetch:fakeService({})});
  assert.equal((await call(h,{method:'GET'})).status,405);assert.equal((await call(h,{body:{mode:'calcul',question:'x y'},headers:{origin:'https://evil.example'}})).status,403);
  assert.equal((await call(h,{body:{mode:'autre',question:'bonjour'}})).status,400);assert.equal((await call(h,{body:{mode:'leo',question:'x'.repeat(401)}})).status,400);});
-test('calcul : modèle par défaut Claude Sonnet 5.5 (v7.69), consigne mise en cache, outil imposé, clé jamais renvoyée',async()=>{T.reset();const seen=[];
+test('calcul : modèle par défaut Claude Sonnet 5.5 (v7.69), consigne mise en cache, sortie JSON imposée par un schéma (ni outil imposé ni température, refusés par Sonnet 5.5), réflexion coupée, clé jamais renvoyée',async()=>{T.reset();const seen=[];
  const h=API.createHandler({env:{ANTHROPIC_API_KEY:'secret-key'},fetch:fakeService({outil:'goal',cases:[{chemin:'goal.capital',valeur:200000}],note:'Compris.'},seen)});
  const r=await call(h,{body:{mode:'calcul',question:'J’ai 200 000 et je veux 1 million',lang:'fr',state:'{"outil":"goal"}'}});
  assert.equal(r.status,200);assert.equal(seen[0].url,'https://api.anthropic.com/v1/messages');const b=seen[0].body;
- assert.equal(b.model,'claude-sonnet-5-5');assert.equal(b.system[0].cache_control.type,'ephemeral');assert.equal(b.tool_choice.name,'remplir_calculateur');
+ assert.equal(b.model,'claude-sonnet-5-5');assert.equal(b.system[0].cache_control.type,'ephemeral');
+ assert.equal(b.output_config.format.type,'json_schema');assert.deepEqual(b.output_config.format.schema.required,['outil','cases','scenarios','note','question']);
+ assert.equal(b.tool_choice,undefined);assert.equal(b.tools,undefined);assert.equal(b.temperature,undefined);assert.equal(b.top_p,undefined);
+ assert.deepEqual(b.thinking,{type:'between_tools'});assert.equal(b.output_config.effort,'low');
  assert.equal(seen[0].opt.headers['x-api-key'],'secret-key');assert.ok(!JSON.stringify(r.body).includes('secret-key'));assert.match(b.messages[0].content,/J’ai 200 000 et je veux 1 million/);});
 test('modèle choisi dans Vercel (LK_IA_MODELE), valeur invalide ignorée',async()=>{for(const [m,expected] of [['claude-haiku-4-5-20251001','claude-haiku-4-5-20251001'],['rm -rf /','claude-sonnet-5-5']]){T.reset();const seen=[];
- const h=API.createHandler({env:{ANTHROPIC_API_KEY:'k',LK_IA_MODELE:m},fetch:fakeService({outil:'goal',cases:[],note:''},seen)});await call(h,{body:{mode:'calcul',question:'bonjour'}});assert.equal(seen[0].body.model,expected);}});
+ const h=API.createHandler({env:{ANTHROPIC_API_KEY:'k',LK_IA_MODELE:m},fetch:fakeService({outil:'goal',cases:[],note:''},seen)});await call(h,{body:{mode:'calcul',question:'bonjour'}});assert.equal(seen[0].body.model,expected);
+ if(expected.startsWith('claude-haiku')){assert.equal(seen[0].body.thinking,undefined);assert.equal(seen[0].body.output_config.effort,undefined);}}});
 test('calcul : cases filtrées (chemin mal formé, valeur trop grande, texte trop long), outil inconnu ramené à goal',()=>{
  const d={mode:'calcul'};const s=T.shape(d,{outil:'pirate',cases:[{chemin:'goal.capital',valeur:5},{chemin:'__proto__.x',valeur:1},{chemin:'goal.target',valeur:1e15},{chemin:'assets.0.name',valeur:'x'.repeat(81)},{chemin:'order.keys',valeur:['a','b']}],scenarios:[{nom:'bas',cases:[{chemin:'goal.hourly',valeur:20000}]}],note:'ok'},'m');
  assert.equal(s.outil,'goal');assert.deepEqual(s.cases.map(c=>c.chemin),['goal.capital','order.keys']);assert.equal(s.scenarios[0].cases[0].valeur,20000);});

@@ -23,7 +23,7 @@ function fakeKV(){const db=new Map(),ttl=new Map();let now=0;
 const KV_ENV={KV_REST_API_URL:'https://kv.example',KV_REST_API_TOKEN:'t'};
 function services({kv,claude,stripe}={}){return async(url,opt)=>{
  if(url.startsWith('https://kv.example'))return kv.fetch(url,opt);
- if(url.startsWith('https://api.anthropic.com'))return claude?claude(url,opt):{ok:true,status:200,json:async()=>({content:[{type:'tool_use',name:JSON.parse(opt.body).tool_choice.name,input:{reponse:'Réponse.',liens:[],trouve:true}}],usage:{input_tokens:3000,output_tokens:400}})};
+ if(url.startsWith('https://api.anthropic.com'))return claude?claude(url,opt):{ok:true,status:200,json:async()=>({content:[{type:'text',text:JSON.stringify({reponse:'Réponse.',liens:[],trouve:true})}],usage:{input_tokens:3000,output_tokens:400}})};
  if(url.startsWith('https://api.stripe.com'))return stripe(url,opt);
  throw Error('appel inattendu '+url);};}
 function call(handler,body,{ip='1.2.3.4'}={}){return new Promise(resolve=>{const res={statusCode:0,headers:{},setHeader(k,v){this.headers[k.toLowerCase()]=v;},end(s){resolve({status:this.statusCode,body:s?JSON.parse(s):null});}};
@@ -36,7 +36,7 @@ test('état : 30 questions gratuites toutes les 9 heures, rien de consommé, ven
  const r2=await call(h,{mode:'etat',appareil:DEV});assert.equal(r2.body.restant,30,'lire l’état ne consomme rien');});
 
 test('30 questions puis mode local (402 « quota » avec l’heure de renouvellement) ; une panne ne consomme pas ; renouvellement au bout de 9 heures',async()=>{T.reset();const kv=fakeKV();let fail=false;
- const h=IA.createHandler({env:{ANTHROPIC_API_KEY:'k',...KV_ENV},fetch:services({kv,claude:async(u,o)=>fail?{ok:false,status:529,json:async()=>({})}:{ok:true,status:200,json:async()=>({content:[{type:'tool_use',name:'repondre',input:{reponse:'R.',liens:[],trouve:true}}],usage:{input_tokens:100,output_tokens:10}})}})});
+ const h=IA.createHandler({env:{ANTHROPIC_API_KEY:'k',...KV_ENV},fetch:services({kv,claude:async(u,o)=>fail?{ok:false,status:529,json:async()=>({})}:{ok:true,status:200,json:async()=>({content:[{type:'text',text:JSON.stringify({reponse:'R.',liens:[],trouve:true})}],usage:{input_tokens:100,output_tokens:10}})}})});
  const ask=()=>call(h,{mode:'leo',question:'Bonjour Léo',appareil:DEV});
  fail=true;assert.equal((await ask()).status,502);fail=false;
  for(let i=1;i<=30;i++){const r=await ask();assert.equal(r.status,200,'question '+i);assert.equal(r.body.acces.type,'gratuit');assert.equal(r.body.acces.restant,30-i);}
@@ -100,3 +100,22 @@ test('pages : « Qui répond ? » sous la barre du calculateur et dans Léo ; mo
  const ia=require('node:fs').readFileSync(root+'/lk-ia.js','utf8');assert.doesNotMatch(ia,/pointerenter/,'jamais de lecture au simple survol');assert.match(ia,/if \(mode\(\) === 'local' && !force\) return Promise\.resolve/);
  const fs=require('node:fs'),ui=fs.readFileSync(root+'/leo-ui.js','utf8');assert.match(ui,/window\.LKIA\.control\('leo'\)/);assert.match(ui,/by:'ia'/);assert.match(ui,/Réponse locale de Léo, sans IA\./);
  assert.match(fs.readFileSync(root+'/leo-loader.js','utf8'),/script\('lk-ia\.js','LKIA'\)/);});
+test('correctif du 07/10/2026 : demande acceptée par Claude Sonnet 5.5 (schéma JSON sans mot-clé refusé), raison du refus dans le journal, refus non compté',async()=>{
+ /* schémas : chaque objet fermé (additionalProperties false, toutes les propriétés requises), aucun mot-clé non pris en charge par la sortie JSON */
+ const walk=(n,where)=>{if(!n||typeof n!=='object')return;for(const k of ['maxItems','minItems','minimum','maximum','minLength','maxLength','pattern'])assert.ok(!(k in n),where+' : '+k);
+  if(!Array.isArray(n)&&!Object.keys(n).length)assert.fail(where+' : schéma vide');
+  if(n.type==='object'){assert.equal(n.additionalProperties,false,where);assert.deepEqual([...n.required].sort(),Object.keys(n.properties).sort(),where);}
+  for(const [k,v] of Object.entries(n))if(v&&typeof v==='object')walk(v,where+'.'+k);};
+ walk(T.SCHEMA_CALC,'calcul');walk(T.SCHEMA_LEO,'leo');
+ assert.deepEqual(T.modelOptions('claude-sonnet-5-5'),{thinking:{type:'between_tools'},effort:'low',extra:0});assert.equal(T.modelOptions('claude-haiku-4-5-20251001').thinking,undefined);assert.equal(T.modelOptions('claude-opus-5-5').thinking,undefined);
+ /* refus d'Anthropic : 502, raison (type et message, jamais la question) dans le journal, question gratuite rendue */
+ T.reset();const kv=fakeKV(),logs=[],orig=console.error;console.error=(...a)=>logs.push(a.join(' '));
+ try{const h=IA.createHandler({env:{ANTHROPIC_API_KEY:'k',...KV_ENV},fetch:services({kv,claude:async()=>({ok:false,status:400,json:async()=>({type:'error',error:{type:'invalid_request_error',message:'Your credit balance is too low to access the Anthropic API.'}})})})});
+  const r=await call(h,{mode:'leo',question:'Question secrète du joueur',appareil:DEV});assert.equal(r.status,502);
+  assert.equal(logs.length,1);assert.match(logs[0],/\(400 — invalid_request_error : Your credit balance is too low/);assert.doesNotMatch(logs[0],/secrète/);
+  const e=await call(h,{mode:'etat',appareil:DEV});assert.equal(e.body.restant,30,'un refus ne coûte pas de question');
+  /* réponse sans JSON lisible : 502, rien de consommé */
+  const h2=IA.createHandler({env:{ANTHROPIC_API_KEY:'k',...KV_ENV},fetch:services({kv,claude:async()=>({ok:true,status:200,json:async()=>({content:[{type:'text',text:'{"reponse":'}],stop_reason:'max_tokens'})})})});
+  assert.equal((await call(h2,{mode:'leo',question:'Bonjour',appareil:DEV})).status,502);assert.match(logs[1],/réponse illisible \(max_tokens\)/);
+  assert.equal((await call(h,{mode:'etat',appareil:DEV})).body.restant,30);
+ }finally{console.error=orig;}});

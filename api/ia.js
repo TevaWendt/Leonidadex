@@ -77,14 +77,27 @@ Style : réponse courte (2 à 5 phrases), claire, tutoiement, dans la langue dem
 Liens : propose seulement des liens présents dans les éléments (champ url), ou le site officiel de Rockstar ; trois au plus.
 Pour un calcul (argent, temps, rentabilité), ne calcule pas toi-même : renvoie vers le calculateur (/calculateurs.html) si ce lien est présent dans les éléments.`;
 
-const TOOL_CALC={name:'remplir_calculateur',description:'Cases à remplir dans le calculateur et outil à ouvrir.',input_schema:{type:'object',properties:{
+/* v7.69 (correctif du 07/10/2026) : Claude Sonnet 5.5 refuse l'outil imposé (tool_choice « tool ») et une température choisie
+   (erreur 400, documentation d'Anthropic). La réponse est donc une sortie JSON imposée par un schéma (output_config.format) ;
+   les limites (40 cases, 3 scénarios, 3 liens) sont dites dans les descriptions et appliquées ensuite par cases() et safeLink(). */
+const VALEUR={anyOf:[{type:'string'},{type:'number'},{type:'boolean'},{type:'null'},{type:'array',items:{type:'string'}}]};
+const CASE={type:'object',properties:{chemin:{type:'string'},valeur:VALEUR},required:['chemin','valeur'],additionalProperties:false};
+const SCHEMA_CALC={type:'object',properties:{
  outil:{type:'string',enum:TOOLS},
- cases:{type:'array',maxItems:40,items:{type:'object',properties:{chemin:{type:'string'},valeur:{}},required:['chemin','valeur']}},
- scenarios:{type:'array',maxItems:3,items:{type:'object',properties:{nom:{type:'string'},cases:{type:'array',maxItems:12,items:{type:'object',properties:{chemin:{type:'string'},valeur:{}},required:['chemin','valeur']}}},required:['nom','cases']}},
- note:{type:'string'},question:{type:'string'}},required:['outil','cases','note']}};
-const TOOL_LEO={name:'repondre',description:'Réponse de Léo et liens utiles.',input_schema:{type:'object',properties:{
- reponse:{type:'string'},liens:{type:'array',maxItems:3,items:{type:'object',properties:{titre:{type:'string'},url:{type:'string'}},required:['titre','url']}},
- trouve:{type:'boolean',description:'true si les éléments permettaient de répondre'}},required:['reponse','trouve']}};
+ cases:{type:'array',description:'Cases à remplir, 40 au plus.',items:CASE},
+ scenarios:{type:'array',description:'Variantes, 3 au plus (12 cases chacune au plus) ; liste vide s’il n’y en a pas.',items:{type:'object',properties:{nom:{type:'string'},cases:{type:'array',items:CASE}},required:['nom','cases'],additionalProperties:false}},
+ note:{type:'string'},question:{type:'string',description:'Vide, ou une seule question courte.'}},required:['outil','cases','scenarios','note','question'],additionalProperties:false};
+const SCHEMA_LEO={type:'object',properties:{
+ reponse:{type:'string'},liens:{type:'array',description:'3 liens au plus, pris dans les éléments fournis ou le site officiel de Rockstar ; liste vide sinon.',items:{type:'object',properties:{titre:{type:'string'},url:{type:'string'}},required:['titre','url'],additionalProperties:false}},
+ trouve:{type:'boolean',description:'true si les éléments permettaient de répondre'}},required:['reponse','liens','trouve'],additionalProperties:false};
+/* Réglages propres aux modèles récents : Claude Sonnet 5.5 réfléchit par défaut (effort « high »), « between_tools » coupe la
+   réflexion avant la réponse et l'effort « low » garde une réponse courte et rapide ; Opus 5.5 et Fable 5.1 réfléchissent
+   toujours : seul l'effort est abaissé (et la place pour la réflexion ajoutée). Les autres modèles gardent les réglages de base. */
+function modelOptions(model){
+ if(/^claude-sonnet-5-5(?:$|-)/.test(model))return {thinking:{type:'between_tools'},effort:'low',extra:0};
+ if(/^claude-(?:opus-5-5|fable-5|mythos-5)/.test(model))return {effort:'low',extra:2000};
+ return {extra:0};
+}
 
 function limited(ip,now=Date.now()){
  const key=crypto.createHash('sha256').update(String(ip||'inconnue')).digest('hex').slice(0,16);
@@ -124,15 +137,20 @@ function userMessage(d){
 }
 
 async function callClaude(d,env,fetchImpl){
- const model=MODELS.test(String(env.LK_IA_MODELE||''))?env.LK_IA_MODELE:MODEL_DEFAULT,calc=d.mode==='calcul',tool=calc?TOOL_CALC:TOOL_LEO;
+ const model=MODELS.test(String(env.LK_IA_MODELE||''))?env.LK_IA_MODELE:MODEL_DEFAULT,calc=d.mode==='calcul',opt=modelOptions(model);
  const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),TIMEOUT_MS);
  try{
-  const r=await fetchImpl('https://api.anthropic.com/v1/messages',{method:'POST',signal:controller.signal,headers:{'content-type':'application/json','x-api-key':env.ANTHROPIC_API_KEY,'anthropic-version':'2023-06-01'},
-   body:JSON.stringify({model,max_tokens:calc?900:700,temperature:calc?0:0.3,system:[{type:'text',text:calc?SYSTEM_CALC:SYSTEM_LEO,cache_control:{type:'ephemeral'}}],tools:[tool],tool_choice:{type:'tool',name:tool.name},messages:[{role:'user',content:userMessage(d)}]})});
-  if(!r.ok)return {ok:false,status:r.status};
-  const j=await r.json(),use=(j.content||[]).find(c=>c.type==='tool_use'&&c.name===tool.name);
-  return use&&use.input&&typeof use.input==='object'?{ok:true,input:use.input,model,usage:j.usage||{}}:{ok:false,status:0};
- }catch(e){return {ok:false,status:0};}
+  const body={model,max_tokens:(calc?1400:900)+opt.extra,system:[{type:'text',text:calc?SYSTEM_CALC:SYSTEM_LEO,cache_control:{type:'ephemeral'}}],
+   messages:[{role:'user',content:userMessage(d)}],output_config:{format:{type:'json_schema',schema:calc?SCHEMA_CALC:SCHEMA_LEO}}};
+  if(opt.effort)body.output_config.effort=opt.effort;
+  if(opt.thinking)body.thinking=opt.thinking;
+  const r=await fetchImpl('https://api.anthropic.com/v1/messages',{method:'POST',signal:controller.signal,headers:{'content-type':'application/json','x-api-key':env.ANTHROPIC_API_KEY,'anthropic-version':'2023-06-01'},body:JSON.stringify(body)});
+  /* la raison donnée par Anthropic (type et message d'erreur, jamais la question) va dans le journal de Vercel */
+  if(!r.ok){let why='';try{const e=await r.json();why=[e&&e.error&&e.error.type,e&&e.error&&e.error.message].filter(x=>typeof x==='string'&&x).join(' : ').slice(0,180);}catch{why='';}return {ok:false,status:r.status,why};}
+  const j=await r.json(),text=(j.content||[]).filter(c=>c&&c.type==='text'&&typeof c.text==='string').map(c=>c.text).join('').trim();
+  let input=null;try{input=JSON.parse(text);}catch{input=null;}
+  return input&&typeof input==='object'&&!Array.isArray(input)?{ok:true,input,model,usage:j.usage||{}}:{ok:false,status:0,why:'réponse illisible ('+String(j.stop_reason||'?').slice(0,30)+')'};
+ }catch(e){return {ok:false,status:0,why:e&&e.name==='AbortError'?'délai dépassé':'service injoignable'};}
  finally{clearTimeout(timer);}
 }
 
@@ -216,7 +234,7 @@ function createHandler(options={}){
    if(bal!==null&&bal>=MIN_CREDIT)paid=true;
    else return reply(res,402,{ok:false,code:'quota',gratuit:st.free,heures:st.windowS/3600,restant:0,reset:access.reset,achat:st.sell,solde:bal});}
   const r=await callClaude(d,env,fetchImpl);
-  if(!r.ok){if(access.undo)await access.undo();console.error('ia: réponse refusée par le service ('+r.status+')');return reply(res,502,{ok:false,code:'service'});}
+  if(!r.ok){if(access.undo)await access.undo();console.error('ia: réponse refusée par le service ('+r.status+(r.why?' — '+r.why:'')+')');return reply(res,502,{ok:false,code:'service'});}
   const out=shape(d,r.input,r.model);
   if(paid){const cost=priceOf(r.model,r.usage,st),left=await charge(st,who,fetchImpl,cost);out.acces={type:'credit',cout:cost,solde:left===null?bal-cost:left};}
   else out.acces={type:'gratuit',gratuit:st.free,heures:st.windowS/3600,restant:access.restant,reset:access.reset};
@@ -226,4 +244,4 @@ function createHandler(options={}){
 
 module.exports=createHandler();
 module.exports.createHandler=createHandler;
-module.exports._test={validate,limited,cases,safeLink,shape,userMessage,SYSTEM_CALC,SYSTEM_LEO,MODEL_DEFAULT,PRICES,priceOf,settings,digest,reset:()=>{hits.clear();freeMem.clear();}};
+module.exports._test={validate,limited,cases,safeLink,shape,userMessage,SYSTEM_CALC,SYSTEM_LEO,SCHEMA_CALC,SCHEMA_LEO,modelOptions,MODEL_DEFAULT,PRICES,priceOf,settings,digest,reset:()=>{hits.clear();freeMem.clear();}};

@@ -134,3 +134,15 @@ Base : v7.68 (commit 6b72727). Demandes de Téva du 06/10/2026 (messages 5 et 6)
   · outils/verifier.js : 306 066 références dans 2 241 pages, 0 erreur ; preuve-confidentialite : toutes les affirmations
     des Mentions tenues ; calculateur-inventaire --check à jour ; calculateur-cadre identique (150 vues).
   · Langues : 0 texte sans traduction (anglais, espagnol, italien, allemand).
+
+10. CORRECTIF DU 7 OCTOBRE 2026 (v7.69.1) : L'IA REFUSÉE PAR ANTHROPIC (ERREUR 400)
+- Constat en ligne : « ia: réponse refusée par le service (400) » dans les journaux de Vercel ; Léo répondait en local.
+- Cause : Claude Sonnet 5.5 refuse l'outil imposé (tool_choice « tool ») et une température choisie (documentation
+  d'Anthropic, « Migrating to Claude Sonnet 5.5 »). Les tests simulaient le service et ne pouvaient pas le voir.
+- api/ia.js : sortie JSON imposée par un schéma (output_config.format) à la place de l'outil imposé ; plus de température ;
+  pour Claude Sonnet 5.5, réflexion coupée avant la réponse (thinking « between_tools ») et effort « low » (réponse courte et
+  rapide) ; pour Opus 5.5 et Fable 5.1, effort « low » ; schémas fermés (additionalProperties false), sans maxItems ni
+  schéma vide (limites appliquées ensuite par le serveur, comme avant). Le journal de Vercel donne maintenant la raison d'un
+  refus (type et message d'Anthropic, jamais la question) ; un refus ne coûte toujours pas de question.
+- Tests : ia-v767.test.cjs (forme de la demande), ia-v769.test.cjs (schémas, réglages par modèle, raison du refus dans le
+  journal, refus et réponse illisible non comptés).
