@@ -71,16 +71,17 @@
     });
   });
   if (btn) {
-    var key = 'lk_achats_vue';
+    /* v7.70 (Téva : « t'as enlevé l'effet sur les cartes quand tu défiles ») : la pile est de retour à chaque ouverture de la
+       page. « Tout voir en grille » ne vaut que le temps de la page : rien n'est plus gardé (l'ancienne clé lk_achats_vue
+       gardait la grille toute la session, et la pile semblait avoir disparu). */
     btn.hidden = false;
-    function set(on, save) {
+    function set(on) {
       stack.classList.toggle('is-grid', on); placed = '-'; btn.setAttribute('aria-pressed', String(on)); btn.textContent = on ? 'Zurück zum Stapel' : 'Alles im Raster ansehen';
-      if (save) { try { sessionStorage.setItem(key, on ? 'grille' : 'pile'); } catch (e) { /* choix valable pour cette page seulement */ } }
       queue();
     }
-    var saved = null; try { saved = sessionStorage.getItem(key); } catch (e) { saved = null; }
-    set(saved === 'grille', false);
-    btn.addEventListener('click', function () { set(!grid(), true); });
+    try { sessionStorage.removeItem('lk_achats_vue'); } catch (e) { /* rien à effacer */ }
+    set(false);
+    btn.addEventListener('click', function () { set(!grid()); });
     if (reduce.matches) btn.hidden = true;
   }
   if (reduce.addEventListener) reduce.addEventListener('change', function () { placed = '-'; queue(); });

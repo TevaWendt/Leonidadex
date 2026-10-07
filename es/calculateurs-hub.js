@@ -429,7 +429,7 @@
     const quantities = x.mentions.filter(m => !m.replaced && m.role !== 'excluded').length + (x.minutes !== null ? 1 : 0) + (x.players !== null ? 1 : 0) + (result.values.deadlineDays !== null ? 1 : 0);
     return quantities > result.done.length || BEYOND.test(x.text);
   }
-  /* v7.69 : le visiteur choisit qui lit sa phrase (lk-ia.js : « IA Claude » ou « Local »), voit lequel a répondu, et a
+  /* v7.69 : le visiteur choisit qui lit sa phrase (lk-ia.js : « IA » ou « Local »), voit lequel a répondu, et a
      30 questions IA gratuites par 9 heures ; ensuite la lecture locale répond seule (ou le crédit, si la vente est ouverte). */
   const IA = () => window.LKIA || null;
   const iaUsable = () => { const A = IA(); return A ? A.usable() : iaOn(); };
@@ -467,7 +467,7 @@
     if (out) out.removeAttribute('aria-busy');
     if (r && r.quota) { if (out) out.textContent = localLine + byLocal(); return; }
     /* v7.69.2 : l'IA a lu la phrase sans rien ajouter : la lecture locale reste, dite comme telle, question non comptée */
-    if (r && r.compte === false) { if (out) out.textContent = localLine + ' · ' + 'Respuesta local: la IA Claude no tenía nada que añadir (pregunta no contada).'; return; }
+    if (r && r.compte === false) { if (out) out.textContent = localLine + ' · ' + 'Respuesta local: la IA no tenía nada que añadir (pregunta no contada).'; return; }
     if (!r || !(r.cases.length || r.question)) return;
     const parts = [];
     if (r.note) parts.push(r.note);

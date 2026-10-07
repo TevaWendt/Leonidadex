@@ -43,6 +43,9 @@
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) { if (e.isIntersecting) current = e.target.id; });
       links.forEach(function (a) { var on = a.getAttribute('href') === '#' + current; a.classList.toggle('is-current', on); if (on) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current'); });
+      /* v7.70 : la barre et le texte de progression du sommaire suivent le chapitre lu */
+      var idx = links.findIndex(function (a) { return a.getAttribute('href') === '#' + current; }); var bar = document.querySelector('[data-t-prog]'), txt = document.querySelector('[data-t-prog-txt]');
+      if (idx >= 0) { if (bar) bar.style.width = Math.round((idx + 1) / links.length * 100) + '%'; if (txt) txt.textContent = 'Chapter ' + (idx + 1) + ' of ' + links.length; }
     }, { rootMargin: '-30% 0px -60% 0px' });
     chapters.forEach(function (c) { io.observe(c); });
   }

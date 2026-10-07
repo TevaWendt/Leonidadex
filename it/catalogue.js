@@ -326,4 +326,14 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
   }
   openFromHash();
   window.addEventListener('hashchange', openFromHash);
+  /* v7.70 : tableau des ateliers (personnalisations.html) : survoler ou atteindre une fiche allume son repère sur la carte */
+  document.querySelectorAll('.ed-at-board').forEach(board => {
+    const pins = Array.from(board.querySelectorAll('.lk-loc-pin[data-place]'));
+    const hot = id => { pins.forEach(p => { p.classList.toggle('is-hot', !!id && p.getAttribute('data-place') === id); }); };
+    board.querySelectorAll('.ed-at[data-atelier]').forEach(li => {
+      const id = li.getAttribute('data-atelier');
+      li.addEventListener('mouseenter', () => hot(id)); li.addEventListener('mouseleave', () => hot(null));
+      li.addEventListener('focusin', () => hot(id)); li.addEventListener('focusout', () => hot(null));
+    });
+  });
 })();

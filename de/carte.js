@@ -48,6 +48,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     { id:'moto',    nom:'Mit dem Motorrad',    v: 41.0, ico:'moto' },
     { id:'voiture', nom:'Mit dem Auto', v: 33.0, ico:'car'  },
     { id:'bateau',  nom:'Mit dem Boot',  v: 22.0, ico:'boat' },
+    { id:'helico',  nom:'Mit dem Hubschrauber', v: 60.0, ico:'heli' },
     { id:'avion',   nom:'Mit dem Flugzeug',   v: 78.0, ico:'plane'}
   ];
 
@@ -1322,7 +1323,8 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     car: '<path d="M4 16v-3l2-5h12l2 5v3M4 16h16M4 16v2M20 16v2"/><circle cx="8" cy="16" r="1.6"/><circle cx="16" cy="16" r="1.6"/>',
     moto:'<circle cx="5.5" cy="17" r="3.5"/><circle cx="18.5" cy="17" r="3.5"/><path d="M5.5 17l4-6h5l4 6M9 11l-2-3H5M14 8h3"/>',
     boat:'<path d="M4 18h16l-2 3H6zM12 4v11M12 6l7 8H12"/>',
-    plane:'<path d="M12 3l2 8 8 3v2l-8-1-1 5 3 2v1l-4-1-4 1v-1l3-2-1-5-8 1v-2l8-3z"/>'
+    plane:'<path d="M12 3l2 8 8 3v2l-8-1-1 5 3 2v1l-4-1-4 1v-1l3-2-1-5-8 1v-2l8-3z"/>',
+    heli:'<path d="M4 5h16M12 5v4M7 12h7a4 4 0 0 1 4 4v1H9a4 4 0 0 1-4-4v-1zM5 20h10M12 17v3"/>'
   };
 
   /* ============================================================
@@ -1331,7 +1333,8 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
      étapes) ; la distance est à vol d’oiseau ; les temps s’affichent tout de suite, marqués « estimation » : vitesses de
      référence de GTA V (une hypothèse, pas des données de GTA VI). Jusqu’à trois véhicules du site à comparer, chacun avec
      SA vitesse : la référence de sa famille, ou celle que tu as mesurée en jeu et écrite ici (gardée sur l’appareil,
-     lk_trajet_v1). Les hélicoptères n’ont pas de référence : tu écris la tienne. Lien direct : carte.html#trajet.
+     lk_trajet_v1). v7.70 : tous les moyens de déplacement sont listés (à pied, en courant, à vélo, moto, voiture, bateau,
+     hélicoptère, avion), chacun avec sa référence de GTA V. Lien direct : carte.html#trajet.
      ============================================================ */
   const trajetBox = document.getElementById('map-trajet');
   const trajetFab = document.getElementById('map-trajet-fab');
@@ -1344,10 +1347,13 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     { id:'voiture', nom:'Auto (Referenz aus GTA V)' },
     { id:'moto',    nom:'Motorrad (Referenz aus GTA V)' },
     { id:'bateau',  nom:'Boot (Referenz aus GTA V)' },
+    { id:'helico',  nom:'Hubschrauber (Referenz aus GTA V)' },
     { id:'avion',   nom:'Flugzeug (Referenz aus GTA V)' }
   ];
-  const FAM_LABEL = { voiture:'durchschnittliches Auto aus GTA V', moto:'durchschnittliches Motorrad aus GTA V', bateau:'durchschnittliches Boot aus GTA V', avion:'durchschnittliches Flugzeug aus GTA V' };
-  const ICO_FAM = { voiture:'car', moto:'moto', bateau:'boat', avion:'plane', helico:'plane' };
+  /* v7.70 (Téva : « le calculateur doit prendre en compte tous les moyens de déplacement ») : chaque famille du site a sa référence
+     de GTA V, hélicoptères compris (vitesse de croisière moyenne) ; le panneau liste d'abord tous les moyens, puis tes véhicules. */
+  const FAM_LABEL = { voiture:'durchschnittliches Auto aus GTA V', moto:'durchschnittliches Motorrad aus GTA V', bateau:'durchschnittliches Boot aus GTA V', helico:'durchschnittlicher Hubschrauber aus GTA V', avion:'durchschnittliches Flugzeug aus GTA V' };
+  const ICO_FAM = { voiture:'car', moto:'moto', bateau:'boat', avion:'plane', helico:'heli' };
   const SLUG = /^[a-z0-9][a-z0-9-]{0,79}$/;
   const validTrajet = function(v){
     return !!v && typeof v === 'object' && !Array.isArray(v) && Array.isArray(v.choix) && v.choix.length >= 1 && v.choix.length <= 3
@@ -1428,8 +1434,8 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       '<p class="rl-dist">' + fmtDist(distM) + ' <span class="rl-dist-k">Luftlinie</span></p>' +
       (lkPluriel(etapes.length) ? '<p class="rl-seg">' + etapes.length + ' Segmente · längstes ' + fmtDist(Math.max.apply(null, etapes)) + '</p>' : '') +
       '<p class="rl-times-h"><span class="rl-sim-tag">Schätzung</span> Wie lange?</p>' +
-      '<ul class="rl-list">' + VITESSES.filter(function(v){ return ['pied','course','velo'].indexOf(v.id) !== -1; }).map(function(v){
-        return '<li><span class="rl-ico">' + svgIco(v.ico) + '</span><span class="rl-nom">' + v.nom + '</span><span class="rl-t">≈ ' + fmtDuree(distM / v.v) + '</span></li>';
+      '<ul class="rl-list rl-list--all">' + VITESSES.map(function(v){
+        return '<li' + (['pied','course','velo'].indexOf(v.id) === -1 ? ' class="rl-li-veh"' : '') + '><span class="rl-ico">' + svgIco(v.ico) + '</span><span class="rl-nom">' + v.nom + (['pied','course','velo'].indexOf(v.id) === -1 ? ' <small>Ref. GTA V</small>' : '') + '</span><span class="rl-t">≈ ' + fmtDuree(distM / v.v) + '</span></li>';
       }).join('') + '</ul>' +
       '<p class="rl-vehs-h">Mit deinem Fahrzeug <span>jedes hat sein Tempo</span></p>' +
       '<div class="rl-vehs">' + trajet.choix.map(vehRow).join('') + '</div>' +
