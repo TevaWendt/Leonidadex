@@ -5833,7 +5833,7 @@
     "partenaire rockstar",
     "site non officiel"
    ],
-   "text": "Non. Leonidakit est un projet personnel, indépendant de Rockstar Games et de Take-Two Interactive, gratuit, sans compte et sans publicité. Les visuels officiels sont crédités dans Médias et crédits. Le site officiel de GTA VI est rockstargames.com/VI.",
+   "text": "Non. Leonidakit est un projet personnel, indépendant de Rockstar Games et de Take-Two Interactive, gratuit et sans compte (emplacements publicitaires réservés, vides pour le moment). Les visuels officiels sont crédités dans Médias et crédits. Le site officiel de GTA VI est rockstargames.com/VI.",
    "status": "Le site",
    "links": [
     {
@@ -6120,7 +6120,7 @@
     "bandeau cookies",
     "pas de cookies"
    ],
-   "text": "Non : aucun cookie, aucune publicité, aucune mesure d’audience et aucun script d’un autre site, vérifié dans le code. Seule exception, si tu la choisis : « Écouter ici », sur la page Radios et musique, charge le lecteur officiel de YouTube ou de Spotify, qui peut alors déposer ses propres cookies. Tes calculs, ton suivi et ta conversation avec moi restent dans ton navigateur, c’est pourquoi il n’y a pas de bandeau à accepter.",
+   "text": "Non : aucun cookie, aucune mesure d’audience et aucun script d’un autre site, vérifié dans le code ; aucune publicité aujourd’hui (des emplacements sont réservés ; les Mentions le diront avant). Seule exception, si tu la choisis : « Écouter ici », sur la page Radios et musique, charge le lecteur officiel de YouTube ou de Spotify, qui peut alors déposer ses propres cookies. Tes calculs, ton suivi et ta conversation avec moi restent dans ton navigateur, c’est pourquoi il n’y a pas de bandeau à accepter.",
    "status": "Le site",
    "links": [
     {
@@ -6700,7 +6700,7 @@
     "tu utilises un serveur",
     "leo local"
    ],
-   "text": "Oui, quand l’IA est active : ta question, la page et des extraits du site partent vers la fonction du site, puis vers le fournisseur de l’IA (nommé dans les Mentions), qui rédige la réponse ; le site ne garde pas ta question, il compte seulement tes 30 questions gratuites pendant 9 heures. Tu peux aussi me passer en mode local : alors rien ne part. Si l’IA ne répond pas, je réponds seul, dans ton navigateur. La discussion reste dans cet onglet et s’efface toute seule après 30 minutes sans activité, ou quand tu cliques « Effacer ».",
+   "text": "Oui, quand l’IA est active : ta question, la page et des extraits du site partent vers la fonction du site, puis vers le fournisseur de l’IA (nommé dans les Mentions), qui rédige la réponse ; le site ne garde pas ta question, il compte seulement tes 15 questions gratuites pendant 12 heures. Tu peux aussi me passer en mode local : alors rien ne part. Si l’IA ne répond pas, je réponds seul, dans ton navigateur. La discussion reste dans cet onglet et s’efface toute seule après 30 minutes sans activité, ou quand tu cliques « Effacer ».",
    "status": "Léo",
    "links": [
     {
@@ -6720,16 +6720,15 @@
     "combien de questions il me reste",
     "limite de questions",
     "plus de questions",
-    "acheter des questions",
-    "payer pour avoir plus de questions",
-    "ia claude ou local",
-    "mode local ou ia",
+    "ia ou local",
     "qui repond",
-    "c est l ia qui repond",
     "questions epuisees",
-    "quota ia"
+    "quota ia",
+    "parler au micro",
+    "micro leo",
+    "dicter ma question"
    ],
-   "text": "Tu as 30 questions gratuites à l’IA toutes les 9 heures, communes à moi et à la barre « Que veux-tu calculer ? » du calculateur. « Qui répond ? » te laisse choisir « IA » ou « Local », et chaque réponse dit qui l’a écrite. Quand tes questions gratuites sont épuisées, tout repasse en local jusqu’à l’heure indiquée. Si l’achat de questions est ouvert, « Plus de questions » en propose d’autres, au prix réel plus 20 %.",
+   "text": "Tu as 15 questions gratuites à l’IA toutes les 12 heures, communes à moi et à la barre du calculateur ; rien n’est à acheter. « Qui répond ? » te laisse choisir « IA » ou « Local », et chaque réponse dit qui l’a écrite. Questions épuisées : tout repasse en local, avec un compte à rebours. Le bouton micro écrit ta phrase pour toi : la reconnaissance est faite par ton navigateur, pas par le site.",
    "status": "Léo",
    "links": [
     {

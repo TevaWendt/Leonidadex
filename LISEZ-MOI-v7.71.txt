@@ -1,0 +1,51 @@
+LEONIDAKIT v7.71 — lot 1 sur 3 : IA 100 % gratuite (15 questions / 12 h, minuteur), micro, business plan, À propos
+À appliquer APRÈS la v7.70 (archives Leonidakit-v7.70-modifs-1-sur-2.zip et -2-sur-2.zip). Rien n'a été publié ni poussé.
+Livrée en archive « modifs » (seulement les fichiers qui changent) : Leonidakit-v7.71-modifs.zip.
+
+UN FICHIER À SUPPRIMER DU DÉPÔT (le seul) : api/ia-achat.js
+  L'archive ne peut pas supprimer un fichier : efface-le toi-même dans le dossier GitHub avant de valider (clic droit →
+  Supprimer, ou dans GitHub Desktop la ligne apparaîtra comme « supprimé »). Sans ça, la fonction d'achat resterait en
+  ligne, inutile : rien de grave, mais autant la retirer.
+
+CE QUI CHANGE POUR LE VISITEUR
+- L'IA est entièrement gratuite : plus de crédit, plus de bouton « Plus de questions », plus de paiement. Quota : 15
+  questions par personne toutes les 12 heures (Léo et la barre du calculateur en commun). La ligne sous la barre et dans
+  Léo montre un minuteur : « IA : 14 questions gratuites sur 15 · de nouveau 15 dans 11:59:27 », puis, à zéro :
+  « Questions IA gratuites épuisées : mode local, l'IA revient dans 03:41:12 » (il défile chaque seconde).
+- Un bouton micro à côté de la barre « Que veux-tu calculer ? » et de la case de Léo : on parle, la phrase s'écrit, puis
+  part. C'est le navigateur qui transcrit (Chrome, Edge, Safari ; Firefox ne sait pas le faire, le bouton n'y apparaît
+  pas) : rien ne passe par le site. Il faut autoriser le micro quand le navigateur le demande.
+- Business plan : les blocs « Mes calculs enregistrés » / « Mes business plans » n'apparaissent plus en double, et le bloc
+  « Mode Expert » avec son « Et si le chiffre bouge de 20 % ? » est là même quand le plan n'est pas encore calculable.
+- À propos adapté au site d'aujourd'hui (IA gratuite, micro, publicité à venir) ; Mentions : lignes « micro » et
+  « Publicité ». Tout est traduit dans les quatre langues.
+
+MARCHE À SUIVRE
+  1. Copie le contenu de l'archive à la racine du dossier GitHub (remplacer), supprime api/ia-achat.js, valide, pousse.
+  2. Vercel → Settings → Environment Variables : si tu avais posé LK_IA_GRATUIT ou LK_IA_HEURES, supprime-les (sinon elles
+     gardent la main sur les 15 / 12 h). Si tu avais posé LK_IA_VENTE, STRIPE_SECRET_KEY, LK_IA_SEL, LK_IA_MARGE,
+     LK_IA_PACKS, LK_IA_FRAIS ou LK_IA_EUR_PAR_USD, supprime-les aussi : elles ne servent plus. ANTHROPIC_API_KEY et la
+     base Upstash (KV_REST_API_URL / KV_REST_API_TOKEN) restent. Puis « Redeploy ».
+  3. Essai : calculateur → clique dans la barre : « IA : 15 questions gratuites toutes les 12 h. » Pose une question que
+     la lecture locale ne sait pas finir : la ligne passe à « 14 … de nouveau 15 dans 11:59:xx » et défile. Clique le micro
+     (Chrome), dis « j'ai 200 000 dollars et je veux un million » : la phrase s'écrit et part.
+
+PUBLICITÉ : CE QUE J'AI FAIT, ET CE QU'IL FAUDRA FAIRE POUR EN METTRE
+- J'ai laissé les espaces des fiches tels quels et réservé, sous le corps de chaque fiche du monde, un emplacement caché
+  (<aside class="lk-pub"> dans le code) prêt à recevoir une publicité ; les Mentions et À propos disent déjà que des
+  emplacements sont réservés, vides, et que la page dira tout avant de les remplir. Rien d'autre ne change : aucun script
+  publicitaire n'est chargé, la preuve de confidentialité (« aucun cookie, aucune requête vers un autre site ») reste vraie.
+- Le jour où tu choisis une régie (Google AdSense ou autre), il faudra, dans l'ordre : (1) un bandeau de consentement
+  avant tout cookie ou traceur (loi Informatique et Libertés, lignes directrices CNIL), (2) ouvrir la politique de sécurité
+  du site (CSP, aujourd'hui « connect-src 'self' ») aux domaines de la régie, (3) réécrire la section « Publicité » et
+  « Cookies » des Mentions avec le nom de la régie, ce qu'elle collecte et pour combien de temps, (4) passer Vercel sur
+  l'offre Pro : l'offre gratuite Hobby est réservée à un usage non commercial, et un site avec publicité est commercial.
+  Dis-moi quelle régie et je ferai ces quatre points dans un lot.
+- Rappel qui ne change pas : Rockstar et Take-Two tolèrent les sites de fans non commerciaux ; afficher de la publicité
+  sur un site consacré à GTA VI, avec leurs visuels, les expose à une réclamation (retrait des visuels, voire du site).
+  C'est ta décision ; les visuels restent crédités partout.
+
+SUR ORDINATEUR ET TÉLÉPHONE : vérifié (1 280 et 390 px) : barre du calculateur avec le micro et le minuteur, Léo, Mentions,
+À propos ; tous les contrôles automatiques au vert (tests, navigateur, langues, liens, confidentialité : détail technique).
+Détail technique : outils/CHANGEMENTS-v7.71.txt. Lot 2 (hubs du monde, Collectibles, Codes) et lot 3 (listes, personnalisations,
+trophées) suivent, chacun avec son archive. Retour arrière : commit précédent dans GitHub Desktop.

@@ -101,7 +101,6 @@ Lecture : **kind** = type de contrôle ; **field** = chemin dans le scénario v6
 | Que veux-tu calculer ? | button |  | Trouver le bon calcul ↗ |  |  |
 | Que veux-tu calculer ? | button |  | IA | lkiaMode=ia | pressed=true |
 | Que veux-tu calculer ? | button |  | Local | lkiaMode=local | pressed=false |
-| Que veux-tu calculer ? | button |  | Plus de questions | lkiaShop |  |
 | Que veux-tu calculer ? | button |  | Mon premier million ↗ | ask=Combien de temps pour atteindre 1 millio |  |
 | Que veux-tu calculer ? | button |  | Est-ce que je peux l’acheter ? ↗ | ask=Puis-je me permettre d’acheter un véhicu |  |
 | Que veux-tu calculer ? | button |  | J’ai 30 minutes ↗ | ask=J’ai 30 minutes pour ma session |  |
@@ -833,6 +832,7 @@ Lecture : **kind** = type de contrôle ; **field** = chemin dans le scénario v6
 | button |  |  | Retirer | bPlanPRemove=0 |  | Simple + Expert | achat, missions, achat d’avant |
 | button |  |  | Aller à la case à corriger | bFocus=plan-price |  | Simple + Expert | achat, missions, achat d’avant |
 | button |  |  | Écrire le prix de « Mon achat d’avant » | bFocus=plan-p-0-price |  | Simple + Expert | achat, missions, achat d’avant |
+| button |  |  | Et si le chiffre bouge de 20 % ? | foldHead=plan-sensitivity | expanded=false controls=fold-plan-sensitivity | Expert (E) | achat, missions, achat d’avant, déblocage |
 | text | plan-name | plan.goal.name | Ce que je veux débloquer | field=plan.goal.name |  | Simple + Expert | déblocage |
 | text | plan-units-label | plan.goal.unitLabel | Ça se gagne en | field=plan.goal.unitLabel |  | Simple + Expert | déblocage |
 | text | plan-units-target | plan.goal.targetUnits | Il faut atteindre (points) | field=plan.goal.targetUnits number min=0 max=1000000000000 |  | Simple + Expert | déblocage |

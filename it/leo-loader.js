@@ -4,9 +4,9 @@ const button=document.createElement('button');button.id='leo-launch';button.type
 /* v7.61 : les modules viennent du dossier de la langue (/es/…) ; un module identique dans toutes les langues (leo-nlp.js) n'y est pas copié : il est pris directement à la racine (un module
    absent du dossier de la langue y est aussi cherché en dernier recours) */
 const BASE=(document.currentScript&&document.currentScript.src||'').replace(/^https?:\/\/[^/]+/,'').replace(/[^/]*$/,'')||'/';
-const href=(name,root)=>(root?'/':BASE)+name+'?v=b7452e21bf47';let loading=null,frame=0;
+const href=(name,root)=>(root?'/':BASE)+name+'?v=52de8a985d03';let loading=null,frame=0;
 function script(name,global,root){if(window[global])return Promise.resolve();return new Promise((resolve,reject)=>{const s=document.createElement('script');s.src=href(name,root);s.onload=()=>window[global]?resolve():reject(Error('Modulo locale non disponibile.'));s.onerror=()=>{s.remove();if(!root&&BASE!=='/'){script(name,global,true).then(resolve,reject);return;}reject(Error('Non è stato possibile caricare un file locale di Léo.'));};document.head.append(s);});}
-async function open(){if(window.LKLeoUI){window.LKLeoUI.open();return;}if(loading)return;button.disabled=true;button.setAttribute('aria-busy','true');const label=button.lastElementChild;label.textContent='Apertura';loading=(async()=>{await Promise.all([script('calculateurs-engine.js','LKCalcEngine'),script('leo-link.js','LKLeoLink'),script('leo-nlp.js','LKLeoNLP',true),script('lk-ia.js','LKIA').catch(()=>{})]);await script('leo-core.js','LKLeoCore');await script('leo-ui.js','LKLeoUI');window.LKLeoUI.open();})();try{await loading;}catch(e){window.LK?.status(e.message+' Puoi continuare a usare il sito e riprovare.');}finally{loading=null;button.disabled=false;button.removeAttribute('aria-busy');label.textContent='Léo';}}
+async function open(){if(window.LKLeoUI){window.LKLeoUI.open();return;}if(loading)return;button.disabled=true;button.setAttribute('aria-busy','true');const label=button.lastElementChild;label.textContent='Apertura';loading=(async()=>{await Promise.all([script('calculateurs-engine.js','LKCalcEngine'),script('leo-link.js','LKLeoLink'),script('leo-nlp.js','LKLeoNLP',true),script('lk-ia.js','LKIA'),script('lk-micro.js','LKMicro').catch(()=>{}).catch(()=>{})]);await script('leo-core.js','LKLeoCore');await script('leo-ui.js','LKLeoUI');window.LKLeoUI.open();})();try{await loading;}catch(e){window.LK?.status(e.message+' Puoi continuare a usare il sito e riprovare.');}finally{loading=null;button.disabled=false;button.removeAttribute('aria-busy');label.textContent='Léo';}}
 button.addEventListener('click',()=>window.LKLeoUI?.isOpen()?window.LKLeoUI.close():open());
 /* v7.54 (lot 1) : la place du bouton n'est plus recalculée à chaque trame du défilement (sept tests de recouvrement par
    position, jusqu'à douze positions : autant de lectures de mise en page). Pendant le défilement, une vérification au plus
@@ -38,7 +38,5 @@ if(window.MutationObserver){let t=0;new MutationObserver(()=>{if(t)return;t=setT
 /* v7.66 (latence) : la première place du bouton est cherchée quand le navigateur est libre (jusqu’à 168 tests de recouvrement), pas pendant le premier affichage */
 if(window.requestIdleCallback)requestIdleCallback(schedule,{timeout:1200});else setTimeout(schedule,300);
 window.LKLeoLoader={open,place:schedule};
-/* v7.69 : retour du paiement du crédit IA (?ia=paye ou ?ia=annule) : lk-ia.js vérifie le paiement et affiche le crédit */
-if(/[?&]ia=(?:paye|annule)\b/.test(location.search))script('lk-ia.js','LKIA').catch(()=>{});
 try{const raw=sessionStorage.getItem('lk_leo_session_v2');if(raw&&raw.length<100000){const r=JSON.parse(raw);if(r.resumeTo===location.pathname+location.hash&&r.at<=Date.now()&&Date.now()-r.at<1800000)open();}}catch{}
 })();

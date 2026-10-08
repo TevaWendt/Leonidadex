@@ -130,7 +130,7 @@
           "media": "vice-city-09",
           "alt": "Berline bleue sous un viaduc peint de Vice City, visuel officiel Rockstar Games",
           "title": "Demander à Léo",
-          "text": "Léo répond depuis ton navigateur, avec ce que le site sait : il retrouve une fiche, ouvre un calcul, explique un statut. Rien ne quitte ton navigateur.",
+          "text": "Léo répond depuis ton navigateur avec ce que le site sait : une fiche, un calcul, un statut. En mode « IA », il rédige sa réponse avec une intelligence artificielle, gratuitement, à partir des seules pages du site ; tu peux aussi lui parler au micro. Chaque réponse dit qui l’a écrite.",
           "href": "tuto.html",
           "label": "Lire le Tuto"
         },
@@ -296,9 +296,9 @@
         },
         {
           "icon": "argent",
-          "titre": "Gratuit, sans compte, sans publicité",
+          "titre": "Gratuit, sans compte",
           "p": [
-            "Rien à payer, rien à créer, aucun script publicitaire ni de mesure d’audience."
+            "Rien à payer, rien à créer : l’IA de Léo et du calculateur est gratuite aussi (15 questions toutes les 12 heures). Des emplacements publicitaires sont réservés pour aider à payer l’hébergement et l’IA : vides aujourd’hui, décrits dans les Mentions avant d’être remplis. Aucune mesure d’audience."
           ]
         },
         {

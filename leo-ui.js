@@ -5,7 +5,7 @@
 (function(){'use strict';
 /* v7.61 : l'index est celui de la langue de la page (/es/leo-index.json sur une page espagnole) : dossier de ce script */
 const LEO_BASE=(document.currentScript&&document.currentScript.src||'').replace(/^https?:\/\/[^/]+/,'').replace(/[^/]*$/,'')||'/';
-const LANG_UI=(document.documentElement.lang||'fr').slice(0,2).toLowerCase(),C=window.LKLeoCore,L=window.LKLeoLink,launch=document.getElementById('leo-launch'),KEY='lk_leo_session_v2',TTL=30*60*1000,MAX_MESSAGES=32,V='?v=b7452e21bf47',MAX_BYTES=1500000;
+const LANG_UI=(document.documentElement.lang||'fr').slice(0,2).toLowerCase(),C=window.LKLeoCore,L=window.LKLeoLink,launch=document.getElementById('leo-launch'),KEY='lk_leo_session_v2',TTL=30*60*1000,MAX_MESSAGES=32,V='?v=52de8a985d03',MAX_BYTES=1500000;
 const names={capital:'J’ai déjà ($)',target:'Je veux avoir ($)',hourly:'Gain net estimé ($ / h)',price:'Prix que j’imagine ($)',reserve:'Réserve à garder ($)',minutes:'Session (min)',dailyMinutes:'Temps par jour (min)',players:'Joueurs, moi compris'};
 const preferred={goal:['capital','target','hourly'],session:['minutes','capital','players'],activities:['capital','minutes','players'],purchase:['price','capital'],roi:['price','capital'],order:['capital','hourly'],budget:['capital','reserve'],plan:['capital','target','minutes']};
 const el=(tag,text,cls)=>{const node=document.createElement(tag);if(text!==undefined&&text!==null)node.textContent=text;if(cls)node.className=cls;return node;};
@@ -22,6 +22,8 @@ const notice=el('div',null,'leo-notice'),privacy=el('p');const privacyText=el('s
 const log=el('div',null,'leo-log');log.setAttribute('role','region');log.setAttribute('aria-label','Échange avec Léo');log.tabIndex=0;
 const live=el('p',null,'leo-sr');live.setAttribute('role','status');live.setAttribute('aria-live','polite');live.setAttribute('aria-atomic','true');
 const form=el('form',null,'leo-compose'),label=el('label','Ta question pour Léo','leo-sr'),input=el('input'),send=el('button','↑','leo-send');input.id='leo-question';input.type='text';input.maxLength=C.MAX_INPUT;input.autocomplete='off';input.placeholder='Écris un nom, une question ou tes chiffres…';label.htmlFor=input.id;send.type='submit';send.setAttribute('aria-label','Envoyer la question');form.append(label,input,send);panel.append(header,notice,log,live,form);document.body.append(panel);
+/* v7.71 : parler au lieu d'écrire (lk-micro.js, si le navigateur sait transcrire) */
+if(window.LKMicro&&window.LKMicro.supported)window.LKMicro.attach(input,{submit:true});
 /* v7.69 : « Qui répond ? » (IA ou local) et la phrase de confidentialité qui suit ce choix */
 const PRIV_LOCAL='Léo répond depuis ton navigateur, rien n’est envoyé. La discussion reste dans cet onglet et s’efface après 30 min. ',PRIV_IA='Avec l’IA, ta question et des extraits du site partent vers le fournisseur de l’IA pour la réponse ; le site ne les garde pas. La discussion reste dans cet onglet et s’efface après 30 min. ';
 function privacyPaint(){const v=window.LKIA&&window.LKIA.usable()?PRIV_IA:PRIV_LOCAL;if(privacyText.textContent!==v)privacyText.textContent=v;}
@@ -86,8 +88,8 @@ function appendAnswer(answer,question){touchedAt=Date.now();const ctx=answer.con
 const IA_OFF='lk_ia_off',IA_KINDS=['answer','unknown','place','character'];
 function iaOn(){try{return sessionStorage.getItem(IA_OFF)!=='1';}catch{return true;}}
 /* v7.69 : le visiteur choisit qui répond (lk-ia.js : « IA » ou « Local ») et voit toujours lequel a répondu ;
-   30 questions IA gratuites par 9 heures, puis mode local (ou crédit, si la vente est ouverte). */
-function localNote(){const A=window.LKIA;if(!A)return 'Réponse locale de Léo, sans IA.';const st=A.status();return st.kind==='quota'||st.kind==='off'?st.text:A.mode()==='local'?'Réponse locale de Léo, sans IA (mode local choisi).':'Réponse locale de Léo, sans IA.';}
+   15 questions IA gratuites par 12 heures (v7.71), puis mode local jusqu'au renouvellement (compte à rebours affiché). */
+function localNote(){const A=window.LKIA;if(!A)return 'Réponse locale de Léo, sans IA.';const st=A.status();return st.kind==='quota'||st.kind==='off'?(st.plain||st.text):A.mode()==='local'?'Réponse locale de Léo, sans IA (mode local choisi).':'Réponse locale de Léo, sans IA.';}
 async function withAI(question,local){if(!local||!IA_KINDS.includes(local.kind)||typeof fetch!=='function'||typeof core.evidence!=='function')return local;
  const A=window.LKIA;if(A?!A.usable():!iaOn())return {...local,by:'local',byNote:localNote()};
  let passages=[];try{passages=await core.evidence(question,5);}catch{passages=[];}

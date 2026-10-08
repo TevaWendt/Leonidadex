@@ -52,7 +52,8 @@
     "leo-link.js",
     "leo-calculator.js",
     "calculateurs-engine.js",
-    "lk-ia.js"
+    "lk-ia.js",
+    "lk-micro.js"
    ]
   },
   {
@@ -83,7 +84,8 @@
     "leo-link.js",
     "leo-calculator.js",
     "calculateurs-engine.js",
-    "lk-ia.js"
+    "lk-ia.js",
+    "lk-micro.js"
    ]
   },
   {
@@ -115,7 +117,8 @@
     "leo-link.js",
     "leo-calculator.js",
     "calculateurs-engine.js",
-    "lk-ia.js"
+    "lk-ia.js",
+    "lk-micro.js"
    ]
   },
   {
@@ -146,7 +149,8 @@
     "leo-link.js",
     "leo-calculator.js",
     "calculateurs-engine.js",
-    "lk-ia.js"
+    "lk-ia.js",
+    "lk-micro.js"
    ],
    "motsCodeGardes": true
   },

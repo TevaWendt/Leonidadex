@@ -430,7 +430,7 @@
     return quantities > result.done.length || BEYOND.test(x.text);
   }
   /* v7.69 : le visiteur choisit qui lit sa phrase (lk-ia.js : « IA » ou « Local »), voit lequel a répondu, et a
-     30 questions IA gratuites par 9 heures ; ensuite la lecture locale répond seule (ou le crédit, si la vente est ouverte). */
+     15 questions IA gratuites par 12 heures (v7.71) ; ensuite la lecture locale répond seule jusqu'au renouvellement. */
   const IA = () => window.LKIA || null;
   const iaUsable = () => { const A = IA(); return A ? A.usable() : iaOn(); };
   async function iaCalc(text) {
@@ -452,7 +452,7 @@
     const result = route(value);
     if (!result) return;
     const localLine = result.label + (result.done.length ? ' · ' + result.done.join(' · ') : ' — fill in the boxes just below.') + (result.notes.length ? ' · ' + result.notes.join(' · ') : '');
-    const byLocal = () => { const A = IA(); if (!A) return ''; const st = A.status(); return ' · ' + (st.kind === 'quota' || st.kind === 'off' ? st.text : A.line(false)); };
+    const byLocal = () => { const A = IA(); if (!A) return ''; const st = A.status(); return ' · ' + (st.kind === 'quota' || st.kind === 'off' ? (st.plain || st.text) : A.line(false)); };
     if (out) { out.textContent = localLine + byLocal(); out.hidden = false; out.removeAttribute('aria-busy'); }
     focusWorkshop();
     const text = String(value || '').trim(), calc = window.LKCalculator;

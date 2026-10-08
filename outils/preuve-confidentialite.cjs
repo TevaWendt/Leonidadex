@@ -48,7 +48,7 @@ const forms=[];for(const f of html)for(const m of text(f).matchAll(/<form\b[^>]*
 facts.externalForms=forms;/* v7.60 : l'accueil traduit (en/index.html) porte le même formulaire d'alerte que l'accueil */for(const x of forms)if(!(/^(?:[a-z]{2}\/)?index\.html$/.test(x.file)&&/^https:\/\/[a-z0-9]+\.sibforms\.com\//.test(x.action)))fail('formulaire externe',x.file,x.action);
 /* 6. fonctions serveur connues (contact, IA), pas de package.json */
 if(files.includes('package.json'))fail('build','package.json','présent');
-if(JSON.stringify(api)!==JSON.stringify(['api/contact.js','api/ia-achat.js','api/ia.js']))fail('fonction serveur','api/',api.join(', ')); /* v7.67 : api/ia.js (IA Claude de Léo et du calculateur, déclarée dans les Mentions) ; v7.69 : api/ia-achat.js (crédit IA payant, fermé tant que la vente n'est pas ouverte) */
+if(JSON.stringify(api)!==JSON.stringify(['api/contact.js','api/ia.js']))fail('fonction serveur','api/',api.join(', ')); /* v7.67 : api/ia.js (IA Claude de Léo et du calculateur, déclarée dans les Mentions) ; v7.69 : api/ia-achat.js (crédit IA payant, fermé tant que la vente n'est pas ouverte) */
 /* 7. stockage du navigateur : toutes les clés commencent par « lk » */
 const keys=new Set(),unresolved=[];
 for(const f of js.filter(f=>!f.startsWith('api/'))){const s=text(f),consts=new Map();for(const m of s.matchAll(/\b([A-Za-z_$][\w$]*)\s*=\s*['"`]([^'"`]*)['"`]/g))if(!consts.has(m[1]))consts.set(m[1],m[2]);

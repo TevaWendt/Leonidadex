@@ -1,0 +1,88 @@
+LEONIDAKIT v7.71 — lot 1 : IA 100 % gratuite avec compte à rebours, micro, business plan, À propos et publicité, 8 octobre 2026
+
+Base : v7.70 (commit 5c8bdef). Demande de Téva du 08/10/2026 (lot 1 sur 3). Rien n'est publié ni poussé.
+
+1. IA ENTIÈREMENT GRATUITE : 15 QUESTIONS PAR VISITEUR TOUTES LES 12 HEURES
+- api/ia.js : LK_IA_GRATUIT 15 et LK_IA_HEURES 12 par défaut (au lieu de 30 et 9). Plus aucun crédit payant : le code de
+  crédit (jeton), le solde, les prix des modèles, la marge, Stripe et la vente ont disparu de la fonction ; l'état (mode
+  « etat ») et la réponse 402 « quota » ne renvoient plus que gratuit, heures, restant et reset (date du renouvellement).
+  Un code de crédit envoyé par une vieille page est ignoré.
+- api/ia-achat.js SUPPRIMÉ (voir LISEZ-MOI-v7.71.txt : fichier à retirer du dépôt). Les variables Vercel LK_IA_VENTE,
+  STRIPE_SECRET_KEY, LK_IA_SEL, LK_IA_MARGE, LK_IA_PACKS, LK_IA_FRAIS, LK_IA_EUR_PAR_USD ne servent plus (à retirer si elles
+  avaient été posées) ; ANTHROPIC_API_KEY et la base Upstash restent les seules choses nécessaires.
+- lk-ia.js réécrit sans la boîte « Plus de questions » : « Qui répond ? IA | Local », ligne d'état et compte à rebours
+  (demande de Téva : le temps avant le retour des questions est affiché sous forme de minuteur). Une seule horloge pour
+  toutes les commandes affichées (barre du calculateur, Léo), mise à jour chaque seconde dans un élément <time
+  class="lkia-timer" role="timer">, arrêtée quand aucun compte à rebours n'est en cours ; au passage de l'heure, les
+  questions reviennent toutes seules sans requête. Textes (phrases entières, traduisibles en bloc) :
+  « IA : 14 questions gratuites sur 15 · de nouveau 15 dans 11:59:27. », « IA : 15 questions gratuites toutes les 12 h. »,
+  « Questions IA gratuites épuisées : mode local, l'IA revient dans 03:41:12. » La mention sous une réponse locale reprend
+  la même phrase écrite en entier (status().plain : leo-ui.js, calculateurs-hub.js). L'ancien code de crédit (lk_ia_jeton)
+  est effacé de l'appareil s'il existait. leo-loader.js : plus de retour de paiement (?ia=paye).
+- Mentions (outils/gen-informations.cjs, outils/site-informations.json) : ligne « Tu poses une question… » à 15 / 12 h,
+  sans code de crédit ; clé lk_ia_jeton retirée de « Ce qui reste dans ton navigateur » ; « L'IA est entièrement
+  gratuite : aucun crédit, aucun paiement. » Tuto (chapitre « Poser ta question »), Léo (sujet ia-questions) et À propos
+  disent la même chose. outils/preuve-confidentialite.cjs et les tests connaissent les deux seules fonctions serveur.
+
+2. MICRO : PARLER AU LIEU D'ÉCRIRE (lk-micro.js, nouveau)
+- Bouton micro à côté de la case de la barre « Que veux-tu calculer ? » (calculateurs.html, chargé en differé) et de la
+  case de Léo (leo-loader.js le charge avec lk-ia.js ; leo-ui.js l'attache). Reconnaissance vocale du navigateur (API
+  SpeechRecognition) dans la langue de la page : résultats intermédiaires écrits dans la case, phrase finale envoyée
+  (requestSubmit) ; états « Je t'écoute… », micro bloqué, rien entendu, échec ; une seule écoute à la fois ; le micro
+  s'éteint seul à la fin de la phrase ; retour du focus dans la case. Le bouton n'existe que si le navigateur sait le
+  faire (Chrome, Edge, Safari ; pas Firefox) et sur une page sûre (https ou localhost).
+- Rien ne passe par le site : l'audio est transcrit par le navigateur (chez son éditeur selon ses règles) ; la page ne
+  reçoit que le texte et ne garde rien. Mentions : nouvelle ligne « Tu parles au lieu d'écrire » (#donnees-micro) dans le
+  tableau « Ce qui part, et où », puce « Micro » dans « Ce qui reste dans ton navigateur ». Tuto et Léo l'expliquent.
+- Mise en page : bouton carré dans la barre (56 px, ombre), rond dans Léo ; sur téléphone, case + micro sur une ligne et
+  « Trouver le bon calcul » dessous ; pulsation pendant l'écoute (coupée en mouvement réduit).
+
+3. BUSINESS PLAN
+- calculateurs-workspace.js : les deux blocs « Mes calculs enregistrés » et « Mes business plans » du mode Expert étaient
+  écrits à chaque passage de mount() (calcul rechargé depuis le tiroir, lien partagé, demande de Léo) : ils se
+  dupliquaient (capture de Téva). L'ancien bloc est retiré avant d'écrire le nouveau.
+- calculateurs-plan.js : quand le plan ne se calcule pas encore (missions manquantes, case vide…), le bloc « Mode Expert :
+  tout le détail » restait vide : il garde maintenant sa place avec le point « Et si le chiffre bouge de 20 % ? » en
+  attente (« Pas encore calculable » et la case à remplir). Plan calculable : le « Et si » reste le dernier point du bloc.
+
+4. À PROPOS, MENTIONS, PUBLICITÉ
+- À propos (outils/informations-editorial.json) : « Gratuit, sans compte » (l'IA de Léo et du calculateur est gratuite,
+  15 questions toutes les 12 heures ; des emplacements publicitaires sont réservés pour aider à payer l'hébergement et
+  l'IA : vides aujourd'hui, décrits dans les Mentions avant d'être remplis ; aucune mesure d'audience) ; carte « Demander
+  à Léo » : mode IA gratuit, micro, chaque réponse dit qui l'a écrite.
+- Mentions : section « Publicité » (#publicite) : aucune publicité ni script publicitaire aujourd'hui ; emplacements
+  réservés, vides ; si une régie est ajoutée un jour, la page dira laquelle, ce qu'elle collecte et pour combien de temps,
+  et un bandeau demandera l'accord avant tout cookie ou traceur. La phrase « ni publicité » du paragraphe « Aucune donnée
+  n'est vendue… » est remplacée par cette section ; « Aucun cookie, aucun traceur » reste vrai.
+- Fiches du monde (outils/lore-gen.js) : un emplacement publicitaire caché (<aside class="lk-pub" data-pub="fiche-monde"
+  hidden>) sous le corps de chaque fiche, là où Téva a vu des espaces blancs ; style prêt dans lk-sections.css (cadre
+  pointillé « Publicité »). Invisible et vide tant qu'aucune régie n'est choisie ; aucun script publicitaire n'est chargé,
+  la preuve de confidentialité le vérifie.
+- Léo : sujets site-officiel et cookies (emplacements réservés, vides pour le moment).
+
+5. LANGUES
+- outils/langues/<en|es|it|de>/v771.json : ~45 textes par langue (lignes d'état avec {n}, {total}, {h}, {timer} ; micro ;
+  À propos ; Mentions ; Tuto ; Léo). outils/langues.json : lk-micro.js copié et traduit dans chaque langue.
+- Extraction : 0 texte sans traduction, 0 repère cassé, 0 conflit.
+
+6. CONTRÔLES
+- outils/tests/v771.test.cjs (6 tests : serveur gratuit, lk-ia.js et compte à rebours, micro, business plan, À propos et
+  Mentions dans les cinq langues, emplacement caché des fiches). Tests mis à jour : ia-v769 (15 / 12 h, plus de crédit),
+  ia-v767, contact-v746 et preuve-confidentialite (deux fonctions serveur), v769 (Tuto, Léo), leo-browser (IA simulée à
+  15 / 12 h, compte à rebours dans la ligne et sous la réponse).
+- Résultats : voir la fin de ce fichier.
+
+RÉSULTATS DE LA LIVRAISON DU LOT 1 (8 octobre 2026)
+- node --test : 938 tests légers réussis sur 938 ; langues.test, coverage.test et calculateurs-check-ultime : 61/61.
+- Léo (leo-eval) : 512/512 bonnes pages ou intentions, 39/39 hors sujet refusés, 0 réponse sans source.
+- Navigateur : leo-browser tenu (IA simulée : « IA : 15 questions gratuites toutes les 12 h. » → « 14 … de nouveau 15 dans
+  11:59:59 » → quota : « l'IA revient dans … », mode local sans requête) ; langues-browser 2 267 contrôles, 0 échec ;
+  calculateurs-check-ultime-browser 1 120/1 120 ; tuto-essayer 23/23 ; carnets 94/94 ; mots-coupes : 230 chargements,
+  0 mot coupé ; zoom-hauteur 56/56 ; contact tenu ; audit de clôture (26 pages, 182 chargements) : 0 débordement, 0 cible
+  sous 24 px, 0 contraste insuffisant (11 915 vérifiés), 0 erreur console ni requête en échec.
+- outils/verifier.js : 306 159 références dans 2 241 pages, 0 erreur ; preuve-confidentialite : toutes les affirmations
+  des Mentions tenues (deux fonctions serveur, aucune ressource d'un autre site) ; calculateur-inventaire régénéré ;
+  calculateur-cadre : 150 vues identiques.
+- Langues : 0 texte sans traduction, 0 repère cassé, 0 conflit.
+- Vérifié à l'écran (1 280 et 390 px, français et allemand) : barre du calculateur avec micro et minuteur, Léo (micro,
+  ligne d'état), réponse locale après quota.

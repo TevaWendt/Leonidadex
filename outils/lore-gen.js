@@ -156,6 +156,9 @@ const LKX_HUBS=new Set(['lieux','personnages','demeures','planques','entreprises
 const FEM={lucia:'la',dimez:'la'};/* personnages au féminin pour « Où la trouver » */
 const charMapIds=x=>{const ids=[];const add=y=>{if(y&&y.mapId)ids.push(y.mapId);};if(x.home)add(byId[x.home]);for(const k of ['residences','hideouts','businesses'])for(const y of ED[k])if((y.characters||[]).includes(x.id))add(y);for(const r of (x.places||[]))add(byId[r]);return [...new Set(ids)];};
 
+/* v7.71 (Téva) : emplacement publicitaire réservé sous le corps de chaque fiche du monde (<aside class="lk-pub" hidden>) : vide et
+   invisible tant qu'aucune régie n'est choisie ; le jour venu, les Mentions diront laquelle et un bandeau de consentement précédera
+   tout cookie (voir LISEZ-MOI-v7.71.txt). Aucun script publicitaire n'est chargé. */
 /* v7.70 : données structurées d’une fiche du monde (schema.org) : la page, son sujet (nom et autres noms), l’image principale et la
    galerie, chaque image créditée à Rockstar Games. Rien d’autre : aucune date, aucun fait qui ne soit pas sur la page. */
 const ficheLd=(x,S,key,m)=>{const url=SITE+'/'+S.hub+'/'+x.id+'.html';const imgOf=(mm,alt)=>({"@type":"ImageObject","contentUrl":SITE+(mm.variants[1]||mm.variants[0]).src,"width":(mm.variants[1]||mm.variants[0]).w,"height":(mm.variants[1]||mm.variants[0]).h,"name":alt,"creditText":"Rockstar Games","copyrightNotice":"© Rockstar Games / Take-Two Interactive"});
@@ -260,7 +263,8 @@ ${calcBridge}${factionBridge}
   ${x.pratique?`<div class="lore-texte reveal"><h2>${{regions:'Sur le terrain',characters:'Sur les captures et dans les fiches',businesses:'Dans le jeu',residences:'Dans le jeu',hideouts:'Dans le jeu',factions:'Ce qu’on sait pour le jeu',animals:'Ce que le jeu en fait'/* section animaux */}[key]||'Dans le jeu'}</h2><p class="rise">${esc(x.pratique)}</p></div>`:''}
   ${facts}
   ${(relBlocks||vehBlock||armBlock||mapBlock)?`<div class="lore-related"><h2>En lien</h2>${relBlocks}${vehBlock}${armBlock}${mapBlock}</div>`:''}
-</section>${locate}${galleryBlock(x,S)}`;
+</section>
+<aside class="shell lk-pub lk-pub--fiche" data-pub="fiche-monde" hidden aria-hidden="true"></aside>${locate}${galleryBlock(x,S)}`;
     fs.writeFileSync(S.hub+'/'+x.id+'.html',page({p,lkx:!!locate||LKX_HUBS.has(S.hub)||!!x.galerie,RECAP:recapOf(x,key),title:x.name+' — GTA VI | Leonidakit',desc:x.description,canonical:'/'+S.hub+'/'+x.id+'.html',ogImg:m?(m.variants[1]||m.variants[0]).src:null,body,crumbs:[['Accueil','/'],[S.label,'/'+S.hub+'.html'],[x.name,'/'+S.hub+'/'+x.id+'.html']],hub:S.hub,ld:ldFiche}));
     index.push({l:x.name,k:S.one,u:'/'+S.hub+'/'+x.id+'.html',s:(x.name+' '+S.one+' '+x.description+' '+(x.tagline||'')+(key==='factions'?' '+(x.kind||'')+' '+(x.aliases||[]).join(' '):'')).toLowerCase(),w:1});
   }

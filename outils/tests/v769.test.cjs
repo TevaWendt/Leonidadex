@@ -60,14 +60,14 @@ test('consommables : filtre par catégorie (boutons radio, transitions de vue), 
   assert.ok(!chips.includes('Lieux'), 'pas de pastille vers la page elle-même');
 });
 
-test('Tuto : chapitre « Poser ta question » (IA Claude ou Local), captures refaites, FAQ trajet, lien d’agrandissement', () => {
+test('Tuto : chapitre « Poser ta question » (IA ou Local), captures refaites, FAQ trajet, lien d’agrandissement', () => {
   const html = read('tuto.html'), d = new JSDOM(html).window.document;
   const ch = d.getElementById('poser-question'); assert.ok(ch, 'chapitre');
   assert.equal(ch.querySelector('h2').textContent.trim(), 'Poser ta question');
   assert.ok(d.querySelector('#sommaire a[href="#poser-question"]'), 'sommaire');
   const fig = ch.querySelector('figure[data-capture="ask"]'); assert.ok(fig, 'capture de la barre');
   assert.ok(exists(fig.querySelector('img').getAttribute('src')));
-  assert.match(ch.textContent, /30\s?questions IA gratuites toutes les 9\s?h/);
+  assert.match(ch.textContent, /15\s?questions IA gratuites toutes les 12\s?h/); /* v7.71 */
   assert.ok(ch.querySelector('a[href="mentions-legales.html#donnees-ia"]'), 'ce qui part : renvoi aux Mentions');
   assert.ok(doc('mentions-legales.html').getElementById('donnees-ia'));
   const btn = ch.querySelector('a.t-button'); assert.match(btn.getAttribute('href'), /chapter=poser-question#que-calculer$/);
@@ -87,9 +87,9 @@ test('Tuto : le bouton « Poser ma question » ouvre le calculateur avec le reto
   assert.deepEqual(p.errors, []); p.close();
 });
 
-test('Léo : sujet « combien de questions à l’IA Claude », liens vers le Tuto et les Mentions', () => {
+test('Léo : sujet « combien de questions à l’IA », liens vers le Tuto et les Mentions', () => {
   const t = JSON.parse(read('outils/leo-knowledge.json')).topics.find(x => x.id === 'ia-questions');
-  assert.ok(t); assert.match(t.text, /30 questions gratuites/); assert.match(t.text, /9 heures/);
+  assert.ok(t); assert.match(t.text, /15 questions gratuites/); assert.match(t.text, /12 heures/); /* v7.71 */
   assert.deepEqual(t.links.map(l => l.url), ['/tuto.html#poser-question', '/mentions-legales.html#donnees-ia']);
 });
 

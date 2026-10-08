@@ -1,9 +1,9 @@
 'use strict';
-/* v7.69 : accès à l'IA par visiteur (demande de Téva du 06/10/2026) : 30 questions gratuites toutes les 9 heures, puis
-   crédit payant au prix réel d'Anthropic + 20 % si la vente est ouverte, sinon mode local ; le visiteur choisit qui répond
-   (IA Claude ou local) et voit lequel a répondu. Aucun appel réseau réel : Claude, la base Upstash et Stripe sont simulés. */
+/* v7.69 : accès à l'IA par visiteur (demande de Téva du 06/10/2026), v7.71 : entièrement gratuit (demande du 07/10/2026) :
+   15 questions gratuites toutes les 12 heures, puis mode local jusqu'au renouvellement (plus aucun crédit payant) ; le visiteur
+   choisit qui répond (IA ou local) et voit lequel a répondu. Aucun appel réseau réel : Claude et la base Upstash sont simulés. */
 const test=require('node:test'),assert=require('node:assert/strict'),path=require('node:path');
-const root=path.resolve(__dirname,'../..'),IA=require(root+'/api/ia.js'),T=IA._test,ACHAT=require(root+'/api/ia-achat.js');
+const root=path.resolve(__dirname,'../..'),IA=require(root+'/api/ia.js'),T=IA._test;
 
 /* base Redis simulée (commandes utilisées par les deux fonctions) */
 function fakeKV(){const db=new Map(),ttl=new Map();let now=0;
@@ -21,27 +21,26 @@ function fakeKV(){const db=new Map(),ttl=new Map();let now=0;
   default:throw Error('commande inconnue '+cmd);}};
  return {db,tick:ms=>{now+=ms;},fetch:async(url,opt)=>({ok:true,status:200,json:async()=>JSON.parse(opt.body).map(c=>({result:run(c)}))})};}
 const KV_ENV={KV_REST_API_URL:'https://kv.example',KV_REST_API_TOKEN:'t'};
-function services({kv,claude,stripe}={}){return async(url,opt)=>{
+function services({kv,claude}={}){return async(url,opt)=>{
  if(url.startsWith('https://kv.example'))return kv.fetch(url,opt);
  if(url.startsWith('https://api.anthropic.com'))return claude?claude(url,opt):{ok:true,status:200,json:async()=>({content:[{type:'text',text:JSON.stringify(JSON.parse(opt.body).output_config.format.schema.properties.outil?{outil:'goal',cases:[{chemin:'goal.capital',valeur:200000}],scenarios:[],note:'Compris.',question:''}:{reponse:'Réponse.',liens:[],trouve:true})}],usage:{input_tokens:3000,output_tokens:400}})};
- if(url.startsWith('https://api.stripe.com'))return stripe(url,opt);
  throw Error('appel inattendu '+url);};}
 function call(handler,body,{ip='1.2.3.4'}={}){return new Promise(resolve=>{const res={statusCode:0,headers:{},setHeader(k,v){this.headers[k.toLowerCase()]=v;},end(s){resolve({status:this.statusCode,body:s?JSON.parse(s):null});}};
  handler({method:'POST',headers:{'content-type':'application/json',origin:'https://www.leonidakit.com','x-forwarded-for':ip},body,socket:{}},res);});}
 const DEV='appareil-de-test-0123456789';
 
-test('état : 30 questions gratuites toutes les 9 heures, rien de consommé, vente fermée par défaut',async()=>{T.reset();const kv=fakeKV();
+test('état : 15 questions gratuites toutes les 12 heures, rien de consommé, aucune vente',async()=>{T.reset();const kv=fakeKV();
  const h=IA.createHandler({env:{ANTHROPIC_API_KEY:'k',...KV_ENV},fetch:services({kv})});
- const r=await call(h,{mode:'etat',appareil:DEV});assert.equal(r.status,200);assert.equal(r.body.gratuit,30);assert.equal(r.body.heures,9);assert.equal(r.body.restant,30);assert.equal(r.body.achat,false);assert.equal(r.body.modele,'claude-sonnet-5-5');
- const r2=await call(h,{mode:'etat',appareil:DEV});assert.equal(r2.body.restant,30,'lire l’état ne consomme rien');});
+ const r=await call(h,{mode:'etat',appareil:DEV});assert.equal(r.status,200);assert.equal(r.body.gratuit,15);assert.equal(r.body.heures,12);assert.equal(r.body.restant,15);assert.equal(r.body.achat,undefined);assert.equal(r.body.solde,undefined);assert.equal(r.body.modele,'claude-sonnet-5-5');
+ const r2=await call(h,{mode:'etat',appareil:DEV});assert.equal(r2.body.restant,15,'lire l’état ne consomme rien');});
 
-test('30 questions puis mode local (402 « quota » avec l’heure de renouvellement) ; une panne ne consomme pas ; renouvellement au bout de 9 heures',async()=>{T.reset();const kv=fakeKV();let fail=false;
+test('15 questions puis mode local (402 « quota » avec l’heure de renouvellement) ; une panne ne consomme pas ; renouvellement au bout de 12 heures',async()=>{T.reset();const kv=fakeKV();let fail=false;
  const h=IA.createHandler({env:{ANTHROPIC_API_KEY:'k',...KV_ENV},fetch:services({kv,claude:async(u,o)=>fail?{ok:false,status:529,json:async()=>({})}:{ok:true,status:200,json:async()=>({content:[{type:'text',text:JSON.stringify({reponse:'R.',liens:[],trouve:true})}],usage:{input_tokens:100,output_tokens:10}})}})});
  const ask=()=>call(h,{mode:'leo',question:'Bonjour Léo',appareil:DEV});
  fail=true;assert.equal((await ask()).status,502);fail=false;
- for(let i=1;i<=30;i++){const r=await ask();assert.equal(r.status,200,'question '+i);assert.equal(r.body.acces.type,'gratuit');assert.equal(r.body.acces.restant,30-i);}
- const over=await ask();assert.equal(over.status,402);assert.equal(over.body.code,'quota');assert.equal(over.body.restant,0);assert.ok(over.body.reset>Date.now());assert.equal(over.body.achat,false);
- kv.tick(9*3600*1000+1);const again=await ask();assert.equal(again.status,200,'de nouveau des questions après 9 heures');});
+ for(let i=1;i<=15;i++){const r=await ask();assert.equal(r.status,200,'question '+i);assert.equal(r.body.acces.type,'gratuit');assert.equal(r.body.acces.restant,15-i);}
+ const over=await ask();assert.equal(over.status,402);assert.equal(over.body.code,'quota');assert.equal(over.body.restant,0);assert.ok(over.body.reset>Date.now());assert.equal(over.body.achat,undefined,'plus aucune vente');
+ kv.tick(12*3600*1000+1);const again=await ask();assert.equal(again.status,200,'de nouveau des questions après 12 heures');});
 
 test('le compteur suit l’appareil, et l’adresse IP d’une box partagée a un plafond 5 fois plus haut',async()=>{T.reset();const kv=fakeKV();
  const h=IA.createHandler({env:{ANTHROPIC_API_KEY:'k',...KV_ENV,LK_IA_GRATUIT:'2'},fetch:services({kv})});
@@ -49,38 +48,10 @@ test('le compteur suit l’appareil, et l’adresse IP d’une box partagée a u
  for(let d=0;d<5;d++)for(let i=0;i<2;i++)assert.equal((await ask('appareil-partage-'+d+'-xxxxxxxx')).status,200);
  assert.equal((await ask('appareil-partage-5-xxxxxxxx')).status,402,'au-delà de 5 × 2 sur la même adresse');});
 
-test('crédit payant : au-delà des gratuites, chaque question coûte son prix réel (jetons × tarif × taux) plus 20 %',async()=>{T.reset();const kv=fakeKV();
- const env={ANTHROPIC_API_KEY:'k',...KV_ENV,LK_IA_GRATUIT:'0'};const h=IA.createHandler({env,fetch:services({kv})});
- const st=T.settings(env),jeton='LK-ABCD-EFGH-IJKL-MNOP';kv.db.set('lkia:b:'+T.digest(st.salt,'jeton:'+jeton),'1000000');
- const price=T.priceOf('claude-sonnet-5-5',{input_tokens:3000,output_tokens:400},st);assert.equal(price,Math.ceil((3000*2+400*10)/1e6*0.89*1.2*1e6));
- const r=await call(h,{mode:'leo',question:'Bonjour Léo',appareil:DEV,jeton});assert.equal(r.status,200);assert.equal(r.body.acces.type,'credit');assert.equal(r.body.acces.cout,price);assert.equal(r.body.acces.solde,1000000-price);
- kv.db.set('lkia:b:'+T.digest(st.salt,'jeton:'+jeton),'1000');const poor=await call(h,{mode:'leo',question:'Encore ?',appareil:DEV,jeton});assert.equal(poor.status,402,'crédit trop bas : mode local');assert.equal(poor.body.solde,1000);});
-
-test('sans base Upstash : le compteur tient en mémoire vive (repli), la vente reste fermée',async()=>{T.reset();
- const h=IA.createHandler({env:{ANTHROPIC_API_KEY:'k',LK_IA_GRATUIT:'1',LK_IA_VENTE:'oui',STRIPE_SECRET_KEY:'sk',LK_IA_SEL:'sel-de-test-assez-long'},fetch:services({})});
- assert.equal((await call(h,{mode:'leo',question:'Une',appareil:DEV})).status,200);const r=await call(h,{mode:'leo',question:'Deux',appareil:DEV});assert.equal(r.status,402);assert.equal(r.body.achat,false);});
-
-test('achat : fermé sans LK_IA_VENTE=oui ; ouvert, exige la renonciation et un montant prévu ; crée le code avant Stripe ; crédite une seule fois, frais de paiement retirés',async()=>{
- const kv=fakeKV(),sessions=new Map();let n=0;
- const stripe=async(url,opt)=>{if(opt.method==='POST'){const f=new URLSearchParams(opt.body),id='cs_test_'+(++n)+'abcdefghij';sessions.set(id,{id,url:'https://checkout.stripe.com/c/pay/'+id,payment_status:'unpaid',status:'open',currency:f.get('line_items[0][price_data][currency]'),amount_total:Number(f.get('line_items[0][price_data][unit_amount]')),metadata:{jeton:f.get('metadata[jeton]')},success:f.get('success_url')});return {ok:true,status:200,json:async()=>sessions.get(id)};}
-  const id=decodeURIComponent(url.split('/').pop());return sessions.has(id)?{ok:true,status:200,json:async()=>sessions.get(id)}:{ok:false,status:404,json:async()=>({})};};
- const closed=ACHAT.createHandler({env:{...KV_ENV,STRIPE_SECRET_KEY:'sk_test'},fetch:services({kv,stripe})});
- assert.equal((await call(closed,{action:'creer',pack:5,renonce:true,retour:'/calculateurs.html'})).body.code,'ferme');
- const noSalt=ACHAT.createHandler({env:{...KV_ENV,STRIPE_SECRET_KEY:'sk_test',LK_IA_VENTE:'oui',ANTHROPIC_API_KEY:'k'},fetch:services({kv,stripe})});
- assert.equal((await call(noSalt,{action:'creer',pack:5,renonce:true,retour:'/calculateurs.html'})).body.code,'ferme','sans LK_IA_SEL fixe, la vente reste fermée');
- assert.equal(IA._test.settings({...KV_ENV,STRIPE_SECRET_KEY:'sk',LK_IA_VENTE:'oui',LK_IA_SEL:'court'}).sell,false);
- const env={...KV_ENV,STRIPE_SECRET_KEY:'sk_test',LK_IA_VENTE:'oui',ANTHROPIC_API_KEY:'k',LK_IA_SEL:'sel-de-test-assez-long'},h=ACHAT.createHandler({env,fetch:services({kv,stripe})});
- assert.equal((await call(h,{action:'creer',pack:5,retour:'/calculateurs.html'})).body.code,'renonce');
- assert.equal((await call(h,{action:'creer',pack:7,renonce:true})).body.code,'pack');
- const c=await call(h,{action:'creer',pack:5,renonce:true,retour:'/calculateurs.html'});assert.equal(c.status,200);assert.match(c.body.jeton,ACHAT._test.TOKEN);assert.match(c.body.url,/^https:\/\/checkout\.stripe\.com\//);
- const s=[...sessions.values()][0];assert.equal(s.success,'https://www.leonidakit.com/calculateurs.html?ia=paye');assert.equal(s.amount_total,500);assert.equal(s.currency,'eur');
- let v=await call(h,{action:'verifier',jeton:c.body.jeton});assert.equal(v.body.solde,0,'pas encore payé');
- s.payment_status='paid';s.status='complete';v=await call(h,{action:'verifier',jeton:c.body.jeton});
- assert.equal(v.body.credite,Math.floor((5-(0.25+5*0.015))*1e6));assert.equal(v.body.solde,4675000);
- v=await call(h,{action:'verifier',jeton:c.body.jeton});assert.equal(v.body.credite,0,'un paiement n’est crédité qu’une fois');assert.equal(v.body.solde,4675000);
- /* le crédit sert ensuite aux questions de l'IA */
- const ia=IA.createHandler({env:{...env,LK_IA_GRATUIT:'0'},fetch:services({kv})});const r=await call(ia,{mode:'leo',question:'Bonjour',appareil:DEV,jeton:c.body.jeton});assert.equal(r.status,200);assert.equal(r.body.acces.type,'credit');assert.ok(r.body.acces.solde<4675000);
- const etat=await call(ia,{mode:'etat',appareil:DEV,jeton:c.body.jeton});assert.equal(etat.body.achat,true);assert.equal(etat.body.solde,r.body.acces.solde);});
+test('sans base Upstash : le compteur tient en mémoire vive (repli) ; un code de crédit envoyé par une vieille page est ignoré',async()=>{T.reset();
+ const h=IA.createHandler({env:{ANTHROPIC_API_KEY:'k',LK_IA_GRATUIT:'1'},fetch:services({})});
+ assert.equal((await call(h,{mode:'leo',question:'Une',appareil:DEV,jeton:'LK-ABCD-EFGH-IJKL-MNOP'})).status,200);const r=await call(h,{mode:'leo',question:'Deux',appareil:DEV,jeton:'LK-ABCD-EFGH-IJKL-MNOP'});assert.equal(r.status,402);assert.equal(r.body.achat,undefined);assert.equal(r.body.solde,undefined);
+ assert.ok(!require('node:fs').existsSync(root+'/api/ia-achat.js'),'v7.71 : plus de fonction d’achat');assert.ok(!('priceOf' in T)&&!('PRICES' in T));});
 
 test('pages : « Qui répond ? » sous la barre du calculateur et dans Léo ; mode local : aucun appel ; chaque réponse dit qui l’a écrite',async()=>{
  const {load}=require('./runtime-helper.cjs'),p=await load(root,'calculateurs.html',{});
@@ -95,7 +66,7 @@ test('pages : « Qui répond ? » sous la barre du calculateur et dans Léo ; mo
   for(let i=0;i<5;i++)await new Promise(r=>setImmediate(r));
   assert.equal(calls.filter(u=>u==='/api/ia').length,0,'mode local : aucune lecture de l’état');
   ctl.querySelector('[data-lkia-mode="ia"]').click();for(let i=0;i<5;i++)await new Promise(r=>setImmediate(r));
-  assert.equal(calls.filter(u=>u==='/api/ia').length,1,'retour à « IA Claude » : l’état est lu une fois');assert.equal(p.w.localStorage.getItem('lk_ia_mode'),null);
+  assert.equal(calls.filter(u=>u==='/api/ia').length,1,'retour à « IA » : l’état est lu une fois');assert.equal(p.w.localStorage.getItem('lk_ia_mode'),null);
   assert.deepEqual(p.errors,[]);}finally{p.close();}
  const ia=require('node:fs').readFileSync(root+'/lk-ia.js','utf8');assert.doesNotMatch(ia,/pointerenter/,'jamais de lecture au simple survol');assert.match(ia,/if \(mode\(\) === 'local' && !force\) return Promise\.resolve/);
  const fs=require('node:fs'),ui=fs.readFileSync(root+'/leo-ui.js','utf8');assert.match(ui,/window\.LKIA\.control\('leo'\)/);assert.match(ui,/by:'ia'/);assert.match(ui,/Réponse locale de Léo, sans IA\./);
@@ -113,18 +84,18 @@ test('correctif du 07/10/2026 : demande acceptée par Claude Sonnet 5.5 (schéma
  try{const h=IA.createHandler({env:{ANTHROPIC_API_KEY:'k',...KV_ENV},fetch:services({kv,claude:async()=>({ok:false,status:400,json:async()=>({type:'error',error:{type:'invalid_request_error',message:'Your credit balance is too low to access the Anthropic API.'}})})})});
   const r=await call(h,{mode:'leo',question:'Question secrète du joueur',appareil:DEV});assert.equal(r.status,502);
   assert.equal(logs.length,1);assert.match(logs[0],/\(400 — invalid_request_error : Your credit balance is too low/);assert.doesNotMatch(logs[0],/secrète/);
-  const e=await call(h,{mode:'etat',appareil:DEV});assert.equal(e.body.restant,30,'un refus ne coûte pas de question');
+  const e=await call(h,{mode:'etat',appareil:DEV});assert.equal(e.body.restant,15,'un refus ne coûte pas de question');
   /* réponse sans JSON lisible : 502, rien de consommé */
   const h2=IA.createHandler({env:{ANTHROPIC_API_KEY:'k',...KV_ENV},fetch:services({kv,claude:async()=>({ok:true,status:200,json:async()=>({content:[{type:'text',text:'{"reponse":'}],stop_reason:'max_tokens'})})})});
   assert.equal((await call(h2,{mode:'leo',question:'Bonjour',appareil:DEV})).status,502);assert.match(logs[1],/réponse illisible \(max_tokens\)/);
-  assert.equal((await call(h,{mode:'etat',appareil:DEV})).body.restant,30);
+  assert.equal((await call(h,{mode:'etat',appareil:DEV})).body.restant,15);
  }finally{console.error=orig;}});
 test('v7.69.2 : l’IA consultée sans rien ajouter (Léo « trouve » faux, calcul vide) : question rendue, réponse locale dite comme telle',async()=>{
  T.reset();const kv=fakeKV();let out={reponse:'Les éléments ne le disent pas.',liens:[],trouve:false};
  const h=IA.createHandler({env:{ANTHROPIC_API_KEY:'k',...KV_ENV},fetch:services({kv,claude:async()=>({ok:true,status:200,json:async()=>({content:[{type:'text',text:JSON.stringify(out)}],usage:{input_tokens:100,output_tokens:10}})})})});
- const r=await call(h,{mode:'leo',question:'Bonjour Léo',appareil:DEV});assert.equal(r.status,200);assert.equal(r.body.compte,false);assert.equal(r.body.acces.restant,30);
- assert.equal((await call(h,{mode:'etat',appareil:DEV})).body.restant,30,'non comptée');
- out={reponse:'Vice City est au sud-est.',liens:[],trouve:true};const r2=await call(h,{mode:'leo',question:'Où est Vice City ?',appareil:DEV});assert.equal(r2.body.compte,undefined);assert.equal(r2.body.acces.restant,29);
- out={outil:'goal',cases:[],scenarios:[],note:'Rien à remplir.',question:''};const r3=await call(h,{mode:'calcul',question:'Bonjour',appareil:DEV});assert.equal(r3.body.compte,false);assert.equal(r3.body.acces.restant,29);
+ const r=await call(h,{mode:'leo',question:'Bonjour Léo',appareil:DEV});assert.equal(r.status,200);assert.equal(r.body.compte,false);assert.equal(r.body.acces.restant,15);
+ assert.equal((await call(h,{mode:'etat',appareil:DEV})).body.restant,15,'non comptée');
+ out={reponse:'Vice City est au sud-est.',liens:[],trouve:true};const r2=await call(h,{mode:'leo',question:'Où est Vice City ?',appareil:DEV});assert.equal(r2.body.compte,undefined);assert.equal(r2.body.acces.restant,14);
+ out={outil:'goal',cases:[],scenarios:[],note:'Rien à remplir.',question:''};const r3=await call(h,{mode:'calcul',question:'Bonjour',appareil:DEV});assert.equal(r3.body.compte,false);assert.equal(r3.body.acces.restant,14);
  const fs=require('node:fs');assert.match(fs.readFileSync(root+'/leo-ui.js','utf8'),/j\.compte===false\)return \{\.\.\.local,by:'local',byNote:'Réponse locale de Léo : l’IA n’avait rien à ajouter \(question non comptée\)\.'/);
  assert.match(fs.readFileSync(root+'/calculateurs-hub.js','utf8'),/r\.compte === false\) \{ if \(out\) out\.textContent = localLine \+ ' · ' \+ 'Réponse locale : l’IA n’avait rien à ajouter/);});

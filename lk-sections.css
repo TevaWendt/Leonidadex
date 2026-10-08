@@ -398,3 +398,9 @@
 /* v7.68 (téléphone) : très petits écrans (320 px) : un long nom de lien (« Personnalisations ») se coupe au lieu d’être rogné */
 /* v7.69 : à 320 px, « Personnalisations » (et ses traductions) tient sur une ligne : vignette et marges un peu plus petites */
 @media(max-width:360px){.lkx-link{padding-right:26px;gap:10px;}.lkx-link::after{right:9px;}.lkx-link img,.lkx-link .lkx-link-ico{width:52px;height:40px;}.lkx-link b{overflow-wrap:anywhere;-webkit-hyphens:auto;hyphens:auto;}}
+
+/* v7.71 (Téva) : emplacement publicitaire réservé (fiches du monde). Caché tant qu'aucune régie n'est choisie (attribut hidden) ;
+   une fois rempli, il se présente comme une publicité signalée, jamais comme du contenu du site. */
+.lk-pub[hidden]{display:none;}
+.lk-pub--fiche{margin:8px auto 40px;padding:14px 16px;border:1.5px dashed var(--rule,#d8d2c6);border-radius:14px;background:var(--paper-2,#f4f0e7);text-align:center;color:var(--ink-soft,#5c5a63);font-size:.82rem;}
+.lk-pub--fiche::before{content:'Publicité';display:block;margin-bottom:6px;font:800 .64rem/1.4 var(--font-mono,ui-monospace,monospace);letter-spacing:.12em;text-transform:uppercase;}

@@ -1,24 +1,23 @@
-/* Leonidakit — lk-ia.js (v7.69) : accès à l'IA de Léo et de la barre du calculateur, côté page.
+/* Leonidakit — lk-ia.js (v7.69, v7.71) : accès à l'IA de Léo et de la barre du calculateur, côté page.
    - Le visiteur choisit qui répond : « IA » ou « Local » (lk_ia_mode, sur cet appareil). Il voit toujours lequel
      répond : un bandeau sous la barre et dans Léo, et une mention sous chaque réponse.
-   - 30 questions IA gratuites par visiteur et par 9 heures (réglage du serveur) ; ensuite, mode local jusqu'au
-     renouvellement, ou crédit payant si la vente est ouverte (api/ia-achat.js : paiement chez Stripe).
+   - 15 questions IA gratuites par visiteur et par 12 heures (réglage du serveur), entièrement gratuites : ensuite, mode
+     local jusqu'au renouvellement, dont le compte à rebours est affiché (v7.71 : plus aucun crédit payant).
    - Identifiant aléatoire de l'appareil (lk_ia_appareil) envoyé avec chaque question pour compter les questions
-     gratuites ; code de crédit (lk_ia_jeton) si le visiteur a acheté du crédit ; état mis en cache le temps de l'onglet
-     (lk_ia_etat, sessionStorage). Aucun cookie. */
+     gratuites ; état mis en cache le temps de l'onglet (lk_ia_etat, sessionStorage). Aucun cookie. */
 (function () {
   'use strict';
   if (window.LKIA) return;
-  const KEY_MODE = 'lk_ia_mode', KEY_DEV = 'lk_ia_appareil', KEY_JETON = 'lk_ia_jeton', KEY_ETAT = 'lk_ia_etat';
-  const K = { mode: KEY_MODE, dev: KEY_DEV, jeton: KEY_JETON, etat: KEY_ETAT };
+  const KEY_MODE = 'lk_ia_mode', KEY_DEV = 'lk_ia_appareil', KEY_ETAT = 'lk_ia_etat';
+  const K = { mode: KEY_MODE, dev: KEY_DEV, etat: KEY_ETAT };
   const put = fn => { try { fn(); } catch (e) { /* stockage bloqué (navigation privée stricte) */ } };
-  const TOKEN = /^LK(?:-[A-Z2-7]{4}){4}$/, DEVICE = /^[A-Za-z0-9_-]{16,64}$/, MIN_CREDIT = 30000;
+  const DEVICE = /^[A-Za-z0-9_-]{16,64}$/;
   const lang = (document.documentElement.lang || 'fr').slice(0, 2), locale = { fr: 'fr-FR', en: 'en-GB', es: 'es-ES', it: 'it-IT', de: 'de-DE' }[lang] || 'fr-FR';
   const local = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } } };
   const session = { get(k) { try { return sessionStorage.getItem(k); } catch (e) { return null; } } };
-  const money = (n, d) => new Intl.NumberFormat(locale, { style: 'currency', currency: 'EUR', minimumFractionDigits: d || 2, maximumFractionDigits: d || 2 }).format((Number(n) || 0) / 1e6);
-  const clock = t => new Intl.DateTimeFormat(locale, { hour: '2-digit', minute: '2-digit' }).format(new Date(t));
   const nf = n => new Intl.NumberFormat(locale).format(n);
+  /* v7.71 : l'ancien code de crédit (lk_ia_jeton) n'a plus d'usage : retiré de l'appareil s'il existait */
+  put(() => localStorage.removeItem('lk_ia_jeton'));
 
   function device() {
     let d = local.get(K.dev);
@@ -27,17 +26,16 @@
   }
   /* identifiant déjà créé (lecture seule : rien n'est écrit sans action du visiteur) */
   const existing = () => { const d = local.get(K.dev); return DEVICE.test(d || '') ? d : ''; };
-  let acted = false; /* le cache de l'état n'est écrit qu'après une action (question, choix du mode, code) */
-  const token = () => { const t = local.get(K.jeton); return TOKEN.test(t || '') ? t : ''; };
+  let acted = false; /* le cache de l'état n'est écrit qu'après une action (question, choix du mode) */
   const mode = () => local.get(K.mode) === 'local' ? 'local' : 'ia';
 
-  /* état connu : on (IA disponible), gratuit, heures, restant, reset, achat, solde, modele */
+  /* état connu : on (IA disponible), gratuit, heures, restant, reset (date du renouvellement), modele */
   let state = (() => { try { const s = JSON.parse(session.get(K.etat) || 'null'); return s && Date.now() - (s.at || 0) < 5 * 60000 ? s : {}; } catch (e) { return {}; } })();
   const listeners = new Set();
   function emit() { state.at = Date.now(); if (acted) { const v = JSON.stringify(state); put(() => sessionStorage.setItem(KEY_ETAT, v)); } listeners.forEach(fn => { try { fn(api.state()); } catch (e) { /* rien */ } }); paint(); }
   function merge(x) { Object.keys(x || {}).forEach(k => { if (x[k] !== undefined) state[k] = x[k]; }); if (state.reset && state.reset < Date.now()) { state.restant = state.gratuit; state.reset = null; } emit(); }
-  const credit = () => typeof state.solde === 'number' && state.solde >= MIN_CREDIT;
-  const exhausted = () => state.restant === 0 && !credit();
+  const exhausted = () => state.restant === 0;
+  const total = () => state.gratuit || 15, hours = () => state.heures || 12;
 
   async function post(url, body) {
     const ctl = typeof AbortController === 'function' ? new AbortController() : null, timer = setTimeout(() => { if (ctl) ctl.abort(); }, 15000);
@@ -50,40 +48,59 @@
     if (mode() === 'local' && !force) return Promise.resolve(api.state());
     if (refreshing) return refreshing;
     if (!force && state.at && Date.now() - state.at < 60000 && state.on !== undefined) return Promise.resolve(api.state());
-    refreshing = post('/api/ia', { mode: 'etat', appareil: existing() || undefined, jeton: token() || undefined }).then(({ status, j }) => {
+    refreshing = post('/api/ia', { mode: 'etat', appareil: existing() || undefined }).then(({ status, j }) => {
       refreshing = null;
       if (status === 503 || status === 404 || status === 405) { merge({ on: false }); return api.state(); }
-      if (j && j.ok) merge({ on: true, gratuit: j.gratuit, heures: j.heures, restant: j.restant, reset: j.reset, achat: !!j.achat, solde: j.solde, modele: j.modele, marge: j.marge });
+      if (j && j.ok) merge({ on: true, gratuit: j.gratuit, heures: j.heures, restant: j.restant, reset: j.reset, modele: j.modele });
       return api.state();
     });
     return refreshing;
   }
-  /* réponse d'une question : mise à jour du compteur ou du crédit */
+  /* réponse d'une question : mise à jour du compteur */
   function learn(status, j) {
     if (status === 503 || status === 404 || status === 405) return merge({ on: false });
-    if (status === 402 && j) return merge({ on: true, gratuit: j.gratuit, heures: j.heures, restant: 0, reset: j.reset, achat: !!j.achat, solde: j.solde });
-    if (j && j.acces) { if (j.acces.type === 'credit') merge({ on: true, solde: j.acces.solde, restant: 0 }); else merge({ on: true, gratuit: j.acces.gratuit, heures: j.acces.heures, restant: j.acces.restant, reset: j.acces.reset }); }
+    if (status === 402 && j) return merge({ on: true, gratuit: j.gratuit, heures: j.heures, restant: 0, reset: j.reset });
+    if (j && j.acces) merge({ on: true, gratuit: j.acces.gratuit, heures: j.acces.heures, restant: j.acces.restant, reset: j.acces.reset });
   }
 
+  /* ---------- compte à rebours (v7.71) : temps avant que les questions gratuites reviennent ---------- */
+  const pad = n => (n < 10 ? '0' : '') + n;
+  function countdown(at) { const left = Math.max(0, Math.round((at - Date.now()) / 1000)), h = Math.floor(left / 3600), m = Math.floor((left % 3600) / 60), s = left % 60; return (h ? h + ':' : '') + pad(m) + ':' + pad(s); }
+  const tpl = (t, v) => t.replace(/\{(\w+)\}/g, (m, k) => v[k] === undefined ? m : String(v[k]));
   /* ---------- textes ---------- */
+  /* chaque texte est une phrase entière ({n}, {total}, {h} et {timer} sont remplis ensuite) : traduisible en bloc */
+  const T = {
+    off: 'IA indisponible pour le moment : réponses locales du site.',
+    local: 'Mode local : réponses du site, sans IA. Tes questions IA gratuites restent de côté.',
+    some: 'IA : {n} questions gratuites sur {total} · de nouveau {total} dans {timer}.',
+    one: 'IA : {n} question gratuite sur {total} · de nouveau {total} dans {timer}.',
+    full: 'IA : {total} questions gratuites toutes les {h} h.',
+    quota: 'Questions IA gratuites épuisées : mode local, l’IA revient dans {timer}.',
+    quotaNoReset: 'Questions IA gratuites épuisées : mode local.'
+  };
+  /* text : la phrase avec « {timer} » à la place du compte à rebours (rendu vivant par line()) ; plain : la même phrase écrite
+     en entier, pour une mention sous une réponse */
   function status() {
-    if (state.on === false) return { kind: 'off', text: 'IA indisponible pour le moment : réponses locales du site.' };
-    if (mode() === 'local') return { kind: 'local', text: 'Mode local : réponses du site, sans IA. Tes questions IA gratuites restent de côté.' };
-    if (typeof state.restant === 'number' && state.restant > 0) return { kind: 'ia', text: 'IA : ' + nf(state.restant) + ' ' + (state.restant > 1 ? 'questions gratuites' : 'question gratuite') + ' sur ' + nf(state.gratuit || 30) + (state.reset ? ' (de nouveau ' + nf(state.gratuit || 30) + ' à ' + clock(state.reset) + ')' : ' toutes les ' + nf(state.heures || 9) + ' h') + '.' };
-    if (credit()) return { kind: 'ia', text: 'IA : crédit ' + money(state.solde) + '. Chaque question coûte son prix réel plus ' + nf(state.marge || 20) + ' %.' };
-    if (state.restant === 0) return { kind: 'quota', text: 'Questions IA gratuites épuisées : mode local' + (state.reset ? ' jusqu’à ' + clock(state.reset) : '') + '.' };
-    return { kind: 'ia', text: 'IA : ' + nf(state.gratuit || 30) + ' questions gratuites toutes les ' + nf(state.heures || 9) + ' h.' };
+    const r = raw(); r.plain = r.timer ? tpl(r.text, { timer: countdown(r.timer) }) : r.text; return r;
+  }
+  function raw() {
+    if (state.on === false) return { kind: 'off', text: T.off };
+    if (mode() === 'local') return { kind: 'local', text: T.local };
+    const v = { n: nf(state.restant || 0), total: nf(total()), h: nf(hours()), timer: '{timer}' };
+    if (typeof state.restant === 'number' && state.restant > 0) {
+      if (!state.reset || state.restant >= total()) return { kind: 'ia', text: tpl(T.full, v) };
+      return { kind: 'ia', text: tpl(state.restant > 1 ? T.some : T.one, v), timer: state.reset };
+    }
+    if (state.restant === 0) return state.reset ? { kind: 'quota', text: tpl(T.quota, v), timer: state.reset } : { kind: 'quota', text: T.quotaNoReset };
+    return { kind: 'ia', text: tpl(T.full, v) };
   }
 
   /* ---------- commande « Qui répond ? » (barre du calculateur, Léo) ---------- */
   const controls = new Set();
   function control(where) {
     const box = document.createElement('div'); box.className = 'lkia lkia--' + where;
-    box.innerHTML = '<div class="lkia-sw" role="group" aria-label="Qui répond ?"><span class="lkia-t">Qui répond ?</span><button type="button" data-lkia-mode="ia">IA</button><button type="button" data-lkia-mode="local">Local</button></div><p class="lkia-st" role="status" aria-live="polite"></p><button type="button" class="lkia-more" data-lkia-shop hidden>Plus de questions</button>';
-    box.addEventListener('click', e => {
-      const m = e.target.closest('[data-lkia-mode]'); if (m) { setMode(m.dataset.lkiaMode); return; }
-      if (e.target.closest('[data-lkia-shop]')) shop();
-    });
+    box.innerHTML = '<div class="lkia-sw" role="group" aria-label="Qui répond ?"><span class="lkia-t">Qui répond ?</span><button type="button" data-lkia-mode="ia">IA</button><button type="button" data-lkia-mode="local">Local</button></div><p class="lkia-st" role="status" aria-live="polite"></p>';
+    box.addEventListener('click', e => { const m = e.target.closest('[data-lkia-mode]'); if (m) setMode(m.dataset.lkiaMode); });
     controls.add(box); paintOne(box);
     /* l'état réel (questions restantes) n'est lu qu'en mode IA : à l'ouverture de Léo, ou quand le visiteur entre dans
        la barre du calculateur (clic, clavier) ; jamais au simple survol, jamais en mode local */
@@ -91,100 +108,45 @@
     if (where === 'leo') wake(); else box.addEventListener('focusin', wake, { once: true, passive: true });
     return box;
   }
+  /* le texte d'état, avec le compte à rebours dans son propre élément (mis à jour chaque seconde sans réécrire la phrase) */
+  function line(p, st) {
+    const parts = st.text.split('{timer}');
+    if (p.dataset.lkiaText === st.text && p.dataset.lkiaTimer === String(st.timer || '')) { if (st.timer) { const t = p.querySelector('.lkia-timer'); if (t) t.textContent = countdown(st.timer); } return; }
+    p.dataset.lkiaText = st.text; p.dataset.lkiaTimer = String(st.timer || ''); p.textContent = '';
+    parts.forEach((txt, i) => { if (i) { const t = document.createElement('time'); t.className = 'lkia-timer'; t.setAttribute('role', 'timer'); t.dateTime = new Date(st.timer).toISOString(); t.textContent = countdown(st.timer); p.appendChild(t); } if (txt) p.appendChild(document.createTextNode(txt)); });
+  }
   function paintOne(box) {
     const st = status(), m = mode(), off = state.on === false;
     box.dataset.kind = st.kind;
     box.querySelectorAll('[data-lkia-mode]').forEach(b => { const on = off ? b.dataset.lkiaMode === 'local' : b.dataset.lkiaMode === m; b.setAttribute('aria-pressed', String(on)); b.disabled = off && b.dataset.lkiaMode === 'ia'; });
-    const p = box.querySelector('.lkia-st'); if (p.textContent !== st.text) p.textContent = st.text;
-    const more = box.querySelector('[data-lkia-shop]'); more.hidden = !(state.achat && m === 'ia' && !off && (exhausted() || credit() || token()));
+    line(box.querySelector('.lkia-st'), st);
   }
-  function paint() { controls.forEach(b => { if (b.isConnected) paintOne(b); else controls.delete(b); }); }
+  function paint() { controls.forEach(b => { if (b.isConnected) paintOne(b); else controls.delete(b); }); ticking(); }
+  /* une seule horloge pour toutes les commandes affichées, arrêtée quand aucun compte à rebours n'est en cours */
+  let clock = 0;
+  function ticking() {
+    const need = !!state.reset && mode() !== 'local' && state.on !== false && [...controls].some(b => b.isConnected);
+    if (need && !clock) clock = setInterval(() => { if (state.reset && state.reset <= Date.now()) { merge({}); return; } controls.forEach(b => { if (!b.isConnected) return; const t = b.querySelector('.lkia-timer'); if (t) t.textContent = countdown(state.reset); }); }, 1000);
+    if (!need && clock) { clearInterval(clock); clock = 0; }
+  }
   function setMode(m) { acted = true; put(() => { if (m === 'local') localStorage.setItem(KEY_MODE, 'local'); else localStorage.removeItem(KEY_MODE); }); emit(); if (m !== 'local') refresh(false); }
 
   /* mention sous une réponse : qui l'a écrite */
   function credit_line(byAI) { return byAI ? 'Réponse de l’IA.' : 'Réponse locale, sans IA.'; }
 
-  /* ---------- crédit payant (si la vente est ouverte) ---------- */
-  let dlg = null;
-  const PER_Q = { sonnet: 11000, haiku: 5500, opus: 22000, fable: 55000 };
-  function perQuestion() { const m = String(state.modele || ''); for (const k of Object.keys(PER_Q)) if (m.indexOf(k) !== -1) return PER_Q[k]; return PER_Q.sonnet; }
-  function estimate(eur) { const credit = Math.max(0, (eur - (0.25 + eur * 0.015)) * 1e6); return Math.floor(credit / perQuestion()); }
-  function shop() {
-    if (!dlg) {
-      dlg = document.createElement('dialog'); dlg.className = 'lkia-dlg'; dlg.setAttribute('aria-labelledby', 'lkia-dlg-t');
-      dlg.innerHTML = '<div class="lkia-dlg-in"><button type="button" class="lkia-x" data-lkia-close aria-label="Fermer"><span aria-hidden="true">×</span></button>'
-        + '<p class="lkia-k">IA</p><h2 id="lkia-dlg-t">Plus de questions à l’IA</h2>'
-        + '<p class="lkia-p" data-lkia-intro></p>'
-        + '<p class="lkia-solde" data-lkia-solde></p>'
-        + '<div class="lkia-packs" data-lkia-packs role="group" aria-label="Montant"></div>'
-        + '<label class="lkia-renonce"><input type="checkbox" data-lkia-renonce> <span>Je veux utiliser ce crédit tout de suite et je renonce à mon droit de rétractation pour ce crédit (article L221-28 du Code de la consommation). <a href="/conditions-de-vente.html" target="_blank" rel="noopener">Conditions de vente</a></span></label>'
-        + '<button type="button" class="lkia-pay" data-lkia-pay disabled>Payer avec Stripe</button>'
-        + '<p class="lkia-msg" data-lkia-msg role="status" aria-live="polite"></p>'
-        + '<div class="lkia-code" data-lkia-code hidden><p>Ton code de crédit : <b data-lkia-code-v></b> <button type="button" class="lkia-copy" data-lkia-copy>Copier</button></p><p class="lkia-small">Note-le : il donne accès à ton crédit sur un autre appareil ou après avoir vidé ton navigateur.</p></div>'
-        + '<details class="lkia-have"><summary>J’ai déjà un code</summary><div class="lkia-have-in"><input type="text" data-lkia-have placeholder="LK-XXXX-XXXX-XXXX-XXXX" maxlength="22" autocomplete="off" spellcheck="false" aria-label="Ton code de crédit"><button type="button" data-lkia-use>Utiliser ce code</button></div></details>'
-        + '</div>';
-      document.body.appendChild(dlg);
-      let chosen = 0;
-      dlg.addEventListener('click', e => {
-        if (e.target === dlg || e.target.closest('[data-lkia-close]')) { dlg.close(); return; }
-        const p = e.target.closest('[data-lkia-pack]'); if (p) { chosen = Number(p.dataset.lkiaPack); dlg.querySelectorAll('[data-lkia-pack]').forEach(b => b.setAttribute('aria-pressed', String(b === p))); sync(); return; }
-        if (e.target.closest('[data-lkia-copy]')) { const v = token(); if (navigator.clipboard && v) navigator.clipboard.writeText(v).then(() => say('Code copié.'), () => say(v)); return; }
-        if (e.target.closest('[data-lkia-use]')) { const v = String(dlg.querySelector('[data-lkia-have]').value || '').trim().toUpperCase(); if (!TOKEN.test(v)) { say('Ce code n’a pas la bonne forme : LK- suivi de quatre groupes de quatre caractères.'); return; } put(() => localStorage.setItem(KEY_JETON, v)); verify().then(() => fill()); return; }
-        if (e.target.closest('[data-lkia-pay]')) pay(chosen);
-      });
-      dlg.querySelector('[data-lkia-renonce]').addEventListener('change', sync);
-      function sync() { dlg.querySelector('[data-lkia-pay]').disabled = !(chosen && dlg.querySelector('[data-lkia-renonce]').checked); }
-    }
-    fill(); verify().then(fill);
-    try { dlg.showModal(); } catch (e) { dlg.setAttribute('open', ''); }
-  }
-  function say(t) { if (dlg) dlg.querySelector('[data-lkia-msg]').textContent = t; }
-  function fill() {
-    if (!dlg) return;
-    const packs = state.packs || [3, 5, 10];
-    dlg.querySelector('[data-lkia-intro]').textContent = 'Tes ' + nf(state.gratuit || 30) + ' questions gratuites reviennent toutes les ' + nf(state.heures || 9) + ' heures. Pour continuer tout de suite, ajoute du crédit : chaque question coûte son prix réel chez le fournisseur de l’IA plus ' + nf(state.marge || 20) + ' % pour le site, environ ' + money(perQuestion(), 3) + '. Les frais du paiement (0,25 € + 1,5 %) sont retirés du crédit.';
-    dlg.querySelector('[data-lkia-solde]').textContent = typeof state.solde === 'number' ? 'Ton crédit : ' + money(Math.max(0, state.solde)) + '.' : '';
-    const wrap = dlg.querySelector('[data-lkia-packs]');
-    if (!wrap.children.length || wrap.dataset.k !== packs.join(',')) { wrap.dataset.k = packs.join(','); wrap.innerHTML = packs.map(p => '<button type="button" data-lkia-pack="' + p + '" aria-pressed="false"><b>' + money(p * 1e6) + '</b><span>environ ' + nf(estimate(p)) + ' questions</span></button>').join(''); }
-    const t = token(), code = dlg.querySelector('[data-lkia-code]'); code.hidden = !t; if (t) code.querySelector('[data-lkia-code-v]').textContent = t;
-    const open = !!state.achat; wrap.hidden = !open; dlg.querySelector('.lkia-renonce').hidden = !open; dlg.querySelector('[data-lkia-pay]').hidden = !open;
-    if (!open) say('L’achat de crédit n’est pas ouvert pour le moment : l’IA revient toute seule à l’heure indiquée.');
-  }
-  async function verify() {
-    const t = token(); if (!t) return;
-    const { status, j } = await post('/api/ia-achat', { action: 'verifier', jeton: t });
-    if (status === 400 && j && j.code === 'jeton') { say('Ce code n’est pas valable.'); return; }
-    if (j && j.ok) { merge({ solde: j.solde, packs: j.packs, achat: j.achat }); if (j.credite > 0) say('Paiement reçu : ' + money(j.credite) + ' ajoutés à ton crédit.'); }
-  }
-  async function pay(pack) {
-    if (!pack) return;
-    say('Préparation du paiement…');
-    const { j } = await post('/api/ia-achat', { action: 'creer', pack, jeton: token() || undefined, retour: location.pathname, renonce: dlg.querySelector('[data-lkia-renonce]').checked });
-    if (!j || !j.ok || !j.url || !TOKEN.test(j.jeton || '')) { say('Le paiement n’a pas pu démarrer. Réessaie dans un instant.'); return; }
-    const code = j.jeton; put(() => localStorage.setItem(KEY_JETON, code)); /* le code est gardé AVANT de partir chez Stripe */
-    location.assign(j.url);
-  }
-  /* retour de Stripe : ?ia=paye ou ?ia=annule */
-  function back() {
-    const q = new URLSearchParams(location.search), v = q.get('ia'); if (!v) return;
-    q.delete('ia'); try { history.replaceState(null, '', location.pathname + (q.toString() ? '?' + q : '') + location.hash); } catch (e) { /* rien */ }
-    if (v === 'paye') { shop(); say('Vérification du paiement…'); verify().then(() => { fill(); if (!dlg.querySelector('[data-lkia-msg]').textContent.startsWith('Paiement reçu')) say('Paiement en cours de confirmation : ton crédit apparaîtra dans un instant.'); }); }
-    else if (v === 'annule') { shop(); say('Paiement annulé : rien n’a été débité.'); }
-  }
-
   /* feuille de style du module (injectée : la commande vit dans Léo et dans la barre du calculateur) */
   const css = document.createElement('style'); css.id = 'lkia-css';
-  css.textContent = '.lkia{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:10px 0 0}.lkia--leo{flex-shrink:0;margin:0;padding:8px 16px 9px;background:#f7f3ec;border-bottom:1px solid #e3dfd7;color:#281949;gap:6px 10px}.lkia--leo .lkia-st{flex-basis:100%;font-size:12px;color:#4a3d63}.lkia--leo .lkia-sw button{min-height:30px}.lkia-sw{display:inline-flex;align-items:center;gap:4px;padding:3px;border:1.5px solid currentColor;border-radius:999px}.lkia-t{font:800 .7rem/1 var(--font-mono,ui-monospace,monospace);letter-spacing:.1em;text-transform:uppercase;padding:0 6px;opacity:.85}.lkia-sw button{min-height:32px;padding:0 12px;border:0;border-radius:999px;background:none;color:inherit;font:700 .84rem/1 "Archivo",sans-serif;cursor:pointer}.lkia-sw button[aria-pressed="true"]{background:var(--amber,#f7b645);color:#1a1a1e}.lkia-sw button:disabled{opacity:.45;cursor:not-allowed}.lkia-st{flex:1 1 220px;margin:0;font-size:.84rem;line-height:1.4}.lkia[data-kind="quota"] .lkia-st,.lkia[data-kind="off"] .lkia-st{font-weight:700}.lkia-more{min-height:32px;padding:0 12px;border:1.5px solid currentColor;border-radius:999px;background:none;color:inherit;font:700 .82rem "Archivo",sans-serif;cursor:pointer}.lkia-dlg{width:min(560px,calc(100vw - 24px));max-height:calc(100dvh - 24px);padding:0;border:2px solid #1a1a1e;border-radius:16px;background:#fdfbf7;color:#1a1a1e;box-shadow:8px 8px 0 #1a1a1e}.lkia-dlg::backdrop{background:rgba(26,16,48,.55)}.lkia-dlg-in{position:relative;display:grid;gap:12px;padding:22px 22px 20px;overflow:auto;max-height:calc(100dvh - 28px)}.lkia-x{position:absolute;top:10px;right:10px;width:36px;height:36px;border:0;border-radius:50%;background:none;font-size:1.5rem;cursor:pointer}.lkia-k{margin:0;font:800 .72rem/1 var(--font-mono,ui-monospace,monospace);letter-spacing:.14em;text-transform:uppercase;color:#b93220}.lkia-dlg h2{margin:0;font:900 1.5rem/1.1 "Archivo",sans-serif}.lkia-p,.lkia-solde,.lkia-small,.lkia-msg{margin:0;font-size:.92rem;line-height:1.5}.lkia-solde{font-weight:800}.lkia-packs{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}.lkia-packs[hidden],.lkia-renonce[hidden],.lkia-pay[hidden]{display:none}.lkia-packs button{display:grid;gap:2px;padding:12px;border:2px solid #1a1a1e;border-radius:12px;background:#fff;cursor:pointer;text-align:left;font:inherit}.lkia-packs button b{font:900 1.2rem "Archivo",sans-serif}.lkia-packs button span{font-size:.8rem;color:#5c5a63}.lkia-packs button[aria-pressed="true"]{background:#1a1a1e;color:#fff}.lkia-packs button[aria-pressed="true"] span{color:#e7def3}.lkia-renonce{display:flex;gap:10px;align-items:flex-start;font-size:.82rem;line-height:1.45}.lkia-renonce input{width:20px;height:20px;flex:none;margin-top:1px}.lkia-renonce a{color:#b93220;font-weight:700;text-decoration:underline;text-underline-offset:2px}.lkia-pay{min-height:48px;border:2px solid #1a1a1e;border-radius:999px;background:#f7b645;color:#1a1a1e;font:800 1rem "Archivo",sans-serif;cursor:pointer;box-shadow:3px 3px 0 #1a1a1e}.lkia-pay:disabled{opacity:.5;cursor:not-allowed;box-shadow:none}.lkia-code{padding:12px;border-radius:12px;background:#241740;color:#fff9ef}.lkia-code p{margin:0}.lkia-code b{font-family:var(--font-mono,ui-monospace,monospace);letter-spacing:.06em}.lkia-copy{margin-left:6px;min-height:30px;padding:0 10px;border:1.5px solid #fff9ef;border-radius:999px;background:none;color:#fff9ef;cursor:pointer}.lkia-have summary{cursor:pointer;font-weight:700;font-size:.9rem}.lkia-have-in{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}.lkia-have-in input{flex:1 1 220px;min-height:42px;padding:0 12px;border:2px solid #1a1a1e;border-radius:10px;font:600 16px var(--font-mono,ui-monospace,monospace);text-transform:uppercase}.lkia-have-in button{min-height:42px;padding:0 14px;border:2px solid #1a1a1e;border-radius:999px;background:#fff;font-weight:800;cursor:pointer}@media(prefers-reduced-motion:no-preference){.lkia-dlg[open]{animation:lkia-in .26s cubic-bezier(.2,.7,.2,1)}@keyframes lkia-in{from{opacity:0;transform:translate3d(0,14px,0) scale(.98)}}}';
+  css.textContent = '.lkia{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:10px 0 0}.lkia--leo{flex-shrink:0;margin:0;padding:8px 16px 9px;background:#f7f3ec;border-bottom:1px solid #e3dfd7;color:#281949;gap:6px 10px}.lkia--leo .lkia-st{flex-basis:100%;font-size:12px;color:#4a3d63}.lkia--leo .lkia-sw button{min-height:30px}.lkia-sw{display:inline-flex;align-items:center;gap:4px;padding:3px;border:1.5px solid currentColor;border-radius:999px}.lkia-t{font:800 .7rem/1 var(--font-mono,ui-monospace,monospace);letter-spacing:.1em;text-transform:uppercase;padding:0 6px;opacity:.85}.lkia-sw button{min-height:32px;padding:0 12px;border:0;border-radius:999px;background:none;color:inherit;font:700 .84rem/1 "Archivo",sans-serif;cursor:pointer}.lkia-sw button[aria-pressed="true"]{background:var(--amber,#f7b645);color:#1a1a1e}.lkia-sw button:disabled{opacity:.45;cursor:not-allowed}.lkia-st{flex:1 1 220px;margin:0;font-size:.84rem;line-height:1.4}.lkia[data-kind="quota"] .lkia-st,.lkia[data-kind="off"] .lkia-st{font-weight:700}.lkia-timer{display:inline-block;margin:0 2px;padding:1px 7px;border-radius:999px;background:#1a1a1e;color:#f7b645;font:800 .78rem/1.5 var(--font-mono,ui-monospace,monospace);letter-spacing:.06em;font-variant-numeric:tabular-nums;vertical-align:baseline}.lkia[data-kind="quota"] .lkia-timer{background:#b93220;color:#fff9ef}';
   document.head.appendChild(css);
 
   const api = {
-    mode, setMode, token, device, refresh, learn, control, shop, subscribe(fn) { listeners.add(fn); return () => listeners.delete(fn); },
-    state() { return Object.assign({ mode: mode(), exhausted: exhausted(), credit: credit() }, state); },
-    /* l'IA peut répondre : choisie, disponible, et des questions gratuites ou du crédit restent */
+    mode, setMode, device, refresh, learn, control, subscribe(fn) { listeners.add(fn); return () => listeners.delete(fn); },
+    state() { return Object.assign({ mode: mode(), exhausted: exhausted() }, state); },
+    /* l'IA peut répondre : choisie, disponible, et des questions gratuites restent */
     usable() { return mode() === 'ia' && state.on !== false && !exhausted(); },
-    body(extra) { acted = true; return Object.assign({}, extra, { appareil: device(), jeton: token() || undefined }); },
-    line: credit_line, status
+    body(extra) { acted = true; return Object.assign({}, extra, { appareil: device() }); },
+    line: credit_line, status, countdown
   };
   window.LKIA = api;
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', back); else back();
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') paint(); });
 }());
