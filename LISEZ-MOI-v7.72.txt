@@ -1,0 +1,31 @@
+LEONIDAKIT v7.72 — lot 2 sur 3 : hubs du monde mis en scène, familles de collectibles, catégories de codes alignées
+À appliquer APRÈS la v7.71 (archive Leonidakit-v7.71-modifs.zip). Rien n'a été publié ni poussé.
+Livrée en archive « modifs » (seulement les fichiers qui changent) : Leonidakit-v7.72-modifs.zip. Aucun fichier à supprimer.
+
+CE QUI CHANGE POUR LE VISITEUR
+- Les hubs du monde ont chacun leur idée, avec la qualité des Gangs mais sans se ressembler : Lieux en atlas de cartes
+  postales (cadre blanc, timbre « Région », ouverture en iris), Personnages en tableau de casting épinglé (portraits qui
+  tombent et se posent), Demeures en plans d'architecte (balayage lumineux des photos sur fond quadrillé), Planques en
+  dossiers (onglets « Dossier 01, 02, 03 », cartes qui glissent de gauche et de droite), Entreprises en enseignes au néon
+  (chaque carte sa couleur, allumage qui clignote). Gangs inchangés. Les fiches (pages ouvertes) ne changent pas, comme
+  convenu : leurs espaces restent libres pour la publicité (emplacement déjà réservé depuis la v7.71).
+- Collectibles : les six familles sont maintenant six vraies cartes illustrées (visuel officiel, compteur, statut) et
+  « Voir la fiche » ouvre bien une fiche plein écran : ce que Rockstar a confirmé pour GTA VI (rien d'inventé), ce que la
+  série faisait avant (chiffres de Vice City, San Andreas, GTA IV, GTA V, GTA Online, toujours étiquetés), ce que dira
+  chaque fiche, et des liens. Section moins chargée en texte.
+- Codes de triche : les quatre cartes de catégories ont la même hauteur.
+- Tout est traduit dans les quatre langues, vérifié sur téléphone, tablette et ordinateur, mouvement réduit respecté.
+
+MARCHE À SUIVRE
+  1. Copie le contenu de l'archive à la racine du dossier GitHub (remplacer), valide, pousse. Rien à changer dans Vercel.
+  2. Essai : lieux.html (cartes postales), personnages.html (casting), demeures.html (plans), planques.html (dossiers),
+     entreprises.html (néons) ; collectibles.html → « Les familles » → clique une carte → la fiche s'ouvre ;
+     codes-de-triche.html → les quatre catégories alignées.
+
+RAPPEL QUI NE CHANGE PAS : Rockstar et Take-Two tolèrent les sites de fans non commerciaux ; le jour où une publicité
+s'affiche, un site consacré à GTA VI avec leurs visuels s'expose à une réclamation. Les visuels restent crédités partout.
+
+SUR ORDINATEUR ET TÉLÉPHONE : vérifié (1 280 et 390 px) ; tous les contrôles automatiques au vert (tests, navigateur,
+langues, liens, confidentialité, audit de clôture sur les pages du lot : détail dans outils/CHANGEMENTS-v7.72.txt).
+Lot 3 (listes de Consommables, Vêtements et style, Personnalisations ; personnalisation par véhicule et par arme ;
+trophées par grade et dans la Progression) suit, avec son archive. Retour arrière : commit précédent dans GitHub Desktop.

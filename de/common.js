@@ -381,7 +381,7 @@
 })();
 
 /* Léo : amorçage isolé. Les données ne se chargent qu'à l'ouverture du panneau. */
-(function(){'use strict';if(!document.querySelector('main')||document.getElementById('leo-style'))return;/* v7.60-v7.64 : Léo parle les langues de outils/langues.json → leo (français, espagnol, italien, anglais, allemand) : pas de Léo sur une page d’une autre langue */if(!/^(?:fr|es|it|en|de)\b/i.test(document.documentElement.lang||'fr'))return;const base=(document.currentScript&&document.currentScript.src||'').replace(/[^/]*$/,'')||'/';const css=document.createElement('link');css.id='leo-style';css.rel='stylesheet';css.href='/leo.css?v=52de8a985d03';css.onload=()=>{const script=document.createElement('script');script.src=base+'leo-loader.js?v=52de8a985d03';document.head.append(script);};document.head.append(css);})();
+(function(){'use strict';if(!document.querySelector('main')||document.getElementById('leo-style'))return;/* v7.60-v7.64 : Léo parle les langues de outils/langues.json → leo (français, espagnol, italien, anglais, allemand) : pas de Léo sur une page d’une autre langue */if(!/^(?:fr|es|it|en|de)\b/i.test(document.documentElement.lang||'fr'))return;const base=(document.currentScript&&document.currentScript.src||'').replace(/[^/]*$/,'')||'/';const css=document.createElement('link');css.id='leo-style';css.rel='stylesheet';css.href='/leo.css?v=6f7c9a7f6ac8';css.onload=()=>{const script=document.createElement('script');script.src=base+'leo-loader.js?v=6f7c9a7f6ac8';document.head.append(script);};document.head.append(css);})();
 
 /* v7.61 (langues) : page introuvable. Le serveur renvoie la page 404 française pour toute adresse inconnue ; sous
    /en/… (une adresse d'une langue publiée), c'est la page introuvable de cette langue qui s'affiche. */
@@ -507,7 +507,8 @@
   const ROWS = 'main table>tbody, main .shell>ul, main .shell>ol, .t-steps, .d-sources>ul, .info-grid, .lk-goals';
   const extra = [];
   /* v7.44 : la séquence lk-showcase (À propos) gère ses propres apparitions (lk-showcase.js, informations.css) */
-  const add = function (el, variant) { if (!el || el.closest('[hidden], template, .lore-stack, .leo-panel, .hero, header, footer, #calc-panels, .lk-arrive, .lk-showcase, .lk-loc, .ak-stack')) return; if (!el.classList.contains('lk-reveal')) { el.classList.add('lk-reveal'); extra.push(el); } if (variant) el.classList.add('lk-reveal--' + variant); };
+  /* v7.72 : une zone d'annonce (aria-live) ou un texte réservé aux lecteurs d'écran (.sr-only) n'entre pas en scène : il resterait à opacité 0 (l'observateur ne voit jamais une case de 1 px) */
+  const add = function (el, variant) { if (!el || el.matches('.sr-only, [aria-live]') || el.closest('[hidden], template, .lore-stack, .leo-panel, .hero, header, footer, #calc-panels, .lk-arrive, .lk-showcase, .lk-loc, .ak-stack')) return; if (!el.classList.contains('lk-reveal')) { el.classList.add('lk-reveal'); extra.push(el); } if (variant) el.classList.add('lk-reveal--' + variant); };
   main.querySelectorAll(FIGURES).forEach(function (el) { if (el.closest('.lk-stack, figure figure, .lk-reveal--clip, .lk-hero-item, .d-card, .lore-card, .ed-step, .cn-dcard')) return; add(el, 'clip'); });
   main.querySelectorAll(TEXTS).forEach(function (el) { if (el.closest('.lk-reveal--clip') || el.classList.contains('lk-hero-item') || el.closest('.lk-hero-item')) return; add(el, 'blur'); });
   /* v7.56 (lot 3, UI-03) : les listes des catalogues (.cat-table) animent chaque ligne elles-mêmes (catalogue.js), y compris

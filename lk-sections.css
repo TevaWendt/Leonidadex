@@ -58,6 +58,8 @@
 .lkx-sheet-x:focus-visible{outline:3px solid var(--coral);outline-offset:3px;}
 .lkx-sheet-src{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);}
 .lkx-sheet-src[hidden]{display:none;}
+/* v7.72 : la source d'une fiche fermée n'est pas mise en page du tout (Chromium la mesure sinon, l'audit la croit visible) ; le clone affiché dans la boîte de dialogue garde sa grille */
+.lkx-det:not([open])>.lkx-sheet-src{display:none;}
 .lkx-sheet-fig{position:relative;margin:0;min-height:100%;background:var(--night-deep);overflow:hidden;}
 .lkx-sheet-fig img{display:block;width:100%;height:100%;min-height:340px;object-fit:cover;}
 .lkx-sheet-fig::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(18,10,34,0) 45%,rgba(18,10,34,.82));pointer-events:none;}
@@ -150,7 +152,7 @@
 
 /* ---------- 8. mouvement réduit : tout est visible, rien ne bouge ---------- */
 @media (prefers-reduced-motion:reduce){
-  .lkx-js .lkx-deal:not(.is-in)>*,.lkx-js .lkx-scan:not(.is-in)>*,.lkx-js .lkx-iris:not(.is-in)>*,.lkx-js .lkx-wave:not(.is-in)>*,.lkx-js .lkx-up:not(.is-in){opacity:1;}
+  .lkx-js .lkx-deal:not(.is-in)>*,.lkx-js .lkx-scan:not(.is-in)>*,.lkx-js .lkx-iris:not(.is-in)>*,.lkx-js .lkx-wave:not(.is-in)>*,.lkx-js .lkx-up:not(.is-in),.lkx-js .lkx-pin:not(.is-in)>*,.lkx-js .lkx-slide:not(.is-in)>*,.lkx-js .lkx-neon:not(.is-in)>*{opacity:1;}
   .lkx-deal.is-in>*,.lkx-scan.is-in>*,.lkx-scan.is-in>* .lkx-scan-media,.lkx-scan.is-in>* .lkx-scan-media img,.lkx-scan.is-in>* .lkx-scan-media::after,.lkx-iris.is-in>*,.lkx-iris.is-in>* img,.lkx-wave.is-in>*,.lkx-up.is-in,
   .lkx-sheet-open .lkx-sheet-src>*,.lkx-sheet-open .lkx-sheet-main>*,.lkx-sheet-open .lkx-sheet-fig img,.lkx-gold-text{animation:none!important;}
   .lkx-tilt,.lkx-tilting{transform:none!important;transition:none!important;}
@@ -288,7 +290,12 @@
 .lkx-sheet-fig--ico .trophees-badge svg{width:76px;height:76px;}
 .lkx-sheet-fig--ico .trophees-badge .trophees-sceau{display:none;}
 .codes-cats.lkx-cards{grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;}
-.codes-cats.lkx-cards>li{display:block;padding:0;border:0;background:transparent;border-radius:0;}
+.codes-cats.lkx-cards>li{display:flex;flex-direction:column;padding:0;border:0;background:transparent;border-radius:0;}
+/* v7.72 (Téva) : les quatre cartes alignées en bas quelle que soit la longueur du texte : la fiche dépliable et son résumé prennent toute la hauteur de la case */
+/* le <details> reste en bloc (en flex, Chromium met en page le contenu fermé) : il s'étire dans la case, le résumé prend toute sa hauteur */
+.codes-cats.lkx-cards>li>.lkx-det{flex:1;display:block;}
+.codes-cats.lkx-cards>li>.lkx-det>summary{display:flex;height:100%;}
+.codes-cats.lkx-cards>li>.lkx-det>summary>.lkx-card{flex:1;}
 .codes-cats.lkx-cards .lkx-card-body>span{font-size:.86rem;}
 .codes-cats.lkx-cards .lkx-card-go{color:var(--coral-text);font-size:.84rem;}
 @media (max-width:980px){.codes-cats.lkx-cards{grid-template-columns:repeat(2,minmax(0,1fr));}}
@@ -404,3 +411,90 @@
 .lk-pub[hidden]{display:none;}
 .lk-pub--fiche{margin:8px auto 40px;padding:14px 16px;border:1.5px dashed var(--rule,#d8d2c6);border-radius:14px;background:var(--paper-2,#f4f0e7);text-align:center;color:var(--ink-soft,#5c5a63);font-size:.82rem;}
 .lk-pub--fiche::before{content:'Publicité';display:block;margin-bottom:6px;font:800 .64rem/1.4 var(--font-mono,ui-monospace,monospace);letter-spacing:.12em;text-transform:uppercase;}
+
+/* ============================================================
+   v7.72 (Téva) : chaque hub du monde a sa propre mise en scène, de même qualité que la « donne » des gangs.
+   Lieux : atlas de cartes postales (entrée « iris ») · Personnages : tableau de casting épinglé (entrée « chute ») ·
+   Demeures : plans d'architecte (entrée « balayage vidéo ») · Planques : dossiers (entrée « glissement » alterné) ·
+   Entreprises : enseignes (entrée « néon »). Mouvement : transform, opacity, clip-path, filter ; tout coupé en mouvement réduit.
+   ============================================================ */
+/* --- entrées supplémentaires --- */
+.lkx-js .lkx-pin:not(.is-in)>*{opacity:0;}
+.lkx-pin.is-in>*{animation:lkx-pin 1s var(--lkx-spring) backwards;animation-delay:calc(var(--i,0) * 110ms);}
+@keyframes lkx-pin{0%{opacity:0;transform:translate3d(0,-70px,0) rotate(calc(var(--rz,0deg) - 7deg)) scale(1.04);}60%{opacity:1;transform:translate3d(0,6px,0) rotate(calc(var(--rz,0deg) + 2deg));}100%{opacity:1;transform:rotate(var(--rz,0deg));}}
+.lkx-js .lkx-slide:not(.is-in)>*{opacity:0;}
+.lkx-slide.is-in>*{animation:lkx-slide-l .85s var(--lkx-ease) backwards;animation-delay:calc(var(--i,0) * 160ms);}
+.lkx-slide.is-in>:nth-child(even){animation-name:lkx-slide-r;}
+@keyframes lkx-slide-l{from{opacity:0;transform:translate3d(-80px,10px,0) rotate(-1.5deg);}to{opacity:1;transform:none;}}
+@keyframes lkx-slide-r{from{opacity:0;transform:translate3d(80px,10px,0) rotate(1.5deg);}to{opacity:1;transform:none;}}
+.lkx-js .lkx-neon:not(.is-in)>*{opacity:0;}
+.lkx-neon.is-in>*{animation:lkx-neon 1.3s steps(1,end) backwards;animation-delay:calc(var(--i,0) * 140ms);}
+.lkx-neon.is-in>* img{animation:lkx-neon-img 1.3s ease-out backwards;animation-delay:calc(var(--i,0) * 140ms);}
+@keyframes lkx-neon{0%{opacity:0;}8%{opacity:.6;}14%{opacity:.1;}22%{opacity:.8;}30%{opacity:.25;}40%{opacity:1;}100%{opacity:1;}}
+@keyframes lkx-neon-img{0%{filter:brightness(.2) saturate(.2);}40%{filter:brightness(1.35) saturate(1.4);}100%{filter:none;}}
+/* --- Lieux : atlas de cartes postales --- */
+.lore-grid--atlas{gap:26px 22px;}
+.lore-card--postcard{position:relative;transform:rotate(var(--rz,0deg));border-radius:6px;background:#fffdf8;box-shadow:0 1px 0 #fff inset,5px 6px 0 rgba(26,26,30,.14);}
+.lore-card--postcard>img,.lore-card--postcard>.lore-vide{margin:10px 10px 0;width:calc(100% - 20px);border:1.5px solid var(--ink);border-radius:3px;aspect-ratio:16/10;}
+.lore-card--postcard .lore-stamp{position:absolute;z-index:3;right:18px;top:18px;padding:5px 9px;border:2px solid var(--coral-text);border-radius:4px;color:var(--coral-text);font:800 .62rem/1 var(--font-mono);letter-spacing:.16em;text-transform:uppercase;background:rgba(253,251,247,.9);transform:rotate(9deg);box-shadow:2px 2px 0 rgba(26,26,30,.15);}
+.lore-card--postcard .veh-body{padding-top:12px;background:repeating-linear-gradient(0deg,transparent 0 27px,rgba(26,26,30,.06) 27px 28px) 0 14px;}
+.lore-card--postcard .veh-marque{display:none;}
+.lore-card--postcard h3{font-size:1.3rem;letter-spacing:-.02em;}
+.lore-card--postcard:hover,.lore-card--postcard:focus-visible{transform:rotate(0deg) translate(-4px,-4px);box-shadow:9px 9px 0 var(--ink);}
+.lkx-iris.is-in>.lore-card--postcard{animation:lkx-iris 1.1s var(--lkx-ease) backwards;animation-delay:calc(var(--i,0) * 110ms);}
+/* --- Personnages : tableau de casting --- */
+.lore-grid--casting{gap:22px 20px;align-items:start;}
+.lore-card--casting{position:relative;transform:rotate(var(--rz,0deg));background:#fff;border-radius:4px;padding:0;}
+.lore-card--casting::before{content:'';position:absolute;z-index:5;left:50%;top:-9px;width:18px;height:18px;margin-left:-9px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ffd98a,var(--coral) 60%,#7a1f12);border:2px solid var(--ink);box-shadow:2px 3px 0 rgba(26,26,30,.25);}
+.lore-card--casting>img,.lore-card--casting>.lore-vide{aspect-ratio:4/5;object-position:50% 18%;filter:saturate(1.05);}
+.lore-card--casting .veh-body{padding:12px 14px 14px;}
+.lore-card--casting .veh-marque{display:inline-block;padding:3px 8px;border-radius:999px;background:var(--night-deep,#1a1030);color:var(--amber-2);font-size:.62rem;letter-spacing:.14em;}
+.lore-card--casting h3{font-size:1.2rem;}
+.lore-card--casting:hover,.lore-card--casting:focus-visible{transform:rotate(0deg) translate(-3px,-5px);box-shadow:9px 9px 0 var(--ink);}
+@media (min-width:960px){.lore-grid--casting>:nth-child(even){margin-top:34px;}.lore-grid--casting{margin-bottom:60px;}}
+/* --- cartes larges (Demeures, Planques) : image à gauche, texte à droite ; sort du subgrid des cartes normales --- */
+.lore-grid>.lore-card--wide{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);grid-template-rows:auto;grid-row:auto;row-gap:0;align-items:stretch;}
+.lore-grid>.lore-card--wide>img,.lore-grid>.lore-card--wide>.lkx-scan-media,.lore-grid>.lore-card--wide>.lore-vide{grid-row:1;grid-column:1;height:100%;min-height:200px;}
+.lore-grid>.lore-card--wide>.lkx-scan-media{display:block;border-right:2px solid var(--ink);}
+.lore-grid>.lore-card--wide>.lkx-scan-media>img{height:100%;aspect-ratio:auto;border-bottom:0;}
+.lore-grid>.lore-card--wide>img{aspect-ratio:auto;border-bottom:0;border-right:2px solid var(--ink);}
+.lore-grid>.lore-card--wide>.veh-body{grid-row:1;grid-column:2;display:flex;flex-direction:column;padding:18px 20px 18px;}
+.lore-grid>.lore-card--wide .veh-body>.veh-go{margin-top:auto;}
+@media (max-width:700px){.lore-grid>.lore-card--dossier>img,.lore-grid>.lore-card--dossier>.lore-vide,.lore-grid--dossier>.lore-card--dossier:nth-child(even)>img{border-radius:0 12px 0 0;}.lore-grid--dossier>.lore-card--dossier:nth-child(even)>img{border-radius:12px 0 0 0;}.lore-grid>.lore-card--wide{grid-template-columns:minmax(0,1fr);}.lore-grid>.lore-card--wide>img,.lore-grid>.lore-card--wide>.lkx-scan-media,.lore-grid>.lore-card--wide>.lore-vide{grid-column:1;grid-row:1;min-height:0;aspect-ratio:16/9;border-right:0;border-bottom:2px solid var(--ink);}.lore-grid>.lore-card--wide>.lkx-scan-media>img{aspect-ratio:16/9;}.lore-grid>.lore-card--wide>.veh-body{grid-column:1;grid-row:2;}}
+/* --- Demeures : plans d'architecte --- */
+.lore-grid--blueprint{grid-template-columns:repeat(2,minmax(0,1fr)) !important;gap:22px;padding:22px;border-radius:16px;background-color:#eef3f6;background-image:linear-gradient(rgba(42,86,128,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(42,86,128,.12) 1px,transparent 1px);background-size:24px 24px;border:2px solid var(--ink);}
+.lore-card--blueprint{border-radius:10px;background:#fff;box-shadow:5px 5px 0 rgba(42,86,128,.35);}
+.lore-card--blueprint .veh-marque{font-family:var(--font-mono);letter-spacing:.14em;color:#2a5680;}
+.lore-card--blueprint .veh-body{background:repeating-linear-gradient(90deg,transparent 0 23px,rgba(42,86,128,.06) 23px 24px);}
+.lore-card--blueprint:hover,.lore-card--blueprint:focus-visible{box-shadow:9px 9px 0 #2a5680;}
+@media (max-width:900px){.lore-grid--blueprint{grid-template-columns:minmax(0,1fr) !important;padding:14px;}}
+/* --- Planques : dossiers --- */
+.lore-grid--dossier{grid-template-columns:minmax(0,1fr) !important;max-width:980px;margin-left:auto;margin-right:auto;gap:30px;}
+.lore-card--dossier{position:relative;overflow:visible;margin-top:14px;border-radius:0 14px 14px 14px;background:#fff9ef;}
+.lore-grid>.lore-card--dossier>img,.lore-grid>.lore-card--dossier>.lore-vide{border-radius:0 0 0 12px;}
+.lore-grid--dossier>.lore-card--dossier:nth-child(even)>img,.lore-grid--dossier>.lore-card--dossier:nth-child(even)>.lore-vide{border-radius:0 0 12px 0;}
+.lore-card--dossier .veh-marque,.lore-card--casting .veh-marque{align-self:flex-start;}
+.lore-card--dossier .lore-dossier-tab{position:absolute;z-index:4;left:-2px;top:-30px;padding:7px 16px 4px;border:2px solid var(--ink);border-bottom:0;border-radius:10px 14px 0 0;background:var(--amber);color:var(--ink);font:800 .68rem/1.3 var(--font-mono);letter-spacing:.16em;text-transform:uppercase;}
+.lore-grid--dossier>.lore-card--dossier:nth-child(even){border-radius:14px 0 14px 14px;}
+.lore-grid--dossier>.lore-card--dossier:nth-child(even) .lore-dossier-tab{left:auto;right:-2px;border-radius:14px 10px 0 0;background:var(--coral);color:#fff9ef;}
+@media (min-width:701px){.lore-grid--dossier>.lore-card--dossier:nth-child(even){grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);}.lore-grid--dossier>.lore-card--dossier:nth-child(even)>img,.lore-grid--dossier>.lore-card--dossier:nth-child(even)>.lkx-scan-media,.lore-grid--dossier>.lore-card--dossier:nth-child(even)>.lore-vide{grid-column:2;border-right:0;border-left:2px solid var(--ink);}.lore-grid--dossier>.lore-card--dossier:nth-child(even)>.veh-body{grid-column:1;}}
+.lore-card--dossier .veh-marque{display:inline-block;padding:3px 9px;border-radius:999px;background:var(--ink);color:var(--amber-2);}
+.lore-card--dossier:hover,.lore-card--dossier:focus-visible{box-shadow:9px 9px 0 var(--coral);}
+/* --- Entreprises : enseignes --- */
+.lore-grid--signs{gap:22px 18px;}
+.lore-card--sign{position:relative;background:#141022;color:#fff9ef;border-color:#2b2140;box-shadow:0 0 0 2px #2b2140,0 14px 30px -14px rgba(0,0,0,.6);}
+.lore-card--sign::after{content:'';position:absolute;inset:0;z-index:4;pointer-events:none;border-radius:inherit;box-shadow:inset 0 0 0 2px hsla(var(--hue,42),95%,65%,.55),0 0 18px hsla(var(--hue,42),95%,60%,.35);opacity:.55;transition:opacity .4s ease,box-shadow .4s ease;}
+.lore-card--sign>img,.lore-card--sign>.lore-vide{border-bottom-color:#2b2140;filter:saturate(1.08);}
+.lore-card--sign .veh-body{background:linear-gradient(180deg,#171229,#120d1f);}
+.lore-card--sign .veh-marque{color:hsl(var(--hue,42) 95% 70%);letter-spacing:.14em;}
+.lore-card--sign h3{color:#fff9ef;text-transform:uppercase;letter-spacing:.06em;font-size:1.02rem;text-shadow:0 0 12px hsla(var(--hue,42),95%,65%,.6);}
+.lore-card--sign .lore-cardtag,.lore-card--sign p{color:#d9d2e8;}
+.lore-card--sign .veh-go{color:hsl(var(--hue,42) 95% 70%);}
+.lore-card--sign:hover,.lore-card--sign:focus-visible{box-shadow:0 0 0 2px hsl(var(--hue,42) 95% 65%),8px 8px 0 hsla(var(--hue,42),95%,60%,.5);}
+.lore-card--sign:hover::after,.lore-card--sign:focus-visible::after{opacity:1;box-shadow:inset 0 0 0 2px hsla(var(--hue,42),95%,65%,.9),0 0 34px hsla(var(--hue,42),95%,60%,.6);}
+/* --- mouvement réduit : tout visible, aucune animation --- */
+@media (prefers-reduced-motion:reduce){
+  .lkx-pin.is-in>*,.lkx-slide.is-in>*,.lkx-neon.is-in>*,.lkx-neon.is-in>* img,.lkx-iris.is-in>.lore-card--postcard{animation:none!important;}
+  .lore-card--postcard,.lore-card--casting{transform:none!important;}
+}
+@media (max-width:640px){.lore-card--postcard,.lore-card--casting{--rz:0deg;}.lore-card--casting>img,.lore-card--casting>.lore-vide{aspect-ratio:1/1;}}

@@ -1,0 +1,74 @@
+LEONIDAKIT v7.72 — lot 2 : hubs du monde mis en scène, familles de collectibles, catégories de codes alignées, 8 octobre 2026
+
+Base : v7.71 (lot 1, commit b48a2d1). Demande de Téva du 08/10/2026 (lot 2 sur 3). Rien n'est publié ni poussé.
+
+1. HUBS DU MONDE : UNE MISE EN SCÈNE PAR HUB (outils/lore-gen.js, lk-sections.css)
+La v7.70 avait donné aux six hubs la même entrée « distribuée » que les gangs. Téva veut la même qualité partout mais une
+idée différente par hub, dans la disposition des cartes comme dans l'apparition (comme Animaux diffère de Gangs). Table
+HUB_FX de lore-gen.js : une classe d'entrée, une disposition et une variante de carte par hub ; le contenu des cartes
+(catégorie, titre, accroche, description, « Voir la fiche ») ne change pas, les fiches non plus.
+- Lieux : atlas de cartes postales. Cadre blanc épais, timbre « Région » dans le coin, corps ligné comme le dos d'une
+  carte, chaque carte légèrement tournée (--rz, alternée, droite sur téléphone) ; entrée « iris » (ouverture circulaire).
+- Personnages : tableau de casting. Portraits 4/5 épinglés (point d'épingle, ombre), rangées décalées une carte sur deux
+  (≥ 960 px), rotation légère ; entrée « chute » (lkx-pin : la carte tombe, rebondit et se pose).
+- Demeures : plans d'architecte. Deux colonnes larges (image à gauche, texte à droite ; empilées sous 700 px) sur un fond
+  quadrillé bleu de plan ; entrée « balayage » (lkx-scan : une barre lumineuse parcourt l'image qui se révèle).
+- Planques : dossiers. Une colonne (980 px max), onglet « Dossier 01 / 02 / 03 », cartes alternées (image à droite une
+  fois sur deux) ; entrée « glissement » (lkx-slide : de gauche pour les impaires, de droite pour les paires).
+- Entreprises : enseignes au néon. Cartes sombres, teinte par carte (--hue : 352, 42, 168, 268, 196, 24, 312, 88),
+  liseré et titre lumineux ; entrée « allumage » (lkx-neon : clignotement puis lumière stable, image qui se révèle).
+- Gangs : inchangés (la « donne » de la v7.70, lkx-deal).
+- Mouvement réduit (prefers-reduced-motion) : aucune animation, aucune rotation, tout est posé d'emblée. Survol : le
+  reflet et l'inclinaison des cartes (lkx-tilt) restent.
+- Les cartes larges (Demeures, Planques) sortent du sous-quadrillage de .lore-grid (subgrid) : grille à deux colonnes
+  propre, corps en colonne, onglet visible (overflow:visible), pastille de catégorie non étirée.
+
+2. COLLECTIBLES : SIX FAMILLES ILLUSTRÉES ET CLIQUABLES (collectibles.html, collectibles-brand.css)
+Téva : les six cartes « Les familles que le catalogue est prêt à accueillir » étaient laides, et « Voir la fiche » ne
+menait nulle part. La section est refaite :
+- Six cartes illustrées d'un visuel officiel existant (Vice City sous le viaduc, collection de Wyman, Mount Kalaga, Jason
+  à la pêche, les ponts des Keys, la maison de Jason), compteur « 0 » de fiches, étiquette de statut (À venir / Confirmé /
+  Aperçu), « Voir la fiche » ; entrée « iris » en cascade, inclinaison au survol.
+- Chaque carte ouvre une fiche squelette plein écran (mécanique lk-sections.js, ajoutée à la page : lien lk-sections.css,
+  main.lkx-page, <dialog id="lkx-sheet">) : visuel crédité, famille et statut, titre, accroche, « Pour GTA VI » (ce que
+  Rockstar a confirmé, rien d'inventé : seuls les épaves de Wyman sont confirmées, la pêche est aperçue), « Repère de la
+  série » (Vice City, San Andreas, GTA IV, GTA V, GTA Online : chiffres de la série, jamais présentés comme GTA VI),
+  « Ce que dira chaque fiche » (nom, région et emplacement vérifié, récompense, statut, ta case), deux liens vers le site.
+  Sans JavaScript, la fiche se déplie sous la carte.
+- Nouveau texte d'introduction de la section ; la liste explicative en double dans « Sorties et exports » est retirée ;
+  plus de squelette gris (.col-fam-slots).
+- lk-sections.css : la source d'une fiche fermée (.lkx-det:not([open])>.lkx-sheet-src) n'est plus mise en page du tout :
+  Chromium la mesurait (4 000 px de contenu invisible par carte) et l'audit de contraste la croyait visible.
+
+3. CODES DE TRICHE : LES QUATRE CATÉGORIES ALIGNÉES (lk-sections.css)
+Les quatre cartes « Armes, Véhicules, Joueur, Monde » n'avaient pas la même hauteur (textes de longueurs différentes).
+Chaque case est une colonne flexible, le <details> s'y étire (en bloc : en flex, Chromium met en page le contenu fermé),
+le résumé prend toute la hauteur et la carte le remplit : quatre cartes de même hauteur, « Voir la fiche prête » aligné.
+
+4. COMMON.JS
+Un texte réservé aux lecteurs d'écran (.sr-only) ou une zone d'annonce (aria-live) n'entre plus en scène au défilement :
+l'observateur ne voit jamais une case de 1 px, l'élément restait à opacité 0 (zone d'annonce des codes).
+
+5. LANGUES
+- outils/langues/<en|es|it|de>/v772.json : 64 textes par langue (timbre « Région », onglets « Dossier 01 à 03 », cartes
+  et fiches des six familles, nouvelle introduction). Extraction : 0 texte sans traduction, 0 repère cassé, 0 conflit.
+
+6. CONTRÔLES
+- outils/tests/v772.test.cjs (4 tests : mise en scène par hub et styles présents, familles de collectibles et fiches,
+  codes alignés, traductions). v770.test.cjs : le test des hubs connaît la table HUB_FX.
+- Résultats : voir la fin de ce fichier.
+
+RÉSULTATS DE LA LIVRAISON DU LOT 2 (8 octobre 2026)
+- node --test : 942 tests légers réussis sur 942 ; langues.test, coverage.test et calculateurs-check-ultime : 61/61.
+- Léo (leo-eval) : 512/512 bonnes pages ou intentions, 39/39 hors sujet refusés, 0 réponse sans source ; gen-leo --check
+  tenu (noyau 327 662 octets sur 327 680 : le prochain lot devra alléger ou relever CORE_MAX).
+- Navigateur : leo-browser tenu ; langues-browser 2 267 contrôles, 0 échec ; calculateurs-check-ultime-browser
+  1 120/1 120 ; tuto-essayer 23/23 ; carnets 94/94 ; mots-coupes : 230 chargements, 0 mot coupé ; zoom-hauteur 56/56 ;
+  contact tenu ; audit de clôture sur les 20 pages du lot (hubs, fiches, collectibles, codes, à propos, mentions, quatre
+  langues ; 80 chargements) : 0 débordement, 0 élément resté invisible, 0 cible sous 24 px, 0 contraste insuffisant
+  (4 384 vérifiés), 0 erreur console ni requête en échec, survols et fonctions tenus.
+- outils/verifier.js : 306 882 références dans 2 241 pages, 0 erreur ; preuve-confidentialite : toutes les affirmations
+  des Mentions tenues.
+- Langues : 0 texte sans traduction, 0 repère cassé, 0 conflit.
+- Vérifié à l'écran (1 280 et 390 px) : les cinq hubs mis en scène, les familles de collectibles et une fiche ouverte,
+  les quatre catégories de codes.

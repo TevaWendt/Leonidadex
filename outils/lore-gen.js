@@ -169,11 +169,18 @@ const ficheLd=(x,S,key,m)=>{const url=SITE+'/'+S.hub+'/'+x.id+'.html';const imgO
 
 /* ---------- hubs ---------- */
 const index=[];
-const cardOf=(x,S,pfx,extraCls)=>{const m=visual(x);
-  return `<a class="lore-card rise${extraCls||''}" href="${pfx}${S.hub}/${x.id}.html">${m?imgTag(m,IMG_ALT(m,x),false):'<div class="lore-vide">Visuel officiel à venir</div>'}<div class="veh-body"><span class="veh-marque">${esc(kindOf(x,S))}</span><h3>${esc(x.name)}</h3>${x.tagline?'<p class="lore-cardtag">'+esc(x.tagline)+'</p>':''}<p>${esc(x.description)}</p><span class="veh-go">Voir la fiche</span></div></a>`;};
+/* v7.72 (Téva) : chaque hub du monde a sa propre mise en scène (disposition des cartes et entrée), de même qualité que la
+   « donne » des gangs : atlas de cartes postales (Lieux, iris), tableau de casting épinglé (Personnages, chute), plans
+   d'architecte (Demeures, balayage vidéo), dossiers (Planques, glissement alterné), enseignes au néon (Entreprises). */
+const HUB_FX={lieux:{fx:'lkx-iris',grid:' lore-grid--atlas',card:' lore-card--postcard',stamp:'Région'},personnages:{fx:'lkx-pin',grid:' lore-grid--casting',card:' lore-card--casting'},demeures:{fx:'lkx-scan',grid:' lore-grid--blueprint',card:' lore-card--wide lore-card--blueprint',scan:true},planques:{fx:'lkx-slide',grid:' lore-grid--dossier',card:' lore-card--wide lore-card--dossier',tab:'Dossier'},entreprises:{fx:'lkx-neon',grid:' lore-grid--signs',card:' lore-card--sign'},gangs:{fx:'lkx-deal',grid:'',card:''}};
+const cardOf=(x,S,pfx,extraCls,opt)=>{const m=visual(x);const o=opt||{};const img=m?imgTag(m,IMG_ALT(m,x),false):'<div class="lore-vide">Visuel officiel à venir</div>';
+  const media=o.scan?'<span class="lkx-scan-media">'+img+'</span>':img;
+  const extra=(o.tab?'<span class="lore-dossier-tab" aria-hidden="true">'+esc(o.tab)+' '+String(o.n).padStart(2,'0')+'</span>':'')+(o.stamp?'<span class="lore-stamp" aria-hidden="true">'+esc(o.stamp)+'</span>':'');
+  return `<a class="lore-card rise${extraCls||''}" href="${pfx}${S.hub}/${x.id}.html"${o.style?' style="'+o.style+'"':''}>${extra}${media}<div class="veh-body"><span class="veh-marque">${esc(kindOf(x,S))}</span><h3>${esc(x.name)}</h3>${x.tagline?'<p class="lore-cardtag">'+esc(x.tagline)+'</p>':''}<p>${esc(x.description)}</p><span class="veh-go">Voir la fiche</span></div></a>`;};
 for(const [key,S] of Object.entries(SECTIONS)){
   const items=ED[key];
-  const cards=items.map(x=>LKX_HUBS.has(S.hub)?cardOf(x,S,'',' lkx-tilt lk-arrive').replace('lore-card rise ','lore-card '):cardOf(x,S,'')).join('\n');
+  const FX=HUB_FX[S.hub]||null;
+  const cards=items.map((x,i)=>LKX_HUBS.has(S.hub)?cardOf(x,S,'',' lkx-tilt lk-arrive'+(FX?FX.card:''),{scan:!!(FX&&FX.scan),tab:FX&&FX.tab,stamp:FX&&FX.stamp,n:i+1,style:S.hub==='entreprises'?'--hue:'+String([352,42,168,268,196,24,312,88][i%8]):(S.hub==='personnages'||S.hub==='lieux')?'--rz:'+String((i%2?1:-1)*(1+(i%3)*0.6))+'deg':''}).replace('lore-card rise ','lore-card '):cardOf(x,S,'')).join('\n');
   /* lot C : pile de trois visuels officiels des fiches du hub, à droite du titre */
   /* de préférence le deuxième visuel de chaque fiche (le premier est déjà sur la carte juste dessous) ; sinon le visuel des dernières fiches */
   const second=items.map(x=>({x,m:(x.media||[]).map(id=>MED[id]).filter(Boolean)[1]})).filter(o=>o.m&&o.m.variants&&o.m.variants[0]);
@@ -188,7 +195,7 @@ for(const [key,S] of Object.entries(SECTIONS)){
 ${pile?'</div>'+pile+'</div>':''}</section>
 <section class="shell" id="fiches">
   <h2 class="sr-only">Les ${items.length} fiches</h2>
-  <div class="lore-grid lore-grid--center lore-grid--n${items.length}${LKX_HUBS.has(S.hub)?' lkx-deal lk-arrive" data-lkx-in="':''}">
+  <div class="lore-grid lore-grid--center lore-grid--n${items.length}${LKX_HUBS.has(S.hub)?(FX?FX.grid:'')+' '+(FX?FX.fx:'lkx-deal')+' lk-arrive" data-lkx-in="':''}">
 ${cards}
   </div>
 </section>

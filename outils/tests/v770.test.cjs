@@ -11,11 +11,12 @@ const read = f => fs.readFileSync(path.join(root, f), 'utf8');
 const doc = f => new JSDOM(read(f)).window.document;
 const LANGS = ['', 'en/', 'es/', 'it/', 'de/'];
 
-test('hubs du monde : la grille des cartes entre comme celle des gangs (lkx-deal, lk-arrive, cartes lkx-tilt)', () => {
+test('hubs du monde : chaque grille de cartes a son entrée animée (v7.72 : une mise en scène par hub), lk-arrive, cartes lkx-tilt', () => {
+  const FX = { gangs: 'lkx-deal', lieux: 'lkx-iris', personnages: 'lkx-pin', demeures: 'lkx-scan', planques: 'lkx-slide', entreprises: 'lkx-neon' };
   for (const hub of ['gangs', 'lieux', 'personnages', 'demeures', 'planques', 'entreprises']) {
     const d = doc(hub + '.html');
-    const grid = d.querySelector('.lore-grid.lkx-deal');
-    assert.ok(grid, hub + ' : grille lkx-deal');
+    const grid = d.querySelector('.lore-grid.' + FX[hub]);
+    assert.ok(grid, hub + ' : grille ' + FX[hub]);
     assert.ok(grid.classList.contains('lk-arrive') && grid.hasAttribute('data-lkx-in'), hub + ' : entrée au défilement');
     const cards = grid.querySelectorAll('.lore-card');
     assert.ok(cards.length >= 3, hub + ' : au moins trois cartes');
