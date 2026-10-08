@@ -181,13 +181,14 @@ test('progression-core : les deux familles entrent dans le total, l’export et 
 });
 
 test('fiches : chaque fiche véhicule a « Personnaliser ce véhicule » vers sa catégorie filtrée, chaque fiche d’arme « Accessoires compatibles », les fiches des deux ateliers renvoient à la sous-section',()=>{
-  /* v7.69 : le lien vise le modèle lui-même (#perso-vehicules=<véhicule>, #perso-armes=<arme>) : la section le choisit dans « Ton véhicule » / « Ton arme » */
-  for(const v of vehicules()){const h=read('vehicules/'+v.id+'.html');const m=h.match(/<a href="\.\.\/personnalisations\.html#perso-vehicules=([a-z0-9-]+)">Personnaliser ce véhicule<\/a>/);assert.ok(m,v.id);assert.equal(m[1],v.id);}
-  for(const a of armes()){const h=read('armes/'+a.id+'.html');const m=h.match(/<a href="\.\.\/personnalisations\.html#perso-armes=([a-z0-9-]+)">Personnaliser cette arme<\/a>/);assert.ok(m,a.id);assert.equal(m[1],a.id);}
+  /* v7.69 : le lien visait le modèle dans la liste (#perso-vehicules=<véhicule>) ; v7.73 : la fiche a sa propre section
+     « Personnaliser » (#personnaliser, outils/perso-fiche.cjs) : le lien du bandeau y mène, et la section cite le modèle. */
+  for(const v of vehicules()){const h=read('vehicules/'+v.id+'.html');assert.ok(h.includes('<a href="#personnaliser">Personnaliser ce véhicule</a>'),v.id);assert.ok(h.includes('<section class="shell reveal pf" id="personnaliser" data-pf="vehicules" data-pf-id="'+v.id+'"'),v.id+' : section');}
+  for(const a of armes()){const h=read('armes/'+a.id+'.html');assert.ok(h.includes('<a href="#personnaliser">Personnaliser cette arme</a>'),a.id);assert.ok(h.includes('<section class="shell reveal pf" id="personnaliser" data-pf="armes" data-pf-id="'+a.id+'"'),a.id+' : section');}
   for(const b of ['rideout-customs','one-eyed-willie'])assert.ok(read('entreprises/'+b+'.html').includes('href="../personnalisations.html#perso-vehicules">Personnaliser mon véhicule</a>'),b);
   assert.ok(!read('entreprises/stock-305.html').includes('personnalisations.html#perso-'),'une boutique de vêtements ne renvoie pas aux ateliers');
   /* le lien reste dans le bloc de liens du bandeau, une fois */
-  const g=doc('vehicules/vapid-ganado.html');assert.equal(g.querySelectorAll('.fhero .fiche-liens a[href*="personnalisations.html"]').length,1);
+  const g=doc('vehicules/vapid-ganado.html');assert.equal(g.querySelectorAll('.fhero .fiche-liens a[href="#personnaliser"]').length,1);
 });
 
 test('recherche interne, Léo et sitemap : chaque poste indexé vers son ancre (type élément, mots de compatibilité), les deux familles indexées, cinq FAQ dans Léo avec réponses, « trouve silencieux »',()=>{

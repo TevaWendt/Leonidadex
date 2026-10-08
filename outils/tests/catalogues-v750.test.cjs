@@ -48,7 +48,10 @@ test('listes des catalogues : vignette (visuel officiel ou pictogramme dit comme
         const f = r.querySelector('details.cat-fiche .doc-fiche'); assert.ok(f, r.id + ' fiche complète'); assert.ok(f.querySelectorAll('.doc-rub').length >= 2);
       }
       const withMedia = C.load().families[fam].items.filter(it => it.media).length;
-      assert.equal(d.querySelectorAll('#box-' + fam + ' .cat-thumb img').length, withMedia, fam + ' : une photo par visuel lié, pas plus');
+      /* v7.73 : une ligne sans visuel propre montre celui de sa catégorie (cat-thumb--cat, dit « illustration ») : les photos
+         propres restent exactement celles des visuels liés */
+      assert.equal(d.querySelectorAll('#box-' + fam + ' .cat-thumb:not(.cat-thumb--cat) img').length, withMedia, fam + ' : une photo par visuel lié, pas plus');
+      assert.equal(d.querySelectorAll('#box-' + fam + ' .cat-thumb--cat img').length, rows.length - withMedia, fam + ' : illustration de catégorie pour les autres');
     }
   }
 });

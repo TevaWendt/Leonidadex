@@ -583,7 +583,7 @@
 .cat-pick-field{display:flex;align-items:center;gap:10px;padding:0 16px;min-height:54px;border:2px solid var(--ink);border-radius:12px;background:#fff;transition:box-shadow .2s ease}
 .cat-pick-field:focus-within{box-shadow:0 0 0 4px rgba(247,182,69,.55)}
 .cat-pick-field svg{width:20px;height:20px;flex:none;color:var(--ink-soft)}
-.cat-pick-field input{flex:1;min-width:0;border:0;background:none;font:600 1.06rem/1.2 'Archivo',sans-serif;color:var(--ink);outline:none}
+.cat-pick-field input{flex:1;min-width:0;min-height:30px;border:0;background:none;font:600 1.06rem/1.2 'Archivo',sans-serif;color:var(--ink);outline:none}
 .cat-pick-field input::placeholder{color:#8a8590;font-weight:500}
 .cat-pick-field input:focus,.cat-pick-field input:focus-visible{outline:none!important}
 .cat-pick-hint{margin:0;font-size:.9rem;line-height:1.5;color:var(--ink-soft)}
@@ -618,14 +618,15 @@
 .cg-filter{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 6px;padding:0;border:0;min-width:0;}
 .cg-filter input{position:absolute;opacity:0;width:1px;height:1px;margin:0;pointer-events:none;}
 .cg-filter label{display:inline-flex;align-items:center;gap:7px;min-height:42px;padding:5px 12px 5px 8px;border:2px solid var(--ink);border-radius:999px;background:var(--paper);color:var(--ink);font-weight:800;font-size:.86rem;cursor:pointer;user-select:none;transition:background .2s,color .2s,transform .2s var(--ease-out),box-shadow .2s;}
-.cg-filter label[for="cg-f-tout"]{padding-left:14px;}
+.cg-filter label.cg-f-tout{padding-left:14px;}
+.cg-filter label{position:relative;}
 .cg-f-ico{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--cg);border:1.5px solid var(--ink);}
 .cg-f-ico .ed-ico{width:20px;height:20px;}
 .cg-n{display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 6px;border-radius:999px;background:var(--paper-2);border:1.5px solid var(--ink);font:800 .72rem/1 var(--font-mono,ui-monospace,monospace);}
 .cg-filter label:hover{transform:translateY(-2px);box-shadow:3px 3px 0 var(--ink);}
-.cg-filter input:checked+label{background:var(--ink);color:var(--paper);box-shadow:4px 4px 0 var(--amber);}
-.cg-filter input:checked+label .cg-n{background:var(--amber);color:var(--ink);border-color:var(--amber);}
-.cg-filter input:focus-visible+label{outline:3px solid var(--coral);outline-offset:3px;}
+.cg-filter label:has(input:checked){background:var(--ink);color:var(--paper);box-shadow:4px 4px 0 var(--amber);}
+.cg-filter label:has(input:checked) .cg-n{background:var(--amber);color:var(--ink);border-color:var(--amber);}
+.cg-filter label:has(input:focus-visible){outline:3px solid var(--coral);outline-offset:3px;}
 #en-un-regard:has(#cg-f-boissons:checked) .cg-card:not([data-cg-cat="boissons"]),
 #en-un-regard:has(#cg-f-snacks:checked) .cg-card:not([data-cg-cat="snacks"]),
 #en-un-regard:has(#cg-f-repas:checked) .cg-card:not([data-cg-cat="repas"]),
@@ -642,14 +643,17 @@
 .cg-cat{color:inherit;}
 .cg-body{display:flex;flex-direction:column;gap:9px;padding:14px 14px 12px;flex:1;}
 .cg-nom{font-size:1.12rem;}
-.cg-desc{margin:0;font-size:.87rem;line-height:1.45;color:var(--ink-soft);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+.cg-desc{margin:0;font-size:.87rem;line-height:1.45;color:var(--ink-soft);}
 .cg-facts{gap:5px;font-size:.8rem;}
 .cg-facts div{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 8px;padding:0;border:0;}
 .cg-facts dt{font:700 .64rem/1.4 var(--font-mono,ui-monospace,monospace);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);}
 .cg-facts dd{display:block;color:var(--ink-soft);}
-.cg-facts .cg-f-ou{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:8px;padding:8px 10px;border-radius:10px;background:var(--paper-2);}
-.cg-facts .cg-f-ou dt{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--ink);color:transparent;overflow:hidden;font-size:0;}
-.cg-facts .cg-f-ou dt::before{content:'';width:12px;height:12px;background:var(--amber);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 22s-7-6-7-12a7 7 0 0 1 14 0c0 6-7 12-7 12zm0-9.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 22s-7-6-7-12a7 7 0 0 1 14 0c0 6-7 12-7 12zm0-9.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z'/%3E%3C/svg%3E") center/contain no-repeat;}
+.cg-facts .cg-f-ou{display:block;padding:8px 10px;border-radius:10px;background:var(--paper-2);}
+.cg-facts .cg-f-ou{position:relative;padding-left:40px;}
+/* v7.73 : le titre « Où » reste lisible par les lecteurs d'écran (clip) et visible à l'audit ; la pastille est dessinée par ::before/::after du bloc */
+.cg-facts .cg-f-ou dt{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;color:var(--ink);}
+.cg-facts .cg-f-ou::before{content:'';position:absolute;left:10px;top:50%;width:22px;height:22px;margin-top:-11px;border-radius:50%;background:var(--ink);}
+.cg-facts .cg-f-ou::after{content:'';position:absolute;left:15px;top:50%;width:12px;height:12px;margin-top:-6px;background:var(--amber);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 22s-7-6-7-12a7 7 0 0 1 14 0c0 6-7 12-7 12zm0-9.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 22s-7-6-7-12a7 7 0 0 1 14 0c0 6-7 12-7 12zm0-9.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z'/%3E%3C/svg%3E") center/contain no-repeat;}
 .cg-facts .cg-f-ou dd{font-weight:800;color:var(--ink);font-size:.82rem;}
 .cg-facts .cg-f-use{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
 .cg-facts small{display:inline-flex;align-self:flex-start;margin-top:4px;padding:3px 9px;border:1.5px solid #2F6F73;border-left-width:1.5px;border-radius:999px;background:#e5f3f0;color:#1d4f52;font-weight:800;font-size:.7rem;}
@@ -700,9 +704,10 @@
 .cg-nom{margin:0;font:900 1.1rem/1.15 'Archivo',sans-serif;letter-spacing:-.01em;color:var(--ink);}
 .cg-cat{flex:none;font:800 .64rem/1.2 var(--font-mono,ui-monospace,monospace);letter-spacing:.12em;text-transform:uppercase;color:var(--cg-ink,var(--ink-soft));}
 .cg-body{display:flex;flex-direction:column;gap:10px;padding:0 14px 14px 20px;flex:1;}
-.cg-desc{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin:0;font-size:.88rem;line-height:1.5;color:var(--ink-soft);}
+/* v7.73 : la description s'affiche en entier (plus de coupe à deux lignes) */
+.cg-desc{margin:0;font-size:.88rem;line-height:1.5;color:var(--ink-soft);}
 .cg-facts{gap:8px;}
-.cg-facts .cg-f-ou{padding:9px 11px;border:1.5px solid var(--rule);border-radius:12px;background:var(--paper);}
+.cg-facts .cg-f-ou{padding:9px 11px 9px 40px;border:1.5px solid var(--rule);border-radius:12px;background:var(--paper);}
 .cg-facts .cg-f--unk{display:none;}
 .cg-facts .cg-f-effet{display:flex;padding:0;border:0;background:none;}
 .cg-facts .cg-f-effet dt,.cg-facts .cg-f-effet .cg-unk{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
@@ -820,3 +825,90 @@
 @media(max-width:900px){.ed-at-board{grid-template-columns:1fr;}.ed-at-map{position:static;}}
 @media(max-width:600px){.ed-at{grid-template-columns:auto minmax(0,1fr);}.ed-at-visual{display:none;}}
 @media(prefers-reduced-motion:reduce){.ed-at,.ed-at-visual img,.ed-at-links .veh-go::after{transition:none;}}
+
+/* ---------- v7.73 (lot 3) : les listes des trois catalogues, en couleur et en mouvement ----------
+   Demande de Téva : « les listes ne sont pas belles, pas d'effet, pas de visuel, plus de couleur ». Chaque ligne est une fiche :
+   barre de la teinte de sa catégorie (--ch, posée par outils/catalogues.cjs), visuel officiel (le sien, sinon celui de sa
+   catégorie voilé de la teinte et marqué du pictogramme), pastille de catégorie colorée, « Fiche complète » à droite (gardé).
+   Entrée : à l'ouverture de la liste et au défilement, les lignes glissent de la gauche en cascade (catalogue.js pose le délai) ;
+   au survol, la fiche se soulève, l'image s'agrandit, le titre se souligne. Mouvement réduit : tout est posé, rien ne bouge. */
+.cat-row{--chs:hsl(var(--ch,38) 82% 52%);--chl:hsl(var(--ch,38) 70% 94%);--chd:hsl(var(--ch,38) 60% 26%);position:relative;overflow:hidden;border-color:var(--ink);background:linear-gradient(180deg,#fff,#fff 70%,var(--chl));box-shadow:4px 4px 0 rgba(26,26,30,.12);}
+.cat-row::before{content:'';position:absolute;left:0;top:0;bottom:0;width:8px;background:var(--chs);}
+.cat-row::after{content:'';position:absolute;right:-40px;top:-40px;width:150px;height:150px;border-radius:50%;background:radial-gradient(circle,hsl(var(--ch,38) 85% 60% / .18),transparent 68%);pointer-events:none;}
+.cat-row:has(.is-own){background:linear-gradient(180deg,#fffaf0,#fffaf0 70%,var(--chl));}
+.cat-thumb{width:128px;height:88px;border-width:2px;box-shadow:3px 3px 0 var(--chs);}
+.cat-thumb img{transition:transform .7s var(--ease-out);}
+.cat-thumb--cat{position:relative;isolation:isolate;border-style:solid;border-color:var(--ink);}
+.cat-thumb--cat::after{content:'';position:absolute;inset:0;background:linear-gradient(160deg,hsl(var(--ch,38) 80% 50% / .18),hsl(var(--ch,38) 70% 30% / .55));mix-blend-mode:multiply;pointer-events:none;}
+.cat-thumb-badge{position:absolute;right:-2px;bottom:-2px;z-index:1;display:grid;place-items:center;width:34px;height:34px;border:2px solid var(--ink);border-radius:10px 0 10px 0;background:var(--amber);color:var(--ink);box-shadow:-2px -2px 0 rgba(26,26,30,.15);}
+.cat-thumb-badge .cat-thumb-ico{width:20px;height:20px;color:var(--ink);}
+.cat-id{gap:18px;}
+.cat-nom{position:relative;display:inline;padding-bottom:2px;background:linear-gradient(var(--chs),var(--chs)) left bottom/0 3px no-repeat;transition:background-size .4s var(--ease-out);}
+.cat-tags .cat-cat{background:var(--chl);border-color:var(--chd);color:var(--chd);}
+.cat-tags .cat-cat .cat-ico{color:var(--chd);}
+.cat-c-eff,.cat-c-p6,.cat-c-pr,.cat-c-ou{background:rgba(255,255,255,.72);border-color:var(--rule);}
+.cat-table td::before{color:var(--chd);}
+.cat-fiche-bt{box-shadow:3px 3px 0 var(--ink);transition:transform .25s var(--ease-out),box-shadow .25s var(--ease-out),background .25s var(--ease-out);}
+.cat-acts{gap:10px;}
+/* entrée en cascade : glissement de la gauche, légère réduction ; le délai vient de catalogue.js (--lk-delay) */
+.js tr.cat-row.lk-reveal:not(.lk-settled){transform:translate3d(-28px,0,0) scale(.985);transition:opacity .55s ease var(--lk-delay,0ms),transform .65s var(--ease-out) var(--lk-delay,0ms),box-shadow .25s var(--ease-out);}
+.js tr.cat-row.lk-reveal.is-in:not(.lk-settled){transform:none;}
+@media(hover:hover){
+  .cat-row{transition:transform .25s var(--ease-out),box-shadow .25s var(--ease-out);}
+  .cat-row:hover{transform:translate(-2px,-3px);box-shadow:7px 8px 0 var(--chs);}
+  .cat-row:hover .cat-thumb img{transform:scale(1.08);}
+  .cat-row:hover .cat-nom{background-size:100% 3px;}
+  .cat-row:hover .cat-fiche-bt{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink);}
+}
+@media(prefers-reduced-motion:reduce){
+  .cat-row,.cat-thumb img,.cat-nom,.cat-fiche-bt{transition:none;}
+  .cat-row:hover{transform:none;}
+  .cat-row:hover .cat-thumb img{transform:none;}
+  .js tr.cat-row.lk-reveal:not(.lk-settled){transform:none;transition:none;}
+}
+@media(max-width:600px){.cat-thumb{width:104px;height:72px;}.cat-thumb-badge{width:30px;height:30px;}}
+/* la barre fermée de la liste : trois visuels officiels en éventail, titre, compteur, « Ouvrir la liste » */
+.cat-sum{grid-template-columns:auto minmax(0,1fr) auto auto;gap:10px 18px;padding:14px 22px 14px 18px;background:linear-gradient(90deg,var(--amber) 0,var(--amber) 8px,transparent 8px),linear-gradient(100deg,#fff 55%,var(--paper-2));}
+.cat-sum:hover,.cat-sum:focus-visible{background:linear-gradient(90deg,var(--amber) 0,var(--amber) 8px,transparent 8px),linear-gradient(100deg,#fff 40%,#fff4d9);}
+.cat-sum-pile{position:relative;display:block;width:120px;height:62px;flex:none;}
+.cat-sum-pile img{position:absolute;top:0;width:76px;height:50px;object-fit:cover;border:2px solid var(--ink);border-radius:8px;background:var(--paper-2);box-shadow:2px 2px 0 rgba(26,26,30,.2);transition:transform .45s var(--ease-spring);}
+.cat-sum-pile img:nth-child(1){left:0;top:8px;transform:rotate(-7deg);z-index:1;}
+.cat-sum-pile img:nth-child(2){left:22px;top:2px;transform:rotate(2deg);z-index:2;}
+.cat-sum-pile img:nth-child(3){left:44px;top:10px;transform:rotate(8deg);z-index:3;}
+.cat-sum-txt{display:flex;flex-direction:column;gap:4px;min-width:0;}
+.cat-sum-n{grid-column:auto;}
+.cat-sum-open{justify-self:end;padding:9px 14px;border:2px solid var(--ink);border-radius:999px;background:var(--ink);color:var(--paper);font:800 .8rem/1 'Archivo',sans-serif;white-space:nowrap;transition:background .25s var(--ease-out),color .25s var(--ease-out);}
+.cat-box[open]>.cat-sum .cat-sum-open{background:var(--paper);color:var(--ink);}
+.cat-chev{grid-column:auto;grid-row:auto;}
+@media(hover:hover){
+  .cat-sum:hover .cat-sum-pile img:nth-child(1){transform:rotate(-12deg) translate(-6px,-2px);}
+  .cat-sum:hover .cat-sum-pile img:nth-child(2){transform:rotate(0) translateY(-5px);}
+  .cat-sum:hover .cat-sum-pile img:nth-child(3){transform:rotate(13deg) translate(6px,-2px);}
+  .cat-sum:hover .cat-sum-open{background:var(--amber);color:var(--ink);}
+}
+@media(max-width:700px){
+  .cat-sum{grid-template-columns:auto minmax(0,1fr) auto;padding:12px 14px 12px 12px;}
+  .cat-sum-pile{width:92px;height:54px;}
+  .cat-sum-pile img{width:60px;height:40px;}
+  .cat-sum-pile img:nth-child(2){left:16px;} .cat-sum-pile img:nth-child(3){left:32px;}
+  .cat-sum-open{display:none;}
+}
+@media(prefers-reduced-motion:reduce){.cat-sum-pile img,.cat-sum-open{transition:none;}.cat-sum:hover .cat-sum-pile img{transform:none;}}
+/* ---------- v7.73 (lot 3) : Consommables, « En un regard » : des cartes illustrées ----------
+   Chaque carte s'ouvre sur un visuel officiel (le sien, sinon celui de sa catégorie voilé de la teinte et dit « illustration »),
+   la pastille de catégorie passe par-dessus l'image, le corps garde ses faits ; entrée en cascade par groupe (le site), survol :
+   la carte se soulève, l'image s'agrandit, le pictogramme pivote. */
+.cg-card{background:#fff;}
+.cg-card::before{background:hsl(var(--ch,38) 82% 52%);}
+.cg-media{position:relative;isolation:isolate;aspect-ratio:16/8;overflow:hidden;border-bottom:2px solid var(--ink);background:var(--paper-2);}
+.cg-media img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .8s var(--ease-out);}
+.cg-media--cat::after{content:'';position:absolute;inset:0;background:linear-gradient(170deg,hsl(var(--ch,38) 80% 50% / .12),hsl(var(--ch,38) 70% 30% / .5));mix-blend-mode:multiply;pointer-events:none;}
+.cg-media-l{position:absolute;left:10px;top:8px;z-index:1;padding:4px 8px;border:1.5px solid var(--ink);border-radius:6px;background:rgba(253,251,247,.92);color:var(--ink);font:800 .58rem/1.2 var(--font-mono,ui-monospace,monospace);letter-spacing:.1em;text-transform:uppercase;}
+.cg-card .cg-top{padding:12px 14px 8px 20px;}
+.cg-card .cg-ico{margin-top:-40px;position:relative;z-index:2;width:54px;height:54px;background:var(--cg,var(--paper-2));box-shadow:3px 3px 0 var(--ink);}
+.cg-top .cg-st{position:absolute;right:12px;top:-30px;z-index:2;}
+.cg-card .cg-top{position:relative;}
+@media(hover:hover){
+  .cg-card:hover .cg-media img{transform:scale(1.07);}
+}
+@media(prefers-reduced-motion:reduce){.cg-media img{transition:none;}.cg-card:hover .cg-media img{transform:none;}}

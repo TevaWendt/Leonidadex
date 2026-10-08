@@ -29,17 +29,95 @@
   ]
  },
  "grades": {
-  "kicker": "Les grades",
-  "titre": "Quatre grades, et des points sur Xbox",
-  "lede": "Les badges sont dessinés pour le site : ce ne sont pas les icônes des consoles.",
-  "items": [
-   { "grade": "platine", "label": "Platine", "texte": "Un par jeu au plus ; il demande tous les autres trophées." },
-   { "grade": "or", "label": "Or", "texte": "Le grade le plus haut après le platine." },
-   { "grade": "argent", "label": "Argent", "texte": "Le grade du milieu." },
-   { "grade": "bronze", "label": "Bronze", "texte": "Le premier grade." },
-   { "grade": "xbox", "label": "Points Xbox", "texte": "Chaque succès vaut des points ; leur total fait le score du profil." }
-  ],
-  "statut": "comm", "sources": ["psnprofiles-systeme", "trueach-gamerscore"]
+   "kicker": "Les grades",
+   "titre": "Quatre grades, et des points sur Xbox",
+   "lede": "Les badges sont dessinés pour le site : ce ne sont pas les icônes des consoles.",
+   "items": [
+     {
+       "grade": "platine",
+       "label": "Platine",
+       "texte": "Un par jeu au plus ; il demande tous les autres trophées.",
+       "fiche": {
+         "attendu": "Un seul par jeu, sur PlayStation : il tombe quand tous les autres trophées du jeu de base sont obtenus. Compte l’histoire, les activités, les collections et les trophées manquables : c’est le trophée du 100 % du jeu.",
+         "repere": "Dans GTA V, « Los Santos Legend » (« Légende de Los Santos ») demande tous les autres trophées ; 1 platine pour 51 trophées dans le jeu de base. Pas de platine sur Xbox : son équivalent est le score complet."
+       }
+     },
+     {
+       "grade": "or",
+       "label": "Or",
+       "texte": "Le grade le plus haut après le platine.",
+       "fiche": {
+         "attendu": "Les plus longs et les plus rares : finir le jeu à 100 %, cumuler des médailles d’or sur les missions et les activités, atteindre un rang élevé. Compte des dizaines d’heures après la fin de l’histoire.",
+         "repere": "Dans GTA V, trois trophées d’or : « Career Criminal » (100 % du jeu), « Solid Gold, Baby! » (70 médailles d’or) et « Above the Law » (rang 100 dans GTA Online)."
+       }
+     },
+     {
+       "grade": "argent",
+       "label": "Argent",
+       "texte": "Le grade du milieu.",
+       "fiche": {
+         "attendu": "Les étapes marquantes : la fin de l’histoire, les grandes activités terminées, les collections bien avancées. Ils demandent de la régularité plus que de l’exploit.",
+         "repere": "Dans GTA V, 5 trophées d’argent sur les 51 du jeu de base."
+       }
+     },
+     {
+       "grade": "bronze",
+       "label": "Bronze",
+       "texte": "Le premier grade.",
+       "fiche": {
+         "attendu": "Les plus nombreux : premières fois, missions, activités, collections partielles. Certains sont manquables : à faire avant la fin de l’histoire, ou selon un choix du scénario.",
+         "repere": "Dans GTA V, 42 trophées de bronze sur 51 ; PowerPyx compte six trophées manquables, dont « Kifflom! » et « Red Mist »."
+       }
+     },
+     {
+       "grade": "xbox",
+       "label": "Points Xbox",
+       "texte": "Chaque succès vaut des points ; leur total fait le score du profil.",
+       "fiche": {
+         "attendu": "Pas de grade sur Xbox : chaque succès vaut des points (le score du profil). Un jeu complet totalise en général 1 000 points, et les contenus ajoutés en apportent d’autres.",
+         "repere": "Dans GTA V, 77 succès pour 1 750 points sur Xbox Series X|S."
+       }
+     }
+   ],
+   "statut": "comm",
+   "sources": [
+     "psnprofiles-systeme",
+     "trueach-gamerscore"
+   ],
+   "fichesNote": "v7.73 (Téva) : chaque grade s'ouvre en fiche squelette plein écran : ce qu'il faut, en général, pour obtenir un trophée de ce grade (repères de GTA V et règles des consoles, sourcés), ce que GTA VI a publié (rien), et ce que dira chaque trophée de ce grade.",
+   "go": "Voir ce qu’il faut",
+   "kickerFiche": "Grade",
+   "h": {
+     "vi": "Pour GTA VI",
+     "attendu": "Ce qu’il faut, en général",
+     "repere": "Repère de GTA V",
+     "champs": "Ce que dira chaque trophée de ce grade"
+   },
+   "vi": "Rien n’est publié pour GTA VI : ni le nombre de trophées de ce grade, ni leurs conditions. La fiche Xbox annonce des succès ; PlayStation ne dit rien des trophées. Rien n’est inventé ici.",
+   "viXbox": "La fiche Xbox annonce des succès pour GTA VI, sans nombre ni points ; rien n’est publié sur le total. Rien n’est inventé ici.",
+   "champs": [
+     {
+       "t": "Nom officiel",
+       "d": "En anglais, puis dans ta langue quand il est publié."
+     },
+     {
+       "t": "Condition",
+       "d": "Le texte exact de PlayStation ou de Xbox."
+     },
+     {
+       "t": "Points Xbox",
+       "d": "La valeur du succès, sur Xbox."
+     },
+     {
+       "t": "Manquable ou caché",
+       "d": "Signalé d’avance, avec sa source."
+     },
+     {
+       "t": "Ta case « Obtenu »",
+       "d": "Gardée sur cet appareil, comptée dans ta progression."
+     }
+   ],
+   "sortie": "À la publication de la liste"
  },
  "gtav": {
   "kicker": "Pour comparer",
@@ -173,7 +251,7 @@
   "toi": {
    "lede": "En attendant la liste, suis déjà ce que le site te permet de cocher.",
    "actions": [
-    { "k": "Progression", "t": "Ma progression", "d": "Coche ce que tu fais, gardé sur ton appareil.", "href": "progression.html" },
+    { "k": "Progression", "t": "Ma progression", "d": "Coche ce que tu fais, gardé sur ton appareil.", "href": "progression.html#trophees" },
     { "k": "Collectibles", "t": "Les collectibles", "d": "La collection de Wyman et le carnet des objets à trouver.", "href": "collectibles.html" },
     { "k": "Carte", "t": "La carte", "d": "Les lieux repérés, à cocher un par un.", "href": "carte.html" },
     { "k": "Statuts", "t": "Comprendre les statuts", "d": "Officiel, vu, communauté, à confirmer : ce que veut dire chaque pastille.", "href": "tuto.html#sources" }

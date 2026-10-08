@@ -285,3 +285,28 @@
 .cn-others .cn-other-list .cn-other-b{color:var(--coral-text);}
 .cn-others .cn-back a:not([class]){color:var(--ink);background:#fff;}
 .cn-others .cn-back a:not([class]):hover{background:var(--amber);}
+
+/* ---------- v7.73 (lot 3, Téva : « les trophées ne sont pas dans la Progression ») : bloc « Mes trophées et succès » ----------
+   Anneau et compteurs par grade sur fond nuit (même langage que la page Trophées), comptés depuis la clé
+   lk-trophees-obtenus-v1 par progression.js ; la liste n'étant pas publiée, les totaux restent « ? ». */
+.tr-prog-board{display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-areas:"ring txt" "grades grades" "acts acts";gap:14px 22px;align-items:center;margin-top:14px;padding:22px 24px;border:2px solid var(--ink);border-radius:18px;background:radial-gradient(circle at 10% 0%,#4b2a6b,var(--night-deep) 60%);color:var(--paper);box-shadow:5px 5px 0 var(--amber);}
+.tr-prog-ring{grid-area:ring;position:relative;width:104px;height:104px;border-radius:50%;background:conic-gradient(var(--amber) 0,var(--amber) var(--tr-p,0%),rgba(255,255,255,.14) var(--tr-p,0%));display:grid;place-items:center;}
+.tr-prog-ring::before{content:'';position:absolute;inset:11px;border-radius:50%;background:var(--night-deep);}
+.tr-prog-ring-c{position:relative;font:900 1.2rem/1 'Archivo',sans-serif;color:var(--paper);}
+.tr-prog-t{grid-area:txt;min-width:0;}
+.tr-prog-n{margin:0;font:900 1.9rem/1 var(--font-mono);color:var(--amber-2);}
+.tr-prog-n span{margin:0 6px;color:rgba(255,255,255,.5);}
+.tr-prog-l{margin:4px 0 0;font:800 1rem/1.2 'Archivo',sans-serif;color:var(--amber-2);}
+.tr-prog-note{margin:6px 0 0;font-size:.86rem;color:rgba(255,255,255,.78);}
+.tr-prog-grades{grid-area:grades;list-style:none;margin:0;padding:14px 0 0;border-top:1px solid rgba(255,255,255,.18);display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;}
+.tr-prog-g{display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;}
+.tr-prog-g svg{width:46px;height:46px;padding:10px;border-radius:50%;border:2px solid rgba(255,255,255,.3);background:#fff;color:var(--ink);}
+.tr-prog-g--platine svg{background:linear-gradient(135deg,#e9eef5,#b9c4d6);} .tr-prog-g--or svg{background:linear-gradient(135deg,#ffe28a,#e4a51f);} .tr-prog-g--argent svg{background:linear-gradient(135deg,#f3f3f3,#bdbdbd);} .tr-prog-g--bronze svg{background:linear-gradient(135deg,#f0c39a,#b46a36);}
+.tr-prog-g b{font:800 .95rem/1 var(--font-mono);color:var(--paper);} .tr-prog-g b i{font-style:normal;color:var(--amber-2);}
+.tr-prog-g>span{font:700 .64rem/1.2 var(--font-mono);letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.75);}
+.tr-prog-acts{grid-area:acts;display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;margin:0;}
+.tr-prog-btn{display:inline-flex;align-items:center;min-height:42px;padding:8px 18px;border:2px solid var(--amber);border-radius:999px;background:var(--amber);color:var(--ink);font:800 .9rem/1 'Archivo',sans-serif;text-decoration:none;transition:transform .2s var(--ease-out),background .2s var(--ease-out);}
+.tr-prog-btn:hover{transform:translate(-1px,-2px);background:#fff;}
+.tr-prog-link{color:var(--paper);font-weight:700;}
+@media(max-width:640px){.tr-prog-board{grid-template-columns:1fr;grid-template-areas:"ring" "txt" "grades" "acts";justify-items:center;text-align:center;padding:18px 16px;}.tr-prog-grades{grid-template-columns:repeat(2,minmax(0,1fr));width:100%;}}
+@media(prefers-reduced-motion:reduce){.tr-prog-btn{transition:none;}.tr-prog-btn:hover{transform:none;}}

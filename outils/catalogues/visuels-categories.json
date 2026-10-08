@@ -1,0 +1,67 @@
+{
+  "_note": "v7.73 (lot 3, demande de Téva : des visuels et de la couleur dans les listes et les cartes des trois catalogues). Un visuel officiel par catégorie, affiché comme illustration de la catégorie (jamais présenté comme le visuel de l'objet : une ligne qui a son propre visuel officiel le garde). « h » : teinte (0-360) de la catégorie, pour la barre de couleur, la pastille et le voile du visuel. Identifiants : outils/medias-officiels.json.",
+  "consommables": {
+    "boissons": { "media": "jason-duval-06", "h": 198 },
+    "snacks": { "media": "cal-hampton-03", "h": 42 },
+    "repas": { "media": "cal-hampton-02", "h": 18 },
+    "soins": { "media": "vice-city-09", "h": 152 },
+    "protection": { "media": "jason-and-lucia-02", "h": 232 }
+  },
+  "coiffures": {
+    "coupes": { "media": "sara-s-unisex-salon-02", "h": 338 },
+    "barbe": { "media": "sara-s-unisex-salon-01", "h": 24 },
+    "couleur-et-yeux": { "media": "sara-s-unisex-salon-03", "h": 262 },
+    "maquillage-et-ongles": { "media": "lucia-caminos-06", "h": 312 }
+  },
+  "tatouages": {
+    "collections": { "media": "electric-fang-tattoo-04", "h": 352 },
+    "zones": { "media": "electric-fang-tattoo-03", "h": 196 },
+    "motifs": { "media": "electric-fang-tattoo-02", "h": 282 },
+    "retrait": { "media": "electric-fang-tattoo-01", "h": 160 }
+  },
+  "tenues": {
+    "tenues-completes": { "media": "stock-305-clothing-store-01", "h": 318 },
+    "collections": { "media": "vintage-vice-city-pack-exclusive-looks-03", "h": 292 },
+    "hauts": { "media": "goodtime-gear-01", "h": 48 },
+    "bas": { "media": "stock-305-clothing-store-04", "h": 206 },
+    "chaussures": { "media": "trailer-2-motorcycle-143", "h": 24 },
+    "lunettes": { "media": "ultimate-edition-02", "h": 186 },
+    "chapeaux": { "media": "jason-duval-04", "h": 38 },
+    "bijoux-et-montres": { "media": "boobie-ike-03", "h": 46 },
+    "masques": { "media": "jason-and-lucia-02", "h": 232 },
+    "autres-accessoires": { "media": "stock-305-clothing-store-03", "h": 168 }
+  },
+  "perso-vehicules": {
+    "kits": { "media": "ganado-retro-build", "h": 36 },
+    "carrosserie": { "media": "ultimate-edition-rideout-customs-03", "h": 44 },
+    "jantes": { "media": "rideout-customs-mod-shop-01", "h": 32 },
+    "peinture": { "media": "one-eyed-willie-s-mod-shop-01", "h": 118 },
+    "vitres": { "media": "extended-look-coquette-d10", "h": 350 },
+    "plaques": { "media": "extended-look-sentinel-classic-rear", "h": 8 },
+    "klaxons": { "media": "trailer-1-vehicles-033", "h": 190 },
+    "phares": { "media": "vice-city-08", "h": 268 },
+    "neons": { "media": "vice-city-06", "h": 300 },
+    "suspension": { "media": "trailer-1-vehicles-028", "h": 210 },
+    "moteur": { "media": "ultimate-edition-one-eyed-willie-03", "h": 128 },
+    "freins": { "media": "trailer-1-vehicles-071", "h": 12 },
+    "transmission": { "media": "extended-look-sentinel-classic-front", "h": 4 },
+    "turbo": { "media": "trailer-1-vehicles-025", "h": 346 },
+    "blindage": { "media": "extended-look-stockade", "h": 222 },
+    "interieur": { "media": "ultimate-edition-rideout-customs-02", "h": 22 },
+    "livrees": { "media": "trailer-1-vehicles-053", "h": 104 },
+    "securite": { "media": "trailer-2-caracara-016", "h": 200 }
+  },
+  "perso-armes": {
+    "variantes": { "media": "personalized-weapon-variants", "h": 352 },
+    "chargeurs": { "media": "trailer-2-lucia-pm", "h": 330 },
+    "viseurs": { "media": "hawk-little-morgan-revolvers-01", "h": 214 },
+    "canons": { "media": "hawk-little-morgan-revolvers-02", "h": 40 },
+    "poignees": { "media": "vintage-vice-city-weapon-pattern-01", "h": 24 },
+    "lampes": { "media": "jason-duval-05", "h": 56 },
+    "finitions": { "media": "vintage-vice-city-pack-exclusive-looks-03", "h": 292 },
+    "camouflages": { "media": "vintage-vice-city-weapon-pattern-01", "h": 276 },
+    "munitions-speciales": { "media": "trailer-2-lucia-grenade-launcher", "h": 14 },
+    "conversion": { "media": "personalized-weapon-variants", "h": 196 },
+    "armurerie": { "media": "ptt-youngin-illegal-goods-store", "h": 306 }
+  }
+}

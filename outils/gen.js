@@ -34,6 +34,8 @@ const {schema:vehSchema}=require('./vehicules-schemas.cjs');
 const RED=require('./redaction.cjs');
 /* v7.43 (lot 6) : catégories de véhicules couvertes par au moins un poste de personnalisation (outils/catalogues/perso-vehicules.json) : lien « Personnaliser ce véhicule » vers la liste filtrée. */
 const PERSO_COVER=require('./catalogues.cjs').coverage('perso-vehicules');
+/* v7.73 (lot 3) : section « Personnaliser ce véhicule » de chaque fiche (postes du catalogue qui vont à sa catégorie, options, repères) */
+const PF=require('./perso-fiche.cjs');
 const VIDE_TXT='Schéma indicatif du modèle. Les visuels officiels détaillés arriveront avec le jeu.';
 const art=v=>vehSchema(v,90)||ART_ID[v.id]||ART_CAT[v.cat]||ART_CAT.sport||'';
 /* img/schemas/<id>.svg : le même schéma en fichier autonome, pour les pages qui chargent une image (top 10, véhicules rares) */
@@ -186,7 +188,7 @@ const pend=v=>{const t=PENDCAT[v.cat]||PENDCAT.divers;
 
 const MOD=fs.readFileSync('outils/templates/vehicle-reference.html','utf8');
 const HEADER=MOD.match(/<a class="skip"[\s\S]*?<main id="main">/)[0];
-const FOOTER=MOD.match(/<footer>[\s\S]*?<\/body>/)[0];
+const FOOTER=MOD.match(/<footer>[\s\S]*?<\/body>/)[0].replace(/(<script src="\.\.\/fiches\.js)/,'<script src="../perso-fiche.js" defer></script>\n$1'); // v7.73 : tableau « Personnaliser ce véhicule »
 const FAV=MOD.match(/<link rel="icon"[^>]*>/)[0];
 /* v7.50 (lot 3) : localisateur illustré (lieux liés au type du véhicule, jamais un emplacement inventé) et fiche
    documentaire (modèle commun : prix, achat, obtention, performances, capacités, coûts d’usage). */
@@ -289,7 +291,7 @@ ${HEADER}
         <div class="fiche-tags">
           ${tags}
         </div>
-        <div class="fiche-liens"><button type="button" class="own-bt" id="own-bt" data-id="${v.id}"${prixPub?` data-prix="${prixPub.value}" data-prix-statut="${prixPub.status}"`:''}><span class="ck"></span><span>Ajouter à mon garage</span></button><a href="../comparateur.html?type=vehicules&amp;ids=${v.id}">Comparer</a>${PERSO_COVER.has(v.cat)?'<a href="../personnalisations.html#perso-vehicules='+v.id+'">Personnaliser ce véhicule</a>':''}${v.reel?'<a href="#modele-reel">Le modèle réel</a>':''}${v.perso?'<a href="../personnages/'+v.perso+'.html">Véhicule de '+esc(PERSO_NOM[v.perso]||v.perso)+'</a>':''}</div>
+        <div class="fiche-liens"><button type="button" class="own-bt" id="own-bt" data-id="${v.id}"${prixPub?` data-prix="${prixPub.value}" data-prix-statut="${prixPub.status}"`:''}><span class="ck"></span><span>Ajouter à mon garage</span></button><a href="../comparateur.html?type=vehicules&amp;ids=${v.id}">Comparer</a>${PERSO_COVER.has(v.cat)?'<a href="#personnaliser">Personnaliser ce véhicule</a>':''}${v.reel?'<a href="#modele-reel">Le modèle réel</a>':''}${v.perso?'<a href="../personnages/'+v.perso+'.html">Véhicule de '+esc(PERSO_NOM[v.perso]||v.perso)+'</a>':''}</div>
       </div>
       <div class="fhero-art fhero-art--gal">
         <div class="gal" data-base="../img/vehicules/${v.id}" data-vues="${vues}" data-nom="${esc(nom)}" data-vide="${img?0:1}"${meds.length?` data-medias="${medAttr(v)}"`:''}
@@ -343,6 +345,7 @@ ${HEADER}
   <h2 class="sec-h">Sur la carte de Leonida</h2>
   <p class="fiche-txt rise">${esc(carteV(v).split('</p>')[0])}</p>${carteV(v).slice(carteV(v).indexOf('</p>')+4)}
 </section>
+${PF.persoSection('vehicules',{id:v.id,cat:v.cat,name:nomC(v)})}
 <section class="shell">
   ${note(v)}
 </section>

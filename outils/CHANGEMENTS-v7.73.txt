@@ -1,0 +1,117 @@
+LEONIDAKIT v7.73 — lot 3 : listes des catalogues en couleur et en mouvement, cartes illustrées, « Personnaliser ce véhicule /
+cette arme », grades des trophées cliquables, trophées dans la Progression — 8 octobre 2026
+
+Base : v7.72 (lot 2, commit d809ba4). Demande de Téva du 08/10/2026 (lot 3 sur 3). Rien n'est publié ni poussé.
+
+1. LISTES DES TROIS CATALOGUES (Consommables, Vêtements et style, Personnalisations)
+Téva : « les listes ne sont toujours pas belles, pas d'effet (on clique, ça apparaît directement), pas de visuel, plus de
+couleur ; "Voir la fiche" à droite, ça me plaît ». Les six listes (consommables, coiffures, tatouages, tenues, postes de
+personnalisation des véhicules et des armes) partagent le même moteur (outils/catalogues.cjs, acquisitions.css, catalogue.js) :
+- Un visuel officiel et une teinte par catégorie (outils/catalogues/visuels-categories.json, 52 catégories ; contrôlé par
+  catalogues.cjs : visuel connu, teinte 0-360). Une ligne sans visuel propre montre le visuel officiel de sa catégorie, voilé
+  de la teinte et marqué du pictogramme de la catégorie ; le titre et le texte de remplacement disent « illustration de la
+  catégorie, pas de l'objet ». Les lignes qui ont leur propre visuel officiel le gardent (le test v750 compte les deux).
+- Chaque ligne est une fiche en couleur : barre de la teinte à gauche, fond dégradé vers la teinte, pastille de catégorie
+  colorée, halo dans l'angle, vignette plus grande (128 × 88 px) ; « Fiche complète » reste à droite.
+- Entrée : à l'ouverture de la liste, les lignes de l'écran glissent de la gauche en cascade (80 ms par ligne, 720 ms au
+  plus, posé par catalogue.js avant que l'observateur commun ne les montre) ; plus bas, chacune entre au défilement.
+  Survol : la fiche se soulève (ombre de sa teinte), la vignette s'agrandit, le titre se souligne, le bouton se décolle.
+- La barre fermée de chaque liste : trois visuels officiels de ses catégories en éventail (ils s'écartent au survol), titre,
+  compteur et bouton « Ouvrir la liste ».
+- Mouvement réduit : tout est posé, rien ne bouge, ni au chargement, ni au survol.
+
+2. CONSOMMABLES, « EN UN REGARD » : DES CARTES ILLUSTRÉES (outils/gen-acquisitions.cjs, acquisitions.css)
+Téva : « 29 cartes moches, blanches, bleu pâle, sans visuel ». Chaque carte s'ouvre maintenant sur un visuel officiel : le
+sien quand la ligne en a un (étiquette « Visuel officiel »), sinon celui de sa catégorie voilé de la teinte (étiquette
+« Illustration · visuel officiel »). Le pictogramme chevauche l'image, le statut est posé dessus, le nom, la catégorie,
+la description, « Où » et les faits ne changent pas (la comparaison de consommables.js lit la même liste de définitions).
+Survol : l'image s'agrandit, le pictogramme pivote, la carte se soulève.
+
+3. « PERSONNALISER CE VÉHICULE » / « PERSONNALISER CETTE ARME » SUR CHAQUE FICHE
+Téva : « sur chaque véhicule et chaque arme, une catégorie personnalisation qui montre ce qui s'applique, avec prix, niveau
+requis… ; des sous-listes (couleur des jantes → bleu, vert, mauve, nacré…) ; une prémisse de la personnalisation du
+véhicule sur le site ». Rien n'est inventé pour GTA VI : tout vient des catalogues (perso-vehicules.json, perso-armes.json,
+sources déjà citées) et de la série, présenté comme repère.
+- outils/perso-fiche.cjs (nouveau) : les postes qui s'appliquent à un modèle (sa catégorie, ou l'arme nommée), la section
+  statique de chaque fiche (titre, résumé chiffré, une puce par atelier avec son compteur, lien sans script vers la liste
+  filtrée sur le modèle), et les données perso-data.js (window.LK_PERSO : ateliers, postes, options, repères numériques,
+  familles de teintes). outils/gen.js (302 fiches véhicules) et outils/gen-armes.cjs (27 fiches armes) insèrent la section
+  après « Sur la carte de Leonida » et chargent perso-fiche.js ; le lien « Personnaliser ce véhicule / cette arme » du
+  bandeau y mène (il allait à la liste).
+- outils/catalogues/perso-options.json (nouveau) : les sous-listes d'options et les conditions de déblocage, repères de la
+  série tirés des notes déjà sourcées des postes : finitions de peinture (classique 400 $ … chrome 1 200 $, GTA V), niveaux
+  moteur, freins, transmission, suspension, blindage (20 % 500 $ … 100 % 5 000 $), néons (disposition et treize couleurs),
+  phares de couleur, fumée des pneus, vitres, plaques, klaxons, aileron, traceur et assurance, bombes ; armes : teintes,
+  teintes et camouflages Mk II, freins de bouche, chargeur, silencieux, lampe, poignée, canon lourd, munitions traçantes,
+  conversion Mk II. Déblocages repères (GTA Online : niveaux gagnés en course, rang pour les teintes, conversion Mk II,
+  recherche du bunker, LS Car Meet, conversion de Benny's, crew Social Club). Les couleurs de peinture, de jantes et de
+  nacré sont montrées par familles de teintes de la palette de GTA V (noirs, gris et argents, rouges… onze familles), sans
+  reproduire la liste exacte des teintes. perso-fiche.cjs contrôle le fichier (poste connu, jeu repère, prix lisibles).
+- perso-fiche.js (nouveau) : charge perso-data.js quand la section approche de l'écran (ou au clic d'une puce), puis
+  dessine un groupe dépliable par atelier (visuel officiel de la catégorie, pictogramme, compteur ; le premier ouvert) et
+  une carte par poste : statut, description, « Prix GTA VI » (à venir / ne s'achète pas), « Repère de la série », « Niveau
+  requis » (GTA VI : à confirmer ; repère de déblocage), « Effet », sous-liste d'options (boutons radio, pastille de couleur,
+  prix repère), « Je le prends », « Voir dans la liste ». « Ma configuration » : les postes et options cochés s'additionnent
+  (« Repère de la série : de 1 250 à 4 000 $ · 2 sans prix relevé »), gardés sur l'appareil (clé lk_perso_v1, par modèle),
+  « Tout retirer », « Tout déplier / replier ». Une ligne d'honnêteté ouvre le tableau : les prix et les déblocages viennent
+  de GTA V ou de GTA Online, Rockstar n'a rien publié pour GTA VI.
+- Résumé statique par catégorie de véhicule (13) et d'arme (9) : « 48 postes de personnalisation s'appliquent à un véhicule
+  de la catégorie « Pick-up et tout-terrain » : 9 annoncés ou vus pour GTA VI, 39 repères de la série, 148 options en
+  sous-listes. » ; motos, bateaux, avions, hélicoptères, corps à corps, projectiles, armes spéciales : « Un seul poste …,
+  encore à confirmer ».
+- Dans la section Personnalisations, le modèle choisi (« Ton véhicule » / « Ton arme ») renvoie à sa fiche :
+  « Personnaliser sur sa fiche » (#personnaliser).
+- Les fiches véhicules et armes ne chargent perso-data.js (87 Ko, 15 Ko compressés) qu'à la demande.
+
+4. TROPHÉES : LES GRADES CLIQUABLES, ET LA PROGRESSION (outils/gen-trophees.cjs, outils/trophees/hub.json)
+- Téva : « rendre chaque grade cliquable, en squelette, avec ce qu'on attend pour obtenir le trophée ». Les cinq cartes
+  (Platine, Or, Argent, Bronze, Points Xbox) ouvrent une fiche squelette plein écran (mécanique lk-sections, déjà sur la
+  page) : badge, « Pour GTA VI » (rien n'est publié : ni nombre ni conditions ; la fiche Xbox annonce des succès), « Ce
+  qu'il faut, en général » (platine : tous les autres trophées du jeu de base ; or : 100 %, médailles d'or, rang élevé ;
+  argent : étapes marquantes ; bronze : premières fois, missions, collections partielles, manquables ; Xbox : points,
+  1 000 points par jeu complet en général), « Repère de GTA V » (« Los Santos Legend », « Career Criminal », « Solid Gold,
+  Baby! », « Above the Law », 1-3-5-42, six manquables selon PowerPyx, 77 succès pour 1 750 points), « Ce que dira chaque
+  trophée de ce grade » (squelette : nom officiel, condition, points Xbox, manquable ou caché, ta case), liens vers la liste
+  et la Progression. Sources : celles déjà citées par la section (PSNProfiles, TrueAchievements, PowerPyx, PSTHC).
+- Téva : « "Voir ma progression", mais les trophées ne sont pas dans la Progression ». progression.html : nouveau bloc
+  « Mes trophées et succès » (#trophees) entre « Mes carnets » et le calculateur : anneau, « 0 / ? trophées obtenus »,
+  compteurs par grade (0 / ?), « Voir les trophées », « Les quatre grades, et ce qu'il faut ». progression.js compte les
+  cases « Obtenu » de la page Trophées (clé lk-trophees-obtenus-v1) ; le total reste « ? » tant que la liste n'est pas
+  publiée (rien d'inventé ; les neuf carnets ne changent pas). Les liens « Ma progression » de la page Trophées visent ce
+  bloc.
+
+5. LANGUES
+- outils/langues/<en|es|it|de>/v773.json : ~370 textes par langue (listes, cartes, section et tableau des fiches, options,
+  déblocages, notes de repère, grades, bloc Progression). perso-data.js : listé dans « scriptsDonnees » (chaînes de la mémoire
+  traduites) et « scriptsEnPlus » (copié dans chaque langue, chargé par perso-fiche.js) ; les mots à double sens (Avant,
+  Arrière, Bas, Haut, Turbo, LSPD, Perseus, Boom, carabine, Rideout Customs) ont leur entrée propre au fichier
+  (« perso-data.js::… »). Extraction : 0 texte sans traduction, 0 repère cassé, 0 conflit.
+
+6. CONTRÔLES
+- outils/tests/v773.test.cjs (5 tests : visuels et teintes des catégories dans les six listes, cartes « en un regard »,
+  section et données de personnalisation sur les fiches (67 fiches lues), grades et bloc Progression, traductions dont
+  perso-data.js dans les quatre langues). Tests mis à jour : catalogues-v743 (lien du bandeau vers #personnaliser et
+  section présente), catalogues-v750 (photos propres et illustrations de catégorie comptées à part).
+- Résultats : voir la fin de ce fichier.
+
+RÉSULTATS DE LA LIVRAISON DU LOT 3 (8 octobre 2026)
+- node --test : 947 tests légers réussis sur 947 ; langues.test, coverage.test et calculateurs-check-ultime : 61/61.
+- Léo (leo-eval) : 512/512 bonnes pages ou intentions, 39/39 hors sujet refusés, 0 réponse sans source ; gen-leo --check
+  tenu (noyau inchangé, 327 662 octets sur 327 680).
+- Navigateur : langues-browser 2 267 contrôles, 0 échec ; calculateurs-check-ultime-browser 1 120/1 120 ; tuto-essayer
+  23/23 ; carnets 94/94 ; mots-coupes : 230 chargements, 0 mot coupé ; zoom-hauteur 56/56 ; contact tenu ; audit de
+  clôture sur les 18 pages du lot (listes, fiches véhicule et arme, trophées, progression, quatre langues ; 56 chargements,
+  sept largeurs) : 0 débordement, 0 grille bancale, 0 texte coupé, 0 élément resté invisible, 0 cible sous 24 px,
+  0 contraste insuffisant (20 862 vérifiés), 0 erreur console ni requête en échec, survols et fonctions tenus.
+- leo-browser : tout le fonctionnel tenu (IA simulée, mode local, clavier, 0 erreur console ou page, 0 débordement) ;
+  les seuils de vitesse (frappe < 300 ms, suggestion < 300 ms, processeur ralenti ×4) ne sont pas tenus sur la machine de
+  contrôle, devenue environ 2,5 fois plus lente après un redémarrage en cours de lot : la v7.72 inchangée, rejouée sur la
+  même machine, donne les mêmes temps (313 ms contre 169 ms avant le redémarrage). Rien de Léo n'a changé dans ce lot
+  (ni ses scripts, ni son index) ; à rejouer sur une machine normale.
+- outils/verifier.js : 315 760 références dans 2 241 pages, 0 erreur ; preuve-confidentialite : toutes les affirmations
+  des Mentions tenues.
+- Langues : 0 texte sans traduction, 0 repère cassé, 0 conflit ; perso-data.js : aucune chaîne française restée
+  identique dans les quatre langues (contrôle fichier par fichier).
+- Vérifié à l'écran (1 280 et 390 px, français et allemand) : listes des six catalogues ouvertes et fermées, cartes
+  « En un regard », tableau « Personnaliser » (groupe Peinture ouvert, option cochée, configuration), grades et fiche
+  « Or », bloc « Mes trophées et succès ».

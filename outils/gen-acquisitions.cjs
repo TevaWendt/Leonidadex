@@ -36,6 +36,10 @@ if(new Set(items.map(x=>x.id)).size!==items.length)throw Error('Identifiant dupl
 const services=source.services.map(x=>{const ref=ed.businesses.find(y=>y.id===x.ref);if(!ref)throw Error('Commerce inconnu : '+x.ref);return {...x,id:ref.id,name:ref.name,url:'/entreprises/'+ref.id+'.html',images:images(x.media),condition:'Service de l’Édition Ultimate · tarifs non publiés',evidenceLevel:1};});
 const variants=source.weaponVariants.map(id=>{const ref=weapons.find(x=>x.id===id);if(!ref)throw Error('Arme inconnue : '+id);return {id,name:ref.nom,url:'/armes/'+id+'.html'};});
 const payload={schemaVersion:source.schemaVersion,verifiedAt:source.verifiedAt,game:source.game,sources:source.sources,categories:source.categories,items,services,weaponVariants:variants};
+/* v7.73 (lot 3) : données du tableau « Personnaliser ce véhicule / cette arme » des fiches (perso-fiche.js) : postes, options,
+   repères ; textes déjà dans la page des personnalisations (mémoire de traduction), fichier listé dans outils/langues.json. */
+{const PF=require('./perso-fiche.cjs');const errs=PF.check();if(errs.length)throw Error(errs.join('\n'));
+ fs.writeFileSync(path.join(root,'perso-data.js'),'/* Généré par outils/gen-acquisitions.cjs (outils/perso-fiche.cjs) depuis outils/catalogues/perso-*.json et perso-options.json : repères de la série, jamais un prix GTA VI. */\nwindow.LK_PERSO = '+JSON.stringify(PF.persoData())+';\n');}
 fs.writeFileSync(path.join(root,'acquisitions-data.js'),'/* Généré par outils/gen-acquisitions.cjs depuis outils/acquisitions.json et les données canoniques existantes. */\nwindow.LK_ACQUISITIONS = '+JSON.stringify(payload,null,2)+';\n');
 const base=read('a-propos.html'),header=base.match(/<header>[\s\S]*?<\/header>/)[0].replace(/ class="here"/g,''),footer=base.match(/<footer>[\s\S]*?<\/footer>/)[0];
 const metaDesc=t=>{t=String(t||'').replace(/\s+/g,' ').trim();if(t.length<=158)return t;const ph=t.split(/(?<=[.!?])\s+/);let d='';for(const q of ph){if(d&&(d+' '+q).length>158)break;d=d?d+' '+q:q;}return d.length<=158&&d.length>=60?d:t.slice(0,155).replace(/\s+\S*$/,'')+'…';};
@@ -154,7 +158,7 @@ const GLANCE_ST={officiel:'Officiel',vu:'Vu dans un média',comm:'Identification
 /* v7.56 (lot 3, UI-02) : le statut d'une carte est le même badge (couleur, pictogramme, libellé) que dans la liste et la fiche. */
 function glancePip(st){const s=GLANCE_ST[st]?st:'conf';return '<span class="cg-st" title="'+esc('Statut : '+GLANCE_ST[s])+'">'+S.pip(s,true)+'</span>';}
 function glanceSection(num){
- const d=C.load().families.consommables,cats=new Map(d.categories.map(c=>[c.id,c]));
+ const L=C.load(),d=L.families.consommables,cats=new Map(d.categories.map(c=>[c.id,c]));
  const FD=require('./fiche-doc.cjs');
  const card=it=>{const cat=cats.get(it.categorie),e=it.effet||{},acc=FD.accessCell(it);const sante=typeof e.valeur==='number'&&e.unite==='sante';
   const rep=sante?(e.valeur+' % de vie dans '+e.jeu):(typeof e.valeur==='number'&&e.unite==='armure'?e.valeur+' % d’armure dans '+e.jeu:null);
@@ -169,7 +173,12 @@ function glanceSection(num){
      couleur de la catégorie, nom en grand, catégorie en petites capitales, statut à droite, description sur deux lignes, « Où »
      avec son repère, repère de la série en puce. Prix et effet, inconnus pour tous, restent dans la liste de définitions
      (classe cg-f--unk, cachée : la comparaison de consommables.js les lit toujours) ; la page le dit une fois, en tête. */
-  return '<article class="cg-card cg-cat-'+esc(it.categorie)+'" data-cg-id="'+esc(it.id)+'" data-cg-cat="'+esc(it.categorie)+'" style="view-transition-name:cg-'+esc(it.id)+'"><div class="cg-top"><span class="cg-ico" aria-hidden="true">'+S.icon(cat.icon)+'</span><div class="cg-head"><h4 class="cg-nom">'+esc(it.nom)+'</h4><span class="cg-cat">'+esc(cat.label)+'</span></div>'+glancePip(it.statut)+'</div>'
+  /* v7.73 (lot 3, Téva : « cartes blanches, sans visuel ») : chaque carte s'ouvre sur un visuel officiel — celui de la ligne quand
+     elle en a un, sinon celui de sa catégorie, voilé de la teinte de la catégorie et dit comme une illustration (pas l'objet). */
+  const own=it.media?L.ctx.medias[it.media]:null, cv=C.catVisual(cat);
+  const pic=own?(()=>{const v=own.variants.find(x=>x.w===480)||own.variants[0];return '<img src="'+esc(v.src.replace(/^\//,''))+'" width="'+v.w+'" height="'+v.h+'" alt="'+esc(own.alt||own.titre||it.nom)+'" loading="lazy" decoding="async">';})():cv?'<img src="'+esc(cv.src)+'" width="'+cv.w+'" height="'+cv.h+'" alt="'+esc('Illustration de la catégorie « '+cat.label+' »')+'" loading="lazy" decoding="async">':'';
+  const media=pic?'<div class="cg-media'+(own?' cg-media--own':' cg-media--cat')+'"'+(own?'':' title="Visuel officiel : illustration de la catégorie, pas de l’objet"')+'>'+pic+'<span class="cg-media-l">'+(own?'Visuel officiel':'Illustration · visuel officiel')+'</span></div>':'';
+  return '<article class="cg-card cg-cat-'+esc(it.categorie)+'" data-cg-id="'+esc(it.id)+'" data-cg-cat="'+esc(it.categorie)+'" style="view-transition-name:cg-'+esc(it.id)+(typeof cat.teinte==='number'?';--ch:'+cat.teinte:'')+'">'+media+'<div class="cg-top"><span class="cg-ico" aria-hidden="true">'+S.icon(cat.icon)+'</span><div class="cg-head"><h4 class="cg-nom">'+esc(it.nom)+'</h4><span class="cg-cat">'+esc(cat.label)+'</span></div>'+glancePip(it.statut)+'</div>'
    +'<div class="cg-body">'+(it.description?'<p class="cg-desc">'+esc(it.description)+'</p>':'')+'<dl class="cg-facts">'
    +'<div class="cg-f-ou"><dt>Où</dt><dd>'+esc(where||'Emplacement à venir')+'</dd></div>'
    +'<div class="cg-f-use cg-f--unk"><dt>À quoi ça sert</dt><dd>'+esc(cat.id==='protection'?'Encaisser les coups':cat.id==='soins'?'Se soigner':'Manger ou boire pour récupérer')+'</dd></div>'
@@ -178,8 +187,9 @@ function glanceSection(num){
    +'<p class="cg-actions"><a class="cg-link" href="#'+esc('consommables-'+it.id)+'">Fiche complète</a><label class="cg-cmp" hidden><input type="checkbox" data-cg-cmp="'+esc(it.id)+'"> Comparer</label></p></div></article>';};
  /* v7.69 : filtre par catégorie (boutons radio, sans script : acquisitions.css masque les autres cartes avec :has) */
  const tracked=d.items.filter(it=>it.suivi!==false),cnt=c=>tracked.filter(it=>it.categorie===c).length;
- const filter='<fieldset class="cg-filter" data-lk-vt><legend class="sr-only">Filtrer les consommables par catégorie</legend><input type="radio" name="cg-f" id="cg-f-tout" value="tout" checked><label for="cg-f-tout">Tout <span class="cg-n">'+tracked.length+'</span></label>'
-  +d.categories.filter(c=>cnt(c.id)).map(c=>'<input type="radio" name="cg-f" id="cg-f-'+esc(c.id)+'" value="'+esc(c.id)+'"><label class="cg-cat-'+esc(c.id)+'" for="cg-f-'+esc(c.id)+'"><span class="cg-f-ico" aria-hidden="true">'+S.icon(c.icon)+'</span>'+esc(c.label)+' <span class="cg-n">'+cnt(c.id)+'</span></label>').join('')+'</fieldset>';
+ /* v7.73 : le bouton radio vit dans son libellé (la cible tactile est le libellé entier ; l'audit ne compte plus une case de 1 px) */
+ const filter='<fieldset class="cg-filter" data-lk-vt><legend class="sr-only">Filtrer les consommables par catégorie</legend><label class="cg-f-tout"><input type="radio" name="cg-f" id="cg-f-tout" value="tout" checked>Tout <span class="cg-n">'+tracked.length+'</span></label>'
+  +d.categories.filter(c=>cnt(c.id)).map(c=>'<label class="cg-cat-'+esc(c.id)+'"><input type="radio" name="cg-f" id="cg-f-'+esc(c.id)+'" value="'+esc(c.id)+'"><span class="cg-f-ico" aria-hidden="true">'+S.icon(c.icon)+'</span>'+esc(c.label)+' <span class="cg-n">'+cnt(c.id)+'</span></label>').join('')+'</fieldset>';
  const groups=NEED.map(n=>{const RANK={officiel:0,vu:1,comm:2,conf:3,serie:4},list=d.items.filter(it=>n.cats.includes(it.categorie)&&it.suivi!==false).sort((a,b)=>(RANK[a.statut]??5)-(RANK[b.statut]??5)||a.nom.localeCompare(b.nom,'fr'));return '<div class="cg-group" id="besoin-'+n.id+'"><h3 class="ed-h3"><span class="cg-need-ico" aria-hidden="true">'+S.icon(n.icon)+'</span>'+esc(n.titre)+' <small>'+list.length+'</small></h3><div class="cg-grid">'+list.map(card).join('')+'</div></div>';}).join('');
  return S.section({id:'en-un-regard',num,kicker:'Comparer',title:'En un regard',icon:'loupe',tone:'paper',accent:'amber',lede:esc('À quoi sert chaque consommable, où en trouver, et ce qu’on en sait. Rockstar n’a publié ni prix ni effet chiffré pour GTA VI : aucune carte n’en invente, et le repère d’un autre jeu est écrit à part.')},
   '<p class="cg-legend"><span>'+S.icon('kit-de-soin')+' Récupérer</span><span>'+S.icon('gilet-pare-balles')+' Se protéger</span>'+['officiel','vu','comm','conf','serie'].filter(st=>d.items.some(it=>it.suivi!==false&&(GLANCE_ST[it.statut]?it.statut:'conf')===st)).map(st=>'<span>'+S.pip(st,true)+'</span>').join('')+'</p>'

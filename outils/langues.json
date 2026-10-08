@@ -53,7 +53,8 @@
     "leo-calculator.js",
     "calculateurs-engine.js",
     "lk-ia.js",
-    "lk-micro.js"
+    "lk-micro.js",
+   "perso-data.js"
    ]
   },
   {
@@ -85,7 +86,8 @@
     "leo-calculator.js",
     "calculateurs-engine.js",
     "lk-ia.js",
-    "lk-micro.js"
+    "lk-micro.js",
+   "perso-data.js"
    ]
   },
   {
@@ -118,7 +120,8 @@
     "leo-calculator.js",
     "calculateurs-engine.js",
     "lk-ia.js",
-    "lk-micro.js"
+    "lk-micro.js",
+   "perso-data.js"
    ]
   },
   {
@@ -150,7 +153,8 @@
     "leo-calculator.js",
     "calculateurs-engine.js",
     "lk-ia.js",
-    "lk-micro.js"
+    "lk-micro.js",
+   "perso-data.js"
    ],
    "motsCodeGardes": true
   },
@@ -247,6 +251,7 @@
   "vehicules-data.js",
   "armes-data.js",
   "acquisitions-data.js",
+  "perso-data.js",
   "calculateurs-catalogue.js",
   "calculateurs-activites.js"
  ],

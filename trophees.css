@@ -36,10 +36,26 @@
 .trophees-badge--argent{background:radial-gradient(circle at 35% 30%,#f4f5f7,var(--trophees-argent) 70%);}
 .trophees-badge--bronze{background:radial-gradient(circle at 35% 30%,#efc19c,var(--trophees-bronze) 70%);}
 .trophees-badge--xbox{border-radius:12px;background:var(--night);color:var(--paper);}
+/* v7.73 : chaque grade est une carte cliquable (fiche squelette plein écran, lk-sections) : badge à gauche, texte, « Voir ce qu'il faut » */
 .trophees-grades-l{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr));gap:12px;}
-.trophees-grades-l li{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border:2px solid var(--ink);border-radius:var(--radius-s);background:var(--paper);}
-.trophees-grades-l b{display:block;font-size:1.02rem;}
-.trophees-grades-l span{font-size:.9rem;color:var(--ink-soft);}
+.trophees-grades-l.lkx-cards{grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin:0;}
+.trophees-grades-l li{display:flex;flex-direction:column;padding:0;border:0;background:none;}
+.trophees-grades-l .lkx-det{flex:1;display:block;}
+.trophees-grades-l .lkx-det>summary{display:flex;height:100%;}
+.trophees-grades-l .trophees-grade-card{flex:1;flex-direction:row;align-items:flex-start;gap:12px;padding:12px 14px;border-radius:var(--radius-s);}
+.trophees-grades-l .trophees-grade-card>.trophees-badge{flex:none;}
+.trophees-grades-l .trophees-grade-card .lkx-card-body{padding:0;gap:4px;}
+.trophees-grades-l .trophees-grade-card .lkx-card-body b{display:block;font-size:1.02rem;}
+.trophees-grades-l .trophees-grade-card .lkx-card-body>span{font-size:.9rem;color:var(--ink-soft);}
+.trophees-grades-l .trophees-grade-card .lkx-card-go{margin-top:auto;padding-top:6px;}
+.trophees-grade-card--platine{background:linear-gradient(135deg,#fff,#eef3f7);} .trophees-grade-card--or{background:linear-gradient(135deg,#fff,#fff3d6);} .trophees-grade-card--argent{background:linear-gradient(135deg,#fff,#f1f1f1);} .trophees-grade-card--bronze{background:linear-gradient(135deg,#fff,#f6e6da);} .trophees-grade-card--xbox{background:linear-gradient(135deg,#fff,#ece7f6);}
+.trophees-podium--un{justify-content:center;padding:0;}
+.lkx-sheet-fig--ico .trophees-podium--un .trophees-badge{width:150px;height:150px;}
+.lkx-sheet-fig--ico .trophees-podium--un .trophees-badge svg{width:74px;height:74px;}
+.trophees-repere{padding:10px 12px;border-left:4px solid #1f6b6b;background:#e8f3f3;border-radius:0 8px 8px 0;}
+@media(max-width:1100px){.trophees-grades-l.lkx-cards{grid-template-columns:repeat(3,minmax(0,1fr));}}
+@media(max-width:700px){.trophees-grades-l.lkx-cards{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media(max-width:460px){.trophees-grades-l.lkx-cards{grid-template-columns:1fr;}}
 
 /* ---------- GTA V, pour comparer ---------- */
 .trophees-v{display:inline-flex;align-items:center;padding:2px 10px;border-radius:999px;background:var(--night);color:var(--paper);font:700 .72rem/1.4 var(--font-mono);letter-spacing:.06em;text-transform:uppercase;}
@@ -163,7 +179,7 @@
 .trophees-chiffres:has(>:last-child:nth-child(4)){grid-template-columns:repeat(auto-fit,minmax(clamp(calc((100% - 42px)/4 - 1px),calc((762px - 100%)*999),clamp(calc((100% - 14px)/2 - 1px),calc((374px - 100%)*999),100%)),1fr));}
 .trophees-champs:has(>:last-child:nth-child(6)){grid-template-columns:repeat(auto-fit,minmax(max(min(100%,230px),calc((100% - 20px)/3 - 1px)),1fr));}
 /* 5 grades : 5 sur une rangée, sinon 3 puis 2 centrés, 1 par rangée sur téléphone */
-@media(min-width:601px) and (max-width:1240px){.trophees-grades-l:has(>:last-child:nth-child(5)){grid-template-columns:repeat(6,minmax(0,1fr));}.trophees-grades-l:has(>:last-child:nth-child(5))>li{grid-column:span 2;}.trophees-grades-l:has(>:last-child:nth-child(5))>li:nth-child(4){grid-column:2/span 2;}}
+@media(min-width:601px) and (max-width:1240px){.trophees-grades-l:not(.lkx-cards):has(>:last-child:nth-child(5)){grid-template-columns:repeat(6,minmax(0,1fr));}.trophees-grades-l:not(.lkx-cards):has(>:last-child:nth-child(5))>li{grid-column:span 2;}.trophees-grades-l:not(.lkx-cards):has(>:last-child:nth-child(5))>li:nth-child(4){grid-column:2/span 2;}}
 
 /* v7.70 : tableau de bord en attente (la liste n'est pas publiée) : anneau à zéro et compteurs par grade sur fond nuit, squelette
    de la liste en face ; les lignes fantômes scintillent doucement et les badges arrivent un à un (lkx-unlock). */

@@ -83,6 +83,14 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
        ce qui est déjà à l'écran est montré sans attente ; boîte fermée : aucune mesure (les lignes ne sont pas affichées, et
        mesurer 237 lignes avant la première peinture coûtait ~0,5 s de mise en page sur un processeur lent). */
     if (motion) { rows.forEach(r => r.classList.add('lk-reveal')); motion.observe(rows, { initial: box.open }); }
+    /* v7.73 (lot 3, Téva : « on clique, ça apparaît directement ») : à l'ouverture de la liste, les lignes de l'écran entrent en
+       cascade marquée (80 ms par ligne, 720 ms au plus) : le délai est posé ici avant que l'observateur commun ne les montre ;
+       les lignes plus bas gardent leur entrée au défilement. Mouvement réduit : le moteur commun ne bouge rien. */
+    if (motion && !reduced.matches) box.addEventListener('toggle', () => {
+      if (!box.open) return;
+      let i = 0;
+      rows.forEach(r => { if (r.hidden || r.classList.contains('is-in')) return; r.style.setProperty('--lk-delay', Math.min(i * 80, 720) + 'ms'); r.dataset.lkStagger = '1'; i++; if (i >= 12) r.dataset.lkStagger = '0'; });
+    });
     function apply(cause) {
       const needle = fold(state.q), tag = state.tag ? ' ' + state.tag + ' ' : '';
       let shown = 0; const revealed = [];
@@ -100,7 +108,8 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
         if (state.item) {
           pickName.textContent = state.item.name;
           pickMeta.textContent = (state.item.label ? state.item.label + ' · ' : '') + nf.format(shown) + ' ' + (lkPluriel(shown) ? 'matching options' : 'matching option');
-          if (pickFiche && state.item.url) pickFiche.setAttribute('href', state.item.url);
+          /* v7.73 : la fiche du modèle a sa section « Personnaliser » (tableau des postes, options, configuration) */
+          if (pickFiche && state.item.url) pickFiche.setAttribute('href', state.item.url + '#personnaliser');
           if (!was && canAnimate()) pickCard.animate([{ opacity: 0, transform: 'translate3d(0,8px,0) scale(.98)' }, { opacity: 1, transform: 'none' }], { duration: 280, easing: 'cubic-bezier(.2,.7,.2,1)' });
         }
       }

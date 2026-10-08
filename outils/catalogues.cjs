@@ -78,6 +78,7 @@ function site() {
 }
 
 /* Charge et valide toutes les familles. Renvoie {schema, sources, families:{id → données}, all:[…items avec famille]}. */
+const VISUELS = JSON.parse(fs.readFileSync(path.join(DIR, 'visuels-categories.json'), 'utf8'));
 function load(options = {}) {
   if (cache && !options.fresh) return cache;
   const schema = JSON.parse(fs.readFileSync(path.join(DIR, 'schema.json'), 'utf8'));
@@ -140,6 +141,16 @@ function load(options = {}) {
         if (it.suivi !== false) errors.push(at + ' : une ligne reliée à une acquisition porte suivi false (sa case est celle de la carte)');
       }
       all.push({ ...it, famille: fam });
+    }
+    /* v7.73 (lot 3) : un visuel officiel et une teinte par catégorie (outils/catalogues/visuels-categories.json), pour les
+       lignes sans visuel propre, les cartes « en un regard » et les fiches des véhicules et des armes. */
+    const vis = VISUELS[fam] || {};
+    for (const c of data.categories || []) {
+      const v = vis[c.id];
+      if (!v) { errors.push(fam + ' : catégorie « ' + c.id + ' » sans visuel de catégorie (visuels-categories.json)'); continue; }
+      if (!ctx.medias[v.media]) errors.push(fam + ' : visuel de catégorie inconnu « ' + v.media + ' » (' + c.id + ')');
+      if (!(v.h >= 0 && v.h <= 360)) errors.push(fam + ' : teinte de catégorie illisible (' + c.id + ')');
+      c.visuel = v.media; c.teinte = v.h;
     }
     families[fam] = data;
   }
@@ -221,7 +232,17 @@ const FD = require('./fiche-doc.cjs');
 /* v7.56 (lot 3, UI-01) : la vignette garde l'adresse de la grande version (data-big) pour la fiche paysage ouverte par catalogue.js. */
 function thumb(it, cat, media) {
   if (media) { const v = media.variants.find(x => x.w === 480) || media.variants[0], big = media.variants.find(x => x.w === 1280); return '<span class="cat-thumb"><img src="' + esc(v.src.replace(/^\//, '')) + '" width="' + v.w + '" height="' + v.h + '" alt="' + esc(media.alt || media.titre || it.nom) + '" loading="lazy" decoding="async"' + (big ? ' data-big="' + esc(big.src.replace(/^\//, '')) + '"' : '') + '></span>'; }
+  /* v7.73 (lot 3) : sans visuel propre, la ligne montre le visuel officiel de sa catégorie, voilé de la teinte de la catégorie et
+     marqué de son pictogramme ; le titre et le texte de remplacement disent que c'est une illustration, pas l'objet. */
+  const cv = catVisual(cat);
+  if (cv) return '<span class="cat-thumb cat-thumb--cat" title="Visuel officiel : illustration de la catégorie, pas de l’objet"><img src="' + esc(cv.src) + '" width="' + cv.w + '" height="' + cv.h + '" alt="' + esc('Illustration de la catégorie « ' + cat.label + ' »') + '" loading="lazy" decoding="async"><span class="cat-thumb-badge" aria-hidden="true">' + S.icon(cat.icon, 'cat-thumb-ico') + '</span></span>';
   return '<span class="cat-thumb cat-thumb--ico" title="Pictogramme de la catégorie, pas un visuel de l’objet">' + S.icon(cat.icon, 'cat-thumb-ico') + '</span>';
+}
+/* visuel officiel d'une catégorie (480 px, sans la barre oblique initiale : les pages des catalogues sont à la racine) */
+function catVisual(cat) {
+  const m = cat && cat.visuel ? load().ctx.medias[cat.visuel] : null; if (!m) return null;
+  const v = m.variants.find(x => x.w === 480) || m.variants[0], big = m.variants.find(x => x.w === 1280) || v;
+  return { id: cat.visuel, src: v.src.replace(/^\//, ''), w: v.w, h: v.h, big: big.src.replace(/^\//, ''), titre: m.titre || cat.visuel, credit: m.credit || '' };
 }
 /* v7.56 (lot 3, UI-01) : la fiche complète reste une boîte details/summary (lisible sans script, repli de secours) ; avec
    script, catalogue.js ouvre son contenu (.cat-fiche-body) dans une fiche paysage commune (<dialog class="cat-dlg">) :
@@ -247,7 +268,7 @@ function row(fam, it, cat, sources) {
   const srcLinks = it.sources.map((id, i) => '<a href="#src-' + esc(id) + '" class="cat-src" aria-label="Source : ' + esc(sources[id].title) + '">source' + (it.sources.length > 1 ? ' ' + (i + 1) : '') + '</a>').join(' ');
   const q = fold([it.nom, it.description, cat.label, it.effet.texte, ...(it.variantes || []), ...it.ou_le_trouver.map(o => o.lieu ? place(o.lieu).name : o.type), PERSON[it.personnage] || '', ...compatWords(it)].join(' '));
   const rep = repereText(it.prix_repere_serie), repV = repereValue(it.prix_repere_serie), compat = compatOf(it), folded = FOLDED.has(fam);
-  return '<tr class="cat-row" id="' + esc(rowId(fam, it)) + '" data-cat="' + esc(it.categorie) + '" data-st="' + esc(it.statut) + '" data-ci="' + ci + '"' + (cat.groupe ? ' data-group="' + esc(cat.groupe) + '"' : '') + (it.personnage ? ' data-who="' + esc(it.personnage) + '"' : '') + ' data-nom="' + esc(fold(it.nom)) + '"' + (repV !== null ? ' data-prix="' + repV + '"' : '') + compat.attrs + ' data-q="' + esc(q) + '">'
+  return '<tr class="cat-row" id="' + esc(rowId(fam, it)) + '" data-cat="' + esc(it.categorie) + '" data-st="' + esc(it.statut) + '" data-ci="' + ci + '"' + (typeof cat.teinte === 'number' ? ' style="--ch:' + cat.teinte + '"' : '') + (cat.groupe ? ' data-group="' + esc(cat.groupe) + '"' : '') + (it.personnage ? ' data-who="' + esc(it.personnage) + '"' : '') + ' data-nom="' + esc(fold(it.nom)) + '"' + (repV !== null ? ' data-prix="' + repV + '"' : '') + compat.attrs + ' data-q="' + esc(q) + '">'
     + '<td class="cat-c-st" data-l="Statut">' + S.pip(it.statut, true) + '</td>'
     /* v7.70 : l'identité de la ligne (vignette, nom, catégorie, pour qui) forme un bloc .cat-id, placé par acquisitions.css
        (chaque ligne est une fiche aérée : identité, statut et suivi en haut ; faits ; description ; sources et actions). */
@@ -298,12 +319,18 @@ function pickBlock(fam) {
     + '<datalist id="pick-' + esc(fam) + '">' + opts + '</datalist>'
     + '<p class="cat-pick-hint">' + esc(P.hint) + '</p></div>'
     + '<div class="cat-pick-card" data-cat-pick-card hidden><span class="cat-pick-badge" aria-hidden="true">' + S.icon(P.icon, 'cat-pick-badge-i') + '</span><div class="cat-pick-txt"><p class="cat-pick-name" data-cat-pick-name></p><p class="cat-pick-meta" data-cat-pick-meta role="status" aria-live="polite"></p></div>'
-    + '<a class="cat-pick-fiche" data-cat-pick-fiche href="' + esc(fam === 'perso-armes' ? 'armes.html' : 'vehicules.html') + '">Voir sa fiche</a><button type="button" class="cat-pick-clear" data-cat-pick-clear>' + esc(P.clear) + '</button></div></div>';
+    + '<a class="cat-pick-fiche" data-cat-pick-fiche href="' + esc(fam === 'perso-armes' ? 'armes.html' : 'vehicules.html') + '">Personnaliser sur sa fiche</a><button type="button" class="cat-pick-clear" data-cat-pick-clear>' + esc(P.clear) + '</button></div></div>';
 }
 /* v7.69 : « Pour qui ? » sur les listes qui savent qui porte quoi (tatouages, coiffures, tenues) : Jason, Lucia ou tout */
 function whoSwitch(fam) {
   const d = load(); if (!d.families[fam].items.some(it => it.personnage)) return '';
   return '<div class="cat-who-sw" role="group" aria-label="Pour qui ?"><span class="cat-who-t">Pour qui ?</span><button type="button" data-cat-who="" aria-pressed="true">Tout</button><button type="button" data-cat-who="jason" aria-pressed="false">Vu sur Jason</button><button type="button" data-cat-who="lucia" aria-pressed="false">Vu sur Lucia</button></div>';
+}
+/* v7.73 (lot 3) : la barre fermée de chaque liste montre trois visuels officiels de ses catégories en éventail (décoratifs) */
+function sumPile(data) {
+  const seen = new Set(), out = [];
+  for (const c of data.categories) { const v = catVisual(c); if (!v || seen.has(v.id)) continue; seen.add(v.id); out.push('<img src="' + esc(v.src) + '" width="' + v.w + '" height="' + v.h + '" alt="" loading="lazy" decoding="async">'); if (out.length === 3) break; }
+  return out.join('');
 }
 function listBox(fam, opts = {}) {
   const d = load(), data = d.families[fam], c = counts(fam), cats = new Map(data.categories.map(x => [x.id, x]));
@@ -316,7 +343,7 @@ function listBox(fam, opts = {}) {
   const chips = groups.length ? '<div class="cat-groups" role="group" aria-label="Filtrer par groupe">' + groups.map(g => '<button type="button" class="cat-chip" data-cat-group="' + esc(g) + '" id="' + esc(g === 'accessoires' ? 'accessoires' : fam + '-' + g) + '">' + esc({ vetements: 'Vêtements', accessoires: 'Accessoires', vehicules: 'Véhicules', armes: 'Armes' }[g] || g) + '</button>').join('') + '</div>' : '';
   const tags = compatLabels(fam);
   return pickBlock(fam) + '<details class="cat-box" id="' + esc('box-' + fam) + '" data-catalogue="' + esc(fam) + '"' + (Object.keys(tags).length ? ' data-cat-tags="' + esc(JSON.stringify(tags)) + '"' : '') + (FOLDED.has(fam) ? ' data-cat-desc="fold"' : '') + (opts.open ? ' open' : '') + '>'
-    + '<summary class="cat-sum"><span class="cat-sum-t">' + esc(data.titre) + '</span><span class="cat-sum-n"><b>' + c.n + '</b> ' + esc(NOUN[fam] || '') + 'référencés · <b>' + c.confirmes + '</b> confirmés pour GTA VI · ' + c.serie + ' repères de la série</span><span class="cat-chev" aria-hidden="true"></span></summary>'
+    + '<summary class="cat-sum"><span class="cat-sum-pile" aria-hidden="true">' + sumPile(data) + '</span><span class="cat-sum-txt"><span class="cat-sum-t">' + esc(data.titre) + '</span><span class="cat-sum-n"><b>' + c.n + '</b> ' + esc(NOUN[fam] || '') + 'référencés · <b>' + c.confirmes + '</b> confirmés pour GTA VI · ' + c.serie + ' repères de la série</span></span><span class="cat-sum-open">Ouvrir la liste</span><span class="cat-chev" aria-hidden="true"></span></summary>'
     + '<div class="cat-body">'
     + (Object.keys(tags).length ? '<p class="cat-filter" data-cat-filter hidden><span>Filtré pour :</span> <b data-cat-filter-label></b> <button type="button" class="cat-reset" data-cat-reset>Tout afficher</button></p>' : '')
     + '<div class="cat-track" data-track-bar="' + esc(fam) + '"><span class="cat-track-l">' + esc(data.suivi.label) + ' :</span> <b>0</b> <span class="cat-track-sep">/</span> <span class="own-total">' + c.suivis + '</span> ' + esc(data.suivi.fait) + '<progress max="' + c.suivis + '" value="0" aria-label="' + esc(data.suivi.label) + '"></progress><a class="cat-track-link" href="' + esc(require('./carnets-source.cjs').carnetHref(fam)) + '">' + esc(require('./carnets-source.cjs').carnetOf(fam).bouton) + '</a></div>'
@@ -367,5 +394,5 @@ function placesOf(fams) {
   for (const fam of fams) for (const it of d.families[fam].items) for (const o of it.ou_le_trouver) if (o.lieu) ids.add(o.lieu);
   return [...ids].map(place);
 }
-module.exports = { FAMILIES, STATUS_ORDER, KIND, VEH_CATS, ARM_CATS, FOLDED, KEY, load, check, counts, counterText, listBox, row, rowId, ldItemList, searchEntries, leoRows, progressIds, progressNames, sourcesOf, placesOf, place, repereText, trackable, sortItems, compatLabels, coverage };
+module.exports = { catVisual, FAMILIES, STATUS_ORDER, KIND, VEH_CATS, ARM_CATS, FOLDED, KEY, load, check, counts, counterText, listBox, row, rowId, ldItemList, searchEntries, leoRows, progressIds, progressNames, sourcesOf, placesOf, place, repereText, trackable, sortItems, compatLabels, coverage };
 if (require.main === module) { const d = load({ fresh: true }); for (const fam of FAMILIES) { const c = counts(fam); console.log(fam + ' : ' + counterText(fam) + ' (officiel ' + c.officiel + ', vu ' + c.vu + ', comm ' + c.comm + ', série ' + c.serie + ', à confirmer ' + c.conf + ', suivis ' + c.suivis + ')'); } }

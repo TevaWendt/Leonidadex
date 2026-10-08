@@ -72,7 +72,7 @@ test('trophees.html : ce qu’on sait, grades dessinés, GTA V pour comparer, su
   assert.equal(d.querySelectorAll('h1').length, 1);
   assert.ok(d.querySelector('meta[name="description"]').content.length <= 160);
   for (const id of ['etat', 'grades', 'gtav', 'liste']) assert.ok(d.getElementById(id), id);
-  assert.equal(d.querySelectorAll('#grades .trophees-badge').length, 5);
+  assert.equal(d.querySelectorAll('#grades summary .trophees-badge').length, 5); /* v7.73 : chaque grade est une carte cliquable, son badge est aussi dans sa fiche */
   for (const b of d.querySelectorAll('.trophees-badge')) assert.equal(b.getAttribute('aria-hidden'), 'true');
   assert.equal(d.querySelectorAll('#gtav .trophees-chiffre').length, 4);
   for (const v of d.querySelectorAll('#gtav .trophees-chiffre .trophees-v')) assert.equal(v.textContent, 'GTA V');

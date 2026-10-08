@@ -222,6 +222,20 @@ function attente(LI) {
     + '<ul class="trophees-att-grades" aria-label="Trophées par grade">' + GRADES.map(grade).join('') + '</ul></div>'
     + '<div class="trophees-att-skel"><p class="trophees-att-vide">' + esc(LI.vide) + '</p><ol class="trophees-ghosts">' + ['platine', 'or', 'argent', 'bronze'].map(ghost).join('') + '</ol></div></div>';
 }
+/* v7.73 (lot 3, Téva) : chaque grade est une carte cliquable qui ouvre, en plein écran, sa fiche squelette : ce qu'il faut en
+   général pour obtenir un trophée de ce grade (repères de GTA V et règles des consoles, sourcés dans la section), rien pour
+   GTA VI, et ce que dira chaque trophée de ce grade. Sans script : la fiche se déplie sous la carte. */
+function gradeSheet(GR, x) {
+  const F = x.fiche || {}, badge = badgeHtml(x.grade).replace('<span class="trophees-sceau">' + SCEAU + '</span>', '');
+  const summary = '<span class="lkx-card lkx-tilt trophees-grade-card trophees-grade-card--' + esc(x.grade) + '">' + badge + '<span class="lkx-card-body"><b>' + esc(x.label) + '</b><span>' + esc(x.texte) + '</span><span class="lkx-card-go">' + esc(GR.go) + '</span></span></span>';
+  const body = '<p>' + esc(x.texte) + '</p>'
+    + '<h4>' + esc(GR.h.vi) + '</h4><p class="lkx-sheet-vide">' + esc(x.grade === 'xbox' ? GR.viXbox : GR.vi) + '</p>'
+    + '<h4>' + esc(GR.h.attendu) + '</h4><p>' + esc(F.attendu || '') + '</p>'
+    + '<h4>' + esc(GR.h.repere) + '</h4><p class="trophees-repere"><span class="trophees-v">GTA V</span> ' + esc(F.repere || '') + '</p>'
+    + '<h4>' + esc(GR.h.champs) + '</h4>' + LKX.skel(GR.champs, GR.sortie)
+    + '<div class="lkx-sheet-cta"><a class="lkx-btn" href="#liste">Ma liste et mon suivi</a><a class="lkx-btn lkx-btn--ghost" href="progression.html#trophees">Ma progression</a></div>';
+  return LKX.sheet({ id: 'grade-' + x.grade, cls: 'trophees-grade-det', summary, icon: '<div class="trophees-podium trophees-podium--un">' + badgeHtml(x.grade) + '</div>', kicker: esc(GR.kicker) + ' · <span>' + esc(GR.kickerFiche) + '</span>', title: x.label, body });
+}
 /* aperçu d’une fiche trophée : une carte qui ouvre, en plein écran, le squelette de chaque fiche (rien d’inventé : la liste
    n’est pas publiée) */
 function apercu(LI) {
@@ -234,7 +248,7 @@ function apercu(LI) {
     + (X.items.length ? '<h4>' + esc(X.titre) + '</h4><ol class="trophees-exs">' + X.items.map(row).join('') + '</ol>' : '')
     + '<p class="lkx-sheet-vide">' + esc(LI.vide) + '</p>'
     + '<h4>' + esc(LI.champsTitre) + '</h4>' + LKX.skel(LI.champs, LI.sortie) + '<p class="trophees-note">' + esc(LI.note) + '</p>'
-    + '<div class="lkx-sheet-cta"><a class="lkx-btn" href="progression.html">Ma progression</a><a class="lkx-btn lkx-btn--ghost" href="collectibles.html">Les collectibles</a></div>';
+    + '<div class="lkx-sheet-cta"><a class="lkx-btn" href="progression.html#trophees">Ma progression</a><a class="lkx-btn lkx-btn--ghost" href="collectibles.html">Les collectibles</a></div>';
   return '<div class="lkx-cards lkx-cards--solo lkx-unlock lk-arrive" data-lkx-in>' + LKX.sheet({ id: 'apercu-fiche', cls: 'trophees-apercu', summary, icon: '<div class="trophees-podium">' + badgeHtml('or') + badgeHtml('platine') + badgeHtml('argent') + badgeHtml('bronze') + '</div>', kicker: esc(LI.kicker) + ' · <span>' + esc(LI.apercuK) + '</span>', title: LI.apercuT, body }) + '</div>';
 }
 function hubPage(ctx) {
@@ -245,7 +259,7 @@ function hubPage(ctx) {
     + '<div class="trophees-statut rise"><span class="trophees-statut-ico" aria-hidden="true">' + S.icon('sablier') + '</span><div><p class="trophees-statut-date">' + esc(E.carte.date) + '</p><h3>' + esc(E.carte.titre) + '</h3><p>' + esc(E.carte.texte) + '</p><p>' + st(E.carte.statut, E.carte.sources) + '</p></div></div>'
     + '<div class="trophees-faits lkx-unlock lk-arrive" data-lkx-in>' + E.faits.map(fait).join('') + '</div></section>';
   const grades = '<section class="shell trophees-grades" id="grades" aria-labelledby="grades-t"><div class="reveal"><p class="trophees-kicker">' + esc(GR.kicker) + '</p><h2 class="sec-h" id="grades-t">' + esc(GR.titre) + '</h2><p class="trophees-lede">' + esc(GR.lede) + '</p></div>'
-    + '<ul class="trophees-grades-l lkx-unlock lk-arrive" data-lkx-in>' + GR.items.map(x => '<li>' + badgeHtml(x.grade).replace('<span class="trophees-sceau">' + SCEAU + '</span>', '') + '<div><b>' + esc(x.label) + '</b><span>' + esc(x.texte) + '</span></div></li>').join('') + '</ul>'
+    + '<ul class="trophees-grades-l lkx-cards lkx-unlock lk-arrive" data-lkx-in>' + GR.items.map(x => '<li>' + gradeSheet(GR, x) + '</li>').join('') + '</ul>'
     + '<p class="trophees-note">' + st(GR.statut, GR.sources) + '</p></section>';
   const gtav = '<section class="shell trophees-gtav" id="gtav" aria-labelledby="gtav-t"><div class="reveal"><p class="trophees-kicker">' + esc(G.kicker) + '</p><h2 class="sec-h" id="gtav-t">' + esc(G.titre) + '</h2><p class="trophees-lede">' + esc(G.lede) + '</p></div>'
     + '<div class="trophees-chiffres lkx-unlock lk-arrive" data-lkx-in>' + G.chiffres.map(x => '<div class="trophees-chiffre"><span class="trophees-v">GTA V</span><b>' + esc(x.n) + '</b><span>' + esc(x.l) + '</span><p>' + st(x.statut, x.sources) + '</p></div>').join('') + '</div>'

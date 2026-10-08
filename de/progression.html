@@ -30,7 +30,7 @@
 <link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="../style.css?v=0be922c25db5">
 <link rel="stylesheet" href="../calculator-entry.css?v=cf94b45f1d2d">
-<link rel="stylesheet" href="../carnets.css?v=6264abc4d30a">
+<link rel="stylesheet" href="../carnets.css?v=876379fa5bf3">
 <meta property="og:image" content="https://www.leonidakit.com/img/social-card.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta property="og:url" content="https://www.leonidakit.com/de/progression.html">
@@ -148,6 +148,21 @@
   <div class="lk-prog-global rise" id="progress-global" aria-live="polite"><p class="calc-kicker">MEIN GESAMTER FORTSCHRITT</p><strong id="progress-global-value">0 %</strong><progress id="progress-global-bar" value="0" max="100" aria-label="Gesamtfortschritt"></progress><p id="progress-global-text">Hak Seiten ab, damit dieser Prozentsatz steigt. Dieses Tracking ist persönlich: Es ist nicht der offizielle Spielfortschritt.</p></div>
   <p class="note">Missionen und Trophäen kommen mit ihren Listen. Kaufbare Unterkünfte, Unterschlüpfe und Wohnsitze warten auf das Spiel: Sie zählen nicht mit, und nichts wird an ihrer Stelle erfunden.</p>
 </section>
+<section class="shell reveal tr-prog" id="trophees" aria-labelledby="trophees-t">
+  <h2 class="sec-h" id="trophees-t">Meine Trophäen und Erfolge</h2>
+  <p class="fiche-txt">Die Trophäenliste von GTA VI ist nicht veröffentlicht: Dieser Block zählt deine Kästchen „Erhalten“ der Trophäen-Seite, sobald es sie gibt, Stufe für Stufe, auf diesem Gerät. Bis dahin ist nichts erfunden.</p>
+  <div class="tr-prog-board rise" data-tr-prog>
+    <div class="tr-prog-ring" aria-hidden="true"><span class="tr-prog-ring-c"><b data-tr-pct>—</b></span></div>
+    <div class="tr-prog-t"><p class="tr-prog-n"><b data-tr-n>0</b><span aria-hidden="true">/</span><b data-tr-total>?</b></p><p class="tr-prog-l">Trophäen erhalten</p><p class="tr-prog-note" role="status" aria-live="polite" data-tr-note>Liste folgt: Im Moment gibt es kein Kästchen zum Abhaken.</p></div>
+    <ul class="tr-prog-grades" aria-label="Trophäen nach Stufe">
+      <li class="tr-prog-g tr-prog-g--platine"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 4h10v4.5a5 5 0 0 1-10 0z"/><path d="M7 6H4.5v1.2A3 3 0 0 0 7.5 10M17 6h2.5v1.2a3 3 0 0 1-3 2.8"/><path d="M12 13.5V17M8.5 20h7M9.5 17h5"/></svg><b><span data-tr-g="platine">0</span><span aria-hidden="true"> / </span><i>?</i></b><span>Platin</span></li>
+      <li class="tr-prog-g tr-prog-g--or"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 4h10v4.5a5 5 0 0 1-10 0z"/><path d="M7 6H4.5v1.2A3 3 0 0 0 7.5 10M17 6h2.5v1.2a3 3 0 0 1-3 2.8"/><path d="M12 13.5V17M8.5 20h7M9.5 17h5"/></svg><b><span data-tr-g="or">0</span><span aria-hidden="true"> / </span><i>?</i></b><span>Gold</span></li>
+      <li class="tr-prog-g tr-prog-g--argent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 4h10v4.5a5 5 0 0 1-10 0z"/><path d="M7 6H4.5v1.2A3 3 0 0 0 7.5 10M17 6h2.5v1.2a3 3 0 0 1-3 2.8"/><path d="M12 13.5V17M8.5 20h7M9.5 17h5"/></svg><b><span data-tr-g="argent">0</span><span aria-hidden="true"> / </span><i>?</i></b><span>Silber</span></li>
+      <li class="tr-prog-g tr-prog-g--bronze"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 4h10v4.5a5 5 0 0 1-10 0z"/><path d="M7 6H4.5v1.2A3 3 0 0 0 7.5 10M17 6h2.5v1.2a3 3 0 0 1-3 2.8"/><path d="M12 13.5V17M8.5 20h7M9.5 17h5"/></svg><b><span data-tr-g="bronze">0</span><span aria-hidden="true"> / </span><i>?</i></b><span>Bronze</span></li>
+    </ul>
+    <p class="tr-prog-acts"><a class="tr-prog-btn" href="trophees.html#liste">Trophäen ansehen</a><a class="tr-prog-link" href="trophees.html#grades">Die vier Stufen, und was es braucht</a></p>
+  </div>
+</section>
 <section class="shell" aria-labelledby="progress-calculator-title">
   <div class="lk-entry-card">
     <div><p class="lk-entry-eyebrow">DER RECHNER</p><h2 id="progress-calculator-title">Und dein nächstes Ziel?</h2><p>Sag, wie viel du hast und wie viel du spielst. Der Rechner sagt dir, in wie vielen Tagen du haben kannst, was du willst, und hält deine Berechnungen gespeichert.</p></div>
@@ -222,7 +237,7 @@
 
 <script type="lk/lazy" src="search-index.js?v=a2fec213752f"></script><script type="lk/lazy" src="search-lieux.js?v=f2ec60784a69"></script>
 <script src="../assets-manifest.js?v=6af57ce07b3f"></script>
-<script src="common.js?v=33a9ac6cd55a"></script>
+<script src="common.js?v=23ec78279936"></script>
 <script src="app.js?v=3d898de503e5"></script>
 <script src="progression-data.js?v=148d8812d375"></script>
 <script src="collectibles-data.js?v=32ca00038f45"></script>
@@ -231,6 +246,6 @@
 <script src="modele-donnees.js?v=2dca7000970f"></script>
 <script src="carnets-core.js?v=dcd7c8a27f92"></script>
 <script src="progression-core.js?v=cfc56effbaf1"></script>
-<script src="progression.js?v=9d20d1a8e537"></script>
+<script src="progression.js?v=092fee9d3f05"></script>
 </body>
 </html>

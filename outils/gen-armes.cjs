@@ -19,6 +19,8 @@ const {schema}=require('./armes-schemas.cjs');
 const RED=require('./redaction.cjs');
 /* v7.43 (lot 6) : catégories d’armes couvertes par au moins un poste de personnalisation (outils/catalogues/perso-armes.json) : lien « Accessoires compatibles » vers la liste filtrée. */
 const PERSO_COVER=require('./catalogues.cjs').coverage('perso-armes');
+/* v7.73 (lot 3) : section « Personnaliser cette arme » de chaque fiche (postes du catalogue qui vont à sa catégorie ou la citent) */
+const PF=require('./perso-fiche.cjs');
 const VIDE_TXT='Schéma indicatif du type d’arme. Les visuels officiels détaillés arriveront avec le jeu.';
 const PERSO_NOM=Object.fromEntries(JSON.parse(fs.readFileSync('outils/editorial.json','utf8')).characters.map(c=>[c.id,c.name.split(' ')[0]]));
 /* armureries repérées sur la carte : mêmes liens sur toutes les fiches, comme les concessions sur les fiches véhicules */
@@ -58,7 +60,7 @@ const HEAD_TOP=between(/<meta name="theme-color"[\s\S]*?<link rel="icon"[^>]*>\n
 const HEADER=between(/<a class="skip"[\s\S]*?<main id="main">/);
 const FCOUNT=between(/<div class="fcount">[\s\S]*?<\/div>\n<\/div>/);
 const NOTE=between(/<section class="shell">\s*<div class="note-box rise">[\s\S]*?<\/section>/);
-const FOOTER=between(/<footer>[\s\S]*?<\/body>\n<\/html>/).replace(/(<script src="\.\.\/carnets-core\.js[^"]*"><\/script>\n)?(<script src="\.\.\/fiches\.js)/,'<script src="../carnets-core.js"></script>\n$2') // v7.51 : envies (carnets-core.js) avant fiches.js
+const FOOTER=between(/<footer>[\s\S]*?<\/body>\n<\/html>/).replace(/<script src="\.\.\/perso-fiche\.js[^"]*"[^>]*><\/script>\n?/,'').replace(/(<script src="\.\.\/fiches\.js)/,'<script src="../perso-fiche.js" defer></script>\n$1') /* v7.73 : tableau « Personnaliser cette arme » */.replace(/(<script src="\.\.\/carnets-core\.js[^"]*"><\/script>\n)?(<script src="\.\.\/fiches\.js)/,'<script src="../carnets-core.js"></script>\n$2') // v7.51 : envies (carnets-core.js) avant fiches.js
  .replace(/<script src="\.\.\/armes-data\.js[^"]*"><\/script>\n?/,''); // v7.54 : aucun script d'une fiche ne lit LK_ARMES (le comparateur charge ses données lui-même)
 
 const lede=a=>{const cat=CATL[a.cat].toLowerCase();return a.nom+' dans GTA VI : '+cat+(a.insp?'. Inspiration : '+a.insp:'')+'. '+ST[a.st].l+' ('+a.src+').';};
@@ -128,7 +130,7 @@ ${HEADER}
         <div class="fiche-tags">
           ${tags}
         </div>
-        <div class="fiche-liens"><button type="button" class="own-bt" id="own-bt" data-id="${a.id}"${prixPub?` data-prix="${prixPub.value}" data-prix-statut="${prixPub.status}"`:''}><span class="ck"></span><span>Ajouter à mon arsenal</span></button><a href="../comparateur.html?type=armes&amp;ids=${a.id}">Comparer</a>${(PERSO_COVER.has(a.cat)||PERSO_COVER.has(a.id))?'<a href="../personnalisations.html#perso-armes='+a.id+'">Personnaliser cette arme</a>':''}</div>
+        <div class="fiche-liens"><button type="button" class="own-bt" id="own-bt" data-id="${a.id}"${prixPub?` data-prix="${prixPub.value}" data-prix-statut="${prixPub.status}"`:''}><span class="ck"></span><span>Ajouter à mon arsenal</span></button><a href="../comparateur.html?type=armes&amp;ids=${a.id}">Comparer</a>${(PERSO_COVER.has(a.cat)||PERSO_COVER.has(a.id))?'<a href="#personnaliser">Personnaliser cette arme</a>':''}</div>
       </div>
       <div class="fhero-art fhero-art--gal">
         ${gal}
@@ -169,6 +171,8 @@ ${meds.length?`<section class="shell reveal" id="apercus">
 </section>`:''}
 
 ${carteOf(a)}
+
+${PF.persoSection('armes',{id:a.id,cat:a.cat,name:a.nom})}
 
 ${NOTE}
 

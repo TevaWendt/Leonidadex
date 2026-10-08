@@ -1,0 +1,85 @@
+{
+  "_note": "v7.73 (lot 3, demande de Téva : « sur chaque véhicule et chaque arme, la catégorie personnalisation avec prix, niveau requis, et des sous-listes d'options »). Options (sous-listes) et conditions de déblocage de chaque poste, toujours comme repères de la série (GTA V, GTA Online), tirés des sources déjà citées par le poste (outils/catalogues/sources.json) : jamais un prix ni un niveau pour GTA VI, que Rockstar n'a pas publiés. « p » : prix repère en dollars du jeu du poste ; « pmin » / « pmax » : fourchette ; sans prix : prix non relevé. « deblocage » : comment le poste se débloque dans le jeu repère (GTA Online : rang, victoires en course, recherche du bunker…). « couleurs » : familles de teintes de la palette de GTA V (rangées par famille, sans inventer la liste exacte). « swatch » : couleur d'illustration de l'option (CSS), décorative.",
+  "perso-vehicules": {
+    "peinture-principale": { "jeu": "GTA V", "options": [
+      { "n": "Classique", "p": 400 }, { "n": "Métallisée", "p": 650 }, { "n": "Métal", "p": 900 }, { "n": "Mate", "p": 1000 }, { "n": "Chrome", "p": 1200 } ],
+      "couleurs": true },
+    "peinture-secondaire": { "jeu": "GTA V", "options": [
+      { "n": "Classique", "p": 400 }, { "n": "Métallisée", "p": 650 }, { "n": "Métal", "p": 900 }, { "n": "Mate", "p": 1000 }, { "n": "Chrome", "p": 1200 } ],
+      "couleurs": true },
+    "nacre": { "jeu": "GTA V", "couleurs": true, "note": "sur une peinture métallisée seulement" },
+    "couleur-jantes": { "jeu": "GTA V", "options": [ { "n": "Chromées" } ], "couleurs": true, "note": "41 teintes préréglées, rangées ici par famille" },
+    "jantes-familles": { "jeu": "GTA V", "options": [
+      { "n": "Sport" }, { "n": "Muscle" }, { "n": "Lowrider" }, { "n": "SUV" }, { "n": "Tout-terrain" }, { "n": "Tuner" }, { "n": "Haut de gamme" }, { "n": "Moto" }, { "n": "Benny’s" }, { "n": "Course" }, { "n": "Street" }, { "n": "Track" } ],
+      "note": "1 290 à 4 290 $ selon la famille (muscle à haut de gamme)" },
+    "fumee-pneus": { "jeu": "GTA V", "options": [
+      { "n": "Blanche", "swatch": "#f4f4f4" }, { "n": "Noire", "swatch": "#222" }, { "n": "Bleue", "swatch": "#2b6fd6" }, { "n": "Jaune", "swatch": "#f2d64b" }, { "n": "Violette", "swatch": "#8a3fc4" }, { "n": "Orange", "swatch": "#f08a24" }, { "n": "Rouge", "swatch": "#d8322b" }, { "n": "Verte", "swatch": "#3aa652" }, { "n": "Rose", "swatch": "#f06aa8" }, { "n": "Grise", "swatch": "#9a9a9a" }, { "n": "Brun clair", "swatch": "#b98a5a" }, { "n": "Patriote (rouge, blanc, bleu)", "swatch": "linear-gradient(90deg,#d8322b 33%,#f4f4f4 33% 66%,#2b6fd6 66%)" } ] },
+    "neons-couleur": { "jeu": "GTA V", "options": [
+      { "n": "Blanc", "swatch": "#f4f4f4" }, { "n": "Bleu", "swatch": "#2b6fd6" }, { "n": "Bleu électrique", "swatch": "#2fd3f5" }, { "n": "Vert menthe", "swatch": "#4fe3b0" }, { "n": "Vert citron", "swatch": "#9be24a" }, { "n": "Jaune", "swatch": "#f2d64b" }, { "n": "Doré", "swatch": "#e2b03a" }, { "n": "Orange", "swatch": "#f08a24" }, { "n": "Rouge", "swatch": "#d8322b" }, { "n": "Rose poney", "swatch": "#f49ac1" }, { "n": "Rose vif", "swatch": "#ef3f8f" }, { "n": "Violet", "swatch": "#8a3fc4" }, { "n": "Lumière noire", "swatch": "#4b2a8a" } ],
+      "note": "treize couleurs, plus celle du crew en ligne" },
+    "phares-couleur": { "jeu": "GTA Online", "options": [
+      { "n": "Blanc", "swatch": "#f4f4f4" }, { "n": "Bleu", "swatch": "#2b6fd6" }, { "n": "Bleu électrique", "swatch": "#2fd3f5" }, { "n": "Vert menthe", "swatch": "#4fe3b0" }, { "n": "Vert citron", "swatch": "#9be24a" }, { "n": "Jaune", "swatch": "#f2d64b" }, { "n": "Doré", "swatch": "#e2b03a" }, { "n": "Orange", "swatch": "#f08a24" }, { "n": "Rouge", "swatch": "#d8322b" }, { "n": "Rose poney", "swatch": "#f49ac1" }, { "n": "Rose vif", "swatch": "#ef3f8f" }, { "n": "Violet", "swatch": "#8a3fc4" }, { "n": "Lumière noire", "swatch": "#4b2a8a" } ],
+      "note": "20 000 à 80 000 $ ; moitié prix après Arena War" },
+    "neons-disposition": { "jeu": "GTA V", "options": [
+      { "n": "Avant", "p": 1000 }, { "n": "Arrière", "p": 1000 }, { "n": "Côtés", "p": 1250 }, { "n": "Avant et arrière" }, { "n": "Tout le tour", "p": 3000 } ] },
+    "vitres-teintees": { "jeu": "GTA V", "options": [
+      { "n": "Fumé léger", "p": 200 }, { "n": "Fumé foncé", "p": 450 }, { "n": "Limousine", "p": 700 } ] },
+    "plaques": { "jeu": "GTA V", "options": [
+      { "n": "Bleu sur blanc", "swatch": "linear-gradient(90deg,#f4f4f4 60%,#2b6fd6 60%)" }, { "n": "Jaune sur bleu", "swatch": "linear-gradient(90deg,#2b6fd6 60%,#f2d64b 60%)" }, { "n": "Jaune sur noir", "swatch": "linear-gradient(90deg,#222 60%,#f2d64b 60%)" } ],
+      "note": "50 à 150 $, relevé sur la Bravado Gauntlet" },
+    "klaxons": { "jeu": "GTA V", "options": [
+      { "n": "De série", "p": 50 }, { "n": "Camion", "p": 60 }, { "n": "Police", "p": 75 }, { "n": "Clown", "p": 150 }, { "n": "Airs musicaux", "pmin": 255, "pmax": 1700 } ] },
+    "suspension-niveaux": { "jeu": "GTA V", "options": [
+      { "n": "Rabaissée", "p": 500 }, { "n": "Street", "p": 1000 }, { "n": "Sport", "p": 1700 }, { "n": "Compétition" } ],
+      "note": "relevé sur la Bravado Gauntlet", "deblocage": "GTA Online : les niveaux se gagnent en course" },
+    "moteur-ems": { "jeu": "GTA V", "options": [
+      { "n": "Niveau 1", "p": 900 }, { "n": "Niveau 2", "p": 1250 }, { "n": "Niveau 3", "p": 1800 }, { "n": "Niveau 4", "p": 3350 } ],
+      "note": "relevé sur la Bravado Gauntlet", "deblocage": "GTA Online : les niveaux se gagnent en course" },
+    "freins": { "jeu": "GTA V", "options": [
+      { "n": "Street", "p": 2000 }, { "n": "Sport", "p": 2700 }, { "n": "Course", "p": 3500 } ],
+      "note": "relevé sur la Bravado Gauntlet", "deblocage": "GTA Online : les niveaux se gagnent en course" },
+    "transmission": { "jeu": "GTA V", "options": [
+      { "n": "Street", "p": 2950 }, { "n": "Sport", "p": 3250 }, { "n": "Course", "p": 4000 } ],
+      "note": "relevé sur la Bravado Gauntlet", "deblocage": "GTA Online : les niveaux se gagnent en course" },
+    "turbo": { "jeu": "GTA V", "options": [ { "n": "Turbo", "p": 2500 } ], "note": "30 000 $ en ligne sur la Bravado Gauntlet", "deblocage": "GTA Online : se gagne en course" },
+    "blindage": { "jeu": "GTA V", "options": [
+      { "n": "20 %", "p": 500 }, { "n": "40 %", "p": 1250 }, { "n": "60 %", "p": 2000 }, { "n": "80 %", "p": 3500 }, { "n": "100 %", "p": 5000 } ],
+      "note": "relevé sur la Bravado Gauntlet ; 4 500 à 30 000 $ en ligne", "deblocage": "GTA Online : les niveaux se gagnent en course" },
+    "aileron": { "jeu": "GTA V", "options": [ { "n": "Bas" }, { "n": "Haut" }, { "n": "Aile GT" } ], "note": "500 à 1 300 $ sur la Karin Sultan" },
+    "traceur-assurance": { "jeu": "GTA Online", "options": [ { "n": "Traceur", "p": 2000 }, { "n": "Assurance", "p": 4000 } ], "note": "relevé sur la Bravado Gauntlet" },
+    "bombes": { "jeu": "GTA Online", "options": [ { "n": "Au démarrage", "p": 5000 }, { "n": "À distance", "p": 7500 } ] },
+    "pneus-faible-adherence": { "deblocage": "GTA Online : réservés au LS Car Meet" },
+    "hydrauliques": { "deblocage": "GTA Online : après la conversion de Benny’s" },
+    "moteur-bennys": { "deblocage": "GTA Online : après la conversion de Benny’s" },
+    "interieur-bennys": { "deblocage": "GTA Online : après la conversion de Benny’s" },
+    "embleme-crew": { "deblocage": "GTA Online : membre d’un crew Social Club" }
+  },
+  "perso-armes": {
+    "teintes": { "jeu": "GTA V", "options": [
+      { "n": "Armée", "p": 100, "swatch": "#6b7a3a" }, { "n": "Vert", "swatch": "#2f8a4a" }, { "n": "Orange", "swatch": "#f08a24" }, { "n": "LSPD", "swatch": "#2b4fa6" }, { "n": "Rose", "swatch": "#f06aa8" }, { "n": "Or", "swatch": "#d4a83a" }, { "n": "Platine", "p": 1500, "swatch": "#c9ccd1" } ],
+      "note": "5 000 à 12 500 $ en ligne", "deblocage": "GTA Online : chaque teinte se débloque au rang" },
+    "teintes-mk2": { "jeu": "GTA Online", "options": [ { "n": "Classiques", "pmin": 20000, "pmax": 35000 }, { "n": "Contraste", "p": 40000 }, { "n": "Métaux", "pmin": 75000, "pmax": 100000 } ], "deblocage": "GTA Online : arme convertie en Mk II" },
+    "camouflages-mk2": { "jeu": "GTA Online", "options": [
+      { "n": "Digital", "p": 40000 }, { "n": "Coup de pinceau" }, { "n": "Forêt" }, { "n": "Crâne" }, { "n": "Léopard" }, { "n": "Zèbre" }, { "n": "Géométrique" }, { "n": "Perseus" }, { "n": "Boom" }, { "n": "Patriotique", "p": 100000 } ],
+      "deblocage": "GTA Online : arme convertie en Mk II, recherche du bunker pour certaines livrées" },
+    "freins-de-bouche": { "jeu": "GTA Online", "options": [ { "n": "Plat" }, { "n": "Tactique" }, { "n": "Évasé" }, { "n": "Précision" }, { "n": "Renforcé" }, { "n": "Biseauté" }, { "n": "Fendu" } ], "note": "29 750 à 38 530 $ ; 45 010 à 57 790 $ sur le précision lourd", "deblocage": "GTA Online : arme convertie en Mk II" },
+    "chargeur-etendu": { "jeu": "GTA V", "options": [ { "n": "Carabine", "p": 262 }, { "n": "Pistolet", "p": 387 } ], "note": "9 175 à 9 775 $ en ligne" },
+    "silencieux": { "jeu": "GTA V", "options": [ { "n": "Pistolet", "p": 1822 }, { "n": "Carabine", "p": 2037 } ], "note": "12 050 à 12 450 $ en ligne" },
+    "lampe-tactique": { "jeu": "GTA V", "options": [ { "n": "Carabine", "p": 375 }, { "n": "Pistolet", "p": 472 } ], "note": "1 675 à 2 350 $ en ligne" },
+    "conversion-mk2": { "jeu": "GTA Online", "options": [ { "n": "Pistolet", "p": 73750 }, { "n": "Carabine", "p": 107500 }, { "n": "Précision lourd", "p": 165375 } ], "deblocage": "GTA Online : dans un atelier d’armes (centre d’opérations mobile, Avenger, agence…)" },
+    "munitions-tracantes": { "jeu": "GTA Online", "options": [ { "n": "Pistolet Mk II", "p": 28600 }, { "n": "Carabine Mk II", "p": 44700 } ], "deblocage": "GTA Online : arme Mk II, recherche du bunker" },
+    "munitions-incendiaires": { "deblocage": "GTA Online : arme Mk II, recherche du bunker" },
+    "munitions-perforantes": { "deblocage": "GTA Online : arme Mk II, recherche du bunker" },
+    "munitions-creuses": { "deblocage": "GTA Online : arme Mk II, recherche du bunker" },
+    "munitions-blindees": { "deblocage": "GTA Online : arme Mk II, recherche du bunker" },
+    "munitions-explosives": { "deblocage": "GTA Online : fusil de précision lourd Mk II, recherche du bunker" },
+    "lunette-nocturne": { "deblocage": "GTA Online : fusil de précision lourd Mk II, recherche du bunker" },
+    "lunette-thermique": { "deblocage": "GTA Online : fusil de précision lourd Mk II, recherche du bunker" },
+    "canon-lourd": { "jeu": "GTA Online", "options": [ { "n": "Carabine Mk II", "p": 49000 }, { "n": "Précision lourd Mk II", "p": 69825 } ], "deblocage": "GTA Online : arme convertie en Mk II" },
+    "lunettes-mk2": { "deblocage": "GTA Online : arme convertie en Mk II" },
+    "viseur-holographique": { "deblocage": "GTA Online : arme convertie en Mk II" },
+    "compensateur": { "deblocage": "GTA Online : arme convertie en Mk II" },
+    "chargeur-caisson": { "deblocage": "GTA Online : arme convertie en Mk II" },
+    "poignee": { "jeu": "GTA V", "options": [ { "n": "Poignée", "p": 330 } ], "note": "4 350 $ en ligne, 14 080 $ en Mk II" }
+  }
+}

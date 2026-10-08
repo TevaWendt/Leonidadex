@@ -1,0 +1,40 @@
+LEONIDAKIT v7.73 — lot 3 sur 3 : listes des catalogues en couleur et en mouvement, cartes illustrées, « Personnaliser ce
+véhicule / cette arme », grades des trophées cliquables, trophées dans la Progression
+À appliquer APRÈS la v7.72 (archive Leonidakit-v7.72-modifs.zip). Rien n'a été publié ni poussé.
+Livrée en archive « modifs » (seulement les fichiers qui changent) : Leonidakit-v7.73-modifs.zip. Aucun fichier à supprimer.
+
+CE QUI CHANGE POUR LE VISITEUR
+- Consommables, Vêtements et style, Personnalisations : les six listes sont en couleur et illustrées. Chaque ligne a la
+  teinte de sa catégorie (barre, pastille, fond), un visuel officiel (le sien, sinon celui de sa catégorie, marqué comme
+  illustration), et « Fiche complète » reste à droite. À l'ouverture d'une liste, les lignes glissent en cascade ; plus
+  bas, elles entrent au défilement ; au survol, la fiche se soulève et l'image s'agrandit. La barre fermée de chaque liste
+  montre trois visuels en éventail et « Ouvrir la liste ».
+- Consommables, « En un regard » : les 29 cartes s'ouvrent sur un visuel officiel, avec le pictogramme et le statut posés
+  dessus ; le reste (nom, où, comparer, fiche complète) ne change pas.
+- Chaque fiche de véhicule (302) et d'arme (27) a sa section « Personnaliser ce véhicule / cette arme » : les postes qui
+  s'appliquent au modèle, rangés par atelier (puces colorées), avec pour chacun le statut, le prix GTA VI (à venir),
+  le repère de la série (prix GTA V ou GTA Online), le niveau requis (à confirmer, avec le déblocage repère), l'effet,
+  et des sous-listes d'options : finitions de peinture, familles de teintes (jantes, nacré), niveaux moteur, freins,
+  transmission, blindage, couleurs de néons et de phares, teintes et camouflages d'armes… « Je le prends » coche un poste
+  ou une option : « Ma configuration » additionne les repères, gardés sur l'appareil. Rien n'est inventé : chaque chiffre
+  dit de quel jeu il vient, et une ligne le rappelle en tête du tableau. Dans la section Personnalisations, le modèle
+  choisi renvoie à sa fiche (« Personnaliser sur sa fiche »).
+- Trophées : les cinq grades (Platine, Or, Argent, Bronze, Points Xbox) s'ouvrent en fiche squelette plein écran : ce
+  que GTA VI a publié (rien), ce qu'il faut en général pour un trophée de ce grade, le repère de GTA V, et ce que dira
+  chaque trophée. Progression : nouveau bloc « Mes trophées et succès » (anneau, compteurs par grade, liens), que
+  « Voir ma progression » vise maintenant ; il comptera tes cases « Obtenu » dès que la liste existera.
+- Tout est traduit dans les quatre langues, vérifié sur téléphone, tablette et ordinateur, mouvement réduit respecté.
+
+MARCHE À SUIVRE
+  1. Copie le contenu de l'archive à la racine du dossier GitHub (remplacer), valide, pousse. Rien à changer dans Vercel.
+  2. Essai : nourriture.html → « Tous les consommables » → la liste s'ouvre en cascade ; « En un regard » : cartes
+     illustrées. vehicules/vapid-ganado.html → « Personnaliser ce véhicule » (bandeau ou bas de page) → ouvre
+     « Peinture », coche « Métallisée » : « Ma configuration » affiche le repère. trophees.html → clique « Or » ;
+     progression.html → « Mes trophées et succès ».
+
+RAPPEL QUI NE CHANGE PAS : Rockstar et Take-Two tolèrent les sites de fans non commerciaux ; le jour où une publicité
+s'affiche, un site consacré à GTA VI avec leurs visuels s'expose à une réclamation. Les visuels restent crédités partout.
+
+SUR ORDINATEUR ET TÉLÉPHONE : vérifié (1 280 et 390 px) ; tous les contrôles automatiques au vert (tests, navigateur,
+langues, liens, confidentialité, audit de clôture sur les pages du lot : détail dans outils/CHANGEMENTS-v7.73.txt).
+Les trois lots demandés le 8 octobre sont livrés (v7.71, v7.72, v7.73). Retour arrière : commit précédent dans GitHub Desktop.

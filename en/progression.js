@@ -17,6 +17,15 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
   let storage=null;try{storage=window.localStorage;}catch(e){storage=null;}
   const store=storage?K.create({storage,modele:M,ids}):null;
   const set=(root,sel,v)=>{const n=root.querySelector(sel);if(n)n.textContent=v;};
+  /* v7.73 (lot 3) : bloc « Mes trophées et succès » : cases « Obtenu » de la page Trophées (clé lk-trophees-obtenus-v1, liste
+     d'identifiants) ; la liste n'étant pas publiée, le total et les grades restent « ? » : seul le nombre coché est écrit. */
+  function trophees(){
+    const box=document.querySelector('[data-tr-prog]');if(!box||!storage)return;
+    let list=[];try{const v=JSON.parse(storage.getItem('lk-trophees-obtenus-v1')||'[]');list=Array.isArray(v)?v.filter(x=>typeof x==='string'):[];}catch(e){list=[];}
+    set(box,'[data-tr-n]',nf.format(list.length));
+    if(list.length){const n=list.length;set(box,'[data-tr-note]',n+(lkPluriel(n)?' trophies ticked':' trophy ticked')+' on the Trophies page; the total is waiting for the official list.');}
+  }
+  trophees();
   function notebooks(){try{const d=JSON.parse(storage.getItem('lk-calculator-notebooks-v3')||'null');return d&&d.version===3&&Array.isArray(d.entries)?d.entries.filter(e=>e&&typeof e.tool==='string'):[];}catch(e){return [];}}
   function render(){
     M.carnets.forEach(k=>{
