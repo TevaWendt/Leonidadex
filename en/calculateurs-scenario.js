@@ -987,14 +987,99 @@ function sensitivity(tool,s,source=[]){
     par heure, c'est lui qui bouge ; avec des missions, c'est la récompense de la première mission jouable (son prix, ses frais et
     le reste du plan ne bougent pas). Sans chiffre encore écrit, le bloc dit ce qu'il attend. */
  if(tool==='plan'){const p=s.plan,si=p.situation;
-  if(p.source==='hourly'){if(!Number.isFinite(si.hourly)||si.hourly<=0)return {pending:true,label:'What you earn per hour: 20% more or less',need:'Enter what you earn per hour in “Your situation”: this block then shows how the time to your goal moves when that income changes by 20%.'};path=['plan','situation','hourly'];label='What you earn per hour: 20% more or less';}
-  else{const i=p.missions.findIndex(m=>Number.isFinite(m.reward)&&m.reward>0&&!(m.once&&m.done));if(i<0)return {pending:true,label:'Your first mission’s reward: 20% more or less',need:'Enter at least one mission with its reward in “Your missions”: this block then shows how the time to your goal moves when that reward changes by 20%.'};path=['plan','missions',i,'reward'];label='Reward for “'+p.missions[i].name+'” only: 20% more or less';}}
+  if(p.source==='hourly'){if(!Number.isFinite(si.hourly)||si.hourly<=0)return {pending:true,label:'What you earn per hour: 20% more or less',need:'Enter what you earn per hour in “How do you earn your money?”: this block then shows how the time to your goal moves when that income changes by 20%.'};path=['plan','situation','hourly'];label='What you earn per hour: 20% more or less';}
+  else{const i=p.missions.findIndex(m=>Number.isFinite(m.reward)&&m.reward>0&&!(m.once&&m.done));if(i<0)return {pending:true,label:'Your first mission’s reward: 20% more or less',need:'Add at least one mission with its reward in “How do you earn your money?”: this block then shows how the time to your goal moves when that reward changes by 20%.'};path=['plan','missions',i,'reward'];label='Reward for “'+p.missions[i].name+'” only: 20% more or less';}}
  if(tool==='budget'){const first=s.budget.source==='basket'?s.assets.findIndex(a=>a.key===s.order.keys[0]):-1;path=first>=0?['assets',first,'price']:s.budget.source==='manual'?['budget','allocations',0]:['budget','extra'];label='Only the price of your first expense';}
  if(!path)return null;let value=sourceInput?source:s;for(const k of path)value=value[k];
  return{label,path:path.slice(),sourceInput,rows:[.8,1,1.2].map(f=>{const c=copy(s),sources=sourceInput?copy(source):source;let p=sourceInput?sources:c;path.slice(0,-1).forEach(k=>p=p[k]);const v=Number.isFinite(value)?Math.min(1e12,value*f):null;p[path.at(-1)]=v;return{factor:f,value:v,bounded:Number.isFinite(value)&&value*f>1e12,result:evaluate(tool,c,sources)};})};
 }
+/* v7.74 (Téva : « rajoute des hypothèses utiles, à la fois pour les calculs et pour le business plan ») : « Et si autre chose
+   change ? » du mode Expert. Chaque hypothèse refait tout le calcul (evaluate) sur une copie où un seul levier bouge : ce que tu
+   gagnes, les prix, les frais et dépenses, la durée des missions, ton temps de jeu, l'argent gardé de côté, l'argent de départ,
+   l'objectif. « Tout va moins bien » et « Tout va mieux » bougent ensemble, de 20 %, les leviers qui ne dépendent pas de toi
+   (gains, prix, frais, durées). Seuls les leviers qui touchent un chiffre que l'outil lit sont proposés ; un chiffre inconnu reste
+   inconnu. Ce ne sont pas des prévisions : ce sont tes chiffres, déplacés. */
+const HYP_MARKET=['gains','prices','costs','time'];
+const HYP_NEED={order:'Add at least one purchase with its price in “What should I buy first?”.',compare:'Add at least two purchases to compare.',hourly:'Enter what you earn per hour in “How do you earn your money?”.',missions:'Add at least one mission with its reward in “How do you earn your money?”.'};
+const hypScale=(v,f)=>typeof v==='number'&&Number.isFinite(v)?Math.round(v*f*100)/100:v;
+function hypLevers(tool,s){const m=tool==='roi'?roiMode(s):null;
+ return ({goal:['gains','prices','costs','time','play','reserve','capital','goal'],activities:['gains','prices','costs','time','play','reserve','capital'],session:['gains','prices','costs','time','play','reserve','capital'],purchase:['prices','costs','reserve','capital'],roi:m==='estimate'?['prices','costs','reserve','capital']:['gains','prices','costs','time','play'],order:['gains','prices','costs','reserve','capital'],budget:['prices','costs','reserve','capital'],compare:['gains','prices','costs','reserve','capital'],plan:['gains','prices','goal','costs','time','play','days','reserve','capital']})[tool]||[];}
+/* les activités et les achats que l'outil lit vraiment (références dans la copie) */
+function hypActs(tool,c,src){const all=[...c.activities,...src],byId=id=>all.filter(a=>a.id===id).slice(0,1);
+ if(tool==='goal')return c.model==='cycles'?(c.goal.selected==='mixed'?c.activities.slice():byId(c.goal.selected)):[];
+ if(tool==='activities')return byId(c.inverse.selected);
+ if(tool==='session')return all.filter(a=>c.session.enabled.includes(a.id));
+ if(tool==='roi')return ['new','improve'].includes(roiMode(c))?all.filter(a=>c.roi.activityIds.includes(a.id)):[];
+ return [];}
+function hypAssets(tool,c){const keys=tool==='purchase'?[c.purchase.key]:tool==='roi'?[c.roi.key]:tool==='order'?c.order.keys:tool==='compare'?c.compare.keys:tool==='budget'&&c.budget.source==='basket'?c.order.keys:[];return keys.map(k=>asset(c,k)).filter(Boolean);}
+function hypApply(tool,c,src,lever,f){const g=c.goal,p=c.plan,acts=hypActs(tool,c,src),assets=hypAssets(tool,c),m=tool==='roi'?roiMode(c):null;
+ const sc=(o,k,ff=f)=>{if(o)o[k]=hypScale(o[k],ff);};
+ if(tool==='plan'){const si=p.situation;
+  if(lever==='gains'){if(p.source==='hourly')sc(si,'hourly');else p.missions.forEach(x=>sc(x,'reward'));p.prerequisites.forEach(x=>sc(x,'boostHourly'));sc(p.goal,'boostHourly');}
+  if(lever==='prices'){if(p.goal.kind==='purchase')sc(p.goal,'price');if(p.goal.kind==='unlock')sc(p.goal,'alsoPrice');p.prerequisites.forEach(x=>{if(!x.owned)sc(x,'price');});if(p.source==='missions')p.missions.forEach(x=>{if(!x.owned)sc(x,'investment');});}
+  if(lever==='costs'){sc(si,'upkeepPerSession');if(p.source==='missions')p.missions.forEach(x=>sc(x,'cost'));p.prerequisites.forEach(x=>sc(x,'usagePerSession'));}
+  if(lever==='time'&&p.source==='missions')p.missions.forEach(x=>{sc(x,'duration');sc(x,'prep');sc(x,'cooldown');});
+  if(lever==='play'&&typeof si.dailyMinutes==='number'&&si.dailyMinutes>0)si.dailyMinutes=Math.min(1440,si.dailyMinutes+30);
+  if(lever==='days'&&typeof si.dailyMinutes==='number'&&si.dailyMinutes>0&&(si.daysPerWeek??7)<7)si.daysPerWeek=(si.daysPerWeek??7)+1;
+  if(lever==='reserve'){if((si.reserve??0)>0)si.reserve=0;else if(typeof si.capital==='number'&&si.capital>0)si.reserve=Math.round(si.capital*0.1);}
+  if(lever==='capital')sc(si,'capital');
+  if(lever==='goal'){if(p.goal.kind==='amount')sc(p.goal,'target');if(p.goal.kind==='unlock'&&typeof p.goal.targetUnits==='number')p.goal.targetUnits=Math.ceil(p.goal.targetUnits*f);}
+  return;}
+ if(lever==='gains'){
+  if(tool==='goal'&&c.model==='continuous'||tool==='order'||tool==='compare')sc(g,'hourly');
+  if(tool==='roi'&&m==='continuous')sc(c.roi,'revenueHourly');
+  if(tool==='roi'&&m==='new')sc(g,'hourly');
+  acts.forEach(a=>sc(a,'reward'));
+  if(tool==='order'||tool==='compare')assets.forEach(a=>{if(a.incomeMode==='personal')sc(a,'boostHourly');});}
+ if(lever==='prices'){
+  if(tool==='goal')sc(g,'plannedSpend');
+  acts.forEach(a=>{if(!a.owned)sc(a,'investment');});
+  assets.forEach(a=>{if(!a.owned)sc(a,'price');});
+  if(tool==='budget'){if(c.budget.source!=='basket')c.budget.allocations=c.budget.allocations.map(v=>hypScale(v,f));sc(c.budget,'extra');}}
+ if(lever==='costs'){
+  if(tool==='goal'||tool==='order')sc(g,'upkeepPerSession');
+  acts.forEach(a=>sc(a,'cost'));
+  assets.forEach(a=>{if(!a.owned){sc(a,'extras');sc(a,'fees');}});
+  if(tool==='roi'&&m==='continuous')sc(c.roi,'costHourly');}
+ if(lever==='time')acts.forEach(a=>{sc(a,'duration');sc(a,'prep');sc(a,'cooldown');});
+ if(lever==='play'){
+  if(tool==='goal'&&typeof g.dailyMinutes==='number'&&g.dailyMinutes>0)g.dailyMinutes=Math.min(1440,g.dailyMinutes+30);
+  if(tool==='activities'&&typeof c.inverse.minutes==='number')c.inverse.minutes=Math.min(1440,c.inverse.minutes+30);
+  if(tool==='session'&&typeof c.session.minutes==='number')c.session.minutes=Math.min(1440,c.session.minutes+30);
+  if(tool==='roi'&&typeof c.roi.hours==='number'&&c.roi.hours>0)c.roi.hours=hypScale(c.roi.hours,1.2);}
+ if(lever==='reserve'){if((g.reserve??0)>0)g.reserve=0;else if(typeof g.capital==='number'&&g.capital>0)g.reserve=Math.round(g.capital*0.1);}
+ if(lever==='capital')sc(g,'capital');
+ if(lever==='goal'&&tool==='goal')sc(g,'target');}
+const HYP_LABEL={gains:'Everything you earn: 20% less',prices:'Prices: 20% higher',costs:'Fees and spending: 20% more',time:'Missions take 20% longer',days:'One more play day per week',capital:'You start with 20% less money',prudent:'Everything goes worse, at the same time',favorable:'Everything goes better, at the same time'};
+function hypLabel(tool,s,lever){
+ if(lever==='play')return tool==='goal'?'You play 30 min more per day':tool==='activities'?'You have 30 min more':tool==='session'?'Your session lasts 30 min longer':tool==='roi'?'You use it 20% longer':'Sessions 30 min longer';
+ if(lever==='reserve')return ((tool==='plan'?s.plan.situation.reserve:s.goal.reserve)??0)>0?'You also spend your money set aside':'You keep 10% of your money set aside';
+ if(lever==='goal')return tool==='plan'?'Your goal needs 20% more':'Your target is 20% higher';
+ return HYP_LABEL[lever];}
+function hypotheses(tool,s,source=[],ctx={}){
+ const met=metric(tool,s);if(!met)return {valid:false,reason:'Choose a tool.',rows:[]};
+ const [key,label,unit,direction]=met,sens=sensitivity(tool,s,source);
+ /* même attente que « Et si le chiffre bouge de 20 % ? » (Quoi acheter d’abord ? sans achat, Quel achat choisir ? avec moins de deux) */
+ if(sens&&sens.pending)return {valid:false,pending:true,reason:tool==='plan'?(s.plan.source==='hourly'?HYP_NEED.hourly:HYP_NEED.missions):HYP_NEED[tool]||sens.need,key,label,unit,direction,rows:[]};
+ const base=evaluate(tool,s,source,ctx);
+ if(!base.valid||!Number.isFinite(base[key]))return {valid:false,reason:base.reason||'Can’t be calculated yet.',key,label,unit,direction,rows:[]};
+ const R=v=>Math.round(v*100)/100,baseDays=Number.isFinite(base.days)?base.days:null;
+ const before=JSON.stringify([s,source]),levers=hypLevers(tool,s),rows=[];
+ const run=(id,kind,label,changes)=>{const c=copy(s),src=copy(source);changes.forEach(([lever,f])=>hypApply(tool,c,src,lever,f));if(JSON.stringify([c,src])===before)return false;
+  const r=evaluate(tool,c,src,ctx),ok=r.valid&&Number.isFinite(r[key]),delta=ok?R(r[key]-base[key]):null,days=ok&&Number.isFinite(r.days)?r.days:null,dDays=days!==null&&baseDays!==null?days-baseDays:null;
+  /* mieux ou moins bien : d’après le chiffre de l’outil ; s’il ne bouge pas, d’après les jours (finir plus tôt) ; s’ils se contredisent (parties plus longues : plus de temps de jeu, moins de jours), ni l’un ni l’autre */
+  const byMetric=ok&&delta!==0?delta*direction>0:null,byDays=dDays?dDays<0:null,better=!ok?false:byMetric===null?byDays:byDays===null||byDays===byMetric?byMetric:null;
+  rows.push({id,kind,label,valid:ok,reason:ok?null:(r.reason||'Can’t be calculated.'),value:ok?R(r[key]):null,delta,pct:ok&&base[key]!==0?delta/Math.abs(base[key])*100:null,better,days,dDays});return true;};
+ const UNFAV={gains:0.8,prices:1.2,costs:1.2,time:1.2,capital:0.8,goal:1.2,play:1,days:1,reserve:1};
+ levers.forEach(l=>run(l,'one',hypLabel(tool,s,l),[[l,UNFAV[l]]]));
+ const market=levers.filter(l=>HYP_MARKET.includes(l)&&rows.some(x=>x.id===l));
+ if(market.length>1){run('prudent','all',HYP_LABEL.prudent,market.map(l=>[l,l==='gains'?0.8:1.2]));run('favorable','all',HYP_LABEL.favorable,market.map(l=>[l,l==='gains'?1.2:0.8]));}
+ const ones=rows.filter(x=>x.kind==='one'),broken=ones.find(x=>!x.valid),moved=ones.filter(x=>x.valid&&x.delta!==0).sort((a,b)=>Math.abs(b.delta)-Math.abs(a.delta));
+ const prudent=rows.find(x=>x.id==='prudent'),favorable=rows.find(x=>x.id==='favorable');
+ return {valid:true,key,label,unit,direction,base:{value:R(base[key]),days:baseDays},rows,top:moved[0]||null,broken:broken||null,range:prudent&&favorable?{prudent,favorable}:null};
+}
 function signature(s){const c=copy(s);delete c.name;delete c.mode;delete c.views;delete c.tab;delete c.catalogue;delete c.completed;delete c.modelVersion;delete c.modelUpgradedFrom;/* lot 2 (C13) : la version du modèle ne rend pas un calcul « non enregistré » */return JSON.stringify(c);}
 function referenceWarnings(s,catalogue){const out=[];s.assets.forEach(a=>{if(!a.itemId)return;const item=catalogue.find(x=>x.id===a.itemId);if(!item)out.push(a.name+': this page no longer exists, your price is kept.');else if(a.referencePrice!==item.price)out.push(item.name+': the site’s price has changed; check your number.');});return out;}
 function initial(dataVersion,presets){return defaults({version:2,dataVersion,mode:'quick',model:'continuous',name:'My first million',tab:'goal',goal:{capital:200000,target:1000000,hourly:100000,reserve:0,dailyMinutes:60,players:1,selected:'scenario-a',meaning:'available',plannedSpend:null,upkeepPerSession:null,deadlineDays:null},activities:presets.map(a=>({id:a.id,name:a.name,reward:a.reward,cost:a.cost,duration:a.duration,prep:a.prep,cooldown:a.cooldown,share:a.share,investment:a.investment,players:a.players,owned:false})),session:{minutes:60,maxRepeat:100,enabled:['scenario-a','scenario-b','scenario-c']},inverse:{minutes:60,selected:'scenario-a'},purchase:{itemId:'',price:100000,hourly:50000,boostHourly:0,capital:200000,target:1000000,reserve:0,extras:0},catalogue:{query:'',type:'all',status:'all',maxPrice:null,sort:'name',favorites:[],compareIds:[],favoritesOnly:false}});}
-return Object.freeze({MODEL_VERSION,roiMode,hourlyNet,compareNames,compareChanges,roiChanges,planLogId,analysis,goalTarget,goalPurchase,usageOf,terrainFits,OBJECTIVES,dependencyOrder,copy,tools,names,defaults,initial,validate,migrate,asset,addAsset,activities,eligible,purchase,goal,session,projection,roi,investment,decision,blank,orderInput,budgetInput,chooseInput,planInput,planMissing,planPurchases,planReserve,planGoalName,planStrategies,planAlternatives,planObserved,planNextSession,planDeadline,planCurve,planTemplate,planMissionTemplate,planPrereqTemplate,planLogTemplate,planVariantTemplate,analysisTemplate,assetTemplate,MECHANICS,ROLES,GOAL_MEANINGS,PRIORITIES,TERRAINS,STRATEGIES,STRATEGY_LABEL,PLAN_KINDS,PLAN_SOURCES,evaluate,metrics,metric,sensitivity,signature,referenceWarnings});
+return Object.freeze({MODEL_VERSION,roiMode,hourlyNet,compareNames,compareChanges,roiChanges,planLogId,analysis,goalTarget,goalPurchase,usageOf,terrainFits,OBJECTIVES,dependencyOrder,copy,tools,names,defaults,initial,validate,migrate,asset,addAsset,activities,eligible,purchase,goal,session,projection,roi,investment,decision,blank,orderInput,budgetInput,chooseInput,planInput,planMissing,planPurchases,planReserve,planGoalName,planStrategies,planAlternatives,planObserved,planNextSession,planDeadline,planCurve,planTemplate,planMissionTemplate,planPrereqTemplate,planLogTemplate,planVariantTemplate,analysisTemplate,assetTemplate,MECHANICS,ROLES,GOAL_MEANINGS,PRIORITIES,TERRAINS,STRATEGIES,STRATEGY_LABEL,PLAN_KINDS,PLAN_SOURCES,evaluate,metrics,metric,sensitivity,hypotheses,signature,referenceWarnings});
 });

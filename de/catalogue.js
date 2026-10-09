@@ -240,9 +240,11 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     const d = ensureDialog(), side = d.querySelector('[data-dlg-side]'), main = d.querySelector('[data-dlg-main]');
     side.replaceChildren(); main.replaceChildren();
     /* colonne de gauche : visuel, statut, catégorie, nom, description, repères et actions */
-    const img = row.querySelector('.cat-thumb img'), ico = row.querySelector('.cat-thumb--ico');
-    const fig = el('figure', 'cat-dlg-media' + (img ? '' : ' cat-dlg-media--ico'));
-    if (img) { const i = document.createElement('img'); i.src = img.dataset.big || img.src; i.alt = img.alt; i.decoding = 'async'; i.width = 1280; i.height = 720; fig.appendChild(i); const c = el('figcaption', 'cat-dlg-media-c', 'Offizielles Bild von Rockstar Games'); fig.appendChild(c); }
+    /* v7.76 (lot C) : une illustration réalisée pour le site est dite comme telle, à son format (16/10) ; v7.77 : silhouette
+       « teaser » en 960 × 600 (objet modelé en 3D, montré en ombre) */
+    const img = row.querySelector('.cat-thumb img'), ico = row.querySelector('.cat-thumb--ico'), illus = !!row.querySelector('.cat-thumb--illus');
+    const fig = el('figure', 'cat-dlg-media' + (img ? (illus ? ' cat-dlg-media--illus' : '') : ' cat-dlg-media--ico'));
+    if (img) { const i = document.createElement('img'); i.src = img.dataset.big || img.src; i.alt = img.alt; i.decoding = 'async'; i.width = illus ? 960 : 1280; i.height = illus ? 600 : 720; fig.appendChild(i); const c = el('figcaption', 'cat-dlg-media-c', illus ? 'Leonidakit-Illustration: für die Website gezeichnete Silhouette bis zum offiziellen Bild, kein Bild aus dem Spiel' : 'Offizielles Bild von Rockstar Games'); fig.appendChild(c); }
     else if (ico) { fig.innerHTML = ico.innerHTML; const c = el('figcaption', 'cat-dlg-media-c', 'Kategoriesymbol: kein Bild des Objekts'); fig.appendChild(c); }
     side.appendChild(fig);
     const head = el('div', 'cat-dlg-head');
