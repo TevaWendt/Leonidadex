@@ -1,0 +1,33 @@
+LEONIDAKIT v7.76 — lot C sur 3 : des illustrations dessinées pour le site dans les Consommables, Vêtements et style et
+Personnalisations
+À appliquer APRÈS la v7.75 (archive Leonidakit-v7.75-modifs). Rien n'a été publié ni poussé.
+Livrée en archive « modifs » (seulement les fichiers qui changent, dont le nouveau dossier img/illus/). Aucun fichier à
+supprimer.
+
+CE QUI CHANGE POUR LE VISITEUR
+- Fini les visuels répétés : chaque élément des listes qui n'a pas de visuel officiel a maintenant sa propre illustration,
+  dessinée pour le site (195 en tout, toutes différentes), dans l'esprit des affiches du jeu : aplats, gros contour,
+  couleurs du coucher de soleil.
+  Consommables : l'objet sur un comptoir de diner (café, canettes, burgers, seaux de poulet, trousses, gilets…).
+  Coiffures : un portrait par coupe, barbe ou maquillage, dans le miroir du barbier.
+  Tatouages : le motif façon planche de tatoueur, ou la zone du corps.
+  Tenues : la pièce en vitrine.
+  Personnalisation des véhicules : un plan au néon avec la pièce surlignée.
+  Personnalisation des armes : un schéma lumineux avec l'accessoire surligné.
+- Où : la vignette de chaque ligne des listes, la fiche qui s'ouvre (en grand), la barre fermée de chaque liste (trois
+  illustrations en éventail) et les cartes « En un regard » des Consommables. Le format des listes et des cartes ne change
+  pas.
+- Honnêteté : chaque illustration est dite comme telle (« Illustration Leonidakit : dessinée pour le site, pas une image
+  du jeu »). Les éléments qui ont un visuel officiel de Rockstar le gardent, crédité comme avant.
+
+MARCHE À SUIVRE
+  1. Copie le contenu de l'archive à la racine du dossier GitHub (remplacer), valide, pousse. Rien à changer dans Vercel.
+  2. Essai : nourriture.html → « En un regard » (une image par consommable), puis ouvre une liste et « Fiche complète » ;
+     style.html et personnalisations.html : ouvre les listes.
+
+RAPPEL QUI NE CHANGE PAS : Rockstar et Take-Two tolèrent les sites de fans non commerciaux ; le jour où une publicité
+s'affiche, un site consacré à GTA VI avec leurs visuels s'expose à une réclamation. Les illustrations du site ne posent pas
+ce problème (dessins originaux, sans logo ni marque), les visuels officiels restent crédités partout.
+
+Contrôles automatiques et vérifications sur ordinateur et téléphone : détail dans outils/CHANGEMENTS-v7.76.txt.
+Retour arrière : commit précédent dans GitHub Desktop.

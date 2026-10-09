@@ -246,3 +246,20 @@ main > section.shell.reveal + section.shell.reveal{padding-top:8px;}
 #sorties .lk-steps li:nth-child(2){--i:1;}#sorties .lk-steps li:nth-child(3){--i:2;}
 #heritage .lk-her:nth-child(2){--i:1;}#heritage .lk-her:nth-child(3){--i:2;}#heritage .lk-her:nth-child(4){--i:3;}
 @media(prefers-reduced-motion:reduce){#catalogue .col-ghost,#carnet .col-ring-fg,#carnet .col-map-card img{transition:none;}#catalogue .col-ghost-line{animation:none;}}
+
+/* ============================================================
+   v7.75 (Téva : « la partie Collectibles, un poil plus belle dans sa globalité ») : titres de section numérotés
+   (pastille ambre, filet qui part de l'encre), rythme régulier entre les sections, l'étiquette « Ultimate » en pastille,
+   anneau du carnet sur une piste ambre, coins harmonisés des panneaux du carnet et des sorties. Aucun texte, aucun outil
+   ne change.
+   ============================================================ */
+main{counter-reset:colsec;}
+main>section.shell.reveal+section.shell.reveal{margin-top:30px;}
+main section.shell.reveal>h2.sec-h{counter-increment:colsec;font-size:clamp(1.28rem,1.05rem + .8vw,1.62rem);font-weight:850;letter-spacing:-.025em;line-height:1.15;margin:0 0 16px;gap:14px;}
+main section.shell.reveal>h2.sec-h::before{content:counter(colsec,decimal-leading-zero);content:counter(colsec,decimal-leading-zero)/'';flex:none;display:inline-grid;place-items:center;width:40px;height:40px;border:2px solid var(--ink);border-radius:11px;background:var(--amber,#F5A524);color:var(--ink);font:800 .82rem/1 var(--font-mono);box-shadow:3px 3px 0 var(--ink);}
+main section.shell.reveal>h2.sec-h::after{height:2px;min-width:24px;background:linear-gradient(90deg,var(--ink) 0 56px,var(--rule) 56px);}
+main .sec-h .sec-n{flex:none;display:inline-flex;align-items:center;padding:5px 11px 4px;border:2px solid var(--ink);border-radius:999px;background:linear-gradient(135deg,var(--amber,#F5A524),#f7c768);color:var(--ink);font:800 .64rem/1 'Archivo',sans-serif;letter-spacing:.14em;text-transform:uppercase;box-shadow:2px 2px 0 var(--ink);}
+main section.shell.reveal>h2.sec-h+.fiche-txt{max-width:74ch;color:var(--ink-soft);}
+#carnet .col-ring-bg{stroke:#F6E6C4;}
+#carnet .col-progress-panel,#carnet .col-backup-panel,#carnet .col-map-card,#sorties .col-tools-panel{border-radius:14px;}
+@media(max-width:600px){main section.shell.reveal>h2.sec-h{gap:11px;}main section.shell.reveal>h2.sec-h::before{width:34px;height:34px;border-radius:9px;font-size:.74rem;}}

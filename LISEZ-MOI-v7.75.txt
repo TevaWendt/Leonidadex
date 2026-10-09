@@ -1,0 +1,30 @@
+LEONIDAKIT v7.75 — lot B sur 3 : cartes des hubs du monde, Collectibles, GTA Online et Progression dans un nouvel onglet
+À appliquer APRÈS la v7.74 (archive Leonidakit-v7.74-modifs.zip). Rien n'a été publié ni poussé.
+Livrée en archive « modifs » (seulement les fichiers qui changent). Aucun fichier à supprimer.
+
+CE QUI CHANGE POUR LE VISITEUR
+- Lieux, Personnages, Demeures, Planques, Entreprises : les cartes en tête de chaque hub sont nettes et alignées (cadre,
+  photo cadrée, texte, bouton calé en bas). Au survol, plus rien ne se décale : seuls l'ombre, la photo (dans son cadre)
+  et la flèche du bouton réagissent. Chaque hub garde son style : tableau des départs numéroté (Lieux), plaques de casting
+  cadrées sur les visages (Personnages), planche d'architecte (Demeures), dossiers à onglet (Planques), enseignes au néon
+  (Entreprises).
+- Entrées : deux nouvelles, Lieux (les volets de la photo s'ouvrent, le nom s'écrit lettre à lettre comme un tableau des
+  départs) et Personnages (flash d'appareil photo, mise au point du portrait). Demeures, Planques et Entreprises gardent
+  la leur. Gangs et factions ne change pas.
+- Collectibles : titres de section numérotés (01, 02…) dans une tuile ambre, anneau de progression plus lisible, coins et
+  tailles harmonisés, sur ordinateur comme sur téléphone.
+- GTA Online et Progression : depuis le menu, « Explorer », le pied de page et les puces, ils s'ouvrent dans un nouvel
+  onglet (petite flèche ↗ après le nom, info-bulle « S'ouvre dans un nouvel onglet »). Une fois dans l'espace GTA Online
+  (ou dans la Progression et ses carnets), on navigue dans le même onglet. Les liens dans le texte des pages ne changent pas.
+
+MARCHE À SUIVRE
+  1. Copie le contenu de l'archive à la racine du dossier GitHub (remplacer), valide, pousse. Rien à changer dans Vercel.
+  2. Essai : ouvre lieux.html (fais défiler jusqu'aux cartes : volets et noms qui s'écrivent), personnages.html, puis passe
+     la souris sur les cartes de planques.html : rien ne bouge. Dans le menu, clique « Progression » : nouvel onglet.
+
+RAPPEL QUI NE CHANGE PAS : Rockstar et Take-Two tolèrent les sites de fans non commerciaux ; le jour où une publicité
+s'affiche, un site consacré à GTA VI avec leurs visuels s'expose à une réclamation. Les visuels restent crédités partout.
+
+Contrôles automatiques et vérifications sur ordinateur et téléphone : détail dans outils/CHANGEMENTS-v7.75.txt.
+Suite : v7.76 (visuels propres aux consommables, styles et personnalisations).
+Retour arrière : commit précédent dans GitHub Desktop.

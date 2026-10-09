@@ -912,3 +912,15 @@
   .cg-card:hover .cg-media img{transform:scale(1.07);}
 }
 @media(prefers-reduced-motion:reduce){.cg-media img{transition:none;}.cg-card:hover .cg-media img{transform:none;}}
+
+/* v7.76 (lot C, Téva : « les visuels sont toujours les mêmes, souvent sans rapport : fais des schémas jolis, effet Rockstar ») :
+   une illustration réalisée pour le site (outils/illustrations/, img/illus/) dans les vignettes des listes, les cartes « En un
+   regard » et la fiche ouverte de chaque élément sans visuel officiel propre ; pas de voile de teinte.
+   v7.77 (Téva : « thème rétro, sérieux, semi-réaliste voire réaliste ») : images de synthèse photographiques (WebP), fond sombre
+   le temps du chargement, sujet centré. */
+.cat-thumb--illus{background:#141414;}
+.cat-thumb--illus img{object-position:50% 50%;}
+.cg-media--illus{background:#141414;}
+.cg-media--illus img{object-position:50% 46%;}
+.cat-dlg-media--illus{background:#141414;}
+.cat-dlg-media--illus img{aspect-ratio:16/10;}

@@ -1,0 +1,53 @@
+LEONIDAKIT v7.74 — lot A sur 3 : business plan en mode Expert complet, « Et si autre chose change ? », micro réparé
+À appliquer APRÈS la v7.73 (archive Leonidakit-v7.73-modifs.zip). Rien n'a été publié ni poussé.
+Livrée en archive « modifs » (seulement les fichiers qui changent) : Leonidakit-v7.74-modifs.zip. Aucun fichier à supprimer.
+
+CE QUI CHANGE POUR LE VISITEUR
+- Mon business plan, mode Expert : le bloc « Mode Expert : tout le détail » a maintenant les mêmes points que les autres
+  calculs, que le plan se calcule ou pas encore : 1. Et si le chiffre bouge de 20 % ? 2. Et si autre chose change ?
+  3. Comparer avec un calcul gardé 4. Comment est-ce calculé ? 5. Tous les chiffres du calcul. Quand il manque un
+  chiffre, chaque point dit lequel.
+- « Et si autre chose change ? », dans les huit calculs et le plan : le calcul est refait avec un seul changement à la
+  fois (gains −20 %, prix +20 %, frais +20 %, missions plus longues, 30 min de jeu de plus, un jour de jeu de plus,
+  argent de côté, argent de départ −20 %, objectif +20 %), puis « tout va moins bien » et « tout va mieux » ensemble.
+  Un tableau montre l'écart de chaque hypothèse (barre verte si c'est mieux, corail si c'est moins bien), ★ ce qui pèse
+  le plus, et la fourchette. Sur téléphone, chaque hypothèse est une petite fiche.
+- Micro : il marche. Au premier appui, le site prévient que le navigateur va demander l'accès (réponds « Autoriser »).
+  Si l'accès est refusé, un encadré « Autoriser le micro pour ce site » donne les étapes de TON navigateur et un bouton
+  « Réessayer ».
+
+POURQUOI LE MICRO NE MARCHAIT PAS (ce n'était pas toi)
+L'en-tête de sécurité du site (fichier vercel.json) interdisait le micro à toutes les pages depuis une ancienne version :
+le navigateur refusait sans rien te demander, et aucun réglage ne pouvait le débloquer. C'est corrigé (le micro est
+permis au site seul, jamais à une vidéo intégrée). Il faut que la nouvelle version soit en ligne : pousse, Vercel la
+déploie tout seul.
+
+SI TON NAVIGATEUR A GARDÉ UN « BLOQUER » (à faire une fois, après la mise en ligne)
+- Chrome (ordinateur) : clique sur l'icône à gauche de l'adresse du site (deux petits curseurs ou un cadenas) → ligne
+  « Micro » → « Autoriser » → recharge la page.
+- Edge : cadenas à gauche de l'adresse → « Autorisations pour ce site » → « Microphone » → « Autoriser » → recharge.
+- Safari sur Mac : menu Safari → « Réglages pour ce site web… » → « Microphone » → « Autoriser » → recharge.
+  (Safari transcrit avec la Dictée : Réglages Système → Clavier → Dictée doit être activée.)
+- iPhone / iPad (Safari) : touche « aA » à gauche de l'adresse → « Réglages du site web » → « Microphone » →
+  « Autoriser ». Sinon : app Réglages → Safari → Microphone → « Autoriser ». Dictée : Réglages → Général → Clavier.
+- Android (Chrome) : icône à gauche de l'adresse → « Autorisations » → active « Micro ».
+- Toujours bloqué sur ordinateur : Windows → Paramètres → Confidentialité et sécurité → Microphone (autorise le
+  navigateur) ; Mac → Réglages Système → Confidentialité et sécurité → Micro (coche ton navigateur).
+- Firefox ne sait pas transcrire la voix : le bouton micro n'y apparaît pas. Brave bloque la transcription : le site le
+  dit et propose Chrome, Edge ou Safari.
+Le site affiche ces mêmes étapes tout seul, pour le navigateur utilisé, dès qu'il voit le micro bloqué.
+
+MARCHE À SUIVRE
+  1. Copie le contenu de l'archive à la racine du dossier GitHub (remplacer), valide, pousse. Rien à changer dans Vercel
+     (le nouvel en-tête du micro part avec le déploiement).
+  2. Essai : calculateurs.html → « Mon business plan » → mode Expert : cinq points numérotés ; ouvre « Et si autre chose
+     change ? ». Appuie sur « Garder pour comparer », change « Argent en poche » : le point 3 montre l'écart.
+     Puis la barre « Que veux-tu calculer ? » → bouton micro → « Autoriser » → parle.
+
+RAPPEL QUI NE CHANGE PAS : Rockstar et Take-Two tolèrent les sites de fans non commerciaux ; le jour où une publicité
+s'affiche, un site consacré à GTA VI avec leurs visuels s'expose à une réclamation. Les visuels restent crédités partout.
+
+SUR ORDINATEUR ET TÉLÉPHONE : vérifié (1 280 et 390 px) ; contrôles automatiques au vert (détail dans
+outils/CHANGEMENTS-v7.74.txt). Suite : v7.75 (cartes des hubs du monde, Collectibles, GTA Online et Progression dans un
+nouvel onglet), puis v7.76 (visuels propres aux consommables, styles et personnalisations).
+Retour arrière : commit précédent dans GitHub Desktop.

@@ -573,3 +573,50 @@ body.calculator-page main .lk-act--3 td[data-l]::before{content:attr(data-l) "\0
 body:not([data-calc-mode="advanced"]) .b-expert-only{display:none!important}
 .b-legacy-saved.b-expert-only{display:grid;gap:12px;margin-top:22px}
 .b-legacy-saved .calc-button{margin-top:10px}
+
+/* v7.74 : « Et si autre chose change ? » (mode Expert des huit calculs et du business plan). Chaque ligne refait tout le calcul
+   avec un seul changement : écart chiffré, barre proportionnelle (la plus longue = l’hypothèse qui pèse le plus), vert si c’est
+   mieux pour toi, corail si c’est moins bien, ambre quand le temps de jeu et les jours vont en sens contraire. */
+.b-hyp-keys{list-style:none;margin:0 0 14px;padding:0;display:grid;gap:6px}
+.b-hyp-keys li{padding:9px 14px;border-left:3px solid var(--amber,#F5A524);background:var(--paper-2,#F4F0E7);border-radius:0 10px 10px 0;line-height:1.45;overflow-wrap:anywhere}
+.b-doc .b-hyp .calc-table{min-width:560px;border-collapse:separate;border-spacing:0}
+.b-doc .b-hyp thead th{background:none;color:var(--ink-soft,#5C5A63);font-size:11px;letter-spacing:.06em;text-transform:uppercase;font-weight:750;border-bottom:2px solid var(--rule,#DFD9CC);text-align:left}
+.b-doc .b-hyp tbody th,.b-doc .b-hyp tbody td{border-bottom:1px solid var(--rule,#DFD9CC);vertical-align:middle}
+.b-doc .b-hyp tbody th{background:none;font-weight:650}
+.b-hyp-row td:nth-child(2){white-space:nowrap}
+.b-hyp-delta{display:block;font-weight:750;font-variant-numeric:tabular-nums;white-space:nowrap}
+.b-hyp-bar{display:block;height:6px;margin-top:6px;width:100%;max-width:150px;border-radius:3px;background:var(--rule,#DFD9CC);overflow:hidden}
+.b-hyp-bar i{display:block;height:100%;max-width:100%;border-radius:3px;background:var(--ink-soft,#5C5A63);transform-origin:left center}
+.b-hyp-row.is-worse .b-hyp-delta{color:var(--coral-text,#B93220)}.b-hyp-bar i.is-worse{background:var(--coral-text,#B93220)}
+.b-hyp-row.is-better .b-hyp-delta{color:#1C6A43}.b-hyp-bar i.is-better{background:#1C6A43}
+.b-hyp-row.is-mixed .b-hyp-delta{color:#8A5300}.b-hyp-bar i.is-mixed{background:var(--amber,#F5A524)}
+.b-doc .b-hyp .b-hyp-row.is-base th,.b-doc .b-hyp .b-hyp-row.is-base td{background:var(--paper-2,#F4F0E7);font-weight:750}
+.b-doc .b-hyp .b-hyp-row.is-off th,.b-doc .b-hyp .b-hyp-row.is-off td{color:var(--ink-soft,#5C5A63)}.b-hyp-row.is-off td:nth-child(2){font-style:italic;white-space:normal}
+.b-doc .b-hyp .b-hyp-row.is-all th{font-weight:800}
+.b-doc .b-hyp .b-hyp-row.is-all th,.b-doc .b-hyp .b-hyp-row.is-all td{background:#FFF8EC}
+.b-doc .b-hyp .b-hyp-row:not(.is-all)+.b-hyp-row.is-all th,.b-doc .b-hyp .b-hyp-row:not(.is-all)+.b-hyp-row.is-all td{border-top:2px solid var(--rule,#DFD9CC)}
+.b-hyp-star{color:#8A5300}
+.b-hyp-row.is-top th{box-shadow:inset 3px 0 0 var(--amber,#F5A524)}
+@keyframes b-hyp-grow{from{transform:scaleX(0)}to{transform:none}}
+.b-fold.is-open .b-hyp-bar i{animation:b-hyp-grow .5s var(--ease-out,cubic-bezier(.2,.8,.2,1)) both}
+@media(prefers-reduced-motion:reduce){.b-fold.is-open .b-hyp-bar i{animation:none}}
+.b-hyp-row .b-hyp-delta.is-flat{color:var(--ink-soft,#5C5A63)}
+.b-hyp-dd{font-weight:700;white-space:nowrap}.b-hyp-dd.is-better{color:#1C6A43}.b-hyp-dd.is-worse{color:var(--coral-text,#B93220)}
+/* téléphone : chaque hypothèse devient une petite fiche (nom, puis réponse et écart, puis jours) au lieu d’un tableau à faire défiler */
+@media(max-width:600px){
+ .b-doc .b-hyp{overflow:visible}
+ .b-doc .b-hyp .calc-table{min-width:0;width:100%;display:block}
+ .b-doc .b-hyp caption{display:block}
+ .b-doc .b-hyp thead{display:none}
+ .b-doc .b-hyp tbody{display:block}
+ .b-doc .b-hyp tbody tr{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:4px 14px;padding:11px 10px;border-bottom:1px solid var(--rule,#DFD9CC)}
+ .b-doc .b-hyp tbody th,.b-doc .b-hyp tbody td,.b-doc .b-hyp .b-hyp-row.is-base th,.b-doc .b-hyp .b-hyp-row.is-base td,.b-doc .b-hyp .b-hyp-row.is-all th,.b-doc .b-hyp .b-hyp-row.is-all td{display:block;border:0!important;padding:0;background:none}
+ .b-doc .b-hyp tbody th{grid-column:1/-1}
+ .b-doc .b-hyp tbody td:nth-of-type(2){text-align:right}
+ .b-doc .b-hyp tbody td:nth-of-type(3){grid-column:1/-1;font-size:13px;color:var(--ink-soft,#5C5A63)}
+ .b-doc .b-hyp tbody tr.is-base{background:var(--paper-2,#F4F0E7);border-radius:10px 10px 0 0}
+ .b-doc .b-hyp tbody tr.is-all{background:#FFF8EC}
+ .b-doc .b-hyp tbody tr:not(.is-all)+tr.is-all{border-top:2px solid var(--rule,#DFD9CC)}
+ .b-hyp-row.is-top th{box-shadow:none}.b-doc .b-hyp tbody tr.is-top{box-shadow:inset 3px 0 0 var(--amber,#F5A524)}
+ .b-hyp-bar{margin-left:auto;max-width:96px;min-width:72px}
+}
