@@ -219,6 +219,7 @@
       "categorie": "collections",
       "statut": "officiel",
       "personnage": "jason-lucia",
+      "media": "goodtime-gear-01",
       "description": "Vêtements et accessoires inspirés de Macca the Gator, personnage télé de l’État du bon temps (Édition Ultimate).",
       "effet": {
         "texte": "Change l’apparence ; aucun effet de jeu publié",
@@ -254,6 +255,7 @@
       "categorie": "tenues-completes",
       "statut": "officiel",
       "personnage": "jason",
+      "media": "vintage-vice-city-pack-exclusive-looks-03",
       "description": "Costume en lin « vintage pastel » livré avec le Pack Vintage Vice City.",
       "effet": {
         "texte": "Change l’apparence ; aucun effet de jeu publié",

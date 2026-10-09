@@ -20,15 +20,25 @@ CE QUI CHANGE POUR LE VISITEUR (résumé des quatre versions)
   créditent Poly Haven (ressources CC0).
 - Quand Rockstar publiera le visuel d'un élément, il suffira de le lier à l'élément : il remplacera la silhouette.
 
-MARCHE À SUIVRE
+MARCHE À SUIVRE (trois archives qui se complètent ; l'ordre n'a pas d'importance)
+  Leonidakit-v7.77-1-sur-3-site.zip           540 fichiers : pages, scripts, styles, outils
+  Leonidakit-v7.77-2-sur-3-illustrations.zip  383 fichiers : les 382 silhouettes (img/illus/) et ce LISEZ-MOI
+  Leonidakit-v7.77-3-sur-3-langues.zip       1781 fichiers : pages en anglais, espagnol, italien, allemand, et ce LISEZ-MOI
   1. Si tu avais déjà collé la v7.76, supprime d'abord dans ton dossier GitHub : le dossier img/illus/ (les fichiers
      .svg), les fichiers outils/illustrations/core.cjs, conso.cjs, head.cjs, tattoo.cjs, wear.cjs, car.cjs, gun.cjs, et
-     outils/tests/v776.test.cjs. Si tu n'avais collé que la v7.74 (ou rien après la v7.73), il n'y a rien à supprimer.
-  2. Copie le contenu des DEUX archives à la racine du dossier GitHub (remplacer) : Leonidakit-v7.77-tout-en-un-1-sur-2
-     (le site, les images, les outils) et Leonidakit-v7.77-tout-en-un-2-sur-2 (les pages en anglais, espagnol, italien
-     et allemand). Les deux se complètent, l'ordre n'a pas d'importance. Valide, pousse. Rien à changer dans Vercel.
-  3. Essai : nourriture.html (« En un regard », puis une liste et « Fiche complète »), style.html et
-     personnalisations.html (ouvre les listes, puis une fiche).
+     outils/tests/v776.test.cjs. Sinon, il n'y a rien à supprimer.
+  2. Pour chaque archive : clic droit → « Extraire tout… » vers un dossier à part (pas directement dans GitHub). Vérifie
+     le nombre de fichiers obtenus : clic droit sur le dossier extrait → Propriétés → « Contenu » doit afficher le nombre
+     ci-dessus. Moins de fichiers = extraction incomplète : recommence. Si Windows affiche une erreur, ne clique pas sur
+     « Annuler » : note le message.
+  3. Copie le CONTENU de chaque dossier extrait (404.html, img, vehicules… et non le dossier lui-même) à la racine du
+     dossier GitHub, en choisissant « Remplacer les fichiers dans la destination ».
+  4. Avant de valider, contrôle dans le dossier GitHub : img/illus/ contient 6 dossiers (consommables, coiffures,
+     tatouages, tenues, perso-vehicules, perso-armes) ; nourriture.html ouvert avec le Bloc-notes contient le mot
+     « silhouette » ; en/nourriture.html contient « silhouette drawn ». Si c'est bon : valide, pousse. Rien à changer
+     dans Vercel.
+  5. Essai sur le site : nourriture.html (« En un regard », puis une liste et « Fiche complète »), style.html,
+     personnalisations.html (ouvre les listes, puis une fiche), lieux.html et personnages.html (nouvelles cartes).
 
 L'AVERTISSEMENT DE GITHUB DESKTOP (« LF will be replaced by CRLF »)
   Ce n'est pas une erreur : Git pour Windows convertit les fins de ligne des fichiers texte (format Linux « LF » dans

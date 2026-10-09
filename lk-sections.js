@@ -24,6 +24,29 @@
       c.style.setProperty('--rz', ((i % 2 ? 1 : -1) * (5 + (i % 3) * 4)) + 'deg');
     });
   }
+  /* v7.75 : entrée « tableau des départs » des Lieux : le nom de chaque région bascule lettre par lettre, comme un volet
+     d'affichage. Les lettres sont celles de la page (déjà traduite) : une copie décorative (aria-hidden) est animée, le nom
+     reste lisible (sr-only), puis le titre redevient exactement le texte d'origine. */
+  function flap(g) {
+    if (!g.classList.contains('lkx-flap')) return;
+    each(g.children, function (card, i) {
+      var h = card.querySelector('h3'); if (!h || h.getAttribute('data-lkx-flap')) return;
+      var text = h.textContent, d = i * 130 + 560, k = 0;
+      h.setAttribute('data-lkx-flap', '1');
+      var sr = document.createElement('span'); sr.className = 'sr-only'; sr.textContent = text;
+      var vis = document.createElement('span'); vis.setAttribute('aria-hidden', 'true');
+      text.split(/(\s+)/).forEach(function (part) {
+        if (!part) return;
+        if (/^\s+$/.test(part)) { vis.appendChild(document.createTextNode(part)); return; }
+        var w = document.createElement('span'); w.className = 'lkx-flap-w';
+        Array.prototype.forEach.call(part, function (ch) { var c = document.createElement('span'); c.className = 'lkx-flap-c'; c.textContent = ch; c.style.setProperty('--k', k++); w.appendChild(c); });
+        vis.appendChild(w);
+      });
+      h.style.setProperty('--d', d + 'ms');
+      h.replaceChildren(sr, vis);
+      window.setTimeout(function () { h.textContent = text; h.style.removeProperty('--d'); }, d + k * 26 + 700);
+    });
+  }
   var rows = document.querySelectorAll('.lkx-page .ed-tl-item--media');
   if (reduced || !('IntersectionObserver' in window)) {
     each(groups, function (g) { g.classList.add('is-in'); });
@@ -34,6 +57,7 @@
       entries.forEach(function (e) {
         if (!e.isIntersecting) return;
         deal(e.target);
+        flap(e.target);
         e.target.classList.add('is-in');
         io.unobserve(e.target);
       });

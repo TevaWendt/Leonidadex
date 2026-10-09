@@ -420,6 +420,42 @@
    "alt": "Lucia tient un lance-grenades à cylindre pendant une poursuite, dans le Trailer 2 de GTA VI.",
    "source": "https://www.rockstargames.com/VI/media/videos",
    "preuve": "Le large cylindre de l’arme se distingue à gauche du cadre, à hauteur de l’épaule de Lucia. Séquence recoupée par PC Gamer ; aucun calibre, capacité ou nom de marque déduit."
+  },
+  {
+   "type": "tenues",
+   "fiche": "goodtime-gear",
+   "media": "goodtime-gear-01",
+   "alt": "Jason et Lucia en casquettes et tee-shirts Vice City illustrés de Macca the Gator, devant une fresque de l’alligator (capture officielle « Goodtime Gear » de l’Édition Ultimate).",
+   "source": "https://www.rockstargames.com/VI/media/screenshots",
+   "identification": "inspection visuelle du visuel officiel (Leonidakit, 09/10/2026)",
+   "preuve": "Jason et Lucia portent des tee-shirts et casquettes « Vice City / Leonida » illustrés du personnage Macca the Gator : la collection Goodtime Gear de l’Édition Ultimate."
+  },
+  {
+   "type": "perso-armes",
+   "fiche": "variante-morgan",
+   "media": "hawk-little-morgan-revolvers-02",
+   "alt": null,
+   "source": "https://www.rockstargames.com/VI/media/screenshots",
+   "identification": "inspection visuelle du visuel officiel (Leonidakit, 09/10/2026)",
+   "preuve": "Les deux revolvers Hawk & Little Morgan posés côte à côte : crosses gravées de palmiers, lunette, gravures du canon."
+  },
+  {
+   "type": "tenues",
+   "fiche": "jason-costume-lin-pastel",
+   "media": "vintage-vice-city-pack-exclusive-looks-03",
+   "alt": "Jason tient un PM compact turquoise à motif de palmiers dans un visuel Vintage Vice City.",
+   "source": "https://www.rockstargames.com/VI/media/screenshots",
+   "identification": "inspection visuelle du visuel officiel (Leonidakit, 09/10/2026)",
+   "preuve": "Visuel officiel des looks exclusifs du Pack Vintage Vice City : Jason en veste de lin bleu pastel."
+  },
+  {
+   "type": "coiffures",
+   "fiche": "jason-coiffure-retro",
+   "media": "vintage-vice-city-pack-exclusive-looks-03",
+   "alt": "Jason tient un PM compact turquoise à motif de palmiers dans un visuel Vintage Vice City.",
+   "source": "https://www.rockstargames.com/VI/media/screenshots",
+   "identification": "inspection visuelle du visuel officiel (Leonidakit, 09/10/2026)",
+   "preuve": "Visuel officiel des looks exclusifs du Pack Vintage Vice City : Jason avec sa coiffure rétro mi-longue."
   }
  ]
 }

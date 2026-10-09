@@ -57,7 +57,7 @@ test('VIS-04 : cartes-fiches des hubs du monde alignées (cadre 16/9 réel, gril
   const d = doc('planques.html'), cards = [...d.querySelectorAll('#fiches .lore-grid > .lore-card')];
   assert.equal(cards.length, 3);
   for (const c of cards) {
-    const img = c.querySelector(':scope > img'); assert.ok(img, 'image directe');
+    const img = c.querySelector(':scope > img, :scope > .lore-card-media > img'); assert.ok(img, 'image directe, ou dans son cadre (v7.75 : cartes « pro »)');
     const body = c.querySelector(':scope > .veh-body'); assert.ok(body);
     assert.deepEqual([...body.children].map(x => x.tagName.toLowerCase() + (x.className ? '.' + x.className : '')), ['span.veh-marque', 'h3', 'p.lore-cardtag', 'p', 'span.veh-go'], 'structure attendue par les rangées');
   }

@@ -66,7 +66,8 @@ test('micro : module lk-micro.js (navigateur sans reconnaissance vocale : aucun 
 
 test('business plan : « Mes calculs enregistrés » et « Mes business plans » une seule fois même après rechargement d’un calcul ; « Et si » présent en Expert quand le plan ne se calcule pas encore', async () => {
   assert.match(read('calculateurs-workspace.js'), /querySelectorAll\('\.b-legacy-saved'\)\.forEach\(n=>n\.remove\(\)\)/);
-  assert.match(read('calculateurs-plan.js'), /expertPending\(s\)/);
+  /* v7.74 : le plan pas encore calculable garde le même bloc Expert (cinq points) que le plan calculé */
+  assert.equal((read('calculateurs-plan.js').match(/\$\('expert-plan'\)\.innerHTML=expert\?expertBlock\(s,r\):''/g) || []).length, 2);
   const p = await load(root, 'calculateurs.html', {});
   try {
     const count = () => [...p.d.querySelectorAll('summary')].filter(s => /^(Mes calculs enregistrés|Mes business plans)$/.test(s.textContent.trim())).length;

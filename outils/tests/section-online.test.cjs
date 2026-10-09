@@ -102,8 +102,13 @@ test('menu, pied de page, recherche et plan du site : « GTA Online » est un gr
   assert.ok(!shell.play.some(x => x[0] === 'online.html'), 'plus dans « Jouer »');
   assert.deepEqual(shell.online[0], ['online.html', 'L’espace GTA Online']);
   assert.ok(shell.sectionPages.has('online.html') && !shell.sectionPages.has('online/annonces.html'));
-  assert.match(shell.nav('index.html', ''), /<div class="nav-online"><strong>GTA Online<\/strong><a href="online\.html">L’espace GTA Online<\/a><a href="online\/annonces\.html">Les annonces<\/a><a href="online\/gta-online-actuel\.html">Le GTA Online actuel<\/a><\/div><\/div><\/details>/);
-  assert.match(shell.footer('', ''), /<h2>GTA Online<\/h2><nav [^>]*><a href="online\.html">L’espace GTA Online<\/a>/);
+  /* v7.75 : depuis le reste du site, ces liens s'ouvrent dans un nouvel onglet (marques retirées pour lire la structure) */
+  const plain = h => h.replace(/ target="_blank" rel="noopener" data-newtab title="S’ouvre dans un nouvel onglet"/g, '');
+  assert.match(plain(shell.nav('index.html', '')), /<div class="nav-online"><strong>GTA Online<\/strong><a href="online\.html">L’espace GTA Online<\/a><a href="online\/annonces\.html">Les annonces<\/a><a href="online\/gta-online-actuel\.html">Le GTA Online actuel<\/a><\/div><\/div><\/details>/);
+  assert.match(plain(shell.footer('', '')), /<h2>GTA Online<\/h2><nav [^>]*><a href="online\.html">L’espace GTA Online<\/a>/);
+  assert.match(shell.nav('index.html', ''), /<a href="online\.html" target="_blank" rel="noopener" data-newtab title="S’ouvre dans un nouvel onglet">L’espace GTA Online<\/a>/);
+  assert.doesNotMatch(shell.nav('online/annonces.html', '../'), /href="\.\.\/online[^"]*" target="_blank"/, 'dans la section : même onglet');
+  assert.match(shell.nav('online/annonces.html', '../'), /href="\.\.\/progression\.html" target="_blank"/, 'la Progression, autre section : nouvel onglet');
   assert.ok(shell.ENTRY['online.html'] && shell.ENTRY['online.html'].tool === 'roi');
   assert.match(read('online.html'), /<a href="online\.html" class="here" aria-current="page">L’espace GTA Online<\/a>/);
   const ctx = { window: {} }; vm.runInNewContext(read('search-index.js'), ctx);

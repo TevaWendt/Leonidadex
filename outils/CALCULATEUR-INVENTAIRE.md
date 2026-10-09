@@ -202,6 +202,7 @@ Lecture : **kind** = type de contrôle ; **field** = chemin dans le scénario v6
 | button |  |  | Choisir cette activité ↗ | scenario=scenario-c |  | Simple + Expert (E) | petit à petit, à la fin de chaque mission |
 | button |  |  | Et si le chiffre bouge de 20 % ? | foldHead=goal-sensitivity | expanded=false controls=fold-goal-sensitivity | Expert (E) | petit à petit, à la fin de chaque mission |
 | button |  |  | Et si je gagne plus, ou moins ? | foldHead=goal-earn | expanded=false controls=fold-goal-earn | Expert (E) | petit à petit, à la fin de chaque mission |
+| button |  |  | Et si autre chose change ? | foldHead=goal-hypotheses | expanded=false controls=fold-goal-hypotheses | Expert (E) | petit à petit, à la fin de chaque mission |
 | button |  |  | Comparer avec un calcul gardé | foldHead=goal-reference | expanded=false controls=fold-goal-reference | Expert (E) | petit à petit, à la fin de chaque mission |
 | button |  |  | Comment est-ce calculé ? | foldHead=goal-formula | expanded=false controls=fold-goal-formula | Expert (E) | petit à petit, à la fin de chaque mission |
 | button |  |  | Tous les chiffres du calcul | foldHead=goal-raw | expanded=false controls=fold-goal-raw | Expert (E) | petit à petit, à la fin de chaque mission |
@@ -286,6 +287,7 @@ Lecture : **kind** = type de contrôle ; **field** = chemin dans le scénario v6
 | checkbox |  |  | Comparer | compare=club-golf |  | Simple + Expert | achat libre, fiche du catalogue, revenu écrit |
 | button | catalogue-more |  | Afficher plus |  |  | Simple + Expert | achat libre, fiche du catalogue, revenu écrit |
 | button |  |  | Et si le chiffre bouge de 20 % ? | foldHead=purchase-sensitivity | expanded=false controls=fold-purchase-sensitivity | Expert (E) | achat libre, fiche du catalogue, revenu écrit |
+| button |  |  | Et si autre chose change ? | foldHead=purchase-hypotheses | expanded=false controls=fold-purchase-hypotheses | Expert (E) | achat libre, fiche du catalogue, revenu écrit |
 | button |  |  | Comparer avec un calcul gardé | foldHead=purchase-reference | expanded=false controls=fold-purchase-reference | Expert (E) | achat libre, fiche du catalogue, revenu écrit |
 | button |  |  | Comment est-ce calculé ? | foldHead=purchase-formula | expanded=false controls=fold-purchase-formula | Expert (E) | achat libre, fiche du catalogue, revenu écrit |
 | button |  |  | Tous les chiffres du calcul | foldHead=purchase-raw | expanded=false controls=fold-purchase-raw | Expert (E) | achat libre, fiche du catalogue, revenu écrit |
@@ -388,6 +390,7 @@ Lecture : **kind** = type de contrôle ; **field** = chemin dans le scénario v6
 | button |  |  | Modifier | bFocus=session-reserve |  | Simple + Expert |  |
 | button |  |  | Ton programme, dans l’ordre | foldHead=session-timeline | expanded=false controls=fold-session-timeline | Simple + Expert |  |
 | button |  |  | Et si le chiffre bouge de 20 % ? | foldHead=session-sensitivity | expanded=false controls=fold-session-sensitivity | Expert (E) |  |
+| button |  |  | Et si autre chose change ? | foldHead=session-hypotheses | expanded=false controls=fold-session-hypotheses | Expert (E) |  |
 | button |  |  | Comparer avec un calcul gardé | foldHead=session-reference | expanded=false controls=fold-session-reference | Expert (E) |  |
 | button |  |  | Comment est-ce calculé ? | foldHead=session-formula | expanded=false controls=fold-session-formula | Expert (E) |  |
 | button |  |  | Tous les chiffres du calcul | foldHead=session-raw | expanded=false controls=fold-session-raw | Expert (E) |  |
@@ -427,6 +430,7 @@ Lecture : **kind** = type de contrôle ; **field** = chemin dans le scénario v6
 | button |  |  | Modifier | bFocus=budget-capital |  | Simple + Expert | je répartis moi-même, panier de Quoi acheter d’abord ? |
 | button |  |  | Modifier | bFocus=budget-reserve |  | Simple + Expert | je répartis moi-même, panier de Quoi acheter d’abord ? |
 | button |  |  | Et si le chiffre bouge de 20 % ? | foldHead=budget-sensitivity | expanded=false controls=fold-budget-sensitivity | Expert (E) | je répartis moi-même, panier de Quoi acheter d’abord ? |
+| button |  |  | Et si autre chose change ? | foldHead=budget-hypotheses | expanded=false controls=fold-budget-hypotheses | Expert (E) | je répartis moi-même, panier de Quoi acheter d’abord ? |
 | button |  |  | Comparer avec un calcul gardé | foldHead=budget-reference | expanded=false controls=fold-budget-reference | Expert (E) | je répartis moi-même, panier de Quoi acheter d’abord ? |
 | button |  |  | Comment est-ce calculé ? | foldHead=budget-formula | expanded=false controls=fold-budget-formula | Expert (E) | je répartis moi-même, panier de Quoi acheter d’abord ? |
 | button |  |  | Tous les chiffres du calcul | foldHead=budget-raw | expanded=false controls=fold-budget-raw | Expert (E) | je répartis moi-même, panier de Quoi acheter d’abord ? |
@@ -460,6 +464,7 @@ Lecture : **kind** = type de contrôle ; **field** = chemin dans le scénario v6
 | button |  |  | Modifier | bFocus=order-reserve |  | Simple + Expert | panier vide, deux achats, éditeur ouvert |
 | button |  |  | Modifier | bFocus=order-hourly |  | Simple + Expert | panier vide, deux achats, éditeur ouvert |
 | button |  |  | Et si le chiffre bouge de 20 % ? | foldHead=order-sensitivity | expanded=false controls=fold-order-sensitivity | Expert (E) | panier vide, deux achats, éditeur ouvert |
+| button |  |  | Et si autre chose change ? | foldHead=order-hypotheses | expanded=false controls=fold-order-hypotheses | Expert (E) | panier vide, deux achats, éditeur ouvert |
 | button |  |  | Comparer avec un calcul gardé | foldHead=order-reference | expanded=false controls=fold-order-reference | Expert (E) | panier vide, deux achats, éditeur ouvert |
 | button |  |  | Comment est-ce calculé ? | foldHead=order-formula | expanded=false controls=fold-order-formula | Expert (E) | panier vide, deux achats, éditeur ouvert |
 | button |  |  | Tous les chiffres du calcul | foldHead=order-raw | expanded=false controls=fold-order-raw | Expert (E) | panier vide, deux achats, éditeur ouvert |
@@ -539,6 +544,7 @@ Lecture : **kind** = type de contrôle ; **field** = chemin dans le scénario v6
 | button |  |  | Comment est-ce calculé ? | foldHead=roi-d1 | expanded=false controls=fold-roi-d1 | Simple + Expert | achat plaisir (estimate), estimate + activité pour regagner, chiffre par heure (continuous), deuxième achat comparé |
 | button |  |  | Ajouter à « Quoi acheter d’abord ? » | bOrderRoi |  | Simple + Expert | achat plaisir (estimate), estimate + activité pour regagner, nouvelle activité (new), activité améliorée (improve), chiffre par heure (continuous), deuxième achat comparé |
 | button |  |  | Et si le chiffre bouge de 20 % ? | foldHead=roi-sensitivity | expanded=false controls=fold-roi-sensitivity | Expert (E) | achat plaisir (estimate), estimate + activité pour regagner, nouvelle activité (new), activité améliorée (improve), chiffre par heure (continuous), deuxième achat comparé |
+| button |  |  | Et si autre chose change ? | foldHead=roi-hypotheses | expanded=false controls=fold-roi-hypotheses | Expert (E) | achat plaisir (estimate), estimate + activité pour regagner, nouvelle activité (new), activité améliorée (improve), chiffre par heure (continuous), deuxième achat comparé |
 | button |  |  | Comparer avec un calcul gardé | foldHead=roi-reference | expanded=false controls=fold-roi-reference | Expert (E) | achat plaisir (estimate), estimate + activité pour regagner, nouvelle activité (new), activité améliorée (improve), chiffre par heure (continuous), deuxième achat comparé |
 | button |  |  | Comment est-ce calculé ? | foldHead=roi-formula | expanded=false controls=fold-roi-formula | Expert (E) | achat plaisir (estimate), estimate + activité pour regagner, nouvelle activité (new), activité améliorée (improve), chiffre par heure (continuous), deuxième achat comparé |
 | button |  |  | Tous les chiffres du calcul | foldHead=roi-raw | expanded=false controls=fold-roi-raw | Expert (E) | achat plaisir (estimate), estimate + activité pour regagner, nouvelle activité (new), activité améliorée (improve), chiffre par heure (continuous), deuxième achat comparé |
@@ -663,6 +669,7 @@ Lecture : **kind** = type de contrôle ; **field** = chemin dans le scénario v6
 | checkbox |  |  | Je prépare une seule fois par partie (sinon, à chaque mission) | bPrepOnce=2 |  | Simple + Expert |  |
 | select | activity-filter |  | Afficher |  |  | Simple + Expert |  |
 | button |  |  | Et si le chiffre bouge de 20 % ? | foldHead=activities-sensitivity | expanded=false controls=fold-activities-sensitivity | Expert (E) |  |
+| button |  |  | Et si autre chose change ? | foldHead=activities-hypotheses | expanded=false controls=fold-activities-hypotheses | Expert (E) |  |
 | button |  |  | Comparer avec un calcul gardé | foldHead=activities-reference | expanded=false controls=fold-activities-reference | Expert (E) |  |
 | button |  |  | Comment est-ce calculé ? | foldHead=activities-formula | expanded=false controls=fold-activities-formula | Expert (E) |  |
 | button |  |  | Tous les chiffres du calcul | foldHead=activities-raw | expanded=false controls=fold-activities-raw | Expert (E) |  |
@@ -699,6 +706,7 @@ Lecture : **kind** = type de contrôle ; **field** = chemin dans le scénario v6
 | button |  |  | Rétablir cette valeur | bDefault=compare.hours bDefaultValue=10 |  | Simple + Expert (E) | vide, deux achats libres |
 | button |  |  | Voir ma réponse ↓ | showAnswer |  | Simple + Expert | vide, deux achats libres |
 | button |  |  | Et si le chiffre bouge de 20 % ? | foldHead=compare-sensitivity | expanded=false controls=fold-compare-sensitivity | Expert (E) | vide, deux achats libres |
+| button |  |  | Et si autre chose change ? | foldHead=compare-hypotheses | expanded=false controls=fold-compare-hypotheses | Expert (E) | vide, deux achats libres |
 | button |  |  | Comparer avec un calcul gardé | foldHead=compare-reference | expanded=false controls=fold-compare-reference | Expert (E) | vide, deux achats libres |
 | button |  |  | Comment est-ce calculé ? | foldHead=compare-formula | expanded=false controls=fold-compare-formula | Expert (E) | vide, deux achats libres |
 | button |  |  | Tous les chiffres du calcul | foldHead=compare-raw | expanded=false controls=fold-compare-raw | Expert (E) | vide, deux achats libres |
@@ -785,7 +793,6 @@ Lecture : **kind** = type de contrôle ; **field** = chemin dans le scénario v6
 | button |  |  | Ce qui change tout | foldHead=plan-thresholds | expanded=true controls=fold-plan-thresholds | Expert | somme, gain par heure |
 | button |  |  | Ton argent au fil du plan | foldHead=plan-curve | expanded=true controls=fold-plan-curve | Expert | somme, gain par heure |
 | button |  |  | Ton calendrier | foldHead=plan-calendar | expanded=true controls=fold-plan-calendar | Expert | somme, gain par heure |
-| button |  |  | Comment est-ce calculé ? | foldHead=plan-method | expanded=true controls=fold-plan-method | Expert | somme, gain par heure |
 | button |  |  | Mes variantes du plan | foldHead=plan-saved | expanded=true controls=fold-plan-saved | Simple + Expert | somme, gain par heure |
 | button |  |  | Garder ce plan comme variante | bPlanVsave |  | Simple + Expert | somme, gain par heure |
 | button |  |  | Préparer ma prochaine partie | open=session |  | Simple + Expert | somme, gain par heure |
@@ -794,9 +801,13 @@ Lecture : **kind** = type de contrôle ; **field** = chemin dans le scénario v6
 | button |  |  | Enregistrer mon plan (avec sa fiche) | bSave=plan |  | Simple + Expert | somme, gain par heure, achat, missions, achat d’avant, déblocage |
 | button |  |  | Imprimer mon plan | bPrint |  | Simple + Expert | somme, gain par heure, achat, missions, achat d’avant, déblocage |
 | button |  |  | Télécharger mon plan en texte (à lire ou à envoyer) | bPlanExport |  | Simple + Expert | somme, gain par heure, achat, missions, achat d’avant, déblocage |
-| button |  |  | Les chiffres utilisés | foldHead=plan-x-inputs | expanded=true controls=fold-plan-x-inputs | Expert (E) | somme, gain par heure |
-| button |  |  | Tous les chiffres du calcul | foldHead=plan-x-raw | expanded=true controls=fold-plan-x-raw | Expert (E) | somme, gain par heure |
-| button |  |  | Et si le chiffre bouge de 20 % ? | foldHead=plan-sensitivity | expanded=true controls=fold-plan-sensitivity | Expert (E) | somme, gain par heure |
+| button |  |  | Et si le chiffre bouge de 20 % ? | foldHead=plan-sensitivity | expanded=true controls=fold-plan-sensitivity | Expert (E) | somme, gain par heure, achat, missions, achat d’avant, déblocage |
+| button |  |  | Et si autre chose change ? | foldHead=plan-hypotheses | expanded=true controls=fold-plan-hypotheses | Expert (E) | somme, gain par heure, achat, missions, achat d’avant, déblocage |
+| button |  |  | Comparer avec un calcul gardé | foldHead=plan-reference | expanded=true controls=fold-plan-reference | Expert (E) | somme, gain par heure, achat, missions, achat d’avant, déblocage |
+| select | b-reference-plan |  | Comparer avec un calcul gardé de Mon business plan | bReference=plan |  | Expert (E) | somme, gain par heure |
+| button |  |  | Garder pour comparer | bKeepRef=plan |  | Expert (E) | somme, gain par heure |
+| button |  |  | Comment est-ce calculé ? | foldHead=plan-formula | expanded=true controls=fold-plan-formula | Expert (E) | somme, gain par heure, achat, missions, achat d’avant, déblocage |
+| button |  |  | Tous les chiffres du calcul | foldHead=plan-x-raw | expanded=true controls=fold-plan-x-raw | Expert (E) | somme, gain par heure, achat, missions, achat d’avant, déblocage |
 | search | plan-search |  | Je veux acheter (cherche dans le site) | bCombo=plan | expanded=false controls=plan-search-list | Simple + Expert | achat, missions, achat d’avant |
 | button |  |  | Écrire un achat libre | bPlanFree |  | Simple + Expert | achat, missions, achat d’avant |
 | text | plan-name | plan.goal.name | Nom de mon achat | field=plan.goal.name |  | Simple + Expert | achat, missions, achat d’avant |
@@ -832,7 +843,6 @@ Lecture : **kind** = type de contrôle ; **field** = chemin dans le scénario v6
 | button |  |  | Retirer | bPlanPRemove=0 |  | Simple + Expert | achat, missions, achat d’avant |
 | button |  |  | Aller à la case à corriger | bFocus=plan-price |  | Simple + Expert | achat, missions, achat d’avant |
 | button |  |  | Écrire le prix de « Mon achat d’avant » | bFocus=plan-p-0-price |  | Simple + Expert | achat, missions, achat d’avant |
-| button |  |  | Et si le chiffre bouge de 20 % ? | foldHead=plan-sensitivity | expanded=false controls=fold-plan-sensitivity | Expert (E) | achat, missions, achat d’avant, déblocage |
 | text | plan-name | plan.goal.name | Ce que je veux débloquer | field=plan.goal.name |  | Simple + Expert | déblocage |
 | text | plan-units-label | plan.goal.unitLabel | Ça se gagne en | field=plan.goal.unitLabel |  | Simple + Expert | déblocage |
 | text | plan-units-target | plan.goal.targetUnits | Il faut atteindre (points) | field=plan.goal.targetUnits number min=0 max=1000000000000 |  | Simple + Expert | déblocage |

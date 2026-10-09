@@ -10,7 +10,7 @@ const root = path.resolve(__dirname, '../..');
 const read = f => fs.readFileSync(path.join(root, f), 'utf8');
 const doc = f => new JSDOM(read(f)).window.document;
 const exists = src => fs.existsSync(path.join(root, src.replace(/^\//, '').split(/[?#]/)[0]));
-const C = require('../catalogues.cjs'), PF = require('../perso-fiche.cjs');
+const C = require('../catalogues.cjs'), PF = require('../perso-fiche.cjs'), IL = require('../illustrations/index.cjs');
 const run = f => { const ctx = { window: {} }; vm.runInNewContext(read(f), ctx); return ctx.window; };
 const PAGES = { consommables: 'nourriture.html', coiffures: 'style.html', tatouages: 'style.html', tenues: 'style.html', 'perso-vehicules': 'personnalisations.html', 'perso-armes': 'personnalisations.html' };
 
@@ -32,6 +32,9 @@ test('listes des catalogues : chaque catégorie a son visuel officiel et sa tein
       const th = r.querySelector('.cat-thumb'); assert.ok(th, r.id + ' : vignette');
       const img = th.querySelector('img'); assert.ok(img && exists(img.getAttribute('src')), r.id + ' : image');
       if (it.media) { assert.ok(!th.classList.contains('cat-thumb--cat'), r.id + ' : garde son visuel'); }
+      /* v7.76 (lot C) : une ligne sans visuel propre montre l'illustration réalisée pour elle (outils/illustrations/, test v777) ;
+         le visuel de la catégorie reste le repli d'un élément sans illustration */
+      else if (IL.has(fam, it.id)) { assert.ok(th.classList.contains('cat-thumb--illus') && img.getAttribute('src') === IL.srcSmall(fam, it.id), r.id + ' : illustration du site'); assert.match(th.getAttribute('title'), /^Illustration Leonidakit/); }
       else { assert.ok(th.classList.contains('cat-thumb--cat') && th.querySelector('.cat-thumb-badge'), r.id + ' : illustration de la catégorie'); assert.match(th.getAttribute('title'), /illustration de la catégorie/); assert.ok(img.getAttribute('alt').includes(cats.get(it.categorie).label), r.id + ' : alt'); assert.equal(img.getAttribute('src'), C.catVisual(cats.get(it.categorie)).src); }
     }
   }
@@ -48,7 +51,8 @@ test('consommables « en un regard » : chaque carte s’ouvre sur un visuel off
   for (const c of cards) {
     const it = d.items.find(x => x.id === c.getAttribute('data-cg-id')); assert.ok(it);
     const m = c.querySelector('.cg-media'); assert.ok(m, it.id + ' : visuel');
-    assert.ok(m.classList.contains(it.media ? 'cg-media--own' : 'cg-media--cat'), it.id + ' : origine du visuel');
+    /* v7.76 (lot C) : sans visuel propre, l'illustration dessinée pour l'élément ; le visuel de la catégorie en repli */
+    assert.ok(m.classList.contains(it.media ? 'cg-media--own' : IL.has('consommables', it.id) ? 'cg-media--illus' : 'cg-media--cat'), it.id + ' : origine du visuel');
     const img = m.querySelector('img'); assert.ok(img && exists(img.getAttribute('src')), it.id + ' : image');
     assert.ok(m.querySelector('.cg-media-l'), it.id + ' : étiquette');
     assert.ok(c.querySelector('.cg-top .cg-head h4') && c.querySelector('.cg-top .cg-st'), it.id + ' : nom et statut');

@@ -1,0 +1,105 @@
+LEONIDAKIT v7.74 — business plan : le mode Expert complet (cinq points, comme les calculs) ; « Et si autre chose
+change ? » dans les huit calculs et le plan ; micro réparé, autorisation demandée depuis le site — 8 octobre 2026
+
+Base : v7.73 (lot 3, commit 033a7be). Demande de Téva du 08/10/2026 (13 h 47), premier lot sur trois (v7.74, v7.75,
+v7.76). Rien n'est publié ni poussé.
+
+1. BUSINESS PLAN : LE MODE EXPERT A LES MÊMES POINTS QUE LES CALCULS (calculateurs-plan.js)
+Téva, capture de « Mes achats » à l'appui : « dans le business plan, il manque ces quatre parties là. Tu m'as rajouté que
+le Et si ». Avant, le bloc « Mode Expert : tout le détail » du plan n'avait, quand le plan ne se calculait pas encore, que
+« Et si le chiffre bouge de 20 % ? » ; calculé, il avait « Les chiffres utilisés », « Tous les chiffres du calcul » et
+« Et si », dans un autre ordre que les huit calculs, sans comparaison.
+Maintenant, calculé ou pas encore, le bloc a cinq points numérotés de 1 à 5 :
+  1. Et si le chiffre bouge de 20 % ? (inchangé : le gain par heure, ou la récompense de la première mission)
+  2. Et si autre chose change ? (nouveau, voir 2)
+  3. Comparer avec un calcul gardé : le même point que les calculs (fonction compareFold de calculateurs-workspace.js,
+     passée au plan) : « Garder pour comparer » range le plan dans « Mes calculs » ; ensuite, « Temps de jeu jusqu'au but
+     du plan » actuel contre gardé, écart en temps et en pourcentage, et lequel fait mieux ; le choix d'un calcul gardé
+     redessine le bloc (expertHtml, exporté par le plan).
+  4. Comment est-ce calculé ? : la méthode (le texte du point « Comment est-ce calculé ? » du document du plan, retiré du
+     document pour ne pas l'avoir deux fois en Expert) et le tableau « Les chiffres utilisés » (avant un point à part),
+     aussi quand le plan ne se calcule pas encore (un chiffre inconnu s'écrit « — »).
+  5. Tous les chiffres du calcul : les 13 chiffres du moteur, ou « Pas encore calculable : » et la raison.
+Plan pas encore calculable : une phrase dit que chaque point indique ce qui manque, et chaque point le dit.
+Les textes d'attente du « Et si » du plan renvoyaient à des questions qui n'existent pas (« Ta situation », « Tes
+missions ») : ils nomment la vraie question du formulaire, « Comment tu gagnes ton argent ? ».
+
+2. « ET SI AUTRE CHOSE CHANGE ? » : DES HYPOTHÈSES UTILES, POUR LES HUIT CALCULS ET POUR LE PLAN
+Téva : « rajoute des hypothèses qui seront utiles, à la fois pour les calculs, à la fois pour le business plan ».
+- Moteur (calculateurs-scenario.js, B.hypotheses) : chaque hypothèse refait tout le calcul, avec le même moteur, sur une
+  copie où un seul levier bouge ; rien n'est estimé à côté. Leviers : tout ce que tu gagnes 20 % de moins ; les prix 20 %
+  plus chers ; les frais et les dépenses 20 % de plus ; les missions durent 20 % de plus ; 30 min de jeu de plus (par jour,
+  par partie, ou de temps disponible ; « Ça vaut le coup ? » : tu t'en sers 20 % plus longtemps) ; un jour de jeu de plus
+  par semaine (plan) ; l'argent de côté (tu le dépenses s'il y en a, sinon tu gardes 10 %) ; tu pars avec 20 % d'argent
+  en moins ; l'objectif ou le but 20 % plus haut. Seuls les leviers qui touchent un chiffre que l'outil lit sont proposés ;
+  un chiffre inconnu reste inconnu.
+- « Tout va moins bien, en même temps » et « Tout va mieux, en même temps » : les leviers qui ne dépendent pas de toi
+  (gains, prix, frais, durées) bougent ensemble de 20 %, quand au moins deux s'appliquent : la fourchette de la réponse.
+- Affichage (mode Expert, point 2 du plan, point après « Et si » dans les calculs) : ★ « Ce qui pèse le plus », « Sans
+  effet ici » (les hypothèses qui ne changent rien sont citées sur une ligne au lieu d'encombrer le tableau), « De tout va
+  mieux à tout va moins bien » ; tableau Et si… / la réponse de l'outil / Écart / Jours (si l'outil compte des jours) :
+  ligne « Ton calcul, tel quel », une ligne par hypothèse, écart chiffré et barre proportionnelle (vert si c'est mieux
+  pour toi, corail si c'est moins bien, ambre quand le temps de jeu et les jours vont en sens contraire), jours avec
+  l'écart (« 23 jours (+5 jours) »). Les barres se dessinent à l'ouverture (rien ne bouge si le mouvement est réduit).
+  Sur téléphone, chaque hypothèse devient une petite fiche (nom ; réponse et écart ; jours) au lieu d'un tableau à faire
+  défiler. Une note rappelle que ce ne sont pas des prévisions : « ce sont tes chiffres, déplacés ».
+- Pas encore calculable : la raison (Quoi acheter d'abord ? demande un achat avec son prix ; Quel achat choisir ? deux).
+- Calculs : les points du mode Expert sont numérotés à la suite (Mon objectif avait deux « 1 ») ; « Comparer avec un
+  calcul gardé » dit « Ton calcul n'a pas encore de réponse… » ou « Le calcul gardé n'a pas de réponse… » au lieu de
+  « Comparaison impossible » quand l'un des deux ne se calcule pas.
+- Contrôles : 600 calculs tirés au hasard × 9 outils (aucune erreur, aucun chiffre infini, toujours une raison), 47 ms au
+  plus pour toutes les hypothèses d'un plan.
+
+3. MICRO (vercel.json, lk-micro.js)
+Téva : « le micro ne marche pas, on me demande l'autorisation du navigateur, mais je ne sais pas comment l'activer ».
+- Cause : l'en-tête de sécurité du site (vercel.json, Permissions-Policy « camera=(), microphone=(), geolocation=() »)
+  interdisait le micro à toutes les pages : le navigateur refusait sans même demander, et le site affichait « Le micro est
+  bloqué par le navigateur : autorise-le ». Aucun réglage du navigateur ne pouvait le débloquer. Il vaut maintenant
+  « microphone=(self) » : le site seul (jamais une vidéo ou un lecteur intégré) ; caméra et position restent interdites.
+- Sur le site : au premier appui, une phrase prévient « Ton navigateur va te demander l'accès au micro : choisis
+  « Autoriser » » ; dès que le son arrive, « Je t'écoute… ». Refusé ou bloqué : encadré « Autoriser le micro pour ce
+  site » avec les étapes du navigateur utilisé (Chrome, Edge, Safari sur Mac, iPhone et iPad, Android, autre), les
+  réglages de l'ordinateur ou du téléphone (Windows, Mac, Android), la Dictée pour Safari, « Réessayer » et « Fermer ».
+  Si l'autorisation passe à « Autoriser » pendant que l'encadré est ouvert, il se ferme et dit « Micro autorisé ». Déjà
+  bloqué sur l'appareil : l'encadré vient tout de suite (le navigateur ne redemanderait pas). Aussi dans Léo (encadré
+  compact, qui défile dans le panneau).
+- Autres pannes dites en clair : aucun micro trouvé ; transcription du navigateur injoignable (hors connexion, ou
+  navigateur qui la bloque, comme Brave) ; langue non transcrite.
+- Rien ne part vers le site : l'état de l'autorisation (navigator.permissions) et le type de navigateur sont lus sur
+  l'appareil ; le site ne garde ni la voix ni le texte (inchangé).
+- Le changement d'en-tête prend effet au déploiement Vercel qui suit la poussée (aucun réglage à changer dans Vercel).
+
+4. TRADUCTIONS
+outils/langues/<en|es|it|de>/v774.json : 69 textes (70 en allemand : « Pareil »), étapes des navigateurs avec leurs
+libellés dans chaque langue (Allow / Permitir / Consenti / Zulassen…). Vérification : 0 manque, 0 casse, 0 conflit
+dans les quatre langues.
+
+5. TESTS
+- outils/tests/v774.test.cjs (9 tests) : moteur des hypothèses (calcul de départ intact, mieux / moins bien, ce qui pèse
+  le plus, fourchette), hypothèses du plan, 600 calculs au hasard, plan en Expert (cinq points 1 à 5, méthode passée du
+  document au bloc Expert), plan pas encore calculable, comparaison gardée du plan (garder, changer un chiffre, écart),
+  les huit calculs (hypothèses entre « Et si » et « Comparer », numéros sans doublon), micro (en-tête, autorisation,
+  étapes, rien d'envoyé, quatre langues), traductions.
+- Mis à jour : calculateurs-ergonomie-v35 (le plan en Expert a cinq points, dans l'ordre), v771 (le plan pas encore
+  calculable garde le même bloc Expert).
+
+CONTRÔLES (8 octobre 2026)
+- Tests Node : 956 tests rapides au vert (dont les 9 de v774), contrôle ultime du calculateur, langues, couverture,
+  vérificateur de liens, preuve de confidentialité, index de Léo à jour (gen-leo --check).
+- Navigateur : contrôle ultime du calculateur (1 120 contrôles, 0 échec ; business plan complet, Expert tout déplié :
+  427 ms), Léo (micro compris), « Essayer » du tuto (23 contrôles), langues (2 267 contrôles, 0 échec), audit de clôture
+  du calculateur en français, anglais et allemand (débordement, grilles, textes coupés, images, contrastes, cibles,
+  erreurs console : 0 partout).
+- Micro, avec une fausse reconnaissance vocale : autorisation à demander (phrase « va te demander », puis texte reçu et
+  envoyé), refus (encadré, étapes Chrome, « Réessayer »), déjà bloqué (encadré sans relancer), autorisation accordée
+  pendant que l'encadré est ouvert (il se ferme), service injoignable, aucun micro ; dans la barre du calculateur et
+  dans Léo, à 1 280 et 390 px.
+- Hypothèses : 600 calculs tirés au hasard × 9 outils, aucune erreur, 47 ms au plus.
+
+FICHIERS
+Modifiés : calculateurs-scenario.js, calculateurs-workspace.js, calculateurs-workspace.css, calculateurs-plan.js,
+lk-micro.js, vercel.json, leurs copies traduites (en/, es/, it/, de/), calculateurs.html (5 langues : empreintes des
+fichiers), a-propos.html (5 langues : nombre de tests), index de Léo, outils/sitemap-dates.json, empreinte du cadre du
+calculateur et inventaire, tests ci-dessus, README.md.
+Nouveaux : outils/langues/*/v774.json, outils/tests/v774.test.cjs, outils/CHANGEMENTS-v7.74.txt, LISEZ-MOI-v7.74.txt.
+Aucun fichier à supprimer.

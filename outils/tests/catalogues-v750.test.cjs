@@ -50,8 +50,9 @@ test('listes des catalogues : vignette (visuel officiel ou pictogramme dit comme
       const withMedia = C.load().families[fam].items.filter(it => it.media).length;
       /* v7.73 : une ligne sans visuel propre montre celui de sa catégorie (cat-thumb--cat, dit « illustration ») : les photos
          propres restent exactement celles des visuels liés */
-      assert.equal(d.querySelectorAll('#box-' + fam + ' .cat-thumb:not(.cat-thumb--cat) img').length, withMedia, fam + ' : une photo par visuel lié, pas plus');
-      assert.equal(d.querySelectorAll('#box-' + fam + ' .cat-thumb--cat img').length, rows.length - withMedia, fam + ' : illustration de catégorie pour les autres');
+      /* v7.76 (lot C) : … et, s'il a été dessiné, l'illustration du site (cat-thumb--illus, dite comme telle) */
+      assert.equal(d.querySelectorAll('#box-' + fam + ' .cat-thumb:not(.cat-thumb--cat):not(.cat-thumb--illus) img').length, withMedia, fam + ' : une photo par visuel lié, pas plus');
+      assert.equal(d.querySelectorAll('#box-' + fam + ' .cat-thumb--cat img, #box-' + fam + ' .cat-thumb--illus img').length, rows.length - withMedia, fam + ' : illustration (du site, sinon de la catégorie) pour les autres');
     }
   }
 });

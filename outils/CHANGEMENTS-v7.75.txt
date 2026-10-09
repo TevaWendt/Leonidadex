@@ -1,0 +1,84 @@
+LEONIDAKIT v7.75 — cartes des hubs du monde (Lieux, Personnages, Demeures, Planques, Entreprises) plus professionnelles,
+sans rien qui bouge au survol ; Collectibles plus soignée ; GTA Online et Progression dans un nouvel onglet — 8 octobre 2026
+
+Base : v7.74 (lot A). Demande de Téva du 08/10/2026 (13 h 47), deuxième lot sur trois (v7.74, v7.75, v7.76). Rien n'est
+publié ni poussé.
+
+1. HUBS DU MONDE : DES CARTES NETTES, RIEN NE SE DÉCALE AU SURVOL (outils/lore-gen.js, lk-sections.css, lk-sections.js)
+Téva : « les sections de gauche (lieux, personnages, demeures, planques, entreprises) : l'idée est cool, mais les cartes ne
+sont pas très belles, l'agencement fait brouillon ; quand on passe la souris, sur les Planques par exemple, tout se décale
+un peu. Garde l'effet, sauf pour les deux premières où il faut innover. Je ne te parle que des six premières cartes. »
+Seule la grille des fiches en tête de ces hubs change (rien d'autre sur ces pages ; Gangs et factions garde sa « donne »).
+- Une carte commune (classe lore-card--pro) : cadre encre de 2 px, coins de 16 px, ombre posée, image cadrée en haut
+  (ou à gauche), accroche, texte, bouton séparé d'un filet et calé en bas, même hauteur pour toutes les cartes d'une rangée.
+- Survol : la carte ne bouge plus (plus d'inclinaison 3D, plus de rotation, plus de translation : la translation commune
+  des cartes du site est annulée pour ces grilles). Seuls l'ombre (couleur ambre), la photo (zoom dans son cadre) et la
+  flèche du bouton réagissent. Au clavier, un contour ambre.
+- Chaque hub garde son identité :
+  Lieux : atlas en trois colonnes, photo 16/10 avec un voile bas, tuile numérotée 01 à 06 façon tableau des départs.
+  Personnages : plaques de casting, portraits 4/5 cadrés sur le visage (un point focal par personnage : Jason, Lucia,
+  Cal, Boobie, Dre'Quan, Real Dimez, Raul, Brian), 16/10 sur téléphone.
+  Demeures : planche d'architecte (fond quadrillé bleu), deux cartes par rangée, photo à gauche, texte à droite.
+  Planques : dossiers sur une colonne, onglet « Dossier 01 », « Dossier 02 »… (décoratif, traduit), photo et texte côte
+  à côte.
+  Entreprises : enseignes au néon (fond nuit, liseré lumineux de la couleur de l'enseigne).
+  Sur téléphone, une colonne partout, texte sous l'image.
+- Entrées (à l'arrivée de la grille dans l'écran) : Lieux innove avec le « tableau des départs » (les lamelles de la photo
+  s'ouvrent, le numéro bascule, le nom s'écrit lettre à lettre comme un volet ; le titre reste lu en entier par un lecteur
+  d'écran et redevient du texte simple à la fin) ; Personnages innove avec le « flash de casting » (éclair de l'appareil,
+  mise au point du portrait, plaque qui glisse). Demeures (balayage), Planques (glissement alterné) et Entreprises (néon qui
+  s'allume) gardent la leur, comme demandé. Mouvement réduit : tout est posé, rien ne bouge.
+
+2. COLLECTIBLES : « UN POIL PLUS BELLE DANS SA GLOBALITÉ » (collectibles-brand.css)
+- Titres de section numérotés (01, 02…) dans une tuile ambre, avec un filet encre qui court jusqu'au bord ; pastille des
+  compteurs harmonisée.
+- Anneau de progression : piste crème, plus lisible ; coins des cartes et des panneaux harmonisés (14 px) ; tailles
+  ajustées sur téléphone. Les contenus, l'ordre et le fonctionnement ne changent pas.
+
+3. GTA ONLINE ET PROGRESSION S'OUVRENT DANS UN NOUVEL ONGLET (outils/site-shell.cjs, outils/sync-site.cjs, style.css)
+Téva : « quand on clique sur la section GTA Online, j'aimerais que ça ouvre une nouvelle page du navigateur ; pareil pour
+la section Progression ».
+- Depuis le reste du site, les liens du menu (Progression dans la barre), d'« Explorer » (groupe GTA Online), du pied de
+  page et des puces de navigation qui mènent à l'espace GTA Online (online.html, online/annonces.html,
+  online/gta-online-actuel.html) ou à la Progression (progression.html) s'ouvrent dans un nouvel onglet (target="_blank",
+  rel="noopener").
+- À l'intérieur de leur section, ils restent dans le même onglet (d'une page GTA Online à l'autre ; de la Progression à
+  ses carnets et retour), pour ne pas multiplier les onglets.
+- Repère : une petite flèche ↗ après le texte (dessinée par la feuille de style), et l'info-bulle « S'ouvre dans un nouvel
+  onglet » (attribut title, lue aussi comme description par les lecteurs d'écran ; le texte visible reste le nom du lien).
+- Les liens dans le contenu des pages ne changent pas.
+
+4. TRADUCTIONS
+outils/langues/<en|es|it|de>/v775.json : l'info-bulle (Opens in a new tab, Se abre en una pestaña nueva, Si apre in una
+nuova scheda, Öffnet sich in einem neuen Tab) et les onglets des dossiers (File, Expediente, Fascicolo, Akte).
+
+5. TESTS
+- outils/tests/v775.test.cjs (7 tests) : cartes pro des cinq hubs et Gangs inchangé ; survol sans déplacement (règles de
+  la feuille) ; Lieux (numéros, volets lettre à lettre, texte lu en entier) ; Personnages (points focaux, flash) ;
+  Planques (onglets traduits) ; nouvel onglet (sections, menu, pied de page, puces, même onglet dans la section, contenu
+  inchangé, flèche, info-bulle dans les quatre langues) ; Collectibles (titres numérotés).
+- Mis à jour : v770 et v772 (nouvelles entrées, cartes pro ; tuiles numérotées de Lieux au lieu du timbre « Région »,
+  onglets traduits), visuel-lot2 (l'image des cartes de Planques est dans son cadre), section-online (liens du groupe GTA
+  Online avec les marques du nouvel onglet ; depuis une page GTA Online, seule la Progression s'ouvre à part), empreinte du
+  cadre du calculateur (outils/calculateur-cadre.json : seule l'empreinte de style.css change, les 150 vues sont identiques).
+
+CONTRÔLES (8 octobre 2026)
+- Tests Node : 963 tests rapides (dont les 7 de v775), contrôle ultime du calculateur (16), langues (42), couverture (3),
+  vérificateur de liens (315 760 références dans 2 241 pages, aucune erreur), preuve de confidentialité, index de Léo à jour.
+  Traductions : 0 texte sans traduction, 0 manque, 0 casse, 0 conflit dans les quatre langues.
+- Navigateur : audit de clôture sur 16 pages (hubs, Collectibles, GTA Online, Progression, accueil ; français, anglais,
+  espagnol, italien, allemand ; de 320 à 1 920 px) : débordement, grilles, textes coupés, images, contrastes (3 493),
+  cibles, erreurs console : 0 partout (seules les scènes de online.html restent masquées jusqu'au défilement, comme en
+  v7.74 : c'est leur effet) ; survol : aucune carte des hubs ne bouge (106 cartes survolées sur l'échantillon
+  du site, et les cinq hubs un par un, mouvement normal). Mots coupés : 46 pages × 5 largeurs, aucun. Langues : 2 267
+  contrôles, 0 échec. Léo : au vert.
+- Flèche du nouvel onglet : marge et contraste vérifiés sur chaque lien marqué (menu, bande GTA Online sur fond nuit,
+  pied de page, puces), à 1 280 et 390 px, en français et en anglais.
+
+FICHIERS
+Modifiés : outils/lore-gen.js, lk-sections.css, lk-sections.js, collectibles-brand.css, style.css, outils/site-shell.cjs,
+outils/sync-site.cjs, les pages (menu, pied de page et puces de toutes les pages ; grilles des cinq hubs ; empreintes des
+feuilles de style) et leurs copies traduites (en/, es/, it/, de/), index de Léo, outils/sitemap-dates.json, sitemaps,
+outils/calculateur-cadre.json, tests ci-dessus, README.md.
+Nouveaux : outils/langues/*/v775.json, outils/tests/v775.test.cjs, outils/CHANGEMENTS-v7.75.txt, LISEZ-MOI-v7.75.txt.
+Aucun fichier à supprimer.

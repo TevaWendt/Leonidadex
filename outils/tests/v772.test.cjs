@@ -10,18 +10,18 @@ const read = f => fs.readFileSync(path.join(root, f), 'utf8');
 const doc = f => new JSDOM(read(f)).window.document;
 const exists = src => fs.existsSync(path.join(root, src.replace(/^\//, '').split(/[?#]/)[0]));
 
-test('hubs du monde : une mise en scène par hub (classe d’entrée, disposition, cartes), toutes présentes dans lk-sections.css', () => {
-  const FX = { lieux: ['lkx-iris', 'lore-grid--atlas', 'lore-card--postcard'], personnages: ['lkx-pin', 'lore-grid--casting', 'lore-card--casting'], demeures: ['lkx-scan', 'lore-grid--blueprint', 'lore-card--blueprint'], planques: ['lkx-slide', 'lore-grid--dossier', 'lore-card--dossier'], entreprises: ['lkx-neon', 'lore-grid--signs', 'lore-card--sign'], gangs: ['lkx-deal', null, null] };
+test('hubs du monde : une mise en scène par hub (classe d’entrée, disposition, cartes), toutes présentes dans lk-sections.css (v7.75 : cartes « pro »)', () => {
+  const FX = { lieux: ['lkx-flap', 'lore-grid--lieux', 'lore-card--lieux'], personnages: ['lkx-flash', 'lore-grid--personnages', 'lore-card--personnages'], demeures: ['lkx-scan', 'lore-grid--demeures', 'lore-card--demeures'], planques: ['lkx-slide', 'lore-grid--planques', 'lore-card--planques'], entreprises: ['lkx-neon', 'lore-grid--entreprises', 'lore-card--entreprises'], gangs: ['lkx-deal', null, null] };
   const css = read('lk-sections.css');
   const seen = new Set();
   for (const [hub, [fx, grid, card]] of Object.entries(FX)) {
     const d = doc(hub + '.html'), g = d.querySelector('#fiches .lore-grid');
     assert.ok(g.classList.contains(fx) && g.classList.contains('lk-arrive') && g.hasAttribute('data-lkx-in'), hub + ' : ' + fx);
     seen.add(fx);
-    if (grid) assert.ok(g.classList.contains(grid), hub + ' : ' + grid);
+    if (grid) assert.ok(g.classList.contains(grid) && g.classList.contains('lore-grid--pro'), hub + ' : ' + grid);
     const cards = [...g.querySelectorAll('.lore-card')];
     assert.ok(cards.length >= 3);
-    for (const c of cards) { assert.ok(c.classList.contains('lkx-tilt'), hub + ' : lkx-tilt'); if (card) assert.ok(c.classList.contains(card), hub + ' : ' + card); assert.ok(c.querySelector('.veh-body h3') && c.querySelector('.veh-go'), hub + ' : contenu de la carte inchangé'); }
+    for (const c of cards) { assert.equal(c.classList.contains('lkx-tilt'), hub === 'gangs', hub + ' : inclinaison'); if (card) assert.ok(c.classList.contains(card) && c.querySelector(':scope>.lore-card-media img'), hub + ' : ' + card + ', image dans son cadre'); assert.ok(c.querySelector('.veh-body h3') && c.querySelector('.veh-go'), hub + ' : contenu de la carte inchangé'); }
     assert.match(css, new RegExp('\\.' + fx.replace('-', '\\-') + '\\.is-in>\\*\\{animation:'), fx + ' : animation d’entrée');
     if (grid) assert.ok(css.includes('.' + grid), grid + ' : style');
   }
@@ -29,12 +29,12 @@ test('hubs du monde : une mise en scène par hub (classe d’entrée, dispositio
   const dem = doc('demeures.html');
   assert.ok(dem.querySelectorAll('#fiches .lore-card .lkx-scan-media img').length >= 3, 'Demeures : image dans son cadre de balayage');
   const pla = doc('planques.html');
-  assert.deepEqual([...pla.querySelectorAll('#fiches .lore-dossier-tab')].map(t => t.textContent), ['Dossier 01', 'Dossier 02', 'Dossier 03']);
+  assert.deepEqual([...pla.querySelectorAll('#fiches .lore-tab')].map(t => t.textContent), ['Dossier 01', 'Dossier 02', 'Dossier 03']);
   const lie = doc('lieux.html');
-  assert.equal(lie.querySelectorAll('#fiches .lore-stamp').length, 6, 'Lieux : un timbre par carte postale');
+  assert.deepEqual([...lie.querySelectorAll('#fiches .lore-num')].map(t => t.textContent), ['01', '02', '03', '04', '05', '06'], 'Lieux : un numéro de volet par région');
   const ent = doc('entreprises.html');
   for (const c of ent.querySelectorAll('#fiches .lore-card')) assert.match(c.getAttribute('style') || '', /--hue:\d+/, 'Entreprises : teinte de l’enseigne');
-  assert.match(css, /prefers-reduced-motion:reduce\)\{[\s\S]*\.lkx-pin\.is-in>\*,\.lkx-slide\.is-in>\*,\.lkx-neon\.is-in>\*/, 'mouvement réduit : rien ne bouge');
+  assert.match(css, /prefers-reduced-motion:reduce\)\{\.lkx-slide\.is-in>\*,\.lkx-neon\.is-in>\*,\.lkx-neon\.is-in>\* img\{animation:none!important;\}\}/, 'mouvement réduit : rien ne bouge');
 });
 
 test('collectibles : six familles illustrées (visuel officiel existant), cliquables, fiche squelette plein écran avec « Pour GTA VI », repères de la série et champs de la future fiche', () => {
@@ -72,10 +72,12 @@ test('codes de triche : les quatre catégories ont la même hauteur (la fiche d�
   assert.equal(doc('codes-de-triche.html').querySelectorAll('.codes-cats > li > details.lkx-det').length, 4);
 });
 
-test('langues : les hubs et les familles sont traduits (timbre, dossier, fiches)', () => {
+test('langues : les hubs et les familles sont traduits (numéros, dossier, fiches)', () => {
   for (const l of ['en/', 'es/', 'it/', 'de/']) {
-    const lieux = doc(l + 'lieux.html'); assert.equal(lieux.querySelectorAll('#fiches .lore-stamp').length, 6, l + 'lieux : timbres');
-    assert.doesNotMatch(lieux.querySelector('#fiches .lore-stamp').textContent, /^Région$/, l + ' : timbre traduit');
+    /* v7.75 : le timbre « Région » des cartes de Lieux devient la tuile numérotée du tableau des départs (01 à 06, décorative) */
+    const lieux = doc(l + 'lieux.html'); assert.equal(lieux.querySelectorAll('#fiches .lore-num').length, 6, l + 'lieux : numéros');
+    assert.equal(lieux.querySelectorAll('#fiches .lore-stamp').length, 0, l + 'lieux : plus de timbre');
+    assert.doesNotMatch(doc(l + 'planques.html').querySelector('#fiches .lore-tab').textContent, /^Dossier/, l + ' : onglet de dossier traduit');
     const col = doc(l + 'collectibles.html'); assert.equal(col.querySelectorAll('#categories details.lkx-det').length, 6, l + 'collectibles');
     assert.doesNotMatch(col.querySelector('#famille-epaves .lkx-sheet-t').textContent, /Épaves et voitures abandonnées/, l + ' : titre traduit');
   }

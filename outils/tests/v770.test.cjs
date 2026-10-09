@@ -11,8 +11,8 @@ const read = f => fs.readFileSync(path.join(root, f), 'utf8');
 const doc = f => new JSDOM(read(f)).window.document;
 const LANGS = ['', 'en/', 'es/', 'it/', 'de/'];
 
-test('hubs du monde : chaque grille de cartes a son entrée animée (v7.72 : une mise en scène par hub), lk-arrive, cartes lkx-tilt', () => {
-  const FX = { gangs: 'lkx-deal', lieux: 'lkx-iris', personnages: 'lkx-pin', demeures: 'lkx-scan', planques: 'lkx-slide', entreprises: 'lkx-neon' };
+test('hubs du monde : chaque grille de cartes a son entrée animée (v7.75 : tableau des départs pour Lieux, flash de casting pour Personnages), lk-arrive ; inclinaison au survol réservée aux gangs', () => {
+  const FX = { gangs: 'lkx-deal', lieux: 'lkx-flap', personnages: 'lkx-flash', demeures: 'lkx-scan', planques: 'lkx-slide', entreprises: 'lkx-neon' };
   for (const hub of ['gangs', 'lieux', 'personnages', 'demeures', 'planques', 'entreprises']) {
     const d = doc(hub + '.html');
     const grid = d.querySelector('.lore-grid.' + FX[hub]);
@@ -20,7 +20,8 @@ test('hubs du monde : chaque grille de cartes a son entrée animée (v7.72 : une
     assert.ok(grid.classList.contains('lk-arrive') && grid.hasAttribute('data-lkx-in'), hub + ' : entrée au défilement');
     const cards = grid.querySelectorAll('.lore-card');
     assert.ok(cards.length >= 3, hub + ' : au moins trois cartes');
-    for (const c of cards) assert.ok(c.classList.contains('lkx-tilt'), hub + ' : carte lkx-tilt');
+    /* v7.75 (Téva : « au survol, rien ne doit se décaler ») : plus d'inclinaison sur les cinq hubs refaits ; les gangs la gardent */
+    for (const c of cards) assert.equal(c.classList.contains('lkx-tilt'), hub === 'gangs', hub + ' : inclinaison au survol');
   }
   const css = read('lk-sections.css');
   assert.match(css, /\.lkx-deal\.is-in>\*\{animation:lkx-deal/);

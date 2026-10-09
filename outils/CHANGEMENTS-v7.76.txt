@@ -1,0 +1,87 @@
+LEONIDAKIT v7.76 — des illustrations dessinées pour le site, une par élément, dans les listes des Consommables, de
+Vêtements et style et des Personnalisations, et dans les cartes « En un regard » — 8 octobre 2026
+
+Base : v7.75 (lot B). Demande de Téva du 08/10/2026 (13 h 47), troisième lot sur trois (v7.74, v7.75, v7.76). Rien n'est
+publié ni poussé.
+
+1. LE PROBLÈME
+Téva : « la partie consommable, c'est parfait, c'est nickel ; le seul petit bémol, c'est que les visuels, c'est toujours
+les mêmes, et des fois ça n'a pas beaucoup de rapport avec le truc. Fais toi-même un schéma joli, effet Rockstar, vraiment
+bien fait, comme si t'étais un pro designer. Pour les listes, c'est pile le bon format, mais pareil au niveau des visuels,
+pour les trois sections Consommables, Vêtements et style et Personnalisation. »
+Avant : une ligne sans visuel officiel propre montrait le visuel officiel de sa catégorie, le même pour toutes les lignes
+de la catégorie, et souvent sans lien avec l'objet. Seuls 42 des 237 éléments ont un visuel officiel qui leur est propre.
+
+2. LES ILLUSTRATIONS (outils/illustrations/, img/illus/<famille>/<id>.svg)
+- 195 illustrations originales, une par élément sans visuel officiel propre, toutes différentes, dessinées en SVG par le
+  site (aucune image extérieure, aucun logo, aucune marque, aucun texte dans l'image ; 2 à 6 Ko chacune).
+- Une direction artistique par famille, dans l'esprit des affiches du jeu (aplats, contour encre épais, ombre portée dure,
+  étincelles, couleurs du coucher de soleil) :
+  Consommables : objets posés sur un comptoir de diner devant un soleil rétro rayé (café fumant, shaker, canettes avec
+  leur emblème, bière qui mousse, barres, chips, bonbons, burgers simple, double et au poulet, pancakes, hot-dog, seaux de
+  poulet de trois tailles, salade, trousses de soin, récupération automatique, gilets de 1 à 5 plaques et celui de GTA VI).
+  Coiffures : portraits en buste dans le miroir d'un barbier (enseigne rayée), un par coupe, barbe ou maquillage, avec la
+  coupe dessinée (fade, cornrows, dreads, chignon, couettes, tresses, mulet…), la barbe (trois jours, bouc, moustache
+  guidon…), plus les outils (tondeuse, fauteuil, nuancier, lentilles, palette).
+  Tatouages : motifs « flash » de tatoueur sur papier ancien (palmier au soleil couchant, dague, œil, crâne, fleurs, dragon,
+  couronne, cœur à banderole…), silhouettes des zones (GTA VI en rose Vice City, GTA V en rouge), retrait au laser.
+  Tenues : vitrine sous projecteur (portant de t-shirts, costume en lin pastel, mini-robe à sequins, robe de soirée,
+  bandana, hauts, pantalons, chaussures, chapeaux, lunettes, accessoires, masque, parfum).
+  Personnalisation des véhicules : plans au néon sur papier calque bleu (voiture de profil ou de face avec la pièce
+  surlignée et son repère : pare-chocs, jupes, aileron, capot, calandre, ailes, échappement, arceau ; jantes, pneus,
+  peintures, vitres, plaques, klaxons, phares, néons, suspensions, hydrauliques, moteur, freins, boîte, turbo, blindage,
+  intérieur, livrée, emblème, alarme, traceur, bombes, motos, bateaux et avions).
+  Personnalisation des armes : schémas lumineux sur panneau perforé d'armurerie (carabine générique avec l'accessoire
+  surligné : chargeurs, lunettes, viseurs, silencieux, freins de bouche, poignée, lampe, laser ; teintes, camouflages,
+  munitions spéciales, conversion Mk II, casiers, armes exclusives, mêlée).
+- Couleur : la teinte de la catégorie (la même que la pastille de la liste), décalée d'un cran d'une ligne à l'autre pour
+  que deux voisines ne se ressemblent pas.
+- Ce sont des illustrations, pas des images du jeu : chaque vignette le dit (info-bulle « Illustration Leonidakit :
+  dessinée pour le site, pas une image du jeu », texte de remplacement « Illustration Leonidakit : <nom> », étiquette
+  « Illustration Leonidakit » sur les cartes, légende de la fiche ouverte). Les 42 éléments qui ont un visuel officiel le
+  gardent, crédité comme avant. Aucun chiffre ni aucune donnée n'est déduit d'une illustration.
+
+3. OÙ ELLES APPARAISSENT
+- Listes des six catalogues (nourriture.html, style.html, personnalisations.html) : la vignette de chaque ligne sans
+  visuel propre (outils/catalogues.cjs, thumb) ; la fiche ouverte (catalogue.js) montre la même illustration en grand, à
+  son format, avec sa légende.
+- Barre fermée de chaque liste : trois illustrations parlantes en éventail (PILE de outils/illustrations/index.cjs).
+- Consommables, « En un regard » : chaque carte s'ouvre sur l'illustration de son consommable (27 cartes ; les deux qui
+  ont un visuel officiel le gardent) ; plus aucune image répétée. Le format des cartes et des listes ne change pas.
+- Génération : outils/gen-acquisitions.cjs écrit les fichiers (et retire ceux en trop) ; outils/sync-site.cjs ne les met
+  pas dans le manifeste des médias chargé par toutes les pages (aucun script ne les cherche).
+
+4. TRADUCTIONS
+outils/langues/<en|es|it|de>/v776.json : info-bulle, étiquette et texte de remplacement (motif « Illustration
+Leonidakit : {1} », le nom de l'élément traduit à son tour).
+
+5. TESTS
+outils/tests/v776.test.cjs (8 tests) : chaque élément sans visuel propre a son illustration et aucun fichier en trop ;
+SVG autonomes (320 × 200, sans texte, sans script, sans lien extérieur, XML bien formé, références internes résolues,
+moins de 12 Ko) ; un dessin propre à chaque élément ; listes (vignette, texte de remplacement, info-bulle, visuel officiel
+gardé, barre fermée) ; « En un regard » (illustration, étiquette, aucune image répétée) ; fiche ouverte et feuille de
+style ; manifeste ; traductions (nom traduit dans le texte de remplacement).
+Mis à jour : v773 et catalogues-v750 (une ligne sans visuel propre montre son illustration, le visuel de la catégorie reste
+le repli), catalogues-lot3 (l'illustration, en SVG, est sa propre grande version pour la fiche).
+
+CONTRÔLES (8 octobre 2026)
+- Tests Node : 971 tests rapides (dont les 8 de v776), contrôle ultime du calculateur, langues, couverture, vérificateur
+  de liens, preuve de confidentialité, index de Léo à jour. Traductions : 0 texte sans traduction, 0 manque, 0 casse,
+  0 conflit dans les quatre langues.
+- Navigateur : audit de clôture des trois pages (Consommables, Vêtements et style, Personnalisations) et de « Tout ce qui
+  s'achète », en français, anglais, espagnol, italien et allemand, de 320 à 1 920 px : débordement, grilles, textes
+  coupés, images cassées, contrastes (16 272), cibles, erreurs console : 0 (un sur-titre de
+  style.html encore en train d'apparaître au moment de la mesure, comme en v7.75). Langues : 2 267 contrôles, 0 échec.
+  Léo : au vert. Contrôle ultime du calculateur : 16 sur 16.
+- Vu à l'œil, à 1 280 et 390 px : les 195 illustrations à la taille des vignettes, les cartes « En un regard », les
+  barres fermées, la fiche ouverte (français et anglais).
+
+FICHIERS
+Nouveaux : outils/illustrations/ (core.cjs, conso.cjs, head.cjs, tattoo.cjs, wear.cjs, car.cjs, gun.cjs, index.cjs),
+img/illus/ (195 fichiers SVG en six dossiers), outils/langues/*/v776.json, outils/tests/v776.test.cjs,
+outils/CHANGEMENTS-v7.76.txt, LISEZ-MOI-v7.76.txt.
+Modifiés : outils/catalogues.cjs, outils/gen-acquisitions.cjs, outils/sync-site.cjs, catalogue.js, acquisitions.css,
+nourriture.html, style.html, personnalisations.html et leurs copies traduites, catalogue.js traduit (en/, es/, it/, de/),
+les pages qui chargent acquisitions.css ou catalogue.js (empreinte ?v= seulement), a-propos.html (nombre de tests), index
+de Léo, outils/sitemap-dates.json, tests ci-dessus, README.md.
+Aucun fichier à supprimer.

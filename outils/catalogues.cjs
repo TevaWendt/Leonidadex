@@ -12,6 +12,10 @@
    Progression. Aucun texte n'est écrit ici : tout vient des JSON. */
 const fs = require('node:fs'), path = require('node:path'), vm = require('node:vm');
 const S = require('./sections.cjs');
+/* v7.76 (lot C) : une illustration par élément sans visuel officiel propre (outils/illustrations/).
+   v7.77 : silhouettes « teaser » (WebP) à la place des dessins SVG, toujours dites comme telles. */
+const IL = require('./illustrations/index.cjs');
+const ILLUS_TITLE = 'Illustration Leonidakit : silhouette dessinée pour le site en attendant le visuel officiel, pas une image du jeu';
 const root = path.resolve(__dirname, '..');
 const DIR = path.join(__dirname, 'catalogues');
 const FAMILIES = ['consommables', 'coiffures', 'tatouages', 'tenues', 'perso-vehicules', 'perso-armes'];
@@ -230,10 +234,16 @@ function rowId(fam, it) { return fam + '-' + it.id; }
    colonne GTA VI qui distingue « Prix à venir » et « Achat à confirmer », fiche complète dépliable (modèle commun). */
 const FD = require('./fiche-doc.cjs');
 /* v7.56 (lot 3, UI-01) : la vignette garde l'adresse de la grande version (data-big) pour la fiche paysage ouverte par catalogue.js. */
-function thumb(it, cat, media) {
+function thumb(it, cat, media, fam) {
   if (media) { const v = media.variants.find(x => x.w === 480) || media.variants[0], big = media.variants.find(x => x.w === 1280); return '<span class="cat-thumb"><img src="' + esc(v.src.replace(/^\//, '')) + '" width="' + v.w + '" height="' + v.h + '" alt="' + esc(media.alt || media.titre || it.nom) + '" loading="lazy" decoding="async"' + (big ? ' data-big="' + esc(big.src.replace(/^\//, '')) + '"' : '') + '></span>'; }
-  /* v7.73 (lot 3) : sans visuel propre, la ligne montre le visuel officiel de sa catégorie, voilé de la teinte de la catégorie et
-     marqué de son pictogramme ; le titre et le texte de remplacement disent que c'est une illustration, pas l'objet. */
+  /* v7.76 (lot C, Téva : « les visuels sont toujours les mêmes, et souvent sans rapport avec l'objet ») : sans visuel propre, la
+     ligne montre son illustration, réalisée pour le site et dite comme telle (titre, texte de remplacement, légende de la fiche
+     ouverte). v7.77 (Téva : « plus silhouette, comme si on l'attend et qu'il va bientôt venir, en mode suspense ») : silhouette
+     « teaser » d'après l'objet modelé en 3D, img/illus/<famille>/<id>-p.webp (384 × 240) dans la liste, <id>.webp
+     (960 × 600) dans la fiche ouverte. */
+  if (fam && IL.has(fam, it.id)) return '<span class="cat-thumb cat-thumb--illus" title="' + esc(ILLUS_TITLE) + '"><img src="' + esc(IL.srcSmall(fam, it.id)) + '" width="' + IL.PW + '" height="' + IL.PH + '" alt="' + esc('Illustration Leonidakit : ' + it.nom) + '" loading="lazy" decoding="async" data-big="' + esc(IL.src(fam, it.id)) + '"></span>';
+  /* v7.73 (lot 3) : sans visuel propre ni illustration, la ligne montre le visuel officiel de sa catégorie, voilé de la teinte de
+     la catégorie et marqué de son pictogramme ; le titre et le texte de remplacement disent que c'est une illustration, pas l'objet. */
   const cv = catVisual(cat);
   if (cv) return '<span class="cat-thumb cat-thumb--cat" title="Visuel officiel : illustration de la catégorie, pas de l’objet"><img src="' + esc(cv.src) + '" width="' + cv.w + '" height="' + cv.h + '" alt="' + esc('Illustration de la catégorie « ' + cat.label + ' »') + '" loading="lazy" decoding="async"><span class="cat-thumb-badge" aria-hidden="true">' + S.icon(cat.icon, 'cat-thumb-ico') + '</span></span>';
   return '<span class="cat-thumb cat-thumb--ico" title="Pictogramme de la catégorie, pas un visuel de l’objet">' + S.icon(cat.icon, 'cat-thumb-ico') + '</span>';
@@ -272,7 +282,7 @@ function row(fam, it, cat, sources) {
     + '<td class="cat-c-st" data-l="Statut">' + S.pip(it.statut, true) + '</td>'
     /* v7.70 : l'identité de la ligne (vignette, nom, catégorie, pour qui) forme un bloc .cat-id, placé par acquisitions.css
        (chaque ligne est une fiche aérée : identité, statut et suivi en haut ; faits ; description ; sources et actions). */
-    + '<td class="cat-c-nom" data-l="Élément"><div class="cat-id">' + thumb(it, cat, media) + '<div class="cat-id-t"><b class="cat-nom">' + esc(it.nom) + '</b><span class="cat-tags">'
+    + '<td class="cat-c-nom" data-l="Élément"><div class="cat-id">' + thumb(it, cat, media, fam) + '<div class="cat-id-t"><b class="cat-nom">' + esc(it.nom) + '</b><span class="cat-tags">'
     + '<span class="cat-cat">' + S.icon(cat.icon, 'cat-ico') + esc(cat.label) + '</span>'
     + (it.personnage ? '<span class="cat-who">' + esc(PERSON[it.personnage]) + '</span>' : '') + '</span></div></div>'
     /* v7.56 : description, variantes, compatibilité et note forment un bloc (.cat-more) ; repliée au départ pour les familles
@@ -326,7 +336,9 @@ function whoSwitch(fam) {
   const d = load(); if (!d.families[fam].items.some(it => it.personnage)) return '';
   return '<div class="cat-who-sw" role="group" aria-label="Pour qui ?"><span class="cat-who-t">Pour qui ?</span><button type="button" data-cat-who="" aria-pressed="true">Tout</button><button type="button" data-cat-who="jason" aria-pressed="false">Vu sur Jason</button><button type="button" data-cat-who="lucia" aria-pressed="false">Vu sur Lucia</button></div>';
 }
-/* v7.73 (lot 3) : la barre fermée de chaque liste montre trois visuels officiels de ses catégories en éventail (décoratifs) */
+/* v7.73 (lot 3) : la barre fermée de chaque liste montre trois visuels officiels de ses catégories en éventail (décoratifs).
+   v7.77 (Téva : « n'implante pas les designs là où il y a déjà les vrais visuels ») : de nouveau les visuels officiels des
+   catégories, comme en v7.75 ; les illustrations ne servent qu'aux lignes sans visuel officiel propre. */
 function sumPile(data) {
   const seen = new Set(), out = [];
   for (const c of data.categories) { const v = catVisual(c); if (!v || seen.has(v.id)) continue; seen.add(v.id); out.push('<img src="' + esc(v.src) + '" width="' + v.w + '" height="' + v.h + '" alt="" loading="lazy" decoding="async">'); if (out.length === 3) break; }
@@ -394,5 +406,5 @@ function placesOf(fams) {
   for (const fam of fams) for (const it of d.families[fam].items) for (const o of it.ou_le_trouver) if (o.lieu) ids.add(o.lieu);
   return [...ids].map(place);
 }
-module.exports = { catVisual, FAMILIES, STATUS_ORDER, KIND, VEH_CATS, ARM_CATS, FOLDED, KEY, load, check, counts, counterText, listBox, row, rowId, ldItemList, searchEntries, leoRows, progressIds, progressNames, sourcesOf, placesOf, place, repereText, trackable, sortItems, compatLabels, coverage };
+module.exports = { ILLUS_TITLE, catVisual, FAMILIES, STATUS_ORDER, KIND, VEH_CATS, ARM_CATS, FOLDED, KEY, load, check, counts, counterText, listBox, row, rowId, ldItemList, searchEntries, leoRows, progressIds, progressNames, sourcesOf, placesOf, place, repereText, trackable, sortItems, compatLabels, coverage };
 if (require.main === module) { const d = load({ fresh: true }); for (const fam of FAMILIES) { const c = counts(fam); console.log(fam + ' : ' + counterText(fam) + ' (officiel ' + c.officiel + ', vu ' + c.vu + ', comm ' + c.comm + ', série ' + c.serie + ', à confirmer ' + c.conf + ', suivis ' + c.suivis + ')'); } }

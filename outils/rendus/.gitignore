@@ -1,0 +1,5 @@
+# Produits des rendus : ressources Poly Haven téléchargées, images fabriquées par tex/, caches Python
+ressources/
+tex/*.png
+tex/*.svg
+__pycache__/

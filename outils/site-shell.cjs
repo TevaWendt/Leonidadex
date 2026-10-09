@@ -18,9 +18,22 @@ const footShopping = [['achats.html', 'Tout ce qui s’achète'], ...shopping, [
 const info = [['a-propos.html', 'À propos'], ['contact.html', 'Contact'], ['medias.html', 'Médias et crédits'], ['mentions-legales.html', 'Mentions et confidentialité']];
 const top = [['calculateurs.html', 'Calculateur'], ['tuto.html', 'Tuto'], ['carte.html', 'Carte'], ['vehicules.html', 'Véhicules'], ['armes.html', 'Armurerie'], ['achats.html', 'Achats'], ['progression.html', 'Progression']];
 
-function link([url, label], prefix = '', current = '') {
-  const here = url.split('#')[0] === current;
-  return '<a href="' + prefix + url + '"' + (here ? ' class="here" aria-current="page"' : '') + '>' + esc(label) + '</a>';
+/* v7.75 (Téva : « quand on clique sur la section GTA Online, j'aimerais que ça ouvre une nouvelle page du navigateur ; pareil
+   pour la section Progression ») : depuis le reste du site, les liens du menu, d'« Explorer », du pied de page et des puces
+   qui mènent à l'espace GTA Online (online.html, online/…) ou à la Progression (progression.html) s'ouvrent dans un nouvel
+   onglet : target="_blank", rel="noopener", petite flèche ↗ (feuille de style) et l'info-bulle « S’ouvre dans un nouvel onglet ». À l'intérieur de
+   la section (pages GTA Online ; Progression et carnets), ils restent dans le même onglet. Les liens du contenu des pages ne
+   changent pas. */
+const NEW_TAB_SECTIONS = { 'online.html': u => u === 'online.html' || u.startsWith('online/'), 'progression.html': u => u === 'progression.html' };
+const sectionOfUrl = url => { const u = url.split('#')[0]; return Object.keys(NEW_TAB_SECTIONS).find(k => NEW_TAB_SECTIONS[k](u)) || null; };
+const opensNewTab = (url, from) => { const sec = sectionOfUrl(url); return !!sec && sec !== from; };
+/* le texte visible ne change pas (mêmes entrées de la mémoire de traduction) et reste le nom du lien : la flèche est dessinée
+   par la feuille de style (a[data-newtab]) et l'info-bulle (title, lue aussi comme description) dit « S’ouvre dans un nouvel onglet » */
+const NEW_TAB_TITLE = 'S’ouvre dans un nouvel onglet';
+const newTabAttrs = () => ' target="_blank" rel="noopener" data-newtab title="' + esc(NEW_TAB_TITLE) + '"';
+function link([url, label], prefix = '', current = '', from = current) {
+  const here = url.split('#')[0] === current, tab = opensNewTab(url, from);
+  return '<a href="' + prefix + url + '"' + (here ? ' class="here" aria-current="page"' : '') + (tab ? newTabAttrs() : '') + '>' + esc(label) + '</a>';
 }
 function currentOf(file) {
   /* v7.51 (lot 4) : les carnets de progression (carnets/<id>.html) sont des pages de la Progression. */
@@ -36,7 +49,8 @@ function nav(file, prefix) {
     + groups.map(([label, list, cls]) => '<div' + (cls ? ' class="' + cls + '"' : '') + '><strong>' + esc(label) + '</strong>' + list.map(x => link(x, prefix, current)).join('') + '</div>').join('')
     + '</div></details></li></ul>';
 }
-function footer(existing, prefix) {
+function footer(existing, prefix, file = '') {
+  const from = file ? currentOf(file) : '';
   const art = existing.match(/<svg class="foot-art"[\s\S]*?<\/svg>/)?.[0] || '';
   const groups = [
     ['Explorer', [['carte.html', 'Carte'], ['vehicules.html', 'Véhicules'], ['armes.html', 'Armurerie'], ...world]],
@@ -49,7 +63,7 @@ function footer(existing, prefix) {
     + '<a class="brand" href="' + prefix + 'index.html">Leonida<span>kit</span></a>'
     + '<p>Une carte, des fiches, un calculateur. Prépare tes choix dans Leonida avec des sources claires et tes propres chiffres.</p>'
     + '<a class="foot-feature" href="' + prefix + 'calculateurs.html">Trouver mon calcul ↗</a></div><div class="foot-cols">'
-    + groups.map(([label, list]) => '<div><h2>' + esc(label) + '</h2><nav aria-label="' + esc(label) + ' en pied de page">' + list.map(x => link(x, prefix)).join('') + '</nav></div>').join('')
+    + groups.map(([label, list]) => '<div><h2>' + esc(label) + '</h2><nav aria-label="' + esc(label) + ' en pied de page">' + list.map(x => link(x, prefix, '', from)).join('') + '</nav></div>').join('')
     + '</div></div><p class="legal">Leonidakit est un projet indépendant réalisé par un joueur, sans affiliation, approbation ni sponsoring de Rockstar Games ou Take-Two Interactive. Grand Theft Auto est une marque de Take-Two Interactive. Les crédits de chaque média restent consultables.</p></div></footer>';
 }
 /* v7.40 (lot 3) : puces de navigation entre les sections documentées, identiques sur toutes les pages de section
@@ -74,7 +88,8 @@ function chips(file) {
   const alias = acquisition.find(c => c.alias && c.route.slice(1) === file);
   const currentFile = alias ? alias.alias.slice(1).split('#')[0] : file;
   const items = chipSets[chipSetOf(currentFile)].filter(([url]) => url.split('#')[0] !== currentFile && url.split('#')[0] !== file);
-  return '<nav class="lk-chips shell" aria-label="Explorer les contenus documentés">' + items.map(([url, label]) => '<a href="' + url + '">' + esc(label) + '</a>').join('') + '</nav>';
+  const from = currentOf(currentFile);
+  return '<nav class="lk-chips shell" aria-label="Explorer les contenus documentés">' + items.map(([url, label]) => '<a href="' + url + '"' + (opensNewTab(url, from) ? newTabAttrs() : '') + '>' + esc(label) + '</a>').join('') + '</nav>';
 }
 /* Pose (ou remplace) les puces en bas de <main>, avant le bandeau de fin s'il existe. Idempotent. */
 function placeChips(html, file) {
@@ -143,4 +158,4 @@ function placeEntry(html, file, prefix = '') {
   if (/<section class="lk-outro"/.test(html)) return html.replace(/<section class="lk-outro"/, block + '\n<section class="lk-outro"');
   return html.replace(/<\/main>/, block + '\n</main>');
 }
-module.exports = { chipSets, chipSetOf, nav, footer, top, world, play /* sections missions, activites, radios, codes, trophees */, online /* section online */, shopping, info, chips, placeChips, chipList, sectionPages, ENTRY, entry, placeEntry, entryPages };
+module.exports = { opensNewTab, chipSets, chipSetOf, nav, footer, top, world, play /* sections missions, activites, radios, codes, trophees */, online /* section online */, shopping, info, chips, placeChips, chipList, sectionPages, ENTRY, entry, placeEntry, entryPages };

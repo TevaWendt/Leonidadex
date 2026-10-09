@@ -23,7 +23,8 @@ const name=v=>(v.marque&&v.marque!=='Marque inconnue'?v.marque+' ':'')+v.nom;
 const walk=d=>fs.readdirSync(d,{withFileTypes:true}).flatMap(x=>x.isDirectory()?walk(path.join(d,x.name)):[path.join(d,x.name)]);
 const shipped=['photos','img'].flatMap(d=>fs.existsSync(d)?walk(d):[]).map(p=>'/'+p.replaceAll('\\','/')).sort();if(fs.existsSync('credits-reels.json'))shipped.push('/credits-reels.json');
 // Le manifeste chargé par toutes les pages ne liste pas les photos de la carte : elles ne servent qu'à carte.html et carte-gtadb.js est déjà filtré ci-dessous.
-const assets=shipped.filter(p=>!p.startsWith('/photos/'));
+/* v7.76 : ni les illustrations des catalogues (img/illus/, montrées par les pages elles-mêmes, jamais cherchées par un script). */
+const assets=shipped.filter(p=>!p.startsWith('/photos/')&&!p.startsWith('/img/illus/'));
 fs.writeFileSync('assets-manifest.js','/* Generated from the files actually shipped. */\nwindow.LK_ASSETS = '+JSON.stringify(assets)+';\n');
 const assetSet=new Set(shipped);
 const available=(file,u)=>{try{const url=new URL(u,'https://www.leonidakit.com/'+file);return url.origin!=='https://www.leonidakit.com'||url.protocol==='data:'||assetSet.has(url.pathname);}catch{return false;}};
@@ -104,7 +105,7 @@ for(const file of htmlFiles){let s=fs.readFileSync(file,'utf8');if(file.startsWi
   if(!s.includes('property="og:image"'))s=s.replace('</head>','<meta property="og:image" content="https://www.leonidakit.com/img/social-card.png">\n</head>');
   if(!s.includes('name="twitter:card"'))s=s.replace('</head>','<meta name="twitter:card" content="summary_large_image">\n</head>');
  }
- s=s.replace(/<footer[\s\S]*?<\/footer>/g,footer=>require('./site-shell.cjs').footer(footer,prefix));
+ s=s.replace(/<footer[\s\S]*?<\/footer>/g,footer=>require('./site-shell.cjs').footer(footer,prefix,file));
  const title=s.match(/<title>([^<]*)<\/title>/)?.[1];const canonical=s.match(/<link rel="canonical" href="([^"]+)"/)?.[1];const description=s.match(/<meta name="description" content="([^"]*)"/)?.[1];
  if(title&&!s.includes('property="og:title"'))s=s.replace('</head>','<meta property="og:title" content="'+title+'">\n</head>');
  if(description&&!s.includes('property="og:description"'))s=s.replace('</head>','<meta property="og:description" content="'+description+'">\n</head>');

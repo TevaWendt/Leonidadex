@@ -1,0 +1,79 @@
+LEONIDAKIT v7.77 — les illustrations des catalogues deviennent des silhouettes « teaser » aux couleurs du site (l'objet
+caché en ombre, on l'attend) ; les vrais visuels gardés partout où ils existent, et quatre éléments de plus montrent le
+leur — 9 octobre 2026
+
+Base : v7.76 (lot C). Demandes de Téva du 09/10/2026 (0 h 21, 11 h 40 et 14 h 14). Rien n'est publié ni poussé.
+
+1. LA DEMANDE
+Téva (0 h 21) : « tu m'as fait des vignettes enfantines […] c'est un jeu PEGI 18 quand même […] Recommence les designs. Et
+surtout, n'implante pas les designs là où il y a déjà les vrais visuels. » (11 h 40) : « je souhaite les visuels officiels de
+GTA 6 ; s'ils ne sont pas encore dévoilés, tu fais un dessin qui reste dans le thème GTA 6 avec le branding du site, comme pour
+les véhicules et les armes ; chaque schéma différent suivant l'illustration ; garder un style rétro Rockstar avec notre
+branding ; avoir la forme de l'objet. » (14 h 14) : « Fais plus silhouette, comme si tu vois le truc, on l'attend et qu'il va
+bientôt venir, un peu en mode suspense : armes, objets, véhicules et tout cachés. »
+Entre-temps, deux essais (images de synthèse photoréalistes, puis dessins encrés en aplats) ont été écartés.
+Avant : 195 dessins SVG en aplats simples (v7.76), et la barre fermée de chaque liste montrait trois de ces dessins.
+
+2. LES NOUVELLES ILLUSTRATIONS (img/illus/<famille>/<id>.webp et <id>-p.webp)
+- Les éléments qui ont leur visuel officiel Rockstar le gardent : aucune illustration ne remplace un vrai visuel. Quatre de
+  plus le montrent désormais, après inspection des visuels officiels déjà présents dans img/officiel/ : Goodtime Gear
+  (goodtime-gear-01 : Jason et Lucia en tee-shirts et casquettes Macca the Gator), Hawk & Little Morgan « his and hers »
+  (hawk-little-morgan-revolvers-02 : les deux revolvers aux crosses gravées de palmiers), la coiffure rétro et le costume en
+  lin pastel de Jason (vintage-vice-city-pack-exclusive-looks-03 : le look exclusif du Pack Vintage Vice City) ; provenance
+  notée dans outils/medias-identifications.json. 46 éléments ont ainsi leur visuel officiel ; les 191 autres ont chacun leur
+  silhouette, propre à l'élément.
+- Silhouettes « teaser », dans la famille des schémas des véhicules et des armes du site : chaque objet est modelé en 3D avec
+  Blender (vraies proportions : burger, canette, seau de poulet, gilet sur buste, tête de mannequin coiffée, vêtements sur
+  cintre, robe, coupé des années 80 sans marque avec la pièce montée, pièces détachées, pistolets et accessoires…), puis
+  montré en ombre noire : liseré de contre-jour teinté de la couleur propre de l'objet (on devine sa teinte : peinture,
+  finition, tissu), second liseré néon, quelques traits de forme très discrets, vitrages un peu plus clairs, ombre portée ;
+  ses lumières percent (néons sous la voiture, phares allumés, faisceau de la lampe, rayon du laser, écrans). Coiffures :
+  la forme de la coupe se lit dans la silhouette de la tête. Tatouages : le motif « flash » en silhouette, les planches de
+  placement (corps de face et de dos, zone allumée), et sur le mannequin le motif qui brille sous la peau.
+  Fond aux couleurs du site : dégradé (corail et ambre, nuit de Vice City, gris-violet des armes), lignes de balayage,
+  soleil rétro rayé derrière le sujet.
+- Quelques objets et matières viennent de Poly Haven (domaine public, CC0) ; tête de mannequin d'après le maillage de visage
+  MediaPipe (Apache 2.0). Aucune marque, aucun logo, aucune image du jeu.
+- Deux tailles en WebP : 960 × 600 (fiche ouverte, cartes « En un regard ») et 384 × 240 (vignettes des listes).
+- Toujours dites comme telles : info-bulle et légende « Illustration Leonidakit : silhouette dessinée pour le site en
+  attendant le visuel officiel, pas une image du jeu », texte de remplacement « Illustration Leonidakit : <nom> »,
+  étiquette « Illustration Leonidakit » des cartes ; dans les cinq langues (outils/langues/<code>/v777.json).
+- Mentions : « Les illustrations des catalogues […] sont des silhouettes dessinées pour le site, en attendant les visuels
+  officiels : chaque objet est modelé en 3D avec Blender (certains objets et matières viennent de Poly Haven, domaine public,
+  CC0), puis montré en ombre, avec un liseré de lumière et ses propres lumières. Ce ne sont pas des images du jeu, et chacune
+  laisse sa place au visuel officiel dès qu'il existe. » (outils/gen-informations.cjs).
+- Dès qu'un élément reçoit son visuel officiel (champ « media » dans outils/catalogues/), il le montre à la place de la
+  silhouette ; le contrôle de outils/gen-acquisitions.cjs signale alors l'illustration devenue inutile (à retirer de
+  outils/illustrations/index.cjs et de img/illus/).
+
+3. CE QUI REVIENT COMME AVANT (v7.75)
+- La barre fermée de chaque liste montre de nouveau trois visuels officiels de ses catégories (outils/catalogues.cjs,
+  sumPile), plus jamais une illustration.
+
+4. FICHIERS
+- outils/illustrations/index.cjs : la liste des 191 éléments illustrés (IDS), les chemins (src, srcSmall), les dimensions,
+  la lecture des dimensions d'un WebP sans dépendance (webpSize) et le contrôle (check : une illustration pour chaque
+  élément sans visuel officiel, aucune pour un élément qui a le sien, deux fichiers aux bonnes dimensions, aucun fichier
+  en trop). Les générateurs de dessins SVG de la v7.76 (core, conso, head, tattoo, wear, car, gun .cjs) sont supprimés.
+- outils/catalogues/coiffures.json, tenues.json, perso-armes.json (champ « media » des quatre éléments liés à leur visuel
+  officiel), outils/medias-identifications.json (provenance).
+- outils/rendus/ : silhouettes.py (construit la scène de chaque élément et en fait la silhouette), lk/toon.py (mise en
+  silhouette ; contient aussi la mise en dessin essayée avant), lk/*.py (scènes des six familles), fetch.py (ressources
+  Poly Haven), tex/ (motifs), visage/ (maillage MediaPipe et sa licence), vers-webp.cjs (conversion en WebP), LISEZ-MOI.md ;
+  aucun chemin propre à une machine (ressources téléchargées dans outils/rendus/ressources, ignoré par Git grâce à
+  outils/rendus/.gitignore). Ce dossier n'est pas mis en ligne (outils/ est exclu par .vercelignore).
+- outils/catalogues.cjs (vignette en 384 × 240 avec la grande version pour la fiche, titre, barre fermée),
+  outils/gen-acquisitions.cjs (contrôle, cartes « En un regard » avec srcset 384w / 960w), catalogue.js (fiche ouverte en
+  960 × 600, légende), acquisitions.css (fond sombre le temps du chargement), outils/gen-informations.cjs (Mentions),
+  outils/langues/<code>/v777.json (légende et paragraphe des Mentions), outils/langues/<code>/v776.json (sans l'ancienne
+  légende), pages régénérées.
+- Tests : outils/tests/v777.test.cjs remplace v776.test.cjs ; catalogues-lot3 et v773 suivent les WebP.
+
+5. CONTRÔLES
+- node outils/regenerer.cjs ; node outils/verifier.js ; suites de tests ; vérifications à l'écran (ordinateur et téléphone)
+  des listes, des fiches ouvertes et des cartes « En un regard » ; relecture des 191 silhouettes sur planche ; contrôle à
+  part du paquet livré.
+
+6. POUR LA SUITE (demande de Téva du 09/10, 14 h 14 : « à terme, la personnalisation des véhicules et des armes en direct,
+   comme dans le jeu […] au moins voir les véhicules et les armes sous différents angles et les effets des
+   personnalisations ») : à faire dans un prochain lot, voir la réponse de livraison.

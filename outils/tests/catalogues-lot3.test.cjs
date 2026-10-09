@@ -60,7 +60,8 @@ test('UI-01 / UI-02 / CONSO-01 : chaque ligne des six listes a son badge, sa bar
         if (C.FOLDED.has(fam)) { assert.ok(more.hidden && bt && bt.getAttribute('aria-expanded') === 'false' && bt.getAttribute('aria-controls') === more.id, r.id + ' : description repliée, commande reliée'); }
         else assert.ok(!more.hidden && !bt, r.id + ' : description visible, pas de commande');
         const img = r.querySelector('.cat-thumb img');
-        if (img && img.dataset.big) assert.ok(exists(img.dataset.big) && /-1280\.webp$/.test(img.dataset.big), r.id + ' : grande version pour la fiche');
+        /* v7.77 : une illustration du site a sa grande version (960 × 600) à côté de la petite (384 × 240) */
+        if (img && img.dataset.big) assert.ok(exists(img.dataset.big) && (/-1280\.webp$/.test(img.dataset.big) || /^img\/illus\/[a-z-]+\/[a-z0-9-]+\.webp$/.test(img.dataset.big) && img.getAttribute('src') === img.dataset.big.replace(/\.webp$/, '-p.webp')), r.id + ' : grande version pour la fiche');
         assert.ok(!r.querySelector('td.cat-c-nom > p.cat-desc'), r.id + ' : la description n’est plus un paragraphe nu de la cellule');
       }
     }

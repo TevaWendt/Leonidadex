@@ -3447,3 +3447,12 @@ a.ed-brand:hover,a.ed-brand:focus-visible{border-color:var(--ink);box-shadow:5px
    se coupe au lieu d’élargir l’en-tête et de rogner les liens voisins */
 @media(max-width:360px){.page-head :is(h1,.lk-hero-item){overflow-wrap:anywhere;-webkit-hyphens:auto;hyphens:auto;}}
 .map-stage:has(.map-trajet:not([hidden])) .map-scale{opacity:0;}
+/* v7.75 : liens du menu, du pied de page et des puces qui ouvrent l’espace GTA Online ou la Progression dans un nouvel onglet
+   (outils/site-shell.cjs) : petite flèche en image de fond (le ::after des liens du menu sert déjà au soulignement), à droite
+   du texte ; le texte du lien reste son nom, l’info-bulle (title) dit « S’ouvre dans un nouvel onglet ». */
+a[data-newtab][href]{padding-right:1.05em;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M4.5 2.5h5v5M9.5 2.5 2.5 9.5' fill='none' stroke='%235C5A63' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .05em center;background-size:.6em .6em;}
+.lk-chips a[data-newtab][href]{padding-right:2.1em;background-position:right 1em center;}
+/* pied de page : les liens des colonnes s'étirent sur toute la largeur (flex en colonne) ; la flèche suit le texte */
+.foot-cols nav a[data-newtab][href]{align-self:flex-start;max-width:100%;}
+/* bande « GTA Online » du menu (fond nuit) : la règle des liens de la bande remet leur marge à zéro ; flèche claire */
+#nav .nav-more-panel .nav-online a[data-newtab][href]{padding-right:1.05em;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M4.5 2.5h5v5M9.5 2.5 2.5 9.5' fill='none' stroke='%23FDFBF7' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");}

@@ -40,6 +40,10 @@ const payload={schemaVersion:source.schemaVersion,verifiedAt:source.verifiedAt,g
    repères ; textes déjà dans la page des personnalisations (mémoire de traduction), fichier listé dans outils/langues.json. */
 {const PF=require('./perso-fiche.cjs');const errs=PF.check();if(errs.length)throw Error(errs.join('\n'));
  fs.writeFileSync(path.join(root,'perso-data.js'),'/* Généré par outils/gen-acquisitions.cjs (outils/perso-fiche.cjs) depuis outils/catalogues/perso-*.json et perso-options.json : repères de la série, jamais un prix GTA VI. */\nwindow.LK_PERSO = '+JSON.stringify(PF.persoData())+';\n');}
+/* v7.76 (lot C) : une illustration par élément des catalogues sans visuel officiel propre (outils/illustrations/), montrée par
+   outils/catalogues.cjs. v7.77 : silhouettes « teaser » faites hors du site (outils/rendus/), fichiers du dépôt
+   img/illus/<famille>/<id>.webp et <id>-p.webp ; ici on contrôle qu'il n'en manque aucune et qu'aucune n'est en trop. */
+{const IL=require('./illustrations/index.cjs');const fams=C.load().families;const errs=IL.check(fams,root);if(errs.length)throw Error(errs.join('\n'));}
 fs.writeFileSync(path.join(root,'acquisitions-data.js'),'/* Généré par outils/gen-acquisitions.cjs depuis outils/acquisitions.json et les données canoniques existantes. */\nwindow.LK_ACQUISITIONS = '+JSON.stringify(payload,null,2)+';\n');
 const base=read('a-propos.html'),header=base.match(/<header>[\s\S]*?<\/header>/)[0].replace(/ class="here"/g,''),footer=base.match(/<footer>[\s\S]*?<\/footer>/)[0];
 const metaDesc=t=>{t=String(t||'').replace(/\s+/g,' ').trim();if(t.length<=158)return t;const ph=t.split(/(?<=[.!?])\s+/);let d='';for(const q of ph){if(d&&(d+' '+q).length>158)break;d=d?d+' '+q:q;}return d.length<=158&&d.length>=60?d:t.slice(0,155).replace(/\s+\S*$/,'')+'…';};
@@ -175,9 +179,12 @@ function glanceSection(num){
      (classe cg-f--unk, cachée : la comparaison de consommables.js les lit toujours) ; la page le dit une fois, en tête. */
   /* v7.73 (lot 3, Téva : « cartes blanches, sans visuel ») : chaque carte s'ouvre sur un visuel officiel — celui de la ligne quand
      elle en a un, sinon celui de sa catégorie, voilé de la teinte de la catégorie et dit comme une illustration (pas l'objet). */
-  const own=it.media?L.ctx.medias[it.media]:null, cv=C.catVisual(cat);
-  const pic=own?(()=>{const v=own.variants.find(x=>x.w===480)||own.variants[0];return '<img src="'+esc(v.src.replace(/^\//,''))+'" width="'+v.w+'" height="'+v.h+'" alt="'+esc(own.alt||own.titre||it.nom)+'" loading="lazy" decoding="async">';})():cv?'<img src="'+esc(cv.src)+'" width="'+cv.w+'" height="'+cv.h+'" alt="'+esc('Illustration de la catégorie « '+cat.label+' »')+'" loading="lazy" decoding="async">':'';
-  const media=pic?'<div class="cg-media'+(own?' cg-media--own':' cg-media--cat')+'"'+(own?'':' title="Visuel officiel : illustration de la catégorie, pas de l’objet"')+'>'+pic+'<span class="cg-media-l">'+(own?'Visuel officiel':'Illustration · visuel officiel')+'</span></div>':'';
+  /* v7.76 (lot C, Téva : « les visuels sont toujours les mêmes ») : sans visuel propre, la carte montre l'illustration de
+     l'élément, réalisée pour le site et dite comme telle ; le visuel de la catégorie reste le repli.
+     v7.77 : silhouette « teaser », petite (384 px) ou grande (960 px) selon la largeur de la carte et l'écran. */
+  const IL=require('./illustrations/index.cjs'),own=it.media?L.ctx.medias[it.media]:null,il=!own&&IL.has('consommables',it.id),cv=C.catVisual(cat);
+  const pic=own?(()=>{const v=own.variants.find(x=>x.w===480)||own.variants[0];return '<img src="'+esc(v.src.replace(/^\//,''))+'" width="'+v.w+'" height="'+v.h+'" alt="'+esc(own.alt||own.titre||it.nom)+'" loading="lazy" decoding="async">';})():il?'<img src="'+esc(IL.srcSmall('consommables',it.id))+'" srcset="'+esc(IL.srcSmall('consommables',it.id))+' '+IL.PW+'w, '+esc(IL.src('consommables',it.id))+' '+IL.W+'w" sizes="(max-width: 600px) 92vw, 380px" width="'+IL.W+'" height="'+IL.H+'" alt="'+esc('Illustration Leonidakit : '+it.nom)+'" loading="lazy" decoding="async">':cv?'<img src="'+esc(cv.src)+'" width="'+cv.w+'" height="'+cv.h+'" alt="'+esc('Illustration de la catégorie « '+cat.label+' »')+'" loading="lazy" decoding="async">':'';
+  const media=pic?'<div class="cg-media'+(own?' cg-media--own':il?' cg-media--illus':' cg-media--cat')+'"'+(own?'':il?' title="'+esc(C.ILLUS_TITLE)+'"':' title="Visuel officiel : illustration de la catégorie, pas de l’objet"')+'>'+pic+'<span class="cg-media-l">'+(own?'Visuel officiel':il?'Illustration Leonidakit':'Illustration · visuel officiel')+'</span></div>':'';
   return '<article class="cg-card cg-cat-'+esc(it.categorie)+'" data-cg-id="'+esc(it.id)+'" data-cg-cat="'+esc(it.categorie)+'" style="view-transition-name:cg-'+esc(it.id)+(typeof cat.teinte==='number'?';--ch:'+cat.teinte:'')+'">'+media+'<div class="cg-top"><span class="cg-ico" aria-hidden="true">'+S.icon(cat.icon)+'</span><div class="cg-head"><h4 class="cg-nom">'+esc(it.nom)+'</h4><span class="cg-cat">'+esc(cat.label)+'</span></div>'+glancePip(it.statut)+'</div>'
    +'<div class="cg-body">'+(it.description?'<p class="cg-desc">'+esc(it.description)+'</p>':'')+'<dl class="cg-facts">'
    +'<div class="cg-f-ou"><dt>Où</dt><dd>'+esc(where||'Emplacement à venir')+'</dd></div>'
