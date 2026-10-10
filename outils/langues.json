@@ -209,7 +209,8 @@
   "data-search",
   "data-q",
   "data-n",
-  "data-help-keywords"
+  "data-help-keywords",
+  "data-ang-dot"
  ],
  "attributsCherches": [
   "data-q",

@@ -1,0 +1,21 @@
+LEONIDAKIT v7.80 — Fiches véhicules et armes : le schéma sous tous les angles, en un clic
+À appliquer sur la v7.79. Archive « modifs » : seulement les fichiers qui changent.
+Rien n'a été publié ni poussé. Aucun fichier à supprimer.
+
+CE QUI CHANGE POUR LE VISITEUR (fiches véhicules et fiches armes)
+- En haut d'une fiche sans visuel officiel, le schéma devient un écran : clique sur l'image, elle passe à l'angle suivant
+  avec un effet d'écran cathodique qui change de chaîne (bandes, balayage, décalage rouge-bleu qui se stabilise).
+  Véhicules : profil, face, arrière, dessus. Armes : profil, dessus, face. Pas plus.
+- Étiquette « PROFIL 1/4 », rappel « Cliquer : angle suivant », onglets en bas pour aller droit à un angle ; flèches du
+  clavier ; glisser au doigt sur téléphone.
+- Sur une fiche qui a des photos officielles (54 véhicules), les photos restent en premier ; le schéma sous tous les
+  angles est la dernière vue de la galerie (point « Schéma »).
+- Les vélos sont enfin visibles sur leur fiche (le cadre était tracé en clair sur fond clair).
+- Rien d'autre ne change. Cinq langues.
+
+MARCHE À SUIVRE
+  1. Copie le contenu de l'archive à la racine du dossier GitHub (remplacer), valide, pousse. Rien à changer dans Vercel.
+  2. Essai : vehicules/pegassi-zentorno.html (Ctrl+F5) → clique sur l'image trois fois ; armes/carabine.html ;
+     vehicules/albany-manana.html → dernier point de la galerie.
+
+Contrôles automatiques et vérifications : outils/CHANGEMENTS-v7.80.txt. Retour arrière : commit précédent dans GitHub Desktop.

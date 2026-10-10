@@ -1,0 +1,68 @@
+LEONIDAKIT v7.80 — Fiches véhicules et armes : le schéma sous tous les angles, en un clic, avec un effet rétro —
+10 octobre 2026
+
+Base : v7.79. Demande de Téva du 09/10/2026 (21 h) : « sur les sections déjà existantes comme armure et véhicule, qu'on
+puisse cliquer pour voir les différents angles, mais pas en mettre trop ; je clique sur l'image, ça fait un effet rétro
+qui passe à l'autre image : l'angle vu du haut, de droite… ; pareil pour les armes ». Rien n'est publié ni poussé.
+
+1. LES ANGLES (outils/vehicules-angles.cjs, outils/armes-angles.cjs, outils/vehicules-schemas.cjs)
+- Véhicules : quatre angles, profil (le schéma existant), face, arrière, dessus. Les trois nouveaux sont dessinés à partir
+  des mêmes paramètres que le profil (type de carrosserie, époque, marque, taille des roues, hauteur de toit, accessoires :
+  rampe, barres de toit, aileron, pare-buffle, bandes…), relevés au passage par describe() ajouté à vehicules-schemas.cjs
+  (le profil ne change pas d'un trait). Treize familles : voiture, pick-up, camion (caisse, benne, plateau, dépanneuse,
+  semi, ambulance, toupie, benne à ordures), bus et camping-car, moto (sportive, roadster, cross, custom, chopper,
+  scooter), quad, buggy, bateau (console, cabine, yacht, catamaran, ferry, paquebot, voilier, kayak, jet-ski, hydroglisseur,
+  semi-rigide), avion (jet, biréacteur, monomoteur, hydravion, biplan, dirigeable), hélicoptère, rail, chariot élévateur,
+  pelleteuse, tracteur d'aéroport. Face et arrière sont posées au sol et dessinées plus grandes que le profil (un engin
+  vu de face est étroit : il remplit la hauteur du cadre). Les 302 véhicules passent sans erreur.
+- Armes : trois angles, profil (le schéma existant), dessus (l'arme à plat, canon à droite : glissière, hausse, guidon,
+  fenêtre d'éjection, chargeur, lunette, bipied, barillet…), face (la bouche du canon vers soi : canon, guidon, poignée,
+  chargeur, crosse, lunette, barillet du lance-grenades). Les 27 armes, une à une.
+- Au passage : le cadre, la fourche et les roues des six vélos sont désormais à l'encre (ils étaient tracés en clair et
+  invisibles sur le fond clair des fiches).
+
+2. L'ÉCRAN (outils/angles-markup.cjs, fiches.css, fiches.js, outils/gen.js, outils/gen-armes.cjs)
+- Fiche sans visuel officiel (260 véhicules, 27 armes) : l'emplacement vide du haut de fiche devient un écran : le profil
+  posé, une étiquette « PROFIL 1/4 », le rappel « Cliquer : angle suivant », les onglets Profil · Face · Arrière · Dessus.
+- Un clic sur l'image passe à l'angle suivant, à la manière d'un écran cathodique qui change de chaîne : l'image sortante
+  se découpe en bandes qui se décalent, un balayage lumineux descend, les lignes de balayage clignotent, l'image entrante
+  s'ouvre d'une ligne, se stabilise après un bref décalage rouge-bleu. 0,44 s. Onglets pour aller droit à un angle ;
+  ← → Début Fin au clavier ; glisser au doigt. Les clics pressés sont posés sans attendre.
+- Fiche avec visuels officiels (54 véhicules) : les photos restent en tête ; le schéma sous tous les angles est la
+  dernière vue de la galerie (point « Schéma »).
+- Sans script : le profil est posé, onglets et rappel cachés. Avec « réduire les animations » : changement immédiat.
+  Rien gardé sur l'appareil, aucune requête : les quatre dessins sont dans la page (environ 10 Ko de plus par fiche,
+  aucun fichier supplémentaire à charger).
+- Sous 900 px (téléphone, tablette en portrait), la galerie du haut de fiche — photos ou écran des angles — prend
+  toute la largeur de la colonne, calée sur le texte de la fiche (elle était limitée à 230 px, la largeur de l'ancienne
+  vignette : écran minuscule, onglets coupés). Au-dessus, rien ne bouge (colonne de 320 à 440 px).
+- Le hub Véhicules, le hub Armes, les cartes liées et les listes ne changent pas (même schéma de profil).
+- Outil : outils/regenerer.cjs plafonne le tas de Node à 4 Go pour chaque étape (sans plafond, la traduction des langues
+  le laissait grossir jusqu'à 6 Go et le système pouvait tuer la génération ; avec, 3,3 Go au plus).
+
+3. TRADUCTIONS
+outils/langues/<en|es|it|de>/v780.json : « Cliquer : angle suivant », « Angle suivant », « Angles du schéma »,
+« Schéma » (point de la galerie, attribut data-ang-dot ajouté à outils/langues.json) ; Profil/Face/Arrière/Dessus
+viennent de la mémoire (ajoutés en allemand).
+
+4. TESTS
+outils/tests/v780.test.cjs (6 tests) : générateurs (302 + 27, sans NaN, angles qui varient, profil inchangé) ; fiches
+sans visuel (4 angles, profil seul posé, onglets, étiquette, compteur, rappel, description) ; fiches avec visuels (photo
+d'abord, bloc caché dans la galerie, script) ; fiches armes (3 angles) ; style et script (effet, mouvement réduit, sans
+script, clavier, aucun mot ni requête dans le script) ; langues. regression.test.cjs mis à jour (l'emplacement vide
+n'existe plus).
+
+CONTRÔLES (10 octobre 2026)
+- Planches de contrôle : les quatre angles des 99 engins représentatifs (deux par type) et les trois angles des 27 armes,
+  relus un à un ; corrections : faces trop larges, motos et hélicoptères trop petits, quads sans guidon, bateaux trop bas.
+- Navigateur : clic → angle suivant avec l'effet, étiquette et compteur, onglets ; clavier (flèches, Début, Fin, Tab +
+  Entrée) ; six clics pressés → état cohérent ; mouvement réduit → changement immédiat ; sans script → profil posé ;
+  galerie d'une fiche à photos → dernière vue « Schéma » ; aucune erreur console ; largeur téléphone.
+- Tests Node, langues, vérificateur de liens, audit navigateur : voir le LISEZ-MOI.
+
+FICHIERS
+Modifiés : outils/gen.js, outils/gen-armes.cjs, outils/vehicules-schemas.cjs, outils/regenerer.cjs, outils/langues.json, fiches.css, fiches.js,
+outils/tests/regression.test.cjs, les fiches vehicules/*.html et armes/*.html (et leurs copies traduites), img/schemas des
+vélos, empreintes, README.md. Nouveaux : outils/vehicules-angles.cjs, outils/armes-angles.cjs, outils/angles-markup.cjs,
+outils/langues/*/v780.json, outils/tests/v780.test.cjs, outils/CHANGEMENTS-v7.80.txt, LISEZ-MOI-v7.80.txt.
+Aucun fichier à supprimer.

@@ -383,3 +383,49 @@ section[id], .sec-h[id]{scroll-margin-top:200px;}
 }
 @media(max-width:460px){.pf-facts{grid-template-columns:1fr;}.pf-opt-list>li,.pf-coul>li{flex-basis:100%;}}
 @media(prefers-reduced-motion:reduce){.pf-chip-li,.pf-bt,.pf-g-img img,.pf-chev,.pf-post,.pf-opt{transition:none;}.pf-post:hover{transform:none;}.pf-g-sum:hover .pf-g-img img{transform:none;}}
+
+/* ---------- sous tous les angles (v7.80) ----------
+   Fiches véhicules et armes : l'écran du haut de fiche montre le schéma de profil ; un clic passe à l'angle suivant
+   (face, arrière, dessus ; dessus et face pour une arme) avec l'effet d'un écran cathodique qui change de chaîne :
+   l'image sortante se découpe en bandes, un balayage descend, l'image entrante s'ouvre d'une ligne et se stabilise
+   après un bref décalage rouge-bleu. Onglets en bas, étiquette et compteur en haut. Sans script : le profil est
+   posé, onglets et rappel cachés. Avec « réduire les animations » : changement immédiat. Balisage : outils/angles-markup.cjs. */
+.gal--ang{aspect-ratio:16/10;}
+.ang{position:relative;width:100%;height:100%;}
+.ang-view{display:block;position:relative;width:100%;height:100%;border:0;padding:0;margin:0;background:none;cursor:pointer;font:inherit;color:inherit;text-align:left;border-radius:inherit;}
+.ang-view:focus-visible{outline:3px solid var(--coral,#E8452C);outline-offset:-3px;}
+.ang-screen{position:absolute;inset:0;overflow:hidden;background:linear-gradient(180deg,#FBF9F4 0%,#F0EDE5 100%);}
+.ang-screen::before{content:'';position:absolute;inset:0;z-index:3;pointer-events:none;background:repeating-linear-gradient(180deg,rgba(26,26,30,.05) 0 1px,transparent 1px 3px);}
+.ang-screen::after{content:'';position:absolute;inset:0;z-index:3;pointer-events:none;box-shadow:inset 0 0 48px rgba(26,26,30,.09);}
+.ang-img{position:absolute;inset:0;width:100%;height:100%;padding:8% 7% 10%;box-sizing:border-box;display:none;transform-origin:50% 50%;}
+.ang-img.is-on{display:block;}
+.ang-scan{position:absolute;left:0;right:0;top:0;height:22%;z-index:4;pointer-events:none;opacity:0;background:linear-gradient(180deg,rgba(255,255,255,0),rgba(255,255,255,.8) 50%,rgba(255,255,255,0));}
+.ang-tag{position:absolute;left:12px;top:12px;z-index:5;display:inline-flex;align-items:center;gap:8px;background:rgba(26,26,30,.88);color:#fff;font-size:.68rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:4px 9px;border-radius:20px;pointer-events:none;}
+.ang-tag span{font-weight:600;opacity:.7;letter-spacing:0;font-variant-numeric:tabular-nums;}
+.ang-hint{position:absolute;right:12px;top:13px;z-index:5;font-size:.68rem;font-weight:700;color:#6B6874;pointer-events:none;display:inline-flex;align-items:center;gap:6px;}
+.ang-hint::before{content:'';width:12px;height:12px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;}
+.ang-view:hover .ang-hint{color:var(--ink,#1A1A1E);}
+.ang-tabs{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);z-index:5;display:flex;gap:2px;background:rgba(253,251,247,.92);border:1px solid rgba(26,26,30,.12);border-radius:20px;padding:3px;max-width:calc(100% - 20px);}
+.ang-tab{border:0;background:none;font:inherit;font-size:.72rem;font-weight:800;color:#6B6874;padding:5px 11px;border-radius:16px;cursor:pointer;min-height:28px;white-space:nowrap;}
+.ang-tab.is-on{background:var(--ink,#1A1A1E);color:#fff;}
+.ang-tab:hover{color:var(--ink,#1A1A1E);}
+.ang-tab.is-on:hover{color:#fff;}
+.ang-tab:focus-visible{outline:2px solid var(--coral,#E8452C);outline-offset:1px;}
+html:not(.js) .ang-tabs,html:not(.js) .ang-hint{display:none;}
+/* changement de chaîne */
+.js .ang-img.is-out{animation:ang-out .24s steps(6,end) forwards;z-index:1;}
+.js .ang-img.is-in{animation:ang-in .44s cubic-bezier(.2,.8,.2,1) both;z-index:2;}
+.js .ang.is-switch .ang-scan{animation:ang-scan .44s linear both;}
+.js .ang.is-switch .ang-screen::before{animation:ang-flick .44s steps(4,end) both;}
+@keyframes ang-out{0%{opacity:1;clip-path:inset(0 0 0 0);transform:translateX(0);}20%{clip-path:inset(8% 0 62% 0);transform:translateX(-5%);}45%{clip-path:inset(34% 0 30% 0);transform:translateX(6%);}70%{clip-path:inset(56% 0 12% 0);transform:translateX(-3%);}100%{opacity:0;clip-path:inset(50% 0 50% 0);transform:translateX(2%);}}
+@keyframes ang-in{0%{opacity:0;transform:scaleY(.04) scaleX(1.35);filter:drop-shadow(-5px 0 0 rgba(232,69,44,.9)) drop-shadow(5px 0 0 rgba(88,182,255,.9));}22%{opacity:1;transform:scaleY(1.05) scaleX(.985);}50%{transform:none;filter:drop-shadow(-2px 0 0 rgba(232,69,44,.55)) drop-shadow(2px 0 0 rgba(88,182,255,.55));}100%{transform:none;filter:none;}}
+@keyframes ang-scan{0%{transform:translateY(-110%);opacity:1;}100%{transform:translateY(480%);opacity:1;}}
+@keyframes ang-flick{0%{opacity:1;}25%{opacity:3;}50%{opacity:.3;}75%{opacity:2;}100%{opacity:1;}}
+@media(prefers-reduced-motion:reduce){.js .ang-img.is-out{animation:none;display:none;}.js .ang-img.is-in,.js .ang.is-switch .ang-scan,.js .ang.is-switch .ang-screen::before{animation:none;}}
+/* dans une galerie de visuels officiels : le schéma est la dernière vue */
+.gal-item--ang{display:block;}
+.gal-item--ang .ang-slide,.gal-item--ang .ang{width:100%;height:100%;}
+@media(max-width:480px){.ang-tag{left:8px;top:8px;font-size:.62rem;}.ang-hint{display:none;}.ang-tab{padding:5px 8px;font-size:.66rem;}.ang-tabs{bottom:8px;}}
+/* v7.80 : sous 900 px, la galerie (photos ou écran des angles) prend toute la largeur de la colonne, calée sur le texte de
+   la fiche ; la limite de 230 px de style.css ne vaut que pour l'ancienne vignette (fiches sans galerie) */
+@media (max-width:900px){.fhero-art--gal{max-width:none;}}

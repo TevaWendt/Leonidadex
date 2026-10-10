@@ -16,6 +16,9 @@ const HC=(cx,cy,r,w=1.5,o=.55)=>`<circle cx="${cx}" cy="${cy}" r="${r}" fill="no
 const rnd=(n,d=1)=>Number(n.toFixed(d));
 const hash=s=>{let h=2166136261;for(const c of s){h^=c.charCodeAt(0);h=Math.imul(h,16777619)>>>0;}return h;};
 const jit=(seed,k,amp)=>((hash(seed+':'+k)%1000)/1000-.5)*2*amp;   /* variation déterministe dans [-amp, +amp] */
+/* v7.80 : le type de carrosserie choisi et ses paramètres sont notés au passage (describe), pour que
+   outils/vehicules-angles.cjs dessine la face, l'arrière et le dessus du même engin */
+let LAST=null;const rec=(kind,o,s)=>{LAST={kind,o};return s;};
 
 /* ---------- roues ---------- */
 const wheel=(cx,cy,r,spokes=5)=>{let s=C(cx,cy,r)+HC(cx,cy,r*.62,1.6,.6)+C(cx,cy,r*.18,HL).replace('fill="'+HL+'"','fill="'+HL+'" fill-opacity=".6"');
@@ -240,15 +243,18 @@ function moto(o,seed){const {kind,wr}=o,yg=100,y=yg-wr;
   return s;}
 
 function bike(o,seed){const {kind}=o,yg=100,r=kind==='bmx'?12:kind==='cruiser'?15:14,y=yg-r,a=64,b=176;
-  let s=H(`M${a} ${y}L112 46L154 46L${b} ${y}M112 46L130 ${y-2}M154 46L128 ${y-2}M128 ${y-2}L${a} ${y}`,3,.85);
-  s+=H(`M154 46L160 34M108 46L104 34`,3,.85)+P('M96 30h16v4h-16z')+P('M150 30h20v3h-20z');
-  if(kind==='cruiser')s+=P('M94 28h20v5h-20z')+H('M150 30h22',3.5,.8)+P(`M${a-14} ${y-10}h32v3h-32z`,.5);
-  if(kind==='bmx')s+=H('M150 30h18M150 30L150 26',2.5,.8)+H(`M120 ${y-4}h12`,2,.7);
+  /* v7.80 : cadre, fourche et roues à l'encre (les traits clairs étaient invisibles sur le fond clair des fiches) */
+  const K=(d,w=1.5,op=1)=>`<path d="${d}" fill="none" stroke="${INK}"${op<1?` stroke-opacity="${op}"`:''} stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/>`;
+  const KC=(cx,cy,rr,w=2,op=1)=>`<circle cx="${cx}" cy="${cy}" r="${rr}" fill="none" stroke="${INK}"${op<1?` stroke-opacity="${op}"`:''} stroke-width="${w}"/>`;
+  let s=K(`M${a} ${y}L112 46L154 46L${b} ${y}M112 46L130 ${y-2}M154 46L128 ${y-2}M128 ${y-2}L${a} ${y}`,3);
+  s+=K(`M154 46L160 34M108 46L104 34`,3)+P('M96 30h16v4h-16z')+P('M150 30h20v3h-20z');
+  if(kind==='cruiser')s+=P('M94 28h20v5h-20z')+K('M150 30h22',3.5)+P(`M${a-14} ${y-10}h32v3h-32z`,.5);
+  if(kind==='bmx')s+=K('M150 30h18M150 30L150 26',2.5)+K(`M120 ${y-4}h12`,2);
   if(kind==='ebike')s+=P('M118 60L142 56L146 70L122 74Z')+P('M40 76h18v6h-18z');
-  if(kind==='race')s+=H('M150 30q6 0 8 6q2 6 -4 8',2.5,.8);
-  if(kind==='mtb')s+=H(`M154 46L160 30`,4,.9)+H(`M${b} ${y}L152 60`,3,.9);
-  s+=C(128,y-2,4)+H(`M128 ${y-2}L120 ${y+6}M128 ${y-2}L136 ${y-10}`,2.5,.8)+HC(a,y,r,2.2,.9)+HC(b,y,r,2.2,.9)+HC(a,y,r-3,1,.35)+HC(b,y,r-3,1,.35);
-  if(kind==='kick'){s=P('M60 86h120v6h-120z')+H('M176 86L182 30',3.5,.9)+P('M170 28h24v4h-24z')+C(60,94,6)+C(184,94,6)+HC(60,94,3,1.2,.6)+HC(184,94,3,1.2,.6);}
+  if(kind==='race')s+=K('M150 30q6 0 8 6q2 6 -4 8',2.5);
+  if(kind==='mtb')s+=K(`M154 46L160 30`,4)+K(`M${b} ${y}L152 60`,3);
+  s+=C(128,y-2,4)+K(`M128 ${y-2}L120 ${y+6}M128 ${y-2}L136 ${y-10}`,2.5)+KC(a,y,r,2.4)+KC(b,y,r,2.4)+KC(a,y,r-3.5,1,.35)+KC(b,y,r-3.5,1,.35);
+  if(kind==='kick'){s=P('M60 86h120v6h-120z')+K('M176 86L182 30',3.5)+P('M170 28h24v4h-24z')+C(60,94,6)+C(184,94,6)+HC(60,94,3,1.2,.6)+HC(184,94,3,1.2,.6);}
   return s;}
 
 /* ---------- bateaux ---------- */
@@ -348,73 +354,73 @@ function pick(v){
   const ins=L(v.insp)+' '+L(v.nom)+' '+L(v.id),cat=v.cat,seed=v.id,j=(k,a)=>jit(seed,k,a);
   const has=re=>re.test(ins);
   /* divers et rail */
-  if(has(/monorail|apm/))return rail({kind:'monorail'},seed);
-  if(has(/locomotive|genesis|ac4400|freight/))return rail({kind:'train'},seed);
-  if(has(/metrorail|vcia-train|vcmm-train|train/))return rail({kind:'metro'},seed);
-  if(has(/excavator|liebherr/))return excavator();
-  if(has(/forklift|yale/))return forklift({});
+  if(has(/monorail|apm/))return rec('rail',{kind:'monorail'},rail({kind:'monorail'},seed));
+  if(has(/locomotive|genesis|ac4400|freight/))return rec('rail',{kind:'train'},rail({kind:'train'},seed));
+  if(has(/metrorail|vcia-train|vcmm-train|train/))return rec('rail',{kind:'metro'},rail({kind:'metro'},seed));
+  if(has(/excavator|liebherr/))return rec('excavator',{},excavator());
+  if(has(/forklift|yale/))return rec('forklift',{},forklift({}));
   if(has(/airtug|clark ct/))return P('M40 84h150v6h-150z')+P('M60 70h60v-26h-60z')+G('M66 50h48v14h-48z',.3)+P('M120 62h70v22h-70z')+P('M124 44h20v18h-20z')+wheel(70,90,10,5)+wheel(170,90,10,5);
-  if(has(/bmx/))return bike({kind:'bmx'},seed);
-  if(has(/beach cruiser|vélo de plage/))return bike({kind:'cruiser'},seed);
-  if(has(/e-bike|citibike|lombike/))return bike({kind:'ebike'},seed);
-  if(has(/pinarello|race bike|endurex/))return bike({kind:'race'},seed);
-  if(has(/rockshox|saracen|scorcher/))return bike({kind:'mtb'},seed);
-  if(has(/bird one|electric-scooter|trottinette/))return bike({kind:'kick'},seed);
+  if(has(/bmx/))return rec('bike',{kind:'bmx'},bike({kind:'bmx'},seed));
+  if(has(/beach cruiser|vélo de plage/))return rec('bike',{kind:'cruiser'},bike({kind:'cruiser'},seed));
+  if(has(/e-bike|citibike|lombike/))return rec('bike',{kind:'ebike'},bike({kind:'ebike'},seed));
+  if(has(/pinarello|race bike|endurex/))return rec('bike',{kind:'race'},bike({kind:'race'},seed));
+  if(has(/rockshox|saracen|scorcher/))return rec('bike',{kind:'mtb'},bike({kind:'mtb'},seed));
+  if(has(/bird one|electric-scooter|trottinette/))return rec('bike',{kind:'kick'},bike({kind:'kick'},seed));
   /* aéronefs */
   if(cat==='avion'){
-    if(has(/747|airliner|\bjet\b/))return plane({kind:'airliner'},seed);
-    if(has(/learjet|citation/))return plane({kind:'bizjet'},seed);
-    if(has(/beaver|dodo/))return plane({kind:'seaplane'},seed);
-    if(has(/twin otter|streamer/))return plane({kind:'twin'},seed);
-    if(has(/stearman|duster|biplan/))return plane({kind:'biplane'},seed);
-    if(has(/blimp|goodyear/))return plane({kind:'blimp'},seed);
-    return plane({kind:'cessna'},seed);}
+    if(has(/747|airliner|\bjet\b/))return rec('plane',{kind:'airliner'},plane({kind:'airliner'},seed));
+    if(has(/learjet|citation/))return rec('plane',{kind:'bizjet'},plane({kind:'bizjet'},seed));
+    if(has(/beaver|dodo/))return rec('plane',{kind:'seaplane'},plane({kind:'seaplane'},seed));
+    if(has(/twin otter|streamer/))return rec('plane',{kind:'twin'},plane({kind:'twin'},seed));
+    if(has(/stearman|duster|biplan/))return rec('plane',{kind:'biplane'},plane({kind:'biplane'},seed));
+    if(has(/blimp|goodyear/))return rec('plane',{kind:'blimp'},plane({kind:'blimp'},seed));
+    return rec('plane',{kind:'cessna'},plane({kind:'cessna'},seed));}
   if(cat==='helicoptere'){
-    if(has(/little bird|buzzard/))return heli({kind:has(/police|mh-6/)?'light':'attack'},seed);
-    if(has(/s-300|hughes|sparrow/))return heli({kind:'frame'},seed);
-    if(has(/uh-1|412|venom|valkyrie/))return heli({kind:'heavy'},seed);
-    return heli({kind:'medium'},seed);}
+    if(has(/little bird|buzzard/))return rec('heli',{kind:has(/police|mh-6/)?'light':'attack'},heli({kind:has(/police|mh-6/)?'light':'attack'},seed));
+    if(has(/s-300|hughes|sparrow/))return rec('heli',{kind:'frame'},heli({kind:'frame'},seed));
+    if(has(/uh-1|412|venom|valkyrie/))return rec('heli',{kind:'heavy'},heli({kind:'heavy'},seed));
+    return rec('heli',{kind:'medium'},heli({kind:'medium'},seed));}
   /* bateaux */
   if(cat==='bateau'){
-    if(has(/airboat|hydroglisseur/))return boat({kind:'airboat'},seed);
-    if(has(/kayak/))return boat({kind:'kayak'},seed);
-    if(has(/sea-doo|sea doo|seashark|rxt|jetmax|jet ski/))return boat({kind:'jetski'},seed);
-    if(has(/cruise|voyager|paquebot/))return boat({kind:'ship'},seed);
-    if(has(/ferry/))return boat({kind:'ferry'},seed);
-    if(has(/\btaxi\b/))return boat({kind:'taxi'},seed);
-    if(has(/catamaran/))return boat({kind:'cat'},seed);
-    if(has(/sail|voilier|cherubini|classic 20/))return boat({kind:'sail'},seed);
-    if(has(/inflatable|dinghy|highfield|rb-s|rigid/))return boat({kind:'rib'},seed);
-    if(has(/contender|steiger|fishing|pêche|longfin|crusader|\bbay\b|marquis/))return boat({kind:has(/marquis|adjutor/)?'yacht':'console'},seed);
-    if(has(/lürssen|lurssen|azimut 85|de hoop|brion|riva 86|coral/))return boat({kind:'yacht'},seed);
-    if(has(/sundancer|atlantis|frauscher|delmar|bavaria|crownline/))return boat({kind:'cabin'},seed);
-    return boat({kind:'speed'},seed);}
+    if(has(/airboat|hydroglisseur/))return rec('boat',{kind:'airboat'},boat({kind:'airboat'},seed));
+    if(has(/kayak/))return rec('boat',{kind:'kayak'},boat({kind:'kayak'},seed));
+    if(has(/sea-doo|sea doo|seashark|rxt|jetmax|jet ski/))return rec('boat',{kind:'jetski'},boat({kind:'jetski'},seed));
+    if(has(/cruise|voyager|paquebot/))return rec('boat',{kind:'ship'},boat({kind:'ship'},seed));
+    if(has(/ferry/))return rec('boat',{kind:'ferry'},boat({kind:'ferry'},seed));
+    if(has(/\btaxi\b/))return rec('boat',{kind:'taxi'},boat({kind:'taxi'},seed));
+    if(has(/catamaran/))return rec('boat',{kind:'cat'},boat({kind:'cat'},seed));
+    if(has(/sail|voilier|cherubini|classic 20/))return rec('boat',{kind:'sail'},boat({kind:'sail'},seed));
+    if(has(/inflatable|dinghy|highfield|rb-s|rigid/))return rec('boat',{kind:'rib'},boat({kind:'rib'},seed));
+    if(has(/contender|steiger|fishing|pêche|longfin|crusader|\bbay\b|marquis/))return rec('boat',{kind:has(/marquis|adjutor/)?'yacht':'console'},boat({kind:has(/marquis|adjutor/)?'yacht':'console'},seed));
+    if(has(/lürssen|lurssen|azimut 85|de hoop|brion|riva 86|coral/))return rec('boat',{kind:'yacht'},boat({kind:'yacht'},seed));
+    if(has(/sundancer|atlantis|frauscher|delmar|bavaria|crownline/))return rec('boat',{kind:'cabin'},boat({kind:'cabin'},seed));
+    return rec('boat',{kind:'speed'},boat({kind:'speed'},seed));}
   /* motos et engins */
   if(cat==='moto'){
-    if(has(/mobility|maxima/))return moto({kind:'mobility',wr:8},seed);
-    if(has(/vespa|zip|v-clic|agility|bws|scooter/))return moto({kind:'scooter',wr:11},seed);
-    if(has(/xl 350|xr 500|ktm|yz450|enduro|sanchez|manchez|lifeguard|blazer/))return has(/lifeguard|blazer/)?moto({kind:'quad',wr:14},seed):moto({kind:'dirt',wr:14},seed);
-    if(has(/chopper|fat bob|iron 883/))return moto({kind:'chopper',wr:12},seed);
-    if(has(/night rod|road king/))return moto({kind:'cruiser',wr:13},seed);
-    if(has(/streetfighter|brutale/))return moto({kind:'naked',wr:13},seed);
-    return moto({kind:'sport',wr:13},seed);}
-  if(has(/yfz|sportsman|polaris|quad/))return moto({kind:'quad',wr:14},seed);
-  if(has(/maverick x3|can-am|utv/))return moto({kind:'utv',wr:16},seed);
-  if(has(/swamp buggy/))return moto({kind:'swamp',wr:22},seed);
+    if(has(/mobility|maxima/))return rec('moto',{kind:'mobility',wr:8},moto({kind:'mobility',wr:8},seed));
+    if(has(/vespa|zip|v-clic|agility|bws|scooter/))return rec('moto',{kind:'scooter',wr:11},moto({kind:'scooter',wr:11},seed));
+    if(has(/xl 350|xr 500|ktm|yz450|enduro|sanchez|manchez|lifeguard|blazer/)){const _o=has(/lifeguard|blazer/)?{kind:'quad',wr:14}:{kind:'dirt',wr:14};return rec('moto',_o,moto(_o,seed));}
+    if(has(/chopper|fat bob|iron 883/))return rec('moto',{kind:'chopper',wr:12},moto({kind:'chopper',wr:12},seed));
+    if(has(/night rod|road king/))return rec('moto',{kind:'cruiser',wr:13},moto({kind:'cruiser',wr:13},seed));
+    if(has(/streetfighter|brutale/))return rec('moto',{kind:'naked',wr:13},moto({kind:'naked',wr:13},seed));
+    return rec('moto',{kind:'sport',wr:13},moto({kind:'sport',wr:13},seed));}
+  if(has(/yfz|sportsman|polaris|quad/))return rec('moto',{kind:'quad',wr:14},moto({kind:'quad',wr:14},seed));
+  if(has(/maverick x3|can-am|utv/))return rec('moto',{kind:'utv',wr:16},moto({kind:'utv',wr:16},seed));
+  if(has(/swamp buggy/))return rec('moto',{kind:'swamp',wr:22},moto({kind:'swamp',wr:22},seed));
   /* camions, bus, services */
-  if(has(/xcelsior|new flyer|airport-bus/))return bus({kind:'city',wr:11},seed);
-  if(has(/mci|greyhound|autocar|coach/))return bus({kind:'coach',wr:11},seed);
-  if(has(/school/))return bus({kind:'school',wr:11},seed);
-  if(has(/fleetwood|winnebago|rexhall|pace arrow|southwind|rose air|moocher|journey/))return bus({kind:'rv',wr:11},seed);
-  if(has(/shuttle/))return bus({kind:'shuttle',wr:11},seed);
-  if(has(/ambulance/))return truck({kind:'ambulance',yb:84,wr:11,hood:false},seed);
-  if(has(/\btow\b|dépanneuse|depanneuse/))return truck({kind:'tow',yb:84,wr:12,hood:true},seed);
-  if(has(/packer|garbage|benne à ordures/))return truck({kind:'garbage',yb:84,wr:12,hood:true,axles:3},seed);
-  if(has(/tipper|rubble|dump/))return truck({kind:'dump',yb:84,wr:13,hood:true,axles:3},seed);
-  if(has(/mixer|béton/))return truck({kind:'mixer',yb:84,wr:13,hood:true,axles:3},seed);
-  if(has(/flatbed|mtl-flatbed/))return truck({kind:'flat',yb:84,wr:12,hood:true,axles:3},seed);
-  if(has(/peterbilt|kenworth|freightliner|tracteur|\bsemi\b|hauler|t800|\b9000\b|9200|s-series/))return truck({kind:'semi',yb:84,wr:13,hood:true,axles:has(/t800|biff/)?3:2},seed);
-  if(has(/canter|\belf\b|kodiak|topkick|4700|silverado 6500|step van|boxville|benson|\bmule\b|utility|stockade|\briot\b|\bbear\b|lenco/))return truck({kind:has(/riot|bear|lenco|stockade/)?'ambulance':'box',yb:84,wr:11,hood:has(/4700|kodiak|topkick|6500|stockade|riot|bear/)},seed).replace(/M(\d+) 52v18M(\d+) 61h18/,'M$1 52v0');
+  if(has(/xcelsior|new flyer|airport-bus/))return rec('bus',{kind:'city',wr:11},bus({kind:'city',wr:11},seed));
+  if(has(/mci|greyhound|autocar|coach/))return rec('bus',{kind:'coach',wr:11},bus({kind:'coach',wr:11},seed));
+  if(has(/school/))return rec('bus',{kind:'school',wr:11},bus({kind:'school',wr:11},seed));
+  if(has(/fleetwood|winnebago|rexhall|pace arrow|southwind|rose air|moocher|journey/))return rec('bus',{kind:'rv',wr:11},bus({kind:'rv',wr:11},seed));
+  if(has(/shuttle/))return rec('bus',{kind:'shuttle',wr:11},bus({kind:'shuttle',wr:11},seed));
+  if(has(/ambulance/))return rec('truck',{kind:'ambulance',yb:84,wr:11,hood:false},truck({kind:'ambulance',yb:84,wr:11,hood:false},seed));
+  if(has(/\btow\b|dépanneuse|depanneuse/))return rec('truck',{kind:'tow',yb:84,wr:12,hood:true},truck({kind:'tow',yb:84,wr:12,hood:true},seed));
+  if(has(/packer|garbage|benne à ordures/))return rec('truck',{kind:'garbage',yb:84,wr:12,hood:true,axles:3},truck({kind:'garbage',yb:84,wr:12,hood:true,axles:3},seed));
+  if(has(/tipper|rubble|dump/))return rec('truck',{kind:'dump',yb:84,wr:13,hood:true,axles:3},truck({kind:'dump',yb:84,wr:13,hood:true,axles:3},seed));
+  if(has(/mixer|béton/))return rec('truck',{kind:'mixer',yb:84,wr:13,hood:true,axles:3},truck({kind:'mixer',yb:84,wr:13,hood:true,axles:3},seed));
+  if(has(/flatbed|mtl-flatbed/))return rec('truck',{kind:'flat',yb:84,wr:12,hood:true,axles:3},truck({kind:'flat',yb:84,wr:12,hood:true,axles:3},seed));
+  if(has(/peterbilt|kenworth|freightliner|tracteur|\bsemi\b|hauler|t800|\b9000\b|9200|s-series/))return rec('truck',{kind:'semi',yb:84,wr:13,hood:true,axles:has(/t800|biff/)?3:2},truck({kind:'semi',yb:84,wr:13,hood:true,axles:has(/t800|biff/)?3:2},seed));
+  if(has(/canter|\belf\b|kodiak|topkick|4700|silverado 6500|step van|boxville|benson|\bmule\b|utility|stockade|\briot\b|\bbear\b|lenco/))return rec('truck',{kind:has(/riot|bear|lenco|stockade/)?'ambulance':'box',yb:84,wr:11,hood:has(/4700|kodiak|topkick|6500|stockade|riot|bear/)},truck({kind:has(/riot|bear|lenco|stockade/)?'ambulance':'box',yb:84,wr:11,hood:has(/4700|kodiak|topkick|6500|stockade|riot|bear/)},seed)).replace(/M(\d+) 52v18M(\d+) 61h18/,'M$1 52v0');
   /* pick-up */
   if(cat==='pickup'||has(/pick-up|pickup|f-150|f-series|ram |ram 3500|silverado|c10|c\/k|s-10|hilux|tundra|ranger|super duty|dakota|raptor|ranchero|scrambler|sport trac|caracara/)){
     const o={x0:22,x1:222,yb:86,yBelt:62,yRoof:42,cabA:154,cabB:112,yHood:56,hoodStart:176,wr:14,extra:[]};
@@ -426,7 +432,7 @@ function pick(v){
     if(has(/raptor|rebel|kamacho|caracara|hilux|sandking/))o.knob=true;
     if(has(/1953|1956|c10|des années 60/)){o.yRoof=40;o.cabB=110;o.hoodStart=170;o.wr=13;}
     o.wr=rnd(o.wr+jit(v.id,'wr',1.2),1);o.yRoof=rnd(o.yRoof+jit(v.id,'roof',2),1);o.wa=rnd(50+jit(v.id,'wa',5),1);o.wb=rnd(188+jit(v.id,'wb',4),1);o.spokes=5+(hash(v.id)%3);
-    return pickup(o,seed);}
+    return rec('pickup',o,pickup(o,seed));}
   /* voitures */
   let base={};
   if(cat==='supercar'||has(/lamborghini|mclaren|sf90|488|senna|zerouno|huracán|aventador|812|458|zagato|testarossa|512|diablo|cizeta|kellison/)){base={style:'fast',era:'wedge',yRoof:52,yBelt:70,yHood:66,roofA:132,roofB:70,x0:20,x1:224,wr:13.5,doors:2,extra:[]};}
@@ -443,7 +449,7 @@ function pick(v){
   const o=carParams(v,base);
   if(o.style==='cabrio'&&!o.extra.includes('softtop'))o.extra.push('softtop');
   if(has(/rat rod|slamvan/)){o.style='notch';o.roofA=120;o.roofB=90;o.yRoof=50;o.extra.push('exhaust');}
-  return car(o,seed);}
+  return rec('car',o,car(o,seed));}
 
 const HEADER=h=>`<svg class="veh-art veh-art--schema" viewBox="0 0 240 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="height:${h}px">`;
 /* Variation propre à chaque fiche : proportions légèrement différentes (longueur, hauteur, décalage) et une ligne de livrée
@@ -453,4 +459,5 @@ function vary(v,body){const seed=v.id;const sx=rnd(1+jit(seed,'sx',.06),3),sy=rn
   const accent=(hash(seed)%3===0)?'':H(`M${x0} ${y}h${len}`,2.2,.42);
   return `<g transform="translate(${tx} 0) scale(${sx} ${sy})" transform-origin="120 100">${body}${accent}</g>`;}
 function schema(v,h=90){try{const body=pick(v);if(!body)return '';return HEADER(h)+vary(v,body)+H('M8 100h224',1.2,.25)+'</svg>';}catch(e){return '';}}
-module.exports={schema};
+function describe(v){LAST=null;try{pick(v);}catch(e){LAST=null;}return LAST;}
+module.exports={schema,describe,carParams,era,brandOf,hash,jit};

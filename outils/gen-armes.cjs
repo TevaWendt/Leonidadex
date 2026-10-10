@@ -22,6 +22,10 @@ const PERSO_COVER=require('./catalogues.cjs').coverage('perso-armes');
 /* v7.73 (lot 3) : section « Personnaliser cette arme » de chaque fiche (postes du catalogue qui vont à sa catégorie ou la citent) */
 const PF=require('./perso-fiche.cjs');
 const VIDE_TXT='Schéma indicatif du type d’arme. Les visuels officiels détaillés arriveront avec le jeu.';
+/* v7.80 : les deux autres angles du schéma (dessus, face) et le bloc cliquable « sous tous les angles » du haut de fiche */
+const AA=require('./armes-angles.cjs'),ANGM=require('./angles-markup.cjs');
+const angBlock=a=>{const g=AA.angles(a.id);const prof=art(a,150);if(!g||!/^<svg/.test(prof))return '';
+ return ANGM.render({id:a.id,nom:a.nom,profil:prof,vues:[{id:'dessus',label:ANGM.TXT.dessus,body:g.dessus},{id:'face',label:ANGM.TXT.face,body:g.face}],labels:ANGM.TXT,hint:ANGM.TXT.hint,next:ANGM.TXT.next,group:ANGM.TXT.group,dot:ANGM.TXT.dot,desc:VIDE_TXT});};
 const PERSO_NOM=Object.fromEntries(JSON.parse(fs.readFileSync('outils/editorial.json','utf8')).characters.map(c=>[c.id,c.name.split(' ')[0]]));
 /* armureries repérées sur la carte : mêmes liens sur toutes les fiches, comme les concessions sur les fiches véhicules */
 /* v7.50 (lot 3) : « Sur la carte de Leonida » devient un localisateur illustré (carte cadrée, repères numérotés, résumé,
@@ -84,8 +88,8 @@ function fiche(a,i){
   ['Catégorie','<a href="../armes.html#'+a.cat+'">'+esc(cat)+'</a>'],['Emplacement',SLOTL[a.slot]],
   ...(a.portee?[['Portée estimée',esc(a.portee)]]:[]),['Inspiration réelle',insp],...(a.mun?[['Munitions',esc(a.mun)]]:[]),
   ...(a.ue?[['Édition Ultimate','Version exclusive ou mise en avant']]:[]),...(prixPub?[['Prix en jeu',esc(DP.phrasePrix(prixPub))]]:[]),['Source',esc(a.src)]];
- const gal=`<div class="gal" data-base="../img/armes/${a.id}" data-vues="" data-nom="${esc(a.nom)}"
-             data-art="${esc(art(a,150))}" data-vide-txt="${esc(VIDE_TXT)}" aria-label="Schéma : ${esc(a.nom)}" data-vide="1"><div class="gal-track"><div class="gal-item"><div class="gal-vide">${art(a,150)}<span>${esc(VIDE_TXT)}</span></div></div></div></div>`;
+ const ang=angBlock(a);const gal=`<div class="gal${ang?' gal--ang':''}" data-base="../img/armes/${a.id}" data-vues="" data-nom="${esc(a.nom)}"
+             data-art="${esc(art(a,150))}" data-vide-txt="${esc(VIDE_TXT)}" aria-label="Schéma : ${esc(a.nom)}" data-vide="1">${ang||'<div class="gal-track"><div class="gal-item"><div class="gal-vide">'+art(a,150)+'<span>'+esc(VIDE_TXT)+'</span></div></div></div>'}</div>`;
  const rel=related(a).map(x=>'<a class="rel-card" href="'+x.id+'.html"><span class="rel-art">'+art(x,108)+'</span><span class="rel-txt"><span class="rel-marque">'+esc(CATL[x.cat])+'</span><span class="rel-nom">'+esc(x.nom)+'</span></span></a>').join('');
  return `<!DOCTYPE html>
 <html lang="fr">

@@ -31,6 +31,10 @@ while((m=re.exec(hub0))!==null){ THUMB[m[1]]={cls:m[2],in:m[3]};
   const s=m[3].match(/<svg class="veh-art"[\s\S]*?<\/svg>/); if(s){ ART_ID[m[1]]=s[0];
     const v=V.find(x=>x.id===m[1]); if(v&&!ART_CAT[v.cat])ART_CAT[v.cat]=s[0]; } }
 const {schema:vehSchema}=require('./vehicules-schemas.cjs');
+/* v7.80 : les trois autres angles du schéma (face, arrière, dessus) et le bloc cliquable « sous tous les angles » du haut de fiche */
+const VA=require('./vehicules-angles.cjs'),AM=require('./angles-markup.cjs');
+const angBlock=v=>{const a=VA.angles(v);const prof=artH(v);if(!a||!/^<svg/.test(prof))return '';
+ return AM.render({id:v.id,nom:nomC(v),profil:prof,vues:[{id:'face',label:AM.TXT.face,body:a.face},{id:'arriere',label:AM.TXT.arriere,body:a.arriere},{id:'dessus',label:AM.TXT.dessus,body:a.dessus}],labels:AM.TXT,hint:AM.TXT.hint,next:AM.TXT.next,group:AM.TXT.group,dot:AM.TXT.dot,desc:VIDE_TXT});};
 const RED=require('./redaction.cjs');
 /* v7.43 (lot 6) : catégories de véhicules couvertes par au moins un poste de personnalisation (outils/catalogues/perso-vehicules.json) : lien « Personnaliser ce véhicule » vers la liste filtrée. */
 const PERSO_COVER=require('./catalogues.cjs').coverage('perso-vehicules');
@@ -221,7 +225,7 @@ function fiche(v,i){
  /* meta description : les premières phrases du texte de la fiche (160 caractères max), sinon le lede générique */
  const description=(()=>{const ph=(v.txt||'').split(/(?<=[.!?])\s+/);let d=nom+' dans GTA VI.';let n=0;for(const q of ph){if((d+' '+q).length>158)break;d=d+' '+q;n++;}/* v7.47 : description trop courte (moins de 100 caractères) : la phrase suivante, coupée à un mot */if(n&&d.length<100&&ph[n]){const room=156-d.length;const cut=ph[n].slice(0,room).replace(/\s+\S*$/,'').replace(/[,;:\s]+$/,'');if(cut.length>20)d=d+' '+cut+'…';}return n?d:(lede.length>158?lede.slice(0,155).replace(/\s+\S*$/,'')+'…':lede);})();
  const available=(v.vues||[]).filter(view=>fs.existsSync('img/vehicules/'+v.id+'-'+view+'.jpg'));
- const meds=medList(v);
+ const meds=medList(v); const ang=angBlock(v); /* v7.80 : bloc « sous tous les angles » (vide si le schéma manque) */
  const img=available.length>0, vues=img?available.join(','):'';
  const prixPub=DP.prixDe(v); /* v7.59 : un prix publié dans outils/v-corrige.json s'affiche avec son statut ; sinon rien n'est inventé */
  const tags=['<span class="chip live">'+st.c+'</span>']
@@ -294,8 +298,8 @@ ${HEADER}
         <div class="fiche-liens"><button type="button" class="own-bt" id="own-bt" data-id="${v.id}"${prixPub?` data-prix="${prixPub.value}" data-prix-statut="${prixPub.status}"`:''}><span class="ck"></span><span>Ajouter à mon garage</span></button><a href="../comparateur.html?type=vehicules&amp;ids=${v.id}">Comparer</a>${PERSO_COVER.has(v.cat)?'<a href="#personnaliser">Personnaliser ce véhicule</a>':''}${v.reel?'<a href="#modele-reel">Le modèle réel</a>':''}${v.perso?'<a href="../personnages/'+v.perso+'.html">Véhicule de '+esc(PERSO_NOM[v.perso]||v.perso)+'</a>':''}</div>
       </div>
       <div class="fhero-art fhero-art--gal">
-        <div class="gal" data-base="../img/vehicules/${v.id}" data-vues="${vues}" data-nom="${esc(nom)}" data-vide="${img?0:1}"${meds.length?` data-medias="${medAttr(v)}"`:''}
-             data-art="${esc(artH(v))}"${meds.length?'':' data-vide-txt="'+esc(VIDE_TXT)+'"'}>${meds.length?'<div class="gal-track"><div class="gal-item"><img src="'+meds[0].variants[0].src+'" srcset="'+medSrcset(meds[0])+'" sizes="(max-width:700px) 100vw, 520px" width="'+meds[0].variants[0].w+'" height="'+meds[0].variants[0].h+'"'+(meds[0].variants[0].h>meds[0].variants[0].w?' class="gal-portrait"':'')+' alt="'+esc(medAlt(v,meds[0]))+'" fetchpriority="high" decoding="async"><span class="gal-lbl">'+esc(meds[0].titre)+'</span></div></div>':'<div class="gal-track"><div class="gal-item"><div class="gal-vide">'+artH(v)+'<span>'+esc(VIDE_TXT)+'</span></div></div></div>'}</div>
+        <div class="gal${meds.length||!ang?'':' gal--ang'}" data-base="../img/vehicules/${v.id}" data-vues="${vues}" data-nom="${esc(nom)}" data-vide="${img?0:1}"${meds.length?` data-medias="${medAttr(v)}"`:''}
+             data-art="${esc(artH(v))}"${meds.length?'':' data-vide-txt="'+esc(VIDE_TXT)+'"'}>${meds.length?'<div class="gal-track"><div class="gal-item"><img src="'+meds[0].variants[0].src+'" srcset="'+medSrcset(meds[0])+'" sizes="(max-width:700px) 100vw, 520px" width="'+meds[0].variants[0].w+'" height="'+meds[0].variants[0].h+'"'+(meds[0].variants[0].h>meds[0].variants[0].w?' class="gal-portrait"':'')+' alt="'+esc(medAlt(v,meds[0]))+'" fetchpriority="high" decoding="async"><span class="gal-lbl">'+esc(meds[0].titre)+'</span></div></div>'+(ang?'<div class="ang-slide" hidden>'+ang+'</div>':''):(ang||'<div class="gal-track"><div class="gal-item"><div class="gal-vide">'+artH(v)+'<span>'+esc(VIDE_TXT)+'</span></div></div></div>')}</div>
         <p class="gal-note">${meds.length?CREDIT_RS:img?esc(v.credit||'Captures officielles de Rockstar Games.'):esc(pioche(v.id,'img',V_SANSIMG))}</p>
       </div>
     </div>

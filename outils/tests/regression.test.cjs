@@ -127,7 +127,7 @@ test('Every weapon is drawn with its own schematic and keeps its official previe
  try{const cards=[...hub.window.document.querySelectorAll('#vgrid .veh-card')];assert.equal(cards.length,weaponCount);
   const svgs=cards.map(c=>c.querySelector('.veh-thumb svg.veh-art--schema')?.innerHTML);assert.ok(svgs.every(Boolean),'schéma sur chaque carte');assert.equal(new Set(svgs).size,svgs.length,'schémas tous différents');assert.equal(hub.window.document.querySelectorAll('#vgrid .veh-thumb--photo').length,0);}finally{hub.window.close();}
  for(const a of baseline.window.LK_ARMES){const dom=new JSDOM(fs.readFileSync(path.join(root,'armes/'+a.id+'.html'),'utf8'));
-  try{const d=dom.window.document;assert.ok(d.querySelector('.gal[data-vide="1"] .gal-vide svg.veh-art--schema'),a.id);assert.match(d.querySelector('.gal-vide span').textContent,/visuels officiels/);
+  try{const d=dom.window.document;/* v7.80 : l'emplacement vide devient l'écran « sous tous les angles » (profil, dessus, face) */assert.ok(d.querySelector('.gal[data-vide="1"] [data-ang] svg.veh-art--schema[data-ang-id="profil"]'),a.id);assert.equal(d.querySelectorAll('.gal[data-vide="1"] [data-ang] svg.ang-img').length,3,a.id+' : trois angles');assert.match(d.querySelector('.gal[data-vide="1"] [data-ang] .sr-only').textContent,/visuels officiels/);
    const n=(am[a.id]||[]).length;assert.equal(d.querySelectorAll('#apercus .apercu img').length,n,a.id+' aperçus');}finally{dom.window.close();}}
 });
 
@@ -144,7 +144,7 @@ test('Every vehicle gets a distinct schematic',()=>{
   assert.ok(imgs.filter(i=>i.getAttribute('loading')==='lazy').length>=imgs.length-8,'tout est différé sauf le premier écran');
   assert.equal(withPhoto+withSchema,catalog.length,'photo ou schéma sur chaque carte');assert.equal(withPhoto,catalog.filter(v=>Array.isArray(v.medias)&&v.medias.length).length);}finally{hub.window.close();}
  const v=catalog.find(v=>!(v.medias&&v.medias.length));const dom=new JSDOM(fs.readFileSync(path.join(root,'vehicules/'+v.id+'.html'),'utf8'));
- try{const d=dom.window.document;assert.ok(d.querySelector('.gal .gal-vide svg.veh-art--schema'),v.id);/* v7.50 : « Ce qui arrive avec le jeu » devient la fiche documentaire du modèle commun (4 rubriques, prix « à venir ») */assert.equal(d.querySelectorAll('.doc-fiche .doc-rub').length,4);assert.match(d.querySelector('.doc-fiche').textContent,/Prix à venir/);assert.match(d.querySelector('.doc-fiche').textContent,/Achat à confirmer/);assert.ok(d.querySelector('#carte .lk-loc--single'),'localisateur illustré sur la fiche');}finally{dom.window.close();}
+ try{const d=dom.window.document;/* v7.80 : écran « sous tous les angles » (profil, face, arrière, dessus) */assert.ok(d.querySelector('.gal.gal--ang [data-ang] svg.veh-art--schema[data-ang-id="profil"]'),v.id);assert.equal(d.querySelectorAll('.gal.gal--ang [data-ang] svg.ang-img').length,4,v.id+' : quatre angles');/* v7.50 : « Ce qui arrive avec le jeu » devient la fiche documentaire du modèle commun (4 rubriques, prix « à venir ») */assert.equal(d.querySelectorAll('.doc-fiche .doc-rub').length,4);assert.match(d.querySelector('.doc-fiche').textContent,/Prix à venir/);assert.match(d.querySelector('.doc-fiche').textContent,/Achat à confirmer/);assert.ok(d.querySelector('#carte .lk-loc--single'),'localisateur illustré sur la fiche');}finally{dom.window.close();}
 });
 
 // v7.11 : aucune fiche ne déclare un type dérivé de Product (Google exigerait prix, avis ou note, qui n'existent pas ici).

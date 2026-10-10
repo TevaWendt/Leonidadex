@@ -37,6 +37,65 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
      avec l'illustration provisoire. Clavier ← →, glisser au doigt, points. */
   const VUES_LBL = { face:'Vorne', profil:'Seite', arriere:'Heck', detail:'Detail', interieur:'Innenraum', dessus:'Oben' };
 
+  /* ---------------------------------------------------------- sous tous les angles (v7.80)
+     <div class="ang" data-ang> : l'écran (bouton) porte les schémas de chaque angle (svg.ang-img, data-ang-id) ; un clic
+     passe au suivant avec l'effet d'un écran cathodique qui change de chaîne (fiches.css : ang-out, ang-in, ang-scan).
+     Onglets (data-ang-go), ← → Début Fin au clavier, glisser au doigt. Tous les mots viennent du balisage. Avec
+     « réduire les animations », le changement est immédiat. Aucune requête, rien gardé sur l'appareil. */
+  var angReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function initAng(ang) {
+    if (!ang || ang.dataset.angReady) return; ang.dataset.angReady = '1';
+    var imgs = Array.prototype.slice.call(ang.querySelectorAll('.ang-img')), tabs = Array.prototype.slice.call(ang.querySelectorAll('[data-ang-go]'));
+    var view = ang.querySelector('[data-ang-next]'), label = ang.querySelector('[data-ang-label]'), count = ang.querySelector('[data-ang-count]');
+    var n = imgs.length, i = 0, busy = false, timer = 0;
+    if (n < 2) return;
+    imgs.forEach(function (im, k) { im.classList.toggle('is-on', k === 0); });
+    function show(k) {
+      i = k;
+      tabs.forEach(function (t, q) { t.classList.toggle('is-on', q === i); t.setAttribute('aria-pressed', String(q === i)); });
+      if (label) label.textContent = tabs[i] ? tabs[i].textContent : imgs[i].getAttribute('data-ang-id');
+      if (count) count.textContent = (i + 1) + '/' + n;
+      ang.dataset.angI = String(i);
+    }
+    function go(k) {
+      k = ((k % n) + n) % n;
+      if (k === i) return;
+      var from = imgs[i], to = imgs[k];
+      if (angReduced || busy) {
+        window.clearTimeout(timer); busy = false;
+        imgs.forEach(function (im) { im.classList.remove('is-out', 'is-in'); im.classList.toggle('is-on', im === to); });
+        ang.classList.remove('is-switch');
+        show(k); return;
+      }
+      busy = true;
+      ang.classList.add('is-switch');
+      from.classList.add('is-out');
+      to.classList.add('is-on', 'is-in');
+      show(k);
+      timer = window.setTimeout(function () {
+        from.classList.remove('is-on', 'is-out'); to.classList.remove('is-in');
+        ang.classList.remove('is-switch'); busy = false;
+      }, 460);
+    }
+    var swiped = false, x0 = null;
+    if (view) {
+      view.addEventListener('click', function () { if (swiped) { swiped = false; return; } go(i + 1); });
+      view.addEventListener('pointerdown', function (e) { x0 = e.clientX; });
+      view.addEventListener('pointerup', function (e) {
+        if (x0 === null) return; var dx = e.clientX - x0; x0 = null;
+        if (Math.abs(dx) > 40) { swiped = true; e.stopPropagation(); go(i + (dx < 0 ? 1 : -1)); window.setTimeout(function () { swiped = false; }, 400); }
+      });
+    }
+    tabs.forEach(function (t, q) { t.addEventListener('click', function () { go(q); }); });
+    ang.addEventListener('keydown', function (e) {
+      var k = e.key;
+      if (k === 'ArrowRight' || k === 'ArrowDown') { go(i + 1); } else if (k === 'ArrowLeft' || k === 'ArrowUp') { go(i - 1); }
+      else if (k === 'Home') { go(0); } else if (k === 'End') { go(n - 1); } else return;
+      e.preventDefault(); e.stopPropagation();
+    });
+    show(0);
+  }
+
   document.querySelectorAll('.gal').forEach(function(gal){
     /* visuels officiels Rockstar déclarés dans la page : galerie prête, sans requête de test */
     var medias = [];
@@ -65,11 +124,16 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
         const s = document.createElement('span'); s.className = 'gal-lbl'; s.textContent = m.t; it.appendChild(s);
         trk.appendChild(it);
       });
+      /* v7.80 : le bloc « sous tous les angles » (schéma) devient la dernière vue de la galerie, après les visuels officiels */
+      const angSlide = gal.querySelector('.ang-slide');
+      if (angSlide) { const it = document.createElement('div'); it.className = 'gal-item gal-item--ang'; angSlide.hidden = false; it.appendChild(angSlide); trk.appendChild(it); }
+      const nSlides = medias.length + (angSlide ? 1 : 0);
       gal.replaceChildren(trk);
-      if (medias.length > 1) {
+      if (angSlide) initAng(angSlide.querySelector('[data-ang]'));
+      if (nSlides > 1) {
         let j = 0;
         const dts = document.createElement('div'); dts.className = 'gal-dots';
-        const goM = function (k) { j = (k + medias.length) % medias.length;
+        const goM = function (k) { j = (k + nSlides) % nSlides;
           const cur = trk.children[j].querySelector('img');
           if (cur && !cur.getAttribute('src')) { cur.srcset = cur.dataset.srcset; cur.src = cur.dataset.src; }
           trk.style.transform = 'translateX(-' + (j * 100) + '%)';
@@ -77,7 +141,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
         const mk = function (cls, txt) { const b = document.createElement('button'); b.type = 'button'; b.className = 'gal-btn ' + cls; b.textContent = txt;
           b.setAttribute('aria-label', cls === 'prev' ? 'Vorherige Ansicht' : 'Nächste Ansicht'); b.addEventListener('click', function () { goM(j + (cls === 'prev' ? -1 : 1)); }); return b; };
         gal.appendChild(mk('prev', '‹')); gal.appendChild(mk('next', '›'));
-        medias.forEach(function (_, k) { const d = document.createElement('button'); d.type = 'button'; d.setAttribute('aria-label', 'Ansicht ' + (k + 1)); d.addEventListener('click', function () { goM(k); }); dts.appendChild(d); });
+        for (let k = 0; k < nSlides; k++) { const d = document.createElement('button'); d.type = 'button'; d.setAttribute('aria-label', k < medias.length ? 'Ansicht ' + (k + 1) : (angSlide.querySelector('[data-ang]').dataset.angDot || 'Ansicht ' + (k + 1))); d.addEventListener('click', function () { goM(k); }); dts.appendChild(d); }
         gal.parentNode.insertBefore(dts, gal.nextSibling);
         goM(0);
         gal.tabIndex = 0;
@@ -88,6 +152,8 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       }
       return;
     }
+    /* v7.80 : fiche sans visuel officiel : l'écran « sous tous les angles » remplace l'emplacement vide */
+    if (gal.classList.contains('gal--ang')) { initAng(gal.querySelector('[data-ang]')); return; }
     const base = gal.dataset.base;
     const vues = (gal.dataset.vues || 'face,profil').split(',').filter(v => window.LK.hasAsset(base+'-'+v+'.jpg'));
     const art = gal.dataset.art || '';
