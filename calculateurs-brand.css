@@ -22,6 +22,7 @@
 .lk-hero-meta>span:before{content:'';display:inline-block;width:5px;height:5px;background:var(--calc-green);border-radius:50%;margin-right:6px;vertical-align:middle}
 .lk-hero-meta a{color:#e8e4de;text-decoration:underline;text-underline-offset:3px}
 .lk-calc-hero-scene{position:absolute;inset:0 0 0 40%;overflow:hidden;z-index:0}
+.lk-calc-hero-scene picture{display:contents}/* v7.82 : variantes 480/800 px sur téléphone et tablette, sans boîte intermédiaire */
 .lk-calc-hero-scene img{width:100%;height:100%;object-fit:cover;object-position:50% 49%;opacity:.88;display:block}
 .lk-calc-hero-scene:after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,#241740 0%,#24174055 28%,#2417400a 65%),linear-gradient(0deg,#24174085,transparent 55%);pointer-events:none}
 .lk-scene-lines{position:absolute;inset:0;background:repeating-linear-gradient(0deg,#24174000 0 3px,#24174022 3px 4px);z-index:1;pointer-events:none;opacity:.6}

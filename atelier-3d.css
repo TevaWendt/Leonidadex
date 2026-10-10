@@ -178,11 +178,13 @@
 @media (max-width:600px){
   .at-view{aspect-ratio:1/1;min-height:0;box-shadow:4px 4px 0 var(--ink);}
   .at-help{display:none;}
-  .at-view-bottom{flex-direction:column;align-items:stretch;}
-  .at-angles{overflow:auto;scrollbar-width:none;}
+  .at-view-bottom{flex-direction:column;align-items:stretch;flex-wrap:nowrap;} /* v7.82 : en colonne, une seule ligne : sinon la ligne prend la largeur des angles (305 px) et déborde à 320 px */
+  .at-angles{overflow:auto;scrollbar-width:none;max-width:100%;}
   .at-angles button{padding:6px 9px;font-size:.68rem;}
   .at-view-tools{align-self:flex-end;}
   .at-facts li{min-width:calc(50% - 5px);}
   .at-text input{max-width:none;}
 }
 @media (prefers-reduced-motion:reduce){.at-canvas{cursor:default;}}
+/* v7.82 (latence) : les 329 lignes du catalogue ne sont mises en page qu'à l'approche de la fenêtre de la liste */
+.at-list>li{content-visibility:auto;contain-intrinsic-size:auto 52px;}

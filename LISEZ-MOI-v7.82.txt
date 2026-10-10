@@ -1,0 +1,24 @@
+LEONIDAKIT v7.82 — Audit final : latence, tous les écrans, alignements
+À appliquer sur la v7.81. Archive « modifs » : seulement les fichiers qui changent.
+Rien n'a été publié ni poussé. Aucun fichier à supprimer. CSP inchangée.
+
+CE QUI CHANGE POUR LE VISITEUR
+- Pages plus rapides, surtout sur téléphone : l'accueil ne télécharge plus le moteur du calculateur avant qu'on touche au
+  mini-formulaire ; les longues listes (hub Véhicules, médias, catalogues, Atelier) ne sont mises en page qu'à l'approche
+  de l'écran ; la police « latin-ext » n'est plus chargée pour un « œ » ; le calculateur reçoit un visuel adapté à la
+  taille de l'écran ; l'Atelier 3D affiche la page tout de suite et construit la scène juste après.
+  Mesures sur banc bridé (4G lente, processeur ×4), médianes : accueil LCP 3,4 s → 2,2 s ; Véhicules load 4,6 → 3,8 s ;
+  Style 4,6 → 3,7 s ; Personnalisations 4,7 → 3,5 s ; Médias 2,8 → 2,4 s ; Atelier 9,6 → 2,9 s. Détail et toutes les
+  pages : outils/CHANGEMENTS-v7.82.txt.
+- Tous les écrans, de 320 à 2 560 px (912 chargements vérifiés) : barre de l'Atelier à 320 px, rangées des médias sous
+  390 px, vignettes des carnets sous 400 px, hero GTA Online et galeries des fiches alignés sur les autres sections.
+- Rien d'autre ne change. Cinq langues.
+
+MARCHE À SUIVRE
+  1. Copie le contenu de l'archive à la racine du dossier GitHub (remplacer), valide, pousse. Rien à changer dans Vercel
+     (vercel.json ajoute seulement un en-tête de cache pour atelier/ ; la CSP est la même).
+  2. Essai : accueil (Ctrl+F5) → tape trois valeurs dans le mini-calculateur : la réponse arrive, le bouton ouvre le
+     calculateur ; vehicules.html → défile vite jusqu'en bas ; medias.html sur un téléphone étroit ; atelier-3d.html.
+
+Contrôles : tests Node + langues, vérificateur de liens, audit navigateur, passe « écrans » (16 largeurs) ; le détail et
+les chiffres sont dans outils/CHANGEMENTS-v7.82.txt. Retour arrière : commit précédent dans GitHub Desktop.

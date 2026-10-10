@@ -523,10 +523,15 @@ import * as THREE from './vendor/three.module.min.js';
   search.addEventListener('input', filterList); Object.values(catSels).forEach(s => s.addEventListener('change', filterList));
 
   /* ---------- départ ---------- */
-  const ok = initGL();
+  /* v7.82 : la page s'affiche d'abord (catalogue, menus, liens, « Chargement de la maquette… ») ; la scène WebGL
+     (contexte, nuanceurs, environnement réfléchi) est créée à la tâche suivante, après le premier rendu : ni
+     DOMContentLoaded ni l'affichage de la page n'attendent three.js. */
   const want = fromParams(location.search);
   setFam('v'); renderSaved();
-  if (want && items.some(x => x.dataset.atPick === want.fam && x.dataset.atId === want.id)) { st.s = want.s; pick(want.fam, want.id, true); }
-  else pick('v', root.dataset.atFirst);
-  if (ok && spinning) tick();
+  const first = want && items.some(x => x.dataset.atPick === want.fam && x.dataset.atId === want.id) ? [want.fam, want.id] : ['v', root.dataset.atFirst];
+  if (first[0] === want?.fam && first[1] === want?.id) st.s = want.s;
+  pick(first[0], first[1], true); /* sans scène encore : nom, options, liens, total */
+  const boot = () => { if (!initGL()) return; pick(first[0], first[1], true); if (spinning) tick(); };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => requestAnimationFrame(() => setTimeout(boot, 0)), { once: true });
+  else requestAnimationFrame(() => setTimeout(boot, 0));
 })();

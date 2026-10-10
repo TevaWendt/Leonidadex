@@ -903,7 +903,7 @@
 .cg-media{position:relative;isolation:isolate;aspect-ratio:16/8;overflow:hidden;border-bottom:2px solid var(--ink);background:var(--paper-2);}
 .cg-media img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .8s var(--ease-out);}
 .cg-media--cat::after{content:'';position:absolute;inset:0;background:linear-gradient(170deg,hsl(var(--ch,38) 80% 50% / .12),hsl(var(--ch,38) 70% 30% / .5));mix-blend-mode:multiply;pointer-events:none;}
-.cg-media-l{position:absolute;left:10px;top:8px;z-index:1;padding:4px 8px;border:1.5px solid var(--ink);border-radius:6px;background:rgba(253,251,247,.92);color:var(--ink);font:800 .58rem/1.2 var(--font-mono,ui-monospace,monospace);letter-spacing:.1em;text-transform:uppercase;}
+.cg-media-l{position:absolute;left:10px;top:8px;z-index:1;padding:4px 8px;border:1.5px solid var(--ink);border-radius:6px;background:rgba(253,251,247,.92);color:var(--ink);font:800 .62rem/1.2 var(--font-mono,ui-monospace,monospace);letter-spacing:.1em;text-transform:uppercase;}
 .cg-card .cg-top{padding:12px 14px 8px 20px;}
 .cg-card .cg-ico{margin-top:-40px;position:relative;z-index:2;width:54px;height:54px;background:var(--cg,var(--paper-2));box-shadow:3px 3px 0 var(--ink);}
 .cg-top .cg-st{position:absolute;right:12px;top:-30px;z-index:2;}
@@ -1046,3 +1046,7 @@
   .rk-gauge-v{justify-self:start;font-size:1.35rem;}
   .rk-gauge-n{font-size:.8rem;overflow-wrap:anywhere;}
 }
+
+/* v7.82 (latence) : rangées des catalogues mises en page seulement à l'approche de l'écran (voir style.css) */
+.cat-row{content-visibility:auto;contain-intrinsic-size:auto 320px;}
+@media (max-width:700px){.cat-row{contain-intrinsic-size:auto 620px;}}

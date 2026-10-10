@@ -274,6 +274,8 @@
 .cn-back a:hover{background:var(--amber);}
 @media (max-width:1100px){.cn-other-list{grid-template-columns:repeat(3,minmax(0,1fr));}}
 @media (max-width:760px){.cn-other-list{grid-template-columns:repeat(2,minmax(0,1fr));}.cn-ring{width:96px;height:96px;}.cn-ring-pct{font-size:.95rem;padding:0 18px;}}
+/* v7.82 : sous 400 px, une vignette par ligne (« Mes personnalisations » ne tenait pas dans une demi-largeur et se coupait) */
+@media (max-width:400px){.cn-other-list{grid-template-columns:1fr;}.cn-other-txt{overflow-wrap:anywhere;}}
 @media (max-width:700px){.cn-card{grid-template-columns:92px minmax(0,1fr);}.cn-tools{padding:12px;}}
 @media (prefers-reduced-motion:reduce){
   .cn-ring-fg,.cn-thumb img,.cn-thumb--schema img,.cn-thumb--schema svg,.cn-thumb--ico .cn-ico,.cn-other-img img,.cn-about-card{transition:none;}
