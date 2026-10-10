@@ -1,0 +1,29 @@
+LEONIDAKIT v7.81 — Nouvelle section « Atelier 3D »
+À appliquer sur la v7.80. Archive « modifs » : seulement les fichiers qui changent.
+Rien n'a été publié ni poussé. Aucun fichier à supprimer.
+
+CE QUI CHANGE POUR LE VISITEUR
+- Une nouvelle page, Atelier 3D (atelier-3d.html, dans Explorer › S'équiper, après Personnalisations) : les 302 véhicules
+  et les 27 armes en maquette 3D, à faire tourner, à peindre et à équiper en direct. Peinture (teintes, finitions,
+  secondaire, bandes), jantes et pneus, carrosserie (aileron, jupes, prise d'air, barres de toit, pare-chocs, échappements,
+  arceau), vitres teintées, néons, suspension, phares, plaque, performances ; pour les armes : finitions et camouflages,
+  chargeurs, viseurs et lunettes, silencieux et canons, poignée, lampe, laser, munitions.
+- Chaque option renvoie au poste de personnalisation du catalogue, avec son repère de la série ; le total s'additionne.
+  Une option n'est proposée qu'aux catégories que son poste accepte.
+- Enregistrer une configuration (sur l'appareil), copier un lien qui la rouvre, télécharger une image PNG.
+- Les fiches véhicules et armes ont « Essayer dans l'Atelier 3D » ; la section Personnalisations aussi (carte du modèle
+  choisi). Depuis l'Atelier : la fiche du modèle et ses postes dans Personnalisations.
+- Les maquettes sont bâties sur les schémas Leonidakit (pas les modèles du jeu, que Rockstar n'a pas publiés) ; la page le
+  dit. Aucun autre poids ailleurs : three.js (vendor/) n'est chargé que sur cette page.
+- Rien d'autre ne change. Cinq langues.
+
+MARCHE À SUIVRE
+  1. Copie le contenu de l'archive à la racine du dossier GitHub (remplacer), valide, pousse. Rien à changer dans Vercel
+     (la CSP actuelle, script-src 'self', suffit : three.js est servi par le site).
+  2. Essai : atelier-3d.html (Ctrl+F5) → tourne la Zentorno, change la peinture, coche l'aileron et les néons, copie le lien,
+     ouvre-le dans un autre onglet ; Armes → Carabine → lunette et silencieux ; une fiche véhicule → « Essayer ce véhicule
+     dans l'Atelier 3D ».
+
+Contrôles : 1 014 tests Node + 42 tests de langues, vérificateur de liens (aucune erreur), audit navigateur (0 débordement,
+0 erreur console), relecture dans les cinq langues ; le détail est dans outils/CHANGEMENTS-v7.81.txt.
+Retour arrière : commit précédent dans GitHub Desktop.

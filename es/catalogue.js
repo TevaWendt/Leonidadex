@@ -68,7 +68,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     const items = new Map();
     if (pick) pick.querySelectorAll('datalist option[data-id]').forEach(o => items.set(o.dataset.id, { id: o.dataset.id, name: o.value, tag: o.dataset.tag || '', label: o.dataset.l || '', url: o.dataset.u || '', key: fold(o.value) }));
     const pickQ = pick && pick.querySelector('[data-cat-pick-q]'), pickCard = pick && pick.querySelector('[data-cat-pick-card]');
-    const pickName = pick && pick.querySelector('[data-cat-pick-name]'), pickMeta = pick && pick.querySelector('[data-cat-pick-meta]'), pickFiche = pick && pick.querySelector('[data-cat-pick-fiche]');
+    const pickName = pick && pick.querySelector('[data-cat-pick-name]'), pickMeta = pick && pick.querySelector('[data-cat-pick-meta]'), pickFiche = pick && pick.querySelector('[data-cat-pick-fiche]'), pickAtelier = pick && pick.querySelector('[data-cat-pick-atelier]'); /* v7.81 */
     const whoBts = Array.from(tools.querySelectorAll('[data-cat-who]'));
     /* v7.54 (lot 1) : les lignes sont lues une fois (texte, catégorie, statut, compatibilité) ; filtrer ne déplace aucune
        ligne dans la page (seul un changement de tri réordonne, chaque tri n'est calculé qu'une fois) ; l'attente de 80 ms
@@ -110,6 +110,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
           pickMeta.textContent = (state.item.label ? state.item.label + ' · ' : '') + nf.format(shown) + ' ' + (lkPluriel(shown) ? 'elementos compatibles' : 'elemento compatible');
           /* v7.73 : la fiche du modèle a sa section « Personnaliser » (tableau des postes, options, configuration) */
           if (pickFiche && state.item.url) pickFiche.setAttribute('href', state.item.url + '#personnaliser');
+          if (pickAtelier) pickAtelier.setAttribute('href', 'atelier-3d.html?' + (fam === 'perso-armes' ? 'a=' : 'v=') + encodeURIComponent(state.item.id)); /* v7.81 : le modèle choisi s'ouvre dans l'Atelier 3D */
           if (!was && canAnimate()) pickCard.animate([{ opacity: 0, transform: 'translate3d(0,8px,0) scale(.98)' }, { opacity: 1, transform: 'none' }], { duration: 280, easing: 'cubic-bezier(.2,.7,.2,1)' });
         }
       }
