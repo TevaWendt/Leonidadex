@@ -329,7 +329,9 @@ function pickBlock(fam) {
     + '<datalist id="pick-' + esc(fam) + '">' + opts + '</datalist>'
     + '<p class="cat-pick-hint">' + esc(P.hint) + '</p></div>'
     + '<div class="cat-pick-card" data-cat-pick-card hidden><span class="cat-pick-badge" aria-hidden="true">' + S.icon(P.icon, 'cat-pick-badge-i') + '</span><div class="cat-pick-txt"><p class="cat-pick-name" data-cat-pick-name></p><p class="cat-pick-meta" data-cat-pick-meta role="status" aria-live="polite"></p></div>'
-    + '<a class="cat-pick-fiche" data-cat-pick-fiche href="' + esc(fam === 'perso-armes' ? 'armes.html' : 'vehicules.html') + '">Personnaliser sur sa fiche</a><button type="button" class="cat-pick-clear" data-cat-pick-clear>' + esc(P.clear) + '</button></div></div>';
+    + '<a class="cat-pick-fiche" data-cat-pick-fiche href="' + esc(fam === 'perso-armes' ? 'armes.html' : 'vehicules.html') + '">Personnaliser sur sa fiche</a>'
+    /* v7.81 : l'Atelier 3D ouvre le modèle choisi (catalogue.js pose l'adresse exacte) */
+    + '<a class="cat-pick-fiche cat-pick-atelier" data-cat-pick-atelier href="atelier-3d.html">Essayer dans l’Atelier 3D</a><button type="button" class="cat-pick-clear" data-cat-pick-clear>' + esc(P.clear) + '</button></div></div>';
 }
 /* v7.69 : « Pour qui ? » sur les listes qui savent qui porte quoi (tatouages, coiffures, tenues) : Jason, Lucia ou tout */
 function whoSwitch(fam) {

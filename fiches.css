@@ -429,3 +429,9 @@ html:not(.js) .ang-tabs,html:not(.js) .ang-hint{display:none;}
 /* v7.80 : sous 900 px, la galerie (photos ou écran des angles) prend toute la largeur de la colonne, calée sur le texte de
    la fiche ; la limite de 230 px de style.css ne vaut que pour l'ancienne vignette (fiches sans galerie) */
 @media (max-width:900px){.fhero-art--gal{max-width:none;}}
+/* v7.81 : lien vers l'Atelier 3D sous le résumé de « Personnaliser ce véhicule / cette arme » */
+.pf-atelier{margin:10px 0 0;}
+.pf-atelier-link{display:inline-flex;align-items:center;gap:8px;min-height:38px;padding:7px 14px;border:2px solid var(--ink);border-radius:999px;background:var(--ink);color:#fff;font-weight:800;font-size:.86rem;text-decoration:none;box-shadow:2px 2px 0 var(--amber);}
+.pf-atelier-link::before{content:'';width:12px;height:12px;border:2px solid var(--amber-2);border-radius:3px;transform:rotate(45deg);box-sizing:border-box;}
+.pf-atelier-link:hover{background:#000;}
+.pf-atelier-link:focus-visible{outline:3px solid var(--coral);outline-offset:2px;}

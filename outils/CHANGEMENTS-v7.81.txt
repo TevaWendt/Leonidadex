@@ -1,0 +1,92 @@
+LEONIDAKIT v7.81 — Nouvelle section « Atelier 3D » : tous les véhicules et toutes les armes, personnalisables en direct,
+reliés aux Personnalisations — 10 octobre 2026
+
+Base : v7.80. Demande de Téva du 09/10/2026 (21 h) : « une autre section, Atelier 3D, ultra complète : on pourra mettre tous
+les véhicules, toutes les armes, et on pourra les personnaliser ici ; reliée à la section Personnalisations ». Rien n'est
+publié ni poussé.
+
+1. LA PAGE (atelier-3d.html ; outils/gen-atelier.cjs, atelier-3d.css, atelier-3d.js, vendor/three.module.min.js)
+- Trois colonnes sur grand écran : le catalogue des modèles (deux familles, Véhicules 302 et Armes 27, recherche, filtre par
+  catégorie, liste complète), la scène (maquette 3D dans un garage de nuit, à faire tourner à la souris ou au doigt, zoom
+  à la molette ou au pincement, flèches du clavier ; angles Trois quarts, Profil, Face, Arrière, Dessus ; rotation
+  automatique ; plein écran), le menu de personnalisation (ateliers en colonne, options en face, comme dans un atelier du
+  jeu). Deux colonnes sous 1 240 px, une seule sous 900 px (scène, ateliers en ligne, options, catalogue).
+- Sous la scène : le total des repères de la série, Enregistrer cette configuration (sur l'appareil, liste « Mes
+  configurations » rechargeable), Copier le lien (l'adresse porte seulement les options : ?v=pegassi-zentorno&paint=…),
+  Image PNG (produite par le navigateur), Réinitialiser, Fiche du modèle, Ses postes dans Personnalisations. Les options
+  choisies sont rappelées en puces.
+- Ateliers des véhicules : Peinture (douze teintes de Leonida ou couleur libre ; brillante, mate, métallisée, chromée,
+  nacrée, caméléon ; peinture secondaire ; livrée à bandes), Jantes et pneus (couleur, taille jusqu'au donk ; route,
+  tout-terrain, faible adhérence), Carrosserie (aileron, jupes, prise d'air, barres de toit, pare-chocs tout-terrain,
+  double échappement, arceau), Vitres (teinte de 0 à 100 %), Néons (allumés, couleur), Suspension (rabaissée course ou
+  street, d'origine, rehaussée), Phares (éteints, halogène, xénon, de couleur), Plaque (texte de 8 caractères, quatre
+  styles), Performances (turbo, moteur, freins, transmission, blindage : sans effet visible, comptés dans le total).
+  Ateliers des armes : Finition (noir d'usine, vert armée, orange, LSPD, rose, or, platine, chrome, libre ; camouflages
+  forêt, désert, tropical à palmiers, urbain ; crosse gravée de palmiers), Chargeurs (étendu, tambour, caisson),
+  Viseurs (holographique, lunette, grande lunette, nocturne, thermique), Canon (silencieux, compensateur, frein de
+  bouche, canon lourd), Accessoires (poignée, lampe, laser), Munitions (comptées dans le total).
+- Chaque option porte le ou les postes du catalogue qui lui correspondent (lien vers sa ligne dans Personnalisations,
+  repère de la série quand il existe : Toit 350 $, Arceau 550 $, Vitres noir pur 10 000 $, Néons 650 $, Phares xénon
+  1 000 $, Turbo 2 500 $, Lunette 1 125 $, Poignée 330 $…). Une option est proposée seulement aux catégories que son poste
+  accepte (compat du catalogue) : un bateau n'a que Peinture et Phares, une batte que sa Finition. Rien n'est inventé :
+  noms, statuts et repères viennent des catalogues perso-vehicules.json et perso-armes.json.
+- Sans script ou sans WebGL : le message renvoie aux fiches (qui ont le schéma sous tous les angles). Mouvement réduit :
+  pas de rotation automatique, angles posés sans glissement.
+
+2. LES MAQUETTES (outils/svg-polys.cjs, outils/gen-atelier.cjs → atelier/vehicules/<id>.json, atelier/armes/<id>.json)
+- Rockstar n'a publié aucun modèle 3D : chaque maquette est bâtie à partir des schémas Leonidakit. Le lecteur de schémas
+  (svg-polys.cjs) tire du profil ses silhouettes d'encre (aplaties, courbes échantillonnées ; les traits à l'encre d'un
+  vélo deviennent des rubans), ses vitrages, ses roues (disques), ses feux ; de la vue de dessus le contour de l'engin et
+  les vitrages (pare-brise, lunette) ; de la face et de l'arrière la largeur et les feux.
+- Véhicule : chaque silhouette est extrudée en volume puis resserrée par le contour de dessus (lofting) ; les petites
+  pièces hautes deviennent une paire de rétroviseurs ; vitres latérales un peu plus larges que la caisse ; pare-brise et
+  lunette posés sur la caisse ; roues en cylindres (pneu, jante, moyeu) sur les flancs, une seule roue par cercle pour
+  un deux-roues ; feux de face et d'arrière à leur place ; plaque arrière (texte dessiné) ; avions et hélicoptères reçoivent
+  ailes, stabilisateurs et pales depuis la vue de dessus. Arme : silhouettes extrudées (épaisseur selon la hauteur),
+  accessoires posés sur les bords (chargeur sous la pièce la plus basse, viseur sur la plus grande, canon à la bouche).
+- Un fichier JSON par modèle (environ 1 Ko), chargé seulement quand le modèle est choisi, depuis la racine du site (les
+  pages traduites lisent les mêmes). three.js (r170, MIT) est servi depuis vendor/ (CSP script-src 'self'), chargé
+  seulement sur cette page, en module différé : aucune autre page ne change de poids.
+
+3. RELIÉ AU RESTE DU SITE
+- Menu « Explorer › S'équiper » et pied de page : Atelier 3D après Personnalisations (outils/site-shell.cjs).
+- Fiches véhicules et armes : « Essayer ce véhicule / cette arme dans l'Atelier 3D » sous le résumé de « Personnaliser »
+  (outils/perso-fiche.cjs, fiches.css) ; la page s'ouvre sur ce modèle.
+- Personnalisations : la carte du modèle choisi (« Ton véhicule / Ton arme ») a « Essayer dans l'Atelier 3D »
+  (outils/catalogues.cjs, catalogue.js).
+- Depuis l'Atelier : Fiche du modèle, Ses postes dans Personnalisations (ancre #perso-vehicules=<modèle> : la liste se
+  filtre sur ce modèle), et chaque poste.
+
+4. TRADUCTIONS
+outils/langues/<en|es|it|de>/v781.json (517 entrées) : la page, les options, les messages ; les 329 lignes du catalogue
+(nom du modèle + catégorie) et les 62 liens de postes (nom + repère) composés à partir de la mémoire existante (catégories,
+noms des postes, sommes au format de la langue). data-hint-alt ajouté aux attributs traduits (outils/langues.json) ;
+atelier-3d.js et vendor/three.module.min.js déclarés scripts partagés (jamais traduits, chargés depuis la racine).
+
+5. TESTS
+outils/tests/v781.test.cjs (5 tests) : données (un fichier par modèle, silhouettes, roues, contour, feux, rubans du vélo,
+pales) ; page (listes complètes, filtres, scène, barre, menus, chaque poste existe dans Personnalisations avec son repère,
+three.js en vendor, script sans mot ni requête) ; liens (menu, pied de page, fiches, Personnalisations, plan du site) ;
+style (colonnes, téléphone, cibles, mouvement réduit) ; langues.
+
+CONTRÔLES (10 octobre 2026)
+- Navigateur (WebGL logiciel) : maquettes de chaque famille relues (voitures, pick-up, camion, bus, moto, vélo, bateau,
+  avion, hélicoptère, armes) ; options une à une (or caméléon, jantes donk, aileron, jupes, prise d'air, vitres noires,
+  néons, rabaissée, xénon, plaque, turbo → total 14 150 $ ; carabine or, tambour, lunette, silencieux, poignée, laser →
+  1 455 $) ; angles ; lien copié et rechargé ; enregistrement et rechargement ; famille Armes ; batte (Finition seule) ;
+  ferry (Peinture et Phares) ; six largeurs de 320 à 1 920 px sans débordement ; sans script ; aucune erreur console.
+  Pages traduites (en, es, it, de) : maquette rendue, liens Fiche / Personnalisations / postes en 200, menus traduits.
+- Choisir un modèle fait défiler la liste seulement, plus la page (à l'ouverture d'un lien ?v=…, la page restait en haut
+  du hero au lieu de sauter).
+- Tests Node : 1 014 / 1 014 (toute la suite, langues.test.cjs à part : 42 / 42). Vérificateur : aucune erreur, 321 391
+  références dans 2 246 pages. Audit navigateur (26 pages, 182 chargements, 7 largeurs) : 0 débordement, 0 erreur console,
+  0 requête en échec, 11 175 contrastes, 10 604 cibles ; 3 « hidden » transitoires (apparitions Motion+ relevées pendant
+  une mesure sous charge, déjà vus propres sur une passe au repos), à durcir en v7.82.
+
+FICHIERS
+Modifiés : outils/site-shell.cjs, outils/perso-fiche.cjs, outils/catalogues.cjs, outils/regenerer.cjs, outils/langues.json,
+catalogue.js, fiches.css, personnalisations.html, les fiches vehicules/*.html et armes/*.html et leurs copies traduites,
+toutes les pages (menu et pied de page), empreintes, plan du site, README.md. Nouveaux : atelier-3d.html, atelier-3d.css,
+atelier-3d.js, vendor/three.module.min.js, vendor/LICENSE-three.txt, atelier/vehicules/*.json (302), atelier/armes/*.json
+(27), outils/gen-atelier.cjs, outils/svg-polys.cjs, outils/langues/*/v781.json, outils/tests/v781.test.cjs,
+outils/CHANGEMENTS-v7.81.txt, LISEZ-MOI-v7.81.txt, les copies traduites de atelier-3d.html. Aucun fichier à supprimer.

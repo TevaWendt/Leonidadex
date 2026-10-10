@@ -210,7 +210,8 @@
   "data-q",
   "data-n",
   "data-help-keywords",
-  "data-ang-dot"
+  "data-ang-dot",
+  "data-hint-alt"
  ],
  "attributsCherches": [
   "data-q",
@@ -246,7 +247,9 @@
   "assets-manifest.js",
   "carte-gtadb.js",
   "carte-vehicules.js",
-  "armes-schemas.js"
+  "armes-schemas.js",
+  "atelier-3d.js",
+  "vendor/three.module.min.js"
  ],
  "scriptsDonnees": [
   "vehicules-data.js",

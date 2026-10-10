@@ -84,6 +84,8 @@ function persoSection(kind, item) {
     /* le résumé et les puces ne portent pas d'apparition propre (la section entre d'un bloc) : le tableau se dessine en dessous
        après coup, et une apparition retardée pouvait rester invisible à l'audit */
     + '  <div class="pf-head"><p class="fiche-txt">' + esc(lede) + '</p>\n'
+    /* v7.81 : l'Atelier 3D ouvre ce modèle, prêt à peindre et à équiper */
+    + '  <p class="pf-atelier"><a class="pf-atelier-link" href="../atelier-3d.html?' + (kind === 'vehicules' ? 'v=' : 'a=') + encodeURIComponent(item.id) + '">' + (kind === 'vehicules' ? 'Essayer ce véhicule dans l’Atelier 3D' : 'Essayer cette arme dans l’Atelier 3D') + '</a></p>\n'
     + (cats.length ? '  <ul class="pf-cats" aria-label="Ateliers">' + chips + '</ul>\n' : '') + '</div>\n'
     + '  <div class="pf-board" data-pf-board>' + (list.length ? '<p class="pf-nojs"><a href="' + esc(listHref) + '">Voir ces postes dans la liste des personnalisations</a></p>' : '') + '</div>\n'
     + '</section>';
