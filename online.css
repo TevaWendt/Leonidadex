@@ -372,7 +372,7 @@
 .online-hero-fx{z-index:1;}
 .online-hero .online-cine-grid{height:44%;opacity:.5;}
 .online-hero .online-cine-glow{opacity:.75;}
-.online-hero-in{position:relative;z-index:2;padding-top:calc(var(--lk-head-h,76px) + 28px);padding-bottom:clamp(30px,4vw,52px);}
+.online-hero-in{position:relative;z-index:2;width:100%;padding-top:calc(var(--lk-head-h,76px) + 28px);padding-bottom:clamp(30px,4vw,52px);} /* v7.82 : width:100% — dans la grille du hero, margin:auto réduisait le bloc à son contenu (titre décalé de 34 px par rapport au corps à 1 280 px) */
 .online-hero .crumbs{padding:0 0 18px;color:rgba(253,251,247,.72);}
 .online-hero .crumbs a{color:var(--online-accent);}
 .online-page .online-hero h1{color:var(--paper);font-size:clamp(2.5rem,1.4rem + 5vw,5.8rem);line-height:.94;letter-spacing:-.04em;max-width:none;text-wrap:balance;margin-top:16px;text-shadow:0 0 30px rgba(151,223,207,.32),0 4px 0 rgba(0,0,0,.4);}

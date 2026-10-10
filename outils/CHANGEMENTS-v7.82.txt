@@ -1,0 +1,117 @@
+LEONIDAKIT v7.82 — Audit final du site : latence sur toutes les pages, adaptation à tous les écrans, alignement des cartes
+et des sections — 10 octobre 2026
+
+Base : v7.81. Demande de Téva du 09/10/2026 : « un dernier check de tout le site, un dernier audit… réduire la latence sur
+toutes les pages… l'adaptation à tout type d'écran… le respect de l'alignement des cartes et sections ». Rien n'est publié
+ni poussé. Aucun fichier à supprimer. CSP inchangée.
+
+1. LATENCE — CE QUI A ÉTÉ MESURÉ
+Banc : Chromium headless, réseau bridé (1,6 Mbit/s, 150 ms de latence, type 4G lente), processeur ralenti ×4, cache vide,
+pages servies compressées (gzip, comme Vercel en brotli), 49 pages (toute la racine + fiches types + pages traduites), à
+390 px (téléphone) et 1 280 px. Repères relevés : premier rendu (FCP), plus grand élément (LCP), DOMContentLoaded, load,
+octets transférés, requêtes, temps de tâches longues (travail du processeur), coût d'un défilement de quatre écrans.
+Avant (v7.81), médianes à 390 px : FCP 2,2 s, LCP 2,3 s, load 2,9 s, 325 Ko, 18 requêtes, 1,0 s de tâches longues. Le
+poids commun à toutes les pages : style.css (55 Ko compressés), la police (34 Ko), common.js + app.js (28 Ko) ; le reste
+dépend de la page. Les pages lourdes : vehicules.html (11 300 éléments, 710 Ko de HTML), carte.html (20 400 éléments),
+style.html (10 000), personnalisations.html (9 400), nourriture.html (5 300), calculateurs.html (422 Ko de scripts),
+atelier-3d.html (DOMContentLoaded à 9,6 s : three.js s'initialisait avant).
+
+2. LATENCE — CE QUI CHANGE
+- Police (style.css) : « ı », « Œ » et « œ » étaient déclarés dans les deux plages Unicode ; un seul « cœur » dans la page
+  faisait charger le fichier latin-ext (32 Ko) pour rien (accueil, lieux, animaux, missions, personnages, nourriture…).
+  La plage latin-ext ne les couvre plus : une seule police sur ces pages.
+- Longues listes (style.css, acquisitions.css, atelier-3d.css) : content-visibility:auto avec une taille réservée sur les
+  cartes du hub Véhicules (305), la liste « Où les trouver sur la carte » (302), les rangées des médias (150), les rangées
+  des catalogues Style / Personnalisations / Consommables (cat-row), le catalogue de l'Atelier (329 lignes). Le navigateur
+  ne met en page et ne peint que ce qui approche de l'écran ; ancres, recherche dans la page, clavier, apparitions au
+  défilement inchangés (vérifié). Pas appliqué à la carte (aucun gain mesuré : l'arbre des lieux est déjà replié).
+- Accueil : le moteur du calculateur (calculateurs-engine.js, 178 Ko, 48 Ko compressés) n'est plus chargé avec la page.
+  Déclaré <script type="lk/lazy">, il arrive au premier geste dans le mini-formulaire (focus ou saisie) et l'aperçu se
+  recalcule aussitôt (calculator-entry.js) ; en attendant « Un instant… ». Le bouton envoie toujours vers le calculateur
+  avec les trois valeurs. Tuto et calculateur le chargent comme avant.
+- Atelier 3D (atelier-3d.js) : la page s'affiche d'abord (catalogue, menus, liens, « Chargement de la maquette… »), la
+  scène WebGL est créée à la tâche suivante ; DOMContentLoaded n'attend plus three.js. Choisir un modèle fait défiler la
+  liste seulement, plus la page (à l'ouverture d'un lien ?v=…, le hero restait en haut).
+- Calculateur (calculateurs.html, calculateurs-brand.css) : le visuel du hero en 480 px sous 650 px et 800 px sous
+  1 100 px au lieu du 1 280 px (119 Ko) partout.
+- vercel.json : Cache-Control d'un jour (+ stale-while-revalidate) pour atelier/ (une maquette par modèle). Rien d'autre
+  ne change dans les en-têtes.
+- common.js (Motion+) : le filet de sécurité des apparitions joue aussi 400 ms après chaque arrêt du défilement, tant
+  qu'il reste des blocs à montrer, et couvre tout ce qui a déjà défilé (jusqu'au point le plus bas atteint) : sur un
+  appareil très chargé, l'observateur peut livrer son entrée en retard ou la manquer pendant un défilement très rapide ;
+  rien ne reste transparent, ni dans l'écran ni en remontant (c'était la source des « hidden » transitoires de l'audit
+  v7.81 ; rejoué avec le défilement de l'audit sous processeur ×8 : 0 bloc caché). Même filet dans monde.js pour les
+  cartes des cinq hubs du monde (observateur à part : une carte dépassée est posée telle quelle, mo-still).
+- Essayé, non retenu (mesuré sans gain net) : scripts en defer dans <head> (premier rendu parfois plus tard : les scripts
+  concurrencent la feuille et la police) ; découpage de style.css (63 Ko de règles jamais vues par l'audit mais dont une
+  partie sert aux états créés par les scripts : risque de régression sans gain sûr).
+
+3. LATENCE — AVANT / APRÈS (médianes de trois chargements, même banc ; ms)
+390 px (téléphone)               FCP          LCP          DOMContentLoaded   load          tâches longues
+  index.html                     2488 → 2232  3448 → 2232  2427 → 2029        2607 → 2367   862 → 676
+  vehicules.html                 2944 → 2812  2944 → 2812  4060 → 3468        4588 → 3761   3215 → 2169
+  style.html                     2520 → 2468  2520 → 2468  3138 → 3265        4576 → 3660   3186 → 1894
+  personnalisations.html         2516 → 2392  2516 → 2392  3263 → 2931        4674 → 3454   2973 → 1652
+  medias.html                    1696 → 1484  1696 → 1484  2453 → 1915        2834 → 2355   1631 → 758
+  atelier-3d.html                1796 → 1728  1796 → 1728  9561 → 2847        9576 → 2881   11049 → 3862
+  calculateurs.html              2600 → 2480  3620 → 2480  4715 → 4198        4778 → 4243   1725 → 1667
+1 280 px
+  index.html                     3576 → 3352  4600 → 3352  2446 → 2257        3000 → 2662   950 → 781
+  vehicules.html                 3180 → 2892  3180 → 2892  4271 → 3755        4424 → 3915   3859 → 2889
+  style.html                     2848 → 3044  2848 → 3044  3093 → 3193        4463 → 3726   3013 → 1799
+  personnalisations.html         2656 → 2768  2656 → 2768  2806 → 2908        4302 → 3505   2572 → 1691
+  medias.html                    1860 → 1708  1860 → 1708  2393 → 1927        3208 → 3002   1690 → 1207
+  atelier-3d.html                2156 → 1844  2156 → 1844  12758 → 2906       12780 → 2915  15972 → 5767
+  calculateurs.html              3060 → 3060  3060 → 3140  4715 → 4780        4824 → 4849   2059 → 1817
+Coût d'un défilement de quatre écrans à 390 px : vehicules 853 → 479 ms, medias 657 → 393, accueil 1318 → 872.
+Sur les 49 pages : load moyen 3,19 s → 2,83 s à 390 px ; les pages déjà légères (fiches, hubs du monde, contact…) ne
+bougent pas : leur poids est la feuille commune et la police, gardées en cache sept jours d'une page à l'autre.
+(Chiffres sous bridage sévère : sur un téléphone 4G réel, diviser par trois à quatre.)
+
+4. ÉCRANS ET ALIGNEMENTS (outils/tests/ecrans-browser.cjs, nouvel outil, gardé dans le dépôt)
+57 pages × 16 largeurs (320, 360, 390, 414, 480, 600, 768, 834, 1 024, 1 180, 1 280, 1 366, 1 440, 1 680, 1 920,
+2 560 px) = 912 chargements : débordement du document, éléments hors de la fenêtre, sections (.shell) toutes à la même
+marge, cartes d'une rangée à la même hauteur et largeur et dans leur conteneur, contrôles coupés par un ancêtre, textes
+coupés, textes sous 10 px, cibles sous 24 px sur téléphone. Corrigé :
+- Atelier 3D à 320–360 px (atelier-3d.css) : la barre des angles et « Plein écran » sortaient de la scène (la colonne
+  flex gardait le retour à la ligne : la ligne prenait 305 px) ; une seule ligne, angles défilables.
+- Médias sous 390 px (style.css) : chaque rangée faisait 354 px (colonne de grille dimensionnée par le contenu) et se
+  coupait sur iPhone SE / mini ; colonne bornée à la page.
+- Carnets sous 400 px (carnets.css) : « Mes personnalisations » ne tenait pas dans une vignette de demi-largeur et était
+  rogné ; une vignette par ligne.
+- GTA Online, pages de l'espace (online.css) : le bloc du hero était réduit à son contenu (margin:auto dans une grille) :
+  titre décalé de 34 px par rapport au corps à 1 280 px, 92 px à 1 920 px ; aligné.
+- Fiches du monde (style.css) : la galerie « En images » (max-width 96vw) était plus étroite que les autres sections sous
+  1 540 px (26 px de chaque côté à 1 280 px) ; jamais plus étroite qu'elles (elle reste plus large au-delà, voulu).
+- Étiquettes de 9,3 px (statut des lieux dans la carte, « Illustration Leonidakit ») montées à 10 px.
+Relevés restants, à lire et non à corriger : les bento (Activités, outils du calculateur, Animaux : tuiles de tailles
+différentes par construction), les carrousels (galerie des fiches : pistes qui défilent), les marqueurs de la carte
+(pannable), les badges à 9,9 px (.62rem) déjà validés pour le contraste, et — en navigateur sans dictionnaire de césure —
+le mot « Personnalisations » coupé sans trait d'union à 320 px (les navigateurs des téléphones ont la césure française :
+« Personnalisa-tions »).
+
+5. TRADUCTIONS
+outils/langues/<en|es|it|de>/v782.json : « Un instant… ». Pages traduites régénérées (accueil : moteur en différé).
+
+6. TESTS
+outils/tests/v782.test.cjs (8 tests) : plages de la police, content-visibility sur chaque liste et ses pages, accueil sans
+moteur puis moteur demandé une seule fois à la saisie (jsdom), démarrage de l'Atelier, hero du calculateur et cache des
+maquettes avec CSP identique, corrections d'écrans, filet des apparitions, traductions.
+
+CONTRÔLES (10 octobre 2026)
+- Navigateur : accueil (saisie → moteur chargé, réponse, envoi vers le calculateur avec les valeurs), Atelier (page visible
+  à 1,1 s, maquette à 3,3 s en WebGL logiciel ; liste qui défile seule), police (une seule sur l'accueil), listes à
+  content-visibility (hauteurs, ancres), médias / carnets / Atelier à 320 px, hero GTA Online et galeries alignés.
+- Tests Node : 1 022 / 1 022 (toute la suite ; les deux échecs de la première passe — empreintes des feuilles dans
+  l'instantané du cadre du calculateur, empreinte de common.js avant la synchronisation — repassent après mise à jour de
+  outils/calculateur-cadre.json et synchronisation) ; langues : 42 / 42 ; 0 texte sans traduction dans les quatre
+  langues. Vérificateur : aucune erreur, 321 401 références dans 2 246 pages. Audit navigateur (26 pages, 182
+  chargements, 7 largeurs, machine au repos) : 0 débordement, 0 grille, 0 coupe, 0 image, 0 caché, 0 cible, 0 contraste,
+  0 erreur console, 0 requête en échec, fonctions 12 / 12. Écrans (outils/tests/ecrans-browser.cjs, 912 chargements) :
+  0 débordement, 0 élément hors fenêtre, 0 texte coupé, 0 cible sous 24 px ; restent les relevés à lire du § 4.
+
+FICHIERS
+Modifiés : style.css, acquisitions.css, atelier-3d.css, carnets.css, online.css, calculateurs-brand.css, common.js,
+monde.js, calculator-entry.js, atelier-3d.js, outils/calculateur-cadre.json (empreintes des feuilles), index.html, calculateurs.html, vercel.json, README.md, toutes les pages (empreintes),
+leurs copies traduites. Nouveaux : outils/tests/v782.test.cjs, outils/tests/ecrans-browser.cjs, outils/langues/*/v782.json,
+outils/CHANGEMENTS-v7.82.txt, LISEZ-MOI-v7.82.txt. Aucun fichier à supprimer.

@@ -38,10 +38,26 @@
         if (el.getAttribute('data-mo') === 'lieux') window.setTimeout(function () { el.classList.add('is-drawn'); }, 3400);
       });
     }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
+    var watched = [];
     each(mods, function (mod) {
-      if (mod.getAttribute('data-mo') === 'lieux') io.observe(mod);
-      else each(mod.children, function (el) { io.observe(el); });
+      if (mod.getAttribute('data-mo') === 'lieux') { io.observe(mod); watched.push(mod); }
+      else each(mod.children, function (el) { io.observe(el); watched.push(el); });
     });
+    /* v7.82 : filet de sécurité (comme Motion+ dans common.js) : 2,5 s après l'ouverture puis 400 ms après chaque arrêt du
+       défilement, une carte dans l'écran ou déjà dépassée (jusqu'au point le plus bas atteint) qui n'a pas reçu son entrée
+       (appareil très chargé, défilement très rapide) est posée telle quelle ; plus rien ne tourne quand tout est entré. */
+    var deepest = 0, timer = 0;
+    function sweep() {
+      watched = watched.filter(function (el) { return !el.classList.contains('is-in'); });
+      if (!watched.length) return;
+      var vh = window.innerHeight || 800, y = window.scrollY || window.pageYOffset || 0;
+      watched.forEach(function (el) {
+        var r = el.getBoundingClientRect();
+        if ((r.height > 0 && r.top < vh && r.bottom > 0) || r.top + y < deepest) { el.classList.add('mo-still', 'is-in'); io.unobserve(el); if (el.getAttribute('data-mo') === 'lieux') el.classList.add('is-drawn'); }
+      });
+    }
+    window.setTimeout(sweep, 2500);
+    window.addEventListener('scroll', function () { if (!watched.length) return; deepest = Math.max(deepest, (window.scrollY || window.pageYOffset || 0) + (window.innerHeight || 800)); window.clearTimeout(timer); timer = window.setTimeout(sweep, 400); }, { passive: true });
   }
 
   /* ---------- Lieux : traits et mise en lumière ---------- */

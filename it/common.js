@@ -267,11 +267,21 @@
   if (reduced.addEventListener) reduced.addEventListener('change', function () { if (reduced.matches) showAll(); });
   window.addEventListener('beforeprint', function () { settle(); showAll(); });
   /* filet de sécurité : seul ce qui est dans l'écran est forcé ; le reste garde son apparition au défilement */
-  setTimeout(function () {
+  /* v7.82 : le filet couvre aussi tout ce que le visiteur a déjà fait défiler (jusqu'au point le plus bas atteint) : un bloc
+     survolé trop vite pour que l'observateur livre son entrée (appareil très chargé) est montré sans transition, il ne
+     réapparaîtra pas transparent en remontant. */
+  let deepest = 0;
+  function sweep() {
     if (!pending) return;
-    const vh = window.innerHeight || 800;
-    document.querySelectorAll(SEL).forEach(function (el) { if (!shown(el) && inView(el, vh)) { show(el, 0, true); if (io) io.unobserve(el); } });
-  }, 2500);
+    const vh = window.innerHeight || 800, y = window.scrollY || window.pageYOffset || 0;
+    document.querySelectorAll(SEL).forEach(function (el) { if (shown(el)) return; const r = el.getBoundingClientRect(); if ((r.height > 0 && r.top < vh && r.bottom > 0) || r.top + y < deepest) { show(el, 0, true); if (io) io.unobserve(el); } });
+  }
+  setTimeout(sweep, 2500);
+  /* v7.82 : le même filet après chaque défilement qui s'arrête (400 ms) : sur un appareil très chargé, l'observateur peut
+     livrer son entrée avec retard ; un bloc arrivé dans l'écran n'y reste jamais transparent. Rien n'est lu pendant le
+     défilement lui-même, et plus rien ne tourne quand tout est montré. */
+  let sweepTimer = 0;
+  window.addEventListener('scroll', function () { if (!pending) return; deepest = Math.max(deepest, (window.scrollY || window.pageYOffset || 0) + (window.innerHeight || 800)); clearTimeout(sweepTimer); sweepTimer = setTimeout(sweep, 400); }, { passive: true });
   /* v7.39 : une fois l'apparition jouée, la promotion en couche (will-change) est rendue */
   document.addEventListener('transitionend', function (ev) { const el = ev.target; if (!el || !el.classList) return; if (el.classList.contains('lk-reveal') && el.classList.contains('is-in')) el.classList.add('lk-settled'); if (el.classList.contains('lk-w')) { const w = el.closest('.lk-words'); if (w) w.classList.add('lk-settled'); } });
   window.LKMotion = { observe: observe, scan: scan, enter: enter, settle: settle, showAll: showAll, reduced: function () { return reduced.matches; }, painted: painted };

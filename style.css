@@ -1,7 +1,9 @@
 /* Police Archivo hébergée sur le site (v7.37) : plus de connexion à Google Fonts, affichage immédiat du texte (swap).
+   v7.82 : ı, Œ et œ (U+0131, U+0152-0153) ne sont plus déclarés aussi dans la plage « latin-ext » : un « cœur » dans la page
+   chargeait le second fichier (32 Ko) pour rien ; U+0304/0308/0329 (diacritiques combinants) restent au latin.
    Fichiers : fonts/archivo-latin.woff2 et fonts/archivo-latin-ext.woff2 (variable, graisses 100 à 900, licence OFL). */
 @font-face{font-family:'Archivo';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/archivo-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
-@font-face{font-family:'Archivo';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/archivo-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;}
+@font-face{font-family:'Archivo';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/archivo-latin-ext.woff2) format('woff2');unicode-range:U+0100-0130,U+0132-0151,U+0154-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;}
 :root{
     --paper:#FDFBF7;
     --paper-2:#F4F0E7;
@@ -1432,7 +1434,7 @@ body.map-full-on{overflow:hidden;}
 .tr-go:hover{background:var(--paper-2);}
 .tr-dot{width:8px; height:8px; border-radius:50%; flex-shrink:0;}
 .tr-n{overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
-.tr-st{margin-left:auto; font-style:normal; font-size:.58rem; font-weight:800; border-radius:100px; padding:1px 6px; flex-shrink:0;}
+.tr-st{margin-left:auto; font-style:normal; font-size:.62rem; font-weight:800; border-radius:100px; padding:1px 6px; flex-shrink:0;}
 .tr-st--officiel{background:#1A1A1E; color:var(--paper);}
 .tr-st--vu{background:#F3D8A8; color:#6B4A12;}
 .tr-st--spec{background:#FADFD9; color:#9B2E19;}
@@ -1857,7 +1859,8 @@ html:not(.js) .reveal,html:not(.js) .rise{opacity:1;transform:none;}
 .save-msg{font-size:.9rem; color:var(--ink-soft); min-height:1.4em;}
 
 /* page des crédits médias */
-.media-list{list-style:none; padding:0; margin:0 0 50px; display:grid; gap:14px;}
+.media-list{list-style:none; padding:0; margin:0 0 50px; display:grid; grid-template-columns:minmax(0,1fr); gap:14px;} /* v7.82 : colonne bornée à la page (une rangée faisait 354 px sous 390 px et se coupait) */
+.media-row,.media-row>*{min-width:0;}
 .media-row{display:grid; grid-template-columns:160px 1fr; gap:14px; align-items:center; background:#fff; border:2px solid var(--ink); border-radius:8px; padding:10px; box-shadow:3px 3px 0 rgba(26,26,30,.12);}
 .media-row img{width:100%; height:auto; border-radius:4px; display:block;}
 .media-row span{color:var(--ink-soft); font-size:.9rem;}
@@ -2125,7 +2128,7 @@ img.veh-art--schema{object-fit:contain;background:transparent;}
 .cl-img{display:block;} .cl-img img.cl-schema{object-fit:contain;background:linear-gradient(160deg,var(--coral),var(--amber));padding:4px 8px;box-sizing:border-box;}
 /* v7.12 : galerie « En images » plus grande (toute la largeur utile, 85 % de la hauteur) ; la vue en place reste nette,
    seule la vue qui arrive passe du flou au net avant de la recouvrir */
-.lore-gallery.shell{max-width:min(1600px,96vw);}
+.lore-gallery.shell{max-width:max(calc(var(--shell-max) + 2*var(--gutter)),min(1600px,96vw));} /* v7.82 : jamais plus étroite que les autres sections (sous 1 540 px, 96vw retirait 2 % de chaque côté : galerie décalée de 26 px à 1 280 px) */
 .lore-stage{height:min(85vh,940px);}
 .lore-stack{height:calc((var(--n,2) - 1) * 80vh + min(85vh,940px));}
 .lore-slide.is-out{filter:none;opacity:1;transform:none;}
@@ -3456,3 +3459,12 @@ a[data-newtab][href]{padding-right:1.05em;background-image:url("data:image/svg+x
 .foot-cols nav a[data-newtab][href]{align-self:flex-start;max-width:100%;}
 /* bande « GTA Online » du menu (fond nuit) : la règle des liens de la bande remet leur marge à zéro ; flèche claire */
 #nav .nav-more-panel .nav-online a[data-newtab][href]{padding-right:1.05em;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M4.5 2.5h5v5M9.5 2.5 2.5 9.5' fill='none' stroke='%23FDFBF7' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");}
+
+/* v7.82 (latence) : les longues listes ne mettent en page que ce qui approche de l'écran. Chaque carte garde sa place
+   (taille réservée proche de sa taille réelle, puis sa dernière taille mesurée) ; le navigateur saute la mise en page et
+   la peinture de celles qui sont loin sous le pli, et les rend dès qu'elles s'approchent. Les ancres, la recherche dans
+   la page, le clavier et les apparitions au défilement (IntersectionObserver) fonctionnent comme avant. */
+.veh-card{content-visibility:auto;contain-intrinsic-size:auto 460px;}
+.lk-loc-list>li{content-visibility:auto;contain-intrinsic-size:auto 58px;}
+.media-row{content-visibility:auto;contain-intrinsic-size:auto 140px;}
+@media (max-width:700px){.media-row{contain-intrinsic-size:auto 330px;}}
