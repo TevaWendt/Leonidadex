@@ -52,3 +52,66 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
   root.addEventListener('click', function (ev) { if (ev.target.closest('[data-cg-clear]')) { checks.forEach(function (c) { c.checked = false; }); render(); } });
   render();
 }());
+
+/* v7.79 (Téva : « une apparition des cartes ; plus de trou dans la dernière rangée ; les gilets pare-balles à part ») :
+   - chaque carte « En un regard » entre à son arrivée à l'écran (classe is-in, cascade par rangée) ; une carte déjà dépassée
+     est posée telle quelle (cg-still) ; sans IntersectionObserver ou en mouvement réduit, tout est posé ;
+   - après un filtre, le nombre de cartes visibles de chaque grille est écrit dans data-cg-n : acquisitions.css choisit le
+     nombre de colonnes pour que la dernière rangée reste centrée, sans trou ;
+   - le rayon protection : pointer ou choisir un palier remplit la jauge d'armure du gilet à son niveau ; à l'arrivée, la jauge
+     monte d'un palier à l'autre puis s'arrête au gilet complet. Aucune donnée ajoutée : les niveaux sont ceux des lignes. */
+(function () {
+  'use strict';
+  var root = document.getElementById('en-un-regard'); if (!root) return;
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var each = function (list, fn) { Array.prototype.forEach.call(list, fn); };
+  var grids = root.querySelectorAll('.cg-grid');
+  /* colonnes : nombre de cartes visibles après filtre */
+  function count() { each(grids, function (g) { var n = 0; each(g.children, function (c) { if (c.offsetParent !== null) n++; }); g.setAttribute('data-cg-n', String(n)); }); }
+  root.addEventListener('change', function (ev) { if (ev.target.name === 'cg-f') { window.requestAnimationFrame(count); } });
+  count();
+  /* entrées */
+  var cards = root.querySelectorAll('.cg-grid > .cg-card'), rack = root.querySelector('[data-rk]');
+  var show = function (el) { el.classList.add('is-in'); };
+  if (reduced || !('IntersectionObserver' in window)) { each(cards, show); if (rack) rack.classList.add('is-in'); }
+  else {
+    var io = new IntersectionObserver(function (entries) {
+      var batch = entries.filter(function (e) { return e.isIntersecting; }).map(function (e) { return e.target; });
+      batch.sort(function (a, b) { return a.compareDocumentPosition(b) & 4 ? -1 : 1; });
+      batch.forEach(function (el, k) {
+        if (el.getBoundingClientRect().bottom < 0) el.classList.add('cg-still');
+        if (el.classList.contains('cg-card')) el.style.setProperty('--d', Math.min(k, 7) * 80 + 'ms');
+        show(el); io.unobserve(el);
+        if (el.hasAttribute('data-rk')) demo(el);
+      });
+    }, { rootMargin: '0px 0px -6% 0px', threshold: 0.1 });
+    each(cards, function (c) { io.observe(c); });
+    if (rack) io.observe(rack);
+  }
+  /* le rayon protection */
+  if (!rack) return;
+  var tiers = rack.querySelectorAll('.rk-tier'), val = rack.querySelector('[data-rk-val]'), name = rack.querySelector('[data-rk-name]');
+  var chosen = null, timer = 0;
+  function set(tier) {
+    var lvl = tier.getAttribute('data-rk-level'), nom = tier.querySelector('.rk-nom');
+    rack.style.setProperty('--lvl', lvl);
+    if (val) val.textContent = lvl;
+    if (name && nom) name.textContent = nom.textContent;
+    each(tiers, function (t) { t.classList.toggle('is-on', t === tier); var b = t.querySelector('.rk-pick'); if (b) b.setAttribute('aria-pressed', t === tier ? 'true' : 'false'); });
+  }
+  function demo(el) {
+    if (reduced || !tiers.length) return;
+    rack.style.setProperty('--lvl', '0'); if (val) val.textContent = '0'; if (name) name.textContent = '';
+    var i = 0;
+    var step = function () { set(tiers[i]); i++; if (i < tiers.length) timer = window.setTimeout(step, 420); else { chosen = tiers[tiers.length - 1]; } };
+    timer = window.setTimeout(step, 450);
+  }
+  each(tiers, function (t) {
+    var b = t.querySelector('.rk-pick'); if (!b) return;
+    b.addEventListener('click', function () { window.clearTimeout(timer); chosen = t; set(t); });
+    t.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') { window.clearTimeout(timer); set(t); } });
+    t.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse' && chosen) set(chosen); });
+    b.addEventListener('focus', function () { set(t); });
+  });
+  if (tiers.length) { chosen = tiers[tiers.length - 1]; if (reduced || !('IntersectionObserver' in window)) set(chosen); else { rack.style.setProperty('--lvl', '0'); if (val) val.textContent = '0'; } }
+}());

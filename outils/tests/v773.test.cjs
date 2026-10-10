@@ -46,7 +46,8 @@ test('listes des catalogues : chaque catégorie a son visuel officiel et sa tein
 
 test('consommables « en un regard » : chaque carte s’ouvre sur un visuel officiel (le sien, sinon celui de sa catégorie dit « illustration »), nom et statut toujours là', () => {
   const d = C.load().families.consommables, page = doc('nourriture.html');
-  const cards = [...page.querySelectorAll('#en-un-regard .cg-card')];
+  /* v7.79 : les gilets sont dans le rayon protection, sans visuel de carte (outils/tests/v779.test.cjs) */
+  const cards = [...page.querySelectorAll('#en-un-regard .cg-grid > .cg-card')];
   assert.ok(cards.length >= 20);
   for (const c of cards) {
     const it = d.items.find(x => x.id === c.getAttribute('data-cg-id')); assert.ok(it);

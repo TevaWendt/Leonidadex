@@ -1,0 +1,83 @@
+LEONIDAKIT v7.78 — les cartes en tête des cinq hubs du monde (Lieux, Personnages, Demeures, Planques, Entreprises)
+refaites : plus modernes, plus Rockstar, en motion design, aussi développées que la mosaïque des Animaux, sans en copier la
+forme — 9 octobre 2026
+
+Base : v7.77 (en ligne sur leonidakit.com le 9 octobre au soir). Demande de Téva du 09/10/2026 (20 h 15) : « j'aime pas du
+tout les cartes des sections à gauche ; beaucoup mieux, plus moderne, avec des effets d'animation, plus Rockstar, plus
+stylé, plus motion design ; des cartes aussi développées que celles des animaux, pas la même forme ; toujours avec des
+fonctionnalités pratiques, on clique dessus ; rien changer d'autre » ; 21 h 39 : « attention au respect de l'alignement des
+cartes et sections ». Rien n'est publié ni poussé.
+
+1. CINQ MISES EN SCÈNE, UN OBJET DU MONDE DE GTA PAR HUB (outils/monde-cartes.cjs, monde.css, monde.js)
+Seule la grille des fiches en tête de chaque hub change (section #fiches). Le titre, l'intro, la pile de visuels, la zone
+éditoriale, l'encart calculateur, « Continuer la visite » : inchangés. Gangs et factions garde sa « donne ».
+- Lieux — la carte dépliée. La carte routière de Leonida (le fond de carte du site, img/leonida-carte.svg, celui de la carte
+  interactive) arrive pliée en trois, couverture au soleil rayé Leonidakit, et se déplie ; ses six repères s'allument un à
+  un aux coordonnées exactes de la carte interactive (outils/carte-vignette.cjs) ; un trait de la couleur de chaque région
+  file vers sa carte, rangée de part et d'autre, du nord au sud. Pointer une carte ou un repère met la région en lumière
+  (projecteur sur la carte, repère qui pulse, les autres s'estompent). Chaque carte : capture officielle, nom avec sa
+  pastille de couleur, accroche, personnages liés (pastilles), lieux cités, nombre de visuels officiels, « Sur la carte »
+  (ouvre carte.html sur la région) et « Voir la fiche ». Sur tablette et téléphone, la carte passe au-dessus et les six
+  cartes se rangent dessous (deux colonnes puis une).
+- Personnages — la jaquette. Huit cases cerclées d'encre, ombre ambre, comme les pochettes de la série : Jason et Lucia en
+  hauteur, Cal, Brian, Raul et Boobie en carré, Dre'Quan et Real Dimez en large. Chaque case s'imprime à l'arrivée
+  (balayage, voile de sa teinte qui se retire, nom qui glisse comme un titre de bande-annonce). Pointer un personnage (souris
+  ou clavier) allume les cases de ceux qu'il connaît, les autres passent en noir et blanc : les liens viennent des fiches
+  (personnages cités) et des équipes nommées dans les gangs (l'équipe de Raul, le réseau de Brian), jamais inventés. Les
+  pastilles « Ses liens » sont de vrais liens vers les fiches.
+- Demeures — les portes. Quatre portes dans leur encadrement, chacune avec sa plaque au nom de famille : porte peinte à
+  persienne des Keys (Duval), porte bleu nuit à trois verrous (Hampton), porte de cabane de plage à hublot (Heder), porte de
+  cellule à barreaux qui coulisse (Caminos). À l'arrivée, la porte se déverrouille, s'ouvre vers l'intérieur et la lumière de
+  la pièce (la capture officielle) s'allume ; au survol, elle s'ouvre un peu plus. Occupants (pastilles), lieu, véhicules
+  garés, « Sur la carte », « Voir la fiche ».
+- Planques — la régie. Une console sombre et trois écrans de surveillance : CAM 01 à 03, quartier de la carte, voyant REC,
+  trame et grain d'écran. À l'arrivée, chaque écran s'allume comme un vieux moniteur (trait blanc, image dans la neige) ;
+  au survol, la mire se verrouille sur l'image et le grain tremble. Occupants, repère, véhicules, « Sur la carte ».
+- Entreprises — la rue. Huit devantures la nuit : enseigne au néon de sa couleur (pictogramme et nom), vitrine, rideau de
+  fer. À l'arrivée, le rideau se lève puis le néon grésille et s'allume ; au survol, le néon monte et un reflet traverse la
+  vitrine. Nature de l'adresse (atelier, salon, boutique, label, club), quartier de la carte ou « Adresse à venir » quand
+  Rockstar n'a rien localisé (One-Eyed Willie's, Only Raw Records).
+- Pratique : toute la carte est cliquable (le nom est le lien), les pastilles des personnages et « Sur la carte » sont des
+  liens à part, le clavier suit le même ordre (nom, pastilles, carte), le focus est visible (contour corail). Au survol,
+  rien ne se décale : seules la lumière, l'image dans son cadre, les portes et les enseignes réagissent.
+- Alignement : chaque bloc est calé sur les mêmes bords que le titre de la page et les sections suivantes (gouttière du
+  site), à toutes les largeurs ; sur téléphone, une colonne partout (plus de carrousel).
+- Mouvement : une seule entrée par carte, à son arrivée à l'écran (cascade de 130 ms entre cartes arrivant ensemble) ;
+  la carte de Leonida entre d'un bloc (2,8 s en tout). Sans script ou avec « réduire les animations », tout est posé et
+  visible : les états de départ n'existent que sous html.mo-js, posé par monde.js (chargé dans l'en-tête, 5 Ko, pour ne
+  jamais afficher puis cacher). Aucune requête, rien gardé sur l'appareil.
+- Données : textes, liens, lieux, personnages et images viennent des fiches (outils/editorial.json), de la carte du site et
+  des captures officielles déjà publiées ; seuls les cadrages, couleurs, portes et enseignes sont des choix du site. Les
+  pastilles des personnages sont des recadrages carrés de captures officielles (img/monde/<id>.webp, 128 px, 27 Ko en
+  tout, outils/monde-avatars.cjs).
+- Garde-fous : la génération s'arrête si une région, un personnage, une demeure ou une entreprise est ajouté sans sa mise
+  en scène (REGIONS, CAST, DOORS, SHOPS dans outils/monde-cartes.cjs).
+
+2. TRADUCTIONS
+outils/langues/<en|es|it|de>/v778.json : nature des adresses, « Adresse à venir », « Ses liens », conseils (« Pointe une
+région… », « Pointe un personnage… »), couverture de la carte, légende du fond de carte, « N visuels officiels », quartier
+des caméras. Les noms propres, plaques et caméras (CAM 01, REC) restent.
+
+3. TESTS
+- outils/tests/v778.test.cjs (10 tests) : feuille et script sur les cinq hubs seulement ; une carte par fiche avec lien,
+  accroche, visuel officiel existant, « Voir la fiche » ; pastilles reliées aux fiches ; Lieux (repères aux coordonnées de
+  la carte, six cartes, « Sur la carte ») ; Personnages (liens tirés des fiches et des équipes) ; Demeures (quatre portes
+  différentes, occupants) ; Planques (CAM 01-03, occupants, repère) ; Entreprises (huit teintes, adresse ou « à venir ») ;
+  mouvement (états de départ sous mo-js seulement, mouvement réduit, survol immobile, focus visible, aucune requête) ;
+  langues.
+- Mis à jour : v770, v772, v775 (les cartes « pro » de la v7.75 et leurs entrées sont remplacées ; Gangs reste vérifié).
+
+CONTRÔLES (9 octobre 2026)
+- Tests Node : suite rapide complète, langues (42), vérificateur de liens, index de Léo. Traductions : 0 texte sans
+  traduction dans les quatre langues.
+- Navigateur (Chromium) : les cinq hubs à 320, 390, 768, 1 024, 1 280, 1 440 et 1 920 px : aucun débordement, cartes et
+  sections calées ; sans script : tout visible ; mouvement réduit : tout visible, aucune animation ; après l'entrée : tout
+  visible, aucune animation qui continue (sauf le voyant REC, décoratif) ; clavier : tabulation, focus visible, Entrée ouvre
+  la fiche ; aucune erreur console, aucune requête en échec ; audit du site (--rapide) au vert.
+
+FICHIERS
+Nouveaux : monde.css, monde.js, img/monde/*.webp (8), outils/monde-cartes.cjs, outils/monde-avatars.cjs,
+outils/langues/*/v778.json, outils/tests/v778.test.cjs, outils/CHANGEMENTS-v7.78.txt, LISEZ-MOI-v7.78.txt.
+Modifiés : outils/lore-gen.js, les cinq hubs et leurs copies traduites, index de recherche et de Léo, empreintes,
+sitemaps, outils/sitemap-dates.json, tests v770/v772/v775, README.md.
+Aucun fichier à supprimer.

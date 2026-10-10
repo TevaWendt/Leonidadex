@@ -1,0 +1,17 @@
+LEONIDAKIT v7.79 — Consommables : les cartes arrivent, plus de trou, le rayon protection
+À appliquer sur la v7.78. Archive « modifs » : seulement les fichiers qui changent.
+Rien n'a été publié ni poussé. Aucun fichier à supprimer.
+
+CE QUI CHANGE POUR LE VISITEUR (page Consommables, partie « En un regard »)
+- Les cartes arrivent une à une quand on descend jusqu'à elles (image qui se dévoile, barre de couleur qui se tire).
+- La dernière rangée est centrée : plus de trou à droite. Avec un filtre, la grille se réorganise pour rester pleine.
+- « Se protéger » devient le rayon protection d'Ammu-Nation : un gilet dessiné avec sa jauge d'armure, le gilet de GTA VI
+  (à confirmer) en tête, puis les cinq gilets de GTA V en liste. Passe la souris sur un palier : la jauge se remplit à son
+  niveau ; clique pour le garder. « Fiche complète » et « Comparer » sont toujours là.
+- Rien d'autre ne change. Cinq langues.
+
+MARCHE À SUIVRE
+  1. Copie le contenu de l'archive à la racine du dossier GitHub (remplacer), valide, pousse. Rien à changer dans Vercel.
+  2. Essai : nourriture.html (Ctrl+F5), descends jusqu'à « En un regard », filtre « Boissons » puis « Protection ».
+
+Contrôles automatiques et vérifications : outils/CHANGEMENTS-v7.79.txt. Retour arrière : commit précédent dans GitHub Desktop.

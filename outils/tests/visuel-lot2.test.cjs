@@ -54,8 +54,9 @@ test('VIS-04 : cartes-fiches des hubs du monde alignées (cadre 16/9 réel, gril
   assert.match(css, /\.lore-card>img,\.lore-card>\.lore-vide\{height:auto;aspect-ratio:16\/9;object-fit:cover/);
   assert.match(css, /@supports \(grid-template-rows:subgrid\)\{\s*\.lore-grid>\.lore-card\{display:grid;[^}]*grid-template-rows:subgrid;grid-row:span 6;row-gap:0\}/);
   for (const row of ['.veh-marque{grid-row:1}', 'h3{grid-row:2}', '.lore-cardtag{grid-row:3}', 'p:not(.lore-cardtag){grid-row:4}', '.veh-go{grid-row:5;align-self:end']) assert.ok(css.includes('.veh-body>' + row), row);
-  const d = doc('planques.html'), cards = [...d.querySelectorAll('#fiches .lore-grid > .lore-card')];
-  assert.equal(cards.length, 3);
+  /* v7.78 : les cinq hubs du monde ont leur mise en scène (outils/tests/v778.test.cjs) ; la grille commune reste sur Gangs */
+  const d = doc('gangs.html'), cards = [...d.querySelectorAll('#fiches .lore-grid > .lore-card')];
+  assert.equal(cards.length, 6);
   for (const c of cards) {
     const img = c.querySelector(':scope > img, :scope > .lore-card-media > img'); assert.ok(img, 'image directe, ou dans son cadre (v7.75 : cartes « pro »)');
     const body = c.querySelector(':scope > .veh-body'); assert.ok(body);

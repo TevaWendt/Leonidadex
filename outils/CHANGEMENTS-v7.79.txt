@@ -1,0 +1,54 @@
+LEONIDAKIT v7.79 — Consommables, « En un regard » : les cartes arrivent, la dernière rangée est centrée, les gilets
+pare-balles ont leur rayon — 9 octobre 2026
+
+Base : v7.78. Demande de Téva du 09/10/2026 (21 h) : « une apparition des cartes des consommables ; les gilets pare-balles se
+ressemblent tous, ça fait brouillon : une liste, un truc plus designé, plus spécial, qui pète, pas des cartes trop pareilles ;
+et les trois cartes de la fin sont à gauche avec un trou dans les lignes de quatre ». Rien n'est publié ni poussé.
+
+1. LES CARTES ARRIVENT (acquisitions.css, consommables.js)
+Chaque carte « En un regard » entre à son arrivée à l'écran : elle monte, son image se dévoile d'un rideau, la barre de couleur
+de sa catégorie se tire ; cascade de 80 ms entre les cartes qui arrivent ensemble. Une carte déjà dépassée (défilement rapide)
+est posée telle quelle. Sans script ou avec « réduire les animations », tout est posé. Les cartes qui reviennent après un filtre
+gardent leur fondu de la v7.69.
+
+2. PLUS DE TROU (acquisitions.css, consommables.js)
+La grille passe en flex, centrée : la dernière rangée incomplète est au milieu. Quatre colonnes sur grand écran, trois sous
+1 200 px, deux sous 860 px, une sous 600 px. Quand il resterait une ou deux cartes seules sur quatre colonnes (5, 6, 9, 10…
+cartes visibles), la grille passe à trois colonnes : jamais une carte orpheline qui déséquilibre. Le nombre de cartes visibles
+est écrit dans data-cg-n (23 à la génération) et recompté par consommables.js après chaque filtre.
+
+3. LE RAYON PROTECTION (outils/gen-acquisitions.cjs, acquisitions.css, consommables.js)
+Le groupe « Se protéger » n'est plus six cartes jumelles : c'est le rayon protection d'Ammu-Nation, un bloc sombre à part.
+- À gauche, un gilet pare-balles dessiné (SVG, pas une image du jeu) et sa jauge d'armure en cinq segments, comme celle du jeu.
+- À droite, le gilet de GTA VI en tête, dans son cadre « à confirmer » (rien n'est nommé ni montré par Rockstar), avec « Fiche
+  complète » et « Suivi dans l'Armurerie » ; puis les cinq paliers de GTA V en liste (I à V) : nom, phrase de la liste, barre
+  d'armure, pourcentage, prix repère et note (« 100 $ en ligne, dès le rang 5 »), statut « Repère de la série », « Fiche
+  complète », « Comparer ».
+- Pointer un palier remplit la jauge du gilet à son niveau ; le choisir (clic, ou Tab) le garde. À l'arrivée du rayon, la jauge
+  monte d'un palier à l'autre (0 → 20 → 40 → 60 → 80 → 100 %) puis s'arrête au gilet complet. Sans script, jauge au maximum.
+- Rien d'inventé : noms, descriptions, pourcentages d'armure, prix repère, notes, lieux et statuts viennent de la liste
+  (outils/catalogues/consommables.json). Chaque palier garde sa carte cg-card (invisible comme carte) : la comparaison de
+  consommables.js lit toujours ses faits (Où, À quoi ça sert, Prix, Protection), « Fiche complète » ouvre la même fiche.
+- Sur téléphone : gilet et jauge côte à côte en haut, les paliers en dessous.
+
+4. TRADUCTIONS
+outils/langues/<en|es|it|de>/v779.json : « Rayon protection », « Armure », « armure dans GTA V », « repère GTA V · … »,
+« Suivi dans l'Armurerie », les paliers (composés avec les traductions déjà en mémoire des noms et phrases de la liste),
+sommes au format de la langue ($2,500 ; 2.500 $).
+
+5. TESTS
+outils/tests/v779.test.cjs (5 tests) : grille (data-cg-n, flex centrée, colonnes, recomptage) ; entrée (états sous html.js,
+mouvement réduit, aucune requête) ; rayon (paliers triés par armure et fidèles à la liste, GTA VI au-dessus avec son lien,
+jauge, Fiche complète et Comparer partout) ; liste et sections inchangées ; langues.
+
+CONTRÔLES (9 octobre 2026)
+- Navigateur : filtre « Boissons » → 7 cartes en 4 + 3 centrées, rayon masqué ; « Protection » → rayon seul ; « Tout » → 23 en
+  4 + 4 + 4 + 4 + 4 + 3 ; clic sur un palier → jauge à son niveau, aria-pressed ; survol → aperçu, retour au palier choisi ;
+  Comparer deux gilets → tableau avec la ligne Protection ; « Fiche complète » d'un palier → fiche « Gilet standard » ; Tab →
+  la jauge suit le palier focalisé ; aucune erreur console. Sans script et en mouvement réduit : tout visible.
+- Tests Node, langues, vérificateur de liens, audit navigateur (--rapide) : voir le LISEZ-MOI.
+
+FICHIERS
+Modifiés : outils/gen-acquisitions.cjs, acquisitions.css, consommables.js, nourriture.html et ses copies traduites, empreintes,
+index de Léo, README.md. Nouveaux : outils/langues/*/v779.json, outils/tests/v779.test.cjs, outils/CHANGEMENTS-v7.79.txt,
+LISEZ-MOI-v7.79.txt. Aucun fichier à supprimer.

@@ -11,18 +11,16 @@ const read = f => fs.readFileSync(path.join(root, f), 'utf8');
 const doc = f => new JSDOM(read(f)).window.document;
 const LANGS = ['', 'en/', 'es/', 'it/', 'de/'];
 
-test('hubs du monde : chaque grille de cartes a son entrée animée (v7.75 : tableau des départs pour Lieux, flash de casting pour Personnages), lk-arrive ; inclinaison au survol réservée aux gangs', () => {
-  const FX = { gangs: 'lkx-deal', lieux: 'lkx-flap', personnages: 'lkx-flash', demeures: 'lkx-scan', planques: 'lkx-slide', entreprises: 'lkx-neon' };
-  for (const hub of ['gangs', 'lieux', 'personnages', 'demeures', 'planques', 'entreprises']) {
-    const d = doc(hub + '.html');
-    const grid = d.querySelector('.lore-grid.' + FX[hub]);
-    assert.ok(grid, hub + ' : grille ' + FX[hub]);
-    assert.ok(grid.classList.contains('lk-arrive') && grid.hasAttribute('data-lkx-in'), hub + ' : entrée au défilement');
-    const cards = grid.querySelectorAll('.lore-card');
-    assert.ok(cards.length >= 3, hub + ' : au moins trois cartes');
-    /* v7.75 (Téva : « au survol, rien ne doit se décaler ») : plus d'inclinaison sur les cinq hubs refaits ; les gangs la gardent */
-    for (const c of cards) assert.equal(c.classList.contains('lkx-tilt'), hub === 'gangs', hub + ' : inclinaison au survol');
-  }
+test('hubs du monde : Gangs garde sa « donne » (lk-arrive, inclinaison au survol) ; les cinq autres hubs ont leur mise en scène v7.78 (outils/tests/v778.test.cjs)', () => {
+  const d = doc('gangs.html');
+  const grid = d.querySelector('.lore-grid.lkx-deal');
+  assert.ok(grid, 'gangs : grille lkx-deal');
+  assert.ok(grid.classList.contains('lk-arrive') && grid.hasAttribute('data-lkx-in'), 'gangs : entrée au défilement');
+  const cards = grid.querySelectorAll('.lore-card');
+  assert.ok(cards.length >= 3, 'gangs : au moins trois cartes');
+  for (const c of cards) assert.ok(c.classList.contains('lkx-tilt'), 'gangs : inclinaison au survol');
+  /* v7.78 : plus de grille commune sur les cinq hubs du monde */
+  for (const hub of ['lieux', 'personnages', 'demeures', 'planques', 'entreprises']) assert.equal(doc(hub + '.html').querySelector('#fiches .lore-grid'), null, hub + ' : mise en scène v7.78');
   const css = read('lk-sections.css');
   assert.match(css, /\.lkx-deal\.is-in>\*\{animation:lkx-deal/);
 });
@@ -67,7 +65,8 @@ test('collectibles : tableau de bord, plan de fiche, anneau de progression, fris
 
 test('consommables : cartes « en un regard » lisibles, lede sans chiffre inventé, listes en cartes (cat-id) sur les trois catalogues', () => {
   const d = doc('nourriture.html');
-  const cards = d.querySelectorAll('.cg-card');
+  /* v7.79 : les gilets sont dans le rayon protection (cartes cg-card--rack, outils/tests/v779.test.cjs) ; ici, les cartes de la grille */
+  const cards = d.querySelectorAll('.cg-grid > .cg-card');
   assert.ok(cards.length >= 6, 'cartes consommables');
   for (const c of cards) { assert.ok(c.querySelector('.cg-head h4'), 'nom en tête'); assert.ok(c.querySelector('.cg-top'), 'bloc du haut'); }
   assert.ok(read('nourriture.html').includes('Rockstar n’a publié ni prix ni effet chiffré'), 'lede');

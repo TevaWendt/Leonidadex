@@ -100,7 +100,7 @@ const recapOf=(x,S)=>{const f=(x&&x.facts||[]).map(t=>String(t).trim().replace(/
   const intro={regions:'Ce qu’il faut retenir de cette région',characters:'Ce qu’il faut retenir de ce personnage',businesses:'Ce qu’il faut retenir de cette adresse',residences:'Ce qu’il faut retenir de ce lieu',hideouts:'Ce qu’il faut retenir de ce lieu',factions:'Ce qu’il faut retenir de ce groupe',animals:'L’essentiel de cette fiche'/* section animaux */}[S]||'À retenir';
   return `<section class="shell reveal lk-recap"><h2 class="sec-h">${intro}</h2><p class="fiche-txt rise">${esc(f.join('. ')+'.')} ${esc(x.name)} ${({f:'est reliée',mp:'sont reliés',fp:'sont reliées'})[x&&x.accord]||'est relié'} aux fiches voisines ci-dessous : les fiches se complètent avec le jeu, et ce résumé se mettra à jour avec elles.</p></section>`;};
 const metaDesc=t=>{t=String(t||'').replace(/\s+/g,' ').trim();if(t.length<=158)return t;const ph=t.split(/(?<=[.!?])\s+/);let d='';for(const q of ph){if(d&&(d+' '+q).length>158)break;d=d?d+' '+q:q;}return d.length<=158&&d.length>=60?d:t.slice(0,155).replace(/\s+\S*$/,'')+'…';};
-function page({p,title,desc,canonical,ogImg,body,crumbs,hub,RECAP='',ld='',lkx=false}){desc=metaDesc(desc);
+function page({p,title,desc,canonical,ogImg,body,crumbs,hub,RECAP='',ld='',lkx=false,monde=false}){desc=metaDesc(desc);
   const C=p?SUB:ROOT;const header=hub?withHere(C.header,hub):C.header.replace(/ class="here"/g,'');
   return `<!DOCTYPE html>
 <html lang="fr">
@@ -121,7 +121,7 @@ ${bc(crumbs)}${ld?'\n'+ld:''}
 <link rel="stylesheet" href="${p}style.css">
 <link rel="stylesheet" href="${p}motion-tokens.css">
 <link rel="stylesheet" href="${p}acquisitions.css">
-${body.includes('lk-entry-card') ? `<link rel="stylesheet" href="${p}calculator-entry.css">` : ''}${lkx?`\n<link rel="stylesheet" href="${p}lk-sections.css">`:''}
+${body.includes('lk-entry-card') ? `<link rel="stylesheet" href="${p}calculator-entry.css">` : ''}${lkx?`\n<link rel="stylesheet" href="${p}lk-sections.css">`:''}${monde?`\n<link rel="stylesheet" href="${p}monde.css">\n<script src="${p}monde.js"></script>`:''}
 <meta property="og:image" content="${SITE}${ogImg||'/img/social-card.png'}">
 <meta name="twitter:card" content="summary_large_image">
 <meta property="og:url" content="${SITE}${canonical}">
@@ -180,6 +180,10 @@ const index=[];
    (balayage gardé), Planques en dossiers (onglet toujours à gauche, glissement gardé), Entreprises en enseignes (néon gardé). */
 const HUB_FX={lieux:{fx:'lkx-flap',pro:true,num:true},personnages:{fx:'lkx-flash',pro:true,focus:{jason:83,lucia:54,cal:79,boobie:45,drequan:54,dimez:60,raul:50,brian:50}},demeures:{fx:'lkx-scan',pro:true,scan:true},planques:{fx:'lkx-slide',pro:true,tab:'Dossier'},entreprises:{fx:'lkx-neon',pro:true},gangs:{fx:'lkx-deal',grid:'',card:''}};
 const HUB_HUES=[352,42,168,268,196,24,312,88];
+/* v7.78 (Téva : « je n'aime pas du tout ces cartes ; plus moderne, plus Rockstar, plus motion design, aussi développées que
+   celles des animaux, pratiques ») : les cinq hubs du monde reçoivent chacun leur mise en scène (outils/monde-cartes.cjs,
+   monde.css, monde.js) à la place de la grille commune ; Gangs et factions garde sa « donne ». */
+const MC=require('./monde-cartes.cjs');const MONDE_CARTES=MC.create({ED,MED,esc,placeName});
 const cardOf=(x,S,pfx,extraCls,opt)=>{const m=visual(x);const o=opt||{};const img=m?imgTag(m,IMG_ALT(m,x),false):'<div class="lore-vide">Visuel officiel à venir</div>';
   const media=o.pro?'<span class="lore-card-media'+(o.scan?' lkx-scan-media':'')+'">'+img+'</span>':o.scan?'<span class="lkx-scan-media">'+img+'</span>':img;
   const extra=(o.tab?'<span class="'+(o.pro?'lore-tab':'lore-dossier-tab')+'" aria-hidden="true">'+esc(o.tab)+' '+String(o.n).padStart(2,'0')+'</span>':'')+(o.num?'<span class="lore-num" aria-hidden="true">'+String(o.n).padStart(2,'0')+'</span>':'')+(o.stamp?'<span class="lore-stamp" aria-hidden="true">'+esc(o.stamp)+'</span>':'');
@@ -202,17 +206,17 @@ for(const [key,S] of Object.entries(SECTIONS)){
   <p class="lede">${esc(S.lede)}</p>
   <p class="d-intro-note">${esc(HUB_NOTES[S.hub]||"")} <a href="tuto.html#sources">Comprendre les statuts</a>.</p>
 ${pile?'</div>'+pile+'</div>':''}</section>
-<section class="shell" id="fiches">
+${MC.HUBS.includes(S.hub)?MONDE_CARTES.render(S.hub):`<section class="shell" id="fiches">
   <h2 class="sr-only">Les ${items.length} fiches</h2>
   <div class="lore-grid lore-grid--center lore-grid--n${items.length}${LKX_HUBS.has(S.hub)?(FX?(FX.pro?' lore-grid--pro lore-grid--'+S.hub:FX.grid):'')+' '+(FX?FX.fx:'lkx-deal')+' lk-arrive" data-lkx-in="':''}">
 ${cards}
   </div>
-</section>
+</section>`}
 ${S.hub==='planques'?'<!-- lot-d-garages:start --><!-- lot-d-garages:end -->\n':''}${MONDE.render(S.hub,{label:S.label,n:items.length})}`;
   /* v7.41 : CollectionPage (la liste des fiches) à côté du fil d'Ariane ; la FAQPage est posée par sync-site depuis les questions visibles. */
   const collection='<script type="application/ld+json">'+JSON.stringify({"@context":"https://schema.org","@type":"CollectionPage","name":S.title,"description":metaDesc(S.desc),"url":SITE+'/'+S.hub+'.html',"inLanguage":"fr","isPartOf":{"@type":"WebSite","name":"Leonidakit","url":SITE+'/'},"mainEntity":{"@type":"ItemList","numberOfItems":items.length,"itemListElement":items.map((x,i)=>({"@type":"ListItem","position":i+1,"name":x.name,"url":SITE+'/'+S.hub+'/'+x.id+'.html'}))}})+'</script>';
   console.log(S.hub+' : zone éditoriale de '+MONDE.words(S.hub)+' mots, '+MONDE.DATA[S.hub].faq.length+' questions, '+MONDE.sourcesOf(S.hub).length+' sources');
-  fs.writeFileSync(S.hub+'.html',page({p:'',title:S.title+' | Leonidakit',desc:S.desc,canonical:'/'+S.hub+'.html',ogImg:visual(items[0])?(visual(items[0]).variants[1]||visual(items[0]).variants[0]).src:null,body,crumbs:[['Accueil','/'],[S.label,'/'+S.hub+'.html']],hub:S.hub,ld:collection,lkx:LKX_HUBS.has(S.hub)}));
+  fs.writeFileSync(S.hub+'.html',page({p:'',title:S.title+' | Leonidakit',desc:S.desc,canonical:'/'+S.hub+'.html',ogImg:visual(items[0])?(visual(items[0]).variants[1]||visual(items[0]).variants[0]).src:null,body,crumbs:[['Accueil','/'],[S.label,'/'+S.hub+'.html']],hub:S.hub,ld:collection,lkx:LKX_HUBS.has(S.hub),monde:MC.HUBS.includes(S.hub)}));
   index.push({l:S.title,k:S.label,u:'/'+S.hub+'.html',s:(S.title+' '+S.label+' leonida gta vi').toLowerCase(),w:1});
 
   /* ---------- fiches ---------- */

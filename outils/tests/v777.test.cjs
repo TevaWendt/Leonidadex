@@ -85,8 +85,9 @@ test('barre fermée des listes : de nouveau les visuels officiels des catégorie
 });
 
 test('« En un regard » (Consommables) : l’illustration de l’élément en petite et grande taille, ou son visuel officiel ; aucune image répétée', () => {
-  const d = doc('nourriture.html'), cards = [...d.querySelectorAll('#en-un-regard .cg-card')];
-  assert.ok(cards.length >= 25);
+  /* v7.79 : les six gilets sont dans le rayon protection, sans visuel de carte (outils/tests/v779.test.cjs) : 23 cartes de grille */
+  const d = doc('nourriture.html'), cards = [...d.querySelectorAll('#en-un-regard .cg-grid > .cg-card')];
+  assert.ok(cards.length >= 20);
   const srcs = new Set();
   for (const c of cards) {
     const id = c.dataset.cgId, it = fams.consommables.items.find(x => x.id === id), m = c.querySelector('.cg-media'), img = m.querySelector('img');

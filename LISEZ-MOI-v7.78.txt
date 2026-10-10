@@ -1,0 +1,34 @@
+LEONIDAKIT v7.78 — les cartes des sections Lieux, Personnages, Demeures, Planques et Entreprises refaites
+À appliquer sur la v7.77 (celle qui est en ligne). Archive « modifs » : seulement les fichiers qui changent.
+Rien n'a été publié ni poussé. Aucun fichier à supprimer.
+
+CE QUI CHANGE POUR LE VISITEUR
+- Seules les cartes en tête de ces cinq sections changent (le reste des pages ne bouge pas ; Gangs et factions non plus).
+  Chaque section met en scène un objet du monde de GTA, une seule fois, quand les cartes arrivent à l'écran :
+  Lieux : la carte routière de Leonida se déplie, ses six repères s'allument, un trait relie chaque région à sa carte ;
+          pointer une région la met en lumière sur la carte. « Sur la carte » ouvre la carte interactive sur la région.
+  Personnages : une jaquette en huit cases qui s'impriment ; pointer un personnage allume les cases de ceux qu'il connaît.
+  Demeures : quatre portes (plaque au nom de famille) qui se déverrouillent et s'ouvrent sur la demeure ; la cellule de
+             Lucia coulisse.
+  Planques : une régie de surveillance, trois écrans qui s'allument (CAM 01 à 03) ; au survol, la mire se verrouille.
+  Entreprises : une rue la nuit, les rideaux de fer se lèvent et les enseignes au néon s'allument une à une.
+- Toute la carte reste cliquable (le nom ouvre la fiche), les pastilles des personnages et « Sur la carte » sont des liens.
+  Rien ne se décale au survol. Les blocs sont calés sur les mêmes bords que le titre et les sections suivantes.
+- Cinq langues. Sans animation si le navigateur ou l'appareil demande « réduire les animations ».
+
+MARCHE À SUIVRE
+  1. Copie le contenu de l'archive à la racine du dossier GitHub (remplacer), valide, pousse. Rien à changer dans Vercel.
+  2. Essai sur le site (Ctrl+F5) : lieux.html, personnages.html, demeures.html, planques.html, entreprises.html. Fais
+     défiler jusqu'aux cartes, passe la souris dessus, clique un nom et une pastille de personnage.
+
+LE MICRO (ta question du 9 octobre)
+  Le navigateur n'affiche la demande d'autorisation que lorsque le site utilise le micro, jamais à l'arrivée sur une page :
+  c'est une règle des navigateurs, pas un réglage du site. Le micro est dans deux endroits : la barre « Que veux-tu
+  calculer ? » du calculateur (calculateurs.html) et la case de Léo. Au premier clic sur le bouton micro, une phrase te
+  prévient, puis Chrome affiche sa bulle « Autoriser » sous la barre d'adresse. Tant que tu n'as pas cliqué sur ce bouton,
+  le menu du cadenas ne parle pas du micro : c'est ce que tu vois sur Collectibles, où il n'y a pas de micro. Une fois
+  autorisé une fois, Chrome s'en souvient pour tout le site. Si tu as cliqué « Bloquer » un jour : cadenas → Paramètres
+  des sites → Micro → « Autoriser », puis recharge.
+
+Contrôles automatiques et vérifications sur ordinateur et téléphone : outils/CHANGEMENTS-v7.78.txt.
+Retour arrière : commit précédent dans GitHub Desktop.

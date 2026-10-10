@@ -381,7 +381,7 @@
 })();
 
 /* Léo : amorçage isolé. Les données ne se chargent qu'à l'ouverture du panneau. */
-(function(){'use strict';if(!document.querySelector('main')||document.getElementById('leo-style'))return;/* v7.60-v7.64 : Léo parle les langues de outils/langues.json → leo (français, espagnol, italien, anglais, allemand) : pas de Léo sur une page d’une autre langue */if(!/^(?:fr|es|it|en|de)\b/i.test(document.documentElement.lang||'fr'))return;const base=(document.currentScript&&document.currentScript.src||'').replace(/[^/]*$/,'')||'/';const css=document.createElement('link');css.id='leo-style';css.rel='stylesheet';css.href='/leo.css?v=0ff305b3c08b';css.onload=()=>{const script=document.createElement('script');script.src=base+'leo-loader.js?v=0ff305b3c08b';document.head.append(script);};document.head.append(css);})();
+(function(){'use strict';if(!document.querySelector('main')||document.getElementById('leo-style'))return;/* v7.60-v7.64 : Léo parle les langues de outils/langues.json → leo (français, espagnol, italien, anglais, allemand) : pas de Léo sur une page d’une autre langue */if(!/^(?:fr|es|it|en|de)\b/i.test(document.documentElement.lang||'fr'))return;const base=(document.currentScript&&document.currentScript.src||'').replace(/[^/]*$/,'')||'/';const css=document.createElement('link');css.id='leo-style';css.rel='stylesheet';css.href='/leo.css?v=8bc4dbb2cc59';css.onload=()=>{const script=document.createElement('script');script.src=base+'leo-loader.js?v=8bc4dbb2cc59';document.head.append(script);};document.head.append(css);})();
 
 /* v7.61 (langues) : page introuvable. Le serveur renvoie la page 404 française pour toute adresse inconnue ; sous
    /en/… (une adresse d'une langue publiée), c'est la page introuvable de cette langue qui s'affiche. */
