@@ -42,11 +42,11 @@ test('page : liste complète des modèles, familles, filtres, scène, barre, men
   for (const v of V) { const b = d.querySelector('.at-item[data-at-pick="v"][data-at-id="' + v.id + '"]'); assert.ok(b, v.id); assert.equal(b.getAttribute('data-at-cat'), v.cat); }
   assert.ok(d.querySelector('[data-at-search]') && d.querySelector('[data-at-catsel="v"]') && d.querySelector('[data-at-catsel="a"]'));
   assert.ok(d.querySelector('canvas[data-at-canvas]') && d.querySelector('[data-at-nojs] a[href="vehicules.html"]'));
-  assert.deepEqual([...d.querySelectorAll('[data-at-angle]')].map(b => b.dataset.atAngle), ['tq', 'profil', 'face', 'arriere', 'dessus']);
+  assert.deepEqual([...d.querySelectorAll('[data-at-angle]')].map(b => b.dataset.atAngle), ['tq', 'profil', 'face', 'arriere', 'dessus', 'interieur']); /* v7.84 : vue intérieure */
   for (const k of ['save', 'share', 'png', 'reset']) { const b = d.querySelector('[data-at-' + k + ']'); assert.ok(b, k); assert.ok(b.dataset.hint, k + ' : message'); }
   assert.ok(d.querySelector('[data-at-share]').dataset.hintAlt);
   /* menus : ateliers et options des deux familles, chaque option avec sa compatibilité */
-  assert.equal(d.querySelectorAll('[data-at-menu="v"] .at-cat').length, 9); assert.equal(d.querySelectorAll('[data-at-menu="a"] .at-cat').length, 6);
+  assert.equal(d.querySelectorAll('[data-at-menu="v"] .at-cat').length, 11); /* v7.84 : + Intérieur, Klaxons */ assert.equal(d.querySelectorAll('[data-at-menu="a"] .at-cat').length, 6);
   const opts = [...d.querySelectorAll('.at-opt')]; assert.ok(opts.length >= 18);
   for (const o of opts) assert.ok(o.dataset.atCompat && o.querySelector('legend'), o.id);
   /* chaque lien de poste ouvre la ligne du catalogue, existe, porte son repère */
@@ -99,7 +99,7 @@ test('style : trois colonnes puis deux puis une, scène sans débordement sur t�
   const css = read('atelier-3d.css');
   assert.match(css, /\.at\{display:grid;grid-template-columns:272px minmax\(0,1fr\) 340px;/);
   assert.match(css, /@media \(max-width:1240px\)\{\.at\{grid-template-columns:240px minmax\(0,1fr\);/);
-  assert.match(css, /@media \(max-width:900px\)\{\s*\.at\{grid-template-columns:1fr;grid-template-areas:"stage" "menu" "chosen" "pick";/);
+  assert.match(css, /@media \(max-width:900px\)\{\s*\.at\{grid-template-columns:1fr;grid-template-areas:"stage" "menu" "chosen" "pre" "pick";/); /* v7.84 : pré-listes */
   assert.match(css, /@media \(max-width:600px\)\{\s*\.at-view\{aspect-ratio:1\/1;min-height:0;/);
   assert.match(css, /\.at-tab, \.at-cat\{|\.at-cat\{[^}]*padding:10px 10px/);
   assert.match(css, /\.at-act\{[^}]*min-height:36px/);

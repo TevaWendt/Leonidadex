@@ -1,0 +1,5842 @@
+{
+ "_note": "v7.84 : pré-listes de l’Atelier 3D (outils/gen-atelier.cjs) : ce que GTA V et GTA Online proposent, atelier par atelier, présenté comme repère de la série en attendant les listes de GTA VI. Noms : ceux du jeu (anglais quand « langue » vaut « en », libellé officiel français sinon, traduit par la mémoire). « set » : réglage de la maquette quand l’élément s’essaie ; « hex » : couleur des données du jeu (numéros recoupés avec le script décompilé de Los Santos Customs). Relevé du 10 au 11 octobre 2026.",
+ "consulte": "2026-10-11",
+ "sources": {
+  "gtawiki-respray": {
+   "url": "https://gta.fandom.com/wiki/Vehicle_Customization_in_GTA_V/Respray_Colors",
+   "titre": "GTA Wiki : Respray Colors (noms et numéros des couleurs de GTA V)"
+  },
+  "lsc-script": {
+   "url": "https://github.com/root-cause/v-decompiled-scripts",
+   "titre": "Scripts décompilés de GTA V : carmod_shop.c (tables de couleurs de Los Santos Customs)"
+  },
+  "gtav-dumps": {
+   "url": "https://github.com/DurtyFree/gta-v-data-dumps",
+   "titre": "GTA V Data Dumps : couleurs, teintes, plaques et accessoires d’armes, noms officiels en cinq langues"
+  },
+  "gtawiki-custom": {
+   "url": "https://gta.fandom.com/wiki/Vehicle_Customization_in_GTA_V",
+   "titre": "GTA Wiki : Vehicle Customization in GTA V (vitres, peintures)"
+  },
+  "gtawiki-wheels": {
+   "url": "https://gta.fandom.com/wiki/Vehicle_Customization_in_GTA_V/Wheels",
+   "titre": "GTA Wiki : Wheels (familles de jantes, pneus, fumée)"
+  },
+  "gtawiki-lights": {
+   "url": "https://gta.fandom.com/wiki/Vehicle_Customization_in_GTA_V/Lights",
+   "titre": "GTA Wiki : Lights (phares et néons)"
+  },
+  "gtawiki-horns": {
+   "url": "https://gta.fandom.com/wiki/Vehicle_Customization_in_GTA_V/Horns",
+   "titre": "GTA Wiki : Horns (klaxons)"
+  },
+  "gtawiki-chopshop": {
+   "url": "https://gta.fandom.com/wiki/GTA_Online:_The_Chop_Shop",
+   "titre": "GTA Wiki : The Chop Shop (plaques ajoutées en décembre 2023)"
+  },
+  "gtawiki-apc": {
+   "url": "https://gta.fandom.com/wiki/APC",
+   "titre": "GTA Wiki : APC (livrées camouflage des véhicules militaires)"
+  },
+  "gtawiki-bennys-int": {
+   "url": "https://gta.fandom.com/wiki/Benny%27s_Original_Motor_Works/Interior",
+   "titre": "GTA Wiki : Benny’s Original Motor Works, intérieur"
+  },
+  "gtawiki-avarus": {
+   "url": "https://gta.fandom.com/wiki/Avarus",
+   "titre": "GTA Wiki : Avarus (postes d’une moto custom de Bikers)"
+  },
+  "gtawiki-pistol": {
+   "url": "https://gta.fandom.com/wiki/Pistol_(HD_Universe)",
+   "titre": "GTA Wiki : Pistol (teintes et prix)"
+  },
+  "gtawiki-carbine-mk2": {
+   "url": "https://gta.fandom.com/wiki/Carbine_Rifle_Mk_II",
+   "titre": "GTA Wiki : Carbine Rifle Mk II (camouflages, teintes, accessoires)"
+  },
+  "gtawiki-special-liveries": {
+   "url": "https://gta.fandom.com/wiki/Special_Liveries_in_GTA_Online/Weapons",
+   "titre": "GTA Wiki : finitions spéciales des armes"
+  }
+ },
+ "listes": [
+  {
+   "id": "peinture-classique",
+   "fam": "v",
+   "groupe": "peinture",
+   "titre": "Couleurs classiques",
+   "jeu": "GTA V",
+   "compte": "75 couleurs",
+   "note": "La palette de Los Santos Customs, dans l’ordre du menu. En ligne s’ajoute « Crew Color », la couleur du crew.",
+   "sources": [
+    "gtawiki-respray",
+    "lsc-script",
+    "gtav-dumps"
+   ],
+   "type": "sw",
+   "items": [
+    {
+     "n": "Black",
+     "hex": "080808",
+     "set": {
+      "paint": "080808",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Carbon Black",
+     "hex": "080808",
+     "set": {
+      "paint": "080808",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Graphite",
+     "hex": "0F0F0F",
+     "set": {
+      "paint": "0F0F0F",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Anthracite Black",
+     "hex": "121110",
+     "set": {
+      "paint": "121110",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Black Steel",
+     "hex": "1C1E21",
+     "set": {
+      "paint": "1C1E21",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Dark Steel",
+     "hex": "292C2E",
+     "set": {
+      "paint": "292C2E",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Silver",
+     "hex": "5A5E66",
+     "set": {
+      "paint": "5A5E66",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Bluish Silver",
+     "hex": "777C87",
+     "set": {
+      "paint": "777C87",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Rolled Steel",
+     "hex": "515459",
+     "set": {
+      "paint": "515459",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Shadow Silver",
+     "hex": "323B47",
+     "set": {
+      "paint": "323B47",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Stone Silver",
+     "hex": "333333",
+     "set": {
+      "paint": "333333",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Midnight Silver",
+     "hex": "1F2226",
+     "set": {
+      "paint": "1F2226",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Cast Iron Silver",
+     "hex": "23292E",
+     "set": {
+      "paint": "23292E",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Red",
+     "hex": "690000",
+     "set": {
+      "paint": "690000",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Torino Red",
+     "hex": "8A0B00",
+     "set": {
+      "paint": "8A0B00",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Formula Red",
+     "hex": "6B0000",
+     "set": {
+      "paint": "6B0000",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Lava Red",
+     "hex": "6B0B00",
+     "set": {
+      "paint": "6B0B00",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Blaze Red",
+     "hex": "611009",
+     "set": {
+      "paint": "611009",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Grace Red",
+     "hex": "4A0A0A",
+     "set": {
+      "paint": "4A0A0A",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Garnet Red",
+     "hex": "470E0E",
+     "set": {
+      "paint": "470E0E",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Sunset Red",
+     "hex": "380C00",
+     "set": {
+      "paint": "380C00",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Cabernet Red",
+     "hex": "26030B",
+     "set": {
+      "paint": "26030B",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Wine Red",
+     "hex": "080000",
+     "set": {
+      "paint": "080000",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Candy Red",
+     "hex": "630012",
+     "set": {
+      "paint": "630012",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Hot Pink",
+     "hex": "B01259",
+     "set": {
+      "paint": "B01259",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Pfister Pink",
+     "hex": "8F2F55",
+     "set": {
+      "paint": "8F2F55",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Salmon Pink",
+     "hex": "F69799",
+     "set": {
+      "paint": "F69799",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Sunrise Orange",
+     "hex": "802800",
+     "set": {
+      "paint": "802800",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Orange",
+     "hex": "BD4800",
+     "set": {
+      "paint": "BD4800",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Bright Orange",
+     "hex": "C26610",
+     "set": {
+      "paint": "C26610",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Gold",
+     "hex": "5E5343",
+     "set": {
+      "paint": "5E5343",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Bronze",
+     "hex": "4A341B",
+     "set": {
+      "paint": "4A341B",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Yellow",
+     "hex": "F5890F",
+     "set": {
+      "paint": "F5890F",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Race Yellow",
+     "hex": "D9A600",
+     "set": {
+      "paint": "D9A600",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Dew Yellow",
+     "hex": "A2A827",
+     "set": {
+      "paint": "A2A827",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Dark Green",
+     "hex": "001207",
+     "set": {
+      "paint": "001207",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Racing Green",
+     "hex": "001A0B",
+     "set": {
+      "paint": "001A0B",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Sea Green",
+     "hex": "00211E",
+     "set": {
+      "paint": "00211E",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Olive Green",
+     "hex": "1F261E",
+     "set": {
+      "paint": "1F261E",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Bright Green",
+     "hex": "003805",
+     "set": {
+      "paint": "003805",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Gasoline Green",
+     "hex": "0B4145",
+     "set": {
+      "paint": "0B4145",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Lime Green",
+     "hex": "568F00",
+     "set": {
+      "paint": "568F00",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Midnight Blue",
+     "hex": "000108",
+     "set": {
+      "paint": "000108",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Galaxy Blue",
+     "hex": "000D14",
+     "set": {
+      "paint": "000D14",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Dark Blue",
+     "hex": "001029",
+     "set": {
+      "paint": "001029",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Saxon Blue",
+     "hex": "1C2F4F",
+     "set": {
+      "paint": "1C2F4F",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Blue",
+     "hex": "001B57",
+     "set": {
+      "paint": "001B57",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Mariner Blue",
+     "hex": "3B4E78",
+     "set": {
+      "paint": "3B4E78",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Harbor Blue",
+     "hex": "272D3B",
+     "set": {
+      "paint": "272D3B",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Diamond Blue",
+     "hex": "95B2DB",
+     "set": {
+      "paint": "95B2DB",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Surf Blue",
+     "hex": "3E627A",
+     "set": {
+      "paint": "3E627A",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Nautical Blue",
+     "hex": "1C3140",
+     "set": {
+      "paint": "1C3140",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Racing Blue",
+     "hex": "0E316D",
+     "set": {
+      "paint": "0E316D",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Ultra Blue",
+     "hex": "0055C4",
+     "set": {
+      "paint": "0055C4",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Light Blue",
+     "hex": "395A83",
+     "set": {
+      "paint": "395A83",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Chocolate Brown",
+     "hex": "120D07",
+     "set": {
+      "paint": "120D07",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Bison Brown",
+     "hex": "221918",
+     "set": {
+      "paint": "221918",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Creek Brown",
+     "hex": "262117",
+     "set": {
+      "paint": "262117",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Feltzer Brown",
+     "hex": "291B06",
+     "set": {
+      "paint": "291B06",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Maple Brown",
+     "hex": "332111",
+     "set": {
+      "paint": "332111",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Beechwood Brown",
+     "hex": "241309",
+     "set": {
+      "paint": "241309",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Sienna Brown",
+     "hex": "3B1700",
+     "set": {
+      "paint": "3B1700",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Saddle Brown",
+     "hex": "3D3023",
+     "set": {
+      "paint": "3D3023",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Moss Brown",
+     "hex": "37382B",
+     "set": {
+      "paint": "37382B",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Woodbeech Brown",
+     "hex": "575036",
+     "set": {
+      "paint": "575036",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Straw Brown",
+     "hex": "5E5343",
+     "set": {
+      "paint": "5E5343",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Sandy Brown",
+     "hex": "6E6246",
+     "set": {
+      "paint": "6E6246",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Bleached Brown",
+     "hex": "998D73",
+     "set": {
+      "paint": "998D73",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Schafter Purple",
+     "hex": "1A182E",
+     "set": {
+      "paint": "1A182E",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Spinnaker Purple",
+     "hex": "161629",
+     "set": {
+      "paint": "161629",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Midnight Purple",
+     "hex": "050008",
+     "set": {
+      "paint": "050008",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Bright Purple",
+     "hex": "320642",
+     "set": {
+      "paint": "320642",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Cream",
+     "hex": "CFC0A5",
+     "set": {
+      "paint": "CFC0A5",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Ice White",
+     "hex": "F0F0F0",
+     "set": {
+      "paint": "F0F0F0",
+      "finish": "gloss"
+     }
+    },
+    {
+     "n": "Frost White",
+     "hex": "B3B9C9",
+     "set": {
+      "paint": "B3B9C9",
+      "finish": "gloss"
+     }
+    }
+   ],
+   "compat": null,
+   "ids": null,
+   "langue": "en",
+   "sous": null
+  },
+  {
+   "id": "peinture-metallisee",
+   "fam": "v",
+   "groupe": "peinture",
+   "titre": "Couleurs métallisées",
+   "jeu": "GTA V",
+   "compte": "75 couleurs",
+   "note": "Les mêmes 75 noms en finition métallisée ; Midnight Purple et Gold y prennent une autre teinte.",
+   "sources": [
+    "gtawiki-respray",
+    "lsc-script",
+    "gtav-dumps"
+   ],
+   "type": "sw",
+   "items": [
+    {
+     "n": "Black",
+     "hex": "080808",
+     "set": {
+      "paint": "080808",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Carbon Black",
+     "hex": "080808",
+     "set": {
+      "paint": "080808",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Graphite",
+     "hex": "0F0F0F",
+     "set": {
+      "paint": "0F0F0F",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Anthracite Black",
+     "hex": "121110",
+     "set": {
+      "paint": "121110",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Black Steel",
+     "hex": "1C1E21",
+     "set": {
+      "paint": "1C1E21",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Dark Steel",
+     "hex": "292C2E",
+     "set": {
+      "paint": "292C2E",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Silver",
+     "hex": "5A5E66",
+     "set": {
+      "paint": "5A5E66",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Bluish Silver",
+     "hex": "777C87",
+     "set": {
+      "paint": "777C87",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Rolled Steel",
+     "hex": "515459",
+     "set": {
+      "paint": "515459",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Shadow Silver",
+     "hex": "323B47",
+     "set": {
+      "paint": "323B47",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Stone Silver",
+     "hex": "333333",
+     "set": {
+      "paint": "333333",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Midnight Silver",
+     "hex": "1F2226",
+     "set": {
+      "paint": "1F2226",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Cast Iron Silver",
+     "hex": "23292E",
+     "set": {
+      "paint": "23292E",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Red",
+     "hex": "690000",
+     "set": {
+      "paint": "690000",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Torino Red",
+     "hex": "8A0B00",
+     "set": {
+      "paint": "8A0B00",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Formula Red",
+     "hex": "6B0000",
+     "set": {
+      "paint": "6B0000",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Lava Red",
+     "hex": "6B0B00",
+     "set": {
+      "paint": "6B0B00",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Blaze Red",
+     "hex": "611009",
+     "set": {
+      "paint": "611009",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Grace Red",
+     "hex": "4A0A0A",
+     "set": {
+      "paint": "4A0A0A",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Garnet Red",
+     "hex": "470E0E",
+     "set": {
+      "paint": "470E0E",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Sunset Red",
+     "hex": "380C00",
+     "set": {
+      "paint": "380C00",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Cabernet Red",
+     "hex": "26030B",
+     "set": {
+      "paint": "26030B",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Wine Red",
+     "hex": "080000",
+     "set": {
+      "paint": "080000",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Candy Red",
+     "hex": "630012",
+     "set": {
+      "paint": "630012",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Hot Pink",
+     "hex": "B01259",
+     "set": {
+      "paint": "B01259",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Pfister Pink",
+     "hex": "8F2F55",
+     "set": {
+      "paint": "8F2F55",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Salmon Pink",
+     "hex": "F69799",
+     "set": {
+      "paint": "F69799",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Sunrise Orange",
+     "hex": "802800",
+     "set": {
+      "paint": "802800",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Orange",
+     "hex": "BD4800",
+     "set": {
+      "paint": "BD4800",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Bright Orange",
+     "hex": "C26610",
+     "set": {
+      "paint": "C26610",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Gold",
+     "hex": "6E4F2D",
+     "set": {
+      "paint": "6E4F2D",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Bronze",
+     "hex": "4A341B",
+     "set": {
+      "paint": "4A341B",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Yellow",
+     "hex": "F5890F",
+     "set": {
+      "paint": "F5890F",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Race Yellow",
+     "hex": "D9A600",
+     "set": {
+      "paint": "D9A600",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Dew Yellow",
+     "hex": "A2A827",
+     "set": {
+      "paint": "A2A827",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Dark Green",
+     "hex": "001207",
+     "set": {
+      "paint": "001207",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Racing Green",
+     "hex": "001A0B",
+     "set": {
+      "paint": "001A0B",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Sea Green",
+     "hex": "00211E",
+     "set": {
+      "paint": "00211E",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Olive Green",
+     "hex": "1F261E",
+     "set": {
+      "paint": "1F261E",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Bright Green",
+     "hex": "003805",
+     "set": {
+      "paint": "003805",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Gasoline Green",
+     "hex": "0B4145",
+     "set": {
+      "paint": "0B4145",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Lime Green",
+     "hex": "568F00",
+     "set": {
+      "paint": "568F00",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Midnight Blue",
+     "hex": "000108",
+     "set": {
+      "paint": "000108",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Galaxy Blue",
+     "hex": "000D14",
+     "set": {
+      "paint": "000D14",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Dark Blue",
+     "hex": "001029",
+     "set": {
+      "paint": "001029",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Saxon Blue",
+     "hex": "1C2F4F",
+     "set": {
+      "paint": "1C2F4F",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Blue",
+     "hex": "001B57",
+     "set": {
+      "paint": "001B57",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Mariner Blue",
+     "hex": "3B4E78",
+     "set": {
+      "paint": "3B4E78",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Harbor Blue",
+     "hex": "272D3B",
+     "set": {
+      "paint": "272D3B",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Diamond Blue",
+     "hex": "95B2DB",
+     "set": {
+      "paint": "95B2DB",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Surf Blue",
+     "hex": "3E627A",
+     "set": {
+      "paint": "3E627A",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Nautical Blue",
+     "hex": "1C3140",
+     "set": {
+      "paint": "1C3140",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Racing Blue",
+     "hex": "0E316D",
+     "set": {
+      "paint": "0E316D",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Ultra Blue",
+     "hex": "0055C4",
+     "set": {
+      "paint": "0055C4",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Light Blue",
+     "hex": "395A83",
+     "set": {
+      "paint": "395A83",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Chocolate Brown",
+     "hex": "120D07",
+     "set": {
+      "paint": "120D07",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Bison Brown",
+     "hex": "221918",
+     "set": {
+      "paint": "221918",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Creek Brown",
+     "hex": "262117",
+     "set": {
+      "paint": "262117",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Feltzer Brown",
+     "hex": "291B06",
+     "set": {
+      "paint": "291B06",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Maple Brown",
+     "hex": "332111",
+     "set": {
+      "paint": "332111",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Beechwood Brown",
+     "hex": "241309",
+     "set": {
+      "paint": "241309",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Sienna Brown",
+     "hex": "3B1700",
+     "set": {
+      "paint": "3B1700",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Saddle Brown",
+     "hex": "3D3023",
+     "set": {
+      "paint": "3D3023",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Moss Brown",
+     "hex": "37382B",
+     "set": {
+      "paint": "37382B",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Woodbeech Brown",
+     "hex": "575036",
+     "set": {
+      "paint": "575036",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Straw Brown",
+     "hex": "5E5343",
+     "set": {
+      "paint": "5E5343",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Sandy Brown",
+     "hex": "6E6246",
+     "set": {
+      "paint": "6E6246",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Bleached Brown",
+     "hex": "998D73",
+     "set": {
+      "paint": "998D73",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Schafter Purple",
+     "hex": "1A182E",
+     "set": {
+      "paint": "1A182E",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Spinnaker Purple",
+     "hex": "161629",
+     "set": {
+      "paint": "161629",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Midnight Purple",
+     "hex": "00080F",
+     "set": {
+      "paint": "00080F",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Bright Purple",
+     "hex": "320642",
+     "set": {
+      "paint": "320642",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Cream",
+     "hex": "CFC0A5",
+     "set": {
+      "paint": "CFC0A5",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Ice White",
+     "hex": "F0F0F0",
+     "set": {
+      "paint": "F0F0F0",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Frost White",
+     "hex": "B3B9C9",
+     "set": {
+      "paint": "B3B9C9",
+      "finish": "metal"
+     }
+    }
+   ],
+   "compat": null,
+   "ids": null,
+   "langue": "en",
+   "sous": null
+  },
+  {
+   "id": "peinture-mate",
+   "fam": "v",
+   "groupe": "peinture",
+   "titre": "Couleurs mates",
+   "jeu": "GTA V",
+   "compte": "20 couleurs",
+   "note": "La finition mate a sa propre palette, plus courte.",
+   "sources": [
+    "gtawiki-respray",
+    "lsc-script",
+    "gtav-dumps"
+   ],
+   "type": "sw",
+   "items": [
+    {
+     "n": "Black",
+     "hex": "050505",
+     "set": {
+      "paint": "050505",
+      "finish": "matte"
+     }
+    },
+    {
+     "n": "Gray",
+     "hex": "121212",
+     "set": {
+      "paint": "121212",
+      "finish": "matte"
+     }
+    },
+    {
+     "n": "Light Gray",
+     "hex": "2F3233",
+     "set": {
+      "paint": "2F3233",
+      "finish": "matte"
+     }
+    },
+    {
+     "n": "Ice White",
+     "hex": "D9D9D9",
+     "set": {
+      "paint": "D9D9D9",
+      "finish": "matte"
+     }
+    },
+    {
+     "n": "Blue",
+     "hex": "0F1E73",
+     "set": {
+      "paint": "0F1E73",
+      "finish": "matte"
+     }
+    },
+    {
+     "n": "Dark Blue",
+     "hex": "030E2E",
+     "set": {
+      "paint": "030E2E",
+      "finish": "matte"
+     }
+    },
+    {
+     "n": "Midnight Blue",
+     "hex": "001C32",
+     "set": {
+      "paint": "001C32",
+      "finish": "matte"
+     }
+    },
+    {
+     "n": "Midnight Purple",
+     "hex": "050008",
+     "set": {
+      "paint": "050008",
+      "finish": "matte"
+     }
+    },
+    {
+     "n": "Schafter Purple",
+     "hex": "320642",
+     "set": {
+      "paint": "320642",
+      "finish": "matte"
+     }
+    },
+    {
+     "n": "Red",
+     "hex": "780000",
+     "set": {
+      "paint": "780000",
+      "finish": "matte"
+     }
+    },
+    {
+     "n": "Dark Red",
+     "hex": "360000",
+     "set": {
+      "paint": "360000",
+      "finish": "matte"
+     }
+    },
+    {
+     "n": "Orange",
+     "hex": "AB3F00",
+     "set": {
+      "paint": "AB3F00",
+      "finish": "matte"
+     }
+    },
+    {
+     "n": "Yellow",
+     "hex": "DE7E00",
+     "set": {
+      "paint": "DE7E00",
+      "finish": "matte"
+     }
+    },
+    {
+     "n": "Lime Green",
+     "hex": "418503",
+     "set": {
+      "paint": "418503",
+      "finish": "matte"
+     }
+    },
+    {
+     "n": "Green",
+     "hex": "243022",
+     "set": {
+      "paint": "243022",
+      "finish": "matte"
+     }
+    },
+    {
+     "n": "Forest Green",
+     "hex": "121710",
+     "set": {
+      "paint": "121710",
+      "finish": "matte"
+     }
+    },
+    {
+     "n": "Foliage Green",
+     "hex": "2B302B",
+     "set": {
+      "paint": "2B302B",
+      "finish": "matte"
+     }
+    },
+    {
+     "n": "Olive Drab",
+     "hex": "323325",
+     "set": {
+      "paint": "323325",
+      "finish": "matte"
+     }
+    },
+    {
+     "n": "Dark Earth",
+     "hex": "3B352D",
+     "set": {
+      "paint": "3B352D",
+      "finish": "matte"
+     }
+    },
+    {
+     "n": "Desert Tan",
+     "hex": "706656",
+     "set": {
+      "paint": "706656",
+      "finish": "matte"
+     }
+    }
+   ],
+   "compat": null,
+   "ids": null,
+   "langue": "en",
+   "sous": null
+  },
+  {
+   "id": "peinture-metaux",
+   "fam": "v",
+   "groupe": "peinture",
+   "titre": "Métaux et chrome",
+   "jeu": "GTA V et GTA Online",
+   "compte": "6 finitions",
+   "note": "Les deux ors arrivent en ligne avec la mise à jour « I’m Not a Hipster », au rang 100. Pastilles des ors : leur couleur de reflet dans les données du jeu.",
+   "sources": [
+    "gtawiki-respray",
+    "gtav-dumps"
+   ],
+   "type": "sw",
+   "items": [
+    {
+     "n": "Brushed Steel",
+     "hex": "3B4045",
+     "set": {
+      "paint": "3B4045",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Brushed Black Steel",
+     "hex": "1A1E21",
+     "set": {
+      "paint": "1A1E21",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Brushed Aluminum",
+     "hex": "5E646B",
+     "set": {
+      "paint": "5E646B",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Pure Gold",
+     "hex": "FFD859",
+     "set": {
+      "paint": "FFD859",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Brushed Gold",
+     "hex": "FFD859",
+     "set": {
+      "paint": "FFD859",
+      "finish": "metal"
+     }
+    },
+    {
+     "n": "Chrome",
+     "hex": "C9CDD2",
+     "set": {
+      "finish": "chrome"
+     }
+    }
+   ],
+   "compat": null,
+   "ids": null,
+   "langue": "en",
+   "sous": null
+  },
+  {
+   "id": "peinture-nacre",
+   "fam": "v",
+   "groupe": "peinture",
+   "titre": "Nacres",
+   "jeu": "GTA V",
+   "compte": "75 reflets",
+   "note": "Une couleur de reflet posée sur une peinture métallisée, choisie dans la même palette de 75 noms. Sur la maquette, elle se voit dans les reflets.",
+   "sources": [
+    "gtawiki-respray",
+    "gtav-dumps"
+   ],
+   "type": "sw",
+   "items": [
+    {
+     "n": "Black",
+     "hex": "080808",
+     "set": {
+      "pearl": "080808",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Carbon Black",
+     "hex": "080808",
+     "set": {
+      "pearl": "080808",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Graphite",
+     "hex": "0F0F0F",
+     "set": {
+      "pearl": "0F0F0F",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Anthracite Black",
+     "hex": "121110",
+     "set": {
+      "pearl": "121110",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Black Steel",
+     "hex": "1C1E21",
+     "set": {
+      "pearl": "1C1E21",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Dark Steel",
+     "hex": "292C2E",
+     "set": {
+      "pearl": "292C2E",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Silver",
+     "hex": "5A5E66",
+     "set": {
+      "pearl": "5A5E66",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Bluish Silver",
+     "hex": "777C87",
+     "set": {
+      "pearl": "777C87",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Rolled Steel",
+     "hex": "515459",
+     "set": {
+      "pearl": "515459",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Shadow Silver",
+     "hex": "323B47",
+     "set": {
+      "pearl": "323B47",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Stone Silver",
+     "hex": "333333",
+     "set": {
+      "pearl": "333333",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Midnight Silver",
+     "hex": "1F2226",
+     "set": {
+      "pearl": "1F2226",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Cast Iron Silver",
+     "hex": "23292E",
+     "set": {
+      "pearl": "23292E",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Red",
+     "hex": "690000",
+     "set": {
+      "pearl": "690000",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Torino Red",
+     "hex": "8A0B00",
+     "set": {
+      "pearl": "8A0B00",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Formula Red",
+     "hex": "6B0000",
+     "set": {
+      "pearl": "6B0000",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Lava Red",
+     "hex": "6B0B00",
+     "set": {
+      "pearl": "6B0B00",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Blaze Red",
+     "hex": "611009",
+     "set": {
+      "pearl": "611009",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Grace Red",
+     "hex": "4A0A0A",
+     "set": {
+      "pearl": "4A0A0A",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Garnet Red",
+     "hex": "470E0E",
+     "set": {
+      "pearl": "470E0E",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Sunset Red",
+     "hex": "380C00",
+     "set": {
+      "pearl": "380C00",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Cabernet Red",
+     "hex": "26030B",
+     "set": {
+      "pearl": "26030B",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Wine Red",
+     "hex": "080000",
+     "set": {
+      "pearl": "080000",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Candy Red",
+     "hex": "630012",
+     "set": {
+      "pearl": "630012",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Hot Pink",
+     "hex": "B01259",
+     "set": {
+      "pearl": "B01259",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Pfister Pink",
+     "hex": "8F2F55",
+     "set": {
+      "pearl": "8F2F55",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Salmon Pink",
+     "hex": "F69799",
+     "set": {
+      "pearl": "F69799",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Sunrise Orange",
+     "hex": "802800",
+     "set": {
+      "pearl": "802800",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Orange",
+     "hex": "BD4800",
+     "set": {
+      "pearl": "BD4800",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Bright Orange",
+     "hex": "C26610",
+     "set": {
+      "pearl": "C26610",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Gold",
+     "hex": "6E4F2D",
+     "set": {
+      "pearl": "6E4F2D",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Bronze",
+     "hex": "4A341B",
+     "set": {
+      "pearl": "4A341B",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Yellow",
+     "hex": "F5890F",
+     "set": {
+      "pearl": "F5890F",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Race Yellow",
+     "hex": "D9A600",
+     "set": {
+      "pearl": "D9A600",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Dew Yellow",
+     "hex": "A2A827",
+     "set": {
+      "pearl": "A2A827",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Dark Green",
+     "hex": "001207",
+     "set": {
+      "pearl": "001207",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Racing Green",
+     "hex": "001A0B",
+     "set": {
+      "pearl": "001A0B",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Sea Green",
+     "hex": "00211E",
+     "set": {
+      "pearl": "00211E",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Olive Green",
+     "hex": "1F261E",
+     "set": {
+      "pearl": "1F261E",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Bright Green",
+     "hex": "003805",
+     "set": {
+      "pearl": "003805",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Gasoline Green",
+     "hex": "0B4145",
+     "set": {
+      "pearl": "0B4145",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Lime Green",
+     "hex": "568F00",
+     "set": {
+      "pearl": "568F00",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Midnight Blue",
+     "hex": "000108",
+     "set": {
+      "pearl": "000108",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Galaxy Blue",
+     "hex": "000D14",
+     "set": {
+      "pearl": "000D14",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Dark Blue",
+     "hex": "001029",
+     "set": {
+      "pearl": "001029",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Saxon Blue",
+     "hex": "1C2F4F",
+     "set": {
+      "pearl": "1C2F4F",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Blue",
+     "hex": "001B57",
+     "set": {
+      "pearl": "001B57",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Mariner Blue",
+     "hex": "3B4E78",
+     "set": {
+      "pearl": "3B4E78",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Harbor Blue",
+     "hex": "272D3B",
+     "set": {
+      "pearl": "272D3B",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Diamond Blue",
+     "hex": "95B2DB",
+     "set": {
+      "pearl": "95B2DB",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Surf Blue",
+     "hex": "3E627A",
+     "set": {
+      "pearl": "3E627A",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Nautical Blue",
+     "hex": "1C3140",
+     "set": {
+      "pearl": "1C3140",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Racing Blue",
+     "hex": "0E316D",
+     "set": {
+      "pearl": "0E316D",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Ultra Blue",
+     "hex": "0055C4",
+     "set": {
+      "pearl": "0055C4",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Light Blue",
+     "hex": "395A83",
+     "set": {
+      "pearl": "395A83",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Chocolate Brown",
+     "hex": "120D07",
+     "set": {
+      "pearl": "120D07",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Bison Brown",
+     "hex": "221918",
+     "set": {
+      "pearl": "221918",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Creek Brown",
+     "hex": "262117",
+     "set": {
+      "pearl": "262117",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Feltzer Brown",
+     "hex": "291B06",
+     "set": {
+      "pearl": "291B06",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Maple Brown",
+     "hex": "332111",
+     "set": {
+      "pearl": "332111",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Beechwood Brown",
+     "hex": "241309",
+     "set": {
+      "pearl": "241309",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Sienna Brown",
+     "hex": "3B1700",
+     "set": {
+      "pearl": "3B1700",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Saddle Brown",
+     "hex": "3D3023",
+     "set": {
+      "pearl": "3D3023",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Moss Brown",
+     "hex": "37382B",
+     "set": {
+      "pearl": "37382B",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Woodbeech Brown",
+     "hex": "575036",
+     "set": {
+      "pearl": "575036",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Straw Brown",
+     "hex": "5E5343",
+     "set": {
+      "pearl": "5E5343",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Sandy Brown",
+     "hex": "6E6246",
+     "set": {
+      "pearl": "6E6246",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Bleached Brown",
+     "hex": "998D73",
+     "set": {
+      "pearl": "998D73",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Schafter Purple",
+     "hex": "1A182E",
+     "set": {
+      "pearl": "1A182E",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Spinnaker Purple",
+     "hex": "161629",
+     "set": {
+      "pearl": "161629",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Midnight Purple",
+     "hex": "00080F",
+     "set": {
+      "pearl": "00080F",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Bright Purple",
+     "hex": "320642",
+     "set": {
+      "pearl": "320642",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Cream",
+     "hex": "CFC0A5",
+     "set": {
+      "pearl": "CFC0A5",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Ice White",
+     "hex": "F0F0F0",
+     "set": {
+      "pearl": "F0F0F0",
+      "finish": "nacre"
+     }
+    },
+    {
+     "n": "Frost White",
+     "hex": "B3B9C9",
+     "set": {
+      "pearl": "B3B9C9",
+      "finish": "nacre"
+     }
+    }
+   ],
+   "compat": null,
+   "ids": null,
+   "langue": "en",
+   "sous": null
+  },
+  {
+   "id": "peinture-cameleon",
+   "fam": "v",
+   "groupe": "peinture",
+   "titre": "Peintures caméléon",
+   "jeu": "GTA Online",
+   "compte": "46 peintures",
+   "note": "Peintures à reflets changeants des versions PS5, Xbox Series et PC Enhanced. Leurs teintes ne figurent pas dans les données consultées : la finition « Caméléon » de l’Atelier en donne l’idée.",
+   "sources": [
+    "gtawiki-respray"
+   ],
+   "type": "txt",
+   "sous": [
+    {
+     "titre": "En vente",
+     "compte": "10",
+     "items": [
+      {
+       "n": "Anodized Red Pearl"
+      },
+      {
+       "n": "Anodized Blue Pearl"
+      },
+      {
+       "n": "Anodized Gold Pearl"
+      },
+      {
+       "n": "Green/Blue Flip"
+      },
+      {
+       "n": "Purple/Green Flip"
+      },
+      {
+       "n": "Orange/Purple Flip"
+      },
+      {
+       "n": "Dark Purple Pearl"
+      },
+      {
+       "n": "Baby Blue Pearl"
+      },
+      {
+       "n": "Red Prismatic Pearl"
+      },
+      {
+       "n": "Black Prismatic Pearl"
+      }
+     ]
+    },
+    {
+     "titre": "Offertes aux membres GTA+",
+     "compte": "34",
+     "items": [
+      {
+       "n": "Anodized Purple Pearl"
+      },
+      {
+       "n": "Anodized Copper Pearl"
+      },
+      {
+       "n": "Anodized Bronze Pearl"
+      },
+      {
+       "n": "Anodized Champagne Pearl"
+      },
+      {
+       "n": "Green/Red Flip"
+      },
+      {
+       "n": "Turquoise/Purple Flip"
+      },
+      {
+       "n": "Blue/Pink Flip"
+      },
+      {
+       "n": "Blue/Green Flip"
+      },
+      {
+       "n": "Magenta/Green Flip"
+      },
+      {
+       "n": "Burgundy/Green Flip"
+      },
+      {
+       "n": "Magenta/Orange Flip"
+      },
+      {
+       "n": "Red/Orange Flip"
+      },
+      {
+       "n": "Orange/Blue Flip"
+      },
+      {
+       "n": "White/Purple Flip"
+      },
+      {
+       "n": "Red Rainbow Flip"
+      },
+      {
+       "n": "Blue Rainbow Flip"
+      },
+      {
+       "n": "Dark Green Pearl"
+      },
+      {
+       "n": "Dark Blue Pearl"
+      },
+      {
+       "n": "Oil Slick Pearl"
+      },
+      {
+       "n": "Light Blue Pearl"
+      },
+      {
+       "n": "Off White Pearl"
+      },
+      {
+       "n": "Soft Pink Pearl"
+      },
+      {
+       "n": "Pastel Yellow Pearl"
+      },
+      {
+       "n": "Pastel Green Pearl"
+      },
+      {
+       "n": "Cream Pearl"
+      },
+      {
+       "n": "White Prismatic Pearl"
+      },
+      {
+       "n": "Graphite Prismatic Pearl"
+      },
+      {
+       "n": "Purple Prismatic Pearl"
+      },
+      {
+       "n": "Pink Prismatic Pearl"
+      },
+      {
+       "n": "Green Prismatic Pearl"
+      },
+      {
+       "n": "Black Oil Spill Prismatic"
+      },
+      {
+       "n": "Black Rainbow Prismatic"
+      },
+      {
+       "n": "Dark Holographic"
+      },
+      {
+       "n": "Light Holographic"
+      }
+     ]
+    },
+    {
+     "titre": "Vues seulement en vitrine",
+     "compte": "2",
+     "items": [
+      {
+       "n": "Light Green Pearl"
+      },
+      {
+       "n": "Light Purple Pearl"
+      }
+     ]
+    }
+   ],
+   "compat": null,
+   "ids": null,
+   "langue": "en",
+   "items": null
+  },
+  {
+   "id": "livrees-camouflage",
+   "fam": "v",
+   "groupe": "peinture",
+   "titre": "Livrées camouflage des véhicules militaires",
+   "jeu": "GTA Online",
+   "compte": "20 livrées",
+   "note": "Le même jeu de livrées revient sur les véhicules militaires (APC, Half-track, TM-02 Khanjali, Akula…). Les noms soulignés s’essaient sur la maquette avec un motif générique de l’Atelier : ce ne sont pas les livrées du jeu.",
+   "sources": [
+    "gtawiki-apc"
+   ],
+   "type": "txt",
+   "sous": [
+    {
+     "titre": "Au départ",
+     "compte": "9",
+     "items": [
+      {
+       "n": "Basic Camo"
+      },
+      {
+       "n": "Zancudo Camo"
+      },
+      {
+       "n": "Sprayed Camo"
+      },
+      {
+       "n": "3 Color Outline"
+      },
+      {
+       "n": "90s Sandbox"
+      },
+      {
+       "n": "Modern 5 Color"
+      },
+      {
+       "n": "Arid Theater",
+       "set": {
+        "camo": "desert"
+       }
+      },
+      {
+       "n": "Winter Camo",
+       "set": {
+        "camo": "neige"
+       }
+      },
+      {
+       "n": "Urban Warrior",
+       "set": {
+        "camo": "urbain"
+       }
+      }
+     ]
+    },
+    {
+     "titre": "À débloquer par la recherche du bunker",
+     "compte": "11",
+     "items": [
+      {
+       "n": "Nature Reserve",
+       "set": {
+        "camo": "foret"
+       }
+      },
+      {
+       "n": "Naval Battle",
+       "set": {
+        "camo": "marine"
+       }
+      },
+      {
+       "n": "Urban Geometric",
+       "set": {
+        "camo": "urbain"
+       }
+      },
+      {
+       "n": "Coyote Geometric",
+       "set": {
+        "camo": "desert"
+       }
+      },
+      {
+       "n": "Large Geometric"
+      },
+      {
+       "n": "Naval Geometric",
+       "set": {
+        "camo": "marine"
+       }
+      },
+      {
+       "n": "Desert Fractal",
+       "set": {
+        "camo": "desert"
+       }
+      },
+      {
+       "n": "Urban Fractal",
+       "set": {
+        "camo": "urbain"
+       }
+      },
+      {
+       "n": "Large Digital",
+       "set": {
+        "camo": "numerique"
+       }
+      },
+      {
+       "n": "Medium Digital",
+       "set": {
+        "camo": "numerique"
+       }
+      },
+      {
+       "n": "Small Digital",
+       "set": {
+        "camo": "numerique"
+       }
+      }
+     ]
+    }
+   ],
+   "compat": null,
+   "ids": null,
+   "langue": "en",
+   "items": null
+  },
+  {
+   "id": "jantes-familles",
+   "fam": "v",
+   "groupe": "jantes",
+   "titre": "Familles de jantes",
+   "jeu": "GTA V et GTA Online",
+   "compte": "13 familles, 324 modèles",
+   "note": "Benny’s, Open Wheel, Street et Track sont arrivées avec GTA Online. Le style de jante de l’Atelier reste générique.",
+   "sources": [
+    "gtawiki-wheels"
+   ],
+   "type": "txt",
+   "sous": [
+    {
+     "titre": "High End",
+     "compte": "20",
+     "items": [
+      {
+       "n": "Shadow"
+      },
+      {
+       "n": "Hyper"
+      },
+      {
+       "n": "Blade"
+      },
+      {
+       "n": "Diamond"
+      },
+      {
+       "n": "Supa Gee"
+      },
+      {
+       "n": "Chromatic Z"
+      },
+      {
+       "n": "Mercie ch.Lip"
+      },
+      {
+       "n": "Obey RS"
+      },
+      {
+       "n": "GT Chrome"
+      },
+      {
+       "n": "Cheetah R"
+      },
+      {
+       "n": "Solar"
+      },
+      {
+       "n": "Split Ten"
+      },
+      {
+       "n": "Dash VIP"
+      },
+      {
+       "n": "LozspeedTen"
+      },
+      {
+       "n": "Carbon Inferno"
+      },
+      {
+       "n": "Carbon Shadow"
+      },
+      {
+       "n": "Carbon Z"
+      },
+      {
+       "n": "Carbon Solar"
+      },
+      {
+       "n": "Carbon Cheetah R"
+      },
+      {
+       "n": "Carbon S Racer"
+      }
+     ]
+    },
+    {
+     "titre": "Lowrider",
+     "compte": "15",
+     "items": [
+      {
+       "n": "Flare"
+      },
+      {
+       "n": "Wired"
+      },
+      {
+       "n": "Triple Golds"
+      },
+      {
+       "n": "Big Worm"
+      },
+      {
+       "n": "Seven Fives"
+      },
+      {
+       "n": "Split Six"
+      },
+      {
+       "n": "Fresh Mesh"
+      },
+      {
+       "n": "Lead Sled"
+      },
+      {
+       "n": "Turbine"
+      },
+      {
+       "n": "Super Fin"
+      },
+      {
+       "n": "Classic Rod"
+      },
+      {
+       "n": "Dollar"
+      },
+      {
+       "n": "Dukes"
+      },
+      {
+       "n": "Low Five"
+      },
+      {
+       "n": "Gooch"
+      }
+     ]
+    },
+    {
+     "titre": "Muscle",
+     "compte": "18",
+     "items": [
+      {
+       "n": "Classic Five"
+      },
+      {
+       "n": "Dukes"
+      },
+      {
+       "n": "Muscle Freak"
+      },
+      {
+       "n": "Kracka"
+      },
+      {
+       "n": "Azrea"
+      },
+      {
+       "n": "Mecha"
+      },
+      {
+       "n": "Black Top"
+      },
+      {
+       "n": "Drag SPL"
+      },
+      {
+       "n": "Revolver"
+      },
+      {
+       "n": "Classic Rod"
+      },
+      {
+       "n": "Fairle"
+      },
+      {
+       "n": "Spooner"
+      },
+      {
+       "n": "Five Star"
+      },
+      {
+       "n": "Old School"
+      },
+      {
+       "n": "El Jefe"
+      },
+      {
+       "n": "Dodman"
+      },
+      {
+       "n": "Six Gun"
+      },
+      {
+       "n": "Mercenary"
+      }
+     ]
+    },
+    {
+     "titre": "Offroad",
+     "compte": "25",
+     "items": [
+      {
+       "n": "Raider"
+      },
+      {
+       "n": "Mudslinger"
+      },
+      {
+       "n": "Nevis"
+      },
+      {
+       "n": "Cairngorm"
+      },
+      {
+       "n": "Amazon"
+      },
+      {
+       "n": "Challenger"
+      },
+      {
+       "n": "Dune Basher"
+      },
+      {
+       "n": "Five Star"
+      },
+      {
+       "n": "Rock Crawler"
+      },
+      {
+       "n": "Mil Spec Steelie"
+      },
+      {
+       "n": "Retro Steelie"
+      },
+      {
+       "n": "Heavy Duty Steelie"
+      },
+      {
+       "n": "Concave Steelie"
+      },
+      {
+       "n": "Police Issue Steelie"
+      },
+      {
+       "n": "Lightweight Steelie"
+      },
+      {
+       "n": "Dukes"
+      },
+      {
+       "n": "Avalanche"
+      },
+      {
+       "n": "Mountain Man"
+      },
+      {
+       "n": "Ridge Climber"
+      },
+      {
+       "n": "Concave 5"
+      },
+      {
+       "n": "Flat Six"
+      },
+      {
+       "n": "All Terrain Monster"
+      },
+      {
+       "n": "Drag SPL"
+      },
+      {
+       "n": "Concave Rally Master"
+      },
+      {
+       "n": "Rugged Snowflake"
+      }
+     ]
+    },
+    {
+     "titre": "Sport",
+     "compte": "25",
+     "items": [
+      {
+       "n": "Inferno"
+      },
+      {
+       "n": "Deep Five"
+      },
+      {
+       "n": "Lozspeed Mk.v"
+      },
+      {
+       "n": "Diamond Cut"
+      },
+      {
+       "n": "Chrono"
+      },
+      {
+       "n": "Feroci RR"
+      },
+      {
+       "n": "FiftyNine"
+      },
+      {
+       "n": "Mercie"
+      },
+      {
+       "n": "Synthetic Z"
+      },
+      {
+       "n": "Organic Type D"
+      },
+      {
+       "n": "Endo v.1"
+      },
+      {
+       "n": "GT One"
+      },
+      {
+       "n": "Duper 7"
+      },
+      {
+       "n": "Uzer"
+      },
+      {
+       "n": "GroundRide"
+      },
+      {
+       "n": "S Racer"
+      },
+      {
+       "n": "Venum"
+      },
+      {
+       "n": "Cosmo"
+      },
+      {
+       "n": "Dash VIP"
+      },
+      {
+       "n": "Ice Kid"
+      },
+      {
+       "n": "Ruff Weld"
+      },
+      {
+       "n": "Wangen Master"
+      },
+      {
+       "n": "Super Five"
+      },
+      {
+       "n": "Endo v.2"
+      },
+      {
+       "n": "Slit Six"
+      }
+     ]
+    },
+    {
+     "titre": "SUV",
+     "compte": "19",
+     "items": [
+      {
+       "n": "VIP"
+      },
+      {
+       "n": "Benefactor"
+      },
+      {
+       "n": "Cosmo"
+      },
+      {
+       "n": "Bippu"
+      },
+      {
+       "n": "Royal Six"
+      },
+      {
+       "n": "Fagorme"
+      },
+      {
+       "n": "Deluxe"
+      },
+      {
+       "n": "Iced Out"
+      },
+      {
+       "n": "Cognoscenti"
+      },
+      {
+       "n": "LozSpeed Ten"
+      },
+      {
+       "n": "Supernova"
+      },
+      {
+       "n": "Obey RS"
+      },
+      {
+       "n": "LozSpeed Baller"
+      },
+      {
+       "n": "Extravagano"
+      },
+      {
+       "n": "Split Six"
+      },
+      {
+       "n": "Empowered"
+      },
+      {
+       "n": "Sunrise"
+      },
+      {
+       "n": "Dash VIP"
+      },
+      {
+       "n": "Cutter"
+      }
+     ]
+    },
+    {
+     "titre": "Tuner",
+     "compte": "24",
+     "items": [
+      {
+       "n": "Cosmo"
+      },
+      {
+       "n": "Super Mesh"
+      },
+      {
+       "n": "Outsider"
+      },
+      {
+       "n": "Rollas"
+      },
+      {
+       "n": "Driffmeister"
+      },
+      {
+       "n": "Slicer"
+      },
+      {
+       "n": "El Quatro"
+      },
+      {
+       "n": "Dubbed"
+      },
+      {
+       "n": "Five Star"
+      },
+      {
+       "n": "Slideways"
+      },
+      {
+       "n": "Apex"
+      },
+      {
+       "n": "Stanced EG"
+      },
+      {
+       "n": "Countersteer"
+      },
+      {
+       "n": "Endo v.1"
+      },
+      {
+       "n": "Endo v.2"
+      },
+      {
+       "n": "Gruppe Z"
+      },
+      {
+       "n": "Choku-Dori"
+      },
+      {
+       "n": "Chicane"
+      },
+      {
+       "n": "Saisoku"
+      },
+      {
+       "n": "Dished Eight"
+      },
+      {
+       "n": "Fujiwara"
+      },
+      {
+       "n": "Zokusha"
+      },
+      {
+       "n": "Battle VIII"
+      },
+      {
+       "n": "Rally Master"
+      }
+     ]
+    },
+    {
+     "titre": "Bike",
+     "compte": "36",
+     "items": [
+      {
+       "n": "Speedway"
+      },
+      {
+       "n": "Street Special"
+      },
+      {
+       "n": "Racer"
+      },
+      {
+       "n": "Track Star"
+      },
+      {
+       "n": "Overlord"
+      },
+      {
+       "n": "Trident"
+      },
+      {
+       "n": "Triple Threat"
+      },
+      {
+       "n": "Stilleto"
+      },
+      {
+       "n": "Wires"
+      },
+      {
+       "n": "Bobber"
+      },
+      {
+       "n": "Solidus"
+      },
+      {
+       "n": "Ice Shield"
+      },
+      {
+       "n": "Loops"
+      },
+      {
+       "n": "Romper Racing"
+      },
+      {
+       "n": "Warp Drive"
+      },
+      {
+       "n": "Snowflake"
+      },
+      {
+       "n": "Holy Spoke"
+      },
+      {
+       "n": "Old Skool Triple"
+      },
+      {
+       "n": "Futura"
+      },
+      {
+       "n": "Quarter Mile King"
+      },
+      {
+       "n": "Cartwheel"
+      },
+      {
+       "n": "Double Five"
+      },
+      {
+       "n": "Shuriken"
+      },
+      {
+       "n": "Simple Six"
+      },
+      {
+       "n": "Celtic"
+      },
+      {
+       "n": "Razer"
+      },
+      {
+       "n": "Twisted"
+      },
+      {
+       "n": "Morning Star"
+      },
+      {
+       "n": "Jagged Spokes"
+      },
+      {
+       "n": "Eidolon"
+      },
+      {
+       "n": "Enigma"
+      },
+      {
+       "n": "Big Spokes"
+      },
+      {
+       "n": "Webs"
+      },
+      {
+       "n": "Hotplate"
+      },
+      {
+       "n": "Bobsta"
+      },
+      {
+       "n": "Grouch"
+      }
+     ],
+     "note": "Pour les motos ; roue avant et roue arrière au choix."
+    },
+    {
+     "titre": "Benny’s Originals",
+     "compte": "31",
+     "items": [
+      {
+       "n": "OG Hunnets"
+      },
+      {
+       "n": "OG Hunnets (Chrome Lip)"
+      },
+      {
+       "n": "Knock-Offs"
+      },
+      {
+       "n": "Knock-Offs (Chrome Lip)"
+      },
+      {
+       "n": "Spoked Out"
+      },
+      {
+       "n": "Spoked Out (Chrome Lip)"
+      },
+      {
+       "n": "Vintage Wire"
+      },
+      {
+       "n": "Vintage Wire (Chrome Lip)"
+      },
+      {
+       "n": "Smoothie"
+      },
+      {
+       "n": "Smoothie (Chrome Lip)"
+      },
+      {
+       "n": "Smoothie (Solid Color)"
+      },
+      {
+       "n": "Rod Me Up"
+      },
+      {
+       "n": "Rod Me Up (Chrome Lip)"
+      },
+      {
+       "n": "Rod Me Up (Solid Color)"
+      },
+      {
+       "n": "Clean"
+      },
+      {
+       "n": "Lotta Chrome"
+      },
+      {
+       "n": "Spindles"
+      },
+      {
+       "n": "Viking"
+      },
+      {
+       "n": "Triple Spoke"
+      },
+      {
+       "n": "Pharohe"
+      },
+      {
+       "n": "Tiger Style"
+      },
+      {
+       "n": "Three Wheelin"
+      },
+      {
+       "n": "Big Bar"
+      },
+      {
+       "n": "Biohazard"
+      },
+      {
+       "n": "Waves"
+      },
+      {
+       "n": "Lick Lick"
+      },
+      {
+       "n": "Spiralizer"
+      },
+      {
+       "n": "Hypnotics"
+      },
+      {
+       "n": "Psycho-Delic"
+      },
+      {
+       "n": "Half Cut"
+      },
+      {
+       "n": "Super Electric"
+      }
+     ]
+    },
+    {
+     "titre": "Benny’s Bespoke",
+     "compte": "31",
+     "items": [
+      {
+       "n": "Chrome/Gold OG Hunnets"
+      },
+      {
+       "n": "Chrome/Gold Wires"
+      },
+      {
+       "n": "Chrome/Gold Spoked Out"
+      },
+      {
+       "n": "Chrome/Gold Knock-Offs"
+      },
+      {
+       "n": "Chrome/Gold Bigger Worm"
+      },
+      {
+       "n": "Chrome/Gold Vintage Wire"
+      },
+      {
+       "n": "Chrome/Gold Classic Wire"
+      },
+      {
+       "n": "Chrome/Gold Smoothie"
+      },
+      {
+       "n": "Chrome/Gold Classic Rod"
+      },
+      {
+       "n": "Chrome/Gold Dollar"
+      },
+      {
+       "n": "Chrome/Gold Mighty Star"
+      },
+      {
+       "n": "Chrome/Gold Decadent Dish"
+      },
+      {
+       "n": "Chrome/Gold Razor Style"
+      },
+      {
+       "n": "Chrome/Gold Celtic Knot"
+      },
+      {
+       "n": "Chrome/Gold Warrior Dish"
+      },
+      {
+       "n": "Gold Big Dog Spokes"
+      }
+     ],
+     "note": "Chaque modèle en chrome ou en or."
+    },
+    {
+     "titre": "Open Wheel",
+     "compte": "20",
+     "items": [
+      {
+       "n": "Classic 5"
+      },
+      {
+       "n": "Retro Star"
+      },
+      {
+       "n": "Triplex"
+      },
+      {
+       "n": "70s Spec"
+      },
+      {
+       "n": "Super 5R"
+      },
+      {
+       "n": "Speedster"
+      },
+      {
+       "n": "GP-90"
+      },
+      {
+       "n": "Superspoke"
+      },
+      {
+       "n": "Gridline"
+      },
+      {
+       "n": "Snowflake"
+      }
+     ],
+     "note": "Chacune aussi en version rayée (« Striped ») ; famille appelée « Race » sur le GTA Wiki."
+    },
+    {
+     "titre": "Street",
+     "compte": "30",
+     "items": [
+      {
+       "n": "Retro Steelie"
+      },
+      {
+       "n": "Poverty Spec Steelie"
+      },
+      {
+       "n": "Concave Steelie"
+      },
+      {
+       "n": "Nebula"
+      },
+      {
+       "n": "Hotring Steelie"
+      },
+      {
+       "n": "Cup Champion"
+      },
+      {
+       "n": "Stanced EG Custom"
+      },
+      {
+       "n": "Kracka Custom"
+      },
+      {
+       "n": "Dukes Custom"
+      },
+      {
+       "n": "Endo v.3 Custom"
+      },
+      {
+       "n": "V8 Killer"
+      },
+      {
+       "n": "Fujiwara Custom"
+      },
+      {
+       "n": "Cosmo MKII"
+      },
+      {
+       "n": "Aero Star"
+      },
+      {
+       "n": "Hype Five"
+      },
+      {
+       "n": "Ruff Weld Mega Deep"
+      },
+      {
+       "n": "Mercie Concave"
+      },
+      {
+       "n": "Sugoi Concave"
+      },
+      {
+       "n": "Synthetic Z Concave"
+      },
+      {
+       "n": "Endo v.4 Dished"
+      },
+      {
+       "n": "Hyperfresh"
+      },
+      {
+       "n": "Truffade Concave"
+      },
+      {
+       "n": "Organic Type II"
+      },
+      {
+       "n": "Big Mamba"
+      },
+      {
+       "n": "Deep Flake"
+      },
+      {
+       "n": "Cosmo MKIII"
+      },
+      {
+       "n": "Concave Racer"
+      },
+      {
+       "n": "Deep Flake Reverse"
+      },
+      {
+       "n": "Wild Wagon"
+      },
+      {
+       "n": "Concave Mega Mesh"
+      }
+     ]
+    },
+    {
+     "titre": "Track",
+     "compte": "30",
+     "items": [
+      {
+       "n": "Rally Throwback"
+      },
+      {
+       "n": "Gravel Trap"
+      },
+      {
+       "n": "Stove Top"
+      },
+      {
+       "n": "Stove Top Mesh"
+      },
+      {
+       "n": "Retro 3 Piece"
+      },
+      {
+       "n": "Rally Monoblock"
+      },
+      {
+       "n": "Forged 5"
+      },
+      {
+       "n": "Split Star"
+      },
+      {
+       "n": "Speed Boy"
+      },
+      {
+       "n": "90s Running"
+      },
+      {
+       "n": "Tropos"
+      },
+      {
+       "n": "Exos"
+      },
+      {
+       "n": "High Five"
+      },
+      {
+       "n": "Super Luxe"
+      },
+      {
+       "n": "Pure Business"
+      },
+      {
+       "n": "Pepper Pot"
+      },
+      {
+       "n": "Blacktop Blender"
+      },
+      {
+       "n": "Throwback"
+      },
+      {
+       "n": "Expressway"
+      },
+      {
+       "n": "Hidden Six"
+      },
+      {
+       "n": "Dinka SPL"
+      },
+      {
+       "n": "Retro Turbofan"
+      },
+      {
+       "n": "Conical Turbofan"
+      },
+      {
+       "n": "Ice Storm"
+      },
+      {
+       "n": "Super Turbine"
+      },
+      {
+       "n": "Modern Mesh"
+      },
+      {
+       "n": "Forged Star"
+      },
+      {
+       "n": "Snowflake"
+      },
+      {
+       "n": "Giga Mesh"
+      },
+      {
+       "n": "Mesh Meister"
+      }
+     ]
+    }
+   ],
+   "compat": null,
+   "ids": null,
+   "langue": "en",
+   "items": null
+  },
+  {
+   "id": "pneus",
+   "fam": "v",
+   "groupe": "jantes",
+   "titre": "Pneus et flancs",
+   "jeu": "GTA V et GTA Online",
+   "compte": "16 options",
+   "note": "Les flancs blancs et les lignes de couleur soulignés s’essaient sur la maquette.",
+   "sources": [
+    "gtawiki-wheels"
+   ],
+   "type": "txt",
+   "sous": [
+    {
+     "titre": "Modèle",
+     "compte": "2",
+     "items": [
+      {
+       "n": "Stock Tires"
+      },
+      {
+       "n": "Custom Tires"
+      }
+     ]
+    },
+    {
+     "titre": "Flancs des jantes Benny’s",
+     "compte": "6",
+     "items": [
+      {
+       "n": "White Lines",
+       "set": {
+        "tyreWall": "whiteline"
+       }
+      },
+      {
+       "n": "Classic White Wall",
+       "set": {
+        "tyreWall": "white"
+       }
+      },
+      {
+       "n": "Retro White Wall",
+       "set": {
+        "tyreWall": "white"
+       }
+      },
+      {
+       "n": "Red Lines",
+       "set": {
+        "tyreWall": "redline"
+       }
+      },
+      {
+       "n": "Blue Lines",
+       "set": {
+        "tyreWall": "blueline"
+       }
+      },
+      {
+       "n": "Atomic"
+      }
+     ]
+    },
+    {
+     "titre": "Flancs des jantes Street et Track",
+     "compte": "6",
+     "items": [
+      {
+       "n": "Atomic Logo"
+      },
+      {
+       "n": "Atomic Yellow"
+      },
+      {
+       "n": "Fukaru White"
+      },
+      {
+       "n": "Fukaru Red"
+      },
+      {
+       "n": "Chepalle Yellow"
+      },
+      {
+       "n": "Chepalle Green"
+      }
+     ]
+    },
+    {
+     "titre": "Renforts",
+     "compte": "2",
+     "items": [
+      {
+       "n": "Bulletproof Tires"
+      },
+      {
+       "n": "Low Grip Tires"
+      }
+     ]
+    }
+   ],
+   "compat": null,
+   "ids": null,
+   "langue": "en",
+   "items": null
+  },
+  {
+   "id": "fumee",
+   "fam": "v",
+   "groupe": "jantes",
+   "titre": "Fumée de pneus",
+   "jeu": "GTA V et GTA Online",
+   "compte": "12 couleurs",
+   "note": "Patriot ne sort que pendant les événements de l’Independence Day ; Crew, en ligne, prend la couleur du crew.",
+   "sources": [
+    "gtawiki-wheels"
+   ],
+   "type": "txt",
+   "items": [
+    {
+     "n": "White"
+    },
+    {
+     "n": "Black"
+    },
+    {
+     "n": "Blue"
+    },
+    {
+     "n": "Yellow"
+    },
+    {
+     "n": "Purple"
+    },
+    {
+     "n": "Orange"
+    },
+    {
+     "n": "Green"
+    },
+    {
+     "n": "Red"
+    },
+    {
+     "n": "Pink"
+    },
+    {
+     "n": "Brown"
+    },
+    {
+     "n": "Patriot"
+    },
+    {
+     "n": "Crew"
+    }
+   ],
+   "compat": null,
+   "ids": null,
+   "langue": "en",
+   "sous": null
+  },
+  {
+   "id": "motos-postes",
+   "fam": "v",
+   "groupe": "carrosserie",
+   "compat": [
+    "moto"
+   ],
+   "titre": "Postes des motos custom",
+   "jeu": "GTA Online (Bikers)",
+   "compte": "18 postes",
+   "note": "Les postes des motos custom de la mise à jour Bikers (2016), regroupés comme sur le GTA Wiki.",
+   "sources": [
+    "gtawiki-avarus"
+   ],
+   "type": "txt",
+   "sous": [
+    {
+     "titre": "Carrosserie",
+     "compte": "15",
+     "items": [
+      {
+       "n": "Belt Drive Covers"
+      },
+      {
+       "n": "Fairings"
+      },
+      {
+       "n": "Frames"
+      },
+      {
+       "n": "Front Mudguards"
+      },
+      {
+       "n": "Fuel Tanks"
+      },
+      {
+       "n": "Handlebars"
+      },
+      {
+       "n": "Headlights"
+      },
+      {
+       "n": "Headlight Covers"
+      },
+      {
+       "n": "Mirrors"
+      },
+      {
+       "n": "Oil Tanks"
+      },
+      {
+       "n": "Rear Mudguards"
+      },
+      {
+       "n": "Seats"
+      },
+      {
+       "n": "Shifters"
+      },
+      {
+       "n": "Sissy Bars"
+      },
+      {
+       "n": "Swingarms"
+      }
+     ]
+    },
+    {
+     "titre": "Moteur",
+     "compte": "3",
+     "items": [
+      {
+       "n": "Engine Block"
+      },
+      {
+       "n": "Air Filters"
+      },
+      {
+       "n": "Engine Tunes"
+      }
+     ]
+    }
+   ],
+   "ids": null,
+   "langue": "en",
+   "items": null
+  },
+  {
+   "id": "vitres-teintes",
+   "fam": "v",
+   "groupe": "vitres",
+   "titre": "Teintes de vitres",
+   "jeu": "GTA V",
+   "compte": "4 teintes",
+   "langue": "local",
+   "note": "Le noir pur (« Pure Black »), vendu en ligne sur PS3 et Xbox 360, a disparu des versions suivantes.",
+   "sources": [
+    "gtawiki-custom",
+    "gtav-dumps"
+   ],
+   "type": "txt",
+   "items": [
+    {
+     "n": "Aucune",
+     "set": {
+      "tint": 0
+     }
+    },
+    {
+     "n": "Fumé clair",
+     "set": {
+      "tint": 30
+     }
+    },
+    {
+     "n": "Fumé foncé",
+     "set": {
+      "tint": 60
+     }
+    },
+    {
+     "n": "Limousine",
+     "set": {
+      "tint": 85
+     }
+    }
+   ],
+   "compat": null,
+   "ids": null,
+   "sous": null
+  },
+  {
+   "id": "neons-disposition",
+   "fam": "v",
+   "groupe": "neons",
+   "titre": "Dispositions des néons",
+   "jeu": "GTA V",
+   "compte": "8 dispositions",
+   "note": "Les néons existent depuis les versions PS4, Xbox One et PC.",
+   "sources": [
+    "gtawiki-lights"
+   ],
+   "type": "txt",
+   "items": [
+    {
+     "n": "None",
+     "set": {
+      "neon": 0
+     }
+    },
+    {
+     "n": "Front",
+     "set": {
+      "neon": 1,
+      "neonLayout": "front"
+     }
+    },
+    {
+     "n": "Back",
+     "set": {
+      "neon": 1,
+      "neonLayout": "back"
+     }
+    },
+    {
+     "n": "Sides",
+     "set": {
+      "neon": 1,
+      "neonLayout": "sides"
+     }
+    },
+    {
+     "n": "Front and Back",
+     "set": {
+      "neon": 1,
+      "neonLayout": "fb"
+     }
+    },
+    {
+     "n": "Front and Sides",
+     "set": {
+      "neon": 1,
+      "neonLayout": "fs"
+     }
+    },
+    {
+     "n": "Back and Sides",
+     "set": {
+      "neon": 1,
+      "neonLayout": "bs"
+     }
+    },
+    {
+     "n": "Front, Back and Sides",
+     "set": {
+      "neon": 1,
+      "neonLayout": "all"
+     }
+    }
+   ],
+   "compat": null,
+   "ids": null,
+   "langue": "en",
+   "sous": null
+  },
+  {
+   "id": "neons-couleurs",
+   "fam": "v",
+   "groupe": "neons",
+   "titre": "Couleurs des néons",
+   "jeu": "GTA V",
+   "compte": "14 couleurs",
+   "note": "Pastilles : les teintes des phares du même nom dans les données du jeu. En ligne, « Crew » prend la couleur du crew.",
+   "sources": [
+    "gtawiki-lights",
+    "gtav-dumps"
+   ],
+   "type": "sw",
+   "items": [
+    {
+     "n": "White",
+     "hex": "DEDEFF",
+     "set": {
+      "neon": 1,
+      "neonColor": "DEDEFF"
+     }
+    },
+    {
+     "n": "Blue",
+     "hex": "0215FF",
+     "set": {
+      "neon": 1,
+      "neonColor": "0215FF"
+     }
+    },
+    {
+     "n": "Electric Blue",
+     "hex": "0353FF",
+     "set": {
+      "neon": 1,
+      "neonColor": "0353FF"
+     }
+    },
+    {
+     "n": "Mint Green",
+     "hex": "00FF8C",
+     "set": {
+      "neon": 1,
+      "neonColor": "00FF8C"
+     }
+    },
+    {
+     "n": "Lime Green",
+     "hex": "5EFF01",
+     "set": {
+      "neon": 1,
+      "neonColor": "5EFF01"
+     }
+    },
+    {
+     "n": "Yellow",
+     "hex": "FFFF00",
+     "set": {
+      "neon": 1,
+      "neonColor": "FFFF00"
+     }
+    },
+    {
+     "n": "Golden Shower",
+     "hex": "FF9605",
+     "set": {
+      "neon": 1,
+      "neonColor": "FF9605"
+     }
+    },
+    {
+     "n": "Orange",
+     "hex": "FF3E00",
+     "set": {
+      "neon": 1,
+      "neonColor": "FF3E00"
+     }
+    },
+    {
+     "n": "Red",
+     "hex": "FF0101",
+     "set": {
+      "neon": 1,
+      "neonColor": "FF0101"
+     }
+    },
+    {
+     "n": "Pony Pink",
+     "hex": "FF3264",
+     "set": {
+      "neon": 1,
+      "neonColor": "FF3264"
+     }
+    },
+    {
+     "n": "Hot Pink",
+     "hex": "FF05BE",
+     "set": {
+      "neon": 1,
+      "neonColor": "FF05BE"
+     }
+    },
+    {
+     "n": "Purple",
+     "hex": "2301FF",
+     "set": {
+      "neon": 1,
+      "neonColor": "2301FF"
+     }
+    },
+    {
+     "n": "Blacklight",
+     "hex": "0F03FF",
+     "set": {
+      "neon": 1,
+      "neonColor": "0F03FF"
+     }
+    },
+    {
+     "n": "Crew"
+    }
+   ],
+   "compat": null,
+   "ids": null,
+   "langue": "en",
+   "sous": null
+  },
+  {
+   "id": "phares-couleurs",
+   "fam": "v",
+   "groupe": "phares",
+   "titre": "Couleurs des phares",
+   "jeu": "GTA Online",
+   "compte": "13 couleurs",
+   "note": "Arrivées avec Arena War, vendues aussi au LS Car Meet ; teintes des données du jeu.",
+   "sources": [
+    "gtawiki-lights",
+    "gtav-dumps"
+   ],
+   "type": "sw",
+   "items": [
+    {
+     "n": "White",
+     "hex": "DEDEFF",
+     "set": {
+      "lights": "color",
+      "lightColor": "DEDEFF"
+     }
+    },
+    {
+     "n": "Blue",
+     "hex": "0215FF",
+     "set": {
+      "lights": "color",
+      "lightColor": "0215FF"
+     }
+    },
+    {
+     "n": "Electric Blue",
+     "hex": "0353FF",
+     "set": {
+      "lights": "color",
+      "lightColor": "0353FF"
+     }
+    },
+    {
+     "n": "Mint Green",
+     "hex": "00FF8C",
+     "set": {
+      "lights": "color",
+      "lightColor": "00FF8C"
+     }
+    },
+    {
+     "n": "Lime Green",
+     "hex": "5EFF01",
+     "set": {
+      "lights": "color",
+      "lightColor": "5EFF01"
+     }
+    },
+    {
+     "n": "Yellow",
+     "hex": "FFFF00",
+     "set": {
+      "lights": "color",
+      "lightColor": "FFFF00"
+     }
+    },
+    {
+     "n": "Golden Shower",
+     "hex": "FF9605",
+     "set": {
+      "lights": "color",
+      "lightColor": "FF9605"
+     }
+    },
+    {
+     "n": "Orange",
+     "hex": "FF3E00",
+     "set": {
+      "lights": "color",
+      "lightColor": "FF3E00"
+     }
+    },
+    {
+     "n": "Red",
+     "hex": "FF0101",
+     "set": {
+      "lights": "color",
+      "lightColor": "FF0101"
+     }
+    },
+    {
+     "n": "Pony Pink",
+     "hex": "FF3264",
+     "set": {
+      "lights": "color",
+      "lightColor": "FF3264"
+     }
+    },
+    {
+     "n": "Hot Pink",
+     "hex": "FF05BE",
+     "set": {
+      "lights": "color",
+      "lightColor": "FF05BE"
+     }
+    },
+    {
+     "n": "Purple",
+     "hex": "2301FF",
+     "set": {
+      "lights": "color",
+      "lightColor": "2301FF"
+     }
+    },
+    {
+     "n": "Blacklight",
+     "hex": "0F03FF",
+     "set": {
+      "lights": "color",
+      "lightColor": "0F03FF"
+     }
+    }
+   ],
+   "compat": null,
+   "ids": null,
+   "langue": "en",
+   "sous": null
+  },
+  {
+   "id": "plaques",
+   "fam": "v",
+   "groupe": "plaques",
+   "titre": "Plaques",
+   "jeu": "GTA V et GTA Online",
+   "compte": "12 styles",
+   "langue": "local",
+   "note": "eCola et Sprunk se posent sur tous les véhicules ; les cinq autres plaques de 2023 ne se voient que sur les véhicules des braquages de la casse. Les plaques North Yankton et « SA EXEMPT » ne se choisissent pas.",
+   "sources": [
+    "gtawiki-chopshop",
+    "gtav-dumps"
+   ],
+   "type": "txt",
+   "sous": [
+    {
+     "titre": "Au départ",
+     "compte": "5",
+     "items": [
+      {
+       "n": "Bleu sur blanc 1",
+       "set": {
+        "plateStyle": "blue"
+       }
+      },
+      {
+       "n": "Bleu sur blanc 2",
+       "set": {
+        "plateStyle": "blue"
+       }
+      },
+      {
+       "n": "Bleu sur blanc 3",
+       "set": {
+        "plateStyle": "blue"
+       }
+      },
+      {
+       "n": "Jaune sur bleu",
+       "set": {
+        "plateStyle": "yellowblue"
+       }
+      },
+      {
+       "n": "Jaune sur noir",
+       "set": {
+        "plateStyle": "yellowblack"
+       }
+      }
+     ]
+    },
+    {
+     "titre": "The Chop Shop (2023)",
+     "compte": "7",
+     "items": [
+      {
+       "n": "eCola"
+      },
+      {
+       "n": "Sprunk"
+      },
+      {
+       "n": "Las Venturas"
+      },
+      {
+       "n": "Liberty City"
+      },
+      {
+       "n": "Salon auto de LS"
+      },
+      {
+       "n": "LS Panic"
+      },
+      {
+       "n": "LS Pounders"
+      }
+     ]
+    }
+   ],
+   "compat": null,
+   "ids": null,
+   "items": null
+  },
+  {
+   "id": "klaxons",
+   "fam": "v",
+   "groupe": "klaxons",
+   "titre": "Klaxons",
+   "jeu": "GTA V et GTA Online",
+   "compte": "46 klaxons",
+   "note": "Les noms seulement, sans le son. Les airs de saison (Halloween, fêtes de fin d’année, Independence Day) ne se vendent que pendant leurs événements.",
+   "sources": [
+    "gtawiki-horns"
+   ],
+   "type": "txt",
+   "sous": [
+    {
+     "titre": "Standard",
+     "compte": "7",
+     "items": [
+      {
+       "n": "Stock Horn"
+      },
+      {
+       "n": "Truck Horn"
+      },
+      {
+       "n": "Cop Horn"
+      },
+      {
+       "n": "Clown Horn"
+      },
+      {
+       "n": "Air Horn 1"
+      },
+      {
+       "n": "Air Horn 2"
+      },
+      {
+       "n": "Air Horn 3"
+      }
+     ]
+    },
+    {
+     "titre": "Musicaux",
+     "compte": "29",
+     "items": [
+      {
+       "n": "Musical Horn 1"
+      },
+      {
+       "n": "Musical Horn 2"
+      },
+      {
+       "n": "Musical Horn 3"
+      },
+      {
+       "n": "Musical Horn 4"
+      },
+      {
+       "n": "Musical Horn 5"
+      },
+      {
+       "n": "Sad Trombone"
+      },
+      {
+       "n": "Classical Horn 1"
+      },
+      {
+       "n": "Classical Horn 2"
+      },
+      {
+       "n": "Classical Horn 3"
+      },
+      {
+       "n": "Classical Horn 4"
+      },
+      {
+       "n": "Classical Horn 5"
+      },
+      {
+       "n": "Classical Horn 6"
+      },
+      {
+       "n": "Classical Horn 7"
+      },
+      {
+       "n": "Classical Horn 8"
+      },
+      {
+       "n": "Jazz Horn 1"
+      },
+      {
+       "n": "Jazz Horn 2"
+      },
+      {
+       "n": "Jazz Horn 3"
+      },
+      {
+       "n": "Star Spangled Banner 1"
+      },
+      {
+       "n": "Star Spangled Banner 2"
+      },
+      {
+       "n": "Star Spangled Banner 3"
+      },
+      {
+       "n": "Star Spangled Banner 4"
+      },
+      {
+       "n": "Gamme : huit notes, de do à do aigu",
+       "fr": true
+      }
+     ]
+    },
+    {
+     "titre": "En boucle",
+     "compte": "10",
+     "items": [
+      {
+       "n": "Jazz Horn Loop"
+      },
+      {
+       "n": "Classical Horn Loop 1"
+      },
+      {
+       "n": "Classical Horn Loop 2"
+      },
+      {
+       "n": "San Andreas Loop"
+      },
+      {
+       "n": "Liberty City Loop"
+      },
+      {
+       "n": "Halloween Loop 1"
+      },
+      {
+       "n": "Halloween Loop 2"
+      },
+      {
+       "n": "Festive Loop 1"
+      },
+      {
+       "n": "Festive Loop 2"
+      },
+      {
+       "n": "Festive Loop 3"
+      }
+     ]
+    }
+   ],
+   "compat": null,
+   "ids": null,
+   "langue": "en",
+   "items": null
+  },
+  {
+   "id": "interieur-habillage",
+   "fam": "v",
+   "groupe": "interieur",
+   "titre": "Couleurs d’habillage",
+   "jeu": "GTA Online (Benny’s)",
+   "compte": "68 couleurs",
+   "note": "La palette classique moins sept couleurs ; elle teinte sièges, portes et tableau de bord des modèles de Benny’s.",
+   "sources": [
+    "gtawiki-bennys-int",
+    "lsc-script",
+    "gtav-dumps"
+   ],
+   "type": "sw",
+   "items": [
+    {
+     "n": "Black",
+     "hex": "080808",
+     "set": {
+      "trim": "080808"
+     }
+    },
+    {
+     "n": "Graphite",
+     "hex": "0F0F0F",
+     "set": {
+      "trim": "0F0F0F"
+     }
+    },
+    {
+     "n": "Anthracite Black",
+     "hex": "121110",
+     "set": {
+      "trim": "121110"
+     }
+    },
+    {
+     "n": "Black Steel",
+     "hex": "1C1E21",
+     "set": {
+      "trim": "1C1E21"
+     }
+    },
+    {
+     "n": "Dark Steel",
+     "hex": "292C2E",
+     "set": {
+      "trim": "292C2E"
+     }
+    },
+    {
+     "n": "Bluish Silver",
+     "hex": "777C87",
+     "set": {
+      "trim": "777C87"
+     }
+    },
+    {
+     "n": "Rolled Steel",
+     "hex": "515459",
+     "set": {
+      "trim": "515459"
+     }
+    },
+    {
+     "n": "Shadow Silver",
+     "hex": "323B47",
+     "set": {
+      "trim": "323B47"
+     }
+    },
+    {
+     "n": "Stone Silver",
+     "hex": "333333",
+     "set": {
+      "trim": "333333"
+     }
+    },
+    {
+     "n": "Midnight Silver",
+     "hex": "1F2226",
+     "set": {
+      "trim": "1F2226"
+     }
+    },
+    {
+     "n": "Cast Iron Silver",
+     "hex": "23292E",
+     "set": {
+      "trim": "23292E"
+     }
+    },
+    {
+     "n": "Red",
+     "hex": "690000",
+     "set": {
+      "trim": "690000"
+     }
+    },
+    {
+     "n": "Torino Red",
+     "hex": "8A0B00",
+     "set": {
+      "trim": "8A0B00"
+     }
+    },
+    {
+     "n": "Lava Red",
+     "hex": "6B0B00",
+     "set": {
+      "trim": "6B0B00"
+     }
+    },
+    {
+     "n": "Blaze Red",
+     "hex": "611009",
+     "set": {
+      "trim": "611009"
+     }
+    },
+    {
+     "n": "Grace Red",
+     "hex": "4A0A0A",
+     "set": {
+      "trim": "4A0A0A"
+     }
+    },
+    {
+     "n": "Garnet Red",
+     "hex": "470E0E",
+     "set": {
+      "trim": "470E0E"
+     }
+    },
+    {
+     "n": "Sunset Red",
+     "hex": "380C00",
+     "set": {
+      "trim": "380C00"
+     }
+    },
+    {
+     "n": "Cabernet Red",
+     "hex": "26030B",
+     "set": {
+      "trim": "26030B"
+     }
+    },
+    {
+     "n": "Wine Red",
+     "hex": "080000",
+     "set": {
+      "trim": "080000"
+     }
+    },
+    {
+     "n": "Candy Red",
+     "hex": "630012",
+     "set": {
+      "trim": "630012"
+     }
+    },
+    {
+     "n": "Pfister Pink",
+     "hex": "8F2F55",
+     "set": {
+      "trim": "8F2F55"
+     }
+    },
+    {
+     "n": "Salmon Pink",
+     "hex": "F69799",
+     "set": {
+      "trim": "F69799"
+     }
+    },
+    {
+     "n": "Sunrise Orange",
+     "hex": "802800",
+     "set": {
+      "trim": "802800"
+     }
+    },
+    {
+     "n": "Orange",
+     "hex": "BD4800",
+     "set": {
+      "trim": "BD4800"
+     }
+    },
+    {
+     "n": "Bright Orange",
+     "hex": "C26610",
+     "set": {
+      "trim": "C26610"
+     }
+    },
+    {
+     "n": "Bronze",
+     "hex": "4A341B",
+     "set": {
+      "trim": "4A341B"
+     }
+    },
+    {
+     "n": "Yellow",
+     "hex": "F5890F",
+     "set": {
+      "trim": "F5890F"
+     }
+    },
+    {
+     "n": "Race Yellow",
+     "hex": "D9A600",
+     "set": {
+      "trim": "D9A600"
+     }
+    },
+    {
+     "n": "Dew Yellow",
+     "hex": "A2A827",
+     "set": {
+      "trim": "A2A827"
+     }
+    },
+    {
+     "n": "Dark Green",
+     "hex": "001207",
+     "set": {
+      "trim": "001207"
+     }
+    },
+    {
+     "n": "Racing Green",
+     "hex": "001A0B",
+     "set": {
+      "trim": "001A0B"
+     }
+    },
+    {
+     "n": "Sea Green",
+     "hex": "00211E",
+     "set": {
+      "trim": "00211E"
+     }
+    },
+    {
+     "n": "Olive Green",
+     "hex": "1F261E",
+     "set": {
+      "trim": "1F261E"
+     }
+    },
+    {
+     "n": "Bright Green",
+     "hex": "003805",
+     "set": {
+      "trim": "003805"
+     }
+    },
+    {
+     "n": "Gasoline Green",
+     "hex": "0B4145",
+     "set": {
+      "trim": "0B4145"
+     }
+    },
+    {
+     "n": "Lime Green",
+     "hex": "568F00",
+     "set": {
+      "trim": "568F00"
+     }
+    },
+    {
+     "n": "Midnight Blue",
+     "hex": "000108",
+     "set": {
+      "trim": "000108"
+     }
+    },
+    {
+     "n": "Galaxy Blue",
+     "hex": "000D14",
+     "set": {
+      "trim": "000D14"
+     }
+    },
+    {
+     "n": "Dark Blue",
+     "hex": "001029",
+     "set": {
+      "trim": "001029"
+     }
+    },
+    {
+     "n": "Saxon Blue",
+     "hex": "1C2F4F",
+     "set": {
+      "trim": "1C2F4F"
+     }
+    },
+    {
+     "n": "Mariner Blue",
+     "hex": "3B4E78",
+     "set": {
+      "trim": "3B4E78"
+     }
+    },
+    {
+     "n": "Harbor Blue",
+     "hex": "272D3B",
+     "set": {
+      "trim": "272D3B"
+     }
+    },
+    {
+     "n": "Diamond Blue",
+     "hex": "95B2DB",
+     "set": {
+      "trim": "95B2DB"
+     }
+    },
+    {
+     "n": "Surf Blue",
+     "hex": "3E627A",
+     "set": {
+      "trim": "3E627A"
+     }
+    },
+    {
+     "n": "Nautical Blue",
+     "hex": "1C3140",
+     "set": {
+      "trim": "1C3140"
+     }
+    },
+    {
+     "n": "Racing Blue",
+     "hex": "0E316D",
+     "set": {
+      "trim": "0E316D"
+     }
+    },
+    {
+     "n": "Ultra Blue",
+     "hex": "0055C4",
+     "set": {
+      "trim": "0055C4"
+     }
+    },
+    {
+     "n": "Light Blue",
+     "hex": "395A83",
+     "set": {
+      "trim": "395A83"
+     }
+    },
+    {
+     "n": "Chocolate Brown",
+     "hex": "120D07",
+     "set": {
+      "trim": "120D07"
+     }
+    },
+    {
+     "n": "Bison Brown",
+     "hex": "221918",
+     "set": {
+      "trim": "221918"
+     }
+    },
+    {
+     "n": "Creek Brown",
+     "hex": "262117",
+     "set": {
+      "trim": "262117"
+     }
+    },
+    {
+     "n": "Feltzer Brown",
+     "hex": "291B06",
+     "set": {
+      "trim": "291B06"
+     }
+    },
+    {
+     "n": "Maple Brown",
+     "hex": "332111",
+     "set": {
+      "trim": "332111"
+     }
+    },
+    {
+     "n": "Beechwood Brown",
+     "hex": "241309",
+     "set": {
+      "trim": "241309"
+     }
+    },
+    {
+     "n": "Sienna Brown",
+     "hex": "3B1700",
+     "set": {
+      "trim": "3B1700"
+     }
+    },
+    {
+     "n": "Saddle Brown",
+     "hex": "3D3023",
+     "set": {
+      "trim": "3D3023"
+     }
+    },
+    {
+     "n": "Moss Brown",
+     "hex": "37382B",
+     "set": {
+      "trim": "37382B"
+     }
+    },
+    {
+     "n": "Woodbeech Brown",
+     "hex": "575036",
+     "set": {
+      "trim": "575036"
+     }
+    },
+    {
+     "n": "Straw Brown",
+     "hex": "5E5343",
+     "set": {
+      "trim": "5E5343"
+     }
+    },
+    {
+     "n": "Sandy Brown",
+     "hex": "6E6246",
+     "set": {
+      "trim": "6E6246"
+     }
+    },
+    {
+     "n": "Bleached Brown",
+     "hex": "998D73",
+     "set": {
+      "trim": "998D73"
+     }
+    },
+    {
+     "n": "Spinnaker Purple",
+     "hex": "161629",
+     "set": {
+      "trim": "161629"
+     }
+    },
+    {
+     "n": "Midnight Purple",
+     "hex": "00080F",
+     "set": {
+      "trim": "00080F"
+     }
+    },
+    {
+     "n": "Bright Purple",
+     "hex": "320642",
+     "set": {
+      "trim": "320642"
+     }
+    },
+    {
+     "n": "Cream",
+     "hex": "CFC0A5",
+     "set": {
+      "trim": "CFC0A5"
+     }
+    },
+    {
+     "n": "Ice White",
+     "hex": "F0F0F0",
+     "set": {
+      "trim": "F0F0F0"
+     }
+    },
+    {
+     "n": "Frost White",
+     "hex": "B3B9C9",
+     "set": {
+      "trim": "B3B9C9"
+     }
+    }
+   ],
+   "compat": null,
+   "ids": null,
+   "langue": "en",
+   "sous": null
+  },
+  {
+   "id": "interieur-accent",
+   "fam": "v",
+   "groupe": "interieur",
+   "titre": "Couleurs d’accent",
+   "jeu": "GTA Online (Benny’s)",
+   "compte": "49 couleurs",
+   "note": "Cadrans, surpiqûres et détails (« Light Color » sur le GTA Wiki).",
+   "sources": [
+    "gtawiki-bennys-int",
+    "lsc-script",
+    "gtav-dumps"
+   ],
+   "type": "sw",
+   "items": [
+    {
+     "n": "Silver",
+     "hex": "5A5E66",
+     "set": {
+      "accent": "5A5E66"
+     }
+    },
+    {
+     "n": "Bluish Silver",
+     "hex": "777C87",
+     "set": {
+      "accent": "777C87"
+     }
+    },
+    {
+     "n": "Rolled Steel",
+     "hex": "515459",
+     "set": {
+      "accent": "515459"
+     }
+    },
+    {
+     "n": "Shadow Silver",
+     "hex": "323B47",
+     "set": {
+      "accent": "323B47"
+     }
+    },
+    {
+     "n": "Ice White",
+     "hex": "F0F0F0",
+     "set": {
+      "accent": "F0F0F0"
+     }
+    },
+    {
+     "n": "Frost White",
+     "hex": "B3B9C9",
+     "set": {
+      "accent": "B3B9C9"
+     }
+    },
+    {
+     "n": "Cream",
+     "hex": "CFC0A5",
+     "set": {
+      "accent": "CFC0A5"
+     }
+    },
+    {
+     "n": "Sienna Brown",
+     "hex": "3B1700",
+     "set": {
+      "accent": "3B1700"
+     }
+    },
+    {
+     "n": "Saddle Brown",
+     "hex": "3D3023",
+     "set": {
+      "accent": "3D3023"
+     }
+    },
+    {
+     "n": "Moss Brown",
+     "hex": "37382B",
+     "set": {
+      "accent": "37382B"
+     }
+    },
+    {
+     "n": "Woodbeech Brown",
+     "hex": "575036",
+     "set": {
+      "accent": "575036"
+     }
+    },
+    {
+     "n": "Straw Brown",
+     "hex": "5E5343",
+     "set": {
+      "accent": "5E5343"
+     }
+    },
+    {
+     "n": "Sandy Brown",
+     "hex": "6E6246",
+     "set": {
+      "accent": "6E6246"
+     }
+    },
+    {
+     "n": "Bleached Brown",
+     "hex": "998D73",
+     "set": {
+      "accent": "998D73"
+     }
+    },
+    {
+     "n": "Gold",
+     "hex": "6E4F2D",
+     "set": {
+      "accent": "6E4F2D"
+     }
+    },
+    {
+     "n": "Bronze",
+     "hex": "4A341B",
+     "set": {
+      "accent": "4A341B"
+     }
+    },
+    {
+     "n": "Yellow",
+     "hex": "F5890F",
+     "set": {
+      "accent": "F5890F"
+     }
+    },
+    {
+     "n": "Race Yellow",
+     "hex": "D9A600",
+     "set": {
+      "accent": "D9A600"
+     }
+    },
+    {
+     "n": "Dew Yellow",
+     "hex": "A2A827",
+     "set": {
+      "accent": "A2A827"
+     }
+    },
+    {
+     "n": "Orange",
+     "hex": "BD4800",
+     "set": {
+      "accent": "BD4800"
+     }
+    },
+    {
+     "n": "Bright Orange",
+     "hex": "C26610",
+     "set": {
+      "accent": "C26610"
+     }
+    },
+    {
+     "n": "Sunrise Orange",
+     "hex": "802800",
+     "set": {
+      "accent": "802800"
+     }
+    },
+    {
+     "n": "Red",
+     "hex": "690000",
+     "set": {
+      "accent": "690000"
+     }
+    },
+    {
+     "n": "Torino Red",
+     "hex": "8A0B00",
+     "set": {
+      "accent": "8A0B00"
+     }
+    },
+    {
+     "n": "Formula Red",
+     "hex": "6B0000",
+     "set": {
+      "accent": "6B0000"
+     }
+    },
+    {
+     "n": "Lava Red",
+     "hex": "6B0B00",
+     "set": {
+      "accent": "6B0B00"
+     }
+    },
+    {
+     "n": "Blaze Red",
+     "hex": "611009",
+     "set": {
+      "accent": "611009"
+     }
+    },
+    {
+     "n": "Grace Red",
+     "hex": "4A0A0A",
+     "set": {
+      "accent": "4A0A0A"
+     }
+    },
+    {
+     "n": "Garnet Red",
+     "hex": "470E0E",
+     "set": {
+      "accent": "470E0E"
+     }
+    },
+    {
+     "n": "Candy Red",
+     "hex": "630012",
+     "set": {
+      "accent": "630012"
+     }
+    },
+    {
+     "n": "Hot Pink",
+     "hex": "B01259",
+     "set": {
+      "accent": "B01259"
+     }
+    },
+    {
+     "n": "Pfister Pink",
+     "hex": "8F2F55",
+     "set": {
+      "accent": "8F2F55"
+     }
+    },
+    {
+     "n": "Salmon Pink",
+     "hex": "F69799",
+     "set": {
+      "accent": "F69799"
+     }
+    },
+    {
+     "n": "Schafter Purple",
+     "hex": "1A182E",
+     "set": {
+      "accent": "1A182E"
+     }
+    },
+    {
+     "n": "Bright Purple",
+     "hex": "320642",
+     "set": {
+      "accent": "320642"
+     }
+    },
+    {
+     "n": "Saxon Blue",
+     "hex": "1C2F4F",
+     "set": {
+      "accent": "1C2F4F"
+     }
+    },
+    {
+     "n": "Blue",
+     "hex": "001B57",
+     "set": {
+      "accent": "001B57"
+     }
+    },
+    {
+     "n": "Mariner Blue",
+     "hex": "3B4E78",
+     "set": {
+      "accent": "3B4E78"
+     }
+    },
+    {
+     "n": "Harbor Blue",
+     "hex": "272D3B",
+     "set": {
+      "accent": "272D3B"
+     }
+    },
+    {
+     "n": "Diamond Blue",
+     "hex": "95B2DB",
+     "set": {
+      "accent": "95B2DB"
+     }
+    },
+    {
+     "n": "Surf Blue",
+     "hex": "3E627A",
+     "set": {
+      "accent": "3E627A"
+     }
+    },
+    {
+     "n": "Nautical Blue",
+     "hex": "1C3140",
+     "set": {
+      "accent": "1C3140"
+     }
+    },
+    {
+     "n": "Racing Blue",
+     "hex": "0E316D",
+     "set": {
+      "accent": "0E316D"
+     }
+    },
+    {
+     "n": "Ultra Blue",
+     "hex": "0055C4",
+     "set": {
+      "accent": "0055C4"
+     }
+    },
+    {
+     "n": "Light Blue",
+     "hex": "395A83",
+     "set": {
+      "accent": "395A83"
+     }
+    },
+    {
+     "n": "Sea Green",
+     "hex": "00211E",
+     "set": {
+      "accent": "00211E"
+     }
+    },
+    {
+     "n": "Bright Green",
+     "hex": "003805",
+     "set": {
+      "accent": "003805"
+     }
+    },
+    {
+     "n": "Gasoline Green",
+     "hex": "0B4145",
+     "set": {
+      "accent": "0B4145"
+     }
+    },
+    {
+     "n": "Lime Green",
+     "hex": "568F00",
+     "set": {
+      "accent": "568F00"
+     }
+    }
+   ],
+   "compat": null,
+   "ids": null,
+   "langue": "en",
+   "sous": null
+  },
+  {
+   "id": "interieur-postes",
+   "fam": "v",
+   "groupe": "interieur",
+   "titre": "Postes d’intérieur de Benny’s",
+   "jeu": "GTA Online",
+   "compte": "10 postes",
+   "note": "Ce que Benny’s change dans l’habitacle des 31 modèles convertibles en lowriders.",
+   "sources": [
+    "gtawiki-bennys-int"
+   ],
+   "type": "txt",
+   "items": [
+    {
+     "n": "Trim Design"
+    },
+    {
+     "n": "Dash"
+    },
+    {
+     "n": "Dials"
+    },
+    {
+     "n": "Doors"
+    },
+    {
+     "n": "Seats"
+    },
+    {
+     "n": "Steering Wheels"
+    },
+    {
+     "n": "ICE"
+    },
+    {
+     "n": "Column Shifter Levers"
+    },
+    {
+     "n": "Plaques"
+    },
+    {
+     "n": "Ornaments"
+    }
+   ],
+   "compat": null,
+   "ids": null,
+   "langue": "en",
+   "sous": null
+  },
+  {
+   "id": "armes-teintes",
+   "fam": "a",
+   "groupe": "finitions",
+   "titre": "Teintes",
+   "jeu": "GTA V",
+   "compte": "8 teintes",
+   "langue": "local",
+   "note": "Pour la plupart des armes à feu ; en ligne, débloquées par les éliminations et le rang.",
+   "sources": [
+    "gtawiki-pistol",
+    "gtav-dumps"
+   ],
+   "type": "txt",
+   "items": [
+    {
+     "n": "Teinte noire",
+     "set": {
+      "finish": "black"
+     }
+    },
+    {
+     "n": "Teinte verte",
+     "set": {
+      "finish": "green"
+     }
+    },
+    {
+     "n": "Teinte or",
+     "set": {
+      "finish": "gold"
+     }
+    },
+    {
+     "n": "Teinte rose",
+     "set": {
+      "finish": "pink"
+     }
+    },
+    {
+     "n": "Teinte armée",
+     "set": {
+      "finish": "army"
+     }
+    },
+    {
+     "n": "Teinte LSPD",
+     "set": {
+      "finish": "lspd"
+     }
+    },
+    {
+     "n": "Teinte orange",
+     "set": {
+      "finish": "orange"
+     }
+    },
+    {
+     "n": "Teinte platine",
+     "set": {
+      "finish": "platinum"
+     }
+    }
+   ],
+   "compat": null,
+   "ids": null,
+   "sous": null
+  },
+  {
+   "id": "armes-teintes-mk2",
+   "fam": "a",
+   "groupe": "finitions",
+   "titre": "Teintes Mk II",
+   "jeu": "GTA Online",
+   "compte": "32 teintes",
+   "langue": "local",
+   "note": "Les finitions des armes Mk II de l’atelier d’armes, souvent bicolores : elles ne s’essaient pas sur la maquette.",
+   "sources": [
+    "gtawiki-carbine-mk2",
+    "gtav-dumps"
+   ],
+   "type": "txt",
+   "sous": [
+    {
+     "titre": "Classiques",
+     "compte": "9",
+     "items": [
+      {
+       "n": "Noir classique"
+      },
+      {
+       "n": "Gris classique"
+      },
+      {
+       "n": "Bicolore classique"
+      },
+      {
+       "n": "Blanc classique"
+      },
+      {
+       "n": "Beige classique"
+      },
+      {
+       "n": "Vert classique"
+      },
+      {
+       "n": "Bleu classique"
+      },
+      {
+       "n": "Marron classique"
+      },
+      {
+       "n": "Brun et noir classique"
+      }
+     ]
+    },
+    {
+     "titre": "Contraste",
+     "compte": "4",
+     "items": [
+      {
+       "n": "Contraste rouge"
+      },
+      {
+       "n": "Contraste bleu"
+      },
+      {
+       "n": "Contraste jaune"
+      },
+      {
+       "n": "Contraste orange"
+      }
+     ]
+    },
+    {
+     "titre": "Vives",
+     "compte": "10",
+     "items": [
+      {
+       "n": "Rose vif"
+      },
+      {
+       "n": "Violet et jaune vif"
+      },
+      {
+       "n": "Orange vif"
+      },
+      {
+       "n": "Vert et violet vif"
+      },
+      {
+       "n": "Détails rouge vif"
+      },
+      {
+       "n": "Détails vert vif"
+      },
+      {
+       "n": "Détails cyan vif"
+      },
+      {
+       "n": "Détails jaune vif"
+      },
+      {
+       "n": "Rouge et blanc vif"
+      },
+      {
+       "n": "Bleu et blanc vif"
+      }
+     ]
+    },
+    {
+     "titre": "Métallisées",
+     "compte": "9",
+     "items": [
+      {
+       "n": "Or métallisé"
+      },
+      {
+       "n": "Platine métallisé"
+      },
+      {
+       "n": "Gris et lilas métallisé"
+      },
+      {
+       "n": "Violet et vert lime métallisé"
+      },
+      {
+       "n": "Rouge métallisé"
+      },
+      {
+       "n": "Vert métallisé"
+      },
+      {
+       "n": "Bleu métallisé"
+      },
+      {
+       "n": "Blanc et turquoise métallisé"
+      },
+      {
+       "n": "Rouge et jaune métallisé"
+      }
+     ]
+    }
+   ],
+   "compat": null,
+   "ids": null,
+   "items": null
+  },
+  {
+   "id": "armes-camouflages",
+   "fam": "a",
+   "groupe": "finitions",
+   "titre": "Camouflages Mk II",
+   "jeu": "GTA Online",
+   "compte": "11 camouflages",
+   "langue": "local",
+   "note": "Chaque camouflage se décline en 32 couleurs. Les noms soulignés s’essaient avec un motif générique de l’Atelier.",
+   "sources": [
+    "gtawiki-carbine-mk2",
+    "gtav-dumps"
+   ],
+   "type": "txt",
+   "items": [
+    {
+     "n": "Camouflage pixel",
+     "set": {
+      "camo": "digital"
+     }
+    },
+    {
+     "n": "Camouflage pinceau",
+     "set": {
+      "camo": "brush"
+     }
+    },
+    {
+     "n": "Camouflage forestier",
+     "set": {
+      "camo": "woodland"
+     }
+    },
+    {
+     "n": "Crânien"
+    },
+    {
+     "n": "Sessanta Nove"
+    },
+    {
+     "n": "Perseus"
+    },
+    {
+     "n": "Léopard",
+     "set": {
+      "camo": "leopard"
+     }
+    },
+    {
+     "n": "Zébré",
+     "set": {
+      "camo": "zebra"
+     }
+    },
+    {
+     "n": "Géométrique",
+     "set": {
+      "camo": "geometric"
+     }
+    },
+    {
+     "n": "Détonant"
+    },
+    {
+     "n": "Patriotique"
+    }
+   ],
+   "compat": null,
+   "ids": null,
+   "sous": null
+  },
+  {
+   "id": "armes-finitions",
+   "fam": "a",
+   "groupe": "finitions",
+   "titre": "Finitions spéciales",
+   "jeu": "GTA V et GTA Online",
+   "compte": "7 finitions",
+   "langue": "local",
+   "note": "Chacune liée à quelques armes précises ; la plupart arrivent avec la mise à jour Lowriders.",
+   "sources": [
+    "gtawiki-special-liveries",
+    "gtav-dumps"
+   ],
+   "type": "fin",
+   "items": [
+    {
+     "n": "Finition luxe Yusuf Amir",
+     "armes": [
+      "Pistolet",
+      "Pistolet de combat",
+      "Pistolet-mitrailleur",
+      "Mitraillette",
+      "Mitraillette d’assaut",
+      "Fusil d’assaut",
+      "Carabine",
+      "Mitrailleuse",
+      "Fusil à pompe",
+      "Fusil à lunette"
+     ]
+    },
+    {
+     "n": "Finition bronze doré",
+     "armes": [
+      "Pistolet perforant",
+      "Fusil amélioré",
+      "Fusil à canon scié",
+      "Fusil bullpup"
+     ]
+    },
+    {
+     "n": "Finition perle de platine",
+     "armes": [
+      "Pistolet cal.50"
+     ]
+    },
+    {
+     "n": "Finition métal gravé",
+     "armes": [
+      "Mitrailleuse de combat",
+      "Carabine spéciale"
+     ]
+    },
+    {
+     "n": "Finition bois gravé",
+     "armes": [
+      "Pistolet lourd",
+      "Pétoire",
+      "Fusil de précision"
+     ]
+    },
+    {
+     "n": "Variante de gros bonnet",
+     "armes": [
+      "Revolver lourd",
+      "Cran d’arrêt"
+     ]
+    },
+    {
+     "n": "Variante de garde du corps",
+     "armes": [
+      "Revolver lourd",
+      "Cran d’arrêt"
+     ]
+    }
+   ],
+   "compat": null,
+   "ids": null,
+   "sous": null
+  },
+  {
+   "id": "armes-batte",
+   "fam": "a",
+   "groupe": "finitions",
+   "ids": [
+    "batte"
+   ],
+   "titre": "Habillages de la batte",
+   "jeu": "GTA Online",
+   "compte": "10 habillages",
+   "langue": "local",
+   "note": "Les motifs de la batte de baseball vendus en ligne.",
+   "sources": [
+    "gtav-dumps"
+   ],
+   "type": "txt",
+   "items": [
+    {
+     "n": "Blagueurs"
+    },
+    {
+     "n": "Projections"
+    },
+    {
+     "n": "Impacts de balles"
+    },
+    {
+     "n": "Burger Shot"
+    },
+    {
+     "n": "Cluckin’ Bell"
+    },
+    {
+     "n": "Fatal Incursion"
+    },
+    {
+     "n": "Lucha Libre"
+    },
+    {
+     "n": "Psychédélique"
+    },
+    {
+     "n": "Teinture"
+    },
+    {
+     "n": "Briques"
+    }
+   ],
+   "compat": null,
+   "sous": null
+  },
+  {
+   "id": "armes-viseurs",
+   "fam": "a",
+   "groupe": "viseurs",
+   "titre": "Viseurs et lunettes",
+   "jeu": "GTA V et GTA Online",
+   "compte": "9 modèles",
+   "langue": "local",
+   "note": "Lunettes de vision nocturne et thermique : sur le fusil de précision lourd Mk II.",
+   "sources": [
+    "gtawiki-carbine-mk2",
+    "gtav-dumps"
+   ],
+   "type": "txt",
+   "items": [
+    {
+     "n": "Lunette",
+     "set": {
+      "sight": "scope"
+     }
+    },
+    {
+     "n": "Lunette améliorée",
+     "set": {
+      "sight": "scope2"
+     }
+    },
+    {
+     "n": "Viseur holographique",
+     "set": {
+      "sight": "holo"
+     }
+    },
+    {
+     "n": "Grande lunette",
+     "set": {
+      "sight": "scope2"
+     }
+    },
+    {
+     "n": "Lunette puissante",
+     "set": {
+      "sight": "scope2"
+     }
+    },
+    {
+     "n": "Petite lunette",
+     "set": {
+      "sight": "scope"
+     }
+    },
+    {
+     "n": "Lunette moyenne",
+     "set": {
+      "sight": "scope"
+     }
+    },
+    {
+     "n": "Lunette de vision nocturne",
+     "set": {
+      "sight": "night"
+     }
+    },
+    {
+     "n": "Lunette thermique",
+     "set": {
+      "sight": "thermal"
+     }
+    }
+   ],
+   "compat": null,
+   "ids": null,
+   "sous": null
+  },
+  {
+   "id": "armes-canons",
+   "fam": "a",
+   "groupe": "canons",
+   "titre": "Canons et bouches",
+   "jeu": "GTA V et GTA Online",
+   "compte": "5 pièces",
+   "langue": "local",
+   "note": "Sur les armes Mk II, le frein de bouche existe en sept modèles.",
+   "sources": [
+    "gtawiki-carbine-mk2",
+    "gtav-dumps"
+   ],
+   "type": "txt",
+   "items": [
+    {
+     "n": "Canon par défaut",
+     "set": {
+      "barrel": "std"
+     }
+    },
+    {
+     "n": "Canon lourd",
+     "set": {
+      "barrel": "heavy"
+     }
+    },
+    {
+     "n": "Silencieux",
+     "set": {
+      "barrel": "silencer"
+     }
+    },
+    {
+     "n": "Frein de bouche",
+     "set": {
+      "barrel": "brake"
+     }
+    },
+    {
+     "n": "Compensateur",
+     "set": {
+      "barrel": "comp"
+     }
+    }
+   ],
+   "compat": null,
+   "ids": null,
+   "sous": null
+  },
+  {
+   "id": "armes-munitions",
+   "fam": "a",
+   "groupe": "munitions",
+   "titre": "Munitions spéciales",
+   "jeu": "GTA Online",
+   "compte": "10 munitions",
+   "langue": "local",
+   "note": "Les quatre cartouches sont celles du fusil à pompe Mk II ; les munitions explosives, celles du fusil de précision lourd Mk II.",
+   "sources": [
+    "gtawiki-carbine-mk2",
+    "gtav-dumps"
+   ],
+   "type": "txt",
+   "items": [
+    {
+     "n": "Munitions traçantes",
+     "set": {
+      "ammo": "tracer"
+     }
+    },
+    {
+     "n": "Munitions incendiaires",
+     "set": {
+      "ammo": "incend"
+     }
+    },
+    {
+     "n": "Munitions à pointes creuses",
+     "set": {
+      "ammo": "hp"
+     }
+    },
+    {
+     "n": "Munitions blindées",
+     "set": {
+      "ammo": "fmj"
+     }
+    },
+    {
+     "n": "Munitions perforantes",
+     "set": {
+      "ammo": "ap"
+     }
+    },
+    {
+     "n": "Balles en acier"
+    },
+    {
+     "n": "Balles explosives"
+    },
+    {
+     "n": "Fléchettes"
+    },
+    {
+     "n": "Souffle du dragon"
+    },
+    {
+     "n": "Munitions explosives",
+     "set": {
+      "ammo": "explo"
+     }
+    }
+   ],
+   "compat": null,
+   "ids": null,
+   "sous": null
+  }
+ ]
+}

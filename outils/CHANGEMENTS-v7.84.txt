@@ -1,0 +1,93 @@
+LEONIDAKIT v7.84 — Atelier 3D : pré-listes de la série (GTA V, GTA Online) qu'on ouvre d'un clic et qu'on essaie sur la
+maquette ; vue intérieure des voitures et première personne des motos ; camouflages, styles de jante, flancs, néons,
+plaques, habitacle — 11 octobre 2026
+
+Base : v7.83. Demandes de Téva du 10/10/2026 : « des pré-listes… même si elles ne sont pas remplies… qu'on peut cliquer
+dessus pour voir la liste qui va arriver des camouflages, etc., qu'on peut appliquer à la voiture, à la moto » (spéculer
+d'après GTA V) ; « la vue intérieure, ou la vue première personne pour les motos… on va pouvoir aussi modifier
+l'intérieur ». Rien n'est publié ni poussé. Aucun fichier à supprimer. CSP inchangée.
+
+1. LES PRÉ-LISTES (outils/atelier-prelistes.json, nouveau ; outils/gen-atelier.cjs ; atelier-3d.js ; atelier-3d.css)
+Sous la maquette, « Pré-listes de la série » : un onglet par atelier (synchronisé avec le menu de droite), une carte par
+liste (titre, nombre, jeu de référence, « GTA VI : à venir »), fermée, qui s'ouvre d'un clic. 28 listes, 971 éléments,
+toujours présentés comme repères de la série, jamais comme des listes de GTA VI :
+- Véhicules — peinture : couleurs classiques (75), métallisées (75), mates (20), métaux et chrome (6), nacres (75 reflets),
+  peintures caméléon (46, noms seulement), livrées camouflage des véhicules militaires de GTA Online (20) ; jantes et
+  pneus : 13 familles de jantes et leurs 324 modèles, pneus et flancs (16), fumée de pneus (12) ; motos : postes des
+  motos custom de Bikers (18) ; vitres (4 teintes) ; néons : 8 dispositions, 14 couleurs ; phares : 13 couleurs ;
+  plaques (12 styles) ; klaxons (46, noms seulement) ; intérieur : couleurs d'habillage (68), couleurs d'accent (49),
+  postes d'intérieur de Benny's (10).
+- Armes : teintes (8), teintes Mk II (32), camouflages Mk II (11), finitions spéciales (7, avec leurs armes), habillages
+  de la batte (10, sur la fiche de la batte seulement), viseurs et lunettes (9), canons et bouches (5), munitions
+  spéciales (10).
+- S'essaient sur la maquette (pastille ou nom souligné) : toutes les couleurs (avec la couleur exacte des données du jeu :
+  numéros de couleur relevés sur le GTA Wiki et recoupés avec le script décompilé de Los Santos Customs), les nacres, les
+  teintes de vitres, dispositions et couleurs des néons, couleurs des phares, cinq plaques, flancs blancs et lignes, les
+  teintes, viseurs, canons et munitions des armes ; les camouflages des véhicules et des armes avec un motif générique de
+  l'Atelier quand le nom le dit (désert, neige, urbain, numérique, marine, forêt ; pixel, pinceau, forestier, léopard,
+  zèbre, géométrique) — la carte le précise : ce ne sont pas les textures du jeu. L'élément essayé est marqué dans la liste
+  et nommé dans les options choisies (« Couleurs classiques : Torino Red »).
+- Noms : ceux du jeu. En anglais (version anglaise de GTA V, jamais traduits) pour les couleurs, jantes, klaxons, livrées
+  et postes ; libellés officiels français, espagnols, italiens et allemands pour les teintes de vitres, les plaques et
+  tout ce qui touche aux armes (données du jeu : outils/langues/<l>/v784-jeu.json).
+- Sources citées sous chaque liste : GTA Wiki (Respray Colors, Wheels, Lights, Horns, The Chop Shop, APC, Benny's,
+  Avarus, Pistol, Carbine Rifle Mk II, finitions spéciales), GTA V Data Dumps, scripts décompilés de GTA V. Relevé des
+  10 et 11 octobre 2026.
+- Légèreté : le contenu de chaque liste est dans un <template> : rien n'est mis en page avant l'ouverture. Poids compressé
+  de l'Atelier : page 37 Ko (20 avant), script 27 Ko (17), feuille 5,5 Ko (3,9) ; les autres pages ne changent pas.
+
+2. VUE INTÉRIEURE ET PREMIÈRE PERSONNE (atelier-3d.js)
+- Nouveau bouton dans la barre des angles : « Intérieur » pour les voitures, pick-up, camions et bus ; « Première
+  personne » pour les motos, quads et vélos (caché pour les armes, bateaux, avions, hélicoptères et trains). La caméra se
+  pose à la place du conducteur ; glisser fait regarder autour, la molette ou le pincement règle le champ de vision ; les
+  flèches du clavier aussi. Un autre angle ramène dehors.
+- Habitacle générique bâti sur les vitres du schéma de chaque modèle : parois percées aux vitres (on voit la route et le
+  capot à travers le pare-brise), pavillon, plancher, tableau de bord avec deux cadrans et un écran, volant, console et
+  levier, sièges, banquette arrière quand la cabine est longue, rétroviseur, plafonnier. Motos : guidon, poignées,
+  rétroviseurs et compteur (aussi visibles de l'extérieur). Une note le dit dans la scène : « Habitacle générique de
+  l'Atelier : ni le tableau de bord ni les sièges du modèle ».
+- Correction trouvée en chemin : les volumes extrudés (caisses, pièces, armes) avaient leurs faces tournées vers
+  l'intérieur (l'échange des axes est une symétrie) ; ils sont remis à l'endroit. De dehors, la silhouette est la même ;
+  de dedans, la caisse ne bouche plus la vue.
+
+3. NOUVELLES OPTIONS (outils/gen-atelier.cjs, atelier-3d.js)
+- Peinture : reflet de nacre (couleur du reflet pour la finition nacrée) ; camouflage générique sur la caisse (forêt,
+  désert, urbain, numérique, neige, marine).
+- Jantes : style générique (cinq branches par défaut, multibranches, nid d'abeille, rayons fins, tôle, pleine) ; pneus :
+  flancs (flanc blanc, ligne blanche, rouge, bleue).
+- Néons : disposition (tout le tour, à l'avant, à l'arrière, sur les côtés et leurs combinaisons).
+- Plaque : « Jaune sur bleu » et « Jaune sur noir » (styles de GTA V).
+- Nouvel atelier « Intérieur » : couleur d'habillage, couleur d'accent (cadrans, surpiqûres), sièges (d'origine,
+  baquets, banquette), volant (d'origine, sport, course), bouton « Voir l'intérieur » ; postes reliés : intérieurs sur
+  mesure de Rideout Customs (officiel GTA VI) et intérieur de Benny's (repère de la série).
+- Nouvel atelier « Klaxons » : pas de son, la note renvoie à la pré-liste ; postes reliés (klaxons, klaxons en boucle).
+- Armes : teinte « Vert » ; camouflages numérique, coup de pinceau, léopard, zèbre, géométrique.
+- Le lien copié et les configurations enregistrées gardent ces réglages (mêmes clés courtes).
+
+4. TRADUCTIONS
+outils/langues/<en|es|it|de>/v784.json (textes de l'Atelier, cartes, sources, composites) et v784-jeu.json (libellés
+officiels du jeu ; une vingtaine propres à atelier-3d.html quand le reste du site traduisait déjà le même mot autrement :
+« Balles explosives » reste « Explosive rounds » ailleurs, « Explosive Slugs » dans la pré-liste).
+
+5. TESTS
+outils/tests/v784.test.cjs (4 tests) : données des pré-listes (nombres, couleurs du jeu, libellés officiels, motifs
+génériques seulement quand le nom le dit), page (section, onglets, cartes fermées, modèles, éléments à essayer, noms
+anglais non traduits), vue intérieure et nouvelles options, traductions. outils/tests/v781.test.cjs : angle
+« interieur », 11 ateliers de véhicule, rangée des pré-listes sur téléphone.
+
+CONTRÔLES (11 octobre 2026)
+- Tests Node : 1 031 / 1 031 (toute la suite) ; langues : 42 / 42 ; 0 texte sans traduction dans les quatre langues (pages,
+  modèles des pré-listes compris).
+- Vérificateur : aucune erreur, 326 457 références vérifiées dans 2 246 pages.
+- Navigateur (Chromium, WebGL logiciel) : pré-listes ouvertes et essayées (Torino Red, néons sur les côtés, flanc blanc,
+  camouflage numérique, léopard sur la carabine), vue intérieure (Zentorno, Manana, Ganado, bus), première personne
+  (Bati 801, Enduro), anglais à 390 px : 0 erreur de script.
+- Écrans (57 pages × 6 largeurs, Atelier compris) : 0 débordement, 0 élément hors fenêtre, 0 marge différente ; audit
+  navigateur (26 pages, 182 chargements) : 0 débordement, 0 coupe, 0 image, 0 caché, 0 contraste, 0 erreur console,
+  0 requête en échec, fonctions 12 / 12.
+
+FICHIERS
+Modifiés : outils/gen-atelier.cjs, atelier-3d.js, atelier-3d.css, atelier-3d.html et ses copies traduites,
+outils/tests/v781.test.cjs, README.md, pages dont l'empreinte de script change. Nouveaux : outils/atelier-prelistes.json,
+outils/langues/*/v784.json, outils/langues/*/v784-jeu.json, outils/tests/v784.test.cjs, outils/CHANGEMENTS-v7.84.txt,
+LISEZ-MOI-v7.84.txt. Aucun fichier à supprimer.

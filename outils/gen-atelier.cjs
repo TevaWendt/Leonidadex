@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 'use strict';
 /* ============================================================
-   LEONIDAKIT — gen-atelier.cjs (v7.81) : la section « Atelier 3D » (atelier-3d.html) et ses données.
+   LEONIDAKIT — gen-atelier.cjs (v7.81, v7.84) : la section « Atelier 3D » (atelier-3d.html) et ses données.
    - atelier/vehicules/<id>.json, atelier/armes/<id>.json : silhouettes, vitrages, roues, contour de dessus, feux, tirés des
      schémas du site (outils/svg-polys.cjs). L'Atelier (atelier-3d.js, three.js en vendor/) en construit des volumes : ce
      sont des maquettes bâties sur les schémas Leonidakit, pas les modèles du jeu.
@@ -18,6 +18,8 @@ const V = ctx.window.LK_VEHICULES, A = ctx.window.LK_ARMES, VCAT = ctx.window.LK
 const S = require('./vehicules-schemas.cjs'), VA = require('./vehicules-angles.cjs'), AS = require('./armes-schemas.cjs'), AA = require('./armes-angles.cjs'), SP = require('./svg-polys.cjs');
 const C = require('./catalogues.cjs');
 const PV = JSON.parse(read('outils/catalogues/perso-vehicules.json')), PA = JSON.parse(read('outils/catalogues/perso-armes.json'));
+/* v7.84 : pré-listes de la série (outils/atelier-prelistes.json) */
+const PRE = JSON.parse(read('outils/atelier-prelistes.json'));
 const nomC = v => (v.marque && v.marque !== 'Marque inconnue' ? v.marque + ' ' : '') + v.nom;
 const DP = require('./donnees-publiees.cjs');
 
@@ -73,15 +75,17 @@ const check = (k, l, compat, fam) => '<label class="at-chk" data-at-compat="' + 
 const opt = (fam, id, titre, body, compat, postes) => '<fieldset class="at-opt" id="at-' + fam + '-' + id + '" data-at-opt="' + id + '" data-at-fam="' + fam + '" data-at-compat="' + esc(compat.join(' ')) + '"><legend>' + esc(titre) + '</legend>' + body + (postes.length ? '<ul class="at-postes">' + postes.map(link).join('') + '</ul>' : '') + '</fieldset>';
 const ALL = VCATS.filter(c => !['bateau', 'avion', 'helicoptere'].includes(c));
 /* catégories de menu (véhicules) */
+const INT = ALL.filter(c => c !== 'moto'); /* v7.84 : l'habitacle (voitures, utilitaires, poids lourds) */
+const note = t => '<p class="at-opt-note">' + esc(t) + '</p>';
 const VMENU = [
   ['peinture', 'Peinture', [
-    opt('v', 'paint', 'Peinture principale', swatches('paint', 'rouge', 'Couleur') + radios('finish', [['gloss', 'Brillante'], ['matte', 'Mate'], ['metal', 'Métallisée'], ['chrome', 'Chromée'], ['nacre', 'Nacrée'], ['cameleon', 'Caméléon']], 'gloss', 'Finition'), VCATS, [poste('v', 'peinture-principale'), poste('v', 'nacre'), poste('v', 'cameleon')]),
+    opt('v', 'paint', 'Peinture principale', swatches('paint', 'rouge', 'Couleur') + radios('finish', [['gloss', 'Brillante'], ['matte', 'Mate'], ['metal', 'Métallisée'], ['chrome', 'Chromée'], ['nacre', 'Nacrée'], ['cameleon', 'Caméléon']], 'gloss', 'Finition') + swatches('pearl', null, 'Reflet (finition nacrée)'), VCATS, [poste('v', 'peinture-principale'), poste('v', 'nacre'), poste('v', 'cameleon')]),
     opt('v', 'paint2', 'Peinture secondaire (accessoires, aileron, rétroviseurs)', swatches('paint2', 'noir'), VCATS, [poste('v', 'peinture-secondaire')]),
-    opt('v', 'stripes', 'Livrée', check('stripes', 'Deux bandes sur le capot et le toit', ALL, 'v') + swatches('stripeColor', 'blanc', 'Couleur des bandes'), ALL, [poste('v', 'livrees-serie')])
+    opt('v', 'stripes', 'Livrée', check('stripes', 'Deux bandes sur le capot et le toit', ALL, 'v') + swatches('stripeColor', 'blanc', 'Couleur des bandes') + radios('camo', [['none', 'Aucun'], ['foret', 'Forêt'], ['desert', 'Désert'], ['urbain', 'Urbain'], ['numerique', 'Numérique'], ['neige', 'Neige'], ['marine', 'Marine']], 'none', 'Camouflage (motif générique)'), ALL, [poste('v', 'livrees-serie')])
   ]],
   ['jantes', 'Jantes et pneus', [
-    opt('v', 'rims', 'Jantes', swatches('rim', 'gris', 'Couleur des jantes') + radios('rimSize', [['-1', 'Petites'], ['0', 'D’origine'], ['1', 'Grandes'], ['2', 'Surdimensionnées (donk)']], '0', 'Taille des jantes'), ALL, [poste('v', 'couleur-jantes'), poste('v', 'jantes-familles'), poste('v', 'jantes-donk')]),
-    opt('v', 'tyres', 'Pneus', radios('tyres', [['std', 'Route'], ['tt', 'Tout-terrain (larges)'], ['slick', 'Faible adhérence (fins)']], 'std'), ALL, [poste('v', 'pneus-tout-terrain'), poste('v', 'pneus-faible-adherence'), poste('v', 'pneus-pare-balles')])
+    opt('v', 'rims', 'Jantes', swatches('rim', 'gris', 'Couleur des jantes') + radios('rimSize', [['-1', 'Petites'], ['0', 'D’origine'], ['1', 'Grandes'], ['2', 'Surdimensionnées (donk)']], '0', 'Taille des jantes') + radios('rimStyle', [['five', 'Cinq branches'], ['multi', 'Multibranches'], ['mesh', 'Nid d’abeille'], ['wire', 'Rayons fins'], ['steelie', 'Tôle'], ['disc', 'Pleine']], 'five', 'Style de jante (générique)'), ALL, [poste('v', 'couleur-jantes'), poste('v', 'jantes-familles'), poste('v', 'jantes-donk')]),
+    opt('v', 'tyres', 'Pneus', radios('tyres', [['std', 'Route'], ['tt', 'Tout-terrain (larges)'], ['slick', 'Faible adhérence (fins)']], 'std') + radios('tyreWall', [['none', 'Noirs'], ['white', 'Flanc blanc'], ['whiteline', 'Ligne blanche'], ['redline', 'Ligne rouge'], ['blueline', 'Ligne bleue']], 'none', 'Flancs'), ALL, [poste('v', 'pneus-tout-terrain'), poste('v', 'pneus-faible-adherence'), poste('v', 'pneus-pare-balles'), poste('v', 'pneus-flancs')])
   ]],
   ['carrosserie', 'Carrosserie', [
     opt('v', 'body', 'Pièces', [check('aileron', 'Aileron', ALL), check('jupes', 'Jupes latérales', ALL), check('capot', 'Prise d’air sur le capot', ALL), check('toit', 'Barres de toit', ALL), check('bullbar', 'Pare-chocs tout-terrain', ['pickup', 'suv']), check('exhaust', 'Double échappement', [...ALL]), check('arceau', 'Arceau', ALL)].join(''), ALL, [poste('v', 'aileron'), poste('v', 'jupes'), poste('v', 'capot'), poste('v', 'toit'), poste('v', 'pare-chocs-tout-terrain'), poste('v', 'echappement'), poste('v', 'arceau')])
@@ -90,7 +94,7 @@ const VMENU = [
     opt('v', 'tint', 'Teinte des vitres', '<label class="at-range"><span>Teinte</span><input type="range" min="0" max="100" value="35" step="5" data-at-k="tint"><output data-at-out="tint">35 %</output></label>', ALL, [poste('v', 'vitres-teintees'), poste('v', 'vitres-noir-pur')])
   ]],
   ['neons', 'Néons', [
-    opt('v', 'neon', 'Néons sous la caisse', check('neon', 'Néons allumés', ALL) + swatches('neonColor', 'rose', 'Couleur des néons'), ALL, [poste('v', 'neons-couleur'), poste('v', 'neons-disposition')])
+    opt('v', 'neon', 'Néons sous la caisse', check('neon', 'Néons allumés', ALL) + swatches('neonColor', 'rose', 'Couleur des néons') + radios('neonLayout', [['all', 'Tout le tour'], ['front', 'À l’avant'], ['back', 'À l’arrière'], ['sides', 'Sur les côtés'], ['fb', 'Avant et arrière'], ['fs', 'Avant et côtés'], ['bs', 'Arrière et côtés']], 'all', 'Disposition'), ALL, [poste('v', 'neons-couleur'), poste('v', 'neons-disposition')])
   ]],
   ['suspension', 'Suspension', [
     opt('v', 'susp', 'Hauteur de caisse', radios('susp', [['-2', 'Rabaissée (course)'], ['-1', 'Rabaissée (street)'], ['0', 'D’origine'], ['1', 'Rehaussée']], '0'), ALL, [poste('v', 'suspension-niveaux'), poste('v', 'suspension-rehaussee'), poste('v', 'hydrauliques')])
@@ -99,7 +103,16 @@ const VMENU = [
     opt('v', 'lights', 'Phares', radios('lights', [['off', 'Éteints'], ['halo', 'Halogène'], ['xenon', 'Xénon'], ['color', 'De couleur']], 'halo') + swatches('lightColor', 'cyan', 'Couleur des phares'), VCATS, [poste('v', 'phares-xenon'), poste('v', 'phares-couleur')])
   ]],
   ['plaques', 'Plaque', [
-    opt('v', 'plate', 'Plaque d’immatriculation', '<label class="at-text"><span>Texte (8 caractères)</span><input type="text" maxlength="8" value="LEONIDA" data-at-k="plate" autocomplete="off" spellcheck="false"></label>' + radios('plateStyle', [['blue', 'Bleue Leonida'], ['white', 'Blanche'], ['yellow', 'Jaune'], ['black', 'Noire']], 'blue', 'Style de plaque'), ALL, [poste('v', 'plaques')])
+    opt('v', 'plate', 'Plaque d’immatriculation', '<label class="at-text"><span>Texte (8 caractères)</span><input type="text" maxlength="8" value="LEONIDA" data-at-k="plate" autocomplete="off" spellcheck="false"></label>' + radios('plateStyle', [['blue', 'Bleue Leonida'], ['white', 'Blanche'], ['yellow', 'Jaune'], ['black', 'Noire'], ['yellowblue', 'Jaune sur bleu'], ['yellowblack', 'Jaune sur noir']], 'blue', 'Style de plaque'), ALL, [poste('v', 'plaques')])
+  ]],
+  /* v7.84 (Téva : « la vue intérieure… on va pouvoir aussi modifier l'intérieur ») : habitacle générique, teintes et pièces */
+  ['interieur', 'Intérieur', [
+    opt('v', 'trim', 'Habillage (sièges, portes, tableau de bord)', swatches('trim', 'noir', 'Couleur d’habillage'), INT, [poste('v', 'interieur-rideout'), poste('v', 'interieur-bennys')]),
+    opt('v', 'accent', 'Accents (cadrans, surpiqûres)', swatches('accent', 'blanc', 'Couleur d’accent'), INT, []),
+    opt('v', 'seats', 'Sièges et volant', radios('seats', [['std', 'D’origine'], ['bucket', 'Baquets'], ['bench', 'Banquette']], 'std', 'Sièges') + radios('wheel', [['std', 'D’origine'], ['sport', 'Sport'], ['race', 'Course']], 'std', 'Volant') + '<p class="at-opt-go"><button type="button" class="at-go" data-at-go="interieur">Voir l’intérieur</button></p>', INT, [])
+  ]],
+  ['klaxons', 'Klaxons', [
+    opt('v', 'horn', 'Klaxon', note('Pas de son dans l’Atelier : les 46 klaxons de GTA V et de GTA Online sont dans la pré-liste, sous la maquette.'), ALL, [poste('v', 'klaxons'), poste('v', 'klaxons-boucle')])
   ]],
   ['perfs', 'Performances', [
     opt('v', 'perf', 'Sans effet visible, comptés dans le total', [check('turbo', 'Turbo', ALL), check('moteur', 'Moteur (EMS)', ALL), check('freins', 'Freins', ALL), check('transmission', 'Transmission', ALL), check('blindage', 'Blindage', ALL)].join(''), ALL, [poste('v', 'turbo'), poste('v', 'moteur-ems'), poste('v', 'freins'), poste('v', 'transmission'), poste('v', 'blindage')])
@@ -108,8 +121,8 @@ const VMENU = [
 const GUNS = ['pistolet', 'pm', 'assaut', 'precision', 'mitrailleuse', 'pompe'];
 const AMENU = [
   ['finitions', 'Finition', [
-    opt('a', 'finish', 'Finition', radios('finish', [['black', 'Noir d’usine'], ['army', 'Vert armée'], ['orange', 'Orange'], ['lspd', 'Bleu LSPD'], ['pink', 'Rose'], ['gold', 'Or'], ['platinum', 'Platine'], ['chrome', 'Chrome'], ['custom', 'Autre']], 'black') + '<label class="at-sw-c at-sw-c--alone"><span>Couleur libre</span><input type="color" value="#E8452C" data-at-k="finishColor" aria-label="Couleur libre"></label>', ACATS, [poste('a', 'teintes'), poste('a', 'teintes-mk2'), poste('a', 'finition-doree')]),
-    opt('a', 'camo', 'Camouflage', radios('camo', [['none', 'Aucun'], ['woodland', 'Forêt'], ['desert', 'Désert'], ['tropical', 'Tropical (palmiers)'], ['urban', 'Urbain']], 'none'), GUNS, [poste('a', 'camouflages-mk2'), poste('a', 'motif-vintage-vice-city')]),
+    opt('a', 'finish', 'Finition', radios('finish', [['black', 'Noir d’usine'], ['green', 'Vert'], ['army', 'Vert armée'], ['orange', 'Orange'], ['lspd', 'Bleu LSPD'], ['pink', 'Rose'], ['gold', 'Or'], ['platinum', 'Platine'], ['chrome', 'Chrome'], ['custom', 'Autre']], 'black') + '<label class="at-sw-c at-sw-c--alone"><span>Couleur libre</span><input type="color" value="#E8452C" data-at-k="finishColor" aria-label="Couleur libre"></label>', ACATS, [poste('a', 'teintes'), poste('a', 'teintes-mk2'), poste('a', 'finition-doree')]),
+    opt('a', 'camo', 'Camouflage', radios('camo', [['none', 'Aucun'], ['woodland', 'Forêt'], ['desert', 'Désert'], ['tropical', 'Tropical (palmiers)'], ['urban', 'Urbain'], ['digital', 'Numérique'], ['brush', 'Coup de pinceau'], ['leopard', 'Léopard'], ['zebra', 'Zèbre'], ['geometric', 'Géométrique']], 'none'), GUNS, [poste('a', 'camouflages-mk2'), poste('a', 'motif-vintage-vice-city')]),
     opt('a', 'engrave', 'Gravures', check('engrave', 'Crosse gravée de palmiers', ['pistolet']), ['pistolet'], [poste('a', 'crosses-gravees')])
   ]],
   ['chargeurs', 'Chargeurs', [
@@ -131,6 +144,44 @@ const AMENU = [
 const menu = (fam, M) => '<nav class="at-cats" data-at-cats="' + fam + '" aria-label="' + (fam === 'v' ? 'Ateliers du véhicule' : 'Ateliers de l’arme') + '"><ul>' + M.map(([id, l], k) => '<li><button type="button" class="at-cat' + (k === 0 ? ' is-on' : '') + '" data-at-cat="' + id + '" aria-pressed="' + (k === 0) + '">' + esc(l) + '</button></li>').join('') + '</ul></nav>' +
   '<div class="at-opts" data-at-opts="' + fam + '">' + M.map(([id, l, opts], k) => '<div class="at-group' + (k === 0 ? ' is-on' : '') + '" data-at-group="' + id + '"' + (k === 0 ? '' : ' hidden') + '>' + opts.join('') + '</div>').join('') + '</div>';
 
+/* ---------- v7.84 : pré-listes de la série (Téva : « des pré-listes qu'on peut cliquer pour voir la liste qui va arriver,
+   camouflages, etc., qu'on peut appliquer à la voiture, à la moto ») ----------
+   Une section sous la maquette : un onglet par atelier qui a des listes (synchronisé avec le menu), une carte par liste
+   (titre, nombre, jeu de référence, « GTA VI : à venir ») qui s'ouvre d'un clic. Le contenu de chaque liste est dans un
+   <template> : rien n'est mis en page avant l'ouverture (la page reste légère). Un élément qui s'essaie est un bouton
+   (data-at-set : réglages de la maquette) ; les autres sont du texte. Noms du jeu : en anglais (lang="en", translate="no",
+   jamais traduits) ou libellés officiels français (traduits par la mémoire, outils/langues/<l>/v784-jeu.json). */
+const PRE_SRC = Object.assign({}, PRE.sources);
+const setAttr = set => Object.entries(set).map(([k, v]) => k + ':' + v).join(',');
+const preItem = (x, langue, type) => {
+  const en = langue === 'en' && !x.fr, nm = en ? '<span lang="en" translate="no">' + esc(x.n) + '</span>' : '<span>' + esc(x.n) + '</span>';
+  const swb = x.hex ? '<i class="at-pi-sw" style="--sw:#' + esc(x.hex) + '"></i>' : '';
+  const extra = type === 'fin' && x.armes ? '<ul class="at-pi-armes">' + x.armes.map(a => '<li>' + esc(a) + '</li>').join('') + '</ul>' : '';
+  if (x.set) return '<li><button type="button" class="at-pi at-pi--try" data-at-set="' + esc(setAttr(x.set)) + '" aria-pressed="false">' + swb + nm + '</button></li>';
+  return '<li class="at-pi' + (extra ? ' at-pi--fin' : '') + '">' + swb + nm + extra + '</li>';
+};
+const preItems = (items, langue, type) => '<ul class="at-pl-items at-pl-items--' + (type === 'sw' ? 'sw' : type === 'fin' ? 'fin' : 'txt') + '">' + items.map(x => preItem(x, langue, type)).join('') + '</ul>';
+const preList = L => {
+  const id = 'at-pl-' + L.id;
+  const body = '<p class="at-pl-note">' + esc(L.note) + '</p>' +
+    (L.items ? preItems(L.items, L.langue, L.type) : '') +
+    (L.sous ? L.sous.map(S0 => '<div class="at-pl-sub"><h4 class="at-pl-sub-t"><span' + (/^[A-Z0-9]/.test(S0.titre) && L.id === 'jantes-familles' ? ' lang="en" translate="no"' : '') + '>' + esc(S0.titre) + '</span> <small>' + esc(S0.compte) + '</small></h4>' + (S0.note ? '<p class="at-pl-sub-note">' + esc(S0.note) + '</p>' : '') + preItems(S0.items, L.langue, L.type) + '</div>').join('') : '') +
+    '<p class="at-pl-src">Sources : ' + L.sources.map(k => { const s = PRE_SRC[k]; if (!s) throw new Error('gen-atelier : source inconnue ' + k); return '<a href="' + esc(s.url) + '" target="_blank" rel="noopener nofollow">' + esc(s.titre) + '</a>'; }).join(' ; ') + '</p>';
+  return '<article class="at-pl" data-at-pl="' + esc(L.id) + '"' + (L.compat ? ' data-at-compat="' + esc(L.compat.join(' ')) + '"' : '') + (L.ids ? ' data-at-ids="' + esc(L.ids.join(' ')) + '"' : '') + '>' +
+    '<button type="button" class="at-pl-b" aria-expanded="false" aria-controls="' + id + '"><span class="at-pl-t">' + esc(L.titre) + '</span><span class="at-pl-m"><span class="at-pl-n">' + esc(L.compte) + '</span><span class="at-pl-g">' + esc(L.jeu) + '</span></span><span class="at-pl-s">GTA VI : à venir</span></button>' +
+    '<div class="at-pl-body" id="' + id + '" hidden><template data-at-pl-tpl>' + body + '</template></div></article>';
+};
+const preFam = (fam, M) => {
+  const groups = M.filter(([g]) => PRE.listes.some(L => L.fam === fam && L.groupe === g));
+  return '<div class="at-pre-fam" data-at-pre-fam="' + fam + '"' + (fam === 'v' ? '' : ' hidden') + '>' +
+    '<div class="at-pre-tabs" role="group" aria-label="' + (fam === 'v' ? 'Ateliers du véhicule' : 'Ateliers de l’arme') + '">' + groups.map(([g, l], k) => '<button type="button" class="at-pre-tab' + (k === 0 ? ' is-on' : '') + '" data-at-pre-tab="' + g + '" aria-pressed="' + (k === 0) + '">' + esc(l) + '</button>').join('') + '</div>' +
+    M.map(([g]) => { const lists = PRE.listes.filter(L => L.fam === fam && L.groupe === g); return '<div class="at-pre-group" data-at-pre-group="' + g + '"' + (g === groups[0][0] ? '' : ' hidden') + '>' + (lists.length ? lists.map(preList).join('') : '<p class="at-pre-none">Pas de pré-liste pour cet atelier : ses options suffisent à la maquette.</p>') + '</div>'; }).join('') +
+    '</div>';
+};
+const preCount = PRE.listes.reduce((n, L) => n + (L.items ? L.items.length : 0) + (L.sous ? L.sous.reduce((m, S0) => m + S0.items.length, 0) : 0), 0);
+for (const L of PRE.listes) if (![...VMENU, ...AMENU].some(([g]) => g === L.groupe)) throw new Error('gen-atelier : atelier inconnu pour la pré-liste ' + L.id);
+const preSection = '<section class="at-pre" data-at-pre aria-labelledby="at-pre-t"><div class="at-pre-head"><h2 class="at-pre-t" id="at-pre-t">Pré-listes de la série</h2><p class="at-pre-lede">Ce que GTA V et GTA Online proposent, atelier par atelier, en attendant les listes de GTA VI. Chaque liste s’ouvre d’un clic ; les pastilles et les noms soulignés s’essaient sur la maquette.</p></div>' + preFam('v', VMENU) + preFam('a', AMENU) + '</section>';
+
 /* ---------- la page ---------- */
 const base = read('a-propos.html'), header = base.match(/<header>[\s\S]*?<\/header>/)[0].replace(/ class="here"/g, '').replace(/ aria-current="page"/g, ''), footer = base.match(/<footer>[\s\S]*?<\/footer>/)[0], favicon = base.match(/<link rel="icon"[^>]*>/)[0];
 const byCat = (idx, cats, labels) => cats.filter(c => idx.some(x => x.cat === c)).map(c => '<optgroup label="' + esc(labels[c] || c) + '">' + idx.filter(x => x.cat === c).sort((a, b) => a.nom.localeCompare(b.nom, 'fr')).map(x => '<option value="' + esc(x.id) + '">' + esc(x.nom) + '</option>').join('') + '</optgroup>').join('');
@@ -144,7 +195,7 @@ const html = `<!DOCTYPE html>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Atelier 3D : personnaliser ${nv} véhicules et ${na} armes de GTA VI | Leonidakit</title>
-<meta name="description" content="Tourne, peins et équipe chaque véhicule et chaque arme de GTA VI en 3D : peinture, jantes, carrosserie, vitres, néons, suspension, plaque, finitions, chargeurs, viseurs, canons. Chaque option renvoie au poste de personnalisation et à son repère de la série.">
+<meta name="description" content="Tourne, peins et équipe chaque véhicule et chaque arme de GTA VI en 3D, jusqu’à l’intérieur : peinture, jantes, néons, plaque, finitions, viseurs, avec les pré-listes de GTA V et de GTA Online et le repère de la série de chaque option.">
 <link rel="canonical" href="https://www.leonidakit.com/atelier-3d.html">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Accueil","item":"https://www.leonidakit.com/"},{"@type":"ListItem","position":2,"name":"Personnalisations","item":"https://www.leonidakit.com/personnalisations.html"},{"@type":"ListItem","position":3,"name":"Atelier 3D","item":"https://www.leonidakit.com/atelier-3d.html"}]}</script>
 <meta property="og:title" content="Atelier 3D Leonidakit : personnalise les véhicules et les armes de GTA VI">
@@ -170,9 +221,9 @@ ${header}
     <div class="at-hero-txt">
       <p class="fiche-cat">Personnalisations</p>
       <h1>Atelier 3D</h1>
-      <p class="lede">Choisis un véhicule ou une arme, fais-le tourner, peins-le, équipe-le. Chaque option renvoie au poste de personnalisation du catalogue, avec le repère de la série quand il existe. Les volumes sont des maquettes bâties sur les schémas Leonidakit, pas les modèles du jeu.</p>
+      <p class="lede">Choisis un véhicule ou une arme, fais-le tourner, peins-le, équipe-le, monte à bord. Chaque option renvoie au poste de personnalisation du catalogue, avec le repère de la série quand il existe ; les pré-listes donnent, atelier par atelier, ce que GTA V et GTA Online proposent. Les volumes sont des maquettes bâties sur les schémas Leonidakit, pas les modèles du jeu.</p>
     </div>
-    <ul class="at-facts" aria-label="L’Atelier en bref"><li><b>${nv}</b><span>véhicules</span></li><li><b>${na}</b><span>armes</span></li><li><b>${PV.items.length + PA.items.length}</b><span>postes du catalogue reliés</span></li><li><b>0</b><span>modèle inventé</span></li></ul>
+    <ul class="at-facts" aria-label="L’Atelier en bref"><li><b>${nv}</b><span>véhicules</span></li><li><b>${na}</b><span>armes</span></li><li><b>${PV.items.length + PA.items.length}</b><span>postes du catalogue reliés</span></li><li><b>${preCount}</b><span>éléments en pré-liste</span></li><li><b>0</b><span>modèle inventé</span></li></ul>
   </div>
 </section>
 
@@ -195,12 +246,13 @@ ${header}
       <canvas class="at-canvas" data-at-canvas aria-label="Maquette 3D"></canvas>
       <div class="at-view-top">
         <p class="at-name"><b data-at-name>${esc(first.nom)}</b><span data-at-model-cat>${esc(VCAT[first.cat] || first.cat)}</span></p>
-        <p class="at-help" data-at-help>Glisser pour tourner · molette ou pincer pour zoomer</p>
+        <p class="at-help" data-at-help><span data-at-help-out>Glisser pour tourner · molette ou pincer pour zoomer</span><span data-at-help-in hidden>Glisser pour regarder autour · molette ou pincer pour le champ de vision</span></p>
       </div>
       <div class="at-view-bottom">
-        <div class="at-angles" role="group" aria-label="Angles"><button type="button" data-at-angle="tq" class="is-on" aria-pressed="true">Trois quarts</button><button type="button" data-at-angle="profil" aria-pressed="false">Profil</button><button type="button" data-at-angle="face" aria-pressed="false">Face</button><button type="button" data-at-angle="arriere" aria-pressed="false">Arrière</button><button type="button" data-at-angle="dessus" aria-pressed="false">Dessus</button></div>
+        <div class="at-angles" role="group" aria-label="Angles"><button type="button" data-at-angle="tq" class="is-on" aria-pressed="true">Trois quarts</button><button type="button" data-at-angle="profil" aria-pressed="false">Profil</button><button type="button" data-at-angle="face" aria-pressed="false">Face</button><button type="button" data-at-angle="arriere" aria-pressed="false">Arrière</button><button type="button" data-at-angle="dessus" aria-pressed="false">Dessus</button><button type="button" data-at-angle="interieur" aria-pressed="false" data-at-inside><span data-at-in-car>Intérieur</span><span data-at-in-moto hidden>Première personne</span></button></div>
         <div class="at-view-tools"><button type="button" data-at-spin aria-pressed="true">Rotation</button><button type="button" data-at-full>Plein écran</button></div>
       </div>
+      <p class="at-inside-note" data-at-inside-note hidden><span data-at-note-car>Habitacle générique de l’Atelier : ni le tableau de bord ni les sièges du modèle.</span><span data-at-note-moto hidden>Guidon, rétroviseurs et compteur génériques de l’Atelier.</span></p>
       <p class="at-loading" data-at-loading>Chargement de la maquette…</p>
       <div class="at-nojs" data-at-nojs><p>La maquette 3D a besoin d’un navigateur avec WebGL et le script activé. Les schémas sous tous les angles restent sur chaque fiche.</p><p><a href="vehicules.html">Véhicules</a> · <a href="armes.html">Armurerie</a></p></div>
     </div>
@@ -221,6 +273,8 @@ ${header}
   <div class="at-menu" data-at-menu="a" hidden>${menu('a', AMENU)}</div>
 
   <ul class="at-chosen" data-at-chosen aria-label="Options choisies"></ul>
+
+  ${preSection}
 </section>
 
 <section class="shell at-saved" id="mes-configurations" data-at-saved>
@@ -236,6 +290,7 @@ ${header}
   <div class="at-how-grid">
     <article><h3>Des maquettes, pas les modèles du jeu</h3><p>Rockstar n’a publié aucun modèle 3D. Chaque maquette est bâtie à partir des schémas Leonidakit de la fiche : la silhouette de profil est étirée en volume, affinée par la vue de dessus, puis reçoit ses roues, ses vitres, ses feux. Les proportions sont celles du type d’engin, pas d’un modèle exact.</p></article>
     <article><h3>Relié aux Personnalisations</h3><p>Chaque option de l’Atelier correspond à un poste du catalogue (peinture, jantes, aileron, vitres teintées, néons, silencieux, lunette…). Le lien sous l’option ouvre sa ligne dans la liste des <a href="personnalisations.html">Personnalisations</a>, avec son statut et son repère de la série. Le total additionne les repères connus ; une option sans repère reste à confirmer pour GTA VI.</p></article>
+    <article><h3>Pré-listes et vue intérieure</h3><p>Les pré-listes reprennent ce que GTA V et GTA Online proposent (noms du jeu, couleurs des données du jeu), en attendant les listes de GTA VI. La vue intérieure et la première personne montrent un habitacle générique bâti sur les vitres du schéma : ni le tableau de bord ni les sièges du modèle.</p></article>
     <article><h3>Rien ne sort de l’appareil</h3><p>Les configurations enregistrées restent dans ce navigateur. Le lien copié contient seulement les options choisies. L’image PNG est produite ici, par ton navigateur.</p></article>
   </div>
   <p class="at-how-links"><a href="vehicules.html">Tous les véhicules</a><a href="armes.html">Toute l’armurerie</a><a href="personnalisations.html">Toutes les personnalisations</a></p>
@@ -250,4 +305,4 @@ ${footer}
 </body>
 </html>`;
 fs.writeFileSync('atelier-3d.html', html);
-console.log('Atelier 3D : ' + nv + ' véhicules, ' + na + ' armes, ' + (VMENU.length + AMENU.length) + ' ateliers, ' + (PV.items.length + PA.items.length) + ' postes du catalogue.');
+console.log('Atelier 3D : ' + nv + ' véhicules, ' + na + ' armes, ' + (VMENU.length + AMENU.length) + ' ateliers, ' + (PV.items.length + PA.items.length) + ' postes du catalogue, ' + PRE.listes.length + ' pré-listes (' + preCount + ' éléments).');

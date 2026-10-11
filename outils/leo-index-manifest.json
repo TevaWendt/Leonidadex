@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "inputs": {
-    "a-propos.html": "4f5dc2ab33e737b630249a32b7036807498269a41af91a64bec63febc02e46f8",
+    "a-propos.html": "3762d7701293e69812dec7352d4d43ec0a1fa57c1b8c1bfe86a7a951947729de",
     "achats.html": "8acf87c3a85fdb063ecbb5169ef04dc4524376501a5122266845e70e1f647811",
     "acquisitions-data.js": "7e484ffb1c75ca2a753b76a3c7f0570e79d51296ed3fdbad7a9c36d9ab813059",
     "activites.html": "3fca58d81fd6411ac932c9790f81358f8d717ee0d75d11eddcdf38a7ffe314f5",
@@ -479,14 +479,14 @@
     "leo/codes.json": 3170,
     "leo/trophees.json": 4314,
     "leo/online.json": 2406,
-    "leo/passages.json": 1001692
+    "leo/passages.json": 1004508
   },
   "counts": {
     "questionsRedigees": 332,
     "questionsFaq": 46,
     "questionsGenerees": 16562,
     "fiches": 3164,
-    "passages": 1384,
+    "passages": 1387,
     "lexique": 482,
     "nomsProteges": 165,
     "anglais": 134,
