@@ -3468,6 +3468,12 @@ a[data-newtab][href]{padding-right:1.05em;background-image:url("data:image/svg+x
 .lk-loc-list>li{content-visibility:auto;contain-intrinsic-size:auto 58px;}
 .media-row{content-visibility:auto;contain-intrinsic-size:auto 140px;}
 @media (max-width:700px){.media-row{contain-intrinsic-size:auto 330px;}}
+/* v7.85 (latence) : même principe pour les sections éditoriales (.ed : dossiers, repères, sources, questions ; 159 sections
+   sur 25 pages, presque toutes sous le pli) : le premier affichage ne met plus en page ni ne peint celles qui sont loin de
+   l'écran. Taille réservée proche de la médiane mesurée (1 030 px sur téléphone, 630 px sur ordinateur), puis la dernière
+   taille réelle. Aucune n'a d'élément en position fixe ni de débord hors de son cadre (vérifié capture par capture). */
+.ed-zone>.ed{content-visibility:auto;contain-intrinsic-size:auto 1000px;}
+@media (min-width:900px){.ed-zone>.ed{contain-intrinsic-size:auto 640px;}}
 
 /* v7.83 (Téva : l'Atelier 3D dans la barre du haut) : neuf entrées dans la barre ; sur les écrans de 1 081 à 1 279 px, les
    liens ne passent jamais à la ligne, l'écart se resserre et le champ de recherche se fait plus étroit : la barre tient sur

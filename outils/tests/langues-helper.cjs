@@ -40,6 +40,8 @@ const ALLOW = new Set(['léo', 'pokémon', 'café', 'résumé', 'décor', 'naïv
   'française', 'français', 'françois', 'québec', 'élysée', 'mêlée', 'übermacht', 'mulét', 'légifrance',
   /* v7.63 : mots français entrés tels quels en italien (« una coupé », « vetri fumé », « art déco ») */
   'coupé', 'fumé', 'déco', 'berlina-coupé',
+  /* v7.85 : libellé officiel italien de GTA V (« Proiettili a fléchette », munitions spéciales, pré-liste de l'Atelier) */
+  'fléchette',
   /* noms propres du jeu et du monde réel cités sur tout le site */
   'lârss', 'elbö', 'pérez', 'trésor', 'škorpion', 'pißwasser', 'huracán', 'hellión']);
 /* noms propres français cités tels quels (adresses, nom officiel d'une loi ou d'une autorité) et citations anglaises

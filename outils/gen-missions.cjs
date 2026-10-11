@@ -169,9 +169,11 @@ ${C.scripts}
 
 /* ---------- briques ---------- */
 const imgOf = (MED, id) => { const m = MED[id]; if (!m) return null; return { a: m.variants[0], b: m.variants[1] || m.variants[0] }; };
-function imgTag(MED, id, alt, big, sizes) {
+/* v7.85 : une image de fiche plein écran (details fermé) est différée (lazy) : elle ne se télécharge plus avec la page ;
+   lk-sections.js la rend immédiate dans la fiche ouverte et la précharge une fois la page chargée */
+function imgTag(MED, id, alt, big, sizes, inSheet) {
   const m = imgOf(MED, id); if (!m) return '';
-  return '<img src="' + m.a.src + '" srcset="' + m.a.src + ' ' + m.a.w + 'w, ' + m.b.src + ' ' + m.b.w + 'w" sizes="' + (sizes || (big ? '(max-width:820px) 100vw, 560px' : '(max-width:600px) 100vw, 360px')) + '" width="' + (big ? m.b.w : m.a.w) + '" height="' + (big ? m.b.h : m.a.h) + '" alt="' + esc(alt) + '" loading="' + (big ? 'eager' : 'lazy') + '" decoding="async">';
+  return '<img src="' + m.a.src + '" srcset="' + m.a.src + ' ' + m.a.w + 'w, ' + m.b.src + ' ' + m.b.w + 'w" sizes="' + (sizes || (big ? '(max-width:820px) 100vw, 560px' : '(max-width:600px) 100vw, 360px')) + '" width="' + (big ? m.b.w : m.a.w) + '" height="' + (big ? m.b.h : m.a.h) + '" alt="' + esc(alt) + '" loading="' + (big && !inSheet ? 'eager' : 'lazy') + '"' + (inSheet ? ' data-lkx-pre' : '') + ' decoding="async">';
 }
 function sourceList(H, ids) {
   return '<ol class="ed-srcs">' + ids.map(id => { const s = H.sources[id];
@@ -215,7 +217,7 @@ function hubPage(ctx) {
       + (richChips(x, '') ? '<h4>Qui et où</h4><div class="lkx-chips">' + richChips(x, '') + '</div>' : '')
       + (places.length ? '<h4>Sur la carte de Leonida</h4>' + LKX.miniMap(places, { label: 'Carte de Leonida : lieux de la séquence', note: 'Lieux repérés sur notre carte, d’après la vidéo : rien n’est placé au hasard.' }) : '')
       + '<p class="missions-st">' + S.pip(x.statut, true) + srcLinks(x.sources) + '</p>';
-    return '<li class="missions-seq" id="seq-' + esc(x.id) + '">' + LKX.sheet({ id: 'sequence-' + x.id, cls: 'missions-seq-det', summary: '<span class="missions-seq-card lkx-tilt">' + summary + '</span>', fig: imgTag(MED, x.media, x.alt, true), caption: x.illustration ? 'Illustration : visuel officiel Rockstar Games' : 'Visuel officiel Rockstar Games', kicker: esc(x.video) + ' · ' + esc(x.moment) + ' · <span>Séquence ' + n + '</span>', title: x.titre, body }) + '</li>';
+    return '<li class="missions-seq" id="seq-' + esc(x.id) + '">' + LKX.sheet({ id: 'sequence-' + x.id, cls: 'missions-seq-det', summary: '<span class="missions-seq-card lkx-tilt">' + summary + '</span>', fig: imgTag(MED, x.media, x.alt, true, undefined, true), caption: x.illustration ? 'Illustration : visuel officiel Rockstar Games' : 'Visuel officiel Rockstar Games', kicker: esc(x.video) + ' · ' + esc(x.moment) + ' · <span>Séquence ' + n + '</span>', title: x.titre, body }) + '</li>';
   };
   const sequences = '<section class="shell missions-sequences" id="sequences" aria-labelledby="sequences-t"><div class="reveal"><p class="missions-kicker">' + esc(seq.kicker) + '</p><h2 class="sec-h" id="sequences-t">' + esc(seq.titre) + '</h2><p class="missions-lede">' + esc(seq.lede) + '</p></div>'
     + '<ol class="missions-seqs lkx-scan lk-arrive" data-lkx-in>' + seq.items.map(seqCard).join('') + '</ol></section>';
@@ -237,7 +239,7 @@ function hubPage(ctx) {
     const body = '<p>' + esc(t.texte) + '</p><p class="missions-type-vide">' + esc(n ? LI.typeDoc : LI.typeVide) + '</p>'
       + '<h4>' + esc(LI.squelette) + '</h4><dl class="missions-skel">' + SKEL.map(k => '<div><dt>' + esc(k) + '</dt><dd><span class="missions-skel-bar" aria-hidden="true"></span><span>' + esc(LI.sortie) + '</span></dd></div>').join('') + '</dl>'
       + '<p class="lkx-sheet-cta"><a class="lkx-btn" href="calculateurs.html?tool=' + esc(t.calc || 'activities') + '&amp;from=missions#atelier">' + esc(c.cta) + '</a></p>';
-    return LKX.sheet({ id: 'type-' + t.id, cls: 'missions-type', summary, fig: t.media ? imgTag(MED, t.media, t.alt, true) : null, caption: 'Visuel officiel Rockstar Games', kicker: esc(LI.kicker) + ' · ' + esc(LI.typeK), title: t.label, body });
+    return LKX.sheet({ id: 'type-' + t.id, cls: 'missions-type', summary, fig: t.media ? imgTag(MED, t.media, t.alt, true, undefined, true) : null, caption: 'Visuel officiel Rockstar Games', kicker: esc(LI.kicker) + ' · ' + esc(LI.typeK), title: t.label, body });
   };
   const liste = '<section class="shell missions-liste" id="liste" aria-labelledby="liste-t"><div class="reveal"><p class="missions-kicker">' + esc(LI.kicker) + '</p><h2 class="sec-h" id="liste-t">' + esc(LI.titre) + '</h2></div>'
     + (list.length ? Object.entries(byChap).map(([chap, ms]) => (chap ? '<h3 class="missions-chap">' + esc(chap) + '</h3>' : '') + '<div class="lore-grid lore-grid--center">' + ms.sort((a, b) => (a.ordre || 999) - (b.ordre || 999)).map(missionCard).join('') + '</div>').join('')

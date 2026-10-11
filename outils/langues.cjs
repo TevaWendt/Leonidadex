@@ -511,7 +511,9 @@ function translatePage(html, file, code, ctx) {
       const al = loc.startTag.attrs && loc.startTag.attrs[a.name]; if (!al) continue;
       let v = null;
       const name = a.name, tag = el.tagName;
+      /* v7.85 : <option value> d'une <datalist> = la suggestion montrée sous le champ (et le nom repris par catalogue.js) */
       if (ATTRS.has(name) || (name === 'value' && tag === 'input' && /^(?:submit|button|reset)$/.test(attr(el, 'type') || ''))
+        || (name === 'value' && tag === 'option' && el.parentNode && el.parentNode.tagName === 'datalist')
         || (name === 'content' && tag === 'meta' && (METAS.has(attr(el, 'name') || '') || METAS.has(attr(el, 'property') || ''))) || (name === 'label' && /^(?:optgroup|track|option)$/.test(tag))) {
         /* v7.64 : description pour les moteurs de recherche raccourcie dans une langue (« @meta::texte » de la mémoire) sans
            toucher au même texte affiché dans la page */

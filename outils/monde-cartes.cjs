@@ -139,7 +139,7 @@ function create(ctx) {
         + '<p class="mo-tag">' + esc(x.tagline) + '</p>'
         + (people || places ? '<div class="mo-meta">' + (people ? '<span class="mo-faces">' + people + '</span>' : '') + places + '</div>' : '')
         + '<div class="mo-act">' + go + '</div></div>'
-        + '<div class="mo-reg-media">' + pic(m, altOf(x, m), { sizes: '(max-width:720px) 38vw, (max-width:1359px) 20vw, 170px', eager: i < 2 })
+        + '<div class="mo-reg-media">' + pic(m, altOf(x, m), { sizes: '(max-width:720px) 38vw, (max-width:1359px) 20vw, 170px' }) /* v7.85 : sous l’écran à toutes les largeurs : différée */
         + mapChip(x.mapId || id) + '<span class="mo-count" title="' + esc(count(nVis, 'visuel officiel', 'visuels officiels')) + '">' + ICO.photo + '<span>' + nVis + '</span></span></div></article>';
     }).join('');
     return '<section class="shell mo mo--lieux" id="fiches">' + head('lieux', items.length)

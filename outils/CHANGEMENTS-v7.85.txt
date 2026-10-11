@@ -1,0 +1,145 @@
+LEONIDAKIT v7.85 — Latence, deuxième passe (sans rien changer au site), vérification complète des langues, tous les écrans
+— 11 octobre 2026
+
+Base : v7.84. Demandes de Téva du 10/10/2026 : « la latence, il faut qu'elle diminue au max, tout en gardant des visuels
+beaux… sans rien changer au site. Juste la latence » ; « faire un check des langues pour voir si tout est bien traduit » ;
+« regarde si la version mobile et la version sur les autres écrans est bien adaptée ». Rien n'est publié ni poussé. Aucun
+fichier à supprimer. CSP inchangée. Aucun changement visuel (vérifié capture par capture, voir CONTRÔLES).
+
+1. LATENCE — LE BANC
+Le banc de la v7.82 (serveur HTTP/1.1 gzip, composition GPU par le rendu logiciel SwiftShader) mesurait par moments la
+compilation des shaders du rendu logiciel : la première image attendait 1,3 s dans le processus GPU (SwapBuffers), sans
+rapport avec le site. Nouveau banc, plus proche de Vercel : HTTP/2 + brotli, composition logicielle, réseau bridé
+(1,6 Mbit/s, 150 ms, type 4G lente), processeur ×4, cache vide, 45 pages (toute la racine + fiches types + pages
+traduites), 390 et 1 280 px. La v7.84 et la v7.85 sont servies côte à côte et chargées en alternance (§ 3).
+
+2. LATENCE — CE QUI A ÉTÉ TROUVÉ ET CORRIGÉ
+- Fiches d'armes (27 fiches × 5 langues) : carnets-core.js y était inclus 17 fois. Depuis la v7.73, la chaîne qui reprend
+  le pied de page d'une fiche existante (outils/gen-armes.cjs) en ajoutait une copie à chaque régénération : 16 scripts
+  bloquants de trop, chacun téléchargé ou au moins exécuté (carabine à 1 280 px : contenu prêt à 5,6 s). Toutes les copies
+  sont retirées avant d'en poser une seule ; un test vérifie qu'aucune page ne charge deux fois le même script ou la même
+  feuille.
+- Galerie des fiches véhicules et armes (fiches.js) : le script réécrivait le srcset de la première image avec deux tailles
+  seulement (480 et 1 280 px), et réécrivait aussi ses attributs (sizes, taille, priorité) déjà écrits dans la page : chaque
+  réécriture relançait le choix de l'image en cours de chargement. Albany Manana à 1 280 px : la grande photo arrivait trois
+  fois (800 px, encore 800 px, puis 1 280 px : 198 Ko) ; à 390 px deux fois (164 Ko). La variante 800 px reste dans la
+  liste (chaque visuel officiel l'a) et un attribut déjà juste n'est plus réécrit : un seul téléchargement, 34 Ko. Même
+  netteté : l'image s'affiche sur 520 px au plus (800 px de large suffisent en écran standard et à 390 px ×2).
+- Missions : les 13 images des fiches plein écran (dans des details fermés) étaient en chargement immédiat : 322 Ko
+  téléchargés avec la page, en concurrence avec la feuille de style. Elles sont différées dans la page et préchargées une
+  fois la page chargée, quand le fil est libre (lk-sections.js) : la fiche s'ouvre toujours avec son image ; avec
+  l'économiseur de données, l'image arrive à l'ouverture.
+- Lieux : les images des régions (sous le pli à toutes les largeurs) sont différées (outils/monde-cartes.cjs).
+- Premier affichage des pages longues : les 159 sections éditoriales (dossiers, repères, sources, questions ; 25 pages)
+  sont en content-visibility:auto avec une taille réservée (style.css) : le navigateur ne met plus en page ni ne peint
+  celles qui sont loin de l'écran avant la première image. Même principe que les listes de la v7.82.
+- Essayé, non retenu : retirer la liste des images (assets-manifest.js) des pages dont aucun script ne la lit. Mesuré en
+  alternance avec la v7.84 : sur une partie des pages, le premier rendu arrivait alors après common.js (Médias +0,6 s,
+  Progression : pile d'images animée au lieu d'être posée) ; ce petit script laisse passer le rendu avant common.js. La
+  liste reste devant common.js partout (outils/sync-site.cjs le garantit) : le comportement d'affichage est celui de la
+  v7.84.
+
+3. LATENCE — AVANT / APRÈS (v7.84 → v7.85)
+Banc (§ 1), les deux versions servies côte à côte et chargées en alternance (v7.84, puis v7.85, puis v7.85, puis v7.84…),
+quatre chargements de chaque par page, 45 pages ; médiane par page, puis médiane et moyenne des pages. LCP compté sans les
+chargements où le navigateur n'en donne aucun.
+390 px (téléphone)         médiane des pages              moyenne des pages
+  premier rendu (FCP)      2,12 s → 2,04 s                2,32 s → 2,12 s
+  plus grand élément (LCP) 2,52 s → 2,21 s                2,66 s → 2,35 s
+  DOMContentLoaded         2,69 s → 2,47 s                2,87 s → 2,60 s
+  load                     3,16 s → 3,03 s                3,34 s → 3,10 s
+  tâches longues           995 ms → 779 ms                1 361 ms → 1 216 ms
+  octets                   323 Ko → 318 Ko                334 Ko → 326 Ko
+1 280 px                   médiane des pages              moyenne des pages
+  premier rendu (FCP)      2,24 s → 2,24 s                2,40 s → 2,30 s
+  plus grand élément (LCP) 2,55 s → 2,65 s                2,83 s → 2,79 s
+  DOMContentLoaded         2,73 s → 2,49 s                2,89 s → 2,66 s
+  load                     3,37 s → 3,35 s                3,63 s → 3,42 s
+  tâches longues           943 ms → 833 ms                1 439 ms → 1 288 ms
+  octets                   368 Ko → 368 Ko                403 Ko → 393 Ko
+Pages les plus touchées (390 px ; FCP, DOMContentLoaded, load, octets) :
+  missions.html            FCP 4,72 → 2,26 s   DCL 5,04 → 2,72 s   load 5,53 → 3,15 s   560 → 328 Ko
+  armes/carabine.html      FCP 1,85 → 1,98 s   DCL 5,34 → 2,24 s   load 5,50 → 2,69 s   235 → 168 Ko
+  vehicules/albany-manana  FCP 2,11 → 1,84 s   DCL 2,31 → 2,05 s   load 3,09 → 2,42 s   332 → 205 Ko
+  nourriture.html          FCP 3,25 → 2,59 s   DCL 3,76 → 3,08 s   load 4,06 → 3,48 s
+  vehicules.html           FCP 2,82 → 2,03 s   DCL 3,80 → 3,06 s   load 4,14 → 3,35 s
+  personnalisations.html   FCP 2,87 → 2,27 s   DCL 3,35 → 2,98 s   load 3,86 → 3,55 s
+  gangs.html               FCP 2,54 → 2,10 s   DCL 2,56 → 2,12 s   load 3,54 → 3,03 s
+  lieux.html               LCP 3,69 → 2,51 s   DCL 3,03 → 2,65 s   load 4,43 → 4,00 s
+À 1 280 px : missions 4,32 → 2,60 s (FCP), 705 → 393 Ko ; carabine : contenu prêt à 2,07 s au lieu de 5,36, LCP 5,47 → 2,50 s ;
+albany-manana : LCP 3,20 → 2,30 s, 332 → 205 Ko ; nourriture, personnalisations, gangs : FCP −0,3 à −0,6 s.
+Lecture : d'une page à l'autre, l'écart sous 0,3 s est dans le bruit du banc (six pages inchangées remesurées six fois :
+±0,3 s dans les deux sens). Le LCP à 1 280 px reste stable : sur les pages à pile d'images, les scripts étant prêts plus
+tôt, la pile joue plus souvent son entrée prévue (elle glisse depuis la droite après le texte) au lieu d'être posée, et
+c'est elle que le LCP mesure (vérifié sur Activités : même élément, image de la pile, dans les deux versions). Aucun
+changement d'apparence ni d'animation : ce comportement est celui que le site prévoit déjà quand les scripts passent
+avant la première image.
+
+4. LANGUES — CE QUI A ÉTÉ TROUVÉ ET CORRIGÉ
+- Titre de la carte ouverte depuis le localisateur des armes (« Voir ces lieux sur la carte ») : le nom de l'arme restait
+  en français dans les quatre langues (« Pistolet personnalisé: spotted gun stores »). Les règles de la mémoire qui
+  prennent un nom dans un motif (« … : armureries repérées », « … : lieux liés », « Équivalent réel : … », « … dans
+  GTA VI ») traduisent maintenant ce nom ({t1}) : « Custom pistol: spotted gun stores », « Pistola personalizada: armerías
+  localizadas »… Même cause pour la mini-carte des fiches d'armes en italien (« Carte de Leonida », 28 pages) et pour
+  une étiquette du calculateur italien (« Achetable in GTA VI » → « Acquistabile in GTA VI », analyse d'un achat).
+- Personnalisations : les suggestions des champs « Ton véhicule » et « Ton arme » (329 noms) restaient en français dans
+  les quatre langues, et le nom choisi était repris tel quel dans la carte du modèle (« Fusil à pompe ») : traduites
+  (outils/langues.cjs traduit les valeurs d'une datalist ; motif « Marque inconnue {1} » → « Fishing boat (unknown
+  brand) », « Unbekannte Marke Fischerboot »…).
+- Barre de progression des collectibles (aria-valuetext lu par les lecteurs d'écran) et nom des fiches d'armes
+  (data-pf-name) : traduits.
+- Atelier 3D : la recherche du catalogue comparait la saisie à une clé française cachée (nom + famille : « bateaux et
+  jet-skis ») : elle lit maintenant le texte affiché, dans la langue de la page, sans tenir compte des accents
+  (« boats », « barcos », « barche », « Boote » trouvent les 64 bateaux) ; la clé française est retirée de la page. Hors
+  du français, la liste suit l'ordre alphabétique des noms traduits (« Fishing boat » rangé à F).
+- outils/tests/langues.test.cjs lit désormais tous les attributs traduits (et non plus huit), les suggestions des
+  datalist, le contenu des modèles (template) et les textes des SVG.
+
+5. ÉCRANS
+57 pages × 16 largeurs (320 à 2 560 px) : 0 débordement, 0 élément hors de la fenêtre, 0 élément rogné, 0 cible sous
+24 px ; restent les relevés à lire déjà connus (bento et carrousels, marqueurs de la carte, badges à 9,9 px, galerie des
+fiches du monde volontairement plus large au-delà de 1 540 px). Audit navigateur : voir CONTRÔLES.
+
+6. TESTS
+outils/tests/v785.test.cjs (7 tests) : aucun fichier chargé deux fois, une seule copie de carnets-core.js par fiche d'arme ;
+liste des images gardée devant common.js sur chaque page ; aucune image non différée dans un details fermé, images des
+fiches de Missions différées et préchargées, régions de Lieux différées ; content-visibility des sections éditoriales,
+aucun élément fixe dedans ; galerie des fiches (jsdom) : srcset 480 / 800 / 1 280 conservé ; langues (datalist, titres de
+carte, aria-valuetext, data-pf-name, règles {t1}) ; recherche et tri de l'Atelier. outils/tests/langues.test.cjs : lecture
+élargie (§ 4). outils/tests/langues-helper.cjs : « fléchette » (libellé officiel italien de GTA V, « Proiettili a
+fléchette »).
+
+CONTRÔLES (11 octobre 2026)
+- Tests Node : 1 038 / 1 038 (toute la suite) ; langues : 42 / 42 (lecture élargie du § 4) ; 0 texte sans traduction dans
+  les quatre langues à la génération.
+- Vérificateur : aucune erreur, 324 297 références vérifiées dans 2 246 pages (2 160 de moins qu'en v7.84 : les 16 copies de
+  carnets-core.js retirées de 135 fiches d'armes).
+- Langues dans le navigateur : toutes les pages des quatre langues (439 × 4, à 1 280 et 390 px ; outils/tests/
+  langues-pages-browser.cjs) : 0 mot français visible (ni anglais en allemand), 0 erreur de script, 0 requête en échec, langue
+  et barre « Changer la langue » justes, 0 débordement propre à la traduction ; calculateur, bandeau de langue et Léo
+  (langues-browser.cjs) : 2 267 contrôles, 0 échec ; états ouverts par les scripts (recherche de l'accueil, menu du
+  téléphone, Léo à deux questions, carte du modèle choisi dans Personnalisations, pré-listes et options de l'Atelier,
+  recherche du catalogue de l'Atelier, carte ouverte depuis l'armurerie, comparateur) : 0 texte suspect dans les quatre
+  langues (le même parcours en français en relève 36 : le détecteur voit bien le français).
+- Écrans (outils/tests/ecrans-browser.cjs, 57 pages × 16 largeurs, 912 chargements) : 0 débordement, 0 élément hors de la
+  fenêtre, 0 élément rogné, 0 cible sous 24 px ; relevés à lire inchangés (voir § 5). Audit navigateur (26 pages,
+  182 chargements) : 0 débordement, 0 grille, 0 coupe, 0 image, 0 caché, 0 contraste, 0 erreur console, 0 requête en
+  échec, fonctions 12 / 12.
+- Aucun changement visuel : les 159 sections éditoriales capturées une à une avant et après (390 et 1 280 px, 318
+  captures), comparées pixel par pixel à un pixel de décalage près : 285 identiques ; les 33 autres tiennent à la capture
+  (image encore en chargement, barre collante passée dessus, texte rendu à un demi-pixel près), aucun élément manquant,
+  rogné ou déplacé (vérifié une à une).
+- Navigateur, contrôles ciblés : Missions (images au chargement : 34 → 11, 800 → 190 Ko ; 13 images de fiche préchargées
+  après le chargement ; fiche ouverte avec son image), fiche d'arme (carnets-core.js demandé une fois, bouton « Je le
+  veux » présent), fiche à photos (image principale téléchargée une fois, en 800 px, à 1 280 px et à 390 px ×2), Atelier
+  anglais (armes rangées par nom anglais ; ordre français inchangé), Personnalisations anglais (« Fishing boat (unknown
+  brand) ») : 0 erreur de script.
+
+FICHIERS
+Modifiés : outils/gen-armes.cjs, outils/gen-missions.cjs, outils/monde-cartes.cjs, outils/sync-site.cjs,
+outils/gen-atelier.cjs, outils/langues.cjs, outils/langues.json, outils/langues/en/lot-27.json, outils/langues/es/lot-46.json,
+outils/langues/it/lot-90.json, outils/langues/de/lot-66.json, outils/tests/langues.test.cjs, outils/tests/langues-helper.cjs,
+outils/calculateur-cadre.json, outils/leo-index-manifest.json, fiches.js et ses copies traduites, it/calculateurs-scenario.js,
+lk-sections.js, atelier-3d.js, style.css, sitemap.xml, sitemap-fiches.xml, outils/sitemap-dates.json, README.md, les pages
+(empreintes, scripts, images différées) et leurs copies traduites. Nouveaux : outils/langues/*/v785.json, outils/tests/v785.test.cjs,
+outils/CHANGEMENTS-v7.85.txt, LISEZ-MOI-v7.85.txt. Aucun fichier à supprimer.

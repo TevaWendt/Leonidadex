@@ -458,7 +458,7 @@ function purchaseAnalysis(s,source,ctx){
  /* à la fin de chaque mission, le gain en plus n’entre pas encore dans le calcul (lot 2) : il n’est pas réclamé */
  if(gp&&gp.valid&&gp.buy&&!gp.extraKnown&&a.incomeMode!=='none'&&s.model==='continuous')missing.push({label:'Guadagno in più',text:'Non scritto: conto 0 $ in più per il tuo obiettivo, senza dire che non rende nulla.',field:'f-purchase-boostHourly',decisive:false});
  if(!V.usable(use.perSession)&&use.source==='unconfirmed')missing.push({label:'Costo d’uso',text:'Può cambiare la risposta nel tempo; non è confermato in GTA VI.',field:'f-purchase-usage',decisive:false});
- if(pc.state==='assumed')missing.push({label:'Achetable in GTA VI',text:'Non ancora confermato: la risposta presume di sì.',decisive:true});
+ if(pc.state==='assumed')missing.push({label:'Acquistabile in GTA VI',text:'Non ancora confermato: la risposta presume di sì.',decisive:true});
  const explain=M.explain({tool:'purchase',category:item?item.type:null,aim:'Sapere se puoi pagare questo acquisto adesso, e quanto costa dopo.',horizon:sessions===null?'Adesso (nessuna partita contata dopo l’acquisto)':'Adesso, poi '+sessions+' partite',conditions,used,excluded,values,drivers,missing,changes});
  return {tool:'purchase',asset:a,item,acquisition:acq,cash:cc,usage:use,cost,sustain:st,purchasable:pc,admission:adm,role,sessions,explain};
 }

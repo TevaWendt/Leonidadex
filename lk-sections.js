@@ -121,6 +121,16 @@
     if (det.id && window.history && window.history.replaceState) window.history.replaceState(null, '', '#' + det.id);
     return true;
   }
+  /* v7.85 : les images des fiches qui se téléchargeaient avec la page (data-lkx-pre, Missions) sont différées dans la page et
+     préchargées une fois la page chargée, quand le fil est libre : la fiche s’ouvre toujours avec son image, sans peser sur le
+     premier affichage ; avec l’économiseur de données, l’image arrive à l’ouverture de la fiche. */
+  (function () {
+    var pre = document.querySelectorAll('img[data-lkx-pre][loading="lazy"]'); if (!pre.length) return;
+    var cn = navigator.connection; if (cn && cn.saveData) return;
+    var go = function () { each(pre, function (im) { im.loading = 'eager'; }); };
+    var idle = function () { if ('requestIdleCallback' in window) window.requestIdleCallback(go, { timeout: 3000 }); else window.setTimeout(go, 1200); };
+    if (document.readyState === 'complete') idle(); else window.addEventListener('load', idle, { once: true });
+  })();
   if (canSheet) {
     dlg.addEventListener('click', function (e) {
       if (e.target === dlg || e.target.closest('[data-lkx-close]')) { e.preventDefault(); closeSheet(); return; }

@@ -30,7 +30,8 @@ function walk(node, fn, ctx = {}) {
   const el = node.tagName ? node : null;
   let c = ctx;
   if (el) {
-    const skip = ['script', 'style', 'template', 'svg'].includes(el.tagName) || attr(el, 'translate') === 'no' || attr(el, 'data-lk-langbar') !== undefined || attr(el, 'lang') === 'fr' || attr(el, 'hreflang') === 'fr' && el.tagName === 'link';
+    /* v7.85 : le contenu des <template> (pré-listes de l'Atelier…) et les textes des SVG sont lus aussi */
+    const skip = ['script', 'style'].includes(el.tagName) || attr(el, 'translate') === 'no' || attr(el, 'data-lk-langbar') !== undefined || attr(el, 'lang') === 'fr' || attr(el, 'hreflang') === 'fr' && el.tagName === 'link';
     c = { ...ctx, skip: ctx.skip || skip };
     fn(el, c);
   } else if (node.nodeName === '#text') fn(node, ctx);
@@ -135,7 +136,10 @@ for (const LG of LANGS) {
   });
 
   test('pages ' + code + ' : aucun français visible (textes, attributs lus, titre, description, données structurées)', () => {
-    const READ = ['title', 'alt', 'aria-label', 'placeholder', 'aria-description', 'data-short', 'data-label', 'data-ask'];
+    /* v7.85 : tous les attributs que la traduction touche (langues.json → « attributs »), sauf les mots de recherche (comparés
+       sans accents, ils gardent des noms de modèles comme « stanier le ») ; et les valeurs d'une <datalist> (suggestions) */
+    const SEARCHY = new Set([...(cfg.attributsCherches || []), 'data-search', 'data-help-keywords']);
+    const READ = [...new Set(['title', 'alt', 'aria-label', 'placeholder', 'aria-description', 'data-short', 'data-label', 'data-ask', ...cfg.attributs.filter(a => !SEARCHY.has(a))])];
     for (const p of LG.pages) {
       const html = read(dir + '/' + p), doc = PARSE(html), hits = [];
       const see = (text, where) => { const h = frenchHits(text, code); if (h.length) hits.push(where + ' « ' + String(text).trim().slice(0, 90) + ' » [' + h.slice(0, 4).join(', ') + ']'); };
@@ -143,6 +147,7 @@ for (const LG of LANGS) {
         if (c.skip) return;
         if (n.nodeName === '#text') { if (n.value.trim()) see(n.value, 'texte'); return; }
         for (const a of READ) { const v = attr(n, a); if (v) see(v, a); }
+        if (n.tagName === 'option' && n.parentNode && n.parentNode.tagName === 'datalist') { const v = attr(n, 'value'); if (v) see(v, 'datalist'); }
         if (n.tagName === 'meta' && /^(?:description|og:title|og:description|twitter:title|twitter:description|og:image:alt)$/.test(attr(n, 'name') || attr(n, 'property') || '')) see(attr(n, 'content'), 'meta');
       });
       for (const m of html.matchAll(/<script type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)) {

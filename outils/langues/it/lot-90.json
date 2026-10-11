@@ -145,10 +145,10 @@
  "re:^(.+) \\(nom supposé\\)$": "{t1} (nome presunto)",
  "re:^Regroupe 1 bâtiments? repérés\\.$": "Raggruppa 1 edificio individuato.",
  "re:^Regroupe (\\d+) bâtiments? repérés\\.$": "Raggruppa {1} edifici individuati.",
- "re:^Équivalent réel : (.+)\\.$": "Equivalente reale: {1}.",
- "re:^((?:[A-Z0-9][^\\s]*)(?:\\s(?:[A-Z0-9][^\\s]*|of|de|du|the|and|&))*) dans GTA VI$": "{1} in GTA VI",
- "re:^(.+) : armureries repérées$": "{1}: armerie individuate",
- "re:^(.+) : lieux liés$": "{1}: luoghi collegati",
+ "re:^Équivalent réel : (.+)\\.$": "Equivalente reale: {t1}.",
+ "re:^((?:[A-Z0-9][^\\s]*)(?:\\s(?:[A-Z0-9][^\\s]*|of|de|du|the|and|&))*) dans GTA VI$": "{t1} in GTA VI",
+ "re:^(.+) : armureries repérées$": "{t1}: armerie individuate",
+ "re:^(.+) : lieux liés$": "{t1}: luoghi collegati",
  "progression.js::plan": [
   {
    "si": "plans'\\s*:\\s*$",

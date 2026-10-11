@@ -1,0 +1,6 @@
+{
+ "_note": "v7.85 : vérification des langues — suggestions des champs « Ton véhicule » / « Ton arme » de Personnalisations (valeurs des <datalist>, nom repris dans la carte du modèle choisi)",
+ "_motifs": {
+  "Marque inconnue {1}": "Marca sconosciuta {1}"
+ }
+}

@@ -72,6 +72,10 @@ for(const file of htmlFiles){let s=fs.readFileSync(file,'utf8');if(file.startsWi
   s=s.replace(/<script src="(?:\.\.\/|\/)?(?:assets-manifest|common)\.js"><\/script>\n?/g,'');
   s=s.replace(/(<script src="(?:\.\.\/|\/)?app\.js"><\/script>)/,'<script src="'+prefix+'assets-manifest.js"></script>\n<script src="'+prefix+'common.js"></script>\n$1');
  }
+ // v7.85 : la liste des images (assets-manifest.js) reste devant common.js sur chaque page qui charge common.js. Essayé :
+ // la retirer des pages dont aucun script ne la lit — le premier rendu arrivait alors après common.js sur une partie des
+ // pages (Médias +0,6 s, pile d'images animée au lieu d'être posée) : ce petit script sert de point de passage au rendu.
+ if(/<script src="(?:\.\.\/|\/)?common\.js(?:\?v=[a-f0-9]+)?"><\/script>/.test(s)&&!/<script src="(?:\.\.\/|\/)?assets-manifest\.js(?:\?v=[a-f0-9]+)?"><\/script>/.test(s))s=s.replace(/(<script src="(?:\.\.\/|\/)?common\.js(?:\?v=[a-f0-9]+)?"><\/script>)/,'<script src="'+prefix+'assets-manifest.js"></script>\n$1');
  // v7.54 (lot 1) : l'index de recherche (search-index.js, 175 Ko) et les lieux (search-lieux.js) ne sont plus téléchargés avec
  // chaque page : déclarés en <script type="lk/lazy" src="…"> (un type inconnu n'est ni téléchargé ni exécuté), ils sont chargés
  // par app.js à la première approche de la recherche. Les empreintes ?v= sont posées plus bas, comme pour les autres scripts.
