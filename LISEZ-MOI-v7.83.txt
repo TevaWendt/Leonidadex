@@ -1,0 +1,25 @@
+LEONIDAKIT v7.83 — L'Atelier 3D dans la barre du haut, les fiches du monde enrichies
+À appliquer sur la v7.82. Archive « modifs » : seulement les fichiers qui changent.
+Rien n'a été publié ni poussé. Aucun fichier à supprimer. CSP inchangée.
+
+CE QUI CHANGE POUR LE VISITEUR
+- L'Atelier 3D est dans la barre du haut, entre Armurerie et Achats, avec un petit cube ; il n'est plus caché dans
+  Explorer (le pied de page le garde). La barre tient sur une ligne dans les cinq langues.
+- Les 35 fiches des six sections du monde (lieux, personnages, gangs, demeures, planques, entreprises) ont un « dossier »
+  sous leur texte : une fiche d'identité, la chronologie de ce que chaque sortie officielle a montré (Trailer 1, Trailer 2,
+  pages officielles, jaquette, Édition Ultimate, An Extended Look, captures, radios…), des repères de la série (ce que les
+  GTA précédents ont fait de semblable, présentés comme tels), ce qui reste à confirmer et les sources. « Lire le dossier »
+  est le premier lien en tête de fiche.
+- 28 nouveaux visuels officiels : les galeries de Vice City, Jason et Lucia passent à 12 images, celles de Grassrivers,
+  des Keys, de Port Gellhorn, de Cal, de Brian, de Dre'Quan, des forces de l'ordre et des autres fiches s'étoffent.
+- 34 légendes et une dizaine de textes corrigés d'après les textes alternatifs officiels de Rockstar (ce que montre
+  vraiment chaque capture).
+- Tout est traduit dans les quatre autres langues.
+
+MARCHE À SUIVRE
+  1. Copie le contenu de l'archive à la racine du dossier GitHub (remplacer), valide, pousse. Rien à changer dans Vercel.
+  2. Essai : n'importe quelle page → la barre du haut montre « Atelier 3D » ; personnages/jason.html → « Lire le dossier »,
+     puis la chronologie et la galerie (12 images) ; lieux/vice-city.html sur un téléphone ; en/personnages/lucia.html.
+
+Contrôles : tests Node + langues, vérificateur de liens, audit navigateur, captures en cinq langues et quatre largeurs ;
+le détail est dans outils/CHANGEMENTS-v7.83.txt. Retour arrière : commit précédent dans GitHub Desktop.
