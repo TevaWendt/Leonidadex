@@ -1,0 +1,28 @@
+LEONIDAKIT v7.84 — Atelier 3D : pré-listes de la série, vue intérieure, première personne
+À appliquer sur la v7.83. Archive « modifs » : seulement les fichiers qui changent.
+Rien n'a été publié ni poussé. Aucun fichier à supprimer. CSP inchangée.
+
+CE QUI CHANGE POUR LE VISITEUR
+- Sous la maquette, les « Pré-listes de la série » : atelier par atelier, ce que GTA V et GTA Online proposent, en
+  attendant les listes de GTA VI (chaque carte le dit : « GTA VI : à venir »). 28 listes, 971 éléments : les 75 couleurs
+  de Los Santos Customs (classiques, métallisées), les mates, les métaux, les nacres, les peintures caméléon, les livrées
+  camouflage, les 13 familles de jantes et leurs 324 modèles, les pneus, la fumée, les vitres, les néons, les phares, les
+  plaques, les 46 klaxons, les couleurs d'intérieur de Benny's ; pour les armes, les teintes, les teintes et camouflages
+  Mk II, les finitions spéciales, les habillages de la batte, les viseurs, les canons, les munitions.
+- Chaque liste s'ouvre d'un clic ; les pastilles et les noms soulignés s'essaient tout de suite sur la voiture, la moto
+  ou l'arme (couleurs exactes des données du jeu ; camouflages avec un motif générique de l'Atelier, signalé comme tel).
+- Nouveau bouton « Intérieur » (voitures, pick-up, camions, bus) et « Première personne » (motos, quads, vélos) : on
+  s'assoit à la place du conducteur et on regarde autour en glissant. L'habitacle est générique (la scène le précise) ;
+  le nouvel atelier « Intérieur » en change les couleurs, les sièges et le volant.
+- Nouvelles options : camouflage de la caisse, style de jante, flancs blancs, disposition des néons, deux plaques de GTA V,
+  teinte verte et cinq camouflages pour les armes ; atelier « Klaxons » relié à la pré-liste.
+- Tout est traduit dans les quatre autres langues ; les noms anglais du jeu restent tels quels.
+
+MARCHE À SUIVRE
+  1. Copie le contenu de l'archive à la racine du dossier GitHub (remplacer), valide, pousse. Rien à changer dans Vercel.
+  2. Essai : atelier-3d.html → « Intérieur » sous la maquette ; descends aux pré-listes → « Couleurs classiques » →
+     « Torino Red » ; choisis une moto (Pegassi Bati 801) → « Première personne » ; onglet Armes → pré-liste
+     « Camouflages Mk II ».
+
+Contrôles : tests Node + langues, vérificateur de liens, audit navigateur, captures (scène, pré-listes, téléphone) ; le
+détail est dans outils/CHANGEMENTS-v7.84.txt. Retour arrière : commit précédent dans GitHub Desktop.
