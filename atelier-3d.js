@@ -586,9 +586,20 @@ import * as THREE from './vendor/three.module.min.js';
 
   /* ---------- interface : catalogue des modèles ---------- */
   const lists = { v: $('[data-at-list="v"]'), a: $('[data-at-list="a"]') }, items = $$('.at-item'), search = $('[data-at-search]'), catSels = { v: $('[data-at-catsel="v"]'), a: $('[data-at-catsel="a"]') };
+  /* v7.85 (langues) : la recherche lit le texte affiché (nom et famille dans la langue de la page), sans accents ni
+     majuscules ; hors du français, la liste suit l'ordre alphabétique des noms traduits (« Fishing boat » rangé à F) */
+  const fold = s => String(s).normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/ß/g, 'ss').toLowerCase();
+  const hay = it => it._q || (it._q = fold([...it.children].map(c => c.textContent).join(' ')));
+  {
+    const lang = document.documentElement.lang || 'fr';
+    if (!/^fr\b/i.test(lang)) {
+      const coll = new Intl.Collator(lang), nameOf = li => (li.querySelector('.at-item-n') || li).textContent;
+      for (const ul of Object.values(lists)) { if (!ul) continue; const lis = [...ul.children]; lis.sort((x, y) => coll.compare(nameOf(x), nameOf(y))); ul.append(...lis); }
+    }
+  }
   function filterList() {
-    const q = (search.value || '').trim().toLowerCase(), cat = catSels[st.fam].value; let n = 0;
-    for (const it of items) { if (it.dataset.atPick !== st.fam) continue; const ok = (!q || it.dataset.atQ.includes(q)) && (!cat || it.dataset.atCat === cat); it.parentNode.hidden = !ok; if (ok) n++; }
+    const q = fold((search.value || '').trim()), cat = catSels[st.fam].value; let n = 0;
+    for (const it of items) { if (it.dataset.atPick !== st.fam) continue; const ok = (!q || hay(it).includes(q)) && (!cat || it.dataset.atCat === cat); it.parentNode.hidden = !ok; if (ok) n++; }
     $('[data-at-empty]').hidden = n > 0;
   }
   function setFam(f) {

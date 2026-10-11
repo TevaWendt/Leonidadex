@@ -110,14 +110,22 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       medias.forEach(function (m, k) {
         const it = document.createElement('div'); it.className = 'gal-item';
         const im = k === 0 && firstImage ? firstImage : document.createElement('img');
-        im.sizes = '(max-width:700px) 100vw, 520px';
-        im.dataset.src = m.s; im.dataset.srcset = m.s + ' ' + (m.w || 480) + 'w, ' + m.l + ' ' + (m.lw || 1280) + 'w';
+        /* v7.85 : un attribut déjà écrit dans la page n'est pas réécrit (réécrire sizes relance la sélection de l'image en cours
+           de chargement : second téléchargement de la même variante) */
+        if (im.getAttribute('sizes') !== '(max-width:700px) 100vw, 520px') im.sizes = '(max-width:700px) 100vw, 520px';
+        /* v7.85 (latence) : la variante 800 px (présente pour chaque visuel officiel, déjà dans le srcset écrit dans la page)
+           reste dans la liste : la première image n'est plus retéléchargée en 1 280 px (130 Ko au lieu de 34) après sa
+           variante 800 px, et un écran qui n'a besoin que de 520 à 800 pixels la garde */
+        const m800 = m.s && m.l && /-480\.webp$/.test(m.s) && m.l === m.s.replace(/-480\.webp$/, '-1280.webp') ? m.s.replace(/-480\.webp$/, '-800.webp') : '';
+        im.dataset.src = m.s; im.dataset.srcset = m.s + ' ' + (m.w || 480) + 'w, ' + (m800 && window.LK.hasAsset(m800) ? m800 + ' 800w, ' : '') + m.l + ' ' + (m.lw || 1280) + 'w';
         if (k === 0) {
           if (im.getAttribute('srcset') !== im.dataset.srcset) im.srcset = im.dataset.srcset;
           if (im.getAttribute('src') !== m.s) im.src = m.s;
-          im.fetchPriority = 'high';
+          if (im.getAttribute('fetchpriority') !== 'high') im.fetchPriority = 'high';
         }
-        im.width = m.w; im.height = m.h; im.decoding = 'async';
+        if (im.getAttribute('width') !== String(m.w)) im.width = m.w;
+        if (im.getAttribute('height') !== String(m.h)) im.height = m.h;
+        if (im.getAttribute('decoding') !== 'async') im.decoding = 'async';
         if (m.h > m.w) im.classList.add('gal-portrait');
         im.alt = m.a || ((gal.dataset.nom || '') + ' — ' + m.t + ', official Rockstar Games screenshot');
         it.appendChild(im);

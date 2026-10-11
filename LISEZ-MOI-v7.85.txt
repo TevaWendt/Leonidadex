@@ -1,0 +1,32 @@
+LEONIDAKIT v7.85 — Latence (deuxième passe), langues vérifiées partout, tous les écrans
+À appliquer sur la v7.84. Archive « modifs » : seulement les fichiers qui changent.
+Rien n'a été publié ni poussé. Aucun fichier à supprimer. CSP inchangée. Aucun changement visuel.
+
+CE QUI CHANGE POUR LE VISITEUR
+- Les pages s'affichent plus vite, à l'identique. Mesuré sur 45 pages en alternance avec la v7.84 (téléphone, 4G lente,
+  processeur ralenti) : premier rendu −0,2 s en moyenne, page prête (DOMContentLoaded) −0,27 s, plus grand élément −0,3 s,
+  travail du processeur −11 % ; les pages lentes gagnent le plus : Missions 4,7 → 2,3 s, Nourriture 3,2 → 2,6 s, hub
+  Véhicules 2,8 → 2,0 s, Personnalisations 2,9 → 2,3 s ; une fiche d'arme est prête à 2,2 s au lieu de 5,3.
+- Fiches d'armes : un script y était chargé 17 fois (erreur de génération qui s'aggravait à chaque mise à jour) ; il ne
+  l'est plus qu'une fois.
+- Fiches véhicules et armes à photos : la grande photo n'est plus téléchargée deux ou trois fois de suite (34 Ko au lieu
+  de 164 à 198 Ko), même netteté.
+- Missions : les images des fiches plein écran ne se téléchargent plus avec la page (322 Ko) ; elles arrivent juste après,
+  la fiche s'ouvre toujours avec son image.
+- Pages longues (dossiers, sources, questions en bas de page) : le navigateur ne prépare plus ce qui est loin de l'écran
+  avant d'afficher le haut de la page.
+- Langues : toutes les pages des quatre langues relues dans le navigateur (textes, attributs, modèles, états ouverts par
+  les scripts : recherche, menu, Léo, Personnalisations, Atelier, carte, comparateur). Corrigé : le nom de l'arme dans le
+  titre de la carte ouverte depuis l'armurerie, les suggestions des champs « Ton véhicule » / « Ton arme » de
+  Personnalisations, la recherche du catalogue de l'Atelier (dans la langue de la page) et son ordre alphabétique.
+- Écrans : 57 pages relues à 16 largeurs, du petit téléphone (320 px) à l'écran 2 560 px : rien ne déborde.
+
+MARCHE À SUIVRE
+  1. Copie le contenu de l'archive à la racine du dossier GitHub (remplacer), valide, pousse. Rien à changer dans Vercel.
+  2. Essai : une fiche d'arme (armes/carabine.html) s'affiche d'un coup ; Missions → ouvre une fiche « Séquence » : l'image
+     est là ; en anglais, Personnalisations → « Your vehicle » → tape « fish » : « Fishing boat (unknown brand) » ;
+     Atelier 3D en anglais → recherche « boats ».
+
+Contrôles : tests Node + langues, vérificateur de liens, langues dans le navigateur (toutes les pages), écrans (16
+largeurs), audit navigateur ; le détail est dans outils/CHANGEMENTS-v7.85.txt. Retour arrière : commit précédent dans
+GitHub Desktop.
