@@ -149,6 +149,29 @@ ${C.scripts}${lkx?`\n<script src="${p}lk-sections.js"></script>`:''}
 /* gangs et factions : entrée « donne » des six cartes, reflet au survol (lk-sections.css, lk-sections.js) ; fiches de lieux
    (gangs, demeures, planques, entreprises) : carte de Leonida avec leurs repères, même dessin que le localisateur des armes */
 const LKX=require('./lk-sections.cjs');
+/* v7.83 (Téva : « quand on clique sur les cartes, la plupart ne sont pas très enrichies au niveau du texte, ou même au niveau
+   des visuels ») : « Le dossier » de chaque fiche des six sections du monde (outils/monde-dossiers.json, construit avec ses
+   traductions) : fiche d'identité, chronologie des révélations (chaque sortie officielle datée, son statut, un visuel
+   officiel), repères de la série (épisodes précédents, jamais donnés pour des informations sur GTA VI), questions ouvertes,
+   sources. Il remplace le résumé « Ce qu'il faut retenir » (lk-recap), qui répétait le bloc « À retenir » : les animaux le gardent.
+   Balisage : chaque texte dans son propre bloc (la mémoire de traduction les prend un par un). */
+const DOS=JSON.parse(fs.readFileSync('outils/monde-dossiers.json','utf8'));
+const DOS_SRC=Object.assign({},JSON.parse(fs.readFileSync('outils/editorial-hubs.json','utf8')).sources,DOS.sources);
+const DOS_KEYS=new Set(['regions','characters','businesses','residences','hideouts','factions']);
+function dossierOf(x,key,nVis){
+  const d=DOS.fiches[key+'/'+x.id];if(!d){if(DOS_KEYS.has(key))throw new Error('Dossier manquant (outils/monde-dossiers.json) : '+key+'/'+x.id);return '';}
+  const U=DOS.ui,ST=DOS.statuts;
+  const thumb=id=>{const mm=MED[id];if(!mm)throw new Error('Dossier '+x.id+' : visuel inconnu '+id);const v=mm.variants[0];return '<img src="'+v.src+'" width="'+v.w+'" height="'+v.h+'" alt="" loading="lazy" decoding="async">';};
+  const st=s=>{if(!ST[s])throw new Error('Dossier '+x.id+' : statut inconnu '+s);return '<p class="lkd-st lkd-st--'+s+'">'+esc(ST[s])+'</p>';};
+  const count=nVis?'<div class="lkd-dl-vis"><dt>'+esc(U.visuels)+'</dt><dd>'+(nVis>=2?'<a href="#galerie">'+nVis+' sur cette fiche</a>':nVis+' sur cette fiche')+'</dd></div>':'';
+  const ident='<div class="lkd-id"><h3 class="lkd-h3">'+esc(U.id)+'</h3><dl class="lkd-dl">'+d.identite.map(([t,v])=>'<div><dt>'+esc(t)+'</dt><dd>'+esc(v)+'</dd></div>').join('')+count+'</dl></div>';
+  const chrono='<div class="lkd-chrono"><h3 class="lkd-h3">'+esc(U.chrono)+'</h3><ol class="lkd-tl">'+d.chrono.map(c=>{const e=DOS.evenements[c.ev];if(!e)throw new Error('Dossier '+x.id+' : sortie inconnue '+c.ev);
+    return '<li class="lkd-ev lkd-ev--'+c.statut+(c.media?'':' lkd-ev--nofig')+' rise">'+(c.media?'<div class="lkd-ev-fig">'+thumb(c.media)+'</div>':'')+'<div class="lkd-ev-txt"><p class="lkd-ev-when"><time datetime="'+esc(e.iso)+'">'+esc(e.date)+'</time></p><h4 class="lkd-ev-t">'+esc(e.titre)+'</h4>'+st(c.statut)+'<p class="lkd-ev-d">'+esc(c.texte)+'</p></div></li>';}).join('')+'</ol></div>';
+  const serie=d.serie.length?'<div class="lkd-serie"><h3 class="lkd-h3">'+esc(U.serie)+'</h3><p class="lkd-note">'+esc(U.serieNote)+'</p><ul class="lkd-sc-list">'+d.serie.map(s=>'<li class="lkd-sc"><p class="lkd-sc-y">'+esc(s.annee)+'</p><h4 class="lkd-sc-t">'+esc(s.titre)+'</h4><p class="lkd-sc-d">'+esc(s.texte)+'</p></li>').join('')+'</ul></div>':'';
+  const open=d.questions.length?'<div class="lkd-open"><h3 class="lkd-h3">'+esc(U.questions)+'</h3><ul class="lkd-q">'+d.questions.map(q=>'<li>'+esc(q)+'</li>').join('')+'</ul><p class="lkd-note">'+esc(U.questionsNote)+'</p></div>':'';
+  const srcs='<div class="lkd-src"><h3 class="lkd-h3">'+esc(U.sources)+'</h3><ul class="lkd-src-list">'+d.sources.map(id=>{const s=DOS_SRC[id];if(!s)throw new Error('Dossier '+x.id+' : source inconnue '+id);return '<li>'+st(s.statut)+'<p class="lkd-src-t"><a href="'+esc(s.url)+'" target="_blank" rel="noopener nofollow">'+esc(s.title)+'</a></p></li>';}).join('')+'</ul></div>';
+  return '<section class="shell lkd reveal" id="dossier" aria-labelledby="lkd-t"><h2 class="sec-h" id="lkd-t">'+esc(U.h2)+'</h2><p class="lkd-lede">'+esc(DOS.ledes[key])+'</p><div class="lkd-top">'+ident+chrono+'</div>'+serie+'<div class="lkd-foot">'+open+srcs+'</div></section>';
+}
 /* v7.70 : les six hubs du monde ont l’entrée « donne » et le reflet des cartes des gangs ; les fiches de régions et de personnages ont
    aussi le bloc « Sur la carte de Leonida » (régions : la région et ses lieux repérés ; personnages : maison, planques, commerces et
    régions liés dans nos fiches). */
@@ -242,6 +265,10 @@ ${S.hub==='planques'?'<!-- lot-d-garages:start --><!-- lot-d-garages:end -->\n':
     const mapBlock=locate?'':mapIds.length?`<div class="lore-rel-group lore-rel-group--map"><h3>Sur la carte</h3><div class="lore-map">${mapIds.map(id=>{const ph=placeImage(id);return '<a class="lore-mapcard" href="'+mapHref(id,p)+'">'+(ph?'<img src="'+ph.variants[0].src+'" width="320" height="180" alt="" loading="lazy" decoding="async">':'<i class="lore-mapvide"></i>')+'<span>'+esc(placeName(id))+'</span></a>';}).join('')}</div></div>`:'';
     const facts=(x.facts&&x.facts.length)?`<div class="lore-facts"><h2>À retenir</h2><ul>${x.facts.map(f=>'<li class="rise">'+esc(f)+'</li>').join('')}</ul></div>`:'';
     const links=[];
+    /* v7.83 : le dossier de la fiche, plus bas ; nVis : nombre de visuels officiels de la galerie (au moins deux pour qu'elle existe) */
+    const nVis=galerieOf(x).filter(g=>MED[g.media]).length||((x.media||[]).filter(id=>MED[id]).length);
+    const dossier=dossierOf(x,key,nVis);
+    if(dossier)links.push(`<a href="#dossier">${esc(DOS.ui.lire)}</a>`);
     if(x.mapId)links.push(`<a href="${mapHref(x.mapId,p)}">Voir sur la carte</a>`);
     if(key==='regions')links.push(`<a href="${p}vehicules.html">Véhicules</a>`);
     if(x.source)links.push(`<a href="${esc(x.source)}" target="_blank" rel="noopener nofollow">Page officielle</a>`);
@@ -284,8 +311,8 @@ ${calcBridge}${factionBridge}
   ${facts}
   ${(relBlocks||vehBlock||armBlock||mapBlock)?`<div class="lore-related"><h2>En lien</h2>${relBlocks}${vehBlock}${armBlock}${mapBlock}</div>`:''}
 </section>
-<aside class="shell lk-pub lk-pub--fiche" data-pub="fiche-monde" hidden aria-hidden="true"></aside>${locate}${galleryBlock(x,S)}`;
-    fs.writeFileSync(S.hub+'/'+x.id+'.html',page({p,lkx:!!locate||LKX_HUBS.has(S.hub)||!!x.galerie,RECAP:recapOf(x,key),title:x.name+' — GTA VI | Leonidakit',desc:x.description,canonical:'/'+S.hub+'/'+x.id+'.html',ogImg:m?(m.variants[1]||m.variants[0]).src:null,body,crumbs:[['Accueil','/'],[S.label,'/'+S.hub+'.html'],[x.name,'/'+S.hub+'/'+x.id+'.html']],hub:S.hub,ld:ldFiche}));
+${dossier}<aside class="shell lk-pub lk-pub--fiche" data-pub="fiche-monde" hidden aria-hidden="true"></aside>${locate}${galleryBlock(x,S).replace('<section class="shell lore-gallery reveal">','<section class="shell lore-gallery reveal" id="galerie">')}`;
+    fs.writeFileSync(S.hub+'/'+x.id+'.html',page({p,lkx:!!locate||LKX_HUBS.has(S.hub)||!!x.galerie,RECAP:key==='animals'?recapOf(x,key):''/* v7.83 : le dossier remplace le résumé sur les six sections du monde */,title:x.name+' — GTA VI | Leonidakit',desc:x.description,canonical:'/'+S.hub+'/'+x.id+'.html',ogImg:m?(m.variants[1]||m.variants[0]).src:null,body,crumbs:[['Accueil','/'],[S.label,'/'+S.hub+'.html'],[x.name,'/'+S.hub+'/'+x.id+'.html']],hub:S.hub,ld:ldFiche}));
     index.push({l:x.name,k:S.one,u:'/'+S.hub+'/'+x.id+'.html',s:(x.name+' '+S.one+' '+x.description+' '+(x.tagline||'')+(key==='factions'?' '+(x.kind||'')+' '+(x.aliases||[]).join(' '):'')).toLowerCase(),w:1});
   }
   console.log(S.hub+' : '+items.length+' fiches');

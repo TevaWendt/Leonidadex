@@ -1,0 +1,2481 @@
+{
+ "_note": "v7.83 (Téva, 10/10/2026 : « la plupart ne sont pas très enrichies au niveau du texte, ou même au niveau des visuels ») : « Le dossier » de chaque fiche des six sections du monde (outils/lore-gen.js) : fiche d’identité, chronologie des révélations (chaque sortie officielle, sa date, son statut et un visuel officiel), repères de la série (des épisodes précédents, jamais présentés comme des informations sur GTA VI), questions ouvertes et sources. Statuts : officiel (texte ou propos de Rockstar), vu (ce que montre une image ou une vidéo officielle, ou ce qu’en rapporte la presse), comm (lecture des joueurs), conf (à confirmer). Les sources viennent du registre de outils/editorial-hubs.json, plus celles de « sources » ci-dessous. Textes vérifiés le 10 octobre 2026. Traductions : outils/langues/<langue>/v783.json.",
+ "ui": {
+  "h2": "Le dossier",
+  "id": "Fiche d’identité",
+  "chrono": "Chronologie des révélations",
+  "serie": "Repères de la série",
+  "serieNote": "Ce que les épisodes précédents ont fait de semblable : des repères pour se faire une idée, pas des informations sur GTA VI.",
+  "questions": "Ce qui reste à confirmer",
+  "questionsNote": "Personne n’a encore la réponse : ces points se compléteront avec le jeu, le 19 novembre 2026.",
+  "sources": "Sources de ce dossier",
+  "visuels": "Visuels officiels",
+  "count": "12 sur cette fiche",
+  "count1": "1 sur cette fiche",
+  "lire": "Lire le dossier"
+ },
+ "statuts": {
+  "officiel": "Officiel",
+  "vu": "Vu dans un média",
+  "comm": "Identification communautaire",
+  "conf": "À confirmer"
+ },
+ "ledes": {
+  "regions": "Ce que chaque sortie officielle a montré de la région, date par date, avec les repères de la série et ce qui reste à confirmer.",
+  "characters": "Ce que chaque sortie officielle a montré du personnage, date par date, avec les repères de la série et ce qui reste à confirmer.",
+  "businesses": "Ce que chaque sortie officielle a montré de cette adresse, date par date, avec les repères de la série et ce qui reste à confirmer.",
+  "residences": "Ce que chaque sortie officielle a montré de ce lieu, date par date, avec les repères de la série et ce qui reste à confirmer.",
+  "factions": "Ce que chaque sortie officielle a montré du groupe, date par date, avec les repères de la série et ce qui reste à confirmer.",
+  "hideouts": "Ce que chaque sortie officielle a montré de ce lieu, date par date, avec les repères de la série et ce qui reste à confirmer."
+ },
+ "evenements": {
+  "t1": {
+   "iso": "2023-12-04",
+   "date": "4 décembre 2023",
+   "titre": "Trailer 1",
+   "media": "affiche-trailer-1"
+  },
+  "t2": {
+   "iso": "2025-05-06",
+   "date": "6 mai 2025",
+   "titre": "Trailer 2",
+   "media": "affiche-trailer-2"
+  },
+  "site": {
+   "iso": "2025-05-06",
+   "date": "6 mai 2025",
+   "titre": "Pages « Only in Leonida »",
+   "media": null
+  },
+  "shots25": {
+   "iso": "2025-05-06",
+   "date": "6 mai 2025",
+   "titre": "Captures officielles",
+   "media": null
+  },
+  "cover": {
+   "iso": "2026-06",
+   "date": "juin 2026",
+   "titre": "Jaquette officielle",
+   "media": "cover-art-officielle"
+  },
+  "ue": {
+   "iso": "2026-06-24",
+   "date": "24 juin 2026",
+   "titre": "Édition Ultimate",
+   "media": "ultimate-edition-02"
+  },
+  "ueshots": {
+   "iso": "2026-06-24",
+   "date": "24 juin 2026",
+   "titre": "Captures de l’Édition Ultimate",
+   "media": null
+  },
+  "vv": {
+   "iso": "2026-06-24",
+   "date": "24 juin 2026",
+   "titre": "Pack Vintage Vice City",
+   "media": "vintage-vice-city-pack-01"
+  },
+  "el": {
+   "iso": "2026-08-27",
+   "date": "27 août 2026",
+   "titre": "An Extended Look",
+   "media": "affiche-extended-look"
+  },
+  "presse": {
+   "iso": "2026-08-27",
+   "date": "27 août 2026",
+   "titre": "Aperçus de la presse",
+   "media": null
+  },
+  "famitsu": {
+   "iso": "2026-08-28",
+   "date": "28 août 2026",
+   "titre": "Entretien de Rob Nelson",
+   "media": null
+  },
+  "shots": {
+   "iso": "2026-08",
+   "date": "fin août 2026",
+   "titre": "29 nouvelles captures",
+   "media": null
+  },
+  "radio": {
+   "iso": "2026-10-08",
+   "date": "8 octobre 2026",
+   "titre": "Les stations de radio",
+   "media": null
+  }
+ },
+ "sources": {
+  "rs-music": {
+   "url": "https://www.rockstargames.com/VI/music",
+   "title": "Rockstar Games : la musique de GTA VI (six stations de radio à écouter)",
+   "publishedAt": "2026-10-08",
+   "consultedAt": "2026-10-10",
+   "statut": "officiel"
+  },
+  "rs-artwork": {
+   "url": "https://www.rockstargames.com/VI/media/artwork-wallpapers",
+   "title": "Rockstar Games : illustrations officielles de GTA VI (jaquette, carte postale de Vice City)",
+   "publishedAt": null,
+   "consultedAt": "2026-10-10",
+   "statut": "officiel"
+  },
+  "gi-radio": {
+   "url": "https://gameinformer.com/2026/10/08/you-can-preview-6-of-the-radio-stations-in-grand-theft-auto-vi-right-now-plus-new",
+   "title": "Game Informer : six stations de radio de GTA VI à écouter (texte de Rockstar)",
+   "publishedAt": "2026-10-08",
+   "consultedAt": "2026-10-10",
+   "statut": "officiel"
+  },
+  "trois-couleurs": {
+   "url": "https://www.troiscouleurs.fr/?p=74349",
+   "title": "Trois Couleurs : la démo de GTA VI présentée par Rob Nelson",
+   "publishedAt": "2026-08-27",
+   "consultedAt": "2026-10-10",
+   "statut": "officiel"
+  },
+  "techradar-16": {
+   "url": "https://www.techradar.com/gaming/ps5/16-new-gta-6-details-we-learned-from-the-big-extended-look-gameplay-video-captured-in-game-on-a-ps5",
+   "title": "TechRadar : 16 détails appris dans l’Extended Look",
+   "publishedAt": "2026-08-27",
+   "consultedAt": "2026-10-10",
+   "statut": "vu"
+  },
+  "insider-lucia": {
+   "url": "https://insider-gaming.com/gta-6-lucia-can-stand-tall-with-niko-arthur-morgan-rockstar-says/",
+   "title": "Insider Gaming : Alexa D’Agostino (Rockstar) sur Lucia et Liberty City, sa ville natale",
+   "publishedAt": null,
+   "consultedAt": "2026-10-10",
+   "statut": "officiel"
+  },
+  "nme-extended": {
+   "url": "https://www.nme.com/features/gaming-features/gta6-netflix-jason-lucia-plot-reveals-soundtrack-3965148",
+   "title": "NME : ce que l’Extended Look montre de Jason et Lucia",
+   "publishedAt": "2026-08-28",
+   "consultedAt": "2026-10-10",
+   "statut": "vu"
+  },
+  "dexerto-extended": {
+   "url": "https://www.dexerto.com/gta/everything-revealed-in-gta-6-netflix-extended-look-3403132/",
+   "title": "Dexerto : tout ce que révèle l’Extended Look",
+   "publishedAt": "2026-08-27",
+   "consultedAt": "2026-10-10",
+   "statut": "vu"
+  },
+  "mp1st-ign": {
+   "url": "https://mp1st.com/?p=313306",
+   "title": "MP1st : les détails de l’aperçu d’IGN (bracelet de Lucia, avis de recherche, planques)",
+   "publishedAt": "2026-08-27",
+   "consultedAt": "2026-10-10",
+   "statut": "vu"
+  }
+ },
+ "fiches": {
+  "regions/vice-city": {
+   "identite": [
+    [
+     "Type",
+     "Métropole du sud de Leonida"
+    ],
+    [
+     "Slogan officiel",
+     "« Everything in excess »"
+    ],
+    [
+     "Lieux nommés par Rockstar",
+     "Ocean Beach, Little Cuba, Tisha-Wocka, VC Port, Downtown, Southside, Stockyard"
+    ],
+    [
+     "Équivalent réel (joueurs)",
+     "Miami (Floride)"
+    ],
+    [
+     "Personnages liés",
+     "Boobie Ike, Dre’Quan Priest, Real Dimez"
+    ],
+    [
+     "À la radio",
+     "Flash FM, « l’institution de Vice City » pour la pop"
+    ]
+   ],
+   "chrono": [
+    {
+     "ev": "t1",
+     "statut": "vu",
+     "media": "trailer-1-vehicles-033",
+     "texte": "Le jeu se dévoile par la ville : la plage, les tours au bord de la baie, les néons d’Ocean Beach la nuit et des voitures modifiées."
+    },
+    {
+     "ev": "t2",
+     "statut": "vu",
+     "media": "trailer-2-jet-037",
+     "texte": "Vers 0:37, les panneaux de l’autoroute indiquent VCI Airport, Ambrosia, Downtown, Southside et Peacock Bay."
+    },
+    {
+     "ev": "site",
+     "statut": "officiel",
+     "media": "vice-city-03",
+     "texte": "Rockstar la présente sous le slogan « Everything in excess » et nomme Ocean Beach, Little Cuba, Tisha-Wocka et VC Port."
+    },
+    {
+     "ev": "ue",
+     "statut": "officiel",
+     "media": "stock-305-clothing-store-03",
+     "texte": "Les textes de l’édition nomment Stockyard (Stock 305, Electric Fang) et Southside, où se trouve le repaire des PTT Youngin$ ; le bateau Squalo est amarré à Washington Beach."
+    },
+    {
+     "ev": "vv",
+     "statut": "officiel",
+     "media": "vintage-vice-city-pack-01",
+     "texte": "Le garage de Shore Court, « à deux pas » des plages d’Ocean Beach, accueille la Vapid Stanier ’55 ; la capture du pack pose Jason et Lucia devant l’Ocean View Hotel."
+    },
+    {
+     "ev": "el",
+     "statut": "vu",
+     "media": "affiche-extended-look",
+     "texte": "Poursuite avec la police dans les rues, bar sur un toit-terrasse et saut en base jump depuis un gratte-ciel."
+    },
+    {
+     "ev": "presse",
+     "statut": "officiel",
+     "media": null,
+     "texte": "Selon Rob Nelson, qui présentait la démo, Vice City fait à elle seule deux fois la taille de Los Santos, la ville de GTA V."
+    },
+    {
+     "ev": "shots",
+     "statut": "officiel",
+     "media": "vice-city-11",
+     "texte": "Trois captures de plus : deux tours au bord de la baie, le front de mer au crépuscule et un homme armé en pleine rue."
+    },
+    {
+     "ev": "radio",
+     "statut": "officiel",
+     "media": null,
+     "texte": "Flash FM est présentée comme « l’institution de Vice City » de la pop, avec Robyn et Alex à l’antenne."
+    }
+   ],
+   "serie": [
+    {
+     "annee": "1997",
+     "titre": "Grand Theft Auto",
+     "texte": "Vice City est déjà l’une des trois villes du tout premier épisode, avec Liberty City et San Andreas."
+    },
+    {
+     "annee": "2002",
+     "titre": "GTA Vice City",
+     "texte": "Tommy Vercetti y débarque en 1986 : Ocean Beach, Washington Beach, Little Havana, Downtown. Sa première planque est une chambre de l’Ocean View Hotel."
+    },
+    {
+     "annee": "2006",
+     "titre": "GTA Vice City Stories",
+     "texte": "Retour en 1984 avec Victor Vance, deux ans avant Tommy : on y bâtit un empire de commerces, quartier par quartier."
+    }
+   ],
+   "questions": [
+    "Quels quartiers ouvrent dès le début de l’histoire, et lesquels plus tard ?",
+    "Où se trouvent exactement Stockyard, Southside et Washington Beach dans la ville ?",
+    "Combien de lieux se visiteront de l’intérieur : boutiques, clubs, appartements ?"
+   ],
+   "sources": [
+    "rs-vi",
+    "rs-videos",
+    "rs-screens",
+    "rs-music",
+    "trois-couleurs",
+    "gtawiki-vice-city"
+   ]
+  },
+  "regions/leonida-keys": {
+   "identite": [
+    [
+     "Type",
+     "Archipel du sud de l’État"
+    ],
+    [
+     "Slogan officiel",
+     "« Gateway to paradise »"
+    ],
+    [
+     "Lieux nommés par Rockstar",
+     "Key Lento, The Rusty Anchor, Brian’s Boat Works & Marina"
+    ],
+    [
+     "Équivalent réel (joueurs)",
+     "Les Florida Keys ; Key Lento rappelle Key Largo"
+    ],
+    [
+     "Personnages liés",
+     "Jason Duval, Brian Heder, Cal Hampton"
+    ],
+    [
+     "Dans l’histoire",
+     "L’histoire commence chez Jason, dans les Keys"
+    ]
+   ],
+   "chrono": [
+    {
+     "ev": "t2",
+     "statut": "vu",
+     "media": "trailer-2-seashark-141",
+     "texte": "La vidéo s’ouvre sur Key Lento : Jason répare un toit, passe au chantier de Brian, puis file en scooter des mers avec Lucia."
+    },
+    {
+     "ev": "site",
+     "statut": "officiel",
+     "media": "leonida-keys-01",
+     "texte": "Rockstar en fait la porte du paradis, « Gateway to paradise » : pêche, bars de plage et petites combines, loin de l’agitation de Vice City."
+    },
+    {
+     "ev": "ue",
+     "statut": "officiel",
+     "media": "jason-s-safehouse-vehicles",
+     "texte": "Les véhicules de la planque de Jason, une Dinka Enduro aux tons treillis et un kayak Crest, sont décrits avec l’Édition Ultimate."
+    },
+    {
+     "ev": "presse",
+     "statut": "officiel",
+     "media": null,
+     "texte": "D’après la démo de Rob Nelson racontée par Trois Couleurs, l’histoire commence chez Jason, dans les Keys."
+    },
+    {
+     "ev": "shots",
+     "statut": "officiel",
+     "media": "leonida-keys-06",
+     "texte": "Une capture de plus : un iguane au soleil, la mer et les îles derrière lui."
+    }
+   ],
+   "serie": [
+    {
+     "annee": "2013",
+     "titre": "GTA V",
+     "texte": "Plongée avec bouteille, épaves et objets à repêcher au large de San Andreas : la mer y était déjà un terrain de jeu."
+    }
+   ],
+   "questions": [
+    "Peut-on aller partout dans l’archipel dès le début, y compris en bateau ?",
+    "Le chantier de Brian sera-t-il un lieu de missions, une planque, ou les deux ?",
+    "Quelles autres îles que Key Lento porteront un nom ?"
+   ],
+   "sources": [
+    "rs-vi",
+    "rs-videos",
+    "rs-screens",
+    "trois-couleurs",
+    "gtawiki-keys"
+   ]
+  },
+  "regions/grassrivers": {
+   "identite": [
+    [
+     "Type",
+     "Marais et zones humides"
+    ],
+    [
+     "Slogan officiel",
+     "« Welcome to the wetlands »"
+    ],
+    [
+     "Équivalent réel (joueurs)",
+     "Les Everglades"
+    ],
+    [
+     "Véhicules vus",
+     "Hydroglisseurs (Airboat 09, Vortex)"
+    ],
+    [
+     "À la radio",
+     "Back Country Radio, une country « prête pour l’hydroglisseur »"
+    ]
+   ],
+   "chrono": [
+    {
+     "ev": "t1",
+     "statut": "vu",
+     "media": "affiche-trailer-1",
+     "texte": "Un hydroglisseur fend les marais : c’est la première image de la région."
+    },
+    {
+     "ev": "site",
+     "statut": "officiel",
+     "media": "grassrivers-03",
+     "texte": "Rockstar l’accueille d’un « Welcome to the wetlands » : alligators, hydroglisseurs, chasse, pêche et braconnage."
+    },
+    {
+     "ev": "shots",
+     "statut": "officiel",
+     "media": "jason-and-lucia-13",
+     "texte": "Deux captures de la région, puis Jason et Lucia enlacés au coucher du soleil, cernés par des hydroglisseurs de la police dans les marais."
+    },
+    {
+     "ev": "radio",
+     "statut": "officiel",
+     "media": null,
+     "texte": "Back Country Radio, la country de MW et Delta Dawne, est présentée comme « Airboat-ready » : prête pour l’hydroglisseur."
+    }
+   ],
+   "serie": [
+    {
+     "annee": "2013",
+     "titre": "GTA V",
+     "texte": "La chasse arrive avec Cletus, l’ami de Trevor : cerfs, sangliers et pumas dans les collines de Blaine County."
+    },
+    {
+     "annee": "2018",
+     "titre": "Red Dead Redemption 2",
+     "texte": "Les bayous de Lemoyne, leurs alligators et la chasse aux animaux légendaires : le jeu précédent de Rockstar."
+    }
+   ],
+   "questions": [
+    "Les hydroglisseurs vont-ils partout dans les marais, ou sur des voies d’eau tracées ?",
+    "Chasse et braconnage : quelles espèces, et que rapporte une prise ?",
+    "Les gardes de la faune poursuivent-ils les braconniers ?"
+   ],
+   "sources": [
+    "rs-vi",
+    "rs-screens",
+    "rs-music",
+    "gi-radio",
+    "gtawiki-regions",
+    "dexerto-real"
+   ]
+  },
+  "regions/port-gellhorn": {
+   "identite": [
+    [
+     "Type",
+     "Station balnéaire déchue"
+    ],
+    [
+     "Slogan officiel",
+     "« Live hard »"
+    ],
+    [
+     "Lieux nommés par Rockstar",
+     "Starlet Motel, Delights"
+    ],
+    [
+     "Équivalent réel (joueurs)",
+     "Panama City, sur la côte nord-ouest (sans certitude)"
+    ],
+    [
+     "Personnages liés",
+     "Jason et Lucia, au Starlet Motel"
+    ]
+   ],
+   "chrono": [
+    {
+     "ev": "t1",
+     "statut": "vu",
+     "media": "affiche-trailer-1",
+     "texte": "Jason et Lucia partagent une chambre de motel ; l’enseigne du Starlet Motel, lisible sur les captures de la région, situe la scène."
+    },
+    {
+     "ev": "site",
+     "statut": "officiel",
+     "media": "port-gellhorn-01",
+     "texte": "Slogan « Live hard » : motels bon marché, centres commerciaux vides, attractions fermées, l’endroit où se faire oublier."
+    },
+    {
+     "ev": "el",
+     "statut": "vu",
+     "media": "affiche-extended-look",
+     "texte": "La vidéo repasse par le Starlet Motel, vers 25:58."
+    },
+    {
+     "ev": "shots",
+     "statut": "officiel",
+     "media": "port-gellhorn-06",
+     "texte": "Une capture de plus montre la ville au couchant, entre stations-service et rues commerçantes."
+    },
+    {
+     "ev": "radio",
+     "statut": "officiel",
+     "media": null,
+     "texte": "Selon le texte de Rockstar repris par Game Informer, Back Country Radio diffuse « pour Grassrivers, Port Gellhorn et au-delà »."
+    }
+   ],
+   "serie": [
+    {
+     "annee": "2013",
+     "titre": "GTA V",
+     "texte": "Sandy Shores, ville sur le déclin au bord de l’Alamo Sea, sert de base à Trevor : caravanes, bars et trafics."
+    }
+   ],
+   "questions": [
+    "Le Starlet Motel sera-t-il une planque, ou seulement un décor ?",
+    "Quels boulots « dont personne ne veut » la ville réserve-t-elle ?",
+    "Les attractions fermées se visiteront-elles ?"
+   ],
+   "sources": [
+    "rs-vi",
+    "rs-videos",
+    "rs-screens",
+    "gi-radio",
+    "gtawiki-safehouses",
+    "dexerto-real"
+   ]
+  },
+  "regions/ambrosia": {
+   "identite": [
+    [
+     "Type",
+     "Région agricole et industrielle"
+    ],
+    [
+     "Slogan officiel",
+     "« Keeping Leonida sweet »"
+    ],
+    [
+     "Lieux nommés par Rockstar",
+     "La raffinerie sucrière Allied Crystal"
+    ],
+    [
+     "Équivalent réel (joueurs)",
+     "Clewiston, ville du sucre au bord du lac Okeechobee"
+    ],
+    [
+     "Groupe local",
+     "Final Chapter MC, d’après les écussons d’une capture"
+    ]
+   ],
+   "chrono": [
+    {
+     "ev": "t2",
+     "statut": "vu",
+     "media": "trailer-2-jet-037",
+     "texte": "Un panneau de l’autoroute indique Ambrosia, à côté de l’aéroport VCI."
+    },
+    {
+     "ev": "site",
+     "statut": "officiel",
+     "media": "ambrosia-01",
+     "texte": "Slogan « Keeping Leonida sweet » : la raffinerie Allied Crystal fournit les emplois, un gang de motards local fournit à peu près tout le reste."
+    },
+    {
+     "ev": "shots",
+     "statut": "officiel",
+     "media": "ambrosia-06",
+     "texte": "Une capture de plus : une fête dans la boue, entre buggys et quads."
+    }
+   ],
+   "serie": [
+    {
+     "annee": "2013",
+     "titre": "GTA V",
+     "texte": "Grapeseed, ses fermes et ses champs, au nord de Blaine County : la campagne agricole de San Andreas."
+    },
+    {
+     "annee": "2009",
+     "titre": "GTA IV : The Lost and Damned",
+     "texte": "Johnny Klebitz et The Lost MC : la série a déjà raconté un club de motards de l’intérieur."
+    }
+   ],
+   "questions": [
+    "Pourra-t-on entrer dans la raffinerie Allied Crystal ?",
+    "Le club de motards sera-t-il un allié, un employeur ou une cible ?",
+    "Les fêtes dans la boue seront-elles une activité à part entière ?"
+   ],
+   "sources": [
+    "rs-vi",
+    "rs-videos",
+    "rs-screens",
+    "gtawiki-regions",
+    "gtawiki-final-chapter"
+   ]
+  },
+  "regions/mount-kalaga": {
+   "identite": [
+    [
+     "Type",
+     "Parc national, au nord de l’État"
+    ],
+    [
+     "Slogan officiel",
+     "« Wild, wild country »"
+    ],
+    [
+     "Équivalent réel (joueurs)",
+     "Géorgie et nord de la Floride ; canyons de Providence Canyon"
+    ],
+    [
+     "Activités annoncées",
+     "Chasse, pêche, camping, tout-terrain"
+    ],
+    [
+     "Véhicules vus",
+     "Maibatsu Manchez, Buckingham Maverick, Crest Kayak"
+    ]
+   ],
+   "chrono": [
+    {
+     "ev": "site",
+     "statut": "officiel",
+     "media": "mount-kalaga-national-park-01",
+     "texte": "Slogan « Wild, wild country » : forêts, gorges et rivières pour la chasse, la pêche et le tout-terrain."
+    },
+    {
+     "ev": "ue",
+     "statut": "officiel",
+     "media": "67-vapid-dominator-buggy-01",
+     "texte": "La Vapid Dominator Buggy ’67 est présentée comme « un monstre du Mud Club », taillé pour l’arrière-pays de Mount Kalaga « et au-delà »."
+    },
+    {
+     "ev": "el",
+     "statut": "vu",
+     "media": "affiche-extended-look",
+     "texte": "Une course tout-terrain s’y déroule, vers 18:35."
+    }
+   ],
+   "serie": [
+    {
+     "annee": "2004",
+     "titre": "GTA San Andreas",
+     "texte": "Mount Chiliad, sa descente à VTT et ses sentiers : la première vraie montagne de la série."
+    },
+    {
+     "annee": "2013",
+     "titre": "GTA V",
+     "texte": "Mount Chiliad revient, avec la réserve de Chiliad Mountain State Wilderness, ses chasseurs et ses mystères."
+    }
+   ],
+   "questions": [
+    "Où commencent les pistes tout-terrain et les zones de chasse ?",
+    "Le parc aura-t-il des campings où se reposer ?"
+   ],
+   "sources": [
+    "rs-vi",
+    "rs-videos",
+    "rs-screens",
+    "gtawiki-regions",
+    "gtawiki-extended"
+   ]
+  },
+  "characters/jason": {
+   "identite": [
+    [
+     "Rôle",
+     "Protagoniste jouable, avec Lucia"
+    ],
+    [
+     "Région",
+     "Leonida Keys"
+    ],
+    [
+     "Domicile",
+     "Une maison des Keys prêtée par Brian Heder"
+    ],
+    [
+     "Passé",
+     "Élevé parmi les escrocs, passé par l’armée"
+    ],
+    [
+     "Entourage",
+     "Lucia Caminos, Brian Heder, Cal Hampton"
+    ],
+    [
+     "Arme personnelle",
+     "Girardi ES9 gravé (Édition Ultimate)"
+    ],
+    [
+     "Véhicules vus",
+     "Vapid Ganado, Dinka Enduro, kayak Crest"
+    ],
+    [
+     "Tenue d’édition",
+     "Costume de lin pastel (Pack Vintage Vice City)"
+    ]
+   ],
+   "chrono": [
+    {
+     "ev": "t1",
+     "statut": "vu",
+     "media": "affiche-trailer-1",
+     "texte": "Il apparaît aux côtés de Lucia : chambre de motel, fuite en voiture, braquage de supérette."
+    },
+    {
+     "ev": "t2",
+     "statut": "vu",
+     "media": "affiche-trailer-2",
+     "texte": "La vidéo s’ouvre sur lui dans les Keys : un toit à réparer, l’appel de Brian, une tournée de recouvrement qui tourne mal."
+    },
+    {
+     "ev": "site",
+     "statut": "officiel",
+     "media": "jason-duval-02",
+     "texte": "Sa fiche officielle : une jeunesse parmi les escrocs, l’armée, un travail pour les trafiquants des Keys et une vie qui ne cesse de se compliquer."
+    },
+    {
+     "ev": "cover",
+     "statut": "officiel",
+     "media": "cover-art-officielle",
+     "texte": "Il est au centre de la jaquette officielle, aux côtés de Lucia."
+    },
+    {
+     "ev": "ue",
+     "statut": "officiel",
+     "media": "ganado-retro-build",
+     "texte": "L’Édition Ultimate lui attribue un Girardi ES9 gravé, les véhicules de sa planque et un kit rétro pour son Vapid Ganado « bien usé »."
+    },
+    {
+     "ev": "vv",
+     "statut": "officiel",
+     "media": "vintage-vice-city-pack-02",
+     "texte": "Le Pack Vintage lui donne un costume de lin pastel et la coupe « de la décennie de la décadence »."
+    },
+    {
+     "ev": "el",
+     "statut": "vu",
+     "media": "affiche-extended-look",
+     "texte": "Première mission montrée : un ramassage pour Boobie qui tourne à la fusillade. Chez lui, Jason joue au basket et prend une bière devant la télé."
+    },
+    {
+     "ev": "shots",
+     "statut": "officiel",
+     "media": "jason-duval-07",
+     "texte": "Quatre captures de plus : derrière un grillage sous les gyrophares, près d’un hydravion, un chargeur à la main, un fusil sous la capuche."
+    }
+   ],
+   "serie": [
+    {
+     "annee": "2013",
+     "titre": "GTA V",
+     "texte": "Trois protagonistes et le passage de l’un à l’autre : GTA VI revient à deux, avec un récit partagé entre Jason et Lucia."
+    },
+    {
+     "annee": "2008",
+     "titre": "GTA IV",
+     "texte": "Niko Bellic, ancien soldat venu chercher une vie meilleure : la série a souvent mis en scène des vétérans rattrapés par le crime."
+    }
+   ],
+   "questions": [
+    "Quelles missions seront réservées à Jason ?",
+    "Son passé militaire jouera-t-il un rôle dans l’histoire ?",
+    "Quittera-t-il un jour la maison prêtée par Brian ?"
+   ],
+   "sources": [
+    "gtabase-jason",
+    "rs-videos",
+    "rs-artwork",
+    "rs-screens",
+    "techradar-16",
+    "trois-couleurs"
+   ]
+  },
+  "characters/lucia": {
+   "identite": [
+    [
+     "Rôle",
+     "Protagoniste jouable, avec Jason"
+    ],
+    [
+     "Origine",
+     "Liberty City"
+    ],
+    [
+     "Passé",
+     "Pénitencier de Leonida, puis libérée"
+    ],
+    [
+     "Entourage",
+     "Jason Duval"
+    ],
+    [
+     "Arme personnelle",
+     "Klose K17 gravé (Édition Ultimate)"
+    ],
+    [
+     "Tenue d’édition",
+     "Mini-robe rouge à sequins et boucles (Pack Vintage Vice City)"
+    ]
+   ],
+   "chrono": [
+    {
+     "ev": "t1",
+     "statut": "vu",
+     "media": "affiche-trailer-1",
+     "texte": "La toute première scène : Lucia interrogée en tenue orange, au pénitencier de Leonida."
+    },
+    {
+     "ev": "t2",
+     "statut": "vu",
+     "media": "trailer-2-lucia-grenade-launcher",
+     "texte": "Libre, elle conduit, braque et tient tête à la police, lance-grenades à l’épaule."
+    },
+    {
+     "ev": "site",
+     "statut": "officiel",
+     "media": "lucia-caminos-01",
+     "texte": "Sa fiche officielle : un père qui lui a appris à se battre, la prison pour avoir défendu sa famille, une mère qui rêve de la belle vie depuis Liberty City."
+    },
+    {
+     "ev": "ue",
+     "statut": "officiel",
+     "media": "electric-fang-tattoo-02",
+     "texte": "L’Édition Ultimate lui destine un Klose K17 gravé, le maquillage et les ongles de Sara’s Unisex Salon, et des tatouages d’Electric Fang."
+    },
+    {
+     "ev": "vv",
+     "statut": "officiel",
+     "media": "vintage-vice-city-pack-01",
+     "texte": "Le Pack Vintage lui offre une mini-robe rouge à sequins et des boucles, pour « montrer à tout le monde que le monde est à toi »."
+    },
+    {
+     "ev": "el",
+     "statut": "vu",
+     "media": "affiche-extended-look",
+     "texte": "Salle de sport, stand de tir, base jump depuis un gratte-ciel, perruques et coiffures, voiture de fuite incendiée au cocktail Molotov."
+    },
+    {
+     "ev": "shots",
+     "statut": "officiel",
+     "media": "lucia-caminos-07",
+     "texte": "Quatre captures de plus : fusillade dans un tunnel, sortie d’un comptoir d’encaissement de chèques, salle de sport, et la nuit au volant."
+    }
+   ],
+   "serie": [
+    {
+     "annee": "2001",
+     "titre": "GTA III",
+     "texte": "Liberty City, sa ville natale, est le décor de GTA III, de Liberty City Stories (2005) et de GTA IV (2008)."
+    },
+    {
+     "annee": "2013",
+     "titre": "GTA V",
+     "texte": "Le pénitencier de Bolingbroke, et le casse « The Prison Break » de GTA Online en 2015 : la série connaît bien ces murs."
+    }
+   ],
+   "questions": [
+    "Quel rôle joue le bracelet électronique à sa cheville ?",
+    "Comment sort-elle exactement du pénitencier ?",
+    "Sa mère apparaîtra-t-elle dans l’histoire ?"
+   ],
+   "sources": [
+    "gtabase-lucia",
+    "rs-videos",
+    "rs-screens",
+    "insider-lucia",
+    "nme-extended",
+    "mp1st-ign"
+   ]
+  },
+  "characters/cal": {
+   "identite": [
+    [
+     "Rôle",
+     "Ami de Jason, associé de Brian"
+    ],
+    [
+     "Région",
+     "Leonida Keys"
+    ],
+    [
+     "Passe-temps",
+     "Radio des garde-côtes, forums, théories du complot"
+    ],
+    [
+     "Jouable",
+     "Non annoncé comme jouable"
+    ],
+    [
+     "Entourage",
+     "Jason Duval, Brian Heder"
+    ]
+   ],
+   "chrono": [
+    {
+     "ev": "t2",
+     "statut": "vu",
+     "media": "affiche-trailer-2",
+     "texte": "Chemise à fleurs et lunettes noires, il accompagne Jason dans la séquence des Keys."
+    },
+    {
+     "ev": "site",
+     "statut": "officiel",
+     "media": "cal-hampton-03",
+     "texte": "Sa fiche officielle le montre heureux chez lui, entre bières, onglets privés et radio des garde-côtes : et si tout ce qu’on lit sur internet était vrai ?"
+    },
+    {
+     "ev": "el",
+     "statut": "vu",
+     "media": "affiche-extended-look",
+     "texte": "D’après Engadget, on le voit allongé sur une bouée flamant rose dans une piscine, comme sur sa capture officielle."
+    }
+   ],
+   "serie": [
+    {
+     "annee": "2013",
+     "titre": "GTA V",
+     "texte": "Ron Jakowski, l’associé paranoïaque de Trevor, collé à la radio complotiste de Blaine County : un cousin évident."
+    }
+   ],
+   "questions": [
+    "Cal donnera-t-il des missions, ou restera-t-il un ami qu’on appelle ?",
+    "Son écoute des garde-côtes servira-t-elle à éviter les patrouilles en mer ?"
+   ],
+   "sources": [
+    "gtabase-cal",
+    "rs-videos",
+    "rs-screens",
+    "engadget-breakdown",
+    "gtawiki-characters"
+   ]
+  },
+  "characters/boobie": {
+   "identite": [
+    [
+     "Rôle",
+     "Figure de Vice City : club, immobilier, label"
+    ],
+    [
+     "Affaires",
+     "Jack of Hearts, Only Raw Records"
+    ],
+    [
+     "Associé",
+     "Dre’Quan Priest"
+    ],
+    [
+     "Région",
+     "Vice City"
+    ]
+   ],
+   "chrono": [
+    {
+     "ev": "site",
+     "statut": "officiel",
+     "media": "boobie-ike-01",
+     "texte": "Sa fiche officielle : une légende locale qui a fait de ses années de rue un empire légal, avec un pari à gagner, Only Raw Records."
+    },
+    {
+     "ev": "cover",
+     "statut": "officiel",
+     "media": "cover-art-officielle",
+     "texte": "Il figure sur la jaquette officielle, lunettes noires et or au cou."
+    },
+    {
+     "ev": "el",
+     "statut": "vu",
+     "media": "affiche-extended-look",
+     "texte": "Selon la presse, la première mission montrée est un ramassage pour Boobie qui tourne à la fusillade."
+    }
+   ],
+   "serie": [
+    {
+     "annee": "2002",
+     "titre": "GTA Vice City",
+     "texte": "Tommy Vercetti rachète le Malibu Club et des commerces qui rapportent : bâtir un empire légal était déjà au cœur de Vice City."
+    },
+    {
+     "annee": "2021",
+     "titre": "GTA Online : The Contract",
+     "texte": "Franklin tient une agence et Record A Studios, où enregistre Dr. Dre : la musique comme affaire, déjà."
+    }
+   ],
+   "questions": [
+    "Ses missions ouvriront-elles l’accès au Jack of Hearts ou au studio ?",
+    "Pourra-t-on investir dans ses affaires ?"
+   ],
+   "sources": [
+    "gi-characters",
+    "rs-artwork",
+    "rs-screens",
+    "techradar-16",
+    "gtawiki-characters"
+   ]
+  },
+  "characters/drequan": {
+   "identite": [
+    [
+     "Rôle",
+     "Producteur, cofondateur d’Only Raw Records"
+    ],
+    [
+     "Artistes signés",
+     "Real Dimez (Bae-Luxe et Roxy)"
+    ],
+    [
+     "Associé",
+     "Boobie Ike"
+    ],
+    [
+     "Où il travaille",
+     "Le club de Boobie, le studio du label"
+    ]
+   ],
+   "chrono": [
+    {
+     "ev": "site",
+     "statut": "officiel",
+     "media": "dre-quan-priest-04",
+     "texte": "Sa fiche officielle : plus hustler que gangster, il a toujours visé la musique et veut désormais toute la scène de Vice City."
+    },
+    {
+     "ev": "el",
+     "statut": "conf",
+     "media": "affiche-extended-look",
+     "texte": "La presse ne rapporte aucune apparition de Dre’Quan dans la vidéo."
+    }
+   ],
+   "serie": [
+    {
+     "annee": "2021",
+     "titre": "GTA Online : The Contract",
+     "texte": "Dr. Dre enregistre à Record A Studios, et l’histoire tourne autour de ses morceaux volés : un studio au centre d’une intrigue."
+    }
+   ],
+   "questions": [
+    "Pourra-t-on aider le label à décrocher son tube ?",
+    "Ses soirées au club seront-elles des activités ?"
+   ],
+   "sources": [
+    "gi-characters",
+    "rs-screens",
+    "gtawiki-characters"
+   ]
+  },
+  "characters/dimez": {
+   "identite": [
+    [
+     "Membres",
+     "Bae-Luxe et Roxy"
+    ],
+    [
+     "Maison de disques",
+     "Only Raw Records"
+    ],
+    [
+     "Premier succès",
+     "Un morceau avec le rappeur local DWNPLY"
+    ],
+    [
+     "Producteur",
+     "Dre’Quan Priest"
+    ]
+   ],
+   "chrono": [
+    {
+     "ev": "site",
+     "statut": "officiel",
+     "media": "real-dimez-02",
+     "texte": "Leur fiche officielle : des amies du lycée passées des petits trafics au rap viral, qui espèrent que la foudre frappe deux fois."
+    },
+    {
+     "ev": "el",
+     "statut": "vu",
+     "media": "affiche-extended-look",
+     "texte": "D’après la presse, une scène les montre en cabine d’enregistrement."
+    }
+   ],
+   "serie": [
+    {
+     "annee": "2004",
+     "titre": "GTA San Andreas",
+     "texte": "Madd Dogg, rappeur déchu que CJ aide à revenir au sommet : la série a déjà raconté une carrière à relancer."
+    }
+   ],
+   "questions": [
+    "Leurs morceaux passeront-ils à la radio du jeu ?",
+    "Leurs vidéos virales seront-elles visibles sur les réseaux du jeu ?"
+   ],
+   "sources": [
+    "gi-characters",
+    "rs-screens",
+    "engadget-breakdown",
+    "gtawiki-characters"
+   ]
+  },
+  "characters/raul": {
+   "identite": [
+    [
+     "Rôle",
+     "Braqueur de banques, recruteur"
+    ],
+    [
+     "Méthode",
+     "Confiance, charme et ruse"
+    ],
+    [
+     "Équipe",
+     "Jason et Lucia, recrutés après une fuite (Extended Look)"
+    ],
+    [
+     "Sur la jaquette",
+     "Oui, une arme à la main"
+    ]
+   ],
+   "chrono": [
+    {
+     "ev": "site",
+     "statut": "officiel",
+     "media": "raul-bautista-02",
+     "texte": "Sa fiche officielle : un braqueur chevronné toujours en quête de talents, dont l’imprudence fait monter les enjeux à chaque coup."
+    },
+    {
+     "ev": "cover",
+     "statut": "officiel",
+     "media": "cover-art-officielle",
+     "texte": "Il apparaît sur la jaquette officielle, une arme à la main."
+    },
+    {
+     "ev": "el",
+     "statut": "vu",
+     "media": "affiche-extended-look",
+     "texte": "Jason et Lucia conduisent la voiture de fuite de l’un de ses braquages, puis entrent dans son équipe."
+    }
+   ],
+   "serie": [
+    {
+     "annee": "2013",
+     "titre": "GTA V",
+     "texte": "Lester Crest prépare les casses, on choisit l’équipe et chacun prend sa part : le modèle des grands braquages de la série."
+    },
+    {
+     "annee": "2015",
+     "titre": "GTA Online : Heists",
+     "texte": "Les braquages en équipe arrivent en ligne, avec leurs missions de préparation et le partage du butin."
+    }
+   ],
+   "questions": [
+    "Combien de braquages compte son histoire, et comment se partage le butin ?",
+    "Pourra-t-on refuser de le suivre quand les risques montent ?"
+   ],
+   "sources": [
+    "gi-characters",
+    "rs-artwork",
+    "rs-screens",
+    "dexerto-extended",
+    "gtawiki-characters"
+   ]
+  },
+  "characters/brian": {
+   "identite": [
+    [
+     "Rôle",
+     "Trafiquant de la vieille école"
+    ],
+    [
+     "Région",
+     "Leonida Keys"
+    ],
+    [
+     "Entreprise",
+     "Brian’s Boat Works & Marina"
+    ],
+    [
+     "Épouse",
+     "Lori, sa troisième"
+    ],
+    [
+     "Véhicules vus",
+     "Vapid Caracara 4x4"
+    ],
+    [
+     "Péché mignon",
+     "Un Mudslide au coucher du soleil"
+    ]
+   ],
+   "chrono": [
+    {
+     "ev": "t2",
+     "statut": "vu",
+     "media": "trailer-2-brian-boatyard-085",
+     "texte": "Patron de Jason dans la séquence des Keys ; l’enseigne de son chantier se lit vers 1:25."
+    },
+    {
+     "ev": "site",
+     "statut": "officiel",
+     "media": "brian-heder-03",
+     "texte": "Sa fiche officielle : formé à l’âge d’or de la contrebande, il loge Jason contre des recouvrements et des passages pour la sangria de Lori."
+    },
+    {
+     "ev": "el",
+     "statut": "vu",
+     "media": "affiche-extended-look",
+     "texte": "Avec Lori, il retrouve Jason et Lucia à l’Effluvia, un bar sur un toit."
+    }
+   ],
+   "serie": [
+    {
+     "annee": "2002",
+     "titre": "GTA Vice City",
+     "texte": "Le Boatyard de Viceport, que Tommy peut racheter, devient une source de revenus une fois ses missions faites."
+    },
+    {
+     "annee": "2017",
+     "titre": "GTA Online : Smuggler’s Run",
+     "texte": "Contrebande aérienne depuis un hangar : la série a déjà fait de la contrebande un métier."
+    }
+   ],
+   "questions": [
+    "Brian confiera-t-il des missions de contrebande en bateau ?",
+    "Lori sera-t-elle un personnage à part entière ?"
+   ],
+   "sources": [
+    "gi-characters",
+    "rs-videos",
+    "rs-screens",
+    "svg-extended-map",
+    "nme-extended",
+    "gtawiki-characters"
+   ]
+  },
+  "businesses/rideout-customs": {
+   "identite": [
+    [
+     "Type",
+     "Atelier de personnalisation automobile"
+    ],
+    [
+     "Accès",
+     "Ouvert seulement avec l’Édition Ultimate"
+    ],
+    [
+     "Services",
+     "Intérieurs détaillés, jantes raffinées, style donk"
+    ],
+    [
+     "Voiture vue",
+     "Albany Manana"
+    ],
+    [
+     "Sur notre carte",
+     "Crosstown, Vice City"
+    ]
+   ],
+   "chrono": [
+    {
+     "ev": "t1",
+     "statut": "vu",
+     "media": "affiche-trailer-1",
+     "texte": "Des voitures modifiées et un rassemblement de passionnés dans Vice City donnent le ton dès la première vidéo."
+    },
+    {
+     "ev": "ue",
+     "statut": "officiel",
+     "media": "rideout-customs-mod-shop-01",
+     "texte": "« Transforme des véhicules ordinaires en œuvres d’art » : intérieurs détaillés, jantes raffinées et style donk. L’atelier n’ouvre qu’avec l’Édition Ultimate."
+    },
+    {
+     "ev": "ueshots",
+     "statut": "officiel",
+     "media": "ultimate-edition-rideout-customs-02",
+     "texte": "Trois captures : la berline dorée sur ses jantes, son habitacle rouge, et un mécanicien glissé sous une voiture jaune."
+    }
+   ],
+   "serie": [
+    {
+     "annee": "2013",
+     "titre": "GTA V",
+     "texte": "Los Santos Customs : peinture, jantes, moteur et blindage, avec un prix pour chaque option."
+    },
+    {
+     "annee": "2015",
+     "titre": "GTA Online : Lowriders",
+     "texte": "Benny’s Original Motor Works transforme les voitures en lowriders sur mesure, habitacle compris."
+    }
+   ],
+   "questions": [
+    "Ces options existeront-elles ailleurs, sans l’Édition Ultimate ?",
+    "Quels véhicules l’atelier accepte-t-il, et à quel prix ?"
+   ],
+   "sources": [
+    "rs-vi",
+    "rs-screens",
+    "gtawiki-ultimate",
+    "xbox-ultimate"
+   ]
+  },
+  "businesses/saras-unisex-salon": {
+   "identite": [
+    [
+     "Type",
+     "Salon de coiffure et de soins"
+    ],
+    [
+     "Accès",
+     "Ouvert seulement avec l’Édition Ultimate"
+    ],
+    [
+     "Services",
+     "Coiffures signature ; barbe pour Jason ; maquillage et ongles pour Lucia"
+    ],
+    [
+     "Personnages liés",
+     "Jason et Lucia"
+    ],
+    [
+     "Sur notre carte",
+     "Repéré grâce aux captures"
+    ]
+   ],
+   "chrono": [
+    {
+     "ev": "ue",
+     "statut": "officiel",
+     "media": "sara-s-unisex-salon-01",
+     "texte": "Le texte de l’édition promet des coiffures signature pour Jason et Lucia, la barbe pour Jason, le maquillage et les ongles pour Lucia ; le salon n’ouvre qu’avec l’Édition Ultimate."
+    },
+    {
+     "ev": "ueshots",
+     "statut": "officiel",
+     "media": "sara-s-unisex-salon-02",
+     "texte": "Les captures montrent Jason et Lucia devant le salon, Jason avec une coupe mulet de la maison et Lucia chez la manucure."
+    },
+    {
+     "ev": "famitsu",
+     "statut": "officiel",
+     "media": null,
+     "texte": "Rob Nelson évoque d’innombrables boutiques et salons, et une coupe possible à la planque, avec un choix limité."
+    }
+   ],
+   "serie": [
+    {
+     "annee": "2004",
+     "titre": "GTA San Andreas",
+     "texte": "Les barbiers de San Andreas, dont Reece’s : la coiffure de CJ jouait sur son pouvoir de séduction."
+    },
+    {
+     "annee": "2013",
+     "titre": "GTA V",
+     "texte": "Herr Kutz, Bob Mulét, Beachcombover : coupes et barbes, avec un prix pour chaque prestation."
+    }
+   ],
+   "questions": [
+    "Les autres salons proposeront-ils les mêmes coupes sans l’Édition Ultimate ?",
+    "Combien coûteront une coupe et une manucure ?"
+   ],
+   "sources": [
+    "rs-vi",
+    "rs-screens",
+    "famitsu-nelson",
+    "gamingbible-7"
+   ]
+  },
+  "businesses/stock-305": {
+   "identite": [
+    [
+     "Type",
+     "Boutique de vêtements (streetwear)"
+    ],
+    [
+     "Quartier",
+     "Stockyard"
+    ],
+    [
+     "Accès",
+     "Ouvert seulement avec l’Édition Ultimate"
+    ],
+    [
+     "Services",
+     "Looks uniques et exclusifs pour Jason et Lucia"
+    ],
+    [
+     "Le nom",
+     "305, l’indicatif téléphonique de Miami"
+    ]
+   ],
+   "chrono": [
+    {
+     "ev": "ue",
+     "statut": "officiel",
+     "media": "stock-305-clothing-store-03",
+     "texte": "Présentée comme l’adresse phare du streetwear haut de gamme à Stockyard, la boutique n’ouvre qu’avec l’Édition Ultimate."
+    },
+    {
+     "ev": "ueshots",
+     "statut": "officiel",
+     "media": "stock-305-clothing-store-01",
+     "texte": "Les captures montrent Jason assis sur le toit d’un van peint, Lucia appuyée contre la carrosserie, puis chacun à l’intérieur de la boutique."
+    },
+    {
+     "ev": "famitsu",
+     "statut": "officiel",
+     "media": null,
+     "texte": "Rob Nelson parle de « milliers » de tenues, gagnées en mission ou achetées en boutique."
+    }
+   ],
+   "serie": [
+    {
+     "annee": "2013",
+     "titre": "GTA V",
+     "texte": "Binco, Suburban, Ponsonbys : une boutique par style et par budget, de la fripe au luxe."
+    }
+   ],
+   "questions": [
+    "Les looks de Stock 305 resteront-ils exclusifs à la boutique ?",
+    "Quels prix pour les pièces de la boutique ?"
+   ],
+   "sources": [
+    "rs-vi",
+    "rs-screens",
+    "famitsu-nelson",
+    "gamingbible-7"
+   ]
+  },
+  "businesses/electric-fang": {
+   "identite": [
+    [
+     "Type",
+     "Salon de tatouage"
+    ],
+    [
+     "Quartier",
+     "Stockyard"
+    ],
+    [
+     "Accès",
+     "Ouvert seulement avec l’Édition Ultimate"
+    ],
+    [
+     "Services",
+     "Plus de 50 tatouages signature pour Jason et Lucia"
+    ],
+    [
+     "Les artistes",
+     "FAILE, un duo d’artistes de Brooklyn"
+    ]
+   ],
+   "chrono": [
+    {
+     "ev": "ue",
+     "statut": "officiel",
+     "media": "electric-fang-tattoo-01",
+     "texte": "Le salon le plus emblématique de Stockyard : plus de 50 tatouages signature dessinés par le collectif FAILE, seulement avec l’Édition Ultimate."
+    },
+    {
+     "ev": "ueshots",
+     "statut": "officiel",
+     "media": "electric-fang-tattoo-03",
+     "texte": "Les captures montrent Jason et Lucia devant le néon, Lucia au crâne rasé sous l’aiguille, et le dos de Jason entièrement tatoué."
+    }
+   ],
+   "serie": [
+    {
+     "annee": "2004",
+     "titre": "GTA San Andreas",
+     "texte": "Les salons de tatouage arrivent dans la série : bras, torse et dos, avec un effet sur le respect et le charme de CJ."
+    },
+    {
+     "annee": "2013",
+     "titre": "GTA V",
+     "texte": "Blazing Tattoo et Ink Inc. : chaque motif a son prix, et se retire gratuitement."
+    }
+   ],
+   "questions": [
+    "Les tatouages de FAILE seront-ils réservés à ce salon ?",
+    "Pourra-t-on retirer un tatouage, et à quel prix ?"
+   ],
+   "sources": [
+    "rs-vi",
+    "rs-screens",
+    "gtawiki-ultimate"
+   ]
+  },
+  "businesses/one-eyed-willie": {
+   "identite": [
+    [
+     "Type",
+     "Atelier de préparation tout-terrain"
+    ],
+    [
+     "Lieu",
+     "Lake Leonida"
+    ],
+    [
+     "Accès",
+     "Ouvert seulement avec l’Édition Ultimate"
+    ],
+    [
+     "Services",
+     "Modifications tout-terrain, peintures faites à la main"
+    ],
+    [
+     "Sur notre carte",
+     "Pas encore placé"
+    ]
+   ],
+   "chrono": [
+    {
+     "ev": "ue",
+     "statut": "officiel",
+     "media": "one-eyed-willie-s-mod-shop-01",
+     "texte": "Le texte de l’édition le situe à Lake Leonida et le dit spécialisé dans le tout-terrain et la peinture automobile faite à la main ; il n’ouvre qu’avec l’Édition Ultimate."
+    },
+    {
+     "ev": "ueshots",
+     "statut": "officiel",
+     "media": "ultimate-edition-one-eyed-willie-03",
+     "texte": "Les captures montrent un tout-terrain vert citron sous toutes les coutures, capot ouvert à l’atelier."
+    }
+   ],
+   "serie": [
+    {
+     "annee": "2013",
+     "titre": "GTA V",
+     "texte": "De Los Santos Customs à Beeker’s Garage, à Paleto Bay : suspensions, pneus et pare-chocs pour les 4x4 aussi."
+    }
+   ],
+   "questions": [
+    "Où se trouve Lake Leonida sur la carte ?",
+    "Ses peintures à la main seront-elles des livrées à choisir, ou des créations uniques ?"
+   ],
+   "sources": [
+    "rs-vi",
+    "rs-screens",
+    "gtawiki-ultimate"
+   ]
+  },
+  "businesses/ptt-youngin": {
+   "identite": [
+    [
+     "Type",
+     "Boutique de biens illicites, repaire de gang"
+    ],
+    [
+     "Quartier",
+     "Southside, Vice City"
+    ],
+    [
+     "Nom officiel",
+     "PTT YOUNGIN$ Illegal Goods Store"
+    ],
+    [
+     "Accès",
+     "Pillage inclus dans l’Édition Ultimate"
+    ]
+   ],
+   "chrono": [
+    {
+     "ev": "ue",
+     "statut": "officiel",
+     "media": "ptt-youngin-illegal-goods-store",
+     "texte": "L’édition propose de piller le repaire de l’un des gangs les plus bruyants et les plus actifs sur les réseaux de Southside, puis de filer avec des objets spéciaux et une contrebande à part."
+    },
+    {
+     "ev": "famitsu",
+     "statut": "officiel",
+     "media": null,
+     "texte": "Rob Nelson : la carte indique ce qu’un repaire de gang contient avant d’y entrer, et la drogue volée se revend à un receleur."
+    }
+   ],
+   "serie": [
+    {
+     "annee": "2013",
+     "titre": "GTA Online",
+     "texte": "Les « Gang Attacks » : nettoyer un repaire de gang, puis ouvrir ses caisses."
+    }
+   ],
+   "questions": [
+    "Le pillage se rejouera-t-il, ou une seule fois ?",
+    "Sans l’Édition Ultimate, le repaire existera-t-il dans le jeu ?"
+   ],
+   "sources": [
+    "rs-vi",
+    "gtabase-ptt",
+    "famitsu-nelson"
+   ]
+  },
+  "businesses/only-raw-records": {
+   "identite": [
+    [
+     "Type",
+     "Label et studio d’enregistrement"
+    ],
+    [
+     "Fondateurs",
+     "Boobie Ike et Dre’Quan Priest"
+    ],
+    [
+     "Artistes signés",
+     "Real Dimez"
+    ],
+    [
+     "Financement",
+     "L’argent du Jack of Hearts"
+    ],
+    [
+     "Sur notre carte",
+     "Pas encore placé"
+    ]
+   ],
+   "chrono": [
+    {
+     "ev": "site",
+     "statut": "officiel",
+     "media": "dre-quan-priest-04",
+     "texte": "Les fiches de Boobie, Dre’Quan et Real Dimez le présentent : il ne manque au label qu’un tube."
+    },
+    {
+     "ev": "el",
+     "statut": "vu",
+     "media": "affiche-extended-look",
+     "texte": "D’après la presse, une scène montre Real Dimez en cabine d’enregistrement."
+    }
+   ],
+   "serie": [
+    {
+     "annee": "2021",
+     "titre": "GTA Online : The Contract",
+     "texte": "Record A Studios, où Dr. Dre enregistre pendant que Franklin court après ses morceaux volés."
+    }
+   ],
+   "questions": [
+    "Le studio se visitera-t-il, ou n’apparaîtra-t-il qu’en mission ?",
+    "Les morceaux du label passeront-ils à la radio du jeu ?"
+   ],
+   "sources": [
+    "gi-characters",
+    "rs-screens",
+    "engadget-breakdown"
+   ]
+  },
+  "businesses/jack-of-hearts": {
+   "identite": [
+    [
+     "Type",
+     "Club de strip-tease"
+    ],
+    [
+     "Propriétaire",
+     "Boobie Ike"
+    ],
+    [
+     "Sur notre carte",
+     "Crosstown, Vice City"
+    ],
+    [
+     "Équivalent réel (joueurs)",
+     "Le King of Diamonds, à Miami"
+    ]
+   ],
+   "chrono": [
+    {
+     "ev": "t1",
+     "statut": "comm",
+     "media": "affiche-trailer-1",
+     "texte": "Les joueurs rapprochent un club du premier trailer du King of Diamonds, un club réel de Miami."
+    },
+    {
+     "ev": "site",
+     "statut": "officiel",
+     "media": "boobie-ike-02",
+     "texte": "La fiche de Boobie le cite parmi ses affaires : l’argent du club fait tourner le label."
+    }
+   ],
+   "serie": [
+    {
+     "annee": "2002",
+     "titre": "GTA Vice City",
+     "texte": "Le Pole Position Club était déjà le club de strip-tease d’Ocean Beach."
+    },
+    {
+     "annee": "2013",
+     "titre": "GTA V",
+     "texte": "Le Vanilla Unicorn, que Trevor reprend en main au fil de l’histoire."
+    }
+   ],
+   "questions": [
+    "Le club sera-t-il un lieu de missions, d’activités, ou les deux ?",
+    "Pourra-t-on y investir, comme Tommy dans ses commerces ?"
+   ],
+   "sources": [
+    "gi-characters",
+    "rs-screens",
+    "dexerto-kod",
+    "gtawiki-shops"
+   ]
+  },
+  "residences/jason-keys": {
+   "identite": [
+    [
+     "Type",
+     "Maison sur pilotis"
+    ],
+    [
+     "Propriétaire",
+     "Brian Heder"
+    ],
+    [
+     "Occupant",
+     "Jason Duval, sans loyer"
+    ],
+    [
+     "Lieu",
+     "Key Lento, Leonida Keys"
+    ],
+    [
+     "Véhicules vus",
+     "Vapid Ganado, Dinka Enduro, kayak Crest"
+    ]
+   ],
+   "chrono": [
+    {
+     "ev": "t2",
+     "statut": "vu",
+     "media": "affiche-trailer-2",
+     "texte": "Jason répare le toit qui fuit avant de partir encaisser pour Brian."
+    },
+    {
+     "ev": "ue",
+     "statut": "officiel",
+     "media": "jason-s-safehouse-vehicles",
+     "texte": "La capture « Jason’s Safehouse Vehicles » montre la maison, toit réparé, avec ses véhicules garés devant."
+    },
+    {
+     "ev": "presse",
+     "statut": "officiel",
+     "media": null,
+     "texte": "D’après la démo de Rob Nelson racontée par Trois Couleurs, la partie commence ici."
+    }
+   ],
+   "serie": [
+    {
+     "annee": "2013",
+     "titre": "GTA V",
+     "texte": "La caravane de Trevor à Sandy Shores : la planque d’un personnage en dit long sur lui."
+    }
+   ],
+   "questions": [
+    "La maison changera-t-elle au fil de l’histoire ?",
+    "Jason pourra-t-il s’installer ailleurs ?"
+   ],
+   "sources": [
+    "rs-vi",
+    "rs-videos",
+    "rs-screens",
+    "trois-couleurs",
+    "gtawiki-safehouses"
+   ]
+  },
+  "residences/cal-keys": {
+   "identite": [
+    [
+     "Type",
+     "Maison, adresse non publiée"
+    ],
+    [
+     "Occupant",
+     "Cal Hampton"
+    ],
+    [
+     "Région",
+     "Leonida Keys"
+    ],
+    [
+     "Équipement",
+     "Radio des garde-côtes, ordinateur"
+    ]
+   ],
+   "chrono": [
+    {
+     "ev": "site",
+     "statut": "officiel",
+     "media": "cal-hampton-01",
+     "texte": "La fiche de Cal le décrit en sécurité chez lui, à l’écoute des garde-côtes, quelques bières à portée de main."
+    },
+    {
+     "ev": "el",
+     "statut": "vu",
+     "media": "affiche-extended-look",
+     "texte": "D’après Engadget, on le voit sur une bouée dans une piscine, sans que la vidéo dise si c’est chez lui."
+    }
+   ],
+   "serie": [
+    {
+     "annee": "2013",
+     "titre": "GTA V",
+     "texte": "Ron Jakowski vit lui aussi entre radio et théories, à Sandy Shores, à deux pas de Trevor."
+    }
+   ],
+   "questions": [
+    "Sa maison sera-t-elle visitable, et où se trouve-t-elle ?"
+   ],
+   "sources": [
+    "gtabase-cal",
+    "engadget-breakdown",
+    "gtawiki-characters"
+   ]
+  },
+  "residences/brian-keys": {
+   "identite": [
+    [
+     "Type",
+     "Maison et chantier naval"
+    ],
+    [
+     "Occupants",
+     "Brian Heder et Lori"
+    ],
+    [
+     "Propriétés",
+     "Plusieurs maisons dans les Keys, dont celle de Jason"
+    ],
+    [
+     "Sur notre carte",
+     "Chantier naval repéré ; maison non publiée"
+    ]
+   ],
+   "chrono": [
+    {
+     "ev": "t2",
+     "statut": "vu",
+     "media": "trailer-2-brian-boatyard-085",
+     "texte": "Le chantier de Brian apparaît de nuit, enseigne allumée, vers 1:25."
+    },
+    {
+     "ev": "site",
+     "statut": "officiel",
+     "media": "brian-heder-02",
+     "texte": "La fiche de Brian parle de la sangria de Lori, que Jason doit venir boire : c’est dans le contrat."
+    },
+    {
+     "ev": "el",
+     "statut": "vu",
+     "media": "affiche-extended-look",
+     "texte": "Brian et Lori retrouvent Jason et Lucia à l’Effluvia, un bar sur un toit."
+    }
+   ],
+   "serie": [
+    {
+     "annee": "2002",
+     "titre": "GTA Vice City",
+     "texte": "Les propriétés de Tommy, de l’hôtel au manoir Vercetti : chaque adresse achetée devenait une planque."
+    }
+   ],
+   "questions": [
+    "Jason pourra-t-il passer chez Brian et Lori en dehors des missions ?"
+   ],
+   "sources": [
+    "gi-characters",
+    "rs-videos",
+    "rs-screens",
+    "svg-extended-map"
+   ]
+  },
+  "residences/lucia-avant": {
+   "identite": [
+    [
+     "Dernière adresse connue",
+     "Pénitencier de Leonida"
+    ],
+    [
+     "Ville d’origine",
+     "Liberty City"
+    ],
+    [
+     "Après la prison",
+     "Une chambre de motel avec Jason (Trailer 1)"
+    ],
+    [
+     "Appartement vu",
+     "À Vice City, vers 6:20 de l’Extended Look"
+    ]
+   ],
+   "chrono": [
+    {
+     "ev": "t1",
+     "statut": "vu",
+     "media": "affiche-trailer-1",
+     "texte": "La vidéo s’ouvre sur Lucia interrogée au pénitencier, en tenue orange."
+    },
+    {
+     "ev": "site",
+     "statut": "officiel",
+     "media": "lucia-caminos-05",
+     "texte": "Sa fiche : la prison pour avoir défendu sa famille, une sortie due à la chance, et un seul plan, les coups intelligents."
+    },
+    {
+     "ev": "el",
+     "statut": "vu",
+     "media": "affiche-extended-look",
+     "texte": "Le duo partage un appartement à Vice City, visible vers 6:20 ; Lucia nomme le quartier de Bayside."
+    }
+   ],
+   "serie": [
+    {
+     "annee": "2001",
+     "titre": "GTA III",
+     "texte": "Claude s’évade pendant un transfert de prisonniers : la série a souvent démarré à la sortie de prison."
+    }
+   ],
+   "questions": [
+    "L’appartement de Vice City sera-t-il une planque où sauvegarder ?",
+    "Le bracelet électronique limitera-t-il ses déplacements au début ?"
+   ],
+   "sources": [
+    "gtabase-lucia",
+    "rs-videos",
+    "svg-extended-map",
+    "kotaku-apartment",
+    "insider-lucia"
+   ]
+  },
+  "hideouts/planque-jason": {
+   "identite": [
+    [
+     "Type",
+     "Planque nommée par Rockstar"
+    ],
+    [
+     "Visuel officiel",
+     "Jason’s Safehouse Vehicles"
+    ],
+    [
+     "Véhicules vus",
+     "Dinka Enduro aux tons treillis, kayak Crest"
+    ],
+    [
+     "Lieu",
+     "Key Lento, Leonida Keys"
+    ]
+   ],
+   "chrono": [
+    {
+     "ev": "ue",
+     "statut": "officiel",
+     "media": "dinka-enduro-motorcycle",
+     "texte": "La Dinka Enduro aux tons treillis et le kayak Crest sont présentés comme les véhicules de sa planque, « pour changer de rythme et profiter du soleil »."
+    },
+    {
+     "ev": "presse",
+     "statut": "vu",
+     "media": null,
+     "texte": "D’après l’aperçu d’IGN, les planques sont habitées : des proches passent, et chaque personnage peut garder plusieurs véhicules."
+    },
+    {
+     "ev": "famitsu",
+     "statut": "officiel",
+     "media": null,
+     "texte": "Rob Nelson n’évoque l’achat que pour des garages ; aucune autre planque à acheter n’est annoncée."
+    }
+   ],
+   "serie": [
+    {
+     "annee": "2002",
+     "titre": "GTA Vice City",
+     "texte": "Sauvegarder, changer de tenue, garer ses véhicules : les planques le font depuis la chambre de Tommy à l’Ocean View Hotel."
+    }
+   ],
+   "questions": [
+    "La planque servira-t-elle à sauvegarder et à changer de tenue ?",
+    "Combien de véhicules pourra-t-on y garder ?"
+   ],
+   "sources": [
+    "rs-vi",
+    "rs-screens",
+    "mp1st-ign",
+    "famitsu-nelson",
+    "gtawiki-safehouses"
+   ]
+  },
+  "hideouts/chantier-brian": {
+   "identite": [
+    [
+     "Type",
+     "Chantier naval, point de passage de la contrebande"
+    ],
+    [
+     "Enseigne",
+     "Brian’s Boat Works & Marina"
+    ],
+    [
+     "Propriétaire",
+     "Brian Heder, avec Lori"
+    ],
+    [
+     "Y travaillent",
+     "Jason Duval, Cal Hampton"
+    ],
+    [
+     "Sur notre carte",
+     "Key Lento, Leonida Keys"
+    ]
+   ],
+   "chrono": [
+    {
+     "ev": "t2",
+     "statut": "vu",
+     "media": "trailer-2-brian-boatyard-085",
+     "texte": "De nuit, pendant un chargement, l’enseigne se lit au-dessus de la porte de l’atelier, vers 1:25."
+    },
+    {
+     "ev": "site",
+     "statut": "officiel",
+     "media": "brian-heder-03",
+     "texte": "La fiche de Brian : sa marchandise transite toujours par son chantier naval, avec Lori."
+    }
+   ],
+   "serie": [
+    {
+     "annee": "2002",
+     "titre": "GTA Vice City",
+     "texte": "Le Boatyard de Viceport, que Tommy peut racheter : un chantier naval qui rapporte une fois ses missions faites."
+    }
+   ],
+   "questions": [
+    "Le chantier sera-t-il un lieu de missions de contrebande ?",
+    "Pourra-t-on y garer ou y réparer ses bateaux ?"
+   ],
+   "sources": [
+    "gi-characters",
+    "rs-videos",
+    "rs-screens",
+    "gtawiki-shops"
+   ]
+  },
+  "hideouts/starlet-motel": {
+   "identite": [
+    [
+     "Type",
+     "Motel de bord de route"
+    ],
+    [
+     "Région",
+     "Port Gellhorn"
+    ],
+    [
+     "Vu dans",
+     "Trailer 1, captures de Port Gellhorn, Extended Look (25:58)"
+    ],
+    [
+     "Occupants vus",
+     "Jason et Lucia"
+    ]
+   ],
+   "chrono": [
+    {
+     "ev": "t1",
+     "statut": "vu",
+     "media": "affiche-trailer-1",
+     "texte": "Jason et Lucia partagent une chambre, rideau tiré."
+    },
+    {
+     "ev": "site",
+     "statut": "officiel",
+     "media": "port-gellhorn-01",
+     "texte": "Une capture de Port Gellhorn montre l’enseigne allumée de nuit, panneau « vacancy » compris."
+    },
+    {
+     "ev": "el",
+     "statut": "vu",
+     "media": "affiche-extended-look",
+     "texte": "La vidéo y revient, vers 25:58."
+    }
+   ],
+   "serie": [
+    {
+     "annee": "2002",
+     "titre": "GTA Vice City",
+     "texte": "La première planque de Tommy est une simple chambre d’hôtel, à l’Ocean View : la série aime commencer petit."
+    }
+   ],
+   "questions": [
+    "Le motel sera-t-il une planque où dormir et sauvegarder ?",
+    "Pourra-t-on louer d’autres chambres ailleurs ?"
+   ],
+   "sources": [
+    "rs-videos",
+    "rs-screens",
+    "gtawiki-safehouses"
+   ]
+  },
+  "factions/final-chapter-mc": {
+   "identite": [
+    [
+     "Type",
+     "Club de motards"
+    ],
+    [
+     "Région",
+     "Ambrosia"
+    ],
+    [
+     "Fondé en",
+     "1982, d’après les écussons"
+    ],
+    [
+     "D’où vient le nom",
+     "Écussons lus sur une capture officielle"
+    ],
+    [
+     "Emblème",
+     "Une tête de mort encapuchonnée qui tient un livre ouvert"
+    ]
+   ],
+   "chrono": [
+    {
+     "ev": "site",
+     "statut": "officiel",
+     "media": "ambrosia-04",
+     "texte": "La fiche d’Ambrosia : la raffinerie donne les emplois, « un gang de motards local » fournit à peu près tout le reste."
+    },
+    {
+     "ev": "shots25",
+     "statut": "vu",
+     "media": "ambrosia-01",
+     "texte": "Sur une capture, le nom se lit dans le dos des gilets : « Final Chapter », « Ambrosia », « 1982 », « MC »."
+    },
+    {
+     "ev": "shots",
+     "statut": "officiel",
+     "media": "ambrosia-06",
+     "texte": "Une nouvelle capture d’Ambrosia montre une fête dans la boue, sans écusson lisible."
+    }
+   ],
+   "serie": [
+    {
+     "annee": "2009",
+     "titre": "GTA IV : The Lost and Damned",
+     "texte": "The Lost MC vu de l’intérieur : guerres de clubs, trahisons et chevauchées en formation."
+    },
+    {
+     "annee": "2013",
+     "titre": "GTA V",
+     "texte": "The Lost MC revient dans Blaine County, cette fois face à Trevor."
+    }
+   ],
+   "questions": [
+    "Le club aura-t-il un repaire à attaquer, ou un territoire ?",
+    "Pourra-t-on travailler pour lui ?"
+   ],
+   "sources": [
+    "rs-vi",
+    "rs-screens",
+    "gtawiki-final-chapter",
+    "gtabase-gangs"
+   ]
+  },
+  "factions/ptt-youngin-gang": {
+   "identite": [
+    [
+     "Type",
+     "Gang de rue"
+    ],
+    [
+     "Quartier",
+     "Southside, Vice City"
+    ],
+    [
+     "Repaire",
+     "PTT YOUNGIN$ Illegal Goods Store"
+    ],
+    [
+     "D’où vient le nom",
+     "Texte officiel de l’Édition Ultimate"
+    ],
+    [
+     "Réputation",
+     "L’un des gangs les plus bruyants et les plus actifs sur les réseaux"
+    ]
+   ],
+   "chrono": [
+    {
+     "ev": "ue",
+     "statut": "officiel",
+     "media": "ptt-youngin-illegal-goods-store",
+     "texte": "L’édition propose de piller leur repaire de Southside et de s’enfuir avec des objets spéciaux et une contrebande à part."
+    },
+    {
+     "ev": "famitsu",
+     "statut": "officiel",
+     "media": null,
+     "texte": "Rob Nelson : la carte dit ce qu’un repaire contient avant d’y entrer, et la drogue volée se revend à un receleur."
+    }
+   ],
+   "serie": [
+    {
+     "annee": "2004",
+     "titre": "GTA San Andreas",
+     "texte": "Les guerres de territoires de Grove Street : la série a déjà fait des gangs de quartier un enjeu de carte."
+    }
+   ],
+   "questions": [
+    "Le gang ripostera-t-il après le pillage ?",
+    "Ses membres apparaîtront-ils dans l’histoire principale ?"
+   ],
+   "sources": [
+    "rs-vi",
+    "gtabase-ptt",
+    "famitsu-nelson"
+   ]
+  },
+  "factions/san4san": {
+   "identite": [
+    [
+     "Type",
+     "Gang de rue"
+    ],
+    [
+     "D’où vient le nom",
+     "Lecture des joueurs (une chaîne, une fresque)"
+    ],
+    [
+     "Vu dans",
+     "Trailer 1 (1:08), Trailer 2 (0:46)"
+    ],
+    [
+     "Lieu rattaché",
+     "Venture Apartments, Rockridge (selon le wiki)"
+    ],
+    [
+     "Statut",
+     "Identification communautaire"
+    ]
+   ],
+   "chrono": [
+    {
+     "ev": "t1",
+     "statut": "comm",
+     "media": "affiche-trailer-1",
+     "texte": "D’après le GTA Wiki, une chaîne San4San se lit au cou d’un homme, au rassemblement de voitures, vers 1:08."
+    },
+    {
+     "ev": "t2",
+     "statut": "comm",
+     "media": "affiche-trailer-2",
+     "texte": "Le nom reviendrait sur une fresque du quartier de La Perle, vers 0:46."
+    },
+    {
+     "ev": "el",
+     "statut": "comm",
+     "media": "affiche-extended-look",
+     "texte": "Le wiki rattache au gang les revendeurs de Venture Apartments, où une descente de police interrompt la livraison du début de la vidéo."
+    }
+   ],
+   "serie": [
+    {
+     "annee": "2002",
+     "titre": "GTA Vice City",
+     "texte": "Haïtiens de Little Haiti et Cubains de Little Havana se disputent la ville : les gangs de quartier font partie de Vice City depuis le début."
+    }
+   ],
+   "questions": [
+    "Rockstar nommera-t-il ce gang, sous ce nom ou un autre ?",
+    "Le groupe de Venture Apartments aura-t-il un rôle dans l’histoire ?"
+   ],
+   "sources": [
+    "gtawiki-san4san",
+    "gtabase-gangs",
+    "rs-videos",
+    "wikipedia-extended"
+   ]
+  },
+  "factions/equipe-raul": {
+   "identite": [
+    [
+     "Type",
+     "Équipe de braqueurs"
+    ],
+    [
+     "Chef",
+     "Raul Bautista"
+    ],
+    [
+     "Recrues connues",
+     "Jason et Lucia"
+    ],
+    [
+     "La règle",
+     "Suivre, ou se retirer"
+    ],
+    [
+     "Nom",
+     "Aucun nom publié"
+    ]
+   ],
+   "chrono": [
+    {
+     "ev": "site",
+     "statut": "officiel",
+     "media": "raul-bautista-01",
+     "texte": "La fiche de Raul : toujours à la recherche de talents prêts à prendre les plus gros risques."
+    },
+    {
+     "ev": "cover",
+     "statut": "officiel",
+     "media": "cover-art-officielle",
+     "texte": "Raul figure sur la jaquette, une arme à la main."
+    },
+    {
+     "ev": "el",
+     "statut": "vu",
+     "media": "affiche-extended-look",
+     "texte": "Jason et Lucia conduisent la voiture de fuite après un braquage de Raul, qui les prend dans son équipe."
+    },
+    {
+     "ev": "shots",
+     "statut": "officiel",
+     "media": "jason-and-lucia-04",
+     "texte": "Des captures du duo montrent une bijouterie braquée et une voiture qu’on incendie, sans dire pour qui ils travaillent."
+    }
+   ],
+   "serie": [
+    {
+     "annee": "2013",
+     "titre": "GTA V",
+     "texte": "Choisir son équipe et partager le butin : chez Lester, un complice moins cher prend une plus petite part, et se trompe plus souvent."
+    }
+   ],
+   "questions": [
+    "Combien de coups l’équipe prépare-t-elle, et dans quel ordre ?",
+    "Le joueur choisira-t-il ses partenaires, comme dans GTA V ?"
+   ],
+   "sources": [
+    "gi-characters",
+    "rs-artwork",
+    "rs-screens",
+    "dexerto-extended",
+    "famitsu-nelson"
+   ]
+  },
+  "factions/reseau-brian": {
+   "identite": [
+    [
+     "Type",
+     "Réseau de contrebande"
+    ],
+    [
+     "Figure connue",
+     "Brian Heder"
+    ],
+    [
+     "Base",
+     "Brian’s Boat Works & Marina, Leonida Keys"
+    ],
+    [
+     "Autour de lui",
+     "Jason Duval, Cal Hampton, Lori"
+    ],
+    [
+     "Nom",
+     "« Trafiquants locaux », aucun autre nom publié"
+    ]
+   ],
+   "chrono": [
+    {
+     "ev": "t2",
+     "statut": "vu",
+     "media": "trailer-2-brian-boatyard-085",
+     "texte": "Le chantier de Brian de nuit, enseigne allumée, pendant un chargement."
+    },
+    {
+     "ev": "site",
+     "statut": "officiel",
+     "media": "brian-heder-03",
+     "texte": "Jason travaille pour « les trafiquants locaux » des Keys, et Brian fait passer sa marchandise par son chantier."
+    },
+    {
+     "ev": "el",
+     "statut": "vu",
+     "media": "affiche-extended-look",
+     "texte": "Brian et Lori retrouvent le duo à l’Effluvia, un bar sur un toit."
+    }
+   ],
+   "serie": [
+    {
+     "annee": "2017",
+     "titre": "GTA Online : Smuggler’s Run",
+     "texte": "Hangar, avions et cargaisons de contrebande : un métier déjà jouable dans la série."
+    }
+   ],
+   "questions": [
+    "Quelles missions le réseau confiera-t-il, et à quel moment de l’histoire ?",
+    "La contrebande se fera-t-elle en bateau, en avion, ou les deux ?"
+   ],
+   "sources": [
+    "gi-characters",
+    "rs-videos",
+    "rs-screens",
+    "svg-extended-map"
+   ]
+  },
+  "factions/forces-de-l-ordre": {
+   "identite": [
+    [
+     "Type",
+     "Police, shérifs et garde-côtes"
+    ],
+    [
+     "Services vus",
+     "Vice City Police, Vice-Dale Police Department, shérifs des comtés de Leonard et d’Ambrosia"
+    ],
+    [
+     "Avis de recherche",
+     "Six étoiles, d’après IGN"
+    ],
+    [
+     "La règle",
+     "Sans témoin ni alarme, pas de recherche"
+    ],
+    [
+     "Véhicules recensés",
+     "Une quinzaine, du fourgon blindé à la vedette"
+    ]
+   ],
+   "chrono": [
+    {
+     "ev": "t1",
+     "statut": "vu",
+     "media": "affiche-trailer-1",
+     "texte": "Une voiture du Vice-Dale Police Department et le bureau du shérif du comté de Leonard apparaissent."
+    },
+    {
+     "ev": "t2",
+     "statut": "vu",
+     "media": "trailer-2-police-riot-119",
+     "texte": "Un fourgon blindé fait face à Lucia pendant sa fuite, vers 1:59."
+    },
+    {
+     "ev": "ueshots",
+     "statut": "vu",
+     "media": "shitzu-squalo-04",
+     "texte": "Une capture de l’Édition Ultimate montre une vedette marquée Vice City Police et un hélicoptère aux mêmes couleurs."
+    },
+    {
+     "ev": "el",
+     "statut": "vu",
+     "media": "affiche-extended-look",
+     "texte": "Une descente armée ouvre la vidéo ; plus tard, une course-poursuite avec la police traverse Vice City."
+    },
+    {
+     "ev": "famitsu",
+     "statut": "officiel",
+     "media": null,
+     "texte": "Rob Nelson : un crime n’est signalé que s’il a un témoin ou déclenche une alarme, et il faut changer de vêtements pour se faire oublier."
+    },
+    {
+     "ev": "shots",
+     "statut": "officiel",
+     "media": "lucia-caminos-07",
+     "texte": "Plusieurs captures montrent le duo traqué : gyrophares derrière un grillage, voiture de police dans un tunnel, hydroglisseurs de la police dans les marais."
+    }
+   ],
+   "serie": [
+    {
+     "annee": "2002",
+     "titre": "GTA Vice City",
+     "texte": "Six étoiles déjà, jusqu’à l’armée, et la Cheetah de la brigade des mœurs du VCPD."
+    },
+    {
+     "annee": "2013",
+     "titre": "GTA V",
+     "texte": "Cinq étoiles, une zone de recherche en cercle et les lignes de vue des policiers : se cacher devient un jeu en soi."
+    }
+   ],
+   "questions": [
+    "Comment fonctionnera le « profil criminel » évoqué par la presse ?",
+    "Les garde-côtes poursuivront-ils sur l’eau comme la police sur la route ?"
+   ],
+   "sources": [
+    "rs-screens",
+    "rs-videos",
+    "svg-wanted",
+    "famitsu-nelson",
+    "mp1st-ign"
+   ]
+  }
+ }
+}

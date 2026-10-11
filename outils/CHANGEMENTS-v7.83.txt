@@ -1,0 +1,94 @@
+LEONIDAKIT v7.83 — L'Atelier 3D dans la barre du haut ; les fiches du monde enrichies : « Le dossier » (fiche d'identité,
+chronologie des révélations, repères de la série, ce qui reste à confirmer, sources), 28 nouveaux visuels officiels,
+légendes et textes corrigés — 11 octobre 2026
+
+Base : v7.82. Demandes de Téva du 10/10/2026 (21 h 15) : « l'atelier 3D… le mettre sur la barre directement en haut,
+plutôt que dans Explorer » ; « quand on clique sur les cartes [des six sections du monde], la plupart ne sont pas très
+enrichies au niveau du texte… ou même au niveau des visuels ». Rien n'est publié ni poussé. Aucun fichier à supprimer.
+CSP inchangée. Lots suivants annoncés : v7.84 (Atelier 3D : pré-listes de la série, vue intérieure et première personne),
+v7.85 (latence, langues, écrans).
+
+1. L'ATELIER 3D DANS LA BARRE DU HAUT (outils/site-shell.cjs, style.css)
+- La barre compte neuf entrées : Calculateur, Tuto, Carte, Véhicules, Armurerie, Atelier 3D, Achats, Progression,
+  Explorer. L'Atelier quitte « Explorer › S'équiper » (le pied de page le garde dans « S'équiper »). Un petit cube dessiné
+  par la feuille de style le signale ; le texte du lien ne change pas.
+- De 1 081 à 1 279 px, les liens ne passent jamais à la ligne : l'écart se resserre et le champ de recherche devient plus
+  étroit ; la barre tient sur une ligne dans les cinq langues (« 3D-Werkstatt », « Waffenkammer »). Rien ne change au-delà
+  de 1 280 px ; sous 1 081 px, le menu reste celui du téléphone.
+
+2. LES FICHES DU MONDE : « LE DOSSIER » (outils/monde-dossiers.json, nouveau ; outils/lore-gen.js ; lk-sections.css)
+35 fiches des six sections : 6 régions et lieux, 8 personnages, 6 gangs et factions, 4 demeures, 3 planques, 8
+entreprises. Sous le texte de la fiche, une section « Le dossier » :
+- Fiche d'identité (171 lignes en tout : rôle, région, domicile, entourage, arme, véhicules vus, accès, services…),
+  collée en haut de l'écran pendant qu'on lit la chronologie (au-dessus de 980 px), avec « Visuels officiels : N sur
+  cette fiche » qui descend à la galerie.
+- Chronologie des révélations (119 étapes datées, du Trailer 1 du 4 décembre 2023 aux stations de radio du 8 octobre
+  2026) : pour chaque sortie officielle, son visuel, son statut (Officiel / Vu dans un média) et ce qu'elle a montré du
+  sujet, sans rien ajouter.
+- Repères de la série (51, dans un bandeau de nuit) : ce que Grand Theft Auto (1997), GTA III, Vice City, San Andreas,
+  Vice City Stories, GTA IV et The Lost and Damned, GTA V, GTA Online et Red Dead Redemption 2 ont fait de semblable,
+  présentés comme repères, jamais comme des informations sur GTA VI.
+- Ce qui reste à confirmer (75 questions), puis les sources du dossier (38 citées, dont 9 nouvelles : Rockstar Games
+  (musique, illustrations), Game Informer (radios), Trois Couleurs (démo présentée par Rob Nelson), TechRadar, Insider
+  Gaming, NME, Dexerto, MP1st), chacune avec son statut.
+- En tête de fiche, « Lire le dossier » est le premier lien. Le petit encadré récapitulatif des fiches du monde est
+  remplacé par le dossier (les fiches des animaux gardent le leur).
+- Deux colonnes au-dessus de 980 px, une seule en dessous ; vérifié à 390, 768, 1 280 et 1 440 px, en français et dans
+  les quatre traductions.
+
+3. LES VISUELS (img/officiel, outils/medias-officiels.json, outils/galeries-monde.json, outils/editorial.json)
+28 nouveaux visuels officiels de Rockstar Games (84 fichiers webp : 480, 800 et 1 280 px) : affiches du Trailer 1, du
+Trailer 2 et d'An Extended Look, jaquette officielle, carte postale de Vice City, Pack Vintage Vice City, captures de Jason,
+de Lucia, de Jason et Lucia, de Vice City, de Port Gellhorn, de Grassrivers, des Keys, de la planque de Jason (Dinka
+Enduro, kayak Crest)… Crédit « © Rockstar Games / Take-Two Interactive » et page Médias à jour.
+Galeries : Vice City, Jason, Lucia 12 visuels chacune ; Leonida Keys 8 ; Grassrivers 7 ; Port Gellhorn, Cal, Brian,
+Dre'Quan 6 ; Real Dimez, Raul 5 ; Boobie, Stock 305 4 ; Only Raw Records, la maison de Jason, la planque de Jason 3 ;
+Jack of Hearts, chez Brian, le chantier de Brian 2 ; les forces de l'ordre 10 ; l'équipe de Raul 7. L'image d'en-tête de
+chaque fiche ne change pas.
+
+4. LÉGENDES ET TEXTES CORRIGÉS (d'après les textes alternatifs officiels de Rockstar)
+- 34 légendes et textes alternatifs relus et corrigés (Grassrivers, Mount Kalaga, Leonida Keys, Ambrosia, Jason, Lucia,
+  Cal, Dre'Quan, Real Dimez, Raul, Brian, Rideout Customs, Sara's Unisex Salon, Stock 305, Electric Fang Tattoo,
+  One-Eyed Willie's). Exemples : Stock 305, « Lucia appuyée contre un van peint, Jason assis sur le toit » ; Sara's, « la
+  coupe mulet de Jason » ; Grassrivers, « des chasseurs sur un hydroglisseur avec un alligator et un félin abattus » ;
+  Mount Kalaga, « un puma » ; Brian, « tend un pistolet à Jason ».
+- Textes des fiches réécrits là où ils reposaient sur une mauvaise lecture d'une capture : Port Gellhorn (rien ne relie
+  Real Dimez à la ville), Grassrivers, Real Dimez (la capture devant Stock 305 montre Jason et Lucia), Stock 305, Sara's
+  Unisex Salon, Electric Fang Tattoo (fresque de FAILE), Rideout Customs (la voiture dorée n'est pas sur un pont
+  élévateur), One-Eyed Willie's (à Lake Leonida, comme le dit le texte officiel), Brian Heder (ni au volant de son
+  pick-up, ni en dispute), l'équipe de Raul (sur un bateau, pas sur un toit).
+
+5. TRADUCTIONS
+outils/langues/<en|es|it|de>/v783.json (808 à 817 entrées) : dossiers, légendes, textes réécrits, sources, lignes de la
+page Médias. 0 texte sans traduction dans les quatre langues.
+
+6. TESTS
+outils/tests/v783.test.cjs (5 tests) : les 35 dossiers complets et dans l'ordre, rendu des fiches (lien, frise, dates,
+galerie), 28 visuels en trois tailles et galeries enrichies, légendes corrigées, dossiers traduits. outils/tests/
+v781.test.cjs : l'Atelier dans la barre du haut. outils/calculateur-cadre.json : empreinte de style.css mise à jour (le
+cadre des 150 vues du calculateur est identique). outils/tests/section-radios.test.cjs : trois noms de stations venus des
+fuites d'août sont devenus officiels le 8 octobre 2026 (rockstargames.com/VI/music : Back Country Radio, Cocoteo FM, Dirty
+South Classics) ; leurs empreintes quittent la liste des noms interdits, les onze autres restent. outils/tests/
+langues-helper.cjs : « D'Agostino » (Alexa D'Agostino, Rockstar) et « The Lost and Damned » (épisode de GTA IV) reconnus
+comme noms propres par le contrôle des pages traduites.
+
+CONTRÔLES (11 octobre 2026)
+- Tests Node : 1 027 / 1 027 (toute la suite ; le seul échec de la première passe était le test de la section Radios, qui
+  refusait « Back Country Radio », officiel depuis le 8 octobre : voir § 6) ; langues : 42 / 42 (après « retrò » en italien
+  et les deux noms propres du § 6) ; 0 texte sans traduction dans les quatre langues.
+- Vérificateur : aucune erreur, 326 429 références vérifiées dans 2 246 pages.
+- Audit navigateur (26 pages, 182 chargements, 7 largeurs) : 0 débordement, 0 grille, 0 coupe, 0 image, 0 caché, 0 cible,
+  0 contraste, 0 erreur console, 0 requête en échec, fonctions 12 / 12.
+- Écrans (outils/tests/ecrans-browser.cjs, 57 pages × 6 largeurs de 320 à 1 440 px, dont des fiches du monde) : 0
+  débordement, 0 élément hors fenêtre, 0 marge de section différente ; restent les relevés à lire de la v7.82 (bento,
+  carrousels, badges à 9,9 px).
+- Captures des dossiers : français, anglais, allemand et italien, à 390, 768, 1 280 et 1 440 px ; toutes les images des
+  chronologies et des galeries chargées (Jason : 8 + 12).
+
+FICHIERS
+Modifiés : outils/site-shell.cjs, outils/lore-gen.js, outils/editorial.json, outils/galeries-monde.json,
+outils/medias-officiels.json, outils/calculateur-cadre.json, outils/tests/v781.test.cjs, outils/tests/section-radios.test.cjs,
+outils/tests/langues-helper.cjs, style.css, lk-sections.css,
+README.md, toutes les pages (barre du haut) et leurs copies traduites, index et sitemap. Nouveaux : outils/monde-dossiers.json,
+outils/langues/*/v783.json, outils/tests/v783.test.cjs, 84 images dans img/officiel, outils/CHANGEMENTS-v7.83.txt,
+LISEZ-MOI-v7.83.txt. Aucun fichier à supprimer.

@@ -13,10 +13,12 @@ const play = [['missions.html', 'Missions'] /* section missions */, ['activites.
 const online = [['online.html', 'L’espace GTA Online'], ['online/annonces.html', 'Les annonces'], ['online/gta-online-actuel.html', 'Le GTA Online actuel']];
 // Menu « S’équiper » : seules les catégories marquées menu:true dans acquisitions.json (pas de doublon avec Véhicules,
 // Planques ou Armurerie, pas de catégorie vide). Le hub « Tout ce qui s’achète » reste dans la barre (Achats) et le pied de page.
-const shopping = [...acquisition.filter(c => c.menu && !c.alias).sort((a, b) => (a.menuOrder || 99) - (b.menuOrder || 99)).map(c => [c.route.slice(1), c.label]), ['atelier-3d.html', 'Atelier 3D'] /* v7.81 : l'Atelier 3D, après les Personnalisations */];
-const footShopping = [['achats.html', 'Tout ce qui s’achète'], ...shopping, ['armes.html#munitions', 'Munitions et équipement'], ['logements.html', 'Logements et appartements']];
+const shopping = [...acquisition.filter(c => c.menu && !c.alias).sort((a, b) => (a.menuOrder || 99) - (b.menuOrder || 99)).map(c => [c.route.slice(1), c.label])];
+/* v7.83 (Téva : « l'Atelier 3D sur la barre directement en haut, plutôt que dans Explorer ; c'est un truc important du site ») :
+   l'Atelier quitte « Explorer › S'équiper » pour la barre du haut, après Armurerie ; le pied de page le garde dans « S'équiper ». */
+const footShopping = [['achats.html', 'Tout ce qui s’achète'], ...shopping, ['atelier-3d.html', 'Atelier 3D'], ['armes.html#munitions', 'Munitions et équipement'], ['logements.html', 'Logements et appartements']];
 const info = [['a-propos.html', 'À propos'], ['contact.html', 'Contact'], ['medias.html', 'Médias et crédits'], ['mentions-legales.html', 'Mentions et confidentialité']];
-const top = [['calculateurs.html', 'Calculateur'], ['tuto.html', 'Tuto'], ['carte.html', 'Carte'], ['vehicules.html', 'Véhicules'], ['armes.html', 'Armurerie'], ['achats.html', 'Achats'], ['progression.html', 'Progression']];
+const top = [['calculateurs.html', 'Calculateur'], ['tuto.html', 'Tuto'], ['carte.html', 'Carte'], ['vehicules.html', 'Véhicules'], ['armes.html', 'Armurerie'], ['atelier-3d.html', 'Atelier 3D'] /* v7.83 */, ['achats.html', 'Achats'], ['progression.html', 'Progression']];
 
 /* v7.75 (Téva : « quand on clique sur la section GTA Online, j'aimerais que ça ouvre une nouvelle page du navigateur ; pareil
    pour la section Progression ») : depuis le reste du site, les liens du menu, d'« Explorer », du pied de page et des puces

@@ -76,10 +76,12 @@ test('page : liste complète des modèles, familles, filtres, scène, barre, men
   assert.ok(!fs.existsSync(path.join(root, 'en/atelier-3d.js')) && !fs.existsSync(path.join(root, 'en/vendor')));
 });
 
-test('liens : menu « S’équiper » et pied de page, fiches (Personnaliser ce véhicule / cette arme), carte du modèle choisi dans Personnalisations', () => {
+test('liens : barre du haut (v7.83) et pied de page, fiches (Personnaliser ce véhicule / cette arme), carte du modèle choisi dans Personnalisations', () => {
   for (const f of ['index.html', 'personnalisations.html', 'vehicules/pegassi-zentorno.html', 'armes/carabine.html']) {
     const d = doc(f), pre = f.includes('/') ? '../' : '';
-    assert.ok(d.querySelector('nav#nav .nav-more-panel a[href="' + pre + 'atelier-3d.html"]'), f + ' : menu');
+    /* v7.83 (Téva) : l'Atelier quitte « Explorer » pour la barre du haut (entrée directe, après Armurerie) */
+    assert.ok(d.querySelector('nav#nav > ul > li > a[href="' + pre + 'atelier-3d.html"]'), f + ' : barre du haut');
+    assert.equal(d.querySelector('nav#nav .nav-more-panel a[href="' + pre + 'atelier-3d.html"]'), null, f + ' : plus dans Explorer');
     assert.ok(d.querySelector('footer a[href="' + pre + 'atelier-3d.html"]'), f + ' : pied de page');
   }
   const v = doc('vehicules/pegassi-zentorno.html'), a = v.querySelector('#personnaliser .pf-atelier-link');
@@ -116,7 +118,7 @@ test('langues : page traduite, listes et options sans français, menus et pied d
     assert.equal(d.querySelectorAll('[data-at-list="v"] .at-item').length, V.length, l);
     assert.doesNotMatch(d.querySelector('[data-at-menu="v"]').textContent, /repère à venir|Peinture principale|Jantes et pneus/, l + ' : rien en français dans le menu');
     assert.doesNotMatch(d.querySelector('[data-at-menu="a"]').textContent, /Chargeur étendu|repère de la série/, l + ' : rien en français dans le menu des armes');
-    assert.ok(d.querySelector('nav#nav .nav-more-panel a[href="atelier-3d.html"]'), l + ' : menu');
+    assert.ok(d.querySelector('nav#nav > ul > li > a[href="atelier-3d.html"]'), l + ' : barre du haut (v7.83)');
     assert.match(read(l + 'atelier-3d.html'), /<script type="module" src="\.\.\/atelier-3d\.js(\?v=[a-f0-9]+)?"><\/script>/, l + ' : script partagé depuis la racine');
     const f = doc(l + 'vehicules/pegassi-zentorno.html'); assert.equal(f.querySelector('#personnaliser .pf-atelier-link').getAttribute('href'), '../atelier-3d.html?v=pegassi-zentorno', l);
   }

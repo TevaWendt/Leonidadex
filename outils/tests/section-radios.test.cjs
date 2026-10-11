@@ -12,8 +12,10 @@ const ld = d => [...d.querySelectorAll('script[type="application/ld+json"]')].ma
 const FICHES = D.fiches.map(x => 'radios/' + x.id + '.html');
 const PAGES = ['radios.html', ...FICHES];
 /* noms de stations qui ne viennent que des vidéos volées d’août 2026 : jamais écrits sur le site, ni ici. Le test compare des
-   empreintes (sha256 des noms en minuscules, 16 premiers caractères) aux suites de 1 à 3 mots des textes contrôlés. */
-const FUITES = new Set(["0c9c89ea7a51c508", "126080207d1629c8", "1ece602c1078ef6f", "28bb2b6f4c372f09", "6e176086a62dab27", "739dee15f1ce2470", "8296cd3f1093643f", "8440c6f4a53b63bf", "a0fce2631873a465", "ae98c266767fcd8d", "b35fbea4617e6517", "b6ffa7c7f3454f50", "cc5adf5b09da1d68", "f14c18bc7f7f3c5a"]);
+   empreintes (sha256 des noms en minuscules, 16 premiers caractères) aux suites de 1 à 3 mots des textes contrôlés.
+   v7.83 : trois de ces noms sont devenus officiels le 8 octobre 2026 (rockstargames.com/VI/music, six stations à écouter) :
+   leurs empreintes sont retirées (126080207d1629c8, 28bb2b6f4c372f09, f14c18bc7f7f3c5a) ; les onze autres restent interdites. */
+const FUITES = new Set(["0c9c89ea7a51c508", "1ece602c1078ef6f", "6e176086a62dab27", "739dee15f1ce2470", "8296cd3f1093643f", "8440c6f4a53b63bf", "a0fce2631873a465", "ae98c266767fcd8d", "b35fbea4617e6517", "b6ffa7c7f3454f50", "cc5adf5b09da1d68"]);
 const fuiteDans = t => { const w = String(t).toLowerCase().replace(/[^a-z0-9.\- ]+/g, ' ').split(/\s+/).filter(Boolean); for (let i = 0; i < w.length; i++) for (let n = 1; n <= 3 && i + n <= w.length; n++) { const h = require('node:crypto').createHash('sha256').update(w.slice(i, i + n).join(' ')).digest('hex').slice(0, 16); if (FUITES.has(h)) return true; } return false; };
 
 test('section radios : données complètes, statuts et sources connus, aucune station sans source officielle', () => {
