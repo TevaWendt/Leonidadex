@@ -490,7 +490,7 @@ function compareAnalysis(s,source,ctx){
   r.cost=M.usageCost({initial:r.acquisition.complete?V.personal(r.acquisition.value):V.unknown(),perSession:r.usage.perSession},{sessions});}
  const admissible=rows.filter(r=>r.admission.state==='admissible'||r.admission.state==='conditionnel'||r.admission.state==='inconnu');
  const excluded=rows.filter(r=>r.admission.state==='impossible');
- const P=M.pareto(admissible.map(r=>({id:r.key,admission:{state:'admissible'},values:{now:r.acquisition.complete?r.acquisition.value:null,total:r.cost.total.complete&&sessions!==null&&V.usable(r.usage.perSession)?r.cost.total.value:null,envie:-(r.utility||0)}})),['now','total','wish']);
+ const P=M.pareto(admissible.map(r=>({id:r.key,admission:{state:'admissible'},values:{now:r.acquisition.complete?r.acquisition.value:null,total:r.cost.total.complete&&sessions!==null&&V.usable(r.usage.perSession)?r.cost.total.value:null,envie:-(r.utility||0)}})),['now','total','envie']);
  // Point de bascule entre les deux options admissibles les moins chères à l’achat, si leurs coûts d’usage sont connus.
  let cross=null;const priced=admissible.filter(r=>r.acquisition.complete&&V.usable(r.usage.perSession)).sort((x,y)=>x.acquisition.value-y.acquisition.value);
  if(priced.length>=2){const A=priced[0],Bq=priced[1],x=M.crossover({initial:A.acquisition.value,rate:A.usage.perSession.v},{initial:Bq.acquisition.value,rate:Bq.usage.perSession.v});if(x.known&&x.n!==null)cross={a:A.name,b:Bq.name,n:x.n,before:x.before==='a'?A.name:Bq.name,after:x.after==='a'?A.name:Bq.name,costAt:x.costAt};}
@@ -783,7 +783,7 @@ function explainCompare(s,source,r,x){
  /* v7.54 : « Effet sur la vie » ne concerne que les consommables : pour d’autres achats, il est écarté comme « sans objet », pas comme « pas chiffré ». */
  excluded['effet-soin']=x.rows.some(row=>row.item&&row.item.type==='consumable')?'Effect of consumables not quantified in GTA VI.':'Not applicable: no consumables among these purchases.';
  excluded.esthetique='The site doesn’t rate your taste: show it with your want score.';
- used.push('wish');
+ used.push('envie');
  if(x.rows.some(row=>row.usage.source==='simulated'))used.push('mecanique-simulee');else excluded['mecanique-simulee']='No simulated mechanics.';
  if(x.excluded.length)drivers.push({label:'Excluded',text:x.excluded.map(row=>'“'+row.name+'” ('+row.admission.failed.map(c=>c.detail||c.label).join(', ')+')').join('; ')+'.'});
  if(x.crossover)drivers.push({label:'Cost over time',text:'“'+x.crossover.before+'” costs less up to '+Math.ceil(x.crossover.n-1e-9)+' sessions; beyond that, “'+x.crossover.after+'” becomes cheaper.'});

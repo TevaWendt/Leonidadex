@@ -391,7 +391,7 @@
 })();
 
 /* Léo : amorçage isolé. Les données ne se chargent qu'à l'ouverture du panneau. */
-(function(){'use strict';if(!document.querySelector('main')||document.getElementById('leo-style'))return;/* v7.60-v7.64 : Léo parle les langues de outils/langues.json → leo (français, espagnol, italien, anglais, allemand) : pas de Léo sur une page d’une autre langue */if(!/^(?:fr|es|it|en|de)\b/i.test(document.documentElement.lang||'fr'))return;const base=(document.currentScript&&document.currentScript.src||'').replace(/[^/]*$/,'')||'/';const css=document.createElement('link');css.id='leo-style';css.rel='stylesheet';css.href='/leo.css?v=fe4b7665b338';css.onload=()=>{const script=document.createElement('script');script.src=base+'leo-loader.js?v=fe4b7665b338';document.head.append(script);};document.head.append(css);})();
+(function(){'use strict';if(!document.querySelector('main')||document.getElementById('leo-style'))return;/* v7.60-v7.64 : Léo parle les langues de outils/langues.json → leo (français, espagnol, italien, anglais, allemand) : pas de Léo sur une page d’une autre langue */if(!/^(?:fr|es|it|en|de)\b/i.test(document.documentElement.lang||'fr'))return;const base=(document.currentScript&&document.currentScript.src||'').replace(/[^/]*$/,'')||'/';const css=document.createElement('link');css.id='leo-style';css.rel='stylesheet';css.href='/leo.css?v=0d104178ce9d';css.onload=()=>{const script=document.createElement('script');script.src=base+'leo-loader.js?v=0d104178ce9d';document.head.append(script);};document.head.append(css);})();
 
 /* v7.61 (langues) : page introuvable. Le serveur renvoie la page 404 française pour toute adresse inconnue ; sous
    /en/… (une adresse d'une langue publiée), c'est la page introuvable de cette langue qui s'affiche. */
@@ -459,7 +459,11 @@
         if (n.nodeType === 3) {
           if (!n.textContent.trim()) return;
           const frag = document.createDocumentFragment();
-          n.textContent.split(/(\s+)/).forEach(function (part) {
+          /* v7.87 : on ne coupe qu'aux espaces ordinaires (une espace insécable, comme devant « : », devenait un élément à
+             part, entouré de deux écarts) ; le dernier mot d'un titre, s'il est très court (« 6 », « VI »), reste attaché
+             au mot d'avant : il ne finit plus seul sur sa ligne (« Il Trailer 2 di GTA / 6 »). */
+          const txt = n.nextSibling ? n.textContent : n.textContent.replace(/(\S)[ \t\n\r]+(\S{1,2})[ \t\n\r]*$/, '$1\u00a0$2');
+          txt.split(/([ \t\n\r]+)/).forEach(function (part) {
             if (!part) return;
             if (!part.trim()) { frag.appendChild(document.createTextNode(part)); return; }
             const s = document.createElement('span'); s.className = 'lk-w'; s.style.setProperty('--lk-i', Math.min(i++, 8)); s.textContent = part; frag.appendChild(s);

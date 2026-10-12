@@ -1,0 +1,46 @@
+LEONIDAKIT v7.87 — Actualités, vidéos officielles et éditions
+À appliquer sur la v7.86. Archive « modifs » : seulement les fichiers qui changent (et les nouveaux).
+Rien n'a été publié ni poussé. Aucun fichier à supprimer. CSP inchangée (le lecteur des vidéos est celui de
+youtube-nocookie.com, déjà permis pour la page Radios et musique).
+
+CE QUI CHANGE POUR LE VISITEUR
+- Actualités (actus.html, cinq langues) : tout ce que Rockstar a annoncé sur GTA VI, date par date, du Trailer 1
+  (4 décembre 2023) aux six stations de radio (8 octobre 2026) : 11 annonces, chacune avec sa source et, à ouvrir, ce
+  qu'elle a montré fiche par fiche (lieux, personnages, entreprises…). En haut, ce qui est déjà daté : préchargement et
+  boîte le 12 novembre, sortie le 19, fin des bonus de précommande le 20. Flux RSS dans chaque langue (actus.xml).
+- Vidéos officielles (videos.html et une page par vidéo : Trailer 1, Trailer 2, An Extended Look) : la vidéo se
+  regarde sur la page, mais le lecteur de YouTube ne se charge qu'au clic (avant, la page ne demande rien à YouTube) ;
+  les moments relevés (photogrammes officiels minutés, avec les véhicules et les armes qu'on y voit, et « Revoir ce
+  moment » qui relance la vidéo au bon endroit), la musique, ce que la vidéo a montré fiche par fiche, les modèles vus
+  pour la première fois, les questions fréquentes et les sources. Sans script, chaque bouton est un lien vers YouTube.
+- Éditions (editions.html) : Standard et Ultimate, les seize contenus de l'Ultimate sous leurs noms officiels (avec un
+  lien vers la fiche quand le site en a une), les bonus de précommande, la version en boîte (un code, pas de disque),
+  le préchargement, les codes par région ; d'après l'article de l'assistance de Rockstar mis à jour le 18 août 2026.
+- Menu « Explorer » et pied de page : un groupe « L'actualité » (Actualités, Vidéos officielles, Éditions, Ce qui est
+  confirmé). Accueil : la dernière annonce sous le compte à rebours, avec un lien vers toutes les annonces.
+- Fiches véhicules et armes : la ligne « Source » (« Premier trailer », « Second trailer », « Extended Look ») mène à la
+  page de la vidéo où le modèle a été vu.
+- Léo : « quelle est la dernière annonce ? », et ses réponses sur les trailers, les éditions, la boîte et la
+  précommande renvoient aux nouvelles pages.
+- Abonnement GTA+ (page GTA Online) : ses prix réels sont écrits « $ US » ; « $ » seul reste la monnaie du jeu.
+- Mentions : les lecteurs de YouTube et de Spotify (radios, vidéos) sont la seule exception aux cookies, et seulement
+  après un clic.
+- Correction de la v7.86 : sur l'accueil en anglais, en espagnol et en italien, la ligne du prochain jalon (préchargement
+  le 12 novembre) restait vide ; elle s'affiche désormais dans les cinq langues.
+- Correction plus ancienne : en anglais, en espagnol et en italien, le calculateur (« Quel achat choisir ? ») comptait
+  « Ton envie » parmi les critères non pris en compte alors qu'il s'en servait ; l'explication est juste désormais.
+- Titres des pages : le dernier mot très court (« 6 », « VI ») ne finit plus seul sur sa ligne.
+
+MARCHE À SUIVRE
+  1. Copie le contenu de l'archive à la racine du dossier GitHub (remplacer), valide, pousse.
+  2. Google Search Console → Sitemaps : renvoie sitemap.xml ; Inspection de l'URL → « Demander une indexation » pour
+     actus.html, videos.html, editions.html et les trois pages de vidéo (videos/trailer-1.html, videos/trailer-2.html,
+     videos/extended-look.html).
+  3. Essai : actus.html (ouvrir une annonce, « S'abonner au flux RSS ») ; videos/trailer-2.html (« Regarder la vidéo »,
+     puis « Revoir ce moment » sur un photogramme) ; editions.html#boite ; une fiche vue dans un trailer
+     (vehicules/grotti-cheetah-classic.html → ligne « Source »).
+  4. Quand Rockstar publie une nouvelle annonce : une entrée en tête de outils/actus/actus.json (date, titre, texte,
+     source), puis la régénération ; je peux le faire à chaque fois.
+
+Contrôles : tests Node + langues, vérificateur de liens, langues dans le navigateur, écrans, audit navigateur ; le
+détail est dans outils/CHANGEMENTS-v7.87.txt. Retour arrière : commit précédent dans GitHub Desktop.
