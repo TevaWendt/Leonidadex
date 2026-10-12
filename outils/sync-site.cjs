@@ -65,7 +65,7 @@ const mapData=JSON.parse(fs.readFileSync(rawPath,'utf8'));
 for(const p of [...mapData.groupes,...mapData.lieux,...Object.values(mapData.enrichit)])for(const key of ['img','img2'])if(p[key]&&!available('carte.html',p[key]))delete p[key];
 fs.writeFileSync('carte-gtadb.js','/* Generated from data/carte-gtadb-source.json. gtadb.org et ses contributeurs, CC BY 4.0; adapté pour Leonidakit. */\nwindow.LK_GTADB = '+JSON.stringify(mapData)+';\n');
 
-const htmlFiles=[...fs.readdirSync('.').filter(x=>x.endsWith('.html')),...['armes','vehicules','lieux','personnages','entreprises','demeures','planques','gangs','carnets','missions'/* section missions */,'activites'/* section activites */,'radios'/* section radios */,'animaux'/* section animaux */,'codes-de-triche'/* section codes */,'trophees'/* section trophees */,'online'/* section online */].filter(d=>fs.existsSync(d)).flatMap(d=>fs.readdirSync(d).filter(f=>f.endsWith('.html')).map(f=>d+'/'+f))].sort();
+const htmlFiles=[...fs.readdirSync('.').filter(x=>x.endsWith('.html')),...['armes','vehicules','lieux','personnages','entreprises','demeures','planques','gangs','carnets','missions'/* section missions */,'activites'/* section activites */,'radios'/* section radios */,'animaux'/* section animaux */,'codes-de-triche'/* section codes */,'trophees'/* section trophees */,'online'/* section online */,'videos'/* v7.87 : vidéos officielles */].filter(d=>fs.existsSync(d)).flatMap(d=>fs.readdirSync(d).filter(f=>f.endsWith('.html')).map(f=>d+'/'+f))].sort();
 const canonicals=[];
 for(const file of htmlFiles){let s=fs.readFileSync(file,'utf8');if(file.startsWith('google'))continue;const prefix=file==='404.html'?'/':file.includes('/')?'../':'';
  if(s.includes('app.js')){
@@ -142,6 +142,8 @@ if(fs.existsSync('outils/lore-index.json'))index=index.concat(JSON.parse(fs.read
 if(fs.existsSync('outils/missions-index.json'))index=index.concat(JSON.parse(fs.readFileSync('outils/missions-index.json','utf8')));
 /* section activites : page principale et fiches de la section (outils/activites-index.json, écrit par outils/gen-activites.cjs) */
 if(fs.existsSync('outils/activites-index.json'))index=index.concat(JSON.parse(fs.readFileSync('outils/activites-index.json','utf8')));
+/* v7.87 : actualités, vidéos officielles et éditions (outils/actus-index.json, écrit par outils/gen-actus.cjs) */
+if(fs.existsSync('outils/actus-index.json'))index=index.concat(JSON.parse(fs.readFileSync('outils/actus-index.json','utf8')));
 /* section radios : hub et fiches de la section (outils/radios-index.json, écrit par outils/gen-radios.cjs) */
 if(fs.existsSync('outils/radios-index.json'))index=index.concat(JSON.parse(fs.readFileSync('outils/radios-index.json','utf8')));
 /* section codes : page principale et fiches de catégorie (outils/codes-index.json, écrit par outils/gen-codes.cjs ; sans la page modèle) */

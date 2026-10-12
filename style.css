@@ -1894,7 +1894,7 @@ body>header .head-search{flex:0 1 200px;max-width:200px;margin-left:auto;margin-
  .head-in{flex-wrap:wrap}.nav-more-panel{position:static;width:100%;box-shadow:none;max-height:60vh;overflow:auto}
  body>header .head-search{order:0;flex:1 1 120px;max-width:300px}
 }
-@media(max-width:600px){.nav-more-panel{grid-template-columns:1fr;gap:18px;padding:16px}.foot-top{grid-template-columns:1fr}.foot-cols{grid-template-columns:repeat(2,minmax(0,1fr))}.foot-cols>div:last-child{grid-column:1/-1}.foot-cols>div:last-child nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 18px}.foot-cols a{min-height:44px}}
+@media(max-width:600px){.nav-more-panel{grid-template-columns:1fr;gap:18px;padding:16px}.foot-top{grid-template-columns:1fr}.foot-cols{grid-template-columns:repeat(2,minmax(0,1fr))}.foot-cols a{min-height:44px}}
 
 /* Bandeaux défilants : deux moitiés identiques, chacune au moins aussi large que l'écran */
 .mq-half{display:inline-flex; align-items:center; white-space:nowrap; flex-shrink:0;}
@@ -3427,7 +3427,9 @@ a.ed-brand:hover,a.ed-brand:focus-visible{border-color:var(--ink);box-shadow:5px
 @media(min-width:960px){.lore-grid--five{grid-template-columns:repeat(6,minmax(0,1fr));}.lore-grid--five>*{grid-column:span 2;}.lore-grid--five>:nth-child(4){grid-column:2/span 2;}}
 @media(min-width:640px) and (max-width:959px){.lore-grid--five{grid-template-columns:repeat(4,minmax(0,1fr));}.lore-grid--five>*{grid-column:span 2;}.lore-grid--five>:nth-child(5){grid-column:2/span 2;}}
 /* sections missions, activites, radios, codes, trophees, online : cinq groupes dans « Explorer » (Le monde, Jouer, S’équiper, Le site, puis GTA Online en bande à part) et cinq colonnes au pied de page */
-@media(min-width:1081px){.nav-more-panel{width:min(1000px,calc(100vw - 48px));grid-template-columns:repeat(4,minmax(0,1fr))}.foot-cols{grid-template-columns:repeat(5,minmax(0,1fr))}}
+@media(min-width:1081px){.nav-more-panel{width:min(1000px,calc(100vw - 48px));grid-template-columns:repeat(4,minmax(0,1fr))}.foot-cols{grid-template-columns:repeat(3,minmax(0,1fr))}}
+/* v7.87 : six colonnes au pied de page (« L’actualité ») : six de front à partir de 1 280 px */
+@media(min-width:1280px){.foot-cols{grid-template-columns:repeat(6,minmax(0,1fr))}}
 .nav-more-panel .nav-online{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;gap:4px 18px;margin-top:4px;padding:12px 14px;border:2px solid var(--night);border-radius:10px;background:linear-gradient(120deg,var(--night-deep),var(--night) 70%);color:var(--paper);}
 .nav-more-panel .nav-online strong{display:inline-flex;align-items:center;gap:9px;margin:0 10px 0 0;color:var(--amber-2);font-weight:800;}
 .nav-more-panel .nav-online strong::before{content:'';width:8px;height:8px;border-radius:50%;background:#97DFCF;box-shadow:0 0 8px #97DFCF;}
@@ -3498,3 +3500,8 @@ a[data-newtab][href]{padding-right:1.05em;background-image:url("data:image/svg+x
 .clock-jalon{flex-basis:100%;margin:-12px 0 0;font-size:.88rem;font-weight:700;color:var(--ink);}
 .clock-jalon span::before{content:'';display:inline-block;width:8px;height:8px;margin-right:8px;border-radius:50%;background:var(--coral);vertical-align:.08em;}
 .clock[hidden]{display:none;}
+/* v7.87 : la dernière annonce officielle sous les jalons (écrite par outils/gen-actus.cjs), avec un lien vers toutes les annonces */
+.clock-news{flex-basis:100%;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;margin:-16px 0 0;font-size:.88rem;color:var(--ink-soft);}
+.clock-news-k{font-weight:800;color:var(--ink);}
+.clock-news a{color:var(--ink);font-weight:700;text-decoration:underline;text-decoration-color:var(--coral);text-underline-offset:3px;}
+.clock-news a.clock-news-all{font-weight:600;color:var(--coral-text);}

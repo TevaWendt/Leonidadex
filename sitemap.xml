@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://www.leonidakit.com/</loc>
-    <lastmod>2026-10-11</lastmod>
+    <lastmod>2026-10-12</lastmod>
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.leonidakit.com/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.leonidakit.com/en/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://www.leonidakit.com/es/"/>
@@ -594,6 +594,61 @@
     <xhtml:link rel="alternate" hreflang="de" href="https://www.leonidakit.com/de/activites/vol-de-voitures.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.leonidakit.com/en/activites/vol-de-voitures.html"/>
     <image:image><image:loc>https://www.leonidakit.com/img/officiel/trailer-1-vehicles-071-1280.webp</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/actus.html</loc>
+    <lastmod>2026-10-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.leonidakit.com/actus.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.leonidakit.com/en/actus.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.leonidakit.com/es/actus.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.leonidakit.com/it/actus.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.leonidakit.com/de/actus.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.leonidakit.com/en/actus.html"/>
+    <image:image><image:loc>https://www.leonidakit.com/img/officiel/affiche-extended-look-1280.webp</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/en/actus.html</loc>
+    <lastmod>2026-10-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.leonidakit.com/actus.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.leonidakit.com/en/actus.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.leonidakit.com/es/actus.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.leonidakit.com/it/actus.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.leonidakit.com/de/actus.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.leonidakit.com/en/actus.html"/>
+    <image:image><image:loc>https://www.leonidakit.com/img/officiel/affiche-extended-look-1280.webp</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/es/actus.html</loc>
+    <lastmod>2026-10-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.leonidakit.com/actus.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.leonidakit.com/en/actus.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.leonidakit.com/es/actus.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.leonidakit.com/it/actus.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.leonidakit.com/de/actus.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.leonidakit.com/en/actus.html"/>
+    <image:image><image:loc>https://www.leonidakit.com/img/officiel/affiche-extended-look-1280.webp</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/it/actus.html</loc>
+    <lastmod>2026-10-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.leonidakit.com/actus.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.leonidakit.com/en/actus.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.leonidakit.com/es/actus.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.leonidakit.com/it/actus.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.leonidakit.com/de/actus.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.leonidakit.com/en/actus.html"/>
+    <image:image><image:loc>https://www.leonidakit.com/img/officiel/affiche-extended-look-1280.webp</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/de/actus.html</loc>
+    <lastmod>2026-10-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.leonidakit.com/actus.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.leonidakit.com/en/actus.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.leonidakit.com/es/actus.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.leonidakit.com/it/actus.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.leonidakit.com/de/actus.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.leonidakit.com/en/actus.html"/>
+    <image:image><image:loc>https://www.leonidakit.com/img/officiel/affiche-extended-look-1280.webp</image:loc></image:image>
   </url>
   <url>
     <loc>https://www.leonidakit.com/animaux.html</loc>
@@ -3211,6 +3266,61 @@
     <image:image><image:loc>https://www.leonidakit.com/img/officiel/lucia-caminos-05-1280.webp</image:loc></image:image>
   </url>
   <url>
+    <loc>https://www.leonidakit.com/editions.html</loc>
+    <lastmod>2026-10-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.leonidakit.com/editions.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.leonidakit.com/en/editions.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.leonidakit.com/es/editions.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.leonidakit.com/it/editions.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.leonidakit.com/de/editions.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.leonidakit.com/en/editions.html"/>
+    <image:image><image:loc>https://www.leonidakit.com/img/officiel/ultimate-edition-02-1280.webp</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/en/editions.html</loc>
+    <lastmod>2026-10-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.leonidakit.com/editions.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.leonidakit.com/en/editions.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.leonidakit.com/es/editions.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.leonidakit.com/it/editions.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.leonidakit.com/de/editions.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.leonidakit.com/en/editions.html"/>
+    <image:image><image:loc>https://www.leonidakit.com/img/officiel/ultimate-edition-02-1280.webp</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/es/editions.html</loc>
+    <lastmod>2026-10-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.leonidakit.com/editions.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.leonidakit.com/en/editions.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.leonidakit.com/es/editions.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.leonidakit.com/it/editions.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.leonidakit.com/de/editions.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.leonidakit.com/en/editions.html"/>
+    <image:image><image:loc>https://www.leonidakit.com/img/officiel/ultimate-edition-02-1280.webp</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/it/editions.html</loc>
+    <lastmod>2026-10-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.leonidakit.com/editions.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.leonidakit.com/en/editions.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.leonidakit.com/es/editions.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.leonidakit.com/it/editions.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.leonidakit.com/de/editions.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.leonidakit.com/en/editions.html"/>
+    <image:image><image:loc>https://www.leonidakit.com/img/officiel/ultimate-edition-02-1280.webp</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/de/editions.html</loc>
+    <lastmod>2026-10-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.leonidakit.com/editions.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.leonidakit.com/en/editions.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.leonidakit.com/es/editions.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.leonidakit.com/it/editions.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.leonidakit.com/de/editions.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.leonidakit.com/en/editions.html"/>
+    <image:image><image:loc>https://www.leonidakit.com/img/officiel/ultimate-edition-02-1280.webp</image:loc></image:image>
+  </url>
+  <url>
     <loc>https://www.leonidakit.com/entreprises.html</loc>
     <lastmod>2026-10-11</lastmod>
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.leonidakit.com/entreprises.html"/>
@@ -4682,7 +4792,7 @@
   </url>
   <url>
     <loc>https://www.leonidakit.com/online.html</loc>
-    <lastmod>2026-10-06</lastmod>
+    <lastmod>2026-10-12</lastmod>
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.leonidakit.com/online.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.leonidakit.com/en/online.html"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://www.leonidakit.com/es/online.html"/>
@@ -4692,7 +4802,7 @@
   </url>
   <url>
     <loc>https://www.leonidakit.com/en/online.html</loc>
-    <lastmod>2026-10-06</lastmod>
+    <lastmod>2026-10-12</lastmod>
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.leonidakit.com/online.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.leonidakit.com/en/online.html"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://www.leonidakit.com/es/online.html"/>
@@ -4782,7 +4892,7 @@
   </url>
   <url>
     <loc>https://www.leonidakit.com/online/gta-online-actuel.html</loc>
-    <lastmod>2026-10-06</lastmod>
+    <lastmod>2026-10-12</lastmod>
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.leonidakit.com/online/gta-online-actuel.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.leonidakit.com/en/online/gta-online-actuel.html"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://www.leonidakit.com/es/online/gta-online-actuel.html"/>
@@ -4792,7 +4902,7 @@
   </url>
   <url>
     <loc>https://www.leonidakit.com/en/online/gta-online-actuel.html</loc>
-    <lastmod>2026-10-06</lastmod>
+    <lastmod>2026-10-12</lastmod>
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.leonidakit.com/online/gta-online-actuel.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.leonidakit.com/en/online/gta-online-actuel.html"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://www.leonidakit.com/es/online/gta-online-actuel.html"/>
@@ -4802,7 +4912,7 @@
   </url>
   <url>
     <loc>https://www.leonidakit.com/es/online/gta-online-actuel.html</loc>
-    <lastmod>2026-10-06</lastmod>
+    <lastmod>2026-10-12</lastmod>
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.leonidakit.com/online/gta-online-actuel.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.leonidakit.com/en/online/gta-online-actuel.html"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://www.leonidakit.com/es/online/gta-online-actuel.html"/>
@@ -4812,7 +4922,7 @@
   </url>
   <url>
     <loc>https://www.leonidakit.com/it/online/gta-online-actuel.html</loc>
-    <lastmod>2026-10-06</lastmod>
+    <lastmod>2026-10-12</lastmod>
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.leonidakit.com/online/gta-online-actuel.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.leonidakit.com/en/online/gta-online-actuel.html"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://www.leonidakit.com/es/online/gta-online-actuel.html"/>
@@ -4822,7 +4932,7 @@
   </url>
   <url>
     <loc>https://www.leonidakit.com/de/online/gta-online-actuel.html</loc>
-    <lastmod>2026-10-06</lastmod>
+    <lastmod>2026-10-12</lastmod>
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.leonidakit.com/online/gta-online-actuel.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.leonidakit.com/en/online/gta-online-actuel.html"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://www.leonidakit.com/es/online/gta-online-actuel.html"/>
@@ -9339,6 +9449,226 @@
     <xhtml:link rel="alternate" hreflang="it" href="https://www.leonidakit.com/it/verification.html"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://www.leonidakit.com/de/verification.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.leonidakit.com/en/verification.html"/>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/videos.html</loc>
+    <lastmod>2026-10-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.leonidakit.com/videos.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.leonidakit.com/en/videos.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.leonidakit.com/es/videos.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.leonidakit.com/it/videos.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.leonidakit.com/de/videos.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.leonidakit.com/en/videos.html"/>
+    <image:image><image:loc>https://www.leonidakit.com/img/officiel/affiche-extended-look-1280.webp</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/en/videos.html</loc>
+    <lastmod>2026-10-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.leonidakit.com/videos.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.leonidakit.com/en/videos.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.leonidakit.com/es/videos.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.leonidakit.com/it/videos.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.leonidakit.com/de/videos.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.leonidakit.com/en/videos.html"/>
+    <image:image><image:loc>https://www.leonidakit.com/img/officiel/affiche-extended-look-1280.webp</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/es/videos.html</loc>
+    <lastmod>2026-10-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.leonidakit.com/videos.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.leonidakit.com/en/videos.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.leonidakit.com/es/videos.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.leonidakit.com/it/videos.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.leonidakit.com/de/videos.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.leonidakit.com/en/videos.html"/>
+    <image:image><image:loc>https://www.leonidakit.com/img/officiel/affiche-extended-look-1280.webp</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/it/videos.html</loc>
+    <lastmod>2026-10-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.leonidakit.com/videos.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.leonidakit.com/en/videos.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.leonidakit.com/es/videos.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.leonidakit.com/it/videos.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.leonidakit.com/de/videos.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.leonidakit.com/en/videos.html"/>
+    <image:image><image:loc>https://www.leonidakit.com/img/officiel/affiche-extended-look-1280.webp</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/de/videos.html</loc>
+    <lastmod>2026-10-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.leonidakit.com/videos.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.leonidakit.com/en/videos.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.leonidakit.com/es/videos.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.leonidakit.com/it/videos.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.leonidakit.com/de/videos.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.leonidakit.com/en/videos.html"/>
+    <image:image><image:loc>https://www.leonidakit.com/img/officiel/affiche-extended-look-1280.webp</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/videos/extended-look.html</loc>
+    <lastmod>2026-10-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.leonidakit.com/videos/extended-look.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.leonidakit.com/en/videos/extended-look.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.leonidakit.com/es/videos/extended-look.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.leonidakit.com/it/videos/extended-look.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.leonidakit.com/de/videos/extended-look.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.leonidakit.com/en/videos/extended-look.html"/>
+    <image:image><image:loc>https://www.leonidakit.com/img/officiel/affiche-extended-look-1280.webp</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/en/videos/extended-look.html</loc>
+    <lastmod>2026-10-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.leonidakit.com/videos/extended-look.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.leonidakit.com/en/videos/extended-look.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.leonidakit.com/es/videos/extended-look.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.leonidakit.com/it/videos/extended-look.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.leonidakit.com/de/videos/extended-look.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.leonidakit.com/en/videos/extended-look.html"/>
+    <image:image><image:loc>https://www.leonidakit.com/img/officiel/affiche-extended-look-1280.webp</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/es/videos/extended-look.html</loc>
+    <lastmod>2026-10-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.leonidakit.com/videos/extended-look.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.leonidakit.com/en/videos/extended-look.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.leonidakit.com/es/videos/extended-look.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.leonidakit.com/it/videos/extended-look.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.leonidakit.com/de/videos/extended-look.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.leonidakit.com/en/videos/extended-look.html"/>
+    <image:image><image:loc>https://www.leonidakit.com/img/officiel/affiche-extended-look-1280.webp</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/it/videos/extended-look.html</loc>
+    <lastmod>2026-10-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.leonidakit.com/videos/extended-look.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.leonidakit.com/en/videos/extended-look.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.leonidakit.com/es/videos/extended-look.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.leonidakit.com/it/videos/extended-look.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.leonidakit.com/de/videos/extended-look.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.leonidakit.com/en/videos/extended-look.html"/>
+    <image:image><image:loc>https://www.leonidakit.com/img/officiel/affiche-extended-look-1280.webp</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/de/videos/extended-look.html</loc>
+    <lastmod>2026-10-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.leonidakit.com/videos/extended-look.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.leonidakit.com/en/videos/extended-look.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.leonidakit.com/es/videos/extended-look.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.leonidakit.com/it/videos/extended-look.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.leonidakit.com/de/videos/extended-look.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.leonidakit.com/en/videos/extended-look.html"/>
+    <image:image><image:loc>https://www.leonidakit.com/img/officiel/affiche-extended-look-1280.webp</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/videos/trailer-1.html</loc>
+    <lastmod>2026-10-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.leonidakit.com/videos/trailer-1.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.leonidakit.com/en/videos/trailer-1.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.leonidakit.com/es/videos/trailer-1.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.leonidakit.com/it/videos/trailer-1.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.leonidakit.com/de/videos/trailer-1.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.leonidakit.com/en/videos/trailer-1.html"/>
+    <image:image><image:loc>https://www.leonidakit.com/img/officiel/affiche-trailer-1-1280.webp</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/en/videos/trailer-1.html</loc>
+    <lastmod>2026-10-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.leonidakit.com/videos/trailer-1.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.leonidakit.com/en/videos/trailer-1.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.leonidakit.com/es/videos/trailer-1.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.leonidakit.com/it/videos/trailer-1.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.leonidakit.com/de/videos/trailer-1.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.leonidakit.com/en/videos/trailer-1.html"/>
+    <image:image><image:loc>https://www.leonidakit.com/img/officiel/affiche-trailer-1-1280.webp</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/es/videos/trailer-1.html</loc>
+    <lastmod>2026-10-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.leonidakit.com/videos/trailer-1.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.leonidakit.com/en/videos/trailer-1.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.leonidakit.com/es/videos/trailer-1.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.leonidakit.com/it/videos/trailer-1.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.leonidakit.com/de/videos/trailer-1.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.leonidakit.com/en/videos/trailer-1.html"/>
+    <image:image><image:loc>https://www.leonidakit.com/img/officiel/affiche-trailer-1-1280.webp</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/it/videos/trailer-1.html</loc>
+    <lastmod>2026-10-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.leonidakit.com/videos/trailer-1.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.leonidakit.com/en/videos/trailer-1.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.leonidakit.com/es/videos/trailer-1.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.leonidakit.com/it/videos/trailer-1.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.leonidakit.com/de/videos/trailer-1.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.leonidakit.com/en/videos/trailer-1.html"/>
+    <image:image><image:loc>https://www.leonidakit.com/img/officiel/affiche-trailer-1-1280.webp</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/de/videos/trailer-1.html</loc>
+    <lastmod>2026-10-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.leonidakit.com/videos/trailer-1.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.leonidakit.com/en/videos/trailer-1.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.leonidakit.com/es/videos/trailer-1.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.leonidakit.com/it/videos/trailer-1.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.leonidakit.com/de/videos/trailer-1.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.leonidakit.com/en/videos/trailer-1.html"/>
+    <image:image><image:loc>https://www.leonidakit.com/img/officiel/affiche-trailer-1-1280.webp</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/videos/trailer-2.html</loc>
+    <lastmod>2026-10-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.leonidakit.com/videos/trailer-2.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.leonidakit.com/en/videos/trailer-2.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.leonidakit.com/es/videos/trailer-2.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.leonidakit.com/it/videos/trailer-2.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.leonidakit.com/de/videos/trailer-2.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.leonidakit.com/en/videos/trailer-2.html"/>
+    <image:image><image:loc>https://www.leonidakit.com/img/officiel/affiche-trailer-2-1280.webp</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/en/videos/trailer-2.html</loc>
+    <lastmod>2026-10-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.leonidakit.com/videos/trailer-2.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.leonidakit.com/en/videos/trailer-2.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.leonidakit.com/es/videos/trailer-2.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.leonidakit.com/it/videos/trailer-2.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.leonidakit.com/de/videos/trailer-2.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.leonidakit.com/en/videos/trailer-2.html"/>
+    <image:image><image:loc>https://www.leonidakit.com/img/officiel/affiche-trailer-2-1280.webp</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/es/videos/trailer-2.html</loc>
+    <lastmod>2026-10-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.leonidakit.com/videos/trailer-2.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.leonidakit.com/en/videos/trailer-2.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.leonidakit.com/es/videos/trailer-2.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.leonidakit.com/it/videos/trailer-2.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.leonidakit.com/de/videos/trailer-2.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.leonidakit.com/en/videos/trailer-2.html"/>
+    <image:image><image:loc>https://www.leonidakit.com/img/officiel/affiche-trailer-2-1280.webp</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/it/videos/trailer-2.html</loc>
+    <lastmod>2026-10-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.leonidakit.com/videos/trailer-2.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.leonidakit.com/en/videos/trailer-2.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.leonidakit.com/es/videos/trailer-2.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.leonidakit.com/it/videos/trailer-2.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.leonidakit.com/de/videos/trailer-2.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.leonidakit.com/en/videos/trailer-2.html"/>
+    <image:image><image:loc>https://www.leonidakit.com/img/officiel/affiche-trailer-2-1280.webp</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://www.leonidakit.com/de/videos/trailer-2.html</loc>
+    <lastmod>2026-10-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.leonidakit.com/videos/trailer-2.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.leonidakit.com/en/videos/trailer-2.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.leonidakit.com/es/videos/trailer-2.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.leonidakit.com/it/videos/trailer-2.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.leonidakit.com/de/videos/trailer-2.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.leonidakit.com/en/videos/trailer-2.html"/>
+    <image:image><image:loc>https://www.leonidakit.com/img/officiel/affiche-trailer-2-1280.webp</image:loc></image:image>
   </url>
   <url>
     <loc>https://www.leonidakit.com/collectibles.html</loc>

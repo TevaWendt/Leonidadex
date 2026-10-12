@@ -37,6 +37,8 @@ LOC.writeReference(); // v7.55 : fond commun img/leonida-carte.svg dérivé de c
    seules dans « Ce qui arrive avec le jeu », lien vers verification.html, encadré « Une erreur ? » remplacé par deux liens, plus de
    paragraphe générique de catégorie ; une fiche sans contenu propre passe en noindex, follow jusqu'à ce que le jeu la remplisse. */
 const VERIF='../verification.html';
+/* v7.87 : la vidéo où l’arme a été vue pour la première fois a sa page (outils/gen-actus.cjs) */
+const VIDEO_OF={'Premier trailer':'trailer-1','Second trailer':'trailer-2','Extended Look du 27 août 2026':'extended-look'};
 const signaler=id=>'<p class="fiche-meth"><a class="fiche-meth-a" href="../contact.html#motif='+encodeURIComponent('Erreur dans une fiche')+'&amp;page='+encodeURIComponent('/armes/'+id+'.html')+'">Signaler une erreur sur cette fiche</a><a class="fiche-meth-a" href="'+VERIF+'">Ce qui est confirmé et comment on vérifie</a></p>';
 const carteOf=a=>'<section class="shell reveal" id="carte">\n  <h2 class="sec-h">Sur la carte de Leonida</h2>\n  '
  +LOC.single({compact:true,item:LOC.weaponItem(a,'../',(id,h)=>schema(id,h)),places:LOC.data().placesA,prefix:'../',caption:'Armureries repérées sur notre carte : pas un point de vente confirmé pour cette arme.',placesTitle:'Armureries repérées',mapLabel:'Carte de Leonida : armureries repérées'})+'\n</section>';
@@ -102,7 +104,7 @@ function fiche(a,i){
  const rows=[['Nom',esc(a.nom)+(a.perso?' <span class="perso-tag">Arme de '+esc(PERSO_NOM[a.perso]||a.perso)+'</span>':'')],...(a.fr?[['Désignation courante',esc(a.fr)]]:[]),['Statut',st.l],
   ['Catégorie','<a href="../armes.html#'+a.cat+'">'+esc(cat)+'</a>'],['Emplacement',slotOf(a)?SLOTL[a.slot]:SLOT_AUTRE[a.cat]],
   ...(a.portee?[['Portée estimée',esc(a.portee)]]:[]),['Inspiration réelle',insp],...(a.mun?[['Munitions',esc(a.mun)]]:[]),
-  ...(a.ue?[['Édition Ultimate','Version exclusive ou mise en avant']]:[]),...(prixPub?[['Prix en jeu',esc(DP.phrasePrix(prixPub))]]:[]),['Source',esc(a.src)]];
+  ...(a.ue?[['Édition Ultimate','Version exclusive ou mise en avant']]:[]),...(prixPub?[['Prix en jeu',esc(DP.phrasePrix(prixPub))]]:[]),['Source',VIDEO_OF[a.src]?'<a href="../videos/'+VIDEO_OF[a.src]+'.html">'+esc(a.src)+'</a>':esc(a.src)]];
  const ang=angBlock(a);const gal=`<div class="gal${ang?' gal--ang':''}" data-base="../img/armes/${a.id}" data-vues="" data-nom="${esc(a.nom)}"
              data-art="${esc(art(a,150))}" data-vide-txt="${esc(VIDE_TXT)}" aria-label="Schéma : ${esc(a.nom)}" data-vide="1">${ang||'<div class="gal-track"><div class="gal-item"><div class="gal-vide">'+art(a,150)+'<span>'+esc(VIDE_TXT)+'</span></div></div></div>'}</div>`;
  const rel=related(a).map(x=>'<a class="rel-card" href="'+x.id+'.html"><span class="rel-art">'+art(x,108)+'</span><span class="rel-txt"><span class="rel-marque">'+esc(CATL[x.cat])+'</span><span class="rel-nom">'+esc(x.nom)+'</span></span></a>').join('');

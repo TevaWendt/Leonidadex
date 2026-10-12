@@ -176,8 +176,9 @@ function lookup(mem, key, file, before, noSplit) {
   }
   /* v7.86 : un texte fait seulement de repères, sans rien entre eux (« <1>Vapid</1><2>Stanier</2> » : cartes des fiches
      voisines, marque puis modèle), dont chaque morceau est connu de la mémoire : traduit morceau par morceau. Un seul
-     morceau inconnu et le texte entier reste à traduire (signalé comme avant). */
-  if (v === undefined && !noSplit && /^(?:<(\d+)>[^<]*<\/\1>){2,}$/.test(k)) {
+     morceau inconnu et le texte entier reste à traduire (signalé comme avant). v7.87 : un seul repère aussi (lien seul
+     dans une case : « <1>Premier trailer</1> » sur la ligne Source des fiches). */
+  if (v === undefined && !noSplit && /^(?:<(\d+)>[^<]*<\/\1>)+$/.test(k)) {
     let ok = true;
     const out = k.replace(/<(\d+)>([^<]*)<\/\1>/g, (x, n, inner) => {
       if (!ok || !inner.trim()) return x;
@@ -891,6 +892,8 @@ function generer(code, root = ROOT, opts = {}) {
     html = html.replace(/(<script\b[^>]*\ssrc=")([^"?#]+)(?:\?v=[a-f0-9]+)?(")/g, (m, a, u, b) => { const t = link.target(u, p); return t && ctx.translatedScripts.has(t) ? a + u + '?v=' + hash(outputs.get(lang.dossier + '/' + t)) + b : m; });
     put(lang.dossier + '/' + p, html); keepPages.add(p); report.pages.push(lang.dossier + '/' + p);
   }
+  /* v7.87 : flux RSS des actualités, rendu depuis la page traduite (outils/gen-actus.cjs → rss) */
+  { const actus = outputs.get(lang.dossier + '/actus.html'); if (actus) put(lang.dossier + '/actus.xml', require('./gen-actus.cjs').rss(actus, code)); }
   /* 3. pages françaises traduites : hreflang ; sitemap */
   for (const p of lang.pages) { const f = path.join(root, p), s = fs.readFileSync(f, 'utf8'), n = placeAlternates(titleSeo(s), p, root); if (n !== s) put(p, n); }
   /* 4. v7.61 : Léo dans cette langue (outils/langues.json → leo) : index et morceaux tirés de l'index français */

@@ -1,0 +1,653 @@
+{
+ "_note": "v7.87 : section « Actualités et vidéos » rendue par outils/gen-actus.cjs : actus.html (frise datée de tout ce que Rockstar a publié sur GTA VI, flux actus.xml dans chaque langue), videos.html et videos/<id>.html (les trois vidéos officielles), editions.html (les deux éditions, les seize contenus de l’Ultimate, les bonus, la version en boîte). Les révélations de chaque événement viennent des dossiers des fiches du monde (outils/monde-dossiers.json, chrono) ; les morceaux et leurs minutages de outils/radios/radios.json ; les véhicules et les armes vus dans chaque vidéo de vehicules-data.js et armes-data.js (champ src) ; les photogrammes minutés de outils/medias-officiels.json. Rien n’est tiré des fuites ; chaque événement a sa source officielle.",
+ "actus": {
+  "label": "Actualités",
+  "title": "Tout ce que Rockstar a annoncé sur GTA 6, date par date",
+  "seoTitle": "Actualités GTA 6 : la chronologie officielle, date par date",
+  "lede": "Chaque annonce officielle de Rockstar sur GTA VI, de la première vidéo aux stations de radio, avec ce qu’elle a montré et sa source.",
+  "desc": "Actualités de GTA 6 : chaque annonce officielle de Rockstar, du Trailer 1 aux radios, avec ce qu’elle a montré, fiche par fiche, et sa source.",
+  "note": "Les dates sont celles de la publication officielle. Ce qu’une annonce a montré est relié à la fiche du site qui en parle.",
+  "flux": "S’abonner au flux RSS",
+  "fluxNote": "Le flux reprend cette frise : une entrée par annonce, la plus récente en premier.",
+  "pile": [
+   {
+    "media": "affiche-extended-look",
+    "alt": "Affiche officielle d’An Extended Look, la présentation du 27 août 2026",
+    "caption": "An Extended Look"
+   },
+   {
+    "media": "affiche-trailer-2",
+    "alt": "Affiche officielle du Trailer 2 de GTA VI",
+    "caption": "Trailer 2"
+   },
+   {
+    "media": "affiche-trailer-1",
+    "alt": "Affiche officielle du Trailer 1 de GTA VI",
+    "caption": "Trailer 1"
+   }
+  ],
+  "aVenirKicker": "Les prochaines dates",
+  "aVenirTitre": "Ce qui est déjà daté",
+  "frise": "La frise des annonces",
+  "friseLede": "De la plus récente à la plus ancienne. Ouvre une annonce pour voir ce qu’elle a montré, fiche par fiche.",
+  "montre": "Ce qu’elle a montré, fiche par fiche",
+  "derniere": "Dernière annonce",
+  "toutes": "Toutes les annonces",
+  "faq": [
+   {
+    "q": "Quelle est la dernière annonce officielle sur GTA 6 ?",
+    "a": "Le 8 octobre 2026, Rockstar a présenté six stations de radio, leurs animateurs et des podcasts à la demande. La frise de cette page est mise à jour à chaque annonce."
+   },
+   {
+    "q": "Quand sort GTA 6 ?",
+    "a": "Le jeudi 19 novembre 2026 sur PlayStation 5 et Xbox Series X|S. Le préchargement commence le 12 novembre 2026, d’après l’assistance de Rockstar."
+   },
+   {
+    "q": "Combien de vidéos officielles de GTA 6 ?",
+    "a": "Trois : le Trailer 1 (4 décembre 2023), le Trailer 2 (6 mai 2025) et An Extended Look (27 août 2026). Chacune a sa page, avec ses moments, sa musique et ce qu’on y voit."
+   },
+   {
+    "q": "Les infos qui circulent sur les réseaux sont-elles sur cette page ?",
+    "a": "Non. Seules les publications de Rockstar, et les articles de presse qui les citent, y entrent. Les vidéos volées de 2022 et d’août 2026 ne sont jamais reprises."
+   }
+  ]
+ },
+ "aVenir": [
+  {
+   "iso": "2026-11-12",
+   "titre": "Préchargement et version en boîte",
+   "texte": "Le préchargement commence à minuit, heure locale, et la boîte (un code de téléchargement, sans disque) est disponible, en livraison ou en retrait.",
+   "source": "rs-support-editions",
+   "lien": {
+    "href": "editions.html#boite",
+    "label": "La version en boîte"
+   }
+  },
+  {
+   "iso": "2026-11-19",
+   "titre": "Sortie de GTA VI",
+   "texte": "Sur PlayStation 5 et Xbox Series X|S. L’album officiel sort le même jour.",
+   "source": "rs-date",
+   "lien": {
+    "href": "verification.html",
+    "label": "Ce qui est confirmé"
+   }
+  },
+  {
+   "iso": "2026-11-20",
+   "titre": "Fin des bonus de précommande",
+   "texte": "Un achat numérique fait avant cette date donne le Pack Vintage Vice City et un mois de GTA+.",
+   "source": "rs-support-editions",
+   "lien": {
+    "href": "editions.html#bonus",
+    "label": "Les bonus"
+   }
+  }
+ ],
+ "evenements": [
+  {
+   "id": "stations-radio",
+   "ev": "radio",
+   "iso": "2026-10-08",
+   "titre": "Les six stations de radio",
+   "texte": "Rockstar présente Flash FM, Cocoteo FM, Back Country Radio, AfroBank FM, The Chamber 106.6 et Dirty South Classics, leurs animateurs, des podcasts à la demande, et une radio qu’on écoute aussi à pied.",
+   "statut": "officiel",
+   "sources": [
+    "rs-radios"
+   ],
+   "liens": [
+    {
+     "href": "radios.html#stations",
+     "label": "Les six stations"
+    }
+   ]
+  },
+  {
+   "id": "game-informer",
+   "ev": null,
+   "iso": "2026-09-25",
+   "titre": "Le dossier de Game Informer",
+   "texte": "Game Informer révèle sa couverture consacrée à GTA VI, puis, le 29 septembre, plus de 170 espèces animales, selon Michael Kane, de Rockstar.",
+   "statut": "officiel",
+   "sources": [
+    "gameinformer-couverture",
+    "gameinformer-faune"
+   ],
+   "liens": [
+    {
+     "href": "animaux.html",
+     "label": "Les animaux"
+    }
+   ]
+  },
+  {
+   "id": "album",
+   "ev": null,
+   "iso": "2026-09-17",
+   "titre": "L’album officiel",
+   "texte": "Grand Theft Auto VI: The Album : 34 titres originaux avec Atlantic Records, qui sortent avec le jeu ; six sont disponibles le jour de l’annonce.",
+   "statut": "officiel",
+   "sources": [
+    "rs-album"
+   ],
+   "liens": [
+    {
+     "href": "radios/gta-vi-the-album.html",
+     "label": "La fiche de l’album"
+    }
+   ]
+  },
+  {
+   "id": "entretien-famitsu",
+   "ev": "famitsu",
+   "iso": "2026-08-28",
+   "titre": "L’entretien de Rob Nelson à Famitsu",
+   "texte": "Rob Nelson, de Rockstar North, répond à Famitsu après la démonstration : boutiques et salons, tenues, repaires de gangs, témoins et alarmes.",
+   "statut": "officiel",
+   "sources": [
+    "famitsu-nelson",
+    "gtavice-famitsu"
+   ],
+   "liens": [
+    {
+     "href": "activites.html",
+     "label": "Les activités annexes"
+    }
+   ]
+  },
+  {
+   "id": "extended-look",
+   "ev": "el",
+   "iso": "2026-08-27",
+   "titre": "An Extended Look",
+   "texte": "Une présentation d’environ 26 minutes, d’abord sur Netflix puis sur YouTube, capturée sur PS5 : missions, vol de voitures, braquages, police et vie quotidienne de Jason et Lucia. Rockstar ajoute ensuite de nouvelles captures à son site.",
+   "statut": "officiel",
+   "sources": [
+    "rs-extended",
+    "rs-screens"
+   ],
+   "video": "extended-look",
+   "evs": [
+    "el",
+    "shots"
+   ]
+  },
+  {
+   "id": "apercus-presse",
+   "ev": "presse",
+   "iso": "2026-08-27",
+   "titre": "Les aperçus de la presse",
+   "texte": "Des journalistes racontent la démonstration présentée par Rob Nelson : l’histoire qui commence dans les Keys, la taille de Vice City, les planques habitées.",
+   "statut": "officiel",
+   "sources": [
+    "trois-couleurs",
+    "mp1st-ign"
+   ],
+   "liens": [
+    {
+     "href": "lieux.html",
+     "label": "Les lieux"
+    }
+   ]
+  },
+  {
+   "id": "boite",
+   "ev": null,
+   "iso": "2026-08-18",
+   "titre": "La version en boîte détaillée",
+   "texte": "L’assistance de Rockstar met à jour sa page sur les éditions : la boîte contient un code de téléchargement, sans disque, disponible dès le 12 novembre pour le préchargement, et il n’y a pas d’Édition Ultimate en boîte.",
+   "statut": "officiel",
+   "sources": [
+    "rs-support-editions"
+   ],
+   "liens": [
+    {
+     "href": "editions.html#boite",
+     "label": "La version en boîte"
+    }
+   ]
+  },
+  {
+   "id": "precommandes",
+   "ev": "ue",
+   "iso": "2026-06-24",
+   "titre": "Précommandes, Édition Ultimate et jaquette",
+   "texte": "Rockstar annonce l’ouverture des précommandes le 25 juin, à minuit, heure locale, et présente l’Édition Ultimate et le Pack Vintage Vice City.",
+   "statut": "officiel",
+   "sources": [
+    "rs-preorder",
+    "rs-precommandes"
+   ],
+   "liens": [
+    {
+     "href": "editions.html",
+     "label": "Les éditions"
+    }
+   ],
+   "evs": [
+    "ue",
+    "ueshots",
+    "vv"
+   ]
+  },
+  {
+   "id": "date-sortie",
+   "ev": null,
+   "iso": "2025-11-06",
+   "titre": "La date du 19 novembre 2026",
+   "texte": "Rockstar annonce la sortie pour le jeudi 19 novembre 2026, pour finir le jeu avec le niveau de finition voulu.",
+   "statut": "officiel",
+   "sources": [
+    "rs-date"
+   ],
+   "liens": [
+    {
+     "href": "verification.html",
+     "label": "Ce qui est confirmé"
+    }
+   ]
+  },
+  {
+   "id": "trailer-2",
+   "ev": "t2",
+   "iso": "2025-05-06",
+   "titre": "Le Trailer 2, les personnages et les régions",
+   "texte": "Le même jour, Rockstar publie le Trailer 2, les pages des huit personnages, les six régions de Leonida et les premières captures officielles.",
+   "statut": "officiel",
+   "sources": [
+    "rs-videos",
+    "rs-vi",
+    "gi-characters",
+    "gi-areas"
+   ],
+   "video": "trailer-2",
+   "evs": [
+    "t2",
+    "site",
+    "shots25"
+   ]
+  },
+  {
+   "id": "trailer-1",
+   "ev": "t1",
+   "iso": "2023-12-04",
+   "titre": "Le Trailer 1",
+   "texte": "La première vidéo présente Lucia, l’État de Leonida et Vice City, sur « Love Is a Long Road » de Tom Petty.",
+   "statut": "officiel",
+   "sources": [
+    "rs-videos",
+    "louder-petty"
+   ],
+   "video": "trailer-1"
+  }
+ ],
+ "videos": {
+  "label": "Vidéos officielles",
+  "title": "Les vidéos officielles de GTA 6, moment par moment",
+  "seoTitle": "Trailers de GTA 6 : les vidéos officielles, moment par moment",
+  "lede": "Les trois vidéos publiées par Rockstar, à regarder ici, avec ce qu’on y voit : les moments relevés, la musique, les véhicules, les armes et les lieux.",
+  "desc": "Les trailers de GTA 6 et l’Extended Look : chaque vidéo officielle avec ses moments minutés, sa musique, ses véhicules et ses armes, et ses sources.",
+  "note": "Le lecteur de YouTube ne se charge qu’à ton clic.",
+  "lecteur": "Regarder la vidéo",
+  "lecteurNote": "Lecteur officiel de YouTube (Google), chargé seulement après ton clic : YouTube peut alors déposer ses propres cookies.",
+  "lecteurLien": "Mentions et confidentialité",
+  "revoir": "Revoir ce moment",
+  "moments": "Les moments relevés",
+  "momentsLede": "Des images officielles tirées de la vidéo, avec leur minutage et ce qu’on y reconnaît.",
+  "momentsLedeSansTemps": "Des images officielles tirées de la vidéo, et ce qu’on y reconnaît.",
+  "musique": "La musique",
+  "montre": "Ce qu’elle montre, fiche par fiche",
+  "vehicules": "Les véhicules vus pour la première fois",
+  "armes": "Les armes vues pour la première fois",
+  "vuNote": "Les modèles que le site a repérés pour la première fois dans cette vidéo ; chaque fiche dit d’où vient son nom.",
+  "autres": "Les autres vidéos",
+  "liste": [
+   {
+    "id": "trailer-1",
+    "ev": "t1",
+    "nom": "Trailer 1",
+    "titre": "Le Trailer 1 de GTA 6",
+    "iso": "2023-12-04",
+    "youtube": "QdBZY2fkU-0",
+    "affiche": "affiche-trailer-1",
+    "radio": "trailer-1",
+    "src": "Premier trailer",
+    "seo": "Trailer 1 de GTA 6 : ce qu’on y voit, moment par moment",
+    "desc": "Le Trailer 1 de GTA 6 (4 décembre 2023) : Lucia, Leonida et Vice City sur Tom Petty, les véhicules et les lieux qu’on y voit, minutés et sourcés.",
+    "lede": "La première vidéo de GTA VI, publiée le 4 décembre 2023 : Lucia, l’État de Leonida et Vice City, sur « Love Is a Long Road » de Tom Petty.",
+    "faits": [
+     {
+      "texte": "La vidéo s’ouvre sur Lucia, interrogée en tenue orange au pénitencier de Leonida.",
+      "statut": "vu",
+      "sources": [
+       "rs-videos"
+      ]
+     },
+     {
+      "texte": "Jason apparaît à ses côtés : chambre de motel, fuite en voiture, braquage de supérette.",
+      "statut": "vu",
+      "sources": [
+       "rs-videos"
+      ]
+     },
+     {
+      "texte": "Un seul morceau du début à la fin, crédité par Rockstar dans la description de la vidéo : « Love Is a Long Road » de Tom Petty (1989).",
+      "statut": "officiel",
+      "sources": [
+       "rs-videos",
+       "louder-petty"
+      ]
+     }
+    ],
+    "faq": [
+     {
+      "q": "Quelle est la musique du Trailer 1 de GTA 6 ?",
+      "a": "« Love Is a Long Road » de Tom Petty, de l’album Full Moon Fever (1989), crédité par Rockstar dans la description de la vidéo."
+     },
+     {
+      "q": "Qui voit-on dans le Trailer 1 ?",
+      "a": "Lucia, interrogée au pénitencier au début de la vidéo, puis avec Jason : chambre de motel, fuite en voiture, braquage de supérette."
+     }
+    ]
+   },
+   {
+    "id": "trailer-2",
+    "ev": "t2",
+    "nom": "Trailer 2",
+    "titre": "Le Trailer 2 de GTA 6",
+    "iso": "2025-05-06",
+    "youtube": "VQRLujxTm3c",
+    "affiche": "affiche-trailer-2",
+    "radio": "trailer-2",
+    "src": "Second trailer",
+    "seo": "Trailer 2 de GTA 6 : ce qu’on y voit, moment par moment",
+    "desc": "Le Trailer 2 de GTA 6 (6 mai 2025) : Jason et Lucia, les Keys et Vice City sur « Hot Together », les véhicules, les armes et les lieux, minutés.",
+    "lede": "Publiée le 6 mai 2025 avec les pages des personnages et des régions : l’histoire de Jason et Lucia, des Leonida Keys à Vice City, sur « Hot Together » des Pointer Sisters.",
+    "faits": [
+     {
+      "texte": "Le résumé officiel : un coup facile tourne mal, et le duo se retrouve du côté sombre de l’endroit le plus ensoleillé des États-Unis.",
+      "statut": "officiel",
+      "sources": [
+       "variety-t2"
+      ]
+     },
+     {
+      "texte": "Le même jour, Rockstar publie les pages de huit personnages, les six régions de Leonida et des dizaines de captures.",
+      "statut": "officiel",
+      "sources": [
+       "rs-vi",
+       "gi-characters",
+       "gi-areas"
+      ]
+     },
+     {
+      "texte": "Morceau principal crédité par Rockstar : « Hot Together » des Pointer Sisters (1986) ; de courtes bribes d’autoradio passent aussi, relevées par la presse.",
+      "statut": "officiel",
+      "sources": [
+       "rs-videos",
+       "gamespot-t2-song",
+       "nme-t2"
+      ]
+     }
+    ],
+    "faq": [
+     {
+      "q": "Quelle est la musique du Trailer 2 de GTA 6 ?",
+      "a": "« Hot Together » des Pointer Sisters (1986), créditée par Rockstar ; la presse a aussi relevé de courtes bribes d’autoradio : Zenglen, Wang Chung et Tammy Wynette."
+     },
+     {
+      "q": "Quels personnages apparaissent dans le Trailer 2 ?",
+      "a": "Jason et Lucia, Cal Hampton et Brian Heder dans les Keys, et Lucia face à la police, lance-grenades à l’épaule. Les fiches de chaque personnage donnent les moments."
+     }
+    ]
+   },
+   {
+    "id": "extended-look",
+    "ev": "el",
+    "nom": "An Extended Look",
+    "titre": "An Extended Look",
+    "iso": "2026-08-27",
+    "youtube": "tJbzMqJGH4k",
+    "affiche": "affiche-extended-look",
+    "radio": "extended-look",
+    "src": "Extended Look",
+    "srcArmes": "Extended Look du 27 août 2026",
+    "seo": "GTA 6 Extended Look : ce qu’on y voit, minute par minute",
+    "desc": "An Extended Look de GTA 6 (27 août 2026) : 26 minutes capturées sur PS5, missions, musique minutée, véhicules et armes, avec leurs sources.",
+    "lede": "Une présentation d’environ 26 minutes, diffusée le 27 août 2026 d’abord sur Netflix puis sur YouTube, capturée sur PlayStation 5.",
+    "faits": [
+     {
+      "texte": "Rockstar l’annonce comme une présentation d’environ 26 minutes, d’abord sur Netflix puis sur YouTube.",
+      "statut": "officiel",
+      "sources": [
+       "rs-extended"
+      ]
+     },
+     {
+      "texte": "Au programme : salle de sport, basket, stand de tir, courses, vol de voiture, braquages, police et vie quotidienne de Jason et Lucia.",
+      "statut": "officiel",
+      "sources": [
+       "rs-extended",
+       "gi-activites-el"
+      ]
+     },
+     {
+      "texte": "Quatorze morceaux sous licence y sont relevés par la presse, avec leurs minutages ; Rockstar n’en a pas publié la liste.",
+      "statut": "vu",
+      "sources": [
+       "gamerant-extended",
+       "svg-extended-songs"
+      ]
+     }
+    ],
+    "faq": [
+     {
+      "q": "Combien de temps dure l’Extended Look de GTA 6 ?",
+      "a": "Environ 26 minutes, d’après l’annonce de Rockstar. Elle a été diffusée le 27 août 2026, d’abord sur Netflix puis sur YouTube."
+     },
+     {
+      "q": "Quelle musique entend-on dans l’Extended Look ?",
+      "a": "Quatorze morceaux sous licence relevés par la presse, de Phil Collins à Depeche Mode, avec leurs minutages ; la liste complète est dans le poste de la page Radios et musique."
+     }
+    ]
+   }
+  ]
+ },
+ "editions": {
+  "label": "Éditions",
+  "title": "Les éditions de GTA 6",
+  "seoTitle": "Éditions de GTA 6 : Standard, Ultimate, bonus et version en boîte",
+  "lede": "Ce que contient chaque édition, les seize contenus de l’Ultimate, les bonus de précommande et la version en boîte, d’après l’assistance de Rockstar.",
+  "desc": "Éditions de GTA 6 : Standard ou Ultimate, les seize contenus bonus, le Pack Vintage Vice City, le mois de GTA+, la boîte sans disque et le préchargement.",
+  "note": "Page relue sur l’article de l’assistance de Rockstar, mis à jour le 18 août 2026. Les prix varient selon la boutique : vérifie sur la tienne.",
+  "pile": [
+   {
+    "media": "ultimate-edition-02",
+    "alt": "Visuel officiel de l’Édition Ultimate de GTA VI",
+    "caption": "Édition Ultimate"
+   },
+   {
+    "media": "vintage-vice-city-pack-01",
+    "alt": "Visuel officiel du Pack Vintage Vice City",
+    "caption": "Pack Vintage Vice City"
+   },
+   {
+    "media": "95-grotti-cheetah-01",
+    "alt": "Grotti Cheetah ’95 blanche à bandes rouges, capture officielle de l’Édition Ultimate",
+    "caption": "Grotti Cheetah ’95"
+   }
+  ],
+  "standard": {
+   "titre": "Édition Standard",
+   "texte": "Le jeu, en numérique ou en boîte."
+  },
+  "ultimate": {
+   "titre": "Édition Ultimate",
+   "texte": "Le jeu et l’amélioration Ultimate : seize contenus en plus, répartis dans l’histoire de Jason et Lucia, découverts chapitre après chapitre."
+  },
+  "amelioration": "Avec l’édition Standard, l’amélioration Ultimate s’achète à part, en numérique, sur le PlayStation Store ou le Microsoft Store, à tout moment une fois le code du jeu utilisé.",
+  "contenusTitre": "Les seize contenus de l’Ultimate",
+  "contenusLede": "Les noms officiels, dans l’ordre de l’assistance de Rockstar. Quand le site a une fiche, elle est reliée.",
+  "contenus": [
+   {
+    "nom": "’95 Grotti Cheetah",
+    "fr": "La Grotti Cheetah ’95",
+    "href": "vehicules/grotti-cheetah-classic.html"
+   },
+   {
+    "nom": "Hawk & Little Morgan Revolvers",
+    "fr": "Les revolvers Hawk & Little Morgan",
+    "href": "armes/hawk-little-morgan.html"
+   },
+   {
+    "nom": "Personalized Weapon Variants",
+    "fr": "Des variantes d’armes personnalisées",
+    "href": "armes.html"
+   },
+   {
+    "nom": "Vice City Styles",
+    "fr": "Une collection de tenues « Style de Vice City »",
+    "href": "style.html"
+   },
+   {
+    "nom": "Jason’s Safehouse Vehicles",
+    "fr": "Les véhicules de la planque de Jason",
+    "href": "planques/planque-jason.html"
+   },
+   {
+    "nom": "Ganado Retro Build",
+    "fr": "Un kit rétro pour le Ganado de Jason",
+    "href": "personnalisations.html"
+   },
+   {
+    "nom": "Rideout Customs Mod Shop",
+    "fr": "L’atelier Rideout Customs",
+    "href": "entreprises/rideout-customs.html"
+   },
+   {
+    "nom": "Sara’s Unisex Salon",
+    "fr": "Le salon Sara’s Unisex Salon",
+    "href": "entreprises/saras-unisex-salon.html"
+   },
+   {
+    "nom": "Shitzu Squalo",
+    "fr": "Le bateau Shitzu Squalo",
+    "href": "vehicules/shitzu-squalo.html"
+   },
+   {
+    "nom": "Stock 305 Clothing Store",
+    "fr": "La boutique de vêtements Stock 305",
+    "href": "entreprises/stock-305.html"
+   },
+   {
+    "nom": "’67 Vapid Dominator Buggy and Garage",
+    "fr": "Le Vapid Dominator Buggy ’67 et son garage",
+    "href": "vehicules/vapid-dominator-buggy.html"
+   },
+   {
+    "nom": "Electric Fang Tattoo Parlor",
+    "fr": "Le salon de tatouage Electric Fang",
+    "href": "entreprises/electric-fang.html"
+   },
+   {
+    "nom": "One-Eyed Willie’s Mod Shop",
+    "fr": "L’atelier One-Eyed Willie’s",
+    "href": "entreprises/one-eyed-willie.html"
+   },
+   {
+    "nom": "Goodtime Gear",
+    "fr": "Goodtime Gear",
+    "href": null
+   },
+   {
+    "nom": "PTT Youngin$ Compound",
+    "fr": "Le repaire des PTT Youngin$",
+    "href": "gangs/ptt-youngin-gang.html"
+   },
+   {
+    "nom": "Classic Car Collection",
+    "fr": "La Classic Car Collection",
+    "href": "missions.html"
+   }
+  ],
+  "bonusTitre": "Les bonus de précommande",
+  "bonus": [
+   {
+    "titre": "Pack Vintage Vice City",
+    "texte": "La Vapid Stanier ’55 et son garage, des tenues et des coiffures, et un motif d’arme exclusif.",
+    "pour": "Précommande ou achat numérique avant le 20 novembre 2026, et précommande en boîte.",
+    "href": "vehicules/vapid-stanier.html"
+   },
+   {
+    "titre": "Un mois de GTA+",
+    "texte": "Un mois d’abonnement à GTA+, le service payant de Rockstar.",
+    "pour": "Précommande ou achat numérique avant le 20 novembre 2026. L’assistance ne le cite pas pour la boîte.",
+    "href": null
+   }
+  ],
+  "boiteTitre": "La version en boîte",
+  "boite": [
+   "La boîte contient un code de téléchargement, pas de disque.",
+   "Elle est disponible à partir du 12 novembre 2026, en livraison ou en retrait chez le revendeur, et son code permet de précharger le jeu dès ce jour-là.",
+   "L’Édition Ultimate n’existe pas en boîte : avec la boîte, l’amélioration Ultimate s’achète en numérique une fois le code utilisé."
+  ],
+  "prechargementTitre": "Préchargement et sortie",
+  "prechargement": [
+   "Le préchargement commence le 12 novembre 2026 à minuit, heure locale.",
+   "La sortie est le jeudi 19 novembre 2026, sur PlayStation 5 et Xbox Series X|S."
+  ],
+  "regionsTitre": "Codes et régions",
+  "regions": [
+   "PlayStation : un code est lié à un pays ou une région de compte ; l’achat doit correspondre à la région du compte.",
+   "Xbox : les codes ne sont pas limités à une région.",
+   "Japon : les codes PlayStation expirent 170 jours après leur date d’émission, fixée au jour de la sortie, le 19 novembre 2026."
+  ],
+  "faq": [
+   {
+    "q": "Que contient l’Édition Ultimate de GTA 6 ?",
+    "a": "Le jeu et seize contenus en plus, dont la Grotti Cheetah ’95, les revolvers Hawk & Little Morgan, l’atelier Rideout Customs, le Vapid Dominator Buggy ’67 et son garage, et la Classic Car Collection."
+   },
+   {
+    "q": "Y a-t-il un disque dans la boîte de GTA 6 ?",
+    "a": "Non : la boîte contient un code de téléchargement, d’après l’assistance de Rockstar. Elle arrive le 12 novembre 2026, jour où commence le préchargement."
+   },
+   {
+    "q": "Peut-on passer de la Standard à l’Ultimate ?",
+    "a": "Oui : l’amélioration Ultimate s’achète à part, en numérique, sur le PlayStation Store ou le Microsoft Store, une fois le code du jeu utilisé."
+   },
+   {
+    "q": "Jusqu’à quand les bonus de précommande sont-ils offerts ?",
+    "a": "Pour un achat numérique fait avant le 20 novembre 2026 : Pack Vintage Vice City et un mois de GTA+. La précommande en boîte donne le Pack Vintage Vice City."
+   }
+  ]
+ },
+ "sources": {
+  "rs-support-editions": {
+   "url": "https://support.rockstargames.com/articles/4QfG4FmZCf5W1gS8jy4UVT/grand-theft-auto-vi-platform-editions-and-versions",
+   "title": "Rockstar Support : Grand Theft Auto VI, plateformes, éditions et versions",
+   "publisher": "Rockstar Games",
+   "publishedAt": "2026-08-18",
+   "consultedAt": "2026-10-12",
+   "statut": "officiel",
+   "claim": "Les deux éditions, les seize contenus de l’Ultimate, l’amélioration, la boîte sans disque, le préchargement du 12 novembre à minuit, les bonus avant le 20 novembre et les règles de région."
+  },
+  "rs-date": {
+   "url": "https://www.rockstargames.com/newswire/article/ak3ak31a49a221/grand-theft-auto-vi-is-now-set-to-launch-november-19-2026",
+   "title": "Rockstar Newswire : GTA VI sortira le 19 novembre 2026",
+   "publisher": "Rockstar Games",
+   "publishedAt": "2025-11-06",
+   "consultedAt": "2026-10-12",
+   "statut": "officiel",
+   "claim": "La sortie est fixée au jeudi 19 novembre 2026, pour finir le jeu avec le niveau de finition voulu."
+  },
+  "gameinformer-couverture": {
+   "url": "https://gameinformer.com/cover-reveal/2026/09/25/cover-reveal-grand-theft-auto-vi",
+   "title": "Game Informer : la couverture consacrée à Grand Theft Auto VI",
+   "publisher": "Game Informer",
+   "publishedAt": "2026-09-25",
+   "consultedAt": "2026-10-01",
+   "statut": "officiel",
+   "claim": "Annonce du dossier (numéro 382, 14 pages) rédigé après des entretiens avec des lead designers de Rockstar."
+  }
+ }
+}

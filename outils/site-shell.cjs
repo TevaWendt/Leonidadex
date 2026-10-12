@@ -18,7 +18,9 @@ const shopping = [...acquisition.filter(c => c.menu && !c.alias).sort((a, b) => 
    l'Atelier quitte « Explorer › S'équiper » pour la barre du haut, après Armurerie ; le pied de page le garde dans « S'équiper ». */
 const footShopping = [['achats.html', 'Tout ce qui s’achète'], ...shopping, ['atelier-3d.html', 'Atelier 3D'], ['armes.html#munitions', 'Munitions et équipement'], ['logements.html', 'Logements et appartements']];
 /* v7.86 : « Ce qui est confirmé » (verification.html), la page de méthode vers laquelle renvoie chaque fiche */
-const info = [['a-propos.html', 'À propos'], ['verification.html', 'Ce qui est confirmé'], ['contact.html', 'Contact'], ['medias.html', 'Médias et crédits'], ['mentions-legales.html', 'Mentions et confidentialité']];
+const info = [['a-propos.html', 'À propos'], ['contact.html', 'Contact'], ['medias.html', 'Médias et crédits'], ['mentions-legales.html', 'Mentions et confidentialité']];
+/* v7.87 : « L’actualité » : les annonces date par date, les vidéos officielles, les éditions et la page de méthode */
+const news = [['actus.html', 'Actualités'], ['videos.html', 'Vidéos officielles'], ['editions.html', 'Éditions'], ['verification.html', 'Ce qui est confirmé']];
 const top = [['calculateurs.html', 'Calculateur'], ['tuto.html', 'Tuto'], ['carte.html', 'Carte'], ['vehicules.html', 'Véhicules'], ['armes.html', 'Armurerie'], ['atelier-3d.html', 'Atelier 3D'] /* v7.83 */, ['achats.html', 'Achats'], ['progression.html', 'Progression']];
 
 /* v7.75 (Téva : « quand on clique sur la section GTA Online, j'aimerais que ça ouvre une nouvelle page du navigateur ; pareil
@@ -46,7 +48,7 @@ function currentOf(file) {
 }
 function nav(file, prefix) {
   const current = currentOf(file);
-  const groups = [['Le monde', world], ['Jouer', play] /* sections missions, activites, radios, codes, trophees */, ['S’équiper', shopping], ['Le site', info], ['GTA Online', online, 'nav-online'] /* section online */];
+  const groups = [['Le monde', world], ['Jouer', play] /* sections missions, activites, radios, codes, trophees */, ['S’équiper', shopping], ['L’actualité', news] /* v7.87 */, ['Le site', info], ['GTA Online', online, 'nav-online'] /* section online */];
   return '<ul>' + top.map(x => '<li>' + link(x, prefix, current) + '</li>').join('')
     + '<li><details class="nav-more"><summary>Explorer</summary><div class="nav-more-panel">'
     + groups.map(([label, list, cls]) => '<div' + (cls ? ' class="' + cls + '"' : '') + '><strong>' + esc(label) + '</strong>' + list.map(x => link(x, prefix, current)).join('') + '</div>').join('')
@@ -60,6 +62,7 @@ function footer(existing, prefix, file = '') {
     ['Jouer', play] /* sections missions, activites, radios, codes, trophees */,
     ['GTA Online', online] /* section online */,
     ['S’équiper', footShopping],
+    ['L’actualité', news] /* v7.87 */,
     ['Outils et aide', [['calculateurs.html', 'Calculateur'], ['tuto.html', 'Tuto'], ['progression.html', 'Progression'], ...info]]
   ];
   return '<footer>' + art + '<div class="shell"><div class="foot-top"><div class="foot-brand">'
@@ -161,4 +164,4 @@ function placeEntry(html, file, prefix = '') {
   if (/<section class="lk-outro"/.test(html)) return html.replace(/<section class="lk-outro"/, block + '\n<section class="lk-outro"');
   return html.replace(/<\/main>/, block + '\n</main>');
 }
-module.exports = { opensNewTab, chipSets, chipSetOf, nav, footer, top, world, play /* sections missions, activites, radios, codes, trophees */, online /* section online */, shopping, info, chips, placeChips, chipList, sectionPages, ENTRY, entry, placeEntry, entryPages };
+module.exports = { opensNewTab, chipSets, chipSetOf, nav, footer, top, world, play /* sections missions, activites, radios, codes, trophees */, online /* section online */, shopping, info, news /* v7.87 */, chips, placeChips, chipList, sectionPages, ENTRY, entry, placeEntry, entryPages };

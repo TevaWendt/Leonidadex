@@ -1,0 +1,128 @@
+LEONIDAKIT v7.87 — Actualités (frise datée et flux RSS), vidéos officielles moment par moment, éditions
+— 12 octobre 2026
+
+Base : v7.86. Plan validé par Téva le 12/10/2026 (lot 2) : actualités datées avec flux RSS, vidéos officielles
+regardées sur le site (lecteur au clic) avec une page par vidéo, éditions et précommande, fiches reliées à la vidéo où
+le modèle a été vu, cohérence $ / €. Rien n'est publié ni poussé. Aucun fichier à supprimer. CSP inchangée.
+
+1. ACTUALITÉS (actus.html, actus.xml ; outils/actus/actus.json, outils/gen-actus.cjs, actus.css)
+- Frise de 11 annonces officielles, de la plus récente à la plus ancienne, chacune avec sa date de publication, son
+  statut, ses sources numérotées et ses liens ; « Ce qu'elle a montré » (à ouvrir) reprend mot pour mot les entrées
+  datées des dossiers des fiches du monde (outils/monde-dossiers.json), rangées par famille, avec leur statut : rien
+  n'est réécrit : 115 révélations reliées.
+- « Ce qui est déjà daté » : 12 novembre (préchargement, boîte), 19 novembre (sortie, album), 20 novembre (fin des
+  bonus de précommande numériques).
+- Flux RSS 2.0 par langue (actus.xml, en/actus.xml…), rendu depuis la page traduite : titres et textes dans la langue
+  de la page, une entrée par annonce, adresses de la langue ; signalé dans l'en-tête de la page (link rel="alternate").
+- Données structurées CollectionPage + ItemList, FAQPage ; plan du site ; recherche du site.
+
+2. VIDÉOS OFFICIELLES (videos.html, videos/trailer-1.html, videos/trailer-2.html, videos/extended-look.html ; actus.js)
+- Le lecteur (youtube-nocookie.com, déjà permis par la CSP pour Radios et musique) n'existe qu'après un clic sur
+  « Regarder la vidéo » ou « Revoir ce moment » (actus.js) : avant, la page ne fait aucune requête vers YouTube et rien
+  n'est écrit sur l'appareil. Sans script, ces boutons sont des liens vers la vidéo sur YouTube, au bon moment (&t=).
+- Par vidéo : trois faits datés et sourcés ; les moments relevés (photogrammes officiels minutés de
+  outils/medias-officiels.json, avec les véhicules et les armes qu'on y voit, dans l'ordre du temps ; deux photogrammes de
+  la même seconde font un seul moment ; les captures de l'Extended Look, publiées sans minutage, sont dites « images
+  relevées », sans bouton « Revoir ce moment ») ; la musique
+  (outils/radios/radios.json, avec minutages) ; ce que la vidéo a montré fiche par fiche ; les véhicules et les armes
+  vus pour la première fois (champ « src » des données) ; les autres vidéos ; FAQ ; sources.
+- VideoObject (date, vignette, adresses de lecture), FAQPage, CollectionPage pour le sommaire.
+
+3. ÉDITIONS (editions.html)
+- D'après l'article de l'assistance de Rockstar (mis à jour le 18 août 2026, relu le 12 octobre 2026) : Standard et
+  Ultimate ; les seize contenus de l'Ultimate sous leurs noms officiels, avec leur nom français et un lien vers la fiche
+  quand le site en a une ; l'amélioration de la Standard ; les bonus (Pack Vintage Vice City, un mois de GTA+ pour un
+  achat numérique avant le 20 novembre 2026 ; la boîte donne le pack, l'assistance ne cite pas le mois de GTA+) ; la
+  boîte (un code, pas de disque, pas d'Ultimate en boîte) ; préchargement ; codes par région (PlayStation lié à la
+  région du compte, Xbox sans région, Japon : expiration 170 jours après la date d'émission, fixée au jour de la sortie).
+  Aucun prix inventé. Sur une page traduite, le nom officiel anglais sous un contenu est masqué quand la traduction
+  l'écrit déjà (actus.js).
+
+4. LIENS DANS LE SITE
+- outils/site-shell.cjs : groupe « L'actualité » (Actualités, Vidéos officielles, Éditions, Ce qui est confirmé) dans
+  le menu « Explorer » et au pied de page (six colonnes à partir de 1 280 px, trois de 1 081 à 1 279 px).
+- Accueil : la dernière annonce sous le compte à rebours, écrite par outils/gen-actus.cjs depuis la frise.
+- Fiches véhicules et armes (outils/gen.js, outils/gen-armes.cjs) : la ligne « Source » mène à la page de la vidéo.
+- Page de méthode (verification.html) : les éditions, la boîte et les vidéos renvoient aux nouvelles pages.
+- Léo (outils/leo-knowledge.json) : nouveau sujet « Quelle est la dernière annonce sur GTA 6 ? » ; trailers, éditions,
+  boîte, précommande, sortie et heure renvoient aux nouvelles pages ; réponse sur les cookies : le lecteur des vidéos.
+- Mentions (outils/gen-informations.cjs) : les lecteurs de YouTube et de Spotify des pages Radios et musique et des
+  vidéos officielles, chargés après un clic, sont la seule exception.
+
+5. CORRECTIONS
+- Accueil (app.js, index.html) : la ligne des jalons sous le compte à rebours (v7.86) restait vide en anglais, en espagnol
+  et en italien : la traduction des scripts avait changé le code « avant » en « before », « antes », « prima », qui ne
+  correspondait plus à la page. Codes neutres (« j-avant », « j-pre », « j-sorti ») ; un test compare désormais, dans
+  chaque langue, les codes du script à ceux de la page.
+- Titres animés des pages intérieures (common.js) : le dernier mot d'un titre, s'il est très court (« 6 », « VI »), reste
+  attaché au mot d'avant et ne finit plus seul sur sa ligne (« Il Trailer 2 di GTA / 6 » sur téléphone) ; une espace
+  insécable (devant « : ») ne devient plus un élément à part entouré de deux écarts.
+- Éditions : les seize contenus en quatre rangées de quatre (deux colonnes sur téléphone, une sous 420 px), au lieu de
+  cinq, cinq, cinq et un.
+- Flux RSS : chaque page Actualités annonce le flux de sa langue (lien relatif « actus.xml ») ; l'adresse absolue du
+  flux français était recopiée telle quelle dans les pages traduites.
+- Calculateur, anglais, espagnol et italien (bug antérieur à cette version) : la traduction des scripts changeait
+  l'identifiant du critère « envie » dans calculateurs-scenario.js (« wish », « deseo », « desiderio ») alors que le
+  modèle (modele-donnees.js) le garde : explain() le classait parmi les critères non pris en compte. Entrée
+  « calculateurs-scenario.js::envie » = "=" dans outils/langues/{en,es,it}/code.json ; un test compare désormais, dans
+  chaque langue, les identifiants des critères du script à ceux du français.
+
+6. $ ET €
+Sur le site, « $ » seul est la monnaie du jeu. L'abonnement GTA+ était le seul prix réel écrit en « $ » seul : il est
+désormais en « $ US » (page GTA Online et ses sources). Les prix des éditions restent en euros, tels qu'affichés dans
+les boutiques depuis l'ouverture des précommandes.
+
+7. LANGUES
+- outils/langues/<code>/v787.json : 285 textes en anglais, en espagnol et en allemand, 286 en italien (pages de la
+  section, menu et pied de page, Mentions, Léo, page GTA Online), traduits puis contrôlés (repères, nombres, aucun
+  mot français) ; noms officiels gardés (contenus de l'Ultimate, titres, médias). Groupe et page distincts : « Latest »
+  et « News », « Actualidad » et « Noticias », « Attualità » et « Notizie », « Aktuelles » et « Neuigkeiten ».
+- outils/langues.cjs : flux RSS de chaque langue rendu depuis sa page actus.html ; un repère seul dont le texte est connu
+  de la mémoire (« <1>Premier trailer</1> », la ligne Source des fiches) est traduit comme un texte.
+- Relus et réécrits en français avant traduction : la phrase sur ce qui entre dans la frise (« les articles de presse
+  qui les citent »), « avant le 20 novembre » (au lieu de « jusqu'au », qui disait autre chose que l'assistance), la
+  date d'émission des codes japonais, et deux titres de sources désormais en français comme les autres.
+
+8. TESTS
+outils/tests/v787.test.cjs (nouveau, 10 tests) : données de la frise (sources connues, dates, ordre, liens), révélations
+reprises mot pour mot des dossiers ; flux RSS dans les cinq langues (XML bien formé, une entrée par annonce, adresses
+de la langue, titres traduits) ; pages des vidéos (aucun cadre avant le clic, liens de secours au bon moment,
+VideoObject, moments dans l'ordre, musique) ; lecteur (cadre créé au clic, au bon moment, rien d'écrit sur l'appareil) ;
+éditions (seize contenus aux noms officiels, sections, source, aucun prix, noms répétés masqués en anglais) ; ligne
+« Source » des fiches ; menu, pied de page, accueil, recherche, plan du site et langues ; « $ US » de GTA+ ; Léo et
+Mentions. Mis à jour : a-propos-v744, coverage, donnees-publiees, regression (dossier videos/ parmi les pages, une seule fois),
+v786 (codes des jalons de l'accueil, comparés dans chaque langue entre le script et la page). v787 (10 tests) : lien du
+flux de chaque page Actualités, identifiants des critères du calculateur dans chaque langue ; révélations comparées
+aux dossiers aux espaces insécables près ; le VideoObject peut citer YouTube (il n'est pas chargé).
+
+CONTRÔLES (12 octobre 2026)
+- Suite Node (79 fichiers, 1 057 tests) : 3 échecs, tous dans les tests eux-mêmes, corrigés puis relancés : dossier
+  videos/ compté deux fois dans quatre listes de tests ; révélations comparées aux dossiers sans tenir compte des espaces
+  insécables posés par la synchronisation ; VideoObject (données structurées, jamais chargé) qui cite YouTube. Ils ont
+  aussi montré deux vrais défauts, corrigés (voir 5) : lien du flux RSS des pages traduites, critère « envie » du
+  calculateur en anglais, espagnol et italien.
+- Langues (langues.test.cjs) : 42/42. Vérificateur : 334 953 références dans 2 311 pages, aucune erreur. Preuve de
+  confidentialité : toutes les affirmations des Mentions tenues.
+- Navigateur : pages des quatre langues 28/28 ; langues 2 267/2 267 (aucun mot français visible, montants, aucune erreur
+  JavaScript) ; écrans, 61 pages × 16 largeurs (976 chargements) : aucun débordement, signalements identiques à la v7.86
+  (24 coquilles, 39 rangées, 21 coupes, 16 mots, 154 petits textes, tous connus) ; allemand, 58 pages × 5 largeurs :
+  identique à la v7.86 (10, 7, 5, 45) ; audit de clôture, 26 pages, 182 chargements : 0 erreur console, 0 requête en
+  échec, 0 contraste insuffisant (11 479 vérifiés), 12/12 fonctions ; un titre « En bref » de carte.html relevé comme
+  masqué à 1280 px : il était encore dans son fondu d'apparition au moment de la mesure (visible ensuite, vérifié trois
+  fois ; page non modifiée par ce lot).
+- Mesure d'audience : 12/12. Cookies dans Chromium : 17 pages, 0 cookie avant et après les actions.
+- Après les deux corrections : actualités régénérées, fin de chaîne, tests v787, v786 et a-propos, langues et
+  vérificateur relancés.
+
+FICHIERS (par rapport à la v7.86 : 47 ajoutés, 2 346 modifiés, aucun supprimé)
+- Ajoutés : actus.html, actus.xml, videos.html, videos/{trailer-1,trailer-2,extended-look}.html, editions.html et leurs
+  versions en/ es/ it/ de/ (avec les flux actus.xml) ; actus.css, actus.js ; outils/gen-actus.cjs, outils/actus/actus.json,
+  outils/actus-index.json ; outils/langues/{en,es,it,de}/v787.json ; outils/tests/v787.test.cjs ; LISEZ-MOI-v7.87.txt,
+  outils/CHANGEMENTS-v7.87.txt.
+- Sources modifiées : outils/site-shell.cjs, outils/sync-site.cjs, outils/gen-leo.cjs, outils/regenerer.cjs,
+  outils/langues.cjs, outils/gen.js, outils/gen-armes.cjs, outils/gen-informations.cjs, outils/informations-editorial.json,
+  outils/leo-knowledge.json, outils/online/{hub,pages}.json, outils/langues/{en,es,it}/code.json, style.css, common.js,
+  app.js, index.html, README.md, tests (a-propos-v744, coverage, donnees-publiees, regression, v786).
+- Produits par la régénération : toutes les pages (menu et pied de page « L'actualité », empreintes), leurs traductions,
+  scripts traduits, index de recherche, plans du site, Léo (leo-index.json, leo/), outils/sitemap-dates.json,
+  outils/leo-index-manifest.json, outils/calculateur-cadre.json.

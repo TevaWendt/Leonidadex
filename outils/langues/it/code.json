@@ -1,5 +1,5 @@
 {
- "_note": "Valeurs de code (pas de texte).",
+ "_note": "Valeurs de code (pas de texte). v7.87 : « calculateurs-scenario.js::envie » = identifiant du critère (modele-donnees.js) : gardé tel quel dans ce script.",
  "fr-FR": "it-IT",
  "_ignorer": [
   "millionen|millions?|mio|millones|millon|milioni|milione|mille|thousand|tausend|milliarden?|mrd|miliardi|miliardo|billions?|mila|mil(?![a-z])|k(?![a-z])|m(?![a-z])",
@@ -19,5 +19,6 @@
  "leo-core.js::laquelle": [],
  "leo-core.js::progression": [],
  "leo-core.js::listes": [],
- "leo-ui.js::calculateur": []
+ "leo-ui.js::calculateur": [],
+ "calculateurs-scenario.js::envie": "="
 }

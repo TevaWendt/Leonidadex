@@ -1,5 +1,5 @@
 {
- "_note": "Valeurs de code (pas de texte) : format des nombres et des dates. « _ignorer » : chaînes qui ressemblent à du français mais sont des identifiants (chapitres du Tuto, familles des carnets, clés de données) : jamais traduites, jamais signalées.",
+ "_note": "Valeurs de code (pas de texte) : format des nombres et des dates. « _ignorer » : chaînes qui ressemblent à du français mais sont des identifiants (chapitres du Tuto, familles des carnets, clés de données) : jamais traduites, jamais signalées. v7.87 : « calculateurs-scenario.js::envie » = identifiant du critère (modele-donnees.js) : gardé tel quel dans ce script.",
  "fr-FR": "en-US",
  "_ignorer": [
   "$/partie",
@@ -206,5 +206,6 @@
  "leo-core.js::laquelle": [],
  "leo-core.js::progression": [],
  "leo-core.js::listes": [],
- "leo-ui.js::calculateur": []
+ "leo-ui.js::calculateur": [],
+ "calculateurs-scenario.js::envie": "="
 }

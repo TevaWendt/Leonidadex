@@ -190,11 +190,20 @@ test('accueil : compte à rebours sans chiffre figé, jalons officiels du 12 et 
   const d = doc('index.html');
   for (const id of ['rd', 'rh', 'rm', 'rs']) assert.equal(d.getElementById(id).textContent.trim(), '–', id);
   const j = [...d.querySelectorAll('#jalons [data-jalon]')];
-  assert.deepEqual(j.map(s => s.dataset.jalon), ['avant', 'pre', 'sorti']);
+  assert.deepEqual(j.map(s => s.dataset.jalon), ['j-avant', 'j-pre', 'j-sorti']);
   assert.deepEqual(j.map(s => s.hidden), [false, true, true]);
   const app = read('app.js');
   assert.match(app, /const preload = new Date\("2026-11-12T00:00:00"\)/); assert.match(app, /const target = new Date\("2026-11-19T00:00:00"\)/);
   for (const l of LANGS) { const t = doc(l + '/index.html'); assert.equal(t.querySelectorAll('#jalons [data-jalon]').length, 3, l); assert.ok(!/Préchargement/.test(t.getElementById('jalons').textContent), l + ' : jalons traduits'); }
+  /* v7.87 : les codes des jalons du script de chaque langue sont ceux de sa page (« avant » était traduit dans app.js :
+     « before », « antes », « prima », et la ligne restait vide en anglais, en espagnol et en italien) */
+  for (const l of ['', ...LANGS.map(x => x + '/')]) {
+    const js = read(fs.existsSync(path.join(root, l + 'app.js')) ? l + 'app.js' : 'app.js');
+    const codes = (js.match(/const k = now >= target \? '([^']+)' : now >= preload \? '([^']+)' : '([^']+)'/) || []).slice(1);
+    assert.equal(codes.length, 3, l + 'app.js');
+    const attrs = [...doc(l + 'index.html').querySelectorAll('#jalons [data-jalon]')].map(x => x.dataset.jalon);
+    assert.deepEqual(codes.slice().sort(), attrs.slice().sort(), (l || 'fr/') + ' : codes des jalons');
+  }
 });
 
 test('radios : la page dit les six stations officielles, plus « aucune station annoncée »', () => {

@@ -205,6 +205,8 @@ const EDV={'Ultimate Edition':'Offert avec l’édition Ultimate','Pre-Order':'O
      passe en noindex, follow jusqu'à ce que le jeu la remplisse ; elle reste visible et reliée pour les visiteurs, et sort du
      plan du site (sync-site.cjs n'y met que les pages indexables). */
 const VERIF='../verification.html';
+/* v7.87 : la vidéo où le véhicule a été vu pour la première fois a sa page (outils/gen-actus.cjs) */
+const VIDEO_OF={'Premier trailer':'trailer-1','Second trailer':'trailer-2','Extended Look':'extended-look'};
 const indexable=v=>medList(v).length>0||v.st==='officiel'||!!v.edition||!!DP.prixDe(v);
 const docC=v=>{const V=MODEL.V,known=MODEL.fromVehicle(v);known.acquisition=v.edition&&EDV[v.edition]?V.official(EDV[v.edition]):V.unknown();known.location=V.unknown();known.terrain=V.unknown();
  return FD.renderKnown('vehicle',known,{level:3});};
@@ -334,7 +336,7 @@ ${HEADER}
         <tr><th scope="row">Inspiration réelle</th><td>${mod?esc(mod)+' <span class="unknown">(rapprochement communautaire)</span>':'<span class="unknown">Non identifiée</span>'}</td></tr>${v.slot?`
         <tr><th scope="row">Origine du modèle</th><td><a href="../vehicules.html#slot=${v.slot}">${SLOT[v.slot]}</a></td></tr>`:''}${ed?`
         <tr><th scope="row">Disponibilité</th><td><a href="../vehicules-rares.html">${ed}</a></td></tr>`:''}
-        <tr><th scope="row">Source</th><td>${esc(v.src||'Rapprochement de la communauté')}</td></tr>
+        <tr><th scope="row">Source</th><td>${VIDEO_OF[v.src]?'<a href="../videos/'+VIDEO_OF[v.src]+'.html">'+esc(v.src)+'</a>':esc(v.src||'Rapprochement de la communauté')}</td></tr>
       </tbody>
     </table>
   </div>

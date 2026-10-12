@@ -36,6 +36,10 @@
    "status": "Officiel Rockstar",
    "links": [
     {
+     "label": "Ce qui est déjà daté",
+     "url": "/actus.html#a-venir"
+    },
+    {
      "label": "Compter les jours sur l’accueil",
      "url": "/index.html"
     }
@@ -102,6 +106,10 @@
    "text": "Sur le PlayStation Store, le jeu se débloque à minuit dans la nuit du 18 au 19 novembre 2026 (heure locale). Vérifie l’heure exacte sur la boutique de ta console juste avant, elle peut changer.",
    "status": "Boutiques officielles, à vérifier",
    "links": [
+    {
+     "label": "Préchargement et sortie",
+     "url": "/editions.html#prechargement"
+    },
     {
      "label": "Le calendrier",
      "url": "/a-propos.html#calendrier"
@@ -379,7 +387,7 @@
    "links": [
     {
      "label": "Ce que contiennent les éditions",
-     "url": "/achats.html"
+     "url": "/editions.html"
     }
    ],
    "source": "https://www.rockstargames.com/VI",
@@ -414,16 +422,16 @@
    "status": "Officiel Rockstar",
    "links": [
     {
+     "label": "Ce que contiennent les éditions",
+     "url": "/editions.html"
+    },
+    {
      "label": "Tout ce qui s’achète",
      "url": "/achats.html"
     },
     {
      "label": "Vêtements et style",
      "url": "/style.html"
-    },
-    {
-     "label": "Personnalisations",
-     "url": "/personnalisations.html"
     }
    ],
    "source": "https://www.rockstargames.com/VI"
@@ -459,6 +467,10 @@
    "text": "D’après les présentations officielles déjà relevées sur le site : un kit rétro pour le Ganado de Jason (Rideout Customs), les collections « Style de Vice City » et « Les articles du bonheur », le garage de Paradise avec le Dominator Buggy, et des services chez Sara’s Unisex Salon, Stock 305 et Electric Fang Tattoo. Les prix en jeu de ces contenus ne sont pas publiés.",
    "status": "Officiel Rockstar",
    "links": [
+    {
+     "label": "Les seize contenus de l’Ultimate",
+     "url": "/editions.html#ultimate"
+    },
     {
      "label": "Voir les personnalisations",
      "url": "/personnalisations.html"
@@ -498,6 +510,10 @@
    "text": "Les précommandes sont ouvertes depuis le 25 juin 2026 sur le PlayStation Store, le Xbox Store et la boutique Rockstar. Le bonus de précommande (avant le 20 novembre 2026) est le Pack Vintage Vice City : des tenues années 80, un motif d’arme et le Stanier ’55 avec le garage de Shore Court.",
    "status": "Officiel Rockstar",
    "links": [
+    {
+     "label": "Les bonus de précommande",
+     "url": "/editions.html#bonus"
+    },
     {
      "label": "Le Pack Vintage Vice City sur le site",
      "url": "/personnalisations.html"
@@ -606,8 +622,8 @@
    "status": "Officiel Rockstar (assistance)",
    "links": [
     {
-     "label": "Tout ce qui s’achète",
-     "url": "/achats.html"
+     "label": "La version en boîte",
+     "url": "/editions.html#boite"
     }
    ],
    "checkedAt": "2026-10-12"
@@ -637,11 +653,52 @@
    "status": "Officiel Rockstar",
    "links": [
     {
+     "label": "Toutes les annonces, date par date",
+     "url": "/actus.html#frise"
+    },
+    {
      "label": "Médias et crédits",
      "url": "/medias.html"
     }
    ],
    "source": "https://www.rockstargames.com/newswire"
+  },
+  {
+   "id": "derniere-annonce",
+   "theme": "jeu",
+   "q": "Quelle est la dernière annonce sur GTA 6 ?",
+   "f": [
+    "derniere annonce gta 6",
+    "quoi de neuf gta 6",
+    "actu gta 6",
+    "les dernieres infos gta 6",
+    "derniere news gta 6",
+    "nouvelles de gta 6",
+    "quelles sont les dernieres actus gta6",
+    "ya du nouveau sur gta 6"
+   ],
+   "k": [
+    "derniere annonce",
+    "actualite",
+    "actu",
+    "quoi de neuf",
+    "dernieres infos",
+    "news",
+    "du nouveau"
+   ],
+   "text": "La dernière annonce officielle date du 8 octobre 2026 : Rockstar a présenté six stations de radio, leurs animateurs et des podcasts à la demande. Viennent ensuite le préchargement, le 12 novembre 2026, puis la sortie, le 19 novembre. Toutes les annonces, date par date, sont dans les Actualités.",
+   "status": "Officiel Rockstar · relu le 12 octobre 2026",
+   "links": [
+    {
+     "label": "Toutes les annonces, date par date",
+     "url": "/actus.html#frise"
+    },
+    {
+     "label": "Ce qui est déjà daté",
+     "url": "/actus.html#a-venir"
+    }
+   ],
+   "checkedAt": "2026-10-12"
   },
   {
    "id": "trailer1",
@@ -668,6 +725,10 @@
    "text": "Le Trailer 1 est sorti le 4 décembre 2023, un jour plus tôt que prévu après une fuite. Il présente Lucia, Leonida et Vice City, sur « Love Is a Long Road » de Tom Petty. Il a dépassé 90 millions de vues en 24 heures.",
    "status": "Officiel Rockstar",
    "links": [
+    {
+     "label": "Le Trailer 1 de GTA 6",
+     "url": "/videos/trailer-1.html"
+    },
     {
      "label": "Les lieux montrés",
      "url": "/lieux.html"
@@ -699,6 +760,10 @@
    "text": "Le Trailer 2 est sorti le 6 mai 2025, en même temps que les premières captures et les présentations de Jason, Lucia et des autres personnages. La musique est « Hot Together » des Pointer Sisters.",
    "status": "Officiel Rockstar",
    "links": [
+    {
+     "label": "Le Trailer 2 de GTA 6",
+     "url": "/videos/trailer-2.html"
+    },
     {
      "label": "Les personnages",
      "url": "/personnages.html"
@@ -734,6 +799,10 @@
    "status": "Officiel Rockstar",
    "links": [
     {
+     "label": "An Extended Look",
+     "url": "/videos/extended-look.html"
+    },
+    {
      "label": "Ce que montre l’Extended Look (armurerie)",
      "url": "/armes.html"
     }
@@ -764,6 +833,10 @@
    "text": "Aucun Trailer 3 n’est annoncé. La dernière vidéo officielle est l’Extended Look du 27 août 2026.",
    "status": "Non annoncé",
    "links": [
+    {
+     "label": "Les vidéos officielles",
+     "url": "/videos.html"
+    },
     {
      "label": "Médias et crédits",
      "url": "/medias.html"
@@ -801,6 +874,10 @@
    "text": "Trailer 1 : « Love Is a Long Road » de Tom Petty. Trailer 2 : « Hot Together » des Pointer Sisters, avec de courtes bribes d’autoradio (Zenglen, Wang Chung, Tammy Wynette). L’Extended Look fait entendre quatorze autres morceaux, de Phil Collins à Depeche Mode. La liste complète, avec les moments et les sources, est dans le poste de la page Radios et musique.",
    "status": "Officiel Rockstar (trailers) · relevés de presse (Extended Look)",
    "links": [
+    {
+     "label": "Les vidéos officielles",
+     "url": "/videos.html"
+    },
     {
      "label": "Le poste de Leonida",
      "url": "/radios.html#poste"
@@ -6134,7 +6211,7 @@
     "bandeau cookies",
     "pas de cookies"
    ],
-   "text": "Non : aucun cookie et aucun script d’un autre site, vérifié dans le code ; aucune publicité aujourd’hui (des emplacements sont réservés ; les Mentions le diront avant). Seule exception, si tu la choisis : « Écouter ici », sur la page Radios et musique, charge le lecteur officiel de YouTube ou de Spotify, qui peut alors déposer ses propres cookies. Une mesure d’audience sans cookie compte les pages lues sans rien garder qui t’identifie ; tu peux la couper dans les Mentions. Tes calculs, ton suivi et ta conversation avec moi restent dans ton navigateur, c’est pourquoi il n’y a pas de bandeau à accepter.",
+   "text": "Non : aucun cookie et aucun script d’un autre site, vérifié dans le code ; aucune publicité aujourd’hui (des emplacements sont réservés ; les Mentions le diront avant). Seule exception, si tu la choisis : « Écouter ici », sur la page Radios et musique, et « Regarder la vidéo », sur les pages des vidéos, chargent le lecteur officiel de YouTube ou de Spotify, qui peut alors déposer ses propres cookies. Une mesure d’audience sans cookie compte les pages lues sans rien garder qui t’identifie ; tu peux la couper dans les Mentions. Tes calculs, ton suivi et ta conversation avec moi restent dans ton navigateur, c’est pourquoi il n’y a pas de bandeau à accepter.",
    "status": "Le site",
    "links": [
     {
@@ -7316,6 +7393,10 @@
    "text": "C’est ton choix : le site liste ce que l’Ultimate ajoute (véhicules, garage Paradise, kit du Ganado, collections de style, magasins réservés, armes gravées) et rappelle que les prix en jeu de ces contenus ne sont pas publiés. Sur les boutiques, la différence est d’environ 20 €. Je ne donne pas d’avis d’achat.",
    "status": "Le site",
    "links": [
+    {
+     "label": "Ce que contiennent les éditions",
+     "url": "/editions.html"
+    },
     {
      "label": "Tout ce qui s’achète",
      "url": "/achats.html"
@@ -9162,6 +9243,10 @@
    "text": "Rockstar a annoncé les précommandes le 24 juin 2026 (Newswire « Pre-Order Grand Theft Auto VI on June 25 ») et elles sont ouvertes depuis le 25 juin 2026 sur le PlayStation Store, le Xbox Store et la boutique Rockstar.",
    "status": "Officiel Rockstar",
    "links": [
+    {
+     "label": "Toutes les annonces, date par date",
+     "url": "/actus.html#frise"
+    },
     {
      "label": "Sources et statuts (Tuto)",
      "url": "/tuto.html#sources"

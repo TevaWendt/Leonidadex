@@ -85,10 +85,12 @@ const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)')
   const preload = new Date("2026-11-12T00:00:00");
   let jalon = null, clockTimer = 0;
   function setJalon(now){
-    const k = now >= target ? 'sorti' : now >= preload ? 'pre' : 'prima';
+    /* v7.87 : des codes que la traduction des scripts ne touche pas (« avant » devenait « before », « antes », « prima » :
+       la ligne des jalons restait vide en anglais, en espagnol et en italien) */
+    const k = now >= target ? 'j-sorti' : now >= preload ? 'j-pre' : 'j-avant';
     if(k === jalon) return; jalon = k;
     document.querySelectorAll('#jalons [data-jalon]').forEach(function(s){ s.hidden = s.dataset.jalon !== k; });
-    const c = el('clock'); if(c) c.hidden = k === 'sorti';
+    const c = el('clock'); if(c) c.hidden = k === 'j-sorti';
   }
   function tick(){
     const now = new Date(), diff = target - now;
