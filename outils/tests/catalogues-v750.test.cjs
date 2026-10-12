@@ -57,23 +57,31 @@ test('listes des catalogues : vignette (visuel officiel ou pictogramme dit comme
   }
 });
 
-test('fiches armes : fiche documentaire (4 rubriques) et localisateur illustré, emplacement « à venir », repères numérotés sur la vraie carte', () => {
+/* v7.86 (référencement) : forme courte des fiches véhicules et armes — « Ce qui arrive avec le jeu » (valeurs connues seules, les
+   rubriques encore vides en pastilles, lien vers verification.html), localisateur sans résumé ni liste des lieux de la catégorie
+   (la carte, ses repères non numérotés, la légende et un lien vers ces lieux sur la carte interactive). */
+const avenir = d => [...d.querySelectorAll('.fiche-col')].find(c => (c.querySelector('h2') || {}).textContent === 'Ce qui arrive avec le jeu');
+const rubTitles = d => { const col = avenir(d); return new Set([...col.querySelectorAll('.doc-rub-t'), ...col.querySelectorAll('.fv-wait li')].map(x => x.textContent)); };
+test('fiches armes : « Ce qui arrive avec le jeu » (4 rubriques, connues ou à relever) et localisateur court, repères sur la vraie carte', () => {
   /* v7.55 (lot 2, VIS-02) : le fond des fiches est la référence commune img/leonida-carte.svg, dérivée de carte.html */
   assert.ok(exists(LOC.REFERENCE), 'référence cartographique en fichier');
   assert.match(read(LOC.REFERENCE), /^<svg xmlns="http:\/\/www\.w3\.org\/2000\/svg" viewBox="0 0 5200 6000"/);
   assert.ok(!exists('img/leonida-silhouette.svg'), 'ancien sprite de silhouette retiré');
   for (const a of data.LK_ARMES) {
-    const d = doc('armes/' + a.id + '.html');
-    assert.equal(d.querySelectorAll('.doc-fiche .doc-rub').length, 4, a.id);
-    assert.doesNotMatch([...d.querySelectorAll('.doc-row')].find(r => r.querySelector('dt').textContent === 'Prix').textContent, /\d/, a.id);
-    const loc = d.querySelector('#carte .lk-loc--single'); assert.ok(loc, a.id);
-    assert.match(loc.querySelector('.lk-loc-status').textContent, /Emplacement à venir/);
+    const d = doc('armes/' + a.id + '.html'), col = avenir(d);
+    assert.ok(col, a.id + ' : bloc « Ce qui arrive avec le jeu »');
+    assert.deepEqual([...rubTitles(d)].sort(), ['Améliorations et restrictions', 'Au tir', 'Munitions', 'L’obtenir'].sort(), a.id);
+    assert.equal(col.querySelector('a[href="../verification.html#a-venir"]').textContent, 'Ce qui est confirmé et comment on vérifie', a.id);
+    const prix = [...d.querySelectorAll('.doc-row')].find(r => r.querySelector('dt').textContent === 'Prix'); if (prix) assert.doesNotMatch(prix.textContent, /\d/, a.id);
+    assert.ok(![...d.querySelectorAll('.doc-row .doc-v')].some(v => /^(À confirmer|Prix à venir|Achat à confirmer|Obtention à confirmer|Emplacement à venir)$/.test(v.textContent)), a.id + ' : aucune case « à confirmer » répétée');
+    const loc = d.querySelector('#carte .lk-loc--single.lk-loc--compact'); assert.ok(loc, a.id);
     const pins = [...loc.querySelectorAll('.lk-loc-pin')]; assert.equal(pins.length, 3, a.id);
-    pins.forEach((p, i) => { const pt = carte.point(p.dataset.place); assert.equal(p.querySelector('.lk-loc-dot').getAttribute('cx'), String(pt.x)); assert.equal(p.querySelector('text').textContent, String(i + 1)); });
+    pins.forEach(p => { const pt = carte.point(p.dataset.place); assert.equal(p.querySelector('.lk-loc-dot').getAttribute('cx'), String(pt.x)); assert.equal(p.querySelector('text'), null, 'repère sans numéro'); });
     const base = loc.querySelector('.lk-loc-stage > img.lk-loc-base'); assert.ok(base, a.id + ' : fond de référence');
     assert.match(base.getAttribute('src'), /^\.\.\/img\/leonida-carte\.svg\?v=[a-f0-9]{12}$/); assert.equal(loc.querySelector('.lk-loc-svg').getAttribute('viewBox'), '0 0 5200 6000');
     assert.equal(loc.querySelector('use'), null, 'plus de silhouette dans le localisateur');
-    assert.equal(loc.querySelectorAll('.lk-loc-places a[href^="../carte.html#lieu="]').length, 3);
+    assert.equal(loc.querySelectorAll('.lk-loc-places, .lk-loc-sum, .lk-loc-status').length, 0, a.id + ' : ni liste ni résumé répétés');
+    assert.equal(loc.querySelector('.lk-loc-more a').getAttribute('href'), '../carte.html#pins=' + pins.map(p => encodeURIComponent(p.dataset.place)).join(',') + '&t=' + encodeURIComponent(LOC.weaponItem(a, '../', () => '').mapTitle), a.id);
     assert.equal(d.querySelector('#carte .fiche-liens'), null, 'plus de petits carrés portant seulement un nom');
   }
 });
@@ -81,13 +89,15 @@ test('fiches armes : fiche documentaire (4 rubriques) et localisateur illustré,
 test('fiches véhicules : lieux liés au type (marinas pour un bateau, aucun pour un véhicule de service), jamais un emplacement inventé', () => {
   const byCat = {};
   for (const v of data.LK_VEHICULES) {
-    const d = doc('vehicules/' + v.id + '.html'), loc = d.querySelector('#carte .lk-loc--single');
-    assert.ok(loc, v.id); assert.equal(d.querySelectorAll('.doc-fiche .doc-rub').length, 4, v.id);
+    const d = doc('vehicules/' + v.id + '.html'), loc = d.querySelector('#carte .lk-loc--single.lk-loc--compact');
+    assert.ok(loc, v.id); assert.ok(avenir(d), v.id + ' : bloc « Ce qui arrive avec le jeu »');
+    assert.deepEqual([...rubTitles(d)].sort(), ['Capacités', 'Coûts d’usage', 'L’obtenir', 'Performances'].sort(), v.id);
     const ids = [...loc.querySelectorAll('.lk-loc-pin')].map(p => p.dataset.place);
     assert.deepEqual(ids, LOC.vehicleLinks(v), v.id);
     (byCat[v.cat] = byCat[v.cat] || new Set()).add(ids.join(','));
-    if (v.cat === 'service') { assert.match(loc.textContent, /aucun lieu d’achat repéré/); assert.ok(loc.querySelector('.lk-loc-svg--empty')); }
-    assert.match(loc.querySelector('.lk-loc-status').textContent, /mplacement à venir/);
+    if (v.cat === 'service') { assert.match(loc.textContent, /Aucun lieu repéré pour cette catégorie/); assert.ok(loc.querySelector('.lk-loc-svg--empty')); assert.equal(loc.querySelector('.lk-loc-more'), null); }
+    else assert.ok(loc.querySelector('.lk-loc-more a[href^="../carte.html#pins="]'), v.id);
+    assert.equal(loc.querySelectorAll('.lk-loc-places, .lk-loc-sum, .lk-loc-status').length, 0, v.id);
   }
   assert.deepEqual([...byCat.bateau], ['g-L120,g-L328,g-L326']);
   for (const set of Object.values(byCat)) assert.equal(set.size, 1, 'même règle pour toute une catégorie');

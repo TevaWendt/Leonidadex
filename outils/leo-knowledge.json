@@ -602,14 +602,15 @@
     "en magasin",
     "cartouche"
    ],
-   "text": "Une version en boîte est vendue, mais d’après les fiches des boutiques elle contient un code de téléchargement plutôt qu’un disque. Vérifie la mention sur la boîte avant d’acheter si c’est important pour toi.",
-   "status": "Fiches boutiques, à vérifier",
+   "text": "Oui, et c’est officiel : d’après l’assistance de Rockstar (page mise à jour le 18 août 2026), la boîte contient un code de téléchargement, pas de disque. Elle arrive en magasin à partir du 12 novembre 2026, pour pouvoir précharger le jeu. L’Édition Ultimate n’existe pas en boîte : on achète l’amélioration Ultimate sur le PlayStation Store ou le Microsoft Store une fois le code utilisé.",
+   "status": "Officiel Rockstar (assistance)",
    "links": [
     {
      "label": "Tout ce qui s’achète",
      "url": "/achats.html"
     }
-   ]
+   ],
+   "checkedAt": "2026-10-12"
   },
   {
    "id": "annonce",
@@ -1389,14 +1390,15 @@
     "carte du jeu",
     "map"
    ],
-   "text": "Rockstar n’a pas donné la taille de la carte. Elle couvre six régions, de la ville aux marais. Sur le site, la carte interactive recense environ 2 500 lieux repérés dans les médias officiels.",
+   "text": "Rockstar n’a pas publié de surface chiffrée, mais a dit à la presse fin août 2026 que la carte fait environ deux fois celle de GTA V et trois fois la zone jouable de Red Dead Redemption 2. Elle couvre six régions, de la ville aux marais. Sur le site, la carte interactive recense environ 2 500 lieux repérés dans les médias officiels.",
    "status": "Non communiqué",
    "links": [
     {
      "label": "Ouvrir la carte",
      "url": "/carte.html"
     }
-   ]
+   ],
+   "checkedAt": "2026-10-12"
   },
   {
    "id": "animaux",
@@ -1724,7 +1726,12 @@
     "v rock gta 6",
     "album gta 6",
     "les radios de gta6",
-    "quelle musique dans le jeu"
+    "quelle musique dans le jeu",
+    "quelles sont les radios de gta 6",
+    "qui anime les radios gta 6",
+    "les noms de stations qui circulent sont ils confirmes",
+    "les radios des fuites sont elles vraies",
+    "les noms de radios du leak sont vrais"
    ],
    "k": [
     "radio",
@@ -1732,23 +1739,30 @@
     "musique du jeu",
     "bande son",
     "v rock",
-    "album"
+    "album",
+    "flash fm",
+    "cocoteo fm",
+    "the chamber",
+    "podcasts",
+    "noms de stations",
+    "stations confirmees",
+    "stations des fuites"
    ],
-   "text": "Rockstar n’a encore annoncé aucune station de radio. Le 17 septembre 2026, en annonçant « Grand Theft Auto VI: The Album » (34 titres originaux, le 19 novembre 2026), il a promis « la prochaine évolution de la radio en jeu » et une partition dynamique. Le logo de V-Rock, la station rock de GTA Vice City, serait visible sur un t-shirt de Jason selon des joueurs, sans que la station soit confirmée. Les noms de stations qui circulent viennent de vidéos volées en août 2026 : le site ne les reprend pas.",
-   "status": "Officiel Rockstar (album) · aucune station annoncée",
+   "text": "Rockstar a présenté six stations le 8 octobre 2026 : Flash FM (pop), Cocoteo FM (musiques latines), Back Country Radio (country), AfroBank FM (musiques africaines), The Chamber 106.6 (metal) et Dirty South Classics (rap du Sud), avec des animateurs comme Bad Bunny, Lana Del Rey, Morgan Wallen ou Burna Boy. Des podcasts à la demande arrivent aussi, et la radio s’écoute pour la première fois à pied, avec le téléphone et des écouteurs. Rockstar n’a pas dit si la liste est complète. Les autres noms de stations qui circulent viennent de vidéos volées en août 2026 : on ne les reprend pas.",
+   "status": "Officiel Rockstar · six stations présentées le 8 octobre 2026",
    "links": [
+    {
+     "label": "Les six stations",
+     "url": "/radios.html#stations"
+    },
     {
      "label": "Radios et musique",
      "url": "/radios.html"
-    },
-    {
-     "label": "Médias et crédits",
-     "url": "/medias.html"
     }
    ],
    "min": 1,
-   "checkedAt": "2026-10-04",
-   "source": "https://www.rockstargames.com/newswire/article/7599a881942544/announcing-grand-theft-auto-vi-the-album-coming-november-19"
+   "checkedAt": "2026-10-12",
+   "source": "https://www.rockstargames.com/newswire/article/o3982oa93a23k4/the-music-of-grand-theft-auto-vi-in-game-radio-stations"
   },
   {
    "id": "argent",
@@ -6120,7 +6134,7 @@
     "bandeau cookies",
     "pas de cookies"
    ],
-   "text": "Non : aucun cookie, aucune mesure d’audience et aucun script d’un autre site, vérifié dans le code ; aucune publicité aujourd’hui (des emplacements sont réservés ; les Mentions le diront avant). Seule exception, si tu la choisis : « Écouter ici », sur la page Radios et musique, charge le lecteur officiel de YouTube ou de Spotify, qui peut alors déposer ses propres cookies. Tes calculs, ton suivi et ta conversation avec moi restent dans ton navigateur, c’est pourquoi il n’y a pas de bandeau à accepter.",
+   "text": "Non : aucun cookie et aucun script d’un autre site, vérifié dans le code ; aucune publicité aujourd’hui (des emplacements sont réservés ; les Mentions le diront avant). Seule exception, si tu la choisis : « Écouter ici », sur la page Radios et musique, charge le lecteur officiel de YouTube ou de Spotify, qui peut alors déposer ses propres cookies. Une mesure d’audience sans cookie compte les pages lues sans rien garder qui t’identifie ; tu peux la couper dans les Mentions. Tes calculs, ton suivi et ta conversation avec moi restent dans ton navigateur, c’est pourquoi il n’y a pas de bandeau à accepter.",
    "status": "Le site",
    "links": [
     {

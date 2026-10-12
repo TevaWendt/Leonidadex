@@ -91,7 +91,12 @@ test('personnaliser ce véhicule / cette arme : section sur chaque fiche (catég
     const cats = [...new Set(list.map(p => p.cat))];
     assert.equal(chips.length, cats.length, file + ' : un atelier par catégorie qui a un poste');
     for (const ch of chips) { assert.equal(ch.querySelector('.pf-chip').tagName, 'BUTTON', file + ' : puce = bouton (aucune ancre à vérifier)'); const id = ch.querySelector('.pf-chip').getAttribute('data-pf-chip'); assert.equal(+ch.querySelector('.pf-chip-n').textContent, list.filter(p => p.cat === id).length, file + ' : compteur ' + id); assert.match(ch.getAttribute('style'), /--ch:\d+/); }
-    assert.match(sec.querySelector('.fiche-txt').textContent, !list.length ? /Aucun poste/ : list.length === 1 && list[0].st === 'conf' ? /^Un seul poste/ : new RegExp('^' + list.length + ' postes'), file + ' : résumé');
+    /* v7.86 (référencement) : une phrase fixe (plus de phrase propre à chaque catégorie, répétée sur toutes ses fiches) et trois
+       chiffres à part (postes, annoncés ou vus pour GTA VI, repères de la série) */
+    const one = list.length === 1 && list[0].st === 'conf';
+    assert.match(sec.querySelector('.fiche-txt').textContent, !list.length ? /^Aucun poste/ : one ? /^Un seul poste/ : kind === 'vehicules' ? /^Ce que tu pourras modifier sur ce modèle, atelier par atelier/ : /^Ce que tu pourras modifier sur cette arme, atelier par atelier/, file + ' : résumé');
+    const stats = [...sec.querySelectorAll('.pf-stats dd')].map(x => +x.textContent);
+    assert.deepEqual(stats, !list.length || one ? [] : [list.length, list.filter(p => p.st === 'officiel' || p.st === 'vu').length, list.filter(p => p.st === 'serie').length], file + ' : chiffres');
     if (list.length) { const a = sec.querySelector('.pf-nojs a'); assert.ok(a && a.getAttribute('href').startsWith('../personnalisations.html?') && a.getAttribute('href').endsWith('#box-' + PF.FAM[kind]), file + ' : lien sans script'); }
     assert.match(h, /<script src="\.\.\/perso-fiche\.js(?:\?v=[a-f0-9]+)?" defer><\/script>/, file + ' : script');
     assert.ok(!/perso-data\.js/.test(h), file + ' : les données ne sont chargées qu’à la demande');

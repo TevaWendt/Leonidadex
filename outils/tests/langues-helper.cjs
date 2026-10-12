@@ -47,7 +47,7 @@ const ALLOW = new Set(['léo', 'pokémon', 'café', 'résumé', 'décor', 'naïv
 /* noms propres français cités tels quels (adresses, nom officiel d'une loi ou d'une autorité) et citations anglaises
    gardées dans leur langue (propos de Rob Nelson) */
 const PROPER = ['You’ll obtain outfits by completing missions or purchasing them from stores', 'Le Mans', 'De Hoop', 'De Havilland', 'Sedan de Ville', 'La Perle', 'La Mesa', 'Ctrl+Y', 'UH-1Y', 'Safari Y6', 'Commission Nationale de l’Informatique et des Libertés', 'Commission nationale de l’informatique et des libertés', 'loi Informatique et Libertés', 'Informatique et Libertés', 'rue de Salneuve', 'place de Fontenoy',
-  'Stanier LE', 'La Quinta', 'Herzog and de Meuron', 'Y Vice City', 'SE280LC', 'mud parties', 'Strg+Y', 'Eau de Cologne', 'eau de cologne', 'Michael De Santa' /* section online */, 'D’Agostino' /* v7.83 : Alexa D’Agostino (Rockstar), source du dossier de Lucia */];
+  'Stanier LE', 'La Quinta', 'Herzog and de Meuron', 'Y Vice City', 'SE280LC', 'mud parties', 'Strg+Y', 'Eau de Cologne', 'eau de cologne', 'Michael De Santa' /* section online */, 'D’Agostino' /* v7.83 : Alexa D’Agostino (Rockstar), source du dossier de Lucia */, 'La Gata' /* v7.86 : nom d’antenne de RaiNao sur Cocoteo FM (annonce Rockstar du 8 octobre 2026) */];
 /* v7.62 (allemand) : mots outils français qui sont aussi des mots allemands (« du » = tu, « des » = génitif, « je » = chaque,
    « Partie » = partie de jeu) et lettres accentuées qui appartiennent à l'allemand (trémas) */
 const SAME_AS_FR = { de: new Set(['du', 'des', 'je', 'partie', 'quelle', 'arme']) };

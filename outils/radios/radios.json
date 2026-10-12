@@ -1,11 +1,11 @@
 {
- "_note": "Section « Radios et musique » (section radios) : données de radios.html et des fiches radios/<id>.html, lues par outils/gen-radios.cjs. Rien d’inventé : chaque morceau, chaque phrase porte un statut (officiel, vu, comm, conf) et des sources de « sources ». Aucune station tirée des fuites de 2022 ou d’août 2026. Pas de paroles, pas d’extrait audio ni vidéo, pas de pochette. Les titres de morceaux et les noms d’artistes restent tels quels dans les cinq langues (translate=\"no\"). Sources relevées le 4 octobre 2026 par moteur de recherche (pages non ouvertes depuis l’atelier : accès réseau bloqué).",
+ "_note": "Section « Radios et musique » (section radios) : données de radios.html et des fiches radios/<id>.html, lues par outils/gen-radios.cjs. Rien d’inventé : chaque morceau, chaque phrase porte un statut (officiel, vu, comm, conf) et des sources de « sources ». Aucune station tirée des fuites de 2022 ou d’août 2026. Pas de paroles, pas d’extrait audio ni vidéo, pas de pochette. Les titres de morceaux et les noms d’artistes restent tels quels dans les cinq langues (translate=\"no\"). Sources relevées le 4 octobre 2026 par moteur de recherche (pages non ouvertes depuis l’atelier : accès réseau bloqué) ; v7.86 : les six stations présentées par Rockstar le 8 octobre 2026 (« stations »), relevées le 12 octobre 2026 dans le Newswire et dans quatre médias qui reprennent la page Musique du site officiel (celle-ci s’affiche par script et n’a pas pu être lue directement).",
  "hub": {
   "label": "Radios et musique",
   "title": "Les radios et la musique de GTA VI",
-  "lede": "Aucune station de radio n’est encore annoncée. Voici ce que Rockstar a vraiment fait entendre : les morceaux des trailers et de l’Extended Look, l’album officiel du jeu et ce qu’il promet pour la radio.",
-  "desc": "Radios de GTA VI : aucune station annoncée. Les morceaux des trailers et de l’Extended Look, l’album officiel et ce que Rockstar promet pour la radio.",
-  "note": "Chaque morceau dit d’où il vient : crédité par Rockstar, ou entendu dans une vidéo officielle et identifié par la presse. Les listes de stations tirées des fuites ne sont pas reprises.",
+  "lede": "Rockstar a présenté six stations le 8 octobre 2026, avec leurs animateurs et des podcasts à la demande. Voici les stations, les morceaux des trailers et de l’Extended Look, et l’album officiel du jeu.",
+  "desc": "Les six radios de GTA 6 présentées par Rockstar : Flash FM, Cocoteo FM, Back Country Radio, AfroBank FM, The Chamber 106.6 et Dirty South Classics.",
+  "note": "Chaque information dit d’où elle vient : annoncée par Rockstar, ou entendue dans une vidéo officielle et identifiée par la presse. Les listes de stations tirées des fuites ne sont pas reprises.",
   "pile": [
    {
     "media": "real-dimez-04",
@@ -22,12 +22,13 @@
     "caption": "Un club de Vice City",
     "alt": "Dre’Quan Priest au milieu d’un club baigné de lumière violette, visuel officiel Rockstar Games"
    }
-  ]
+  ],
+  "seoTitle": "Radios GTA 6 : les 6 stations et leurs animateurs"
  },
  "poste": {
   "kicker": "Le poste de Leonida",
   "titre": "Ce que Rockstar a fait entendre",
-  "lede": "Pas encore de stations : le poste parcourt les quatre sources officielles de musique. Choisis une vidéo ou l’album, ses morceaux s’affichent avec leur moment, leur statut et leur source.",
+  "lede": "Le poste parcourt les quatre sources de musique déjà entendues : trois vidéos officielles et l’album. Choisis-en une, ses morceaux s’affichent avec leur moment, leur statut et leur source.",
   "choisir": "Choisir une source de musique",
   "sansJs": "Les quatre sources, l’une après l’autre :",
   "video": "Voir la vidéo officielle",
@@ -389,7 +390,7 @@
   }
  ],
  "fichesTitre": "L’album officiel",
- "fichesLede": "Aucune station n’a encore de nom officiel : la seule fiche de la section est celle de l’album. Une fiche par station s’ajoutera quand Rockstar les présentera.",
+ "fichesLede": "Rockstar n’a rattaché aucun titre de l’album à une station : la fiche dit ce que l’annonce contient, et ce qu’elle ne dit pas.",
  "fiches": [
   {
    "id": "gta-vi-the-album",
@@ -404,12 +405,12 @@
    "source": "https://www.rockstargames.com/newswire/article/7599a881942544/announcing-grand-theft-auto-vi-the-album-coming-november-19",
    "texte": "Rockstar Games et Atlantic Records ont annoncé l’album le 17 septembre 2026. Il réunit 34 titres originaux, écrits pour le jeu, qui doivent « capturer l’énergie électrique de Vice City et de Leonida », selon le message officiel. Il sort le 19 novembre 2026, le même jour que GTA VI, en écoute en ligne, en CD et en vinyle. Six titres sont sortis dès l’annonce, de Yung Lean à Keith Richards.",
    "contexte": "Le même jour, Rockstar a promis d’en dire plus sur la musique du jeu : une partition dynamique et « la prochaine évolution de la radio en jeu ». L’album n’en dit pas plus : ses titres ne sont rattachés à aucune station, et rien ne dit encore dans quelles situations on les entendra en jouant. Trois éditions physiques sont réservées au site d’Atlantic Records ; le vinyle en édition limitée a été épuisé en quelques minutes, selon TechRadar.",
-   "pratique": "Pour l’instant, c’est un album à écouter en dehors du jeu. Quand Rockstar présentera les stations, cette fiche dira lesquelles diffusent ces titres. Les autres morceaux connus, ceux des trailers et de l’Extended Look, sont dans le poste de la page Radios et musique.",
+   "pratique": "Pour l’instant, c’est un album à écouter en dehors du jeu. Rockstar a présenté six stations le 8 octobre 2026 sans dire lesquelles diffuseront ces titres ; Morgan Wallen, dont un titre figure sur l’album, anime Back Country Radio. Les autres morceaux connus, ceux des trailers et de l’Extended Look, sont dans le poste de la page Radios et musique.",
    "facts": [
     "Annoncé le 17 septembre 2026 par Rockstar Games et Atlantic Records.",
     "34 titres originaux, à paraître le 19 novembre 2026, le jour du jeu.",
     "Six titres sortis dès l’annonce : Yung Lean, Travis Scott, CA7RIEL & Paco Amoroso, Morgan Wallen, Rauw Alejandro et Keith Richards.",
-    "Aucune station de radio n’est rattachée à ces titres pour l’instant."
+    "Aucun de ces titres n’est encore rattaché à l’une des six stations présentées."
    ],
    "characters": [
     "drequan",
@@ -478,6 +479,10 @@
  "zone": {
   "nav": [
    {
+    "href": "#stations",
+    "label": "Les stations"
+   },
+   {
     "href": "#poste",
     "label": "Le poste"
    },
@@ -511,7 +516,7 @@
    }
   ],
   "rockstar": {
-   "lede": "Rockstar n’a présenté aucune station. Il a fait entendre des morceaux dans trois vidéos, publié un album et promis une radio repensée.",
+   "lede": "Rockstar a présenté six stations et des podcasts, fait entendre des morceaux dans trois vidéos et publié un album.",
    "items": [
     {
      "date": "4 décembre 2023",
@@ -552,6 +557,12 @@
      "texte": "Annonce de « Grand Theft Auto VI: The Album », avec Atlantic Records. Le Newswire promet aussi une partition dynamique et « la prochaine évolution de la radio en jeu », sans détail.",
      "media": "real-dimez-04",
      "alt": "Les deux rappeuses de Real Dimez au micro dans une cabine d’enregistrement, casques sur les oreilles, visuel officiel Rockstar Games"
+    },
+    {
+     "date": "8 octobre 2026",
+     "titre": "Six stations et des podcasts",
+     "statut": "officiel",
+     "texte": "Rockstar présente six stations et leurs animateurs, de Bad Bunny à Lana Del Rey, et des podcasts à la demande. Radio et podcasts s’écoutent en voiture ou à pied, avec le téléphone et des écouteurs."
     }
    ],
    "p": [
@@ -573,7 +584,7 @@
     },
     {
      "fiction": "Des listes de stations",
-     "reel": "Ces noms de stations viennent du menu radio de vidéos volées en août 2026, pas d’une présentation officielle : le site ne les reprend pas.",
+     "reel": "Des noms de stations venus du menu radio de vidéos volées en août 2026 circulent encore. Le site ne reprend que les six stations présentées par Rockstar le 8 octobre 2026.",
      "src": "consequence-every-song"
     },
     {
@@ -588,23 +599,31 @@
     }
    ],
    "p": [
-    "Une liste de stations n’entrera sur cette page qu’avec une présentation de Rockstar : une capture, une vidéo ou un texte officiel."
+    "Les six stations de cette page viennent de la présentation de Rockstar du 8 octobre 2026. Toute autre station n’y entrera qu’avec une source officielle : une capture, une vidéo ou un texte de Rockstar."
    ]
   },
   "confirmer": {
-   "lede": "La musique du jeu est annoncée, pas encore expliquée.",
+   "lede": "Les stations ont un nom et des voix ; le reste de la musique du jeu attend la sortie.",
    "items": [
     {
-     "q": "Les stations et leurs animateurs",
-     "etat": "Aucun nom publié. Rockstar promet seulement une radio en jeu repensée."
+     "q": "La liste complète des stations",
+     "etat": "Six stations présentées le 8 octobre 2026 ; Rockstar n’a pas dit s’il y en aura d’autres."
     },
     {
-     "q": "La partition dynamique",
-     "etat": "Annoncée le 17 septembre 2026, sans un mot sur son fonctionnement."
+     "q": "La programmation",
+     "etat": "Aucune liste de morceaux n’est publiée, pour aucune des six stations."
+    },
+    {
+     "q": "Les podcasts",
+     "etat": "Des podcasts à écouter à la demande, annoncés le 8 octobre 2026 ; ni leur nombre ni leurs animateurs ne sont connus."
     },
     {
      "q": "L’album à l’antenne",
      "etat": "Ses 34 titres sont écrits pour Vice City et Leonida ; on ne sait pas sur quelles stations ils passeront."
+    },
+    {
+     "q": "La partition dynamique",
+     "etat": "Annoncée le 17 septembre 2026, sans un mot sur son fonctionnement."
     },
     {
      "q": "Le compositeur",
@@ -648,40 +667,72 @@
     }
    ],
    "p": [
-    "Quand les stations seront connues, chacune aura sa fiche ici, avec son style et ses animateurs."
+    "Chaque station a sa fiche, avec son style, ses animateurs et ce qui reste à savoir."
    ]
   },
   "faq": [
    {
     "q": "Quelles radios y aura-t-il dans GTA 6 ?",
-    "a": "Aucune station n’est annoncée à ce jour. Rockstar promet seulement « la prochaine évolution de la radio en jeu » et une partition dynamique (17 septembre 2026). Les noms de stations qui circulent viennent de vidéos volées en août 2026 : on ne les reprend pas.",
+    "a": "Rockstar a présenté six stations le 8 octobre 2026 : Flash FM (pop), Cocoteo FM (musiques latines), Back Country Radio (country), AfroBank FM (musiques africaines), The Chamber 106.6 (metal) et Dirty South Classics (rap du Sud). Il n’a pas dit si la liste est complète. Les autres noms de stations qui circulent viennent de vidéos volées en août 2026 : on ne les reprend pas.",
     "k": [
      "radios gta 6",
      "stations de radio",
      "quelles radios",
      "liste des radios",
-     "radio du jeu"
+     "radio du jeu",
+     "noms de stations",
+     "stations confirmees"
     ],
     "leo": "radio"
    },
    {
-    "q": "Quelle est la musique du Trailer 2 ?",
-    "a": "« Hot Together » des Pointer Sisters (1986), créditée par Rockstar. On entend aussi de courtes bribes à l’autoradio pendant que Jason conduit : Zenglen, Wang Chung et Tammy Wynette, relevés par la presse.",
+    "q": "Qui anime les radios de GTA 6 ?",
+    "a": "D’après Rockstar : Robyn et Alex Consani sur Flash FM ; Bad Bunny (El Martillo) et RaiNao (La Gata) sur Cocoteo FM ; Morgan Wallen (MW) et Lana Del Rey (Delta Dawne) sur Back Country Radio, avec le reporter Mud Dog Mike ; Burna Boy (Burna) et Palms Trax (Palmsy) sur AfroBank FM ; Kerry King et Tom Araya, de Slayer, sur The Chamber 106.6 ; Trick Daddy et Trina sur Dirty South Classics.",
     "k": [
-     "musique trailer 2",
-     "chanson trailer 2",
-     "hot together",
-     "pointer sisters"
+     "animateurs radio",
+     "qui anime les radios",
+     "dj gta 6",
+     "bad bunny",
+     "lana del rey",
+     "morgan wallen",
+     "burna boy",
+     "slayer"
     ],
-    "leo": "musique-trailer"
+    "f": [
+     "qui anime les radios de gta 6",
+     "les animateurs des radios",
+     "bad bunny dans gta 6",
+     "lana del rey est dans gta 6",
+     "quels artistes animent les radios"
+    ]
    },
    {
-    "q": "Qui chante dans le Trailer 1 ?",
-    "a": "Tom Petty, avec « Love Is a Long Road », tiré de l’album Full Moon Fever (1989). C’est le seul morceau de la vidéo, crédité dans sa description officielle.",
+    "q": "Peut-on écouter la radio à pied dans GTA 6 ?",
+    "a": "Oui, d’après Rockstar (8 octobre 2026) : pour la première fois, la radio et des podcasts à la demande s’écoutent aussi à pied, avec le téléphone de Jason ou de Lucia et des écouteurs, en plus de l’autoradio.",
     "k": [
+     "radio a pied",
+     "ecouter la radio",
+     "podcasts",
+     "ecouteurs",
+     "telephone radio"
+    ],
+    "f": [
+     "peut on ecouter la radio a pied",
+     "la radio hors de la voiture",
+     "y a t il des podcasts dans gta 6",
+     "ecouter la radio avec le telephone"
+    ]
+   },
+   {
+    "q": "Quelle est la musique des trailers de GTA 6 ?",
+    "a": "Le Trailer 1 se joue sur « Love Is a Long Road » de Tom Petty (1989), le Trailer 2 sur « Hot Together » des Pointer Sisters (1986) : les deux sont crédités par Rockstar. Dans le Trailer 2, de courtes bribes d’autoradio passent aussi pendant que Jason conduit : Zenglen, Wang Chung et Tammy Wynette, relevés par la presse.",
+    "k": [
+     "musique trailer",
      "chanson trailer 1",
-     "qui chante trailer 1",
+     "chanson trailer 2",
      "tom petty",
+     "hot together",
+     "pointer sisters",
      "love is a long road"
     ],
     "leo": "musique-trailer"
@@ -723,28 +774,16 @@
      "quand sort l album",
      "l album de gta 6 avec travis scott"
     ]
-   },
-   {
-    "q": "Les noms de stations qui circulent sont-ils confirmés ?",
-    "a": "Non. Ces noms viennent du menu radio de vidéos volées en août 2026, pas d’une présentation de Rockstar. Le site ne les reprend pas et attend l’annonce officielle des stations.",
-    "k": [
-     "noms de stations",
-     "stations des fuites",
-     "radios des leaks",
-     "stations confirmees",
-     "noms des radios"
-    ],
-    "f": [
-     "les noms de stations qui circulent sont ils confirmes",
-     "les radios des fuites sont elles vraies",
-     "les stations des fuites sont confirmees",
-     "les noms de radios du leak sont vrais",
-     "les radios qui circulent sont officielles"
-    ]
    }
   ],
-  "sourcesLede": "Chaque morceau et chaque phrase de cette page renvoie à une source datée. Les pages ont été relevées le 4 octobre 2026 par moteur de recherche : leur ouverture directe était bloquée depuis l’atelier ce jour-là.",
+  "sourcesLede": "Chaque morceau et chaque phrase de cette page renvoie à une source datée. Les pages ont été relevées le 4 octobre 2026 par moteur de recherche ; celles des stations ont été ouvertes le 12 octobre 2026, et la page Musique de Rockstar, qui s’affiche par script, a été lue au travers des médias qui la citent.",
   "sources": [
+   "rs-radios",
+   "rs-music",
+   "forbes-radios",
+   "pushsquare-radios",
+   "dexerto-radios",
+   "djmag-radios",
    "rs-videos",
    "rs-extended",
    "rs-album",
@@ -980,16 +1019,76 @@
    "consultedAt": "2026-10-04",
    "statut": "conf",
    "claim": "Rapporte une rumeur d’informateur ; rien n’est confirmé par Rockstar ni par l’artiste."
+  },
+  "rs-radios": {
+   "url": "https://www.rockstargames.com/newswire/article/o3982oa93a23k4/the-music-of-grand-theft-auto-vi-in-game-radio-stations",
+   "title": "Rockstar Newswire : The Music of Grand Theft Auto VI: In-Game Radio Stations",
+   "lang": "en",
+   "publisher": "Rockstar Games",
+   "publishedAt": "2026-10-08",
+   "consultedAt": "2026-10-12",
+   "statut": "officiel",
+   "claim": "Six stations présentées avec leurs animateurs, des podcasts à la demande, et une radio qu’on écoute en voiture ou à pied avec le téléphone de Jason ou de Lucia et des écouteurs."
+  },
+  "rs-music": {
+   "url": "https://www.rockstargames.com/VI/music",
+   "title": "Grand Theft Auto VI : Music (site officiel)",
+   "lang": "en",
+   "publisher": "Rockstar Games",
+   "publishedAt": "2026-10-08",
+   "consultedAt": "2026-10-12",
+   "statut": "officiel",
+   "claim": "La page officielle des stations, avec le style, les animateurs et un aperçu de chacune."
+  },
+  "forbes-radios": {
+   "url": "https://www.forbes.com/sites/brianmazique/2026/10/08/lana-del-rey-learned-las-roads-from-gta---now-shes-a-radio-dj-in-gta-vi-alongside-bad-bunny-and-morgan-wallen/",
+   "title": "Lana Del Rey Learned LA’s Roads From ‘GTA’ — Now She’s A Radio DJ In ‘GTA VI’",
+   "lang": "en",
+   "publisher": "Forbes",
+   "publishedAt": "2026-10-08",
+   "consultedAt": "2026-10-12",
+   "statut": "officiel",
+   "claim": "Reprend la page Musique de Rockstar : chaque station, son style et ses animateurs, avec leur nom à l’antenne."
+  },
+  "pushsquare-radios": {
+   "url": "https://www.pushsquare.com/news/2026/10/gta-6-in-game-radio-stations-announced-and-you-can-preview-them-right-now",
+   "title": "GTA 6 In-Game Radio Stations Announced, and You Can Preview Them Right Now",
+   "lang": "en",
+   "publisher": "Push Square",
+   "publishedAt": "2026-10-08",
+   "consultedAt": "2026-10-12",
+   "statut": "officiel",
+   "claim": "Cite l’article de Rockstar : noms d’antenne des animateurs, reporter Mud Dog Mike, podcasts à la demande et écoute à pied."
+  },
+  "dexerto-radios": {
+   "url": "https://www.dexerto.com/gta/gta-6-radio-stations-revealed-and-you-can-listen-to-them-now-3417185/",
+   "title": "GTA 6 radio stations revealed and you can listen to them now",
+   "lang": "en",
+   "publisher": "Dexerto",
+   "publishedAt": "2026-10-08",
+   "consultedAt": "2026-10-12",
+   "statut": "officiel",
+   "claim": "Détaille le style de chaque station : bachata, merengue, dembow et reggaeton pour Cocoteo FM ; des classiques du XXᵉ siècle à l’amapiano et au 3-step pour AfroBank FM ; le metal depuis les années 1980 pour The Chamber 106.6."
+  },
+  "djmag-radios": {
+   "url": "https://djmag.com/news/gta-6-radio-stations-be-hosted-robyn-palms-trax-bad-bunny-more",
+   "title": "GTA 6 radio stations to be hosted by Robyn, Palms Trax, Bad Bunny, more",
+   "lang": "en",
+   "publisher": "DJ Mag",
+   "publishedAt": "2026-10-09",
+   "consultedAt": "2026-10-12",
+   "statut": "officiel",
+   "claim": "Liste les six stations et leurs animateurs, et renvoie aux aperçus de la page Musique officielle."
   }
  },
  "leo": {
   "suggestions": [
    "Quelles radios dans GTA 6 ?",
-   "Quelle musique dans le Trailer 2 ?",
-   "Qui chante dans le Trailer 1 ?",
+   "Qui anime les radios ?",
+   "La radio à pied, c’est possible ?",
+   "Quelle musique dans les trailers ?",
    "Quelles chansons dans l’Extended Look ?",
-   "C’est quoi GTA VI: The Album ?",
-   "Les stations qui circulent sont-elles confirmées ?"
+   "C’est quoi GTA VI: The Album ?"
   ]
  },
  "album": {
@@ -1002,5 +1101,292 @@
   "cta": "Ouvrir la fiche de l’album",
   "ecouter": "Écouter les titres déjà sortis"
  },
- "_noteLecteur": "Lecteur au clic (v7.66) : « youtube » = identifiant de la vidéo officielle sur la chaîne YouTube de Rockstar Games (vérifié par oEmbed le 4 octobre 2026 : Trailer 1, Trailer 2, An Extended Look) ; le morceau démarre à son moment. Les singles se lisent avec le lecteur Spotify quand un lien officiel open.spotify.com/track est connu. Rien ne se charge avant le clic."
+ "_noteLecteur": "Lecteur au clic (v7.66) : « youtube » = identifiant de la vidéo officielle sur la chaîne YouTube de Rockstar Games (vérifié par oEmbed le 4 octobre 2026 : Trailer 1, Trailer 2, An Extended Look) ; le morceau démarre à son moment. Les singles se lisent avec le lecteur Spotify quand un lien officiel open.spotify.com/track est connu. Rien ne se charge avant le clic.",
+ "stations": [
+  {
+   "id": "flash-fm",
+   "name": "Flash FM",
+   "genre": "Pop",
+   "ton": "#E8452C",
+   "tagline": "La station pop de Vice City est de retour.",
+   "description": "Flash FM dans GTA VI : la station pop, revenue de GTA Vice City, animée par Robyn et Alex Consani. Présentée par Rockstar le 8 octobre 2026.",
+   "hosts": [
+    {
+     "nom": "Robyn",
+     "antenne": "Robyn"
+    },
+    {
+     "nom": "Alex Consani",
+     "antenne": "Alex"
+    }
+   ],
+   "texte": "Flash FM est la station pop de GTA VI. Rockstar la présente comme une radio faite pour danser, où que l’on soit dans le Goodtime State, le surnom de Leonida. À l’antenne : la chanteuse suédoise Robyn, sous son nom de scène, et la mannequin américaine Alex Consani, qu’on entend sous le nom d’Alex.",
+   "serie": "Le nom ne sort pas de nulle part : Flash FM était déjà la station pop de GTA Vice City, en 2002. C’est un repère de la série, pas une indication sur la programmation de GTA VI.",
+   "contexte": "L’annonce donne le style et les deux voix de la station, rien de plus : aucun titre de sa programmation n’est publié, et on ne sait pas si des morceaux de l’album officiel y passeront. Rockstar propose un aperçu de la station sur la page Musique de son site.",
+   "facts": [
+    "Style : pop.",
+    "À l’antenne : Robyn et Alex Consani (Alex).",
+    "Présentée par Rockstar le 8 octobre 2026.",
+    "Déjà présente dans GTA Vice City (2002) : repère de la série."
+   ],
+   "aliases": [
+    "flash fm gta 6",
+    "radio pop gta 6",
+    "robyn gta 6",
+    "alex consani",
+    "station pop"
+   ],
+   "kind": "Station de radio",
+   "pratique": "Comme les autres stations, elle s’écoute en voiture et, pour la première fois dans la série, à pied : avec le téléphone de Jason ou de Lucia et des écouteurs, d’après Rockstar.",
+   "lien": "https://www.rockstargames.com/VI/music",
+   "sources": [
+    "rs-radios",
+    "rs-music",
+    "forbes-radios",
+    "pushsquare-radios",
+    "dexerto-radios",
+    "djmag-radios"
+   ],
+   "seo": "pop"
+  },
+  {
+   "id": "cocoteo-fm",
+   "name": "Cocoteo FM",
+   "genre": "Musiques latines",
+   "ton": "#F5A524",
+   "tagline": "Bachata, merengue, dembow et reggaeton.",
+   "description": "Cocoteo FM dans GTA VI : bachata, merengue, dembow et reggaeton, avec Bad Bunny (El Martillo) et RaiNao (La Gata). Présentée le 8 octobre 2026.",
+   "hosts": [
+    {
+     "nom": "Bad Bunny",
+     "antenne": "El Martillo"
+    },
+    {
+     "nom": "RaiNao",
+     "antenne": "La Gata"
+    }
+   ],
+   "texte": "Cocoteo FM couvre les musiques latines d’aujourd’hui : bachata, merengue, dembow et reggaeton, d’après la présentation de Rockstar. Deux voix tiennent l’antenne, chacune sous un nom propre au jeu : Bad Bunny, la star portoricaine, devient El Martillo, et la chanteuse RaiNao devient La Gata.",
+   "contexte": "Rockstar donne le style et les animateurs ; la liste des morceaux n’est pas publiée. Rien ne dit encore quels artistes passeront sur Cocoteo FM, ni si Rauw Alejandro, présent sur l’album officiel du jeu, y sera diffusé.",
+   "facts": [
+    "Style : musiques latines d’aujourd’hui (bachata, merengue, dembow, reggaeton).",
+    "À l’antenne : Bad Bunny (El Martillo) et RaiNao (La Gata).",
+    "Présentée par Rockstar le 8 octobre 2026."
+   ],
+   "aliases": [
+    "cocoteo fm gta 6",
+    "radio latino gta 6",
+    "bad bunny gta 6",
+    "el martillo",
+    "la gata",
+    "rainao",
+    "reggaeton gta 6"
+   ],
+   "kind": "Station de radio",
+   "pratique": "Comme les autres stations, elle s’écoute en voiture et, pour la première fois dans la série, à pied : avec le téléphone de Jason ou de Lucia et des écouteurs, d’après Rockstar.",
+   "lien": "https://www.rockstargames.com/VI/music",
+   "sources": [
+    "rs-radios",
+    "rs-music",
+    "forbes-radios",
+    "pushsquare-radios",
+    "dexerto-radios",
+    "djmag-radios"
+   ],
+   "seo": "latino"
+  },
+  {
+   "id": "back-country-radio",
+   "name": "Back Country Radio",
+   "genre": "Country",
+   "ton": "#3A9A4F",
+   "tagline": "La country, outlaw comprise.",
+   "description": "Back Country Radio dans GTA VI : la country, avec Morgan Wallen (MW), Lana Del Rey (Delta Dawne) et le reporter Mud Dog Mike. Présentée le 8 octobre 2026.",
+   "hosts": [
+    {
+     "nom": "Morgan Wallen",
+     "antenne": "MW"
+    },
+    {
+     "nom": "Lana Del Rey",
+     "antenne": "Delta Dawne"
+    },
+    {
+     "nom": "Jeremy Dufrene",
+     "antenne": "Mud Dog Mike",
+     "role": "reporter"
+    }
+   ],
+   "texte": "Back Country Radio est la station country du jeu, outlaw country comprise. Ses deux animateurs portent un nom d’antenne : le chanteur Morgan Wallen est MW, la chanteuse Lana Del Rey est Delta Dawne. Un troisième personnage complète l’équipe : Mud Dog Mike, reporter itinérant et « météorologue des marais », incarné par Jeremy Dufrene, le mari de Lana Del Rey.",
+   "contexte": "Morgan Wallen figure aussi sur l’album officiel du jeu, avec « Last Thing You Need » ; Rockstar n’a pas dit si ce titre passera sur Back Country Radio. La programmation de la station n’est pas publiée.",
+   "facts": [
+    "Style : country, outlaw country comprise.",
+    "À l’antenne : Morgan Wallen (MW) et Lana Del Rey (Delta Dawne).",
+    "Reporter : Mud Dog Mike, incarné par Jeremy Dufrene.",
+    "Présentée par Rockstar le 8 octobre 2026."
+   ],
+   "aliases": [
+    "back country radio gta 6",
+    "radio country gta 6",
+    "lana del rey gta 6",
+    "morgan wallen gta 6",
+    "delta dawne",
+    "mud dog mike",
+    "jeremy dufrene"
+   ],
+   "kind": "Station de radio",
+   "pratique": "Comme les autres stations, elle s’écoute en voiture et, pour la première fois dans la série, à pied : avec le téléphone de Jason ou de Lucia et des écouteurs, d’après Rockstar.",
+   "lien": "https://www.rockstargames.com/VI/music",
+   "sources": [
+    "rs-radios",
+    "rs-music",
+    "forbes-radios",
+    "pushsquare-radios",
+    "dexerto-radios",
+    "djmag-radios"
+   ],
+   "seo": "country"
+  },
+  {
+   "id": "afrobank-fm",
+   "name": "AfroBank FM",
+   "genre": "Musiques africaines",
+   "ton": "#C9A227",
+   "tagline": "Des classiques du XXᵉ siècle à l’amapiano.",
+   "description": "AfroBank FM dans GTA VI : des classiques africains du XXᵉ siècle à l’amapiano et au 3-step, avec Burna Boy (Burna) et Palms Trax (Palmsy).",
+   "hosts": [
+    {
+     "nom": "Burna Boy",
+     "antenne": "Burna"
+    },
+    {
+     "nom": "Palms Trax",
+     "antenne": "Palmsy"
+    }
+   ],
+   "texte": "AfroBank FM parcourt les musiques africaines, des classiques du XXᵉ siècle jusqu’aux styles d’aujourd’hui comme l’amapiano et le 3-step, d’après la présentation de Rockstar. Au micro, la star nigériane Burna Boy, sous le nom de Burna, et le DJ et producteur Palms Trax, devenu Palmsy à l’antenne.",
+   "contexte": "Rockstar présente le style et les deux animateurs ; aucun morceau de la station n’est publié. On ne sait pas non plus si elle diffusera des titres de l’album officiel du jeu.",
+   "facts": [
+    "Style : musiques africaines, des classiques du XXᵉ siècle à l’amapiano et au 3-step.",
+    "À l’antenne : Burna Boy (Burna) et Palms Trax (Palmsy).",
+    "Présentée par Rockstar le 8 octobre 2026."
+   ],
+   "aliases": [
+    "afrobank fm gta 6",
+    "radio afro gta 6",
+    "burna boy gta 6",
+    "palms trax",
+    "palmsy",
+    "amapiano gta 6"
+   ],
+   "kind": "Station de radio",
+   "pratique": "Comme les autres stations, elle s’écoute en voiture et, pour la première fois dans la série, à pied : avec le téléphone de Jason ou de Lucia et des écouteurs, d’après Rockstar.",
+   "lien": "https://www.rockstargames.com/VI/music",
+   "sources": [
+    "rs-radios",
+    "rs-music",
+    "forbes-radios",
+    "pushsquare-radios",
+    "dexerto-radios",
+    "djmag-radios"
+   ],
+   "seo": "afro"
+  },
+  {
+   "id": "the-chamber-106-6",
+   "name": "The Chamber 106.6",
+   "genre": "Metal",
+   "ton": "#8E2F4C",
+   "tagline": "Le metal, des années 1980 à aujourd’hui.",
+   "description": "The Chamber 106.6 dans GTA VI : le metal des années 1980 à nos jours, avec Kerry King (DJ Kerry) et Tom Araya (DJ Tom), de Slayer.",
+   "hosts": [
+    {
+     "nom": "Kerry King",
+     "antenne": "DJ Kerry"
+    },
+    {
+     "nom": "Tom Araya",
+     "antenne": "DJ Tom"
+    }
+   ],
+   "texte": "The Chamber 106.6 est la station metal du jeu : le metal des années 1980 et ce qui a suivi, d’après Rockstar. Ses deux animateurs viennent de Slayer, groupe phare du thrash metal : le guitariste Kerry King, alias DJ Kerry, et le chanteur et bassiste Tom Araya, alias DJ Tom. C’est la seule des six stations présentées dont le nom porte une fréquence.",
+   "contexte": "Seuls le style et les deux voix de la station sont annoncés : aucune liste de morceaux n’est publiée, et sa place sur le cadran de la radio du jeu n’est pas montrée.",
+   "facts": [
+    "Style : metal, des années 1980 à aujourd’hui.",
+    "À l’antenne : Kerry King (DJ Kerry) et Tom Araya (DJ Tom), de Slayer.",
+    "Présentée par Rockstar le 8 octobre 2026."
+   ],
+   "aliases": [
+    "the chamber gta 6",
+    "chamber 106.6",
+    "radio metal gta 6",
+    "slayer gta 6",
+    "kerry king",
+    "tom araya",
+    "dj kerry",
+    "dj tom"
+   ],
+   "kind": "Station de radio",
+   "pratique": "Comme les autres stations, elle s’écoute en voiture et, pour la première fois dans la série, à pied : avec le téléphone de Jason ou de Lucia et des écouteurs, d’après Rockstar.",
+   "lien": "https://www.rockstargames.com/VI/music",
+   "sources": [
+    "rs-radios",
+    "rs-music",
+    "forbes-radios",
+    "pushsquare-radios",
+    "dexerto-radios",
+    "djmag-radios"
+   ],
+   "seo": "metal"
+  },
+  {
+   "id": "dirty-south-classics",
+   "name": "Dirty South Classics",
+   "genre": "Rap du Sud",
+   "ton": "#5A2358",
+   "tagline": "Les classiques du rap du Sud.",
+   "description": "Dirty South Classics dans GTA VI : les classiques du rap et du hip-hop du Sud des États-Unis, avec Trick Daddy et Trina. Présentée le 8 octobre 2026.",
+   "hosts": [
+    {
+     "nom": "Trick Daddy",
+     "antenne": "Trick"
+    },
+    {
+     "nom": "Trina",
+     "antenne": "Trina"
+    }
+   ],
+   "texte": "Dirty South Classics passe les classiques du rap et du hip-hop du Sud des États-Unis, le « Dirty South ». Ses animateurs sont deux figures du rap de Miami, la ville qui inspire Vice City : Trick Daddy, appelé Trick à l’antenne, et Trina, sous son nom d’artiste. Le choix colle à ce que Rockstar dit de l’esprit musical du jeu : « We love Miami music, particularly Miami bass ».",
+   "contexte": "Rockstar ne publie pas la liste des morceaux. Des titres de rap du Sud entendus dans l’Extended Look, comme « Pop Bottles » de Birdman et Lil Wayne ou « Skrilla » de Kodak Black, ne sont rattachés à aucune station.",
+   "facts": [
+    "Style : classiques du rap et du hip-hop du Sud des États-Unis.",
+    "À l’antenne : Trick Daddy (Trick) et Trina.",
+    "Présentée par Rockstar le 8 octobre 2026."
+   ],
+   "aliases": [
+    "dirty south classics gta 6",
+    "radio rap gta 6",
+    "trick daddy gta 6",
+    "trina gta 6",
+    "rap du sud",
+    "miami bass"
+   ],
+   "kind": "Station de radio",
+   "pratique": "Comme les autres stations, elle s’écoute en voiture et, pour la première fois dans la série, à pied : avec le téléphone de Jason ou de Lucia et des écouteurs, d’après Rockstar.",
+   "lien": "https://www.rockstargames.com/VI/music",
+   "sources": [
+    "rs-radios",
+    "rs-music",
+    "forbes-radios",
+    "pushsquare-radios",
+    "dexerto-radios",
+    "djmag-radios",
+    "dazed-deepdive"
+   ],
+   "seo": "rap du Sud"
+  }
+ ],
+ "stationsTitre": "Les six stations",
+ "stationsLede": "Présentées par Rockstar le 8 octobre 2026, chacune avec ses animateurs. Rockstar n’a pas dit si la liste est complète, ni publié la programmation des stations.",
+ "stationsKicker": "Annoncées le 8 octobre 2026"
 }

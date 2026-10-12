@@ -9,26 +9,31 @@ const G = require(path.join(root, 'outils/gen-radios.cjs'));
 const D = JSON.parse(read('outils/radios/radios.json'));
 const doc = f => new JSDOM(read(f)).window.document;
 const ld = d => [...d.querySelectorAll('script[type="application/ld+json"]')].map(s => JSON.parse(s.textContent));
-const FICHES = D.fiches.map(x => 'radios/' + x.id + '.html');
+/* v7.86 : les six stations présentées par Rockstar le 8 octobre 2026 ont chacune leur fiche, à côté de celle de l’album */
+const FICHES = [...D.fiches, ...(D.stations || [])].map(x => 'radios/' + x.id + '.html');
 const PAGES = ['radios.html', ...FICHES];
 /* noms de stations qui ne viennent que des vidéos volées d’août 2026 : jamais écrits sur le site, ni ici. Le test compare des
    empreintes (sha256 des noms en minuscules, 16 premiers caractères) aux suites de 1 à 3 mots des textes contrôlés.
    v7.83 : trois de ces noms sont devenus officiels le 8 octobre 2026 (rockstargames.com/VI/music, six stations à écouter) :
-   leurs empreintes sont retirées (126080207d1629c8, 28bb2b6f4c372f09, f14c18bc7f7f3c5a) ; les onze autres restent interdites. */
-const FUITES = new Set(["0c9c89ea7a51c508", "1ece602c1078ef6f", "6e176086a62dab27", "739dee15f1ce2470", "8296cd3f1093643f", "8440c6f4a53b63bf", "a0fce2631873a465", "ae98c266767fcd8d", "b35fbea4617e6517", "b6ffa7c7f3454f50", "cc5adf5b09da1d68"]);
+   leurs empreintes sont retirées (126080207d1629c8, 28bb2b6f4c372f09, f14c18bc7f7f3c5a).
+   v7.86 : un quatrième, la station metal, est officiel sous le nom « The Chamber 106.6 » (même annonce) : son empreinte
+   (b6ffa7c7f3454f50) est retirée à son tour ; les dix autres restent interdites. */
+const FUITES = new Set(["0c9c89ea7a51c508", "1ece602c1078ef6f", "6e176086a62dab27", "739dee15f1ce2470", "8296cd3f1093643f", "8440c6f4a53b63bf", "a0fce2631873a465", "ae98c266767fcd8d", "b35fbea4617e6517", "cc5adf5b09da1d68"]);
 const fuiteDans = t => { const w = String(t).toLowerCase().replace(/[^a-z0-9.\- ]+/g, ' ').split(/\s+/).filter(Boolean); for (let i = 0; i < w.length; i++) for (let n = 1; n <= 3 && i + n <= w.length; n++) { const h = require('node:crypto').createHash('sha256').update(w.slice(i, i + n).join(' ')).digest('hex').slice(0, 16); if (FUITES.has(h)) return true; } return false; };
 
-test('section radios : données complètes, statuts et sources connus, aucune station sans source officielle', () => {
+test('section radios : données complètes, statuts et sources connus, six stations sourcées par Rockstar', () => {
   const { MED } = G.load(root);
   assert.doesNotThrow(() => G.check(D, MED, root));
   assert.equal(D.videos.length, 4);
   for (const v of D.videos) for (const m of v.morceaux) { assert.ok(['officiel', 'vu', 'comm', 'conf'].includes(m.statut), m.titre); assert.ok(m.sources.length >= 1, m.titre); for (const s of m.sources) assert.ok(D.sources[s], s); }
-  for (const s of Object.values(D.sources)) { assert.match(s.consultedAt, /^2026-10-04$/); assert.match(s.url, /^https:\/\//); }
+  for (const s of Object.values(D.sources)) { assert.match(s.consultedAt, /^2026-10-(04|12)$/); assert.match(s.url, /^https:\/\//); }
   assert.ok(D.zone.sources.some(id => D.sources[id].url.startsWith('https://www.rockstargames.com/')), 'au moins une page Rockstar');
   assert.ok(D.zone.sources.some(id => D.sources[id].statut === 'comm'), 'au moins une source communautaire');
-  /* aucune fiche de station : Rockstar n’en a nommé aucune */
+  /* les stations sont à part (D.stations) : six, chacune avec l’annonce de Rockstar du 8 octobre 2026 parmi ses sources */
   assert.ok(D.fiches.every(x => x.kind !== 'Station de radio'));
-  const all = JSON.stringify(D.fiches) + JSON.stringify(D.videos);
+  assert.deepEqual(D.stations.map(s => s.name), ['Flash FM', 'Cocoteo FM', 'Back Country Radio', 'AfroBank FM', 'The Chamber 106.6', 'Dirty South Classics']);
+  for (const st of D.stations) { assert.ok(st.sources.includes('rs-radios') && st.sources.includes('rs-music'), st.id); assert.equal(D.sources['rs-radios'].statut, 'officiel'); assert.ok(st.hosts.length >= 2, st.id); }
+  const all = JSON.stringify(D.fiches) + JSON.stringify(D.videos) + JSON.stringify(D.stations);
   assert.ok(!fuiteDans(all), 'nom tiré des fuites dans les fiches ou les morceaux');
   /* droits : ni paroles, ni extrait, ni pochette */
   /* ni fichier audio ou vidéo, ni paroles ; l’adresse d’un article de presse peut contenir « lyrics » dans son titre */
@@ -44,7 +49,10 @@ test('radios.html : gabarit des hubs, poste à quatre sources, zone éditoriale 
   const desc = d.querySelector('meta[name="description"]').content; assert.ok(desc.length <= 160, desc.length);
   assert.match(d.title, /GTA 6/);
   const types = ld(d).map(x => x['@type']); for (const t of ['BreadcrumbList', 'CollectionPage', 'FAQPage']) assert.ok(types.includes(t), t);
-  const cp = ld(d).find(x => x['@type'] === 'CollectionPage'); assert.equal(cp.mainEntity.numberOfItems, D.fiches.length);
+  const cp = ld(d).find(x => x['@type'] === 'CollectionPage'); assert.equal(cp.mainEntity.numberOfItems, D.fiches.length + D.stations.length);
+  /* v7.86 : les six stations en tête de page, chacune vers sa fiche */
+  assert.deepEqual([...d.querySelectorAll('#stations .radios-station a')].map(a => a.getAttribute('href')), D.stations.map(s => 'radios/' + s.id + '.html'));
+  for (const pl of d.querySelectorAll('.radios-plaque')) assert.equal(pl.getAttribute('aria-hidden'), 'true');
   assert.ok(d.querySelector('.page-head .lk-stack'), 'pile de visuels officiels');
   const presets = d.querySelectorAll('[data-radios-presets] [data-radios-preset]'), panels = d.querySelectorAll('[data-radios-panneau]');
   assert.equal(presets.length, 4); assert.equal(panels.length, 4);
@@ -68,8 +76,8 @@ test('radios.html : gabarit des hubs, poste à quatre sources, zone éditoriale 
   assert.match(html, /<link rel="stylesheet" href="radios\.css\?v=[a-f0-9]{12}">/); assert.match(html, /<script src="radios\.js\?v=[a-f0-9]{12}"><\/script>/);
 });
 
-test('radios/ : fiche de l’album (sources, liens, gabarit des fiches), aucune autre fiche', () => {
-  assert.deepEqual(fs.readdirSync(path.join(root, 'radios')).filter(f => f.endsWith('.html')).sort(), D.fiches.map(x => x.id + '.html').sort());
+test('radios/ : fiche de l’album et des six stations (sources, liens, gabarit des fiches), aucune autre fiche', () => {
+  assert.deepEqual(fs.readdirSync(path.join(root, 'radios')).filter(f => f.endsWith('.html')).sort(), [...D.fiches, ...D.stations].map(x => x.id + '.html').sort());
   for (const f of FICHES) {
     const d = doc(f);
     assert.equal(d.querySelectorAll('h1').length, 1, f);
@@ -119,7 +127,8 @@ test('Léo : morceau de questions de la section, fiche de l’album, réponses s
   assert.equal(sh.revision, idx.revision);
   assert.ok(sh.knowledge.length >= 3 && sh.knowledge.every(t => /^radios-/.test(t.id) && t.links[0].url === '/radios.html#faq'));
   assert.ok(!idx.knowledge.some(t => /^radios-/.test(t.id)), 'les questions de la section ne pèsent pas sur le noyau');
-  const radio = idx.knowledge.find(t => t.id === 'radio'); assert.equal(radio.links[0].url, '/radios.html');
+  /* v7.86 : depuis l’annonce du 8 octobre 2026, le sujet radio mène d’abord aux six stations (#stations), puis à la page entière */
+  const radio = idx.knowledge.find(t => t.id === 'radio'); assert.equal(radio.links[0].url, '/radios.html#stations'); assert.ok(radio.links.some(l => l.url === '/radios.html'));
   assert.ok(!fuiteDans(radio.text), 'sujet radio : aucun nom tiré des fuites');
   assert.ok(!fuiteDans(read('leo/radios.json')), 'morceau de Léo : aucun nom tiré des fuites');
   /* ni dans les index de Léo des autres langues, ni dans la mémoire de traduction, ni dans les documents de la section */
@@ -129,9 +138,11 @@ test('Léo : morceau de questions de la section, fiche de l’album, réponses s
   assert.deepEqual(idx.suggestions.radios.length, 6);
   const core = require(path.join(root, 'outils/tests/leo-complet.cjs')).fullCore(root);
   assert.ok(core.byKey.get('album:gta-vi-the-album'), 'fiche de l’album');
-  const cases = [['quelles radios dans gta 6 ?', 'radio'], ['qui chante dans le trailer 1 ?', 'musique-trailer'], ['quelle musique dans le trailer 2 ?', 'musique-trailer'], ['les noms de stations qui circulent sont ils confirmes ?', /^radios-faq-/], ['quelles chansons dans l extended look ?', /^radios-faq-/]];
+  const cases = [['quelles radios dans gta 6 ?', 'radio'], ['qui chante dans le trailer 1 ?', 'musique-trailer'], ['quelle musique dans le trailer 2 ?', 'musique-trailer'], ['les noms de stations qui circulent sont ils confirmes ?', /^radio$|^radios-faq-/], ['quelles chansons dans l extended look ?', /^radios-faq-/], ['qui anime les radios de gta 6 ?', /^radio$|^radios-faq-/], ['peut on ecouter la radio a pied ?', /^radios-faq-/]];
   for (const [q, want] of cases) { const a = core.answer(q); assert.equal(a.kind, 'answer', q); if (want instanceof RegExp) assert.match(a.topic || '', want, q + ' → ' + a.topic); else assert.equal(a.topic, want, q); assert.ok((a.links || []).length, q + ' : source'); }
   const al = core.answer('c est quoi gta vi the album ?'); assert.ok(al.entity === 'album:gta-vi-the-album' || /^radios-faq-/.test(al.topic || ''), 'album → ' + (al.entity || al.topic));
+  /* v7.86 : chaque station est une fiche de Léo */
+  for (const st of D.stations) assert.ok(core.byKey.get('station:' + st.id), 'fiche de Léo : ' + st.id);
 });
 
 test('cinq langues : pages générées, Léo dans chaque langue, titres et artistes gardés tels quels', () => {

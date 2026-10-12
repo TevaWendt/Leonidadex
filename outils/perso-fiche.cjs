@@ -65,16 +65,20 @@ function persoData() {
    dessiné par perso-fiche.js ; sans script, le lien mène à la liste filtrée sur ce modèle */
 function persoSection(kind, item) {
   const fam = FAM[kind], data = C.load().families[fam], list = forItem(kind, item), cats = data.categories.filter(c => list.some(p => p.cat === c.id));
-  const catLabel = CATS[kind][item.cat] || item.cat, nSerie = list.filter(p => p.st === 'serie').length, nVi = list.filter(p => p.st === 'officiel' || p.st === 'vu').length, nOpts = list.reduce((n, p) => n + p.opts.length + (p.couleurs ? COULEURS.length : 0), 0);
+  const catLabel = CATS[kind][item.cat] || item.cat, nSerie = list.filter(p => p.st === 'serie').length, nVi = list.filter(p => p.st === 'officiel' || p.st === 'vu').length;
   const titre = kind === 'vehicules' ? 'Personnaliser ce véhicule' : 'Personnaliser cette arme';
   const quoi = kind === 'vehicules' ? 'un véhicule de la catégorie « ' + catLabel + ' »' : 'une arme de la catégorie « ' + catLabel + ' »';
   /* résumé : une phrase par cas (un seul poste à confirmer, ou la liste), chiffres écrits dans des <b> : chaque phrase est une
      entrée de la mémoire de traduction par catégorie */
+  /* v7.86 (référencement) : une phrase fixe et trois chiffres (postes, annoncés ou vus pour GTA VI, repères de la série) au lieu
+     d’une longue phrase propre à chaque catégorie, répétée mot pour mot sur toutes ses fiches ; « chaque chiffre dit son jeu »
+     reste écrit dans le tableau des postes. */
   const lede = !list.length
     ? 'Aucun poste de personnalisation n’est encore documenté pour ' + quoi + ' : la liste s’allongera avec les annonces de Rockstar.'
     : list.length === 1 && list[0].st === 'conf'
       ? 'Un seul poste pour ' + quoi + ', encore à confirmer : Rockstar n’a rien publié sur sa personnalisation, rien n’est inventé.'
-      : list.length + ' postes de personnalisation s’appliquent à ' + quoi + ' : ' + (nVi ? nVi + ' annoncé' + (nVi > 1 ? 's' : '') + ' ou vu' + (nVi > 1 ? 's' : '') + ' pour GTA VI, ' : '') + nSerie + ' repère' + (nSerie > 1 ? 's' : '') + ' de la série (GTA V, GTA Online), ' + nOpts + ' options en sous-listes. Rockstar n’a publié ni prix ni niveau requis pour GTA VI : chaque chiffre dit de quel jeu il vient.';
+      : (kind === 'vehicules' ? 'Ce que tu pourras modifier sur ce modèle, atelier par atelier : ce que Rockstar a montré pour GTA VI et les repères de GTA V et de GTA Online.' : 'Ce que tu pourras modifier sur cette arme, atelier par atelier : ce que Rockstar a montré pour GTA VI et les repères de GTA V et de GTA Online.');
+  const stats = list.length > 1 || (list.length === 1 && list[0].st !== 'conf') ? '<dl class="pf-stats"><div><dt>Postes</dt><dd>' + list.length + '</dd></div><div><dt>Annoncés ou vus pour GTA VI</dt><dd>' + nVi + '</dd></div><div><dt>Repères de la série</dt><dd>' + nSerie + '</dd></div></dl>' : '';
   /* la puce d'atelier : un bouton (le groupe qu'il ouvre est dessiné par perso-fiche.js : pas d'ancre à vérifier) avec le
      pictogramme et le nom ; le compteur est un bloc à part (<div>) : le nom reste une seule entrée de la mémoire, quel que soit le nombre */
   const chips = cats.map(c => { const n = list.filter(p => p.cat === c.id).length; return '<li class="pf-chip-li" style="--ch:' + c.teinte + '"><button type="button" class="pf-chip" data-pf-chip="' + esc(c.id) + '">' + S.icon(c.icon, 'pf-chip-ico') + '<span>' + esc(c.label) + '</span></button><div class="pf-chip-n" aria-hidden="true">' + n + '</div></li>'; }).join('');
@@ -83,7 +87,7 @@ function persoSection(kind, item) {
     + '  <h2 class="sec-h">' + titre + '</h2>\n'
     /* le résumé et les puces ne portent pas d'apparition propre (la section entre d'un bloc) : le tableau se dessine en dessous
        après coup, et une apparition retardée pouvait rester invisible à l'audit */
-    + '  <div class="pf-head"><p class="fiche-txt">' + esc(lede) + '</p>\n'
+    + '  <div class="pf-head"><p class="fiche-txt">' + esc(lede) + '</p>' + stats + '\n'
     /* v7.81 : l'Atelier 3D ouvre ce modèle, prêt à peindre et à équiper */
     + '  <p class="pf-atelier"><a class="pf-atelier-link" href="../atelier-3d.html?' + (kind === 'vehicules' ? 'v=' : 'a=') + encodeURIComponent(item.id) + '">' + (kind === 'vehicules' ? 'Essayer ce véhicule dans l’Atelier 3D' : 'Essayer cette arme dans l’Atelier 3D') + '</a></p>\n'
     + (cats.length ? '  <ul class="pf-cats" aria-label="Ateliers">' + chips + '</ul>\n' : '') + '</div>\n'

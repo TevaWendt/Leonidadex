@@ -52,6 +52,19 @@ function check(D, MED, root = ROOT) {
     for (const id of x.businesses || []) if (!fs.existsSync(path.join(root, 'entreprises', id + '.html'))) err.push('entreprise absente : ' + id);
   }
   for (const p of D.hub.pile) if (!MED[p.media]) err.push('visuel inconnu dans la pile : ' + p.media);
+  /* v7.86 : les stations présentées par Rockstar (8 octobre 2026) */
+  const ids = new Set(D.fiches.map(x => x.id));
+  for (const s of D.stations || []) {
+    if (!/^[a-z0-9-]+$/.test(s.id) || ids.has(s.id) || !s.name || !s.genre || !s.description || !s.texte || !s.contexte || !s.pratique) err.push('station mal formée : ' + (s.id || '?'));
+    ids.add(s.id);
+    if (!/^#[0-9A-Fa-f]{6}$/.test(s.ton || '')) err.push('station ' + s.id + ' : teinte #rrggbb attendue');
+    if (!(s.hosts || []).length || s.hosts.some(h => !h.nom || !h.antenne)) err.push('station ' + s.id + ' : animateurs incomplets');
+    if (!/^https:\/\/www\.rockstargames\.com\//.test(s.lien || '')) err.push('station ' + s.id + ' : lien officiel attendu');
+    if (s.description.length > 160) err.push('description de ' + s.id + ' trop longue (' + s.description.length + ' signes)');
+    if (!(s.sources || []).length) err.push('station sans source : ' + s.id);
+    (s.sources || []).forEach(src);
+    if (!(s.facts || []).length) err.push('station ' + s.id + ' : « À retenir » vide');
+  }
   const Z = D.zone;
   for (const k of ['nav', 'rockstar', 'communaute', 'confirmer', 'toi', 'faq', 'sources']) if (!Z[k]) err.push('zone : bloc manquant ' + k);
   Z.sources.forEach(src);
@@ -60,7 +73,7 @@ function check(D, MED, root = ROOT) {
   if (Z.faq.length < 4 || Z.faq.length > 6) err.push('la FAQ compte 4 à 6 questions');
   for (const f of Z.faq) if (!f.q || !f.a || f.a.length > 900 || !(f.k || []).length) err.push('FAQ mal formée : ' + f.q);
   for (const a of Z.toi.actions) if (!a.href) err.push('action sans lien : ' + a.t);
-  for (const s of new Set([...D.videos.flatMap(v => v.morceaux.flatMap(m => m.sources)), ...D.fiches.flatMap(x => x.sources || [])])) if (!Z.sources.includes(s)) err.push('source citée mais absente de la liste de la page : ' + s);
+  for (const s of new Set([...D.videos.flatMap(v => v.morceaux.flatMap(m => m.sources)), ...D.fiches.flatMap(x => x.sources || []), ...(D.stations || []).flatMap(x => x.sources || [])])) if (!Z.sources.includes(s)) err.push('source citée mais absente de la liste de la page : ' + s);
   if (D.hub.desc.length > 160) err.push('description du hub trop longue (' + D.hub.desc.length + ' signes)');
   for (const x of D.fiches) if (x.description.length > 160) err.push('description de ' + x.id + ' trop longue (' + x.description.length + ' signes)');
   if (err.length) throw new Error('Section radios, données à corriger (' + DATA_FILE + ') :\n- ' + err.join('\n- '));
@@ -226,6 +239,53 @@ function zone(D, STATUTS) {
   return out.join('\n');
 }
 
+/* ---------- v7.86 : les stations présentées par Rockstar ---------- */
+/* plaque décorative d’une station (dessin du site aux couleurs de la station, aucun logo de Rockstar reproduit) */
+const plaque = (s, big) => '<span class="radios-plaque' + (big ? ' radios-plaque--big' : '') + '" style="--st:' + esc(s.ton) + '" aria-hidden="true">'
+  + '<span class="radios-plaque-scale">' + '<i></i>'.repeat(25) + '</span>'
+  + '<span class="radios-plaque-name" translate="no">' + esc(s.name) + '</span>'
+  + '<span class="radios-plaque-eq">' + '<i></i>'.repeat(11) + '</span></span>';
+const hostNames = s => s.hosts.filter(h => h.role !== 'reporter').map(h => h.nom).join(' · ');
+function stationsSec(D) {
+  const L = D.stations || []; if (!L.length) return '';
+  return '<section class="radios-stations-sec" id="stations" aria-labelledby="stations-t"><div class="shell">'
+    + '<div class="radios-album-head reveal"><p class="ed-kicker">' + esc(D.stationsKicker) + '</p><h2 class="sec-h" id="stations-t">' + esc(D.stationsTitre) + '</h2><p class="radios-lede">' + esc(D.stationsLede) + '</p></div>'
+    + '<ul class="radios-stations" role="list">' + L.map((s, i) => '<li class="radios-station rise" style="--st:' + esc(s.ton) + ';--i:' + i + '"><a class="radios-station-a" href="radios/' + esc(s.id) + '.html">' + plaque(s)
+      + '<span class="radios-station-body"><span class="radios-station-genre">' + esc(s.genre) + '</span><h3 translate="no">' + esc(s.name) + '</h3><span class="radios-station-tag">' + esc(s.tagline) + '</span>'
+      + '<span class="radios-station-hosts" translate="no">' + esc(hostNames(s)) + '</span><span class="veh-go">Voir la fiche</span></span></a></li>').join('') + '</ul></div></section>';
+}
+function stationPage(ctx, s) {
+  const { D, SUBC } = ctx, H = D.hub, p = '../';
+  const others = D.stations.filter(x => x.id !== s.id);
+  const hosts = '<dl class="radios-hosts">' + s.hosts.map(h => '<div class="radios-host"><dt translate="no">' + esc(h.nom) + '</dt><dd>' + (h.role === 'reporter' ? '<span>' + esc('Reporter à l’antenne') + '</span> ' : '<span>' + esc('Nom à l’antenne') + '</span> ') + '<b translate="no">' + esc(h.antenne) + '</b></dd></div>').join('') + '</dl>';
+  const facts = '<div class="lore-facts"><h2>À retenir</h2><ul>' + s.facts.map(f => '<li class="rise">' + esc(f) + '</li>').join('') + '</ul></div>';
+  const body = `<section class="page-head shell">
+  <nav class="crumbs" aria-label="Fil d’Ariane"><a href="../index.html">Accueil</a> / <a href="../${HUB}.html">${esc(H.label)}</a> / <span translate="no">${esc(s.name)}</span></nav>
+  <div class="lore-hero lore-enter">
+    <div class="lore-copy">
+      <p class="fiche-cat">${esc(s.kind)} · ${esc(s.genre)}</p>
+      <h1 translate="no">${esc(s.name)}</h1>
+      <p class="lore-tag">${esc(s.tagline)}</p>
+      <p class="lede">${esc(s.description)}</p>
+      <div class="lore-links"><a href="${esc(s.lien)}" target="_blank" rel="noopener nofollow">Écouter l’aperçu officiel</a><a href="../${HUB}.html#stations">Les six stations</a><a href="../${HUB}.html#poste">Le poste de Leonida</a></div>
+    </div>
+    <figure class="lore-fig radios-fig radios-fig--station">${plaque(s, true)}<figcaption>${esc('Illustration Leonidakit aux couleurs de la station ; l’aperçu officiel est sur le site de Rockstar.')}</figcaption></figure>
+  </div>
+</section>
+<section class="shell lore-body">
+  <div class="lore-texte reveal"><h2>Présentation</h2><p class="rise">${esc(s.texte)}</p></div>
+  <div class="lore-texte reveal"><h2>À l’antenne</h2>${hosts}</div>
+  ${s.serie ? `<div class="lore-texte reveal"><h2>Repère de la série</h2><p class="rise">${S.pip('serie', true)} ${esc(s.serie)}</p></div>` : ''}
+  <div class="lore-texte reveal"><h2>Ce que l’annonce dit, et ne dit pas</h2><p class="rise">${esc(s.contexte)}</p></div>
+  <div class="lore-texte reveal"><h2>Ce qu’on sait pour le jeu</h2><p class="rise">${esc(s.pratique)}</p></div>
+  ${facts}
+  <div class="lore-related"><h2>Les autres stations</h2><div class="lore-mini">${others.map(o => '<a class="lore-minicard radios-minicard" href="' + esc(o.id) + '.html" style="--st:' + esc(o.ton) + '"><i class="radios-minidot" aria-hidden="true"></i><span><b translate="no">' + esc(o.name) + '</b><i>' + esc(o.genre) + '</i></span></a>').join('')}</div></div>
+</section>
+<section class="shell radios-fiche-src reveal" aria-labelledby="sources-t"><h2 class="sec-h" id="sources-t">Sources</h2>${sourceList(D, s.sources)}<p class="radios-note">Toutes les sources de la section, avec les statuts, sont <a href="../radios.html#sources">en bas de la page Radios et musique</a>.</p></section>`;
+  const ld = '<script type="application/ld+json">' + JSON.stringify({ '@context': 'https://schema.org', '@type': 'Thing', name: s.name, description: s.description, url: SITE + '/' + HUB + '/' + s.id + '.html', isPartOf: { '@type': 'VideoGame', name: 'Grand Theft Auto VI' } }) + '</script>';
+  return page(SUBC, { player: '', p, title: s.name + ' : la radio ' + s.seo + ' de GTA 6 | Leonidakit', desc: s.description, canonical: '/' + HUB + '/' + s.id + '.html', ogImg: null, body, crumbs: [['Accueil', '/'], [H.label, '/' + HUB + '.html'], [s.name, '/' + HUB + '/' + s.id + '.html']], ld, cls: 'radios-page--station' });
+}
+
 /* ---------- pages ---------- */
 function hubPage(ctx) {
   const { D, MED, STATUTS, ROOTC } = ctx, H = D.hub;
@@ -247,12 +307,14 @@ function hubPage(ctx) {
   <p class="lede">${esc(H.lede)}</p>
   <p class="d-intro-note">${esc(H.note)} <a href="tuto.html#sources">Comprendre les statuts</a>.</p>
 </div>${pile}</div></section>
+${stationsSec(D)}
 ${poste(D)}
 ${albumSec}
 ${zone(D, STATUTS)}`;
-  const collection = '<script type="application/ld+json">' + JSON.stringify({ '@context': 'https://schema.org', '@type': 'CollectionPage', name: H.title, description: metaDesc(H.desc), url: SITE + '/' + HUB + '.html', inLanguage: 'fr', isPartOf: { '@type': 'WebSite', name: 'Leonidakit', url: SITE + '/' }, mainEntity: { '@type': 'ItemList', numberOfItems: D.fiches.length, itemListElement: D.fiches.map((x, i) => ({ '@type': 'ListItem', position: i + 1, name: x.name, url: SITE + '/' + HUB + '/' + x.id + '.html' })) } }) + '</script>';
+  const listed = [...(D.stations || []), ...D.fiches];
+  const collection = '<script type="application/ld+json">' + JSON.stringify({ '@context': 'https://schema.org', '@type': 'CollectionPage', name: H.title, description: metaDesc(H.desc), url: SITE + '/' + HUB + '.html', inLanguage: 'fr', isPartOf: { '@type': 'WebSite', name: 'Leonidakit', url: SITE + '/' }, mainEntity: { '@type': 'ItemList', numberOfItems: listed.length, itemListElement: listed.map((x, i) => ({ '@type': 'ListItem', position: i + 1, name: x.name, url: SITE + '/' + HUB + '/' + x.id + '.html' })) } }) + '</script>';
   const og = imgOf(MED, H.pile[0].media);
-  return page(ROOTC, { player: playerBox(D.poste, ''), p: '', title: H.title + ' | Leonidakit', desc: H.desc, canonical: '/' + HUB + '.html', ogImg: og.b.src, body, crumbs: [['Accueil', '/'], [H.label, '/' + HUB + '.html']], ld: collection });
+  return page(ROOTC, { player: playerBox(D.poste, ''), p: '', title: (H.seoTitle || H.title) + ' | Leonidakit', desc: H.desc, canonical: '/' + HUB + '.html', ogImg: og.b.src, body, crumbs: [['Accueil', '/'], [H.label, '/' + HUB + '.html']], ld: collection });
 }
 
 function fichePage(ctx, x) {
@@ -303,14 +365,18 @@ function indexEntries(D) {
   const n = s => String(s).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
   const tracks = D.videos.flatMap(v => v.morceaux.map(m => m.titre + ' ' + m.artiste)).join(' ');
   return [{ l: D.hub.title, k: D.hub.label, u: '/' + HUB + '.html', s: n(D.hub.title + ' ' + D.hub.label + ' radio radios stations musique bande son chansons trailer extended look album leonida gta vi ' + tracks), w: 1 },
-    ...D.fiches.map(x => ({ l: x.name, k: x.kind, u: '/' + HUB + '/' + x.id + '.html', s: n(x.name + ' ' + x.kind + ' ' + x.description + ' ' + (x.tagline || '') + ' ' + (x.aliases || []).join(' ')), w: 1 }))];
+    ...D.fiches.map(x => ({ l: x.name, k: x.kind, u: '/' + HUB + '/' + x.id + '.html', s: n(x.name + ' ' + x.kind + ' ' + x.description + ' ' + (x.tagline || '') + ' ' + (x.aliases || []).join(' ')), w: 1 })),
+    /* v7.86 : les stations (nom, style, animateurs et leurs noms à l’antenne) */
+    ...(D.stations || []).map(x => ({ l: x.name, k: x.kind, u: '/' + HUB + '/' + x.id + '.html', s: n(x.name + ' ' + x.kind + ' ' + x.genre + ' ' + x.description + ' ' + x.hosts.map(h => h.nom + ' ' + h.antenne).join(' ') + ' ' + (x.aliases || []).join(' ')), w: 1 }))];
 }
 
 /* ---------- Léo : fiches (morceau « monde ») et questions de la section (morceau leo/radios.json) ---------- */
 function leo(root = ROOT) {
   const { D, MED } = load(root);
   const image = ids => (ids || []).flatMap(id => (MED[id] && MED[id].variants) || []).map(v => v.src).find(src => fs.existsSync(path.join(root, src.slice(1)))) || null;
-  const fiches = D.fiches.map(x => ({ key: 'album:' + x.id, id: x.id, kind: 'album', shard: 'monde', name: x.name, aliases: x.aliases || [], category: x.kind, url: '/' + HUB + '/' + x.id + '.html', image: image(x.media), calcId: null, price: null, proof: 'Album annoncé par Rockstar ; sources datées sur la fiche.', source: x.source || null, verifiedAt: D.sources[(x.sources || [])[0]] ? D.sources[x.sources[0]].consultedAt : null, description: x.description, tagline: x.tagline || null }));
+  const fiches = D.fiches.map(x => ({ key: 'album:' + x.id, id: x.id, kind: 'album', shard: 'monde', name: x.name, aliases: x.aliases || [], category: x.kind, url: '/' + HUB + '/' + x.id + '.html', image: image(x.media), calcId: null, price: null, proof: 'Album annoncé par Rockstar ; sources datées sur la fiche.', source: x.source || null, verifiedAt: D.sources[(x.sources || [])[0]] ? D.sources[x.sources[0]].consultedAt : null, description: x.description, tagline: x.tagline || null }))
+    /* v7.86 : les six stations présentées par Rockstar le 8 octobre 2026 */
+    .concat((D.stations || []).map(x => ({ key: 'station:' + x.id, id: x.id, kind: 'station', shard: 'monde', name: x.name, aliases: x.hosts.map(h => h.nom), category: x.kind + ' · ' + x.genre, url: '/' + HUB + '/' + x.id + '.html', image: null, calcId: null, price: null, proof: 'Station présentée par Rockstar le 8 octobre 2026 ; sources datées sur la fiche.', source: x.lien, verifiedAt: D.sources[x.sources[0]].consultedAt, description: x.description, tagline: x.tagline })));
   const label = D.hub.label, verifiedAt = Object.values(D.sources).map(s => s.consultedAt).sort().pop();
   const topics = D.zone.faq.filter(x => !x.leo).map((x, i) => ({ id: 'radios-faq-' + (i + 1), q: x.q, f: [x.q, ...(x.f || [])], k: x.k, text: x.a, status: 'Réponse de la FAQ « ' + label + ' », sources en bas de la page', links: [{ label: 'La FAQ et ses sources', url: '/' + HUB + '.html#faq' }], verifiedAt, min: Number.isInteger(x.min) ? x.min : 2 }));
   return { fiches, topics, suggestions: { radios: D.leo.suggestions }, inputs: [DATA_FILE] };
@@ -324,12 +390,13 @@ function generate(root = ROOT) {
   const ctx = { D, MED, STATUTS, ED, ROOTC: chromeOf(read('a-propos.html')), SUBC: chromeOf(read('vehicules/karin-sultan.html')) };
   fs.writeFileSync(path.join(root, HUB + '.html'), hubPage(ctx));
   fs.mkdirSync(path.join(root, HUB), { recursive: true });
-  const keep = new Set(D.fiches.map(x => x.id + '.html'));
+  const keep = new Set([...D.fiches, ...(D.stations || [])].map(x => x.id + '.html'));
   for (const f of fs.readdirSync(path.join(root, HUB))) if (f.endsWith('.html') && !keep.has(f)) fs.unlinkSync(path.join(root, HUB, f));
   for (const x of D.fiches) fs.writeFileSync(path.join(root, HUB, x.id + '.html'), fichePage(ctx, x));
+  for (const s of D.stations || []) fs.writeFileSync(path.join(root, HUB, s.id + '.html'), stationPage(ctx, s));
   fs.writeFileSync(path.join(root, 'outils/radios-index.json'), JSON.stringify(indexEntries(D)));
   const n = D.videos.reduce((a, v) => a + v.morceaux.length, 0);
-  console.log('radios : ' + D.videos.length + ' sources de musique, ' + n + ' morceaux, ' + D.fiches.length + ' fiche(s), ' + D.zone.faq.length + ' questions, ' + D.zone.sources.length + ' sources');
+  console.log('radios : ' + (D.stations || []).length + ' stations, ' + D.videos.length + ' sources de musique, ' + n + ' morceaux, ' + D.fiches.length + ' fiche(s), ' + D.zone.faq.length + ' questions, ' + D.zone.sources.length + ' sources');
 }
 
 module.exports = { generate, leo, load, check, DATA_FILE };

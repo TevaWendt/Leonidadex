@@ -270,6 +270,11 @@
           "texte": "Le site publie ce que Rockstar a montré, avec les repères de la série pour l’ordre de grandeur. Les prix de GTA VI restent à confirmer."
         },
         {
+          "icon": "envoi",
+          "titre": "Le {preloadDate} : le préchargement",
+          "texte": "Le préchargement commence, une semaine avant la sortie, et la version en boîte arrive en magasin : un code de téléchargement, sans disque, d’après l’assistance de Rockstar."
+        },
+        {
           "icon": "horloge",
           "titre": "Le {releaseDate} : la sortie",
           "texte": "Date annoncée par Rockstar, relue le {releaseChecked}. Si elle change, cette page change avec elle."
@@ -298,7 +303,7 @@
           "icon": "argent",
           "titre": "Gratuit, sans compte",
           "p": [
-            "Rien à payer, rien à créer : l’IA de Léo et du calculateur est gratuite aussi (15 questions toutes les 12 heures). Des emplacements publicitaires sont réservés pour aider à payer l’hébergement et l’IA : vides aujourd’hui, décrits dans les Mentions avant d’être remplis. Aucune mesure d’audience."
+            "Rien à payer, rien à créer : l’IA de Léo et du calculateur est gratuite aussi (15 questions toutes les 12 heures). Des emplacements publicitaires sont réservés pour aider à payer l’hébergement et l’IA : vides aujourd’hui, décrits dans les Mentions avant d’être remplis. Une mesure d’audience sans cookie compte les pages lues, sans rien garder qui t’identifie."
           ]
         },
         {
@@ -380,5 +385,229 @@
         "a": "Par la page Contact : la page, le problème, la source. La correction entre dans les données du site, la page est régénérée avec sa source datée."
       }
     ]
+  },
+  "verification": {
+    "title": "Ce qui est confirmé sur GTA 6, et comment on le vérifie",
+    "h1": "Ce qui est confirmé,<br>et comment on le vérifie.",
+    "description": "Ce que Rockstar a vraiment confirmé sur GTA 6 au 12 octobre 2026, ce qui ne l’est pas encore, et comment chaque fiche de Leonidakit le signale.",
+    "checkedAt": "2026-10-12",
+    "hero": {
+      "eyebrow": "LA MÉTHODE",
+      "lede": "GTA VI sort le 19 novembre 2026. D’ici là, une règle : ce que Rockstar a publié est écrit comme tel, le reste attend le jeu. Voici ce qui est officiel aujourd’hui, ce qui ne l’est pas encore, et comment les fiches le montrent.",
+      "actions": [
+        {
+          "label": "Signaler une erreur",
+          "href": "contact.html#ecrire",
+          "primary": true
+        },
+        {
+          "label": "Les cinq statuts du site",
+          "href": "a-propos.html#comment-on-verifie"
+        }
+      ]
+    },
+    "nav": [
+      {
+        "href": "#confirme",
+        "label": "Confirmé",
+        "fam": "rockstar"
+      },
+      {
+        "href": "#pas-encore",
+        "label": "Pas encore annoncé",
+        "fam": "conf"
+      },
+      {
+        "href": "#a-venir",
+        "label": "Sur les fiches",
+        "fam": "carte"
+      },
+      {
+        "href": "#modeles",
+        "label": "Modèles réels",
+        "fam": "serie"
+      },
+      {
+        "href": "#jamais",
+        "label": "Jamais",
+        "fam": "coiffures"
+      },
+      {
+        "href": "#signaler",
+        "label": "Signaler",
+        "fam": "consommables"
+      }
+    ],
+    "confirme": {
+      "kicker": "Officiel aujourd’hui",
+      "title": "Ce que Rockstar a confirmé",
+      "lede": "Les annonces officielles, relues le 12 octobre 2026. Chaque point renvoie à la page du site qui le détaille, et à sa source.",
+      "items": [
+        {
+          "t": "Date et consoles",
+          "d": "GTA VI sort le jeudi 19 novembre 2026 sur PlayStation 5 et Xbox Series X|S. Rockstar a annoncé cette date le 6 novembre 2025, au deuxième report du jeu.",
+          "href": "index.html",
+          "label": "Le compte à rebours",
+          "src": "https://www.rockstargames.com/newswire/article/ak3ak31a49a221/grand-theft-auto-vi-is-now-set-to-launch-november-19-2026"
+        },
+        {
+          "t": "Précommandes et éditions",
+          "d": "Les précommandes sont ouvertes depuis le 25 juin 2026. Deux éditions : Standard et Ultimate ; l’Ultimate ajoute seize contenus, dont la Grotti Cheetah ’95, les revolvers Hawk & Little Morgan et la Classic Car Collection.",
+          "href": "achats.html",
+          "label": "Tout ce qui s’achète",
+          "src": "https://support.rockstargames.com/articles/4QfG4FmZCf5W1gS8jy4UVT/grand-theft-auto-vi-platform-editions-and-versions"
+        },
+        {
+          "t": "Bonus de précommande",
+          "d": "Avant le 20 novembre 2026, une précommande ou un achat numérique donne aussi le pack Vintage Vice City (la Vapid Stanier ’55 et son garage, des tenues et coiffures, un motif d’arme) et un mois de GTA+ ; la précommande en boîte donne le pack.",
+          "href": "vehicules/vapid-stanier.html",
+          "label": "La Stanier ’55",
+          "src": "https://support.rockstargames.com/articles/4QfG4FmZCf5W1gS8jy4UVT/grand-theft-auto-vi-platform-editions-and-versions"
+        },
+        {
+          "t": "La version en boîte",
+          "d": "La boîte contient un code de téléchargement, pas de disque. Elle arrive en magasin dès le 12 novembre 2026, jour où commence le préchargement. L’Édition Ultimate n’existe pas en boîte.",
+          "href": "achats.html",
+          "label": "Tout ce qui s’achète",
+          "src": "https://support.rockstargames.com/articles/4QfG4FmZCf5W1gS8jy4UVT/grand-theft-auto-vi-platform-editions-and-versions"
+        },
+        {
+          "t": "Les personnages",
+          "d": "Lucia Caminos et Jason Duval sont les deux héros. Rockstar a aussi présenté Cal Hampton, Boobie Ike, Dre’Quan Priest, Real Dimez, Raul Bautista et Brian Heder.",
+          "href": "personnages.html",
+          "label": "Les personnages",
+          "src": "https://www.rockstargames.com/VI"
+        },
+        {
+          "t": "Leonida",
+          "d": "L’histoire se passe dans l’État de Leonida, inspiré de la Floride : Vice City, les Leonida Keys, Grassrivers, Port Gellhorn, Ambrosia et le Mount Kalaga National Park.",
+          "href": "lieux.html",
+          "label": "Les régions",
+          "src": "https://www.rockstargames.com/VI"
+        },
+        {
+          "t": "Les vidéos",
+          "d": "Trois vidéos officielles : le Trailer 1 (4 décembre 2023), le Trailer 2 (6 mai 2025) et An Extended Look (27 août 2026), entièrement capturé en jeu sur PlayStation 5.",
+          "href": "medias.html",
+          "label": "Visuels officiels et crédits",
+          "src": "https://www.rockstargames.com/videos"
+        },
+        {
+          "t": "La musique",
+          "d": "Six stations de radio présentées le 8 octobre 2026, avec leurs animateurs, des podcasts à la demande et une radio qu’on écoute aussi à pied. L’album officiel, 34 titres originaux, sort le 19 novembre 2026.",
+          "href": "radios.html",
+          "label": "Radios et musique",
+          "src": "https://www.rockstargames.com/newswire/article/o3982oa93a23k4/the-music-of-grand-theft-auto-vi-in-game-radio-stations"
+        }
+      ],
+      "statsLede": "Dans la base du site, aujourd’hui :",
+      "stats": [
+        {
+          "stat": "veh-officiel",
+          "label": "véhicules nommés par Rockstar"
+        },
+        {
+          "stat": "veh-vu",
+          "label": "véhicules vus sans nom officiel"
+        },
+        {
+          "stat": "arm-officiel",
+          "label": "armes nommées par Rockstar"
+        },
+        {
+          "stat": "arm-vu",
+          "label": "armes vues sans nom officiel"
+        }
+      ]
+    },
+    "pasEncore": {
+      "kicker": "Pas encore annoncé",
+      "title": "Ce que Rockstar n’a pas encore dit",
+      "lede": "Les questions qu’on nous pose le plus, sans réponse officielle au 12 octobre 2026.",
+      "items": [
+        {
+          "t": "Une version PC",
+          "d": "Aucune annonce, aucune date. Pour GTA V, la version PC était arrivée un an et demi après les consoles."
+        },
+        {
+          "t": "L’heure de déblocage",
+          "d": "Rockstar ne l’a pas annoncée. Le PlayStation Store indique minuit, heure locale, dans la nuit du 18 au 19 novembre : vérifie l’heure sur ta boutique juste avant la sortie."
+        },
+        {
+          "t": "Le poids du jeu",
+          "d": "Non communiqué. Il sera connu au plus tard à l’ouverture du préchargement, le 12 novembre 2026."
+        },
+        {
+          "t": "GTA Online sur GTA VI",
+          "d": "Rien d’annoncé, pas même une date : le jeu est présenté comme une expérience solo."
+        },
+        {
+          "t": "Les prix en jeu",
+          "d": "Aucun prix de véhicule, d’arme, de logement ou de vêtement n’est publié pour GTA VI. Ceux du site sont des repères de GTA V et de GTA Online, toujours signalés comme tels."
+        },
+        {
+          "t": "La surface de la carte",
+          "d": "Aucun chiffre. Fin août 2026, Rockstar a dit à la presse que la carte fait environ deux fois celle de GTA V et trois fois la zone jouable de Red Dead Redemption 2."
+        },
+        {
+          "t": "La durée de vie",
+          "d": "Aucune durée officielle. Rob Nelson, de Rockstar North, dit avoir fini sa partie en 80 heures environ, histoire et une partie des objectifs facultatifs compris."
+        },
+        {
+          "t": "Les codes de triche",
+          "d": "Rien d’annoncé : les listes « GTA 6 » qui circulent ne sont pas officielles."
+        }
+      ]
+    },
+    "aVenir": {
+      "kicker": "Sur les fiches",
+      "title": "Ce que les fiches attendent du jeu",
+      "lede": "Chaque fiche de véhicule ou d’arme dit ce qui est déjà connu, puis ce qui reste à relever. Voici pourquoi ces cases attendent le 19 novembre, une fois pour toutes plutôt que sur chaque fiche.",
+      "rubs": [
+        {
+          "t": "L’obtenir",
+          "d": "Prix, achat, façon de l’obtenir et emplacement. Aucun n’est publié. Les concessions, armureries et ateliers de notre carte sont des lieux repérés dans les médias officiels, pas des points de vente confirmés pour un modèle."
+        },
+        {
+          "t": "Performances et tir",
+          "d": "Vitesse, accélération, freinage, tenue de route ; pour les armes, portée, cadence, précision, rechargement et chargeur. Aucune mesure n’existe avant le jeu, et une portée « estimée » sur une fiche d’arme vient de l’arme réelle qui l’inspire."
+        },
+        {
+          "t": "Capacités",
+          "d": "Places et chargement attendent le jeu. Quand une fiche indique un terrain (route, eau, air), il vient de la catégorie du véhicule, pas d’une fiche technique."
+        },
+        {
+          "t": "Personnalisations",
+          "d": "Les postes de chaque fiche viennent du catalogue des personnalisations : ce que Rockstar a montré pour GTA VI, et des repères de GTA V et de GTA Online signalés comme tels."
+        }
+      ],
+      "coutsTitre": "Les coûts d’usage, poste par poste",
+      "coutsLede": "Le carburant existe dans le jeu : on fait le plein dans les stations-service de l’Extended Look. Mais aucun prix ni aucune consommation n’est publié, et rien n’est annoncé pour les autres postes. Le calculateur peut les simuler si tu choisis une hypothèse.",
+      "fin": "Dès qu’une valeur est publiée ou relevée en jeu, elle s’affiche sur la fiche avec sa source et sa date."
+    },
+    "modeles": {
+      "kicker": "Rapprochements",
+      "title": "Les modèles réels et les noms provisoires",
+      "lede": "Ce qu’on lit sur une fiche quand Rockstar n’a rien dit.",
+      "p": [
+        "Rockstar ne reproduit aucun modèle réel sous licence : ses véhicules et ses armes s’en inspirent, et le studio ne dit pas lesquels. Quand une fiche cite un modèle réel, c’est une observation du site.",
+        "Les désignations françaises et les inspirations réelles sont des rapprochements établis à partir des visuels officiels, pas des informations communiquées par Rockstar.",
+        "Un modèle vu dans un média officiel, véhicule ou arme, garde un nom provisoire, celui de la série ou de son modèle réel, jusqu’à ce que Rockstar le nomme."
+      ]
+    },
+    "jamais": {
+      "kicker": "Ce qu’on refuse",
+      "title": "Ce qu’on n’utilise jamais",
+      "lede": "Ce que le site s’interdit, sans exception."
+    },
+    "signaler": {
+      "kicker": "À toi",
+      "title": "Une erreur, ou une info du jeu ?",
+      "lede": "Signale-la avec la page et une source : elle est corrigée dès qu’une source le permet.",
+      "p": [
+        "À partir du 19 novembre 2026, les relevés faits en jeu sont les bienvenus : un prix, un emplacement, une statistique, avec une capture ou une vidéo. Ils rejoignent les fiches une fois vérifiés, avec leur date."
+      ],
+      "label": "Écrire à Leonidakit"
+    }
   }
 }

@@ -33,7 +33,7 @@
   let state = (() => { try { const s = JSON.parse(session.get(K.etat) || 'null'); return s && Date.now() - (s.at || 0) < 5 * 60000 ? s : {}; } catch (e) { return {}; } })();
   const listeners = new Set();
   function emit() { state.at = Date.now(); if (acted) { const v = JSON.stringify(state); put(() => sessionStorage.setItem(KEY_ETAT, v)); } listeners.forEach(fn => { try { fn(api.state()); } catch (e) { /* rien */ } }); paint(); }
-  function merge(x) { Object.keys(x || {}).forEach(k => { if (x[k] !== undefined) state[k] = x[k]; }); if (state.reset && state.reset < Date.now()) { state.restant = state.gratuit; state.reset = null; } emit(); }
+  function merge(x) { Object.keys(x || {}).forEach(k => { if (x[k] !== undefined) state[k] = x[k]; }); if (state.reset && state.reset < Date.now()) { state.restant = state.gratuit; state.reset = null; } if (state.plafond && state.plafond < Date.now()) state.plafond = null; emit(); }
   const exhausted = () => state.restant === 0;
   const total = () => state.gratuit || 15, hours = () => state.heures || 12;
 
@@ -51,7 +51,7 @@
     refreshing = post('/api/ia', { mode: 'etat', appareil: existing() || undefined }).then(({ status, j }) => {
       refreshing = null;
       if (status === 503 || status === 404 || status === 405) { merge({ on: false }); return api.state(); }
-      if (j && j.ok) merge({ on: true, gratuit: j.gratuit, heures: j.heures, restant: j.restant, reset: j.reset, modele: j.modele });
+      if (j && j.ok) merge({ on: true, gratuit: j.gratuit, heures: j.heures, restant: j.restant, reset: j.reset, modele: j.modele, plafond: j.plafond || null });
       return api.state();
     });
     return refreshing;
@@ -59,6 +59,8 @@
   /* réponse d'une question : mise à jour du compteur */
   function learn(status, j) {
     if (status === 503 || status === 404 || status === 405) return merge({ on: false });
+    /* v7.86 : budget du jour de tout le site atteint (code « plafond ») : mode local jusqu'à minuit ; les questions du visiteur restent */
+    if (status === 402 && j && j.code === 'plafond') return merge({ on: true, gratuit: j.gratuit, heures: j.heures, restant: j.restant, reset: j.reset, plafond: j.plafond || null });
     if (status === 402 && j) return merge({ on: true, gratuit: j.gratuit, heures: j.heures, restant: 0, reset: j.reset });
     if (j && j.acces) merge({ on: true, gratuit: j.acces.gratuit, heures: j.acces.heures, restant: j.acces.restant, reset: j.acces.reset });
   }
@@ -76,7 +78,8 @@
     one: 'IA : {n} question gratuite sur {total} · de nouveau {total} dans {timer}.',
     full: 'IA : {total} questions gratuites toutes les {h} h.',
     quota: 'Questions IA gratuites épuisées : mode local, l’IA revient dans {timer}.',
-    quotaNoReset: 'Questions IA gratuites épuisées : mode local.'
+    quotaNoReset: 'Questions IA gratuites épuisées : mode local.',
+    plafond: 'L’IA du site a atteint sa limite du jour : mode local, elle revient dans {timer}.'
   };
   /* text : la phrase avec « {timer} » à la place du compte à rebours (rendu vivant par line()) ; plain : la même phrase écrite
      en entier, pour une mention sous une réponse */
@@ -86,6 +89,7 @@
   function raw() {
     if (state.on === false) return { kind: 'off', text: T.off };
     if (mode() === 'local') return { kind: 'local', text: T.local };
+    if (state.plafond && state.plafond > Date.now()) return { kind: 'quota', text: T.plafond, timer: state.plafond };
     const v = { n: nf(state.restant || 0), total: nf(total()), h: nf(hours()), timer: '{timer}' };
     if (typeof state.restant === 'number' && state.restant > 0) {
       if (!state.reset || state.restant >= total()) return { kind: 'ia', text: tpl(T.full, v) };
@@ -125,8 +129,9 @@
   /* une seule horloge pour toutes les commandes affichées, arrêtée quand aucun compte à rebours n'est en cours */
   let clock = 0;
   function ticking() {
-    const need = !!state.reset && mode() !== 'local' && state.on !== false && [...controls].some(b => b.isConnected);
-    if (need && !clock) clock = setInterval(() => { if (state.reset && state.reset <= Date.now()) { merge({}); return; } controls.forEach(b => { if (!b.isConnected) return; const t = b.querySelector('.lkia-timer'); if (t) t.textContent = countdown(state.reset); }); }, 1000);
+    /* v7.86 : le compte à rebours suit le minuteur affiché (questions du visiteur, ou budget du jour du site) */
+    const need = !!(state.reset || state.plafond) && mode() !== 'local' && state.on !== false && [...controls].some(b => b.isConnected);
+    if (need && !clock) clock = setInterval(() => { const st = raw(); if ((state.reset && state.reset <= Date.now()) || (state.plafond && state.plafond <= Date.now())) { merge({}); return; } if (!st.timer) return; controls.forEach(b => { if (!b.isConnected) return; const t = b.querySelector('.lkia-timer'); if (t) t.textContent = countdown(st.timer); }); }, 1000);
     if (!need && clock) { clearInterval(clock); clock = 0; }
   }
   function setMode(m) { acted = true; put(() => { if (m === 'local') localStorage.setItem(KEY_MODE, 'local'); else localStorage.removeItem(KEY_MODE); }); emit(); if (m !== 'local') refresh(false); }

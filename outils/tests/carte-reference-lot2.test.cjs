@@ -72,7 +72,11 @@ test('liens « voir sur la carte » : chaque #lieu= et chaque #pins= vise des li
   const known = C.points();
   for (const file of ['armes.html', 'vehicules.html', 'armes/girardi-es9.html', 'vehicules/vapid-stanier.html']) {
     const d = doc(file), links = [...d.querySelectorAll('#carte a[href*="carte.html#"]')];
-    assert.ok(links.length >= 3, file);
+    /* v7.86 : une fiche n’a plus la liste des lieux de sa catégorie (identique sur 200 fiches) : une carte compacte et un seul
+       lien « Voir ces lieux sur la carte », qui pose au moins trois repères ; les pages de section gardent un lien par lieu */
+    const fiche = file.includes('/');
+    assert.ok(links.length >= (fiche ? 1 : 3), file);
+    if (fiche) assert.ok(links.some(a => ((a.getAttribute('href').match(/#pins=([^&]+)/) || [])[1] || '').split(',').length >= 3), file + ' : trois repères au moins');
     for (const a of links) {
       const h = a.getAttribute('href').split('#')[1];
       if (h.startsWith('lieu=')) assert.ok(known[h.slice(5)], file + ' : ' + h);

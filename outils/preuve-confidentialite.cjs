@@ -3,8 +3,9 @@
 /* v7.46 (lot 9) : preuve, sur les fichiers réellement déployés (tout sauf ce que .vercelignore exclut : outils/…),
    de ce que disent les Mentions : aucun cookie (ni document.cookie, ni cookieStore, ni en-tête Set-Cookie dans
    vercel.json ou api/), aucune ressource d'un autre site (script, feuille de style, police, image, cadre, média),
-   aucun outil de mesure d'audience ou de publicité, aucune requête réseau du navigateur vers un autre site, CSP
-   connect-src 'self', formulaires : seul l'accueil poste vers Brevo, deux fonctions serveur (api/contact.js, api/ia.js depuis la v7.67), pas de
+   aucun outil de publicité ni d'autre mesure d'audience que celle de l'hébergeur (voir plus bas), aucune requête réseau du navigateur vers un autre site, CSP
+   connect-src 'self', formulaires : seul l'accueil poste vers Brevo, trois fonctions serveur (api/contact.js, api/ia.js depuis la v7.67,
+   api/indexnow.js depuis la v7.86), une seule mesure d'audience, sans cookie (Vercel Web Analytics, v7.86), pas de
    package.json, stockage du navigateur : toutes les clés commencent par « lk ».
    Usage : node outils/preuve-confidentialite.cjs [--json]. Code 1 si une affirmation n'est plus vraie. */
 const fs=require('node:fs'),path=require('node:path');
@@ -36,7 +37,16 @@ for(const f of css){const s=text(f);for(const m of s.matchAll(/url\(\s*['"]?([^'
 facts.externalResources=external;
 /* 3. outils de mesure, publicité, réseaux sociaux intégrés */
 const trackers=/googletagmanager|google-analytics|\bgtag\(|\bga\(\s*['"]create|plausible\.io|matomo|piwik|hotjar|clarity\.ms|connect\.facebook|\bfbq\(|segment\.(?:io|com)|mixpanel|umami|\/_vercel\/insights|\/_vercel\/speed-insights|doubleclick|adsbygoogle|googlesyndication|platform\.twitter|tiktok\.com\/embed/i;
-for(const f of [...html,...js]){const c=f.endsWith('.html')?text(f).replace(/<(?:p|li|td|code)[^>]*>[\s\S]*?<\/(?:p|li|td|code)>/gi,''):text(f);if(trackers.test(c))fail('traceur',f,c.match(trackers)[0]);}
+/* v7.86 : une seule exception, décrite dans les Mentions (#mesure-audience) : la mesure d'audience sans cookie de l'hébergeur
+   (Vercel Web Analytics, script servi par le site lui-même), chargée par common.js seulement sur le site publié, jamais si le
+   navigateur demande à ne pas être suivi ou si le visiteur l'a refusée ; les copies traduites (en/common.js, es/…) portent le même
+   chargeur. Ailleurs, ou sans ces conditions, c'est un traceur. */
+const AUDIENCE='common.js';
+const audienceOk=c=>/s\.src='\/_vercel\/insights\/script\.js'/.test(c)&&/h!=='www\.leonidakit\.com'&&h!=='leonidakit\.com'/.test(c)&&/navigator\.globalPrivacyControl===true/.test(c)&&/navigator\.doNotTrack==='1'/.test(c)&&/lk_mesure_off/.test(c)&&(c.match(/\/_vercel\/insights/g)||[]).length===1&&!/speed-insights/.test(c);
+for(const f of [...html,...js]){const c=f.endsWith('.html')?text(f).replace(/<(?:p|li|td|code)[^>]*>[\s\S]*?<\/(?:p|li|td|code)>/gi,''):text(f);
+ if((f===AUDIENCE||/^[a-z]{2}\/common\.js$/.test(f))&&audienceOk(c)){facts.audience='Vercel Web Analytics, chargé par '+AUDIENCE+' sur www.leonidakit.com seulement (sans cookie ; ni GPC, ni Do Not Track, ni refus du visiteur)';const rest=c.replace(/\/_vercel\/insights/,'');if(trackers.test(rest))fail('traceur',f,rest.match(trackers)[0]);continue;}
+ if(trackers.test(c))fail('traceur',f,c.match(trackers)[0]);}
+if(!facts.audience)fail('mesure d’audience',AUDIENCE,'chargeur de la mesure d’audience absent ou sans ses conditions (site publié, GPC, Do Not Track, refus)');
 /* 4. requêtes du navigateur vers un autre site (le serveur, api/, peut appeler Brevo) */
 const netCall=/\b(?:fetch|sendBeacon|EventSource|WebSocket|importScripts)\s*\(\s*['"`](https?:)?\/\/[^'"`]+['"`]|\.open\(\s*['"`][A-Z]+['"`]\s*,\s*['"`](?:https?:)?\/\/|new\s+Image\(\)[^;]*\.src\s*=\s*['"`]https?:/g;
 for(const f of js.filter(f=>!f.startsWith('api/')))for(const m of text(f).matchAll(netCall))if(!OWN.test(m[0].replace(/^[^'"`]*['"`]/,'')))fail('requête externe',f,m[0].slice(0,120));
@@ -48,7 +58,7 @@ const forms=[];for(const f of html)for(const m of text(f).matchAll(/<form\b[^>]*
 facts.externalForms=forms;/* v7.60 : l'accueil traduit (en/index.html) porte le même formulaire d'alerte que l'accueil */for(const x of forms)if(!(/^(?:[a-z]{2}\/)?index\.html$/.test(x.file)&&/^https:\/\/[a-z0-9]+\.sibforms\.com\//.test(x.action)))fail('formulaire externe',x.file,x.action);
 /* 6. fonctions serveur connues (contact, IA), pas de package.json */
 if(files.includes('package.json'))fail('build','package.json','présent');
-if(JSON.stringify(api)!==JSON.stringify(['api/contact.js','api/ia.js']))fail('fonction serveur','api/',api.join(', ')); /* v7.67 : api/ia.js (IA Claude de Léo et du calculateur, déclarée dans les Mentions) ; v7.69 : api/ia-achat.js (crédit IA payant, fermé tant que la vente n'est pas ouverte) */
+if(JSON.stringify(api)!==JSON.stringify(['api/contact.js','api/ia.js','api/indexnow.js']))fail('fonction serveur','api/',api.join(', ')); /* v7.86 : api/indexnow.js (tâche planifiée : signale à Bing les pages modifiées ; ne lit aucune donnée de visiteur) */ /* v7.67 : api/ia.js (IA Claude de Léo et du calculateur, déclarée dans les Mentions) ; v7.69 : api/ia-achat.js (crédit IA payant, fermé tant que la vente n'est pas ouverte) */
 /* 7. stockage du navigateur : toutes les clés commencent par « lk » */
 const keys=new Set(),unresolved=[];
 for(const f of js.filter(f=>!f.startsWith('api/'))){const s=text(f),consts=new Map();for(const m of s.matchAll(/\b([A-Za-z_$][\w$]*)\s*=\s*['"`]([^'"`]*)['"`]/g))if(!consts.has(m[1]))consts.set(m[1],m[2]);
@@ -64,6 +74,7 @@ if(asJSON)console.log(JSON.stringify(report,null,1));else{
  console.log('Preuve de confidentialité : '+html.length+' pages, '+js.length+' scripts, '+css.length+' feuilles de style déployés.');
  console.log('- Cookies : '+(problems.some(p=>p.rule==='cookie')?'TROUVÉ':'aucun (ni document.cookie, ni cookieStore, ni Set-Cookie)')+'.');
  console.log('- Ressources d’autres sites dans les pages : '+external+'. Traceurs : '+(problems.some(p=>p.rule==='traceur')?'TROUVÉ':'aucun')+'. Requêtes du navigateur vers un autre site : '+problems.filter(p=>p.rule==='requête externe').length+'.');
+ console.log('- Mesure d’audience : '+(facts.audience||'ABSENTE OU SANS SES CONDITIONS')+'.');
  console.log('- CSP : '+csp);
  console.log('- Formulaires qui postent ailleurs : '+forms.map(x=>x.file+' → '+new URL(x.action).host).join(', ')+'. Fonctions serveur : '+api.join(', ')+'. package.json : '+(files.includes('package.json')?'présent':'absent')+'.');
  console.log('- Clés de stockage lues dans le code : '+facts.storageKeys.join(', ')+' ; clés calculées : '+unresolved.length+'.');

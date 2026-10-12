@@ -157,14 +157,6 @@ const V_INSP=[
  "Rockstar dessine des répliques, jamais des modèles sous licence, et ne dit pas lesquelles. Ce rapprochement reste une observation.",
  "Il s’agit d’une comparaison visuelle, pas d’une information officielle : le studio ne commente pas ses inspirations."];
 
-const V_CARTE=[
- "Notre carte situe déjà les concessions, l’atelier et le circuit. Les points d’apparition précis viendront avec le jeu.",
- "Les lieux utiles au conducteur sont placés sur la carte : vendeurs, préparateur, piste. Restent les spots de chaque modèle, après le 19 novembre.",
- "Concessionnaires, garage de préparation et circuit figurent sur notre carte. Où trouver ce véhicule exactement, nous le saurons à la sortie.",
- "La carte recense les adresses liées à l’automobile. Les emplacements propres à chaque modèle seront relevés une fois le jeu en main.",
- "Vendeurs, atelier et circuit sont déjà cartographiés. Le détail des apparitions par véhicule suivra le lancement.",
- "Notre carte couvre les points de vente, l’atelier et la piste. Le repérage véhicule par véhicule commencera le jour de la sortie."];
-
 const V_SANSIMG=[
  "Illustration provisoire : les visuels officiels restent à intégrer à cette fiche.",
  "Silhouette temporaire en attendant l’intégration des images du véhicule.",
@@ -199,26 +191,34 @@ const FAV=MOD.match(/<link rel="icon"[^>]*>/)[0];
 const LOC=require('./localisateur.cjs'),FD=require('./fiche-doc.cjs'),MODEL=require('../calculateurs-modele.js');
 const DP=require('./donnees-publiees.cjs');
 LOC.writeReference(); // v7.55 : fond commun img/leonida-carte.svg dérivé de carte.html
-const V_CARTE_TYPE={bateau:'Les marinas repérées sur notre carte. Où trouver ce bateau exactement, nous le saurons à la sortie.',avion:'Les aérodromes repérés sur notre carte. Où trouver cet appareil exactement, nous le saurons à la sortie.',helicoptere:'Les aérodromes repérés sur notre carte. Où trouver cet appareil exactement, nous le saurons à la sortie.',service:'Aucun lieu d’achat n’est repéré pour les véhicules de service, et rien ne dit qu’ils s’achètent.'};
-const carteV=v=>(V_CARTE_TYPE[v.cat]||pioche(v.id,'carte',V_CARTE))+'</p>\n  '+LOC.single({item:LOC.vehicleItem(v,'../'),places:LOC.data().placesV,prefix:'../',caption:'Lieux de notre carte liés à ce type de véhicule : pas un emplacement confirmé.',placesTitle:'Lieux liés sur notre carte',mapLabel:'Carte de Leonida : lieux liés à ce véhicule'});
+const carteC=v=>LOC.single({compact:true,item:LOC.vehicleItem(v,'../'),places:LOC.data().placesV,prefix:'../',caption:'Lieux de notre carte liés à ce type de véhicule : pas un emplacement confirmé.',placesTitle:'Lieux liés sur notre carte',mapLabel:'Carte de Leonida : lieux liés à ce véhicule'});
 const EDV={'Ultimate Edition':'Offert avec l’édition Ultimate','Pre-Order':'Offert avec la précommande'};
-const docV=v=>{const V=MODEL.V,known=MODEL.fromVehicle(v);known.acquisition=v.edition&&EDV[v.edition]?V.official(EDV[v.edition]):V.unknown();known.location=V.unknown();
- return FD.render('vehicle',known,{level:3,lead:'Ce qui n’est pas encore publié garde son état : rien n’est inventé, et les coûts d’usage ne sont pas des mécaniques confirmées.'});};
-const NOTE=MOD.match(/<div class="note-box rise">[\s\S]*?<\/div>/)[0];
-const V_NOTE=[
- "Les inspirations réelles sont des rapprochements établis à partir des visuels officiels, pas des informations communiquées par Rockstar. Aucune donnée issue de fuites n’est utilisée ici.",
- "Ce que tu lis ici vient des visuels publiés par Rockstar, jamais d’une annonce du studio. Rien de ce qui a filtré par des fuites n’entre dans cette base.",
- "Chaque modèle réel cité est une déduction tirée des images officielles. Le studio ne confirme rien, et nous n’exploitons aucun contenu volé.",
- "Nos identifications reposent uniquement sur ce que Rockstar a diffusé publiquement. Les fuites, quelles qu’elles soient, restent hors de cette base.",
- "Les modèles réels indiqués sont le fruit d’une comparaison avec les visuels officiels. Rien ici ne provient d’un code ou d’une vidéo dérobés.",
- "Tout ce qui figure sur cette fiche a été relevé dans les supports publiés par Rockstar. Aucun élément ne vient des fuites de 2022 ou de 2026."];
-const note=v=>NOTE.replace(/(<strong>Une erreur sur cette fiche \?<\/strong> )[\s\S]*?( Si tu as une correction)/,'$1'+pioche(v.id,'note',V_NOTE)+'$2');
+/* v7.86 (référencement, avis demandé par Téva) : une fiche ne répète plus les mêmes avertissements que les 300 autres.
+   - « Fiche documentaire » : seules les valeurs connues s'affichent (avec statut, source et date) ; les rubriques encore vides
+     tiennent en une ligne de pastilles, avec un lien vers verification.html qui explique, une seule fois, ce qui est confirmé
+     et pourquoi un prix, une performance ou un coût d'usage reste à relever en jeu.
+   - « Sur la carte de Leonida » : la carte et ses repères, sans la liste des lieux de la catégorie (identique sur 200 fiches).
+   - L'encadré « Une erreur sur cette fiche ? » devient deux liens : signaler une erreur (formulaire prérempli), la méthode.
+   - Les paragraphes génériques de catégorie (« Dans un GTA, la catégorie sport… », « Le point ») quittent les fiches : ils
+     restent sur les pages de section.
+   - indexable(v) : une fiche sans contenu propre (ni visuel officiel, ni nom publié par Rockstar, ni édition, ni prix publié)
+     passe en noindex, follow jusqu'à ce que le jeu la remplisse ; elle reste visible et reliée pour les visiteurs, et sort du
+     plan du site (sync-site.cjs n'y met que les pages indexables). */
+const VERIF='../verification.html';
+const indexable=v=>medList(v).length>0||v.st==='officiel'||!!v.edition||!!DP.prixDe(v);
+const docC=v=>{const V=MODEL.V,known=MODEL.fromVehicle(v);known.acquisition=v.edition&&EDV[v.edition]?V.official(EDV[v.edition]):V.unknown();known.location=V.unknown();known.terrain=V.unknown();
+ return FD.renderKnown('vehicle',known,{level:3});};
+const avenir=d=>'\n    <h2 class="sec-h">Ce qui arrive avec le jeu</h2>\n    '+d.html+(d.pending.length?'<ul class="fv-wait" aria-label="À relever en jeu">'+d.pending.map(t=>'<li>'+esc(t)+'</li>').join('')+'</ul>':'')
+ +(d.waiting?'<p class="fiche-txt fv-wait-p">Ces cases seront remplies en jeu à partir du 19 novembre 2026 ; d’ici là, aucune valeur n’est inventée. <a href="'+VERIF+'#a-venir">Ce qui est confirmé et comment on vérifie</a></p>':'');
+const signaler=(dossier,id)=>'<p class="fiche-meth"><a class="fiche-meth-a" href="../contact.html#motif='+encodeURIComponent('Erreur dans une fiche')+'&amp;page='+encodeURIComponent('/'+dossier+'/'+id+'.html')+'">Signaler une erreur sur cette fiche</a><a class="fiche-meth-a" href="'+VERIF+'">Ce qui est confirmé et comment on vérifie</a></p>';
 const artH=v=>art(v).replace(/style="height:\d+px"/,'style="height:120px"');
 
 function fiche(v,i){
  const cat=CATL[v.cat],mod=v.insp||v.fam,st=ST[v.st],nom=nomC(v);
  const prev=V[(i-1+V.length)%V.length],next=V[(i+1)%V.length];
- const vois=V.filter(x=>x.cat===v.cat&&x.id!==v.id).slice(0,6);
+ /* v7.86 : les six voisins de la fiche dans sa catégorie (trois avant, trois après, en boucle) plutôt que les six premiers de la
+    catégorie : chaque fiche reçoit des liens, et deux fiches voisines ne montrent plus le même bloc « Autres … ». */
+ const vois=(()=>{const L=V.filter(x=>x.cat===v.cat),k=L.findIndex(x=>x.id===v.id),n=L.length,out=[];for(const d of [-3,-2,-1,1,2,3]){const x=L[((k+d)%n+n)%n];if(x&&x.id!==v.id&&!out.includes(x))out.push(x);}return out.slice(0,6);})();
  const ed=v.edition==='Pre-Order'?'Bonus de précommande':v.edition?'Exclusif à l\u2019édition Ultimate':null;
  const red=RED.vehicule(v,CATL);
  const lede=nom+' dans GTA VI : '+cat.toLowerCase()+(mod?'. Inspiration : '+mod:'')+'. '+st.d;
@@ -255,7 +255,8 @@ function fiche(v,i){
 <meta property="og:image" content="https://www.leonidakit.com/img/vehicules/${v.id}-${available[0]}.jpg">
 <meta name="twitter:card" content="summary_large_image">`:''}
 <meta name="theme-color" content="#FDFBF7">
-<meta name="color-scheme" content="light">
+<meta name="color-scheme" content="light">${indexable(v)?'':`
+<meta name="robots" content="noindex, follow">`}
 <link rel="canonical" href="https://www.leonidakit.com/vehicules/${v.id}.html">
 ${FAV}
 <script type="application/ld+json">${JSON.stringify({'@context':'https://schema.org','@type':'BreadcrumbList',itemListElement:[
@@ -319,12 +320,7 @@ ${HEADER}
 <section class="shell reveal" id="presentation">
   <h2 class="sec-h">${esc(red.h2[0])}</h2>
   <p class="fiche-txt rise">${esc(v.txt||'')}</p>
-  <div class="fiche-clair rise"><p class="fiche-clair-k">${esc(red.ouverture)}</p><p>${esc(red.p1)}</p><p>${esc(red.p3)}</p></div>
 </section>${panneau}
-<section class="shell reveal" id="categorie">
-  <h2 class="sec-h">${esc(red.h2[2])}</h2>
-  <p class="fiche-txt rise">${esc(red.p2)}</p>
-</section>
 <section class="shell fiche-body">
   <div class="fiche-col reveal">
     <h2 class="sec-h">Identité</h2>
@@ -343,15 +339,15 @@ ${HEADER}
     </table>
   </div>
   <div class="fiche-col reveal">
-    <h2 class="sec-h">Fiche documentaire</h2>${docV(v)}</div>
+${avenir(docC(v))}</div>
 </section>
 <section class="shell reveal" id="carte">
   <h2 class="sec-h">Sur la carte de Leonida</h2>
-  <p class="fiche-txt rise">${esc(carteV(v).split('</p>')[0])}</p>${carteV(v).slice(carteV(v).indexOf('</p>')+4)}
+  ${carteC(v)}
 </section>
 ${PF.persoSection('vehicules',{id:v.id,cat:v.cat,name:nomC(v)})}
 <section class="shell">
-  ${note(v)}
+  ${signaler('vehicules',v.id)}
 </section>
 <section class="shell reveal">
   <h2 class="rel-title">Autres ${esc(cat.toLowerCase())}</h2>

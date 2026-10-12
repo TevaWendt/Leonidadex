@@ -435,3 +435,27 @@ html:not(.js) .ang-tabs,html:not(.js) .ang-hint{display:none;}
 .pf-atelier-link::before{content:'';width:12px;height:12px;border:2px solid var(--amber-2);border-radius:3px;transform:rotate(45deg);box-sizing:border-box;}
 .pf-atelier-link:hover{background:#000;}
 .pf-atelier-link:focus-visible{outline:3px solid var(--coral);outline-offset:2px;}
+
+/* ---------- v7.86 (référencement) : fiches allégées des textes répétés ----------
+   « Ce qui arrive avec le jeu » : valeurs connues seules (doc-fiche--known), rubriques encore vides en pastilles, une ligne et un
+   lien vers verification.html ; « Personnaliser » : trois chiffres ; « Une erreur ? » : deux liens. */
+.doc-fiche--known{margin-bottom:12px;}
+.fv-wait{list-style:none;margin:6px 0 10px;padding:0;display:flex;flex-wrap:wrap;gap:8px;}
+.fv-wait li{display:inline-flex;align-items:center;gap:7px;padding:6px 12px;border:2px dashed var(--rule);border-radius:999px;background:var(--paper-2);color:var(--ink-soft);font-size:.84rem;font-weight:700;}
+.fv-wait li::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--amber);flex:none;}
+.fv-wait-p{font-size:.92rem;color:var(--ink-soft);}
+.fv-wait-p a{color:var(--coral-text,#B93220);font-weight:700;text-decoration:underline;text-underline-offset:3px;}
+.fiche-meth{display:flex;flex-wrap:wrap;gap:10px 14px;margin:30px 0 4px;padding-top:16px;border-top:1px solid var(--rule);}
+.fiche-meth-a{display:inline-flex;align-items:center;min-height:40px;padding:8px 14px;border:2px solid var(--ink);border-radius:9px;background:#fff;color:var(--ink);font-weight:700;font-size:.88rem;text-decoration:none;}
+.fiche-meth-a:first-child{background:var(--ink);color:#fff;}
+.fiche-meth-a:hover{border-color:var(--coral-text,#B93220);color:var(--coral-text,#B93220);background:#fff;}
+.fiche-meth-a:focus-visible{outline:3px solid var(--coral);outline-offset:2px;}
+.pf-stats{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0 0;}
+.pf-stats div{display:flex;flex-direction:column-reverse;gap:2px;min-width:118px;padding:8px 12px;border:2px solid var(--ink);border-radius:10px;background:#fff;}
+.pf-stats dt{font-size:.76rem;font-weight:700;color:var(--ink-soft);line-height:1.25;}
+.pf-stats dd{margin:0;font-size:1.35rem;font-weight:800;line-height:1;}
+/* v7.86 : rubrique en partie connue (« Ce qui arrive avec le jeu ») : les champs encore vides sont nommés dans sa boîte */
+.doc-wait{margin-top:10px;padding-top:9px;border-top:1px dashed var(--rule);}
+.doc-wait-k{margin:0 0 6px;font-size:.78rem;font-weight:700;color:var(--ink-soft);}
+.doc-wait ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px;}
+.doc-wait li{padding:3px 9px;border:1.5px dashed var(--rule);border-radius:999px;background:var(--paper-2);color:var(--ink-soft);font-size:.76rem;font-weight:700;line-height:1.35;}

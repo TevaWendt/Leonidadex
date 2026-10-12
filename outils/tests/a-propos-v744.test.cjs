@@ -27,7 +27,8 @@ test('À propos : gabarit (bandeau avec pile cliquable, sous-navigation, neuf se
   const kinds=secs.map(s=>{const b=s.querySelector('.ed-body');const f=b.firstElementChild;return f.className.split(' ')[0];});
   for(let i=1;i<kinds.length;i++)assert.notEqual(kinds[i],kinds[i-1],'sections '+(i)+' et '+(i+1)+' : '+kinds[i]);
   const body=strip(d.querySelector('.ed-zone--info').outerHTML.replace(/<nav[\s\S]*?<\/nav>/,''));
-  const n=words(body);assert.ok(n>=700&&n<=1400,'mots du corps : '+n);
+  /* v7.86 : le calendrier gagne le préchargement et la version en boîte, « Gratuit, sans compte » dit la mesure d’audience : 1 500 mots au plus */
+  const n=words(body);assert.ok(n>=700&&n<=1500,'mots du corps : '+n);
   const txt=read('a-propos.html');
   assert.doesNotMatch(txt,/le plus complet|le meilleur site|incontournable|révolutionnaire/i);
   assert.doesNotMatch(strip(txt),/\bvous\b/i,'registre « tu »');

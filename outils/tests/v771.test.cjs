@@ -18,7 +18,8 @@ test('serveur : 15 questions gratuites toutes les 12 heures par défaut, plus de
   assert.equal(st.free, 15); assert.equal(st.windowS, 12 * 3600);
   assert.ok(!('sell' in st) && !('margin' in st), 'plus de vente ni de marge');
   assert.ok(!fs.existsSync(path.join(root, 'api/ia-achat.js')));
-  assert.deepEqual(fs.readdirSync(path.join(root, 'api')).sort(), ['contact.js', 'ia.js']);
+  /* v7.86 : api/indexnow.js (prévenir Bing des pages modifiées, appelée par la tâche planifiée de Vercel) ; aucune fonction d’achat */
+  assert.deepEqual(fs.readdirSync(path.join(root, 'api')).sort(), ['contact.js', 'ia.js', 'indexnow.js']);
   assert.ok(!('priceOf' in T) && !('PRICES' in T));
   const src = read('api/ia.js').replace(/\/\*[\s\S]*?\*\//g, ''); assert.doesNotMatch(src, /stripe|jeton|MIN_CREDIT/i);
 });

@@ -33,16 +33,28 @@ const PERSO_NOM=Object.fromEntries(JSON.parse(fs.readFileSync('outils/editorial.
 const LOC=require('./localisateur.cjs'),FD=require('./fiche-doc.cjs'),MODEL=require('../calculateurs-modele.js');
 const DP=require('./donnees-publiees.cjs');
 LOC.writeReference(); // v7.55 : fond commun img/leonida-carte.svg dérivé de carte.html
-const carteOf=a=>'<section class="shell reveal" id="carte">\n  <h2 class="sec-h">Sur la carte de Leonida</h2>\n  <p class="fiche-txt rise">Les armureries repérées sur notre carte. L’emplacement et le prix de cette arme seront ajoutés quand Rockstar les publiera.</p>\n  '
- +LOC.single({item:LOC.weaponItem(a,'../',(id,h)=>schema(id,h)),places:LOC.data().placesA,prefix:'../',caption:'Armureries repérées sur notre carte : pas un point de vente confirmé pour cette arme.',placesTitle:'Armureries repérées',mapLabel:'Carte de Leonida : armureries repérées'})+'\n</section>';
+/* v7.86 (référencement) : même allègement que les fiches véhicules (outils/gen.js) — carte sans liste des armureries, valeurs connues
+   seules dans « Ce qui arrive avec le jeu », lien vers verification.html, encadré « Une erreur ? » remplacé par deux liens, plus de
+   paragraphe générique de catégorie ; une fiche sans contenu propre passe en noindex, follow jusqu'à ce que le jeu la remplisse. */
+const VERIF='../verification.html';
+const signaler=id=>'<p class="fiche-meth"><a class="fiche-meth-a" href="../contact.html#motif='+encodeURIComponent('Erreur dans une fiche')+'&amp;page='+encodeURIComponent('/armes/'+id+'.html')+'">Signaler une erreur sur cette fiche</a><a class="fiche-meth-a" href="'+VERIF+'">Ce qui est confirmé et comment on vérifie</a></p>';
+const carteOf=a=>'<section class="shell reveal" id="carte">\n  <h2 class="sec-h">Sur la carte de Leonida</h2>\n  '
+ +LOC.single({compact:true,item:LOC.weaponItem(a,'../',(id,h)=>schema(id,h)),places:LOC.data().placesA,prefix:'../',caption:'Armureries repérées sur notre carte : pas un point de vente confirmé pour cette arme.',placesTitle:'Armureries repérées',mapLabel:'Carte de Leonida : armureries repérées'})+'\n</section>';
 /* Fiche documentaire : structure du modèle commun ; seules les données déjà sur la fiche sont remplies, avec leur statut. */
 const docCol=a=>{const V=MODEL.V,known=MODEL.fromWeapon(a);known.acquisition=a.ue?V.official('Une version est offerte avec l’édition Ultimate'):V.unknown();known.location=V.unknown();
  if(a.slot==='longue')known.restrictions=V.official('Deux armes longues au plus sur toi : une dans le dos, une en main (Extended Look).');
- return '<div class="fiche-col reveal">\n    <h2 class="sec-h">Fiche documentaire</h2>\n    '+FD.render('weapon',known,{level:3,lead:'Ce qui n’est pas encore publié garde son état : « Prix à venir », « Achat à confirmer », « à confirmer ». Rien n’est inventé.'})+'\n  </div>\n\n</section>';};
+ const d=FD.renderKnown('weapon',known,{level:3});
+ return '<div class="fiche-col reveal">\n    <h2 class="sec-h">Ce qui arrive avec le jeu</h2>\n    '+d.html+(d.pending.length?'<ul class="fv-wait" aria-label="À relever en jeu">'+d.pending.map(t=>'<li>'+esc(t)+'</li>').join('')+'</ul>':'')
+  +(d.waiting?'<p class="fiche-txt fv-wait-p">Ces cases seront remplies en jeu à partir du 19 novembre 2026 ; d’ici là, aucune valeur n’est inventée. <a href="'+VERIF+'#a-venir">Ce qui est confirmé et comment on vérifie</a></p>':'')+'\n  </div>\n\n</section>';};
 const esc=s=>String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#x27;');
 const dec=s=>String(s).replace(/&quot;/g,'"').replace(/&#(?:39|x27);/g,"'").replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&');
 const ST={officiel:{chip:'Officielle',l:'Nommée par Rockstar',card:'Officielle'},vu:{chip:'Aperçue',l:'Vue dans un média officiel',card:'Aperçue'}};
 const SLOTL={longue:'Arme longue',poing:'Arme de poing'};
+/* v7.86 : une arme de mêlée ou de jet n’occupe pas l’emplacement des armes de poing (Rob Nelson ne parle que de deux armes de
+   poing et de deux armes longues) : emplacement non précisé, sans pastille « Poing » et hors des filtres « Longues » et « Poing »
+   (une batte comptait parmi les armes de poing). Les données (armes-data.js) ne changent pas. */
+const slotOf=a=>a.cat==='melee'||a.cat==='projectile'?null:a.slot;
+const SLOT_AUTRE={melee:'Non précisé (arme de mêlée)',projectile:'Non précisé (arme de jet)'};
 const CREDIT_RS='Visuels officiels © Rockstar Games / Take-Two Interactive. <a href="../medias.html">Provenance et crédits</a>.';
 const medList=a=>(AM[a.id]||[]).map(id=>MED[id]).filter(m=>m&&m.variants&&m.variants.every(x=>fs.existsSync(x.src.replace(/^\//,''))));
 const medBig=m=>m.variants[1]||m.variants[0];
@@ -63,14 +75,17 @@ const between=(re)=>{const m=BASE.match(re);if(!m)throw new Error('gabarit : '+
 const HEAD_TOP=between(/<meta name="theme-color"[\s\S]*?<link rel="icon"[^>]*>\n/);
 const HEADER=between(/<a class="skip"[\s\S]*?<main id="main">/);
 const FCOUNT=between(/<div class="fcount">[\s\S]*?<\/div>\n<\/div>/);
-const NOTE=between(/<section class="shell">\s*<div class="note-box rise">[\s\S]*?<\/section>/);
 const FOOTER=between(/<footer>[\s\S]*?<\/body>\n<\/html>/).replace(/<script src="\.\.\/perso-fiche\.js[^"]*"[^>]*><\/script>\n?/,'').replace(/<script src="\.\.\/carnets-core\.js[^"]*"><\/script>\n?/g,'') /* v7.85 : toutes les copies retirées — la v7.73 en ajoutait une à chaque régénération (17 sur chaque fiche d'arme, chacune téléchargée et exécutée) */.replace(/(<script src="\.\.\/fiches\.js)/,'<script src="../carnets-core.js"></script>\n<script src="../perso-fiche.js" defer></script>\n$1') // v7.51 : envies (carnets-core.js) avant fiches.js ; v7.73 : tableau « Personnaliser cette arme » (perso-fiche.js, différé)
  .replace(/<script src="\.\.\/armes-data\.js[^"]*"><\/script>\n?/,''); // v7.54 : aucun script d'une fiche ne lit LK_ARMES (le comparateur charge ses données lui-même)
 
+const indexable=a=>medList(a).length>0||a.st==='officiel'||!!a.ue||!!DP.prixDe(a);
 const lede=a=>{const cat=CATL[a.cat].toLowerCase();return a.nom+' dans GTA VI : '+cat+(a.insp?'. Inspiration : '+a.insp:'')+'. '+ST[a.st].l+' ('+a.src+').';};
 /* meta description : les premières phrases du contexte de l'arme (165 caractères max), sinon le lede générique */
 const description=a=>{const ph=(a.ctx||'').split(/(?<=[.!?])\s+/);let d=a.nom+' dans GTA VI.';let n=0;for(const q of ph){if((d+' '+q).length>158)break;d=d+' '+q;n++;}const l=lede(a);return n?d:(l.length>158?l.slice(0,155).replace(/\s+\S*$/,'')+'…':l);};
-const related=a=>{let r=A.filter(x=>x.cat===a.cat&&x.id!==a.id);if(r.length<4)for(const x of A){if(r.length>=6)break;if(x.id!==a.id&&x.slot===a.slot&&!r.includes(x))r.push(x);}return r.slice(0,6);};
+/* v7.86 : voisins de l'arme dans sa catégorie (en boucle), complétés par des armes du même emplacement : le bloc « Autres armes »
+   change d'une fiche à l'autre et chaque fiche reçoit des liens. */
+const related=a=>{const L=A.filter(x=>x.cat===a.cat),k=L.findIndex(x=>x.id===a.id),n=L.length,r=[];for(const d of [1,-1,2,-2,3,-3]){const x=L[((k+d)%n+n)%n];if(x&&x.id!==a.id&&!r.includes(x))r.push(x);}
+ if(r.length<4){const S=A.filter(x=>x.slot===a.slot&&x.cat!==a.cat),j=A.indexOf(a);S.sort((x,y)=>Math.abs(A.indexOf(x)-j)-Math.abs(A.indexOf(y)-j));for(const x of S){if(r.length>=6)break;if(!r.includes(x))r.push(x);}}return r.slice(0,6);};
 
 function fiche(a,i){
  const meds=medList(a),cat=CATL[a.cat],st=ST[a.st],url='https://www.leonidakit.com/armes/'+a.id+'.html';
@@ -82,10 +97,10 @@ function fiche(a,i){
   {'@type':'ListItem',position:3,name:a.nom,item:url}]},null,2);
  const prixPub=DP.prixDe(a); /* v7.59 : un prix publié dans armes-data.js s'affiche avec son statut ; sinon rien n'est inventé */
  const tags=[...(meds.length?['<span class="chip">Images officielles</span>','']:[]),
-  '<span class="chip live">'+st.chip+'</span>',...(prixPub?['<span class="chip chip-prix" data-prix-statut="'+prixPub.status+'">'+esc('Prix publié : '+DP.fmt(prixPub.value)+' '+prixPub.unit+' · '+prixPub.label)+'</span>']:[]),'<span class="chip">'+esc(a.src)+'</span>','<span class="chip">'+SLOTL[a.slot]+'</span>'].join('\n          ');
+  '<span class="chip live">'+st.chip+'</span>',...(prixPub?['<span class="chip chip-prix" data-prix-statut="'+prixPub.status+'">'+esc('Prix publié : '+DP.fmt(prixPub.value)+' '+prixPub.unit+' · '+prixPub.label)+'</span>']:[]),'<span class="chip">'+esc(a.src)+'</span>',...(slotOf(a)?['<span class="chip">'+SLOTL[a.slot]+'</span>']:[])].join('\n          ');
  const insp=a.insp?esc(a.insp)+' <span class="unknown">— rapprochement communautaire</span>':a.fam?esc(a.fam)+' <span class="unknown">— famille d’objet</span>':'<span class="unknown">Objet du quotidien</span>';
  const rows=[['Nom',esc(a.nom)+(a.perso?' <span class="perso-tag">Arme de '+esc(PERSO_NOM[a.perso]||a.perso)+'</span>':'')],...(a.fr?[['Désignation courante',esc(a.fr)]]:[]),['Statut',st.l],
-  ['Catégorie','<a href="../armes.html#'+a.cat+'">'+esc(cat)+'</a>'],['Emplacement',SLOTL[a.slot]],
+  ['Catégorie','<a href="../armes.html#'+a.cat+'">'+esc(cat)+'</a>'],['Emplacement',slotOf(a)?SLOTL[a.slot]:SLOT_AUTRE[a.cat]],
   ...(a.portee?[['Portée estimée',esc(a.portee)]]:[]),['Inspiration réelle',insp],...(a.mun?[['Munitions',esc(a.mun)]]:[]),
   ...(a.ue?[['Édition Ultimate','Version exclusive ou mise en avant']]:[]),...(prixPub?[['Prix en jeu',esc(DP.phrasePrix(prixPub))]]:[]),['Source',esc(a.src)]];
  const ang=angBlock(a);const gal=`<div class="gal${ang?' gal--ang':''}" data-base="../img/armes/${a.id}" data-vues="" data-nom="${esc(a.nom)}"
@@ -101,7 +116,7 @@ function fiche(a,i){
 <meta property="og:title" content="${esc(a.nom)} — GTA VI | Leonidakit">
 <meta property="og:description" content="${esc(description(a))}">
 <meta property="og:type" content="website">
-<meta property="og:locale" content="fr_FR">
+<meta property="og:locale" content="fr_FR">${indexable(a)?'':'\n<meta name="robots" content="noindex, follow">'}
 ${HEAD_TOP.replace(/<link rel="canonical" href="[^"]*">/,'<link rel="canonical" href="'+url+'">')}<script type="application/ld+json">
 ${ld}
 </script>
@@ -162,15 +177,10 @@ ${rows.map(([k,v])=>'        <tr><th scope="row">'+k+'</th><td>'+v+'</td></tr>')
 <section class="shell reveal">
   <h2 class="sec-h">${esc(red.h2[0])}</h2>
   <p class="fiche-txt rise">${esc(a.ctx)}</p>
-  <div class="fiche-clair rise"><p class="fiche-clair-k">En clair</p><p>${esc(red.p1)}</p><p>${esc(red.p3)}</p></div>
-</section>
-<section class="shell reveal">
-  <h2 class="sec-h">${esc(red.h2[1])}</h2>
-  <p class="fiche-txt rise">${esc(red.p2)}</p>
 </section>
 ${meds.length?`<section class="shell reveal" id="apercus">
   <h2 class="sec-h">Aperçus dans les supports officiels</h2>
-  <p class="fiche-txt rise">Les captures où cette arme apparaît. Elles montrent la scène plus que l’arme : le schéma ci-dessus reste la référence visuelle tant que Rockstar n’a pas publié de vue détaillée.</p>
+  <p class="fiche-txt rise">Les captures officielles où elle apparaît.</p>
   <div class="lore-gallery-grid rise" data-kicker="${esc(a.nom)}">${meds.map(m=>'<a class="apercu" href="'+medBig(m).src+'" target="_blank" rel="noopener" aria-label="Agrandir : '+esc(medAlt(a,m))+'"><img src="'+m.variants[0].src+'" srcset="'+medSrcset(m)+'" sizes="(max-width:700px) 100vw, 560px" width="'+m.variants[0].w+'" height="'+m.variants[0].h+'" alt="'+esc(medAlt(a,m))+'" loading="lazy" decoding="async"></a>').join('')}</div>
 </section>`:''}
 
@@ -178,7 +188,9 @@ ${carteOf(a)}
 
 ${PF.persoSection('armes',{id:a.id,cat:a.cat,name:a.nom})}
 
-${NOTE}
+<section class="shell">
+  ${signaler(a.id)}
+</section>
 
 <section class="shell reveal">
   <h2 class="rel-title">Autres armes : ${esc(cat.toLowerCase())}</h2>
@@ -207,9 +219,9 @@ A.forEach((a,i)=>fs.writeFileSync('armes/'+a.id+'.html',fiche(a,i)));
 const search=a=>[a.nom,a.fr,a.insp,CATL[a.cat]].filter(Boolean).join(' ').toLowerCase();
 function card(a){const meds=medList(a);
  const thumb=art(a,90);
- return '<article class="veh-card rise arm-card" data-id="'+a.id+'" data-cat="'+a.cat+'" data-slot="'+a.slot+'" data-st="'+a.st+'" data-search="'+esc(search(a))+'"><a class="veh-link" href="armes/'+a.id+'.html"><div class="veh-thumb veh-thumb--arm veh-thumb--'+a.cat+'"><span class="veh-badge">'+esc(CATL[a.cat])+'</span>'+thumb+'<span class="arm-slot arm-slot--'+a.slot+'">'+(a.slot==='longue'?'Longue':'Poing')+'</span></div><div class="veh-body"><span class="veh-st veh-st--'+a.st+'">'+ST[a.st].card+'</span><h3>'+esc(a.nom)+'</h3>'+(a.insp?'<p class="veh-insp">Inspiration&nbsp;: <span>'+esc(a.insp)+'</span></p>':a.fam?'<p class="veh-insp veh-insp--fam">Famille&nbsp;: <span>'+esc(a.fam)+'</span></p>':'')+'<p class="veh-doc"><span>Prix à venir</span><span>Munitions : '+esc((a.mun||'à confirmer').replace(/^Munitions de /,'').replace(/^Munitions d’/,''))+'</span></p><span class="veh-go">Voir la fiche</span></div></a></article>';}
+ return '<article class="veh-card rise arm-card" data-id="'+a.id+'" data-cat="'+a.cat+'" data-slot="'+(slotOf(a)||'')+'" data-st="'+a.st+'" data-search="'+esc(search(a))+'"><a class="veh-link" href="armes/'+a.id+'.html"><div class="veh-thumb veh-thumb--arm veh-thumb--'+a.cat+'"><span class="veh-badge">'+esc(CATL[a.cat])+'</span>'+thumb+(slotOf(a)?'<span class="arm-slot arm-slot--'+a.slot+'">'+(a.slot==='longue'?'Longue':'Poing')+'</span>':'')+'</div><div class="veh-body"><span class="veh-st veh-st--'+a.st+'">'+ST[a.st].card+'</span><h3>'+esc(a.nom)+'</h3>'+(a.insp?'<p class="veh-insp">Inspiration&nbsp;: <span>'+esc(a.insp)+'</span></p>':a.fam?'<p class="veh-insp veh-insp--fam">Famille&nbsp;: <span>'+esc(a.fam)+'</span></p>':'')+'<p class="veh-doc"><span>Prix à venir</span><span>Munitions : '+esc((a.mun||'à confirmer').replace(/^Munitions de /,'').replace(/^Munitions d’/,''))+'</span></p><span class="veh-go">Voir la fiche</span></div></a></article>';}
 const nSt={officiel:0,vu:0};A.forEach(a=>nSt[a.st]++);
-const nSlot={longue:0,poing:0};A.forEach(a=>nSlot[a.slot]++);
+const nSlot={longue:0,poing:0};A.forEach(a=>{const sl=slotOf(a);if(sl)nSlot[sl]++;});
 const nCat={};A.forEach(a=>nCat[a.cat]=(nCat[a.cat]||0)+1);
 hub=hub.replace(/(<div class="veh-grid" id="vgrid" data-mot="arme"[^>]*>)[\s\S]*?(<\/div>\s*<p class="vempty")/,'$1'+A.map(card).join('')+'<i class="veh-spacer" aria-hidden="true"></i>'.repeat(3)+'$2');
 hub=hub.replace(/(<button class="chip-filter is-on" data-filter="all">Tout<em>)\d+(<\/em><\/button>)/,'$1'+A.length+'$2');

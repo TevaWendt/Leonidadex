@@ -27,6 +27,22 @@ function repereText(r) {
 }
 /* Rendu d’une fiche. opts.level : niveau des titres de rubrique (défaut 3) ; opts.compact : version dans une liste ;
    opts.title : titre de la fiche ; opts.lead : phrase d’introduction. */
+/* v7.86 : une ligne de la fiche (dt/dd), commune à la fiche complète et à la forme courte des fiches véhicules et armes */
+function rowHtml(ch, seen) {
+    const cls = STATE[ch.value.s] || 'is-wait';
+    const shown = ch.known ? valueText(ch.value.v, ch.unite) : cap(ch.text);
+    const badge = ch.known ? '<span class="doc-st">' + esc(V.statusLabel(ch.value)) + '</span>' : '';
+    const ctx = ch.value.ctx ? '<small class="doc-ctx">' + esc(ch.value.ctx) + '</small>' : '';
+    const rep = ch.repere ? '<small class="doc-rep"><b>Repère de la série :</b> ' + esc(repereText(ch.repere)) + '</small>' : '';
+    /* v7.86 : dans la forme courte (seen), une même précision n’est écrite qu’une fois par fiche (« Arme de mêlée : ni munitions,
+       ni chargeur. » valait pour quatre lignes). */
+    let noteText = ch.value.note && !ch.known ? ch.value.note : (!ch.known && ch.note ? ch.note : '');
+    if (noteText && seen) { if (seen.has(noteText)) noteText = ''; else seen.add(noteText); }
+    const note = noteText ? '<small class="doc-ctx">' + esc(noteText) + '</small>' : '';
+    /* v7.59 (check ultime, CALC-13) : une valeur publiée porte sa source et sa date de vérification (schéma unique, V.published). */
+    const prov = ch.known && (ch.value.source || ch.value.verifiedAt) ? '<small class="doc-ctx doc-prov">' + [ch.value.source ? 'Source : ' + (/^https?:\/\//.test(ch.value.source) ? '<a href="' + esc(ch.value.source) + '" target="_blank" rel="noopener nofollow">' + esc(ch.value.source.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')) + '</a>' : esc(ch.value.source)) : '', ch.value.verifiedAt ? 'vérifié le ' + esc(DP.texteDate(ch.value.verifiedAt)) : ''].filter(Boolean).join(' · ') + '</small>' : '';
+    return '<div class="doc-row ' + cls + '"><dt>' + esc(ch.label) + '</dt><dd><span class="doc-v">' + esc(shown) + '</span>' + badge + ctx + prov + rep + note + '</dd></div>';
+}
 function render(categoryId, known, opts = {}) {
   const rubs = M.fiche(categoryId, known || {});
   if (!rubs) throw Error('Catégorie documentaire inconnue : ' + categoryId);
@@ -34,15 +50,7 @@ function render(categoryId, known, opts = {}) {
   let waiting = 0, total = 0;
   const body = rubs.map(r => '<section class="doc-rub"><' + h + ' class="doc-rub-t">' + esc(r.titre) + '</' + h + '><dl class="doc-list">' + r.champs.map(ch => {
     total += 1; if (!ch.known) waiting += 1;
-    const cls = STATE[ch.value.s] || 'is-wait';
-    const shown = ch.known ? valueText(ch.value.v, ch.unite) : cap(ch.text);
-    const badge = ch.known ? '<span class="doc-st">' + esc(V.statusLabel(ch.value)) + '</span>' : '';
-    const ctx = ch.value.ctx ? '<small class="doc-ctx">' + esc(ch.value.ctx) + '</small>' : '';
-    const rep = ch.repere ? '<small class="doc-rep"><b>Repère de la série :</b> ' + esc(repereText(ch.repere)) + '</small>' : '';
-    const note = ch.value.note && !ch.known ? '<small class="doc-ctx">' + esc(ch.value.note) + '</small>' : (!ch.known && ch.note ? '<small class="doc-ctx">' + esc(ch.note) + '</small>' : '');
-    /* v7.59 (check ultime, CALC-13) : une valeur publiée porte sa source et sa date de vérification (schéma unique, V.published). */
-    const prov = ch.known && (ch.value.source || ch.value.verifiedAt) ? '<small class="doc-ctx doc-prov">' + [ch.value.source ? 'Source : ' + (/^https?:\/\//.test(ch.value.source) ? '<a href="' + esc(ch.value.source) + '" target="_blank" rel="noopener nofollow">' + esc(ch.value.source.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')) + '</a>' : esc(ch.value.source)) : '', ch.value.verifiedAt ? 'vérifié le ' + esc(DP.texteDate(ch.value.verifiedAt)) : ''].filter(Boolean).join(' · ') + '</small>' : '';
-    return '<div class="doc-row ' + cls + '"><dt>' + esc(ch.label) + '</dt><dd><span class="doc-v">' + esc(shown) + '</span>' + badge + ctx + prov + rep + note + '</dd></div>';
+    return rowHtml(ch);
   }).join('') + '</dl></section>').join('');
   const head = opts.title ? '<p class="doc-head"><b>' + esc(opts.title) + '</b> <span class="doc-count">' + (total - waiting) + ' connu' + (total - waiting > 1 ? 's' : '') + ' sur ' + total + '</span></p>' : '';
   return '<div class="doc-fiche' + (opts.compact ? ' doc-fiche--compact' : '') + '" data-doc="' + esc(categoryId) + '">' + head + (opts.lead ? '<p class="doc-lead">' + esc(opts.lead) + '</p>' : '') + '<div class="doc-rubs">' + body + '</div></div>';
@@ -113,4 +121,27 @@ function publishedRow(it) {
   const v = V.published({ value: r.valeur, status: r.statut === 'officiel' || r.statut === 'vu' ? 'official' : r.statut === 'serie' ? 'unverified' : r.statut || 'unverified', source: r.source, verifiedAt: r.verifiedAt });
   return V.usable(v) ? v : null;
 }
-module.exports = { render, knownOfRow, accessCell, notBought, CATEGORY_OF, valueText, esc };
+/* v7.86 (référencement) : forme courte des fiches véhicules et armes. Seules les valeurs connues s’affichent (avec leur statut,
+   leur source et leur date, comme dans la fiche complète) ; les rubriques encore vides ne sont plus des listes de « À confirmer »
+   répétées sur trois cents pages : leurs titres reviennent dans « pending », que la fiche affiche en une ligne, avec un lien vers
+   la page qui explique ce qui est confirmé et comment on vérifie. Dès qu’une valeur est publiée, elle apparaît ici.
+   Une rubrique en partie connue garde sa boîte : ses champs encore vides y sont nommés un par un (« Encore à relever »), au
+   lieu de revenir en pastille à côté de la boîte. Un champ « sans objet » (chargeur d’une batte, carburant d’un vélo) est une
+   réponse, pas une attente : il s’affiche avec sa raison et ne compte pas parmi les champs à relever. « waiting » : nombre de
+   champs encore vides. */
+function renderKnown(categoryId, known, opts = {}) {
+  const rubs = M.fiche(categoryId, known || {});
+  if (!rubs) throw Error('Catégorie documentaire inconnue : ' + categoryId);
+  const h = 'h' + (opts.level || 3), pending = [], seen = new Set();
+  const settled = ch => ch.known || (ch.value && ch.value.s === 'na');
+  let waiting = 0;
+  const body = rubs.map(r => {
+    const rows = r.champs.filter(settled), rest = r.champs.filter(ch => !settled(ch));
+    waiting += rest.length;
+    if (!rows.length) { if (rest.length) pending.push(r.titre); return ''; }
+    const wait = rest.length ? '<div class="doc-wait"><p class="doc-wait-k">Encore à relever</p><ul>' + rest.map(ch => '<li>' + esc(ch.label) + '</li>').join('') + '</ul></div>' : '';
+    return '<section class="doc-rub"><' + h + ' class="doc-rub-t">' + esc(r.titre) + '</' + h + '><dl class="doc-list">' + rows.map(ch => rowHtml(ch, seen)).join('') + '</dl>' + wait + '</section>';
+  }).join('');
+  return { html: body ? '<div class="doc-fiche doc-fiche--known" data-doc="' + esc(categoryId) + '"><div class="doc-rubs">' + body + '</div></div>' : '', pending, waiting, known: rubs.reduce((n, r) => n + r.champs.filter(ch => ch.known).length, 0) };
+}
+module.exports = { render, renderKnown, knownOfRow, accessCell, notBought, CATEGORY_OF, valueText, esc };

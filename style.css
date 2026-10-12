@@ -351,6 +351,9 @@
   line-height:1.08; letter-spacing:-0.03em;
   display:flex; align-items:center; gap:14px; flex-wrap:wrap;
 }
+/* v7.86 : ce titre est en flex (mots animés un par un) : un <br> n'y passait pas à la ligne et devenait un élément vide
+   entouré de deux espaces de 14 px (« confirmé,  et ») ; masqué, le titre revient à la ligne naturellement. */
+.page-head h1 br{display:none;}
 .page-head .lede{margin-top:14px; font-size:1.06rem; color:var(--ink-soft); max-width:56ch;}
 
 nav a.here{color:var(--ink);}
@@ -2955,7 +2958,7 @@ a.ed-brand:hover,a.ed-brand:focus-visible{border-color:var(--ink);box-shadow:5px
 @keyframes ed-map-pulse{from{transform:scale(.6);fill-opacity:.6;}to{transform:scale(1.9);fill-opacity:0;}}
 .ed-map-pin{fill:var(--amber);stroke:var(--ink);stroke-width:40;}
 .ed-place-body{display:flex;flex-direction:column;gap:3px;padding:12px 14px 12px 0;min-width:0;flex:1;}
-.ed-place b{font-size:.98rem;line-height:1.25;letter-spacing:-.01em;}
+.ed-place b{font-size:.98rem;line-height:1.25;letter-spacing:-.01em;overflow-wrap:break-word;hyphens:auto;}
 .ed-place-where{font-size:.8rem;line-height:1.35;color:var(--ink-soft);}
 .ed-place .veh-go{margin-top:auto;padding-top:8px;font-size:.82rem;font-weight:800;color:var(--coral-text,#B93220);display:inline-flex;align-items:center;gap:6px;}
 .ed-place .veh-go::after{display:inline-block;transition:transform .2s var(--ease-out);}
@@ -2997,6 +3000,10 @@ a.ed-brand:hover,a.ed-brand:focus-visible{border-color:var(--ink);box-shadow:5px
 .ed-nav a[data-fam=munitions]{--dot:var(--coral);}
 .ed-nav a[data-fam=combat]{--dot:var(--night-3);}
 .ed-nav a[data-fam=carte]{--dot:var(--night-2);}
+/* v7.86 : quatre étapes (calendrier de l’À propos, avec le préchargement) : quatre de front sur grand écran, deux et deux
+   entre 1 001 et 1 279 px, au lieu de trois et une seule en dessous */
+@media(min-width:1001px){.ed-steps:has(>:nth-child(4):last-child){grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media(min-width:1280px){.ed-steps:has(>:nth-child(4):last-child){grid-template-columns:repeat(4,minmax(0,1fr));}}
 @media(max-width:1000px){
   .ed-steps,.ed-kits,.ed-brands,.ed-cols--4,.ed-cols--5{grid-template-columns:repeat(2,minmax(0,1fr));}
   .ed-cols--5>:last-child{grid-column:1/-1;}
@@ -3201,7 +3208,8 @@ a.ed-brand:hover,a.ed-brand:focus-visible{border-color:var(--ink);box-shadow:5px
 .doc-rub{border:1.5px solid var(--ink);border-radius:var(--radius,12px);background:var(--paper);box-shadow:var(--shadow-soft);padding:12px 14px 6px}
 .doc-rub-t{margin:0 0 6px;font:800 .78rem/1.3 'Archivo',sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--coral-text)}
 .doc-list{margin:0}
-.doc-row{display:grid;grid-template-columns:minmax(0,40%) minmax(0,1fr);gap:4px 12px;padding:7px 0;border-top:1px solid var(--doc-line)}
+/* v7.86 : la colonne des libellés garde au moins la largeur de leur mot le plus long (« Rechargement », « Munitionskosten » débordaient sur la valeur) */
+.doc-row{display:grid;grid-template-columns:minmax(min-content,40%) minmax(0,1fr);gap:4px 12px;padding:7px 0;border-top:1px solid var(--doc-line)}
 .doc-row:first-child{border-top:0}
 .doc-row dt{font-weight:700;color:var(--ink)}
 .doc-row dd{margin:0;display:flex;flex-direction:column;gap:3px;min-width:0}
@@ -3215,7 +3223,7 @@ a.ed-brand:hover,a.ed-brand:focus-visible{border-color:var(--ink);box-shadow:5px
 .doc-row.is-est .doc-st{background:#7A4F00}
 .doc-fiche--compact .doc-rubs{grid-template-columns:1fr;gap:10px}
 .doc-fiche--compact .doc-rub{box-shadow:none;border-width:1px;padding:8px 12px 4px}
-.doc-fiche--compact .doc-row{grid-template-columns:minmax(0,38%) minmax(0,1fr);font-size:.84rem}
+.doc-fiche--compact .doc-row{grid-template-columns:minmax(min-content,38%) minmax(0,1fr);font-size:.84rem}
 @media(max-width:560px){.doc-row{grid-template-columns:1fr}}
 
 /* ===== v7.50 (lot 3) : localisateur illustré « Où le trouver » (armes, véhicules, fiches, carnets) =====
@@ -3483,3 +3491,10 @@ a[data-newtab][href]{padding-right:1.05em;background-image:url("data:image/svg+x
 @media (min-width:1081px) and (max-width:1279px){body>header nav ul{gap:11px}body>header .head-search{flex:0 1 150px;max-width:150px;min-width:120px}}
 #nav>ul>li>a[href$="atelier-3d.html"]{padding-right:1.25em;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 1.6 14 5v6L8 14.4 2 11V5z' fill='none' stroke='%23B93220' stroke-width='1.6' stroke-linejoin='round'/%3E%3Cpath d='M2 5l6 3.4L14 5M8 8.4v6' fill='none' stroke='%23B93220' stroke-width='1.6' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right center/.95em}
 @media (max-width:1080px){#nav>ul>li>a[href$="atelier-3d.html"]{background-position:right 4px center;background-size:1.05em}}
+/* v7.86 (référencement) : forme courte du localisateur sur les fiches véhicules et armes — carte et repères, légende et un lien */
+.lk-loc--compact{grid-template-columns:minmax(0,1fr);max-width:620px;}
+.lk-loc-more{margin:0;}
+/* v7.86 : jalons officiels sous le compte à rebours de l'accueil (préchargement, sortie) */
+.clock-jalon{flex-basis:100%;margin:-12px 0 0;font-size:.88rem;font-weight:700;color:var(--ink);}
+.clock-jalon span::before{content:'';display:inline-block;width:8px;height:8px;margin-right:8px;border-radius:50%;background:var(--coral);vertical-align:.08em;}
+.clock[hidden]{display:none;}

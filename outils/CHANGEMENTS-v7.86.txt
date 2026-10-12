@@ -1,0 +1,193 @@
+LEONIDAKIT v7.86 — Ce qui est confirmé et comment on le vérifie ; fiches allégées et fiches minces hors de Google ; vraies
+dates du plan du site ; IndexNow ; mesure d'audience sans cookie ; budget du jour de l'IA ; les six radios officielles
+— 12 octobre 2026
+
+Base : v7.85. Demandes de Téva du 12/10/2026 : appliquer le plan (vraies infos officielles, compte à rebours, textes
+répétés sortis des fiches vers une page de méthode, noindex des fiches minces, vraies dates du plan du site, IndexNow,
+mesure d'audience sans cookie, budget global de l'IA) et les conseils de l'autre conversation (coût de l'IA, pages
+véhicules trop semblables, Bing, notoriété) ; « aucune erreur ». Rien n'est publié ni poussé. Aucun fichier à supprimer.
+CSP inchangée.
+
+1. INFORMATIONS OFFICIELLES RELUES (12 octobre 2026)
+- Radios (outils/radios/radios.json, outils/gen-radios.cjs, radios.css) : les six stations présentées par Rockstar le
+  8 octobre 2026, chacune avec sa fiche radios/<station>.html : Flash FM (pop, Robyn et Alex Consani, « Alex »),
+  Cocoteo FM (bachata, merengue, dembow, reggaeton ; Bad Bunny « El Martillo », RaiNao « La Gata »), Back Country Radio
+  (country ; Morgan Wallen « MW », Lana Del Rey « Delta Dawne », le reporter Mud Dog Mike joué par Jeremy Dufrene),
+  AfroBank FM (des classiques africains du XXᵉ siècle à l'amapiano et au 3-step ; Burna Boy « Burna », Palms Trax
+  « Palmsy »), The Chamber 106.6 (metal ; Kerry King « DJ Kerry » et Tom Araya « DJ Tom », de Slayer), Dirty South
+  Classics (rap du Sud ; Trick Daddy « Trick » et Trina). Podcasts à la demande ; radio et podcasts à pied, avec le
+  téléphone et des écouteurs. Sources : Newswire et page Musique de Rockstar, Forbes, Push Square, Dexerto, DJ Mag
+  (relues le 12 octobre 2026 ; noms d'antenne recoupés entre Forbes et Push Square, Jeremy Dufrene « as reporter Mud Dog
+  Mike » chez Forbes). Hub : section « Les six stations » (plaques de station dessinées en CSS, égaliseur seulement au
+  survol et en mouvement réduit immobile), FAQ, « À confirmer », Léo (qui anime quoi, radio à pied ; « les noms de
+  stations qui circulent sont-ils confirmés ? » : les six officielles, les autres noms ne sont pas repris) ; le test qui
+  interdit les noms de stations venus des vidéos volées retire « the chamber », devenu officiel.
+- Version en boîte (assistance Rockstar, page mise à jour le 18 août 2026) : code de téléchargement, pas de disque, en
+  magasin le 12 novembre, jour du préchargement ; pas d'Édition Ultimate en boîte. Léo, la page À propos (calendrier) et
+  la nouvelle page le disent.
+- Taille de la carte : Rockstar n'a publié aucune surface, mais a dit à la presse fin août 2026 que la carte fait environ
+  deux fois celle de GTA V et trois fois la zone jouable de Red Dead Redemption 2 (Léo, page de méthode).
+
+2. NOUVELLE PAGE « CE QUI EST CONFIRMÉ SUR GTA 6, ET COMMENT ON LE VÉRIFIE » (verification.html, cinq langues)
+outils/informations-editorial.json (bloc verification), outils/gen-informations.cjs, informations.css, lien dans le pied
+de page (outils/site-shell.cjs) et dans la recherche (outils/sync-site.cjs).
+- Ce que Rockstar a confirmé (8 points, chacun avec sa page du site et sa source officielle) : date et consoles, précommandes
+  et éditions (Ultimate : seize contenus, dont la Grotti Cheetah ’95, les revolvers Hawk & Little Morgan, la Classic Car
+  Collection), bonus de précommande, version en boîte, personnages, Leonida, vidéos, musique ; puis les chiffres de la base
+  du site, calculés à la génération (10 véhicules nommés par Rockstar, 269 vus sans nom officiel, 5 et 22 armes).
+- Ce que Rockstar n'a pas encore dit : version PC, heure de déblocage, poids, GTA Online, prix en jeu, surface de la carte,
+  durée de vie (Rob Nelson : environ 80 heures pour sa partie), codes de triche.
+- Ce que les fiches attendent du jeu (une fois pour toutes, au lieu de sur chaque fiche), les coûts d'usage poste par
+  poste (le carburant existe ; aucun prix ni consommation), les modèles réels et les noms provisoires, ce que le site
+  s'interdit, signaler une erreur ou un relevé fait en jeu.
+- Données structurées WebPage (dateModified), trois visuels officiels crédités, plan du site, cinq langues.
+
+3. FICHES VÉHICULES ET ARMES ALLÉGÉES (outils/gen.js, outils/gen-armes.cjs, outils/fiche-doc.cjs, outils/localisateur.cjs,
+   outils/perso-fiche.cjs, fiches.css, style.css)
+Avis de l'autre conversation : « les pages véhicules se ressemblent toutes ». Mesuré : sur les 302 fiches véhicules, le
+contenu principal faisait 729 mots en moyenne, dont la plus grande part identique d'une fiche à l'autre.
+- « Fiche documentaire » (une vingtaine de lignes « à confirmer » par fiche) → « Ce qui arrive avec le jeu » : seules les
+  valeurs connues s'affichent, avec statut, source et date ; une rubrique en partie connue nomme dans sa boîte ce qui
+  reste à relever (« Encore à relever ») ; les rubriques encore vides tiennent en une ligne de pastilles, avec une phrase
+  et un lien vers la page de méthode. Une case « sans objet » est une réponse, pas une attente : le chargeur d'une batte
+  ou d'un cocktail Molotov, le carburant d'un vélo ou d'un kayak s'affichent « Ne s'applique pas », avec leur raison
+  écrite une seule fois par fiche.
+- Retirés des fiches (ils restent sur les pages de section) : l'encadré « En clair », le paragraphe générique de la
+  catégorie, la note de fin, la liste des lieux de la catégorie (identique sur 200 fiches). La carte devient compacte
+  (repères sans numéros, « Voir ces lieux sur la carte »).
+- « Personnaliser » : une phrase et trois chiffres (postes, annoncés ou vus pour GTA VI, repères de la série) au lieu d'un
+  paragraphe répété.
+- « Une erreur sur cette fiche ? » devient deux liens : « Signaler une erreur sur cette fiche » (formulaire de Contact
+  prérempli : motif et adresse de la fiche) et la page de méthode.
+- Voisins : trois modèles avant et trois après dans la même catégorie, au lieu des six mêmes premiers de l'alphabet.
+- Armes de mêlée et de jet (batte, couteau, club de golf, marteau, queue de billard, cocktail Molotov, grenade fumigène) :
+  elles n'étaient pas des armes de poing, mais leur fiche disait « Emplacement : Arme de poing » (en allemand
+  « Handfeuerwaffe ») et leur carte portait la pastille « Poing » ; le filtre « Poing » de l'Armurerie les comptait (16 au
+  lieu de 9). Emplacement « Non précisé (arme de mêlée) » ou « (arme de jet) » : Rob Nelson ne parle que de deux armes de
+  poing et de deux armes longues. Le test qui l'interdisait sur la batte ignorait la majuscule : il ne l'ignore plus.
+- Résultat (contenu principal, 8-grammes de mots, plus proche voisin) : véhicules, médiane 59 % → 46 %, 90e centile
+  65 % → 51 % ; 322 mots par fiche en moyenne (729 avant), dont 102 propres à la fiche. Armes : 50 % → 51 % (la liste des
+  personnalisations, commune à une famille d'armes, domine ; 9 des 27 fiches passent en noindex, voir § 4).
+
+4. GOOGLE ET BING
+- noindex des fiches minces (outils/gen.js, outils/gen-armes.cjs) : une fiche sans visuel officiel, sans nom donné par
+  Rockstar, sans édition et sans prix publié porte « noindex, follow » et sort du plan du site (sync-site.cjs n'y met que
+  les pages indexables) : 248 fiches véhicules sur 302 et 9 armes sur 27, dans chaque langue. Elles restent en ligne et
+  reliées, et reviennent d'elles-mêmes dès qu'un visuel, un nom ou un prix arrive.
+- Vraies dates du plan du site (outils/langues.cjs : contentPrint, printHash ; outils/sitemap-dates-historique.cjs,
+  nouveau) : l'empreinte qui date une adresse ne porte plus sur tout le HTML (une retouche du gabarit redatait les 2 115
+  adresses : deux dates en tout) mais sur le contenu (titre, description, robots, texte de <main>, textes alternatifs) ;
+  les dates ont été reconstituées une fois depuis l'historique git (le plus ancien commit d'une suite ininterrompue où le
+  contenu est celui d'aujourd'hui).
+- IndexNow (api/indexnow.js, nouveau ; 0a923bd2f68183265c5d1b929dd16681.txt, nouveau ; vercel.json → crons) : chaque
+  jour à 6 h UTC, la tâche planifiée de Vercel lit sitemap.xml et envoie à api.indexnow.org les adresses dont la date est
+  plus récente que le dernier envoi (noté dans la base déjà reliée au projet, verrou de 20 heures). Avec CRON_SECRET, seule
+  la tâche planifiée est acceptée ; sans, seul l'agent « vercel-cron ». Aucune donnée de visiteur.
+
+5. MESURE D'AUDIENCE SANS COOKIE (common.js, outils/gen-informations.cjs, outils/site-informations.json,
+   outils/preuve-confidentialite.cjs)
+- Vercel Web Analytics, servi par le site lui-même : chargé seulement sur www.leonidakit.com, jamais si le navigateur
+  envoie Global Privacy Control ou Do Not Track, ni si le visiteur a choisi « Ne plus être compté sur cet appareil » ;
+  l'adresse envoyée perd ses paramètres et son ancre. Aucun cookie.
+- Mentions : ligne « Chaque page lue (mesure d'audience) » (données, destinataire, finalité et base légale, durée : 12 mois
+  de statistiques d'ensemble), boutons « Ne plus être compté sur cet appareil » / « Être compté de nouveau » (clé
+  lk_mesure_off, citée dans « Ce qui reste dans ton navigateur ») ; « En bref », « Cookies et traceurs », À propos et la
+  réponse de Léo sur les cookies le disent ; historique de la page.
+- La preuve (outils/preuve-confidentialite.cjs) accepte cette seule exception, et seulement avec ses conditions (site
+  publié, GPC, Do Not Track, refus, une seule occurrence, pas de Speed Insights), dans common.js et ses copies traduites.
+
+6. L'IA DU SITE : UN BUDGET PAR JOUR (api/ia.js, lk-ia.js)
+- En plus des questions gratuites par visiteur, un plafond pour tout le site, remis à zéro à minuit (heure de Paris) :
+  LK_IA_PLAFOND_JOUR questions (600 par défaut) et LK_IA_BUDGET_JOUR dollars (5 par défaut), coût calculé à chaque réponse
+  depuis les jetons consommés et le tarif du modèle (Sonnet, Haiku, Opus, Fable, Mythos). Compteur sans donnée personnelle
+  dans la base déjà reliée (ou en mémoire). Plafond atteint : réponse 402 « plafond », la question n'est pas décomptée au
+  visiteur, Léo passe en mode local et affiche « L'IA du site a atteint sa limite du jour : mode local, elle revient dans … ».
+
+7. ACCUEIL : LE COMPTE À REBOURS ET SES JALONS (index.html, app.js, style.css)
+Cases « – » avant le premier calcul (plus de zéros furtifs), ligne de jalon sous le compteur (préchargement le
+12 novembre, « le préchargement est ouvert », puis « GTA VI est sorti le 19 novembre 2026 ») ; le compteur s'arrête et se
+masque à la sortie.
+
+8. LANGUES
+- outils/langues/<code>/v786.json (en, es, it, de) : 373 textes en anglais et en allemand, 378 en espagnol et en italien
+  (stations, page de méthode, fiches, Mentions, Léo, recherche) ; noms propres gardés (« = »).
+- outils/langues.cjs : un texte fait seulement de repères (« <1>Vapid</1><2>Stanier</2> » : cartes des fiches voisines)
+  dont chaque morceau est connu de la mémoire est traduit morceau par morceau ; un seul morceau inconnu et il reste
+  signalé comme avant (211 cartes de voisins couvertes sans entrée à écrire).
+- style.css : un <br> dans le titre d'une page intérieure (titre en flex, mots animés) n'y passait pas à la ligne et
+  laissait un double espace (« confirmé,  et ») : masqué.
+- Mots longs (contrôle dans Chromium des pages des cinq langues, du texte lui-même et pas seulement de sa boîte) :
+  - fiches (style.css) : la colonne des libellés garde au moins la largeur de son mot le plus long ; « Rechargement »
+    (2 px) et « Munitionskosten » (15 px) chevauchaient la valeur ;
+  - page GTA Online sur téléphone (online.css) : les cinq écrans plein cadre n'avaient aucune marge latérale (le texte
+    touchait les bords, dans toutes les langues) et leur colonne s'élargissait avec un mot très long : « Mehrspielermodus »
+    et « multigiocatore » sortaient de l'écran, le paragraphe dessous était coupé. Marges rétablies, colonne bornée, titres
+    un peu plus petits sur téléphone (un mot de onze ou douze lettres tient dès 320 px), césures écrites dans les
+    traductions (« Mehr-spieler-modus », « multi-giocatore », « multi-jugador » : césures invisibles, utilisées seulement sur
+    téléphone), pastille « 04 / 05 » sur une ligne. Sur ordinateur, rien ne change, sauf les titres allemands, un peu
+    plus petits : « Mehrspielermodus » sortait de l'écran à 1 024 px.
+  - passés au même contrôle en allemand : le bouton de la question du calculateur (« Die richtige Berechnung finden »,
+    coupé à 320 px) passe à la ligne sur téléphone (calculateurs-brand.css) ; la pastille « Auf der Karte » des régions
+    (monde.css) et un nom de lieu trop long pour sa carte (« Spirituosenladen », style.css) ne sont plus rognés ;
+  - outils/tests/ecrans-browser.cjs repère désormais ces mots coupés (« MOT » : le texte qui sort d'un parent qui cache
+    son débordement ou de l'écran, sauf dans une zone qui défile) et passe sur une langue avec LK_ECRANS_LANGUE=de.
+- À propos : le calendrier a désormais quatre étapes (préchargement) ; elles tiennent sur une rangée à partir de
+  1 280 px et en deux rangées de deux entre 1 001 et 1 279 px, au lieu de trois et une seule (style.css).
+
+9. TESTS
+outils/tests/v786.test.cjs (nouveau) : règle du noindex et plan du site ; fiches allégées (plus de « Fiche documentaire »,
+d'« En clair », de catégorie ni de phrases répétées ; lien « Signaler une erreur » prérempli ; voisins variés) ; page de
+méthode (structure, sources, chiffres, plan du site, pied de page, cinq langues) ; empreinte de contenu et dates du plan
+du site ; IndexNow (clé, tâche planifiée, lecture du plan, droits, premier envoi, verrou, envoi suivant) ; budget de l'IA
+(coût, jour de Paris et changement d'heure, 402, plafond affiché) ; mesure d'audience (chargeur, Mentions, CSP) ; compte à
+rebours ; six stations en cinq langues. Mis à jour pour la nouvelle forme des fiches et les nouvelles données :
+section-radios (lien du sujet radio vers #stations ; nom figé « the chamber » retiré de la liste des fuites),
+catalogues-v750, contact-v746, leo-v745 (noyau de Léo jusqu'à 336 Kio), regression (rubriques « Ce qui arrive avec le
+jeu », lien #pins= de la carte), v771 (api/indexnow.js), v773 (phrase et chiffres de « Personnaliser »),
+a-propos-v744 (1 500 mots au plus), carte-reference-lot2 (lien de la fiche vers ses lieux) ; langues-helper : « La Gata »
+(nom d'antenne de RaiNao) est un nom propre, pas du français.
+
+CONTRÔLES (12 octobre 2026)
+- Tests Node : toute la suite, 1 048 tests : 1 047 passés, et la nouvelle assertion du § 3 (raison écrite une fois)
+  corrigée puis repassée (elle comparait un texte sans les espaces insécables de la typographie française) ; après les
+  dernières retouches de mise en page, les 23 fichiers qui lisent les feuilles de style, la chaîne des empreintes, le
+  cadre du calculateur, la régression et la v7.86 : 251 / 251. Langues : 42 / 42 ; 0 texte sans traduction dans les quatre
+  langues à la génération ; fichiers « à traduire » vides.
+- Vérificateur : aucune erreur, 314 218 références vérifiées dans 2 281 pages. Preuve de confidentialité : « Toutes les
+  affirmations des Mentions sont tenues. »
+- Langues dans le navigateur : toutes les pages des quatre langues (446 × 4, à 1 280 et 390 px) : 0 mot français visible,
+  0 erreur de script, 0 requête en échec, langue et barre « Changer la langue » justes, 0 défilement horizontal propre à
+  la traduction ; calculateur, bandeau de langue et Léo (langues-browser.cjs) : 2 267 contrôles, 0 échec.
+- Écrans (outils/tests/ecrans-browser.cjs, 58 pages × 16 largeurs, 928 chargements) : 0 débordement, 0 élément hors de la
+  fenêtre, 0 élément rogné, 0 cible sous 24 px ; relevés à lire identiques à la v7.85 (sections, cartes, caché, petits
+  textes), sauf trois de moins (page de l'album) ; le nouveau contrôle des mots coupés ne relève que la galerie d'angles
+  hors champ d'une fiche à photos (16 largeurs), par construction. En allemand (55 pages × 5 largeurs, 275 chargements) :
+  0 débordement, 0 rogné ; mots coupés et éléments cachés limités à la carte qui se déplace et à la même galerie.
+- Audit navigateur (26 pages, 182 chargements) : 0 débordement, 0 grille boiteuse (le calendrier de l'À propos en
+  relevait quatre avant la correction du § 8), 0 coupe, 0 image, 0 caché, 0 contraste, 0 erreur console, 0 requête en
+  échec, fonctions 12 / 12.
+- Mesure d'audience dans Chromium (site servi sous www.leonidakit.com) : 12 / 12 (script chargé sur le site publié
+  seulement, ni avec Global Privacy Control, ni avec Do Not Track, ni après « Ne plus être compté », adresse envoyée sans
+  paramètres ni ancre, boutons des Mentions). Cookies (outils/audit-cookies.cjs, 17 pages, avant et après les usages
+  principaux) : 0 cookie, 0 en-tête Set-Cookie.
+- Captures relues : fiches batte, BMX et cocktail Molotov (allemand) à 1 280 et 390 px ; page GTA Online en français,
+  allemand, italien et espagnol de 320 à 1 280 px ; calendrier de l'À propos à 1 024 et 1 280 px ; pastille des régions,
+  cartes des lieux et bouton du calculateur en allemand.
+
+FICHIERS
+Modifiés : README.md, vercel.json, api/ia.js, app.js, common.js, lk-ia.js, leo-loader.js, leo-ui.js, leo.css,
+acquisitions-data.js, search-index.js, leo-index.json et leo/*.json, style.css, fiches.css, informations.css, online.css,
+radios.css, monde.css, calculateurs-brand.css, sitemap.xml, sitemap-fiches.xml ; outils/ : acquisitions.json,
+calculateur-cadre.json, fiche-doc.cjs, gen.js, gen-armes.cjs, gen-informations.cjs, gen-leo.cjs, gen-radios.cjs,
+informations-editorial.json, langues.cjs, leo-index-manifest.json, leo-knowledge.json, localisateur.cjs,
+lot-c-visuals.cjs, perso-fiche.cjs, preuve-confidentialite.cjs, radios-index.json, radios/radios.json,
+site-informations.json, site-shell.cjs, sitemap-dates.json, sync-site.cjs, langues/{de,es,it}/section-online.json ;
+outils/tests/ : a-propos-v744, carte-reference-lot2, catalogues-v750, conformite-v754, contact-v746, leo-v745,
+regression, section-radios, v771, v773 (.test.cjs), ecrans-browser.cjs, langues-helper.cjs ; les pages (fiches véhicules et
+armes, Radios et musique, accueil, À propos, Mentions, Contact, GTA Online, pied de page de toutes les pages, empreintes)
+et leurs copies traduites, avec les scripts et données traduits.
+Nouveaux : verification.html ; radios/flash-fm.html, radios/cocoteo-fm.html, radios/back-country-radio.html,
+radios/afrobank-fm.html, radios/the-chamber-106-6.html, radios/dirty-south-classics.html (et leurs copies en/, es/, it/,
+de/) ; api/indexnow.js ; 0a923bd2f68183265c5d1b929dd16681.txt ; outils/sitemap-dates-historique.cjs ;
+outils/langues/{en,es,it,de}/v786.json ; outils/tests/v786.test.cjs ; outils/CHANGEMENTS-v7.86.txt ; LISEZ-MOI-v7.86.txt.
+Aucun fichier à supprimer.

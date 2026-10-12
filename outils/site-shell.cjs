@@ -17,7 +17,8 @@ const shopping = [...acquisition.filter(c => c.menu && !c.alias).sort((a, b) => 
 /* v7.83 (Téva : « l'Atelier 3D sur la barre directement en haut, plutôt que dans Explorer ; c'est un truc important du site ») :
    l'Atelier quitte « Explorer › S'équiper » pour la barre du haut, après Armurerie ; le pied de page le garde dans « S'équiper ». */
 const footShopping = [['achats.html', 'Tout ce qui s’achète'], ...shopping, ['atelier-3d.html', 'Atelier 3D'], ['armes.html#munitions', 'Munitions et équipement'], ['logements.html', 'Logements et appartements']];
-const info = [['a-propos.html', 'À propos'], ['contact.html', 'Contact'], ['medias.html', 'Médias et crédits'], ['mentions-legales.html', 'Mentions et confidentialité']];
+/* v7.86 : « Ce qui est confirmé » (verification.html), la page de méthode vers laquelle renvoie chaque fiche */
+const info = [['a-propos.html', 'À propos'], ['verification.html', 'Ce qui est confirmé'], ['contact.html', 'Contact'], ['medias.html', 'Médias et crédits'], ['mentions-legales.html', 'Mentions et confidentialité']];
 const top = [['calculateurs.html', 'Calculateur'], ['tuto.html', 'Tuto'], ['carte.html', 'Carte'], ['vehicules.html', 'Véhicules'], ['armes.html', 'Armurerie'], ['atelier-3d.html', 'Atelier 3D'] /* v7.83 */, ['achats.html', 'Achats'], ['progression.html', 'Progression']];
 
 /* v7.75 (Téva : « quand on clique sur la section GTA Online, j'aimerais que ça ouvre une nouvelle page du navigateur ; pareil

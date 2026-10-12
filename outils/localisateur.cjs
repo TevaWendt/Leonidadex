@@ -40,7 +40,9 @@ function mapSvg(places, opts = {}) {
     }
     return { x: p.x, y: p.y - gap };
   });
+  /* v7.86 : opts.dots — repères sans numéro (forme courte des fiches, sans liste de lieux à laquelle renvoyer un numéro) */
   const pins = pts.map((p, i) => { const l = labels[i];
+    if (opts.dots) return '<g class="lk-loc-pin" data-place="' + esc(p.id) + '" data-name="' + esc(places[i].name) + '"><circle class="lk-loc-halo" cx="' + p.x + '" cy="' + p.y + '" r="' + dot * 2.4 + '"/><circle class="lk-loc-dot" cx="' + p.x + '" cy="' + p.y + '" r="' + dot + '"/></g>';
     return '<g class="lk-loc-pin" data-place="' + esc(p.id) + '" data-name="' + esc(places[i].name) + '"><line class="lk-loc-lead" x1="' + p.x + '" y1="' + p.y + '" x2="' + l.x + '" y2="' + l.y + '" stroke-width="' + Math.max(8, Math.round(dot * 0.35)) + '"/><circle class="lk-loc-halo" cx="' + p.x + '" cy="' + p.y + '" r="' + dot * 2.4 + '"/><circle class="lk-loc-dot" cx="' + p.x + '" cy="' + p.y + '" r="' + dot + '"/>'
       + '<circle class="lk-loc-lab" cx="' + l.x + '" cy="' + l.y + '" r="' + lab + '" stroke-width="' + Math.round(lab * 0.14) + '"/><text class="lk-loc-pin-n" x="' + l.x + '" y="' + l.y + '" dy="' + Math.round(lab * 0.42) + '" text-anchor="middle" font-size="' + Math.round(lab * 1.15) + '">' + p.n + '</text></g>'; }).join('');
   return '<div class="lk-loc-stage">' + REF.image(opts.prefix) + '<svg class="lk-loc-svg" viewBox="' + f.vx + ' ' + f.vy + ' ' + f.vw + ' ' + f.vh + '" role="img" aria-label="' + esc(opts.label || 'Carte de Leonida et lieux repérés') + '" focusable="false">' + pins + '</svg></div>';
@@ -76,6 +78,13 @@ function hub(o) {
 /* Forme « fiche » : un seul objet, sans script. */
 function single(o) {
   const prefix = o.prefix || '', linked = o.item.places.map(id => o.places.find(p => p.id === id)).filter(Boolean);
+  /* v7.86 (référencement) : forme courte des fiches véhicules et armes — la carte et ses repères, la légende et un lien vers
+     ces lieux sur la carte interactive ; ni résumé ni liste des lieux, identiques sur toutes les fiches d’une catégorie (ils
+     restent sur les pages de section, dans le sélecteur des hubs). L’emplacement de l’objet est dit dans « Ce qui arrive avec le jeu ». */
+  if (o.compact) return '<div class="lk-loc lk-loc--single lk-loc--compact">'
+    + '<figure class="lk-loc-map">' + (linked.length ? mapSvg(linked, { label: o.mapLabel, prefix, dots: true }) : emptyMap(prefix))
+    + '<figcaption>' + esc(linked.length ? o.caption : 'Aucun lieu repéré pour cette catégorie : rien n’est placé au hasard.') + '</figcaption></figure>'
+    + (linked.length ? '<p class="lk-loc-more"><a class="lk-loc-btn lk-loc-btn--main" href="' + pinsHref(prefix, linked.map(p => p.id), o.item.mapTitle) + '">Voir ces lieux sur la carte</a></p>' : '') + '</div>';
   return '<div class="lk-loc lk-loc--single">'
     + '<figure class="lk-loc-map">' + (linked.length ? mapSvg(linked, { label: o.mapLabel, prefix }) : emptyMap(prefix))
     + '<figcaption>' + esc(linked.length ? o.caption : 'Aucun lieu repéré pour cette catégorie : rien n’est placé au hasard.') + '</figcaption></figure>'

@@ -10,7 +10,10 @@
      dans une rangée (sauf alignement en haut ou retour à la ligne volontaires), aucune carte hors de son conteneur ;
    - contrôles ou titres coupés par un ancêtre qui cache son débordement sans défilement ; textes à overflow caché plus
      larges que leur boîte ; textes nowrap qui sortent de la fenêtre ;
-   - textes sous 10 px ; cibles tactiles sous 24 px sur téléphone (hors liens dans le texte, cases avec libellé).
+   - textes sous 10 px ; cibles tactiles sous 24 px sur téléphone (hors liens dans le texte, cases avec libellé) ;
+   - v7.86 : mots coupés — le texte lui-même (pas seulement sa boîte) qui sort d’un parent cachant son débordement ou de
+     la fenêtre (un mot allemand ou italien plus long que sa colonne : « Mehrspielermodus » sur la page GTA Online).
+   LK_ECRANS_LANGUE=de (en, es, it…) : les mêmes pages dans cette langue (dossier de/), là où les mots sont plus longs.
    Les bento (tuiles de tailles différentes), les carrousels (pistes qui défilent) et les cartes pannables (carte du monde)
    ressortent par construction : ils sont à lire, pas à corriger.
    Usage : NODE_PATH=<dépendances>/node_modules node outils/tests/ecrans-browser.cjs <dossier hors dépôt> [largeurs…]
@@ -24,7 +27,7 @@ const server = http.createServer((req, res) => { let p; try { p = decodeURICompo
 const first = d => fs.readdirSync(path.join(root, d)).filter(f => f.endsWith('.html')).sort()[0];
 const pages = fs.readdirSync(root).filter(f => f.endsWith('.html') && !/^google|^(accessoires|munitions|tatouages|vetements)\.html$/.test(f)).sort()
   .concat(['vehicules/pegassi-zentorno.html', 'vehicules/albany-manana.html', 'armes/carabine.html', 'armes/batte.html', 'carnets/garage.html', 'carnets/calculs.html', 'carnets/consommables.html', 'lieux/leonida-keys.html', 'personnages/boobie.html', 'animaux/alligator.html', 'demeures/' + first('demeures'), 'planques/' + first('planques'), 'entreprises/' + first('entreprises'), 'gangs/' + first('gangs'), 'online/' + first('online'), 'radios/' + first('radios'), 'trophees/' + first('trophees'), 'activites/' + first('activites'), 'en/index.html', 'de/vehicules.html', 'es/atelier-3d.html'])
-  .filter(p => fs.existsSync(path.join(root, p)));
+  .map(p => (process.env.LK_ECRANS_LANGUE ? process.env.LK_ECRANS_LANGUE + '/' : '') + p).filter(p => fs.existsSync(path.join(root, p)));
 
 function inspect() {
   const W = document.documentElement.clientWidth;
@@ -33,7 +36,7 @@ function inspect() {
   const vis = el => { const cs = getComputedStyle(el); return cs.display !== 'none' && cs.visibility !== 'hidden'; };
   const scroller = el => { for (let e = el.parentElement; e && e !== document.body; e = e.parentElement) { const o = getComputedStyle(e).overflowX; if (o === 'auto' || o === 'scroll' || o === 'hidden' || o === 'clip') return true; } return false; };
   const ignore = el => el.closest('svg, .sr-only, .trap, [aria-hidden="true"], [hidden], noscript') !== null || (el.closest('details:not([open])') && !el.closest('summary'));
-  const out = { overflow: document.documentElement.scrollWidth - W, right: [], left: [], shells: [], rows: [], cut: [], clipped: [], small: [], tiny: [] };
+  const out = { overflow: document.documentElement.scrollWidth - W, right: [], left: [], shells: [], rows: [], cut: [], clipped: [], words: [], small: [], tiny: [] };
   for (const el of document.querySelectorAll('main *, header *, footer *')) {
     if (!vis(el) || ignore(el)) continue; const r = el.getBoundingClientRect(); if (r.width === 0 || r.height === 0) continue;
     if (r.right > W + 1 && !scroller(el) && out.right.length < 6) out.right.push(sig(el) + ' → ' + Math.round(r.right - W) + 'px « ' + txt(el) + ' »');
@@ -73,6 +76,19 @@ function inspect() {
     if (cs.overflow === 'hidden' || cs.overflowX === 'hidden') { if (cs.textOverflow === 'ellipsis' || cs.webkitLineClamp !== 'none') continue; if (el.scrollWidth > el.clientWidth + 2 && el.clientWidth > 1 && txt(el) && out.clipped.length < 5) out.clipped.push(sig(el) + ' « ' + txt(el) + ' » ' + el.scrollWidth + '>' + el.clientWidth); }
     else if (el.scrollWidth > el.clientWidth + 2 && el.clientWidth > 20 && cs.whiteSpace === 'nowrap' && !scroller(el) && el.getBoundingClientRect().right > W + 1 && out.clipped.length < 5) out.clipped.push(sig(el) + ' nowrap « ' + txt(el) + ' »');
   }
+  /* v7.86 : mots coupés — chaque nœud de texte comparé au premier parent qui cache son débordement (ou à la fenêtre) ; une
+     zone qui défile, un texte à points de suspension ou masqué pour l’œil (clip) ne comptent pas */
+  for (const el of document.querySelectorAll('main h1, main h2, main h3, main h4, main p, main li, main dt, main dd, main th, main td, main summary, main a, main button, main label')) {
+    if (!vis(el) || ignore(el)) continue; const own = getComputedStyle(el); if (own.textOverflow === 'ellipsis' || own.webkitLineClamp !== 'none') continue;
+    /* limite : l'intersection de la fenêtre et de tous les parents qui cachent leur débordement ; un parent qui défile
+       (même au-dessus d'un parent qui cache, comme un tableau arrondi dans sa zone de défilement) rend le texte atteignable */
+    let lim = { left: 0, right: W }, skip = false;
+    for (let e = el; e && e !== document.body; e = e.parentElement) { const c = getComputedStyle(e); if (c.clipPath !== 'none' || (c.clip && c.clip !== 'auto')) { skip = true; break; } const o = c.overflowX; if (o === 'auto' || o === 'scroll') { skip = true; break; } if ((o === 'hidden' || o === 'clip') && e !== el) { const pr = e.getBoundingClientRect(); lim = { left: Math.max(lim.left, pr.left), right: Math.min(lim.right, pr.right) }; } }
+    if (skip) continue;
+    for (const n of el.childNodes) { if (n.nodeType !== 3 || !n.nodeValue.trim()) continue; const rg = document.createRange(); rg.selectNodeContents(n);
+      const bad = [...rg.getClientRects()].find(rc => rc.width > 0 && (rc.right > lim.right + 2 || rc.left < lim.left - 2));
+      if (bad) { if (out.words.length < 4) out.words.push(sig(el) + ' « ' + n.nodeValue.trim().slice(0, 28) + ' » ' + Math.round(Math.max(bad.right - lim.right, lim.left - bad.left)) + 'px'); break; } }
+  }
   for (const el of document.querySelectorAll('main *')) { if (!el.childNodes.length) continue; const t = [...el.childNodes].some(n => n.nodeType === 3 && n.nodeValue.trim()); if (!t || !vis(el)) continue; const fs = parseFloat(getComputedStyle(el).fontSize); if (fs < 10 && !ignore(el) && el.getBoundingClientRect().height > 0 && out.small.length < 4) out.small.push(sig(el) + ' ' + fs.toFixed(1) + 'px « ' + txt(el) + ' »'); }
   if (W < 700) for (const el of document.querySelectorAll('main a, main button, main input, main select, main summary')) {
     if (!vis(el) || ignore(el)) continue; const cs = getComputedStyle(el);
@@ -102,6 +118,7 @@ function inspect() {
       if (r.rows && r.rows.length) flags.push('CARTES ' + r.rows[0]);
       if (r.cut && r.cut.length) flags.push('CACHÉ ' + r.cut[0]);
       if (r.clipped && r.clipped.length) flags.push('COUPÉ ' + r.clipped[0]);
+      if (r.words && r.words.length) flags.push('MOT ' + r.words[0]);
       if (r.small && r.small.length) flags.push('PETIT ' + r.small[0]);
       if (r.tiny && r.tiny.length) flags.push('CIBLE ' + r.tiny[0]);
       if (r.err) flags.push('ERR ' + r.err);
@@ -111,7 +128,7 @@ function inspect() {
     await ctx.close();
   }
   await browser.close(); server.close();
-  const tot = {}; for (const k of ['overflow', 'right', 'left', 'shells', 'rows', 'cut', 'clipped', 'small', 'tiny']) tot[k] = res.filter(r => k === 'overflow' ? r.overflow > 0 : (r[k] && r[k].length)).length;
+  const tot = {}; for (const k of ['overflow', 'right', 'left', 'shells', 'rows', 'cut', 'clipped', 'words', 'small', 'tiny']) tot[k] = res.filter(r => k === 'overflow' ? r.overflow > 0 : (r[k] && r[k].length)).length;
   const head = 'Écrans et alignements — ' + new Date().toISOString() + ' — ' + pages.length + ' pages × ' + widths.length + ' largeurs (' + widths.join(', ') + ') = ' + res.length + ' chargements, ' + Math.round((Date.now() - t0) / 1000) + ' s\nChargements concernés : ' + JSON.stringify(tot);
   fs.writeFileSync(path.join(out, 'ecrans.json'), JSON.stringify(res, null, 1));
   fs.writeFileSync(path.join(out, 'ecrans.txt'), head + '\n' + lines.join('\n') + '\n');

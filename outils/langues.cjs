@@ -174,6 +174,19 @@ function lookup(mem, key, file, before, noSplit) {
     for (const part of parts) { const t = lookup(mem, part, file, before, true); if (typeof t !== 'string') return null; out.push(t); }
     return out.join(' ');
   }
+  /* v7.86 : un texte fait seulement de repères, sans rien entre eux (« <1>Vapid</1><2>Stanier</2> » : cartes des fiches
+     voisines, marque puis modèle), dont chaque morceau est connu de la mémoire : traduit morceau par morceau. Un seul
+     morceau inconnu et le texte entier reste à traduire (signalé comme avant). */
+  if (v === undefined && !noSplit && /^(?:<(\d+)>[^<]*<\/\1>){2,}$/.test(k)) {
+    let ok = true;
+    const out = k.replace(/<(\d+)>([^<]*)<\/\1>/g, (x, n, inner) => {
+      if (!ok || !inner.trim()) return x;
+      const t = lookup(mem, inner, file, before, true);
+      if (typeof t !== 'string') { ok = false; return x; }
+      return '<' + n + '>' + t + '</' + n + '>';
+    });
+    if (ok) return out;
+  }
   if (v === undefined) return null;
   mem.used.add((file && mem.map.has(file + '::' + k)) ? file + '::' + k : k);
   if (typeof v === 'object') {
@@ -930,6 +943,20 @@ function leoPivot(root, code, core, enCore, names) {
   for (const x of names) { const a = n(x.name); if (a && a.includes(' ') && a.split(' ').some(w => words.has(w)) && !out.some(e => e[0] === a)) out.push([a, a]); }
   return out;
 }
+/* v7.86 (référencement) : empreinte du CONTENU d’une page pour la date « lastmod » du plan du site : titre, description, consigne
+   aux robots et texte visible de <main> (textes alternatifs des images compris), sans les scripts, styles, dessins SVG, modèles,
+   menus et barres de navigation (fil d’Ariane, puces, précédent / suivant). Une retouche du gabarit, d’une feuille de style
+   ou d’un script ne change plus la date de 2 000 pages : seule une page dont le contenu change prend la date du jour.
+   (Avant la v7.86, l’empreinte portait sur tout le HTML : deux dates seulement pour 2 115 adresses, que Google ignorait.) */
+function contentPrint(html) {
+  const pick = re => ((html.match(re) || [])[1] || '').trim();
+  let main = (html.match(/<main\b[\s\S]*?<\/main>/) || [html])[0];
+  main = main.replace(/<(script|style|template|svg|nav|noscript)\b[\s\S]*?<\/\1>/g, ' ')
+    .replace(/<img\b[^>]*?\balt="([^"]*)"[^>]*>/g, ' $1 ')
+    .replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+  return [pick(/<title>([^<]*)<\/title>/), pick(/<meta name="description" content="([^"]*)"/), pick(/<meta name="robots" content="([^"]*)"/), main].join('\n');
+}
+const printHash = html => crypto.createHash('sha256').update(contentPrint(html)).digest('hex').slice(0, 16);
 function sitemap(root = ROOT) {
   /* v7.61 : chaque adresse française du plan du site (pages indexables : ni redirection, ni noindex, ni 404) a sa version
      dans chaque langue publiée, dans le même fichier (sitemap.xml, sitemap-fiches.xml).
@@ -944,7 +971,7 @@ function sitemap(root = ROOT) {
   const info = u => {
     if (seen[u]) return seen[u];
     const f = path.join(root, fileOf(u)); let html = ''; try { html = fs.readFileSync(f, 'utf8'); } catch (e) { html = ''; }
-    const h = crypto.createHash('sha256').update(html.replace(/\?v=[a-f0-9]{6,}/g, '')).digest('hex').slice(0, 16);
+    const h = printHash(html);
     const old = dates[u]; const d = old && old[0] === h ? old[1] : today;
     const img = (html.match(/<meta property="og:image" content="([^"]+)"/) || [])[1];
     return (seen[u] = { h, d, img: img && !/\/social-card\.png$/.test(img) ? img : null });
@@ -986,7 +1013,7 @@ function extraire(code, root = ROOT, opts = {}) {
   return { total: seen.size, report: r };
 }
 
-module.exports = { config, memoire, norm, textual, typo, wrap, quotesOf, langBar, placeLangBar, alternates, placeAlternates, titleSeo, versions, translatePage, translateScript, generer, toutGenerer, extraire, sitemap, linker, segmentOf, tokens, marks, lookup, deep, flatLookup, partsOf, leoPivot, KEEP, uiLike, langue };
+module.exports = { config, memoire, norm, textual, typo, wrap, quotesOf, langBar, placeLangBar, alternates, placeAlternates, titleSeo, versions, translatePage, translateScript, generer, toutGenerer, extraire, sitemap, contentPrint, printHash, linker, segmentOf, tokens, marks, lookup, deep, flatLookup, partsOf, leoPivot, KEEP, uiLike, langue };
 
 if (require.main === module) {
   const args = process.argv.slice(2), code = args.find(a => !a.startsWith('--'));

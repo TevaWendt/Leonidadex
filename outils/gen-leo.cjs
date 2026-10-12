@@ -12,7 +12,7 @@
    « --check » recompare toutes les sorties à l'octet près sans les écrire. */
 const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),crypto=require('node:crypto');
 const {JSDOM}=require('jsdom');const root=path.resolve(__dirname,'..');const T=require('./typographie.cjs');
-const CORE_MAX=320*1024,PASSAGE_MIN=300,PASSAGE_MAX=600; /* v7.58 : 300 → 320 Kio (72 vues de section, aide par page, 5 sujets) ; servi compressé par Vercel (≈ 80 Kio), chargé une fois à la première ouverture */
+const CORE_MAX=336*1024,PASSAGE_MIN=300,PASSAGE_MAX=600; /* v7.58 : 300 → 320 Kio (72 vues de section, aide par page, 5 sujets) ; v7.86 : 320 → 336 Kio (le noyau était à 18 octets du plafond ; les six stations de radio et trois sujets mis à jour : radios, version en boîte, taille de la carte) ; servi compressé par Vercel (≈ 80 Kio), chargé une fois à la première ouverture de Léo, jamais avec la page */
 function generate(options={}){
  const r=options.root||root,read=f=>fs.readFileSync(path.join(r,f),'utf8'),json=f=>JSON.parse(read(f)),exists=f=>fs.existsSync(path.join(r,f));
  const defs=json('outils/leo-editorial.json'),ed=json('outils/editorial.json'),med=json('outils/medias-officiels.json'),lex=json('outils/leo-lexique.json'),c={window:{}};const N=require(path.join(r,'leo-nlp.js'));const DEFAULT_DATE=(()=>{const k=json('outils/leo-knowledge.json'),m={};for(const t of k.topics||[]){const dt=t.checkedAt||k.checkedAt;m[dt]=(m[dt]||0)+1;}return Object.entries(m).sort((a,b)=>b[1]-a[1])[0]?.[0]||null;})();
