@@ -1,0 +1,73 @@
+LEONIDAKIT v7.86 — Ce qui est confirmé, fiches allégées, vraies dates pour Google, IndexNow, mesure d'audience sans
+cookie, budget de l'IA, les six radios officielles
+À appliquer sur la v7.85. Archive « modifs » : seulement les fichiers qui changent (et les nouveaux).
+Rien n'a été publié ni poussé. Aucun fichier à supprimer. CSP inchangée.
+
+CE QUI CHANGE POUR LE VISITEUR
+- Nouvelle page « Ce qui est confirmé sur GTA 6, et comment on le vérifie » (verification.html, cinq langues, dans le
+  pied de page de toutes les pages) : ce que Rockstar a confirmé (date, éditions, bonus, version en boîte, personnages,
+  régions, vidéos, musique, chaque point avec sa source), ce qui ne l'est pas encore (version PC, heure de déblocage,
+  poids, GTA Online, prix en jeu, surface de la carte, durée, codes), ce que les fiches attendent du jeu, les modèles réels
+  et les noms provisoires, ce que le site s'interdit, et comment signaler une erreur.
+- Radios : les six stations présentées par Rockstar le 8 octobre 2026 (Flash FM, Cocoteo FM, Back Country Radio,
+  AfroBank FM, The Chamber 106.6, Dirty South Classics) ont chacune leur fiche, dans les cinq langues : style,
+  animateurs et noms d'antenne (Bad Bunny est El Martillo, Lana Del Rey est Delta Dawne…), ce que l'annonce ne dit pas,
+  sources. Podcasts à la demande et radio à pied (téléphone et écouteurs). Léo sait répondre à « qui anime les radios ? ».
+- Fiches véhicules (302) et armes (27) allégées : les paragraphes identiques sur toutes les fiches (« Fiche
+  documentaire », « En clair », la catégorie, la note, la liste des lieux de la catégorie) sont remplacés par « Ce qui
+  arrive avec le jeu » : les valeurs déjà connues (avec statut et source), ce qui reste à relever en jeu, et un lien vers
+  la nouvelle page. Carte plus compacte (« Voir ces lieux sur la carte »), voisins de la même catégorie, lien « Signaler
+  une erreur sur cette fiche » qui préremplit le formulaire.
+- Armes de mêlée et de jet (batte, couteau, Molotov…) : elles ne sont plus rangées parmi les armes de poing (fiche,
+  pastille, filtre « Poing » de l'Armurerie) ; une case « sans objet » (le chargeur d'une batte) est dite telle quelle.
+- Mise en page : sur téléphone, la page GTA Online retrouve ses marges et ses grands titres ne sortent plus de l'écran
+  en allemand et en italien ; quelques textes allemands trop longs (fiches, calculateur, régions) ne sont plus rognés ;
+  le calendrier de l'À propos tient sur une rangée.
+- Accueil : sous le compte à rebours, le prochain jalon (préchargement le 12 novembre, puis la sortie) ; le compteur
+  s'arrête proprement le 19 novembre.
+- Version en boîte (code de téléchargement, pas de disque, en magasin le 12 novembre), taille de la carte (environ deux
+  fois GTA V d'après Rockstar à la presse) : dans Léo et sur la nouvelle page.
+- Mentions : la mesure d'audience sans cookie de l'hébergeur est décrite (ce qui est compté, ce qui ne l'est jamais,
+  statistiques d'ensemble gardées 12 mois) avec un bouton « Ne plus être compté sur cet appareil ». Toujours aucun cookie,
+  donc toujours aucun bandeau.
+- Léo : si l'IA du site atteint sa limite du jour (nombre de questions ou budget), Léo passe en mode local et dit quand
+  l'IA revient.
+
+CE QUI CHANGE POUR GOOGLE ET BING
+- Les fiches sans contenu propre (ni visuel officiel, ni nom donné par Rockstar, ni édition, ni prix publié) sont en
+  « noindex, follow » et sortent du plan du site : 248 fiches de véhicules sur 302 et 9 armes sur 27, dans chaque langue.
+  Elles restent en ligne et reliées ; elles reviendront dans Google d'elles-mêmes dès qu'elles auront une image, un nom
+  ou un prix. Dans la Search Console, « Exclue par la balise noindex » pour ces pages est normal.
+- Plan du site : chaque adresse porte la vraie date de son dernier changement de contenu (reconstituée depuis
+  l'historique du dépôt), au lieu de deux dates pour toutes ; une retouche de gabarit ne redate plus les pages.
+- IndexNow : chaque jour à 6 h (UTC), une tâche Vercel signale à Bing (et à Yandex, Seznam, Naver, Yep) les pages
+  nouvelles ou modifiées. Fichier de clé à la racine : 0a923bd2f68183265c5d1b929dd16681.txt (public par nature).
+
+MARCHE À SUIVRE
+  1. Vercel → le projet → Analytics → « Enable » (Web Analytics). À faire avant de pousser ; sans cela le script de
+     mesure renvoie une erreur 404 discrète, sans effet sur le site.
+  2. Vercel → Settings → Environment Variables (Production) :
+     - CRON_SECRET : une longue chaîne aléatoire (conseillé ; seule la tâche planifiée pourra alors appeler IndexNow) ;
+     - facultatif : LK_IA_PLAFOND_JOUR (questions IA par jour pour tout le site, 600 par défaut) et LK_IA_BUDGET_JOUR
+       (dollars par jour, 5 par défaut) ;
+     - à partir du 12 novembre, si tu veux limiter le coût au lancement : LK_IA_GRATUIT=5 (questions gratuites par
+       visiteur et par 12 heures, 15 aujourd'hui).
+  3. Console Claude (celle où la clé ANTHROPIC_API_KEY a été créée) → Settings → Limits : une limite de dépense
+     mensuelle pour l'API ;
+     Vercel → Settings → Billing → Spend Management : un montant d'alerte (et l'arrêt si tu veux).
+  4. Copie le contenu de l'archive à la racine du dossier GitHub (remplacer), valide, pousse.
+  5. Google Search Console → Sitemaps : renvoie sitemap.xml ; Inspection de l'URL → « Demander une indexation » pour
+     l'accueil, verification.html, radios.html et les six stations (radios/flash-fm.html, cocoteo-fm, back-country-radio,
+     afrobank-fm, the-chamber-106-6, dirty-south-classics).
+  6. Bing Webmaster Tools → « Importer depuis Google Search Console » (un clic) ; IndexNow fait le reste chaque matin.
+  7. Essai : accueil (jalon sous le compte à rebours) ; une fiche (vehicules/grotti-cheetah-classic.html : « Ce qui arrive
+     avec le jeu », « Signaler une erreur sur cette fiche » ouvre le formulaire prérempli) ; radios.html#stations ;
+     mentions-legales.html#mesure-audience (le bouton bascule) ; dans Vercel, Analytics affiche les premières visites
+     quelques minutes après.
+
+Le kit de notoriété (créateurs, presse, communautés, vidéos courtes, Discord) est livré à part, hors du dépôt
+(KIT-NOTORIETE-Leonidakit.md) : le dépôt est public.
+
+Contrôles : tests Node + langues, vérificateur de liens, langues dans le navigateur (toutes les pages des quatre langues),
+écrans (16 largeurs), audit navigateur, mesure d'audience et cookies dans Chromium ; le détail est dans
+outils/CHANGEMENTS-v7.86.txt. Retour arrière : commit précédent dans GitHub Desktop.

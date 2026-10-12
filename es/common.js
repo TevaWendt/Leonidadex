@@ -391,7 +391,7 @@
 })();
 
 /* Léo : amorçage isolé. Les données ne se chargent qu'à l'ouverture du panneau. */
-(function(){'use strict';if(!document.querySelector('main')||document.getElementById('leo-style'))return;/* v7.60-v7.64 : Léo parle les langues de outils/langues.json → leo (français, espagnol, italien, anglais, allemand) : pas de Léo sur une page d’une autre langue */if(!/^(?:fr|es|it|en|de)\b/i.test(document.documentElement.lang||'fr'))return;const base=(document.currentScript&&document.currentScript.src||'').replace(/[^/]*$/,'')||'/';const css=document.createElement('link');css.id='leo-style';css.rel='stylesheet';css.href='/leo.css?v=3fa5fa42dc99';css.onload=()=>{const script=document.createElement('script');script.src=base+'leo-loader.js?v=3fa5fa42dc99';document.head.append(script);};document.head.append(css);})();
+(function(){'use strict';if(!document.querySelector('main')||document.getElementById('leo-style'))return;/* v7.60-v7.64 : Léo parle les langues de outils/langues.json → leo (français, espagnol, italien, anglais, allemand) : pas de Léo sur une page d’une autre langue */if(!/^(?:fr|es|it|en|de)\b/i.test(document.documentElement.lang||'fr'))return;const base=(document.currentScript&&document.currentScript.src||'').replace(/[^/]*$/,'')||'/';const css=document.createElement('link');css.id='leo-style';css.rel='stylesheet';css.href='/leo.css?v=fe4b7665b338';css.onload=()=>{const script=document.createElement('script');script.src=base+'leo-loader.js?v=fe4b7665b338';document.head.append(script);};document.head.append(css);})();
 
 /* v7.61 (langues) : page introuvable. Le serveur renvoie la page 404 française pour toute adresse inconnue ; sous
    /en/… (une adresse d'une langue publiée), c'est la page introuvable de cette langue qui s'affiche. */
@@ -720,4 +720,23 @@
  const go=document.createElement('a');go.href=target.getAttribute('href');go.hreflang=target.dataset.lkLang;go.setAttribute('data-lk-lang',target.dataset.lkLang);go.textContent=target.dataset.aller;go.addEventListener('click',()=>keep(target.dataset.lkLang));
  const no=document.createElement('button');no.type='button';no.textContent=target.dataset.rester||'×';no.addEventListener('click',()=>{keep(here);box.remove();});
  p.append(go);box.append(p,no);bar.insertAdjacentElement('afterend',box);
+})();
+
+/* v7.86 : mesure d'audience sans cookie (Vercel Web Analytics), décrite dans les Mentions (#mesure-audience).
+   Chargée seulement sur le site publié (www.leonidakit.com), jamais en local ni sur une préversion ; jamais si le navigateur
+   demande à ne pas être suivi (Global Privacy Control, Do Not Track) ou si le visiteur a choisi « Ne plus être compté »
+   (clé lk_mesure_off sur cet appareil). Le script de Vercel est servi par le site lui-même : aucun cookie,
+   pas d'adresse IP gardée, une empreinte de visite effacée au bout de 24 heures. L'adresse envoyée est celle de la page,
+   sans paramètres ni ancre (beforeSend). Boutons [data-lk-mesure="off|on"] : choix enregistré sur cet appareil. */
+(()=>{
+ const KEY='lk_mesure_off';
+ const off=()=>{try{return localStorage.getItem(KEY)==='1';}catch(e){return false;}};
+ const say=()=>{for(const s of document.querySelectorAll('[data-lk-mesure-etat]'))s.hidden=s.dataset.lkMesureEtat!==(off()?'off':'on');};
+ document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-lk-mesure]');if(!b)return;try{if(b.dataset.lkMesure==='off')localStorage.setItem(KEY,'1');else localStorage.removeItem(KEY);}catch(err){}say();});
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',say,{once:true});else say();
+ const h=location.hostname;if(h!=='www.leonidakit.com'&&h!=='leonidakit.com')return;
+ if(navigator.globalPrivacyControl===true||navigator.doNotTrack==='1'||window.doNotTrack==='1'||off())return;
+ window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments);};
+ window.va('beforeSend',ev=>{if(off())return null;try{const u=new URL(ev.url);u.search='';u.hash='';return Object.assign({},ev,{url:u.toString()});}catch(e){return ev;}});
+ const s=document.createElement('script');s.defer=true;s.src='/_vercel/insights/script.js';document.head.appendChild(s);
 })();

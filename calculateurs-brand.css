@@ -664,3 +664,5 @@ body.calculator-page main .calc-panel>details.calc-advanced>summary:focus-visibl
    Schritt » en allemand faisait sortir « Experte » de 7 px à 360 px) */
 @media(max-width:400px){body.calculator-page .calc-mode-switch button{padding-inline:11px;}}
 @media(max-width:340px){body.calculator-page .calc-mode-switch button{padding-inline:8px;font-size:.86rem;}}
+/* v7.86 : sur téléphone, le bouton de la question passe à la ligne s’il le faut (allemand : « Die richtige Berechnung finden » était coupé à 320 px) */
+@media(max-width:700px){body.calculator-page .lk-ask-row button{white-space:normal;text-wrap:balance}}

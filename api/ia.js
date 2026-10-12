@@ -30,6 +30,19 @@ const WINDOW_MS=10*60*1000,MAX_PER_WINDOW=60,TIMEOUT_MS=18000; /* v7.69 : anti-r
 const ORIGINS=[/^https:\/\/(?:www\.)?leonidakit\.com$/,/^https:\/\/[a-z0-9-]+\.vercel\.app$/,/^http:\/\/(?:localhost|127\.0\.0\.1)(?::\d+)?$/];
 const hits=new Map(),freeMem=new Map();
 const FREE_DEFAULT=15,HOURS_DEFAULT=12,IP_FACTOR=5;
+/* v7.86 (avis demandé par Téva : « le coût de l'IA ») : budget global par jour, tous visiteurs confondus. Les 15 questions par
+   visiteur ne limitaient pas le total : 10 000 visiteurs le jour de la sortie, c'était jusqu'à 150 000 appels. Deux plafonds,
+   réglables dans Vercel, comptés par jour de Paris (remis à zéro à minuit, heure de Paris) dans la base déjà reliée :
+   - LK_IA_PLAFOND_JOUR : appels à l'IA par jour (défaut 600) ;
+   - LK_IA_BUDGET_JOUR : dépense par jour en dollars (défaut 5), calculée sur les jetons réellement facturés (champ usage de
+     chaque réponse) et les prix publics d'Anthropic ; un modèle absent du tableau est compté au prix le plus haut.
+   Au-delà, la page repasse en mode local (Léo local, lecture locale du calculateur) jusqu'à minuit et le dit. Aucun compteur ne
+   porte de donnée personnelle. Une limite de dépense dans la Console Claude reste le filet de sécurité final. */
+const DAY_CALLS_DEFAULT=600,DAY_USD_DEFAULT=5,DAY_TTL=172800;
+/* prix publics en dollars par million de jetons : entrée, sortie, écriture du cache (5 min), lecture du cache (relevés le 12/10/2026) */
+const TARIFS={'claude-sonnet-5-5':[2,10,2.5,0.1],'claude-haiku-5-5':[0.1,0.5,0.125,0.01],'claude-opus-5-5':[4,20,5,0.2],'claude-fable-5-1':[10,50,12.5,0.25],'claude-mythos-5-1':[10,50,12.5,0.25]};
+const TARIF_MAX=[10,50,12.5,0.25];
+const dayMem=new Map();
 const DEVICE=/^[A-Za-z0-9_-]{16,64}$/;
 
 const clean=(v,max)=>typeof v==='string'?v.replace(/\r\n?/g,'\n').replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/g,'').trim().slice(0,max):'';
@@ -200,6 +213,33 @@ async function freeUse(st,who,ip,fetchImpl,now,take){
  return {ok:true,restant:Math.max(0,Math.min(st.free,capA)-a.n),reset:a.until,undo:()=>{a.n=Math.max(0,a.n-1);if(ka!==ki)i.n=Math.max(0,i.n-1);}};
 }
 
+/* ---------- v7.86 : budget global par jour ---------- */
+function tarifModele(model){const k=Object.keys(TARIFS).find(p=>model===p||String(model).startsWith(p+'-'));return k?TARIFS[k]:TARIF_MAX;}
+/* jetons × dollars par million de jetons = micro-dollars */
+function coutMicro(model,u){const [i,o,cw,cr]=tarifModele(model),n=x=>{const v=Number(x);return Number.isFinite(v)&&v>0?v:0;};u=u||{};return Math.ceil(n(u.input_tokens)*i+n(u.output_tokens)*o+n(u.cache_creation_input_tokens)*cw+n(u.cache_read_input_tokens)*cr);}
+function parisParts(t){const f=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Paris',hourCycle:'h23',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit'}).formatToParts(new Date(t));const g=k=>f.find(p=>p.type===k).value;return {day:g('year')+'-'+g('month')+'-'+g('day'),h:Number(g('hour'))};}
+const dayKey=t=>parisParts(t).day;
+/* prochain minuit à Paris (heure d'été et d'hiver comprises) : on avance d'heure en heure, puis de minute en minute */
+function nextMidnight(t){const d=dayKey(t);let x=t-(t%60000);while(dayKey(x)===d)x+=3600000;x-=3600000;while(dayKey(x)===d)x+=60000;return x;}
+function daySettings(env){const n=(v,d,min,max)=>{const x=Number(v);return Number.isFinite(x)&&x>=min&&x<=max?x:d;};return {calls:Math.round(n(env.LK_IA_PLAFOND_JOUR,DAY_CALLS_DEFAULT,0,1e6)),micro:Math.round(n(env.LK_IA_BUDGET_JOUR,DAY_USD_DEFAULT,0,1e5)*1e6)};}
+/* lecture (état) ou réservation d'un appel ; renvoie {ok, reset} */
+async function dayUse(st,env,fetchImpl,now,take){
+ const lim=daySettings(env),d=dayKey(now),kq='lkia:j:'+d+':q',kc='lkia:j:'+d+':c',reset=nextMidnight(now);
+ if(lim.calls<=0||lim.micro<=0)return {ok:false,reset};
+ if(st.kv){try{
+   if(!take){const [q,c]=await kvRun(st.kv,fetchImpl,[['GET',kq],['GET',kc]]);return {ok:(Number(q)||0)<lim.calls&&(Number(c)||0)<lim.micro,reset};}
+   const r=await kvRun(st.kv,fetchImpl,[['INCR',kq],['EXPIRE',kq,String(DAY_TTL)],['GET',kc]]);
+   if(Number(r[0])>lim.calls||(Number(r[2])||0)>=lim.micro){await kvRun(st.kv,fetchImpl,[['DECR',kq]]).catch(()=>{});return {ok:false,reset};}
+   return {ok:true,reset,undo:()=>kvRun(st.kv,fetchImpl,[['DECR',kq]]).catch(()=>{}),spend:m=>m>0?kvRun(st.kv,fetchImpl,[['INCRBY',kc,String(m)],['EXPIRE',kc,String(DAY_TTL)]]).catch(()=>{}):Promise.resolve()};
+  }catch(e){console.error('ia: base des compteurs indisponible (budget du jour)');}}
+ /* sans base : mémoire vive de cette instance */
+ for(const k of dayMem.keys())if(k!==d)dayMem.delete(k);
+ const m=dayMem.get(d)||{q:0,c:0};dayMem.set(d,m);
+ if(!take)return {ok:m.q<lim.calls&&m.c<lim.micro,reset};
+ if(m.q+1>lim.calls||m.c>=lim.micro)return {ok:false,reset};
+ m.q++;return {ok:true,reset,undo:()=>{m.q=Math.max(0,m.q-1);},spend:x=>{if(x>0)m.c+=x;return Promise.resolve();}};
+}
+
 function createHandler(options={}){
  const env=options.env||process.env,fetchImpl=options.fetch||globalThis.fetch,clock=options.now||(()=>Date.now());
  return async function handler(req,res){
@@ -214,13 +254,17 @@ function createHandler(options={}){
   const st=settings(env),now=clock(),d=v.data,who={appareil:d.appareil};
   const model=MODELS.test(String(env.LK_IA_MODELE||''))?env.LK_IA_MODELE:MODEL_DEFAULT;
   /* v7.69 : état de l'accès (questions gratuites restantes, heure du renouvellement), sans rien consommer */
-  if(d.mode==='etat'){const f=await freeUse(st,who,ip,fetchImpl,now,false);
-   return reply(res,200,{ok:true,mode:'etat',modele:model,gratuit:st.free,heures:st.windowS/3600,restant:f.restant,reset:f.reset});}
+  if(d.mode==='etat'){const f=await freeUse(st,who,ip,fetchImpl,now,false),g=await dayUse(st,env,fetchImpl,now,false);
+   return reply(res,200,{ok:true,mode:'etat',modele:model,gratuit:st.free,heures:st.windowS/3600,restant:f.restant,reset:f.reset,...(g.ok?{}:{plafond:g.reset})});}
   if(limited(ip,now))return reply(res,429,{ok:false,code:'rate'});
   const access=await freeUse(st,who,ip,fetchImpl,now,true);
   if(!access.ok)return reply(res,402,{ok:false,code:'quota',gratuit:st.free,heures:st.windowS/3600,restant:0,reset:access.reset});
+  /* v7.86 : budget global du jour atteint : la question du visiteur n'est pas comptée, la page passe en mode local jusqu'à minuit */
+  const day=await dayUse(st,env,fetchImpl,now,true);
+  if(!day.ok){if(access.undo)await access.undo();return reply(res,402,{ok:false,code:'plafond',gratuit:st.free,heures:st.windowS/3600,restant:Math.min(st.free,access.restant+1),reset:access.reset,plafond:day.reset});}
   const r=await callClaude(d,env,fetchImpl);
-  if(!r.ok){if(access.undo)await access.undo();console.error('ia: réponse refusée par le service ('+r.status+(r.why?' — '+r.why:'')+')');return reply(res,502,{ok:false,code:'service'});}
+  if(!r.ok){if(access.undo)await access.undo();if(day.undo)await day.undo();console.error('ia: réponse refusée par le service ('+r.status+(r.why?' — '+r.why:'')+')');return reply(res,502,{ok:false,code:'service'});}
+  if(day.spend)await day.spend(coutMicro(r.model,r.usage));
   const out=shape(d,r.input,r.model);
   /* v7.69.2 : l'IA n'avait rien à ajouter (Léo : « trouve » faux ; calculateur : ni case, ni variante, ni question) : la page garde
      sa réponse locale, la question n'est ni comptée ni facturée */
@@ -235,4 +279,4 @@ function createHandler(options={}){
 
 module.exports=createHandler();
 module.exports.createHandler=createHandler;
-module.exports._test={validate,limited,cases,safeLink,shape,userMessage,SYSTEM_CALC,SYSTEM_LEO,SCHEMA_CALC,SCHEMA_LEO,modelOptions,MODEL_DEFAULT,settings,digest,reset:()=>{hits.clear();freeMem.clear();}};
+module.exports._test={validate,limited,cases,safeLink,shape,userMessage,SYSTEM_CALC,SYSTEM_LEO,SCHEMA_CALC,SCHEMA_LEO,modelOptions,MODEL_DEFAULT,settings,digest,tarifModele,coutMicro,dayKey,nextMidnight,daySettings,DAY_CALLS_DEFAULT,DAY_USD_DEFAULT,reset:()=>{hits.clear();freeMem.clear();dayMem.clear();}};

@@ -80,14 +80,26 @@ const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)')
     box.innerHTML = ''; box.appendChild(s);
     last[id] = val;
   }
+  /* v7.86 : sans script, le compteur affiche des tirets (plus de « 69 jours » figé) ; les jalons officiels (préchargement le
+     12 novembre, sortie le 19) changent seuls la phrase sous le compteur, et le compteur s'efface le jour de la sortie. */
+  const preload = new Date("2026-11-12T00:00:00");
+  let jalon = null, clockTimer = 0;
+  function setJalon(now){
+    const k = now >= target ? 'sorti' : now >= preload ? 'pre' : 'before';
+    if(k === jalon) return; jalon = k;
+    document.querySelectorAll('#jalons [data-jalon]').forEach(function(s){ s.hidden = s.dataset.jalon !== k; });
+    const c = el('clock'); if(c) c.hidden = k === 'sorti';
+  }
   function tick(){
-    const diff = target - new Date();
+    const now = new Date(), diff = target - now;
+    setJalon(now);
+    if(diff <= 0){ if(clockTimer){ clearInterval(clockTimer); clockTimer = 0; } return; }
     setRoll('rd', String(Math.max(0, Math.floor(diff/86400000))));
     setRoll('rh', String(Math.max(0, Math.floor(diff/3600000)%24)).padStart(2,'0'));
     setRoll('rm', String(Math.max(0, Math.floor(diff/60000)%60)).padStart(2,'0'));
     setRoll('rs', String(Math.max(0, Math.floor(diff/1000)%60)).padStart(2,'0'));
   }
-  tick(); setInterval(tick, 1000);
+  tick(); if(target - new Date() > 0) clockTimer = setInterval(tick, 1000);
 
   /* titre mot par mot */
   document.querySelectorAll('#h1 .w').forEach(function(w,i){
