@@ -666,3 +666,10 @@ body.calculator-page main .calc-panel>details.calc-advanced>summary:focus-visibl
 @media(max-width:340px){body.calculator-page .calc-mode-switch button{padding-inline:8px;font-size:.86rem;}}
 /* v7.86 : sur téléphone, le bouton de la question passe à la ligne s’il le faut (allemand : « Die richtige Berechnung finden » était coupé à 320 px) */
 @media(max-width:700px){body.calculator-page .lk-ask-row button{white-space:normal;text-wrap:balance}}
+/* lot 1 bis (corrections de l’audit, points 7 et 14) : les montants proposés s’équilibrent (plus de « 10 Mio. $ » seul sur sa
+   ligne) ; sur téléphone, les boutons d’une étape s’empilent sur toute la largeur (le libellé du mode Expert ne fait plus quatre
+   ou cinq lignes en allemand et en italien, et son voisin ne s’étire plus à la même hauteur) ; en colonne, chaque bouton garde sa
+   hauteur naturelle (la base de 170 px de calculateurs-workspace.css deviendrait sa hauteur) */
+body.calculator-page main .calc-presets{display:block;text-wrap:balance;}
+body.calculator-page main .calc-presets>.calc-chip{margin:0 8px 8px 0;vertical-align:top;}
+@media(max-width:600px){body.calculator-page main .b-stage-actions{flex-direction:column;align-items:stretch;}body.calculator-page main .b-stage-actions>*{flex:0 0 auto;}body.calculator-page main .b-stage-actions .calc-button{width:100%;}}

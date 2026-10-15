@@ -6,7 +6,8 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
 (function () {
   'use strict';
   var lkPl = function (n) { return /^fr/.test(document.documentElement.lang || "fr") ? n > 1 : n !== 1; }; /* pluriel selon la langue de la page (français : n > 1) */
-  var lkDollars = function (s) { return /^(fr|de)/.test(document.documentElement.lang || "fr") ? s + "\u00a0$" : "$" + s; }; /* « 1 250 $ », « 1.250 $ » (allemand) ou « $1,250 » selon la langue de la page */
+  /* v7.91 (portugais) : « $ 1.250 » (signe devant, espace insécable) ; saisie « 1.250,50 » comme en allemand */
+  var lkDollars = function (s) { return /^pt/.test(document.documentElement.lang || "fr") ? "$\u00a0" + s : /^(fr|de)/.test(document.documentElement.lang || "fr") ? s + "\u00a0$" : "$" + s; }; /* « 1 250 $ », « 1.250 $ » (allemand) ou « $1,250 » selon la langue de la page */
   var root = document.getElementById('en-un-regard'); if (!root) return;
   var tools = root.querySelector('[data-cg-tools]'), box = root.querySelector('[data-cg-compare]'), status = root.querySelector('[data-cg-status]');
   var checks = Array.prototype.slice.call(root.querySelectorAll('[data-cg-cmp]'));
@@ -14,7 +15,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
   tools.hidden = false; checks.forEach(function (c) { c.closest('label').hidden = false; });
   var sim = {}; // id → {price, heal} écrits par le joueur, pour cette visite seulement
   function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text !== undefined) n.textContent = text; return n; }
-  function num(v) { var t = String(v || '').trim().replace(/[\s  ]/g, ''); t = /^fr/.test(document.documentElement.lang || 'fr') ? t.replace(',', '.') : /^de/.test(document.documentElement.lang) ? t.replace(/\.(?=\d{3}(?!\d))/g, '').replace(',', '.') : t.replace(/,/g, ''); if (!/^\d+(\.\d+)?$/.test(t)) return null; var n = Number(t); return Number.isFinite(n) ? n : null; }
+  function num(v) { var t = String(v || '').trim().replace(/[\s  ]/g, ''); t = /^fr/.test(document.documentElement.lang || 'fr') ? t.replace(',', '.') : /^(de|pt)/.test(document.documentElement.lang) ? t.replace(/\.(?=\d{3}(?!\d))/g, '').replace(',', '.') : t.replace(/,/g, ''); if (!/^\d+(\.\d+)?$/.test(t)) return null; var n = Number(t); return Number.isFinite(n) ? n : null; }
   function facts(card) { var out = {}; Array.prototype.forEach.call(card.querySelectorAll('.cg-facts > div'), function (d) { out[d.querySelector('dt').textContent] = d.querySelector('dd').textContent; }); return out; }
   function chosen() { return checks.filter(function (c) { return c.checked; }).map(function (c) { return c.closest('.cg-card'); }); }
   function render() {

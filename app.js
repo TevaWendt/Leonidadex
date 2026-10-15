@@ -1,5 +1,9 @@
 /* v7.61 : pluriel selon la langue de la page : français n > 1 (« 0 coché », « 1,5 million ») ; anglais, espagnol n ≠ 1 (« 0 marcados ») */
 var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.documentElement&&document.documentElement.lang)||'fr').slice(0,2)==='fr'?n>1:n!==1;};
+/* lot 1 bis (corrections de l'audit, point 2) : la cible des comptes à rebours, une seule fois pour tout le site (accueil, fiches,
+   pages de section). Ligne écrite par outils/sync-site.cjs depuis outils/acquisitions.json (game.releaseDate, game.releaseTime) :
+   c'est là qu'on change la date ou l'heure. Sans fuseau, c'est minuit à l'heure du visiteur, comme sur le PlayStation Store. */
+window.LK_SORTIE = {"sortie":"2026-11-19T00:00:00","prechargement":"2026-11-12T00:00:00"};
 (function(){
 'use strict';
 const esc = window.LK.esc;
@@ -70,19 +74,23 @@ const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)')
   document.querySelectorAll('.fact .big[data-count]').forEach(function(n){ factIO.observe(n); });
 
   /* compteur à rouleaux */
-  const target = new Date("2026-11-19T00:00:00");
+  const target = new Date(window.LK_SORTIE.sortie);
   const last = {rd:null, rh:null, rm:null, rs:null};
   function setRoll(id, val){
     if(last[id] === val) return;
     const box = el(id);
+    if(!box) return;
     const s = document.createElement('span');
     s.textContent = val; s.className = 'up';
     box.innerHTML = ''; box.appendChild(s);
     last[id] = val;
   }
-  /* v7.86 : sans script, le compteur affiche des tirets (plus de « 69 jours » figé) ; les jalons officiels (préchargement le
-     12 novembre, sortie le 19) changent seuls la phrase sous le compteur, et le compteur s'efface le jour de la sortie. */
-  const preload = new Date("2026-11-12T00:00:00");
+  /* v7.86 : les jalons officiels (préchargement le 12 novembre, sortie le 19) changent seuls la phrase sous le compteur.
+     lot 1 bis (corrections de l'audit, points 1, 2 et 12) : sans script, le visiteur et les robots lisent « Sortie le jeudi
+     19 novembre 2026 » (plus de cases « – jours – heures ») ; le script pose les cases depuis le modèle #clock-cases, avec
+     « Minuit, heure locale » dessous. À la sortie, le compteur laisse place à « GTA VI est sorti » et à deux liens (les vrais
+     prix, le calculateur), au lieu de rester sur « 0 jours 00 heures ». */
+  const preload = new Date(window.LK_SORTIE.prechargement);
   let jalon = null, clockTimer = 0;
   function setJalon(now){
     /* v7.87 : des codes que la traduction des scripts ne touche pas (« avant » devenait « before », « antes », « prima » :
@@ -90,7 +98,10 @@ const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)')
     const k = now >= target ? 'j-sorti' : now >= preload ? 'j-pre' : 'j-avant';
     if(k === jalon) return; jalon = k;
     document.querySelectorAll('#jalons [data-jalon]').forEach(function(s){ s.hidden = s.dataset.jalon !== k; });
-    const c = el('clock'); if(c) c.hidden = k === 'j-sorti';
+    const done = k === 'j-sorti', c = el('clock'), tz = el('clock-tz'), out = el('clock-sorti');
+    if(c) c.hidden = done;
+    if(tz) tz.hidden = done;
+    if(out) out.hidden = !done;
   }
   function tick(){
     const now = new Date(), diff = target - now;
@@ -101,6 +112,10 @@ const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)')
     setRoll('rm', String(Math.max(0, Math.floor(diff/60000)%60)).padStart(2,'0'));
     setRoll('rs', String(Math.max(0, Math.floor(diff/1000)%60)).padStart(2,'0'));
   }
+  (function(){
+    const c = el('clock'), tpl = el('clock-cases');
+    if(c && tpl && tpl.content && target - new Date() > 0 && !el('rd')){ c.replaceChildren(tpl.content.cloneNode(true)); c.classList.add('is-live'); }
+  })();
   tick(); if(target - new Date() > 0) clockTimer = setInterval(tick, 1000);
 
   /* titre mot par mot */
@@ -491,12 +506,18 @@ const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)')
 (function(){
   const box = document.getElementById('fcd');
   if(!box) return;
-  const target = new Date("2026-11-19T00:00:00");
+  const target = new Date(window.LK_SORTIE.sortie);
   const g = id => document.getElementById(id);
+  /* lot 1 bis (corrections de l'audit, point 2) : sous chaque compteur, l'heure visée, dans la langue de la page */
+  let tz = null;
+  if(target - new Date() > 0){ tz = document.createElement('span'); tz.className = 'fcount-tz'; tz.textContent = 'minuit, heure locale'; box.insertAdjacentElement('afterend', tz); }
+  let timer = 0;
   function tick(){
     const diff = target - new Date();
     if(diff <= 0){
       box.innerHTML = '<span class="fcd-box"><b>Données en cours de mise à jour</b></span>';
+      if(tz){ tz.remove(); tz = null; }
+      if(timer){ clearInterval(timer); timer = 0; }
       return;
     }
     g('fd').textContent = Math.floor(diff/86400000);
@@ -504,7 +525,7 @@ const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)')
     g('fm').textContent = String(Math.floor(diff/60000)%60).padStart(2,'0');
     g('fs').textContent = String(Math.floor(diff/1000)%60).padStart(2,'0');
   }
-  tick(); setInterval(tick, 1000);
+  tick(); if(target - new Date() > 0) timer = setInterval(tick, 1000);
 })();
 
 /* ============================================================

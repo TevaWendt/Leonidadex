@@ -1,0 +1,95 @@
+{
+ "id": "/en/",
+ "name": "Leonidakit",
+ "short_name": "Leonidakit",
+ "description": "The map, your trackers, the calculator and Léo for GTA VI, to keep open next to your console, even offline.",
+ "lang": "en-US",
+ "dir": "ltr",
+ "start_url": "/en/",
+ "scope": "/en/",
+ "display": "standalone",
+ "background_color": "#FDFBF7",
+ "theme_color": "#FDFBF7",
+ "categories": [
+  "games",
+  "entertainment",
+  "utilities"
+ ],
+ "icons": [
+  {
+   "src": "/img/app/icone-192.png",
+   "sizes": "192x192",
+   "type": "image/png",
+   "purpose": "any"
+  },
+  {
+   "src": "/img/app/icone-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "any"
+  },
+  {
+   "src": "/img/app/icone-maskable-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "maskable"
+  }
+ ],
+ "shortcuts": [
+  {
+   "name": "Map",
+   "short_name": "Map",
+   "url": "/en/carte.html",
+   "icons": [
+    {
+     "src": "/img/app/raccourci-carte-96.png",
+     "sizes": "96x96",
+     "type": "image/png"
+    }
+   ]
+  },
+  {
+   "name": "Calculator",
+   "short_name": "Calculator",
+   "url": "/en/calculateurs.html",
+   "icons": [
+    {
+     "src": "/img/app/raccourci-calculateur-96.png",
+     "sizes": "96x96",
+     "type": "image/png"
+    }
+   ]
+  },
+  {
+   "name": "Progress",
+   "short_name": "Progress",
+   "url": "/en/progression.html",
+   "icons": [
+    {
+     "src": "/img/app/raccourci-progression-96.png",
+     "sizes": "96x96",
+     "type": "image/png"
+    }
+   ]
+  },
+  {
+   "name": "Companion mode",
+   "short_name": "Companion mode",
+   "url": "/en/compagnon.html",
+   "icons": [
+    {
+     "src": "/img/app/raccourci-compagnon-96.png",
+     "sizes": "96x96",
+     "type": "image/png"
+    }
+   ]
+  }
+ ],
+ "launch_handler": {
+  "client_mode": [
+   "navigate-existing",
+   "auto"
+  ]
+ },
+ "prefer_related_applications": false
+}

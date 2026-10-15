@@ -1,0 +1,77 @@
+LEONIDAKIT v7.89 — Lot 5 : appli installable, Mode compagnon, sans réseau et changement d'appareil
+À appliquer sur la v7.87. Archive « modifs » : seulement les fichiers qui changent (et les nouveaux).
+Rien n'a été publié ni poussé. Aucun fichier à supprimer pour ce lot. CSP inchangée.
+
+HORS LOT, À FAIRE UNE FOIS : supprime api/ia-achat.js du dossier GitHub. La v7.71 demandait de le supprimer (une
+archive ne peut pas effacer un fichier) ; il est toujours dans le dépôt et c'est lui seul qui fait échouer quatre tests
+du socle, déjà sur la v7.87 (deux dans contact-v746, dont la preuve de confidentialité, un dans ia-v769, un dans v771).
+Vérifié : sans ce fichier, ils passent tous.
+
+CETTE ARCHIVE PART À L'ASSEMBLAGE
+Les lots 3, 6 et 7 sont faits en même temps, depuis la même v7.87. Ne pousse pas cette archive seule : donne-la à la
+conversation d'assemblage avec les trois autres, qui réunit tout et régénère le site une seule fois. Toutes les pages
+changent dans cette archive (manifeste et icône dans l'en-tête, nouvelle entrée de menu et de pied de page) : c'est
+normal, l'assemblage les régénère de toute façon.
+
+CE QUI CHANGE POUR LE VISITEUR
+- Leonidakit s'installe comme une appli, sur téléphone, tablette et ordinateur : le soleil du site sur l'écran
+  d'accueil, plein écran sans barre du navigateur, raccourcis Carte, Calculateur, Progression et Mode compagnon, dans la
+  langue de la page.
+- Sans réseau, le site marche pour ce qui a déjà été vu : les pages déjà ouvertes s'affichent ; une page jamais vue
+  donne « Pas de réseau pour l'instant » (dans la langue), avec la liste des pages gardées sur l'appareil. Avec du réseau,
+  rien ne change : on a toujours la dernière version.
+- Nouvelle page Mode compagnon (compagnon.html, cinq langues ; menu Explorer › Le site, pied de page Outils et aide) :
+  la carte, les carnets, le calculateur et Léo en grandes tuiles ; « Préparer pour jouer sans réseau » (accueil, carte,
+  calculateur, progression, les 9 carnets et Léo, environ 7 Mo) ; « Installer l'appli » (en un geste quand le navigateur
+  le propose, sinon la marche à suivre pour iPhone, Android ou ordinateur) ; « Garder l'écran allumé » pendant la partie ;
+  questions fréquentes.
+- Changer d'appareil, sans compte ni serveur (Mode compagnon et page Progression) : « Créer le lien de transfert » donne
+  un lien et un QR code avec tout le suivi (cases cochées, calculs, plans) ; sur l'autre appareil, un aperçu puis
+  Fusionner, Remplacer ou Annuler. Le fichier (exporter / importer) reste proposé.
+- Mentions : ce que garde le service worker et comment l'effacer, l'écran allumé, le transfert ; toujours aucun cookie.
+- Léo répond à « comment installer le site ? », « ça marche sans réseau ? », « comment passer ma progression sur un
+  autre téléphone ? ». Tuto : « Comment emporter mes données sur un autre appareil ? » commence par le lien de transfert.
+
+POUR GOOGLE
+- compagnon.html (cinq langues) entre dans le plan du site : titre « Mode compagnon GTA 6 : appli, sans réseau et
+  transfert », description, FAQ, hreflang. hors-ligne.html est en noindex et hors du plan du site.
+
+MARCHE À SUIVRE (après l'assemblage)
+  1. La conversation d'assemblage copie l'archive avec les autres, régénère (outils/regenerer.cjs : gen-compagnon.cjs y
+     est déjà, avant gen-informations.cjs) et lance les contrôles. Le numéro de version du service worker (sw.js) est
+     réécrit tout seul par la régénération : rien à faire à la main.
+  2. Toi : copie le résultat de l'assemblage à la racine du dossier GitHub (remplacer), valide, pousse.
+  3. Google Search Console → Sitemaps : renvoie sitemap.xml ; Inspection de l'URL → « Demander une indexation » pour
+     compagnon.html.
+  4. Essai sur ton téléphone, en https (le service worker ne marche qu'en https) :
+     - ouvre compagnon.html, touche « Préparer pour jouer sans réseau », attends « Prêt à jouer sans réseau » ;
+     - passe en mode avion : ouvre la carte, un carnet, le calculateur, Léo ; puis une page jamais ouverte → « Pas de
+       réseau pour l'instant » ;
+     - « Installer l'appli » (Android : le bouton ; iPhone : Partager → Sur l'écran d'accueil) ;
+     - sur un ordinateur, « Créer le lien de transfert », scanne le QR code avec le téléphone → aperçu → Fusionner.
+
+POUR L'ASSEMBLAGE (fichiers partagés avec d'autres lots)
+Chaque ajout est commenté « v7.89 (lot 5) ». Fichiers à fusionner s'ils sont aussi modifiés ailleurs :
+- common.js : un bloc ajouté à la fin (enregistrement du service worker, écran allumé, scripts « data-lk-idle » chargés
+  une fois la page chargée) ;
+- vercel.json : trois règles d'en-têtes (sw.js, manifestes) après celle des .js / .css ; CSP inchangée ;
+- outils/sync-site.cjs : liens absolus pour hors-ligne.html, appli.tete() (manifeste + icône), recherche du site (page
+  hors connexion exclue, synonymes du Mode compagnon), tampon du service worker tout à la fin ;
+- outils/langues.cjs : manifeste de chaque langue (deux lignes dans generer()), barre des langues de la page hors
+  connexion en liens absolus (langBar, comme 404.html) ;
+- outils/site-shell.cjs : « Mode compagnon » dans « Explorer › Le site » et dans « Outils et aide » ;
+- outils/regenerer.cjs : gen-compagnon.cjs avant gen-informations.cjs ; outils/langues.json : vendor/qrcode-generator.js ;
+- outils/gen-informations.cjs, outils/site-informations.json (Mentions) ; outils/gen-tuto.cjs (une réponse de la FAQ) ;
+- outils/leo-knowledge.json : trois sujets nouveaux (installer-site, hors-connexion, changer-telephone), trois modifiés
+  (donnees-navigateur, exporter-suivi, site-telephone) ;
+- outils/langues/<code>/code.json (codes internes protégés), leo-pivot.json, _leo-pont.json ;
+- outils/tests/langues.test.cjs : une ligne (liens de langue absolus de hors-ligne.html, comme pour 404.html) ;
+- progression.html : le bloc « Passer sur un autre appareil » est écrit par outils/gen-compagnon.cjs entre ses marqueurs
+  (ou, s'ils manquent, après le message de sauvegarde) : il se remet tout seul.
+
+Contrôles : tests Node (1 077 : tout passe, sauf les quatre tests que fait échouer api/ia-achat.js, voir plus haut),
+langues 42/42, vérificateur sans erreur, contrôle navigateur du lot 41/41, langues dans le navigateur 2 267/2 267, écrans
+identiques à la v7.87 (16 largeurs, et l'allemand), audit de clôture sans erreur, aucun cookie, accessibilité sans
+violation dans le lot, latence dans le bruit de la mesure (série témoin à l'appui), page Mode compagnon plus rapide que
+Tuto et À propos. Le détail est dans outils/CHANGEMENTS-v7.89.txt et la matrice dans outils/MATRICE-v7.89.md.
+Retour arrière : commit précédent dans GitHub Desktop.

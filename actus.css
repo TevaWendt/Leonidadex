@@ -1,36 +1,62 @@
 /* v7.87 : section « Actualités et vidéos » (actus.html, videos.html, videos/<id>.html, editions.html), rendue par
    outils/gen-actus.cjs. Mêmes jetons que le reste du site (style.css) ; le seul élément marquant est l’écran de la vidéo
-   (affiche, trame d’écran, bouton de lecture) : le reste reste sobre. */
-.actus-page .ac-sec{padding-block:clamp(28px,4vw,48px);}
-.actus-page .ac-lede{max-width:var(--measure);color:var(--ink-soft);margin:6px 0 18px;}
+   (affiche, trame d’écran, bouton de lecture) : le reste reste sobre.
+   v7.87.1 (passe de qualité) : les blocs sont des sections éditoriales du moteur commun (outils/sections.cjs, style.css :
+   numéro, kicker, titre, icône, fonds alternés) ; les entrées au défilement passent par le moteur commun (common.js,
+   LKMotion) : un bloc .ac-in[data-lk-reveal] reçoit « is-in » en entrant dans l’écran (cascade de 60 ms, 300 ms au plus) et
+   joue une seule animation (--c-rise, 10 px, et opacité ; durées et courbes de motion-tokens.css) ; déjà à l’écran à
+   l’ouverture (« lk-settled »), en « réduire les animations » ou sans script, il est visible tout de suite. Un moment par
+   page : la frise qui se trace (actus.html), la planche de photogrammes (vidéos), les seize contenus qui se déballent
+   (éditions). */
 .actus-page .ac-more{margin-top:16px;font-weight:700;}
 .actus-page .ac-more a,.ac-ev-links a,.ac-ticket-a,.ac-bonus-i a{color:var(--coral-text);text-decoration:underline;text-underline-offset:3px;font-weight:700;}
-.ac-n{display:inline-flex;align-items:center;justify-content:center;min-width:1.9em;height:1.9em;padding:0 .45em;margin-left:.35em;border-radius:999px;background:var(--ink);color:var(--paper);font-size:.72em;font-weight:800;vertical-align:.15em;}
-.ac-refs{display:inline-flex;gap:3px;vertical-align:.35em;}
-.ac-refs a{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 4px;border-radius:5px;background:var(--paper-2);border:1px solid var(--rule);color:var(--ink-soft);font-size:.68rem;font-weight:800;text-decoration:none;}
+.ed--night .ac-more a{color:var(--amber-2);}
+.ac-n{display:inline-flex;align-items:center;justify-content:center;min-width:1.9em;height:1.9em;padding:0 .45em;margin-left:.35em;border-radius:999px;background:var(--ink);color:var(--paper);font-size:.72em;font-weight:800;vertical-align:.15em;letter-spacing:0;}
+.ed-title .ac-n{font-size:.5em;vertical-align:.3em;}
+/* v7.87.1 : renvois aux sources lisibles (11 px au moins) */
+.ac-refs{display:inline-flex;gap:3px;vertical-align:.3em;}
+.ac-refs a{display:inline-flex;align-items:center;justify-content:center;min-width:24px;height:24px;padding:0 5px;border-radius:5px;background:var(--paper-2);border:1px solid var(--rule);color:var(--ink-soft);font-size:max(11px,.7rem);font-weight:800;text-decoration:none;}
 .ac-refs a:hover,.ac-refs a:focus-visible{background:var(--amber);color:var(--ink);}
 .ac-rss{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin-top:18px;}
 .ac-rss span{font-size:.86rem;color:var(--ink-soft);}
 
+/* ---------- v7.87.1 : entrée au défilement (moteur commun) ---------- */
+@keyframes ac-rise{from{opacity:0;transform:translate3d(0,var(--c-rise,10px),0);}to{opacity:1;transform:none;}}
+@keyframes ac-slide{from{opacity:0;transform:translate3d(calc(-1*var(--c-rise,10px)),0,0);}to{opacity:1;transform:none;}}
+@keyframes ac-pop{0%{transform:scale(0);}70%{transform:scale(1.18);}100%{transform:scale(1);}}
+@keyframes ac-stamp{0%{opacity:0;transform:scale(1.35) rotate(-6deg);}60%{opacity:1;}100%{opacity:1;transform:none;}}
+@keyframes ac-draw{from{transform:scaleY(0);}to{transform:scaleY(1);}}
+@media (prefers-reduced-motion:no-preference){
+  .js .ac-in[data-lk-reveal]:not(.is-in){opacity:0;}
+  .js .ac-in[data-lk-reveal].is-in:not(.lk-settled){animation:ac-rise calc(var(--c-standard,300ms)*1.5) var(--c-ease-result,cubic-bezier(.16,1,.3,1)) var(--lk-delay,0ms) backwards;}
+}
+
 /* ---------- les prochaines dates : trois billets ---------- */
-.ac-next{padding-block:clamp(26px,4vw,44px);background:var(--paper-2);border-block:1px solid var(--rule);}
-.ac-next-l{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));}
+.ac-next-l{list-style:none;margin:0;padding:0;display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));}
 .ac-ticket{display:grid;grid-template-columns:96px 1fr;border:2px solid var(--ink);border-radius:var(--radius);background:var(--paper);box-shadow:var(--shadow-hard);overflow:hidden;}
+.ed--paper2 .ac-ticket{background:#fff;}
 .ac-ticket-d{margin:0;background:var(--night);color:var(--paper);display:flex;align-items:center;justify-content:center;text-align:center;position:relative;}
 .ac-ticket-d::after{content:'';position:absolute;right:-1px;top:8px;bottom:8px;border-right:2px dashed rgba(253,251,247,.35);}
 .ac-ticket-d time{display:flex;flex-direction:column;align-items:center;gap:2px;padding:14px 6px;}
 .ac-ticket-d b{font-size:2.3rem;line-height:1;color:var(--amber);font-variant-numeric:tabular-nums;}
 .ac-ticket-d span{font-size:.72rem;font-weight:700;letter-spacing:.02em;}
-.ac-ticket-b{padding:14px 16px 16px;}
+.ac-ticket-b{padding:14px 16px 16px;display:flex;flex-direction:column;}
 .ac-ticket-b h3{margin:0 0 6px;font-size:1.06rem;}
 .ac-ticket-b p{margin:0 0 8px;font-size:.92rem;color:var(--ink-soft);}
+.ac-ticket-a{margin-top:auto;align-self:flex-start;}
+@media (prefers-reduced-motion:no-preference){
+  /* le talon du billet se « tamponne » juste après l’entrée du billet */
+  .js .ac-ticket.is-in:not(.lk-settled) .ac-ticket-d b{animation:ac-stamp var(--c-narrative,620ms) var(--ease-spring,cubic-bezier(.34,1.56,.64,1)) calc(var(--lk-delay,0ms) + 160ms) backwards;}
+}
 
 /* ---------- la frise ---------- */
-.ac-frise{padding-block:clamp(32px,5vw,60px);}
 .ac-evs{list-style:none;margin:8px 0 0;padding:0;position:relative;}
 .ac-evs::before{content:'';position:absolute;left:150px;top:6px;bottom:6px;width:2px;background:var(--rule);}
-.ac-ev{display:grid;grid-template-columns:150px 1fr;gap:0 28px;position:relative;padding-bottom:22px;}
-.ac-ev::before{content:'';position:absolute;left:144px;top:14px;width:14px;height:14px;border-radius:50%;background:var(--amber);border:2px solid var(--ink);}
+.ac-ev{display:grid;grid-template-columns:150px 1fr;gap:0 28px;position:relative;padding-bottom:22px;scroll-margin-top:130px;}
+.ac-ev::before{content:'';position:absolute;z-index:1;left:144px;top:14px;width:14px;height:14px;border-radius:50%;background:var(--amber);border:2px solid var(--ink);box-sizing:border-box;}
+/* v7.87.1 : le tronçon ambre de la frise, du point de l’annonce jusqu’à la suivante */
+.ac-ev::after{content:'';position:absolute;left:150px;top:28px;bottom:-14px;width:2px;background:var(--amber);transform-origin:top center;}
+.ac-ev:last-child::after{display:none;}
 .ac-ev-when{padding-top:8px;text-align:right;padding-right:14px;}
 .ac-ev-when time{font-weight:800;font-size:.95rem;line-height:1.3;}
 .ac-ev-card{display:grid;grid-template-columns:1fr;border:2px solid var(--ink);border-radius:var(--radius);background:#fff;box-shadow:var(--shadow-soft);overflow:hidden;margin-left:14px;}
@@ -52,15 +78,33 @@
 .ac-rev-l{list-style:none;margin:0;padding:0;display:grid;gap:10px;}
 .ac-rev-i{padding-left:12px;border-left:3px solid var(--amber);}
 .ac-rev-a{font-weight:800;color:var(--ink);margin-right:8px;}
+.ac-rev-st,.ac-mi-l,.ac-vcard-t{display:inline;}/* v7.87.1 : blocs en ligne (segments de traduction séparés) */
 .ac-rev-i p{margin:2px 0 0;font-size:.92rem;color:var(--ink-soft);}
+.ed .ac-rev-h{color:var(--ed-soft);}
+.ed .ac-rev-a{color:var(--ed-fg);}
+.ed .ac-rev-i p{color:var(--ed-soft);}
 @media (max-width:760px){
   .ac-evs::before{left:7px;}
   .ac-ev{grid-template-columns:1fr;padding-left:28px;}
   .ac-ev::before{left:1px;top:4px;}
+  .ac-ev::after{left:7px;top:18px;}
   .ac-ev-when{text-align:left;padding:0 0 6px;}
   .ac-ev-card{margin-left:0;}
   .ac-ev-card:has(.ac-ev-fig){grid-template-columns:1fr;}
   .ac-ev-fig{order:0;}
+}
+/* v7.87.1 : moment de la page — à l’entrée d’une annonce (moteur commun : la classe is-in sur .ac-ev[data-lk-reveal]),
+   son point s’allume, sa date glisse, la carte monte de 10 px (--c-rise), puis le tronçon ambre se trace jusqu’à
+   l’annonce suivante. Avant l’entrée, seul le trait gris de la frise est là ; déjà à l’écran à l’ouverture : tout est
+   posé, rien ne bouge. */
+@media (prefers-reduced-motion:no-preference){
+  .js .ac-ev[data-lk-reveal]:not(.is-in) .ac-ev-when,.js .ac-ev[data-lk-reveal]:not(.is-in) .ac-ev-card{opacity:0;}
+  .js .ac-ev[data-lk-reveal]:not(.is-in)::before{transform:scale(0);}
+  .js .ac-ev[data-lk-reveal]:not(.is-in)::after{transform:scaleY(0);}
+  .js .ac-ev[data-lk-reveal].is-in:not(.lk-settled)::before{animation:ac-pop calc(var(--c-standard,300ms)*1.4) var(--ease-spring,cubic-bezier(.34,1.56,.64,1)) var(--lk-delay,0ms) backwards;}
+  .js .ac-ev[data-lk-reveal].is-in:not(.lk-settled) .ac-ev-when{animation:ac-slide calc(var(--c-standard,300ms)*1.5) var(--c-ease-result,cubic-bezier(.16,1,.3,1)) calc(var(--lk-delay,0ms) + 60ms) backwards;}
+  .js .ac-ev[data-lk-reveal].is-in:not(.lk-settled) .ac-ev-card{animation:ac-rise calc(var(--c-standard,300ms)*1.5) var(--c-ease-result,cubic-bezier(.16,1,.3,1)) calc(var(--lk-delay,0ms) + 100ms) backwards;}
+  .js .ac-ev[data-lk-reveal].is-in:not(.lk-settled)::after{animation:ac-draw var(--c-narrative,620ms) var(--c-ease-soft,cubic-bezier(.22,.61,.36,1)) calc(var(--lk-delay,0ms) + 240ms) backwards;}
 }
 
 /* ---------- vidéo : l’écran ---------- */
@@ -73,42 +117,70 @@
 .ac-screen-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(1.05) contrast(1.02);}
 .ac-screen::after{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,0,0,.14) 0 1px,transparent 1px 3px),radial-gradient(120% 90% at 50% 50%,transparent 55%,rgba(20,10,40,.55) 100%);}
 .ac-screen.is-playing::after{display:none;}
-.ac-play{position:absolute;z-index:2;left:50%;top:50%;transform:translate(-50%,-50%);display:inline-flex;align-items:center;gap:12px;padding:10px 20px 10px 10px;border:2px solid var(--ink);border-radius:999px;background:var(--amber);color:var(--ink);font-weight:800;font-size:1rem;text-decoration:none;box-shadow:var(--shadow-hard);transition:transform var(--dur) var(--ease-out),box-shadow var(--dur) var(--ease-out);}
-.ac-play-ico{display:inline-flex;width:44px;height:44px;border-radius:50%;background:var(--ink);color:var(--amber);align-items:center;justify-content:center;}
+.ac-play{position:absolute;z-index:2;left:50%;top:50%;transform:translate(-50%,-50%);display:inline-flex;align-items:center;gap:12px;padding:10px 20px 10px 10px;border:2px solid var(--ink);border-radius:999px;background:var(--amber);color:var(--ink);font-weight:800;font-size:1rem;text-decoration:none;white-space:nowrap;box-shadow:var(--shadow-hard);transition:transform var(--dur) var(--ease-out),box-shadow var(--dur) var(--ease-out);}
+.ac-play-ico{display:inline-flex;width:44px;height:44px;border-radius:50%;background:var(--ink);color:var(--amber);align-items:center;justify-content:center;flex:none;}
 .ac-play-ico svg{width:22px;height:22px;margin-left:3px;}
 .ac-play:hover,.ac-play:focus-visible{transform:translate(-50%,-50%) translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink);}
 .ac-screen-f{position:absolute;inset:0;width:100%;height:100%;border:0;}
 .ac-screen-n{margin:10px 2px 0;font-size:.82rem;color:var(--ink-soft);}
 .ac-screen-n a{color:inherit;text-decoration:underline;}
 @media (max-width:900px){.ac-vgrid{grid-template-columns:1fr;}.ac-vplayer{order:-1;}}
+@media (max-width:360px){.ac-play{gap:8px;padding:8px 14px 8px 8px;font-size:.92rem;}.ac-play-ico{width:38px;height:38px;}}
 
-/* ---------- vidéo : les moments, la musique, les modèles ---------- */
-.ac-moments{list-style:none;margin:0;padding:0;display:grid;gap:14px;}
-.ac-moment{display:grid;grid-template-columns:72px 240px minmax(0,1fr);gap:16px;align-items:start;padding:12px;border:2px solid var(--ink);border-radius:var(--radius);background:#fff;}
-/* photogramme sans minutage (captures de l’Extended Look) : pas de colonne vide pour l’heure */
-.ac-moment--sans-temps{grid-template-columns:240px minmax(0,1fr);}
-.ac-moment--sans-temps .ac-moment-t{display:none;}
-.ac-moment-t time{display:block;font-size:1.5rem;font-weight:900;font-variant-numeric:tabular-nums;line-height:1;padding-bottom:6px;border-bottom:3px solid var(--amber);}
-.ac-moment-fig{margin:0;border-radius:8px;overflow:hidden;background:var(--paper-2);}
+/* ---------- vidéo : la planche de photogrammes (v7.87.1) ---------- */
+/* trois colonnes sur grand écran, deux sur tablette, une sur téléphone ; la dernière rangée est centrée, les cartes d’une
+   rangée ont la même hauteur et le bouton « Revoir ce moment » est calé en bas */
+.ac-moments{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;justify-content:center;gap:18px;}
+.ac-moment{position:relative;flex:0 1 calc((100% - 36px)/3);min-width:0;display:flex;flex-direction:column;border:2px solid var(--ink);border-radius:var(--radius);background:#fff;overflow:hidden;box-shadow:var(--shadow-soft);}
+@media (max-width:1000px){.ac-moment{flex-basis:calc((100% - 18px)/2);}}
+@media (max-width:640px){.ac-moment{flex-basis:100%;}}
+.ac-moment-fig{margin:0;position:relative;background:var(--paper-2);border-bottom:2px solid var(--ink);}
 .ac-moment-fig img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;}
-.ac-moment-items{display:flex;flex-wrap:wrap;gap:6px 14px;margin:0 0 6px;}
+/* le minutage, posé sur l’image (coin haut gauche de la carte) comme un repère de chapitre ; vide sans minutage */
+.ac-moment-t{position:absolute;z-index:4;left:10px;top:10px;}
+.ac-moment-t:empty{display:none;}
+.ac-moment-t time{display:inline-block;padding:4px 9px;border-radius:6px;background:var(--ink);color:var(--paper);font:800 1.05rem/1 var(--font-mono,ui-monospace,monospace);font-variant-numeric:tabular-nums;box-shadow:3px 3px 0 var(--amber);}
+.ac-moment-b{display:flex;flex-direction:column;flex:1;padding:14px 16px 16px;min-width:0;}
+.ac-moment-items{display:flex;flex-wrap:wrap;gap:4px 14px;margin:0 0 6px;}
 .ac-moment-items a{font-weight:800;color:var(--ink);text-decoration:underline;text-underline-offset:3px;}
-.ac-moment-items small{font-weight:700;color:var(--ink-soft);text-decoration:none;}
+.ac-moment-items small{font-weight:700;color:var(--ink-soft);text-decoration:none;font-size:.78rem;}
 .ac-moment-alt{margin:0 0 10px;font-size:.9rem;color:var(--ink-soft);}
+.ac-moment .ac-replay{margin-top:auto;align-self:flex-start;}
 .ac-replay{display:inline-flex;align-items:center;gap:8px;min-height:36px;padding:4px 14px 4px 6px;border:2px solid var(--ink);border-radius:999px;background:var(--paper);color:var(--ink);font-weight:800;font-size:.86rem;text-decoration:none;}
-.ac-replay>span[aria-hidden]{display:inline-flex;width:24px;height:24px;border-radius:50%;background:var(--ink);color:var(--amber);align-items:center;justify-content:center;}
+.ac-replay>span[aria-hidden]{display:inline-flex;width:24px;height:24px;border-radius:50%;background:var(--ink);color:var(--amber);align-items:center;justify-content:center;flex:none;}
 .ac-replay svg{width:12px;height:12px;margin-left:2px;}
 .ac-replay:hover,.ac-replay:focus-visible{background:var(--amber);}
 .ac-at{font-variant-numeric:tabular-nums;}
-@media (max-width:760px){.ac-moment,.ac-moment--sans-temps{grid-template-columns:1fr;}.ac-moment-t time{display:inline-block;}}
-.ac-songs{list-style:none;margin:0;padding:0;display:grid;gap:8px;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));}
-.ac-song{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 12px;border:1px solid var(--rule);border-radius:10px;background:var(--paper);}
+@media (max-width:640px){.ac-replay{min-height:44px;}}
+/* moment de la page : la carte monte (entrée commune), l’image se dévoile d’un rideau (Motion+ de common.js, comme toutes les
+   images des pages), puis le minutage glisse sur l’image */
+@media (prefers-reduced-motion:no-preference){
+  .js .ac-moment.is-in:not(.lk-settled) .ac-moment-t{animation:ac-slide calc(var(--c-standard,300ms)*1.5) var(--c-ease-result,cubic-bezier(.16,1,.3,1)) calc(var(--lk-delay,0ms) + 380ms) backwards;}
+}
+
+/* ---------- vidéo : la musique (section « nuit »), les modèles ---------- */
+.ac-songs{list-style:none;margin:0;padding:0;display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));}
+.ac-song{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 12px;border:1.5px solid var(--ed-line,var(--rule));border-radius:10px;background:var(--ed-card,var(--paper));color:var(--ed-fg,var(--ink));}
 .ac-song-b{display:flex;flex-direction:column;min-width:0;}
 .ac-song-b cite{font-style:normal;font-weight:800;}
 .ac-song-a{font-size:.9rem;}
-.ac-song-b small{color:var(--ink-soft);font-size:.8rem;}
+.ac-song-b small{color:var(--ed-soft,var(--ink-soft));font-size:.8rem;}
 .ac-replay--s{padding-right:10px;}
+.ed--night .ac-replay{background:transparent;color:var(--paper);border-color:rgba(253,251,247,.6);}
+.ed--night .ac-replay>span[aria-hidden]{background:var(--amber-2);color:var(--ink);}
+.ed--night .ac-replay:hover,.ed--night .ac-replay:focus-visible{background:var(--amber-2);color:var(--ink);border-color:var(--amber-2);}
 .ac-chips{display:flex;flex-wrap:wrap;gap:8px;}
+/* v7.87.1 : au-delà de seize modèles, le reste se déplie (« Voir les 92 autres ») */
+.ac-chips-more{margin-top:12px;}
+.ac-chips-more>summary{display:inline-flex;align-items:center;gap:10px;min-height:44px;padding:0 18px;border:2px solid var(--ink);border-radius:999px;background:var(--paper);color:var(--ink);font-weight:800;cursor:pointer;list-style:none;box-shadow:3px 3px 0 var(--ink);transition:transform var(--c-fast,190ms) var(--ease-out),box-shadow var(--c-fast,190ms) var(--ease-out);}
+.ac-chips-more>summary::-webkit-details-marker{display:none;}
+.ac-chips-more>summary::after{content:'';width:8px;height:8px;border-right:2.5px solid currentColor;border-bottom:2.5px solid currentColor;transform:translateY(-2px) rotate(45deg);transition:transform var(--dur) var(--ease-out);}
+.ac-chips-more[open]>summary::after{transform:translateY(2px) rotate(-135deg);}
+.ac-chips-more>summary:hover,.ac-chips-more>summary:focus-visible{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--ink);}
+.ac-chips-more>.ac-chips{margin-top:12px;}
+@media (prefers-reduced-motion:no-preference){
+  .ac-chips-more[open]>.ac-chips{animation:ac-rise calc(var(--c-standard,300ms)*1.2) var(--c-ease-result,cubic-bezier(.16,1,.3,1)) both;}
+}
 
 /* ---------- vidéos : les cartes ---------- */
 .ac-vcards{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));}
@@ -118,11 +190,13 @@
 .ac-vcard-fig img{display:block;width:100%;height:100%;object-fit:cover;}
 .ac-vcard-play{position:absolute;left:12px;bottom:12px;display:inline-flex;width:40px;height:40px;border-radius:50%;background:var(--amber);color:var(--ink);border:2px solid var(--ink);align-items:center;justify-content:center;}
 .ac-vcard-play svg{width:18px;height:18px;margin-left:2px;}
-.ac-vcard-b{display:flex;flex-direction:column;gap:6px;padding:14px 16px 16px;}
+.ac-vcard-b{display:flex;flex-direction:column;gap:6px;padding:14px 16px 16px;flex:1;}
 .ac-vcard-d{font-size:.84rem;color:var(--ink-soft);font-weight:700;}
 .ac-vcard-t{font-size:1.25rem;font-weight:900;}
-.ac-vcard-s{display:flex;flex-wrap:wrap;gap:6px;}
+.ac-vcard-s{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;}
 .ac-vcard-s span{padding:3px 9px;border-radius:999px;background:var(--paper-2);border:1px solid var(--rule);font-size:.78rem;font-weight:700;}
+/* v7.87.1 : « Les autres vidéos » : deux cartes de taille raisonnable, pas deux affiches pleine largeur */
+.ac-vcards--mini{grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),360px));}
 .ac-vcards--mini .ac-vcard-t{font-size:1.05rem;}
 
 /* ---------- éditions ---------- */
@@ -131,28 +205,51 @@
 .ac-ed:last-child{border-color:var(--amber);box-shadow:var(--shadow-amber);}
 .ac-ed h3{margin:0 0 6px;}
 .ac-ed p{margin:0;color:var(--ink-soft);}
-.ac-ue{list-style:none;margin:0;padding:0;display:grid;gap:10px;grid-template-columns:repeat(2,minmax(0,1fr));}
+.ac-ue{list-style:none;margin:0;padding:0;display:grid;gap:10px;grid-template-columns:repeat(2,minmax(0,1fr));counter-reset:ac-ue;}
 /* seize contenus : quatre rangées de quatre sur grand écran, deux colonnes en dessous, une seule sur petit téléphone */
 @media(min-width:1000px){.ac-ue{grid-template-columns:repeat(4,minmax(0,1fr));}}
 @media(max-width:419px){.ac-ue{grid-template-columns:minmax(0,1fr);}}
-.ac-ue-i>a,.ac-ue-x{display:flex;flex-direction:column;gap:2px;height:100%;padding:12px 14px;border:1px solid var(--rule);border-radius:10px;background:var(--paper);color:var(--ink);text-decoration:none;}
-.ac-ue-i>a:hover,.ac-ue-i>a:focus-visible{border-color:var(--ink);background:#fff;}
+.ac-ue-i{counter-increment:ac-ue;}
+.ac-ue-i>a,.ac-ue-x{position:relative;display:flex;flex-direction:column;gap:2px;height:100%;padding:12px 14px 12px 50px;border:1.5px solid var(--rule);border-radius:10px;background:#fff;color:var(--ink);text-decoration:none;}
+.ac-ue-i>a:hover,.ac-ue-i>a:focus-visible{border-color:var(--ink);box-shadow:3px 3px 0 var(--ink);}
+/* v7.87.1 : le numéro d’ordre de l’assistance de Rockstar (compteur CSS, décoratif : rien à lire ni à traduire) */
+.ac-ue-i>a::before,.ac-ue-x::before{content:counter(ac-ue,decimal-leading-zero);content:counter(ac-ue,decimal-leading-zero) / "";position:absolute;left:12px;top:12px;width:28px;height:28px;border-radius:8px;display:grid;place-items:center;background:var(--ink);color:var(--amber);font:800 .78rem/1 var(--font-mono,ui-monospace,monospace);}
 .ac-ue-fr{font-weight:800;}
 .ac-ue-i>a .ac-ue-fr{text-decoration:underline;text-underline-offset:3px;}
 .ac-ue-en{font-size:.8rem;color:var(--ink-soft);}
+/* v7.87.1 : en anglais, une seule ligne par contenu. actus.js masque déjà le nom officiel quand la traduction l’écrit tel
+   quel ; sinon (traduction différente, ou page sans script), le nom officiel de Rockstar remplace la ligne traduite
+   (« PTT Youngin$ Compound » plutôt que « The PTT Youngin$ hideout » au-dessus) */
+html[lang="en"] .ac-ue-fr:has(+ .ac-ue-en:not([hidden])){display:none;}
+html[lang="en"] .ac-ue-en:not([hidden]){font-size:inherit;font-weight:800;color:inherit;}
+html[lang="en"] .ac-ue-i>a .ac-ue-en:not([hidden]){text-decoration:underline;text-underline-offset:3px;}
+@media (prefers-reduced-motion:no-preference){
+  .js .ac-ue-i.is-in:not(.lk-settled)>a::before,.js .ac-ue-i.is-in:not(.lk-settled) .ac-ue-x::before{animation:ac-stamp calc(var(--c-standard,300ms)*1.6) var(--ease-spring,cubic-bezier(.34,1.56,.64,1)) calc(var(--lk-delay,0ms) + 140ms) backwards;}
+}
 .ac-bonus{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));}
-.ac-bonus-i{padding:16px 18px;border:2px solid var(--ink);border-radius:var(--radius);background:#fff;}
+.ac-bonus-i{display:flex;flex-direction:column;padding:16px 18px;border:2px solid var(--ink);border-radius:var(--radius);background:#fff;}
 .ac-bonus-i h3{margin:0 0 6px;}
 .ac-bonus-i p{margin:0 0 8px;}
 .ac-bonus-pour{font-size:.9rem;color:var(--ink-soft);}
-.ac-cols{display:grid;gap:24px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));}
-.ac-list{margin:8px 0 0;padding-left:1.1em;display:grid;gap:8px;}
-.ac-list li{color:var(--ink);}
+.ac-bonus-i a{margin-top:auto;align-self:flex-start;}
+/* boîte, préchargement, régions : trois colonnes du moteur commun (ed-col), ancres sous la sous-navigation */
+.ac-cols{grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));}
+.ac-col{scroll-margin-top:130px;}
+.ac-col h3{font-size:1.05rem;}
 
 @media (prefers-reduced-motion:reduce){
-  .ac-play,.ac-vcard,.ac-ev-more>summary::before{transition:none;}
+  .ac-play,.ac-vcard,.ac-ev-more>summary::before,.ac-chips-more>summary,.ac-chips-more>summary::after{transition:none;}
   .ac-play:hover,.ac-play:focus-visible{transform:translate(-50%,-50%);}
-  .ac-vcard:hover,.ac-vcard:focus-visible{transform:none;}
+  .ac-vcard:hover,.ac-vcard:focus-visible,.ac-chips-more>summary:hover,.ac-chips-more>summary:focus-visible{transform:none;}
 }
 /* titres équilibrés : « Il Trailer 2 di GTA 6 » ne laisse plus « 6 » seul sur sa ligne */
 .actus-page .page-head h1{text-wrap:balance;}
+/* v7.88 : liens affiliés de editions.html (outils/monetisation.cjs), affichés seulement s’ils sont activés */
+.lk-aff-list{list-style:none;margin:14px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr));gap:12px;}
+.lk-aff-a{display:flex;flex-direction:column;gap:4px;height:100%;padding:14px 16px;border:2px solid var(--ink);border-radius:12px;background:#fff;color:var(--ink);text-decoration:none;box-shadow:var(--shadow-soft,4px 4px 0 rgba(26,26,30,.18));box-sizing:border-box;}
+.lk-aff-a:hover{background:var(--amber);}
+.lk-aff-a:focus-visible{outline:3px solid var(--coral-text,#B93220);outline-offset:2px;}
+.lk-aff-shop{font-weight:900;font-size:1.05rem;}
+.lk-aff-meta{font-size:.9rem;color:var(--ink-soft);}
+.lk-aff-a:hover .lk-aff-meta{color:var(--ink);} /* v7.88 : contraste au survol (ambre) */
+.lk-aff-tag{align-self:flex-start;margin-top:6px;padding:2px 8px;border:1.5px solid var(--ink);border-radius:999px;font-size:.78rem;font-weight:800;}

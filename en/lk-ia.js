@@ -12,7 +12,8 @@
   const K = { mode: KEY_MODE, dev: KEY_DEV, etat: KEY_ETAT };
   const put = fn => { try { fn(); } catch (e) { /* stockage bloqué (navigation privée stricte) */ } };
   const DEVICE = /^[A-Za-z0-9_-]{16,64}$/;
-  const lang = (document.documentElement.lang || 'fr').slice(0, 2), locale = { fr: 'en-US', en: 'en-GB', es: 'es-ES', it: 'it-IT', de: 'de-DE' }[lang] || 'en-US';
+  /* v7.91 (portugais) : nombres et dates au format du Brésil (pt-BR) */
+  const lang = (document.documentElement.lang || 'fr').slice(0, 2), locale = { fr: 'en-US', en: 'en-GB', es: 'es-ES', it: 'it-IT', de: 'de-DE', pt: 'pt-BR' }[lang] || 'en-US';
   const local = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } } };
   const session = { get(k) { try { return sessionStorage.getItem(k); } catch (e) { return null; } } };
   const nf = n => new Intl.NumberFormat(locale).format(n);

@@ -1,0 +1,50 @@
+LEONIDAKIT v7.91 — Le site en portugais du Brésil, avec Léo
+À appliquer sur la v7.87. Archive « modifs » : seulement les fichiers qui changent (et les nouveaux). Elle contient aussi le
+lot 1 bis (corrections de l’audit), qu’elle prolonge : elle s’applique donc sur la v7.87, avec ou sans le lot 1 bis déjà
+poussé. Rien n’a été publié ni poussé. CSP inchangée.
+Fichier à supprimer : api/ia-achat.js (celui du lot 1 bis : il aurait dû partir avec la v7.71 ; s’il n’est plus là, rien
+à faire).
+
+CETTE ARCHIVE PART À L’ASSEMBLAGE : ne la pousse pas seule. La conversation d’assemblage la réunit aux lots 3, 5 et 6
+(préparés en même temps sur la v7.87) et traduit en portugais les textes nouveaux de ces lots.
+
+CE QUI CHANGE POUR LE VISITEUR
+- Tout le site existe en portugais du Brésil, dans le dossier pt/ : les 462 pages (accueil, calculateur, carte, fiches
+  des véhicules, des armes et du monde, Atelier 3D, Tuto, À propos, Mentions…), écrites comme un site brésilien de
+  joueurs : « você », « golpe », « celular », « Vale a pena? », « Tenho », « Avistado em material oficial ».
+- Barre de langue « Mudar o idioma » sur chaque page des six langues ; un navigateur réglé en portugais se voit proposer
+  la version portugaise (« Esta página também está disponível em português. » — « Ler em português » / « Não, obrigado »).
+- Nombres, dates et argent à la brésilienne : « $ 200.000 », « 1,5 milhão », « $ 1,5 mi », « 19 de novembro de 2026 »,
+  « 1º de outubro ».
+- Calculateur : il comprend ce qu’un joueur brésilien tape (« tenho 200 mil e quero 1 milhão », « 2 horas por dia »,
+  « somos 4 », « vale a pena comprar a boate por 1,2 milhão? », « 1kk » pour un million…), dans les huit calculs et le
+  business plan.
+- Léo répond en portugais (« quando sai o jogo? », « onde fica Vice City? », « quem é a Lucia? », « o jogo vai ter
+  versão pra pc? »…) ; la recherche du site et le flux RSS des actualités (pt/actus.xml) aussi.
+- Tuto du calculateur : captures de l’interface en portugais.
+- Mentions : la ligne de l’historique « v7.91 — Langues : tout le site existe aussi en portugais du Brésil ».
+
+POUR GOOGLE
+- Chaque page des six langues annonce sa version portugaise (hreflang « pt »), x-default toujours en anglais ; les plans
+  du site (sitemap.xml, sitemap-fiches.xml) listent les 179 adresses portugaises indexables avec leurs équivalents ;
+  og:locale pt_BR ; titres (« GTA 6 », comme en français) et descriptions traduits, 155 signes au plus, une description
+  par page indexable ; IndexNow signale les nouvelles adresses à Bing le lendemain matin de la mise en ligne.
+
+MARCHE À SUIVRE
+  1. Donne cette archive à la conversation d’assemblage (avec les archives des lots 3, 5 et 6). Ne la pousse pas seule.
+  2. Une fois l’assemblage poussé : Google Search Console → Sitemaps : renvoie sitemap.xml et sitemap-fiches.xml (les
+     adresses portugaises y sont, avec les hreflang) ; Inspection de l’URL → « Demander une indexation » pour
+     https://www.leonidakit.com/pt/ , pt/calculateurs.html et pt/carte.html (Google trouve le reste par les plans du site
+     et les hreflang). Bing : rien à faire, IndexNow lui signale les nouvelles adresses le lendemain matin.
+  3. Essai : pt/ (barre « Mudar o idioma », compte à rebours « Meia-noite, horário local ») ; pt/calculateurs.html, taper
+     « tenho 200 mil e quero 1 milhão » dans « O que você quer calcular? » ; Léo : « quando sai o jogo? » ;
+     pt/carte.html ; une fiche (pt/vehicules/grotti-cheetah-classic.html) ; pt/mentions-legales.html.
+
+Contrôles : tous verts — tests Node (dont outils/tests/v791.test.cjs), langues avec six langues, vérificateur de liens,
+langues dans le navigateur (toutes les pages des cinq langues traduites), écrans (dont le portugais à 320, 390, 768,
+1 024 et 1 280 px), contrôle de l’audit (six langues), audit de clôture, cookies, latence (aucune régression) ; le détail
+est dans outils/CHANGEMENTS-v7.91.txt. Retour arrière : commit précédent dans GitHub Desktop.
+
+À savoir (déjà dans la v7.87, hors de ce lot) : Léo, en français comme en portugais, répond mal à « quelles voitures ont
+été confirmées ? » (il parle des armes) et à « ça vaut le coup d’acheter le Kosatka ? » (il propose une coupe de
+cheveux) ; quatre questions du fichier de test des radios échouent dans toutes les langues.

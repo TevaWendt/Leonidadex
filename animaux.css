@@ -72,7 +72,7 @@
 .an-fam{display:inline-flex;align-items:center;gap:6px;padding:4px 10px 4px 5px;border-radius:999px;border:1.5px solid var(--ink);background:var(--fam);color:var(--fam-ink);font:800 .64rem/1.2 var(--font-mono);letter-spacing:.12em;text-transform:uppercase;}
 .an-fam .an-ico{width:17px;height:17px;}
 .an-card .ed-status{padding:4px 9px;border-radius:999px;background:rgba(12,9,22,.62);border:1px solid rgba(255,255,255,.38);}
-.an-card .ed-st{color:#fff;font-size:.62rem;}
+.an-card .ed-st{color:#fff;font-size:max(11px,.62rem);}
 .an-card .ed-status .pip{border-color:#fff;}
 .an-card .pip--officiel{background:#fff;}
 .an-card-body{display:flex;flex-direction:column;gap:6px;padding:16px 18px 18px;}

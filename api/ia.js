@@ -23,7 +23,9 @@ const crypto=require('node:crypto');
 
 const MODEL_DEFAULT='claude-sonnet-5-5';
 const MODELS=/^claude-[a-z0-9.-]{3,60}$/;
-const LANGS={fr:'français',en:'anglais',es:'espagnol',it:'italien',de:'allemand'};
+/* v7.91 : portugais du Brésil (pages pt/, lang « pt ») : la réponse et la note sont en portugais du Brésil, avec « você » (le
+   tutoiement du site) ; avant, une langue inconnue retombait sur le français */
+const LANGS={fr:'français',en:'anglais',es:'espagnol',it:'italien',de:'allemand',pt:'portugais du Brésil (avec « você »)'};
 const TOOLS=['goal','purchase','session','budget','order','roi','activities','compare','plan'];
 const LIMITS={body:24000,question:400,page:200,local:1600,passages:6,passage:900,history:4,historyItem:400,state:3000};
 const WINDOW_MS=10*60*1000,MAX_PER_WINDOW=60,TIMEOUT_MS=18000; /* v7.69 : anti-rafale à 60 par 10 minutes (les questions gratuites par 12 heures sont comptées à part) */

@@ -391,7 +391,7 @@
 })();
 
 /* Léo : amorçage isolé. Les données ne se chargent qu'à l'ouverture du panneau. */
-(function(){'use strict';if(!document.querySelector('main')||document.getElementById('leo-style'))return;/* v7.60-v7.64 : Léo parle les langues de outils/langues.json → leo (français, espagnol, italien, anglais, allemand) : pas de Léo sur une page d’une autre langue */if(!/^(?:fr|es|it|en|de)\b/i.test(document.documentElement.lang||'fr'))return;const base=(document.currentScript&&document.currentScript.src||'').replace(/[^/]*$/,'')||'/';const css=document.createElement('link');css.id='leo-style';css.rel='stylesheet';css.href='/leo.css?v=0d104178ce9d';css.onload=()=>{const script=document.createElement('script');script.src=base+'leo-loader.js?v=0d104178ce9d';document.head.append(script);};document.head.append(css);})();
+(function(){'use strict';if(!document.querySelector('main')||document.getElementById('leo-style'))return;/* v7.60-v7.64 : Léo parle les langues de outils/langues.json → leo (français, espagnol, italien, anglais, allemand ; v7.91 : portugais du Brésil) : pas de Léo sur une page d’une autre langue */if(!/^(?:fr|es|it|en|de|pt)\b/i.test(document.documentElement.lang||'fr'))return;const base=(document.currentScript&&document.currentScript.src||'').replace(/[^/]*$/,'')||'/';const css=document.createElement('link');css.id='leo-style';css.rel='stylesheet';css.href='/leo.css?v=348e69466646';css.onload=()=>{const script=document.createElement('script');script.src=base+'leo-loader.js?v=348e69466646';document.head.append(script);};document.head.append(css);})();
 
 /* v7.61 (langues) : page introuvable. Le serveur renvoie la page 404 française pour toute adresse inconnue ; sous
    /en/… (une adresse d'une langue publiée), c'est la page introuvable de cette langue qui s'affiche. */
@@ -743,4 +743,44 @@
  window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments);};
  window.va('beforeSend',ev=>{if(off())return null;try{const u=new URL(ev.url);u.search='';u.hash='';return Object.assign({},ev,{url:u.toString()});}catch(e){return ev;}});
  const s=document.createElement('script');s.defer=true;s.src='/_vercel/insights/script.js';document.head.appendChild(s);
+})();
+
+/* v7.89 (lot 5) : Leonidakit installable comme une appli (manifeste dans chaque page, outils/appli.cjs).
+   1. Service worker (sw.js, même origine, portée « / ») : copies des pages et des fichiers du site sur l'appareil, pour s'ouvrir
+      vite et marcher sans réseau pour ce qui a déjà été vu (Mentions, « Ce qui reste dans ton navigateur »). Enregistré seulement
+      si le navigateur le permet et que la page est en https ou sur localhost, après le chargement, quand le navigateur est libre ;
+      un échec reste silencieux : le site marche comme avant.
+   2. « Garder l'écran allumé » (choix fait sur la page Mode compagnon, clé lk_ecran_v1, écrite seulement par ce choix) : l'écran
+      ne se met pas en veille tant qu'une page du site est affichée (API Wake Lock), repris à chaque retour sur la page.
+   3. Un script déclaré <script type="lk/lazy" data-lk-idle src="…"> (transfert.js sur la page Progression) se charge après le
+      chargement de la page, quand le navigateur est libre : il ne retarde ni l'affichage ni DOMContentLoaded. */
+(function () {
+  'use strict';
+  try {
+    if ('serviceWorker' in navigator && (location.protocol === 'https:' || /^(?:localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname))) {
+      const go = function () { navigator.serviceWorker.register('/sw.js', { scope: '/' }).catch(function () { /* silencieux */ }); };
+      const later = function () { if (window.requestIdleCallback) requestIdleCallback(go, { timeout: 4000 }); else setTimeout(go, 1500); };
+      if (document.readyState === 'complete') later(); else window.addEventListener('load', later, { once: true });
+    }
+  } catch (e) { /* silencieux */ }
+  const idle = function () {
+    document.querySelectorAll('script[type="lk/lazy"][data-lk-idle][src]').forEach(function (s) {
+      const name = (s.getAttribute('src') || '').split('?')[0].split('/').pop();
+      if (window.LK && window.LK.lazyScript) window.LK.lazyScript(name).catch(function () { /* réessayé au prochain chargement */ });
+    });
+  };
+  /* lu au chargement : la balise est souvent après common.js dans la page */
+  const soon = function () { if (!document.querySelector('script[type="lk/lazy"][data-lk-idle]')) return; if (window.requestIdleCallback) requestIdleCallback(idle, { timeout: 2000 }); else setTimeout(idle, 300); };
+  if (document.readyState === 'complete') soon(); else window.addEventListener('load', soon, { once: true });
+  const KEY = 'lk_ecran_v1';
+  let lock = null;
+  const on = function () { try { return localStorage.getItem(KEY) === '1'; } catch (e) { return false; } };
+  const take = function () {
+    if (lock || !on() || !navigator.wakeLock || document.hidden) return;
+    navigator.wakeLock.request('screen').then(function (l) { lock = l; l.addEventListener('release', function () { lock = null; }); }).catch(function () { /* refusé (batterie faible…) : rien */ });
+  };
+  const release = function () { const l = lock; lock = null; if (l) l.release().catch(function () { /* déjà relâché */ }); };
+  document.addEventListener('visibilitychange', take);
+  take();
+  window.LKEcran = { on: on, take: take, release: release };
 })();

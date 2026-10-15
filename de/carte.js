@@ -496,7 +496,8 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       MK[p.id] = el;
       el.dataset.cat = p.c;
       el.dataset.st = p.s;
-      el.setAttribute('aria-label', p.n);
+      /* assemblage v7.91 (axe, « label in name ») : avec un compte d'enfants dans la pastille, le nom vient du contenu */
+      if(!kids) el.setAttribute('aria-label', p.n);
       const reel = / \(nom (réel|supposé)\)$/.test(p.n);
       if(reel) el.classList.add('lbl-reel');
       el.innerHTML = '<span class="mk-dot">' + (kids ? '<i>' + kids + '</i>' : '') + '</span>'

@@ -126,7 +126,7 @@ main > section.shell.reveal + section.shell.reveal{padding-top:8px;}
 .col-fams.lkx-cards>li>.lkx-det{flex:1;display:flex;flex-direction:column;}
 .col-fams.lkx-cards>li>.lkx-det>summary{flex:1;display:flex;}
 .col-fams.lkx-cards>li>.lkx-det>summary>.lkx-card{flex:1;}
-.col-fams .lkx-card-tag.col-fam-st{left:auto;right:12px;bottom:auto;top:12px;padding:5px 9px;border:2px solid var(--ink);border-radius:999px;background:var(--paper);color:var(--ink);font-size:.6rem;}
+.col-fams .lkx-card-tag.col-fam-st{left:auto;right:12px;bottom:auto;top:12px;padding:5px 9px;border:2px solid var(--ink);border-radius:999px;background:var(--paper);color:var(--ink);font-size:max(11px,.6rem);}
 .col-fams .col-fam-st--confirme{background:#1F7A70;border-color:#1F7A70;color:#fff;}
 .col-fams .col-fam-st--apercu{background:var(--amber);}
 .col-fams .col-fam-st--avenir{background:var(--paper);border-style:dashed;}
@@ -160,7 +160,7 @@ main > section.shell.reveal + section.shell.reveal{padding-top:8px;}
 .col-dash-ico svg{width:20px;height:20px;}
 .col-dash-t .n{font:900 2rem/1 'Archivo',sans-serif;letter-spacing:-.03em;color:var(--ink);}
 .col-dash-t .l{font-size:.8rem;color:var(--ink-soft);line-height:1.3;}
-.col-dash-st{align-self:flex-start;margin-top:8px;padding:3px 9px;border-radius:999px;border:1.5px dashed var(--ink);font:800 .62rem/1 var(--font-mono,ui-monospace,monospace);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);}
+.col-dash-st{align-self:flex-start;margin-top:8px;padding:3px 9px;border-radius:999px;border:1.5px dashed var(--ink);font:800 .62rem/1 var(--font-mono,ui-monospace,monospace);font-size:max(11px,.62rem);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);}
 .col-dash-t--q .n{color:var(--coral-text);}
 @media(hover:hover){.col-dash-t{transition:transform .25s var(--ease-out),box-shadow .25s var(--ease-out);}.col-dash-t:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink);}}
 @media(max-width:900px){.col-dash{grid-template-columns:repeat(2,minmax(0,1fr));}}
@@ -263,3 +263,8 @@ main section.shell.reveal>h2.sec-h+.fiche-txt{max-width:74ch;color:var(--ink-sof
 #carnet .col-ring-bg{stroke:#F6E6C4;}
 #carnet .col-progress-panel,#carnet .col-backup-panel,#carnet .col-map-card,#sorties .col-tools-panel{border-radius:14px;}
 @media(max-width:600px){main section.shell.reveal>h2.sec-h{gap:11px;}main section.shell.reveal>h2.sec-h::before{width:34px;height:34px;border-radius:9px;font-size:.74rem;}}
+/* lot 1 bis (corrections de l’audit, point 13) : tant qu’aucune fiche n’est documentée, une phrase à la place de trois « 0 » */
+.col-dash-t--vide{grid-column:span 3;justify-content:center;}
+.col-dash-t--vide .col-dash-phrase{font-weight:800;font-size:1rem;line-height:1.35;color:var(--ink);text-wrap:pretty;}
+.col-dash:not([data-vide]) .col-dash-t--vide,.col-dash[data-vide] .col-dash-t:not(.col-dash-t--vide):not(.col-dash-t--q){display:none;}
+@media(max-width:900px){.col-dash-t--vide{grid-column:1/-1;}}

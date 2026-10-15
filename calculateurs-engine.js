@@ -17,7 +17,9 @@
   /* Un montant déjà mis en forme (« 1 250 », « 1,250 ») → avec le signe dollar à la place d'usage : après en français
      (séparateur choisi par l'appelant, inchangé), devant en anglais (« -$1,250 »). */
   /* Pluriel du nom qui suit un nombre : règle française (plus de 1) ou anglaise (tout sauf 1). */
-  function plural(n, lang) { var l = lang || LANG; return l === 'fr' ? n > 1 : Math.abs(n) !== 1; }
+  /* v7.91 (portugais) : en portugais du Brésil, 0 et 2 ou plus au pluriel, moins de 2 au singulier (« 1 hora », « 1,5 milhão », « 0,5 milhão »,
+     « 0 horas », « 2 milhões ») */
+  function plural(n, lang) { var l = lang || LANG; return l === 'fr' ? n > 1 : l === 'pt' ? (n === 0 || Math.abs(n) >= 2) : Math.abs(n) !== 1; }
   /* Date lisible : « 3 décembre 2026 » (« 1er » le premier du mois) en français, « December 3, 2026 » ailleurs ;
      opts.time ajoute l'heure, opts.short le mois abrégé, opts.year:false retire l'année. */
   var MONTHS_FR = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
@@ -31,13 +33,18 @@
     }
     var f = { month: o.short ? 'short' : 'long', day: 'numeric' }; if (o.year !== false) f.year = 'numeric';
     if (o.time) { f.hour = 'numeric'; f.minute = '2-digit'; }
-    try { return d.toLocaleString(l === 'en' ? 'en-US' : l, f); } catch (e) { return d.toISOString().slice(0, 10); }
+    /* v7.91 (portugais) : « 19 de novembro de 2026 » (pt-BR) ; le premier du mois en ordinal, comme au Brésil (« 1º de outubro de 2026 ») */
+    try { var s = d.toLocaleString(l === 'en' ? 'en-US' : l === 'pt' ? 'pt-BR' : l, f); return l === 'pt' && d.getDate() === 1 ? s.replace(/^1(?= de )/, '1º') : s; } catch (e) { return d.toISOString().slice(0, 10); }
   }
   /* v7.62 : l'allemand place aussi le signe après le nombre (« 1.250 $ ») */
   function dollars(numberText, sep, lang) {
     var l = lang || LANG, t = String(numberText);
+    /* v7.91 (portugais) : le signe devant, suivi d'une espace insécable (« $ 1.250 », « -$ 1.250 ») ; le séparateur de l'appelant ne sert pas */
+    if (l === 'pt') return t.replace(/^([-\u2212]?)\s*/, '$1$$\u00a0');
     /* v7.61, v7.63 : l'espagnol et l'italien écrivent aussi le signe après le nombre (« 200.000 $ ») */
-    if (l === 'fr' || l === 'es' || l === 'it' || l === 'de') return t + (sep === undefined ? '\u00a0' : sep) + '$';
+    /* lot 1 bis (corrections de l’audit, point 11) : une espace ordinaire entre le nombre et le signe devient insécable (« 100.000 $ »
+       ne laisse plus le « $ » seul au début de la ligne suivante) ; un autre séparateur choisi par l’appelant reste tel quel */
+    if (l === 'fr' || l === 'es' || l === 'it' || l === 'de') return t + (sep === undefined || sep === ' ' ? '\u00a0' : sep) + '$';
     return t.replace(/^([-\u2212]?)\s*/, '$1$$');
   }
 
@@ -89,7 +96,8 @@
     /* v7.60 : hors du français, la virgule groupe les milliers et le point sépare les décimales (« 1,250.50 ») */
     /* v7.61, v7.63 : en espagnol et en italien, le point groupe les milliers et la virgule sépare les décimales (« 1.250,50 ») ;
        « 1.5 » reste un décimal */
-    if ((lang || LANG) === 'es' || (lang || LANG) === 'it') {
+    /* v7.91 (portugais) : comme l'espagnol et l'italien (« 1.250,50 » ; « 1.5 » reste un décimal) */
+    if ((lang || LANG) === 'es' || (lang || LANG) === 'it' || (lang || LANG) === 'pt') {
       if (/^[+-]?\d+\.\d{1,2}$/.test(text)) return finish({ value: Number(text) }, shape);
       if (!/^[+-]?(?:\d+|\d{1,3}(?:[. \u00a0\u202f]\d{3})+)(?:,\d+)?$/.test(text)) return fail(shape, 'Écris un nombre comme 1 250,50, sans unité.');
       return finish({ value: Number(text.replace(/[. \u00a0\u202f]/g, '').replace(',', '.')) }, shape);

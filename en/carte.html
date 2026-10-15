@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Interactive map of Leonida (GTA 6) | Leonidakit</title>
-<meta name="description" content="Interactive map of Leonida for GTA VI: the six confirmed regions, filters, progress tracking and estimated distance between two points.">
+<meta name="description" content="Interactive map of Leonida for GTA VI: the six official regions, filters, progress tracking and estimated distance between two points.">
 <meta name="robots" content="max-image-preview:large">
 <meta property="og:title" content="Interactive map of Leonida (GTA 6) | Leonidakit">
 <meta property="og:description" content="Interactive map of the state of Leonida for GTA VI: collectibles, safehouses, shops and missions, with filters.">
@@ -14,6 +14,7 @@
 <meta property="og:locale:alternate" content="es_ES">
 <meta property="og:locale:alternate" content="it_IT">
 <meta property="og:locale:alternate" content="de_DE">
+<meta property="og:locale:alternate" content="pt_BR">
 <meta name="theme-color" content="#FDFBF7">
 <meta name="color-scheme" content="light">
 <link rel="canonical" href="https://www.leonidakit.com/en/carte.html">
@@ -22,8 +23,11 @@
 <link rel="alternate" hreflang="es" href="https://www.leonidakit.com/es/carte.html">
 <link rel="alternate" hreflang="it" href="https://www.leonidakit.com/it/carte.html">
 <link rel="alternate" hreflang="de" href="https://www.leonidakit.com/de/carte.html">
+<link rel="alternate" hreflang="pt" href="https://www.leonidakit.com/pt/carte.html">
 <link rel="alternate" hreflang="x-default" href="https://www.leonidakit.com/en/carte.html">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%231A1A1E'/%3E%3Ccircle cx='32' cy='28' r='16' fill='%23F5A524'/%3E%3Crect x='10' y='30' width='44' height='3' fill='%231A1A1E'/%3E%3Crect x='10' y='37' width='44' height='4' fill='%231A1A1E'/%3E%3Crect x='10' y='45' width='44' height='5' fill='%231A1A1E'/%3E%3C/svg%3E">
+<link rel="manifest" href="/en/manifest.webmanifest">
+<link rel="apple-touch-icon" href="/img/app/apple-touch-icon-180.png">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.leonidakit.com/en/"},{"@type":"ListItem","position":2,"name":"Interactive map","item":"https://www.leonidakit.com/en/carte.html"}]}
 </script>
@@ -31,8 +35,12 @@
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is this map official?","acceptedAnswer":{"@type":"Answer","text":"No. Rockstar has never released the full GTA VI map. The base map shown here is temporary and will be replaced after the game comes out, using screenshots we take ourselves."}},{"@type":"Question","name":"How big is the GTA VI map?","acceptedAnswer":{"@type":"Answer","text":"Rockstar hasn’t shared any size. The figures going around, including comparisons with GTA V, are player estimates, not official data."}},{"@type":"Question","name":"How many regions are confirmed?","acceptedAnswer":{"@type":"Answer","text":"Six: Vice City, the Leonida Keys, Grassrivers, Port Gellhorn, Ambrosia and Mount Kalaga National Park. Rockstar officially presented all of them."}},{"@type":"Question","name":"Does the site use the map that leaked in August 2026?","acceptedAnswer":{"@type":"Answer","text":"No, and that’s a deliberate choice. That material comes from a hack and is the subject of legal action by Take-Two. It also comes from a 2022-2023 development build, so it may be out of date."}},{"@type":"Question","name":"Where will the locations come from?","acceptedAnswer":{"@type":"Answer","text":"From our own surveys after the November 19, 2026 release, and from official sources like the trailers and the Extended Look, fully captured on PlayStation 5 and released by Rockstar."}},{"@type":"Question","name":"Will the whole map be open from the start of the game?","acceptedAnswer":{"@type":"Answer","text":"Rockstar hasn’t said. Some regions might be locked at the start of the story."}},{"@type":"Question","name":"How does the distance calculation work?","acceptedAnswer":{"@type":"Answer","text":"Click “Calculate a trip”, then your start and your finish (you can add stops): the tool shows the straight-line distance, estimated from the base map’s scale (to be confirmed after release), and times marked “Estimate” for every way of getting around (on foot, running, by bike, motorbike, car, boat, helicopter, plane) and for up to three of your vehicles. GTA VI hasn’t published any speeds: the references are GTA V’s, and you can enter the one you measure in-game."}}]}
 </script>
 <link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../style.css?v=2b6aaf9c2437">
+<link rel="stylesheet" href="../style.css?v=89d9af28a5e8">
 <link rel="stylesheet" href="../calculator-entry.css?v=cf94b45f1d2d">
+<meta property="og:image" content="https://www.leonidakit.com/img/partage/en/carte.jpg?v=304f2330e984">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Interactive map of Leonida (GTA 6)">
 <meta property="og:image" content="https://www.leonidakit.com/img/social-card.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta property="og:url" content="https://www.leonidakit.com/en/carte.html">
@@ -40,13 +48,13 @@
 <body>
 
 <a class="skip" href="#main">Skip to content</a>
-<div class="lk-langbar" data-lk-langbar translate="no"><div class="shell lk-langbar-in"><details class="lk-lang"><summary aria-label="Change language (English)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9s1.3-6.4 3.8-9z"/></svg><span class="lk-lang-t">Change language</span><span class="lk-lang-code" aria-hidden="true">EN</span></summary><ul class="lk-lang-menu"><li><a href="../carte.html" hreflang="fr" lang="fr" data-lk-lang="fr" data-lk-equiv="1" data-offre="Cette page existe aussi en français." data-aller="Lire en français" data-rester="Non merci">Français</a></li><li><a aria-current="true" hreflang="en" lang="en" data-lk-lang="en">English</a></li><li><a href="../es/carte.html" hreflang="es" lang="es" data-lk-lang="es" data-lk-equiv="1" data-offre="Esta página también está disponible en español." data-aller="Leer en español" data-rester="No, gracias">Español</a></li><li><a href="../it/carte.html" hreflang="it" lang="it" data-lk-lang="it" data-lk-equiv="1" data-offre="Questa pagina è disponibile anche in italiano." data-aller="Leggi in italiano" data-rester="No, grazie">Italiano</a></li><li><a href="../de/carte.html" hreflang="de" lang="de" data-lk-lang="de" data-lk-equiv="1" data-offre="Diese Seite gibt es auch auf Deutsch." data-aller="Auf Deutsch lesen" data-rester="Nein danke">Deutsch</a></li></ul></details></div></div>
+<div class="lk-langbar" data-lk-langbar translate="no"><div class="shell lk-langbar-in"><details class="lk-lang"><summary><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9s1.3-6.4 3.8-9z"/></svg><span class="lk-lang-t">Change language</span><span class="lk-lang-code">EN</span><span class="sr-only"> (English)</span></summary><ul class="lk-lang-menu"><li><a href="../carte.html" hreflang="fr" lang="fr" data-lk-lang="fr" data-lk-equiv="1" data-offre="Cette page existe aussi en français." data-aller="Lire en français" data-rester="Non merci">Français</a></li><li><a aria-current="true" hreflang="en" lang="en" data-lk-lang="en">English</a></li><li><a href="../es/carte.html" hreflang="es" lang="es" data-lk-lang="es" data-lk-equiv="1" data-offre="Esta página también está disponible en español." data-aller="Leer en español" data-rester="No, gracias">Español</a></li><li><a href="../it/carte.html" hreflang="it" lang="it" data-lk-lang="it" data-lk-equiv="1" data-offre="Questa pagina è disponibile anche in italiano." data-aller="Leggi in italiano" data-rester="No, grazie">Italiano</a></li><li><a href="../de/carte.html" hreflang="de" lang="de" data-lk-lang="de" data-lk-equiv="1" data-offre="Diese Seite gibt es auch auf Deutsch." data-aller="Auf Deutsch lesen" data-rester="Nein danke">Deutsch</a></li><li><a href="../pt/carte.html" hreflang="pt" lang="pt" data-lk-lang="pt" data-lk-equiv="1" data-offre="Esta página também está disponível em português." data-aller="Ler em português" data-rester="Não, obrigado">Português</a></li></ul></details></div></div>
 <div class="sunset" aria-hidden="true"></div>
 
 <header>
   <div class="shell head-in">
     <a href="/en/" class="brand">Leonida<span>kit</span></a>
-    <nav id="nav" aria-label="Main navigation"><ul><li><a href="calculateurs.html">Calculator</a></li><li><a href="tuto.html">Tutorial</a></li><li><a href="carte.html" class="here" aria-current="page">Map</a></li><li><a href="vehicules.html">Vehicles</a></li><li><a href="armes.html">Armory</a></li><li><a href="atelier-3d.html">3D Workshop</a></li><li><a href="achats.html">Shop</a></li><li><a href="progression.html" target="_blank" rel="noopener" data-newtab title="Opens in a new tab">Progress</a></li><li><details class="nav-more"><summary>Explore</summary><div class="nav-more-panel"><div><strong>The world</strong><a href="lieux.html">Places</a><a href="personnages.html">Characters</a><a href="gangs.html">Gangs and factions</a><a href="demeures.html">Residences</a><a href="planques.html">Safehouses</a><a href="entreprises.html">Businesses</a><a href="animaux.html">Animals</a><a href="collectibles.html">Collectibles</a></div><div><strong>Play</strong><a href="missions.html">Missions</a><a href="activites.html">Side activities</a><a href="radios.html">Radio and music</a><a href="codes-de-triche.html">Cheat codes</a><a href="trophees.html">Trophies and achievements</a></div><div><strong>Gear up</strong><a href="nourriture.html">Consumables</a><a href="style.html">Clothing and style</a><a href="personnalisations.html">Customization</a></div><div><strong>Latest</strong><a href="actus.html">News</a><a href="videos.html">Official videos</a><a href="editions.html">Editions</a><a href="verification.html">What’s confirmed</a></div><div><strong>The site</strong><a href="a-propos.html">About</a><a href="contact.html">Contact</a><a href="medias.html">Media and credits</a><a href="mentions-legales.html">Legal and privacy</a></div><div class="nav-online"><strong>GTA Online</strong><a href="online.html" target="_blank" rel="noopener" data-newtab title="Opens in a new tab">The GTA Online space</a><a href="online/annonces.html" target="_blank" rel="noopener" data-newtab title="Opens in a new tab">The announcements</a><a href="online/gta-online-actuel.html" target="_blank" rel="noopener" data-newtab title="Opens in a new tab">The current GTA Online</a></div></div></details></li></ul></nav>
+    <nav id="nav" aria-label="Main navigation"><ul><li><a href="calculateurs.html">Calculator</a></li><li><a href="tuto.html">Tutorial</a></li><li><a href="carte.html" class="here" aria-current="page">Map</a></li><li><a href="vehicules.html">Vehicles</a></li><li><a href="armes.html">Armory</a></li><li><a href="atelier-3d.html">3D Workshop</a></li><li><a href="achats.html">Shop</a></li><li><a href="progression.html" target="_blank" rel="noopener" data-newtab title="Opens in a new tab">Progress</a></li><li><details class="nav-more"><summary>Explore</summary><div class="nav-more-panel"><div><strong>The world</strong><a href="lieux.html">Places</a><a href="personnages.html">Characters</a><a href="gangs.html">Gangs and factions</a><a href="demeures.html">Residences</a><a href="planques.html">Safehouses</a><a href="entreprises.html">Businesses</a><a href="animaux.html">Animals</a><a href="collectibles.html">Collectibles</a></div><div><strong>Play</strong><a href="missions.html">Missions</a><a href="activites.html">Side activities</a><a href="radios.html">Radio and music</a><a href="codes-de-triche.html">Cheat codes</a><a href="trophees.html">Trophies and achievements</a><a href="devine-le-lieu.html">Guess the Location</a></div><div><strong>Gear up</strong><a href="nourriture.html">Consumables</a><a href="style.html">Clothing and style</a><a href="personnalisations.html">Customization</a></div><div><strong>Latest</strong><a href="actus.html">News</a><a href="videos.html">Official videos</a><a href="editions.html">Editions</a><a href="verification.html">What’s confirmed</a></div><div><strong>The site</strong><a href="compagnon.html">Companion mode</a><a href="a-propos.html">About</a><a href="contact.html">Contact</a><a href="presse.html">Press</a><a href="medias.html">Media and credits</a><a href="mentions-legales.html">Legal and privacy</a></div><div class="nav-online"><strong>GTA Online</strong><a href="online.html" target="_blank" rel="noopener" data-newtab title="Opens in a new tab">The GTA Online space</a><a href="online/annonces.html" target="_blank" rel="noopener" data-newtab title="Opens in a new tab">The announcements</a><a href="online/gta-online-actuel.html" target="_blank" rel="noopener" data-newtab title="Opens in a new tab">The current GTA Online</a></div></div></details></li></ul></nav>
     <div class="head-search searchwrap">
       <div class="hs-bar">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
@@ -74,7 +82,7 @@
     <div class="vstats rise">
       <div class="vstat"><span class="n" data-count="2547">2547</span><span class="l">places listed</span></div>
       <div class="vstat"><span class="n" data-count="14">14</span><span class="l">named by Rockstar</span></div>
-      <div class="vstat"><span class="n" data-count="7">7</span><span class="l">confirmed regions</span></div>
+      <div class="vstat"><span class="n" data-count="6">6</span><span class="l">official regions</span></div>
       <div class="vstat"><span class="n" data-count="12">12</span><span class="l">categories</span></div>
     </div>
     </div><div class="lk-stack lk-stack--3" aria-label="Three official images of Leonida"><figure><a class="lk-stack-link" href="lieux/vice-city.html" aria-label="Vice City: open the page"><img fetchpriority="high" src="../img/officiel/vice-city-03-480.webp" srcset="../img/officiel/vice-city-03-480.webp 480w, ../img/officiel/vice-city-03-800.webp 800w, ../img/officiel/vice-city-03-1280.webp 1280w" sizes="(max-width:440px) 64vw, (max-width:900px) 286px, 360px" width="480" height="270" alt="Aerial view of Vice City, official Rockstar Games image" loading="eager" decoding="async"><span class="lk-stack-cap">Vice City</span></a></figure><figure><a class="lk-stack-link" href="lieux/grassrivers.html" aria-label="Grassrivers: open the page"><img src="../img/officiel/grassrivers-05-480.webp" srcset="../img/officiel/grassrivers-05-480.webp 480w, ../img/officiel/grassrivers-05-800.webp 800w, ../img/officiel/grassrivers-05-1280.webp 1280w" sizes="(max-width:440px) 64vw, (max-width:900px) 286px, 360px" width="480" height="270" alt="Grassrivers swamps with the skyline in the distance, official Rockstar Games image" loading="lazy" decoding="async"><span class="lk-stack-cap">Grassrivers</span></a></figure><figure><a class="lk-stack-link" href="lieux/mount-kalaga.html" aria-label="Mount Kalaga: open the page"><img src="../img/officiel/mount-kalaga-national-park-04-480.webp" srcset="../img/officiel/mount-kalaga-national-park-04-480.webp 480w, ../img/officiel/mount-kalaga-national-park-04-800.webp 800w, ../img/officiel/mount-kalaga-national-park-04-1280.webp 1280w" sizes="(max-width:440px) 64vw, (max-width:900px) 286px, 360px" width="480" height="270" alt="Cliffside road in Mount Kalaga, official Rockstar Games image" loading="lazy" decoding="async"><span class="lk-stack-cap">Mount Kalaga</span></a></figure></div></div>
@@ -409,7 +417,7 @@
         
           <g opacity=".55">
             <text x="5080" y="5920" text-anchor="end" font-family="Archivo, sans-serif" font-size="48" font-weight="900" fill="#FDFBF7" stroke="#1A1A1E" stroke-width="8" paint-order="stroke">TEMPORARY BASE MAP · v1.0</text>
-            <text x="5080" y="5970" text-anchor="end" font-family="Archivo, sans-serif" font-size="34" fill="#FDFBF7" stroke="#1A1A1E" stroke-width="6" paint-order="stroke">Drawn from official media · refined after November 19, 2026</text>
+            <text x="5080" y="5970" text-anchor="end" font-family="Archivo, sans-serif" font-size="34" fill="#FDFBF7" stroke="#1A1A1E" stroke-width="6" paint-order="stroke">Drawn from official media · refined after November 19, 2026</text>
           </g>
         </svg>
 
@@ -521,7 +529,7 @@
         <tr><th scope="row">Confirmed regions</th><td>6</td></tr>
         <tr><th scope="row">Official map released</th><td class="unknown">No, not so far</td></tr>
         <tr><th scope="row">Announced size</th><td class="unknown">No official figure</td></tr>
-        <tr><th scope="row">Game release</th><td>November 19, 2026</td></tr>
+        <tr><th scope="row">Game release</th><td>November 19, 2026</td></tr>
       </tbody>
     </table>
   </div>
@@ -585,7 +593,7 @@
         <div class="ans">No. Rockstar has never released the full GTA VI map. The base map shown here is temporary and will be replaced after the game comes out, using screenshots we take ourselves.</div>
       </details>
       <details>
-        <summary>How big is the GTA VI map?</summary>
+        <summary>How big is the GTA VI map?</summary>
         <div class="ans">Rockstar hasn’t shared any size. The press reports a map about three times bigger than Red Dead Redemption 2’s playable area, but the studio hasn’t confirmed that figure. The other comparisons going around are player estimates.</div>
       </details>
       <details>
@@ -593,12 +601,12 @@
         <div class="ans">Six: Vice City, the Leonida Keys, Grassrivers, Port Gellhorn, Ambrosia and Mount Kalaga National Park. Rockstar officially presented all of them.</div>
       </details>
       <details>
-        <summary>Does the site use the map that leaked in August 2026?</summary>
+        <summary>Does the site use the map that leaked in August 2026?</summary>
         <div class="ans">No, and that’s a deliberate choice. That material comes from a hack and is the subject of legal action by Take-Two. It also comes from a 2022-2023 development build, so it may be out of date.</div>
       </details>
       <details>
         <summary>Where will the locations come from?</summary>
-        <div class="ans">From our own surveys after the November 19, 2026 release, and from official sources like the trailers and the Extended Look, fully captured on PlayStation 5 and released by Rockstar.</div>
+        <div class="ans">From our own surveys after the November 19, 2026 release, and from official sources like the trailers and the Extended Look, fully captured on PlayStation 5 and released by Rockstar.</div>
       </details>
       <details>
         <summary>Will the whole map be open from the start of the game?</summary>
@@ -616,7 +624,7 @@
 <section class="lk-outro" aria-label="What’s next">
   <div class="shell lk-outro-in">
     <p class="lk-outro-k">What’s next?</p>
-    <h2>The rest gets written on November 19, 2026.</h2>
+    <h2>The rest gets written on November 19, 2026.</h2>
     <p>The map gets more precise with every new official image.</p>
     <div class="lk-outro-links"><a href="lieux.html">The six regions</a><a href="carnets/lieux.html">Open my spotted places</a></div>
   </div>
@@ -649,15 +657,15 @@
     <g stroke="#1A1A1E" stroke-width="2" opacity=".2">
       <line x1="0" y1="132" x2="1200" y2="132"/><line x1="0" y1="142" x2="1200" y2="142"/>
     </g>
-  </svg><div class="shell"><div class="foot-top"><div class="foot-brand"><a class="brand" href="/en/">Leonida<span>kit</span></a><p>A map, pages, a calculator. Plan your moves in Leonida with clear sources and your own numbers.</p><a class="foot-feature" href="calculateurs.html">Find my calculation ↗</a></div><div class="foot-cols"><div><h2>Explore</h2><nav aria-label="Explore (footer)"><a href="carte.html">Map</a><a href="vehicules.html">Vehicles</a><a href="armes.html">Armory</a><a href="lieux.html">Places</a><a href="personnages.html">Characters</a><a href="gangs.html">Gangs and factions</a><a href="demeures.html">Residences</a><a href="planques.html">Safehouses</a><a href="entreprises.html">Businesses</a><a href="animaux.html">Animals</a><a href="collectibles.html">Collectibles</a></nav></div><div><h2>Play</h2><nav aria-label="Play (footer)"><a href="missions.html">Missions</a><a href="activites.html">Side activities</a><a href="radios.html">Radio and music</a><a href="codes-de-triche.html">Cheat codes</a><a href="trophees.html">Trophies and achievements</a></nav></div><div><h2>GTA Online</h2><nav aria-label="GTA Online (footer)"><a href="online.html" target="_blank" rel="noopener" data-newtab title="Opens in a new tab">The GTA Online space</a><a href="online/annonces.html" target="_blank" rel="noopener" data-newtab title="Opens in a new tab">The announcements</a><a href="online/gta-online-actuel.html" target="_blank" rel="noopener" data-newtab title="Opens in a new tab">The current GTA Online</a></nav></div><div><h2>Gear up</h2><nav aria-label="Gear up (footer)"><a href="achats.html">Everything you can buy</a><a href="nourriture.html">Consumables</a><a href="style.html">Clothing and style</a><a href="personnalisations.html">Customization</a><a href="atelier-3d.html">3D Workshop</a><a href="armes.html#munitions">Ammo and gear</a><a href="logements.html">Housing and apartments</a></nav></div><div><h2>Latest</h2><nav aria-label="Latest (footer)"><a href="actus.html">News</a><a href="videos.html">Official videos</a><a href="editions.html">Editions</a><a href="verification.html">What’s confirmed</a></nav></div><div><h2>Tools and help</h2><nav aria-label="Tools and help (footer)"><a href="calculateurs.html">Calculator</a><a href="tuto.html">Tutorial</a><a href="progression.html" target="_blank" rel="noopener" data-newtab title="Opens in a new tab">Progress</a><a href="a-propos.html">About</a><a href="contact.html">Contact</a><a href="medias.html">Media and credits</a><a href="mentions-legales.html">Legal and privacy</a></nav></div></div></div><p class="legal">Leonidakit is an independent project made by a player, not affiliated with, endorsed or sponsored by Rockstar Games or Take-Two Interactive. Grand Theft Auto is a trademark of Take-Two Interactive. Credits for every media item remain available.</p></div></footer>
+  </svg><div class="shell"><div class="foot-top"><div class="foot-brand"><a class="brand" href="/en/">Leonida<span>kit</span></a><p>A map, pages, a calculator. Plan your moves in Leonida with clear sources and your own numbers.</p><a class="foot-feature" href="calculateurs.html">Find my calculation ↗</a></div><div class="foot-cols"><div><h2>Explore</h2><nav aria-label="Explore (footer)"><a href="carte.html">Map</a><a href="vehicules.html">Vehicles</a><a href="armes.html">Armory</a><a href="lieux.html">Places</a><a href="personnages.html">Characters</a><a href="gangs.html">Gangs and factions</a><a href="demeures.html">Residences</a><a href="planques.html">Safehouses</a><a href="entreprises.html">Businesses</a><a href="animaux.html">Animals</a><a href="collectibles.html">Collectibles</a></nav></div><div><h2>Play</h2><nav aria-label="Play (footer)"><a href="missions.html">Missions</a><a href="activites.html">Side activities</a><a href="radios.html">Radio and music</a><a href="codes-de-triche.html">Cheat codes</a><a href="trophees.html">Trophies and achievements</a><a href="devine-le-lieu.html">Guess the Location</a></nav></div><div><h2>GTA Online</h2><nav aria-label="GTA Online (footer)"><a href="online.html" target="_blank" rel="noopener" data-newtab title="Opens in a new tab">The GTA Online space</a><a href="online/annonces.html" target="_blank" rel="noopener" data-newtab title="Opens in a new tab">The announcements</a><a href="online/gta-online-actuel.html" target="_blank" rel="noopener" data-newtab title="Opens in a new tab">The current GTA Online</a></nav></div><div><h2>Gear up</h2><nav aria-label="Gear up (footer)"><a href="achats.html">Everything you can buy</a><a href="nourriture.html">Consumables</a><a href="style.html">Clothing and style</a><a href="personnalisations.html">Customization</a><a href="atelier-3d.html">3D Workshop</a><a href="armes.html#munitions">Ammo and gear</a><a href="logements.html">Housing and apartments</a></nav></div><div><h2>Latest</h2><nav aria-label="Latest (footer)"><a href="actus.html">News</a><a href="videos.html">Official videos</a><a href="editions.html">Editions</a><a href="verification.html">What’s confirmed</a></nav></div><div><h2>Tools and help</h2><nav aria-label="Tools and help (footer)"><a href="calculateurs.html">Calculator</a><a href="tuto.html">Tutorial</a><a href="progression.html" target="_blank" rel="noopener" data-newtab title="Opens in a new tab">Progress</a><a href="compagnon.html">Companion mode</a><a href="a-propos.html">About</a><a href="contact.html">Contact</a><a href="presse.html">Press</a><a href="medias.html">Media and credits</a><a href="mentions-legales.html">Legal and privacy</a></nav></div></div></div><p class="legal">Leonidakit is an independent project made by a player, not affiliated with, endorsed or sponsored by Rockstar Games or Take-Two Interactive. Grand Theft Auto is a trademark of Take-Two Interactive. Credits for every media item remain available.</p></div></footer>
 
-<script type="lk/lazy" src="search-index.js?v=7a50eacc490d"></script><script type="lk/lazy" src="search-lieux.js?v=be730d617c45"></script><script type="lk/lazy" src="../carte-vehicules.js?v=113ecfa572bb"></script>
-<script src="../assets-manifest.js?v=6728a686b465"></script>
-<script src="common.js?v=34018167bc06"></script>
-<script src="app.js?v=9b7a03485160"></script>
+<script type="lk/lazy" src="search-index.js?v=48968a7a1224"></script><script type="lk/lazy" src="search-lieux.js?v=be730d617c45"></script><script type="lk/lazy" src="../carte-vehicules.js?v=113ecfa572bb"></script>
+<script src="../assets-manifest.js?v=a2c9a2ab1439"></script>
+<script src="common.js?v=2a63a1734cc8"></script>
+<script src="app.js?v=21e5feff98e7"></script>
 <script src="carte-gtadb.js?v=fa3ce04e4038"></script>
 <script src="collectibles-data.js?v=60533f89e903"></script>
 <script src="collectibles-core.js?v=088b436855ae"></script>
-<script src="carte.js?v=4b5cc2b0cf8e"></script>
+<script src="carte.js?v=48ac133dde1f"></script>
 </body>
 </html>

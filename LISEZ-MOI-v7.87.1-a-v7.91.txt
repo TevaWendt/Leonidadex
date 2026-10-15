@@ -1,0 +1,84 @@
+LEONIDAKIT v7.87.1 → v7.91 — Assemblage des cinq travaux, puis audit complet du site en six langues
+À appliquer sur la v7.87 (dépôt GitHub, commit 210850a62). Archive « modifs » : seulement les fichiers qui changent (et les
+nouveaux), en plusieurs parties qui se posent toutes à la racine du dossier GitHub, dans n'importe quel ordre (aucun fichier
+n'est dans deux parties). Rien n'a été publié ni poussé. CSP inchangée.
+
+UN SEUL FICHIER À SUPPRIMER : api/ia-achat.js
+  (reste de la v7.71 : fonction de paiement abandonnée ; il faisait échouer quatre tests et la preuve de confidentialité.
+  Une archive ne peut pas effacer un fichier : supprime-le à la main dans le dossier GitHub avant de valider.)
+
+CE QUE CETTE ARCHIVE RÉUNIT (cinq travaux faits en parallèle sur la v7.87, fusionnés dans les sources, régénérés une fois)
+- v7.87.1, passe de qualité : Actualités, Vidéos officielles et Éditions au gabarit des pages de section, un moment animé par
+  page, rien sous 11 px, « GTA 6 » insécable, relecture des quatre langues, Léo sur « Ce qui est confirmé » et les vidéos.
+- v7.88, lot 3 : une image de partage par grande page et par langue (30 pages × 6 langues = 180 images), page « Presse et
+  créateurs » (presse.html) avec le kit à télécharger, motif de contact « Presse ou partenariat », revenus en sommeil (bloc
+  « Où l'acheter » éteint, Mentions inchangées).
+- v7.89, lot 5 : Leonidakit s'installe comme une appli (manifeste, icônes), marche sans réseau pour ce qui a déjà été vu
+  (service worker), page Mode compagnon (compagnon.html), lien de transfert et QR code pour changer d'appareil.
+- v7.90, lot 6 : jeu « Devine le lieu » (devine-le-lieu.html), cinq captures officielles par jour, score et série dans le
+  navigateur, encart sur Lieux et lien sur les six fiches des régions.
+- v7.91, lot 7 : tout le site en portugais du Brésil (pt/, 466 pages), Léo, recherche et flux RSS en portugais, et le
+  lot 1 bis (les douze corrections de l'audit du 12 octobre : compte à rebours « minuit, heure locale », repli sans script,
+  « GTA VI est sorti » le jour J, montants jamais coupés, titres animés qui passent à la ligne, six régions officielles,
+  phrase d'attente des collectibles, insécables, puces équilibrées).
+
+CE QUE L'ASSEMBLAGE A AJOUTÉ (en plus des cinq travaux)
+- Les textes nouveaux des lots 3, 5 et 6 et de la passe de qualité sont en portugais (521 entrées traduites, Léo comprend
+  les nouveaux sujets en portugais : kit de imprensa, modo companheiro, sem internet, adivinhe o lugar…).
+- Images de partage du Mode compagnon et du jeu (visuels officiels), dans les six langues.
+- Mentions : une ligne d'historique pour la v7.89 (service worker, écran allumé, transfert), traduite.
+- Deux retouches que la fusion automatique avait perdues sur des pages écrites à la main : carte.html (« 6 régions
+  officielles ») et collectibles.html (phrase d'attente). « Six régions officielles » partout, description de la carte et
+  Léo compris.
+
+CE QUE L'AUDIT COMPLET A TROUVÉ ET CORRIGÉ (détail et preuves : outils/AUDIT-v7.91.md)
+- Léo : « c'est quoi le mode compagnon » n'avait pas de réponse ; « quelles voitures ont été confirmées ? » menait aux
+  armes ; « ça vaut le coup d'acheter le Kosatka ? » proposait une coupe de cheveux. Deux sujets ajoutés (Mode compagnon,
+  véhicules confirmés) et « ça vaut le coup d'acheter… » reconnu, dans les six langues.
+- Référencement : description de l'Atelier 3D trop longue (235 signes, 155 au plus), raccourcie dans les six langues ;
+  description du jeu en portugais (161) ; titres du calculateur et de la progression trop longs en espagnol et en
+  portugais ; la page hors connexion (secours du service worker) ne porte plus de balises de partage.
+- Lisibilité : huit pastilles de statut à 9,9 px (véhicules, armurerie, carte, collectibles, animaux, activités, catalogues,
+  cartes des régions) passent à 11 px au moins.
+- Tests : les contrôles des lots comptaient « cinq langues » en dur ; ils lisent maintenant outils/langues.json (six).
+- Reste signalé, non corrigé (mineur) : une soixantaine de descriptions de fiches entre 156 et 164 signes (surtout dans
+  les traductions), à reprendre dans le lot 8 (pages pour Google) ; voir outils/AUDIT-v7.91.md.
+
+MARCHE À SUIVRE
+  1. Dans le dossier GitHub : supprime api/ia-achat.js ; copie le contenu de chaque partie de l'archive à la racine
+     (remplacer) ; valide ; pousse. Vercel déploie.
+  2. Google Search Console → Sitemaps : renvoie sitemap.xml et sitemap-fiches.xml (les adresses portugaises et les pages
+     nouvelles y sont, avec leurs hreflang). Inspection de l'URL → « Demander une indexation » pour presse.html,
+     compagnon.html, devine-le-lieu.html, https://www.leonidakit.com/pt/ , pt/calculateurs.html et pt/carte.html. Bing :
+     rien à faire, IndexNow signale les nouvelles adresses le lendemain matin.
+  3. Essai, dans cet ordre :
+     - accueil : le compte à rebours et « Minuit, heure locale » dessous ; carte.html (« 6 régions officielles ») ;
+     - presse.html : « Télécharger le kit (ZIP) », un logo en PNG, « Écrire à l'éditeur » (motif déjà choisi) ;
+     - compagnon.html sur ton téléphone, en https : « Préparer pour jouer sans réseau », attends « Prêt à jouer sans
+       réseau » ; mode avion : la carte, un carnet, le calculateur, Léo, puis une page jamais ouverte → « Pas de réseau
+       pour l'instant » ; « Installer l'appli » ; sur un ordinateur, « Créer le lien de transfert », scanne le QR code ;
+     - devine-le-lieu.html : une partie, « Partager mon résultat », recharge la page : le résultat du jour revient ;
+     - pt/ : barre « Mudar o idioma », compte à rebours « Meia-noite, horário local » ; pt/calculateurs.html, tape
+       « tenho 200 mil e quero 1 milhão » ; Léo : « quando sai o jogo? », « o que é o modo companheiro? » ;
+     - partage : colle https://www.leonidakit.com/presse.html dans WhatsApp ou Discord : l'aperçu montre l'image 1200 × 630
+       avec le titre (une page déjà partagée avant peut garder l'ancienne image quelques jours).
+  4. Bon à savoir :
+     - Le jeu « Devine le lieu » : la partie n° 1 est celle du 12 octobre 2026 (« debut » dans outils/devine/devine.json) ;
+       pour qu'il démarre au n° 1 le jour de la mise en ligne, change cette date puis régénère (je peux le faire).
+     - Quand une grande page change de titre : relance outils/gen-partage.cjs (Chromium), puis la fin de chaîne ; tant que
+       ce n'est pas fait, la page garde son image d'avant.
+     - Affiliation (en sommeil) : outils/monetisation.json, « actif » à true, puis régénérer ; lis d'abord
+       LISEZ-MOI-v7.88.txt (statut d'éditeur, impôts, transparence).
+     - Discord et AdSense (plan de lancement) : rien n'a été fait, faute de lien d'invitation et d'identifiant pub-… ; dès
+       que tu me les donnes, c'est une demi-heure.
+     - Le lot 8 (pages qui répondent aux recherches Google) se fait sur cette version.
+
+CONTRÔLES (tout est vert ; le détail est dans outils/CHANGEMENTS-v7.87.1-a-v7.91.txt et outils/AUDIT-v7.91.md)
+Tests Node (1 133, dont ceux des cinq travaux et du lot 1 bis), langues (51, six langues), vérificateur de liens
+(431 560 références, 0 erreur), preuve de confidentialité, langues dans le navigateur (toutes les pages des cinq langues
+traduites : 35 et 2 791 contrôles), écrans à 16 largeurs en français et à 5 largeurs en allemand et en portugais
+(0 débordement, 0 texte sous 10 px, le reste identique à la v7.87), audit de clôture (0 partout, 0 erreur console, 11 661
+contrastes), aucun cookie, contrôles navigateur de la passe de qualité (324 chargements), du lot 5 (41/41), du lot 6
+(143/143), de l'audit du 12 octobre (161/161, horloge simulée à sept dates, six langues, 28 pages), accessibilité axe-core
+(316 chargements : 0 violation sérieuse hors 9 cibles documentées), latence comparée à la v7.87 (aucune régression), Léo
+questionné dans les six langues, captures regardées. Retour arrière : commit précédent dans GitHub Desktop.

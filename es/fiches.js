@@ -7,7 +7,8 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
 (function(){
   'use strict';
   var lkPl = function (n) { return /^fr/.test(document.documentElement.lang || "fr") ? n > 1 : n !== 1; }; /* pluriel selon la langue de la page (français : n > 1) */
-  var lkDollars = function (s) { return /^(fr|de)/.test(document.documentElement.lang || "fr") ? s + "\u00a0$" : "$" + s; }; /* « 1 250 $ », « 1.250 $ » (allemand) ou « $1,250 » selon la langue de la page */
+  /* v7.91 (portugais) : « $ 1.250 » (signe devant, espace insécable) */
+  var lkDollars = function (s) { return /^pt/.test(document.documentElement.lang || "fr") ? "$\u00a0" + s : /^(fr|de)/.test(document.documentElement.lang || "fr") ? s + "\u00a0$" : "$" + s; }; /* « 1 250 $ », « 1.250 $ » (allemand) ou « $1,250 » selon la langue de la page */
   const calculatorBase = new URL('calculateurs.html', document.currentScript?.src || document.querySelector('script[src*="fiches.js"]')?.src || new URL('/fiches.js', location.href).href);
   function calculatorLink(type, values, origin) {
     const url = new URL(calculatorBase);

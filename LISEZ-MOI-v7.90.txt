@@ -1,0 +1,51 @@
+LEONIDAKIT v7.90 (lot 6) — Jeu « Devine le lieu »
+À appliquer sur la v7.87. Archive « modifs » destinée à l'ASSEMBLAGE des lots 3, 5, 6 et 7 : ne la pousse pas seule.
+Rien n'a été publié ni poussé. CSP inchangée. Aucun cookie, aucun service extérieur.
+UN FICHIER À SUPPRIMER DU DÉPÔT (hors lot, déjà demandé en v7.71) : api/ia-achat.js. Il est encore dans GitHub (donc
+déployé par Vercel, même s'il reste fermé sans ses réglages), alors que les Mentions disent qu'il n'y a plus de fonction
+d'achat : c'était la seule cause des 4 échecs de la suite de tests, déjà présents dans la base.
+
+CE QUI CHANGE POUR LE VISITEUR
+- Nouvelle page devine-le-lieu.html, dans les cinq langues (« Guess the Location », « Adivina el lugar », « Indovina il
+  luogo », « Errate den Ort ») : chaque jour, cinq captures officielles de GTA VI, les mêmes pour tout le monde (le
+  tirage change à minuit, heure de Paris). Pour chacune, on choisit la région de Leonida où elle a été prise, avec les
+  boutons ou directement sur la carte. La réponse s'affiche tout de suite : la bonne région s'allume sur la carte, avec
+  ce que montre l'image, son titre officiel et le lien vers la fiche de la région. On apprend la carte en jouant.
+- À la fin : le score, les cinq images (chacune vers sa fiche), la série de jours joués, le meilleur score, le temps
+  avant la prochaine partie, et « Partager mon résultat » (une ligne par image ✅ / ❌, le numéro du jour et l'adresse ;
+  menu de partage du téléphone, sinon copie). Ensuite, une partie libre sans limite, qui ne touche pas à la série.
+- Seulement des images que Rockstar a lui-même rangées par région sur sa page des captures (40 images : Mount Kalaga 6,
+  Ambrosia 5, Port Gellhorn 6, Vice City 11, Grassrivers 6, Leonida Keys 6), créditées « Rockstar Games ». On devine une
+  région, jamais un point précis. Les textes alternatifs décrivent l'image sans donner la réponse.
+- Clavier et souris, annonces pour les lecteurs d'écran, verdict écrit (✓ / ✗) et pas seulement en couleur, « réduire
+  les animations » respecté. Sans JavaScript : les règles et les six régions avec leurs fiches.
+- Ce que le jeu garde : tes réponses du jour, ta série et ton meilleur score, dans le navigateur, sous une seule clé
+  (lk_devine_v1), écrite à la première réponse ; la partie libre ne garde rien ; rien n'est envoyé. Décrit dans les
+  Mentions (liste du stockage et historique).
+- Liens : groupe « Jouer » du menu et pied de page (préparé dans outils/site-shell.cjs), page Lieux (encart « Le jeu du
+  jour »), les six fiches des régions (lien « Devine le lieu »), recherche du site, plan du site, Léo (« un jeu sur la
+  carte ? », « devine le lieu », « mon score est-il enregistré ? », dans les cinq langues).
+
+MARCHE À SUIVRE
+  1. Donne cette archive à la conversation d'assemblage, avec celles des lots 3, 5 et 7 : c'est l'assemblage qui
+     régénère tout, une seule fois (menu et pied de page de toutes les pages, empreintes, Léo, plans du site). L'archive
+     contient les fichiers nouveaux, les sources modifiées, les données et les pages dont le contenu change (le jeu, Lieux,
+     les six fiches des régions, les Mentions, À propos, dans les cinq langues). Les pages qui ne changent que par le menu,
+     le pied de page ou les empreintes n'y sont pas : la régénération les produit. Les modifications des fichiers
+     existants sont aussi dans outils/assemblage/lot6-devine.diff, pour les fusionner avec les autres lots.
+     Signale aussi à l'assemblage la suppression de api/ia-achat.js (à faire à la main dans le dossier GitHub).
+  2. Après la mise en ligne de l'assemblage : Google Search Console → Sitemaps : renvoie sitemap.xml ; Inspection de
+     l'URL → « Demander une indexation » pour devine-le-lieu.html (et en/, es/, it/, de/).
+  3. Essai : devine-le-lieu.html (une partie au clavier puis à la souris, « Partager mon résultat », recharger la page :
+     le résultat du jour revient) ; lieux.html (encart « Le jeu du jour ») ; lieux/vice-city.html (lien « Devine le lieu »).
+  4. Bon à savoir :
+     - La partie n° 1 est celle du 12 octobre 2026 (« debut » dans outils/devine/devine.json). Pour que le jeu démarre
+       au n° 1 le jour de la mise en ligne, change cette date puis régénère (je peux le faire).
+     - Rockstar range aussi « Vice City 07 » et « Ambrosia 05 » sur sa page des captures, mais le site ne les a pas dans
+       ses visuels officiels : une fois ajoutées à img/officiel/ et à outils/medias-officiels.json, une entrée dans
+       devine.json suffit (la génération refuse toute image de la série oubliée ou mal rangée).
+
+Contrôles : tests Node (dont 11 tests du jeu) et langues, vérificateur de liens, preuve de confidentialité, navigateur
+(jeu complet en français et en allemand à 390 et 1 280 px : 143 contrôles ; langues ; écrans ; audit ; cookies), latence
+avant / après, captures regardées une à une ; le détail est dans outils/CHANGEMENTS-v7.90.txt et outils/MATRICE-v7.90.md.
+Retour arrière : commit précédent dans GitHub Desktop.

@@ -1,0 +1,48 @@
+LEONIDAKIT — Lot 1 bis : corrections de l’audit (langues, mise en page, compteurs, comptes à rebours)
+À appliquer sur la v7.87. Archive « modifs » : seulement les fichiers qui changent (et les nouveaux).
+Rien n’a été publié ni poussé. CSP inchangée.
+UN FICHIER À SUPPRIMER DU DÉPÔT : api/ia-achat.js. La v7.71 demandait déjà de le retirer ; il est toujours là (fonction
+de paiement abandonnée, fermée faute de réglages, mais encore mise en ligne) et il fait échouer trois tests.
+
+CE QUI CHANGE POUR LE VISITEUR (dans les cinq langues)
+- Accueil, compte à rebours : sans JavaScript (et pour les robots), « Sortie le jeudi 19 novembre 2026 » au lieu de cases
+  figées ; avec JavaScript, les cases et, dessous, « Minuit, heure locale ». Le 19 novembre à minuit, le compteur ne reste
+  plus sur « 0 jours 00 heures » : il laisse place à « GTA VI est sorti » et à deux boutons, « Voir les vrais prix »
+  (page Achats) et « Ouvrir le calculateur ».
+- Fiches véhicules et armes, Carte, Armurerie, Collectibles, Calculateur : sous chaque compteur, « minuit, heure locale ».
+- La date visée n’est plus écrite qu’à un seul endroit : outils/acquisitions.json (releaseDate, releaseTime, preloadDate).
+  Si Rockstar annonce une heure mondiale, on change releaseTime (par exemple « 06:00:00Z ») et la mention sous les
+  compteurs, puis on régénère.
+- Calculateur, téléphone : les montants ne se coupent plus au milieu (« 800 / 000 / $ ») ; les boutons d’une étape
+  (« Voir les réglages avancés », « Aller à mon business plan ») s’empilent sur toute la largeur ; les montants proposés
+  (« 100 k $ » … « 10 M $ ») s’équilibrent sur leurs lignes.
+- Titres animés (Progression en allemand : « Deinen Fortschritt sichern oder übertragen ») : ils passent à la ligne au lieu
+  de sortir de l’écran.
+- Fiches en allemand : les longs libellés (« Höchstgeschwindigkeit ») se coupent à la bonne syllabe au lieu de recouvrir
+  la valeur.
+- Six régions officielles partout : la Carte disait « 7 régions confirmées » et l’Accueil « 6 comtés recensés ». Léo, à
+  « quels sont les comtés ? », dit maintenant ce que montre vraiment la carte (cinq comtés, dont deux identifiés par la
+  communauté) et les distingue des six régions officielles.
+- Titres de fin de page (« La suite s’écrit le 19 novembre 2026. ») : équilibrés, l’année ne finit plus seule sur sa
+  ligne ; dates et montants ont des espaces insécables dans toutes les langues (« 80.000 $. » ne se coupe plus avant
+  le « $ »).
+- Accueil : « Le monde de Leonida » a le même espace au-dessus que les autres sections.
+- Pas d’espace avant « : » en anglais, espagnol, italien et allemand dans le tableau des activités du calculateur.
+- Collectibles : tant que le catalogue est vide, une phrase (« Rien n’est encore confirmé objet par objet : la liste
+  complète arrive à la sortie. ») remplace les trois compteurs à « 0 ».
+- Rangées de puces (Achats, Progression, Véhicules, ateliers des fiches) : plus de puce seule sur sa dernière ligne.
+
+MARCHE À SUIVRE
+  1. Copie le contenu des deux parties de l’archive à la racine du dossier GitHub (remplacer), supprime api/ia-achat.js,
+     valide, pousse. Ce lot peut partir tout de suite : ce sont des défauts visibles.
+  2. Les lots 3, 5, 6 et 7, préparés en parallèle sur la v7.87, touchent aussi certains fichiers communs (app.js,
+     style.css, index.html, outils/sync-site.cjs, outils/langues.cjs…) : la conversation d’assemblage part de ce lot
+     (liste des fichiers sources dans outils/CHANGEMENTS-lot1bis.txt, § FICHIERS).
+  3. Essai : accueil (le compte à rebours, « Minuit, heure locale » dessous) ; carte.html (« 6 régions officielles ») ;
+     collectibles.html (la phrase en tête) ; calculateurs.html sur téléphone, « 10 M $ » puis « Voir ma réponse » ;
+     de/progression.html sur téléphone (« Sauvegarde ») ; une fiche véhicule (« minuit, heure locale » sous le compteur).
+
+Contrôles : nouveau test dans Chromium, outils/tests/audit-langues-browser.cjs (20 pages clés × 5 langues × téléphone
+et PC, horloge simulée avant, à 23:59:50, à 00:00:05 et le 1er décembre, à Paris et à Montréal, compteurs comparés aux
+données), tests Node, langues, vérificateur de liens, écrans ; le détail est dans outils/CHANGEMENTS-lot1bis.txt.
+Retour arrière : commit précédent dans GitHub Desktop.

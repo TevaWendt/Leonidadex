@@ -1,0 +1,109 @@
+LEONIDAKIT v7.88 — Images de partage, page Presse et kit presse, revenus en sommeil (lot 3)
+À appliquer sur la v7.87. Archive « modifs » : seulement les fichiers qui changent (et les nouveaux).
+Rien n'a été publié ni poussé. CSP inchangée.
+
+UN FICHIER À SUPPRIMER : api/ia-achat.js
+(l'ancien paiement des questions de Léo, retiré en v7.71 mais resté dans le dépôt ; les tests de la v7.71 et la preuve
+de confidentialité échouent tant qu'il est là ; une archive ne peut pas supprimer un fichier : supprime-le à la main dans
+le dossier GitHub, ou dis-le à l'assemblage.)
+
+ATTENTION : cette archive part à l'ASSEMBLAGE avec celles des lots 5, 6 et 7 (faits en même temps, depuis la même
+v7.87). Ne la pousse pas seule, sauf si tu enchaînes les lots un par un (dans ce cas, elle se pose telle quelle sur la
+v7.87, et tu supprimes api/ia-achat.js).
+
+CE QUI CHANGE POUR LE VISITEUR
+- Partage sur les réseaux : les 28 grandes pages (accueil, calculateur, carte, véhicules, armurerie, les hubs du monde,
+  missions, radios, codes, trophées, GTA Online, collectibles, achats, Atelier 3D, progression, ce qui est confirmé,
+  actualités, vidéos, éditions, Presse) ont chacune leur image de partage, dans chaque langue : le titre de la page sur
+  un visuel officiel crédité « © Rockstar Games », la marque et l'adresse du site (1200 × 630, 140 images). C'est elle
+  que WhatsApp, Discord, X, Facebook, LinkedIn ou Reddit montrent en principe quand on colle l'adresse de la page (à
+  vérifier une fois en ligne, voir plus bas). Les autres pages (fiches, À propos, Contact…) gardent leur image d'avant.
+- Nouvelle page « Presse et créateurs » (presse.html, cinq langues), dans le menu « Explorer › Le site » et au pied de
+  page (« Outils et aide ») :
+  · le site en trois phrases, à reprendre tel quel, et ses chiffres à jour (pages, fiches de véhicules et d'armes,
+    lieux, visuels, langues), recomptés à chaque mise à jour et écrits au format de chaque langue (2 547, 2,547, 2.547) ;
+  · le kit à télécharger : logo pour fond clair et pour fond sombre (SVG et PNG transparent), icône (SVG et PNG
+    512 × 512), cinq captures du site en français (accueil, carte, calculateur, une fiche, accueil sur téléphone), et tout
+    le kit en une archive ZIP de 789 Ko ;
+  · comment citer une information (avec les vrais libellés : ligne « Source », « Sources de ce dossier », les cinq
+    statuts du site), ce qui se reprend librement (le kit et les informations, avec un lien ; les visuels du jeu restent à
+    Rockstar Games et se créditent) et ce qu'il vaut mieux éviter, l'indépendance du site ;
+  · « Écrire à l'éditeur » : le formulaire de contact s'ouvre sur le nouveau motif « Presse ou partenariat » (dans les
+    cinq langues ; le motif existe aussi dans la liste de la page Contact).
+- À propos : « pages en ligne » ne compte plus les pages de redirection ni la page 404 (452 au lieu de 463).
+- Léo, dans les cinq langues : « kit presse », « je suis journaliste », « presse », « partenariat », « comment citer
+  Leonidakit », « captures du site »… mènent à la page Presse ; les questions sur le jeu n'y mènent pas (« le logo de
+  GTA 6 », « journaliste du jeu », « interview de Lucia », « télécharger »…). Nouveau : « que dit la presse de GTA 6 ? »
+  répond avec les aperçus de la presse du 27 août 2026 (lien vers les Actualités). Il dit aussi le bon nombre de
+  visuels crédités (178, recompté à chaque régénération, au lieu de 148). La recherche du site trouve la page Presse.
+- Google : le logo de Leonidakit dans les données structurées est désormais l'icône carrée du kit (512 × 512), au lieu
+  de l'image de partage générale.
+- Revenus : rien ne change à l'écran. Un bloc « Où l'acheter » (liens affiliés) est prêt pour la page Éditions,
+  éteint ; les Mentions disent toujours « aucun lien d'affiliation ». Voir plus bas avant de l'allumer.
+
+MARCHE À SUIVRE
+  1. Donne cette archive à la conversation d'assemblage, avec celles des lots 5, 6 et 7, et dis-lui de supprimer
+     api/ia-achat.js. (Si tu enchaînes les lots un par un : copie le contenu de l'archive à la racine du dossier GitHub en
+     remplaçant, supprime api/ia-achat.js, valide, pousse.)
+     Pour l'assemblage :
+     · l'entrée « Presse » du menu est dans outils/site-shell.cjs (groupe « Le site ») et déjà posée dans toutes les
+       pages de cette archive ; l'assemblage la garde en régénérant tout une seule fois ;
+     · 15 images de partage ont un chiffre dans leur titre (véhicules : 302 ; Atelier 3D : 302 et 27 ; radios : 6 ; dans
+       les cinq langues). Si un autre lot change un de ces chiffres, la page reprend sans bruit son image d'avant et le
+       test v788 échoue tant que « node outils/gen-partage.cjs » (Chromium, ≈ 1 min 30) n'a pas été relancé, puis la
+       fin de chaîne ;
+     · Léo : ce lot ajoute deux sujets (« presse », « apercus-presse ») à outils/leo-knowledge.json, deux formulations
+       au sujet « sources-page » et le nombre de visuels calculé ({visuels}) ; des entrées en fin des ponts
+       outils/langues/{en,de}/leo-pivot.json et outils/langues/{es,it}/_leo-pont.json : à garder si un autre lot touche
+       les mêmes fichiers ;
+     · traductions : outils/langues/<code>/v788.json (fichier propre au lot, aucun conflit).
+  2. Une fois en ligne — Google Search Console → Sitemaps : renvoie sitemap.xml ; Inspection de l'URL → « Demander une
+     indexation » pour https://www.leonidakit.com/presse.html (et /en/presse.html si tu veux).
+  3. Essai du partage : colle https://www.leonidakit.com/carte.html dans une conversation WhatsApp ou Discord (avec toi-
+     même) : l'aperçu montre l'image avec le titre « Carte interactive de Leonida (GTA 6) ». WhatsApp et Discord gardent
+     les aperçus en cache : une page déjà partagée avant peut montrer l'ancienne image pendant quelques jours ; essaie
+     d'abord une page jamais partagée (presse.html, editions.html).
+  4. Facebook : outil de débogage de partage https://developers.facebook.com/tools/debug/ (compte Facebook nécessaire)
+     → colle l'adresse → « Récupérer à nouveau » : l'image 1200 × 630 et son titre doivent apparaître, sans avertissement
+     sur l'image. LinkedIn : https://www.linkedin.com/post-inspector/ (même principe). X : poster le lien en brouillon
+     montre l'aperçu. Si une plateforme montre l'image d'avant (la seconde og:image), dis-le-moi : je la retirerai des
+     grandes pages.
+  5. Page Presse : « Télécharger le kit (ZIP) » enregistre l'archive ; un logo en PNG ; puis « Écrire à l'éditeur » :
+     le motif « Presse ou partenariat » est déjà choisi dans le formulaire.
+  6. Quand une grande page change de titre : relance outils/gen-partage.cjs (≈ 1 min 30, Chromium), puis la fin de
+     chaîne ; tant que ce n'est pas fait, la page garde son image d'avant (jamais un titre faux). Je peux le faire à
+     chaque fois.
+
+ACTIVER L'AFFILIATION PLUS TARD (rien ne presse)
+Comment : dans outils/monetisation.json, remplis « liens » (nom de la boutique, adresse https donnée par le programme
+d'affiliation, édition, plateformes), passe « actif » à true, puis régénère (ou demande-le-moi). Le bloc « Où
+l'acheter » apparaît sur la page Éditions ; chaque lien est marqué « Lien affilié » (rel="sponsored nofollow"), s'ouvre
+dans un nouvel onglet et le dit ; les trois phrases des Mentions qui disent « sans activité commerciale » et « aucun lien
+d'affiliation » sont réécrites toutes seules. Tous ces textes sont déjà traduits dans les quatre langues. Seule
+exception possible : une édition ou une plateforme écrite autrement que « Standard » ou « Édition Ultimate » avec
+« PS5, Xbox Series X|S » ; l'extraction des langues la signale alors, et une ligne de traduction suffit (je peux la
+faire). Un lien affilié reste un simple lien : aucun script d'un autre site, aucun cookie posé par Leonidakit.
+Ce que ça implique — je ne suis pas juriste, vérifie avant d'activer :
+- Statut d'éditeur : les Mentions s'appuient aujourd'hui sur l'anonymat permis à une personne qui édite un site « à
+  titre non professionnel » (loi pour la confiance dans l'économie numérique, art. 1-1 II). Des revenus réguliers
+  peuvent faire de toi un éditeur professionnel : il faudrait alors publier dans les Mentions ton nom (ou celui de ta
+  micro-entreprise), une adresse et un moyen de te joindre. Le champ editorName de outils/site-informations.json est
+  prêt pour ça.
+- Impôts et cotisations : les commissions sont des revenus à déclarer chaque année (en général comme bénéfices non
+  commerciaux) ; si l'activité devient régulière, un statut (micro-entrepreneur) et des cotisations sociales peuvent
+  s'appliquer. Renseigne-toi sur impots.gouv.fr et entreprendre.service-public.gouv.fr, ou auprès d'un conseiller.
+- Transparence : chaque lien est déjà signalé « Lien affilié » et la page explique la commission. Certains programmes
+  (Amazon Partenaires, par exemple) imposent leur propre phrase : ajoute-la si le programme la demande.
+- Le programme : lis ses conditions ; certains refusent les sites de fans ou les marques de jeux.
+- Cookies : la boutique pose les siens une fois que le visiteur est chez elle ; la phrase des Mentions qui s'affiche à
+  l'activation le dit.
+
+CONTRÔLES (détail dans outils/CHANGEMENTS-v7.88.txt et outils/MATRICE-v7.88.md)
+Tests Node 1 064 / 1 065 au passage complet (le dernier, un test de l'À propos qui comptait encore les redirections dans
+« pages en ligne », mis à la nouvelle règle et repassé), langues 42 / 42, liens 0 erreur, confidentialité tenue,
+toutes les pages des quatre langues dans Chromium sans échec, écrans à 16 largeurs et en allemand identiques à la v7.87
+(page Presse sans aucun signalement), audit de clôture à zéro, aucun cookie, latence sans régression ; Léo identique à
+la v7.87 sur tous ses jeux de questions et à 100 % sur la page Presse dans les cinq langues ; captures de la page
+Presse (390, 768 et 1 280 px, français et allemand), téléchargements réels du kit, motif prérempli dans les cinq
+langues ; planches des 140 images de partage relues langue par langue.
+Retour arrière : commit précédent dans GitHub Desktop.

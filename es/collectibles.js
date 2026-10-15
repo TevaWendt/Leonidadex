@@ -130,6 +130,8 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     setText('col-documented', items.length);
     setText('col-confirmed', items.filter(item => item.status === 'confirmed').length);
     setText('col-located', items.filter(item => core.mapUrl(item)).length);
+    /* lot 1 bis (corrections de l’audit, point 13) : sans fiche documentée, la phrase remplace les compteurs à « 0 » */
+    document.querySelectorAll('.col-dash').forEach(function (d) { d.toggleAttribute('data-vide', !items.length); });
     setText('col-found-count', found);
     setText('col-trackable-label', trackable.length ? '/ ' + trackable.length + (lkPluriel(trackable.length)?' encontrados':' encontrado') : 'objetos con seguimiento');
     setText('col-percent', percent === null ? '—' : percent + ' %');

@@ -13,13 +13,13 @@
   var me = document.currentScript, base = me && me.src ? me.src.replace(/[^/]*$/, '') : '';
   var KEY = 'lk_perso_v1', SK = kind + ':' + id;
   var T = {
-    titre: 'Mi configuración', ou: 'en este dispositivo', vide: 'Ningún puesto elegido: marca “Lo tomo” en un puesto o una opción.',
-    un: '{n} puesto elegido', des: '{n} puestos elegidos', total: 'Referencia de la saga: {t}', entre: 'de {a} a {b}', sans: '{n} sin precio registrado',
-    reset: 'Quitar todo', prends: 'Lo tomo', voir: 'Ver en la lista', postes: '{n} puestos', poste: '1 puesto',
+    titre: 'Mi configuración', ou: 'en este dispositivo', vide: 'Ningún elemento elegido: marca “Lo tomo” en un elemento o una opción.',
+    un: '{n} elemento elegido', des: '{n} elementos elegidos', total: 'Referencia de la saga: {t}', entre: 'de {a} a {b}', sans: '{n} sin precio registrado',
+    reset: 'Quitar todo', prends: 'Lo tomo', voir: 'Ver en la lista', postes: '{n} elementos', poste: '1 elemento',
     p6: 'Precio GTA VI', rep: 'Referencia de la saga', pasRep: 'Sin referencia', niveau: 'Nivel requerido', niveauVi: 'GTA VI: por confirmar', effet: 'Efecto',
     options: '{n} options', option: '1 option', couleurs: 'Familias de tonos de la paleta de GTA V', couleursN: '{n} familias de tonos',
     prixNon: 'precio no registrado', honnete: 'Los precios y los desbloqueos vienen de GTA V o de GTA Online, presentados como referencias: Rockstar no ha publicado nada para GTA VI.',
-    charge: 'Cargando los puestos…', echec: 'No se pudieron cargar los puestos: abre la lista de personalizaciones.', ouvrir: 'Desplegar todo', fermer: 'Plegar todo'
+    charge: 'Cargando los elementos…', echec: 'No se pudieron cargar los elementos: abre la lista de personalizaciones.', ouvrir: 'Desplegar todo', fermer: 'Plegar todo'
   };
   var fill = function (s, v) { return s.replace(/\{(\w+)\}/g, function (m, k) { return v[k] !== undefined ? String(v[k]) : m; }); };
   var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };

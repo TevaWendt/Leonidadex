@@ -13,13 +13,13 @@
   var me = document.currentScript, base = me && me.src ? me.src.replace(/[^/]*$/, '') : '';
   var KEY = 'lk_perso_v1', SK = kind + ':' + id;
   var T = {
-    titre: 'My configuration', ou: 'on this device', vide: 'No post chosen yet: tick “I’ll take it” on a post or an option.',
-    un: '{n} post chosen', des: '{n} posts chosen', total: 'Series benchmark: {t}', entre: 'from {a} to {b}', sans: '{n} without a recorded price',
-    reset: 'Remove all', prends: 'I’ll take it', voir: 'See in the list', postes: '{n} posts', poste: '1 post',
+    titre: 'My configuration', ou: 'on this device', vide: 'No item chosen yet: tick “I’ll take it” on an item or an option.',
+    un: '{n} item chosen', des: '{n} items chosen', total: 'Series benchmark: {t}', entre: 'from {a} to {b}', sans: '{n} without a recorded price',
+    reset: 'Remove all', prends: 'I’ll take it', voir: 'See in the list', postes: '{n} items', poste: '1 item',
     p6: 'GTA VI price', rep: 'Series benchmark', pasRep: 'No benchmark', niveau: 'Level required', niveauVi: 'GTA VI: to be confirmed', effet: 'Effect',
     options: '{n} options', option: '1 option', couleurs: 'Colour families of the GTA V palette', couleursN: '{n} colour families',
     prixNon: 'price not recorded', honnete: 'Prices and unlocks come from GTA V or GTA Online, shown as benchmarks: Rockstar has published nothing for GTA VI.',
-    charge: 'Loading the posts…', echec: 'The posts could not be loaded: open the customizations list.', ouvrir: 'Expand all', fermer: 'Collapse all'
+    charge: 'Loading the items…', echec: 'The items could not be loaded: open the customization list.', ouvrir: 'Expand all', fermer: 'Collapse all'
   };
   var fill = function (s, v) { return s.replace(/\{(\w+)\}/g, function (m, k) { return v[k] !== undefined ? String(v[k]) : m; }); };
   var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };

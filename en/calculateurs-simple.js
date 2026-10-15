@@ -17,8 +17,9 @@
     return /^\d+(?:[,.]\d+)?$/.test(t) ? Number(t.replace(',', '.')) : null;
   }
   /* « 1 000 000 » se lit mal pour un enfant : on l'écrit aussi en mots. */
-  /* v7.61 : pluriel selon la langue de la page (« 1,5 million » en français, « 1,5 millones » en espagnol) */
-  function many(x) { return /^fr/i.test(document.documentElement.lang || 'fr') ? x >= 2 : x !== 1; }
+  /* v7.61 : pluriel selon la langue de la page (« 1,5 million » en français, « 1,5 millones » en espagnol) ;
+     v7.91 (portugais) : comme en français, singulier sous 2 (« 1,5 milhão », « 2 milhões ») */
+  function many(x) { return /^(fr|pt)/i.test(document.documentElement.lang || 'fr') ? x >= 2 : x !== 1; }
   function words(n) {
     if (n === null || !isFinite(n) || n < 1000) return '';
     if (n >= 1e9) return nf.format(n / 1e9) + (many(n / 1e9) ? ' billion' : ' billion');
@@ -34,7 +35,7 @@
       var n = parse(input.value), w = words(n);
       node.textContent = w ? '= ' + dollars(w) : '';
       /* séparateurs de milliers, uniquement quand on n'est pas en train d'écrire dans la case */
-      if (n !== null && n >= 1000 && Number.isInteger(n) && document.activeElement !== input && (/^[\d\s\u00a0\u202f]+$/.test(input.value) || (en && (E.lang === 'de' ? /^[\d.]+$/ : /^[\d,]+$/).test(input.value)))) { var g = group(n); if (input.value !== g) input.value = g; }
+      if (n !== null && n >= 1000 && Number.isInteger(n) && document.activeElement !== input && (/^[\d\s\u00a0\u202f]+$/.test(input.value) || (en && (E.lang === 'de' || E.lang === 'pt' ? /^[\d.]+$/ : /^[\d,]+$/).test(input.value)) /* v7.91 (portugais) : le point groupe les milliers, comme en allemand */)) { var g = group(n); if (input.value !== g) input.value = g; }
     });
   }
   /* Réglette d'objectif : 10 000 $ à 10 000 000 $, échelle logarithmique, liée dans les deux sens. */

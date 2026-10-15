@@ -1,0 +1,72 @@
+LEONIDAKIT v7.87.1 — Passe de qualité des v7.86 et v7.87
+À appliquer sur la v7.87. Archive « modifs » : seulement les fichiers qui changent (et les nouveaux). Cette archive part à
+la conversation d'assemblage avec les lots 3, 5, 6 et 7 : ne la pousse pas seule. Rien n'a été publié ni poussé. CSP
+inchangée. Ce lot ne supprime aucun fichier.
+
+UN FICHIER À SUPPRIMER (un reste de la v7.71, pas de ce lot) : api/ia-achat.js
+  La v7.71 demandait déjà de l'effacer (fin du crédit IA payant) ; il est toujours dans le dépôt. Tant qu'il y est, quatre
+  tests et la preuve de confidentialité échouent (sur la v7.87 aussi). Efface-le dans le dossier GitHub (ou dis-le à la
+  conversation d'assemblage).
+
+CE QUI CHANGE POUR LE VISITEUR
+- Actualités, Vidéos officielles (sommaire et trois pages) et Éditions ont maintenant la mise en page des autres pages de
+  section : sections numérotées avec leur titre et leur icône, fonds alternés, sous-navigation qui suit la lecture,
+  questions fréquentes et sources en bas, puces « L'actualité » pour passer d'une page à l'autre (avec Ce qui est confirmé
+  et Radios et musique).
+- Un moment animé par page, au défilement, comme sur les autres sections : la frise des actualités se trace annonce après
+  annonce ; la planche des photogrammes de chaque vidéo ; les seize contenus de l'Ultimate qui se déballent ; sur Radios et
+  musique, l'aiguille du poste qui s'accorde sur chaque station. Avec « réduire les animations » ou sans script, tout est
+  affiché tout de suite, rien ne bouge.
+- Vidéos : au-delà de seize modèles vus, douze puces et « Voir les N autres » (104 modèles pour le Trailer 1).
+- Ce qui est confirmé : grilles alignées et centrées. Stations : le nom n'est plus écrit deux fois. Fiches : les trois
+  chiffres « Personnaliser » tiennent sur une rangée, même sur téléphone.
+- Lisibilité : plus aucun texte sous 11 px sur ces pages (légendes, statuts, angles du dessin, intitulés du tableau des
+  Mentions sur téléphone) ; « Voir dans la liste » et les renvois aux sources sont plus faciles à toucher ; « GTA 6 » ne se
+  coupe plus en fin de ligne dans les titres et les questions.
+- Langues : j'ai relu les quatre langues page par page. Les noms des fiches, des armes et des véhicules décrits ne restent
+  plus en français sur les pages traduites (« Fusil à pompe » devient « Pump shotgun », « Lucia, du pénitencier à Vice
+  City » devient « Lucia, from the penitentiary to Vice City »…), les minutages de l'Extended Look sont justes (« 0:06 »
+  au lieu de « 0:6 »), les titres des sources anglaises ne gardent plus de mots français, et près de 200 traductions
+  sont plus justes ou plus naturelles (noms officiels des véhicules gardés, faux amis, glossaires de chaque langue).
+- Pages des stations : la petite légende sous la plaque était grise sur fond sombre, presque illisible ; elle est lisible.
+- Léo : il répond sur « Ce qui est confirmé », les vidéos officielles, la mesure d'audience et la limite du jour de l'IA,
+  dans les cinq langues.
+
+POUR GOOGLE
+- Titres de 65 signes au plus avec « GTA 6 », descriptions de 155 au plus et toutes différentes, dans les cinq langues.
+- Fiches en noindex : image de partage et carte Twitter rétablies. Ce qui est confirmé a sa propre image de partage. Pages
+  des stations : données structurées complétées.
+
+MESURÉ (v7.87 → v7.87.1)
+- Latence, téléphone 390 px, 4G lente, processeur ralenti ×4, à froid, médianes de 4 à 8 chargements en alternance
+  (premier affichage ; page chargée) :
+    Actualités              1,82 → 1,61 s ; 2,55 → 2,33 s     Ce qui est confirmé   1,67 → 1,51 s ; 2,31 → 2,17 s
+    Trailer 1               1,93 → 1,74 s ; 2,49 → 2,45 s     Éditions              1,79 → 1,71 s ; 2,32 → 2,38 s
+    Vidéos (sommaire)       1,52 → 1,67 s ; 2,18 → 2,35 s     Radios et musique     2,14 → 2,27 s ; 2,95 → 3,14 s
+    Flash FM (station)      1,65 → 1,85 s ; 2,22 → 2,30 s     Fiche Grotti          2,06 → 2,02 s ; 2,51 → 2,47 s
+    Batte (fiche d'arme)    1,71 → 1,76 s ; 2,24 → 2,21 s     Accueil               1,67 → 1,60 s ; 2,21 → 2,23 s
+  Les écarts restent dans le bruit du banc : lancé avec le même site des deux côtés, il trouve déjà 1,96 contre 2,12 s
+  et 2,65 contre 2,93 s sur Radios et musique, 1,64 contre 1,81 s sur Flash FM ; les pages témoins non modifiées (Gangs,
+  À propos) bougent de 0,1 à 0,4 s d'une série à l'autre. Poids : 2 à 4 Ko de plus au plus (feuilles de style) ; travail
+  du processeur en baisse sur Actualités, Trailer 1 et Ce qui est confirmé (tâches longues −80 à −120 ms). À chaud : 0,35
+  à 0,6 s partout, comme avant.
+- Contrôle des pages touchées (19 pages, français et allemand, 390 / 768 / 1 280 px, animations normales, réduites et sans
+  script, 324 chargements) : « GTA 6 » coupé en fin de ligne 6 → 0, textes sous 11 px 54 → 0, cibles trop petites 4 → 0 ;
+  aucun débordement, aucun bloc caché, aucune erreur.
+- Écrans, 16 largeurs : sur les 61 pages déjà contrôlées en v7.87, mêmes signalements (connus) et 20 petits textes en
+  moins ; rien sur les pages ajoutées au contrôle. Allemand : identique, 8 petits textes en moins.
+- Léo : les questions sur les radios passent de 8/12 à 12/12 en français et de 7/11 à 11/11 dans les autres langues ;
+  douze questions nouvelles par langue sur ces pages : 12/12 partout.
+
+MARCHE À SUIVRE
+  1. Ne pousse pas cette archive seule : elle va à la conversation d'assemblage avec les archives des lots 3, 5, 6 et 7.
+     Environ 2 300 pages n'y changent que par les empreintes « ?v= » de Léo ; l'assemblage régénère tout une seule fois.
+  2. Après l'assemblage et la mise en ligne : Google Search Console → Sitemaps → renvoie sitemap.xml.
+  3. Essai : actus.html (descends jusqu'à la frise) ; videos/trailer-1.html (« Voir les 92 autres ») ; editions.html ;
+     radios.html#stations ; en/videos/trailer-2.html (noms traduits) ; une fiche sur téléphone
+     (vehicules/grotti-cheetah-classic.html, chiffres « Personnaliser »).
+
+Contrôles : tests Node (dont v7871.test.cjs), langues, vérificateur de liens, confidentialité, contrôle navigateur des
+pages du périmètre, langues et écrans dans le navigateur, audit de clôture, cookies, accessibilité ; le détail est dans
+outils/CHANGEMENTS-v7.87.1.txt et la matrice point par point dans outils/MATRICE-v7.87.1.md. Retour arrière : commit
+précédent dans GitHub Desktop.

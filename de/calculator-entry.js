@@ -59,13 +59,17 @@
     const hours = Math.floor(rounded / 60), remainder = rounded % 60;
     return (hours ? format.format(hours) + ' h' : '') + (remainder ? (hours ? ' ' : '') + remainder + ' min' : '');
   }
-  /* v7.61 : pluriel selon la langue de la page (« 1,5 million » en français, « 1,5 millones » en espagnol) */
-  function many(x) { return /^fr/i.test(document.documentElement.lang || 'fr') ? x >= 2 : x !== 1; }
+  /* v7.61 : pluriel selon la langue de la page (« 1,5 million » en français, « 1,5 millones » en espagnol) ;
+     v7.91 (portugais) : comme en français, singulier sous 2 (« 1,5 milhão », « 2 milhões ») */
+  function many(x) { return /^(fr|pt)/i.test(document.documentElement.lang || 'fr') ? x >= 2 : x !== 1; }
   function words(n) { if (n === null || n < 1000) return ''; if (n >= 1e9) return format.format(n / 1e9) + (many(n / 1e9) ? ' Milliarden' : ' Milliarde'); if (n >= 1e6) return format.format(n / 1e6) + (many(n / 1e6) ? ' Millionen' : ' Million'); return format.format(n / 1e3) + ' Tausend'; }
   /* v7.60 (langues) : en anglais, « 200,000 » ; en français, « 200 000 » comme avant */
   const pageLang = (document.documentElement.lang || 'fr').slice(0, 2).toLowerCase();
   const en = pageLang !== 'fr';
-  function echoes() { keys.forEach(key => { const node = document.getElementById('lk-mini-echo-' + key); if (!node) return; const field = form.elements.namedItem(key), v = parse(field.value), w = words(v); node.textContent = w ? '= ' + (E && E.dollars ? E.dollars(w, ' ') : w + ' $') : ''; if (v !== null && v >= 1000 && Number.isInteger(v) && document.activeElement !== field && (/^[\d\s\u00a0\u202f]+$/.test(field.value) || (en && (pageLang === 'de' ? /^[\d.]+$/ : /^[\d,]+$/).test(field.value)))) { const g = en ? format.format(v) : String(v).replace(/\B(?=(\d{3})+(?!\d))/g, ' '); if (field.value !== g) field.value = g; } }); }
+  /* v7.91 (portugais) : signe de l'argent selon la langue quand le moteur (chargé plus tard) n'est pas encore là : « = 200 mil $ »
+     s'affichait sur l'accueil portugais (« = $ 200 mil » attendu) et « = 200 thousand $ » sur l'accueil anglais (« = $200 thousand ») */
+  const sign = s => pageLang === 'en' ? '$' + s : pageLang === 'pt' ? '$\u00a0' + s : s + '\u00a0$';
+  function echoes() { keys.forEach(key => { const node = document.getElementById('lk-mini-echo-' + key); if (!node) return; const field = form.elements.namedItem(key), v = parse(field.value), w = words(v); node.textContent = w ? '= ' + (E && E.dollars ? E.dollars(w, ' ') : sign(w)) : ''; if (v !== null && v >= 1000 && Number.isInteger(v) && document.activeElement !== field && (/^[\d\s\u00a0\u202f]+$/.test(field.value) || (en && (pageLang === 'de' || pageLang === 'pt' ? /^[\d.]+$/ : /^[\d,]+$/).test(field.value)) /* v7.91 (portugais) : point des milliers, comme en allemand */)) { const g = en ? format.format(v) : String(v).replace(/\B(?=(\d{3})+(?!\d))/g, ' '); if (field.value !== g) field.value = g; } }); }
   function preview() {
     echoes();
     const values = inputs(false);

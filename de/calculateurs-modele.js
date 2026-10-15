@@ -446,7 +446,7 @@
       purchasable: V.unknown(),
       ammoType: noAmmo ? V.na(naText) : a && a.mun ? make(a.mun, SITE_STATUS[a.st] || 'estimated', { ctx: 'Munitionstyp laut der Seite.' }) : V.unknown(),
       ammoCost: noAmmo ? V.na(naText) : undefined,
-      range: a && a.portee ? make(a.portee, 'estimated', { ctx: 'Reichweite in Worten nach der realen Waffe, die sie inspiriert; keine Messung aus GTA VI.' }) : V.unknown(),
+      range: a && a.portee ? make(a.portee, 'estimated', { ctx: 'Reichweite in Worten nach dem realen Vorbild der Waffe; keine Messung aus GTA VI.' }) : V.unknown(),
       rate: noAmmo && a.cat === 'melee' ? V.na('Nahkampfwaffe: keine Feuerrate.') : V.unknown(), accuracy: V.unknown(),
       reload: noAmmo ? V.na(naText) : V.unknown(), capacity: noAmmo ? V.na(naText) : V.unknown()
     };

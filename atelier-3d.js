@@ -742,7 +742,8 @@ import * as THREE from './vendor/three.module.min.js';
     }
     return [...new Set(out)];
   }
-  const fmtMoney = n => { const lang = (document.documentElement.lang || 'fr').slice(0, 2), s = n.toLocaleString(lang === 'en' ? 'en-US' : lang === 'de' ? 'de-DE' : lang === 'es' ? 'es-ES' : lang === 'it' ? 'it-IT' : 'fr-FR'); return lang === 'en' ? '$' + s : s + ' $'; };
+  /* v7.91 (portugais) : « $ 1.250 » (pt-BR, signe devant, espace insécable) */
+  const fmtMoney = n => { const lang = (document.documentElement.lang || 'fr').slice(0, 2), s = n.toLocaleString(lang === 'en' ? 'en-US' : lang === 'de' ? 'de-DE' : lang === 'es' ? 'es-ES' : lang === 'it' ? 'it-IT' : lang === 'pt' ? 'pt-BR' : 'fr-FR'); return lang === 'en' ? '$' + s : lang === 'pt' ? '$\u00a0' + s : s + ' $'; };
   function summary() {
     const menu = $('[data-at-menu="' + st.fam + '"]'), act = activePostes(), pre = 'perso-' + (st.fam === 'v' ? 'vehicules' : 'armes') + '-';
     $$('[data-at-menu] .at-poste.is-on').forEach(a => { if (!menu.contains(a)) a.classList.remove('is-on'); });

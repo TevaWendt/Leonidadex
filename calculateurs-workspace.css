@@ -487,7 +487,9 @@ body.calculator-page main .lk-act--3 tbody tr{display:grid;grid-template-columns
 body.calculator-page main .lk-act--3 tbody tr:last-child{border-bottom:0}
 body.calculator-page main .lk-act--3 tbody th{grid-column:1/-1;width:auto;padding:0;border:0}
 body.calculator-page main .lk-act--3 tbody td{padding:0;border:0}
-body.calculator-page main .lk-act--3 td[data-l]::before{content:attr(data-l) "\00a0: ";font-weight:700;color:var(--ink)}
+body.calculator-page main .lk-act--3 td[data-l]::before{content:attr(data-l) ": ";font-weight:700;color:var(--ink)}
+/* lot 1 bis (corrections de l’audit, point 10) : l’espace avant les deux-points est une règle française ; « Voraussetzung: Keine » en allemand, en anglais, en espagnol, en italien et en portugais */
+html:lang(fr) body.calculator-page main .lk-act--3 td[data-l]::before{content:attr(data-l) "\00a0: "}
 }
 .b-doc-more>.calc-note{margin:0}
 .b-doc-more>.calc-button{margin-top:12px}

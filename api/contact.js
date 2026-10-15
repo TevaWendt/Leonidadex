@@ -11,7 +11,7 @@ const crypto=require('node:crypto');
 
 const PUBLIC_ADDRESS='contact@leonidakit.com';
 const SENDER={name:'Leonidakit',email:PUBLIC_ADDRESS};
-const TOPICS=['Erreur dans une fiche','Suggestion de contenu','Problème de calcul ou d’affichage','Demande concernant un visuel','Réponse de Léo à corriger','Question sur le site','Question sur mes données'];
+const TOPICS=['Erreur dans une fiche','Suggestion de contenu','Problème de calcul ou d’affichage','Demande concernant un visuel','Réponse de Léo à corriger','Question sur le site','Question sur mes données','Presse ou partenariat'];
 const LIMITS={details:[10,5000],page:1000,source:1000,email:254,body:20000};
 const MIN_DELAY_MS=3000,MAX_AGE_MS=24*3600*1000,WINDOW_MS=10*60*1000,MAX_PER_WINDOW=5,SEND_TIMEOUT_MS=8000;
 const ORIGINS=[/^https:\/\/(?:www\.)?leonidakit\.com$/,/^https:\/\/[a-z0-9-]+\.vercel\.app$/,/^http:\/\/(?:localhost|127\.0\.0\.1)(?::\d+)?$/];
