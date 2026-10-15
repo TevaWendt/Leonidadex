@@ -5,6 +5,7 @@ window.LK_ACQUISITIONS = {
   "game": {
     "name": "Grand Theft Auto VI",
     "releaseDate": "2026-11-19",
+    "releaseTime": "00:00:00",
     "preloadDate": "2026-11-12",
     "preloadSource": "https://support.rockstargames.com/articles/4QfG4FmZCf5W1gS8jy4UVT/grand-theft-auto-vi-platform-editions-and-versions",
     "status": "Uscita annunciata",

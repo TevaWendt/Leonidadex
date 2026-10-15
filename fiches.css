@@ -402,7 +402,7 @@ section[id], .sec-h[id]{scroll-margin-top:200px;}
 .ang-scan{position:absolute;left:0;right:0;top:0;height:22%;z-index:4;pointer-events:none;opacity:0;background:linear-gradient(180deg,rgba(255,255,255,0),rgba(255,255,255,.8) 50%,rgba(255,255,255,0));}
 .ang-tag{position:absolute;left:12px;top:12px;z-index:5;display:inline-flex;align-items:center;gap:8px;background:rgba(26,26,30,.88);color:#fff;font-size:.68rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:4px 9px;border-radius:20px;pointer-events:none;}
 .ang-tag span{font-weight:600;opacity:.7;letter-spacing:0;font-variant-numeric:tabular-nums;}
-.ang-hint{position:absolute;right:12px;top:13px;z-index:5;font-size:.68rem;font-weight:700;color:#6B6874;pointer-events:none;display:inline-flex;align-items:center;gap:6px;}
+.ang-hint{position:absolute;right:12px;top:13px;z-index:5;font-size:max(11px,.68rem);font-weight:700;color:#6B6874;pointer-events:none;display:inline-flex;align-items:center;gap:6px;}
 .ang-hint::before{content:'';width:12px;height:12px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;}
 .ang-view:hover .ang-hint{color:var(--ink,#1A1A1E);}
 .ang-tabs{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);z-index:5;display:flex;gap:2px;background:rgba(253,251,247,.92);border:1px solid rgba(26,26,30,.12);border-radius:20px;padding:3px;max-width:calc(100% - 20px);}
@@ -450,12 +450,26 @@ html:not(.js) .ang-tabs,html:not(.js) .ang-hint{display:none;}
 .fiche-meth-a:first-child{background:var(--ink);color:#fff;}
 .fiche-meth-a:hover{border-color:var(--coral-text,#B93220);color:var(--coral-text,#B93220);background:#fff;}
 .fiche-meth-a:focus-visible{outline:3px solid var(--coral);outline-offset:2px;}
-.pf-stats{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0 0;}
-.pf-stats div{display:flex;flex-direction:column-reverse;gap:2px;min-width:118px;padding:8px 12px;border:2px solid var(--ink);border-radius:10px;background:#fff;}
-.pf-stats dt{font-size:.76rem;font-weight:700;color:var(--ink-soft);line-height:1.25;}
+/* v7.87.1 : les trois chiffres restent sur une rangée, à la même largeur et à la même hauteur, à toutes les largeurs (sur
+   téléphone, le troisième ne tombe plus seul sous les deux autres) */
+.pf-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;max-width:560px;margin:10px 0 0;}
+.pf-stats div{display:flex;flex-direction:column-reverse;justify-content:flex-end;gap:2px;min-width:0;padding:8px 12px;border:2px solid var(--ink);border-radius:10px;background:#fff;}
+.pf-stats dt{font-size:.76rem;font-weight:700;color:var(--ink-soft);line-height:1.25;overflow-wrap:break-word;}
 .pf-stats dd{margin:0;font-size:1.35rem;font-weight:800;line-height:1;}
 /* v7.86 : rubrique en partie connue (« Ce qui arrive avec le jeu ») : les champs encore vides sont nommés dans sa boîte */
 .doc-wait{margin-top:10px;padding-top:9px;border-top:1px dashed var(--rule);}
 .doc-wait-k{margin:0 0 6px;font-size:.78rem;font-weight:700;color:var(--ink-soft);}
 .doc-wait ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px;}
 .doc-wait li{padding:3px 9px;border:1.5px dashed var(--rule);border-radius:999px;background:var(--paper-2);color:var(--ink-soft);font-size:.76rem;font-weight:700;line-height:1.35;}
+/* v7.87.1 (passe de qualité) : rien sous 11 px et des cibles d’au moins 24 px (44 px visés sur téléphone) dans les blocs des
+   fiches : légende de la galerie, angles du dessin, statuts de « Ce qui arrive avec le jeu », voisins de la même catégorie,
+   chiffres et panneau « Personnaliser » et leur lien « Voir dans la liste » (mesuré par outils/tests/v7871-browser.cjs) */
+.gal-lbl,.ang-tag,.rel-marque,.pf-config-t small{font-size:max(11px,.68rem);}
+.ang-tab{font-size:max(11px,.72rem);}
+.doc-st,.pf-st,.pf-f dt{font-size:max(11px,.62rem);}
+@media(max-width:480px){.ang-tag,.ang-tab{font-size:11px;}}
+.pf-link{display:inline-flex;align-items:center;min-height:24px;}
+@media(max-width:700px){.pf-link{min-height:44px;}}
+/* lot 1 bis (corrections de l’audit, point 14) : les puces des ateliers s’équilibrent (plus de « Security and tracking » seule sur sa ligne) */
+.pf-cats{display:block;text-wrap:balance;}
+.pf-cats>.pf-chip-li{margin:0 8px 8px 0;vertical-align:top;}

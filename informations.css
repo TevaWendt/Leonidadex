@@ -248,7 +248,8 @@
 .ed-zone--legal .info-table tbody td:nth-of-type(2){grid-area:r;}
 .ed-zone--legal .info-table tbody td:nth-of-type(3){grid-area:f;}
 .ed-zone--legal .info-table tbody td:nth-of-type(4){grid-area:t;}
-.ed-zone--legal .info-table td[data-label]::before{content:attr(data-label);display:block;margin-bottom:4px;font:800 .64rem/1.4 var(--font-mono,ui-monospace,monospace);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);}
+/* v7.87.1 : sur téléphone, l’intitulé de chaque case (dont la ligne « mesure d’audience ») fait 11 px au moins (0,64 rem : 10,2 px) */
+.ed-zone--legal .info-table td[data-label]::before{content:attr(data-label);display:block;margin-bottom:4px;font:800 max(11px,.64rem)/1.4 var(--font-mono,ui-monospace,monospace);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);}
 .ed-zone--legal .info-table tbody tr:target,.ed-zone--legal .info-table tbody tr.is-target{box-shadow:0 0 0 3px var(--amber),4px 4px 0 rgba(26,26,30,.1);}
 @media(max-width:600px){.ed-zone--legal .info-table tbody tr{grid-template-columns:1fr;grid-template-areas:"h" "d" "r" "f" "t";padding:14px;}.ed-zone--legal .info-table tbody th{font-size:1rem;}}
 /* historique : frise */
@@ -280,3 +281,58 @@
 .vf-never{list-style:none;margin:0;padding:0;display:grid;gap:10px;}
 .vf-never li{position:relative;padding:12px 14px 12px 44px;border:2px solid currentColor;border-radius:10px;}
 .vf-never li::before{content:'';position:absolute;left:14px;top:50%;width:18px;height:18px;margin-top:-9px;border-radius:50%;border:2px solid currentColor;background:linear-gradient(45deg,transparent 45%,currentColor 45% 55%,transparent 55%);}
+
+/* v7.87.1 (passe de qualité) : page « Ce qui est confirmé » (verification.html)
+   - grilles : la dernière rangée est centrée, à la même largeur que les autres (règle des grilles du site, comme .ed-open) ;
+     trois colonnes (huit points confirmés) ou quatre (rubriques des fiches, coûts d’usage), puis deux, puis une ;
+   - « Ce qu’on n’utilise jamais » : deux colonnes sur grand écran au lieu de quatre bandeaux pleine largeur ;
+   - entrées au défilement du moteur commun (lk-reveal) avec la translation des jetons (--c-rise, 10 px). */
+.vf-list,.vf-rubs{display:flex;flex-wrap:wrap;justify-content:center;}
+.vf-list>.vf-item{flex:0 1 calc((100% - 28px)/3);min-width:0;}
+.vf-rubs>.vf-rub{flex:0 1 calc((100% - 36px)/4);min-width:0;}
+@media (max-width:1240px){.vf-rubs>.vf-rub{flex-basis:calc((100% - 24px)/3);}}
+@media (max-width:1000px){.vf-list>.vf-item{flex-basis:calc((100% - 14px)/2);}}
+@media (max-width:920px){.vf-rubs>.vf-rub{flex-basis:calc((100% - 12px)/2);}}
+@media (max-width:660px){.vf-list>.vf-item,.vf-rubs>.vf-rub{flex-basis:100%;}}
+@media (min-width:900px){.vf-never{grid-template-columns:repeat(2,minmax(0,1fr));}}
+.info-page--verif :is(.vf-item,.vf-rub,.vf-never li,.ed-level,.fig).lk-reveal:not(.is-in):not(.lk-settled){transform:translate3d(0,var(--c-rise,10px),0);}
+
+/* v7.88 : page Presse et créateurs (presse.html) : le site en trois phrases, le kit à télécharger, citer le site, ce qui se reprend */
+.pr-brief{display:grid;gap:12px;max-width:72ch;}
+.pr-brief p{margin:0;font-size:1.08rem;line-height:1.6;}
+.pr-zip{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 20px;margin:0 0 18px;padding:18px 20px;border:2px solid var(--ink);border-radius:14px;background:var(--amber);box-shadow:var(--shadow-soft);}
+.pr-zip h3{margin:0;font-size:1.15rem;}
+.pr-zip .pr-file-meta{color:var(--ink);}
+.pr-kit{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,250px),1fr));gap:16px;}
+.pr-file{display:flex;flex-direction:column;min-width:0;border:2px solid var(--ink);border-radius:12px;background:#fff;box-shadow:var(--shadow-soft);overflow:hidden;}
+.pr-file-thumb{display:block;aspect-ratio:16/10;min-height:0;overflow:hidden;background:var(--paper-2);border-bottom:2px solid var(--ink);}
+.pr-file-thumb img{display:block;width:100%;height:100%;object-fit:cover;object-position:top center;}
+.pr-file--logo .pr-file-thumb img{object-fit:contain;padding:14% 10%;box-sizing:border-box;}
+.pr-file-thumb.pr-thumb--sombre{background:var(--ink);}
+.pr-file-thumb.pr-thumb--icone img{padding:12%;}
+.pr-file-thumb.pr-thumb--tel img{object-fit:contain;padding:8px 0 0;box-sizing:border-box;}
+.pr-file-body{display:flex;flex-direction:column;gap:8px;padding:14px 16px 16px;flex:1;}
+.pr-file-body h3{margin:0;font-size:1rem;}
+.pr-file-meta{display:flex;flex-wrap:wrap;gap:4px 12px;margin:0;font-size:.86rem;color:var(--ink-soft);}
+.pr-file-dls{display:flex;flex-wrap:wrap;gap:8px;margin:auto 0 0;padding-top:4px;}
+.pr-dl{display:inline-flex;align-items:baseline;gap:6px;min-height:40px;padding:9px 12px;border:2px solid var(--ink);border-radius:8px;background:var(--paper);color:var(--ink);font-weight:800;text-decoration:none;box-sizing:border-box;}
+.pr-dl:hover{background:var(--amber);}
+.pr-dl:focus-visible{outline:3px solid var(--coral-text,#B93220);outline-offset:2px;}
+.pr-dl-size{font-weight:600;font-size:.82rem;color:var(--ink-soft);}
+.pr-dl:hover .pr-dl-size{color:var(--ink);} /* v7.88 : --ink-soft sur l’ambre du survol tombait à 3,3:1 */
+.pr-dl--main{min-height:46px;padding:12px 18px;background:var(--paper);box-shadow:3px 3px 0 var(--ink);}
+.pr-dl--main:hover{background:#fff;}
+.pr-note{max-width:72ch;margin:14px 0 0;font-size:.92rem;color:var(--ink-soft);}
+.pr-exemple{max-width:72ch;margin:18px 0 0;padding:12px 16px;border-left:4px solid var(--coral-text,#B93220);background:var(--paper-2);border-radius:0 10px 10px 0;font-weight:600;overflow-wrap:anywhere;}
+.pr-rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px;}
+.pr-rule{padding:18px 20px;border:2px solid currentColor;border-radius:12px;}
+.pr-rule h3{margin:0 0 10px;font-size:1.05rem;}
+.pr-rule ul{margin:0;padding:0;list-style:none;display:grid;gap:10px;}
+.pr-rule li{position:relative;padding-left:30px;}
+.pr-rule li::before{content:'';position:absolute;left:0;top:.2em;width:18px;height:18px;border-radius:50%;}
+.pr-rule--oui li::before{background:var(--amber) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Cpath d='M4.5 9.5l3 3 6-7' fill='none' stroke='%231A1A1E' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/100% no-repeat;}
+.pr-rule--non li::before{border:2px solid currentColor;background:linear-gradient(45deg,transparent 44%,currentColor 44% 56%,transparent 56%);box-sizing:border-box;}
+@media(max-width:600px){.pr-zip{padding:16px;}.pr-zip .pr-dl--main{width:100%;justify-content:center;}}
+/* six chiffres : une rangée de six sur grand écran, deux rangées de trois au-dessous, puis la grille de l'À propos (2 × 3) */
+@media(min-width:1180px){.info-page--presse .ed-figs--about{grid-template-columns:repeat(6,minmax(0,1fr));}}
+@media(min-width:1001px) and (max-width:1179px){.info-page--presse .ed-figs--about{grid-template-columns:repeat(3,minmax(0,1fr));}}

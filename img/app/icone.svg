@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="512" height="512">
+  <!-- v7.89 : icône de l'appli Leonidakit, dessinée d'après le favicon du site (carré encre, soleil ambre coupé de trois bandes).
+       Source des PNG de img/app/ (outils/gen-icones-appli.cjs) ; la version « plein cadre » (icône masquable, écran d'accueil
+       d'Apple) est la même sans coins arrondis : le soleil reste dans la zone sûre (cercle de 40 % du côté). -->
+  <rect width="64" height="64" rx="12" fill="#1A1A1E"/>
+  <circle cx="32" cy="28" r="16" fill="#F5A524"/>
+  <rect x="10" y="30" width="44" height="3" fill="#1A1A1E"/>
+  <rect x="10" y="37" width="44" height="4" fill="#1A1A1E"/>
+  <rect x="10" y="45" width="44" height="5" fill="#1A1A1E"/>
+</svg>

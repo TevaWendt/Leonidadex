@@ -21,7 +21,8 @@
   if (window.LKMicro) return;
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   const ok = !!SR && (location.protocol === 'https:' || /^(localhost|127\.0\.0\.1)$/.test(location.hostname));
-  const lang = (document.documentElement.lang || 'fr').slice(0, 2), LOCALE = { fr: 'it-IT', en: 'en-GB', es: 'es-ES', it: 'it-IT', de: 'de-DE' };
+  /* v7.91 (portugais) : la dictée en portugais du Brésil (pt-BR) */
+  const lang = (document.documentElement.lang || 'fr').slice(0, 2), LOCALE = { fr: 'it-IT', en: 'en-GB', es: 'es-ES', it: 'it-IT', de: 'de-DE', pt: 'pt-BR' };
   const T = {
     start: 'Parla invece di scrivere', stop: 'Ferma il microfono', listening: 'Ti ascolto… parla, poi fai una pausa.',
     asking: 'Il tuo browser ti chiederà l’accesso al microfono: scegli “Consenti”.',
