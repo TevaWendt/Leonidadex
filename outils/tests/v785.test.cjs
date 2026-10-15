@@ -27,8 +27,9 @@ test('scripts et feuilles : aucune page ne charge deux fois le même fichier ; u
     for (const [s, n] of seen) if (n > 1) bad.push(p + ' : ' + s + ' ×' + n);
   }
   assert.deepEqual(bad.slice(0, 10), []);
-  const armes = ALL.filter(p => /^(?:(?:en|es|it|de)\/)?armes\/[^/]+\.html$/.test(p) && !/http-equiv="refresh"/i.test(read(p)));
-  assert.ok(armes.length >= 27 * 5, 'fiches d’armes : ' + armes.length);
+  /* v7.91 : dossiers des langues lus dans outils/langues.json (portugais compris) */
+  const armes = ALL.filter(p => new RegExp('^(?:(?:' + LANGS.map(l => l.dossier).join('|') + ')/)?armes/[^/]+\\.html$').test(p) && !/http-equiv="refresh"/i.test(read(p)));
+  assert.ok(armes.length >= 27 * (LANGS.length + 1), 'fiches d’armes : ' + armes.length);
   for (const p of armes) assert.equal((read(p).match(/carnets-core\.js/g) || []).length, 1, p);
   /* le générateur retire toutes les copies avant d'en poser une */
   assert.match(read('outils/gen-armes.cjs'), /carnets-core\\\.js\[\^"\]\*"><\\\/script>\\n\?\/g,''\)/);
@@ -47,7 +48,7 @@ test('assets-manifest.js : devant common.js sur chaque page qui charge common.js
 
 test('images : aucune image non différée dans un details fermé (téléchargée pour rien au chargement) ; Missions : images des fiches plein écran différées et préchargées après le chargement ; Lieux : régions différées', () => {
   const bad = [];
-  for (const p of ALL.filter(p => !/^(?:en|es|it|de)\//.test(p))) {
+  for (const p of ALL.filter(p => !new RegExp('^(?:' + LANGS.map(l => l.dossier).join('|') + ')/').test(p))) {
     const h = read(p);
     for (const m of h.matchAll(/<details(?![^>]*\sopen)[^>]*>([\s\S]*?)<\/details>/g)) {
       const inner = m[1].replace(/<summary[\s\S]*?<\/summary>/, '');
@@ -108,7 +109,7 @@ test('langues : suggestions des champs « Ton véhicule » / « Ton arme » trad
     for (const f of ['fusil-pompe', 'couteau-cran', 'pistolet-custom']) { const n = read(dir + '/armes/' + f + '.html').match(/data-pf-name="([^"]*)"/); assert.ok(n && !hitsOf(n[1], code).length, code + ' : data-pf-name ' + f + ' « ' + (n && n[1]) + ' »'); }
   }
   /* les règles de la mémoire traduisent le nom pris dans le motif ({t1}), pas seulement le reste */
-  for (const l of ['en', 'es', 'it', 'de']) for (const f of fs.readdirSync(path.join(root, 'outils/langues', l)).filter(f => f.endsWith('.json'))) {
+  for (const l of LANGS.map(x => x.code)) for (const f of fs.readdirSync(path.join(root, 'outils/langues', l)).filter(f => f.endsWith('.json'))) {
     const j = JSON.parse(read('outils/langues/' + l + '/' + f));
     for (const k of ['re:^(.+) : armureries repérées$', 're:^(.+) : lieux liés$', 're:^Équivalent réel : (.+)\\.$']) if (j[k]) assert.match(j[k], /\{t1\}/, l + '/' + f + ' : ' + k);
   }

@@ -127,7 +127,7 @@ test('Mentions : les illustrations des catalogues sont dites silhouettes dessin�
   assert.match(sp(p.textContent), /montré en ombre, avec un liseré de lumière/);
   assert.match(sp(p.textContent), /domaine public, CC0/);
   assert.equal(p.querySelector('a').getAttribute('href'), 'https://polyhaven.com');
-  for (const l of ['en', 'es', 'it', 'de']) {
+  for (const l of ['en', 'es', 'it', 'de', 'pt']) { /* v7.91 : portugais */
     const q = [...doc(l + '/mentions-legales.html').querySelectorAll('#propriete p')].find(x => x.querySelector('a[href="https://polyhaven.com"]'));
     assert.ok(q && /CC0/.test(q.textContent) && !/synthèse|silhouettes dessinées/.test(q.textContent), l);
   }

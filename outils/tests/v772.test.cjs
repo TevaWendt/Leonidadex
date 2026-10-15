@@ -57,7 +57,7 @@ test('codes de triche : les quatre catégories ont la même hauteur (la fiche d�
 });
 
 test('langues : les hubs et les familles sont traduits (numéros, dossier, fiches)', () => {
-  for (const l of ['en/', 'es/', 'it/', 'de/']) {
+  for (const l of ['en/', 'es/', 'it/', 'de/', 'pt/']) { /* v7.91 : portugais */
     /* v7.78 : les cartes des hubs sont vérifiées dans outils/tests/v778.test.cjs (six régions, textes traduits) */
     const lieux = doc(l + 'lieux.html'); assert.equal(lieux.querySelectorAll('#fiches .mo-reg').length, 6, l + 'lieux : six régions');
     const col = doc(l + 'collectibles.html'); assert.equal(col.querySelectorAll('#categories details.lkx-det').length, 6, l + 'collectibles');

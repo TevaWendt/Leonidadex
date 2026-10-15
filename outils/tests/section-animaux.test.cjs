@@ -42,7 +42,7 @@ test('données : fiches complètes et sourcées, statuts « officiel » ou « vu
 test('animaux.html : mécanique des hubs du monde (grille, zone éditoriale complète, encart du calculateur), données structurées', () => {
   assert.ok(M.HUBS.includes('animaux'));
   const d = doc('animaux.html');
-  assert.equal(d.querySelectorAll('h1').length, 1); assert.equal(d.querySelector('h1').textContent, A.section.title);
+  assert.equal(d.querySelectorAll('h1').length, 1); assert.equal(d.querySelector('h1').textContent.replace(/\u00a0/g, ' '), A.section.title); /* assemblage v7.91 : « GTA VI » insécable dans les titres */
   assert.ok(d.querySelector('meta[name="description"]').content.length <= 160);
   /* v7.69 : mosaïque de la section (outils/gen-animaux.cjs) : une carte par fiche, filtre par famille, chiffres sourcés, régions */
   assert.equal(d.querySelectorAll('#fiches .an-card').length, A.fiches.length);

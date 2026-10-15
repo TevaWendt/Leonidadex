@@ -10,7 +10,7 @@ const root = path.resolve(__dirname, '../..');
 const read = f => fs.readFileSync(path.join(root, f), 'utf8');
 const doc = f => new JSDOM(read(f)).window.document;
 const { load } = require('./runtime-helper.cjs');
-const LANGS = ['', 'en/', 'es/', 'it/', 'de/'];
+const LANGS = ['', 'en/', 'es/', 'it/', 'de/', 'pt/']; /* v7.91 : portugais */
 
 test('serveur : 15 questions gratuites toutes les 12 heures par défaut, plus de fonction d’achat, plus de code de crédit', () => {
   const IA = require(root + '/api/ia.js'), T = IA._test;
@@ -59,7 +59,7 @@ test('micro : module lk-micro.js (navigateur sans reconnaissance vocale : aucun 
   assert.match(read('calculateurs.html'), /<script src="lk-micro\.js(?:\?v=[a-f0-9]+)?" defer><\/script>/);
   assert.match(read('leo-loader.js'), /script\('lk-micro\.js','LKMicro'\)/);
   assert.match(read('leo-ui.js'), /window\.LKMicro\.attach\(input,\{submit:true\}\)/);
-  for (const l of ['en/', 'es/', 'it/', 'de/']) assert.ok(fs.existsSync(path.join(root, l + 'lk-micro.js')), l + 'lk-micro.js');
+  for (const l of ['en/', 'es/', 'it/', 'de/', 'pt/']) assert.ok(fs.existsSync(path.join(root, l + 'lk-micro.js')), l + 'lk-micro.js');
   assert.match(read('de/lk-micro.js'), /Sprechen statt tippen/);
   const p = await load(root, 'calculateurs.html', {});
   try { assert.ok(p.w.LKMicro && p.w.LKMicro.supported === false, 'jsdom : pas de reconnaissance vocale'); assert.equal(p.d.querySelectorAll('.lk-mic').length, 0); assert.deepEqual(p.errors, []); } finally { p.close(); }

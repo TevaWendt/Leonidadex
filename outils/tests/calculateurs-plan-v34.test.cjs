@@ -81,12 +81,12 @@ test('Courbe du programme : un point par partie, l’argent baisse au moment de 
 });
 test('Refus clairs : rien ne rentre, mission verrouillée au départ, but absent, trop de missions, jamais d’Infinity',()=>{
  // v7.49 : le refus dit maintenant quelle mission, combien il faut avancer et combien il reste.
- assert.match(E.missionPlan({capital:0,sessionMinutes:60,goalPrice:1000,activities:[A]}).reason,/« Courses » demande 2\s000 \$ avant de commencer, et il ne te reste que 0 \$ utilisables/);
+ assert.match(E.missionPlan({capital:0,sessionMinutes:60,goalPrice:1000,activities:[A]}).reason,/« Courses » demande 2\s000\s\$ avant de commencer, et il ne te reste que 0\s\$ utilisables/);
  assert.match(E.missionPlan({capital:100000,sessionMinutes:5,goalPrice:1000000,activities:[A]}).reason,/Aucune mission ne rentre/);
  // v7.49 : avec 120 000 le Garage se paie dès le début ; le cas « verrouillé au départ » se teste avec 60 000 (Garage hors de portée).
  assert.match(E.missionPlan({capital:60000,reserve:10000,sessionMinutes:90,goalPrice:1000000,activities:[Bq],purchases:[G]}).reason,/«\sBraquage\s» demande d’abord un achat \(Garage\)/);
  const early=E.missionPlan({capital:120000,reserve:10000,sessionMinutes:90,goalPrice:1000000,activities:[Bq],purchases:[G]});assert.equal(early.valid,true);assert.deepEqual(early.sessions[0].purchasesBefore,['Garage']);
- assert.match(E.missionPlan({capital:120000,reserve:10000,sessionMinutes:90,goalPrice:1000000,activities:[Bq],purchases:[{...G,boostHourly:0}]}).reason,/demande 20\s000 \$ avant de commencer, et il ne te reste que 10\s000 \$ utilisables après tes achats d’avant/);
+ assert.match(E.missionPlan({capital:120000,reserve:10000,sessionMinutes:90,goalPrice:1000000,activities:[Bq],purchases:[{...G,boostHourly:0}]}).reason,/demande 20\s000\s\$ avant de commencer, et il ne te reste que 10\s000\s\$ utilisables après tes achats d’avant/);
  assert.match(E.missionPlan({capital:100,sessionMinutes:60,hourly:10}).reason,/Dis-moi ton but/);
  assert.match(E.missionPlan({capital:100,sessionMinutes:60,goalPrice:10}).reason,/comment tu gagnes ton argent/);
  assert.match(E.missionPlan({capital:100,sessionMinutes:60,goalPrice:10,activities:Array.from({length:13},()=>A)}).reason,/douze/);
@@ -147,7 +147,7 @@ test('Parcours : programme dans l’ordre, prochaine partie, plans A/B/C, plan d
  const s=stored(p);assert.equal(s.plan.situation.capital,120000);assert.equal(s.plan.log.length,1);assert.equal(s.plan.log[0].gain,70000);assert.equal(s.plan.log[0].plannedGain,162000);assert.deepEqual(s.plan.log[0].runs,{a:5});assert.equal(s.plan.log[0].note,'partie difficile');assert.equal(s.plan.playedMinutes,90);assert.equal(s.plan.sessionsPlayed,1);
  /* lot 2 (PER2-1) : correction, pas régression : « Ta prochaine partie » part de l’argent qu’il reste après l’achat d’avant-partie (120 000 − Garage 100 000 = 20 000, comme le journal),
     l’achat étant dit avant (« Achète d’abord ») ; avant : « Tu passes de 120 000 $ », un solde qui n’existe à aucun instant du journal */
- t=text(p,'plan-results');rep=text(p,'plan-report');assert.match(t,/Achète d’abord : Garage → il te reste 20\s000 \$\. Tu passes de 20\s000 \$/);assert.doesNotMatch(t,/Tu passes de 120\s000/);assert.match(rep,/BILAN DE TA DERNIÈRE PARTIE/);assert.match(rep,/Prévu\+162\s000 \$Réel\+70\s000 \$Écart−92\s000 \$/);assert.match(rep,/Ta dernière partie a rapporté 70\s000 \$ au lieu de 162\s000 \$ prévus/);assert.match(rep,/Au rythme que tu as vraiment eu/);assert.match(rep,/Courses ×5/);
+ t=text(p,'plan-results');rep=text(p,'plan-report');assert.match(t,/Achète d’abord : Garage → il te reste 20\s000\s\$\. Tu passes de 20\s000\s\$/);assert.doesNotMatch(t,/Tu passes de 120\s000/);assert.match(rep,/BILAN DE TA DERNIÈRE PARTIE/);assert.match(rep,/Prévu\+162\s000\s\$Réel\+70\s000\s\$Écart−92\s000\s\$/);assert.match(rep,/Ta dernière partie a rapporté 70\s000\s\$ au lieu de 162\s000\s\$ prévus/);assert.match(rep,/Au rythme que tu as vraiment eu/);assert.match(rep,/Courses ×5/);
  // l’achat fait pendant la partie sort du plan
  edit(p,'plan-actual',60000);edit(p,'plan-actual-minutes',90);const b=p.d.querySelector('[data-b-plan-actual-bought="g"]');assert.ok(b);b.checked=true;fire(p,b,'change');clickSel(p,'[data-b-plan-log]');
  const s2=stored(p);assert.equal(s2.plan.prerequisites[0].owned,true);assert.deepEqual(s2.plan.log[1].purchases,['g']);assert.equal(s2.plan.log[1].gain,60000-120000+100000);rep=text(p,'plan-report');assert.doesNotMatch(rep,/achète « Garage »/);assert.match(rep,/Braquage/);
@@ -164,8 +164,8 @@ test('But gagné avec l’expérience dans le formulaire : ses cases, sa répons
  const p=await page('plan',B.copy(initial));const kind=p.d.getElementById('f-plan-goal-kind');kind.value='unlock';fire(p,kind,'change');
  for(const id of ['plan-name','plan-units-label','plan-units-target','plan-units-current','plan-also-price','plan-units-hourly'])assert.ok(p.d.getElementById(id),id);
  edit(p,'plan-name','Voiture de rang');edit(p,'plan-units-label','niveaux');edit(p,'plan-units-target',20);edit(p,'plan-units-current',5);edit(p,'plan-units-hourly',2);edit(p,'plan-also-price',300000);
- const t=text(p,'plan-results');assert.match(t,/Pour débloquer Voiture de rang, il te manque 15 niveaux et 100\s000 \$/);assert.match(t,/8 parties/);assert.match(t,/niveaux déjà gagnés/);assert.match(t,/\+2 niveaux/);
- assert.match(text(p,'plan-report'),/Tu débloques Voiture de rang et tu le paies \(300\s000 \$\)/);
+ const t=text(p,'plan-results');assert.match(t,/Pour débloquer Voiture de rang, il te manque 15 niveaux et 100\s000\s\$/);assert.match(t,/8 parties/);assert.match(t,/niveaux déjà gagnés/);assert.match(t,/\+2 niveaux/);
+ assert.match(text(p,'plan-report'),/Tu débloques Voiture de rang et tu le paies \(300\s000\s\$\)/);
  const src=p.d.getElementById('f-plan-source');src.value='missions';fire(p,src,'change');assert.match(text(p,'plan-results'),/Ajoute au moins une mission/);
  clickSel(p,'[data-b-plan-m-add]');edit(p,'plan-m-0-name','Course de rue');edit(p,'plan-m-0-reward',30000);edit(p,'plan-m-0-duration',15);edit(p,'plan-m-0-units',1);
  assert.match(text(p,'plan-results'),/« Course de rue » ×4/);assert.equal(stored(p).plan.missions[0].units,1);

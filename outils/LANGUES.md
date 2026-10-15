@@ -1,7 +1,7 @@
-# Langues du site (v7.60 à v7.65)
+# Langues du site (v7.60 à v7.65 ; portugais du Brésil en v7.91)
 
 Le français reste la seule langue que l’on écrit. Chaque langue publiée est **générée** à partir des pages françaises finales,
-dans son dossier (`/en/…`, `/es/…`, `/it/…`, `/de/…`), par `outils/langues.cjs`, avec une mémoire de traduction
+dans son dossier (`/en/…`, `/es/…`, `/it/…`, `/de/…`, `/pt/…`), par `outils/langues.cjs`, avec une mémoire de traduction
 (`outils/langues/<code>/*.json`). Rien n’est traduit à la main dans une page générée : on corrige la mémoire (ou la source
 française), puis on régénère.
 
@@ -12,6 +12,7 @@ française), puis on régénère.
 | Español | `/es/` | **toutes** | **oui, en espagnol** | v7.61 |
 | Italiano | `/it/` | **toutes** | **oui, en italien** | v7.63 |
 | Deutsch | `/de/` | **toutes** | **oui, en allemand** | v7.64 (livrée à part en « v7.62 allemand », réunie ici) |
+| Português (Brasil) | `/pt/` | **toutes** (`pt-BR`) | **oui, en portugais du Brésil** (pont, comme l’espagnol et l’italien) | v7.91 |
 
 v7.64 : deux séries d’archives avaient été faites en parallèle à partir de la v7.60 (espagnol, anglais, italien d’un côté ;
 anglais et allemand de l’autre). Elles partageaient les mêmes fichiers (common.js, outils/langues.json, outils/langues.cjs, les
@@ -22,16 +23,17 @@ cinq langues et Léo dans les cinq. Les documents de l’autre série sont gard�
 ## Ce que voit le visiteur
 
 - **Tout en haut de chaque page**, une barre sombre « Changer la langue » / « Change language » / « Cambiar idioma » /
-  « Cambia lingua » / « Sprache ändern » (globe + code de la langue). Un clic ouvre la liste des cinq langues ; la langue
+  « Cambia lingua » / « Sprache ändern » / « Mudar o idioma » (globe + code de la langue). Un clic ouvre la liste des langues ; la langue
   affichée est cochée. Fonctionne sans JavaScript (`<details>`), au clavier (Tab, Entrée, Échap) et sur mobile.
 - **Bandeau de suggestion** (jamais de redirection) : si la langue du navigateur, ou la langue choisie avant, a une version
   de la page, un bandeau la propose dans cette langue (« Leer en español » / « Leggi in italiano » / « Auf Deutsch lesen » /
-  « No, grazie »…). Rien n’est enregistré tant qu’on ne clique pas ; un clic écrit une seule clé, `lk_lang_v1`.
+  « Ler em português » / « No, grazie »…). Rien n’est enregistré tant qu’on ne clique pas ; un clic écrit une seule clé, `lk_lang_v1`.
 - **Page introuvable** : le serveur renvoie la page 404 française pour toute adresse inconnue ; sous `/en/…`, `/es/…`,
-  `/it/…` ou `/de/…`, `common.js` affiche la page introuvable de cette langue (`<dossier>/404.html`).
+  `/it/…`, `/de/…` ou `/pt/…`, `common.js` affiche la page introuvable de cette langue (`<dossier>/404.html`).
 - Dans une page traduite, un lien vers une page encore en français porte un petit badge **FR** (liens de texte) et, pour les
-  lecteurs d’écran, « (in French) » / « (en francés) » / « (in francese) » / « (auf Französisch) », plus `hreflang="fr"`.
-- **Léo** répond dans les langues de `outils/langues.json` → `leo` : français, espagnol, italien, anglais, allemand.
+  lecteurs d’écran, « (in French) » / « (en francés) » / « (in francese) » / « (auf Französisch) » / « (em francês) », plus `hreflang="fr"`.
+- **Léo** répond dans les langues de `outils/langues.json` → `leo` : français, espagnol, italien, anglais, allemand, portugais du
+  Brésil (v7.91 ; `common.js` ne l’amorce que sur une page de ces langues, et `api/ia.js` connaît chacune d’elles).
 - Ce que le visiteur enregistre (garage, arsenal, carnets, calculs, progression) est **commun à toutes les langues** : mêmes
   clés du navigateur, mêmes identifiants.
 - Recherche dans les listes (véhicules, armes, catalogues, localisateur, marques) : les mots cherchés sont ceux de la langue
@@ -69,7 +71,7 @@ Fait par le générateur, sur chaque page de chaque langue, sans toucher au text
 | `outils/langues/<code>/_glossaire.md` | Règles et vocabulaire imposés à la traduction. |
 | `outils/langues/<code>/*.json` | La mémoire : `"texte français": "traduction"` (lot-*, site-*, leo-*, noms, motifs, recherche-*…). |
 | `outils/langues/<code>/code.json` | Valeurs de code (`"fr-FR": "de-DE"`), `_ignorer` (chaînes qui ressemblent à du français mais sont des identifiants), règles « jamais traduit dans ce fichier » (`"leo-core.js::monde": []`). |
-| `outils/langues/es|it/_leo-pont.json` | Pont de Léo (espagnol, italien) : expressions → français, mots vides. |
+| `outils/langues/es|it|pt/_leo-pont.json` | Pont de Léo (espagnol, italien, portugais du Brésil) : expressions → français, mots vides. |
 | `outils/langues/en|de/leo-pivot.json` | Table de réécriture de Léo (anglais, allemand) : `{"expressions": [[expression, français], …]}`. |
 | `outils/sitemap-dates.json` | Empreinte et date de dernière modification de chaque adresse du plan du site. |
 | `outils/langues/<code>/_a-traduire.json` | Écrit par `--extraire` : ce qui manque, avec l’endroit. |
@@ -101,8 +103,8 @@ Fait par le générateur, sur chaque page de chaque langue, sans toucher au text
 - `"re:expression": "… {1} / {t1}"` — phrase à trous (v7.61) ; `"_motifs": { "phrase {1}": "Satz {1}" }` — motif (v7.62).
 - `"@meta::description française": "…"` — description raccourcie pour les moteurs de recherche (v7.64).
 - `"_scriptsJamais"`, `"_ignorer"` — identifiants.
-- Guillemets : « » français → “ ” (anglais, espagnol, italien) ou „ “ (allemand) ; « 20 % » avec espace en espagnol et en
-  allemand, « 20% » collé en anglais et en italien.
+- Guillemets : « » français → “ ” (anglais, espagnol, italien, portugais) ou „ “ (allemand) ; « 20 % » avec espace en espagnol et
+  en allemand, « 20% » collé en anglais, en italien et en portugais. Argent : « $ 200.000 » en portugais (signe devant).
 - Nombres : une entrée dont la traduction reprend ses nombres sert aussi pour d’autres nombres ; un nombre sans séparateur
   (« 2547 ») peut être repris tel quel (allemand) ou au format de la langue (italien : « 2.547 », `"milliers": "toujours"`).
 - Pluriels : jamais de `+ 's'` dans le code ; les deux formes sont écrites (`plural(n, ' partie', ' parties')`).
@@ -113,7 +115,7 @@ Le cerveau de Léo reste français : `outils/gen-leo.cjs` écrit `leo-index.json
 tire `<dossier>/leo-index.json` et `<dossier>/leo/*.json` pour chaque langue de `leo`.
 
 - Ce que Léo **affiche** passe par la mémoire de la langue (mêmes recherches que les pages).
-- Ce qui sert à **comprendre** reste français : la question passe d’abord par le **pont** (espagnol, italien :
+- Ce qui sert à **comprendre** reste français : la question passe d’abord par le **pont** (espagnol, italien, portugais :
   `_leo-pont.json`, appliqué par `leo-core.js`) ou par la **table de réécriture** (anglais, allemand : `leo-pivot.json`,
   appliquée par `leo-nlp.js` → `pivot`, complétée par les libellés des catégories et des outils). Un nom traduit est affiché et
   reconnu en entier ; le nom français reste celui que Léo reconnaît (`nameFr`), les jetons des noms traduits désignent aussi leur
@@ -129,7 +131,7 @@ node outils/regenerer.cjs                     # tout, langues comprises (« Lang
 node outils/langues.cjs de --extraire         # ce qui manque → outils/langues/de/_a-traduire.json
 node outils/langues.cjs de --verifier         # 0 manque, 0 balise cassée, 0 conflit (code de sortie 1 sinon)
 python3 outils/tuto-shots.py . de             # captures du Tuto allemand (img/tuto/de, outils/tuto-captures-de.json)
-node outils/tests/leo-eval.cjs --langue de    # Léo en allemand (fr, en, es, it de même)
+node outils/tests/leo-eval.cjs --langue de    # Léo en allemand (fr, en, es, it, pt de même)
 ```
 
 Tests :

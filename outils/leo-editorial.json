@@ -1419,6 +1419,12 @@
    "Qui habite à {name} ?",
    "Quels lieux sont sur le site ?",
    "Comment mesurer une distance sur la carte ?"
+  ],
+  "devine-le-lieu": [
+   "C’est quoi Devine le lieu ?",
+   "Mon score de Devine le lieu est-il enregistré ?",
+   "Quelles sont les régions de GTA VI ?",
+   "Où est Vice City sur la carte ?"
   ]
  },
  "templates": {

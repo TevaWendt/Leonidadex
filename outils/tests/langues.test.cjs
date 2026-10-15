@@ -44,7 +44,7 @@ function frPages() {
   return out;
 }
 
-const OG = { en: 'en_US', es: 'es_ES', it: 'it_IT', de: 'de_DE' };
+const OG = { en: 'en_US', es: 'es_ES', it: 'it_IT', de: 'de_DE', pt: 'pt_BR' };
 const LANG_CODES = new Set(cfg.langues.map(l => l.code));
 const PARSE = h => parse5.parse(h, { scriptingEnabled: false });
 const NOT_INDEXED = h => /<meta name="robots" content="[^"]*noindex/i.test(h) || /http-equiv="refresh"/i.test(h);
@@ -236,7 +236,8 @@ test('pages françaises : barre « Changer la langue » en haut de chaque page (
     const depth = p.split('/').length - 1;
     for (const LG of LANGS) {
       const tr = LG.pages.includes(p), code = LG.code;
-      const href = (p === '404.html' ? '/' : '../'.repeat(depth)) + LG.dossier + '/' + (tr ? p : 'index.html').replace(/(^|\/)index\.html$/, '$1');
+      /* 404.html et, v7.89, la page hors connexion (montrée par le service worker à la place d'une page jamais vue) : liens absolus */
+      const href = (p === '404.html' || p === 'hors-ligne.html' ? '/' : '../'.repeat(depth)) + LG.dossier + '/' + (tr ? p : 'index.html').replace(/(^|\/)index\.html$/, '$1');
       assert.ok(html.includes('href="' + href + '" hreflang="' + code + '" lang="' + code + '" data-lk-lang="' + code + '"'), p + ' : lien vers ' + code + ' ' + href);
       assert.equal(html.includes('<link rel="alternate" hreflang="' + code + '" href="' + url(LG, p) + '">'), tr && !NOT_INDEXED(html), p + ' : hreflang ' + code + (tr ? ' (aucun sur une page non indexée)' : ' absent sans traduction'));
     }
@@ -279,7 +280,7 @@ test('calculateur espagnol (jsdom) : démarre sans erreur, montants « 1.250 $ �
     assert.deepEqual(p.errors.filter(e => !/Not implemented|Could not load/.test(e)), [], 'aucune erreur');
     const E = p.w.LKCalcEngine;
     assert.equal(E.lang, 'es');
-    assert.equal(E.dollars('1.250', ' '), '1.250 $');
+    assert.equal(E.dollars('1.250', ' '), '1.250\u00a0$'); /* lot 1 bis : espace insécable avant le signe */
     assert.equal(E.parseLocalizedNumber('1.250,5').value, 1250.5);
     assert.equal(E.parseLocalizedNumber('200.000').value, 200000);
     assert.equal(E.parseLocalizedNumber('1,5').value, 1.5);
@@ -308,7 +309,7 @@ test('calculateur italien (jsdom) : démarre sans erreur, montants « 12.500 $ �
     assert.deepEqual(p.errors.filter(e => !/Not implemented|Could not load/.test(e)), [], 'aucune erreur');
     const E = p.w.LKCalcEngine;
     assert.equal(E.lang, 'it');
-    assert.equal(E.dollars('12.500', ' '), '12.500 $');
+    assert.equal(E.dollars('12.500', ' '), '12.500\u00a0$'); /* lot 1 bis : espace insécable avant le signe */
     assert.equal(E.parseLocalizedNumber('1.250,5').value, 1250.5);
     assert.equal(E.parseLocalizedNumber('200.000').value, 200000);
     assert.equal(E.parseLocalizedNumber('1,5').value, 1.5);
@@ -337,7 +338,7 @@ test('calculateur allemand (jsdom) : démarre sans erreur, montants « 1.250 $ �
     assert.deepEqual(p.errors.filter(e => !/Not implemented|Could not load/.test(e)), [], 'aucune erreur');
     const E = p.w.LKCalcEngine;
     assert.equal(E.lang, 'de');
-    assert.equal(E.dollars('1.250', ' '), '1.250 $');
+    assert.equal(E.dollars('1.250', ' '), '1.250\u00a0$'); /* lot 1 bis : espace insécable avant le signe */
     /* « 1.500 » tapé vaut 1 500 (le point groupe les milliers), jamais 1,5 */
     assert.equal(E.parseLocalizedNumber('1.250,5').value, 1250.5);
     assert.equal(E.parseLocalizedNumber('200.000').value, 200000);
@@ -365,6 +366,45 @@ test('calculateur allemand (jsdom) : démarre sans erreur, montants « 1.250 $ �
       if (/\d{1,3}(?:,\d{3})+(?![\d,])[   ]?\$/.test(t)) bad.push('« 1,250 $ » : ' + t.slice(0, 80)); } }
     assert.deepEqual(bad.slice(0, 6), [], 'montants écrits à l’allemande');
     assert.deepEqual(frenchHits(p.d.title, 'de'), [], 'titre');
+  } finally { p.close(); }
+});
+
+/* v7.91 : portugais du Brésil */
+test('calculateur portugais (jsdom) : démarre sans erreur, montants « $ 1.250 », nombres brésiliens, date « 1º de outubro de 2026 », phrases du hub en portugais', async () => {
+  if (!LANGS.some(l => l.code === 'pt')) return;
+  const p = await load(root, 'pt/calculateurs.html');
+  try {
+    assert.deepEqual(p.errors.filter(e => !/Not implemented|Could not load/.test(e)), [], 'aucune erreur');
+    const E = p.w.LKCalcEngine;
+    assert.equal(E.lang, 'pt');
+    assert.equal(E.dollars('1.250', ' '), '$\u00a01.250');
+    assert.equal(E.dollars('-1.250'), '-$\u00a01.250');
+    assert.equal(E.parseLocalizedNumber('1.250,5').value, 1250.5);
+    assert.equal(E.parseLocalizedNumber('200.000').value, 200000);
+    assert.equal(E.parseLocalizedNumber('1,5').value, 1.5);
+    assert.equal(E.plural(0), true); assert.equal(E.plural(1), false); assert.equal(E.plural(1.5), false); assert.equal(E.plural(2), true);
+    assert.equal(E.dateText(new Date(2026, 9, 1)), '1º de outubro de 2026');
+    assert.equal(E.dateText(new Date(2026, 10, 19)), '19 de novembro de 2026');
+    const H = p.w.LKCalcHub;
+    assert.equal(H.parseMoney('Tenho $ 200.000 e quero 1,5 milhão'), 1500000);
+    assert.equal(H.parseMoney('250 mil'), 250000);
+    assert.equal(H.parseMinutesPerDay('2 horas por dia'), 120);
+    const r = H.route('Tenho $ 200.000 e quero chegar a 1 milhão, 2 horas por dia');
+    assert.equal(r.tab, 'goal');
+    assert.equal(p.d.getElementById('f-goal-capital')?.value, '200000');
+    assert.equal(p.d.getElementById('f-goal-target')?.value, '1000000');
+    assert.equal(p.d.getElementById('f-goal-dailyMinutes')?.value, '120');
+    const out = p.d.getElementById('calc-ask-out');
+    if (out) { p.d.getElementById('calc-ask-input').value = 'vale a pena?'; p.d.getElementById('calc-ask').dispatchEvent(new p.w.Event('submit', { cancelable: true })); assert.deepEqual(frenchHits(out.textContent, 'pt'), [], 'réponse du hub : ' + out.textContent); }
+    /* chaque texte de la page à part : « $ 1.250 », jamais « 1.250 $ », « 1 250 $ » ni « $1,250 » */
+    const main = p.d.querySelector('main'), bad = [];
+    { const w = p.d.createTreeWalker(main, p.w.NodeFilter.SHOW_TEXT); let n; while ((n = w.nextNode())) { const t = n.nodeValue.replace(/\s+/g, ' ').trim(); if (!t || n.parentElement.closest('script,style,template')) continue;
+      if (/\d[\d.,]*[\u00a0\u202f ]?\$(?![\d{])/.test(t)) bad.push('« 1.250 $ » : ' + t.slice(0, 80));
+      if (/\$\d{1,3},\d{3}/.test(t)) bad.push('« $1,250 » : ' + t.slice(0, 80)); } }
+    assert.deepEqual(bad.slice(0, 6), [], 'montants écrits à la brésilienne');
+    const text = main.textContent.replace(/\s+/g, ' ');
+    assert.ok(!/\d million\b|\bmillions\b|\bmilliards?\b/.test(text), 'grands nombres en mots portugais');
+    assert.deepEqual(frenchHits(p.d.title, 'pt'), [], 'titre');
   } finally { p.close(); }
 });
 
@@ -453,7 +493,18 @@ test('clé lk_lang_v1 : rien n’est écrit à l’ouverture (même avec un navi
     const fr = r.d.querySelector('.lk-langbar a[data-lk-lang="fr"]'); fr.addEventListener('click', e => e.preventDefault()); fr.click();
     assert.equal(r.w.localStorage.getItem('lk_lang_v1'), 'fr', 'clic sur « Français » : choix écrit');
   } finally { r.close(); }
-  const s = await load(root, 'contact.html', { before: nav(['pt-BR', 'fr']) });
+  /* v7.91 : le portugais du Brésil est publié : un navigateur brésilien se voit proposer la page en portugais */
+  if (LANGS.some(l => l.code === 'pt')) {
+    const b = await load(root, 'missions.html', { url: 'https://www.leonidakit.com/missions.html', before: nav(['pt-BR', 'pt']) });
+    try {
+      const offer = b.d.querySelector('.lk-lang-offer'); assert.ok(offer, 'navigateur brésilien : bandeau proposé');
+      assert.equal(offer.lang, 'pt'); assert.match(offer.textContent, /Esta página também está disponível em português\.\s*Ler em português/);
+      assert.equal(offer.querySelector('button').textContent, 'Não, obrigado');
+      assert.equal(offer.querySelector('a').getAttribute('href'), 'pt/missions.html');
+      assert.equal(b.w.localStorage.getItem('lk_lang_v1'), null);
+    } finally { b.close(); }
+  }
+  const s = await load(root, 'contact.html', { before: nav(['ja-JP', 'fr']) });
   try { assert.equal(s.d.querySelector('.lk-lang-offer'), null, 'langue du navigateur non publiée, puis français : rien à proposer'); } finally { s.close(); }
 });
 
@@ -461,7 +512,7 @@ test('pages françaises inchangées par les langues : seule la barre de langue e
   const strip = h => h.replace(/<div class="lk-langbar"[^>]*>[\s\S]*?<\/details><\/div><\/div>\n?/g, '').replace(/<link rel="alternate" hreflang="[^"]+" href="[^"]*">\n?/g, '');
   for (const p of ['index.html', 'calculateurs.html', 'vehicules.html', 'contact.html']) {
     const h = read(p), s = strip(h);
-    assert.ok(!s.includes('data-lk-langbar') && !/hreflang="(?:en|es|it)" href/.test(s), p);
+    assert.ok(!s.includes('data-lk-langbar') && !/hreflang="(?:en|es|it|de|pt)" href/.test(s), p);
     assert.equal((h.match(/data-lk-langbar/g) || []).length, 1, p + ' : une seule barre');
   }
 });

@@ -195,7 +195,7 @@ const html = `<!DOCTYPE html>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Atelier 3D : personnaliser ${nv} véhicules et ${na} armes de GTA VI | Leonidakit</title>
-<meta name="description" content="Tourne, peins et équipe chaque véhicule et chaque arme de GTA VI en 3D, jusqu’à l’intérieur : peinture, jantes, néons, plaque, finitions, viseurs, avec les pré-listes de GTA V et de GTA Online et le repère de la série de chaque option.">
+<meta name="description" content="Tourne, peins et équipe chaque véhicule et chaque arme de GTA VI en 3D, jusqu’à l’intérieur : peinture, jantes, néons, plaque, viseurs, listes de la série.">
 <link rel="canonical" href="https://www.leonidakit.com/atelier-3d.html">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Accueil","item":"https://www.leonidakit.com/"},{"@type":"ListItem","position":2,"name":"Personnalisations","item":"https://www.leonidakit.com/personnalisations.html"},{"@type":"ListItem","position":3,"name":"Atelier 3D","item":"https://www.leonidakit.com/atelier-3d.html"}]}</script>
 <meta property="og:title" content="Atelier 3D Leonidakit : personnalise les véhicules et les armes de GTA VI">

@@ -8,7 +8,7 @@ const acquisition = JSON.parse(fs.readFileSync(path.join(__dirname, 'acquisition
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
 const world = [['lieux.html', 'Lieux'], ['personnages.html', 'Personnages'], ['gangs.html', 'Gangs et factions'] /* v7.65 */, ['demeures.html', 'Demeures'], ['planques.html', 'Planques'], ['entreprises.html', 'Entreprises'], ['animaux.html', 'Animaux'] /* section animaux */, ['collectibles.html', 'Collectibles']];
-const play = [['missions.html', 'Missions'] /* section missions */, ['activites.html', 'Activités annexes'] /* section activites */, ['radios.html', 'Radios et musique'] /* section radios */, ['codes-de-triche.html', 'Codes de triche'] /* section codes */, ['trophees.html', 'Trophées et succès'] /* section trophees */];
+const play = [['missions.html', 'Missions'] /* section missions */, ['activites.html', 'Activités annexes'] /* section activites */, ['radios.html', 'Radios et musique'] /* section radios */, ['codes-de-triche.html', 'Codes de triche'] /* section codes */, ['trophees.html', 'Trophées et succès'] /* section trophees */, ['devine-le-lieu.html', 'Devine le lieu'] /* v7.90 (lot 6) : le jeu du jour, à la fin du groupe « Jouer » (menu, pied de page, puces) */];
 /* section online : un espace à part, son propre groupe dans « Explorer » et sa colonne au pied de page */
 const online = [['online.html', 'L’espace GTA Online'], ['online/annonces.html', 'Les annonces'], ['online/gta-online-actuel.html', 'Le GTA Online actuel']];
 // Menu « S’équiper » : seules les catégories marquées menu:true dans acquisitions.json (pas de doublon avec Véhicules,
@@ -18,7 +18,9 @@ const shopping = [...acquisition.filter(c => c.menu && !c.alias).sort((a, b) => 
    l'Atelier quitte « Explorer › S'équiper » pour la barre du haut, après Armurerie ; le pied de page le garde dans « S'équiper ». */
 const footShopping = [['achats.html', 'Tout ce qui s’achète'], ...shopping, ['atelier-3d.html', 'Atelier 3D'], ['armes.html#munitions', 'Munitions et équipement'], ['logements.html', 'Logements et appartements']];
 /* v7.86 : « Ce qui est confirmé » (verification.html), la page de méthode vers laquelle renvoie chaque fiche */
-const info = [['a-propos.html', 'À propos'], ['contact.html', 'Contact'], ['medias.html', 'Médias et crédits'], ['mentions-legales.html', 'Mentions et confidentialité']];
+const info = [['a-propos.html', 'À propos'], ['contact.html', 'Contact'], ['presse.html', 'Presse'] /* v7.88 */, ['medias.html', 'Médias et crédits'], ['mentions-legales.html', 'Mentions et confidentialité']];
+/* v7.89 (lot 5) : la page Mode compagnon (appli, sans réseau, changer d'appareil) : menu « Explorer › Le site » et pied de page « Outils et aide » */
+const companion = ['compagnon.html', 'Mode compagnon'];
 /* v7.87 : « L’actualité » : les annonces date par date, les vidéos officielles, les éditions et la page de méthode */
 const news = [['actus.html', 'Actualités'], ['videos.html', 'Vidéos officielles'], ['editions.html', 'Éditions'], ['verification.html', 'Ce qui est confirmé']];
 const top = [['calculateurs.html', 'Calculateur'], ['tuto.html', 'Tuto'], ['carte.html', 'Carte'], ['vehicules.html', 'Véhicules'], ['armes.html', 'Armurerie'], ['atelier-3d.html', 'Atelier 3D'] /* v7.83 */, ['achats.html', 'Achats'], ['progression.html', 'Progression']];
@@ -48,7 +50,7 @@ function currentOf(file) {
 }
 function nav(file, prefix) {
   const current = currentOf(file);
-  const groups = [['Le monde', world], ['Jouer', play] /* sections missions, activites, radios, codes, trophees */, ['S’équiper', shopping], ['L’actualité', news] /* v7.87 */, ['Le site', info], ['GTA Online', online, 'nav-online'] /* section online */];
+  const groups = [['Le monde', world], ['Jouer', play] /* sections missions, activites, radios, codes, trophees */, ['S’équiper', shopping], ['L’actualité', news] /* v7.87 */, ['Le site', [companion, ...info]] /* v7.89 */, ['GTA Online', online, 'nav-online'] /* section online */];
   return '<ul>' + top.map(x => '<li>' + link(x, prefix, current) + '</li>').join('')
     + '<li><details class="nav-more"><summary>Explorer</summary><div class="nav-more-panel">'
     + groups.map(([label, list, cls]) => '<div' + (cls ? ' class="' + cls + '"' : '') + '><strong>' + esc(label) + '</strong>' + list.map(x => link(x, prefix, current)).join('') + '</div>').join('')
@@ -63,7 +65,7 @@ function footer(existing, prefix, file = '') {
     ['GTA Online', online] /* section online */,
     ['S’équiper', footShopping],
     ['L’actualité', news] /* v7.87 */,
-    ['Outils et aide', [['calculateurs.html', 'Calculateur'], ['tuto.html', 'Tuto'], ['progression.html', 'Progression'], ...info]]
+    ['Outils et aide', [['calculateurs.html', 'Calculateur'], ['tuto.html', 'Tuto'], ['progression.html', 'Progression'], companion /* v7.89 */, ...info]]
   ];
   return '<footer>' + art + '<div class="shell"><div class="foot-top"><div class="foot-brand">'
     + '<a class="brand" href="' + prefix + 'index.html">Leonida<span>kit</span></a>'
@@ -78,7 +80,7 @@ function footer(existing, prefix, file = '') {
 const chipList = [['achats.html', 'Tout ce qui s’achète'], ['vehicules.html', 'Véhicules'], ['armes.html', 'Armurerie'],
   ...acquisition.filter(c => !c.alias).map(c => [c.route.slice(1), c.label]),
   ['progression.html#carnets', 'Mes carnets'], ['tuto.html#sources', 'Comprendre les statuts']];
-const sectionPages = new Set([...world.map(x => x[0]), ...play.map(x => x[0]) /* sections missions, activites, radios, codes, trophees */, ...online.map(x => x[0]).filter(f => !f.includes('/')) /* section online : le hub seul */, ...acquisition.map(c => c.route.slice(1).split('#')[0]), 'vehicules.html', 'armes.html', 'achats.html', 'progression.html']);
+const sectionPages = new Set([...world.map(x => x[0]), ...play.map(x => x[0]) /* sections missions, activites, radios, codes, trophees */, ...online.map(x => x[0]).filter(f => !f.includes('/')) /* section online : le hub seul */, ...acquisition.map(c => c.route.slice(1).split('#')[0]), 'vehicules.html', 'armes.html', 'achats.html', 'progression.html', ...news.map(x => x[0]) /* v7.87.1 : L’actualité */]);
 /* v7.69 : les puces suivent la famille de la page. Les pages du monde (lieux, personnages… animaux, collectibles) proposent
    les autres pages du monde et la carte ; les pages « Jouer » (missions, activités, radios, codes, trophées, GTA Online)
    les autres pages de jeu ; les pages d’achat et la Progression gardent la liste « S’équiper ». Une page de la faune ne
@@ -86,9 +88,12 @@ const sectionPages = new Set([...world.map(x => x[0]), ...play.map(x => x[0]) /*
 const chipSets = {
   monde: [...world, ['carte.html', 'La carte de Leonida'], ['progression.html#carnets', 'Mes carnets'], ['tuto.html#sources', 'Comprendre les statuts']],
   jouer: [...play, ['online.html', 'L’espace GTA Online'], ['progression.html#carnets', 'Mes carnets'], ['tuto.html#sources', 'Comprendre les statuts']],
-  equiper: chipList
+  equiper: chipList,
+  /* v7.87.1 : les pages de « L’actualité » (Actualités, Vidéos officielles, Éditions, Ce qui est confirmé) se renvoient
+     l’une à l’autre, avec la musique annoncée et la lecture des statuts */
+  actu: [...news, ['radios.html', 'Radios et musique'], ['tuto.html#sources', 'Comprendre les statuts']]
 };
-const chipSetOf = file => world.some(([u]) => u === file) ? 'monde' : (play.some(([u]) => u === file) || file === 'online.html') ? 'jouer' : 'equiper';
+const chipSetOf = file => world.some(([u]) => u === file) ? 'monde' : (play.some(([u]) => u === file) || file === 'online.html') ? 'jouer' : news.some(([u]) => u === file) ? 'actu' : 'equiper';
 function chips(file) {
   if (!sectionPages.has(file)) return '';
   const alias = acquisition.find(c => c.alias && c.route.slice(1) === file);
@@ -164,4 +169,4 @@ function placeEntry(html, file, prefix = '') {
   if (/<section class="lk-outro"/.test(html)) return html.replace(/<section class="lk-outro"/, block + '\n<section class="lk-outro"');
   return html.replace(/<\/main>/, block + '\n</main>');
 }
-module.exports = { opensNewTab, chipSets, chipSetOf, nav, footer, top, world, play /* sections missions, activites, radios, codes, trophees */, online /* section online */, shopping, info, news /* v7.87 */, chips, placeChips, chipList, sectionPages, ENTRY, entry, placeEntry, entryPages };
+module.exports = { opensNewTab, chipSets, chipSetOf, nav, footer, top, world, play /* sections missions, activites, radios, codes, trophees */, online /* section online */, shopping, info, news /* v7.87 */, companion /* v7.89 */, chips, placeChips, chipList, sectionPages, ENTRY, entry, placeEntry, entryPages };

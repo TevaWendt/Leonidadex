@@ -56,10 +56,10 @@ test('parcours sans durée de partie : attendre la mission la plus rentable vaut
 test('priorité du plan : « je garde mon argent de côté » et « sécurité » ne recommandent jamais un plan qui puise dans la réserve ; bloqué et expliqué ; « le plus vite » l’autorise et le dit ; « le moins coûteux » existe',()=>{
   const mk=pr=>{const s=fresh();s.plan.goal={...s.plan.goal,kind:'amount',target:300000,meaning:'held'};s.plan.situation={...s.plan.situation,capital:30000,reserve:20000,dailyMinutes:null};s.plan.source='missions';s.plan.priority=pr;
     s.plan.missions=[{...B.copy(B.planMissionTemplate),id:'m-1',name:'Mission',reward:100000,cost:20000,duration:30}];return B.validate(s,initial);};
-  for(const pr of ['balanced','safe','cheap']){const r=B.evaluate('plan',mk(pr),[]);assert.equal(r.valid,false,pr);assert.equal(r.blockedByReserve,true);assert.match(r.reason,/Aucun plan ne garde tes 20\s000 \$ de côté/);assert.match(r.reason,/au plus bas 10\s000 \$/);}
+  for(const pr of ['balanced','safe','cheap']){const r=B.evaluate('plan',mk(pr),[]);assert.equal(r.valid,false,pr);assert.equal(r.blockedByReserve,true);assert.match(r.reason,/Aucun plan ne garde tes 20\s000\s\$ de côté/);assert.match(r.reason,/au plus bas 10\s000\s\$/);}
   const fast=B.evaluate('plan',mk('fast'),[]);assert.equal(fast.valid,true);assert.equal(fast.input.reserve,0);assert.equal(fast.lowPoint.cash,10000);
   assert.match(read('calculateurs-plan.js'),/\['cheap','Le moins coûteux sur tout le parcours/);
-  const x=B.analysis('plan',mk('fast'),[]);const low=x.explain.drivers.find(d=>d.label==='Au plus bas');assert.ok(low);assert.doesNotMatch(low.text,/jamais sous les 0 \$/,'plus de « jamais sous 0 $ gardés » quand la réserve est utilisée');
+  const x=B.analysis('plan',mk('fast'),[]);const low=x.explain.drivers.find(d=>d.label==='Au plus bas');assert.ok(low);assert.doesNotMatch(low.text,/jamais sous les 0\s\$/,'plus de « jamais sous 0 $ gardés » quand la réserve est utilisée');
 });
 
 test('munitions simulées : comptées dans le plan comme dans Mes activités, et dites ; les missions à trop de joueurs sont écartées et dites ; « Reprendre mes chiffres » copie groupe, coût d’usage, gain, dépendances et sens du but',async()=>{

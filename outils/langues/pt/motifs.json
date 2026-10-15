@@ -1,0 +1,20 @@
+{
+ "_note": "v7.91 (portugais du Brésil) : phrases à trous des générateurs (« _motifs », comme es/section-design.json, es/v776.json, es/v785.json) et règles « re: » des données de la carte (comme es/lot-45.json et es/lot-46.json). Mêmes trous, même expression ; {t1} = trou traduit par la mémoire.",
+ "_motifs": {
+  "Agrandir : {1}": "Ampliar: {1}",
+  "Lieux de notre carte liés à cette activité : {1}.": "Lugares do nosso mapa ligados a esta atividade: {1}.",
+  "Lieux de notre carte liés à cette fiche : {1}.": "Lugares do nosso mapa ligados a esta ficha: {1}.",
+  "Carte de Leonida : {1}": "Mapa de Leonida: {1}",
+  "Illustration Leonidakit : {1}": "Ilustração Leonidakit: {1}",
+  "Marque inconnue {1}": "Marca desconhecida {1}"
+ },
+ "re:^Bâtiment (L\\d+)$": "Edifício {1}",
+ "re:^(.+) \\(nom réel\\)$": "{t1} (nome real)",
+ "re:^(.+) \\(nom supposé\\)$": "{t1} (nome presumido)",
+ "re:^Regroupe 1 bâtiments? repérés\\.$": "Agrupa 1 edifício identificado.",
+ "re:^Regroupe (\\d+) bâtiments? repérés\\.$": "Agrupa {1} edifícios identificados.",
+ "re:^Équivalent réel : (.+)\\.$": "Equivalente real: {t1}.",
+ "re:^((?:[A-Z0-9][^\\s]*)(?:\\s(?:[A-Z0-9][^\\s]*|of|de|du|the|and|&))*) dans GTA VI$": "{t1} no GTA VI",
+ "re:^(.+) : armureries repérées$": "{t1}: lojas de armas mapeadas",
+ "re:^(.+) : lieux liés$": "{t1}: lugares relacionados"
+}

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 'use strict';
 /* Calculateur, lot 1 (« Même interface, intelligence renforcée ») — instantané du CADRE visible, pour prouver que le moteur
-   change sans que la présentation change. Charge calculateurs.html (fr) et les pages traduites (en, es, it, de) dans jsdom,
+   change sans que la présentation change. Charge calculateurs.html (fr) et les pages traduites (en, es, it, de ; pt depuis la v7.91) dans jsdom,
    ouvre chacun des neuf outils dans chacun des trois modes, et relève, hors des zones de résultat dynamiques inventoriées
    (ZONES ci-dessous, vidées avant la lecture) : chaque élément dans l’ordre (balise, id, classes, hidden), son texte propre,
    ses attributs lus (placeholder, aria-label, title, alt, data-question, data-short exclu car dynamique), les options des
@@ -14,7 +14,7 @@ const root = path.resolve(__dirname, '..'), { load } = require('./tests/runtime-
 const OUT = path.join(__dirname, 'calculateur-cadre.json');
 const TOOLS = ['goal', 'purchase', 'session', 'budget', 'order', 'roi', 'activities', 'compare', 'plan'];
 const MODES = ['quick', 'guided', 'advanced'];
-const LANGS = ['', 'en/', 'es/', 'it/', 'de/'];
+const LANGS = ['', 'en/', 'es/', 'it/', 'de/', 'pt/']; /* v7.91 : portugais du Brésil */
 /* Zones dont le CONTENU est produit par le moteur (valeurs, réponses, explications, graphiques, tableaux de résultats) :
    seul leur contenu est neutralisé ; la balise elle-même (id, classes, place) reste dans le cadre comparé. */
 const ZONES = ['[id$="-results"]', '[id$="-timeline"]', '[id^="expert-"]', '[id^="mode-summary-"]', '#plan-report', '#goal-routes',

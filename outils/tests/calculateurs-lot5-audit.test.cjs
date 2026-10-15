@@ -82,8 +82,8 @@ test('A6 déploiement : les 15 pages qui chargent le calculateur (5 langues) —
   const crypto = require('node:crypto'), bad = [];
   const vercel = JSON.parse(read('vercel.json')), csp = vercel.headers.find(h => h.source === '/(.*)').headers.find(h => h.key === 'Content-Security-Policy').value;
   assert.match(csp, /script-src 'self';/); assert.match(read('.vercelignore'), /^outils$/m);
-  const pages = ['', 'en/', 'es/', 'it/', 'de/'].flatMap(l => ['calculateurs.html', 'index.html', 'tuto.html'].map(f => l + f)).filter(f => fs.existsSync(path.join(root, f)));
-  assert.equal(pages.length, 15);
+  const pages = ['', 'en/', 'es/', 'it/', 'de/', 'pt/'].flatMap(l => ['calculateurs.html', 'index.html', 'tuto.html'].map(f => l + f)).filter(f => fs.existsSync(path.join(root, f))); /* v7.91 : portugais */
+  assert.equal(pages.length, 18);
   for (const f of pages) {
     const html = read(f);
     assert.match(html, /calculateurs-engine\.js\?v=/, f);
@@ -233,7 +233,7 @@ test('A10 langues : chaque étiquette (« label ») des scripts du calculateur e
   const bad = [];
   for (const f of ['calculateurs-scenario.js', 'calculateurs-workspace.js', 'calculateurs-visuals.js', 'calculateurs-plan.js', 'calculateurs.js', 'calculateurs-hub.js', 'calculateurs-notebooks.js', 'calculateurs-modele.js', 'calculateurs-engine.js']) {
     const fr = labels(f);
-    for (const l of ['en', 'es', 'it', 'de']) {
+    for (const l of ['en', 'es', 'it', 'de', 'pt']) { /* v7.91 : portugais */
       if (!fs.existsSync(path.join(root, l, f))) { bad.push(l + '/' + f + ' absent'); continue; }
       const t = labels(l + '/' + f);
       if (t.length !== fr.length) { bad.push(l + '/' + f + ' : ' + t.length + ' étiquettes au lieu de ' + fr.length); continue; }

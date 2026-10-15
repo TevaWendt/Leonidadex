@@ -1,0 +1,94 @@
+{
+ "_note": "v7.89 (lot 5) : questions de test de Léo (de) sur l'appli installable, le site sans réseau et le transfert du suivi d'un appareil à l'autre (sujets installer-site, hors-connexion, changer-telephone). Rejoué par outils/tests/v789.test.cjs (leo-eval.cjs, --questions).",
+ "schemaVersion": 1,
+ "questions": [
+  {
+   "q": "wie kann ich die app installieren",
+   "expect": {
+    "topic": "installer-site"
+   },
+   "tags": [
+    "v789"
+   ]
+  },
+  {
+   "q": "gibt es eine app von leonidakit",
+   "expect": {
+    "topic": "installer-site"
+   },
+   "tags": [
+    "v789"
+   ]
+  },
+  {
+   "q": "leonidakit zum startbildschirm hinzufugen",
+   "expect": {
+    "topic": "installer-site"
+   },
+   "tags": [
+    "v789"
+   ]
+  },
+  {
+   "q": "funktioniert die seite offline",
+   "expect": {
+    "topic": "hors-connexion"
+   },
+   "tags": [
+    "v789"
+   ]
+  },
+  {
+   "q": "karte ohne internet nutzen",
+   "expect": {
+    "topic": "hors-connexion"
+   },
+   "tags": [
+    "v789"
+   ]
+  },
+  {
+   "q": "geht das im flugmodus",
+   "expect": {
+    "topic": "hors-connexion"
+   },
+   "tags": [
+    "v789"
+   ]
+  },
+  {
+   "q": "neues handy, wie fortschritt ubertragen",
+   "expect": {
+    "topic": "changer-telephone"
+   },
+   "tags": [
+    "v789"
+   ]
+  },
+  {
+   "q": "fortschritt auf ein anderes handy ubertragen",
+   "expect": {
+    "any": [
+     {
+      "topic": "changer-telephone"
+     },
+     {
+      "topic": "faq-export"
+     }
+    ]
+   },
+   "tags": [
+    "v789"
+   ]
+  },
+  {
+   "q": "qr code fur den transfer",
+   "expect": {
+    "topic": "changer-telephone"
+   },
+   "tags": [
+    "v789"
+   ]
+  }
+ ]
+}

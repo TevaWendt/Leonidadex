@@ -1,0 +1,298 @@
+{
+ "_note": "v7.91 (portugais du Brésil) : entrées propres à un fichier (« fichier::texte ») et règles selon le code qui précède ({ \"si\", \"texte\" } : sans règle vérifiée, la chaîne reste telle quelle, c’est un identifiant), reprises de l’espagnol (es/lot-45, lot-46, lot-54, lot-55, lot-56, v769, v773, v784-jeu, section-codes, section-trophees). « _scriptsJamais » : union de l’espagnol (lot-45, calculateur-lot4) et de l’italien (lot-90, calculateur-lot4).",
+ "_notes": "Différences voulues avec l’espagnol : progression.js::plan en règle (comme l’italien : 'plan' est aussi l’identifiant e.tool==='plan', « plano » ne peut pas le remplacer) ; calculateurs.js::achats en règle (« ? ») : 'achats' est aussi un chapitre du Tuto (tutorialChapters) et le paramètre ?achats= lu par q.has('achats') ; carte.js::lieux : règle « ? » (la règle espagnole « > 1 ? » ne correspond plus au code, lkPluriel(…)?) ; calculateurs-workspace.js::aucun : « nenhuma » après fastest|| (une compra), « nenhum » sinon ; calculateurs.js::Tu as déjà : texte simple « Você já tem » (pas d’article avant « 45% do seu objetivo », la règle espagnole « Ya tienes el » n’a pas lieu d’être). Ajouts : carnets.js::plan et calculateurs-workspace.js::plan (mot affiché seulement, après « ? [ » ou « ? »). collectibles-help.js : la liste questionWords devient une liste de mots vides portugais sans accents (la recherche retire les accents) : chaque mot français y est remplacé par un mot portugais utile (ao, das, isso, quando, dos, do, as, tem, eu, da, o, os, minha, meus, meu, nao, onde, por, no, que, se, seu, voce, um, uma, como, na, me, pode, posso, quem, qual, quais, quantas, quantos, sao, quanto, sua) ; « or » reste « or » (mot anglais de la liste, pas l’or). Atelier 3D : « Aucune » (teinte) → Padrão, « Rose vif » → Rosa vibrante, « Balles explosives » (munition de fusil à pompe Mk II) → Balotes explosivos, « Pistolet-mitrailleur » → Micro SMG (comme l’anglais, à côté de « Mitraillette »).",
+ "_scriptsJamais": [
+  "source",
+  "aucun",
+  "aucune",
+  "fiche",
+  "fiches",
+  "calcul",
+  "calculs",
+  "restants",
+  "$/partie",
+  "mission",
+  "missions",
+  "plans",
+  "plan",
+  "0,5 million",
+  "1,5 million",
+  "0,5 millones",
+  "0,5 milioni",
+  "0,5 millionen",
+  ")\\s+(joueurs?|players?|jugadores?|giocatori|spielern?)\\b",
+  "millionen|millions?|mio|millones|millon|milioni|milione|mille|thousand|tausend|milliarden?|milliards?|mrd|miliardi|miliardo|billions?|mila|mil(?![a-z])|k(?![a-z])|m(?![a-z])",
+  "mille|millions?|milliards?",
+  "thousand|millions?|billions?",
+  "mil|millon(?:es)?",
+  "mila|mille|milion[ei]|miliard[io]",
+  "tausend|millionen|million|milliarden?"
+ ],
+ "calculateurs-engine.js::entier": "inteiro",
+ "calculateurs-plan.js::prévues": "previstas",
+ "calculateurs-plan.js::aucune": "nenhuma",
+ "calculateurs-plan.js::aucun": "nenhuma",
+ "calculateurs-workspace.js::aucun": [
+  {
+   "si": "fastest\\|\\|\\s*$",
+   "texte": "nenhuma"
+  },
+  {
+   "texte": "nenhum"
+  }
+ ],
+ "calculateurs-scenario.js::joueurs": [
+  {
+   "si": "(?:\\+|unit:|\\?)\\s*$",
+   "texte": "jogadores"
+  }
+ ],
+ "calculateurs-simple.js::sur": "de",
+ "calculateurs-workspace.js::exemple": "exemplo",
+ "calculateurs-workspace.js::frais": "gastos",
+ "calculateurs-workspace.js::attente": "espera",
+ "calculateurs-workspace.js::mise": "investimento",
+ "calculateurs-workspace.js::connues": "conhecidos",
+ "calculateurs-workspace.js::calcul": "cálculo",
+ "calculateurs.js::fiches": "fichas",
+ "calculateurs.js::fiche": "ficha",
+ "calculateurs.js::officiels": "oficiais",
+ "calculateurs.js::officiel": "oficial",
+ "armes-data.js::Précision": "Rifles de precisão",
+ "calculateurs-plan.js::mission": "missão",
+ "calculateurs-plan.js::missions": [
+  {
+   "si": "(?:' ?mission',|\\?)\\s*$",
+   "texte": "missões"
+  }
+ ],
+ "calculateurs-plan.js::points": "pontos",
+ "calculateurs.js::missions": [
+  {
+   "si": "\\?\\s*$",
+   "texte": "missões"
+  }
+ ],
+ "calculateurs.js::mission": [
+  {
+   "si": "missions'\\s*:\\s*$",
+   "texte": "missão"
+  }
+ ],
+ "calculateurs-workspace.js::missions": [
+  {
+   "si": "\\?\\s*$",
+   "texte": "missões"
+  }
+ ],
+ "calculateurs-workspace.js::mission": [
+  {
+   "si": "missions'\\s*:\\s*$",
+   "texte": "missão"
+  }
+ ],
+ "calculateurs-scenario.js::missions": [
+  {
+   "si": "\\?\\s*$",
+   "texte": "missões"
+  }
+ ],
+ "calculateurs-scenario.js::mission": [
+  {
+   "si": "missions'\\s*:\\s*$",
+   "texte": "missão"
+  }
+ ],
+ "progression.js::calculs": "cálculos",
+ "progression.js::calcul": "cálculo",
+ "progression.js::plans": "planos",
+ "progression.js::plan": [
+  {
+   "si": "plans'\\s*:\\s*$",
+   "texte": "plano"
+  }
+ ],
+ "progression.js::envies": "desejos",
+ "progression.js::envie": "desejo",
+ "collectibles-tools.js::fiche": "ficha",
+ "collectibles.js::fiche": "ficha",
+ "carnets.js::calcul": [
+  {
+   "si": "'plans'\\]\\s*:\\s*\\[\\s*$",
+   "texte": "cálculo"
+  }
+ ],
+ "carnets.js::calculs": [
+  {
+   "si": "'calcul',\\s*$",
+   "texte": "cálculos"
+  }
+ ],
+ "carnets.js::plans": [
+  {
+   "si": "\\['plan',\\s*$",
+   "texte": "planos"
+  }
+ ],
+ "carnets.js::plan": [
+  {
+   "si": "\\?\\s*\\[\\s*$",
+   "texte": "plano"
+  }
+ ],
+ "calculateurs-workspace.js::plan": [
+  {
+   "si": "\\?\\s*$",
+   "texte": "plano"
+  }
+ ],
+ "collectibles-help.js::au": "ao",
+ "collectibles-help.js::aux": "das",
+ "collectibles-help.js::ce": "isso",
+ "collectibles-help.js::ces": "quando",
+ "collectibles-help.js::des": "dos",
+ "collectibles-help.js::du": "do",
+ "collectibles-help.js::est": "as",
+ "collectibles-help.js::il": "tem",
+ "collectibles-help.js::je": "eu",
+ "collectibles-help.js::la": "da",
+ "collectibles-help.js::le": "o",
+ "collectibles-help.js::les": "os",
+ "collectibles-help.js::ma": "minha",
+ "collectibles-help.js::mes": "meus",
+ "collectibles-help.js::mon": "meu",
+ "collectibles-help.js::ne": "nao",
+ "collectibles-help.js::ou": "onde",
+ "collectibles-help.js::par": "por",
+ "collectibles-help.js::pas": "no",
+ "collectibles-help.js::que": "=",
+ "collectibles-help.js::se": "=",
+ "collectibles-help.js::son": "seu",
+ "collectibles-help.js::tu": "voce",
+ "collectibles-help.js::un": "um",
+ "collectibles-help.js::une": "uma",
+ "collectibles-help.js::comment": "como",
+ "collectibles-help.js::ils": "na",
+ "collectibles-help.js::moi": "me",
+ "collectibles-help.js::peut": "pode",
+ "collectibles-help.js::peux": "posso",
+ "collectibles-help.js::qu": "quem",
+ "collectibles-help.js::quel": "qual",
+ "collectibles-help.js::quelle": "quais",
+ "collectibles-help.js::quelles": "quantas",
+ "collectibles-help.js::quels": "quantos",
+ "collectibles-help.js::sont": "sao",
+ "collectibles-help.js::vos": "quanto",
+ "collectibles-help.js::votre": "sua",
+ "leo-core.js::dans": [
+  {
+   "si": "\\.name\\+\\s*$",
+   "texte": "em"
+  }
+ ],
+ "collectibles-help.js::or": "=",
+ "carnets/calculs.html::plan": "plano",
+ "carnets/calculs.html::plans": "planos",
+ "carnets/arsenal.html::équipement": "equipamento",
+ "carnets/arsenal.html::équipements": "equipamentos",
+ "carnets/arsenal.html::type de munitions": "tipo de munição",
+ "carnets/arsenal.html::types de munitions": "tipos de munição",
+ "carnets/calculs.html::Calculs": "Cálculos",
+ "carnets/collectibles.html::collectible": "colecionável",
+ "carnets/collectibles.html::collectibles": "colecionáveis",
+ "carnets/consommables.html::consommable": "consumível",
+ "carnets/consommables.html::consommables": "consumíveis",
+ "carnets/garde-robe.html::tenue ou accessoire": "traje ou acessório",
+ "carnets/garde-robe.html::tenues et accessoires": "trajes e acessórios",
+ "carnets/garde-robe.html::porté": "usado",
+ "carnets/garde-robe.html::portés": "usados",
+ "carnets/garde-robe.html::coiffure": "corte de cabelo",
+ "carnets/garde-robe.html::coiffures": "cortes de cabelo",
+ "carnets/garde-robe.html::essayée": "experimentado",
+ "carnets/garde-robe.html::tatouage": "tatuagem",
+ "carnets/garde-robe.html::tatouages": "tatuagens",
+ "carnets/garde-robe.html::fait": "feita",
+ "carnets/lieux.html::lieu": "lugar",
+ "carnets/lieux.html::lieux": "lugares",
+ "carnets/personnalisations.html::modif de véhicule": "modificação de veículo",
+ "carnets/personnalisations.html::modifs de véhicule": "modificações de veículo",
+ "carnets/personnalisations.html::modif d’arme": "modificação de arma",
+ "carnets/personnalisations.html::modifs d’arme": "modificações de arma",
+ "carnets/proprietes.html::contenu": "conteúdo",
+ "carnets/proprietes.html::contenus": "conteúdos",
+ "comparateur.js::armes": [
+  {
+   "si": "\\?'véhicules':\\s*$",
+   "texte": "armas"
+  }
+ ],
+ "calculateurs-simple.js::millions": "milhões",
+ "calculateurs-simple.js::million": "milhão",
+ "calculator-entry.js::millions": "milhões",
+ "calculator-entry.js::million": "milhão",
+ "carte.js::lieux": [
+  {
+   "si": "\\?\\s*$",
+   "texte": "lugares"
+  }
+ ],
+ "carte.js::lieu": [
+  {
+   "si": "'\\s*lieux'\\s*:\\s*$",
+   "texte": "lugar"
+  }
+ ],
+ "carnets/arsenal.html::armes": "armas",
+ "carnets/arsenal.html::arme": "arma",
+ "calculateurs-workspace.js::Encore": "Ainda faltam",
+ "calculateurs.js::Tu as déjà": "Você já tem",
+ "fiches.js::garage": [
+  {
+   "si": "'véhicules',\\s*$",
+   "texte": "garagem"
+  }
+ ],
+ "fiches.js::sélectionnés": "selecionados",
+ "collectibles-tools.js::fiches": "fichas",
+ "collectibles.js::fiches": "fichas",
+ "calculateurs.js::achats": [
+  {
+   "si": "\\?\\s*$",
+   "texte": "compras"
+  }
+ ],
+ "calculateurs-plan.js::achats": "compras",
+ "calculateurs-workspace.js::calculs": "cálculos",
+ "armes.html::armes": "armas",
+ "codes-de-triche.html::Bas": "Baixo",
+ "codes-de-triche/modele.html::Bas": "Baixo",
+ "trophees.html::Argent": "Prata",
+ "trophees/modele.html::Argent": "Prata",
+ "trophees/modele.html::Suivi": "Progresso",
+ "trophees.html::Suivi": "Progresso",
+ "personnalisations.html::silencieux": "silenciador",
+ "carte.js::départ": "ponto de partida",
+ "carte.js::points.": "pontos.",
+ "catalogue.js::poste compatible": "item compatível",
+ "catalogue.js::postes compatibles": "itens compatíveis",
+ "comparateur.js::Deux-roues": "Motos",
+ "comparateur.js::Fusils": "Fuzis",
+ "comparateur.js::Tout-terrain": "Off-road",
+ "perso-data.js::Avant": "Dianteira",
+ "perso-data.js::Arrière": "Traseira",
+ "perso-data.js::Turbo": "Turbo",
+ "perso-data.js::Bas": "Baixo",
+ "perso-data.js::Haut": "Alto",
+ "perso-data.js::LSPD": "LSPD",
+ "perso-data.js::Perseus": "Perseus",
+ "perso-data.js::Boom": "Boom",
+ "perso-data.js::carabine": "carabina",
+ "perso-data.js::Rideout Customs": "Rideout Customs",
+ "atelier-3d.html::Aucune": "Padrão",
+ "atelier-3d.html::Rose vif": "Rosa vibrante",
+ "atelier-3d.html::Pistolet-mitrailleur": "Micro SMG",
+ "atelier-3d.html::Lunette": "Luneta",
+ "atelier-3d.html::Grande lunette": "Luneta grande",
+ "atelier-3d.html::Lunette thermique": "Luneta térmica",
+ "atelier-3d.html::Balles explosives": "Balotes explosivos"
+}

@@ -56,6 +56,8 @@ const ICONS = {
   eau: '<path d="M3 15c2-2 4-2 6 0s4 2 6 0 4-2 6 0M3 19c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M6 10l9-6"/><path class="ac" d="M14 3.5l4-1-1 4z"/>',
   'drive-by': '<path d="M3 15l2-5h11l3 5v3H3z"/><circle cx="7" cy="18" r="1.8"/><circle cx="16" cy="18" r="1.8"/><path d="M13 10l2-4h4"/><path class="ac" d="M15.5 4.5h4v2h-4z"/>',
   personnalisation: '<path d="M20.5 7a4.5 4.5 0 0 1-6 4.2L7 18.7a2 2 0 0 1-2.8-2.8l7.5-7.5A4.5 4.5 0 0 1 17 2.5l-2.5 2.5 2 2 2.5-2.5c.3.8.5 1.6.5 2.5z"/><circle class="ac" cx="6" cy="18" r="1"/>',
+  /* v7.87.1 : musique des vidéos officielles (section « La bande-son » de videos/<id>.html) */
+  note: '<path d="M9 18V5.5l11-2.5v12.5"/><circle cx="6" cy="18" r="3"/><circle class="ac" cx="17" cy="15.5" r="3"/>',
   /* v7.41 (lot 4) : hubs du monde */
   film: '<rect x="3" y="8" width="18" height="12" rx="2"/><path d="M3.5 8l2-4h13l2 4"/><path d="M7.5 4l2 4M12 4l2 4M16.5 4l2 4"/><path class="ac" d="M10 11.5v5l4.5-2.5z"/>',
   /* v7.46 (lot 9) : Contact et Mentions */

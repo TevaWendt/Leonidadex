@@ -1,0 +1,103 @@
+{
+ "_note": "Section missions : questions de test de Léo en portugais du Brésil pour la section « Missions » (nombre de missions, déblocage, gains, braquages, durée, changement de personnage, guide). Rejoué par node outils/tests/leo-eval.cjs --lang pt --questions=outils/tests/leo-questions-section-missions-pt.json.",
+ "schemaVersion": 1,
+ "questions": [
+  {
+   "q": "quantas missões tem no gta 6",
+   "expect": {
+    "topic": "missions-faq-1"
+   },
+   "tags": [
+    "section-missions"
+   ]
+  },
+  {
+   "q": "quantos capítulos tem o gta 6",
+   "expect": {
+    "topic": "missions-faq-1"
+   },
+   "tags": [
+    "section-missions"
+   ]
+  },
+  {
+   "q": "como desbloquear uma missão",
+   "expect": {
+    "topic": "missions-faq-2"
+   },
+   "tags": [
+    "section-missions"
+   ]
+  },
+  {
+   "q": "missão travada gta 6",
+   "expect": {
+    "topic": "missions-faq-2"
+   },
+   "tags": [
+    "section-missions"
+   ]
+  },
+  {
+   "q": "quais missões dão mais dinheiro",
+   "expect": {
+    "topic": "missions-faq-3"
+   },
+   "tags": [
+    "section-missions"
+   ]
+  },
+  {
+   "q": "missão mais rentável gta 6",
+   "expect": {
+    "topic": "missions-faq-3"
+   },
+   "tags": [
+    "section-missions"
+   ]
+  },
+  {
+   "q": "o que já se sabe dos golpes",
+   "expect": {
+    "any": [
+     {
+      "topic": "braquage"
+     },
+     {
+      "topic": "braquer-magasins"
+     }
+    ]
+   },
+   "tags": [
+    "section-missions"
+   ]
+  },
+  {
+   "q": "quantas horas dura gta 6",
+   "expect": {
+    "topic": "mission-solo"
+   },
+   "tags": [
+    "section-missions"
+   ]
+  },
+  {
+   "q": "da pra trocar de personagem durante uma missão",
+   "expect": {
+    "topic": "changer-perso"
+   },
+   "tags": [
+    "section-missions"
+   ]
+  },
+  {
+   "q": "guia de missões gta 6",
+   "expect": {
+    "page": "/missions.html"
+   },
+   "tags": [
+    "section-missions"
+   ]
+  }
+ ]
+}

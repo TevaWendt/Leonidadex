@@ -1,5 +1,5 @@
 {
- "_note": "Section radios : questions de test de Léo en français pour la section « Radios et musique » (radios, musique des trailers et de l’Extended Look, album officiel, stations des fuites). Rejoué par node outils/tests/leo-eval.cjs --questions=outils/tests/leo-questions-section-radios-fr.json.",
+ "_note": "Section radios : questions de test de Léo en français pour la section « Radios et musique » (radios, musique des trailers et de l’Extended Look, album officiel, stations des fuites). Rejoué par node outils/tests/leo-eval.cjs --questions=outils/tests/leo-questions-section-radios-fr.json. v7.87.1 : attentes mises à jour (la v7.86 a ajouté deux questions en tête de la FAQ de la section : « qui anime » et « radio à pied » ; les noms de stations des fuites sont traités par le sujet « radio »).",
  "schemaVersion": 1,
  "questions": [
   {
@@ -59,7 +59,7 @@
   {
    "q": "quelles chansons dans l extended look",
    "expect": {
-    "topic": "radios-faq-1"
+    "topic": "radios-faq-3"
    },
    "tags": [
     "section-radios"
@@ -68,7 +68,7 @@
   {
    "q": "musique de l extended look",
    "expect": {
-    "topic": "radios-faq-1"
+    "topic": "radios-faq-3"
    },
    "tags": [
     "section-radios"
@@ -82,7 +82,7 @@
       "entity": "album:gta-vi-the-album"
      },
      {
-      "topic": "radios-faq-2"
+      "topic": "radios-faq-4"
      }
     ]
    },
@@ -98,7 +98,7 @@
       "entity": "album:gta-vi-the-album"
      },
      {
-      "topic": "radios-faq-2"
+      "topic": "radios-faq-4"
      }
     ]
    },
@@ -109,7 +109,7 @@
   {
    "q": "les noms de stations qui circulent sont confirmes ?",
    "expect": {
-    "topic": "radios-faq-3"
+    "topic": "radio"
    },
    "tags": [
     "section-radios"
@@ -118,7 +118,7 @@
   {
    "q": "les radios des fuites sont vraies ?",
    "expect": {
-    "topic": "radios-faq-3"
+    "topic": "radio"
    },
    "tags": [
     "section-radios"

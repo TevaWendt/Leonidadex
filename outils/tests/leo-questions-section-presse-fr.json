@@ -1,0 +1,160 @@
+{
+ "_note": "v7.88 : questions de test de Léo en français pour la page « Presse et créateurs » : « questions » doivent mener au sujet presse (ou, pour le logo et les captures à télécharger, à un passage de la page Presse), ou au sujet apercus-presse pour ce que dit la presse du jeu ; « hors_presse » sont des questions sur le jeu qui ne doivent jamais recevoir le sujet presse. Rejoué par outils/tests/v788.test.cjs et, pour « questions », par node outils/tests/leo-eval.cjs --questions=outils/tests/leo-questions-section-presse-fr.json.",
+ "schemaVersion": 1,
+ "questions": [
+  {
+   "q": "kit presse",
+   "expect": {
+    "topic": "presse"
+   },
+   "tags": [
+    "section-presse"
+   ]
+  },
+  {
+   "q": "presse",
+   "expect": {
+    "topic": "presse"
+   },
+   "tags": [
+    "section-presse"
+   ]
+  },
+  {
+   "q": "journaliste",
+   "expect": {
+    "topic": "presse"
+   },
+   "tags": [
+    "section-presse"
+   ]
+  },
+  {
+   "q": "je suis journaliste",
+   "expect": {
+    "topic": "presse"
+   },
+   "tags": [
+    "section-presse"
+   ]
+  },
+  {
+   "q": "contact presse",
+   "expect": {
+    "topic": "presse"
+   },
+   "tags": [
+    "section-presse"
+   ]
+  },
+  {
+   "q": "comment citer leonidakit",
+   "expect": {
+    "page": "/presse.html"
+   },
+   "tags": [
+    "section-presse",
+    "passage"
+   ]
+  },
+  {
+   "q": "faire un partenariat avec leonidakit",
+   "expect": {
+    "topic": "presse"
+   },
+   "tags": [
+    "section-presse"
+   ]
+  },
+  {
+   "q": "captures du site pour une video",
+   "expect": {
+    "topic": "presse"
+   },
+   "tags": [
+    "section-presse"
+   ]
+  },
+  {
+   "q": "je suis youtubeur je veux parler du site",
+   "expect": {
+    "topic": "presse"
+   },
+   "tags": [
+    "section-presse"
+   ]
+  },
+  {
+   "q": "interview leonidakit",
+   "expect": {
+    "topic": "presse"
+   },
+   "tags": [
+    "section-presse"
+   ]
+  },
+  {
+   "q": "ou trouver le logo de leonidakit",
+   "expect": {
+    "topic": "presse"
+   },
+   "tags": [
+    "section-presse"
+   ]
+  },
+  {
+   "q": "telecharger le logo du site",
+   "expect": {
+    "page": "/presse.html"
+   },
+   "tags": [
+    "section-presse",
+    "passage"
+   ]
+  },
+  {
+   "q": "logo du site",
+   "expect": {
+    "page": "/presse.html"
+   },
+   "tags": [
+    "section-presse",
+    "passage"
+   ]
+  },
+  {
+   "q": "que dit la presse sur gta 6",
+   "expect": {
+    "topic": "apercus-presse"
+   },
+   "tags": [
+    "section-presse",
+    "apercus"
+   ]
+  },
+  {
+   "q": "apercus de la presse",
+   "expect": {
+    "topic": "apercus-presse"
+   },
+   "tags": [
+    "section-presse",
+    "apercus"
+   ]
+  }
+ ],
+ "hors_presse": [
+  "le logo de gta 6",
+  "telecharger gta 6",
+  "journaliste du jeu",
+  "interview de jason",
+  "partenariat avec lucia",
+  "faire un partenariat avec lucia",
+  "captures d ecran de gta 6",
+  "streamer gta 6",
+  "citer une source",
+  "kit de soin",
+  "createur de contenu",
+  "collaboration avec rockstar"
+ ]
+}

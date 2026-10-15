@@ -1,0 +1,58 @@
+{
+ "_note": "Section animaux : questions de test de Léo en portugais du Brésil pour la section « Animaux » (faune annoncée, alligators, chasse, chiens, animaux marins, fiches). Rejoué par node outils/tests/leo-eval.cjs --lang pt --questions=outils/tests/leo-questions-section-animaux-pt.json.",
+ "schemaVersion": 1,
+ "questions": [
+  {
+   "q": "tem animais no gta 6",
+   "expect": {
+    "topic": "animaux"
+   },
+   "tags": [
+    "section-animaux"
+   ]
+  },
+  {
+   "q": "tem jacaré no gta 6",
+   "expect": {
+    "topic": "animaux-faq-1"
+   },
+   "tags": [
+    "section-animaux"
+   ]
+  },
+  {
+   "q": "quais animais da pra caçar",
+   "expect": {
+    "topic": "animaux-faq-2"
+   },
+   "tags": [
+    "section-animaux"
+   ]
+  },
+  {
+   "q": "tem tubarão no gta 6",
+   "expect": {
+    "any": [
+     {
+      "topic": "animaux-faq-3"
+     },
+     {
+      "entity": "animal:faune-marine"
+     }
+    ]
+   },
+   "tags": [
+    "section-animaux"
+   ]
+  },
+  {
+   "q": "da pra ter um cachorro no gta 6",
+   "expect": {
+    "topic": "animaux"
+   },
+   "tags": [
+    "section-animaux"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,38 @@
+# Matrice du lot 7 (v7.91) — le site en portugais du Brésil (14/10/2026)
+
+Base : v7.87 + lot 1 bis. Chaque ligne : l’exigence, où, ce qui a été fait, comment c’est vérifié. Le lot ne crée ni page
+française, ni composant, ni animation : il ouvre une sixième langue. Les exigences visuelles se vérifient donc sur les
+pages portugaises (toutes) et sur les pages des cinq autres langues (barre de langue, hreflang).
+
+## Ce que le prompt demande
+
+| # | Demande | Fait | Vérifié |
+|---|---|---|---|
+| 1 | Finir la mémoire (sous-agents, `verifier.py` à 0, harmonisation) | 150 morceaux, 24 582 entrées, glossaire complété après chaque vague, passe d’harmonisation | `verifier.py` à 0 sur chaque morceau ; `v791.test` (aucun conflit) |
+| 2 | Entrées de code (format pt-BR, identifiants protégés dont `calculateurs-scenario.js::envie` = "=", motifs, pont de Léo) | `code.json`, `motifs.json`, `fichiers.json`, `_leo-pont.json` (13 383 paires) | `langues.test` (jetons des scripts identiques à la source, identifiants traduits partout ou nulle part) ; `v791.test` ; questions de Léo |
+| 3 | Code qui dépend de la langue (argent `$ 200.000`, mots du calculateur et de Léo, `_scriptsJamais`) | 15 scripts du site, la fonction `api/ia.js` et `vercel.json` (voir CHANGEMENTS § 2) | `v791-calculateur-pt.test` (80 demandes et plus), `v791.test`, `langues-browser` (montants) |
+| 4 | Publier (`pt` publiée, pt-BR, pt_BR, Léo) et régénérer (barre, hreflang, plans du site, recherche, Léo, RSS) | régénération complète | `v791.test` (pages des six langues, plan du site, `pt/actus.xml`, `pt/leo-index.json`) ; vérificateur de liens |
+| 5 | Extraction `pt` jusqu’à `{}` | fait : `{}` en portugais, et dans les quatre autres langues (aucun texte nouveau sans traduction) | `langues.cjs pt --extraire` → `{}` ; `v791.test` (aucun texte manquant) |
+| 6 | Vérifier comme les autres langues | fait, comme pour les autres langues : suite Node, `langues.test` (six langues), vérificateur, confidentialité, Léo, `langues-browser`, `langues-pages-browser`, écrans (fr 16 largeurs, de et pt 5 largeurs), contrôle de l’audit, audit de clôture, cookies : tous verts | voir CONTRÔLES |
+| 7 | Relecture à la main : accueil, calculateur (8 calculs et plan), carte, fiche véhicule, Léo (10 questions), Mentions | faite (CHANGEMENTS § 5) : accueil, calculateur (captures du Tuto des huit calculs et du plan), carte, fiche Grotti Cheetah ’95, dix questions à Léo, Mentions, et l’actualité, l’armurerie, les collectibles, l’À propos, le Tuto ; corrections : signe de l’écho de l’accueil, accord « se paga », descriptions trop longues ; relevés par les contrôles : « $ 10 mi » insécable, « silenciador » | captures `pt` 390 / 768 / 1 280 |
+| 8 | Tests `v791.test.cjs`, documentation, livraison | `v791.test.cjs`, `v791-calculateur-pt.test.cjs`, LISEZ-MOI, CHANGEMENTS, README | suite Node |
+
+## Exigences de qualité
+
+| Exigence | État | Preuve |
+|---|---|---|
+| 1. Esprit : « du tac au tac », mots simples, registre direct (« você »), aucun jargon | tenue : glossaire (§ règles, vocabulaire fixe), relecture | relecture des pages clés ; glossaire |
+| 1. Rien d’inutile, même fonction = même nom partout | tenue : passe d’harmonisation (boutons, statuts, outils) | recherche des variantes dans la mémoire |
+| 2. Charte (jetons, Archivo, gabarit) | inchangée : aucun style nouveau | aucune feuille de style touchée par le lot (seule l’empreinte de Léo change dans `leo.css`) ; audit de clôture : 0 contraste insuffisant sur 11 487 |
+| 3. Mouvement (`LKMotion`, mouvement réduit) | inchangé : aucune animation nouvelle ; les titres animés mot par mot passent en portugais | écrans `pt` ; audit de l’audit (six langues) |
+| 4. Mise en page : 16 largeurs, langues, aucun débordement, rien de rogné, aucun texte sous 11 px | tenue : écrans français à 16 largeurs (976 chargements) identiques à la v7.87 et au lot 1 bis ; allemand à 5 largeurs identique ; portugais à 320, 390, 768, 1 024 et 1 280 px : aucun débordement ni texte sous 11 px, mêmes signalements connus que l’allemand ; pages des cinq langues traduites à 390 px : aucun défilement horizontal propre à la traduction ; contrôle de l’audit (six langues, 390 et 1 440 px) 137/137 ; montants insécables (« $ 10 mi ») | écrans fr (16 largeurs), `pt` et `de` (5 largeurs), Chromium six langues |
+| 4. Cibles tactiles | inchangées | audit de clôture |
+| 5. Latence : aucune régression | tenue : pages portugaises contre les mêmes pages espagnoles et pages françaises avant / après, à froid (jusqu’à 11 tours) et à chaud (5 tours) : chaque écart dans le bruit du banc (intervalle de confiance à 95 % contenant 0 pour chaque page et chaque mesure ; contrôle A/A de la carte de même largeur) ; seul poids en plus : 9 Ko sur le calculateur (mots portugais du hub), sans effet mesurable | banc 4G lente × processeur ×4, `pt` contre `es` (même gabarit) |
+| 6. Référencement : titre « GTA 6 », description unique ≤ 155 signes, hreflang six langues + x-default, og:locale, plan du site | tenue : 462 pages portugaises comme en espagnol (179 indexables, 273 en noindex et 10 redirections, comme leurs pages françaises) ; titre traduit avec « GTA 6 » partout où le français l’a ; description de 155 signes au plus sur chaque page (36 versions courtes), une par page indexable ; un seul `h1` ; hreflang `pt` dans les pages des six langues, x-default anglais ; og:locale pt_BR ; 179 adresses portugaises dans sitemap.xml (130 fiches aussi dans sitemap-fiches.xml) | `langues.test`, `v791.test`, vérificateur |
+| 6. Données structurées traduites | tenue | `langues.test` (aucun français dans les données structurées) |
+| 7. Accessibilité : `lang` juste, noms accessibles traduits, contrastes | tenue : `lang="pt"` (le code de la langue, comme `es`, `it`, `de`, `en` : les scripts lisent ce code ; pt-BR sert aux nombres, aux dates et à `og:locale`), noms accessibles, `aria-label`, `title`, `alt` et `placeholder` traduits, un seul `h1` par page | `langues.test` (attributs lus), audit de clôture |
+| 8. Rien d’inventé ; statuts traduits (« Oficial », « A confirmar », « Referência da série »…) | tenue | glossaire ; `langues.test` |
+| 8. Aucun cookie ; aucune ressource externe ; `lk…` | tenu : rien de nouveau | audit des cookies ; preuve de confidentialité |
+| 8. Léo connaît le site en portugais | tenue : Léo s’ouvre sur les pages portugaises (amorçage de `common.js` corrigé) ; `leo-eval --langue pt` : 512/512, 39/39 hors sujet refusés avec le lien de Rockstar, 0 réponse sans source ; questions des sections 48/52 (radios 7/11 : les quatre mêmes échecs dans toutes les langues et déjà en v7.87, hors du lot, signalé) ; dix questions relues à la main | `leo-eval --langue pt` |
+| 9. Langues : aucune phrase française, nombres / dates / argent du Brésil, typographie, glossaire, noms officiels | tenue : `langues.test` 51/51 ; `langues-browser` 2 791/2 791 (hub, calculateur rempli, huit calculs et plan, montants « $ 1.250 », bandeau « Ler em português ») ; `langues-pages-browser` : 452 pages par langue à 1 280 et 390 px, aucun mot français visible (une fausse alerte, la lettre « Y » de « em Y », corrigée dans le détecteur, test ajouté) ; extraction `{}` ; glossaire appliqué (passe d’harmonisation) ; noms officiels gardés | `langues.test`, `langues-browser`, `langues-pages-browser`, audit de l’audit |
+| 10. Preuves : contrôles du socle tous verts, écrans identiques ou meilleurs | tenue : contrôles du socle tous verts (deux tests relancés seuls après la fin de chaîne, comme prévu) ; écrans français et allemands identiques à la v7.87 et au lot 1 bis ; matrice close | CHANGEMENTS § CONTRÔLES |

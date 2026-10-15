@@ -1,0 +1,161 @@
+{
+ "_note": "v7.88 : fichiers du kit presse (presse/), écrits par outils/gen-presse.cjs. Ne pas modifier à la main.",
+ "fichiers": [
+  {
+   "f": "presse/leonidakit-logo.svg",
+   "role": "logo",
+   "format": "SVG",
+   "w": 5585,
+   "h": 858,
+   "octets": 3572,
+   "empreinte": "0850827cf013f1ae"
+  },
+  {
+   "f": "presse/leonidakit-logo-sombre.svg",
+   "role": "logo-sombre",
+   "format": "SVG",
+   "w": 5585,
+   "h": 858,
+   "octets": 3572,
+   "empreinte": "d2d8881b8ec03e65"
+  },
+  {
+   "f": "presse/leonidakit-icone.svg",
+   "role": "icone",
+   "format": "SVG",
+   "w": 64,
+   "h": 64,
+   "octets": 429,
+   "empreinte": "7ce51187e61845a2"
+  },
+  {
+   "f": "presse/leonidakit-logo.png",
+   "role": "logo",
+   "format": "PNG",
+   "w": 2400,
+   "h": 369,
+   "octets": 40142,
+   "empreinte": "e280488a97599212"
+  },
+  {
+   "f": "presse/leonidakit-logo-sombre.png",
+   "role": "logo-sombre",
+   "format": "PNG",
+   "w": 2400,
+   "h": 369,
+   "octets": 39030,
+   "empreinte": "34239291053f54a1"
+  },
+  {
+   "f": "presse/leonidakit-icone-512.png",
+   "role": "icone",
+   "format": "PNG",
+   "w": 512,
+   "h": 512,
+   "octets": 10117,
+   "empreinte": "27cc66180142c295"
+  },
+  {
+   "f": "presse/capture-accueil.jpg",
+   "role": "capture",
+   "format": "JPEG",
+   "w": 1440,
+   "h": 900,
+   "octets": 145820,
+   "empreinte": "101fc224657e9266",
+   "page": "index.html"
+  },
+  {
+   "f": "presse/capture-carte.jpg",
+   "role": "capture",
+   "format": "JPEG",
+   "w": 1440,
+   "h": 900,
+   "octets": 205757,
+   "empreinte": "ab702651c87fe883",
+   "page": "carte.html"
+  },
+  {
+   "f": "presse/capture-calculateur.jpg",
+   "role": "capture",
+   "format": "JPEG",
+   "w": 1440,
+   "h": 900,
+   "octets": 183151,
+   "empreinte": "f9ab5f3ffb4ecf09",
+   "page": "calculateurs.html"
+  },
+  {
+   "f": "presse/capture-fiche.jpg",
+   "role": "capture",
+   "format": "JPEG",
+   "w": 1440,
+   "h": 900,
+   "octets": 147395,
+   "empreinte": "0817c6b1a93f44f1",
+   "page": "vehicules/grotti-cheetah-classic.html"
+  },
+  {
+   "f": "presse/capture-telephone.jpg",
+   "role": "capture",
+   "format": "JPEG",
+   "w": 780,
+   "h": 1688,
+   "octets": 151141,
+   "empreinte": "dd242feacac4195a",
+   "page": "index.html"
+  },
+  {
+   "f": "presse/apercu/capture-accueil-480.jpg",
+   "role": "apercu",
+   "format": "JPEG",
+   "w": 480,
+   "h": 300,
+   "octets": 24800,
+   "empreinte": "c04c8aa9d58625be"
+  },
+  {
+   "f": "presse/apercu/capture-carte-480.jpg",
+   "role": "apercu",
+   "format": "JPEG",
+   "w": 480,
+   "h": 300,
+   "octets": 29754,
+   "empreinte": "acd64e5690deca9f"
+  },
+  {
+   "f": "presse/apercu/capture-calculateur-480.jpg",
+   "role": "apercu",
+   "format": "JPEG",
+   "w": 480,
+   "h": 300,
+   "octets": 30051,
+   "empreinte": "9d19ae67f31e3af5"
+  },
+  {
+   "f": "presse/apercu/capture-fiche-480.jpg",
+   "role": "apercu",
+   "format": "JPEG",
+   "w": 480,
+   "h": 300,
+   "octets": 24915,
+   "empreinte": "879a9230794e17d1"
+  },
+  {
+   "f": "presse/apercu/capture-telephone-480.jpg",
+   "role": "apercu",
+   "format": "JPEG",
+   "w": 480,
+   "h": 1039,
+   "octets": 73770,
+   "empreinte": "4264c9972a45e990"
+  },
+  {
+   "f": "presse/leonidakit-kit-presse.zip",
+   "role": "archive",
+   "format": "ZIP",
+   "octets": 809808,
+   "empreinte": "20ce27f6cb80bb1f"
+  }
+ ]
+}

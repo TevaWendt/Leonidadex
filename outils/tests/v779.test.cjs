@@ -9,7 +9,7 @@ const root = path.resolve(__dirname, '../..');
 const read = f => fs.readFileSync(path.join(root, f), 'utf8');
 const doc = f => new JSDOM(read(f)).window.document;
 const C = require(path.join(root, 'outils/catalogues.cjs'));
-const LANGS = ['', 'en/', 'es/', 'it/', 'de/'];
+const LANGS = ['', 'en/', 'es/', 'it/', 'de/', 'pt/']; /* v7.91 : portugais */
 /* la synchronisation pose des espaces insécables (fines ou non) avant « ; : % » : les textes se comparent sans tenir compte du type d'espace */
 const sp = t => String(t).replace(/[\s\u202f\u00a0]+/g, ' ').trim();
 
@@ -103,7 +103,7 @@ test('la liste Consommables (box-consommables) et les autres sections de la page
 });
 
 test('langues : le rayon protection est traduit (titre, jauge, paliers), noms et sommes selon la langue', () => {
-  const T = { 'en/': ['Protection aisle', 'Armor', 'Super heavy armor', '$2,500'], 'es/': ['Sección protección', 'Blindaje', 'Chaleco superpesado', '2500'], 'it/': ['Reparto protezione', 'Armatura', 'Giubbotto superpesante', '2500'], 'de/': ['Abteilung Schutz', 'Panzerung', 'Superschwere Schutzweste', '2.500'] };
+  const T = { 'en/': ['Protection aisle', 'Armor', 'Super heavy armor', '$2,500'], 'es/': ['Sección protección', 'Blindaje', 'Chaleco superpesado', '2500'], 'it/': ['Reparto protezione', 'Armatura', 'Giubbotto superpesante', '2500'], 'de/': ['Abteilung Schutz', 'Panzerung', 'Superschwere Schutzweste', '2.500'], 'pt/': ['Seção de proteção', 'Armadura', 'Colete superpesado', '2.500'] };
   for (const l of LANGS.slice(1)) {
     const d = doc(l + 'nourriture.html'), rk = d.querySelector('#besoin-proteger [data-rk]');
     assert.ok(rk, l);

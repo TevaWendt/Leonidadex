@@ -23,10 +23,11 @@ function render(o) {
   const tabs = vues.map((v, k) => `<button type="button" class="ang-tab${k === 0 ? ' is-on' : ''}" data-ang-go="${k}" aria-pressed="${k === 0 ? 'true' : 'false'}">${esc(v.label)}</button>`).join('');
   const did = 'ang-desc-' + o.id;
   return `<div class="ang" data-ang data-ang-n="${n}" data-ang-dot="${esc(o.dot)}" aria-describedby="${did}">` +
-    `<button type="button" class="ang-view" data-ang-next aria-label="${esc(o.next)}">` +
+    /* assemblage v7.91 (axe, « label in name ») : le nom accessible est le contenu du bouton (angle, compteur, indication « angle suivant ») */
+    `<button type="button" class="ang-view" data-ang-next>` +
     `<span class="ang-screen">${imgs}<span class="ang-scan" aria-hidden="true"></span></span>` +
     `<span class="ang-tag" aria-live="polite"><b data-ang-label>${esc(vues[0].label)}</b><span data-ang-count>1/${n}</span></span>` +
-    `<span class="ang-hint" aria-hidden="true">${esc(o.hint)}</span>` +
+    `<span class="ang-hint">${esc(o.hint)}</span>` +
     `</button>` +
     `<div class="ang-tabs" role="group" aria-label="${esc(o.group)}">${tabs}</div>` +
     `<span class="sr-only" id="${did}">${esc(o.desc)}</span>` +

@@ -1,0 +1,113 @@
+LEONIDAKIT v7.87.1 → v7.91 — Assemblage des cinq travaux faits en parallèle sur la v7.87, puis audit complet du site
+— 15 octobre 2026
+
+Base : v7.87 (dépôt GitHub, commit 210850a62). Cinq travaux, chacun dans sa conversation, chacun livré en archive « modifs »
+relative à la v7.87 : passe de qualité (v7.87.1), lot 3 (v7.88), lot 5 (v7.89), lot 6 (v7.90), lot 7 (v7.91, avec le
+lot 1 bis). Mission : les réunir sans rien perdre, régénérer une seule fois, traduire en portugais ce que les quatre autres
+ont écrit, contrôler, auditer tout le site dans les six langues, corriger, livrer une seule archive. Rien n'est publié ni
+poussé. Un fichier à supprimer : api/ia-achat.js. CSP inchangée. Les LISEZ-MOI, CHANGEMENTS et MATRICE des cinq travaux
+restent dans le dépôt tels quels ; ce fichier décrit seulement ce que l'assemblage et l'audit ont fait en plus.
+
+1. MÉTHODE DE FUSION
+- Une branche par travail depuis la base (archive copiée, commit), puis cinq fusions dans l'ordre passe de qualité, 3, 5, 6, 7.
+- Fichiers produits (pages des langues, fiches, index de Léo et de la recherche, plans du site, images de partage, kit
+  presse, pages racine générées) déclarés « version courante » dans .git/info/attributes (jamais commité) : ils sont tous
+  réécrits par la régénération. Les pages écrites à la main (index.html, carte.html, collectibles.html, calculateurs.html,
+  progression.html, comparateur.html, classement-vehicules.html, vehicules-rares.html) ont été comparées à trois voies avec
+  chaque travail : deux lignes du lot 1 bis perdues par la règle (carte : « 6 régions officielles » ; collectibles : la
+  phrase d'attente) ont été reposées à la main.
+- Conflits de sources résolus à la main en gardant les ajouts des deux côtés : README.md (sections remises dans l'ordre),
+  outils/site-shell.cjs (Presse + Mode compagnon), outils/sync-site.cjs (synonymes de la recherche : presse + compagnon ;
+  jeu ; service worker), outils/langues.cjs (images de partage + manifeste de la langue), outils/regenerer.cjs
+  (gen-compagnon + gen-devine), outils/gen-informations.cjs (Mentions : service worker + jeu), outils/gen-actus.cjs
+  (zone() de la passe de qualité + bloc affilié du lot 3 → monetisation.cjs : zoneEditions()), informations.css
+  (« Ce qui est confirmé » + Presse), fiches.css (passe de qualité + lot 1 bis), common.js (portugais + service worker),
+  index.html (nav et pied de page régénérés ; description, manifeste, hreflang pt, compte à rebours du lot 1 bis).
+- JSON fusionnés entrée par entrée (fusion à trois voies, dictionnaires et listes par identifiant, format d'origine gardé) :
+  outils/leo-knowledge.json (333 → 344 sujets, aucun perdu), outils/langues/{en,de}/leo-pivot.json,
+  outils/langues/{es,it}/_leo-pont.json, outils/site-informations.json, outils/langues.json, code.json des langues.
+- Relecture du diff complet des sources fusionnées contre la base ; contrôle automatique que chaque ligne ajoutée par
+  chaque travail est dans la fusion (seules exceptions : les lignes fusionnées à la main, listées ci-dessus).
+- api/ia-achat.js supprimé (demandé depuis la v7.71).
+
+2. RÉGÉNÉRATION ET TRADUCTIONS
+- Régénération complète (outils/regenerer.cjs, 36 min), puis node outils/gen-presse.cjs (kit presse : captures du site
+  assemblé), node outils/gen-partage.cjs (images de partage : 180 = 30 pages × 6 langues ; ajoutées : compagnon.html →
+  jason-and-lucia-02, devine-le-lieu.html → vice-city-09), fin de chaîne (gen-leo → sync-site → gen-leo --check).
+- Portugais des quatre autres travaux : 521 textes (outils/langues/en/{v7871,v788,v789,v790}.json sans équivalent
+  portugais) découpés en cinq morceaux (outils/livraison/traduction, format du lot 7), traduits en parallèle par cinq
+  traducteurs avec le glossaire et les consignes du lot 7, 0 problème au contrôle (assembler.py / verifier.py) :
+  outils/langues/pt/trad-251.json à trad-255.json. Pont de Léo (outils/langues/pt/_leo-pont.json) : 98 expressions
+  (jeu, appli, hors connexion, transfert, presse, annonces, mode compagnon, véhicules confirmés). outils/langues/pt/code.json :
+  identifiants de transfert.js. Jeux de questions de Léo en portugais : outils/tests/leo-questions-{section-presse,v789,
+  section-devine,v7871}-pt.json.
+- Textes nés de l'assemblage, traduits dans les cinq langues (outils/langues/<code>/assemblage-v791.json) : ligne
+  d'historique v7.89 des Mentions, « six régions officielles » (description de la carte, Léo), description de l'Atelier 3D,
+  deux sujets de Léo. Extraction à {} dans les cinq langues.
+
+3. AUDIT COMPLET (constats, preuves et corrections : outils/AUDIT-v7.91.md)
+- Langues : kicker « À toi » en portugais (« Sua vez »), « six régions officielles » partout ; 0 texte sans traduction.
+- Référencement : description de atelier-3d.html (235 → 168 signes en français, traduite), pt/devine-le-lieu.html (161 →
+  154), titres es/pt du calculateur et de la progression (73–77 → 57–67) ; hors-ligne.html sans balises de partage ;
+  audit statique de 2 797 pages (outilsx/audit-seo.py, dans le dossier de contrôle) : hreflang réciproques six langues,
+  canoniques, h1, JSON-LD, plans du site, 0 lien mort, 0 orpheline.
+- Mise en page : huit pastilles de statut à 9,9 px passent à 11 px (font-size:max(11px,…)) : style.css (.arm-slot, .tr-st,
+  .mp-kid-st), fiches.css, acquisitions.css (.cg-media-l, .cg-st .ed-st), collectibles-brand.css (.col-dash-st),
+  animaux.css (.an-card .ed-st), monde.css (.mo-map-cap), lk-sections.css (.lkx-chip small),
+  outils/templates/vehicules.html et vehicules-rares.html (.veh-st).
+- Léo : sujets mode-compagnon et vehicules-confirmes (outils/leo-knowledge.json), formulations « ça vaut le coup
+  d'acheter… » sur site-roi ; ponts et pivots des cinq langues ; 23 questions libres en français, 15 à 18 dans chaque
+  autre langue (leo-ask.cjs, dossier de contrôle).
+- Tests adaptés aux six langues : outils/tests/v7871.test.cjs (langues depuis outils/langues.json, image de partage en
+  première og:image, « Standard ou Ultimate » admis en portugais), outils/tests/v790.test.cjs (hreflang).
+- Contrôle de l'audit du 12 octobre (outils/tests/audit-langues-browser.cjs) élargi : horloge simulée aussi au 14 octobre,
+  au 11 novembre 23:59:50 et au 12 novembre 00:00:05 (jalon du préchargement) ; pages nouvelles ajoutées (collectibles,
+  presse, compagnon, jeu, ce qui est confirmé, actualités, vidéos, éditions) : 28 pages × 6 langues × 2 largeurs.
+- Nouveau : outils/tests/audit-axe-v791.cjs (axe-core WCAG 2.x A/AA, 35 pages × fr/de + pages nouvelles en pt, 390 et
+  1 280 px).
+- Exactitude revérifiée le 15 octobre (sortie, préchargement, éditions, radios, dernière annonce) : rien à changer.
+
+4. CONTRÔLES (15 octobre 2026, sur l'état livré ; journaux et captures dans le dossier de contrôle livré à part)
+- Tests Node : 1 133 / 1 133 (suite complète, dont v7871, v788, v789, v790, lot1bis, v791, check ultime du calculateur avec
+  l'inventaire refait) ; langues : 51 / 51 (six langues, génération sans écriture identique aux fichiers, 0 texte sans
+  traduction) ; extraction à {} pour en, es, it, de, pt ; vérificateur de liens : 431 560 références dans 2 797 pages, 0
+  erreur ; preuve de confidentialité : toutes les affirmations des Mentions tenues ; cadre du calculateur : 180 vues,
+  0 erreur.
+- Navigateur (Chromium) : langues sur toutes les pages des cinq langues traduites 35 / 35 ; langues (calculateur, Léo,
+  formats) 2 791 / 2 791 ; audit du 12 octobre (audit-langues-browser, 28 pages × 6 langues × 390 et 1 440 px, horloge
+  simulée à sept dates, Paris et Montréal) 161 / 161 ; passe de qualité (v7871-browser, 324 chargements) tout bon ; Mode
+  compagnon (v789-browser) 41 / 41 ; jeu (v790-browser) 143 / 143 ; audit de clôture (26 pages, 182 chargements) : 0 partout
+  (débordements, grilles, coupures, images, cachés, h1, liens d'évitement, doublons d'id, cibles < 24 px, recouvrements,
+  noms, flou, contrastes : 11 661 vérifiés), 0 erreur console, fonctions 12 / 12 ; cookies : 17 pages, 0 cookie, 0 requête
+  vers un autre site.
+- Écrans : français 71 pages × 16 largeurs (1 136 chargements) : 0 débordement, 0 texte rogné, 0 texte sous 10 px (159 sur
+  la v7.87) ; les autres signalements (24 coquilles, 55 rangées, 37 coupures de galeries, 32 mots longs) sont exactement
+  ceux de la v7.87, refaite le même jour et comparée ligne à ligne ; allemand et portugais 68 pages × 5 largeurs : 0 débordement,
+  0 petit texte (47 sur la v7.87 en allemand).
+- Accessibilité (audit-axe-v791, WCAG 2.x A/AA, 316 chargements) : 0 violation sérieuse ou critique après corrections, hors
+  9 cas de « cible < 24 px » documentés dans outils/AUDIT-v7.91.md § 6.7 (liens de sources en ligne, un lien de pied de page
+  allemand sur deux lignes, une épingle de la carte au zoom initial).
+- Latence (latence-browser, v7.87 contre assemblage, 16 pages, 4 tours ; pages nouvelles, 2 tours) : aucune régression
+  (tableau dans outils/AUDIT-v7.91.md § 5).
+- Léo : 23 questions libres en français, 15 à 18 par autre langue (leo-ask.cjs) : sujets et liens justes dans les six
+  langues ; jeux de questions des lots en portugais ajoutés (presse, v789, devine, v7871).
+- Captures regardées (390, 768 et 1 280 px ; fr, de, pt) : accueil, Presse, Mode compagnon, Devine le lieu, Éditions, carte,
+  collectibles, véhicules, Atelier 3D, Mentions.
+
+5. FICHIERS (par rapport à la v7.87 : 1104 ajoutés, 2630 modifiés, 1 supprimé : api/ia-achat.js)
+- Ajoutés : le dossier pt/ (466 pages, Léo, index, manifeste, flux RSS), les pages et fichiers des cinq travaux (presse.html,
+  compagnon.html, hors-ligne.html, devine-le-lieu.html et leurs traductions ; sw.js, manifest.webmanifest, transfert.js,
+  compagnon.js/.css, devine.js/.css, img/app/, img/partage/ (180 images), presse/ (kit), img/tuto/pt/ (28 captures),
+  vendor/qrcode-generator.js), leurs générateurs, mémoires, tests et documents (LISEZ-MOI, CHANGEMENTS, MATRICE de chaque
+  travail), et ceux de l'assemblage : LISEZ-MOI-v7.87.1-a-v7.91.txt, outils/CHANGEMENTS-v7.87.1-a-v7.91.txt,
+  outils/AUDIT-v7.91.md, outils/langues/<code>/assemblage-v791.json, outils/langues/pt/trad-251.json à trad-255.json,
+  outils/tests/leo-questions-{section-presse,v789,section-devine,v7871}-pt.json, outils/tests/audit-axe-v791.cjs.
+- Modifiés : toutes les pages des cinq langues déjà publiées (menu, pied de page, manifeste et icône de l'appli, hreflang
+  pt, image de partage, « GTA 6 » insécable dans les titres, barre de langue, empreintes), les fiches (dessins : nom
+  accessible), index.html, carte.html, collectibles.html, armes.html, vehicules-rares.html, les feuilles de style
+  (style.css, fiches.css, acquisitions.css, collectibles.css, collectibles-brand.css, animaux.css, monde.css,
+  lk-sections.css, informations.css, actus.css…), common.js, app.js, carte.js, calculateurs-*.js, leo-*.js, vercel.json,
+  les générateurs de outils/ (sync-site, langues, site-shell, gen-actus, gen-informations, gen-partage, gen-atelier,
+  angles-markup, insecables, monetisation, regenerer…), outils/leo-knowledge.json, outils/site-informations.json,
+  outils/langues.json, les mémoires et ponts de Léo des cinq langues, les tests, README.md.
+

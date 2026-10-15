@@ -609,5 +609,185 @@
       ],
       "label": "Écrire à Leonidakit"
     }
+  },
+  "presse": {
+    "title": "Presse et créateurs : parler de Leonidakit",
+    "h1": "Tout pour parler<br>de Leonidakit.",
+    "description": "Presse, vidéastes, streamers : ce qu’est Leonidakit, ses chiffres à jour, le logo, l’icône et des captures à télécharger, et comment citer une fiche.",
+    "hero": {
+      "eyebrow": "PRESSE ET CRÉATEURS",
+      "lede": "Pour un article, une vidéo, un live ou un post : ce qu’est le site, ses chiffres tenus à jour, des fichiers prêts à l’emploi et la bonne façon de citer une information. Le kit et les informations se reprennent librement, avec un lien vers le site ; les visuels du jeu restent à Rockstar Games.",
+      "actions": [
+        {
+          "label": "Télécharger le kit (ZIP)",
+          "href": "presse/leonidakit-kit-presse.zip",
+          "primary": true,
+          "download": true
+        },
+        {
+          "label": "Écrire à l’éditeur",
+          "href": "contact.html#motif=Presse%20ou%20partenariat"
+        }
+      ]
+    },
+    "nav": [
+      {
+        "href": "#en-bref",
+        "label": "En bref",
+        "fam": "rockstar"
+      },
+      {
+        "href": "#kit",
+        "label": "Le kit",
+        "fam": "carte"
+      },
+      {
+        "href": "#citer",
+        "label": "Citer le site",
+        "fam": "serie"
+      },
+      {
+        "href": "#regles",
+        "label": "Ce qui se reprend",
+        "fam": "conf"
+      },
+      {
+        "href": "#independance",
+        "label": "Indépendance",
+        "fam": "coiffures"
+      },
+      {
+        "href": "#ecrire",
+        "label": "Contact",
+        "fam": "consommables"
+      }
+    ],
+    "enBref": {
+      "kicker": "En bref",
+      "title": "Le site en trois phrases",
+      "lede": "À reprendre tel quel, ou à couper.",
+      "p": [
+        "Leonidakit est un site de fans consacré à GTA VI : une carte interactive de Leonida, des fiches sur les véhicules, les armes, les lieux et les personnages, un calculateur pour planifier achats, budget et temps de jeu, et Léo, un assistant qui répond aux questions sur le jeu.",
+        "Chaque information porte un statut (Officiel, Vu dans un média, Identification communautaire, Repère de la série, À confirmer) et sa source ; rien n’est inventé.",
+        "Gratuit, sans compte et sans cookie, en {langues} langues, édité par un particulier et indépendant de Rockstar Games comme de Take-Two Interactive."
+      ],
+      "statsLede": "Les chiffres du site, recomptés à chaque mise à jour.",
+      "stats": [
+        {
+          "stat": "pages",
+          "label": "pages"
+        },
+        {
+          "stat": "vehicules",
+          "label": "fiches de véhicules"
+        },
+        {
+          "stat": "armes",
+          "label": "fiches d’armes"
+        },
+        {
+          "stat": "lieux",
+          "label": "lieux sur la carte"
+        },
+        {
+          "stat": "visuels",
+          "label": "visuels officiels crédités"
+        },
+        {
+          "stat": "langues",
+          "label": "langues"
+        }
+      ]
+    },
+    "kit": {
+      "kicker": "À télécharger",
+      "title": "Le kit",
+      "lede": "Logo, icône et captures du site, un par un ou réunis dans une archive.",
+      "labels": {
+        "logo": "Logo, pour fond clair",
+        "logo-sombre": "Logo, pour fond sombre",
+        "icone": "Icône du site",
+        "archive": "Tout le kit",
+        "index.html": "Accueil",
+        "carte.html": "Carte interactive",
+        "calculateurs.html": "Calculateur",
+        "vehicules/grotti-cheetah-classic.html": "Une fiche de véhicule",
+        "telephone": "Accueil sur téléphone"
+      },
+      "transparent": "fond transparent",
+      "vectoriel": "vectoriel, toute taille",
+      "telecharger": "Télécharger",
+      "note": "Les captures sont en français. Les visuels du jeu qu’on y voit appartiennent à Rockstar Games.",
+      "partage": "Chaque grande page du site a aussi sa propre image de partage, avec son titre : c’est elle que montrent en principe WhatsApp, Discord, X ou Facebook quand on colle l’adresse de la page."
+    },
+    "citer": {
+      "kicker": "Citer le site",
+      "title": "Citer une information",
+      "lede": "Trois règles simples, pour que ton public sache d’où vient chaque chose.",
+      "cols": [
+        {
+          "icon": "film",
+          "titre": "Une annonce officielle",
+          "p": [
+            "Cite la source de Rockstar quand la fiche en donne une : elle figure sur sa ligne « Source », ou sous « Sources de ce dossier » pour un lieu ou un personnage. Le site n’est qu’un relais."
+          ]
+        },
+        {
+          "icon": "carte",
+          "titre": "Une page du site",
+          "p": [
+            "Pour citer le site, écris « Leonidakit » avec un lien vers la page d’où vient l’information : la carte, le calculateur et chaque fiche (véhicule, arme, lieu…) ont leur propre adresse."
+          ]
+        },
+        {
+          "icon": "loupe",
+          "titre": "Un point à confirmer",
+          "p": [
+            "Une « Identification communautaire » ou un point « À confirmer » n’est pas une annonce : présente-le comme tel, avec son statut."
+          ]
+        }
+      ],
+      "exemple": "Exemple : « Source : Leonidakit, carte interactive de Leonida (leonidakit.com/carte.html) »."
+    },
+    "regles": {
+      "kicker": "Ce qui se reprend",
+      "title": "Libre, avec un lien",
+      "lede": "Les fichiers du kit sont faits pour être repris. Les visuels du jeu, eux, restent à Rockstar Games.",
+      "oui": {
+        "titre": "Oui, librement",
+        "liste": [
+          "Le logo et l’icône de Leonidakit, sur fond clair ou sombre, à la taille qu’il faut.",
+          "Les captures du site, dans un article, une vidéo, une miniature ou un post, en créditant Rockstar Games pour les visuels du jeu qu’on y voit.",
+          "Les chiffres et les informations du site, avec un lien vers la page."
+        ]
+      },
+      "non": {
+        "titre": "Merci d’éviter",
+        "liste": [
+          "Modifier le logo (couleurs, proportions) ou le mêler à un autre.",
+          "Laisser entendre un partenariat, une approbation ou un sponsoring qui n’existe pas.",
+          "Présenter les visuels officiels du jeu comme ceux du site : ils viennent de Rockstar Games, qu’il faut créditer."
+        ]
+      }
+    },
+    "independance": {
+      "kicker": "Indépendance",
+      "title": "Ce que le site n’est pas",
+      "lede": "Un projet de fan, pas un site officiel du jeu.",
+      "p": [
+        "Leonidakit n’est ni affilié à Rockstar Games ou à Take-Two Interactive, ni approuvé ou sponsorisé par eux. Grand Theft Auto et GTA VI leur appartiennent.",
+        "Aucun contenu du site n’est payé par qui que ce soit. Un échange avec la presse, un créateur ou une marque ne change ni un statut, ni une source, ni un chiffre."
+      ]
+    },
+    "ecrire": {
+      "kicker": "Contact",
+      "title": "Une question, une interview, un partenariat",
+      "lede": "Le formulaire de contact s’ouvre avec le bon motif.",
+      "p": [
+        "Dis qui tu es, pour quel média ou quelle chaîne, et ce dont tu as besoin : une précision, un chiffre, une capture particulière. Le message arrive directement chez l’éditeur ; aucun délai de réponse n’est garanti."
+      ],
+      "label": "Écrire à l’éditeur",
+      "href": "contact.html#motif=Presse%20ou%20partenariat"
+    }
   }
 }

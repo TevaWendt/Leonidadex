@@ -1,0 +1,94 @@
+{
+ "_note": "assemblage v7.91 : questions de test de Léo en portugais du Brésil pour le lot 5 (v7.89) : installer le site, hors connexion, changer de téléphone. Rejoué par outils/tests/v789.test.cjs.",
+ "schemaVersion": 1,
+ "questions": [
+  {
+   "q": "como instalar o app",
+   "expect": {
+    "topic": "installer-site"
+   },
+   "tags": [
+    "v789"
+   ]
+  },
+  {
+   "q": "tem um aplicativo do leonidakit",
+   "expect": {
+    "topic": "installer-site"
+   },
+   "tags": [
+    "v789"
+   ]
+  },
+  {
+   "q": "adicionar à tela inicial",
+   "expect": {
+    "topic": "installer-site"
+   },
+   "tags": [
+    "v789"
+   ]
+  },
+  {
+   "q": "funciona sem internet",
+   "expect": {
+    "topic": "hors-connexion"
+   },
+   "tags": [
+    "v789"
+   ]
+  },
+  {
+   "q": "usar o mapa sem conexão",
+   "expect": {
+    "topic": "hors-connexion"
+   },
+   "tags": [
+    "v789"
+   ]
+  },
+  {
+   "q": "no modo avião funciona",
+   "expect": {
+    "topic": "hors-connexion"
+   },
+   "tags": [
+    "v789"
+   ]
+  },
+  {
+   "q": "trocar de celular e passar meu progresso",
+   "expect": {
+    "topic": "changer-telephone"
+   },
+   "tags": [
+    "v789"
+   ]
+  },
+  {
+   "q": "transferir meu progresso para outro aparelho",
+   "expect": {
+    "any": [
+     {
+      "topic": "changer-telephone"
+     },
+     {
+      "topic": "faq-export"
+     }
+    ]
+   },
+   "tags": [
+    "v789"
+   ]
+  },
+  {
+   "q": "qr code para transferir",
+   "expect": {
+    "topic": "changer-telephone"
+   },
+   "tags": [
+    "v789"
+   ]
+  }
+ ]
+}

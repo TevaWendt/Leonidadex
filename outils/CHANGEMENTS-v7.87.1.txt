@@ -1,0 +1,119 @@
+LEONIDAKIT v7.87.1 — Passe de qualité des v7.86 et v7.87 (mouvement, charte, alignements, latence, référencement,
+langues, Léo)
+— 14 octobre 2026
+
+Base : v7.87 (commit 210850a). Demande de Téva du 12/10/2026 : appliquer aux ajouts des v7.86 et v7.87 les exigences de
+qualité d'avant la v7.86, sans rien casser. Lot fait en parallèle des lots 3, 5, 6 et 7 : seul le périmètre des v7.86 et
+v7.87 est touché ; l'archive part à l'assemblage. Rien n'est publié ni poussé. CSP inchangée. Ce lot ne supprime aucun
+fichier ; reste à supprimer à la main, comme le demandait déjà la v7.71 : api/ia-achat.js (voir CONTRÔLES).
+Matrice point par point : outils/MATRICE-v7.87.1.md.
+
+1. GABARIT ET « DU TAC AU TAC » (outils/gen-actus.cjs, actus.css, outils/sections.cjs, outils/site-shell.cjs)
+- Actualités, Vidéos officielles (sommaire et trois pages) et Éditions : les blocs maison (.ac-sec, .ac-frise, .ac-next…)
+  deviennent des sections éditoriales du moteur commun (S.section : numéro, kicker, titre, icône, fonds papier / papier 2 /
+  nuit alternés, accent ambre ou corail), avec la sous-navigation collante (S.nav) dès quatre sections, la FAQ et les
+  sources en sections à part. Icône « note » ajoutée (section « La bande-son »).
+- Puces « Explorer » en bas des pages de « L'actualité » (Actualités, Vidéos officielles, Éditions, Ce qui est confirmé,
+  Radios et musique, Comprendre les statuts) : jeu « actu » de site-shell, pages ajoutées aux pages de section.
+- Listes des modèles vus : au-delà de seize, douze puces (ceux que Rockstar a nommés d'abord, puis ceux qui ont un visuel)
+  et « Voir les N autres » à déplier ; aucune puce perdue (test 3).
+- Éditions : numéro d'ordre des seize contenus par compteur CSS (décoratif, rien à traduire), cartes blanches, boîte /
+  préchargement / régions en trois colonnes du moteur commun avec leurs ancres ; en anglais, le nom officiel seul.
+- Ce qui est confirmé (informations.css) : grilles centrées 3 → 2 → 1 (quatre colonnes pour les rubriques), « Ce qu'on
+  n'utilise jamais » en deux colonnes. Stations (radios.css) : le nom n'est écrit qu'une fois (sur la plaque), plaque plus
+  basse sur téléphone. Fiches (fiches.css) : les trois chiffres « Personnaliser » sur une rangée.
+
+2. MOUVEMENT (moteur commun : common.js, LKMotion ; aucun script ni observateur ajouté)
+- Chaque bloc nouveau entre au défilement : data-lk-reveal + classe ac-in ; cascade de 60 ms, 300 ms au plus ; une seule
+  animation (10 px, --c-rise, et opacité ; durées et courbes de motion-tokens.css) ; déjà à l'écran : lk-settled.
+- Un moment par page : la frise des actualités se trace (point, date, carte, tronçon jusqu'à l'annonce suivante) ; la planche
+  des photogrammes (minutage posé ensuite) ; les seize contenus de l'Ultimate tamponnés l'un après l'autre ; l'accord du poste
+  sur les stations (aiguille qui glisse jusqu'à la station, nom qui s'allume, égaliseur) ; seuls transform et opacité bougent.
+- « Réduire les animations » et sans script : tout est visible tout de suite, rien ne bouge ; les règles de mouvement vivent
+  toutes dans prefers-reduced-motion: no-preference et l'état caché n'existe qu'avec .js (test 2).
+
+3. ALIGNEMENTS, TEXTES ET CIBLES
+- Rien sous 11 px (max(11px, …)) : renvois aux sources, légendes des visuels des radios, étiquette de la galerie, angles du
+  dessin, statuts de « Ce qui arrive avec le jeu », voisins, panneau « Personnaliser », intitulés du tableau des Mentions
+  sur téléphone. Cibles : « Voir dans la liste » 44 px de haut sur téléphone, renvois aux sources 24 px.
+- « GTA 6 » / « GTA VI » ne se coupe plus en fin de ligne dans les titres et les questions : espace insécable posée par
+  gen-radios, gen-actus et gen-informations, et dans les valeurs de la mémoire des titres et questions des pages du
+  périmètre (jamais dans les clés des balises <title>, que titleSeo réécrit).
+- Accessibilité : la légende des pages de station (v7.86) passait en gris sur le cadre sombre de la figure (2,55:1) ; elle
+  reprend la couleur des autres légendes d'en-tête (radios.css).
+- outils/tests/ecrans-browser.cjs : pages ajoutées (trois vidéos, deux stations, une fiche véhicule).
+
+4. RÉFÉRENCEMENT
+- Titres de 65 signes au plus avec « GTA 6 », descriptions de 155 au plus et uniques, dans les cinq langues (corrections :
+  Trailer 1 et 2 en espagnol, Vidéos et Éditions en italien, Radios en allemand ; description de l'accueil).
+- Fiches minces (noindex, follow) : image de partage et carte Twitter rétablies (sync-site). Ce qui est confirmé : son
+  propre visuel de partage. Stations : WebPage avec « about » (la station, partie de GTA VI).
+- Données structurées vérifiées dans les cinq langues : BreadcrumbList partout, CollectionPage + ItemList, VideoObject,
+  FAQPage, WebPage ; plan du site : dates et images ; maillage : menu, pied de page, puces, recherche, Léo.
+
+5. LANGUES (relecture des quatre langues, page par page)
+- Noms restés en français sur les pages traduites (noms des fiches dans « Ce qu'elle a montré », armes et véhicules décrits
+  dans les moments et les modèles vus, titre des vidéos) : translate="no" retiré dans gen-actus ; nom et statut (ou type et
+  nom, titre et date) séparés par un élément de bloc affiché en ligne, pour que chacun soit un segment de la mémoire.
+- Sources anglaises des radios (rs-radios, rs-album, rs-music) : titres en anglais (« Rockstar Newswire: … »,
+  « Grand Theft Auto VI: Music ») au lieu de la typographie et des mots français gardés tels quels dans les autres langues.
+- Minutages « 0:06 » et « 6:00 » (le zéro tombait) ; « postes » de personnalisation (« items », « elementos ») ;
+  « N sources ouvertes » à un seul libellé par langue ; kicker « À toi » de verification.html (« Your turn »…).
+- Près de 200 entrées de la mémoire corrigées en tout (anglais 81, espagnol 86, italien 67, allemand 54 valeurs, dont les
+  23 titres et questions insécables par langue), chacune dans le fichier où la clé existait (aucun conflit) : noms
+  officiels gardés (Vapid Stanier ’55, Vapid Dominator Buggy ’67), glossaires (l'Ultimate Edition, Trailer 1,
+  hidrodeslizador, Versteck), faux amis et calques.
+
+6. LÉO
+- Sujets nouveaux : « Ce qui est confirmé » (verification), « vidéos officielles » ; formulations ajoutées (Extended Look,
+  cookies et mesure d'audience, limite du jour de l'IA, radio et fuites, dernière annonce date par date) ; ponts des quatre
+  langues (leo-pivot.json, _leo-pont.json). Jeux de questions : leo-questions-v7871-<code>.json (douze par langue).
+
+CONTRÔLES (14 octobre 2026)
+- Suite Node (79 fichiers, 1 068 tests) : 1 061 réussis au premier passage. Les 7 échecs :
+  - 4 viennent de api/ia-achat.js, que la v7.71 demandait de supprimer et qui est toujours dans le dépôt (la base v7.87
+    échoue exactement de la même façon) : contact-v746 (deux tests), ia-v769, v771 ; à supprimer (voir LISEZ-MOI) ;
+  - coverage.test.cjs arrêté par le système (mémoire : deux fichiers lourds en même temps), relancé seul : 3/3 ;
+  - 2 vrais défauts de ce lot, corrigés puis relancés : section-radios (l'aiguille du poste animait « left » : elle bouge
+    désormais par transform et opacité, comme le veut la section) ; v780 (libellé allemand « Profil » du dessin de la
+    v7.80 : rendu tel qu'il était, hors périmètre) : section-radios, v780, v7871, v787 et v786
+    relancés sur l'état final : 46/46.
+- Langues (langues.test.cjs) : 42/42, relancé sur l'état final : 42/42. Synchronisation : 0 texte sans traduction dans les
+  quatre langues.
+- Vérificateur : 336 518 références dans 2 311 pages, aucune erreur. Preuve de confidentialité : toutes les affirmations
+  des Mentions tenues, sauf « fonctions serveur » à cause du même api/ia-achat.js (identique sur la base).
+- Contrôle navigateur du périmètre (outils/tests/v7871-browser.cjs) : 324 chargements (19 pages, FR et DE, 390 / 768 /
+  1 280 px, mouvement normal, réduit, sans script) : 0 débordement, 0 bloc caché, 0 premier écran caché, 0 bloc non entré,
+  0 « GTA 6 » coupé, 0 texte sous 11 px, 0 cible sous 24 px, 0 rangée inégale, 0 erreur ; lecteur 3/3 ; captures de chaque
+  moment (début, milieu, fin) et en mouvement réduit. Avant la passe (même contrôle sur la v7.87.1 en cours) : 6 « GTA 6 »
+  coupés, 54 chargements avec un texte sous 11 px, 4 avec une petite cible.
+- Navigateur : pages des quatre langues 28/28 ; langues 2 267/2 267 (aucun mot français visible, aucune erreur
+  JavaScript) ; écrans, 67 pages × 16 largeurs (1 072 chargements) : aucun débordement ; sur les 61 pages de la v7.87,
+  signalements identiques ou meilleurs (24 coquilles, 39 rangées, 21 coupes, 16 mots, comme en v7.87 ; petits textes
+  154 → 134) ; pages ajoutées : rien sur les trois vidéos et les deux stations, le carrousel de la galerie sur la fiche
+  (comme toute fiche, par construction) ; allemand, 64 pages × 5 largeurs : sur les 58 pages de la v7.87, 10 rangées,
+  7 coupes, 5 mots (identique) et 37 petits textes (45 en v7.87) ; audit de clôture, 26 pages, 182 chargements : 0 erreur
+  console, 0 requête en échec, 0 contraste insuffisant (11 488 vérifiés), 12/12 fonctions ; cookies : aucun, avant et
+  après les actions.
+- Accessibilité (axe-core, WCAG 2 A/AA, 18 pages du périmètre dont 6 traduites, 390 et 1 280 px) : la légende des pages de
+  station (v7.86) était à 2,55:1 (texte gris sur le fond sombre de la figure) : corrigée, 0 contraste insuffisant ensuite ;
+  reste un avertissement « label-content-name-mismatch » sur le sélecteur de langue, composant commun de la v7.61 (hors
+  périmètre).
+- Léo (outils/tests/leo-eval.cjs, toutes les séries des cinq langues, comparées à la base) : v7871 12/12 dans les cinq
+  langues ; série des radios 8/12 → 12/12 (fr) et 7/11 → 11/11 (en, es, it, de) ; toutes les autres séries identiques.
+- Latence : voir LISEZ-MOI-v7.87.1.txt (390 px, 4G lente, processeur ×4, médianes, base et v7.87.1 en alternance).
+
+FICHIERS (par rapport à la v7.87 : 14 ajoutés, 2 434 modifiés, aucun supprimé)
+- Ajoutés : LISEZ-MOI-v7.87.1.txt, outils/CHANGEMENTS-v7.87.1.txt, outils/MATRICE-v7.87.1.md,
+  outils/langues/{en,es,it,de}/v7871.json, outils/tests/v7871.test.cjs, outils/tests/v7871-browser.cjs,
+  outils/tests/leo-questions-v7871-{fr,en,es,it,de}.json.
+- Sources modifiées : outils/gen-actus.cjs, outils/gen-radios.cjs, outils/gen-informations.cjs, outils/sections.cjs,
+  outils/site-shell.cjs, outils/sync-site.cjs, outils/radios/radios.json, outils/leo-knowledge.json, actus.css, radios.css,
+  informations.css, fiches.css, leo-core.js, README.md ; mémoire de traduction (outils/langues/{en,es,it,de}/…, dont les
+  ponts de Léo leo-pivot.json et _leo-pont.json) ; tests (ecrans-browser.cjs, leo-questions-section-radios-*.json).
+- Produits par la régénération : les pages du périmètre dans les cinq langues, les pages traduites touchées par la mémoire
+  (fiches : « items », « elementos », « How to get it »…), les scripts traduits (perso-fiche.js, modele-donnees.js,
+  calculateurs-modele.js), les flux actus.xml anglais et allemand, l'index de recherche, Léo (leo-index.json, leo/,
+  outils/leo-index-manifest.json), les plans du site et outils/sitemap-dates.json ; dans toutes les pages, les empreintes
+  « ?v= » de Léo (common.js, leo-*.js, leo.css, search-index.js) : environ 2 300 fichiers ne changent que par là
+  (2 260 pages HTML modifiées en tout).

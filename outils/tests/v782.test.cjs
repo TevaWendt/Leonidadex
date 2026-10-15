@@ -45,7 +45,7 @@ test('LAT-03 : l\'accueil ne charge plus le moteur du calculateur (178 Ko) avec 
   const html = read('index.html');
   assert.match(html, /<script type="lk\/lazy" src="calculateurs-engine\.js\?v=[a-f0-9]{12}"><\/script>/);
   assert.doesNotMatch(html, /<script src="calculateurs-engine\.js/);
-  for (const l of ['en', 'es', 'it', 'de']) { const m = read(l + '/index.html').match(/<script type="lk\/lazy" src="((?:\.\.\/)?calculateurs-engine\.js)\?v=[a-f0-9]{12}"><\/script>/); assert.ok(m, l); assert.ok(fs.existsSync(path.join(root, l, m[1])), l + ' : ' + m[1]); }
+  for (const l of ['en', 'es', 'it', 'de', 'pt']) { const m = read(l + '/index.html').match(/<script type="lk\/lazy" src="((?:\.\.\/)?calculateurs-engine\.js)\?v=[a-f0-9]{12}"><\/script>/); assert.ok(m, l); assert.ok(fs.existsSync(path.join(root, l, m[1])), l + ' : ' + m[1]); }
   const js = read('calculator-entry.js');
   assert.match(js, /LK\.lazyScript\('calculateurs-engine\.js'\)/);
   assert.match(js, /addEventListener\('focusin'/);
@@ -99,7 +99,7 @@ test('ECR-01 : écrans — rangées des médias bornées à la page, vignettes d
   assert.match(read('online.css'), /\.online-hero-in\{position:relative;z-index:2;width:100%;/);
   assert.match(css, /\.lore-gallery\.shell\{max-width:max\(calc\(var\(--shell-max\) \+ 2\*var\(--gutter\)\),min\(1600px,96vw\)\);\}/);
   /* étiquettes les plus petites : au moins .62rem (≈ 10 px) */
-  assert.match(css, /\.tr-st\{[^}]*font-size:\.62rem;/);
+  assert.match(css, /\.tr-st\{[^}]*font-size:(?:max\(11px,)?\.62rem\)?;/); /* assemblage v7.91 : 11 px au moins */
   assert.match(read('acquisitions.css'), /\.cg-media-l\{[^}]*font:800 \.62rem\/1\.2/);
   assert.doesNotMatch(css + read('acquisitions.css'), /font(?:-size)?:(?:800 )?\.5[0-9]rem/);
 });

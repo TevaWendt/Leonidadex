@@ -1,0 +1,1149 @@
+{
+ "_note": "v7.88 : images de partage écrites par outils/gen-partage.cjs (1200 × 630, JPEG). Ne pas modifier à la main.",
+ "taille": {
+  "w": 1200,
+  "h": 630
+ },
+ "pages": {
+  "index.html": {
+   "fr": {
+    "title": "Calculateur GTA 6, carte et fiches de Leonida",
+    "img": "/img/partage/fr/index.jpg",
+    "media": "jason-and-lucia-01",
+    "key": "bdd700a602bc"
+   },
+   "en": {
+    "title": "GTA 6 calculator, Leonida map and info pages",
+    "img": "/img/partage/en/index.jpg",
+    "media": "jason-and-lucia-01",
+    "key": "d56ef924a040"
+   },
+   "es": {
+    "title": "Calculadora de GTA 6, mapa y fichas de Leonida",
+    "img": "/img/partage/es/index.jpg",
+    "media": "jason-and-lucia-01",
+    "key": "67032d1740f2"
+   },
+   "it": {
+    "title": "Calcolatore GTA 6, mappa e schede di Leonida",
+    "img": "/img/partage/it/index.jpg",
+    "media": "jason-and-lucia-01",
+    "key": "0373191996b7"
+   },
+   "de": {
+    "title": "GTA-6-Rechner, Karte und Seiten zu Leonida",
+    "img": "/img/partage/de/index.jpg",
+    "media": "jason-and-lucia-01",
+    "key": "cf89d366d182"
+   },
+   "pt": {
+    "title": "Calculadora de GTA 6, mapa e fichas de Leonida",
+    "img": "/img/partage/pt/index.jpg",
+    "media": "jason-and-lucia-01",
+    "key": "171d302fd810"
+   }
+  },
+  "calculateurs.html": {
+   "fr": {
+    "title": "Calculateur GTA 6 : objectif, achats, temps de jeu et business plan",
+    "img": "/img/partage/fr/calculateurs.jpg",
+    "media": "ptt-youngin-illegal-goods-store",
+    "key": "1ff241642176"
+   },
+   "en": {
+    "title": "GTA 6 Calculator: goal, purchases, play time and business plan",
+    "img": "/img/partage/en/calculateurs.jpg",
+    "media": "ptt-youngin-illegal-goods-store",
+    "key": "ae7f32d8d454"
+   },
+   "es": {
+    "title": "Calculadora de GTA 6: objetivo, compras, tiempo y plan de negocio",
+    "img": "/img/partage/es/calculateurs.jpg",
+    "media": "ptt-youngin-illegal-goods-store",
+    "key": "472ff7624cbf"
+   },
+   "it": {
+    "title": "Calcolatore GTA 6: obiettivo, acquisti, tempo di gioco e business plan",
+    "img": "/img/partage/it/calculateurs.jpg",
+    "media": "ptt-youngin-illegal-goods-store",
+    "key": "a9452e98a227"
+   },
+   "de": {
+    "title": "GTA-6-Rechner: Ziel, Käufe, Spielzeit und Businessplan",
+    "img": "/img/partage/de/calculateurs.jpg",
+    "media": "ptt-youngin-illegal-goods-store",
+    "key": "22152460c5ac"
+   },
+   "pt": {
+    "title": "Calculadora do GTA 6: objetivo, compras, tempo e plano de negócios",
+    "img": "/img/partage/pt/calculateurs.jpg",
+    "media": "ptt-youngin-illegal-goods-store",
+    "key": "fdde2d17810b"
+   }
+  },
+  "carte.html": {
+   "fr": {
+    "title": "Carte interactive de Leonida (GTA 6)",
+    "img": "/img/partage/fr/carte.jpg",
+    "media": "carte-postale-vice-city",
+    "key": "f9805adf25eb"
+   },
+   "en": {
+    "title": "Interactive map of Leonida (GTA 6)",
+    "img": "/img/partage/en/carte.jpg",
+    "media": "carte-postale-vice-city",
+    "key": "304f2330e984"
+   },
+   "es": {
+    "title": "Mapa interactivo de Leonida (GTA 6)",
+    "img": "/img/partage/es/carte.jpg",
+    "media": "carte-postale-vice-city",
+    "key": "70dfc34ac608"
+   },
+   "it": {
+    "title": "Mappa interattiva di Leonida (GTA 6)",
+    "img": "/img/partage/it/carte.jpg",
+    "media": "carte-postale-vice-city",
+    "key": "a057ba255ec2"
+   },
+   "de": {
+    "title": "Interaktive Karte von Leonida (GTA 6)",
+    "img": "/img/partage/de/carte.jpg",
+    "media": "carte-postale-vice-city",
+    "key": "0ba71c3fc371"
+   },
+   "pt": {
+    "title": "Mapa interativo de Leonida (GTA 6)",
+    "img": "/img/partage/pt/carte.jpg",
+    "media": "carte-postale-vice-city",
+    "key": "9fb2c3fab9af"
+   }
+  },
+  "vehicules.html": {
+   "fr": {
+    "title": "Véhicules de GTA 6 : les 302 modèles recensés",
+    "img": "/img/partage/fr/vehicules.jpg",
+    "media": "95-grotti-cheetah-01",
+    "key": "7c6fa1a0a177"
+   },
+   "en": {
+    "title": "GTA 6 vehicles: the 302 listed models",
+    "img": "/img/partage/en/vehicules.jpg",
+    "media": "95-grotti-cheetah-01",
+    "key": "366a5b8477e8"
+   },
+   "es": {
+    "title": "Vehículos de GTA 6: los 302 modelos registrados",
+    "img": "/img/partage/es/vehicules.jpg",
+    "media": "95-grotti-cheetah-01",
+    "key": "cc0c5f4623ba"
+   },
+   "it": {
+    "title": "Veicoli di GTA 6: i 302 modelli censiti",
+    "img": "/img/partage/it/vehicules.jpg",
+    "media": "95-grotti-cheetah-01",
+    "key": "32860bcb8ef6"
+   },
+   "de": {
+    "title": "Fahrzeuge in GTA 6: alle 302 erfassten Modelle",
+    "img": "/img/partage/de/vehicules.jpg",
+    "media": "95-grotti-cheetah-01",
+    "key": "3f5d161f64a2"
+   },
+   "pt": {
+    "title": "Veículos do GTA 6: os 302 modelos catalogados",
+    "img": "/img/partage/pt/vehicules.jpg",
+    "media": "95-grotti-cheetah-01",
+    "key": "31f0a575f881"
+   }
+  },
+  "vehicules-rares.html": {
+   "fr": {
+    "title": "Véhicules rares et exclusifs de GTA 6 : éditions et modèles uniques",
+    "img": "/img/partage/fr/vehicules-rares.jpg",
+    "media": "classic-car-collection-01",
+    "key": "d3e7fc969429"
+   },
+   "en": {
+    "title": "Rare and exclusive GTA 6 vehicles: editions and one-off models",
+    "img": "/img/partage/en/vehicules-rares.jpg",
+    "media": "classic-car-collection-01",
+    "key": "c741b2a59c8d"
+   },
+   "es": {
+    "title": "Vehículos raros y exclusivos de GTA 6: ediciones y modelos únicos",
+    "img": "/img/partage/es/vehicules-rares.jpg",
+    "media": "classic-car-collection-01",
+    "key": "448251b106dd"
+   },
+   "it": {
+    "title": "Veicoli rari ed esclusivi di GTA 6: edizioni e modelli unici",
+    "img": "/img/partage/it/vehicules-rares.jpg",
+    "media": "classic-car-collection-01",
+    "key": "3b256d165e3d"
+   },
+   "de": {
+    "title": "Seltene und exklusive Fahrzeuge in GTA 6: Editionen und Einzelstücke",
+    "img": "/img/partage/de/vehicules-rares.jpg",
+    "media": "classic-car-collection-01",
+    "key": "cc7c6bbff12e"
+   },
+   "pt": {
+    "title": "Veículos raros e exclusivos de GTA 6: edições e modelos únicos",
+    "img": "/img/partage/pt/vehicules-rares.jpg",
+    "media": "classic-car-collection-01",
+    "key": "9c982b6f317f"
+   }
+  },
+  "armes.html": {
+   "fr": {
+    "title": "Armurerie GTA 6 : armes, munitions et équipement",
+    "img": "/img/partage/fr/armes.jpg",
+    "media": "hawk-little-morgan-revolvers-01",
+    "key": "fffa8a29970a"
+   },
+   "en": {
+    "title": "GTA 6 Armory: weapons, ammo and gear",
+    "img": "/img/partage/en/armes.jpg",
+    "media": "hawk-little-morgan-revolvers-01",
+    "key": "79fbfaf9d83e"
+   },
+   "es": {
+    "title": "Armería de GTA 6: armas, munición y equipo",
+    "img": "/img/partage/es/armes.jpg",
+    "media": "hawk-little-morgan-revolvers-01",
+    "key": "39c53a1ff94f"
+   },
+   "it": {
+    "title": "Armeria di GTA 6: armi, munizioni ed equipaggiamento",
+    "img": "/img/partage/it/armes.jpg",
+    "media": "hawk-little-morgan-revolvers-01",
+    "key": "f4ed9618dde3"
+   },
+   "de": {
+    "title": "Waffenkammer GTA 6: Waffen, Munition und Ausrüstung",
+    "img": "/img/partage/de/armes.jpg",
+    "media": "hawk-little-morgan-revolvers-01",
+    "key": "bc6a17a1f201"
+   },
+   "pt": {
+    "title": "Armaria do GTA 6: armas, munição e equipamento",
+    "img": "/img/partage/pt/armes.jpg",
+    "media": "hawk-little-morgan-revolvers-01",
+    "key": "9ba2e4ab0349"
+   }
+  },
+  "lieux.html": {
+   "fr": {
+    "title": "Les régions de Leonida",
+    "img": "/img/partage/fr/lieux.jpg",
+    "media": "vice-city-01",
+    "key": "613ff3d93bb9"
+   },
+   "en": {
+    "title": "The regions of Leonida",
+    "img": "/img/partage/en/lieux.jpg",
+    "media": "vice-city-01",
+    "key": "8404678a12e1"
+   },
+   "es": {
+    "title": "Las regiones de Leonida",
+    "img": "/img/partage/es/lieux.jpg",
+    "media": "vice-city-01",
+    "key": "2f5e553ff3f0"
+   },
+   "it": {
+    "title": "Le regioni di Leonida",
+    "img": "/img/partage/it/lieux.jpg",
+    "media": "vice-city-01",
+    "key": "6e816aa03cb0"
+   },
+   "de": {
+    "title": "Die Regionen von Leonida",
+    "img": "/img/partage/de/lieux.jpg",
+    "media": "vice-city-01",
+    "key": "5a202d8cc921"
+   },
+   "pt": {
+    "title": "As regiões de Leonida",
+    "img": "/img/partage/pt/lieux.jpg",
+    "media": "vice-city-01",
+    "key": "ee7be942726c"
+   }
+  },
+  "personnages.html": {
+   "fr": {
+    "title": "Les personnages de GTA 6",
+    "img": "/img/partage/fr/personnages.jpg",
+    "media": "lucia-caminos-01",
+    "key": "3290892e7915"
+   },
+   "en": {
+    "title": "The characters of GTA 6",
+    "img": "/img/partage/en/personnages.jpg",
+    "media": "lucia-caminos-01",
+    "key": "de51abee154f"
+   },
+   "es": {
+    "title": "Los personajes de GTA 6",
+    "img": "/img/partage/es/personnages.jpg",
+    "media": "lucia-caminos-01",
+    "key": "ab357e412856"
+   },
+   "it": {
+    "title": "I personaggi di GTA 6",
+    "img": "/img/partage/it/personnages.jpg",
+    "media": "lucia-caminos-01",
+    "key": "dd4686dc8f84"
+   },
+   "de": {
+    "title": "Die Charaktere von GTA 6",
+    "img": "/img/partage/de/personnages.jpg",
+    "media": "lucia-caminos-01",
+    "key": "f1d38f5d06fc"
+   },
+   "pt": {
+    "title": "Os personagens de GTA 6",
+    "img": "/img/partage/pt/personnages.jpg",
+    "media": "lucia-caminos-01",
+    "key": "7556f1a14892"
+   }
+  },
+  "entreprises.html": {
+   "fr": {
+    "title": "Les entreprises de Leonida",
+    "img": "/img/partage/fr/entreprises.jpg",
+    "media": "electric-fang-tattoo-01",
+    "key": "a03fe03d7d52"
+   },
+   "en": {
+    "title": "The businesses of Leonida",
+    "img": "/img/partage/en/entreprises.jpg",
+    "media": "electric-fang-tattoo-01",
+    "key": "7083dd463603"
+   },
+   "es": {
+    "title": "Los negocios de Leonida",
+    "img": "/img/partage/es/entreprises.jpg",
+    "media": "electric-fang-tattoo-01",
+    "key": "b7b2b6f606c1"
+   },
+   "it": {
+    "title": "Le attività commerciali di Leonida",
+    "img": "/img/partage/it/entreprises.jpg",
+    "media": "electric-fang-tattoo-01",
+    "key": "57d8c13739c9"
+   },
+   "de": {
+    "title": "Die Unternehmen von Leonida",
+    "img": "/img/partage/de/entreprises.jpg",
+    "media": "electric-fang-tattoo-01",
+    "key": "bba74a3d545b"
+   },
+   "pt": {
+    "title": "As empresas de Leonida",
+    "img": "/img/partage/pt/entreprises.jpg",
+    "media": "electric-fang-tattoo-01",
+    "key": "fc1edd880d43"
+   }
+  },
+  "demeures.html": {
+   "fr": {
+    "title": "Les demeures de Leonida",
+    "img": "/img/partage/fr/demeures.jpg",
+    "media": "leonida-keys-02",
+    "key": "6832feea6e39"
+   },
+   "en": {
+    "title": "The residences of Leonida",
+    "img": "/img/partage/en/demeures.jpg",
+    "media": "leonida-keys-02",
+    "key": "cf596f0d56b9"
+   },
+   "es": {
+    "title": "Las residencias de Leonida",
+    "img": "/img/partage/es/demeures.jpg",
+    "media": "leonida-keys-02",
+    "key": "17845af6cdd0"
+   },
+   "it": {
+    "title": "Le residenze di Leonida",
+    "img": "/img/partage/it/demeures.jpg",
+    "media": "leonida-keys-02",
+    "key": "5f71bdf36fa3"
+   },
+   "de": {
+    "title": "Die Wohnsitze von Leonida",
+    "img": "/img/partage/de/demeures.jpg",
+    "media": "leonida-keys-02",
+    "key": "19f390221396"
+   },
+   "pt": {
+    "title": "As residências de Leonida",
+    "img": "/img/partage/pt/demeures.jpg",
+    "media": "leonida-keys-02",
+    "key": "50bc571e354d"
+   }
+  },
+  "planques.html": {
+   "fr": {
+    "title": "Les planques de Leonida",
+    "img": "/img/partage/fr/planques.jpg",
+    "media": "jason-s-safehouse-vehicles",
+    "key": "83c9a0ccfbd9"
+   },
+   "en": {
+    "title": "The safehouses of Leonida",
+    "img": "/img/partage/en/planques.jpg",
+    "media": "jason-s-safehouse-vehicles",
+    "key": "d97a31f55099"
+   },
+   "es": {
+    "title": "Los escondites de Leonida",
+    "img": "/img/partage/es/planques.jpg",
+    "media": "jason-s-safehouse-vehicles",
+    "key": "e832fd0e8e39"
+   },
+   "it": {
+    "title": "I rifugi di Leonida",
+    "img": "/img/partage/it/planques.jpg",
+    "media": "jason-s-safehouse-vehicles",
+    "key": "96822a85f488"
+   },
+   "de": {
+    "title": "Die Unterschlüpfe von Leonida",
+    "img": "/img/partage/de/planques.jpg",
+    "media": "jason-s-safehouse-vehicles",
+    "key": "7dbe03e14a0d"
+   },
+   "pt": {
+    "title": "Os esconderijos de Leonida",
+    "img": "/img/partage/pt/planques.jpg",
+    "media": "jason-s-safehouse-vehicles",
+    "key": "6ada6c821d9b"
+   }
+  },
+  "gangs.html": {
+   "fr": {
+    "title": "Les gangs et factions de GTA 6",
+    "img": "/img/partage/fr/gangs.jpg",
+    "media": "real-dimez-01",
+    "key": "a937fe65dd15"
+   },
+   "en": {
+    "title": "The gangs and factions of GTA 6",
+    "img": "/img/partage/en/gangs.jpg",
+    "media": "real-dimez-01",
+    "key": "6731aa8c7e30"
+   },
+   "es": {
+    "title": "Las bandas y facciones de GTA 6",
+    "img": "/img/partage/es/gangs.jpg",
+    "media": "real-dimez-01",
+    "key": "4c31e0cfcc78"
+   },
+   "it": {
+    "title": "Le gang e le fazioni di GTA 6",
+    "img": "/img/partage/it/gangs.jpg",
+    "media": "real-dimez-01",
+    "key": "70b51d6979ec"
+   },
+   "de": {
+    "title": "Die Gangs und Fraktionen von GTA 6",
+    "img": "/img/partage/de/gangs.jpg",
+    "media": "real-dimez-01",
+    "key": "ca5833f1bcd9"
+   },
+   "pt": {
+    "title": "As gangues e facções de GTA 6",
+    "img": "/img/partage/pt/gangs.jpg",
+    "media": "real-dimez-01",
+    "key": "24a2215b7cbf"
+   }
+  },
+  "animaux.html": {
+   "fr": {
+    "title": "Les animaux de GTA 6",
+    "img": "/img/partage/fr/animaux.jpg",
+    "media": "grassrivers-03",
+    "key": "2b198b10bc06"
+   },
+   "en": {
+    "title": "The animals of GTA 6",
+    "img": "/img/partage/en/animaux.jpg",
+    "media": "grassrivers-03",
+    "key": "7f77c34026d9"
+   },
+   "es": {
+    "title": "Los animales de GTA 6",
+    "img": "/img/partage/es/animaux.jpg",
+    "media": "grassrivers-03",
+    "key": "b62f999e9ee7"
+   },
+   "it": {
+    "title": "Gli animali di GTA 6",
+    "img": "/img/partage/it/animaux.jpg",
+    "media": "grassrivers-03",
+    "key": "4496555bb5be"
+   },
+   "de": {
+    "title": "Die Tiere von GTA 6",
+    "img": "/img/partage/de/animaux.jpg",
+    "media": "grassrivers-03",
+    "key": "9cae1761d62d"
+   },
+   "pt": {
+    "title": "Os animais do GTA 6",
+    "img": "/img/partage/pt/animaux.jpg",
+    "media": "grassrivers-03",
+    "key": "20a5aad10a33"
+   }
+  },
+  "missions.html": {
+   "fr": {
+    "title": "Les missions de GTA 6 et leurs solutions",
+    "img": "/img/partage/fr/missions.jpg",
+    "media": "trailer-2-lucia-pm",
+    "key": "34775f21fa2b"
+   },
+   "en": {
+    "title": "GTA 6 missions and walkthroughs",
+    "img": "/img/partage/en/missions.jpg",
+    "media": "trailer-2-lucia-pm",
+    "key": "1ebbc84a2664"
+   },
+   "es": {
+    "title": "Las misiones de GTA 6 y sus soluciones",
+    "img": "/img/partage/es/missions.jpg",
+    "media": "trailer-2-lucia-pm",
+    "key": "ccebcfbce6c7"
+   },
+   "it": {
+    "title": "Le missioni di GTA 6 e le loro soluzioni",
+    "img": "/img/partage/it/missions.jpg",
+    "media": "trailer-2-lucia-pm",
+    "key": "c78b5610502c"
+   },
+   "de": {
+    "title": "Die Missionen von GTA 6 und ihre Lösungen",
+    "img": "/img/partage/de/missions.jpg",
+    "media": "trailer-2-lucia-pm",
+    "key": "8a73a61bc0fc"
+   },
+   "pt": {
+    "title": "As missões do GTA 6 e os detonados",
+    "img": "/img/partage/pt/missions.jpg",
+    "media": "trailer-2-lucia-pm",
+    "key": "53070e202225"
+   }
+  },
+  "activites.html": {
+   "fr": {
+    "title": "Les activités annexes de GTA 6",
+    "img": "/img/partage/fr/activites.jpg",
+    "media": "trailer-2-seashark-141",
+    "key": "009866663bd1"
+   },
+   "en": {
+    "title": "Side activities in GTA 6",
+    "img": "/img/partage/en/activites.jpg",
+    "media": "trailer-2-seashark-141",
+    "key": "481502b99a6b"
+   },
+   "es": {
+    "title": "Las actividades secundarias de GTA 6",
+    "img": "/img/partage/es/activites.jpg",
+    "media": "trailer-2-seashark-141",
+    "key": "651e339b5919"
+   },
+   "it": {
+    "title": "Le attività secondarie di GTA 6",
+    "img": "/img/partage/it/activites.jpg",
+    "media": "trailer-2-seashark-141",
+    "key": "b2c1a0e42aa4"
+   },
+   "de": {
+    "title": "Die Nebenaktivitäten von GTA 6",
+    "img": "/img/partage/de/activites.jpg",
+    "media": "trailer-2-seashark-141",
+    "key": "ab6c9d3ff8df"
+   },
+   "pt": {
+    "title": "As atividades paralelas do GTA 6",
+    "img": "/img/partage/pt/activites.jpg",
+    "media": "trailer-2-seashark-141",
+    "key": "91c737ba2fce"
+   }
+  },
+  "radios.html": {
+   "fr": {
+    "title": "Radios GTA 6 : les 6 stations et leurs animateurs",
+    "img": "/img/partage/fr/radios.jpg",
+    "media": "real-dimez-04",
+    "key": "a6a88d098a73"
+   },
+   "en": {
+    "title": "GTA 6 Radio: the 6 stations and their hosts",
+    "img": "/img/partage/en/radios.jpg",
+    "media": "real-dimez-04",
+    "key": "25f33b660c2a"
+   },
+   "es": {
+    "title": "Radios de GTA 6: las 6 emisoras y sus locutores",
+    "img": "/img/partage/es/radios.jpg",
+    "media": "real-dimez-04",
+    "key": "27a6e6c6d8fd"
+   },
+   "it": {
+    "title": "Radio di GTA 6: le 6 stazioni e i loro conduttori",
+    "img": "/img/partage/it/radios.jpg",
+    "media": "real-dimez-04",
+    "key": "74476abc9101"
+   },
+   "de": {
+    "title": "Radio in GTA 6: die 6 Sender und ihre Moderatoren",
+    "img": "/img/partage/de/radios.jpg",
+    "media": "real-dimez-04",
+    "key": "7be423b30402"
+   },
+   "pt": {
+    "title": "Rádios do GTA 6: as 6 estações e seus locutores",
+    "img": "/img/partage/pt/radios.jpg",
+    "media": "real-dimez-04",
+    "key": "375a53ff32b4"
+   }
+  },
+  "codes-de-triche.html": {
+   "fr": {
+    "title": "Les codes de triche de GTA 6",
+    "img": "/img/partage/fr/codes-de-triche.jpg",
+    "media": "trailer-1-tropic-011",
+    "key": "235f1f488123"
+   },
+   "en": {
+    "title": "GTA 6 cheat codes",
+    "img": "/img/partage/en/codes-de-triche.jpg",
+    "media": "trailer-1-tropic-011",
+    "key": "f4cd3516dd80"
+   },
+   "es": {
+    "title": "Los trucos de GTA 6",
+    "img": "/img/partage/es/codes-de-triche.jpg",
+    "media": "trailer-1-tropic-011",
+    "key": "d37f8b897109"
+   },
+   "it": {
+    "title": "I trucchi di GTA 6",
+    "img": "/img/partage/it/codes-de-triche.jpg",
+    "media": "trailer-1-tropic-011",
+    "key": "45a9ecd5f670"
+   },
+   "de": {
+    "title": "Die Cheatcodes für GTA 6",
+    "img": "/img/partage/de/codes-de-triche.jpg",
+    "media": "trailer-1-tropic-011",
+    "key": "1b3582a84cc2"
+   },
+   "pt": {
+    "title": "Os códigos de trapaça do GTA 6",
+    "img": "/img/partage/pt/codes-de-triche.jpg",
+    "media": "trailer-1-tropic-011",
+    "key": "5c29cf8c938b"
+   }
+  },
+  "trophees.html": {
+   "fr": {
+    "title": "Les trophées et succès de GTA 6",
+    "img": "/img/partage/fr/trophees.jpg",
+    "media": "jason-duval-03",
+    "key": "c6bd934aa7d8"
+   },
+   "en": {
+    "title": "GTA 6 trophies and achievements",
+    "img": "/img/partage/en/trophees.jpg",
+    "media": "jason-duval-03",
+    "key": "6145bf30f881"
+   },
+   "es": {
+    "title": "Los trofeos y logros de GTA 6",
+    "img": "/img/partage/es/trophees.jpg",
+    "media": "jason-duval-03",
+    "key": "667df658347f"
+   },
+   "it": {
+    "title": "I trofei e gli obiettivi di GTA 6",
+    "img": "/img/partage/it/trophees.jpg",
+    "media": "jason-duval-03",
+    "key": "3bde5b51ee6a"
+   },
+   "de": {
+    "title": "Die Trophäen und Erfolge von GTA 6",
+    "img": "/img/partage/de/trophees.jpg",
+    "media": "jason-duval-03",
+    "key": "7b3450037fa5"
+   },
+   "pt": {
+    "title": "Os troféus e conquistas do GTA 6",
+    "img": "/img/partage/pt/trophees.jpg",
+    "media": "jason-duval-03",
+    "key": "29c208c8f957"
+   }
+  },
+  "online.html": {
+   "fr": {
+    "title": "GTA Online et GTA 6, ce qu’on sait",
+    "img": "/img/partage/fr/online.jpg",
+    "media": "jason-and-lucia-05",
+    "key": "8185d0b3a31c"
+   },
+   "en": {
+    "title": "GTA Online and GTA 6: what we know",
+    "img": "/img/partage/en/online.jpg",
+    "media": "jason-and-lucia-05",
+    "key": "6dc1fc62cf50"
+   },
+   "es": {
+    "title": "GTA Online y GTA 6, lo que sabemos",
+    "img": "/img/partage/es/online.jpg",
+    "media": "jason-and-lucia-05",
+    "key": "0d2362e05644"
+   },
+   "it": {
+    "title": "GTA Online e GTA 6, cosa sappiamo",
+    "img": "/img/partage/it/online.jpg",
+    "media": "jason-and-lucia-05",
+    "key": "cfaa5a4c3d7d"
+   },
+   "de": {
+    "title": "GTA Online und GTA 6: was wir wissen",
+    "img": "/img/partage/de/online.jpg",
+    "media": "jason-and-lucia-05",
+    "key": "09b2fa685192"
+   },
+   "pt": {
+    "title": "GTA Online e GTA 6: o que se sabe",
+    "img": "/img/partage/pt/online.jpg",
+    "media": "jason-and-lucia-05",
+    "key": "d3877c4b5666"
+   }
+  },
+  "collectibles.html": {
+   "fr": {
+    "title": "Collectibles GTA 6 : catalogue, sources et suivi",
+    "img": "/img/partage/fr/collectibles.jpg",
+    "media": "vintage-vice-city-pack-01",
+    "key": "6a7ffe194353"
+   },
+   "en": {
+    "title": "GTA 6 collectibles: catalog, sources and tracking",
+    "img": "/img/partage/en/collectibles.jpg",
+    "media": "vintage-vice-city-pack-01",
+    "key": "eee319c6c1f5"
+   },
+   "es": {
+    "title": "Coleccionables de GTA 6: catálogo, fuentes y seguimiento",
+    "img": "/img/partage/es/collectibles.jpg",
+    "media": "vintage-vice-city-pack-01",
+    "key": "51325e2a6850"
+   },
+   "it": {
+    "title": "Collezionabili di GTA 6: catalogo, fonti e monitoraggio",
+    "img": "/img/partage/it/collectibles.jpg",
+    "media": "vintage-vice-city-pack-01",
+    "key": "fe7dfddbe99e"
+   },
+   "de": {
+    "title": "Sammelobjekte in GTA 6: Katalog, Quellen und Tracking",
+    "img": "/img/partage/de/collectibles.jpg",
+    "media": "vintage-vice-city-pack-01",
+    "key": "134807c40b52"
+   },
+   "pt": {
+    "title": "Colecionáveis de GTA 6: catálogo, fontes e acompanhamento",
+    "img": "/img/partage/pt/collectibles.jpg",
+    "media": "vintage-vice-city-pack-01",
+    "key": "2ec6cda82c9e"
+   }
+  },
+  "achats.html": {
+   "fr": {
+    "title": "Tout ce qui s’achète dans GTA 6 : véhicules, armes, vêtements",
+    "img": "/img/partage/fr/achats.jpg",
+    "media": "stock-305-clothing-store-01",
+    "key": "ff23683c1f36"
+   },
+   "en": {
+    "title": "Everything you can buy in GTA 6: vehicles, weapons, clothing",
+    "img": "/img/partage/en/achats.jpg",
+    "media": "stock-305-clothing-store-01",
+    "key": "540195d999da"
+   },
+   "es": {
+    "title": "Todo lo que se compra en GTA 6: vehículos, armas, ropa",
+    "img": "/img/partage/es/achats.jpg",
+    "media": "stock-305-clothing-store-01",
+    "key": "6c4c6ac1ebad"
+   },
+   "it": {
+    "title": "Tutto ciò che si compra in GTA 6: veicoli, armi, vestiti",
+    "img": "/img/partage/it/achats.jpg",
+    "media": "stock-305-clothing-store-01",
+    "key": "a3d683355121"
+   },
+   "de": {
+    "title": "Alles, was man in GTA 6 kaufen kann: Fahrzeuge, Waffen, Kleidung",
+    "img": "/img/partage/de/achats.jpg",
+    "media": "stock-305-clothing-store-01",
+    "key": "167692bfd88f"
+   },
+   "pt": {
+    "title": "Tudo o que dá para comprar no GTA 6: veículos, armas, roupas",
+    "img": "/img/partage/pt/achats.jpg",
+    "media": "stock-305-clothing-store-01",
+    "key": "f01bdb9c1c50"
+   }
+  },
+  "atelier-3d.html": {
+   "fr": {
+    "title": "Atelier 3D : personnaliser 302 véhicules et 27 armes de GTA 6",
+    "img": "/img/partage/fr/atelier-3d.jpg",
+    "media": "rideout-customs-mod-shop-01",
+    "key": "ace11a3b0edc"
+   },
+   "en": {
+    "title": "3D Workshop: customize 302 vehicles and 27 weapons of GTA 6",
+    "img": "/img/partage/en/atelier-3d.jpg",
+    "media": "rideout-customs-mod-shop-01",
+    "key": "90c1175e477e"
+   },
+   "es": {
+    "title": "Taller 3D: personalizar 302 vehículos y 27 armas de GTA 6",
+    "img": "/img/partage/es/atelier-3d.jpg",
+    "media": "rideout-customs-mod-shop-01",
+    "key": "f95bd84da562"
+   },
+   "it": {
+    "title": "Officina 3D: personalizzare 302 veicoli e 27 armi di GTA 6",
+    "img": "/img/partage/it/atelier-3d.jpg",
+    "media": "rideout-customs-mod-shop-01",
+    "key": "627b45129616"
+   },
+   "de": {
+    "title": "3D-Werkstatt: 302 Fahrzeuge und 27 Waffen aus GTA 6 anpassen",
+    "img": "/img/partage/de/atelier-3d.jpg",
+    "media": "rideout-customs-mod-shop-01",
+    "key": "c9973c518ad0"
+   },
+   "pt": {
+    "title": "Ateliê 3D: personalizar 302 veículos e 27 armas do GTA 6",
+    "img": "/img/partage/pt/atelier-3d.jpg",
+    "media": "rideout-customs-mod-shop-01",
+    "key": "850b599b027f"
+   }
+  },
+  "progression.html": {
+   "fr": {
+    "title": "Suivi de progression GTA 6 : véhicules, armes, lieux et contenus",
+    "img": "/img/partage/fr/progression.jpg",
+    "media": "mount-kalaga-national-park-02",
+    "key": "3509fb617c70"
+   },
+   "en": {
+    "title": "GTA 6 progress tracker: vehicles, weapons, places and content",
+    "img": "/img/partage/en/progression.jpg",
+    "media": "mount-kalaga-national-park-02",
+    "key": "f8706e2b2242"
+   },
+   "es": {
+    "title": "Progreso en GTA 6: vehículos, armas, lugares y contenidos",
+    "img": "/img/partage/es/progression.jpg",
+    "media": "mount-kalaga-national-park-02",
+    "key": "3fb31de27e64"
+   },
+   "it": {
+    "title": "Monitoraggio dei progressi GTA 6: veicoli, armi, luoghi e contenuti",
+    "img": "/img/partage/it/progression.jpg",
+    "media": "mount-kalaga-national-park-02",
+    "key": "b795331d97ac"
+   },
+   "de": {
+    "title": "Fortschritts-Tracker für GTA 6: Fahrzeuge, Waffen, Orte und Inhalte",
+    "img": "/img/partage/de/progression.jpg",
+    "media": "mount-kalaga-national-park-02",
+    "key": "01504f015170"
+   },
+   "pt": {
+    "title": "Progresso no GTA 6: veículos, armas, lugares e conteúdos",
+    "img": "/img/partage/pt/progression.jpg",
+    "media": "mount-kalaga-national-park-02",
+    "key": "eacad2251e38"
+   }
+  },
+  "verification.html": {
+   "fr": {
+    "title": "Ce qui est confirmé sur GTA 6, et comment on le vérifie",
+    "img": "/img/partage/fr/verification.jpg",
+    "media": "cover-art-officielle",
+    "key": "b4068f023170"
+   },
+   "en": {
+    "title": "What’s confirmed about GTA 6, and how we check it",
+    "img": "/img/partage/en/verification.jpg",
+    "media": "cover-art-officielle",
+    "key": "249cfe291557"
+   },
+   "es": {
+    "title": "Lo que está confirmado sobre GTA 6, y cómo lo verificamos",
+    "img": "/img/partage/es/verification.jpg",
+    "media": "cover-art-officielle",
+    "key": "42643bdd027e"
+   },
+   "it": {
+    "title": "Cosa è confermato su GTA 6, e come lo verifichiamo",
+    "img": "/img/partage/it/verification.jpg",
+    "media": "cover-art-officielle",
+    "key": "bc65f3e53602"
+   },
+   "de": {
+    "title": "Was zu GTA 6 bestätigt ist – und wie wir es prüfen",
+    "img": "/img/partage/de/verification.jpg",
+    "media": "cover-art-officielle",
+    "key": "654fb48706d5"
+   },
+   "pt": {
+    "title": "O que está confirmado sobre o GTA 6, e como verificamos",
+    "img": "/img/partage/pt/verification.jpg",
+    "media": "cover-art-officielle",
+    "key": "6f4ee390b11b"
+   }
+  },
+  "actus.html": {
+   "fr": {
+    "title": "Actualités GTA 6 : la chronologie officielle, date par date",
+    "img": "/img/partage/fr/actus.jpg",
+    "media": "affiche-trailer-2",
+    "key": "7fce92a3c075"
+   },
+   "en": {
+    "title": "GTA 6 News: the official timeline, date by date",
+    "img": "/img/partage/en/actus.jpg",
+    "media": "affiche-trailer-2",
+    "key": "7cb98b5d6694"
+   },
+   "es": {
+    "title": "Noticias de GTA 6: la cronología oficial, fecha a fecha",
+    "img": "/img/partage/es/actus.jpg",
+    "media": "affiche-trailer-2",
+    "key": "1b5aa64bf901"
+   },
+   "it": {
+    "title": "Notizie su GTA 6: la cronologia ufficiale, data per data",
+    "img": "/img/partage/it/actus.jpg",
+    "media": "affiche-trailer-2",
+    "key": "4b68c0773b7a"
+   },
+   "de": {
+    "title": "Neuigkeiten zu GTA 6: die offizielle Chronik, Datum für Datum",
+    "img": "/img/partage/de/actus.jpg",
+    "media": "affiche-trailer-2",
+    "key": "ea95b42d10ae"
+   },
+   "pt": {
+    "title": "Notícias do GTA 6: a cronologia oficial, data por data",
+    "img": "/img/partage/pt/actus.jpg",
+    "media": "affiche-trailer-2",
+    "key": "e7a097c85e40"
+   }
+  },
+  "videos.html": {
+   "fr": {
+    "title": "Trailers de GTA 6 : les vidéos officielles, moment par moment",
+    "img": "/img/partage/fr/videos.jpg",
+    "media": "affiche-extended-look",
+    "key": "e48aaef767f7"
+   },
+   "en": {
+    "title": "GTA 6 Trailers: the official videos, moment by moment",
+    "img": "/img/partage/en/videos.jpg",
+    "media": "affiche-extended-look",
+    "key": "16ec64e11e16"
+   },
+   "es": {
+    "title": "Tráileres de GTA 6: los vídeos oficiales, momento a momento",
+    "img": "/img/partage/es/videos.jpg",
+    "media": "affiche-extended-look",
+    "key": "ede29b779895"
+   },
+   "it": {
+    "title": "Trailer di GTA 6: i video ufficiali, momento per momento",
+    "img": "/img/partage/it/videos.jpg",
+    "media": "affiche-extended-look",
+    "key": "60270d1c9771"
+   },
+   "de": {
+    "title": "Trailer von GTA 6: die offiziellen Videos, Moment für Moment",
+    "img": "/img/partage/de/videos.jpg",
+    "media": "affiche-extended-look",
+    "key": "1bd637f3f71a"
+   },
+   "pt": {
+    "title": "Trailers do GTA 6: os vídeos oficiais, momento a momento",
+    "img": "/img/partage/pt/videos.jpg",
+    "media": "affiche-extended-look",
+    "key": "514341c8707a"
+   }
+  },
+  "editions.html": {
+   "fr": {
+    "title": "Éditions de GTA 6 : Standard, Ultimate, bonus et version en boîte",
+    "img": "/img/partage/fr/editions.jpg",
+    "media": "ultimate-edition-02",
+    "key": "e2ffa4cd222b"
+   },
+   "en": {
+    "title": "GTA 6 Editions: Standard, Ultimate, bonuses and boxed version",
+    "img": "/img/partage/en/editions.jpg",
+    "media": "ultimate-edition-02",
+    "key": "619835b1df8a"
+   },
+   "es": {
+    "title": "Ediciones de GTA 6: Standard, Ultimate, bonus y versión en caja",
+    "img": "/img/partage/es/editions.jpg",
+    "media": "ultimate-edition-02",
+    "key": "2150adb636db"
+   },
+   "it": {
+    "title": "Edizioni di GTA 6: Standard, Ultimate, bonus, versione in scatola",
+    "img": "/img/partage/it/editions.jpg",
+    "media": "ultimate-edition-02",
+    "key": "6fafd6814f64"
+   },
+   "de": {
+    "title": "Editionen von GTA 6: Standard, Ultimate, Boni und Box-Version",
+    "img": "/img/partage/de/editions.jpg",
+    "media": "ultimate-edition-02",
+    "key": "294cbf55c27e"
+   },
+   "pt": {
+    "title": "Edições do GTA 6: Standard, Ultimate, bônus e versão física",
+    "img": "/img/partage/pt/editions.jpg",
+    "media": "ultimate-edition-02",
+    "key": "70e5af256e84"
+   }
+  },
+  "presse.html": {
+   "fr": {
+    "title": "Presse et créateurs : parler de Leonidakit",
+    "img": "/img/partage/fr/presse.jpg",
+    "media": "artwork-jason-lucia-beach",
+    "key": "019951cf463b"
+   },
+   "en": {
+    "title": "Press and creators: talking about Leonidakit",
+    "img": "/img/partage/en/presse.jpg",
+    "media": "artwork-jason-lucia-beach",
+    "key": "d9353ef46541"
+   },
+   "es": {
+    "title": "Prensa y creadores: hablar de Leonidakit",
+    "img": "/img/partage/es/presse.jpg",
+    "media": "artwork-jason-lucia-beach",
+    "key": "8c6c7c32de2b"
+   },
+   "it": {
+    "title": "Stampa e creator: parlare di Leonidakit",
+    "img": "/img/partage/it/presse.jpg",
+    "media": "artwork-jason-lucia-beach",
+    "key": "6d74162daa33"
+   },
+   "de": {
+    "title": "Presse und Creator: über Leonidakit berichten",
+    "img": "/img/partage/de/presse.jpg",
+    "media": "artwork-jason-lucia-beach",
+    "key": "06cb29b556a8"
+   },
+   "pt": {
+    "title": "Imprensa e criadores: falar sobre o Leonidakit",
+    "img": "/img/partage/pt/presse.jpg",
+    "media": "artwork-jason-lucia-beach",
+    "key": "f157de63112d"
+   }
+  },
+  "compagnon.html": {
+   "fr": {
+    "title": "Mode compagnon GTA 6 : appli, sans réseau et transfert",
+    "img": "/img/partage/fr/compagnon.jpg",
+    "media": "jason-and-lucia-02",
+    "key": "42774852c915"
+   },
+   "en": {
+    "title": "GTA 6 Companion mode: app, offline play and transfer",
+    "img": "/img/partage/en/compagnon.jpg",
+    "media": "jason-and-lucia-02",
+    "key": "cdcb94210669"
+   },
+   "es": {
+    "title": "Modo compañero de GTA 6: app, sin conexión y transferencia",
+    "img": "/img/partage/es/compagnon.jpg",
+    "media": "jason-and-lucia-02",
+    "key": "23b4b35f8316"
+   },
+   "it": {
+    "title": "Modalità companion GTA 6: app, offline e trasferimento",
+    "img": "/img/partage/it/compagnon.jpg",
+    "media": "jason-and-lucia-02",
+    "key": "5b421673e8a7"
+   },
+   "de": {
+    "title": "Begleitmodus für GTA 6: App, offline und Übertragung",
+    "img": "/img/partage/de/compagnon.jpg",
+    "media": "jason-and-lucia-02",
+    "key": "e0e70c7acfe5"
+   },
+   "pt": {
+    "title": "Modo companheiro GTA 6: app, offline e transferência",
+    "img": "/img/partage/pt/compagnon.jpg",
+    "media": "jason-and-lucia-02",
+    "key": "3efb7987cb45"
+   }
+  },
+  "devine-le-lieu.html": {
+   "fr": {
+    "title": "Devine le lieu : le jeu du jour sur la carte de GTA 6",
+    "img": "/img/partage/fr/devine-le-lieu.jpg",
+    "media": "vice-city-09",
+    "key": "16a3f18b0323"
+   },
+   "en": {
+    "title": "Guess the Location: the daily game on the GTA 6 map",
+    "img": "/img/partage/en/devine-le-lieu.jpg",
+    "media": "vice-city-09",
+    "key": "54b72e1ce88c"
+   },
+   "es": {
+    "title": "Adivina el lugar: el juego del día en el mapa de GTA 6",
+    "img": "/img/partage/es/devine-le-lieu.jpg",
+    "media": "vice-city-09",
+    "key": "cbbafbe36edd"
+   },
+   "it": {
+    "title": "Indovina il luogo: il gioco del giorno sulla mappa di GTA 6",
+    "img": "/img/partage/it/devine-le-lieu.jpg",
+    "media": "vice-city-09",
+    "key": "5af9ace6b4ae"
+   },
+   "de": {
+    "title": "Errate den Ort: das Tagesspiel auf der Karte von GTA 6",
+    "img": "/img/partage/de/devine-le-lieu.jpg",
+    "media": "vice-city-09",
+    "key": "24492e795580"
+   },
+   "pt": {
+    "title": "Adivinhe o lugar: o jogo do dia no mapa do GTA 6",
+    "img": "/img/partage/pt/devine-le-lieu.jpg",
+    "media": "vice-city-09",
+    "key": "e56ab759f01b"
+   }
+  }
+ }
+}

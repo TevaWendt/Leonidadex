@@ -1,0 +1,69 @@
+{
+ "_note": "v7.90 (lot 6) : questions de test de Léo en anglais sur le jeu « Devine le lieu » (ce que c’est, où est gardé le score). Rejoué par outils/tests/v790.test.cjs (leo-eval.cjs --lang en --questions=outils/tests/leo-questions-section-devine-en.json).",
+ "schemaVersion": 1,
+ "questions": [
+  {
+   "q": "what is guess the location?",
+   "expect": {
+    "topic": "devine-le-lieu"
+   },
+   "tags": [
+    "section-devine"
+   ]
+  },
+  {
+   "q": "is there a game on the map?",
+   "expect": {
+    "topic": "devine-le-lieu"
+   },
+   "tags": [
+    "section-devine"
+   ]
+  },
+  {
+   "q": "guess the location",
+   "expect": {
+    "topic": "devine-le-lieu"
+   },
+   "tags": [
+    "section-devine"
+   ]
+  },
+  {
+   "q": "what is the daily game?",
+   "expect": {
+    "topic": "devine-le-lieu"
+   },
+   "tags": [
+    "section-devine"
+   ]
+  },
+  {
+   "q": "is my guess the location score saved?",
+   "expect": {
+    "topic": "devine-le-lieu-score"
+   },
+   "tags": [
+    "section-devine"
+   ]
+  },
+  {
+   "q": "where is my guess the location score stored?",
+   "expect": {
+    "topic": "devine-le-lieu-score"
+   },
+   "tags": [
+    "section-devine"
+   ]
+  },
+  {
+   "q": "does guess the location keep my streak?",
+   "expect": {
+    "topic": "devine-le-lieu-score"
+   },
+   "tags": [
+    "section-devine"
+   ]
+  }
+ ]
+}

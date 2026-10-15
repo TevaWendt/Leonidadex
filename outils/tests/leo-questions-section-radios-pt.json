@@ -1,0 +1,119 @@
+{
+ "_note": "Section radios : questions de test de Léo en portugais du Brésil pour la section « Radios et musique » (radios, musique des trailers et de l’Extended Look, album officiel, stations des fuites). Rejoué par node outils/tests/leo-eval.cjs --lang pt --questions=outils/tests/leo-questions-section-radios-pt.json.",
+ "schemaVersion": 1,
+ "questions": [
+  {
+   "q": "quais rádios tem no gta 6",
+   "expect": {
+    "topic": "radio"
+   },
+   "tags": [
+    "section-radios"
+   ]
+  },
+  {
+   "q": "lista de estações de rádio gta 6",
+   "expect": {
+    "topic": "radio"
+   },
+   "tags": [
+    "section-radios"
+   ]
+  },
+  {
+   "q": "quem canta no trailer 1",
+   "expect": {
+    "topic": "musique-trailer"
+   },
+   "tags": [
+    "section-radios"
+   ]
+  },
+  {
+   "q": "a música do trailer 2",
+   "expect": {
+    "topic": "musique-trailer"
+   },
+   "tags": [
+    "section-radios"
+   ]
+  },
+  {
+   "q": "qual a música do trailer 2 do gta 6",
+   "expect": {
+    "topic": "musique-trailer"
+   },
+   "tags": [
+    "section-radios"
+   ]
+  },
+  {
+   "q": "músicas do extended look",
+   "expect": {
+    "topic": "radios-faq-1"
+   },
+   "tags": [
+    "section-radios"
+   ]
+  },
+  {
+   "q": "música do extended look",
+   "expect": {
+    "topic": "radios-faq-1"
+   },
+   "tags": [
+    "section-radios"
+   ]
+  },
+  {
+   "q": "o que é gta vi the album",
+   "expect": {
+    "any": [
+     {
+      "entity": "album:gta-vi-the-album"
+     },
+     {
+      "topic": "radios-faq-2"
+     }
+    ]
+   },
+   "tags": [
+    "section-radios"
+   ]
+  },
+  {
+   "q": "álbum oficial do gta 6",
+   "expect": {
+    "any": [
+     {
+      "entity": "album:gta-vi-the-album"
+     },
+     {
+      "topic": "radios-faq-2"
+     }
+    ]
+   },
+   "tags": [
+    "section-radios"
+   ]
+  },
+  {
+   "q": "os nomes das rádios que circulam por aí são confirmados",
+   "expect": {
+    "topic": "radios-faq-3"
+   },
+   "tags": [
+    "section-radios"
+   ]
+  },
+  {
+   "q": "as rádios vazadas são reais",
+   "expect": {
+    "topic": "radios-faq-3"
+   },
+   "tags": [
+    "section-radios"
+   ]
+  }
+ ]
+}

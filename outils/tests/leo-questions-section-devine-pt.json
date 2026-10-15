@@ -1,0 +1,69 @@
+{
+ "_note": "assemblage v7.91 : questions de test de Léo en portugais du Brésil pour le jeu « Devine le lieu » (v7.90). Rejoué par outils/tests/v790.test.cjs.",
+ "schemaVersion": 1,
+ "questions": [
+  {
+   "q": "o que é adivinhe o lugar?",
+   "expect": {
+    "topic": "devine-le-lieu"
+   },
+   "tags": [
+    "section-devine"
+   ]
+  },
+  {
+   "q": "tem um jogo no mapa?",
+   "expect": {
+    "topic": "devine-le-lieu"
+   },
+   "tags": [
+    "section-devine"
+   ]
+  },
+  {
+   "q": "adivinhe o lugar",
+   "expect": {
+    "topic": "devine-le-lieu"
+   },
+   "tags": [
+    "section-devine"
+   ]
+  },
+  {
+   "q": "o que é o jogo do dia?",
+   "expect": {
+    "topic": "devine-le-lieu"
+   },
+   "tags": [
+    "section-devine"
+   ]
+  },
+  {
+   "q": "minha pontuação do adivinhe o lugar fica salva?",
+   "expect": {
+    "topic": "devine-le-lieu-score"
+   },
+   "tags": [
+    "section-devine"
+   ]
+  },
+  {
+   "q": "onde fica salva minha pontuação do adivinhe o lugar?",
+   "expect": {
+    "topic": "devine-le-lieu-score"
+   },
+   "tags": [
+    "section-devine"
+   ]
+  },
+  {
+   "q": "o adivinhe o lugar guarda minha sequência?",
+   "expect": {
+    "topic": "devine-le-lieu-score"
+   },
+   "tags": [
+    "section-devine"
+   ]
+  }
+ ]
+}

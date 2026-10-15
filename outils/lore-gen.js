@@ -235,7 +235,7 @@ ${MC.HUBS.includes(S.hub)?MONDE_CARTES.render(S.hub):`<section class="shell" id=
 ${cards}
   </div>
 </section>`}
-${S.hub==='planques'?'<!-- lot-d-garages:start --><!-- lot-d-garages:end -->\n':''}${MONDE.render(S.hub,{label:S.label,n:items.length})}`;
+${S.hub==='lieux'?require('./gen-devine.cjs').promo('')+'\n'/* v7.90 (lot 6) : l’encart du jeu « Devine le lieu », sous la carte des six régions */:''}${S.hub==='planques'?'<!-- lot-d-garages:start --><!-- lot-d-garages:end -->\n':''}${MONDE.render(S.hub,{label:S.label,n:items.length})}`;
   /* v7.41 : CollectionPage (la liste des fiches) à côté du fil d'Ariane ; la FAQPage est posée par sync-site depuis les questions visibles. */
   const collection='<script type="application/ld+json">'+JSON.stringify({"@context":"https://schema.org","@type":"CollectionPage","name":S.title,"description":metaDesc(S.desc),"url":SITE+'/'+S.hub+'.html',"inLanguage":"fr","isPartOf":{"@type":"WebSite","name":"Leonidakit","url":SITE+'/'},"mainEntity":{"@type":"ItemList","numberOfItems":items.length,"itemListElement":items.map((x,i)=>({"@type":"ListItem","position":i+1,"name":x.name,"url":SITE+'/'+S.hub+'/'+x.id+'.html'}))}})+'</script>';
   console.log(S.hub+' : zone éditoriale de '+MONDE.words(S.hub)+' mots, '+MONDE.DATA[S.hub].faq.length+' questions, '+MONDE.sourcesOf(S.hub).length+' sources');
@@ -271,6 +271,8 @@ ${S.hub==='planques'?'<!-- lot-d-garages:start --><!-- lot-d-garages:end -->\n':
     if(dossier)links.push(`<a href="#dossier">${esc(DOS.ui.lire)}</a>`);
     if(x.mapId)links.push(`<a href="${mapHref(x.mapId,p)}">Voir sur la carte</a>`);
     if(key==='regions')links.push(`<a href="${p}vehicules.html">Véhicules</a>`);
+    /* v7.90 (lot 6) : chaque fiche de région renvoie au jeu « Devine le lieu » */
+    if(key==='regions')links.push(require('./gen-devine.cjs').lienFiche(p));
     if(x.source)links.push(`<a href="${esc(x.source)}" target="_blank" rel="noopener nofollow">Page officielle</a>`);
     /* v7.43 (lot 6) : les ateliers de personnalisation renvoient vers leur sous-section de personnalisations.html (outils/catalogues/editorial.json, ateliers). */
     if(key==='businesses'){const at=ATELIERS.find(a=>a.business===x.id);if(at)links.push(`<a href="${p}personnalisations.html#${at.fam}">${at.fam==='perso-armes'?'Personnaliser mes armes':'Personnaliser mon véhicule'}</a>`);}
@@ -350,7 +352,7 @@ const homeCard=(x,S,sub)=>{const m=visual(x);return `    <a class="lore-card ris
 const etat=`<section class="counties-sec shell" id="etat">
   <div class="sec-head reveal">
     <h2>L’État de Leonida</h2>
-    <p>Six régions présentées par Rockstar. Les six comtés et leur niveau de certitude sont sur <a href="carte.html">la carte</a>.</p>
+    <p>Six régions officielles, présentées par Rockstar. Chacune a sa fiche et sa zone sur <a href="carte.html">la carte</a>.</p>
   </div>
   <div class="lore-grid lore-grid--center lore-grid--n${ED.regions.length}">
 ${ED.regions.map(x=>homeCard(x,SECTIONS.regions)).join('\n')}

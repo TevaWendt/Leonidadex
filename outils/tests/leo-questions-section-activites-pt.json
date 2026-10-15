@@ -1,0 +1,95 @@
+{
+ "_note": "Section activites : questions de test de Léo en portugais du Brésil pour la section « Activités annexes » (liste des activités, pêche, chasse, salle de sport, gains, braquages, vol de voitures, fiches). Rejoué par node outils/tests/leo-eval.cjs --lang pt --questions=outils/tests/leo-questions-section-activites-pt.json.",
+ "schemaVersion": 1,
+ "questions": [
+  {
+   "q": "quais atividades paralelas tem no gta 6",
+   "expect": {
+    "topic": "activites-faq-1"
+   },
+   "tags": [
+    "section-activites"
+   ]
+  },
+  {
+   "q": "minigames gta 6",
+   "expect": {
+    "topic": "activites-faq-1"
+   },
+   "tags": [
+    "section-activites"
+   ]
+  },
+  {
+   "q": "da pra pescar no gta 6",
+   "expect": {
+    "topic": "activites-faq-2"
+   },
+   "tags": [
+    "section-activites"
+   ]
+  },
+  {
+   "q": "da pra caçar no gta 6",
+   "expect": {
+    "topic": "activites-faq-3"
+   },
+   "tags": [
+    "section-activites"
+   ]
+  },
+  {
+   "q": "as atividades paralelas dão dinheiro",
+   "expect": {
+    "topic": "activites-faq-4"
+   },
+   "tags": [
+    "section-activites"
+   ]
+  },
+  {
+   "q": "da pra ir na academia",
+   "expect": {
+    "any": [
+     {
+      "topic": "poids"
+     },
+     {
+      "entity": "activite:salle-de-sport"
+     }
+    ]
+   },
+   "tags": [
+    "section-activites"
+   ]
+  },
+  {
+   "q": "da pra assaltar lojas",
+   "expect": {
+    "any": [
+     {
+      "topic": "braquer-magasins"
+     },
+     {
+      "topic": "braquage"
+     },
+     {
+      "topic": "hub-entreprises-3"
+     }
+    ]
+   },
+   "tags": [
+    "section-activites"
+   ]
+  },
+  {
+   "q": "como roubar um carro no gta 6",
+   "expect": {
+    "topic": "vol-voiture"
+   },
+   "tags": [
+    "section-activites"
+   ]
+  }
+ ]
+}

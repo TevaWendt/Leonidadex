@@ -9,7 +9,7 @@ const { JSDOM } = require('jsdom');
 const root = path.resolve(__dirname, '../..');
 const read = f => fs.readFileSync(path.join(root, f), 'utf8');
 const doc = f => new JSDOM(read(f)).window.document;
-const LANGS = ['', 'en/', 'es/', 'it/', 'de/'];
+const LANGS = ['', 'en/', 'es/', 'it/', 'de/', 'pt/']; /* v7.91 : portugais */
 /* la synchronisation pose une espace insécable avant « : » : les textes se comparent sans tenir compte du type d'espace */
 const sp = t => String(t).replace(/[\s\u202f\u00a0]+/g, ' ').trim();
 const ctx = { window: {} }; vm.runInNewContext(read('vehicules-data.js') + '\n' + read('armes-data.js'), ctx);
@@ -44,7 +44,7 @@ test('fiches véhicules sans visuel officiel : écran « sous tous les angles »
     assert.deepEqual(imgs.map(s => s.classList.contains('is-on')), [true, false, false, false], v.id + ' : seul le profil est posé');
     for (const s of imgs) { assert.equal(s.getAttribute('viewBox'), '0 0 240 120'); assert.equal(s.getAttribute('aria-hidden'), 'true'); assert.ok(s.classList.contains('veh-art--schema')); assert.equal(s.getAttribute('style'), null, 'plus de hauteur fixe'); }
     assert.ok(imgs[0].innerHTML.includes('<g transform='), v.id + ' : le profil garde sa variation propre');
-    const view = ang.querySelector('button.ang-view[data-ang-next]'); assert.ok(view); assert.equal(view.getAttribute('type'), 'button'); assert.equal(view.getAttribute('aria-label'), 'Angle suivant');
+    const view = ang.querySelector('button.ang-view[data-ang-next]'); assert.ok(view); assert.equal(view.getAttribute('type'), 'button'); assert.equal(view.getAttribute('aria-label'), null, 'assemblage v7.91 : le nom accessible est le contenu (angle, compteur, indication)'); assert.ok(sp(view.textContent).includes('Cliquer : angle suivant'));
     assert.equal(ang.querySelector('[data-ang-label]').textContent, 'Profil'); assert.equal(ang.querySelector('[data-ang-count]').textContent, '1/4');
     assert.equal(sp(ang.querySelector('.ang-hint').textContent), 'Cliquer : angle suivant');
     const tabs = [...ang.querySelectorAll('.ang-tabs [data-ang-go]')];
@@ -112,7 +112,7 @@ test('style et script : effet rétro (sortie en bandes, balayage, entrée en lig
 });
 
 test('langues : étiquette, onglets, rappel, bouton et point « Schéma » traduits', () => {
-  const T = { 'en/': ['Side', 'Front', 'Rear', 'Top', 'Click: next angle', 'Next angle', 'Schematic'], 'es/': ['Perfil', 'Frontal', 'Trasera', 'Superior', 'Clic: ángulo siguiente', 'Ángulo siguiente', 'Esquema'], 'it/': ['Profilo', 'Fronte', 'Retro', 'Dall’alto', 'Clic: angolo successivo', 'Angolo successivo', 'Schema'], 'de/': ['Seite', 'Front', 'Heck', 'Oben', 'Klicken: nächster Winkel', 'Nächster Winkel', 'Schema'] };
+  const T = { 'en/': ['Side', 'Front', 'Rear', 'Top', 'Click: next angle', 'Next angle', 'Schematic'], 'es/': ['Perfil', 'Frontal', 'Trasera', 'Superior', 'Clic: ángulo siguiente', 'Ángulo siguiente', 'Esquema'], 'it/': ['Profilo', 'Fronte', 'Retro', 'Dall’alto', 'Clic: angolo successivo', 'Angolo successivo', 'Schema'], 'de/': ['Seite', 'Front', 'Heck', 'Oben', 'Klicken: nächster Winkel', 'Nächster Winkel', 'Schema'], 'pt/': ['Lateral', 'Frente', 'Traseira', 'Topo', 'Clique para o próximo ângulo', 'Próximo ângulo', 'Esquema'] };
   const v = V.find(x => !(x.medias && x.medias.length)), w = V.find(x => x.medias && x.medias.length);
   for (const l of LANGS.slice(1)) {
     const d = doc(l + 'vehicules/' + v.id + '.html'), ang = d.querySelector('.gal--ang [data-ang]');
@@ -120,7 +120,7 @@ test('langues : étiquette, onglets, rappel, bouton et point « Schéma » tradu
     assert.deepEqual([...ang.querySelectorAll('[data-ang-go]')].map(t => t.textContent), T[l].slice(0, 4), l);
     assert.equal(ang.querySelector('[data-ang-label]').textContent, T[l][0], l);
     assert.equal(ang.querySelector('.ang-hint').textContent.replace(/ /g, ' ').replace(/\s*:\s*/, ': '), T[l][4], l);
-    assert.equal(ang.querySelector('[data-ang-next]').getAttribute('aria-label'), T[l][5], l);
+    assert.equal(ang.querySelector('[data-ang-next]').getAttribute('aria-label'), null, l); /* assemblage v7.91 : nom accessible = contenu (axe « label in name ») */
     const d2 = doc(l + 'vehicules/' + w.id + '.html');
     assert.equal(d2.querySelector('.ang-slide [data-ang]').getAttribute('data-ang-dot'), T[l][6], l + ' : point de la galerie');
     const d3 = doc(l + 'armes/' + A[0].id + '.html');

@@ -1,0 +1,122 @@
+{
+ "_note": "v7.87.1 (passe de qualité des v7.86 et v7.87) : douze questions sur les pages des deux versions (actualités, vidéos, éditions, « Ce qui est confirmé », radios, mesure d’audience), réponse et lien attendus. Rejoué par node outils/tests/leo-eval.cjs --lang fr --questions=outils/tests/leo-questions-v7871-fr.json (sans --lang pour le français).",
+ "schemaVersion": 1,
+ "questions": [
+  {
+   "q": "quelle est la dernière annonce sur gta 6",
+   "expect": {
+    "topic": "derniere-annonce",
+    "page": "/actus.html"
+   },
+   "tags": [
+    "v7871"
+   ]
+  },
+  {
+   "q": "toutes les annonces de gta 6 date par date",
+   "expect": {
+    "page": "/actus.html"
+   },
+   "tags": [
+    "v7871"
+   ]
+  },
+  {
+   "q": "les vidéos officielles de gta 6",
+   "expect": {
+    "topic": "videos-officielles",
+    "page": "/videos.html"
+   },
+   "tags": [
+    "v7871"
+   ]
+  },
+  {
+   "q": "que montre le trailer 2",
+   "expect": {
+    "topic": "trailer2",
+    "page": "/videos/trailer-2.html"
+   },
+   "tags": [
+    "v7871"
+   ]
+  },
+  {
+   "q": "c'est quoi l'extended look",
+   "expect": {
+    "topic": "extended",
+    "page": "/videos/extended-look.html"
+   },
+   "tags": [
+    "v7871"
+   ]
+  },
+  {
+   "q": "quelles sont les éditions de gta 6",
+   "expect": {
+    "page": "/editions.html"
+   },
+   "tags": [
+    "v7871"
+   ]
+  },
+  {
+   "q": "que contient l'édition ultimate",
+   "expect": {
+    "topic": "ultime-contenu",
+    "page": "/editions.html"
+   },
+   "tags": [
+    "v7871"
+   ]
+  },
+  {
+   "q": "y a-t-il un disque dans la boîte",
+   "expect": {
+    "topic": "physique",
+    "page": "/editions.html"
+   },
+   "tags": [
+    "v7871"
+   ]
+  },
+  {
+   "q": "qu'est-ce qui est confirmé sur gta 6",
+   "expect": {
+    "topic": "verification",
+    "page": "/verification.html"
+   },
+   "tags": [
+    "v7871"
+   ]
+  },
+  {
+   "q": "qui anime flash fm",
+   "expect": {
+    "page": "/radios/flash-fm.html"
+   },
+   "tags": [
+    "v7871"
+   ]
+  },
+  {
+   "q": "quelles radios dans gta 6",
+   "expect": {
+    "topic": "radio",
+    "page": "/radios.html"
+   },
+   "tags": [
+    "v7871"
+   ]
+  },
+  {
+   "q": "ne plus être compté sur cet appareil",
+   "expect": {
+    "page": "/mentions-legales.html"
+   },
+   "tags": [
+    "v7871"
+   ]
+  }
+ ]
+}

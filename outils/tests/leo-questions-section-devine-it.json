@@ -1,0 +1,69 @@
+{
+ "_note": "v7.90 (lot 6) : questions de test de Léo en italien sur le jeu « Devine le lieu » (ce que c’est, où est gardé le score). Rejoué par outils/tests/v790.test.cjs (leo-eval.cjs --lang it --questions=outils/tests/leo-questions-section-devine-it.json).",
+ "schemaVersion": 1,
+ "questions": [
+  {
+   "q": "cos’è indovina il luogo?",
+   "expect": {
+    "topic": "devine-le-lieu"
+   },
+   "tags": [
+    "section-devine"
+   ]
+  },
+  {
+   "q": "c’è un gioco sulla mappa?",
+   "expect": {
+    "topic": "devine-le-lieu"
+   },
+   "tags": [
+    "section-devine"
+   ]
+  },
+  {
+   "q": "indovina il luogo",
+   "expect": {
+    "topic": "devine-le-lieu"
+   },
+   "tags": [
+    "section-devine"
+   ]
+  },
+  {
+   "q": "cos’è il gioco del giorno?",
+   "expect": {
+    "topic": "devine-le-lieu"
+   },
+   "tags": [
+    "section-devine"
+   ]
+  },
+  {
+   "q": "il mio punteggio di indovina il luogo viene salvato?",
+   "expect": {
+    "topic": "devine-le-lieu-score"
+   },
+   "tags": [
+    "section-devine"
+   ]
+  },
+  {
+   "q": "dove viene salvato il mio punteggio di indovina il luogo?",
+   "expect": {
+    "topic": "devine-le-lieu-score"
+   },
+   "tags": [
+    "section-devine"
+   ]
+  },
+  {
+   "q": "indovina il luogo salva la mia serie?",
+   "expect": {
+    "topic": "devine-le-lieu-score"
+   },
+   "tags": [
+    "section-devine"
+   ]
+  }
+ ]
+}

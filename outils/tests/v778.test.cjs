@@ -10,7 +10,7 @@ const read = f => fs.readFileSync(path.join(root, f), 'utf8');
 const doc = f => new JSDOM(read(f)).window.document;
 const exists = src => fs.existsSync(path.join(root, src.replace(/^\//, '').split(/[?#]/)[0]));
 const HUBS = ['lieux', 'personnages', 'demeures', 'planques', 'entreprises'];
-const LANGS = ['', 'en/', 'es/', 'it/', 'de/'];
+const LANGS = ['', 'en/', 'es/', 'it/', 'de/', 'pt/']; /* v7.91 : portugais */
 const ED = JSON.parse(read('outils/editorial.json'));
 const COUNT = { lieux: ED.regions.length, personnages: ED.characters.length, demeures: ED.residences.length, planques: ED.hideouts.length, entreprises: ED.businesses.length };
 
@@ -178,8 +178,8 @@ test('mouvement : états de départ seulement sous html.mo-js (posé par monde.j
 });
 
 test('langues : les cinq hubs sont traduits (nature des adresses, conseils, plaques, caméras), les noms propres restent', () => {
-  const KIND = { 'en/': 'Record label', 'es/': 'Sello discográfico', 'it/': 'Etichetta discografica', 'de/': 'Plattenlabel' };
-  const SOON = { 'en/': 'Address to come', 'es/': 'Dirección por confirmar', 'it/': 'Indirizzo in arrivo', 'de/': 'Adresse folgt' };
+  const KIND = { 'en/': 'Record label', 'es/': 'Sello discográfico', 'it/': 'Etichetta discografica', 'de/': 'Plattenlabel', 'pt/': 'Gravadora' };
+  const SOON = { 'en/': 'Address to come', 'es/': 'Dirección por confirmar', 'it/': 'Indirizzo in arrivo', 'de/': 'Adresse folgt', 'pt/': 'Endereço em breve' };
   for (const l of LANGS.slice(1)) {
     const ent = doc(l + 'entreprises.html');
     assert.equal(ent.querySelector('#fiches .mo-shop[data-mo-id="only-raw-records"] .mo-kind').textContent, KIND[l], l);

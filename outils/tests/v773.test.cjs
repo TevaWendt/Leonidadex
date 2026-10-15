@@ -138,7 +138,7 @@ test('trophées : les cinq grades sont des cartes cliquables avec fiche squelett
 
 test('langues : listes, cartes, fiches de personnalisation, grades et bloc de la Progression traduits', () => {
   const frData = run('perso-data.js').LK_PERSO;
-  for (const l of ['en/', 'es/', 'it/', 'de/']) {
+  for (const l of ['en/', 'es/', 'it/', 'de/', 'pt/']) { /* v7.91 : portugais */
     const D = run(l + 'perso-data.js').LK_PERSO;
     assert.equal(D.vehicules.posts.length, frData.vehicules.posts.length, l + 'perso-data.js');
     const same = D.vehicules.posts.filter((p, i) => p.desc === frData.vehicules.posts[i].desc).length;

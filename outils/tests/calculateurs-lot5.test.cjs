@@ -94,6 +94,16 @@ const LANGS = {
   ['ich spiele nicht gerne allein, Ziel 1 Million', { players: null }],
   ['das Motorrad kostet 400.000, nee, 420.000, und ich bin pleite, wann kann ich es kaufen?', { tab: 'purchase', price: 420000, cap: 0 }],
  ],
+ /* v7.91 : portugais du Brésil (pt/calculateurs.html) */
+ pt: [
+  ['não tenho nada pra comprar, meta 1 milhão', { cap: null, target: 1e6 }],
+  ['somos 4 e temos duas horas', { tab: 'session', players: 4, minutes: 120 }],
+  ['vale a pena a boate por 1,2 milhão se ela rende 40 mil por dia?', { tab: 'roi', price: 1.2e6 }],
+  ['tenho 250 mil, quanto tempo pra chegar a 2 milhões?', { cap: 250000, target: 2e6 }],
+  ['jogo das 22h à meia-noite, monta um plano pra 8 milhões', { tab: 'plan', minutes: 120, target: 8e6 }],
+  ['a moto custa 400 mil, não, 420 mil, e tô zerado, quando posso comprar?', { tab: 'purchase', price: 420000, cap: 0 }],
+  ['não gosto de jogar sozinho, meta 1 milhão', { players: null }],
+ ],
 };
 const VAL = { tab: r => r.tab, cap: r => r.values.capital, target: r => r.values.target, price: r => r.values.price, minutes: r => r.values.minutes, players: r => r.values.players, hourly: r => r.values.hourly, deadline: r => r.values.deadlineDays };
 function check(r, exp) {

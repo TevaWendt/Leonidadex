@@ -1,0 +1,60 @@
+{
+ "_note": "Section trophees : questions de test de Léo en portugais du Brésil pour la section « Trophées et succès » (nombre, platine, manquables, en ligne, date de la liste, suivi). Rejoué par node outils/tests/leo-eval.cjs --lang pt --questions=outils/tests/leo-questions-section-trophees-pt.json.",
+ "schemaVersion": 1,
+ "questions": [
+  {
+   "q": "quantos troféus o gta 6 tem",
+   "expect": {
+    "topic": "trophees-faq-1"
+   },
+   "tags": [
+    "section-trophees"
+   ]
+  },
+  {
+   "q": "lista de troféus gta 6",
+   "expect": {
+    "topic": "trophees-faq-1"
+   },
+   "tags": [
+    "section-trophees"
+   ]
+  },
+  {
+   "q": "como pegar a platina",
+   "expect": {
+    "topic": "trophees-faq-2"
+   },
+   "tags": [
+    "section-trophees"
+   ]
+  },
+  {
+   "q": "tem troféus perdíveis",
+   "expect": {
+    "topic": "trophees-faq-3"
+   },
+   "tags": [
+    "section-trophees"
+   ]
+  },
+  {
+   "q": "vai ter troféus online",
+   "expect": {
+    "topic": "trophees-faq-4"
+   },
+   "tags": [
+    "section-trophees"
+   ]
+  },
+  {
+   "q": "quando sai a lista de troféus",
+   "expect": {
+    "topic": "trophees-faq-5"
+   },
+   "tags": [
+    "section-trophees"
+   ]
+  }
+ ]
+}

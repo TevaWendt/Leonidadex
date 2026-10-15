@@ -1,0 +1,215 @@
+LEONIDAKIT v7.89 — Lot 5 : appli installable, Mode compagnon, sans réseau et changement d'appareil
+— 14 octobre 2026
+
+Base : v7.87 (commit 210850a62). Lot 5, fait en même temps que les lots 3, 6 et 7 depuis la même base : cette archive part
+à l'assemblage, qui régénère tout une seule fois. Rien n'est publié ni poussé. Aucun fichier à supprimer pour ce lot
+(hors lot : api/ia-achat.js, voir CONTRÔLES). CSP inchangée
+(le service worker est de même origine : worker-src retombe sur script-src 'self' ; le QR code est dessiné dans la page).
+
+1. APPLI INSTALLABLE (manifest.webmanifest et en/ es/ it/ de/manifest.webmanifest ; img/app/ ; outils/appli.cjs,
+   outils/gen-icones-appli.cjs)
+- Un manifeste par langue publiée (le portugais aura le sien quand il sera publié : outils/appli.cjs suit
+  outils/langues.json) : nom « Leonidakit », description traduite, id, start_url et scope de la langue (/, /en/…),
+  display standalone, fond et thème #FDFBF7 (la méta theme-color des pages), lang (fr-FR, en-US, es-ES, it-IT, de-DE),
+  catégories, icônes 192, 512 et « maskable » 512, quatre raccourcis aux noms traduits (Carte, Calculateur, Progression,
+  Mode compagnon) avec leur pictogramme de 96 px.
+- Icônes dessinées d'après le favicon du site (carré encre #1A1A1E, soleil #F5A524 coupé de trois bandes, mêmes
+  coordonnées) : sources img/app/icone.svg et img/app/raccourcis.svg ; PNG rendus par Chromium
+  (outils/gen-icones-appli.cjs, à relancer seulement si un dessin change) : icone-192, icone-512,
+  icone-maskable-512 et apple-touch-icon-180 (plein cadre, le soleil dans la zone sûre), raccourci-{carte,calculateur,
+  progression,compagnon}-96.
+- outils/sync-site.cjs pose dans toutes les pages <link rel="manifest"> et <link rel="apple-touch-icon"> ; les pages
+  traduites reçoivent le manifeste de leur langue (outils/langues.cjs).
+- vercel.json : Cache-Control no-cache pour /sw.js et les manifestes (type application/manifest+json). Rien d'autre.
+
+2. SERVICE WORKER (sw.js)
+- Enregistré par common.js seulement si le navigateur le permet et que la page est en https ou sur localhost, après le
+  chargement, quand le navigateur est libre ; un échec reste silencieux. Le même bloc de common.js reprend « Garder
+  l'écran allumé » sur toutes les pages et charge, une fois la page chargée, les scripts marqués data-lk-idle.
+- Pages : réseau d'abord ; si le réseau tarde plus de 3 s et qu'une copie existe, la copie répond et le réseau la met à
+  jour derrière ; sans réseau : la copie, sinon la page hors connexion de la langue. Préchargement de navigation activé.
+- Fichiers versionnés (?v=, CSS et JS) et polices : cache d'abord. Là où le navigateur connaît les routes fixes (Chrome,
+  Edge : event.addRoutes), ils sont lus directement dans les caches sans réveiller le service worker (sinon, par le
+  réseau, sans lui non plus) ; ailleurs, le gestionnaire « fetch » fait la même chose. Images, données JSON et fichiers
+  non versionnés : la copie tout de suite puis mise à jour en arrière-plan (stale-while-revalidate, au plus une fois par
+  heure pour une même adresse, d'après l'en-tête Date). Plafonds : 60 pages vues, 300 fichiers, 150 images, 60 données ;
+  les plus anciennes copies partent d'abord.
+- Pour ne pas ralentir la page : la copie d'une page vue est écrite tout de suite, le reste (ses fichiers immuables,
+  recopiés du cache du navigateur sans réseau grâce à « only-if-cached », mises à jour, élagage) quand la page s'est
+  calmée ; la page qui installe le service worker est gardée dès l'installation, de la même façon ; la coquille laisse de
+  côté les scripts chargés à la demande (recherche du site : 92 Ko de moins à la première visite).
+- Jamais : /api/…, /_vercel/… (mesure d'audience), les requêtes autres que GET ou partielles (Range), les autres origines
+  (lecteurs YouTube et Spotify). Aucune donnée personnelle dans les caches : les cases cochées restent dans le stockage du
+  site.
+- Version : VERSION (empreinte de la coquille : sw.js, manifestes, pages hors connexion de chaque langue et leurs
+  fichiers), LANGUES et PACK (pages préparées) réécrits par outils/sync-site.cjs à la fin (outils/appli.cjs). Une
+  coquille modifiée donne un nouveau service worker : à son activation, il reprend des anciens caches les copies encore
+  bonnes (même adresse), applique les plafonds, puis supprime les anciens caches. Une préparation « sans réseau » faite
+  avec une version précédente reste en service et se refait toute seule à la page suivante ouverte avec du réseau (sauf
+  en mode économie de données) : seuls les pages et les fichiers qui ont changé sont téléchargés.
+
+3. PAGE MODE COMPAGNON (compagnon.html, cinq langues ; outils/gen-compagnon.cjs, outils/compagnon.json, compagnon.css,
+   compagnon.js)
+- Gabarit du site : en-tête avec pile de trois visuels officiels cliquables (Real Dimez, Vice City, collection de
+  voitures), sous-navigation collante, cinq sections du moteur commun (outils/sections.cjs) aux fonds alternés.
+- « Tes quatre outils de jeu » : grandes tuiles vers la carte, les carnets, le calculateur et Léo (la tuile ouvre Léo).
+- « Prêt à jouer sans réseau » : état lu dans les caches du site (prêt, à mettre à jour, pas encore prêt, impossible),
+  pages déjà gardées, bouton « Préparer pour jouer sans réseau » (15 pages de la langue : accueil, Mode compagnon, page
+  hors connexion, carte, calculateur, progression, 9 carnets ; leurs fichiers ; Léo et ses réponses locales) avec barre
+  de progression ; demande au navigateur de garder ces copies (navigator.storage.persist).
+- « Installer l'appli » : l'invite du navigateur (beforeinstallprompt) quand il en propose une, sinon la marche à suivre
+  de l'appareil, repérée (iPhone et iPad : Partager → Sur l'écran d'accueil ; Android : « Ajouter à l'écran d'accueil »
+  ou « Installer l'application » ; ordinateur : l'icône de la barre d'adresse) ; « Garder l'écran allumé » (API Wake
+  Lock, reprise à chaque retour sur la page, sur tout le site ; option cachée si le navigateur ne la connaît pas).
+- « Changer d'appareil » : lien de transfert, QR code, fichier (voir 4) ; FAQ (5 questions, FAQPage posée par
+  sync-site depuis les questions visibles).
+- SEO : titre « Mode compagnon GTA 6 : appli, sans réseau et transfert », description de 151 signes, WebPage,
+  BreadcrumbList, FAQPage, hreflang, plan du site. Liens : menu « Explorer › Le site » et pied de page « Outils et aide »
+  (outils/site-shell.cjs), recherche du site (synonymes : appli, installer, hors ligne, sans réseau, transfert, QR code…),
+  Tuto (FAQ « emporter mes données »), Mentions, Léo, page Progression.
+
+4. CHANGER D'APPAREIL (transfert.js ; vendor/qrcode-generator.js)
+- Reprend l'export versionné de progression-core.js (exportData, prepareImport, applyImport : toutes les clés lk_/lk-
+  sauf les privées, comme le fichier). Lien …/compagnon.html#transfert=1z… : « LKT1 », l'origine du site qui l'a créé,
+  une somme de contrôle CRC-32 et le suivi (JSON), compressés (CompressionStream « deflate-raw ») puis écrits en
+  base64url dans le fragment # que le navigateur n'envoie jamais au serveur ; « 1j » : la même chose sans compression,
+  pour un navigateur sans CompressionStream.
+- À l'ouverture : aperçu (rubriques, cases cochées, calculs, plans, date de l'export) puis Fusionner, Remplacer ou Annuler ;
+  rien n'est écrit avant le choix ; l'adresse est ensuite nettoyée (history.replaceState).
+- Refus propres, sans rien écrire : lien abîmé (somme de contrôle, base64url, décompression), autre origine, version plus
+  récente, trop gros (lien plafonné à 60 000 signes, données à 4 Mio). Si le suivi est trop gros pour un QR code (au-delà
+  de la version 30), la page le dit et propose le lien ou le fichier.
+- QR code dessiné en SVG dans la page par qrcode-generator 2.0.4 (Kazuhiko Arase, licence MIT, récupéré avec npm pack,
+  licence dans vendor/LICENSE-qrcode-generator.txt), chargé seulement quand on crée un lien.
+- Le même bloc (« Passer sur un autre appareil ») sur la page Progression, entre les marqueurs transfert:debut / fin
+  écrits par outils/gen-compagnon.cjs ; export et import par fichier inchangés. Sur cette page, transfert.js arrive une
+  fois la page chargée, quand le navigateur est libre (<script type="lk/lazy" data-lk-idle>, chargé par common.js) : il
+  ne retarde ni l'affichage ni DOMContentLoaded, et le bouton apparaît avec lui (caché sans script).
+
+5. PAGE HORS CONNEXION (hors-ligne.html, cinq langues)
+- Servie par le service worker quand une page jamais vue est demandée sans réseau : « Pas de réseau pour l'instant »,
+  bouton Réessayer, liste des pages gardées sur l'appareil dans la langue de la page (« Prêtes pour jouer », « Déjà
+  ouvertes »), lien vers le Mode compagnon ; sans script, des liens vers les pages souvent gardées.
+- noindex, follow ; adresse canonique (exigée partout sauf sur 404.html, comme sur comparateur.html), sans hreflang ni
+  balises de partage ; liens absolus, barre des langues comprise (elle s'affiche à n'importe quelle adresse, comme
+  404.html : outils/sync-site.cjs pour la page, outils/langues.cjs → langBar pour la barre) ; hors du plan du site et de
+  la recherche.
+
+6. MENTIONS, LÉO, TUTO
+- Mentions (outils/gen-informations.cjs, outils/site-informations.json) : « Copies pour jouer sans réseau » (ce que garde
+  le service worker, où, comment l'effacer), « Écran allumé » (clé lk_ecran_v1, écrite seulement si on l'active),
+  « Changer d'appareil » (fragment jamais envoyé, QR code dessiné dans la page, aucun serveur) ; section cookies : le
+  service worker n'en pose aucun ; inventaire relevé : au plus 5 caches « lk-… » par page, 1 service worker ; date de
+  l'audit : 14 octobre 2026.
+- Léo (outils/leo-knowledge.json) : trois sujets nouveaux, « installer le site », « hors connexion », « changer de
+  téléphone » (5 à 15 formulations chacun) ; mis à jour : « où sont mes données », « exporter mon suivi », « le site
+  marche-t-il sur téléphone ». Ponts des langues (leo-pivot.json, _leo-pont.json) complétés.
+- Tuto (outils/gen-tuto.cjs) : la réponse « Comment emporter mes données sur un autre appareil ? » commence par le lien
+  de transfert.
+
+7. LANGUES
+- outils/langues/<code>/v789.json : 201 textes en anglais et en allemand, 204 en espagnol et en italien (pages Mode
+  compagnon et hors connexion, bloc de Progression, messages des scripts, manifestes, Mentions, Léo, Tuto), traduits
+  puis contrôlés (repères, trous {n}, aucune espace avant la ponctuation, titres et descriptions dans les limites).
+- Codes internes neutres dans les scripts (états s-…, messages pr-…, plateformes pf-…, erreurs E_…) : protégés dans
+  code.json de chaque langue pour qu'aucune traduction ne les change.
+- outils/langues.cjs : manifeste de chaque langue (nom, description, raccourcis traduits par la mémoire) ; barre des
+  langues de la page hors connexion en liens absolus. outils/langues.json : vendor/qrcode-generator.js partagé, jamais
+  traduit. outils/langues/de/code.json : deux sélecteurs de common.js protégés (mots anglais « lazy », « idle »).
+
+8. TESTS
+- outils/tests/v789.test.cjs (nouveau, 18 tests) : manifestes (un par langue, valides, couleurs, icônes aux bonnes
+  dimensions, raccourcis traduits) et liens dans chaque page ; service worker (tampon à jour, règles : jamais /api/, autre
+  origine, non GET, Range ; routes fixes (scripts, feuilles de style, polices, même origine) et repli sans elles ;
+  installation, coquille sans scripts à la demande, fichiers de la page vue gardés, page vue sans réseau, page jamais vue
+  → page hors connexion de la langue ;
+  réseau d'abord avec délai, plafonds, reprise et purge des anciennes versions ; préparation et sa reprise après une mise
+  à jour) ; page hors connexion ; page Mode compagnon (SEO, sections, menu, pied de page, recherche, plan du site) ; bloc
+  de Progression ; transfert (aller-retour export → lien → aperçu → import identique, fusionner et remplacer, données
+  privées jamais transportées ; refus d'un lien abîmé, d'une autre origine, d'une version plus récente, trop gros ; QR
+  code présent et relu ; page ouverte avec le lien) ; Léo dans les cinq langues (outils/tests/leo-questions-v789-*.json,
+  9 questions par langue, seuil 8/9 ; « passer ma progression sur un autre appareil » accepte aussi la FAQ du Tuto, dont
+  la réponse donne désormais le lien de transfert en premier) ; codes internes identiques dans chaque langue ; Mentions.
+  Test existant modifié : langues.test.cjs (une ligne : la page hors connexion a des liens de langue absolus, comme
+  404.html).
+- outils/tests/v789-browser.cjs (nouveau, Chromium, 41 vérifications) : installation du service worker, routes fixes
+  (feuille de style lue dans le cache, CDP), context.setOffline(true) puis page vue et page jamais vue (page hors
+  connexion de la bonne langue, en français et en allemand, pages gardées listées), préparation puis calculateur, carnet
+  et Léo sans réseau, lien créé depuis la page Progression, transfert d'un contexte de navigateur à un autre (lien, QR
+  code relu par jsQR, aperçu, import, adresse nettoyée, lien abîmé refusé), écran allumé, icônes.
+- outils/tests/latence-browser.cjs (nouveau) : mesure avant / après de la méthode des v7.54 et v7.85, réseau freiné par
+  le serveur lui-même pour que les requêtes du service worker le soient aussi.
+
+CONTRÔLES (14 octobre 2026)
+- Suite Node (80 fichiers, 1 077 tests) : tout passe, sauf quatre tests qui échouent déjà sur la v7.87 pour une seule
+  raison : api/ia-achat.js, à supprimer depuis la v7.71, est toujours dans le dépôt (contact-v746 : deux tests, ia-v769,
+  v771). Sans ce fichier, ces trois fichiers de tests passent (23/23) et la preuve de confidentialité est tenue (vérifié en
+  le déplaçant le temps du contrôle). coverage.test.cjs, arrêté faute de mémoire quand il tournait en même temps qu'un
+  autre gros test, relancé seul : 3/3.
+- Ce que la première passe a montré, corrigé dans le lot : page hors connexion sans adresse canonique (coverage.test et le
+  vérificateur l'exigent partout sauf sur 404.html) ; sa barre des langues en liens relatifs (cassés quand le service
+  worker la montre à une autre adresse) ; Léo en italien (« codice qr per il trasferimento » sans réponse : pont
+  complété) ; bouton « Créer le lien de transfert » jamais montré sur la page Progression (seul compagnon.js le montrait :
+  transfert.js le fait désormais), trouvé par la vérification ajoutée au contrôle navigateur ; message de fin de
+  préparation en police à chasse fixe (désormais Archivo, comme les autres messages) ; course dans le contrôle navigateur
+  (QR code compté avant d'être dessiné).
+- Langues (langues.test.cjs) : 42/42. Extraction à sec des quatre langues : {} partout ; aucune entrée inutilisée dans
+  les v789.json. Vérificateur : aucune erreur, 345 274 références dans 2 321 pages. Preuve de confidentialité : toutes
+  les affirmations tenues, sauf « fonction serveur — api/ », à cause du même api/ia-achat.js (tenue sans lui).
+- Navigateur : contrôle du lot (v789-browser) 41/41 ; pages des quatre langues 28/28 ; langues 2 267/2 267 ; écrans,
+  63 pages × 16 largeurs (1 008 chargements) : rapport identique à la v7.87 (24 coquilles, 39 rangées, 21 coupes, 16 mots,
+  154 petits textes, tous connus ; rien sur les nouvelles pages) ; allemand, 60 pages × 5 largeurs (300 chargements) :
+  identique (10, 7, 5, 45) ; audit de clôture, 26 pages, 182 chargements : 0 erreur console, 0 requête en échec,
+  0 contraste insuffisant (11 550 vérifiés), 12/12 fonctions ; cookies dans Chromium : 17 pages, 0 cookie, 0 en-tête
+  Set-Cookie, stockage « lk » seulement, aucune requête vers un autre site (l'envoi de l'alerte vers Brevo, intercepté,
+  comme avant), au plus 5 caches « lk-… » par page. Après les dernières retouches (police du message, service worker,
+  chargement de transfert.js) : écrans des trois pages du lot (48 + 15 chargements), langues de six pages (28/28),
+  langues dans le navigateur (2 267/2 267), audit de clôture et cookies relancés : rien de nouveau.
+- Accessibilité des pages du lot (axe-core, WCAG 2.0/2.1/2.2 A et AA ; compagnon, hors connexion et Progression en
+  français et en allemand, compagnon en anglais, espagnol et italien ; 390 et 1 280 px, 18 chargements) : aucune
+  violation dans les composants du lot ; seule la règle expérimentale label-content-name-mismatch relève la barre
+  « Changer la langue » de tout le site, déjà là sur la v7.87 (hors lot). Cibles tactiles sous 24 px : aucune. Focus
+  visible sur les 25 premiers arrêts de tabulation de chaque page (le champ de recherche de l'en-tête le montre sur son
+  cadre). Sans script : tout le contenu est lisible (compagnon fr et de, hors connexion, Progression).
+- Mouvement : apparition des tuiles du Mode compagnon (moteur commun) capturée au début, au milieu et à la fin (opacités
+  0,86 / 0,53 / 0 / 0, puis ≈ 1, puis 1) ; en « réduire les animations », tout est là dès le premier instant.
+- Captures regardées une à une : Mode compagnon et page hors connexion à 390, 768 et 1 280 px en français et en allemand
+  (pages entières), Mode compagnon en mouvement réduit, bloc de la page Progression, deux rubriques des Mentions, réponse
+  du Tuto, menu « Explorer » et pied de page, en français et en allemand. Aucun débordement.
+- Latence (outils/tests/latence-browser.cjs) : méthode des v7.54 et v7.85 (téléphone 390 px, processeur
+  ×4, 4G lente simulée par le serveur pour la page comme pour le service worker), v7.87 et v7.89 en alternance, ordre
+  inversé à chaque tour, 8 tours, médianes ; à froid (première visite) et à chaud (deuxième visite, service worker
+  actif) ; accueil, carte, Progression, fiche Karin Sultan, accueil allemand.
+  · Premier rendu : meilleur sur 5 mesures sur 10 (accueil à froid −88 ms, fiche Sultan à froid −104 ms, carte −30 et
+    −8 ms, Progression à chaud −26 ms), plus lent de 14 à 66 ms sur les 5 autres ; plus grand élément : meilleur sur 5
+    sur 10 (dont l'accueil à chaud, −54 ms), de +4 à +66 ms ailleurs.
+    DOMContentLoaded et chargement : de −56 à +94 ms selon les pages, sans sens constant d'une série à l'autre (trois
+    séries de 4, 6 et 8 tours).
+  · Série témoin, la v7.89 contre elle-même avec les mêmes réglages (Progression, fiche Sultan, accueil allemand,
+    8 tours) : écarts de médianes jusqu'à 76 ms (premier rendu), 59 ms (DOMContentLoaded), 242 ms (plus grand élément),
+    122 ms (processeur). Les écarts v7.87 → v7.89 sont de cet ordre : dans le bruit de la mesure, aucune régression
+    qui en sorte.
+  · Octets : à chaud, identiques ; à froid, 58 à 90 Ko de plus, téléchargés après la fin du chargement par
+    l'installation du service worker (page hors connexion de la langue, sa feuille et son script, manifeste, icônes).
+  · Ce qui a été fait pour cela pendant le lot, mesures à l'appui : routes fixes du service worker (feuilles et scripts
+    versionnés lus dans les caches sans le réveiller), écritures faites quand la page s'est calmée, coquille sans les
+    scripts de la recherche (92 Ko de moins à la première visite), transfert.js chargé après la page sur Progression.
+  · Page nouvelle : le Mode compagnon (à froid : premier rendu 0,9 à 1,0 s, DOMContentLoaded 1,2 s, chargé en 1,5 s) est
+    plus rapide que les pages du même genre mesurées de la même façon : Tuto (1,2 à 1,3 s ; 1,8 à 1,9 s ; 2,0 à 2,1 s) et
+    À propos (1,0 s ; 1,3 s ; 1,5 à 1,7 s).
+
+FICHIERS (par rapport à la v7.87 : 58 ajoutés, 2 430 modifiés, aucun supprimé)
+- Ajoutés : sw.js ; manifest.webmanifest et en/ es/ it/ de/manifest.webmanifest ; compagnon.html, hors-ligne.html et
+  leurs versions en/ es/ it/ de/ ; compagnon.css ; compagnon.js et transfert.js (et leurs versions traduites dans en/
+  es/ it/ de/) ; vendor/qrcode-generator.js, vendor/LICENSE-qrcode-generator.txt ; img/app/ (2 SVG, 8 PNG) ; outils/appli.cjs,
+  outils/gen-compagnon.cjs, outils/gen-icones-appli.cjs, outils/compagnon.json ; outils/langues/{en,es,it,de}/v789.json ;
+  outils/tests/v789.test.cjs, v789-browser.cjs, latence-browser.cjs, leo-questions-v789-{fr,en,es,it,de}.json ;
+  outils/MATRICE-v7.89.md ; LISEZ-MOI-v7.89.txt, outils/CHANGEMENTS-v7.89.txt.
+- Sources modifiées : common.js, vercel.json, outils/sync-site.cjs, outils/langues.cjs, outils/site-shell.cjs,
+  outils/regenerer.cjs, outils/langues.json, outils/gen-informations.cjs, outils/site-informations.json,
+  outils/leo-knowledge.json, outils/gen-tuto.cjs, outils/langues/{en,es,it,de}/code.json,
+  outils/langues/{en,de}/leo-pivot.json, outils/langues/{es,it}/_leo-pont.json, outils/tests/langues.test.cjs,
+  README.md.
+- Produits par la régénération : toutes les pages (manifeste et icône dans l'en-tête, menu et pied de page, empreintes),
+  leurs traductions, scripts traduits, index de recherche, plans du site, Léo (leo-index.json, leo/),
+  outils/sitemap-dates.json, outils/leo-index-manifest.json.

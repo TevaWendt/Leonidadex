@@ -1,0 +1,122 @@
+{
+ "_note": "assemblage v7.91 : questions de test de Léo en portugais du Brésil pour la passe de qualité (v7.87.1) : actualités, vidéos, éditions, ce qui est confirmé, radios, mesure d’audience. Rejoué par outils/tests/v7871.test.cjs.",
+ "schemaVersion": 1,
+ "questions": [
+  {
+   "q": "qual é o último anúncio do gta 6",
+   "expect": {
+    "topic": "derniere-annonce",
+    "page": "/actus.html"
+   },
+   "tags": [
+    "v7871"
+   ]
+  },
+  {
+   "q": "todos os anúncios do gta 6 data por data",
+   "expect": {
+    "page": "/actus.html"
+   },
+   "tags": [
+    "v7871"
+   ]
+  },
+  {
+   "q": "vídeos oficiais do gta 6",
+   "expect": {
+    "topic": "videos-officielles",
+    "page": "/videos.html"
+   },
+   "tags": [
+    "v7871"
+   ]
+  },
+  {
+   "q": "o que mostra o trailer 2",
+   "expect": {
+    "topic": "trailer2",
+    "page": "/videos/trailer-2.html"
+   },
+   "tags": [
+    "v7871"
+   ]
+  },
+  {
+   "q": "o que é o extended look",
+   "expect": {
+    "topic": "extended",
+    "page": "/videos/extended-look.html"
+   },
+   "tags": [
+    "v7871"
+   ]
+  },
+  {
+   "q": "quais são as edições do gta 6",
+   "expect": {
+    "page": "/editions.html"
+   },
+   "tags": [
+    "v7871"
+   ]
+  },
+  {
+   "q": "o que vem na edição ultimate",
+   "expect": {
+    "topic": "ultime-contenu",
+    "page": "/editions.html"
+   },
+   "tags": [
+    "v7871"
+   ]
+  },
+  {
+   "q": "tem disco na caixa",
+   "expect": {
+    "topic": "physique",
+    "page": "/editions.html"
+   },
+   "tags": [
+    "v7871"
+   ]
+  },
+  {
+   "q": "o que está confirmado do gta 6",
+   "expect": {
+    "topic": "verification",
+    "page": "/verification.html"
+   },
+   "tags": [
+    "v7871"
+   ]
+  },
+  {
+   "q": "quem apresenta a flash fm",
+   "expect": {
+    "page": "/radios/flash-fm.html"
+   },
+   "tags": [
+    "v7871"
+   ]
+  },
+  {
+   "q": "quais são as rádios do gta 6",
+   "expect": {
+    "topic": "radio",
+    "page": "/radios.html"
+   },
+   "tags": [
+    "v7871"
+   ]
+  },
+  {
+   "q": "não ser mais contado neste aparelho",
+   "expect": {
+    "page": "/mentions-legales.html"
+   },
+   "tags": [
+    "v7871"
+   ]
+  }
+ ]
+}

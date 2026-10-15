@@ -1,0 +1,184 @@
+LEONIDAKIT v7.91 (lot 7) — Le site en portugais du Brésil (pt-BR), avec Léo
+— 14 octobre 2026
+
+Base : v7.87 (commit 210850a6), avec le lot 1 bis (commit d631daeb, corrections de l’audit du 12/10/2026) que ce lot
+prolonge. Prompt de Téva « Lot 7 (v7.91) : le site en portugais du Brésil ». Les lots 3, 5 et 6 sont faits en même temps
+depuis la v7.87 : cette archive part à l’assemblage (qui traduira en portugais les textes nouveaux de ces lots). Rien n’est
+publié ni poussé. CSP inchangée. Fichier à supprimer : api/ia-achat.js (lot 1 bis).
+
+L’archive « Lot7-portugais-en-cours.zip » annoncée par le prompt (60 morceaux traduits, glossaire, outils de découpe et de
+contrôle) n’était pas dans la conversation : tout a été refait depuis la v7.87 (glossaire, outils, 150 morceaux).
+
+1. MÉMOIRE DE TRADUCTION (outils/langues/pt/)
+- _glossaire.md : portugais du Brésil, registre « você », mots de joueurs brésiliens (« golpe », « celular », « tela »,
+  « baixar », « pré-venda »), argent « $ 200.000 » (signe devant, point des milliers dès 1 000, virgule décimale),
+  « 1,5 milhão », « $ 1,5 mi », ponctuation sans espace avant « : ; ? ! », guillemets “ ”, noms officiels gardés, mots que le
+  code cherche (§ 8 : « guardado », « Já tenho », « Quero ter », « por hora », « por dia », « jogadores », « gastos por
+  sessão », « é preciso chegar a »…), vocabulaire fixe (menus, outils du calculateur, statuts, boutons).
+- trad-101.json à trad-250.json : 150 morceaux (clé française, traduction portugaise), découpés depuis la mémoire anglaise
+  par outils/livraison/traduction/decouper.py, traduits par des sous-agents avec consignes-agent.md, chacun contrôlé par
+  verifier.py à 0 problème (clés, repères <1>…</1>, nombres, français restant) et réunis par assembler.py ; harmonisation
+  finale (mêmes libellés partout : « Avistado » pour « Aperçu », « Tenho », « Limpar tudo », « aparelho », « Consegui »,
+  « Avistado em material oficial »…) ; troisième passe après relecture des pages et des captures du calculateur : « se
+  paga (após) » pour « remboursé (après) », neutre (« esta compra é recuperado » ne s’accordait pas), « Primeiro »,
+  « Buscar », « Lateral », « motoqueiros ».
+- code.json (format des nombres et des dates pt-BR, identifiants protégés dont calculateurs-scenario.js::envie = "=",
+  _scriptsJamais), motifs.json (phrases à trous des générateurs), fichiers.json (entrées propres à un script),
+  noms-auto.json, lot1bis.json (textes du lot 1 bis), v791.json (historique des Mentions, descriptions des carnets),
+  meta.json (descriptions courtes « @meta:: » de 36 pages dont la traduction complète dépassait 155 signes, dont quatre
+  ajoutées à la relecture, voir 5 ; trois de plus pour les carnets, dans v791.json).
+- Entrées propres à une page reprises des autres langues quand le mot change de sens : « Bas » des codes de triche
+  (« Baixo », pas « Peças de baixo »), « Suivi » des trophées (« Progresso »), « silencieux » des personnalisations
+  (« silenciador » : nom lu par le tri de la page, relevé par langues.test) ; « leo-core.js::$1 millions » protégé
+  (remplacement du pont, jamais traduit ; aussi dans de/code.json, que l’extraction allemande signalait).
+- _leo-pont.json : pont de Léo (13 383 paires expression portugaise → forme française lue par Léo, comme l’espagnol et
+  l’italien) : « quando sai », « onde fica », « quanto custa », « vale a pena », « como faço pra », écriture rapide des
+  joueurs (« vc », « q », « tá », « pra »).
+- Total : 24 582 entrées, aucun conflit (une seule traduction par texte), extraction « pt » à {}.
+
+2. CODE QUI DÉPEND DE LA LANGUE (scripts du site)
+- Argent : « $ 200.000 » (signe devant, espace insécable) : calculateurs-engine.js (dollars, aussi « -$ 1.250 »),
+  atelier-3d.js, consommables.js, fiches.js, calculateurs.js (boutons « $ 100 mil », « $ 1 mi », « $ 10 mi »).
+- Nombres : pt-BR partout (Intl), point des milliers, « 1.250,50 » lu à la saisie (« 1.5 » reste un décimal) :
+  calculateurs-engine.js, calculateurs-simple.js, calculator-entry.js, consommables.js, lk-ia.js.
+- Pluriel brésilien (0 et 2 ou plus au pluriel, moins de 2 au singulier : « 1 hora », « 1,5 milhão », « 2 milhões ») :
+  calculateurs-engine.js, calculateurs-simple.js, calculator-entry.js.
+- Dates : « 19 de novembro de 2026 », « 1º de outubro de 2026 » (calculateurs-engine.js).
+- Ce que le joueur tape (calculateurs-hub.js, sur une page portugaise seulement ; rien ne change pour les autres langues) :
+  « tenho / já tenho / tô com / juntei » (ton argent), « quero / meta de / chegar a » (but), « faltam » (ce qui manque),
+  « custa / por » (prix), « milhão / milhões / bilhão », « mil », « 1 mi », « 1kk », « dólares », « R$ » (lu comme « $ » :
+  dans le calculateur, tout montant est de l’argent du jeu), nombres en
+  lettres (« duzentos e cinquenta mil », « um milhão e meio », « dois mil e quinhentos »), « por hora », « por dia »,
+  « das 20h às 22h », « somos 4 », « jogadores », « sessão », « por semana », « ontem », « levei 2 horas » ; mots de chaque
+  outil (« vale a pena », « o que comprar primeiro », « orçamento », « plano de negócios »…) ; écriture rapide (« vc »,
+  « q », « hj », « mto », « tbm »).
+- Libellés que le code lit (calculateurs-workspace.js, calculateurs-scenario.js : « guardado », « Já tenho », « dinheiro
+  disponível », « Ganho por hora », « Missões anotadas », « Percurso a completar », « Escreva… / Escolha… »).
+- Léo (leo-core.js) : trait d’union des mots composés (« pré-venda », « comprá-lo »), « $ 200.000 », « R$ » (reais, une
+  vraie monnaie : jamais l’argent du jeu), « vc » qui n’est pas « Vice City » ; dictée en pt-BR (lk-micro.js).
+- Collectibles (collectibles-help.js) : mots outils portugais de l’aide.
+- Léo sur les pages portugaises (common.js) : l’amorçage de Léo ne reconnaissait que fr, es, it, en et de : il ne se
+  serait jamais affiché en portugais. Test ajouté : chaque langue de « leo » est reconnue.
+- IA du site (api/ia.js) : une langue inconnue retombait sur le français ; « pt » demande désormais une réponse en
+  portugais du Brésil (« você »). Test ajouté.
+- Redirections par langue (vercel.json) : les onze règles « /:lang(en|es|it|de)/… » (anciennes adresses, /xx/index.html →
+  /xx/) couvrent aussi pt. Test ajouté. En-têtes et CSP inchangés.
+
+3. LANGUE PUBLIÉE (outils/langues.json) ET RÉGÉNÉRATION
+- pt : « publiee », dossier pt/, locale pt-BR, og pt_BR, libellés de la barre (« Mudar o idioma », « página inicial »,
+  « Esta página também está disponível em português. », « Ler em português », « Não, obrigado », « em francês »), toutes
+  les pages, mêmes scripts traduits que l’espagnol (index de recherche, lieux, carte ; Léo, moteur du calculateur, IA,
+  micro, personnages) ; Léo en portugais (« leo »).
+- Régénération complète : 462 pages pt/ (redirections et page introuvable comprises), 59 scripts traduits (ceux de
+  l’espagnol, et trophees.js pour « 50% » sans espace), barre de langue et hreflang « pt » dans chaque page des six
+  langues (x-default anglais), plans du site, index de recherche, Léo (pt/leo-index.json, pt/leo/), flux RSS
+  pt/actus.xml, Tuto (captures de l’interface portugaise : img/tuto/pt/, outils/tuto-captures-pt.json, par
+  outils/tuto-shots.py), Mentions (historique : « v7.91 — Langues : tout le site existe aussi en portugais du Brésil »).
+
+4. TESTS
+- outils/tests/v791.test.cjs (nouveau) : langue publiée partout (configuration, dossier pt/ complet en pt-BR, barre,
+  og:locale), hreflang dans les pages des six langues, plan du site, flux RSS ; moteur (argent, nombres, pluriel, dates) ;
+  pages portugaises sans montant à la française ; mots du calculateur et pont de Léo ; mémoire sans conflit, sans texte
+  manquant ni repère cassé.
+- outils/tests/v791-calculateur-pt.test.cjs (nouveau) : plus de 80 demandes tapées comme un joueur brésilien, cases
+  remplies, règles dites, libellés du glossaire, boutons ; les autres langues lisent comme avant.
+- outils/tests/leo-questions-pt.json et sept fichiers de section (activités, animaux, codes, missions, GTA Online, radios,
+  trophées) : questions de Léo en portugais (outils/tests/leo-eval.cjs --langue pt).
+- langues.test.cjs, langues-helper.cjs, langues-browser.cjs : le portugais comme les autres langues (og pt_BR, montants
+  « $ 200.000 », mots français repérés, bandeau de proposition).
+- langues-helper.cjs : « sem » (« sans » en portugais : « sem conta », « sem IA ») n’est plus pris pour l’abréviation
+  française de « semaine ». section-codes.test.cjs : mot de recherche portugais des codes de triche (« trapaca »).
+- Listes de langues écrites en dur dans les tests et les outils, complétées par pt (ou lues dans outils/langues.json) :
+  calculateur-cadre.cjs (instantané du cadre du calculateur, 180 vues), calculateurs-lot5 (sept demandes en portugais sur
+  pt/calculateurs.html), calculateurs-lot5-audit, section-radios, v770, v771, v772, v773, v777, v778, v779, v780, v781,
+  v782, v785, v786. Les tests qui lisent un fichier de mémoire d’une version (v769.json, v783.json…) restent sur les
+  quatre langues d’alors : la mémoire portugaise est rangée autrement (trad-*.json).
+
+5. RELECTURE À LA MAIN (captures du Tuto pour les huit calculs et le plan ; accueil, calculateur, carte, fiche Grotti
+   Cheetah ’95, Mentions, actualités, armurerie, collectibles, À propos, Tuto à 390, 768 et 1 280 px ; barre de langue en
+   français, en allemand et en portugais ; dix questions à Léo) et ce qu’elle a corrigé :
+- Accueil, mini-calculateur (calculator-entry.js) : tant que le moteur n’est pas chargé, l’écho sous les cases écrivait
+  « = 200 mil $ » en portugais (et « = 200 thousand $ » en anglais, défaut plus ancien) : le signe est placé selon la
+  langue (« = $ 200 mil », « = $200 thousand », « = 200 mille $ »). Test : v791.test.cjs.
+- Accord : « esta compra é recuperado após 6 h » (morceaux assemblés par le code, le nom posé avant peut être féminin) :
+  « se paga após », « só se pagaria depois de », neutres ; « Em primeiro » → « Primeiro ».
+- Descriptions : quatre pages traduites phrase par phrase dépassaient 155 signes (Online, Troféus, deux gangues) : versions
+  courtes dans meta.json.
+- Montants : « $ 10 mi » se coupait avant « mi » dans le Tuto à 1 440 px (relevé par le contrôle de l’audit) :
+  outils/insecables.cjs attache aussi l’unité qui suit un montant au signe placé devant (« $ 100 mil », « $ 1,5 milhão »).
+- Langue de la page : <html lang="pt">, comme les autres langues (le code de la langue ; la locale pt-BR sert aux nombres,
+  aux dates et à og:locale).
+- Léo, dix questions tapées en portugais (« quando sai o gta 6? », « onde fica vice city no mapa? », « quem é a lucia? »,
+  « vc sabe quais são as rádios do jogo? », « o jogo vai ter versão pra pc? », « tenho 200 mil e quero 1 milhão, jogo 2
+  horas por dia », « qual o preço da edição ultimate? », une question hors sujet…) : six réponses justes avec leurs liens
+  vers les pages portugaises, le refus avec le lien de Rockstar pour la question hors sujet, deux bonnes pistes proposées
+  pour le prix de l’Ultimate (le site n’a aucun prix publié). Deux réponses faibles viennent du cerveau français de Léo et sont
+  les mêmes en français dans la v7.87 : « quais carros já foram confirmados? » répond sur les armes nommées (« quelles
+  voitures ont été confirmées ? » aussi ; « quais veículos… » répond juste), « vale a pena comprar o kosatka? » propose
+  « Comment marche « Ça vaut le coup ? » » et une coupe de cheveux. Non corrigé ici (Léo en français, hors du lot) :
+  signalé à Téva.
+
+CONTRÔLES (14 octobre 2026)
+- Régénération des langues après la dernière entrée de la mémoire : 462 pages et 58 ou 59 scripts par langue, 0 texte
+  manquant, 0 repère cassé, 0 conflit dans les cinq langues ; puis fin de chaîne (chiffres de l’À propos : un test de
+  plus), gen-leo --check : à jour. Extraction : 0 texte sans traduction dans chacune des cinq langues. Instantané du
+  cadre du calculateur réécrit avec le portugais : 180 vues, 0 erreur.
+- Suite Node (81 fichiers, 1 085 tests) : 1 083/1 085 en un passage ; les deux autres relancés après la fin de chaîne :
+  a-propos-v744 (le nombre de tests affiché par l’À propos, remis à jour par sync-site), avec v791 et leo : 91/91 ;
+  coverage.test.cjs, tué faute de mémoire quand il tourne en parallèle (comme dans les lots précédents), seul : 3/3.
+- Langues (langues.test.cjs, six langues) : 51/51. Vérificateur : 403 565 références dans 2 773 pages, aucune erreur.
+  Preuve de confidentialité : toutes les affirmations des Mentions tenues.
+- Léo en portugais (outils/tests/leo-eval.cjs --langue pt) : 512/512 bonnes pages ou intentions, 39/39 hors sujet refusés
+  avec le lien de Rockstar, 0 réponse sans source (écriture rapide « sms » 58/58, abréviations 11/11, fautes 13/13) ;
+  questions des sections : activités 8/8, animaux 5/5, codes 7/7, missions 10/10, GTA Online 5/5, trophées 6/6, radios
+  7/11 : les quatre mêmes questions échouent en français, en espagnol, en italien et en allemand, et déjà sur la v7.87
+  (français 8/12) : le fichier de questions attend d’autres sujets de la FAQ des radios que ceux que Léo choisit depuis
+  les six stations de la v7.86 ; hors du lot, signalé.
+- Contrôle de l’audit (six langues, 20 pages × 390 et 1 440 px, horloge simulée) : 137/137.
+- Navigateur : langues (hub, calculateur rempli, huit calculs et plan, montants, bandeau « Ler em português », six
+  langues) : 2 791/2 791 ; pages des cinq langues traduites (452 pages chacune, hors redirections, à 1 280 et 390 px) :
+  34/35, la seule alerte était fausse (« entradas de ar em Y » : la lettre Y lue comme le « y » français ; détecteur
+  corrigé, test ajouté), portugais relancé : 7/7 ; écrans, 61 pages × 16 largeurs (976 chargements) : identique à la
+  v7.87 et au lot 1 bis (24 coquilles, 39 rangées, 21 coupes, 16 mots, 154 petits textes, aucun débordement) ; allemand,
+  58 pages × 5 largeurs : identique (10, 7, 5, 45) ; portugais, 58 pages × 5 largeurs (320, 390, 768, 1 024, 1 280) :
+  aucun débordement, mêmes signalements que l’allemand (10 rangées, 7 coupes, 5 mots, 45 petits textes : la carte et la
+  galerie des fiches, connus) ; audit de clôture, 26 pages, 182 chargements : 0 erreur console, 0 requête en échec,
+  0 contraste insuffisant (11 487 vérifiés), 12/12 fonctions ; cookies dans Chromium : 17 pages, 0 cookie, 0 en-tête
+  Set-Cookie, stockage local en « lk… » seulement.
+- Latence (téléphone 390 px, 4G lente, processeur ×4 ; à froid : cache vide ; à chaud : cache rempli avec les en-têtes
+  de cache de Vercel ; médianes, chargements en alternance ; ms). Pages portugaises contre les mêmes pages espagnoles
+  (même gabarit, mêmes scripts), premier rendu à froid, 11 tours : accueil 1 424 → 1 424, fiche 1 580 → 1 540, carte
+  1 600 → 1 608 ; calculateur (9 tours) 1 772 → 1 808 ; à chaud, 5 tours : accueil 408 → 400, fiche 348 → 256, carte
+  288 → 304, calculateur 548 → 420 ; mêmes poids (calculateur 539 → 541 Ko). Pages françaises, lot 1 bis contre lot 7,
+  à froid, 11 tours : accueil 1 456 → 1 408, carte 1 544 → 1 592 ; calculateur (5 tours) 1 848 → 1 816, avec 9 Ko
+  transférés de plus (les mots portugais de calculateurs-hub.js, script du calculateur partagé par toutes les langues) ;
+  à chaud, 5 tours : accueil 404 → 384, carte 304 → 320, calculateur 388 → 380. Chaque écart reste dans le bruit du
+  banc : pour chaque page et chaque mesure (premier rendu, plus grand élément, DOMContentLoaded), l’intervalle de
+  confiance à 95 % de l’écart (rééchantillonnage des tours) contient 0 ; la carte du lot 1 bis mesurée contre elle-même
+  (11 tours) donne un intervalle de même largeur (−36 à +68). Aucune régression.
+- Relecture à la main et captures : voir 5 ; 129 captures du portugais (10 pages × 390, 768, 1 280 px, écrans
+  successifs ; barre de langue en français, en allemand et en portugais) et les 28 captures du Tuto, regardées une à une.
+
+FICHIERS (par rapport à la v7.87, lot 1 bis compris : 757 ajoutés, 2 503 modifiés, 1 supprimé)
+- Ajoutés par ce lot : pt/ (537 fichiers : 462 pages, 59 scripts traduits, Léo pt/leo-index.json et pt/leo/, flux
+  pt/actus.xml), img/tuto/pt/ (28 captures), outils/tuto-captures-pt.json ; outils/langues/pt/ (160 fichiers :
+  _glossaire.md, trad-101.json à trad-250.json, code.json, motifs.json, fichiers.json, noms-auto.json, lot1bis.json,
+  v791.json, meta.json, _leo-pont.json, _a-traduire.json) ; outils/langues/{en,es,it,de}/v791.json ;
+  outils/livraison/traduction/ (decouper.py, verifier.py, assembler.py, consignes-agent.md) ; outils/tests/v791.test.cjs,
+  outils/tests/v791-calculateur-pt.test.cjs, outils/tests/leo-questions-pt.json et sept
+  outils/tests/leo-questions-section-*-pt.json ; LISEZ-MOI-v7.91.txt, outils/CHANGEMENTS-v7.91.txt,
+  outils/MATRICE-v7.91.md.
+- Ajoutés par le lot 1 bis (dans l’archive) : les dix fichiers listés dans outils/CHANGEMENTS-lot1bis.txt.
+- Supprimé : api/ia-achat.js (lot 1 bis ; à retirer à la main du dépôt : une archive ne peut pas supprimer un fichier).
+- Sources modifiées par ce lot : outils/langues.json, outils/langues/de/code.json, outils/insecables.cjs,
+  outils/calculateur-cadre.cjs, outils/tuto-shots.py, outils/site-informations.json (historique des Mentions),
+  outils/LANGUES.md, README.md ; api/ia.js, vercel.json ; common.js, calculateurs-engine.js, calculateurs-hub.js,
+  calculateurs-scenario.js, calculateurs-simple.js, calculateurs-workspace.js, calculateurs.js, calculator-entry.js,
+  atelier-3d.js, consommables.js, fiches.js, collectibles-help.js, leo-core.js, lk-ia.js, lk-micro.js ; tests :
+  calculateurs-lot5, calculateurs-lot5-audit, langues, langues-helper, langues-browser, section-codes, section-radios,
+  v770, v771, v772, v773, v777, v778, v779, v780, v781, v782, v785, v786.
+- Produits par la régénération : toutes les pages françaises et celles des quatre autres langues (barre de langue et
+  hreflang « pt », empreinte de common.js), leurs scripts traduits, Léo (leo/passages.json et ceux des langues ;
+  empreintes dans common.js, leo-loader.js, leo-ui.js, leo.css), assets-manifest.js, sitemap.xml, sitemap-fiches.xml,
+  outils/sitemap-dates.json, outils/leo-index-manifest.json, outils/calculateur-cadre.json ; et ce que le lot 1 bis a
+  produit (voir outils/CHANGEMENTS-lot1bis.txt).

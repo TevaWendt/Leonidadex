@@ -40,6 +40,21 @@
  },
  "history": [
   {
+   "date": "2026-10-14",
+   "version": "v7.91",
+   "text": "Langues : tout le site existe aussi en portugais du Brésil (accueil, calculateur, Tuto, carte, catalogues, listes, toutes les fiches, carnets, À propos, Contact et ces Mentions), et Léo répond en portugais. Le choix de la langue reste la seule clé lk_lang_v1, écrite seulement quand tu cliques. Aucune clé de plus, aucun cookie, aucun service extérieur."
+  },
+  {
+   "date": "2026-10-14",
+   "version": "v7.89",
+   "text": "Appli et Mode compagnon : un petit script du site (service worker) garde sur ton appareil des copies des pages que tu ouvres, et, si tu le demandes sur la page Mode compagnon, celles qu’il faut pour jouer sans réseau ; « Garder l’écran allumé » et le lien de transfert vers un autre appareil se font dans ton navigateur ; rien n’est envoyé. Le détail et la façon d’effacer ces copies sont dans « Ce qui reste dans ton navigateur »."
+  },
+  {
+   "date": "2026-10-12",
+   "version": "v7.90",
+   "text": "Jeu « Devine le lieu » : tes réponses du jour, ta série de jours joués et ton meilleur score restent dans ton navigateur, sous une seule clé ; le partage n’envoie que le texte de ton résultat, vers l’application que tu choisis. Aucun cookie, aucun service extérieur."
+  },
+  {
    "date": "2026-10-12",
    "version": "v7.86",
    "text": "Mesure d’audience : le site compte les pages lues avec l’outil de son hébergeur (Vercel Web Analytics), sans cookie et sans rien déposer sur ton appareil, et pas du tout si ton navigateur demande à ne pas être suivi ; tu peux aussi refuser d’être compté (voir « Ce qui part, et où »). IA : un budget par jour pour tout le site s’ajoute aux questions gratuites par visiteur. Rien de nouveau n’est gardé sur toi."
@@ -118,16 +133,16 @@
   "rule": "Les personnes éditant à titre non professionnel un service de communication au public en ligne peuvent ne tenir à la disposition du public, pour préserver leur anonymat, que le nom, la dénomination ou la raison sociale et l’adresse du fournisseur de services d’hébergement."
  },
  "audit": {
-  "date": "2026-10-12",
+  "date": "2026-10-14",
   "pages": 17,
   "cookies": 0,
   "setCookie": 0,
   "indexedDB": 0,
-  "cacheStorage": 0,
-  "serviceWorkers": 0,
+  "cacheStorage": 5,
+  "serviceWorkers": 1,
   "thirdPartyBeforeAction": "aucune",
   "thirdPartyOnAction": "envoi de l’alerte de l’accueil : navigation POST vers affd58b3.sibforms.com (Brevo), déclenchée par le bouton « Me prévenir » et la case cochée",
-  "storages": "localStorage et sessionStorage, clés « lk » seulement, écrites après une action (saisie du calculateur, « Je l’ai », brouillon de Contact, sélection à comparer, conversation avec Léo, choix de la langue)"
+  "storages": "localStorage et sessionStorage, clés « lk » seulement, écrites après une action (saisie du calculateur, « Je l’ai », brouillon de Contact, sélection à comparer, conversation avec Léo, choix de la langue) ; v7.89 : un seul service worker, celui du site (sw.js), et ses caches « lk-… » (coquille, pages, fichiers, images, données ; préparation et réglages après « Préparer pour jouer sans réseau »), qui ne gardent que des copies des pages et des fichiers du site"
  },
  "ai": {
   "name": "Anthropic",

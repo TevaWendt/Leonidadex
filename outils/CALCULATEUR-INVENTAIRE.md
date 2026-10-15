@@ -58,7 +58,7 @@ Lecture : **kind** = type de contrôle ; **field** = chemin dans le scénario v6
 | où | kind | id | label | data | aria |
 |---|---|---|---|---|---|
 | atelier | button | calc-save | ☆ Enregistrer ce calcul |  |  |
-| atelier | button | calc-saved-open | Mes calculs enregistrés : 0 calcul et 0 business plan | savedOpen | controls=calc-drawer haspopup=dialog |
+| atelier | button | calc-saved-open | Mes calculs 0 — Mes calculs enregistrés : 0 calcul et 0 business plan | savedOpen | controls=calc-drawer haspopup=dialog |
 | atelier | button | calc-share | Partager ↗ |  |  |
 | onglets | button | tab-goal | Mon objectif | tab=goal | selected=true controls=panel-goal |
 | onglets | button | tab-purchase | Mes achats | tab=purchase | selected=false controls=panel-purchase |
@@ -78,7 +78,7 @@ Lecture : **kind** = type de contrôle ; **field** = chemin dans le scénario v6
 | atelier | button |  | Voir mes business plans | bSavedView=plans |  |
 | atelier | text | calc-name | Le nom de mon calcul |  |  |
 | atelier | button | calc-save-bottom | ☆ Enregistrer ce calcul | bSaveCurrent |  |
-| atelier | button |  | Mes calculs enregistrés : 0 calcul et 0 business plan | savedOpen | controls=calc-drawer haspopup=dialog |
+| atelier | button |  | Mes calculs 0 — Mes calculs enregistrés : 0 calcul et 0 business plan | savedOpen | controls=calc-drawer haspopup=dialog |
 | atelier | button | calc-print | Imprimer |  |  |
 | atelier | button | calc-undo | Annuler la remise à zéro |  |  |
 | tiroir Mes calculs | button |  | Fermer Mes calculs enregistrés | drawerClose |  |

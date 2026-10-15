@@ -1,0 +1,234 @@
+LEONIDAKIT v7.88 — Images de partage des grandes pages, page Presse et kit presse, revenus en sommeil (lot 3)
+— 12 au 14 octobre 2026
+
+Base : v7.87 (commit 210850a62). Lot 3 du plan de Téva du 12/10/2026, fait en parallèle des lots 5, 6 et 7 depuis la
+même base : l'archive part à l'assemblage. Point de départ : le code déjà écrit dans Lot3-code-en-cours.zip (copié
+tel quel, commit a8f8761a9), terminé, corrigé, relu et vérifié ici. Rien n'est publié ni poussé. CSP inchangée.
+FICHIER À SUPPRIMER : api/ia-achat.js (voir § 10).
+
+1. IMAGES DE PARTAGE (outils/gen-partage.cjs, outils/partage.json, img/partage/<langue>/<page>.jpg)
+- 28 grandes pages × 5 langues = 140 JPEG 1200 × 630 (qualité 84 ; 64 à 133 Ko chacune, sous le plafond de 300 Ko de
+  WhatsApp ; 13 Mo en tout) : le titre de la page (sa balise <title> sans « | Leonidakit »), un visuel officiel de
+  outils/medias-officiels.json crédité « © Rockstar Games », la marque, l'adresse du site ; rendu par Chromium avec la
+  police du site (Archivo, fichiers du site), titre ajusté après le chargement de la police (74 → 40 px).
+- outils/langues.cjs pose, devant l'image d'avant : og:image (?v=empreinte), og:image:width, og:image:height,
+  og:image:alt (= le titre, traduit) ; l'image d'avant reste en seconde og:image (le plan du site la reprend pour Google
+  Images : il ignore désormais img/partage/). Pages traduites : l'image française est retirée avant la traduction,
+  celle de la langue posée après. Un titre changé garde l'image d'avant jusqu'au prochain rendu (jamais un titre faux).
+- outils/sync-site.cjs : img/partage/ hors du manifeste des images chargé par toutes les pages.
+- Gabarit v3, ajouté pendant la relecture des planches : un petit mot de liaison (article, préposition, conjonction ;
+  liste par langue) reste avec le mot qui le suit et un dernier mot de quatre lettres au plus ne reste pas seul
+  (« Actualités GTA 6 : la / chronologie » devenait « … : / la chronologie », « business / plan » reste entier) ; un mot
+  composé de 12 signes au plus ne se coupe pas au trait d'union (« one- / off ») ; fit() essaie la version liée et la
+  version libre et garde la liée si elle ne coûte pas plus de 6 px de corps (« Die Nebenaktivitäten » garde sa taille).
+  Planches des 140 images relues langue par langue : titre lisible, rien sur le visuel, « GTA 6 » jamais coupé.
+- Relecture : strip() ne retire plus que le bloc qu'il a posé (la balise og:image de img/partage/ et ses trois
+  propriétés qui suivent), plus toute og:image:… d'une page ; les petits mots portugais (« do », « no », « as »…) ne
+  valent que pour un titre portugais (le portugais n'est pas publié : les 140 images restent identiques, vérifié).
+
+2. PAGE « PRESSE ET CRÉATEURS » (presse.html et en/ es/ it/ de/ ; outils/gen-informations.cjs, contenu dans
+   outils/informations-editorial.json → presse, bandeau « presse » de outils/lot-c-visuals.cjs, styles pr-* dans
+   informations.css)
+- Six sections du moteur commun (sous-navigation collante) : En bref (le site en trois phrases ; six chiffres posés par
+  outils/sync-site.cjs comme ceux de l'À propos, plus le nombre de langues publiées), Le kit, Citer le site, Ce qui se
+  reprend (fond nuit), Indépendance, Contact (« Écrire à l'éditeur » → contact.html#motif=Presse%20ou%20partenariat).
+  WebPage + Organization (identique à l'accueil) + BreadcrumbList ; plan du site avec un visuel officiel (Real Dimez) ;
+  menu « Explorer › Le site » et pied de page (outils/site-shell.cjs) ; recherche (libellé et mots : presse, journaliste,
+  logo, youtubeur, streamer, créateur, partenariat, interview, citer).
+- Corrigé dans le code reçu :
+  · « Citer une information » : les trois textes n'étaient pas affichés (champ « texte » ignoré par le gabarit cols(),
+    qui lit « p ») ; un test vérifie désormais que chaque texte de la page est affiché ;
+  · aperçus du kit : l'icône carrée et la capture du téléphone agrandissaient leur carte (taille minimale automatique
+    d'une boîte à aspect-ratio) ; min-height:0 et overflow:hidden sur .pr-file-thumb, cartes d'une rangée à même hauteur ;
+  · aperçus remplacés par « Visuel à intégrer » : outils/sync-site.cjs ne connaissait pas les fichiers de presse/ ;
+    ils entrent dans sa liste des fichiers publiés (pas dans le manifeste chargé par les pages) ; un test l'interdit ;
+  · six chiffres : une rangée de six à partir de 1 180 px, deux rangées de trois de 1 001 à 1 179 px (au lieu de 4 + 2) ;
+  · bouton « Télécharger le kit (ZIP) » du bandeau : attribut download et flèche ↓ (au lieu de ↗) ;
+  · libellé de la dernière section « Écrire » → « Contact » : « Écrire » était déjà traduit autrement pour le
+    calculateur et la mémoire de traduction signalait un conflit ; en espagnol, « En bref » reprend « En resumen ».
+- Relecture des textes (cinq langues) :
+  · « Tout se reprend librement » promettait trop, à côté de visuels Rockstar : « Le kit et les informations se
+    reprennent librement, avec un lien vers le site ; les visuels du jeu restent à Rockstar Games » (bandeau, Léo) ; la
+    ligne des captures dit « en créditant Rockstar Games pour les visuels du jeu qu'on y voit » ;
+  · « chaque fiche la donne sous « Source officielle » » était faux : la fiche a une ligne « Source » (Source, Fuente,
+    Fonte, Quelle), un dossier « Sources de ce dossier » (Sources for this file, Fuentes de este expediente, Fonti di
+    questo dossier, Quellen dieses Dossiers), et toutes les fiches n'ont pas de source Rockstar ;
+  · les cinq statuts avec leurs vrais noms, langue par langue (Officiel, Vu dans un média, Identification communautaire,
+    Repère de la série, À confirmer ; en allemand « Referenz aus der Reihe ») ;
+  · « En bref », fait pour être collé dans un article : plus de « tes propres chiffres » (« un calculateur pour
+    planifier achats, budget et temps de jeu »), virgule avant « et Léo », plus de date de sortie qui se périme ;
+    « chiffres du jour » → « chiffres à jour » (ils sont recomptés à chaque mise à jour) ;
+  · image de partage : « c'est elle que montrent en principe WhatsApp, Discord… » (invérifiable avant la mise en ligne) ;
+  · « ni affilié, ni approuvé, ni sponsorisé par » → « ni affilié à …, ni approuvé ou sponsorisé par eux » (formule de
+    l'À propos, et ses traductions) ; « pas un média du jeu » → « pas un site officiel du jeu » ; italien « da
+    nessuno » ; allemand « Leonidakit gibt sie nur weiter » (et non « Die Seite », pris pour la page) ; « motif » rendu
+    par le libellé du formulaire (Reason, Grund) ; « chaque fiche » sans tautologie en anglais et en allemand ;
+  · « Pour citer le site, écris « Leonidakit » avec un lien vers la page d'où vient l'information » : Léo y renvoie
+    « comment citer Leonidakit » dans les cinq langues.
+- Chiffres : « pages en ligne » sans les redirections ni 404.html (outils/sync-site.cjs : 463 → 452, À propos compris) ;
+  sur la page Presse, chiffres fixes (sans compteur, donc sans « 2547 » du script qui défilait) au format de chaque
+  langue : 2 547, 2,547, 2547 (espagnol), 2.547 ; « en 5 langues » écrit en chiffres : la mémoire de traduction
+  généralise les nombres, la phrase suivra seule l'arrivée du portugais.
+- Accessibilité : chaque lien de téléchargement a pour nom l'intitulé de son fichier puis son format et son poids
+  (« Logo, pour fond clair SVG 3 Ko » : aria-labelledby, sans texte de plus à traduire) ; au survol, le poids passe à
+  l'encre (--ink-soft sur l'ambre tombait à 3,3:1), de même pour .lk-aff-meta des liens affiliés.
+
+3. KIT PRESSE (presse/ ; outils/presse-logo.py, outils/gen-presse.cjs, outils/presse.json)
+- Logo vectoriel tracé depuis la police du site (Archivo 900, approche -0,02 em ; tracés, pas de texte), version sombre,
+  icône du site (SVG) ; PNG rendus par Chromium (logo 2400 × 369 transparent, icône 512 × 512) ; captures du site du
+  12 octobre (accueil, carte, calculateur, fiche Grotti Cheetah '95 en 1440 × 900, accueil sur téléphone 780 × 1688)
+  et leurs aperçus 480 px ; archive presse/leonidakit-kit-presse.zip (789 Ko, LISEZ-MOI bilingue, date fixe : mêmes
+  fichiers, mêmes octets). 17 fichiers au manifeste. Les captures sont dites « en français » ; les visuels du jeu qu'on y
+  voit sont dits à Rockstar Games, « à créditer comme tels » ; en anglais, « reason "Press or partnership" ».
+- outils/gen-presse.cjs --archive : refait l'archive et le manifeste sans navigateur (captures gardées).
+- Logo de l'organisation (JSON-LD de index.html et de outils/gen-informations.cjs, identiques) : l'icône 512 × 512.
+
+4. CONTACT
+- Motif « Presse ou partenariat » dans outils/gen-informations.cjs et api/contact.js (listes identiques, contrôlées par
+  le générateur) ; contact.js le choisit depuis #motif= (valeur française gardée, libellé traduit).
+
+5. REVENUS EN SOMMEIL (outils/monetisation.json, outils/monetisation.cjs)
+- affiliation.actif = false : rien sur editions.html, Mentions inchangées. Activé : bloc « Où l'acheter » sur
+  editions.html (titre qui reste juste après la sortie ; liens https seulement, boutique nommée et non traduite,
+  rel="sponsored nofollow noopener", nouvel onglet annoncé comme ailleurs sur le site : data-newtab et title « S'ouvre
+  dans un nouvel onglet », « Lien affilié » sur chaque lien, styles lk-aff-* dans actus.css), Mentions réécrites.
+- Ajouté : les deux autres phrases des Mentions qui disaient « sans activité commerciale » / « sans but commercial »
+  (« En bref » et « En clair » de la section Éditeur) seraient devenues fausses à l'activation : mentionsProjet() et
+  mentionsClair() les réécrivent aussi ; identiques à aujourd'hui tant que rien n'est actif.
+- Activés, ces textes sont déjà traduits dans les quatre langues (outils/langues/<code>/v788.json) : liste donnée par
+  l'extraction des quatre langues faite revenus activés (avec un lien d'exemple), puis tout remis en sommeil et
+  régénéré ; le test v788 vérifie que chaque phrase activée a sa traduction.
+- Ce que l'activation implique (statut d'éditeur, déclaration des revenus, mention du programme) : LISEZ-MOI-v7.88.txt.
+
+6. LÉO (outils/leo-knowledge.json, outils/gen-leo.cjs ; ponts outils/langues/{en,de}/leo-pivot.json,
+   outils/langues/{es,it}/_leo-pont.json ; jeux outils/tests/leo-questions-section-presse-<langue>.json)
+- Sujet « presse » (« Où trouver le kit presse de Leonidakit ? », liens vers la page, le kit et la section Contact) :
+  15 formulations liées au site seulement (« kit presse », « contact presse », « presse », « je suis journaliste ou
+  rédacteur et je prépare un article… sur ce site de fans », « proposer un partenariat ou une collaboration avec le
+  site », « demande d'interview pour le site ou son éditeur », « captures du site pour un article ou une vidéo »…).
+  La relecture a montré que la première version captait des questions sur le jeu dans les cinq langues (« le logo de
+  GTA 6 », « télécharger », « journaliste du jeu », « interview de Lucia », « can I partner with Lucia ») : mots seuls
+  retirés (logo, télécharger, streamer, créateur, citer), formulations longues pour les mots à double sens, réglées
+  sur un banc de 193 questions (à mener à la page Presse, à ne pas y mener, à comparer à la v7.87) posées à un Léo
+  neuf dans les cinq langues.
+- Nouveau sujet « apercus-presse » (« Que racontent les aperçus de la presse sur GTA VI ? », statut « Officiel
+  (déclaration à la presse) », liens vers l'entrée du 27 août 2026 des Actualités) : « que dit la presse de GTA 6 »,
+  « press previews », « was sagt die presse über gta 6 »… y vont au lieu d'atterrir sur la page Presse ; le mot seul
+  « presse » reste à la page Presse. Texte repris des Actualités (aperçus de la démonstration de Rob Nelson, entretien
+  à Famitsu).
+- Sujet « sources-page » : deux formulations (« citer une source », « comment citer une source ») gardent sa réponse
+  de la v7.87 maintenant que « citer » est un mot connu de Léo.
+- Sujets « medias » et « visuels-nombre » : ils disaient « 148 visuels » ; le nombre vient désormais de
+  outils/medias-officiels.json à chaque régénération ({visuels} dans le texte, outils/gen-leo.cjs) : 178, comme l'À
+  propos et la page Presse.
+- Ponts, en fin de fichier (anglais 25 entrées, allemand 21, espagnol 19, italien 18) : expressions du site
+  (« press kit », « Pressekit », « kit de prensa », « kit stampa », « partnership with leonidakit », « screenshots der
+  Seite », « anteprime della stampa », « was sagt die presse »…) et quelques mots propres à la presse traduits mot pour
+  mot vers le mot français déjà réglé (« prensa », « periodista », « entrevista », « giornalista », « Partnerschaft »,
+  « Kooperation », « Zusammenarbeit », « Journalistin ») : « periodista en el juego », « Kooperation mit Rockstar »…
+  ne mènent pas à la page Presse. Aucune question des jeux existants ne change de forme française en passant par les
+  ponts (vérifié dans les quatre langues). Les mots à double sens restent intacts (« stampa » = imprimé, « scarico » =
+  échappement, « cite » seul).
+- Jeux de questions section-presse (11 à 15 questions par langue, dont 2 « aperçus de la presse ») et, nouveau, une
+  liste « hors_presse » (8 à 12 questions sur le jeu par langue) : le test v788 vérifie qu'aucune ne reçoit le sujet
+  presse, avec un Léo neuf dans chaque langue.
+- Limites connues : un passage de la page Presse peut répondre à « logo » ou « créateur de contenu » (comme le texte
+  de toute page ; la v7.87 répondait par un passage sans rapport ou « je n'ai pas cette réponse ») ; « faire un
+  partenariat » seul reste sans réponse (comme en v7.87 ; « partenariat » seul mène à la page) ; « citer leonidakit »
+  seul répond par l'À propos. Écarts avec la v7.87 sur le banc, tous hors page Presse : « interview de Lucia » mène à
+  la fiche de Lucia (au lieu de sa maison), « journaliste du jeu » à un passage sur un journaliste (Jason Schreier,
+  annonces de GTA Online) au lieu de « je n'ai pas cette réponse », « comment citer une source » à « Où sont les
+  sources d'une page ? » au lieu de « je n'ai pas cette réponse ».
+
+7. LANGUES (outils/langues/<code>/v788.json : 106 textes en anglais, en espagnol et en allemand, 107 en italien)
+- Page Presse, menu, motif de contact, Léo, titres des images de partage ; tailles de fichiers au format de la langue
+  (Ko → KB, et les tailles en Mo prêtes si l'archive dépasse 1 Mio) ; textes des revenus activés ; extraction à {} dans
+  les quatre langues (0 texte sans traduction à la fin de chaîne).
+- outils/tests/langues-helper.cjs : une adresse citée dans un texte (« leonidakit.com/de/carte.html ») n'est plus prise
+  pour du français (« de » y est le dossier de la langue).
+
+8. OUTILS DE LIVRAISON (outils/livraison/)
+- archive-modifs.py : archive « modifs » en parties de moins de 28 Mio, vérifie que base + archives = HEAD ; chemins
+  lus avec -z (accents) et --no-renames (un fichier renommé : l'ancien nom va dans « à supprimer »).
+- verifier-tout.sh : tous les contrôles du § E ; NODE_PATH des tests mis en tête même si l'environnement en définit un
+  autre ; suite Node à la concurrence par défaut (deux fichiers à la fois faisaient tuer des tests faute de mémoire) ;
+  code de sortie de la preuve de confidentialité gardé.
+
+9. TESTS (outils/tests/v788.test.cjs, 7 tests)
+- Images de partage (une par page et par langue, JPEG 1200 × 630 sous 300 Ko, à jour, aucune orpheline ; balises,
+  idempotence, titre changé), plan du site et manifeste ; page Presse (sections, textes tous affichés, chiffres fixes au
+  format de chaque langue et égaux à ceux de l'À propos, « en 5 langues », noms accessibles des téléchargements, kit
+  complet, poids affichés = poids réels, archive lisible et identique aux fichiers, logos en tracés, un aperçu par
+  fichier, aucun « Visuel à intégrer ») ; menu et pied de page (source et pages, cinq langues), recherche, Léo (cinq
+  langues), motif de contact, logo de l'organisation ; revenus en sommeil et activés (liens filtrés et échappés,
+  nouvel onglet annoncé, boutique non traduite, « Où l'acheter », trois phrases des Mentions, traductions prêtes) ;
+  Léo et la page Presse dans les cinq langues (jeux section-presse à 100 %, questions hors presse jamais au sujet
+  presse).
+
+10. CORRECTIONS PENDANT LE LOT
+- Plan du site : la date de es/carte.html était passée au 12 octobre sans changement de contenu, à cause d'un passage
+  intermédiaire où la mémoire espagnole avait deux traductions de « En bref » ; date réelle remise (7 octobre) dans
+  outils/sitemap-dates.json et sitemap.xml (comparaison des empreintes avec la base : seules les pages réellement
+  changées ont une nouvelle date).
+- api/ia-achat.js SUPPRIMÉ : l'ancien paiement des questions de Léo, retiré en v7.71 (outils/tests/v771.test.cjs exige
+  son absence, outils/tests/contact-v746.test.cjs la liste exacte de api/, la preuve de confidentialité le signale) mais
+  resté dans le dépôt : ces contrôles échouaient déjà sur la v7.87. À supprimer à la main dans le dépôt GitHub.
+
+CONTRÔLES (14 octobre 2026)
+État final du lot, après la dernière régénération (fin de chaîne : gen-leo → sync-site, qui traduit les quatre langues →
+gen-leo --check ; 0 texte sans traduction ; extraction à {} dans les quatre langues).
+- outils/livraison/verifier-tout.sh :
+  · cadre du calculateur : 150 vues, 22 860 lignes, 0 erreur ;
+  · suite Node : 1 064 / 1 065 au passage complet ; l'échec venait du test « À propos : aucun nombre tapé à la main »
+    (a-propos-v744), qui recomptait encore les redirections dans « pages en ligne » : mis à la nouvelle règle, son
+    fichier repassé seul : 8 / 8 ;
+  · langues (langues.test.cjs) : 42 / 42 ;
+  · vérificateur de liens : 0 erreur (340 261 références dans 2 316 pages) ;
+  · preuve de confidentialité : toutes les affirmations des Mentions tenues (elle échouait sur la v7.87 à cause de
+    api/ia-achat.js) ;
+  · toutes les pages des quatre langues dans Chromium : 0 échec ; langues dans le navigateur : 2 267 contrôles, 0 échec ;
+  · écrans, 62 pages × 16 largeurs (992 chargements) : aucun débordement ; signalements identiques à la v7.87, comparés
+    page par page et largeur par largeur (0 nouveau, 0 disparu) ; presse.html : rien, aux 16 largeurs ; allemand, 59 pages
+    × 5 largeurs : identique à la v7.87, de/presse.html : rien ;
+  · audit de clôture (26 pages, 182 chargements) : 0 débordement, 0 grille décalée, 0 texte rogné, 0 image cassée,
+    0 identifiant en double, 0 cible sous 24 px, 0 nom manquant, 0 contraste insuffisant (11 540 vérifiés), 0 erreur
+    console, 0 requête en échec ;
+  · cookies (17 pages, usage simulé) : 0 cookie, 0 Set-Cookie, stockage local seulement en « lk… ».
+- Léo, index réels des cinq langues, lot contre v7.87 : jeux complets 512 / 512 (fr, es, it, de) et 511 / 512 (en),
+  identiques ; inédites 112 / 140 (en) et 96 / 140 (de), identiques ; sections activités, animaux, codes, missions,
+  online, radios et trophées identiques dans les cinq langues ; section presse 100 % ×5 (15, 13, 12, 11 et 13
+  questions) ; listes hors_presse : aucune question ne reçoit le sujet presse. Test v788 : 7 / 7.
+- Page Presse dans Chromium : captures pleine page en français et en allemand à 390, 768 et 1 280 px ; apparition au
+  défilement (début, milieu, fin) et même vue en mouvement réduit (opacités finales à 1) ; téléchargements réels (archive
+  du bandeau et de la section, logo SVG, logo sombre PNG, icône PNG, capture du téléphone) : fichiers identiques à ceux du
+  site, la page reste en place ; « Écrire à l'éditeur » (bandeau et section Contact) préremplit le motif dans les cinq
+  langues ; 0 erreur JavaScript, 0 débordement.
+- Images de partage : outils/gen-partage.cjs --verifier « à jour » (140 images) ; kit : outils/gen-presse.cjs --verifier
+  « à jour ».
+- Latence (banc HTTP/2 + brotli, téléphone 390 px, 4G lente, processeur ×4, à froid et à chaud, base et lot en
+  alternance, médianes) : accueil, carte, éditions, contact, Mentions, À propos, accueil allemand : mêmes requêtes, de
+  +40 à +970 octets de HTML (balises og:, lien de menu) ; FCP, chargement et temps processeur dans le bruit. Le LCP de
+  l'À propos (comme celui des Mentions) est bimodal : le texte vers 1,5 s ou un visuel vers 2,2 s, selon la course entre
+  l'image et la fin de la mesure ; sur 9 chargements, la base contre elle-même donne 2,00 s / 1,95 s, la base contre le
+  lot 1,46 s / 1,72 s puis 1,60 s / 2,19 s, avec la même part de LCP tardifs (3 sur 9 de chaque côté au dernier
+  passage) : aucune régression.
+- Plan du site : dates changées seulement pour À propos (nombre de pages), Contact (motif) et Presse (nouvelle), dans
+  les cinq langues.
+
+FICHIERS (par rapport à la v7.87)
+2 527 fichiers dans l'archive (184 nouveaux, 2 343 modifiés) ; 1 FICHIER À SUPPRIMER : api/ia-achat.js.
+- Nouveaux : presse.html et en/ es/ it/ de/presse.html ; presse/ (17 : logos SVG et PNG, icône, cinq captures et leurs
+  aperçus, archive ZIP) ; img/partage/<langue>/<page>.jpg (140) ; outils/gen-partage.cjs, outils/partage.json,
+  outils/gen-presse.cjs, outils/presse.json, outils/presse-logo.py, outils/monetisation.cjs, outils/monetisation.json,
+  outils/livraison/archive-modifs.py, outils/livraison/verifier-tout.sh, outils/CHANGEMENTS-v7.88.txt,
+  outils/MATRICE-v7.88.md, LISEZ-MOI-v7.88.txt ; outils/langues/{en,es,it,de}/v788.json ; outils/tests/v788.test.cjs
+  et outils/tests/leo-questions-section-presse-{fr,en,es,it,de}.json.
+- Modifiés : générateurs et données (outils/gen-informations.cjs, gen-actus.cjs, gen-leo.cjs, langues.cjs,
+  lot-c-visuals.cjs, site-shell.cjs, sync-site.cjs, informations-editorial.json, leo-knowledge.json,
+  leo-index-manifest.json, sitemap-dates.json) ; ponts de Léo (outils/langues/{en,de}/leo-pivot.json,
+  outils/langues/{es,it}/_leo-pont.json) ; tests (outils/tests/a-propos-v744.test.cjs, langues-helper.cjs) ;
+  api/contact.js ; informations.css, actus.css ; common.js, leo-loader.js, leo-ui.js, leo.css (empreintes) ;
+  search-index.js, sitemap.xml, leo-index.json et leo/*.json ; README.md ; 445 pages françaises et 1 856 fichiers des
+  quatre langues (entrée « Presse » du menu et du pied de page, balises de partage des grandes pages, empreintes ?v=,
+  index de Léo des langues).
+- À supprimer : api/ia-achat.js (§ 10).

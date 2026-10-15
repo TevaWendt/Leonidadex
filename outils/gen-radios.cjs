@@ -152,6 +152,8 @@ function imgTag(MED, id, alt, big, prefix = '') {
   const m = imgOf(MED, id); if (!m) return '';
   return '<img src="' + m.a.src + '" srcset="' + m.a.src + ' ' + m.a.w + 'w, ' + m.b.src + ' ' + m.b.w + 'w" sizes="' + (big ? '(max-width:820px) 100vw, 560px' : '(max-width:600px) 100vw, 300px') + '" width="' + (big ? m.b.w : m.a.w) + '" height="' + (big ? m.b.h : m.a.h) + '" alt="' + esc(alt) + '" loading="' + (big ? 'eager' : 'lazy') + '" decoding="async">';
 }
+/* v7.87.1 : « GTA 6 » et « GTA VI » ne se coupent plus en fin de ligne dans le titre de la page et les questions */
+const nb = s => String(s).replace(/\bGTA (6|VI)\b/g, 'GTA\u00a0$1');
 /* titre d’une source : un titre d’article anglais reste tel quel dans toutes les langues (translate="no") */
 function sourceList(D, ids) {
   return '<ol class="ed-srcs">' + ids.map(id => { const s = D.sources[id];
@@ -231,7 +233,7 @@ function zone(D, STATUTS) {
   out.push(S.section({ id: 'communaute', num: 2, kicker: 'Observations des joueurs', title: 'Ce que la communauté a identifié', icon: 'loupe', tone: 'paper2', accent: 'coral', lede: esc(Z.communaute.lede) }, S.pairs(Z.communaute.pairs, srcMap) + para(Z.communaute.p)));
   out.push(S.section({ id: 'a-confirmer', num: 3, kicker: 'Questions ouvertes', title: 'Ce qui reste à confirmer', icon: 'sablier', tone: 'night', lede: esc(Z.confirmer.lede) }, S.pending(Z.confirmer.items) + para(Z.confirmer.p)));
   out.push(S.section({ id: 'pour-toi', num: 4, kicker: 'Outils du site', title: 'Ce que ça change pour toi', icon: 'boussole', tone: 'paper', lede: esc(Z.toi.lede) }, S.actions(Z.toi.actions) + para(Z.toi.p)));
-  out.push(S.section({ id: 'faq', num: 5, kicker: 'Questions', title: 'Questions fréquentes', icon: 'faq', tone: 'paper2' }, '<p>Les questions qu’on tape dans un moteur de recherche, avec des réponses courtes et datées.</p><div class="faq rise">' + Z.faq.map(x => '<details><summary>' + esc(x.q) + '</summary><div class="ans">' + esc(x.a) + '</div></details>').join('') + '</div>'));
+  out.push(S.section({ id: 'faq', num: 5, kicker: 'Questions', title: 'Questions fréquentes', icon: 'faq', tone: 'paper2' }, '<p>Les questions qu’on tape dans un moteur de recherche, avec des réponses courtes et datées.</p><div class="faq rise">' + Z.faq.map(x => '<details><summary>' + nb(esc(x.q)) + '</summary><div class="ans">' + esc(x.a) + '</div></details>').join('') + '</div>'));
   const legend = '<div class="ed-levels">' + STATUTS.map(n => '<div class="ed-level"><h3>' + S.pip(n.statut) + esc(n.titre) + '</h3><p>' + esc(n.texte) + '</p></div>').join('') + '</div>';
   out.push(S.section({ id: 'sources', num: 6, kicker: Z.sources.length + ' sources ouvertes', title: 'Sources et statuts', icon: 'lire', tone: 'night', accent: 'coral', lede: esc(Z.sourcesLede) },
     legend + '<h3 class="ed-h3">Pages consultées</h3>' + sourceList(D, Z.sources) + '<div class="ed-callout"><p><strong>Ce qu’on ne fait pas.</strong> Aucune donnée issue des fuites de 2022 ou de 2026, aucune parole de chanson, aucun extrait audio ou vidéo, aucune pochette. Les statuts sont expliqués dans le <a href="tuto.html#sources">Tuto</a>.</p></div>'));
@@ -250,7 +252,11 @@ function stationsSec(D) {
   const L = D.stations || []; if (!L.length) return '';
   return '<section class="radios-stations-sec" id="stations" aria-labelledby="stations-t"><div class="shell">'
     + '<div class="radios-album-head reveal"><p class="ed-kicker">' + esc(D.stationsKicker) + '</p><h2 class="sec-h" id="stations-t">' + esc(D.stationsTitre) + '</h2><p class="radios-lede">' + esc(D.stationsLede) + '</p></div>'
-    + '<ul class="radios-stations" role="list">' + L.map((s, i) => '<li class="radios-station rise" style="--st:' + esc(s.ton) + ';--i:' + i + '"><a class="radios-station-a" href="radios/' + esc(s.id) + '.html">' + plaque(s)
+    /* v7.87.1 : chaque station entre au défilement par le moteur commun (common.js, LKMotion : data-lk-reveal → is-in) ;
+       moment de la section, l’accord du poste (radios.css) : l’aiguille balaie le cadran, le nom s’allume, l’égaliseur
+       saute une fois. Le nom n’est plus écrit deux fois à l’œil : la plaque le montre, le titre h3 reste pour les lecteurs
+       d’écran (masqué à l’œil par radios.css ; le texte de la page, que Léo lit, ne change pas). */
+    + '<ul class="radios-stations" role="list">' + L.map((s, i) => '<li class="radios-station" data-lk-reveal style="--st:' + esc(s.ton) + ';--i:' + i + '"><a class="radios-station-a" href="radios/' + esc(s.id) + '.html">' + plaque(s)
       + '<span class="radios-station-body"><span class="radios-station-genre">' + esc(s.genre) + '</span><h3 translate="no">' + esc(s.name) + '</h3><span class="radios-station-tag">' + esc(s.tagline) + '</span>'
       + '<span class="radios-station-hosts" translate="no">' + esc(hostNames(s)) + '</span><span class="veh-go">Voir la fiche</span></span></a></li>').join('') + '</ul></div></section>';
 }
@@ -282,7 +288,8 @@ function stationPage(ctx, s) {
   <div class="lore-related"><h2>Les autres stations</h2><div class="lore-mini">${others.map(o => '<a class="lore-minicard radios-minicard" href="' + esc(o.id) + '.html" style="--st:' + esc(o.ton) + '"><i class="radios-minidot" aria-hidden="true"></i><span><b translate="no">' + esc(o.name) + '</b><i>' + esc(o.genre) + '</i></span></a>').join('')}</div></div>
 </section>
 <section class="shell radios-fiche-src reveal" aria-labelledby="sources-t"><h2 class="sec-h" id="sources-t">Sources</h2>${sourceList(D, s.sources)}<p class="radios-note">Toutes les sources de la section, avec les statuts, sont <a href="../radios.html#sources">en bas de la page Radios et musique</a>.</p></section>`;
-  const ld = '<script type="application/ld+json">' + JSON.stringify({ '@context': 'https://schema.org', '@type': 'Thing', name: s.name, description: s.description, url: SITE + '/' + HUB + '/' + s.id + '.html', isPartOf: { '@type': 'VideoGame', name: 'Grand Theft Auto VI' } }) + '</script>';
+  /* v7.87.1 : la page (WebPage) parle d’une station du jeu (about), elle-même partie de GTA VI ; plus de « Thing » seul */
+  const ld = '<script type="application/ld+json">' + JSON.stringify({ '@context': 'https://schema.org', '@type': 'WebPage', name: s.name + ' : la radio ' + s.seo + ' de GTA 6', description: metaDesc(s.description), url: SITE + '/' + HUB + '/' + s.id + '.html', inLanguage: 'fr', isPartOf: { '@type': 'WebSite', name: 'Leonidakit', url: SITE + '/' }, about: { '@type': 'Thing', name: s.name, description: s.tagline, isPartOf: { '@type': 'VideoGame', name: 'Grand Theft Auto VI' } } }) + '</script>';
   return page(SUBC, { player: '', p, title: s.name + ' : la radio ' + s.seo + ' de GTA 6 | Leonidakit', desc: s.description, canonical: '/' + HUB + '/' + s.id + '.html', ogImg: null, body, crumbs: [['Accueil', '/'], [H.label, '/' + HUB + '.html'], [s.name, '/' + HUB + '/' + s.id + '.html']], ld, cls: 'radios-page--station' });
 }
 
@@ -303,7 +310,7 @@ function hubPage(ctx) {
     + '<div class="veh-body"><span class="veh-marque">' + esc(x.kind) + '</span><h3 translate="no">' + esc(x.name) + '</h3>' + (x.tagline ? '<p class="lore-cardtag">' + esc(x.tagline) + '</p>' : '') + '<p>' + esc(x.description) + '</p><span class="veh-go">Voir la fiche</span></div></a>'; }
   const body = `<section class="page-head shell lk-glow"><div class="lk-head-grid"><div>
   <p class="fiche-cat">${esc(H.label)} · GTA VI</p>
-  <h1>${esc(H.title)}</h1>
+  <h1>${nb(esc(H.title))}</h1>
   <p class="lede">${esc(H.lede)}</p>
   <p class="d-intro-note">${esc(H.note)} <a href="tuto.html#sources">Comprendre les statuts</a>.</p>
 </div>${pile}</div></section>

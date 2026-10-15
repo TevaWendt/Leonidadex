@@ -1,0 +1,95 @@
+{
+ "id": "/pt/",
+ "name": "Leonidakit",
+ "short_name": "Leonidakit",
+ "description": "O mapa, seus cadernos, a calculadora e o Léo para o GTA VI: deixe tudo aberto ao lado do console, mesmo sem internet.",
+ "lang": "pt-BR",
+ "dir": "ltr",
+ "start_url": "/pt/",
+ "scope": "/pt/",
+ "display": "standalone",
+ "background_color": "#FDFBF7",
+ "theme_color": "#FDFBF7",
+ "categories": [
+  "games",
+  "entertainment",
+  "utilities"
+ ],
+ "icons": [
+  {
+   "src": "/img/app/icone-192.png",
+   "sizes": "192x192",
+   "type": "image/png",
+   "purpose": "any"
+  },
+  {
+   "src": "/img/app/icone-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "any"
+  },
+  {
+   "src": "/img/app/icone-maskable-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "maskable"
+  }
+ ],
+ "shortcuts": [
+  {
+   "name": "Mapa",
+   "short_name": "Mapa",
+   "url": "/pt/carte.html",
+   "icons": [
+    {
+     "src": "/img/app/raccourci-carte-96.png",
+     "sizes": "96x96",
+     "type": "image/png"
+    }
+   ]
+  },
+  {
+   "name": "Calculadora",
+   "short_name": "Calculadora",
+   "url": "/pt/calculateurs.html",
+   "icons": [
+    {
+     "src": "/img/app/raccourci-calculateur-96.png",
+     "sizes": "96x96",
+     "type": "image/png"
+    }
+   ]
+  },
+  {
+   "name": "Progresso",
+   "short_name": "Progresso",
+   "url": "/pt/progression.html",
+   "icons": [
+    {
+     "src": "/img/app/raccourci-progression-96.png",
+     "sizes": "96x96",
+     "type": "image/png"
+    }
+   ]
+  },
+  {
+   "name": "Modo companheiro",
+   "short_name": "Modo companheiro",
+   "url": "/pt/compagnon.html",
+   "icons": [
+    {
+     "src": "/img/app/raccourci-compagnon-96.png",
+     "sizes": "96x96",
+     "type": "image/png"
+    }
+   ]
+  }
+ ],
+ "launch_handler": {
+  "client_mode": [
+   "navigate-existing",
+   "auto"
+  ]
+ },
+ "prefer_related_applications": false
+}

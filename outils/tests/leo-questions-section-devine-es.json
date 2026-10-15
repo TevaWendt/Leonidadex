@@ -1,0 +1,69 @@
+{
+ "_note": "v7.90 (lot 6) : questions de test de Léo en espagnol sur le jeu « Devine le lieu » (ce que c’est, où est gardé le score). Rejoué par outils/tests/v790.test.cjs (leo-eval.cjs --lang es --questions=outils/tests/leo-questions-section-devine-es.json).",
+ "schemaVersion": 1,
+ "questions": [
+  {
+   "q": "¿qué es adivina el lugar?",
+   "expect": {
+    "topic": "devine-le-lieu"
+   },
+   "tags": [
+    "section-devine"
+   ]
+  },
+  {
+   "q": "¿hay un juego en el mapa?",
+   "expect": {
+    "topic": "devine-le-lieu"
+   },
+   "tags": [
+    "section-devine"
+   ]
+  },
+  {
+   "q": "adivina el lugar",
+   "expect": {
+    "topic": "devine-le-lieu"
+   },
+   "tags": [
+    "section-devine"
+   ]
+  },
+  {
+   "q": "¿qué es el juego del día?",
+   "expect": {
+    "topic": "devine-le-lieu"
+   },
+   "tags": [
+    "section-devine"
+   ]
+  },
+  {
+   "q": "¿se guarda mi puntuación de adivina el lugar?",
+   "expect": {
+    "topic": "devine-le-lieu-score"
+   },
+   "tags": [
+    "section-devine"
+   ]
+  },
+  {
+   "q": "¿dónde se guarda mi puntuación de adivina el lugar?",
+   "expect": {
+    "topic": "devine-le-lieu-score"
+   },
+   "tags": [
+    "section-devine"
+   ]
+  },
+  {
+   "q": "¿adivina el lugar guarda mi racha?",
+   "expect": {
+    "topic": "devine-le-lieu-score"
+   },
+   "tags": [
+    "section-devine"
+   ]
+  }
+ ]
+}

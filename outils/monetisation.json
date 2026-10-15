@@ -1,0 +1,9 @@
+{
+  "_note": "v7.88 : revenus du site, en sommeil. Tant que « actif » vaut false, rien n’apparaît sur le site et les Mentions disent « aucun lien d’affiliation ». Pour activer : remplir « liens » (boutique, adresse https fournie par le programme d’affiliation, édition, plateformes), passer « actif » à true et régénérer (outils/regenerer.cjs) : un bloc « Où l’acheter » apparaît sur editions.html, chaque lien marqué « Lien affilié » (rel=\"sponsored\"), et les Mentions le disent. Un lien affilié est un simple lien : aucun script d’un autre site, aucun cookie posé par Leonidakit. Voir LISEZ-MOI-v7.88.txt avant d’activer (statut de l’éditeur, déclaration des revenus).",
+  "affiliation": {
+    "actif": false,
+    "liens": [
+      { "boutique": "", "url": "", "edition": "Standard", "plateformes": "PS5, Xbox Series X|S" }
+    ]
+  }
+}

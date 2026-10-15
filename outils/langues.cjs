@@ -31,6 +31,7 @@ function deps() {
   return { P5, ACORN };
 }
 const readJSON = (root, f) => JSON.parse(fs.readFileSync(path.join(root, f), 'utf8'));
+const { insecables } = require('./insecables.cjs');
 /* v7.61-v7.64 : « pages »: "*" = toutes les pages françaises du site (racine et dossiers), sauf « exclure » (liste globale
    ou propre à la langue) et les dossiers qui ne sont pas des pages (outils, api, images, Léo, dossiers des langues). Les
    redirections et la page 404 sont traduites aussi (une adresse /es/… inconnue montre la page introuvable en espagnol) ;
@@ -414,8 +415,9 @@ function langBar(file, code, root = ROOT) {
   const cfg = config(root), here = langue(cfg, code), list = cfg.langues.filter(l => l.etat === 'publiee');
   if (list.length < 2) return '';
   const depth = file.split('/').length - 1, inLang = code !== cfg.source;
-  /* 404.html est servie à n'importe quelle adresse : liens absolus */
-  const toRoot = file === '404.html' ? '/' : (inLang ? '../' : '') + '../'.repeat(depth);
+  /* 404.html est servie à n'importe quelle adresse : liens absolus. v7.89 (lot 5) : la page hors connexion aussi (le service
+     worker la montre à la place d'une page jamais vue, à son adresse) */
+  const toRoot = file === '404.html' || file === 'hors-ligne.html' ? '/' : (inLang ? '../' : '') + '../'.repeat(depth);
   const items = list.map(l => {
     const has = l.code === cfg.source || (l.pages || []).includes(file);
     const target = l.code === cfg.source ? file : has ? file : 'index.html';
@@ -428,8 +430,10 @@ function langBar(file, code, root = ROOT) {
       + escText(l.nom) + note + '</a></li>';
   }).join('');
   const label = (here.libelles || {}).changer || 'Langue';
-  return '<div class="lk-langbar" data-lk-langbar translate="no"><div class="shell lk-langbar-in"><details class="lk-lang"><summary aria-label="' + escAttr(label + ' (' + here.nom + ')') + '">' + GLOBE
-    + '<span class="lk-lang-t">' + escText(label) + '</span><span class="lk-lang-code" aria-hidden="true">' + code.toUpperCase() + '</span></summary><ul class="lk-lang-menu">' + items + '</ul></details></div></div>';
+  /* assemblage v7.91 (audit axe-core, « label in name ») : le nom accessible du bouton commence par son texte visible (« Changer la
+     langue FR »), puis le nom de la langue pour les lecteurs d'écran ; plus d'aria-label qui masquait le code visible */
+  return '<div class="lk-langbar" data-lk-langbar translate="no"><div class="shell lk-langbar-in"><details class="lk-lang"><summary>' + GLOBE
+    + '<span class="lk-lang-t">' + escText(label) + '</span><span class="lk-lang-code">' + code.toUpperCase() + '</span><span class="sr-only"> (' + escText(here.nom) + ')</span></summary><ul class="lk-lang-menu">' + items + '</ul></details></div></div>';
 }
 function placeLangBar(html, file, code, root = ROOT) {
   html = html.replace(/<div class="lk-langbar"[^>]*>[\s\S]*?<\/details><\/div><\/div>\n?/g, '');
@@ -586,7 +590,8 @@ function translatePage(html, file, code, ctx) {
       else if (marks(v) !== marks(seg.key)) report.broken.push({ where: file, key: seg.key, value: v });
       else {
         const byId = new Map(); for (const t of seg.inner) if (t.t !== 'text') { const i = seg.ids.get(t.el); byId.set((t.t === 'close' ? '/' : '') + i + (t.t === 'void' ? '/' : ''), srcOf(t)); }
-        const body = typo(v, code).split(/(<\/?\d+\/?>)/).map(p => { const m = p.match(/^<(\/?)(\d+)(\/?)>$/); return m ? byId.get(m[1] + m[2] + m[3]) : escText(p); }).join('');
+        /* lot 1 bis (corrections de l’audit, points 8 et 11) : espaces insécables dans les montants et les dates (outils/insecables.cjs) */
+        const body = insecables(typo(v, code), code).split(/(<\/?\d+\/?>)/).map(p => { const m = p.match(/^<(\/?)(\d+)(\/?)>$/); return m ? byId.get(m[1] + m[2] + m[3]) : escText(p); }).join('');
         const before = toks.slice(0, seg.a).map(srcOf).join(''), after = toks.slice(seg.b + 1).map(srcOf).join('');
         const lead = seg.inner.length && seg.inner[0].t === 'text' ? seg.inner[0].src.match(/^\s*/)[0] : '';
         const last = seg.inner[seg.inner.length - 1], tail = last && last.t === 'text' ? last.src.match(/\s*$/)[0] : '';
@@ -859,7 +864,7 @@ function localScripts(html, file = 'index.html') { return [...html.matchAll(/<sc
 /* fichiers d'un dossier de langue, sous-dossiers compris (chemins relatifs) */
 function filesIn(dir, base = '') { if (!fs.existsSync(dir)) return []; return fs.readdirSync(dir, { withFileTypes: true }).flatMap(x => x.isDirectory() ? filesIn(path.join(dir, x.name), base + x.name + '/') : [base + x.name]); }
 function generer(code, root = ROOT, opts = {}) {
-  const cfg = config(root), lang = langue(cfg, code);
+  const cfg = config(root), lang = langue(cfg, code), partage = require('./gen-partage.cjs');
   if (lang.etat !== 'publiee' && !opts.force) return null;
   const mem = memoire(root, code); mem.used = new Set();
   const report = { code, pages: [], scripts: [], missing: [], broken: [], conflicts: mem.conflicts };
@@ -887,15 +892,23 @@ function generer(code, root = ROOT, opts = {}) {
   /* 2. pages */
   const keepPages = new Set();
   for (const p of lang.pages) {
-    let html = translatePage(fs.readFileSync(path.join(root, p), 'utf8'), p, code, ctx);
+    /* v7.88 : l'image de partage de la page française est retirée avant la traduction, celle de la langue posée après
+       (outils/gen-partage.cjs) */
+    let html = partage.applyMeta(translatePage(partage.strip(fs.readFileSync(path.join(root, p), 'utf8')), p, code, ctx), p, code, root);
+    /* v7.89 (lot 5) : le manifeste de l'appli de cette langue (outils/appli.cjs) */
+    html = require('./appli.cjs').manifesteDe(html, lang.dossier);
+    /* assemblage v7.91 : « GTA 6 » insécable dans les titres et les questions (outils/insecables.cjs) */
+    html = require('./insecables.cjs').insecablesTitres(html);
     /* empreintes des scripts traduits (les autres gardent celle de la page française) */
     html = html.replace(/(<script\b[^>]*\ssrc=")([^"?#]+)(?:\?v=[a-f0-9]+)?(")/g, (m, a, u, b) => { const t = link.target(u, p); return t && ctx.translatedScripts.has(t) ? a + u + '?v=' + hash(outputs.get(lang.dossier + '/' + t)) + b : m; });
     put(lang.dossier + '/' + p, html); keepPages.add(p); report.pages.push(lang.dossier + '/' + p);
   }
+  /* v7.89 (lot 5) : manifeste de l'appli dans la langue (nom, description et raccourcis traduits par la mémoire) */
+  put(lang.dossier + '/manifest.webmanifest', require('./appli.cjs').manifeste(code, t => translateText(t, 'manifest.webmanifest', ctx, ' (manifeste)'), root));
   /* v7.87 : flux RSS des actualités, rendu depuis la page traduite (outils/gen-actus.cjs → rss) */
   { const actus = outputs.get(lang.dossier + '/actus.html'); if (actus) put(lang.dossier + '/actus.xml', require('./gen-actus.cjs').rss(actus, code)); }
   /* 3. pages françaises traduites : hreflang ; sitemap */
-  for (const p of lang.pages) { const f = path.join(root, p), s = fs.readFileSync(f, 'utf8'), n = placeAlternates(titleSeo(s), p, root); if (n !== s) put(p, n); }
+  for (const p of lang.pages) { const f = path.join(root, p), s = fs.readFileSync(f, 'utf8'), n = partage.applyMeta(placeAlternates(titleSeo(s), p, root), p, cfg.source, root); if (n !== s) put(p, n); }
   /* 4. v7.61 : Léo dans cette langue (outils/langues.json → leo) : index et morceaux tirés de l'index français */
   if ((cfg.leo || []).includes(code) && code !== cfg.source) {
     const r = require('./leo-langues.cjs').build(code, root, module.exports, { mem, outputs });
@@ -976,7 +989,9 @@ function sitemap(root = ROOT) {
     const f = path.join(root, fileOf(u)); let html = ''; try { html = fs.readFileSync(f, 'utf8'); } catch (e) { html = ''; }
     const h = printHash(html);
     const old = dates[u]; const d = old && old[0] === h ? old[1] : today;
-    const img = (html.match(/<meta property="og:image" content="([^"]+)"/) || [])[1];
+    /* v7.88 : l'image de partage (titre écrit sur un visuel, outils/gen-partage.cjs) n'est pas une image de la page : c'est
+       l'image suivante (visuel officiel) qui va dans le plan du site */
+    const img = [...html.matchAll(/<meta property="og:image" content="([^"]+)"/g)].map(m => m[1]).find(u => !/\/img\/partage\//.test(u));
     return (seen[u] = { h, d, img: img && !/\/social-card\.png$/.test(img) ? img : null });
   };
   for (const name of ['sitemap.xml', 'sitemap-fiches.xml']) {

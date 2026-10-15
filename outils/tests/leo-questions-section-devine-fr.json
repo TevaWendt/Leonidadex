@@ -1,0 +1,69 @@
+{
+ "_note": "v7.90 (lot 6) : questions de test de Léo en français sur le jeu « Devine le lieu » (ce que c’est, où est gardé le score). Rejoué par outils/tests/v790.test.cjs (leo-eval.cjs --questions=outils/tests/leo-questions-section-devine-fr.json).",
+ "schemaVersion": 1,
+ "questions": [
+  {
+   "q": "c’est quoi devine le lieu ?",
+   "expect": {
+    "topic": "devine-le-lieu"
+   },
+   "tags": [
+    "section-devine"
+   ]
+  },
+  {
+   "q": "un jeu sur la carte ?",
+   "expect": {
+    "topic": "devine-le-lieu"
+   },
+   "tags": [
+    "section-devine"
+   ]
+  },
+  {
+   "q": "devine le lieu",
+   "expect": {
+    "topic": "devine-le-lieu"
+   },
+   "tags": [
+    "section-devine"
+   ]
+  },
+  {
+   "q": "le jeu du jour, c’est quoi ?",
+   "expect": {
+    "topic": "devine-le-lieu"
+   },
+   "tags": [
+    "section-devine"
+   ]
+  },
+  {
+   "q": "mon score de devine le lieu est-il enregistré ?",
+   "expect": {
+    "topic": "devine-le-lieu-score"
+   },
+   "tags": [
+    "section-devine"
+   ]
+  },
+  {
+   "q": "où est gardé mon score de devine le lieu ?",
+   "expect": {
+    "topic": "devine-le-lieu-score"
+   },
+   "tags": [
+    "section-devine"
+   ]
+  },
+  {
+   "q": "devine le lieu garde ma série ?",
+   "expect": {
+    "topic": "devine-le-lieu-score"
+   },
+   "tags": [
+    "section-devine"
+   ]
+  }
+ ]
+}

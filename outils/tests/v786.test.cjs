@@ -18,7 +18,7 @@ const doc = f => new JSDOM(read(f)).window.document;
 const data = (() => { const c = { window: {} }; vm.createContext(c); for (const f of ['vehicules-data.js', 'armes-data.js']) vm.runInContext(read(f), c); return c.window; })();
 const MED = JSON.parse(read('outils/medias-officiels.json')), AM = JSON.parse(read('outils/armes-medias.json'));
 const DP = require(path.join(root, 'outils/donnees-publiees.cjs'));
-const LANGS = ['en', 'es', 'it', 'de'];
+const LANGS = ['en', 'es', 'it', 'de', 'pt']; /* v7.91 : portugais */
 const noindex = d => /noindex/.test((d.querySelector('meta[name="robots"]') || {}).content || '');
 const sitemap = read('sitemap.xml'), sitemapF = read('sitemap-fiches.xml');
 const inSitemap = u => sitemap.includes('<loc>https://www.leonidakit.com/' + u + '</loc>');
@@ -188,12 +188,16 @@ test('mesure d’audience sans cookie : chargée par common.js sur le site publi
 
 test('accueil : compte à rebours sans chiffre figé, jalons officiels du 12 et du 19 novembre', () => {
   const d = doc('index.html');
-  for (const id of ['rd', 'rh', 'rm', 'rs']) assert.equal(d.getElementById(id).textContent.trim(), '–', id);
+  /* lot 1 bis : les cases sont dans le modèle #clock-cases (posées par le script) ; sans script, une date en toutes lettres */
+  for (const id of ['rd', 'rh', 'rm', 'rs']) assert.equal(d.getElementById('clock-cases').content.getElementById(id).textContent.trim(), '–', id);
+  assert.match(d.getElementById('clock').textContent.replace(/[\u00a0\u202f]/g, ' '), /19 novembre 2026/);
   const j = [...d.querySelectorAll('#jalons [data-jalon]')];
   assert.deepEqual(j.map(s => s.dataset.jalon), ['j-avant', 'j-pre', 'j-sorti']);
   assert.deepEqual(j.map(s => s.hidden), [false, true, true]);
   const app = read('app.js');
-  assert.match(app, /const preload = new Date\("2026-11-12T00:00:00"\)/); assert.match(app, /const target = new Date\("2026-11-19T00:00:00"\)/);
+  /* lot 1 bis : une seule constante (window.LK_SORTIE), écrite par outils/sync-site.cjs depuis outils/acquisitions.json */
+  assert.match(app, /^window\.LK_SORTIE = \{"sortie":"2026-11-19T00:00:00","prechargement":"2026-11-12T00:00:00"\};$/m);
+  assert.match(app, /const preload = new Date\(window\.LK_SORTIE\.prechargement\)/); assert.match(app, /const target = new Date\(window\.LK_SORTIE\.sortie\)/);
   for (const l of LANGS) { const t = doc(l + '/index.html'); assert.equal(t.querySelectorAll('#jalons [data-jalon]').length, 3, l); assert.ok(!/Préchargement/.test(t.getElementById('jalons').textContent), l + ' : jalons traduits'); }
   /* v7.87 : les codes des jalons du script de chaque langue sont ceux de sa page (« avant » était traduit dans app.js :
      « before », « antes », « prima », et la ligne restait vide en anglais, en espagnol et en italien) */

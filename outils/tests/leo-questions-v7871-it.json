@@ -1,0 +1,122 @@
+{
+ "_note": "v7.87.1 (passe de qualité des v7.86 et v7.87) : douze questions sur les pages des deux versions (actualités, vidéos, éditions, « Ce qui est confirmé », radios, mesure d’audience), réponse et lien attendus. Rejoué par node outils/tests/leo-eval.cjs --lang it --questions=outils/tests/leo-questions-v7871-it.json (sans --lang pour le français).",
+ "schemaVersion": 1,
+ "questions": [
+  {
+   "q": "qual è l'ultimo annuncio su gta 6",
+   "expect": {
+    "topic": "derniere-annonce",
+    "page": "/actus.html"
+   },
+   "tags": [
+    "v7871"
+   ]
+  },
+  {
+   "q": "tutti gli annunci di gta 6 data per data",
+   "expect": {
+    "page": "/actus.html"
+   },
+   "tags": [
+    "v7871"
+   ]
+  },
+  {
+   "q": "video ufficiali di gta 6",
+   "expect": {
+    "topic": "videos-officielles",
+    "page": "/videos.html"
+   },
+   "tags": [
+    "v7871"
+   ]
+  },
+  {
+   "q": "cosa mostra il trailer 2",
+   "expect": {
+    "topic": "trailer2",
+    "page": "/videos/trailer-2.html"
+   },
+   "tags": [
+    "v7871"
+   ]
+  },
+  {
+   "q": "cos'è l'extended look",
+   "expect": {
+    "topic": "extended",
+    "page": "/videos/extended-look.html"
+   },
+   "tags": [
+    "v7871"
+   ]
+  },
+  {
+   "q": "quali sono le edizioni di gta 6",
+   "expect": {
+    "page": "/editions.html"
+   },
+   "tags": [
+    "v7871"
+   ]
+  },
+  {
+   "q": "cosa contiene l'ultimate edition",
+   "expect": {
+    "topic": "ultime-contenu",
+    "page": "/editions.html"
+   },
+   "tags": [
+    "v7871"
+   ]
+  },
+  {
+   "q": "c'è un disco nella scatola",
+   "expect": {
+    "topic": "physique",
+    "page": "/editions.html"
+   },
+   "tags": [
+    "v7871"
+   ]
+  },
+  {
+   "q": "cosa è confermato su gta 6",
+   "expect": {
+    "topic": "verification",
+    "page": "/verification.html"
+   },
+   "tags": [
+    "v7871"
+   ]
+  },
+  {
+   "q": "chi conduce flash fm",
+   "expect": {
+    "page": "/radios/flash-fm.html"
+   },
+   "tags": [
+    "v7871"
+   ]
+  },
+  {
+   "q": "quali stazioni radio ci sono in gta 6",
+   "expect": {
+    "topic": "radio",
+    "page": "/radios.html"
+   },
+   "tags": [
+    "v7871"
+   ]
+  },
+  {
+   "q": "non essere più contato su questo dispositivo",
+   "expect": {
+    "page": "/mentions-legales.html"
+   },
+   "tags": [
+    "v7871"
+   ]
+  }
+ ]
+}

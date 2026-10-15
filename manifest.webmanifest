@@ -1,0 +1,95 @@
+{
+ "id": "/",
+ "name": "Leonidakit",
+ "short_name": "Leonidakit",
+ "description": "La carte, tes carnets, le calculateur et Léo pour GTA VI, à garder ouverts à côté de ta console, même sans réseau.",
+ "lang": "fr-FR",
+ "dir": "ltr",
+ "start_url": "/",
+ "scope": "/",
+ "display": "standalone",
+ "background_color": "#FDFBF7",
+ "theme_color": "#FDFBF7",
+ "categories": [
+  "games",
+  "entertainment",
+  "utilities"
+ ],
+ "icons": [
+  {
+   "src": "/img/app/icone-192.png",
+   "sizes": "192x192",
+   "type": "image/png",
+   "purpose": "any"
+  },
+  {
+   "src": "/img/app/icone-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "any"
+  },
+  {
+   "src": "/img/app/icone-maskable-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "maskable"
+  }
+ ],
+ "shortcuts": [
+  {
+   "name": "Carte",
+   "short_name": "Carte",
+   "url": "/carte.html",
+   "icons": [
+    {
+     "src": "/img/app/raccourci-carte-96.png",
+     "sizes": "96x96",
+     "type": "image/png"
+    }
+   ]
+  },
+  {
+   "name": "Calculateur",
+   "short_name": "Calculateur",
+   "url": "/calculateurs.html",
+   "icons": [
+    {
+     "src": "/img/app/raccourci-calculateur-96.png",
+     "sizes": "96x96",
+     "type": "image/png"
+    }
+   ]
+  },
+  {
+   "name": "Progression",
+   "short_name": "Progression",
+   "url": "/progression.html",
+   "icons": [
+    {
+     "src": "/img/app/raccourci-progression-96.png",
+     "sizes": "96x96",
+     "type": "image/png"
+    }
+   ]
+  },
+  {
+   "name": "Mode compagnon",
+   "short_name": "Mode compagnon",
+   "url": "/compagnon.html",
+   "icons": [
+    {
+     "src": "/img/app/raccourci-compagnon-96.png",
+     "sizes": "96x96",
+     "type": "image/png"
+    }
+   ]
+  }
+ ],
+ "launch_handler": {
+  "client_mode": [
+   "navigate-existing",
+   "auto"
+  ]
+ },
+ "prefer_related_applications": false
+}

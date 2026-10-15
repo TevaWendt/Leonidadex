@@ -1387,15 +1387,15 @@ body.map-full-on{overflow:hidden;}
 .mk-dot i{
   position:absolute; top:-7px; right:-9px; font-style:normal;
   min-width:17px; height:17px; padding:0 4px; border-radius:100px;
-  background:var(--ink); color:var(--paper); font-size:.62rem; font-weight:900;
+  background:var(--ink); color:var(--paper); font-size:max(11px,.62rem); font-weight:900;
   display:flex; align-items:center; justify-content:center; line-height:1;
   border:1.5px solid var(--paper);
 }
 .mk-dot{position:relative;}
 .mk.z1 .mk-dot{width:15px; height:15px; border-width:2.5px;}
-.mk.z1 .mk-lbl{font-size:.66rem;}
+.mk.z1 .mk-lbl{font-size:max(11px,.66rem);}
 .mk.z2 .mk-dot{width:12px; height:12px; border-width:2px;}
-.mk.z2 .mk-lbl{font-size:.6rem; padding:1px 5px;}
+.mk.z2 .mk-lbl{font-size:max(11px,.6rem); padding:1px 5px;}
 .mk--batiment .mk-dot{border-radius:3px;}
 .mk--transport .mk-dot{border-radius:3px; transform:rotate(45deg);}
 
@@ -1413,7 +1413,7 @@ body.map-full-on{overflow:hidden;}
 }
 .mp-kid:hover{color:var(--coral-text,#B93220);}
 .mp-kid-dot{width:8px; height:8px; border-radius:50%; flex-shrink:0;}
-.mp-kid-st{margin-left:auto; font-style:normal; font-size:.62rem; font-weight:800; border-radius:100px; padding:1px 7px; flex-shrink:0;}
+.mp-kid-st{margin-left:auto; font-style:normal; font-size:max(11px,.62rem); font-weight:800; border-radius:100px; padding:1px 7px; flex-shrink:0;}
 .mp-kid-st--officiel{background:#1A1A1E; color:var(--paper);}
 .mp-kid-st--vu{background:#F3D8A8; color:#6B4A12;}
 .mp-kid-st--spec{background:#FADFD9; color:#9B2E19;}
@@ -1437,7 +1437,7 @@ body.map-full-on{overflow:hidden;}
 .tr-go:hover{background:var(--paper-2);}
 .tr-dot{width:8px; height:8px; border-radius:50%; flex-shrink:0;}
 .tr-n{overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
-.tr-st{margin-left:auto; font-style:normal; font-size:.62rem; font-weight:800; border-radius:100px; padding:1px 6px; flex-shrink:0;}
+.tr-st{margin-left:auto; font-style:normal; font-size:max(11px,.62rem); font-weight:800; border-radius:100px; padding:1px 6px; flex-shrink:0;}
 .tr-st--officiel{background:#1A1A1E; color:var(--paper);}
 .tr-st--vu{background:#F3D8A8; color:#6B4A12;}
 .tr-st--spec{background:#FADFD9; color:#9B2E19;}
@@ -1665,7 +1665,7 @@ body.map-full-on{overflow:hidden;}
 .veh-thumb--arm .veh-art{opacity:.9;}
 .arm-slot{
   position:absolute; right:9px; bottom:9px; z-index:2;
-  font-size:.62rem; font-weight:800; letter-spacing:.04em; text-transform:uppercase;
+  font-size:max(11px,.62rem); font-weight:800; letter-spacing:.04em; text-transform:uppercase;
   border-radius:100px; padding:3px 9px;
 }
 .arm-slot--longue{background:var(--ink); color:var(--paper);}
@@ -3505,3 +3505,37 @@ a[data-newtab][href]{padding-right:1.05em;background-image:url("data:image/svg+x
 .clock-news-k{font-weight:800;color:var(--ink);}
 .clock-news a{color:var(--ink);font-weight:700;text-decoration:underline;text-decoration-color:var(--coral);text-underline-offset:3px;}
 .clock-news a.clock-news-all{font-weight:600;color:var(--coral-text);}
+/* lot 1 bis (corrections de l’audit, points 1, 2 et 12) : compte à rebours de l’accueil. Sans script : « Sortie le jeudi
+   19 novembre 2026 » (plus de cases figées) ; avec : les cases, et « Minuit, heure locale » dessous ; à la sortie, « GTA VI est
+   sorti » et deux liens. La boîte garde la hauteur des cases (aucun saut quand le script les pose). */
+.clock-box{display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0;}
+.clock{min-height:3.35rem;align-items:flex-start;}
+.clock-repli{margin:0;align-self:center;font-weight:900;font-size:1.25rem;line-height:1.2;letter-spacing:-.02em;color:var(--ink);text-wrap:balance;}
+.clock-tz{margin:0;font-size:.76rem;font-weight:600;color:var(--ink-soft);}
+.clock-tz::before{content:'';display:inline-block;width:7px;height:7px;margin-right:7px;border-radius:50%;border:1.5px solid var(--ink-soft);vertical-align:.04em;}
+.clock-tz[hidden],.clock-sorti[hidden]{display:none;}
+.clock-sorti{display:flex;flex-direction:column;align-items:flex-end;gap:8px;}
+.clock-sorti-t{margin:0;font-weight:900;font-size:1.7rem;line-height:1.1;letter-spacing:-.025em;color:var(--ink);}
+.clock-sorti-l{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px;margin:0;}
+.clock-sorti-l a{display:inline-flex;align-items:center;min-height:44px;padding:9px 15px;border:2px solid var(--ink);border-radius:var(--radius-s);background:var(--amber);color:var(--ink);font-weight:800;font-size:.9rem;text-decoration:none;box-shadow:3px 3px 0 var(--ink);transition:transform var(--dur) var(--ease-out),box-shadow var(--dur) var(--ease-out);}
+.clock-sorti-l a+a{background:#fff;}
+.clock-sorti-l a:hover,.clock-sorti-l a:focus-visible{transform:translate(-2px,-2px);box-shadow:var(--shadow-hard);}
+@media (max-width:820px){.clock-box,.clock-sorti{width:100%;align-items:flex-start;}.clock{min-height:3rem;}.clock-sorti-l{justify-content:flex-start;}}
+@media (prefers-reduced-motion:reduce){.clock-sorti-l a{transition:none;}.clock-sorti-l a:hover{transform:none;}}
+/* point 2 : sous les compteurs des fiches et des pages de section, l’heure visée (posée par app.js, traduite) */
+.fcount-tz{font-size:.74rem;font-weight:600;color:#BBB5C4;white-space:nowrap;}
+/* point 4 : un titre animé mot par mot passe à la ligne (chaque mot est un élément flex : sans retour, « Deinen Fortschritt
+   sichern oder übertragen » sortait de l’écran) */
+.sec-h.lk-words{flex-wrap:wrap;row-gap:2px;}
+.sec-h.lk-words::after{min-width:24px;}
+/* point 5 : un long libellé allemand des fiches se coupe à la bonne syllabe plutôt que de recouvrir la valeur */
+.doc-row dt{hyphens:auto;-webkit-hyphens:auto;overflow-wrap:break-word;}
+/* point 8 : titres de fin de page équilibrés (plus d’année seule sur la dernière ligne) */
+.lk-outro h2{text-wrap:balance;}
+/* point 9 : « Le monde de Leonida » a le même espace au-dessus que les autres sections de l’accueil */
+.lore-sec#monde{padding-top:58px;}
+/* point 14 : une puce ne reste plus seule sur sa ligne : les rangées de puces s’équilibrent */
+.lk-chips{display:block;text-align:center;text-wrap:balance;}
+.lk-chips a{margin:5px 6px;vertical-align:middle;}
+.fcount-tz::before{content:'(';}
+.fcount-tz::after{content:')';}

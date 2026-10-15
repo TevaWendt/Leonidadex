@@ -1,0 +1,94 @@
+{
+ "_note": "v7.89 (lot 5) : questions de test de Léo (en) sur l'appli installable, le site sans réseau et le transfert du suivi d'un appareil à l'autre (sujets installer-site, hors-connexion, changer-telephone). Rejoué par outils/tests/v789.test.cjs (leo-eval.cjs, --questions).",
+ "schemaVersion": 1,
+ "questions": [
+  {
+   "q": "how do i install the app",
+   "expect": {
+    "topic": "installer-site"
+   },
+   "tags": [
+    "v789"
+   ]
+  },
+  {
+   "q": "is there an app for leonidakit",
+   "expect": {
+    "topic": "installer-site"
+   },
+   "tags": [
+    "v789"
+   ]
+  },
+  {
+   "q": "add leonidakit to my home screen",
+   "expect": {
+    "topic": "installer-site"
+   },
+   "tags": [
+    "v789"
+   ]
+  },
+  {
+   "q": "does the site work offline",
+   "expect": {
+    "topic": "hors-connexion"
+   },
+   "tags": [
+    "v789"
+   ]
+  },
+  {
+   "q": "can i use the map without internet",
+   "expect": {
+    "topic": "hors-connexion"
+   },
+   "tags": [
+    "v789"
+   ]
+  },
+  {
+   "q": "airplane mode does it work",
+   "expect": {
+    "topic": "hors-connexion"
+   },
+   "tags": [
+    "v789"
+   ]
+  },
+  {
+   "q": "i got a new phone, how do i transfer my progress",
+   "expect": {
+    "topic": "changer-telephone"
+   },
+   "tags": [
+    "v789"
+   ]
+  },
+  {
+   "q": "move my progress to another device",
+   "expect": {
+    "any": [
+     {
+      "topic": "changer-telephone"
+     },
+     {
+      "topic": "faq-export"
+     }
+    ]
+   },
+   "tags": [
+    "v789"
+   ]
+  },
+  {
+   "q": "transfer link qr code",
+   "expect": {
+    "topic": "changer-telephone"
+   },
+   "tags": [
+    "v789"
+   ]
+  }
+ ]
+}

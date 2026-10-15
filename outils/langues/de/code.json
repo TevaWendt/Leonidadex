@@ -172,6 +172,8 @@
   "script[type=\"lk/lazy\"][src*=\"search-index.js\"]",
   "script[type=\"lk/lazy\"][src*=\"search-lieux.js\"]",
   "script[type=\"lk/lazy\"][src]",
+  "script[type=\"lk/lazy\"][data-lk-idle][src]",
+  "script[type=\"lk/lazy\"][data-lk-idle]",
   "mode:",
   ":message:",
   "page:",
@@ -187,6 +189,7 @@
   "tri"
  ],
  "leo-core.js::pour": [],
+ "leo-core.js::$1 millions": [],
  "leo-core.js::maintenant": [],
  "leo-core.js::je veux": [],
  "leo-core.js::je sais pas": [],
@@ -218,5 +221,12 @@
  "leo-core.js::laquelle": [],
  "leo-core.js::progression": [],
  "leo-core.js::listes": [],
- "leo-ui.js::calculateur": []
+ "leo-ui.js::calculateur": [],
+ "transfert.js::E_ABIME": "=",
+ "transfert.js::E_TAILLE": "=",
+ "transfert.js::E_VERSION": "=",
+ "transfert.js::E_ORIGINE": "=",
+ "transfert.js::E_NAVIGATEUR": "=",
+ "transfert.js::E_STOCKAGE": "=",
+ "transfert.js::Envies": "Wünsche"
 }

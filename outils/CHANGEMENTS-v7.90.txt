@@ -1,0 +1,172 @@
+LEONIDAKIT v7.90 (lot 6) — Jeu « Devine le lieu » : une image officielle, six régions, la carte apprise en jouant
+— préparé le 12 octobre 2026, livré le 14 octobre 2026
+
+Base : v7.87 (commit 210850a). Lot 6 du plan v7.90 (lots 3, 5, 6 et 7 menés en parallèle, réunis par une conversation
+d'assemblage qui régénère tout une seule fois). Rien n'est publié ni poussé. CSP inchangée. Un fichier à supprimer,
+hors lot : api/ia-achat.js (retiré en v7.71 mais resté dans le dépôt ; voir CONTRÔLES).
+Aucun cookie, aucune ressource d'un autre site, une seule clé de stockage (lk_devine_v1), décrite dans les Mentions.
+
+1. LE JEU (devine-le-lieu.html ; outils/gen-devine.cjs, outils/devine/devine.json, devine.js, devine.css)
+- Partie du jour : cinq images, les mêmes pour tout le monde, tirées d'après la date de Paris
+  (Intl.DateTimeFormat, fuseau Europe/Paris ; le jour change à minuit heure de Paris, été comme hiver). Tirage
+  déterministe (empreinte FNV-1a + générateur mulberry32, sans réseau) : les 40 images forment des cycles de huit jours
+  où chacune passe une fois ; dans une partie, cinq images différentes et deux au plus d'une même région ; jamais une
+  image de la veille (y compris d'un cycle au suivant). outils/gen-devine.cjs vérifie ces trois règles sur trois ans de
+  tirages à chaque génération et s'arrête au moindre écart. Numéro du jour : n° 1 le 12 octobre 2026 (« debut »).
+- Réponse : six boutons (noms officiels des régions) ou la carte du site (repères des six régions, cibles de 44 px) ;
+  la bonne région s'allume (✓, couleur ambre), la mauvaise réponse est marquée (✗, en corail) et un trait la relie
+  à la bonne sur la carte ; sur l'image, le verdict (« ✓ Juste · Vice City ») ; dessous, ce que montre l'image, son titre
+  officiel (« Vice City 04 »), sa légende et le lien vers la fiche de la région ; puis « Image suivante » (le focus y va,
+  et revient aux régions sur l'image suivante). Aucune information portée par la seule couleur.
+- Résultat : score, les cinq images (vignette, titre, région, ta réponse si elle était fausse, lien vers la fiche),
+  phrase selon le score, série de jours joués (jours de suite où la partie du jour a été finie ; Intl.PluralRules pour
+  « 1 jour / 2 jours » dans chaque langue), meilleur score, compte à rebours jusqu'à minuit heure de Paris (le passage à
+  l'heure d'hiver ou d'été est calculé, pas supposé), puis « Jouer la nouvelle partie » quand elle est prête.
+- Partage : « Partager mon résultat » ouvre le menu de partage de l'appareil (navigator.share), sinon copie le texte ;
+  « Copier » à côté (presse-papiers, sinon sélection du texte). Texte : « Leonidakit · Devine le lieu n° 3 : 4/5 », une
+  ligne par image (« 1 ✅ », « 2 ❌ »…), l'adresse de la page de la langue ; ni image ni donnée de l'appareil.
+- Partie libre : des images au hasard, sans limite (jamais deux fois la même de suite), sans rien enregistrer.
+- Stockage : un seul objet versionné sous lk_devine_v1 ({ v: 1, jour, serie, best }), validé à la lecture (un état
+  abîmé est ignoré), écrit seulement après la première réponse ; rechargée, la page reprend la partie en cours ou
+  remontre le résultat du jour.
+- Accessibilité : tout au clavier, focus visible, noms accessibles, région « aria-live » qui annonce chaque image,
+  chaque réponse et la fin ; textes pour les lecteurs d'écran sur la bonne réponse et sur la tienne ; lang de la page.
+- Sans JavaScript : un message dit que le tirage se fait dans le navigateur, et la page garde les règles, les six
+  régions et leurs fiches, la provenance des images et les questions.
+- Mouvement (devine.css, jetons de motion-tokens.css) : l'image distribuée comme une carte depuis un petit paquet
+  (dos « ? » couleur nuit), l'ancienne qui s'efface, le verdict qui monte, le trait tracé sur la carte, l'anneau autour
+  de la bonne région ; sections de la page en apparition au défilement par LKMotion (common.js), cascade 35-60 ms
+  plafonnée à 300 ms ; « réduire les animations » : tout est posé sans mouvement.
+- Mise en page : en-tête compact (titre et explication côte à côte à partir de 1 000 px, pour que le jeu soit dans le
+  premier écran), jeu en deux colonnes (image et réponses à gauche, carte à droite) à partir de 1 000 px, une colonne
+  en dessous avec la carte limitée à 480 px ; hauteur de l'image bornée par la hauteur de l'écran ; boutons en trois
+  colonnes, deux sous 600 px ; résultat en cinq colonnes, rangées sous 900 px. Sous-navigation collante (Le jeu, Les
+  régions, Les règles, Les images, Questions), sections du moteur commun (outils/sections.cjs, lk-sections),
+  puces « Explorer » du pied de page. Pas de pile d'images dans l'en-tête ni d'encart du calculateur : toute capture
+  officielle rangée par région est une réponse du jeu, et le calculateur n'a pas de rapport avec cette page.
+- Données structurées : WebPage, BreadcrumbList, FAQPage (depuis les questions visibles) ; aucun avis ni note. Titre
+  « Devine le lieu : le jeu du jour sur la carte de GTA 6 », description de 135 à 151 signes selon la langue, image de
+  partage officielle (carte postale de Vice City).
+
+2. LES IMAGES (outils/devine/devine.json → images, series, source)
+- Seulement les images que Rockstar a rangées par région sur sa page des captures de GTA VI
+  (https://www.rockstargames.com/VI/media/screenshots, consultée le 12/10/2026) : Vice City, Leonida Keys, Grassrivers,
+  Port Gellhorn, Ambrosia, Mount Kalaga National Park. Le jeu reprend celles que le site a déjà dans ses visuels
+  officiels (img/officiel/, outils/medias-officiels.json), toutes : 40 images (Mount Kalaga 6, Ambrosia 5, Port
+  Gellhorn 6, Vice City 11, Grassrivers 6, Leonida Keys 6). Aucune image ajoutée au site, aucune position précise.
+- La région de chaque image est celle de sa série : outils/gen-devine.cjs refuse une image dont l'identifiant ou le
+  fichier d'origine sort de la série, dont la source n'est pas la page des captures, sans crédit « Rockstar Games », sans
+  ses fichiers 480 / 1 280 px, dont le texte alternatif nomme une région (il donnerait la réponse), et toute image d'une
+  série présente dans les visuels du site mais oubliée par le jeu.
+- Textes alternatifs écrits pour le jeu (ce qu'on voit, sans lieu, « capture officielle de GTA VI ») ; légendes reprises
+  des galeries du site, quatre nouvelles pour les images de Vice City qui n'en avaient pas.
+- Vice City 07 et Ambrosia 05 sont sur la page de Rockstar mais pas dans les visuels du site : non reprises.
+
+3. LIENS DANS LE SITE
+- Menu et pied de page : « Devine le lieu » en dernier dans le groupe « Jouer » (outils/site-shell.cjs ; les puces
+  « Explorer » des pages du groupe suivent). Préparé dans la source : l'assemblage régénère toutes les pages.
+- Page Lieux : encart « Le jeu du jour » (outils/lore-gen.js → promo de outils/gen-devine.cjs, brique lk-entry-card).
+- Fiches des six régions : lien « Devine le lieu » parmi les liens de l'en-tête (Lire le dossier, Voir sur la carte…).
+- Recherche du site : outils/devine-index.json (écrit par gen-devine), ajouté à l'index par outils/sync-site.cjs, avec
+  les mots du joueur (quiz, devinette, jeu de la carte, geoguessr…).
+- Plan du site : devine-le-lieu.html dans les cinq langues, date de contenu réelle (outils/sitemap-dates.json).
+- outils/regenerer.cjs : gen-devine.cjs après gen-actus.cjs.
+
+4. LÉO (cinq langues)
+- outils/leo-knowledge.json : sujets « devine-le-lieu » (ce que c'est, « un jeu sur la carte ? », « devine le lieu »,
+  « le jeu du jour »…) et « devine-le-lieu-score » (ce qui est gardé, où, le partage, la partie libre), avec leurs liens
+  (le jeu, Lieux, les Mentions). outils/leo-editorial.json : suggestions de la page du jeu ; leo-core.js : la page du jeu
+  propose ces suggestions.
+- Questions dans les autres langues : ponts de lecture (outils/langues/en/leo-pivot.json, de/leo-pivot.json,
+  es/_leo-pont.json, it/_leo-pont.json : « guess the location », « errate den Ort », « adivina el lugar », « indovina il
+  luogo », « streak », « racha », « Bestwert »…). Questions de test : outils/tests/leo-questions-section-devine-<code>.json
+  (7 par langue), rejouées par leo-eval dans v790.test.cjs : 7/7 dans chaque langue.
+
+5. MENTIONS ET CONFIDENTIALITÉ
+- Liste du stockage (outils/gen-informations.cjs) : « Devine le lieu : tes réponses de la partie du jour, ta série de
+  jours joués et ton meilleur score (lk_devine_v1), écrits à ta première réponse ; la partie libre ne garde rien. Le
+  partage n'envoie que le texte de ton résultat, vers l'application que tu choisis. »
+- Historique (outils/site-informations.json) : entrée v7.90 du 12 octobre 2026.
+
+6. LANGUES
+- outils/langues/<code>/v790.json : 177 textes en anglais, espagnol, italien et allemand (page du jeu, 40 textes
+  alternatifs, messages du script lus dans la page, menu, puces, Lieux, fiches, Mentions, Léo, recherche), traduits
+  puis contrôlés par script (repères, champs {…}, fin des textes alternatifs, aucun nom de région dans un texte
+  alternatif, aucun mot français, description ≤ 155 signes) et relus par un second relecteur (14 retouches).
+  Nom du jeu : « Guess the Location », « Adivina el lugar », « Indovina il luogo », « Errate den Ort ».
+- devine.js ne contient aucun texte : tout est lu dans la page (modèle <template id="dv-msg">), donc traduit avec elle.
+- Extraction finale : 0 texte sans traduction dans chaque langue.
+
+7. TESTS
+- outils/tests/v790.test.cjs (nouveau, 11 tests) : images et séries (région établie, fichier, source, crédit) ; la
+  génération s'arrête sur une image douteuse (région, texte alternatif, source, image oubliée) ; tirage (déterministe,
+  sans doublon, deux au plus par région, rien deux jours de suite, sur trois ans ; chaque image autant de fois) ; jour à
+  Paris et prochain minuit aux changements d'heure ; score, série, meilleur score, état versionné ; texte de partage ;
+  partie complète dans la page (jsdom) ; page dans les cinq langues (aucune requête réseau, aucun texte dans le script,
+  titre, hreflang, données structurées, accessibilité, sans script) ; partie en allemand ; liens (menu, pied, Lieux,
+  fiches, recherche, plan du site, Léo, Mentions) ; Léo dans les cinq langues.
+- outils/tests/v790-browser.cjs (nouveau) : Chromium, français et allemand, 390 et 1 280 px : partie au clavier et à la
+  souris, annonces, verdicts sans la seule couleur, stockage, résultat, partage et copie, partie libre, rechargement,
+  aucune erreur, aucune requête extérieure, aucun cookie ; « réduire les animations » ; sans JavaScript.
+- outils/tests/v790-latence.cjs (nouveau) : latence avant / après (méthode de la charte).
+
+CONTRÔLES (14 octobre 2026)
+- Jeu : v790.test.cjs 11/11 ; navigateur (v790-browser.cjs) 143/143 contrôles (français et allemand, 390 et 1 280 px,
+  « réduire les animations », sans JavaScript).
+- Suite Node (80 fichiers, 1 069 tests) : 1 065 réussis, 4 échecs, les mêmes que sur la base v7.87 : api/ia-achat.js,
+  supprimé en v7.71, est toujours dans le dépôt (contact-v746 : liste des fonctions serveur ; ia-v769 et v771 : « plus de
+  fonction d'achat » ; preuve de confidentialité : « fonctions serveur » des Mentions). Fichier retiré (à supprimer du
+  dépôt, voir le LISEZ-MOI) : les trois fichiers de tests relancés, 23/23.
+- Cadre du calculateur : identique (150 vues, 22 860 lignes, styles identiques).
+- Langues (langues.test.cjs) : 42/42. Extraction : 0 texte sans traduction dans les quatre langues.
+- Vérificateur : 340 952 références dans 2 316 pages, aucune erreur. Preuve de confidentialité : toutes les affirmations
+  des Mentions tenues (dont la clé lk_devine_v1, lue dans le code et décrite).
+- Navigateur : pages des quatre langues 28/28 ; langues 2 267/2 267 (aucun mot français visible, montants, aucune erreur
+  JavaScript) ; écrans, 62 pages × 16 largeurs (992 chargements, la page du jeu comprise) : aucun débordement, rapport
+  identique ligne à ligne à celui de la base (24 coquilles, 39 rangées, 21 coupes, 16 mots, 154 petits textes, tous
+  connus, aucun sur les pages du lot) ; allemand, 59 pages × 5 largeurs : identique (10, 7, 5, 45) ; audit de clôture,
+  26 pages, 182 chargements : 0 erreur console, 0 requête en échec, 0 contraste insuffisant (11 545 vérifiés), 0 cible
+  sous 24 px, 12/12 fonctions ; cookies dans Chromium : 17 pages, 0 cookie, 0 en-tête Set-Cookie, clés « lk » seulement.
+- Après la dernière retouche (devine.css : transparences en color-mix sur les jetons, même rendu ; donnée inutilisée
+  retirée de devine.json) : génération du jeu (page identique hors empreintes), fin de chaîne, puis v790 11/11,
+  navigateur 143/143, vérificateur, preuve de confidentialité, cadre du calculateur relancés.
+
+LATENCE (outils/tests/v790-latence.cjs : Chromium, 390 px, 4G lente 150 ms / 1,6 Mbit/s, processeur ×4 ; à froid puis à
+chaud ; base v7.87 et travail servis côte à côte, en alternance, ordre inversé à chaque tour ; médianes de 6 tours)
+                         premier rendu      DOMContentLoaded   plus grand élément   processeur        octets (froid)
+                         base → travail     base → travail     base → travail       base → travail    base → travail
+  accueil (froid)        3 272 → 3 268      3 446 → 3 514      3 272 → 3 268        2 008 → 2 053     541 515 → 541 611
+  Lieux (froid)          4 276 → 4 320      4 975 → 4 966      4 500 → 4 320        2 966 → 2 872     1 300 638 → 1 301 171
+  fiche Vice City        4 000 → 4 036      4 187 → 4 213      4 000 → 4 036        1 834 → 1 881     717 317 → 717 470
+  Mentions (10 tours)    3 444 → 3 424      3 674 → 3 658      3 444 → 3 424        1 877 → 1 739     643 587 → 644 334
+  Radios (témoin)        4 984 → 4 836      5 340 → 5 283      4 984 → 4 836        2 777 → 2 883     916 507 → 916 651
+  Actualités (témoin)    3 828 → 3 788      4 148 → 4 204      3 828 → 3 788        2 434 → 2 401     753 231 → 753 327
+  À chaud, mêmes pages : premier rendu 508 → 492, 452 → 368, 324 → 336, 416 → 392, 488 → 348, 388 → 380 ms.
+  Les écarts restent de l'ordre de 2 % dans les deux sens, comme sur Radios et Actualités, dont le contenu ne change
+  pas (seulement le lien du menu) : c'est le bruit de la mesure. Poids : + 96 octets par page (le lien du menu), + 0,5 Ko
+  pour Lieux (l'encart), + 0,7 Ko pour les Mentions. Une première mesure avec la base toujours mesurée en premier
+  donnait, sur Actualités seulement, un plus grand élément plus tardif : l'élément retenu y hésite entre le titre et
+  l'image (relevé dans les deux versions) ; avec l'ordre alterné, les deux versions sont identiques (3 856 ms, 10 tours).
+- Page nouvelle, devine-le-lieu.html (froid / chaud) : premier rendu 3 600 / 296 ms, DOMContentLoaded 3 922 / 922 ms,
+  plus grand élément 4 192 / 296 ms (l'image du jour, choisie par le script), processeur 2 186 / 1 373 ms, 882 Ko à
+  froid (allemand : 3 624 ms, 4 268 ms, 2 124 ms). Pages de même type, même mesure : Radios 4 836 ms / 4 836 ms / 2 883 ms,
+  917 Ko ; Actualités 3 788 ms / 3 788 ms / 2 401 ms, 753 Ko. Premier rendu, DOMContentLoaded et processeur plus bas que
+  les deux ; le plus grand élément est une image (le titre pour Actualités), demandée dès que le script a tiré le jour.
+
+FICHIERS (par rapport à la v7.87 : 26 ajoutés, 2 343 modifiés, 1 supprimé)
+- Ajoutés : devine-le-lieu.html et ses versions en/ es/ it/ de/ ; devine.js, devine.css ; outils/gen-devine.cjs,
+  outils/devine/devine.json, outils/devine-index.json ; outils/langues/{en,es,it,de}/v790.json ;
+  outils/tests/v790.test.cjs, v790-browser.cjs, v790-latence.cjs, leo-questions-section-devine-{fr,en,es,it,de}.json ;
+  outils/assemblage/lot6-devine.diff ; LISEZ-MOI-v7.90.txt, outils/CHANGEMENTS-v7.90.txt, outils/MATRICE-v7.90.md.
+- Sources modifiées à la main : outils/regenerer.cjs, outils/site-shell.cjs, outils/sync-site.cjs, outils/lore-gen.js,
+  outils/gen-informations.cjs, outils/site-informations.json, outils/leo-knowledge.json, outils/leo-editorial.json,
+  leo-core.js, outils/langues/{en,de}/leo-pivot.json, outils/langues/{es,it}/_leo-pont.json, README.md (diff complet
+  dans outils/assemblage/lot6-devine.diff).
+- Produits par la régénération : pages dont le contenu change (Lieux, les six fiches des régions, Mentions, À propos,
+  dans les cinq langues), index de recherche, plans du site, Léo (leo-index.json, leo/, et leurs versions traduites),
+  outils/sitemap-dates.json, outils/leo-index-manifest.json ; et, seulement par le menu, le pied de page, les puces et
+  les empreintes, toutes les autres pages et quelques scripts (2 196 fichiers, laissés hors de l'archive : la
+  régénération de l'assemblage les refait).
+- Supprimé : api/ia-achat.js (hors lot ; retiré en v7.71, resté dans le dépôt).
+- Archive : Leonidakit-v7.90-lot6-modifs.zip (173 fichiers). Vérifiée : base v7.87 + archive + suppression de
+  api/ia-achat.js + fin de chaîne (gen-leo, sync-site, gen-leo --check) = ce commit, fichier pour fichier.

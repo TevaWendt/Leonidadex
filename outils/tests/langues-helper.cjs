@@ -29,6 +29,13 @@ const FR_WORDS_ES = new Set([...FR_WORDS, 'mission', 'missions', 'budget', 'part
 const IT_SHARED = new Set(['le', 'la', 'il', 'un', 'tu', 'qui', 'ce', 'sa', 'non', 'se', 'ne', 'quel', 'quelle', 'mille', 'est', 'plan', 'budget', 'a', 'ma', 'on', 'son', 'ton', 'par', 'en', 'fiche', 'fiches', 'y']);
 const FR_WORDS_IT = new Set([...FR_WORDS, 'mission', 'missions', 'parties', 'sont', 'était', 'faut', 'votre', 'notre', 'lieu', 'lieux', 'voiture', 'voitures', 'bateau', 'bateaux', 'trouver', 'acheter',
   'nouveau', 'nouvelle', 'dernier', 'plusieurs', 'beaucoup', 'toujours', 'jamais', 'chose', 'choses', 'entreprise', 'quartier'].filter(w => !IT_SHARED.has(w)));
+/* v7.91 (portugais du Brésil) : mots que le portugais partage avec le français (« de », « a », « as », « que », « se », « mais »
+   = plus, « ou », « tu », « par » = paire, « entre », « à » = crase, « si ») : ne comptent pas en portugais ; le portugais écrit
+   aussi â ê ô ç à é : seuls è ë î ï û ù œ æ, ou une finale -ité, -ée, -ément, -eux, -eaux trahissent le français. */
+const PT_SHARED = new Set(['de', 'a', 'as', 'que', 'se', 'mais', 'ou', 'tu', 'par', 'entre', 'à', 'si', 'plan', 'budget', 'total', 'simples', 'menu', 'sem']); /* « sem » : « sans » en portugais (« sem conta », « sem IA »), « semaine » abrégé en français */
+const FR_WORDS_PT = new Set([...FR_WORDS, 'mission', 'missions', 'parties', 'sont', 'était', 'faut', 'votre', 'notre', 'lieu', 'lieux', 'voiture', 'voitures', 'bateau', 'bateaux', 'trouver', 'acheter',
+  'nouveau', 'nouvelle', 'dernier', 'plusieurs', 'beaucoup', 'toujours', 'jamais', 'chose', 'choses', 'entreprise', 'quartier', 'sortie'].filter(w => !PT_SHARED.has(w)));
+const PT_SHAPE = w => /[èëîïûùœæ]/.test(w) || /(?:ité|ités|ée|ées|ément|eux|eaux)$/.test(w);
 /* italien : l'accent n'est écrit que sur la dernière voyelle (« città », « perché », « più ») ; un accent ailleurs
    (« véhicule », « très »), un accent propre au français (â ç ê ë î ï ô û œ) ou une finale « é » qui n'est pas italienne
    (« acheté », « activité » ; l'italien n'a que « perché », « né », « sé », « ventitré »…) trahissent le français. */
@@ -57,9 +64,12 @@ const ACCENT_OK_DE = /coupé|déco/;
 function words(text) { return String(text || '').toLowerCase().replace(/[  ]/g, ' ').split(/[^a-zß-öø-ÿœæ’'-]+/).map(w => w.replace(/^[’'-]+|[’'-]+$/g, '')).filter(Boolean); }
 /* Renvoie la liste des mots qui trahissent du français (vide = rien trouvé). */
 function frenchHits(text, lang = 'en') {
-  const hits = [], es = lang === 'es', it = lang === 'it', de = lang === 'de', list = es ? FR_WORDS_ES : it ? FR_WORDS_IT : FR_WORDS, accents = es ? /[àâçèêëîïôûùœ]/ : de ? ACCENTS_DE : /[àâçéèêëîïôûùüœ]/, same = SAME_AS_FR[lang];
+  const hits = [], es = lang === 'es', it = lang === 'it', de = lang === 'de', pt = lang === 'pt', list = es ? FR_WORDS_ES : it ? FR_WORDS_IT : pt ? FR_WORDS_PT : FR_WORDS, accents = es ? /[àâçèêëîïôûùœ]/ : de ? ACCENTS_DE : /[àâçéèêëîïôûùüœ]/, same = SAME_AS_FR[lang];
   let t = String(text || ''); for (const p of PROPER) t = t.split(p).join(' ');
+  /* v7.88 : une adresse citée dans le texte (« leonidakit.com/de/carte.html ») n'est pas du français : « de » y est le dossier */
+  t = t.replace(/(?:https?:\/\/)?(?:www\.)?[a-z0-9-]+(?:\.[a-z0-9-]+)*\.(?:com|net|org|fr|de|es|it|io|gg|tv|co|uk)(?:\/[^\s)»”"’]*)?/gi, ' ');
   t = t.replace(/(^|[^A-Za-zÀ-ÿ])[A-ZÀ-Ý]{2,3}(?![A-Za-zÀ-ÿ’'])/g, '$1 ');   // sigles et monogrammes (« DU » pour Dundreary, « LE », « RS »)
+  if (pt) t = t.replace(/(^|[^A-Za-zÀ-ÿ])Y(?![A-Za-zÀ-ÿ’'])/g, '$1 ');   // v7.91 : « entradas de ar em Y » : la lettre (une forme), pas le « y » français, que le portugais n’a pas
   if (/^(?:De|LA|ÜB)$/.test(t.trim())) return [];   // morceau de nom isolé dans sa balise (« De » de De Hoop)
   for (const w of words(t)) {
     if (ALLOW.has(w) || ALLOW.has(w.replace(/’s$/, ''))) continue;   // nom propre, aussi au possessif anglais (Léo’s)
@@ -74,6 +84,7 @@ function frenchHits(text, lang = 'en') {
     const base = w.replace(/^(?:l|d|j|t|s|n|qu|c)’/, '');
     if (base !== w && base.length > 1) { hits.push(w); continue; }   // l’objectif, d’abord, j’ai…
     if (list.has(w)) { hits.push(w); continue; }
+    if (pt) { if (PT_SHAPE(w)) hits.push(w); continue; }   /* v7.91 : le portugais a ses propres accents (voir PT_SHAPE) */
     if ((accents.test(w) && !(de && ACCENT_OK_DE.test(w))) || es && ES_SHAPE.test(w)) hits.push(w);
   }
   return hits;
@@ -211,4 +222,4 @@ function foreignHits(text, lang = 'en') {
   }
   return out;
 }
-module.exports = { frenchHits, englishHits, foreignHits, FR_WORDS, FR_WORDS_ES, FR_WORDS_IT, ALLOW, PROPER, EN_WORDS, EN_KEEP, EN_MIN, CHECKS };
+module.exports = { frenchHits, englishHits, foreignHits, FR_WORDS, FR_WORDS_ES, FR_WORDS_IT, FR_WORDS_PT, ALLOW, PROPER, EN_WORDS, EN_KEEP, EN_MIN, CHECKS };

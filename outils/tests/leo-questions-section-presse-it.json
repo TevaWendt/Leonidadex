@@ -1,0 +1,121 @@
+{
+ "_note": "v7.88 : questions de test de Léo en italien pour la page « Presse et créateurs » : « questions » doivent mener au sujet presse (ou, pour le logo et les captures à télécharger, à un passage de la page Presse), ou au sujet apercus-presse pour ce que dit la presse du jeu ; « hors_presse » sont des questions sur le jeu qui ne doivent jamais recevoir le sujet presse. Rejoué par outils/tests/v788.test.cjs et, pour « questions », par node outils/tests/leo-eval.cjs --lang it --questions=outils/tests/leo-questions-section-presse-it.json.",
+ "schemaVersion": 1,
+ "questions": [
+  {
+   "q": "kit stampa",
+   "expect": {
+    "topic": "presse"
+   },
+   "tags": [
+    "section-presse"
+   ]
+  },
+  {
+   "q": "sono un giornalista",
+   "expect": {
+    "topic": "presse"
+   },
+   "tags": [
+    "section-presse"
+   ]
+  },
+  {
+   "q": "giornalista",
+   "expect": {
+    "topic": "presse"
+   },
+   "tags": [
+    "section-presse"
+   ]
+  },
+  {
+   "q": "come citare leonidakit",
+   "expect": {
+    "page": "/presse.html"
+   },
+   "tags": [
+    "section-presse",
+    "passage"
+   ]
+  },
+  {
+   "q": "collaborazione con leonidakit",
+   "expect": {
+    "topic": "presse"
+   },
+   "tags": [
+    "section-presse"
+   ]
+  },
+  {
+   "q": "screenshot del sito",
+   "expect": {
+    "topic": "presse"
+   },
+   "tags": [
+    "section-presse"
+   ]
+  },
+  {
+   "q": "sono uno youtuber e voglio parlare del sito",
+   "expect": {
+    "topic": "presse"
+   },
+   "tags": [
+    "section-presse"
+   ]
+  },
+  {
+   "q": "intervista leonidakit",
+   "expect": {
+    "topic": "presse"
+   },
+   "tags": [
+    "section-presse"
+   ]
+  },
+  {
+   "q": "dove scarico il logo di leonidakit",
+   "expect": {
+    "page": "/presse.html"
+   },
+   "tags": [
+    "section-presse",
+    "passage"
+   ]
+  },
+  {
+   "q": "cosa dice la stampa su gta 6",
+   "expect": {
+    "topic": "apercus-presse"
+   },
+   "tags": [
+    "section-presse",
+    "apercus"
+   ]
+  },
+  {
+   "q": "anteprime della stampa",
+   "expect": {
+    "topic": "apercus-presse"
+   },
+   "tags": [
+    "section-presse",
+    "apercus"
+   ]
+  }
+ ],
+ "hors_presse": [
+  "logo di gta 6",
+  "scaricare gta 6",
+  "giornalista nel gioco",
+  "intervista a jason",
+  "dove scarico il logo di gta 6",
+  "screenshot di gta 6",
+  "stampa",
+  "stampare il piano",
+  "citare una fonte",
+  "collaborazione con lucia"
+ ]
+}

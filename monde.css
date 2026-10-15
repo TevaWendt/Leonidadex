@@ -117,7 +117,7 @@
 .mo-reg .mo-meta{gap:5px;}
 .mo-reg .mo-chip{min-height:26px;font-size:.7rem;}
 .mo-faces{display:inline-flex;margin-right:4px;}
-.mo-faces .mo-who+.mo-who{margin-left:-8px;}
+.mo-faces .mo-who+.mo-who{margin-left:-6px;}/* assemblage v7.91 (axe, cibles de 24 px) : le visage suivant en recouvre 6 px, pas 8 : 24 px restent cliquables */
 .mo-faces .mo-who img{width:30px;height:30px;}
 .mo-reg .mo-act{margin-top:auto;}
 .mo-reg.is-on{box-shadow:5px 5px 0 var(--c),5px 5px 0 2px var(--mo-ink);}
@@ -166,7 +166,7 @@
   .mo-reg,.mo-reg:nth-of-type(even){grid-template-columns:minmax(0,37%) minmax(0,1fr);min-height:172px;}
   .mo-reg-body{padding:12px 12px 12px;gap:7px;}
   .mo-reg .mo-tag{font-size:.82rem;}
-  .mo-map-cap{font-size:.62rem;}
+  .mo-map-cap{font-size:max(11px,.62rem);}
 }
 
 /* ================= Personnages : la jaquette ================= */

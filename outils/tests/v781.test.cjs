@@ -8,7 +8,7 @@ const { JSDOM } = require('jsdom');
 const root = path.resolve(__dirname, '../..');
 const read = f => fs.readFileSync(path.join(root, f), 'utf8');
 const doc = f => new JSDOM(read(f)).window.document;
-const LANGS = ['', 'en/', 'es/', 'it/', 'de/'];
+const LANGS = ['', 'en/', 'es/', 'it/', 'de/', 'pt/']; /* v7.91 : portugais */
 const sp = t => String(t).replace(/[\s  ]+/g, ' ').trim();
 const ctx = { window: {} }; vm.runInNewContext(read('vehicules-data.js') + '\n' + read('armes-data.js'), ctx);
 const V = ctx.window.LK_VEHICULES, A = ctx.window.LK_ARMES;
@@ -107,7 +107,7 @@ test('style : trois colonnes puis deux puis une, scène sans débordement sur t�
 });
 
 test('langues : page traduite, listes et options sans français, menus et pied de page avec l’Atelier, script partagé', () => {
-  const T = { 'en/': ['3D Workshop', 'Vehicles', 'Primary paint', 'Save this configuration', 'Sedans'], 'es/': ['Taller 3D', 'Vehículos', 'Pintura principal', 'Guardar esta configuración', 'Berlinas'], 'it/': ['Officina 3D', 'Veicoli', 'Vernice principale', 'Salva questa configurazione', 'Berline'], 'de/': ['3D-Werkstatt', 'Fahrzeuge', 'Hauptlackierung', 'Diese Konfiguration speichern', 'Limousinen'] };
+  const T = { 'en/': ['3D Workshop', 'Vehicles', 'Primary paint', 'Save this configuration', 'Sedans'], 'es/': ['Taller 3D', 'Vehículos', 'Pintura principal', 'Guardar esta configuración', 'Berlinas'], 'it/': ['Officina 3D', 'Veicoli', 'Vernice principale', 'Salva questa configurazione', 'Berline'], 'de/': ['3D-Werkstatt', 'Fahrzeuge', 'Hauptlackierung', 'Diese Konfiguration speichern', 'Limousinen'], 'pt/': ['Ateliê 3D', 'Veículos', 'Pintura principal', 'Salvar esta configuração', 'Sedãs'] };
   for (const l of LANGS.slice(1)) {
     const d = doc(l + 'atelier-3d.html');
     assert.equal(sp(d.querySelector('h1').textContent), T[l][0], l);

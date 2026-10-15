@@ -1,0 +1,316 @@
+# Lot 6 (v7.90, jeu « Devine le lieu ») : git diff depuis la base v7.87 (210850a), fichiers existants modifiés à la main.
+# Les fichiers nouveaux du lot (devine-le-lieu.html et ses langues, devine.js, devine.css, outils/gen-devine.cjs,
+# outils/devine/devine.json, outils/devine-index.json, outils/langues/*/v790.json, outils/tests/v790*.cjs,
+# outils/tests/leo-questions-section-devine-*.json, LISEZ-MOI-v7.90.txt, outils/CHANGEMENTS-v7.90.txt,
+# outils/MATRICE-v7.90.md) sont entiers dans l'archive. Après fusion : régénération complète (outils/regenerer.cjs).
+diff --git a/README.md b/README.md
+index b256917..9c5e725 100644
+--- a/README.md
++++ b/README.md
+@@ -462,6 +462,10 @@ Latence, sans changement visuel (vérifié capture par capture et par un banc qu
+ 
+ Section « L’actualité » (`outils/gen-actus.cjs`, données `outils/actus/actus.json`, `actus.css`, `actus.js`) : `actus.html` (chaque annonce officielle, de la plus récente à la plus ancienne, avec ses sources et ce qu’elle a montré fiche par fiche, repris des dossiers `outils/monde-dossiers.json` ; « Ce qui est déjà daté » ; flux `actus.xml` rendu dans chaque langue par `outils/langues.cjs`), `videos.html` et `videos/<id>.html` (photogrammes minutés, musique, modèles vus pour la première fois ; lecteur youtube-nocookie créé au clic par `actus.js`, liens YouTube sans script), `editions.html` (d’après l’assistance de Rockstar). Groupe « L’actualité » au menu et au pied de page (`outils/site-shell.cjs`, six colonnes à partir de 1 280 px dans `style.css`), dernière annonce sous le compte à rebours de l’accueil (écrite par `gen-actus.cjs`), ligne « Source » des fiches reliée à la vidéo (`outils/gen.js`, `outils/gen-armes.cjs`), Léo (`outils/leo-knowledge.json` : sujet « derniere-annonce », liens), Mentions (`outils/gen-informations.cjs`), prix réels de GTA+ en « $ US » (`outils/online/`). Une nouvelle annonce : une entrée en tête de `outils/actus/actus.json`, puis la régénération. Langues : `outils/langues/*/v787.json`. Tests : `outils/tests/v787.test.cjs`. Détail : `outils/CHANGEMENTS-v7.87.txt` ; marche à suivre : `LISEZ-MOI-v7.87.txt`.
+ 
++## v7.90 — lot 6 (12/10/2026) — Jeu « Devine le lieu »
++
++Nouvelle page `devine-le-lieu.html` (`outils/gen-devine.cjs`, branché dans `outils/regenerer.cjs` ; données `outils/devine/devine.json` ; `devine.js`, `devine.css`) : chaque jour, cinq captures officielles, les mêmes pour tous (tirage déterministe sur la date de Paris : cycles de huit jours où chaque image passe une fois, deux images au plus par région, jamais une image de la veille ; vérifié sur trois ans à chaque génération), une région de Leonida à choisir (boutons ou carte du site), la réponse tout de suite (région allumée, titre officiel, fiche de la région), score, série de jours joués et meilleur score dans `localStorage` sous la seule clé `lk_devine_v1` (écrite à la première réponse), partage en texte (`navigator.share` ou copie), partie libre ensuite. Seules les images des séries par région de la page des captures de Rockstar (40 aujourd’hui ; la génération refuse une image hors de sa série, sans crédit, au texte alternatif qui nomme la région, ou une image de la série oubliée). Sans script : règles et régions. Liens : groupe « Jouer » (`outils/site-shell.cjs`), page Lieux et fiches des régions (`outils/lore-gen.js`), recherche (`outils/devine-index.json` lu par `outils/sync-site.cjs`), Léo (`outils/leo-knowledge.json`, `outils/leo-editorial.json`, `leo-core.js`, ponts des langues), Mentions (`outils/gen-informations.cjs`, `outils/site-informations.json`). Langues : `outils/langues/*/v790.json`. Tests : `outils/tests/v790.test.cjs`, `outils/tests/v790-browser.cjs`, latence `outils/tests/v790-latence.cjs`. Détail : `outils/CHANGEMENTS-v7.90.txt`, matrice `outils/MATRICE-v7.90.md` ; marche à suivre : `LISEZ-MOI-v7.90.txt`.
++
+ ## v7.86 (12/10/2026) — Ce qui est confirmé, fiches allégées, vraies dates pour Google, IndexNow, mesure d’audience, budget de l’IA, six radios
+ 
+ Nouvelle page `verification.html` (`outils/informations-editorial.json` → `verification`, `outils/gen-informations.cjs`, `informations.css`, pied de page par `outils/site-shell.cjs`) : ce que Rockstar a confirmé (chaque point avec sa page et sa source), ce qui ne l’est pas encore, ce que les fiches attendent du jeu, modèles réels et noms provisoires, ce que le site s’interdit, signaler une erreur. Fiches véhicules et armes allégées des textes répétés (`outils/gen.js`, `outils/gen-armes.cjs`, `outils/fiche-doc.cjs` → `renderKnown`, `outils/localisateur.cjs` → carte compacte, `outils/perso-fiche.cjs`, `fiches.css`) : « Ce qui arrive avec le jeu » (valeurs connues seules, « Encore à relever » dans une rubrique en partie connue, pastilles pour les rubriques vides), « Signaler une erreur sur cette fiche » (formulaire prérempli), voisins de la même catégorie ; une fiche sans visuel officiel, sans nom de Rockstar, sans édition et sans prix publié est en `noindex, follow` et hors du plan du site. Dates du plan du site sur le contenu (`outils/langues.cjs` → `contentPrint`, `printHash`), reconstituées une fois depuis l’historique (`outils/sitemap-dates-historique.cjs`). IndexNow : `api/indexnow.js`, clé à la racine, tâche planifiée dans `vercel.json` (variable conseillée : `CRON_SECRET`). Mesure d’audience sans cookie (Vercel Web Analytics) chargée par `common.js` sur le site publié seulement, ni avec Global Privacy Control, ni avec Do Not Track, ni après « Ne plus être compté » (clé `lk_mesure_off`), décrite dans les Mentions ; `outils/preuve-confidentialite.cjs` n’accepte que cette exception. Budget du jour de l’IA (`api/ia.js` : `LK_IA_PLAFOND_JOUR`, `LK_IA_BUDGET_JOUR`, coût calculé depuis les jetons ; `lk-ia.js` : mode local et retour de l’IA affiché). Radios : les six stations du 8 octobre 2026 et leurs fiches (`outils/radios/radios.json` → `stations`, `outils/gen-radios.cjs`, `radios.css`). Accueil : jalons du compte à rebours (`index.html`, `app.js`). Langues : `outils/langues/*/v786.json` ; les cartes des fiches voisines (marque, modèle) sont traduites morceau par morceau par `outils/langues.cjs`. Mise en page dans les langues aux mots longs : libellés des fiches (`style.css`), page GTA Online sur téléphone (`online.css` : marges, césures des traductions). Tests : `outils/tests/v786.test.cjs` ; `outils/tests/ecrans-browser.cjs` repère aussi les mots coupés et passe sur une langue avec `LK_ECRANS_LANGUE=de`. Détail : `outils/CHANGEMENTS-v7.86.txt` ; marche à suivre : `LISEZ-MOI-v7.86.txt`.
+diff --git a/leo-core.js b/leo-core.js
+index cb73030..527abf4 100644
+--- a/leo-core.js
++++ b/leo-core.js
+@@ -385,7 +385,7 @@ function create(data,options={}){
+   if(/^\/(?:personnages|entreprises|demeures|planques|gangs)\/[a-z0-9-]+\.html$/.test(path)&&name)return [fill('C’est quoi {name} ?',{name}),fill('Où est {name} ?',{name}),...pick('monde').slice(0,4)];
+   if(path==='/'||path==='/index.html')return pick('home');if(path==='/calculateurs.html')return pick('calculateurs');if(path==='/tuto.html')return pick('tuto');if(path==='/carte.html')return pick('carte');
+   if(/^\/(?:vehicules|classement-vehicules|vehicules-rares|comparateur|bateaux)\.html$/.test(path))return pick('vehicules');if(path==='/armes.html')return pick('armes');if(path==='/progression.html')return pick('progression');
+-  if(/^\/(?:lieux|personnages|demeures|planques|entreprises|gangs|collectibles)\.html$/.test(path))return pick('monde');if(/^\/(?:nourriture|style|personnalisations)\.html$/.test(path))return pick('listes');if(/^\/(?:achats|logements)\.html$/.test(path))return pick('achats');if(/^\/(?:a-propos|contact|mentions-legales|medias)\.html$/.test(path))return pick('info');if(/^\/missions(?:\/[a-z0-9-]+)?\.html$/.test(path))return pick('missions');/* section missions */if(/^\/activites(?:\/[a-z0-9-]+)?\.html$/.test(path))return pick('activites');/* section activites */if(/^\/radios(?:\/[a-z0-9-]+)?\.html$/.test(path))return pick('radios');/* section radios */if(/^\/animaux(?:\/[a-z0-9-]+)?\.html$/.test(path))return pick('animaux');/* section animaux */if(/^\/codes-de-triche(?:\/[a-z0-9-]+)?\.html$/.test(path))return pick('codes');/* section codes */if(/^\/trophees(?:\/[a-z0-9-]+)?\.html$/.test(path))return pick('trophees');/* section trophees */if(/^\/online(?:\/[a-z0-9-]+)?\.html$/.test(path))return pick('online');/* section online */return pick('default');}
++  if(/^\/(?:lieux|personnages|demeures|planques|entreprises|gangs|collectibles)\.html$/.test(path))return pick('monde');if(/^\/(?:nourriture|style|personnalisations)\.html$/.test(path))return pick('listes');if(/^\/(?:achats|logements)\.html$/.test(path))return pick('achats');if(/^\/(?:a-propos|contact|mentions-legales|medias)\.html$/.test(path))return pick('info');if(/^\/missions(?:\/[a-z0-9-]+)?\.html$/.test(path))return pick('missions');/* section missions */if(/^\/activites(?:\/[a-z0-9-]+)?\.html$/.test(path))return pick('activites');/* section activites */if(/^\/radios(?:\/[a-z0-9-]+)?\.html$/.test(path))return pick('radios');/* section radios */if(/^\/animaux(?:\/[a-z0-9-]+)?\.html$/.test(path))return pick('animaux');/* section animaux */if(/^\/codes-de-triche(?:\/[a-z0-9-]+)?\.html$/.test(path))return pick('codes');/* section codes */if(/^\/trophees(?:\/[a-z0-9-]+)?\.html$/.test(path))return pick('trophees');/* section trophees */if(/^\/online(?:\/[a-z0-9-]+)?\.html$/.test(path))return pick('online');/* section online */if(path==='/devine-le-lieu.html')return pick('devine-le-lieu');/* v7.90 (lot 6) : le jeu du jour */return pick('default');}
+  function attach(name,json){if(loaded.has(name))return false;addShard(name,json);loaded.add(name);return true;}
+  /* v7.67 : éléments donnés à l'IA de Léo : les extraits de pages les plus proches de la question (même index que l'étape 8
+     des réponses locales). Aucun réseau hors du site : le morceau « passages » est un fichier local. */
+diff --git a/outils/gen-informations.cjs b/outils/gen-informations.cjs
+index 42823da..2b20c26 100644
+--- a/outils/gen-informations.cjs
++++ b/outils/gen-informations.cjs
+@@ -199,7 +199,7 @@ const TOPICS=['Erreur dans une fiche','Suggestion de contenu','Problème de calc
+   +`<div class="info-prose-in"><p>Grand Theft Auto, GTA VI, Leonida et les éléments du jeu sont des marques et des créations de Rockstar Games et Take-Two Interactive. Leonidakit est un projet indépendant, sans affiliation, approbation ni sponsoring de ces sociétés.</p><p>Les médias promotionnels officiels (captures, illustrations, images des bandes-annonces) restent la propriété de leurs titulaires. Ils sont affichés, parfois redimensionnés ou recadrés, pour illustrer l’information, avec leur crédit ; ce crédit ne vaut pas autorisation de réutilisation. La liste complète est dans <a href="medias.html">Médias et crédits</a>. Un titulaire qui souhaite le retrait d’un visuel peut écrire à ${mailLink()} (motif « Demande concernant un visuel »).</p><p>Les photographies et données de la carte viennent de ${ext('https://gtadb.org','gtadb.org')} et de ses contributeurs, sous licence ${ext('https://creativecommons.org/licenses/by/4.0/deed.fr','Creative Commons BY 4.0')}. La police Archivo est distribuée sous licence SIL Open Font License 1.1 (fichier <code>fonts/LICENCE-ARCHIVO.txt</code>). Les schémas des véhicules et des armes sont des dessins du site, pas des images du jeu.</p><p>Les illustrations des catalogues (consommables, coiffures, tatouages, tenues, personnalisations) sont des silhouettes dessinées pour le site, en attendant les visuels officiels : chaque objet est modelé en 3D avec Blender (certains objets et matières viennent de ${ext('https://polyhaven.com','Poly Haven')}, domaine public, CC0), puis montré en ombre, avec un liseré de lumière et ses propres lumières. Ce ne sont pas des images du jeu, et chacune laisse sa place au visuel officiel dès qu’il existe.</p><p>Les textes, le code et les outils propres à Leonidakit sont protégés : tous droits réservés, sauf les éléments sous licence cités ci-dessus. Tu peux citer un court passage avec un lien vers la page.</p></div>`));
+  parts.push(sec({id:'confidentialite',kicker:'Ce qui reste, ce qui part',title:'Données personnelles',icon:'navigateur',tone:'paper'},
+   clair('Presque tout reste dans ton navigateur ; seuls les deux formulaires et tes questions à l’IA (Léo, barre du calculateur) partent, quand tu les envoies.')
+-  +`<div class="info-prose-in"><p id="responsable"><strong>Responsable du traitement :</strong> ${controller}, joignable à ${mailLink()}.${controllerNote} Le site n’a pas de délégué à la protection des données (non obligatoire pour un site personnel sans traitement à grande échelle).</p><h3 id="donnees-navigateur">Ce qui reste dans ton navigateur</h3><p>Les outils enregistrent leurs données dans le stockage de ton navigateur (<code>localStorage</code>, et <code>sessionStorage</code> pour ce qui s’efface avec l’onglet). Toutes les clés commencent par « lk ». Rien n’est écrit tant que tu n’as rien fait : une clé apparaît avec ta première action (un chiffre saisi, une case cochée, un brouillon, une sélection, une question à Léo). L’éditeur n’y a pas accès et ne les reçoit jamais.</p><ul><li>Calculateur : tes chiffres, carnets, calculs enregistrés, favoris et copies de secours.</li><li>Suivi et Progression : ce que tu as coché (véhicules, armes, équipements, listes), et la progression.</li><li>Carte et Collectibles : lieux trouvés, repères, tracés, calques, préférences, et pour le calculateur de trajet les véhicules que tu compares et les vitesses que tu as écrites (<code>lk_trajet_v1</code>).</li><li>Classement : ton top 10.</li><li>Langue : la langue choisie avec « Changer la langue » ou le bandeau qui la propose (une seule clé, gardée jusqu’à ce que tu en choisisses une autre) ; rien n’est écrit si tu ne cliques pas.</li><li>Mesure d’audience : si tu choisis « Ne plus être compté sur cet appareil », ce choix est gardé (une seule clé) jusqu’à « Être compté de nouveau » ; rien n’est écrit sinon.</li><li>Léo : la conversation reste dans l’onglet (32 messages au plus) et s’efface après 30 minutes sans activité ou avec « Effacer ». En mode local, Léo répond depuis ton navigateur avec les fichiers du site et rien n’est envoyé ; avec l’IA, ta question part comme décrit plus bas.</li><li>IA (Léo et la barre du calculateur) : ton choix « Local » s’il est fait (<code>lk_ia_mode</code>), un identifiant tiré au hasard créé à ta première question à l’IA et envoyé avec elle pour compter tes questions gratuites (<code>lk_ia_appareil</code>), et l’état de ton accès le temps de l’onglet (<code>lk_ia_etat</code>). L’IA est entièrement gratuite : aucun crédit, aucun paiement.</li><li>Micro (Léo et la barre du calculateur) : rien n’est écrit ; le texte reconnu va dans la case, comme si tu l’avais tapé.</li><li>Signalement : « Signaler une mauvaise réponse » ouvre Contact avec la question placée après le signe #, que le navigateur n’envoie pas au serveur ; rien ne part tant que tu n’envoies pas le formulaire.</li><li>Contact : le brouillon du formulaire, effacé après l’envoi ou avec « Effacer le brouillon ».</li></ul><p>Pour effacer : les boutons « Effacer » et « Tout effacer » des outils, ou le réglage de ton navigateur qui efface les données du site. Pour garder une copie : « Exporter mon suivi » sur la page <a href="progression.html">Progression</a> et l’export du calculateur. Un lien de calcul partagé contient les valeurs saisies : ne le transmets qu’à qui tu veux.</p>
++  +`<div class="info-prose-in"><p id="responsable"><strong>Responsable du traitement :</strong> ${controller}, joignable à ${mailLink()}.${controllerNote} Le site n’a pas de délégué à la protection des données (non obligatoire pour un site personnel sans traitement à grande échelle).</p><h3 id="donnees-navigateur">Ce qui reste dans ton navigateur</h3><p>Les outils enregistrent leurs données dans le stockage de ton navigateur (<code>localStorage</code>, et <code>sessionStorage</code> pour ce qui s’efface avec l’onglet). Toutes les clés commencent par « lk ». Rien n’est écrit tant que tu n’as rien fait : une clé apparaît avec ta première action (un chiffre saisi, une case cochée, un brouillon, une sélection, une question à Léo). L’éditeur n’y a pas accès et ne les reçoit jamais.</p><ul><li>Calculateur : tes chiffres, carnets, calculs enregistrés, favoris et copies de secours.</li><li>Suivi et Progression : ce que tu as coché (véhicules, armes, équipements, listes), et la progression.</li><li>Carte et Collectibles : lieux trouvés, repères, tracés, calques, préférences, et pour le calculateur de trajet les véhicules que tu compares et les vitesses que tu as écrites (<code>lk_trajet_v1</code>).</li><li>Classement : ton top 10.</li><li>Devine le lieu : tes réponses de la partie du jour, ta série de jours joués et ton meilleur score (<code>lk_devine_v1</code>), écrits à ta première réponse ; la partie libre ne garde rien. Le partage n’envoie que le texte de ton résultat, vers l’application que tu choisis.</li><li>Langue : la langue choisie avec « Changer la langue » ou le bandeau qui la propose (une seule clé, gardée jusqu’à ce que tu en choisisses une autre) ; rien n’est écrit si tu ne cliques pas.</li><li>Mesure d’audience : si tu choisis « Ne plus être compté sur cet appareil », ce choix est gardé (une seule clé) jusqu’à « Être compté de nouveau » ; rien n’est écrit sinon.</li><li>Léo : la conversation reste dans l’onglet (32 messages au plus) et s’efface après 30 minutes sans activité ou avec « Effacer ». En mode local, Léo répond depuis ton navigateur avec les fichiers du site et rien n’est envoyé ; avec l’IA, ta question part comme décrit plus bas.</li><li>IA (Léo et la barre du calculateur) : ton choix « Local » s’il est fait (<code>lk_ia_mode</code>), un identifiant tiré au hasard créé à ta première question à l’IA et envoyé avec elle pour compter tes questions gratuites (<code>lk_ia_appareil</code>), et l’état de ton accès le temps de l’onglet (<code>lk_ia_etat</code>). L’IA est entièrement gratuite : aucun crédit, aucun paiement.</li><li>Micro (Léo et la barre du calculateur) : rien n’est écrit ; le texte reconnu va dans la case, comme si tu l’avais tapé.</li><li>Signalement : « Signaler une mauvaise réponse » ouvre Contact avec la question placée après le signe #, que le navigateur n’envoie pas au serveur ; rien ne part tant que tu n’envoies pas le formulaire.</li><li>Contact : le brouillon du formulaire, effacé après l’envoi ou avec « Effacer le brouillon ».</li></ul><p>Pour effacer : les boutons « Effacer » et « Tout effacer » des outils, ou le réglage de ton navigateur qui efface les données du site. Pour garder une copie : « Exporter mon suivi » sur la page <a href="progression.html">Progression</a> et l’export du calculateur. Un lien de calcul partagé contient les valeurs saisies : ne le transmets qu’à qui tu veux.</p>
+ <h3 id="donnees-envois">Ce qui part, et où</h3><div class="info-table" role="region" aria-label="Traitements de données" tabindex="0"><table><thead><tr><th scope="col">Quand</th><th scope="col">Données</th><th scope="col">Destinataire</th><th scope="col">Finalité et base légale</th><th scope="col">Durée</th></tr></thead><tbody>
+ <tr><th scope="row">Chaque visite</th><td>Journaux techniques : adresse IP, date, page demandée, navigateur.</td><td>Vercel, hébergeur (États-Unis ; certifié Data Privacy Framework UE–États-Unis selon sa notice du ${esc(frLong(H.sourceDate))}).</td><td>Servir les pages et protéger le site ; intérêt légitime. L’éditeur ne consulte pas ces journaux pour suivre les visiteurs.</td><td>Selon la politique de Vercel (${ext(H.source,'notice')}).</td></tr>
+ <tr id="mesure-audience"><th scope="row">Chaque page lue (mesure d’audience)</th><td>L’adresse de la page, sans paramètres ni ancre ; la page d’où tu viens ; ton pays et ta région ; le type d’appareil, le système et le navigateur ; l’heure. Aucun cookie : ta visite est reconnue pendant 24 heures par une empreinte que Vercel calcule à partir de la requête, puis oubliée ; ni ton adresse IP ni un identifiant ne sont gardés.</td><td>Vercel Web Analytics, l’outil de mesure de l’hébergeur, chargé depuis le site lui-même.</td><td>Savoir quelles pages sont lues et d’où viennent les visiteurs, pour améliorer le site ; intérêt légitime. La mesure n’est pas chargée si ton navigateur demande à ne pas être suivi (Global Privacy Control, Do Not Track).</td><td>Des statistiques d’ensemble, consultables 12 mois dans l’offre de Vercel utilisée par le site, sans rien qui t’identifie. <span data-lk-mesure-etat="on"><button type="button" class="info-textbtn" data-lk-mesure="off">Ne plus être compté sur cet appareil</button></span><span data-lk-mesure-etat="off" hidden>Tu n’es plus compté sur cet appareil. <button type="button" class="info-textbtn" data-lk-mesure="on">Être compté de nouveau</button></span></td></tr>
+diff --git a/outils/langues/de/leo-pivot.json b/outils/langues/de/leo-pivot.json
+index 3c3c969..eb8392f 100644
+--- a/outils/langues/de/leo-pivot.json
++++ b/outils/langues/de/leo-pivot.json
+@@ -5643,6 +5643,12 @@
+ ["online trophaen", "trophees en ligne"],
+ ["unendlich geld", "argent infini"],
+ ["unendliches geld", "argent infini"],
+-["nach gta 6 weiter", "continue apres gta 6"]
++["nach gta 6 weiter", "continue apres gta 6"],
++["errate den ort", "devine le lieu"],
++["spiel des tages", "jeu du jour"],
++["tagesspiel", "jeu du jour"],
++["spiel auf der karte", "jeu sur la carte"],
++["punktestand", "score"],
++["bestwert", "meilleur score"]
+ ]
+ }
+diff --git a/outils/langues/en/leo-pivot.json b/outils/langues/en/leo-pivot.json
+index 126c3c5..f619d11 100644
+--- a/outils/langues/en/leo-pivot.json
++++ b/outils/langues/en/leo-pivot.json
+@@ -6424,6 +6424,26 @@
+   [
+    "rated",
+    "pegi"
++  ],
++  [
++   "guess the location",
++   "devine le lieu"
++  ],
++  [
++   "daily game",
++   "jeu du jour"
++  ],
++  [
++   "game on the map",
++   "jeu sur la carte"
++  ],
++  [
++   "streak",
++   "serie"
++  ],
++  [
++   "score stored",
++   "score enregistre"
+   ]
+  ]
+ }
+diff --git a/outils/langues/es/_leo-pont.json b/outils/langues/es/_leo-pont.json
+index 95bb50c..3245778 100644
+--- a/outils/langues/es/_leo-pont.json
++++ b/outils/langues/es/_leo-pont.json
+@@ -6815,4 +6815,10 @@
+ ["trofeos perdibles","trophees manquables"],
+ ["perdibles","manquables"],
+ ["perdible","manquable"],
+-["playstation plus","abonnement playstation plus"]]}
++["playstation plus","abonnement playstation plus"],
++["adivina el lugar","devine le lieu"],
++["juego del día","jeu du jour"],
++["juego en el mapa","jeu sur la carte"],
++["puntuación","score"],
++["mejor puntuación","meilleur score"],
++["racha","serie"]]}
+diff --git a/outils/langues/it/_leo-pont.json b/outils/langues/it/_leo-pont.json
+index 2fbd6b8..99e4e21 100644
+--- a/outils/langues/it/_leo-pont.json
++++ b/outils/langues/it/_leo-pont.json
+@@ -14273,5 +14273,11 @@
+ ["mancabili","manquables"],
+ ["mancabile","manquable"],
+ ["inserire un trucco","entrer un code de triche"],
+-["trucco con il telefono","code de triche avec le telephone"]
++["trucco con il telefono","code de triche avec le telephone"],
++["indovina il luogo","devine le lieu"],
++["gioco del giorno","jeu du jour"],
++["gioco sulla mappa","jeu sur la carte"],
++["punteggio","score"],
++["miglior punteggio","meilleur score"],
++["viene salvato","est enregistre"]
+ ]}
+diff --git a/outils/leo-editorial.json b/outils/leo-editorial.json
+index 7f9ebe1..a9904e2 100644
+--- a/outils/leo-editorial.json
++++ b/outils/leo-editorial.json
+@@ -1419,6 +1419,12 @@
+    "Qui habite à {name} ?",
+    "Quels lieux sont sur le site ?",
+    "Comment mesurer une distance sur la carte ?"
++  ],
++  "devine-le-lieu": [
++   "C’est quoi Devine le lieu ?",
++   "Mon score de Devine le lieu est-il enregistré ?",
++   "Quelles sont les régions de GTA VI ?",
++   "Où est Vice City sur la carte ?"
+   ]
+  },
+  "templates": {
+diff --git a/outils/leo-knowledge.json b/outils/leo-knowledge.json
+index 541d5c5..460ea35 100644
+--- a/outils/leo-knowledge.json
++++ b/outils/leo-knowledge.json
+@@ -9778,6 +9778,89 @@
+     }
+    ],
+    "checkedAt": "2026-10-01"
++  },
++  {
++   "id": "devine-le-lieu",
++   "theme": "site",
++   "q": "C’est quoi Devine le lieu ?",
++   "f": [
++    "devine le lieu",
++    "c est quoi devine le lieu",
++    "un jeu sur la carte",
++    "y a t il un jeu sur le site",
++    "jeu du jour gta 6",
++    "quiz gta 6",
++    "deviner la region d une image",
++    "mini jeu leonidakit",
++    "jouer a deviner les lieux de gta 6",
++    "geoguessr gta 6",
++    "jeu sur les regions de leonida",
++    "il y a un jeu sur la carte"
++   ],
++   "k": [
++    "devine le lieu",
++    "jeu sur la carte",
++    "jeu du jour",
++    "quiz",
++    "devinette",
++    "geoguessr",
++    "mini jeu",
++    "deviner la region"
++   ],
++   "text": "Devine le lieu est le jeu du jour du site : une capture officielle de GTA VI, et tu dis dans laquelle des six régions de Leonida elle a été prise, avec les boutons ou directement sur la carte. Cinq images par jour, les mêmes pour tout le monde, puis une partie libre. Chaque réponse montre la bonne région et mène à sa fiche.",
++   "status": "Le site",
++   "links": [
++    {
++     "label": "Jouer à Devine le lieu",
++     "url": "/devine-le-lieu.html"
++    },
++    {
++     "label": "Les six régions",
++     "url": "/lieux.html"
++    }
++   ],
++   "checkedAt": "2026-10-12"
++  },
++  {
++   "id": "devine-le-lieu-score",
++   "theme": "site",
++   "q": "Mon score de Devine le lieu est-il enregistré ?",
++   "f": [
++    "mon score de devine le lieu est il enregistre",
++    "mon score est il enregistre",
++    "ou est gardee ma serie de devine le lieu",
++    "ma serie de jours joues",
++    "partager mon resultat du jour",
++    "rejouer la partie du jour",
++    "quand change la partie du jour",
++    "nouvelle partie du jour",
++    "meilleur score du jeu du jour",
++    "sauvegarde du score du jeu",
++    "mon score du jeu du jour est garde ou"
++   ],
++   "k": [
++    "score devine",
++    "serie devine",
++    "serie de jours",
++    "partager mon resultat",
++    "partie du jour",
++    "partie libre",
++    "rejouer la partie",
++    "meilleur score"
++   ],
++   "text": "Sur ton appareil seulement : tes réponses du jour, ta série de jours joués et ton meilleur score restent dans ton navigateur, sous une seule clé, et rien n’est envoyé. La partie du jour change à minuit, heure de Paris, et ne se joue qu’une fois ; la partie libre continue sans limite. Partager envoie seulement le texte de ton résultat.",
++   "status": "Le site",
++   "links": [
++    {
++     "label": "Jouer à Devine le lieu",
++     "url": "/devine-le-lieu.html#jeu"
++    },
++    {
++     "label": "Ce qui reste dans ton navigateur",
++     "url": "/mentions-legales.html#donnees-navigateur"
++    }
++   ],
++   "checkedAt": "2026-10-12"
+   }
+  ]
+ }
+diff --git a/outils/lore-gen.js b/outils/lore-gen.js
+index 16805d7..54eb65c 100644
+--- a/outils/lore-gen.js
++++ b/outils/lore-gen.js
+@@ -235,7 +235,7 @@ ${MC.HUBS.includes(S.hub)?MONDE_CARTES.render(S.hub):`<section class="shell" id=
+ ${cards}
+   </div>
+ </section>`}
+-${S.hub==='planques'?'<!-- lot-d-garages:start --><!-- lot-d-garages:end -->\n':''}${MONDE.render(S.hub,{label:S.label,n:items.length})}`;
++${S.hub==='lieux'?require('./gen-devine.cjs').promo('')+'\n'/* v7.90 (lot 6) : l’encart du jeu « Devine le lieu », sous la carte des six régions */:''}${S.hub==='planques'?'<!-- lot-d-garages:start --><!-- lot-d-garages:end -->\n':''}${MONDE.render(S.hub,{label:S.label,n:items.length})}`;
+   /* v7.41 : CollectionPage (la liste des fiches) à côté du fil d'Ariane ; la FAQPage est posée par sync-site depuis les questions visibles. */
+   const collection='<script type="application/ld+json">'+JSON.stringify({"@context":"https://schema.org","@type":"CollectionPage","name":S.title,"description":metaDesc(S.desc),"url":SITE+'/'+S.hub+'.html',"inLanguage":"fr","isPartOf":{"@type":"WebSite","name":"Leonidakit","url":SITE+'/'},"mainEntity":{"@type":"ItemList","numberOfItems":items.length,"itemListElement":items.map((x,i)=>({"@type":"ListItem","position":i+1,"name":x.name,"url":SITE+'/'+S.hub+'/'+x.id+'.html'}))}})+'</script>';
+   console.log(S.hub+' : zone éditoriale de '+MONDE.words(S.hub)+' mots, '+MONDE.DATA[S.hub].faq.length+' questions, '+MONDE.sourcesOf(S.hub).length+' sources');
+@@ -271,6 +271,8 @@ ${S.hub==='planques'?'<!-- lot-d-garages:start --><!-- lot-d-garages:end -->\n':
+     if(dossier)links.push(`<a href="#dossier">${esc(DOS.ui.lire)}</a>`);
+     if(x.mapId)links.push(`<a href="${mapHref(x.mapId,p)}">Voir sur la carte</a>`);
+     if(key==='regions')links.push(`<a href="${p}vehicules.html">Véhicules</a>`);
++    /* v7.90 (lot 6) : chaque fiche de région renvoie au jeu « Devine le lieu » */
++    if(key==='regions')links.push(require('./gen-devine.cjs').lienFiche(p));
+     if(x.source)links.push(`<a href="${esc(x.source)}" target="_blank" rel="noopener nofollow">Page officielle</a>`);
+     /* v7.43 (lot 6) : les ateliers de personnalisation renvoient vers leur sous-section de personnalisations.html (outils/catalogues/editorial.json, ateliers). */
+     if(key==='businesses'){const at=ATELIERS.find(a=>a.business===x.id);if(at)links.push(`<a href="${p}personnalisations.html#${at.fam}">${at.fam==='perso-armes'?'Personnaliser mes armes':'Personnaliser mon véhicule'}</a>`);}
+diff --git a/outils/regenerer.cjs b/outils/regenerer.cjs
+index 549585f..d624dc4 100644
+--- a/outils/regenerer.cjs
++++ b/outils/regenerer.cjs
+@@ -2,7 +2,7 @@
+ 'use strict';
+ // Commande de maintenance, jamais une commande de build Vercel.
+ const {execFileSync}=require('node:child_process'),path=require('node:path'),root=path.resolve(__dirname,'..');
+-const steps=['gen-modele.cjs','final.js','gen.js','gen-armes.cjs','gen-armurerie.cjs','lore-gen.js','gen-missions.cjs'/* section missions */,'gen-activites.cjs'/* section activites */,'gen-radios.cjs'/* section radios */,'gen-actus.cjs'/* v7.87 : actualités, vidéos, éditions */,'gen-animaux.cjs'/* section animaux */,'gen-codes.cjs'/* section codes */,'gen-trophees.cjs'/* section trophees */,'gen-online.cjs'/* section online */,'gen-acquisitions.cjs','gen-informations.cjs','gen-tuto.cjs','gen-achats.cjs','gen-carnets.cjs','gen-atelier.cjs'/* v7.81 : Atelier 3D */,'sync-site.cjs','gen-leo.cjs','sync-site.cjs'];
++const steps=['gen-modele.cjs','final.js','gen.js','gen-armes.cjs','gen-armurerie.cjs','lore-gen.js','gen-missions.cjs'/* section missions */,'gen-activites.cjs'/* section activites */,'gen-radios.cjs'/* section radios */,'gen-actus.cjs'/* v7.87 : actualités, vidéos, éditions */,'gen-devine.cjs'/* v7.90 : jeu « Devine le lieu » */,'gen-animaux.cjs'/* section animaux */,'gen-codes.cjs'/* section codes */,'gen-trophees.cjs'/* section trophees */,'gen-online.cjs'/* section online */,'gen-acquisitions.cjs','gen-informations.cjs','gen-tuto.cjs','gen-achats.cjs','gen-carnets.cjs','gen-atelier.cjs'/* v7.81 : Atelier 3D */,'sync-site.cjs','gen-leo.cjs','sync-site.cjs'];
+ /* v7.80 : tas V8 plafonné à 4 Go pour chaque étape : sans plafond, Node laisse le tas grossir jusqu'à 6 Go pendant la
+    traduction des langues (gen.js → sync-site.cjs) et peut être tué par le système ; avec, il ramasse plus tôt (3,3 Go). */
+ const NODE_OPTS=['--max-old-space-size=4096'];
+diff --git a/outils/site-informations.json b/outils/site-informations.json
+index c2d06d7..bafa6fa 100644
+--- a/outils/site-informations.json
++++ b/outils/site-informations.json
+@@ -39,6 +39,11 @@
+   }
+  },
+  "history": [
++  {
++   "date": "2026-10-12",
++   "version": "v7.90",
++   "text": "Jeu « Devine le lieu » : tes réponses du jour, ta série de jours joués et ton meilleur score restent dans ton navigateur, sous une seule clé ; le partage n’envoie que le texte de ton résultat, vers l’application que tu choisis. Aucun cookie, aucun service extérieur."
++  },
+   {
+    "date": "2026-10-12",
+    "version": "v7.86",
+diff --git a/outils/site-shell.cjs b/outils/site-shell.cjs
+index c7f99f6..7e18349 100644
+--- a/outils/site-shell.cjs
++++ b/outils/site-shell.cjs
+@@ -8,7 +8,7 @@ const acquisition = JSON.parse(fs.readFileSync(path.join(__dirname, 'acquisition
+ const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+ 
+ const world = [['lieux.html', 'Lieux'], ['personnages.html', 'Personnages'], ['gangs.html', 'Gangs et factions'] /* v7.65 */, ['demeures.html', 'Demeures'], ['planques.html', 'Planques'], ['entreprises.html', 'Entreprises'], ['animaux.html', 'Animaux'] /* section animaux */, ['collectibles.html', 'Collectibles']];
+-const play = [['missions.html', 'Missions'] /* section missions */, ['activites.html', 'Activités annexes'] /* section activites */, ['radios.html', 'Radios et musique'] /* section radios */, ['codes-de-triche.html', 'Codes de triche'] /* section codes */, ['trophees.html', 'Trophées et succès'] /* section trophees */];
++const play = [['missions.html', 'Missions'] /* section missions */, ['activites.html', 'Activités annexes'] /* section activites */, ['radios.html', 'Radios et musique'] /* section radios */, ['codes-de-triche.html', 'Codes de triche'] /* section codes */, ['trophees.html', 'Trophées et succès'] /* section trophees */, ['devine-le-lieu.html', 'Devine le lieu'] /* v7.90 (lot 6) : le jeu du jour, à la fin du groupe « Jouer » (menu, pied de page, puces) */];
+ /* section online : un espace à part, son propre groupe dans « Explorer » et sa colonne au pied de page */
+ const online = [['online.html', 'L’espace GTA Online'], ['online/annonces.html', 'Les annonces'], ['online/gta-online-actuel.html', 'Le GTA Online actuel']];
+ // Menu « S’équiper » : seules les catégories marquées menu:true dans acquisitions.json (pas de doublon avec Véhicules,
+diff --git a/outils/sync-site.cjs b/outils/sync-site.cjs
+index 837d690..084dcb7 100644
+--- a/outils/sync-site.cjs
++++ b/outils/sync-site.cjs
+@@ -144,6 +144,8 @@ if(fs.existsSync('outils/missions-index.json'))index=index.concat(JSON.parse(fs.
+ if(fs.existsSync('outils/activites-index.json'))index=index.concat(JSON.parse(fs.readFileSync('outils/activites-index.json','utf8')));
+ /* v7.87 : actualités, vidéos officielles et éditions (outils/actus-index.json, écrit par outils/gen-actus.cjs) */
+ if(fs.existsSync('outils/actus-index.json'))index=index.concat(JSON.parse(fs.readFileSync('outils/actus-index.json','utf8')));
++/* v7.90 (lot 6) : le jeu « Devine le lieu » (outils/devine-index.json, écrit par outils/gen-devine.cjs : une entrée vers #jeu, avec les mots du joueur) */
++if(fs.existsSync('outils/devine-index.json'))index=index.concat(JSON.parse(fs.readFileSync('outils/devine-index.json','utf8')));
+ /* section radios : hub et fiches de la section (outils/radios-index.json, écrit par outils/gen-radios.cjs) */
+ if(fs.existsSync('outils/radios-index.json'))index=index.concat(JSON.parse(fs.readFileSync('outils/radios-index.json','utf8')));
+ /* section codes : page principale et fiches de catégorie (outils/codes-index.json, écrit par outils/gen-codes.cjs ; sans la page modèle) */

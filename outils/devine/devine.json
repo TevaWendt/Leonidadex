@@ -1,0 +1,507 @@
+{
+ "_note": "v7.90 (lot 6) : jeu « Devine le lieu » (devine-le-lieu.html), généré par outils/gen-devine.cjs, joué par devine.js. Seules entrent les captures dont la région est établie par Rockstar : ses séries de captures officielles portent le nom de la région (page des captures de GTA VI, rangées par région ; fichiers Vice_City_01…, Leonida_Keys_01…). « series » relie chaque série à sa région ; « images » liste les images retenues (région, source, texte alternatif qui ne donne pas la réponse, légende montrée après la réponse) ; le générateur refuse une image dont la série, le fichier d’origine ou la source ne disent pas la même région, et une image de série absente de cette liste. « debut » : jour n° 1 (partie du jour, heure de Paris) ; le tirage d’un jour ne dépend que de sa date et de la liste des images. « parRegionMax » : nombre maximal d’images d’une même région dans une partie (vérifié par le générateur sur trois ans de tirages). Tous les textes sont en français ; les autres langues viennent de la mémoire de traduction (outils/langues/<code>/v790.json).",
+ "version": 1,
+ "cle": "lk_devine_v1",
+ "debut": "2026-10-12",
+ "parPartie": 5,
+ "parRegionMax": 2,
+ "source": {
+  "id": "rs-screens",
+  "url": "https://www.rockstargames.com/VI/media/screenshots",
+  "title": "Rockstar Games : captures officielles de GTA VI",
+  "publisher": "Rockstar Games",
+  "consultedAt": "2026-10-12",
+  "statut": "officiel",
+  "claim": "Rockstar y range ses captures par région : Vice City, Leonida Keys, Grassrivers, Port Gellhorn, Ambrosia et Mount Kalaga National Park."
+ },
+ "series": [
+  {
+   "region": "mount-kalaga",
+   "prefixe": "mount-kalaga-national-park-",
+   "fichier": "Mount_Kalaga_National_Park_"
+  },
+  {
+   "region": "ambrosia",
+   "prefixe": "ambrosia-",
+   "fichier": "Ambrosia_"
+  },
+  {
+   "region": "port-gellhorn",
+   "prefixe": "port-gellhorn-",
+   "fichier": "Port_Gellhorn_"
+  },
+  {
+   "region": "vice-city",
+   "prefixe": "vice-city-",
+   "fichier": "Vice_City_"
+  },
+  {
+   "region": "grassrivers",
+   "prefixe": "grassrivers-",
+   "fichier": "Grassrivers_"
+  },
+  {
+   "region": "leonida-keys",
+   "prefixe": "leonida-keys-",
+   "fichier": "Leonida_Keys_"
+  }
+ ],
+ "images": [
+  {
+   "id": "ambrosia-01",
+   "region": "ambrosia",
+   "source": "rs-screens",
+   "alt": "Cortège de motards remontant une rue devant une station-service, sous un grand panneau publicitaire, capture officielle de GTA VI",
+   "legende": "Le cortège de motards"
+  },
+  {
+   "id": "ambrosia-02",
+   "region": "ambrosia",
+   "source": "rs-screens",
+   "alt": "Vue nocturne d’une plaine, avec des usines et des cheminées qui fument au loin, capture officielle de GTA VI",
+   "legende": "Ambrosia, la nuit"
+  },
+  {
+   "id": "ambrosia-03",
+   "region": "ambrosia",
+   "source": "rs-screens",
+   "alt": "Une femme enlace un motard barbu par-derrière et montre le revolver qu’elle tient, capture officielle de GTA VI",
+   "legende": "L’écusson « Enforcer »"
+  },
+  {
+   "id": "ambrosia-04",
+   "region": "ambrosia",
+   "source": "rs-screens",
+   "alt": "Pylônes électriques et champs en feu au coucher du soleil, des cheminées d’usine à l’horizon, capture officielle de GTA VI",
+   "legende": "Les champs, au couchant"
+  },
+  {
+   "id": "ambrosia-06",
+   "region": "ambrosia",
+   "source": "rs-screens",
+   "alt": "Fêtards couverts de boue autour de buggies, un homme fait le signe des cornes avec une canette, capture officielle de GTA VI",
+   "legende": "Une fête dans la boue"
+  },
+  {
+   "id": "grassrivers-01",
+   "region": "grassrivers",
+   "source": "rs-screens",
+   "alt": "Trois habitants couverts de boue posent sur un hydroglisseur avec un alligator et un félin abattus, armes en main, capture officielle de GTA VI",
+   "legende": "Les chasseurs et leurs prises"
+  },
+  {
+   "id": "grassrivers-02",
+   "region": "grassrivers",
+   "source": "rs-screens",
+   "alt": "Un bateau à moteur file vers des bâtiments sur pilotis, des gratte-ciel au loin, capture officielle de GTA VI",
+   "legende": "Les bâtiments sur pilotis"
+  },
+  {
+   "id": "grassrivers-03",
+   "region": "grassrivers",
+   "source": "rs-screens",
+   "alt": "Vu du ciel, deux hommes en hydroglisseur au milieu des alligators, l’un vise le plus proche, capture officielle de GTA VI",
+   "legende": "L’hydroglisseur vu du ciel"
+  },
+  {
+   "id": "grassrivers-04",
+   "region": "grassrivers",
+   "source": "rs-screens",
+   "alt": "Un hélicoptère et deux voitures de police poursuivent un pick-up dans les marais, parmi les alligators, capture officielle de GTA VI",
+   "legende": "Poursuite dans les marais"
+  },
+  {
+   "id": "grassrivers-05",
+   "region": "grassrivers",
+   "source": "rs-screens",
+   "alt": "Pontons et cabanes au bord de l’eau, un hydravion amarré et des gratte-ciel à l’horizon, capture officielle de GTA VI",
+   "legende": "Les marais face à la ville"
+  },
+  {
+   "id": "grassrivers-06",
+   "region": "grassrivers",
+   "source": "rs-screens",
+   "alt": "Homme barbu à la casquette, un fusil à l’épaule, un alligator suspendu derrière lui, capture officielle de GTA VI",
+   "legende": "Un chasseur et ses alligators"
+  },
+  {
+   "id": "leonida-keys-01",
+   "region": "leonida-keys",
+   "source": "rs-screens",
+   "alt": "Un hydravion survole des îles reliées par des ponts, au milieu d’une mer turquoise, capture officielle de GTA VI",
+   "legende": "Les ponts des Keys"
+  },
+  {
+   "id": "leonida-keys-02",
+   "region": "leonida-keys",
+   "source": "rs-screens",
+   "alt": "Un iguane traverse la route devant un scooter de mobilité, des passants et un minibus derrière, capture officielle de GTA VI",
+   "legende": "Un iguane sur la route"
+  },
+  {
+   "id": "leonida-keys-03",
+   "region": "leonida-keys",
+   "source": "rs-screens",
+   "alt": "Terrasse d’un bar en bois parmi les palmiers, des clients au comptoir et un homme endormi sur une table, capture officielle de GTA VI",
+   "legende": "Le bar The Rusty Anchor"
+  },
+  {
+   "id": "leonida-keys-04",
+   "region": "leonida-keys",
+   "source": "rs-screens",
+   "alt": "Plongeurs sous l’eau près d’une tortue et de bancs de poissons, au-dessus d’un récif, capture officielle de GTA VI",
+   "legende": "Plongée sur le récif"
+  },
+  {
+   "id": "leonida-keys-05",
+   "region": "leonida-keys",
+   "source": "rs-screens",
+   "alt": "Fête sur des bateaux : un homme sur une bouée flamant rose, des jet-skis au loin, capture officielle de GTA VI",
+   "legende": "Rassemblement de bateaux"
+  },
+  {
+   "id": "leonida-keys-06",
+   "region": "leonida-keys",
+   "source": "rs-screens",
+   "alt": "Iguane vert posé sur un rocher, la mer et une petite île derrière lui, capture officielle de GTA VI",
+   "legende": "Un iguane au soleil"
+  },
+  {
+   "id": "mount-kalaga-national-park-01",
+   "region": "mount-kalaga",
+   "source": "rs-screens",
+   "alt": "Motos tout-terrain lancées dans la boue devant de vieux silos, capture officielle de GTA VI",
+   "legende": "Course de motos tout-terrain"
+  },
+  {
+   "id": "mount-kalaga-national-park-02",
+   "region": "mount-kalaga",
+   "source": "rs-screens",
+   "alt": "Un hélicoptère de la télévision survole une crête boisée au soleil couchant, capture officielle de GTA VI",
+   "legende": "Hélicoptère sur les collines"
+  },
+  {
+   "id": "mount-kalaga-national-park-03",
+   "region": "mount-kalaga",
+   "source": "rs-screens",
+   "alt": "Deux chasseurs en tenue de camouflage avancent dans une forêt de pins, capture officielle de GTA VI",
+   "legende": "Chasseurs dans la forêt"
+  },
+  {
+   "id": "mount-kalaga-national-park-04",
+   "region": "mount-kalaga",
+   "source": "rs-screens",
+   "alt": "Route qui serpente au fond d’une gorge aux falaises rouges, un pont au loin, capture officielle de GTA VI",
+   "legende": "La route dans la gorge"
+  },
+  {
+   "id": "mount-kalaga-national-park-05",
+   "region": "mount-kalaga",
+   "source": "rs-screens",
+   "alt": "Un puma s’approche de cerfs qui boivent au ruisseau, capture officielle de GTA VI",
+   "legende": "Le puma et les cerfs"
+  },
+  {
+   "id": "mount-kalaga-national-park-06",
+   "region": "mount-kalaga",
+   "source": "rs-screens",
+   "alt": "Une personne en gilet de sauvetage pagaie en kayak vers un pont de chemin de fer, près d’une échelle de crue, capture officielle de GTA VI",
+   "legende": "En kayak sous le pont"
+  },
+  {
+   "id": "port-gellhorn-01",
+   "region": "port-gellhorn",
+   "source": "rs-screens",
+   "alt": "Enseigne lumineuse d’un motel, de nuit, un pick-up garé devant, capture officielle de GTA VI",
+   "legende": "Le Starlet Motel, de nuit"
+  },
+  {
+   "id": "port-gellhorn-02",
+   "region": "port-gellhorn",
+   "source": "rs-screens",
+   "alt": "Deux hommes dans une pièce éclairée par des lampes de culture, l’un appuyé sur une pelle, l’autre une batte sur l’épaule, capture officielle de GTA VI",
+   "legende": "La pièce aux lampes de culture"
+  },
+  {
+   "id": "port-gellhorn-03",
+   "region": "port-gellhorn",
+   "source": "rs-screens",
+   "alt": "Une femme penchée à la vitre d’une voiture tend un sachet à l’homme assis à l’arrière, capture officielle de GTA VI",
+   "legende": "Un échange par la vitre"
+  },
+  {
+   "id": "port-gellhorn-04",
+   "region": "port-gellhorn",
+   "source": "rs-screens",
+   "alt": "Enseigne rose d’un cabaret et son panneau lumineux, de nuit, vus du dessus, capture officielle de GTA VI",
+   "legende": "Le cabaret Delights"
+  },
+  {
+   "id": "port-gellhorn-05",
+   "region": "port-gellhorn",
+   "source": "rs-screens",
+   "alt": "Un couple au bord d’un feu de camp, de nuit, parmi d’autres fêtards, capture officielle de GTA VI",
+   "legende": "Soirée autour du feu"
+  },
+  {
+   "id": "port-gellhorn-06",
+   "region": "port-gellhorn",
+   "source": "rs-screens",
+   "alt": "Rues, mobile homes et château d’eau au coucher du soleil, capture officielle de GTA VI",
+   "legende": "Port Gellhorn au couchant"
+  },
+  {
+   "id": "vice-city-01",
+   "region": "vice-city",
+   "source": "rs-screens",
+   "alt": "Un jet passe au-dessus de lettres géantes éclairées, au crépuscule, capture officielle de GTA VI",
+   "legende": "Les lettres de Vice City"
+  },
+  {
+   "id": "vice-city-02",
+   "region": "vice-city",
+   "source": "rs-screens",
+   "alt": "Un couple sur un balcon surplombe une piscine, des palmiers et une plage, capture officielle de GTA VI",
+   "legende": "Un balcon sur la plage"
+  },
+  {
+   "id": "vice-city-03",
+   "region": "vice-city",
+   "source": "rs-screens",
+   "alt": "Vue aérienne de quartiers : immeubles blancs, terrain de basket, palmiers et tours en fond, capture officielle de GTA VI",
+   "legende": "Les quartiers vus du ciel"
+  },
+  {
+   "id": "vice-city-04",
+   "region": "vice-city",
+   "source": "rs-screens",
+   "alt": "Deux hommes posent face à l’objectif, l’un montre ses dents serties d’or, l’autre pointe le doigt, capture officielle de GTA VI",
+   "legende": "La pose face à l’objectif"
+  },
+  {
+   "id": "vice-city-05",
+   "region": "vice-city",
+   "source": "rs-screens",
+   "alt": "Baigneurs, cabine de sauveteur jaune et tours en fond sur une plage, capture officielle de GTA VI",
+   "legende": "Sur la plage"
+  },
+  {
+   "id": "vice-city-06",
+   "region": "vice-city",
+   "source": "rs-screens",
+   "alt": "Policiers et fêtardes autour d’une voiture de police, devant un hôtel éclairé au néon, capture officielle de GTA VI",
+   "legende": "La police devant l’hôtel"
+  },
+  {
+   "id": "vice-city-08",
+   "region": "vice-city",
+   "source": "rs-screens",
+   "alt": "Une ville de nuit : grande roue illuminée, salle de spectacle et immeubles au bord de l’eau, capture officielle de GTA VI",
+   "legende": "La grande roue, de nuit"
+  },
+  {
+   "id": "vice-city-09",
+   "region": "vice-city",
+   "source": "rs-screens",
+   "alt": "Une berline bleue et des motards sous un viaduc couvert de fresques, capture officielle de GTA VI",
+   "legende": "Sous le viaduc peint"
+  },
+  {
+   "id": "vice-city-10",
+   "region": "vice-city",
+   "source": "rs-screens",
+   "alt": "Deux tours arrondies et des bateaux sur une baie, en plein jour, capture officielle de GTA VI",
+   "legende": "Les tours au bord de la baie"
+  },
+  {
+   "id": "vice-city-11",
+   "region": "vice-city",
+   "source": "rs-screens",
+   "alt": "Gratte-ciel au bord de l’eau au crépuscule, un hélicoptère en vol, capture officielle de GTA VI",
+   "legende": "Le front de mer au crépuscule"
+  },
+  {
+   "id": "vice-city-12",
+   "region": "vice-city",
+   "source": "rs-screens",
+   "alt": "Un homme aux longues dreadlocks tient une arme dorée et un téléphone, capture officielle de GTA VI",
+   "legende": "L’arme dorée"
+  }
+ ],
+ "page": {
+  "label": "Devine le lieu",
+  "kicker": "Jouer · GTA VI",
+  "title": "Devine le lieu",
+  "seoTitle": "Devine le lieu : le jeu du jour sur la carte de GTA VI",
+  "desc": "Une image officielle de GTA 6, six régions de Leonida : devine où elle a été prise. Cinq images par jour, les mêmes pour tous, puis une partie libre.",
+  "lede": "Une image officielle de GTA VI, six régions de Leonida : à toi de dire où elle a été prise. Cinq images par jour, les mêmes pour tout le monde.",
+  "note": "Chaque réponse allume la bonne région sur la carte et mène à sa fiche : tu apprends Leonida en jouant.",
+  "question": "Dans quelle région cette image a-t-elle été prise ?",
+  "carte": "Ou touche une région sur la carte",
+  "carteNote": "Fond de carte communautaire, non officiel",
+  "sansScript": "Le jeu tire les images du jour dans ton navigateur : il a besoin de JavaScript. Sans lui, retrouve plus bas les six régions et leurs fiches.",
+  "nav": {
+   "jeu": "Le jeu",
+   "regions": "Les régions",
+   "regles": "Les règles",
+   "images": "Les images",
+   "faq": "Questions"
+  }
+ },
+ "msg": {
+  "dv-jour": "Partie du jour n° {n}",
+  "dv-libre": "Partie libre",
+  "dv-image": "Image {i} sur {total}",
+  "dv-points": "Bonnes réponses : {score} sur {done}",
+  "dv-juste": "Bien vu : {region}.",
+  "dv-rate": "Raté : c’était {region}, pas {choix}.",
+  "dv-verdict-juste": "Juste",
+  "dv-verdict-rate": "Raté",
+  "dv-suivante": "Image suivante",
+  "dv-voir": "Voir mon résultat",
+  "dv-fiche": "La fiche de {region}",
+  "dv-annonce": "Image {i} sur {total} : dans quelle région a-t-elle été prise ?",
+  "dv-annonce-libre": "Nouvelle image : dans quelle région a-t-elle été prise ?",
+  "dv-fin": "Partie terminée : {score} sur {total}.",
+  "dv-deja": "Tu as déjà joué la partie du jour : voici ton résultat.",
+  "dv-res-5": "Sans faute : tu connais Leonida par cœur.",
+  "dv-res-4": "Presque parfait.",
+  "dv-res-3": "Bien joué.",
+  "dv-res-2": "Tu progresses : chaque fiche t’aide pour demain.",
+  "dv-res-1": "Un bon début : la carte se retient vite.",
+  "dv-res-0": "Pas cette fois : ouvre les fiches, et à demain.",
+  "dv-jours-one": "{n} jour",
+  "dv-jours-other": "{n} jours",
+  "dv-sur": "{score} sur {total}",
+  "dv-partage-titre": "Leonidakit · Devine le lieu n° {n} : {score}/{total}",
+  "dv-copie": "Résultat copié : colle-le où tu veux.",
+  "dv-copie-ko": "Copie impossible : sélectionne le texte du résultat et copie-le.",
+  "dv-partage-ok": "Résultat partagé.",
+  "dv-prochaine": "Prochaine partie dans {h} h {m} min.",
+  "dv-prochaine-min": "Prochaine partie dans {m} min.",
+  "dv-nouvelle": "La nouvelle partie du jour est prête.",
+  "dv-libre-annonce": "Partie libre : des images au hasard, sans limite. Ta série ne change pas.",
+  "dv-sr-bonne": "bonne réponse",
+  "dv-sr-ta": "ta réponse",
+  "dv-res-ta": "{verdict} · ta réponse : {choix}"
+ },
+ "resultat": {
+  "titre": "Ton résultat",
+  "serie": "Série",
+  "serieNote": "jours de suite où tu as fini la partie du jour",
+  "meilleur": "Meilleur score",
+  "partage": "Partager mon résultat",
+  "copier": "Copier",
+  "partageNote": "Seul ce texte est partagé : ni image, ni donnée de ton appareil.",
+  "libre": "Continuer en partie libre",
+  "retour": "Mon résultat du jour",
+  "jouer": "Jouer la nouvelle partie"
+ },
+ "regions": {
+  "kicker": "La carte de Leonida",
+  "titre": "Les six régions",
+  "lede": "Chaque région a sa fiche : ce que Rockstar en a dit, ses images et sa place sur la carte. Le meilleur moyen de progresser.",
+  "images": "{n} images dans le jeu",
+  "fiche": "Voir la fiche",
+  "carte": "Sur la carte"
+ },
+ "regles": {
+  "kicker": "Les règles",
+  "titre": "Comment on joue",
+  "etapes": [
+   {
+    "icon": "horloge",
+    "titre": "Cinq images par jour",
+    "texte": "Le tirage change à minuit, heure de Paris. Tout le monde a les mêmes images : tu peux comparer ton score avec tes amis."
+   },
+   {
+    "icon": "carte",
+    "titre": "Une région par image",
+    "texte": "Réponds avec les boutons ou sur la carte. Une même région revient deux fois au plus dans une partie, et une image ne revient jamais le lendemain."
+   },
+   {
+    "icon": "loupe",
+    "titre": "La réponse, tout de suite",
+    "texte": "La bonne région s’allume sur la carte, avec ce que montre l’image, son titre officiel et le lien vers la fiche de la région."
+   },
+   {
+    "icon": "statuts",
+    "titre": "Ta série, puis la partie libre",
+    "texte": "Finis la partie du jour pour allonger ta série. Ensuite, continue avec des images au hasard, autant que tu veux."
+   }
+  ]
+ },
+ "sources": {
+  "kicker": "D’où viennent les images",
+  "titre": "Rien que des captures officielles",
+  "lede": "Le jeu ne montre que des images que Rockstar a lui-même rangées par région.",
+  "p1": "Sur sa page des captures de GTA VI, Rockstar classe ses images par région : Vice City, Leonida Keys, Grassrivers, Port Gellhorn, Ambrosia et Mount Kalaga National Park. Le jeu reprend les images de ces six séries que le site a dans ses visuels officiels, et seulement elles : la bonne réponse est toujours celle de Rockstar.",
+  "p2": "La carte du jeu est celle du site : un fond tracé par la communauté d’après les supports officiels, pas une carte publiée par Rockstar. Chaque région y est placée sur le repère de la carte interactive ; on devine une région, jamais un point précis.",
+  "total": "images dans le jeu",
+  "credits": "Tous les visuels et leurs crédits",
+  "credit": "Capture officielle de Rockstar Games"
+ },
+ "faq": {
+  "kicker": "Questions",
+  "titre": "Questions fréquentes",
+  "items": [
+   {
+    "q": "Les images de Devine le lieu viennent-elles des fuites ?",
+    "a": "Non. Seulement les captures officielles que Rockstar a publiées sur son site, rangées par région. Le site ne reprend rien des fuites."
+   },
+   {
+    "q": "Pourquoi certaines images sont-elles si difficiles ?",
+    "a": "Rockstar range aussi des portraits et des scènes de nuit dans ses séries par région : sans paysage, il faut deviner à l’ambiance. Ce sont les images les plus dures du jeu."
+   },
+   {
+    "q": "Mon score est-il enregistré quelque part ?",
+    "a": "Seulement sur ton appareil : tes réponses du jour, ta série et ton meilleur score, dans le stockage de ton navigateur, sous une seule clé. Rien n’est envoyé ; le partage ne transmet que le texte de ton résultat, à l’application que tu choisis."
+   },
+   {
+    "q": "Peut-on rejouer la partie du jour ?",
+    "a": "Une seule fois : c’est ce qui rend les scores comparables. Ensuite, la partie libre tire des images au hasard, sans limite et sans toucher à ta série."
+   },
+   {
+    "q": "De nouvelles images arriveront-elles ?",
+    "a": "Quand de nouvelles captures officielles rangées par région arrivent sur le site, elles entrent dans le jeu. Les régions restent les six que Rockstar a présentées, tant qu’il n’en annonce pas d’autres."
+   }
+  ]
+ },
+ "liens": {
+  "kicker": "Le jeu du jour",
+  "titre": "Devine le lieu",
+  "texte": "Une image officielle, six régions : sauras-tu dire où elle a été prise ? Cinq images par jour, les mêmes pour tout le monde.",
+  "bouton": "Jouer"
+ },
+ "explorer": {
+  "titre": "Continuer la visite",
+  "liens": [
+   {
+    "href": "carte.html",
+    "titre": "La carte de Leonida",
+    "texte": "Tous les lieux repérés, à explorer et à cocher",
+    "icon": "map"
+   },
+   {
+    "href": "lieux.html",
+    "titre": "Les régions de Leonida",
+    "texte": "Les six fiches, leurs images et leurs sources",
+    "icon": "pin"
+   },
+   {
+    "href": "videos.html",
+    "titre": "Les vidéos officielles",
+    "texte": "Les trailers, moment par moment",
+    "icon": "page"
+   }
+  ]
+ },
+ "leo": {
+  "suggestions": [
+   "C’est quoi Devine le lieu ?",
+   "Mon score de Devine le lieu est-il enregistré ?",
+   "Quelles sont les régions de GTA VI ?",
+   "Où est Vice City sur la carte ?"
+  ]
+ }
+}

@@ -116,7 +116,7 @@ test('menu, pied de page, recherche (« cheat » dans chaque langue) et plan du 
   const foot = shell.footer('', ''); assert.ok(foot.indexOf('<h2>Explorer</h2>') < foot.indexOf('<h2>Jouer</h2>') && foot.includes('href="codes-de-triche.html"'));
   assert.match(read('codes-de-triche.html'), /<a href="codes-de-triche\.html" class="here" aria-current="page">Codes de triche<\/a>/);
   const L = require(path.join(root, 'outils/langues.cjs')).config(root);
-  const words = { fr: /\bcheat\b/, en: /\bcheats?\b/, es: /\btrucos\b/, it: /\btrucchi\b/, de: /\bcheatcodes\b/ };
+  const words = { fr: /\bcheat\b/, en: /\bcheats?\b/, es: /\btrucos\b/, it: /\btrucchi\b/, de: /\bcheatcodes\b/, pt: /\btrapaca\b/ }; /* v7.91 : portugais (« códigos de trapaça ») */
   for (const l of [{ code: 'fr', dossier: '' }, ...L.langues.filter(x => x.etat === 'publiee' && x.code !== 'fr')]) {
     const ctx = { window: {} }; vm.runInNewContext(read((l.dossier ? l.dossier + '/' : '') + 'search-index.js'), ctx);
     const list = ctx.window.LK_INDEX.filter(x => x.u.startsWith((l.dossier ? '/' + l.dossier : '') + '/codes-de-triche.html'));

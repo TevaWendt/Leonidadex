@@ -10,6 +10,14 @@
 
 const fs=require('fs'),path=require('path'),vm=require('vm');
 const root=path.resolve(__dirname,'..');process.chdir(root);
+// lot 1 bis (corrections de l’audit, point 2) : la cible des comptes à rebours, une seule fois pour tout le site. app.js la reçoit
+// de outils/acquisitions.json (game.releaseDate, game.releaseTime, game.preloadDate) : c’est là qu’on la change. Sans fuseau,
+// l’heure est celle du visiteur (minuit, heure locale, comme l’indique le PlayStation Store) ; une heure mondiale annoncée
+// par Rockstar s’écrirait avec son fuseau (« 06:00:00Z »), et la mention « minuit, heure locale » serait à revoir.
+{const g=JSON.parse(fs.readFileSync('outils/acquisitions.json','utf8')).game,t=g.releaseTime||'00:00:00';
+ const line='window.LK_SORTIE = '+JSON.stringify({sortie:g.releaseDate+'T'+t,prechargement:g.preloadDate+'T00:00:00'})+';';
+ const app=fs.readFileSync('app.js','utf8');if(!/^window\.LK_SORTIE = .*;$/m.test(app))throw new Error('app.js : ligne « window.LK_SORTIE = … » introuvable');
+ const next=app.replace(/^window\.LK_SORTIE = .*;$/m,line);if(next!==app)fs.writeFileSync('app.js',next);}
 // v7.55 (lot 2, VIS-02) : la référence cartographique img/leonida-carte.svg suit le dessin de carte.html (outils/carte-reference.cjs).
 require('./carte-reference.cjs').write();
 // Catalogue du calculateur : projeter les sources avant le calcul de version.
@@ -21,10 +29,12 @@ const V=data.window.LK_VEHICULES,A=data.window.LK_ARMES;
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const name=v=>(v.marque&&v.marque!=='Marque inconnue'?v.marque+' ':'')+v.nom;
 const walk=d=>fs.readdirSync(d,{withFileTypes:true}).flatMap(x=>x.isDirectory()?walk(path.join(d,x.name)):[path.join(d,x.name)]);
-const shipped=['photos','img'].flatMap(d=>fs.existsSync(d)?walk(d):[]).map(p=>'/'+p.replaceAll('\\','/')).sort();if(fs.existsSync('credits-reels.json'))shipped.push('/credits-reels.json');
+/* v7.88 : les fichiers du kit presse (presse/) existent aussi : leurs aperçus sont des images de la page Presse. */
+const shipped=['photos','img','presse'].flatMap(d=>fs.existsSync(d)?walk(d):[]).map(p=>'/'+p.replaceAll('\\','/')).sort();if(fs.existsSync('credits-reels.json'))shipped.push('/credits-reels.json');
 // Le manifeste chargé par toutes les pages ne liste pas les photos de la carte : elles ne servent qu'à carte.html et carte-gtadb.js est déjà filtré ci-dessous.
 /* v7.76 : ni les illustrations des catalogues (img/illus/, montrées par les pages elles-mêmes, jamais cherchées par un script). */
-const assets=shipped.filter(p=>!p.startsWith('/photos/')&&!p.startsWith('/img/illus/'));
+/* v7.88 : ni les images de partage (img/partage/, lues par les réseaux sociaux, jamais par une page), ni le kit presse (presse/). */
+const assets=shipped.filter(p=>!p.startsWith('/photos/')&&!p.startsWith('/img/illus/')&&!p.startsWith('/img/partage/')&&!p.startsWith('/presse/'));
 fs.writeFileSync('assets-manifest.js','/* Generated from the files actually shipped. */\nwindow.LK_ASSETS = '+JSON.stringify(assets)+';\n');
 const assetSet=new Set(shipped);
 const available=(file,u)=>{try{const url=new URL(u,'https://www.leonidakit.com/'+file);return url.origin!=='https://www.leonidakit.com'||url.protocol==='data:'||assetSet.has(url.pathname);}catch{return false;}};
@@ -33,7 +43,10 @@ home=home.replace(/(class="chip live">)\d+ fiches<\/span>/g,'$1'+(V.length+A.len
 // Resolve the explicit counter independently of its presentation classes.
 home=home.replace(/(<[^>]+data-count=")\d+("[^>]*>)\d+(<\/[^>]+>\s*<[^>]+>fiches véhicules)/g,'$1'+V.length+'$2'+V.length+'$3');
 home=home.replace('Les outils sont prêts, les données arrivent avec le jeu.','La carte et les catalogues sont accessibles. Les autres outils se complètent avec le jeu.');
-home=home.replace('Six comtés confirmés par Rockstar à ce jour.','Six comtés recensés. Leur niveau de certitude est détaillé sur la carte.').replace('comtés à explorer','comtés recensés');fs.writeFileSync('index.html',home);
+// lot 1 bis (corrections de l’audit, point 6) : l’accueil compte les régions officielles (outils/editorial.json : six), comme la
+// carte et lieux.html ; il disait « 6 comtés recensés » alors que la carte ne recense pas six comtés.
+{const n=JSON.parse(fs.readFileSync('outils/editorial.json','utf8')).regions.length;home=home.replace(/(<div class="big" data-count=")\d+(">)\d+(<\/div><div class="lbl">régions officielles<\/div>)/,'$1'+n+'$2'+n+'$3');}
+fs.writeFileSync('index.html',home);
 let hub=fs.readFileSync('vehicules.html','utf8');const st=V.reduce((a,v)=>(a[v.st]=(a[v.st]||0)+1,a),{});
 const counts=[V.length,new Set(V.map(v=>v.cat)).size,new Set(V.map(v=>v.marque).filter(x=>x&&x!=='Marque inconnue')).size,V.filter(v=>v.insp).length];let ci=0;
 hub=hub.replace(/(<span class="n" data-count=")\d+(">)\d+(<\/span>)/g,(_,a,b,c)=>{const n=counts[ci++];return a+n+b+n+c;});
@@ -67,7 +80,7 @@ fs.writeFileSync('carte-gtadb.js','/* Generated from data/carte-gtadb-source.jso
 
 const htmlFiles=[...fs.readdirSync('.').filter(x=>x.endsWith('.html')),...['armes','vehicules','lieux','personnages','entreprises','demeures','planques','gangs','carnets','missions'/* section missions */,'activites'/* section activites */,'radios'/* section radios */,'animaux'/* section animaux */,'codes-de-triche'/* section codes */,'trophees'/* section trophees */,'online'/* section online */,'videos'/* v7.87 : vidéos officielles */].filter(d=>fs.existsSync(d)).flatMap(d=>fs.readdirSync(d).filter(f=>f.endsWith('.html')).map(f=>d+'/'+f))].sort();
 const canonicals=[];
-for(const file of htmlFiles){let s=fs.readFileSync(file,'utf8');if(file.startsWith('google'))continue;const prefix=file==='404.html'?'/':file.includes('/')?'../':'';
+for(const file of htmlFiles){let s=fs.readFileSync(file,'utf8');if(file.startsWith('google'))continue;/* v7.89 : la page hors connexion (comme 404.html) s'affiche à n'importe quelle adresse : liens absolus */const prefix=file==='404.html'||file==='hors-ligne.html'?'/':file.includes('/')?'../':'';
  if(s.includes('app.js')){
   s=s.replace(/<script src="(?:\.\.\/|\/)?(?:assets-manifest|common)\.js"><\/script>\n?/g,'');
   s=s.replace(/(<script src="(?:\.\.\/|\/)?app\.js"><\/script>)/,'<script src="'+prefix+'assets-manifest.js"></script>\n<script src="'+prefix+'common.js"></script>\n$1');
@@ -89,6 +102,9 @@ for(const file of htmlFiles){let s=fs.readFileSync(file,'utf8');if(file.startsWi
  if(/<a\b[^>]*\shref="(?:\.\.\/|\/)?[^":]+\.(?:webp|avif|jpe?g|png)"/i.test(s)){const tag='<script type="lk/lazy" src="'+prefix+'lk-visionneuse.js"></script>';
   s=/<script src="(?:\.\.\/|\/)?common\.js(?:\?v=[a-f0-9]+)?"><\/script>/.test(s)?s.replace(/(<script src="(?:\.\.\/|\/)?common\.js(?:\?v=[a-f0-9]+)?"><\/script>)/,'$1\n'+tag):s.replace('</body>',tag+'\n</body>');}
  if(!s.includes('name="viewport"'))s=s.replace('</head>','<meta name="viewport" content="width=device-width, initial-scale=1.0">\n</head>');
+ // v7.89 (lot 5) : appli installable : manifeste de la langue et icône d'écran d'accueil d'Apple dans toutes les pages (outils/appli.cjs ;
+ // outils/langues.cjs donne aux pages traduites le manifeste de leur langue).
+ s=require('./appli.cjs').tete(s);
  // v7.37 : police Archivo hébergée sur le site (style.css) : plus aucun lien vers Google Fonts, préchargement du fichier latin.
  s=s.replace(/[ \t]*<link rel="preconnect" href="https:\/\/fonts\.googleapis\.com">\s*\n?/g,'').replace(/[ \t]*<link rel="preconnect" href="https:\/\/fonts\.gstatic\.com" crossorigin>\s*\n?/g,'').replace(/[ \t]*<link href="https:\/\/fonts\.googleapis\.com\/css2[^"]*" rel="stylesheet">\s*\n?/g,'');
  if(!s.includes('rel="preload" href="/fonts/archivo-latin.woff2"'))s=s.replace(/(<link rel="stylesheet" href="(?:\.\.\/|\/)?style\.css[^>]*>)/,'<link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>\n$1');
@@ -105,7 +121,10 @@ for(const file of htmlFiles){let s=fs.readFileSync(file,'utf8');if(file.startsWi
  if(/class="gal"[^>]*data-vide="1"/.test(s)&&!s.includes('data-vide-txt')){s=s.replace(/<p class="gal-note">[\s\S]*?<\/p>/,'<p class="gal-note">Illustration provisoire : les visuels restent à intégrer à cette fiche.</p>').replace(/<span class="chip">Images officielles<\/span>/g,'');}
  s=s.replace(/<meta property="og:image" content="([^"]+)"\s*\/?>/g,(tag,src)=>available(file,src)?tag:'<meta property="og:image" content="https://www.leonidakit.com/img/social-card.png">');
  // Le calculateur est utilisable et indexable depuis la v7.16.
- if(!s.includes('http-equiv="refresh"')&&!s.includes('name="robots" content="noindex')){
+ /* v7.87.1 : l’image de partage et la carte Twitter valent aussi pour une page en « noindex, follow » (les fiches minces de la
+    v7.86 : une page hors de Google se partage quand même sur un réseau social ou une messagerie, qui lisent ces balises) ;
+    seules les pages de redirection et la page 404 n’en ont pas. */
+ if(!s.includes('http-equiv="refresh"')&&file!=='404.html'&&file!=='hors-ligne.html'/* assemblage v7.91 : la page de secours du service worker (v7.89) ne se partage pas */){
   if(!s.includes('property="og:image"'))s=s.replace('</head>','<meta property="og:image" content="https://www.leonidakit.com/img/social-card.png">\n</head>');
   if(!s.includes('name="twitter:card"'))s=s.replace('</head>','<meta name="twitter:card" content="summary_large_image">\n</head>');
  }
@@ -144,6 +163,8 @@ if(fs.existsSync('outils/missions-index.json'))index=index.concat(JSON.parse(fs.
 if(fs.existsSync('outils/activites-index.json'))index=index.concat(JSON.parse(fs.readFileSync('outils/activites-index.json','utf8')));
 /* v7.87 : actualités, vidéos officielles et éditions (outils/actus-index.json, écrit par outils/gen-actus.cjs) */
 if(fs.existsSync('outils/actus-index.json'))index=index.concat(JSON.parse(fs.readFileSync('outils/actus-index.json','utf8')));
+/* v7.90 (lot 6) : le jeu « Devine le lieu » (outils/devine-index.json, écrit par outils/gen-devine.cjs : une entrée vers #jeu, avec les mots du joueur) */
+if(fs.existsSync('outils/devine-index.json'))index=index.concat(JSON.parse(fs.readFileSync('outils/devine-index.json','utf8')));
 /* section radios : hub et fiches de la section (outils/radios-index.json, écrit par outils/gen-radios.cjs) */
 if(fs.existsSync('outils/radios-index.json'))index=index.concat(JSON.parse(fs.readFileSync('outils/radios-index.json','utf8')));
 /* section codes : page principale et fiches de catégorie (outils/codes-index.json, écrit par outils/gen-codes.cjs ; sans la page modèle) */
@@ -174,7 +195,10 @@ const mapSource=fs.readFileSync('carte.js','utf8');const local=vm.runInNewContex
 const allPoints=[...local,...data.window.LK_GTADB.groupes,...data.window.LK_GTADB.lieux];
 const pointIds=allPoints.map(p=>p.id);
 const cats=vm.runInNewContext('('+mapSource.match(/const CATS = (\{[\s\S]*?\n  \});/)[1]+')');
-const mapCounts=[allPoints.length,allPoints.filter(p=>p.s==='officiel').length,7,Object.keys(cats).length];let mi=0;
+// lot 1 bis (corrections de l’audit, point 6) : le troisième chiffre est le nombre de régions officielles (outils/editorial.json :
+// six), comme le titre « Les six régions de Leonida », lieux.html et l’accueil ; il n’était plus calculé (« 7 »).
+const nRegions=JSON.parse(fs.readFileSync('outils/editorial.json','utf8')).regions.length;
+const mapCounts=[allPoints.length,allPoints.filter(p=>p.s==='officiel').length,nRegions,Object.keys(cats).length];let mi=0;
 fs.writeFileSync('carte.html',fs.readFileSync('carte.html','utf8').replace(/(<span class="n" data-count=")\d+(">)\d+(<\/span>)/g,(_,a,b,c)=>{const n=mapCounts[mi++];return a+n+b+n+c;}));
 // v7.69 : calculateur de trajet de la carte : liste légère des véhicules du site (identifiant, marque et nom, catégorie),
 // sans les textes des fiches ; chargée par carte.js à l'ouverture du calculateur (lk/lazy, partagée par toutes les langues).
@@ -209,8 +233,14 @@ const progressIds={vehicules:V.map(v=>v.id),armes:A.map(v=>v.id),lieux:pointIds,
  /* v7.45 : les sujets du morceau « calculateur » (leo/calculateur.json) comptent aussi */
  const leoTopics=(leo.knowledge||[]).length+Object.values(leo.shards||{}).filter(x=>x&&x.knowledge&&fs.existsSync(String(x.file).slice(1))).reduce((n,x)=>n+(JSON.parse(fs.readFileSync(String(x.file).slice(1),'utf8')).knowledge||[]).length,0);
  const tests=fs.readdirSync('outils/tests').filter(f=>f.endsWith('.test.cjs')).reduce((n,f)=>n+(fs.readFileSync('outils/tests/'+f,'utf8').match(/^\s*test\(/gm)||[]).length,0);
- const STATS={pages:htmlFiles.filter(f=>!f.startsWith('google')).length,vehicules:V.length,armes:A.length,lieux:new Set(pointIds).size,lignes:C.FAMILIES.reduce((n,f)=>n+C.counts(f).n,0),visuels:Object.keys(medias).length,leo:leoTopics,tests};
- if(fs.existsSync('a-propos.html')){let ap=fs.readFileSync('a-propos.html','utf8');ap=ap.replace(/(<b class="fig-n" data-count=")\d+(" data-stat="([a-z]+)">)\d+(<\/b>)/g,(m,a,b,key,c)=>STATS[key]===undefined?m:a+STATS[key]+b+STATS[key]+c);fs.writeFileSync('a-propos.html',ap);}}
+ /* v7.88 : « pages en ligne » sans les pages de redirection (meta refresh) ni 404.html */
+ const STATS={pages:htmlFiles.filter(f=>!f.startsWith('google')&&f!=='404.html'&&!/http-equiv=["']refresh/i.test(fs.readFileSync(f,'utf8'))).length,vehicules:V.length,armes:A.length,lieux:new Set(pointIds).size,lignes:C.FAMILIES.reduce((n,f)=>n+C.counts(f).n,0),visuels:Object.keys(medias).length,leo:leoTopics,tests};
+ /* v7.88 : les mêmes chiffres sur la page Presse (presse.html), plus le nombre de langues publiées (outils/langues.json) */
+ STATS.langues=JSON.parse(fs.readFileSync('outils/langues.json','utf8')).langues.filter(l=>l.etat==='publiee').length;
+ /* page Presse : chiffres fixes (sans data-count), au format français (« 2 547 », espace fine insécable) */
+ const frN=n=>new Intl.NumberFormat('fr-FR').format(n).replace(/\u00a0/g,'\u202f');
+ for(const f of ['a-propos.html','presse.html'])if(fs.existsSync(f)){let ap=fs.readFileSync(f,'utf8');ap=ap.replace(/(<b class="fig-n" data-count=")\d+(" data-stat="([a-z]+)">)\d+(<\/b>)/g,(m,a,b,key,c)=>STATS[key]===undefined?m:a+STATS[key]+b+STATS[key]+c);
+  ap=ap.replace(/(<b class="fig-n" data-stat="([a-z]+)">)[\d\u202f]+(<\/b>)/g,(m,a,key,c)=>STATS[key]===undefined?m:a+frN(STATS[key])+c);fs.writeFileSync(f,ap);}}
 fs.writeFileSync('progression-data.js','/* IDs only; no need to load the full map on this page. */\nwindow.LK_PROGRESS_IDS = '+JSON.stringify(progressIds)+';\n/* v7.38 : noms, catégories et liens pour les listes dépliables de la page Progression. */\nwindow.LK_PROGRESS_NAMES = '+JSON.stringify(progressNames)+';\n');
 console.log('Synchronisation : '+htmlFiles.length+' pages, '+assets.length+' assets, '+urls.length+' URL canoniques.');
 
@@ -221,11 +251,11 @@ require('child_process').execFileSync(process.execPath,[path.join(__dirname,'gen
 {const ctx={window:{}};vm.runInNewContext(readFile('search-index.js'),ctx);
  function readFile(file){return fs.readFileSync(path.join(root,file),'utf8');}
  const extra=[];
- for(const file of fs.readdirSync(root).filter(f=>f.endsWith('.html')&&!f.startsWith('google')&&f!=='404.html')){
+ for(const file of fs.readdirSync(root).filter(f=>f.endsWith('.html')&&!f.startsWith('google')&&f!=='404.html'&&f!=='hors-ligne.html'/* v7.89 : page de secours du service worker, pas une destination */)){
   const html=readFile(file);if(/http-equiv="refresh"/.test(html))continue; // Le noindex des moteurs externes n’exclut pas la recherche interne.
-  const label=({'a-propos.html':'À propos','contact.html':'Contact','mentions-legales.html':'Mentions et confidentialité','calculateurs.html':'Calculateur : huit calculs et un business plan','tuto.html':'Tuto du calculateur','index.html':'Accueil — Leonidakit','verification.html':'Ce qui est confirmé sur GTA 6'})[file]||html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/)?.[1]?.replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim();
+  const label=({'a-propos.html':'À propos','contact.html':'Contact','mentions-legales.html':'Mentions et confidentialité','calculateurs.html':'Calculateur : huit calculs et un business plan','tuto.html':'Tuto du calculateur','index.html':'Accueil — Leonidakit','verification.html':'Ce qui est confirmé sur GTA 6','presse.html':'Presse et créateurs'})[file]||html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/)?.[1]?.replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim();
   if(!label)continue;const desc=html.match(/<meta name="description" content="([^"]*)"/)?.[1]||'';
-  const synonyms=({'tuto.html':'tutoriel aide apprendre','achats.html':'achats acheter acquisitions','a-propos.html':'a propos equipe projet fonctionnement sources','contact.html':'contact erreur correction signalement retrait','style.html':'vetements habits looks coiffures style','personnalisations.html':'customisation ameliorations peinture tuning','medias.html':'credits photos images sources droits','verification.html':'confirme officiel annonces verifier methode statuts rumeurs fuites pc online heure poids preordre precommande boite disque'})[file]||'';
+  const synonyms=({'tuto.html':'tutoriel aide apprendre','achats.html':'achats acheter acquisitions','a-propos.html':'a propos equipe projet fonctionnement sources','contact.html':'contact erreur correction signalement retrait','style.html':'vetements habits looks coiffures style','personnalisations.html':'customisation ameliorations peinture tuning','medias.html':'credits photos images sources droits','verification.html':'confirme officiel annonces verifier methode statuts rumeurs fuites pc online heure poids preordre precommande boite disque','presse.html':'presse journaliste media kit logo icone captures youtubeur streamer createur partenariat interview citer','compagnon.html':'appli application installer ecran d accueil hors connexion sans reseau offline ecran allume veille transferer transfert changer de telephone nouvel appareil qr code lien exporter importer suivi'})[file]||'';
   extra.push({l:label,k:file.includes('calcul')||file==='tuto.html'?'Outil':'Page',u:'/'+file,s:label+' '+desc+' '+synonyms,w:-1});
  }
  /* v7.51 (lot 4) : une entrée par carnet de progression (page dédiée carnets/<id>.html), avec les mots qu’on tape pour les trouver. */
@@ -300,6 +330,9 @@ require('child_process').execFileSync(process.execPath,[path.join(__dirname,'gen
  const i=html.indexOf('<img',at),j=i<0?-1:html.indexOf('>',i);if(j<0)continue;const tag=html.slice(i,j+1);if(/fetchpriority=|loading="lazy"/.test(tag))continue;
  fs.writeFileSync(file,html.slice(0,i)+tag.replace(/^<img\b/,'<img fetchpriority="high"')+html.slice(j+1));}}
 
+// lot 1 bis (corrections de l’audit, points 8 et 11) : espaces insécables dans les montants et les dates du texte des pages
+// françaises (outils/insecables.cjs ; les pages traduites le font dans outils/langues.cjs). Rien d’autre ne change.
+{const {insecablesHtml,insecablesTitres}=require('./insecables.cjs');for(const file of htmlFiles){if(file.startsWith('google'))continue;const html=fs.readFileSync(file,'utf8'),next=insecablesTitres(insecablesHtml(html,'fr'))/* assemblage v7.91 : « GTA 6 » insécable dans les titres */;if(next!==html)fs.writeFileSync(file,next);}}
 // Empreintes finales : ne dépendent pas de l’état antérieur des autres fichiers.
 // v7.38 : chaque image d'une pile (.lk-stack) est un lien vers ce qu'elle représente (outils/lot-c-visuals.cjs).
 {const visuals=require('./lot-c-visuals.cjs');for(const file of htmlFiles){const html=fs.readFileSync(file,'utf8');if(!html.includes('class="lk-stack'))continue;const prefix=file.includes('/')?'../':'';const next=visuals.linkify(html,prefix);if(next!==html)fs.writeFileSync(file,next);}}
@@ -310,3 +343,8 @@ require('child_process').execFileSync(process.execPath,[path.join(__dirname,'gen
 // v7.60 : langues publiées (outils/langues.json) : pages traduites dans /en/…, scripts traduits, hreflang, sitemap.
 // Fait en dernier, à partir des pages françaises finales (empreintes comprises).
 {const L=require('./langues.cjs');const r=L.toutGenerer(root);for(const x of r.summary)console.log('Langue '+x.code+' : '+x.pages+' pages, '+x.scripts+' scripts traduits, '+x.manques+' texte(s) sans traduction'+(x.casses?', '+x.casses+' repère(s) cassé(s)':'')+(x.conflits?', '+x.conflits+' conflit(s)':'')+'.');}
+
+// v7.89 (lot 5) : service worker : VERSION (empreinte de la coquille : sw.js, manifestes, pages hors connexion de chaque langue et
+// leurs fichiers), LANGUES et PACK réécrits dans sw.js, après les langues (outils/appli.cjs). Une coquille modifiée = un nouveau
+// service worker, qui purge les anciens caches à son activation.
+{const r=require('./appli.cjs').tamponner(root);if(r)console.log('Service worker : version '+r.version+', '+r.pack.length+' pages préparées par langue ('+['fr',...r.langues].join(', ')+').');}

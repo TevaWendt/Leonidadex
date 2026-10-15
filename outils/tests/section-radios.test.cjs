@@ -133,7 +133,7 @@ test('Léo : morceau de questions de la section, fiche de l’album, réponses s
   assert.ok(!fuiteDans(read('leo/radios.json')), 'morceau de Léo : aucun nom tiré des fuites');
   /* ni dans les index de Léo des autres langues, ni dans la mémoire de traduction, ni dans les documents de la section */
   const sans = t => String(t).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, ' ');
-  const lus = [...['en', 'es', 'it', 'de'].flatMap(c => [c + '/leo-index.json', c + '/leo/radios.json', ...fs.readdirSync(path.join(root, 'outils/langues', c)).filter(f => f.endsWith('.json')).map(f => 'outils/langues/' + c + '/' + f)]), 'LISEZ-MOI-section-radios.txt', 'outils/CHANGEMENTS-section-radios.txt', 'outils/PREUVES-section-radios.md', 'outils/assemblage/section-radios.diff'].filter(f => fs.existsSync(path.join(root, f)));
+  const lus = [...['en', 'es', 'it', 'de', 'pt'].flatMap(c => [c + '/leo-index.json', c + '/leo/radios.json', ...fs.readdirSync(path.join(root, 'outils/langues', c)).filter(f => f.endsWith('.json')).map(f => 'outils/langues/' + c + '/' + f)]), 'LISEZ-MOI-section-radios.txt', 'outils/CHANGEMENTS-section-radios.txt', 'outils/PREUVES-section-radios.md', 'outils/assemblage/section-radios.diff'].filter(f => fs.existsSync(path.join(root, f)));
   for (const f of lus) { const t = read(f); assert.ok(!fuiteDans(t) && !fuiteDans(sans(t)), 'nom tiré des fuites : ' + f); }
   assert.deepEqual(idx.suggestions.radios.length, 6);
   const core = require(path.join(root, 'outils/tests/leo-complet.cjs')).fullCore(root);

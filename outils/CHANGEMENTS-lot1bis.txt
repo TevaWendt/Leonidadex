@@ -1,0 +1,132 @@
+LEONIDAKIT — Lot 1 bis : corrections de l’audit du 12 octobre 2026 (langues, mise en page, compteurs, comptes à rebours)
+— 14 octobre 2026
+
+Base : v7.87 (commit 210850a6). Prompt de Téva « PROMPT 3 — corrections de l’audit langues, mise en page, compteurs et
+comptes à rebours » (audit fait le 12/10/2026 sur la v7.85, copie locale rendue dans Chromium). Mêmes règles : un lot à la
+fois, archive « modifs », cinq langues, rien d’autre ne change, tests. Rien n’est publié ni poussé. CSP inchangée.
+Fichier supprimé : api/ia-achat.js (retrait demandé par la v7.71, jamais fait : les tests contact-v746, ia-v769 et v771
+échouaient sur la v7.87 à cause de lui ; fonction de paiement fermée faute de réglages, mais toujours déployée).
+
+Chaque point de l’audit a été d’abord vérifié sur la v7.87 dans Chromium (certains avaient changé depuis la v7.85) :
+le point 5 (« Höchstgeschwindigkeit » qui recouvrait sa valeur) était déjà réglé par la v7.86 (colonne des libellés à la
+largeur de leur mot le plus long) ; il reçoit la césure en plus. Le point 12 (« 69 jours » en dur) était devenu des cases
+« – jours – heures – min – sec » en v7.86 : toujours lues par les robots et sans script.
+
+PRIORITÉ 1
+1. Compte à rebours de l’accueil après la sortie (index.html, app.js, style.css) : en v7.86 le compteur se masquait à la
+   sortie, mais rien ne le remplaçait. Nouveau bloc #clock-sorti : « GTA VI est sorti » et deux boutons, « Voir les vrais
+   prix » (achats.html) et « Ouvrir le calculateur » (calculateurs.html), dans la langue de la page ; la phrase de jalon
+   devient « Depuis le 19 novembre 2026, les fiches se remplissent avec le jeu. » (plus de « est sorti » deux fois). Le
+   passage se fait en direct à minuit (le minuteur relit l’heure chaque seconde) et au chargement après la sortie.
+2. Fuseau horaire (app.js, outils/sync-site.cjs, outils/acquisitions.json) : la cible reste minuit à l’heure du visiteur
+   (comme le PlayStation Store pour la France). Une seule constante, window.LK_SORTIE, en tête d’app.js, écrite par
+   outils/sync-site.cjs depuis outils/acquisitions.json (game.releaseDate, game.releaseTime nouveau, game.preloadDate) :
+   les deux comptes à rebours (accueil, bandeaux des fiches et des pages de section) la lisent ; plus aucune date dans
+   le code. « Minuit, heure locale » sous le compteur de l’accueil (#clock-tz) et « minuit, heure locale » sous chaque
+   bandeau (.fcount-tz, posé par app.js, entre parenthèses par la feuille), dans les cinq langues.
+3. Calculateur, montants coupés (calculateurs-motion.css) : .calc-stat strong avait overflow-wrap:anywhere ; le montant
+   animé (span.c-final) se cassait sur trois ou quatre lignes à 320 et 390 px (« 800 / 000 / $ »), seulement avec les
+   animations (invisible en « réduire les animations »). .c-number et [data-c-number] : white-space:nowrap,
+   overflow-wrap:normal ; la case garde sa place (flex-shrink:0) et passe sous son intitulé faute de largeur. Contrôlé
+   sur la réponse (plus petit et plus grand montant proposés) et sur le business plan, dans les cinq langues.
+4. Titres animés mot par mot (style.css) : .sec-h.lk-words{flex-wrap:wrap} (chaque mot est un élément flex). Seul titre
+   animé en flex sans retour sur les 29 pages vérifiées (le h1 des sections passe déjà à la ligne).
+5. Libellés allemands des fiches (style.css) : .doc-row dt{hyphens:auto} en plus de la colonne de la v7.86.
+
+PRIORITÉ 2
+6. Régions (outils/sync-site.cjs, carte.html, index.html, outils/lore-gen.js, outils/leo-knowledge.json) : le troisième
+   chiffre de la carte était écrit « 7 » en dur ; il compte désormais les régions officielles (outils/editorial.json :
+   six), libellé « régions officielles » ; l’accueil : « 6 régions officielles » (au lieu de « 6 comtés recensés »,
+   calculé de même) et « Six régions officielles, présentées par Rockstar. Chacune a sa fiche et sa zone sur la carte. »
+   (aussi dans outils/lore-gen.js, qui écrit cette section). Léo (sujet carte-comtes) affirmait « six comtés : …, Lummox et
+   Ambrosia » : la carte en montre cinq (Vice-Dale, Kelly, Leonard vus dans le premier trailer ; Mariana, Lummox
+   identifiés par la communauté) et Ambrosia est une région ; texte corrigé, vérifié le 14/10/2026.
+7. Boutons d’une étape du calculateur (calculateurs-brand.css) : sous 600 px, .b-stage-actions en colonne, boutons sur
+   toute la largeur et à leur hauteur naturelle (flex:0 0 auto : la base de 170 px de calculateurs-workspace.css serait
+   devenue leur hauteur en colonne) ; le libellé du mode Expert faisait cinq lignes en italien, quatre en allemand, et son
+   voisin s’étirait. Le contrôle Chromium mesure ces boutons (trois lignes au plus).
+8. Titres de fin de page (style.css, outils/insecables.cjs) : .lk-outro h2{text-wrap:balance} ; l’année reste attachée à ce
+   qui la précède (« novembre 2026 », « November 19, 2026 », « November 2026 », « 19. November 2026 », « de 2026 ») et le
+   jour à son mois quand l’année ne suit pas (« 19 novembre », « 19. November », « 19 de ») : « 2026. » ne finit plus seul
+   sur sa ligne, et une date complète garde une coupure possible (une date entière d’un seul bloc, « 19 novembre 2026. »,
+   dépassait de 39 px le grand titre de collectibles.html sur un téléphone de 320 px ; relevé par le contrôle des écrans).
+9. Accueil (style.css) : #monde{padding-top:58px} (même écart que les autres sections).
+10. Deux-points (calculateurs-workspace.css) : « attr(data-l) ": " » partout, « \00a0: » seulement sous html:lang(fr).
+11. Montants (outils/insecables.cjs, outils/langues.cjs, outils/sync-site.cjs, calculateurs-engine.js) : espace insécable
+    entre le nombre et la devise (et dans les dates), dans le texte des pages françaises (outils/sync-site.cjs) et des
+    pages traduites (outils/langues.cjs, segments de texte) ; jamais dans les balises, scripts et styles. Dans le
+    calculateur, LKCalcEngine.dollars(n, ' ') rend désormais une espace insécable (« 100.000 $ » des titres repliables se
+    coupait en allemand). L’empreinte de contenu du plan du site ne change pas (contentPrint ramène les insécables à des
+    espaces) : aucune date du plan du site n’est modifiée par ce point.
+12. Repli sans script de l’accueil (index.html, app.js, style.css) : « Sortie le jeudi 19 novembre 2026 » dans #clock ;
+    les cases sont dans un modèle (<template id="clock-cases">, traduit comme la page) posé par app.js ; la boîte garde la
+    hauteur des cases (min-height) : aucun saut de mise en page quand le script les pose.
+13. Collectibles (collectibles.html, collectibles.js, outils/gen-collectibles.cjs, collectibles-brand.css) : tant que le
+    catalogue n’a aucune fiche, .col-dash[data-vide] montre la phrase « Rien n’est encore confirmé objet par objet : la
+    liste complète arrive à la sortie. » à la place des trois compteurs à « 0 » (le « ? total dans le jeu » reste). La
+    phrase dit « objet par objet » : la page présente par ailleurs la collection de Wyman, confirmée par Rockstar.
+14. Puces (style.css, fiches.css, calculateurs-brand.css) : .lk-chips, .pf-cats et .calc-presets en bloc avec
+    text-wrap:balance (les puces se répartissent sur leurs lignes).
+
+CONTRÔLE AUTOMATIQUE AJOUTÉ : outils/tests/audit-langues-browser.cjs
+20 pages clés, chaque langue publiée (cinq ici, six avec le portugais), 390 et 1 440 px : débordement (bord droit des
+éléments visibles, même quand body cache le débordement), recouvrements (dt/dd, th/td, compteurs, cases du calculateur,
+bandeaux), nombres coupés (y compris la réponse du calculateur et le business plan avec les animations), phrase
+française visible, erreurs de console et ressources en échec, compteurs comparés aux données (véhicules, armes, carte,
+accueil) et identiques d’une langue à l’autre, phrase d’attente des collectibles ; comptes à rebours avec une horloge
+simulée (2 novembre, 18 novembre 23:59:50, 19 novembre 00:00:05 avec passage en direct, 1er décembre ; Paris et Montréal).
+Contrôlé sur la v7.87 : le test relève bien les défauts de l’audit (7 régions, compteurs à 0, montants coupés en
+français et en allemand, compteurs sans heure locale ni état après la sortie).
+Tests Node : outils/tests/lot1bis.test.cjs (nouveau) ; v786 (compte à rebours : modèle, constante) et langues
+(dollars avec insécable) mis à jour.
+
+CONTRÔLES (14 octobre 2026)
+- Suite Node (79 fichiers, 1 067 tests) : 1 066/1 067, puis coverage.test.cjs relancé seul : 3/3 (arrêté par manque de
+  mémoire quand il tourne avec les autres, comme en v7.87). Tests ciblés du lot (lot1bis, v786, v787, a-propos-v744, calculateurs-plan-v34,
+  conformite-v754, leo, validation-v752, carte-reference-lot2, ia-v769, contact-v746) : tous verts ; couverture 3/3.
+- Langues (langues.test.cjs) : 42/42 ; anglais, espagnol, italien, allemand : 462 pages chacune, 0 texte sans traduction,
+  extraction à {} dans les quatre langues. Vérificateur : 334 963 références dans 2 311 pages, aucune erreur. Preuve de
+  confidentialité : toutes les affirmations des Mentions tenues.
+- Contrôle de l’audit (outils/tests/audit-langues-browser.cjs) : 107/107 (20 pages × 5 langues × 390 et 1 440 px, horloge
+  simulée à Paris et à Montréal) ; après la correction des boutons du calculateur, le calculateur seul dans les 5 langues :
+  113/113. Lancé sur la v7.87, il relève bien les défauts de l’audit (dont les boutons de 92 et 109 px en allemand et en
+  italien).
+- Navigateur : langues 2 267/2 267 (aucun mot français visible, montants, aucune erreur JavaScript) ; pages des quatre
+  langues 28/28 ; écrans, 61 pages × 16 largeurs (976 chargements) : identique à la v7.87 (24 coquilles, 39 rangées,
+  21 coupes, 16 mots, 154 petits textes, tous connus, aucun débordement) ; allemand, 58 pages × 5 largeurs : identique à
+  la v7.87 (10 rangées, 7 coupes, 5 mots, 45 petits textes) ; anglais, espagnol, italien à 320 et 390 px : identiques à
+  la v7.87 (2, 4, 2, 24) ; audit de clôture, 26 pages, 182 chargements : 0 erreur console, 0 requête en échec,
+  0 contraste insuffisant (11 485 vérifiés), 12/12 fonctions ; cookies dans Chromium : 17 pages, 0 cookie, 0 en-tête
+  Set-Cookie, stockage local en « lk… » seulement. (Langues, pages des langues, audit de clôture, cookies et preuve de
+  confidentialité ont tourné avant les deux corrections ci-dessous, qui ne changent ni un mot ni un script ; tout le
+  reste a été relancé après.)
+- Deux défauts trouvés par ces contrôles et par les captures, corrigés puis revérifiés : (1) la date entière d’un seul bloc
+  (« 19 novembre 2026. ») dépassait le grand titre de fin de page sur un téléphone de 320 px (un titre en français, 31 en
+  allemand) : l’année reste attachée au mois, la date garde une coupure au milieu (point 8) ; (2) sur téléphone, les
+  boutons d’étape empilés du calculateur prenaient 170 px de haut chacun : hauteur naturelle (point 7).
+- Latence (banc des v7.54 et v7.85 : téléphone 390 px, 4G lente, processeur ×4, cache vide, v7.87 et lot en alternance,
+  médianes ; 9 tours, 5 pour l’accueil et les collectibles), premier rendu · DOMContentLoaded · plus grand élément · poids :
+  accueil 1 720 → 1 672 ms · 2 017 → 1 898 · 1 720 → 1 672 · 163 → 164 Ko ; calculateur 1 912 → 1 896 · 3 829 → 3 700 ·
+  3 012 → 3 404 · 526 → 528 Ko (le plus grand élément du calculateur se mesure soit vers 1,8 s, soit entre 3,0 et 3,8 s,
+  dans les deux versions : 4 tours bas sur 9 pour la v7.87, 3 pour le lot, mêmes valeurs dans chaque groupe) ; carte
+  1 616 → 1 620 · 2 978 → 2 947 · 1 616 → 1 620 · 430 → 432 Ko ; armurerie 1 556 → 1 480 · 1 957 → 1 904 · 1 556 → 1 480 ·
+  220 → 221 Ko ; fiche (Grotti Cheetah Classic) 1 588 → 1 560 · 1 704 → 1 754 · 1 588 → 1 560 · 194 → 196 Ko ;
+  collectibles 2 132 → 2 176 · 2 554 → 2 500 · 2 780 → 2 720 · 432 → 395 Ko (394 ou 433 Ko d’un chargement à l’autre, dans
+  les deux versions). Aucune régression au-delà du bruit de mesure.
+- Captures : 96 (accueil avant et après la sortie, chiffres de l’accueil et de la carte, « Le monde de Leonida »,
+  collectibles, progression, fin de l’armurerie, puces des achats, compteur et tableau d’une fiche, réponse, boutons et
+  montants du calculateur), en français, en allemand et en anglais, à 390, 768 et 1 280 px, regardées une à une.
+
+FICHIERS (par rapport à la v7.87 : 10 ajoutés, 2 380 modifiés, 1 supprimé)
+- Ajoutés : LISEZ-MOI-lot1bis.txt, outils/CHANGEMENTS-lot1bis.txt, outils/MATRICE-lot1bis.md, outils/insecables.cjs,
+  outils/langues/{en,es,it,de}/lot1bis.json, outils/tests/audit-langues-browser.cjs, outils/tests/lot1bis.test.cjs.
+- Supprimé : api/ia-achat.js (à retirer à la main du dépôt : une archive ne peut pas supprimer un fichier).
+- Sources modifiées : index.html, carte.html, collectibles.html (pages faites à la main), app.js, collectibles.js,
+  calculateurs-engine.js, style.css, fiches.css, calculateurs-brand.css, calculateurs-motion.css,
+  calculateurs-workspace.css, collectibles-brand.css, outils/sync-site.cjs, outils/langues.cjs, outils/gen-collectibles.cjs,
+  outils/lore-gen.js, outils/acquisitions.json, outils/leo-knowledge.json, README.md ; tests : a-propos-v744,
+  calculateurs-plan-v34, conformite-v754, langues, leo, v786, validation-v752.
+- Produits par la régénération : toutes les pages et leurs versions en/ es/ it/ de/ (empreintes d’app.js et de style.css,
+  textes), scripts traduits, acquisitions-data.js, Léo (leo-index.json, leo/*.json ; empreintes dans common.js,
+  leo-loader.js, leo-ui.js, leo.css), sitemap.xml, outils/sitemap-dates.json, outils/leo-index-manifest.json,
+  outils/calculateur-cadre.json.

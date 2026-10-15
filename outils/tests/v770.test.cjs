@@ -9,7 +9,7 @@ const { JSDOM } = require('jsdom');
 const root = path.resolve(__dirname, '../..');
 const read = f => fs.readFileSync(path.join(root, f), 'utf8');
 const doc = f => new JSDOM(read(f)).window.document;
-const LANGS = ['', 'en/', 'es/', 'it/', 'de/'];
+const LANGS = ['', 'en/', 'es/', 'it/', 'de/', 'pt/']; /* v7.91 : portugais */
 
 test('hubs du monde : Gangs garde sa « donne » (lk-arrive, inclinaison au survol) ; les cinq autres hubs ont leur mise en scène v7.78 (outils/tests/v778.test.cjs)', () => {
   const d = doc('gangs.html');
@@ -168,5 +168,5 @@ test('« Claude » n’apparaît plus pour le visiteur, sauf dans les Mentions (
   const ia = read('lk-ia.js');
   assert.match(ia, /data-lkia-mode="ia">IA</);
   assert.match(ia, /Réponse de l’IA\./);
-  for (const [l, w] of [['en/', 'AI'], ['es/', 'IA'], ['it/', 'IA'], ['de/', 'KI']]) assert.ok(read(l + 'lk-ia.js').includes('data-lkia-mode="ia">' + w + '<'), l + 'lk-ia.js : bouton ' + w);
+  for (const [l, w] of [['en/', 'AI'], ['es/', 'IA'], ['it/', 'IA'], ['de/', 'KI'], ['pt/', 'IA']]) assert.ok(read(l + 'lk-ia.js').includes('data-lkia-mode="ia">' + w + '<'), l + 'lk-ia.js : bouton ' + w);
 });

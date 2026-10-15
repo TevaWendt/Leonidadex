@@ -341,6 +341,9 @@ function updateHub(hub, items, data) {
   inner('col-documented', String(count));
   inner('col-confirmed', String(items.filter(item => item.status === 'confirmed').length));
   inner('col-located', String(items.filter(item => item.coordinates).length));
+  /* lot 1 bis (corrections de l’audit, point 13) : tant qu’aucune fiche n’est documentée, une phrase remplace les trois compteurs
+     à « 0 » (collectibles-brand.css : .col-dash[data-vide]) ; collectibles.js fait de même dans le navigateur. */
+  hub = hub.replace(/(<div class="col-dash(?: [^"]*)?"[^>]*?)(?: data-vide)?>/, (_, open) => open + (count ? '' : ' data-vide') + '>');
   inner('col-help-catalogue-state', count ? 'Le catalogue recense ' + count + ' fiche' + (count > 1 ? 's' : '') + ', dont ' + items.filter(item => item.status === 'confirmed').length + ' confirmée' + (items.filter(item => item.status === 'confirmed').length > 1 ? 's' : '') + ' officiellement. Le total du jeu reste distinct de ce catalogue.' : 'Aucun collectible suffisamment documenté n’est publié pour le moment. Les outils de recherche et de suivi seront utilisables dès les premières fiches vérifiées.');
   inner('col-result-count', count ? count + ' fiche' + (count > 1 ? 's' : '') + ' documentée' + (count > 1 ? 's' : '') : 'Aucune fiche documentée');
   inner('col-status-title', count ? count + ' découverte' + (count > 1 ? 's' : '') + ' documentée' + (count > 1 ? 's' : '') + '.' : 'Des découvertes, quand elles sont documentées.');

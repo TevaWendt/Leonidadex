@@ -1,0 +1,94 @@
+{
+ "_note": "v7.89 (lot 5) : questions de test de Léo (fr) sur l'appli installable, le site sans réseau et le transfert du suivi d'un appareil à l'autre (sujets installer-site, hors-connexion, changer-telephone). Rejoué par outils/tests/v789.test.cjs (leo-eval.cjs, --questions).",
+ "schemaVersion": 1,
+ "questions": [
+  {
+   "q": "comment installer le site sur mon téléphone",
+   "expect": {
+    "topic": "installer-site"
+   },
+   "tags": [
+    "v789"
+   ]
+  },
+  {
+   "q": "y a t il une appli leonidakit ?",
+   "expect": {
+    "topic": "installer-site"
+   },
+   "tags": [
+    "v789"
+   ]
+  },
+  {
+   "q": "ajouter leonidakit à l'écran d'accueil",
+   "expect": {
+    "topic": "installer-site"
+   },
+   "tags": [
+    "v789"
+   ]
+  },
+  {
+   "q": "le site marche sans internet ?",
+   "expect": {
+    "topic": "hors-connexion"
+   },
+   "tags": [
+    "v789"
+   ]
+  },
+  {
+   "q": "leonidakit hors connexion",
+   "expect": {
+    "topic": "hors-connexion"
+   },
+   "tags": [
+    "v789"
+   ]
+  },
+  {
+   "q": "je peux utiliser la carte en mode avion ?",
+   "expect": {
+    "topic": "hors-connexion"
+   },
+   "tags": [
+    "v789"
+   ]
+  },
+  {
+   "q": "je change de téléphone, je garde ma progression ?",
+   "expect": {
+    "topic": "changer-telephone"
+   },
+   "tags": [
+    "v789"
+   ]
+  },
+  {
+   "q": "transférer ma progression sur un autre appareil",
+   "expect": {
+    "any": [
+     {
+      "topic": "changer-telephone"
+     },
+     {
+      "topic": "faq-export"
+     }
+    ]
+   },
+   "tags": [
+    "v789"
+   ]
+  },
+  {
+   "q": "c'est quoi le lien de transfert",
+   "expect": {
+    "topic": "changer-telephone"
+   },
+   "tags": [
+    "v789"
+   ]
+  }
+ ]
+}

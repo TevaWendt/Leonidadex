@@ -675,7 +675,11 @@
     "derniere news gta 6",
     "nouvelles de gta 6",
     "quelles sont les dernieres actus gta6",
-    "ya du nouveau sur gta 6"
+    "ya du nouveau sur gta 6",
+    "toutes les annonces de gta 6",
+    "chronologie de gta 6",
+    "frise des annonces",
+    "toutes les annonces de gta 6 date par date"
    ],
    "k": [
     "derniere annonce",
@@ -684,7 +688,10 @@
     "quoi de neuf",
     "dernieres infos",
     "news",
-    "du nouveau"
+    "du nouveau",
+    "date par date",
+    "chronologie",
+    "toutes les annonces"
    ],
    "text": "La dernière annonce officielle date du 8 octobre 2026 : Rockstar a présenté six stations de radio, leurs animateurs et des podcasts à la demande. Viennent ensuite le préchargement, le 12 novembre 2026, puis la sortie, le 19 novembre. Toutes les annonces, date par date, sont dans les Actualités.",
    "status": "Officiel Rockstar · relu le 12 octobre 2026",
@@ -696,6 +703,68 @@
     {
      "label": "Ce qui est déjà daté",
      "url": "/actus.html#a-venir"
+    }
+   ],
+   "checkedAt": "2026-10-12"
+  },
+  {
+   "id": "apercus-presse",
+   "theme": "jeu",
+   "q": "Que racontent les aperçus de la presse sur GTA VI ?",
+   "f": [
+    "que dit la presse sur gta 6",
+    "apercus de la presse",
+    "previews de gta 6",
+    "demo de gta 6 montree a la presse",
+    "premieres impressions sur gta 6",
+    "avis de la presse sur gta 6",
+    "la presse du jeu gta 6"
+   ],
+   "text": "Le 27 août 2026, des journalistes ont raconté la démonstration de GTA VI présentée par Rob Nelson, de Rockstar North : l’histoire qui commence dans les Keys, la taille de Vice City, les planques habitées. Rob Nelson a aussi répondu à Famitsu : boutiques et salons, tenues, repaires de gangs, témoins et alarmes. Les Actualités reprennent ces aperçus avec leurs sources.",
+   "status": "Officiel (déclaration à la presse)",
+   "links": [
+    {
+     "label": "Les aperçus de la presse",
+     "url": "/actus.html#ev-apercus-presse"
+    },
+    {
+     "label": "Toutes les annonces, date par date",
+     "url": "/actus.html#frise"
+    }
+   ],
+   "checkedAt": "2026-10-14"
+  },
+  {
+   "id": "videos-officielles",
+   "theme": "jeu",
+   "q": "Quelles sont les vidéos officielles de GTA 6 ?",
+   "f": [
+    "videos officielles gta 6",
+    "les videos de gta 6",
+    "toutes les videos de gta 6",
+    "les trailers de gta 6",
+    "combien de trailers gta 6",
+    "liste des trailers gta6",
+    "regarder les trailers de gta 6",
+    "ou voir les trailers"
+   ],
+   "k": [
+    "videos officielles",
+    "les trailers",
+    "toutes les videos",
+    "combien de trailers",
+    "regarder les trailers"
+   ],
+   "text": "Rockstar a publié trois vidéos : le Trailer 1 (4 décembre 2023), le Trailer 2 (6 mai 2025) et An Extended Look (27 août 2026). Sur le site, chacune se regarde sur sa page, avec les moments relevés, la musique, les véhicules et les armes qu’on y voit ; le lecteur de YouTube ne se charge qu’à ton clic.",
+   "status": "Officiel Rockstar · relu le 12 octobre 2026",
+   "links": [
+    {
+     "label": "Les vidéos officielles",
+     "url": "/videos.html"
+    },
+    {
+     "label": "Toutes les annonces, date par date",
+     "url": "/actus.html#frise"
     }
    ],
    "checkedAt": "2026-10-12"
@@ -776,6 +845,8 @@
    "theme": "jeu",
    "q": "C’est quoi l’Extended Look de GTA VI ?",
    "f": [
+    "an extended look",
+    "extended look",
     "extended look gta 6",
     "c est quoi l extended look",
     "video de gameplay gta6",
@@ -1808,7 +1879,9 @@
     "qui anime les radios gta 6",
     "les noms de stations qui circulent sont ils confirmes",
     "les radios des fuites sont elles vraies",
-    "les noms de radios du leak sont vrais"
+    "les noms de radios du leak sont vrais",
+    "les stations des fuites sont reelles",
+    "les stations des fuites sont vraies"
    ],
    "k": [
     "radio",
@@ -2013,6 +2086,49 @@
      "url": "/vehicules.html"
     }
    ]
+  },
+  {
+   "id": "vehicules-confirmes",
+   "theme": "vehicules",
+   "q": "Quels véhicules sont confirmés dans GTA VI ?",
+   "f": [
+    "quelles voitures ont ete confirmees",
+    "quels vehicules sont confirmes",
+    "vehicules confirmes",
+    "voitures confirmees",
+    "les voitures confirmees",
+    "quels vehicules sont officiels",
+    "vehicules officiels gta 6",
+    "voitures officielles gta 6",
+    "quelles voitures sont sures",
+    "vehicules vus dans les trailers",
+    "voitures du trailer",
+    "quelles voitures sont dans gta 6",
+    "les voitures qu on a vues",
+    "vehicules nommes par rockstar",
+    "voitures nommees par rockstar"
+   ],
+   "k": [
+    "vehicules confirmes",
+    "voitures confirmees",
+    "vehicules officiels",
+    "voitures officielles",
+    "vehicules vus",
+    "voitures vues"
+   ],
+   "text": "Rockstar n’a publié aucune liste de véhicules. Les plus sûrs sont ceux que Rockstar nomme lui-même sur son site (statut « officiel » : la Grotti Cheetah Classic, le Vapid Dominator Buggy, le Shitzu Squalo, la Declasse Mamba GT, le Vapid Stanier…), puis ceux vus dans les trailers et l’Extended Look (statut « vu dans un média officiel »), enfin ceux identifiés par la communauté. La page Véhicules les classe par statut, et chaque fiche dit d’où vient son nom.",
+   "status": "Officiel Rockstar et médias officiels · relu le 15 octobre 2026",
+   "links": [
+    {
+     "label": "Les véhicules, par statut",
+     "url": "/vehicules.html#fiabilite"
+    },
+    {
+     "label": "Ce qui est confirmé, et comment on le vérifie",
+     "url": "/verification.html#confirme"
+    }
+   ],
+   "checkedAt": "2026-10-15"
   },
   {
    "id": "personnalisation",
@@ -2380,6 +2496,45 @@
      "url": "/medias.html"
     }
    ]
+  },
+  {
+   "id": "verification",
+   "theme": "site",
+   "q": "Qu’est-ce qui est confirmé sur GTA 6, et comment le site le vérifie ?",
+   "f": [
+    "qu est ce qui est confirme sur gta 6",
+    "ce qui est confirme gta 6",
+    "c est confirme ou pas",
+    "infos officielles gta 6",
+    "qu est ce que rockstar n a pas encore dit",
+    "ce qui n est pas encore annonce",
+    "infos pas encore confirmees",
+    "comment vous verifiez les infos",
+    "page ce qui est confirme",
+    "liste de ce qui est officiel",
+    "c est quoi confirme sur gta 6"
+   ],
+   "k": [
+    "ce qui est confirme",
+    "confirme",
+    "pas encore annonce",
+    "pas encore dit",
+    "verifiez",
+    "infos officielles"
+   ],
+   "text": "La page « Ce qui est confirmé » fait le point au 12 octobre 2026 : ce que Rockstar a confirmé (date et consoles, éditions, bonus de précommande, version en boîte, personnages, régions, vidéos, musique), chaque point avec sa source, puis ce qu’il n’a pas encore dit (version PC, heure de déblocage, poids, GTA Online, prix en jeu, surface de la carte, durée, codes de triche). Elle dit aussi ce que les fiches attendent du jeu et ce que le site s’interdit.",
+   "status": "Le site · relu le 12 octobre 2026",
+   "links": [
+    {
+     "label": "Ce que Rockstar a confirmé",
+     "url": "/verification.html#confirme"
+    },
+    {
+     "label": "Ce que Rockstar n’a pas encore dit",
+     "url": "/verification.html#pas-encore"
+    }
+   ],
+   "checkedAt": "2026-10-12"
   },
   {
    "id": "site-erreur",
@@ -2863,7 +3018,14 @@
     "avec ou sans l achat",
     "cout d opportunite",
     "ca vaut le coup c koi",
-    "outil ca vaut le coup"
+    "outil ca vaut le coup",
+    "ca vaut le coup d acheter",
+    "est ce que ca vaut le coup d acheter",
+    "vaut le coup d acheter",
+    "ca vaut le coup d acheter une voiture",
+    "ca vaut le coup d acheter un vehicule",
+    "est ce que ca vaut le coup",
+    "ca vaut le coup"
    ],
    "k": [
     "comment marche ca vaut le coup",
@@ -2871,7 +3033,10 @@
     "comment savoir si un achat vaut le coup",
     "achat plaisir",
     "avec ou sans l achat",
-    "cout d opportunite"
+    "cout d opportunite",
+    "ca vaut le coup d acheter",
+    "vaut le coup d acheter",
+    "ca vaut le coup"
    ],
    "text": "« Ça vaut le coup ? » distingue trois cas : un achat plaisir (il ne rapporte rien : je regarde ce qu’il te coûte, ce qu’il te reste et le retard sur ton objectif), un achat qui débloque des activités, et un achat qui te fait gagner en plus. Pour ces deux derniers, je compare la situation avec l’achat et sans, sur le même temps de jeu : seul ce qui s’ajoute à ce que tu gagnais déjà compte, et je te dis après combien d’heures c’est remboursé. Sans chiffre de ta part, je n’invente ni gain ni prix.",
    "status": "Le site",
@@ -3731,7 +3896,7 @@
     "la carte a combien de lieux",
     "nombre de reperes carte"
    ],
-   "text": "La carte référence 2 547 lieux, dont 14 nommés par Rockstar, répartis en 12 catégories, et six régions confirmées. Les emplacements précis ne sont affichés que s’ils sont vérifiés et sourcés.",
+   "text": "La carte référence 2 547 lieux, dont 14 nommés par Rockstar, répartis en 12 catégories, et six régions officielles. Les emplacements précis ne sont affichés que s’ils sont vérifiés et sourcés.",
    "status": "Le site (compté par script)",
    "links": [
     {
@@ -3809,7 +3974,7 @@
     "lummox county",
     "les 6 comtes"
    ],
-   "text": "La carte affiche six comtés relevés dans les médias officiels : Vice-Dale, Kelly, Leonard, Mariana, Lummox et Ambrosia. Ce sont des relevés communautaires, pas une liste publiée par Rockstar : la carte montre leur niveau de certitude.",
+   "text": "La carte affiche cinq comtés : Vice-Dale, Kelly et Leonard, vus dans le premier trailer, et Mariana et Lummox, identifiés par la communauté. Rockstar n’a publié aucune liste de comtés : les six régions officielles (Vice City, Leonida Keys, Grassrivers, Port Gellhorn, Ambrosia, Mount Kalaga) sont autre chose. La carte montre le niveau de certitude de chaque comté.",
    "status": "Relevé communautaire",
    "links": [
     {
@@ -3821,7 +3986,7 @@
      "url": "/lieux.html#faq"
     }
    ],
-   "checkedAt": "2026-09-28"
+   "checkedAt": "2026-10-14"
   },
   {
    "id": "lieux-hub",
@@ -6174,6 +6339,46 @@
    "checkedAt": "2026-09-28"
   },
   {
+   "id": "presse",
+   "theme": "site",
+   "q": "Où trouver le kit presse de Leonidakit ?",
+   "f": [
+    "presse",
+    "kit presse",
+    "kit media",
+    "dossier de presse",
+    "contact presse",
+    "page presse du site",
+    "je suis journaliste ou redacteur et je prepare un article un reportage ou une emission sur ce site de fans",
+    "je suis youtubeur et je veux parler du site",
+    "je suis youtuber et je parle du site sur ma chaine",
+    "parler du site dans une video ou un live",
+    "proposer un partenariat ou une collaboration avec le site",
+    "demande d interview pour le site ou son editeur",
+    "captures du site pour un article ou une video",
+    "chiffres et presentation du site pour un article",
+    "comment citer le site dans un article ou une video"
+   ],
+   "text": "La page Presse et créateurs a tout ce qu’il faut pour parler du site : sa présentation en trois phrases, ses chiffres à jour, le logo, l’icône et des captures à télécharger, un par un ou en une archive, et la façon de citer une information. Le kit et les informations se reprennent librement, avec un lien vers le site ; les visuels du jeu restent à Rockstar Games. Pour une question, une interview ou un partenariat, le formulaire de contact s’ouvre sur le motif « Presse ou partenariat ».",
+   "status": "Le site",
+   "links": [
+    {
+     "label": "Presse et créateurs",
+     "url": "/presse.html"
+    },
+    {
+     "label": "Le kit à télécharger",
+     "url": "/presse.html#kit"
+    },
+    {
+     "label": "Écrire à l’éditeur",
+     "url": "/presse.html#ecrire"
+    }
+   ],
+   "checkedAt": "2026-10-14",
+   "k": []
+  },
+  {
    "id": "mentions",
    "theme": "site",
    "q": "Où sont les mentions légales et la confidentialité ?",
@@ -6209,7 +6414,11 @@
     "traceurs",
     "mesure d audience",
     "bandeau cookies",
-    "pas de cookies"
+    "pas de cookies",
+    "ne plus etre compte sur cet appareil",
+    "couper la mesure d audience",
+    "statistiques de visite",
+    "ne plus etre compte"
    ],
    "text": "Non : aucun cookie et aucun script d’un autre site, vérifié dans le code ; aucune publicité aujourd’hui (des emplacements sont réservés ; les Mentions le diront avant). Seule exception, si tu la choisis : « Écouter ici », sur la page Radios et musique, et « Regarder la vidéo », sur les pages des vidéos, chargent le lecteur officiel de YouTube ou de Spotify, qui peut alors déposer ses propres cookies. Une mesure d’audience sans cookie compte les pages lues sans rien garder qui t’identifie ; tu peux la couper dans les Mentions. Tes calculs, ton suivi et ta conversation avec moi restent dans ton navigateur, c’est pourquoi il n’y a pas de bandeau à accepter.",
    "status": "Le site",
@@ -6219,11 +6428,15 @@
      "url": "/mentions-legales.html#cookies"
     },
     {
+     "label": "La mesure d’audience",
+     "url": "/mentions-legales.html#mesure-audience"
+    },
+    {
      "label": "Un projet indépendant",
      "url": "/a-propos.html#independance"
     }
    ],
-   "checkedAt": "2026-09-28"
+   "checkedAt": "2026-10-12"
   },
   {
    "id": "donnees-navigateur",
@@ -6239,7 +6452,7 @@
     "local storage",
     "serveur leonidakit"
    ],
-   "text": "Dans ton navigateur : calculs, carnets, favoris, possessions, lieux repérés, marqueurs et ma conversation. Ce qui part : ce que tu écris dans Contact ou l’alerte de l’accueil (par Brevo), et tes questions à moi ou à la barre du calculateur, envoyées à l’IA du site pour y répondre ; le site ne les garde pas. Tu peux tout exporter ou effacer depuis la page Progression.",
+   "text": "Dans ton navigateur : calculs, carnets, favoris, possessions, lieux repérés, marqueurs et ma conversation. Ce qui part : ce que tu écris dans Contact ou l’alerte de l’accueil (par Brevo), et tes questions à moi ou à la barre du calculateur, envoyées à l’IA du site pour y répondre ; le site ne les garde pas. Le site garde aussi des copies de ses pages pour marcher sans réseau, rien sur toi. Tu peux tout exporter ou effacer depuis la page Progression.",
    "status": "Le site",
    "links": [
     {
@@ -6249,9 +6462,13 @@
     {
      "label": "Sauvegarder ou transférer mon suivi",
      "url": "/progression.html#sauvegarde"
+    },
+    {
+     "label": "Copies pour jouer sans réseau",
+     "url": "/mentions-legales.html#copies-hors-connexion"
     }
    ],
-   "checkedAt": "2026-09-28"
+   "checkedAt": "2026-10-12"
   },
   {
    "id": "alerte-sortie",
@@ -6297,7 +6514,7 @@
     "photos du site",
     "images rockstar sur le site"
    ],
-   "text": "Les visuels sont des captures, artworks et photogrammes des trailers publiés par Rockstar, recadrés et crédités un par un dans Médias et crédits (148 visuels), avec leur source. Les photos de la carte viennent de gtadb.org (CC BY 4.0). Aucune image de fuite.",
+   "text": "Les visuels sont des captures, artworks et photogrammes des trailers publiés par Rockstar, recadrés et crédités un par un dans Médias et crédits ({visuels} visuels), avec leur source. Les photos de la carte viennent de gtadb.org (CC BY 4.0). Aucune image de fuite.",
    "status": "Le site · crédits",
    "links": [
     {
@@ -6365,20 +6582,22 @@
     "version mobile",
     "leonidakit sur mobile",
     "ca marche sur telephone",
-    "application leonidakit",
-    "ya une appli",
     "site sur tel",
     "sur portable"
    ],
-   "text": "Oui : le site est vérifié de 320 à 1 920 px de large, sur téléphone, tablette et ordinateur. Il n’y a pas d’application : c’est un site, à ajouter à ton écran d’accueil si tu veux. Ton suivi reste sur l’appareil ; exporte-le pour l’emporter ailleurs.",
+   "text": "Oui : le site est vérifié de 320 à 1 920 px de large, sur téléphone, tablette et ordinateur. Tu peux aussi l’installer comme une appli et le garder ouvert à côté de ta console, même sans réseau : tout est dans le Mode compagnon. Ton suivi reste sur l’appareil ; un lien ou un QR code le fait passer sur un autre.",
    "status": "Le site",
    "links": [
+    {
+     "label": "Mode compagnon",
+     "url": "/compagnon.html"
+    },
     {
      "label": "Sauvegarder ou transférer mon suivi",
      "url": "/progression.html#sauvegarde"
     }
    ],
-   "checkedAt": "2026-09-28"
+   "checkedAt": "2026-10-14"
   },
   {
    "id": "animations-off",
@@ -6622,9 +6841,7 @@
     "sauvegarde json",
     "fichier de sauvegarde",
     "emporter ma progression",
-    "changer d appareil",
     "fusionner ou remplacer",
-    "transferer mon suivi",
     "exporter mon suivi sur un autre appareil"
    ],
    "text": "Sur la page Progression, « Exporter mon suivi » crée un fichier avec garage, arsenal, lieux repérés, contenus cochés, calculs enregistrés du calculateur, marqueurs et dessins de la carte. Sur l’autre appareil, importe le fichier : un aperçu montre ce qu’il contient, puis « Fusionner » ajoute ses cases aux tiennes et « Remplacer » met le fichier à la place, rubrique par rubrique.",
@@ -6636,6 +6853,151 @@
     }
    ],
    "checkedAt": "2026-09-28"
+  },
+  {
+   "id": "installer-site",
+   "theme": "site",
+   "q": "Comment installer Leonidakit comme une appli ?",
+   "f": [
+    "installer le site",
+    "installer leonidakit",
+    "appli leonidakit",
+    "application leonidakit",
+    "y a t il une appli",
+    "telecharger l appli",
+    "mettre le site sur l ecran d accueil",
+    "ajouter a l ecran d accueil",
+    "leonidakit sur iphone",
+    "leonidakit sur android",
+    "appli sur mon telephone",
+    "raccourci sur l ecran d accueil"
+   ],
+   "k": [
+    "installer",
+    "appli",
+    "application",
+    "ecran d accueil",
+    "raccourci"
+   ],
+   "text": "Sur la page Mode compagnon, « Installer l’appli » le fait en un geste quand ton navigateur le propose. Sur iPhone et iPad, dans Safari : le bouton Partager, puis « Sur l’écran d’accueil ». Sur Android, dans Chrome : le menu ⋮, puis « Ajouter à l’écran d’accueil » ou « Installer l’application ». Leonidakit s’ouvre alors en plein écran, avec des raccourcis vers la carte, le calculateur et ta progression.",
+   "status": "Le site",
+   "links": [
+    {
+     "label": "Installer l’appli",
+     "url": "/compagnon.html#installer"
+    }
+   ],
+   "checkedAt": "2026-10-14"
+  },
+  {
+   "id": "mode-compagnon",
+   "theme": "site",
+   "q": "C’est quoi le Mode compagnon ?",
+   "f": [
+    "mode compagnon",
+    "c est quoi le mode compagnon",
+    "la page mode compagnon",
+    "page compagnon",
+    "compagnon",
+    "le site a cote de la console",
+    "leonidakit pendant que je joue",
+    "le site pendant que je joue",
+    "mode compagnon c est quoi",
+    "a quoi sert le mode compagnon"
+   ],
+   "k": [
+    "mode compagnon",
+    "compagnon"
+   ],
+   "text": "Le Mode compagnon est la page du site faite pour rester ouverte à côté de ta console, sur un téléphone ou une tablette : la carte, tes carnets, le calculateur et moi en grandes tuiles, « Préparer pour jouer sans réseau », « Installer l’appli », « Garder l’écran allumé » pendant la partie, et le lien de transfert pour passer ta progression sur un autre appareil.",
+   "status": "Le site",
+   "links": [
+    {
+     "label": "Le Mode compagnon",
+     "url": "/compagnon.html"
+    },
+    {
+     "label": "Installer l’appli",
+     "url": "/compagnon.html#installer"
+    }
+   ],
+   "checkedAt": "2026-10-15"
+  },
+  {
+   "id": "hors-connexion",
+   "theme": "site",
+   "q": "Le site marche-t-il sans réseau ?",
+   "f": [
+    "hors connexion",
+    "sans reseau",
+    "sans internet",
+    "sans connexion",
+    "le site marche hors ligne",
+    "utiliser le site en mode avion",
+    "pas de reseau",
+    "jouer sans wifi",
+    "la carte sans internet",
+    "leonidakit hors ligne",
+    "ca marche sans internet"
+   ],
+   "k": [
+    "hors connexion",
+    "sans reseau",
+    "sans internet",
+    "hors ligne",
+    "mode avion"
+   ],
+   "text": "Oui, pour ce que tu as déjà ouvert sur cet appareil : le site en garde une copie. Pour avoir aussi la carte, tes carnets, le calculateur et mes réponses locales partout, ouvre le Mode compagnon et touche « Préparer pour jouer sans réseau » une fois, avec du réseau. Les vidéos, l’IA et le formulaire de contact attendent le retour du réseau.",
+   "status": "Le site",
+   "links": [
+    {
+     "label": "Prêt à jouer sans réseau",
+     "url": "/compagnon.html#sans-reseau"
+    }
+   ],
+   "checkedAt": "2026-10-12"
+  },
+  {
+   "id": "changer-telephone",
+   "theme": "suivi",
+   "q": "Comment passer ma progression sur un autre téléphone ?",
+   "f": [
+    "changer de telephone",
+    "nouveau telephone",
+    "changer d appareil",
+    "transferer mon suivi",
+    "transferer ma progression",
+    "passer sur un autre appareil",
+    "recuperer ma progression sur un autre telephone",
+    "mettre ma progression sur mon pc",
+    "envoyer ma progression",
+    "lien de transfert",
+    "qr code transfert",
+    "transferer ma progression sur un autre appareil",
+    "transferer mon suivi sur un autre appareil",
+    "mettre ma progression sur un autre appareil",
+    "emporter ma progression sur un autre telephone"
+   ],
+   "k": [
+    "changer de telephone",
+    "transferer",
+    "transfert",
+    "autre appareil",
+    "qr code"
+   ],
+   "text": "Sur la page Mode compagnon (ou Progression), « Créer le lien de transfert » fabrique un lien et un QR code avec tout ton suivi : cases cochées, calculs et plans. Ouvre-le sur l’autre appareil : la page montre ce qui arrive, puis tu choisis Fusionner, Remplacer ou Annuler. Rien ne passe par le site. Si ton suivi est trop gros pour un QR code, passe par le lien ou le fichier.",
+   "status": "Le site",
+   "links": [
+    {
+     "label": "Changer d’appareil",
+     "url": "/compagnon.html#changer-d-appareil"
+    },
+    {
+     "label": "Sauvegarder ou transférer mon suivi",
+     "url": "/progression.html#sauvegarde"
+    }
+   ],
+   "checkedAt": "2026-10-12"
   },
   {
    "id": "effacer-suivi",
@@ -6817,9 +7179,12 @@
     "quota ia",
     "parler au micro",
     "micro leo",
-    "dicter ma question"
+    "dicter ma question",
+    "limite du jour de l ia",
+    "l ia ne marche plus",
+    "pourquoi le mode local"
    ],
-   "text": "Tu as 15 questions gratuites à l’IA toutes les 12 heures, communes à moi et à la barre du calculateur ; rien n’est à acheter. « Qui répond ? » te laisse choisir « IA » ou « Local », et chaque réponse dit qui l’a écrite. Questions épuisées : tout repasse en local, avec un compte à rebours. Le bouton micro écrit ta phrase pour toi : la reconnaissance est faite par ton navigateur, pas par le site.",
+   "text": "Tu as 15 questions gratuites à l’IA toutes les 12 heures, communes à moi et à la barre du calculateur ; rien n’est à acheter. « Qui répond ? » te laisse choisir « IA » ou « Local », et chaque réponse dit qui l’a écrite. Questions épuisées, ou limite du jour de l’IA atteinte pour tout le site : tout repasse en local, et je te dis quand l’IA revient. Le bouton micro écrit ta phrase pour toi : la reconnaissance est faite par ton navigateur, pas par le site.",
    "status": "Léo",
    "links": [
     {
@@ -6831,7 +7196,7 @@
      "url": "/mentions-legales.html#donnees-ia"
     }
    ],
-   "checkedAt": "2026-10-06"
+   "checkedAt": "2026-10-12"
   },
   {
    "id": "leo-effacer",
@@ -8717,7 +9082,9 @@
     "voir les sources",
     "sources en bas de page",
     "quelles sources pour cette page",
-    "source datee"
+    "source datee",
+    "citer une source",
+    "comment citer une source"
    ],
    "text": "Chaque hub et chaque liste se termine par un bloc « Sources et statuts » : les pages ouvertes, leur date de consultation et ce qu’elles confirment. Les fiches citent leur source dans le texte. Mes réponses donnent aussi la page d’où vient l’information.",
    "status": "Le site",
@@ -9299,7 +9666,7 @@
     "images officielles combien",
     "combien de visuels officiels sur le site"
    ],
-   "text": "148 visuels officiels Rockstar (captures, artworks, photogrammes des trailers) sont crédités dans Médias et crédits, en deux tailles, recadrés sans bandes noires. Le nombre exact est recompté à chaque régénération sur la page À propos.",
+   "text": "{visuels} visuels officiels Rockstar (captures, artworks, photogrammes des trailers) sont crédités dans Médias et crédits, en deux tailles, recadrés sans bandes noires. Le nombre exact est recompté à chaque régénération sur la page À propos.",
    "status": "Le site (compté par script)",
    "links": [
     {
@@ -9778,6 +10145,89 @@
     }
    ],
    "checkedAt": "2026-10-01"
+  },
+  {
+   "id": "devine-le-lieu",
+   "theme": "site",
+   "q": "C’est quoi Devine le lieu ?",
+   "f": [
+    "devine le lieu",
+    "c est quoi devine le lieu",
+    "un jeu sur la carte",
+    "y a t il un jeu sur le site",
+    "jeu du jour gta 6",
+    "quiz gta 6",
+    "deviner la region d une image",
+    "mini jeu leonidakit",
+    "jouer a deviner les lieux de gta 6",
+    "geoguessr gta 6",
+    "jeu sur les regions de leonida",
+    "il y a un jeu sur la carte"
+   ],
+   "k": [
+    "devine le lieu",
+    "jeu sur la carte",
+    "jeu du jour",
+    "quiz",
+    "devinette",
+    "geoguessr",
+    "mini jeu",
+    "deviner la region"
+   ],
+   "text": "Devine le lieu est le jeu du jour du site : une capture officielle de GTA VI, et tu dis dans laquelle des six régions de Leonida elle a été prise, avec les boutons ou directement sur la carte. Cinq images par jour, les mêmes pour tout le monde, puis une partie libre. Chaque réponse montre la bonne région et mène à sa fiche.",
+   "status": "Le site",
+   "links": [
+    {
+     "label": "Jouer à Devine le lieu",
+     "url": "/devine-le-lieu.html"
+    },
+    {
+     "label": "Les six régions",
+     "url": "/lieux.html"
+    }
+   ],
+   "checkedAt": "2026-10-12"
+  },
+  {
+   "id": "devine-le-lieu-score",
+   "theme": "site",
+   "q": "Mon score de Devine le lieu est-il enregistré ?",
+   "f": [
+    "mon score de devine le lieu est il enregistre",
+    "mon score est il enregistre",
+    "ou est gardee ma serie de devine le lieu",
+    "ma serie de jours joues",
+    "partager mon resultat du jour",
+    "rejouer la partie du jour",
+    "quand change la partie du jour",
+    "nouvelle partie du jour",
+    "meilleur score du jeu du jour",
+    "sauvegarde du score du jeu",
+    "mon score du jeu du jour est garde ou"
+   ],
+   "k": [
+    "score devine",
+    "serie devine",
+    "serie de jours",
+    "partager mon resultat",
+    "partie du jour",
+    "partie libre",
+    "rejouer la partie",
+    "meilleur score"
+   ],
+   "text": "Sur ton appareil seulement : tes réponses du jour, ta série de jours joués et ton meilleur score restent dans ton navigateur, sous une seule clé, et rien n’est envoyé. La partie du jour change à minuit, heure de Paris, et ne se joue qu’une fois ; la partie libre continue sans limite. Partager envoie seulement le texte de ton résultat.",
+   "status": "Le site",
+   "links": [
+    {
+     "label": "Jouer à Devine le lieu",
+     "url": "/devine-le-lieu.html#jeu"
+    },
+    {
+     "label": "Ce qui reste dans ton navigateur",
+     "url": "/mentions-legales.html#donnees-navigateur"
+    }
+   ],
+   "checkedAt": "2026-10-12"
   }
  ]
 }

@@ -207,5 +207,11 @@
  "leo-core.js::progression": [],
  "leo-core.js::listes": [],
  "leo-ui.js::calculateur": [],
- "calculateurs-scenario.js::envie": "="
+ "calculateurs-scenario.js::envie": "=",
+ "transfert.js::E_ABIME": "=",
+ "transfert.js::E_TAILLE": "=",
+ "transfert.js::E_VERSION": "=",
+ "transfert.js::E_ORIGINE": "=",
+ "transfert.js::E_NAVIGATEUR": "=",
+ "transfert.js::E_STOCKAGE": "="
 }
