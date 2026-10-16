@@ -1,4 +1,5 @@
 # Leonidakit
+Site en ligne : https://www.leonidakit.com (site de fan non officiel consacré à GTA VI)
 
 Site compagnon GTA VI (carte, véhicules, armes, outils). HTML, CSS et JavaScript, sans framework.
 Hébergé sur Vercel, qui publie tel quel le contenu de ce dépôt : **aucune commande de build**.
