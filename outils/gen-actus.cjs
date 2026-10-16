@@ -18,6 +18,8 @@ const fs = require('node:fs'), path = require('node:path'), vm = require('node:v
 const ROOT = path.resolve(__dirname, '..');
 const S = require('./sections.cjs');
 const LKX = require('./lk-sections.cjs');
+const VT = require('./vitrine.cjs'); /* v7.92 : briques des pages enrichies (vitrine.css, vitrine.js) */
+const VTX = JSON.parse(fs.readFileSync(path.join(ROOT, 'outils/vitrine.json'), 'utf8'));
 const esc = S.esc;
 const SITE = 'https://www.leonidakit.com';
 const DATA_FILE = 'outils/actus/actus.json';
@@ -135,6 +137,7 @@ ${bc(crumbs)}${ld ? '\n' + ld : ''}
 <link rel="stylesheet" href="${p}motion-tokens.css">
 <link rel="stylesheet" href="${p}lk-sections.css">
 <link rel="stylesheet" href="${p}actus.css">
+<link rel="stylesheet" href="${p}vitrine.css">
 <meta property="og:image" content="${SITE}${ogImg || '/img/social-card.png'}">
 <meta name="twitter:card" content="summary_large_image">
 <meta property="og:url" content="${SITE}${canonical}">
@@ -153,6 +156,7 @@ ${C.footer}
 
 ${C.scripts}
 <script src="${p}actus.js"></script>
+<script src="${p}vitrine.js"></script>
 </body>
 </html>
 `;
@@ -207,7 +211,7 @@ const uniq = l => [...new Set(l)];
 /* v7.87.1 : chaque question entre au défilement (moteur commun), « GTA 6 » insécable */
 const faqBlock = list => '<div class="faq">' + list.map(x => '<details class="ac-in" data-lk-reveal><summary>' + esc(nb(x.q)) + '</summary><div class="ans">' + esc(x.a) + '</div></details>').join('') + '</div>';
 /* v7.87.1 : sections communes de fin de page (questions, sources et statuts) */
-const faqSec = list => ({ id: 'faq', k: UI.faqK, t: UI.faqT, icon: 'faq', nav: UI.faqK, fam: 'faq', body: faqBlock(list) });
+const faqSec = (list, aside) => ({ id: 'faq', k: UI.faqK, t: UI.faqT, icon: 'faq', nav: UI.faqK, fam: 'faq', body: aside ? VT.faqGrid(faqBlock(list), aside) : faqBlock(list) });
 const srcSec = (ctx, ids, lede, after = '') => ({ id: 'sources', k: UI.srcK(ids.length), t: UI.srcT, icon: 'statuts', nav: 'Sources', fam: 'sources', lede, body: sourceList(ctx, ids) + after });
 const faqLD = list => '<script type="application/ld+json">' + JSON.stringify({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: list.map(x => ({ '@type': 'Question', name: x.q, acceptedAnswer: { '@type': 'Answer', text: x.a } })) }) + '</script>';
 /* révélations d’une annonce ou d’une vidéo, regroupées par famille de fiches */
@@ -234,35 +238,46 @@ function actusPage(ctx) {
   /* v7.87.1 : les billets entrent au défilement ; leur talon daté se « tamponne » (actus.css) */
   const upcoming = '<ol class="ac-next-l">' + A.aVenir.map(x => { const d = new Date(x.iso + 'T12:00:00Z');
       return '<li class="ac-ticket' + IN + ' data-iso="' + esc(x.iso) + '"><p class="ac-ticket-d"><time datetime="' + esc(x.iso) + '"><b>' + d.getUTCDate() + '</b><span>' + esc(new Intl.DateTimeFormat('fr-FR', { month: 'long', timeZone: 'UTC' }).format(d)) + ' ' + d.getUTCFullYear() + '</span></time></p>'
-        + '<div class="ac-ticket-b"><h3>' + nb(esc(x.titre)) + '</h3><p>' + esc(x.texte) + '</p>' + (x.lien ? '<a class="ac-ticket-a" href="' + esc(x.lien.href) + '">' + esc(x.lien.label) + '</a>' : '') + '</div></li>'; }).join('') + '</ol>';
+        + '<div class="ac-ticket-b"><h3>' + nb(esc(x.titre)) + '</h3><p>' + esc(x.texte) + '</p>' + VT.cd(x.iso) + (x.lien ? '<a class="ac-ticket-a" href="' + esc(x.lien.href) + '">' + esc(x.lien.label) + '</a>' : '') + '</div></li>'; }).join('') + '</ol>';
   /* v7.87.1 : moment de la page — à l’entrée de chaque annonce (moteur commun), son point s’allume, la date glisse, la carte
      monte, puis un tronçon ambre de la frise se trace jusqu’à l’annonce suivante (actus.css) */
+  /* v7.92 : chaque annonce a son visuel officiel (affiche de la vidéo, visuel du dossier, sinon celui choisi dans actus.json,
+     avec son texte alternatif), son type (filtre de la frise, vitrine.js) ; un repère d’année ouvre chaque année */
+  let year = null;
   const events = A.evenements.map(e => {
     const evs = e.evs || (e.ev ? [e.ev] : []), rev = revelations(ctx, evs);
     const dossierMedia = evs.map(ev => ctx.MD.evenements[ev] && ctx.MD.evenements[ev].media).find(Boolean);
     const vid = e.video ? A.videos.liste.find(v => v.id === e.video) : null;
-    const media = vid ? vid.affiche : dossierMedia;
+    const media = vid ? vid.affiche : dossierMedia || e.media, alt = vid || dossierMedia ? '' : e.alt || '';
     const links = [...(vid ? [{ href: 'videos/' + vid.id + '.html', label: 'La page de la vidéo' }] : []), ...(e.liens || [])];
-    return '<li class="ac-ev" id="ev-' + esc(e.id) + '" data-iso="' + esc(e.iso) + '" data-lk-reveal>'
-      + '<div class="ac-ev-when"><time datetime="' + esc(e.iso) + '">' + esc(e.dateTexte || frLong(e.iso)) + '</time></div>'
-      + '<article class="ac-ev-card">' + (media ? '<figure class="ac-ev-fig">' + LKX.img(MED, media, '', { sizes: '(max-width:700px) 100vw, 280px' }) + '</figure>' : '')
+    const y = e.iso.slice(0, 4), mark = y !== year ? '<li class="ac-yr" data-vt-sep aria-hidden="true"><span>' + y + '</span></li>' : ''; year = y;
+    return mark + '<li class="ac-ev ac-ev--' + esc(e.type) + '" id="ev-' + esc(e.id) + '" data-iso="' + esc(e.iso) + '" data-lk-reveal data-vt-item data-vt-t="' + esc(e.type) + '">'
+      + '<div class="ac-ev-when"><time datetime="' + esc(e.iso) + '">' + esc(e.dateTexte || frLong(e.iso)) + '</time><span class="ac-ev-type">' + esc(X.types[e.type]) + '</span></div>'
+      + '<article class="ac-ev-card">' + (media ? '<figure class="ac-ev-fig">' + VT.img(media, alt, { sizes: '(max-width:700px) 100vw, 280px', prefix: '/' }) + '</figure>' : '')
       + '<div class="ac-ev-body"><p class="ac-ev-st">' + S.pip(e.statut, true) + '</p><h3 class="ac-ev-t">' + esc(e.titre) + '</h3><p class="ac-ev-text">' + esc(e.texte) + ' ' + srcRefs(e.sources) + '</p>'
       + (links.length ? '<p class="ac-ev-links">' + links.map(l => '<a href="' + esc(l.href) + '">' + esc(l.label) + '</a>').join('') + '</p>' : '')
       + (rev.length ? '<details class="ac-ev-more"><summary>' + esc(X.montre) + ' <span class="ac-n">' + rev.length + '</span></summary>' + revealList(rev, '') + '</details>' : '')
       + '</div></article></li>';
   }).join('');
   const allSrc = uniq([...A.evenements.flatMap(e => e.sources), ...A.aVenir.map(x => x.source)]);
+  /* chiffres de l’en-tête : calculés sur les données (annonces, vidéos, sources, jours de la première vidéo à la sortie) */
+  const first = A.videos.liste.map(v => v.iso).sort()[0], sortie = A.aVenir.find(x => /sortie/i.test(x.titre)) || A.aVenir[1];
+  const jours = Math.round((Date.parse(sortie.iso) - Date.parse(first)) / 864e5);
+  const figs = VT.figs([{ n: A.evenements.length, label: X.chiffres.annonces }, { n: A.videos.liste.length, label: X.chiffres.videos }, { n: allSrc.length, label: X.chiffres.sources }, { n: jours.toLocaleString('fr-FR'), label: X.chiffres.jours, accent: true }], { cls: 'ac-figs' });
+  const types = Object.keys(X.types);
+  const bar = VT.filters('ac-frise', types.map(t => ({ f: t, label: X.types[t], n: A.evenements.filter(e => e.type === t).length })), { label: X.tout, n: A.evenements.length }, X.filtresLabel);
   const body = `<section class="page-head shell lk-glow"><div class="lk-head-grid"><div>
   <p class="fiche-cat">${esc(X.label)} · GTA VI</p>
   <h1>${esc(nb(X.title))}</h1>
   <p class="lede">${esc(X.lede)}</p>
   <p class="d-intro-note">${esc(X.note)} <a href="tuto.html#sources">Comprendre les statuts</a>.</p>
   <p class="ac-rss"><a class="lkx-btn lkx-btn--ghost" href="actus.xml" type="application/rss+xml">${esc(X.flux)}</a><span>${esc(X.fluxNote)}</span></p>
-</div>${pile(MED, X.pile, 'Trois affiches officielles des vidéos de GTA VI')}</div></section>
+</div>${pile(MED, X.pile, 'Trois affiches officielles des vidéos de GTA VI')}</div>
+${figs}</section>
 ${zone([
     { id: 'a-venir', k: X.aVenirKicker, t: X.aVenirTitre, icon: 'horloge', nav: UI.aVenir.nav, fam: 'equipements', body: upcoming },
-    { id: 'frise', k: UI.frise.k, t: X.frise, icon: 'liste', nav: UI.frise.nav, fam: 'munitions', lede: X.friseLede, body: '<ol class="ac-evs" role="list">' + events + '</ol>' },
-    faqSec(X.faq),
+    { id: 'frise', k: UI.frise.k, t: X.frise, icon: 'liste', nav: UI.frise.nav, fam: 'munitions', lede: X.friseLede, body: bar + '<ol class="ac-evs" id="ac-frise" role="list">' + events + '</ol>' },
+    faqSec(X.faq, leoAside(X.leo, 'carte-postale-vice-city', 'Carte postale « Vice City » de Leonida : la baie, les tours et des bateaux, illustration officielle de GTA VI')),
     srcSec(ctx, allSrc, 'Chaque annonce renvoie ici par son numéro ; les révélations fiche par fiche ont leurs sources sur chaque fiche.')
   ])}`;
   const ld = '<script type="application/ld+json">' + JSON.stringify({ '@context': 'https://schema.org', '@type': 'CollectionPage', name: X.title, description: metaDesc(X.desc), url: SITE + '/actus.html', inLanguage: 'fr', dateModified: A.evenements[0].iso > ctx.maj ? A.evenements[0].iso : ctx.maj, isPartOf: { '@type': 'WebSite', name: 'Leonidakit', url: SITE + '/' }, mainEntity: { '@type': 'ItemList', numberOfItems: A.evenements.length, itemListElement: A.evenements.map((e, i) => ({ '@type': 'ListItem', position: i + 1, name: e.titre, url: SITE + '/actus.html#ev-' + e.id })) } }) + '</script>' + faqLD(X.faq);
@@ -297,12 +312,16 @@ function videoData(ctx, v) {
 /* sans script, les boutons du lecteur sont des liens vers la vidéo sur YouTube (au bon moment) */
 const ytWatch = (id, t) => 'https://www.youtube.com/watch?v=' + id + (t ? '&t=' + Math.floor(t) + 's' : '');
 const ytSrc = (id, t) => 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0&playsinline=1' + (t ? '&start=' + Math.floor(t) : '');
-function screen(ctx, v, P) {
-  const m = imgOf(ctx.MED, v.affiche);
+/* v7.92 : la version 800 px de l’affiche (à côté de la 480 et de la 1 280 dans img/officiel) ; au téléphone, l’affiche
+   s’arrête à 800 px (un écran à densité 3 prenait la 1 280 : deux à trois fois plus lourde, sans différence visible) */
+const midOf = src => { const c = /-1280\.webp$/.test(src) ? src.replace(/-1280\.webp$/, '-800.webp') : null; return c && fs.existsSync(path.join(ROOT, c.replace(/^\//, ''))) ? c : null; };
+function screen(ctx, v, P, pre = '../', lazy = false) {
+  const m = imgOf(ctx.MED, v.affiche), mid = midOf(m.b.src), sizes = '(max-width:900px) 100vw, 760px';
+  const im = '<img class="ac-screen-img" src="' + m.b.src + '" srcset="' + m.a.src + ' ' + m.a.w + 'w, ' + (mid ? mid + ' 800w, ' : '') + m.b.src + ' ' + m.b.w + 'w" sizes="' + sizes + '" width="' + m.b.w + '" height="' + m.b.h + '" alt="' + esc('Affiche officielle : ' + v.nom) + '" decoding="async"' + (lazy ? ' loading="lazy"' : ' fetchpriority="high"') + '>';
   return '<div class="ac-screen" data-ac-screen data-src="' + esc(ytSrc(v.youtube)) + '" data-title="' + esc(v.nom) + '">'
-    + '<img class="ac-screen-img" src="' + m.b.src + '" srcset="' + m.a.src + ' ' + m.a.w + 'w, ' + m.b.src + ' ' + m.b.w + 'w" sizes="(max-width:900px) 100vw, 760px" width="' + m.b.w + '" height="' + m.b.h + '" alt="' + esc('Affiche officielle : ' + v.nom) + '" decoding="async" fetchpriority="high">'
+    + (mid ? '<picture class="vt-pic"><source media="(max-width:599px)" srcset="' + m.a.src + ' ' + m.a.w + 'w, ' + mid + ' 800w" sizes="' + sizes + '">' + im + '</picture>' : im)
     + '<a class="ac-play" data-ac-play href="' + esc(ytWatch(v.youtube)) + '" target="_blank" rel="noopener nofollow"><span class="ac-play-ico" aria-hidden="true">' + LKX.ICO.play + '</span><span>' + esc(P.lecteur) + '</span></a>'
-    + '</div><p class="ac-screen-n">' + esc(P.lecteurNote) + ' <a href="../mentions-legales.html#cookies">' + esc(P.lecteurLien) + '</a></p>';
+    + '</div><p class="ac-screen-n">' + esc(P.lecteurNote) + ' <a href="' + pre + 'mentions-legales.html#cookies">' + esc(P.lecteurLien) + '</a></p>';
 }
 function videoPage(ctx, v) {
   const { A, MED, SUBC } = ctx, P = A.videos, d = videoData(ctx, v), pre = '../';
@@ -317,7 +336,7 @@ function videoPage(ctx, v) {
      carte. Moment de la page : à l’entrée de chaque carte (moteur commun), l’image se dévoile, le minutage glisse sur l’image. */
   const moments = d.moments.length ? '<ol class="ac-moments">'
     + d.moments.map(m => '<li class="ac-moment' + (m.t === null ? ' ac-moment--sans-temps' : '') + IN + '>' + '<span class="ac-moment-t">' + (m.t !== null ? '<time>' + mmss(m.t) + '</time>' : '') + '</span>'
-      + '<figure class="ac-moment-fig">' + LKX.img(MED, m.id, m.alt, { sizes: '(max-width:640px) 100vw, (max-width:1000px) 50vw, 400px' }) + '</figure>'
+      + '<figure class="ac-moment-fig">' + VT.img(m.id, m.alt, { sizes: '(max-width:640px) 100vw, (max-width:1000px) 50vw, 400px', prefix: '/' }) + '</figure>'
       + '<div class="ac-moment-b">' + (m.items.length ? '<div class="ac-moment-items">' + m.items.map(it => '<a href="' + pre + esc(it.href) + '"><small>' + esc(it.kind) + '</small> <div class="ac-mi-l">' + esc(it.label) + '</div></a>').join('') + '</div>' : '')
       + m.alts.map(a => '<p class="ac-moment-alt">' + esc(a) + '</p>').join('')
       + (m.t !== null ? '<a class="ac-replay" data-ac-at="' + Math.floor(m.t) + '" href="' + esc(ytWatch(v.youtube, m.t)) + '" target="_blank" rel="noopener nofollow"><span aria-hidden="true">' + LKX.ICO.play + '</span>' + esc(P.revoir) + ' <span class="ac-at">' + mmss(m.t) + '</span></a>' : '')
@@ -365,16 +384,51 @@ ${zone([
   return page(SUBC, { p: pre, title: v.seo + ' | Leonidakit', desc: v.desc, canonical: '/videos/' + v.id + '.html', ogImg: m.b.src, body, crumbs: [['Accueil', '/'], [P.label, '/videos.html'], [v.nom, '/videos/' + v.id + '.html']], ld, cls: 'actus-page--video' });
 }
 function vcard(ctx, v, pre) {
-  const d = videoData(ctx, v), m = imgOf(ctx.MED, v.affiche);
+  const d = videoData(ctx, v);
   /* « moments minutés » ne compte que les photogrammes qui ont leur minutage ; les autres sont des « images relevées » */
   const nt = d.moments.filter(m => m.t !== null).length, nu = d.moments.length - nt, pl = n => n > 1 ? 's' : '';
   const stats = [nt ? nt + ' moment' + pl(nt) + ' minuté' + pl(nt) : null, !nt && nu ? nu + ' image' + pl(nu) + ' relevée' + pl(nu) : null, d.songs.length ? d.songs.length + ' morceau' + (d.songs.length > 1 ? 'x' : '') : null, d.vehicles.length ? d.vehicles.length + ' véhicule' + (d.vehicles.length > 1 ? 's' : '') : null].filter(Boolean);
-  return '<a class="ac-vcard' + IN + ' href="' + pre + 'videos/' + esc(v.id) + '.html"><span class="ac-vcard-fig"><img src="' + m.a.src + '" srcset="' + m.a.src + ' ' + m.a.w + 'w, ' + m.b.src + ' ' + m.b.w + 'w" sizes="(max-width:700px) 100vw, 380px" width="' + m.a.w + '" height="' + m.a.h + '" alt="" loading="lazy" decoding="async"><span class="ac-vcard-play" aria-hidden="true">' + LKX.ICO.play + '</span></span>'
+  return '<a class="ac-vcard' + IN + ' href="' + pre + 'videos/' + esc(v.id) + '.html"><span class="ac-vcard-fig">' + VT.img(v.affiche, '', { sizes: '(max-width:700px) 100vw, 380px', prefix: '/' }) + '<span class="ac-vcard-play" aria-hidden="true">' + LKX.ICO.play + '</span></span>'
     + '<div class="ac-vcard-b"><span class="ac-vcard-d"><time datetime="' + esc(v.iso) + '">' + esc(frLong(v.iso)) + '</time></span><div class="ac-vcard-t">' + esc(v.nom) + '</div><span class="ac-vcard-s">' + stats.map(s => '<span>' + esc(s) + '</span>').join('') + '</span></div></a>';
 }
 function videosHub(ctx) {
   const { A, MED, ROOTC } = ctx, P = A.videos;
   const list = [...P.liste].sort((a, b) => b.iso.localeCompare(a.iso));
+  const data = Object.fromEntries(list.map(v => [v.id, videoData(ctx, v)]));
+  const plural = (n, one, many) => n + ' ' + (n > 1 ? many : one);
+  const statsOf = (v, d) => { const nt = d.moments.filter(m => m.t !== null).length, nu = d.moments.length - nt;
+    return [nt ? plural(nt, 'moment minuté', 'moments minutés') : null, !nt && nu ? plural(nu, 'image relevée', 'images relevées') : null, d.songs.length ? plural(d.songs.length, 'morceau', 'morceaux') : null, d.vehicles.length ? plural(d.vehicles.length, 'véhicule', 'véhicules') : null].filter(Boolean); };
+  /* v7.92 : moment de la page — la salle de projection : l’affiche de la dernière vidéo en grand (le lecteur de YouTube ne se
+     charge qu’au clic, actus.js), sa fiche à côté, et la liste des trois vidéos ; choisir une vidéo change l’écran sans
+     recharger la page (actus.js) ; sans script, la liste mène aux pages des vidéos */
+  const feat = list[0];
+  const info = v => { const d = data[v.id];
+    return '<div class="ac-th-info" data-ac-info="' + esc(v.id) + '"' + (v === feat ? '' : ' hidden') + '><p class="ac-th-k"><span>' + esc(P.aLaffiche) + '</span> <time datetime="' + esc(v.iso) + '">' + esc(frLong(v.iso)) + '</time></p>'
+      + '<h3 class="ac-th-t">' + esc(v.nom) + '</h3><p class="ac-th-d">' + esc(v.lede) + '</p><ul class="ac-th-s">' + statsOf(v, d).map(s => '<li>' + esc(s) + '</li>').join('') + '</ul>'
+      + '<a class="lkx-btn" href="videos/' + esc(v.id) + '.html">' + esc(P.ouvrir) + '</a></div>'; };
+  /* la liste entre par le moteur commun (cascade de vitrine.css), comme les autres blocs de la page */
+  const pl = '<ol class="ac-pl vt-in" data-lk-reveal aria-label="' + esc(P.choisir) + '">' + list.map((v, i) => { const m = imgOf(MED, v.affiche);
+    return '<li style="--i:' + i + '"><a class="ac-pl-a" href="videos/' + esc(v.id) + '.html" data-ac-pick="' + esc(v.id) + '" data-src="' + esc(ytSrc(v.youtube)) + '" data-title="' + esc(v.nom) + '" data-poster="' + esc(m.b.src) + '" data-poster-s="' + esc(m.a.src) + '"' + (midOf(m.b.src) ? ' data-poster-m="' + esc(midOf(m.b.src)) + '"' : '') + '' + (v === feat ? ' aria-current="true"' : '') + '>'
+      /* vignette de 132 px (pleine colonne de 600 à 959 px) : srcset écrit ici, sinon outils/sync-site.cjs en pose un « 100vw »
+         qui ferait prendre la 1 280 px au téléphone */
+      + '<span class="ac-pl-fig"><img src="' + m.a.src + '" srcset="' + m.a.src + ' ' + m.a.w + 'w' + (midOf(m.b.src) ? ', ' + midOf(m.b.src) + ' 800w' : '') + '" sizes="(max-width:599px) 132px, (max-width:959px) 30vw, 132px" width="' + m.a.w + '" height="' + m.a.h + '" alt="" loading="lazy" decoding="async"><span class="ac-pl-play" aria-hidden="true">' + LKX.ICO.play + '</span></span>'
+      + '<span class="ac-pl-b"><time datetime="' + esc(v.iso) + '">' + esc(frLong(v.iso)) + '</time><span class="ac-pl-t">' + esc(v.nom) + '</span></span></a></li>'; }).join('') + '</ol>';
+  const salle = '<div class="ac-theater"><div class="ac-th-main"><div class="ac-vplayer">' + screen(ctx, feat, P, '', true) + '</div></div><div class="ac-th-side">' + pl + list.map(info).join('') + '</div></div>';
+  /* les trois vidéos comparées : une barre par vidéo et par mesure (la plus grande valeur remplit la ligne) */
+  const M = P.metriques;
+  const metrics = [['moments', d => d.moments.length], ['morceaux', d => d.songs.length], ['vehicules', d => d.vehicles.length], ['armes', d => d.weapons.length], ['fiches', d => d.rev.length]];
+  const chrono = [...list].sort((a, b) => a.iso.localeCompare(b.iso));
+  const bars = '<div class="ac-bars vt-in" data-lk-reveal><ul class="ac-bars-key" aria-hidden="true">' + chrono.map((v, k) => '<li class="ac-k' + k + '">' + esc(v.nom) + '</li>').join('') + '</ul>'
+    + metrics.map(([key, f], i) => { const vals = chrono.map(v => f(data[v.id])), max = Math.max(...vals, 1);
+      return '<div class="ac-bar-g" style="--i:' + i + '"><h3 class="ac-bar-h">' + esc(M[key]) + '</h3><ul class="ac-bar-l">' + chrono.map((v, k) => '<li class="ac-bar ac-k' + k + '" style="--p:' + Math.max(2, Math.round(100 * vals[k] / max)) + '%"><span class="ac-bar-n">' + esc(v.nom) + '</span><b>' + vals[k] + '</b><span class="ac-bar-t" aria-hidden="true"><i></i></span></li>').join('') + '</ul></div>'; }).join('') + '</div>';
+  /* les moments à revoir : les photogrammes des trois vidéos, dans l’ordre des vidéos puis du minutage */
+  const shots = chrono.flatMap(v => data[v.id].moments.map(m => ({ media: m.id, alt: m.alts[0] || m.alt || '', href: 'videos/' + v.id + '.html#moments', title: v.nom + (m.t !== null ? ' · ' + mmss(m.t) : ''), sub: m.items.slice(0, 2).map(it => it.label).join(' · '), time: m.t !== null ? mmss(m.t) : null })));
+  const revoir = VT.strip(shots, { region: P.bandeLabel, prev: P.precedent, next: P.suivant });
+  /* toute la musique, vidéo par vidéo */
+  const bande = '<div class="ac-allsongs">' + chrono.filter(v => data[v.id].songs.length).map((v, k) => '<section class="ac-as-g' + IN + ' aria-label="' + esc(v.nom) + '"><h3 class="ac-as-h"><a href="videos/' + esc(v.id) + '.html#musique">' + esc(v.nom) + '</a> <span class="ac-n">' + data[v.id].songs.length + '</span></h3><ol class="ac-as-l">'
+    + data[v.id].songs.map(s => '<li>' + S.pip(s.statut) + '<span class="ac-as-b"><cite translate="no">' + esc(s.titre) + '</cite> <span class="ac-as-a" translate="no">' + esc(s.artiste) + '</span></span><small>' + esc(s.moment) + '</small></li>').join('') + '</ol></section>').join('') + '</div>'
+    + '<p class="ac-more"><a href="radios.html#poste">Le poste de Leonida, morceau par morceau</a></p>';
+  const faqs = list.flatMap(v => v.faq.slice(0, 1));
   const body = `<section class="page-head shell lk-glow"><div class="lk-head-grid"><div>
   <p class="fiche-cat">${esc(P.label)} · GTA VI</p>
   <h1>${esc(nb(P.title))}</h1>
@@ -382,23 +436,53 @@ function videosHub(ctx) {
   <p class="d-intro-note">${esc(P.note)} <a href="mentions-legales.html#cookies">${esc(P.lecteurLien)}</a>.</p>
 </div>${pile(MED, A.actus.pile, 'Les affiches officielles des trois vidéos')}</div></section>
 ${zone([
-    { id: 'videos', k: UI.videos.k, t: 'Les trois vidéos', icon: 'film', body: '<div class="ac-vcards">' + list.map(v => vcard(ctx, v, '')).join('') + '</div><p class="ac-more"><a href="actus.html#frise">Toutes les annonces, date par date</a></p>' },
-    faqSec(list.flatMap(v => v.faq.slice(0, 1)))
+    { id: 'salle', k: P.salleK, t: P.salleT, icon: 'film', tone: 'night', nav: 'Salle', fam: 'combat', lede: P.salleLede, body: salle },
+    { id: 'chiffres', k: P.chiffresK, t: P.chiffresT, icon: 'chiffres', nav: 'Chiffres', fam: 'munitions', lede: P.chiffresLede, body: bars + '<p class="ac-more"><a href="actus.html#frise">Toutes les annonces, date par date</a></p>' },
+    { id: 'revoir', k: P.revoirK, t: P.revoirT, icon: 'film', nav: 'Moments', fam: 'carte', lede: P.revoirLede, body: revoir },
+    { id: 'musique', k: P.bandeK, t: P.bandeT, icon: 'note', tone: 'night', nav: 'Musique', fam: 'combat', lede: P.bandeLede, body: bande },
+    faqSec(faqs, leoAside(P.leo, 'affiche-trailer-1', 'Affiche officielle : Trailer 1'))
   ])}`;
-  const ld = '<script type="application/ld+json">' + JSON.stringify({ '@context': 'https://schema.org', '@type': 'CollectionPage', name: P.title, description: metaDesc(P.desc), url: SITE + '/videos.html', inLanguage: 'fr', isPartOf: { '@type': 'WebSite', name: 'Leonidakit', url: SITE + '/' }, mainEntity: { '@type': 'ItemList', numberOfItems: list.length, itemListElement: list.map((v, i) => ({ '@type': 'ListItem', position: i + 1, name: v.titre, url: SITE + '/videos/' + v.id + '.html' })) } }) + '</script>' + faqLD(list.flatMap(v => v.faq.slice(0, 1)));
+  const ld = '<script type="application/ld+json">' + JSON.stringify({ '@context': 'https://schema.org', '@type': 'CollectionPage', name: P.title, description: metaDesc(P.desc), url: SITE + '/videos.html', inLanguage: 'fr', isPartOf: { '@type': 'WebSite', name: 'Leonidakit', url: SITE + '/' }, mainEntity: { '@type': 'ItemList', numberOfItems: list.length, itemListElement: list.map((v, i) => ({ '@type': 'ListItem', position: i + 1, name: v.titre, url: SITE + '/videos/' + v.id + '.html' })) } }) + '</script>' + faqLD(faqs);
   const og = imgOf(MED, A.actus.pile[0].media);
   return page(ROOTC, { p: '', title: P.seoTitle + ' | Leonidakit', desc: P.desc, canonical: '/videos.html', ogImg: og.b.src, body, crumbs: [['Accueil', '/'], [P.label, '/videos.html']], ld, cls: 'actus-page--videos' });
 }
 
 /* ---------- Éditions ---------- */
+/* v7.92 : briques communes aux trois pages de la section (vitrine.cjs) */
+/* les dates à venir en pastilles, sous le titre : jour, mois, ce qui arrive, et le compte à rebours (vitrine.js) */
+function datesRow(A, label) {
+  return '<ol class="ac-dates vt-in" data-lk-reveal aria-label="' + esc(label) + '">' + A.aVenir.map((x, i) => { const d = new Date(x.iso + 'T12:00:00Z');
+    return '<li class="ac-date" style="--i:' + i + '"><time datetime="' + esc(x.iso) + '"><b>' + d.getUTCDate() + '</b><span>' + esc(new Intl.DateTimeFormat('fr-FR', { month: 'long', timeZone: 'UTC' }).format(d)) + '</span></time><span class="ac-date-t">' + nb(esc(x.titre)) + '</span>' + VT.cd(x.iso) + '</li>'; }).join('') + '</ol>';
+}
+/* encart « Une autre question ? » à côté des questions fréquentes : Léo répond, ou le formulaire de contact */
+const leoAside = (asks, media, alt, prefix = '') => VT.aside({ title: VTX.aside.titre, text: VTX.aside.texte, asks, mail: { href: prefix + 'contact.html', label: VTX.aside.ecrire }, media, alt }, { prefix });
+/* silhouette « teaser » d’une tenue (contenu sans visuel officiel) */
+const TEASER_TENUE = '<svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" aria-hidden="true"><path d="M44 18c4 7 9 10 16 10s12-3 16-10l22 10 12 26-17 8-6-11v61H33V51l-6 11-17-8 12-26z"/><path d="M60 28v12M49 60h22" stroke-linecap="round"/><circle cx="60" cy="48" r="2.5" fill="currentColor"/></svg>';
+const STAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z"/></svg>';
 function editionsPage(ctx) {
   const { A, MED, ROOTC } = ctx, E = A.editions, src = 'rs-support-editions';
-  /* v7.87.1 : gabarit des pages de section ; moment de la page : les seize contenus de l’Ultimate se déballent, rangée par
-     rangée (moteur commun), leur numéro d’ordre (celui de l’assistance de Rockstar, compteur CSS décoratif : le texte de
-     chaque contenu, et donc sa traduction, ne change pas) se tamponne (actus.css) */
-  const ed = x => '<div class="ac-ed' + IN + '><h3>' + esc(x.titre) + '</h3><p>' + esc(x.texte) + '</p></div>';
-  const contenus = '<ul class="ac-ue" role="list">' + E.contenus.map(c => '<li class="ac-ue-i' + IN + '>' + (c.href ? '<a class="ac-ue-a" href="' + esc(c.href) + '">' : '<span class="ac-ue-x">') + '<span class="ac-ue-fr">' + esc(c.fr) + '</span><span class="ac-ue-en" translate="no">' + esc(c.nom) + '</span>' + (c.href ? '</a>' : '</span>') + '</li>').join('') + '</ul>';
-  const bonus = '<div class="ac-bonus">' + E.bonus.map(b => '<div class="ac-bonus-i' + IN + '><h3>' + esc(b.titre) + '</h3><p>' + esc(b.texte) + '</p><p class="ac-bonus-pour">' + esc(b.pour) + '</p>' + (b.href ? '<a href="' + esc(b.href) + '">Voir la fiche</a>' : '') + '</div>').join('') + '</div>';
+  /* deux grandes cartes (jaquette officielle, visuel de l’Ultimate) puis le comparatif ligne à ligne, d’après l’assistance */
+  const edCard = (x, i, ult) => '<article class="ac-edcard' + (ult ? ' ac-edcard--ult' : '') + '" style="--i:' + i + '">'
+    + '<figure class="ac-edcard-fig">' + VT.img(x.media, x.alt, { big: true, sizes: '(max-width:899px) 92vw, 660px' }) + (ult ? '<span class="ac-edcard-ribbon vt-stamp">' + esc(x.ruban) + '</span>' : '') + '</figure>'
+    + '<div class="ac-edcard-b"><h3>' + esc(x.titre) + '</h3><p>' + esc(x.texte) + '</p><ul class="ac-checks">' + x.points.map(t => '<li>' + esc(t) + '</li>').join('') + '</ul></div></article>';
+  const C = E.comparatif;
+  const editions = '<div class="ac-duo vt-in" data-lk-reveal>' + edCard(E.standard, 0, false) + edCard(E.ultimate, 1, true) + '</div>'
+    + '<h3 class="ac-h3">' + esc(C.titre) + '</h3><div class="ac-compare' + IN + '>' + VT.compare({ caption: C.caption, first: C.first, cols: C.cols, rows: C.rows, hi: 2 }, { yes: E.oui, no: E.non }) + '</div>'
+    + '<p class="ac-amelio">' + esc(E.amelioration) + ' ' + srcRefs([src]) + '</p>';
+  /* moment de la page : les seize contenus arrivent comme des cartes qu’on distribue (vitrine.css), numérotés dans l’ordre de
+     l’assistance de Rockstar, classés par famille (filtre, vitrine.js) ; une carte sans visuel officiel montre une silhouette */
+  const cats = Object.keys(E.categories);
+  const items = E.contenus.map((c, i) => ({ href: c.href || null, media: c.media || null, alt: c.alt || '', teaser: c.media ? null : TEASER_TENUE, teaserLabel: c.media ? null : E.teaser,
+    n: String(i + 1).padStart(2, '0'), tag: E.categories[c.cat], title: c.fr, text: c.nom, textNo: true, go: c.href ? E.voirFiche : null, item: c.cat }));
+  const ultimate = VT.filters('ue-list', cats.map(k => ({ f: k, label: E.categories[k], n: E.contenus.filter(c => c.cat === k).length })), { label: E.tout, n: E.contenus.length }, E.filtresLabel)
+    + VT.cards(items, { id: 'ue-list', fx: 'deal', sizes: '(max-width:719px) 92vw, 320px' });
+  /* bonus : le Pack Vintage Vice City (visuel, contenu, fiche, et ses trois images) et le mois de GTA+ */
+  const B0 = E.bonus[0], B1 = E.bonus[1];
+  const bonus = '<div class="ac-bonus2 vt-in" data-lk-reveal>'
+    + '<article class="ac-bcard" style="--i:0"><figure class="ac-bcard-fig">' + VT.img(B0.media, B0.alt, { big: true, sizes: '(max-width:899px) 92vw, 760px' }) + '</figure><div class="ac-bcard-b"><h3>' + esc(B0.titre) + '</h3><p>' + esc(B0.texte) + '</p><p class="ac-bonus-pour">' + esc(B0.pour) + '</p>' + (B0.href ? '<a class="lkx-btn lkx-btn--ghost" href="' + esc(B0.href) + '">' + esc(E.voirFiche) + '</a>' : '') + '</div></article>'
+    + '<article class="ac-bcard ac-bcard--plain" style="--i:1"><span class="ac-bcard-ico" aria-hidden="true">' + STAR + '</span><h3>' + esc(B1.titre) + '</h3><p>' + esc(B1.texte) + '</p><p class="ac-bonus-pour">' + esc(B1.pour) + '</p><p class="ac-bcard-end"><span>' + esc(E.bonusFin) + '</span> <time datetime="2026-11-20">20/11/2026</time> ' + VT.cd('2026-11-20') + '</p></article>'
+    + '</div>'
+    + '<h3 class="ac-h3">' + esc(E.galerieLabel) + '</h3>' + VT.strip(B0.galerie.map(g => ({ media: g.media, alt: g.alt, title: g.titre })), { region: E.galerieLabel, prev: E.precedent, next: E.suivant });
   /* boîte, préchargement, régions : trois colonnes du moteur commun (ed-col), chacune avec son ancre */
   const col = (id, icon, titre, l) => '<div class="ed-col ac-col' + IN + ' id="' + id + '"><h3><span class="ed-col-ico">' + S.icon(icon) + '</span>' + esc(titre) + '</h3><ul>' + l.map(t => '<li>' + esc(t) + '</li>').join('') + '</ul></div>';
   const body = `<section class="page-head shell lk-glow"><div class="lk-head-grid"><div>
@@ -406,14 +490,15 @@ function editionsPage(ctx) {
   <h1>${esc(nb(E.title))}</h1>
   <p class="lede">${esc(E.lede)}</p>
   <p class="d-intro-note">${esc(E.note)} ${srcRefs([src])}</p>
+  ${datesRow(A, E.datesLabel)}
 </div>${pile(MED, E.pile, 'Trois visuels officiels des éditions')}</div></section>
 ${zone([
-    { id: 'editions', k: UI.editions.k, t: 'Deux éditions', icon: 'achats', nav: UI.editions.nav, fam: 'equipements', body: '<div class="ac-eds">' + ed(E.standard) + ed(E.ultimate) + '</div><p>' + esc(E.amelioration) + '</p>' },
-    { id: 'ultimate', k: UI.ultimate.k, t: E.contenusTitre, icon: 'inventaire', nav: UI.ultimate.nav, fam: 'munitions', lede: E.contenusLede, body: contenus },
+    { id: 'editions', k: UI.editions.k, t: 'Deux éditions', icon: 'achats', nav: UI.editions.nav, fam: 'equipements', body: editions },
+    { id: 'ultimate', k: UI.ultimate.k, t: E.contenusTitre, icon: 'inventaire', nav: UI.ultimate.nav, fam: 'munitions', lede: E.contenusLede, body: ultimate },
     { id: 'bonus', k: UI.bonus.k, t: E.bonusTitre, icon: 'etiquette', nav: UI.bonus.nav, fam: 'carte', body: bonus },
     { id: 'en-pratique', k: UI.pratique.k, t: UI.pratique.t, icon: 'boussole', tone: 'night', nav: UI.pratique.nav, fam: 'combat', body: '<div class="ed-cols ac-cols">' + col('boite', 'kit', E.boiteTitre, E.boite) + col('prechargement', 'sablier', E.prechargementTitre, E.prechargement) + col('regions', 'carte', E.regionsTitre, E.regions) + '</div>' },
     require('./monetisation.cjs').zoneEditions() /* v7.88 : liens affiliés, rien tant que outils/monetisation.json ne les active pas */,
-    faqSec(E.faq),
+    faqSec(E.faq, leoAside(E.leo, 'cover-art-sea-sparrow', 'Hélicoptère bleu à flotteurs sur une illustration de la jaquette officielle GTA VI')),
     srcSec(ctx, [src], '', '<p class="ac-more"><a href="verification.html">Ce qui est confirmé sur GTA 6, et comment on le vérifie</a></p>')
   ])}`;
   const og = imgOf(MED, E.pile[0].media);

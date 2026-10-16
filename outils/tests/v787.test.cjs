@@ -66,7 +66,9 @@ test('flux RSS : actus.xml dans chaque langue, une entrée par annonce, titres t
 test('vidéos : trois pages, lecteur de YouTube chargé au clic seulement, liens de secours, VideoObject, moments et musique', () => {
   const R = JSON.parse(read('outils/radios/radios.json'));
   const hub = doc('videos.html');
-  assert.equal(hub.querySelectorAll('.ac-vcard').length, A.videos.liste.length);
+  /* v7.92 : la salle de projection liste les trois vidéos (chacune mène à sa page) */
+  assert.equal(hub.querySelectorAll('.ac-pl-a[data-ac-pick]').length, A.videos.liste.length);
+  for (const v of A.videos.liste) assert.ok(hub.querySelector('.ac-pl-a[href="videos/' + v.id + '.html"]'), v.id);
   for (const v of A.videos.liste) {
     const f = 'videos/' + v.id + '.html', html = read(f), d = doc(f);
     assert.doesNotMatch(html, /<iframe/i, f + ' : aucun cadre avant le clic');
@@ -109,10 +111,11 @@ test('lecteur des vidéos (actus.js) : rien avant le clic, YouTube sans cookie a
 
 test('éditions : les seize contenus de l’Ultimate (noms officiels), bonus, boîte, préchargement, régions, source de l’assistance', () => {
   const d = doc('editions.html');
-  const items = [...d.querySelectorAll('.ac-ue > li')];
+  /* v7.92 : les seize contenus sont des cartes de la vitrine (#ue-list), le nom officiel sous le titre */
+  const items = [...d.querySelectorAll('#ue-list > li')];
   assert.equal(items.length, 16);
-  assert.deepEqual(items.map(li => li.querySelector('.ac-ue-en').textContent), A.editions.contenus.map(c => c.nom));
-  for (const a of d.querySelectorAll('.ac-ue a, .ac-bonus a')) assert.ok(exists('editions.html', a.getAttribute('href')), a.getAttribute('href'));
+  assert.deepEqual(items.map(li => li.querySelector('.vt-card-d').textContent), A.editions.contenus.map(c => c.nom));
+  for (const a of d.querySelectorAll('#ue-list a, #bonus a')) assert.ok(exists('editions.html', a.getAttribute('href')), a.getAttribute('href'));
   for (const id of ['editions', 'ultimate', 'bonus', 'boite', 'prechargement', 'regions', 'faq', 'sources']) assert.ok(d.getElementById(id), id);
   assert.ok(d.querySelector('#sources a[href^="https://support.rockstargames.com/"]'));
   assert.doesNotMatch(d.querySelector('main').textContent, /\d+,\d\d ?€/, 'aucun prix inventé');
@@ -120,10 +123,10 @@ test('éditions : les seize contenus de l’Ultimate (noms officiels), bonus, bo
   if (fs.existsSync(path.join(root, 'en/editions.html'))) {
     const dom = new JSDOM(read('en/editions.html').replace(/<script[^>]*src="[^"]*"><\/script>/g, ''), { runScripts: 'outside-only', url: 'https://www.leonidakit.com/en/editions.html' });
     dom.window.matchMedia = () => ({ matches: true }); dom.window.eval(read(fs.existsSync(path.join(root, 'en/actus.js')) ? 'en/actus.js' : 'actus.js'));
-    const li = [...dom.window.document.querySelectorAll('.ac-ue-i')], hid = li.filter(x => x.querySelector('.ac-ue-en').hidden);
+    const li = [...dom.window.document.querySelectorAll('#ue-list .vt-card')], hid = li.filter(x => x.querySelector('.vt-card-d').hidden);
     assert.equal(li.length, 16);
     assert.ok(hid.length >= 5, 'noms répétés masqués : ' + hid.length);
-    for (const x of hid) assert.equal(x.querySelector('.ac-ue-fr').textContent.replace(/^(The|An?) /, '').replace(/’/g, "'").toLowerCase(), x.querySelector('.ac-ue-en').textContent.replace(/’/g, "'").toLowerCase());
+    for (const x of hid) assert.equal(x.querySelector('.vt-card-t').textContent.replace(/^(The|An?) /, '').replace(/’/g, "'").toLowerCase(), x.querySelector('.vt-card-d').textContent.replace(/’/g, "'").toLowerCase());
     dom.window.close();
   }
 });

@@ -278,6 +278,7 @@
   "armes-schemas.js",
   "atelier-3d.js",
   "vendor/three.module.min.js",
+  "vendor/three.atelier.min.js",
   "vendor/qrcode-generator.js"
  ],
  "scriptsDonnees": [

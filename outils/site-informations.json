@@ -8,7 +8,7 @@
  "contactRetentionDecidedAt": "2026-10-01",
  "publicationDirector": null,
  "editorContact": "contact@leonidakit.com",
- "checkedAt": "2026-10-12",
+ "checkedAt": "2026-10-15",
  "hosting": {
   "name": "Vercel Inc.",
   "address": "440 N Barranca Avenue #4133, Covina, CA 91723, États-Unis",
@@ -39,6 +39,11 @@
   }
  },
  "history": [
+  {
+   "date": "2026-10-15",
+   "version": "v7.92",
+   "text": "Jeu « Devine le lieu » : la même clé garde aussi tes statistiques (parties jouées, scores, bonnes réponses par région, 60 derniers jours) et ton album des images déjà jouées, toujours dans ton navigateur seulement. Aucune clé de plus, aucun cookie, aucun service extérieur."
+  },
   {
    "date": "2026-10-14",
    "version": "v7.91",

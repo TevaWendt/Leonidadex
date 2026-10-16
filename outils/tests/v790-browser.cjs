@@ -145,7 +145,7 @@ const check = (ok, label, detail) => { checks.push({ ok: !!ok, label, detail: de
   {
     const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, javaScriptEnabled: false });
     const page = await ctx.newPage(); await page.goto(base + '/devine-le-lieu.html', { waitUntil: 'load' });
-    const nojs = await page.evaluate(() => ({ msg: !!document.querySelector('[data-dv-nojs]').offsetHeight, board: !document.querySelector('[data-dv-board]').offsetHeight, regions: [...document.querySelectorAll('#regions a[data-dv-fiche]')].filter(a => a.offsetHeight).length, rules: document.querySelectorAll('#regles .ed-step').length }));
+    const nojs = await page.evaluate(() => ({ msg: !!document.querySelector('[data-dv-nojs]').offsetHeight, board: !document.querySelector('[data-dv-board]').offsetHeight, regions: [...document.querySelectorAll('#regions a[data-dv-fiche]')].filter(a => a.offsetHeight).length, rules: document.querySelectorAll('#regles .vt-step').length }));
     check(nojs.msg && nojs.board && nojs.regions === 6 && nojs.rules === 4, 'sans JavaScript : message, six régions avec leur fiche, règles', nojs);
     await page.screenshot({ path: path.join(out, 'sans-script-390.png'), fullPage: true });
     await ctx.close();

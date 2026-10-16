@@ -70,11 +70,12 @@ test('gabarit : sections éditoriales du moteur commun, numérotées, fonds alte
 });
 
 test('mouvement : les blocs nouveaux entrent par le moteur commun, rien ne reste caché sans script ni en mouvement réduit', () => {
-  const sel = { 'actus.html': ['.ac-ticket', '.ac-ev', '.faq > details'], 'editions.html': ['.ac-ed', '.ac-ue-i', '.ac-bonus-i', '.ac-col', '.faq > details'], 'videos.html': ['.ac-vcard', '.faq > details'] };
+  /* v7.92 : blocs des pages enrichies ; un bloc entre par lui-même ou par son groupe (data-lk-reveal, cascade de vitrine.css) */
+  const sel = { 'actus.html': ['.ac-ticket', '.ac-ev', '.vt-fig', '.faq > details'], 'editions.html': ['.ac-edcard', '#ue-list > li', '.ac-bcard', '.ac-col', '.vt-shot', '.faq > details'], 'videos.html': ['.ac-pl-a', '.ac-bar', '.vt-shot', '.faq > details'] };
   for (const v of VIDEOS) sel[v] = ['.ac-moment', '.ac-song', '.ac-rev-g', '.ac-chips', '.ac-vcard', '.faq > details'];
   for (const [f, list] of Object.entries(sel)) {
     const d = doc(f);
-    for (const s of list) { const els = [...d.querySelectorAll('main ' + s)].filter(el => !el.closest('.ac-chips-more')); assert.ok(els.length, f + ' : ' + s); for (const el of els) assert.ok(el.hasAttribute('data-lk-reveal'), f + ' : ' + s + ' sans entrée'); }
+    for (const s of list) { const els = [...d.querySelectorAll('main ' + s)].filter(el => !el.closest('.ac-chips-more')); assert.ok(els.length, f + ' : ' + s); for (const el of els) assert.ok(el.closest('[data-lk-reveal]'), f + ' : ' + s + ' sans entrée'); }
     /* aucun bloc de la section n’utilise encore l’ancien « rise » (deux langages d’apparition sur un même bloc) */
     assert.equal(d.querySelectorAll('main .ac-sec .rise, main .ac-vhead .rise').length, 0, f + ' : ancien « rise »');
   }

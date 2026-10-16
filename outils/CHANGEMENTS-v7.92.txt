@@ -1,0 +1,209 @@
+LEONIDAKIT v7.92 — Pages enrichies (Éditions, Vidéos officielles, Actualités, Ce qui est confirmé, Presse, Mode compagnon,
+Devine le lieu) et Atelier 3D plus rapide
+— 15 octobre 2026
+
+Base : assemblage v7.87.1 → v7.91 (commit 134e87c58, poussé par Téva). Demande de Téva du 15 octobre : « le mode compagnon,
+devine le lieu, la section presse et les 4 sections [Actualités, Vidéos officielles, Éditions, Ce qui est confirmé] sont
+absolument moches, ça manque d’informations, de visuels, de contenu, d’images, d’effets avec la souris ou d’apparition…
+enrichis tout sans oublier les consignes, et optimise encore davantage l’Atelier 3D ». Rien n’est publié ni poussé. CSP
+inchangée. Aucun fichier à supprimer. Lot 8 (recherches Google) devient la v7.93, lot 4 (jour J) la v7.94.
+
+1. BRIQUES COMMUNES DES PAGES ENRICHIES (nouveau)
+- outils/vitrine.cjs (balisage), vitrine.css (styles), vitrine.js (comportements), outils/vitrine.json (textes communs) :
+  chiffres qui défilent (data-lk-count du moteur commun) avec barre de part, cartes à visuel officiel (numéro en tampon,
+  étiquette, silhouette « teaser » pour ce que Rockstar n’a pas montré), bande de photogrammes avec flèches (montrées
+  seulement si la bande déborde), bandeau d’image, encart Léo à côté de la FAQ (questions posées à Léo par bouton :
+  LKLeoLoader puis LKLeoUI.ask), tableau comparatif (cartes sous 640 px), étapes illustrées, compte à rebours en jours
+  (Intl.RelativeTimeFormat, langue de la page, minuit local), blocs à copier (bouton montré par le script), filtres
+  (aria-pressed, repères d’année masqués s’ils n’ont plus rien sous eux, entrée par LKMotion).
+- Animations en boucle limitées à quelques tours (point des comptes à rebours, silhouettes « teaser », écrans du Mode
+  compagnon, flux du schéma de transfert) : rien ne tourne sans fin sur la page.
+- Entrées de groupe : un seul moteur (common.js, LKMotion pose « is-in » sur data-lk-reveal) ; cascade de 50 ms par
+  élément, 300 ms au plus ; trois entrées (montée, donne de cartes, balayage d’image) ; « Réduire les animations » et sans
+  script : tout visible, rien ne bouge. Survol : les cartes-liens se soulèvent, l’image se rapproche dans son cadre ; une
+  carte qu’on lit ne bouge pas.
+- vitrine.js n’écrit aucun mot (tout vient de la page traduite) ; rien gardé sur l’appareil ; aucune requête.
+- Images : trois tailles (480, 800 et 1 280 px) ; au téléphone (599 px et moins), 800 px au plus (<picture> sans boîte,
+  .vt-pic { display: contents } : la mise en page reste celle de l’image seule). Un écran à densité 3 prenait la 1 280 px
+  pour une carte de 360 px : deux à trois fois plus lourde, sans différence visible. Même règle pour l’affiche de la
+  salle de projection et des pages des vidéos (actus.js change aussi la source du téléphone quand on choisit une autre
+  vidéo), les images de la frise des Actualités, les moments et les « autres vidéos » des pages des vidéos, la télévision
+  du Mode compagnon et l’image de la partie de Devine le lieu (devine.js). Les vignettes de la liste des vidéos (132 px)
+  et un visuel plus petit que 480 px ont leur srcset écrit par le générateur : outils/sync-site.cjs leur en posait un
+  « 100vw » qui faisait prendre la 1 280 px au téléphone. Résultat, page entière parcourue au téléphone (390 px, densité
+  3) : plus aucune image de 1 280 px sur les sept pages et les trois pages des vidéos (v7.91 : 3 sur les Vidéos
+  officielles, 4 sur les Actualités, 1 sur Devine le lieu, 12, 10 et 7 sur les pages des trois vidéos). Poids des images,
+  v7.91 → v7.92, au chargement puis page entière parcourue (Ko) :
+    Éditions 106 → 172 puis 106 → 860 (21 visuels au lieu de 3) ; Vidéos officielles 454 → 199 puis 454 → 246 ;
+    Actualités 125 → 125 puis 587 → 478 ; Ce qui est confirmé 75 → 75 puis 75 → 367 ; Presse 72 → 72 puis 338 → 360 ;
+    Mode compagnon 132 → 165 ; Devine le lieu 302 → 244 puis 302 → 261 ; Trailer 1 251 → 134 puis 1 020 → 412 ;
+    Trailer 2 281 → 147 puis 744 → 318 ; An Extended Look 243 → 156 puis 649 → 266.
+
+2. ÉDITIONS (editions.html ; outils/gen-actus.cjs, outils/actus/actus.json, actus.css, actus.js)
+- En tête : les dates à retenir en tickets (12, 19 et 20 novembre) avec compte à rebours.
+- Les deux éditions côte à côte (jaquette officielle, visuel de l’Ultimate avec ruban), points clés cochés.
+- Tableau comparatif d’après l’assistance de Rockstar (colonne Ultimate mise en avant ; « Non cité par l’assistance »
+  quand Rockstar ne dit rien), passage à l’Ultimate et ses sources.
+- Les 16 contenus de l’Ultimate en cartes illustrées (visuels officiels, silhouette pour Vice City Styles), filtres
+  véhicules / armes / tenues / lieux et commerces, nom officiel anglais masqué en double.
+- Bonus de précommande : carte image du Pack Vintage Vice City et bande de ses trois visuels, carte GTA+ de nuit avec son
+  compte à rebours ; « En pratique » ; zone d’affiliation inchangée (toujours éteinte) ; FAQ et encart Léo ; sources.
+
+3. VIDÉOS OFFICIELLES (videos.html, videos/*.html)
+- Salle de projection : la vidéo à l’affiche (lecteur YouTube sans cookie, seulement au clic) et la liste des trois vidéos ;
+  choisir une vidéo change l’affiche, le titre, le panneau d’informations et le lecteur sans quitter la page (actus.js).
+- Les trois vidéos en chiffres (moments relevés, morceaux, véhicules vus la première fois, armes, révélations) en barres
+  colorées ; les moments à revoir en bande de photogrammes (vers videos/<id>.html#moments) ; toute la musique des vidéos ;
+  FAQ et encart Léo. L’ancienne grille de cartes, qui répétait la liste, est retirée.
+
+4. ACTUALITÉS (actus.html)
+- Chiffres en tête (11 annonces, 3 vidéos, 19 sources, 1 081 jours entre la première vidéo et la sortie) ; tickets des
+  prochaines dates avec compte à rebours.
+- Frise : un visuel officiel par annonce, un type (vidéos, annonces, presse, musique) avec filtres, un repère par année,
+  une ligne qui se remplit au défilement (animation-timeline, rien sans prise en charge) ; FAQ et encart Léo. Le flux RSS
+  (actus.xml) ne change pas.
+
+5. CE QUI EST CONFIRMÉ (verification.html ; outils/gen-informations.cjs, outils/informations-editorial.json, informations.css)
+- Tableau de bord en tête : tuiles « confirmé » et « en attente », chacune vers sa fiche (#confirme-N, #pas-encore-N).
+- Confirmations en cartes illustrées (visuels officiels), chiffres, questions encore ouvertes (icône et tampon « ? »),
+  à venir, échelle des statuts (autant de colonnes que de statuts), ce qui ne sera jamais affirmé, « Signaler » avec
+  l’encart Léo.
+
+6. PRESSE (presse.html)
+- Captures du kit agrandissables (lien vers l’image, visionneuse du site) ; nouvelle partie « Identité visuelle » :
+  les cinq couleurs à copier (hex et rôle), la police Archivo (licence SIL OFL, fonts/LICENCE-ARCHIVO.txt), graisses et
+  spécimen ; formules de citation prêtes à copier ; partie Indépendance sur papier ; « Écrire » avec l’encart Léo.
+
+7. MODE COMPAGNON (compagnon.html ; outils/gen-compagnon.cjs, outils/compagnon.json, outils/compagnon-illus.cjs,
+   compagnon.css, compagnon.js)
+- Les quatre outils racontés au défilement : une télévision (visuel officiel), une console et un téléphone dont l’écran
+  change avec l’étape lue (carte, carnets, calculateur, Léo : écrans dessinés, sans mot) ; au téléphone, un mini-écran
+  par étape. La position des étapes est relue à chaque image (une étape qui change de taille ne décale plus l’écran).
+- « Ce qui est préparé » pour jouer sans réseau ; installation illustrée pour iPhone et iPad, Android, ordinateur (ton
+  appareil mis en avant) ; schéma du transfert (cet appareil → lien ou QR code → l’autre appareil, « Rien ne passe par
+  le site. ») ; FAQ et encart Léo.
+
+8. DEVINE LE LIEU (devine-le-lieu.html ; outils/gen-devine.cjs, outils/devine/devine.json, outils/devine-illus.cjs,
+   devine.js, devine.css)
+- Album : chaque image jouée dans la partie du jour rejoint sa région (timbre dentelé ; le dos d’une carte tant qu’elle
+  n’est pas découverte ; pastille sur celles du jour) ; progression « Ton album : n sur 40 ».
+- Les six régions en cartes postales : la carte du site autour de la région (repères des autres régions), le timbre avec le
+  nombre d’images, la devise, « Ce que montrent les captures » (deux faits de outils/editorial.json par région, choisis
+  dans devine.json → regions.faits, contrôlés à la génération), ta réussite dans la région, « Sur la carte ». Aucune image
+  du jeu n’est montrée hors du jeu (l’encart Léo prend un visuel officiel qui n’est pas dans le jeu).
+- Pendant la partie : ta série en pastille ; après chaque réponse, la devise de la bonne région et « Nouvelle image dans
+  ton album ».
+- Résultat : score, cinq pastilles, série, meilleure série, parties jouées, réussite, meilleur score, album ; tes sept
+  derniers jours (jour de la semaine et score, dans la langue de la page) ; tes scores (une barre par score, celui du jour
+  marqué) ; tes régions (part de bonnes réponses, teinte de la région) ; « Voir mon album ».
+- Règles illustrées (paquet qui s’ouvre en éventail, horloge à minuit, boutons des régions, trait vers la bonne région,
+  jours cochés et flamme de la série), le cycle des images (8 jours pour 40 images, le jour du cycle marqué ; ni image ni
+  région à venir n’est montrée), FAQ (une question de plus : « Comment remplir mon album ? ») et encart Léo.
+- Chargement : devine.js est chargé juste après le jeu (async, fetchpriority="high" : un script async part sinon en
+  priorité basse, derrière les feuilles et les images) et non plus en fin de page : la partie du jour s’affiche sans
+  attendre la lecture des cartes postales, des règles et des questions ; l’album, le cycle et les liens du résultat sont
+  posés une fois la page lue.
+- Stockage : toujours la seule clé lk_devine_v1 ; champ « st » en plus (parties, meilleure série, répartition des scores,
+  bonnes réponses par région, scores des 60 derniers jours, album), écrit avec les réponses de la partie du jour ; un champ
+  abîmé repart de zéro sans toucher au reste ; l’état d’avant la v7.92 reste valide (l’album reprend les réponses déjà
+  données le jour même) ; la partie libre ne touche à rien. Fonctions pures ajoutées à LKDevine : blankSt, cleanSt,
+  summary, cycleDay. Mentions : « Ce qui reste dans ton navigateur » et ligne d’historique v7.92 ; date de mise à jour
+  au 15 octobre (outils/site-informations.json).
+
+9. ATELIER 3D (atelier-3d.js, outils/gen-atelier.cjs, outils/three-atelier.cjs, vendor/three.atelier.min.js,
+   outils/sync-site.cjs, outils/langues.json)
+- Rendu identique, vérifié image par image avant / après (trois véhicules, peinture changée, néons, intérieur, arme).
+- Nuanceurs gardés d’une maquette à l’autre : la nouvelle maquette est dessinée avant que l’ancienne soit libérée (sinon
+  chaque changement d’option recompilait tous les programmes) ; avec la compilation parallèle du navigateur
+  (KHR_parallel_shader_compile), compileAsync prépare la nouvelle maquette sans bloquer la page pendant que l’ancienne
+  reste affichée (au plus 1,5 s d’attente).
+- Ombre : shadowMap.autoUpdate coupé, recalculée seulement quand la maquette change (option, modèle, intérieur).
+- Hors de l’écran (IntersectionObserver) : la boucle s’arrête, rien n’est dessiné ; elle reprend en revenant.
+- Rotation automatique : 60 images par seconde au plus (30 sur écran tactile) ; gestes à pleine vitesse.
+- La scène se prépare après l’événement load, comme avant (three.js, lui, arrive plus tôt) : son travail ne retarde ni le
+  chargement de la page ni les scripts qui l’attendent.
+- preserveDrawingBuffer retiré (l’export PNG dessine puis lit dans la même tâche, vérifié).
+- three.js réduit : vendor/three.atelier.min.js (522 Ko au lieu de 675, 136 Ko compressés au lieu de 171), sous-ensemble
+  exact du build officiel r170 (vendor/three.module.min.js, gardé comme source) construit par outils/three-atelier.cjs
+  (esbuild, tree shaking) à partir des noms THREE.Xxx d’atelier-3d.js ; « --check » vérifie sans esbuild que chaque nom est
+  exporté. Préchargé dès l’en-tête (<link rel="modulepreload">) ; outils/sync-site.cjs pose la même empreinte sur l’import
+  d’atelier-3d.js que sur le préchargement (une seule adresse, un seul téléchargement). Script partagé, jamais traduit.
+- Données : la maquette du départ se télécharge pendant que la scène se prépare ; un modèle survolé ou focalisé dans la
+  liste se télécharge avant le clic (une requête par modèle, promesse gardée).
+- Mesures (navigateur de test, rendu logiciel SwiftShader : chiffres relatifs) : changer la peinture 650 à 740 ms de
+  travail de la page → 30 à 45 ms (4 programmes recompilés → 0) ; changer de véhicule 480 à 650 ms → 25 à 135 ms (3 ou 4 →
+  0 ou 1) ; rotation 117 → 67 dessins WebGL par image ; hors de l’écran 1 104 dessins en 8 s → 0 ; three.js commence à
+  arriver à 20 ms au lieu de 210 ms.
+
+10. LÉO (outils/gen-leo.cjs)
+- Passages des pages : l’encart Léo des pages enrichies (des suggestions, pas du contenu), les boutons « Copier », les
+  filtres et les flèches des bandes d’images ne sont plus lus ; une capture agrandissable de la Presse garde sa ligne
+  (nom, format, poids, « Télécharger ») : seul « Agrandir la capture » au début est retiré (sinon « télécharger le logo du
+  site » ne menait plus à la Presse). Les questions de la FAQ ajoutées (Devine le lieu) sont indexées.
+
+11. LANGUES
+- outils/langues/{en,es,it,de,pt}/v792.json : 234 à 236 textes par langue (pages enrichies, Devine le lieu, Mentions),
+  plus « devine-le-lieu.html::Parties jouées » en anglais, allemand et portugais (le mot du calculateur ne convenait
+  pas) ; extraction à {} dans les cinq langues. Une image dans <picture> change le découpage des textes qui l’entourent
+  (numéro et étiquette des cartes, photogrammes des bandes : 32 textes par langue) : leurs traductions sont reprises
+  telles quelles des anciens découpages, qui sont retirés (aucune entrée inutilisée dans v792.json). Formules de citation de la Presse : adresses des pages de la langue.
+  Repères des messages du jeu sans mot français ({n}, {w}) : le contrôle « aucun français visible » lisait « {jours} ».
+
+12. TESTS ET CONTRÔLES
+- outils/tests/v792.test.cjs (8 tests : briques chargées dans chaque langue, vitrine.js sans mot, textes alternatifs,
+  images de 800 px au plus au téléphone dans chaque langue, statistiques et album de Devine le lieu, cartes postales,
+  album et cycle dans chaque langue, Mode compagnon, three.js réduit et préchargement = import dans chaque langue,
+  Mentions) ; outils/tests/v792-browser.cjs (53 contrôles : album et statistiques en français et en allemand à 390 et
+  1 280 px, filtres et comptes à rebours, écran du Mode compagnon qui suit l’étape, question posée à Léo depuis l’encart,
+  Atelier sans recompilation, rien dessiné hors de l’écran, export PNG, au téléphone aucune image de 1 280 px sur les
+  sept pages (dont une en anglais et une en allemand), image de la partie et affiche d’une autre vidéo en 800 px, aucun
+  défilement horizontal, aucune erreur, aucune requête externe, aucun cookie).
+- Tests mis à jour pour le nouveau balisage (même intention) : outils/tests/v790.test.cjs et v790-browser.cjs (règles
+  illustrées : .vt-step), v781.test.cjs (import de three.js réduit), v786.test.cjs (Ce qui est confirmé : tableau de bord,
+  cartes .vf-card, chiffres .vt-fig), v787.test.cjs (liste de la salle de projection, cartes des seize contenus #ue-list),
+  v7871.test.cjs (un bloc entre par lui-même ou par son groupe data-lk-reveal), v788.test.cjs (partie « identite » de la
+  Presse), v789.test.cjs (quatre étapes du Mode compagnon).
+- Débordements et erreurs : 10 pages enrichies × 6 langues × 5 largeurs (320, 390, 768, 1 024, 1 440) : aucun.
+- Cibles tactiles : le contrôle des écrans signalait le titre-lien d’un groupe de « Toute la musique des vidéos » (23 px de
+  haut au téléphone) ; il fait maintenant 28 px, comme les liens des cartes de « Ce qui est confirmé » et le nom des régions
+  des cartes postales (aucune cible sous 24 px dans les pages enrichies, de 320 à 1 280 px).
+- Contrôles de la version livrée (nuit du 15 au 16 octobre ; outils/livraison/verifier-tout.sh, puis le navigateur) :
+  suite Node 1 141/1 141 ; langues 51/51 ; verifier.js : aucune erreur, 434 799 références (HTML, srcset, CSS, galeries,
+  données, plans du site) dans 2 797 pages ; preuve de confidentialité tenue ; pages des langues 35/35 ; langues dans le
+  navigateur 2 791/2 791 ; écrans 71 pages × 16 largeurs et 68 pages allemandes × 5 largeurs : aucun débordement, aucune
+  cible trop petite, aucun signal sur les pages de la v7.92 (les signaux restants, alignements de galeries et de fiches
+  sur des pages non touchées, sont ceux des versions d’avant, en même nombre) ; audit de clôture : 0 problème, 0 erreur console, 11 663 contrastes ;
+  cookies : aucun ; v792-browser 53/53 ; v790-browser 143/143 ; débordements (10 pages × 6 langues × 5 largeurs) : 0 ;
+  gen-leo --check ; une synchronisation de plus (outils/sync-site.cjs) ne change aucun fichier.
+
+13. LATENCE (mesurée le 15 octobre au soir, sur la version livrée)
+- Banc du site, outils/tests/latence-browser.cjs : téléphone 390 px (densité 3), processeur ralenti ×4, réseau « 4G
+  lente » simulé par le serveur (150 ms, 1,6 Mbit/s, réponses compressées), 4 tours en alternance, médianes ; à froid
+  (ni cache ni service worker) puis à chaud. v7.91 → v7.92, en ms ; Ko reçus à froid.
+                         FCP froid    DCL froid     chargement   processeur    Ko froid    FCP chaud   DCL chaud
+  Éditions               872 → 876    877 → 1109   1325 → 1500    759 → 1199   326 → 412   444 → 428   571 → 794
+  Vidéos officielles     784 → 856    855 → 1121   1505 → 1471    779 → 1057   672 → 439   496 → 424   461 → 763
+  Actualités             880 → 816    982 → 1037   1400 → 1412   1018 → 1119   356 → 373   484 → 452   775 → 796
+  Ce qui est confirmé    812 → 848    958 → 1091   1358 → 1438    945 → 984    284 → 300   532 → 472   587 → 740
+  Presse                 804 → 836    938 → 1042   1353 → 1454    873 → 1043   278 → 294   496 → 448   567 → 740
+  Mode compagnon         792 → 872    987 → 1034   1360 → 1374    926 → 1299   339 → 389   496 → 488   655 → 822
+  Devine le lieu         856 → 916    976 → 1123   1567 → 1530   1029 → 1244   400 → 364   424 → 432   867 → 1051
+  Devine (allemand)      808 → 1016  1056 → 1129   1610 → 1557   1212 → 1255   433 → 397   392 → 396   784 → 1109
+  Atelier 3D             836 → 868   2058 → 1164   2066 → 1468       (*)       372 → 340   376 → 448   949 → 984
+  (*) la colonne processeur compte jusqu’à 1,5 s après la fin du chargement : la v7.92, prête plus tôt, y fait déjà
+  tourner la maquette (5 024 → 7 254) ; elle ne se compare pas pour cette page, d’où la mesure ciblée ci-dessous.
+- Mesures ciblées, mêmes conditions, à froid :
+  Devine le lieu : l’image de la partie est reçue à 921 ms au lieu de 1 500 (allemand : 918 au lieu de 1 565), 34 Ko au
+  lieu de 92. Premier affichage mesuré à part : 820 → 888 (allemand 872 → 920 : les +208 ms du banc sont un écart du
+  banc). Le plus grand élément (LCP) du banc passe de 1 616 à 916 ms, mais ce n’est plus la même image : il est compté
+  ici pour mémoire.
+  Atelier 3D : la maquette est dessinée à 1,6 à 1,9 s au lieu de 2,5 à 2,7 s ; travail du fil principal jusque-là 0,8 à
+  1,0 s au lieu de 1,4 à 1,6 s (trace du navigateur, deux tours).
+  Ce qui fait monter DOMContentLoaded (Vidéos officielles, à chaud, trace) : 381 → 508 ms ; lecture du HTML 116 → 200,
+  styles 59 → 110, mise en page 33 → 103, moteur commun (common.js) 89 → 169, vitrine.js 16 : la page est deux fois plus
+  longue (plus de HTML, de styles et de blocs qui entrent au défilement), aucun calcul en trop.
+- Ce qu’on en retient : le premier affichage bouge à peine (de −60 à +80 ms) ; le chargement complet est plus court sur
+  Vidéos officielles, Devine le lieu et l’Atelier ; les images sont plus légères partout (§ 1) ; au téléphone ralenti
+  ×4, DOMContentLoaded monte de 0,02 à 0,33 s et le processeur de 0,04 à 0,44 s, prix de pages deux fois plus riches ;
+  Éditions reçoit 86 Ko de plus (21 visuels au lieu de 3). Atelier 3D à chaud : premier affichage +70 ms (three.js, préchargé dès
+  l’en-tête, se compile avant le premier affichage), en échange de la maquette 0,9 s plus tôt à froid.

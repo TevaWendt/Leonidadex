@@ -65,7 +65,8 @@ test('page : liste complète des modèles, familles, filtres, scène, barre, men
   assert.ok(fs.existsSync(path.join(root, 'vendor/three.module.min.js')) && fs.existsSync(path.join(root, 'vendor/LICENSE-three.txt')));
   assert.match(read('atelier-3d.html'), /<script type="module" src="atelier-3d\.js(\?v=[a-f0-9]+)?"><\/script>/);
   const js = read('atelier-3d.js');
-  assert.match(js, /^import \* as THREE from '\.\/vendor\/three\.module\.min\.js';/m);
+  /* v7.92 : three.js réduit pour l’Atelier (outils/three-atelier.cjs), importé avec son empreinte (outils/sync-site.cjs) */
+  assert.match(js, /^import \* as THREE from '\.\/vendor\/three\.atelier\.min\.js(?:\?v=[0-9a-f]{12})?';/m);
   assert.match(js, /new URL\('atelier\/', import\.meta\.url\)/, 'données lues depuis la racine du site, même depuis une page traduite');
   assert.doesNotMatch(js, /textContent = '[A-Za-zÀ-ÿ]{3,}/, 'aucun mot écrit par le script');
   assert.doesNotMatch(js, /document\.cookie|XMLHttpRequest/);

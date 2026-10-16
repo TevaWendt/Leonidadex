@@ -61,7 +61,8 @@ test('images de partage : hors du plan du site (Google Images) et du manifeste c
 
 test('presse : page en six sections, chiffres posés par la synchronisation, kit téléchargeable et cohérent', () => {
   const d = doc('presse.html'), ab = doc('a-propos.html');
-  assert.deepEqual([...d.querySelectorAll('main section.ed')].map(s => s.id), ['en-bref', 'kit', 'citer', 'regles', 'independance', 'ecrire']);
+  /* v7.92 : partie « Identité visuelle » (couleurs, police) après le kit */
+  assert.deepEqual([...d.querySelectorAll('main section.ed')].map(s => s.id), ['en-bref', 'kit', 'identite', 'citer', 'regles', 'independance', 'ecrire']);
   /* chaque texte de la page est affiché (pas de champ ignoré par le gabarit : « Citer une information » a ses trois textes) */
   const ED = JSON.parse(read('outils/informations-editorial.json')).presse, txt = d.querySelector('main').textContent.replace(/[\u00a0\u202f]/g, ' ');
   const shown = t => txt.includes(String(t).replace(/[\u00a0\u202f]/g, ' ').replace(/\{\w+\}/g, '').split(/(?<=[.:;!?])\s/)[0].slice(0, 40));

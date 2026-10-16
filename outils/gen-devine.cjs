@@ -12,6 +12,10 @@
    (cinq images différentes par jour, deux au plus d’une même région, aucune image deux jours de suite).
    Sorties : devine-le-lieu.html, outils/devine-index.json (recherche du site, lu par sync-site.cjs). Le bloc de la page
    Lieux (promo) et le lien des fiches de régions (lienFiche) sont posés par outils/lore-gen.js.
+   v7.92 : devine.js est chargé juste après le jeu (async) : la partie du jour s’affiche sans attendre la lecture du reste
+   de la page (cartes postales, règles, images, questions), plus longue depuis l’album. fetchpriority="high" : un script
+   async part en priorité basse, derrière les feuilles et les images ; c’est lui qui pose l’image de la partie (le plus
+   grand élément de l’écran), il passe donc devant.
    Usage : node outils/gen-devine.cjs   (appelé par outils/regenerer.cjs, après gen-actus.cjs) */
 const fs = require('node:fs'), path = require('node:path'), vm = require('node:vm');
 const ROOT = path.resolve(__dirname, '..');
@@ -19,6 +23,10 @@ const S = require('./sections.cjs');
 const LKX = require('./lk-sections.cjs');
 const carte = require('./carte-vignette.cjs');
 const { REGIONS } = require('./monde-cartes.cjs');
+/* v7.92 : briques communes des pages enrichies (vitrine.css, vitrine.js) et dessins des règles */
+const VT = require('./vitrine.cjs');
+const VTX = JSON.parse(fs.readFileSync(path.join(__dirname, 'vitrine.json'), 'utf8'));
+const IL = require('./devine-illus.cjs');
 const esc = S.esc;
 const SITE = 'https://www.leonidakit.com', PAGE = 'devine-le-lieu.html', DATA_FILE = 'outils/devine/devine.json';
 const SCREENS = 'https://www.rockstargames.com/VI/media/screenshots';
@@ -33,7 +41,7 @@ function load(root = ROOT) {
 function regionsOf(L) {
   return L.D.series.map(s => {
     const x = L.ED.regions.find(r => r.id === s.region), p = x ? carte.point(x.mapId || x.id) : null;
-    return { ...s, id: s.region, name: x ? x.name : null, short: x ? x.name.replace(/ National Park$/, '') : null, tagline: x ? x.tagline : '', mapId: x ? (x.mapId || x.id) : null, c: (REGIONS[s.region] || {}).c, x: p ? p.x : null, y: p ? p.y : null, images: L.D.images.filter(i => i.region === s.region) };
+    return { ...s, id: s.region, name: x ? x.name : null, short: x ? x.name.replace(/ National Park$/, '') : null, tagline: x ? x.tagline : '', facts: x ? x.facts || [] : [], mapId: x ? (x.mapId || x.id) : null, c: (REGIONS[s.region] || {}).c, x: p ? p.x : null, y: p ? p.y : null, images: L.D.images.filter(i => i.region === s.region) };
   });
 }
 const pool = L => L.D.images.map(i => ({ id: i.id, r: i.region })).sort((a, b) => (a.id < b.id ? -1 : 1));
@@ -77,7 +85,10 @@ function check(L, opts = {}) {
   if (P.desc.length > 155) err.push('description trop longue (' + P.desc.length + ' signes)');
   if (!/GTA VI/.test(P.seoTitle)) err.push('titre de référencement sans « GTA VI » (le <title> l’écrit « GTA 6 », outils/langues.cjs, titleSeo)');
   const keys = Object.keys(D.msg);
-  for (const k of ['dv-jour', 'dv-libre', 'dv-image', 'dv-points', 'dv-juste', 'dv-rate', 'dv-verdict-juste', 'dv-verdict-rate', 'dv-suivante', 'dv-voir', 'dv-fiche', 'dv-annonce', 'dv-annonce-libre', 'dv-fin', 'dv-deja', 'dv-jours-one', 'dv-jours-other', 'dv-sur', 'dv-partage-titre', 'dv-copie', 'dv-copie-ko', 'dv-partage-ok', 'dv-prochaine', 'dv-prochaine-min', 'dv-nouvelle', 'dv-libre-annonce', 'dv-sr-bonne', 'dv-sr-ta', 'dv-res-ta', 'dv-res-0', 'dv-res-1', 'dv-res-2', 'dv-res-3', 'dv-res-4', 'dv-res-5']) if (!keys.includes(k)) err.push('message absent : ' + k);
+  for (const k of ['dv-jour', 'dv-libre', 'dv-image', 'dv-points', 'dv-juste', 'dv-rate', 'dv-verdict-juste', 'dv-verdict-rate', 'dv-suivante', 'dv-voir', 'dv-fiche', 'dv-annonce', 'dv-annonce-libre', 'dv-fin', 'dv-deja', 'dv-jours-one', 'dv-jours-other', 'dv-sur', 'dv-partage-titre', 'dv-copie', 'dv-copie-ko', 'dv-partage-ok', 'dv-prochaine', 'dv-prochaine-min', 'dv-nouvelle', 'dv-libre-annonce', 'dv-sr-bonne', 'dv-sr-ta', 'dv-res-ta', 'dv-res-0', 'dv-res-1', 'dv-res-2', 'dv-res-3', 'dv-res-4', 'dv-res-5', 'dv-serie', 'dv-album', 'dv-album-reg', 'dv-album-new', 'dv-reussite', 'dv-cycle', 'dv-sem-score', 'dv-sem-vide']) if (!keys.includes(k)) err.push('message absent : ' + k);
+  /* v7.92 : fiches des régions (ce que montrent les captures : deux faits de outils/editorial.json) */
+  for (const r of R) { const f = (D.regions.faits || {})[r.region]; if (!Array.isArray(f) || !f.length || f.some(i => !Number.isInteger(i) || !r.facts[i])) err.push('regions.faits : deux faits de outils/editorial.json pour ' + r.region); }
+  if (Math.floor(D.images.length / D.parPartie) < 2) err.push('cycle des images trop court');
   /* tirages : trois ans à partir du jour n° 1 */
   if (!err.length) {
     const PL = pool(L), byId = Object.fromEntries(PL.map(x => [x.id, x.r]));
@@ -117,7 +128,7 @@ function board(L, R) {
   const SIDE = { grassrivers: ' dv-pin--g', 'port-gellhorn': ' dv-pin--b' };
   const pin = r => '<button type="button" class="dv-pin' + (SIDE[r.id] || '') + '" data-dv-pin="' + esc(r.id) + '" data-x="' + r.x + '" data-y="' + r.y + '" tabindex="-1" style="left:' + pct(r.x, carte.W) + ';top:' + pct(r.y, carte.H) + ';--c:' + r.c + '"><span class="dv-pin-dot"></span><span class="dv-pin-t" translate="no">' + esc(r.short) + '</span></button>';
   return '<div class="dv-board" data-dv-board hidden>'
-    + '<div class="dv-bar"><p class="dv-mode" data-dv-mode></p><ol class="dv-dots" data-dv-dots aria-hidden="true">' + '<li></li>'.repeat(D.parPartie) + '</ol><p class="dv-count" data-dv-count></p><p class="dv-points" data-dv-points></p>'
+    + '<div class="dv-bar"><p class="dv-mode" data-dv-mode></p><ol class="dv-dots" data-dv-dots aria-hidden="true">' + '<li></li>'.repeat(D.parPartie) + '</ol><p class="dv-count" data-dv-count></p><p class="dv-streak" data-dv-streak hidden></p><p class="dv-points" data-dv-points></p>'
     + '<button type="button" class="dv-back-btn" data-dv-back hidden>' + esc(D.resultat.retour) + '</button></div>'
     + '<div class="dv-grid"><div class="dv-play">'
     + '<div class="dv-deck" data-dv-deck data-left="' + (D.parPartie - 1) + '"><span class="dv-back dv-back--2" aria-hidden="true"></span><span class="dv-back dv-back--1" aria-hidden="true"></span><div class="dv-card" data-dv-card><p class="dv-verdict" data-dv-verdict hidden></p></div></div>'
@@ -125,6 +136,8 @@ function board(L, R) {
     + '<div class="dv-opts" role="group" aria-labelledby="dv-q">' + R.map(opt).join('') + '</div>'
     + '<div class="dv-answer" data-dv-answer hidden><p class="dv-answer-t" data-dv-answer-t></p>'
     + '<p class="dv-answer-img"><span class="dv-answer-leg" data-dv-leg></span> <span class="dv-answer-tit" data-dv-tit translate="no"></span> <a class="dv-answer-src" href="' + esc(D.source.url) + '" target="_blank" rel="noopener nofollow">' + esc(D.sources.credit) + '</a></p>'
+    /* v7.92 : la devise de la bonne région (sa fiche, plus bas) et l’entrée de l’image dans l’album */
+    + '<p class="dv-answer-tag" data-dv-answer-tag hidden></p><p class="dv-answer-new" data-dv-answer-new hidden></p>'
     + '<div class="dv-answer-act"><a class="dv-fiche-link" data-dv-fiche-link href="lieux.html">' + esc(D.regions.fiche) + '</a><button type="button" class="lkx-btn" data-dv-next></button></div></div>'
     + '</div>'
     + '<div class="dv-map" aria-hidden="true"><p class="dv-map-k">' + esc(P.carte) + '</p><div class="dv-map-box"><img class="dv-map-img" src="img/leonida-carte.svg" width="' + carte.W + '" height="' + carte.H + '" alt="" loading="lazy" decoding="async">'
@@ -132,14 +145,23 @@ function board(L, R) {
     + R.map(pin).join('') + '</div><p class="dv-map-cap">' + esc(P.carteNote) + '</p></div>'
     + '</div></div>';
 }
-function resultPanel(L) {
-  const { D } = L, X = D.resultat;
+function resultPanel(L, R) {
+  const { D } = L, X = D.resultat, per = D.parPartie;
+  const tile = (k, attr, note, cls) => '<div class="dv-stat' + (cls ? ' ' + cls : '') + '"><dt>' + esc(k) + '</dt><dd class="dv-stat-n" ' + attr + '></dd>' + (note ? '<dd class="dv-stat-d">' + esc(note) + '</dd>' : '') + '</div>';
+  const dist = []; for (let k = per; k >= 0; k--) dist.push('<li data-dv-dist="' + k + '"><span class="dv-dist-k"></span><span class="dv-dist-bar" aria-hidden="true"><i></i></span><b class="dv-dist-v"></b></li>');
+  const rs = R.map(r => '<li data-dv-rs="' + esc(r.id) + '" style="--c:' + r.c + '"><span class="dv-rs-n"><span class="dv-reg-dot" aria-hidden="true"></span><span translate="no">' + esc(r.name) + '</span></span><span class="dv-rs-bar" aria-hidden="true"><i></i></span><b class="dv-rs-v"></b><span class="dv-rs-c"></span></li>');
   return '<div class="dv-result" data-dv-result hidden tabindex="-1" aria-labelledby="dv-res-t">'
-    + '<div class="dv-res-head"><p class="dv-res-k" data-dv-res-k></p><h3 class="dv-res-t" id="dv-res-t"><span class="sr-only">' + esc(X.titre) + ' : </span><span data-dv-res-score></span></h3><p class="dv-res-msg" data-dv-res-msg></p></div>'
+    + '<div class="dv-res-top"><div class="dv-res-head"><p class="dv-res-k" data-dv-res-k></p><h3 class="dv-res-t" id="dv-res-t"><span class="sr-only">' + esc(X.titre) + ' : </span><span data-dv-res-score></span></h3>'
+    + '<ol class="dv-res-dots" data-dv-res-dots aria-hidden="true">' + '<li></li>'.repeat(per) + '</ol><p class="dv-res-msg" data-dv-res-msg></p></div>'
+    + '<dl class="dv-stats">' + tile(X.serie, 'data-dv-serie', X.serieNote, 'dv-stat--hot') + tile(X.serieMax, 'data-dv-serie-max') + tile(X.parties, 'data-dv-parties') + tile(X.reussite, 'data-dv-reussite') + tile(X.meilleur, 'data-dv-best') + tile(X.album, 'data-dv-album-n') + '</dl></div>'
     + '<ol class="dv-res-list" data-dv-res-list></ol>'
-    + '<dl class="dv-stats"><div class="dv-stat"><dt>' + esc(X.serie) + '</dt><dd class="dv-stat-n" data-dv-serie></dd><dd class="dv-stat-d">' + esc(X.serieNote) + '</dd></div><div class="dv-stat"><dt>' + esc(X.meilleur) + '</dt><dd class="dv-stat-n" data-dv-best></dd></div></dl>'
+    + '<div class="dv-res-more">'
+    + '<section class="dv-res-box dv-res-box--week" aria-labelledby="dv-week-t"><h4 id="dv-week-t">' + esc(X.semaine) + '</h4><ol class="dv-week" data-dv-week></ol></section>'
+    + '<section class="dv-res-box dv-res-box--dist" aria-labelledby="dv-dist-t"><h4 id="dv-dist-t">' + esc(X.repartition) + '</h4><ol class="dv-dist">' + dist.join('') + '</ol><p class="dv-res-note">' + esc(X.repartitionNote) + '</p></section>'
+    + '<section class="dv-res-box dv-res-box--rs" aria-labelledby="dv-rs-t"><h4 id="dv-rs-t">' + esc(X.regionsT) + '</h4><ul class="dv-rs">' + rs.join('') + '</ul><p class="dv-res-note">' + esc(X.regionsNote) + '</p></section>'
+    + '</div>'
     + '<div class="dv-share"><pre class="dv-share-txt" data-dv-share-txt></pre><div class="dv-share-act"><button type="button" class="lkx-btn" data-dv-share>' + esc(X.partage) + '</button><button type="button" class="lkx-btn lkx-btn--ghost dv-noarrow" data-dv-copy>' + esc(X.copier) + '</button></div><p class="dv-share-n">' + esc(X.partageNote) + '</p></div>'
-    + '<div class="dv-res-foot"><p class="dv-countdown" data-dv-countdown></p><button type="button" class="lkx-btn lkx-btn--night" data-dv-new hidden>' + esc(X.jouer) + '</button><button type="button" class="lkx-btn lkx-btn--ghost" data-dv-free>' + esc(X.libre) + '</button></div>'
+    + '<div class="dv-res-foot"><p class="dv-countdown" data-dv-countdown></p><a class="dv-res-album" href="#regions">' + esc(X.voirAlbum) + '</a><button type="button" class="lkx-btn lkx-btn--night" data-dv-new hidden>' + esc(X.jouer) + '</button><button type="button" class="lkx-btn lkx-btn--ghost" data-dv-free>' + esc(X.libre) + '</button></div>'
     + '</div>';
 }
 /* textes et images pour devine.js : des gabarits inertes (rien n’est chargé, rien n’est affiché), traduits avec la page */
@@ -151,29 +173,59 @@ function templates(L) {
   const list = D.images.slice().sort((x, y) => (x.id < y.id ? -1 : 1));
   return msg + '<template id="dv-pool">' + list.map(item).join('') + '</template>';
 }
+/* v7.92 : les six régions en cartes postales — la carte autour de la région (silhouette du site, repères des six
+   régions), sa devise, ce que montrent ses captures (deux faits de outils/editorial.json) et l’album du joueur : une case
+   par image de la région, le dos d’une carte tant qu’elle n’a pas été jouée dans une partie du jour (devine.js). */
+const PCW = 3400, PCH = 1700;
+function pcMap(r, R) {
+  const x0 = Math.max(0, Math.min(carte.W - PCW, Math.round(r.x - PCW / 2))), y0 = Math.max(0, Math.min(carte.H - PCH, Math.round(r.y - PCH / 2)));
+  const others = R.filter(o => o.id !== r.id && o.x >= x0 - 200 && o.x <= x0 + PCW + 200 && o.y >= y0 - 200 && o.y <= y0 + PCH + 200)
+    .map(o => '<circle class="dv-pc-o" cx="' + o.x + '" cy="' + o.y + '" r="62" style="fill:' + o.c + '"/>').join('');
+  return '<svg class="dv-pc-svg" viewBox="' + x0 + ' ' + y0 + ' ' + PCW + ' ' + PCH + '" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><use href="#lk-leonida" width="' + carte.W + '" height="' + carte.H + '"/>'
+    + others + '<circle class="dv-pc-halo" cx="' + r.x + '" cy="' + r.y + '" r="300"/><circle class="dv-pc-pin" cx="' + r.x + '" cy="' + r.y + '" r="105"/></svg>';
+}
 function regionsSection(L, R) {
-  const X = L.D.regions;
-  const card = (r, i) => '<li class="dv-reg" style="--c:' + r.c + ';--i:' + i + '">' + carte.vignette(r.mapId)
-    + '<div class="dv-reg-b"><h3 class="dv-reg-t"><span class="dv-reg-dot" aria-hidden="true"></span><a class="dv-reg-a" href="lieux/' + esc(r.id) + '.html" data-dv-fiche="' + esc(r.id) + '" translate="no">' + esc(r.name) + '</a></h3>'
-    + '<p class="dv-reg-tag">' + esc(r.tagline) + '</p><p class="dv-reg-n">' + esc(X.images.replace('{n}', r.images.length)) + '</p>'
+  const X = L.D.regions, total = L.D.images.length;
+  const slots = r => r.images.slice().sort((a, b) => (a.id < b.id ? -1 : 1)).map(im => '<li class="dv-slot" data-dv-slot="' + esc(im.id) + '"><span class="dv-slot-q" aria-hidden="true"></span></li>').join('');
+  const card = (r, i) => '<li class="dv-pc" style="--c:' + r.c + ';--i:' + i + '" data-dv-reg="' + esc(r.id) + '">'
+    + '<div class="dv-pc-map">' + pcMap(r, R) + '<span class="dv-pc-stamp vt-stamp" aria-hidden="true">' + r.images.length + '</span></div>'
+    + '<div class="dv-pc-b"><h3 class="dv-pc-t"><span class="dv-reg-dot" aria-hidden="true"></span><a class="dv-reg-a" href="lieux/' + esc(r.id) + '.html" data-dv-fiche="' + esc(r.id) + '" translate="no">' + esc(r.name) + '</a></h3>'
+    + '<p class="dv-pc-tag" data-dv-tag="' + esc(r.id) + '">' + esc(r.tagline) + '</p>'
+    + '<p class="dv-pc-k">' + esc(X.voit) + '</p><ul class="dv-pc-facts">' + X.faits[r.id].map(k => '<li>' + esc(r.facts[k]) + '</li>').join('') + '</ul>'
+    + '<div class="dv-pc-album"><p class="dv-pc-n"><span data-dv-pc-n>' + esc(X.images.replace('{n}', r.images.length)) + '</span><span class="dv-pc-ok" data-dv-pc-ok hidden></span></p>'
+    + '<ol class="dv-album" role="list">' + slots(r) + '</ol></div>'
     + '<a class="dv-reg-map" href="carte.html#lieu=' + esc(r.mapId) + '">' + ICON_PIN + '<span>' + esc(X.carte) + '</span></a></div></li>';
-  return S.section({ id: 'regions', num: 1, kicker: X.kicker, title: X.titre, icon: 'carte', tone: 'paper', lede: esc(X.lede) }, '<ul class="dv-regs" role="list">' + R.map(card).join('') + '</ul>');
+  const bar = '<div class="dv-albumbar"><p class="dv-albumbar-t" data-dv-albumbar-t>' + esc(X.aDecouvrir.replace('{n}', total)) + '</p><span class="dv-albumbar-p" aria-hidden="true"><i data-dv-albumbar-i></i></span></div>';
+  return S.section({ id: 'regions', num: 1, kicker: X.kicker, title: X.titre, icon: 'carte', tone: 'paper', lede: esc(X.lede) }, bar + '<ul class="dv-atlas vt-in vt-in--deal" data-lk-reveal role="list">' + R.map(card).join('') + '</ul>');
 }
 function rulesSection(L) {
   const X = L.D.regles;
-  return S.section({ id: 'regles', num: 2, kicker: X.kicker, title: X.titre, icon: 'boussole', tone: 'paper2', accent: 'coral' }, S.steps(X.etapes.map(e => ({ icon: e.icon, titre: e.titre, texte: e.texte }))));
+  return S.section({ id: 'regles', num: 2, kicker: X.kicker, title: X.titre, icon: 'boussole', tone: 'paper2', accent: 'coral' }, VT.steps(X.etapes.map((e, i) => ({ title: e.titre, text: e.texte, ill: IL.RULES[i] })), { cls: 'dv-steps' }));
+}
+/* le cycle des images : autant de colonnes que de jours dans un cycle, une case par image ; devine.js marque les jours
+   passés et celui d’aujourd’hui, sans jamais montrer quelle image ni quelle région vient */
+function cycleBox(L) {
+  const { D } = L, X = D.sources, total = D.images.length, per = D.parPartie, jours = Math.floor(total / per);
+  const fillN = t => t.replace(/\{total\}/g, total).replace(/\{jours\}/g, jours).replace(/\{per\}/g, per).replace(/\{max\}/g, D.parRegionMax);
+  const cols = []; for (let d = 0; d < jours; d++) cols.push('<li data-dv-cday="' + d + '" style="--i:' + d + '"><span class="dv-cycle-c">' + '<i></i>'.repeat(per) + '</span><b>' + (d + 1) + '</b></li>');
+  return '<div class="dv-cycle" data-dv-cycle><div class="dv-cycle-h"><h3 class="dv-cycle-t">' + esc(fillN(X.cycleT)) + '</h3><p class="dv-cycle-n" data-dv-cycle-n hidden></p></div>'
+    + '<p class="dv-cycle-d">' + esc(fillN(X.cycleD)) + '</p><ol class="dv-cycle-g vt-in" data-lk-reveal aria-hidden="true">' + cols.join('') + '</ol></div>';
 }
 function sourcesSection(L, R) {
-  const { D } = L, X = D.sources, s = D.source;
-  const figs = S.figures([{ n: D.images.length, label: X.total }, ...R.map(r => ({ n: r.images.length, label: r.name }))]).replace(/<span class="fig-l">([^<]*)<\/span>/g, (m, t, off) => t === X.total ? m : '<span class="fig-l" translate="no">' + t + '</span>');
+  const { D } = L, X = D.sources, s = D.source, most = Math.max(...R.map(r => r.images.length));
+  const figs = VT.figs([{ n: D.images.length, label: X.total, accent: true }, ...R.map(r => ({ n: r.images.length, label: r.name, p: r.images.length / most * 100, c: r.c, no: true }))], { cls: 'dv-figs' });
   return S.section({ id: 'images', num: 3, kicker: X.kicker, title: X.titre, icon: 'film', tone: 'night', accent: 'coral', lede: esc(X.lede) },
-    '<p class="dv-src-p">' + esc(X.p1) + '</p>' + figs + '<p class="dv-src-p">' + esc(X.p2) + '</p>'
+    '<p class="dv-src-p">' + esc(X.p1) + '</p>' + figs + cycleBox(L) + '<p class="dv-src-p">' + esc(X.p2) + '</p>'
     + S.sourceList([{ id: s.id, url: s.url, title: s.title, consultedAt: s.consultedAt, statut: s.statut, claim: s.claim }])
     + '<p class="dv-src-p"><a href="medias.html">' + esc(X.credits) + '</a></p>');
 }
 function faqSection(L) {
-  const X = L.D.faq;
-  return S.section({ id: 'faq', num: 4, kicker: X.kicker, title: X.titre, icon: 'faq', tone: 'paper' }, '<div class="faq rise">' + X.items.map(x => '<details><summary>' + esc(x.q) + '</summary><div class="ans">' + esc(x.a) + '</div></details>').join('') + '</div>');
+  const { D } = L, X = D.faq, total = D.images.length, jours = Math.floor(total / D.parPartie);
+  const fillN = t => t.replace(/\{total\}/g, total).replace(/\{jours\}/g, jours);
+  const faq = '<div class="faq">' + X.items.map(x => '<details data-lk-reveal><summary>' + esc(fillN(x.q)) + '</summary><div class="ans">' + esc(fillN(x.a)) + '</div></details>').join('') + '</div>';
+  const A = VTX.aside;
+  return S.section({ id: 'faq', num: 4, kicker: X.kicker, title: X.titre, icon: 'faq', tone: 'paper' }, VT.faqGrid(faq,
+    VT.aside({ title: A.titre, text: A.texte, asks: D.leo.suggestions.slice(0, 3), mail: { href: 'contact.html#ecrire', label: A.ecrire }, media: D.leo.media, alt: D.leo.alt })));
 }
 function explore(L) {
   const X = L.D.explorer;
@@ -197,10 +249,11 @@ function pageHtml(L, R) {
 <h2 class="sr-only" id="dv-t">${esc(P.label)}</h2>
 <div class="dv-nojs" data-dv-nojs><p>${esc(P.sansScript)}</p></div>
 ${board(L, R)}
-${resultPanel(L)}
+${resultPanel(L, R)}
 <p class="sr-only" data-dv-live aria-live="polite"></p>
 ${templates(L)}
 </section>
+<script src="devine.js" async fetchpriority="high"></script>
 <div class="ed-zone ed-zone--devine">
 ${nav}
 ${regionsSection(L, R)}
@@ -229,6 +282,7 @@ ${ld}
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="motion-tokens.css">
 <link rel="stylesheet" href="lk-sections.css">
+<link rel="stylesheet" href="vitrine.css">
 <link rel="stylesheet" href="devine.css">
 <meta property="og:image" content="${SITE}${og}">
 <meta name="twitter:card" content="summary_large_image">
@@ -249,7 +303,7 @@ ${body}
 ${C.footer}
 
 ${C.scripts}
-<script src="devine.js"></script>
+<script src="vitrine.js"></script>
 </body>
 </html>
 `;

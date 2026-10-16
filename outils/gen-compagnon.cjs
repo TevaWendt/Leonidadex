@@ -16,6 +16,8 @@
 const fs = require('node:fs'), path = require('node:path');
 const ROOT = path.resolve(__dirname, '..');
 const S = require('./sections.cjs'), V = require('./lot-c-visuals.cjs');
+const VT = require('./vitrine.cjs'), IL = require('./compagnon-illus.cjs'); /* v7.92 : briques des pages enrichies, dessins de la page */
+const VTX = JSON.parse(fs.readFileSync(path.join(ROOT, 'outils/vitrine.json'), 'utf8'));
 const esc = S.esc, SITE = 'https://www.leonidakit.com', DATA = 'outils/compagnon.json';
 
 /* pictogrammes (24 × 24, trait du site ; la classe « ac » reçoit la couleur d'accent) */
@@ -120,14 +122,25 @@ const dialogueQR = () => '<dialog class="cp-qr-dialog" data-tr-dialogue aria-lab
 function compagnonPage(ctx) {
   const { D, MED, C } = ctx, X = D.compagnon;
   const pile = V.stack(X.pile.map(x => { const m = MED[x.media]; return { src: m.variants[0].src, big: (m.variants.find(v => v.w === 1280) || m.variants[0]).src, alt: x.alt, caption: x.caption }; }), { label: X.pileLabel });
-  const tuiles = '<div class="cp-tuiles">' + X.tuiles.liste.map((t, i) => '<a class="cp-tuile" href="' + esc(t.href) + '"' + (t.leo ? ' data-cp-leo' : '') + ' data-lk-reveal data-delay="' + (i * 50) + '">'
-    + '<span class="cp-tuile-ico">' + ico(t.icone) + '</span><span class="cp-tuile-t">' + esc(t.titre) + '</span><span class="cp-tuile-d">' + esc(t.texte) + '</span><span class="cp-tuile-go" aria-hidden="true">→</span></a>').join('') + '</div>';
+  /* v7.92 : moment de la page — la scène « console et téléphone » : la télévision montre le jeu (visuel officiel), le
+     téléphone l'outil dont parle l'étape lue ; l'écran change au défilement (compagnon.js), sans script ou en « réduire les
+     animations » chaque étape montre son propre écran. Les dessins n'ont aucun mot (outils/compagnon-illus.cjs). */
+  /* la télévision : visuel officiel des briques (800 px au plus au téléphone), décoratif (la scène est aria-hidden) */
+  const scene = '<div class="cp-scene" aria-hidden="true"><div class="cp-tv"><div class="cp-tv-screen">' + VT.img(X.tuiles.tele.media, '', { sizes: '(max-width:899px) 80vw, 520px' }) + '</div><span class="cp-tv-foot"></span></div>'
+    + '<div class="cp-console"><span></span></div>'
+    + '<div class="cp-phone"><div class="cp-phone-in">' + X.tuiles.liste.map((t, i) => '<div class="cp-scr' + (i ? '' : ' is-on') + '" data-cp-scr="' + esc(t.ecran) + '">' + IL.SCREENS[t.ecran] + '</div>').join('') + '</div></div></div>';
+  const story = '<div class="cp-story-wrap" data-cp-story><div class="cp-story-stage">' + scene + '</div><ol class="cp-story">' + X.tuiles.liste.map((t, i) => '<li class="cp-story-i' + (i ? '' : ' is-on') + '" data-cp-step="' + esc(t.ecran) + '">'
+    + '<div class="cp-story-mini" aria-hidden="true"><div class="cp-phone cp-phone--mini"><div class="cp-phone-in"><div class="cp-scr is-on">' + IL.SCREENS[t.ecran] + '</div></div></div></div>'
+    + '<div class="cp-story-b"><p class="cp-story-k"><span class="cp-story-ico">' + ico(t.icone) + '</span><span class="cp-story-n">' + String(i + 1).padStart(2, '0') + '</span></p><h3 class="cp-story-t">' + esc(t.titre) + '</h3><p class="cp-story-d">' + esc(t.texte) + '</p>'
+    + '<ul class="cp-story-p">' + t.points.map(x => '<li>' + esc(x) + '</li>').join('') + '</ul>'
+    + '<a class="cp-btn" href="' + esc(t.href) + '"' + (t.leo ? ' data-cp-leo' : '') + '>' + esc(t.ouvrir) + '</a></div></li>').join('') + '</ol></div>';
   const R = X.reseau, I = X.installer, T = X.transfert;
   const reseau = `<div class="cp-etat" data-cp-etat="s-inconnu">
   <span class="cp-etat-ico" aria-hidden="true">${ico('reseau', 'cp-etat-svg')}</span>
   <div class="cp-etat-txt" aria-live="polite"><p class="cp-etat-t" data-cp-etat-titre>${esc(R.sansScript)}</p><p class="cp-etat-d" data-cp-etat-detail></p></div>
 </div>
-<p class="cp-txt">${esc(R.contenu)}</p>
+<h3 class="cp-h3 cp-prep-t">${esc(R.preparesTitre)}</h3>
+<ul class="cp-prep vt-in" data-lk-reveal>${R.prepares.map((x, i) => '<li style="--i:' + i + '"><span class="cp-prep-ico">' + S.icon(x.ico) + '</span>' + esc(x.label) + '</li>').join('')}</ul>
 <p class="cp-row" data-cp-js hidden><button type="button" class="cp-btn" data-cp-preparer>${esc(R.bouton)}</button></p>
 <div class="cp-progres" data-cp-progres hidden><progress max="100" value="0" aria-label="${esc(R.bouton)}"></progress><span class="cp-progres-txt" data-cp-progres-txt></span></div>
 <details class="cp-plus"><summary>${esc(R.plus)}</summary><div class="cp-plus-in">${R.detail.map(x => '<p>' + esc(x) + '</p>').join('')}</div></details>`;
@@ -136,7 +149,7 @@ function compagnonPage(ctx) {
   <h3 class="cp-h3">${ico('installer', 'cp-h3-ico')}${esc(I.comment)}</h3>
   <p class="cp-install-etat" data-cp-install-etat aria-live="polite"></p>
   <p class="cp-row" data-cp-installer-ligne hidden><button type="button" class="cp-btn" data-cp-installer>${esc(I.bouton)}</button></p>
-  <ul class="cp-plateformes"><li data-cp-pf="pf-ios">${esc(I.iphone)}</li><li data-cp-pf="pf-android">${esc(I.android)}</li><li data-cp-pf="pf-pc">${esc(I.ordinateur)}</li></ul>
+  <ul class="cp-plateformes cp-pfs vt-in" data-lk-reveal>${[['pf-ios', 'ios', I.iphone], ['pf-android', 'android', I.android], ['pf-pc', 'pc', I.ordinateur]].map(([id, k, txt], i) => '<li data-cp-pf="' + id + '" style="--i:' + i + '"><span class="cp-pf-ill" aria-hidden="true">' + IL.INSTALL[k] + '</span><b class="cp-pf-t">' + esc(I.plateformes[k]) + '</b><span class="cp-pf-d">' + esc(txt) + '</span></li>').join('')}</ul>
 </div>
 <div class="cp-bloc cp-ecran" data-cp-ecran data-lk-reveal data-delay="60" hidden>
   <h3 class="cp-h3"><svg class="cp-h3-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle class="ac" cx="12" cy="12" r="4"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></svg>${esc(I.ecranTitre)}</h3>
@@ -146,7 +159,8 @@ function compagnonPage(ctx) {
   <p class="cp-note">${esc(I.ecranNote)}</p>
 </div>
 </div>`;
-  const transfert = `<div class="cp-duo">
+  const schema = '<figure class="cp-schema lk-reveal">' + IL.TRANSFERT + '<figcaption class="cp-schema-l"><span>' + esc(T.schema.de) + '</span><span>' + esc(T.schema.via) + '</span><span>' + esc(T.schema.vers) + '</span></figcaption><p class="cp-schema-n">' + esc(T.schema.note) + '</p></figure>';
+  const transfert = schema + `<div class="cp-duo">
 <div class="cp-bloc" data-lk-reveal>${blocEnvoi(T)}</div>
 <div class="cp-bloc" data-lk-reveal data-delay="60">
   <h3 class="cp-h3">${esc(T.fichierTitre)}</h3>
@@ -168,7 +182,8 @@ function compagnonPage(ctx) {
   <p class="cp-row" data-tr-suite hidden><a class="cp-btn cp-btn--ghost" href="progression.html">Voir ma progression</a></p>
 </div>
 </section>`;
-  const faq = '<div class="faq">' + X.faq.map(x => '<details data-lk-reveal><summary>' + esc(x.q) + '</summary><div class="ans">' + esc(x.a) + '</div></details>').join('') + '</div>';
+  const faq = VT.faqGrid('<div class="faq">' + X.faq.map(x => '<details data-lk-reveal><summary>' + esc(x.q) + '</summary><div class="ans">' + esc(x.a) + '</div></details>').join('') + '</div>',
+    VT.aside({ title: VTX.aside.titre, text: VTX.aside.texte, asks: X.leo, mail: { href: 'contact.html#ecrire', label: VTX.aside.ecrire }, media: 'vice-city-03', alt: 'Vue aérienne de Vice City, visuel officiel Rockstar Games' }));
   const body = `<section class="page-head shell lk-glow"><div class="lk-head-grid"><div>
   <p class="fiche-cat">${esc(X.kicker)}</p>
   <h1>${esc(X.h1)}</h1>
@@ -179,7 +194,7 @@ function compagnonPage(ctx) {
 ${reception}
 <div class="ed-zone ed-zone--compagnon">
 ${S.nav(X.nav, X.navLabel)}
-${S.section({ id: X.tuiles.id, num: 1, kicker: X.tuiles.kicker, title: X.tuiles.titre, icon: 'boussole', tone: 'paper', lede: esc(X.tuiles.lede) }, tuiles)}
+${S.section({ id: X.tuiles.id, num: 1, kicker: X.tuiles.kicker, title: X.tuiles.titre, icon: 'boussole', tone: 'paper', lede: esc(X.tuiles.lede), cls: 'cp-sec-story' }, story)}
 ${sec({ id: R.id, num: 2, kicker: R.kicker, title: R.titre, tone: 'paper2', accent: 'coral', lede: esc(R.lede) }, reseau, 'reseau')}
 ${sec({ id: I.id, num: 3, kicker: I.kicker, title: I.titre, tone: 'night', lede: esc(I.lede) }, installer, 'installer')}
 ${sec({ id: T.id, num: 4, kicker: T.kicker, title: T.titre, tone: 'paper2', accent: 'coral', lede: esc(T.lede) }, transfert, 'transfert')}
@@ -188,7 +203,7 @@ ${S.section({ id: 'faq', num: 5, kicker: 'Questions fréquentes', title: 'Tes qu
 ${dialogueQR()}`;
   const ld = '<script type="application/ld+json">' + JSON.stringify({ '@context': 'https://schema.org', '@type': 'WebPage', name: X.h1, description: metaDesc(X.desc), url: SITE + '/compagnon.html', inLanguage: 'fr', isPartOf: { '@type': 'WebSite', name: 'Leonidakit', url: SITE + '/' } }) + '</script>';
   const og = MED[X.pile[0].media].variants.find(v => v.w === 1280) || MED[X.pile[0].media].variants[0];
-  return page(C, { p: '', title: X.seoTitle + ' | Leonidakit', desc: X.desc, canonical: '/compagnon.html', ogImg: og.src, body, crumbs: [['Accueil', '/'], [X.label, '/compagnon.html']], ld, css: ['compagnon.css'], lazy: ['progression-data.js', 'acquisitions-data.js', 'collectibles-data.js', 'progression-core.js', 'vendor/qrcode-generator.js'], js: ['compagnon.js', 'transfert.js'], cls: 'cp-page' });
+  return page(C, { p: '', title: X.seoTitle + ' | Leonidakit', desc: X.desc, canonical: '/compagnon.html', ogImg: og.src, body, crumbs: [['Accueil', '/'], [X.label, '/compagnon.html']], ld, css: ['compagnon.css', 'vitrine.css'], lazy: ['progression-data.js', 'acquisitions-data.js', 'collectibles-data.js', 'progression-core.js', 'vendor/qrcode-generator.js'], js: ['compagnon.js', 'transfert.js', 'vitrine.js'], cls: 'cp-page' });
 }
 
 /* ---------- hors-ligne.html ---------- */

@@ -9,36 +9,128 @@
   "lede": "Pendant que tu joues, garde Leonidakit ouvert sur ton téléphone, à côté de la console : la carte, tes carnets, le calculateur et Léo, même sans réseau.",
   "note": "Aucun compte, rien à créer : tout reste sur ton appareil.",
   "actions": [
-   { "href": "#sans-reseau", "label": "Préparer sans réseau" },
-   { "href": "#installer", "label": "Installer l'appli" },
-   { "href": "#changer-d-appareil", "label": "Changer d'appareil" }
+   {
+    "href": "#sans-reseau",
+    "label": "Préparer sans réseau"
+   },
+   {
+    "href": "#installer",
+    "label": "Installer l'appli"
+   },
+   {
+    "href": "#changer-d-appareil",
+    "label": "Changer d'appareil"
+   }
   ],
   "pileLabel": "Trois visuels officiels de GTA VI",
   "pile": [
-   { "media": "real-dimez-02", "caption": "Real Dimez", "alt": "Real Dimez et ses danseuses sur le capot d'une voiture, au milieu d'une foule qui filme au téléphone, visuel officiel Rockstar Games" },
-   { "media": "vice-city-03", "caption": "Vice City", "alt": "Vue aérienne de Vice City, visuel officiel Rockstar Games" },
-   { "media": "classic-car-collection-01", "caption": "Collection de voitures", "alt": "Homme devant des voitures classiques dans une casse, visuel officiel Rockstar Games" }
+   {
+    "media": "real-dimez-02",
+    "caption": "Real Dimez",
+    "alt": "Real Dimez et ses danseuses sur le capot d'une voiture, au milieu d'une foule qui filme au téléphone, visuel officiel Rockstar Games"
+   },
+   {
+    "media": "vice-city-03",
+    "caption": "Vice City",
+    "alt": "Vue aérienne de Vice City, visuel officiel Rockstar Games"
+   },
+   {
+    "media": "classic-car-collection-01",
+    "caption": "Collection de voitures",
+    "alt": "Homme devant des voitures classiques dans une casse, visuel officiel Rockstar Games"
+   }
   ],
   "nav": [
-   { "href": "#outils", "label": "Tes outils" },
-   { "href": "#sans-reseau", "label": "Sans réseau" },
-   { "href": "#installer", "label": "Installer" },
-   { "href": "#changer-d-appareil", "label": "Changer d'appareil" },
-   { "href": "#faq", "label": "Questions" }
+   {
+    "href": "#outils",
+    "label": "Tes outils"
+   },
+   {
+    "href": "#sans-reseau",
+    "label": "Sans réseau"
+   },
+   {
+    "href": "#installer",
+    "label": "Installer"
+   },
+   {
+    "href": "#changer-d-appareil",
+    "label": "Changer d'appareil"
+   },
+   {
+    "href": "#faq",
+    "label": "Questions"
+   }
   ],
   "navLabel": "Sections de la page Mode compagnon",
   "tuiles": {
-   "id": "outils", "kicker": "À portée de main", "titre": "Tes quatre outils de jeu",
+   "id": "outils",
+   "kicker": "À portée de main",
+   "titre": "Tes quatre outils de jeu",
    "lede": "Un appui et tu y es : chacun garde ce que tu as fait, sur cet appareil.",
    "liste": [
-    { "icone": "carte", "href": "carte.html", "titre": "La carte", "texte": "Les lieux de Leonida, tes repères et tes tracés." },
-    { "icone": "carnets", "href": "progression.html#carnets", "titre": "Mes carnets", "texte": "Ce que tu as obtenu, coché au fil du jeu." },
-    { "icone": "calcul", "href": "calculateurs.html", "titre": "Le calculateur", "texte": "Combien de temps pour ton prochain achat ?" },
-    { "icone": "leo", "href": "a-propos.html#ce-que-le-site-fait", "titre": "Léo", "texte": "Pose ta question sur le jeu ou sur le site.", "leo": true }
-   ]
+    {
+     "icone": "carte",
+     "href": "carte.html",
+     "titre": "La carte",
+     "texte": "Les lieux de Leonida, tes repères et tes tracés.",
+     "ecran": "carte",
+     "ouvrir": "Ouvrir la carte",
+     "points": [
+      "Va à un lieu en tapant son nom",
+      "Distance et temps de trajet entre deux points",
+      "Tes repères et tes tracés restent sur ton appareil"
+     ]
+    },
+    {
+     "icone": "carnets",
+     "href": "progression.html#carnets",
+     "titre": "Mes carnets",
+     "texte": "Ce que tu as obtenu, coché au fil du jeu.",
+     "ecran": "carnets",
+     "ouvrir": "Ouvrir mes carnets",
+     "points": [
+      "Coche ce que tu obtiens, au fil du jeu",
+      "Tout reste sur cet appareil, sans compte",
+      "Passe-le sur un autre appareil avec un lien"
+     ]
+    },
+    {
+     "icone": "calcul",
+     "href": "calculateurs.html",
+     "titre": "Le calculateur",
+     "texte": "Combien de temps pour ton prochain achat ?",
+     "ecran": "calculateur",
+     "ouvrir": "Ouvrir le calculateur",
+     "points": [
+      "Écris ton objectif comme tu le dirais",
+      "Huit calculs et un business plan, mission par mission",
+      "Tes calculs gardés pour la prochaine partie"
+     ]
+    },
+    {
+     "icone": "leo",
+     "href": "a-propos.html#ce-que-le-site-fait",
+     "titre": "Léo",
+     "texte": "Pose ta question sur le jeu ou sur le site.",
+     "leo": true,
+     "ecran": "leo",
+     "ouvrir": "Demander à Léo",
+     "points": [
+      "Pose ta question dans ta langue",
+      "Ses réponses locales marchent sans réseau",
+      "Il te mène à la fiche qui répond"
+     ]
+    }
+   ],
+   "tele": {
+    "media": "jason-and-lucia-09"
+   }
   },
   "reseau": {
-   "id": "sans-reseau", "kicker": "Quand le réseau tombe", "titre": "Prêt à jouer sans réseau",
+   "id": "sans-reseau",
+   "kicker": "Quand le réseau tombe",
+   "titre": "Prêt à jouer sans réseau",
    "lede": "Le site garde les pages que tu ouvres. Pour avoir aussi la carte, tes carnets, le calculateur et Léo quand le réseau tombe, prépare-les une fois.",
    "contenu": "Ce qui est préparé : l'accueil, la carte, le calculateur, ta progression et tes carnets, Léo (ses réponses locales) et cette page.",
    "bouton": "Préparer pour jouer sans réseau",
@@ -48,10 +140,39 @@
     "Un petit script du site, appelé service worker, garde sur ton appareil des copies des pages et des fichiers du site. Quand le réseau répond, tu as la dernière version ; quand il ne répond pas, la copie prend le relais.",
     "Les copies se mettent à jour quand le site change, la prochaine fois que tu l'ouvres avec du réseau. Ce qui demande Internet (vidéos, IA de Léo, formulaire de contact) attend le retour du réseau.",
     "Ces copies ne contiennent rien sur toi. Pour les effacer : les réglages de ton navigateur, données du site."
+   ],
+   "preparesTitre": "Ce qui est préparé",
+   "prepares": [
+    {
+     "ico": "ouvert",
+     "label": "L’accueil"
+    },
+    {
+     "ico": "carte",
+     "label": "La carte"
+    },
+    {
+     "ico": "calcul",
+     "label": "Le calculateur"
+    },
+    {
+     "ico": "liste",
+     "label": "Ta progression et tes carnets"
+    },
+    {
+     "ico": "faq",
+     "label": "Léo, ses réponses locales"
+    },
+    {
+     "ico": "boussole",
+     "label": "Cette page"
+    }
    ]
   },
   "installer": {
-   "id": "installer", "kicker": "Sur ton écran d'accueil", "titre": "Installer l'appli",
+   "id": "installer",
+   "kicker": "Sur ton écran d'accueil",
+   "titre": "Installer l'appli",
    "lede": "Une fois installé, Leonidakit s'ouvre comme une appli : en plein écran, sans la barre du navigateur, avec des raccourcis vers la carte, le calculateur et ta progression.",
    "bouton": "Installer l'appli",
    "comment": "Comment l'installer",
@@ -61,10 +182,17 @@
    "ecranTitre": "En pleine partie",
    "ecranLede": "Pratique pour suivre la carte pendant une mission : tant qu'une page du site est à l'écran, ton téléphone ne se met pas en veille.",
    "ecranBouton": "Garder l'écran allumé",
-   "ecranNote": "Ton choix est gardé sur cet appareil. L'écran peut de nouveau se mettre en veille dès que tu quittes le site ou que tu changes d'appli."
+   "ecranNote": "Ton choix est gardé sur cet appareil. L'écran peut de nouveau se mettre en veille dès que tu quittes le site ou que tu changes d'appli.",
+   "plateformes": {
+    "ios": "iPhone et iPad",
+    "android": "Android",
+    "pc": "Ordinateur"
+   }
   },
   "transfert": {
-   "id": "changer-d-appareil", "kicker": "Ton suivi te suit", "titre": "Changer d'appareil",
+   "id": "changer-d-appareil",
+   "kicker": "Ton suivi te suit",
+   "titre": "Changer d'appareil",
    "lede": "Tes cases cochées, tes calculs et tes plans restent sur cet appareil, sans compte. Pour les retrouver sur un autre : un lien, un QR code ou un fichier. Rien ne passe par le site.",
    "envoyerTitre": "Envoyer ton suivi",
    "envoyerTexte": "Crée le lien sur cet appareil, puis ouvre-le sur l'autre : scanne le QR code, ou envoie-toi le lien.",
@@ -79,14 +207,40 @@
     "Le lien porte ton suivi, compressé, après le signe # de l'adresse : ton navigateur n'envoie jamais cette partie au serveur. Le QR code est dessiné dans la page.",
     "Sur l'autre appareil, la page te montre ce qui arrive avant de l'enregistrer : tu choisis de fusionner, de remplacer ou d'annuler. Puis l'adresse est nettoyée."
    ],
-   "receptionTitre": "Un suivi arrive sur cet appareil"
+   "receptionTitre": "Un suivi arrive sur cet appareil",
+   "schema": {
+    "de": "Cet appareil",
+    "via": "Un lien ou un QR code",
+    "vers": "L’autre appareil",
+    "note": "Rien ne passe par le site."
+   }
   },
   "faq": [
-   { "q": "Le site marche-t-il vraiment sans réseau ?", "a": "Oui, pour les pages déjà ouvertes sur cet appareil et pour ce que tu as préparé : la carte, tes carnets, le calculateur, ta progression et Léo dans ses réponses locales. Ce qui demande Internet (vidéos, IA de Léo, formulaire de contact) attend le retour du réseau." },
-   { "q": "Mes données passent-elles par un serveur ?", "a": "Non. Ton suivi reste dans ton navigateur. Le lien de transfert garde tes données après le signe # de l'adresse, une partie que le navigateur n'envoie jamais au serveur, et le QR code est fabriqué dans la page. C'est toi qui choisis comment le faire passer d'un appareil à l'autre." },
-   { "q": "Comment installer Leonidakit sur iPhone ?", "a": "Ouvre le site dans Safari, touche le bouton Partager, puis « Sur l'écran d'accueil ». L'icône Leonidakit apparaît avec tes autres applis." },
-   { "q": "Que garde mon téléphone, et comment l'effacer ?", "a": "Des copies des pages et des fichiers du site, rien sur toi ; elles se mettent à jour quand le site change. Pour tout effacer : les réglages de ton navigateur, données du site Leonidakit." },
-   { "q": "Ma progression est trop grosse pour un QR code : je fais comment ?", "a": "Envoie-toi le lien, ou passe par le fichier : « Exporter mon suivi » sur cet appareil, puis « Importer un fichier » sur l'autre." }
+   {
+    "q": "Le site marche-t-il vraiment sans réseau ?",
+    "a": "Oui, pour les pages déjà ouvertes sur cet appareil et pour ce que tu as préparé : la carte, tes carnets, le calculateur, ta progression et Léo dans ses réponses locales. Ce qui demande Internet (vidéos, IA de Léo, formulaire de contact) attend le retour du réseau."
+   },
+   {
+    "q": "Mes données passent-elles par un serveur ?",
+    "a": "Non. Ton suivi reste dans ton navigateur. Le lien de transfert garde tes données après le signe # de l'adresse, une partie que le navigateur n'envoie jamais au serveur, et le QR code est fabriqué dans la page. C'est toi qui choisis comment le faire passer d'un appareil à l'autre."
+   },
+   {
+    "q": "Comment installer Leonidakit sur iPhone ?",
+    "a": "Ouvre le site dans Safari, touche le bouton Partager, puis « Sur l'écran d'accueil ». L'icône Leonidakit apparaît avec tes autres applis."
+   },
+   {
+    "q": "Que garde mon téléphone, et comment l'effacer ?",
+    "a": "Des copies des pages et des fichiers du site, rien sur toi ; elles se mettent à jour quand le site change. Pour tout effacer : les réglages de ton navigateur, données du site Leonidakit."
+   },
+   {
+    "q": "Ma progression est trop grosse pour un QR code : je fais comment ?",
+    "a": "Envoie-toi le lien, ou passe par le fichier : « Exporter mon suivi » sur cet appareil, puis « Importer un fichier » sur l'autre."
+   }
+  ],
+  "leo": [
+   "C’est quoi le mode compagnon ?",
+   "Le site marche-t-il sans réseau ?",
+   "Comment installer Leonidakit sur iPhone ?"
   ]
  },
  "horsLigne": {
@@ -102,10 +256,22 @@
   "lien": "Ouvrir le Mode compagnon",
   "sansScript": "Essaie ces pages, souvent gardées sur l'appareil :",
   "secours": [
-   { "href": "carte.html", "label": "La carte" },
-   { "href": "progression.html", "label": "Ma progression" },
-   { "href": "calculateurs.html", "label": "Le calculateur" },
-   { "href": "compagnon.html", "label": "Mode compagnon" }
+   {
+    "href": "carte.html",
+    "label": "La carte"
+   },
+   {
+    "href": "progression.html",
+    "label": "Ma progression"
+   },
+   {
+    "href": "calculateurs.html",
+    "label": "Le calculateur"
+   },
+   {
+    "href": "compagnon.html",
+    "label": "Mode compagnon"
+   }
   ]
  }
 }

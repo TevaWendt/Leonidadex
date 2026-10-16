@@ -448,56 +448,80 @@
           "d": "GTA VI sort le jeudi 19 novembre 2026 sur PlayStation 5 et Xbox Series X|S. Rockstar a annoncé cette date le 6 novembre 2025, au deuxième report du jeu.",
           "href": "index.html",
           "label": "Le compte à rebours",
-          "src": "https://www.rockstargames.com/newswire/article/ak3ak31a49a221/grand-theft-auto-vi-is-now-set-to-launch-november-19-2026"
+          "src": "https://www.rockstargames.com/newswire/article/ak3ak31a49a221/grand-theft-auto-vi-is-now-set-to-launch-november-19-2026",
+          "media": "jason-and-lucia-09",
+          "alt": "Jason et Lucia à moto, Lucia tirant au pistolet, poursuivis par une voiture de police, visuel officiel Rockstar Games",
+          "ico": "horloge"
         },
         {
           "t": "Précommandes et éditions",
           "d": "Les précommandes sont ouvertes depuis le 25 juin 2026. Deux éditions : Standard et Ultimate ; l’Ultimate ajoute seize contenus, dont la Grotti Cheetah ’95, les revolvers Hawk & Little Morgan et la Classic Car Collection.",
           "href": "editions.html",
           "label": "Ce que contiennent les éditions",
-          "src": "https://support.rockstargames.com/articles/4QfG4FmZCf5W1gS8jy4UVT/grand-theft-auto-vi-platform-editions-and-versions"
+          "src": "https://support.rockstargames.com/articles/4QfG4FmZCf5W1gS8jy4UVT/grand-theft-auto-vi-platform-editions-and-versions",
+          "media": "ultimate-edition-02",
+          "alt": "Jason et Lucia devant le coupé vert rapproché d’un Kellison J4 dans le visuel Ultimate Edition",
+          "ico": "achats"
         },
         {
           "t": "Bonus de précommande",
           "d": "Avant le 20 novembre 2026, une précommande ou un achat numérique donne aussi le pack Vintage Vice City (la Vapid Stanier ’55 et son garage, des tenues et coiffures, un motif d’arme) et un mois de GTA+ ; la précommande en boîte donne le pack.",
           "href": "vehicules/vapid-stanier.html",
           "label": "La Stanier ’55",
-          "src": "https://support.rockstargames.com/articles/4QfG4FmZCf5W1gS8jy4UVT/grand-theft-auto-vi-platform-editions-and-versions"
+          "src": "https://support.rockstargames.com/articles/4QfG4FmZCf5W1gS8jy4UVT/grand-theft-auto-vi-platform-editions-and-versions",
+          "media": "vintage-vice-city-pack-01",
+          "alt": "Jason et Lucia, pistolet en main, devant l’Ocean View Hotel et la Vapid Stanier ’55, capture officielle du Pack Vintage Vice City",
+          "ico": "etiquette"
         },
         {
           "t": "La version en boîte",
           "d": "La boîte contient un code de téléchargement, pas de disque. Elle arrive en magasin dès le 12 novembre 2026, jour où commence le préchargement. L’Édition Ultimate n’existe pas en boîte.",
           "href": "editions.html#boite",
           "label": "La version en boîte",
-          "src": "https://support.rockstargames.com/articles/4QfG4FmZCf5W1gS8jy4UVT/grand-theft-auto-vi-platform-editions-and-versions"
+          "src": "https://support.rockstargames.com/articles/4QfG4FmZCf5W1gS8jy4UVT/grand-theft-auto-vi-platform-editions-and-versions",
+          "media": "cover-art-officielle",
+          "alt": "La jaquette officielle de GTA VI : Jason et Lucia au centre, entourés de Boobie, de Raul, d’un alligator et de scènes de Leonida, illustration officielle",
+          "ico": "kit"
         },
         {
           "t": "Les personnages",
           "d": "Lucia Caminos et Jason Duval sont les deux héros. Rockstar a aussi présenté Cal Hampton, Boobie Ike, Dre’Quan Priest, Real Dimez, Raul Bautista et Brian Heder.",
           "href": "personnages.html",
           "label": "Les personnages",
-          "src": "https://www.rockstargames.com/VI"
+          "src": "https://www.rockstargames.com/VI",
+          "media": "lucia-caminos-01",
+          "alt": "Lucia, gants aux poings, frappe un sac de boxe dans une salle de sport, capture officielle Rockstar Games",
+          "ico": "nommes"
         },
         {
           "t": "Leonida",
           "d": "L’histoire se passe dans l’État de Leonida, inspiré de la Floride : Vice City, les Leonida Keys, Grassrivers, Port Gellhorn, Ambrosia et le Mount Kalaga National Park.",
           "href": "lieux.html",
           "label": "Les régions",
-          "src": "https://www.rockstargames.com/VI"
+          "src": "https://www.rockstargames.com/VI",
+          "media": "vice-city-01",
+          "alt": "Les grandes lettres de Vice City au coucher du soleil, un avion dans le ciel, visuel officiel Rockstar Games",
+          "ico": "carte"
         },
         {
           "t": "Les vidéos",
           "d": "Trois vidéos officielles : le Trailer 1 (4 décembre 2023), le Trailer 2 (6 mai 2025) et An Extended Look (27 août 2026), entièrement capturé en jeu sur PlayStation 5.",
           "href": "videos.html",
           "label": "Les vidéos officielles",
-          "src": "https://www.rockstargames.com/VI/media/videos"
+          "src": "https://www.rockstargames.com/VI/media/videos",
+          "media": "affiche-extended-look",
+          "alt": "Affiche officielle d’An Extended Look, la présentation du 27 août 2026",
+          "ico": "film"
         },
         {
           "t": "La musique",
           "d": "Six stations de radio présentées le 8 octobre 2026, avec leurs animateurs, des podcasts à la demande et une radio qu’on écoute aussi à pied. L’album officiel, 34 titres originaux, sort le 19 novembre 2026.",
           "href": "radios.html",
           "label": "Radios et musique",
-          "src": "https://www.rockstargames.com/newswire/article/o3982oa93a23k4/the-music-of-grand-theft-auto-vi-in-game-radio-stations"
+          "src": "https://www.rockstargames.com/newswire/article/o3982oa93a23k4/the-music-of-grand-theft-auto-vi-in-game-radio-stations",
+          "media": "real-dimez-02",
+          "alt": "Real Dimez et ses danseuses sur le capot d’une voiture, au milieu d’une foule qui filme au téléphone, visuel officiel Rockstar Games",
+          "ico": "note"
         }
       ],
       "statsLede": "Dans la base du site, aujourd’hui :",
@@ -527,35 +551,43 @@
       "items": [
         {
           "t": "Une version PC",
-          "d": "Aucune annonce, aucune date. Pour GTA V, la version PC était arrivée un an et demi après les consoles."
+          "d": "Aucune annonce, aucune date. Pour GTA V, la version PC était arrivée un an et demi après les consoles.",
+          "ico": "navigateur"
         },
         {
           "t": "L’heure de déblocage",
-          "d": "Rockstar ne l’a pas annoncée. Le PlayStation Store indique minuit, heure locale, dans la nuit du 18 au 19 novembre : vérifie l’heure sur ta boutique juste avant la sortie."
+          "d": "Rockstar ne l’a pas annoncée. Le PlayStation Store indique minuit, heure locale, dans la nuit du 18 au 19 novembre : vérifie l’heure sur ta boutique juste avant la sortie.",
+          "ico": "horloge"
         },
         {
           "t": "Le poids du jeu",
-          "d": "Non communiqué. Il sera connu au plus tard à l’ouverture du préchargement, le 12 novembre 2026."
+          "d": "Non communiqué. Il sera connu au plus tard à l’ouverture du préchargement, le 12 novembre 2026.",
+          "ico": "serveur"
         },
         {
           "t": "GTA Online sur GTA VI",
-          "d": "Rien d’annoncé, pas même une date : le jeu est présenté comme une expérience solo."
+          "d": "Rien d’annoncé, pas même une date : le jeu est présenté comme une expérience solo.",
+          "ico": "passants"
         },
         {
           "t": "Les prix en jeu",
-          "d": "Aucun prix de véhicule, d’arme, de logement ou de vêtement n’est publié pour GTA VI. Ceux du site sont des repères de GTA V et de GTA Online, toujours signalés comme tels."
+          "d": "Aucun prix de véhicule, d’arme, de logement ou de vêtement n’est publié pour GTA VI. Ceux du site sont des repères de GTA V et de GTA Online, toujours signalés comme tels.",
+          "ico": "argent"
         },
         {
           "t": "La surface de la carte",
-          "d": "Aucun chiffre. Fin août 2026, Rockstar a dit à la presse que la carte fait environ deux fois celle de GTA V et trois fois la zone jouable de Red Dead Redemption 2."
+          "d": "Aucun chiffre. Fin août 2026, Rockstar a dit à la presse que la carte fait environ deux fois celle de GTA V et trois fois la zone jouable de Red Dead Redemption 2.",
+          "ico": "carte"
         },
         {
           "t": "La durée de vie",
-          "d": "Aucune durée officielle. Rob Nelson, de Rockstar North, dit avoir fini sa partie en 80 heures environ, histoire et une partie des objectifs facultatifs compris."
+          "d": "Aucune durée officielle. Rob Nelson, de Rockstar North, dit avoir fini sa partie en 80 heures environ, histoire et une partie des objectifs facultatifs compris.",
+          "ico": "sablier"
         },
         {
           "t": "Les codes de triche",
-          "d": "Rien d’annoncé : les listes « GTA 6 » qui circulent ne sont pas officielles."
+          "d": "Rien d’annoncé : les listes « GTA 6 » qui circulent ne sont pas officielles.",
+          "ico": "loupe"
         }
       ]
     },
@@ -608,7 +640,25 @@
         "À partir du 19 novembre 2026, les relevés faits en jeu sont les bienvenus : un prix, un emplacement, une statistique, avec une capture ou une vidéo. Ils rejoignent les fiches une fois vérifiés, avec leur date."
       ],
       "label": "Écrire à Leonidakit"
-    }
+    },
+    "tableau": {
+      "kicker": "D’un coup d’œil",
+      "title": "Le tableau de bord",
+      "lede": "Ce que Rockstar a confirmé, et ce qu’il n’a pas encore dit, au 12 octobre 2026. Un clic mène au détail.",
+      "confirme": "Confirmé",
+      "attente": "Pas encore annoncé",
+      "nConfirme": "points confirmés",
+      "nAttente": "questions sans réponse officielle"
+    },
+    "echelle": {
+      "plusSur": "Le plus sûr",
+      "attente": "En attente du jeu"
+    },
+    "leo": [
+      "Quand sort GTA 6 ?",
+      "Y aura-t-il une version PC de GTA 6 ?",
+      "Quelle est la taille de la carte de GTA 6 ?"
+    ]
   },
   "presse": {
     "title": "Presse et créateurs : parler de Leonidakit",
@@ -788,6 +838,80 @@
       ],
       "label": "Écrire à l’éditeur",
       "href": "contact.html#motif=Presse%20ou%20partenariat"
-    }
+    },
+    "identite": {
+      "kicker": "Identité visuelle",
+      "title": "Les couleurs et la police du site",
+      "lede": "Pour un visuel, une miniature ou un générique aux couleurs de Leonidakit.",
+      "couleurs": [
+        {
+          "nom": "Papier",
+          "hex": "#FDFBF7",
+          "role": "Le fond des pages"
+        },
+        {
+          "nom": "Encre",
+          "hex": "#1A1A1E",
+          "role": "Le texte et les bordures"
+        },
+        {
+          "nom": "Corail",
+          "hex": "#E8452C",
+          "role": "Le « kit » du logo, les accents"
+        },
+        {
+          "nom": "Ambre",
+          "hex": "#F5A524",
+          "role": "Les boutons, les mises en avant"
+        },
+        {
+          "nom": "Nuit",
+          "hex": "#2B1B4D",
+          "role": "Les bandes sombres, la nuit de Vice City"
+        }
+      ],
+      "police": "Archivo",
+      "policeTexte": "Une seule famille, du texte courant au gras très noir des titres. Elle est libre (SIL Open Font License) et hébergée par le site.",
+      "graisses": [
+        {
+          "w": 400,
+          "l": "Courant"
+        },
+        {
+          "w": 700,
+          "l": "Gras"
+        },
+        {
+          "w": 900,
+          "l": "Titres"
+        }
+      ],
+      "specimen": "Le compte à rebours a commencé."
+    },
+    "citerFormats": {
+      "titre": "Des formules prêtes à copier",
+      "items": [
+        {
+          "k": "Dans un article",
+          "t": "Source : Leonidakit, carte interactive de Leonida (https://www.leonidakit.com/carte.html)"
+        },
+        {
+          "k": "Sous une vidéo",
+          "t": "Données : Leonidakit (https://www.leonidakit.com), site de fan non officiel de GTA VI"
+        },
+        {
+          "k": "Dans un post",
+          "t": "Vu sur leonidakit.com, le site de fan non officiel de GTA VI"
+        }
+      ]
+    },
+    "copier": "Copier",
+    "copie": "Copié",
+    "leo": [
+      "C’est quoi Leonidakit ?",
+      "Combien de véhicules sont recensés ?",
+      "Le site utilise-t-il des cookies ?"
+    ],
+    "agrandir": "Agrandir la capture"
   }
 }

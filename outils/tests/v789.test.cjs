@@ -293,7 +293,7 @@ test('page Mode compagnon : cinq langues, SEO, sections, tuiles, menu, pied de p
     assert.equal(d.querySelector('link[rel="canonical"]').href, ORIGIN + '/' + (l.dossier ? l.dossier + '/' : '') + 'compagnon.html');
     assert.equal(d.querySelectorAll('link[rel="alternate"][hreflang]').length, PUB.length + 1, f + ' : hreflang');
     assert.ok(s.includes('"@type":"BreadcrumbList"') && s.includes('"@type":"FAQPage"') && s.includes('"@type":"WebPage"'), f + ' : données structurées');
-    assert.equal(d.querySelectorAll('.cp-tuile').length, 4);
+    assert.equal(d.querySelectorAll('[data-cp-story] [data-cp-step]').length, 4); /* v7.92 : quatre étapes au lieu des quatre tuiles */
     for (const id of ['outils', 'sans-reseau', 'installer', 'changer-d-appareil', 'faq', 'reception']) assert.ok(d.getElementById(id), f + ' #' + id);
     assert.ok(d.querySelector('.lk-stack img[fetchpriority="high"]'), f + ' : pile d’images officielles');
     for (const img of d.querySelectorAll('.lk-stack img')) assert.match(img.alt, /Rockstar Games/);

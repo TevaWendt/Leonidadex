@@ -50,6 +50,26 @@
     "q": "Les infos qui circulent sur les réseaux sont-elles sur cette page ?",
     "a": "Non. Seules les publications de Rockstar, et les articles de presse qui les citent, y entrent. Les vidéos volées de 2022 et d’août 2026 ne sont jamais reprises."
    }
+  ],
+  "types": {
+   "video": "Vidéos",
+   "annonce": "Annonces",
+   "presse": "Presse",
+   "musique": "Musique"
+  },
+  "tout": "Tout",
+  "filtresLabel": "Filtrer les annonces",
+  "chiffres": {
+   "annonces": "annonces officielles",
+   "videos": "vidéos officielles",
+   "sources": "sources ouvertes",
+   "jours": "jours entre la première vidéo et la sortie"
+  },
+  "progres": "Progression dans la frise",
+  "leo": [
+   "Quelle est la dernière annonce sur GTA 6 ?",
+   "Quand sort GTA 6 ?",
+   "Quelles sont les stations de radio ?"
   ]
  },
  "aVenir": [
@@ -100,7 +120,10 @@
      "href": "radios.html#stations",
      "label": "Les six stations"
     }
-   ]
+   ],
+   "type": "musique",
+   "media": "dre-quan-priest-01",
+   "alt": "Dre’Quan Priest, une main sur l’épaule de chacune des Real Dimez, capture officielle de GTA VI"
   },
   {
    "id": "game-informer",
@@ -118,7 +141,10 @@
      "href": "animaux.html",
      "label": "Les animaux"
     }
-   ]
+   ],
+   "type": "presse",
+   "media": "grassrivers-04",
+   "alt": "Un hélicoptère et deux voitures de police poursuivent un pick-up dans les marais de Grassrivers, parmi les alligators, capture officielle de GTA VI"
   },
   {
    "id": "album",
@@ -135,7 +161,10 @@
      "href": "radios/gta-vi-the-album.html",
      "label": "La fiche de l’album"
     }
-   ]
+   ],
+   "type": "musique",
+   "media": "real-dimez-01",
+   "alt": "Bae-Luxe, des Real Dimez, assise en studio d’enregistrement, un casque à la main, capture officielle de GTA VI"
   },
   {
    "id": "entretien-famitsu",
@@ -153,7 +182,10 @@
      "href": "activites.html",
      "label": "Les activités annexes"
     }
-   ]
+   ],
+   "type": "presse",
+   "media": "stock-305-clothing-store-02",
+   "alt": "Jason adossé à un présentoir mural de bombes de peinture dans la boutique Stock 305, capture officielle de GTA VI"
   },
   {
    "id": "extended-look",
@@ -170,7 +202,8 @@
    "evs": [
     "el",
     "shots"
-   ]
+   ],
+   "type": "video"
   },
   {
    "id": "apercus-presse",
@@ -188,7 +221,10 @@
      "href": "lieux.html",
      "label": "Les lieux"
     }
-   ]
+   ],
+   "type": "presse",
+   "media": "vice-city-03",
+   "alt": "Vue aérienne de Vice City, visuel officiel Rockstar Games"
   },
   {
    "id": "boite",
@@ -205,7 +241,10 @@
      "href": "editions.html#boite",
      "label": "La version en boîte"
     }
-   ]
+   ],
+   "type": "annonce",
+   "media": "cover-art-officielle",
+   "alt": "La jaquette officielle de GTA VI : Jason et Lucia au centre, entourés de Boobie, de Raul, d’un alligator et de scènes de Leonida, illustration officielle"
   },
   {
    "id": "precommandes",
@@ -228,7 +267,8 @@
     "ue",
     "ueshots",
     "vv"
-   ]
+   ],
+   "type": "annonce"
   },
   {
    "id": "date-sortie",
@@ -245,7 +285,10 @@
      "href": "verification.html",
      "label": "Ce qui est confirmé"
     }
-   ]
+   ],
+   "type": "annonce",
+   "media": "carte-postale-vice-city",
+   "alt": "Carte postale « Vice City » de Leonida : la baie, les tours et des bateaux, illustration officielle de GTA VI"
   },
   {
    "id": "trailer-2",
@@ -265,7 +308,8 @@
     "t2",
     "site",
     "shots25"
-   ]
+   ],
+   "type": "video"
   },
   {
    "id": "trailer-1",
@@ -278,7 +322,8 @@
     "rs-videos",
     "louder-petty"
    ],
-   "video": "trailer-1"
+   "video": "trailer-1",
+   "type": "video"
   }
  ],
  "videos": {
@@ -451,6 +496,37 @@
      }
     ]
    }
+  ],
+  "salleK": "Sur grand écran",
+  "salleT": "La salle de projection",
+  "salleLede": "La dernière vidéo à l’affiche ; choisis-en une autre dans la liste.",
+  "choisir": "Choisir une vidéo",
+  "ouvrir": "Ouvrir la page de la vidéo",
+  "aLaffiche": "À l’affiche",
+  "chiffresK": "Comparées",
+  "chiffresT": "Les trois vidéos en chiffres",
+  "chiffresLede": "Ce que le site a relevé dans chaque vidéo, à partir de ses fiches.",
+  "metriques": {
+   "moments": "Moments relevés",
+   "morceaux": "Morceaux de musique",
+   "vehicules": "Véhicules vus pour la première fois",
+   "armes": "Armes vues pour la première fois",
+   "fiches": "Fiches du site reliées"
+  },
+  "revoirK": "Image par image",
+  "revoirT": "Les moments à revoir",
+  "revoirLede": "Les images officielles tirées des trois vidéos, dans l’ordre ; chacune mène à sa vidéo.",
+  "bandeK": "La bande-son",
+  "bandeT": "Toute la musique des vidéos",
+  "bandeLede": "Chaque morceau entendu, vidéo par vidéo, avec son moment.",
+  "ecouter": "Écouter sur la page de la vidéo",
+  "precedent": "Images précédentes",
+  "suivant": "Images suivantes",
+  "bandeLabel": "Les moments relevés dans les trois vidéos",
+  "leo": [
+   "Quelle est la musique du Trailer 2 ?",
+   "Combien de temps dure l’Extended Look ?",
+   "Quels véhicules voit-on dans le Trailer 1 ?"
   ]
  },
  "editions": {
@@ -479,11 +555,26 @@
   ],
   "standard": {
    "titre": "Édition Standard",
-   "texte": "Le jeu, en numérique ou en boîte."
+   "texte": "Le jeu, en numérique ou en boîte.",
+   "media": "cover-art-officielle",
+   "alt": "La jaquette officielle de GTA VI : Jason et Lucia au centre, entourés de Boobie, de Raul, d’un alligator et de scènes de Leonida, illustration officielle",
+   "points": [
+    "Le jeu complet, en numérique ou en boîte",
+    "Les bonus de précommande, selon ton mode d’achat",
+    "L’amélioration Ultimate peut s’acheter ensuite, en numérique"
+   ]
   },
   "ultimate": {
    "titre": "Édition Ultimate",
-   "texte": "Le jeu et l’amélioration Ultimate : seize contenus en plus, répartis dans l’histoire de Jason et Lucia, découverts chapitre après chapitre."
+   "texte": "Le jeu et l’amélioration Ultimate : seize contenus en plus, répartis dans l’histoire de Jason et Lucia, découverts chapitre après chapitre.",
+   "media": "ultimate-edition-02",
+   "alt": "Jason et Lucia devant le coupé vert rapproché d’un Kellison J4 dans le visuel Ultimate Edition",
+   "points": [
+    "Le jeu complet, en numérique",
+    "Seize contenus en plus, découverts au fil de l’histoire",
+    "Les mêmes bonus de précommande"
+   ],
+   "ruban": "16 contenus en plus"
   },
   "amelioration": "Avec l’édition Standard, l’amélioration Ultimate s’achète à part, en numérique, sur le PlayStation Store ou le Microsoft Store, à tout moment une fois le code du jeu utilisé.",
   "contenusTitre": "Les seize contenus de l’Ultimate",
@@ -492,82 +583,128 @@
    {
     "nom": "’95 Grotti Cheetah",
     "fr": "La Grotti Cheetah ’95",
-    "href": "vehicules/grotti-cheetah-classic.html"
+    "href": "vehicules/grotti-cheetah-classic.html",
+    "media": "95-grotti-cheetah-01",
+    "alt": "Une Grotti Cheetah blanche à bandes rouges devant un immeuble en spirale, capture officielle Rockstar Games",
+    "cat": "vehicules"
    },
    {
     "nom": "Hawk & Little Morgan Revolvers",
     "fr": "Les revolvers Hawk & Little Morgan",
-    "href": "armes/hawk-little-morgan.html"
+    "href": "armes/hawk-little-morgan.html",
+    "media": "hawk-little-morgan-revolvers-01",
+    "alt": "Revolver à lunette tenu à la main, visuel officiel Rockstar Games",
+    "cat": "armes"
    },
    {
     "nom": "Personalized Weapon Variants",
     "fr": "Des variantes d’armes personnalisées",
-    "href": "armes.html"
+    "href": "armes.html",
+    "media": "personalized-weapon-variants",
+    "alt": "Deux pistolets gravés, l’un chromé, l’autre rouge, posés au bord d’une piscine, visuel officiel Rockstar Games",
+    "cat": "armes"
    },
    {
     "nom": "Vice City Styles",
     "fr": "Une collection de tenues « Style de Vice City »",
-    "href": "style.html"
+    "href": "style.html",
+    "cat": "tenues"
    },
    {
     "nom": "Jason’s Safehouse Vehicles",
     "fr": "Les véhicules de la planque de Jason",
-    "href": "planques/planque-jason.html"
+    "href": "planques/planque-jason.html",
+    "media": "jason-s-safehouse-vehicles",
+    "alt": "La maison sur pilotis de Jason dans les Keys, avec le Vapid Ganado, la Dinka Enduro et le kayak Crest devant, capture officielle de GTA VI",
+    "cat": "vehicules"
    },
    {
     "nom": "Ganado Retro Build",
     "fr": "Un kit rétro pour le Ganado de Jason",
-    "href": "personnalisations.html"
+    "href": "personnalisations.html",
+    "media": "ganado-retro-build",
+    "alt": "Vapid Ganado ’70, Ganado Retro Build, capture officielle Rockstar Games",
+    "cat": "vehicules"
    },
    {
     "nom": "Rideout Customs Mod Shop",
     "fr": "L’atelier Rideout Customs",
-    "href": "entreprises/rideout-customs.html"
+    "href": "entreprises/rideout-customs.html",
+    "media": "rideout-customs-mod-shop-01",
+    "alt": "Une Manana dorée sur le pont élévateur de Rideout Customs, capture officielle de l’Édition Ultimate",
+    "cat": "lieux"
    },
    {
     "nom": "Sara’s Unisex Salon",
     "fr": "Le salon Sara’s Unisex Salon",
-    "href": "entreprises/saras-unisex-salon.html"
+    "href": "entreprises/saras-unisex-salon.html",
+    "media": "sara-s-unisex-salon-01",
+    "alt": "Sara’s Unisex Salon, capture officielle Rockstar Games",
+    "cat": "lieux"
    },
    {
     "nom": "Shitzu Squalo",
     "fr": "Le bateau Shitzu Squalo",
-    "href": "vehicules/shitzu-squalo.html"
+    "href": "vehicules/shitzu-squalo.html",
+    "media": "shitzu-squalo-01",
+    "alt": "Hors-bord Squalo devant la skyline de Vice City, visuel officiel Rockstar Games",
+    "cat": "vehicules"
    },
    {
     "nom": "Stock 305 Clothing Store",
     "fr": "La boutique de vêtements Stock 305",
-    "href": "entreprises/stock-305.html"
+    "href": "entreprises/stock-305.html",
+    "media": "stock-305-clothing-store-01",
+    "alt": "Devanture peinte de la boutique Stock 305, visuel officiel Rockstar Games",
+    "cat": "lieux"
    },
    {
     "nom": "’67 Vapid Dominator Buggy and Garage",
     "fr": "Le Vapid Dominator Buggy ’67 et son garage",
-    "href": "vehicules/vapid-dominator-buggy.html"
+    "href": "vehicules/vapid-dominator-buggy.html",
+    "media": "67-vapid-dominator-buggy-01",
+    "alt": "Buggy Dominator dans la boue, visuel officiel Rockstar Games",
+    "cat": "vehicules"
    },
    {
     "nom": "Electric Fang Tattoo Parlor",
     "fr": "Le salon de tatouage Electric Fang",
-    "href": "entreprises/electric-fang.html"
+    "href": "entreprises/electric-fang.html",
+    "media": "electric-fang-tattoo-01",
+    "alt": "Electric Fang Tattoo, capture officielle Rockstar Games",
+    "cat": "lieux"
    },
    {
     "nom": "One-Eyed Willie’s Mod Shop",
     "fr": "L’atelier One-Eyed Willie’s",
-    "href": "entreprises/one-eyed-willie.html"
+    "href": "entreprises/one-eyed-willie.html",
+    "media": "one-eyed-willie-s-mod-shop-01",
+    "alt": "Pick-up vert éclairé dans l’atelier de One-Eyed Willie, visuel officiel Rockstar Games",
+    "cat": "lieux"
    },
    {
     "nom": "Goodtime Gear",
     "fr": "Goodtime Gear",
-    "href": null
+    "href": null,
+    "media": "goodtime-gear-01",
+    "alt": "Jason et Lucia en casquettes et tee-shirts Vice City illustrés de Macca the Gator, devant une fresque de l’alligator (capture officielle « Goodtime Gear » de l’Édition Ultimate).",
+    "cat": "tenues"
    },
    {
     "nom": "PTT Youngin$ Compound",
     "fr": "Le repaire des PTT Youngin$",
-    "href": "gangs/ptt-youngin-gang.html"
+    "href": "gangs/ptt-youngin-gang.html",
+    "media": "ptt-youngin-illegal-goods-store",
+    "alt": "Le repaire des PTT Youngin$ de nuit, moto tout-terrain décorée et foule qui filme, capture officielle de l’Édition Ultimate",
+    "cat": "lieux"
    },
    {
     "nom": "Classic Car Collection",
     "fr": "La Classic Car Collection",
-    "href": "missions.html"
+    "href": "missions.html",
+    "media": "classic-car-collection-01",
+    "alt": "Un homme au débardeur « Wyman’s World Auto Salvage » salue devant des voitures classiques, capture officielle de l’Édition Ultimate",
+    "cat": "vehicules"
    }
   ],
   "bonusTitre": "Les bonus de précommande",
@@ -576,13 +713,33 @@
     "titre": "Pack Vintage Vice City",
     "texte": "La Vapid Stanier ’55 et son garage, des tenues et des coiffures, et un motif d’arme exclusif.",
     "pour": "Précommande ou achat numérique avant le 20 novembre 2026, et précommande en boîte.",
-    "href": "vehicules/vapid-stanier.html"
+    "href": "vehicules/vapid-stanier.html",
+    "media": "vintage-vice-city-pack-01",
+    "alt": "Jason et Lucia, pistolet en main, devant l’Ocean View Hotel et la Vapid Stanier ’55, capture officielle du Pack Vintage Vice City",
+    "galerie": [
+     {
+      "media": "55-vapid-stanier-01",
+      "alt": "Vapid Stanier jaune sous les néons, visuel officiel Rockstar Games",
+      "titre": "La Vapid Stanier ’55"
+     },
+     {
+      "media": "vintage-vice-city-pack-exclusive-looks-03",
+      "alt": "Jason tient un PM compact turquoise à motif de palmiers dans un visuel Vintage Vice City.",
+      "titre": "Les tenues et les coiffures"
+     },
+     {
+      "media": "vintage-vice-city-weapon-pattern-01",
+      "alt": "PM moderne à crosse rabattue et pistolet turquoise sur la banquette d’une voiture, près de billets.",
+      "titre": "Le motif d’arme"
+     }
+    ]
    },
    {
     "titre": "Un mois de GTA+",
     "texte": "Un mois d’abonnement à GTA+, le service payant de Rockstar.",
     "pour": "Précommande ou achat numérique avant le 20 novembre 2026. L’assistance ne le cite pas pour la boîte.",
-    "href": null
+    "href": null,
+    "ico": "etoile"
    }
   ],
   "boiteTitre": "La version en boîte",
@@ -619,6 +776,96 @@
     "q": "Jusqu’à quand les bonus de précommande sont-ils offerts ?",
     "a": "Pour un achat numérique fait avant le 20 novembre 2026 : Pack Vintage Vice City et un mois de GTA+. La précommande en boîte donne le Pack Vintage Vice City."
    }
+  ],
+  "categories": {
+   "vehicules": "Véhicules",
+   "armes": "Armes",
+   "tenues": "Tenues",
+   "lieux": "Lieux et commerces"
+  },
+  "filtresLabel": "Filtrer les contenus",
+  "tout": "Tout",
+  "teaser": "Pas encore de visuel officiel",
+  "voirFiche": "Voir la fiche",
+  "comparatif": {
+   "titre": "Ce que contient chaque édition",
+   "caption": "Comparatif des éditions de GTA VI, d’après l’assistance de Rockstar",
+   "first": "Ce que tu reçois",
+   "cols": [
+    "Standard, numérique",
+    "Standard, en boîte",
+    "Ultimate, numérique"
+   ],
+   "rows": [
+    {
+     "label": "Le jeu",
+     "cells": [
+      true,
+      true,
+      true
+     ]
+    },
+    {
+     "label": "Les seize contenus de l’Ultimate",
+     "cells": [
+      false,
+      false,
+      true
+     ]
+    },
+    {
+     "label": "Format",
+     "cells": [
+      "Téléchargement",
+      "Une boîte avec un code, sans disque",
+      "Téléchargement"
+     ]
+    },
+    {
+     "label": "Préchargement le 12 novembre",
+     "cells": [
+      true,
+      true,
+      true
+     ]
+    },
+    {
+     "label": "Pack Vintage Vice City",
+     "cells": [
+      "Avant le 20 novembre",
+      "En précommande",
+      "Avant le 20 novembre"
+     ]
+    },
+    {
+     "label": "Un mois de GTA+",
+     "cells": [
+      "Avant le 20 novembre",
+      "Non cité par l’assistance",
+      "Avant le 20 novembre"
+     ]
+    },
+    {
+     "label": "Passer à l’Ultimate",
+     "cells": [
+      "Amélioration en numérique",
+      "Amélioration en numérique, une fois le code utilisé",
+      true
+     ]
+    }
+   ]
+  },
+  "oui": "Oui",
+  "non": "Non",
+  "bonusFin": "Fin des bonus",
+  "datesLabel": "Les dates à retenir",
+  "galerieLabel": "Le Pack Vintage Vice City en images",
+  "precedent": "Images précédentes",
+  "suivant": "Images suivantes",
+  "leo": [
+   "Y a-t-il un disque dans la boîte de GTA 6 ?",
+   "Quels sont les bonus de précommande ?",
+   "Quand commence le préchargement ?"
   ]
  },
  "sources": {

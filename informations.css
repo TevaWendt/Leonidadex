@@ -336,3 +336,112 @@
 /* six chiffres : une rangée de six sur grand écran, deux rangées de trois au-dessous, puis la grille de l'À propos (2 × 3) */
 @media(min-width:1180px){.info-page--presse .ed-figs--about{grid-template-columns:repeat(6,minmax(0,1fr));}}
 @media(min-width:1001px) and (max-width:1179px){.info-page--presse .ed-figs--about{grid-template-columns:repeat(3,minmax(0,1fr));}}
+
+/* =====================================================================================================================
+   v7.92 : pages enrichies « Ce qui est confirmé » et « Presse et créateurs ». Briques communes dans vitrine.css.
+   ===================================================================================================================== */
+/* ---------- Ce qui est confirmé : le tableau de bord ---------- */
+.vf-board-sum{margin:0 0 18px;}
+.vf-figs{grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));}
+.vf-board{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:0;padding:0;list-style:none;}
+@media (max-width:1099px){.vf-board{grid-template-columns:repeat(3,minmax(0,1fr));}}
+@media (max-width:759px){.vf-board{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media (max-width:419px){.vf-board{grid-template-columns:1fr;}}
+.vf-tile{position:relative;display:grid;grid-template-columns:auto 1fr;grid-template-rows:1fr auto;gap:6px 12px;height:100%;min-height:96px;padding:14px 14px 12px;border:2px solid var(--ink);border-radius:var(--radius);background:#fff;color:var(--ink);text-decoration:none;box-shadow:var(--shadow-hard);transition:transform var(--c-fast,190ms) var(--c-ease-control,ease),box-shadow var(--c-fast,190ms);}
+.vf-tile-ico{grid-row:1 / span 2;display:grid;place-items:center;width:44px;height:44px;border-radius:12px;background:var(--paper-2);border:2px solid var(--ink);}
+.vf-tile-ico svg{width:24px;height:24px;--ed-accent:var(--coral);}
+.vf-tile-t{align-self:center;font:800 .98rem/1.25 'Archivo',sans-serif;}
+.vf-tile-s{justify-self:start;display:inline-flex;align-items:center;gap:6px;padding:3px 10px 3px 6px;border-radius:999px;font:800 .74rem/1.2 'Archivo',sans-serif;}
+.vf-tile-s::before{content:'';width:16px;height:16px;border-radius:50%;background:center/11px no-repeat;}
+.vf-tile--ok .vf-tile-s{background:var(--amber);color:var(--ink);}
+.vf-tile--ok .vf-tile-s::before{background-color:var(--ink);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23F5A524' stroke-width='3.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E");}
+.vf-tile--wait{background:linear-gradient(160deg,var(--night-deep),var(--night) 70%);color:var(--paper);border-color:var(--ink);}
+.vf-tile--wait .vf-tile-ico{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.4);color:var(--paper);}
+.vf-tile--wait .vf-tile-s{background:rgba(255,255,255,.12);color:var(--amber-2);border:1px dashed rgba(245,165,36,.6);}
+.vf-tile--wait .vf-tile-s::before{content:'?';width:auto;height:auto;background:none;font:900 .9rem/1 'Archivo',sans-serif;color:var(--amber-2);}
+.vf-tile:focus-visible{outline:3px solid var(--coral);outline-offset:3px;}
+@media (hover:hover) and (pointer:fine){.vf-tile:hover{transform:translate(-3px,-3px);box-shadow:7px 7px 0 var(--ink);}}
+
+/* ---------- Ce qui est confirmé : points confirmés avec leur visuel ---------- */
+.vf-cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin:0;padding:0;list-style:none;}
+@media (max-width:1199px){.vf-cards{grid-template-columns:repeat(3,minmax(0,1fr));}}
+@media (max-width:899px){.vf-cards{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media (max-width:539px){.vf-cards{grid-template-columns:1fr;}}
+.vf-card{display:flex;flex-direction:column;min-width:0;border:2px solid var(--ink);border-radius:var(--radius);background:#fff;box-shadow:var(--shadow-hard);overflow:hidden;scroll-margin-top:130px;}
+.vf-card .vt-media{border-bottom:2px solid var(--ink);}
+.vf-card-b{display:flex;flex:1;flex-direction:column;gap:8px;padding:14px 16px 16px;}
+.vf-card-b h3{margin:0;font:900 1.05rem/1.2 'Archivo',sans-serif;letter-spacing:-.015em;}
+.vf-card-b p{margin:0;font-size:.9rem;line-height:1.5;color:var(--ink-soft);}
+.vf-card-b .vf-links{margin-top:auto;padding-top:6px;}
+.vf-card:target{outline:3px solid var(--coral);outline-offset:3px;}
+@media (hover:hover) and (pointer:fine){.vf-card:hover .vt-media img{transform:scale(1.05);}}
+.vf-stats-k+.vf-figs{margin-top:8px;}
+
+/* ---------- Ce qui est confirmé : questions sans réponse officielle ---------- */
+.vf-qs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:0;padding:0;list-style:none;}
+@media (max-width:1099px){.vf-qs{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media (max-width:539px){.vf-qs{grid-template-columns:1fr;}}
+.vf-q{display:flex;flex-direction:column;gap:8px;padding:16px;border:1.5px solid rgba(255,255,255,.28);border-radius:var(--radius);background:rgba(255,255,255,.06);scroll-margin-top:130px;}
+.vf-q:target{outline:3px solid var(--amber);outline-offset:3px;}
+.vf-q-ico{position:relative;display:grid;place-items:center;width:48px;height:48px;border:2px solid rgba(255,255,255,.45);border-radius:14px;color:var(--paper);}
+.vf-q-ico svg{width:26px;height:26px;}
+.vf-q-ico b{position:absolute;right:-8px;top:-8px;display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--coral);color:#fff;font:900 .8rem/1 'Archivo',sans-serif;border:2px solid var(--night);}
+.vf-q h3{margin:0;font:900 1.02rem/1.25 'Archivo',sans-serif;color:#fff;}
+.vf-q p{margin:0;font-size:.9rem;line-height:1.5;color:rgba(253,251,247,.86);}
+
+/* ---------- Ce qui est confirmé : l’échelle des statuts ---------- */
+.vf-scale{margin-top:22px;}
+.vf-scale-ends{display:flex;justify-content:space-between;margin:0 0 8px;font:800 var(--fs-kicker)/1.2 var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);}
+.vf-scale-l{position:relative;display:grid;grid-template-columns:repeat(var(--n,5),minmax(0,1fr));gap:12px;margin:0;padding:18px 0 0;list-style:none;}
+.vf-scale-l::before{content:'';position:absolute;left:0;right:0;top:0;height:8px;border:2px solid var(--ink);border-radius:999px;background:linear-gradient(90deg,var(--ink) 0%,var(--amber) 35%,#7A4FB8 60%,#9B9AA3 80%,var(--paper) 100%);}
+@media (max-width:899px){.vf-scale-l{grid-template-columns:1fr 1fr;}.vf-scale-l::before{display:none;}}
+@media (max-width:479px){.vf-scale-l{grid-template-columns:1fr;}}
+.vf-step{position:relative;padding:14px 14px 16px;border:2px solid var(--ink);border-radius:var(--radius);background:#fff;box-shadow:var(--shadow-soft);}
+.vf-step::before{content:'';position:absolute;left:18px;top:-20px;width:2px;height:18px;background:var(--ink);}
+@media (max-width:899px){.vf-step::before{display:none;}}
+.vf-step h3{display:flex;align-items:center;gap:8px;margin:0 0 6px;font:900 .98rem/1.25 'Archivo',sans-serif;}
+.vf-step p{margin:0;font-size:.86rem;line-height:1.5;color:var(--ink-soft);}
+.vf-signal{max-width:var(--measure);}
+
+/* ---------- Presse : vignettes des captures qui s’agrandissent ---------- */
+.pr-file-zoom{position:relative;display:block;}
+.pr-zoom{position:absolute;right:8px;top:8px;display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:rgba(26,26,30,.78);color:#fff;opacity:0;transform:scale(.8);transition:opacity var(--c-fast,190ms),transform var(--c-fast,190ms);}
+.pr-zoom svg{width:15px;height:15px;}
+.pr-file-zoom:focus-visible{outline:3px solid var(--coral);outline-offset:2px;}
+.pr-file-zoom:focus-visible .pr-zoom{opacity:1;transform:none;}
+@media (hover:hover) and (pointer:fine){.pr-file-zoom:hover .pr-zoom{opacity:1;transform:none;}.pr-file-zoom:hover img{transform:scale(1.04);}}
+.pr-file-zoom img{transition:transform .5s var(--c-ease-result,cubic-bezier(.16,1,.3,1));}
+
+/* ---------- Presse : couleurs et police ---------- */
+.pr-swatches{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;margin:0 0 22px;padding:0;list-style:none;}
+@media (max-width:1099px){.pr-swatches{grid-template-columns:repeat(3,minmax(0,1fr));}}
+@media (max-width:639px){.pr-swatches{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media (max-width:379px){.pr-swatches{grid-template-columns:1fr;}}
+.pr-sw{display:flex;flex-direction:column;border:2px solid var(--ink);border-radius:var(--radius);background:#fff;box-shadow:var(--shadow-hard);overflow:hidden;}
+.pr-sw-chip{display:block;height:92px;background:var(--sw);border-bottom:2px solid var(--ink);}
+.pr-sw-b{display:flex;flex-direction:column;gap:4px;padding:12px 14px 14px;}
+.pr-sw-b h3{margin:0;font:900 1.02rem/1.2 'Archivo',sans-serif;}
+.pr-sw-hex{margin:0;font:800 .9rem/1.3 var(--font-mono);letter-spacing:.03em;}
+.pr-sw-role{margin:0 0 6px;font-size:.84rem;line-height:1.45;color:var(--ink-soft);}
+.pr-sw .vt-copy{align-self:flex-start;margin-top:auto;}
+.js .pr-swatches.is-in:not(.lk-settled) .pr-sw-chip{animation:pr-fill .7s var(--c-ease-result,cubic-bezier(.16,1,.3,1)) calc(min(var(--i,0),6) * 70ms + 120ms) backwards;}
+@keyframes pr-fill{from{clip-path:inset(100% 0 0 0);}to{clip-path:inset(0);}}
+.pr-type{display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(18px,3vw,40px);align-items:center;padding:clamp(18px,2.6vw,30px);border:2px solid var(--ink);border-radius:var(--radius);background:var(--night);color:var(--paper);box-shadow:var(--shadow-amber);}
+@media (max-width:639px){.pr-type{grid-template-columns:1fr;}}
+.pr-type-aa{font:900 clamp(5rem,4rem + 6vw,9.5rem)/.9 'Archivo',sans-serif;letter-spacing:-.06em;color:var(--amber);}
+.pr-type-b h3{margin:0 0 6px;font:900 clamp(1.5rem,1.2rem + 1.2vw,2.2rem)/1 'Archivo',sans-serif;color:#fff;}
+.pr-type-b p{margin:0 0 10px;color:rgba(253,251,247,.86);}
+.pr-weights{display:flex;flex-wrap:wrap;gap:8px 20px;margin:0 0 12px;padding:0;list-style:none;font-size:1.1rem;}
+.pr-weights b{font:inherit;font-family:var(--font-mono);font-size:.78rem;color:var(--amber-2);}
+.pr-specimen{margin:0!important;font:900 clamp(1.2rem,1rem + 1vw,1.9rem)/1.15 'Archivo',sans-serif!important;letter-spacing:-.03em;color:#fff!important;}
+
+/* ---------- Presse : formules à copier ---------- */
+.pr-formats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:0;padding:0;list-style:none;}
+@media (max-width:959px){.pr-formats{grid-template-columns:1fr;}}
+.pr-formats>li{display:flex;flex-direction:column;gap:8px;padding:14px 16px 16px;border:2px solid var(--ink);border-radius:var(--radius);background:#fff;box-shadow:var(--shadow-soft);}
+.pr-format-k{margin:0;font:800 var(--fs-kicker)/1.2 var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--coral-text);}
+.vt-copybox{display:flex;flex-direction:column;gap:10px;}
+.vt-copy-src{margin:0;padding:10px 12px;border:1px dashed var(--rule);border-radius:8px;background:var(--paper);font-size:.9rem;line-height:1.5;overflow-wrap:anywhere;}
+.vt-copybox .vt-copy{align-self:flex-start;}
+/* v7.92 : liens des cartes (sources, pages liées) : 28 px de haut au moins pour le doigt, sans changer le texte */
+.vf-links a{padding:3px 0;}

@@ -246,7 +246,7 @@ test('page : cinq langues, textes du jeu dans la page (aucun dans le script), au
     assert.ok(d.querySelector('[data-dv-nojs]').textContent.trim().length > 40);
     assert.equal(d.querySelectorAll('#regions a[data-dv-fiche]').length, 6, f);
     for (const a of d.querySelectorAll('#regions a[data-dv-fiche]')) assert.ok(fs.existsSync(path.join(root, dir, a.getAttribute('href'))), f + ' : ' + a.getAttribute('href'));
-    assert.ok(d.querySelectorAll('#regles .ed-step').length === 4 && d.querySelectorAll('#faq details').length === D.faq.items.length, f);
+    assert.ok(d.querySelectorAll('#regles .vt-step').length === 4 && d.querySelectorAll('#faq details').length === D.faq.items.length, f);
     if (dir) {
       /* le script n’a aucun texte à traduire : la page de la langue charge celui de la racine ; s’il existait une copie
          dans la langue, elle devrait garder les mêmes chaînes (aucun identifiant traduit) */

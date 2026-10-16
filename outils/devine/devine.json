@@ -1,5 +1,5 @@
 {
- "_note": "v7.90 (lot 6) : jeu « Devine le lieu » (devine-le-lieu.html), généré par outils/gen-devine.cjs, joué par devine.js. Seules entrent les captures dont la région est établie par Rockstar : ses séries de captures officielles portent le nom de la région (page des captures de GTA VI, rangées par région ; fichiers Vice_City_01…, Leonida_Keys_01…). « series » relie chaque série à sa région ; « images » liste les images retenues (région, source, texte alternatif qui ne donne pas la réponse, légende montrée après la réponse) ; le générateur refuse une image dont la série, le fichier d’origine ou la source ne disent pas la même région, et une image de série absente de cette liste. « debut » : jour n° 1 (partie du jour, heure de Paris) ; le tirage d’un jour ne dépend que de sa date et de la liste des images. « parRegionMax » : nombre maximal d’images d’une même région dans une partie (vérifié par le générateur sur trois ans de tirages). Tous les textes sont en français ; les autres langues viennent de la mémoire de traduction (outils/langues/<code>/v790.json).",
+ "_note": "v7.90 (lot 6) : jeu « Devine le lieu » (devine-le-lieu.html), généré par outils/gen-devine.cjs, joué par devine.js. Seules entrent les captures dont la région est établie par Rockstar : ses séries de captures officielles portent le nom de la région (page des captures de GTA VI, rangées par région ; fichiers Vice_City_01…, Leonida_Keys_01…). « series » relie chaque série à sa région ; « images » liste les images retenues (région, source, texte alternatif qui ne donne pas la réponse, légende montrée après la réponse) ; le générateur refuse une image dont la série, le fichier d’origine ou la source ne disent pas la même région, et une image de série absente de cette liste. « debut » : jour n° 1 (partie du jour, heure de Paris) ; le tirage d’un jour ne dépend que de sa date et de la liste des images. « parRegionMax » : nombre maximal d’images d’une même région dans une partie (vérifié par le générateur sur trois ans de tirages). Tous les textes sont en français ; les autres langues viennent de la mémoire de traduction (outils/langues/<code>/v790.json). v7.92 : fiches des régions en cartes postales (regions.faits : deux faits de outils/editorial.json par région, ce que montrent ses captures), album et statistiques du joueur (resultat, msg dv-serie… dv-sem-vide), cycle des images (sources.cycleT, cycleD), encart Léo (leo.media, leo.alt : visuel officiel hors du jeu).",
  "version": 1,
  "cle": "lk_devine_v1",
  "debut": "2026-10-12",
@@ -342,7 +342,7 @@
   "sansScript": "Le jeu tire les images du jour dans ton navigateur : il a besoin de JavaScript. Sans lui, retrouve plus bas les six régions et leurs fiches.",
   "nav": {
    "jeu": "Le jeu",
-   "regions": "Les régions",
+   "regions": "Régions et album",
    "regles": "Les règles",
    "images": "Les images",
    "faq": "Questions"
@@ -383,7 +383,15 @@
   "dv-libre-annonce": "Partie libre : des images au hasard, sans limite. Ta série ne change pas.",
   "dv-sr-bonne": "bonne réponse",
   "dv-sr-ta": "ta réponse",
-  "dv-res-ta": "{verdict} · ta réponse : {choix}"
+  "dv-res-ta": "{verdict} · ta réponse : {choix}",
+  "dv-serie": "Série : {n}",
+  "dv-album": "Ton album : {n} sur {total}",
+  "dv-album-reg": "{n} sur {total} découvertes",
+  "dv-album-new": "Nouvelle image dans ton album.",
+  "dv-reussite": "Ta réussite : {pct}",
+  "dv-cycle": "Aujourd’hui : jour {n} sur {total} du cycle",
+  "dv-sem-score": "{w} : {score} sur {total}",
+  "dv-sem-vide": "{w} : pas joué"
  },
  "resultat": {
   "titre": "Ton résultat",
@@ -395,15 +403,53 @@
   "partageNote": "Seul ce texte est partagé : ni image, ni donnée de ton appareil.",
   "libre": "Continuer en partie libre",
   "retour": "Mon résultat du jour",
-  "jouer": "Jouer la nouvelle partie"
+  "jouer": "Jouer la nouvelle partie",
+  "serieMax": "Meilleure série",
+  "parties": "Parties jouées",
+  "reussite": "Réussite",
+  "album": "Ton album",
+  "semaine": "Tes sept derniers jours",
+  "repartition": "Tes scores",
+  "repartitionNote": "Nombre de parties du jour pour chaque score.",
+  "regionsT": "Tes régions",
+  "regionsNote": "Bonnes réponses par région, sur toutes tes parties du jour.",
+  "voirAlbum": "Voir mon album"
  },
  "regions": {
   "kicker": "La carte de Leonida",
-  "titre": "Les six régions",
-  "lede": "Chaque région a sa fiche : ce que Rockstar en a dit, ses images et sa place sur la carte. Le meilleur moyen de progresser.",
+  "titre": "Les six régions et ton album",
+  "lede": "Chaque image de la partie du jour rejoint ton album, rangée dans sa région. Ce que montrent les captures officielles de chaque région t’aide à viser juste.",
   "images": "{n} images dans le jeu",
   "fiche": "Voir la fiche",
-  "carte": "Sur la carte"
+  "carte": "Sur la carte",
+  "voit": "Ce que montrent les captures",
+  "aDecouvrir": "{n} images à découvrir",
+  "faits": {
+   "mount-kalaga": [
+    1,
+    2
+   ],
+   "ambrosia": [
+    2,
+    0
+   ],
+   "port-gellhorn": [
+    1,
+    0
+   ],
+   "vice-city": [
+    0,
+    1
+   ],
+   "grassrivers": [
+    0,
+    2
+   ],
+   "leonida-keys": [
+    3,
+    0
+   ]
+  }
  },
  "regles": {
   "kicker": "Les règles",
@@ -439,7 +485,9 @@
   "p2": "La carte du jeu est celle du site : un fond tracé par la communauté d’après les supports officiels, pas une carte publiée par Rockstar. Chaque région y est placée sur le repère de la carte interactive ; on devine une région, jamais un point précis.",
   "total": "images dans le jeu",
   "credits": "Tous les visuels et leurs crédits",
-  "credit": "Capture officielle de Rockstar Games"
+  "credit": "Capture officielle de Rockstar Games",
+  "cycleT": "{jours} jours pour tout voir",
+  "cycleD": "Les {total} images sont réparties en cycles de {jours} jours : chaque partie en tire {per} que tu n’as pas encore eues dans le cycle, jamais plus de {max} d’une même région, et aucune ne revient le lendemain. Chaque cycle est mélangé autrement."
  },
  "faq": {
   "kicker": "Questions",
@@ -455,11 +503,15 @@
    },
    {
     "q": "Mon score est-il enregistré quelque part ?",
-    "a": "Seulement sur ton appareil : tes réponses du jour, ta série et ton meilleur score, dans le stockage de ton navigateur, sous une seule clé. Rien n’est envoyé ; le partage ne transmet que le texte de ton résultat, à l’application que tu choisis."
+    "a": "Seulement sur ton appareil : tes réponses du jour, ta série, tes statistiques et ton album, dans le stockage de ton navigateur, sous une seule clé. Rien n’est envoyé ; le partage ne transmet que le texte de ton résultat, à l’application que tu choisis."
    },
    {
     "q": "Peut-on rejouer la partie du jour ?",
     "a": "Une seule fois : c’est ce qui rend les scores comparables. Ensuite, la partie libre tire des images au hasard, sans limite et sans toucher à ta série."
+   },
+   {
+    "q": "Comment remplir mon album ?",
+    "a": "Chaque image de la partie du jour rejoint ton album dès ta réponse, rangée dans sa région. Les {total} images passent toutes une fois par cycle de {jours} jours ; la partie libre ne remplit pas l’album."
    },
    {
     "q": "De nouvelles images arriveront-elles ?",
@@ -502,6 +554,8 @@
    "Mon score de Devine le lieu est-il enregistré ?",
    "Quelles sont les régions de GTA VI ?",
    "Où est Vice City sur la carte ?"
-  ]
+  ],
+  "media": "jason-and-lucia-13",
+  "alt": "Jason et Lucia enlacés au coucher du soleil, entourés d’hydroglisseurs de la police et d’un hélicoptère dans les marais, capture officielle de GTA VI"
  }
 }

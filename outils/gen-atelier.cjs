@@ -209,6 +209,7 @@ const html = `<!DOCTYPE html>
 ${favicon}
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="atelier-3d.css">
+<link rel="modulepreload" href="vendor/three.atelier.min.js">
 </head>
 <body class="at-page">
 <a class="skip" href="#main">Aller au contenu</a>

@@ -1,0 +1,15 @@
+{
+ "_note": "v7.92 : textes communs des briques de outils/vitrine.cjs (pages enrichies). Français source ; les traductions viennent de la mémoire de traduction (outils/langues/<code>/v792.json).",
+ "aside": {
+  "titre": "Une autre question ?",
+  "texte": "Léo, l’assistant du site, répond à partir des fiches de Leonidakit, dans ta langue.",
+  "ecrire": "Écrire à Leonidakit"
+ },
+ "oui": "Oui",
+ "non": "Non",
+ "copier": "Copier",
+ "copie": "Copié",
+ "precedent": "Images précédentes",
+ "suivant": "Images suivantes",
+ "credit": "Visuel officiel Rockstar Games"
+}
