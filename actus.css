@@ -253,3 +253,169 @@ html[lang="en"] .ac-ue-i>a .ac-ue-en:not([hidden]){text-decoration:underline;tex
 .lk-aff-meta{font-size:.9rem;color:var(--ink-soft);}
 .lk-aff-a:hover .lk-aff-meta{color:var(--ink);} /* v7.88 : contraste au survol (ambre) */
 .lk-aff-tag{align-self:flex-start;margin-top:6px;padding:2px 8px;border:1.5px solid var(--ink);border-radius:999px;font-size:.78rem;font-weight:800;}
+
+/* =====================================================================================================================
+   v7.92 : pages enrichies (Éditions, Vidéos officielles, Actualités). Briques communes dans vitrine.css ; ici, ce qui est
+   propre à la section. Mêmes règles : transform, opacity, clip-path, filter ; rien ne bouge en « réduire les animations ».
+   ===================================================================================================================== */
+.ac-h3{margin:30px 0 14px;font:900 clamp(1.15rem,1.02rem + .55vw,1.45rem)/1.2 'Archivo',sans-serif;letter-spacing:-.02em;color:var(--ed-fg,var(--ink));}
+
+/* ---------- dates à retenir, sous le titre ---------- */
+.ac-dates{display:flex;flex-wrap:wrap;gap:10px;margin:20px 0 0;padding:0;list-style:none;}
+.ac-date{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;column-gap:12px;align-items:center;min-width:min(100%,210px);flex:1 1 210px;padding:10px 14px 10px 10px;border:2px solid var(--ink);border-radius:var(--radius);background:#fff;box-shadow:3px 3px 0 var(--ink);}
+.ac-date time{grid-row:1 / span 2;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:58px;padding:6px 4px;border-radius:8px;background:var(--night);color:var(--paper);}
+.ac-date time b{font:900 1.7rem/1 'Archivo',sans-serif;color:var(--amber);font-variant-numeric:tabular-nums;}
+.ac-date time span{font-size:.7rem;font-weight:700;}
+.ac-date-t{font-weight:800;font-size:.9rem;line-height:1.25;}
+.ac-date .vt-cd{justify-self:start;margin-top:4px;color:var(--coral-text);}
+
+/* ---------- Éditions : deux grandes cartes, puis le comparatif ---------- */
+.ac-duo{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;align-items:stretch;}
+@media (max-width:819px){.ac-duo{grid-template-columns:1fr;}}
+.ac-edcard{position:relative;display:flex;flex-direction:column;border:2px solid var(--ink);border-radius:var(--radius);background:var(--ed-card,#fff);box-shadow:var(--shadow-hard);overflow:hidden;}
+.ac-edcard--ult{box-shadow:var(--shadow-amber);border-color:var(--ink);}
+.ac-edcard-fig{position:relative;margin:0;aspect-ratio:16/9;overflow:hidden;background:var(--night);border-bottom:2px solid var(--ink);}
+.ac-edcard-fig img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .8s var(--c-ease-result,cubic-bezier(.16,1,.3,1));}
+.ac-edcard-ribbon{position:absolute;right:12px;top:12px;padding:6px 12px;border:2px solid var(--ink);border-radius:999px;background:var(--amber);color:var(--ink);font:900 .82rem/1.1 'Archivo',sans-serif;box-shadow:2px 2px 0 var(--ink);}
+.ac-edcard-b{display:flex;flex-direction:column;gap:8px;padding:18px 20px 20px;}
+.ac-edcard-b h3{margin:0;font:900 clamp(1.25rem,1.1rem + .6vw,1.6rem)/1.15 'Archivo',sans-serif;letter-spacing:-.025em;}
+.ac-edcard-b p{margin:0;color:var(--ed-soft,var(--ink-soft));}
+.ac-checks{display:grid;gap:7px;margin:6px 0 0;padding:0;list-style:none;}
+.ac-checks li{position:relative;padding-left:30px;font-weight:600;line-height:1.4;}
+.ac-checks li::before{content:'';position:absolute;left:0;top:1px;width:20px;height:20px;border:2px solid var(--ink);border-radius:50%;background:var(--amber) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231A1A1E' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center/12px no-repeat;box-sizing:border-box;}
+@media (hover:hover) and (pointer:fine){.ac-edcard:hover .ac-edcard-fig img{transform:scale(1.04);}}
+.ac-compare{overflow-x:auto;padding:2px 6px 8px 2px;}
+.ac-compare .vt-compare{min-width:640px;}
+@media (max-width:639px){.ac-compare .vt-compare{min-width:0;}}
+.ac-amelio{margin:16px 0 0;max-width:var(--measure);color:var(--ed-soft,var(--ink-soft));}
+
+/* ---------- Éditions : les seize contenus (cartes distribuées, filtre par famille) ---------- */
+/* seize cartes : quatre par rangée sur grand écran, trois puis deux ; la dernière rangée se centre (filtre compris) */
+#ultimate .vt-cards{display:flex;flex-wrap:wrap;justify-content:center;}
+#ultimate .vt-cards>li{flex:0 1 calc((100% - 48px) / 4);min-width:0;}
+@media (max-width:1099px){#ultimate .vt-cards>li{flex-basis:calc((100% - 32px) / 3);}}
+@media (max-width:819px){#ultimate .vt-cards>li{flex-basis:calc((100% - 16px) / 2);}}
+@media (max-width:479px){#ultimate .vt-cards>li{flex-basis:100%;}}
+#ultimate .vt-card-t{font-size:1rem;}
+#ultimate .vt-card-d{font:700 .74rem/1.35 var(--font-mono);letter-spacing:.02em;text-transform:uppercase;color:var(--ink-soft);}
+
+/* ---------- Éditions : les bonus ---------- */
+.ac-bonus2{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:20px;align-items:stretch;}
+@media (max-width:819px){.ac-bonus2{grid-template-columns:1fr;}}
+.ac-bcard{display:flex;flex-direction:column;border:2px solid var(--ink);border-radius:var(--radius);background:var(--ed-card,#fff);box-shadow:var(--shadow-hard);overflow:hidden;}
+.ac-bcard-fig{margin:0;aspect-ratio:16/8;overflow:hidden;border-bottom:2px solid var(--ink);background:var(--night);}
+.ac-bcard-fig img{display:block;width:100%;height:100%;object-fit:cover;}
+.ac-bcard-b{display:flex;flex-direction:column;gap:8px;padding:16px 18px 18px;}
+.ac-bcard h3{margin:0;font:900 1.25rem/1.2 'Archivo',sans-serif;letter-spacing:-.02em;}
+.ac-bcard p{margin:0;}
+.ac-bcard .lkx-btn{align-self:flex-start;margin-top:4px;}
+.ac-bcard--plain{padding:20px 20px 22px;gap:10px;background:linear-gradient(160deg,var(--night-deep) 0%,var(--night) 60%,var(--night-2) 100%);color:var(--paper);}
+.ac-bcard--plain p{color:rgba(253,251,247,.88);}
+.ac-bcard--plain .ac-bonus-pour{color:var(--amber-2);}
+.ac-bcard-ico{display:grid;place-items:center;width:56px;height:56px;border:2px solid var(--amber);border-radius:50%;color:var(--amber);}
+.ac-bcard-ico svg{width:28px;height:28px;}
+.ac-bcard-end{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:auto!important;padding-top:10px;border-top:1px dashed rgba(253,251,247,.3);font-weight:800;}
+.ac-bcard-end .vt-cd{color:var(--amber-2);}
+.ac-bonus-pour{font-weight:700;color:var(--coral-text);}
+
+/* ---------- Vidéos : la salle de projection ---------- */
+.ac-theater{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,340px);gap:clamp(16px,2.4vw,30px);align-items:start;}
+.ac-th-side{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.ed--night .ac-screen-n a{color:var(--amber-2);}
+@media (max-width:959px){.ac-theater{grid-template-columns:1fr;}}
+.ac-th-main{display:flex;flex-direction:column;gap:16px;min-width:0;}
+.ed--night .ac-screen-n{color:rgba(253,251,247,.75);}
+.ac-th-info{display:flex;flex-direction:column;gap:8px;padding:16px 18px 18px;border:1.5px solid rgba(255,255,255,.28);border-radius:var(--radius);background:rgba(255,255,255,.06);}
+.ac-th-info[hidden]{display:none;}
+.ac-th-k{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin:0;font:800 var(--fs-kicker)/1.2 var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--amber-2);}
+.ac-th-k span{padding:3px 8px;border-radius:999px;background:var(--coral);color:#fff;letter-spacing:.04em;}
+.ac-th-t{margin:0;font:900 clamp(1.4rem,1.15rem + 1vw,2rem)/1.1 'Archivo',sans-serif;letter-spacing:-.03em;color:#fff;}
+.ac-th-d{margin:0;color:rgba(253,251,247,.88);max-width:62ch;}
+.ac-th-s{display:flex;flex-wrap:wrap;gap:6px;margin:2px 0 4px;padding:0;list-style:none;}
+.ac-th-s li{padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.12);font-size:.8rem;font-weight:700;}
+.ac-th-info .lkx-btn{align-self:flex-start;}
+.ac-pl{display:flex;flex-direction:column;gap:12px;margin:0;padding:0;list-style:none;}
+@media (max-width:959px){.ac-pl{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));}}
+@media (max-width:599px){.ac-pl{grid-template-columns:1fr;}}
+.ac-pl-a{display:grid;grid-template-columns:132px 1fr;gap:12px;align-items:center;padding:8px;border:2px solid rgba(255,255,255,.3);border-radius:12px;background:rgba(255,255,255,.05);color:#fff;text-decoration:none;transition:background var(--c-fast,190ms),border-color var(--c-fast,190ms),transform var(--c-fast,190ms);}
+@media (max-width:959px) and (min-width:600px){.ac-pl-a{grid-template-columns:1fr;}}
+.ac-pl-fig{position:relative;display:block;aspect-ratio:16/9;border-radius:8px;overflow:hidden;background:var(--night-deep);}
+.ac-pl-fig img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .5s var(--c-ease-result,cubic-bezier(.16,1,.3,1));}
+.ac-pl-play{position:absolute;left:8px;bottom:8px;display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--amber);color:var(--ink);}
+.ac-pl-play svg{width:14px;height:14px;margin-left:2px;}
+.ac-pl-b{display:flex;flex-direction:column;gap:3px;min-width:0;}
+.ac-pl-b time{font:700 .74rem/1.3 var(--font-mono);color:rgba(253,251,247,.72);}
+.ac-pl-t{font:900 1.02rem/1.2 'Archivo',sans-serif;}
+.ac-pl-a[aria-current="true"]{border-color:var(--amber);background:rgba(245,165,36,.16);box-shadow:4px 4px 0 rgba(0,0,0,.35);}
+.ac-pl-a[aria-current="true"] .ac-pl-play{background:var(--coral);color:#fff;}
+.ac-pl-a:hover{background:rgba(255,255,255,.12);border-color:var(--amber-2);}
+.ac-pl-a:hover .ac-pl-fig img{transform:scale(1.06);}
+.ac-pl-a:focus-visible{outline:3px solid var(--amber);outline-offset:3px;}
+
+/* ---------- Vidéos : les trois vidéos en chiffres (barres qui se remplissent à l’entrée) ---------- */
+.ac-bars{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:16px;}
+.ac-bars-key{grid-column:1 / -1;display:flex;flex-wrap:wrap;gap:8px 18px;margin:0 0 2px;padding:0;list-style:none;font-weight:800;font-size:.86rem;}
+.ac-bars-key li{display:inline-flex;align-items:center;gap:8px;}
+.ac-bars-key li::before{content:'';width:14px;height:14px;border:2px solid var(--ink);border-radius:4px;background:var(--k);}
+.ac-k0{--k:var(--coral);}.ac-k1{--k:var(--amber);}.ac-k2{--k:#7A4FB8;}
+.ac-bar-g{padding:14px 16px 16px;border:2px solid var(--ink);border-radius:var(--radius);background:var(--ed-card,#fff);box-shadow:var(--shadow-hard);}
+.ac-bar-h{margin:0 0 10px;font:800 .98rem/1.25 'Archivo',sans-serif;}
+.ac-bar-l{display:grid;gap:8px;margin:0;padding:0;list-style:none;}
+.ac-bar{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:3px 10px;align-items:baseline;font-size:.82rem;}
+.ac-bar-n{font-weight:700;color:var(--ink-soft);min-width:0;}
+.ac-bar>b{font:900 1.05rem/1 'Archivo',sans-serif;font-variant-numeric:tabular-nums;}
+.ac-bar-t{grid-column:1 / -1;display:block;height:14px;border-radius:6px;background:var(--paper-2);}
+.ac-bar-t i{display:block;height:100%;width:var(--p);min-width:6px;border:2px solid var(--ink);border-radius:6px;background:var(--k);transform-origin:left;box-sizing:border-box;}
+.js .ac-bars.is-in:not(.lk-settled) .ac-bar-t i{animation:vt-bar 1s var(--c-ease-result,cubic-bezier(.16,1,.3,1)) calc(min(var(--i,0),6) * 70ms + 200ms) backwards;}
+
+/* ---------- Vidéos : toute la musique ---------- */
+.ac-allsongs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px;align-items:start;}
+.ac-as-g{padding:14px 16px 16px;border:1.5px solid rgba(255,255,255,.28);border-radius:var(--radius);background:rgba(255,255,255,.06);}
+.ac-as-h{display:flex;align-items:center;gap:6px;margin:0 0 10px;font:900 1.1rem/1.2 'Archivo',sans-serif;}
+.ac-as-h a{display:inline-block;padding:3px 0 2px;color:#fff;text-decoration:none;border-bottom:2px solid var(--amber);} /* cible de 28 px au moins (v7.92) */
+.ac-as-h a:hover{color:var(--amber-2);}
+.ac-as-h .ac-n{background:var(--amber);color:var(--ink);}
+.ac-as-l{display:grid;gap:6px;margin:0;padding:0;list-style:none;}
+.ac-as-l li{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:baseline;padding:7px 0;border-top:1px solid rgba(255,255,255,.14);}
+.ac-as-l li:first-child{border-top:0;}
+.ac-as-b{min-width:0;}
+.ac-as-b cite{font-style:normal;font-weight:800;color:#fff;}
+.ac-as-a{display:block;font-size:.8rem;color:rgba(253,251,247,.72);}
+.ac-as-l small{font:700 .74rem/1.2 var(--font-mono);color:var(--amber-2);white-space:nowrap;}
+
+/* ---------- Actualités : chiffres de l’en-tête ---------- */
+.page-head .ac-figs{margin-top:clamp(18px,2.4vw,30px);}
+.page-head .ac-figs .vt-fig{background:#fff;}
+.page-head .ac-figs .vt-fig--accent{background:var(--amber);}
+
+/* ---------- Actualités : billets à venir avec compte à rebours ---------- */
+.ac-ticket-b .vt-cd{align-self:flex-start;margin:0 0 10px;color:var(--coral-text);}
+
+/* ---------- Actualités : la frise (repères d’année, type d’annonce, trait qui avance au défilement) ---------- */
+.ac-yr{position:relative;display:grid;grid-template-columns:150px 1fr;margin:4px 0 16px;list-style:none;}
+.ac-yr span{justify-self:end;margin-right:-18px;position:relative;z-index:2;display:inline-flex;align-items:center;justify-content:center;min-width:64px;height:36px;padding:0 12px;border:2px solid var(--ink);border-radius:999px;background:var(--night);color:var(--amber);font:900 1.05rem/1 'Archivo',sans-serif;letter-spacing:.02em;box-shadow:3px 3px 0 var(--ink);}
+.ac-ev-type{display:inline-block;margin-top:6px;padding:2px 8px;border-radius:999px;background:var(--paper-2);border:1px solid var(--rule);font-size:.72rem;font-weight:800;color:var(--ink-soft);}
+.ac-ev--video .ac-ev-type{background:var(--night);border-color:var(--night);color:var(--amber-2);}
+.ac-ev--musique .ac-ev-type{background:#efe4f7;}
+.ac-ev--presse .ac-ev-type{background:#fdeacc;}
+.ac-ev-card{transition:box-shadow var(--c-fast,190ms),border-color var(--c-fast,190ms);}
+.ac-ev-fig{position:relative;overflow:hidden;}
+.ac-ev-fig img{transition:transform .7s var(--c-ease-result,cubic-bezier(.16,1,.3,1));}
+@media (hover:hover) and (pointer:fine){.ac-ev-card:hover .ac-ev-fig img{transform:scale(1.05);}}
+@media (max-width:760px){
+  .ac-yr{grid-template-columns:1fr;padding-left:0;}
+  .ac-yr span{justify-self:start;margin:0 0 0 -10px;}
+  .ac-ev-when{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;}
+  .ac-ev-type{margin-top:0;}
+}
+/* le trait de la frise avance au défilement (navigateurs qui connaissent les animations liées au défilement) ; ailleurs,
+   chaque annonce trace son tronçon à son entrée (plus haut) */
+@supports (animation-timeline:view()){
+  @media (prefers-reduced-motion:no-preference){
+    .ac-evs{view-timeline-name:--ac-frise;view-timeline-axis:block;}
+    .ac-evs::after{content:'';position:absolute;left:149px;top:6px;bottom:6px;width:4px;border-radius:2px;background:linear-gradient(180deg,var(--amber),var(--coral));transform-origin:top center;animation:ac-fill linear both;animation-timeline:--ac-frise;animation-range:entry 10% exit 40%;z-index:0;}
+    .ac-ev::after{display:none;}
+    @media (max-width:760px){.ac-evs::after{left:6px;}}
+  }
+}
+@keyframes ac-fill{from{transform:scaleY(0);}to{transform:scaleY(1);}}

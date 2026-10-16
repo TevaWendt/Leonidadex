@@ -10,8 +10,14 @@
    - La maquette d'une arme : silhouettes extrudées, accessoires posés sur les bords (chargeur, viseur, canon, poignée, lampe).
    - Rien gardé sur l'appareil sauf « Mes configurations » (localStorage lk_atelier) ; aucune requête hors des données du
      site ; le lien copié porte seulement les options.
+   - v7.92 (vitesse, rendu identique) : les nuanceurs restent compilés d'une maquette à l'autre (la nouvelle prend les
+     programmes de l'ancienne avant que celle-ci soit libérée : changer une couleur ne recompile plus rien) et se compilent
+     sans bloquer la page (compileAsync, l'ancienne maquette reste affichée) ; l'ombre portée n'est recalculée que si la
+     maquette change ; rien n'est dessiné quand la scène est hors de l'écran ; la rotation automatique est dessinée à
+     60 images par seconde au plus (30 sur un écran tactile), les gestes à pleine vitesse ; la maquette du départ se
+     télécharge pendant que la scène se prépare, celle d'un modèle survolé dans la liste avant le clic.
    ============================================================ */
-import * as THREE from './vendor/three.module.min.js';
+import * as THREE from './vendor/three.atelier.min.js?v=a5a426607b8d';
 
 (function () {
   'use strict';
@@ -35,15 +41,22 @@ import * as THREE from './vendor/three.module.min.js';
 
   /* ---------- rendu ---------- */
   let renderer, scene, camera, group = null, floorShadow, keyLight, neonLight, camLight, dirty = true, spinning = !reduced, lastInput = 0, raf = 0;
+  /* v7.92 : scène visible à l'écran (sinon rien n'est dessiné), rotation automatique plafonnée */
+  let onScreen = true, spinDue = false, lastRender = 0;
+  const SPIN_MS = (window.matchMedia && window.matchMedia('(pointer: coarse)').matches ? 1000 / 30 : 1000 / 60) - 2;
   const orbit = { az: 0.62, el: 0.36, dist: 420, tx: 0, ty: 16, tz: 0, goal: null };
   /* v7.84 : vue intérieure (voitures, utilitaires) et première personne (motos, quads, vélos) : la caméra se pose à la
      place du conducteur (group.userData.eye) et le glisser fait regarder autour (lacet, tangage) au lieu de tourner. */
   const look = { on: false, yaw: 0, pitch: -0.12, fov: 64 };
   function initGL() {
-    try { renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, preserveDrawingBuffer: true, powerPreference: 'high-performance' }); }
+    try { renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' }); }
     catch (e) { view.classList.add('is-nowebgl'); return false; }
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, window.innerWidth < 700 ? 1.5 : 2));
     renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.shadowMap.autoUpdate = false; renderer.shadowMap.needsUpdate = true; /* v7.92 : lumière et maquette immobiles : l'ombre ne change qu'avec la maquette */
+    /* v7.92 : compilation des nuanceurs en parallèle (hors du fil de la page) seulement si le navigateur sait la faire ;
+       sinon chaque nuanceur est compilé à son premier rendu, comme avant */
+    PARALLEL = !!(renderer.compileAsync && renderer.extensions && renderer.extensions.has && renderer.extensions.has('KHR_parallel_shader_compile'));
     renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.05;
     scene = new THREE.Scene();
     camera = new THREE.PerspectiveCamera(30, 4 / 3, 1, 4000);
@@ -72,6 +85,8 @@ import * as THREE from './vendor/three.module.min.js';
     } catch (e) { /* sans environnement : les lumières suffisent */ }
     resize();
     if ('ResizeObserver' in window) new ResizeObserver(resize).observe(view); else window.addEventListener('resize', resize);
+    /* v7.92 : hors de l'écran, la boucle s'arrête ; elle reprend (et redessine) quand la scène revient */
+    if ('IntersectionObserver' in window) new IntersectionObserver(es => { const was = onScreen; onScreen = es.some(e => e.isIntersecting); if (onScreen && !was) { dirty = true; lastFrame = 0; tick(); } }, { rootMargin: '120px 0px' }).observe(view);
     return true;
   }
   function resize() {
@@ -95,21 +110,24 @@ import * as THREE from './vendor/three.module.min.js';
     if (camLight) { camLight.position.copy(camera.position); camLight.position.y += 60; camLight.intensity = group && group.userData.bounds && group.userData.bounds.weapon ? 1.1 : 0.35; }
   }
   function tick() {
-    if (!renderer) return;
+    if (!renderer || !onScreen) return;
     if (raf) return; raf = window.requestAnimationFrame(frame);
   }
   let lastFrame = 0;
+  function draw(now) { placeCamera(); renderer.render(scene, camera); dirty = false; spinDue = false; lastRender = now; }
   function frame(now) {
     raf = 0;
+    if (!onScreen) { lastFrame = 0; return; }
     const o = orbit, dt = Math.min(0.1, Math.max(0.001, (now - (lastFrame || now)) / 1000)); lastFrame = now;
     if (o.goal) { /* glissement vers un angle choisi (selon le temps écoulé, pas le nombre d'images) */
       const g = o.goal, k = 1 - Math.exp(-dt / 0.11); o.az += (g.az - o.az) * k; o.el += (g.el - o.el) * k; o.dist += (g.dist - o.dist) * k;
       if (Math.abs(g.az - o.az) < 0.004 && Math.abs(g.el - o.el) < 0.004 && Math.abs(g.dist - o.dist) < 1) { o.az = g.az; o.el = g.el; o.dist = g.dist; o.goal = null; }
       dirty = true;
     }
-    if (spinning && !o.goal && !look.on && now - lastInput > 2500) { o.az += 0.22 * dt; dirty = true; }
-    if (dirty) { placeCamera(); renderer.render(scene, camera); dirty = false; }
-    if ((spinning && !look.on) || o.goal) tick();
+    /* rotation automatique : l'angle suit le temps, l'image est dessinée au plus toutes les SPIN_MS (60 ou 30 par seconde) */
+    if (spinning && !o.goal && !look.on && now - lastInput > 2500) { o.az += 0.22 * dt; spinDue = true; }
+    if (dirty || (spinDue && now - lastRender >= SPIN_MS)) draw(now);
+    if ((spinning && !look.on) || o.goal || spinDue) tick();
   }
   /* souris, doigt, molette */
   (function controls() {
@@ -532,22 +550,45 @@ import * as THREE from './vendor/three.module.min.js';
   }
 
   /* ---------- la scène : charger, bâtir, cadrer ---------- */
-  async function loadModel(fam, id) {
+  /* v7.92 : la promesse est gardée : un modèle survolé puis cliqué n'est demandé qu'une fois ; un échec n'est pas gardé */
+  function loadModel(fam, id) {
     const key = fam + '/' + id; if (cache.has(key)) return cache.get(key);
-    const r = await fetch(new URL((fam === 'v' ? 'vehicules/' : 'armes/') + encodeURIComponent(id) + '.json', DATA)); if (!r.ok) throw new Error('data'); const d = await r.json(); cache.set(key, d); return d;
+    const pr = fetch(new URL((fam === 'v' ? 'vehicules/' : 'armes/') + encodeURIComponent(id) + '.json', DATA)).then(r => { if (!r.ok) throw new Error('data'); return r.json(); });
+    cache.set(key, pr); pr.catch(() => cache.delete(key));
+    return pr;
   }
-  let building = 0;
+  let building = 0, buildSeq = 0, PARALLEL = null;
+  const disposeGroup = g => g.traverse(o => { if (o.geometry) o.geometry.dispose(); for (const m of [].concat(o.material || [])) { if (m.map) m.map.dispose(); m.dispose(); } });
+  /* v7.92 : la nouvelle maquette est bâtie, ses nuanceurs compilés sans bloquer la page (l'ancienne reste à l'écran et
+     tourne), puis les deux s'échangent ; la nouvelle est dessinée avant que l'ancienne soit libérée, pour qu'elle reprenne
+     les programmes déjà compilés (sinon chaque changement de couleur recompilait tous les nuanceurs) */
   function rebuild(recenter) {
     if (!renderer || !st.data) return;
     window.cancelAnimationFrame(building);
-    building = window.requestAnimationFrame(() => {
-      if (group) { scene.remove(group); group.traverse(o => { if (o.geometry) o.geometry.dispose(); if (o.material && o.material.map) o.material.map.dispose(); if (o.material) o.material.dispose(); }); }
-      try { group = st.fam === 'v' ? buildVehicle(st.data, st.s) : buildWeapon(st.data, st.s); } catch (e) { group = new THREE.Group(); }
-      scene.add(group); syncInside();
+    const seq = ++buildSeq;
+    building = window.requestAnimationFrame(async () => {
+      let g;
+      try { g = st.fam === 'v' ? buildVehicle(st.data, st.s) : buildWeapon(st.data, st.s); } catch (e) { g = new THREE.Group(); }
+      if (PARALLEL) {
+        /* la scène telle qu'elle sera (décor, lumières, nouvelle maquette, sans l'ancienne), le temps de lancer la compilation :
+           tout est remis en place dans la même tâche, rien n'est dessiné entre-temps */
+        const old = group;
+        let ready = null;
+        try { if (old) scene.remove(old); scene.add(g); ready = renderer.compileAsync(scene, camera); } catch (e) { ready = null; }
+        scene.remove(g); if (old) scene.add(old);
+        /* au plus 1,5 s d'attente : au-delà (contexte perdu, pilote lent), le premier rendu finit la compilation */
+        if (ready) { try { await Promise.race([ready, new Promise(r => setTimeout(r, 1500))]); } catch (e) { /* compilés au premier rendu */ } }
+      }
+      if (seq !== buildSeq) { disposeGroup(g); return; } /* une maquette plus récente est en route */
+      const old = group;
+      if (old) scene.remove(old);
+      group = g; scene.add(group); syncInside();
       const b = group.userData.bounds || { z0: -100, z1: 100, yTop: 40, hw: 40 };
       orbit.tx = 0; orbit.tz = (b.z0 + b.z1) / 2; orbit.ty = b.weapon ? b.yTop * 0.5 + 4 : Math.max(10, b.yTop * 0.45);
       if (recenter) { const size = Math.max(b.z1 - b.z0, 2 * b.hw, b.yTop); orbit.dist = size * (b.weapon ? 1.9 : 1.75) + 60; }
-      dirty = true; tick();
+      draw(performance.now());
+      if (old) disposeGroup(old);
+      tick();
     });
   }
   const ANGLES = { tq: [0.62, 0.36], profil: [Math.PI / 2, 0.14], face: [0, 0.16], arriere: [Math.PI, 0.16], dessus: [0.001, 1.42] };
@@ -564,6 +605,7 @@ import * as THREE from './vendor/three.module.min.js';
     if (helpOut) helpOut.hidden = on; if (helpIn) helpIn.hidden = !on;
     if (insideNote) { insideNote.hidden = !on; const c = $('[data-at-note-car]', insideNote), m = $('[data-at-note-moto]', insideNote); if (c) c.hidden = two; if (m) m.hidden = !two; }
     if (leave) goAngle('tq');
+    if (renderer) renderer.shadowMap.needsUpdate = true;
     dirty = true; tick();
   }
   function goAngle(name) {
@@ -810,7 +852,7 @@ import * as THREE from './vendor/three.module.min.js';
   }
   $('[data-at-save]').addEventListener('click', e => { const l = saved(); l.unshift({ f: st.fam, id: st.id, s: Object.assign({}, st.s), d: new Date().toISOString() }); store(l); renderSaved(); say(e.currentTarget, true); });
   $('[data-at-png]').addEventListener('click', e => {
-    if (!renderer) return; placeCamera(); renderer.render(scene, camera);
+    if (!renderer) return; renderer.shadowMap.needsUpdate = true; draw(performance.now()); /* dessinée et lue dans la même tâche */
     const a = document.createElement('a'); a.href = renderer.domElement.toDataURL('image/png'); a.download = 'leonidakit-atelier-' + st.id + '.png'; document.body.appendChild(a); a.click(); a.remove(); say(e.currentTarget, true);
   });
   $('[data-at-reset]').addEventListener('click', e => { st.s = Object.assign({}, DEF[st.fam]); reflect(); summary(); rebuild(false); say(e.currentTarget, true); });
@@ -822,6 +864,9 @@ import * as THREE from './vendor/three.module.min.js';
   $$('[data-at-go]').forEach(b => b.addEventListener('click', () => { goAngle(b.dataset.atGo); view.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'nearest' }); }));
   $$('[data-at-fam-b]').forEach(b => b.addEventListener('click', () => { setFam(b.dataset.atFamB); const first = items.find(x => x.dataset.atPick === st.fam && x.classList.contains('is-on')) || items.find(x => x.dataset.atPick === st.fam); if (first) pick(st.fam, first.dataset.atId); }));
   items.forEach(it => it.addEventListener('click', () => pick(it.dataset.atPick, it.dataset.atId)));
+  /* v7.92 : survol ou focus d'un modèle : ses données arrivent avant le clic (rien si elles sont déjà là) */
+  const warm = e => { const it = e.target.closest && e.target.closest('.at-item'); if (it && renderer) loadModel(it.dataset.atPick, it.dataset.atId).catch(() => {}); };
+  for (const ul of Object.values(lists)) if (ul) { ul.addEventListener('pointerover', warm, { passive: true }); ul.addEventListener('focusin', warm); }
   search.addEventListener('input', filterList); Object.values(catSels).forEach(s => s.addEventListener('change', filterList));
 
   /* ---------- départ ---------- */
@@ -833,7 +878,11 @@ import * as THREE from './vendor/three.module.min.js';
   const first = want && items.some(x => x.dataset.atPick === want.fam && x.dataset.atId === want.id) ? [want.fam, want.id] : ['v', root.dataset.atFirst];
   if (first[0] === want?.fam && first[1] === want?.id) st.s = want.s;
   pick(first[0], first[1], true); /* sans scène encore : nom, options, liens, total */
+  loadModel(first[0], first[1]).catch(() => {}); /* v7.92 : la maquette du départ se télécharge pendant que la scène se prépare */
   const boot = () => { if (!initGL()) return; pick(first[0], first[1], true); if (spinning) tick(); };
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => requestAnimationFrame(() => setTimeout(boot, 0)), { once: true });
-  else requestAnimationFrame(() => setTimeout(boot, 0));
+  /* v7.92 : three.js arrive plus tôt (préchargé dès l’en-tête) ; la scène, elle, se prépare après le chargement de la page,
+     comme avant : le travail du processeur (contexte, nuanceurs) ne retarde ni l’événement load ni les scripts qui
+     l’attendent */
+  const go = () => requestAnimationFrame(() => setTimeout(boot, 0));
+  if (document.readyState === 'complete') go(); else window.addEventListener('load', go, { once: true });
 })();

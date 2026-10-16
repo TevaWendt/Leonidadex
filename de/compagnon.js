@@ -191,3 +191,35 @@
     })();
   }
 })();
+
+/* v7.92 : la scène « console et téléphone » de compagnon.html : l'écran du téléphone suit l'étape qu'on lit (celle qui passe
+   le milieu de l'écran). La position des étapes est mesurée au chargement et au redimensionnement ; pendant le défilement,
+   une seule lecture de position par trame, et aucune écriture si l'étape ne change pas. Sans script, chaque étape montre son
+   propre écran (compagnon.css). */
+(function () {
+  'use strict';
+  var story = document.querySelector('[data-cp-story]'); if (!story) return;
+  var steps = Array.prototype.slice.call(story.querySelectorAll('[data-cp-step]'));
+  var screens = Array.prototype.slice.call(story.querySelectorAll('.cp-scene [data-cp-scr]'));
+  if (!steps.length || !screens.length) return;
+  var cur = steps[0].getAttribute('data-cp-step'), queued = false;
+  function set(id) {
+    if (id === cur) return; cur = id;
+    screens.forEach(function (s) { s.classList.toggle('is-on', s.getAttribute('data-cp-scr') === id); });
+    steps.forEach(function (st) { st.classList.toggle('is-on', st.getAttribute('data-cp-step') === id); });
+  }
+  /* la position des étapes est relue à chaque image (quatre mesures) : une étape qui change de taille, une image qui se
+     charge plus haut ne décalent jamais l’écran montré */
+  function update() {
+    queued = false;
+    var line = (window.innerHeight || 800) * 0.55, k = 0;
+    for (var i = 0; i < steps.length; i++) if (steps[i].getBoundingClientRect().top <= line) k = i;
+    set(steps[k].getAttribute('data-cp-step'));
+  }
+  var later = function () { if (!queued) { queued = true; window.requestAnimationFrame(update); } };
+  window.addEventListener('scroll', later, { passive: true });
+  window.addEventListener('resize', later);
+  window.addEventListener('load', later);
+  steps.forEach(function (st) { st.addEventListener('focusin', function () { set(st.getAttribute('data-cp-step')); }); });
+  update();
+})();

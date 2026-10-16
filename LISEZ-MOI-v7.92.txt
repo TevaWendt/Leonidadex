@@ -1,0 +1,71 @@
+LEONIDAKIT v7.92 — Pages enrichies (Éditions, Vidéos officielles, Actualités, Ce qui est confirmé, Presse, Mode compagnon,
+Devine le lieu) et Atelier 3D plus rapide
+À appliquer sur l’assemblage v7.87.1 → v7.91 (commit 134e87c58, celui que tu as poussé). Archive « modifs » en deux parties
+(Leonidakit-v7.92-modifs-1-sur-2.zip et 2-sur-2, 2 776 fichiers, aucun dans les deux) : seulement les fichiers qui changent
+et les nouveaux. Rien n’a été publié ni poussé : c’est toi qui pousses. CSP inchangée. Aucun fichier à supprimer.
+
+CE QUI CHANGE POUR LE VISITEUR
+- Éditions : les deux éditions côte à côte (jaquette officielle, ruban « Ultimate »), un tableau comparatif d’après
+  l’assistance de Rockstar, les 16 contenus de l’Ultimate en cartes illustrées qu’on peut filtrer (véhicules, armes, tenues,
+  lieux), une silhouette « pas encore de visuel » pour ce que Rockstar n’a pas montré, les bonus de précommande (Pack
+  Vintage Vice City en images, GTA+ avec son compte à rebours), les dates à retenir en tickets avec compte à rebours.
+- Vidéos officielles : une salle de projection (la vidéo à l’affiche et la liste des trois vidéos, qu’on change sans quitter
+  la page), les trois vidéos en chiffres (moments, morceaux, véhicules, armes, révélations), les moments à revoir en bande
+  de photogrammes, toute la musique des vidéos ; FAQ avec l’encart Léo.
+- Actualités : frise avec un visuel officiel par annonce, un repère par année et une ligne qui se remplit au défilement,
+  filtres par type (vidéos, annonces, presse, musique), chiffres en tête (annonces, vidéos, sources, jours entre la première
+  vidéo et la sortie), tickets des prochaines dates avec compte à rebours.
+- Ce qui est confirmé : un tableau de bord (tuiles « confirmé » et « en attente » qui mènent à leur fiche), les confirmations
+  en cartes illustrées, les questions encore ouvertes, l’échelle des statuts, « Signaler » avec l’encart Léo.
+- Presse : captures agrandissables, nouvelle partie « Identité visuelle » (couleurs à copier, police Archivo), formules de
+  citation prêtes à copier, encart Léo.
+- Mode compagnon : un téléphone qui change d’écran au fil des quatre outils (carte, carnets, calculateur, Léo), « Ce qui est
+  préparé » pour jouer sans réseau, l’installation illustrée pour iPhone, Android et ordinateur (ton appareil mis en avant),
+  un schéma du transfert d’un appareil à l’autre, FAQ avec l’encart Léo.
+- Devine le lieu : ton album (chaque image jouée dans la partie du jour rejoint sa région, en timbre ; le dos d’une carte tant
+  qu’elle n’est pas découverte), les six régions en cartes postales (la carte autour de la région, sa devise, ce que montrent
+  ses captures officielles, ta réussite dans la région), un résultat avec tes statistiques (série, meilleure série, parties
+  jouées, réussite, album, tes sept derniers jours, tes scores, tes régions), ta série pendant la partie, la devise de la
+  bonne région et « Nouvelle image dans ton album » après chaque réponse, les règles illustrées, le cycle des 40 images sur
+  8 jours, FAQ avec l’encart Léo. Tout reste sur l’appareil, sous la même clé (lk_devine_v1) ; les Mentions le disent
+  (ligne d’historique v7.92 et « Ce qui reste dans ton navigateur »).
+- Partout : les visuels sont les visuels officiels de Rockstar, crédités ; entrées au défilement et effets au survol
+  sobres ; « Réduire les animations » respecté ; les six langues. Au téléphone, les images arrivent en 800 px au plus (au
+  lieu de 1 280) : deux à trois fois plus légères, sans différence visible ; c’est vrai aussi pour l’image de la partie
+  de Devine le lieu, qui est en plus demandée en priorité, et pour les pages des trois vidéos.
+- Atelier 3D (rendu identique, vérifié image par image) : changer une couleur ou de modèle ne recompile plus les nuanceurs,
+  l’ombre n’est recalculée que si la maquette change, rien n’est dessiné quand la scène est hors de l’écran, rotation
+  automatique à 60 images par seconde au plus (30 sur téléphone), three.js réduit à ce que l’Atelier utilise et préchargé
+  dès l’en-tête, maquette du départ et modèle survolé téléchargés en avance.
+
+CHIFFRES DE L’ATELIER 3D (mesurés avant / après dans le navigateur de test, rendu logiciel : sur un vrai appareil tout est
+plus rapide, l’écart reste)
+- Changer la couleur de peinture : 650 à 740 ms de travail de la page → 30 à 45 ms (4 nuanceurs recompilés → 0).
+- Changer de véhicule : 480 à 650 ms → 25 à 135 ms (3 ou 4 nuanceurs recompilés → 0 ou 1).
+- Pendant la rotation : 117 → 67 dessins WebGL par image (l’ombre n’est plus recalculée à chaque image).
+- Scène hors de l’écran : 1 104 dessins en 8 secondes → 0.
+- three.js : 675 Ko → 522 Ko (171 → 136 Ko compressés) ; son téléchargement commence à 20 ms au lieu de 210 ms.
+
+CE QUE ÇA CHANGE EN VITESSE (téléphone ralenti, réseau 4G lente, v7.91 → v7.92 ; détail : outils/CHANGEMENTS-v7.92.txt
+§ 13)
+- Plus rapide : l’image de la partie de Devine le lieu arrive 0,6 s plus tôt (921 ms au lieu de 1 500) ; la maquette
+  de l’Atelier s’affiche 0,9 s plus tôt ; les pages des trois vidéos reçoivent deux à trois fois moins de Ko d’images
+  (Trailer 1, page entière : 1 020 → 412 Ko) ; la page Vidéos officielles reçoit 672 → 439 Ko au chargement.
+- Le premier affichage ne bouge presque pas (de −60 à +80 ms selon la page).
+- Ce que coûtent des pages deux fois plus riches : 0,02 à 0,33 s de plus avant que la page soit entièrement lue
+  (DOMContentLoaded) et 0,04 à 0,44 s de travail du processeur en plus sur un téléphone ralenti ; Éditions reçoit 86 Ko
+  de plus (21 visuels au lieu de 3). Atelier 3D en deuxième visite : premier affichage +70 ms, prix du préchargement de
+  three.js qui fait gagner 0,9 s à la première.
+
+MARCHE À SUIVRE
+  1. Décompresse les deux parties à la racine du dépôt, dans n’importe quel ordre (elles remplacent les fichiers modifiés et
+     ajoutent les nouveaux), puis pousse depuis GitHub Desktop. Aucun fichier à supprimer.
+  2. Essai : editions.html (filtres de l’Ultimate, tableau), videos.html (choisir une autre vidéo dans la liste), actus.html
+     (filtres de la frise), verification.html, presse.html (copier une couleur, une formule), compagnon.html (le téléphone
+     change d’écran au défilement), devine-le-lieu.html (joue une image : elle entre dans l’album, plus bas), atelier-3d.html
+     (change la couleur : instantané) ; une page en anglais ou en allemand (en/devine-le-lieu.html, de/compagnon.html).
+  3. Rien à faire dans Vercel, Google Search Console ni ailleurs.
+
+Contrôles : voir outils/CHANGEMENTS-v7.92.txt (tests Node dont outils/tests/v792.test.cjs, navigateur
+outils/tests/v792-browser.cjs, langues à {} dans les cinq langues, écrans de 320 à 1 440 px dans les six langues, latence).
+Retour arrière : commit précédent dans GitHub Desktop.
