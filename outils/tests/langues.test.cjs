@@ -31,7 +31,7 @@ function walk(node, fn, ctx = {}) {
   let c = ctx;
   if (el) {
     /* v7.85 : le contenu des <template> (pré-listes de l'Atelier…) et les textes des SVG sont lus aussi */
-    const skip = ['script', 'style'].includes(el.tagName) || attr(el, 'translate') === 'no' || attr(el, 'data-lk-langbar') !== undefined || attr(el, 'lang') === 'fr' || attr(el, 'hreflang') === 'fr' && el.tagName === 'link';
+    const skip = ['script', 'style'].includes(el.tagName) || attr(el, 'translate') === 'no' || attr(el, 'data-lk-langbar') !== undefined || attr(el, 'lang') === 'fr' || (el.tagName !== 'html' && !!attr(el, 'lang')) /* v7.93 : un bloc marqué d’une autre langue (citation en anglais, lang="en") est voulu tel quel */ || attr(el, 'hreflang') === 'fr' && el.tagName === 'link';
     c = { ...ctx, skip: ctx.skip || skip };
     fn(el, c);
   } else if (node.nodeName === '#text') fn(node, ctx);

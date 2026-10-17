@@ -63,10 +63,10 @@ test('flux RSS : actus.xml dans chaque langue, une entrée par annonce, titres t
   }
 });
 
-test('vidéos : trois pages, lecteur de YouTube chargé au clic seulement, liens de secours, VideoObject, moments et musique', () => {
+test('vidéos : une page par vidéo, lecteur de YouTube chargé au clic seulement, liens de secours, VideoObject, moments et musique', () => {
   const R = JSON.parse(read('outils/radios/radios.json'));
   const hub = doc('videos.html');
-  /* v7.92 : la salle de projection liste les trois vidéos (chacune mène à sa page) */
+  /* v7.92 : la salle de projection liste les vidéos (chacune mène à sa page) ; v7.92.1 : quatre avec la bande-annonce de lancement */
   assert.equal(hub.querySelectorAll('.ac-pl-a[data-ac-pick]').length, A.videos.liste.length);
   for (const v of A.videos.liste) assert.ok(hub.querySelector('.ac-pl-a[href="videos/' + v.id + '.html"]'), v.id);
   for (const v of A.videos.liste) {
@@ -85,7 +85,8 @@ test('vidéos : trois pages, lecteur de YouTube chargé au clic seulement, liens
     const songs = R.videos.find(x => x.id === v.radio).morceaux;
     assert.equal(d.querySelectorAll('.ac-song').length, songs.length, f + ' : morceaux');
     for (const a of d.querySelectorAll('main a[href]')) { const h = a.getAttribute('href'); if (!/^(https?:|#|mailto:)/.test(h)) assert.ok(exists(f, h), f + ' : ' + h); }
-    assert.ok(d.querySelectorAll('.ac-chips a').length >= 3, f + ' : modèles repérés');
+    /* v7.92.1 : une vidéo dont aucun véhicule ni aucune arme n’est encore relevé (bande-annonce de lancement) n’a pas ces sections */
+    if (d.getElementById('vehicules') || d.getElementById('armes')) assert.ok(d.querySelectorAll('.ac-chips a').length >= 3, f + ' : modèles repérés');
   }
   /* photogrammes minutés : un moment par photogramme officiel de la vidéo, dans l’ordre du temps */
   const t1 = doc('videos/trailer-1.html'), times = [...t1.querySelectorAll('.ac-moment-t time')].map(t => t.textContent);

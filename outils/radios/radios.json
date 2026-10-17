@@ -4,7 +4,7 @@
   "label": "Radios et musique",
   "title": "Les radios et la musique de GTA VI",
   "lede": "Rockstar a présenté six stations le 8 octobre 2026, avec leurs animateurs et des podcasts à la demande. Voici les stations, les morceaux des trailers et de l’Extended Look, et l’album officiel du jeu.",
-  "desc": "Les six radios de GTA 6 présentées par Rockstar : Flash FM, Cocoteo FM, Back Country Radio, AfroBank FM, The Chamber 106.6 et Dirty South Classics.",
+  "desc": "Les six radios de GTA 6 présentées par Rockstar, animateurs et chansons : Flash FM, Cocoteo FM, Back Country, AfroBank FM, The Chamber, Dirty South.",
   "note": "Chaque information dit d’où elle vient : annoncée par Rockstar, ou entendue dans une vidéo officielle et identifiée par la presse. Les listes de stations tirées des fuites ne sont pas reprises.",
   "pile": [
    {
@@ -23,14 +23,14 @@
     "alt": "Dre’Quan Priest au milieu d’un club baigné de lumière violette, visuel officiel Rockstar Games"
    }
   ],
-  "seoTitle": "Radios GTA 6 : les 6 stations et leurs animateurs"
+  "seoTitle": "GTA VI radios : les 6 stations, animateurs et chansons"
  },
  "poste": {
   "kicker": "Le poste de Leonida",
   "titre": "Ce que Rockstar a fait entendre",
-  "lede": "Le poste parcourt les quatre sources de musique déjà entendues : trois vidéos officielles et l’album. Choisis-en une, ses morceaux s’affichent avec leur moment, leur statut et leur source.",
+  "lede": "Le poste parcourt les cinq sources de musique déjà entendues : quatre vidéos officielles et l’album. Choisis-en une, ses morceaux s’affichent avec leur moment, leur statut et leur source.",
   "choisir": "Choisir une source de musique",
-  "sansJs": "Les quatre sources, l’une après l’autre :",
+  "sansJs": "Les cinq sources, l’une après l’autre :",
   "video": "Voir la vidéo officielle",
   "morceau": "morceau",
   "morceaux": "morceaux",
@@ -387,6 +387,29 @@
      ]
     }
    ]
+  },
+  {
+   "id": "bande-annonce-lancement",
+   "nom": "Bande-annonce de lancement",
+   "court": "Lancement",
+   "date": "2026-10-15",
+   "dateTexte": "15 octobre 2026",
+   "statut": "officiel",
+   "resume": "Un nouveau single de Justice, le duo qui compose la musique originale du jeu, nommé par Rockstar dans son annonce.",
+   "lien": "https://www.rockstargames.com/videos/76orsa95",
+   "youtube": "rz1B4B2yBZY",
+   "morceaux": [
+    {
+     "titre": "Flower in a Hurricane",
+     "artiste": "Justice, Tame Impala, SZA, King Gizzard & The Lizard Wizard",
+     "infos": "Single, 2026",
+     "moment": "Morceau principal",
+     "statut": "officiel",
+     "sources": [
+      "rs-launch"
+     ]
+    }
+   ]
   }
  ],
  "fichesTitre": "L’album officiel",
@@ -397,19 +420,20 @@
    "name": "Grand Theft Auto VI: The Album",
    "kind": "Album officiel",
    "tagline": "34 titres originaux, le 19 novembre 2026.",
-   "description": "L’album officiel de GTA VI, annoncé par Rockstar et Atlantic Records le 17 septembre 2026 : 34 titres originaux, six déjà sortis, le reste le jour du jeu.",
+   "description": "L’album officiel de GTA VI, annoncé par Rockstar et Atlantic Records le 17 septembre 2026 : 34 titres originaux, six sortis dès l’annonce, d’autres depuis.",
    "media": [
     "dre-quan-priest-04"
    ],
    "imageAlt": "Dre’Quan Priest près d’une console de mixage dans un studio d’enregistrement, capture officielle Rockstar Games (aucune pochette n’est reprise ici)",
    "source": "https://www.rockstargames.com/newswire/article/7599a881942544/announcing-grand-theft-auto-vi-the-album-coming-november-19",
-   "texte": "Rockstar Games et Atlantic Records ont annoncé l’album le 17 septembre 2026. Il réunit 34 titres originaux, écrits pour le jeu, qui doivent « capturer l’énergie électrique de Vice City et de Leonida », selon le message officiel. Il sort le 19 novembre 2026, le même jour que GTA VI, en écoute en ligne, en CD et en vinyle. Six titres sont sortis dès l’annonce, de Yung Lean à Keith Richards.",
+   "texte": "Rockstar Games et Atlantic Records ont annoncé l’album le 17 septembre 2026. Il réunit 34 titres originaux, écrits pour le jeu, qui doivent « capturer l’énergie électrique de Vice City et de Leonida », selon le message officiel. Il sort le 19 novembre 2026, le même jour que GTA VI, en écoute en ligne, en CD et en vinyle. Six titres sont sortis dès l’annonce, de Yung Lean à Keith Richards. D’autres singles ont suivi, dont « Flower in a Hurricane » de Justice, le 15 octobre.",
    "contexte": "Le même jour, Rockstar a promis d’en dire plus sur la musique du jeu : une partition dynamique et « la prochaine évolution de la radio en jeu ». L’album n’en dit pas plus : ses titres ne sont rattachés à aucune station, et rien ne dit encore dans quelles situations on les entendra en jouant. Trois éditions physiques sont réservées au site d’Atlantic Records ; le vinyle en édition limitée a été épuisé en quelques minutes, selon TechRadar.",
    "pratique": "Pour l’instant, c’est un album à écouter en dehors du jeu. Rockstar a présenté six stations le 8 octobre 2026 sans dire lesquelles diffuseront ces titres ; Morgan Wallen, dont un titre figure sur l’album, anime Back Country Radio. Les autres morceaux connus, ceux des trailers et de l’Extended Look, sont dans le poste de la page Radios et musique.",
    "facts": [
     "Annoncé le 17 septembre 2026 par Rockstar Games et Atlantic Records.",
     "34 titres originaux, à paraître le 19 novembre 2026, le jour du jeu.",
     "Six titres sortis dès l’annonce : Yung Lean, Travis Scott, CA7RIEL & Paco Amoroso, Morgan Wallen, Rauw Alejandro et Keith Richards.",
+    "D’autres singles ont suivi, dont « Flower in a Hurricane » de Justice, le 15 octobre 2026.",
     "Aucun de ces titres n’est encore rattaché à l’une des six stations présentées."
    ],
    "characters": [
@@ -431,7 +455,8 @@
     "mbw-album",
     "billboard-album",
     "techradar-album",
-    "gamespot-radio-evolution"
+    "gamespot-radio-evolution",
+    "rs-launch"
    ],
    "aliases": [
     "gta 6 the album",
@@ -516,7 +541,7 @@
    }
   ],
   "rockstar": {
-   "lede": "Rockstar a présenté six stations et des podcasts, fait entendre des morceaux dans trois vidéos et publié un album.",
+   "lede": "Rockstar a présenté six stations et des podcasts, fait entendre des morceaux dans quatre vidéos et publié un album.",
    "items": [
     {
      "date": "4 décembre 2023",
@@ -563,6 +588,14 @@
      "titre": "Six stations et des podcasts",
      "statut": "officiel",
      "texte": "Rockstar présente six stations et leurs animateurs, de Bad Bunny à Lana Del Rey, et des podcasts à la demande. Radio et podcasts s’écoutent en voiture ou à pied, avec le téléphone et des écouteurs."
+    },
+    {
+     "date": "15 octobre 2026",
+     "titre": "La bande-annonce de lancement",
+     "statut": "officiel",
+     "texte": "Elle se joue sur « Flower in a Hurricane », nouveau single de Justice avec Tame Impala, SZA et King Gizzard & The Lizard Wizard. Rockstar présente Justice comme le compositeur de la musique originale du jeu.",
+     "media": "affiche-bande-annonce-lancement",
+     "alt": "Affiche officielle de la bande-annonce de lancement de GTA VI : Jason et Lucia devant une voiture rouge, sous les palmiers"
     }
    ],
    "p": [
@@ -725,7 +758,7 @@
    },
    {
     "q": "Quelle est la musique des trailers de GTA 6 ?",
-    "a": "Le Trailer 1 se joue sur « Love Is a Long Road » de Tom Petty (1989), le Trailer 2 sur « Hot Together » des Pointer Sisters (1986) : les deux sont crédités par Rockstar. Dans le Trailer 2, de courtes bribes d’autoradio passent aussi pendant que Jason conduit : Zenglen, Wang Chung et Tammy Wynette, relevés par la presse.",
+    "a": "Le Trailer 1 se joue sur « Love Is a Long Road » de Tom Petty (1989), le Trailer 2 sur « Hot Together » des Pointer Sisters (1986) : les deux sont crédités par Rockstar. Dans le Trailer 2, de courtes bribes d’autoradio passent aussi pendant que Jason conduit : Zenglen, Wang Chung et Tammy Wynette, relevés par la presse. La bande-annonce de lancement, le 15 octobre 2026, se joue sur « Flower in a Hurricane », nouveau single de Justice.",
     "k": [
      "musique trailer",
      "chanson trailer 1",
@@ -733,7 +766,10 @@
      "tom petty",
      "hot together",
      "pointer sisters",
-     "love is a long road"
+     "love is a long road",
+     "flower in a hurricane",
+     "justice",
+     "bande-annonce de lancement"
     ],
     "leo": "musique-trailer"
    },
@@ -758,7 +794,7 @@
    },
    {
     "q": "C’est quoi « Grand Theft Auto VI: The Album » ?",
-    "a": "L’album officiel du jeu, annoncé par Rockstar et Atlantic Records le 17 septembre 2026 : 34 titres originaux, à paraître le 19 novembre 2026 avec le jeu. Six titres sont déjà sortis, dont ceux de Travis Scott, Yung Lean et Keith Richards.",
+    "a": "L’album officiel du jeu, annoncé par Rockstar et Atlantic Records le 17 septembre 2026 : 34 titres originaux, à paraître le 19 novembre 2026 avec le jeu. Six titres sont sortis dès l’annonce, dont ceux de Travis Scott, Yung Lean et Keith Richards ; d’autres ont suivi, comme « Flower in a Hurricane » de Justice le 15 octobre.",
     "k": [
      "album gta 6",
      "the album",
@@ -805,7 +841,8 @@
    "consequence-every-song",
    "gtafandom-vrock",
    "postmode-24things",
-   "gamespot-khaled"
+   "gamespot-khaled",
+   "rs-launch"
   ]
  },
  "sources": {
@@ -815,7 +852,7 @@
    "publishedAt": "2023-12-04",
    "consultedAt": "2026-10-04",
    "statut": "officiel",
-   "claim": "Les trois vidéos dont viennent les morceaux. Les descriptions des Trailers 1 et 2 créditent « Love Is a Long Road » et « Hot Together »."
+   "claim": "Les vidéos officielles dont viennent les morceaux. Les descriptions des Trailers 1 et 2 créditent « Love Is a Long Road » et « Hot Together »."
   },
   "rs-extended": {
    "url": "https://www.rockstargames.com/newswire/article/4k138k8okkk483/grand-theft-auto-vi-an-extended-look-now-playing",
@@ -1079,6 +1116,15 @@
    "consultedAt": "2026-10-12",
    "statut": "officiel",
    "claim": "Liste les six stations et leurs animateurs, et renvoie aux aperçus de la page Musique officielle."
+  },
+  "rs-launch": {
+   "url": "https://www.rockstargames.com/newswire/article/517572321a549a/watch-the-grand-theft-auto-vi-launch-trailer",
+   "title": "Rockstar Newswire : la bande-annonce de lancement de GTA VI",
+   "publisher": "Rockstar Games",
+   "publishedAt": "2026-10-15",
+   "consultedAt": "2026-10-16",
+   "statut": "officiel",
+   "claim": "La bande-annonce de lancement se joue sur « Flower in a Hurricane », nouveau single de Justice avec Tame Impala, SZA et King Gizzard & The Lizard Wizard, aussi sur GTA VI: The Album ; Justice compose la musique originale du jeu."
   }
  },
  "leo": {
@@ -1095,11 +1141,11 @@
   "kicker": "L’album officiel",
   "stats": [
    "34 titres originaux",
-   "6 titres déjà sortis",
+   "6 titres sortis dès l’annonce",
    "Sortie le 19 novembre 2026"
   ],
   "cta": "Ouvrir la fiche de l’album",
-  "ecouter": "Écouter les titres déjà sortis"
+  "ecouter": "Écouter les premiers titres"
  },
  "_noteLecteur": "Lecteur au clic (v7.66) : « youtube » = identifiant de la vidéo officielle sur la chaîne YouTube de Rockstar Games (vérifié par oEmbed le 4 octobre 2026 : Trailer 1, Trailer 2, An Extended Look) ; le morceau démarre à son moment. Les singles se lisent avec le lecteur Spotify quand un lien officiel open.spotify.com/track est connu. Rien ne se charge avant le clic.",
  "stations": [

@@ -1,0 +1,7 @@
+{
+ "_note": "v7.93 (lot 8) : bloc « Sites amis » de la page À propos (section Contribuer, ancre #sites-amis), rendu par outils/gen-informations.cjs. Un site = une ligne dans « sites » : {\"nom\": \"Nom du site\", \"url\": \"https://…\", \"mots\": \"ce qu’il fait, en quelques mots\"} ; « mots » est facultatif. Le nom et l’adresse passent tels quels dans toutes les langues ; les mots s’affichent en français tant que leur traduction n’est pas dans outils/langues/<code>/ (l’extraction les liste). Liste vide = la phrase d’attente s’affiche. Régénérer ensuite (node outils/gen-informations.cjs puis la fin de chaîne).",
+ "titre": "Sites amis",
+ "vide": "La liste est vide pour l’instant : elle accueillera les sites qui parlent de GTA VI avec le même soin.",
+ "sites": [
+ ]
+}

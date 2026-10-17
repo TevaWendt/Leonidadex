@@ -22,7 +22,11 @@ const info = [['a-propos.html', 'À propos'], ['contact.html', 'Contact'], ['pre
 /* v7.89 (lot 5) : la page Mode compagnon (appli, sans réseau, changer d'appareil) : menu « Explorer › Le site » et pied de page « Outils et aide » */
 const companion = ['compagnon.html', 'Mode compagnon'];
 /* v7.87 : « L’actualité » : les annonces date par date, les vidéos officielles, les éditions et la page de méthode */
-const news = [['actus.html', 'Actualités'], ['videos.html', 'Vidéos officielles'], ['editions.html', 'Éditions'], ['verification.html', 'Ce qui est confirmé']];
+const news = [['actus.html', 'Actualités'], ['videos.html', 'Vidéos officielles'], ['editions.html', 'Éditions'], ['prix.html', 'Prix et collector'] /* v7.92.1 */, ['verification.html', 'Ce qui est confirmé'],
+  /* v7.93 (lot 8) : les pages qui répondent aux recherches des joueurs, dans le même groupe que « Ce qui est confirmé » (menu, pied de page, puces) */
+  ['prechargement.html', 'Préchargement'], ['gta-6-pc.html', 'GTA VI sur PC'], ['gta-6-vs-gta-5.html', 'GTA VI et GTA V']];
+/* v7.93 : « Les vraies voitures » est une page de la famille Véhicules (comme le comparateur ou le classement) : menu « Véhicules » actif, puces « S’équiper » */
+const realCars = 'vraies-voitures.html';
 const top = [['calculateurs.html', 'Calculateur'], ['tuto.html', 'Tuto'], ['carte.html', 'Carte'], ['vehicules.html', 'Véhicules'], ['armes.html', 'Armurerie'], ['atelier-3d.html', 'Atelier 3D'] /* v7.83 */, ['achats.html', 'Achats'], ['progression.html', 'Progression']];
 
 /* v7.75 (Téva : « quand on clique sur la section GTA Online, j'aimerais que ça ouvre une nouvelle page du navigateur ; pareil
@@ -46,7 +50,7 @@ function currentOf(file) {
   /* v7.51 (lot 4) : les carnets de progression (carnets/<id>.html) sont des pages de la Progression. */
   if (file.startsWith('carnets/')) return 'progression.html';
   if (file.includes('/')) return file.split('/')[0] + '.html';
-  return ({ 'comparateur.html': 'vehicules.html', 'classement-vehicules.html': 'vehicules.html', 'vehicules-rares.html': 'vehicules.html' })[file] || file;
+  return ({ 'comparateur.html': 'vehicules.html', 'classement-vehicules.html': 'vehicules.html', 'vehicules-rares.html': 'vehicules.html', [realCars]: 'vehicules.html' /* v7.93 */ })[file] || file;
 }
 function nav(file, prefix) {
   const current = currentOf(file);
@@ -80,7 +84,7 @@ function footer(existing, prefix, file = '') {
 const chipList = [['achats.html', 'Tout ce qui s’achète'], ['vehicules.html', 'Véhicules'], ['armes.html', 'Armurerie'],
   ...acquisition.filter(c => !c.alias).map(c => [c.route.slice(1), c.label]),
   ['progression.html#carnets', 'Mes carnets'], ['tuto.html#sources', 'Comprendre les statuts']];
-const sectionPages = new Set([...world.map(x => x[0]), ...play.map(x => x[0]) /* sections missions, activites, radios, codes, trophees */, ...online.map(x => x[0]).filter(f => !f.includes('/')) /* section online : le hub seul */, ...acquisition.map(c => c.route.slice(1).split('#')[0]), 'vehicules.html', 'armes.html', 'achats.html', 'progression.html', ...news.map(x => x[0]) /* v7.87.1 : L’actualité */]);
+const sectionPages = new Set([...world.map(x => x[0]), ...play.map(x => x[0]) /* sections missions, activites, radios, codes, trophees */, ...online.map(x => x[0]).filter(f => !f.includes('/')) /* section online : le hub seul */, ...acquisition.map(c => c.route.slice(1).split('#')[0]), 'vehicules.html', 'armes.html', 'achats.html', 'progression.html', ...news.map(x => x[0]) /* v7.87.1 : L’actualité */, realCars /* v7.93 */]);
 /* v7.69 : les puces suivent la famille de la page. Les pages du monde (lieux, personnages… animaux, collectibles) proposent
    les autres pages du monde et la carte ; les pages « Jouer » (missions, activités, radios, codes, trophées, GTA Online)
    les autres pages de jeu ; les pages d’achat et la Progression gardent la liste « S’équiper ». Une page de la faune ne

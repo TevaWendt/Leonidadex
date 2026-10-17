@@ -131,7 +131,9 @@ H=H.replace(/<script type="application\/ld\+json">\{"@context":"https:\/\/schema
   name:'Véhicules de GTA VI recensés par Leonidakit',numberOfItems:N,
   itemListElement:V.map((v,i)=>({'@type':'ListItem',position:i+1,name:nomC(v),
    url:'https://www.leonidakit.com/vehicules/'+v.id+'.html'}))})+'</script>');
-H=H.replace(/les \d+ modèles recensés/g,'les '+N+' modèles recensés')
+H=H.replace(/liste des \d+ voitures, motos et bateaux/g,'liste des '+N+' voitures, motos et bateaux')/* v7.93 : titre pour « gta 6 voiture, car list » */
+   .replace(/La liste des \d+ véhicules de GTA 6 vus/g,'La liste des '+N+' véhicules de GTA 6 vus')
+   .replace(/les \d+ modèles recensés/g,'les '+N+' modèles recensés')
    .replace(/les \d+ modèles confirmés/g,'les '+N+' modèles recensés')
    .replace(/Les \d+ véhicules confirmés de GTA VI/g,'Les '+N+' véhicules recensés de GTA VI')
    .replace(/"numberOfItems": \d+/g,'"numberOfItems": '+N)
@@ -239,7 +241,7 @@ function fiche(v,i){
 <section class="shell reveal" id="modele-reel">
   <h2 class="sec-h">${esc(red.h2[1])}</h2>
   <p class="fiche-txt rise">Le rapprochement retenu pour ce véhicule est <strong>${esc(v.insp||v.fam)}</strong>. ${esc(pioche(v.id,'insp',V_INSP))}</p>
-  <div class="fiche-liens rise"><a id="reel-bt" href="${esc(v.reel)}" target="_blank" rel="noopener nofollow">Voir ${esc(v.reelNom)} en photo</a><a href="https://fr.wikipedia.org/w/index.php?search=${encodeURIComponent(v.reelNom)}" target="_blank" rel="noopener nofollow">Fiche encyclopédique</a>${v.slot?'<a href="../vehicules.html#slot='+v.slot+'">Autres '+SLOTP[v.slot].charAt(0).toLowerCase()+SLOTP[v.slot].slice(1)+'</a>':''}</div>
+  <div class="fiche-liens rise"><a id="reel-bt" href="${esc(v.reel)}" target="_blank" rel="noopener nofollow">Voir ${esc(v.reelNom)} en photo</a><a href="https://fr.wikipedia.org/w/index.php?search=${encodeURIComponent(v.reelNom)}" target="_blank" rel="noopener nofollow">Fiche encyclopédique</a>${v.slot?'<a href="../vehicules.html#slot='+v.slot+'">Autres '+SLOTP[v.slot].charAt(0).toLowerCase()+SLOTP[v.slot].slice(1)+'</a>':''}<a href="../vraies-voitures.html#${v.marque&&v.marque!=='Marque inconnue'?'marque-'+v.marque.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''):'marque-inconnue'}">Toutes les vraies voitures de GTA VI</a></div>
 </section>`:'';
  return `<!DOCTYPE html>
 <html lang="fr">

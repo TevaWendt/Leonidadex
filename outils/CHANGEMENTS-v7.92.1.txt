@@ -1,0 +1,210 @@
+LEONIDAKIT v7.92.1 — Presse, Devine le lieu, Actualités, Vidéos officielles, Éditions et Ce qui est confirmé revus ;
+nouvelle page Prix et collector
+— 16 octobre 2026
+
+Base : v7.92 (commit 52ecaec29, poussé par Téva). Demande de Téva du 16 octobre : « revoie la partie presse … n’oublie pas
+les animations et aussi le centrage ainsi que l’alignement des images et textes, idem pour la section Devine le lieu ;
+l’actualité est un peu vide au niveau du contenu ; pour la partie Vidéos officielles on y retrouve les mêmes problèmes,
+surtout au niveau de l’alignement ; … la section Éditions est vraiment fade ; … Ce qui est confirmé, déjà un peu mieux mais
+pas suffisante ; rajoute une partie ou une section avec le bundle Rockstar (figurine, lunettes, casquette… pour 400 euros),
+avec le prix du jeu aussi ». Rien n’est publié ni poussé. CSP inchangée. Aucun fichier à supprimer. Lot 8 (recherches
+Google) reste la v7.93, lot 4 (jour J) la v7.94 ; leurs prompts partent maintenant de la v7.92.1.
+
+Sources relues le 16 octobre 2026 (toutes citées sur les pages, avec leur statut) : Rockstar Newswire (bande-annonce de
+lancement du 15 octobre, coffret « The Goodtime State – Vice City Collection » du 24 septembre, Collection Grand Theft Auto
+VI du 8 octobre, date d’An Extended Look du 6 août, date des précommandes du 18 juin), boutique Rockstar (fiche du coffret :
+399,99 $, expédition, conditions), assistance de Rockstar (éditions, GTA+), PlayStation Store France (79,99 € et 99,99 €),
+PlayStation Blog (manettes DualSense en édition limitée, 84,99 €), presse française pour les seuls prix en euros que
+Rockstar n’affiche pas (coffret : iPhoneSoft ; collection : Xboxygen), marqués « Vu dans un média ».
+
+1. VISUELS OFFICIELS (img/officiel, outils/medias-officiels.json)
+- 18 nouveaux visuels, chacun en 480, 800 et 1 280 px (54 fichiers, 2,3 Mo) : l’affiche de la bande-annonce de lancement,
+  le visuel de l’annonce d’An Extended Look, la photo de la Collection de la boutique, la photo des deux manettes
+  (© Sony Interactive Entertainment / Rockstar Games), l’illustration « The Goodtime State », le coffret fermé et ouvert,
+  et ses onze objets photographiés par la boutique Rockstar. Chacun a sa source, son crédit et sa date de consultation ;
+  medias.html les liste (196 visuels), avec « Source officielle » quand la source n’est pas la galerie de Rockstar.
+
+2. BRIQUES COMMUNES (outils/vitrine.cjs, vitrine.css, vitrine.js ; outils/sections.cjs ; style.css)
+- Nouvelles briques : étiquette de prix (.vt-tag, montant en grand), visuel qui s’incline vers la souris avec un reflet
+  ([data-vt-tilt], 8° au plus, souris seulement, jamais en mouvement réduit), petit choix qui montre la réponse des boutons
+  cochés ([data-vt-pick]), total à cocher au format monétaire de la langue de la page ([data-vt-sum], Intl.NumberFormat,
+  montants en centimes écrits dans la page), « À la une » (.vt-feature), bandeau-lien illustré (.vt-cta), points titrés
+  (.vt-points, rangée incomplète centrée), texte et visuel côte à côte (.vt-split), questions et encart Léo équilibrés
+  (.vt-faqgrid--even). vitrine.js n’écrit toujours aucun mot, ne garde rien et n’envoie rien.
+- Images : option « chargée tout de suite sans priorité haute » pour un second visuel du premier écran (eager: 'normal').
+- Piles d’images des bandeaux (style.css) : la légende de la carte du fond passe en haut à gauche, là où la carte est
+  visible, au lieu d’être coupée par la carte du dessus (toutes les pages à pile de trois).
+- Icônes ajoutées : manette, coffret.
+- Renvois aux sources (actus.css) : dans une bande de nuit, le chiffre passe en clair sur un fond translucide (le corail des
+  liens de paragraphe ne s’y lisait pas : manettes de la page des prix).
+- Au téléphone, aucun texte sous 11 px : étiquettes de prix des Éditions et de la page des prix, légende de la carte de
+  presse (actus.css, informations.css). Les noms longs des objets du coffret se coupent (« Rasierklingen-Schlüsselanhänger »
+  en allemand) ; les montants du bandeau des prix sont plafonnés à la largeur de leur carte (unités de conteneur : « US$
+  399,99 » en portugais tient à toutes les largeurs) et, au téléphone, le coffret et la manette prennent toute la largeur.
+- Animations nouvelles : toutes dans « prefers-reduced-motion: no-preference » (trois anciennes y sont aussi rangées :
+  barres des vidéos, couleurs de la Presse, étiquettes) ; entrées par le moteur commun (LKMotion).
+
+3. PRESSE (presse.html ; outils/gen-informations.cjs, outils/informations-editorial.json, informations.css)
+- Bandeau : une carte de presse suspendue à son cordon (visuel officiel de Vice City vu du ciel, reflet holographique,
+  marque, trois chiffres du site posés par sync-site, code-barres), qui arrive en se balançant et s’incline vers la souris.
+- « Le site en trois phrases » : la carte des trois phrases et « Copier les trois phrases » (d’un coup), à côté des chiffres.
+- Kit : la grande carte « Tout le kit » alignée (icône, texte, bouton), captures sur 4, 2 ou 1 colonnes, notes illustrées.
+- Identité visuelle : nuancier avec reflet et coche à la copie ; formats alignés.
+- Indépendance : le texte puis trois points titrés (ni Rockstar ni Take-Two, aucun contenu payé, chaque information
+  sourcée).
+- Écrire : une lettre avec son timbre (l’icône du site) et son cachet de la poste, « Dans ton message » en trois cases
+  cochées l’une après l’autre, le bouton ; l’encart Léo à côté, de même hauteur.
+
+4. DEVINE LE LIEU (devine-le-lieu.html ; devine.css)
+- En-tête aligné ; légende de la carte sous la carte ; les six cartes postales alignées rangée par rangée (sous-grilles :
+  titres, devises, « Ce que montrent les captures », albums et liens « Sur la carte » sur les mêmes lignes) ; le cycle en
+  deux colonnes sur grand écran ; « Continuer la visite » sur trois colonnes ; l’album au téléphone en cases régulières.
+
+5. ACTUALITÉS (actus.html, actus.xml ; outils/gen-actus.cjs, outils/actus/actus.json, actus.css)
+- 17 annonces au lieu de 11 : la bande-annonce de lancement (15 octobre), la Collection de la boutique Rockstar
+  (8 octobre), le coffret collector (24 septembre), les manettes DualSense (3 septembre), la date d’An Extended Look
+  (6 août), la date des précommandes et la jaquette (18 juin) ; l’annonce du 24 juin complétée (Édition Ultimate, Pack
+  Vintage Vice City, PlayStation). Chacune a sa source ; nouveau type « Produits dérivés » (filtre de la frise).
+- « À la une » en tête : la dernière annonce en grand (affiche, statut, texte, source, « Voir la vidéo », « La fiche de
+  l’album »). Questions fréquentes revues (six) ; bandeau : l’affiche de la bande-annonce de lancement.
+
+6. VIDÉOS OFFICIELLES (videos.html, videos/*.html dont la nouvelle videos/bande-annonce-lancement.html)
+- Quatrième vidéo : la bande-annonce de lancement (15 octobre 2026), sa page (trois faits officiels, lecteur YouTube
+  seulement au clic, sa musique « Flower in a Hurricane » de Justice avec Tame Impala, SZA et King Gizzard & The Lizard
+  Wizard, trois questions, sources) ; aucun photogramme, aucune fiche ni aucun modèle inventés tant que personne ne les a
+  relevés.
+- Salle de projection réalignée : l’écran, le panneau d’informations à côté (faits de la vidéo, bouton calé en bas), la
+  liste des quatre vidéos dessous (4, 2 ou 1 colonnes) ; chiffres : seulement les moments relevés, avec une note.
+- Musique : une carte par vidéo (affiche, morceaux) et la longue liste de l’Extended Look à part ; questions fréquentes :
+  celles du sommaire et la première de chaque vidéo.
+- Pages des vidéos : une vidéo à un seul morceau (Trailer 1, bande-annonce de lancement) le montre en grand, sa pochette
+  (l’affiche de la vidéo) et son vinyle qui sort de la pochette puis tourne quatre tours ; l’encart Léo à côté des
+  questions ; les autres vidéos sur toute la largeur.
+
+7. ÉDITIONS (editions.html)
+- Bandeau : les deux éditions posées l’une sur l’autre, distribuées comme des cartes, chacune avec son prix en étiquette
+  qui se balance (PlayStation Store en France : 79,99 € et 99,99 €), inclinées vers la souris.
+- Cartes des éditions : l’étiquette de prix sur l’image ; côte à côte, une sous-grille aligne titre, phrase, liste et
+  source des deux éditions (sans sous-grille ou en colonne, la source reste calée en bas) ; au téléphone, l’étiquette
+  rapetisse et le ruban « 16 contenus en plus » passe en bas de l’image.
+- Nouveau « Quelle édition choisir ? » : deux questions (les seize contenus ? une boîte ?) et la réponse de l’assistance de
+  Rockstar avec le prix ; sans script, les quatre réponses se lisent l’une après l’autre.
+- Bonus : les conditions du mois de GTA+ (assistance de Rockstar), la fin des bonus en talon de ticket (20 novembre,
+  compte à rebours) ; le coffret collector en bandeau vers la page Prix et collector.
+
+8. PRIX ET COLLECTOR (nouvelle page prix.html ; outils/gen-actus.cjs, outils/actus/actus.json → prix, actus.css)
+- Bandeau : le coffret fermé qui s’ouvre (photos officielles), ses deux prix en étiquettes (399,99 $ « Boutique Rockstar,
+  États-Unis », 399,99 € « Annoncé par la presse »), le tampon « Jeu non inclus » ; quatre chiffres.
+- Le jeu : les deux éditions et leur prix (PlayStation Store en France), ce que chacune contient, les autres façons de
+  l’acheter (boîte, revendeurs).
+- Le coffret « The Goodtime State – Vice City Collection » : ses onze objets en photos officielles (figurine Macca the
+  Gator, lunettes Oakley Frogskins, casquette New Era 9FORTY, sac à bandoulière, miroir aimanté, verre à shot, cuillère à
+  mélange, porte-clés, pin’s, stickers, poster recto verso), le coffret qui s’ouvre au défilement, les conditions de la
+  boutique (expédition à partir du 19 novembre, un par personne, livraison en France, taxes, dimensions, 18 ans et plus).
+- Les manettes DualSense en édition limitée (84,99 € chacune, où les acheter), la Collection de la boutique Rockstar et ses
+  prix en euros relevés par la presse, en ticket de caisse.
+- « Ce que tu vas dépenser » : le jeu, le coffret, les manettes à cocher, le total au format de ta langue (hors port,
+  douane et taxes) ; sans script, trois totaux déjà calculés.
+- Questions fréquentes (sept) avec l’encart Léo ; sources (huit), chacune avec son statut ; données structurées : fil
+  d’Ariane, WebPage, FAQPage, aucune offre, aucun avis. Menu, pied de page et puces de « L’actualité », recherche du site,
+  plan du site, image de partage dans les six langues.
+
+9. CE QUI EST CONFIRMÉ (verification.html)
+- Relu le 16 octobre ; 12 points confirmés au lieu de 8 : le prix du jeu (étiquettes, PlayStation Store), le coffret
+  collector, les manettes en édition limitée, la Collection de la boutique ; « Les vidéos » : quatre vidéos.
+- Bandeau : le relevé du jour sur sa planchette (la date de relecture, six points cochés l’un après l’autre, deux questions
+  ouvertes, une photo officielle en pièce jointe, le tampon « Vérifié ») ; c’est une image, le tableau de bord juste
+  dessous dit la même chose et se clique. Le tampon a sa propre place sous la dernière ligne (dernière case de la grille de
+  la feuille) : il ne couvre aucun texte, dans aucune langue et à aucune largeur.
+- Modèles réels : trois règles titrées côte à côte au lieu de trois paragraphes.
+
+10. LE RESTE DU SITE
+- Menu, pied de page et puces de « L’actualité » : « Prix et collector » (outils/site-shell.cjs, toutes les pages).
+- Accueil : la dernière annonce (bande-annonce de lancement). Radios et musique : la bande-annonce de lancement en
+  cinquième source du poste, Justice, « 6 titres sortis dès l’annonce ». Textes rendus justes : « les deux premiers
+  trailers » (Vice City, carte), « trois bandes-annonces » (Missions).
+
+11. LÉO (outils/leo-knowledge.json, outils/gen-leo.cjs, outils/langues/{en,de}/leo-pivot.json, {es,it,pt}/_leo-pont.json)
+- Sujets nouveaux : la bande-annonce de lancement, le coffret collector, les manettes DualSense, la boutique Rockstar ;
+  mis à jour : prix (lien vers la page Prix et collector), dernière annonce, vidéos officielles (quatre), Trailer 3, musique
+  des trailers, Macca the Gator, précommande (une précommande numérique donne aussi un mois de GTA+, comme le dit
+  l’assistance de Rockstar). Questions des encarts Léo de la page des prix et des pages des vidéos comprises ; « le trailer
+  de sortie » et « la musique du trailer de sortie » mènent à la bande-annonce de lancement.
+- Sujet Presse : il ne répond plus à une question qui parle du jeu quand un seul de ses mots y correspond (« un journaliste
+  dans le jeu », « journalist in the game »), alors que « je suis journaliste et je prépare un article sur GTA 6 » y mène
+  toujours (drapeau « surLeSite » dans outils/leo-knowledge.json, passé à l’index par outils/gen-leo.cjs, règle dans
+  leo-core.js) : la réponse ne dépend plus d’un centième de confiance, que les nouveaux sujets avaient fait basculer.
+- Anglais : « the GTA 6 box » se lit « la boîte de GTA 6 » (pivot anglais) : « is there a disc in the gta 6 box » mène de
+  nouveau à la version en boîte.
+- Plafond du noyau 336 → 352 Kio (le noyau était à 1,3 Kio du plafond ; il fait 348 Ko, environ 80 Ko compressés,
+  chargé une fois à la première ouverture de Léo, jamais avec la page).
+- Dans les cinq autres langues, Léo comprend ces questions (« launch trailer », « collector's edition », « controller »,
+  « tráiler de lanzamiento », « edición coleccionista », « cofanetto da collezione », « edição de colecionador »…).
+
+12. LANGUES
+- outils/langues/{en,es,it,de,pt}/v7921.json : 415 textes en anglais et en allemand, 420 en espagnol, en italien et en
+  portugais (les autres textes étaient déjà dans la mémoire) ; extraction à {} dans les cinq langues ; aucune entrée
+  inutilisée, aucun conflit, aucun texte cassé.
+- Choix de traduction : « collector’s box » (en), « Sammlerbox » (de), « caja de coleccionista » (es), « cofanetto da
+  collezione » (it), « box de colecionador » (pt) ; les objets du coffret portent en anglais les noms de la boutique
+  Rockstar (« swizzle spoon », « razor blade keychain »…) ; prix au format de chaque langue (« $399.99 », « 399,99 $ »,
+  « US$ 399,99 »).
+- Italien : « Total » devient « Totale » (outils/langues/it/lot-11.json : page des prix et calculateur, où l’italien
+  gardait le mot tel quel).
+- Contrôle des langues (outils/tests/langues-helper.cjs) : « King Gizzard & The Lizard Wizard » et « GTA VI: The Album »
+  rejoignent les noms propres anglais gardés tels quels sur les pages allemandes.
+
+13. TESTS ET CONTRÔLES
+- outils/tests/v7921.test.cjs (11 tests : sections, prix et statuts de la page des prix, onze objets en photos officielles
+  de la boutique, sources ; total à cocher aux montants des données dans chaque langue, « Totale » en italien, noms
+  anglais de la boutique ; page des prix dans le menu, le pied de page, le plan du site et Léo ; dix-sept annonces et
+  leurs sources ; quatre vidéos ; Éditions ; Presse ; douze points confirmés ; textes à jour ; animations rangées dans
+  « no-preference » ; dix questions à Léo dans les six langues) : 11/11.
+- outils/tests/v7921-browser.cjs (196 contrôles : total à cocher au format de la langue en français et en anglais à 390
+  et 1 280 px, coffret ouvert à la fin, aucune image de 1 280 px au téléphone, renvois aux sources en clair sur la nuit ;
+  « Quelle édition choisir ? » en français et en allemand, cartes d’édition alignées à 1 280 px ; « Copier les trois
+  phrases » ; tampon « Vérifié » qui ne couvre aucune ligne et cartes confirmées de même hauteur à 320, 390 et 1 280 px
+  en trois langues ; filtre « Produits dérivés » ; cartes postales alignées ; disque et pochette de la bande-annonce ;
+  huit pages revues en espagnol, italien, portugais et anglais à 320, 390 et 1 440 px ; partout ni défilement
+  horizontal, ni erreur, ni requête externe, ni cookie) : 196/196.
+- Léo : outils/tests/leo-questions-v7921-<langue>.json, 10/10 dans les six langues ; tous les jeux de questions du site
+  (80 jeux, six langues) rejoués et comparés à la v7.92 : aucun recul (« inédites » en allemand : 95/140 au lieu de 94).
+- Tests adaptés aux changements voulus : v7871 (Éditions et Prix et collector ont leur visuel au lieu d’une pile, le
+  relevé du jour sur « Ce qui est confirmé », une vidéo sans photogramme ni modèle relevé, Prix et collector dans
+  « L’actualité »), v787 (quatre vidéos), v786 (source officielle PlayStation acceptée), section-radios (cinq sources),
+  leo-v745 (plafond du noyau), ecrans-browser (page de la bande-annonce de lancement), langues-helper (deux noms propres
+  anglais gardés sur les pages allemandes), v7871-browser (films des entrées : cartes des seize contenus #ue-list et
+  cartes confirmées .vf-card, le balisage de la v7.92 ; ses anciennes cibles n’existaient plus depuis la v7.92).
+- Contrôles navigateur des versions d’avant, rejoués : v7871-browser (342 chargements : aucun débordement, aucun texte
+  sous 11 px, aucune petite cible, aucune erreur ; lecteur 4/4), v792-browser 53/53, v790-browser 143/143.
+- Contrôles de la version livrée (16 octobre, de 17 h 53 à 19 h 41 ; outils/livraison/verifier-tout.sh) : suite Node
+  1 152/1 152 ; langues 51/51 ; verifier.js : aucune erreur, 444 411 références dans 2 809 pages ; preuve de
+  confidentialité tenue ; pages des langues 35/35 ; langues dans le navigateur 2 791/2 791 ; écrans 73 pages × 16
+  largeurs et 70 pages allemandes × 5 largeurs : aucun débordement, aucun texte sous 10 px, aucune cible trop petite, et
+  exactement les signaux de la v7.92 sur des pages non touchées (alignements de galeries et de fiches) ; audit de
+  clôture : 0 problème, 0 erreur console, 11 751 contrastes ; cookies : aucun ; gen-leo --check ; images de partage à
+  jour ; une synchronisation de plus (outils/sync-site.cjs) ne change aucun fichier ; v7921-browser 196/196 et
+  v792-browser 53/53 rejoués sur cette version.
+- Trouvé et corrigé par ces contrôles avant livraison : quatre petits textes au téléphone (étiquettes de prix, légende de
+  la carte de presse : 9,6 px → 11 px), un nom d’objet trop long en allemand, le montant portugais du coffret coupé,
+  le tampon « Vérifié » qui touchait la dernière ligne du relevé (allemand ; anglais et français au téléphone), une
+  question de Léo (« journalist in the game ») qui menait à la page Presse.
+
+14. LATENCE (mesurée le 16 octobre vers 17 h ; depuis, seules quatre tailles de texte du téléphone ont changé)
+- Banc du site, outils/tests/latence-browser.cjs : téléphone 390 px (densité 3), processeur ralenti ×4, réseau « 4G
+  lente » simulé par le serveur (150 ms, 1,6 Mbit/s, réponses compressées), 4 tours en alternance (8 pour Éditions, dont
+  le premier passage donnait un premier affichage à +236 ms, écart du banc : 864 au lieu de 884 sur 8 tours), médianes ; à
+  froid puis à chaud. v7.92 → v7.92.1, en ms ; Ko reçus à froid.
+                         FCP froid    DCL froid     chargement   processeur   Ko froid    FCP chaud   DCL chaud
+  Éditions               884 → 864   1163 → 1190   1513 → 1550   1229 → 1303   422 → 372   456 → 536   807 → 962
+  Vidéos officielles     880 → 908   1058 → 1123   1429 → 1493    965 → 1097   449 → 416   476 → 488   815 → 837
+  Actualités             824 → 896   1113 → 1099   1440 → 1441   1291 → 1085   382 → 403   460 → 452   842 → 855
+  Ce qui est confirmé    928 → 908   1041 → 1092   1427 → 1461    929 → 1139   307 → 253   484 → 508   794 → 934
+  Presse                 796 → 832   1013 → 1147   1398 → 1538    955 → 1050   301 → 275   448 → 508   702 → 802
+  Devine le lieu         944 → 964   1187 → 1114   1697 → 1503   1264 → 1239   389 → 394   396 → 364   989 → 1084
+  Prix et collector         —  876      —  1169       —  1534       —  1204     —  431      —  468      —  822
+- Ce qu’on en retient : le premier affichage bouge à peine (de −20 à +72 ms) ; le plus grand élément des Vidéos
+  officielles arrive 0,44 s plus tôt (936 au lieu de 1 372 ms) ; Éditions, Vidéos, Ce qui est confirmé et la Presse
+  reçoivent 26 à 54 Ko de moins ; au téléphone ralenti ×4, DOMContentLoaded et le processeur montent de 0,01 à 0,21 s
+  sur certaines pages, prix de blocs plus nombreux (sous-grilles, étiquettes, relevé du jour) ; la nouvelle page des prix
+  est dans les mêmes temps que les autres.

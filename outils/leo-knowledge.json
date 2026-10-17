@@ -103,19 +103,20 @@
     "debloque",
     "a quelle heure"
    ],
-   "text": "Sur le PlayStation Store, le jeu se débloque à minuit dans la nuit du 18 au 19 novembre 2026 (heure locale). Vérifie l’heure exacte sur la boutique de ta console juste avant, elle peut changer.",
+   "text": "Rockstar n’a pas annoncé l’heure de déblocage. Les boutiques affichent des horaires qui reviennent à minuit, heure locale, dans la nuit du 18 au 19 novembre 2026, et Xbox dit « généralement peu après minuit ». Vérifie l’heure sur la boutique de ta console la veille.",
    "status": "Boutiques officielles, à vérifier",
    "links": [
     {
-     "label": "Préchargement et sortie",
-     "url": "/editions.html#prechargement"
+     "label": "Préchargement : l’heure du 19 novembre",
+     "url": "/prechargement.html#q-heure-sortie"
     },
     {
      "label": "Le calendrier",
      "url": "/a-propos.html#calendrier"
     }
    ],
-   "min": 1
+   "min": 1,
+   "checkedAt": "2026-10-16"
   },
   {
    "id": "precharge",
@@ -128,7 +129,13 @@
     "preload gta vi",
     "telecharger gta 6 avant la sortie",
     "precharge gta6 date",
-    "pre load quand"
+    "pre load quand",
+    "a quelle heure commence le prechargement",
+    "comment precharger",
+    "comment precharger sur ps5",
+    "comment precharger sur xbox",
+    "precharger avec la boite",
+    "le prechargement est ouvert"
    ],
    "k": [
     "prechargement",
@@ -138,15 +145,20 @@
     "pre load",
     "preload"
    ],
-   "text": "Le préchargement commence le 12 novembre 2026 pour les versions numériques, une semaine avant la sortie. Le poids du jeu n’a pas été communiqué.",
-   "status": "Officiel Rockstar",
+   "text": "Le préchargement commence le 12 novembre 2026 à minuit, heure locale, une semaine avant la sortie, d’après l’assistance de Rockstar : pour les versions numériques précommandées et, avec le code, pour la boîte. La taille du jeu n’est pas communiquée. La page du préchargement donne la marche à suivre sur PS5 et Xbox Series.",
+   "status": "Officiel Rockstar (assistance)",
    "links": [
     {
-     "label": "Le calendrier",
-     "url": "/a-propos.html#calendrier"
+     "label": "Préchargement : date, marche à suivre, taille",
+     "url": "/prechargement.html"
+    },
+    {
+     "label": "Comment précharger sur PS5 et Xbox",
+     "url": "/prechargement.html#comment"
     }
    ],
-   "source": "https://www.rockstargames.com/VI"
+   "source": "https://www.rockstargames.com/VI",
+   "checkedAt": "2026-10-16"
   },
   {
    "id": "taille",
@@ -160,7 +172,12 @@
     "espace disque gta vi",
     "cb de go gta6",
     "il faut un ssd pour gta 6",
-    "gta6 pese combien"
+    "gta6 pese combien",
+    "taille sur ps5",
+    "taille de telechargement",
+    "espace de stockage",
+    "poids en go",
+    "combien de giga"
    ],
    "k": [
     "poids du jeu",
@@ -170,15 +187,20 @@
     "espace disque",
     "ssd"
    ],
-   "text": "Rockstar n’a pas communiqué la taille du jeu. On saura le poids exact à l’ouverture du préchargement, le 12 novembre 2026.",
+   "text": "Rockstar n’a pas communiqué la taille du jeu, et les boutiques ne l’affichent pas encore. On saura le poids exact au plus tard à l’ouverture du préchargement, le 12 novembre 2026 : la page du préchargement le reprendra avec sa source.",
    "status": "Non communiqué",
    "links": [
+    {
+     "label": "Préchargement : la taille du jeu",
+     "url": "/prechargement.html#q-taille"
+    },
     {
      "label": "Le calendrier",
      "url": "/a-propos.html#calendrier"
     }
    ],
-   "min": 1
+   "min": 1,
+   "checkedAt": "2026-10-16"
   },
   {
    "id": "plateformes",
@@ -227,9 +249,15 @@
     "gta 6 steam",
     "le jeu sort sur ordinateur",
     "gta 6 sur ordi",
-    "pc gta vi date",
-    "gta6 sur windows",
-    "portage pc gta 6"
+    "portage pc gta 6",
+    "date de sortie pc",
+    "sur pc c est pour quand",
+    "config requise",
+    "configuration pc",
+    "beta sur pc",
+    "arnaque version pc",
+    "telecharger sur pc",
+    "gratuit sur pc"
    ],
    "k": [
     "sur pc",
@@ -243,17 +271,26 @@
     "portage pc",
     "sortira sur ordinateur"
    ],
-   "text": "Aucune version PC n’est annoncée, ni date, ni page Steam. Une rumeur de septembre 2026 parle d’une arrivée « plus tôt que d’habitude », mais Rockstar n’a rien confirmé. Pour GTA V, la version PC était arrivée un an et demi après les consoles.",
-   "status": "Non annoncé · rumeur non confirmée",
+   "text": "Aucune version PC n’est annoncée : ni date, ni page Steam, ni configuration requise. GTA VI sort le 19 novembre 2026 sur PlayStation 5 et Xbox Series X|S seulement. Pour situer, GTA V est arrivé sur PC un an et demi après les consoles et Red Dead Redemption 2 un an après : ce sont des repères de la série, pas une annonce. Toute « version PC » ou « bêta » proposée aujourd’hui est une arnaque.",
+   "status": "Non annoncé",
    "links": [
     {
-     "label": "Le calendrier",
-     "url": "/a-propos.html#calendrier"
+     "label": "GTA 6 sur PC : ce qu’on sait",
+     "url": "/gta-6-pc.html"
+    },
+    {
+     "label": "Les précédents de la série",
+     "url": "/gta-6-pc.html#serie"
+    },
+    {
+     "label": "Fausses versions PC et fausses bêtas",
+     "url": "/gta-6-pc.html#arnaques"
     }
    ],
    "source": "https://www.rockstargames.com/VI",
    "priority": true,
-   "min": 1
+   "min": 1,
+   "checkedAt": "2026-10-16"
   },
   {
    "id": "ps4",
@@ -368,7 +405,9 @@
     "gta 6 100 euros",
     "tarif gta vi",
     "gta6 cher",
-    "prix du jeu gta 6"
+    "prix du jeu gta 6",
+    "gta 6 79 euros",
+    "gta 6 prix playstation store"
    ],
    "k": [
     "prix",
@@ -382,9 +421,13 @@
     "prix du jeu",
     "combien ca coute"
    ],
-   "text": "Sur les boutiques, l’édition Standard est affichée à 79,99 € et l’Édition Ultimate à 99,99 € (passage de l’une à l’autre : environ 20 €). Ce sont les prix constatés depuis l’ouverture des précommandes le 25 juin 2026 ; vérifie sur ta boutique.",
-   "status": "Prix constatés sur les boutiques",
+   "text": "Sur le PlayStation Store en France, l’Édition Standard est à 79,99 € et l’Édition Ultimate à 99,99 € (relevé du 16 octobre 2026) ; en boîte, chaque revendeur fixe son prix. Le coffret collector, vendu sans le jeu, est à 399,99 $ sur la boutique Rockstar américaine. Tous les prix, avec leur statut, sont sur la page Prix et collector.",
+   "status": "Officiel · PlayStation Store, relevé le 16 octobre 2026",
    "links": [
+    {
+     "label": "Les prix et le coffret collector",
+     "url": "/prix.html"
+    },
     {
      "label": "Ce que contiennent les éditions",
      "url": "/editions.html"
@@ -392,7 +435,115 @@
    ],
    "source": "https://www.rockstargames.com/VI",
    "priority": true,
-   "min": 1
+   "min": 1,
+   "checkedAt": "2026-10-16"
+  },
+  {
+   "id": "coffret-collector",
+   "theme": "jeu",
+   "q": "Que contient le coffret collector de GTA 6 ?",
+   "f": [
+    "coffret collector gta 6",
+    "edition collector gta 6",
+    "the goodtime state",
+    "vice city collection",
+    "bundle rockstar gta 6",
+    "coffret macca the gator",
+    "prix du coffret collector",
+    "collector gta 6 400 euros",
+    "figurine macca gta 6",
+    "gta 6 collector contenu",
+    "le coffret contient il le jeu"
+   ],
+   "k": [
+    "coffret collector",
+    "collector",
+    "goodtime state",
+    "vice city collection",
+    "figurine",
+    "399"
+   ],
+   "text": "The Goodtime State – Vice City Collection est un coffret en édition limitée, sans le jeu : onze objets inspirés de Macca the Gator, dont une figurine de 15 cm, des lunettes Oakley Frogskins, une casquette New Era, un sac à bandoulière, un miroir, un verre à shot, des pin’s, des stickers et un poster. 399,99 $ sur la boutique Rockstar américaine, un seul par personne, expédié à partir du 19 novembre 2026 ; la presse française l’annonce à 399,99 €.",
+   "status": "Officiel Rockstar (boutique) · prix en euros vu dans un média",
+   "links": [
+    {
+     "label": "Le coffret collector",
+     "url": "/prix.html#collector"
+    },
+    {
+     "label": "Ce que tu vas dépenser",
+     "url": "/prix.html#total"
+    }
+   ],
+   "source": "https://www.rockstargames.com/newswire/article/9k2a49ook82o57/pre-order-the-goodtime-state-vice-city-collection-now-while-supplies-l",
+   "checkedAt": "2026-10-16"
+  },
+  {
+   "id": "manettes-dualsense",
+   "theme": "jeu",
+   "q": "Combien coûte la manette DualSense GTA 6 ?",
+   "f": [
+    "manette gta 6",
+    "manette ps5 gta 6",
+    "dualsense gta 6",
+    "prix manette gta 6",
+    "manette edition limitee gta 6",
+    "manette noire gta 6",
+    "manette blanche gta 6",
+    "ou acheter la manette gta 6",
+    "precommande manette gta 6"
+   ],
+   "k": [
+    "manette",
+    "dualsense",
+    "manettes",
+    "84,99"
+   ],
+   "text": "PlayStation présente deux manettes DualSense en édition limitée Grand Theft Auto VI, une noire et une blanche, au prix conseillé de 84,99 € chacune, à partir du 19 novembre 2026 ; précommandes depuis le 10 septembre 2026. La noire est vendue uniquement sur direct.playstation.com, la blanche aussi chez les revendeurs participants.",
+   "status": "Officiel PlayStation · relu le 16 octobre 2026",
+   "links": [
+    {
+     "label": "Les manettes en édition limitée",
+     "url": "/prix.html#manettes"
+    }
+   ],
+   "checkedAt": "2026-10-16"
+  },
+  {
+   "id": "collection-boutique",
+   "theme": "jeu",
+   "q": "Que vend la boutique Rockstar pour GTA 6 ?",
+   "f": [
+    "boutique rockstar gta 6",
+    "t-shirt gta 6",
+    "casquette gta 6",
+    "goodies gta 6",
+    "merch gta 6",
+    "collection gta 6 rockstar store",
+    "zippo gta 6",
+    "produits derives gta 6",
+    "vetements gta 6 officiels"
+   ],
+   "k": [
+    "boutique rockstar",
+    "rockstar store",
+    "tee-shirt",
+    "t-shirt",
+    "casquette",
+    "zippo",
+    "produits derives",
+    "merch"
+   ],
+   "text": "Depuis le 8 octobre 2026, la boutique Rockstar vend la Collection Grand Theft Auto VI : tee-shirts, casquettes, porte-clés, pince à billets, briquet Zippo, tote bags et autocollants, et Rockstar annonce d’autres articles. Les prix en euros relevés par la presse (de 4,99 € à 39,99 €) sont sur la page Prix et collector.",
+   "status": "Officiel Rockstar · prix en euros vus dans un média",
+   "links": [
+    {
+     "label": "La collection de la boutique",
+     "url": "/prix.html#boutique"
+    }
+   ],
+   "source": "https://www.rockstargames.com/newswire/article/759875393o5253/grand-theft-auto-vi-collection-now-at-the-rockstar-store",
+   "checkedAt": "2026-10-16"
   },
   {
    "id": "editions",
@@ -507,7 +658,7 @@
     "acheter gta 6",
     "acheter gta vi"
    ],
-   "text": "Les précommandes sont ouvertes depuis le 25 juin 2026 sur le PlayStation Store, le Xbox Store et la boutique Rockstar. Le bonus de précommande (avant le 20 novembre 2026) est le Pack Vintage Vice City : des tenues années 80, un motif d’arme et le Stanier ’55 avec le garage de Shore Court.",
+   "text": "Les précommandes sont ouvertes depuis le 25 juin 2026 sur le PlayStation Store, le Xbox Store et la boutique Rockstar. Le bonus de précommande (avant le 20 novembre 2026) est le Pack Vintage Vice City : des tenues années 80, un motif d’arme et le Stanier ’55 avec le garage de Shore Court. Une précommande numérique donne aussi un mois de GTA+.",
    "status": "Officiel Rockstar",
    "links": [
     {
@@ -624,6 +775,10 @@
     {
      "label": "La version en boîte",
      "url": "/editions.html#boite"
+    },
+    {
+     "label": "Précharger avec la boîte",
+     "url": "/prechargement.html#boite"
     }
    ],
    "checkedAt": "2026-10-12"
@@ -693,19 +848,23 @@
     "chronologie",
     "toutes les annonces"
    ],
-   "text": "La dernière annonce officielle date du 8 octobre 2026 : Rockstar a présenté six stations de radio, leurs animateurs et des podcasts à la demande. Viennent ensuite le préchargement, le 12 novembre 2026, puis la sortie, le 19 novembre. Toutes les annonces, date par date, sont dans les Actualités.",
-   "status": "Officiel Rockstar · relu le 12 octobre 2026",
+   "text": "La dernière annonce officielle date du 15 octobre 2026 : Rockstar a publié la bande-annonce de lancement, sur « Flower in a Hurricane », nouveau single de Justice, le duo qui signe la musique originale du jeu. Viennent ensuite le préchargement, le 12 novembre 2026, puis la sortie, le 19 novembre. Toutes les annonces, date par date, sont dans les Actualités.",
+   "status": "Officiel Rockstar · relu le 16 octobre 2026",
    "links": [
     {
      "label": "Toutes les annonces, date par date",
      "url": "/actus.html#frise"
     },
     {
+     "label": "La bande-annonce de lancement",
+     "url": "/videos/bande-annonce-lancement.html"
+    },
+    {
      "label": "Ce qui est déjà daté",
      "url": "/actus.html#a-venir"
     }
    ],
-   "checkedAt": "2026-10-12"
+   "checkedAt": "2026-10-16"
   },
   {
    "id": "apercus-presse",
@@ -746,7 +905,9 @@
     "combien de trailers gta 6",
     "liste des trailers gta6",
     "regarder les trailers de gta 6",
-    "ou voir les trailers"
+    "ou voir les trailers",
+    "combien de videos officielles de gta 6",
+    "combien de videos gta 6"
    ],
    "k": [
     "videos officielles",
@@ -755,8 +916,8 @@
     "combien de trailers",
     "regarder les trailers"
    ],
-   "text": "Rockstar a publié trois vidéos : le Trailer 1 (4 décembre 2023), le Trailer 2 (6 mai 2025) et An Extended Look (27 août 2026). Sur le site, chacune se regarde sur sa page, avec les moments relevés, la musique, les véhicules et les armes qu’on y voit ; le lecteur de YouTube ne se charge qu’à ton clic.",
-   "status": "Officiel Rockstar · relu le 12 octobre 2026",
+   "text": "Rockstar a publié quatre vidéos : le Trailer 1 (4 décembre 2023), le Trailer 2 (6 mai 2025), An Extended Look (27 août 2026) et la bande-annonce de lancement (15 octobre 2026). Sur le site, chacune se regarde sur sa page, avec ce qu’on y voit et sa musique ; le lecteur de YouTube ne se charge qu’à ton clic.",
+   "status": "Officiel Rockstar · relu le 16 octobre 2026",
    "links": [
     {
      "label": "Les vidéos officielles",
@@ -767,7 +928,7 @@
      "url": "/actus.html#frise"
     }
    ],
-   "checkedAt": "2026-10-12"
+   "checkedAt": "2026-10-16"
   },
   {
    "id": "trailer1",
@@ -901,18 +1062,66 @@
     "nouvelle bande annonce",
     "prochaine video"
    ],
-   "text": "Aucun Trailer 3 n’est annoncé. La dernière vidéo officielle est l’Extended Look du 27 août 2026.",
-   "status": "Non annoncé",
+   "text": "Rockstar n’a publié aucune vidéo appelée « Trailer 3 ». Sa dernière vidéo, le 15 octobre 2026, est la bande-annonce de lancement ; avant elle, il y a eu le Trailer 1, le Trailer 2 et An Extended Look.",
+   "status": "Officiel Rockstar · relu le 16 octobre 2026",
    "links": [
+    {
+     "label": "La bande-annonce de lancement",
+     "url": "/videos/bande-annonce-lancement.html"
+    },
     {
      "label": "Les vidéos officielles",
      "url": "/videos.html"
+    }
+   ],
+   "checkedAt": "2026-10-16",
+   "source": "https://www.rockstargames.com/newswire/article/517572321a549a/watch-the-grand-theft-auto-vi-launch-trailer"
+  },
+  {
+   "id": "bande-annonce-lancement",
+   "theme": "jeu",
+   "q": "Qu’y a-t-il dans la bande-annonce de lancement de GTA 6 ?",
+   "f": [
+    "bande annonce de lancement gta 6",
+    "launch trailer gta 6",
+    "trailer de lancement gta6",
+    "la bande annonce du 15 octobre",
+    "derniere bande annonce gta 6",
+    "nouvelle bande annonce gta 6",
+    "trailer lancement gta vi",
+    "quand est sortie la bande annonce de lancement",
+    "musique de la bande annonce de lancement",
+    "justice gta 6",
+    "flower in a hurricane",
+    "quelle musique dans le trailer de sortie de gta 6",
+    "trailer de sortie gta 6",
+    "le trailer de sortie",
+    "musique du trailer de lancement"
+   ],
+   "k": [
+    "bande annonce de lancement",
+    "launch trailer",
+    "trailer de lancement",
+    "15 octobre",
+    "justice",
+    "flower in a hurricane",
+    "trailer de sortie",
+    "bande annonce de sortie"
+   ],
+   "text": "Rockstar l’a publiée le 15 octobre 2026, avec le résumé de l’histoire : Jason et Lucia, pris dans un complot criminel qui s’étend dans tout l’État de Leonida. Elle se joue sur « Flower in a Hurricane », nouveau single de Justice avec Tame Impala, SZA et King Gizzard & The Lizard Wizard, aussi sur GTA VI: The Album ; Justice compose la musique originale du jeu.",
+   "status": "Officiel Rockstar · publiée le 15 octobre 2026",
+   "links": [
+    {
+     "label": "La bande-annonce de lancement",
+     "url": "/videos/bande-annonce-lancement.html"
     },
     {
-     "label": "Médias et crédits",
-     "url": "/medias.html"
+     "label": "Les vidéos officielles",
+     "url": "/videos.html"
     }
-   ]
+   ],
+   "source": "https://www.rockstargames.com/newswire/article/517572321a549a/watch-the-grand-theft-auto-vi-launch-trailer",
+   "checkedAt": "2026-10-16"
   },
   {
    "id": "musique-trailer",
@@ -942,7 +1151,7 @@
     "love is a long road",
     "qui chante"
    ],
-   "text": "Trailer 1 : « Love Is a Long Road » de Tom Petty. Trailer 2 : « Hot Together » des Pointer Sisters, avec de courtes bribes d’autoradio (Zenglen, Wang Chung, Tammy Wynette). L’Extended Look fait entendre quatorze autres morceaux, de Phil Collins à Depeche Mode. La liste complète, avec les moments et les sources, est dans le poste de la page Radios et musique.",
+   "text": "Trailer 1 : « Love Is a Long Road » de Tom Petty. Trailer 2 : « Hot Together » des Pointer Sisters, avec de courtes bribes d’autoradio (Zenglen, Wang Chung, Tammy Wynette). L’Extended Look fait entendre quatorze autres morceaux, de Phil Collins à Depeche Mode. La bande-annonce de lancement se joue sur « Flower in a Hurricane » de Justice, avec Tame Impala, SZA et King Gizzard & The Lizard Wizard. La liste complète, avec les moments et les sources, est dans le poste de la page Radios et musique.",
    "status": "Officiel Rockstar (trailers) · relevés de presse (Extended Look)",
    "links": [
     {
@@ -958,7 +1167,7 @@
      "url": "/medias.html"
     }
    ],
-   "checkedAt": "2026-10-04"
+   "checkedAt": "2026-10-16"
   },
   {
    "id": "developpeur",
@@ -1538,15 +1747,19 @@
     "carte du jeu",
     "map"
    ],
-   "text": "Rockstar n’a pas publié de surface chiffrée, mais a dit à la presse fin août 2026 que la carte fait environ deux fois celle de GTA V et trois fois la zone jouable de Red Dead Redemption 2. Elle couvre six régions, de la ville aux marais. Sur le site, la carte interactive recense environ 2 500 lieux repérés dans les médias officiels.",
-   "status": "Non communiqué",
+   "text": "Rockstar n’a publié aucune surface chiffrée. D’après Rob Nelson, de Rockstar North, rapporté le 27 août 2026 par un créateur reçu au studio et par le New York Times, la carte fait environ deux fois celle de GTA V et trois fois la zone jouable de Red Dead Redemption 2 ; Vice City seule ferait deux fois Los Santos. Elle couvre six régions. La page « GTA 6 et GTA 5 » cite les mots exacts.",
+   "status": "Déclaration rapportée, pas de chiffre officiel",
    "links": [
+    {
+     "label": "La carte, mot pour mot",
+     "url": "/gta-6-vs-gta-5.html#carte"
+    },
     {
      "label": "Ouvrir la carte",
      "url": "/carte.html"
     }
    ],
-   "checkedAt": "2026-10-12"
+   "checkedAt": "2026-10-16"
   },
   {
    "id": "animaux",
@@ -2408,7 +2621,14 @@
     "par rapport a gta v",
     "quoi de neuf dans gta 6",
     "gta 6 par rapport a gta5",
-    "differences gta 5 gta 6"
+    "differences gta 5 gta 6",
+    "difference entre les deux jeux",
+    "comparé a gta 5",
+    "qu est ce qui change par rapport a gta 5",
+    "gta 6 ou gta 5",
+    "meilleur que gta 5",
+    "carte vs gta 5",
+    "gta 6 vs vice city"
    ],
    "k": [
     "difference avec gta 5",
@@ -2418,14 +2638,19 @@
     "gta v",
     "nouveautes"
    ],
-   "text": "Ce qu’on a vu de nouveau : deux personnages qui doivent se faire confiance, un réseau social dans le jeu, une police qui reconnaît le véhicule et la tenue, plusieurs façons de voler une voiture, le poids qui change avec l’alimentation, et une roue d’équipement à deux volets. Rockstar n’a pas publié de liste complète des nouveautés.",
+   "text": "Ce qu’on a vu de nouveau : deux personnages qui doivent se faire confiance, un réseau social dans le jeu, une police qui reconnaît le véhicule et la tenue, plusieurs façons de voler une voiture, le poids qui change avec l’alimentation, et une roue d’équipement à deux volets. Rockstar n’a pas publié de liste complète. La page « GTA 6 et GTA 5 » met les deux jeux face à face : cadre, personnages, carte, plateformes, éditions, prix, dates.",
    "status": "Vu dans les présentations officielles",
    "links": [
     {
-     "label": "La conduite",
-     "url": "/vehicules.html#conduite"
+     "label": "GTA 6 et GTA 5 : ce qui change, point par point",
+     "url": "/gta-6-vs-gta-5.html"
+    },
+    {
+     "label": "Ce qu’on a vu de nouveau",
+     "url": "/gta-6-vs-gta-5.html#nouveau"
     }
-   ]
+   ],
+   "checkedAt": "2026-10-16"
   },
   {
    "id": "site-qui",
@@ -3708,20 +3933,19 @@
     "map gta 6 plus grande",
     "la carte fait 2 fois gta v"
    ],
-   "text": "D’après la FAQ des lieux, fin août 2026 Rockstar a dit à la presse : environ trois fois la zone jouable de Red Dead Redemption 2 et deux fois GTA V. Aucune surface chiffrée n’est publiée.",
-   "status": "Officiel (déclaration à la presse)",
+   "text": "D’après Rob Nelson, de Rockstar North, rapporté le 27 août 2026 : environ deux fois la carte de GTA V et trois fois la zone jouable de Red Dead Redemption 2. Aucune surface chiffrée n’est publiée, ni pour GTA VI ni pour GTA V. Les mots exacts sont cités sur la page « GTA 6 et GTA 5 ».",
+   "status": "Déclaration rapportée",
    "links": [
     {
-     "label": "La FAQ des lieux",
-     "url": "/lieux.html#faq"
+     "label": "GTA 6 et GTA 5 : la carte, mot pour mot",
+     "url": "/gta-6-vs-gta-5.html#carte"
     },
     {
      "label": "La carte du site",
      "url": "/carte.html"
     }
    ],
-   "checkedAt": "2026-09-28",
-   "source": "https://www.rockstargames.com/VI"
+   "checkedAt": "2026-10-16"
   },
   {
    "id": "zones-fermees",
@@ -6376,7 +6600,8 @@
     }
    ],
    "checkedAt": "2026-10-14",
-   "k": []
+   "k": [],
+   "surLeSite": true
   },
   {
    "id": "mentions",
@@ -7818,6 +8043,10 @@
     {
      "label": "Les marques",
      "url": "/vehicules.html#marques"
+    },
+    {
+     "label": "Les vraies voitures, marque par marque",
+     "url": "/vraies-voitures.html"
     }
    ],
    "checkedAt": "2026-09-28"
@@ -7918,6 +8147,10 @@
     {
      "label": "Fiabilité des fiches",
      "url": "/vehicules.html#fiabilite"
+    },
+    {
+     "label": "Les vraies voitures derrière chaque véhicule",
+     "url": "/vraies-voitures.html"
     }
    ],
    "checkedAt": "2026-09-28"
@@ -9212,6 +9445,10 @@
     {
      "label": "La page Véhicules",
      "url": "/vehicules.html"
+    },
+    {
+     "label": "Les vraies voitures, marque par marque",
+     "url": "/vraies-voitures.html"
     }
    ],
    "checkedAt": "2026-09-28"
@@ -9440,15 +9677,19 @@
     "l alligator de la tele",
     "goodtime gear collection"
    ],
-   "text": "Macca the Gator est un personnage télé de « l’État du bon temps » : la collection Goodtime Gear (« Les articles du bonheur ») de l’Édition Ultimate réunit des vêtements et accessoires à son effigie, sans liste de pièces publiée.",
+   "text": "Macca the Gator est un personnage télé de « l’État du bon temps » : la collection Goodtime Gear (« Les articles du bonheur ») de l’Édition Ultimate réunit des vêtements et accessoires à son effigie, sans liste de pièces publiée. Le coffret collector The Goodtime State, vendu à part sur la boutique Rockstar, s’en inspire aussi.",
    "status": "Officiel Rockstar (textes des éditions)",
    "links": [
     {
      "label": "La ligne Goodtime Gear",
      "url": "/style.html#tenues"
+    },
+    {
+     "label": "Le coffret collector",
+     "url": "/prix.html#collector"
     }
    ],
-   "checkedAt": "2026-09-28",
+   "checkedAt": "2026-10-16",
    "source": "https://www.rockstargames.com/VI"
   },
   {
@@ -10228,6 +10469,224 @@
     }
    ],
    "checkedAt": "2026-10-12"
+  },
+  {
+   "id": "page-prechargement",
+   "theme": "jeu",
+   "q": "Comment précharger GTA VI, et quand ?",
+   "f": [
+    "comment precharger gta 6",
+    "comment precharger gta 6 sur ps5",
+    "comment precharger sur xbox",
+    "precharger xbox series",
+    "precharger ps5",
+    "pre telecharger ps5",
+    "preload ps5",
+    "preload xbox",
+    "installer avant la sortie",
+    "telecharger en avance",
+    "precommande prechargement",
+    "le prechargement marche comment",
+    "que faire avant le 12 novembre",
+    "prechargement heure",
+    "prechargement taille"
+   ],
+   "k": [
+    "precharger",
+    "prechargement",
+    "preload",
+    "pre telechargement",
+    "installer avant"
+   ],
+   "text": "Sur PS5 : précommande sur le PlayStation Store, puis dans la bibliothèque de jeux ouvre le jeu et son compte à rebours ; si la case du contenu est cochée, il se télécharge seul dès l’ouverture du préchargement, le 12 novembre 2026 à minuit, heure locale. Sur Xbox Series : un jeu possédé s’installe seul en mode veille avec « Maintenir mes jeux et applications à jour », sinon Mes jeux et applications, Bibliothèque complète, Installer. Avec la boîte, entre le code dès réception. La taille du jeu n’est pas annoncée.",
+   "status": "Assistance Rockstar, PlayStation et Xbox",
+   "links": [
+    {
+     "label": "Précharger GTA 6 : la marche à suivre",
+     "url": "/prechargement.html#comment"
+    },
+    {
+     "label": "Ce qui n’est pas confirmé (taille, heure du 19)",
+     "url": "/prechargement.html#pas-confirme"
+    },
+    {
+     "label": "Avant le 12 novembre",
+     "url": "/prechargement.html#avant"
+    }
+   ],
+   "checkedAt": "2026-10-16"
+  },
+  {
+   "id": "pc-precedents",
+   "theme": "jeu",
+   "q": "Combien de temps après les consoles GTA V et Red Dead Redemption 2 sont-ils sortis sur PC ?",
+   "f": [
+    "gta 5 pc combien de temps apres",
+    "rdr2 pc combien de temps apres",
+    "red dead redemption 2 pc date",
+    "gta 5 pc date de sortie",
+    "gta 6 pc dans combien de temps",
+    "les precedents pc de rockstar",
+    "rockstar sortie pc apres consoles",
+    "historique sorties pc rockstar",
+    "quand gta 5 est sorti sur pc",
+    "delai version pc rockstar"
+   ],
+   "k": [
+    "precedents",
+    "repere",
+    "pc"
+   ],
+   "text": "Repères de la série, pas une annonce : GTA V est sorti le 17 septembre 2013 sur consoles et le 14 avril 2015 sur PC, dix-neuf mois après ; Red Dead Redemption 2 le 26 octobre 2018 puis le 5 novembre 2019 sur PC, un an après ; Red Dead Redemption en 2010 puis le 29 octobre 2024 sur PC. Pour GTA VI, rien n’est annoncé.",
+   "status": "Repère de la série (Rockstar Newswire)",
+   "links": [
+    {
+     "label": "Les précédents de la série",
+     "url": "/gta-6-pc.html#serie"
+    },
+    {
+     "label": "GTA 6 sur PC : ce qu’on sait",
+     "url": "/gta-6-pc.html"
+    }
+   ],
+   "checkedAt": "2026-10-16"
+  },
+  {
+   "id": "pc-arnaque",
+   "theme": "jeu",
+   "q": "Les versions PC ou les bêtas de GTA VI qu’on me propose sont-elles vraies ?",
+   "f": [
+    "gta 6 beta",
+    "beta gta 6",
+    "acces anticipe",
+    "cle beta",
+    "telecharger gta 6",
+    "version gratuite",
+    "gta 6 crack",
+    "early access",
+    "on m a propose en avance",
+    "site pour jouer avant la sortie",
+    "gta 6 demo",
+    "demo gta 6",
+    "telechargement version pc",
+    "c est une arnaque",
+    "faux site"
+   ],
+   "k": [
+    "beta",
+    "arnaque",
+    "acces anticipe",
+    "demo",
+    "crack",
+    "cle"
+   ],
+   "text": "Non : il n’existe ni version PC, ni bêta, ni accès anticipé, ni démo de GTA VI. Tout ce qui se présente ainsi avant une annonce de Rockstar est une arnaque, souvent pour voler un compte, un paiement ou installer un programme malveillant. Le jeu ne s’achète que sur le PlayStation Store, le Microsoft Store, le Rockstar Store et chez les revendeurs de la boîte. Si tu as entré un identifiant ou un paiement sur une de ces pages, change ton mot de passe et préviens ta banque.",
+   "status": "Le site, d’après les pages officielles",
+   "links": [
+    {
+     "label": "Fausses versions PC et fausses bêtas",
+     "url": "/gta-6-pc.html#arnaques"
+    },
+    {
+     "label": "Ce qui est confirmé",
+     "url": "/verification.html"
+    }
+   ],
+   "checkedAt": "2026-10-16"
+  },
+  {
+   "id": "gta6-vs-gta5",
+   "theme": "jeu",
+   "q": "Qu’est-ce qui change entre GTA VI et GTA V ?",
+   "f": [
+    "gta 6 vs gta 5",
+    "gta 6 contre gta 5",
+    "gta 6 face a gta 5",
+    "les differences avec gta 5",
+    "par rapport a gta 5 qu est ce qui change",
+    "comparatif avec gta 5",
+    "lequel choisir entre les deux",
+    "plus grand que gta 5",
+    "plus cher que gta 5",
+    "combien de personnages contre gta 5",
+    "c est la suite de gta 5",
+    "gta 6 vs vice city 2002",
+    "ce qui change par rapport au precedent",
+    "tableau comparatif avec gta 5"
+   ],
+   "k": [
+    "vs",
+    "face a",
+    "compare",
+    "difference",
+    "gta 5",
+    "gta v"
+   ],
+   "text": "La page « GTA 6 et GTA 5 » met les deux jeux face à face : le cadre (Leonida et Vice City contre San Andreas et Los Santos), deux héros au lieu de trois, la carte (environ deux fois celle de GTA V d’après Rob Nelson, sans chiffre officiel), les plateformes (PS5 et Xbox Series, sans PC annoncé), les éditions et le prix (79,99 $ et 99,99 $ contre 59,99 $ en 2013), les dates, le jeu en ligne et la musique, chaque ligne avec sa source. Ce qui n’est pas annoncé reste vide, et c’est dit.",
+   "status": "Le site, sources Rockstar",
+   "links": [
+    {
+     "label": "GTA 6 et GTA 5 : ce qui change, point par point",
+     "url": "/gta-6-vs-gta-5.html"
+    },
+    {
+     "label": "Le tableau",
+     "url": "/gta-6-vs-gta-5.html#tableau"
+    },
+    {
+     "label": "Ce qu’on a vu de nouveau",
+     "url": "/gta-6-vs-gta-5.html#nouveau"
+    }
+   ],
+   "checkedAt": "2026-10-16"
+  },
+  {
+   "id": "vraies-voitures",
+   "theme": "vehicules",
+   "q": "Quelles sont les vraies voitures derrière les véhicules de GTA VI ?",
+   "f": [
+    "vraies voitures gta 6",
+    "vraie voiture gta 6",
+    "vraies marques de voiture",
+    "quelle vraie voiture",
+    "a quelle voiture ressemble",
+    "marques reelles",
+    "voitures reelles",
+    "vraies voitures liste",
+    "quelle marque evoque ferrari",
+    "grotti c est quelle marque",
+    "pegassi c est quelle marque",
+    "vapid c est ford",
+    "modeles reels",
+    "inspiration reelle des vehicules",
+    "a quoi correspondent les marques"
+   ],
+   "k": [
+    "vraies voitures",
+    "vraie voiture",
+    "vraies marques",
+    "modele reel",
+    "marque reelle",
+    "evoque",
+    "inspiration"
+   ],
+   "text": "Comme dans toute la série, les marques de GTA VI sont inventées, mais chaque modèle rappelle une vraie voiture : Grotti évoque Ferrari, Vapid évoque Ford, Pfister évoque Porsche, Dinka évoque Honda… La page « Les vraies voitures » liste, marque par marque, à quelle voiture réelle chaque véhicule du site est rapproché, avec le statut du rapprochement (nommé par Rockstar, vu dans un média officiel, identifié par la communauté) et un lien vers chaque fiche. Aucune marque réelle n’est partenaire ou sous licence dans le jeu : ce sont des sources d’inspiration.",
+   "status": "Le site (rapprochements d’après les visuels officiels)",
+   "links": [
+    {
+     "label": "Les vraies voitures, marque par marque",
+     "url": "/vraies-voitures.html#marques"
+    },
+    {
+     "label": "Comment on identifie une vraie voiture",
+     "url": "/vraies-voitures.html#methode"
+    },
+    {
+     "label": "La page Véhicules",
+     "url": "/vehicules.html"
+    }
+   ],
+   "checkedAt": "2026-10-16"
   }
  ]
 }

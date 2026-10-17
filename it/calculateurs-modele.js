@@ -103,7 +103,7 @@
       if (V.usable(value)) { sum += value.v; known.push(p.label); if (V.hypothesis(value)) hypotheses.push(p.label); return; }
       missing.push({ label: p.label, status: value.s, field: p.field || null, mecanique: value.mecanique || null });
     });
-    return { value: sum, complete: missing.length === 0, known: known, missing: missing, na: na, hypotheses: hypotheses, rows: rows, label: missing.length ? 'Subtotale noto' : 'Total' };
+    return { value: sum, complete: missing.length === 0, known: known, missing: missing, na: na, hypotheses: hypotheses, rows: rows, label: missing.length ? 'Subtotale noto' : 'Totale' };
   }
 
   /* ---------- Comparer deux coûts incomplets ---------- */

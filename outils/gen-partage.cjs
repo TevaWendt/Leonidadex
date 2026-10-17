@@ -50,9 +50,15 @@ const PAGES = [
   ['actus.html', 'affiche-trailer-2', '50% 35%'],
   ['videos.html', 'affiche-extended-look', '50% 35%'],
   ['editions.html', 'ultimate-edition-02', '50% 50%'],
+  ['prix.html', 'coffret-collector-ouvert', '50% 45%'] /* v7.92.1 : Prix et collector */,
   ['presse.html', 'artwork-jason-lucia-beach', '50% 40%'],
   ['compagnon.html', 'jason-and-lucia-02', '50% 40%'] /* assemblage v7.91 : Mode compagnon (lot 5) */,
-  ['devine-le-lieu.html', 'vice-city-09', '50% 50%'] /* assemblage v7.91 : jeu « Devine le lieu » (lot 6) */
+  ['devine-le-lieu.html', 'vice-city-09', '50% 50%'] /* assemblage v7.91 : jeu « Devine le lieu » (lot 6) */,
+  /* v7.93 (lot 8) : les quatre pages qui répondent aux recherches des joueurs */
+  ['prechargement.html', 'cover-art-officielle', '50% 30%'],
+  ['gta-6-pc.html', 'jason-and-lucia-06', '50% 40%'],
+  ['gta-6-vs-gta-5.html', 'vice-city-03', '50% 50%'],
+  ['vraies-voitures.html', '95-grotti-cheetah-01', '62% 50%']
 ];
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const sha = s => crypto.createHash('sha256').update(s).digest('hex').slice(0, 12);

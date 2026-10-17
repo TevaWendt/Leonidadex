@@ -47,7 +47,7 @@ function vehicules(V, counts) {
     S.figures([{ n: counts.N, label: 'véhicules recensés ici' }, { n: counts.nOfficiel, label: 'nommés par Rockstar' }, { n: counts.nVu, label: 'vus sans nom communiqué' }, { n: counts.nComm, label: 'identifications communautaires' }, { n: 0, label: 'total officiel publié' }])
     + '<p>' + esc(D.chiffres.texte) + '</p>'));
   out.push(S.section({ id: 'marques', num: 4, kicker: brands.length + ' constructeurs', title: 'Marques fictives et constructeurs évoqués', icon: 'marques', tone: 'paper', lede: esc(D.marques.lede) },
-    S.brandWall(brands, { none: 'constructeur fictif, pas de rapprochement retenu' })));
+    S.brandWall(brands, { none: 'constructeur fictif, pas de rapprochement retenu' }) + (D.marques.lien ? '<div class="ed-links"><a href="' + esc(D.marques.lien.href) + '">' + esc(D.marques.lien.label) + '</a></div>' : '') /* v7.93 : vers la page des vraies voitures */));
   out.push(S.section({ id: 'conduite', num: 5, kicker: 'Gameplay', title: 'Conduite et mécaniques montrées à ce jour', icon: 'conduite', tone: 'paper2', accent: 'coral' },
     S.columns(D.conduite.cards) + '<div class="ed-callout"><p>' + esc(D.conduite.note) + '</p></div>'));
   out.push(S.section({ id: 'ultimate', num: 6, kicker: counts.nOfficiel + ' noms officiels', title: 'Véhicules nommés par Rockstar', icon: 'nommes', tone: 'paper', lede: esc(D.nommes.lede) },

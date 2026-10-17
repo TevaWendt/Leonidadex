@@ -5706,6 +5706,25 @@
 ["welche fahrzeuge sind bestätigt", "quels vehicules sont confirmes"],
 ["offizielle fahrzeuge", "vehicules officiels"],
 ["lohnt es sich zu kaufen", "ca vaut le coup d acheter"],
-["lohnt sich der kauf", "ca vaut le coup d acheter"]
+["lohnt sich der kauf", "ca vaut le coup d acheter"],
+["launch trailer", "trailer de lancement"],
+["launchtrailer", "trailer de lancement"],
+["sammlerbox", "coffret collector"],
+["rockstar store", "boutique rockstar"],
+["reale autos", "vraies voitures"],
+["reales auto", "vraie voiture"],
+["echte marken", "vraies marques"],
+["reale marken", "vraies marques"],
+["echte automarken", "vraies marques de voitures"],
+["welches echte auto", "quelle vraie voiture"],
+["auf pc", "sur pc"],
+["fuer pc", "pour pc"],
+["für pc", "pour pc"],
+["im vergleich mit", "par rapport a"],
+["kartengröße", "taille de la carte"],
+["groesser als", "plus grande que"],
+["größer als", "plus grande que"],
+["wie preloaden", "comment precharger"],
+["wie vorladen", "comment precharger"]
 ]
 }

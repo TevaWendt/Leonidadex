@@ -265,6 +265,8 @@ function create(data,options={}){
    if(ct&&!strong&&!givesFigures&&!nt&&ct.terms.some(t=>clean(t)===qt)){const route=ct.route.split('#')[0];const kbTop=kb.results[0];const kbSame=kbTop&&kbTop.confidence>=HIGH&&kById.get(kbTop.id)&&kById.get(kbTop.id).links.some(l=>l.url===ct.route||l.url.split('#')[0]===route&&ct.route.indexOf('#')<0);
     if(!kbSame)return {kind:'answer',text:'Aqui está a seção '+ct.label+'.',links:[{label:'Abrir '+ct.label,url:ct.route}],context:empty()};}}
   const kbConf=best?best.confidence:0,kbPriority=bestTopic?.priority&&kbConf>=MID&&!(strong?.strict&&intent&&intent!=='what');/* un sujet prioritaire (prix du jeu) ne passe pas devant une fiche nommée avec une intention précise (« combien coûte le Kamacho ») */
+  /* v7.92.1 : un sujet sur le site lui-même (« surLeSite » : la page Presse) ne répond pas à une question qui parle du jeu (« gta 6 », « le jeu ») quand un seul de ses mots y correspond : « un journaliste dans le jeu » n’est pas une demande de presse (« je suis journaliste et je prépare un article sur GTA 6 », si), et la décision ne tient plus à un centième de confiance */
+  const siteNotGame=!!(bestTopic?.surLeSite&&kbConf<HIGH&&(best.matched||[]).length<2&&A.terms.some(t=>/^(?:gta6|jeu)$/.test(t))&&!(best.matched||[]).some(t=>/^(?:gta6|jeu)$/.test(t)));
   /* morceaux à la demande : les salutations, la date de sortie, les définitions et la FAQ du Tuto répondent depuis le noyau seul ; à partir d'ici, les morceaux dont le vocabulaire (noms de fiches) touche la question sont chargés avant de décider */
   {const pending=needs(raw);if(pending.length)return {kind:'needs',shards:pending};}
   /* suite de conversation : « et son prix ? », « et à Vice City ? » */
@@ -326,7 +328,7 @@ function create(data,options={}){
   /* 2. entité + intention → gabarit */
   if(!twoCalcEarly&&target&&useIntent&&useIntent!=='what'&&!(buyIntent&&target.item?.calcId&&useIntent!=='price')&&!(target.item?.calcId&&/vaut le coup|rentab/.test(q))){if(!target.item)return {kind:'needs',shards:[target.e?.shard||'monde']};if(!(useIntent==='price'&&target.item.calcId&&givesFigures)){const t=templateAnswer(target,useIntent,raw,context,options);if(t)return t;}}
   /* 3. question rédigée probable, ou deux réponses proches */
-  if(!twoCalcEarly&&!calcFirst&&!trivialKB&&!offIntentKB&&bestTopic&&kbConf>=MID&&!(strong&&buyIntent)&&!(givesFigures&&!questionLike(q))){
+  if(!twoCalcEarly&&!calcFirst&&!trivialKB&&!offIntentKB&&!siteNotGame&&bestTopic&&kbConf>=MID&&!(strong&&buyIntent)&&!(givesFigures&&!questionLike(q))){
    if(second&&second.confidence>=MID&&second.confidence>=best.confidence-MARGIN&&kbConf<0.9&&kById.get(second.id)){const t2=kById.get(second.id);return {kind:'choices',text:texts.didYouMean,choices:[bestTopic.q,t2.q],topics:[bestTopic.id,t2.id],links:[{label:bestTopic.links[0].label,url:bestTopic.links[0].url}],context:{...empty(),recent:recent.slice(-6)}};}
    const entLinks=strong&&strong.item?[{label:strong.item.name,url:strong.item.url}]:[];return knowledgeAnswer(bestTopic,context,{links:entLinks,entityKey:strong?.key||null,intent,source:strong?.item?.source||null});}
   /* 4. destinations et fiches (v1) */

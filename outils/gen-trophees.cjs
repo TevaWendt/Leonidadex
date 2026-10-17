@@ -283,7 +283,7 @@ ${zone(H, STATUTS)}`;
   const ldList = list.length ? { mainEntity: { '@type': 'ItemList', name: LI.titre, numberOfItems: list.length, itemListElement: list.map((t, i) => ({ '@type': 'ListItem', position: i + 1, name: nomTexte(t), url: SITE + '/' + HUB + ((t.methode || []).length ? '/' + t.id + '.html' : '.html#trophee-' + t.id) })) } } : {};
   const collection = '<script type="application/ld+json">' + JSON.stringify({ '@context': 'https://schema.org', '@type': 'CollectionPage', name: X.title, description: metaDesc(X.desc), url: SITE + '/' + HUB + '.html', inLanguage: 'fr', isPartOf: { '@type': 'WebSite', name: 'Leonidakit', url: SITE + '/' }, ...ldList }) + '</script>';
   const og = imgOf(MED, X.pile[0].media);
-  return page(ROOTC, { p: '', title: X.title + ' | Leonidakit', desc: X.desc, canonical: '/' + HUB + '.html', ogImg: og.b.src, body, crumbs: [['Accueil', '/'], [X.label, '/' + HUB + '.html']], ld: collection });
+  return page(ROOTC, { p: '', title: (X.seoTitle || X.title) + ' | Leonidakit' /* v7.93 : titre pour les moteurs (ce que tapent les joueurs) */, desc: X.desc, canonical: '/' + HUB + '.html', ogImg: og.b.src, body, crumbs: [['Accueil', '/'], [X.label, '/' + HUB + '.html']], ld: collection });
 }
 
 /* zone éditoriale des hubs (même rendu que outils/hubs-monde.cjs) */

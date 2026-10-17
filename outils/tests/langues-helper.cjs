@@ -109,6 +109,8 @@ const EN_MIN = 2;
 const EN_KEEP = {
   /* titres d'articles et de vidéos cités en source (« Quelle: Kotaku: … ») */
   titres: [
+    /* v7.93 : sources de la page « GTA 6 et GTA 5 » */
+    'I Saw 3 Hours of GTA 6 at Rockstar North', 'Grand Theft Auto VI Has a New Trailer and Grand Ambitions',
     'GTA 6 just revealed a massive number of new gameplay details',
     'GTA 6’s wanted system explained, everything Rockstar has confirmed', 'gangs and factions, confirmed groups vs rumors', 'GTA 6 gangs & factions' /* v7.65 */,
     'GTA VI reveals pricing, editions, and emphasis on immersion',
@@ -154,11 +156,14 @@ const EN_KEEP = {
   noms: [
     'Jack of Hearts', 'Only Raw Records', 'The Rusty Anchor', 'Macca the Gator', 'Gulf of Leonida', 'Cash For Scrap', 'The Amalfi',
     'The Atoll Bar & Grill', 'The Flamingrill', 'The Hub Gallery', 'The Sumerian', 'We Have Shoes', 'Welcome to Hamlet Sign',
-    'Welcome to Port Gellhorn Sign', 'What’s Cooking', 'The Lost and Damned' /* v7.83 : épisode de GTA IV cité dans les repères de la série */
+    'Welcome to Port Gellhorn Sign', 'What’s Cooking', 'The Lost and Damned' /* v7.83 : épisode de GTA IV cité dans les repères de la série */,
+    'King Gizzard & The Lizard Wizard', 'GTA VI: The Album' /* v7.92.1 : groupe et album officiel cités avec la bande-annonce de lancement */
   ],
   /* citations anglaises entre guillemets („…“) : Rockstar (textes officiels des éditions, slogans des régions), Rob Nelson
      (Famitsu, GamingBible), Jillian Carr (Dazed) */
   citations: [
+    /* v7.93 : assistance de Rockstar citée sur la page du préchargement, déclarations de Take-Two et de Rob Nelson (PC, GTA 6 et GTA 5) */
+    'at local midnight on November 12, 2026', 'Rockstar always starts on console', 'We’re launching GTA 6 as a single player experience on two major platforms', 'The map is twice the size of GTA 5’s map', 'the studio said, is three times as large as the playable area',
     'Everything in excess', 'Gateway to paradise', 'Welcome to the wetlands', 'Wild, wild country',
     'a weapon locker to customize your loadout for any occasion',
     'wide selection of artistic and performance-based vehicle mods',

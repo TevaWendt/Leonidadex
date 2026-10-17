@@ -32,7 +32,8 @@ function imgSet(id) {
   return { a, b, c, m };
 }
 const rel = (src, prefix) => (prefix || '') + src.replace(/^\//, '');
-/* o : sizes, eager (premier écran), big (largeur et hauteur de la grande image), prefix ('' ou '../'), alt obligatoire.
+/* o : sizes, eager (premier écran ; 'normal' : chargée tout de suite, sans priorité haute), big (largeur et hauteur de la grande
+   image), prefix ('' ou '../'), alt obligatoire.
    Trois tailles (480, 800, 1 280 px) ; au téléphone (599 px et moins), 800 px au plus : un écran à densité 3 prenait la
    1 280 pour une carte de 360 px (deux à trois fois plus lourde, sans différence visible). <picture> sans boîte
    (.vt-pic : display:contents) : la mise en page est celle de l’image seule. */
@@ -44,7 +45,7 @@ function img(id, alt, o = {}) {
   /* une seule taille (visuel plus petit que 480 px) : srcset d’un seul fichier, sinon outils/sync-site.cjs en ajouterait un
      de 480 à 1 280 px qui ferait télécharger au téléphone une copie du même fichier */
   const tag = '<img src="' + rel(a.src, o.prefix) + '" srcset="' + set(b !== a ? (c ? [a, c, b] : [a, b]) : [a]) + '" sizes="' + sizes + '"'
-    + ' width="' + w.w + '" height="' + w.h + '" alt="' + esc(alt) + '"' + (o.eager ? ' fetchpriority="high"' : ' loading="lazy"') + ' decoding="async">';
+    + ' width="' + w.w + '" height="' + w.h + '" alt="' + esc(alt) + '"' + (o.eager ? (o.eager === 'normal' ? '' : ' fetchpriority="high"') : ' loading="lazy"') + ' decoding="async">';
   return c ? '<picture class="vt-pic"><source media="(max-width:599px)" srcset="' + set([a, c]) + '" sizes="' + sizes + '">' + tag + '</picture>' : tag;
 }
 const bigSrc = (id, prefix) => rel(imgSet(id).b.src, prefix);

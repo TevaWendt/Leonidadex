@@ -132,7 +132,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     { id:'stockyard', n:'Stockyard', c:'quartier', x:3601, y:2609, s:'officiel', src:'SITE', p:'vice-city', z:1,
       d:"Quartiere di magazzini riconvertiti, coperti di murales. Rockstar ha confermato che si ispira a Wynwood e che ha coinvolto più di cinquanta street artist per i suoi muri. Nel Trailer 1 ci si svolge un raduno di auto." },
     { id:'vc-port', n:'Porto di Vice City', c:'transport', x:3971, y:3358, s:'vu', src:'T1', p:'vice-city', z:1,
-      d:"Zona portuale industriale: container, magazzini e ponti, avvistata in entrambi i trailer." },
+      d:"Zona portuale industriale: container, magazzini e ponti, avvistata nei primi due trailer." },
     { id:'marina', n:'Marina', c:'quartier', x:3603, y:2854, s:'vu', src:'T2', p:'vice-city', z:1,
       d:"Zona residenziale benestante sull’acqua: barche, moto d’acqua e proprietà di lusso." },
     { id:'vcia', n:'Aeroporto internazionale', c:'transport', x:2960, y:3435, s:'vu', src:'T2', p:'vice-city', z:1,

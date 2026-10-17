@@ -29,8 +29,9 @@ const A = JSON.parse(read('outils/actus/actus.json')), R = JSON.parse(read('outi
 const LANGS = JSON.parse(read('outils/langues.json')).langues.filter(l => l.etat === 'publiee' && l.code !== 'fr').map(l => l.code), ALL = ['', ...LANGS.map(l => l + '/')];
 const VIDEOS = A.videos.liste.map(v => 'videos/' + v.id + '.html');
 const STATIONS = R.stations.map(s => 'radios/' + s.id + '.html');
-const SECTION_PAGES = ['actus.html', 'videos.html', 'editions.html', ...VIDEOS];
-const NEWS = ['actus.html', 'videos.html', 'editions.html', 'verification.html'];
+/* v7.92.1 : la page Prix et collector rejoint « L’actualité » (menu, pied de page, puces) et le gabarit des sections ; v7.93 : le groupe s’étend aux trois pages des recherches (outils/site-shell.cjs → news) */
+const SECTION_PAGES = ['actus.html', 'videos.html', 'editions.html', 'prix.html', ...VIDEOS];
+const NEWS = ['actus.html', 'videos.html', 'editions.html', 'prix.html', 'verification.html', 'prechargement.html', 'gta-6-pc.html', 'gta-6-vs-gta-5.html'];
 const PERIMETRE = [...SECTION_PAGES, 'verification.html', 'radios.html', ...STATIONS];
 const N = s => String(s || '').replace(/[  ]/g, ' ').replace(/\s+/g, ' ').trim();
 const lds = d => [...d.querySelectorAll('script[type="application/ld+json"]')].map(s => JSON.parse(s.textContent));
@@ -56,10 +57,13 @@ test('gabarit : sections éditoriales du moteur commun, numérotées, fonds alte
     /* en-tête : pile d’images officielles (sommaires) ou écran de la vidéo (pages des vidéos) */
     const head = main.querySelector('section.page-head');
     if (f.startsWith('videos/')) assert.ok(head.querySelector('.ac-screen img[fetchpriority="high"]'), f + ' : affiche de la vidéo prioritaire');
+    /* v7.92.1 : Éditions montre ses deux éditions et leur prix, Prix et collector son coffret (ouvert d’abord, prioritaire) */
+    else if (f === 'editions.html' || f === 'prix.html') { const imgs = head.querySelectorAll(f === 'editions.html' ? '.ed-pair img' : '.px-hero img'); assert.equal(imgs.length, 2, f + ' : deux visuels'); assert.equal(imgs[0].getAttribute('fetchpriority'), 'high', f + ' : premier visuel prioritaire'); assert.notEqual(imgs[1].getAttribute('loading'), 'lazy', f + ' : second visuel du premier écran sans différé'); for (const im of imgs) assert.match(im.getAttribute('src'), /^img\/officiel\/[a-z0-9-]+-480\.webp$/, f); }
     else { const imgs = head.querySelectorAll('.lk-stack figure img'); assert.equal(imgs.length, 3, f + ' : pile de trois visuels'); for (const im of imgs) assert.match(im.getAttribute('src'), /^img\/officiel\/[a-z0-9-]+-480\.webp$/, f); }
   }
-  /* « Ce qui est confirmé » et Radios et musique gardent leur gabarit (sections du moteur commun, sous-navigation) */
-  for (const f of ['verification.html', 'radios.html']) { const d = doc(f); assert.ok(d.querySelector('.lk-stack') && d.querySelector('nav.ed-nav') && d.querySelectorAll('section.ed').length >= 5, f); }
+  /* « Ce qui est confirmé » et Radios et musique gardent leur gabarit (sections du moteur commun, sous-navigation) ;
+     v7.92.1 : le relevé du jour (.vf-dos) remplace la pile d’images de « Ce qui est confirmé » */
+  for (const f of ['verification.html', 'radios.html']) { const d = doc(f); assert.ok(d.querySelector(f === 'verification.html' ? '.page-head .vf-dos' : '.page-head .lk-stack') && d.querySelector('nav.ed-nav') && d.querySelectorAll('section.ed').length >= 5, f); }
   /* puces « Explorer » de « L’actualité » en bas des quatre pages du groupe : les trois autres, Radios et musique, les statuts */
   for (const dir of ALL) for (const f of NEWS) {
     const chips = doc(dir + f).querySelector('main > nav.lk-chips');
@@ -75,7 +79,10 @@ test('mouvement : les blocs nouveaux entrent par le moteur commun, rien ne reste
   for (const v of VIDEOS) sel[v] = ['.ac-moment', '.ac-song', '.ac-rev-g', '.ac-chips', '.ac-vcard', '.faq > details'];
   for (const [f, list] of Object.entries(sel)) {
     const d = doc(f);
-    for (const s of list) { const els = [...d.querySelectorAll('main ' + s)].filter(el => !el.closest('.ac-chips-more')); assert.ok(els.length, f + ' : ' + s); for (const el of els) assert.ok(el.closest('[data-lk-reveal]'), f + ' : ' + s + ' sans entrée'); }
+    /* v7.92.1 : une vidéo sans photogramme, sans fiche ni modèle relevés (la bande-annonce de lancement, à sa sortie) n’a pas
+       ces sections : leurs blocs ne sont alors exigés nulle part */
+    const absent = s => f.startsWith('videos/') && ({ '.ac-moment': !d.getElementById('moments'), '.ac-rev-g': !d.getElementById('fiches'), '.ac-chips': !d.getElementById('vehicules') && !d.getElementById('armes') })[s];
+    for (const s of list) { const els = [...d.querySelectorAll('main ' + s)].filter(el => !el.closest('.ac-chips-more')); if (absent(s)) { assert.equal(els.length, 0, f + ' : ' + s); continue; } assert.ok(els.length, f + ' : ' + s); for (const el of els) assert.ok(el.closest('[data-lk-reveal]'), f + ' : ' + s + ' sans entrée'); }
     /* aucun bloc de la section n’utilise encore l’ancien « rise » (deux langages d’apparition sur un même bloc) */
     assert.equal(d.querySelectorAll('main .ac-sec .rise, main .ac-vhead .rise').length, 0, f + ' : ancien « rise »');
   }
@@ -229,7 +236,7 @@ test('fiches : minces (noindex, follow) avec image de partage et carte Twitter ;
 
 test('maillage : menu, pied de page, sommaires, recherche du site et Léo mènent à chaque page du périmètre', () => {
   const shell = require(path.join(root, 'outils/site-shell.cjs')), nav = shell.nav('index.html', ''), foot = shell.footer('', '');
-  for (const f of ['actus.html', 'videos.html', 'editions.html', 'verification.html', 'radios.html']) { assert.ok(nav.includes('href="' + f + '"'), 'menu : ' + f); assert.ok(foot.includes('href="' + f + '"'), 'pied de page : ' + f); }
+  for (const f of ['actus.html', 'videos.html', 'editions.html', 'prix.html', 'verification.html', 'radios.html']) { assert.ok(nav.includes('href="' + f + '"'), 'menu : ' + f); assert.ok(foot.includes('href="' + f + '"'), 'pied de page : ' + f); }
   const hrefs = f => new Set([...doc(f).querySelectorAll('main a[href]')].map(a => a.getAttribute('href').split('#')[0]));
   for (const v of A.videos.liste) assert.ok(hrefs('videos.html').has('videos/' + v.id + '.html'), 'sommaire des vidéos : ' + v.id);
   for (const s of R.stations) assert.ok(hrefs('radios.html').has('radios/' + s.id + '.html'), 'Radios et musique : ' + s.id);
@@ -239,7 +246,7 @@ test('maillage : menu, pied de page, sommaires, recherche du site et Léo mènen
   /* Léo : un sujet mène à chaque page (sujet rédigé ou fiche de station), dans chaque langue */
   for (const dir of ALL) {
     const core = read(dir + 'leo-index.json'), monde = read(dir + 'leo/monde.json'), pre = dir ? '/' + dir.slice(0, 2) : '';
-    for (const f of ['actus.html', 'videos.html', 'editions.html', 'verification.html', 'radios.html', ...VIDEOS]) assert.ok(core.includes('"' + pre + '/' + f), dir + 'Léo : ' + f);
+    for (const f of ['actus.html', 'videos.html', 'editions.html', 'prix.html', 'verification.html', 'radios.html', ...VIDEOS]) assert.ok(core.includes('"' + pre + '/' + f), dir + 'Léo : ' + f);
     for (const f of STATIONS) assert.ok(monde.includes('"' + pre + '/' + f + '"'), dir + 'Léo : ' + f);
   }
 });

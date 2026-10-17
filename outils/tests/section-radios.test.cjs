@@ -24,9 +24,9 @@ const fuiteDans = t => { const w = String(t).toLowerCase().replace(/[^a-z0-9.\- 
 test('section radios : données complètes, statuts et sources connus, six stations sourcées par Rockstar', () => {
   const { MED } = G.load(root);
   assert.doesNotThrow(() => G.check(D, MED, root));
-  assert.equal(D.videos.length, 4);
+  assert.equal(D.videos.length, 5) /* v7.92.1 : la bande-annonce de lancement s’ajoute aux sources de musique */;
   for (const v of D.videos) for (const m of v.morceaux) { assert.ok(['officiel', 'vu', 'comm', 'conf'].includes(m.statut), m.titre); assert.ok(m.sources.length >= 1, m.titre); for (const s of m.sources) assert.ok(D.sources[s], s); }
-  for (const s of Object.values(D.sources)) { assert.match(s.consultedAt, /^2026-10-(04|12)$/); assert.match(s.url, /^https:\/\//); }
+  for (const s of Object.values(D.sources)) { assert.match(s.consultedAt, /^2026-10-(04|12|16)$/); assert.match(s.url, /^https:\/\//); }
   assert.ok(D.zone.sources.some(id => D.sources[id].url.startsWith('https://www.rockstargames.com/')), 'au moins une page Rockstar');
   assert.ok(D.zone.sources.some(id => D.sources[id].statut === 'comm'), 'au moins une source communautaire');
   /* les stations sont à part (D.stations) : six, chacune avec l’annonce de Rockstar du 8 octobre 2026 parmi ses sources */
@@ -42,7 +42,7 @@ test('section radios : données complètes, statuts et sources connus, six stati
   assert.doesNotMatch(sansAdresses, /\.(mp3|ogg|wav|m4a|mp4|webm)\b|lyrics|paroles :/i);
 });
 
-test('radios.html : gabarit des hubs, poste à quatre sources, zone éditoriale complète, données structurées', () => {
+test('radios.html : gabarit des hubs, poste à cinq sources, zone éditoriale complète, données structurées', () => {
   const d = doc('radios.html'), html = read('radios.html');
   assert.equal(d.querySelectorAll('h1').length, 1);
   assert.equal(d.querySelector('link[rel="canonical"]').href, 'https://www.leonidakit.com/radios.html');
@@ -55,7 +55,7 @@ test('radios.html : gabarit des hubs, poste à quatre sources, zone éditoriale 
   for (const pl of d.querySelectorAll('.radios-plaque')) assert.equal(pl.getAttribute('aria-hidden'), 'true');
   assert.ok(d.querySelector('.page-head .lk-stack'), 'pile de visuels officiels');
   const presets = d.querySelectorAll('[data-radios-presets] [data-radios-preset]'), panels = d.querySelectorAll('[data-radios-panneau]');
-  assert.equal(presets.length, 4); assert.equal(panels.length, 4);
+  assert.equal(presets.length, D.videos.length); assert.equal(panels.length, D.videos.length);
   D.videos.forEach((v, i) => { assert.equal(presets[i].getAttribute('href'), '#radios-' + v.id); assert.equal(panels[i].id, 'radios-' + v.id); assert.equal(panels[i].querySelectorAll('.radios-morceau').length, v.morceaux.length); });
   /* sans JavaScript, tout se lit : aucun panneau caché dans le HTML */
   assert.equal(d.querySelectorAll('[data-radios-panneau][hidden]').length, 0);

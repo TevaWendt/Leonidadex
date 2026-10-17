@@ -1,0 +1,252 @@
+LEONIDAKIT v7.93 — Lot 8 : répondre à ce que les joueurs tapent sur Google
+— 16 octobre 2026
+
+Base : v7.92 (commit 52ecaec29, poussé par Téva). Rien n’est publié ni poussé. CSP inchangée. Aucun fichier à supprimer.
+Le complément « Prompt_LeonidaKit_Complement_Mots-cles.txt » n’était pas joint : rien n’en a été repris.
+
+1. QUATRE PAGES NOUVELLES (outils/gen-recherches.cjs, appelé par outils/gen-informations.cjs ; contenu dans
+   outils/informations-editorial.json → prechargement, pc, comparatif, vraiesVoitures ; bandeaux dans outils/lot-c-visuals.cjs ;
+   styles propres recherches.css, chargée seulement par ces pages ; briques de la v7.92 : outils/vitrine.cjs, vitrine.css,
+   vitrine.js ; sections, sous-navigation collante et pastilles de statut de outils/sections.cjs)
+- prechargement.html « GTA 6 : préchargement, date, heure et taille » : les trois dates en tickets avec compte à rebours
+  (12 novembre : préchargement « à minuit, heure locale », assistance de Rockstar du 18 août 2026 ; 19 : sortie ; 20 : fin des
+  bonus), l’état du jour (bloc « Aujourd’hui »), la marche à suivre sur PS5 et Xbox Series d’après les pages d’assistance de
+  PlayStation (précommande, case du téléchargement automatique, mode repos) et de Xbox (installation automatique en veille,
+  Bibliothèque complète › Jeux détenus › Installer, ne jamais racheter), la boîte (un code, pas de disque, dès le 12, pas
+  d’Ultimate en boîte), ce qui n’est pas confirmé (la taille en Go, l’heure de déblocage du 19 : les boutiques affichent des
+  horaires qui reviennent à minuit, heure locale, Xbox dit « généralement peu après minuit » ; Rockstar n’a rien publié) et
+  où ce sera annoncé, cinq gestes à faire avant le 12, FAQ (5) avec l’encart Léo, sources datées (Rockstar Support, Rockstar
+  Newswire, PlayStation Store, Microsoft Store, assistance PlayStation ×2, assistance Xbox ×2).
+  Deux états dans les données : « etat »: "avant" (aujourd’hui) ou "ouvert" (le lot 4, jour J, bascule la valeur et remplit
+  « ouvert.heure », « ouvert.taillePs5 », « ouvert.tailleXbox », laissés à null : le générateur refuse « ouvert » tant qu’un
+  des trois manque, pour ne rien écrire qui ne soit pas annoncé). Repère dans la page : data-lk-preload="2026-11-12".
+- gta-6-pc.html « GTA 6 sur PC : date, annonce, ce qu’on sait » : ce que Rockstar a annoncé (consoles seulement ; aucune
+  version PC, aucune date, aucune page Steam ; expérience solo), ce que Take-Two a dit sans rien annoncer (deux citations de
+  Strauss Zelnick, Bloomberg 4 mai 2026 via PCWorld, assemblée des actionnaires du 17 septembre 2026 via Inven Global), les
+  précédents de la série étiquetés « repère de la série » avec l’écart calculé (GTA V 17/09/2013 → 14/04/2015, 19 mois ; Red
+  Dead Redemption 2 26/10/2018 → 05/11/2019, 12 mois ; Red Dead Redemption 18/05/2010 → 29/10/2024, 14 ans ; chacun avec son
+  billet du Rockstar Newswire), l’encadré « toute version PC ou bêta proposée aujourd’hui est une arnaque » (boutiques
+  officielles d’après la page d’assistance des précommandes ; pas de bêta ; clés tierces contraires à la politique de
+  Rockstar, page « garder son compte en sécurité » ; faux sites « Extended Look » et « démo » d’août 2026 relevés par
+  Malwarebytes), où l’annonce arrivera (Newswire, site officiel, Actualités et Ce qui est confirmé du site), FAQ (5), sources.
+  GTA IV n’est pas dans les précédents : aucune page Rockstar ne date sa sortie PC (2 décembre 2008).
+- gta-6-vs-gta-5.html « GTA 6 et GTA 5 : ce qui change, point par point » : tableau de neuf lignes (cadre, personnages
+  jouables, taille de la carte, plateformes à la sortie, éditions, prix, dates, jeu en ligne, musique), chaque case avec son
+  statut et sa source, GTA V en « repère de la série » (billets du Rockstar Newswire de 2011 à 2022, PlayStation.Blog pour
+  les 59,99 $), et la page du site qui détaille la ligne ; sous 760 px, une fiche par ligne avec l’intitulé de chaque case.
+  « La carte, mot pour mot » : deux citations courtes en anglais (lang="en") — le créateur TGG rapportant les chiffres
+  donnés par Rob Nelson (Rockstar North) le 27 août 2026 (vidéo YouTube, transcrite par Kotaku), et le New York Times du
+  même jour (« the studio said », trois fois la zone jouable de Red Dead Redemption 2) ; le texte dit que Rockstar n’a
+  jamais publié ces chiffres sur son site ni son Newswire, ni aucune surface en km², pour aucun des deux jeux. « Ce qu’on a
+  vu de nouveau » : six cartes à visuel officiel vers les fiches (deux héros, police qui reconnaît voiture et tenue, réseau
+  social, vol de voitures, poids, roue d’équipement). « Pas encore comparable » : six questions (véhicules, prix en jeu,
+  durée, poids, codes, en ligne). FAQ (5), sources (20).
+  Prix : 79,99 $ et 99,99 $ (communiqué Take-Two du 24 juin 2026, officiel), 79,99 € et 99,99 € (PlayStation Store et
+  Microsoft Store, constatés le 16 octobre 2026) ; GTA V : 59,99 $ (PlayStation Store américain, 17 septembre 2013),
+  Special Edition 79,99 $ et Collector’s Edition 149,99 $ (Newswire du 23 mai 2013).
+- vraies-voitures.html « GTA 6 vraies voitures : les marques derrière les véhicules » : produite depuis vehicules-data.js
+  (marque, insp, reelNom, st) : six chiffres calculés (véhicules recensés, rapprochés d’un modèle réel, marques du jeu lues,
+  nommés par Rockstar, vus sans nom officiel, identifications communautaires ; écrits aussi dans
+  outils/vraies-voitures-chiffres.json pour les tests), index des 50 marques (+ « Marque pas encore lue », 83 véhicules),
+  un bloc par marque (constructeur évoqué d’après outils/marques.json, nombre, puis une ligne par véhicule : nom du jeu →
+  modèle réel, pastille de statut, lien vers la fiche ; au-delà de 20 véhicules la liste est repliée dans un <details>),
+  deux colonnes CSS qui se remplissent sans trou, « Comment on identifie » (les trois statuts et « jamais une marque
+  partenaire »), FAQ (5), CollectionPage + ItemList des 302 véhicules.
+- Chaque page : <title> et description pour les moteurs, un seul h1, canonique, hreflang (×6 + x-default), og/twitter avec
+  l’image de partage, BreadcrumbList, WebPage (ou CollectionPage) avec datePublished et dateModified réels, FAQPage dont les
+  questions sont celles affichées, sous-navigation collante aux ancres stables (intitulés en questions), sources numérotées
+  avec statut, éditeur, dates de publication et de consultation ; renvois « source » vers la liste ; liens externes en
+  rel="noopener nofollow".
+
+2. TITRES ET DESCRIPTIONS DES PAGES VISÉES PAR LES RECHERCHES
+- « GTA 6 » en tête du <title> (titleSeo de outils/langues.cjs écrit « GTA 6 » à partir du « GTA VI » des sources), 60 signes
+  au plus (titre seul ≤ 47 avec « | Leonidakit », ou 53 à 60 sans, le suffixe tombant au-delà de 65 : règle de la v7.64) ;
+  description de 155 signes au plus avec « GTA 6 » (ce que tapent les joueurs) ; uniques dans chaque langue. Le h1 et le
+  texte affiché ne changent pas (sauf la nouvelle entrée « Vraies voitures » du hub Véhicules).
+  vehicules.html (outils/templates/vehicules.html, nombres posés par outils/gen.js) ; atelier-3d.html (outils/gen-atelier.cjs) ;
+  carte.html et calculateurs.html (pages écrites à la main) ; codes-de-triche, trophees, missions, online (hub.json de chaque
+  section, champ « seoTitle » lu désormais par gen-codes.cjs, gen-trophees.cjs, gen-missions.cjs, gen-online.cjs) ; radios
+  (outils/radios/radios.json) ; personnages et gangs (outils/lore-gen.js, SECTIONS.seoTitle) ; animaux
+  (outils/editorial-animaux.json → section.seoTitle) ; editions et videos (outils/actus/actus.json : seoTitle, desc).
+- editions.html : FAQ « Combien coûte GTA 6 ? » (79,99 $ / 99,99 $ annoncés par Take-Two, 79,99 € / 99,99 € sur les boutiques,
+  20 € pour passer à l’Ultimate ; source Take-Two ajoutée à la liste) et « Quand commence le préchargement de GTA 6 ? » avec
+  un lien vers la page du préchargement (les réponses de la FAQ acceptent un lien : gen-actus.cjs → faqBlock) ; colonne
+  « Préchargement et sortie » : « à minuit, heure locale », lien vers la nouvelle page (col → lien, actus.css).
+- videos/extended-look.html : FAQ « Comment regarder An Extended Look de GTA 6 (Netflix, YouTube) ? » ; descriptions des vidéos
+  et des trailers avec Netflix.
+- achats.html : sommaire collant (catégories, les quatre sections « Comprendre », questions ; outils/gen-achats.cjs,
+  outils/achats-editorial.json → navLabel).
+
+- a-propos.html (ajout demandé en cours de lot) : petit bloc « Sites amis » à la fin de la section Contribuer (ancre
+  #sites-amis) : titre et liste, ou phrase d’attente tant que la liste est vide (jamais un <ul> vide). Données dans
+  outils/sites-amis.json : un site = une ligne {"nom", "url", "mots"} (« mots » facultatif) ; le générateur refuse un site
+  sans nom ou sans adresse https ; liens des sites amis en rel="noopener" (suivis, à la différence des sources). Le nom et
+  l’adresse passent tels quels dans toutes les langues ; les mots s’affichent en français tant que leur traduction n’est pas
+  dans la mémoire (l’extraction les liste). Styles dans informations.css (.ed-amis). Test dans v793.test.cjs.
+
+3. MAILLAGE
+- Menu « Explorer › L’actualité » et pied de page « L’actualité » : Préchargement, GTA VI sur PC, GTA VI et GTA V
+  (outils/site-shell.cjs → news) ; puces « Explorer » des pages de l’actualité ; vraies-voitures.html dans la famille
+  Véhicules (menu « Véhicules » actif, puces « S’équiper », sectionPages).
+- editions.html → prechargement.html (colonne, FAQ) ; verification.html → gta-6-pc.html, prechargement.html, gta-6-vs-gta-5.html,
+  online.html, achats.html, codes-de-triche.html (les sept questions « pas encore annoncé » reçoivent un lien vers la page
+  qui répond ; gen-informations.cjs, informations.css) ; vehicules.html → vraies-voitures.html (carte « Vraies voitures »
+  dans « Aller plus loin » et bouton sous le mur des marques ; outils/hubs-editoriaux.json et .cjs) ; chaque fiche véhicule →
+  vraies-voitures.html#marque-<marque> (outils/gen.js, section « Modèle réel ») ; accueil → prechargement.html (jalon sous
+  le compte à rebours), gta-6-pc.html (FAQ « plateformes ») et gta-6-vs-gta-5.html (nouvelle question « Qu’est-ce qui change
+  par rapport à GTA V ? », FAQPage reconstruite par sync-site.cjs).
+- Recherche du site : libellés et mots des quatre pages (outils/sync-site.cjs). Léo : plafond du noyau relevé de 336 à
+  352 Kio (outils/gen-leo.cjs, CORE_MAX : le noyau passe de 342 773 à 351 326 octets avec les cinq sujets ; chargé une fois à
+  la première ouverture de Léo, jamais avec la page, servi compressé) ; cinq sujets nouveaux
+  (page-prechargement, pc-precedents, pc-arnaque, gta6-vs-gta5, vraies-voitures) et onze sujets relus vers les nouvelles pages
+  (precharge, taille, heure, pc, physique, taille-carte, carte-plus-grande, gta5-diff, vehicules-marques,
+  inspiration-reelle, vehicules-origines) dans outils/leo-knowledge.json ; vocabulaire des ponts des cinq langues (vraies
+  voitures, version PC, « par rapport à », taille de la carte, préchargement) dans outils/langues/<code>/leo-pivot.json et
+  _leo-pont.json.
+- Images de partage : les quatre pages dans outils/gen-partage.cjs (PAGES), rendues dans chaque langue et posées en og:image ;
+  les images des quatorze pages dont le titre change ont été rendues de nouveau (elles portent le titre de la page) : 108
+  images sur 204 (img/partage/<langue>/, outils/partage.json).
+  Plan du site : chaque page nouvelle avec sa vraie date (outils/sitemap-dates.json) et son visuel ; IndexNow prend les
+  adresses du plan.
+
+4. LANGUES
+- outils/langues/<code>/v793.json (en, es, it, de, pt) ; extraction à {} partout. À côté, v793-fiches.json (par langue) :
+  les entrées mécaniques dérivées de la mémoire existante (lien « Toutes les vraies voitures de GTA VI » des 302 fiches :
+  ancienne clé déjà traduite + segment, et en allemand deux motifs _motifs ; lignes « → modèle réel + statut » et en-têtes
+  « évoque X · N véhicules » de la page des vraies voitures avec les statuts et les noms réels du glossaire ; initiales des
+  marques en « = »). Les titres traduits commencent par
+  « GTA 6 » et les mots que tapent les joueurs de la langue (« GTA 6 map », « GTA 6 car list », « GTA 6 trophy list »,
+  « GTA 6 radio stations »…) ; les citations en anglais restent telles quelles dans toutes les langues.
+
+5. TESTS
+- outils/tests/v793.test.cjs (Node) : pages présentes et indexables dans chaque langue (canonique, hreflang, un h1, briques,
+  première image en priorité, données structurées dont FAQPage = questions affichées, sommaire aux ancres existantes,
+  renvois de sources), titres (« GTA 6 » en tête, ≤ 60) et descriptions (≤ 155, « GTA 6 ») uniques dans chaque langue pour
+  les 18 pages visées, liens entrants (éditions, Ce qui est confirmé, Véhicules, 40 fiches, accueil, menu, pied de page,
+  recherche, Léo), chiffres et lignes de la page des vraies voitures égaux aux données (ItemList complet, chaque fiche
+  existante, une ancre par marque), préchargement (date = acquisitions.json, état « avant », garde-fou), sommaires des
+  pages longues, images de partage.
+- Tests mis à jour (même intention) : outils/tests/v7871.test.cjs (groupe « L’actualité » : les trois pages de plus dans les
+  puces), leo-v745.test.cjs (plafond du noyau 352 Kio), hubs-monde-v741.test.cjs (« la carte est plus grande que gta 5 ? »
+  mène maintenant au sujet rédigé carte-plus-grande et à la page « GTA 6 et GTA 5 »), langues.test.cjs (un bloc marqué
+  lang="en", comme les deux citations de Take-Two, n’est pas un texte à traduire ; langues-pages-browser.cjs de même), langues-helper.cjs
+  (titres anglais des sources de la page « GTA 6 et GTA 5 » et citations officielles gardés tels quels en allemand, règle 9 du
+  glossaire). Les formulations des sujets nouveaux
+  de Léo répètent moins « gta 6 » (la question se pose sur le site) : sans cela, le mot perdait du poids dans tout l’index
+  et « journalist in the game » (anglais) passait de justesse au sujet presse (contrôle négatif de v788.test.cjs).
+- outils/tests/v793-browser.cjs (Chromium) : FR et DE, 390 / 768 / 1 280 px : ni défilement horizontal, ni erreur, ni requête
+  externe, ni cookie ; tous les blocs entrés après la lecture ; aucun texte sous 11 px ; aucun titre qui déborde ; comptes à
+  rebours écrits ; état « avant » ; sommaire → section ; encart Léo → question posée ; repli d’une marque ; mouvement réduit :
+  tout visible sans défilement.
+
+6. CONTRÔLES DE LA VERSION LIVRÉE (16 octobre 2026, outils/livraison/verifier-tout.sh puis les contrôles du lot)
+- Suite Node : 1 149/1 149 ; langues : 51/51 ; verifier.js : aucune erreur, 459 583 références dans 2 821 pages
+  (HTML, srcset, CSS, galeries, données, plans du site) ; preuve de confidentialité tenue ; pages des langues (navigateur)
+  35/35 ; langues dans le navigateur 2 791/2 791 ; extraction à {} dans les cinq langues ; gen-leo --check ; une
+  synchronisation de plus (outils/sync-site.cjs) ne change aucun fichier.
+- Écrans : 75 pages × 16 largeurs (320 à 2 560 px) = 1 200 chargements et 72 pages allemandes × 5 largeurs : aucun
+  débordement, aucune cible trop petite, rien sous 11 px ; aucun signal sur les pages du lot ; les signaux restants
+  (tuiles bento des Activités et des Animaux, galeries des fiches, outils du Calculateur : largeurs volontairement
+  différentes) sont ceux des versions d’avant.
+- Audit de clôture (26 pages, 182 chargements) : 0 problème, 0 erreur console, 11 835 contrastes vérifiés, 11 722 cibles de 24 à 44 px ; cookies : aucun ; v793.test 8/8 ; v793-browser 134/134
+  (FR et DE × 390 / 768 / 1 280 × quatre pages).
+- Corrigé en cours de contrôle : les quatre cartes « Aller plus loin » du hub Véhicules (une de plus) tombaient en 3 + 1
+  entre 830 et 1 110 px (audit : grille non centrée à 1 024) → deux colonnes tant que quatre ne tiennent pas (fiches.css) ;
+  deux noms réels en français sur la page des vraies voitures (« Chevrolet Express, depuis 2003 », « Kayak Crescent,
+  plusieurs variantes ») → traduits par la mémoire ; six descriptions allemandes et italiennes de plus de 155 signes →
+  raccourcies ; la première image de la page du préchargement était la jaquette (68 Ko en 800 px) → Jason et Lucia (28 Ko)
+  en premier, la jaquette en second.
+
+7. LATENCE (mesurée le 16 octobre, sur la version livrée)
+- Banc du site, outils/tests/latence-browser.cjs : téléphone 390 px (densité 3), processeur ralenti ×4, réseau « 4G
+  lente » simulé par le serveur (150 ms, 1,6 Mbit/s, réponses compressées), 4 tours en alternance, médianes ; à froid
+  (ni cache ni service worker) puis à chaud. v7.92 → v7.93, en ms ; Ko reçus à froid.
+  Page                      FCP froid    DCL froid   chargement   processeur     Ko froid    FCP chaud    DCL chaud
+  Accueil                  1036 → 968  1252 → 1213  1498 → 1534  1379 → 1351    238 → 238    532 → 512    935 → 903
+  Éditions                  936 → 864  1267 → 1224  1655 → 1563  1548 → 1464    412 → 413    500 → 500   1008 → 989
+  Ce qui est confirmé       956 → 916  1112 → 1150  1484 → 1498  1137 → 1184    300 → 300    528 → 472    788 → 801
+  Véhicules (hub)         1040 → 1100  1784 → 1826  2131 → 2100  2596 → 2607    398 → 399    624 → 556  1773 → 1753
+  Fiche Karin Sultan        948 → 932  1080 → 1160  1456 → 1526  1117 → 1387    240 → 241    440 → 424    869 → 784
+  À propos                  904 → 908  1195 → 1235  1920 → 1898  1392 → 1408    486 → 487    556 → 456    993 → 855
+  Accueil (allemand)       1000 → 972  1216 → 1174  1440 → 1474  1312 → 1299    270 → 271    528 → 540   1031 → 959
+  Le premier affichage bouge de −100 à +60 ms selon la page (écart du banc : l’accueil, dont le HTML change de 280 octets,
+  fait −68) ; les octets reçus sont les mêmes (+0,3 Ko de HTML par page : liens et titres) ; le processeur de la fiche
+  Karin Sultan à froid (+270) n’est pas retrouvé à chaud (−40) ni au tour préliminaire (+95) : écart du banc. Aucune
+  régression.
+- Pages nouvelles, mêmes conditions, 3 tours, face à Ce qui est confirmé (même gabarit) :
+  Page                      FCP froid    DCL froid   chargement   processeur     Ko froid    FCP chaud    DCL chaud
+  Ce qui est confirmé             928         1181         1553         1192          300          520          954
+  Préchargement                   860         1212         1552         1274          361          436          868
+  GTA 6 sur PC                    892         1111         1501         1101          294          476          767
+  GTA 6 et GTA 5                  928         1120         1498         1160          358          512         1005
+  Vraies voitures                1148         1459         1809         1418          338          560         1129
+  Vraies voitures (de)           1200         1469         1850         1468          370          536         1212
+  Les trois pages de texte sont dans les mêmes temps que Ce qui est confirmé (de −68 à +0 ms au premier affichage à
+  froid, égales à chaud ; Préchargement remesuré après le changement d’ordre des visuels : 860 contre 924) ; la page des vraies voitures, qui porte 302 lignes (203 Ko de HTML), met 0,25 s de plus à
+  charger à froid et reste plus légère que le hub Véhicules (1 459 contre 1 826 ms à DOMContentLoaded). Les grandes
+  marques sont repliées (plus de 20 véhicules), les lignes entrent au défilement.
+
+8. FICHIERS
+- 3 009 fichiers ajoutés ou modifiés depuis la v7.92 (commit 52ecaec29), aucun supprimé : 67 nouveaux (les quatre pages en six
+  langues, outils/gen-recherches.cjs, recherches.css, outils/sites-amis.json, outils/langues/<code>/v793.json et
+  v793-fiches.json, outils/vraies-voitures-chiffres.json, les tests v793, les 24 images de partage des pages nouvelles, la
+  documentation) ; le reste sont les pages régénérées (liens du menu et du pied de page, puces « L’actualité », lien des 302
+  fiches véhicules dans six langues, titres et descriptions, images de partage retitrées, plans du site, index de recherche
+  et de Léo, service worker).
+
+9. RÉUNION AVEC LA v7.92.1 (17 octobre 2026)
+- Pourquoi : la v7.92.1 (pages revues, page Prix et collector ; outils/CHANGEMENTS-v7.92.1.txt) et ce lot ont été faits en
+  même temps, chacun sur la v7.92 (commit 52ecaec29). Leurs deux archives changeaient les mêmes 2 837 fichiers, surtout des
+  pages produites : poussée après l’autre, chacune aurait effacé une partie de la première. Cette version les réunit ;
+  son archive part de la v7.92 et remplace les deux.
+- Méthode : sources réunies une à une (générateurs, données JSON entrée par entrée, feuilles de style, pages écrites à la
+  main, mémoires de traduction, Léo, pivots et ponts), puis tout ce qui est produit refait par la chaîne complète
+  (outils/regenerer.cjs, puis gen.js, gen-actus.cjs, sync-site.cjs, gen-leo.cjs, sync-site.cjs, gen-leo.cjs --check).
+  Contrôle ligne à ligne : chaque ligne ajoutée par l’un ou l’autre côté est dans la version réunie, sauf les lignes
+  produites (menus, pieds de page, empreintes ?v=) et les choix ci-dessous.
+- Choix faits en réunissant :
+  · « L’actualité » (menu Explorer, pied de page, puces) : huit entrées — Actualités, Vidéos officielles, Éditions, Prix et
+    collector, Ce qui est confirmé, Préchargement, GTA VI sur PC, GTA VI et GTA V (outils/site-shell.cjs) ; listes des
+    tests v7871 alignées ;
+  · Vidéos officielles : titre pour les moteurs de ce lot, chapô de la v7.92.1 (quatre vidéos), description réunie :
+    « Les trailers de GTA 6, An Extended Look (Netflix, puis YouTube) et la bande-annonce de lancement : chaque vidéo
+    officielle, ses moments, sa musique. » (148 signes ; de 130 à 139 dans les cinq langues) ;
+  · Éditions : titre et description de ce lot, note et bandeau du coffret de la v7.92.1 ; FAQ de sept questions (les deux
+    de ce lot en tête) ; « Combien coûte GTA 6 ? » : les prix de Take-Two et des boutiques, puis « Les revendeurs fixent
+    leurs propres prix ; la page des prix les détaille, avec le coffret collector. » et le lien Prix et collector ; source
+    Take-Two (t2-prix) ajoutée aux sources de la v7.92.1 ;
+  · informations.css, actus.css, gen-actus.cjs, gen-informations.cjs, README : les ajouts des deux côtés gardés ;
+  · Léo : 353 sujets (les quatre de la v7.92.1 et les cinq de ce lot ; aucun sujet changé des deux côtés) ; le noyau
+    réuni (356 417 octets) tient sous le plafond de 352 Kio, gardé ; pivots anglais et allemand, ponts espagnol, italien et
+    portugais réunis (une expression qui ne diffère d’une autre que par un accent ou un tiret n’est gardée qu’une fois :
+    Léo ignore accents et tirets).
+- Ajouts pour que les deux parties se répondent :
+  · Actualités : le ticket « À venir » du 12 novembre et la question « Quand sort GTA 6 ? » mènent à la page du
+    préchargement (« Le préchargement, pas à pas ») ;
+  · GTA 6 et GTA 5 : la ligne « Le prix » (prix.html#jeu) et la question « GTA 6 sera-t-il plus cher que GTA 5 ? » mènent
+    à Prix et collector ; la source « Vidéos officielles » compte quatre vidéos, dont la bande-annonce de lancement du
+    15 octobre 2026 (elle disait « trois ») ;
+  · Éditions : la réponse « Combien coûte GTA 6 ? » mène à Prix et collector.
+- Corrections :
+  · « GTA V comptait 252 véhicules au lancement » (hub Véhicules et page Achats ; point laissé à Téva par ce lot) n’avait
+    aucune source : 217, d’après le Guinness World Records (record « Most vehicles in a GTA videogame » : 217 véhicules à
+    la sortie du 17 septembre 2013, 257 après les contenus ajoutés et les versions PS4 et Xbox One de 2014), dans les six
+    langues (outils/hubs-editoriaux.json, outils/achats-editorial.json) ;
+  · anglais : prix en euros écrits à l’anglaise (€79.99, €99.99, €20) dans quatre textes de ce lot ; « Toutes les
+    annonces » avait deux traductions (« All announcements » gardé, comme ailleurs sur le site) ;
+  · Léo en anglais : « jack a car », « jack cars », « carjack », « carjacking » → vol de voiture (« how do you jack a car in
+    gta 6 » ne trouvait plus le sujet depuis ce lot), « pattern » → motif (outils/langues/en/leo-pivot.json) ;
+  · espaces insécables de ce lot remis dans les descriptions des Éditions et des Vidéos officielles.
+- Langues : outils/langues/<code>/v793-fusion.json (17 textes en anglais et en allemand, 20 en espagnol, italien et
+  portugais : menus réunis, liens, description et source des vidéos, phrases des 217 véhicules) ; entrées devenues
+  inutiles retirées de v793.json (10 par langue) et de v7921.json (8 par langue) ; extraction à {} dans les cinq langues.
+- Contrôles de la version réunie (17 octobre, outils/livraison/verifier-tout.sh, puis les contrôles
+  des deux versions) : suite Node 1 160/1 160 ; langues 51/51 ; verifier.js : aucune erreur, 469 363 références dans
+  2 833 pages ; preuve de confidentialité tenue ; pages des langues 35/35 ; langues dans le navigateur 2 791/2 791 ; écrans
+  77 pages × 16 largeurs (1 232 chargements) et 74 pages allemandes × 5 largeurs : aucun débordement, aucun texte trop
+  petit, et exactement les signaux de la v7.92 et de la v7.92.1 sur des pages non touchées (galeries des fiches, tuiles) ;
+  audit de clôture : 0 problème, 0 erreur console, 11 923 contrastes vérifiés, 11 852 cibles de 24 à 44 px ; cookies :
+  aucun ; v7921.test 11/11 et v793.test 8/8 ; v7921-browser 196/196 et v793-browser 134/134 ; Léo : les 80 jeux de
+  questions rejoués, mêmes résultats que la v7.92.1, aucun recul face à la v7.92 ; gen-leo --check ; images de partage à
+  jour ; extraction à {} dans les cinq langues ; une synchronisation de plus (outils/sync-site.cjs) ne change aucun
+  fichier.

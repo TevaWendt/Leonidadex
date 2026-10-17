@@ -60,6 +60,10 @@ const ICONS = {
   note: '<path d="M9 18V5.5l11-2.5v12.5"/><circle cx="6" cy="18" r="3"/><circle class="ac" cx="17" cy="15.5" r="3"/>',
   /* v7.41 (lot 4) : hubs du monde */
   film: '<rect x="3" y="8" width="18" height="12" rx="2"/><path d="M3.5 8l2-4h13l2 4"/><path d="M7.5 4l2 4M12 4l2 4M16.5 4l2 4"/><path class="ac" d="M10 11.5v5l4.5-2.5z"/>',
+  /* v7.92.1 : une manette (les manettes en édition limitée, page Ce qui est confirmé) */
+  manette: '<path d="M7.5 7.5h9a4.5 4.5 0 0 1 4.4 3.6l.9 4.6a2.4 2.4 0 0 1-4.1 2.1l-2.2-2.3h-7l-2.2 2.3a2.4 2.4 0 0 1-4.1-2.1l.9-4.6a4.5 4.5 0 0 1 4.4-3.6z"/><path d="M8 10.5v3M6.5 12h3"/><circle class="ac" cx="15.5" cy="11" r="1"/><circle class="ac" cx="17.5" cy="13" r="1"/>',
+  /* v7.92.1 : un coffret à tiroirs (le coffret collector) */
+  coffret: '<path d="M4 10h16v10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/><path d="M4 10l2-6h12l2 6"/><path d="M4 15.5h16"/><path class="ac" d="M10.5 12.75h3M10.5 18.25h3"/>',
   /* v7.46 (lot 9) : Contact et Mentions */
   enveloppe: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 6.5l8.5 6.5 8.5-6.5"/><circle class="ac" cx="18" cy="16" r="1.4"/>',
   serveur: '<rect x="4" y="4" width="16" height="6" rx="1.5"/><rect x="4" y="14" width="16" height="6" rx="1.5"/><circle class="ac" cx="8" cy="7" r="1.2"/><circle class="ac" cx="8" cy="17" r="1.2"/><path d="M12 7h5M12 17h5"/>',

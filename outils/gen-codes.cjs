@@ -285,7 +285,7 @@ ${zone(H, STATUTS)}`;
   const list = C.codes.length ? C.codes.map(c => ({ name: c.effet, url: SITE + '/' + HUB + '/' + c.categorie + '.html#code-' + c.id })) : C.gtav.map(c => ({ name: 'GTA V : ' + c.effet, url: SITE + '/' + HUB + '.html#code-' + c.id }));
   const collection = '<script type="application/ld+json">' + JSON.stringify({ '@context': 'https://schema.org', '@type': 'CollectionPage', name: X.title, description: metaDesc(X.desc), url: SITE + '/' + HUB + '.html', inLanguage: 'fr', isPartOf: { '@type': 'WebSite', name: 'Leonidakit', url: SITE + '/' }, mainEntity: { '@type': 'ItemList', name: C.codes.length ? LI.titre : SE.cartesTitre, numberOfItems: list.length, itemListElement: list.map((x, i) => ({ '@type': 'ListItem', position: i + 1, name: x.name, url: x.url })) } }) + '</script>';
   const og = imgOf(MED, X.pile[0].media);
-  return page(ROOTC, { p: '', title: X.title + ' | Leonidakit', desc: X.desc, canonical: '/' + HUB + '.html', ogImg: og.b.src, body, crumbs: [['Accueil', '/'], [X.label, '/' + HUB + '.html']], ld: collection });
+  return page(ROOTC, { p: '', title: (X.seoTitle || X.title) + ' | Leonidakit' /* v7.93 : titre pour les moteurs (ce que tapent les joueurs) */, desc: X.desc, canonical: '/' + HUB + '.html', ogImg: og.b.src, body, crumbs: [['Accueil', '/'], [X.label, '/' + HUB + '.html']], ld: collection });
 }
 
 /* zone éditoriale des hubs (même rendu que outils/hubs-monde.cjs) */

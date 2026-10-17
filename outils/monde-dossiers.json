@@ -106,6 +106,12 @@
    "date": "8 octobre 2026",
    "titre": "Les stations de radio",
    "media": null
+  },
+  "lancement": {
+   "iso": "2026-10-15",
+   "date": "15 octobre 2026",
+   "titre": "Bande-annonce de lancement",
+   "media": "affiche-bande-annonce-lancement"
   }
  },
  "sources": {

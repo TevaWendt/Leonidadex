@@ -1,0 +1,106 @@
+{
+ "_note": "v7.92.1 : dix questions sur ce que la version ajoute (bande-annonce de lancement et sa musique, Trailer 3, prix du jeu, coffret collector, manettes DualSense, boutique Rockstar, nombre de vidéos, dernière annonce), réponse et lien attendus. Rejoué par node outils/tests/leo-eval.cjs --questions=outils/tests/leo-questions-v7921-fr.json.",
+ "schemaVersion": 1,
+ "questions": [
+  {
+   "q": "c'est quoi la bande-annonce de lancement de gta 6",
+   "expect": {
+    "topic": "bande-annonce-lancement",
+    "page": "/videos/bande-annonce-lancement.html"
+   },
+   "tags": [
+    "v7921"
+   ]
+  },
+  {
+   "q": "quelle est la musique de la bande annonce de lancement de gta 6",
+   "expect": {
+    "topic": "bande-annonce-lancement",
+    "page": "/videos/bande-annonce-lancement.html"
+   },
+   "tags": [
+    "v7921"
+   ]
+  },
+  {
+   "q": "y aura-t-il un trailer 3 de gta 6",
+   "expect": {
+    "topic": "trailer3",
+    "page": "/videos/bande-annonce-lancement.html"
+   },
+   "tags": [
+    "v7921"
+   ]
+  },
+  {
+   "q": "combien coûte gta 6",
+   "expect": {
+    "topic": "prix",
+    "page": "/prix.html"
+   },
+   "tags": [
+    "v7921"
+   ]
+  },
+  {
+   "q": "que contient le coffret collector de gta 6",
+   "expect": {
+    "topic": "coffret-collector",
+    "page": "/prix.html"
+   },
+   "tags": [
+    "v7921"
+   ]
+  },
+  {
+   "q": "prix du coffret collector gta 6",
+   "expect": {
+    "topic": "coffret-collector",
+    "page": "/prix.html"
+   },
+   "tags": [
+    "v7921"
+   ]
+  },
+  {
+   "q": "combien coûte la manette dualsense gta 6",
+   "expect": {
+    "topic": "manettes-dualsense",
+    "page": "/prix.html"
+   },
+   "tags": [
+    "v7921"
+   ]
+  },
+  {
+   "q": "que vend la boutique rockstar pour gta 6",
+   "expect": {
+    "topic": "collection-boutique",
+    "page": "/prix.html"
+   },
+   "tags": [
+    "v7921"
+   ]
+  },
+  {
+   "q": "combien de vidéos officielles de gta 6",
+   "expect": {
+    "topic": "videos-officielles",
+    "page": "/videos.html"
+   },
+   "tags": [
+    "v7921"
+   ]
+  },
+  {
+   "q": "quelle est la dernière annonce sur gta 6",
+   "expect": {
+    "topic": "derniere-annonce",
+    "page": "/actus.html"
+   },
+   "tags": [
+    "v7921"
+   ]
+  }
+ ]
+}

@@ -3592,5 +3592,383 @@
   ],
   "mediaType": "official-artwork",
   "consultedAt": "2026-10-10"
+ },
+ "affiche-bande-annonce-lancement": {
+  "id": "affiche-bande-annonce-lancement",
+  "titre": "Affiche de la bande-annonce de lancement",
+  "source": "https://www.rockstargames.com/videos/76orsa95",
+  "original": "https://videos-rockstargames-com.akamaized.net/v4/76orsa95/art/en-us.jpg",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/affiche-bande-annonce-lancement-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/affiche-bande-annonce-lancement-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-artwork",
+  "consultedAt": "2026-10-16"
+ },
+ "annonce-extended-look": {
+  "id": "annonce-extended-look",
+  "titre": "Annonce d’An Extended Look",
+  "source": "https://www.rockstargames.com/newswire/article/9k2kaa1o3297k9/grand-theft-auto-vi-an-extended-look",
+  "original": "https://media-rockstargames-com.akamaized.net/tina-uploads/posts/9k2kaa1o3297k9/4faf2f8d60cd657f09eb55707b31cc44008bfa4c.jpg",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/annonce-extended-look-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/annonce-extended-look-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-artwork",
+  "consultedAt": "2026-10-16"
+ },
+ "collection-gta-vi": {
+  "id": "collection-gta-vi",
+  "titre": "Collection Grand Theft Auto VI de la boutique Rockstar",
+  "source": "https://www.rockstargames.com/newswire/article/759875393o5253/grand-theft-auto-vi-collection-now-at-the-rockstar-store",
+  "original": "https://media-rockstargames-com.akamaized.net/tina-uploads/posts/759875393o5253/999a13ef806098304feeee0531ad81e817c3030b.jpg",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/collection-gta-vi-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/collection-gta-vi-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-product-photo",
+  "consultedAt": "2026-10-16"
+ },
+ "manettes-dualsense-gta-vi": {
+  "id": "manettes-dualsense-gta-vi",
+  "titre": "Manettes DualSense en édition limitée Grand Theft Auto VI",
+  "source": "https://blog.playstation.com/2026/09/03/first-look-at-the-grand-theft-auto-vi-limited-edition-dualsense-wireless-controllers/",
+  "original": "https://blog.playstation.com/tachyon/2026/09/a5bd4c6e9ca55c1e1fe1705b79e86300f205831f.png",
+  "credit": "© Sony Interactive Entertainment / Rockstar Games",
+  "variants": [
+   {
+    "src": "/img/officiel/manettes-dualsense-gta-vi-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/manettes-dualsense-gta-vi-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-product-photo",
+  "consultedAt": "2026-10-16"
+ },
+ "coffret-the-goodtime-state": {
+  "id": "coffret-the-goodtime-state",
+  "titre": "The Goodtime State – Vice City, illustration officielle",
+  "source": "https://www.rockstargames.com/newswire/article/9k2a49ook82o57/pre-order-the-goodtime-state-vice-city-collection-now-while-supplies-l",
+  "original": "https://media-rockstargames-com.akamaized.net/tina-uploads/posts/9k2a49ook82o57/cbdf4fc342bfca94c789a887244c3b70283047ae.jpg",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/coffret-the-goodtime-state-480.webp",
+    "w": 480,
+    "h": 270
+   },
+   {
+    "src": "/img/officiel/coffret-the-goodtime-state-1280.webp",
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "mediaType": "official-artwork",
+  "consultedAt": "2026-10-16"
+ },
+ "coffret-collector-ferme": {
+  "id": "coffret-collector-ferme",
+  "titre": "Coffret collector, boîte fermée",
+  "source": "https://store.rockstargames.com/merchandise/gtavi-goodtime-state-vice-city-collection",
+  "original": "https://images.ctfassets.net/h1rqp7q66d54/7oD5JrJwPbKnOvJHYJOOls/3bd0371706222d53640907814156e91f/GTAVI_CE_Box_Closed_1440x1440.png",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/coffret-collector-ferme-480.webp",
+    "w": 480,
+    "h": 480
+   },
+   {
+    "src": "/img/officiel/coffret-collector-ferme-1280.webp",
+    "w": 1280,
+    "h": 1280
+   }
+  ],
+  "mediaType": "official-product-photo",
+  "consultedAt": "2026-10-16"
+ },
+ "coffret-collector-ouvert": {
+  "id": "coffret-collector-ouvert",
+  "titre": "Coffret collector, boîte ouverte",
+  "source": "https://store.rockstargames.com/merchandise/gtavi-goodtime-state-vice-city-collection",
+  "original": "https://images.ctfassets.net/h1rqp7q66d54/oUv7kz3o5ZHK96pgSEr80/a5c6343cdf67e3a95cf9cdd172ebe30b/GTAVI_CE_Box_Open_1440x1440.png",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/coffret-collector-ouvert-480.webp",
+    "w": 480,
+    "h": 480
+   },
+   {
+    "src": "/img/officiel/coffret-collector-ouvert-1280.webp",
+    "w": 1280,
+    "h": 1280
+   }
+  ],
+  "mediaType": "official-product-photo",
+  "consultedAt": "2026-10-16"
+ },
+ "coffret-figurine-macca": {
+  "id": "coffret-figurine-macca",
+  "titre": "Coffret collector, figurine Macca the Gator",
+  "source": "https://store.rockstargames.com/merchandise/gtavi-goodtime-state-vice-city-collection",
+  "original": "https://images.ctfassets.net/h1rqp7q66d54/7BkLg0CoubK5mhngoKrIn1/5b3e0d2f0cb4e2787f0200e4d6eb5d2f/GTAVI_CE_VinylFigure_1440x1440.png",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/coffret-figurine-macca-480.webp",
+    "w": 480,
+    "h": 480
+   },
+   {
+    "src": "/img/officiel/coffret-figurine-macca-1280.webp",
+    "w": 1280,
+    "h": 1280
+   }
+  ],
+  "mediaType": "official-product-photo",
+  "consultedAt": "2026-10-16"
+ },
+ "coffret-lunettes-oakley": {
+  "id": "coffret-lunettes-oakley",
+  "titre": "Coffret collector, lunettes de soleil",
+  "source": "https://store.rockstargames.com/merchandise/gtavi-goodtime-state-vice-city-collection",
+  "original": "https://images.ctfassets.net/h1rqp7q66d54/5fmd2a8fRDOLpcRqC8acrD/0aa98656edd47acdf56c14332248104b/GTAVI_CE_Sunglasses_1440x1440.png",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/coffret-lunettes-oakley-480.webp",
+    "w": 480,
+    "h": 480
+   },
+   {
+    "src": "/img/officiel/coffret-lunettes-oakley-1280.webp",
+    "w": 1280,
+    "h": 1280
+   }
+  ],
+  "mediaType": "official-product-photo",
+  "consultedAt": "2026-10-16"
+ },
+ "coffret-casquette-new-era": {
+  "id": "coffret-casquette-new-era",
+  "titre": "Coffret collector, casquette",
+  "source": "https://store.rockstargames.com/merchandise/gtavi-goodtime-state-vice-city-collection",
+  "original": "https://images.ctfassets.net/h1rqp7q66d54/6Prqwic6Z3SViDnlElhiy2/1356d56c0869abfc925500daa2357f0b/GTAVI_CE_Hat_1440x1440.png",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/coffret-casquette-new-era-480.webp",
+    "w": 480,
+    "h": 480
+   },
+   {
+    "src": "/img/officiel/coffret-casquette-new-era-1280.webp",
+    "w": 1280,
+    "h": 1280
+   }
+  ],
+  "mediaType": "official-product-photo",
+  "consultedAt": "2026-10-16"
+ },
+ "coffret-miroir-macca": {
+  "id": "coffret-miroir-macca",
+  "titre": "Coffret collector, miroir aimanté",
+  "source": "https://store.rockstargames.com/merchandise/gtavi-goodtime-state-vice-city-collection",
+  "original": "https://images.ctfassets.net/h1rqp7q66d54/5RoBRTex6jidh3PqTASlka/ce42f4341910c04ba93231192467003c/GTAVI_CE_Mirror_1440x1440.png",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/coffret-miroir-macca-480.webp",
+    "w": 480,
+    "h": 480
+   },
+   {
+    "src": "/img/officiel/coffret-miroir-macca-1280.webp",
+    "w": 1280,
+    "h": 1280
+   }
+  ],
+  "mediaType": "official-product-photo",
+  "consultedAt": "2026-10-16"
+ },
+ "coffret-cuillere": {
+  "id": "coffret-cuillere",
+  "titre": "Coffret collector, cuillère à mélange",
+  "source": "https://store.rockstargames.com/merchandise/gtavi-goodtime-state-vice-city-collection",
+  "original": "https://images.ctfassets.net/h1rqp7q66d54/7hHSxeboxZyvAxucqWwOgm/922db2f549a4811c58aafeb3bf15d5c2/GTAVI_CE_Spoon_1440x1440.png",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/coffret-cuillere-480.webp",
+    "w": 480,
+    "h": 480
+   },
+   {
+    "src": "/img/officiel/coffret-cuillere-1280.webp",
+    "w": 1280,
+    "h": 1280
+   }
+  ],
+  "mediaType": "official-product-photo",
+  "consultedAt": "2026-10-16"
+ },
+ "coffret-porte-cles": {
+  "id": "coffret-porte-cles",
+  "titre": "Coffret collector, porte-clés",
+  "source": "https://store.rockstargames.com/merchandise/gtavi-goodtime-state-vice-city-collection",
+  "original": "https://images.ctfassets.net/h1rqp7q66d54/766AsafNC02W5DjnsK6xBy/3b2f84bad3a8835c88c9781b07179dfb/GTAVI_CE_Keychain_1440x1440.png",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/coffret-porte-cles-480.webp",
+    "w": 480,
+    "h": 480
+   },
+   {
+    "src": "/img/officiel/coffret-porte-cles-1280.webp",
+    "w": 1280,
+    "h": 1280
+   }
+  ],
+  "mediaType": "official-product-photo",
+  "consultedAt": "2026-10-16"
+ },
+ "coffret-sac-bandouliere": {
+  "id": "coffret-sac-bandouliere",
+  "titre": "Coffret collector, sac à bandoulière",
+  "source": "https://store.rockstargames.com/merchandise/gtavi-goodtime-state-vice-city-collection",
+  "original": "https://images.ctfassets.net/h1rqp7q66d54/6p3odyat1GDOEhs7iU4pOK/5da2be702034349f6becaae07271609d/GTAVI_CE_CrossbodyBag_1440x1440.png",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/coffret-sac-bandouliere-480.webp",
+    "w": 480,
+    "h": 480
+   },
+   {
+    "src": "/img/officiel/coffret-sac-bandouliere-1280.webp",
+    "w": 1280,
+    "h": 1280
+   }
+  ],
+  "mediaType": "official-product-photo",
+  "consultedAt": "2026-10-16"
+ },
+ "coffret-verre-a-shot": {
+  "id": "coffret-verre-a-shot",
+  "titre": "Coffret collector, verre à shot",
+  "source": "https://store.rockstargames.com/merchandise/gtavi-goodtime-state-vice-city-collection",
+  "original": "https://images.ctfassets.net/h1rqp7q66d54/1C3hh2zF8TswU0LG5dSWA8/95a816d7c99bd45cb0caf44627d5ab02/GTAVI_CE_ShotGlass_1440x1440.png",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/coffret-verre-a-shot-480.webp",
+    "w": 480,
+    "h": 480
+   },
+   {
+    "src": "/img/officiel/coffret-verre-a-shot-1280.webp",
+    "w": 1280,
+    "h": 1280
+   }
+  ],
+  "mediaType": "official-product-photo",
+  "consultedAt": "2026-10-16"
+ },
+ "coffret-pins": {
+  "id": "coffret-pins",
+  "titre": "Coffret collector, lot de pin’s",
+  "source": "https://store.rockstargames.com/merchandise/gtavi-goodtime-state-vice-city-collection",
+  "original": "https://images.ctfassets.net/h1rqp7q66d54/51Wc0y1S6T2x6eljtIpxpJ/3b177323ada4832826e15489f2b4f899/GTAVI_CE_Pins_1440x1440.png",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/coffret-pins-480.webp",
+    "w": 480,
+    "h": 480
+   },
+   {
+    "src": "/img/officiel/coffret-pins-1280.webp",
+    "w": 1280,
+    "h": 1280
+   }
+  ],
+  "mediaType": "official-product-photo",
+  "consultedAt": "2026-10-16"
+ },
+ "coffret-stickers": {
+  "id": "coffret-stickers",
+  "titre": "Coffret collector, stickers",
+  "source": "https://store.rockstargames.com/merchandise/gtavi-goodtime-state-vice-city-collection",
+  "original": "https://images.ctfassets.net/h1rqp7q66d54/3PmE8MZC5Szx13CkT2hvDr/e73ec8bdb751a45128e8c21592c069e1/GTAVI_CE_Stickers_1440x1440.png",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/coffret-stickers-480.webp",
+    "w": 480,
+    "h": 480
+   },
+   {
+    "src": "/img/officiel/coffret-stickers-1280.webp",
+    "w": 1280,
+    "h": 1280
+   }
+  ],
+  "mediaType": "official-product-photo",
+  "consultedAt": "2026-10-16"
+ },
+ "coffret-poster": {
+  "id": "coffret-poster",
+  "titre": "Coffret collector, poster de Leonida",
+  "source": "https://store.rockstargames.com/merchandise/gtavi-goodtime-state-vice-city-collection",
+  "original": "https://images.ctfassets.net/h1rqp7q66d54/5rJz3xV2KDvKlSZrhIxQUc/c7a65d2b43b5b74bb016d881390dfc75/GTAVI_CE_Map_1440x1440.png",
+  "credit": "© Rockstar Games / Take-Two Interactive",
+  "variants": [
+   {
+    "src": "/img/officiel/coffret-poster-480.webp",
+    "w": 480,
+    "h": 480
+   },
+   {
+    "src": "/img/officiel/coffret-poster-1280.webp",
+    "w": 1280,
+    "h": 1280
+   }
+  ],
+  "mediaType": "official-product-photo",
+  "consultedAt": "2026-10-16"
  }
 }

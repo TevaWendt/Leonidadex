@@ -1,0 +1,179 @@
+/* LEONIDAKIT — recherches.css (v7.93, lot 8) : les quatre pages qui répondent aux recherches des joueurs (Préchargement,
+   GTA VI sur PC, GTA VI et GTA V, Les vraies voitures). Chargée seulement par ces pages, après style.css, informations.css
+   et vitrine.css ; jetons de style.css uniquement (aucune couleur ni ombre écrite à la main). Entrées au défilement par le
+   moteur commun (lk-reveal, data-lk-reveal + vt-in de vitrine.css) ; « Réduire les animations » : tout visible, rien ne bouge. */
+
+/* ---------- repères communs ---------- */
+.rc-stamp{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;margin:10px 0 0;font-size:.82rem;color:var(--ed-soft,var(--ink-soft));}
+.rc-stamp .ed-status{font-weight:700;color:var(--ed-fg,var(--ink));}
+.rc-stamp--sec{margin-top:18px;}
+.rc-ref{display:inline-flex;align-items:center;min-height:28px;padding:0 2px;font-weight:700;color:var(--ed-fg,var(--ink));text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1.5px;}
+.rc-ref:hover{color:var(--coral-text,#B93220);}
+.ed--night .rc-ref:hover{color:var(--amber-2);}
+.rc-callout{margin-top:22px;}
+.rc-callout--maj p{font-weight:700;color:var(--ed-fg);}
+.rc-more{margin:18px 0 0;font-weight:800;}
+.rc-more a{color:var(--ed-fg,var(--ink));text-decoration:underline;text-underline-offset:4px;}
+.rc-more a:hover{color:var(--coral-text,#B93220);}
+.ed--night .rc-more a,.ed--night .ed-body .rc-more a{color:var(--amber-2);}
+.ed--night .rc-more a:hover{color:#fff;}
+.rc-srcs li p{margin:6px 0 0;}
+.rc-legend{display:flex;flex-wrap:wrap;gap:8px 14px;margin:16px 0 0;font-size:.84rem;color:var(--ed-soft);}
+.rc-legend .ed-status{font-weight:700;color:var(--ed-fg);}
+/* cartes de lecture (immobiles) avec une icône de la charte en tête */
+.rc-cards .vt-card{height:100%;}
+.rc-card-ico{width:40px;height:40px;border-radius:11px;margin-bottom:12px;}
+.rc-card-ico .ed-ico{width:24px;height:24px;}
+.rc-card--main{border-color:var(--coral);box-shadow:var(--shadow-amber);}
+.ed--night .rc-cards .vt-card{background:var(--ed-card);color:var(--paper);border-color:rgba(255,255,255,.3);box-shadow:none;}
+.ed--night .rc-cards .vt-card-d{color:var(--ed-soft);}
+.ed--night .rc-card-ico{background:var(--ed-chip);border-color:rgba(255,255,255,.35);color:var(--paper);}
+
+/* ---------- Préchargement : l’état du jour, les tickets ---------- */
+.rc-state{position:relative;display:grid;gap:6px;margin:0 0 22px;padding:18px 20px 18px 24px;border:2px solid var(--ink);border-left-width:10px;border-left-color:var(--amber);border-radius:var(--radius);background:var(--ed-card,#fff);box-shadow:var(--shadow-soft);}
+.rc-state--ouvert{border-left-color:var(--coral);}
+.rc-state-k{margin:0;font:700 var(--fs-kicker)/1.2 var(--font-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ed-soft);}
+.rc-state-t{margin:0;font:900 clamp(1.15rem,2.4vw,1.5rem)/1.25 'Archivo',sans-serif;letter-spacing:-.015em;}
+.rc-state-dl{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:10px 18px;margin:10px 0 0;}
+.rc-state-dl div{display:grid;gap:2px;}
+.rc-state-dl dt{font-size:.82rem;color:var(--ed-soft);}
+.rc-state-dl dd{margin:0;font-weight:800;}
+.rc-tickets{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:0;padding:0;list-style:none;}
+@media (max-width:799px){.rc-tickets{grid-template-columns:1fr;}}
+.rc-ticket{position:relative;display:flex;flex-direction:column;gap:6px;padding:16px 18px 14px;border:2px solid var(--ink);border-radius:var(--radius);background:var(--ed-card,#fff);box-shadow:var(--shadow-hard);}
+.rc-ticket--main{background:var(--amber);}
+.rc-ticket time{font:700 var(--fs-kicker)/1.2 var(--font-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);}
+.rc-ticket--main time{color:var(--ink);}
+.rc-ticket h3{margin:0;font:900 1.08rem/1.25 'Archivo',sans-serif;letter-spacing:-.01em;}
+.rc-ticket p{margin:0;font-size:.9rem;line-height:1.5;color:var(--ink-soft);}
+.rc-ticket--main p{color:var(--ink);}
+.rc-ticket-f{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-top:auto!important;padding-top:8px;}
+.rc-ticket-f .rc-ref{color:var(--ink);}
+
+/* ---------- Préchargement : marche à suivre par console ---------- */
+.rc-howtos{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:18px;}
+.rc-howto{padding:18px 20px 16px;border:2px solid var(--ink);border-radius:var(--radius);background:var(--ed-card,#fff);box-shadow:var(--shadow-soft);}
+.rc-howto-t{display:flex;align-items:center;gap:10px;margin:0 0 14px;font:900 1.12rem/1.25 'Archivo',sans-serif;}
+.rc-steps{margin:0;padding:0;list-style:none;display:grid;gap:12px;}
+.rc-step{display:flex;gap:12px;align-items:flex-start;}
+.rc-step-n{flex:none;display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--ink);color:var(--amber);font:900 .9rem/1 'Archivo',sans-serif;}
+.rc-step h4{margin:0 0 2px;font:800 .98rem/1.3 'Archivo',sans-serif;}
+.rc-step p{margin:0;font-size:.9rem;line-height:1.5;color:var(--ink-soft);}
+
+/* ---------- questions sans réponse : où ce sera annoncé ---------- */
+.rc-qs{grid-template-columns:repeat(3,minmax(0,1fr));}
+@media (max-width:899px){.rc-qs{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media (max-width:539px){.rc-qs{grid-template-columns:1fr;}}
+.ed--paper2 .vf-q,.ed--paper .vf-q{background:var(--night);border-color:var(--ink);}
+.rc-q-ou{margin-top:auto!important;padding-top:6px;font-size:.84rem;}
+.rc-q-ou>span{display:block;margin-bottom:2px;font-weight:800;color:var(--amber-2);}
+.vf-q .rc-q-ou a,.rc-q-ou a{color:#fff;font-weight:700;text-decoration:underline;text-underline-offset:3px;}
+.vf-q .rc-q-ou a:hover{color:var(--amber-2);}
+
+/* ---------- liste « avant le 12 novembre » ---------- */
+/* cinq gestes : cinq de front sur grand écran, puis 3, 2, 1 ; la dernière carte reste centrée à la même largeur */
+.rc-check{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin:0;padding:0;list-style:none;}
+.rc-check li{flex:0 1 calc((100% - 56px)/5);min-width:0;display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border:2px solid var(--ink);border-radius:12px;background:var(--ed-card,#fff);}
+@media (max-width:1180px){.rc-check li{flex-basis:calc((100% - 28px)/3);}}
+@media (max-width:760px){.rc-check li{flex-basis:calc((100% - 14px)/2);}}
+@media (max-width:480px){.rc-check li{flex-basis:100%;}}
+.rc-check-ico{flex:none;display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--amber);border:2px solid var(--ink);}
+.rc-check-ico svg{width:16px;height:16px;}
+.rc-check h3{margin:0 0 2px;font:800 .98rem/1.3 'Archivo',sans-serif;}
+.rc-check p{margin:0;font-size:.9rem;line-height:1.5;color:var(--ink-soft);}
+
+/* ---------- GTA VI sur PC : les précédents de la série ---------- */
+.rc-serie{display:grid;gap:12px;margin:0;padding:0;list-style:none;}
+.rc-serie-i{display:grid;grid-template-columns:minmax(150px,.9fr) minmax(0,1.6fr) minmax(0,1.2fr);gap:10px 18px;align-items:center;padding:14px 18px;border:2px solid var(--ink);border-radius:var(--radius);background:var(--ed-card,#fff);box-shadow:var(--shadow-soft);}
+@media (max-width:899px){.rc-serie-i{grid-template-columns:1fr;gap:8px;}}
+.rc-serie-i h3{margin:0;font:900 1.08rem/1.25 'Archivo',sans-serif;}
+.rc-serie-dates{display:grid;gap:4px;font-size:.9rem;color:var(--ink-soft);}
+.rc-serie-dates b{color:var(--ink);}
+.rc-serie-gap{display:grid;grid-template-columns:1fr auto;align-items:center;gap:10px;margin:0;}
+.rc-serie-gap i{display:block;height:12px;border:2px solid var(--ink);border-radius:999px;background:linear-gradient(90deg,var(--amber) var(--p,50%),transparent var(--p,50%));}
+.rc-serie-gap span{font:800 .92rem/1.2 'Archivo',sans-serif;white-space:nowrap;}
+.rc-serie-i .rc-stamp{grid-column:1 / -1;margin-top:2px;}
+@media (prefers-reduced-motion:no-preference){.rc-serie.vt-in .rc-serie-gap i{background-size:0% 100%;background-repeat:no-repeat;transition:background-size var(--c-narrative,600ms) var(--c-ease-result,ease) calc(var(--i,0)*60ms);}.rc-serie.vt-in.is-in .rc-serie-gap i{background-size:100% 100%;}}
+
+/* ---------- GTA VI sur PC : l’encadré arnaque ---------- */
+.rc-alert{position:relative;padding:22px 24px 20px 28px;border:2px solid var(--coral);border-left-width:10px;border-radius:var(--radius);background:var(--ed-card);}
+.rc-alert-t{margin:0 0 12px;font:900 clamp(1.2rem,2.6vw,1.6rem)/1.2 'Archivo',sans-serif;letter-spacing:-.015em;color:#fff;}
+.rc-alert p{color:var(--ed-soft);line-height:1.6;}
+.rc-alert-l{margin:12px 0 0;padding:0;list-style:none;display:grid;gap:8px;}
+.rc-alert-l li{position:relative;padding-left:28px;color:var(--ed-fg);line-height:1.5;}
+.rc-alert-l li::before{content:'';position:absolute;left:0;top:.35em;width:16px;height:16px;border-radius:50%;border:2px solid var(--coral);background:linear-gradient(45deg,transparent 44%,var(--coral) 44% 56%,transparent 56%);box-sizing:border-box;}
+.rc-alert-f{margin:16px 0 0;font-weight:800;color:var(--ed-fg);}
+.ed--night .rc-alert-f a,.rc-alert-f a{color:var(--amber-2);text-decoration:underline;text-underline-offset:3px;}
+.ed--night .rc-alert-f a:hover{color:#fff;}
+.rc-follow{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:14px;margin:0;padding:0;list-style:none;}
+.rc-follow-a{height:100%;}
+
+/* ---------- GTA VI et GTA V : le tableau ---------- */
+.rc-cmp-wrap{overflow:hidden;border:2px solid var(--ink);border-radius:var(--radius);background:var(--ed-card,#fff);box-shadow:var(--shadow-hard);}
+.rc-cmp{width:100%;border-collapse:separate;border-spacing:0;font-size:.92rem;}
+.rc-cmp th,.rc-cmp td{padding:14px 14px;border-bottom:1px solid var(--rule);text-align:left;vertical-align:top;line-height:1.45;}
+.rc-cmp thead th{background:var(--ink);color:var(--paper);font:800 .92rem/1.25 'Archivo',sans-serif;}
+.rc-cmp thead th.rc-cmp-vi{background:var(--amber);color:var(--ink);}
+.rc-cmp tbody th{font:800 1rem/1.3 'Archivo',sans-serif;}
+.rc-cmp tbody tr:last-child>*{border-bottom:0;}
+.rc-cmp tbody tr:nth-child(2n)>*{background:var(--paper-2);}
+.rc-cmp td.rc-cmp-vi{background:rgba(245,165,36,.14)!important;}
+.rc-cmp-ico{display:inline-grid;place-items:center;width:28px;height:28px;margin-right:8px;border-radius:8px;background:var(--paper-2);vertical-align:middle;}
+.rc-cmp-ico .ed-ico{width:18px;height:18px;}
+.rc-cmp-v{display:block;font-weight:700;}
+.rc-cmp-n{display:block;margin-top:4px;font-size:.84rem;color:var(--ink-soft);}
+.rc-cmp-s{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;margin-top:8px;font-size:.8rem;color:var(--ink-soft);}
+.rc-cmp-link{display:inline-flex;align-items:center;min-height:28px;font-weight:800;color:var(--ink);text-decoration:underline;text-underline-offset:3px;}
+.rc-cmp-link:hover{color:var(--coral-text,#B93220);}
+.rc-cmp tr:target>*{background:var(--amber)!important;}
+@media (max-width:759px){
+  .rc-cmp,.rc-cmp tbody,.rc-cmp tr,.rc-cmp th,.rc-cmp td{display:block;}
+  .rc-cmp thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);}
+  .rc-cmp tbody tr{padding:12px 14px;border-bottom:2px solid var(--rule);}
+  .rc-cmp tbody th{padding:0 0 8px;border:0;background:none!important;}
+  .rc-cmp tbody td{padding:8px 0;border:0;background:none!important;}
+  .rc-cmp td.rc-cmp-vi{padding:8px 10px;border-radius:8px;}
+  .rc-cmp tbody td::before{content:attr(data-l);display:block;margin-bottom:2px;font:700 .78rem/1.2 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);}
+}
+.rc-quotes{display:grid;gap:14px;margin:0 0 18px;}
+.rc-lede2{max-width:var(--measure);margin:0 0 14px;color:var(--ed-soft);line-height:1.6;}
+.rc-quotes .vt-quote p{margin:0;}
+
+/* ---------- les vraies voitures ---------- */
+.rc-figs{grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));}
+.rc-brandidx{margin:0 0 22px;}
+.rc-brandidx ul{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none;}
+.rc-brandidx a{display:inline-flex;align-items:center;gap:6px;min-height:34px;padding:5px 12px;border:2px solid var(--ink);border-radius:999px;background:var(--ed-card,#fff);color:var(--ink);font:700 .86rem/1.2 'Archivo',sans-serif;text-decoration:none;transition:background var(--c-fast,190ms),box-shadow var(--c-fast,190ms),transform var(--c-fast,190ms);}
+.rc-brandidx a b{font-weight:800;color:var(--coral-text,#B93220);}
+.rc-brandidx a:hover{background:var(--amber);box-shadow:var(--shadow-hard);transform:translate(-2px,-2px);}
+.rc-brandidx a:focus-visible{outline:3px solid var(--coral);outline-offset:2px;}
+/* deux colonnes qui se remplissent sans trou (une marque à un véhicule à côté d’une marque à neuf) ; une seule sous 900 px */
+.rc-brands{columns:2;column-gap:16px;}
+@media (max-width:899px){.rc-brands{columns:1;}}
+.rc-brand{display:flex;flex-direction:column;min-width:0;margin:0 0 16px;padding:16px 18px 14px;border:2px solid var(--ink);border-radius:var(--radius);background:var(--ed-card,#fff);box-shadow:var(--shadow-soft);scroll-margin-top:130px;break-inside:avoid;page-break-inside:avoid;}
+.rc-brand:target{outline:3px solid var(--coral);outline-offset:3px;}
+.rc-brand-h{display:flex;gap:12px;align-items:center;margin:0 0 12px;}
+.rc-brand-h h3{margin:0;font:900 1.12rem/1.2 'Archivo',sans-serif;letter-spacing:-.01em;}
+.rc-brand-ev{margin:3px 0 0;font-size:.86rem;color:var(--ink-soft);}
+.rc-brand-ev b{color:var(--ink);}
+.rc-vehs{margin:0;padding:0;list-style:none;display:grid;gap:6px;}
+.rc-veh{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1.3fr) auto;align-items:center;gap:6px 10px;padding:7px 10px;border-radius:9px;background:var(--paper-2);font-size:.9rem;}
+.rc-veh-a{min-height:28px;display:inline-flex;align-items:center;color:var(--ink);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1.5px;}
+.rc-veh-a:hover{color:var(--coral-text,#B93220);}
+.rc-veh-arrow{color:var(--ink-soft);}
+.rc-veh-r{color:var(--ink);}
+.rc-veh .ed-status{font-size:.78rem;color:var(--ink-soft);justify-self:end;}
+@media (max-width:539px){.rc-veh{grid-template-columns:1fr auto;}.rc-veh-arrow{display:none;}.rc-veh-r{grid-column:1 / -1;}.rc-veh .ed-status{grid-column:1 / -1;justify-self:start;}}
+.rc-brand-d summary{cursor:pointer;min-height:40px;display:flex;align-items:center;padding:6px 12px;border:2px solid var(--ink);border-radius:9px;background:var(--amber);font-weight:800;list-style:none;}
+.rc-brand-d summary::-webkit-details-marker{display:none;}
+.rc-brand-d summary::after{content:'+';margin-left:auto;font:900 1.2rem/1 'Archivo',sans-serif;}
+.rc-brand-d[open] summary::after{content:'−';}
+.rc-brand-d[open] summary{margin-bottom:10px;}
+.rc-brand-d summary:focus-visible{outline:3px solid var(--coral);outline-offset:2px;}
+.rc-method .ed-col h3{flex-wrap:wrap;}
+.rc-method .ed-col p{color:var(--ed-soft);}
+
+/* ---------- entrées au défilement : translation des jetons, cascade plafonnée (vt-in de vitrine.css pour les groupes) ---------- */
+.info-page--recherche :is(.rc-state,.rc-howto,.rc-brand,.rc-alert,.vt-quote,.ed-col,.ed-srcs li).lk-reveal:not(.is-in):not(.lk-settled){transform:translate3d(0,var(--c-rise,10px),0);}
+@media (prefers-reduced-motion:reduce){.rc-serie-gap i{background-size:100% 100%!important;}}
+@media print{.rc-brand-d{display:block;}.rc-brand-d summary{display:none;}}

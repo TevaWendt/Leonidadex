@@ -225,3 +225,146 @@ main button.vt-copy{font:800 .84rem/1.2 'Archivo',sans-serif;}
 .vt-teaser-l{position:absolute;left:50%;top:12px;transform:translateX(-50%);padding:3px 10px;border:1px dashed rgba(253,251,247,.55);border-radius:999px;font:700 .72rem/1.3 var(--font-mono);letter-spacing:.03em;white-space:nowrap;color:rgba(253,251,247,.88);}
 @media (prefers-reduced-motion:no-preference){.vt-media--teaser svg{animation:vt-breathe 4.5s ease-in-out 3;}}
 @keyframes vt-breathe{0%,100%{transform:scale(1);opacity:.85;}50%{transform:scale(1.04);opacity:1;}}
+
+/* =====================================================================================================================
+   v7.92.1 : alignements, centrage et mouvement des pages enrichies (demande de Téva du 16 octobre : « le centrage ainsi
+   que l’alignement des images et des textes »). Une seule ligne de départ par section : le numéro, l’icône et le kicker
+   tiennent sur une ligne au-dessus du titre ; titre, chapeau, paragraphes, cartes et grilles partent tous du même bord.
+   Les rangées sont pleines ou centrées, les colonnes d’une même rangée ont la même hauteur, les boutons d’une rangée de
+   cartes sont alignés en bas. Toujours transform, opacity, clip-path et filter ; rien ne bouge en « réduire les animations ».
+   ===================================================================================================================== */
+
+/* ---------- 14. tête de section : une ligne de départ ---------- */
+.ed-zone .ed-head{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;column-gap:12px;row-gap:0;}
+.ed-zone .ed-titles{display:contents;}
+.ed-zone .ed-mark{grid-column:1;grid-row:1;flex-direction:row;align-items:center;gap:10px;padding:0;}
+.ed-zone .ed-mark .ed-ico{width:28px;height:28px;}
+.ed-zone .ed-kicker{grid-column:2;grid-row:1;margin:0;}
+.ed-zone .ed-title{grid-column:1 / -1;grid-row:2;margin-top:12px;text-wrap:balance;}
+.ed-zone .ed-lede{grid-column:1 / -1;grid-row:3;}
+.ed-zone .ed-body{margin-top:28px;}
+/* le trait d’accent du titre se trace à l’entrée de la section (moteur commun : .reveal → .in) */
+@media (prefers-reduced-motion:no-preference){
+  .js .ed-zone .ed.reveal:not(.in) .ed-title::after{transform:scaleX(0);}
+  .ed-zone .ed-title::after{transform-origin:left center;transition:transform .7s var(--c-ease-result,cubic-bezier(.16,1,.3,1)) .15s;}
+}
+
+/* ---------- 15. deux colonnes : texte et visuel, centrés l’un sur l’autre ---------- */
+.vt-split{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(20px,3.2vw,52px);align-items:center;}
+.vt-split--top{align-items:start;}
+.vt-split--rev>:first-child{order:2;}
+.vt-split>*{min-width:0;}
+.vt-split p{max-width:var(--measure);}
+@media (max-width:899px){.vt-split{grid-template-columns:1fr;}.vt-split--rev>:first-child{order:0;}}
+
+/* ---------- 16. points clés : trois (ou quatre) cartes d’une ligne, icône, titre, texte ; la dernière rangée centrée ---------- */
+.vt-points{display:flex;flex-wrap:wrap;justify-content:center;gap:16px;margin:0;padding:0;list-style:none;}
+.vt-points>li{flex:0 1 calc((100% - (var(--n,3) - 1) * 16px) / var(--n,3));}
+@media (max-width:899px){.vt-points>li{flex-basis:calc((100% - 16px) / 2);}}
+@media (max-width:599px){.vt-points>li{flex-basis:100%;}}
+.vt-point{position:relative;display:flex;flex-direction:column;gap:8px;min-width:0;padding:18px 18px 20px;border:2px solid var(--ink);border-radius:var(--radius);background:var(--ed-card,#fff);box-shadow:var(--shadow-hard);}
+.ed--night .vt-point{border-color:rgba(255,255,255,.4);box-shadow:4px 4px 0 rgba(0,0,0,.35);}
+.vt-point-ico{display:grid;place-items:center;width:46px;height:46px;border:2px solid var(--ink);border-radius:12px;background:var(--amber);color:var(--ink);}
+.ed--night .vt-point-ico{border-color:var(--amber-2);background:transparent;color:var(--amber-2);}
+.vt-point-ico svg{width:24px;height:24px;}
+.vt-point h3{margin:4px 0 0;font:800 1.04rem/1.25 'Archivo',sans-serif;color:var(--ed-fg,var(--ink));}
+.vt-point p{margin:0;font-size:.92rem;line-height:1.55;color:var(--ed-soft,var(--ink-soft));}
+.vt-point .vt-go{margin-top:auto;}
+
+/* bande de trois photogrammes ou moins : toute la largeur, trois colonnes égales (au-delà, elle défile) */
+@media (min-width:720px){.vt-strip-l:not(:has(>li:nth-child(4))){grid-auto-columns:calc((100% - 28px) / 3);}}
+
+/* ---------- 17. cartes à image : rangées pleines, la dernière centrée ---------- */
+.vt-cards{display:flex;flex-wrap:wrap;justify-content:center;}
+.vt-cards>li{flex:0 1 calc((100% - 48px) / 4);min-width:0;}
+@media (max-width:1099px){.vt-cards>li{flex-basis:calc((100% - 32px) / 3);}}
+@media (max-width:819px){.vt-cards>li{flex-basis:calc((100% - 16px) / 2);}}
+@media (max-width:479px){.vt-cards>li{flex-basis:100%;}}
+.vt-cards--3>li{flex-basis:calc((100% - 32px) / 3);}
+.vt-cards--2>li{flex-basis:calc((100% - 16px) / 2);}
+@media (max-width:819px){.vt-cards--3>li{flex-basis:calc((100% - 16px) / 2);}}
+@media (max-width:599px){.vt-cards--3>li,.vt-cards--2>li{flex-basis:100%;}}
+
+/* ---------- 18. questions et encart Léo : deux colonnes de même hauteur ---------- */
+.vt-faqgrid{align-items:stretch;}
+@media (min-width:900px){.vt-faqgrid{grid-template-columns:minmax(0,1.45fr) minmax(280px,1fr);}.vt-faqgrid--even{grid-template-columns:minmax(0,1.1fr) minmax(300px,1fr);}}
+.vt-faqgrid>:first-child{align-self:start;}
+.vt-faqgrid--even>:first-child{align-self:stretch;}/* deux blocs de même hauteur (une lettre et l’encart, par exemple) */
+.vt-faqgrid .faq details:last-child{margin-bottom:0;}
+/* l’image officielle passe sous le texte de l’encart (un voile de nuit la garde lisible) : l’encart n’est plus plus haut
+   que les questions qui l’accompagnent, et il prend leur hauteur quand elles sont plus longues */
+.vt-aside{isolation:isolate;justify-content:flex-end;min-height:300px;padding:22px;}
+.vt-aside-fig{position:absolute;inset:0;z-index:-2;margin:0;aspect-ratio:auto;border:0;}
+.vt-aside-fig img{width:100%;height:100%;object-fit:cover;opacity:.5;transform:scale(1.02);transition:transform 1.2s var(--c-ease-result,cubic-bezier(.16,1,.3,1)),opacity .6s;}
+.vt-aside::before{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(26,18,48,.38) 0%,rgba(26,18,48,.86) 42%,rgba(31,20,56,.97) 100%);}
+@media (hover:hover) and (pointer:fine){.vt-aside:hover .vt-aside-fig img{transform:scale(1.08);opacity:.6;}}
+@media (max-width:899px){.vt-aside{min-height:0;}}
+
+/* ---------- 19. inclinaison au pointeur (vitrine.js, [data-vt-tilt]) : un visuel qu’on regarde, jamais une carte qu’on lit ---------- */
+.vt-tilt{--rx:0deg;--ry:0deg;--gx:50%;--gy:50%;position:relative;transform:perspective(1000px) rotateX(var(--rx)) rotateY(var(--ry));transform-style:preserve-3d;transition:transform .5s var(--c-ease-result,cubic-bezier(.16,1,.3,1));will-change:transform;}
+.vt-tilt.is-tilting{transition:transform .08s linear;}
+.vt-tilt-glare{position:absolute;inset:0;z-index:5;border-radius:inherit;pointer-events:none;background:radial-gradient(60% 50% at var(--gx) var(--gy),rgba(255,255,255,.28),rgba(255,255,255,0) 70%);opacity:0;transition:opacity .4s;}
+.vt-tilt.is-tilting .vt-tilt-glare{opacity:1;}
+
+/* ---------- 20. bande de mots qui glisse avec le défilement (aucune boucle : elle suit la page) ---------- */
+.vt-marquee{position:relative;overflow:hidden;margin:0;padding:12px 0;border-block:2px solid var(--ink);background:var(--ink);color:var(--paper);white-space:nowrap;}
+.vt-marquee-l{display:inline-flex;gap:28px;margin:0;padding:0 14px;list-style:none;font:900 clamp(1rem,.85rem + .7vw,1.45rem)/1.1 'Archivo',sans-serif;letter-spacing:-.01em;text-transform:none;}
+.vt-marquee-l li{display:inline-flex;align-items:center;gap:28px;}
+.vt-marquee-l li::after{content:'';width:10px;height:10px;border-radius:50%;background:var(--amber);flex:none;}
+.vt-marquee-l li:nth-child(3n+2)::after{background:var(--coral);}
+.vt-marquee-l li:nth-child(3n)::after{background:#7A4FB8;}
+@supports (animation-timeline:view()){
+  @media (prefers-reduced-motion:no-preference){
+    .vt-marquee-l{animation:vt-slide linear both;animation-timeline:view();animation-range:cover 0% cover 100%;}
+  }
+}
+@keyframes vt-slide{from{transform:translateX(0);}to{transform:translateX(-30%);}}
+
+/* ---------- 21. étiquette de prix : le montant en grand, les centimes en exposant ---------- */
+.vt-price{display:inline-flex;align-items:flex-start;gap:2px;font:900 clamp(2.2rem,1.6rem + 2.4vw,3.4rem)/.95 'Archivo',sans-serif;letter-spacing:-.05em;font-variant-numeric:tabular-nums;color:var(--ed-fg,var(--ink));}
+.vt-price sup{top:0;margin-top:.12em;font-size:.42em;line-height:1;letter-spacing:-.02em;vertical-align:baseline;}
+.vt-price small{align-self:flex-end;margin:0 0 .18em .2em;font-size:.36em;font-weight:800;letter-spacing:0;}
+.vt-tag{position:relative;display:inline-flex;flex-direction:column;gap:4px;padding:12px 18px 12px 26px;border:2px solid var(--ink);border-radius:10px 14px 14px 10px;background:var(--amber);color:var(--ink);box-shadow:4px 4px 0 var(--ink);}
+.vt-tag::before{content:'';position:absolute;left:9px;top:50%;width:9px;height:9px;margin-top:-4.5px;border:2px solid var(--ink);border-radius:50%;background:var(--paper);}
+.vt-tag .vt-price{color:var(--ink);font-size:clamp(1.8rem,1.4rem + 1.6vw,2.6rem);}
+.vt-tag-l{font:800 .74rem/1.2 var(--font-mono);letter-spacing:.04em;text-transform:uppercase;}
+@media (prefers-reduced-motion:no-preference){
+  .js .vt-in.is-in:not(.lk-settled) .vt-tag{animation:vt-swing .9s var(--ease-spring,cubic-bezier(.34,1.56,.64,1)) calc(var(--vt-d,0ms) + 220ms) backwards;transform-origin:12px 50%;}
+}
+@keyframes vt-swing{0%{opacity:0;transform:rotate(-18deg) translateY(-8px);}55%{opacity:1;transform:rotate(6deg);}100%{transform:none;}}
+
+/* ---------- 22. à la une : une grande carte, l’image d’un côté, le texte de l’autre ---------- */
+.vt-feature{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);border:2px solid var(--ink);border-radius:var(--radius);background:var(--ed-card,#fff);box-shadow:var(--shadow-hard);overflow:hidden;color:var(--ed-fg,var(--ink));}
+.vt-feature-fig{position:relative;margin:0;min-height:280px;background:var(--night);overflow:hidden;}
+.vt-feature-fig img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1s var(--c-ease-result,cubic-bezier(.16,1,.3,1));}
+.vt-feature-b{display:flex;flex-direction:column;gap:10px;padding:clamp(18px,2.4vw,30px);min-width:0;}
+.vt-feature-k{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0;font:800 var(--fs-kicker)/1.2 var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--coral-text);}
+.vt-feature-t{margin:0;font:900 clamp(1.4rem,1.1rem + 1.3vw,2.2rem)/1.08 'Archivo',sans-serif;letter-spacing:-.03em;text-wrap:balance;}
+.vt-feature-d{margin:0;line-height:1.6;color:var(--ed-soft,var(--ink-soft));}
+.vt-feature .lkx-btn{align-self:flex-start;margin-top:auto;}
+@media (hover:hover) and (pointer:fine){.vt-feature:hover .vt-feature-fig img{transform:scale(1.04);}}
+@media (max-width:819px){.vt-feature{grid-template-columns:1fr;}.vt-feature-fig{min-height:0;aspect-ratio:16/9;}}
+
+/* ---------- 23. bandeau-lien : un visuel, une phrase, un bouton (renvoi vers une autre page du site) ---------- */
+.vt-cta{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:18px 28px;padding:clamp(20px,3vw,34px);border:2px solid var(--ink);border-radius:var(--radius);background:var(--night);color:#fff;box-shadow:var(--shadow-amber);overflow:hidden;isolation:isolate;text-decoration:none;}
+.vt-cta>.vt-pic{position:absolute;inset:0;z-index:-2;display:block;margin:0;overflow:hidden;}
+.vt-cta>.vt-pic>img,.vt-cta>img{position:absolute;inset:0;z-index:-2;width:100%;height:100%;object-fit:cover;opacity:.55;transition:transform 1.2s var(--c-ease-result,cubic-bezier(.16,1,.3,1)),opacity .5s;}
+.vt-cta::before{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(26,18,48,.95) 0%,rgba(26,18,48,.82) 45%,rgba(26,18,48,.25) 100%);}
+.vt-cta-b{display:flex;flex-direction:column;gap:8px;max-width:640px;}
+.vt-cta-k{margin:0;font:800 var(--fs-kicker)/1.2 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--amber-2);}
+.vt-cta-t{margin:0;font:900 clamp(1.35rem,1.05rem + 1.3vw,2.1rem)/1.1 'Archivo',sans-serif;letter-spacing:-.03em;color:#fff;text-wrap:balance;}
+.vt-cta-d{margin:0;color:rgba(253,251,247,.9);line-height:1.55;}
+.vt-cta-go{display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:10px 20px;border:2px solid var(--ink);border-radius:999px;background:var(--amber);color:var(--ink);font-weight:900;white-space:nowrap;box-shadow:4px 4px 0 var(--ink);transition:transform var(--c-fast,190ms),box-shadow var(--c-fast,190ms);}
+.vt-cta-go::after{content:'→';}
+a.vt-cta:hover .vt-cta-go,a.vt-cta:focus-visible .vt-cta-go{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink);}
+a.vt-cta:hover>.vt-pic>img,a.vt-cta:hover>img{transform:scale(1.05);opacity:.7;}
+a.vt-cta:focus-visible{outline:3px solid var(--amber);outline-offset:3px;}
+@media (max-width:699px){.vt-cta{grid-template-columns:1fr;}.vt-cta-go{justify-self:start;}}
+
+@media (prefers-reduced-motion:reduce){
+  .vt-tilt,.vt-tilt.is-tilting{transform:none!important;transition:none!important;}
+  .vt-tilt-glare{display:none;}
+  .vt-aside-fig img,.vt-feature-fig img,.vt-cta>img,.vt-cta>.vt-pic>img{transition:none!important;transform:none!important;}
+  .ed-zone .ed-title::after{transition:none!important;transform:none!important;}
+}
+@media print{.vt-tilt{transform:none!important;}.vt-marquee{display:none;}}

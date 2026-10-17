@@ -27,8 +27,8 @@ const server = http.createServer((req, res) => { let p; try { p = decodeURICompo
 const first = d => fs.readdirSync(path.join(root, d)).filter(f => f.endsWith('.html')).sort()[0];
 const pages = fs.readdirSync(root).filter(f => f.endsWith('.html') && !/^google|^(accessoires|munitions|tatouages|vetements)\.html$/.test(f)).sort()
   .concat(['vehicules/pegassi-zentorno.html', 'vehicules/albany-manana.html', 'armes/carabine.html', 'armes/batte.html', 'carnets/garage.html', 'carnets/calculs.html', 'carnets/consommables.html', 'lieux/leonida-keys.html', 'personnages/boobie.html', 'animaux/alligator.html', 'demeures/' + first('demeures'), 'planques/' + first('planques'), 'entreprises/' + first('entreprises'), 'gangs/' + first('gangs'), 'online/' + first('online'), 'radios/' + first('radios'), 'trophees/' + first('trophees'), 'activites/' + first('activites'), 'en/index.html', 'de/vehicules.html', 'es/atelier-3d.html',
-    /* v7.87.1 : pages des v7.86 et v7.87 (les sommaires de la racine y sont déjà) : les trois vidéos, la station au nom le plus long, une fiche reliée à sa vidéo */
-    'videos/trailer-1.html', 'videos/trailer-2.html', 'videos/extended-look.html', 'radios/the-chamber-106-6.html', 'radios/dirty-south-classics.html', 'vehicules/grotti-cheetah-classic.html'])
+    /* v7.87.1 : pages des v7.86 et v7.87 (les sommaires de la racine y sont déjà) : les vidéos (v7.92.1 : quatre), la station au nom le plus long, une fiche reliée à sa vidéo */
+    'videos/trailer-1.html', 'videos/trailer-2.html', 'videos/extended-look.html', 'videos/bande-annonce-lancement.html', 'radios/the-chamber-106-6.html', 'radios/dirty-south-classics.html', 'vehicules/grotti-cheetah-classic.html'])
   .map(p => (process.env.LK_ECRANS_LANGUE ? process.env.LK_ECRANS_LANGUE + '/' : '') + p).filter(p => fs.existsSync(path.join(root, p)));
 
 function inspect() {

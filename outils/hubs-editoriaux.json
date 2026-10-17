@@ -42,7 +42,7 @@
   "aVenir": {
    "titre": "Cette liste est incomplète, et c’est normal",
    "p": [
-    "Rockstar n’a publié aucun total. Pour situer : <b>GTA V comptait 252 véhicules au lancement</b>, avant les centaines ajoutées par GTA Online. Leonidakit en recense aujourd’hui <b>{N}</b>, tous repérés dans un support officiel de Rockstar ou identifiés par la communauté à partir de ces supports.",
+    "Rockstar n’a publié aucun total. Pour situer : <b>GTA V comptait 217 véhicules au lancement</b>, d’après le Guinness World Records, avant les centaines ajoutées par GTA Online. Leonidakit en recense aujourd’hui <b>{N}</b>, tous repérés dans un support officiel de Rockstar ou identifiés par la communauté à partir de ces supports.",
     "D’autres sites annoncent des chiffres plus élevés. L’écart vient de là : ils comptent des véhicules vus dans les fuites de 2022 et de 2026. <b>Nous ne les listons pas</b>, parce qu’un véhicule vu dans du code volé peut ne jamais sortir, et parce que relayer ce matériel n’est ni légitime ni utile au joueur.",
     "Le compte réel sera connu le <b>19 novembre 2026</b>. Cette page sera mise à jour à partir du jeu lui-même, avec les vitesses, les prix et les emplacements qui manquent encore à chaque fiche."
    ]
@@ -65,13 +65,20 @@
     "k": "Comparateur",
     "t": "Jusqu’à trois côte à côte",
     "d": "Identité, statut, source et inspiration en parallèle. Les différences sont surlignées."
+   },
+   {
+    "href": "vraies-voitures.html",
+    "k": "Vraies voitures",
+    "t": "La vraie voiture derrière chaque modèle",
+    "d": "Marque par marque, à quelle voiture réelle chaque véhicule est rapproché, et à quel point c’est sûr."
    }
   ],
   "chiffres": {
    "texte": "Les totaux plus élevés qui circulent en ligne mélangent véhicules aperçus et véhicules simplement repris de GTA V. Nous ne comptons que ce que nous pouvons rattacher à un support officiel ou à un rapprochement assumé comme tel."
   },
   "marques": {
-   "lede": "Comme dans toute la série, les constructeurs sont inventés. Les correspondances ci-dessous sont des observations de la communauté à partir du design : aucun constructeur réel n’est sous licence dans le jeu, et Rockstar n’a confirmé aucune de ces équivalences."
+   "lede": "Comme dans toute la série, les constructeurs sont inventés. Les correspondances ci-dessous sont des observations de la communauté à partir du design : aucun constructeur réel n’est sous licence dans le jeu, et Rockstar n’a confirmé aucune de ces équivalences.",
+   "lien": {"href": "vraies-voitures.html", "label": "Les vraies voitures derrière chaque véhicule, marque par marque"}
   },
   "conduite": {
    "cards": [

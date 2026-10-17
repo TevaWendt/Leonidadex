@@ -85,7 +85,8 @@ test('verification.html : confirmé, pas encore annoncé, ce que les fiches atte
   /* v7.92 : tableau de bord en tête ; les confirmations sont des cartes illustrées (.vf-card), chacune avec sa source */
   assert.deepEqual([...d.querySelectorAll('.ed-zone section.ed')].map(s => s.id), ['tableau', 'confirme', 'pas-encore', 'a-venir', 'modeles', 'jamais', 'signaler']);
   const items = d.querySelectorAll('#confirme .vf-card'); assert.equal(items.length, E.confirme.items.length);
-  for (const it of items) { const src = [...it.querySelectorAll('a[target="_blank"]')].map(a => a.href); assert.ok(src.length === 1 && /^https:\/\/(?:www|support)\.rockstargames\.com\//.test(src[0]), src.join()); }
+  /* v7.92.1 : le prix du jeu et les manettes ont pour source officielle PlayStation (Sony), pas Rockstar */
+  for (const it of items) { const src = [...it.querySelectorAll('a[target="_blank"]')].map(a => a.href); assert.ok(src.length === 1 && /^https:\/\/(?:(?:www|support)\.rockstargames\.com|www\.playstation\.com|blog\.playstation\.com)\//.test(src[0]), src.join()); }
   const n = { 'veh-officiel': data.LK_VEHICULES.filter(v => v.st === 'officiel').length, 'arm-officiel': data.LK_ARMES.filter(a => a.st === 'officiel').length };
   const figs = [...d.querySelectorAll('#confirme .vt-fig b')].map(b => Number(b.textContent));
   assert.equal(figs[0], n['veh-officiel']); assert.equal(figs[2], n['arm-officiel']);

@@ -1,15 +1,20 @@
 {
- "_note": "v7.87 : section « Actualités et vidéos » rendue par outils/gen-actus.cjs : actus.html (frise datée de tout ce que Rockstar a publié sur GTA VI, flux actus.xml dans chaque langue), videos.html et videos/<id>.html (les trois vidéos officielles), editions.html (les deux éditions, les seize contenus de l’Ultimate, les bonus, la version en boîte). Les révélations de chaque événement viennent des dossiers des fiches du monde (outils/monde-dossiers.json, chrono) ; les morceaux et leurs minutages de outils/radios/radios.json ; les véhicules et les armes vus dans chaque vidéo de vehicules-data.js et armes-data.js (champ src) ; les photogrammes minutés de outils/medias-officiels.json. Rien n’est tiré des fuites ; chaque événement a sa source officielle.",
+ "_note": "v7.87 : section « Actualités et vidéos » rendue par outils/gen-actus.cjs : actus.html (frise datée de tout ce que Rockstar a publié sur GTA VI, flux actus.xml dans chaque langue), videos.html et videos/<id>.html (les vidéos officielles), editions.html (les deux éditions, les seize contenus de l’Ultimate, les bonus, la version en boîte). Les révélations de chaque événement viennent des dossiers des fiches du monde (outils/monde-dossiers.json, chrono) ; les morceaux et leurs minutages de outils/radios/radios.json ; les véhicules et les armes vus dans chaque vidéo de vehicules-data.js et armes-data.js (champ src) ; les photogrammes minutés de outils/medias-officiels.json. Rien n’est tiré des fuites ; chaque événement a sa source officielle.",
  "actus": {
   "label": "Actualités",
   "title": "Tout ce que Rockstar a annoncé sur GTA 6, date par date",
   "seoTitle": "Actualités GTA 6 : la chronologie officielle, date par date",
-  "lede": "Chaque annonce officielle de Rockstar sur GTA VI, de la première vidéo aux stations de radio, avec ce qu’elle a montré et sa source.",
-  "desc": "Actualités de GTA 6 : chaque annonce officielle de Rockstar, du Trailer 1 aux radios, avec ce qu’elle a montré, fiche par fiche, et sa source.",
+  "lede": "Chaque annonce officielle de Rockstar sur GTA VI, de la première vidéo à la bande-annonce de lancement, avec ce qu’elle a montré et sa source.",
+  "desc": "Actualités de GTA 6 : chaque annonce officielle de Rockstar, du Trailer 1 à la bande-annonce de lancement, avec ce qu’elle a montré et sa source.",
   "note": "Les dates sont celles de la publication officielle. Ce qu’une annonce a montré est relié à la fiche du site qui en parle.",
   "flux": "S’abonner au flux RSS",
   "fluxNote": "Le flux reprend cette frise : une entrée par annonce, la plus récente en premier.",
   "pile": [
+   {
+    "media": "affiche-bande-annonce-lancement",
+    "alt": "Affiche officielle de la bande-annonce de lancement de GTA VI : Jason et Lucia devant une voiture rouge, sous les palmiers",
+    "caption": "Bande-annonce de lancement"
+   },
    {
     "media": "affiche-extended-look",
     "alt": "Affiche officielle d’An Extended Look, la présentation du 27 août 2026",
@@ -19,11 +24,6 @@
     "media": "affiche-trailer-2",
     "alt": "Affiche officielle du Trailer 2 de GTA VI",
     "caption": "Trailer 2"
-   },
-   {
-    "media": "affiche-trailer-1",
-    "alt": "Affiche officielle du Trailer 1 de GTA VI",
-    "caption": "Trailer 1"
    }
   ],
   "aVenirKicker": "Les prochaines dates",
@@ -36,26 +36,37 @@
   "faq": [
    {
     "q": "Quelle est la dernière annonce officielle sur GTA 6 ?",
-    "a": "Le 8 octobre 2026, Rockstar a présenté six stations de radio, leurs animateurs et des podcasts à la demande. La frise de cette page est mise à jour à chaque annonce."
+    "a": "Le 15 octobre 2026, Rockstar a publié la bande-annonce de lancement, sur « Flower in a Hurricane », nouveau single de Justice. La frise de cette page est mise à jour à chaque annonce."
    },
    {
     "q": "Quand sort GTA 6 ?",
-    "a": "Le jeudi 19 novembre 2026 sur PlayStation 5 et Xbox Series X|S. Le préchargement commence le 12 novembre 2026, d’après l’assistance de Rockstar."
+    "a": "Le jeudi 19 novembre 2026 sur PlayStation 5 et Xbox Series X|S. Le préchargement commence le 12 novembre 2026, d’après l’assistance de Rockstar.",
+    "href": "prechargement.html",
+    "label": "Le préchargement, pas à pas"
+   },
+   {
+    "q": "Combien coûte GTA 6 ?",
+    "a": "79,99 € l’Édition Standard et 99,99 € l’Édition Ultimate sur le PlayStation Store en France, au 16 octobre 2026. Les revendeurs fixent leurs propres prix ; la page des prix les détaille, avec le coffret collector."
    },
    {
     "q": "Combien de vidéos officielles de GTA 6 ?",
-    "a": "Trois : le Trailer 1 (4 décembre 2023), le Trailer 2 (6 mai 2025) et An Extended Look (27 août 2026). Chacune a sa page, avec ses moments, sa musique et ce qu’on y voit."
+    "a": "Quatre : le Trailer 1 (4 décembre 2023), le Trailer 2 (6 mai 2025), An Extended Look (27 août 2026) et la bande-annonce de lancement (15 octobre 2026). Chacune a sa page sur le site."
    },
    {
     "q": "Les infos qui circulent sur les réseaux sont-elles sur cette page ?",
     "a": "Non. Seules les publications de Rockstar, et les articles de presse qui les citent, y entrent. Les vidéos volées de 2022 et d’août 2026 ne sont jamais reprises."
+   },
+   {
+    "q": "Le coffret collector de GTA 6 contient-il le jeu ?",
+    "a": "Non. « The Goodtime State – Vice City Collection » réunit onze objets, sans le jeu, vendu à part. Il est en édition limitée sur la boutique Rockstar et arrive le 19 novembre 2026."
    }
   ],
   "types": {
    "video": "Vidéos",
    "annonce": "Annonces",
    "presse": "Presse",
-   "musique": "Musique"
+   "musique": "Musique",
+   "produit": "Produits dérivés"
   },
   "tout": "Tout",
   "filtresLabel": "Filtrer les annonces",
@@ -68,9 +79,14 @@
   "progres": "Progression dans la frise",
   "leo": [
    "Quelle est la dernière annonce sur GTA 6 ?",
-   "Quand sort GTA 6 ?",
-   "Quelles sont les stations de radio ?"
-  ]
+   "Combien coûte GTA 6 ?",
+   "Que contient le coffret collector de GTA 6 ?"
+  ],
+  "une": {
+   "k": "À la une",
+   "t": "La dernière annonce",
+   "voir": "Voir la vidéo"
+  }
  },
  "aVenir": [
   {
@@ -79,8 +95,8 @@
    "texte": "Le préchargement commence à minuit, heure locale, et la boîte (un code de téléchargement, sans disque) est disponible, en livraison ou en retrait.",
    "source": "rs-support-editions",
    "lien": {
-    "href": "editions.html#boite",
-    "label": "La version en boîte"
+    "href": "prechargement.html",
+    "label": "Le préchargement, pas à pas"
    }
   },
   {
@@ -105,6 +121,47 @@
   }
  ],
  "evenements": [
+  {
+   "id": "bande-annonce-lancement",
+   "ev": "lancement",
+   "iso": "2026-10-15",
+   "titre": "La bande-annonce de lancement",
+   "texte": "Une bande-annonce sur « Flower in a Hurricane », nouveau single de Justice avec Tame Impala, SZA et King Gizzard & The Lizard Wizard. Rockstar présente Justice comme le compositeur de la musique originale du jeu.",
+   "statut": "officiel",
+   "sources": [
+    "rs-launch"
+   ],
+   "liens": [
+    {
+     "href": "radios/gta-vi-the-album.html",
+     "label": "La fiche de l’album"
+    }
+   ],
+   "video": "bande-annonce-lancement",
+   "evs": [
+    "lancement"
+   ],
+   "type": "video"
+  },
+  {
+   "id": "collection-boutique",
+   "iso": "2026-10-08",
+   "titre": "La collection de la boutique Rockstar",
+   "texte": "Rockstar ouvre la Collection Grand Theft Auto VI, en exclusivité sur sa boutique : tee-shirts, casquettes, porte-clés, pince à billets, briquet Zippo, tote bags et autocollants.",
+   "statut": "officiel",
+   "sources": [
+    "rs-collection"
+   ],
+   "liens": [
+    {
+     "href": "prix.html#boutique",
+     "label": "Les objets et leurs prix"
+    }
+   ],
+   "type": "produit",
+   "media": "collection-gta-vi",
+   "alt": "Tee-shirts, casquettes, tote bags, autocollants et petits objets en métal aux logos de GTA VI, de Vice City et de Rockstar Games, photo officielle"
+  },
   {
    "id": "stations-radio",
    "ev": "radio",
@@ -147,6 +204,26 @@
    "alt": "Un hélicoptère et deux voitures de police poursuivent un pick-up dans les marais de Grassrivers, parmi les alligators, capture officielle de GTA VI"
   },
   {
+   "id": "coffret-collector",
+   "iso": "2026-09-24",
+   "titre": "Le coffret collector « The Goodtime State »",
+   "texte": "Un coffret en édition limitée, sans le jeu : onze objets inspirés de l’émission Macca the Gator, de la figurine aux lunettes Oakley, à précommander jusqu’à épuisement des stocks pour une arrivée le 19 novembre.",
+   "statut": "officiel",
+   "sources": [
+    "rs-collector",
+    "rs-store-collector"
+   ],
+   "liens": [
+    {
+     "href": "prix.html#collector",
+     "label": "Le coffret en détail"
+    }
+   ],
+   "type": "produit",
+   "media": "coffret-the-goodtime-state",
+   "alt": "Illustration officielle The Goodtime State : le logo Vice City entouré de Macca l’alligator, un verre à la main, d’un soleil à lunettes, d’un flamant rose et de Chunkee le lamantin"
+  },
+  {
    "id": "album",
    "ev": null,
    "iso": "2026-09-17",
@@ -165,6 +242,25 @@
    "type": "musique",
    "media": "real-dimez-01",
    "alt": "Bae-Luxe, des Real Dimez, assise en studio d’enregistrement, un casque à la main, capture officielle de GTA VI"
+  },
+  {
+   "id": "manettes-dualsense",
+   "iso": "2026-09-03",
+   "titre": "Deux manettes aux couleurs de GTA VI",
+   "texte": "PlayStation présente deux manettes DualSense en édition limitée, une noire et une blanche, à partir du 19 novembre au prix conseillé de 84,99 € ; précommandes le 10 septembre à 10 h, heure locale.",
+   "statut": "officiel",
+   "sources": [
+    "ps-blog-dualsense"
+   ],
+   "liens": [
+    {
+     "href": "prix.html#manettes",
+     "label": "Les manettes"
+    }
+   ],
+   "type": "produit",
+   "media": "manettes-dualsense-gta-vi",
+   "alt": "Les deux manettes DualSense en édition limitée Grand Theft Auto VI, une noire et une blanche, devant le logo du jeu, photo officielle PlayStation"
   },
   {
    "id": "entretien-famitsu",
@@ -247,15 +343,35 @@
    "alt": "La jaquette officielle de GTA VI : Jason et Lucia au centre, entourés de Boobie, de Raul, d’un alligator et de scènes de Leonida, illustration officielle"
   },
   {
+   "id": "date-extended-look",
+   "iso": "2026-08-06",
+   "titre": "La date d’An Extended Look",
+   "texte": "Rockstar annonce An Extended Look : en avant-première sur Netflix le jeudi 27 août à 15 h, heure de New York (21 h en France), puis sur YouTube et sur le site du jeu à 21 h, heure de New York.",
+   "statut": "officiel",
+   "sources": [
+    "rs-extended-date"
+   ],
+   "liens": [
+    {
+     "href": "videos/extended-look.html",
+     "label": "La page de la vidéo"
+    }
+   ],
+   "type": "annonce",
+   "media": "annonce-extended-look",
+   "alt": "Visuel officiel de l’annonce d’An Extended Look : Lucia, un bandana sur le visage et un pistolet à la main, et Jason, qui remonte le sien, devant une station-service, avec la date du 27 août sur Netflix"
+  },
+  {
    "id": "precommandes",
    "ev": "ue",
    "iso": "2026-06-24",
-   "titre": "Précommandes, Édition Ultimate et jaquette",
-   "texte": "Rockstar annonce l’ouverture des précommandes le 25 juin, à minuit, heure locale, et présente l’Édition Ultimate et le Pack Vintage Vice City.",
+   "titre": "Précommandes, Édition Ultimate et Pack Vintage Vice City",
+   "texte": "Rockstar annonce l’ouverture des précommandes le 25 juin, à minuit, heure locale, et présente l’Édition Ultimate et le Pack Vintage Vice City. Le même jour, PlayStation présente la PS5 comme la console où le jeu se joue le mieux.",
    "statut": "officiel",
    "sources": [
     "rs-preorder",
-    "rs-precommandes"
+    "rs-precommandes",
+    "ps-blog-ps5"
    ],
    "liens": [
     {
@@ -269,6 +385,25 @@
     "vv"
    ],
    "type": "annonce"
+  },
+  {
+   "id": "precommandes-date",
+   "iso": "2026-06-18",
+   "titre": "La date des précommandes et la jaquette",
+   "texte": "Rockstar annonce l’ouverture des précommandes le 25 juin, sur les boutiques numériques et chez certains revendeurs, et dévoile en vidéo l’illustration officielle de la jaquette.",
+   "statut": "officiel",
+   "sources": [
+    "rs-precommandes-date"
+   ],
+   "liens": [
+    {
+     "href": "editions.html",
+     "label": "Les éditions"
+    }
+   ],
+   "type": "annonce",
+   "media": "cover-art-sea-sparrow",
+   "alt": "Hélicoptère bleu à flotteurs sur une illustration de la jaquette officielle GTA VI"
   },
   {
    "id": "date-sortie",
@@ -329,9 +464,9 @@
  "videos": {
   "label": "Vidéos officielles",
   "title": "Les vidéos officielles de GTA 6, moment par moment",
-  "seoTitle": "Trailers de GTA 6 : les vidéos officielles, moment par moment",
-  "lede": "Les trois vidéos publiées par Rockstar, à regarder ici, avec ce qu’on y voit : les moments relevés, la musique, les véhicules, les armes et les lieux.",
-  "desc": "Les trailers de GTA 6 et l’Extended Look : chaque vidéo officielle avec ses moments minutés, sa musique, ses véhicules et ses armes, et ses sources.",
+  "seoTitle": "GTA VI trailers : les vidéos officielles, moment par moment",
+  "lede": "Les quatre vidéos publiées par Rockstar, à regarder ici, avec ce qu’on y voit : les moments relevés, la musique, les véhicules, les armes et les lieux.",
+  "desc": "Les trailers de GTA 6, An Extended Look (Netflix, puis YouTube) et la bande-annonce de lancement : chaque vidéo officielle, ses moments, sa musique.",
   "note": "Le lecteur de YouTube ne se charge qu’à ton clic.",
   "lecteur": "Regarder la vidéo",
   "lecteurNote": "Lecteur officiel de YouTube (Google), chargé seulement après ton clic : YouTube peut alors déposer ses propres cookies.",
@@ -458,7 +593,7 @@
     "src": "Extended Look",
     "srcArmes": "Extended Look du 27 août 2026",
     "seo": "GTA 6 Extended Look : ce qu’on y voit, minute par minute",
-    "desc": "An Extended Look de GTA 6 (27 août 2026) : 26 minutes capturées sur PS5, missions, musique minutée, véhicules et armes, avec leurs sources.",
+    "desc": "An Extended Look de GTA 6 (27 août 2026) : comment regarder les 26 minutes diffusées sur Netflix puis YouTube, missions, musique minutée, véhicules, armes.",
     "lede": "Une présentation d’environ 26 minutes, diffusée le 27 août 2026 d’abord sur Netflix puis sur YouTube, capturée sur PlayStation 5.",
     "faits": [
      {
@@ -491,8 +626,63 @@
       "a": "Environ 26 minutes, d’après l’annonce de Rockstar. Elle a été diffusée le 27 août 2026, d’abord sur Netflix puis sur YouTube."
      },
      {
+      "q": "Comment regarder An Extended Look de GTA 6 (Netflix, YouTube) ?",
+      "a": "La vidéo est en ligne sur la chaîne YouTube de Rockstar et sur la page des vidéos officielles de GTA VI ; elle avait d’abord été diffusée sur Netflix le 27 août 2026. Le lecteur de cette page la lance au clic, sans rien charger avant."
+     },
+     {
       "q": "Quelle musique entend-on dans l’Extended Look ?",
       "a": "Quatorze morceaux sous licence relevés par la presse, de Phil Collins à Depeche Mode, avec leurs minutages ; la liste complète est dans le poste de la page Radios et musique."
+     }
+    ]
+   },
+   {
+    "id": "bande-annonce-lancement",
+    "ev": "lancement",
+    "nom": "Bande-annonce de lancement",
+    "titre": "La bande-annonce de lancement de GTA 6",
+    "iso": "2026-10-15",
+    "youtube": "rz1B4B2yBZY",
+    "affiche": "affiche-bande-annonce-lancement",
+    "radio": "bande-annonce-lancement",
+    "src": "Bande-annonce de lancement",
+    "seo": "Bande-annonce de lancement de GTA 6 : la vidéo et sa musique",
+    "desc": "La bande-annonce de lancement de GTA 6 (15 octobre 2026) : « Flower in a Hurricane » de Justice, la sortie du 19 novembre et ce que Rockstar en dit.",
+    "lede": "Publiée par Rockstar le 15 octobre 2026, sur un nouveau single de Justice, le duo qui signe la musique originale du jeu.",
+    "faits": [
+     {
+      "texte": "Rockstar la publie le 15 octobre 2026 avec le résumé de l’histoire : Jason et Lucia, pris dans un complot criminel qui s’étend dans tout l’État de Leonida.",
+      "statut": "officiel",
+      "sources": [
+       "rs-launch"
+      ]
+     },
+     {
+      "texte": "Elle se joue sur « Flower in a Hurricane », nouveau single de Justice avec Tame Impala, SZA et King Gizzard & The Lizard Wizard, aussi présent sur GTA VI: The Album.",
+      "statut": "officiel",
+      "sources": [
+       "rs-launch"
+      ]
+     },
+     {
+      "texte": "Justice compose la musique originale du jeu ; Rockstar annonce d’autres détails, dont l’album de cette musique.",
+      "statut": "officiel",
+      "sources": [
+       "rs-launch"
+      ]
+     }
+    ],
+    "faq": [
+     {
+      "q": "Quelle est la musique de la bande-annonce de lancement de GTA 6 ?",
+      "a": "« Flower in a Hurricane », nouveau single du duo Justice avec Tame Impala, SZA et King Gizzard & The Lizard Wizard. Le morceau figure aussi sur GTA VI: The Album, l’album officiel du jeu."
+     },
+     {
+      "q": "Quand est sortie la bande-annonce de lancement de GTA 6 ?",
+      "a": "Le 15 octobre 2026, sur le site de Rockstar et sur YouTube. Le jeu sort le 19 novembre 2026 sur PlayStation 5 et Xbox Series X|S."
+     },
+     {
+      "q": "Y a-t-il un Trailer 3 de GTA 6 ?",
+      "a": "Rockstar n’a publié aucune vidéo appelée « Trailer 3 ». Sa dernière vidéo, le 15 octobre 2026, est la bande-annonce de lancement ; avant elle, il y a eu le Trailer 1, le Trailer 2 et An Extended Look."
      }
     ]
    }
@@ -504,7 +694,7 @@
   "ouvrir": "Ouvrir la page de la vidéo",
   "aLaffiche": "À l’affiche",
   "chiffresK": "Comparées",
-  "chiffresT": "Les trois vidéos en chiffres",
+  "chiffresT": "Les vidéos en chiffres",
   "chiffresLede": "Ce que le site a relevé dans chaque vidéo, à partir de ses fiches.",
   "metriques": {
    "moments": "Moments relevés",
@@ -515,27 +705,45 @@
   },
   "revoirK": "Image par image",
   "revoirT": "Les moments à revoir",
-  "revoirLede": "Les images officielles tirées des trois vidéos, dans l’ordre ; chacune mène à sa vidéo.",
+  "revoirLede": "Les images officielles tirées des vidéos, dans l’ordre ; chacune mène à sa vidéo.",
   "bandeK": "La bande-son",
   "bandeT": "Toute la musique des vidéos",
   "bandeLede": "Chaque morceau entendu, vidéo par vidéo, avec son moment.",
   "ecouter": "Écouter sur la page de la vidéo",
   "precedent": "Images précédentes",
   "suivant": "Images suivantes",
-  "bandeLabel": "Les moments relevés dans les trois vidéos",
+  "bandeLabel": "Les moments relevés dans les vidéos",
   "leo": [
    "Quelle est la musique du Trailer 2 ?",
    "Combien de temps dure l’Extended Look ?",
    "Quels véhicules voit-on dans le Trailer 1 ?"
-  ]
+  ],
+  "leoVideo": [
+   "Combien de vidéos officielles de GTA 6 ?",
+   "Y a-t-il un Trailer 3 de GTA 6 ?",
+   "Quand sort GTA 6 ?"
+  ],
+  "chiffresNote": "La bande-annonce de lancement (15 octobre 2026) n’est pas relevée image par image ; sa page reprend ce que Rockstar en a dit.",
+  "faq": [
+   {
+    "q": "Combien de vidéos officielles de GTA 6 ?",
+    "a": "Quatre : le Trailer 1 (4 décembre 2023), le Trailer 2 (6 mai 2025), An Extended Look (27 août 2026) et la bande-annonce de lancement (15 octobre 2026). Chacune a sa page, à regarder ici."
+   },
+   {
+    "q": "Y a-t-il un Trailer 3 de GTA 6 ?",
+    "a": "Rockstar n’a publié aucune vidéo appelée « Trailer 3 ». Sa dernière vidéo, le 15 octobre 2026, est la bande-annonce de lancement ; avant elle, il y a eu le Trailer 1, le Trailer 2 et An Extended Look."
+   }
+  ],
+  "bandeAutres": "Les autres vidéos",
+  "bandeLongue": "La plus longue liste"
  },
  "editions": {
   "label": "Éditions",
   "title": "Les éditions de GTA 6",
-  "seoTitle": "Éditions de GTA 6 : Standard, Ultimate, bonus et version en boîte",
+  "seoTitle": "GTA VI précommande : prix, édition Ultimate et contenu",
   "lede": "Ce que contient chaque édition, les seize contenus de l’Ultimate, les bonus de précommande et la version en boîte, d’après l’assistance de Rockstar.",
-  "desc": "Éditions de GTA 6 : Standard ou Ultimate, les seize contenus bonus, le Pack Vintage Vice City, le mois de GTA+, la boîte sans disque et le préchargement.",
-  "note": "Page relue sur l’article de l’assistance de Rockstar, mis à jour le 18 août 2026. Les prix varient selon la boutique : vérifie sur la tienne.",
+  "desc": "Précommander GTA 6 : le prix des éditions Standard et Ultimate, les seize contenus de l’Ultimate, le Pack Vintage Vice City, GTA+ et la boîte sans disque.",
+  "note": "Page relue sur l’article de l’assistance de Rockstar, mis à jour le 18 août 2026, et sur le PlayStation Store le 16 octobre 2026. Les revendeurs fixent leurs propres prix.",
   "pile": [
    {
     "media": "ultimate-edition-02",
@@ -739,7 +947,12 @@
     "texte": "Un mois d’abonnement à GTA+, le service payant de Rockstar.",
     "pour": "Précommande ou achat numérique avant le 20 novembre 2026. L’assistance ne le cite pas pour la boîte.",
     "href": null,
-    "ico": "etoile"
+    "ico": "etoile",
+    "points": [
+     "Pour un achat numérique de l’Édition Standard ou Ultimate, avant le 20 novembre 2026",
+     "À activer avant le 31 mars 2027 sur PlayStation, dans les 180 jours suivant l’achat sur Xbox"
+    ],
+    "src": "rs-gtaplus-precommande"
    }
   ],
   "boiteTitre": "La version en boîte",
@@ -749,6 +962,10 @@
    "L’Édition Ultimate n’existe pas en boîte : avec la boîte, l’amélioration Ultimate s’achète en numérique une fois le code utilisé."
   ],
   "prechargementTitre": "Préchargement et sortie",
+  "prechargementLien": {
+   "href": "prechargement.html",
+   "label": "Précharger GTA VI : la marche à suivre, l’heure et la taille"
+  },
   "prechargement": [
    "Le préchargement commence le 12 novembre 2026 à minuit, heure locale.",
    "La sortie est le jeudi 19 novembre 2026, sur PlayStation 5 et Xbox Series X|S."
@@ -760,6 +977,18 @@
    "Japon : les codes PlayStation expirent 170 jours après leur date d’émission, fixée au jour de la sortie, le 19 novembre 2026."
   ],
   "faq": [
+   {
+    "q": "Combien coûte GTA 6 ?",
+    "a": "79,99 $ pour l’édition Standard et 99,99 $ pour l’Ultimate aux États-Unis, prix annoncés par Take-Two le 24 juin 2026 ; 79,99 € et 99,99 € sur le PlayStation Store et le Microsoft Store, et 20 € pour passer de l’une à l’autre. Les revendeurs fixent leurs propres prix ; la page des prix les détaille, avec le coffret collector.",
+    "href": "prix.html",
+    "label": "Prix et collector"
+   },
+   {
+    "q": "Quand commence le préchargement de GTA 6 ?",
+    "a": "Le 12 novembre 2026 à minuit, heure locale, d’après l’assistance de Rockstar, pour les précommandes numériques et pour la boîte dès que son code est utilisé. La taille du jeu n’est pas encore annoncée.",
+    "href": "prechargement.html",
+    "label": "Précharger GTA 6 : la marche à suivre, PS5 et Xbox"
+   },
    {
     "q": "Que contient l’Édition Ultimate de GTA 6 ?",
     "a": "Le jeu et seize contenus en plus, dont la Grotti Cheetah ’95, les revolvers Hawk & Little Morgan, l’atelier Rideout Customs, le Vapid Dominator Buggy ’67 et son garage, et la Classic Car Collection."
@@ -775,6 +1004,10 @@
    {
     "q": "Jusqu’à quand les bonus de précommande sont-ils offerts ?",
     "a": "Pour un achat numérique fait avant le 20 novembre 2026 : Pack Vintage Vice City et un mois de GTA+. La précommande en boîte donne le Pack Vintage Vice City."
+   },
+   {
+    "q": "Peut-on avoir l’Édition Ultimate de GTA 6 en boîte ?",
+    "a": "Non : l’Édition Ultimate n’existe qu’en numérique. Avec la boîte, l’amélioration Ultimate s’achète ensuite en numérique, une fois le code du jeu utilisé."
    }
   ],
   "categories": {
@@ -866,7 +1099,66 @@
    "Y a-t-il un disque dans la boîte de GTA 6 ?",
    "Quels sont les bonus de précommande ?",
    "Quand commence le préchargement ?"
-  ]
+  ],
+  "prix": {
+   "standard": "79,99 €",
+   "ultimate": "99,99 €",
+   "label": "PlayStation Store",
+   "src": "ps-store-fr"
+  },
+  "choix": {
+   "k": "En deux questions",
+   "nav": "Choisir",
+   "titre": "Quelle édition choisir ?",
+   "lede": "Deux questions, une réponse tirée de l’assistance de Rockstar.",
+   "label": "Choisir une édition",
+   "q1": {
+    "q": "Tu veux les seize contenus de l’Ultimate ?",
+    "oui": "Oui",
+    "non": "Non"
+   },
+   "q2": {
+    "q": "Tu veux une boîte ?",
+    "oui": "Oui",
+    "non": "Non"
+   },
+   "reponses": {
+    "non-non": {
+     "t": "L’Édition Standard, en numérique",
+     "d": "Le jeu, avec le Pack Vintage Vice City et un mois de GTA+ si tu l’achètes avant le 20 novembre 2026.",
+     "prix": "79,99 €"
+    },
+    "non-oui": {
+     "t": "L’Édition Standard, en boîte",
+     "d": "Une boîte avec un code de téléchargement, sans disque, en magasin dès le 12 novembre 2026. La précommande en boîte donne le Pack Vintage Vice City.",
+     "prix": ""
+    },
+    "oui-non": {
+     "t": "L’Édition Ultimate, en numérique",
+     "d": "Le jeu et les seize contenus en plus, découverts au fil de l’histoire, avec les mêmes bonus de précommande.",
+     "prix": "99,99 €"
+    },
+    "oui-oui": {
+     "t": "La Standard en boîte, puis l’amélioration Ultimate",
+     "d": "L’Édition Ultimate n’existe pas en boîte : l’amélioration s’achète en numérique, une fois le code de la boîte utilisé.",
+     "prix": ""
+    }
+   },
+   "prixNote": "Prix du PlayStation Store en France ; en boîte, chaque revendeur fixe le sien."
+  },
+  "collector": {
+   "k": "Nouveau : le coffret collector",
+   "t": "The Goodtime State – Vice City Collection",
+   "d": "Onze objets inspirés de Macca the Gator, sans le jeu, en édition limitée sur la boutique Rockstar : 399,99 $, arrivée le 19 novembre.",
+   "go": "Le coffret et les prix",
+   "href": "prix.html#collector",
+   "media": "coffret-the-goodtime-state"
+  },
+  "paire": {
+   "label": "Les deux éditions et leur prix",
+   "standard": "Standard",
+   "ultimate": "Ultimate"
+  }
  },
  "sources": {
   "rs-support-editions": {
@@ -877,6 +1169,15 @@
    "consultedAt": "2026-10-12",
    "statut": "officiel",
    "claim": "Les deux éditions, les seize contenus de l’Ultimate, l’amélioration, la boîte sans disque, le préchargement du 12 novembre à minuit, les bonus avant le 20 novembre et les règles de région."
+  },
+  "t2-prix": {
+   "url": "https://www.take2games.com/ir/news/rockstar-games-announces-pre-orders-grand-theft-auto-vi",
+   "title": "Take-Two Interactive : Rockstar Games annonce les précommandes de Grand Theft Auto VI (prix des éditions)",
+   "publisher": "Take-Two Interactive",
+   "publishedAt": "2026-06-24",
+   "consultedAt": "2026-10-16",
+   "statut": "officiel",
+   "claim": "Édition Standard à 79,99 $ et Édition Ultimate à 99,99 $ aux États-Unis ; préchargement à partir du 12 novembre 2026 pour les précommandes numériques."
   },
   "rs-date": {
    "url": "https://www.rockstargames.com/newswire/article/ak3ak31a49a221/grand-theft-auto-vi-is-now-set-to-launch-november-19-2026",
@@ -895,6 +1196,560 @@
    "consultedAt": "2026-10-01",
    "statut": "officiel",
    "claim": "Annonce du dossier (numéro 382, 14 pages) rédigé après des entretiens avec des lead designers de Rockstar."
+  },
+  "rs-precommandes-date": {
+   "url": "https://www.rockstargames.com/newswire/article/517oa135328155/grand-theft-auto-vi-pre-orders-begin-on-june-25",
+   "title": "Rockstar Newswire : les précommandes de GTA VI le 25 juin",
+   "publisher": "Rockstar Games",
+   "publishedAt": "2026-06-18",
+   "consultedAt": "2026-10-16",
+   "statut": "officiel",
+   "claim": "Les précommandes ouvrent le 25 juin sur les boutiques numériques et chez certains revendeurs ; la jaquette officielle est dévoilée en vidéo."
+  },
+  "ps-blog-ps5": {
+   "url": "https://blog.playstation.com/2026/06/24/grand-theft-auto-vi-plays-best-on-ps5-november-19/",
+   "title": "PlayStation Blog : Grand Theft Auto VI sur PS5 le 19 novembre",
+   "publisher": "Sony Interactive Entertainment",
+   "publishedAt": "2026-06-24",
+   "consultedAt": "2026-10-16",
+   "statut": "officiel",
+   "claim": "Sony présente la PS5 comme la console où le jeu se joue le mieux ; précommandes sur le PlayStation Store le 25 juin à minuit, heure locale, avec un mois de GTA+."
+  },
+  "rs-gtaplus-precommande": {
+   "url": "https://support.rockstargames.com/articles/3SZF8cy8dG7lHsLf38uWK1/redeeming-the-one-month-gta-membership-included-with-your-grand-theft-auto-vi-pre-order",
+   "title": "Rockstar Support : activer le mois de GTA+ de la précommande",
+   "publisher": "Rockstar Games",
+   "publishedAt": "2026-06-24",
+   "consultedAt": "2026-10-16",
+   "statut": "officiel",
+   "claim": "Un mois de GTA+ pour un achat numérique de l’Édition Standard ou Ultimate avant le 20 novembre 2026 ; à activer avant le 31 mars 2027 sur PlayStation, dans les 180 jours suivant l’achat sur Xbox."
+  },
+  "rs-extended-date": {
+   "url": "https://www.rockstargames.com/newswire/article/9k2kaa1o3297k9/grand-theft-auto-vi-an-extended-look",
+   "title": "Rockstar Newswire : An Extended Look le 27 août sur Netflix et YouTube",
+   "publisher": "Rockstar Games",
+   "publishedAt": "2026-08-06",
+   "consultedAt": "2026-10-16",
+   "statut": "officiel",
+   "claim": "Avant-première sur Netflix le jeudi 27 août à 15 h, heure de New York ; sur la chaîne YouTube de Rockstar et le site du jeu à 21 h, heure de New York."
+  },
+  "ps-blog-dualsense": {
+   "url": "https://blog.playstation.com/2026/09/03/first-look-at-the-grand-theft-auto-vi-limited-edition-dualsense-wireless-controllers/",
+   "title": "PlayStation Blog : les manettes DualSense en édition limitée Grand Theft Auto VI",
+   "publisher": "Sony Interactive Entertainment",
+   "publishedAt": "2026-09-03",
+   "consultedAt": "2026-10-16",
+   "statut": "officiel",
+   "claim": "Deux manettes, une noire et une blanche, à partir du 19 novembre au prix conseillé de 84,99 € ; précommandes le 10 septembre à 10 h, heure locale ; la noire est vendue uniquement sur direct.playstation.com là où il existe, dont la France."
+  },
+  "rs-collector": {
+   "url": "https://www.rockstargames.com/newswire/article/9k2a49ook82o57/pre-order-the-goodtime-state-vice-city-collection-now-while-supplies-l",
+   "title": "Rockstar Newswire : The Goodtime State – Vice City Collection",
+   "publisher": "Rockstar Games",
+   "publishedAt": "2026-09-24",
+   "consultedAt": "2026-10-16",
+   "statut": "officiel",
+   "claim": "Un coffret collector exclusif en édition limitée, inspiré de l’émission Macca the Gator : onze objets, sans le jeu, à précommander jusqu’à épuisement des stocks, disponible le 19 novembre."
+  },
+  "rs-store-collector": {
+   "url": "https://store.rockstargames.com/merchandise/gtavi-goodtime-state-vice-city-collection",
+   "title": "Rockstar Store : The Goodtime State – Vice City Collection",
+   "publisher": "Rockstar Games",
+   "consultedAt": "2026-10-16",
+   "statut": "officiel",
+   "claim": "399,99 $ sur la boutique américaine ; expédition à partir du 19 novembre 2026 ; un seul achat par personne ; pas de livraison gratuite ; environ 48 × 33 × 30 cm ; pour adultes, 18 ans et plus."
+  },
+  "iphonesoft-collector": {
+   "url": "https://iphonesoft.fr/2026/09/24/gta-6-coffret-collector-399-99-euro-jeu",
+   "title": "iPhoneSoft : le coffret collector de GTA 6 à 399,99 €, sans le jeu",
+   "publisher": "iPhoneSoft",
+   "publishedAt": "2026-09-24",
+   "consultedAt": "2026-10-16",
+   "statut": "vu",
+   "claim": "Le coffret est affiché à 399,99 € sur le Rockstar Store, jeu non inclus ; les expéditions commencent le 19 novembre 2026."
+  },
+  "xboxygen-collection": {
+   "url": "https://www.xboxygen.com/News/370578-la-collection-officielle-gta-6-est-lancee-t-shirts-casquettes-zippo-a-partir-de-499-e",
+   "title": "Xboxygen : la collection officielle GTA 6 est lancée",
+   "publisher": "Xboxygen",
+   "publishedAt": "2026-10-09",
+   "consultedAt": "2026-10-16",
+   "statut": "vu",
+   "claim": "Prix européens de la collection : tee-shirts et casquettes 29,99 €, tote bags et briquet Zippo 39,99 €, pince à billets 24,99 €, porte-clés 14,99 €, autocollants 4,99 € ou 9,99 € ; le coffret affiché à 399,99 €."
+  },
+  "rs-collection": {
+   "url": "https://www.rockstargames.com/newswire/article/759875393o5253/grand-theft-auto-vi-collection-now-at-the-rockstar-store",
+   "title": "Rockstar Newswire : la Collection Grand Theft Auto VI sur la boutique Rockstar",
+   "publisher": "Rockstar Games",
+   "publishedAt": "2026-10-08",
+   "consultedAt": "2026-10-16",
+   "statut": "officiel",
+   "claim": "Tee-shirts, casquettes, porte-clés, pince à billets, briquet Zippo, tote bags et autocollants, en exclusivité sur la boutique Rockstar."
+  },
+  "ps-store-fr": {
+   "url": "https://www.playstation.com/fr-fr/games/grand-theft-auto-vi/",
+   "title": "PlayStation France : Grand Theft Auto VI",
+   "publisher": "Sony Interactive Entertainment",
+   "consultedAt": "2026-10-16",
+   "statut": "officiel",
+   "claim": "Édition Standard 79,99 € et Édition Ultimate 99,99 € ; un mois de GTA+ avec la précommande, avant le 20 novembre 2026."
   }
+ },
+ "prix": {
+  "label": "Prix et collector",
+  "title": "Le prix de GTA 6, et le coffret collector",
+  "seoTitle": "Prix de GTA 6 : Standard, Ultimate et coffret collector Vice City",
+  "desc": "Prix de GTA 6 : 79,99 € l’Édition Standard, 99,99 € l’Ultimate. Le coffret collector Vice City, ses onze objets en photos, son prix et sa livraison.",
+  "lede": "Ce que coûtent le jeu, le coffret collector « The Goodtime State » et les manettes en édition limitée, d’après les boutiques officielles, avec le statut de chaque prix.",
+  "note": "Prix relevés le 16 octobre 2026. Un prix publié par une boutique officielle porte le statut « Officiel » ; un prix lu seulement dans la presse, « Vu dans un média ».",
+  "hero": {
+   "media": "coffret-collector-ouvert",
+   "ferme": "coffret-collector-ferme",
+   "alt": "Le coffret collector ouvert : un couvercle illustré « Greetings from Vice City », des compartiments et deux tiroirs remplis des objets, photo officielle",
+   "altFerme": "Le coffret collector fermé, noir, au logo Vice City Leonida sur le couvercle et au logo VI sur la face, photo officielle",
+   "label": "Le coffret collector et ses deux prix",
+   "tag1": {
+    "prix": "399,99 $",
+    "l": "Boutique Rockstar, États-Unis"
+   },
+   "tag2": {
+    "prix": "399,99 €",
+    "l": "Annoncé par la presse"
+   },
+   "sticker": "Jeu non inclus"
+  },
+  "chiffres": [
+   {
+    "n": "79,99 €",
+    "label": "l’Édition Standard"
+   },
+   {
+    "n": "99,99 €",
+    "label": "l’Édition Ultimate"
+   },
+   {
+    "n": "399,99 $",
+    "label": "le coffret collector, sans le jeu"
+   },
+   {
+    "n": "84,99 €",
+    "label": "une manette en édition limitée"
+   }
+  ],
+  "jeu": {
+   "k": "Le jeu",
+   "t": "Standard ou Ultimate",
+   "lede": "Les prix du PlayStation Store en France. Microsoft et chaque revendeur fixent les leurs.",
+   "editions": [
+    {
+     "nom": "Édition Standard",
+     "prix": "79,99 €",
+     "media": "cover-art-officielle",
+     "alt": "La jaquette officielle de GTA VI : Jason et Lucia au centre, entourés de Boobie, de Raul, d’un alligator et de scènes de Leonida, illustration officielle",
+     "points": [
+      "Le jeu complet, en numérique ou en boîte",
+      "Avant le 20 novembre 2026 : le Pack Vintage Vice City et, en numérique, un mois de GTA+"
+     ],
+     "st": [
+      {
+       "statut": "officiel",
+       "src": "ps-store-fr",
+       "t": "PlayStation Store, France"
+      }
+     ]
+    },
+    {
+     "nom": "Édition Ultimate",
+     "prix": "99,99 €",
+     "media": "ultimate-edition-02",
+     "alt": "Jason et Lucia devant le coupé vert rapproché d’un Kellison J4 dans le visuel Ultimate Edition",
+     "points": [
+      "Le jeu et seize contenus en plus, en numérique",
+      "Les mêmes bonus de précommande, avant le 20 novembre 2026"
+     ],
+     "st": [
+      {
+       "statut": "officiel",
+       "src": "ps-store-fr",
+       "t": "PlayStation Store, France"
+      }
+     ]
+    }
+   ],
+   "autres": [
+    {
+     "t": "La version en boîte",
+     "d": "Une boîte avec un code de téléchargement, sans disque, de l’Édition Standard seulement : chaque revendeur fixe son prix."
+    },
+    {
+     "t": "L’amélioration Ultimate",
+     "d": "Elle s’achète à part, en numérique, avec l’Édition Standard. Son prix n’est pas affiché sur la page du jeu de PlayStation au 16 octobre 2026."
+    }
+   ],
+   "lien": {
+    "href": "editions.html",
+    "label": "Ce que contient chaque édition"
+   }
+  },
+  "collector": {
+   "k": "Édition limitée",
+   "t": "Le coffret collector « The Goodtime State »",
+   "lede": "« Vice City Collection » : onze objets inspirés de Macca the Gator, l’émission à succès de Leonida. Le jeu est vendu séparément.",
+   "nom": "The Goodtime State – Vice City Collection",
+   "intro": [
+    "Un coffret collector exclusif, en édition limitée, que la boutique Rockstar expédie à partir du 19 novembre 2026, jour de la sortie du jeu. Il se précommande jusqu’à épuisement des stocks.",
+    "Il ne contient pas le jeu : seulement des objets, à collectionner ou à porter, aux couleurs de Vice City et de Leonida."
+   ],
+   "st": [
+    {
+     "statut": "officiel",
+     "src": "rs-store-collector",
+     "t": "399,99 $ sur la boutique Rockstar américaine"
+    },
+    {
+     "statut": "vu",
+     "src": "iphonesoft-collector",
+     "t": "399,99 € d’après la presse française"
+    }
+   ],
+   "objetsT": "Ce qu’il y a dans la boîte",
+   "objetsLede": "Les onze objets annoncés par Rockstar, avec leurs photos officielles. Une photo s’ouvre en grand.",
+   "objets": [
+    {
+     "media": "coffret-figurine-macca",
+     "t": "Figurine Macca the Gator",
+     "d": "15 cm, en PVC ; le socle se dévisse et cache un compartiment.",
+     "alt": "Figurine rose de Macca the Gator, un martini à la main, sur un socle noir marqué Vice City Leonida, photo officielle"
+    },
+    {
+     "media": "coffret-lunettes-oakley",
+     "t": "Lunettes de soleil Oakley Frogskins",
+     "d": "Noir mat, verres Prizm Sapphire, logo GTAVI rose.",
+     "alt": "Lunettes de soleil Oakley Frogskins noires aux verres bleus, photo officielle"
+    },
+    {
+     "media": "coffret-casquette-new-era",
+     "t": "Casquette New Era 9FORTY",
+     "d": "Ajustable, brodée et décorée aux couleurs de Vice City.",
+     "alt": "Casquette blanche, rose et noire à filet, brodée de Macca the Gator et du logo Vice City, photo officielle"
+    },
+    {
+     "media": "coffret-sac-bandouliere",
+     "t": "Sac à bandoulière Leonida Keys",
+     "d": "Tissu ripstop et patchs tissés ; environ 36 × 13 × 8 cm.",
+     "alt": "Sac à bandoulière noir orné de patchs Vice City, de Macca the Gator et d’un soleil à lunettes, photo officielle"
+    },
+    {
+     "media": "coffret-miroir-macca",
+     "t": "Miroir aimanté Macca the Gator",
+     "d": "Verre rose, deux aimants au dos : à poser ou à accrocher.",
+     "alt": "Miroir au cadre rose, illustré de Macca the Gator et du logo Vice City, photo officielle"
+    },
+    {
+     "media": "coffret-verre-a-shot",
+     "t": "Verre à shot Chunkee le lamantin",
+     "d": "Chunkee sur le devant, logo de Rockstar gravé au fond.",
+     "alt": "Verre à shot transparent illustré de Chunkee le lamantin et du logo Vice City, photo officielle"
+    },
+    {
+     "media": "coffret-cuillere",
+     "t": "Cuillère à mélange Vice City",
+     "d": "Décorative : elle n’est pas faite pour les aliments.",
+     "alt": "Longue cuillère argentée gravée du logo Vice City, photo officielle"
+    },
+    {
+     "media": "coffret-porte-cles",
+     "t": "Porte-clés lame de rasoir Vice City",
+     "d": "Zinc plaqué argent, logos de GTAVI et de Vice City gravés.",
+     "alt": "Porte-clés argenté en forme de lame de rasoir, gravé du logo Vice City, photo officielle"
+    },
+    {
+     "media": "coffret-pins",
+     "t": "Pin’s Leonida Keys en émail",
+     "d": "Neuf pin’s, rangés dans une boîte en métal.",
+     "alt": "Boîte en métal illustrée Vice City et neuf pin’s en émail, photo officielle"
+    },
+    {
+     "media": "coffret-stickers",
+     "t": "Stickers Leonida Keys",
+     "d": "Neuf stickers en vinyle, dans un sac.",
+     "alt": "Stickers Vice City, Macca the Gator, flamant rose, logo VI et logo Rockstar Games, photo officielle"
+    },
+    {
+     "media": "coffret-poster",
+     "t": "Poster souvenir recto verso",
+     "d": "Macca the Gator au recto, la carte de toute Leonida au verso.",
+     "alt": "Poster illustré Vice City Leonida aux personnages de Macca the Gator, photo officielle"
+    }
+   ],
+   "detailsT": "En pratique",
+   "details": [
+    {
+     "k": "Prix",
+     "v": "399,99 $ sur la boutique Rockstar américaine ; 399,99 € d’après la presse française."
+    },
+    {
+     "k": "Expédition",
+     "v": "À partir du 19 novembre 2026, avec un numéro de suivi par colis."
+    },
+    {
+     "k": "Où l’acheter",
+     "v": "Uniquement sur la boutique Rockstar, connecté à son compte Rockstar Games."
+    },
+    {
+     "k": "Quantité",
+     "v": "Édition limitée, jusqu’à épuisement des stocks ; un seul achat par personne."
+    },
+    {
+     "k": "Livraison",
+     "v": "France, Belgique, Suisse, Luxembourg et dix-neuf autres pays ; frais de port au paiement, pas de livraison gratuite."
+    },
+    {
+     "k": "Taxes",
+     "v": "Hors États-Unis et Royaume-Uni, des taxes et frais peuvent être appliqués par les autorités locales."
+    },
+    {
+     "k": "Dimensions",
+     "v": "Environ 48 × 33 × 30 cm."
+    },
+    {
+     "k": "Âge",
+     "v": "Objets à collectionner pour adultes, 18 ans et plus ; fragile."
+    },
+    {
+     "k": "Autres régions",
+     "v": "Asie, Amérique latine, Australie et Nouvelle-Zélande : les modalités seront annoncées plus tard."
+    }
+   ],
+   "detailsSrc": [
+    "rs-store-collector",
+    "rs-collector",
+    "iphonesoft-collector"
+   ],
+   "defile": [
+    "Figurine Macca the Gator",
+    "Lunettes Oakley Frogskins",
+    "Casquette New Era",
+    "Sac à bandoulière",
+    "Miroir aimanté",
+    "Verre à shot",
+    "Cuillère à mélange",
+    "Porte-clés lame de rasoir",
+    "Neuf pin’s",
+    "Neuf stickers",
+    "Poster de Leonida"
+   ],
+   "boutique": "Précommander sur la boutique Rockstar"
+  },
+  "manettes": {
+   "k": "PlayStation",
+   "t": "Les manettes en édition limitée",
+   "lede": "Deux manettes DualSense aux couleurs de GTA VI, une noire et une blanche, présentées par PlayStation.",
+   "media": "manettes-dualsense-gta-vi",
+   "alt": "Les deux manettes DualSense en édition limitée Grand Theft Auto VI, une noire et une blanche, devant le logo du jeu, photo officielle PlayStation",
+   "prix": "84,99 €",
+   "prixL": "Prix conseillé, chacune",
+   "details": [
+    {
+     "k": "Sortie",
+     "v": "À partir du 19 novembre 2026 ; la date peut varier selon le pays."
+    },
+    {
+     "k": "Précommandes",
+     "v": "Depuis le 10 septembre 2026, à 10 h, heure locale."
+    },
+    {
+     "k": "La noire",
+     "v": "Uniquement sur direct.playstation.com, là où le site existe, dont la France."
+    },
+    {
+     "k": "La blanche",
+     "v": "Sur direct.playstation.com et chez les revendeurs participants."
+    },
+    {
+     "k": "Quantités",
+     "v": "Limitées, pour les deux."
+    }
+   ],
+   "st": [
+    {
+     "statut": "officiel",
+     "src": "ps-blog-dualsense",
+     "t": "PlayStation Blog"
+    }
+   ]
+  },
+  "boutique": {
+   "k": "Boutique Rockstar",
+   "t": "La collection de vêtements et d’objets",
+   "lede": "La Collection Grand Theft Auto VI, en exclusivité sur la boutique Rockstar depuis le 8 octobre 2026.",
+   "media": "collection-gta-vi",
+   "alt": "Tee-shirts, casquettes, tote bags, autocollants et petits objets en métal aux logos de GTA VI, de Vice City et de Rockstar Games, photo officielle",
+   "ticketT": "Prix en euros",
+   "ticketN": "Relevés par la presse française le 9 octobre 2026",
+   "lignes": [
+    {
+     "t": "Tee-shirt",
+     "p": "29,99 €"
+    },
+    {
+     "t": "Casquette",
+     "p": "29,99 €"
+    },
+    {
+     "t": "Tote bag",
+     "p": "39,99 €"
+    },
+    {
+     "t": "Briquet Zippo",
+     "p": "39,99 €"
+    },
+    {
+     "t": "Pince à billets",
+     "p": "24,99 €"
+    },
+    {
+     "t": "Porte-clés",
+     "p": "14,99 €"
+    },
+    {
+     "t": "Autocollants",
+     "p": "4,99 € ou 9,99 €"
+    }
+   ],
+   "texte": [
+    "Des tee-shirts en coton épais en noir, bleu et rose, des casquettes au logo VI, un porte-clés et une pince à billets chromés, un briquet Zippo, des tote bags en toile et deux packs d’autocollants en vinyle.",
+    "Rockstar annonce d’autres articles à venir."
+   ],
+   "st": [
+    {
+     "statut": "officiel",
+     "src": "rs-collection",
+     "t": "Rockstar Newswire"
+    },
+    {
+     "statut": "vu",
+     "src": "xboxygen-collection",
+     "t": "Prix en euros : Xboxygen"
+    }
+   ]
+  },
+  "total": {
+   "k": "Ton budget",
+   "t": "Ce que tu vas dépenser",
+   "lede": "Coche ce que tu veux : le total se calcule tout seul.",
+   "label": "Calculer mon total",
+   "jeuT": "Le jeu",
+   "aucun": "Pas le jeu",
+   "plusT": "En plus",
+   "lignes": [
+    {
+     "id": "standard",
+     "t": "Édition Standard",
+     "p": "79,99 €",
+     "c": 7999,
+     "jeu": true,
+     "defaut": true
+    },
+    {
+     "id": "ultimate",
+     "t": "Édition Ultimate",
+     "p": "99,99 €",
+     "c": 9999,
+     "jeu": true
+    },
+    {
+     "id": "collector",
+     "t": "Coffret collector",
+     "p": "399,99 €",
+     "c": 39999,
+     "vu": true
+    },
+    {
+     "id": "noire",
+     "t": "Manette DualSense noire",
+     "p": "84,99 €",
+     "c": 8499
+    },
+    {
+     "id": "blanche",
+     "t": "Manette DualSense blanche",
+     "p": "84,99 €",
+     "c": 8499
+    }
+   ],
+   "totalL": "Total",
+   "note": "Hors frais de port, de douane et de taxes. Le prix du coffret en euros vient de la presse.",
+   "exemples": [
+    {
+     "t": "Édition Standard et coffret collector",
+     "p": "479,98 €"
+    },
+    {
+     "t": "Édition Ultimate et coffret collector",
+     "p": "499,98 €"
+    },
+    {
+     "t": "Édition Ultimate, coffret collector et une manette",
+     "p": "584,97 €"
+    }
+   ],
+   "exemplesT": "Quelques totaux"
+  },
+  "faq": [
+   {
+    "q": "Combien coûte GTA 6 ?",
+    "a": "79,99 € l’Édition Standard et 99,99 € l’Édition Ultimate sur le PlayStation Store en France, au 16 octobre 2026. Les revendeurs fixent leurs propres prix, en particulier pour la version en boîte."
+   },
+   {
+    "q": "Combien coûte le coffret collector de GTA 6 ?",
+    "a": "399,99 $ sur la boutique Rockstar américaine, d’après la boutique elle-même. En France, la presse l’annonce à 399,99 € ; la livraison n’est pas offerte."
+   },
+   {
+    "q": "Le jeu est-il inclus dans le coffret collector ?",
+    "a": "Non : Rockstar précise que le jeu Grand Theft Auto VI est vendu séparément. Le coffret ne contient que ses onze objets."
+   },
+   {
+    "q": "Que contient le coffret collector de GTA 6 ?",
+    "a": "Une figurine de Macca the Gator, des lunettes Oakley Frogskins, une casquette New Era 9FORTY, un sac à bandoulière, un miroir aimanté, un verre à shot, une cuillère à mélange, un porte-clés, neuf pin’s, neuf stickers et un poster recto verso avec la carte de Leonida."
+   },
+   {
+    "q": "Quand arrive le coffret collector ?",
+    "a": "La boutique Rockstar l’expédie à partir du 19 novembre 2026, jour de la sortie du jeu. Il est en édition limitée, à précommander jusqu’à épuisement des stocks, un seul par personne."
+   },
+   {
+    "q": "Peut-on acheter le coffret collector en France ?",
+    "a": "Oui : la boutique Rockstar livre la France, la Belgique, la Suisse et le Luxembourg, entre autres. Les frais de port sont indiqués au paiement ; des taxes peuvent s’ajouter hors des États-Unis et du Royaume-Uni."
+   },
+   {
+    "q": "Combien coûte la manette DualSense GTA 6 ?",
+    "a": "84,99 €, prix conseillé, pour chacune des deux manettes en édition limitée, la noire et la blanche, à partir du 19 novembre 2026. En France, la noire est vendue uniquement sur direct.playstation.com."
+   }
+  ],
+  "leo": [
+   "Combien coûte GTA 6 ?",
+   "Que contient le coffret collector de GTA 6 ?",
+   "Combien coûte la manette DualSense GTA 6 ?"
+  ],
+  "sources": [
+   "ps-store-fr",
+   "rs-support-editions",
+   "rs-collector",
+   "rs-store-collector",
+   "iphonesoft-collector",
+   "ps-blog-dualsense",
+   "rs-collection",
+   "xboxygen-collection"
+  ],
+  "liens": [
+   {
+    "href": "editions.html",
+    "label": "Les éditions"
+   },
+   {
+    "href": "actus.html#frise",
+    "label": "Toutes les annonces"
+   }
+  ]
  }
 }

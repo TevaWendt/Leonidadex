@@ -2298,6 +2298,30 @@
    "voler"
   ],
   [
+   "jack a car",
+   "voler une voiture"
+  ],
+  [
+   "jack cars",
+   "voler des voitures"
+  ],
+  [
+   "carjack",
+   "voler une voiture"
+  ],
+  [
+   "carjacking",
+   "vol de voiture"
+  ],
+  [
+   "pattern",
+   "motif"
+  ],
+  [
+   "patterns",
+   "motifs"
+  ],
+  [
    "crime",
    "crime"
   ],
@@ -6732,6 +6756,134 @@
   [
    "worth buying",
    "vaut le coup d acheter"
+  ],
+  [
+   "launch trailer",
+   "trailer de lancement"
+  ],
+  [
+   "launch trailers",
+   "trailers de lancement"
+  ],
+  [
+   "collector box",
+   "coffret collector"
+  ],
+  [
+   "collector's box",
+   "coffret collector"
+  ],
+  [
+   "collector's edition",
+   "edition collector"
+  ],
+  [
+   "collectors edition",
+   "edition collector"
+  ],
+  [
+   "collector edition",
+   "edition collector"
+  ],
+  [
+   "collector",
+   "collector"
+  ],
+  [
+   "dualsense controller",
+   "manette dualsense"
+  ],
+  [
+   "controller",
+   "manette"
+  ],
+  [
+   "controllers",
+   "manettes"
+  ],
+  [
+   "rockstar store",
+   "boutique rockstar"
+  ],
+  [
+   "sell",
+   "vend"
+  ],
+  [
+   "sells",
+   "vend"
+  ],
+  [
+   "merch",
+   "produits derives"
+  ],
+  [
+   "merchandise",
+   "produits derives"
+  ],
+  [
+   "gta 6 box",
+   "boite de gta 6"
+  ],
+  [
+   "gta vi box",
+   "boite de gta vi"
+  ],
+  [
+   "gta6 box",
+   "boite de gta6"
+  ],
+  [
+   "real cars",
+   "vraies voitures"
+  ],
+  [
+   "real-life car",
+   "vraie voiture"
+  ],
+  [
+   "real-life cars",
+   "vraies voitures"
+  ],
+  [
+   "actual car",
+   "vraie voiture"
+  ],
+  [
+   "real brands",
+   "vraies marques"
+  ],
+  [
+   "real brand",
+   "vraie marque"
+  ],
+  [
+   "pc version",
+   "version pc"
+  ],
+  [
+   "on pc",
+   "sur pc"
+  ],
+  [
+   "for pc",
+   "pour pc"
+  ],
+  [
+   "compared with",
+   "par rapport a"
+  ],
+  [
+   "map size",
+   "taille de la carte"
+  ],
+  [
+   "preload size",
+   "taille du prechargement"
+  ],
+  [
+   "how to preload",
+   "comment precharger"
   ]
  ]
 }

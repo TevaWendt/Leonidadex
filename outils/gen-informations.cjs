@@ -11,6 +11,7 @@ const config=JSON.parse(fs.readFileSync(path.join(__dirname,'site-informations.j
 const ED_ALL=JSON.parse(fs.readFileSync(path.join(__dirname,'informations-editorial.json'),'utf8')),ED=ED_ALL.aPropos;
 const acq=JSON.parse(fs.readFileSync(path.join(__dirname,'acquisitions.json'),'utf8'));
 const medias=JSON.parse(fs.readFileSync(path.join(__dirname,'medias-officiels.json'),'utf8'));
+const AMIS=JSON.parse(fs.readFileSync(path.join(__dirname,'sites-amis.json'),'utf8'));/* v7.93 : « Sites amis » de l’À propos, un site par ligne */
 const S=require('./sections.cjs');
 const esc=S.esc;
 const visuals=require('./lot-c-visuals.cjs');
@@ -49,9 +50,10 @@ function page(file,title,description,content,opts={}){
  const html=`<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>${esc(title)} | Leonidakit</title><meta name="description" content="${esc(description)}"><link rel="canonical" href="${url}"><meta property="og:title" content="${esc(title)} | Leonidakit"><meta property="og:description" content="${esc(description)}"><meta property="og:url" content="${url}"><meta property="og:type" content="website"><meta property="og:locale" content="fr_FR"><meta property="og:image" content="${esc(opts.og||'https://www.leonidakit.com/img/social-card.png')}"><meta name="twitter:card" content="summary_large_image"><meta name="theme-color" content="#FDFBF7">${favicon}<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="motion-tokens.css"><link rel="stylesheet" href="informations.css">${(opts.css||[]).map(f=>'<link rel="stylesheet" href="'+f+'">').join('')}${ld}</head><body class="info-page${opts.cls?' '+opts.cls:''}"><a class="skip" href="#main">Aller au contenu</a><div class="sunset" aria-hidden="true"></div>${header}<main id="main">${content}</main>${footer}<script src="search-index.js"></script><script src="assets-manifest.js"></script><script src="common.js"></script><script src="app.js"></script>${(opts.scripts||[]).map(s=>'<script src="'+s+'"></script>').join('')}</body></html>\n`;
  fs.writeFileSync(path.join(root,file),html);
 }
-/* Bandeau commun : texte à gauche, pile d'images cliquable à droite (outils/lot-c-visuals.cjs, visuels officiels seulement). */
+/* Bandeau commun : texte à gauche, pile d'images cliquable à droite (outils/lot-c-visuals.cjs, visuels officiels seulement).
+   v7.92.1 : opts.visual remplace la pile (la carte de presse de la page Presse). */
 function hero(opts){
- return `<section class="page-head shell info-hero lk-glow"><div class="lk-head-grid"><div><p class="info-eyebrow">${esc(opts.eyebrow)}</p><h1>${opts.h1}</h1><p class="lede info-lede">${esc(opts.lede)}</p>${opts.actions?'<div class="info-actions">'+opts.actions.map(a=>'<a class="'+(a.primary?'info-primary':'info-link')+'" href="'+esc(a.href)+'"'+(a.download?' download':'')+'>'+esc(a.label)+' <span aria-hidden="true">'+(a.download?'↓':'↗')+'</span></a>').join('')/* v7.88 : « download » pour un fichier (kit presse) */+'</div>':''}${opts.aside||''}</div>${visuals.stack(opts.stack,{label:opts.stackLabel})}</div></section>`;
+ return `<section class="page-head shell info-hero lk-glow"><div class="lk-head-grid"><div><p class="info-eyebrow">${esc(opts.eyebrow)}</p><h1>${opts.h1}</h1><p class="lede info-lede">${esc(opts.lede)}</p>${opts.actions?'<div class="info-actions">'+opts.actions.map(a=>'<a class="'+(a.primary?'info-primary':'info-link')+'" href="'+esc(a.href)+'"'+(a.download?' download':'')+'>'+esc(a.label)+' <span aria-hidden="true">'+(a.download?'↓':'↗')+'</span></a>').join('')/* v7.88 : « download » pour un fichier (kit presse) */+'</div>':''}${opts.aside||''}</div>${opts.visual||visuals.stack(opts.stack,{label:opts.stackLabel})}</div></section>`;
 }
 /* ---------- À propos ---------- */
 function showcase(sc){
@@ -70,6 +72,15 @@ function stats(list,still){
     (« 2 547 ») par sync-site.cjs ; la traduction les écrit au format de chaque langue. */
  return '<div class="ed-figs ed-figs--about">'+list.map(s=>'<div class="fig"><b class="fig-n"'+(still?'':' data-count="0"')+' data-stat="'+esc(s.stat)+'">0</b><span class="fig-l">'+esc(s.label)+'</span></div>').join('')+'</div>';
 }
+/* v7.93 (lot 8) : petit bloc « Sites amis » à la fin de la section Contribuer : titre et liste (outils/sites-amis.json, un site par
+   ligne : nom, url en https, mots facultatifs) ; liste vide = phrase d’attente, jamais un <ul> vide. Liens vers d’autres sites en
+   rel="noopener" (sites amis : suivis, à la différence des sources). */
+function sitesAmis(D){
+ if(!Array.isArray(D.sites))throw Error('sites-amis.json : « sites » doit être une liste.');
+ const items=D.sites.map(x=>{if(!x||typeof x.nom!=='string'||!x.nom.trim()||!/^https:\/\/[^\s"<>]+$/.test(x.url||''))throw Error('sites-amis.json : chaque site a un nom et une adresse https : '+JSON.stringify(x));
+  return '<li><a href="'+esc(x.url)+'" rel="noopener">'+esc(x.nom.trim())+'</a>'+(x.mots?' <span class="ed-amis-m">— '+esc(x.mots)+'</span>':'')+'</li>';});
+ return '<div class="ed-amis" id="sites-amis"><h3 class="ed-h3">'+esc(D.titre)+'</h3>'+(items.length?'<ul class="ed-amis-l">'+items.join('')+'</ul>':'<p class="ed-amis-vide">'+esc(D.vide)+'</p>')+'</div>';
+}
 function faq(items){return '<p>Cinq questions courtes, avec des réponses vérifiables sur le site.</p><div class="faq rise">'+items.map(x=>'<details><summary>'+esc(x.q)+'</summary><div class="ans">'+esc(x.a)+'</div></details>').join('')+'</div>';}
 {
  const A=ED;let n=0;
@@ -81,7 +92,7 @@ function faq(items){return '<p>Cinq questions courtes, avec des réponses vérif
  parts.push(S.section({id:A.calendrier.id,num:++n,kicker:A.calendrier.kicker,title:A.calendrier.title,icon:'horloge',tone:'paper2',lede:esc(A.calendrier.lede)},S.steps(A.calendrier.steps.map(s=>({icon:s.icon,titre:fill(s.titre,VARS),texte:fill(s.texte,VARS)})))));
  parts.push(S.section({id:A.independance.id,num:++n,kicker:A.independance.kicker,title:A.independance.title,icon:'ouvert',tone:'paper',accent:'coral',lede:esc(A.independance.lede)},cols(A.independance.cols,VARS)));
  parts.push(S.section({id:A.qui.id,num:++n,kicker:A.qui.kicker,title:A.qui.title,icon:'nommes',tone:'night',lede:''},'<div class="ed-sign"><p class="ed-sign-name">'+esc(A.qui.signature)+'</p><p class="ed-sign-phrase">'+esc(A.qui.phrase)+'</p>'+para(A.qui.p)+'<a class="ed-act ed-act--inline" href="'+esc(A.qui.href)+'"><span class="ed-act-t">'+esc(A.qui.label)+'</span><span class="veh-go">Ouvrir</span></a></div>'));
- parts.push(S.section({id:A.contribuer.id,num:++n,kicker:A.contribuer.kicker,title:A.contribuer.title,icon:'lire',tone:'paper2',accent:'coral',lede:esc(A.contribuer.lede)},S.actions(A.contribuer.actions)));
+ parts.push(S.section({id:A.contribuer.id,num:++n,kicker:A.contribuer.kicker,title:A.contribuer.title,icon:'lire',tone:'paper2',accent:'coral',lede:esc(A.contribuer.lede)},S.actions(A.contribuer.actions)+sitesAmis(AMIS)));
  parts.push(S.section({id:'faq',num:++n,kicker:'Questions',title:'Questions fréquentes',icon:'faq',tone:'paper'},faq(A.faq)));
  const about={'@context':'https://schema.org','@graph':[ORG,{'@type':'AboutPage','@id':'https://www.leonidakit.com/a-propos.html#webpage',url:'https://www.leonidakit.com/a-propos.html',name:A.title,inLanguage:'fr-FR',isPartOf:{'@id':'https://www.leonidakit.com/#website'},about:{'@id':'https://www.leonidakit.com/#organization'},mainEntity:{'@id':'https://www.leonidakit.com/#organization'},description:A.description}]};
  const og=medias[A.showcase.cards[0].media].variants.find(x=>x.w===1280)||medias[A.showcase.cards[0].media].variants[0];
@@ -95,6 +106,7 @@ function faq(items){return '<p>Cinq questions courtes, avec des réponses vérif
   .replace(/<div class="fig">/g,'<div class="fig lk-reveal">')
   .replace(/<a class="ed-act" /g,'<a class="ed-act lk-reveal" ')
   .replace(/<div class="ed-sign">/g,'<div class="ed-sign lk-reveal lk-reveal--left">')
+  .replace(/<div class="ed-amis" /,'<div class="ed-amis lk-reveal" ')
   .replace(/<div class="faq rise">([\s\S]*?)<\/div><\/div><\/section>/,(m,inner)=>'<div class="faq">'+inner.replace(/<details>/g,'<details class="lk-reveal">')+'</div></div></section>');
  page('a-propos.html',A.title,A.description,hero({eyebrow:A.hero.eyebrow,h1:esc(A.hero.h1),lede:A.hero.lede,actions:A.hero.actions,stack:'a-propos',stackLabel:'Trois visuels officiels de Leonida'})+'<div class="ed-zone ed-zone--info">'+animated+'</div>',{ld:[about],scripts:['lk-showcase.js'],og:'https://www.leonidakit.com'+og.src,cls:'info-page--about'});
 }
@@ -113,6 +125,11 @@ function faq(items){return '<p>Cinq questions courtes, avec des réponses vérif
  const sec=(o,body)=>S.section({...o,num:++n},body);
  const C=Vx.confirme,P=Vx.pasEncore,TB=Vx.tableau;
  const gta=t=>esc(t).replace(/\bGTA (6|VI)\b/g,'GTA $1');
+ /* v7.92.1 : un point sans photo (le prix du jeu) montre ses prix en étiquettes (vitrine.css, .vt-tag) ; les prix sont aussi
+    écrits dans le texte de la carte, l'étiquette est donc décorative */
+ for(const x of C.items)if(!x.media===!x.tags)throw Error('Point confirmé « '+x.t+' » : un visuel officiel ou des étiquettes de prix, pas les deux');
+ const vfVisual=x=>x.media?VT.media(x.media,x.alt,{sizes:'(max-width:719px) 92vw, 340px'})
+  :'<span class="vt-media vf-card-prices" aria-hidden="true">'+x.tags.map((t,k)=>'<span class="vt-tag" style="--k:'+k+'"><span class="vt-tag-l">'+esc(t.l)+'</span><b class="vt-price">'+esc(t.p)+'</b></span>').join('')+'</span>';
  /* v7.92 : moment de la page — le tableau de bord : chaque point confirmé reçoit son tampon, chaque question ouverte son
     point d’interrogation (vitrine.css), dans l’ordre de lecture ; un clic mène au détail */
  const tile=(x,i,ok,href)=>'<li style="--i:'+i+'"><a class="vf-tile vf-tile--'+(ok?'ok':'wait')+'" href="'+href+'"><span class="vf-tile-ico">'+S.icon(x.ico)+'</span><span class="vf-tile-t">'+gta(x.t)+'</span><span class="vf-tile-s vt-stamp">'+esc(ok?TB.confirme:TB.attente)+'</span></a></li>';
@@ -123,10 +140,10 @@ function faq(items){return '<p>Cinq questions courtes, avec des réponses vérif
  /* v7.87.1 : « GTA VI » ne se coupe plus en fin de ligne dans les titres des points (« GTA Online sur GTA VI », section « pas encore ») */
  /* v7.92 : chaque point confirmé a son visuel officiel (texte alternatif repris des fiches) */
  parts.push(sec({id:'confirme',kicker:C.kicker,title:C.title,icon:'film',tone:'paper',lede:esc(C.lede)},
-  '<ul class="vf-cards vt-in vt-in--deal" data-lk-reveal>'+C.items.map((x,i)=>'<li class="vf-card" id="confirme-'+(i+1)+'" style="--i:'+i+'">'+VT.media(x.media,x.alt,{sizes:'(max-width:719px) 92vw, 340px'})+'<div class="vf-card-b"><h3>'+gta(x.t)+'</h3><p>'+esc(x.d)+'</p><p class="vf-links"><a href="'+esc(x.href)+'">'+esc(x.label)+'</a>'+ext(x.src,'Source officielle')+'</p></div></li>').join('')+'</ul>'
+  '<ul class="vf-cards vt-in vt-in--deal" data-lk-reveal>'+C.items.map((x,i)=>'<li class="vf-card" id="confirme-'+(i+1)+'" style="--i:'+i+'">'+vfVisual(x)+'<div class="vf-card-b"><h3>'+gta(x.t)+'</h3><p>'+esc(x.d)+'</p><p class="vf-links"><a href="'+esc(x.href)+'">'+esc(x.label)+'</a>'+ext(x.src,'Source officielle')+'</p></div></li>').join('')+'</ul>'
   +'<p class="vf-stats-k">'+esc(C.statsLede)+'</p>'+VT.figs(C.stats.map(st=>({n:N[st.stat],label:st.label})),{cls:'vf-figs'})));
  parts.push(sec({id:'pas-encore',kicker:P.kicker,title:P.title,icon:'sablier',tone:'night',accent:'coral',lede:esc(P.lede)},
-  '<ul class="vf-qs vt-in" data-lk-reveal>'+P.items.map((x,i)=>'<li class="vf-q" id="pas-encore-'+(i+1)+'" style="--i:'+i+'"><span class="vf-q-ico">'+S.icon(x.ico)+'<b class="vt-stamp" aria-hidden="true">?</b></span><h3>'+gta(x.t)+'</h3><p>'+esc(x.d)+'</p></li>').join('')+'</ul>'));
+  '<ul class="vf-qs vt-in" data-lk-reveal>'+P.items.map((x,i)=>'<li class="vf-q" id="pas-encore-'+(i+1)+'" style="--i:'+i+'"><span class="vf-q-ico">'+S.icon(x.ico)+'<b class="vt-stamp" aria-hidden="true">?</b></span><h3>'+gta(x.t)+'</h3><p>'+esc(x.d)+'</p>'+(x.href?'<p class="vf-links"><a href="'+esc(x.href)+'">'+esc(x.label)+'</a></p>':'')/* v7.93 : vers la page qui répond (PC, préchargement, GTA VI et GTA V…) */+'</li>').join('')+'</ul>'));
  const A2=Vx.aVenir,mec=MD.mecaniques.filter(m=>m.label&&m.texte);
  parts.push(sec({id:'a-venir',kicker:A2.kicker,title:A2.title,icon:'liste',tone:'paper2',lede:esc(A2.lede)},
   '<dl class="vf-rubs">'+A2.rubs.map(r=>'<div class="vf-rub lk-reveal"><dt>'+esc(r.t)+'</dt><dd>'+esc(r.d)+'</dd></div>').join('')+'</dl>'
@@ -136,7 +153,9 @@ function faq(items){return '<p>Cinq questions courtes, avec des réponses vérif
  const EC=Vx.echelle;
  const legend='<div class="vf-scale"><p class="vf-scale-ends" aria-hidden="true"><span>'+esc(EC.plusSur)+'</span><span>'+esc(EC.attente)+'</span></p><ol class="vf-scale-l vt-in" data-lk-reveal style="--n:'+STATUTS.length+'">'+STATUTS.map((x,i)=>'<li class="vf-step vf-step--'+esc(x.statut)+'" style="--i:'+i+'"><h3>'+S.pip(x.statut)+esc(x.titre)+'</h3><p>'+esc(x.texte)+'</p></li>').join('')+'</ol></div>';
  const Mo=Vx.modeles;
- parts.push(sec({id:'modeles',kicker:Mo.kicker,title:Mo.title,icon:'loupe',tone:'paper',accent:'coral',lede:esc(Mo.lede)},para(Mo.p)+legend));
+ /* v7.92.1 : les trois règles en trois cartes titrées, côte à côte (vitrine.css, .vt-points) */
+ parts.push(sec({id:'modeles',kicker:Mo.kicker,title:Mo.title,icon:'loupe',tone:'paper',accent:'coral',lede:esc(Mo.lede)},
+  '<ul class="vt-points vf-rules vt-in vt-in--deal" data-lk-reveal style="--n:'+Mo.points.length+'">'+Mo.points.map((x,i)=>'<li class="vt-point" style="--i:'+i+'"><span class="vt-point-ico vt-stamp">'+S.icon(x.ico)+'</span><h3>'+esc(x.t)+'</h3><p>'+esc(x.d)+'</p></li>').join('')+'</ul>'+legend));
  const J=Vx.jamais;
  parts.push(sec({id:'jamais',kicker:J.kicker,title:J.title,icon:'ouvert',tone:'night',lede:esc(J.lede)},'<ul class="vf-never">'+ED.verifie.cols[0].liste.map(l=>'<li class="lk-reveal">'+esc(l)+'</li>').join('')+'</ul>'));
  const Si=Vx.signaler;
@@ -145,7 +164,20 @@ function faq(items){return '<p>Cinq questions courtes, avec des réponses vérif
  /* v7.87.1 : image de partage = le premier visuel officiel de la pile de la page (et non la carte générique du site) : il
     sert aussi d’image à la page dans le plan du site. « GTA 6 » ne se coupe pas en fin de ligne dans le titre. */
  const vfOg=visuals.pick('verification')[0];
- page('verification.html',Vx.title,Vx.description,hero({eyebrow:Vx.hero.eyebrow,h1:Vx.h1.split('<br>').map(esc).map(t=>t.replace(/\bGTA (6|VI)\b/g,'GTA\u00a0$1')).join('<br>'),lede:Vx.hero.lede,actions:Vx.hero.actions,stack:'verification',stackLabel:'Trois visuels officiels de GTA VI'})+'<div class="ed-zone ed-zone--info">'+parts.join('\n')+'</div>',{ld:[webpage],cls:'info-page--verif',og:'https://www.leonidakit.com'+(vfOg.big||vfOg.src),css:['vitrine.css'],scripts:['vitrine.js']});
+ /* v7.92.1 : le visuel du bandeau : le relevé du jour sur sa planchette, une photo officielle en pièce jointe, six points
+    confirmés cochés l'un après l'autre, deux questions ouvertes, puis le tampon « Vérifié » (informations.css). C'est une
+    image : le même contenu, lisible et cliquable, est le tableau de bord juste en dessous (aria-hidden). */
+ const D=Vx.hero.dossier,okT=new Set(C.items.map(x=>x.t)),waitT=new Set(P.items.map(x=>x.t));
+ for(const t of D.ok)if(!okT.has(t))throw Error('Relevé du bandeau : point confirmé inconnu : '+t);
+ for(const t of D.wait)if(!waitT.has(t))throw Error('Relevé du bandeau : question inconnue : '+t);
+ const CHECK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+ const dRow=(t,i,ok)=>'<span class="vf-dos-i vf-dos-i--'+(ok?'ok':'wait')+'" style="--i:'+i+'"><span class="vf-dos-box">'+(ok?CHECK:'?')+'</span><span class="vf-dos-t">'+gta(t)+'</span></span>';
+ const dossier='<div class="vf-dos" aria-hidden="true"><span class="vf-dos-board"><span class="vf-dos-clip"></span><span class="vf-dos-sheet">'
+  +'<span class="vf-dos-k">'+esc(D.k)+' <b>'+esc(frDate(Vx.checkedAt))+'</b></span>'
+  +'<span class="vf-dos-photo">'+VT.img(D.media,D.alt,{eager:true,sizes:'(max-width:599px) 112px, 150px'})+'<span class="vf-dos-c">'+esc(D.credit)+'</span></span>'
+  +'<span class="vf-dos-l">'+D.ok.map((t,i)=>dRow(t,i,true)).join('')+D.wait.map((t,i)=>dRow(t,D.ok.length+i,false)).join('')+'</span>'
+  +'<span class="vf-dos-stamp" style="--i:'+(D.ok.length+D.wait.length)+'"><b>'+esc(D.stamp)+'</b><small>'+esc(D.stampSub)+'</small></span></span></span></div>';
+ page('verification.html',Vx.title,Vx.description,hero({eyebrow:Vx.hero.eyebrow,h1:Vx.h1.split('<br>').map(esc).map(t=>t.replace(/\bGTA (6|VI)\b/g,'GTA\u00a0$1')).join('<br>'),lede:Vx.hero.lede,actions:Vx.hero.actions,visual:dossier})+'<div class="ed-zone ed-zone--info">'+parts.join('\n')+'</div>',{ld:[webpage],cls:'info-page--verif',og:'https://www.leonidakit.com'+(vfOg.big||vfOg.src),css:['vitrine.css'],scripts:['vitrine.js']});
 }
 /* ---------- v7.88 : « Presse et créateurs » (presse.html) ----------
    Le site en trois phrases et ses chiffres (posés par sync-site.cjs, comme ceux de l’À propos), le kit à télécharger
@@ -173,13 +205,19 @@ function faq(items){return '<p>Cinq questions courtes, avec des réponses vérif
  const parts=[S.nav(nav,'Sections de la page')];
  const sec=(o,body)=>S.section({...o,num:++n},body);
  const B=Pr.enBref;
+ /* v7.92.1 : les trois phrases dans une fiche à copier d’un coup (à gauche), les chiffres du site en face (à droite) : la
+    section n’a plus de moitié vide ; la fiche et les chiffres partent du même bord haut */
  parts.push(sec({id:'en-bref',kicker:B.kicker,title:B.title,icon:'liste',tone:'paper',lede:esc(B.lede)},
-  '<div class="pr-brief">'+B.p.map(t=>'<p class="lk-reveal">'+esc(fill(t,VARS))+'</p>').join('')+'</div><p class="vf-stats-k">'+esc(B.statsLede)+'</p>'+stats(B.stats,true).replace(/<div class="fig">/g,'<div class="fig lk-reveal">')));
+  '<div class="vt-split vt-split--top pr-brief-split"><div class="pr-brief-card lk-reveal lk-reveal--left" data-vt-copy-box><div class="pr-brief" data-vt-copy-src>'+B.p.map(t=>'<p>'+esc(fill(t,VARS))+'</p>').join('')+'</div>'
+  +'<button type="button" class="vt-copy" data-vt-copy hidden>'+VT.SVG.copy+'<span class="vt-copy-l">'+esc(B.copier)+'</span><span class="vt-copy-ok" aria-live="polite">'+esc(Pr.copie)+'</span></button></div>'
+  +'<div class="pr-brief-figs"><p class="vf-stats-k">'+esc(B.statsLede)+'</p>'+stats(B.stats,true).replace(/<div class="fig">/g,'<div class="fig lk-reveal">')+'</div></div>'));
+ /* v7.92.1 : huit fichiers en deux rangées pleines (4, puis 2, puis 1 par rangée) ; les deux remarques côte à côte, chacune
+    avec son icône */
  parts.push(sec({id:'kit',kicker:K.kicker,title:K.title,icon:'film',tone:'paper2',accent:'coral',lede:esc(K.lede)},
-  '<div class="pr-zip lk-reveal"><div><h3 id="kit-archive">'+esc(K.labels.archive)+'</h3>'+meta(['ZIP',size(zipX.octets)])+'</div>'+dl('leonidakit-kit-presse.zip',K.telecharger,'kit-archive').replace('class="pr-dl"','class="pr-dl pr-dl--main"')+'</div>'
+  '<div class="pr-zip lk-reveal"><span class="pr-zip-ico" aria-hidden="true">'+S.icon('kit')+'</span><div class="pr-zip-b"><h3 id="kit-archive">'+esc(K.labels.archive)+'</h3>'+meta(['ZIP',size(zipX.octets)])+'</div>'+dl('leonidakit-kit-presse.zip',K.telecharger,'kit-archive').replace('class="pr-dl"','class="pr-dl pr-dl--main"')+'</div>'
   +'<ul class="pr-kit">'+logo('logo','leonidakit-logo.svg','leonidakit-logo.png','')+logo('logo-sombre','leonidakit-logo-sombre.svg','leonidakit-logo-sombre.png','pr-thumb--sombre')
   +item(K.labels.icone,meta(['SVG, '+K.vectoriel,'PNG '+file('leonidakit-icone-512.png').w+' × '+file('leonidakit-icone-512.png').h+' px'])+'<p class="pr-file-dls">'+dl('leonidakit-icone.svg','SVG','kit-icone')+dl('leonidakit-icone-512.png','PNG','kit-icone')+'</p>',thumb('leonidakit-icone-512.png','pr-thumb--icone'),'pr-file--logo','kit-icone')
-  +shots.join('')+'</ul><p class="pr-note">'+esc(K.note)+'</p><p class="pr-note">'+esc(K.partage)+'</p>'));
+  +shots.join('')+'</ul><div class="pr-notes"><p class="pr-note lk-reveal">'+S.icon('copyright')+'<span>'+esc(K.note)+'</span></p><p class="pr-note lk-reveal">'+S.icon('envoi')+'<span>'+esc(K.partage)+'</span></p></div>'));
  /* v7.92 : l’identité visuelle du site (couleurs et police), chaque code couleur à copier */
  const I=Pr.identite;
  const swatches='<ul class="pr-swatches vt-in" data-lk-reveal>'+I.couleurs.map((c,i)=>'<li class="pr-sw" style="--i:'+i+';--sw:'+esc(c.hex)+'"><span class="pr-sw-chip" aria-hidden="true"></span><div class="pr-sw-b" data-vt-copy-box><h3>'+esc(c.nom)+'</h3><p class="pr-sw-hex" data-vt-copy-src translate="no">'+esc(c.hex)+'</p><p class="pr-sw-role">'+esc(c.role)+'</p><button type="button" class="vt-copy" data-vt-copy hidden>'+VT.SVG.copy+'<span class="vt-copy-l">'+esc(Pr.copier)+'</span><span class="vt-copy-ok" aria-live="polite">'+esc(Pr.copie)+'</span></button></div></li>').join('')+'</ul>';
@@ -192,12 +230,32 @@ function faq(items){return '<p>Cinq questions courtes, avec des réponses vérif
  parts.push(sec({id:'regles',kicker:R.kicker,title:R.title,icon:'copyright',tone:'night',accent:'coral',lede:esc(R.lede)},
   '<div class="pr-rules"><div class="pr-rule pr-rule--oui lk-reveal"><h3>'+esc(R.oui.titre)+'</h3><ul>'+R.oui.liste.map(l=>'<li>'+esc(l)+'</li>').join('')+'</ul></div><div class="pr-rule pr-rule--non lk-reveal"><h3>'+esc(R.non.titre)+'</h3><ul>'+R.non.liste.map(l=>'<li>'+esc(l)+'</li>').join('')+'</ul></div></div>'));
  const In=Pr.independance;
- parts.push(sec({id:'independance',kicker:In.kicker,title:In.title,icon:'ouvert',tone:'paper',lede:esc(In.lede)},para(In.p)));
+ /* v7.92.1 : les deux paragraphes côte à côte, puis trois engagements en cartes d’une rangée (icône, titre, phrase) */
+ parts.push(sec({id:'independance',kicker:In.kicker,title:In.title,icon:'ouvert',tone:'paper',lede:esc(In.lede)},
+  '<div class="pr-indep">'+In.p.map(t=>'<p class="lk-reveal">'+esc(t)+'</p>').join('')+'</div>'
+  +'<ul class="vt-points vt-in vt-in--deal" data-lk-reveal style="--n:'+In.points.length+'">'+In.points.map((x,i)=>'<li class="vt-point" style="--i:'+i+'"><span class="vt-point-ico vt-stamp">'+S.icon(x.ico)+'</span><h3>'+esc(x.t)+'</h3><p>'+esc(x.d)+'</p></li>').join('')+'</ul>'));
  const Ec=Pr.ecrire;
- parts.push(sec({id:'ecrire',kicker:Ec.kicker,title:Ec.title,icon:'enveloppe',tone:'paper2',accent:'coral',lede:esc(Ec.lede)},VT.faqGrid('<div class="vf-signal">'+para(Ec.p)+'<p><a class="info-primary" href="'+esc(Ec.href)+'">'+esc(Ec.label)+' <span aria-hidden="true">↗</span></a></p></div>',leoAside(Pr.leo,'vice-city-01','Les grandes lettres de Vice City au coucher du soleil, un avion dans le ciel, visuel officiel Rockstar Games'))));
+ /* v7.92.1 : une lettre (bord « par avion », timbre à l’icône du site, cachet) : ce qu’il faut dire, en trois cases qui se
+    cochent l’une après l’autre, et le bouton ; l’encart Léo en face, à la même hauteur */
+ const letter='<div class="pr-letter lk-reveal"><span class="pr-letter-stamp" aria-hidden="true"><img src="presse/leonidakit-icone.svg" width="48" height="48" alt=""></span><span class="pr-letter-mark" aria-hidden="true"></span>'
+  +para(Ec.p)+'<p class="pr-letter-k">'+esc(Ec.listeTitre)+'</p><ul class="pr-letter-l vt-in" data-lk-reveal>'+Ec.liste.map((l,i)=>'<li style="--i:'+i+'">'+esc(l)+'</li>').join('')+'</ul>'
+  +'<p class="pr-letter-go"><a class="info-primary" href="'+esc(Ec.href)+'">'+esc(Ec.label)+' <span aria-hidden="true">↗</span></a></p></div>';
+ parts.push(sec({id:'ecrire',kicker:Ec.kicker,title:Ec.title,icon:'enveloppe',tone:'paper2',accent:'coral',lede:esc(Ec.lede)},VT.faqGrid(letter,leoAside(Pr.leo,'vice-city-01','Les grandes lettres de Vice City au coucher du soleil, un avion dans le ciel, visuel officiel Rockstar Games')).replace('class="vt-faqgrid"','class="vt-faqgrid vt-faqgrid--even"')));
  const webpage={'@context':'https://schema.org','@graph':[ORG,{'@type':'WebPage','@id':'https://www.leonidakit.com/presse.html#webpage',url:'https://www.leonidakit.com/presse.html',name:Pr.title,description:Pr.description,inLanguage:'fr-FR',isPartOf:{'@id':'https://www.leonidakit.com/#website'},about:{'@id':'https://www.leonidakit.com/#organization'}}]};
  const og=medias['real-dimez-02'].variants.find(x=>x.w===1280)||medias['real-dimez-02'].variants[0];
- page('presse.html',Pr.title,Pr.description,hero({eyebrow:Pr.hero.eyebrow,h1:Pr.h1.split('<br>').map(esc).join('<br>'),lede:Pr.hero.lede,actions:Pr.hero.actions,stack:'presse',stackLabel:'Deux visuels officiels de GTA VI'})+'<div class="ed-zone ed-zone--info">'+parts.join('\n')+'</div>',{ld:[webpage],cls:'info-page--presse',og:'https://www.leonidakit.com'+og.src,css:['vitrine.css'],scripts:['vitrine.js']});
+ /* v7.92.1 : le visuel du bandeau est une carte de presse suspendue à son cordon : une vue officielle de Vice City (créditée),
+    le nom du site et trois de ses chiffres (posés par sync-site.cjs, comme ceux de « En bref »). Elle tombe et se balance une
+    fois à l’arrivée (vitrine.css, sans script), s’incline vers la souris (vitrine.js) ; au téléphone, elle se couche en
+    largeur. Ni paragraphe ni figure : le moteur d’entrée du bandeau (common.js) la laisse entière. */
+ const PS=Pr.pass;
+ const pass='<div class="pr-pass-wrap"><div class="pr-pass-hang"><span class="pr-pass-strap" aria-hidden="true"></span>'
+  +'<div class="pr-pass vt-tilt" data-vt-tilt="8"><span class="pr-pass-slot" aria-hidden="true"></span>'
+  +'<span class="pr-pass-k">'+esc(PS.k)+'</span>'
+  +'<span class="pr-pass-photo">'+VT.img(PS.media,PS.alt,{eager:true,sizes:'(max-width:599px) 150px, 300px'})+'<span class="pr-pass-holo" aria-hidden="true"></span><span class="pr-pass-c">'+esc(PS.credit)+'</span></span>'
+  +'<span class="pr-pass-brand" translate="no">Leonida<span>kit</span></span>'
+  +'<ul class="pr-pass-stats">'+PS.stats.map(s=>'<li><b class="fig-n" data-stat="'+esc(s.stat)+'">0</b><span>'+esc(s.label)+'</span></li>').join('')+'</ul>'
+  +'<span class="pr-pass-code" aria-hidden="true"></span></div></div></div>';
+ page('presse.html',Pr.title,Pr.description,hero({eyebrow:Pr.hero.eyebrow,h1:Pr.h1.split('<br>').map(esc).join('<br>'),lede:Pr.hero.lede,actions:Pr.hero.actions,visual:pass})+'<div class="ed-zone ed-zone--info">'+parts.join('\n')+'</div>',{ld:[webpage],cls:'info-page--presse',og:'https://www.leonidakit.com'+og.src,css:['vitrine.css'],scripts:['vitrine.js']});
 }
 /* ---------- v7.46 (lot 9) : éléments communs à Contact et Mentions ---------- */
 /* Adresse publique : jamais écrite en clair dans le HTML (assemblée par contact.js / mentions.js depuis data-u et data-d),
@@ -301,4 +359,7 @@ const TOPICS=['Erreur dans une fiche','Suggestion de contenu','Problème de calc
   hero({eyebrow:'LE SITE EN TRANSPARENCE',h1:'Mentions et<br>confidentialité.',lede:`Qui publie le site, qui l’héberge, ce qui reste dans ton navigateur et ce qui part. Vérifié dans le code du site le ${updated}.`,stack:'mentions',stackLabel:'Deux visuels officiels de Leonida'})
   +'<div class="ed-zone ed-zone--info ed-zone--legal">'+parts.join('\n')+'</div>',{scripts:['contact.js'],ld:[mentionsLD],cls:'info-page--legal'});
 }
+/* v7.93 (lot 8) : les quatre pages qui répondent aux recherches des joueurs (préchargement, PC, GTA VI et GTA V, vraies
+   voitures), même gabarit et mêmes briques (outils/gen-recherches.cjs, contenu dans outils/informations-editorial.json) */
+require('./gen-recherches.cjs')({page,hero,leoAside,S,VT,VTX,ORG,ED_ALL,VARS,frDate,fill,para,acq,visuals,medias});
 console.log('Pages À propos, Ce qui est confirmé (verification.html), Presse (presse.html), Contact et Mentions régénérées.');

@@ -110,8 +110,9 @@ function audit(mobile) {
     /* un film par moment de motion design (début, milieu, fin de l’entrée) et la même vue en mouvement réduit : frise des
        actualités, planche des photogrammes, seize contenus de l’Ultimate, accord du poste sur les stations, points
        confirmés ; le bloc visé est amené à 500 px du haut de l’écran, puis capturé à 60, 340 et 1 240 ms */
-    const FILMS = [['frise', 'actus.html', '.ac-ev', 3], ['moments', 'videos/trailer-1.html', '.ac-moment', 3], ['ultimate', 'editions.html', '.ac-ue-i', 6],
-      ['stations', 'radios.html', '.radios-station', 3], ['confirme', 'verification.html', '.vf-item', 3]];
+    /* v7.92.1 : cibles du balisage des pages enrichies (v7.92) : cartes des seize contenus (#ue-list), cartes confirmées (.vf-card) */
+    const FILMS = [['frise', 'actus.html', '.ac-ev', 3], ['moments', 'videos/trailer-1.html', '.ac-moment', 3], ['ultimate', 'editions.html', '#ue-list > li', 6],
+      ['stations', 'radios.html', '.radios-station', 3], ['confirme', 'verification.html', '.vf-card', 3]];
     for (const [name, pg, sel, idx] of FILMS) for (const motion of ['no-preference', 'reduce']) {
       const c2 = await browser.newContext({ viewport: { width: 1280, height: 900 }, reducedMotion: motion }); await c2.route('**/*', offsite);
       const p = await c2.newPage(); await p.goto(base + '/' + pg, { waitUntil: 'load' }); await p.waitForTimeout(600);

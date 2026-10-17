@@ -6,7 +6,12 @@
    - [data-vt-strip] : flèches de la bande de photogrammes (montrées seulement si la bande déborde).
    - [data-vt-leo] : ouvre Léo et lui pose la question écrite sur le bouton.
    - [data-vt-copy] : copie le texte de [data-vt-copy-src] voisin ; le libellé « Copié » est dans la page.
-   - [data-vt-filters] : filtre les éléments [data-vt-item] selon leur type (data-vt-t), avec l’entrée du moteur commun. */
+   - [data-vt-filters] : filtre les éléments [data-vt-item] selon leur type (data-vt-t), avec l’entrée du moteur commun.
+   - v7.92.1 : [data-vt-tilt="7"] : un visuel qu’on regarde (boîte, carte de presse, coffret) s’incline vers le pointeur,
+     de 7 degrés au plus, avec un reflet ; souris seulement, jamais en « réduire les animations » ni sur une carte qu’on lit.
+   - v7.92.1 : [data-vt-pick] : un petit choix (boutons radio) affiche la réponse [data-vt-answer] qui lui correspond.
+   - v7.92.1 : [data-vt-sum] : additionne les montants (data-vt-cents, en centimes) des cases cochées dans [data-vt-total],
+     au format monétaire de la langue de la page (Intl.NumberFormat, euros sauf data-vt-currency). */
 (function () {
   'use strict';
   var doc = document, each = function (l, f) { Array.prototype.forEach.call(l, f); };
@@ -109,5 +114,63 @@
       if (window.LKMotion && shown.length) window.LKMotion.enter(shown, { stagger: 40, cap: 280 });
     };
     each(buttons, function (b) { b.addEventListener('click', function () { apply(b.getAttribute('data-vt-f')); }); });
+  });
+
+  /* ---------- 6. inclinaison au pointeur ---------- */
+  if (!reduce && window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    each(doc.querySelectorAll('[data-vt-tilt]'), function (el) {
+      var max = Math.min(12, +(el.getAttribute('data-vt-tilt') || 7) || 7), raf = 0, ev = null, box = null;
+      var glare = doc.createElement('span'); glare.className = 'vt-tilt-glare'; glare.setAttribute('aria-hidden', 'true'); el.appendChild(glare);
+      var paint = function () {
+        raf = 0; if (!ev || !box) return;
+        var x = Math.min(1, Math.max(0, (ev.clientX - box.left) / box.width)), y = Math.min(1, Math.max(0, (ev.clientY - box.top) / box.height));
+        el.style.setProperty('--ry', ((x - 0.5) * 2 * max).toFixed(2) + 'deg');
+        el.style.setProperty('--rx', ((0.5 - y) * 2 * max).toFixed(2) + 'deg');
+        el.style.setProperty('--gx', (x * 100).toFixed(1) + '%');
+        el.style.setProperty('--gy', (y * 100).toFixed(1) + '%');
+      };
+      var reset = function () { ev = null; box = null; el.classList.remove('is-tilting'); el.style.setProperty('--rx', '0deg'); el.style.setProperty('--ry', '0deg'); };
+      el.addEventListener('pointerenter', function () { box = el.getBoundingClientRect(); });
+      el.addEventListener('pointermove', function (e) { if (e.pointerType && e.pointerType !== 'mouse') return; if (!box) box = el.getBoundingClientRect(); ev = e; el.classList.add('is-tilting'); if (!raf) raf = window.requestAnimationFrame(paint); });
+      el.addEventListener('pointerleave', reset);
+      window.addEventListener('scroll', function () { if (ev) box = null; }, { passive: true });
+    });
+  }
+
+  /* ---------- 7. petit choix : la réponse suit le bouton coché ---------- */
+  each(doc.querySelectorAll('[data-vt-pick]'), function (form) {
+    var scope = form.closest('[data-vt-pick-scope]') || form.parentNode;
+    var answers = scope.querySelectorAll('[data-vt-answer]');
+    var show = function (anim) {
+      var keys = [];
+      each(form.querySelectorAll('input[type="radio"]:checked'), function (r) { keys.push(r.value); });
+      var key = keys.join('-');
+      each(answers, function (a) {
+        var on = a.getAttribute('data-vt-answer') === key;
+        if (a.hidden === on) a.hidden = !on;
+        if (on && anim && !reduce && typeof a.animate === 'function') a.animate([{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'none' }], { duration: 360, easing: 'cubic-bezier(.16,1,.3,1)' });
+      });
+    };
+    form.addEventListener('change', function () { show(true); });
+    form.hidden = false;
+    show(false);
+  });
+
+  /* ---------- 8. total à cocher ---------- */
+  each(doc.querySelectorAll('[data-vt-sum]'), function (form) {
+    var out = form.querySelector('[data-vt-total]'); if (!out) return;
+    var fmt = null;
+    try { fmt = new Intl.NumberFormat(doc.documentElement.lang || 'fr', { style: 'currency', currency: form.getAttribute('data-vt-currency') || 'EUR' }); } catch (e) { fmt = null; }
+    var sum = function (anim) {
+      var c = 0;
+      each(form.querySelectorAll('input:checked'), function (i) { c += parseInt(i.getAttribute('data-vt-cents'), 10) || 0; });
+      var t = fmt ? fmt.format(c / 100) : (c / 100).toFixed(2);
+      if (out.textContent === t) return;
+      out.textContent = t;
+      if (anim && !reduce && typeof out.animate === 'function') out.animate([{ transform: 'scale(1.08)' }, { transform: 'none' }], { duration: 320, easing: 'cubic-bezier(.34,1.56,.64,1)' });
+    };
+    form.addEventListener('change', function () { sum(true); });
+    form.hidden = false;
+    sum(false);
   });
 })();

@@ -3,8 +3,9 @@
  "hub": {
   "label": "Missions",
   "title": "Les missions de GTA VI et leurs solutions",
+  "seoTitle": "GTA VI missions : la liste, l’histoire et les solutions",
   "lede": "Aucune mission n’a encore de nom officiel. Voici l’histoire de Jason et Lucia telle que Rockstar la raconte, ce que les vidéos montrent des missions et le guide qui se remplira dès le 19 novembre 2026.",
-  "desc": "Missions de GTA VI : l’histoire selon Rockstar, les séquences des trailers et de l’Extended Look, et le guide des solutions prêt pour la sortie.",
+  "desc": "Les missions de GTA 6 : combien il y en aura, la première mission, l’histoire selon Rockstar, les séquences des trailers et le guide des solutions.",
   "note": "Chaque séquence dit d’où elle vient : texte de Rockstar, image officielle ou relevé de joueurs. Aucun nom de mission n’est inventé ni tiré des fuites ; les solutions arriveront avec le jeu.",
   "pile": [
    { "media": "jason-and-lucia-02", "caption": "Un braquage à deux", "alt": "Jason et Lucia armés et masqués devant la porte ouverte d’une chambre forte, billets en l’air, visuel officiel Rockstar Games" },
@@ -81,7 +82,7 @@
    { "href": "#sources", "label": "Sources" }
   ],
   "rockstar": {
-   "lede": "Rockstar raconte l’histoire par touches : deux trailers, des présentations de personnages, un texte d’édition et une longue démonstration.",
+   "lede": "Rockstar raconte l’histoire par touches : trois bandes-annonces, des présentations de personnages, un texte d’édition et une longue démonstration.",
    "items": [
     { "date": "4 décembre 2023", "titre": "Trailer 1", "media": "lucia-caminos-05", "alt": "Lucia en tenue orange, menottée, entre deux gardiens du pénitencier, capture officielle", "statut": "officiel", "texte": "Le premier trailer pose Lucia, Jason et Vice City, et montre déjà le duo en plein braquage." },
     { "date": "6 mai 2025", "titre": "Trailer 2 et personnages", "statut": "officiel", "texte": "Jason travaille pour les trafiquants des Keys, Raul recrute des braqueurs, Brian fait passer sa marchandise par son chantier naval.", "media": "brian-heder-04", "alt": "Brian Heder entre une femme blonde et Jason, devant un pick-up, visuel officiel Rockstar Games" },

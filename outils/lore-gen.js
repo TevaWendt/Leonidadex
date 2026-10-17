@@ -42,9 +42,9 @@ const SECTIONS={
   regions:{hub:'lieux',label:'Lieux',one:'Région',title:'Les régions de Leonida',
     lede:"Des Keys aux quartiers de Vice City, découvre les régions présentées par Rockstar et les liens entre leurs paysages, leurs habitants et l’histoire.",
     desc:'Les six régions officielles de GTA VI : Vice City, Leonida Keys, Grassrivers, Port Gellhorn, Ambrosia et Mount Kalaga, avec visuels officiels et carte.'},
-  characters:{hub:'personnages',label:'Personnages',one:'Personnage',title:'Les personnages de GTA VI',
+  characters:{hub:'personnages',label:'Personnages',one:'Personnage',title:'Les personnages de GTA VI',seoTitle:'GTA VI personnages : Lucia, Jason et tous les personnages'/* v7.93 */,
     lede:"Qui sont Jason, Lucia et les personnes qui croisent leur route ? Ces portraits relient les personnages présentés par Rockstar à leur entourage et aux régions de Leonida.",
-    desc:'Jason, Lucia, Cal, Boobie, Dre\u2019Quan, Real Dimez, Raul et Brian : les personnages officiels de GTA VI, avec visuels Rockstar et liens vers les lieux de Leonida.'},
+    desc:'Qui sont les personnages de GTA 6 ? Lucia et Jason, les deux héros jouables, puis Cal, Boobie, Dre\u2019Quan, Real Dimez, Raul et Brian, avec visuels officiels.'},
   businesses:{hub:'entreprises',label:'Entreprises',one:'Entreprise',title:'Les entreprises de Leonida',
     lede:"Ateliers, boutiques, salons et lieux de musique : découvre les adresses qui donnent vie à Leonida et les services que Rockstar a effectivement décrits.",
     desc:'Les entreprises de GTA VI présentées par Rockstar : ateliers, salons, boutiques et studios, avec visuels officiels et position sur la carte de Leonida.'},
@@ -56,9 +56,9 @@ const SECTIONS={
     desc:'Les planques de GTA VI repérées dans les médias officiels : la planque de Jason dans les Keys, le chantier naval de Brian, le motel du premier trailer.'},
   /* v7.65 : gangs et factions (outils/editorial.json, clé factions ; zone éditoriale : editorial-hubs.json, clé gangs). Chaque fiche peut
      porter « kind » (étiquette affichée à la place de « Faction »), « weapons » (fiches armes liées) et « calc: false » (pas d’encart). */
-  factions:{hub:'gangs',label:'Gangs et factions',one:'Faction',title:'Les gangs et factions de GTA VI',
+  factions:{hub:'gangs',label:'Gangs et factions',one:'Faction',title:'Les gangs et factions de GTA VI',seoTitle:'GTA VI gangs : la liste des gangs et factions de Leonida'/* v7.93 */,
     lede:"Motards d’Ambrosia, gang de Southside, braqueurs de Raul, trafiquants des Keys et forces de l’ordre : les groupes que Rockstar a montrés, et ce qui reste à confirmer.",
-    desc:'Les gangs et factions de GTA VI : Final Chapter MC, PTT Youngin$, San4San, l’équipe de Raul, le réseau de Brian et la police, avec leurs sources.'},
+    desc:'La liste des gangs et factions de GTA 6 : Final Chapter MC, PTT Youngin$, San4San, l’équipe de Raul, le réseau de Brian et la police, avec leurs sources.'},
 };
 SECTIONS.animals=EDA.section;/* section animaux : animaux.html et animaux/<id>.html, après les gangs (statut, sources et gros plans ajoutés par outils/gen-animaux.cjs) */
 const byId={};for(const k of Object.keys(SECTIONS))for(const x of ED[k])byId[x.id]=Object.assign({sec:k},x);
@@ -239,7 +239,7 @@ ${S.hub==='lieux'?require('./gen-devine.cjs').promo('')+'\n'/* v7.90 (lot 6) : l
   /* v7.41 : CollectionPage (la liste des fiches) à côté du fil d'Ariane ; la FAQPage est posée par sync-site depuis les questions visibles. */
   const collection='<script type="application/ld+json">'+JSON.stringify({"@context":"https://schema.org","@type":"CollectionPage","name":S.title,"description":metaDesc(S.desc),"url":SITE+'/'+S.hub+'.html',"inLanguage":"fr","isPartOf":{"@type":"WebSite","name":"Leonidakit","url":SITE+'/'},"mainEntity":{"@type":"ItemList","numberOfItems":items.length,"itemListElement":items.map((x,i)=>({"@type":"ListItem","position":i+1,"name":x.name,"url":SITE+'/'+S.hub+'/'+x.id+'.html'}))}})+'</script>';
   console.log(S.hub+' : zone éditoriale de '+MONDE.words(S.hub)+' mots, '+MONDE.DATA[S.hub].faq.length+' questions, '+MONDE.sourcesOf(S.hub).length+' sources');
-  fs.writeFileSync(S.hub+'.html',page({p:'',title:S.title+' | Leonidakit',desc:S.desc,canonical:'/'+S.hub+'.html',ogImg:visual(items[0])?(visual(items[0]).variants[1]||visual(items[0]).variants[0]).src:null,body,crumbs:[['Accueil','/'],[S.label,'/'+S.hub+'.html']],hub:S.hub,ld:collection,lkx:LKX_HUBS.has(S.hub),monde:MC.HUBS.includes(S.hub)}));
+  fs.writeFileSync(S.hub+'.html',page({p:'',title:(S.seoTitle||S.title)+' | Leonidakit'/* v7.93 : titre pour les moteurs */,desc:S.desc,canonical:'/'+S.hub+'.html',ogImg:visual(items[0])?(visual(items[0]).variants[1]||visual(items[0]).variants[0]).src:null,body,crumbs:[['Accueil','/'],[S.label,'/'+S.hub+'.html']],hub:S.hub,ld:collection,lkx:LKX_HUBS.has(S.hub),monde:MC.HUBS.includes(S.hub)}));
   index.push({l:S.title,k:S.label,u:'/'+S.hub+'.html',s:(S.title+' '+S.label+' leonida gta vi').toLowerCase(),w:1});
 
   /* ---------- fiches ---------- */
@@ -328,11 +328,11 @@ fs.writeFileSync('outils/lore-index.json',JSON.stringify(index));
   for(const [vid,ids] of Object.entries(VMED))for(const id of ids)add(id,VNOM[vid]||vid,'vehicules/'+vid+'.html');
   for(const [aid,ids] of Object.entries(AMED))for(const id of ids)add(id,aid.replace(/-/g,' '),'armes/'+aid+'.html');
   for(const [k,S] of Object.entries(SECTIONS))for(const x of ED[k])for(const id of (x.media||[]))add(id,x.name,S.hub+'/'+x.id+'.html');
-  const rows=Object.values(MED).map(m=>{const a=m.variants[0];return `<li class="media-row lk-arrive" id="media-${esc(m.id)}"><img src="${a.src}" width="${a.w}" height="${a.h}" alt="${esc(m.titre)}" loading="lazy" decoding="async"><div><b>${esc(m.titre)}</b><br><span>${esc(m.credit)}</span>${usage[m.id]?'<br><span>Utilisé sur : '+usage[m.id].join(', ')+'</span>':''}<br><a href="${esc(m.source)}" target="_blank" rel="noopener nofollow">Galerie officielle</a></div></li>`;}).join('\n');
+  const rows=Object.values(MED).map(m=>{const a=m.variants[0];return `<li class="media-row lk-arrive" id="media-${esc(m.id)}"><img src="${a.src}" width="${a.w}" height="${a.h}" alt="${esc(m.titre)}" loading="lazy" decoding="async"><div><b>${esc(m.titre)}</b><br><span>${esc(m.credit)}</span>${usage[m.id]?'<br><span>Utilisé sur : '+usage[m.id].join(', ')+'</span>':''}<br><a href="${esc(m.source)}" target="_blank" rel="noopener nofollow">${/^https:\/\/www\.rockstargames\.com\/VI\/media/.test(m.source)?'Galerie officielle':'Source officielle'/* v7.92.1 : photos de produits et affiches publiées ailleurs (boutique, Newswire, PlayStation) */}</a></div></li>`;}).join('\n');
   const body=`<section class="page-head shell">
   <p class="fiche-cat">Crédits · Visuels officiels</p>
   <h1>Les visuels officiels utilisés</h1>
-  <p class="lede">${Object.keys(MED).length} visuels provenant des captures, artworks et trailers publiés par Rockstar Games, reproduits ici en tant que site de fans. Les images sont redimensionnées et compressées pour le Web ; les photogrammes des trailers sont recadrés pour retirer les bandes noires du format cinéma. Elles restent la propriété de Rockstar Games et Take-Two Interactive.</p>
+  <p class="lede">${Object.keys(MED).length} visuels provenant des captures, artworks, trailers et photos de produits publiés par Rockstar Games et par PlayStation, reproduits ici en tant que site de fans. Les images sont redimensionnées et compressées pour le Web ; les photogrammes des trailers sont recadrés pour retirer les bandes noires du format cinéma. Elles restent la propriété de Rockstar Games et Take-Two Interactive, et de Sony Interactive Entertainment pour la photo des manettes.</p>
 </section>
 <section class="shell">
   <ul class="media-list">
@@ -340,7 +340,7 @@ ${rows}
   </ul>
   <p class="lore-src">Les photos de la carte proviennent de gtadb.org et de ses contributeurs (CC BY 4.0), voir les <a href="mentions-legales.html">mentions légales</a>.</p>
 </section>`;
-  fs.writeFileSync('medias.html',page({p:'',title:'Visuels officiels et crédits | Leonidakit',desc:'Liste des '+Object.keys(MED).length+' visuels officiels Rockstar Games utilisés sur Leonidakit, avec leur source et les fiches où ils apparaissent.',canonical:'/medias.html',ogImg:null,body,crumbs:[['Accueil','/'],['Visuels officiels','/medias.html']]}));
+  fs.writeFileSync('medias.html',page({p:'',title:'Visuels officiels et crédits | Leonidakit',desc:'Liste des '+Object.keys(MED).length+' visuels officiels de GTA VI utilisés sur Leonidakit, avec leur crédit, leur source et les fiches où ils apparaissent.',canonical:'/medias.html',ogImg:null,body,crumbs:[['Accueil','/'],['Visuels officiels','/medias.html']]}));
   console.log('medias.html : '+Object.keys(MED).length+' visuels');
 }
 
