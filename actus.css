@@ -16,6 +16,8 @@
 /* v7.87.1 : renvois aux sources lisibles (11 px au moins) */
 .ac-refs{display:inline-flex;gap:3px;vertical-align:.3em;}
 .ac-refs a{display:inline-flex;align-items:center;justify-content:center;min-width:24px;height:24px;padding:0 5px;border-radius:5px;background:var(--paper-2);border:1px solid var(--rule);color:var(--ink-soft);font-size:max(11px,.7rem);font-weight:800;text-decoration:none;}
+/* v7.92.1 : dans une bande de nuit, le chiffre passe en clair (le corail des liens de paragraphe ne s’y lisait pas) */
+.ed--night .ac-refs a{background-color:var(--ed-chip);border-color:var(--ed-line);color:var(--ed-fg);}
 .ac-refs a:hover,.ac-refs a:focus-visible{background:var(--amber);color:var(--ink);}
 .ac-rss{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin-top:18px;}
 .ac-rss span{font-size:.86rem;color:var(--ink-soft);}
@@ -196,7 +198,7 @@
 .ac-vcard-s{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;}
 .ac-vcard-s span{padding:3px 9px;border-radius:999px;background:var(--paper-2);border:1px solid var(--rule);font-size:.78rem;font-weight:700;}
 /* v7.87.1 : « Les autres vidéos » : deux cartes de taille raisonnable, pas deux affiches pleine largeur */
-.ac-vcards--mini{grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),360px));}
+.ac-vcards--mini{grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));}
 .ac-vcards--mini .ac-vcard-t{font-size:1.05rem;}
 
 /* ---------- éditions ---------- */
@@ -236,6 +238,9 @@ html[lang="en"] .ac-ue-i>a .ac-ue-en:not([hidden]){text-decoration:underline;tex
 .ac-cols{grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));}
 .ac-col{scroll-margin-top:130px;}
 .ac-col h3{font-size:1.05rem;}
+/* v7.93 : lien vers la page du préchargement sous la colonne « Préchargement et sortie » (section de nuit) */
+.ac-col .ed-col-link{display:inline-flex;align-items:center;gap:6px;min-height:28px;margin-top:10px;font-weight:800;color:var(--amber-2);text-decoration:underline;text-underline-offset:4px;}
+.ac-col .ed-col-link:hover{color:#fff;}
 
 @media (prefers-reduced-motion:reduce){
   .ac-play,.ac-vcard,.ac-ev-more>summary::before,.ac-chips-more>summary,.ac-chips-more>summary::after{transition:none;}
@@ -314,45 +319,60 @@ html[lang="en"] .ac-ue-i>a .ac-ue-en:not([hidden]){text-decoration:underline;tex
 .ac-bcard--plain .ac-bonus-pour{color:var(--amber-2);}
 .ac-bcard-ico{display:grid;place-items:center;width:56px;height:56px;border:2px solid var(--amber);border-radius:50%;color:var(--amber);}
 .ac-bcard-ico svg{width:28px;height:28px;}
-.ac-bcard-end{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:auto!important;padding-top:10px;border-top:1px dashed rgba(253,251,247,.3);font-weight:800;}
-.ac-bcard-end .vt-cd{color:var(--amber-2);}
+.ac-bcard-end{display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-rows:auto auto;column-gap:14px;row-gap:6px;align-items:center;margin-top:auto;padding-top:16px;border-top:2px dashed rgba(253,251,247,.28);}
+.ac-bcard-end time{grid-row:1 / span 2;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:76px;padding:8px 6px 7px;border:2px solid var(--amber);border-radius:10px;background:rgba(245,165,36,.12);color:var(--paper);}
+.ac-bcard-end time b{font:900 2.2rem/1 'Archivo',sans-serif;color:var(--amber);font-variant-numeric:tabular-nums;}
+.ac-bcard-end time span{font-size:.74rem;font-weight:700;}
+.ac-bcard-end-t{font-weight:900;font-size:1.02rem;line-height:1.25;color:#fff;}
+.ac-bcard-end .vt-cd{justify-self:start;color:var(--amber-2);}
 .ac-bonus-pour{font-weight:700;color:var(--coral-text);}
 
-/* ---------- Vidéos : la salle de projection ---------- */
-.ac-theater{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,340px);gap:clamp(16px,2.4vw,30px);align-items:start;}
-.ac-th-side{display:flex;flex-direction:column;gap:14px;min-width:0;}
+/* ---------- Vidéos : la salle de projection ----------
+   v7.92.1 : l’écran à gauche, la fiche de la vidéo à l’affiche à droite, à la hauteur de l’écran (son bouton calé en bas) ;
+   la liste des vidéos en une rangée sous les deux, une carte par vidéo (affiche, date, nom) */
+.ac-theater{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,360px);grid-template-areas:"main side" "list list";gap:clamp(16px,2.4vw,30px);align-items:stretch;}
+.ac-th-main{grid-area:main;display:flex;flex-direction:column;gap:16px;min-width:0;}
+.ac-th-side{grid-area:side;display:flex;flex-direction:column;min-width:0;}
+.ac-th-list{grid-area:list;min-width:0;}
 .ed--night .ac-screen-n a{color:var(--amber-2);}
-@media (max-width:959px){.ac-theater{grid-template-columns:1fr;}}
-.ac-th-main{display:flex;flex-direction:column;gap:16px;min-width:0;}
+@media (max-width:959px){.ac-theater{grid-template-columns:1fr;grid-template-areas:"main" "side" "list";}}
 .ed--night .ac-screen-n{color:rgba(253,251,247,.75);}
-.ac-th-info{display:flex;flex-direction:column;gap:8px;padding:16px 18px 18px;border:1.5px solid rgba(255,255,255,.28);border-radius:var(--radius);background:rgba(255,255,255,.06);}
+.ac-th-info{flex:1;display:flex;flex-direction:column;gap:10px;padding:18px 20px 20px;border:1.5px solid rgba(255,255,255,.28);border-radius:var(--radius);background:rgba(255,255,255,.06);}
 .ac-th-info[hidden]{display:none;}
 .ac-th-k{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin:0;font:800 var(--fs-kicker)/1.2 var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--amber-2);}
 .ac-th-k span{padding:3px 8px;border-radius:999px;background:var(--coral);color:#fff;letter-spacing:.04em;}
 .ac-th-t{margin:0;font:900 clamp(1.4rem,1.15rem + 1vw,2rem)/1.1 'Archivo',sans-serif;letter-spacing:-.03em;color:#fff;}
 .ac-th-d{margin:0;color:rgba(253,251,247,.88);max-width:62ch;}
-.ac-th-s{display:flex;flex-wrap:wrap;gap:6px;margin:2px 0 4px;padding:0;list-style:none;}
+.ac-th-s{display:flex;flex-wrap:wrap;gap:6px;margin:2px 0 0;padding:0;list-style:none;}
 .ac-th-s li{padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.12);font-size:.8rem;font-weight:700;}
-.ac-th-info .lkx-btn{align-self:flex-start;}
-.ac-pl{display:flex;flex-direction:column;gap:12px;margin:0;padding:0;list-style:none;}
-@media (max-width:959px){.ac-pl{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));}}
-@media (max-width:599px){.ac-pl{grid-template-columns:1fr;}}
-.ac-pl-a{display:grid;grid-template-columns:132px 1fr;gap:12px;align-items:center;padding:8px;border:2px solid rgba(255,255,255,.3);border-radius:12px;background:rgba(255,255,255,.05);color:#fff;text-decoration:none;transition:background var(--c-fast,190ms),border-color var(--c-fast,190ms),transform var(--c-fast,190ms);}
-@media (max-width:959px) and (min-width:600px){.ac-pl-a{grid-template-columns:1fr;}}
+.ac-th-s:empty{display:none;}
+/* les faits publiés sur la vidéo, avec leur statut (cachés entre 960 et 1 199 px : la colonne y est trop étroite) */
+.ac-th-f{display:grid;gap:10px;margin:4px 0 6px;padding:12px 0 0;list-style:none;border-top:1px dashed rgba(255,255,255,.24);}
+.ac-th-f li{display:grid;gap:5px;}
+.ac-th-f p{margin:0;font-size:.86rem;line-height:1.5;color:rgba(253,251,247,.86);}
+@media (min-width:960px) and (max-width:1199px){.ac-th-f{display:none;}}
+.ac-th-info .lkx-btn{align-self:flex-start;margin-top:auto;}
+.ac-pl{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:0;padding:0;list-style:none;}
+@media (max-width:959px){.ac-pl{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media (max-width:519px){.ac-pl{grid-template-columns:1fr;}}
+.ac-pl>li{min-width:0;}
+.ac-pl-a{display:flex;flex-direction:column;gap:10px;height:100%;padding:8px 8px 12px;border:2px solid rgba(255,255,255,.3);border-radius:12px;background:rgba(255,255,255,.05);color:#fff;text-decoration:none;transition:background var(--c-fast,190ms),border-color var(--c-fast,190ms),transform var(--c-fast,190ms),box-shadow var(--c-fast,190ms);}
+@media (max-width:519px){.ac-pl-a{display:grid;grid-template-columns:132px 1fr;align-items:center;gap:12px;padding:8px;}}
 .ac-pl-fig{position:relative;display:block;aspect-ratio:16/9;border-radius:8px;overflow:hidden;background:var(--night-deep);}
 .ac-pl-fig img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .5s var(--c-ease-result,cubic-bezier(.16,1,.3,1));}
 .ac-pl-play{position:absolute;left:8px;bottom:8px;display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--amber);color:var(--ink);}
 .ac-pl-play svg{width:14px;height:14px;margin-left:2px;}
-.ac-pl-b{display:flex;flex-direction:column;gap:3px;min-width:0;}
+.ac-pl-b{display:flex;flex-direction:column;gap:3px;min-width:0;padding:0 4px;}
 .ac-pl-b time{font:700 .74rem/1.3 var(--font-mono);color:rgba(253,251,247,.72);}
 .ac-pl-t{font:900 1.02rem/1.2 'Archivo',sans-serif;}
 .ac-pl-a[aria-current="true"]{border-color:var(--amber);background:rgba(245,165,36,.16);box-shadow:4px 4px 0 rgba(0,0,0,.35);}
 .ac-pl-a[aria-current="true"] .ac-pl-play{background:var(--coral);color:#fff;}
 .ac-pl-a:hover{background:rgba(255,255,255,.12);border-color:var(--amber-2);}
+@media (hover:hover) and (pointer:fine){.ac-pl-a:hover{transform:translateY(-3px);}}
 .ac-pl-a:hover .ac-pl-fig img{transform:scale(1.06);}
 .ac-pl-a:focus-visible{outline:3px solid var(--amber);outline-offset:3px;}
 
-/* ---------- Vidéos : les trois vidéos en chiffres (barres qui se remplissent à l’entrée) ---------- */
+/* ---------- Vidéos : les vidéos en chiffres (barres qui se remplissent à l’entrée) ---------- */
 .ac-bars{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:16px;}
 .ac-bars-key{grid-column:1 / -1;display:flex;flex-wrap:wrap;gap:8px 18px;margin:0 0 2px;padding:0;list-style:none;font-weight:800;font-size:.86rem;}
 .ac-bars-key li{display:inline-flex;align-items:center;gap:8px;}
@@ -366,11 +386,27 @@ html[lang="en"] .ac-ue-i>a .ac-ue-en:not([hidden]){text-decoration:underline;tex
 .ac-bar>b{font:900 1.05rem/1 'Archivo',sans-serif;font-variant-numeric:tabular-nums;}
 .ac-bar-t{grid-column:1 / -1;display:block;height:14px;border-radius:6px;background:var(--paper-2);}
 .ac-bar-t i{display:block;height:100%;width:var(--p);min-width:6px;border:2px solid var(--ink);border-radius:6px;background:var(--k);transform-origin:left;box-sizing:border-box;}
-.js .ac-bars.is-in:not(.lk-settled) .ac-bar-t i{animation:vt-bar 1s var(--c-ease-result,cubic-bezier(.16,1,.3,1)) calc(min(var(--i,0),6) * 70ms + 200ms) backwards;}
+@media (prefers-reduced-motion:no-preference){
+  .js .ac-bars.is-in:not(.lk-settled) .ac-bar-t i{animation:vt-bar 1s var(--c-ease-result,cubic-bezier(.16,1,.3,1)) calc(var(--lk-delay,0ms) + min(var(--i,0),6) * 70ms + 200ms) backwards;}
+}
 
-/* ---------- Vidéos : toute la musique ---------- */
-.ac-allsongs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px;align-items:start;}
-.ac-as-g{padding:14px 16px 16px;border:1.5px solid rgba(255,255,255,.28);border-radius:var(--radius);background:rgba(255,255,255,.06);}
+/* ---------- Vidéos : toute la musique ----------
+   v7.92.1 : les vidéos à peu de morceaux en une rangée de cartes (affiche, nom, morceaux) ; la plus longue liste dessous,
+   sur toute la largeur, l’affiche à gauche et les morceaux en deux colonnes */
+.ac-allsongs{display:grid;grid-template-columns:repeat(var(--n,3),minmax(0,1fr));gap:16px;align-items:stretch;}
+.ac-allsongs--1{--n:1;}.ac-allsongs--2{--n:2;}.ac-allsongs--3{--n:3;}.ac-allsongs--4{--n:4;}
+@media (max-width:959px){.ac-allsongs{grid-template-columns:minmax(0,1fr);}}
+.ac-as-g{display:flex;flex-direction:column;min-width:0;border:1.5px solid rgba(255,255,255,.28);border-radius:var(--radius);background:rgba(255,255,255,.06);overflow:hidden;}
+.ac-as-fig{position:relative;display:block;aspect-ratio:16/9;overflow:hidden;border-bottom:1.5px solid rgba(255,255,255,.28);background:var(--night-deep);}
+.ac-as-fig img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .7s var(--c-ease-result,cubic-bezier(.16,1,.3,1));}
+@media (hover:hover) and (pointer:fine){.ac-as-g:hover .ac-as-fig img{transform:scale(1.05);}}
+.ac-as-in{flex:1;padding:14px 16px 16px;min-width:0;}
+.ac-as-g--long{display:grid;grid-template-columns:minmax(240px,.75fr) minmax(0,2fr);margin-top:16px;}
+.ac-as-g--long .ac-as-fig{aspect-ratio:auto;height:100%;min-height:220px;border-bottom:0;border-right:1.5px solid rgba(255,255,255,.28);}
+.ac-as-g--long .ac-as-l{display:block;columns:2;column-gap:28px;}
+.ac-as-g--long .ac-as-l li{break-inside:avoid;}
+@media (max-width:959px){.ac-as-g--long{grid-template-columns:minmax(0,1fr);}.ac-as-g--long .ac-as-fig{aspect-ratio:16/9;height:auto;min-height:0;border-right:0;border-bottom:1.5px solid rgba(255,255,255,.28);}}
+@media (max-width:719px){.ac-as-g--long .ac-as-l{columns:1;}}
 .ac-as-h{display:flex;align-items:center;gap:6px;margin:0 0 10px;font:900 1.1rem/1.2 'Archivo',sans-serif;}
 .ac-as-h a{display:inline-block;padding:3px 0 2px;color:#fff;text-decoration:none;border-bottom:2px solid var(--amber);} /* cible de 28 px au moins (v7.92) */
 .ac-as-h a:hover{color:var(--amber-2);}
@@ -419,3 +455,311 @@ html[lang="en"] .ac-ue-i>a .ac-ue-en:not([hidden]){text-decoration:underline;tex
   }
 }
 @keyframes ac-fill{from{transform:scaleY(0);}to{transform:scaleY(1);}}
+
+/* =====================================================================================================================
+   v7.92.1 (demande de Téva du 16 octobre) : « À la une » des Actualités, la salle de projection et la musique des Vidéos
+   (plus haut), les Éditions (deux éditions en étiquettes, « Quelle édition choisir ? », le mois de GTA+, le coffret
+   collector) et la page Prix et collector. Toujours transform, opacity, clip-path ; rien ne bouge en « réduire les
+   animations ».
+   ===================================================================================================================== */
+/* ---------- Actualités : à la une ---------- */
+.ac-une .vt-feature-k{color:var(--ed-soft,var(--ink-soft));}
+.ac-une-type{padding:3px 9px;border-radius:999px;background:var(--night);color:var(--amber-2);letter-spacing:.04em;}
+.ac-une-st{margin:0;}
+.ac-une-act{display:flex;flex-wrap:wrap;gap:10px;margin:6px 0 0;padding-top:4px;}
+.ac-une .vt-feature-fig{min-height:320px;}
+@media (min-width:820px){.ac-une{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);}}
+
+/* ---------- Vidéos : la phrase sous les chiffres ---------- */
+.ac-bars-note{margin:14px 0 0;max-width:var(--measure);font-size:.9rem;line-height:1.55;color:var(--ed-soft,var(--ink-soft));}
+
+/* ---------- Éditions : le prix en étiquette sur chaque carte, la source alignée en bas ---------- */
+.ac-edcard-fig .ac-edcard-tag{position:absolute;left:12px;top:12px;z-index:3;}
+/* au téléphone : l’étiquette rapetisse et le ruban « 16 contenus en plus » passe en bas de l’image (ils ne se couvrent plus) */
+@media (max-width:599px){
+  .ac-edcard-fig .vt-tag{gap:2px;padding:8px 12px 8px 22px;}
+  .ac-edcard-fig .vt-tag::before{left:7px;}
+  .ac-edcard-fig .vt-tag .vt-price{font-size:1.5rem;}
+  .ac-edcard-fig .vt-tag-l{font-size:11px;}
+  .ac-edcard-fig .ac-edcard-ribbon{top:auto;bottom:12px;}
+}
+.ac-edcard-b{flex:1;}
+.ac-edcard-src{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:auto!important;padding-top:12px;border-top:1px dashed var(--ed-line,var(--rule));font-size:.86rem;font-weight:700;color:var(--ed-fg,var(--ink))!important;}
+/* côte à côte, une grille partagée (sous-grille) aligne titre, phrase, liste et source des deux éditions ;
+   sans elle (ou en colonne), la source reste calée en bas */
+@supports (grid-template-rows:subgrid){
+  @media (min-width:820px){
+    .ac-duo{row-gap:0;}
+    .ac-duo>.ac-edcard{display:grid;grid-template-columns:minmax(0,1fr);grid-row:span 5;grid-template-rows:subgrid;row-gap:0;}
+    .ac-duo>.ac-edcard>.ac-edcard-b{display:grid;grid-template-columns:minmax(0,1fr);grid-row:span 4;grid-template-rows:subgrid;row-gap:8px;}
+    .ac-duo>.ac-edcard>.ac-edcard-b>.ac-checks{align-self:start;}
+  }
+}
+
+/* ---------- Éditions : les deux éditions dans le bandeau ---------- */
+.ed-pair{position:relative;width:100%;max-width:460px;aspect-ratio:1/1;margin-left:auto;}
+.ed-pair-c{position:absolute;width:68%;}
+.ed-pair-c--s{left:0;top:9%;rotate:-6deg;z-index:1;}
+.ed-pair-c--u{right:0;bottom:7%;rotate:5deg;z-index:2;}
+.ed-pair-c:hover{z-index:3;}
+.ed-pair-in{position:relative;display:block;aspect-ratio:16/10;border:2px solid var(--ink);border-radius:var(--radius);overflow:hidden;background:var(--night);box-shadow:6px 6px 0 var(--ink);}
+.ed-pair-c--u .ed-pair-in{box-shadow:6px 6px 0 var(--amber),6px 6px 0 2px var(--ink);}
+.ed-pair-in img{display:block;width:100%;height:100%;object-fit:cover;}
+.ed-pair-n{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:24px 14px 10px;background:linear-gradient(180deg,rgba(26,18,48,0),rgba(26,18,48,.82));color:#fff;font:900 1.05rem/1 'Archivo',sans-serif;letter-spacing:-.01em;}
+.ed-pair .ed-pair-tag{position:absolute;top:-22px;right:10%;z-index:4;transform-origin:14px 50%;}
+.ed-pair .ed-pair-c--s .ed-pair-tag{right:auto;left:-4%;top:-26px;}
+@media (prefers-reduced-motion:no-preference){
+  .ed-pair-c--s{animation:ed-deal-s .9s var(--c-ease-result,cubic-bezier(.16,1,.3,1)) .15s backwards;}
+  .ed-pair-c--u{animation:ed-deal-u .9s var(--c-ease-result,cubic-bezier(.16,1,.3,1)) .35s backwards;}
+  .ed-pair .ed-pair-tag{animation:vt-swing 1s var(--ease-spring,cubic-bezier(.34,1.56,.64,1)) 1s backwards;}
+  .ed-pair .ed-pair-c--u .ed-pair-tag{animation-delay:1.2s;}
+}
+@keyframes ed-deal-s{from{opacity:0;transform:translate3d(-40px,36px,0) rotate(-10deg);}to{opacity:1;transform:none;}}
+@keyframes ed-deal-u{from{opacity:0;transform:translate3d(40px,46px,0) rotate(9deg);}to{opacity:1;transform:none;}}
+@media (max-width:900px){.ed-pair{max-width:380px;margin:26px auto 10px;}}
+@media (max-width:599px){
+  .ed-pair .vt-tag{gap:2px;padding:8px 12px 8px 22px;}
+  .ed-pair .vt-tag::before{left:7px;}
+  .ed-pair .vt-tag .vt-price{font-size:1.55rem;}
+  .ed-pair .vt-tag-l{font-size:11px;white-space:nowrap;}
+  .ed-pair .ed-pair-tag{top:-18px;}
+  .ed-pair .ed-pair-c--s .ed-pair-tag{left:2%;top:-20px;}
+}
+
+/* ---------- Éditions : « Quelle édition choisir ? » ---------- */
+.ed-pick{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:clamp(18px,3vw,40px);align-items:stretch;}
+@media (max-width:819px){.ed-pick{grid-template-columns:1fr;}}
+.ed-pick-q{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.ed-pick-q[hidden]{display:none;}
+.ed-pick-f{margin:0;padding:16px 18px 18px;border:2px solid var(--ink);border-radius:var(--radius);background:var(--ed-card,#fff);box-shadow:var(--shadow-hard);min-width:0;}
+.ed-pick-f legend{float:left;width:100%;margin:0 0 12px;padding:0;font:800 1.05rem/1.3 'Archivo',sans-serif;color:var(--ed-fg,var(--ink));}
+.ed-pick-o{clear:both;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;}
+.ed-pick-o label{position:relative;display:block;cursor:pointer;}
+.ed-pick-o input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer;}
+.ed-pick-o span{display:flex;align-items:center;justify-content:center;min-height:48px;padding:10px 14px;border:2px solid var(--ink);border-radius:999px;background:var(--paper);color:var(--ink);font-weight:900;transition:background var(--c-fast,190ms),color var(--c-fast,190ms),box-shadow var(--c-fast,190ms),transform var(--c-fast,190ms);}
+.ed-pick-o input:checked+span{background:var(--ink);color:var(--paper);box-shadow:3px 3px 0 var(--amber);}
+.ed-pick-o input:focus-visible+span{outline:3px solid var(--coral);outline-offset:3px;}
+@media (hover:hover) and (pointer:fine){.ed-pick-o label:hover span{transform:translate(-1px,-1px);}}
+.ed-pick-n{margin:0;font-size:.86rem;line-height:1.5;color:var(--ed-soft,var(--ink-soft));}
+.ed-pick-a{display:grid;min-width:0;}
+.ed-pick-r{position:relative;display:flex;flex-direction:column;justify-content:center;gap:10px;min-height:100%;padding:clamp(20px,2.6vw,30px);border:2px solid var(--ink);border-radius:var(--radius);background:linear-gradient(160deg,var(--night-deep) 0%,var(--night) 65%,var(--night-2) 100%);color:var(--paper);box-shadow:var(--shadow-amber);}
+.ed-pick-r[hidden]{display:none;}
+.ed-pick-r h3{margin:0;font:900 clamp(1.3rem,1.1rem + .9vw,1.9rem)/1.12 'Archivo',sans-serif;letter-spacing:-.025em;color:#fff;text-wrap:balance;}
+.ed-pick-r p{margin:0;max-width:56ch;line-height:1.6;color:rgba(253,251,247,.88);}
+.ed-pick-tag{align-self:flex-start;}
+/* sans script : les quatre cas, deux par rangée, sur toute la largeur */
+.ed-pick-q[hidden]+.ed-pick-a{grid-column:1 / -1;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;}
+@media (max-width:819px){.ed-pick-q[hidden]+.ed-pick-a{grid-template-columns:1fr;}}
+
+/* ---------- Éditions : le mois de GTA+, ses conditions ---------- */
+.ac-bcard-l{display:grid;gap:8px;margin:4px 0 0;padding:0;list-style:none;}
+.ac-bcard-l li{position:relative;padding-left:22px;font-size:.92rem;line-height:1.45;color:rgba(253,251,247,.9);}
+.ac-bcard-l li::before{content:'';position:absolute;left:2px;top:.45em;width:10px;height:10px;border-radius:50%;background:var(--amber);box-shadow:0 0 0 3px rgba(245,165,36,.2);}
+.ac-bcard-src{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:.84rem;font-weight:700;}
+.ac-bcard--plain .ac-refs a{color:var(--amber-2);border-color:var(--amber-2);}
+.ac-bcard--plain .ed-st{color:rgba(253,251,247,.82);}
+.ac-bcard--plain .ed-status .pip{border-color:var(--paper);}
+.ac-bcard--plain .pip--officiel{background:var(--paper);}
+.ac-cta-co{margin-top:30px;}
+
+/* ---------- Prix et collector : le bandeau (le coffret s’ouvre, ses deux prix se balancent) ---------- */
+.page-head .px-figs{margin-top:clamp(18px,2.4vw,30px);}
+.page-head .px-figs .vt-fig{background:#fff;}
+.page-head .px-figs .vt-fig--accent{background:var(--amber);}
+/* v7.92.1 : au téléphone, en deux colonnes étroites, le coffret et la manette prennent toute la largeur : « US$ 399,99 » (portugais)
+   et « 399,99 $ » ne sont plus coupés au bord de leur carte */
+@media (max-width:479px){.page-head .px-figs .vt-fig--accent,.page-head .px-figs .vt-fig--accent~.vt-fig{grid-column:1 / -1;}}
+/* et chaque montant tient dans sa carte, à toutes les largeurs et dans toutes les langues : sa taille est plafonnée à la largeur de
+   la carte (unités de conteneur ; un navigateur qui ne les connaît pas garde la taille d’avant) */
+.page-head .px-figs .vt-fig{container-type:inline-size;}
+.page-head .px-figs .vt-fig b{font-size:min(clamp(1.9rem,1.35rem + 1.7vw,2.75rem),23.5cqi);}
+.page-head .px-figs .vt-fig--accent b:lang(pt){font-size:min(clamp(1.9rem,1.35rem + 1.7vw,2.75rem),17cqi);}
+.px-hero{position:relative;width:100%;max-width:440px;margin-left:auto;padding:26px 14px 14px;}
+.px-hero-in{position:relative;border:2px solid var(--ink);border-radius:20px;overflow:hidden;background:#3b1030;box-shadow:8px 8px 0 var(--ink);}
+.px-box{position:relative;display:block;aspect-ratio:1/1;}
+.px-box-f,.px-box-o{position:absolute;inset:0;display:block;}
+.px-box img{display:block;width:100%;height:100%;object-fit:cover;}
+.px-box-f{opacity:0;}
+@media (prefers-reduced-motion:no-preference){
+  .px-box--hero .px-box-f{animation:px-close 2.8s ease-in-out .3s both;}
+  .px-box--hero .px-box-o{animation:px-open 2.8s ease-in-out .3s both;}
+}
+@keyframes px-close{0%,42%{opacity:1;transform:none;}68%,100%{opacity:0;transform:scale(1.03);}}
+@keyframes px-open{0%,42%{opacity:0;transform:scale(.96) translateY(8px);}68%,100%{opacity:1;transform:none;}}
+.px-hero .px-tag{position:absolute;z-index:3;transform-origin:14px 50%;}
+.px-hero .px-tag--1{left:-4px;top:16%;rotate:-7deg;}
+.px-hero .px-tag--2{right:-4px;bottom:16%;rotate:6deg;background:var(--paper);}
+.px-sticker{position:absolute;right:2px;top:0;z-index:4;display:grid;place-items:center;width:92px;height:92px;padding:10px;border:2px solid var(--ink);border-radius:50%;background:var(--coral);color:#fff;font:900 .84rem/1.1 'Archivo',sans-serif;text-align:center;rotate:12deg;box-shadow:3px 3px 0 var(--ink);}
+@media (prefers-reduced-motion:no-preference){
+  .px-hero .px-tag{animation:vt-swing 1s var(--ease-spring,cubic-bezier(.34,1.56,.64,1)) 1.6s backwards;}
+  .px-hero .px-tag--2{animation-delay:1.85s;}
+  .px-sticker{animation:vt-stamp .55s var(--ease-spring,cubic-bezier(.34,1.56,.64,1)) 2.2s backwards;}
+}
+@media (max-width:900px){.px-hero{max-width:360px;margin:20px auto 0;}}
+@media (max-width:599px){
+  .px-hero .vt-tag{gap:2px;padding:8px 12px 8px 22px;}
+  .px-hero .vt-tag::before{left:7px;}
+  .px-hero .vt-tag-l{font-size:11px;}
+  .px-hero .px-tag .vt-price{font-size:1.45rem;}
+  .px-hero .px-tag--1{top:22%;}
+  .px-sticker{width:76px;height:76px;font-size:.74rem;}
+}
+
+/* ---------- Prix et collector : le jeu ---------- */
+.px-eds{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;margin:0;}
+@media (max-width:819px){.px-eds{grid-template-columns:1fr;}}
+.px-ed{display:flex;flex-direction:column;min-width:0;border:2px solid var(--ink);border-radius:var(--radius);background:var(--ed-card,#fff);box-shadow:var(--shadow-hard);overflow:hidden;}
+.px-ed-fig{position:relative;margin:0;aspect-ratio:16/9;overflow:hidden;background:var(--night);border-bottom:2px solid var(--ink);}
+.px-ed-fig img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .8s var(--c-ease-result,cubic-bezier(.16,1,.3,1));}
+@media (hover:hover) and (pointer:fine){.px-ed:hover .px-ed-fig img{transform:scale(1.04);}}
+.px-ed-fig .px-ed-tag{position:absolute;left:14px;bottom:14px;z-index:2;}
+.px-ed-b{flex:1;display:flex;flex-direction:column;gap:8px;padding:18px 20px 20px;}
+.px-ed-b h3{margin:0;font:900 clamp(1.25rem,1.1rem + .6vw,1.6rem)/1.15 'Archivo',sans-serif;letter-spacing:-.025em;}
+.px-ed-b .px-st{margin-top:auto;padding-top:12px;border-top:1px dashed var(--ed-line,var(--rule));}
+.px-autres{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:18px 0 0;padding:0;list-style:none;}
+@media (max-width:719px){.px-autres{grid-template-columns:1fr;}}
+.px-autres li{padding:16px 18px;border:1.5px dashed var(--ed-line,var(--rule));border-radius:var(--radius);}
+.px-autres h3{margin:0 0 6px;font:800 1.02rem/1.25 'Archivo',sans-serif;}
+.px-autres p{margin:0;font-size:.92rem;line-height:1.55;color:var(--ed-soft,var(--ink-soft));}
+.px-st{display:flex;flex-wrap:wrap;gap:8px 16px;margin:12px 0 0;font-size:.86rem;font-weight:700;}
+.px-st-i{display:inline-flex;flex-wrap:wrap;align-items:center;gap:6px;}
+.px-lede{max-width:var(--measure);margin:-4px 0 16px;color:var(--ed-soft,var(--ink-soft));}
+
+/* ---------- Prix et collector : le coffret ---------- */
+.px-co-nom{margin:0 0 6px;font:900 clamp(1.3rem,1.1rem + .9vw,1.8rem)/1.12 'Archivo',sans-serif;letter-spacing:-.025em;color:var(--ed-fg,var(--ink));}
+.px-co-t p{margin:0 0 12px;line-height:1.65;}
+.px-co-t .px-st{margin-top:4px;}
+.px-co-go{margin:16px 0 0;}
+.px-co-v{display:grid;place-items:center;min-width:0;}
+.px-box--scroll{width:min(100%,460px);border:2px solid var(--ink);border-radius:20px;overflow:hidden;background:#3b1030;box-shadow:var(--shadow-amber);}
+/* la boîte s’ouvre pendant qu’elle entre dans l’écran (animation liée au défilement) ; ailleurs, elle est déjà ouverte */
+@supports (animation-timeline:view()){
+  @media (prefers-reduced-motion:no-preference){
+    .px-box--scroll .px-box-f{opacity:1;animation:px-out linear both;animation-timeline:view();animation-range:entry 55% cover 50%;}
+    .px-box--scroll .px-box-o{animation:px-in linear both;animation-timeline:view();animation-range:entry 55% cover 50%;}
+  }
+}
+@keyframes px-out{from{opacity:1;}to{opacity:0;}}
+@keyframes px-in{from{opacity:0;transform:scale(.97);}to{opacity:1;transform:none;}}
+.px-defile{margin:30px 0 4px;border:2px solid var(--ink);border-radius:999px;box-shadow:var(--shadow-hard);}
+.px-gal{display:flex;flex-wrap:wrap;justify-content:center;gap:16px;margin:0;padding:0;list-style:none;}
+.px-gal>li{flex:0 1 calc((100% - 48px) / 4);min-width:0;}
+@media (max-width:1099px){.px-gal>li{flex-basis:calc((100% - 32px) / 3);}}
+@media (max-width:719px){.px-gal>li{flex-basis:calc((100% - 16px) / 2);}}
+.px-obj{display:flex;flex-direction:column;height:100%;border:2px solid var(--ink);border-radius:var(--radius);background:var(--ed-card,#fff);color:var(--ed-fg,var(--ink));text-decoration:none;overflow:hidden;box-shadow:var(--shadow-hard);transition:transform var(--c-fast,190ms) var(--c-ease-control,ease),box-shadow var(--c-fast,190ms);}
+.px-obj-fig{position:relative;display:block;aspect-ratio:1/1;overflow:hidden;background:#5a1d4a;border-bottom:2px solid var(--ink);}
+.px-obj-fig img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .7s var(--c-ease-result,cubic-bezier(.16,1,.3,1));}
+.px-obj-b{display:flex;flex-direction:column;gap:4px;padding:12px 14px 14px;}
+.px-obj-t{font:800 1rem/1.25 'Archivo',sans-serif;overflow-wrap:break-word;hyphens:auto;}/* v7.92.1 : un nom long (« Rasierklingen-Schlüsselanhänger ») se coupe au lieu de sortir de sa carte */
+.px-obj-d{font-size:.86rem;line-height:1.45;color:var(--ed-soft,var(--ink-soft));}
+.px-obj:focus-visible{outline:3px solid var(--coral);outline-offset:3px;}
+.px-obj:focus-visible .vt-zoom{opacity:1;transform:none;}
+@media (hover:hover) and (pointer:fine){
+  .px-obj:hover{transform:translate(-3px,-3px);box-shadow:7px 7px 0 var(--ink);}
+  .px-obj:hover .px-obj-fig img{transform:scale(1.07);}
+  .px-obj:hover .vt-zoom{opacity:1;transform:none;}
+}
+@media (max-width:479px){.px-obj-b{padding:10px 10px 12px;}.px-obj-t{font-size:.92rem;}.px-obj-d{font-size:.8rem;}}
+.px-dl{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:0;}
+@media (max-width:1099px){.px-dl{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media (max-width:599px){.px-dl{grid-template-columns:1fr;}}
+.px-dl-r{min-width:0;padding:14px 16px;border:1.5px solid var(--ed-line,var(--rule));border-radius:12px;background:var(--ed-card,#fff);}
+.px-dl dt{margin:0 0 6px;font:800 var(--fs-kicker)/1.2 var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--coral-text);}
+.ed--night .px-dl dt{color:var(--amber-2);}
+.px-dl dd{margin:0;line-height:1.5;color:var(--ed-fg,var(--ink));}
+
+/* ---------- Prix et collector : manettes et boutique (photo et texte côte à côte) ---------- */
+.px-fig{position:relative;margin:0;border:2px solid var(--ink);border-radius:var(--radius);overflow:hidden;background:var(--night);box-shadow:var(--shadow-hard);}
+.ed--night .px-fig{border-color:rgba(255,255,255,.4);box-shadow:4px 4px 0 rgba(0,0,0,.4);}
+.px-fig img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;}
+.px-fig .px-fig-tag{position:absolute;right:14px;bottom:14px;z-index:2;}
+.px-split-t{display:flex;flex-direction:column;gap:12px;min-width:0;}
+.px-split-t .px-dl{grid-template-columns:1fr;}
+.px-split-t p{margin:0;line-height:1.6;}
+/* le ticket de caisse des prix en euros : bord déchiré en bas, il s’imprime à son entrée */
+.px-ticket{align-self:flex-start;width:min(100%,400px);filter:drop-shadow(0 0 .8px var(--ink)) drop-shadow(5px 5px 0 rgba(26,26,30,.85));}
+.px-ticket-in{--z:14px;padding:18px 22px calc(18px + var(--z));background:#fff;color:var(--ink);font:600 .92rem/1.4 var(--font-mono);-webkit-mask:conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) 50% / var(--z) 100%;mask:conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) 50% / var(--z) 100%;}
+.px-ticket-h{margin:0 0 10px;padding-bottom:10px;border-bottom:2px dashed rgba(26,26,30,.4);font:900 1rem/1.2 'Archivo',sans-serif;text-align:center;letter-spacing:.02em;}
+.px-ticket-l{display:grid;gap:4px;margin:0;padding:0;list-style:none;}
+.px-ticket-l li{display:flex;align-items:baseline;gap:8px;}
+.px-ticket-l span{flex:1;display:flex;align-items:baseline;gap:8px;min-width:0;}
+.px-ticket-l span::after{content:'';flex:1;min-width:16px;border-bottom:2px dotted rgba(26,26,30,.35);}
+.px-ticket-l b{font-weight:800;white-space:nowrap;}
+.px-ticket-n{margin:12px 0 0;padding-top:10px;border-top:2px dashed rgba(26,26,30,.4);font-size:.76rem;text-align:center;color:var(--ink-soft);}
+@media (prefers-reduced-motion:no-preference){.js .px-ticket.is-in .px-ticket-in{animation:px-print 1.1s cubic-bezier(.3,.7,.3,1) calc(var(--lk-delay,0ms) + 150ms) backwards;}}
+@keyframes px-print{from{clip-path:inset(0 0 100% 0);}to{clip-path:inset(0);}}
+
+/* ---------- Prix et collector : le total à cocher ---------- */
+.px-sum{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(260px,.9fr);gap:16px;align-items:stretch;}
+.px-sum[hidden]{display:none;}
+@media (max-width:1099px){.px-sum{grid-template-columns:repeat(2,minmax(0,1fr));}.px-sum-r{grid-column:1 / -1;}}
+@media (max-width:639px){.px-sum{grid-template-columns:1fr;}}
+.px-sum fieldset{display:flex;flex-direction:column;gap:8px;min-width:0;margin:0;padding:16px;border:2px solid var(--ink);border-radius:var(--radius);background:var(--ed-card,#fff);box-shadow:var(--shadow-hard);}
+.px-sum legend{float:left;width:100%;margin:0 0 6px;padding:0;font:900 1.05rem/1.2 'Archivo',sans-serif;}
+.px-opt{display:flex;align-items:center;gap:10px;min-height:48px;padding:8px 12px;border:2px solid var(--ed-line,var(--rule));border-radius:12px;cursor:pointer;transition:border-color var(--c-fast,190ms),background var(--c-fast,190ms),box-shadow var(--c-fast,190ms);}
+.px-opt input{flex:none;width:20px;height:20px;margin:0;accent-color:var(--ink);}
+.px-opt-t{flex:1;display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-weight:700;line-height:1.3;}
+.px-opt b{font:900 1rem/1 'Archivo',sans-serif;font-variant-numeric:tabular-nums;white-space:nowrap;}
+.px-opt:has(input:checked){border-color:var(--ink);background:#fff6e5;box-shadow:3px 3px 0 var(--ink);}
+.px-opt:has(input:focus-visible){outline:3px solid var(--coral);outline-offset:2px;}
+.px-sum-r{display:flex;flex-direction:column;justify-content:center;gap:8px;min-width:0;padding:22px 24px;border:2px solid var(--ink);border-radius:var(--radius);background:linear-gradient(160deg,var(--night-deep),var(--night) 70%);color:#fff;box-shadow:var(--shadow-amber);}
+.px-sum-k{margin:0;font:800 var(--fs-kicker)/1.2 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--amber-2);}
+.px-sum-v{display:block;font:900 clamp(2.4rem,1.8rem + 2.4vw,3.6rem)/1 'Archivo',sans-serif;letter-spacing:-.04em;font-variant-numeric:tabular-nums;color:#fff;}
+.px-sum-n{margin:0;font-size:.84rem;line-height:1.5;color:rgba(253,251,247,.82);}
+.px-sum-static{max-width:640px;padding:18px 20px;border:2px solid var(--ink);border-radius:var(--radius);background:var(--ed-card,#fff);}
+.px-sum-static .px-sum-k{color:var(--coral-text);}
+.px-sum-static ul{display:grid;gap:6px;margin:10px 0;padding:0;list-style:none;}
+.px-sum-static li{display:flex;justify-content:space-between;gap:12px;}
+.px-sum-static .px-sum-n{color:var(--ink-soft);}
+.js .px-sum-static{display:none;}
+
+@media (prefers-reduced-motion:reduce){
+  .px-box-f{animation:none!important;opacity:0!important;}
+  .px-box-o{animation:none!important;opacity:1!important;transform:none!important;}
+  .px-hero .px-tag,.px-sticker,.ed-pair-c,.ed-pair .ed-pair-tag,.px-ticket-in{animation:none!important;}
+  .px-obj,.px-obj-fig img,.px-ed-fig img,.ac-as-fig img,.ac-pl-a{transition:none!important;}
+}
+@media print{.px-box-f{display:none;}.px-box-o{opacity:1!important;}.px-defile,.px-sum{display:none!important;}.js .px-sum-static{display:block;}}
+
+/* ---------- v7.92.1 : un seul morceau (Trailer 1, bande-annonce de lancement) : la pochette et son vinyle ----------
+   La pochette est l’affiche de la vidéo ; le disque sort de la pochette quand la carte entre, puis tourne quatre tours.
+   Sans script ou en « réduire les animations », le disque est déjà sorti, immobile. */
+.ac-songs--one{grid-template-columns:1fr;}
+.ac-song--feature{grid-template-columns:minmax(150px,280px) minmax(0,1fr);column-gap:clamp(64px,8vw,120px);align-items:center;padding:clamp(18px,2.6vw,30px) clamp(18px,2.6vw,30px) clamp(18px,2.6vw,30px) clamp(16px,2.2vw,26px);border-radius:var(--radius);}
+.ac-song-art{position:relative;display:block;width:100%;aspect-ratio:1/1;}
+.ac-song-sleeve{position:absolute;inset:0;z-index:2;display:block;overflow:hidden;border:2px solid var(--ink);border-radius:6px;background:var(--night-deep);box-shadow:6px 6px 0 rgba(0,0,0,.4);}
+.ac-song-sleeve .vt-pic{display:contents;}
+.ac-song-sleeve img{display:block;width:100%;height:100%;object-fit:cover;}
+.ac-song-disc{position:absolute;top:5%;left:5%;z-index:1;display:block;width:90%;aspect-ratio:1/1;border-radius:50%;transform:translateX(44%);box-shadow:0 10px 24px -10px rgba(0,0,0,.7);}
+/* les sillons et l’étiquette tournent (::before) ; le reflet reste fixe (::after) */
+.ac-song-disc::before,.ac-as-l>li:only-child::before{content:'';position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 57% 41%,#120E1A 0 2.2%,rgba(18,14,26,0) 2.6%),radial-gradient(circle,#120E1A 0 3.2%,var(--amber) 3.6% 16%,var(--coral) 16.4% 17.2%,#120E1A 17.6% 19%,rgba(18,14,26,0) 19.4%),repeating-radial-gradient(circle,#15111D 0 1.4px,#272033 1.8px 3px),#15111D;}
+/* le point imprimé sur l’étiquette tourne avec le disque : c’est lui qui montre qu’il tourne */
+.ac-song-disc::after{content:'';position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 25deg,rgba(255,255,255,0) 0 12%,rgba(255,255,255,.16) 17%,rgba(255,255,255,0) 23% 62%,rgba(255,255,255,.1) 67%,rgba(255,255,255,0) 73%);}
+.ac-song-main{display:flex;flex-direction:column;align-items:flex-start;gap:10px;min-width:0;}
+.ac-song-k{display:inline-flex;align-items:center;gap:8px;}
+/* le statut du morceau (point des statuts du site : plein « Officiel », ambre « Vu dans un média ») */
+.ac-song>.pip,.ac-song-k>.pip{display:inline-block;flex:none;width:10px;height:10px;border:1.5px solid var(--ed-fg,var(--ink));border-radius:50%;}
+.ac-song-k small{font:800 var(--fs-kicker)/1.2 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--amber-2);}
+.ac-song--feature cite{font:900 clamp(1.6rem,1.2rem + 1.8vw,2.7rem)/1.05 'Archivo',sans-serif;font-style:normal;letter-spacing:-.03em;color:var(--ed-fg,var(--ink));text-wrap:balance;}
+.ac-song--feature .ac-song-a{max-width:44ch;font-size:1.02rem;line-height:1.5;color:var(--ed-soft,var(--ink-soft));}
+@media (prefers-reduced-motion:no-preference){
+  .js .ac-song--feature.is-in:not(.lk-settled) .ac-song-disc{animation:ac-disc-out 1s var(--c-ease-result,cubic-bezier(.16,1,.3,1)) calc(var(--lk-delay,0ms) + 260ms) backwards;}
+  .js .ac-song--feature.is-in .ac-song-disc::before{animation:ac-disc-spin 1.8s linear calc(var(--lk-delay,0ms) + 1.1s) 4;}
+}
+@keyframes ac-disc-out{from{transform:translateX(0) rotate(-40deg);}to{transform:translateX(44%);}}
+/* sommaire des vidéos : une carte à un seul morceau le montre en grand, sur son vinyle, au milieu de la carte (plus de vide
+   sous la ligne) ; le disque tourne trois tours quand la carte entre */
+.ac-as-in:has(>.ac-as-l>li:only-child){display:flex;flex-direction:column;}
+.ac-as-l:has(>li:only-child){flex:1;align-content:center;}
+.ac-as-l>li:only-child{position:relative;display:flex;flex-direction:column;align-items:center;gap:8px;padding:6px 8px 10px;border-top:0;text-align:center;}
+.ac-as-l>li:only-child::before{position:relative;inset:auto;flex:none;width:min(120px,52%);aspect-ratio:1/1;margin-bottom:6px;box-shadow:0 12px 24px -12px rgba(0,0,0,.85),0 0 0 2px rgba(255,255,255,.08);}
+.ac-as-l>li:only-child>.pip{display:none;}
+.ac-as-l>li:only-child cite{display:block;font-size:clamp(1.15rem,1rem + .5vw,1.4rem);line-height:1.15;}
+@media (prefers-reduced-motion:no-preference){
+  .js .ac-as-g.is-in .ac-as-l>li:only-child::before{animation:ac-disc-spin 1.8s linear calc(var(--lk-delay,0ms) + 400ms) 3;}
+}
+@keyframes ac-disc-spin{to{transform:rotate(1turn);}}
+@media (max-width:699px){
+  .ac-song--feature{grid-template-columns:1fr;row-gap:22px;}
+  .ac-song-art{width:min(58%,230px);}
+}

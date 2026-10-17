@@ -356,3 +356,35 @@
   .dv-ill-fan,.dv-ill-hand,.dv-ill-opt,.dv-ill-cursor,.dv-ill-check,.dv-ill-ko,.dv-ill-line,.dv-ill-ok,.dv-ill-ring,.dv-ill-tag,.dv-ill-day,.dv-ill-flame{animation:none!important;}
 }
 @media print{.dv-pc,.dv-res-box{box-shadow:none;}.dv-slot{filter:none;}}
+
+/* =====================================================================================================================
+   v7.92.1 : alignements et centrage (demande de Téva du 16 octobre). Le titre et ses deux phrases centrés l’un sur l’autre ;
+   la carte du jeu commence à la hauteur de l’image ; dans une rangée de cartes postales, chaque ligne (nom, devise, faits,
+   album, lien « Sur la carte ») tombe à la même hauteur ; le cycle des images en deux colonnes ; « Continuer la visite »
+   sur toute la largeur.
+   ===================================================================================================================== */
+@media(min-width:1000px){.dv-head{align-items:center;}}
+/* la consigne de la carte passe sous la carte, avec la note sur le fond : la carte et l’image partent du même bord haut */
+.dv-map{display:flex;flex-direction:column;}
+.dv-map-k{order:2;margin:10px 0 0;}
+.dv-map-cap{order:3;margin-top:4px;}
+/* cartes postales : une grille partagée (sous-grille) aligne les lignes d’une rangée ; sans elle, les liens restent en bas */
+.dv-atlas{align-items:stretch;}
+@supports (grid-template-rows:subgrid){
+  .dv-atlas{row-gap:0;}
+  .dv-pc{display:grid;grid-row:span 7;grid-template-rows:subgrid;row-gap:0;margin-bottom:20px;}
+  .dv-pc-b{display:grid;grid-row:span 6;grid-template-rows:subgrid;row-gap:8px;}
+  .dv-pc-album{align-self:start;}
+  .dv-reg-map{align-self:end;}
+}
+/* le cycle des images : le texte à gauche, les huit jours à droite */
+@media(min-width:900px){
+  .dv-cycle{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,.85fr);grid-template-areas:"h g" "d g";column-gap:clamp(24px,3.5vw,52px);align-items:center;}
+  .dv-cycle-h{grid-area:h;align-self:end;}
+  .dv-cycle-d{grid-area:d;align-self:start;margin-bottom:0;}
+  .dv-cycle-g{grid-area:g;max-width:none;}
+}
+.dv-explore .lkx-links{grid-template-columns:repeat(3,minmax(0,1fr));}
+@media(max-width:899px){.dv-explore .lkx-links{grid-template-columns:minmax(0,1fr);}}
+/* au téléphone, six cases d’album par rangée (une région de six images tient sur une ligne) */
+@media(max-width:699px){.dv-album{grid-template-columns:repeat(auto-fill,minmax(46px,1fr));}}

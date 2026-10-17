@@ -1,0 +1,44 @@
+Note du 17 octobre 2026 : cette version est comprise dans la v7.93 réunie (LISEZ-MOI-v7.93.txt). Ne pousse pas son
+archive à elle : pousse seulement l’archive de la v7.93 réunie.
+
+LEONIDAKIT v7.92.1 — Presse, Devine le lieu, Actualités, Vidéos officielles, Éditions et Ce qui est confirmé revus ;
+nouvelle page Prix et collector
+À appliquer sur la v7.92 (commit 52ecaec29, celle que tu as poussée ce matin). Archive « modifs » en deux parties
+(Leonidakit-v7.92.1-modifs-1-sur-2.zip et 2-sur-2, 2 988 fichiers, aucun dans les deux).
+Seulement les fichiers qui changent et les nouveaux. Rien n’a été publié ni poussé : c’est toi qui pousses. CSP inchangée.
+Aucun fichier à supprimer.
+
+CE QUI CHANGE POUR LE VISITEUR
+- Nouvelle page « Prix et collector » (menu L’actualité, pied de page) : le prix du jeu (79,99 € l’Édition Standard,
+  99,99 € l’Ultimate, PlayStation Store en France), le coffret « The Goodtime State – Vice City Collection » (399,99 $ sur
+  la boutique Rockstar, 399,99 € d’après la presse, sans le jeu) qui s’ouvre sous tes yeux, ses onze objets en photos
+  officielles (figurine Macca the Gator, lunettes Oakley, casquette New Era, sac, miroir, verre à shot, cuillère,
+  porte-clés, pin’s, stickers, poster), ses conditions (livraison en France, un par personne, à partir du 19 novembre), les
+  manettes DualSense en édition limitée (84,99 €), la collection de vêtements de la boutique Rockstar et ses prix, et un
+  total à cocher (« Ce que tu vas dépenser »). Chaque prix dit d’où il vient : « Officiel » quand une boutique officielle
+  l’affiche, « Vu dans un média » quand seule la presse le donne.
+- Presse : une carte de presse suspendue en tête (elle se balance, s’incline vers la souris), les trois phrases à copier
+  d’un coup, une lettre avec son timbre et son cachet pour t’écrire, tout aligné.
+- Devine le lieu : les cartes postales des six régions alignées ligne par ligne (titres, captures, albums, liens).
+- Actualités : 17 annonces au lieu de 11 (bande-annonce de lancement, coffret collector, manettes, collection de la
+  boutique, date d’An Extended Look, date des précommandes), « À la une » en grand, filtre « Produits dérivés ».
+- Vidéos officielles : la bande-annonce de lancement du 15 octobre a sa page (sa musique, « Flower in a Hurricane » de
+  Justice) ; la salle de projection et la musique réalignées ; un morceau seul se montre sur son vinyle qui tourne.
+- Éditions : les deux éditions et leur prix en tête (les étiquettes se balancent), leurs cartes alignées ligne par ligne,
+  « Quelle édition choisir ? » en deux questions, les conditions du mois de GTA+, le coffret collector en bandeau.
+- Ce qui est confirmé : le relevé du jour sur sa planchette avec le tampon « Vérifié », 12 points confirmés (prix du jeu,
+  coffret, manettes, collection en plus), les modèles réels en trois règles.
+- Léo connaît la bande-annonce de lancement, le coffret, les manettes et la boutique, dans les six langues ; les six
+  langues sont à jour.
+
+MARCHE À SUIVRE
+  1. Décompresse les deux parties à la racine du dépôt (dans n’importe quel ordre : elles remplacent les fichiers modifiés
+     et ajoutent les nouveaux), puis pousse depuis GitHub Desktop. Aucun fichier à supprimer.
+     Si une conversation du lot 8 (v7.93) a déjà commencé sur la v7.92 : pousse d’abord celle-ci, puis dis-lui de reprendre
+     sur le dépôt à jour et de faire son archive par rapport à la v7.92.1 (sinon elle écraserait ces pages).
+  2. Essai : prix.html (coche des cases du total ; le coffret s’ouvre en haut), editions.html (« Quelle édition choisir ? »),
+     presse.html (« Copier les trois phrases »), actus.html (filtre « Produits dérivés »),
+     videos/bande-annonce-lancement.html, verification.html ; une page dans une autre langue (en/prix.html, de/prix.html).
+  3. Rien à faire dans Vercel, Google Search Console ni ailleurs ; prix.html entre dans le plan du site avec sa date.
+
+Contrôles : voir outils/CHANGEMENTS-v7.92.1.txt. Retour arrière : commit précédent dans GitHub Desktop.

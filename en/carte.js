@@ -132,7 +132,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     { id:'stockyard', n:'Stockyard', c:'quartier', x:3601, y:2609, s:'officiel', src:'SITE', p:'vice-city', z:1,
       d:"Neighborhood of converted warehouses covered in murals. Rockstar confirmed it’s inspired by Wynwood and brought in more than fifty street artists for its walls. A car meet takes place there in Trailer 1." },
     { id:'vc-port', n:'Port of Vice City', c:'transport', x:3971, y:3358, s:'vu', src:'T1', p:'vice-city', z:1,
-      d:"Industrial port area: containers, warehouses and bridges, sighted in both trailers." },
+      d:"Industrial port area: containers, warehouses and bridges, sighted in the first two trailers." },
     { id:'marina', n:'Marina', c:'quartier', x:3603, y:2854, s:'vu', src:'T2', p:'vice-city', z:1,
       d:"Wealthy residential area on the water: boats, jet skis and luxury properties." },
     { id:'vcia', n:'International Airport', c:'transport', x:2960, y:3435, s:'vu', src:'T2', p:'vice-city', z:1,

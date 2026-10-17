@@ -1,0 +1,119 @@
+LEONIDAKIT v7.93 — Lot 8 (répondre à ce que les joueurs tapent sur Google), réuni avec la v7.92.1 (pages revues,
+page Prix et collector)
+À appliquer sur la v7.92 (commit 52ecaec29, celui que tu as poussé). Une seule archive « modifs » : elle contient la
+v7.92.1 ET le lot 8, réunis et vérifiés ensemble. Ne pousse aucune des archives envoyées avant (la v7.92.1 seule, la v7.93
+du lot 8 seule) : chacune effacerait une partie de l’autre. Rien n’a été publié ni poussé : c’est toi qui pousses. CSP
+inchangée. Aucun fichier à supprimer.
+
+POURQUOI UNE VERSION RÉUNIE
+  La v7.92.1 et le lot 8 ont été faits en même temps, chacun sur la v7.92, et changeaient les mêmes 2 837 fichiers. Cette
+  version contient tout : ce qu’apporte la v7.92.1 (LISEZ-MOI-v7.92.1.txt : Presse, Devine le lieu, Actualités, Vidéos officielles,
+  Éditions et Ce qui est confirmé revus, page Prix et collector) et ce qu’apporte le lot 8 (ci-dessous), avec :
+  - « L’actualité » (menu Explorer, pied de page, puces) : Actualités, Vidéos officielles, Éditions, Prix et collector,
+    Ce qui est confirmé, Préchargement, GTA VI sur PC, GTA VI et GTA V ;
+  - des liens entre les deux : Actualités → préchargement (ticket du 12 novembre, question « Quand sort GTA 6 ? ») ;
+    GTA 6 et GTA 5 → Prix et collector (ligne « Le prix », question « plus cher que GTA 5 ? ») ; Éditions, « Combien
+    coûte GTA 6 ? » → Prix et collector ; la page GTA 6 et GTA 5 compte quatre vidéos officielles (bande-annonce de
+    lancement comprise) ;
+  - deux corrections : « GTA V comptait 252 véhicules au lancement » (hub Véhicules, Achats) → 217, d’après le Guinness
+    World Records ; prix en euros écrits à l’anglaise dans la version anglaise (€79.99) ;
+  - Léo : les sujets des deux versions (353), et il comprend « jack a car » (vol de voiture) en anglais.
+  Détail : outils/CHANGEMENTS-v7.93.txt § 9.
+
+CE QUE LE LOT 8 CHANGE POUR LE VISITEUR (six langues)
+- Quatre pages nouvelles, dans le gabarit des pages d’information et avec les briques des pages enrichies de la v7.92 :
+  · prechargement.html — « GTA 6 : préchargement, date, heure et taille » : le préchargement ouvre le 12 novembre 2026 à
+    minuit, heure locale (assistance de Rockstar, 18 août 2026), les trois dates en tickets avec compte à rebours, la marche
+    à suivre officielle sur PS5 et sur Xbox Series (pages d’assistance PlayStation et Xbox), la boîte (un code, pas de
+    disque, dès le 12), ce qui n’est pas confirmé (la taille en Go et l’heure de déblocage du 19 : les boutiques affichent des
+    horaires qui reviennent à minuit, heure locale, mais Rockstar n’a rien publié) et où ce sera annoncé, cinq gestes à faire
+    avant le 12, questions, sources. La page a deux états dans ses données (« avant » aujourd’hui, « ouvert » le 12) : le
+    lot 4 (jour J) basculera l’état et remplira la taille et l’heure quand Rockstar les publiera ; tant qu’ils manquent, le
+    générateur refuse l’état « ouvert ».
+  · gta-6-pc.html — « GTA 6 sur PC : date, annonce, ce qu’on sait » : consoles seulement, aucune version PC ni date, ce que
+    Take-Two a dit sans rien annoncer (deux citations), les précédents de la série étiquetés « repère de la série » avec
+    l’écart calculé (GTA V : 19 mois ; Red Dead Redemption 2 : 12 mois ; Red Dead Redemption : 14 ans), l’encadré « toute
+    version PC ou bêta proposée aujourd’hui est une arnaque » (boutiques officielles, clés tierces interdites par Rockstar,
+    faux sites relevés en août 2026), où l’annonce arrivera, questions, sources.
+  · gta-6-vs-gta-5.html — « GTA 6 et GTA 5 : ce qui change, point par point » : un tableau de neuf lignes (cadre, héros,
+    carte, plateformes, éditions, prix, dates, jeu en ligne, musique), chaque case avec son statut, sa source et la page du
+    site qui détaille ; la carte « mot pour mot » (les chiffres de Rob Nelson rapportés le 27 août 2026 par un créateur reçu à
+    Rockstar North et par le New York Times, cités en anglais : Rockstar ne les a jamais publiés) ; six nouveautés vues dans
+    les présentations ; ce qu’on ne peut pas encore comparer ; questions ; sources (GTA V d’après les billets du Rockstar
+    Newswire de 2011 à 2022).
+  · vraies-voitures.html — « GTA 6 vraies voitures : les marques derrière les véhicules » : produite depuis les données des
+    fiches : six chiffres calculés (302 véhicules, 296 rapprochés d’un modèle réel, 50 marques du jeu, 10 nommés par
+    Rockstar, 269 vus sans nom officiel, 23 identifications communautaires), puis marque par marque (Grotti évoque Ferrari…)
+    la vraie voiture derrière chaque véhicule, avec le statut du rapprochement et un lien vers sa fiche ; les marques réelles
+    sont des sources d’inspiration, jamais des partenaires.
+- Pages existantes : titres pour Google refaits (« GTA 6 » + les mots cherchés, 60 signes au plus) et descriptions (155
+  signes) pour Véhicules, Atelier 3D, Carte, Codes de triche, Trophées, Radios, Personnages, Gangs, Animaux, Missions, GTA
+  Online, Calculateur, Éditions et Vidéos officielles, dans chaque langue avec les mots que tapent les joueurs de cette
+  langue. Le texte affiché ne change pas.
+- Éditions : deux questions de plus (« Combien coûte GTA 6 ? » : 79,99 $ / 99,99 $ annoncés par Take-Two, 79,99 € / 99,99 €
+  sur les boutiques ; « Quand commence le préchargement ? ») et un lien vers la page du préchargement. Vidéos : « Comment
+  regarder An Extended Look (Netflix, YouTube) ? ». Achats : sommaire collant. Ce qui est confirmé : chaque question « pas
+  encore annoncé » mène à la page qui répond.
+- Liens : menu « Explorer › L’actualité » et pied de page (Préchargement, GTA VI sur PC, GTA VI et GTA V) ; Véhicules et
+  chaque fiche véhicule → vraies voitures ; accueil → préchargement, PC, GTA 6 et GTA 5 ; recherche du site ; Léo (cinq
+  sujets nouveaux, onze relus, dans les six langues).
+- À propos (ajout que tu as demandé en cours de lot) : un petit bloc « Sites amis » en bas de la section Contribuer (ancre
+  #sites-amis), titre et phrase d’attente tant que la liste est vide. Pour ajouter un site : une ligne dans
+  outils/sites-amis.json → « sites », par exemple {"nom": "Nom du site", "url": "https://…", "mots": "ce qu’il fait"}
+  (« mots » facultatif), puis régénérer (node outils/gen-informations.cjs, puis la fin de chaîne). Le nom et l’adresse
+  passent tels quels dans les six langues ; les mots restent en français tant que leur traduction n’est pas dans la mémoire.
+  Le générateur refuse un site sans nom ou sans adresse en https.
+- Images de partage des quatre pages, dans chaque langue. Plan du site avec les vraies dates ; IndexNow signale le reste.
+
+POUR GOOGLE (à faire après la mise en ligne, dans cet ordre : la page du préchargement d’abord, les recherches montent
+avant le 12 novembre)
+  Google Search Console → Sitemaps : renvoie sitemap.xml ; puis Inspection de l’URL → « Demander une indexation » pour :
+  1. https://www.leonidakit.com/prechargement.html
+  2. https://www.leonidakit.com/editions.html
+  3. https://www.leonidakit.com/gta-6-pc.html
+  4. https://www.leonidakit.com/gta-6-vs-gta-5.html
+  5. https://www.leonidakit.com/vraies-voitures.html
+  6. https://www.leonidakit.com/vehicules.html
+  7. https://www.leonidakit.com/carte.html
+  8. https://www.leonidakit.com/codes-de-triche.html
+  9. https://www.leonidakit.com/trophees.html
+  10. https://www.leonidakit.com/radios.html
+  11. https://www.leonidakit.com/personnages.html
+  12. https://www.leonidakit.com/missions.html
+  13. https://www.leonidakit.com/online.html
+  14. https://www.leonidakit.com/calculateurs.html
+  15. https://www.leonidakit.com/videos.html, gangs.html, animaux.html, atelier-3d.html, puis les versions anglaises des
+      quatre pages nouvelles (en/prechargement.html, en/gta-6-pc.html, en/gta-6-vs-gta-5.html, en/vraies-voitures.html).
+  16. De la v7.92.1 : https://www.leonidakit.com/prix.html et https://www.leonidakit.com/videos/bande-annonce-lancement.html.
+  Le quota d’inspection est d’une dizaine de demandes par jour : garde cet ordre sur deux ou trois jours.
+
+MARCHE À SUIVRE
+  1. Décompresse l’archive (ou ses parties) à la racine du dépôt, dans n’importe quel ordre (elle remplace les fichiers modifiés
+     et ajoute les nouveaux), puis pousse depuis GitHub Desktop. Aucun fichier à supprimer. Seulement cette archive : pas
+     celles de la v7.92.1 ni de la v7.93 envoyées avant.
+  2. Essai : prechargement.html (les comptes à rebours, « Comment précharger », le sommaire), gta-6-pc.html (les barres des
+     précédents se tracent au défilement), gta-6-vs-gta-5.html (le tableau devient des fiches sur téléphone), vraies-voitures.html
+     (une marque dans l’index, « Voir les 28 véhicules » de Vapid, le lien d’une fiche) ; une fiche véhicule → « Toutes les
+     vraies voitures de GTA VI » ; en/prechargement.html et de/gta-6-vs-gta-5.html. Côté v7.92.1 : prix.html (le total à
+     cocher, le coffret qui s’ouvre), editions.html (« Quelle édition choisir ? »), presse.html, actus.html (« À venir »
+     mène au préchargement), videos/bande-annonce-lancement.html.
+  3. Le 12 novembre (lot 4, jour J) : dans outils/informations-editorial.json → prechargement, passer « etat » à « ouvert »
+     et remplir « ouvert.heure » (déblocage du 19), « ouvert.taillePs5 » et « ouvert.tailleXbox » dès que Rockstar ou les
+     boutiques les publient (avec leur source dans « sources »), puis régénérer : tant qu’un des trois manque, le générateur
+     refuse l’état « ouvert ».
+  4. Rien à faire dans Vercel.
+
+RÉGLÉ DANS CETTE VERSION (les deux points que le lot 8 te laissait)
+- « GTA V comptait 252 véhicules au lancement » : aucune source ne donnait 252 ; le Guinness World Records donne 217 à la
+  sortie (17 septembre 2013) et 257 après les versions PS4 et Xbox One. Le hub Véhicules et la page Achats disent
+  maintenant 217, d’après le Guinness World Records, dans les six langues.
+- La bande-annonce de lancement du 15 octobre 2026 est dans les Actualités et les Vidéos officielles (elle vient de la
+  v7.92.1).
+
+CONTRÔLES (détail : outils/CHANGEMENTS-v7.93.txt § 6, 7 et 9, outils/MATRICE-v7.93.md)
+  Suite Node 1 160/1 160 et tests des langues 51/51 sans échec ; aucun lien mort (verifier.js : 469 363 références dans
+  2 833 pages) ; extraction à {} dans les cinq langues ; 77 pages × 16 largeurs et 74 pages allemandes × 5 : aucun
+  débordement ; audit de clôture : 0 problème, 0 erreur console ; aucun cookie ; v7921.test 11/11, v793.test 8/8,
+  v7921-browser 196/196, v793-browser 134/134 ; Léo : mêmes résultats que la v7.92.1 sur les 80 jeux de questions, aucun
+  recul face à la v7.92 ; une synchronisation de plus ne change aucun fichier. Retour arrière : commit précédent dans
+  GitHub Desktop.

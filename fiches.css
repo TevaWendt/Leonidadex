@@ -183,6 +183,8 @@
 
 /* ---------- bandeau « aller plus loin » ---------- */
 .duo-grid{display:grid; gap:14px; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); margin-top:16px;}
+/* v7.93 : quatre cartes (hub Véhicules, « Vraies voitures » en plus) : deux colonnes tant que quatre ne tiennent pas (≈ 1 110 px), jamais 3 + 1 */
+@media (min-width:560px) and (max-width:1109px){.duo-grid:has(> .duo:nth-child(4):last-child){grid-template-columns:repeat(2,minmax(0,1fr));}}
 .duo{display:flex; flex-direction:column; gap:5px; text-decoration:none; color:inherit; background:#fff;
   border:2px solid var(--ink); border-radius:12px; padding:17px 19px;
   box-shadow:4px 4px 0 rgba(26,26,30,.12); transition:transform .15s, box-shadow .15s, border-color .15s;}
