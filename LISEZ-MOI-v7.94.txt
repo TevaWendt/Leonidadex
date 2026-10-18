@@ -1,0 +1,112 @@
+LEONIDAKIT v7.94 : cinq sections revues, plus aucun signe d’écriture automatique, site plus léger, inventaire « une page
+par élément »
+À appliquer sur la v7.93 réunie (commit 38b7a8325, celui que tu as poussé). Archive « modifs » en plusieurs parties qui
+s’assemblent sans s’écraser : décompresse-les à la racine du dépôt, dans n’importe quel ordre, puis pousse depuis GitHub
+Desktop. Rien n’a été publié ni poussé : c’est toi qui pousses. CSP inchangée. Aucun fichier à supprimer. Rien à faire
+dans Vercel.
+
+CE QUE CONTIENT CETTE VERSION (détail : outils/CHANGEMENTS-v7.94.txt)
+  1. Les cinq sections que tu as citées, revues de bout en bout : Vidéos officielles (tableau de bord des chiffres, frise
+     verticale des moments, grille « À revoir »), Ce qui est confirmé (deux groupes « Confirmé » et « En attente », feuille de
+     contrôle dessinée pour « À venir »), Préchargement (rail des dates, étapes illustrées PS5 et Xbox, calculateur du temps
+     de téléchargement avec les repères de Red Dead Redemption 2, liste à cocher gardée sur l’appareil), GTA 6 sur PC
+     (citations, axe daté des précédents de la série), GTA 6 et GTA 5 (tableau simplifié, carrés à l’échelle de la carte).
+  2. Plus aucun « · », « — », « → », « ↑ », « ↓ » ni « / » de séparation sur l’ensemble du site, dans les six langues :
+     virgules, deux-points, chevrons SVG (liens, fils d’Ariane, boutons Monter et Descendre, bouton Envoyer de Léo),
+     compteurs « 3 sur 12 », plages « de 10 à 20 min », ordres « A, puis B ». Gardés : les noms officiels (« The Goodtime
+     State – Vice City Collection »), les dates « 12/11/2026 », les tirets des cases vides (chiffre absent), la flèche « ↗ »
+     des liens qui s’ouvrent dans un nouvel onglet, les citations.
+  3. Latence, surtout sur téléphone : feuilles de style et scripts servis sans commentaire (les sources commentées sont dans
+     outils/sources/ ; sync-site.cjs écrit la version servie), 211 règles mortes retirées de style.css, les règles de la carte
+     dans carte-page.css chargée seulement par carte.html (style.css : de 59 à 33 Ko compressés), variante 800 px des piles de
+     visuels. Mesures : outils/CHANGEMENTS-v7.94.txt § 7.
+  4. Six langues : les mémoires de traduction migrées (plus de « · », « — », « / » dans les clés ni dans les traductions),
+     tout le texte nouveau traduit (outils/langues/<code>/v794.json), extraction à {} dans les cinq langues.
+  5. « Une page par élément » (ton prompt du 17 octobre), étape 1 seulement : l’inventaire, le script de couverture, le
+     volume, les limites de Vercel et de GitHub, la solution proposée. RIEN N’EST GÉNÉRÉ : j’attends ton « ok » (ci-dessous).
+
+UNE PAGE PAR ÉLÉMENT : CE QUE DIT L’INVENTAIRE (node outils/couverture-pages.cjs --rapport ; rapport complet :
+outils/COUVERTURE-PAGES.md)
+  - 3 603 éléments dans les données du site ; 405 ont déjà leur page (véhicules 302, armes 27, personnages 8, entreprises 8,
+    gangs 6, régions 6, demeures 4, planques 3, animaux 7, activités 7, radios et album 7, vidéos 4, plus 10 achats et
+    services qui renvoient à une fiche existante). Aucune fiche ne manque dans ces familles.
+  - 3 198 pages à créer en français : 2 500 lieux de la carte, 41 quartiers, villes et comtés, 48 marques, 30 consommables,
+    55 coiffures, 24 tatouages, 30 tenues, 58 personnalisations de véhicules, 40 d’armes, 145 valeurs d’options, 7 achats,
+    196 visuels officiels, 14 grands moments, 4 éditions, 6 types de munitions.
+  - Dans les 6 langues : 19 188 pages. Avec le gabarit actuel des fiches (64 Ko la page) : 1 208 Mo. Avec un gabarit
+    allégé (14 Ko) : 262 Mo.
+  - Missions, trophées, codes, collectibles, GTA Online : aucune donnée réelle avant la sortie ; le script les compte déjà
+    (0) et leurs pages se créeront seules quand les données arriveront (gabarit au lot B).
+  - Exclusions : aucun élément ne vient d’une fuite dans les sources du site ; la liste est vide. Dix doublons listés, qui
+    renvoient à la page existante.
+  - Limites relevées le 17 octobre 2026 : Vercel n’impose aucune limite au nombre de fichiers d’un déploiement depuis GitHub
+    (les 15 000 fichiers et 100 Mo de l’offre Hobby ne concernent que l’envoi par la ligne de commande ; 45 minutes de
+    construction au plus, le site n’en a pas ; 2 048 routes dans vercel.json, 26 utilisées). GitHub : dépôt idéalement sous
+    1 Go, 5 Go au plus ; fichier bloqué à 100 Mio. Le dépôt pèse 439 Mo de fichiers suivis ; son historique compressé
+    dépasse déjà 1 Go (les photos).
+
+UNE PAGE PAR ÉLÉMENT : LA SOLUTION QUE JE PROPOSE (et que j’attends que tu valides)
+  Des pages statiques avec un gabarit allégé, livrées par étapes.
+  - Le gabarit : la coquille des fiches véhicules (en-tête, branding, typographie, animations au défilement, règles de
+    survol), mais tout ce qui est commun sort de la page (feuille de style et scripts partagés, aucun SVG ni bloc répété) :
+    12 à 15 Ko par page au lieu de 64. Les 19 188 pages pèsent alors ≈ 260 Mo sur le disque et ≈ 40 Mo dans Git par
+    version complète (le HTML se compresse à 15 %).
+    Avantages : simple, rien à payer, aucun serveur, Google lit une vraie page, le site reste rapide sur téléphone, les pages
+    se publient comme le reste (archive « modifs », poussée à la main).
+    Inconvénients : le dépôt grossit (≈ 10 000 fichiers aujourd’hui, ≈ 29 000 ensuite) ; chaque régénération ne doit
+    réécrire que les pages dont le contenu change (le générateur comparera avant d’écrire) ; les archives des lots feront
+    plusieurs parties.
+  - Par étapes, comme ton prompt le découpe : lot A (lieux et consommables en français), lot B (les autres familles en
+    français), lot C (les cinq langues, sitemaps, IndexNow, vérifications). Si après le lot B le poids te gêne, le lot C
+    commence par l’anglais seul.
+  - L’autre voie (une fonction Vercel qui fabrique chaque page à la demande depuis un JSON) garde le dépôt petit, mais la
+    première réponse est plus lente (démarrage à froid, l’inverse de ce que tu demandes pour la latence), le cache est à
+    régler, les appels sont comptés dans l’offre Hobby et les tests sont plus lourds. Je la garde en réserve si les
+    19 188 fichiers posent problème ; d’après les limites relevées, ils n’en posent pas.
+
+UNE PAGE PAR ÉLÉMENT : CE QUE TU DOIS TRANCHER (ou dire « tranche toi-même »)
+  1. Les 110 repères gtadb absents de la carte du site (43 sans nom, 67 nommés dont 3 avec un « ? ») : les ajouter à la
+     carte, donc une page chacun, ou les laisser hors site ? Liste en annexe du rapport.
+  2. Le seuil d’indexation des lieux : 1 672 atteignent le seuil de ton prompt (nom, catégorie, quartier ou comté, position,
+     équivalent réel ou capture) ; 817 bâtiments numérotés (« Bâtiment L924 ») restent en noindex de toute façon ; 1 053 ne
+     sont connus que par leur nom réel (« (nom réel) ») et 1 886 n’ont pas de nom en jeu confirmé. Ma proposition prudente :
+     indexer les 614 lieux au nom en jeu connu (avec capture ou trois informations), créer les autres en noindex,follow, et
+     les faire passer en indexable quand leur nom en jeu est confirmé.
+  3. Les captures gtadb (photos/, CC BY 4.0, déjà sur la carte) sont-elles admises comme visuel sur ces pages, ou seulement
+     l’aperçu de carte et les silhouettes teaser (ton prompt ne parle que de img/officiel) ?
+  4. Les 145 valeurs d’options (peintures, néons…) : une ou deux informations chacune, aucun visuel, donc noindex. Une page
+     chacune (ton prompt) ou une page par famille d’options ?
+  5. Les 6 types de munitions : une seule information réelle chacun ; garder la famille (noindex) ou renvoyer vers
+     armes.html#munitions ?
+  6. Trois marques présentes dans vehicules-data.js mais absentes de outils/marques.json : LCC, BTN, HVY (« constructeur
+     fictif, pas de rapprochement retenu »).
+  7. Les grands moments : 17 annonces datées dans la frise des Actualités, 14 moments dans les dossiers du monde, qui se
+     recoupent ; je propose une page par annonce de la frise (17), les moments du monde y renvoient.
+
+MARCHE À SUIVRE
+  1. Décompresse les parties de l’archive à la racine du dépôt, puis pousse depuis GitHub Desktop. Aucun fichier à supprimer.
+  2. Essai : videos.html (le tableau de bord des chiffres se dessine, les moments d’une vidéo défilent en frise),
+     verification.html (deux groupes, la feuille de contrôle de « À venir »), prechargement.html (le rail des dates, le
+     calculateur « Combien de temps ? », la liste à cocher), gta-6-pc.html (l’axe daté), gta-6-vs-gta-5.html (les deux
+     carrés), une fiche véhicule (fil d’Ariane à chevrons), progression.html (« 0 sur 302 »), de/prechargement.html et
+     es/videos.html.
+  3. Réponds « ok » (avec tes choix sur les sept points, ou « tranche toi-même ») pour que je lance le lot A : le gabarit
+     allégé, le générateur et les deux familles pilotes (lieux de la carte et consommables).
+
+CONTRÔLES (détail : outils/CHANGEMENTS-v7.94.txt § 6 et 7)
+  Passage complet de outils/livraison/verifier-tout.sh sur l’état livré, 18 octobre 2026 de 0 h 06 à 2 h 05, zéro erreur :
+  - cadre du calculateur : 0 erreur (180 vues) ; suite node : 1 163 tests sur 1 163 ; langues.test.cjs : 51 sur 51 ;
+  - verifier : 0 erreur, 469 429 références dans 2 833 pages ; preuve de confidentialité : toutes les affirmations tenues ;
+  - pages traduites dans Chromium : 35 sur 35 ; langues dans le navigateur : 2 791 sur 2 791 ;
+  - écrans : 77 pages × 16 largeurs (1 232 chargements) et 74 pages allemandes × 5 largeurs (370) : aucun débordement, aucun
+    texte trop petit, aucune cible sous 24 px ; les signaux restants (repère de ville de la carte pannable, galeries des
+    fiches, tuiles bento, outils du Calculateur, galeries des dossiers à 2 560 px) sont exactement ceux de la v7.93, rejoués
+    sur le commit 38b7a8325 pour comparer ;
+  - audit de clôture (26 pages, 182 chargements) : 0 problème, 0 erreur console, 11 933 contrastes vérifiés, 11 852 cibles de
+    24 à 44 px ; cookies : aucun, stockage local sous des clés lk… seulement ;
+  - extraction des traductions : 0 texte à traduire dans les cinq langues ; seconde passe de sync-site : aucun fichier changé ;
+    index de Léo à jour (identique, donc évaluation 3 915 sur 3 995 inchangée) ; images de partage à jour.
+  Le premier passage complet avait relevé deux défauts, corrigés avant ce passage (§ 6) : la case à cocher masquée de la liste
+  de Préchargement, qui prenait toute la largeur de l’écran, et sept réglages de la carte que carte-page.css (chargée après
+  style.css) inversait par rapport à la v7.93, dont le bouton « déplier » de l’arbre des lieux retombé à 20 px et la grille des
+  régions en « 4 + 2 ».

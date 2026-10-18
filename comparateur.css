@@ -1,22 +1,13 @@
-/* ============================================================
-   LEONIDAKIT — comparateur.css (v7.69)
-   Demande de Téva : « rien ne doit faire brouillon ». La page Comparateur n'avait que trois listes et un tableau vide.
-   Elle reçoit : un choix Véhicules / Armes, trois colonnes illustrées (photo officielle, schéma du site ou silhouette de
-   l'arme), des comparaisons toutes prêtes, un tableau rangé par thèmes où « pas encore publié » se voit au premier coup
-   d'œil, et un squelette du tableau tant qu'aucune fiche n'est choisie. Seule cette page charge cette feuille.
-   ============================================================ */
+/* Généré depuis outils/sources/comparateur.css : modifie la source, pas ce fichier. */
 .cmp-hero .fhero-in{align-items:center;}
 .cmp-type{display:inline-flex;gap:4px;margin-top:18px;padding:4px;border:2px solid var(--ink);border-radius:999px;background:var(--paper);box-shadow:3px 3px 0 var(--ink);}
 .cmp-type a{display:inline-flex;align-items:center;min-height:38px;padding:0 18px;border-radius:999px;font-weight:800;font-size:.92rem;color:var(--ink);transition:background var(--dur) var(--ease-out),color var(--dur) var(--ease-out);}
 .cmp-type a:hover{background:var(--paper-2);}
 .cmp-type a[aria-current="page"]{background:var(--ink);color:var(--paper);}
-
 .cmp-zone{padding-top:34px;padding-bottom:12px;}
 .cmp-zone-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:8px 24px;margin-bottom:16px;}
 .cmp-zone-head .sec-h{margin:0;}
 .cmp-zone-head p{margin:0;max-width:62ch;color:var(--ink-soft);font-size:.95rem;line-height:1.55;}
-
-/* --- les trois colonnes --- */
 .cmp-slots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;}
 .cmp-slot{position:relative;display:flex;flex-direction:column;min-width:0;background:#fff;border:2px solid var(--ink);border-radius:var(--radius);box-shadow:var(--shadow-hard);overflow:hidden;transition:transform var(--dur) var(--ease-out),box-shadow var(--dur) var(--ease-out);}
 .cmp-slot.is-empty{background:transparent;border-style:dashed;box-shadow:none;}
@@ -50,15 +41,11 @@
   .cmp-slot.is-new{animation:cmp-in .42s var(--ease-out);}
   @keyframes cmp-in{from{opacity:0;transform:translate3d(0,10px,0) scale(.98);}}
 }
-
-/* --- comparaisons toutes prêtes --- */
 .cmp-quick{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;margin:18px 0 6px;}
 .cmp-quick-k{font:800 .72rem/1 var(--font-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);margin-right:4px;}
 .cmp-quick button{min-height:38px;padding:0 14px;border:2px solid var(--ink);border-radius:999px;background:#fff;font:700 .86rem 'Archivo',sans-serif;color:var(--ink);cursor:pointer;box-shadow:2px 2px 0 var(--ink);transition:transform .15s,box-shadow .15s;}
 .cmp-quick button:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--ink);}
 .cmp-quick button[aria-pressed="true"]{background:var(--amber);}
-
-/* --- tableau --- */
 .cmp-legend{display:flex;flex-wrap:wrap;gap:6px 18px;margin:18px 0 10px;font-size:.84rem;color:var(--ink-soft);}
 .cmp-legend span{display:inline-flex;align-items:center;gap:8px;}
 .cmp-sw{display:inline-block;width:22px;height:14px;border-radius:4px;}
@@ -88,7 +75,6 @@
 @media(prefers-reduced-motion:no-preference){.cmp-ghost{animation:cmp-shimmer 1.8s ease-in-out infinite;}@keyframes cmp-shimmer{to{background-position:-200% 0;}}}
 .cmp-zone .cmp-tools{margin-top:16px;}
 .cmp-note{font-size:.85rem;color:#6B6874;margin-top:16px;}
-
 @media(max-width:900px){
   .cmp-slots{grid-template-columns:1fr;gap:12px;}
   .cmp-slot{flex-direction:row;}

@@ -1,9 +1,4 @@
-/* ============================================================
-   LEONIDAKIT — fiches.css : galerie, arsenal / garage, comparateur
-   Chargé après style.css, ne modifie rien d'existant.
-   ============================================================ */
-
-/* ---------- galerie ---------- */
+/* Généré depuis outils/sources/fiches.css : modifie la source, pas ce fichier. */
 .gal{position:relative;border-radius:14px;overflow:hidden;background:rgba(26,26,30,.05);
   border:1px solid rgba(26,26,30,.12);}
 .gal-track{display:flex;transition:transform .35s cubic-bezier(.2,.8,.2,1);touch-action:pan-y;}
@@ -16,22 +11,18 @@
 .gal-item .gal-vide .veh-art{height:120px;width:auto;opacity:.9;}
 .gal-lbl{position:absolute;left:12px;bottom:12px;background:rgba(26,26,30,.85);color:#fff;
   font-size:.68rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:4px 9px;border-radius:20px;max-width:calc(100% - 24px);}
-/* image plus haute que large (jaquette, artwork vertical) : montrée entière sur fond sombre plutôt que recadrée */
 .gal-item img.gal-portrait{object-fit:contain;background:var(--ink,#1A1A1E);}
 .gal-btn{position:absolute;top:50%;transform:translateY(-50%);width:38px;height:38px;border-radius:50%;
   border:none;background:rgba(255,255,255,.92);color:var(--ink,#1A1A1E);font-size:1.1rem;font-weight:900;cursor:pointer;
   box-shadow:0 2px 8px rgba(0,0,0,.2);display:flex;align-items:center;justify-content:center;}
 .gal-btn:hover{background:#fff;} .gal-btn.prev{left:10px;} .gal-btn.next{right:10px;}
 .gal-dots{display:flex;gap:6px;justify-content:center;margin-top:10px;}
-/* zone tactile de 32 px, barre visuelle de 6 px : accessible au doigt sans alourdir le dessin */
 .gal-dots button{position:relative;width:32px;height:32px;border:none;background:none;cursor:pointer;padding:0;}
 .gal-dots button::before{content:'';position:absolute;left:3px;right:3px;top:13px;height:6px;border-radius:3px;background:rgba(26,26,30,.15);transition:background .15s;}
 .gal-dots button.on::before{background:var(--coral,#E8452C);}
 .gal-dots button:focus-visible{outline:2px solid var(--coral,#E8452C);outline-offset:2px;border-radius:6px;}
 .gal-dots{margin-top:2px;gap:0;}
 .gal-note{font-size:.78rem;color:#6B6874;margin-top:8px;text-align:center;}
-
-/* ---------- possession (arsenal / garage) ---------- */
 .own-bt{display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border-radius:10px;
   border:2px solid var(--ink,#1A1A1E);background:#fff;color:var(--ink,#1A1A1E);font:inherit;font-weight:800;font-size:.85rem;cursor:pointer;}
 .own-bt .ck{width:18px;height:18px;border-radius:5px;border:2px solid var(--ink,#1A1A1E);display:inline-block;position:relative;}
@@ -40,11 +31,9 @@
 .own-bt.on .ck::after{content:'';position:absolute;left:5px;top:1px;width:5px;height:9px;border:solid #fff;
   border-width:0 2.5px 2.5px 0;transform:rotate(45deg);}
 .veh-card.is-own .veh-thumb::before{content:'';position:absolute;inset:0;box-shadow:inset 0 0 0 3px var(--coral,#E8452C);pointer-events:none;z-index:2;}
-/* v7.51 (lot 4) : « Je le veux » (envie, jamais une possession) à côté de « Ajouter à mon garage » */
 .wish-bt{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border-radius:10px;border:2px dashed var(--ink,#1A1A1E);background:#fff;color:var(--ink,#1A1A1E);font:inherit;font-weight:800;font-size:.85rem;cursor:pointer;}
 .wish-bt[aria-pressed=true]{border-style:solid;background:var(--amber,#F5A524);}
 .wish-bt:focus-visible,.own-bt:focus-visible{outline:3px solid var(--coral,#E8452C);outline-offset:2px;}
-/* v7.51 (lot 4) : ancienne fiche hors de la liste suivie (pas de case « Ajouter à mon garage » qui ne compterait jamais) */
 .own-off{flex-basis:100%;margin:0;padding:9px 12px;border:2px dashed var(--rule,#DFD9CC);border-radius:10px;font-size:.88rem;color:var(--ink-soft,#5C5A63);}
 .own-off a,.fiche-liens .own-off a{padding:0;border:0;background:none;color:var(--coral-text,#B93220);font-weight:700;text-decoration:underline;}
 .own-bar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:12px 16px;border-radius:12px;
@@ -55,8 +44,6 @@
 .own-bar button{font:inherit;font-size:.78rem;font-weight:700;padding:6px 11px;border-radius:8px;border:1px solid rgba(26,26,30,.2);
   background:#fff;cursor:pointer;}
 .own-bar button:hover{border-color:var(--coral-text,#B93220);color:var(--coral-text,#B93220);}
-
-/* ---------- comparateur ---------- */
 .cmp-pick{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0;}
 .cmp-pick select{font:inherit;font-size:.9rem;padding:9px 12px;border-radius:9px;border:1px solid rgba(26,26,30,.2);background:#fff;min-width:220px;}
 .cmp-table{width:100%;border-collapse:collapse;background:#fff;border:1px solid rgba(26,26,30,.12);border-radius:12px;overflow:hidden;}
@@ -77,8 +64,6 @@
 .cmp-tray a{color:#fff;background:var(--coral,#E8452C);padding:7px 12px;border-radius:9px;font-weight:800;text-decoration:none;}
 .cmp-tray button{background:none;border:1px solid rgba(255,255,255,.35);color:#fff;border-radius:8px;padding:6px 9px;cursor:pointer;font:inherit;font-size:.78rem;}
 .veh-thumb{position:relative;}
-
-/* ---------- fiche : liens utiles ---------- */
 .fiche-liens{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;}
 .fiche-liens a{font:inherit;font-size:.85rem;font-weight:700;padding:9px 14px;border-radius:9px;
   border:1px solid rgba(26,26,30,.2);background:#fff;color:var(--ink,#1A1A1E);text-decoration:none;}
@@ -87,26 +72,13 @@
 .perso-tag{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;font-weight:700;padding:4px 10px;border-radius:20px;
   background:rgba(245,165,36,.18);color:#7A4E0A;margin-left:6px;}
 @media (max-width:640px){ .cmp-table tbody th{width:110px;white-space:normal;} }
-
-/* ---------- la galerie a besoin de plus de place que l'illustration seule ---------- */
 .fhero-in:has(.fhero-art--gal){grid-template-columns:1fr minmax(320px,440px);align-items:start;}
 .fhero-art--gal{padding:12px 12px 10px;}
 .fhero-art--gal .gal-note{margin-top:8px;}
 @media (max-width:820px){ .fhero-in:has(.fhero-art--gal){grid-template-columns:1fr;} }
-
-/* ---------- vignette photo sur les cartes du hub ---------- */
 .veh-thumb--photo{padding:0 !important;overflow:hidden;}
 .veh-thumb--photo .veh-photo{width:100%;height:100%;object-fit:cover;display:block;}
 .veh-thumb--photo .veh-badge{z-index:2;}
-
-/* ============================================================
-   CALIBRAGE DE LA BORDURE LATÉRALE
-   Le rail était positionné en 7vw, sans rapport avec la largeur
-   du contenu : à 1400 px il chevauchait la colonne de 10 px.
-   Il est désormais ancré sur le bord du contenu (shell 1120 px),
-   avec une gouttière constante de 28 px, et n'apparaît que
-   lorsque la place existe réellement.
-   ============================================================ */
 @media (min-width:1400px){ .rail{display:none;} }
 @media (min-width:1512px){
   .rail{display:block;}
@@ -117,19 +89,11 @@
   .rail--l{left:calc(50% - 560px - 56px - 52px);}
   .rail--r{right:calc(50% - 560px - 56px - 52px);}
 }
-
-/* ---------- famille réelle, quand aucun modèle unique n'est identifié ---------- */
 .veh-insp--fam{color:var(--ink-soft);}
 .veh-insp--fam span{font-weight:700; color:var(--ink);}
-
-/* ---------- vignettes de la liste officielle, devenues cliquables ---------- */
 .kit--lien{display:block; text-decoration:none; color:inherit; transition:border-color .15s, transform .15s;}
 .kit--lien:hover{border-color:var(--coral-text,#B93220); transform:translateY(-2px);}
 .kit-src{display:block; font-size:.72rem; color:var(--ink-soft); margin-top:4px;}
-
-/* ============================================================
-   PAGE VÉHICULES RARES
-   ============================================================ */
 .sec-n{display:inline-block; font-size:.72rem; font-weight:800; vertical-align:middle;
   background:var(--ink); color:#fff; border-radius:20px; padding:2px 9px; margin-left:8px;}
 .rare-grid{display:grid; gap:14px; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); margin-top:16px;}
@@ -146,10 +110,6 @@
 .rare-txt h3{margin:2px 0 6px; font-size:1.02rem;}
 .rare-txt p{margin:0; font-size:.85rem; color:var(--ink-soft); line-height:1.5;}
 .rare-src{display:block; font-size:.72rem; color:var(--ink-soft); margin-top:8px;}
-
-/* ============================================================
-   PAGE CLASSEMENT
-   ============================================================ */
 .cl-bar{display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin:18px 0 8px;}
 .cl-bar select{font:inherit; font-size:.9rem; padding:10px 12px; border-radius:9px;
   border:2px solid var(--rule); background:#fff; min-width:260px; max-width:100%;}
@@ -180,10 +140,7 @@
   .cl-img{display:none;}
   .cl-bar select{min-width:100%;}
 }
-
-/* ---------- bandeau « aller plus loin » ---------- */
 .duo-grid{display:grid; gap:14px; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); margin-top:16px;}
-/* v7.93 : quatre cartes (hub Véhicules, « Vraies voitures » en plus) : deux colonnes tant que quatre ne tiennent pas (≈ 1 110 px), jamais 3 + 1 */
 @media (min-width:560px) and (max-width:1109px){.duo-grid:has(> .duo:nth-child(4):last-child){grid-template-columns:repeat(2,minmax(0,1fr));}}
 .duo{display:flex; flex-direction:column; gap:5px; text-decoration:none; color:inherit; background:#fff;
   border:2px solid var(--ink); border-radius:12px; padding:17px 19px;
@@ -192,14 +149,6 @@
 .duo-k{font-size:.68rem; font-weight:800; letter-spacing:.09em; text-transform:uppercase; color:var(--coral-text,#B93220);}
 .duo-t{font-size:1.05rem; font-weight:900;}
 .duo-d{font-size:.85rem; line-height:1.55; color:var(--ink-soft);}
-
-
-/* ============================================================
-   CARTE DU HUB — refonte
-   L'image ne porte plus que le libellé de catégorie. Le statut tient
-   sur une ligne. Les actions (garage, comparer) forment un pied de
-   carte et ne recouvrent jamais rien.
-   ============================================================ */
 .veh-st{display:inline-flex; align-self:flex-start; align-items:center; gap:6px; font-size:.64rem; font-weight:800;
   letter-spacing:.06em; text-transform:uppercase; padding:3px 9px 3px 7px; border-radius:20px;
   margin-bottom:7px; white-space:nowrap; max-width:100%; overflow:hidden; text-overflow:ellipsis;}
@@ -207,7 +156,6 @@
 .veh-st--officiel{background:var(--ink); color:#fff;}
 .veh-st--vu{background:rgba(181,118,42,.14); color:#8A5A1E;}
 .veh-st--comm{background:rgba(122,92,143,.14); color:#5E4570;}
-
 .veh-body{display:flex; flex-direction:column;}
 .veh-tools{display:flex; gap:6px; margin-top:auto; padding-top:10px; border-top:1px solid rgba(26,26,30,.08);}
 .veh-tools button{flex:1; display:inline-flex; align-items:center; justify-content:center; gap:6px;
@@ -222,9 +170,6 @@
   border:solid #fff; border-width:0 2px 2px 0; transform:rotate(45deg);}
 .veh-tools .cmp-card.on{background:var(--amber); border-color:var(--amber); color:var(--ink);}
 .cmp-ico{font-size:.9rem; line-height:1;}
-
-/* Trois actions ne tiennent pas sur une ligne dans une carte de 234 px :
-   garage et comparer gardent la première, le modèle réel prend la seconde. */
 .veh-tools{flex-wrap:wrap;}
 .veh-tools .own-card,.veh-tools .cmp-card{flex:1 1 0; min-width:0;}
 .veh-tools .reel-card{flex:1 0 100%; min-height:30px; font-size:.7rem; color:#6B6874;
@@ -234,24 +179,16 @@
 .reel-ico{font-size:.78rem; line-height:1; flex:none;}
 .veh-card.is-own .veh-thumb::before{content:''; position:absolute; inset:0; box-shadow:inset 0 0 0 3px var(--coral); pointer-events:none; z-index:2;}
 @media (max-width:640px){
-  /* sous 640 px la carte tombe à 155 px : les libellés ne tiennent plus,
-     on garde les icônes et le bouton du modèle réel, seul porteur de sens. */
   .veh-tools .own-lbl-c{display:none;}
   .veh-tools .cmp-card span:last-child{display:none;}
   .veh-tools .own-card,.veh-tools .cmp-card{flex:1 1 0;}
 }
-
-/* bouton modèle réel sur la fiche, même traitement que les actions de fiche */
 .reel-fiche{display:inline-flex; align-items:center; gap:8px; min-height:42px; padding:0 16px;
   border-radius:10px; border:1.5px solid rgba(26,26,30,.18); background:#fff; color:var(--ink);
   font-size:.85rem; font-weight:800; text-decoration:none; transition:border-color .15s, color .15s;}
 .reel-fiche:hover{border-color:var(--coral-text,#B93220); color:var(--coral-text,#B93220);}
-
-/* ---------- les ancres ne passent plus sous la barre de filtres collante ---------- */
 section[id], .sec-h[id]{scroll-margin-top:200px;}
 @media (min-width:900px){ section[id], .sec-h[id]{scroll-margin-top:196px;} }
-
-/* ---------- tri des résultats ---------- */
 .vtri-wrap{display:inline-flex; align-items:center; margin-left:auto;}
 .vtri-wrap select{font:inherit; font-size:.82rem; font-weight:700; color:var(--ink); padding:7px 30px 7px 10px;
   border:2px solid var(--rule); border-radius:8px; background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 4l4 4 4-4' fill='none' stroke='%231A1A1E' stroke-width='1.8'/%3E%3C/svg%3E") no-repeat right 9px center/12px;
@@ -259,8 +196,6 @@ section[id], .sec-h[id]{scroll-margin-top:200px;}
 .vtri-wrap select:focus{outline:none; border-color:var(--coral-text,#B93220);}
 .sr-only{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap;}
 @media (max-width:640px){ .vtri-wrap{margin-left:0;} }
-
-/* ---------- photo du modèle réel sur la fiche ---------- */
 .reel-photo{margin:16px 0 4px; max-width:640px;}
 .reel-photo img{width:100%; height:auto; display:block; border:2px solid var(--ink);
   border-radius:12px; box-shadow:4px 4px 0 rgba(26,26,30,.12);}
@@ -268,8 +203,6 @@ section[id], .sec-h[id]{scroll-margin-top:200px;}
 .reel-photo figcaption b{color:var(--ink);}
 .reel-photo figcaption a{color:var(--ink-soft);}
 .reel-photo figcaption a:hover{color:var(--coral-text,#B93220);}
-
-/* Audit: preserve the card layout with separate links and controls. */
 .veh-card > .veh-link{display:flex;flex-direction:column;flex:1;min-width:0;color:inherit;text-decoration:none;}
 .veh-card > .veh-tools{margin:0 16px 16px;}
 .veh-link:focus-visible{outline:3px solid #126b85;outline-offset:3px;}
@@ -277,23 +210,15 @@ section[id], .sec-h[id]{scroll-margin-top:200px;}
 .image-placeholder{display:flex;align-items:center;justify-content:center;min-height:90px;padding:16px;font-size:.8rem;color:#55525C;}
 .gal-item{min-width:0;}
 .cmp-table caption{text-align:left;padding:12px 0;font-weight:700;}
-
 .cmp-tray a,.cl-bar #cl-add:hover{background:var(--coral-text,#B93220);}
-/* v7.18 : encart « en clair » propre à chaque fiche */
 .fiche-clair{margin-top:18px;background:#fff;border:2px solid var(--ink);border-left:8px solid var(--amber);border-radius:10px;padding:14px 18px;box-shadow:4px 4px 0 rgba(26,26,30,.14);}
 .fiche-clair-k{font:800 .72rem/1 'Archivo',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--coral-text);margin:0 0 8px;}
 .fiche-clair p{margin:0 0 8px;line-height:1.6;} .fiche-clair p:last-child{margin-bottom:0;}
-/* v7.37 — Véhicules rares : 8 cartes en 4 + 4 (plus de 5 + 3 au-delà de 1 400 px), 3 par rangée sous 1 000 px, 2 sous 700 px ; dernière rangée centrée. */
 .rare-grid{display:flex;flex-wrap:wrap;justify-content:center;--lk-n:4;}
 .rare-grid>*{flex:0 0 calc((100% - 14px*(var(--lk-n) - 1))/var(--lk-n));min-width:0;}
 @media(max-width:1000px){.rare-grid{--lk-n:3;}}
 @media(max-width:700px){.rare-grid{--lk-n:2;}}
 @media(max-width:430px){.rare-grid{--lk-n:1;}}
-
-/* ---------- v7.73 (lot 3) : « Personnaliser ce véhicule / cette arme » (section #personnaliser, perso-fiche.js) ----------
-   Puces d'atelier teintées (--ch), bloc « Ma configuration », un groupe dépliable par atelier (visuel officiel de la catégorie,
-   pictogramme, compteur), une carte par poste (statut, description, prix GTA VI, repère de la série, niveau requis, effet),
-   sous-listes d'options (boutons radio avec pastille de couleur et prix repère), « Je le prends ». Mouvement réduit : immobile. */
 .pf{--chs:hsl(var(--ch,38) 82% 52%);--chl:hsl(var(--ch,38) 70% 94%);--chd:hsl(var(--ch,38) 60% 26%);}
 .pf-cats{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 18px;padding:0;}
 .pf-chip-li{--chs:hsl(var(--ch,38) 82% 52%);--chl:hsl(var(--ch,38) 70% 94%);--chd:hsl(var(--ch,38) 60% 26%);display:inline-flex;align-items:stretch;border:2px solid var(--ink);border-radius:999px;background:var(--chl);box-shadow:2px 2px 0 var(--ink);overflow:hidden;transition:transform .2s var(--ease-out),box-shadow .2s var(--ease-out),background .2s var(--ease-out);}
@@ -385,13 +310,6 @@ section[id], .sec-h[id]{scroll-margin-top:200px;}
 }
 @media(max-width:460px){.pf-facts{grid-template-columns:1fr;}.pf-opt-list>li,.pf-coul>li{flex-basis:100%;}}
 @media(prefers-reduced-motion:reduce){.pf-chip-li,.pf-bt,.pf-g-img img,.pf-chev,.pf-post,.pf-opt{transition:none;}.pf-post:hover{transform:none;}.pf-g-sum:hover .pf-g-img img{transform:none;}}
-
-/* ---------- sous tous les angles (v7.80) ----------
-   Fiches véhicules et armes : l'écran du haut de fiche montre le schéma de profil ; un clic passe à l'angle suivant
-   (face, arrière, dessus ; dessus et face pour une arme) avec l'effet d'un écran cathodique qui change de chaîne :
-   l'image sortante se découpe en bandes, un balayage descend, l'image entrante s'ouvre d'une ligne et se stabilise
-   après un bref décalage rouge-bleu. Onglets en bas, étiquette et compteur en haut. Sans script : le profil est
-   posé, onglets et rappel cachés. Avec « réduire les animations » : changement immédiat. Balisage : outils/angles-markup.cjs. */
 .gal--ang{aspect-ratio:16/10;}
 .ang{position:relative;width:100%;height:100%;}
 .ang-view{display:block;position:relative;width:100%;height:100%;border:0;padding:0;margin:0;background:none;cursor:pointer;font:inherit;color:inherit;text-align:left;border-radius:inherit;}
@@ -414,7 +332,6 @@ section[id], .sec-h[id]{scroll-margin-top:200px;}
 .ang-tab.is-on:hover{color:#fff;}
 .ang-tab:focus-visible{outline:2px solid var(--coral,#E8452C);outline-offset:1px;}
 html:not(.js) .ang-tabs,html:not(.js) .ang-hint{display:none;}
-/* changement de chaîne */
 .js .ang-img.is-out{animation:ang-out .24s steps(6,end) forwards;z-index:1;}
 .js .ang-img.is-in{animation:ang-in .44s cubic-bezier(.2,.8,.2,1) both;z-index:2;}
 .js .ang.is-switch .ang-scan{animation:ang-scan .44s linear both;}
@@ -424,23 +341,15 @@ html:not(.js) .ang-tabs,html:not(.js) .ang-hint{display:none;}
 @keyframes ang-scan{0%{transform:translateY(-110%);opacity:1;}100%{transform:translateY(480%);opacity:1;}}
 @keyframes ang-flick{0%{opacity:1;}25%{opacity:3;}50%{opacity:.3;}75%{opacity:2;}100%{opacity:1;}}
 @media(prefers-reduced-motion:reduce){.js .ang-img.is-out{animation:none;display:none;}.js .ang-img.is-in,.js .ang.is-switch .ang-scan,.js .ang.is-switch .ang-screen::before{animation:none;}}
-/* dans une galerie de visuels officiels : le schéma est la dernière vue */
 .gal-item--ang{display:block;}
 .gal-item--ang .ang-slide,.gal-item--ang .ang{width:100%;height:100%;}
 @media(max-width:480px){.ang-tag{left:8px;top:8px;font-size:.62rem;}.ang-hint{display:none;}.ang-tab{padding:5px 8px;font-size:.66rem;}.ang-tabs{bottom:8px;}}
-/* v7.80 : sous 900 px, la galerie (photos ou écran des angles) prend toute la largeur de la colonne, calée sur le texte de
-   la fiche ; la limite de 230 px de style.css ne vaut que pour l'ancienne vignette (fiches sans galerie) */
 @media (max-width:900px){.fhero-art--gal{max-width:none;}}
-/* v7.81 : lien vers l'Atelier 3D sous le résumé de « Personnaliser ce véhicule / cette arme » */
 .pf-atelier{margin:10px 0 0;}
 .pf-atelier-link{display:inline-flex;align-items:center;gap:8px;min-height:38px;padding:7px 14px;border:2px solid var(--ink);border-radius:999px;background:var(--ink);color:#fff;font-weight:800;font-size:.86rem;text-decoration:none;box-shadow:2px 2px 0 var(--amber);}
 .pf-atelier-link::before{content:'';width:12px;height:12px;border:2px solid var(--amber-2);border-radius:3px;transform:rotate(45deg);box-sizing:border-box;}
 .pf-atelier-link:hover{background:#000;}
 .pf-atelier-link:focus-visible{outline:3px solid var(--coral);outline-offset:2px;}
-
-/* ---------- v7.86 (référencement) : fiches allégées des textes répétés ----------
-   « Ce qui arrive avec le jeu » : valeurs connues seules (doc-fiche--known), rubriques encore vides en pastilles, une ligne et un
-   lien vers verification.html ; « Personnaliser » : trois chiffres ; « Une erreur ? » : deux liens. */
 .doc-fiche--known{margin-bottom:12px;}
 .fv-wait{list-style:none;margin:6px 0 10px;padding:0;display:flex;flex-wrap:wrap;gap:8px;}
 .fv-wait li{display:inline-flex;align-items:center;gap:7px;padding:6px 12px;border:2px dashed var(--rule);border-radius:999px;background:var(--paper-2);color:var(--ink-soft);font-size:.84rem;font-weight:700;}
@@ -452,26 +361,19 @@ html:not(.js) .ang-tabs,html:not(.js) .ang-hint{display:none;}
 .fiche-meth-a:first-child{background:var(--ink);color:#fff;}
 .fiche-meth-a:hover{border-color:var(--coral-text,#B93220);color:var(--coral-text,#B93220);background:#fff;}
 .fiche-meth-a:focus-visible{outline:3px solid var(--coral);outline-offset:2px;}
-/* v7.87.1 : les trois chiffres restent sur une rangée, à la même largeur et à la même hauteur, à toutes les largeurs (sur
-   téléphone, le troisième ne tombe plus seul sous les deux autres) */
 .pf-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;max-width:560px;margin:10px 0 0;}
 .pf-stats div{display:flex;flex-direction:column-reverse;justify-content:flex-end;gap:2px;min-width:0;padding:8px 12px;border:2px solid var(--ink);border-radius:10px;background:#fff;}
 .pf-stats dt{font-size:.76rem;font-weight:700;color:var(--ink-soft);line-height:1.25;overflow-wrap:break-word;}
 .pf-stats dd{margin:0;font-size:1.35rem;font-weight:800;line-height:1;}
-/* v7.86 : rubrique en partie connue (« Ce qui arrive avec le jeu ») : les champs encore vides sont nommés dans sa boîte */
 .doc-wait{margin-top:10px;padding-top:9px;border-top:1px dashed var(--rule);}
 .doc-wait-k{margin:0 0 6px;font-size:.78rem;font-weight:700;color:var(--ink-soft);}
 .doc-wait ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px;}
 .doc-wait li{padding:3px 9px;border:1.5px dashed var(--rule);border-radius:999px;background:var(--paper-2);color:var(--ink-soft);font-size:.76rem;font-weight:700;line-height:1.35;}
-/* v7.87.1 (passe de qualité) : rien sous 11 px et des cibles d’au moins 24 px (44 px visés sur téléphone) dans les blocs des
-   fiches : légende de la galerie, angles du dessin, statuts de « Ce qui arrive avec le jeu », voisins de la même catégorie,
-   chiffres et panneau « Personnaliser » et leur lien « Voir dans la liste » (mesuré par outils/tests/v7871-browser.cjs) */
 .gal-lbl,.ang-tag,.rel-marque,.pf-config-t small{font-size:max(11px,.68rem);}
 .ang-tab{font-size:max(11px,.72rem);}
 .doc-st,.pf-st,.pf-f dt{font-size:max(11px,.62rem);}
 @media(max-width:480px){.ang-tag,.ang-tab{font-size:11px;}}
 .pf-link{display:inline-flex;align-items:center;min-height:24px;}
 @media(max-width:700px){.pf-link{min-height:44px;}}
-/* lot 1 bis (corrections de l’audit, point 14) : les puces des ateliers s’équilibrent (plus de « Security and tracking » seule sur sa ligne) */
 .pf-cats{display:block;text-wrap:balance;}
 .pf-cats>.pf-chip-li{margin:0 8px 8px 0;vertical-align:top;}

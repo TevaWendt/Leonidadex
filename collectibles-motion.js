@@ -1,4 +1,4 @@
-/* Editorial photo stack. Native scroll only; no timers or animation loops at rest. */
+/* Généré depuis outils/sources/collectibles-motion.js : modifie la source, pas ce fichier. */
 (function () {
   'use strict';
   const section = document.getElementById('ambiance');
@@ -14,7 +14,7 @@
   const desktop = window.matchMedia('(min-width: 901px)');
   const key = 'lk_collectibles_motion_v1';
   let wanted = true, active = false, visible = false, frame = 0;
-  try { wanted = window.localStorage.getItem(key) !== 'off'; } catch (_) { /* Session preference still works. */ }
+  try { wanted = window.localStorage.getItem(key) !== 'off'; } catch (_) {  }
   const clamp = value => Math.min(1, Math.max(0, value));
   const ease = value => { const p = clamp(value); return p * p * (3 - 2 * p); };
   function headerOffset() {
@@ -76,7 +76,7 @@
   }
   toggle.addEventListener('click', function () {
     wanted = !wanted;
-    try { window.localStorage.setItem(key, wanted ? 'on' : 'off'); } catch (_) { /* No permanent storage: use this session. */ }
+    try { window.localStorage.setItem(key, wanted ? 'on' : 'off'); } catch (_) {  }
     sync();
   });
   if ('IntersectionObserver' in window) {
@@ -97,7 +97,6 @@
     else if (typeof media.addListener === 'function') media.addListener(sync);
   };
   listen(reduced); listen(desktop);
-  // Express mode can also be changed by a browser extension or another local view.
   if ('MutationObserver' in window) new MutationObserver(sync).observe(document.body, {attributes: true, attributeFilter: ['class']});
   sync();
 })();

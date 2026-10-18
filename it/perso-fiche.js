@@ -1,10 +1,4 @@
-/* v7.73 (lot 3, demande de Téva) : « Personnaliser ce véhicule » / « Personnaliser cette arme » sur chaque fiche.
-   La section statique (outils/perso-fiche.cjs) donne le modèle, sa catégorie et ses ateliers ; ce script charge perso-data.js
-   (window.LK_PERSO, écrit par outils/gen-acquisitions.cjs) quand la section approche de l'écran, puis dessine les postes qui
-   s'appliquent au modèle, atelier par atelier : statut, prix GTA VI (à confirmer : Rockstar n'a rien publié), repère de la
-   série (GTA V, GTA Online), déblocage repère, effet, sous-listes d'options (finitions, niveaux, couleurs).
-   « Ma configuration » : on coche un poste ou une option, le total des repères s'additionne (jamais présenté comme un prix
-   GTA VI), enregistré sur cet appareil (clé lk_perso_v1). Sans script : lien vers la liste filtrée sur le modèle. */
+/* Généré depuis outils/sources/perso-fiche.js : modifie la source, pas ce fichier. */
 (function () {
   'use strict';
   var sec = document.querySelector('section.pf[data-pf]'); if (!sec) return;
@@ -26,7 +20,7 @@
   var money = function (n) { return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' $'; };
   var PIP = { officiel: 'Ufficiale', vu: 'Visto in un media', comm: 'Identificazione della community', serie: 'Riferimento della serie', conf: 'Da confermare' };
   function load(k) { try { return JSON.parse(localStorage.getItem(k) || 'null'); } catch (e) { return null; } }
-  function save(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* stockage indisponible */ } }
+  function save(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {  } }
   var all = load(KEY) || {}, mine = all[SK] || {};
   function persist() { all[SK] = mine; if (!Object.keys(mine).length) delete all[SK]; save(KEY, all); }
   var D = null, posts = [], byId = {};
@@ -50,7 +44,7 @@
   }
   function post(p) {
     var n = p.opts.length, nc = p.couleurs ? D[kind].couleurs.length : 0, on = !!mine[p.id];
-    var sum = n ? fill(n > 1 ? T.options : T.option, { n: n }) + (nc ? ' · ' + fill(T.couleursN, { n: nc }) : '') : nc ? fill(T.couleursN, { n: nc }) : '';
+    var sum = n ? fill(n > 1 ? T.options : T.option, { n: n }) + (nc ? ', ' + fill(T.couleursN, { n: nc }) : '') : nc ? fill(T.couleursN, { n: nc }) : '';
     return '<li class="pf-post' + (on ? ' is-on' : '') + '" data-pf-post="' + esc(p.id) + '" data-st="' + esc(p.st) + '">'
       + '<div class="pf-post-h"><span class="pf-st pf-st--' + esc(p.st) + '">' + esc(p.stl || PIP[p.st] || p.st) + '</span><b class="pf-nom">' + esc(p.nom) + '</b></div>'
       + '<p class="pf-desc">' + esc(p.desc) + '</p>'
@@ -75,8 +69,7 @@
     ids.forEach(function (k) { var p = byId[k]; if (!p) return; var o = mine[k].o !== undefined && mine[k].o !== null ? p.opts[mine[k].o] : null; var pr = priceOf(p, o); if (!pr) { sans++; return; } priced++; a += pr.a; b += pr.b; });
     box.querySelector('[data-pf-n]').textContent = ids.length ? fill(ids.length > 1 ? T.des : T.un, { n: ids.length }) : T.vide;
     var t = a === b ? money(a) : fill(T.entre, { a: money(a), b: money(b) });
-    /* rien de chiffré parmi les choix : seul le nombre de postes sans prix relevé est écrit (pas de « 0 $ ») */
-    box.querySelector('[data-pf-total]').textContent = !ids.length ? '' : priced ? fill(T.total, { t: t }) + (sans ? ' · ' + fill(T.sans, { n: sans }) : '') : fill(T.sans, { n: sans });
+    box.querySelector('[data-pf-total]').textContent = !ids.length ? '' : priced ? fill(T.total, { t: t }) + (sans ? ', ' + fill(T.sans, { n: sans }) : '') : fill(T.sans, { n: sans });
     box.classList.toggle('is-on', ids.length > 0);
     sec.querySelectorAll('[data-pf-post]').forEach(function (li) { li.classList.toggle('is-on', !!mine[li.getAttribute('data-pf-post')]); });
     sec.querySelectorAll('.pf-opt').forEach(function (l) { l.classList.toggle('is-on', l.querySelector('input').checked); });
@@ -105,7 +98,6 @@
     board.querySelectorAll('.pf-group').forEach(function (d) { d.open = open; });
     b.setAttribute('data-pf-all', open ? '0' : '1'); b.textContent = open ? T.fermer : T.ouvrir;
   });
-  /* les puces d'atelier de la section statique ouvrent leur groupe */
   sec.addEventListener('click', function (e) {
     var a = e.target.closest ? e.target.closest('[data-pf-chip]') : null; if (!a) return;
     var g = document.getElementById('pf-' + a.getAttribute('data-pf-chip')); if (!g) { start(); return; }

@@ -199,7 +199,7 @@ window.LK_ACQUISITIONS = {
           "titre": "Crest Kayak",
           "source": "https://www.rockstargames.com/VI/media/screenshots",
           "original": "https://www.rockstargames.com/VI/_next/static/media/ULTIMATE_EDITION_SAFEHOUSE_VEHICLES_03.0c9.qtpdi.tf..jpg?akim=1&imdensity=1&imwidth=1920",
-          "credit": "© Rockstar Games / Take-Two Interactive",
+          "credit": "© Rockstar Games, Take-Two Interactive",
           "variants": [
             {
               "src": "/img/officiel/crest-kayak-480.webp",
@@ -218,7 +218,7 @@ window.LK_ACQUISITIONS = {
           "titre": "Jason’s Safehouse Vehicles",
           "source": "https://www.rockstargames.com/VI/media/screenshots",
           "original": "https://www.rockstargames.com/VI/_next/static/media/ULTIMATE_EDITION_SAFEHOUSE_VEHICLES_01.0wv6pw3t-mky3.jpg?akim=1&imdensity=1&imwidth=1920",
-          "credit": "© Rockstar Games / Take-Two Interactive",
+          "credit": "© Rockstar Games, Take-Two Interactive",
           "variants": [
             {
               "src": "/img/officiel/jason-s-safehouse-vehicles-480.webp",
@@ -269,7 +269,7 @@ window.LK_ACQUISITIONS = {
           "titre": "Shitzu Squalo 01",
           "source": "https://www.rockstargames.com/VI/media/screenshots",
           "original": "https://www.rockstargames.com/VI/_next/static/media/ULTIMATE_EDITION_SQUALO_01.0cim7hj58ypb1.jpg?akim=1&imdensity=1&imwidth=1920",
-          "credit": "© Rockstar Games / Take-Two Interactive",
+          "credit": "© Rockstar Games, Take-Two Interactive",
           "variants": [
             {
               "src": "/img/officiel/shitzu-squalo-01-480.webp",
@@ -288,7 +288,7 @@ window.LK_ACQUISITIONS = {
           "titre": "Shitzu Squalo 02",
           "source": "https://www.rockstargames.com/VI/media/screenshots",
           "original": "https://www.rockstargames.com/VI/_next/static/media/ULTIMATE_EDITION_SQUALO_02.09qplkj.rjnk7.jpg?akim=1&imdensity=1&imwidth=1920",
-          "credit": "© Rockstar Games / Take-Two Interactive",
+          "credit": "© Rockstar Games, Take-Two Interactive",
           "variants": [
             {
               "src": "/img/officiel/shitzu-squalo-02-480.webp",
@@ -307,7 +307,7 @@ window.LK_ACQUISITIONS = {
           "titre": "Shitzu Squalo 03",
           "source": "https://www.rockstargames.com/VI/media/screenshots",
           "original": "https://www.rockstargames.com/VI/_next/static/media/ULTIMATE_EDITION_SQUALO_03.0quncwrsw97j1.jpg?akim=1&imdensity=1&imwidth=1920",
-          "credit": "© Rockstar Games / Take-Two Interactive",
+          "credit": "© Rockstar Games, Take-Two Interactive",
           "variants": [
             {
               "src": "/img/officiel/shitzu-squalo-03-480.webp",
@@ -326,7 +326,7 @@ window.LK_ACQUISITIONS = {
           "titre": "Shitzu Squalo 04",
           "source": "https://www.rockstargames.com/VI/media/screenshots",
           "original": "https://www.rockstargames.com/VI/_next/static/media/ULTIMATE_EDITION_SQUALO_04.00vlesedwtiuy.jpg?akim=1&imdensity=1&imwidth=1920",
-          "credit": "© Rockstar Games / Take-Two Interactive",
+          "credit": "© Rockstar Games, Take-Two Interactive",
           "variants": [
             {
               "src": "/img/officiel/shitzu-squalo-04-480.webp",
@@ -372,7 +372,7 @@ window.LK_ACQUISITIONS = {
           "alt": "Jason e Lucia davanti alla coupé verde che ricorda una Kellison J4 nell’immagine dell’Ultimate Edition",
           "source": "https://www.rockstargames.com/VI/media/screenshots",
           "original": "https://www.rockstargames.com/VI/_next/static/media/ULTIMATE_EDITION_02.0q-6.nrtf~jj0.jpg?akim=1&imdensity=1&imwidth=1920",
-          "credit": "© Rockstar Games / Take-Two Interactive",
+          "credit": "© Rockstar Games, Take-Two Interactive",
           "variants": [
             {
               "src": "/img/officiel/ultimate-edition-02-480.webp",
@@ -419,7 +419,7 @@ window.LK_ACQUISITIONS = {
           "alt": "Jason e Lucia con cappellini e magliette di Vice City con Macca the Gator, davanti a un murale dell’alligatore (screenshot ufficiale “Goodtime Gear” dell’Edizione Ultimate).",
           "source": "https://www.rockstargames.com/VI/media/screenshots",
           "original": "https://www.rockstargames.com/VI/_next/static/media/ULTIMATE_EDITION_GOODTIME_GEAR_01.0t7de8dow381q.jpg?akim=1&imdensity=1&imwidth=1920",
-          "credit": "© Rockstar Games / Take-Two Interactive",
+          "credit": "© Rockstar Games, Take-Two Interactive",
           "variants": [
             {
               "src": "/img/officiel/goodtime-gear-01-480.webp",
@@ -467,7 +467,7 @@ window.LK_ACQUISITIONS = {
           "alt": "Jason tiene in mano una mitraglietta compatta turchese con motivo a palme in un’immagine Vintage Vice City.",
           "source": "https://www.rockstargames.com/VI/media/screenshots",
           "original": "https://www.rockstargames.com/VI/_next/static/media/VINTAGE_VICE_CITY_PACK_EXCLUSIVE_LOOKS_03.0au1tphsftqm5.jpg?akim=1&imdensity=1&imwidth=1920",
-          "credit": "© Rockstar Games / Take-Two Interactive",
+          "credit": "© Rockstar Games, Take-Two Interactive",
           "variants": [
             {
               "src": "/img/officiel/vintage-vice-city-pack-exclusive-looks-03-480.webp",
@@ -495,7 +495,7 @@ window.LK_ACQUISITIONS = {
       "sourceId": "ultimate",
       "evidenceLevel": 1,
       "acquisition": "edition-bonus",
-      "condition": "Kit dell’Ultimate Edition · Vapid Ganado di Jason",
+      "condition": "Kit dell’Ultimate Edition, Vapid Ganado di Jason",
       "description": "Kit di modifiche dedicato al pickup di Jason. Le prestazioni e il costo separato non sono pubblicati.",
       "media": [
         "ganado-retro-build"
@@ -512,7 +512,7 @@ window.LK_ACQUISITIONS = {
           "titre": "Ganado Retro Build",
           "source": "https://www.rockstargames.com/VI/media/screenshots",
           "original": "https://www.rockstargames.com/VI/_next/static/media/ULTIMATE_EDITION_VAPID_GANADO_RETRO_BUILD_01.062dgvkwdynw5.jpg?akim=1&imdensity=1&imwidth=1920",
-          "credit": "© Rockstar Games / Take-Two Interactive",
+          "credit": "© Rockstar Games, Take-Two Interactive",
           "variants": [
             {
               "src": "/img/officiel/ganado-retro-build-480.webp",
@@ -541,7 +541,7 @@ window.LK_ACQUISITIONS = {
       "sourceId": "vintage",
       "evidenceLevel": 1,
       "acquisition": "preorder-bonus",
-      "condition": "Pack Vintage Vice City · la maggior parte delle armi",
+      "condition": "Pack Vintage Vice City, la maggior parte delle armi",
       "description": "Motivo tropicale ispirato alla camicia di Tommy Vercetti. La compatibilità arma per arma non è spiegata nei dettagli.",
       "media": [
         "vintage-vice-city-weapon-pattern-01"
@@ -559,7 +559,7 @@ window.LK_ACQUISITIONS = {
           "alt": "Mitraglietta moderna con calcio ripiegato e pistola turchese sul sedile di un’auto, vicino a delle banconote.",
           "source": "https://www.rockstargames.com/VI/media/screenshots",
           "original": "https://www.rockstargames.com/VI/_next/static/media/VINTAGE_VICE_CITY_WEAPON_PATTERN_01.0gybtumgwdcoi.jpg?akim=1&imdensity=1&imwidth=1920",
-          "credit": "© Rockstar Games / Take-Two Interactive",
+          "credit": "© Rockstar Games, Take-Two Interactive",
           "variants": [
             {
               "src": "/img/officiel/vintage-vice-city-weapon-pattern-01-480.webp",
@@ -588,7 +588,7 @@ window.LK_ACQUISITIONS = {
       "sourceId": "ultimate",
       "evidenceLevel": 1,
       "acquisition": "edition-bonus",
-      "condition": "Ultimate Edition · Watson Bay",
+      "condition": "Ultimate Edition, Watson Bay",
       "description": "Legato al Dominator Buggy: parcheggio, armadietto per le armi e deposito di beni destinati a un ricettatore.",
       "media": [],
       "trackable": true,
@@ -612,7 +612,7 @@ window.LK_ACQUISITIONS = {
       "sourceId": "vintage",
       "evidenceLevel": 1,
       "acquisition": "preorder-bonus",
-      "condition": "Pack Vintage Vice City · vicino a Ocean Beach",
+      "condition": "Pack Vintage Vice City, vicino a Ocean Beach",
       "description": "Garage privato legato allo Stanier: armadietto per le armi e deposito di beni destinati a un ricettatore.",
       "media": [],
       "trackable": true,
@@ -648,7 +648,7 @@ window.LK_ACQUISITIONS = {
           "titre": "Sara’s Unisex Salon 01",
           "source": "https://www.rockstargames.com/VI/media/screenshots",
           "original": "https://www.rockstargames.com/VI/_next/static/media/ULTIMATE_EDITION_SARAS_SALON_01.0gn7dwlvcgz17.jpg?akim=1&imdensity=1&imwidth=1920",
-          "credit": "© Rockstar Games / Take-Two Interactive",
+          "credit": "© Rockstar Games, Take-Two Interactive",
           "variants": [
             {
               "src": "/img/officiel/sara-s-unisex-salon-01-480.webp",
@@ -667,7 +667,7 @@ window.LK_ACQUISITIONS = {
           "titre": "Sara’s Unisex Salon 02",
           "source": "https://www.rockstargames.com/VI/media/screenshots",
           "original": "https://www.rockstargames.com/VI/_next/static/media/ULTIMATE_EDITION_SARAS_SALON_02.170lw.lgxdghm.jpg?akim=1&imdensity=1&imwidth=1920",
-          "credit": "© Rockstar Games / Take-Two Interactive",
+          "credit": "© Rockstar Games, Take-Two Interactive",
           "variants": [
             {
               "src": "/img/officiel/sara-s-unisex-salon-02-480.webp",
@@ -687,7 +687,7 @@ window.LK_ACQUISITIONS = {
           "titre": "Sara’s Unisex Salon 03",
           "source": "https://www.rockstargames.com/VI/media/screenshots",
           "original": "https://www.rockstargames.com/VI/_next/static/media/ULTIMATE_EDITION_SARAS_SALON_03.0w1t10_u0yv~b.jpg?akim=1&imdensity=1&imwidth=1920",
-          "credit": "© Rockstar Games / Take-Two Interactive",
+          "credit": "© Rockstar Games, Take-Two Interactive",
           "variants": [
             {
               "src": "/img/officiel/sara-s-unisex-salon-03-480.webp",
@@ -703,7 +703,7 @@ window.LK_ACQUISITIONS = {
           "mediaType": "official-screenshot"
         }
       ],
-      "condition": "Servizio dell’Ultimate Edition · tariffe non pubblicate",
+      "condition": "Servizio dell’Ultimate Edition, tariffe non pubblicate",
       "evidenceLevel": 1
     },
     {
@@ -726,7 +726,7 @@ window.LK_ACQUISITIONS = {
           "titre": "Stock 305 Clothing Store 01",
           "source": "https://www.rockstargames.com/VI/media/screenshots",
           "original": "https://www.rockstargames.com/VI/_next/static/media/ULTIMATE_EDITION_STOCK_305_01.0vuq0m5_1j-17.jpg?akim=1&imdensity=1&imwidth=1920",
-          "credit": "© Rockstar Games / Take-Two Interactive",
+          "credit": "© Rockstar Games, Take-Two Interactive",
           "variants": [
             {
               "src": "/img/officiel/stock-305-clothing-store-01-480.webp",
@@ -746,7 +746,7 @@ window.LK_ACQUISITIONS = {
           "alt": "Jason, veste en jean grise, adossé à un mur de bombes de peinture colorées dans la boutique Stock 305 (capture officielle de l’Édition Ultimate).",
           "source": "https://www.rockstargames.com/VI/media/screenshots",
           "original": "https://www.rockstargames.com/VI/_next/static/media/ULTIMATE_EDITION_STOCK_305_02.0va5ldrhsejht.jpg?akim=1&imdensity=1&imwidth=1920",
-          "credit": "© Rockstar Games / Take-Two Interactive",
+          "credit": "© Rockstar Games, Take-Two Interactive",
           "variants": [
             {
               "src": "/img/officiel/stock-305-clothing-store-02-480.webp",
@@ -767,7 +767,7 @@ window.LK_ACQUISITIONS = {
           "titre": "Stock 305 Clothing Store 03",
           "source": "https://www.rockstargames.com/VI/media/screenshots",
           "original": "https://www.rockstargames.com/VI/_next/static/media/ULTIMATE_EDITION_STOCK_305_03.00wltke54q_n0.jpg?akim=1&imdensity=1&imwidth=1920",
-          "credit": "© Rockstar Games / Take-Two Interactive",
+          "credit": "© Rockstar Games, Take-Two Interactive",
           "variants": [
             {
               "src": "/img/officiel/stock-305-clothing-store-03-480.webp",
@@ -787,7 +787,7 @@ window.LK_ACQUISITIONS = {
           "titre": "Stock 305 Clothing Store 04",
           "source": "https://www.rockstargames.com/VI/media/screenshots",
           "original": "https://www.rockstargames.com/VI/_next/static/media/ULTIMATE_EDITION_STOCK_305_04.0ipze9~3u6eok.jpg?akim=1&imdensity=1&imwidth=1920",
-          "credit": "© Rockstar Games / Take-Two Interactive",
+          "credit": "© Rockstar Games, Take-Two Interactive",
           "variants": [
             {
               "src": "/img/officiel/stock-305-clothing-store-04-480.webp",
@@ -803,7 +803,7 @@ window.LK_ACQUISITIONS = {
           "mediaType": "official-screenshot"
         }
       ],
-      "condition": "Servizio dell’Ultimate Edition · tariffe non pubblicate",
+      "condition": "Servizio dell’Ultimate Edition, tariffe non pubblicate",
       "evidenceLevel": 1
     },
     {
@@ -826,7 +826,7 @@ window.LK_ACQUISITIONS = {
           "titre": "Electric Fang Tattoo 01",
           "source": "https://www.rockstargames.com/VI/media/screenshots",
           "original": "https://www.rockstargames.com/VI/_next/static/media/ULTIMATE_EDITION_ELECTRIC_FANG_01.04tsytu7qp2b-.jpg?akim=1&imdensity=1&imwidth=1920",
-          "credit": "© Rockstar Games / Take-Two Interactive",
+          "credit": "© Rockstar Games, Take-Two Interactive",
           "variants": [
             {
               "src": "/img/officiel/electric-fang-tattoo-01-480.webp",
@@ -845,7 +845,7 @@ window.LK_ACQUISITIONS = {
           "titre": "Electric Fang Tattoo 02",
           "source": "https://www.rockstargames.com/VI/media/screenshots",
           "original": "https://www.rockstargames.com/VI/_next/static/media/ULTIMATE_EDITION_ELECTRIC_FANG_02.0a0h59s0zvhgc.jpg?akim=1&imdensity=1&imwidth=1920",
-          "credit": "© Rockstar Games / Take-Two Interactive",
+          "credit": "© Rockstar Games, Take-Two Interactive",
           "variants": [
             {
               "src": "/img/officiel/electric-fang-tattoo-02-480.webp",
@@ -865,7 +865,7 @@ window.LK_ACQUISITIONS = {
           "titre": "Electric Fang Tattoo 03",
           "source": "https://www.rockstargames.com/VI/media/screenshots",
           "original": "https://www.rockstargames.com/VI/_next/static/media/ULTIMATE_EDITION_ELECTRIC_FANG_03.0wd4urd9xwy5..jpg?akim=1&imdensity=1&imwidth=1920",
-          "credit": "© Rockstar Games / Take-Two Interactive",
+          "credit": "© Rockstar Games, Take-Two Interactive",
           "variants": [
             {
               "src": "/img/officiel/electric-fang-tattoo-03-480.webp",
@@ -885,7 +885,7 @@ window.LK_ACQUISITIONS = {
           "titre": "Electric Fang Tattoo 04",
           "source": "https://www.rockstargames.com/VI/media/screenshots",
           "original": "https://www.rockstargames.com/VI/_next/static/media/ULTIMATE_EDITION_ELECTRIC_FANG_04.0p0qga4w7y5yl.jpg?akim=1&imdensity=1&imwidth=1920",
-          "credit": "© Rockstar Games / Take-Two Interactive",
+          "credit": "© Rockstar Games, Take-Two Interactive",
           "variants": [
             {
               "src": "/img/officiel/electric-fang-tattoo-04-480.webp",
@@ -901,7 +901,7 @@ window.LK_ACQUISITIONS = {
           "mediaType": "official-screenshot"
         }
       ],
-      "condition": "Servizio dell’Ultimate Edition · tariffe non pubblicate",
+      "condition": "Servizio dell’Ultimate Edition, tariffe non pubblicate",
       "evidenceLevel": 1
     },
     {
@@ -923,7 +923,7 @@ window.LK_ACQUISITIONS = {
           "titre": "Rideout Customs Mod Shop 01",
           "source": "https://www.rockstargames.com/VI/media/screenshots",
           "original": "https://www.rockstargames.com/VI/_next/static/media/ULTIMATE_EDITION_RIDEOUT_CUSTOMS_01.065-ms8~k8vbq.jpg?akim=1&imdensity=1&imwidth=1920",
-          "credit": "© Rockstar Games / Take-Two Interactive",
+          "credit": "© Rockstar Games, Take-Two Interactive",
           "variants": [
             {
               "src": "/img/officiel/rideout-customs-mod-shop-01-480.webp",
@@ -943,7 +943,7 @@ window.LK_ACQUISITIONS = {
           "alt": "Abitacolo rosso dell’auto mostrata nella serie di screenshot di Rideout Customs",
           "source": "https://www.rockstargames.com/VI/media/screenshots",
           "original": "https://www.rockstargames.com/VI/_next/static/media/ULTIMATE_EDITION_RIDEOUT_CUSTOMS_02.0u9jg4xxbm_yd.jpg?akim=1&imdensity=1&imwidth=1920",
-          "credit": "© Rockstar Games / Take-Two Interactive",
+          "credit": "© Rockstar Games, Take-Two Interactive",
           "variants": [
             {
               "src": "/img/officiel/ultimate-edition-rideout-customs-02-480.webp",
@@ -963,7 +963,7 @@ window.LK_ACQUISITIONS = {
           "alt": "Coupé giallo rialzato nell’officina Rideout Customs, identificato come un Albany Manana",
           "source": "https://www.rockstargames.com/VI/media/screenshots",
           "original": "https://www.rockstargames.com/VI/_next/static/media/ULTIMATE_EDITION_RIDEOUT_CUSTOMS_03.0_n4oqh5f_ar4.jpg?akim=1&imdensity=1&imwidth=1920",
-          "credit": "© Rockstar Games / Take-Two Interactive",
+          "credit": "© Rockstar Games, Take-Two Interactive",
           "variants": [
             {
               "src": "/img/officiel/ultimate-edition-rideout-customs-03-480.webp",
@@ -978,7 +978,7 @@ window.LK_ACQUISITIONS = {
           ]
         }
       ],
-      "condition": "Servizio dell’Ultimate Edition · tariffe non pubblicate",
+      "condition": "Servizio dell’Ultimate Edition, tariffe non pubblicate",
       "evidenceLevel": 1
     },
     {
@@ -1000,7 +1000,7 @@ window.LK_ACQUISITIONS = {
           "titre": "One-Eyed Willie’s Mod Shop 01",
           "source": "https://www.rockstargames.com/VI/media/screenshots",
           "original": "https://www.rockstargames.com/VI/_next/static/media/ULTIMATE_EDITION_ONE_EYED_WILLIE_01.0n7-__or5f.b6.jpg?akim=1&imdensity=1&imwidth=1920",
-          "credit": "© Rockstar Games / Take-Two Interactive",
+          "credit": "© Rockstar Games, Take-Two Interactive",
           "variants": [
             {
               "src": "/img/officiel/one-eyed-willie-s-mod-shop-01-480.webp",
@@ -1019,7 +1019,7 @@ window.LK_ACQUISITIONS = {
           "titre": "One-Eyed Willie’s Mod Shop 02",
           "source": "https://www.rockstargames.com/VI/media/screenshots",
           "original": "https://www.rockstargames.com/VI/_next/static/media/ULTIMATE_EDITION_ONE_EYED_WILLIE_02.0dgnw_y_1bqao.jpg?akim=1&imdensity=1&imwidth=1920",
-          "credit": "© Rockstar Games / Take-Two Interactive",
+          "credit": "© Rockstar Games, Take-Two Interactive",
           "variants": [
             {
               "src": "/img/officiel/one-eyed-willie-s-mod-shop-02-480.webp",
@@ -1040,7 +1040,7 @@ window.LK_ACQUISITIONS = {
           "alt": "Pickup Canis verde nell’officina One-Eyed Willie di GTA VI.",
           "source": "https://www.rockstargames.com/VI/media/screenshots",
           "original": "https://www.rockstargames.com/VI/_next/static/media/ULTIMATE_EDITION_ONE_EYED_WILLIE_03.0mhil16bnp3m2.jpg?akim=1&imdensity=1&imwidth=1920",
-          "credit": "© Rockstar Games / Take-Two Interactive",
+          "credit": "© Rockstar Games, Take-Two Interactive",
           "variants": [
             {
               "src": "/img/officiel/ultimate-edition-one-eyed-willie-03-480.webp",
@@ -1055,7 +1055,7 @@ window.LK_ACQUISITIONS = {
           ]
         }
       ],
-      "condition": "Servizio dell’Ultimate Edition · tariffe non pubblicate",
+      "condition": "Servizio dell’Ultimate Edition, tariffe non pubblicate",
       "evidenceLevel": 1
     }
   ],

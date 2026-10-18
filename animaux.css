@@ -1,6 +1,4 @@
-/* Section « Animaux » (section animaux) : fiches animaux/<id>.html (gros plans, statut et sources ajoutés par
-   outils/gen-animaux.cjs). La page animaux.html et le reste des fiches suivent le gabarit des hubs du monde (style.css).
-   Chargée par les fiches de la section seulement. Mouvement : celui du site (.reveal, .rise de common.js), rien d’autre. */
+/* Généré depuis outils/sources/animaux.css : modifie la source, pas ce fichier. */
 .animaux-zoom{padding-top:clamp(24px,3vw,40px);}
 .animaux-zoom-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:14px;margin-top:12px;}
 .animaux-zoom-fig{margin:0;border:2px solid var(--ink);border-radius:var(--radius);overflow:hidden;background:var(--paper);box-shadow:var(--shadow-soft);}
@@ -11,12 +9,6 @@
 .animaux-fiche-src{--ed-line:var(--rule);--ed-card:var(--paper-2);--ed-soft:var(--ink-soft);--ed-fg:var(--ink);padding-top:clamp(24px,3vw,40px);}
 .animaux-statut{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:10px 0 0;padding:10px 14px;border:2px solid var(--ink);border-radius:var(--radius-s);background:var(--paper-2);font-size:.92rem;}
 .animaux-fiche-src .ed-srcs{margin-top:12px;}
-
-/* ===================== v7.69 : section plus vivante (demande de Téva du 06/10/2026) =====================
-   Page animaux.html : « La faune en chiffres », mosaïque des fiches avec filtre par famille, « Où les croiser ».
-   Fiches : carte d’identité avec tampon du statut, gros plan en grand. Couleur de chaque famille : --fam.
-   Mouvement : apparitions du site (.reveal, .rise), nombres qui défilent (common.js, data-lk-count), filtre en
-   transition de vue (common.js, data-lk-vt) ; « réduire les animations » : tout est immobile. */
 .an-fam-reptiles{--fam:#9fd47e;--fam-ink:#1e3a10;}
 .an-fam-mammiferes{--fam:#f4b98a;--fam-ink:#4a2508;}
 .an-fam-oiseaux{--fam:#9ad8f5;--fam-ink:#0d3550;}
@@ -27,8 +19,6 @@
 .an-head{max-width:760px;}
 .an-head .sec-h{margin:0;}
 .an-sub{margin:8px 0 0;color:var(--ink-soft);max-width:62ch;}
-
-/* --- la faune en chiffres --- */
 .an-chiffres{position:relative;margin-top:clamp(26px,4vw,46px);color:#fff;background:linear-gradient(118deg,var(--night-deep) 0%,var(--night) 52%,var(--night-2) 100%);border-block:3px solid var(--ink);overflow:hidden;isolation:isolate;}
 .an-chiffres::before{content:'';position:absolute;inset:-30% -10%;z-index:-1;pointer-events:none;background:radial-gradient(ellipse 34% 46% at 18% 30%,rgba(245,165,36,.26),transparent 70%),radial-gradient(ellipse 30% 40% at 82% 78%,rgba(111,216,200,.2),transparent 70%);animation:an-drift 16s ease-in-out infinite alternate;}
 @keyframes an-drift{from{transform:translate3d(-2%,0,0) rotate(0deg);}to{transform:translate3d(3%,-4%,0) rotate(4deg);}}
@@ -46,8 +36,6 @@
 .js .an-chiffres .an-chiffres-list li{transition:opacity .5s var(--ease-out),transform .6s var(--ease-spring);transition-delay:calc(var(--i,0)*90ms + 120ms);}
 @media(max-width:900px){.an-chiffres-in{grid-template-columns:1fr;}}
 @media(max-width:560px){.an-chiffres-list{grid-template-columns:repeat(2,minmax(0,1fr));}.an-chiffres-list li{padding:12px;}}
-
-/* --- mosaïque des fiches --- */
 .an-fiches{padding-top:clamp(30px,4vw,52px);}
 .an-filter{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 18px;padding:0;border:0;min-width:0;}
 .an-filter input{position:absolute;opacity:0;width:1px;height:1px;margin:0;pointer-events:none;}
@@ -83,7 +71,7 @@
 .an-card-where>span{display:inline-flex;align-items:center;gap:4px;padding:3px 9px 3px 6px;border-radius:999px;background:rgba(253,251,247,.14);border:1px solid rgba(253,251,247,.34);font-size:.72rem;font-weight:700;}
 .an-card-where svg{width:13px;height:13px;}
 .an-card-go{align-self:flex-start;display:inline-flex;align-items:center;gap:6px;margin-top:6px;padding:6px 13px;border-radius:999px;background:rgba(253,251,247,.14);border:1px solid rgba(253,251,247,.5);font-weight:800;font-size:.8rem;transition:background .25s,color .25s,transform .25s var(--ease-out),border-color .25s;}
-.an-card-go::after{content:'→';transition:transform .25s var(--ease-out);}
+.an-card-go::after{content:'';display:inline-block;width:.8em;height:.8em;vertical-align:-.08em;background:currentColor;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27%23000%27 stroke-width=%273%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M9 5l7 7-7 7%27/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27%23000%27 stroke-width=%273%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M9 5l7 7-7 7%27/%3E%3C/svg%3E") center/contain no-repeat;transition:transform .25s var(--ease-out);}
 .an-card:focus-visible{outline:3px solid var(--coral);outline-offset:3px;}
 @media(hover:hover){
   .an-card:hover{transform:translate(-3px,-3px);box-shadow:9px 9px 0 var(--fam,var(--amber));}
@@ -92,7 +80,6 @@
   .an-card:hover .an-card-go{background:var(--fam,var(--amber));color:var(--fam-ink,var(--ink));border-color:var(--ink);}
   .an-card:hover .an-card-go::after{transform:translateX(3px);}
 }
-/* filtre : seules les fiches de la famille choisie restent ; la mosaïque devient une grille régulière */
 .an-fiches:has(#an-fam-reptiles:checked) .an-card:not([data-fam="reptiles"]),
 .an-fiches:has(#an-fam-mammiferes:checked) .an-card:not([data-fam="mammiferes"]),
 .an-fiches:has(#an-fam-oiseaux:checked) .an-card:not([data-fam="oiseaux"]),
@@ -100,7 +87,6 @@
 .an-fiches:has(#an-fam-domestiques:checked) .an-card:not([data-fam="domestiques"]){display:none;}
 .an-fiches:has(.an-filter input:not(#an-fam-tout):checked) .an-grid{grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));}
 .an-fiches:has(.an-filter input:not(#an-fam-tout):checked) .an-card{grid-column:auto;grid-row:auto;min-height:330px;}
-/* sans transition de vue : la fiche qui revient apparaît en fondu */
 @supports (transition-behavior:allow-discrete) and (not (view-transition-name:none)){
   .an-card{transition:transform .35s var(--ease-out),box-shadow .35s var(--ease-out),opacity .35s var(--ease-out),display .35s allow-discrete;}
   @starting-style{.an-fiches .an-card{opacity:0;transform:translateY(12px) scale(.98);}}
@@ -118,8 +104,6 @@
   .an-filter::-webkit-scrollbar{display:none;}
   .an-filter label{flex:none;}
 }
-
-/* --- où les croiser --- */
 .an-regions{padding-top:clamp(34px,4.5vw,60px);}
 .an-regions-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:18px;}
 .an-region{display:flex;flex-direction:column;border:2px solid var(--ink);border-radius:18px;overflow:hidden;background:var(--paper);box-shadow:5px 5px 0 rgba(26,26,30,.16);transition:transform .3s var(--ease-out),box-shadow .3s var(--ease-out);}
@@ -136,8 +120,6 @@
 @media(hover:hover){.an-region:hover{transform:translate(-2px,-2px);box-shadow:8px 8px 0 var(--amber);}.an-region:hover .an-region-media img{transform:scale(1.06);}}
 @media(max-width:980px){.an-regions-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
 @media(max-width:560px){.an-regions-grid{grid-template-columns:1fr;}}
-
-/* --- fiche : carte d’identité --- */
 .an-id{padding-top:clamp(14px,2vw,22px);}
 .an-id-card{position:relative;display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px 20px;align-items:center;padding:16px 20px;border:2px solid var(--ink);border-radius:18px;background:var(--paper-2);box-shadow:6px 6px 0 var(--fam);}
 .an-id-badge{display:grid;place-items:center;width:62px;height:62px;border-radius:50%;border:2px solid var(--ink);background:var(--fam);color:var(--fam-ink);}
@@ -156,8 +138,6 @@
 .js .an-id.reveal:not(.in) .an-id-stamp{opacity:0;transform:rotate(-16deg) scale(1.7);}
 .js .an-id .an-id-stamp{transition:opacity .25s ease-out .35s,transform .5s cubic-bezier(.3,1.6,.5,1) .35s;}
 @media(max-width:560px){.an-id-card{grid-template-columns:1fr;padding:18px 16px 16px;}.an-id-badge{width:52px;height:52px;}.an-id-list{gap:10px 20px;}}
-
-/* --- fiche : gros plan en grand --- */
 .animaux-zoom-grid{grid-template-columns:1fr;}
 .animaux-zoom-fig{display:grid;grid-template-columns:minmax(0,560px) minmax(240px,1fr);align-items:center;}
 .animaux-zoom-crop{position:relative;display:block;align-self:stretch;overflow:hidden;border-right:2px solid var(--ink);background:var(--ink);}
@@ -172,11 +152,8 @@
 .animaux-zoom-orig:hover{border-color:var(--ink);background:var(--paper-2);}
 @media(hover:hover){.animaux-zoom-crop:hover img{transform:scale(1.06);}.animaux-zoom-crop:hover .animaux-zoom-lens{transform:scale(1.12) rotate(-8deg);}}
 @media(max-width:760px){.animaux-zoom-fig{grid-template-columns:1fr;}.animaux-zoom-crop{border-right:0;border-bottom:2px solid var(--ink);}.animaux-zoom-crop img{min-height:0;}}
-
-/* --- fiche : l’image d’en-tête respire, les faits « À retenir » arrivent l’un après l’autre --- */
 .js .lore-page .lore-fig img{animation:an-breathe 20s ease-in-out infinite alternate;}
 @keyframes an-breathe{from{transform:scale(1);}to{transform:scale(1.07) translate3d(-1%,-1%,0);}}
-
 @media(prefers-reduced-motion:reduce){
   .an-chiffres::before,.js .lore-page .lore-fig img{animation:none;}
   .an-card,.an-card-media img,.an-card-go,.an-filter label,.an-region,.an-region-media img,.animaux-zoom-crop img,.animaux-zoom-lens{transition:none!important;}

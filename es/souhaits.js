@@ -1,7 +1,4 @@
-/* LEONIDAKIT — boutons « Garder » (souhaits) (v7.50, lot 3).
-   Un souhait n’est jamais une possession : il va dans lk_wish_v1 (carnets-core.js), séparé des cases « Je l’ai ».
-   Balisage : <button type="button" data-wish-fam="styles" data-wish-id="…" data-wish-on="Style gardé" data-wish-off="Garder ce style">.
-   Stockage indisponible : le bouton reste tel quel et un message le dit (rien n’est annoncé comme gardé). */
+/* Généré depuis outils/sources/souhaits.js : modifie la source, pas ce fichier. */
 (function () {
   'use strict';
   if (!window.LKCarnets) return;

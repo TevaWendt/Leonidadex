@@ -304,9 +304,9 @@
     } else { free.seen++; if (ok) free.ok++; }
     const mark = (list, attr) => list.forEach(x => { const r = x.getAttribute(attr); x.disabled = true; x.classList.add(r === right ? 'is-right' : r === region ? 'is-wrong' : 'is-off'); });
     mark(opts, 'data-dv-opt'); mark(pins, 'data-dv-pin');
-    opts.forEach(b => { const r = b.getAttribute('data-dv-opt'), sr = $('.dv-opt-sr', b); if (sr) sr.textContent = r === right ? ' · ' + fill('dv-sr-bonne') : r === region ? ' · ' + fill('dv-sr-ta') : ''; });
+    opts.forEach(b => { const r = b.getAttribute('data-dv-opt'), sr = $('.dv-opt-sr', b); if (sr) sr.textContent = r === right ? ', ' + fill('dv-sr-bonne') : r === region ? ', ' + fill('dv-sr-ta') : ''; });
     if (!ok) drawLine(region, right);
-    verdict.textContent = (ok ? '✓ ' + fill('dv-verdict-juste') : '✗ ' + fill('dv-verdict-rate')) + ' · ' + NAME[right];
+    verdict.textContent = (ok ? '✓ ' + fill('dv-verdict-juste') : '✗ ' + fill('dv-verdict-rate')) + ', ' + NAME[right];
     verdict.className = 'dv-verdict ' + (ok ? 'is-ok' : 'is-ko'); verdict.hidden = false;
     const t = ok ? fill('dv-juste', { region: NAME[right] }) : fill('dv-rate', { region: NAME[right], choix: NAME[region] });
     const at = $('[data-dv-answer-t]'); at.textContent = t; at.className = 'dv-answer-t ' + (ok ? 'is-ok' : 'is-ko');

@@ -1,9 +1,4 @@
-/* Pages d'information — v7.44 (lot 7). Même charte que le reste du site (jetons de style.css), largeur de contenu
-   commune (.shell), bandeau avec pile d'images cliquable (.page-head + .lk-head-grid de style.css), sous-navigation
-   collante (.ed-nav) et sections éditoriales (.ed) du lot 3. Règle du lot 2 : aucun flou, aucune rotation 3D, rien ne
-   bouge sous la souris sur un bloc qu'on lit. Sans JavaScript ou en mouvement réduit, tout est visible. */
-
-/* ---------- bandeau ---------- */
+/* Généré depuis outils/sources/informations.css : modifie la source, pas ce fichier. */
 .info-page .page-head{padding-top:56px;padding-bottom:40px;}
 .info-eyebrow{font:800 .78rem/1.4 var(--font-mono,ui-monospace,monospace);letter-spacing:.12em;color:var(--coral-text,#B93220);margin:0 0 16px;text-transform:uppercase;}
 .info-page .page-head h1{font-size:clamp(2.2rem,4.4vw,4.2rem);line-height:1.06;letter-spacing:-.045em;margin:0 0 20px;overflow-wrap:break-word;}
@@ -13,8 +8,6 @@
 .info-page .info-link{display:inline-flex;align-items:center;gap:6px;min-height:46px;padding:12px 4px;font-weight:800;color:var(--ink);text-decoration:underline;text-underline-offset:4px;}
 .info-page main button:disabled{opacity:.5;cursor:default;box-shadow:none;}
 .info-page :is(a,button,input,textarea,select,summary,.lk-show):focus-visible{outline:3px solid var(--coral-text,#B93220);outline-offset:4px;}
-
-/* ---------- sections (Contact, Mentions : gabarit commun, contenu inchangé) ---------- */
 .info-section{padding-top:42px;padding-bottom:46px;border-top:1px solid var(--rule);}
 .info-section h2{font-size:clamp(1.6rem,2.8vw,2.3rem);line-height:1.2;margin:0 0 22px;letter-spacing:-.025em;}
 .info-section h3{font-size:1.15rem;line-height:1.35;margin:18px 0 10px;}
@@ -29,7 +22,6 @@
 .info-contact-status h2{font-size:1.2rem;margin:0 0 12px;}
 .info-contact-status p{margin:10px 0;max-width:none;}
 .info-note{font-size:.9rem;color:var(--ink-soft);}
-/* la largeur de page reste celle du site ; seul le texte courant est limité à une mesure lisible, aligné à gauche comme le bandeau */
 .info-prose :is(h2,h3,p,aside,ul){max-width:860px;}
 .info-prose a,.info-section>p a{color:var(--coral-text,#B93220);text-decoration:underline;text-underline-offset:3px;}
 .info-page main :is(input,select,textarea){display:block;width:100%;font:inherit;padding:12px;background:#fff;border:1.5px solid var(--ink-soft);border-radius:8px;min-width:0;max-width:100%;}
@@ -37,13 +29,11 @@
 .info-page label{display:block;font-weight:700;line-height:1.5;margin:20px 0 8px;}
 .info-page form button{margin-top:20px;}
 .info-page .ed-nav+.info-section{border-top:0;}
-
-/* ---------- À propos : compositions propres ---------- */
 .ed-level-ex{margin-top:10px;font-size:.86rem;line-height:1.5;}
 .ed-level-ex span{font-weight:800;}
 .ed-level-ex a{color:var(--coral-text,#B93220);text-decoration:underline;text-underline-offset:3px;}
 .ed--night .ed-level-ex a{color:var(--amber);}
-.ed-levels--about{margin-bottom:26px;} /* v7.47 : la mise en page vient de .ed-levels (style.css), rangées équilibrées */
+.ed-levels--about{margin-bottom:26px;}
 .ed-col-link{display:inline-flex;align-items:center;gap:6px;margin-top:10px;font-weight:800;color:var(--coral-text,#B93220);text-decoration:underline;text-underline-offset:4px;}
 .ed-figs--about{grid-template-columns:repeat(4,minmax(0,1fr));}
 .ed-figs--about .fig{gap:8px;}
@@ -54,8 +44,6 @@
 .ed-sign-phrase{font-size:1.15rem;line-height:1.6;margin:0 0 10px;}
 .ed-act--inline{margin-top:18px;max-width:420px;}
 .ed-zone--info .faq details{max-width:78ch;}
-
-/* ---------- lk-showcase : séquence « effet Rockstar » des six outils ---------- */
 .lk-showcase{display:grid;gap:28px;}
 .lk-show{position:relative;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);align-items:stretch;min-height:400px;border:2px solid var(--ink);border-radius:20px;background:#fff;overflow:hidden;box-shadow:var(--shadow-soft,4px 4px 0 rgba(26,26,30,.18));}
 .lk-show:nth-child(even){grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);}
@@ -71,9 +59,7 @@
 .lk-show-p{margin:0;font-size:1.02rem;line-height:1.65;color:var(--ink);max-width:48ch;}
 .lk-show-link{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;margin-top:6px;padding:11px 16px;font:800 .92rem 'Archivo',sans-serif;color:var(--ink);background:var(--amber);border:2px solid var(--ink);border-radius:9px;text-decoration:none;box-shadow:3px 3px 0 var(--ink);}
 .lk-show-link:hover,.lk-show-link:focus-visible{background:var(--ink);color:#fff;box-shadow:3px 3px 0 var(--amber);}
-/* état sélectionné immobile (lot 2) : bord et ombre, jamais de transform */
 .lk-show:hover,.lk-show.is-focus{box-shadow:7px 7px 0 var(--amber);}
-/* --- repli par observateur : transitions réversibles, ≤ 860 ms par carte --- */
 .js .lk-showcase--observer .lk-show-fig img{clip-path:inset(0 0 0 100%);transform:translate3d(6%,0,0);transition:clip-path .7s var(--ease-out,cubic-bezier(.2,.7,.2,1)),transform .8s var(--ease-out,cubic-bezier(.2,.7,.2,1));}
 .js .lk-showcase--observer .lk-show:nth-child(even) .lk-show-fig img{clip-path:inset(0 100% 0 0);transform:translate3d(-6%,0,0);}
 .js .lk-showcase--observer .lk-show.is-in .lk-show-fig img{clip-path:inset(0 0 0 0);transform:none;}
@@ -84,7 +70,6 @@
 .js .lk-showcase--observer .lk-show-p{opacity:0;transform:translate3d(0,12px,0);transition:opacity .4s var(--ease-out,ease-out) 380ms,transform .4s var(--ease-out,ease-out) 380ms;}
 .js .lk-showcase--observer .lk-show-link{opacity:0;transform:translate3d(0,12px,0);transition:opacity .38s var(--ease-out,ease-out) 480ms,transform .38s var(--ease-out,ease-out) 480ms;}
 .js .lk-showcase--observer .lk-show.is-in .lk-show-p,.js .lk-showcase--observer .lk-show.is-in .lk-show-link{opacity:1;transform:none;}
-/* --- lié au défilement : la carte se compose pendant son entrée, se défait si on remonte --- */
 @keyframes lk-show-img{from{clip-path:inset(0 0 0 100%);transform:translate3d(6%,0,0);}to{clip-path:inset(0 0 0 0);transform:none;}}
 @keyframes lk-show-img-r{from{clip-path:inset(0 100% 0 0);transform:translate3d(-6%,0,0);}to{clip-path:inset(0 0 0 0);transform:none;}}
 @keyframes lk-show-img-up{from{clip-path:inset(100% 0 0 0);transform:translate3d(0,4%,0);}to{clip-path:inset(0 0 0 0);transform:none;}}
@@ -99,16 +84,12 @@
   .js .lk-showcase--timeline .lk-sw{animation:lk-show-word linear both;animation-timeline:--lk-show;animation-range:entry calc(16% + var(--lk-i,0)*3%) entry calc(46% + var(--lk-i,0)*3%);}
   .js .lk-showcase--timeline .lk-show-p{animation:lk-show-up linear both;animation-timeline:--lk-show;animation-range:entry 34% entry 66%;}
   .js .lk-showcase--timeline .lk-show-link{animation:lk-show-up linear both;animation-timeline:--lk-show;animation-range:entry 46% entry 78%;}
-  /* le focus clavier révèle la carte quelle que soit sa position */
   .js .lk-showcase--timeline .lk-show.is-focus .lk-show-fig img,.js .lk-showcase--timeline .lk-show.is-focus .lk-show-n,.js .lk-showcase--timeline .lk-show.is-focus .lk-sw,.js .lk-showcase--timeline .lk-show.is-focus .lk-show-p,.js .lk-showcase--timeline .lk-show.is-focus .lk-show-link{animation:none;clip-path:none;opacity:1;transform:none;}
 }
-/* mouvement réduit et impression : tout visible, rien ne bouge (en plus de la règle globale de style.css) */
 @media(prefers-reduced-motion:reduce){
   .lk-show-fig img,.lk-show-n,.lk-sw,.lk-show-p,.lk-show-link{animation:none !important;transition:none !important;clip-path:none !important;opacity:1 !important;transform:none !important;}
 }
 @media print{.lk-show-fig img,.lk-show-n,.lk-sw,.lk-show-p,.lk-show-link{animation:none !important;transition:none !important;clip-path:none !important;opacity:1 !important;transform:none !important;} .lk-show{break-inside:avoid;}}
-
-/* ---------- largeurs ---------- */
 @media(max-width:1000px){.ed-figs--about{grid-template-columns:repeat(2,minmax(0,1fr));}}
 @media(max-width:950px){.info-grid{grid-template-columns:repeat(2,minmax(0,1fr));}.info-split{gap:24px;}}
 @media(max-width:900px){
@@ -128,11 +109,8 @@
   .info-card{padding:18px;}
   .info-contact-status{padding:18px;}
   .info-actions>*{max-width:100%;}
-
 }
 @media(max-width:480px){.ed-figs--about{grid-template-columns:repeat(2,minmax(0,1fr));}}
-
-/* ---------- v7.46 (lot 9) : Contact réel et Mentions complètes ---------- */
 .lk-mail{font-weight:800;color:var(--ink);text-decoration:underline;text-decoration-color:var(--amber);text-decoration-thickness:3px;text-underline-offset:5px;overflow-wrap:normal;word-break:normal;}
 .info-prose-in .lk-mail,.info-illus .lk-mail,.info-dl .lk-mail{color:var(--coral-text,#B93220);text-decoration-color:currentColor;text-decoration-thickness:1px;text-underline-offset:3px;}
 .info-mail{font-size:clamp(1.15rem,1rem + .6vw,1.45rem);margin:6px 0 4px!important;}
@@ -193,14 +171,11 @@
 @media (max-width:900px){.info-side{position:static;}.info-dl>div{grid-template-columns:1fr;gap:4px;}}
 @media (max-width:420px){.info-clair{flex-direction:column;gap:4px;}.info-illus li{padding:16px;gap:12px;}.info-illus-ico{width:40px;height:40px;}}
 @media print{.info-table table{min-width:0;}}
-
 .ed-zone--info .info-prose-in p{margin:0 0 14px;}
 .ed-zone--info .info-prose-in p:last-child{margin-bottom:0;}
 .info-prose-in code{padding:1px 4px;}
 @media (min-width:1000px){.info-illus--5{grid-template-columns:repeat(6,minmax(0,1fr));}.info-illus--5 li{grid-column:span 2;}.info-illus--5 li:nth-child(4){grid-column:2/span 2;}}
 @media (min-width:640px) and (max-width:999px){.info-illus--5{grid-template-columns:repeat(2,minmax(0,1fr));}.info-illus--5 li:last-child{grid-column:1/-1;}}
-/* v7.68 (téléphone) : un tableau des informations devient une fiche par ligne ; chaque case affiche l’intitulé de sa colonne
-   (data-label posé par outils/gen-informations.cjs). Rien ne change au-dessus de 600 px. */
 @media(max-width:600px){
  .info-table{overflow:visible;border:0;border-radius:0;background:none;}
  .info-table table{min-width:0;}
@@ -212,31 +187,21 @@
  .info-table tbody tr :is(th,td):last-child,.info-table tbody tr:last-child :is(th,td):last-child{border-bottom:0;}
  .info-table td[data-label]::before{content:attr(data-label);content:attr(data-label) / "";display:block;margin-bottom:2px;font-size:.78rem;font-weight:800;letter-spacing:.02em;color:var(--ink-soft);}
 }
-
-/* ============================================================
-   v7.70 (Téva : « toute la section Mentions fait brouillon, rien n'est aligné, beaucoup de texte part en bordel ») :
-   même largeur de lecture partout (860 px), tableau « Ce qui part, et où » en fiches à cinq cases lisibles sur toutes les
-   largeurs (plus de colonnes étroites), listes à puces en cartes, prestataires et hébergeur en fiches alignées, historique
-   en frise. Les rôles ARIA du tableau restent (lecteurs d'écran) ; seule la mise en page change.
-   ============================================================ */
 .ed-zone--legal .info-prose-in,.ed-zone--legal .info-dl,.ed-zone--legal .info-history,.ed-zone--legal .info-clair,.ed-zone--legal .info-table{max-width:860px;}
 .ed-zone--legal .info-prose-in h3{display:flex;align-items:center;gap:12px;margin:34px 0 14px;font-size:1.25rem;}
 .ed-zone--legal .info-prose-in h3::after{content:'';flex:1;height:1px;background:var(--rule);}
-/* listes à puces : cartes */
 .ed-zone--legal .info-prose-in ul{list-style:none;margin:12px 0 18px;padding:0;display:grid;gap:8px;}
 .ed-zone--legal .info-prose-in ul>li{position:relative;margin:0;padding:11px 14px 11px 40px;border:1.5px solid var(--rule);border-radius:12px;background:#fff;line-height:1.6;}
 .ed-zone--legal .info-prose-in ul>li::before{content:'';position:absolute;left:16px;top:19px;width:10px;height:10px;border-radius:50%;background:var(--amber);border:1.5px solid var(--ink);}
 .ed-zone--legal .ed--night .info-prose-in ul>li{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.25);}
 .ed-zone--legal .info-prose-in ul>li code{white-space:nowrap;}
-/* fiches clé / valeur (hébergeur, prestataires) */
 .ed-zone--legal .info-dl{gap:8px;border-top:0;}
 .ed-zone--legal .info-dl>div{grid-template-columns:minmax(150px,200px) minmax(0,1fr);gap:18px;padding:14px 16px;border:1.5px solid var(--rule);border-radius:12px;background:#fff;}
 .ed-zone--legal .info-dl dt{font:800 .72rem/1.5 var(--font-mono,ui-monospace,monospace);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);padding-top:2px;}
 .ed-zone--legal .info-dl dd{line-height:1.65;}
 .ed-zone--legal .ed--night .info-dl>div{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.25);}
 .ed-zone--legal .ed--night .info-dl dt{color:rgba(253,251,247,.75);}
-@media (max-width:900px){.ed-zone--legal .info-dl>div{grid-template-columns:1fr;gap:6px;}}/* la fiche s'empile sous 900 px, comme la liste d'origine : sinon « confidentialité » se coupe à 320 px */
-/* tableau des traitements : une fiche par ligne, cinq cases nommées */
+@media (max-width:900px){.ed-zone--legal .info-dl>div{grid-template-columns:1fr;gap:6px;}}
 .ed-zone--legal .info-table{overflow:visible;border:0;border-radius:0;background:none;margin:12px 0 22px;}
 .ed-zone--legal .info-table table{min-width:0;display:block;}
 .ed-zone--legal .info-table thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;}
@@ -248,11 +213,9 @@
 .ed-zone--legal .info-table tbody td:nth-of-type(2){grid-area:r;}
 .ed-zone--legal .info-table tbody td:nth-of-type(3){grid-area:f;}
 .ed-zone--legal .info-table tbody td:nth-of-type(4){grid-area:t;}
-/* v7.87.1 : sur téléphone, l’intitulé de chaque case (dont la ligne « mesure d’audience ») fait 11 px au moins (0,64 rem : 10,2 px) */
 .ed-zone--legal .info-table td[data-label]::before{content:attr(data-label);display:block;margin-bottom:4px;font:800 max(11px,.64rem)/1.4 var(--font-mono,ui-monospace,monospace);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);}
 .ed-zone--legal .info-table tbody tr:target,.ed-zone--legal .info-table tbody tr.is-target{box-shadow:0 0 0 3px var(--amber),4px 4px 0 rgba(26,26,30,.1);}
 @media(max-width:600px){.ed-zone--legal .info-table tbody tr{grid-template-columns:1fr;grid-template-areas:"h" "d" "r" "f" "t";padding:14px;}.ed-zone--legal .info-table tbody th{font-size:1rem;}}
-/* historique : frise */
 .ed-zone--legal .info-history{list-style:none;padding:0 0 0 26px;margin:0;position:relative;display:grid;gap:12px;}
 .ed-zone--legal .info-history::before{content:'';position:absolute;left:8px;top:8px;bottom:8px;width:2px;background:var(--rule);}
 .ed-zone--legal .info-history li{position:relative;margin:0;padding:12px 16px;border:1.5px solid var(--rule);border-radius:12px;background:#fff;line-height:1.6;}
@@ -260,11 +223,8 @@
 .ed-zone--legal .info-history li:first-child::before{background:var(--coral);}
 .ed-zone--legal .info-history time{font:800 .72rem/1.6 var(--font-mono,ui-monospace,monospace);letter-spacing:.06em;text-transform:uppercase;color:var(--ink);display:inline-block;margin-right:4px;}
 .ed-zone--legal .info-updated{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border:1.5px solid var(--ink);border-radius:999px;background:var(--paper);font-size:.9rem;margin:0 0 16px!important;}
-/* en bref : alignement des cinq cartes et de leurs textes */
 .ed-zone--legal .info-illus li{align-items:flex-start;}
 .ed-zone--legal .info-illus h3{min-height:0;}
-
-/* ---------- v7.86 : « Ce qui est confirmé, et comment on le vérifie » (verification.html) ---------- */
 .vf-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:14px;}
 .vf-item{display:flex;flex-direction:column;gap:6px;padding:16px 18px;border:2px solid var(--ink);border-radius:12px;background:#fff;box-shadow:var(--shadow-soft);}
 .vf-item h3{margin:0;font-size:1.05rem;}
@@ -281,12 +241,6 @@
 .vf-never{list-style:none;margin:0;padding:0;display:grid;gap:10px;}
 .vf-never li{position:relative;padding:12px 14px 12px 44px;border:2px solid currentColor;border-radius:10px;}
 .vf-never li::before{content:'';position:absolute;left:14px;top:50%;width:18px;height:18px;margin-top:-9px;border-radius:50%;border:2px solid currentColor;background:linear-gradient(45deg,transparent 45%,currentColor 45% 55%,transparent 55%);}
-
-/* v7.87.1 (passe de qualité) : page « Ce qui est confirmé » (verification.html)
-   - grilles : la dernière rangée est centrée, à la même largeur que les autres (règle des grilles du site, comme .ed-open) ;
-     trois colonnes (huit points confirmés) ou quatre (rubriques des fiches, coûts d’usage), puis deux, puis une ;
-   - « Ce qu’on n’utilise jamais » : deux colonnes sur grand écran au lieu de quatre bandeaux pleine largeur ;
-   - entrées au défilement du moteur commun (lk-reveal) avec la translation des jetons (--c-rise, 10 px). */
 .vf-list,.vf-rubs{display:flex;flex-wrap:wrap;justify-content:center;}
 .vf-list>.vf-item{flex:0 1 calc((100% - 28px)/3);min-width:0;}
 .vf-rubs>.vf-rub{flex:0 1 calc((100% - 36px)/4);min-width:0;}
@@ -296,8 +250,6 @@
 @media (max-width:660px){.vf-list>.vf-item,.vf-rubs>.vf-rub{flex-basis:100%;}}
 @media (min-width:900px){.vf-never{grid-template-columns:repeat(2,minmax(0,1fr));}}
 .info-page--verif :is(.vf-item,.vf-rub,.vf-never li,.ed-level,.fig).lk-reveal:not(.is-in):not(.lk-settled){transform:translate3d(0,var(--c-rise,10px),0);}
-
-/* v7.88 : page Presse et créateurs (presse.html) : le site en trois phrases, le kit à télécharger, citer le site, ce qui se reprend */
 .pr-brief{display:grid;gap:12px;max-width:72ch;}
 .pr-brief p{margin:0;font-size:1.08rem;line-height:1.6;}
 .pr-zip{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:12px 18px;margin:0 0 18px;padding:18px 20px;border:2px solid var(--ink);border-radius:14px;background:var(--amber);box-shadow:var(--shadow-soft);}
@@ -321,7 +273,7 @@
 .pr-dl:hover{background:var(--amber);}
 .pr-dl:focus-visible{outline:3px solid var(--coral-text,#B93220);outline-offset:2px;}
 .pr-dl-size{font-weight:600;font-size:.82rem;color:var(--ink-soft);}
-.pr-dl:hover .pr-dl-size{color:var(--ink);} /* v7.88 : --ink-soft sur l’ambre du survol tombait à 3,3:1 */
+.pr-dl:hover .pr-dl-size{color:var(--ink);}
 .pr-dl--main{min-height:46px;padding:12px 18px;background:var(--paper);box-shadow:3px 3px 0 var(--ink);}
 .pr-dl--main:hover{background:#fff;}
 .pr-note{max-width:72ch;margin:14px 0 0;font-size:.92rem;color:var(--ink-soft);}
@@ -335,12 +287,6 @@
 .pr-rule--oui li::before{background:var(--amber) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Cpath d='M4.5 9.5l3 3 6-7' fill='none' stroke='%231A1A1E' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/100% no-repeat;}
 .pr-rule--non li::before{border:2px solid currentColor;background:linear-gradient(45deg,transparent 44%,currentColor 44% 56%,transparent 56%);box-sizing:border-box;}
 @media(max-width:600px){.pr-zip{grid-template-columns:auto minmax(0,1fr);padding:16px;}.pr-zip .pr-dl--main{grid-column:1 / -1;width:100%;justify-content:center;}}
-/* six chiffres : v7.92.1, en face des trois phrases, deux colonnes de trois (voir plus bas, « En bref ») */
-
-/* =====================================================================================================================
-   v7.92 : pages enrichies « Ce qui est confirmé » et « Presse et créateurs ». Briques communes dans vitrine.css.
-   ===================================================================================================================== */
-/* ---------- Ce qui est confirmé : le tableau de bord ---------- */
 .vf-board-sum{margin:0 0 18px;}
 .vf-figs{grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));}
 .vf-board{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:0;padding:0;list-style:none;}
@@ -361,8 +307,6 @@
 .vf-tile--wait .vf-tile-s::before{content:'?';width:auto;height:auto;background:none;font:900 .9rem/1 'Archivo',sans-serif;color:var(--amber-2);}
 .vf-tile:focus-visible{outline:3px solid var(--coral);outline-offset:3px;}
 @media (hover:hover) and (pointer:fine){.vf-tile:hover{transform:translate(-3px,-3px);box-shadow:7px 7px 0 var(--ink);}}
-
-/* ---------- Ce qui est confirmé : points confirmés avec leur visuel ---------- */
 .vf-cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin:0;padding:0;list-style:none;}
 @media (max-width:1199px){.vf-cards{grid-template-columns:repeat(3,minmax(0,1fr));}}
 @media (max-width:899px){.vf-cards{grid-template-columns:repeat(2,minmax(0,1fr));}}
@@ -376,8 +320,6 @@
 .vf-card:target{outline:3px solid var(--coral);outline-offset:3px;}
 @media (hover:hover) and (pointer:fine){.vf-card:hover .vt-media img{transform:scale(1.05);}}
 .vf-stats-k+.vf-figs{margin-top:8px;}
-
-/* ---------- Ce qui est confirmé : questions sans réponse officielle ---------- */
 .vf-qs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:0;padding:0;list-style:none;}
 @media (max-width:1099px){.vf-qs{grid-template-columns:repeat(2,minmax(0,1fr));}}
 @media (max-width:539px){.vf-qs{grid-template-columns:1fr;}}
@@ -388,11 +330,8 @@
 .vf-q-ico b{position:absolute;right:-8px;top:-8px;display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--coral);color:#fff;font:900 .8rem/1 'Archivo',sans-serif;border:2px solid var(--night);}
 .vf-q h3{margin:0;font:900 1.02rem/1.25 'Archivo',sans-serif;color:#fff;}
 .vf-q p{margin:0;font-size:.9rem;line-height:1.5;color:rgba(253,251,247,.86);}
-/* v7.93 : lien vers la page qui répond, lisible sur le fond de nuit */
 .vf-q .vf-links{margin-top:auto!important;padding-top:8px;}
 .vf-q .vf-links a{color:var(--amber-2);}
-
-/* ---------- Ce qui est confirmé : l’échelle des statuts ---------- */
 .vf-scale{margin-top:22px;}
 .vf-scale-ends{display:flex;justify-content:space-between;margin:0 0 8px;font:800 var(--fs-kicker)/1.2 var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);}
 .vf-scale-l{position:relative;display:grid;grid-template-columns:repeat(var(--n,5),minmax(0,1fr));gap:12px;margin:0;padding:18px 0 0;list-style:none;}
@@ -405,8 +344,6 @@
 .vf-step h3{display:flex;align-items:center;gap:8px;margin:0 0 6px;font:900 .98rem/1.25 'Archivo',sans-serif;}
 .vf-step p{margin:0;font-size:.86rem;line-height:1.5;color:var(--ink-soft);}
 .vf-signal{max-width:var(--measure);}
-
-/* ---------- Presse : vignettes des captures qui s’agrandissent ---------- */
 .pr-file-zoom{position:relative;display:block;}
 .pr-zoom{position:absolute;right:8px;top:8px;display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:rgba(26,26,30,.78);color:#fff;opacity:0;transform:scale(.8);transition:opacity var(--c-fast,190ms),transform var(--c-fast,190ms);}
 .pr-zoom svg{width:15px;height:15px;}
@@ -414,9 +351,6 @@
 .pr-file-zoom:focus-visible .pr-zoom{opacity:1;transform:none;}
 @media (hover:hover) and (pointer:fine){.pr-file-zoom:hover .pr-zoom{opacity:1;transform:none;}.pr-file-zoom:hover img{transform:scale(1.04);}}
 .pr-file-zoom img{transition:transform .5s var(--c-ease-result,cubic-bezier(.16,1,.3,1));}
-
-/* ---------- Presse : couleurs et police ---------- */
-/* v7.92.1 : une rangée incomplète (3 + 2, 2 + 2 + 1) se centre */
 .pr-swatches{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin:0 0 22px;padding:0;list-style:none;}
 .pr-swatches>li{flex:0 1 calc((100% - 56px) / 5);min-width:0;}
 @media (max-width:1099px){.pr-swatches>li{flex-basis:calc((100% - 28px) / 3);}}
@@ -441,8 +375,6 @@
 .pr-weights{display:flex;flex-wrap:wrap;gap:8px 20px;margin:0 0 12px;padding:0;list-style:none;font-size:1.1rem;}
 .pr-weights b{font:inherit;font-family:var(--font-mono);font-size:.78rem;color:var(--amber-2);}
 .pr-specimen{margin:0!important;font:900 clamp(1.2rem,1rem + 1vw,1.9rem)/1.15 'Archivo',sans-serif!important;letter-spacing:-.03em;color:#fff!important;}
-
-/* ---------- Presse : formules à copier ---------- */
 .pr-formats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:0;padding:0;list-style:none;}
 @media (max-width:959px){.pr-formats{grid-template-columns:1fr;}}
 .pr-formats>li{display:flex;flex-direction:column;gap:8px;padding:14px 16px 16px;border:2px solid var(--ink);border-radius:var(--radius);background:#fff;box-shadow:var(--shadow-soft);}
@@ -450,16 +382,7 @@
 .vt-copybox{display:flex;flex-direction:column;gap:10px;}
 .vt-copy-src{margin:0;padding:10px 12px;border:1px dashed var(--rule);border-radius:8px;background:var(--paper);font-size:.9rem;line-height:1.5;overflow-wrap:anywhere;}
 .vt-copybox .vt-copy{align-self:flex-start;}
-/* v7.92 : liens des cartes (sources, pages liées) : 28 px de haut au moins pour le doigt, sans changer le texte */
 .vf-links a{padding:3px 0;}
-
-/* =====================================================================================================================
-   v7.92.1 : page Presse revue (demande de Téva du 16 octobre : animations, centrage, alignement des images et des textes).
-   Le visuel du bandeau devient une carte de presse ; « En bref », le kit, l’indépendance et le contact remplissent toute la
-   largeur, en colonnes de même hauteur ; boutons alignés en bas de leur carte. Mouvement : transform, opacity, clip-path ;
-   rien ne bouge en « réduire les animations ».
-   ===================================================================================================================== */
-/* ---------- la carte de presse, suspendue à son cordon ---------- */
 .pr-pass-wrap{position:relative;display:grid;place-items:center;min-width:0;padding:6px 0 16px;}
 .pr-pass-hang{position:relative;width:min(100%,300px);transform-origin:50% -80px;}
 .pr-pass-strap{position:absolute;left:50%;bottom:calc(100% - 20px);z-index:2;width:24px;height:70vh;margin-left:-12px;border-inline:2px solid var(--ink);background:repeating-linear-gradient(180deg,var(--coral) 0 30px,#C9381F 30px 32px);}
@@ -470,7 +393,6 @@
 .pr-pass-k::before{content:'';flex:none;width:9px;height:9px;border-radius:50%;background:var(--coral);box-shadow:0 0 0 3px rgba(232,69,44,.32);}
 .pr-pass-photo{position:relative;display:block;aspect-ratio:16/10;overflow:hidden;background:var(--night);border-bottom:2px solid var(--ink);}
 .pr-pass-photo img{display:block;width:100%;height:100%;object-fit:cover;}
-/* l’hologramme d’accréditation change de couleur quand la carte s’incline (--ry, posée par vitrine.js) */
 .pr-pass-holo{position:absolute;right:10px;top:10px;width:34px;height:34px;border:1.5px solid rgba(255,255,255,.75);border-radius:9px;background:conic-gradient(from calc(var(--ry,0deg) * 9),#F5A524,#E8452C,#7A4FB8,#36B5A0,#F5A524);opacity:.88;mix-blend-mode:screen;}
 .pr-pass-c{position:absolute;left:0;right:0;bottom:0;padding:18px 10px 6px;background:linear-gradient(180deg,rgba(26,26,30,0),rgba(26,26,30,.74));color:rgba(255,255,255,.92);font:700 .66rem/1.25 'Archivo',sans-serif;letter-spacing:.01em;}
 .pr-pass-brand{display:block;margin:16px 18px 0;font:900 1.8rem/1 'Archivo',sans-serif;letter-spacing:-.035em;}
@@ -480,7 +402,6 @@
 .pr-pass-stats .fig-n{font:800 1.32rem/1 var(--font-mono);letter-spacing:-.03em;font-variant-numeric:tabular-nums;color:var(--ink);}
 .pr-pass-stats span{font-size:.72rem;line-height:1.25;font-weight:700;color:var(--ink-soft);overflow-wrap:anywhere;-webkit-hyphens:auto;hyphens:auto;}
 .pr-pass-code{display:block;height:30px;margin:16px 18px 18px;background:repeating-linear-gradient(90deg,var(--ink) 0 2px,transparent 2px 4px,var(--ink) 4px 7px,transparent 7px 9px,var(--ink) 9px 10px,transparent 10px 13px,var(--ink) 13px 16px,transparent 16px 17px,var(--ink) 17px 18px,transparent 18px 22px);}
-/* elle tombe et se balance une fois, puis s’immobilise */
 @media (prefers-reduced-motion:no-preference){
   .pr-pass-hang{animation:pr-hang 1.7s ease-in-out .2s backwards;}
 }
@@ -496,7 +417,6 @@
   .pr-pass-wrap{padding-top:44px;}
   .pr-pass-strap{height:60px;}
 }
-/* au téléphone, la carte se couche : la photo à gauche, le nom et les chiffres à droite */
 @media (max-width:599px){
   .pr-pass-wrap{padding:6px 0 10px;}
   .pr-pass-hang{width:min(100%,380px);transform-origin:50% 0;}
@@ -513,8 +433,6 @@
   .pr-pass-stats span{font-size:.76rem;}
   .pr-pass-code{grid-area:code;height:18px;margin:0;border-top:2px solid var(--ink);background-color:#fff;background-clip:content-box;padding:6px 14px;box-sizing:content-box;}
 }
-
-/* ---------- En bref : les trois phrases à copier, les chiffres en face ---------- */
 .pr-brief-split{align-items:stretch;}
 .pr-brief-card{display:flex;flex-direction:column;gap:18px;min-width:0;padding:clamp(18px,2.4vw,28px);border:2px solid var(--ink);border-left-width:8px;border-left-color:var(--amber);border-radius:var(--radius);background:#fff;box-shadow:var(--shadow-hard);}
 .pr-brief-card .pr-brief{gap:14px;max-width:none;}
@@ -523,8 +441,6 @@
 .pr-brief-figs{min-width:0;}
 .pr-brief-figs .vf-stats-k{margin:0 0 12px;}
 .info-page--presse .pr-brief-figs .ed-figs--about{grid-template-columns:repeat(2,minmax(0,1fr));}
-
-/* ---------- Le kit : l’archive avec son icône, deux remarques côte à côte ---------- */
 .pr-zip-ico{display:grid;place-items:center;width:52px;height:52px;border:2px solid var(--ink);border-radius:14px;background:var(--paper);box-shadow:2px 2px 0 var(--ink);}
 .pr-zip-ico svg{width:28px;height:28px;}
 .pr-zip-b{min-width:0;}
@@ -532,8 +448,6 @@
 @media(max-width:759px){.pr-notes{grid-template-columns:1fr;}}
 .pr-notes .pr-note{display:flex;align-items:flex-start;gap:12px;max-width:none;margin:0;padding:14px 16px;border:1.5px solid var(--rule);border-radius:12px;background:var(--paper);line-height:1.55;}
 .pr-notes .pr-note svg{flex:none;width:22px;height:22px;margin-top:1px;color:var(--coral-text);}
-
-/* ---------- Identité : un reflet passe sur la couleur au survol ; une coche quand le code est copié ---------- */
 .pr-sw-chip{position:relative;overflow:hidden;}
 .pr-sw-chip::after{content:'';position:absolute;inset:0;background:linear-gradient(105deg,rgba(255,255,255,0) 30%,rgba(255,255,255,.5) 50%,rgba(255,255,255,0) 70%);transform:translateX(-120%);}
 @media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
@@ -542,24 +456,17 @@
 }
 .pr-sw-chip::before{content:'';position:absolute;left:50%;top:50%;z-index:1;width:40px;height:40px;margin:-20px 0 0 -20px;border:2px solid var(--ink);border-radius:50%;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231A1A1E' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center/22px no-repeat;opacity:0;transform:scale(.6);transition:opacity .2s,transform .3s var(--ease-spring,cubic-bezier(.34,1.56,.64,1));}
 .pr-sw:has(.vt-copy.is-done) .pr-sw-chip::before{opacity:1;transform:none;}
-
-/* ---------- Citer : formules de même hauteur, boutons alignés en bas ---------- */
 .pr-formats>li .vt-copybox{flex:1;}
 .pr-formats .vt-copy-src{flex:1;}
-
-/* ---------- Indépendance : deux paragraphes côte à côte, trois engagements ---------- */
 .pr-indep{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px clamp(20px,3vw,44px);margin:0 0 26px;}
 .pr-indep p{margin:0;font-size:1.04rem;line-height:1.65;max-width:none;}
 @media(max-width:759px){.pr-indep{grid-template-columns:1fr;}}
-
-/* ---------- Contact : la lettre et l’encart Léo, à la même hauteur ---------- */
 .pr-letter{position:relative;display:flex;flex-direction:column;gap:12px;min-width:0;padding:38px clamp(18px,2.6vw,30px) clamp(18px,2.6vw,28px);border:2px solid var(--ink);border-radius:var(--radius);background:#fff;box-shadow:var(--shadow-hard);overflow:hidden;}
 .pr-letter::before{content:'';position:absolute;left:0;right:0;top:0;height:10px;border-bottom:2px solid var(--ink);background:repeating-linear-gradient(135deg,var(--coral) 0 14px,#fff 14px 21px,var(--night) 21px 35px,#fff 35px 42px);}
 .pr-letter>p{margin:0;max-width:60ch;}
 .pr-letter>p:first-of-type{padding-right:118px;line-height:1.6;}
 .pr-letter-stamp{--r:4px;position:absolute;right:22px;top:28px;width:72px;height:84px;padding:calc(2 * var(--r));box-sizing:border-box;background:radial-gradient(var(--r),#0000 98%,#fff) round calc(-1.5 * var(--r)) calc(-1.5 * var(--r)) / calc(3 * var(--r)) calc(3 * var(--r)),linear-gradient(#fff 0 0) no-repeat 50% / calc(100% - 3 * var(--r)) calc(100% - 3 * var(--r));filter:drop-shadow(0 0 .7px var(--ink)) drop-shadow(2px 3px 0 rgba(26,26,30,.22));transform:rotate(5deg);}
 .pr-letter-stamp img{display:block;width:100%;height:100%;object-fit:contain;}
-/* le cachet de la poste : deux cercles d’encre qui mordent sur le bord du timbre, trois lignes d’oblitération par-dessus */
 .pr-letter-mark{position:absolute;right:0;top:50px;width:132px;height:64px;pointer-events:none;transform:rotate(-10deg);background:radial-gradient(circle at 32px 32px,rgba(26,26,30,0) 0 21px,rgba(26,26,30,.42) 21px 22.5px,rgba(26,26,30,0) 22.5px 28.5px,rgba(26,26,30,.5) 28.5px 30.5px,rgba(26,26,30,0) 30.5px) no-repeat,url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 70 24' fill='none' stroke='%231A1A1E' stroke-opacity='.45' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M1 4c5.7-3.5 11.4 3.5 17 0s11.4 3.5 17 0 11.4 3.5 17 0 11.4 3.5 17 0'/%3E%3Cpath d='M1 12c5.7-3.5 11.4 3.5 17 0s11.4 3.5 17 0 11.4 3.5 17 0 11.4 3.5 17 0'/%3E%3Cpath d='M1 20c5.7-3.5 11.4 3.5 17 0s11.4 3.5 17 0 11.4 3.5 17 0 11.4 3.5 17 0'/%3E%3C/svg%3E") no-repeat 60px 50% / 70px 24px;}
 .pr-letter-k{margin:8px 0 0!important;font:800 var(--fs-kicker)/1.2 var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--coral-text);}
 .pr-letter-l{display:grid;gap:10px;margin:0;padding:0;list-style:none;}
@@ -577,7 +484,6 @@
 @keyframes pr-stamp{from{opacity:0;transform:scale(1.7) rotate(-10deg);}to{opacity:1;transform:rotate(5deg);}}
 @keyframes pr-mark{from{opacity:0;transform:rotate(-10deg) scale(1.25);}to{opacity:1;transform:rotate(-10deg);}}
 @keyframes pr-tick{from{clip-path:inset(0 100% 0 0);}to{clip-path:inset(0);}}
-/* au téléphone, le timbre et le cachet ont leur bande en haut de la lettre, le texte passe dessous en pleine largeur */
 @media(max-width:599px){
   .pr-letter{padding-top:108px;}
   .pr-letter-stamp{right:16px;top:24px;width:60px;height:70px;}
@@ -585,26 +491,19 @@
   .pr-letter>p:first-of-type{padding-right:0;}
 }
 @media print{.pr-pass-strap{display:none;}.pr-pass{box-shadow:none;}}
-
-/* ---------- v7.92.1 : Ce qui est confirmé — le relevé du jour, sur sa planchette (bandeau) ----------
-   Une image (aria-hidden) : la date de relecture, six points cochés l'un après l'autre, deux questions ouvertes, une photo
-   officielle en pièce jointe, puis le tampon « Vérifié ». Le même contenu, lisible et cliquable, est le tableau de bord. */
 .vf-dos{position:relative;width:100%;max-width:440px;margin-left:auto;padding:22px 12px 16px 6px;}
 .vf-dos-board{position:relative;display:block;padding:30px 16px 18px;border:2px solid var(--ink);border-radius:18px;background:linear-gradient(160deg,var(--night-deep) 0%,var(--night) 60%,var(--night-2) 100%);box-shadow:8px 8px 0 var(--amber),8px 8px 0 2px var(--ink);rotate:1.5deg;}
 .vf-dos-clip{position:absolute;left:50%;top:-17px;z-index:3;width:128px;height:36px;margin-left:-64px;border:2px solid var(--ink);border-radius:10px 10px 16px 16px;background:linear-gradient(180deg,#F4F0E9 0%,#C4BDB2 52%,#948D83 100%);box-shadow:inset 0 2px 0 rgba(255,255,255,.75),0 4px 0 rgba(26,26,30,.35);}
 .vf-dos-clip::before{content:'';position:absolute;left:50%;top:7px;width:32px;height:12px;margin-left:-16px;border:2px solid var(--ink);border-radius:999px;background:var(--night-deep);}
 .vf-dos-sheet{position:relative;display:grid;grid-template-columns:minmax(0,1fr) 36%;align-items:center;column-gap:12px;padding:14px 14px 18px 40px;border:2px solid var(--ink);border-radius:6px;background:var(--paper);color:var(--ink);rotate:-2.5deg;box-shadow:0 12px 26px -14px rgba(0,0,0,.65);}
-/* la marge rouge du cahier */
 .vf-dos-sheet::before{content:'';position:absolute;left:28px;top:0;bottom:0;width:2px;background:rgba(232,73,44,.42);}
 .vf-dos-k{grid-column:1;grid-row:1;align-self:end;padding-bottom:8px;font:800 .66rem/1.3 var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--coral-text);}
 .vf-dos-k b{display:block;margin-top:3px;font:900 1.08rem/1.15 'Archivo',sans-serif;letter-spacing:-.01em;text-transform:none;color:var(--ink);}
 .vf-dos-photo{grid-column:2;grid-row:1 / span 4;align-self:start;position:relative;display:block;margin-top:-4px;padding:6px;border:2px solid var(--ink);border-radius:4px;background:#fff;box-shadow:3px 3px 0 var(--ink);rotate:5deg;}
-/* le trombone qui tient la photo */
 .vf-dos-photo::before{content:'';position:absolute;left:16px;top:-15px;z-index:2;width:11px;height:32px;border:2.5px solid #7E776E;border-radius:999px;box-shadow:inset 0 0 0 2.5px #fff,inset 0 0 0 4px #7E776E;clip-path:inset(0 0 22% 0);}
 .vf-dos-photo .vt-pic{display:contents;}
 .vf-dos-photo img{display:block;width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;border-radius:2px;}
 .vf-dos-c{display:block;margin-top:5px;font:700 .5rem/1.15 var(--font-mono);letter-spacing:.01em;text-align:center;color:var(--ink-soft);}
-/* les lignes : les trois premières à côté de la photo, les suivantes en pleine largeur */
 .vf-dos-l{display:contents;}
 .vf-dos-i{grid-column:1;display:flex;align-items:center;gap:10px;min-width:0;min-height:31px;border-bottom:1px solid rgba(26,26,30,.13);font:700 .88rem/1.2 'Archivo',sans-serif;}
 .vf-dos-i:nth-child(n+4){grid-column:1 / -1;}
@@ -613,7 +512,6 @@
 .vf-dos-box svg{width:15px;height:15px;}
 .vf-dos-i--wait .vf-dos-box{border-style:dashed;background:transparent;color:var(--amber-text,#9A5B00);font:900 .8rem/1 'Archivo',sans-serif;}
 .vf-dos-i--wait .vf-dos-t{color:var(--ink-soft);}
-/* le tampon : encre corail, imprimée sur la feuille (multiply) */
 .vf-dos-stamp{position:absolute;right:14px;bottom:12px;z-index:4;display:flex;flex-direction:column;align-items:center;gap:3px;padding:7px 14px 6px;border:3px solid var(--coral);border-radius:9px;color:var(--coral);box-shadow:inset 0 0 0 2px var(--paper),inset 0 0 0 4px var(--coral);mix-blend-mode:multiply;rotate:-11deg;}
 .vf-dos-stamp b{font:900 1.45rem/1 'Archivo',sans-serif;letter-spacing:.08em;text-transform:uppercase;}
 .vf-dos-stamp small{font:800 .54rem/1 var(--font-mono);letter-spacing:.14em;text-transform:uppercase;}
@@ -632,8 +530,6 @@
 @keyframes vf-q{from{opacity:0;transform:scale(.4) rotate(-20deg);}to{opacity:1;transform:none;}}
 @keyframes vf-stamp{0%{opacity:0;transform:scale(1.9) rotate(8deg);}55%{opacity:1;}100%{opacity:1;transform:none;}}
 @media (max-width:900px){.vf-dos{max-width:390px;margin:24px auto 0;}}
-/* le tampon a sa place dans la feuille, sous la dernière ligne, à droite (dernière case de la grille) : il ne couvre aucun
-   texte, quelles que soient la langue et la largeur */
 .vf-dos-stamp{position:relative;right:auto;bottom:auto;grid-column:1 / -1;justify-self:end;margin:26px 4px 0 0;}
 @media (max-width:420px){
   .vf-dos-board{padding:28px 12px 14px;}
@@ -644,17 +540,12 @@
   .vf-dos-stamp b{font-size:1.15rem;}
   .vf-dos-stamp small{font-size:.5rem;}
 }
-
-/* ---------- v7.92.1 : Ce qui est confirmé — le prix du jeu en étiquettes (carte sans photo) ---------- */
 .vt-media.vf-card-prices{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:14px 18px;padding:18px;background:radial-gradient(120% 90% at 20% 0%,rgba(245,165,36,.22),rgba(245,165,36,0) 60%),linear-gradient(160deg,var(--night-deep) 0%,var(--night) 60%,var(--night-2) 100%);}
 .vf-card-prices .vt-tag{rotate:calc(-5deg + var(--k,0) * 9deg);}
 .vf-card-prices .vt-tag .vt-price{font-size:clamp(1.4rem,1.1rem + .9vw,1.9rem);}
 .vf-card-prices .vt-tag-l{font-size:.66rem;}
 .js .vf-cards.vt-in.is-in:not(.lk-settled) .vf-card-prices .vt-tag{animation-delay:calc(var(--vt-d,0ms) + 260ms + var(--k,0) * 140ms);}
-
-/* ---------- v7.92.1 : Ce qui est confirmé — les trois règles des modèles réels ---------- */
 .vf-rules{margin-bottom:8px;}
-/* v7.93 (lot 8) : « Sites amis » (À propos, section Contribuer) : un site par ligne de outils/sites-amis.json */
 .ed-amis{margin-top:26px;}
 .ed-amis-vide{margin:0;font-size:.95rem;line-height:1.6;color:var(--ed-soft);}
 .ed-amis-l{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px 18px;}
@@ -662,3 +553,37 @@
 .ed-amis-l a{font-weight:800;color:var(--ink);text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--coral);padding:4px 0;display:inline-block;}
 .ed-amis-l a:hover,.ed-amis-l a:focus-visible{color:var(--coral-text,#B93220);}
 .ed-amis-m{color:var(--ed-soft);}
+.vf-groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:18px;}
+.vf-group{padding:18px 20px 16px;border:2px solid var(--ink);border-radius:var(--radius);background:#fff;box-shadow:var(--shadow-hard);}
+.vf-group--wait{background:linear-gradient(160deg,var(--night-deep),var(--night) 70%);color:var(--paper);}
+.vf-group-n{display:flex;align-items:baseline;gap:12px;margin:0 0 12px;}
+.vf-group-n b{font:900 clamp(2.2rem,2rem+1vw,3rem)/1 'Archivo',sans-serif;letter-spacing:-.04em;color:var(--coral-text);}
+.vf-group--wait .vf-group-n b{color:var(--amber-2);}
+.vf-group-n span{font:800 1rem/1.2 'Archivo',sans-serif;}
+.vf-pills{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none;}
+.vf-pill{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:5px 8px 5px 6px;border:2px solid var(--ink);border-radius:999px;background:var(--paper);color:var(--ink);font:800 .88rem/1.2 'Archivo',sans-serif;text-decoration:none;transition:transform var(--c-fast,190ms),box-shadow var(--c-fast,190ms),background var(--c-fast,190ms);}
+.vf-pill-ico{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--paper-2);}
+.vf-pill-ico svg{width:17px;height:17px;--ed-accent:var(--coral);}
+.vf-pill-s{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--amber);color:var(--ink);font:900 .8rem/1 'Archivo',sans-serif;}
+.vf-pill-s svg{width:13px;height:13px;}
+.vf-pill--wait{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.45);color:var(--paper);}
+.vf-pill--wait .vf-pill-ico{background:rgba(255,255,255,.12);color:var(--paper);}
+.vf-pill--wait .vf-pill-s{background:transparent;border:1.5px dashed var(--amber-2);color:var(--amber-2);}
+@media (hover:hover) and (pointer:fine){.vf-pill:hover{transform:translate(-2px,-2px);box-shadow:var(--shadow-hard);background:var(--amber);}.vf-pill--wait:hover{background:var(--amber);color:var(--ink);box-shadow:4px 4px 0 rgba(0,0,0,.4);}.vf-pill--wait:hover .vf-pill-ico{color:var(--ink);background:rgba(26,26,30,.1);}.vf-pill--wait:hover .vf-pill-s{border-color:var(--ink);color:var(--ink);}}
+.vf-pill:focus-visible{outline:3px solid var(--coral);outline-offset:3px;}
+.vf-sheetgrid{grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr);margin-bottom:8px;}
+.vf-sheet{margin:0;max-width:300px;justify-self:center;}
+.vf-sheet-svg{display:block;width:100%;height:auto;filter:drop-shadow(4px 4px 0 var(--ink));}
+.vf-sheet figcaption{margin:12px 4px 0;font-size:.8rem;line-height:1.45;text-align:center;color:var(--ink-soft);}
+@media (max-width:899px){.vf-sheetgrid{grid-template-columns:1fr;}.vf-sheet{max-width:240px;}}
+.vf-notes{display:grid;gap:14px;margin:0;}
+.vf-notes--2{grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:10px 24px;margin-top:12px;}
+.vf-note{display:grid;gap:4px;padding:0 0 12px;border-bottom:2px solid var(--rule);}
+.vf-notes>.vf-note:last-child{border-bottom:0;padding-bottom:0;}
+.vf-note dt{display:flex;align-items:center;gap:10px;margin:0;font:800 1.02rem/1.25 'Archivo',sans-serif;}
+.vf-note dd{margin:0;color:var(--ink-soft);line-height:1.55;}
+.vf-note-n{display:grid;place-items:center;flex:none;width:26px;height:26px;border-radius:50%;background:var(--ink);color:var(--amber);font:900 .82rem/1 'Archivo',sans-serif;}
+.vf-note--cost dt{font-size:.96rem;}
+.vf-note--cost dt::before{content:'';flex:none;width:10px;height:10px;border-radius:50%;border:2px solid var(--ink);background:var(--paper);}
+.vf-couts-lede{max-width:var(--measure);margin:6px 0 0;color:var(--ink-soft);}
+.info-page--verif :is(.vf-group,.vf-sheet,.vf-note).lk-reveal:not(.is-in):not(.lk-settled){transform:translate3d(0,var(--c-rise,10px),0);}

@@ -1,9 +1,8 @@
-/* v7.61 : pluriel selon la langue de la page : français n > 1 (« 0 coché », « 1,5 million ») ; anglais, espagnol n ≠ 1 (« 0 marcados ») */
+/* Généré depuis outils/sources/collectibles.js : modifie la source, pas ce fichier. */
 var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.documentElement&&document.documentElement.lang)||'fr').slice(0,2)==='fr'?n>1:n!==1;};
-/* Progressive enhancement: catalogue HTML remains useful without JavaScript. */
 (function () {
   'use strict';
-  var lkPl = function (n) { return /^fr/.test(document.documentElement.lang || "fr") ? n > 1 : n !== 1; }; /* pluriel selon la langue de la page (français : n > 1) */
+  var lkPl = function (n) { return /^fr/.test(document.documentElement.lang || "fr") ? n > 1 : n !== 1; };
   const core = window.LKCollectibles;
   if (!core || !Array.isArray(window.LK_COLLECTIBLES?.items)) return;
   const $ = id => document.getElementById(id);
@@ -20,7 +19,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
   const sortModes = ['name', 'updated', 'category', 'region', 'order', 'difficulty'];
   const PREF_KEY = 'lk_collectibles_prefs_v1';
   let prefs = {spoilers: false, view: 'grid'};
-  try { const saved = JSON.parse(localStorage.getItem(PREF_KEY) || 'null'); if (saved && typeof saved === 'object') prefs = {spoilers: saved.spoilers === true, view: saved.view === 'list' ? 'list' : 'grid'}; } catch (_) { /* Optional display preferences must never block reading. */ }
+  try { const saved = JSON.parse(localStorage.getItem(PREF_KEY) || 'null'); if (saved && typeof saved === 'object') prefs = {spoilers: saved.spoilers === true, view: saved.view === 'list' ? 'list' : 'grid'}; } catch (_) {  }
   const defaults = {q: '', sort: 'name', view: prefs.view, page: 1};
   fields.forEach(key => { defaults[key] = ''; });
   let filters = {...defaults};
@@ -56,7 +55,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       const value = filters[key];
       if (value && !(key === 'sort' && value === 'name') && !(key === 'view' && value === 'grid') && !(key === 'page' && value === 1)) url.searchParams.set(key, value);
     });
-    try { history.replaceState(null, '', url.pathname + url.search + url.hash); } catch (_) { /* file: previews may disallow history mutation. */ }
+    try { history.replaceState(null, '', url.pathname + url.search + url.hash); } catch (_) {  }
   }
   function matches(item, omit) {
     if (filters.q && !norm(filters.q).split(/\s+/).every(word => searchIndex.get(item.id).includes(word))) return false;
@@ -130,13 +129,11 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     setText('col-documented', items.length);
     setText('col-confirmed', items.filter(item => item.status === 'confirmed').length);
     setText('col-located', items.filter(item => core.mapUrl(item)).length);
-    /* lot 1 bis (corrections de l’audit, point 13) : sans fiche documentée, la phrase remplace les compteurs à « 0 » */
     document.querySelectorAll('.col-dash').forEach(function (d) { d.toggleAttribute('data-vide', !items.length); });
     setText('col-found-count', found);
     setText('col-trackable-label', trackable.length ? '/ ' + trackable.length + (lkPluriel(trackable.length)?' gefunden':' gefunden') : 'verfolgte Objekte');
     setText('col-percent', percent === null ? '—' : percent + ' %');
     if ($('col-progress-fill')) $('col-progress-fill').style.width = (percent || 0) + '%';
-    /* v7.70 : l’anneau du carnet suit la même part que la barre */
     document.querySelectorAll('.col-ring-fg').forEach(function (r) { r.style.setProperty('--p', String(percent || 0)); });
     if ($('col-progress-meter')) {
       $('col-progress-meter').setAttribute('aria-valuenow', percent || 0);
@@ -151,7 +148,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
         const groups = new Map();
         trackable.forEach(item => { const value = item[field]; if (!value) return; if (!groups.has(value)) groups.set(value, []); groups.get(value).push(item); });
         if (!groups.size) return '';
-        return '<h3>Nach ' + (field === 'category' ? 'Kategorie' : 'Region') + '</h3><ul>' + [...groups].map(([value, group]) => '<li><button type="button" data-col-group="' + field + '" data-col-value="' + esc(value) + '">' + esc(field === 'category' ? categories.get(value) || value : value) + '</button><b>' + group.filter(item => state.found[item.id]).length + ' / ' + group.length + '</b></li>').join('') + '</ul>';
+        return '<h3>Nach ' + (field === 'category' ? 'Kategorie' : 'Region') + '</h3><ul>' + [...groups].map(([value, group]) => '<li><button type="button" data-col-group="' + field + '" data-col-value="' + esc(value) + '">' + esc(field === 'category' ? categories.get(value) || value : value) + '</button><b>' + group.filter(item => state.found[item.id]).length + ' von ' + group.length + '</b></li>').join('') + '</ul>';
       }).join('');
     }
   }
@@ -162,17 +159,17 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
   }
   function card(item) {
     const image = safeImage(item.image?.src), url = core.itemUrl(item), map = core.mapUrl(item), noteId = 'col-note-' + item.id;
-    const location = [item.zone, item.place].filter(Boolean).join(' · ');
+    const location = [item.zone, item.place].filter(Boolean).join(', ');
     const spoilers = location || item.reward || map;
     return '<article class="col-card" data-col-item="' + esc(item.id) + '">' +
       '<div class="col-card-media">' + (image ? '<img src="' + esc(image) + '" alt="' + esc(item.image.alt || item.name) + '" width="' + (Number(item.image.width) || 480) + '" height="' + (Number(item.image.height) || 270) + '" loading="lazy" decoding="async">' : '<span class="col-no-image">GTA-VI-Bild nicht dokumentiert</span>') + '</div>' +
       '<div class="col-card-body"><div class="col-tags"><span class="col-tag col-tag-' + esc(item.status) + '">' + esc(statusLabels[item.status] || 'Status noch zu klären') + '</span></div>' +
       '<h3>' + (url ? '<a href="' + esc(url) + '">' + esc(item.name) + '</a>' : esc(item.name)) + '</h3>' +
-      '<p class="col-card-location">' + esc([categoryName(item), item.region].filter(Boolean).join(' · ')) + '</p>' +
+      '<p class="col-card-location">' + esc([categoryName(item), item.region].filter(Boolean).join(', ')) + '</p>' +
       (item.summary ? '<p class="col-card-summary">' + esc(item.summary) + '</p>' : '') +
       (spoilers ? '<details class="col-card-spoilers" data-col-spoiler' + (prefs.spoilers ? ' open' : '') + '><summary>Standort &amp; Belohnung</summary>' + (location ? '<p>' + esc(location) + '</p>' : '') + (item.reward ? '<p>Belohnung: ' + esc(item.reward) + '</p>' : '') + (map ? '<a href="' + esc(map) + '">Auf der Karte ansehen ↗</a>' : '') + '</details>' : '') +
       '<div class="col-card-actions"><button type="button" data-col-found="' + esc(item.id) + '" aria-pressed="false">Als gefunden markieren</button><button type="button" data-col-favorite="' + esc(item.id) + '" aria-pressed="false">☆ Favorit</button><button type="button" data-col-plan="' + esc(item.id) + '" aria-pressed="false">Zu meiner Tour hinzufügen</button></div>' +
-      '<details class="col-card-note"><summary>Eigene Notiz' + (state.notes[item.id] ? ' · gespeichert' : '') + '</summary><label for="' + esc(noteId) + '">Deine Notiz (maximal 2.000 Zeichen)</label><textarea id="' + esc(noteId) + '" data-col-note="' + esc(item.id) + '" maxlength="2000" rows="3" placeholder="Deine Hinweise für den nächsten Besuch…">' + esc(state.notes[item.id] || '') + '</textarea></details></div></article>';
+      '<details class="col-card-note"><summary>Eigene Notiz' + (state.notes[item.id] ? ' (gespeichert)' : '') + '</summary><label for="' + esc(noteId) + '">Deine Notiz (maximal 2.000 Zeichen)</label><textarea id="' + esc(noteId) + '" data-col-note="' + esc(item.id) + '" maxlength="2000" rows="3" placeholder="Deine Hinweise für den nächsten Besuch…">' + esc(state.notes[item.id] || '') + '</textarea></details></div></article>';
   }
   function ordered(list) {
     const alpha = (a,b) => String(a || '').localeCompare(String(b || ''), 'fr', {numeric: true, sensitivity: 'base'});
@@ -211,7 +208,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     }).join('');
     if ($('col-pagination')) {
       $('col-pagination').hidden = pages < 2;
-      $('col-pagination').innerHTML = '<button type="button" data-col-page="' + (filters.page - 1) + '"' + (filters.page === 1 ? ' disabled' : '') + '>← Zurück</button><span>Seite ' + filters.page + ' / ' + pages + '</span><button type="button" data-col-page="' + (filters.page + 1) + '"' + (filters.page === pages ? ' disabled' : '') + '>Weiter →</button>';
+      $('col-pagination').innerHTML = '<button type="button" data-col-page="' + (filters.page - 1) + '"' + (filters.page === 1 ? ' disabled' : '') + '>Zurück</button><span>Seite ' + filters.page + ' von ' + pages + '</span><button type="button" data-col-page="' + (filters.page + 1) + '"' + (filters.page === pages ? ' disabled' : '') + '>Weiter</button>';
     }
     updateFacets(); syncControls(); updateProgress(); updateActions();
     if (options.url !== false) writeURL();
@@ -220,7 +217,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       (replacement || results).focus({preventScroll: true});
     }
     const view = {filters: {...filters}, count: list.length};
-    viewSubscribers.forEach(fn => { try { fn(view); } catch (_) { /* Isolate supplementary tools. */ } });
+    viewSubscribers.forEach(fn => { try { fn(view); } catch (_) {  } });
     window.dispatchEvent(new CustomEvent('lk:collectibles-view-change', {detail: view}));
   }
   function resetFilters() { clearTimeout(searchTimer); filters = {...defaults, view: filters.view}; render(); $('col-search')?.focus(); }
@@ -261,7 +258,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       if (input.value.length > core.maxNoteLength) { feedback('Eine Notiz darf nicht länger als 2.000 Zeichen sein.'); return; }
       if (core.setNote(input.dataset.colNote, input.value)) {
         const summary = input.closest('details')?.querySelector('summary');
-        if (summary) summary.textContent = 'Eigene Notiz' + (input.value.trim() ? core.getStorageStatus().status === 'available' ? ' · gespeichert' : ' · in diesem Tab' : '');
+        if (summary) summary.textContent = 'Eigene Notiz' + (input.value.trim() ? core.getStorageStatus().status === 'available' ? ' (gespeichert)' : ' (in diesem Tab)' : '');
       }
     }
   });

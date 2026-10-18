@@ -1,15 +1,4 @@
-/* Section « Trophées et succès » (section trophees) : suivi des trophées sur trophees.html, trophees/<id>.html et la page de
-   démonstration trophees/modele.html.
-   - Case « Obtenu » par trophée, gardée sur l’appareil seulement, sous une seule clé (lk-trophees-obtenus-v1 : liste
-     d’identifiants de trophées) ; aucun cookie, aucune requête. Sans JavaScript ou sans stockage, les cases restent cachées.
-     Sur la page de démonstration (data-trophees-demo), tout marche sans rien enregistrer.
-   - Bilan : nombre obtenu, pourcentage et anneau de progression ; le bilan est relu aux lecteurs d’écran après chaque case
-     (la case elle-même annonce son état « coché »).
-   - Filtres (grade, manquable, catégorie, obtenus) : boutons à état, au clavier.
-   - Mouvement : cartes qui arrivent en cascade, badge qui apparaît avec un éclat bref quand on coche, anneau qui se remplit.
-     Jetons de motion-tokens.css, transform et opacity (cadre fixe : aucun décalage de mise en page), coupé avec
-     prefers-reduced-motion: reduce.
-   Tout le texte vient de la page (déjà traduite) : ce script n’écrit que des nombres. */
+/* Généré depuis outils/sources/trophees.js : modifie la source, pas ce fichier. */
 (function () {
   'use strict';
   var KEY = 'lk-trophees-obtenus-v1';
@@ -27,8 +16,6 @@
   var pct = function (p) { try { return new Intl.NumberFormat(lang, { style: 'percent', maximumFractionDigits: 0 }).format(p); } catch (e) { return Math.round(p * 100) + '%'; } };
   var cardOf = function (input) { return input.closest('[data-trophees-id]'); };
   var idOf = function (input) { var c = cardOf(input); return c ? c.getAttribute('data-trophees-id') : null; };
-
-  /* ---------- bilan : nombre, pourcentage, anneau ---------- */
   var bilan = document.querySelector('[data-trophees-bilan]');
   var live = document.querySelector('[data-trophees-annonce]');
   function update(announce) {
@@ -42,11 +29,9 @@
     bilan.classList.toggle('is-complet', total > 0 && n === total);
     if (announce && live) {
       var label = bilan.querySelector('[data-trophees-libelle]');
-      live.textContent = n + ' / ' + total + ' · ' + pct(p) + (label ? ' · ' + label.textContent.replace(/\s+/g, ' ').trim() : '');
+      live.textContent = n + ' of ' + total + ', ' + pct(p) + (label ? ', ' + label.textContent.replace(/\s+/g, ' ').trim() : '');
     }
   }
-
-  /* ---------- cases « Obtenu » ---------- */
   boxes.forEach(function (input) {
     var id = idOf(input), card = cardOf(input), wrap = input.closest('[data-trophees-case]') || input.parentNode;
     if (!okId(id)) return;
@@ -69,8 +54,6 @@
     });
   });
   update(false);
-
-  /* ---------- filtres ---------- */
   var filters = document.querySelector('[data-trophees-filtres]');
   var cards = Array.prototype.slice.call(document.querySelectorAll('[data-trophees-liste] [data-trophees-id]'));
   if (filters && cards.length) {
@@ -112,8 +95,6 @@
     filters.hidden = false;
     apply();
   }
-
-  /* ---------- arrivée des cartes, en cascade, quand la liste arrive à l’écran ---------- */
   var list = document.querySelector('[data-trophees-liste]');
   if (list && !reduced() && 'IntersectionObserver' in window) {
     list.classList.add('trophees-attend');

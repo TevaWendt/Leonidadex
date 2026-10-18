@@ -1,10 +1,4 @@
-/* v7.69 : visionneuse d'images de Leonidakit (demande de Téva : « quand on clique sur les images, ce n'est pas très beau »).
-   Un clic sur un lien qui mène à une image du site (galeries « En images », aperçus des armes, captures du tuto) ouvre
-   l'image dans la page au lieu du fichier brut : l'image grandit depuis sa vignette, flèches et clavier (← →), glisser au
-   doigt (côté : image suivante ; vers le bas : fermer), double-clic ou double tap pour voir le détail, vignettes de la
-   galerie, légende, lien vers le fichier d'origine. Échap, le fond ou ✕ referment : l'image retourne à sa vignette.
-   « Réduire les animations » : fondus seulement. Chargé à la demande par common.js (déclaré dans la page par
-   <script type="lk/lazy" src="lk-visionneuse.js">, posé par outils/sync-site.cjs). Rien n'est enregistré. */
+/* Généré depuis outils/sources/lk-visionneuse.js : modifie la source, pas ce fichier. */
 (function () {
   'use strict';
   if (window.LKViewer) return;
@@ -34,22 +28,18 @@
     prev: '<svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true" focusable="false"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
     next: '<svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true" focusable="false"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>'
   };
-
   let ui = null, items = [], at = 0, opener = null, state = 'closed', token = 0;
   let zoom = { on: false, s: 1, x: 0, y: 0 }, dragged = false;
-
   const pathOf = href => { try { const u = new URL(href, location.href); return u.origin === location.origin ? u.pathname : ''; } catch (_) { return ''; } };
-  /* même image en plusieurs tailles (grassrivers-03-480.webp, grassrivers-03-1280.webp) */
   const baseOf = p => p.replace(/\.\w+$/, '').replace(/-\d{2,4}$/, '');
   const isImageLink = a => !!(a && a.href && !a.hasAttribute('download') && IMG.test(pathOf(a.href)));
   const textOf = el => el ? el.textContent.replace(/\s+/g, ' ').trim() : '';
-
   function itemOf(a) {
     const fig = a.closest('figure');
     const img = a.querySelector('img') || (fig && fig.querySelector('img')) || null;
     const slide = a.closest('.lore-slide');
     let kicker = '';
-    if (slide) kicker = [textOf(slide.querySelector('.lst-k')), textOf(slide.querySelector('.lore-slide-txt strong'))].filter(Boolean).join(' · ');
+    if (slide) kicker = [textOf(slide.querySelector('.lst-k')), textOf(slide.querySelector('.lore-slide-txt strong'))].filter(Boolean).join(', ');
     else if (fig && fig.querySelector('.t-figure-bar span')) kicker = textOf(fig.querySelector('.t-figure-bar span'));
     else { const g = a.closest('.lore-gallery-grid[data-kicker], [data-lkv-group][data-kicker]'); if (g) kicker = g.dataset.kicker; }
     const title = (img && img.getAttribute('alt')) || textOf(fig && fig.querySelector('figcaption')) || (a.getAttribute('aria-label') || '').replace(/^[^:]{1,24}:\s*/, '');
@@ -71,7 +61,6 @@
     if (!seen.has(pathOf(a.href))) { seen.set(pathOf(a.href), list.length); list.push(a); }
     return { links: list, index: seen.get(pathOf(a.href)) };
   }
-
   function css() {
     if (doc.getElementById('lkv-css')) return;
     const s = doc.createElement('style'); s.id = 'lkv-css';
@@ -122,7 +111,6 @@ html.lkv-lock{overflow:hidden}
 `;
     doc.head.appendChild(s);
   }
-
   function build() {
     css();
     const d = doc.createElement('dialog');
@@ -154,15 +142,12 @@ html.lkv-lock{overflow:hidden}
     ui.thumbs.addEventListener('click', ev => { const b = ev.target.closest('.lkv-th'); if (b) go(+b.dataset.i, +b.dataset.i > at ? 1 : -1); });
     d.addEventListener('cancel', ev => { ev.preventDefault(); close(); });
     d.addEventListener('keydown', onKey);
-    /* un clic sur le fond (hors image, boutons et légende) referme */
     d.addEventListener('click', ev => { if (dragged) { dragged = false; return; } if (ev.target === ui.frame || ev.target === ui.stage || ev.target === d || ev.target === ui.bg) close(); });
     ui.img.addEventListener('dblclick', ev => { ev.preventDefault(); setZoom(!zoom.on, ev.clientX, ev.clientY); });
     pointer();
     window.addEventListener('resize', () => { if (state === 'open') { setZoom(false, 0, 0, true); place(items[at]); } });
     doc.body.appendChild(d);
   }
-
-  /* taille de l'image dans le cadre : entière, jamais rognée */
   function place(it) {
     const r = ui.frame.getBoundingClientRect();
     const W = Math.max(80, r.width), H = Math.max(80, r.height);
@@ -182,7 +167,7 @@ html.lkv-lock{overflow:hidden}
   function text(it) {
     ui.k.textContent = it.kicker || '';
     ui.t.textContent = it.title || '';
-    ui.count.textContent = items.length > 1 ? pad(at + 1) + ' / ' + pad(items.length) : '';
+    ui.count.textContent = items.length > 1 ? (at + 1) + ' su ' + items.length : '';
     ui.orig.href = it.href;
     ui.img.alt = it.title || '';
     ui.live.textContent = (items.length > 1 ? T.count.replace('{n}', at + 1).replace('{total}', items.length) + ': ' : '') + (it.title || '');
@@ -192,7 +177,6 @@ html.lkv-lock{overflow:hidden}
       if (i === at && b.scrollIntoView) { const r = b.getBoundingClientRect(), p = ui.thumbs.getBoundingClientRect(); if (r.left < p.left || r.right > p.right) ui.thumbs.scrollLeft += r.left - p.left - (p.width - r.width) / 2; }
     });
   }
-  /* affiche l'élément : la vignette déjà chargée sert d'attente, l'image d'origine la remplace dès qu'elle est prête */
   function show(it) {
     const t = ++token;
     text(it);
@@ -204,7 +188,6 @@ html.lkv-lock{overflow:hidden}
       if (t !== token || state === 'closed') return;
       place(it); ui.img.src = it.href; ui.d.classList.remove('is-wait');
     }, () => { if (t === token) ui.d.classList.remove('is-wait'); });
-    /* voisines préchargées : la flèche répond tout de suite */
     if (items.length > 1) { load(items[(at + 1) % items.length]).catch(() => {}); load(items[(at - 1 + items.length) % items.length]).catch(() => {}); }
   }
   function thumbs() {
@@ -217,14 +200,11 @@ html.lkv-lock{overflow:hidden}
       ui.thumbs.appendChild(b);
     });
   }
-
-  /* vignette dans la page encore visible à l'écran : point de départ et d'arrivée du mouvement */
   function rectOf(el) {
     if (!el || !el.isConnected) return null;
     const r = el.getBoundingClientRect();
     return r.width > 8 && r.height > 8 && r.bottom > 0 && r.top < innerHeight && r.right > 0 && r.left < innerWidth ? r : null;
   }
-  /* de la vignette (recadrée par object-fit: cover) à l'image entière : déplacement, échelle et découpe */
   function morph(rect) {
     const f = ui.img.getBoundingClientRect();
     if (!f.width || !f.height) return null;
@@ -238,9 +218,7 @@ html.lkv-lock{overflow:hidden}
     ];
   }
   const fade = (el, from, to, ms, delay) => el.animate([from, to], { duration: ms, delay: delay || 0, easing: EASE, fill: 'both' });
-  /* fin d'un groupe d'animations, avec un délai de garde : la visionneuse ne reste jamais bloquée entre deux états */
   const settled = (anims, ms) => Promise.race([Promise.all(anims.map(x => x.finished.catch(() => {}))), new Promise(r => setTimeout(r, ms))]);
-
   function open(a) {
     if (!a) return;
     if (!ui) build();
@@ -274,7 +252,6 @@ html.lkv-lock{overflow:hidden}
       done();
     });
   }
-
   function close() {
     if (state === 'closed' || state === 'closing') return;
     state = 'closing'; token++;
@@ -303,7 +280,6 @@ html.lkv-lock{overflow:hidden}
     }
     settled(anims, 1000).then(() => { finish(); anims.forEach(x => { try { x.cancel(); } catch (_) {} }); });
   }
-
   function go(k, dir) {
     if (state !== 'open' || items.length < 2) return;
     k = (k + items.length) % items.length; if (k === at) return;
@@ -321,8 +297,6 @@ html.lkv-lock{overflow:hidden}
       settled([inn], 700).then(() => { if (state === 'moving') state = 'open'; });
     });
   }
-
-  /* zoom : double-clic, double tap ou bouton ; on déplace ensuite l'image en la faisant glisser */
   function bounds() {
     const f = ui.frame.getBoundingClientRect(), w = parseFloat(ui.img.style.width) || 0, h = parseFloat(ui.img.style.height) || 0;
     return { x: Math.max(0, (w * zoom.s - f.width) / 2), y: Math.max(0, (h * zoom.s - f.height) / 2) };
@@ -348,8 +322,6 @@ html.lkv-lock{overflow:hidden}
     const label = zoom.on ? T.zoomOut : T.zoomIn; ui.zoom.title = label; ui.zoom.querySelector('.sr-only').textContent = label;
     applyZoom(!quiet);
   }
-
-  /* doigt ou souris : glisser sur le côté change d'image, vers le bas referme ; image agrandie : on la déplace */
   function pointer() {
     let p = null, lastTap = 0, lastX = 0, lastY = 0;
     ui.frame.addEventListener('pointerdown', ev => {
@@ -364,7 +336,6 @@ html.lkv-lock{overflow:hidden}
         if (Math.hypot(p.dx, p.dy) < 8) return;
         p.mode = zoom.on ? 'pan' : (Math.abs(p.dx) > Math.abs(p.dy) ? (items.length > 1 ? 'swipe' : 'none') : (p.dy > 0 ? 'down' : 'none'));
         ui.d.classList.add('is-drag');
-        /* capture seulement une fois le geste reconnu : un simple clic garde sa cible (l'image ne referme pas) */
         try { ui.frame.setPointerCapture(ev.pointerId); } catch (_) {}
       }
       if (p.mode === 'pan') { zoom.x = p.zx + p.dx; zoom.y = p.zy + p.dy; applyZoom(false); }
@@ -374,7 +345,6 @@ html.lkv-lock{overflow:hidden}
     const end = ev => {
       if (!p || ev.pointerId !== p.id) return;
       const q = p; p = null; ui.d.classList.remove('is-drag');
-      /* le clic qui suit un glissement ne referme pas la visionneuse */
       if (q.mode) { dragged = true; setTimeout(() => { dragged = false; }, 400); }
       const dt = Math.max(1, performance.now() - q.t), v = Math.abs(q.dx) / dt;
       if (q.mode === 'swipe' && (Math.abs(q.dx) > 70 || (v > 0.45 && Math.abs(q.dx) > 24))) { go(at + (q.dx < 0 ? 1 : -1), q.dx < 0 ? 1 : -1); return; }
@@ -385,7 +355,6 @@ html.lkv-lock{overflow:hidden}
         if (!reduce() && from) ui.img.animate([{ transform: from }, { transform: 'none' }], { duration: 260, easing: EASE });
         return;
       }
-      /* double tap (doigt) : zoom à l'endroit touché */
       if (!q.mode && ev.pointerType !== 'mouse' && ev.type === 'pointerup') {
         const now = performance.now();
         if (now - lastTap < 320 && Math.hypot(ev.clientX - lastX, ev.clientY - lastY) < 30) { lastTap = 0; setZoom(!zoom.on, ev.clientX, ev.clientY); }
@@ -395,7 +364,6 @@ html.lkv-lock{overflow:hidden}
     ui.frame.addEventListener('pointerup', end);
     ui.frame.addEventListener('pointercancel', end);
   }
-
   function onKey(ev) {
     if (state !== 'open' || ev.altKey || ev.ctrlKey || ev.metaKey) return;
     if (ev.key === 'ArrowRight') { ev.preventDefault(); go(at + 1, 1); }
@@ -403,6 +371,5 @@ html.lkv-lock{overflow:hidden}
     else if (ev.key === 'Home') { ev.preventDefault(); go(0, -1); }
     else if (ev.key === 'End') { ev.preventDefault(); go(items.length - 1, 1); }
   }
-
   window.LKViewer = { open, close, isImageLink, state: () => state };
 })();

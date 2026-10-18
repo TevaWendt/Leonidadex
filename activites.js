@@ -1,7 +1,4 @@
-/* Section « Activités annexes » (section activites) : filtre de la liste « Tout ce que Rockstar a montré ou annoncé » de
-   activites.html. Les boutons et la phrase du compteur sont écrits dans la page (cachés tant que ce script ne tourne pas) :
-   ce script n’écrit aucun mot, ne garde rien sur l’appareil et n’envoie aucune requête. Sans lui, toutes les lignes restent
-   visibles. Mouvement : les lignes qui réapparaissent entrent en douceur (classe is-in), sauf avec prefers-reduced-motion. */
+/* Généré depuis outils/sources/activites.js : modifie la source, pas ce fichier. */
 (function () {
   'use strict';
   var box = document.querySelector('[data-activites-filtre]');

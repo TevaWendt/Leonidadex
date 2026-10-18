@@ -1,3 +1,4 @@
+/* Généré depuis outils/sources/comparateur.js : modifie la source, pas ce fichier. */
 (function(){
   'use strict';
   const params=new URLSearchParams(location.search),type=params.get('type')==='vehicules'?'vehicules':'armes';
@@ -10,29 +11,22 @@
   const name=x=>(x.marque && x.marque!=='Unknown brand'?x.marque+' ':'')+x.nom;
   const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const waiting='To be confirmed';
-  /* v7.50 (lot 3) : mêmes états vides que les fiches documentaires (modèle commun) : « Prix à venir », « Achat à confirmer »,
-     « Emplacement à venir », coûts d’usage « mécanique non confirmée » ; le terrain est déduit du type et dit comme tel. */
   const terrain=x=>x.cat==='bateau'?'Water (inferred from type)':x.cat==='avion'||x.cat==='helicoptere'?'Air (inferred from type)':'Road (inferred from type)';
   const edition=x=>x.edition==='Pre-Order'?'Pre-order bonus':x.edition==='Ultimate Edition'?'Ultimate Edition':x.edition||'Standard';
-  /* v7.69 : critères rangés par thème (identité, achat, jeu) ; ce qui n'est pas encore publié est marqué comme tel */
   const groups=[
     ['What we know',[...(type==='vehicules'?[['Manufacturer',x=>x.marque]]:[]),['Category',x=>cats[x.cat]],['Status',x=>statuses[x.st]],['Source',x=>x.src],['Real-world inspiration',x=>x.insp||x.fam],...(type==='armes'?[['Where it’s carried',x=>x.slot==='longue'?'Long gun':'Sidearm'],['Estimated range',x=>x.portee],['Ammo',x=>x.mun],['Ultimate Edition',x=>x.ue?'Yes':'Not specified']]:[['Edition',edition]])]],
     ['The purchase',[['Price',()=>'Price to come'],['Purchasable',()=>'Purchase to be confirmed'],[type==='armes'?'Where to find it':'Where to find it',()=>'Location to come']]],
     ['In game, after November 19, 2026',type==='armes'?[['Ammo cost',()=>'Unconfirmed mechanic'],...['Damage','Fire rate','Precision'].map(x=>[x,()=>waiting])]:[['Terrain',terrain],['Running costs (fuel, maintenance)',()=>'Unconfirmed mechanic'],...['Top speed','Acceleration','Seats'].map(x=>[x,()=>waiting])]]
   ];
   const PENDING=new Set(['Price to come','Purchase to be confirmed','Location to come','Unconfirmed mechanic',waiting]);
-  /* comparaisons toutes prêtes : des familles réelles du catalogue (aucun classement, aucun chiffre) */
   const QUICK=type==='vehicules'?[['Ultimate Edition',['grotti-cheetah-classic','declasse-mamba-gt','schyster-deviant']],['Off-road',['vapid-dominator-buggy','canis-kamacho','vapid-riata-classic']],['On water',['shitzu-squalo','speedophile-seashark','shitzu-tropic']],['Two-wheelers',['dinka-enduro','maibatsu-manchez','maibatsu-sanchez']]]
     :[['Named handguns',['girardi-es9','klose-k17','hawk-little-morgan']],['Rifles',['carabine','fusil-assaut','fusil-pompe']],['Melee',['batte','club-golf','couteau-cran']]];
-  /* v7.61 : le type affiché est un libellé (traduit), distinct de l'identifiant « type » des adresses */
-  document.getElementById('cmp-type-lbl').textContent=type==='armes'?'Comparison tool · weapons':'Comparison tool · vehicles';
+  document.getElementById('cmp-type-lbl').textContent=type==='armes'?'Weapon comparison':'Vehicle comparison';
   document.getElementById('cmp-back').href=type+'.html';
   document.querySelectorAll('[data-cmp-type]').forEach(a=>{if(a.dataset.cmpType===type)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
   const pick=document.getElementById('cmp-pick'),table=document.getElementById('cmp-table'),empty=document.getElementById('cmp-empty'),quick=document.getElementById('cmp-quick');
   const sorted=list.slice().sort((a,b)=>name(a).localeCompare(name(b),'fr'));
   const cardClass=x=>'veh-thumb veh-thumb--'+(type==='armes'?'arm veh-thumb--':'')+x.cat;
-
-  /* illustration d'une fiche : photo officielle ou schéma du site (véhicules), silhouette de l'arme (armes) */
   function art(x,small){
     if(type==='vehicules'){
       const t=x.thumb||'';
@@ -43,8 +37,6 @@
     return (window.LK_ARMES_SCHEMAS||{})[x.id]||'';
   }
   const isPhoto=x=>type==='vehicules'&&x.thumb&&!/\.svg$/.test(x.thumb);
-
-  /* les trois colonnes : construites une fois (le choix garde le focus), remplies à chaque changement */
   const slots=ids.map((id,k)=>{
     const card=document.createElement('article');card.className='cmp-slot';
     card.innerHTML='<div class="cmp-slot-art"><span class="cmp-slot-n" aria-hidden="true">'+(k+1)+'</span><span class="cmp-slot-img"></span></div><div class="cmp-slot-body"><p class="cmp-slot-cat"></p><h3 class="cmp-slot-name"></h3><p class="cmp-slot-st" hidden></p><p class="cmp-slot-hint" hidden></p><div class="cmp-slot-row"></div></div>';
@@ -59,7 +51,6 @@
     pick.appendChild(card);
     return {card,s,x};
   });
-
   function paintSlot(slot,k){
     const x=ids[k]?byId.get(ids[k]):null,card=slot.card,artBox=card.querySelector('.cmp-slot-art'),img=card.querySelector('.cmp-slot-img');
     card.classList.toggle('is-empty',!x);
@@ -76,7 +67,6 @@
     slot.x.hidden=!x;
     if(x)slot.x.setAttribute('aria-label','Remove '+name(x));
   }
-
   function cell(v){return PENDING.has(v)?'<span class="cmp-wait">'+esc(v)+'</span>':esc(v);}
   function render(){
     slots.forEach((slot,k)=>{
@@ -107,13 +97,11 @@
       calculator.hidden = cols.length === 0;
       const calculatorQuery = new URLSearchParams({ tool: 'compare', type, ids: ids.filter(Boolean).join(','), from: 'comparateur' });
       calculatorLink.href = 'calculateurs.html?' + calculatorQuery.toString() + '#atelier';
-      /* v7.54 : le lien « Lequel puis-je acheter ? » de la v7.47 (Mes achats, un achat à la fois) revient à côté de « Quel achat choisir ? ». */
       const purchaseLink = document.getElementById('cmp-purchase-link');
       if (purchaseLink) { const q = new URLSearchParams({ tool: 'purchase', type, ids: ids.filter(Boolean).join(','), from: 'comparateur' }); purchaseLink.href = 'calculateurs.html?' + q.toString() + '#atelier'; }
     }
     const query=new URLSearchParams({type});if(ids.some(Boolean))query.set('ids',ids.filter(Boolean).join(','));history.replaceState(null,'','comparateur.html?'+query.toString());
   }
-
   QUICK.forEach(([label,set])=>{
     const ok=set.filter(id=>byId.has(id));if(ok.length<2)return;
     const b=document.createElement('button');b.type='button';b.textContent=label;b.dataset.ids=ok.join(',');

@@ -1,14 +1,9 @@
-/* v7.61 : pluriel selon la langue de la page : français n > 1 (« 0 coché », « 1,5 million ») ; anglais, espagnol n ≠ 1 (« 0 marcados ») */
+/* Généré depuis outils/sources/carte.js : modifie la source, pas ce fichier. */
 var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.documentElement&&document.documentElement.lang)||'fr').slice(0,2)==='fr'?n>1:n!==1;};
-/* ============================================================
-   LEONIDAKIT — moteur de carte
-   Déplacement, zoom, marqueurs, filtres, suivi, distance.
-   ============================================================ */
 (function(){
   const stage = document.getElementById('map-stage');
   const esc = window.LK.esc;
   if(!stage) return;
-
   const world   = document.getElementById('map-world');
   const layer   = document.getElementById('map-markers');
   const panel   = document.getElementById('map-panel');
@@ -32,15 +27,8 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
   const coordBx = document.getElementById('map-coord');
   const progRs  = document.getElementById('map-prog-reset');
   const shell   = document.querySelector('.map-shell');
-
-  /* ---- dimensions du monde, en unités de carte ---- */
   const W = 5200, H = 6000;
-
-  /* échelle : le fond v1.0 est calé sur les coordonnées du jeu (voir carte-gtadb.js).
-     À vérifier sur les vraies distances après le 19 novembre. */
-  const METRES_PAR_UNITE = 3.04;   /* 1 unité de carte = 3,04 m, calé sur les coordonnées du jeu */
-
-  /* vitesses de GTA V, en mètres par seconde : références du calculateur de trajet (v7.69 : estimation affichée tout de suite, marquée comme telle) */
+  const METRES_PAR_UNITE = 3.04;
   const VITESSES = [
     { id:'pied',    nom:'A pie',     v: 2.0,  ico:'walk' },
     { id:'de competición',  nom:'Corriendo', v: 6.0,  ico:'run'  },
@@ -51,8 +39,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     { id:'helico',  nom:'En helicóptero', v: 60.0, ico:'heli' },
     { id:'avion',   nom:'En avión',   v: 78.0, ico:'plane'}
   ];
-
-  /* ---- statut de fiabilité ---- */
   const STATUTS = {
     officiel: { nom:'Nombrado por Rockstar', court:'Oficial',
                 d:"Lugar nombrado explícitamente por Rockstar, en su web o en su material oficial." },
@@ -61,7 +47,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     spec:     { nom:'Reconstrucción de la comunidad', court:'Supuesto',
                 d:"Posición o existencia deducida por la comunidad. Tómalo con precaución." }
   };
-
   const SOURCES = {
     SITE:  'Sitio oficial de Rockstar',
     T1:    'Primer tráiler',
@@ -72,8 +57,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     GTADB: 'Edificios de la comunidad',
     COLLECTIBLES: 'Fuentes indicadas en la ficha del coleccionable'
   };
-
-  /* ---- personnages officiels ---- */
   const PERSOS = {
     jason:  { n:'Jason Duval',      r:"Exmilitar convertido en transportista para traficantes de los Keys." },
     lucia:  { n:'Lucia Caminos',    r:"Originaria de Liberty City, salida de la penitenciaría de Leonida." },
@@ -84,8 +67,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     raul:   { n:'Raul Bautista',    r:"Atracador de bancos experimentado." },
     brian:  { n:'Brian Heder',      r:"Traficante veterano de los Keys, dueño de la vivienda de Jason." }
   };
-
-  /* ---- catégories ---- */
   const CATS = {
     region:      { nom:'Regiones',            col:'#E8452C' },
     ville:       { nom:'Ciudades',             col:'#F5A524' },
@@ -100,11 +81,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     planque:     { nom:'Escondites',           col:'#A85B33' },
     mission:     { nom:'Misiones',           col:'#CE4B33' }
   };
-
-  /* ---- points confirmés par Rockstar ----
-     Positions approximatives, à recaler sur le fond définitif. */
   const POINTS = [
-    /* ============ RÉGIONS OFFICIELLES ============ */
     { id:'vice-city', n:'Vice City', c:'ville', x:3517, y:3214, s:'officiel', src:'SITE', z:0, pers:['boobie','drequan','dimez'],
       d:"La metrópolis de Leonida y el corazón del juego. Rockstar la presenta como la capital soleada y festiva del país, y como la ciudad más densa que el estudio ha construido nunca." },
     { id:'leonida-keys', n:'Leonida Keys', c:'region', x:2889, y:5404, s:'officiel', src:'SITE', z:0, pers:['jason','brian'],
@@ -117,8 +94,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       d:"Condado rural e industrial. La refinería Allied Crystal da los empleos; la banda de moteros local da casi todo lo demás." },
     { id:'mount-kalaga', n:'Mount Kalaga National Park', c:'region', x:2692, y:922, s:'officiel', src:'SITE', z:0,
       d:"Parque nacional en la frontera norte, construido en torno a la caza, la pesca y las pistas todoterreno. En su interior vive una población que se mantiene lejos de las autoridades por decisión propia." },
-
-    /* ============ VICE CITY : QUARTIERS ============ */
     { id:'ocean-beach', n:'Ocean Beach', c:'quartier', x:4295, y:2957, s:'officiel', src:'SITE', p:'vice-city', z:1,
       d:"Barrio nombrado por Rockstar: hoteles art déco en tonos pastel, arena blanca, paseo bordeado de palmeras. Es la escena de apertura del primer tráiler." },
     { id:'little-cuba', n:'Little Cuba', c:'quartier', x:3331, y:3170, s:'officiel', src:'SITE', p:'vice-city', z:1,
@@ -139,8 +114,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       d:"Principal aeropuerto de la ciudad, identificado por el tren VCIA que se ve en el segundo tráiler." },
     { id:'causeway', n:'Calzada de Vice Beach', c:'transport', x:4058, y:2813, s:'vu', src:'T1', p:'vice-city', z:1,
       d:"Puente-calzada que une el continente con la isla de Vice Beach, con peaje a la entrada." },
-
-    /* ============ VICE CITY : BÂTIMENTS IDENTIFIÉS ============ */
     { id:'galina-opera', n:'Galina Ballet Opera House', c:'batiment', x:3557, y:2956, s:'vu', src:'T2', p:'downtown', z:2,
       d:"Ópera de silueta angulosa y explanada animada, que los observadores comparan con el Adrienne Arsht Center." },
     { id:'sahara-arena', n:'Sahara Arena', c:'batiment', x:3624, y:3053, s:'vu', src:'T2', p:'downtown', z:2,
@@ -157,24 +130,18 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       d:"Terraza de lujo con piscina privada y ducha exterior, comparada con la Trésor Tower." },
     { id:'jade-condos', n:'Torres onduladas', c:'batiment', x:4355, y:2697, s:'vu', src:'T1', p:'vice-beach', z:2,
       d:"Edificios con fachada en forma de olas, visibles en el skyline de Vice Beach." },
-
-    /* ============ AUTRES VILLES ============ */
     { id:'waning-sands', n:'Waning Sands', c:'ville', x:3681, y:1860, s:'vu', src:'T1', z:0,
       d:"Extrarradio inmenso: vías rápidas, centros comerciales y enormes aparcamientos." },
     { id:'hamlet', n:'Hamlet', c:'ville', x:2832, y:4258, s:'vu', src:'T1', z:0,
       d:"Localidad nombrada en el primer tráiler, en una escena de calle residencial." },
     { id:'key-lento', n:'Key Lento', c:'quartier', x:2889, y:5144, s:'officiel', src:'T2', p:'leonida-keys', z:1,
       d:"Isla con nombre en el archipiélago de los Leonida Keys." },
-
-    /* ============ LIEUX NOTABLES ============ */
     { id:'allied-crystal', n:'Raffinerie Allied Crystal', c:'lieu', x:2773, y:2004, s:'officiel', src:'SITE', p:'ambrosia', z:1,
       d:"Refinería de azúcar citada por Rockstar como el principal empleador de Ambrosia." },
     { id:'leonida-penitentiary', n:'Leonida Penitentiary', c:'lieu', x:2805, y:4133, s:'officiel', src:'SITE', z:0, pers:['lucia'],
       d:"La penitenciaría estatal donde Lucia cumple condena al principio de la historia, tras pelear por su familia en Liberty City. Nombre confirmado por Rockstar. Comparada con la Florida State Prison." },
     { id:'tv-tower', n:'Torre de televisión', c:'batiment', x:3365, y:2037, s:'spec', src:'COMM', z:0,
       d:"Hipótesis de la comunidad sobre una antena muy alta, inspirada en la torre WTVY. No confirmada." },
-
-    /* ============ COMTÉS ============ */
     { id:'vice-dale', n:'Condado de Vice-Dale', c:'comte', x:3431, y:3189, s:'vu', src:'T1', z:0,
       d:"Deducido de la rotulación Vice-Dale Police Department en un vehículo de policía." },
     { id:'leonard-county', n:'Condado de Leonard', c:'comte', x:3132, y:1989, s:'vu', src:'T1', z:0,
@@ -183,8 +150,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       d:"Nombrado en una señal de carretera. Una de las zonas menos documentadas." },
     { id:'mariana-county', n:'Condado de Mariana', c:'comte', x:2360, y:4317, s:'spec', src:'COMM', z:0,
       d:"Condado propuesto por la comunidad para la zona de los Grassrivers. No confirmado." },
-
-    /* ============ NATURE ============ */
     { id:'grand-lac', n:'Gran lago interior', c:'nature', x:3075, y:1639, s:'spec', src:'COMM', z:0,
       d:"Masa de agua central deducida de las imágenes. Ni su nombre ni su contorno están confirmados." },
     { id:'kalaga-summit', n:'Cumbre del Kalaga', c:'nature', x:2732, y:762, s:'spec', src:'COMM', p:'mount-kalaga', z:1,
@@ -192,16 +157,12 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     { id:'gloriana', n:'Gloriana', c:'region', x:1765, y:1398, s:'spec', src:'COMM', z:0,
       d:"Nombre visto en matrículas. Rockstar nunca ha anunciado que se trate de una región explorable." }
   ];
-
-  /* ---- bâtiments de la communauté gtadb (CC BY 4.0), voir carte-gtadb.js ---- */
   if(window.LK_GTADB){
     (window.LK_GTADB.groupes || []).forEach(function(p){ POINTS.push(p); });
     (window.LK_GTADB.lieux   || []).forEach(function(p){ POINTS.push(p); });
-    /* photos et Street View ajoutés aux fiches déjà présentes ici */
     const enr = window.LK_GTADB.enrichit || {};
     POINTS.forEach(function(p){
       const x = enr[p.id]; if(!x) return;
-      /* un visuel officiel déclaré dans enrichit remplace la photo communautaire du panneau */
       if(x.img){ p.img = x.img; p.imgSrc = x.imgSrc; }
       if(x.img2){ p.img2 = x.img2; p.img2Src = x.img2Src; }
       ['imgW','imgH','img2W','img2H','imgAlt','img2Alt'].forEach(function(k){ if(x[k]) p[k] = x[k]; });
@@ -209,9 +170,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       if(x.reel) p.reel = x.reel;
     });
   }
-
-  /* Les collectibles gardent leurs identifiants et leur suivi propres.
-     Une fiche sans position précise et sourcée ne crée jamais de marqueur. */
   const collectibleApi = window.LKCollectibles;
   let collectibleState = collectibleApi ? collectibleApi.getState() : {found:{}, favorites:{}};
   const collectibleItems = (window.LK_COLLECTIBLES && Array.isArray(window.LK_COLLECTIBLES.items))
@@ -246,18 +204,11 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
   function pointFound(p){
     return p.collectible ? !!(collectibleApi && collectibleApi.isTrackable(p.collectible) && collectibleState.found[p.collectible.id]) : !!found[p.id];
   }
-
-  /* Ne demander que les fichiers réellement livrés. Les photos de la carte (photos/) sont déjà filtrées à la génération de carte-gtadb.js et ne figurent pas dans le manifeste. */
   POINTS.forEach(p=>{['img','img2'].forEach(k=>{if(p[k] && !/^photos\//.test(p[k]) && !window.LK.hasAsset(p[k])) delete p[k];});});
-
-  /* index : indispensable dès qu'on dépasse quelques centaines de lieux */
   const BY_ID = {}, KIDS = {}, MK = {};
   POINTS.forEach(function(p){ BY_ID[p.id] = p; });
   POINTS.forEach(function(p){ if(p.p){ (KIDS[p.p] = KIDS[p.p] || []).push(p); } });
   function byId(id){ return BY_ID[id]; }
-
-  /* couleurs de la légende appliquées aux points de la carte (style.css n'en
-     définit que pour huit catégories sur douze) + règles d'étiquettes */
   (function(){
     const st = document.createElement('style');
     st.textContent =
@@ -273,29 +224,20 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
         'border:1px dashed var(--rule,#d9d0c3);border-radius:8px;background:transparent;cursor:pointer;color:inherit;}';
     document.head.appendChild(st);
   })();
-
-  /* ============================================================
-     ÉTAT
-     ============================================================ */
   let scale = 0.21, minS = 0.10, maxS = 8.0;
   let tx = 0, ty = 0;
   let found = {};
   let visible = {};
   let rulerOn = false;
   let rulerPts = [];
-
   Object.keys(CATS).forEach(k => visible[k] = true);
   let visStatut = { officiel:true, vu:true, spec:true };
   let visSource = { SITE:true, T1:true, T2:true, EL:true, SHOT:true, COMM:true, GTADB:true, COLLECTIBLES:true };
-
-  /* niveau de zoom minimal pour voir chaque profondeur de la hiérarchie */
   const ZOOM_NIVEAU = [0, 0.42, 0.6];
-  let expanded = {};      /* parents dépliés manuellement */
-
+  let expanded = {};
   function niveauVisible(p){
     if(!p.z) return true;
     if(scale >= ZOOM_NIVEAU[p.z]) return true;
-    /* un enfant reste visible si son parent est déplié */
     let cur = p;
     while(cur && cur.p){
       if(expanded[cur.p]) return true;
@@ -303,21 +245,14 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     }
     return false;
   }
-
   function enfants(id){ return KIDS[id] || []; }
-
   try{
     found = window.LK.read('lk_map_found',{},window.LK.own);
     found = Object.fromEntries(Object.entries(found).filter(([id]) => !id.startsWith('collectible-')));
   }catch(e){ found = {}; }
-
   function save(){
     window.LK.write('lk_map_found',found);
   }
-
-  /* ============================================================
-     RENDU
-     ============================================================ */
   let applyTransform = function(){
     world.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + scale + ')';
     if(zoomLbl) zoomLbl.textContent = Math.round(scale * 100) + ' %';
@@ -329,17 +264,14 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     syncHash();
     if(typeof cluster === 'function') clusterSoon();
   };
-
   let clTimer = null;
   function clusterSoon(){
     clearTimeout(clTimer);
     clTimer = setTimeout(refreshVisibility, 90);
   }
-
-  /* ---- barre d'échelle ---- */
   function updateScaleBar(){
     if(!scaleBar) return;
-    const cible = 130;                       /* largeur visée en pixels */
+    const cible = 130;
     const mParPx = METRES_PAR_UNITE / scale;
     const brut = cible * mParPx;
     const pas = [10,25,50,100,250,500,1000,2000,5000,10000];
@@ -350,8 +282,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       ? (choisi/1000).toString().replace('.', ',') + ' km'
       : choisi + ' m';
   }
-
-  /* ---- position dans l'adresse, pour partager un lien ---- */
   let hashTimer = null;
   let collectibleHash = null;
   function syncHash(){
@@ -365,15 +295,12 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       if(location.hash !== h) history.replaceState(null, '', h);
     }, 400);
   }
-
   function readHash(){
-    /* v7.69 : #trajet ouvre le calculateur de trajet sur la carte (liens de l’accueil, du calculateur et de Léo) */
     if(location.hash === '#trajet'){
       setTrajet(true); const ms = document.getElementById('map-trajet-ms'); if(ms) ms.open = true;
       requestAnimationFrame(function(){ stage.scrollIntoView({ block:'start', behavior:'auto' }); });
       return false;
     }
-    /* plusieurs lieux à la fois : #pins=g-L1074,g-L1091&t=Armureries (liens « voir les armureries », « voir les concessions ») */
     const multi = location.hash.match(/^#pins=([\w,-]+)(?:&t=([^&]*))?$/);
     if(multi){
       const pts = multi[1].split(',').map(byId).filter(Boolean);
@@ -403,8 +330,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       collectibleHash = id;
       const p = byId('collectible-' + id);
       if(p && p.collectible){
-        /* Un lien direct rend toujours visible son marqueur, même si un filtre
-           avait été désactivé au cours de la visite. */
         visible[p.c] = visStatut[p.s] = visSource[p.src] = true;
         document.querySelectorAll('.map-filter,.map-statut,.map-source').forEach(function(input){
           if(input.dataset.cat === p.c || input.dataset.st === p.s || input.dataset.src === p.src) input.checked = true;
@@ -429,14 +354,11 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       return false;
     }
     collectibleHash = null;
-    /* lien direct vers un lieu : #lieu=vice-city */
     const l = location.hash.match(/^#lieu=([\w-]+)$/);
     if(l){
       const p = byId(l[1]);
       if(p){
         goTo(p, Math.max(0.6, ZOOM_NIVEAU[p.z || 0] + 0.2));
-        /* arrivée par lien direct : on amène la carte à l'écran, sinon le panneau
-           s'ouvre sous le pli sur mobile et l'utilisateur ne voit rien */
         requestAnimationFrame(function(){ stage.scrollIntoView({ block: 'start', behavior: 'instant' in document.documentElement.style ? 'instant' : 'auto' }); });
         return true;
       }
@@ -450,7 +372,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     clamp(); applyTransform();
     return true;
   }
-
   function clamp(){
     const r = stage.getBoundingClientRect();
     const w = W * scale, h = H * scale;
@@ -460,14 +381,12 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     tx = Math.min(cx + mx, Math.max(cx - mx, tx));
     ty = Math.min(cy + my, Math.max(cy - my, ty));
   }
-
   function center(){
     const r = stage.getBoundingClientRect();
     tx = (r.width - W * scale) / 2;
     ty = (r.height - H * scale) / 2;
     applyTransform();
   }
-
   function zoomAt(cx, cy, factor){
     const before = scale;
     scale = Math.min(maxS, Math.max(minS, scale * factor));
@@ -477,10 +396,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     ty = cy - (cy - ty) * k;
     clamp(); applyTransform();
   }
-
-  /* ============================================================
-     MARQUEURS
-     ============================================================ */
   function buildMarkers(){
     layer.innerHTML = '';
     montes = new Map();
@@ -496,7 +411,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       MK[p.id] = el;
       el.dataset.cat = p.c;
       el.dataset.st = p.s;
-      /* assemblage v7.91 (axe, « label in name ») : avec un compte d'enfants dans la pastille, le nom vient du contenu */
       if(!kids) el.setAttribute('aria-label', p.n);
       const reel = / \(nom (réel|supposé)\)$/.test(p.n);
       if(reel) el.classList.add('lbl-reel');
@@ -510,34 +424,22 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
         }
         openPanel(p);
       });
-      /* pas encore dans la page : refreshVisibility ne monte que les marqueurs visibles */
     });
     refreshVisibility();
     refreshProgress();
   }
-
-  /* ============================================================
-     VISIBILITÉ, REGROUPEMENT ET ÉTIQUETTES
-     Seuls les marqueurs réellement à l'écran sont dans la page :
-     avec plusieurs milliers de lieux, c'est ce qui garde le zoom
-     fluide. Les points trop proches sont regroupés en pastilles à
-     tous les niveaux de zoom, sauf au zoom maximal.
-     ============================================================ */
-  const SEUIL_GROUPE = 2;     /* nb de points par case avant regroupement */
-  const CASE_PX = 34;         /* taille de case à l'écran, en pixels */
-  let montes = new Map();     /* id -> marqueur actuellement dans la page */
-  let ouvertId = null;        /* lieu dont la fiche est ouverte : jamais regroupé */
-
+  const SEUIL_GROUPE = 2;
+  const CASE_PX = 34;
+  let montes = new Map();
+  let ouvertId = null;
   function passeFiltres(p){
     return visible[p.c] && visStatut[p.s] && visSource[p.src] && niveauVisible(p);
   }
-
   function refreshVisibility(){
     const r = stage.getBoundingClientRect();
     const marge = 0.6;
     const x0 = (-tx - r.width  * marge) / scale, x1 = (-tx + r.width  * (1 + marge)) / scale;
     const y0 = (-ty - r.height * marge) / scale, y1 = (-ty + r.height * (1 + marge)) / scale;
-
     const actifs = [];
     for(let i = 0; i < POINTS.length; i++){
       const p = POINTS[i];
@@ -545,8 +447,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       if(!passeFiltres(p)) continue;
       actifs.push(p);
     }
-
-    /* regroupement par case */
     const seuls = [], groupes = [];
     const auMax = scale >= maxS * 0.999;
     if(auMax){
@@ -566,8 +466,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
         else groupes.push(grp);
       });
     }
-
-    /* montage différentiel : on retire ce qui sort, on ajoute ce qui entre */
     const voulus = new Set(seuls.map(p => p.id));
     montes.forEach(function(el, id){
       if(!voulus.has(id)){ el.remove(); montes.delete(id); }
@@ -579,8 +477,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       if(el){ frag.appendChild(el); montes.set(p.id, el); }
     });
     layer.appendChild(frag);
-
-    /* pastilles */
     layer.querySelectorAll('.cl').forEach(el => el.remove());
     groupes.forEach(function(grp){
       const cx = grp.reduce((s,p)=>s+p.x,0) / grp.length;
@@ -597,7 +493,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       b.innerHTML = '<span class="cl-n">' + grp.length + '</span>';
       b.addEventListener('click', function(ev){
         ev.stopPropagation();
-        /* approcher pour éclater le groupe */
         const r2 = stage.getBoundingClientRect();
         scale = Math.min(maxS, scale * 2.2);
         tx = r2.width/2 - cx * scale;
@@ -606,13 +501,9 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       });
       layer.appendChild(b);
     });
-
     trierEtiquettes(seuls);
   }
   function cluster(){ refreshVisibility(); }
-
-  /* ---- étiquettes : on masque celles qui en chevaucheraient une plus
-     importante (officiel > tes lieux > bâtiments nommés > noms réels) ---- */
   function prioriteEtiquette(p){
     if(p.id === ouvertId) return -1;
     if(p.s === 'officiel') return 0;
@@ -627,9 +518,9 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       const el = MK[p.id];
       if(el) el.classList.toggle('is-open', p.id === ouvertId);
       const z = p.z || 0;
-      if((z === 1 && lblZ1) || (z === 2 && lblZ2)) return;   /* déjà masquée par style.css */
+      if((z === 1 && lblZ1) || (z === 2 && lblZ2)) return;
       if(prioriteEtiquette(p) === 3 && scale < 3 && p.id !== ouvertId){
-        if(el) el.classList.add('lbl-off');                 /* nom réel ou bâtiment anonyme : survol seulement */
+        if(el) el.classList.add('lbl-off');
         return;
       }
       cand.push(p);
@@ -672,28 +563,23 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       }
     });
   }
-
   function refreshProgress(){
     const places = POINTS.filter(p => !p.collectible);
     const total = places.length;
     const done = places.filter(p => found[p.id]).length;
     const pct = total ? Math.round(done / total * 100) : 0;
     if(progBar) progBar.style.width = pct + '%';
-    if(progTxt) progTxt.innerHTML = '<strong>' + done + '</strong> / ' + total + ' descubiertos';
+    if(progTxt) progTxt.innerHTML = '<strong>' + done + '</strong> de ' + total + ' descubiertos';
     if(progRs) progRs.hidden = done === 0;
     renderFound();
   }
-
-  /* ---- liste des lieux repérés ---- */
   const fdList = document.getElementById('map-found-list');
   const fdCnt  = document.getElementById('map-found-count');
-
   function renderFound(){
     if(!fdList) return;
     const sec = fdList.closest('details');
     const liste = POINTS.filter(p => !p.collectible && found[p.id]);
     if(fdCnt) fdCnt.textContent = liste.length;
-
     if(!liste.length){
       fdList.innerHTML = '<p class="fd-empty">Aún no has descubierto ningún lugar. Abre un marcador en el mapa y márcalo.</p>';
       return;
@@ -707,7 +593,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
              'aria-label="' + 'Desmarcar {nom}'.replace('{nom}', esc(p.n)) + '" title="Desmarcar">&times;</button></li>';
     }).join('') + '</ul>';
   }
-
   if(fdList){
     fdList.addEventListener('click', function(e){
       const go = e.target.closest('[data-goto]');
@@ -726,10 +611,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       }
     });
   }
-
-  /* ============================================================
-     PANNEAU D'INFORMATION
-     ============================================================ */
   function openPanel(p){
     ouvertId = p.id;
     collectibleHash = p.collectible ? p.collectible.id : null;
@@ -741,9 +622,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
         '<svg viewBox="0 0 64 64"><rect x="8" y="16" width="48" height="36" rx="4" fill="none" stroke="currentColor" stroke-width="2.5"/>' +
         '<circle cx="24" cy="30" r="5" fill="currentColor"/><path d="M12 48l14-14 10 10 8-8 12 12" fill="none" stroke="currentColor" stroke-width="2.5"/></svg>' +
         '<span>Imagen próximamente</span></div>';
-
-    /* lieux gtadb : deux photos possibles, chargées avant affichage pour
-       éviter tout cadre vide ; sinon, comportement d'origine */
     const img = p.img2
       ? '<div id="mp-photos">' + VIDE + '</div>'
       : (p.img
@@ -752,19 +630,16 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
           (p.imgSrc ? '<figcaption>' + esc(p.imgSrc) + '</figcaption>' : '') + '</figure>'
         : VIDE);
     const img2 = '';
-    /* coordonnées réelles uniquement : jamais une position du plan fictif, jamais une valeur non numérique */
     const svOk = /^-?\d+(?:\.\d+)?,-?\d+(?:\.\d+)?$/.test(String(p.sv || '')) &&
       Math.abs(Number(String(p.sv).split(',')[0])) <= 90 && Math.abs(Number(String(p.sv).split(',')[1])) <= 180;
     const streetView = svOk
       ? '<div><span>Lugar real</span><b><a href="https://www.google.com/maps/search/?api=1&amp;query=' + encodeURIComponent(p.sv) +
         '" target="_blank" rel="noopener noreferrer">Ver en Google Maps</a></b></div>'
       : '';
-
     const persos = (p.pers || []).map(function(k){
       const q = PERSOS[k]; if(!q) return '';
       return '<li><b>' + esc(q.n) + '</b><span>' + esc(q.r) + '</span></li>';
     }).join('');
-
     panelIn.innerHTML =
       img +
       '<p class="mp-cat" style="color:' + CATS[p.c].col + '">' + CATS[p.c].nom + '</p>' +
@@ -776,7 +651,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       '<div class="mp-meta">' +
         '<div><span>Fiabilidad</span><b>' + st.nom + '</b></div>' +
         '<div><span>Fuente</span><b>' + SOURCES[p.src] + '</b></div>' +
-        '<div><span>Posición</span><b>' + p.x + ' · ' + p.y + '</b></div>' +
+        '<div><span>Posición</span><b>' + p.x + ', ' + p.y + '</b></div>' +
         streetView +
       '</div>' +
       (function(){
@@ -818,7 +693,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
         '</button>' +
       '</div>';
     panel.classList.add('open'); panel.inert=false;
-
     if(p.img2){
       const zone = document.getElementById('mp-photos');
       const figure = function(src, legende, real){
@@ -836,7 +710,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
         });
       };
       Promise.all([charger(p.img), charger(p.img2)]).then(function(r){
-        /* le panneau a pu changer de lieu entre-temps */
         if(!zone || !zone.isConnected) return;
         let h = '';
         if(r[0]) h += figure(p.img, p.imgSrc);
@@ -844,7 +717,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
         if(h) zone.innerHTML = h;
       });
     }
-
     const shareBt = document.getElementById('mp-share');
     if(shareBt){
       shareBt.addEventListener('click', function(e){
@@ -853,11 +725,8 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
         window.LK.copy(url).then(ok=>{if(ok){shareBt.classList.add('ok');setTimeout(()=>shareBt.classList.remove('ok'),1500);}});
       });
     }
-
-    /* déplier ce lieu : ses enfants deviennent visibles quel que soit le zoom */
     expanded[p.id] = true;
     refreshVisibility();
-
     const plusBt = document.getElementById('mp-kids-more');
     if(plusBt){
       plusBt.addEventListener('click', function(){
@@ -865,14 +734,12 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
         if(suite){ suite.hidden = false; plusBt.remove(); }
       });
     }
-
     panelIn.querySelectorAll('[data-goto]').forEach(function(b){
       b.addEventListener('click', function(){
         const t = byId(b.dataset.goto);
         if(t) goTo(t, Math.max(scale, ZOOM_NIVEAU[t.z || 0] + 0.1));
       });
     });
-
     document.getElementById('mp-toggle').addEventListener('click', function(){
       found[p.id] = !found[p.id];
       if(!found[p.id]) delete found[p.id];
@@ -883,7 +750,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       openPanel(p);
     });
   }
-
   function openCollectiblePanel(p){
     const item = p.collectible;
     const state = collectibleApi ? collectibleApi.getState() : {found:{}, favorites:{}};
@@ -900,7 +766,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       '<div class="mp-meta"><div><span>Fiabilidad</span><b>' + esc(st.nom) + '</b></div>' +
       '<div><span>Ubicación</span><b>Coordenadas verificadas</b></div>' +
       '<div><span>Fuente de la posición</span><b><a href="' + esc(coordinateSource) + '" target="_blank" rel="noopener noreferrer">Ver la fuente</a></b></div></div>' +
-      '<a class="mp-link" href="' + esc(itemHref) + '">Ver la ficha del coleccionable →</a>' +
+      '<a class="mp-link" href="' + esc(itemHref) + '">Ver la ficha del coleccionable</a>' +
       (trackable ? '<button type="button" class="mp-btn' + (isFound ? ' on' : '') + '" id="mp-collectible-found" aria-pressed="' + isFound + '">' +
         (isFound ? 'Encontrado' : 'Marcar como encontrado') + '</button>' : '<p class="mp-d">El seguimiento de coleccionables no está disponible para esta ficha.</p>') +
       (collectibleApi ? '<button type="button" class="mp-btn' + (favorite ? ' on' : '') + '" id="mp-collectible-favorite" aria-pressed="' + favorite + '">' +
@@ -925,7 +791,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     refreshVisibility();
     syncHash();
   }
-
   function refreshCollectibles(){
     if(collectibleApi) collectibleState = collectibleApi.getState();
     POINTS.forEach(function(p){
@@ -939,31 +804,23 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       if(button) button.focus({preventScroll:true});
     }else refreshVisibility();
   }
-
   function closePanel(){
     panel.classList.remove('open'); panel.inert=true;
     collectibleHash = null;
     syncHash();
     if(ouvertId || Object.keys(expanded).length){
       ouvertId = null;
-      expanded = {};          /* ce qui avait été déplié se replie avec la fiche */
+      expanded = {};
       refreshVisibility();
     }
   }
   if(closeBt) closeBt.addEventListener('click', function(e){ e.stopPropagation(); closePanel(); });
-
-  /* les interactions dans le panneau ne doivent pas atteindre la carte */
   ['click','pointerdown','pointerup','wheel','dblclick'].forEach(function(ev){
     panel.addEventListener(ev, function(e){ e.stopPropagation(); });
   });
-
-  /* ============================================================
-     DÉPLACEMENT ET ZOOM
-     ============================================================ */
   let dragging = false, lastX = 0, lastY = 0, moved = 0, captured = false;
   const pointers = new Map();
   let pinchDist = 0;
-
   stage.addEventListener('pointerdown', function(e){
     if(stage.classList.contains('drawing') || e.target.closest('.map-zoom,.map-mini,.map-help,.map-help-box,.map-coord'))return;
     pointers.set(e.pointerId, {x:e.clientX, y:e.clientY});
@@ -976,11 +833,9 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       pinchDist = Math.hypot(a[0].x - a[1].x, a[0].y - a[1].y);
     }
   });
-
   stage.addEventListener('pointermove', function(e){
     if(!pointers.has(e.pointerId)) return;
     pointers.set(e.pointerId, {x:e.clientX, y:e.clientY});
-
     if(pointers.size === 2){
       const a = Array.from(pointers.values());
       const d = Math.hypot(a[0].x - a[1].x, a[0].y - a[1].y);
@@ -993,7 +848,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       pinchDist = d;
       return;
     }
-
     if(!dragging) return;
     const dx = e.clientX - lastX, dy = e.clientY - lastY;
     moved += Math.abs(dx) + Math.abs(dy);
@@ -1007,7 +861,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     lastX = e.clientX; lastY = e.clientY;
     clamp(); applyTransform();
   });
-
   function endPointer(e){
     pointers.delete(e.pointerId);
     if(pointers.size < 2) pinchDist = 0;
@@ -1019,27 +872,22 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
   stage.addEventListener('pointerup', endPointer);
   stage.addEventListener('pointercancel', endPointer);
   stage.addEventListener('pointerleave', endPointer);
-
   stage.addEventListener('pointermove', function(e){
     if(!coordBx) return;
     const r = stage.getBoundingClientRect();
     const x = Math.round((e.clientX - r.left - tx) / scale);
     const y = Math.round((e.clientY - r.top  - ty) / scale);
-    coordBx.textContent = x + ' · ' + y;
+    coordBx.textContent = x + ', ' + y;
   });
-
   stage.addEventListener('wheel', function(e){
     e.preventDefault();
     const r = stage.getBoundingClientRect();
     zoomAt(e.clientX - r.left, e.clientY - r.top, e.deltaY < 0 ? 1.16 : 0.86);
   }, {passive:false});
-
   stage.addEventListener('dblclick', function(e){
     const r = stage.getBoundingClientRect();
     zoomAt(e.clientX - r.left, e.clientY - r.top, 1.6);
   });
-
-  /* conversion écran -> coordonnées de la carte */
   function toWorld(clientX, clientY){
     const r = stage.getBoundingClientRect();
     return {
@@ -1047,11 +895,9 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       y: Math.round((clientY - r.top  - ty) / scale)
     };
   }
-
   stage.addEventListener('click', function(e){
-    if(moved >= 6) return;                       /* c'était un glisser */
+    if(moved >= 6) return;
     if(stage.classList.contains('drawing') || stage.classList.contains('editing') || e.target.closest('.map-panel,.map-zoom,.map-mini,.map-help,.map-help-box,.map-coord'))return;
-
     if(rulerOn){
       const mk = e.target.closest('.mk');
       if(mk){
@@ -1063,10 +909,8 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       }
       return;
     }
-
     if(!e.target.closest('.mk')) closePanel();
   });
-
   if(zoomIn)  zoomIn.addEventListener('click', function(){
     const r = stage.getBoundingClientRect(); zoomAt(r.width/2, r.height/2, 1.35);
   });
@@ -1074,7 +918,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     const r = stage.getBoundingClientRect(); zoomAt(r.width/2, r.height/2, 0.74);
   });
   if(resetBt) resetBt.addEventListener('click', function(){ scale = 0.21; center(); });
-
   if(fullBt && shell){
     fullBt.addEventListener('click', function(){
       const on = shell.classList.toggle('is-full');
@@ -1086,32 +929,24 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       if(e.key === 'Escape' && shell.classList.contains('is-full')) fullBt.click();
     });
   }
-
-  /* ============================================================
-     FILTRES
-     ============================================================ */
   document.querySelectorAll('.map-filter').forEach(function(inp){
     inp.addEventListener('change', function(){
       visible[inp.dataset.cat] = inp.checked;
       refreshVisibility();
     });
   });
-
   document.querySelectorAll('.map-source').forEach(function(inp){
     inp.addEventListener('change', function(){
       visSource[inp.dataset.src] = inp.checked;
       refreshVisibility();
     });
   });
-
   document.querySelectorAll('.map-statut').forEach(function(inp){
     inp.addEventListener('change', function(){
       visStatut[inp.dataset.st] = inp.checked;
       refreshVisibility();
     });
   });
-
-  /* raccourci : n'afficher que ce que Rockstar a officiellement nommé */
   const onlyBt = document.getElementById('map-only-officiel');
   if(onlyBt){
     onlyBt.addEventListener('click', function(){
@@ -1124,10 +959,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       refreshVisibility();
     });
   }
-
-  /* ============================================================
-     ARBORESCENCE DES LIEUX
-     ============================================================ */
   const tree = document.getElementById('map-tree');
   function buildTree(){
     if(!tree) return;
@@ -1149,7 +980,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       return h + '</li>';
     }
     tree.innerHTML = '<ul class="tr-root">' + racines.map(p => node(p, 0)).join('') + '</ul>';
-
     tree.querySelectorAll('.tr-tog').forEach(function(b){
       b.addEventListener('click', function(){
         const ul = b.closest('.tr-item').querySelector(':scope > .tr-kids');
@@ -1166,8 +996,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     });
   }
   buildTree();
-
-  /* totaux affichés : bandeau du haut et volet "Tous les lieux" */
   (function(){
     const total = POINTS.length;
     const nommes = POINTS.filter(p => p.s === 'officiel').length;
@@ -1176,8 +1004,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     if(stats[1]) stats[1].dataset.count = stats[1].textContent = nommes;
     document.querySelectorAll('.ms-n').forEach(function(n){ n.textContent = total; });
   })();
-
-  /* effectifs affichés dans les filtres */
   (function(){
     const parCat = {}, parSrc = {}, parSt = {};
     POINTS.forEach(function(p){
@@ -1215,20 +1041,14 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       }
     });
   })();
-
-  /* ============================================================
-     CALQUES DU FOND
-     ============================================================ */
   const LAYER_KEY = 'lk_map_layers';
   let layers = {};
   try{ layers = window.LK.read(LAYER_KEY,{},v=>window.LK.record(v)&&Object.values(v).every(x=>typeof x==='boolean')); }catch(e){ layers = {}; }
-
   function applyLayer(name, on){
     document.querySelectorAll('.map-bg .' + name).forEach(function(g){
       g.style.display = on ? '' : 'none';
     });
   }
-
   document.querySelectorAll('.map-layer').forEach(function(inp){
     const name = inp.dataset.layer;
     if(Object.prototype.hasOwnProperty.call(layers, name)) inp.checked = layers[name];
@@ -1239,12 +1059,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       applyLayer(name, inp.checked);
     });
   });
-
-  /* ============================================================
-     RECHERCHE
-     ============================================================ */
   const norm = s => s.toLowerCase().replace(/ß/g,'ss').normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[’‘]/g,"'").replace(/[\u00a0\u202f]/g," ");
-
   function goTo(p, z, showPanel = true){
     scale = z || 0.7;
     const r = stage.getBoundingClientRect();
@@ -1253,7 +1068,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     clamp(); applyTransform();
     if(showPanel) openPanel(p);
   }
-
   if(searchI){
     searchI.addEventListener('input', function(){
       const v = norm(searchI.value.trim());
@@ -1274,14 +1088,13 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       sugBox.innerHTML = hits.length
         ? hits.map(function(p){
             const parent = p.p ? byId(p.p) : null;
-            const detail = (p.r ? p.r + ' · ' : '') + (parent ? parent.n + ' · ' : '') + CATS[p.c].nom;
+            const detail = (p.r ? p.r + ', ' : '') + (parent ? parent.n + ', ' : '') + CATS[p.c].nom;
             return '<button type="button" role="option" aria-selected="false" data-go="'+p.id+'"><span>'+p.n+'</span>'+
               '<span class="kind" style="color:'+CATS[p.c].col+'">'+detail+'</span></button>';
           }).join('')
         : '<div class="none" role="option" aria-disabled="true" aria-selected="false">No se ha encontrado ningún lugar.</div>';
       sugBox.classList.add('open');
     });
-
     searchI.setAttribute('aria-controls','map-sug');searchI.setAttribute('aria-expanded','false');
     searchI.addEventListener('input',()=>searchI.setAttribute('aria-expanded',String(sugBox.classList.contains('open'))));
     searchI.addEventListener('keydown',function(e){if(e.key==='Escape'){sugBox.classList.remove('open');searchI.setAttribute('aria-expanded','false');}else if(e.key==='ArrowDown' || e.key==='Enter'){const b=sugBox.querySelector('button');if(b){e.preventDefault();if(e.key==='Enter')b.click();else b.focus();}}});
@@ -1293,15 +1106,10 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       const p = byId(b.dataset.go);
       if(p){ goTo(p); sugBox.classList.remove('open'); searchI.value = p.n; searchI.setAttribute('aria-expanded','false'); }
     });
-
     document.addEventListener('click', function(e){
       if(!e.target.closest('.map-searchwrap')) sugBox.classList.remove('open');
     });
   }
-
-  /* ============================================================
-     CALCULATEUR DE DISTANCE
-     ============================================================ */
   function fmtDuree(sec){
     sec=Math.round(sec);
     if(sec < 60) return Math.round(sec) + ' s';
@@ -1310,13 +1118,11 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     const h = Math.floor(m / 60), mm = m % 60;
     return h + ' h' + (mm ? ' ' + mm + ' min' : '');
   }
-
   function fmtDist(m){
     return m >= 1000
       ? (m/1000).toFixed(2).replace('.', ',') + ' km'
       : Math.round(m) + ' m';
   }
-
   const ICONS = {
     walk:'<path d="M13 4a2 2 0 1 1-4 0 2 2 0 0 1 4 0M9 21l1.5-6L8 13V9l4-2 3 2 2 3M10 21l-2 0"/>',
     run: '<path d="M15 4a2 2 0 1 1-4 0 2 2 0 0 1 4 0M8 21l3-5-2-3 1-4 4 2 2 4M6 12l3-1"/>',
@@ -1327,16 +1133,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     plane:'<path d="M12 3l2 8 8 3v2l-8-1-1 5 3 2v1l-4-1-4 1v-1l3-2-1-5-8 1v-2l8-3z"/>',
     heli:'<path d="M4 5h16M12 5v4M7 12h7a4 4 0 0 1 4 4v1H9a4 4 0 0 1-4-4v-1zM5 20h10M12 17v3"/>'
   };
-
-  /* ============================================================
-     v7.69 : CALCULATEUR DE TRAJET (Téva : « combien ça met à pied, combien en voiture, mais toutes les voitures ne sont
-     pas pareilles » ; un outil à part, qui s’ouvre sur la carte). Les points se posent comme avant (départ, arrivée,
-     étapes) ; la distance est à vol d’oiseau ; les temps s’affichent tout de suite, marqués « estimation » : vitesses de
-     référence de GTA V (une hypothèse, pas des données de GTA VI). Jusqu’à trois véhicules du site à comparer, chacun avec
-     SA vitesse : la référence de sa famille, ou celle que tu as mesurée en jeu et écrite ici (gardée sur l’appareil,
-     lk_trajet_v1). v7.70 : tous les moyens de déplacement sont listés (à pied, en courant, à vélo, moto, voiture, bateau,
-     hélicoptère, avion), chacun avec sa référence de GTA V. Lien direct : carte.html#trajet.
-     ============================================================ */
   const trajetBox = document.getElementById('map-trajet');
   const trajetFab = document.getElementById('map-trajet-fab');
   const trajetX = document.getElementById('map-trajet-x');
@@ -1351,8 +1147,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     { id:'helico',  nom:'Helicóptero (referencia de GTA V)' },
     { id:'avion',   nom:'Avión (referencia de GTA V)' }
   ];
-  /* v7.70 (Téva : « le calculateur doit prendre en compte tous les moyens de déplacement ») : chaque famille du site a sa référence
-     de GTA V, hélicoptères compris (vitesse de croisière moyenne) ; le panneau liste d'abord tous les moyens, puis tes véhicules. */
   const FAM_LABEL = { voiture:'coche medio de GTA V', moto:'moto media de GTA V', bateau:'barco medio de GTA V', helico:'helicóptero medio de GTA V', avion:'avión medio de GTA V' };
   const ICO_FAM = { voiture:'car', moto:'moto', bateau:'boat', avion:'plane', helico:'heli' };
   const SLUG = /^[a-z0-9][a-z0-9-]{0,79}$/;
@@ -1381,8 +1175,8 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
   function duree(kmh){ return kmh ? '≈ ' + fmtDuree(distM / (kmh / 3.6)) : 'Escribe una velocidad'; }
   function chemin(){
     return rulerPts.map(function(p, i){
-      return '<span class="rl-step"><b>' + LETTRES[i] + '</b>' + esc(p.lieu || (p.x + ' · ' + p.y)) + '</span>';
-    }).join('<i aria-hidden="true">→</i>');
+      return '<span class="rl-step"><b>' + LETTRES[i] + '</b>' + esc(p.lieu || (p.x + ', ' + p.y)) + '</span>';
+    }).join('<svg class="lk-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>');
   }
   function sourceOf(c){ return trajet.vit[c.id] ? 'Tu velocidad, guardada en este dispositivo' : (refKmh(c.fam) ? 'Referencia: ' + FAM_LABEL[c.fam] : 'Sin referencia publicada: escribe tu velocidad'); }
   function vehRow(id, i){
@@ -1410,7 +1204,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     }
     if(t !== lastLive){ lastLive = t; trajetLive.textContent = t; }
   }
-
   function renderRuler(){
     if(rulerUndo) rulerUndo.hidden = !rulerPts.length;
     if(rulerPts.length < 2){
@@ -1421,7 +1214,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
         + (rulerPts.length ? '<p class="rl-pair">' + chemin() + '</p>' : '');
       live(); return;
     }
-    /* distance cumulée sur l'ensemble du trajet */
     let du = 0;
     const etapes = [];
     for(let i = 1; i < rulerPts.length; i++){
@@ -1433,7 +1225,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     rulerBx.innerHTML =
       '<p class="rl-pair">' + chemin() + '</p>' +
       '<p class="rl-dist">' + fmtDist(distM) + ' <span class="rl-dist-k">en línea recta</span></p>' +
-      (lkPluriel(etapes.length) ? '<p class="rl-seg">' + etapes.length + ' tramos · el más largo ' + fmtDist(Math.max.apply(null, etapes)) + '</p>' : '') +
+      (lkPluriel(etapes.length) ? '<p class="rl-seg">' + etapes.length + ' tramos, el más largo ' + fmtDist(Math.max.apply(null, etapes)) + '</p>' : '') +
       '<p class="rl-times-h"><span class="rl-sim-tag">Estimación</span> ¿Cuánto tiempo?</p>' +
       '<ul class="rl-list rl-list--all">' + VITESSES.map(function(v){
         return '<li' + (['pied','de competición','velo'].indexOf(v.id) === -1 ? ' class="rl-li-veh"' : '') + '><span class="rl-ico">' + svgIco(v.ico) + '</span><span class="rl-nom">' + v.nom + (['pied','de competición','velo'].indexOf(v.id) === -1 ? ' <small>ref. GTA V</small>' : '') + '</span><span class="rl-t">≈ ' + fmtDuree(distM / v.v) + '</span></li>';
@@ -1486,16 +1278,13 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       }
     });
   }
-
   function drawLine(){
     if(!svgLine) return;
     if(rulerPts.length < 2){ svgLine.setAttribute('d',''); return; }
     svgLine.setAttribute('d',
       'M' + rulerPts.map(p => p.x + ',' + p.y).join(' L'));
   }
-
   const MAX_ETAPES = 50;
-  /* A…Z puis AA, AB… */
   const LETTRES = new Proxy({}, { get: function(_, i){
     i = Number(i); let n = i, s = '';
     do { s = String.fromCharCode(65 + n % 26) + s; n = Math.floor(n / 26) - 1; } while(n >= 0);
@@ -1505,15 +1294,12 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     if(rulerPts.length >= MAX_ETAPES) return;
     p.n = 'Punto ' + LETTRES[rulerPts.length];
     rulerPts.push(p);
-
     Object.keys(MK).map(k => MK[k]).forEach(function(el){
       el.classList.toggle('is-picked', rulerPts.some(r => r.id === el.dataset.id));
     });
     drawPins();
     renderRuler(); drawLine();
   }
-
-  /* épingles posées librement sur la carte */
   function drawPins(){
     layer.querySelectorAll('.pin').forEach(el => el.remove());
     rulerPts.forEach(function(p, i){
@@ -1526,7 +1312,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       layer.appendChild(el);
     });
   }
-
   function setTrajet(on){
     if(on === rulerOn) return;
     if(on) document.querySelectorAll('#map-edit.on,#dr-on.on').forEach(function(b){ b.click(); });
@@ -1547,7 +1332,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
   if(trajetFab) trajetFab.addEventListener('click', function(){ setTrajet(true); const ms = document.getElementById('map-trajet-ms'); if(ms) ms.open = true; if(trajetX) trajetX.focus({ preventScroll:true }); });
   if(trajetX) trajetX.addEventListener('click', function(){ setTrajet(false); if(trajetFab) trajetFab.focus({ preventScroll:true }); });
   if(trajetBox){
-    /* les interactions dans le calculateur ne déplacent pas la carte et ne posent pas de point */
     ['click','pointerdown','pointerup','wheel','dblclick'].forEach(function(ev){ trajetBox.addEventListener(ev, function(e){ e.stopPropagation(); }); });
     trajetBox.addEventListener('keydown', function(e){ if(e.key === 'Escape'){ e.stopPropagation(); setTrajet(false); if(trajetFab) trajetFab.focus({ preventScroll:true }); } });
   }
@@ -1564,10 +1348,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       Object.keys(MK).map(k => MK[k]).forEach(el => el.classList.remove('is-picked'));
     });
   }
-
-  /* ============================================================
-     DÉMARRAGE
-     ============================================================ */
   if(progRs){
     progRs.addEventListener('click', function(){
       if(!confirm('¿Desmarcar todos los lugares descubiertos?')) return;
@@ -1576,25 +1356,18 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       refreshProgress(); closePanel();
     });
   }
-
   buildMarkers();
   if(!readHash()) center();
   window.addEventListener('hashchange', readHash);
   if(collectibleApi && typeof collectibleApi.subscribe === 'function') collectibleApi.subscribe(refreshCollectibles);
   else window.addEventListener('lk:collectibles-change', refreshCollectibles);
   window.addEventListener('resize', function(){ clamp(); applyTransform(); });
-
-  /* raccourcis clavier */
   document.addEventListener('keydown', function(e){
     if(e.target.closest('input,textarea,select,[contenteditable="true"]')) return;
     if(e.key === '+' || e.key === '=') { const r=stage.getBoundingClientRect(); zoomAt(r.width/2,r.height/2,1.3); }
     if(e.key === '-')                  { const r=stage.getBoundingClientRect(); zoomAt(r.width/2,r.height/2,0.77); }
     if(e.key === 'Escape')             { closePanel(); }
   });
-
-  /* ============================================================
-     VUE D'ENSEMBLE
-     ============================================================ */
   const mini = document.getElementById('map-mini');
   const miniBox = document.getElementById('map-mini-box');
   if(mini && miniBox){
@@ -1610,7 +1383,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     }
     const oldApply = applyTransform;
     applyTransform = function(){ oldApply(); majMini(); };
-
     mini.addEventListener('click', function(e){
       const b = mini.getBoundingClientRect();
       const wx = ((e.clientX - b.left) / b.width) * W;
@@ -1622,10 +1394,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     });
     majMini();
   }
-
-  /* ============================================================
-     AIDE ET RACCOURCIS
-     ============================================================ */
   const helpBt = document.getElementById('map-help');
   const helpBx = document.getElementById('map-help-box');
   if(helpBt && helpBx){
@@ -1639,10 +1407,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       if(e.key === '?' && !e.target.closest('input,textarea,select,[contenteditable="true"]')) helpBt.click();
     });
   }
-
-  /* ============================================================
-     INTERFACE PUBLIQUE, pour les modules complémentaires
-     ============================================================ */
   window.LK_MAP = {
     layer: layer,
     panel: panel,
@@ -1666,30 +1430,19 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     refresh: refreshVisibility
   };
 })();
-
-/* ============================================================
-   LEONIDAKIT — outils avancés de la carte
-   Marqueurs personnels, mode édition, export, trajet multi-points
-   ============================================================ */
 (function(){
   const stage = document.getElementById('map-stage');
   if(!stage || !window.LK_MAP) return;
-
   const M = window.LK_MAP;
-
-  /* ---------- 1. MARQUEURS PERSONNELS ---------- */
   const PERSO_KEY = 'lk_map_perso';
   let perso = [];
   try{ perso = window.LK.read(PERSO_KEY,[],window.LK.markers); }catch(e){ perso = []; }
   function savePerso(){ window.LK.write(PERSO_KEY,perso); }
-
-  /* ---------- 2. MODE ÉDITION ---------- */
   let editOn = false;
   const editBt   = document.getElementById('map-edit');
   const editPane = document.getElementById('map-edit-pane');
   const editList = document.getElementById('map-edit-list');
   const editCnt  = document.getElementById('map-edit-count');
-
   function renderPerso(){
     M.layer.querySelectorAll('.pm').forEach(el => el.remove());
     perso.forEach(function(p, i){
@@ -1716,27 +1469,24 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     if(ca) ca.hidden = perso.length === 0;
     renderList();
   }
-
   function esc(s){
     return String(s).replace(/[<>&"]/g, function(c){
       return {'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c];
     });
   }
-
   function openPerso(i){
     const p = perso[i];
     M.panelIn.innerHTML =
       '<p class="mp-cat" style="color:#0B8B84">Marcador personal</p>' +
       '<h3>' + esc(p.n) + '</h3>' +
       (p.note ? '<p class="mp-d">' + esc(p.note) + '</p>' : '') +
-      '<div class="mp-meta"><div><span>Posición</span><b>' + p.x + ' · ' + p.y + '</b></div>' +
+      '<div class="mp-meta"><div><span>Posición</span><b>' + p.x + ', ' + p.y + '</b></div>' +
       (p.cat ? '<div><span>Categoría</span><b>' + esc(p.cat) + '</b></div>' : '') + '</div>' +
       '<div class="pm-acts">' +
         '<button type="button" class="mp-btn" id="pm-edit">Editar</button>' +
         '<button type="button" class="mp-btn pm-del" id="pm-del">Eliminar</button>' +
       '</div>';
     M.panel.classList.add('open'); M.panel.inert=false;
-
     document.getElementById('pm-edit').addEventListener('click', function(){
       const n = prompt('Nombre del marcador', p.n);
       if(n === null) return;
@@ -1751,7 +1501,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       savePerso(); renderPerso(); M.panel.classList.remove('open'); M.panel.inert=true;
     });
   }
-
   function renderList(){
     if(!editList) return;
     if(!perso.length){
@@ -1763,7 +1512,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
              '<button type="button" class="ed-go" data-go="' + i + '">' +
              '<span class="ed-dot"></span>' +
              '<span class="ed-n">' + esc(p.n) + '</span>' +
-             '<span class="ed-c">' + p.x + ' · ' + p.y + '</span></button>' +
+             '<span class="ed-c">' + p.x + ', ' + p.y + '</span></button>' +
              '<button type="button" class="ed-ren" data-ren="' + i + '" ' +
              'aria-label="Renombrar" title="Renombrar">&#9998;</button>' +
              '<button type="button" class="ed-del" data-del="' + i + '" ' +
@@ -1771,7 +1520,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
              '</li>';
     }).join('');
   }
-
   if(editList){
     editList.addEventListener('click', function(e){
       const del = e.target.closest('[data-del]');
@@ -1800,8 +1548,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       }
     });
   }
-
-  /* tout effacer */
   const clearAll = document.getElementById('map-perso-clear');
   if(clearAll){
     clearAll.addEventListener('click', function(){
@@ -1810,7 +1556,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       perso = []; savePerso(); renderPerso(); M.closePanel();
     });
   }
-
   if(editBt){
     editBt.addEventListener('click', function(){
       if(!editOn)document.querySelectorAll('#map-ruler.on,#dr-on.on').forEach(b=>b.click());
@@ -1822,8 +1567,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       editBt.textContent = editOn ? 'Salir del modo edición' : 'Añadir mis marcadores';
     });
   }
-
-  /* pose d'un marqueur au clic, en mode édition */
   stage.addEventListener('click', function(e){
     if(!editOn || stage.classList.contains('drawing')) return;
     if(e.target.closest('.map-panel, .map-zoom, .pm, .map-mini, .map-help, .map-help-box, .map-coord')) return;
@@ -1835,12 +1578,9 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     perso.push({ n: n.trim().slice(0,200) || 'Sin nombre', note: (note||'').trim().slice(0,4000), x: w.x, y: w.y });
     savePerso(); renderPerso();
   }, true);
-
-  /* ---------- 3. EXPORT ET IMPORT ---------- */
   const expBt = document.getElementById('map-export');
   const impBt = document.getElementById('map-import');
   const impIn = document.getElementById('map-import-file');
-
   if(expBt){
     expBt.addEventListener('click', function(){
       const data = {
@@ -1858,7 +1598,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       URL.revokeObjectURL(a.href);
     });
   }
-
   if(impBt && impIn){
     impBt.addEventListener('click', function(){ impIn.click(); });
     impIn.addEventListener('change', function(){
@@ -1881,8 +1620,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       fr.readAsText(f);
     });
   }
-
-  /* ---------- 4. COPIE DES COORDONNÉES ---------- */
   const copyBt = document.getElementById('map-copy');
   if(copyBt){
     copyBt.addEventListener('click', function(){
@@ -1890,32 +1627,22 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       window.LK.copy(t,copyBt,'Copiado');
     });
   }
-
   renderPerso();
 })();
-
-/* ============================================================
-   OUTILS DE DESSIN — tracés enregistrés en coordonnées de carte
-   ============================================================ */
 (function(){
   const stage = document.getElementById('map-stage');
   const M = window.LK_MAP;
   if(!stage || !M) return;
-
   const world = document.getElementById('map-world');
   const svgNS = 'http://www.w3.org/2000/svg';
-
-  /* calque SVG dans le monde : il suit le zoom et le déplacement */
   const layer = document.createElementNS(svgNS, 'svg');
   layer.setAttribute('class', 'map-draw');
   layer.setAttribute('viewBox', '0 0 5200 6000');
   world.appendChild(layer);
-
   const KEY = 'lk_map_draw';
   let strokes = [];
   let redo = [];
   try{ strokes = window.LK.read(KEY,[],window.LK.strokes); }catch(e){ strokes = []; }
-
   const ui = {
     on:    document.getElementById('dr-on'),
     pane:  document.getElementById('dr-pane'),
@@ -1931,18 +1658,14 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     clear: document.getElementById('dr-clear'),
     count: document.getElementById('dr-count')
   };
-
   let mode = false, tool = 'pen', color = '#E8452C', size = 6, opacity = .85;
   let cur = null, curEl = null, start = null;
-
   function save(){ window.LK.write(KEY,strokes); }
-
   function el(tag, attrs){
     const e = document.createElementNS(svgNS, tag);
     Object.keys(attrs).forEach(k => e.setAttribute(k, attrs[k]));
     return e;
   }
-
   function render(){
     layer.innerHTML = '';
     strokes.forEach(function(s, i){
@@ -1974,8 +1697,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     if(ui.undo) ui.undo.disabled = !strokes.length;
     if(ui.redo) ui.redo.disabled = !redo.length;
   }
-
-  /* ---- interaction ---- */
   stage.addEventListener('pointerdown', function(e){
     if(!mode || tool === 'eraser') return;
     if(e.target.closest('.map-panel, .map-zoom, .map-help-box, .map-mini, .dr-bar')) return;
@@ -1994,7 +1715,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     layer.appendChild(curEl);
     stage.setPointerCapture(e.pointerId);
   }, true);
-
   stage.addEventListener('pointermove', function(e){
     if(!mode || !cur) return;
     e.stopPropagation();
@@ -2011,7 +1731,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       else { curEl.setAttribute('cx',cur.a[0]); curEl.setAttribute('cy',cur.a[1]); curEl.setAttribute('r',Math.hypot(w.x-cur.a[0], w.y-cur.a[1])); }
     }
   }, true);
-
   function finish(e){
     if(!mode || !cur) return;
     e.stopPropagation();
@@ -2022,8 +1741,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
   }
   stage.addEventListener('pointerup', finish, true);
   stage.addEventListener('pointercancel', finish, true);
-
-  /* ---- palette ---- */
   if(ui.on){
     ui.on.addEventListener('click', function(){
       if(!mode)document.querySelectorAll('#map-ruler.on,#map-edit.on').forEach(b=>b.click());
@@ -2063,16 +1780,12 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
   if(ui.undo){ ui.undo.addEventListener('click', function(){ if(!strokes.length) return; redo.push(strokes.pop()); save(); render(); }); }
   if(ui.redo){ ui.redo.addEventListener('click', function(){ if(!redo.length) return; strokes.push(redo.pop()); save(); render(); }); }
   if(ui.clear){ ui.clear.addEventListener('click', function(){ if(!strokes.length || !confirm('¿Borrar todos tus trazos?')) return; strokes = []; redo = []; save(); render(); }); }
-
   document.addEventListener('keydown', function(e){
     if(!mode || e.target.closest('input,textarea,select,[contenteditable="true"]')) return;
     if((e.ctrlKey || e.metaKey) && e.key === 'z'){ e.preventDefault(); if(ui.undo) ui.undo.click(); }
     if((e.ctrlKey || e.metaKey) && e.key === 'y'){ e.preventDefault(); if(ui.redo) ui.redo.click(); }
   });
-
-  /* export / import : les tracés voyagent avec le reste */
   M.getDraw = function(){ return strokes; };
   M.setDraw = function(s,persist=true){ if(!window.LK.strokes(s))throw new Error('Trazos no válidos'); strokes = s; redo = []; if(persist)save(); render(); };
-
   render();
 })();

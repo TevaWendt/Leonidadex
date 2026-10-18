@@ -1,37 +1,25 @@
-/* Leonidakit — Mode compagnon (v7.89, lot 5) : page compagnon.html et page hors connexion (hors-ligne.html).
-   - Tuile Léo : ouvre l'assistant (leo-loader.js) au lieu de suivre son lien ;
-   - « Prêt sans réseau » : lit les caches du site (Cache Storage, noms « lk-… ») pour dire ce qui est gardé, et demande au
-     service worker (sw.js, message « lk-preparer ») de préparer les pages clés de la langue, avec une barre de progression ;
-   - « Installer l'appli » : l'invite du navigateur (beforeinstallprompt) quand il en propose une, sinon la marche à suivre
-     de l'appareil (iPhone et iPad : Partager → Sur l'écran d'accueil) ;
-   - « Garder l'écran allumé » : API Wake Lock (common.js la reprend sur toutes les pages, clé lk_ecran_v1) ; cachée si le
-     navigateur ne la connaît pas ;
-   - page hors connexion : la liste des pages gardées sur l'appareil, dans la langue de la page.
-   Rien n'est envoyé : les seules requêtes sont celles du service worker vers le site lui-même. */
+/* Généré depuis outils/sources/compagnon.js : modifie la source, pas ce fichier. */
 (function () {
   'use strict';
   const $ = (sel, root) => (root || document).querySelector(sel);
   const $$ = (sel, root) => Array.from((root || document).querySelectorAll(sel));
   const LANG = (document.documentElement.lang || 'fr').slice(0, 2).toLowerCase();
-  const pl = n => /^fr/.test(document.documentElement.lang || 'fr') ? n > 1 : n !== 1; /* pluriel selon la langue de la page */
+  const pl = n => /^fr/.test(document.documentElement.lang || 'fr') ? n > 1 : n !== 1;
   const nf = new Intl.NumberFormat('de-DE', { maximumFractionDigits: 1 });
   const racine = () => { const m = /^\/([a-z]{2})\//.exec(location.pathname); return m && m[1] === LANG && LANG !== 'fr' ? '/' + LANG + '/' : '/'; };
   const swPossible = 'serviceWorker' in navigator && 'caches' in window && (location.protocol === 'https:' || /^(?:localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname));
   const taille = o => o >= 1048576 ? '{n} Mo'.replace('{n}', nf.format(o / 1048576)) : '{n} Ko'.replace('{n}', nf.format(Math.max(1, Math.round(o / 1024))));
   const quand = iso => { try { const d = new Date(iso); return d.toLocaleDateString('de-DE', { day: 'numeric', month: 'long' }) + ', ' + d.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }); } catch (e) { return ''; } };
   $$('[data-cp-js]').forEach(el => { el.hidden = false; });
-
-  /* ---------- caches du site (lus par la page, sans le service worker) ---------- */
   async function nomsDeCaches(re) { try { return (await caches.keys()).filter(n => re.test(n)); } catch (e) { return []; } }
   async function fichePack() {
     for (const n of await nomsDeCaches(/^lk-[a-z0-9]+-pack$/)) {
-      try { const r = await (await caches.open(n)).match('/__lk/pack-' + (LANG === 'fr' ? 'fr' : LANG) + '.json'); if (r) return await r.json(); } catch (e) { /* cache illisible */ }
+      try { const r = await (await caches.open(n)).match('/__lk/pack-' + (LANG === 'fr' ? 'fr' : LANG) + '.json'); if (r) return await r.json(); } catch (e) {  }
     }
     return null;
   }
   async function reglages() { try { const r = await caches.match('/__lk/reglages.json', { cacheName: 'lk-reglages' }); return r ? await r.json() : {}; } catch (e) { return {}; } }
   const langueDe = p => { const m = /^\/([a-z]{2})\//.exec(p); return m && ['en', 'es', 'it', 'de', 'pt'].indexOf(m[1]) !== -1 ? m[1] : 'fr'; };
-  /* pages gardées (copies des pages vues et des pages préparées), dans la langue de la page */
   async function pagesGardees() {
     const vues = new Map();
     for (const n of await nomsDeCaches(/^lk-[a-z0-9]+-(?:pages|pack)$/)) {
@@ -45,14 +33,10 @@
     }
     return [...vues.values()];
   }
-
-  /* ---------- Léo depuis sa tuile ---------- */
   $$('[data-cp-leo]').forEach(a => a.addEventListener('click', e => {
     if (!window.LKLeoLoader || typeof window.LKLeoLoader.open !== 'function') return;
     e.preventDefault(); window.LKLeoLoader.open();
   }));
-
-  /* ---------- prêt sans réseau ---------- */
   const etat = $('[data-cp-etat]');
   if (etat) {
     const titre = $('[data-cp-etat-titre]'), detail = $('[data-cp-etat-detail]'), bouton = $('[data-cp-preparer]');
@@ -65,7 +49,6 @@
       const [fiche, r, pages] = await Promise.all([fichePack(), reglages(), pagesGardees()]);
       const n = pages.length;
       const deja = n ? (pl(n) ? '{n} Seiten schon auf diesem Gerät gespeichert.' : '{n} Seite schon auf diesem Gerät gespeichert.').replace('{n}', nf.format(n)) : 'Noch keine Seite auf diesem Gerät gespeichert.';
-      /* une préparation faite avec une version précédente du site reste en service jusqu'à la nouvelle : « à mettre à jour » */
       if ((r.refaire || []).indexOf(LANG === 'fr' ? 'fr' : LANG) !== -1) {
         dire('s-maj', 'Aktualisierung nötig', 'Die Website hat sich seit deiner Vorbereitung geändert: Die Vorbereitung läuft bei deinem nächsten Besuch mit Netz neu, oder du startest sie gleich hier.');
         if (bouton) bouton.textContent = 'Für Offline-Spielen vorbereiten';
@@ -103,7 +86,7 @@
           sw.postMessage({ type: 'lk-preparer', langue: LANG === 'fr' ? 'fr' : LANG }, [canal.port2]);
         });
         barre.value = 100;
-        try { if (navigator.storage && navigator.storage.persist && !(await navigator.storage.persisted())) await navigator.storage.persist(); } catch (e) { /* le navigateur décide */ }
+        try { if (navigator.storage && navigator.storage.persist && !(await navigator.storage.persisted())) await navigator.storage.persist(); } catch (e) {  }
         enCours = false; await lire();
         texte.textContent = fiche.echecs ? (pl(fiche.echecs) ? '{n} Dateien konnten nicht gespeichert werden: Starte die Vorbereitung mit besserem Netz neu.' : '{n} Datei konnte nicht gespeichert werden: Starte die Vorbereitung mit besserem Netz neu.').replace('{n}', nf.format(fiche.echecs)) : 'Alles bereit: Du kannst offline gehen.';
       } catch (e) {
@@ -115,8 +98,6 @@
     window.addEventListener('online', lire); window.addEventListener('offline', lire);
     lire();
   }
-
-  /* ---------- installer l'appli ---------- */
   const install = $('[data-cp-install]');
   if (install) {
     const ligne = $('[data-cp-installer-ligne]'), bouton = $('[data-cp-installer]'), msg = $('[data-cp-install-etat]');
@@ -144,8 +125,6 @@
     });
     montrer();
   }
-
-  /* ---------- garder l'écran allumé ---------- */
   const ecran = $('[data-cp-ecran]');
   if (ecran && 'wakeLock' in navigator && window.LKEcran) {
     const bouton = $('[data-cp-ecran-bouton]'), msg = $('[data-cp-ecran-msg]');
@@ -159,21 +138,18 @@
     });
     ecran.hidden = false; peindre();
   }
-
-  /* ---------- page hors connexion : pages gardées ---------- */
   const liste = $('[data-hl-liste]');
   if (liste) {
     const vide = $('[data-hl-vide]'), retry = $('[data-hl-reessayer]');
     if (retry) { retry.hidden = false; retry.addEventListener('click', () => location.reload()); }
     const ordre = ['', 'carte.html', 'progression.html', 'calculateurs.html', 'compagnon.html'];
     const rang = p => { const i = ordre.indexOf(p.slice(racine().length)); return i === -1 ? ordre.length : i; };
-    /* titre d'une page gardée : le début du fichier suffit (<title> est dans les premières lignes) */
     async function titreDe(item) {
       try {
         const r = await item.cache.match(item.req); if (!r || !r.body) return null;
         const lecteur = r.body.getReader(), dec = new TextDecoder(); let txt = '';
         while (txt.length < 24000) { const { done, value } = await lecteur.read(); if (done) break; txt += dec.decode(value, { stream: true }); if (txt.indexOf('</title>') !== -1) break; }
-        try { lecteur.cancel(); } catch (e) { /* déjà fini */ }
+        try { lecteur.cancel(); } catch (e) {  }
         const m = /<title>([^<]*)<\/title>/.exec(txt); if (!m) return null;
         const t = document.createElement('textarea'); t.innerHTML = m[1]; return t.value.replace(/\s*\|\s*Leonidakit\s*$/, '').trim();
       } catch (e) { return null; }
@@ -191,11 +167,6 @@
     })();
   }
 })();
-
-/* v7.92 : la scène « console et téléphone » de compagnon.html : l'écran du téléphone suit l'étape qu'on lit (celle qui passe
-   le milieu de l'écran). La position des étapes est mesurée au chargement et au redimensionnement ; pendant le défilement,
-   une seule lecture de position par trame, et aucune écriture si l'étape ne change pas. Sans script, chaque étape montre son
-   propre écran (compagnon.css). */
 (function () {
   'use strict';
   var story = document.querySelector('[data-cp-story]'); if (!story) return;
@@ -208,8 +179,6 @@
     screens.forEach(function (s) { s.classList.toggle('is-on', s.getAttribute('data-cp-scr') === id); });
     steps.forEach(function (st) { st.classList.toggle('is-on', st.getAttribute('data-cp-step') === id); });
   }
-  /* la position des étapes est relue à chaque image (quatre mesures) : une étape qui change de taille, une image qui se
-     charge plus haut ne décalent jamais l’écran montré */
   function update() {
     queued = false;
     var line = (window.innerHeight || 800) * 0.55, k = 0;

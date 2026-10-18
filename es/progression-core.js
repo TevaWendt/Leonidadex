@@ -1,25 +1,15 @@
-/* Leonidakit : progression v2.
-   Une seule source pour le suivi personnel : les cases historiques (lk_own_vehicules, lk_own_armes,
-   lk_map_found) restent stockées telles quelles, les nouveaux contenus (bateaux référencés, personnalisations,
-   garages) s'y ajoutent, et l'export / import versionné transporte tout, carnets du calculateur compris.
-   Aucune donnée n'est réécrite au chargement ; une rubrique abîmée est copiée avant d'être remplacée. */
+/* Généré depuis outils/sources/progression-core.js : modifie la source, pas ce fichier. */
 (function (global) {
   'use strict';
   var SITE = 'leonidakit', VERSION = 2, KEY = 'lk_progression_v2';
-  /* v7.42 (lot 5) : familles des catalogues (consommables, coiffures, tatouages, tenues), même mécanique que équipements / munitions. */
-  /* v7.43 (lot 6) : perso-vehicules et perso-armes, même mécanique. */
   var LEGACY = { vehicules: 'lk_own_vehicules', armes: 'lk_own_armes', lieux: 'lk_map_found', equipements: 'lk_own_equipements', munitions: 'lk_own_munitions', consommables: 'lk_own_consommables', coiffures: 'lk_own_coiffures', tatouages: 'lk_own_tatouages', tenues: 'lk_own_tenues', 'perso-vehicules': 'lk_own_perso-vehicules', 'perso-armes': 'lk_own_perso-armes' };
   var LEGACY_KEYS = Object.keys(LEGACY).map(function (t) { return LEGACY[t]; });
   function legacyType(key) { for (var t in LEGACY) if (LEGACY[t] === key) return t; return null; }
-  /* v7.48 (lot 1) : stocks, souhaits et journal des réalisations (carnets-core.js) voyagent avec le reste et sont reconnus à l’import. */
   var TRANSPORT = ['lk_collectibles_v1', 'lk_collectibles_tools_v1', 'lk-calculator-notebooks-v3', 'lk-calculator-v1', 'lk-calculator-favorites-v1', 'lk_stock_v1', 'lk_wish_v1', 'lk_journal_v1'];
-  /* v7.51 (lot 4) : ce qui n’est pas du suivi ne voyage jamais dans le fichier, ni à l’export ni à l’import : le brouillon du
-     formulaire de contact (il contient une adresse e-mail) et les sondes techniques du navigateur. */
   var PRIVATE = /^(lk_contact_|lk_probe$)/;
   var LABELS = { vehicules: 'Vehículos', armes: 'Armas', lieux: 'Lugares del mapa', equipements: 'Equipo y gadgets', munitions: 'Tipos de munición', consommables: 'Consumibles', coiffures: 'Peinados', tatouages: 'Tatuajes', tenues: 'Atuendos y accesorios', 'perso-vehicules': 'Personalización de vehículos', 'perso-armes': 'Personalización de armas', collectibles: 'Coleccionables' };
   function isChecked(v) { return v === true || v === 1; }
   function parseMap(raw) {
-    /* Retourne {map, corrupt} : les entrées illisibles ne comptent pas mais ne sont jamais perdues. */
     if (raw === null || raw === undefined || raw === '') return { map: {}, corrupt: false, missing: true };
     var data; try { data = JSON.parse(raw); } catch (e) { return { map: {}, corrupt: true, unreadable: true }; }
     if (!data || typeof data !== 'object' || Array.isArray(data)) return { map: {}, corrupt: true, unreadable: true };
@@ -46,7 +36,6 @@
     var categories = acquisitions.categories || [];
     function ref(item) { return item.ref && item.ref.type && item.ref.id ? item.ref : null; }
     function legacyKeyForType(type) { return { vehicle: LEGACY.vehicules, vehicules: LEGACY.vehicules, weapon: LEGACY.armes, armes: LEGACY.armes, place: LEGACY.lieux, lieux: LEGACY.lieux }[type] || null; }
-    /* Identifiants référencés par une acquisition : ils quittent leur groupe d'origine pour le dénominateur. */
     var partitioned = {};
     items.forEach(function (item) { var r = ref(item); if (r && item.trackable === true) partitioned[r.type + ':' + r.id] = item.category; });
     function trackable(item) { return item.trackable === true; }
@@ -58,7 +47,7 @@
     function v2() { var p = parseMap(read(KEY)); var raw = read(KEY); var data = null; try { data = raw ? JSON.parse(raw) : null; } catch (e) { data = null; }
       return { checked: data && data.checked && typeof data.checked === 'object' ? data.checked : {}, migrated: !!(data && data.migratedAt), corrupt: !!raw && !data }; }
     function writeMap(key, map, previousRaw, corrupt) {
-      if (corrupt && previousRaw) { try { storage.setItem('lk_recovery_' + key + '_' + Date.now(), previousRaw); } catch (e) { /* la copie de secours est facultative */ } }
+      if (corrupt && previousRaw) { try { storage.setItem('lk_recovery_' + key + '_' + Date.now(), previousRaw); } catch (e) {  } }
       var out = {}; Object.keys(map).forEach(function (id) { if (map[id]) out[id] = true; });
       storage.setItem(key, JSON.stringify(out));
     }
@@ -89,8 +78,6 @@
       var dc = trackC.filter(function (x) { return isChecked(found[x.id]); }).length;
       groups.push({ id: 'collectibles', label: LABELS.collectibles, total: trackC.length, done: dc, percent: trackC.length ? dc / trackC.length * 100 : null });
       done += dc; total += trackC.length;
-      /* v7.51 (lot 4, anomalie 12) : une catégorie « alias » (vetements, accessoires, tatouages, munitions) n’est qu’un renvoi
-         vers une section ; elle ne crée plus de groupe portant le même identifiant qu’une famille. */
       categories.filter(function (cat) { return !cat.alias; }).forEach(function (cat) {
         var mine = items.filter(function (x) { return x.category === cat.id && trackable(x); });
         var d = mine.filter(function (x) { return checked(x); }).length;
@@ -99,7 +86,7 @@
       });
       return { done: done, total: total, percent: total ? done / total * 100 : 0, groups: groups };
     }
-    function emit() { listeners.forEach(function (fn) { try { fn(summary()); } catch (e) { /* un écouteur cassé n'empêche pas les autres */ } }); }
+    function emit() { listeners.forEach(function (fn) { try { fn(summary()); } catch (e) {  } }); }
     function toggle(id, value) {
       var item = itemById(id), on = value !== false;
       try {
@@ -117,9 +104,6 @@
     }
     function hasAnything() { if (read(KEY)) return true; for (var t in LEGACY) if (read(LEGACY[t])) return true; return false; }
     function migrate() {
-      /* Pose seulement le marqueur v2 : les octets des clés historiques ne sont jamais réécrits ici.
-         v7.57 (lot 4, COOKIE-02) : quand le navigateur ne contient encore rien du site, rien n'est écrit au chargement ; la
-         première action (« J'ai obtenu ») crée la clé. */
       var state = v2(); if (state.migrated) return false;
       if (!hasAnything()) return false;
       var data = { version: VERSION, migratedAt: new Date().toISOString(), checked: state.checked };
@@ -127,7 +111,6 @@
       return true;
     }
     function exportData() {
-      /* Tout le suivi local part dans le fichier : cases, carnets du calculateur, marqueurs et dessins de la carte, classement. */
       var data = {}, keys = LEGACY_KEYS.concat([KEY], TRANSPORT), i, k;
       for (i = 0; i < storage.length; i++) { k = storage.key(i); if (k && (k.indexOf('lk_') === 0 || k.indexOf('lk-') === 0) && keys.indexOf(k) === -1 && k.indexOf('lk_recovery_') !== 0 && !PRIVATE.test(k)) keys.push(k); }
       keys.forEach(function (k) { var v = read(k); if (v !== null && v !== undefined) data[k] = v; });
@@ -190,9 +173,8 @@
           written.push(key);
         });
       } catch (e) {
-        /* Retour à l'état d'avant : rien n'est appliqué à moitié. */
-        Object.keys(before).forEach(function (k) { try { storage.setItem(k, before[k]); } catch (e2) { /* on continue */ } });
-        for (var i = 0; i < storage.length; i++) { var k2 = storage.key(i); if (!(k2 in before)) { try { storage.removeItem(k2); } catch (e3) { /* on continue */ } i--; } }
+        Object.keys(before).forEach(function (k) { try { storage.setItem(k, before[k]); } catch (e2) {  } });
+        for (var i = 0; i < storage.length; i++) { var k2 = storage.key(i); if (!(k2 in before)) { try { storage.removeItem(k2); } catch (e3) {  } i--; } }
         notice('Importación cancelada: el almacenamiento del navegador ha rechazado la escritura. No se ha modificado nada.');
         throw e;
       }

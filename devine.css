@@ -1,13 +1,4 @@
-/* LEONIDAKIT v7.90 (lot 6) — « Devine le lieu » (devine-le-lieu.html ; balisage : outils/gen-devine.cjs, jeu : devine.js).
-   Charte du site : jetons de style.css et de motion-tokens.css ; teintes des six régions = celles de la carte dépliée de
-   la page Lieux (outils/monde-cartes.cjs, posées en --c sur chaque bouton et chaque repère).
-   Le paquet de cartes reprend le langage des piles d’images (.lk-stack) : la capture du dessus, nette, et le dos des
-   suivantes, en silhouette « teaser ». Mouvement : la carte jouée s’en va, la suivante vient du paquet (devine.js) ; la
-   bonne région s’allume sur la carte, un trait la relie à la réponse donnée ; le verdict monte sur l’image.
-   Au survol, seuls les boutons réagissent ; rien de ce qu’on lit ne bouge. Sans script : un message et les régions.
-   « Réduire les animations » : tout est posé, rien ne bouge. */
-
-/* ---------- en-tête : court, pour que l’image et les réponses tiennent dans le premier écran ---------- */
+/* Généré depuis outils/sources/devine.css : modifie la source, pas ce fichier. */
 .dv-head{padding-bottom:14px;}
 .dv-head .lede{margin-top:12px;}
 .dv-head .d-intro-note{margin-top:8px;}
@@ -15,8 +6,6 @@
   .dv-head{display:grid;grid-template-columns:minmax(0,auto) minmax(0,1fr);align-items:end;gap:8px clamp(28px,4vw,64px);padding-top:36px;}
   .dv-head .lede{margin-top:0;font-size:1.04rem;}
 }
-
-/* ---------- le jeu ---------- */
 .dv-game{position:relative;padding-bottom:clamp(32px,5vw,56px);}
 .dv-nojs{border:2px solid var(--ink);border-radius:var(--radius);background:var(--paper-2);padding:16px 18px;max-width:var(--measure,68ch);box-shadow:var(--shadow-soft);}
 .dv-nojs p{margin:0;line-height:1.6;}
@@ -32,13 +21,9 @@
 .dv-back-btn{margin:0;padding:8px 12px;min-height:40px;border:1.5px solid var(--ink);border-radius:999px;background:var(--paper);color:var(--ink);font:inherit;font-size:.86rem;font-weight:800;cursor:pointer;transition:background var(--c-fast),color var(--c-fast);}
 .dv-back-btn:hover{background:var(--ink);color:var(--paper);}
 .dv-back-btn:focus-visible{outline:3px solid var(--coral);outline-offset:2px;}
-
 .dv-grid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(300px,1fr);gap:clamp(20px,3vw,44px);align-items:start;}
-/* écran d’ordinateur bas (1366 × 768) : la colonne du jeu se règle sur la hauteur pour garder les réponses à l’écran */
 @media(min-width:1000px){.dv-play{max-width:max(560px,calc((100vh - 400px) * 1.7778));max-width:max(560px,calc((100svh - 400px) * 1.7778));}}
 @media(max-width:999px){.dv-grid{grid-template-columns:minmax(0,1fr);}.dv-map{max-width:min(100%,480px);margin-inline:auto;width:100%;}}
-
-/* le paquet : la capture du dessus et le dos des cartes qui restent */
 .dv-deck{position:relative;aspect-ratio:16/9;margin:0 18px 16px 0;}
 .dv-back,.dv-card{position:absolute;inset:0;border:2px solid var(--ink);border-radius:var(--radius);}
 .dv-back{background:radial-gradient(circle at 50% 46%,color-mix(in srgb,var(--amber) 22%,transparent) 0 18%,transparent 19%),repeating-linear-gradient(0deg,transparent 0 13px,color-mix(in srgb,var(--paper) 6%,transparent) 13px 14px),linear-gradient(160deg,var(--night) 0%,var(--night-2) 62%,var(--night-3) 100%);box-shadow:var(--shadow-soft);transition:opacity var(--c-standard) var(--c-ease-soft);}
@@ -53,18 +38,14 @@
 .dv-verdict.is-ok{background:var(--amber);}
 .dv-verdict.is-ko{color:var(--coral-text);border-color:var(--coral);}
 @keyframes dv-up{from{opacity:0;transform:translate3d(0,12px,0);}}
-/* carte suivante : la capture jouée s’en va, la suivante monte du paquet */
 .dv-fig.is-out{animation:dv-out 200ms cubic-bezier(.7,0,.84,0) both;}
 .dv-card.is-in{animation:dv-in var(--c-standard) var(--c-ease-result) both;}
 @keyframes dv-out{to{opacity:0;transform:translate3d(-18px,0,0) rotate(-2deg);}}
 @keyframes dv-in{from{opacity:.4;transform:translate3d(10px,10px,0) rotate(1.6deg) scale(.97);}}
-/* entrée du paquet : le dos des cartes se pose derrière la capture (la capture, elle, est là tout de suite) */
 .dv-deck.is-dealt .dv-back--1{animation:dv-deal-1 var(--c-standard) var(--c-ease-result) both;}
 .dv-deck.is-dealt .dv-back--2{animation:dv-deal-2 var(--c-standard) var(--c-ease-result) 60ms both;}
 @keyframes dv-deal-1{from{transform:none;}}
 @keyframes dv-deal-2{from{transform:none;}}
-
-/* la question et les six régions */
 .dv-q{margin:20px 0 12px;font-size:clamp(1.06rem,1.8vw,1.22rem);font-weight:800;line-height:1.3;letter-spacing:-.01em;text-wrap:balance;}
 .dv-opts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;}
 @media(max-width:599px){.dv-opts{grid-template-columns:repeat(2,minmax(0,1fr));}}
@@ -83,8 +64,6 @@
 .dv-opt.is-off{background:var(--paper-2);border-color:var(--rule);color:var(--ink-soft);box-shadow:none;}
 .dv-opt.is-right .dv-opt-mark,.dv-opt.is-wrong .dv-opt-mark{animation:dv-pop var(--c-fast) var(--c-ease-result) both;}
 @keyframes dv-pop{from{opacity:0;transform:scale(.6);}}
-
-/* la réponse */
 .dv-answer{margin-top:16px;padding:14px 16px;border:2px solid var(--ink);border-left-width:6px;border-radius:var(--radius);background:var(--paper);box-shadow:var(--shadow-soft);}
 .dv-answer:has(.is-ok){border-left-color:var(--amber);}
 .dv-answer:has(.is-ko){border-left-color:var(--coral);}
@@ -93,15 +72,13 @@
 .dv-answer-img{margin:6px 0 0;font-size:.9rem;line-height:1.5;color:var(--ink-soft);}
 .dv-answer-leg{font-weight:800;color:var(--ink);}
 .dv-answer-tit{font-family:var(--font-mono);font-size:.82rem;}
-.dv-answer-tit::before{content:'· ';}
+.dv-answer-tit::before{content:', ';}
 .dv-answer-src{color:var(--coral-text);font-weight:700;}
-.dv-answer-src::before{content:'· ';color:var(--ink-soft);font-weight:400;}
+.dv-answer-src::before{content:', ';color:var(--ink-soft);font-weight:400;}
 .dv-answer-act{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 18px;margin-top:12px;}
 .dv-fiche-link{font-weight:800;color:var(--coral-text);text-decoration:underline;text-underline-offset:3px;}
 .dv-fiche-link:hover{color:var(--ink);}
 .dv-answer .lkx-btn{margin-left:auto;}
-
-/* la carte de Leonida : les six repères (ceux de la carte interactive), cliquables */
 .dv-map{margin:0;}
 .dv-map-k{margin:0 0 8px;font-family:var(--font-mono);font-size:.76rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);}
 .dv-map-box{position:relative;aspect-ratio:5200/6000;border:2px solid var(--ink);border-radius:var(--radius);overflow:hidden;background:var(--paper-2);box-shadow:var(--shadow-hard);}
@@ -126,8 +103,6 @@
 .dv-pin.is-wrong .dv-pin-t::before{content:'✗ ';}
 @keyframes dv-ring{from{opacity:.9;transform:scale(.6);}to{opacity:0;transform:scale(1.9);}}
 .dv-map-cap{margin:8px 0 0;font-size:.76rem;line-height:1.35;color:var(--ink-soft);}
-
-/* ---------- le résultat ---------- */
 .dv-result{display:grid;gap:20px;padding:clamp(18px,3vw,30px);border:2px solid var(--ink);border-radius:16px;background:var(--paper);box-shadow:var(--shadow-hard);outline:none;}
 .dv-result:focus-visible{outline:3px solid var(--coral);outline-offset:4px;}
 .dv-res-head{display:grid;gap:6px;}
@@ -170,48 +145,29 @@
 .dv-res-foot{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;padding-top:16px;border-top:2px solid var(--rule);}
 .dv-countdown{margin:0 auto 0 0;font-weight:800;}
 .lkx-btn.dv-noarrow::after{content:none;}
-
-/* ---------- les six régions (v7.92 : cartes postales et album, plus bas) ---------- */
 .dv-reg-dot{flex:none;width:12px;height:12px;border:2px solid var(--ink);border-radius:50%;background:var(--c,var(--amber));}
 .dv-reg-a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--rule);text-underline-offset:3px;overflow-wrap:break-word;min-width:0;}
 .dv-reg-a:hover{text-decoration-color:var(--coral);}
 .dv-reg-map{display:inline-flex;align-items:center;gap:6px;margin-top:auto;padding-top:6px;min-height:32px;width:fit-content;font-weight:800;font-size:.84rem;color:var(--coral-text);}
 .dv-reg-map svg{width:16px;height:16px;flex:none;}
 .dv-reg-map:hover span{text-decoration:underline;text-underline-offset:3px;}
-
-/* ---------- d’où viennent les images ---------- */
 .ed-zone--devine .dv-src-p{max-width:var(--measure,68ch);margin:0 0 16px;line-height:1.65;}
 .ed-zone--devine .ed-figs{margin:4px 0 22px;}
 .ed-zone--devine .ed-srcs{margin-bottom:12px;}
 .ed-zone--devine .ed--night .dv-src-p a{color:var(--amber-2);font-weight:700;text-underline-offset:3px;}
 .ed-zone--devine .ed--night .dv-src-p a:hover{color:var(--paper);}
-
-/* ---------- page Lieux : l’encart du jeu (composant de l’encart du calculateur) ---------- */
 .dv-explore{margin-bottom:12px;}
-
 @media(prefers-reduced-motion:reduce){
   .dv-dots li,.dv-back,.dv-opt,.dv-pin-dot,.dv-pin-t,.dv-back-btn{transition:none;}
   .dv-verdict,.dv-opt-mark,.dv-pin-dot::after,.dv-deck.is-dealt .dv-back,.dv-fig.is-out,.dv-card.is-in{animation:none!important;}
   .dv-line.is-on line{transition:none;}
 }
-
-/* =====================================================================================================================
-   v7.92 — la page s’enrichit : ta série pendant la partie, la devise de la région après chaque réponse, un résultat avec
-   tes statistiques (sept derniers jours, scores, régions), les six régions en cartes postales avec ton album (une case
-   par image, le dos d’une carte tant qu’elle n’a pas été jouée), les règles illustrées, le cycle des images.
-   Au survol : la carte de la région s’approche, son repère pulse, les timbres de l’album se soulèvent. Rien de ce qu’on
-   lit ne bouge. « Réduire les animations » : tout est posé (fin de fichier).
-   ===================================================================================================================== */
-
-/* ---------- pendant la partie ---------- */
 .dv-streak{margin:0;display:inline-flex;align-items:center;gap:6px;padding:4px 11px 4px 8px;border:1.5px solid var(--ink);border-radius:999px;background:var(--amber);font-size:.82rem;font-weight:800;line-height:1.2;}
 .dv-streak::before{content:'';width:11px;height:14px;background:var(--coral);border:1.5px solid var(--ink);border-radius:50% 50% 50% 50%/62% 62% 38% 38%;transform:rotate(8deg);}
 .dv-answer-tag{margin:10px 0 0;padding:2px 0 2px 12px;border-left:4px solid var(--c,var(--amber));font-size:.92rem;line-height:1.5;color:var(--ink);}
 .dv-answer-new{display:inline-flex;align-items:center;gap:7px;margin:10px 0 0;padding:4px 12px 4px 6px;border:1.5px solid var(--ink);border-radius:999px;background:var(--paper-2);font-size:.82rem;font-weight:800;line-height:1.2;animation:dv-up var(--c-standard) var(--c-ease-result) 120ms both;}
 .dv-answer-new::before{content:'';width:18px;height:14px;border-radius:2px;background:radial-gradient(circle,var(--amber) 0 3px,transparent 3.5px),var(--night);box-shadow:0 0 0 1.5px var(--ink);}
 .dv-answer-new[hidden]{display:none;}
-
-/* ---------- le résultat ---------- */
 .dv-res-top{display:grid;gap:18px 28px;align-items:start;}
 @media(min-width:960px){.dv-res-top{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);}}
 .dv-res-dots{display:flex;gap:6px;margin:6px 0 2px;padding:0;list-style:none;}
@@ -229,7 +185,6 @@
 .dv-res-box{display:flex;flex-direction:column;gap:10px;min-width:0;padding:14px 16px;border:2px solid var(--ink);border-radius:var(--radius);background:var(--paper-2);}
 .dv-res-box h4{margin:0;font-size:.98rem;font-weight:900;letter-spacing:-.01em;}
 .dv-res-note{margin:auto 0 0;font-size:.8rem;line-height:1.4;color:var(--ink-soft);}
-/* sept derniers jours : une case par jour, plus dorée que le score est haut */
 .dv-week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;margin:0;padding:0;list-style:none;}
 .dv-wk{display:grid;justify-items:center;align-content:center;gap:1px;min-height:74px;padding:6px 2px;border:2px solid var(--ink);border-radius:10px;background:color-mix(in srgb,var(--amber) calc(var(--s,0) * 100%),var(--paper));text-align:center;}
 .dv-wk.is-empty{border-style:dashed;border-color:color-mix(in srgb,var(--ink) 45%,transparent);background:transparent;color:var(--ink-soft);}
@@ -237,7 +192,6 @@
 .dv-wk-d{font-size:.68rem;font-weight:800;line-height:1.1;text-transform:capitalize;color:var(--ink-soft);}
 .dv-wk-n{font-size:.72rem;font-weight:700;line-height:1.1;color:var(--ink-soft);}
 .dv-wk-s{font-family:'Archivo',system-ui,sans-serif;font-size:1.3rem;font-weight:900;line-height:1.1;}
-/* scores et régions : des barres */
 .dv-dist,.dv-rs{display:grid;gap:7px;margin:0;padding:0;list-style:none;}
 .dv-dist li{display:grid;grid-template-columns:minmax(4.6em,auto) minmax(0,1fr) 2.2em;align-items:center;gap:10px;font-size:.84rem;}
 .dv-dist-k{font-weight:800;white-space:nowrap;}
@@ -256,8 +210,6 @@
 .dv-rs li.is-zero .dv-rs-v{color:var(--ink-soft);font-weight:700;}
 .dv-res-album{font-weight:800;color:var(--coral-text);text-decoration:underline;text-underline-offset:3px;}
 .dv-res-album:hover{color:var(--ink);}
-
-/* ---------- les six régions : cartes postales et album ---------- */
 .dv-albumbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;margin:0 0 20px;}
 .dv-albumbar-t{margin:0;font-weight:900;font-size:1.02rem;}
 .dv-albumbar-p{position:relative;flex:1 1 220px;max-width:420px;height:16px;border:2px solid var(--ink);border-radius:999px;background:var(--paper-2);overflow:hidden;}
@@ -278,7 +230,6 @@
   .dv-pc:hover .dv-pc-halo,.dv-pc:focus-within .dv-pc-halo{animation:dv-halo 1.5s var(--c-ease-soft) infinite;}
 }
 @keyframes dv-halo{50%{transform:scale(1.45);fill-opacity:.12;}}
-/* le timbre : dentelé, à la teinte de la région, avec le nombre d’images */
 .dv-pc-stamp{--r:3.5px;--paper-stamp:var(--c,var(--amber));position:absolute;right:12px;top:12px;display:grid;place-items:center;min-width:54px;height:62px;padding:calc(2 * var(--r));font-family:'Archivo',system-ui,sans-serif;font-weight:900;font-size:1.7rem;letter-spacing:-.03em;color:var(--ink);transform:rotate(5deg);filter:drop-shadow(2px 2px 0 rgba(26,26,30,.55));
   background:radial-gradient(var(--r),#0000 97%,var(--paper-stamp)) round calc(-1.5 * var(--r)) calc(-1.5 * var(--r))/calc(3 * var(--r)) calc(3 * var(--r)),linear-gradient(var(--paper-stamp) 0 0) no-repeat 50%/calc(100% - 3 * var(--r)) calc(100% - 3 * var(--r));}
 .dv-pc-stamp::before{content:'';position:absolute;inset:calc(2 * var(--r) + 2px);border:1.5px solid rgba(26,26,30,.55);border-radius:2px;pointer-events:none;}
@@ -294,7 +245,6 @@
 .dv-pc-n{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 10px;margin:0;font-size:.84rem;font-weight:800;}
 .dv-pc-ok{padding:2px 9px;border:1.5px solid var(--ink);border-radius:999px;background:color-mix(in srgb,var(--c,var(--amber)) 30%,var(--paper));font-size:.78rem;}
 .dv-pc-ok[hidden]{display:none;}
-/* l’album : une case par image, dentelée comme un timbre ; le dos d’une carte tant qu’elle n’a pas été jouée */
 .dv-album{display:grid;grid-template-columns:repeat(auto-fill,minmax(58px,1fr));gap:6px;margin:0;padding:0;list-style:none;}
 .dv-slot{--r:2.5px;position:relative;aspect-ratio:4/3;padding:calc(2 * var(--r));filter:drop-shadow(0 1px 1.2px rgba(26,26,30,.45));transition:transform var(--c-fast) var(--c-ease-control);
   background:radial-gradient(var(--r),#0000 97%,#fff) round calc(-1.5 * var(--r)) calc(-1.5 * var(--r))/calc(3 * var(--r)) calc(3 * var(--r)),linear-gradient(#fff 0 0) no-repeat 50%/calc(100% - 3 * var(--r)) calc(100% - 3 * var(--r));}
@@ -304,8 +254,6 @@
 @keyframes dv-slot-in{from{opacity:0;transform:scale(.86) rotate(-4deg);}}
 .dv-slot.is-new::after{content:'';position:absolute;right:-3px;top:-3px;width:12px;height:12px;border:2px solid var(--ink);border-radius:50%;background:var(--amber);}
 @media(hover:hover) and (prefers-reduced-motion:no-preference){.dv-slot.is-seen:hover{transform:translateY(-3px) rotate(-3deg) scale(1.12);z-index:1;}}
-
-/* ---------- les règles illustrées ---------- */
 .dv-steps .vt-step-ill{height:118px;background:color-mix(in srgb,var(--paper-2) 70%,#fff);}
 .dv-steps .vt-step-ill svg{height:106px;}
 .dv-ill-fan{transform:rotate(var(--a,0deg));transform-box:view-box;transform-origin:0 0;}
@@ -331,8 +279,6 @@
 @keyframes dv-ill-cursor{from{opacity:0;transform:translate(26px,20px);}}
 @keyframes dv-ill-draw{from{stroke-dashoffset:1;}}
 @keyframes dv-ill-ring{from{opacity:0;transform:scale(.5);}60%{opacity:1;}}
-
-/* ---------- le cycle des images (section de nuit) ---------- */
 .dv-cycle{margin:6px 0 26px;padding:18px 20px 16px;border:2px solid rgba(255,255,255,.4);border-radius:var(--radius);background:rgba(255,255,255,.05);box-shadow:4px 4px 0 rgba(0,0,0,.35);}
 .dv-cycle-h{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px;}
 .dv-cycle-t{margin:0;font-size:1.12rem;font-weight:900;letter-spacing:-.01em;color:#fff;}
@@ -349,26 +295,16 @@
 .dv-cycle-g li.is-now b{color:var(--amber);}
 .ed-zone--devine .dv-figs{margin:4px 0 22px;}
 @media(max-width:699px){.dv-figs .vt-fig--accent{grid-column:1/-1;}}
-
 @media(prefers-reduced-motion:reduce){
   .dv-answer-new,.dv-slot.is-seen img{animation:none!important;}
   .dv-pc-svg,.dv-slot,.dv-dist-bar i,.dv-rs-bar i,.dv-albumbar-p i,.dv-pc{transition:none!important;}
   .dv-ill-fan,.dv-ill-hand,.dv-ill-opt,.dv-ill-cursor,.dv-ill-check,.dv-ill-ko,.dv-ill-line,.dv-ill-ok,.dv-ill-ring,.dv-ill-tag,.dv-ill-day,.dv-ill-flame{animation:none!important;}
 }
 @media print{.dv-pc,.dv-res-box{box-shadow:none;}.dv-slot{filter:none;}}
-
-/* =====================================================================================================================
-   v7.92.1 : alignements et centrage (demande de Téva du 16 octobre). Le titre et ses deux phrases centrés l’un sur l’autre ;
-   la carte du jeu commence à la hauteur de l’image ; dans une rangée de cartes postales, chaque ligne (nom, devise, faits,
-   album, lien « Sur la carte ») tombe à la même hauteur ; le cycle des images en deux colonnes ; « Continuer la visite »
-   sur toute la largeur.
-   ===================================================================================================================== */
 @media(min-width:1000px){.dv-head{align-items:center;}}
-/* la consigne de la carte passe sous la carte, avec la note sur le fond : la carte et l’image partent du même bord haut */
 .dv-map{display:flex;flex-direction:column;}
 .dv-map-k{order:2;margin:10px 0 0;}
 .dv-map-cap{order:3;margin-top:4px;}
-/* cartes postales : une grille partagée (sous-grille) aligne les lignes d’une rangée ; sans elle, les liens restent en bas */
 .dv-atlas{align-items:stretch;}
 @supports (grid-template-rows:subgrid){
   .dv-atlas{row-gap:0;}
@@ -377,7 +313,6 @@
   .dv-pc-album{align-self:start;}
   .dv-reg-map{align-self:end;}
 }
-/* le cycle des images : le texte à gauche, les huit jours à droite */
 @media(min-width:900px){
   .dv-cycle{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,.85fr);grid-template-areas:"h g" "d g";column-gap:clamp(24px,3.5vw,52px);align-items:center;}
   .dv-cycle-h{grid-area:h;align-self:end;}
@@ -386,5 +321,4 @@
 }
 .dv-explore .lkx-links{grid-template-columns:repeat(3,minmax(0,1fr));}
 @media(max-width:899px){.dv-explore .lkx-links{grid-template-columns:minmax(0,1fr);}}
-/* au téléphone, six cases d’album par rangée (une région de six images tient sur une ligne) */
 @media(max-width:699px){.dv-album{grid-template-columns:repeat(auto-fill,minmax(46px,1fr));}}

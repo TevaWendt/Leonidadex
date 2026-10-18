@@ -1,19 +1,12 @@
-/* v7.61 : pluriel selon la langue de la page : français n > 1 (« 0 coché », « 1,5 million ») ; anglais, espagnol n ≠ 1 (« 0 marcados ») */
+/* Généré depuis outils/sources/app.js : modifie la source, pas ce fichier. */
 var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.documentElement&&document.documentElement.lang)||'fr').slice(0,2)==='fr'?n>1:n!==1;};
-/* lot 1 bis (corrections de l'audit, point 2) : la cible des comptes à rebours, une seule fois pour tout le site (accueil, fiches,
-   pages de section). Ligne écrite par outils/sync-site.cjs depuis outils/acquisitions.json (game.releaseDate, game.releaseTime) :
-   c'est là qu'on change la date ou l'heure. Sans fuseau, c'est minuit à l'heure du visiteur, comme sur le PlayStation Store. */
 window.LK_SORTIE = {"sortie":"2026-11-19T00:00:00","prechargement":"2026-11-12T00:00:00"};
 (function(){
 'use strict';
 const esc = window.LK.esc;
-const lkPl = n => /^fr/.test(document.documentElement.lang || 'fr') ? n > 1 : n !== 1; /* pluriel selon la langue de la page (français : n > 1) */
+const lkPl = n => /^fr/.test(document.documentElement.lang || 'fr') ? n > 1 : n !== 1;
 const el = id => document.getElementById(id);
 const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  /* Bandeaux défilants : une moitié de piste doit couvrir au moins la largeur de l'écran, sinon la boucle
-     laisse un vide. On répète le contenu jusqu'à dépasser l'écran, puis on duplique pour l'animation -50 %.
-     v7.54 : une seule mesure (l'ancienne boucle insérait puis mesurait jusqu'à 41 fois, une mise en page à chaque tour). */
   function fillTrack(track, unit){
     if(!track || !unit) return;
     track.innerHTML = '<span class="mq-half">' + unit + '</span>';
@@ -29,16 +22,10 @@ const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)')
     clearTimeout(fillTimer);
     fillTimer = setTimeout(function(){ document.querySelectorAll('[data-unit]').forEach(function(t){ fillTrack(t, t.dataset.unit); }); }, 200);
   });
-
-  /* --- Éléments propres à la page d'accueil : on sort si absents --- */
   const isHome = !!el('mq');
-
   if(isHome){
-  /* bandeau défilant, dupliqué pour une boucle sans coupure */
   const words = ["19 de noviembre de 2026","Vice City","Leonida Keys","Grassrivers","Port Gellhorn","Ambrosia","Mount Kalaga","PS5 y Xbox Series"];
   fillTrack(el('mq'), words.map(w => '<b>' + w + '</b><i>&#9670;</i>').join(''));
-
-  /* bandeau des régions : captures officielles Rockstar (les mêmes que les fiches des régions) */
   const scenes = [
     {cap:"Vice City",     img:"vice-city-01"},
     {cap:"Leonida Keys",  img:"leonida-keys-01"},
@@ -50,12 +37,8 @@ const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)')
   fillTrack(el('strip'), scenes.map(function(s){
     return '<div class="card"><img src="/img/officiel/'+s.img+'-480.webp" width="480" height="270" alt="" loading="lazy" decoding="async"><span class="cap">'+s.cap+'</span></div>';
   }).join(''));
-
-  /* second bandeau, sens inverse */
   const words2 = ["Mapa filtrable","Seguimiento del progreso","Fichas de vehículos","Ubicaciones","Calculadora","Actualización continua"];
   fillTrack(el('mq2'), words2.map(w => '<b>' + w + '</b><i>&#9679;</i>').join(''));
-
-  /* chiffres clés qui montent à l'apparition (valeur finale directe avec « réduire les animations ») */
   const factIO = new IntersectionObserver(function(entries){
     entries.forEach(function(en){
       if(!en.isIntersecting) return;
@@ -72,8 +55,6 @@ const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)')
     });
   }, {threshold:.5});
   document.querySelectorAll('.fact .big[data-count]').forEach(function(n){ factIO.observe(n); });
-
-  /* compteur à rouleaux */
   const target = new Date(window.LK_SORTIE.sortie);
   const last = {rd:null, rh:null, rm:null, rs:null};
   function setRoll(id, val){
@@ -85,16 +66,9 @@ const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)')
     box.innerHTML = ''; box.appendChild(s);
     last[id] = val;
   }
-  /* v7.86 : les jalons officiels (préchargement le 12 novembre, sortie le 19) changent seuls la phrase sous le compteur.
-     lot 1 bis (corrections de l'audit, points 1, 2 et 12) : sans script, le visiteur et les robots lisent « Sortie le jeudi
-     19 novembre 2026 » (plus de cases « – jours – heures ») ; le script pose les cases depuis le modèle #clock-cases, avec
-     « Minuit, heure locale » dessous. À la sortie, le compteur laisse place à « GTA VI est sorti » et à deux liens (les vrais
-     prix, le calculateur), au lieu de rester sur « 0 jours 00 heures ». */
   const preload = new Date(window.LK_SORTIE.prechargement);
   let jalon = null, clockTimer = 0;
   function setJalon(now){
-    /* v7.87 : des codes que la traduction des scripts ne touche pas (« avant » devenait « before », « antes », « prima » :
-       la ligne des jalons restait vide en anglais, en espagnol et en italien) */
     const k = now >= target ? 'j-sorti' : now >= preload ? 'j-pre' : 'j-avant';
     if(k === jalon) return; jalon = k;
     document.querySelectorAll('#jalons [data-jalon]').forEach(function(s){ s.hidden = s.dataset.jalon !== k; });
@@ -117,35 +91,25 @@ const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)')
     if(c && tpl && tpl.content && target - new Date() > 0 && !el('rd')){ c.replaceChildren(tpl.content.cloneNode(true)); c.classList.add('is-live'); }
   })();
   tick(); if(target - new Date() > 0) clockTimer = setInterval(tick, 1000);
-
-  /* titre mot par mot */
   document.querySelectorAll('#h1 .w').forEach(function(w,i){
     w.style.animationDelay = (0.12 + i*0.075) + 's';
   });
-
-  } /* fin des éléments d'accueil */
-
-  /* menu mobile, présent sur toutes les pages */
+  }
   const burger = el('burger'), nav = el('nav');
   if(burger && nav) burger.addEventListener('click', function(){
     const open = nav.classList.toggle('open');
     burger.setAttribute('aria-expanded', open);
     burger.setAttribute('aria-label', open ? 'Cerrar el menú' : 'Abrir el menú');
   });
-
   const moreMenu=document.querySelector('.nav-more');
   document.addEventListener('click',e=>{if(moreMenu?.open&&!moreMenu.contains(e.target))moreMenu.open=false;});
   document.addEventListener('keydown',e=>{if(e.key==='Escape'&&moreMenu?.open){moreMenu.open=false;moreMenu.querySelector('summary').focus();e.stopImmediatePropagation();}});
-  /* Recherche accessible, utilisable aussi dans les deux formulaires de la 404.
-     v7.54 (lot 1) : l'index (search-index.js, 175 Ko) n'est plus chargé avec chaque page ; il arrive à la première
-     approche de la recherche (survol, focus, touche « / », adresse ?q=…), puis les 2 500 lieux comme avant. */
   document.querySelectorAll('.searchwrap').forEach(function(wrap){
     const q = wrap.querySelector('input[type="search"]'), box = wrap.querySelector('.suggest');
     if(!q || !box) return;
     const lazy = !!document.querySelector('script[type="lk/lazy"][src*="search-index.js"]');
     if(!window.LK_INDEX && !lazy) return;
     const norm = s => String(s || '').toLowerCase().replace(/ß/g,'ss').normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,' ').trim();
-    /* chaque entrée est normalisée une fois, à l'arrivée de l'index (plus rien n'est recalculé à la frappe) */
     const indexEntry = e => { const text = norm(e.s+' '+e.l); return {...e, text, label:norm(e.l), words:text.split(' ')}; };
     let index = null, loading = null, lieux = false;
     let cur = -1, hits = [];
@@ -160,7 +124,6 @@ const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)')
     }
     const waiting = [];
     const withIndex = fn => { if(ensureIndex()) fn(); else waiting.push(fn); };
-    /* les 2 500 lieux de la carte ne sont chargés qu'à la première recherche (fichier séparé) */
     function fondreLieux(){ if(!window.LK_INDEX_LIEUX || !index || lieux) return; index = index.concat(window.LK_INDEX_LIEUX.map(indexEntry)); lieux = true; if(q.value.trim()) render(); }
     function chargerLieux(){
       withIndex(function(){
@@ -176,7 +139,6 @@ const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)')
       });
     }
     q.addEventListener('focus', chargerLieux, {once:true}); q.addEventListener('input', chargerLieux, {once:true});
-    /* pré-chargement discret dès que la souris ou le doigt approche la recherche */
     wrap.addEventListener('pointerenter', ensureIndex, {once:true}); wrap.addEventListener('touchstart', ensureIndex, {once:true, passive:true});
     q.setAttribute('role','combobox'); q.setAttribute('aria-autocomplete','list');
     q.setAttribute('aria-controls',box.id); q.setAttribute('aria-expanded','false');
@@ -191,7 +153,6 @@ const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)')
       box.classList.add('open'); q.setAttribute('aria-expanded','true');
     }
     q.addEventListener('input',render); q.addEventListener('focus',()=>{if(q.value.trim())render();});
-    /* v7.37 : ouverture avec ?q=… (lien de recherche, SearchAction des données structurées) : la page d’accueil et la 404 pré-remplissent la recherche */
     try{const initial=new URLSearchParams(location.search).get('q');if(initial&&initial.trim()&&!q.value){q.value=initial.trim().slice(0,100);chargerLieux();render();q.focus();}}catch(_){}
     q.addEventListener('keydown',function(e){
       const items=Array.from(box.querySelectorAll('a'));
@@ -210,37 +171,27 @@ const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)')
     if(e.key==='/' && !editing && !document.getElementById('vq')){const q=document.getElementById('q');if(q){e.preventDefault();q.focus();}}
     if(e.key==='Escape' && nav?.classList.contains('open')){nav.classList.remove('open');burger.setAttribute('aria-expanded','false');burger.setAttribute('aria-label','Abrir el menú');burger.focus();}
   });
-
-  /* apparitions au défilement, sur toutes les pages : v7.54, service commun LKMotion (common.js), un seul observateur.
-     LK_reveal.scan(racine) reste disponible pour les pages qui ajoutent des blocs .reveal / .rise après coup. */
   window.LK_reveal = { scan: function(root){
     if(window.LKMotion) window.LKMotion.scan(root || document);
     else (root || document).querySelectorAll('.reveal, .rise').forEach(function(n){ n.classList.add('in'); });
   } };
-
-  /* inscription à la lettre d'information, envoi direct vers Brevo */
   const signupForm = el('signup');
   if(signupForm){
     const mailField = el('mail');
     const subBtn    = el('sub');
     const note      = el('signup-note');
-
     function say(text, cls){
       note.textContent = text;
       note.className = 'signup-note ' + (cls || '');
     }
-
     signupForm.addEventListener('submit', function(e){
       const v = mailField.value.trim();
-
       if(!v || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)){
         e.preventDefault();
         say("Esta dirección no parece válida.", 'ko');
         mailField.focus();
         return;
       }
-
-      /* v7.46 : consentement explicite (case non transmise à Brevo, elle ne sert qu'à bloquer l'envoi sans accord) */
       const consent = el('consent');
       if(consent && !consent.checked){
         e.preventDefault();
@@ -248,29 +199,17 @@ const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)')
         consent.focus();
         return;
       }
-
-      /* Brevo affiche son résultat réel dans l'onglet courant. */
       say("Abriendo el formulario de confirmación…", '');
     });
   }
-
-/* ============================================================
-   PAGE DE LISTE DES VÉHICULES (et de l'Armurerie : même grille)
-   v7.54 (lot 1) : les cartes sont indexées une fois (catégorie, statut, texte de recherche, nom, marque) ; un filtre ou une
-   recherche ne déplace plus aucune carte dans la page (seul un changement de tri réordonne, et chaque tri est calculé une
-   seule fois) ; la limite d'affichage suit l'ordre trié réel ; aucune écriture DOM quand rien ne change.
-   ============================================================ */
 (function(){
   const grid = document.getElementById('vgrid');
   if(!grid) return;
-
   const cards   = Array.from(grid.querySelectorAll('.veh-card'));
   const initialHash = location.hash;
-
   const input   = document.getElementById('vq');
   const clearBt = document.getElementById('vclear');
   const chips   = Array.from(document.querySelectorAll('.chip-filter'));
-  /* puce « Mon garage / Mon arsenal » : n'affiche que ce qu'on a coché, lisible aussi via #own=1 depuis la page Progression */
   (function(){ const bar = chips[0] && chips[0].parentNode; const type = document.body.dataset.own; if(!bar || !type) return;
     const b = document.createElement('button'); b.type = 'button'; b.id = 'chip-own'; b.className = 'chip-filter chip-own'; b.dataset.own = '1'; b.setAttribute('aria-pressed', 'false');
     b.innerHTML = (type === 'armes' ? 'Mi arsenal' : 'Mi garaje') + ' <span class="chip-n" id="chip-own-n"></span>';
@@ -278,8 +217,6 @@ const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)')
     bar.appendChild(b);
     const maj = function(){ try{ const o = window.LK.read('lk_own_' + type, {}, window.LK.own); const n = Object.keys(o).filter(k => o[k]).length; const el = document.getElementById('chip-own-n'); if(el && el.textContent !== String(n)) el.textContent = n; }catch(e){} };
     maj();
-    /* v7.54 : le compte suit l'événement « lk-owned » de fiches.js et le stockage (autre onglet), plus aucun écouteur
-       de clic global sur le document */
     const changed = function(){ maj(); if(activeOwn) apply(); };
     window.addEventListener('storage', function(e){ if(e.key === 'lk_own_' + type || e.key === null) changed(); });
     document.addEventListener('lk-owned', function(e){ if(!e.detail || e.detail.type === type) changed(); });
@@ -287,15 +224,12 @@ const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)')
   const countEl = document.getElementById('vcount');
   const emptyEl = document.getElementById('vempty');
   const bar     = document.getElementById('vbar');
-
   let activeCat = 'all', query = '', activeSt = null, activeSlot = null, activeEd = null, tri = ''; let activeOwn=false;
-  /* la grille s'affiche par lots : moins de travail pour le téléphone, toutes les cartes restent dans la page */
   const LOT = 48; let limite = LOT, derniereSig = null;
   let plusBt = document.getElementById('vplus');
   if(!plusBt && emptyEl){ plusBt = document.createElement('button'); plusBt.type = 'button'; plusBt.id = 'vplus'; plusBt.className = 'vplus'; plusBt.hidden = true; emptyEl.parentNode.insertBefore(plusBt, emptyEl); }
   const norm = s => s.toLowerCase().replace(/ß/g,'ss').normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[’‘]/g,"'").replace(/[  ]/g," ");
   const motCarte = grid.dataset.mot || 'vehículo', motsCarte = grid.dataset.mots || 'vehículos';
-  /* index des cartes, construit une fois : plus aucune lecture du DOM à la frappe */
   const ordreInitial = cards.map(card => ({
     card, id: card.dataset.id, cat: card.dataset.cat, st: card.dataset.st, slot: card.dataset.slot, ed: card.dataset.ed,
     search: norm(card.dataset.search || ''),
@@ -307,8 +241,6 @@ const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)')
   const collator = new Intl.Collator('fr');
   const POIDS_ST = { officiel: 0, vu: 1, comm: 2 };
   const triSel = document.getElementById('vtri');
-
-  /* ordre d'affichage : la grille est réordonnée physiquement, sans reconstruire les cartes — seulement quand le tri change */
   function trier(){
     if(tri === lastSort) return;
     if(!sortCache.has(tri)){
@@ -326,8 +258,6 @@ const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)')
     grid.insertBefore(fragment, grid.querySelector('.veh-spacer'));
     lastSort = tri;
   }
-
-  /* l'état des filtres vit dans l'adresse : une vue filtrée se partage par lien */
   function ecrireEtat(){
     const p = new URLSearchParams(location.hash.includes('=') ? location.hash.slice(1) : '');
     ['cat','st','slot','ed','q','tri','own'].forEach(k=>p.delete(k));
@@ -357,7 +287,6 @@ const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)')
     document.querySelectorAll('.chip-slot').forEach(c => c.classList.toggle('is-on', c.dataset.slotf === activeSlot));
     document.querySelectorAll('.chip-ed').forEach(c => c.classList.toggle('is-on', c.dataset.edf === activeEd));
   }
-
   function apply(){
     const focusedCard = document.activeElement && document.activeElement.closest ? document.activeElement.closest('.veh-card') : null;
     const q = norm(query.trim());
@@ -367,7 +296,6 @@ const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)')
     const sig = [activeCat, activeSt, activeSlot, activeEd, q, tri, activeOwn ? 'own' : ''].join('|');
     if(sig !== derniereSig){ derniereSig = sig; limite = LOT; }
     let rang = 0;
-    /* la limite s'applique à l'ordre réellement demandé (tri), pas à l'ordre d'origine */
     ordered.forEach(function(item){
       const card = item.card;
       const show = (activeCat === 'all' || item.cat === activeCat)
@@ -386,7 +314,6 @@ const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)')
     if(clearBt) clearBt.hidden = !query.trim();
     chips.forEach(c=>c.setAttribute('aria-pressed',String(c.classList.contains('is-on'))));
     ecrireEtat();
-    /* une possession décochée peut quitter le filtre actif : le clavier retrouve une commande visible */
     if(focusedCard && focusedCard.hidden){
       const target = activeOwn ? document.getElementById('chip-own') : input;
       if(target) target.focus({preventScroll:true});
@@ -394,21 +321,16 @@ const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)')
   }
   if(plusBt) plusBt.addEventListener('click', function(){ limite += LOT; apply(); });
   if(triSel) triSel.addEventListener('change', function(){ tri = triSel.value; apply(); });
-  /* raccourci : la touche / place le curseur dans le filtre */
   document.addEventListener('keydown', function(e){
     if(e.key === '/' && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName) && !document.activeElement.isContentEditable){ e.preventDefault(); input.focus(); }
   });
-
   input.addEventListener('input', function(e){ query = e.target.value; apply(); });
-
   if(clearBt){
     clearBt.addEventListener('click', function(){
       input.value = ''; query = ''; apply(); input.focus();
     });
   }
-
   const scrollToBar = function(){ const anchor = document.querySelector('.vbar'); if(anchor) window.scrollTo({top: anchor.offsetTop - 70, behavior: reduceMotion() ? 'auto' : 'smooth'}); };
-
   chips.filter(c => c.dataset.filter).forEach(function(chip){
     chip.addEventListener('click', function(){
       chips.forEach(c => { if(c.dataset.filter) c.classList.remove('is-on'); });
@@ -418,8 +340,6 @@ const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)')
       chip.scrollIntoView({behavior: reduceMotion() ? 'auto' : 'smooth', block:'nearest', inline:'center'});
     });
   });
-
-  /* filtres secondaires : fiabilité et emplacement, cumulables avec la catégorie */
   function basculeur(sel, lire, poser){
     document.querySelectorAll(sel).forEach(function(b){
       b.addEventListener('click', function(){
@@ -436,8 +356,6 @@ const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)')
   basculeur('.chip-ed',   b => b.dataset.edf,   v => { activeEd = v; });
   lireEtat();
   apply();
-
-  /* ombre de la barre quand elle colle en haut */
   if(bar){
     const sentinel = document.createElement('div');
     bar.parentNode.insertBefore(sentinel, bar);
@@ -445,11 +363,6 @@ const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)')
       bar.classList.toggle('stuck', !e[0].isIntersecting);
     }, {threshold:1}).observe(sentinel);
   }
-
-  /* bandeau défilant de l'en-tête */
-  /* v7.53 : les marques viennent des données véhicules. v7.54 : elles sont écrites dans la page à la génération
-     (attribut data-marques, gen.js) : la page n'a plus à charger vehicules-data.js (215 Ko) pour ce bandeau.
-     Sans données, le bandeau est masqué plutôt que laissé vide. */
   const strip = document.getElementById('vstrip');
   if(strip){
     const source = strip.dataset.marques ? strip.dataset.marques.split('|')
@@ -460,8 +373,6 @@ const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)')
     if(marques.length) fillTrack(strip, marques.map(m => '<b>' + esc(m) + '</b><i>&#9679;</i>').join(''));
     else if(strip.parentNode) strip.parentNode.hidden = true;
   }
-
-  /* statistiques qui montent (valeur finale directe avec « réduire les animations ») */
   const statIO = new IntersectionObserver(function(entries){
     entries.forEach(function(en){
       if(!en.isIntersecting) return;
@@ -478,15 +389,10 @@ const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)')
     });
   }, {threshold:.4});
   document.querySelectorAll('.vstat .n[data-count], .fig-n[data-count]').forEach(n => statIO.observe(n));
-
-  /* filtre via l'ancre : vehicules.html#suv (ancien lien) ou #cat=suv&q=… (état partagé).
-     v7.54 : l'état de l'adresse est lu une seule fois au chargement (plus de second filtrage) ; un ancien lien #suv
-     amène sur le catalogue déjà filtré. */
   function fromHash(ev){
     const h = location.hash.replace('#','');
     if(h.includes('=') || !h){
       lireEtat(); apply();
-      /* v7.40 : depuis le mur de marques (#q=Albany), on remonte sur la barre de recherche pour voir le résultat */
       if(ev && ev.type === 'hashchange' && /(^|&)q=/.test(h)) scrollToBar();
       return;
     }
@@ -499,16 +405,11 @@ const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)')
   }
   window.addEventListener('hashchange', fromHash);
 })();
-
-/* ============================================================
-   FICHE VÉHICULE : COMPTE À REBOURS
-   ============================================================ */
 (function(){
   const box = document.getElementById('fcd');
   if(!box) return;
   const target = new Date(window.LK_SORTIE.sortie);
   const g = id => document.getElementById(id);
-  /* lot 1 bis (corrections de l'audit, point 2) : sous chaque compteur, l'heure visée, dans la langue de la page */
   let tz = null;
   if(target - new Date() > 0){ tz = document.createElement('span'); tz.className = 'fcount-tz'; tz.textContent = 'medianoche, hora local'; box.insertAdjacentElement('afterend', tz); }
   let timer = 0;
@@ -527,32 +428,23 @@ const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)')
   }
   tick(); if(target - new Date() > 0) timer = setInterval(tick, 1000);
 })();
-
-/* ============================================================
-   CONSTRUCTEUR D'ÉQUIPEMENT — règles d'inventaire confirmées
-   ============================================================ */
 (function(){
   const box = document.getElementById('loadout');
   if(!box) return;
-
   const sel = { dos: document.getElementById('lo-dos'), main: document.getElementById('lo-main'), poing: document.getElementById('lo-poing') };
   const art = { dos: document.getElementById('lo-art-dos'), main: document.getElementById('lo-art-main'), poing: document.getElementById('lo-art-poing') };
   const verdict = document.getElementById('lo-verdict');
   const shareBt = document.getElementById('lo-share');
-
-  /* silhouettes récupérées depuis les cartes de la page */
   const cards = {};
   document.querySelectorAll('.arm-card').forEach(function(c){
     const slug = (c.getAttribute('href') || c.querySelector('.veh-link').getAttribute('href')).split('/').pop().replace('.html','');
     const svg = c.querySelector('.veh-art');
-    /* les armes illustrées par une photo officielle n'ont pas de silhouette : on reprend la photo */
     const img = svg ? null : c.querySelector('.veh-thumb img');
     let html = '';
     if(svg) html = svg.outerHTML;
     else if(img){ const i = img.cloneNode(false); i.className = 'lo-photo'; i.removeAttribute('sizes'); i.setAttribute('sizes', '160px'); html = i.outerHTML; }
     cards[slug] = { svg: html, nom: c.querySelector('h3').textContent, cl: c.dataset.cat };
   });
-
   function render(){
     let longues = 0, visible = false, ok = true, msg = [];
     ['dos','main','poing'].forEach(function(k){
@@ -563,8 +455,6 @@ const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)')
       if(k !== 'poing' && v) longues++;
       if(k === 'main' && v) visible = true;
     });
-
-    /* même arme aux deux emplacements longs */
     if(sel.dos.value && sel.dos.value === sel.main.value){
       ok = false; msg.push("Has puesto la misma arma en la espalda y en la mano.");
     }
@@ -572,12 +462,10 @@ const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)')
     if(visible) msg.push("Arma visible en la mano: los transeúntes se apartan y la policía puede reaccionar.");
     if(!sel.dos.value && !sel.main.value && !sel.poing.value) msg = ["Elige tus armas. El constructor comprueba que tu equipo cumple las reglas."];
     else if(ok && msg.length === 0) msg.push("Equipo válido y discreto.");
-
     verdict.className = 'lo-verdict ' + (ok ? (visible ? 'is-warn' : 'is-ok') : 'is-ko');
     verdict.innerHTML = '<span class="lo-v-ico"></span><p>' + msg.join('<br>') + '</p>';
     syncHash();
   }
-
   function syncHash(){
     const parts=['dos','main','poing'].map(k=>sel[k].value||'-');
     const p=new URLSearchParams(location.hash.slice(1));
@@ -588,18 +476,13 @@ const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)')
     const values=(new URLSearchParams(location.hash.slice(1)).get('lo')||'').split(',');
     ['dos','main','poing'].forEach((k,i)=>{const v=values[i]; if(Array.from(sel[k].options).some(o=>o.value===v))sel[k].value=v;});
   }
-
   Object.keys(sel).forEach(function(k){ sel[k].addEventListener('change', render); });
-
   if(shareBt){
     shareBt.addEventListener('click', function(){
       window.LK.copy(location.href,shareBt,'Enlace copiado');
     });
   }
-
   readHash();
   render();
-
 })();
-
 })();

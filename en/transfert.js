@@ -1,25 +1,11 @@
-/* Leonidakit — changer d'appareil (v7.89, lot 5), sur la page Mode compagnon et la page Progression.
-   Ton suivi (le même que « Exporter mon suivi » : progression-core.js, exportData) passe d'un appareil à l'autre sans
-   compte ni serveur :
-   - lien de transfert : …/compagnon.html#transfert=1z<données> ; les données sont compressées (CompressionStream,
-     « deflate-raw ») puis écrites en base64url après le signe # : le navigateur n'envoie jamais cette partie au serveur.
-     Format 1 : « LKT1 », l'origine du site qui l'a créé, une somme de contrôle (CRC-32) et le suivi (JSON), une ligne chacun ;
-     « 1j » : même chose sans compression, pour un navigateur sans CompressionStream ;
-   - QR code de ce lien, dessiné dans la page (vendor/qrcode-generator.js, licence MIT, chargé à la demande) ; un suivi trop
-     gros pour un QR code passe par le lien ou le fichier ;
-   - fichier : export et import existants (progression-core.js), proposés aussi ici.
-   À l'ouverture du lien, la page montre ce qui arrive (cases, calculs, plans) et propose fusionner, remplacer ou annuler
-   (applyImport) ; puis l'adresse est nettoyée (history.replaceState). Refus propre d'un lien abîmé, trop long, d'une version
-   plus récente ou créé sur une autre origine. Le codec (encoder, decoder…) sert aussi aux tests (Node). */
+/* Généré depuis outils/sources/transfert.js : modifie la source, pas ce fichier. */
 (function (global) {
   'use strict';
   const FORMAT = '1', MAGIE = 'LKT1';
-  const LIMITE_LIEN = 60000;           /* caractères après « #transfert= » : au-delà, le fichier */
-  const LIMITE_DONNEES = 4 * 1048576;  /* octets une fois décompressés : au-delà, refus (lien piégé ou abîmé) */
-  const QR_VERSION_MAX = 30;           /* au-delà, un QR code dessiné sur un écran se scanne mal */
+  const LIMITE_LIEN = 60000;
+  const LIMITE_DONNEES = 4 * 1048576;
+  const QR_VERSION_MAX = 30;
   const erreur = code => { const e = new Error(code); e.code = code; return e; };
-
-  /* ---------- codec ---------- */
   const TABLE = (() => { const t = new Uint32Array(256); for (let n = 0; n < 256; n++) { let c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1; t[n] = c >>> 0; } return t; })();
   function crc32(texte) { const b = new TextEncoder().encode(texte); let c = 0xffffffff; for (let i = 0; i < b.length; i++) c = TABLE[(c ^ b[i]) & 0xff] ^ (c >>> 8); return ((c ^ 0xffffffff) >>> 0).toString(16).padStart(8, '0'); }
   function b64url(octets) { let s = ''; for (let i = 0; i < octets.length; i += 0x8000) s += String.fromCharCode.apply(null, octets.subarray(i, i + 0x8000)); return btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); }
@@ -31,7 +17,7 @@
   const compression = () => typeof CompressionStream === 'function' && typeof DecompressionStream === 'function';
   async function lireFlux(flux, max) {
     const lecteur = flux.getReader(), morceaux = []; let total = 0;
-    for (;;) { const { done, value } = await lecteur.read(); if (done) break; total += value.length; if (total > max) { try { await lecteur.cancel(); } catch (e) { /* déjà fermé */ } throw erreur('E_TAILLE'); } morceaux.push(value); }
+    for (;;) { const { done, value } = await lecteur.read(); if (done) break; total += value.length; if (total > max) { try { await lecteur.cancel(); } catch (e) {  } throw erreur('E_TAILLE'); } morceaux.push(value); }
     const out = new Uint8Array(total); let i = 0; for (const m of morceaux) { out.set(m, i); i += m.length; } return out;
   }
   async function encoder(suivi, origine) {
@@ -64,7 +50,6 @@
   }
   const chargeDe = hash => { const m = /^#transfert=([A-Za-z0-9_-]*)$/.exec(String(hash || '')); return m ? m[1] : (/^#transfert=/.test(String(hash || '')) ? '' : null); };
   const lienDe = (page, charge) => String(page).replace(/#.*$/, '') + '#transfert=' + charge;
-  /* ce que porte un suivi : cases cochées (véhicules, armes, lieux, listes, contenus, collectibles, trophées), calculs et plans */
   function compter(rubriques) {
     let cases = 0, calculs = 0, plans = 0; const vrai = x => x === true || x === 1;
     for (const k of Object.keys(rubriques || {})) {
@@ -77,7 +62,6 @@
     }
     return { cases, calculs, plans, rubriques: Object.keys(rubriques || {}).length };
   }
-  /* QR code (SVG) d'un texte ; null s'il dépasse la version QR_VERSION_MAX */
   function qrSvg(texte, Q) {
     Q = Q || global.qrcode; if (typeof Q !== 'function') return null;
     for (const niveau of ['M', 'L']) {
@@ -93,10 +77,8 @@
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   global.LKTransfert = api;
   if (typeof document === 'undefined') return;
-
-  /* ---------- page ---------- */
   const $ = (sel, root) => (root || document).querySelector(sel), $$ = (sel, root) => Array.from((root || document).querySelectorAll(sel));
-  const pl = n => /^fr/.test(document.documentElement.lang || 'fr') ? n > 1 : n !== 1; /* pluriel selon la langue de la page */
+  const pl = n => /^fr/.test(document.documentElement.lang || 'fr') ? n > 1 : n !== 1;
   const nf = n => new Intl.NumberFormat('en-US').format(n);
   const MESSAGES = {
     'E_ABIME': 'This transfer link is damaged or incomplete: copy it again in full, or use the file instead.',
@@ -118,9 +100,8 @@
   }
   function ecrireResume(el, intro, n) {
     el.textContent = intro + ' ';
-    puces(n).forEach((t, i) => { if (i) el.append(' · '); const b = document.createElement('b'); b.textContent = t; el.append(b); });
+    puces(n).forEach((t, i) => { if (i) el.append(', '); const b = document.createElement('b'); b.textContent = t; el.append(b); });
   }
-  /* le suivi de cet appareil (progression-core.js et ses données, chargés à la demande sur la page compagnon) */
   let magasin = null;
   async function suivi() {
     if (magasin) return magasin;
@@ -134,15 +115,12 @@
     return magasin;
   }
   const pageCompagnon = () => new URL('compagnon.html', location.href.replace(/[^/]*$/, '')).href;
-
-  /* ---------- envoyer : lien, QR code, copier, partager, agrandir ---------- */
   const dialogue = $('[data-tr-dialogue]');
   if (dialogue) {
     $('[data-tr-fermer]', dialogue).addEventListener('click', () => dialogue.close());
     dialogue.addEventListener('click', e => { if (e.target === dialogue) dialogue.close(); });
   }
   $$('[data-tr-envoi]').forEach(box => {
-    /* les commandes cachées sans script apparaissent avec lui (page Progression : pas de compagnon.js) */
     $$('[data-cp-js]', box).forEach(el => { el.hidden = false; });
     const creer = $('[data-tr-creer]', box), res = $('[data-tr-resultat]', box), resume = $('[data-tr-resume]', box), qr = $('[data-tr-qr]', box);
     const champ = $('[data-tr-lien]', box), copier = $('[data-tr-copier]', box), partager = $('[data-tr-partager]', box), agrandir = $('[data-tr-agrandir]', box), msg = $('[data-tr-msg]', box);
@@ -175,18 +153,16 @@
     if (partager) partager.addEventListener('click', () => { if (lien && navigator.share) navigator.share({ title: 'Leonidakit', text: 'My Leonidakit tracking', url: lien }).catch(() => {}); });
     if (agrandir) agrandir.addEventListener('click', () => { if (!dessin || !dialogue) return; $('[data-tr-qr-grand]', dialogue).innerHTML = dessin.svg; dialogue.showModal(); });
   });
-
-  /* ---------- recevoir : lien ouvert ou fichier choisi (page compagnon) ---------- */
   const zone = $('[data-tr-reception]');
   if (!zone) return;
   const apercu = $('[data-tr-apercu]', zone), detail = $('[data-tr-detail]', zone), rubriques = $('[data-tr-rubriques]', zone), problemes = $('[data-tr-problemes]', zone);
   const choix = $('[data-tr-choix]', zone), note = $('[data-tr-choix-note]', zone), msgRecu = $('[data-tr-recu-msg]', zone), suite = $('[data-tr-suite]', zone), titre = $('[data-tr-recu-titre]', zone);
   let plan = null;
-  const nettoyer = () => { if (/^#transfert=/.test(location.hash)) try { history.replaceState(history.state, '', location.pathname + location.search); } catch (e) { /* adresse laissée */ } };
+  const nettoyer = () => { if (/^#transfert=/.test(location.hash)) try { history.replaceState(history.state, '', location.pathname + location.search); } catch (e) {  } };
   function ouvrir() {
     zone.hidden = false; zone.removeAttribute('data-tr-etat'); choix.hidden = true; note.hidden = true; detail.hidden = true; suite.hidden = true; msgRecu.textContent = '';
     if (global.LKMotion && global.LKMotion.enter) global.LKMotion.enter([zone]);
-    try { zone.scrollIntoView({ block: 'start', behavior: 'auto' }); titre.focus({ preventScroll: true }); } catch (e) { /* rien */ }
+    try { zone.scrollIntoView({ block: 'start', behavior: 'auto' }); titre.focus({ preventScroll: true }); } catch (e) {  }
   }
   function refuser(texte) { plan = null; zone.dataset.trEtat = 'refus'; apercu.textContent = texte; choix.hidden = true; note.hidden = true; detail.hidden = true; }
   function montrer(p, viaFichier) {
@@ -194,7 +170,7 @@
     const date = p.exportedAt ? new Date(p.exportedAt) : null, jour = date && !isNaN(date) ? date.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' }) : '';
     ecrireResume(apercu, (viaFichier ? (jour ? 'This file contains your tracking from {date}:' : 'This file contains Leonidakit tracking data:') : (jour ? 'This link contains your tracking from {date}:' : 'This link contains Leonidakit tracking data:')).replace('{date}', jour), n);
     rubriques.textContent = ''; for (const k of Object.keys(p.rubrics)) { const li = document.createElement('li'); li.textContent = NOMS[k] || k; rubriques.append(li); }
-    problemes.hidden = !p.issues.length; problemes.textContent = p.issues.length ? 'Good to know: ' + p.issues.join(' · ') : '';
+    problemes.hidden = !p.issues.length; problemes.textContent = p.issues.length ? 'Good to know: ' + p.issues.join(', ') : '';
     detail.hidden = false; choix.hidden = false; note.hidden = false;
     msgRecu.textContent = 'Choose: merge, replace or cancel. Nothing is saved until you choose.';
   }
@@ -213,10 +189,7 @@
     nettoyer();
   }));
   $('[data-tr-annuler]', zone).addEventListener('click', () => { plan = null; choix.hidden = true; note.hidden = true; detail.hidden = true; msgRecu.textContent = 'Nothing was changed.'; nettoyer(); });
-
-  /* fichier (export et import existants) */
   const exporter = $('[data-tr-exporter]'), fichier = $('[data-tr-fichier]'), msgFichier = $('[data-tr-fichier-msg]'), importer = $('[data-tr-importer]');
-  /* un vrai bouton (atteignable au clavier) ouvre le choix du fichier */
   if (importer && fichier) importer.addEventListener('click', () => fichier.click());
   if (exporter) exporter.addEventListener('click', async () => {
     try {
@@ -233,7 +206,6 @@
     lecteur.onerror = () => { msgFichier.textContent = 'This file couldn’t be read.'; fichier.value = ''; };
     lecteur.readAsText(f);
   });
-
   const charge = chargeDe(location.hash);
   if (charge !== null) recevoirLien(charge);
   window.addEventListener('hashchange', () => { const c = chargeDe(location.hash); if (c !== null) recevoirLien(c); });

@@ -1,9 +1,8 @@
-/* v7.61 : pluriel selon la langue de la page : français n > 1 (« 0 coché », « 1,5 million ») ; anglais, espagnol n ≠ 1 (« 0 marcados ») */
+/* Généré depuis outils/sources/collectibles-help.js : modifie la source, pas ce fichier. */
 var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.documentElement&&document.documentElement.lang)||'fr').slice(0,2)==='fr'?n>1:n!==1;};
-/* Fast answers, optional compact view and accessible local-image viewer. */
 (function () {
   'use strict';
-  var lkPl = function (n) { return /^fr/.test(document.documentElement.lang || "fr") ? n > 1 : n !== 1; }; /* pluriel selon la langue de la page (français : n > 1) */
+  var lkPl = function (n) { return /^fr/.test(document.documentElement.lang || "fr") ? n > 1 : n !== 1; };
   const $ = id => document.getElementById(id);
   const norm = value => String(value || '').replace(/ß/g,'ss').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('fr').replace(/[’‘]/g, "'").replace(/[\u00a0\u202f]/g, ' ').trim();
   const feedback = message => {
@@ -14,7 +13,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
   const expressButton = $('col-quick-mode');
   const EXPRESS_KEY = 'lk_collectibles_quick_v1';
   let express = false;
-  try { express = localStorage.getItem(EXPRESS_KEY) === '1'; } catch (_) { /* Reading remains available. */ }
+  try { express = localStorage.getItem(EXPRESS_KEY) === '1'; } catch (_) {  }
   function applyExpress() {
     document.body.classList.toggle('col-quick-mode', express);
     if (expressButton) expressButton.setAttribute('aria-pressed', String(express));
@@ -31,7 +30,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
   window.addEventListener('storage', event => {
     if (event.key === EXPRESS_KEY || event.key === null) { express = event.newValue === '1'; applyExpress(); }
   });
-
   const answers = [...document.querySelectorAll('.col-help-answer')];
   const query = $('col-help-query');
   const form = query?.closest('form');
@@ -44,9 +42,9 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
   }
   const answerIndex = new Map(answers.map(answer => [answer.id, norm(answer.textContent + ' ' + answer.dataset.helpKeywords)]));
   const questionWords = new Set(['a','to','at','with','this','these','c','comment','d','in','de','some','from','en','is','and','it','ils','i','l','the','an','are','m','my','me','moi','how','don','on','or','by','not','peut','peux','for','then','qu','what','quel','quelle','quelles','quels','s','does','which','sont','of','t','you','can','do','vos','votre',
-    /* v7.61 : mots outils anglais (page anglaise) */ 'the','an','and','or','of','to','in','at','for','with','is','are','can','do','does','how','what','where','which','who','why','i','my','me','it','its','be','you','your','there',
-    /* v7.62 : mots outils allemands (page allemande) */ 'der','die','das','den','dem','und','oder','wie','wo','was','wer','wann','welche','welcher','welches','ich','mein','meine','mir','mich','ist','sind','ein','eine','einen','zu','im','am','mit','fur','auf','kann','muss','gibt','es','von','bei','nach','sich','dein','deine',
-    /* v7.91 (portugais) : mots outils portugais (page portugaise) ; « sem » et « mais » restent dehors (mots que le générateur prend pour du français) */ 'o','e','os','as','um','uma','uns','umas','do','da','dos','das','no','na','nos','nas','ao','aos','num','numa','pelo','pela','pelos','pelas','em','para','pra','pro','por','com','sobre','eu','voce','vc','ele','ela','eles','elas','meu','minha','meus','minhas','seu','sua','seus','suas','esse','essa','este','esta','isso','isto','aqui','ai','como','onde','quando','qual','quais','quem','quanto','quantos','quantas','porque','pq','oq','cade','tem','ter','tenho','posso','pode','consigo','fica','ficam','achar','acho','sao','nao','sim','ja','tambem','muito','ate']);
+     'the','an','and','or','of','to','in','at','for','with','is','are','can','do','does','how','what','where','which','who','why','i','my','me','it','its','be','you','your','there',
+     'der','die','das','den','dem','und','oder','wie','wo','was','wer','wann','welche','welcher','welches','ich','mein','meine','mir','mich','ist','sind','ein','eine','einen','zu','im','am','mit','fur','auf','kann','muss','gibt','es','von','bei','nach','sich','dein','deine',
+     'o','e','os','as','um','uma','uns','umas','do','da','dos','das','no','na','nos','nas','ao','aos','num','numa','pelo','pela','pelos','pelas','em','para','pra','pro','por','com','sobre','eu','voce','vc','ele','ela','eles','elas','meu','minha','meus','minhas','seu','sua','seus','suas','esse','essa','este','esta','isso','isto','aqui','ai','como','onde','quando','qual','quais','quem','quanto','quantos','quantas','porque','pq','oq','cade','tem','ter','tenho','posso','pode','consigo','fica','ficam','achar','acho','sao','nao','sim','ja','tambem','muito','ate']);
   let beforeSearch = null;
   function searchAnswers() {
     if (!query) return;
@@ -89,8 +87,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
   }
   window.addEventListener('hashchange', () => followAnswerHash(true));
   followAnswerHash(true);
-  // Keyboard focus can start a smooth scroll just before an anchor is activated.
-  // Let the browser update the hash, then finish that keyboard jump immediately.
   $('col-section-nav')?.addEventListener('click', event => {
     const link = event.target.closest('a[href^="#"]');
     if (!link || event.detail !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
@@ -103,7 +99,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     const target = catalogueQuery && !catalogueQuery.closest('[hidden]') ? catalogueQuery : query;
     if (target) { event.preventDefault(); target.scrollIntoView({block: 'center', behavior: 'auto'}); target.focus({preventScroll: true}); }
   });
-
   let dialog, image, caption, title, sourceLink, previous, next, position, activeIndex = 0, trigger, entries = [];
   function imageURL(raw) {
     try {
@@ -129,7 +124,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
   function buildDialog() {
     dialog = document.createElement('dialog'); dialog.id = 'col-image-dialog'; dialog.className = 'col-image-dialog';
     dialog.setAttribute('aria-labelledby', 'col-image-title');
-    dialog.innerHTML = '<div class="col-image-head"><h2 id="col-image-title">Enlarged image</h2><button type="button" id="col-image-close" class="col-btn" autofocus>Close <span aria-hidden="true">×</span></button></div><figure><img id="col-image-full" alt=""><figcaption><span id="col-image-credit"></span> <a id="col-image-source" target="_blank" rel="noopener noreferrer" hidden>Image source ↗</a></figcaption></figure><p id="col-image-error" role="status" hidden>This image can’t be loaded. You can close the window and keep reading.</p><div class="col-image-controls"><button type="button" id="col-image-prev" class="col-btn">← Previous</button><span id="col-image-position" aria-live="polite"></span><button type="button" id="col-image-next" class="col-btn">Next →</button></div>';
+    dialog.innerHTML = '<div class="col-image-head"><h2 id="col-image-title">Enlarged image</h2><button type="button" id="col-image-close" class="col-btn" autofocus>Close <span aria-hidden="true">×</span></button></div><figure><img id="col-image-full" alt=""><figcaption><span id="col-image-credit"></span> <a id="col-image-source" target="_blank" rel="noopener noreferrer" hidden>Image source ↗</a></figcaption></figure><p id="col-image-error" role="status" hidden>This image can’t be loaded. You can close the window and keep reading.</p><div class="col-image-controls"><button type="button" id="col-image-prev" class="col-btn">Previous</button><span id="col-image-position" aria-live="polite"></span><button type="button" id="col-image-next" class="col-btn">Suivante</button></div>';
     document.body.appendChild(dialog);
     image = $('col-image-full'); caption = $('col-image-credit'); title = $('col-image-title'); sourceLink = $('col-image-source'); previous = $('col-image-prev'); next = $('col-image-next'); position = $('col-image-position');
     $('col-image-close').addEventListener('click', () => dialog.close());
@@ -151,10 +146,10 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
   function showImage() {
     const current = entries[activeIndex];
     title.textContent = current.alt; image.alt = current.alt; image.hidden = false; $('col-image-error').hidden = true;
-    image.src = current.src; caption.textContent = ''; /* crédits sur medias.html, pas dans la visionneuse */
+    image.src = current.src; caption.textContent = '';
     sourceLink.hidden = !current.source; if (current.source) sourceLink.href = current.source; else sourceLink.removeAttribute('href');
     previous.hidden = next.hidden = entries.length < 2;
-    position.textContent = (activeIndex + 1) + ' / ' + entries.length;
+    position.textContent = (activeIndex + 1) + ' of ' + entries.length;
   }
   document.addEventListener('click', event => {
     if (event.defaultPrevented || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;

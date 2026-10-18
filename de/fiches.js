@@ -1,14 +1,9 @@
-/* v7.61 : pluriel selon la langue de la page : français n > 1 (« 0 coché », « 1,5 million ») ; anglais, espagnol n ≠ 1 (« 0 marcados ») */
+/* Généré depuis outils/sources/fiches.js : modifie la source, pas ce fichier. */
 var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.documentElement&&document.documentElement.lang)||'fr').slice(0,2)==='fr'?n>1:n!==1;};
-/* ============================================================
-   LEONIDAKIT — fiches.js : galerie, arsenal / garage, comparaison
-   Chargé après app.js sur les fiches et les pages hub.
-   ============================================================ */
 (function(){
   'use strict';
-  var lkPl = function (n) { return /^fr/.test(document.documentElement.lang || "fr") ? n > 1 : n !== 1; }; /* pluriel selon la langue de la page (français : n > 1) */
-  /* v7.91 (portugais) : « $ 1.250 » (signe devant, espace insécable) */
-  var lkDollars = function (s) { return /^pt/.test(document.documentElement.lang || "fr") ? "$\u00a0" + s : /^(fr|de)/.test(document.documentElement.lang || "fr") ? s + "\u00a0$" : "$" + s; }; /* « 1 250 $ », « 1.250 $ » (allemand) ou « $1,250 » selon la langue de la page */
+  var lkPl = function (n) { return /^fr/.test(document.documentElement.lang || "fr") ? n > 1 : n !== 1; };
+  var lkDollars = function (s) { return /^pt/.test(document.documentElement.lang || "fr") ? "$\u00a0" + s : /^(fr|de)/.test(document.documentElement.lang || "fr") ? s + "\u00a0$" : "$" + s; };
   const calculatorBase = new URL('calculateurs.html', document.currentScript?.src || document.querySelector('script[src*="fiches.js"]')?.src || new URL('/fiches.js', location.href).href);
   function calculatorLink(type, values, origin) {
     const url = new URL(calculatorBase);
@@ -19,30 +14,14 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     url.hash = 'atelier';
     return url.href;
   }
-  /* v7.59 (check ultime, D-03) : la feuille n'est ajoutée que si la page ne la charge pas déjà (sinon elle était chargée
-     deux fois, la seconde avec une empreinte écrite à la main, « ?v=20260921 », qui pouvait servir une version en cache
-     périmée par-dessus la bonne). L'empreinte ci-dessous est posée par outils/sync-site.cjs à chaque régénération. */
   function calculatorStyle() {
     if (document.querySelector('link[data-calculator-entry], link[rel="stylesheet"][href*="calculator-entry.css"]')) return;
     const link = document.createElement('link'); link.rel = 'stylesheet';
-    /* v7.61 : la feuille est à la racine du site, à côté de style.css (une page traduite /es/… charge un fiches.js
-       traduit, rangé dans /es/ : la feuille n'y est pas) */
     const main = Array.from(document.querySelectorAll('link[rel="stylesheet"]')).find(l => /(?:^|\/)style\.css(?:\?|$)/.test(l.getAttribute('href') || ''));
-    link.href = new URL('calculator-entry.css?v=cf94b45f1d2d', main ? main.href : calculatorBase).href.replace(/\/[a-z]{2}\/(?=calculator-entry\.css)/, '/'); /* v7.61 : la feuille est à la racine, y compris pour une page traduite (/en/) */
+    link.href = new URL('calculator-entry.css?v=e178a05bf93e', main ? main.href : calculatorBase).href.replace(/\/[a-z]{2}\/(?=calculator-entry\.css)/, '/');
     link.dataset.calculatorEntry = 'true'; document.head.appendChild(link);
   }
-
-  /* ---------------------------------------------------------- galerie
-     <div class="gal" data-base="img/armes/micro-smg" data-vues="face,profil,arriere,detail">
-     Chaque vue cherche <base>-<vue>.jpg ; absente, elle affiche l'emplacement vide
-     avec l'illustration provisoire. Clavier ← →, glisser au doigt, points. */
   const VUES_LBL = { face:'Vorne', profil:'Seite', arriere:'Heck', detail:'Detail', interieur:'Innenraum', dessus:'Oben' };
-
-  /* ---------------------------------------------------------- sous tous les angles (v7.80)
-     <div class="ang" data-ang> : l'écran (bouton) porte les schémas de chaque angle (svg.ang-img, data-ang-id) ; un clic
-     passe au suivant avec l'effet d'un écran cathodique qui change de chaîne (fiches.css : ang-out, ang-in, ang-scan).
-     Onglets (data-ang-go), ← → Début Fin au clavier, glisser au doigt. Tous les mots viennent du balisage. Avec
-     « réduire les animations », le changement est immédiat. Aucune requête, rien gardé sur l'appareil. */
   var angReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   function initAng(ang) {
     if (!ang || ang.dataset.angReady) return; ang.dataset.angReady = '1';
@@ -55,7 +34,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       i = k;
       tabs.forEach(function (t, q) { t.classList.toggle('is-on', q === i); t.setAttribute('aria-pressed', String(q === i)); });
       if (label) label.textContent = tabs[i] ? tabs[i].textContent : imgs[i].getAttribute('data-ang-id');
-      if (count) count.textContent = (i + 1) + '/' + n;
+      if (count) count.textContent = (i + 1) + ' von ' + n;
       ang.dataset.angI = String(i);
     }
     function go(k) {
@@ -96,27 +75,16 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     });
     show(0);
   }
-
   document.querySelectorAll('.gal').forEach(function(gal){
-    /* visuels officiels Rockstar déclarés dans la page : galerie prête, sans requête de test */
     var medias = [];
     try { medias = gal.dataset.medias ? JSON.parse(gal.dataset.medias) : []; } catch (e) { medias = []; }
     if (medias.length) {
-      /* v7.54 : le nœud de la première image (déjà en cours de chargement, souvent le plus grand contenu de la page)
-         est conservé au lieu d'être recréé : pas de second décodage ni de nouveau candidat LCP */
       const firstImage = gal.querySelector('img[src]');
       const trk = document.createElement('div'); trk.className = 'gal-track';
-      /* la première vue est déjà dans le HTML (visible sans JS) ; les suivantes ne sont demandées
-         qu'au moment où on les affiche, pour ne pas charger toute la galerie d'un coup */
       medias.forEach(function (m, k) {
         const it = document.createElement('div'); it.className = 'gal-item';
         const im = k === 0 && firstImage ? firstImage : document.createElement('img');
-        /* v7.85 : un attribut déjà écrit dans la page n'est pas réécrit (réécrire sizes relance la sélection de l'image en cours
-           de chargement : second téléchargement de la même variante) */
         if (im.getAttribute('sizes') !== '(max-width:700px) 100vw, 520px') im.sizes = '(max-width:700px) 100vw, 520px';
-        /* v7.85 (latence) : la variante 800 px (présente pour chaque visuel officiel, déjà dans le srcset écrit dans la page)
-           reste dans la liste : la première image n'est plus retéléchargée en 1 280 px (130 Ko au lieu de 34) après sa
-           variante 800 px, et un écran qui n'a besoin que de 520 à 800 pixels la garde */
         const m800 = m.s && m.l && /-480\.webp$/.test(m.s) && m.l === m.s.replace(/-480\.webp$/, '-1280.webp') ? m.s.replace(/-480\.webp$/, '-800.webp') : '';
         im.dataset.src = m.s; im.dataset.srcset = m.s + ' ' + (m.w || 480) + 'w, ' + (m800 && window.LK.hasAsset(m800) ? m800 + ' 800w, ' : '') + m.l + ' ' + (m.lw || 1280) + 'w';
         if (k === 0) {
@@ -128,12 +96,11 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
         if (im.getAttribute('height') !== String(m.h)) im.height = m.h;
         if (im.getAttribute('decoding') !== 'async') im.decoding = 'async';
         if (m.h > m.w) im.classList.add('gal-portrait');
-        im.alt = m.a || ((gal.dataset.nom || '') + ' — ' + m.t + ', offizieller Screenshot von Rockstar Games');
+        im.alt = m.a || ((gal.dataset.nom || '') + ', ' + m.t + ', offizieller Screenshot von Rockstar Games');
         it.appendChild(im);
         const s = document.createElement('span'); s.className = 'gal-lbl'; s.textContent = m.t; it.appendChild(s);
         trk.appendChild(it);
       });
-      /* v7.80 : le bloc « sous tous les angles » (schéma) devient la dernière vue de la galerie, après les visuels officiels */
       const angSlide = gal.querySelector('.ang-slide');
       if (angSlide) { const it = document.createElement('div'); it.className = 'gal-item gal-item--ang'; angSlide.hidden = false; it.appendChild(angSlide); trk.appendChild(it); }
       const nSlides = medias.length + (angSlide ? 1 : 0);
@@ -161,7 +128,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       }
       return;
     }
-    /* v7.80 : fiche sans visuel officiel : l'écran « sous tous les angles » remplace l'emplacement vide */
     if (gal.classList.contains('gal--ang')) { initAng(gal.querySelector('[data-ang]')); return; }
     const base = gal.dataset.base;
     const vues = (gal.dataset.vues || 'face,profil').split(',').filter(v => window.LK.hasAsset(base+'-'+v+'.jpg'));
@@ -172,24 +138,21 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     }
     const track = document.createElement('div'); track.className = 'gal-track';
     let i = 0;
-
     vues.forEach(function(v, k){
       const it = document.createElement('div'); it.className = 'gal-item';
       const img = new Image();
-      img.alt = (gal.dataset.nom || '') + ' — ' + (VUES_LBL[v] || v);
+      img.alt = (gal.dataset.nom || '') + ', ' + (VUES_LBL[v] || v);
       img.onload = function(){ it.innerHTML = ''; it.appendChild(img); it.appendChild(lbl(v)); };
       img.onerror = function(){
         it.innerHTML = '<div class="gal-vide">' + art +
-          '<span>' + (VUES_LBL[v] || v) + ' · Bild folgt</span></div>';
+          '<span>' + (VUES_LBL[v] || v) + ', Bild folgt</span></div>';
         it.appendChild(lbl(v));
       };
       img.src = base + '-' + v + '.jpg';
       track.appendChild(it);
     });
     function lbl(v){ const s = document.createElement('span'); s.className = 'gal-lbl'; s.textContent = VUES_LBL[v] || v; return s; }
-
     gal.appendChild(track);
-    /* aucune image officielle : un seul emplacement, pas de défilement */
     if(gal.dataset.vide === '1'){
       track.innerHTML = '<div class="gal-item"><div class="gal-vide">' + art + '<span>Offizielle Bilder folgen</span></div></div>';
       return;
@@ -202,14 +165,12 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       d.addEventListener('click', function(){ go(k); }); dots.appendChild(d);
     });
     gal.parentNode.insertBefore(dots, gal.nextSibling);
-
     function bt(cls, txt){ const b = document.createElement('button'); b.type = 'button'; b.className = 'gal-btn ' + cls;
       b.textContent = txt; b.setAttribute('aria-label', cls === 'prev' ? 'Vorherige Ansicht' : 'Nächste Ansicht');
       b.addEventListener('click', function(){ go(i + (cls === 'prev' ? -1 : 1)); }); return b; }
     function go(k){ i = (k + vues.length) % vues.length; track.style.transform = 'translateX(-' + (i*100) + '%)';
       dots.querySelectorAll('button').forEach((d,j)=>{d.classList.toggle('on',j===i);d.setAttribute('aria-current',String(j===i));}); }
     go(0);
-
     gal.tabIndex = 0;
     gal.addEventListener('keydown', function(e){
       if(e.key === 'ArrowLeft'){ go(i-1); e.preventDefault(); }
@@ -220,32 +181,22 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     gal.addEventListener('pointerup', e => { if(x0 === null) return; const dx = e.clientX - x0; x0 = null;
       if(Math.abs(dx) > 40) go(i + (dx < 0 ? 1 : -1)); });
   });
-
-  /* ---------------------------------------------------------- possession
-     Clé localStorage par type : lk_own_armes, lk_own_vehicules. */
-  const type = document.body.dataset.own;           /* 'armes' | 'vehicules' */
+  const type = document.body.dataset.own;
   if(!type) return;
   const KEY = 'lk_own_' + type;
   const lire = () => window.LK.read(KEY,{},window.LK.own);
-  /* v7.54 : la page (puce « Mon garage / Mon arsenal », app.js) est prévenue par un événement, plus par un écouteur de clic global */
   const ecrire = o => { const saved = window.LK.write(KEY,o); document.dispatchEvent(new CustomEvent('lk-owned', { detail: { type } })); return saved; };
   let own = lire();
   const MOT = type === 'armes' ? ['arme', 'armes', 'arsenal'] : ['Fahrzeug', 'Fahrzeuge', 'garage'];
-  /* v7.61 : clé du lien de partage (#garage=… / #arsenal=…), identique dans toutes les langues ; MOT[2] est le mot affiché */
   const PARTAGE = type === 'armes' ? 'arsenal' : 'garage';
-  /* v7.62 : phrases écrites en entier pour chaque carnet (en allemand, « meine Garage » / « mein Arsenal » n'ont pas le même genre) */
   const TXT = type === 'armes'
     ? { dans: 'In meinem Arsenal', ajouter: 'Zu meinem Arsenal hinzufügen', range: 'In deinem Arsenal abgelegt und von deiner Wunschliste entfernt.', envie: 'Auf deiner Wunschliste gespeichert. Das ist kein Besitz: In deinem Arsenal wird nichts abgehakt.', vider: 'Mein Arsenal leeren?' }
     : { dans: 'In meiner Garage', ajouter: 'Zu meiner Garage hinzufügen', range: 'In deiner Garage abgelegt und von deiner Wunschliste entfernt.', envie: 'Auf deiner Wunschliste gespeichert. Das ist kein Besitz: In deiner Garage wird nichts abgehakt.', vider: 'Meine Garage leeren?' };
-
-  /* bouton de fiche */
   const bt = document.getElementById('own-bt');
   if(bt){
     const id = bt.dataset.id;
     const maj = () => { const on = !!own[id]; bt.classList.toggle('on', on); bt.setAttribute('aria-pressed',String(on));
       bt.querySelector('span:last-child').textContent = on ? TXT.dans : TXT.ajouter; };
-    /* v7.51 (lot 4) : envie (« Je le veux », lk_wish_v1 via carnets-core.js : une envie n’est jamais une possession) et lien
-       « Voir mon garage » / « Voir mon arsenal » vers la page du carnet. Une envie devenue possession quitte les envies. */
     const carnet = type === 'armes' ? ['arsenal', 'Mein Arsenal ansehen'] : ['garage', 'Meine Garage ansehen'];
     let wstore = null, wb = null;
     if (window.LKCarnets) { try { wstore = window.LKCarnets.create({ storage: localStorage, notice: m => window.LK.status(m) }); } catch (e) { wstore = null; } }
@@ -270,8 +221,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       card.className = 'lk-entry-card lk-fiche-calculator';
       const eyebrow = document.createElement('p'); eyebrow.className = 'lk-entry-eyebrow'; eyebrow.textContent = 'DER RECHNER';
       const title = document.createElement('h2'); title.textContent = type === 'armes' ? 'Willst du diese Waffe?' : 'Willst du dieses Fahrzeug?';
-      /* v7.59 (check ultime, CALC-13) : la phrase dépend de la fiche : un prix publié (data-prix posé par le générateur) est annoncé
-         comme prix de référence ; sinon le prix reste « pas encore connu ». Rien n’est figé dans ce script. */
       const prix = Number(bt.dataset.prix), prixStatut = bt.dataset.prixStatut || '';
       const explanation = document.createElement('p'); explanation.textContent = 'Schau, ob du genug Geld hast, und wenn nicht, wie viel Spielzeit du brauchst. ' + (bt.dataset.prix !== undefined && Number.isFinite(prix) && prix >= 0 ? 'Der veröffentlichte Preis (' + lkDollars(new Intl.NumberFormat('de-DE').format(prix)) + (prixStatut === 'official' ? ', officiel' : prixStatut === 'verified' ? ', gemessen und geprüft' : '') + ') wird als Referenzpreis vorgeschlagen: Du kannst einen anderen eingeben.' : 'Der Preis ist noch nicht bekannt: Du kannst den Preis eingeben, den du dir vorstellst.');
       const link = document.createElement('a'); link.className = 'lk-entry-button'; link.href = calculatorLink(type, { id }, 'fiche'); link.textContent = 'Kann ich es kaufen? ↗';
@@ -279,10 +228,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       (bt.closest('.fiche-liens') || bt).insertAdjacentElement('afterend', card);
     }
   }
-
-  /* ---------------------------------------------------------- photos manquantes
-     Une vignette photo absente laissait l'icône d'image cassée et faussait la
-     hauteur de la carte. On retombe sur la silhouette de la catégorie. */
   (function(){
     const photos = document.querySelectorAll('.veh-thumb--photo .veh-photo');
     if(!photos.length) return;
@@ -305,8 +250,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       img.addEventListener('error', repli);
     });
   })();
-
-  /* cartes du hub */
   const grid = document.getElementById('vgrid');
   if(grid){
     const cards = Array.from(grid.querySelectorAll('.veh-card'));
@@ -314,7 +257,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     cards.forEach(function(c){
       const id = c.dataset.id; if(!id) return;
       const body = c.querySelector('.veh-body'); if(!body) return;
-      /* barre d'actions en pied de carte : l'image reste intacte */
       let tools = c.querySelector('.veh-tools');
       if(!tools){ tools = document.createElement('div'); tools.className = 'veh-tools'; c.appendChild(tools); }
       const b = document.createElement('button'); b.type = 'button'; b.className = 'own-card';
@@ -324,7 +266,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
         if(own[id]) delete own[id]; else own[id] = 1; ecrire(own); majCartes(); });
       tools.appendChild(b); ownButtons.set(id, { card: c, button: b });
     });
-    /* v7.54 : boutons retenus dans une table (plus de querySelector par carte) et écritures seulement quand l'état change */
     function majCartes(){
       let n = 0;
       ownButtons.forEach(function(entry, id){ const on = !!own[id], b = entry.button;
@@ -353,7 +294,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
         window.LK.copy(url,exp,'Link kopiert');
       });
     }
-    /* import depuis un lien partagé */
     const hp = new URLSearchParams(location.hash.slice(1));
     const incoming = hp.get(PARTAGE);
     if(incoming !== null){
@@ -362,15 +302,12 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       hp.delete(PARTAGE); history.replaceState(null,'',location.pathname+location.search+(hp.size?'#'+hp.toString():''));
     }
     majCartes();
-    /* v7.54 : une possession cochée dans un autre onglet est reflétée ici */
     window.addEventListener('storage', function(e){ if(e.key === KEY || e.key === null){ own = lire(); majCartes(); } });
-
-    /* ------------------------------------------------------ sélection pour comparer */
     let sel = [];
     const selectionKey = 'lk-calculator-selection-' + type;
     try { const previous = JSON.parse(sessionStorage.getItem(selectionKey) || '[]');
       if (Array.isArray(previous)) sel = [...new Set(previous)].filter(id => cards.some(card => card.dataset.id === id)).slice(0, 3);
-    } catch (e) { /* Selection remains usable when storage is unavailable. */ }
+    } catch (e) {  }
     const tray = document.getElementById('cmp-tray');
     let calculatorSelection;
     if (tray) {
@@ -392,8 +329,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       tools.appendChild(b); compareButtons.set(id, b);
     });
     function majSel(){
-      /* v7.57 (lot 4) : une sélection vide ne crée aucune clé au chargement ; la clé disparaît quand la sélection se vide */
-      try { if (sel.length) sessionStorage.setItem(selectionKey, JSON.stringify(sel)); else if (sessionStorage.getItem(selectionKey) !== null) sessionStorage.removeItem(selectionKey); } catch (e) { /* Optional persistence. */ }
+      try { if (sel.length) sessionStorage.setItem(selectionKey, JSON.stringify(sel)); else if (sessionStorage.getItem(selectionKey) !== null) sessionStorage.removeItem(selectionKey); } catch (e) {  }
       if (calculatorSelection) {
         calculatorSelection.hidden = !sel.length;
         calculatorSelection.href = calculatorLink(type, { ids: sel.join(',') }, 'catalogue');
@@ -410,11 +346,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     }
     if(tray) tray.querySelector('button').addEventListener('click', function(){ sel = []; majSel(); });
     majSel();
-
-    /* ------------------------------------------------------ modèle réel
-       Même principe que Street View sur la carte : aucune image n'est
-       hébergée ici, le bouton ouvre le modèle réel identifié dans un
-       nouvel onglet. Les cartes sans inspiration identifiée n'en ont pas. */
     cards.forEach(function(c){
       const url = c.dataset.reel; if(!url) return;
       const tools = c.querySelector('.veh-tools'); if(!tools) return;
@@ -426,11 +357,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       tools.appendChild(b);
     });
   }
-
-  /* ---------------------------------------------------------- photo du modèle réel
-     Alimentée par photos-reelles.js. Si credits-reels.json est absent ou
-     ne contient pas ce véhicule, la section reste telle quelle : la photo
-     est un bonus, jamais une dépendance. */
   (function(){
     const sec = document.getElementById('modele-reel');
     const bt  = document.getElementById('reel-bt');
@@ -463,9 +389,6 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       })
       .catch(function(){});
   })();
-
-  /* ---------------------------------------------------------- fiche : modèle réel
-     <a id="reel-bt" href="..." data-nom="Ferrari Testarossa 512 BB"> sur la fiche. */
   const reelBt = document.getElementById('reel-bt');
   if(reelBt && !reelBt.dataset.pret){
     reelBt.dataset.pret = '1';

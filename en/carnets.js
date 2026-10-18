@@ -1,16 +1,4 @@
-/* LEONIDAKIT — page d’un carnet de progression (v7.51, lot 4).
-   Une page par carnet (carnets/<id>.html) : « Mon garage », « Mon arsenal »… Les données publiques (noms, catégories,
-   liens, vignettes) sont dans la page (#lk-carnet-data, écrit par outils/gen-carnets.cjs) ; ce que tu as coché est lu ici,
-   dans ce navigateur, avec carnets-core.js et les clés de toujours (lk_own_<famille>, lk_map_found, lk_progression_v2,
-   lk_collectibles_v1) : les fiches, la page Progression, la carte et le calculateur comptent exactement pareil.
-   - trois vues : ce que tu as, tes envies (lk_wish_v1 : une envie n’est jamais une possession), ce qui reste ;
-   - recherche, famille, catégorie, stock, tri, nombre de résultats ; la vue et les filtres vivent dans l’adresse (#vue=…),
-     donc le retour arrière et le rechargement retrouvent la même page ;
-   - stock des consommables et des munitions : une quantité n’est jamais devinée (« stock à renseigner ») ; « J’en ai
-     utilisé un » passe par le journal des réalisations (applyEvent) : un même geste n’est jamais compté deux fois ;
-   - un autre onglet qui change le suivi : la page relit tout, rien n’est écrasé ; stockage indisponible : lecture seule,
-     et le message le dit (jamais de succès annoncé à tort).
-   Tout passe par textContent ; seuls les pictogrammes et les schémas d’armes générés avec la page sont posés en HTML. */
+/* Généré depuis outils/sources/carnets.js : modifie la source, pas ce fichier. */
 (function () {
   'use strict';
   var app = document.querySelector('[data-cn-app]'), dataEl = document.getElementById('lk-carnet-data');
@@ -30,8 +18,6 @@
   function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text !== undefined && text !== null) n.textContent = text; return n; }
   function cap(s) { s = String(s || ''); return s.charAt(0).toUpperCase() + s.slice(1); }
   function uid() { return Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8); }
-
-  /* ---------- messages (zone d’état + « Annuler ») ---------- */
   var undoAction = null, sayTimer = null;
   function say(text, undo) {
     if (!E.statusT) return;
@@ -43,8 +29,6 @@
     if (text && !undoAction) sayTimer = setTimeout(function () { if (E.statusT.textContent === text) { E.statusT.textContent = ''; E.statusT.parentNode.classList.remove('is-on'); } }, 6000);
   }
   if (E.undo) E.undo.addEventListener('click', function () { var fn = undoAction; undoAction = null; E.undo.hidden = true; if (fn) fn(); });
-
-  /* ---------- stockage ---------- */
   var storage = null;
   try { storage = window.localStorage; var probe = 'lk_probe'; storage.setItem(probe, '1'); storage.removeItem(probe); } catch (e) { storage = null; }
   var K = window.LKCarnets, store = null;
@@ -56,8 +40,6 @@
     try { progStore = window.LKProgression.create({ storage: storage, acquisitions: window.LK_ACQUISITIONS, ids: {}, collectibles: [], notice: function (m) { say(m); } }); } catch (e) { progStore = null; }
     return progStore;
   }
-
-  /* ---------- éléments ---------- */
   var items = D.items || [];
   if (D.ext === 'lieux') {
     var L = window.LK_CARNET_LIEUX;
@@ -68,20 +50,16 @@
   items.concat(styles).forEach(function (it) { index[it.f + ':' + it.id] = it; it._q = fold(it.n + ' ' + it.c + ' ' + (it.k || '') + ' ' + ((D.meta[it.f] || {}).label || '')); });
   var multi = D.fams.length > 1;
   function meta(f) { return D.meta[f] || { label: 'Style notebook', one: 'style', many: 'styles', done: 'saved', doneP: 'saved', wish: 'Keep' }; }
-
-  /* ---------- lecture de l’état (une fois par affichage) ---------- */
-  function ownedMap(f) { var out = {}; if (!store) return out; try { store.owned(f).forEach(function (id) { out[id] = true; }); } catch (e) { /* clé illisible : rien de coché */ } return out; }
+  function ownedMap(f) { var out = {}; if (!store) return out; try { store.owned(f).forEach(function (id) { out[id] = true; }); } catch (e) {  } return out; }
   function snapshot() {
     var s = { own: {}, wish: {}, wishAt: {} };
     D.fams.forEach(function (f) { s.own[f] = ownedMap(f); });
-    if (store) { try { store.wishes().forEach(function (w) { var k = w.famille + ':' + w.id; s.wish[k] = true; s.wishAt[k] = w.at || ''; }); } catch (e) { /* souhaits illisibles */ } }
+    if (store) { try { store.wishes().forEach(function (w) { var k = w.famille + ':' + w.id; s.wish[k] = true; s.wishAt[k] = w.at || ''; }); } catch (e) {  } }
     return s;
   }
   function isOwn(it, s) { return !!(s.own[it.f] && s.own[it.f][it.id]); }
   function stockOf(it) { if (!store || !meta(it.f).stock) return null; try { return store.stock(it.f, it.id); } catch (e) { return null; } }
   function stockKind(st) { if (!st || st.state === 'aucun') return ''; if (st.state === 'a-renseigner') return 'a-renseigner'; return st.qty > 0 ? 'en-stock' : 'epuise'; }
-
-  /* ---------- écriture ---------- */
   function setOwn(it, on) {
     if (readOnly) return false;
     if (it.f === 'acquisitions') { var p = prog(); return p ? p.toggle(it.id, on) !== false : false; }
@@ -89,15 +67,12 @@
     return store.setOwned(it.f, it.id, on);
   }
   function setWish(it, on) { if (readOnly) return false; try { return store.setWish(it.f, it.id, on, 'catalogue'); } catch (e) { return false; } }
-
-  /* ---------- état de la page (adresse) ---------- */
   var VIEWS = Object.keys(D.vues), SLUG = { own: 'possedes', wish: 'wishes', rest: 'restants', calcs: 'calculs', plans: 'plans' };
   var PAGE = 48;
   var state = { view: VIEWS[0], q: '', f: '', cat: '', sort: doc ? 'recent' : 'nom', stock: '', shown: PAGE };
   function readHash() {
     var h = location.hash.slice(1); if (!h || h.indexOf('=') < 0) return;
     var p; try { p = new URLSearchParams(h); } catch (e) { return; }
-    /* Une nouvelle adresse remplace tout l’état : ce qu’elle ne précise pas revient à sa valeur de départ. */
     state.view = VIEWS[0]; state.q = ''; state.f = ''; state.cat = ''; state.sort = doc ? 'recent' : 'nom'; state.stock = ''; state.shown = PAGE;
     var v = p.get('vue'); VIEWS.forEach(function (k) { if (SLUG[k] === v) state.view = k; });
     if (p.has('q')) state.q = String(p.get('q')).slice(0, 80);
@@ -112,10 +87,8 @@
     if (state.q) p.set('q', state.q); if (state.f) p.set('f', state.f); if (state.cat) p.set('cat', state.cat);
     if (state.sort !== (doc ? 'recent' : 'nom')) p.set('tri', state.sort); if (state.stock) p.set('stock', state.stock);
     var s = p.toString(), next = location.pathname + location.search + (s ? '#' + s : '');
-    if (next !== location.pathname + location.search + location.hash && history.replaceState) { try { history.replaceState(history.state, '', next); } catch (e) { /* adresse inchangée */ } }
+    if (next !== location.pathname + location.search + location.hash && history.replaceState) { try { history.replaceState(history.state, '', next); } catch (e) {  } }
   }
-
-  /* ---------- listes par vue ---------- */
   function listFor(view, s) {
     if (view === 'own') return items.filter(function (it) { return isOwn(it, s); });
     if (view === 'wish') return items.concat(styles).filter(function (it) { return s.wish[it.f + ':' + it.id]; });
@@ -140,8 +113,6 @@
     else out.sort(function (a, b) { return coll.compare(a.n, b.n); });
     return out;
   }
-
-  /* ---------- rendu d’une carte ---------- */
   function thumb(it) {
     var box = el('span', 'cn-thumb'), t = it.t;
     if (it.f === 'lieux') { box.classList.add('cn-thumb--dot'); var dot = el('i', 'cn-dot'); dot.style.setProperty('--dot', it.col || '#B5762A'); box.appendChild(dot); return box; }
@@ -168,7 +139,7 @@
     var li = el('li', 'cn-card' + (own ? ' is-own' : '') + (wish ? ' is-wish' : '')); li.setAttribute('data-key', key); li.style.setProperty('--i', String(Math.min(i, 14)));
     li.appendChild(thumb(it));
     var body = el('div', 'cn-body');
-    body.appendChild(el('p', 'cn-kicker', it.f === 'styles' || !multi || it.c === m.label ? it.c + (it.f === 'lieux' && it.k ? ' · ' + it.k : '') : m.label + ' · ' + it.c));
+    body.appendChild(el('p', 'cn-kicker', it.f === 'styles' || !multi || it.c === m.label ? it.c + (it.f === 'lieux' && it.k ? ', ' + it.k : '') : m.label + ', ' + it.c));
     var h = el('h3', 'cn-name');
     if (it.u) { var a = el('a', null, it.n); a.href = P + it.u; a.setAttribute('aria-label', it.n + ': ' + linkWord(it)); h.appendChild(a); } else h.textContent = it.n;
     body.appendChild(h);
@@ -176,7 +147,7 @@
     if (own) badges.appendChild(el('span', 'cn-stamp', cap(m.done)));
     if (wish) badges.appendChild(el('span', 'cn-wishb', it.f === 'lieux' ? 'To visit' : it.f === 'consommables' ? 'To try' : 'Want score'));
     if (it.sr) { var sb = el('span', 'cn-serieb', 'Series benchmark'); sb.title = 'Seen in GTA V or GTA Online, not shown in GTA VI yet: counted separately.'; badges.appendChild(sb); }
-    if (it.f === 'collectibles' && window.LKCollectibles) { try { var cs = window.LKCollectibles.getState(); if (cs.favorites && cs.favorites[it.id]) badges.appendChild(el('span', 'cn-favb', 'Favorite')); if (cs.notes && cs.notes[it.id]) body.appendChild(el('p', 'cn-note', cs.notes[it.id])); } catch (e) { /* carnet illisible */ } }
+    if (it.f === 'collectibles' && window.LKCollectibles) { try { var cs = window.LKCollectibles.getState(); if (cs.favorites && cs.favorites[it.id]) badges.appendChild(el('span', 'cn-favb', 'Favorite')); if (cs.notes && cs.notes[it.id]) body.appendChild(el('p', 'cn-note', cs.notes[it.id])); } catch (e) {  } }
     if (badges.childNodes.length) body.appendChild(badges);
     if (own && m.stock) body.appendChild(stockBlock(it));
     var acts = el('div', 'cn-actions');
@@ -217,9 +188,7 @@
     } else box.appendChild(el('p', 'cn-stock-hint', 'The site never guesses a quantity: enter it when you know it.'));
     return box;
   }
-
-  /* ---------- rendu de la page ---------- */
-  var EMPTY_ART = '<svg viewBox="0 0 120 90" aria-hidden="true" focusable="false"><rect x="18" y="10" width="70" height="72" rx="6" fill="#FDFBF7" stroke="#1A1A1E" stroke-width="2.5"/><path d="M30 10v72" stroke="#1A1A1E" stroke-width="2"/><path class="cn-art-l" d="M40 28h36M40 40h36M40 52h24" stroke="#DFD9CC" stroke-width="3" stroke-linecap="round"/><g class="cn-art-pen"><path d="M84 58l20-20 6 6-20 20-9 3z" fill="#F5A524" stroke="#1A1A1E" stroke-width="2.5" stroke-linejoin="round"/></g><circle class="cn-art-dot" cx="96" cy="20" r="7" fill="#E8452C" opacity=".85"/></svg>'; /* v7.69 : classes pour l’animer (carnets.css) */
+  var EMPTY_ART = '<svg viewBox="0 0 120 90" aria-hidden="true" focusable="false"><rect x="18" y="10" width="70" height="72" rx="6" fill="#FDFBF7" stroke="#1A1A1E" stroke-width="2.5"/><path d="M30 10v72" stroke="#1A1A1E" stroke-width="2"/><path class="cn-art-l" d="M40 28h36M40 40h36M40 52h24" stroke="#DFD9CC" stroke-width="3" stroke-linecap="round"/><g class="cn-art-pen"><path d="M84 58l20-20 6 6-20 20-9 3z" fill="#F5A524" stroke="#1A1A1E" stroke-width="2.5" stroke-linejoin="round"/></g><circle class="cn-art-dot" cx="96" cy="20" r="7" fill="#E8452C" opacity=".85"/></svg>';
   function emptyState(view, filteredOut, s) {
     E.empty.replaceChildren();
     var art = el('span', 'cn-empty-art'); art.innerHTML = EMPTY_ART; E.empty.appendChild(art);
@@ -242,19 +211,16 @@
   function fillCats(list) {
     if (!E.cat) return;
     var seen = new Map();
-    list.forEach(function (it) { var k = it.f + ':' + it.g; if (!seen.has(k)) seen.set(k, { label: (multi && it.f !== 'styles' && it.c !== meta(it.f).label ? meta(it.f).label + ' · ' : '') + it.c, n: 0 }); seen.get(k).n += 1; });
+    list.forEach(function (it) { var k = it.f + ':' + it.g; if (!seen.has(k)) seen.set(k, { label: (multi && it.f !== 'styles' && it.c !== meta(it.f).label ? meta(it.f).label + ', ' : '') + it.c, n: 0 }); seen.get(k).n += 1; });
     var keys = Array.from(seen.keys()).sort(function (a, b) { return coll.compare(seen.get(a).label, seen.get(b).label); });
     if (state.cat && !seen.has(state.cat)) keys.unshift(state.cat);
     var opts = [el('option', null, doc ? 'All' : 'All')]; opts[0].value = '';
     keys.forEach(function (k) { var o = el('option', null, seen.has(k) ? seen.get(k).label + ' (' + seen.get(k).n + ')' : k.split(':')[1] + ' (0)'); o.value = k; opts.push(o); });
     E.cat.replaceChildren.apply(E.cat, opts); E.cat.value = state.cat;
   }
-  /* Libellé d’un compteur accordé au nombre (français : 0 et 1 au singulier ; anglais : 1 seulement). */
-  /* v7.61 : français n > 1 ; anglais, espagnol n ≠ 1 (« 0 deseos ») */
   function plural(n, v) { var l = n.nextElementSibling, fr = (document.documentElement.lang || 'fr').slice(0, 2) === 'fr'; if (l && l.hasAttribute('data-one')) l.textContent = (fr ? v > 1 : v !== 1) ? l.getAttribute('data-many') : l.getAttribute('data-one'); }
   function headCounters(s) {
     var total = items.length, done = items.filter(function (it) { return isOwn(it, s); }).length;
-    /* v7.54 : les repères de la série sont dits et comptés à part du total GTA VI. */
     var serie = items.filter(function (it) { return it.sr; }).length;
     document.querySelectorAll('[data-cn-serie]').forEach(function (n) { n.hidden = !serie; var b = n.querySelector('b'); if (b) b.textContent = nf.format(serie); });
     var wish = items.concat(styles).filter(function (it) { return s.wish[it.f + ':' + it.id]; }).length;
@@ -262,7 +228,6 @@
     set('done', done); set('total', total); set('wish', wish); set('rest', total - done);
     var pct = total ? Math.floor(done / total * 100) : 0;
     document.querySelectorAll('[data-cn-bar]').forEach(function (b) { b.style.width = (total ? done / total * 100 : 0) + '%'; });
-    /* v7.69 : anneau de l’en-tête (même part que la jauge) */
     document.querySelectorAll('[data-cn-ring]').forEach(function (r) { r.style.setProperty('--p', String(total ? Math.round(done / total * 1000) / 10 : 0)); });
     document.querySelectorAll('[data-cn-pct]').forEach(function (b) { b.textContent = !total ? '—' : done && pct < 1 ? 'less than 1%' : pct + '%'; });
     var tn = { own: done, wish: wish, rest: total - done };
@@ -275,15 +240,14 @@
     Object.keys(s.wish).forEach(function (k) { var p = k.split(':'); if ((D.fams.indexOf(p[0]) >= 0 || (p[0] === 'styles' && styles.length)) && !index[k]) rows.push({ f: p[0], id: p[1], kind: 'wish' }); });
     E.orphans.hidden = !rows.length; E.orphanList.replaceChildren();
     rows.forEach(function (r) {
-      var li = el('li'); li.appendChild(el('code', null, r.id)); li.appendChild(el('span', null, ' ' + meta(r.f).label + (r.kind === 'wish' ? ' · wish' : '')));
-      if (r.f === 'collectibles') li.appendChild(el('span', 'cn-orphan-keep', ' · kept as is'));
+      var li = el('li'); li.appendChild(el('code', null, r.id)); li.appendChild(el('span', null, ' ' + meta(r.f).label + (r.kind === 'wish' ? ' (envie)' : '')));
+      if (r.f === 'collectibles') li.appendChild(el('span', 'cn-orphan-keep', ' (kept as is)'));
       else { var b = button('Remove', r.kind === 'wish' ? 'orphan-unwish' : 'orphan-unown', 'cn-act--ghost', 'Remove the entry ' + r.id); b.setAttribute('data-f', r.f); b.setAttribute('data-id', r.id); li.appendChild(b); }
       E.orphanList.appendChild(li);
     });
   }
   function countText(n, total) {
     var f = state.f || (D.fams.length === 1 ? D.fams[0] : null), m = f ? meta(f) : { one: 'item', many: 'items' };
-    /* v7.62 : phrase entière avec trous (en allemand « Elemente: 3 von 10 angezeigt ») */
     return n === total ? nf.format(total) + ' ' + (total > 1 ? m.many : m.one) : '{n} of {t} {mots} shown'.replace('{n}', nf.format(n)).replace('{t}', nf.format(total)).replace('{mots}', total > 1 || n > 1 ? m.many : m.one);
   }
   function calcLink(list) {
@@ -293,8 +257,6 @@
     var same = ids.filter(function (it) { return meta(it.f).calc === type; }).slice(0, 12);
     E.calc.hidden = !(state.view === 'wish' && same.length >= 2);
     if (!E.calc.hidden) { E.calc.textContent = 'Rank my wishlist in the calculator'; E.calc.href = P + 'calculateurs.html?tool=order&type=' + type + '&ids=' + same.map(function (it) { return encodeURIComponent(it.id); }).join(',') + '&from=carnet#atelier'; return; }
-    /* v7.53 : envies sans fiche dans le calculateur (tenues, coiffures, tatouages, consommables, personnalisations) :
-       elles partent dans « Mon budget » comme achats libres, prix à venir (jamais comptés à 0). Les styles gardés n’en sont pas. */
     var free = list.filter(function (it) { return !meta(it.f).calc && it.f !== 'styles' && it.f !== 'lieux' && it.f !== 'collectibles'; }).slice(0, 12);
     if (state.view === 'wish' && free.length) { E.calc.hidden = false; E.calc.textContent = 'Plan these wishes in my budget'; E.calc.href = P + 'calculateurs.html?tool=budget&achats=' + encodeURIComponent(free.map(function (it) { return it.n; }).join('|')) + '&from=carnet#atelier'; }
   }
@@ -329,8 +291,6 @@
     }
     writeHash();
   }
-
-  /* ---------- calculs et plans (lus dans le carnet du calculateur, jamais modifiés ici) ---------- */
   var TOOL = { goal: 'My goal', activities: 'My activities', session: 'My play time', purchase: 'My purchases', order: 'What should I buy first?', roi: 'Is it worth it?', budget: 'My budget', compare: 'Which purchase should I pick?', plan: 'My business plan' };
   function notebook() {
     if (!storage) return { entries: [], broken: false };
@@ -362,7 +322,7 @@
       var li = el('li', 'cn-card cn-card--doc'); li.setAttribute('data-key', 'calculs:' + x.id); li.style.setProperty('--i', String(opts.animate ? Math.min(i, 14) : 0));
       var th = el('span', 'cn-thumb cn-thumb--doc'); th.appendChild(el('span', 'cn-doc-tool', x.g === 'plan' ? 'Plan' : 'Calculation')); li.appendChild(th);
       var body = el('div', 'cn-body');
-      body.appendChild(el('p', 'cn-kicker', x.c + ' · ' + when(x.e)));
+      body.appendChild(el('p', 'cn-kicker', x.c + ', ' + when(x.e)));
       body.appendChild(el('h3', 'cn-name', x.n));
       if (x.e.summary) body.appendChild(el('p', 'cn-summary', String(x.e.summary).slice(0, 280)));
       var acts = el('div', 'cn-actions'), a = el('a', 'cn-act cn-act--main', x.g === 'plan' ? 'Open the plan sheet' : 'Open the calculation sheet');
@@ -381,8 +341,6 @@
     if (nb.broken) say('Your saved calculations can’t be read here. Open the calculator: it keeps a backup copy and tells you what to do.');
     writeHash();
   }
-
-  /* ---------- actions ---------- */
   function leave(li, then) {
     if (!li || reduce.matches) { then(); return; }
     li.classList.add('is-leaving');
@@ -445,7 +403,6 @@
   }
   function resetFilters() { state.q = ''; state.f = ''; state.cat = ''; state.stock = ''; state.shown = PAGE; if (E.q) E.q.value = ''; if (E.fam) E.fam.value = ''; if (E.stockf) E.stockf.value = ''; render(); if (E.q) E.q.focus(); }
   function setView(v, focusTab) { if (VIEWS.indexOf(v) < 0) return; state.view = v; state.cat = ''; state.shown = PAGE; render({ animate: true }); if (focusTab) { var t = document.getElementById('cn-tab-' + v); if (t) t.focus(); } }
-
   app.addEventListener('click', function (ev) {
     var t = ev.target.closest('button'); if (!t || !app.contains(t)) return;
     if (t.hasAttribute('data-cn-view')) { setView(t.getAttribute('data-cn-view'), false); return; }
@@ -455,7 +412,6 @@
     if (t.hasAttribute('data-cn-act') && !t.disabled) { t.disabled = true; var later = onAction(t); if (!later && document.contains(t) && !readOnly) t.disabled = false; }
   });
   app.addEventListener('submit', function (ev) { var f = ev.target.closest('[data-cn-stock-form]'); if (!f) return; ev.preventDefault(); stockSubmit(f); });
-  /* Onglets au clavier : flèches, Début, Fin (motif ARIA). */
   if (E.tabs) E.tabs.addEventListener('keydown', function (ev) {
     var cur = ev.target.closest('[data-cn-view]'), i = VIEWS.indexOf(cur ? cur.getAttribute('data-cn-view') : state.view), n = null;
     if (ev.key === 'ArrowRight') n = VIEWS[(i + 1) % VIEWS.length]; else if (ev.key === 'ArrowLeft') n = VIEWS[(i - 1 + VIEWS.length) % VIEWS.length];
@@ -468,20 +424,16 @@
   if (E.cat) E.cat.addEventListener('change', function () { state.cat = E.cat.value; state.shown = PAGE; render(); });
   if (E.sort) E.sort.addEventListener('change', function () { state.sort = E.sort.value; render(); });
   if (E.stockf) E.stockf.addEventListener('change', function () { state.stock = E.stockf.value; state.shown = PAGE; render(); });
-
-  /* Un autre onglet (fiche, carte, calculateur, autre carnet) a changé le suivi : on relit, on n’écrase rien. */
   var WATCH = /^(lk_own_|lk_map_found$|lk_wish_v1$|lk_stock_v1$|lk_progression_v2$|lk_collectibles_v1$|lk-calculator-notebooks-v3$)/;
   window.addEventListener('storage', function (ev) {
     if (!ev.key || !WATCH.test(ev.key)) return;
     var a = document.activeElement, card = a && a.closest && a.closest('.cn-card');
-    if (a && a.tagName === 'INPUT' && card) return; // une quantité en cours d’écriture n’est pas effacée
+    if (a && a.tagName === 'INPUT' && card) return;
     render({ focusKey: card ? card.getAttribute('data-key') : null, focusAct: a && a.getAttribute ? a.getAttribute('data-cn-act') : null });
     say('Updated: your progress changed in another tab.');
   });
   window.addEventListener('pageshow', function (ev) { if (ev.persisted) render(); });
   window.addEventListener('hashchange', function () { var before = state.view; readHash(); if (E.q) E.q.value = state.q; if (E.fam) E.fam.value = state.f; if (E.sort) E.sort.value = state.sort; if (E.stockf) E.stockf.value = state.stock; render({ animate: before !== state.view }); });
-
-  /* ---------- démarrage ---------- */
   readHash();
   if (E.q) E.q.value = state.q; if (E.fam) E.fam.value = state.f; if (E.sort) E.sort.value = state.sort; if (E.stockf) E.stockf.value = state.stock;
   if (E.loading) E.loading.hidden = true;

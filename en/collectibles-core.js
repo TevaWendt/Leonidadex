@@ -1,4 +1,4 @@
-/* Collectibles: versioned, local-only checklist shared by catalogue, fiches and map. */
+/* Généré depuis outils/sources/collectibles-core.js : modifie la source, pas ce fichier. */
 (function () {
   'use strict';
   const KEY = 'lk_collectibles_v1';
@@ -108,7 +108,7 @@
   }
   function emitTools() {
     const copy = toolsSnapshot();
-    toolsSubscribers.forEach(fn => { try { fn(copy); } catch (_) { /* Isolate views. */ } });
+    toolsSubscribers.forEach(fn => { try { fn(copy); } catch (_) {  } });
     window.dispatchEvent(new CustomEvent('lk:collectibles-tools-change', {detail: copy}));
   }
   function setToolsState(value) {
@@ -126,7 +126,7 @@
   }
   function emit() {
     const copy = snapshot();
-    subscribers.forEach(fn => { try { fn(copy); } catch (_) { /* One view must not block the others. */ } });
+    subscribers.forEach(fn => { try { fn(copy); } catch (_) {  } });
     window.dispatchEvent(new CustomEvent('lk:collectibles-change', {detail: copy}));
   }
   function persist() {
@@ -146,7 +146,6 @@
     if (!validId(id)) return false;
     const item = getItem(id);
     if (!item || item.published === false || item.status === 'placeholder' || (field === 'found' && !isTrackable(item))) return false;
-    // Pick up writes from another tab before changing one field; keep volatile state if persistence failed.
     const current = storageStatus === 'available' ? read() || state : state;
     const candidate = empty();
     for (const key of ['found', 'favorites', 'notes']) Object.assign(candidate[key], current[key]);
@@ -162,7 +161,7 @@
   function mapUrl(item) {
     const c = item?.coordinates;
     let sourceValid = false;
-    try { const url = new URL(c?.sourceUrl); sourceValid = ['https:', 'http:'].includes(url.protocol) && !!url.hostname && !url.username && !url.password; } catch (_) { /* Missing or malformed evidence URL. */ }
+    try { const url = new URL(c?.sourceUrl); sourceValid = ['https:', 'http:'].includes(url.protocol) && !!url.hostname && !url.username && !url.password; } catch (_) {  }
     return item && item.published !== false && item.status !== 'placeholder' && validId(item.id) && c?.verified === true && c.system === 'leonidakit-v1' && Number.isFinite(c.x) && Number.isFinite(c.y) && c.x >= 0 && c.x <= 5200 && c.y >= 0 && c.y <= 6000 && sourceValid ? '/en/carte.html#collectible=' + encodeURIComponent(item.id) : null;
   }
   function importData(value, mode = 'merge') {
@@ -181,10 +180,7 @@
         nextTools = validateTools({version: 1, savedViews: [...views.values()], plan: [...new Set([...currentTools.plan, ...imported.tools.plan])]});
       }
     }
-    // Two individually valid backups can exceed field or byte limits after merging.
-    // Reserve the envelope overhead as well so the resulting exported file remains importable.
     const {baseJSON: nextJSON, toolsJSON} = portableJSON(next, nextTools);
-    // Validate the complete candidate first. Then commit both stores, rolling back on a partial write.
     let previousBase, previousTools, wroteBase = false, wroteTools = false;
     try {
       previousBase = window.localStorage.getItem(KEY);

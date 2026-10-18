@@ -1,5 +1,4 @@
-/* LeonidaKit calculator: a compact planning desk, with a Leonida after-hours identity.
-   Scoped to this page; the shared site and calculator base styles stay intact. */
+/* Généré depuis outils/sources/calculateurs-brand.css : modifie la source, pas ce fichier. */
 .calculator-page{--calc-paper:#f7f4ee;--calc-night:var(--night-deep,#241740);--calc-line:#d8d4cf;--calc-muted:#64606b;--calc-green:#f7b23b;--calc-pink:var(--amber-2,#f7b645);--calc-accent:#b1301f;--calc-cream:#f5e3b1;color:var(--night-deep,#241740);background:var(--calc-paper)}
 .calculator-page main{background:var(--calc-paper)}
 .calculator-page main .calc-shell{width:100%;max-width:calc(var(--shell-max,1400px) + 2*var(--gutter,36px));padding-inline:var(--gutter,36px);margin-inline:auto}
@@ -10,7 +9,6 @@
 .calculator-page main :is(button,a,input,select,summary):focus-visible{outline:3px solid var(--coral-text,#bf3422);outline-offset:4px}
 .calculator-page main input:focus,.calculator-page main select:focus{outline-color:var(--coral-text,#bf3422)}
 .calculator-page #atelier,.calculator-page .calc-panel{scroll-margin-top:100px}
-/* Compact cover: the tool, not the illustration, takes the next screen. */
 .lk-calc-hero{overflow:hidden;position:relative;background:var(--night-deep,#241740);color:#fff;border-bottom:1px solid #2a1a4b}
 .lk-calc-hero .lk-calc-hero-in{display:grid;grid-template-columns:1fr 1fr;position:relative;min-height:258px;isolation:isolate}
 .lk-calc-hero-copy{position:relative;z-index:2;padding-block:27px 24px}
@@ -22,7 +20,7 @@
 .lk-hero-meta>span:before{content:'';display:inline-block;width:5px;height:5px;background:var(--calc-green);border-radius:50%;margin-right:6px;vertical-align:middle}
 .lk-hero-meta a{color:#e8e4de;text-decoration:underline;text-underline-offset:3px}
 .lk-calc-hero-scene{position:absolute;inset:0 0 0 40%;overflow:hidden;z-index:0}
-.lk-calc-hero-scene picture{display:contents}/* v7.82 : variantes 480/800 px sur téléphone et tablette, sans boîte intermédiaire */
+.lk-calc-hero-scene picture{display:contents}
 .lk-calc-hero-scene img{width:100%;height:100%;object-fit:cover;object-position:50% 49%;opacity:.88;display:block}
 .lk-calc-hero-scene:after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,#241740 0%,#24174055 28%,#2417400a 65%),linear-gradient(0deg,#24174085,transparent 55%);pointer-events:none}
 .lk-scene-lines{position:absolute;inset:0;background:repeating-linear-gradient(0deg,#24174000 0 3px,#24174022 3px 4px);z-index:1;pointer-events:none;opacity:.6}
@@ -30,7 +28,6 @@
 .lk-scene-label b{font-weight:700;font-size:12.5px;color:#f4e6ba}
 .lk-scene-seal{position:absolute;z-index:2;top:28px;right:36px;display:flex;align-items:center;gap:9px;color:#f1dfb4;font:900 28px/1 'Archivo',sans-serif;transform:rotate(5deg);border:1px solid #f1dfb488;border-radius:3px;padding:9px 12px}
 .lk-scene-seal span{font-size:12.5px;line-height:1.4;letter-spacing:.13em;border-left:1px solid #f1dfb477;padding-left:9px}
-/* Toolbar and intentions */
 .calculator-page main .calc-workspace{padding-top:27px;margin-top:0}
 .calculator-page .calc-section-head{margin-bottom:19px;gap:16px}
 .calculator-page .calc-section-head .calc-kicker{margin-bottom:5px;font-size:12.5px}
@@ -55,7 +52,6 @@
 .calc-mode-switch button:hover{background:#f8f5f1}
 .calc-data-note{font-size:12.5px;line-height:1.5;color:#70636e;margin:0;display:block}
 .calc-data-note>span{display:inline-block;vertical-align:middle;margin-right:6px;width:6px;height:6px;border:1px solid var(--coral-text,#bf3422);border-radius:50%;background:var(--amber-2,#f7b645)}
-/* Forms: calm, large inputs and constrained secondary detail. */
 .calculator-page .calc-grid{gap:20px;align-items:start;grid-template-columns:minmax(0,1fr) minmax(0,1.04fr)}
 .calculator-page .calc-card{background:#fffdfa;border:1px solid #d9d2d9;border-radius:12px;padding:26px;box-shadow:0 3px 12px #26184403;min-width:0}
 .calculator-page .calc-card h3{font-size:21px;font-weight:800;letter-spacing:-.035em;line-height:1.2}
@@ -83,7 +79,6 @@
 .calc-guidance h3,.calc-guidance h4{font-size:16px;margin-bottom:7px}
 .calc-guide-step{display:flex;gap:11px;margin-top:8px;align-items:flex-start}
 .calc-guide-step>strong:first-child,.calc-guide-step>span:first-child{flex-shrink:0}
-/* Results: light numbers on the late-night side of the desk. */
 .calculator-page .calc-result{background:linear-gradient(150deg,#241740,#241740);color:#fbf3e7;border:1px solid #2f1d54;box-shadow:none;isolation:isolate}
 .calculator-page .calc-result:before{width:165px;height:165px;right:-86px;top:-89px;border-color:#f7b64528;box-shadow:0 0 0 29px #f7b64508,0 0 0 60px #f7b64504}
 .calculator-page .calc-result .calc-kicker{color:var(--amber-2,#f7b645);font-size:12.5px}
@@ -126,7 +121,6 @@
 .lk-goal-slider{display:flex;align-items:center;gap:9px;margin-top:8px;min-width:0}
 .lk-goal-slider input[type=range]{flex:1;min-width:0;accent-color:var(--coral-text,#bf3422);min-height:22px;box-shadow:none}
 .lk-goal-slider span{font:700 12.5px 'Archivo',sans-serif;color:var(--coral-text,#bf3422);white-space:nowrap}
-/* Comparisons, session calendar and catalogue. */
 .calculator-page .calc-route-head{margin:26px 0 12px}
 .calculator-page .calc-route-head h3{font-size:18px;letter-spacing:-.025em}
 .calculator-page .calc-route-head p{font-size:12.5px;color:#776879}
@@ -183,7 +177,7 @@
 .calculator-page .calc-product>div{padding:16px}
 .calculator-page .calc-product h4{font-size:16px;line-height:1.4;letter-spacing:-.02em;margin:7px 0;color:#35215f}
 .calculator-page .calc-product p{color:var(--coral-text,#bf3422);font-size:12.5px;line-height:1.5}
-.calculator-page .calc-product a{color:var(--coral-text,#bf3422);font-size:13.5px;display:inline-block;min-height:28px;padding:5px 0;line-height:18px}/* v7.59 (check ultime, CALC-06) : « Fiche ↗ » tenait 15 à 21 px de haut : zone tactile élargie, sans changer sa place */
+.calculator-page .calc-product a{color:var(--coral-text,#bf3422);font-size:13.5px;display:inline-block;min-height:28px;padding:5px 0;line-height:18px}
 .calculator-page .calc-check{font-size:13.5px;color:#a62d1d;line-height:1.5}
 .calculator-page .calc-check input{accent-color:var(--coral-text,#bf3422);width:18px;height:18px}
 .calculator-page .calc-provenance{color:#bc3321;font-size:13.5px;line-height:1.7}
@@ -192,7 +186,6 @@
 .calculator-page .calc-order-steps span{color:var(--coral-text,#bf3422)}
 .calculator-page .calc-empty{color:var(--coral-text,#bf3422);font-size:14.5px;line-height:1.7}
 .calculator-page .calc-disclaimer{color:var(--coral-text,#bf3422);font-size:12.5px;line-height:1.7}
-/* Portable plan, local notebook. */
 .calc-plan-toolbar{display:flex;gap:9px;align-items:end;flex-wrap:wrap;margin-top:26px;padding-top:20px;border-top:1px solid var(--amber-2,#f7b645)}
 .calc-plan-name{display:flex;flex-direction:column;gap:7px;margin-right:auto;flex:1;min-width:220px;max-width:440px}
 .calc-plan-name label{font-size:13.5px;font-weight:700;color:#a92e1e}
@@ -206,7 +199,6 @@
 .calculator-page .calc-saved-row input{font:600 15.5px 'Archivo',sans-serif;border:1px solid var(--amber-2,#f7b645);border-radius:5px;min-height:42px;padding:8px 10px;background:#fffdf9;min-width:160px;max-width:100%;flex:1}
 .calc-carnet-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}
 .calc-print-source{display:none}
-/* Help comes after the live tool. */
 .calculator-page main .lk-ask{margin-top:46px}
 .lk-ask-stage{padding:30px;border:1px solid var(--amber-2,#f7b645);background:#ece9e4;border-radius:12px;position:relative;overflow:hidden}
 .lk-ask-intro h2{font-size:24px;letter-spacing:-.04em;line-height:1.2;font-weight:850;color:#34205d;margin:0 0 23px}
@@ -249,11 +241,9 @@
 .calculator-page .calc-methods details p{font-size:14.5px;line-height:1.9;color:var(--coral-text,#bf3422);max-width:98ch;margin:15px 0}
 .calculator-page .calc-methods a{color:var(--coral-text,#bf3422)}
 .calculator-page main .lk-explore{margin-top:56px;margin-bottom:68px}
-/* Desktop reveal is small, progressive enhancement; values never wait for it. */
 @media(prefers-reduced-motion:no-preference){.lk-calc-hero-copy{animation:lk-calc-enter .5s ease-out both}.lk-scene-seal{animation:lk-seal-enter .7s ease-out both}.calc-panel{animation:calc-in .2s ease}.calc-result-main{transition:color .2s}}
 @keyframes lk-calc-enter{from{opacity:.3;transform:translateY(8px)}to{opacity:1;transform:none}}
 @keyframes lk-seal-enter{from{opacity:0;transform:rotate(0deg) translateY(5px)}to{opacity:1;transform:rotate(5deg)}}
-/* Tablet and mobile: fields stay within the first screen. */
 @media(max-width:1100px){.calculator-page main .calc-shell{padding-inline:var(--gutter,26px)}.calculator-page .calc-tabs button{padding-inline:13px}.calculator-page .calc-tabs button span{font-size:13.5px}.calculator-page .calc-tabs button .calc-tab-icon{font-size:16px}.lk-calc-hero .lk-calc-hero-in{min-height:244px}.lk-calc-hero h1{font-size:44px}.calculator-page .calc-card{padding:23px}.calculator-page .calc-result-metrics strong{font-size:21px}}
 @media(max-width:850px){.calculator-page .calc-tabs button{flex-grow:0}.calculator-page .calc-tabs{margin-inline:0}.calculator-page .calc-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px}.calculator-page .calc-card{padding:19px}.calculator-page .calc-card h3{font-size:19px}.calculator-page .calc-result-main{font-size:49px}.calculator-page .calc-result-metrics{gap:9px}.calculator-page .calc-result-metrics strong{font-size:19px}.calculator-page main .calc-editorial{gap:32px}.calculator-page .calc-editorial h2{font-size:32px}.lk-tools{grid-template-columns:repeat(2,minmax(0,1fr))}.calculator-page .calc-catalogue{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:700px){
@@ -263,14 +253,13 @@
 }
 @media(max-width:380px){.calculator-page main .calc-shell{padding-inline:14px}.calculator-page .calc-section-head h2{font-size:21px}.calculator-page .calc-actions .calc-button{padding:8px;font-size:12.5px}.calculator-page .calc-card{padding:16px}.calculator-page .calc-label{font-size:12.5px}.calculator-page .calc-result-main{font-size:50px}.calculator-page .calc-result-metrics strong{font-size:19px}.calculator-page .calc-result-metrics span{font-size:12.5px}.calculator-page .calc-tabs{margin-inline:-14px;padding-inline:14px}.lk-calc-hero h1{font-size:33px}.calculator-page .calc-stats{gap:7px;grid-template-columns:repeat(3,minmax(0,1fr))}.calculator-page .calc-stat strong{font-size:18px}.calculator-page .calc-stat{padding:11px 8px}.calculator-page .calc-product h4{font-size:14.5px}.calculator-page .calc-catalogue{gap:8px}}
 @media(prefers-reduced-motion:reduce){.calculator-page *,.calculator-page *:before,.calculator-page *:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}.lk-calc-hero-copy,.lk-scene-seal{opacity:1!important}.calculator-page .calc-editorial-image{transform:none}.lk-link:hover img{transform:none}.calculator-page .calc-button:hover,.lk-tool:hover{transform:none}}
-/* Print only the chosen tool, plus its values, result and provenance. */
 @media print{
 @page{size:A4;margin:14mm}
 html,.calculator-page,.calculator-page main{background:#fff!important;color:#161619!important;font-size:10pt}
 .calculator-page header,.calculator-page footer,.calculator-page .sunset,.calculator-page .skip,.lk-calc-hero,.calculator-page main>section:not(#atelier),.calc-tabs,.calc-mode-row,.calc-actions,.calc-plan-toolbar,.calc-saved,.calc-live,.calc-sr,.calc-guidance,.calc-chart-controls,.lk-goal-slider,.calc-filter-chips,.calculator-page .calc-panel[hidden],.calculator-page #catalogue-results,.calculator-page #catalogue-more{display:none!important}
 .calculator-page main #atelier{padding:0!important;margin:0!important;width:100%!important;max-width:none}
 .calculator-page .calc-section-head{display:block;margin-bottom:16pt;border-bottom:2px solid #2f1e55;padding-bottom:10pt}
-.calculator-page .calc-section-head:before{content:'LEONIDAKIT / FICHE DE SIMULATION';font:800 9pt 'Archivo',sans-serif;letter-spacing:.08em;display:block;margin-bottom:7pt;color:var(--coral-deep,#9c2b1c)}
+.calculator-page .calc-section-head:before{content:'LEONIDAKIT, FICHE DE SIMULATION';font:800 9pt 'Archivo',sans-serif;letter-spacing:.08em;display:block;margin-bottom:7pt;color:var(--coral-deep,#9c2b1c)}
 .calculator-page .calc-section-head h2{font-size:22pt;color:var(--night-deep,#241740)}
 .calculator-page .calc-section-head .calc-kicker{display:none}
 .calculator-page .calc-panel:not([hidden]){display:block!important;animation:none}
@@ -300,7 +289,6 @@ html,.calculator-page,.calculator-page main{background:#fff!important;color:#161
 .calc-print-source{display:block;margin-top:18pt;padding-top:10pt;border-top:1px solid var(--amber-2,#f7b645);color:#a52d1d;font-size:8pt;line-height:1.6}
 .calculator-page a{color:#35225f;text-decoration:none}.calculator-page .calc-progress{print-color-adjust:exact}
 }
-/* Detailed scenarios and partial-data cards share the same controls as the quick plan. */
 .calculator-page header nav ul{gap:14px;font-size:14.5px}
 .calculator-page header .head-search{max-width:160px;flex-basis:160px}
 .calculator-page .calc-result .calc-stat strong{font-size:22px;line-height:1.25}
@@ -338,25 +326,16 @@ html,.calculator-page,.calculator-page main{background:#fff!important;color:#161
 .calculator-page .calc-product>.calc-product-placeholder{height:110px;font-size:12.5px;letter-spacing:.1em}
 }
 @media print{.calculator-page .lk-rails{display:none!important}.calc-activity-editor{break-inside:avoid}.calc-session-options{background:#fff;border-color:var(--amber-2,#f7b645)}.calc-activity-editor,.calc-session-options{print-color-adjust:exact}}
-
 .calc-guide-steps{display:flex;flex-wrap:wrap;gap:8px}.calc-guide-steps button{border:1px solid var(--amber-2,#f7b645);border-radius:8px;padding:10px 13px;background:#fff;color:#2e1d53;cursor:pointer;font:inherit;font-weight:700}
 @media(max-width:600px){.calculator-page .calc-fields>.calc-field>.calc-label{min-height:2.8em}}
 .calc-reference:empty{display:none}
 @media print{.calculator-page h3,.calculator-page summary{break-after:avoid}.calc-route-head{break-after:avoid}}
-/* Réserve l’atelier avant l’initialisation, sans décaler le carnet au premier rendu. */
 .calculator-page #calc-panels:empty{min-height:900px}
 @media(max-width:700px){.calculator-page #calc-panels:empty{min-height:1100px}}
-
-/* ============================================================
-   v7.22 : charte Leonidakit et lisibilité « même à 10 ans »
-   Couche posée sur la feuille du calculateur : encre, corail, ambre, nuit de Vice City,
-   gros textes, grandes zones tactiles, une chose à la fois.
-   ============================================================ */
 body.calculator-page{--calc-paper:var(--paper,#FDFBF7);--calc-line:#DFD9CC;--calc-muted:#5C5A63;--calc-green:var(--amber,#F5A524);--calc-pink:var(--amber,#F5A524);--calc-accent:var(--coral-text,#B93220);color:var(--ink);background:var(--paper)}
 body.calculator-page main{background:var(--paper);font-size:16px}
 body.calculator-page main .calc-kicker{color:var(--coral-text);font-size:.78rem;letter-spacing:.14em}
 body.calculator-page main :is(button,a,input,select,summary):focus-visible{outline:3px solid var(--amber);outline-offset:3px}
-/* en-tête de page */
 body.calculator-page .lk-calc-hero{background:linear-gradient(100deg,#2B1B4D 0%,#5A2358 60%,#8E2F4C 100%);border-bottom:0}
 body.calculator-page .lk-calc-hero .calc-kicker{color:var(--amber)}
 body.calculator-page .lk-calc-hero h1 em{color:var(--amber)}
@@ -367,7 +346,6 @@ body.calculator-page .lk-hero-meta>span:before{background:var(--amber)}
 body.calculator-page .lk-calc-hero-scene:after{background:linear-gradient(90deg,#2B1B4D 0%,rgba(43,27,77,.45) 30%,rgba(43,27,77,.04) 70%),linear-gradient(0deg,rgba(43,27,77,.5),transparent 55%)}
 body.calculator-page .fcount-in{flex-wrap:wrap;row-gap:6px}
 body.calculator-page .fcount-lbl--after{opacity:.9}
-/* la question : scène nuit de Vice City */
 body.calculator-page main .lk-ask{margin-top:34px}
 body.calculator-page .lk-ask-stage{position:relative;overflow:hidden;background:linear-gradient(120deg,#2B1B4D 0%,#5A2358 50%,#E8452C 105%);border:2px solid var(--ink);border-radius:16px;box-shadow:6px 6px 0 var(--amber);padding:22px 24px;color:#fff}
 body.calculator-page .lk-ask-stage:before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,0) 0 3px,rgba(255,255,255,.045) 3px 4px);pointer-events:none}
@@ -384,7 +362,6 @@ body.calculator-page .lk-ask-chips button:hover{background:rgba(255,255,255,.24)
 body.calculator-page .lk-goals{border-top:1px solid rgba(255,255,255,.28)}
 body.calculator-page .lk-goals-k{color:#fff;font-size:.9rem;font-weight:700}
 body.calculator-page .lk-goals button{min-height:40px;padding:6px 14px;background:#fff;color:var(--ink);border:2px solid var(--ink);border-radius:999px;box-shadow:2px 2px 0 var(--ink);font:800 .9rem var(--font-mono,ui-monospace,monospace);cursor:pointer}
-/* titre de l'atelier et onglets : sept grands boutons avec pictogramme */
 body.calculator-page .calc-section-head h2{font-size:1.9rem;color:var(--ink)}
 body.calculator-page main .calc-tab-svg{width:22px;height:22px;flex:none;display:block}
 body.calculator-page main .calc-tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;border:0;margin-bottom:20px;overflow:visible;padding:0 4px 4px 0}
@@ -398,18 +375,15 @@ body.calculator-page .calc-mode-switch{background:#fff;border:2px solid var(--in
 body.calculator-page .calc-mode-switch button{min-height:40px;padding:8px 16px;border-radius:999px;font:800 .92rem 'Archivo',sans-serif;color:var(--ink);background:none;box-shadow:none;cursor:pointer}
 body.calculator-page .calc-mode-switch button[aria-pressed="true"]{background:var(--ink);color:#fff}
 body.calculator-page .calc-data-note{font-size:.9rem;color:var(--ink-soft)}
-/* cartes : bord encre, ombre dure, un seul filet ambre */
 body.calculator-page main .calc-card{background:#fff;border:2px solid var(--ink);border-top:6px solid var(--amber);border-radius:14px;box-shadow:5px 5px 0 rgba(26,26,30,.16)}
 body.calculator-page main .calc-card h3{font-size:1.45rem;line-height:1.2;color:var(--ink)}
 body.calculator-page main .calc-card-desc{font-size:1rem;color:var(--ink-soft)}
 body.calculator-page main .calc-note{font-size:.95rem;line-height:1.5}
-/* les 4 étapes */
 body.calculator-page main .calc-steps{display:grid;grid-template-columns:minmax(0,1fr);gap:20px}
 body.calculator-page main .calc-step{display:grid;grid-template-columns:44px minmax(0,1fr);gap:12px;align-items:start}
 body.calculator-page main .calc-step-n{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:var(--amber);color:var(--ink);border:2px solid var(--ink);box-shadow:2px 2px 0 var(--ink);font:900 1.1rem 'Archivo',sans-serif}
 body.calculator-page main .calc-step-body{display:grid;gap:9px;min-width:0}
 body.calculator-page main .calc-step.is-off{display:none}
-/* cases à remplir */
 body.calculator-page main .calc-label,body.calculator-page main .calc-field>label{font:800 1.02rem/1.3 'Archivo',sans-serif;color:var(--ink)}
 body.calculator-page main .calc-field input,body.calculator-page main .calc-field select,body.calculator-page main .calc-search-input,body.calculator-page main #calc-name{width:100%;min-height:54px;padding:10px 14px;font:700 1.12rem 'Archivo',sans-serif;font-variant-numeric:tabular-nums;color:var(--ink);background:var(--paper);border:2px solid var(--ink);border-radius:10px}
 body.calculator-page main .calc-field input:focus,body.calculator-page main .calc-field select:focus{border-color:var(--coral-text);outline:3px solid var(--amber);outline-offset:2px}
@@ -428,13 +402,11 @@ body.calculator-page main .lk-helper summary{min-height:32px;font:800 1rem 'Arch
 body.calculator-page main .lk-helper-body{display:grid;gap:10px;margin-top:10px}
 body.calculator-page main .lk-helper-out{font-weight:800;color:var(--ink)}
 body.calculator-page main details.calc-advanced>summary{min-height:40px;font:800 1rem 'Archivo',sans-serif;color:var(--coral-text);cursor:pointer}
-/* boutons */
 body.calculator-page main .calc-button{min-height:46px;padding:10px 16px;background:#fff;color:var(--ink);border:2px solid var(--ink);border-radius:10px;box-shadow:3px 3px 0 var(--ink);font:800 .98rem 'Archivo',sans-serif;cursor:pointer;transition:transform .15s,box-shadow .15s}
 body.calculator-page main .calc-button:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink)}
 body.calculator-page main .calc-button:disabled{opacity:.5;box-shadow:none;transform:none;cursor:not-allowed}
 body.calculator-page main #calc-save,body.calculator-page main .calc-button-primary{background:var(--amber);color:var(--ink)}
 body.calculator-page main .calc-text-button{min-height:40px;font:700 1rem 'Archivo',sans-serif;color:var(--coral-text);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
-/* pas à pas */
 body.calculator-page main .calc-wizard{margin-bottom:18px;padding:16px 18px;background:#fff;border:2px solid var(--ink);border-radius:14px;box-shadow:4px 4px 0 var(--amber)}
 body.calculator-page main .calc-wiz-count{font:900 1.25rem/1.3 'Archivo',sans-serif;color:var(--ink)}
 body.calculator-page main .calc-wiz-bar{height:14px;margin:10px 0;background:var(--paper-2);border:2px solid var(--ink);border-radius:999px;overflow:hidden}
@@ -446,7 +418,6 @@ body.calculator-page main #calc-panels[data-mode="guided"] .has-steps>.calc-adva
 body.calculator-page main #calc-panels[data-mode="guided"] .calc-step{grid-template-columns:minmax(0,1fr)}
 body.calculator-page main #calc-panels[data-mode="guided"] .calc-step-n{display:none}
 body.calculator-page main #calc-panels[data-mode="guided"] .calc-step .calc-label{font-size:1.2rem}
-/* la réponse */
 body.calculator-page main .calc-card.calc-result{background:linear-gradient(165deg,#2B1B4D 0%,#3B1F57 60%,#5A2358 100%);color:#fff;border:2px solid var(--ink);box-shadow:6px 6px 0 var(--amber)}
 body.calculator-page main .calc-result .calc-kicker{color:var(--amber)}
 body.calculator-page main .calc-tag{display:inline-block;padding:4px 8px;font:800 .74rem var(--font-mono,ui-monospace,monospace);letter-spacing:.05em;color:var(--ink);background:#FFF3DC;border:1.5px solid var(--amber);border-radius:6px}
@@ -464,7 +435,6 @@ body.calculator-page main .calc-progress-label{font-size:.98rem;font-weight:800;
 body.calculator-page main .calc-progress{height:14px}
 body.calculator-page main .calc-result details>summary{font-size:1rem;min-height:36px;cursor:pointer}
 body.calculator-page main .calc-warning{font-size:1rem;font-weight:700}
-/* sept calculs, sans carte orpheline : la première carte tient deux colonnes */
 body.calculator-page main .lk-tools{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
 body.calculator-page main .lk-tool{display:flex;flex-direction:column;gap:9px;height:100%;padding:18px;background:#fff;color:var(--ink);border:2px solid var(--ink);border-top:6px solid var(--amber);border-radius:14px;box-shadow:4px 4px 0 rgba(26,26,30,.16);transition:transform .18s,box-shadow .18s}
 body.calculator-page main .lk-tool:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--amber)}
@@ -479,14 +449,11 @@ body.calculator-page main .lk-tool>span:not(.lk-tool-n){font-size:.98rem;line-he
 body.calculator-page main .lk-tool i{margin-top:auto;font:800 .95rem 'Archivo',sans-serif;font-style:normal;color:var(--coral-text)}
 body.calculator-page main .lk-tool--lead .lk-tool-n em,body.calculator-page main .lk-tool--lead i{color:var(--amber)}
 body.calculator-page main .lk-tool--lead>span:not(.lk-tool-n){color:#F1E6F3}
-/* tableau des activités (repris de la v7.21) */
 .lk-act-wrap{overflow-x:auto;border:2px solid var(--ink);border-radius:12px;box-shadow:4px 4px 0 rgba(26,26,30,.18);background:#fff;}
 .lk-act{width:100%;min-width:640px;} .lk-act th,.lk-act td{padding:12px 14px;} .lk-act thead th{background:var(--ink);color:#fff;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;}
 .lk-act tbody th{text-align:left;font-weight:800;} .lk-act td{color:var(--ink-soft);}
-/* v7.37 : largeurs des colonnes (la règle générique table.spec th{width:44%} s'appliquait aussi aux en-têtes) et statuts sur une ligne */
 .calculator-page .lk-act th{width:auto;} .calculator-page .lk-act tbody th{width:34%;} .calculator-page .lk-act .chip{white-space:nowrap;}
 body.calculator-page main #activites-gains{margin-top:56px}
-/* lexique */
 body.calculator-page .lk-glossary{margin-top:28px;padding:22px;background:#fff;border:2px solid var(--ink);border-top:6px solid var(--amber);border-radius:14px;box-shadow:4px 4px 0 rgba(26,26,30,.16)}
 body.calculator-page .lk-glossary h3{margin-bottom:14px;font:900 1.3rem 'Archivo',sans-serif;color:var(--ink)}
 body.calculator-page .lk-glossary dl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 28px}
@@ -523,8 +490,6 @@ body.calculator-page .faq-sec{margin-top:64px}
 }
 @media(prefers-reduced-motion:reduce){body.calculator-page main .calc-tabs button,body.calculator-page main .calc-button,body.calculator-page main .lk-tool,body.calculator-page main .calc-wiz-bar span{transition:none}}
 @media print{body.calculator-page .lk-ask,body.calculator-page .fcount,body.calculator-page .lk-tool-guide,body.calculator-page #activites-gains,body.calculator-page .faq-sec,body.calculator-page .calc-wiz-nav,body.calculator-page .lk-helper,body.calculator-page .lk-goal-slider{display:none!important}}
-
-/* v7.22 (suite) : premier écran plus court, question compacte, résumé collant */
 body.calculator-page .lk-calc-hero .lk-calc-hero-in{min-height:200px}
 body.calculator-page .lk-calc-hero-copy{padding-block:22px 20px}
 body.calculator-page main .lk-ask{margin-top:26px}
@@ -564,8 +529,6 @@ body.calculator-page main .calc-tab-svg{stroke-width:2.3}
  body.calculator-page .lk-goals{grid-column:3;grid-row:2;margin-top:6px;padding-top:0;border-top:0;justify-content:flex-end}
 }
 @media(max-width:700px){body.calculator-page .calc-section-head h2{white-space:normal;font-size:1.4rem}body.calculator-page main .calc-shell{padding-inline:16px}}
-
-/* v7.23 : sept outils en étapes, réponse sombre partout */
 body.calculator-page main .calc-step-body>.calc-fields{margin:0}
 body.calculator-page main .calc-step-body>.calc-fields.three{grid-template-columns:repeat(3,minmax(0,1fr))}
 body.calculator-page main .calc-step-body fieldset{margin:0;padding:0;border:0;min-width:0}
@@ -589,7 +552,6 @@ body.calculator-page main #calc-panels[data-mode="guided"] .has-steps>.calc-step
 @media(max-width:700px){body.calculator-page main .calc-step-body>.calc-fields.three{grid-template-columns:minmax(0,1fr)}}
 @media print{body.calculator-page main .calc-step{display:grid!important}}
 body.calculator-page main #calc-panels[data-mode="guided"] .calc-guidance:not(.calc-wizard){display:none}
-/* Lot A : rails visibles sur le calculateur, vignettes des fiches, comparaison sous les cartes, joueurs, mise en évidence */
 body.calculator-page main .calc-product{border:2px solid var(--ink);border-radius:12px;overflow:hidden;background:#fff}
 body.calculator-page main .calc-product.is-selected{box-shadow:0 0 0 3px var(--amber),4px 4px 0 var(--ink)}
 body.calculator-page main .calc-product>.calc-product-media{position:relative;aspect-ratio:16/9;overflow:hidden;background:var(--paper-2)}
@@ -622,11 +584,10 @@ body.calculator-page main .is-highlighted{outline:4px solid var(--amber);outline
 @keyframes lk-answer-pulse{0%{outline-color:rgba(245,165,36,0);outline-offset:14px}100%{outline-color:var(--amber);outline-offset:4px}}
 @media(prefers-reduced-motion:no-preference){body.calculator-page main .is-highlighted{animation:lk-answer-pulse .55s ease-out}}
 @media(max-width:700px){body.calculator-page main .calc-play-choices label{flex:1;justify-content:center}}
-/* Lot B : huit onglets sans orphelin, « Mon plan » en barre sous les sept calculs */
 body.calculator-page main .calc-tabs button.calc-tab-plan{grid-column:1/-1;flex-direction:row;justify-content:center;gap:12px;min-height:60px;background:#FFF3DC;border-style:dashed}
 body.calculator-page main .calc-tabs button.calc-tab-plan[aria-selected="true"]{background:linear-gradient(140deg,#2B1B4D,#5A2358);border-style:solid}
 body.calculator-page main .calc-tabs button.calc-tab-plan .calc-tab-icon{width:36px;height:36px}
-/* v7.60 (langues) : les textes ajoutés par la feuille viennent de la page (data-desc, data-kicker), traduits avec elle */body.calculator-page main .calc-tabs button.calc-tab-plan>span:last-child:after{content:" : " attr(data-desc);font-weight:600}html:not([lang="fr"]) body.calculator-page main .calc-tabs button.calc-tab-plan>span:last-child:after{content:": " attr(data-desc)}
+body.calculator-page main .calc-tabs button.calc-tab-plan>span:last-child:after{content:" : " attr(data-desc);font-weight:600}html:not([lang="fr"]) body.calculator-page main .calc-tabs button.calc-tab-plan>span:last-child:after{content:": " attr(data-desc)}
 body.calculator-page main .calc-tabs button.calc-tab-plan:before{content:attr(data-kicker);position:absolute;left:14px;top:-11px;font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--coral-text,#B93220);background:#f7f7f1;padding:0 8px;border-radius:6px}
 body.calculator-page main .calc-tabs button.calc-tab-plan{position:relative;margin-top:14px}
 .calc-section-desc{max-width:62ch;margin-top:8px;font-size:14px;line-height:1.6;color:#5f5a62}
@@ -634,23 +595,19 @@ body.calculator-page main .b-answer{margin:14px 0 2px;font:600 1.2rem/1.5 'Archi
 body.calculator-page main .b-answer b,body.calculator-page main .b-answer strong{font-weight:900;color:var(--amber)}
 @media(max-width:700px){body.calculator-page main .calc-tabs button.calc-tab-plan>span:last-child:after{content:""}}
 @media(max-width:700px){body.calculator-page main .calc-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}body.calculator-page main .calc-tabs button{min-width:0;white-space:normal;overflow-wrap:anywhere}body.calculator-page main .calc-tabs button>span{min-width:0}body.calculator-page main .calc-tabs button.calc-tab-plan{grid-column:1/-1}}
-/* Lot B : résumé des réglages avancés compact ; masqué en Simple / Pas à pas quand rien n'a changé */
 body.calculator-page main .b-mode-summary{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin:0 0 14px;padding:8px 14px;background:#FFF9EC;border:2px dashed var(--amber);border-radius:12px}
 body.calculator-page main .b-mode-summary .calc-note{margin:0;font-size:.92rem}
 body.calculator-page main .b-mode-summary .calc-button{min-height:38px;padding:6px 12px;font-size:.9rem}
 body.calculator-page main #calc-panels:not([data-mode="advanced"]) .b-mode-summary.is-default{display:none}
 body.calculator-page main .b-simple-action{margin-top:14px}
 body.calculator-page main .b-stage-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
-/* v7.37 : à 320 px, « ☆ Enregistrer ce calcul » ne tient pas sur une ligne dans sa moitié de barre : le libellé passe sur deux lignes au lieu d'être coupé */
 @media(max-width:380px){body.calculator-page main .calc-actions .calc-button{white-space:normal;line-height:1.2;padding:8px 6px;text-align:center}}
-/* v7.37 : entre 901 et 1 180 px, la colonne des objectifs (5 puces) n'a pas la place à droite des questions (« 10 M $ » passait seul à la ligne, les questions s'empilaient une par ligne) : objectifs sur leur propre rangée */
 @media(min-width:901px) and (max-width:1180px){
  body.calculator-page .lk-ask-stage{grid-template-columns:minmax(220px,280px) minmax(0,1fr)}
  body.calculator-page .lk-ask-form{grid-column:2}
  body.calculator-page .lk-ask-chips{grid-column:1/-1;grid-row:2}
  body.calculator-page .lk-goals{grid-column:1/-1;grid-row:3;justify-content:flex-start;margin-top:2px}
 }
-/* v7.38 : la section repliable de niveau panneau (« Comparer mes activités et tester d'autres chiffres ») était collée aux bords du panneau alors que les cartes voisines ont bord, ombre et gouttière ; elle devient une carte à part entière */
 body.calculator-page main .calc-panel>details.calc-advanced{margin:22px 0 0;padding:6px 26px 22px;background:#fff;border:2px solid var(--ink);border-radius:14px;box-shadow:5px 5px 0 rgba(26,26,30,.16)}
 body.calculator-page main .calc-panel>details.calc-advanced>summary{display:flex;align-items:center;gap:14px;min-height:56px;padding:6px 0;font:800 1.12rem/1.2 'Archivo',sans-serif;color:var(--ink);list-style:none}
 body.calculator-page main .calc-panel>details.calc-advanced>summary::-webkit-details-marker{display:none}
@@ -659,17 +616,9 @@ body.calculator-page main .calc-panel>details.calc-advanced[open]>summary::befor
 body.calculator-page main .calc-panel>details.calc-advanced[open]>summary{margin-bottom:12px;border-bottom:1px solid var(--rule)}
 body.calculator-page main .calc-panel>details.calc-advanced>summary:focus-visible{outline:3px solid var(--amber);outline-offset:4px;border-radius:8px}
 @media(max-width:700px){body.calculator-page main .calc-panel>details.calc-advanced{padding:4px 16px 16px;border-radius:12px}}
-
-/* v7.68 (téléphone) : sur un écran de 400 px ou moins, les trois boutons de mode tiennent dans la largeur (« Schritt für
-   Schritt » en allemand faisait sortir « Experte » de 7 px à 360 px) */
 @media(max-width:400px){body.calculator-page .calc-mode-switch button{padding-inline:11px;}}
 @media(max-width:340px){body.calculator-page .calc-mode-switch button{padding-inline:8px;font-size:.86rem;}}
-/* v7.86 : sur téléphone, le bouton de la question passe à la ligne s’il le faut (allemand : « Die richtige Berechnung finden » était coupé à 320 px) */
 @media(max-width:700px){body.calculator-page .lk-ask-row button{white-space:normal;text-wrap:balance}}
-/* lot 1 bis (corrections de l’audit, points 7 et 14) : les montants proposés s’équilibrent (plus de « 10 Mio. $ » seul sur sa
-   ligne) ; sur téléphone, les boutons d’une étape s’empilent sur toute la largeur (le libellé du mode Expert ne fait plus quatre
-   ou cinq lignes en allemand et en italien, et son voisin ne s’étire plus à la même hauteur) ; en colonne, chaque bouton garde sa
-   hauteur naturelle (la base de 170 px de calculateurs-workspace.css deviendrait sa hauteur) */
 body.calculator-page main .calc-presets{display:block;text-wrap:balance;}
 body.calculator-page main .calc-presets>.calc-chip{margin:0 8px 8px 0;vertical-align:top;}
 @media(max-width:600px){body.calculator-page main .b-stage-actions{flex-direction:column;align-items:stretch;}body.calculator-page main .b-stage-actions>*{flex:0 0 auto;}body.calculator-page main .b-stage-actions .calc-button{width:100%;}}

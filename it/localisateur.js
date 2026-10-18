@@ -1,8 +1,4 @@
-/* LEONIDAKIT — sélecteur illustré « Où le trouver » (v7.50, lot 3).
-   Balisage produit par outils/localisateur.cjs. Ce script : recherche, filtre de catégorie, choix d’un objet, résumé
-   synchronisé (ce qui est sélectionné, ce qui est montré), repères de la carte mis en évidence, lieux en texte.
-   Le choix est gardé pour la visite (sessionStorage, clé « lk_loc_<type> ») : revenir en arrière retrouve le même objet.
-   Rien n’est écrit en HTML depuis les données : tout passe par textContent. Sans script, le premier objet reste montré. */
+/* Généré depuis outils/sources/localisateur.js : modifie la source, pas ce fichier. */
 (function () {
   'use strict';
   function fold(s) { return String(s || '').replace(/ß/g,'ss').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase(); }
@@ -11,7 +7,7 @@
     var k = 'lk_loc_' + kind;
     return {
       get: function () { try { return JSON.parse(sessionStorage.getItem(k) || 'null'); } catch (e) { return null; } },
-      set: function (v) { try { sessionStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* stockage indisponible : le choix vaut pour cette page */ } }
+      set: function (v) { try { sessionStorage.setItem(k, JSON.stringify(v)); } catch (e) {  } }
     };
   }
   function init(root) {
@@ -42,7 +38,7 @@
       rows.forEach(function (a) { a.classList.toggle('is-linked', linked.indexOf(placeOf(a)) >= 0); });
       if (!sum) return;
       var box = el('div', 'lk-loc-sum-in'), th = el('span', 'lk-loc-sum-thumb'), src = it.querySelector('.lk-loc-thumb');
-      if (src) th.innerHTML = src.innerHTML; // vignette déjà présente dans la page (générée), pas une donnée saisie
+      if (src) th.innerHTML = src.innerHTML;
       var t = el('div', 'lk-loc-sum-t');
       t.appendChild(el('p', 'lk-loc-kicker', it.getAttribute('data-loc-catlabel')));
       t.appendChild(el('p', 'lk-loc-name', it.querySelector('.lk-loc-txt b').textContent));
@@ -68,7 +64,6 @@
       if (b.hasAttribute('data-loc-reset')) { state.cat = ''; state.q = ''; state.raw = ''; if (q) q.value = ''; filter(); memo.set(state); }
     });
     if (q) q.addEventListener('input', function () { state.raw = q.value.slice(0, 80); state.q = fold(state.raw.trim()); filter(); memo.set(state); });
-    // Retour sur la page : même objet, même filtre.
     var saved = memo.get();
     if (saved && typeof saved === 'object') {
       state.cat = chips.some(function (c) { return c.getAttribute('data-loc-catf') === saved.cat; }) ? saved.cat : '';

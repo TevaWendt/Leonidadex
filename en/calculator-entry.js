@@ -1,11 +1,8 @@
-/* Home preview uses exactly the same pure calculator as the full workshop. */
+/* Généré depuis outils/sources/calculator-entry.js : modifie la source, pas ce fichier. */
 (function () {
   'use strict';
   const form = document.getElementById('lk-mini-form');
   if (!form) return;
-  /* v7.82 (latence) : le moteur (calculateurs-engine.js, 48 Ko compressés) n'est plus chargé avec la page d'accueil ;
-     déclaré <script type="lk/lazy">, il arrive au premier geste dans le formulaire (focus, saisie), puis l'aperçu se
-     recalcule. S'il est déjà là (Tuto, pages qui le chargent), rien ne change. */
   let E = window.LKCalcEngine || null;
   let loadingEngine = null;
   function ensureEngine() {
@@ -19,7 +16,6 @@
   const labels = { capital: 'what you have', target: 'what you want', hourly: 'what you earn per hour' };
   const format = new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 });
   let announceTimer;
-
   function parse(value) {
     let n;
     if (E && E.parseLocalizedNumber) {
@@ -59,17 +55,12 @@
     const hours = Math.floor(rounded / 60), remainder = rounded % 60;
     return (hours ? format.format(hours) + ' h' : '') + (remainder ? (hours ? ' ' : '') + remainder + ' min' : '');
   }
-  /* v7.61 : pluriel selon la langue de la page (« 1,5 million » en français, « 1,5 millones » en espagnol) ;
-     v7.91 (portugais) : comme en français, singulier sous 2 (« 1,5 milhão », « 2 milhões ») */
   function many(x) { return /^(fr|pt)/i.test(document.documentElement.lang || 'fr') ? x >= 2 : x !== 1; }
   function words(n) { if (n === null || n < 1000) return ''; if (n >= 1e9) return format.format(n / 1e9) + (many(n / 1e9) ? ' billion' : ' billion'); if (n >= 1e6) return format.format(n / 1e6) + (many(n / 1e6) ? ' million' : ' million'); return format.format(n / 1e3) + ' thousand'; }
-  /* v7.60 (langues) : en anglais, « 200,000 » ; en français, « 200 000 » comme avant */
   const pageLang = (document.documentElement.lang || 'fr').slice(0, 2).toLowerCase();
   const en = pageLang !== 'fr';
-  /* v7.91 (portugais) : signe de l'argent selon la langue quand le moteur (chargé plus tard) n'est pas encore là : « = 200 mil $ »
-     s'affichait sur l'accueil portugais (« = $ 200 mil » attendu) et « = 200 thousand $ » sur l'accueil anglais (« = $200 thousand ») */
   const sign = s => pageLang === 'en' ? '$' + s : pageLang === 'pt' ? '$\u00a0' + s : s + '\u00a0$';
-  function echoes() { keys.forEach(key => { const node = document.getElementById('lk-mini-echo-' + key); if (!node) return; const field = form.elements.namedItem(key), v = parse(field.value), w = words(v); node.textContent = w ? '= ' + (E && E.dollars ? E.dollars(w, ' ') : sign(w)) : ''; if (v !== null && v >= 1000 && Number.isInteger(v) && document.activeElement !== field && (/^[\d\s\u00a0\u202f]+$/.test(field.value) || (en && (pageLang === 'de' || pageLang === 'pt' ? /^[\d.]+$/ : /^[\d,]+$/).test(field.value)) /* v7.91 (portugais) : point des milliers, comme en allemand */)) { const g = en ? format.format(v) : String(v).replace(/\B(?=(\d{3})+(?!\d))/g, ' '); if (field.value !== g) field.value = g; } }); }
+  function echoes() { keys.forEach(key => { const node = document.getElementById('lk-mini-echo-' + key); if (!node) return; const field = form.elements.namedItem(key), v = parse(field.value), w = words(v); node.textContent = w ? '= ' + (E && E.dollars ? E.dollars(w, ' ') : sign(w)) : ''; if (v !== null && v >= 1000 && Number.isInteger(v) && document.activeElement !== field && (/^[\d\s\u00a0\u202f]+$/.test(field.value) || (en && (pageLang === 'de' || pageLang === 'pt' ? /^[\d.]+$/ : /^[\d,]+$/).test(field.value)) )) { const g = en ? format.format(v) : String(v).replace(/\B(?=(\d{3})+(?!\d))/g, ' '); if (field.value !== g) field.value = g; } }); }
   function preview() {
     echoes();
     const values = inputs(false);

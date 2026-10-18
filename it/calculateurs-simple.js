@@ -1,12 +1,7 @@
-/* Leonidakit : couche « facile à utiliser » du calculateur.
-   Aucun calcul ici : les chiffres restent ceux de LKCalcEngine. Ce fichier ajoute
-   la lecture des grands nombres (« = 1 million »), la réglette d'objectif, l'aide
-   « Je ne sais pas combien je gagne » et le mode pas à pas (une question à la fois).
-   Tout est branché par délégation d'événements : le panneau peut être reconstruit sans rien casser. */
+/* Généré depuis outils/sources/calculateurs-simple.js : modifie la source, pas ce fichier. */
 (function () {
   'use strict';
   var E = window.LKCalcEngine, panels = document.getElementById('calc-panels');
-  /* v7.60 : le dollar à sa place selon la langue de la page */
   var dollars = function (t) { return E && E.dollars ? E.dollars(t, ' ') : t + ' $'; };
   if (!panels) return;
   var nf = new Intl.NumberFormat('it-IT', { maximumFractionDigits: 2 });
@@ -16,9 +11,6 @@
     var t = String(value).trim().replace(/[\s\u00a0\u202f]/g, '');
     return /^\d+(?:[,.]\d+)?$/.test(t) ? Number(t.replace(',', '.')) : null;
   }
-  /* « 1 000 000 » se lit mal pour un enfant : on l'écrit aussi en mots. */
-  /* v7.61 : pluriel selon la langue de la page (« 1,5 million » en français, « 1,5 millones » en espagnol) ;
-     v7.91 (portugais) : comme en français, singulier sous 2 (« 1,5 milhão », « 2 milhões ») */
   function many(x) { return /^(fr|pt)/i.test(document.documentElement.lang || 'fr') ? x >= 2 : x !== 1; }
   function words(n) {
     if (n === null || !isFinite(n) || n < 1000) return '';
@@ -26,7 +18,6 @@
     if (n >= 1e6) return nf.format(n / 1e6) + (many(n / 1e6) ? ' milioni' : ' milione');
     return nf.format(n / 1e3) + ' mila';
   }
-  /* v7.60 (langues) : « 200 000 » en français, « 200,000 » en anglais */
   var en = !!(E && E.lang && E.lang !== 'fr');
   function group(n) { if (en) return nf.format(n); return Number.isInteger(n) ? String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') : String(n).replace('.', ','); }
   function echoes() {
@@ -34,11 +25,9 @@
       var input = $(node.dataset.echo); if (!input) return;
       var n = parse(input.value), w = words(n);
       node.textContent = w ? '= ' + dollars(w) : '';
-      /* séparateurs de milliers, uniquement quand on n'est pas en train d'écrire dans la case */
-      if (n !== null && n >= 1000 && Number.isInteger(n) && document.activeElement !== input && (/^[\d\s\u00a0\u202f]+$/.test(input.value) || (en && (E.lang === 'de' || E.lang === 'pt' ? /^[\d.]+$/ : /^[\d,]+$/).test(input.value)) /* v7.91 (portugais) : le point groupe les milliers, comme en allemand */)) { var g = group(n); if (input.value !== g) input.value = g; }
+      if (n !== null && n >= 1000 && Number.isInteger(n) && document.activeElement !== input && (/^[\d\s\u00a0\u202f]+$/.test(input.value) || (en && (E.lang === 'de' || E.lang === 'pt' ? /^[\d.]+$/ : /^[\d,]+$/).test(input.value)) )) { var g = group(n); if (input.value !== g) input.value = g; }
     });
   }
-  /* Réglette d'objectif : 10 000 $ à 10 000 000 $, échelle logarithmique, liée dans les deux sens. */
   var LO = Math.log(10000), HI = Math.log(10000000);
   function toVal(pos) { var v = Math.exp(LO + (HI - LO) * pos / 1000), step = v < 100000 ? 5000 : v < 1000000 ? 10000 : 100000; return Math.round(v / step) * step; }
   function toPos(v) { return Math.round((Math.log(Math.min(Math.max(v, 10000), 10000000)) - LO) / (HI - LO) * 1000); }
@@ -54,7 +43,6 @@
       document.querySelectorAll('[' + pair[0] + ']').forEach(function (b) { b.setAttribute('aria-pressed', String(Number(b.getAttribute(pair[0])) === v)); });
     });
   }
-  /* Aide : « ma dernière mission m'a rapporté X $ en Y minutes » donne un gain par heure. */
   var helped = null;
   function helper() {
     var reward = $('lk-help-reward'), minutes = $('lk-help-minutes'), out = $('lk-help-out'), apply = $('lk-help-apply');
@@ -66,18 +54,14 @@
     apply.disabled = helped === null;
   }
   function fire(node, type) { node.dispatchEvent(new Event(type, { bubbles: true })); }
-  /* Mode pas à pas : dans chaque outil, les mêmes cases que le mode simple, montrées une par une.
-     L'en-tête (« Question n sur N ») et les boutons Retour / Suivant sont créés une fois et
-     déplacés dans l'outil ouvert. */
   var stepByTab = {};
   var head = document.createElement('div'); head.className = 'calc-guidance calc-wizard'; head.hidden = true;
   head.innerHTML = '<p class="calc-wiz-count" id="wiz-count" aria-live="polite"></p><div class="calc-wiz-bar" aria-hidden="true"><span id="wiz-bar"></span></div><p class="calc-wiz-why" id="wiz-why"></p><p class="calc-wiz-tip">Una domanda alla volta. La tua risposta si calcola da sola; puoi tornare indietro, non si perde niente.</p>';
   var nav = document.createElement('div'); nav.className = 'calc-wiz-nav'; nav.hidden = true;
-  nav.innerHTML = '<button type="button" class="calc-button" data-wiz="prev">← Indietro</button><button type="button" class="calc-button calc-button-primary" data-wiz="next">Successivo →</button>';
+  nav.innerHTML = '<button type="button" class="calc-button" data-wiz="prev">Retour</button><button type="button" class="calc-button calc-button-primary" data-wiz="next">Suivant</button>';
   function guided() { return panels.dataset.mode === 'guided'; }
   function activePanel() { return panels.querySelector('.calc-panel:not([hidden])'); }
   function activeTab() { var p = activePanel(); return p ? p.id.replace('panel-', '') : ''; }
-  /* Les questions que l'outil a marquées « à sauter » (data-skip) ne sont pas posées : le parcours s'adapte à la demande. */
   function stepsOf(panel) { return panel ? Array.prototype.slice.call(panel.querySelectorAll('.calc-step[data-step]')).filter(function (n) { return !n.dataset.skip && !n.hidden; }) : []; }
   function current() { return stepByTab[activeTab()] || 1; }
   function resultOf(panel) { return panel ? (panel.querySelector('.calc-result,[data-answer-card]') || document.getElementById(activeTab() + '-results')) : null; }
@@ -99,7 +83,7 @@
     if (bar) bar.style.width = (step / total * 100) + '%';
     var prev = nav.querySelector('[data-wiz="prev"]'), next = nav.querySelector('[data-wiz="next"]');
     if (prev) prev.disabled = step === 1;
-    if (next) next.textContent = step === total ? 'Vedi la mia risposta ↓' : 'Successivo →';
+    if (next) next.textContent = step === total ? 'Vedi la mia risposta' : 'Suivant';
     if (focus && cur) { var input = cur.querySelector('input:not([type="checkbox"]), select'); if (input) input.focus({ preventScroll: true }); }
   }
   function move(delta) {
@@ -111,7 +95,6 @@
   var hiTimer = null;
   function showResult() {
     var res = resultOf(activePanel()); if (!res) return;
-    /* Même quand la réponse est déjà à l'écran, on la met en évidence 4 secondes. */
     var r = res.getBoundingClientRect(), top = (document.querySelector('header') ? document.querySelector('header').getBoundingClientRect().bottom : 0) + 12;
     if (r.top < top || r.bottom > window.innerHeight - 12) res.scrollIntoView({ block: r.height > window.innerHeight - top ? 'start' : 'nearest', behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
     res.classList.remove('is-highlighted'); void res.offsetWidth; res.classList.add('is-highlighted');
@@ -120,17 +103,15 @@
     res.focus({ preventScroll: true });
     var live = $('calc-live'), answer = res.querySelector('.calc-answer'); if (live && answer) { live.textContent = ''; setTimeout(function () { live.textContent = 'Risposta: ' + answer.textContent; }, 50); }
   }
-  /* Un bouton « Voir ma réponse » sous les cases de chaque outil, dans tous les modes (le pas à pas a le sien). */
   function answerButtons() {
     panels.querySelectorAll('.calc-steps').forEach(function (box) {
       var btn = box.nextElementSibling && box.nextElementSibling.classList.contains('calc-show-answer') ? box.nextElementSibling : null;
-      if (!btn) { btn = document.createElement('button'); btn.type = 'button'; btn.className = 'calc-button calc-button-primary calc-show-answer'; btn.dataset.showAnswer = '1'; btn.textContent = 'Vedi la mia risposta ↓'; box.insertAdjacentElement('afterend', btn); }
+      if (!btn) { btn = document.createElement('button'); btn.type = 'button'; btn.className = 'calc-button calc-button-primary calc-show-answer'; btn.dataset.showAnswer = '1'; btn.textContent = 'Vedi la mia risposta'; box.insertAdjacentElement('afterend', btn); }
       btn.hidden = guided();
     });
   }
-  /* Sur téléphone, la réponse est sous les cases : un petit résumé reste visible en bas tant qu'on ne la voit pas. */
   var sticky = document.createElement('div'); sticky.className = 'lk-sticky'; sticky.hidden = true;
-  sticky.innerHTML = '<span id="lk-sticky-text"></span><button type="button" id="lk-sticky-go">Vedi la mia risposta ↓</button>';
+  sticky.innerHTML = '<span id="lk-sticky-text"></span><button type="button" id="lk-sticky-go">Vedi la mia risposta</button>';
   document.body.appendChild(sticky);
   var visible = new Map(), io = null;
   function watch() {
@@ -152,7 +133,6 @@
   function refresh() { echoes(); slider(); helper(); wizard(false); answerButtons(); summary(); }
   var queued = false;
   function later() { if (queued) return; queued = true; (window.requestAnimationFrame || setTimeout)(function () { queued = false; refresh(); }); }
-
   document.addEventListener('input', function (ev) {
     var el = ev.target;
     if (el.id === 'lk-goal-range') { var target = $('f-goal-target'); if (target) { target.value = String(toVal(Number(el.value))); fire(target, 'input'); } }

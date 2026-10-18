@@ -1,11 +1,10 @@
-/* Réception des liens Léo : décision explicite, transaction par le calculateur existant. */
+/* Généré depuis outils/sources/leo-calculator.js : modifie la source, pas ce fichier. */
 (function(){'use strict';
 const L=window.LKLeoLink,api=window.LKCalculator?.leo;if(!L||!api)return;
 const el=(tag,text,cls)=>{const n=document.createElement(tag);if(text)n.textContent=text;if(cls)n.className=cls;return n;};
 const labels={capital:'Ya tengo',target:'Quiero tener',hourly:'Gano más o menos, por hora de juego',reserve:'Dinero apartado',price:'Precio que imagino',minutes:'Mi tiempo de juego (minutos)',dailyMinutes:'Juego cada día (minutos)',players:'Jugadores, yo incluido'},nf=new Intl.NumberFormat('es-ES');
 let dialog=null,oldOverflow='',previousFocus=null;
 function returnLink(back){document.getElementById('leo-return')?.remove();if(!L.safeReturn(back))return;const p=el('p',null,'leo-return');p.id='leo-return';const a=el('a','Volver a mi página y a la conversación con Léo ↗');a.href=back;p.append(a);document.querySelector('.calc-tuto-links')?.after(p);}
-/* v7.59 (check ultime, D-10) : même garde que le tiroir du calculateur (navigateur sans <dialog>.close()) : la fenêtre se retire quand même et le lien de retour est posé. */
 function close(keep=true){if(keep)api.keep();if(dialog){if(typeof dialog.close==='function'&&dialog.open)dialog.close();dialog.remove();dialog=null;}document.documentElement.style.overflow=oldOverflow;if(previousFocus?.isConnected&&previousFocus!==document.body)previousFocus.focus({preventScroll:true});else document.querySelector('[data-tab][aria-selected="true"]')?.focus({preventScroll:true});window.LKLeoLoader?.place();}
 function open(raw){if(dialog)return;previousFocus=document.activeElement;oldOverflow=document.documentElement.style.overflow;dialog=el('dialog',null,'leo-transfer');dialog.id='leo-transfer';dialog.setAttribute('aria-labelledby','leo-transfer-title');dialog.setAttribute('aria-describedby','leo-transfer-description');const title=el('h2','Preparar este cálculo con Léo');title.id='leo-transfer-title';const description=el('p');description.id='leo-transfer-description';dialog.append(title,description);const error=el('p',null,'leo-error');error.setAttribute('role','status');
  const button=(text,fn,secondary=false)=>{const b=el('button',text,'leo-action'+(secondary?' secondary':''));b.type='button';b.addEventListener('click',fn);dialog.append(b);return b;};

@@ -1,3 +1,4 @@
+/* Généré depuis outils/sources/acquisitions.js : modifie la source, pas ce fichier. */
 (function(){'use strict';
 if(!window.LK_ACQUISITIONS||!window.LKProgression)return;
 const message=text=>{const box=document.getElementById('acq-feedback');if(box)box.textContent=text;else window.LK?.status(text);};
@@ -6,12 +7,6 @@ function render(){document.querySelectorAll('[data-acq-toggle]').forEach(input=>
 document.addEventListener('change',event=>{const input=event.target.closest('[data-acq-toggle]');if(!input)return;if(store.toggle(input.dataset.acqToggle,input.checked))message('Seguimiento guardado en este dispositivo.');render();});
 store.migrate();render();store.subscribe(render);window.addEventListener('storage',render);window.addEventListener('pageshow',render);
 })();
-
-/* v7.56 (lot 3, STYLE-03) : carrousels des cartes « Adresses » (style.html). Les vues officielles d'une adresse se parcourent
-   directement sur l'image : flèches dès la première vue (cachées sans script ou à vue unique), position « 2 / 4 », points
-   cliquables, flèches du clavier, balayage au doigt ; transition rétro courte (balayage de lignes et glissement), coupée en
-   « réduire les animations » ; cadrage 16/9 et hauteur de carte inchangés ; légende et lien de crédits mis à jour à chaque vue.
-   Rien n'est inventé : seules les vues listées dans outils/medias-officiels.json sont montrées. */
 (function(){'use strict';
 const cars=Array.from(document.querySelectorAll('[data-car]'));if(!cars.length)return;
 const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -25,7 +20,7 @@ cars.forEach(car=>{
  const dotBts=dots?slides.map((s,k)=>{const b=document.createElement('button');b.type='button';b.className='d-car-dot';b.setAttribute('aria-label','Vista '+(k+1)+' de '+n+': '+title(k));b.addEventListener('click',()=>go(k));dots.appendChild(b);return b;}):[];
  function paint(){
   slides.forEach((s,k)=>{s.classList.toggle('is-current',k===i);if(k===i)s.removeAttribute('aria-hidden');else s.setAttribute('aria-hidden','true');});
-  if(pos)pos.textContent=(i+1)+' / '+n;if(cap)cap.textContent=title(i);
+  if(pos)pos.textContent=(i+1)+' de '+n;if(cap)cap.textContent=title(i);
   if(credit)credit.href='medias.html#media-'+(slides[i].dataset.carId||'');
   prev.setAttribute('aria-label','Vista anterior: '+title(i-1));next.setAttribute('aria-label','Vista siguiente: '+title(i+1));
   dotBts.forEach((b,k)=>b.setAttribute('aria-current',k===i?'true':'false'));
