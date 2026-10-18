@@ -27,8 +27,8 @@ function prixDe(entry){if(!entry)return null;const raw=entry.price??entry.prix??
  return {value,status,label:STATUS_LABEL[status]||'Non confirmé',source:typeof meta.source==='string'&&meta.source.trim()?meta.source.trim():null,verifiedAt:typeof meta.verifiedAt==='string'&&/^\d{4}-\d{2}-\d{2}/.test(meta.verifiedAt)?meta.verifiedAt.slice(0,10):null,unit:typeof meta.unit==='string'&&meta.unit.trim()?meta.unit.trim():'$'};}
 const fmt=n=>new Intl.NumberFormat('fr-FR').format(n);
 function texteDate(d){if(!d)return '';const [y,m,j]=d.split('-').map(Number);const M=['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];return (j===1?'1er':j)+' '+M[m-1]+' '+y;}
-/* Phrase complète pour une fiche : « Prix publié : 35 000 $ · Officiel · source · vérifié le … ». */
-function phrasePrix(p){if(!p)return null;return 'Prix publié : '+fmt(p.value)+' '+p.unit+' · '+p.label+(p.source?' · source : '+p.source:'')+(p.verifiedAt?' · vérifié le '+texteDate(p.verifiedAt):'');}
+/* Phrase complète pour une fiche : « Prix publié : 35 000 $, Officiel, source, vérifié le … ». */
+function phrasePrix(p){if(!p)return null;return 'Prix publié : '+fmt(p.value)+' '+p.unit+', '+p.label+(p.source?', source : '+p.source:'')+(p.verifiedAt?', vérifié le '+texteDate(p.verifiedAt):'');}
 /* Vérifie une valeur publiée : un prix officiel ou vérifié exige une source et une date ; une unité connue ; un nombre fini. */
 function verifierPrix(p,label){const errors=[];if(!p)return errors;if(!['official','verified','estimated','manual','unverified','unknown'].includes(p.status))errors.push(label+' : statut inconnu « '+p.status+' »');
  if(['official','verified'].includes(p.status)){if(!p.source)errors.push(label+' : un prix « '+p.label+' » exige une source (URL ou référence précise)');if(!p.verifiedAt)errors.push(label+' : un prix « '+p.label+' » exige une date de vérification verifiedAt (AAAA-MM-JJ)');}

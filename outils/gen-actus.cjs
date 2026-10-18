@@ -219,7 +219,7 @@ function sourceList(ctx, ids, anchorPrefix = 'src-') {
   return '<ol class="ed-srcs">' + ids.map(id => { const s = ctx.SRC[id];
     return '<li id="' + anchorPrefix + esc(id) + '">' + S.pip(s.statut, true)
       + '<a class="ed-src-link" href="' + esc(s.url) + '" target="_blank" rel="noopener nofollow"' + (s.lang === 'en' ? ' translate="no"' : '') + '>' + esc(s.title) + '</a>'
-      + '<span class="ed-src-meta">' + (s.publisher ? esc(s.publisher) + ' · ' : '') + (s.publishedAt ? 'publié le ' + esc(frDate(s.publishedAt)) + ' · ' : '') + 'consulté le ' + esc(frDate(s.consultedAt)) + '</span>'
+      + '<span class="ed-src-meta">' + (s.publisher ? esc(s.publisher) + ', ' : '') + (s.publishedAt ? 'publié le ' + esc(frDate(s.publishedAt)) + ', ' : '') + 'consulté le ' + esc(frDate(s.consultedAt)) + '</span>'
       + (s.claim ? '<p>' + esc(s.claim) + '</p>' : '') + '</li>'; }).join('') + '</ol>';
 }
 const srcRefs = ids => '<span class="ac-refs">' + ids.map((id, i) => '<a href="#src-' + esc(id) + '" aria-label="Source ' + (i + 1) + '">' + (i + 1) + '</a>').join('') + '</span>';
@@ -294,7 +294,7 @@ function actusPage(ctx) {
       + (links.length ? '<p class="ac-une-act">' + links.map(l => '<a class="lkx-btn' + (l.main ? '' : ' lkx-btn--ghost') + '" href="' + esc(l.href) + '">' + esc(l.label) + '</a>').join('') + '</p>' : '') + '</div></article>';
   })();
   const body = `<section class="page-head shell lk-glow"><div class="lk-head-grid"><div>
-  <p class="fiche-cat">${esc(X.label)} · GTA VI</p>
+  <p class="fiche-cat">${esc(X.label)}, GTA VI</p>
   <h1>${esc(nb(X.title))}</h1>
   <p class="lede">${esc(X.lede)}</p>
   <p class="d-intro-note">${esc(X.note)} <a href="tuto.html#sources">Comprendre les statuts</a>.</p>
@@ -393,10 +393,10 @@ function videoPage(ctx, v) {
   const vName = x => (x.marque && x.marque !== 'Marque inconnue' ? x.marque + ' ' : '') + x.nom;
   const srcIds = uniq([...v.faits.flatMap(f => f.sources), ...d.songs.flatMap(s => s.sources || [])]);
   const body = `<section class="page-head shell ac-vhead">
-  <nav class="crumbs" aria-label="Fil d’Ariane"><a href="../index.html">Accueil</a> / <a href="../videos.html">${esc(P.label)}</a> / <span>${esc(v.nom)}</span></nav>
+  <nav class="crumbs" aria-label="Fil d’Ariane"><a href="../index.html">Accueil</a> <span class="crumbs-sep" aria-hidden="true"></span> <a href="../videos.html">${esc(P.label)}</a> <span class="crumbs-sep" aria-hidden="true"></span> <span>${esc(v.nom)}</span></nav>
   <div class="ac-vgrid">
     <div class="ac-vcopy">
-      <p class="fiche-cat">Vidéo officielle · <time datetime="${esc(v.iso)}">${esc(frLong(v.iso))}</time></p>
+      <p class="fiche-cat">Vidéo officielle, <time datetime="${esc(v.iso)}">${esc(frLong(v.iso))}</time></p>
       <h1>${esc(nb(v.titre))}</h1>
       <p class="lede">${esc(v.lede)}</p>
       ${faits}
@@ -460,12 +460,13 @@ function videosHub(ctx) {
   const metrics = [['moments', d => d.moments.length], ['morceaux', d => d.songs.length], ['vehicules', d => d.vehicles.length], ['armes', d => d.weapons.length], ['fiches', d => d.rev.length]];
   const chrono = [...list].sort((a, b) => a.iso.localeCompare(b.iso));
   const relevees = chrono.filter(v => data[v.id].moments.length);
+  /* v7.94 : un seul tableau de bord, une rangée par mesure (plus de cinq cartes dont une seule sur sa rangée) */
   const bars = '<div class="ac-bars vt-in" data-lk-reveal><ul class="ac-bars-key" aria-hidden="true">' + relevees.map((v, k) => '<li class="ac-k' + k + '">' + esc(v.nom) + '</li>').join('') + '</ul>'
     + metrics.map(([key, f], i) => { const vals = relevees.map(v => f(data[v.id])), max = Math.max(...vals, 1);
       return '<div class="ac-bar-g" style="--i:' + i + '"><h3 class="ac-bar-h">' + esc(M[key]) + '</h3><ul class="ac-bar-l">' + relevees.map((v, k) => '<li class="ac-bar ac-k' + k + '" style="--p:' + Math.max(2, Math.round(100 * vals[k] / max)) + '%"><span class="ac-bar-n">' + esc(v.nom) + '</span><b>' + vals[k] + '</b><span class="ac-bar-t" aria-hidden="true"><i></i></span></li>').join('') + '</ul></div>'; }).join('') + '</div>'
     + (relevees.length < chrono.length && P.chiffresNote ? '<p class="ac-bars-note">' + esc(P.chiffresNote) + '</p>' : '');
   /* les moments à revoir : les photogrammes des vidéos, dans l’ordre des vidéos puis du minutage */
-  const shots = chrono.flatMap(v => data[v.id].moments.map(m => ({ media: m.id, alt: m.alts[0] || m.alt || '', href: 'videos/' + v.id + '.html#moments', title: v.nom + (m.t !== null ? ' · ' + mmss(m.t) : ''), sub: m.items.slice(0, 2).map(it => it.label).join(' · '), time: m.t !== null ? mmss(m.t) : null })));
+  const shots = chrono.flatMap(v => data[v.id].moments.map(m => ({ media: m.id, alt: m.alts[0] || m.alt || '', href: 'videos/' + v.id + '.html#moments', title: v.nom + (m.t !== null ? ', ' + mmss(m.t) : ''), sub: m.items.slice(0, 2).map(it => it.label).join(', '), time: m.t !== null ? mmss(m.t) : null })));
   const revoir = VT.strip(shots, { region: P.bandeLabel, prev: P.precedent, next: P.suivant });
   /* toute la musique, vidéo par vidéo. v7.92.1 : les vidéos à peu de morceaux en une rangée de cartes (affiche, nom, nombre
      de morceaux, liste), la plus longue liste en dessous, sur toute la largeur et en deux colonnes : plus de colonne courte
@@ -481,7 +482,7 @@ function videosHub(ctx) {
   /* v7.92.1 : deux questions de la page (combien de vidéos, un « Trailer 3 »), puis la première question de chaque vidéo */
   const faqs = [...(P.faq || []), ...list.flatMap(v => v.faq.slice(0, 1).filter(x => !(P.faq || []).some(y => y.q === x.q)))];
   const body = `<section class="page-head shell lk-glow"><div class="lk-head-grid"><div>
-  <p class="fiche-cat">${esc(P.label)} · GTA VI</p>
+  <p class="fiche-cat">${esc(P.label)}, GTA VI</p>
   <h1>${esc(nb(P.title))}</h1>
   <p class="lede">${esc(P.lede)}</p>
   <p class="d-intro-note">${esc(P.note)} <a href="mentions-legales.html#cookies">${esc(P.lecteurLien)}</a>.</p>
@@ -557,7 +558,7 @@ function editionsPage(ctx) {
   const PA = E.paire, pairCard = (x, label, prix, cls) => '<div class="ed-pair-c ' + cls + '"><div class="ed-pair-in vt-tilt" data-vt-tilt="6">' + VT.img(x.media, x.alt, { eager: cls === 'ed-pair-c--s' ? true : 'normal', sizes: '(max-width:900px) 64vw, 300px' }) + '<span class="ed-pair-n">' + esc(label) + '</span></div>' + tag(prix, T.label, 'ed-pair-tag') + '</div>';
   const pair = '<div class="ed-pair" role="group" aria-label="' + esc(PA.label) + '">' + pairCard(E.standard, PA.standard, T.standard, 'ed-pair-c--s') + pairCard(E.ultimate, PA.ultimate, T.ultimate, 'ed-pair-c--u') + '</div>';
   const body = `<section class="page-head shell lk-glow"><div class="lk-head-grid"><div>
-  <p class="fiche-cat">${esc(E.label)} · GTA VI</p>
+  <p class="fiche-cat">${esc(E.label)}, GTA VI</p>
   <h1>${esc(nb(E.title))}</h1>
   <p class="lede">${esc(E.lede)}</p>
   <p class="d-intro-note">${esc(E.note)} ${srcRefs([src, T.src])}</p>
@@ -629,7 +630,7 @@ function prixPage(ctx) {
     + '<div class="px-sum-r"><p class="px-sum-k">' + esc(TO.totalL) + '</p><output class="px-sum-v" data-vt-total aria-live="polite">' + esc(jeuL.find(l => l.defaut).p) + '</output><p class="px-sum-n">' + esc(TO.note) + '</p></div></form>'
     + '<div class="px-sum-static"><p class="px-sum-k">' + esc(TO.exemplesT) + '</p><ul>' + TO.exemples.map(e => '<li><span>' + esc(e.t) + '</span><b>' + esc(e.p) + '</b></li>').join('') + '</ul><p class="px-sum-n">' + esc(TO.note) + '</p></div></div>';
   const body = `<section class="page-head shell lk-glow"><div class="lk-head-grid"><div>
-  <p class="fiche-cat">${esc(X.label)} · GTA VI</p>
+  <p class="fiche-cat">${esc(X.label)}, GTA VI</p>
   <h1>${esc(nb(X.title))}</h1>
   <p class="lede">${esc(X.lede)}</p>
   <p class="d-intro-note">${esc(X.note)} <a href="tuto.html#sources">Comprendre les statuts</a>.</p>
@@ -660,7 +661,7 @@ function rss(html, lang = 'fr') {
     return '<item><title>' + x(t) + '</title><link>' + x(url + '#ev-' + m[1]) + '</link><guid isPermaLink="false">leonidakit-' + lang + '-' + m[1] + '</guid><pubDate>' + new Date(m[2] + 'T12:00:00Z').toUTCString() + '</pubDate><description>' + x(d) + '</description></item>';
   });
   if (!items.length) throw new Error('flux RSS : aucune annonce trouvée dans la page');
-  return '<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>' + x(title.replace(/ \| Leonidakit$/, '') + ' — Leonidakit') + '</title><link>' + x(url) + '</link><atom:link href="' + x(url.replace(/\.html$/, '.xml')) + '" rel="self" type="application/rss+xml"/><description>' + x(desc) + '</description><language>' + x(lang) + '</language>' + items.join('') + '</channel></rss>\n';
+  return '<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>' + x(title) + '</title><link>' + x(url) + '</link><atom:link href="' + x(url.replace(/\.html$/, '.xml')) + '" rel="self" type="application/rss+xml"/><description>' + x(desc) + '</description><language>' + x(lang) + '</language>' + items.join('') + '</channel></rss>\n';
 }
 
 /* ---------- accueil : la dernière annonce, sous le compte à rebours (index.html, entre les jalons et la fin du bandeau) ---------- */

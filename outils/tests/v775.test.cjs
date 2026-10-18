@@ -58,7 +58,7 @@ test('GTA Online et Progression : nouvel onglet depuis le reste du site, même o
 });
 
 test('Collectibles : titres de section numérotés, anneau de progression et rayons harmonisés (feuille de la page)', () => {
-  const css = read('collectibles-brand.css');
+  const css = read('outils/sources/collectibles-brand.css'); /* v7.94 : la copie servie n’a plus de commentaires, la source les garde */
   const block = css.slice(css.indexOf('v7.75'));
   assert.ok(block.length > 200, 'bloc v7.75');
   assert.match(block, /counter-reset:colsec/);

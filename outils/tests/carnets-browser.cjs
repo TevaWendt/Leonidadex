@@ -137,7 +137,7 @@ const text=(p,sel)=>p.locator(sel).first().innerText();
   ok(await p.locator('.cn-dcard').count()===9,'Neuf carnets');ok(await p.locator('#carnet-garage.is-target').count()===1,'Ancienne ancre #garage : la carte du garage est mise en évidence');
   ok(await p.locator('#carnet-garage a.cn-dcard-btn[href="carnets/garage.html"]').innerText().then(t=>/Voir mon garage/.test(t)),'« Voir mon garage » → page du carnet');
   const g=await p.locator('#carnet-garage [data-cn-done]').innerText();const own=Object.keys(await store(p,'lk_own_vehicules')).length;ok(Number(g)===own,'Même compte que le carnet',g+' / '+own);
-  ok(/1 \/ 4/.test((await p.locator('#suivi-acquisitions .suivi-n').innerText()).replace(/ /g,' ')),'Propriétés : 1 / 4');
+  ok(/1 sur 4/.test((await p.locator('#suivi-acquisitions .suivi-n').innerText()).replace(/ /g,' ')),'Propriétés : 1 sur 4');
   ok((await p.locator('section#acquisitions').count())===0&&(await p.locator('#acquisitions').count())===1,'Plus de section « acquisitions » non fermée ; l’ancre #acquisitions reste');
  });
 

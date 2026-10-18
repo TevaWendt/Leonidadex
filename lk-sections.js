@@ -1,8 +1,4 @@
-/* LEONIDAKIT — motion design et fiches plein écran des sections Gangs et factions, Missions, Activités annexes, Radios
-   et musique (lk-sections.css). Amélioration progressive : sans ce script, tout est visible et chaque fiche s’ouvre dans
-   la page (details). Ce script n’écrit aucun mot (les textes sont dans la page, déjà traduite ; seul le titre d’un morceau
-   est recopié dans le lecteur), ne garde rien sur l’appareil et n’envoie aucune requête : le lecteur officiel (YouTube ou
-   Spotify) ne se charge qu’après un clic sur « Écouter ici ». Mouvement coupé avec prefers-reduced-motion: reduce. */
+/* Généré depuis outils/sources/lk-sections.js : modifie la source, pas ce fichier. */
 (function () {
   'use strict';
   var mq = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : { matches: false };
@@ -10,8 +6,6 @@
   var fine = window.matchMedia ? window.matchMedia('(hover: hover) and (pointer: fine)').matches : false;
   var root = document.documentElement;
   var each = function (list, fn) { Array.prototype.forEach.call(list, fn); };
-
-  /* ---------- 1. entrées des groupes [data-lkx-in] ---------- */
   var groups = document.querySelectorAll('[data-lkx-in]');
   each(groups, function (g) { each(g.children, function (c, i) { c.style.setProperty('--i', i); }); });
   function deal(g) {
@@ -24,9 +18,6 @@
       c.style.setProperty('--rz', ((i % 2 ? 1 : -1) * (5 + (i % 3) * 4)) + 'deg');
     });
   }
-  /* v7.75 : entrée « tableau des départs » des Lieux : le nom de chaque région bascule lettre par lettre, comme un volet
-     d'affichage. Les lettres sont celles de la page (déjà traduite) : une copie décorative (aria-hidden) est animée, le nom
-     reste lisible (sr-only), puis le titre redevient exactement le texte d'origine. */
   function flap(g) {
     if (!g.classList.contains('lkx-flap')) return;
     each(g.children, function (card, i) {
@@ -65,8 +56,6 @@
     each(groups, function (g) { io.observe(g); });
     each(rows, function (r) { io.observe(r); });
   }
-
-  /* ---------- 2. inclinaison et reflet au survol (pointeur fin) ---------- */
   if (fine && !reduced) {
     each(document.querySelectorAll('.lkx-tilt'), function (el) {
       if (!el.querySelector('.lkx-sheen')) { var s = document.createElement('span'); s.className = 'lkx-sheen'; s.setAttribute('aria-hidden', 'true'); el.appendChild(s); }
@@ -86,8 +75,6 @@
       el.addEventListener('pointerleave', function () { if (raf) { window.cancelAnimationFrame(raf); raf = 0; } el.classList.remove('lkx-tilting'); el.style.removeProperty('--rx'); el.style.removeProperty('--ry'); });
     });
   }
-
-  /* ---------- 3. fiches plein écran : details.lkx-det → <dialog class="lkx-sheet"> de la page ---------- */
   var dlg = document.getElementById('lkx-sheet');
   var canSheet = dlg && typeof dlg.showModal === 'function';
   var last = null, openDet = null;
@@ -98,7 +85,7 @@
     var body = dlg.querySelector('[data-lkx-body]'); if (body) body.replaceChildren();
     if (openDet && openDet.id && window.history && window.history.replaceState && location.hash === '#' + openDet.id) window.history.replaceState(null, '', location.pathname + location.search);
     openDet = null;
-    if (last && last.isConnected) { try { last.focus({ preventScroll: true }); } catch (e) { /* rien */ } }
+    if (last && last.isConnected) { try { last.focus({ preventScroll: true }); } catch (e) {  } }
   }
   function openSheet(det, trigger) {
     var src = det.querySelector('.lkx-sheet-src'); if (!src) return false;
@@ -121,9 +108,6 @@
     if (det.id && window.history && window.history.replaceState) window.history.replaceState(null, '', '#' + det.id);
     return true;
   }
-  /* v7.85 : les images des fiches qui se téléchargeaient avec la page (data-lkx-pre, Missions) sont différées dans la page et
-     préchargées une fois la page chargée, quand le fil est libre : la fiche s’ouvre toujours avec son image, sans peser sur le
-     premier affichage ; avec l’économiseur de données, l’image arrive à l’ouverture de la fiche. */
   (function () {
     var pre = document.querySelectorAll('img[data-lkx-pre][loading="lazy"]'); if (!pre.length) return;
     var cn = navigator.connection; if (cn && cn.saveData) return;
@@ -155,8 +139,6 @@
     if (location.hash) window.setTimeout(fromHash, 60);
     window.addEventListener('hashchange', function () { if (!dlg.open) fromHash(); });
   }
-
-  /* ---------- 4. menus « Écouter » (popover : au-dessus de la page, jamais coupés par une carte) ---------- */
   var menus = document.querySelectorAll('.lkx-listen-menu[popover]');
   var hasPopover = typeof HTMLElement !== 'undefined' && Object.prototype.hasOwnProperty.call(HTMLElement.prototype, 'popover');
   var isOpen = function (m) { try { return m.matches(':popover-open'); } catch (e) { return false; } };
@@ -178,8 +160,6 @@
     window.addEventListener('scroll', reflow, { passive: true });
     window.addEventListener('resize', reflow);
   }
-
-  /* ---------- 5. lecteur au clic : rien ne se charge avant « Écouter ici » (lecteur officiel YouTube ou Spotify) ---------- */
   var player = document.getElementById('lkx-player');
   if (player) {
     var box = player.querySelector('[data-lkx-player-f]'), label = player.querySelector('[data-lkx-player-t]');
@@ -200,7 +180,7 @@
         player.classList.remove('lkx-player--yt', 'lkx-player--sp');
         player.classList.add('lkx-player--' + (b.getAttribute('data-lkx-play') === 'sp' ? 'sp' : 'yt'));
         player.hidden = false;
-        var menu = b.closest('[popover]'); if (menu && menu.hidePopover) { try { menu.hidePopover(); } catch (x) { /* rien */ } }
+        var menu = b.closest('[popover]'); if (menu && menu.hidePopover) { try { menu.hidePopover(); } catch (x) {  } }
         var x = player.querySelector('[data-lkx-player-close]'); if (x) x.focus({ preventScroll: true });
         return;
       }

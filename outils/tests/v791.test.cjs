@@ -112,9 +112,9 @@ test('accueil : l’écho du mini-calculateur met le signe à sa place avant le 
 });
 
 test('mots que le calculateur et Léo reconnaissent en portugais (hub, libellés, pont)', () => {
-  const hub = read('calculateurs-hub.js');
+  const hub = read('outils/sources/calculateurs-hub.js'); /* v7.94 : la source commentée (la copie servie n’a plus de commentaires) */
   for (const w of ['milh', 'tenho', 'por hora', 'por dia', 'jogadores', 'sess']) assert.ok(hub.includes(w), 'calculateurs-hub.js : ' + w);
-  const ws = read('calculateurs-workspace.js');
+  const ws = read('outils/sources/calculateurs-workspace.js');
   for (const w of ['guardado', 'já tenho', 'quero ter', 'por hora', 'por dia', 'jogadores', 'gastos por sessão', 'é preciso chegar a']) assert.ok(ws.toLowerCase().includes(w), 'calculateurs-workspace.js : ' + w);
   const pont = JSON.parse(read('outils/langues/pt/_leo-pont.json'));
   const has = e => pont.pont.some(([a]) => a === e);

@@ -33,7 +33,7 @@ const items=source.items.map(item=>{
   verifiedAt:item.verifiedAt||source.verifiedAt,status:'official',purchasable:null};
 });
 if(new Set(items.map(x=>x.id)).size!==items.length)throw Error('Identifiant dupliqué');
-const services=source.services.map(x=>{const ref=ed.businesses.find(y=>y.id===x.ref);if(!ref)throw Error('Commerce inconnu : '+x.ref);return {...x,id:ref.id,name:ref.name,url:'/entreprises/'+ref.id+'.html',images:images(x.media),condition:'Service de l’Édition Ultimate · tarifs non publiés',evidenceLevel:1};});
+const services=source.services.map(x=>{const ref=ed.businesses.find(y=>y.id===x.ref);if(!ref)throw Error('Commerce inconnu : '+x.ref);return {...x,id:ref.id,name:ref.name,url:'/entreprises/'+ref.id+'.html',images:images(x.media),condition:'Service de l’Édition Ultimate, tarifs non publiés',evidenceLevel:1};});
 const variants=source.weaponVariants.map(id=>{const ref=weapons.find(x=>x.id===id);if(!ref)throw Error('Arme inconnue : '+id);return {id,name:ref.nom,url:'/armes/'+id+'.html'};});
 const payload={schemaVersion:source.schemaVersion,verifiedAt:source.verifiedAt,game:source.game,sources:source.sources,categories:source.categories,items,services,weaponVariants:variants};
 /* v7.73 (lot 3) : données du tableau « Personnaliser ce véhicule / cette arme » des fiches (perso-fiche.js) : postes, options,
@@ -49,8 +49,8 @@ const base=read('a-propos.html'),header=base.match(/<header>[\s\S]*?<\/header>/)
 const metaDesc=t=>{t=String(t||'').replace(/\s+/g,' ').trim();if(t.length<=158)return t;const ph=t.split(/(?<=[.!?])\s+/);let d='';for(const q of ph){if(d&&(d+' '+q).length>158)break;d=d?d+' '+q:q;}return d.length<=158&&d.length>=60?d:t.slice(0,155).replace(/\s+\S*$/,'')+'…';};
 const favicon=base.match(/<link rel="icon"[^>]*>/)[0];
 function photo(m,alt){if(!m)return '';const a=m.variants[0],b=m.variants.find(x=>x.w===1280)||a;return `<img src="${a.src}" srcset="${a.src} ${a.w}w, ${b.src} ${b.w}w" sizes="(max-width:700px) 100vw, 50vw" width="${a.w}" height="${a.h}" alt="${esc(alt)}" loading="lazy" decoding="async">`;}
-function provenance(item){const s=source.sources[item.sourceId];return `<details class="d-source"><summary>Source et niveau de confirmation</summary><p>Niveau ${item.evidenceLevel||1} · obtention ou personnalisation décrite. L’achat séparé en jeu n’est pas confirmé.</p><p><a href="${s.url}" target="_blank" rel="noopener">${esc(s.title)}</a> · consultée le <time datetime="${s.consultedAt}">${s.consultedAt.split('-').reverse().join('/')}</time>. Publication de la source : ${s.publishedAt||'date non indiquée'}.</p></details>`;}
-function gallery(list,name){if(list.length<2)return '';return `<details class="d-gallery"><summary>Voir les ${list.length-1} autres vues officielles</summary><div>${list.slice(1).map(m=>`<figure>${photo(m,name+' : '+m.titre)}<figcaption>${esc(m.titre)} · © Rockstar Games / Take-Two Interactive</figcaption></figure>`).join('')}</div></details>`;}
+function provenance(item){const s=source.sources[item.sourceId];return `<details class="d-source"><summary>Source et niveau de confirmation</summary><p>Niveau ${item.evidenceLevel||1}, obtention ou personnalisation décrite. L’achat séparé en jeu n’est pas confirmé.</p><p><a href="${s.url}" target="_blank" rel="noopener">${esc(s.title)}</a>, consultée le <time datetime="${s.consultedAt}">${s.consultedAt.split('-').reverse().join('/')}</time>. Publication de la source : ${s.publishedAt||'date non indiquée'}.</p></details>`;}
+function gallery(list,name){if(list.length<2)return '';return `<details class="d-gallery"><summary>Voir les ${list.length-1} autres vues officielles</summary><div>${list.slice(1).map(m=>`<figure>${photo(m,name+' : '+m.titre)}<figcaption>${esc(m.titre)}, © Rockstar Games, Take-Two Interactive</figcaption></figure>`).join('')}</div></details>`;}
 /* v7.56 (lot 3, STYLE-03) : les vues officielles d'une adresse se parcourent directement sur l'image (flèches, position,
    clavier, balayage ; catalogue.js). Sans script : la première vue est affichée et les autres suivent, visibles (feuille
    <noscript>). Les flèches sont écrites masquées et ne sont montrées que si le script est là et qu'il y a plus d'une vue. */
@@ -60,19 +60,19 @@ function carousel(list,name){
  const slides=list.map((m,i)=>`<div class="d-car-slide${i?'':' is-current'}" data-car-i="${i}" data-car-title="${esc(m.titre)}" data-car-id="${esc(m.id)}"${i?' aria-hidden="true"':''}>${photo(m,name+' : '+m.titre)}</div>`).join('');
  return `<figure class="d-car" data-car data-car-n="${list.length}" aria-roledescription="carrousel" aria-label="${esc(name)} : ${list.length} vues officielles"><div class="d-car-track">${slides}`
   +`<button type="button" class="d-car-bt d-car-bt--prev" data-car-prev aria-label="Vue précédente" hidden>${CHEV}</button><button type="button" class="d-car-bt d-car-bt--next" data-car-next aria-label="Vue suivante" hidden>${CHEV}</button>`
-  +`<div class="d-car-nav" hidden><span class="d-car-pos" data-car-pos>1 / ${list.length}</span><span class="d-car-dots" data-car-dots role="group" aria-label="Choisir une vue"></span></div></div>`
-  +`<figcaption class="d-car-cap"><span class="d-car-cap-t" data-car-cap aria-live="polite">${esc(list[0].titre)}</span><span class="d-car-cap-c">© Rockstar Games / Take-Two Interactive · <a href="medias.html#media-${esc(list[0].id)}" data-car-credit>crédits et source</a></span></figcaption></figure>`;
+  +`<div class="d-car-nav" hidden><span class="d-car-pos" data-car-pos>1 sur ${list.length}</span><span class="d-car-dots" data-car-dots role="group" aria-label="Choisir une vue"></span></div></div>`
+  +`<figcaption class="d-car-cap"><span class="d-car-cap-t" data-car-cap aria-live="polite">${esc(list[0].titre)}</span><span class="d-car-cap-c">© Rockstar Games, Take-Two Interactive, <a href="medias.html#media-${esc(list[0].id)}" data-car-credit>crédits et source</a></span></figcaption></figure>`;
 }
 function card(item){const media=item.images[0];return `<article class="d-card" id="${item.id}" data-d-reveal>
  ${photo(media,(item.nameKind==='official-description'?'Visuel du contenu décrit : ':'')+item.name+', capture officielle Rockstar Games')}
  <div class="d-card-body">${item.mediaCaption?`<p class="d-media-cap">${esc(item.mediaCaption)} <a href="medias.html#media-${esc(media.id)}">Crédits</a></p>`:''}<p class="d-label">${esc(item.condition)}</p><h3>${esc(item.name)}</h3><p>${esc(item.description)}</p>
- ${item.trackable?'<p class="d-status">Obtention documentée · prix séparé inconnu</p>':'<p class="d-status">Collection annoncée · détail des pièces à documenter</p>'}
+ ${item.trackable?'<p class="d-status">Obtention documentée, prix séparé inconnu</p>':'<p class="d-status">Collection annoncée, détail des pièces à documenter</p>'}
  ${item.nameKind==='official-description'?'<p class="d-label d-label--note">Libellé descriptif fondé sur la présentation officielle.</p>':''}
  ${item.trackable?`<label class="d-check" hidden><input type="checkbox" data-acq-toggle="${item.id}"> J’ai obtenu ${esc(item.name)}</label>`:''}
  <div class="d-actions">${item.ref?`<a href="${item.url}">Ouvrir la fiche existante</a>`:''}${item.calculatorCompatible?`<a href="/calculateurs.html?tool=purchase&amp;type=${item.type}&amp;id=${item.id}&amp;from=fiche#atelier">Simuler un budget personnel</a>`:''}</div>
  ${provenance(item)}${gallery(item.images,item.name)}
  </div></article>`;}
-function serviceCard(item){return `<article class="d-card d-card--adresse" data-d-reveal>${carousel(item.images,item.name)}<div class="d-card-body"><p class="d-label">${esc(item.condition)}</p><h3><a href="${item.url}">${esc(item.name)}</a></h3><p>${esc(item.description)}</p><p class="d-status">Service annoncé · propriété du commerce non confirmée</p>${provenance(item)}</div></article>`;}
+function serviceCard(item){return `<article class="d-card d-card--adresse" data-d-reveal>${carousel(item.images,item.name)}<div class="d-card-body"><p class="d-label">${esc(item.condition)}</p><h3><a href="${item.url}">${esc(item.name)}</a></h3><p>${esc(item.description)}</p><p class="d-status">Service annoncé, propriété du commerce non confirmée</p>${provenance(item)}</div></article>`;}
 // v7.40 : les puces « Explorer les contenus documentés » sont générées par outils/site-shell.cjs (chips) et posées en bas de chaque page de section par sync-site.cjs.
 const contextual=()=>'';
 const frDate=iso=>iso?iso.split('-').reverse().join('/'):null;
@@ -96,9 +96,9 @@ function sourcesSection(num,entries,lede){
 function rockstarSection(num,R){return S.section({id:R.id,num,kicker:'Sources officielles',title:'Ce que Rockstar a dit et montré',icon:'film',tone:'paper',lede:esc(R.lede)},S.timeline(R.items)+para(R.p));}
 /* v7.56 (lot 3, STYLE-01) : une section de liste est toujours opaque (classe ed--list) : les rails colorés des bords de page ne
    passent plus derrière une liste au fond « papier » (Tatouages, Personnalisation des armes), qui semblait bordée de côté. */
-function listSection(num,fam,opts={}){const d=C.load().families[fam];return S.section({id:d.section,num,kicker:'Liste dépliable · '+C.counterText(fam),title:d.titre,icon:'liste',tone:opts.tone||'paper2',accent:opts.accent||'amber',cls:'ed--list',fam,lede:esc(d.intro)},C.listBox(fam,{open:!!opts.open}));}
+function listSection(num,fam,opts={}){const d=C.load().families[fam];return S.section({id:d.section,num,kicker:'Liste dépliable, '+C.counterText(fam),title:d.titre,icon:'liste',tone:opts.tone||'paper2',accent:opts.accent||'amber',cls:'ed--list',fam,lede:esc(d.intro)},C.listBox(fam,{open:!!opts.open}));}
 function placesSection(num,L,opts={}){
- const groups=L.groups.map(g=>({title:g.title,items:g.lieux.map(id=>{const p=C.place(id);return {id,name:p.name,where:S.STATUS_LABEL[p.statut]+(p.region?' · '+p.region:'')};})}));
+ const groups=L.groups.map(g=>({title:g.title,items:g.lieux.map(id=>{const p=C.place(id);return {id,name:p.name,where:S.STATUS_LABEL[p.statut]+(p.region?', '+p.region:'')};})}));
  return S.section({id:L.id,num,kicker:'Sur la carte',title:opts.title||'Où on s’attend à en trouver',icon:'carte',tone:'paper2',accent:'coral',lede:esc(L.lede)},(opts.before||'')+S.defs()+S.places(groups)+para(L.p));
 }
 /* v7.43 (lot 6) : cartes-ateliers. Un atelier = une entreprise du site (fiche entreprises/<id>.html) ou une enseigne vue sur la
@@ -113,7 +113,7 @@ const LOCM=require('./localisateur.cjs');
 function atelierCard(a,n){
  const biz=a.business?ed.businesses.find(b=>b.id===a.business):null;if(a.business&&!biz)throw Error('Atelier inconnu : '+a.business);
  const name=biz?biz.name:a.name;const p=a.lieu?C.place(a.lieu):null;if(a.lieu&&!p)throw Error('Lieu inconnu : '+a.lieu);
- const where=p?'Sur la carte'+(p.region?' · '+p.region:''):'Pas encore placé sur la carte';
+ const where=p?'Sur la carte'+(p.region?', '+p.region:''):'Pas encore placé sur la carte';
  const m=biz&&biz.media&&biz.media.length?MEDIAS[biz.media[0]]:null;
  const visual=m?'<img src="'+esc(m.variants[0].src)+'" width="'+m.variants[0].w+'" height="'+m.variants[0].h+'" alt="" loading="lazy" decoding="async">':'<span class="ed-at-ico" aria-hidden="true">'+S.icon(a.fam==='perso-armes'?'viseur':'carrosserie')+'</span>';
  return '<li class="ed-at'+(p?'':' ed-at--sans')+'"'+(p?' data-atelier="'+esc(a.lieu)+'"':'')+'><span class="ed-at-n" aria-hidden="true">'+(n||'·')+'</span><span class="ed-at-visual">'+visual+'</span>'
@@ -168,7 +168,7 @@ function glanceSection(num){
   const rep=sante?(e.valeur+' % de vie dans '+e.jeu):(typeof e.valeur==='number'&&e.unite==='armure'?e.valeur+' % d’armure dans '+e.jeu:null);
   /* v7.52 : deux lieux du même nom (deux stations Xero) ne s’écrivent plus deux fois : « Xero Gas Station (2 lieux) ». */
   const seen=new Map();for(const o of it.ou_le_trouver){const n=o.lieu?C.place(o.lieu).name:o.type;if(n)seen.set(n,(seen.get(n)||0)+(o.lieu?1:0));}
-  const where=[...seen].slice(0,2).map(([n,k])=>k>1?n+' ('+k+' lieux)':n).join(' · ');
+  const where=[...seen].slice(0,2).map(([n,k])=>k>1?n+' ('+k+' lieux)':n).join(', ');
   /* v7.69 (Téva : « la partie consommable fait ultra brouillon ») : carte lisible d’un coup d’œil. Bandeau coloré de la
      catégorie avec son pictogramme, nom, ce que la source en dit (description de la liste), où en trouver ; prix et effet,
      encore inconnus pour tous, en petites lignes discrètes ; repère de la série à part. Les quatre faits restent dans la
@@ -184,7 +184,7 @@ function glanceSection(num){
      v7.77 : silhouette « teaser », petite (384 px) ou grande (960 px) selon la largeur de la carte et l'écran. */
   const IL=require('./illustrations/index.cjs'),own=it.media?L.ctx.medias[it.media]:null,il=!own&&IL.has('consommables',it.id),cv=C.catVisual(cat);
   const pic=own?(()=>{const v=own.variants.find(x=>x.w===480)||own.variants[0];return '<img src="'+esc(v.src.replace(/^\//,''))+'" width="'+v.w+'" height="'+v.h+'" alt="'+esc(own.alt||own.titre||it.nom)+'" loading="lazy" decoding="async">';})():il?'<img src="'+esc(IL.srcSmall('consommables',it.id))+'" srcset="'+esc(IL.srcSmall('consommables',it.id))+' '+IL.PW+'w, '+esc(IL.src('consommables',it.id))+' '+IL.W+'w" sizes="(max-width: 600px) 92vw, 380px" width="'+IL.W+'" height="'+IL.H+'" alt="'+esc('Illustration Leonidakit : '+it.nom)+'" loading="lazy" decoding="async">':cv?'<img src="'+esc(cv.src)+'" width="'+cv.w+'" height="'+cv.h+'" alt="'+esc('Illustration de la catégorie « '+cat.label+' »')+'" loading="lazy" decoding="async">':'';
-  const media=pic?'<div class="cg-media'+(own?' cg-media--own':il?' cg-media--illus':' cg-media--cat')+'"'+(own?'':il?' title="'+esc(C.ILLUS_TITLE)+'"':' title="Visuel officiel : illustration de la catégorie, pas de l’objet"')+'>'+pic+'<span class="cg-media-l">'+(own?'Visuel officiel':il?'Illustration Leonidakit':'Illustration · visuel officiel')+'</span></div>':'';
+  const media=pic?'<div class="cg-media'+(own?' cg-media--own':il?' cg-media--illus':' cg-media--cat')+'"'+(own?'':il?' title="'+esc(C.ILLUS_TITLE)+'"':' title="Visuel officiel : illustration de la catégorie, pas de l’objet"')+'>'+pic+'<span class="cg-media-l">'+(own?'Visuel officiel':il?'Illustration Leonidakit':'Illustration, visuel officiel')+'</span></div>':'';
   return '<article class="cg-card cg-cat-'+esc(it.categorie)+'" data-cg-id="'+esc(it.id)+'" data-cg-cat="'+esc(it.categorie)+'" style="view-transition-name:cg-'+esc(it.id)+(typeof cat.teinte==='number'?';--ch:'+cat.teinte:'')+'">'+media+'<div class="cg-top"><span class="cg-ico" aria-hidden="true">'+S.icon(cat.icon)+'</span><div class="cg-head"><h4 class="cg-nom">'+esc(it.nom)+'</h4><span class="cg-cat">'+esc(cat.label)+'</span></div>'+glancePip(it.statut)+'</div>'
    +'<div class="cg-body">'+(it.description?'<p class="cg-desc">'+esc(it.description)+'</p>':'')+'<dl class="cg-facts">'
    +'<div class="cg-f-ou"><dt>Où</dt><dd>'+esc(where||'Emplacement à venir')+'</dd></div>'
@@ -216,14 +216,14 @@ function glanceSection(num){
   const rows=tiers.map((it,i)=>{const e=it.effet,acc=FD.accessCell(it),pr=it.prix_repere_serie||{};
    const price=typeof pr.valeur==='number'?pr.valeur.toLocaleString('fr-FR').replace(/\u202f|\u00a0/g,'\u202f')+'\u00a0$':null;
    const seen=new Map();for(const o of it.ou_le_trouver||[]){const n=o.lieu?C.place(o.lieu).name:o.type;if(n)seen.set(n,(seen.get(n)||0)+(o.lieu?1:0));}
-   const where=[...seen].slice(0,2).map(([n,k])=>k>1?n+' ('+k+' lieux)':n).join(' · ');
+   const where=[...seen].slice(0,2).map(([n,k])=>k>1?n+' ('+k+' lieux)':n).join(', ');
    return '<li class="rk-tier" data-rk-level="'+e.valeur+'" style="--lvl:'+e.valeur+';--i:'+i+'"><article class="cg-card cg-card--rack cg-cat-protection" data-cg-id="'+esc(it.id)+'" data-cg-cat="protection">'
     +'<button type="button" class="rk-pick" data-rk-pick="'+e.valeur+'" aria-pressed="false"><span class="rk-num" aria-hidden="true">'+ROMAN[i]+'</span><span class="rk-pick-t"><span class="cg-nom rk-nom">'+esc(it.nom)+'</span><span class="rk-sub">'+esc(it.description||'')+'</span></span>'
     +'<span class="rk-bar" role="img" aria-label="'+esc(e.texte+' dans '+e.jeu)+'"><i></i><i></i><i></i><i></i><i></i></span><span class="rk-val"><b>'+e.valeur+'<small>%</small></b><span>'+esc('armure dans '+e.jeu)+'</span></span></button>'
-    +'<div class="rk-meta">'+(price?'<span class="rk-price"><b>'+price+'</b><span>'+esc('repère '+pr.jeu+(pr.note?' · '+pr.note:''))+'</span></span>':'')+glancePip(it.statut)+'</div>'
+    +'<div class="rk-meta">'+(price?'<span class="rk-price"><b>'+price+'</b><span>'+esc('repère '+pr.jeu+(pr.note?', '+pr.note:''))+'</span></span>':'')+glancePip(it.statut)+'</div>'
     +'<dl class="cg-facts rk-facts"><div class="cg-f-ou"><dt>Où</dt><dd>'+esc(where||'Emplacement à venir')+'</dd></div><div class="cg-f-use"><dt>À quoi ça sert</dt><dd>Encaisser les coups</dd></div><div class="cg-f-prix"><dt>Prix</dt><dd>'+esc(acc.price)+'</dd></div><div class="cg-f-effet"><dt>Protection</dt><dd>'+esc('Protection : à confirmer')+' <small>'+esc('Repère de la série : '+e.valeur+' % d’armure dans '+e.jeu)+'</small></dd></div></dl>'
     +'<p class="cg-actions rk-actions"><a class="cg-link" href="#'+esc('consommables-'+it.id)+'">Fiche complète</a><label class="cg-cmp" hidden><input type="checkbox" data-cg-cmp="'+esc(it.id)+'"> Comparer</label></p></article></li>';}).join('');
-  const head=gta6.map(it=>{const seen=new Map();for(const o of it.ou_le_trouver||[]){const n=o.lieu?C.place(o.lieu).name:o.type;if(n)seen.set(n,(seen.get(n)||0)+(o.lieu?1:0));}const where=[...seen].slice(0,2).map(([n,k])=>k>1?n+' ('+k+' lieux)':n).join(' · ');const acc=FD.accessCell(it);const pr=it.prix_repere_serie||{};
+  const head=gta6.map(it=>{const seen=new Map();for(const o of it.ou_le_trouver||[]){const n=o.lieu?C.place(o.lieu).name:o.type;if(n)seen.set(n,(seen.get(n)||0)+(o.lieu?1:0));}const where=[...seen].slice(0,2).map(([n,k])=>k>1?n+' ('+k+' lieux)':n).join(', ');const acc=FD.accessCell(it);const pr=it.prix_repere_serie||{};
    return '<article class="cg-card cg-card--rack rk-gta6 cg-cat-protection" data-cg-id="'+esc(it.id)+'" data-cg-cat="protection"><div class="rk-gta6-top"><span class="rk-gta6-k">GTA VI</span><h4 class="cg-nom rk-gta6-t">'+esc(it.nom)+'</h4>'+glancePip(it.statut)+'</div><p class="rk-gta6-p">'+esc(it.description||'')+'</p>'
     +'<dl class="cg-facts rk-facts"><div class="cg-f-ou"><dt>Où</dt><dd>'+esc(where||'Emplacement à venir')+'</dd></div><div class="cg-f-use"><dt>À quoi ça sert</dt><dd>Encaisser les coups</dd></div><div class="cg-f-prix"><dt>Prix</dt><dd>'+esc(acc.price)+'</dd></div><div class="cg-f-effet"><dt>Protection</dt><dd>Protection : à confirmer'+(typeof pr.valeur==='number'?' <small>'+esc('Repère de la série : '+pr.valeur.toLocaleString('fr-FR')+' $ dans '+pr.jeu+(pr.note?', '+pr.note:''))+'</small>':'')+'</dd></div></dl>'
     +'<p class="cg-actions rk-actions"><a class="cg-link" href="#'+esc('consommables-'+it.id)+'">Fiche complète</a>'+(it.lien?'<a class="cg-link rk-link" href="'+esc(it.lien.href)+'">'+esc(it.lien.label)+'</a>':'')+'<label class="cg-cmp" hidden><input type="checkbox" data-cg-cmp="'+esc(it.id)+'"> Comparer</label></p></article>';}).join('');
@@ -248,7 +248,7 @@ for(const c of source.categories.filter(c=>c.alias)){
  const target=c.alias,[file,hash]=target.slice(1).split('#');
  const dest=source.categories.find(x=>x.route===('/'+file))?.label||(file==='armes.html'?'Armurerie':file);
  fs.writeFileSync(path.join(root,c.route.slice(1)),`<!DOCTYPE html>
-<html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>${esc(c.label)} — cette page a rejoint ${esc(dest)} | Leonidakit</title><meta name="robots" content="noindex, follow"><link rel="canonical" href="https://www.leonidakit.com${target}"><meta http-equiv="refresh" content="0; url=${target}">${favicon}
+<html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>${esc(c.label)} : cette page a rejoint ${esc(dest)} | Leonidakit</title><meta name="robots" content="noindex, follow"><link rel="canonical" href="https://www.leonidakit.com${target}"><meta http-equiv="refresh" content="0; url=${target}">${favicon}
 <link rel="stylesheet" href="style.css"></head>
 <body><main id="main" class="shell" style="padding:48px 0"><h1>${esc(c.label)}</h1><p>Cette section fait maintenant partie de <a href="${target}">${esc(dest)}</a>. Tu y es redirigé automatiquement.</p></main></body></html>
 `);
@@ -258,7 +258,7 @@ for(const c of source.categories.filter(c=>c.id!=='garages'&&!c.alias)){
  const own=items.filter(x=>x.category===c.id),tracked=own.filter(x=>x.trackable),editorial=own.filter(x=>!x.trackable),svc=services.filter(x=>x.category===c.id);
  const E=EDITO[c.id];if(!E||!E.nav)throw Error('Contenu éditorial absent pour la catégorie '+c.id);
  const pile=visuals.STACKS[c.id]?visuals.stack(c.id):'';
- const head=`<section class="page-head shell lk-glow">${pile?'<div class="lk-head-grid"><div>':''}<p class="fiche-cat">GTA VI · contenus documentés</p><h1>${esc(c.label)}</h1><p class="lede">${esc(c.intro)}</p><p class="d-intro-note">${esc(c.limit)}</p>${contextual(c.id)}${pile?'</div>'+pile+'</div>':''}</section>`;
+ const head=`<section class="page-head shell lk-glow">${pile?'<div class="lk-head-grid"><div>':''}<p class="fiche-cat">GTA VI, contenus documentés</p><h1>${esc(c.label)}</h1><p class="lede">${esc(c.intro)}</p><p class="d-intro-note">${esc(c.limit)}</p>${contextual(c.id)}${pile?'</div>'+pile+'</div>':''}</section>`;
  const parts=[S.nav(E.nav,'Sections de la page '+c.label)];let n=0;const ld=[];
  const vars={nStyle,nConsommables,nPerso};
  if(c.id==='customizations'){
@@ -297,7 +297,7 @@ for(const c of source.categories.filter(c=>c.id!=='garages'&&!c.alias)){
  }else{
   /* v7.69 (« rien ne doit faire brouillon ») : une section sans contenu vérifié montre le gabarit de ses futures fiches
      (visuel, nom, statut, case « J’ai obtenu »), sans aucun nom, prix ni image inventés ; les cartes sont décoratives (aria-hidden). */
-  const skel='<article class="d-card d-card--skel" aria-hidden="true"><div class="d-skel-img"><span class="d-skel-tag">Visuel officiel à venir</span></div><div class="d-card-body"><p class="d-label">Fiche à venir</p><span class="d-skel-line d-skel-line--title"></span><span class="d-skel-line"></span><span class="d-skel-line d-skel-line--short"></span><p class="d-status">Prix à venir · achat à confirmer</p><span class="d-skel-check">J’ai obtenu…</span></div></article>';
+  const skel='<article class="d-card d-card--skel" aria-hidden="true"><div class="d-skel-img"><span class="d-skel-tag">Visuel officiel à venir</span></div><div class="d-card-body"><p class="d-label">Fiche à venir</p><span class="d-skel-line d-skel-line--title"></span><span class="d-skel-line"></span><span class="d-skel-line d-skel-line--short"></span><p class="d-status">Prix à venir, achat à confirmer</p><span class="d-skel-check">J’ai obtenu…</span></div></article>';
   const empty=`<div class="d-empty"><h3>En attente de données officielles</h3><p>${esc(c.empty)}</p><p class="d-skel-note">Chaque fiche aura ce format : visuel officiel, nom, statut, prix quand il est publié, et une case « J’ai obtenu » qui compte dans Ma progression.</p></div><div class="d-grid d-grid--3 d-skel-grid">${skel.repeat(3)}</div>`;
   parts.push(cardsSection(++n,{id:'contenus',kicker:'Sources officielles',title:tracked.length?'Ce que Rockstar a décrit':'Où en est cette section',icon:'film',tone:'paper',lede:tracked.length?tracked.length+' contenus documentés, chacun avec sa source et son niveau de confirmation. Tu peux les cocher ; le compte se retrouve dans Ma progression.':c.empty},tracked.map(card),tracked.length?'':empty));
   if(c.id==='boats')parts.push(S.section({id:'observations',num:++n,kicker:'Dans les médias',title:'Aperçus dans les médias',icon:'loupe',tone:'paper2',accent:'coral',lede:esc('Les autres embarcations restent dans le catalogue Véhicules, avec leur niveau d’identification. Un nom reconnu ou une apparition dans un trailer ne prouve pas un achat.')},'<div class="d-actions"><a href="/vehicules.html#cat=bateau">Consulter les embarcations recensées</a><a href="/vehicules.html#cat=avion">Avions recensés</a><a href="/vehicules.html#cat=helico">Hélicoptères recensés</a></div>'));

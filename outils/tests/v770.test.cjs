@@ -35,7 +35,7 @@ test('fiches du monde : galerie légendée, localisateur avec « Où le/la trouv
     const d = doc(f), withGallery = !/^(demeures|planques)\//.test(f); /* une seule vue officielle pour les demeures et les planques */
     const slides = d.querySelectorAll('.lore-slide .lore-slide-txt');
     if (withGallery) assert.ok(slides.length >= 2, f + ' : galerie');
-    for (const s of slides) { assert.ok(s.querySelector('.lst-k').textContent.trim().length > 2, f + ' : légende de la vue'); assert.match(s.querySelector('em').textContent, /^\d\d \/ \d\d$/, f + ' : compteur'); }
+    for (const s of slides) { assert.ok(s.querySelector('.lst-k').textContent.trim().length > 2, f + ' : légende de la vue'); assert.match(s.querySelector('em').textContent, /^\d+ sur \d+$/, f + ' : compteur'); }
     assert.ok(d.querySelector('.lk-loc-status') && d.querySelector('.lk-loc-status').textContent.includes(lede), f + ' : ' + lede);
     const lds = [...d.querySelectorAll('script[type="application/ld+json"]')].map(s => JSON.parse(s.textContent));
     const page = lds.find(x => x['@type'] === 'WebPage');
@@ -149,7 +149,7 @@ test('carte : le calcul de trajet donne un temps pour chaque moyen de déplaceme
   assert.match(js, /id:'helico',\s*nom:'En hélicoptère'/);
   assert.match(js, /rl-list--all/);
   for (const id of ['pied', 'course', 'velo', 'moto', 'voiture', 'bateau', 'helico', 'avion']) assert.ok(new RegExp("id:'" + id + "'").test(js), 'mode ' + id);
-  assert.match(read('style.css'), /\.rl-list--all/);
+  assert.match(read('carte-page.css'), /\.rl-list--all/); /* v7.94 : règles de la carte dans leur propre feuille */
   const faq = read('carte.html');
   assert.ok(faq.includes('à pied, en courant, à vélo, moto, voiture, bateau, hélicoptère, avion'), 'FAQ');
 });

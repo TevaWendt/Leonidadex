@@ -174,14 +174,14 @@ test('carrousel (jsdom) : flèches et points activés, « suivant » / « préc�
   assert.ok(car.classList.contains('is-ready') && !car.querySelector('[data-car-prev]').hidden && !car.querySelector('.d-car-nav').hidden);
   assert.equal(car.querySelectorAll('.d-car-dot').length, 4);
   const pos = () => car.querySelector('[data-car-pos]').textContent, cap = () => car.querySelector('[data-car-cap]').textContent, cur = () => car.querySelector('.d-car-slide.is-current').dataset.carI;
-  assert.equal(pos(), '1 / 4');
-  fire(p, car.querySelector('[data-car-next]')); assert.equal(pos(), '2 / 4'); assert.equal(cur(), '1'); assert.equal(cap(), 'Stock 305 Clothing Store 02');
+  assert.equal(pos(), '1 sur 4');
+  fire(p, car.querySelector('[data-car-next]')); assert.equal(pos(), '2 sur 4'); assert.equal(cur(), '1'); assert.equal(cap(), 'Stock 305 Clothing Store 02');
   assert.equal(car.querySelector('[data-car-credit]').getAttribute('href'), 'medias.html#media-stock-305-clothing-store-02');
   assert.equal(car.querySelector('[data-car-next]').getAttribute('aria-label'), 'Vue suivante : Stock 305 Clothing Store 03');
   assert.equal(car.querySelector('.d-car-dot[aria-current="true"]').getAttribute('aria-label'), 'Vue 2 sur 4 : Stock 305 Clothing Store 02');
-  fire(p, car.querySelector('[data-car-prev]')); fire(p, car.querySelector('[data-car-prev]')); assert.equal(pos(), '4 / 4', 'boucle vers la dernière vue');
-  car.dispatchEvent(new p.w.KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true })); assert.equal(pos(), '1 / 4', 'flèche droite du clavier');
-  fire(p, car.querySelectorAll('.d-car-dot')[2]); assert.equal(pos(), '3 / 4');
+  fire(p, car.querySelector('[data-car-prev]')); fire(p, car.querySelector('[data-car-prev]')); assert.equal(pos(), '4 sur 4', 'boucle vers la dernière vue');
+  car.dispatchEvent(new p.w.KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true })); assert.equal(pos(), '1 sur 4', 'flèche droite du clavier');
+  fire(p, car.querySelectorAll('.d-car-dot')[2]); assert.equal(pos(), '3 sur 4');
   assert.ok([...car.querySelectorAll('.d-car-slide:not(.is-current)')].every(s => s.getAttribute('aria-hidden') === 'true'));
 });
 

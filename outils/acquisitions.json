@@ -271,7 +271,7 @@
       "sourceId": "ultimate",
       "evidenceLevel": 1,
       "acquisition": "edition-bonus",
-      "condition": "Kit de l’Édition Ultimate · Vapid Ganado de Jason",
+      "condition": "Kit de l’Édition Ultimate, Vapid Ganado de Jason",
       "description": "Kit de modifications dédié au pick-up de Jason. Les performances et le coût séparé ne sont pas publiés.",
       "media": [
         "ganado-retro-build"
@@ -289,7 +289,7 @@
       "sourceId": "vintage",
       "evidenceLevel": 1,
       "acquisition": "preorder-bonus",
-      "condition": "Pack Vintage Vice City · la plupart des armes",
+      "condition": "Pack Vintage Vice City, la plupart des armes",
       "description": "Motif tropical inspiré de la chemise de Tommy Vercetti. La compatibilité arme par arme n’est pas détaillée.",
       "media": [
         "vintage-vice-city-weapon-pattern-01"
@@ -307,7 +307,7 @@
       "sourceId": "ultimate",
       "evidenceLevel": 1,
       "acquisition": "edition-bonus",
-      "condition": "Édition Ultimate · Watson Bay",
+      "condition": "Édition Ultimate, Watson Bay",
       "description": "Associé au Dominator Buggy : stationnement, casier d’armes et dépôt de biens destinés à un receleur.",
       "media": [],
       "trackable": true,
@@ -323,7 +323,7 @@
       "sourceId": "vintage",
       "evidenceLevel": 1,
       "acquisition": "preorder-bonus",
-      "condition": "Pack Vintage Vice City · près d’Ocean Beach",
+      "condition": "Pack Vintage Vice City, près d’Ocean Beach",
       "description": "Garage privé associé au Stanier : casier d’armes et dépôt de biens destinés à un receleur.",
       "media": [],
       "trackable": true,

@@ -45,7 +45,7 @@ test('fiches véhicules sans visuel officiel : écran « sous tous les angles »
     for (const s of imgs) { assert.equal(s.getAttribute('viewBox'), '0 0 240 120'); assert.equal(s.getAttribute('aria-hidden'), 'true'); assert.ok(s.classList.contains('veh-art--schema')); assert.equal(s.getAttribute('style'), null, 'plus de hauteur fixe'); }
     assert.ok(imgs[0].innerHTML.includes('<g transform='), v.id + ' : le profil garde sa variation propre');
     const view = ang.querySelector('button.ang-view[data-ang-next]'); assert.ok(view); assert.equal(view.getAttribute('type'), 'button'); assert.equal(view.getAttribute('aria-label'), null, 'assemblage v7.91 : le nom accessible est le contenu (angle, compteur, indication)'); assert.ok(sp(view.textContent).includes('Cliquer : angle suivant'));
-    assert.equal(ang.querySelector('[data-ang-label]').textContent, 'Profil'); assert.equal(ang.querySelector('[data-ang-count]').textContent, '1/4');
+    assert.equal(ang.querySelector('[data-ang-label]').textContent, 'Profil'); assert.equal(ang.querySelector('[data-ang-count]').textContent, '1 sur 4');
     assert.equal(sp(ang.querySelector('.ang-hint').textContent), 'Cliquer : angle suivant');
     const tabs = [...ang.querySelectorAll('.ang-tabs [data-ang-go]')];
     assert.deepEqual(tabs.map(t => t.textContent), ['Profil', 'Face', 'Arrière', 'Dessus']);
@@ -82,7 +82,7 @@ test('fiches armes : écran à trois angles (profil, dessus, face) à la place d
     assert.equal(ang.getAttribute('data-ang-n'), '3');
     assert.deepEqual([...ang.querySelectorAll('svg.ang-img')].map(s => s.getAttribute('data-ang-id')), ['profil', 'dessus', 'face'], a.id);
     assert.deepEqual([...ang.querySelectorAll('[data-ang-go]')].map(t => t.textContent), ['Profil', 'Dessus', 'Face']);
-    assert.equal(ang.querySelector('[data-ang-count]').textContent, '1/3');
+    assert.equal(ang.querySelector('[data-ang-count]').textContent, '1 sur 3');
     assert.match(d.getElementById(ang.getAttribute('aria-describedby')).textContent, /Schéma indicatif du type d’arme/);
   }
 });

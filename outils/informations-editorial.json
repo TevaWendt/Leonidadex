@@ -4,7 +4,7 @@
     "title": "À propos de Leonidakit",
     "description": "Pourquoi Leonidakit existe, comment chaque information est vérifiée, ce que le site compte, ce qui changera à la sortie de GTA VI, et qui est derrière.",
     "hero": {
-      "eyebrow": "LEONIDAKIT / LE PROJET",
+      "eyebrow": "LEONIDAKIT, LE PROJET",
       "h1": "Des faits sourcés avant la sortie.",
       "lede": "Leonidakit rassemble ce que Rockstar a montré de GTA VI, dit d’où vient chaque information, et te donne des outils pour décider : combien de temps pour un achat, où aller, quoi cocher.",
       "actions": [
@@ -389,8 +389,8 @@
   "verification": {
     "title": "Ce qui est confirmé sur GTA 6, et comment on le vérifie",
     "h1": "Ce qui est confirmé,<br>et comment on le vérifie.",
-    "description": "Ce que Rockstar a vraiment confirmé sur GTA 6 au 16 octobre 2026, ce qui ne l’est pas encore, et comment chaque fiche de Leonidakit le signale.",
-    "checkedAt": "2026-10-16",
+    "description": "Ce que Rockstar a vraiment confirmé sur GTA 6 au 17 octobre 2026, ce qui ne l’est pas encore, et comment chaque fiche de Leonidakit le signale.",
+    "checkedAt": "2026-10-17",
     "hero": {
       "eyebrow": "LA MÉTHODE",
       "lede": "GTA VI sort le 19 novembre 2026. D’ici là, une règle : ce que Rockstar a publié est écrit comme tel, le reste attend le jeu. Voici ce qui est officiel aujourd’hui, ce qui ne l’est pas encore, et comment les fiches le montrent.",
@@ -461,7 +461,7 @@
     "confirme": {
       "kicker": "Officiel aujourd’hui",
       "title": "Ce que Rockstar a confirmé",
-      "lede": "Les annonces officielles, relues le 16 octobre 2026. Chaque point renvoie à la page du site qui le détaille, et à sa source.",
+      "lede": "Les annonces officielles, relues le 17 octobre 2026. Chaque point renvoie à la page du site qui le détaille, et à sa source.",
       "items": [
         {
           "t": "Date et consoles",
@@ -615,7 +615,7 @@
     "pasEncore": {
       "kicker": "Pas encore annoncé",
       "title": "Ce que Rockstar n’a pas encore dit",
-      "lede": "Les questions qu’on nous pose le plus, sans réponse officielle au 16 octobre 2026.",
+      "lede": "Les questions qu’on nous pose le plus, sans réponse officielle au 17 octobre 2026.",
       "items": [
         {
           "t": "Une version PC",
@@ -697,7 +697,8 @@
       ],
       "coutsTitre": "Les coûts d’usage, poste par poste",
       "coutsLede": "Le carburant existe dans le jeu : on fait le plein dans les stations-service de l’Extended Look. Mais aucun prix ni aucune consommation n’est publié, et rien n’est annoncé pour les autres postes. Le calculateur peut les simuler si tu choisis une hypothèse.",
-      "fin": "Dès qu’une valeur est publiée ou relevée en jeu, elle s’affiche sur la fiche avec sa source et sa date."
+      "fin": "Dès qu’une valeur est publiée ou relevée en jeu, elle s’affiche sur la fiche avec sa source et sa date.",
+      "sheetLabel": "Une fiche du site : les cases en pointillé attendent le jeu, avec leur point d’interrogation."
     },
     "modeles": {
       "kicker": "Rapprochements",
@@ -738,7 +739,7 @@
     "tableau": {
       "kicker": "D’un coup d’œil",
       "title": "Le tableau de bord",
-      "lede": "Ce que Rockstar a confirmé, et ce qu’il n’a pas encore dit, au 16 octobre 2026. Un clic mène au détail.",
+      "lede": "Ce que Rockstar a confirmé, et ce qu’il n’a pas encore dit, au 17 octobre 2026. Un clic mène au détail.",
       "confirme": "Confirmé",
       "attente": "Pas encore annoncé",
       "nConfirme": "points confirmés",
@@ -1062,7 +1063,7 @@
     "publishedAt": "2026-10-16",
     "checkedAt": "2026-10-16",
     "hero": {
-      "eyebrow": "VÉHICULES · INSPIRATIONS RÉELLES",
+      "eyebrow": "VÉHICULES, INSPIRATIONS RÉELLES",
       "lede": "Une Grotti, une Vapid, une Pegassi : comme dans toute la série, les marques de GTA VI sont inventées, mais chaque modèle rappelle une vraie voiture. Voici, marque par marque, à quoi chaque véhicule du site est rapproché, et à quel point c’est sûr.",
       "actions": [
         {
@@ -1204,10 +1205,10 @@
     "stack": "prechargement",
     "stackLabel": "Trois visuels officiels de GTA VI",
     "publishedAt": "2026-10-16",
-    "checkedAt": "2026-10-16",
+    "checkedAt": "2026-10-17",
     "etat": "avant",
     "hero": {
-      "eyebrow": "PRÉCHARGEMENT · 12 NOVEMBRE 2026",
+      "eyebrow": "Préchargement, le 12 novembre 2026",
       "lede": "Le préchargement de GTA VI commence le 12 novembre 2026 à minuit, heure locale, une semaine avant la sortie du 19 : c’est écrit par l’assistance de Rockstar. La taille du téléchargement et l’heure de déblocage du 19, elles, ne sont pas encore annoncées. Cette page dit ce qui est officiel, comment s’y préparer sur PS5 et Xbox, et où tomberont les derniers chiffres.",
       "actions": [
         {
@@ -1231,6 +1232,11 @@
         "href": "#comment",
         "label": "Comment précharger",
         "fam": "munitions"
+      },
+      {
+        "href": "#temps",
+        "label": "Temps de téléchargement",
+        "fam": "combat"
       },
       {
         "href": "#boite",
@@ -1280,7 +1286,7 @@
       }
     ],
     "avant": {
-      "kicker": "Le point au 16 octobre 2026",
+      "kicker": "Le point au 17 octobre 2026",
       "title": "Quand commence le préchargement de GTA VI ?",
       "lede": "Le 12 novembre 2026, d’après l’assistance de Rockstar. Trois dates à retenir, chacune avec sa source.",
       "etatLabel": "Aujourd’hui",
@@ -1311,15 +1317,18 @@
           "steps": [
             {
               "t": "Précommande sur le PlayStation Store",
-              "d": "Avec le compte qui jouera. La précommande apparaît aussitôt dans ta bibliothèque de jeux, avec un compte à rebours."
+              "d": "Avec le compte qui jouera. La précommande apparaît aussitôt dans ta bibliothèque de jeux, avec un compte à rebours.",
+              "ill": "store"
             },
             {
               "t": "Vérifie la case du téléchargement automatique",
-              "d": "Dans la bibliothèque, ouvre le jeu précommandé puis son compte à rebours : si la case du contenu est cochée, il se télécharge seul dès qu’il est disponible."
+              "d": "Dans la bibliothèque, ouvre le jeu précommandé puis son compte à rebours : si la case du contenu est cochée, il se télécharge seul dès qu’il est disponible.",
+              "ill": "tick"
             },
             {
               "t": "Laisse la console en mode repos",
-              "d": "Dans les paramètres, active les mises à jour automatiques et « Rester connecté à Internet » en mode repos : le téléchargement part sans toi, à l’ouverture du préchargement."
+              "d": "Dans les paramètres, active les mises à jour automatiques et « Rester connecté à Internet » en mode repos : le téléchargement part sans toi, à l’ouverture du préchargement.",
+              "ill": "rest"
             }
           ]
         },
@@ -1330,15 +1339,18 @@
           "steps": [
             {
               "t": "Précommande sur le Microsoft Store",
-              "d": "Sur la console ou sur xbox.com, avec le compte qui jouera. Les codes Xbox ne sont pas limités à une région."
+              "d": "Sur la console ou sur xbox.com, avec le compte qui jouera. Les codes Xbox ne sont pas limités à une région.",
+              "ill": "store"
             },
             {
               "t": "Installation automatique en veille",
-              "d": "Un jeu que tu possèdes s’installe seul sur ta console principale si elle est en mode veille et si « Maintenir mes jeux et applications à jour » est activé."
+              "d": "Un jeu que tu possèdes s’installe seul sur ta console principale si elle est en mode veille et si « Maintenir mes jeux et applications à jour » est activé.",
+              "ill": "rest"
             },
             {
               "t": "Sinon, depuis « Mes jeux et applications »",
-              "d": "Mes jeux et applications, Bibliothèque complète, Jeux détenus : le jeu porte une icône de téléchargement ; sélectionne Installer. Ne rachète jamais le jeu si un prix s’affiche à la place d’Installer."
+              "d": "Mes jeux et applications, Bibliothèque complète, Jeux détenus : le jeu porte une icône de téléchargement ; sélectionne Installer. Ne rachète jamais le jeu si un prix s’affiche à la place d’Installer.",
+              "ill": "library"
             }
           ]
         }
@@ -1374,7 +1386,7 @@
     "pasConfirme": {
       "kicker": "Pas encore annoncé",
       "title": "La taille du jeu et l’heure du 19 : ce qui n’est pas confirmé",
-      "lede": "Au 16 octobre 2026, Rockstar n’a publié ni la taille du téléchargement, ni l’heure de déblocage du 19 novembre. Voici ce qu’on sait, et où ce sera annoncé.",
+      "lede": "Au 17 octobre 2026, Rockstar n’a publié ni la taille du téléchargement, ni l’heure de déblocage du 19 novembre. Voici ce qu’on sait, et où ce sera annoncé.",
       "ouLabel": "Où ce sera annoncé",
       "items": [
         {
@@ -1434,7 +1446,8 @@
           "t": "Mettre la console à jour",
           "d": "Une mise à jour système en attente retarde parfois un téléchargement. Fais-la avant le 12."
         }
-      ]
+      ],
+      "done": "Tout est prêt : il ne reste qu’à attendre le 12 novembre."
     },
     "faqKicker": "Questions",
     "faqTitle": "Les questions qu’on se pose sur le préchargement de GTA 6",
@@ -1445,7 +1458,13 @@
       },
       {
         "q": "Quelle est la taille de GTA 6 sur PS5 et Xbox ?",
-        "a": "Non communiquée au 16 octobre 2026. Elle sera visible sur la fiche du jeu des boutiques au plus tard à l’ouverture du préchargement ; cette page la reprendra avec sa source."
+        "a": "Non communiquée au 17 octobre 2026. Elle sera visible sur la fiche du jeu des boutiques au plus tard à l’ouverture du préchargement ; cette page la reprendra avec sa source."
+      },
+      {
+        "q": "Combien de temps prend le téléchargement de GTA 6 ?",
+        "a": "Ça dépend de la taille du jeu, pas encore annoncée, et de ton débit. Le calcul de cette page donne un ordre de grandeur : 100 Go à 100 Mbit/s demandent un peu plus de deux heures à débit constant.",
+        "href": "prechargement.html#temps",
+        "label": "Le calcul du temps de téléchargement"
       },
       {
         "q": "Peut-on précharger GTA 6 avec la version en boîte ?",
@@ -1565,7 +1584,74 @@
         "consultedAt": "2026-10-16",
         "statut": "officiel",
         "claim": "Les jeux possédés s’installent automatiquement sur la console principale en mode veille avec « Maintenir mes jeux et applications à jour » ; sinon Bibliothèque complète, Jeux détenus, Installer."
+      },
+      "gi-rdr2": {
+        "url": "https://www.gameinformer.com/index.php/2018/10/18/rockstar-confirms-red-dead-redemption-ii-install-sizes-ps4-digital-will-require-150gb",
+        "title": "Game Informer : Rockstar confirme les tailles d’installation de Red Dead Redemption II",
+        "short": "Game Informer",
+        "publisher": "Game Informer",
+        "publishedAt": "2018-10-18",
+        "consultedAt": "2026-10-17",
+        "statut": "vu",
+        "claim": "D’après la page d’assistance de Rockstar : 99 Go d’espace d’installation sur PlayStation 4, 107 Go sur Xbox One, et 50 Go de plus le temps d’installer la version numérique sur PS4."
       }
+    },
+    "temps": {
+      "kicker": "Combien de temps ?",
+      "title": "Le temps de téléchargement, selon ta connexion",
+      "lede": "La taille de GTA VI n’est pas annoncée. Tape une taille et ton débit : le résultat est ton calcul, pas une donnée du jeu. Les tailles de Red Dead Redemption 2 à sa sortie donnent un repère de la série.",
+      "calc": {
+        "title": "Ton temps de téléchargement",
+        "size": "Taille du jeu",
+        "sizeHint": "Pas annoncée au 17 octobre 2026 : tape une hypothèse. La page reprendra la vraie taille dès sa publication.",
+        "speed": "Ton débit",
+        "speedHint": "Débits courants",
+        "presets": [
+          {
+            "n": 20,
+            "label": "20 Mbit/s"
+          },
+          {
+            "n": 100,
+            "label": "100 Mbit/s"
+          },
+          {
+            "n": 500,
+            "label": "500 Mbit/s"
+          },
+          {
+            "n": 1000,
+            "label": "1 Gbit/s"
+          }
+        ],
+        "result": "Durée estimée",
+        "resultHint": "À débit constant, sans ralentissement de la boutique ni de la console. Un test de débit te donne ton chiffre réel.",
+        "empty": "Tape une taille"
+      },
+      "repereKicker": "Repère de la série",
+      "repereTitle": "Red Dead Redemption 2 à sa sortie, en 2018",
+      "reperes": [
+        {
+          "n": "99",
+          "unit": "Go",
+          "label": "sur PlayStation 4",
+          "src": "gi-rdr2"
+        },
+        {
+          "n": "107",
+          "unit": "Go",
+          "label": "sur Xbox One",
+          "src": "gi-rdr2"
+        },
+        {
+          "n": "?",
+          "unit": "Go",
+          "label": "GTA VI, pas annoncé",
+          "src": "ps-store",
+          "open": true
+        }
+      ],
+      "repereNote": "Tailles d’installation publiées par l’assistance de Rockstar en octobre 2018 et relevées par Game Informer. GTA VI est un autre jeu, sur d’autres consoles : ce repère ne prédit rien."
     }
   },
   "pc": {
@@ -1576,9 +1662,9 @@
     "stack": "pc",
     "stackLabel": "Trois visuels officiels de GTA VI",
     "publishedAt": "2026-10-16",
-    "checkedAt": "2026-10-16",
+    "checkedAt": "2026-10-17",
     "hero": {
-      "eyebrow": "PC · PAS ANNONCÉ",
+      "eyebrow": "PC : rien d’annoncé",
       "lede": "GTA VI sort le 19 novembre 2026 sur PlayStation 5 et Xbox Series X|S. Rockstar n’a annoncé ni version PC, ni date, ni page Steam. Voici ce qui est officiel, ce que la série a fait avant, où l’annonce arrivera, et pourquoi toute « version PC » proposée aujourd’hui est une arnaque.",
       "actions": [
         {
@@ -1625,7 +1711,7 @@
       }
     ],
     "officiel": {
-      "kicker": "Officiel au 16 octobre 2026",
+      "kicker": "Officiel au 17 octobre 2026",
       "title": "GTA VI sur PC : ce que Rockstar a annoncé",
       "lede": "Trois points, et pas un de plus.",
       "points": [
@@ -1656,14 +1742,18 @@
         {
           "texte": "Rockstar always starts on console",
           "lang": "en",
-          "qui": "Strauss Zelnick, Take-Two, à Bloomberg, 4 mai 2026",
-          "src": "pcworld-zelnick"
+          "qui": "Strauss Zelnick, patron de Take-Two",
+          "src": "pcworld-zelnick",
+          "quand": "4 mai 2026",
+          "ou": "à Bloomberg"
         },
         {
           "texte": "We’re launching GTA 6 as a single player experience on two major platforms",
           "lang": "en",
-          "qui": "Strauss Zelnick, assemblée des actionnaires de Take-Two, 17 septembre 2026",
-          "src": "inven-zelnick"
+          "qui": "Strauss Zelnick, patron de Take-Two",
+          "src": "inven-zelnick",
+          "quand": "17 septembre 2026",
+          "ou": "assemblée des actionnaires"
         }
       ]
     },
@@ -1693,9 +1783,42 @@
           "consoles": "2010-05-18",
           "pc": "2024-10-29",
           "src": "rs-rdr-pc"
+        },
+        {
+          "jeu": "Grand Theft Auto VI",
+          "consoles": "2026-11-19",
+          "pc": null,
+          "src": "rs-date"
         }
       ],
-      "note": "Trois jeux, trois écarts très différents : un an, un an et demi, quatorze ans. La seule chose qu’ils ont en commun : à chaque fois, la version PC a été annoncée par Rockstar sur son Newswire, quelques semaines avant sa sortie, et la date de GTA V sur PC a été repoussée deux fois avant d’arriver."
+      "note": "Trois jeux, trois écarts très différents : un an, un an et demi, quatorze ans. La seule chose qu’ils ont en commun : à chaque fois, la version PC a été annoncée par Rockstar sur son Newswire, quelques semaines avant sa sortie, et la date de GTA V sur PC a été repoussée deux fois avant d’arriver. Pour GTA VI, la ligne reste ouverte.",
+      "axe": {
+        "from": "2010-01-01",
+        "to": "2028-07-01",
+        "ticks": [
+          {
+            "iso": "2010-01-01",
+            "label": "2010"
+          },
+          {
+            "iso": "2014-01-01",
+            "label": "2014"
+          },
+          {
+            "iso": "2018-01-01",
+            "label": "2018"
+          },
+          {
+            "iso": "2022-01-01",
+            "label": "2022"
+          },
+          {
+            "iso": "2026-01-01",
+            "label": "2026"
+          }
+        ]
+      },
+      "openLabel": "pas annoncé"
     },
     "arnaque": {
       "kicker": "À retenir",
@@ -1952,9 +2075,9 @@
     "stack": "comparatif",
     "stackLabel": "Trois visuels officiels de GTA VI",
     "publishedAt": "2026-10-16",
-    "checkedAt": "2026-10-16",
+    "checkedAt": "2026-10-17",
     "hero": {
-      "eyebrow": "GTA VI FACE À GTA V",
+      "eyebrow": "GTA VI face à GTA V",
       "lede": "Treize ans séparent les deux jeux. Ce tableau met face à face ce que Rockstar a confirmé pour GTA VI et ce qu’on sait de GTA V, ligne par ligne, avec la source et la page du site qui détaille chaque point. Ce qui n’est pas annoncé reste vide, et c’est dit.",
       "actions": [
         {
@@ -2180,14 +2303,16 @@
         {
           "texte": "The map is twice the size of GTA 5’s map",
           "lang": "en",
-          "qui": "TGG (YouTube), rapportant les chiffres donnés par Rob Nelson, de Rockstar North, le 27 août 2026",
-          "src": "tgg-video"
+          "qui": "TGG, créateur reçu à Rockstar North, rapportant les chiffres de Rob Nelson",
+          "src": "tgg-video",
+          "quand": "27 août 2026"
         },
         {
           "texte": "the studio said, is three times as large as the playable area",
           "lang": "en",
-          "qui": "The New York Times, 27 août 2026, à propos de la carte entière face à celle de Red Dead Redemption 2",
-          "src": "nyt-carte"
+          "qui": "The New York Times, sur la carte entière face à celle de Red Dead Redemption 2 ; « the studio said »",
+          "src": "nyt-carte",
+          "quand": "27 août 2026"
         }
       ],
       "p": [
@@ -2195,7 +2320,21 @@
         "Aucune surface en km² n’existe, ni pour GTA VI, ni pour GTA V : Rockstar n’en a jamais publié. Sur le site, la carte interactive recense les lieux repérés dans les médias officiels, région par région ; elle ne mesure pas la surface du jeu."
       ],
       "lien": "Ouvrir la carte de Leonida",
-      "lien2": "Les six régions"
+      "lien2": "Les six régions",
+      "echelle": {
+        "a": {
+          "label": "GTA V",
+          "n": 1,
+          "sub": "la carte de Los Santos et son comté"
+        },
+        "b": {
+          "label": "GTA VI",
+          "n": 2,
+          "sub": "« twice the size », d’après Rob Nelson"
+        },
+        "caption": "Deux fois la carte de GTA V : c’est ce que rapporte TGG des propos de Rob Nelson, de Rockstar North. Les carrés montrent ce rapport, pas une mesure : Rockstar n’a publié aucune surface, pour aucun des deux jeux.",
+        "statut": "vu"
+      }
     },
     "nouveau": {
       "kicker": "Vu dans les présentations",

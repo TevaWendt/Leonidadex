@@ -306,8 +306,8 @@ test('T3-21 page « Ça vaut le coup ? » : pas remboursé sur 4 h → seuils di
   assert.equal(flat(res.querySelector('[data-c-number="roi-payback"]')?.textContent), 'Rien à rembourser');
   assert.doesNotMatch(all, /au moins 0 \$|après 0 min/);
   // « Ce qui décide la réponse » lit le moteur (avant : « Rien n’est encore calculable » sous une réponse calculée) ; courbe sans « 0 min »
-  assert.doesNotMatch(all, /Rien n’est encore calculable/); assert.match(all, /Remboursement — Rien à rembourser : il ne coûte rien au départ\./);
-  assert.match(all, /Avec ou sans l’achat — Après 10 h : \+100 000 \$ avec l’achat, prix enlevé\./);
+  assert.doesNotMatch(all, /Rien n’est encore calculable/); assert.match(all, /Remboursement : Rien à rembourser : il ne coûte rien au départ\./);
+  assert.match(all, /Avec ou sans l’achat : Après 10 h : \+100 000 \$ avec l’achat, prix enlevé\./);
   assert.match(all, /Il ne coûte rien : dès le départ, la ligne avec l’achat monte plus vite que celle sans\./);
   assert.deepEqual(p.errors, []); p.close();
 });
@@ -317,7 +317,7 @@ test('T3-22 page « Ça vaut le coup ? », nouvelle activité (scénario I) : à
   assert.match(flat(res.querySelector('.calc-answer')?.textContent), /^À l’équilibre : après 4 h, .* ne te laisse ni plus ni moins qu’en continuant ce que tu faisais\. Il n’est devant pour de bon qu’après 4 h 15 de jeu \(15 missions finies\)\.$/);
   assert.equal(flat(res.querySelector('[data-c-number="roi-payback"]')?.textContent), '4 h 15');
   assert.match(flat(res.querySelector('.calc-next-action p')?.textContent), /au moins 4 h 15 : avant, il ne te laisse rien de plus\.$/);
-  assert.match(flat(res.textContent), /Avec ou sans l’achat — Sur 4 h : 0 \$, prix enlevé, comparé à ce que tu faisais\.Remboursement — Après 4 h 15 de jeu \(15 missions\)\./);
+  assert.match(flat(res.textContent), /Avec ou sans l’achat : Sur 4 h : 0 \$, prix enlevé, comparé à ce que tu faisais\.Remboursement : Après 4 h 15 de jeu \(15 missions\)\./);
   assert.deepEqual(p.errors, []); p.close();
   p = await page('roi', st(3)); res = p.d.getElementById('roi-results');
   assert.match(flat(res.querySelector('.calc-answer')?.textContent), /^Pas sur 3 h : .* te fait perdre 20 000 \$ par rapport à ce que tu faisais\. Il ne serait remboursé qu’après 4 h 15 de jeu \(15 missions finies\)\.$/);

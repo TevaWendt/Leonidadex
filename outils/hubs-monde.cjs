@@ -2,8 +2,8 @@
 /* v7.41 (lot 4) : zones éditoriales des cinq hubs du monde (lieux, personnages, demeures, planques, entreprises).
    Contenu : outils/editorial-hubs.json. Balisage : outils/sections.cjs (système du lot 3 + frise datée, paires
    fiction ↔ réel, questions ouvertes, cartes d'action, liste de sources). Appelé par outils/lore-gen.js, qui pose la
-   zone sous la grille des fiches. Ordre des sections : Rockstar (papier) · Communauté (papier-2, corail) · À confirmer
-   (nuit) · Pour toi (papier) · FAQ (papier-2) · Sources et statuts (nuit, corail). */
+   zone sous la grille des fiches. Ordre des sections : Rockstar (papier), Communauté (papier-2, corail), À confirmer
+   (nuit), Pour toi (papier), FAQ (papier-2), Sources et statuts (nuit, corail). */
 const fs = require('node:fs'), path = require('node:path');
 const S = require('./sections.cjs');
 const root = path.resolve(__dirname, '..');

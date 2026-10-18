@@ -160,14 +160,14 @@ test('T5-03 page « Ça vaut le coup ? » : réponse, résumé, chiffre et « Ce
   // mission de 60 min, +100 000 $ ; gain d’avant 60 000 $/h ; prix 100 000 $ ; 3 h : +20 000 $, devant depuis 3 h (3 missions)
   await run(s => { B.asset(s, s.roi.key).price = 100000; one(s, { reward: 100000, duration: 60, prep: 0, prepOnce: false, cost: 0, cooldown: 0, share: 100, players: 1 }); s.roi.mode = 'new'; s.goal.capital = 500000; s.goal.reserve = 0; s.goal.hourly = 60000; s.roi.hours = 3; }, v => {
     assert.match(v.answer, /^Oui : .* est remboursé après 3 h de jeu \(3 missions finies\)\. Après 3 h, il te laisse 20 000 \$ de plus/);
-    assert.equal(v.short, 'Remboursé après 3 h'); assert.match(v.figure, /3 h ?3 missions faites/); assert.match(v.all, /Remboursement — Après 3 h de jeu \(3 missions\)\./); });
+    assert.equal(v.short, 'Remboursé après 3 h'); assert.match(v.figure, /3 h ?3 missions faites/); assert.match(v.all, /Remboursement : Après 3 h de jeu \(3 missions\)\./); });
   // amélioration : 10 min, +40 000 $, attente 30 min, −25 % ; prix 10 000 $ ; 3 h : −10 000 $ ; remboursé seulement après 532,5 min = 8 h 52 min 30 s
   await run(s => { B.asset(s, s.roi.key).price = 10000; one(s, { reward: 40000, duration: 10, prep: 0, prepOnce: false, cost: 0, cooldown: 30, share: 100, players: 1 }); s.roi.mode = 'improve'; s.roi.durationReduction = 25; s.roi.gainPercent = 0; s.goal.capital = 500000; s.goal.reserve = 0; s.roi.hours = 3; }, v => {
     assert.match(v.answer, /^Pas sur 3 h : .* te fait perdre 10 000 \$\. Il ne serait remboursé qu’après 8 h 5[23] de jeu \(15 missions finies\)\.$/);
     assert.equal(v.short, 'Pas remboursé'); assert.doesNotMatch(v.all, /Remboursé après 8 min|1 missions/); });
   // deux activités dont le cycle rapporte autant que le gain d’avant : jamais devant pour de bon → « Pas atteint » partout
   await run(s => { B.asset(s, s.roi.key).price = 10000; Object.assign(s.activities[0], { reward: 40000, share: 50, duration: 5, prep: 20, prepOnce: true, cost: 0, cooldown: 0, investment: 0, owned: true, players: 1 }); Object.assign(s.activities[1], { reward: 10000, share: 100, duration: 45, prep: 20, prepOnce: true, cost: 5000, cooldown: 30, investment: 0, owned: true, players: 1 }); s.roi.activityIds = [s.activities[0].id, s.activities[1].id]; s.roi.mode = 'new'; s.goal.capital = 500000; s.goal.reserve = 0; s.goal.hourly = 20000; s.roi.hours = 10; }, v => {
-    assert.equal(v.short, 'Pas remboursé'); assert.match(v.figure, /Pas atteint avec ces chiffres/); assert.match(v.all, /Remboursement — Pas atteint avec ces chiffres\./); assert.doesNotMatch(v.all, /Remboursé après 25 min/); });
+    assert.equal(v.short, 'Pas remboursé'); assert.match(v.figure, /Pas atteint avec ces chiffres/); assert.match(v.all, /Remboursement : Pas atteint avec ces chiffres\./); assert.doesNotMatch(v.all, /Remboursé après 25 min/); });
 });
 
 /* ---------- business plan : prévu en parcours, éditeur du point réel ---------- */

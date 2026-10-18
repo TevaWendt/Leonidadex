@@ -82,7 +82,7 @@ test('T2-04 obtention après le but : P payé puis obtenu en 60 min sans gain �
 test('T2-05 dépendance circulaire et référence absente : refus avec les phrases existantes de M.prerequisites, dans les deux modes', () => {
   const cycle = { capital: 100000, reserve: 0, target: 150000, hourly: 100000, purchases: [{ id: 'A', name: 'A', price: 10000, requires: ['B'] }, { id: 'B', name: 'B', price: 10000, requires: ['A'] }] };
   const ref = L.prerequisites({ nodes: { A: { id: 'A', name: 'A', requires: ['B'] }, B: { id: 'B', name: 'B', requires: ['A'] } }, targets: ['A', 'B'] }).reason;
-  assert.equal(flat(ref), 'Dépendance circulaire : A → B → A.'); // phrase existante, copiée avec ses espaces d’origine
+  assert.equal(flat(ref), 'Dépendance circulaire : A, puis B, puis A.'); // phrase existante, copiée avec ses espaces d’origine
   for (const input of [cycle, { ...cycle, sessionMinutes: 60 }]) { const r = E.missionPlan(input); assert.equal(r.valid, false); assert.equal(r.reason, ref); }
   const absent = { ...cycle, purchases: [{ id: 'A', name: 'A', price: 10000 }, { id: 'B', name: 'B', price: 10000, requires: ['z'] }] };
   const ref2 = L.prerequisites({ nodes: { A: { id: 'A', name: 'A', requires: [] }, B: { id: 'B', name: 'B', requires: ['z'] } }, targets: ['A', 'B'] }).reason;

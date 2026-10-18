@@ -42,7 +42,7 @@ function posts(kind) {
       p6: acc.price, achat: acc.buy,
       rep: rep ? { t: rep, note: it.prix_repere_serie && it.prix_repere_serie.note ? it.prix_repere_serie.note : '' } : null,
       repv: it.prix_repere_serie && (typeof it.prix_repere_serie.valeur === 'number' || typeof it.prix_repere_serie.min === 'number') ? { valeur: typeof it.prix_repere_serie.valeur === 'number' ? it.prix_repere_serie.valeur : undefined, min: it.prix_repere_serie.min, max: it.prix_repere_serie.max } : null,
-      ou: it.ou_le_trouver.map(x => x.lieu ? C.place(x.lieu).name : x.type + (x.note ? ' (' + x.note + ')' : '')).join(' · '),
+      ou: it.ou_le_trouver.map(x => x.lieu ? C.place(x.lieu).name : x.type + (x.note ? ' (' + x.note + ')' : '')).join(', '),
       compat: it.compat ? (it.compat.vehicules || it.compat.armes || []) : [], ids: it.compat && it.compat.ids ? it.compat.ids : null,
       jeu: o.jeu || null, opts, couleurs: !!o.couleurs, note: o.note || '', deb: o.deblocage || '',
       lien: it.lien ? { href: it.lien.href, label: it.lien.label } : null,

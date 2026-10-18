@@ -23,7 +23,6 @@
  "conditions": "Bedingungen",
  "business plan": "Businessplan",
  "business plans": "Businesspläne",
- "· solo": "· solo",
  "Collectible": "Sammelobjekt",
  "Page": "Seite",
  "(photo": "(Foto",
@@ -173,8 +172,7 @@
  "Pour {but}": "{but}",
  "Afficher {n} de plus ({r} restants)": "{n} weitere anzeigen ({r} übrig)",
  "Afficher {n} de plus ({r} restant)": "{n} weitere anzeigen ({r} übrig)",
- "3 octobre 2026 · v7.62 — Langues : tout le site existe aussi en allemand (fiches, carte, carnets, recherche, page introuvable) et Léo répond en allemand sur les pages allemandes, toujours depuis ton navigateur ; aucune clé nouvelle, aucun cookie, aucun service extérieur.": "3. Oktober 2026 · v7.62 — Sprachen: Die ganze Seite gibt es jetzt auch auf Deutsch (Seiten, Karte, Tracker, Suche, Seite nicht gefunden), und Léo antwortet auf den deutschen Seiten auf Deutsch, weiterhin direkt in deinem Browser; kein neuer Schlüssel, kein Cookie, kein externer Dienst.",
- "<1>3 octobre 2026</1> · v7.62 — Langues : tout le site existe aussi en allemand (fiches, carte, carnets, recherche, page introuvable) et Léo répond en allemand sur les pages allemandes, toujours depuis ton navigateur ; aucune clé nouvelle, aucun cookie, aucun service extérieur.": "<1>3. Oktober 2026</1> · v7.62 — Sprachen: Die ganze Seite gibt es jetzt auch auf Deutsch (Seiten, Karte, Tracker, Suche, Seite nicht gefunden), und Léo antwortet auf den deutschen Seiten auf Deutsch, weiterhin direkt in deinem Browser; kein neuer Schlüssel, kein Cookie, kein externer Dienst.",
+ "<1>3 octobre 2026</1>, v7.62 : Langues : tout le site existe aussi en allemand (fiches, carte, carnets, recherche, page introuvable) et Léo répond en allemand sur les pages allemandes, toujours depuis ton navigateur ; aucune clé nouvelle, aucun cookie, aucun service extérieur.": "<1>3. Oktober 2026</1>, v7.62: Sprachen: Die ganze Seite gibt es jetzt auch auf Deutsch (Seiten, Karte, Tracker, Suche, Seite nicht gefunden), und Léo antwortet auf den deutschen Seiten auf Deutsch, weiterhin direkt in deinem Browser; kein neuer Schlüssel, kein Cookie, kein externer Dienst.",
  "calculateurs-plan.js::à": [
   {
    "si": "money\\((?:r\\.startCash|ph\\.cashBefore)\\)\\+\\s*$",

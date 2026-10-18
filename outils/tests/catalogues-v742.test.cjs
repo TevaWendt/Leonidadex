@@ -146,8 +146,8 @@ test('Progression : les quatre familles comptent leurs lignes dans la carte de l
   const P=progress();
   for(const fam of LOT5){const line=a.d.querySelector('.cn-dcard [data-family="'+fam+'"]');assert.ok(line,fam);assert.ok(a.d.getElementById(fam),'ancre #'+fam);
     assert.equal(P.LK_PROGRESS_IDS[fam].length,C.counts(fam).suivis);assert.equal(Object.keys(P.LK_PROGRESS_NAMES[fam]).length,C.counts(fam).suivis);
-    assert.match(line.querySelector('.suivi-n').textContent,new RegExp('^'+(fam==='consommables'?'1':'0')+' \\/ '+C.counts(fam).suivis+'$'),fam);}
-  assert.match(read('progression.html'),new RegExp('data-family="coiffures"><span>[^<]*</span> <strong class="suivi-n">0 / '+C.counts('coiffures').suivis+'<'));
+    assert.match(line.querySelector('.suivi-n').textContent,new RegExp('^'+(fam==='consommables'?'1':'0')+' sur '+C.counts(fam).suivis+'$'),fam);}
+  assert.match(read('progression.html'),new RegExp('data-family="coiffures"><span>[^<]*</span> <strong class="suivi-n">0 sur '+C.counts('coiffures').suivis+'<'));
 },{storage:{lk_own_consommables:'{"sprunk":1}'}}));
 
 test('Carnet « Mes consommables » : la ligne cochée mène à son ancre, avec sa catégorie ; « Retirer » la décoche partout',withPage('carnets/consommables.html',a=>{

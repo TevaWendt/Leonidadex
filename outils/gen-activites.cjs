@@ -200,7 +200,7 @@ function sourceList(H, ids) {
   return '<ol class="ed-srcs">' + ids.map(id => { const s = H.sources[id];
     return '<li id="src-' + esc(id) + '">' + S.pip(s.statut, true)
       + '<a class="ed-src-link" href="' + esc(s.url) + '" target="_blank" rel="noopener nofollow"' + (s.lang === 'en' ? ' translate="no"' : '') + '>' + esc(s.title) + '</a>'
-      + '<span class="ed-src-meta">' + (s.publishedAt ? 'publié le ' + esc(frDate(s.publishedAt)) + ' · ' : '') + 'consulté le ' + esc(frDate(s.consultedAt)) + '</span>'
+      + '<span class="ed-src-meta">' + (s.publishedAt ? 'publié le ' + esc(frDate(s.publishedAt)) + ', ' : '') + 'consulté le ' + esc(frDate(s.consultedAt)) + '</span>'
       + '<p>' + esc(s.claim) + '</p></li>'; }).join('') + '</ol>';
 }
 /* numéros de source : chaque fiche numérote ses sources dans l’ordre de sa liste (lien vers #src-<id> en bas de page) */
@@ -212,7 +212,7 @@ const carteChips = (list, pre) => (list || []).map(c => '<a class="activites-chi
 const valText = (v, unknownText) => {
   if (!known(v)) return unknownText;
   const label = DP.STATUS_LABEL[({ officiel: 'official' })[v.status] || v.status] || 'Non confirmé';
-  return (v.unit === 'min' ? DP.fmt(v.value) + ' min' : DP.fmt(v.value) + ' $') + ' · ' + label;
+  return (v.unit === 'min' ? DP.fmt(v.value) + ' min' : DP.fmt(v.value) + ' $') + ', ' + label;
 };
 const famille = (H, id) => H.liste.familles.find(f => f.id === id) || { titre: id };
 
@@ -246,7 +246,7 @@ function hubPage(ctx) {
       + ((x.liens || []).length ? '<h4>Sur le site</h4><div class="lkx-links">' + x.liens.map(pageLink).join('') + '</div>' : '')
       + '<p class="lkx-sheet-cta">' + (x.fiche ? '<a class="lkx-btn" href="' + HUB + '/' + esc(x.fiche) + '.html">Voir la fiche complète</a>' : '') + '<a class="lkx-btn lkx-btn--ghost" href="calculateurs.html?tool=activities&amp;from=activites#atelier">Comparer mes activités</a></p>';
     return '<li class="activites-item activites-item--' + esc(f.id) + (x.fiche ? ' activites-item--fiche' : '') + '" data-statut="' + esc(x.statut) + '"' + (x.fiche ? ' data-fiche' : '') + (places.length ? ' data-carte' : '') + '>'
-      + LKX.sheet({ id, cls: 'activites-det', summary, fig: x.media ? LKX.img(MED, x.media, x.alt, { big: true, sizes: '(max-width:760px) 100vw, 600px' }) : null, icon: S.icon(f.icon), caption: 'Visuel officiel Rockstar Games', kicker: esc(f.titre) + ' · ' + S.pip(x.statut, true), title: x.nom, body }) + '</li>';
+      + LKX.sheet({ id, cls: 'activites-det', summary, fig: x.media ? LKX.img(MED, x.media, x.alt, { big: true, sizes: '(max-width:760px) 100vw, 600px' }) : null, icon: S.icon(f.icon), caption: 'Visuel officiel Rockstar Games', kicker: esc(f.titre) + ', ' + S.pip(x.statut, true), title: x.nom, body }) + '</li>';
   };
   const liste = '<section class="shell activites-liste" id="toutes" aria-labelledby="toutes-t"><div class="reveal"><p class="activites-kicker">' + esc(LI.kicker) + '</p><h2 class="sec-h" id="toutes-t">' + esc(LI.titre) + '</h2><p class="activites-lede">' + esc(LI.lede) + '</p></div>'
     + filtre
@@ -272,7 +272,7 @@ function hubPage(ctx) {
     + '<div class="activites-cash lkx-deal" data-lkx-in>' + R.lignes.map(cash).join('') + '</div>'
     + R.p.map(t => '<p class="activites-note">' + esc(t) + ' ' + srcLinks(R.sources || [], order) + '</p>').join('') + '</div></section>';
   const body = `<section class="page-head shell lk-glow"><div class="lk-head-grid"><div>
-  <p class="fiche-cat">${esc(X.label)} · GTA VI</p>
+  <p class="fiche-cat">${esc(X.label)}, GTA VI</p>
   <h1>${esc(X.title)}</h1>
   <p class="lede">${esc(X.lede)}</p>
   <p class="d-intro-note">${esc(X.note)} <a href="tuto.html#sources">Comprendre les statuts</a>.</p>
@@ -338,10 +338,10 @@ function fichePage(ctx, a) {
   const gal = LKX.gallery(MED, [{ media: a.media, alt: a.alt, legende: fam.titre }, ...(a.galerie || []).map(g => ({ media: g.media, alt: g.alt, legende: g.legende }))], { name: a.nom, kicker: fam.titre });
   const srcs = '<section class="shell activites-fiche-src reveal" aria-labelledby="sources-t"><h2 class="sec-h" id="sources-t">Sources</h2>' + sourceList(H, a.sources) + '</section>';
   const body = `<section class="page-head shell">
-  <nav class="crumbs" aria-label="Fil d’Ariane"><a href="../index.html">Accueil</a> / <a href="../${HUB}.html">${esc(H.hub.label)}</a> / <span>${esc(a.nom)}</span></nav>
+  <nav class="crumbs" aria-label="Fil d’Ariane"><a href="../index.html">Accueil</a> <span class="crumbs-sep" aria-hidden="true"></span> <a href="../${HUB}.html">${esc(H.hub.label)}</a> <span class="crumbs-sep" aria-hidden="true"></span> <span>${esc(a.nom)}</span></nav>
   <div class="lore-hero lore-enter">
     <div class="lore-copy">
-      <p class="fiche-cat">${esc(fam.titre)} · GTA VI</p>
+      <p class="fiche-cat">${esc(fam.titre)}, GTA VI</p>
       <h1>${esc(a.nom)}</h1>
       <p class="lore-tag">${esc(a.tagline)}</p>
       <p class="lede">${esc(a.resume)}</p>
@@ -360,7 +360,7 @@ ${locate}
 ${gal}
 ${srcs}`;
   const og = imgOf(MED, a.media);
-  return page(SUBC, { p, title: a.nom + ' — GTA VI | Leonidakit', desc: a.resume, canonical: '/' + HUB + '/' + a.id + '.html', ogImg: og.b.src, body, crumbs: [['Accueil', '/'], [H.hub.label, '/' + HUB + '.html'], [a.nom, '/' + HUB + '/' + a.id + '.html']] });
+  return page(SUBC, { p, title: a.nom + ' dans GTA VI | Leonidakit', desc: a.resume, canonical: '/' + HUB + '/' + a.id + '.html', ogImg: og.b.src, body, crumbs: [['Accueil', '/'], [H.hub.label, '/' + HUB + '.html'], [a.nom, '/' + HUB + '/' + a.id + '.html']] });
 }
 
 /* ---------- pont avec le calculateur (décrit, pas écrit : voir « Pour l’assemblage » du LISEZ-MOI) ---------- */
@@ -390,7 +390,7 @@ function leo(root = ROOT) {
   const verifiedAt = Object.values(H.sources).map(s => s.consultedAt).sort().pop();
   /* « où… ? » : le premier repère de la fiche sur la carte, sinon sa première région */
   const placeOf = a => (a.ou.carte[0] && a.ou.carte[0].id) || a.ou.regions[0] || null;
-  const fiches = A.activites.map(a => ({ key: 'activite:' + a.id, id: a.id, kind: 'activite', shard: 'monde', name: a.nom, aliases: a.aliases || [], category: H.hub.label + ' · ' + famille(H, a.famille).titre, url: '/' + HUB + '/' + a.id + '.html', mapId: placeOf(a), mapUrl: placeOf(a) ? '/carte.html#lieu=' + placeOf(a) : null, image: image(a.media), calcId: null, price: null, proof: 'Activité annoncée ou montrée par Rockstar ; sources datées sur la fiche.', source: null, verifiedAt, description: a.resume, tagline: a.tagline }));
+  const fiches = A.activites.map(a => ({ key: 'activite:' + a.id, id: a.id, kind: 'activite', shard: 'monde', name: a.nom, aliases: a.aliases || [], category: H.hub.label + ', ' + famille(H, a.famille).titre, url: '/' + HUB + '/' + a.id + '.html', mapId: placeOf(a), mapUrl: placeOf(a) ? '/carte.html#lieu=' + placeOf(a) : null, image: image(a.media), calcId: null, price: null, proof: 'Activité annoncée ou montrée par Rockstar ; sources datées sur la fiche.', source: null, verifiedAt, description: a.resume, tagline: a.tagline }));
   const label = H.hub.label;
   const topics = H.zone.faq.filter(x => !x.leo).map((x, i) => ({ id: 'activites-faq-' + (i + 1), q: x.q, f: [x.q, ...(x.f || [])], k: x.k, text: x.a, status: 'Réponse de la FAQ « ' + label + ' », sources en bas de la page', links: [{ label: 'La FAQ et ses sources', url: '/' + HUB + '.html#faq' }], verifiedAt, min: Number.isInteger(x.min) ? x.min : 2 }));
   return { fiches, topics, suggestions: { activites: H.leo.suggestions }, inputs: Object.values(FILES) };

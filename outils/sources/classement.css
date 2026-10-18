@@ -1,0 +1,78 @@
+/* ============================================================
+   LEONIDAKIT — classement.css (v7.69)
+   Demande de Téva : « rien ne doit faire brouillon ». La page Classement n'avait qu'une liste vide et des paragraphes.
+   Elle reçoit : un panneau d'ajout avec le compte « x / 10 », un top 10 en grille où les places libres restent
+   visibles (podium doré, argenté, bronze pour les trois premiers), les plus attendus en cartes illustrées qu'un clic
+   ajoute au top 10, et le squelette de la future grille par catégorie (aucun chiffre avant le 19 novembre 2026).
+   Seule cette page charge cette feuille.
+   ============================================================ */
+.cl-zone .cl-panel{position:relative;display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:18px 0 6px;padding:18px 18px 16px;background:#fff;border:2px solid var(--ink);border-radius:var(--radius);box-shadow:var(--shadow-hard);}
+.cl-zone .cl-panel .cl-q{flex:1 1 100%;margin:0;background:var(--paper);}
+.cl-zone .cl-panel select{flex:1 1 260px;min-height:44px;border:2px solid var(--ink);}
+.cl-zone .cl-panel button{min-height:44px;}
+.cl-count{position:absolute;top:-15px;right:16px;margin:0;padding:4px 12px;border:2px solid var(--ink);border-radius:999px;background:var(--amber);font:800 .82rem/1.2 'Archivo',sans-serif;box-shadow:2px 2px 0 var(--ink);}
+.cl-count b{font-size:1rem;}
+.cl-zone .cl-vide{margin:12px 0 0;font-style:normal;font-weight:600;}
+
+/* --- le top 10 : deux colonnes de cinq places (1 à 5, puis 6 à 10) --- */
+.cl-zone .cl-liste{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(5,auto);grid-auto-flow:column;gap:10px 16px;margin:18px 0 0;}
+.cl-zone .cl-item{min-height:72px;padding:10px 12px;gap:12px;border-radius:12px;box-shadow:3px 3px 0 var(--ink);transition:transform var(--dur) var(--ease-out),box-shadow var(--dur) var(--ease-out);}
+.cl-zone .cl-item:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink);}
+.cl-zone .cl-rang{display:grid;place-items:center;width:38px;height:38px;border:2px solid var(--ink);border-radius:50%;background:var(--paper-2);color:var(--ink);font-size:1.05rem;}
+.cl-zone .cl-item:nth-child(1) .cl-rang{background:linear-gradient(145deg,#ffd76a,#f5a524);}
+.cl-zone .cl-item:nth-child(2) .cl-rang{background:linear-gradient(145deg,#f1f1f4,#bfc0c8);}
+.cl-zone .cl-item:nth-child(3) .cl-rang{background:linear-gradient(145deg,#f3c39a,#c9814d);}
+.cl-zone .cl-item:nth-child(1){border-color:#b97a07;box-shadow:3px 3px 0 #b97a07;}
+.cl-zone .cl-img{width:84px;height:50px;border:1.5px solid var(--ink);}
+.cl-zone .cl-actions button{width:36px;height:36px;border:1.5px solid var(--ink);font-weight:800;}
+.cl-slot{display:flex;align-items:center;gap:12px;min-height:72px;padding:10px 12px;border:2px dashed rgba(26,26,30,.35);border-radius:12px;color:rgba(26,26,30,.5);background:repeating-linear-gradient(135deg,rgba(26,26,30,.03) 0 10px,transparent 10px 20px);}
+.cl-slot .cl-rang{background:transparent;border-style:dashed;border-color:rgba(26,26,30,.35);color:rgba(26,26,30,.5);}
+.cl-slot-txt{font-weight:700;font-size:.92rem;}
+@media(prefers-reduced-motion:no-preference){.cl-zone .cl-item{animation:cl-in .32s var(--ease-out);}@keyframes cl-in{from{opacity:0;transform:translate3d(0,6px,0);}}}
+
+/* --- les plus attendus : cartes illustrées --- */
+.cl-feats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:16px;}
+.cl-feat{display:flex;flex-direction:column;min-width:0;background:#fff;border:2px solid var(--ink);border-radius:var(--radius);box-shadow:var(--shadow-hard);overflow:hidden;}
+.cl-feat-img{display:block;aspect-ratio:16/9;overflow:hidden;border-bottom:2px solid var(--ink);background:var(--ink);}
+.cl-feat-img img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease-out);}
+.cl-feat:hover .cl-feat-img img{transform:scale(1.04);}
+.cl-feat-body{display:flex;flex-direction:column;gap:8px;flex:1;padding:14px 16px 16px;}
+.cl-feat-body h3{margin:0;font-size:1.08rem;line-height:1.2;}
+.cl-feat-body h3 a{display:inline-block;padding:4px 0;text-decoration:underline;text-decoration-color:rgba(26,26,30,.25);text-underline-offset:3px;}
+.cl-feat-body h3 a:hover{text-decoration-color:var(--coral);}
+.cl-feat-body p{margin:0;font-size:.9rem;line-height:1.55;color:var(--ink-soft);}
+.cl-feat-add{align-self:flex-start;margin-top:auto;min-height:40px;padding:0 14px;border:2px solid var(--ink);border-radius:999px;background:var(--amber);font:800 .86rem 'Archivo',sans-serif;color:var(--ink);cursor:pointer;box-shadow:2px 2px 0 var(--ink);transition:transform .15s,box-shadow .15s;}
+.cl-feat-add:hover:not(:disabled){transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--ink);}
+.cl-feat-add:disabled{background:var(--paper-2);color:var(--ink-soft);box-shadow:none;cursor:default;}
+.cl-feat-add.is-in::before{content:'✓ ';}
+
+/* --- squelette de la future grille par catégorie --- */
+.cl-future{margin-top:18px;}
+.cl-future-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;}
+.cl-future-tabs span{padding:7px 14px;border:2px dashed rgba(26,26,30,.35);border-radius:999px;font-weight:700;font-size:.85rem;color:rgba(26,26,30,.55);}
+.cl-future-tabs span.is-on{border-style:solid;border-color:var(--ink);color:var(--ink);background:#fff;}
+.cl-future-wrap{overflow-x:auto;border:2px solid var(--ink);border-radius:var(--radius);background:#fff;box-shadow:var(--shadow-soft);}
+.cl-future-wrap:focus-visible{outline:3px solid var(--coral);outline-offset:3px;}
+.cl-future-t{width:100%;min-width:620px;border-collapse:collapse;}
+.cl-future-t caption{caption-side:top;padding:14px 16px 4px;text-align:left;font-weight:700;font-size:.92rem;color:var(--ink-soft);}
+.cl-future-t th,.cl-future-t td{padding:12px 14px;text-align:left;font-size:.88rem;border-bottom:1px solid rgba(26,26,30,.08);}
+.cl-future-t thead th{border-bottom:2px solid var(--ink);font:800 .72rem/1.2 var(--font-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);}
+.cl-future-t tbody tr:last-child td{border-bottom:0;}
+.cl-future-n{display:grid;place-items:center;width:30px;height:30px;border:2px dashed rgba(26,26,30,.35);border-radius:50%;font-weight:800;color:rgba(26,26,30,.55);}
+.cl-wait{display:inline-block;padding:2px 9px;border:1.5px dashed rgba(26,26,30,.4);border-radius:999px;font-size:.8rem;font-weight:600;color:var(--ink-soft);white-space:nowrap;}
+.cl-ghost{display:inline-block;width:140px;max-width:100%;height:10px;border-radius:6px;background:linear-gradient(90deg,rgba(26,26,30,.07),rgba(26,26,30,.13),rgba(26,26,30,.07));background-size:200% 100%;vertical-align:middle;}
+@media(prefers-reduced-motion:no-preference){.cl-ghost{animation:cl-shimmer 1.8s ease-in-out infinite;}@keyframes cl-shimmer{to{background-position:-200% 0;}}}
+
+@media(max-width:940px){.cl-feats{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media(max-width:760px){
+  .cl-zone .cl-liste{grid-template-columns:1fr;grid-template-rows:none;grid-auto-flow:row;}
+}
+@media(max-width:620px){
+  .cl-feats{grid-template-columns:1fr;}
+  .cl-zone .cl-panel{padding:18px 14px 14px;}
+  .cl-zone .cl-panel select,.cl-zone .cl-panel .cl-q{font-size:16px;}
+  .cl-zone .cl-panel button{flex:1 1 auto;}
+  .cl-zone .cl-img{display:block;width:64px;height:40px;}
+  .cl-zone .cl-item,.cl-slot{min-height:64px;}
+}
+@media(max-width:400px){.cl-zone .cl-img{display:none;}}

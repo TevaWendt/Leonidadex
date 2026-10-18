@@ -180,7 +180,7 @@ test('partie complète dans la page : réponses, carte, stockage après la premi
   assert.equal(res.querySelectorAll('.dv-res-i').length, 5);
   assert.equal(N(res.querySelector('[data-dv-serie]').textContent), '1 jour');
   assert.equal(N(res.querySelector('[data-dv-best]').textContent), '4 sur 5');
-  assert.equal(res.querySelector('[data-dv-share-txt]').textContent, 'Leonidakit · Devine le lieu n° 1 : 4/5\n1 ❌\n2 ✅\n3 ✅\n4 ✅\n5 ✅\nhttps://www.leonidakit.com/' + PAGE);
+  assert.equal(res.querySelector('[data-dv-share-txt]').textContent, 'Leonidakit, Devine le lieu n° 1 : 4/5\n1 ❌\n2 ✅\n3 ✅\n4 ✅\n5 ✅\nhttps://www.leonidakit.com/' + PAGE);
   assert.equal(N(res.querySelector('[data-dv-countdown]').textContent), 'Prochaine partie dans 12 h 0 min.', '12 h à Paris : minuit dans douze heures');
   await pause(150); /* l’annonce arrive après un court délai (le lecteur d’écran relit la zone vidée) */
   assert.match(N(g.querySelector('[data-dv-live]').textContent), /Partie terminée : 4 sur 5\./);

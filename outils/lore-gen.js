@@ -19,7 +19,7 @@ const EDA=JSON.parse(fs.readFileSync('outils/editorial-animaux.json','utf8'));ED
 /* v7.43 (lot 6) : ateliers de personnalisation (fiches entreprises reliées à personnalisations.html). */
 const ATELIERS=(JSON.parse(fs.readFileSync('outils/catalogues/editorial.json','utf8')).customizations.ateliers||{groups:[]}).groups.flatMap(g=>g.items).filter(a=>a.business);
 const MED=JSON.parse(fs.readFileSync('outils/medias-officiels.json','utf8'));
-const CREDIT='Capture officielle © Rockstar Games / Take-Two Interactive';
+const CREDIT='Capture officielle © Rockstar Games, Take-Two Interactive';
 global.window={};eval(fs.readFileSync('vehicules-data.js','utf8'));const VNOM=Object.fromEntries(window.LK_VEHICULES.map(v=>[v.id,(v.marque?v.marque+' ':'')+v.nom]));const VMED=Object.fromEntries(window.LK_VEHICULES.filter(v=>v.medias).map(v=>[v.id,v.medias]));
 const AMED=JSON.parse(fs.readFileSync('outils/armes-medias.json','utf8'));
 eval(fs.readFileSync('armes-data.js','utf8'));const ANOM=Object.fromEntries((window.LK_ARMES||[]).map(a=>[a.id,a.nom]));/* v7.65 : noms des armes pour les fiches de gangs */
@@ -83,9 +83,9 @@ const IMG_ALT=(m,x)=>x.imageAlt||m.alt||(x.name+', capture officielle Rockstar G
    de la fiche dans outils/editorial.json) ; une image sans légende garde l’étiquette de la section. */
 const GAL=JSON.parse(fs.readFileSync('outils/galeries-monde.json','utf8'));
 const galerieOf=x=>x.galerie||(x.media||[]).filter(id=>MED[id]).map(id=>{const g=GAL[id]||{};return {media:id,alt:g.alt||IMG_ALT(MED[id],x),legende:g.legende||''};});
-const galleryBlock=(x,S)=>{const list=galerieOf(x);if(list.length>=2)return LKX.gallery(MED,list.map(g=>({media:g.media,alt:g.alt||IMG_ALT(MED[g.media]||{},x),legende:g.legende})),{name:x.name,kicker:'GTA VI · '+kindOf(x,S)});const g=(x.media||[]).map(id=>MED[id]).filter(Boolean);if(g.length<2)return '';
+const galleryBlock=(x,S)=>{const list=galerieOf(x);if(list.length>=2)return LKX.gallery(MED,list.map(g=>({media:g.media,alt:g.alt||IMG_ALT(MED[g.media]||{},x),legende:g.legende})),{name:x.name,kicker:'GTA VI, '+kindOf(x,S)});const g=(x.media||[]).map(id=>MED[id]).filter(Boolean);if(g.length<2)return '';
   const n=g.length,pad=k=>String(k).padStart(2,'0');
-  return `<section class="shell lore-gallery reveal"><h2 class="sec-h">En images</h2><div class="lore-stack" style="--n:${n}"><div class="lore-stage" aria-label="Galerie de ${n} images">${g.map((m,i)=>'<figure class="lore-slide lore-slide--'+['z','tl','br','tr','bl'][i%5]+(i===0?' is-active':'')+'" data-i="'+i+'"><a href="'+(m.variants[1]||m.variants[0]).src+'" target="_blank" rel="noopener" aria-label="Agrandir : '+esc(m.titre)+'">'+imgTag(m,m.alt||(x.name+', '+m.titre+', capture officielle Rockstar Games'),true).replace('loading="eager"','loading="lazy"').replace('sizes="(max-width:820px) 100vw, 560px"','sizes="'+SLIDE_SIZES+'"')+'</a><div class="lore-slide-txt" aria-hidden="true"><span class="lst-k">GTA VI &middot; '+esc(kindOf(x,S))+'</span><strong>'+esc(x.name)+'</strong><em>'+pad(i+1)+' / '+pad(n)+'</em></div></figure>').join('')}</div></div></section>`;};
+  return `<section class="shell lore-gallery reveal"><h2 class="sec-h">En images</h2><div class="lore-stack" style="--n:${n}"><div class="lore-stage" aria-label="Galerie de ${n} images">${g.map((m,i)=>'<figure class="lore-slide lore-slide--'+['z','tl','br','tr','bl'][i%5]+(i===0?' is-active':'')+'" data-i="'+i+'"><a href="'+(m.variants[1]||m.variants[0]).src+'" target="_blank" rel="noopener" aria-label="Agrandir : '+esc(m.titre)+'">'+imgTag(m,m.alt||(x.name+', '+m.titre+', capture officielle Rockstar Games'),true).replace('loading="eager"','loading="lazy"').replace('sizes="(max-width:820px) 100vw, 560px"','sizes="'+SLIDE_SIZES+'"')+'</a><div class="lore-slide-txt" aria-hidden="true"><span class="lst-k">GTA VI &middot; '+esc(kindOf(x,S))+'</span><strong>'+esc(x.name)+'</strong><em>'+(i+1)+' sur '+n+'</em></div></figure>').join('')}</div></div></section>`;};
 const imgTag=(m,alt,big)=>{if(!m)return '';const a=m.variants[0],b=m.variants[1]||a;
   const ss=u=>u.replace(/,/g,'%2C');/* v7.65 : une adresse avec virgule (photos/L192,ig.webp) couperait srcset */
   return '<img src="'+a.src+'" srcset="'+ss(a.src)+' '+a.w+'w, '+ss(b.src)+' '+b.w+'w" sizes="'+(big?'(max-width:820px) 100vw, 560px':'(max-width:600px) 100vw, 300px')+'" width="'+(big?b.w:a.w)+'" height="'+(big?b.h:a.h)+'" alt="'+esc(alt)+'" loading="'+(big?'eager':'lazy')+'" decoding="async">';};
@@ -184,9 +184,9 @@ const charMapIds=x=>{const ids=[];const add=y=>{if(y&&y.mapId)ids.push(y.mapId);
    tout cookie (voir LISEZ-MOI-v7.71.txt). Aucun script publicitaire n'est chargé. */
 /* v7.70 : données structurées d’une fiche du monde (schema.org) : la page, son sujet (nom et autres noms), l’image principale et la
    galerie, chaque image créditée à Rockstar Games. Rien d’autre : aucune date, aucun fait qui ne soit pas sur la page. */
-const ficheLd=(x,S,key,m)=>{const url=SITE+'/'+S.hub+'/'+x.id+'.html';const imgOf=(mm,alt)=>({"@type":"ImageObject","contentUrl":SITE+(mm.variants[1]||mm.variants[0]).src,"width":(mm.variants[1]||mm.variants[0]).w,"height":(mm.variants[1]||mm.variants[0]).h,"name":alt,"creditText":"Rockstar Games","copyrightNotice":"© Rockstar Games / Take-Two Interactive"});
+const ficheLd=(x,S,key,m)=>{const url=SITE+'/'+S.hub+'/'+x.id+'.html';const imgOf=(mm,alt)=>({"@type":"ImageObject","contentUrl":SITE+(mm.variants[1]||mm.variants[0]).src,"width":(mm.variants[1]||mm.variants[0]).w,"height":(mm.variants[1]||mm.variants[0]).h,"name":alt,"creditText":"Rockstar Games","copyrightNotice":"© Rockstar Games, Take-Two Interactive"});
   const gal=galerieOf(x).filter(g=>MED[g.media]);const about={"@type":"Thing","name":x.name,"description":metaDesc(x.description)};if(x.aliases&&x.aliases.length)about.alternateName=x.aliases;
-  const o={"@context":"https://schema.org","@type":"WebPage","@id":url,"url":url,"name":x.name+' — GTA VI | Leonidakit',"headline":x.name,"description":metaDesc(x.description),"inLanguage":"fr","isPartOf":{"@type":"WebSite","name":"Leonidakit","url":SITE+'/'},"about":about};
+  const o={"@context":"https://schema.org","@type":"WebPage","@id":url,"url":url,"name":x.name+' dans GTA VI | Leonidakit',"headline":x.name,"description":metaDesc(x.description),"inLanguage":"fr","isPartOf":{"@type":"WebSite","name":"Leonidakit","url":SITE+'/'},"about":about};
   if(m)o.primaryImageOfPage=imgOf(m,IMG_ALT(m,x));if(gal.length>=2)o.hasPart={"@type":"ImageGallery","name":x.name,"numberOfItems":gal.length,"image":gal.map(g=>imgOf(MED[g.media],g.legende||g.alt))};
   return '<script type="application/ld+json">'+JSON.stringify(o)+'</script>';};
 
@@ -224,7 +224,7 @@ for(const [key,S] of Object.entries(SECTIONS)){
   const seen=new Set();const pileImgs=[...second,...rest].filter(o=>{const k=o.m.variants[0].src;if(seen.has(k))return false;seen.add(k);return true;}).slice(0,3).map(o=>({src:o.m.variants[0].src,big:o.m.variants[1]?o.m.variants[1].src:null,alt:IMG_ALT(o.m,o.x),caption:o.x.name}));
   const pile=pileImgs.length>=2?visuals.stack(pileImgs,{label:'Trois visuels officiels de cette section'}):'';
   const body=`<section class="page-head shell lk-glow">${pile?'<div class="lk-head-grid"><div>':''}
-  <p class="fiche-cat">${esc(S.label)} · GTA VI</p>
+  <p class="fiche-cat">${esc(S.label)}, GTA VI</p>
   <h1>${esc(S.title)}</h1>
   <p class="lede">${esc(S.lede)}</p>
   <p class="d-intro-note">${esc(HUB_NOTES[S.hub]||"")} <a href="tuto.html#sources">Comprendre les statuts</a>.</p>
@@ -293,10 +293,10 @@ ${S.hub==='lieux'?require('./gen-devine.cjs').promo('')+'\n'/* v7.90 (lot 6) : l
     const factionBridge = key === 'factions' && x.calc !== false ? `<section class="shell" aria-labelledby="lore-calculator-title"><div class="lk-entry-card"><div><p class="lk-entry-eyebrow">LE CALCULATEUR</p><h2 id="lore-calculator-title">Ce que ça rapporterait, à l’heure ?</h2><p>${esc('Rockstar n’a publié aucun gain pour les coups ni pour les repaires de gangs. Écris ce qu’une activité rapporterait, le temps qu’elle prend et ta part : le calculateur la compare aux autres, à l’heure de jeu.')}</p></div><a class="lk-entry-button" href="../calculateurs.html?tool=activities&amp;from=fiche#atelier">Comparer mes activités <span aria-hidden="true">↗</span></a></div></section>` : '';
     const calcBridge = calcKind ? `<section class="shell" aria-labelledby="lore-calculator-title"><div class="lk-entry-card"><div><p class="lk-entry-eyebrow">LE CALCULATEUR</p><h2 id="lore-calculator-title">${calcTitle}</h2><p${prixPub?` data-prix="${prixPub.value}" data-prix-statut="${prixPub.status}"`:''}>${esc(calcDescription)}</p></div><a class="lk-entry-button" href="../calculateurs.html?tool=${calcTool}&amp;type=${calcKind}&amp;id=${encodeURIComponent(x.id)}&amp;from=fiche#atelier">${calcAction} <span aria-hidden="true">↗</span></a></div></section>` : '';
     const body=`<section class="page-head shell">
-  <nav class="crumbs" aria-label="Fil d’Ariane"><a href="../index.html">Accueil</a> / <a href="../${S.hub}.html">${esc(S.label)}</a> / <span>${esc(x.name)}</span></nav>
+  <nav class="crumbs" aria-label="Fil d’Ariane"><a href="../index.html">Accueil</a> <span class="crumbs-sep" aria-hidden="true"></span> <a href="../${S.hub}.html">${esc(S.label)}</a> <span class="crumbs-sep" aria-hidden="true"></span> <span>${esc(x.name)}</span></nav>
   <div class="lore-hero lore-enter">
     <div class="lore-copy">
-      <p class="fiche-cat">${esc(kindOf(x,S))} · GTA VI</p>
+      <p class="fiche-cat">${esc(kindOf(x,S))}, GTA VI</p>
       <h1>${esc(x.name)}</h1>
       ${x.tagline?`<p class="lore-tag">${esc(x.tagline)}</p>`:''}
       <p class="lede">${esc(x.description)}</p>
@@ -314,7 +314,7 @@ ${calcBridge}${factionBridge}
   ${(relBlocks||vehBlock||armBlock||mapBlock)?`<div class="lore-related"><h2>En lien</h2>${relBlocks}${vehBlock}${armBlock}${mapBlock}</div>`:''}
 </section>
 ${dossier}<aside class="shell lk-pub lk-pub--fiche" data-pub="fiche-monde" hidden aria-hidden="true"></aside>${locate}${galleryBlock(x,S).replace('<section class="shell lore-gallery reveal">','<section class="shell lore-gallery reveal" id="galerie">')}`;
-    fs.writeFileSync(S.hub+'/'+x.id+'.html',page({p,lkx:!!locate||LKX_HUBS.has(S.hub)||!!x.galerie,RECAP:key==='animals'?recapOf(x,key):''/* v7.83 : le dossier remplace le résumé sur les six sections du monde */,title:x.name+' — GTA VI | Leonidakit',desc:x.description,canonical:'/'+S.hub+'/'+x.id+'.html',ogImg:m?(m.variants[1]||m.variants[0]).src:null,body,crumbs:[['Accueil','/'],[S.label,'/'+S.hub+'.html'],[x.name,'/'+S.hub+'/'+x.id+'.html']],hub:S.hub,ld:ldFiche}));
+    fs.writeFileSync(S.hub+'/'+x.id+'.html',page({p,lkx:!!locate||LKX_HUBS.has(S.hub)||!!x.galerie,RECAP:key==='animals'?recapOf(x,key):''/* v7.83 : le dossier remplace le résumé sur les six sections du monde */,title:x.name+' dans GTA VI | Leonidakit',desc:x.description,canonical:'/'+S.hub+'/'+x.id+'.html',ogImg:m?(m.variants[1]||m.variants[0]).src:null,body,crumbs:[['Accueil','/'],[S.label,'/'+S.hub+'.html'],[x.name,'/'+S.hub+'/'+x.id+'.html']],hub:S.hub,ld:ldFiche}));
     index.push({l:x.name,k:S.one,u:'/'+S.hub+'/'+x.id+'.html',s:(x.name+' '+S.one+' '+x.description+' '+(x.tagline||'')+(key==='factions'?' '+(x.kind||'')+' '+(x.aliases||[]).join(' '):'')).toLowerCase(),w:1});
   }
   console.log(S.hub+' : '+items.length+' fiches');
@@ -330,7 +330,7 @@ fs.writeFileSync('outils/lore-index.json',JSON.stringify(index));
   for(const [k,S] of Object.entries(SECTIONS))for(const x of ED[k])for(const id of (x.media||[]))add(id,x.name,S.hub+'/'+x.id+'.html');
   const rows=Object.values(MED).map(m=>{const a=m.variants[0];return `<li class="media-row lk-arrive" id="media-${esc(m.id)}"><img src="${a.src}" width="${a.w}" height="${a.h}" alt="${esc(m.titre)}" loading="lazy" decoding="async"><div><b>${esc(m.titre)}</b><br><span>${esc(m.credit)}</span>${usage[m.id]?'<br><span>Utilisé sur : '+usage[m.id].join(', ')+'</span>':''}<br><a href="${esc(m.source)}" target="_blank" rel="noopener nofollow">${/^https:\/\/www\.rockstargames\.com\/VI\/media/.test(m.source)?'Galerie officielle':'Source officielle'/* v7.92.1 : photos de produits et affiches publiées ailleurs (boutique, Newswire, PlayStation) */}</a></div></li>`;}).join('\n');
   const body=`<section class="page-head shell">
-  <p class="fiche-cat">Crédits · Visuels officiels</p>
+  <p class="fiche-cat">Crédits, Visuels officiels</p>
   <h1>Les visuels officiels utilisés</h1>
   <p class="lede">${Object.keys(MED).length} visuels provenant des captures, artworks, trailers et photos de produits publiés par Rockstar Games et par PlayStation, reproduits ici en tant que site de fans. Les images sont redimensionnées et compressées pour le Web ; les photogrammes des trailers sont recadrés pour retirer les bandes noires du format cinéma. Elles restent la propriété de Rockstar Games et Take-Two Interactive, et de Sony Interactive Entertainment pour la photo des manettes.</p>
 </section>

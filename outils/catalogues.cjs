@@ -200,7 +200,7 @@ function compatOf(it) {
   const labels = [...(c.vehicules || []).map(x => VEH_CATS[x]), ...(c.armes || []).map(x => ARM_CATS[x])];
   const fiches = (c.ids || []).map(id => { const a = d.ctx.weapons.get(id); return '<a href="armes/' + esc(id) + '.html">' + esc(a.nom) + '</a>'; });
   const html = '<p class="cat-compat"><span>' + (c.vehicules ? 'Pour' : 'Armes') + ' :</span> ' + esc(labels.join(', '))
-    + (fiches.length ? (labels.length ? ' · ' : '') + '<span>fiches :</span> ' + fiches.join(', ') : '')
+    + (fiches.length ? (labels.length ? ', ' : '') + '<span>fiches :</span> ' + fiches.join(', ') : '')
     + (c.note ? ' <i>(' + esc(c.note) + ')</i>' : '') + '</p>';
   /* v7.69 : une liste d’armes nommées (ids) ferme la compatibilité à ces armes, sauf si elles ne sont que des exemples (exemples:true) */
   return { attrs: ' data-compat="' + esc(tags.join(' ')) + '"' + ((c.ids || []).length && !c.exemples ? ' data-ids="' + esc(c.ids.join(' ')) + '"' : ''), html };
@@ -357,15 +357,15 @@ function listBox(fam, opts = {}) {
   const chips = groups.length ? '<div class="cat-groups" role="group" aria-label="Filtrer par groupe">' + groups.map(g => '<button type="button" class="cat-chip" data-cat-group="' + esc(g) + '" id="' + esc(g === 'accessoires' ? 'accessoires' : fam + '-' + g) + '">' + esc({ vetements: 'Vêtements', accessoires: 'Accessoires', vehicules: 'Véhicules', armes: 'Armes' }[g] || g) + '</button>').join('') + '</div>' : '';
   const tags = compatLabels(fam);
   return pickBlock(fam) + '<details class="cat-box" id="' + esc('box-' + fam) + '" data-catalogue="' + esc(fam) + '"' + (Object.keys(tags).length ? ' data-cat-tags="' + esc(JSON.stringify(tags)) + '"' : '') + (FOLDED.has(fam) ? ' data-cat-desc="fold"' : '') + (opts.open ? ' open' : '') + '>'
-    + '<summary class="cat-sum"><span class="cat-sum-pile" aria-hidden="true">' + sumPile(data) + '</span><span class="cat-sum-txt"><span class="cat-sum-t">' + esc(data.titre) + '</span><span class="cat-sum-n"><b>' + c.n + '</b> ' + esc(NOUN[fam] || '') + 'référencés · <b>' + c.confirmes + '</b> confirmés pour GTA VI · ' + c.serie + ' repères de la série</span></span><span class="cat-sum-open">Ouvrir la liste</span><span class="cat-chev" aria-hidden="true"></span></summary>'
+    + '<summary class="cat-sum"><span class="cat-sum-pile" aria-hidden="true">' + sumPile(data) + '</span><span class="cat-sum-txt"><span class="cat-sum-t">' + esc(data.titre) + '</span><span class="cat-sum-n"><b>' + c.n + '</b> ' + esc(NOUN[fam] || '') + 'référencés, <b>' + c.confirmes + '</b> confirmés pour GTA VI, ' + c.serie + ' repères de la série</span></span><span class="cat-sum-open">Ouvrir la liste</span><span class="cat-chev" aria-hidden="true"></span></summary>'
     + '<div class="cat-body">'
     + (Object.keys(tags).length ? '<p class="cat-filter" data-cat-filter hidden><span>Filtré pour :</span> <b data-cat-filter-label></b> <button type="button" class="cat-reset" data-cat-reset>Tout afficher</button></p>' : '')
-    + '<div class="cat-track" data-track-bar="' + esc(fam) + '"><span class="cat-track-l">' + esc(data.suivi.label) + ' :</span> <b>0</b> <span class="cat-track-sep">/</span> <span class="own-total">' + c.suivis + '</span> ' + esc(data.suivi.fait) + '<progress max="' + c.suivis + '" value="0" aria-label="' + esc(data.suivi.label) + '"></progress><a class="cat-track-link" href="' + esc(require('./carnets-source.cjs').carnetHref(fam)) + '">' + esc(require('./carnets-source.cjs').carnetOf(fam).bouton) + '</a></div>'
+    + '<div class="cat-track" data-track-bar="' + esc(fam) + '"><span class="cat-track-l">' + esc(data.suivi.label) + ' :</span> <b>0</b> <span class="cat-track-sep">sur</span> <span class="own-total">' + c.suivis + '</span> ' + esc(data.suivi.fait) + '<progress max="' + c.suivis + '" value="0" aria-label="' + esc(data.suivi.label) + '"></progress><a class="cat-track-link" href="' + esc(require('./carnets-source.cjs').carnetHref(fam)) + '">' + esc(require('./carnets-source.cjs').carnetOf(fam).bouton) + '</a></div>'
     + '<form class="cat-tools" data-cat-tools hidden>'
     + '<label class="cat-search"><span class="sr-only">Chercher dans la liste</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg><input type="search" placeholder="Chercher un nom, un effet, un lieu" autocomplete="off" data-cat-q></label>'
     + '<label class="cat-sel"><span>Catégorie</span><select data-cat-f="cat"><option value="">Toutes</option>' + catOptions + '</select></label>'
     + '<label class="cat-sel"><span>Statut</span><select data-cat-f="st"><option value="">Tous</option>' + stOptions + '</select></label>'
-    + '<label class="cat-sel"><span>Tri</span><select data-cat-sort><option value="statut">GTA VI d’abord</option><option value="nom">Nom (A → Z)</option><option value="cat">Catégorie</option><option value="prix">Repère de prix</option></select></label>'
+    + '<label class="cat-sel"><span>Tri</span><select data-cat-sort><option value="statut">GTA VI d’abord</option><option value="nom">Nom, de A à Z</option><option value="cat">Catégorie</option><option value="prix">Repère de prix</option></select></label>'
     + '<button type="reset" class="cat-reset">Tout afficher</button>'
     + '<p class="cat-count" role="status" aria-live="polite" data-cat-count></p>'
     + chips + whoSwitch(fam) + '</form>'
@@ -391,7 +391,7 @@ const PROOF = { officiel: 'Nommé ou décrit par Rockstar pour GTA VI ; prix et 
 function leoRows(fam) {
   const d = load(), data = d.families[fam], cats = new Map(data.categories.map(x => [x.id, x]));
   return data.items.map(it => { const m = it.media ? d.ctx.medias[it.media] : null; const src = d.sources[it.sources[0]];
-    return { key: 'catalogue:' + it.id, id: it.id, kind: 'catalogue-' + fam, name: it.nom, aliases: [...(it.variantes || [])], category: data.label + ' · ' + cats.get(it.categorie).label, url: data.page + '#' + rowId(fam, it), image: m ? m.variants[0].src : null, calcId: null, price: null, proof: PROOF[it.statut], source: src.url, verifiedAt: src.consultedAt }; });
+    return { key: 'catalogue:' + it.id, id: it.id, kind: 'catalogue-' + fam, name: it.nom, aliases: [...(it.variantes || [])], category: data.label + ', ' + cats.get(it.categorie).label, url: data.page + '#' + rowId(fam, it), image: m ? m.variants[0].src : null, calcId: null, price: null, proof: PROOF[it.statut], source: src.url, verifiedAt: src.consultedAt }; });
 }
 function progressIds(fam) { return load().families[fam].items.filter(trackable).map(it => it.id); }
 function progressNames(fam) {

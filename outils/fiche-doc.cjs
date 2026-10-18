@@ -23,7 +23,7 @@ function valueText(v, unite) {
 function repereText(r) {
   if (!r) return '';
   const unit = r.unit === 'sante' ? ' % de vie' : r.unit === 'armure' ? ' % d’armure' : r.unit === 'graisse' ? ' de graisse' : '';
-  return (typeof r.v === 'number' ? nf.format(r.v) + unit : String(r.v)) + (r.ctx ? ' — ' + r.ctx : '');
+  return (typeof r.v === 'number' ? nf.format(r.v) + unit : String(r.v)) + (r.ctx ? '. ' + r.ctx : '');
 }
 /* Rendu d’une fiche. opts.level : niveau des titres de rubrique (défaut 3) ; opts.compact : version dans une liste ;
    opts.title : titre de la fiche ; opts.lead : phrase d’introduction. */
@@ -40,7 +40,7 @@ function rowHtml(ch, seen) {
     if (noteText && seen) { if (seen.has(noteText)) noteText = ''; else seen.add(noteText); }
     const note = noteText ? '<small class="doc-ctx">' + esc(noteText) + '</small>' : '';
     /* v7.59 (check ultime, CALC-13) : une valeur publiée porte sa source et sa date de vérification (schéma unique, V.published). */
-    const prov = ch.known && (ch.value.source || ch.value.verifiedAt) ? '<small class="doc-ctx doc-prov">' + [ch.value.source ? 'Source : ' + (/^https?:\/\//.test(ch.value.source) ? '<a href="' + esc(ch.value.source) + '" target="_blank" rel="noopener nofollow">' + esc(ch.value.source.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')) + '</a>' : esc(ch.value.source)) : '', ch.value.verifiedAt ? 'vérifié le ' + esc(DP.texteDate(ch.value.verifiedAt)) : ''].filter(Boolean).join(' · ') + '</small>' : '';
+    const prov = ch.known && (ch.value.source || ch.value.verifiedAt) ? '<small class="doc-ctx doc-prov">' + [ch.value.source ? 'Source : ' + (/^https?:\/\//.test(ch.value.source) ? '<a href="' + esc(ch.value.source) + '" target="_blank" rel="noopener nofollow">' + esc(ch.value.source.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')) + '</a>' : esc(ch.value.source)) : '', ch.value.verifiedAt ? 'vérifié le ' + esc(DP.texteDate(ch.value.verifiedAt)) : ''].filter(Boolean).join(', ') + '</small>' : '';
     return '<div class="doc-row ' + cls + '"><dt>' + esc(ch.label) + '</dt><dd><span class="doc-v">' + esc(shown) + '</span>' + badge + ctx + prov + rep + note + '</dd></div>';
 }
 function render(categoryId, known, opts = {}) {
@@ -112,7 +112,7 @@ function accessCell(it) {
   if (notBought(it)) return { price: 'Ne s’achète pas', buy: it.ou_le_trouver.map(o => o.type).join(', ') };
   /* v7.59 (check ultime, CALC-13) : un prix GTA VI publié (prix_gta6, schéma unique) s'affiche avec son statut ; sinon « Prix à venir ». */
   const p = publishedRow(it);
-  if (p) return { price: nf.format(p.v) + ' $ · ' + V.statusLabel(p), buy: p.verifiedAt ? 'vérifié le ' + DP.texteDate(p.verifiedAt) : M.modele.vides.achat, known: true };
+  if (p) return { price: nf.format(p.v) + ' $, ' + V.statusLabel(p), buy: p.verifiedAt ? 'vérifié le ' + DP.texteDate(p.verifiedAt) : M.modele.vides.achat, known: true };
   return { price: M.modele.vides.prix, buy: M.modele.vides.achat };
 }
 function publishedRow(it) {

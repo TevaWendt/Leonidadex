@@ -285,7 +285,7 @@ test('V791-06 consommables en pt : « 1.250 » tapé vaut 1 250, réponse « $ 2
     const table = r.querySelector('.cg-table'), outs = [...table.querySelectorAll('.cg-out')];
     const [price, heal] = [...table.querySelectorAll('tr.cg-sim')].map(tr => tr.querySelector('input'));
     price.value = '1.250'; fire(p, price, 'input'); heal.value = '50'; fire(p, heal, 'input');
-    assert.match(outs[0].textContent, /^\$\u00a025 par point · simulation$/);
+    assert.match(outs[0].textContent, /^\$\u00a025 par point \(simulation\)$/);
     assert.deepEqual(p.errors, []);
   } finally { p.close(); }
   // fiches.js : le même signe devant que consommables.js

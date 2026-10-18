@@ -69,7 +69,7 @@ test('modèle de données : vide au 4 octobre 2026, valeurs au schéma de donnee
   assert.ok(G.checkItem('misesAJour', { id: 'maj', nom: 'x', resume: 'x', statut: 'officiel', sources: ['rs-precommandes'] }, ctx).some(e => /date/.test(e)));
   const page = new JSDOM(G.itemPage(ctx, 'entreprises', ent)).window.document;
   assert.ok(page.querySelector('main > .online-espace nav.online-nav'), 'une fiche future porte aussi la navigation de l’espace');
-  assert.match(page.querySelector('.online-champs').textContent, /1\s000\s000 \$ · Officiel/);
+  assert.match(page.querySelector('.online-champs').textContent, /1\s000\s000 \$, Officiel/);
   /* jamais dans les données de l’histoire : catalogues, activités du calculateur, achats */
   assert.doesNotMatch(read('calculateurs-activites.js'), /online-|gta-online/i);
   for (const f of ['acquisitions-data.js', 'calculateurs-catalogue.js']) if (fs.existsSync(path.join(root, f))) assert.doesNotMatch(read(f), /"online-|outils\/online\//, f);
@@ -115,7 +115,7 @@ test('menu, pied de page, recherche et plan du site : « GTA Online » est un gr
   for (const u of ['/online.html', '/online/annonces.html', '/online/gta-online-actuel.html']) assert.ok(ctx.window.LK_INDEX.some(e => e.u === u), u);
   assert.ok(ctx.window.LK_INDEX.some(e => e.u === '/online.html#etat' && /\bmultijoueur\b/.test(e.s)), 'les mots du joueur');
   for (const u of ['online.html', 'online/annonces.html', 'online/gta-online-actuel.html']) assert.ok(read(u.includes('/') ? 'sitemap-fiches.xml' : 'sitemap.xml').includes('<loc>https://www.leonidakit.com/' + u + '</loc>'), u);
-  assert.match(read('style.css'), /sections? [a-z, ]*\bonline\b[a-z, ]* : cinq groupes dans « Explorer »/); /* un seul bloc, marqué « section online » ou « sections …, online, … » une fois les sections réunies */
+  assert.match(read('outils/sources/style.css'), /sections? [a-z, ]*\bonline\b[a-z, ]* : cinq groupes dans « Explorer »/); /* un seul bloc, marqué « section online » ou « sections …, online, … » une fois les sections réunies */
 });
 
 test('Léo : morceau de questions de la section, sujets « online » et « gtaplus » reliés à l’espace, réponses sourcées et datées', () => {

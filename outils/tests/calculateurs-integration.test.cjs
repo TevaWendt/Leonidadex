@@ -211,7 +211,7 @@ test('scenario names refresh both selectors and remain escaped in generated resu
   const page = app(), name = '<img src=x onerror=alert(1)>';
   await page.edit('activities.0.name', name);
   for (const id of ['f-goal-selected', 'f-inverse-selected']) {
-    assert.equal(Array.from(page.node(id).options).find(option => option.value === 'scenario-a').textContent, name + ' · à moi');
+    assert.equal(Array.from(page.node(id).options).find(option => option.value === 'scenario-a').textContent, name + ' (à moi)');
   }
   assert.match(page.node('activity-results').innerHTML, /&lt;img/);
   assert.doesNotMatch(page.node('activity-results').innerHTML, /<img src=x/);

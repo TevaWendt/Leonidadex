@@ -127,7 +127,7 @@ function compare(t, labels) {
 /* ---------- 7. étapes illustrées ---------- */
 /* list : [{title, text, ill (SVG décoratif)}] */
 function steps(list, o = {}) {
-  return '<ol class="vt-steps vt-in' + (o.cls ? ' ' + o.cls : '') + '" data-lk-reveal>' + list.map((s, i) => '<li class="vt-step" style="--i:' + i + '">' + (s.ill ? '<span class="vt-step-ill" aria-hidden="true">' + s.ill + '</span>' : '') + '<h3>' + esc(s.title) + '</h3><p>' + esc(s.text) + '</p></li>').join('') + '</ol>';
+  return '<ol class="vt-steps vt-in' + (o.cls ? ' ' + o.cls : '') + '" data-lk-reveal>' + list.map((s, i) => '<li class="vt-step" style="--i:' + i + '">' + (s.ill ? '<span class="vt-step-ill" aria-hidden="true">' + s.ill + '</span>' : '') + '<div class="vt-step-b"><h3>' + esc(s.title) + '</h3><p>' + esc(s.text) + '</p></div></li>').join('') + '</ol>';
 }
 
 /* ---------- 8. compte à rebours, copie, filtres ---------- */
@@ -144,4 +144,58 @@ function filters(scopeId, list, all, label) {
     + list.map(x => '<button type="button" class="vt-filter" data-vt-f="' + esc(x.f) + '" aria-pressed="false">' + esc(x.label) + ' <b>' + x.n + '</b></button>').join('') + '</div>';
 }
 
-module.exports = { esc, SVG, MED, imgSet, img, bigSrc, media, figs, card, cards, strip, band, aside, faqGrid, compare, steps, cd, copyBox, filters };
+/* ---------- 9. v7.94 : frise à stations ---------- */
+/* list : [{iso, date, title, text, foot, main}] ; title, text et foot sont déjà en HTML (échappés par l’appelant). Le trait
+   entre les stations se trace à l’entrée (vitrine.css) ; une colonne sous 760 px. */
+function rail(list, o = {}) {
+  return '<ol class="vt-rail vt-in' + (o.cls ? ' ' + o.cls : '') + '" data-lk-reveal>' + list.map((s, i) => '<li class="vt-rail-s' + (s.main ? ' vt-rail-s--main' : '') + '" style="--i:' + i + '"><span class="vt-rail-dot" aria-hidden="true"></span><time datetime="' + esc(s.iso) + '">' + esc(s.date) + '</time><h3>' + s.title + '</h3><p>' + s.text + '</p>' + (s.foot ? '<p class="vt-rail-f">' + s.foot + '</p>' : '') + '</li>').join('') + '</ol>';
+}
+
+/* ---------- 10. v7.94 : coupure de presse ---------- */
+/* q : {text (cité tel quel), lang, who (HTML), when, foot (HTML : renvoi vers la source)} */
+function clip(q, o = {}) {
+  return '<figure class="vt-clip lk-reveal' + (o.cls ? ' ' + o.cls : '') + '"><blockquote lang="' + esc(q.lang || 'en') + '"><p>' + esc(q.text) + '</p></blockquote><figcaption lang="fr">' + (q.who ? '<b>' + q.who + '</b>' : '') + (q.when ? '<span class="vt-clip-when">' + esc(q.when) + '</span>' : '') + (q.foot ? '<span class="vt-clip-src">' + q.foot + '</span>' : '') + '</figcaption></figure>';
+}
+
+/* ---------- 11. v7.94 : deux surfaces comparées ---------- */
+/* a, b : {label, n (surface relative), sub} ; le côté de chaque carré suit la racine de la surface. caption : HTML. */
+function areas(a, b, caption) {
+  const side = x => Math.sqrt(x), sum = side(a.n) + side(b.n);/* les deux carrés et l’écart (5 %) tiennent dans la largeur */
+  const sq = x => '<div class="vt-area" style="--w:' + (95 * side(x.n) / sum).toFixed(1) + '%"><span class="vt-area-n" aria-hidden="true">' + esc(x.n === 1 ? '1' : '× ' + x.n) + '</span><b translate="no">' + esc(x.label) + '</b>' + (x.sub ? '<span>' + esc(x.sub) + '</span>' : '') + '</div>';
+  return '<figure class="vt-areas lk-reveal"><div class="vt-areas-in">' + sq(a) + sq(b) + '</div>' + (caption ? '<figcaption>' + caption + '</figcaption>' : '') + '</figure>';
+}
+
+/* ---------- 12. v7.94 : frise datée (un départ et une arrivée par ligne, sur un même axe de temps) ---------- */
+/* o : {from, to : AAAA-MM-JJ ; ticks : [{iso, label}] ; aLabel, bLabel ; rows : [{label, a:{iso, label}, b:{iso, label} | null, gap, foot (HTML)}]}
+   Une ligne sans arrivée (b : null) se prolonge en pointillé jusqu’au bord : l’arrivée n’est pas annoncée. */
+function dated(o) {
+  const t = iso => Date.parse(iso + 'T12:00:00Z'), T0 = t(o.from), T1 = t(o.to), pct = iso => (100 * (t(iso) - T0) / (T1 - T0)).toFixed(2);
+  const ticks = '<div class="vt-dated-axis" aria-hidden="true">' + o.ticks.map(k => '<span style="--x:' + pct(k.iso) + '%">' + esc(k.label) + '</span>').join('') + '</div>';
+  const rows = o.rows.map((r, i) => {
+    const x0 = pct(r.a.iso), x1 = r.b ? pct(r.b.iso) : 100;
+    return '<li class="vt-dated-r' + (r.b ? '' : ' vt-dated-r--open') + '" style="--i:' + i + ';--x0:' + x0 + '%;--x1:' + x1 + '%"><div class="vt-dated-h"><h3 translate="no">' + esc(r.label) + '</h3>' + (r.foot ? '<p class="vt-dated-f">' + r.foot + '</p>' : '') + '</div><div class="vt-dated-t"><i class="vt-dated-bar"><b>' + esc(r.b ? (r.gap || '') : (o.bLabel + ' : ' + (o.openLabel || '?'))) + '</b></i>'
+      + '<span class="vt-dated-a"><b>' + esc(o.aLabel) + '</b> <time datetime="' + esc(r.a.iso) + '">' + esc(r.a.label) + '</time></span>'
+      + (r.b ? '<span class="vt-dated-b"><b>' + esc(o.bLabel) + '</b> <time datetime="' + esc(r.b.iso) + '">' + esc(r.b.label) + '</time></span>' : '') + '</div></li>';
+  }).join('');
+  return '<div class="vt-dated vt-in" data-lk-reveal>' + ticks + '<ol class="vt-dated-l">' + rows + '</ol></div>';
+}
+
+/* ---------- 13. v7.94 : liste à cocher gardée sur l’appareil (vitrine.js : lk_<clé> dans localStorage) ---------- */
+/* items : [{title, text}] (HTML) ; key : nom court ; labels : {done} (lu par les lecteurs d’écran quand tout est coché) */
+function checklist(items, key, o = {}) {
+  return '<ul class="vt-check vt-in" data-vt-check="' + esc(key) + '" data-lk-reveal>' + items.map((x, i) => '<li style="--i:' + i + '"><label class="vt-check-l"><input type="checkbox" value="' + i + '"><span class="vt-check-box" aria-hidden="true">' + SVG.yes + '</span><span class="vt-check-b"><b>' + x.title + '</b><span>' + x.text + '</span></span></label></li>').join('') + '</ul>'
+    + (o.done ? '<p class="vt-check-done" data-vt-check-done hidden>' + o.done + '</p>' : '');
+}
+
+/* ---------- 14. v7.94 : temps de téléchargement (vitrine.js : [data-vt-dl]) ---------- */
+/* L : {title, size, sizeHint, speed, speedHint, presets:[{n, label}], result, resultHint, empty} ; o : {size (Go) si annoncée} */
+function dlCalc(L, o = {}) {
+  const id = o.id || 'vt-dl';
+  return '<form class="vt-dl lk-reveal" data-vt-dl' + (o.size ? ' data-vt-dl-size="' + esc(o.size) + '"' : '') + '><fieldset><legend>' + esc(L.title) + '</legend>'
+    + '<div class="vt-dl-f"><label for="' + id + '-size">' + esc(L.size) + '</label><div class="vt-dl-in"><input id="' + id + '-size" type="number" inputmode="decimal" min="1" max="999" step="1" data-vt-dl-size-in' + (o.size ? ' value="' + esc(o.size) + '"' : ' placeholder="?"') + '><span>Go</span></div><small>' + esc(L.sizeHint) + '</small></div>'
+    + '<div class="vt-dl-f"><label for="' + id + '-speed">' + esc(L.speed) + '</label><div class="vt-dl-in"><input id="' + id + '-speed" type="number" inputmode="decimal" min="1" max="10000" step="1" value="100" data-vt-dl-speed-in><span>Mbit/s</span></div>'
+    + (L.presets ? '<div class="vt-dl-presets" role="group" aria-label="' + esc(L.speedHint) + '">' + L.presets.map(p => '<button type="button" data-vt-dl-preset="' + p.n + '">' + esc(p.label) + '</button>').join('') + '</div>' : '<small>' + esc(L.speedHint) + '</small>') + '</div>'
+    + '<div class="vt-dl-out" aria-live="polite"><span class="vt-dl-k">' + esc(L.result) + '</span><output data-vt-dl-out>' + esc(L.empty) + '</output><small>' + esc(L.resultHint) + '</small></div></fieldset></form>';
+}
+
+module.exports = { esc, SVG, MED, imgSet, img, bigSrc, media, figs, card, cards, strip, band, aside, faqGrid, compare, steps, cd, copyBox, filters, rail, clip, areas, dated, checklist, dlCalc };

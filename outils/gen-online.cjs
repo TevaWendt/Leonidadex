@@ -44,7 +44,7 @@ const known = v => v && typeof v.value === 'number' && v.status !== 'unknown';
 const valText = (v, unknownText) => {
   if (!known(v)) return unknownText;
   const label = DP.STATUS_LABEL[({ officiel: 'official' })[v.status] || v.status] || 'Non confirmé';
-  return (v.unit === '$' ? DP.fmt(v.value) + ' $' : DP.fmt(v.value) + ' ' + v.unit) + ' · ' + label;
+  return (v.unit === '$' ? DP.fmt(v.value) + ' $' : DP.fmt(v.value) + ' ' + v.unit) + ', ' + label;
 };
 
 /* ---------- contrôles : une donnée mal formée arrête la génération ---------- */
@@ -198,7 +198,7 @@ function sourceList(H, ids) {
   return '<ol class="ed-srcs">' + ids.map(id => { const s = H.sources[id];
     return '<li id="src-' + esc(id) + '">' + S.pip(s.statut, true)
       + '<a class="ed-src-link" href="' + esc(s.url) + '" target="_blank" rel="noopener nofollow"' + (s.lang === 'en' ? ' translate="no"' : '') + '>' + esc(s.title) + '</a>'
-      + '<span class="ed-src-meta">' + (s.publisher ? '<span translate="no">' + esc(s.publisher.split(',')[0]) + '</span>' + (s.publisher.includes(',') ? esc(s.publisher.slice(s.publisher.indexOf(','))) : '') + ' · ' : '') + (s.publishedAt ? 'publié le ' + esc(frDate(s.publishedAt)) + ' · ' : '') + 'consulté le ' + esc(frDate(s.consultedAt)) + '</span>'
+      + '<span class="ed-src-meta">' + (s.publisher ? '<span translate="no">' + esc(s.publisher.split(',')[0]) + '</span>' + (s.publisher.includes(',') ? esc(s.publisher.slice(s.publisher.indexOf(','))) : '') + ', ' : '') + (s.publishedAt ? 'publié le ' + esc(frDate(s.publishedAt)) + ', ' : '') + 'consulté le ' + esc(frDate(s.consultedAt)) + '</span>'
       + '<p>' + esc(s.claim) + '</p></li>'; }).join('') + '</ol>';
 }
 const srcLinks = (ids, pre = '') => ids.length ? '<span class="online-src">' + ids.map((id, i) => '<a href="' + pre + '#src-' + esc(id) + '" aria-label="Source ' + (i + 1) + '">' + (i + 1) + '</a>').join('') + '</span>' : '';
@@ -226,7 +226,7 @@ function rubrique(ctx, id, R, vide, champs, icon) {
     + (R.repere ? '<p class="online-sheet-r"><span class="online-v">GTA V</span> ' + esc(R.repere.texte) + ' ' + st(R.repere.statut, R.repere.sources) + '</p>' : '')
     + '<h4>' + esc(C.titre) + '</h4>' + LKX.skel(f, C.sortie)
     + '<div class="lkx-sheet-cta"><a class="lkx-btn lkx-btn--night" href="online/gta-online-actuel.html">' + esc(H.espace.sommaire.find(x => x.id === 'gta-online-actuel').label) + '</a><a class="lkx-btn lkx-btn--ghost" href="online/annonces.html">' + esc(H.zone.toi.actions.find(a => a.href === 'online/annonces.html').t) + '</a></div>';
-  const sheet = LKX.sheet({ id: 'apercu-' + id, cls: 'online-apercu', summary, fig: ok ? LKX.img(MED, V.media, V.alt, { big: true, sizes: '(max-width:760px) 100vw, 600px' }) : '', caption: ok ? V.legende : '', icon: ico, kicker: esc(C.apercuK) + ' · <span>' + esc(R.kicker) + '</span>', title: R.titre, body });
+  const sheet = LKX.sheet({ id: 'apercu-' + id, cls: 'online-apercu', summary, fig: ok ? LKX.img(MED, V.media, V.alt, { big: true, sizes: '(max-width:760px) 100vw, 600px' }) : '', caption: ok ? V.legende : '', icon: ico, kicker: esc(C.apercuK) + ', <span>' + esc(R.kicker) + '</span>', title: R.titre, body });
   /* le dossier de la rubrique : grand visuel officiel (dit « illustration »), texte propre, l’état d’aujourd’hui, la fiche */
   return '<div class="online-dossier lkx-net lk-arrive" data-lkx-in>'
     + '<figure class="online-dossier-fig">' + (ok ? LKX.img(MED, V.media, V.alt, { big: true, sizes: '(max-width:820px) 100vw, 640px' }) : '<span class="online-dossier-ico" aria-hidden="true">' + ico + '</span>') + (ok ? '<figcaption>' + esc(V.legende) + '</figcaption>' : '') + '</figure>'
@@ -261,7 +261,7 @@ function cine(ctx) {
     if (sc.id === '2027') art += '<div class="online-scene-art online-scene-art--date" aria-hidden="true" translate="no"><span class="online-flap"><span class="online-flap-s"><b>2026</b><b>2027</b></span></span><span class="online-flap-q">?</span></div>';
     if (sc.cta) art += '<div class="online-scene-art online-scene-art--pret" aria-hidden="true" translate="no"><span class="online-pret-plate"><span class="brand">Leonida<span>kit</span></span><span class="online-pret-bars"><i></i><i></i><i></i></span></span></div>';
     return '<section class="online-scene online-scene--' + esc(sc.id) + (sc.media && !sc.fond ? ' online-scene--img' : '') + '" id="ecran-' + esc(sc.id) + '" data-online-scene style="--i:' + (i + 1) + '" aria-labelledby="scene-' + esc(sc.id) + '-t"><div class="online-scene-in">' + art
-      + '<div class="online-scene-txt"><p class="online-scene-k"><span class="online-scene-n" aria-hidden="true" translate="no">' + pad(i + 1) + ' / ' + pad(n) + '</span> <span>' + esc(sc.k) + '</span></p>'
+      + '<div class="online-scene-txt"><p class="online-scene-k"><span class="online-scene-n" aria-hidden="true" translate="no">' + (i + 1) + ' sur ' + n + '</span> <span>' + esc(sc.k) + '</span></p>'
       + '<h2 class="online-scene-t" id="scene-' + esc(sc.id) + '-t">' + esc(sc.t) + '</h2>'
       + '<p class="online-scene-p">' + esc(sc.p) + '</p>'
       + (sc.statut ? '<p class="online-scene-st">' + st(sc.statut, sc.sources) + '</p>' : '')
@@ -271,8 +271,8 @@ function cine(ctx) {
   return '<div class="online-cine lk-arrive" id="presentation" data-online-cine style="--n:' + (n + 1) + '"><div class="online-stage" data-online-stage>'
     + '<section class="page-head lk-glow online-scene online-scene--hero" data-online-scene style="--i:0" aria-labelledby="online-h1"><div class="online-scene-in online-scene-in--hero">' + bg(I.media, I.alt, true, 'online-scene-bg--hero')
     + '<div class="online-cine-bg" aria-hidden="true"><div class="online-cine-grid"></div><div class="online-cine-glow"></div><div class="online-cine-scan"></div></div>'
-    + '<p class="online-ghost" aria-hidden="true" translate="no">GTA Online · GTA Online · GTA Online · GTA Online</p>'
-    + '<div class="online-scene-txt online-scene-txt--hero"><p class="fiche-cat"><span class="online-marque"><span class="brand" translate="no">Leonida<span>kit</span></span> · <span>' + esc(I.marque) + '</span></span></p>'
+    + '<p class="online-ghost" aria-hidden="true" translate="no">GTA Online, GTA Online, GTA Online, GTA Online</p>'
+    + '<div class="online-scene-txt online-scene-txt--hero"><p class="fiche-cat"><span class="online-marque"><span class="brand" translate="no">Leonida<span>kit</span></span>, <span>' + esc(I.marque) + '</span></span></p>'
     + '<h1 id="online-h1">' + esc(X.title) + '</h1>'
     + '<p class="lede">' + esc(X.lede) + '</p><p class="d-intro-note">' + esc(X.note) + ' <a href="tuto.html#sources">Comprendre les statuts</a>.</p>'
     + '<p class="online-defiler" aria-hidden="true">' + esc(I.defiler) + '<i></i></p><p class="online-passer"><a href="#etat">' + esc(I.passer) + '</a></p></div></div></section>'
@@ -346,8 +346,8 @@ function subPage(ctx, pg) {
   const hero = '<section class="page-head online-hero lk-arrive" aria-labelledby="online-h1">'
     + (ok ? '<figure class="online-hero-fig">' + LKX.img(MED, pg.media, pg.alt, { big: true, sizes: '100vw', eager: true }) + '<figcaption><span>' + esc(P.legende) + '</span><span translate="no">' + esc(MED[pg.media].credit || 'Rockstar Games') + '</span></figcaption></figure>' : '')
     + '<div class="online-cine-bg online-hero-fx" aria-hidden="true"><div class="online-cine-grid"></div><div class="online-cine-glow"></div><div class="online-cine-scan"></div></div>'
-    + '<div class="shell online-hero-in"><nav class="crumbs online-crumbs" aria-label="Fil d’Ariane"><a href="../' + HUB + '.html">' + esc(H.espace.nom) + '</a> / <span>' + esc(pg.label) + '</span></nav>'
-    + '<div class="lore-copy lore-enter"><p class="fiche-cat"><span class="online-marque"><span class="brand" translate="no">Leonida<span>kit</span></span> · <span>' + esc(H.intro.marque) + '</span></span></p>'
+    + '<div class="shell online-hero-in"><nav class="crumbs online-crumbs" aria-label="Fil d’Ariane"><a href="../' + HUB + '.html">' + esc(H.espace.nom) + '</a> <span class="crumbs-sep" aria-hidden="true"></span> <span>' + esc(pg.label) + '</span></nav>'
+    + '<div class="lore-copy lore-enter"><p class="fiche-cat"><span class="online-marque"><span class="brand" translate="no">Leonida<span>kit</span></span>, <span>' + esc(H.intro.marque) + '</span></span></p>'
     + '<h1 id="online-h1">' + esc(pg.titre) + '</h1><p class="lede">' + esc(pg.lede) + '</p>'
     + '<ul class="online-hero-chiffres">' + chiffres.join('') + '</ul></div></div></section>';
   /* la suite : ce qu’on sait en clair, l’autre page de l’espace, la FAQ */
@@ -362,7 +362,7 @@ function subPage(ctx, pg) {
     const n = pg.blocs.length, rub = Object.values(H.rubriques || {});
     const chap = (b, i) => {
       const R = rub.find(r => (r.blocs || [])[0] === b.id), fig = R && R.media && MED[R.media] ? '<figure class="online-chap-fig">' + LKX.img(MED, R.media, R.alt, { big: true, sizes: '(max-width:820px) 100vw, 440px' }) + '<figcaption>' + esc(R.legende) + '</figcaption></figure>' : '';
-      return '<section class="online-chap" id="' + esc(b.id) + '" aria-labelledby="' + esc(b.id) + '-t"><div class="online-chap-head reveal"><p class="online-chap-k"><span class="online-chap-n" aria-hidden="true" translate="no">' + pad(i + 1) + ' / ' + pad(n) + '</span> <span>' + esc(P.chapitre) + '</span></p><h2 class="sec-h" id="' + esc(b.id) + '-t">' + esc(b.titre) + '</h2>' + fig + '</div>'
+      return '<section class="online-chap" id="' + esc(b.id) + '" aria-labelledby="' + esc(b.id) + '-t"><div class="online-chap-head reveal"><p class="online-chap-k"><span class="online-chap-n" aria-hidden="true" translate="no">' + (i + 1) + ' sur ' + n + '</span> <span>' + esc(P.chapitre) + '</span></p><h2 class="sec-h" id="' + esc(b.id) + '-t">' + esc(b.titre) + '</h2>' + fig + '</div>'
         + '<ol class="online-reps lkx-net lk-arrive" data-lkx-in>' + b.items.map((x, j) => '<li class="online-rep"><span class="online-rep-n" aria-hidden="true" translate="no">' + pad(j + 1) + '</span>' + (x.titre ? '<p class="online-rep-k"><span class="online-v">GTA V</span></p><h3 translate="no">' + esc(x.titre) + '</h3>' : '') + '<p class="online-rep-p">' + esc(x.texte) + '</p><p>' + st(x.statut, x.sources) + '</p></li>').join('') + '</ol></section>';
     };
     content = '<section class="shell online-sec online-page-gta-online-actuel" aria-labelledby="chapitres-t">' + head(pg.sectionK, pg.sectionT, 'chapitres')
@@ -371,7 +371,7 @@ function subPage(ctx, pg) {
   }
   const body = hero + '\n' + content + '\n<section class="shell online-sec online-fiche-src" aria-labelledby="sources-t"><div class="reveal"><p class="online-kicker">' + ids.length + ' sources ouvertes</p><h2 class="sec-h" id="sources-t">Sources</h2></div>' + sourceList(H, ids) + '<p class="online-plus">Les statuts sont expliqués dans le <a href="../tuto.html#sources">Tuto</a>.</p></section>';
   const ld = pg.kind === 'annonces' ? '<script type="application/ld+json">' + JSON.stringify({ '@context': 'https://schema.org', '@type': 'ItemList', name: pg.titre, numberOfItems: pg.items.length, itemListElement: pg.items.map((x, i) => ({ '@type': 'ListItem', position: i + 1, name: x.dateTexte + ' : ' + x.titre })) }) + '</script>' : '';
-  return page(SUBC, { p, title: pg.titre + ' — GTA Online | Leonidakit', desc: pg.desc, canonical: '/' + HUB + '/' + pg.id + '.html', body, crumbs: [[H.espace.nom, '/' + HUB + '.html'], [pg.label, '/' + HUB + '/' + pg.id + '.html']], ld, espace: espace(H, pg.sommaire, p) });
+  return page(SUBC, { p, title: pg.titre + ' dans GTA Online | Leonidakit', desc: pg.desc, canonical: '/' + HUB + '/' + pg.id + '.html', body, crumbs: [[H.espace.nom, '/' + HUB + '.html'], [pg.label, '/' + HUB + '/' + pg.id + '.html']], ld, espace: espace(H, pg.sommaire, p) });
 }
 /* une activité, une entreprise ou une mise à jour du jeu en ligne de GTA VI qui a un texte (aucune au 4 octobre 2026) */
 function itemPage(ctx, kind, x) {
@@ -380,15 +380,15 @@ function itemPage(ctx, kind, x) {
   const facts = kind === 'activites' ? [['Joueurs', Number.isInteger(x.joueurs) ? String(x.joueurs) : 'Pas encore publié'], ['Gain', valText(x.gain, 'Pas encore publié')], ['Durée', valText(x.duree, 'Pas encore publiée')]]
     : kind === 'entreprises' ? [['Prix', valText(x.prix, 'Pas encore publié')], ['Revenu', valText(x.revenu, 'Pas encore publié')]] : kind === 'achats' ? [['Prix', valText(x.prix, 'Pas encore publié')]] : [['Date', frDate(x.date)]];
   const body = `<section class="page-head shell">
-  <nav class="crumbs online-crumbs" aria-label="Fil d’Ariane"><a href="../${HUB}.html">${esc(H.espace.nom)}</a> / <span>${esc(x.nom)}</span></nav>
-  <div class="lore-copy lore-enter"><p class="fiche-cat">${esc(H.espace.nom)} · ${esc(label)}</p><h1>${esc(x.nom)}</h1><p class="lede">${esc(x.resume)}</p></div>
+  <nav class="crumbs online-crumbs" aria-label="Fil d’Ariane"><a href="../${HUB}.html">${esc(H.espace.nom)}</a> <span class="crumbs-sep" aria-hidden="true"></span> <span>${esc(x.nom)}</span></nav>
+  <div class="lore-copy lore-enter"><p class="fiche-cat">${esc(H.espace.nom)}, ${esc(label)}</p><h1>${esc(x.nom)}</h1><p class="lede">${esc(x.resume)}</p></div>
 </section>
 <section class="shell lore-body">
   <div class="lore-texte reveal"><h2>En bref</h2><dl class="online-champs">${facts.map(([k, v]) => '<div><dt>' + esc(k) + '</dt><dd>' + esc(v) + '</dd></div>').join('')}</dl><p>${st(x.statut, x.sources)}</p></div>
   <div class="lore-texte reveal"><h2>Ce qu’on sait</h2><p>${esc(x.texte)}</p></div>
 </section>
 <section class="shell online-fiche-src" aria-labelledby="sources-t"><h2 class="sec-h" id="sources-t">Sources</h2>${sourceList(H, x.sources)}</section>`;
-  return page(SUBC, { p, title: x.nom + ' — GTA Online | Leonidakit', desc: x.resume, canonical: '/' + HUB + '/' + x.id + '.html', body, crumbs: [[H.espace.nom, '/' + HUB + '.html'], [x.nom, '/' + HUB + '/' + x.id + '.html']], espace: espace(H, null, p) });
+  return page(SUBC, { p, title: x.nom + ' dans GTA Online | Leonidakit', desc: x.resume, canonical: '/' + HUB + '/' + x.id + '.html', body, crumbs: [[H.espace.nom, '/' + HUB + '.html'], [x.nom, '/' + HUB + '/' + x.id + '.html']], espace: espace(H, null, p) });
 }
 
 /* ---------- recherche du site (outils/online-index.json, lu par sync-site.cjs) ---------- */

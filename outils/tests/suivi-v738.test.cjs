@@ -27,8 +27,8 @@ test('Armurerie : bouton « Je l’ai » sur chaque équipement, barre synchroni
 test('Progression (v7.51 : neuf carnets) : cartes alignées, une ligne par famille, garage compté, total suivi',withPage('progression.html',a=>{
   const cards=[...a.d.querySelectorAll('.cn-dcard')];assert.equal(cards.length,9);
   for(const c of cards){assert.ok(c.querySelector('h3 a'));assert.ok(c.querySelector('.suivi-n'));assert.ok(c.querySelector('a.cn-dcard-btn'));}
-  assert.match(a.d.querySelector('#progress-vehicules .suivi-n').textContent,/^2 \/ /);
-  assert.match(a.d.querySelector('#suivi-equipements .suivi-n').textContent,/^1 \/ 16$/);
+  assert.match(a.d.querySelector('#progress-vehicules .suivi-n').textContent,/^2 sur /);
+  assert.match(a.d.querySelector('#suivi-equipements .suivi-n').textContent,/^1 sur 16$/);
   assert.match(a.d.getElementById('progress-global-text').textContent,/^3 cochés sur/);
 },{storage:{lk_own_vehicules:'{"albany-emperor":1,"vapid-dominator":1}',lk_own_equipements:'{"cle-usb":1}'}}));
 

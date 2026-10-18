@@ -27,7 +27,7 @@ test('sections.cjs : compositions du lot 4 (frise, paires, questions, actions, s
   assert.match(S.pending([{q:'Q ?',etat:'E.'}]),/<h3>Q \?<\/h3><p>E\.<\/p>/);
   assert.match(S.actions([{k:'K',t:'T',d:'D',href:'x.html'}]),/<a class="ed-act" href="x\.html"><span class="ed-act-k">K<\/span>/);
   const sl=S.sourceList([{id:'a',url:'https://x.test/',title:'T',publishedAt:'2026-01-02',consultedAt:'2026-09-27',statut:'comm',claim:'C'}]);
-  assert.match(sl,/<li id="src-a">/);assert.match(sl,/publié le 02\/01\/2026 · consulté le 27\/09\/2026/);assert.match(sl,/rel="noopener nofollow"/);assert.match(sl,/Identification communautaire/);
+  assert.match(sl,/<li id="src-a">/);assert.match(sl,/publié le 02\/01\/2026, consulté le 27\/09\/2026/);assert.match(sl,/rel="noopener nofollow"/);assert.match(sl,/Identification communautaire/);
 });
 
 test('editorial-hubs.json : hubs complets (six depuis la v7.65), FAQ de 4 à 6 questions avec mots-clés, sources datées et connues, actions avec lien',()=>{

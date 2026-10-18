@@ -112,7 +112,7 @@ test('menu, pied de page, recherche et plan du site : « Trophées et succès »
   assert.ok(ctx.window.LK_INDEX.some(e => e.u === '/trophees.html'), 'la page');
   assert.ok(ctx.window.LK_INDEX.some(e => e.u === '/trophees.html#liste' && /\bplatine\b/.test(e.s) && /\bachievements\b/.test(e.s)), 'les mots du joueur');
   assert.ok(read('sitemap.xml').includes('<loc>https://www.leonidakit.com/trophees.html</loc>'));
-  assert.match(read('style.css'), /sections? [a-z, ]*\btrophees\b[a-z, ]* : cinq groupes dans « Explorer »/); /* un seul bloc, marqué « section trophees » ou « sections …, trophees, … » une fois les sections réunies */
+  assert.match(read('outils/sources/style.css'), /sections? [a-z, ]*\btrophees\b[a-z, ]* : cinq groupes dans « Explorer »/); /* un seul bloc, marqué « section trophees » ou « sections …, trophees, … » une fois les sections réunies */
 });
 
 test('Léo : morceau de questions de la section, réponses honnêtes et sourcées (nombre, platine, manquables)', () => {
@@ -147,7 +147,7 @@ test('trophees.js : case « Obtenu » gardée après rechargement (lk-trophees-o
     box.click(); assert.ok(r.d.querySelector('#trophee-exemple-or').classList.contains('is-obtenu'));
     assert.equal(r.d.querySelector('[data-trophees-n]').textContent, '1'); assert.equal(r.d.querySelector('[data-trophees-total]').textContent, '8');
     assert.equal(r.d.querySelector('[data-trophees-anneau]').style.getPropertyValue('--p'), '0.1250');
-    assert.match(r.d.querySelector('[data-trophees-annonce]').textContent, /^1 \/ 8 · /, 'le bilan est relu aux lecteurs d’écran');
+    assert.match(r.d.querySelector('[data-trophees-annonce]').textContent, /^1 sur 8, /, 'le bilan est relu aux lecteurs d’écran');
     assert.equal(r.w.localStorage.getItem(KEY), null);
   } finally { r.close(); }
   /* comme une vraie liste : la case est enregistrée, puis retrouvée cochée après rechargement */

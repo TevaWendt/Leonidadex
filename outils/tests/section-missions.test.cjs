@@ -57,7 +57,7 @@ test('générateur, une mission fictive de test : fiche complète, liens vers pe
   assert.equal(d.querySelectorAll('h1').length, 1); assert.equal(d.querySelector('h1').textContent, 'Mission fictive de test');
   assert.ok(!d.querySelector('meta[name="robots"]'), 'une vraie fiche est indexable');
   assert.equal(d.querySelector('link[rel="canonical"]').href, 'https://www.leonidakit.com/missions/test-fictive.html');
-  const bref = d.querySelector('.missions-bref').textContent; assert.match(bref, /25\s000 \$ · Officiel/); assert.match(bref, /20 min · Mesuré et vérifié/); assert.match(bref, /Chapitre de test/); assert.match(bref, /Non/);
+  const bref = d.querySelector('.missions-bref').textContent; assert.match(bref, /25\s000 \$, Officiel/); assert.match(bref, /20 min, Mesuré et vérifié/); assert.match(bref, /Chapitre de test/); assert.match(bref, /Non/);
   for (const href of ['../personnages/jason.html', '../lieux/vice-city.html', '../carte.html#lieu=g-L192', '../gangs/equipe-raul.html', '../vehicules/karin-sultan.html', '../armes/girardi-es9.html']) assert.ok(d.querySelector('a[href="' + href + '"]'), href);
   assert.equal(d.querySelectorAll('.missions-etapes li').length, 2);
   assert.equal(d.querySelectorAll('.missions-obj li').length, 2); assert.equal(d.querySelectorAll('.missions-obj--fac').length, 1);
@@ -140,7 +140,7 @@ test('menu, pied de page, recherche et plan du site : « Missions » en tête du
   assert.match(read('missions.html'), /<a href="missions\.html" class="here" aria-current="page">Missions<\/a>/);
   const ctx = { window: {} }; vm.runInNewContext(read('search-index.js'), ctx); assert.ok(ctx.window.LK_INDEX.some(e => e.u === '/missions.html'));
   assert.ok(read('sitemap.xml').includes('<loc>https://www.leonidakit.com/missions.html</loc>'));
-  assert.match(read('style.css'), /sections? [a-z, ]*\bmissions\b[a-z, ]* : cinq groupes dans « Explorer »/); /* un seul bloc, marqué « section missions » ou « sections …, missions, … » une fois les sections réunies */
+  assert.match(read('outils/sources/style.css'), /sections? [a-z, ]*\bmissions\b[a-z, ]* : cinq groupes dans « Explorer »/); /* un seul bloc, marqué « section missions » ou « sections …, missions, … » une fois les sections réunies */
 });
 
 test('Léo : morceau de questions de la section, sujets existants reliés au hub, réponses honnêtes (nombre, déblocage, gains, braquages, durée)', () => {

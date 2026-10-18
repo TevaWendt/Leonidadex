@@ -34,7 +34,7 @@
  "Quels véhicules donne l’Édition Ultimate ?": "Quais veículos a edição Ultimate dá?",
  "Comment cocher un véhicule que je possède ?": "Como marcar um veículo que eu tenho?",
  "Peut-on personnaliser sa voiture dans GTA VI ?": "Dá para personalizar o carro no GTA VI?",
- "Oui : {name} — {condition}.": "Sim: {name} — {condition}.",
+ "Oui : {name}, {condition}.": "Sim: {name}, {condition}.",
  "{name} : {description} ({condition}).": "{name}: {description} ({condition}).",
  "Non : {name} n’est pas relié à une édition sur le site.": "Não: {name} não tem ligação com nenhuma edição no site.",
  "Oui : {name} est relié à une édition ({source}).": "Sim: {name} tem ligação com uma edição ({source}).",

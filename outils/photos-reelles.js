@@ -128,7 +128,7 @@ function choisir(pages, terme) {
     'Pour en ajouter une à la main : déposer le fichier dans img/vehicules/<id>-reel.jpg\n' +
     'et ajouter l\'entrée correspondante dans credits-reels.json.\n\n' + revoir.join('\n') + '\n');
 
-  console.log('\ntéléchargées ' + ok + ' · déjà présentes ' + saute + ' · sans résultat ' + rate);
+  console.log('\ntéléchargées ' + ok + ', déjà présentes ' + saute + ', sans résultat ' + rate);
   console.log('crédits écrits dans ' + CREDITS);
   if (rate) console.log('liste des manquantes dans photos-a-revoir.txt');
 })();

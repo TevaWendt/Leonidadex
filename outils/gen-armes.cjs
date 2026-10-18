@@ -57,7 +57,7 @@ const SLOTL={longue:'Arme longue',poing:'Arme de poing'};
    (une batte comptait parmi les armes de poing). Les données (armes-data.js) ne changent pas. */
 const slotOf=a=>a.cat==='melee'||a.cat==='projectile'?null:a.slot;
 const SLOT_AUTRE={melee:'Non précisé (arme de mêlée)',projectile:'Non précisé (arme de jet)'};
-const CREDIT_RS='Visuels officiels © Rockstar Games / Take-Two Interactive. <a href="../medias.html">Provenance et crédits</a>.';
+const CREDIT_RS='Visuels officiels © Rockstar Games, Take-Two Interactive. <a href="../medias.html">Provenance et crédits</a>.';
 const medList=a=>(AM[a.id]||[]).map(id=>MED[id]).filter(m=>m&&m.variants&&m.variants.every(x=>fs.existsSync(x.src.replace(/^\//,''))));
 const medBig=m=>m.variants[1]||m.variants[0];
 const medAlt=(a,m)=>(a.imageAlts&&a.imageAlts[m.id])||m.alt||(a.nom+', '+m.titre+', capture officielle Rockstar Games');
@@ -99,7 +99,7 @@ function fiche(a,i){
   {'@type':'ListItem',position:3,name:a.nom,item:url}]},null,2);
  const prixPub=DP.prixDe(a); /* v7.59 : un prix publié dans armes-data.js s'affiche avec son statut ; sinon rien n'est inventé */
  const tags=[...(meds.length?['<span class="chip">Images officielles</span>','']:[]),
-  '<span class="chip live">'+st.chip+'</span>',...(prixPub?['<span class="chip chip-prix" data-prix-statut="'+prixPub.status+'">'+esc('Prix publié : '+DP.fmt(prixPub.value)+' '+prixPub.unit+' · '+prixPub.label)+'</span>']:[]),'<span class="chip">'+esc(a.src)+'</span>',...(slotOf(a)?['<span class="chip">'+SLOTL[a.slot]+'</span>']:[])].join('\n          ');
+  '<span class="chip live">'+st.chip+'</span>',...(prixPub?['<span class="chip chip-prix" data-prix-statut="'+prixPub.status+'">'+esc('Prix publié : '+DP.fmt(prixPub.value)+' '+prixPub.unit+', '+prixPub.label)+'</span>']:[]),'<span class="chip">'+esc(a.src)+'</span>',...(slotOf(a)?['<span class="chip">'+SLOTL[a.slot]+'</span>']:[])].join('\n          ');
  const insp=a.insp?esc(a.insp)+' <span class="unknown">— rapprochement communautaire</span>':a.fam?esc(a.fam)+' <span class="unknown">— famille d’objet</span>':'<span class="unknown">Objet du quotidien</span>';
  const rows=[['Nom',esc(a.nom)+(a.perso?' <span class="perso-tag">Arme de '+esc(PERSO_NOM[a.perso]||a.perso)+'</span>':'')],...(a.fr?[['Désignation courante',esc(a.fr)]]:[]),['Statut',st.l],
   ['Catégorie','<a href="../armes.html#'+a.cat+'">'+esc(cat)+'</a>'],['Emplacement',slotOf(a)?SLOTL[a.slot]:SLOT_AUTRE[a.cat]],
@@ -113,9 +113,9 @@ function fiche(a,i){
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>${esc(a.nom)} — GTA VI | Leonidakit</title>
+<title>${esc(a.nom)} dans GTA VI | Leonidakit</title>
 <meta name="description" content="${esc(description(a))}">
-<meta property="og:title" content="${esc(a.nom)} — GTA VI | Leonidakit">
+<meta property="og:title" content="${esc(a.nom)} dans GTA VI | Leonidakit">
 <meta property="og:description" content="${esc(description(a))}">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="fr_FR">${indexable(a)?'':'\n<meta name="robots" content="noindex, follow">'}
@@ -137,10 +137,7 @@ ${HEADER}
   <div class="fhero-bg" aria-hidden="true"></div>
   <div class="shell">
     <nav class="crumbs" aria-label="Fil d’Ariane">
-      <a href="../index.html">Accueil</a> <span>/</span>
-      <a href="../armes.html">Armes</a> <span>/</span>
-      <a href="../armes.html#${a.cat}">${esc(cat)}</a> <span>/</span>
-      <span aria-current="page">${esc(a.nom)}</span>
+      <a href="../index.html">Accueil</a> <span class="crumbs-sep" aria-hidden="true"></span> <a href="../armes.html">Armes</a> <span class="crumbs-sep" aria-hidden="true"></span> <a href="../armes.html#${a.cat}">${esc(cat)}</a> <span class="crumbs-sep" aria-hidden="true"></span> <span aria-current="page">${esc(a.nom)}</span>
     </nav>
 
     <div class="fhero-in">
@@ -230,7 +227,7 @@ hub=hub.replace(/(<button class="chip-filter is-on" data-filter="all">Tout<em>)\
 hub=hub.replace(/(<button class="chip-filter is-on" data-filter="all">Tout<em>\d+<\/em><\/button>)[\s\S]*?(\n\s*<span class="chip-sep"><\/span>)/,'$1'+Object.keys(CATL).map(c=>'<button class="chip-filter" data-filter="'+c+'">'+esc(CATL[c])+'<em>'+(nCat[c]||0)+'</em></button>').join('')+'$2');
 hub=hub.replace(/(data-stf="officiel">Nommées par Rockstar<em>)\d+/,'$1'+nSt.officiel).replace(/(data-stf="vu">Vues officiellement<em>)\d+/,'$1'+nSt.vu)
  .replace(/(data-slotf="longue">Longues<em>)\d+/,'$1'+nSlot.longue).replace(/(data-slotf="poing">Poing<em>)\d+/,'$1'+nSlot.poing);
-const opt=list=>'<option value="">Aucune</option>'+list.map(a=>'<option value="'+a.id+'">'+esc(a.nom+' · '+CATL[a.cat])+'</option>').join('');
+const opt=list=>'<option value="">Aucune</option>'+list.map(a=>'<option value="'+a.id+'">'+esc(a.nom+', '+CATL[a.cat])+'</option>').join('');
 hub=hub.replace(/(<select id="lo-(?:dos|main)"[^>]*>)[\s\S]*?<\/select>/g,(m0,open)=>open+opt(A.filter(a=>a.slot==='longue'))+'</select>');
 hub=hub.replace(/(<select id="lo-poing"[^>]*>)[\s\S]*?<\/select>/,(m0,open)=>open+opt(A.filter(a=>a.slot==='poing'&&(a.cat==='pistolet'||a.cat==='pm')))+'</select>');
 hub=hub.replace(/(<p class="vcount" id="vcount" role="status"><strong>)\d+/,'$1'+A.length);

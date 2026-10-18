@@ -106,7 +106,7 @@ function block(ctx, x) {
   const zoom = (x.zoom || []).length ? '<section class="shell animaux-zoom reveal" aria-labelledby="animaux-zoom-t"><h2 class="sec-h" id="animaux-zoom-t">Gros plan</h2><div class="animaux-zoom-grid">'
     + x.zoom.map(z => { const m = MED[z.media], big = m.variants[m.variants.length - 1], small = m.variants[0];
       return '<figure class="animaux-zoom-fig rise"><a class="animaux-zoom-crop" href="' + esc(z.src) + '" aria-label="Agrandir : ' + esc(z.alt) + '"><img src="' + esc(z.src) + '" width="' + z.w + '" height="' + z.h + '" alt="' + esc(z.alt) + '" loading="lazy" decoding="async"><span class="animaux-zoom-lens" aria-hidden="true"></span></a>'
-        + '<figcaption><span class="animaux-zoom-k">Recadrage</span><b>' + esc(z.legende) + '</b><span>Recadrage de la capture officielle « ' + esc(m.titre) + ' » · ' + esc(m.credit) + ' · <a href="' + esc(m.source) + '" target="_blank" rel="noopener nofollow">Galerie officielle</a></span>'
+        + '<figcaption><span class="animaux-zoom-k">Recadrage</span><b>' + esc(z.legende) + '</b><span>Recadrage de la capture officielle « ' + esc(m.titre) + ' », ' + esc(m.credit) + ', <a href="' + esc(m.source) + '" target="_blank" rel="noopener nofollow">Galerie officielle</a></span>'
         + '<a class="animaux-zoom-orig" href="' + esc(big.src) + '" aria-label="Agrandir la capture d’origine : ' + esc(m.titre) + '"><img src="' + esc(small.src) + '" srcset="' + esc(small.src) + ' ' + small.w + 'w" sizes="92px" width="' + small.w + '" height="' + small.h + '" alt="" loading="lazy" decoding="async"><span>Capture d’origine</span></a></figcaption></figure>'; }).join('')
     + '</div></section>' : '';
   const src = '<section class="shell animaux-fiche-src reveal" aria-labelledby="animaux-src-t"><h2 class="sec-h" id="animaux-src-t">Statut et sources</h2><p class="animaux-statut">' + S.pip(x.statut, true) + '<span>' + esc(STATUT_PHRASE[x.statut]) + '</span></p>' + sourceList(SRC, x.sources) + '</section>';
@@ -120,7 +120,7 @@ function idCard(ctx, x) {
     + '<div class="an-id-main"><h2 class="an-id-h" id="an-id-t">Carte d’identité</h2><dl class="an-id-list">'
     + '<div><dt>Famille</dt><dd>' + esc(x.kind) + '</dd></div>'
     + '<div><dt>Statut</dt><dd>' + S.pip(x.statut, true) + '</dd></div>'
-    + (places.length ? '<div><dt>Régions</dt><dd>' + places.map(r => '<a href="../lieux/' + esc(r.id) + '.html">' + esc(r.name) + '</a>').join('<span aria-hidden="true"> · </span>') + '</dd></div>' : '')
+    + (places.length ? '<div><dt>Régions</dt><dd>' + places.map(r => '<a href="../lieux/' + esc(r.id) + '.html">' + esc(r.name) + '</a>').join('<span aria-hidden="true">, </span>') + '</dd></div>' : '')
     + '<div><dt>Visuels officiels</dt><dd>' + (x.media || []).length + '</dd></div>'
     + '<div><dt>Sources datées</dt><dd><a href="#animaux-src-t">' + (x.sources || []).length + '</a></dd></div>'
     + '</dl></div><span class="an-id-stamp an-id-stamp--' + esc(x.statut) + '" aria-hidden="true">' + esc(S.STATUS_LABEL[x.statut]) + '</span></div></section>' + ID_END;
@@ -202,7 +202,7 @@ function leo(root = ROOT) {
   const { A, SRC, MED } = load(root);
   const image = ids => (ids || []).flatMap(id => (MED[id] && MED[id].variants) || []).map(v => v.src).find(src => fs.existsSync(path.join(root, src.slice(1)))) || null;
   const verifiedAt = '2026-10-04';
-  const fiches = A.fiches.map(x => ({ key: 'animal:' + x.id, id: x.id, kind: 'animal', shard: 'monde', name: x.name, aliases: x.aliases || [], category: A.section.label + ' · ' + x.kind, url: '/' + HUB + '/' + x.id + '.html', image: image(x.media), calcId: null, price: null, proof: { officiel: 'Nommé ou décrit par Rockstar ; sources datées sur la fiche.', vu: 'Vu sur les images officielles, sans nom d’espèce donné par Rockstar.', comm: 'Identification des joueurs, non confirmée par Rockstar.', conf: 'À confirmer.' }[x.statut], source: x.source || (SRC[x.sources[0]] || {}).url || null, verifiedAt, description: x.description, tagline: x.tagline || null, related: { places: x.places || [] } }));
+  const fiches = A.fiches.map(x => ({ key: 'animal:' + x.id, id: x.id, kind: 'animal', shard: 'monde', name: x.name, aliases: x.aliases || [], category: A.section.label + ', ' + x.kind, url: '/' + HUB + '/' + x.id + '.html', image: image(x.media), calcId: null, price: null, proof: { officiel: 'Nommé ou décrit par Rockstar ; sources datées sur la fiche.', vu: 'Vu sur les images officielles, sans nom d’espèce donné par Rockstar.', comm: 'Identification des joueurs, non confirmée par Rockstar.', conf: 'À confirmer.' }[x.statut], source: x.source || (SRC[x.sources[0]] || {}).url || null, verifiedAt, description: x.description, tagline: x.tagline || null, related: { places: x.places || [] } }));
   const topics = A.hub.faq.filter(x => !x.leo).map((x, i) => ({ id: 'animaux-faq-' + (i + 1), q: x.q, f: [x.q, ...(x.f || [])], k: x.k, text: x.a, status: 'Réponse de la FAQ « ' + A.section.label + ' », sources en bas de la page', links: [{ label: 'La FAQ et ses sources', url: '/' + HUB + '.html#faq' }], verifiedAt, min: Number.isInteger(x.min) ? x.min : 2 }));
   return { fiches, topics, suggestions: { animaux: A.leo.suggestions }, inputs: [DATA_FILE] };
 }

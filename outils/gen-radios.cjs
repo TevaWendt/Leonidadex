@@ -159,7 +159,7 @@ function sourceList(D, ids) {
   return '<ol class="ed-srcs">' + ids.map(id => { const s = D.sources[id];
     return '<li id="src-' + esc(id) + '">' + S.pip(s.statut, true)
       + '<a class="ed-src-link" href="' + esc(s.url) + '" target="_blank" rel="noopener nofollow"' + (s.lang === 'en' ? ' translate="no"' : '') + '>' + esc(s.title) + '</a>'
-      + '<span class="ed-src-meta">' + (s.publisher ? esc(s.publisher) + ' · ' : '') + (s.publishedAt ? 'publié le ' + esc(frDate(s.publishedAt)) + ' · ' : '') + 'consulté le ' + esc(frDate(s.consultedAt)) + '</span>'
+      + '<span class="ed-src-meta">' + (s.publisher ? esc(s.publisher) + ', ' : '') + (s.publishedAt ? 'publié le ' + esc(frDate(s.publishedAt)) + ', ' : '') + 'consulté le ' + esc(frDate(s.consultedAt)) + '</span>'
       + '<p>' + esc(s.claim) + '</p></li>'; }).join('') + '</ol>';
 }
 /* renvois vers la liste des sources de la page (numéros ; le titre complet est dans la liste) */
@@ -183,7 +183,7 @@ function playable(m, v) {
 function listen(P, m, v, uid) {
   const q = m.artiste + ' ' + m.titre, official = (m.liens || []).filter(l => /spotify|apple|youtube|deezer|tidal|soundcloud/i.test(l.url)), pl = playable(m, v);
   return '<div class="lkx-listen"><button type="button" class="lkx-listen-b" popovertarget="' + esc(uid) + '"><span class="lkx-listen-ico" aria-hidden="true">' + LKX.ICO.play + '</span><span>' + esc(P.ecouter) + '</span><span class="sr-only" translate="no"> ' + esc(m.titre) + '</span></button><div class="lkx-listen-menu" id="' + esc(uid) + '" popover>'
-    + (pl ? '<button type="button" class="lkx-listen-here" data-lkx-play="' + pl.kind + '" data-lkx-src="' + esc(pl.src) + '" data-lkx-title="' + esc(m.titre + ' · ' + m.artiste) + '"><span class="lkx-listen-ico" aria-hidden="true">' + LKX.ICO.play + '</span><span><b>' + esc(P.ici) + '</b><small>' + esc(pl.kind === 'sp' ? P.iciSp : P.iciYt) + '</small></span></button>' : '')
+    + (pl ? '<button type="button" class="lkx-listen-here" data-lkx-play="' + pl.kind + '" data-lkx-src="' + esc(pl.src) + '" data-lkx-title="' + esc(m.titre + ', ' + m.artiste) + '"><span class="lkx-listen-ico" aria-hidden="true">' + LKX.ICO.play + '</span><span><b>' + esc(P.ici) + '</b><small>' + esc(pl.kind === 'sp' ? P.iciSp : P.iciYt) + '</small></span></button>' : '')
     + (official.length ? '<p class="lkx-listen-k">' + esc(P.ecouteOff) + '</p>' + official.map(l => '<a href="' + esc(l.url) + '" target="_blank" rel="noopener nofollow" translate="no">' + esc(l.label) + ' <span aria-hidden="true">↗</span></a>').join('') : '')
     + PLATFORMS.map(([n, u]) => '<a href="' + esc(u(q)) + '" target="_blank" rel="noopener nofollow" translate="no">' + esc(n) + ' <span aria-hidden="true">↗</span></a>').join('')
     + '<p class="lkx-listen-note">' + esc(P.ecouterNote) + '</p></div></div>';
@@ -211,7 +211,7 @@ function poste(D) {
       + '</div>' + listen(P, m, v, 'ecouter-' + v.id + '-' + (j + 1)) + '</li>').join('');
     return '<section class="radios-panneau" id="radios-' + v.id + '" aria-labelledby="radios-' + v.id + '-t" data-radios-panneau="' + i + '">'
       + '<header class="radios-panneau-h"><h3 id="radios-' + v.id + '-t">' + (v.id === 'album' ? '<span translate="no">' + esc(v.nom) + '</span>' : esc(v.nom)) + '</h3>'
-      + '<p class="radios-panneau-meta"><time datetime="' + v.date + '">' + esc(v.dateTexte) + '</time> · ' + esc(plural(v.morceaux.length, P.morceau, P.morceaux)) + ' · ' + S.pip(v.statut, true) + '</p>'
+      + '<p class="radios-panneau-meta"><time datetime="' + v.date + '">' + esc(v.dateTexte) + '</time>, ' + esc(plural(v.morceaux.length, P.morceau, P.morceaux)) + ', ' + S.pip(v.statut, true) + '</p>'
       + '<p class="radios-panneau-txt">' + esc(v.resume) + '</p>'
       + '<p class="radios-panneau-liens"><a href="' + esc(v.lien) + '" target="_blank" rel="noopener nofollow">' + esc(v.lienLabel || P.video) + ' <span aria-hidden="true">↗</span></a>' + (v.fiche ? '<a href="radios/' + esc(v.fiche) + '.html">' + esc('La fiche de l’album') + '</a>' : '') + '</p></header>'
       + '<ol class="radios-morceaux' + (v.morceaux.length > 6 ? ' radios-morceaux--long' : '') + '">' + tracks + '</ol></section>';
@@ -247,7 +247,7 @@ const plaque = (s, big) => '<span class="radios-plaque' + (big ? ' radios-plaque
   + '<span class="radios-plaque-scale">' + '<i></i>'.repeat(25) + '</span>'
   + '<span class="radios-plaque-name" translate="no">' + esc(s.name) + '</span>'
   + '<span class="radios-plaque-eq">' + '<i></i>'.repeat(11) + '</span></span>';
-const hostNames = s => s.hosts.filter(h => h.role !== 'reporter').map(h => h.nom).join(' · ');
+const hostNames = s => s.hosts.filter(h => h.role !== 'reporter').map(h => h.nom).join(', ');
 function stationsSec(D) {
   const L = D.stations || []; if (!L.length) return '';
   return '<section class="radios-stations-sec" id="stations" aria-labelledby="stations-t"><div class="shell">'
@@ -266,10 +266,10 @@ function stationPage(ctx, s) {
   const hosts = '<dl class="radios-hosts">' + s.hosts.map(h => '<div class="radios-host"><dt translate="no">' + esc(h.nom) + '</dt><dd>' + (h.role === 'reporter' ? '<span>' + esc('Reporter à l’antenne') + '</span> ' : '<span>' + esc('Nom à l’antenne') + '</span> ') + '<b translate="no">' + esc(h.antenne) + '</b></dd></div>').join('') + '</dl>';
   const facts = '<div class="lore-facts"><h2>À retenir</h2><ul>' + s.facts.map(f => '<li class="rise">' + esc(f) + '</li>').join('') + '</ul></div>';
   const body = `<section class="page-head shell">
-  <nav class="crumbs" aria-label="Fil d’Ariane"><a href="../index.html">Accueil</a> / <a href="../${HUB}.html">${esc(H.label)}</a> / <span translate="no">${esc(s.name)}</span></nav>
+  <nav class="crumbs" aria-label="Fil d’Ariane"><a href="../index.html">Accueil</a> <span class="crumbs-sep" aria-hidden="true"></span> <a href="../${HUB}.html">${esc(H.label)}</a> <span class="crumbs-sep" aria-hidden="true"></span> <span translate="no">${esc(s.name)}</span></nav>
   <div class="lore-hero lore-enter">
     <div class="lore-copy">
-      <p class="fiche-cat">${esc(s.kind)} · ${esc(s.genre)}</p>
+      <p class="fiche-cat">${esc(s.kind)}, ${esc(s.genre)}</p>
       <h1 translate="no">${esc(s.name)}</h1>
       <p class="lore-tag">${esc(s.tagline)}</p>
       <p class="lede">${esc(s.description)}</p>
@@ -309,7 +309,7 @@ function hubPage(ctx) {
   function card(x) { return '<a class="lore-card rise" href="radios/' + x.id + '.html">' + (x.media && x.media[0] ? imgTag(MED, x.media[0], x.imageAlt, false) : '<div class="lore-vide">Visuel officiel à venir</div>')
     + '<div class="veh-body"><span class="veh-marque">' + esc(x.kind) + '</span><h3 translate="no">' + esc(x.name) + '</h3>' + (x.tagline ? '<p class="lore-cardtag">' + esc(x.tagline) + '</p>' : '') + '<p>' + esc(x.description) + '</p><span class="veh-go">Voir la fiche</span></div></a>'; }
   const body = `<section class="page-head shell lk-glow"><div class="lk-head-grid"><div>
-  <p class="fiche-cat">${esc(H.label)} · GTA VI</p>
+  <p class="fiche-cat">${esc(H.label)}, GTA VI</p>
   <h1>${nb(esc(H.title))}</h1>
   <p class="lede">${esc(H.lede)}</p>
   <p class="d-intro-note">${esc(H.note)} <a href="tuto.html#sources">Comprendre les statuts</a>.</p>
@@ -341,10 +341,10 @@ function fichePage(ctx, x) {
   const relBlocks = rel(x.characters, 'personnages', 'Personnages', 'Personnage') + rel(x.businesses, 'entreprises', 'Entreprises', 'Entreprise');
   const srcs = (x.sources || []).length ? '<section class="shell radios-fiche-src reveal" aria-labelledby="sources-t"><h2 class="sec-h" id="sources-t">Sources</h2>' + sourceList(D, x.sources) + '<p class="radios-note">Toutes les sources de la section, avec les statuts, sont <a href="../radios.html#sources">en bas de la page Radios et musique</a>.</p></section>' : '';
   const body = `<section class="page-head shell">
-  <nav class="crumbs" aria-label="Fil d’Ariane"><a href="../index.html">Accueil</a> / <a href="../${HUB}.html">${esc(H.label)}</a> / <span translate="no">${esc(x.name)}</span></nav>
+  <nav class="crumbs" aria-label="Fil d’Ariane"><a href="../index.html">Accueil</a> <span class="crumbs-sep" aria-hidden="true"></span> <a href="../${HUB}.html">${esc(H.label)}</a> <span class="crumbs-sep" aria-hidden="true"></span> <span translate="no">${esc(x.name)}</span></nav>
   <div class="lore-hero lore-enter">
     <div class="lore-copy">
-      <p class="fiche-cat">${esc(x.kind)} · GTA VI</p>
+      <p class="fiche-cat">${esc(x.kind)}, GTA VI</p>
       <h1 translate="no">${esc(x.name)}</h1>
       ${x.tagline ? `<p class="lore-tag">${esc(x.tagline)}</p>` : ''}
       <p class="lede">${esc(x.description)}</p>
@@ -364,7 +364,7 @@ function fichePage(ctx, x) {
 ${LKX.gallery(MED, (x.galerie || []).map(g => ({ media: g.media, alt: g.alt, legende: g.legende })), { name: x.name, kicker: x.kind })}
 ${srcs}`;
   const og = m ? imgOf(MED, m) : null;
-  return page(SUBC, { player: playerBox(D.poste, p), p, title: x.name + ' — GTA VI | Leonidakit', desc: x.description, canonical: '/' + HUB + '/' + x.id + '.html', ogImg: og ? og.b.src : null, body, crumbs: [['Accueil', '/'], [H.label, '/' + HUB + '.html'], [x.name, '/' + HUB + '/' + x.id + '.html']], cls: album ? 'radios-page--album' : '' });
+  return page(SUBC, { player: playerBox(D.poste, p), p, title: x.name + ' dans GTA VI | Leonidakit', desc: x.description, canonical: '/' + HUB + '/' + x.id + '.html', ogImg: og ? og.b.src : null, body, crumbs: [['Accueil', '/'], [H.label, '/' + HUB + '.html'], [x.name, '/' + HUB + '/' + x.id + '.html']], cls: album ? 'radios-page--album' : '' });
 }
 
 /* ---------- recherche du site (outils/radios-index.json, lu par sync-site.cjs) ---------- */
@@ -383,7 +383,7 @@ function leo(root = ROOT) {
   const image = ids => (ids || []).flatMap(id => (MED[id] && MED[id].variants) || []).map(v => v.src).find(src => fs.existsSync(path.join(root, src.slice(1)))) || null;
   const fiches = D.fiches.map(x => ({ key: 'album:' + x.id, id: x.id, kind: 'album', shard: 'monde', name: x.name, aliases: x.aliases || [], category: x.kind, url: '/' + HUB + '/' + x.id + '.html', image: image(x.media), calcId: null, price: null, proof: 'Album annoncé par Rockstar ; sources datées sur la fiche.', source: x.source || null, verifiedAt: D.sources[(x.sources || [])[0]] ? D.sources[x.sources[0]].consultedAt : null, description: x.description, tagline: x.tagline || null }))
     /* v7.86 : les six stations présentées par Rockstar le 8 octobre 2026 */
-    .concat((D.stations || []).map(x => ({ key: 'station:' + x.id, id: x.id, kind: 'station', shard: 'monde', name: x.name, aliases: x.hosts.map(h => h.nom), category: x.kind + ' · ' + x.genre, url: '/' + HUB + '/' + x.id + '.html', image: null, calcId: null, price: null, proof: 'Station présentée par Rockstar le 8 octobre 2026 ; sources datées sur la fiche.', source: x.lien, verifiedAt: D.sources[x.sources[0]].consultedAt, description: x.description, tagline: x.tagline })));
+    .concat((D.stations || []).map(x => ({ key: 'station:' + x.id, id: x.id, kind: 'station', shard: 'monde', name: x.name, aliases: x.hosts.map(h => h.nom), category: x.kind + ', ' + x.genre, url: '/' + HUB + '/' + x.id + '.html', image: null, calcId: null, price: null, proof: 'Station présentée par Rockstar le 8 octobre 2026 ; sources datées sur la fiche.', source: x.lien, verifiedAt: D.sources[x.sources[0]].consultedAt, description: x.description, tagline: x.tagline })));
   const label = D.hub.label, verifiedAt = Object.values(D.sources).map(s => s.consultedAt).sort().pop();
   const topics = D.zone.faq.filter(x => !x.leo).map((x, i) => ({ id: 'radios-faq-' + (i + 1), q: x.q, f: [x.q, ...(x.f || [])], k: x.k, text: x.a, status: 'Réponse de la FAQ « ' + label + ' », sources en bas de la page', links: [{ label: 'La FAQ et ses sources', url: '/' + HUB + '.html#faq' }], verifiedAt, min: Number.isInteger(x.min) ? x.min : 2 }));
   return { fiches, topics, suggestions: { radios: D.leo.suggestions }, inputs: [DATA_FILE] };

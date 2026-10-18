@@ -34,11 +34,11 @@
 {"@context":"https://schema.org","@type":"WebApplication","name":"Calculadora de GTA VI do Leonidakit","url":"https://www.leonidakit.com/pt/calculateurs.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","browserRequirements":"Navegador recente com JavaScript","inLanguage":"pt-BR","isAccessibleForFree":true,"description":"Oito cálculos (objetivo, compras, tempo de jogo, orçamento, ordem de compra, rentabilidade, atividades, comparação) e um plano de negócios missão por missão, com os seus próprios números. Grátis, sem conta, salvo no seu aparelho.","featureList":["Quanto tempo para ter meu dinheiro","Posso comprar","Tenho 30 minutos: o que faço","Como dividir meu dinheiro","O que comprar primeiro","Vale a pena","Qual atividade rende mais","Qual compra escolher","Meu plano de negócios"],"publisher":{"@type":"Organization","name":"Leonidakit","url":"https://www.leonidakit.com/pt/"}}
 </script>
 <link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../style.css?v=7785db7699af">
-<link rel="stylesheet" href="../calculateurs.css?v=c46e8092ecb1">
-<link rel="stylesheet" href="../calculateurs-brand.css?v=095b3d6ce606">
-<link rel="stylesheet" href="../calculateurs-workspace.css?v=4f69fa374161">
-<link rel="stylesheet" href="../calculateurs-motion.css?v=4cf7927ef891">
+<link rel="stylesheet" href="../style.css?v=4221a85ae3d2">
+<link rel="stylesheet" href="../calculateurs.css?v=6b2c47df7373">
+<link rel="stylesheet" href="../calculateurs-brand.css?v=b1bc2a34feb6">
+<link rel="stylesheet" href="../calculateurs-workspace.css?v=066b32fcc20b">
+<link rel="stylesheet" href="../calculateurs-motion.css?v=373a49ebf722">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta property="og:image" content="https://www.leonidakit.com/img/partage/pt/calculateurs.jpg?v=fa0b4e8cbe02">
 <meta property="og:image:width" content="1200">
@@ -83,7 +83,7 @@
       <h1 id="calc-page-title">Seu objetivo.<br><em>Seu plano de jogo.</em></h1>
       <p>Diga quanto você tem e quanto quer.<br class="lk-desktop-break"> A gente diz de quanto tempo você precisa.</p>
       <div class="lk-hero-meta"><span>Grátis</span><span>Sem conta</span><span>Resposta na hora</span></div>
-      <a class="calc-button c-hero-action" href="#atelier">Abrir a calculadora <span aria-hidden="true">↓</span></a>
+      <a class="calc-button c-hero-action" href="#atelier">Abrir a calculadora</a>
     </div>
     <div class="lk-calc-hero-scene" aria-hidden="true">
       <picture><source media="(max-width: 650px)" srcset="../img/officiel/vice-city-08-480.webp"><source media="(max-width: 1100px)" srcset="../img/officiel/vice-city-08-800.webp"><img src="../img/officiel/vice-city-08-1280.webp" width="1280" height="720" alt="" fetchpriority="high" decoding="async"></picture>
@@ -114,7 +114,7 @@
 
 <section class="calc-shell calc-workspace" id="atelier" aria-labelledby="atelier-title">
   <div class="calc-section-head">
-    <div><p class="calc-kicker">1 · MEUS CÁLCULOS</p><h2 id="atelier-title">Escolha o que você quer saber.</h2><p class="calc-section-desc">Oito cálculos que respondem cada um a uma pergunta. Simples: a resposta em uma frase. Passo a passo: uma pergunta por vez. Avançado: todos os ajustes e detalhes.</p></div>
+    <div><p class="calc-kicker">1. MEUS CÁLCULOS</p><h2 id="atelier-title">Escolha o que você quer saber.</h2><p class="calc-section-desc">Oito cálculos que respondem cada um a uma pergunta. Simples: a resposta em uma frase. Passo a passo: uma pergunta por vez. Avançado: todos os ajustes e detalhes.</p></div>
     <div class="calc-actions"><button class="calc-button" id="calc-save" type="button">☆ Salvar</button><button class="calc-button calc-saved-open" id="calc-saved-open" type="button" data-saved-open="1" aria-haspopup="dialog" aria-controls="calc-drawer">Meus cálculos <span class="calc-count" data-saved-count="all">0</span></button><button class="calc-button" id="calc-share" type="button">Compartilhar ↗</button></div>
   </div>
   <div class="calc-tabs" role="tablist" aria-label="O que você quer saber? E o meu plano de negócios">
@@ -127,13 +127,13 @@
     <button id="tab-activities" role="tab" aria-selected="false" aria-controls="panel-activities" tabindex="-1" data-tab="activities"><span class="calc-tab-icon" aria-hidden="true"><svg class="calc-tab-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4.5h6M8.5 10h7M8.5 14h7M8.5 18h4"/></svg></span><span>Minhas atividades</span></button>
     <button id="tab-compare" role="tab" aria-selected="false" aria-controls="panel-compare" tabindex="-1" data-tab="compare"><span class="calc-tab-icon" aria-hidden="true"><svg class="calc-tab-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18"/><path d="M5 7h14"/><path d="M5 7l-2 6a3 3 0 0 0 6 0L7 7"/><path d="M19 7l-2 6a3 3 0 0 0 6 0l-2-6"/></svg></span><span>Qual compra escolher?</span></button>
 
-    <button id="tab-plan" role="tab" aria-selected="false" aria-controls="panel-plan" tabindex="-1" data-tab="plan" class="calc-tab-plan" data-kicker="2 · MEU PLANO DE NEGÓCIOS"><span class="calc-tab-icon" aria-hidden="true"><svg class="calc-tab-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h5"/><path d="M15 15l2 2 4-4"/></svg></span><span data-desc="meu objetivo, meus números, meu plano passo a passo">Meu plano de negócios</span></button>
+    <button id="tab-plan" role="tab" aria-selected="false" aria-controls="panel-plan" tabindex="-1" data-tab="plan" class="calc-tab-plan" data-kicker="2. MEU PLANO DE NEGÓCIOS"><span class="calc-tab-icon" aria-hidden="true"><svg class="calc-tab-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h5"/><path d="M15 15l2 2 4-4"/></svg></span><span data-desc="meu objetivo, meus números, meu plano passo a passo">Meu plano de negócios</span></button>
   </div>
   <div class="calc-mode-row">
     <div class="calc-mode-switch" role="group" aria-label="Nível de detalhe">
       <button type="button" data-mode="quick" aria-pressed="true">Simples</button><button type="button" data-mode="guided" aria-pressed="false">Passo a passo</button><button type="button" data-mode="advanced" aria-pressed="false">Avançado</button>
     </div>
-    <p class="calc-data-note"><span aria-hidden="true"></span>Os números já escritos são exemplos de demonstração, não números do jogo: troque-os pelos seus · <button type="button" class="calc-text-button" data-calc-zero="1">Começar do zero</button> · <button type="button" class="calc-text-button" id="calc-reset">Restaurar os exemplos</button></p>
+    <p class="calc-data-note"><span aria-hidden="true"></span>Os números já escritos são exemplos de demonstração, não números do jogo: troque-os pelos seus, <button type="button" class="calc-text-button" data-calc-zero="1">Começar do zero</button>, <button type="button" class="calc-text-button" id="calc-reset">Restaurar os exemplos</button></p>
   </div>
   <div class="calc-reminder" id="calc-reminder" role="status" hidden></div>
   <div id="calc-panels"></div>
@@ -145,7 +145,7 @@
   </div>
   <dialog id="calc-drawer" class="calc-drawer" aria-labelledby="calc-drawer-title">
     <div class="calc-drawer-in">
-      <div class="calc-drawer-head"><div><p class="calc-kicker">NESTE APARELHO · SEM CONTA</p><h2 id="calc-drawer-title">Meus cálculos salvos</h2></div><button type="button" class="calc-drawer-close" data-drawer-close="1" aria-label="Fechar Meus cálculos salvos"><span aria-hidden="true">×</span></button><p class="b-drawer-status" id="calc-drawer-status" role="status"></p></div>
+      <div class="calc-drawer-head"><div><p class="calc-kicker">NESTE APARELHO, SEM CONTA</p><h2 id="calc-drawer-title">Meus cálculos salvos</h2></div><button type="button" class="calc-drawer-close" data-drawer-close="1" aria-label="Fechar Meus cálculos salvos"><span aria-hidden="true">×</span></button><p class="b-drawer-status" id="calc-drawer-status" role="status"></p></div>
       <div id="saved-now" class="b-now"></div>
       <div class="calc-drawer-switch" role="group" aria-label="Qual lista você quer ver?"><button type="button" data-drawer-view="calcs" aria-pressed="true">Meus cálculos <span class="calc-count" data-saved-count="calcs">0</span></button><button type="button" data-drawer-view="plans" aria-pressed="false">Meus planos <span class="calc-count" data-saved-count="plans">0</span></button></div>
       <section class="b-saved-list" id="saved-calcs" aria-label="Meus cálculos salvos"><div id="saved-list"></div></section>
@@ -161,7 +161,7 @@
   </dialog>
   <dialog id="calc-sheet" class="b-sheet-dialog" aria-labelledby="calc-sheet-title"><div class="b-sheet-bar"><button type="button" class="calc-button primary" data-b-sheet-print="1">Imprimir a ficha</button><button type="button" class="calc-button" data-b-sheet-open="1">Abrir na calculadora</button><button type="button" class="calc-button" data-b-sheet-close="1" aria-label="Fechar a ficha">Fechar ✕</button></div><div id="calc-sheet-body"></div></dialog>
   <div class="calc-tuto-links"><a href="tuto.html">Como usar a calculadora? O Tutorial ↗</a><a href="tuto.html" id="calc-tuto-return" hidden>Voltar ao capítulo do Tutorial ↗</a></div>
-  <p class="calc-print-source">Leonidakit · leonidakit.com/calculateurs.html · Cálculo feito com os seus próprios números. Não é uma promessa de ganho.</p>
+  <p class="calc-print-source">Leonidakit, leonidakit.com/calculateurs.html, Cálculo feito com os seus próprios números. Não é uma promessa de ganho.</p>
 </section>
 
 <div class="fcount"><div class="shell fcount-in">
@@ -305,30 +305,30 @@
     </g>
   </svg><div class="shell"><div class="foot-top"><div class="foot-brand"><a class="brand" href="/pt/">Leonida<span>kit</span></a><p>Um mapa, fichas, uma calculadora. Prepare suas escolhas em Leonida com fontes claras e os seus próprios números.</p><a class="foot-feature" href="calculateurs.html">Encontrar meu cálculo ↗</a></div><div class="foot-cols"><div><h2>Explorar</h2><nav aria-label="Explorar no rodapé"><a href="carte.html">Mapa</a><a href="vehicules.html">Veículos</a><a href="armes.html">Armaria</a><a href="lieux.html">Lugares</a><a href="personnages.html">Personagens</a><a href="gangs.html">Gangues e facções</a><a href="demeures.html">Residências</a><a href="planques.html">Esconderijos</a><a href="entreprises.html">Empresas</a><a href="animaux.html">Animais</a><a href="collectibles.html">Colecionáveis</a></nav></div><div><h2>Jogar</h2><nav aria-label="Jogar no rodapé"><a href="missions.html">Missões</a><a href="activites.html">Atividades paralelas</a><a href="radios.html">Rádios e música</a><a href="codes-de-triche.html">Códigos de trapaça</a><a href="trophees.html">Troféus e conquistas</a><a href="devine-le-lieu.html">Adivinhe o lugar</a></nav></div><div><h2>GTA Online</h2><nav aria-label="GTA Online no rodapé"><a href="online.html" target="_blank" rel="noopener" data-newtab title="Abre em uma nova aba">O espaço do GTA Online</a><a href="online/annonces.html" target="_blank" rel="noopener" data-newtab title="Abre em uma nova aba">Os anúncios</a><a href="online/gta-online-actuel.html" target="_blank" rel="noopener" data-newtab title="Abre em uma nova aba">O GTA Online atual</a></nav></div><div><h2>Equipar-se</h2><nav aria-label="Equipar-se no rodapé"><a href="achats.html">Tudo o que dá para comprar</a><a href="nourriture.html">Consumíveis</a><a href="style.html">Roupas e estilo</a><a href="personnalisations.html">Personalização</a><a href="atelier-3d.html">Ateliê 3D</a><a href="armes.html#munitions">Munição e equipamento</a><a href="logements.html">Moradias e apartamentos</a></nav></div><div><h2>Novidades</h2><nav aria-label="Novidades no rodapé"><a href="actus.html">Notícias</a><a href="videos.html">Vídeos oficiais</a><a href="editions.html">Edições</a><a href="prix.html">Preços e box de colecionador</a><a href="verification.html">O que está confirmado</a><a href="prechargement.html">Pré-carregamento</a><a href="gta-6-pc.html">GTA VI no PC</a><a href="gta-6-vs-gta-5.html">GTA VI vs GTA V</a></nav></div><div><h2>Ferramentas e ajuda</h2><nav aria-label="Ferramentas e ajuda no rodapé"><a href="calculateurs.html">Calculadora</a><a href="tuto.html">Tutorial</a><a href="progression.html" target="_blank" rel="noopener" data-newtab title="Abre em uma nova aba">Progresso</a><a href="compagnon.html">Modo companheiro</a><a href="a-propos.html">Sobre</a><a href="contact.html">Contato</a><a href="presse.html">Imprensa</a><a href="medias.html">Mídia e créditos</a><a href="mentions-legales.html">Aviso legal e privacidade</a></nav></div></div></div><p class="legal">O Leonidakit é um projeto independente feito por um jogador, sem afiliação, aprovação nem patrocínio da Rockstar Games ou da Take-Two Interactive. Grand Theft Auto é uma marca da Take-Two Interactive. Os créditos de cada mídia continuam disponíveis para consulta.</p></div></footer>
 
-<script type="lk/lazy" src="search-index.js?v=b54b7a95fbe3"></script><script type="lk/lazy" src="search-lieux.js?v=a532c6668c9e"></script>
+<script type="lk/lazy" src="search-index.js?v=74d8ea4dd869"></script><script type="lk/lazy" src="search-lieux.js?v=a532c6668c9e"></script>
 <script src="../assets-manifest.js?v=080da4afeda3"></script>
-<script src="common.js?v=7cdd74c68f1a"></script>
-<script src="app.js?v=ad275e17bbaf"></script>
-<script src="vehicules-data.js?v=406aa35109eb"></script>
-<script src="armes-data.js?v=75e88264ef5d"></script>
+<script src="common.js?v=502498b6dc8e"></script>
+<script src="app.js?v=3eba80efbc16"></script>
+<script src="vehicules-data.js?v=5387d0f47ab4"></script>
+<script src="armes-data.js?v=14e17c9f455d"></script>
 <script src="calculateurs-catalogue.js?v=f85546d59460"></script>
 <script src="../calculateurs-activites.js?v=80def6e8d122"></script>
-<script src="acquisitions-data.js?v=cfff7b712890"></script>
+<script src="acquisitions-data.js?v=c37bd61b88c6"></script>
 <script src="calculateurs-data.js?v=bc4d58ead1a6"></script>
-<script src="calculateurs-engine.js?v=e4115852369e"></script><script src="modele-donnees.js?v=79a86f99f081"></script><script src="calculateurs-modele.js?v=a56c1072f4ad"></script>
-<script src="calculateurs-scenario.js?v=5570ab32e58c"></script>
-<script src="calculateurs-notebooks.js?v=bc63ff681473"></script>
-<script src="calculateurs-visuals.js?v=2d6d5f028bcd"></script>
-<script src="calculateurs-workspace.js?v=79bdf51403ca"></script>
-<script src="carnets-core.js?v=c60f30c97040"></script>
-<script src="calculateurs-plan.js?v=210efd8dddb9"></script>
-<script src="leo-link.js?v=236d7bec29f7"></script>
-<script src="calculateurs.js?v=ddd9ff433172"></script>
-<script src="leo-calculator.js?v=54ecbc5b306e"></script>
-<script src="calculateurs-motion.js?v=a1efd09985f9"></script>
-<script src="lk-ia.js?v=eb2fa559fff5"></script>
-<script src="lk-micro.js?v=62c69398f30d" defer></script>
-<script src="calculateurs-hub.js?v=9afca7c0b26e"></script>
-<script src="calculateurs-simple.js?v=8a8f5ff9696f"></script>
+<script src="calculateurs-engine.js?v=8e291142cf7b"></script><script src="modele-donnees.js?v=79a86f99f081"></script><script src="calculateurs-modele.js?v=0fa0cb681706"></script>
+<script src="calculateurs-scenario.js?v=a15c2788f690"></script>
+<script src="calculateurs-notebooks.js?v=b3de3862359a"></script>
+<script src="calculateurs-visuals.js?v=b2cf5660b60f"></script>
+<script src="calculateurs-workspace.js?v=4a07f350d25d"></script>
+<script src="carnets-core.js?v=d2ad7a6f10f1"></script>
+<script src="calculateurs-plan.js?v=5561bc708d5d"></script>
+<script src="leo-link.js?v=4614f21addc0"></script>
+<script src="calculateurs.js?v=91aa50814e9c"></script>
+<script src="leo-calculator.js?v=f9d42fe6f198"></script>
+<script src="calculateurs-motion.js?v=594122fd7125"></script>
+<script src="lk-ia.js?v=cd8427e76fcd"></script>
+<script src="lk-micro.js?v=3628092335f3" defer></script>
+<script src="calculateurs-hub.js?v=e9750f02382b"></script>
+<script src="calculateurs-simple.js?v=886c48f0b528"></script>
 </body>
 </html>

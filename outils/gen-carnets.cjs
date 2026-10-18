@@ -199,7 +199,7 @@ ${header(prefix)}
 
 <main id="main">
 <section class="page-head shell lk-glow cn-head">
-  <nav class="crumbs" aria-label="Fil d’Ariane"><a href="${prefix}index.html">Accueil</a> / <a href="${prefix}progression.html">Progression</a> / <span>${esc(k.titre)}</span></nav>
+  <nav class="crumbs" aria-label="Fil d’Ariane"><a href="${prefix}index.html">Accueil</a> <span class="crumbs-sep" aria-hidden="true"></span> <a href="${prefix}progression.html">Progression</a> <span class="crumbs-sep" aria-hidden="true"></span> <span>${esc(k.titre)}</span></nav>
   <div class="lk-head-grid"><div>
     <p class="fiche-cat">${esc(C.kicker)}</p>
     <h1>${esc(k.titre)}</h1>
@@ -239,7 +239,7 @@ ${header(prefix)}
 <nav class="shell cn-others" aria-labelledby="cn-others-t">
   <h2 class="sec-h" id="cn-others-t">${esc(C.autres)}</h2>
   <ul class="cn-other-list">${others}</ul>
-  <p class="cn-back"><a href="${prefix}progression.html#carnets">← Retour à ma progression</a></p>
+  <p class="cn-back"><a href="${prefix}progression.html#carnets">Retour à ma progression</a></p>
 </nav>
 </main>
 
@@ -267,22 +267,22 @@ function dashboard() {
 <div class="cn-dcard-body"><h3><a href="${href}">${esc(k.titre)}</a></h3>
 <ul class="cn-dcard-fams"><li id="progress-calc"><span>Calculs enregistrés</span> <strong class="suivi-n" id="progress-calc-n">Aucun calcul</strong></li><li data-cn-plans><span>Business plans</span> <strong class="suivi-n" data-cn-plans-n>Aucun plan</strong></li></ul>
 <p class="cn-dcard-extra" data-cn-extra></p>
-<a class="cn-dcard-btn" href="${href}">${esc(k.bouton)} <span aria-hidden="true">→</span></a></div></article>`;
+<a class="cn-dcard-btn" href="${href}">${esc(k.bouton)} <svg class="lk-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></div></article>`;
     }
     const lines = k.familles.map(f => {
       const n = f === 'lieux' ? S.lieux().items.length : S.items(f).length;
       const id = LEGACY_ID[f] || 'suivi-' + f;
-      return `<li id="${id}" data-family="${f}"><span>${esc(FAM_LINE[f])}</span> <strong class="suivi-n">${f === 'collectibles' && !n ? 'À documenter' : '0 / ' + n}</strong></li>`;
+      return `<li id="${id}" data-family="${f}"><span>${esc(FAM_LINE[f])}</span> <strong class="suivi-n">${f === 'collectibles' && !n ? 'À documenter' : '0 sur ' + n}</strong></li>`;
     }).join('');
     const total = k.familles.reduce((a, f) => a + (f === 'lieux' ? S.lieux().items.length : S.items(f).length), 0);
     return `<article class="cn-dcard" id="carnet-${k.id}" data-carnet="${k.id}">${ANCHORS[k.id].map(a => `<span class="lk-anchor" id="${a}"></span>`).join('')}
 <a class="cn-dcard-cover" href="${href}" tabindex="-1" aria-hidden="true"><img src="${img480.slice(1)}" srcset="${img480.slice(1)} 480w, ${img1280.slice(1)} 1280w" sizes="(max-width:719px) 94vw, (max-width:1119px) 46vw, 456px" width="480" height="270" alt="" loading="lazy" decoding="async"></a>
 <div class="cn-dcard-body"><h3><a href="${href}">${esc(k.titre)}</a></h3>
-<p class="cn-dcard-n"><strong data-cn-done>0</strong> / <span data-cn-total>${nf(total)}</span> <span>${esc(ED.carnets[k.id].compteurs.done)}</span></p>
+<p class="cn-dcard-n"><strong data-cn-done>0</strong> sur <span data-cn-total>${nf(total)}</span> <span>${esc(ED.carnets[k.id].compteurs.done)}</span></p>
 <span class="cn-dcard-bar" aria-hidden="true"><i data-cn-bar style="width:0%"></i></span>
 <ul class="cn-dcard-fams">${lines}</ul>
 <p class="cn-dcard-extra" data-cn-extra></p>
-<a class="cn-dcard-btn" href="${href}">${esc(k.bouton)} <span aria-hidden="true">→</span></a></div></article>`;
+<a class="cn-dcard-btn" href="${href}">${esc(k.bouton)} <svg class="lk-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></div></article>`;
   }).join('\n');
   return '<!-- carnets:debut (généré par outils/gen-carnets.cjs : ne pas modifier à la main) -->\n<div class="cn-dash" id="carnets-cartes">\n' + cards + '\n</div>\n<!-- carnets:fin -->';
 }

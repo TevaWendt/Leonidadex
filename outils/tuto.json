@@ -164,11 +164,11 @@
    "expert": "« Il doit aller » (route, tout-terrain, eau, airs), « Il doit transporter (personnes, toi compris) », « Il doit pouvoir transporter des choses », « Je m’en sers pendant (parties) » pour le coût sur la durée, le tableau complet (prix, quand, envie, envie pour 100 000 $, temps pour regagner le prix, remboursement) et ce que chaque achat te fait gagner en plus.",
    "steps": [
     "Cherche un achat dans le site (« kamacho », « bati »…) ou ajoute un achat libre, puis écris son prix si le site ne le connaît pas.",
-    "Note ton envie de 1 à 5 pour chaque achat, si tu veux. C’est ta note à toi : elle sert au rapport envie / prix. Sans note, le site n’en invente pas : la réponse par défaut devient « le moins cher à l’achat », et elle le dit.",
-    "Choisis ce qui compte le plus : le rapport envie / prix, le moins cher, le plus vite accessible, celui qui se rembourse le plus vite, ou le plus d’envie."
+    "Note ton envie de 1 à 5 pour chaque achat, si tu veux. C’est ta note à toi : elle sert au rapport entre l’envie et le prix. Sans note, le site n’en invente pas : la réponse par défaut devient « le moins cher à l’achat », et elle le dit.",
+    "Choisis ce qui compte le plus : le rapport entre l’envie et le prix, le moins cher, le plus vite accessible, celui qui se rembourse le plus vite, ou le plus d’envie."
    ],
    "example": "Exemple à essayer : Kamacho à 150 000 $ (envie 5), Bati 801 à 50 000 $ (envie 3), un achat libre à 400 000 $ (envie 3), avec 200 000 $ en poche et 100 000 $ par heure.",
-   "result": "« Pour toi, c’est Bati 801 : le meilleur rapport envie / prix. » Le Kamacho gagne sur l’envie, l’achat libre arrive « dans 2 h de jeu ».",
+   "result": "« Pour toi, c’est Bati 801 : le meilleur rapport entre l’envie et le prix. » Le Kamacho gagne sur l’envie, l’achat libre arrive « dans 2 h de jeu ».",
    "try": "Change « Ce qui compte » pour « Le plus d’envie » : la réponse devient le Kamacho, et le tableau ne bouge pas.",
    "error": "Comparer avec des prix imaginés très différents de la réalité. Un prix inconnu, c’est toi qui l’écris : garde-le raisonnable, ou compare seulement des fiches au prix connu.",
    "capture": "compare-simple",

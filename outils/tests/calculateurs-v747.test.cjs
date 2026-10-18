@@ -32,7 +32,7 @@ test('Badge « Mes calculs » : le nombre suit chaque enregistrement, en haut et
  assert.match(p.$('calc-saved-open').getAttribute('aria-label'),/Mes calculs enregistrés\s:\s2\scalculs et 1\sbusiness plan/);});
 test('Tiroir : s’ouvre d’un clic depuis n’importe quel outil, sur la bonne liste, et se ferme',()=>{
  const p=app();p.click('[data-tab="roi"]');p.click('#calc-saved-open');assert.ok(p.$('calc-drawer').open,'ouvert depuis Ça vaut le coup ?');
- assert.equal(p.$('saved-calcs').hidden,false);assert.equal(p.$('saved-plans').hidden,true);assert.match(p.text('saved-now'),/EN CE MOMENT · ÇA VAUT LE COUP/);
+ assert.equal(p.$('saved-calcs').hidden,false);assert.equal(p.$('saved-plans').hidden,true);assert.match(p.text('saved-now'),/EN CE MOMENT, ÇA VAUT LE COUP/);
  p.click('[data-drawer-close]');assert.equal(p.$('calc-drawer').open,false);
  p.click('[data-tab="plan"]');p.click('.calc-plan-toolbar [data-saved-open]');assert.ok(p.$('calc-drawer').open,'ouvert depuis le bas de l’atelier');assert.equal(p.$('saved-plans').hidden,false,'depuis le business plan, la liste des plans');
  p.click('[data-drawer-view="calcs"]');assert.equal(p.$('saved-calcs').hidden,false);assert.equal(p.d.querySelector('[data-drawer-view="calcs"]').getAttribute('aria-pressed'),'true');});

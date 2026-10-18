@@ -45,7 +45,7 @@ test('vehicules.html : zone éditoriale générée (nav, 9 sections, chiffres et
   const tiles=[...d.querySelectorAll('#marques .ed-brand')];assert.equal(tiles.length,brands.size);
   assert.equal(tiles.filter(t=>t.querySelector('.ed-brand-ev:not(.ed-brand-ev--none)')).length>=35,true);
   const albany=tiles.find(t=>t.querySelector('b').textContent==='Albany');assert.equal(albany.getAttribute('href'),'vehicules.html#q=Albany');
-  assert.equal(albany.querySelector('.ed-brand-n').textContent.replace(/\s+/g,' ').trim(),V.filter(v=>v.marque==='Albany').length+' véhicules →');
+  assert.equal(albany.querySelector('.ed-brand-n').textContent.replace(/\s+/g,' ').trim(),V.filter(v=>v.marque==='Albany').length+' véhicules');
   assert.equal(d.querySelectorAll('#marques button[data-letter]').length,new Set([...brands].map(b=>S.fold(b)[0].toUpperCase())).size+1);
   assert.equal(d.querySelectorAll('#carte .ed-place').length,HUBS.vehicules.carte.groups.reduce((n,g)=>n+g.items.length,0));
   assert.equal(d.querySelectorAll('#lk-leonida').length,1);

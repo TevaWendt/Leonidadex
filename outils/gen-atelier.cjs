@@ -217,7 +217,7 @@ ${favicon}
 ${header}
 <main id="main">
 <section class="shell at-hero">
-  <nav class="crumbs" aria-label="Fil d’Ariane"><a href="index.html">Accueil</a><span>/</span><a href="personnalisations.html">Personnalisations</a><span>/</span>Atelier 3D</nav>
+  <nav class="crumbs" aria-label="Fil d’Ariane"><a href="index.html">Accueil</a> <span class="crumbs-sep" aria-hidden="true"></span> <a href="personnalisations.html">Personnalisations</a> <span class="crumbs-sep" aria-hidden="true"></span> Atelier 3D</nav>
   <div class="at-hero-in">
     <div class="at-hero-txt">
       <p class="fiche-cat">Personnalisations</p>
@@ -247,7 +247,7 @@ ${header}
       <canvas class="at-canvas" data-at-canvas aria-label="Maquette 3D"></canvas>
       <div class="at-view-top">
         <p class="at-name"><b data-at-name>${esc(first.nom)}</b><span data-at-model-cat>${esc(VCAT[first.cat] || first.cat)}</span></p>
-        <p class="at-help" data-at-help><span data-at-help-out>Glisser pour tourner · molette ou pincer pour zoomer</span><span data-at-help-in hidden>Glisser pour regarder autour · molette ou pincer pour le champ de vision</span></p>
+        <p class="at-help" data-at-help><span data-at-help-out>Glisser pour tourner, molette ou pincer pour zoomer</span><span data-at-help-in hidden>Glisser pour regarder autour, molette ou pincer pour le champ de vision</span></p>
       </div>
       <div class="at-view-bottom">
         <div class="at-angles" role="group" aria-label="Angles"><button type="button" data-at-angle="tq" class="is-on" aria-pressed="true">Trois quarts</button><button type="button" data-at-angle="profil" aria-pressed="false">Profil</button><button type="button" data-at-angle="face" aria-pressed="false">Face</button><button type="button" data-at-angle="arriere" aria-pressed="false">Arrière</button><button type="button" data-at-angle="dessus" aria-pressed="false">Dessus</button><button type="button" data-at-angle="interieur" aria-pressed="false" data-at-inside><span data-at-in-car>Intérieur</span><span data-at-in-moto hidden>Première personne</span></button></div>
@@ -255,7 +255,7 @@ ${header}
       </div>
       <p class="at-inside-note" data-at-inside-note hidden><span data-at-note-car>Habitacle générique de l’Atelier : ni le tableau de bord ni les sièges du modèle.</span><span data-at-note-moto hidden>Guidon, rétroviseurs et compteur génériques de l’Atelier.</span></p>
       <p class="at-loading" data-at-loading>Chargement de la maquette…</p>
-      <div class="at-nojs" data-at-nojs><p>La maquette 3D a besoin d’un navigateur avec WebGL et le script activé. Les schémas sous tous les angles restent sur chaque fiche.</p><p><a href="vehicules.html">Véhicules</a> · <a href="armes.html">Armurerie</a></p></div>
+      <div class="at-nojs" data-at-nojs><p>La maquette 3D a besoin d’un navigateur avec WebGL et le script activé. Les schémas sous tous les angles restent sur chaque fiche.</p><p><a href="vehicules.html">Véhicules</a>, <a href="armes.html">Armurerie</a></p></div>
     </div>
     <div class="at-bar">
       <div class="at-total"><span>Total des repères de la série</span><b data-at-total>0 $</b><small data-at-total-note>options sans repère : à confirmer pour GTA VI</small></div>

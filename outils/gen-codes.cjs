@@ -183,7 +183,7 @@ function sourceList(H, ids) {
   return '<ol class="ed-srcs">' + ids.map(id => { const s = H.sources[id];
     return '<li id="src-' + esc(id) + '">' + S.pip(s.statut, true)
       + '<a class="ed-src-link" href="' + esc(s.url) + '" target="_blank" rel="noopener nofollow"' + (s.lang === 'en' ? ' translate="no"' : '') + '>' + esc(s.title) + '</a>'
-      + '<span class="ed-src-meta">' + (s.publisher ? '<span translate="no">' + esc(s.publisher.split(',')[0]) + '</span>' + (s.publisher.includes(',') ? esc(s.publisher.slice(s.publisher.indexOf(','))) : '') + ' · ' : '') + (s.publishedAt ? 'publié le ' + esc(frDate(s.publishedAt)) + ' · ' : '') + 'consulté le ' + esc(frDate(s.consultedAt)) + '</span>'
+      + '<span class="ed-src-meta">' + (s.publisher ? '<span translate="no">' + esc(s.publisher.split(',')[0]) + '</span>' + (s.publisher.includes(',') ? esc(s.publisher.slice(s.publisher.indexOf(','))) : '') + ', ' : '') + (s.publishedAt ? 'publié le ' + esc(frDate(s.publishedAt)) + ', ' : '') + 'consulté le ' + esc(frDate(s.consultedAt)) + '</span>'
       + '<p>' + esc(s.claim) + '</p></li>'; }).join('') + '</ol>';
 }
 const srcLinks = (ids, pre = '') => ids.length ? '<span class="codes-src">' + ids.map((id, i) => '<a href="' + pre + '#src-' + esc(id) + '" aria-label="Source ' + (i + 1) + '">' + (i + 1) + '</a>').join('') + '</span>' : '';
@@ -250,7 +250,7 @@ function catSheet(ctx, c, codes) {
     + '<h4>' + esc(LI.champsTitre) + '</h4>' + LKX.skel(LI.champs, LI.sortie)
     + '<p class="codes-note">' + esc(LI.note) + '</p>'
     + (n ? '<div class="lkx-sheet-cta"><a class="lkx-btn" href="' + HUB + '/' + c.id + '.html">' + esc(c.label) + '</a></div>' : '');
-  return LKX.sheet({ id: 'categorie-' + c.id, cls: 'codes-cat-det', summary, fig: ok ? LKX.img(MED, V.media, V.alt, { big: true, sizes: '(max-width:760px) 100vw, 600px' }) : '', caption: ok ? (MED[V.media].credit || '') : '', kicker: esc(LI.kicker) + ' · <span>' + esc(LI.catK) + '</span>', title: c.label, body });
+  return LKX.sheet({ id: 'categorie-' + c.id, cls: 'codes-cat-det', summary, fig: ok ? LKX.img(MED, V.media, V.alt, { big: true, sizes: '(max-width:760px) 100vw, 600px' }) : '', caption: ok ? (MED[V.media].credit || '') : '', kicker: esc(LI.kicker) + ', <span>' + esc(LI.catK) + '</span>', title: c.label, body });
 }
 function hubPage(ctx) {
   const { H, C, MED, STATUTS, ROOTC } = ctx, X = H.hub, E = H.etat, SE = H.serie, LI = H.liste;
@@ -273,7 +273,7 @@ function hubPage(ctx) {
     + '<h3 class="codes-sous-t">' + esc(LI.champsTitre) + '</h3><dl class="codes-champs">' + LI.champs.map(x => '<div><dt>' + esc(x.t) + '</dt><dd>' + esc(x.d) + '</dd></div>').join('') + '</dl>'
     + '<p class="codes-note">' + esc(LI.note) + '</p></section>';
   const body = `<section class="page-head shell lk-glow"><div class="lk-head-grid"><div>
-  <p class="fiche-cat">${esc(X.label)} · GTA VI</p>
+  <p class="fiche-cat">${esc(X.label)}, GTA VI</p>
   <h1>${esc(X.title)}</h1>
   <p class="lede">${esc(X.lede)}</p>
   <p class="d-intro-note">${esc(X.note)} <a href="tuto.html#sources">Comprendre les statuts</a>.</p>
@@ -315,9 +315,9 @@ function categoriePage(ctx, cat, codes, opts = {}) {
   const srcs = ids.length ? '<section class="shell codes-fiche-src" aria-labelledby="sources-t"><h2 class="sec-h" id="sources-t">Sources</h2>' + sourceList(H, ids) + '<p class="codes-retour">Toutes les sources de la section, avec les statuts, sont <a href="../' + HUB + '.html#sources">en bas de la page Codes de triche</a>.</p></section>' : '';
   const title = opts.titre || ('Codes de triche de la catégorie ' + cat.label);
   const body = `${banner}<section class="page-head shell">
-  <nav class="crumbs" aria-label="Fil d’Ariane"><a href="../index.html">Accueil</a> / <a href="../${HUB}.html">${esc(H.hub.label)}</a> / <span>${esc(cat.label)}</span></nav>
+  <nav class="crumbs" aria-label="Fil d’Ariane"><a href="../index.html">Accueil</a> <span class="crumbs-sep" aria-hidden="true"></span> <a href="../${HUB}.html">${esc(H.hub.label)}</a> <span class="crumbs-sep" aria-hidden="true"></span> <span>${esc(cat.label)}</span></nav>
   <div class="lore-copy lore-enter">
-    <p class="fiche-cat">${esc(H.hub.label)} · GTA VI</p>
+    <p class="fiche-cat">${esc(H.hub.label)}, GTA VI</p>
     <h1>${esc(title)}</h1>
     <p class="lede">${esc(lede)}</p>
   </div>
@@ -325,10 +325,10 @@ function categoriePage(ctx, cat, codes, opts = {}) {
 <section class="shell codes-liste" aria-labelledby="codes-t">
   <h2 class="sec-h reveal" id="codes-t">Les codes de cette catégorie</h2>
   ${consoles(codes)}${live}<div class="codes-cartes">${codes.map(c => card(ctx, c, kind, '')).join('')}</div>
-  <p class="codes-retour"><a href="../${HUB}.html#liste">Toutes les catégories</a> · <a href="../${HUB}.html#gtav">Comment marchaient les codes dans GTA V</a></p>
+  <p class="codes-retour"><a href="../${HUB}.html#liste">Toutes les catégories</a>, <a href="../${HUB}.html#gtav">Comment marchaient les codes dans GTA V</a></p>
 </section>
 ${srcs}`;
-  return page(SUBC, { p, title: (opts.titre || 'Codes de triche : ' + cat.label) + ' — GTA VI | Leonidakit', desc: lede, canonical: '/' + HUB + '/' + cat.id + '.html', body, crumbs: [['Accueil', '/'], [H.hub.label, '/' + HUB + '.html'], [cat.label, '/' + HUB + '/' + cat.id + '.html']], noindex: !!opts.noindex });
+  return page(SUBC, { p, title: (opts.titre || 'Codes de triche : ' + cat.label) + ' dans GTA VI | Leonidakit', desc: lede, canonical: '/' + HUB + '/' + cat.id + '.html', body, crumbs: [['Accueil', '/'], [H.hub.label, '/' + HUB + '.html'], [cat.label, '/' + HUB + '/' + cat.id + '.html']], noindex: !!opts.noindex });
 }
 
 /* ---------- recherche du site (outils/codes-index.json, lu par sync-site.cjs) ---------- */

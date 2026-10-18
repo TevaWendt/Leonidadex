@@ -1,16 +1,9 @@
-/* Section « Trophées et succès » (section trophees) : trophees.html, fiches trophees/<id>.html et page de démonstration
-   trophees/modele.html. Chargée par les pages de la section seulement.
-   Mouvement (trophees.js) : cartes qui arrivent en cascade, badge qui apparaît avec un éclat bref quand on coche
-   « Obtenu », anneau de progression qui se remplit (deux demi-disques qui tournent : transform seulement). Jetons de
-   motion-tokens.css, transform et opacity uniquement, cadre fixe (aucun décalage de mise en page), tout coupé avec
-   prefers-reduced-motion: reduce. Les grades sont des coupes génériques dessinées pour le site (aucun logo de console). */
+/* Généré depuis outils/sources/trophees.css : modifie la source, pas ce fichier. */
 .trophees-page{--trophees-platine:#9fb3c8;--trophees-or:var(--amber);--trophees-argent:#b8bcc6;--trophees-bronze:#c27b46;--trophees-fill:var(--amber);}
 .trophees-kicker{font:700 var(--fs-kicker)/1.2 var(--font-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--coral-text);margin:0 0 6px;}
 .trophees-lede{color:var(--ink-soft);max-width:var(--measure);margin:6px 0 18px;}
 .trophees-note{color:var(--ink-soft);max-width:var(--measure);margin-top:16px;font-size:.94rem;}
 .trophees-etat,.trophees-grades,.trophees-gtav,.trophees-liste-sec,.trophees-modele{padding-top:clamp(30px,4vw,52px);}
-
-/* ---------- ce qu’on sait ---------- */
 .trophees-statut{display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px 18px;align-items:start;max-width:880px;padding:18px clamp(14px,3vw,24px);
   border:2px solid var(--ink);border-radius:var(--radius);background:linear-gradient(160deg,var(--paper),var(--paper-2));box-shadow:var(--shadow-hard);}
 .trophees-statut-ico{display:grid;place-items:center;width:54px;height:54px;border-radius:50%;background:var(--night);color:var(--amber-2);}
@@ -27,8 +20,6 @@
 .trophees-src{display:inline-flex;gap:4px;}
 .trophees-src a{display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 5px;border:1px solid var(--ink-soft);border-radius:999px;font:700 .7rem/1 var(--font-mono);color:var(--ink);}
 .trophees-src a:hover,.trophees-src a:focus-visible{background:var(--ink);color:var(--paper);}
-
-/* ---------- badges de grade (coupes génériques) ---------- */
 .trophees-badge{position:relative;flex:none;display:grid;place-items:center;width:52px;height:52px;border:2px solid var(--ink);border-radius:50%;background:var(--paper-2);color:var(--ink);}
 .trophees-badge svg{width:28px;height:28px;}
 .trophees-badge--platine{background:radial-gradient(circle at 35% 30%,#eef3f8,var(--trophees-platine) 70%);}
@@ -36,7 +27,6 @@
 .trophees-badge--argent{background:radial-gradient(circle at 35% 30%,#f4f5f7,var(--trophees-argent) 70%);}
 .trophees-badge--bronze{background:radial-gradient(circle at 35% 30%,#efc19c,var(--trophees-bronze) 70%);}
 .trophees-badge--xbox{border-radius:12px;background:var(--night);color:var(--paper);}
-/* v7.73 : chaque grade est une carte cliquable (fiche squelette plein écran, lk-sections) : badge à gauche, texte, « Voir ce qu'il faut » */
 .trophees-grades-l{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr));gap:12px;}
 .trophees-grades-l.lkx-cards{grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin:0;}
 .trophees-grades-l li{display:flex;flex-direction:column;padding:0;border:0;background:none;}
@@ -56,8 +46,6 @@
 @media(max-width:1100px){.trophees-grades-l.lkx-cards{grid-template-columns:repeat(3,minmax(0,1fr));}}
 @media(max-width:700px){.trophees-grades-l.lkx-cards{grid-template-columns:repeat(2,minmax(0,1fr));}}
 @media(max-width:460px){.trophees-grades-l.lkx-cards{grid-template-columns:1fr;}}
-
-/* ---------- GTA V, pour comparer ---------- */
 .trophees-v{display:inline-flex;align-items:center;padding:2px 10px;border-radius:999px;background:var(--night);color:var(--paper);font:700 .72rem/1.4 var(--font-mono);letter-spacing:.06em;text-transform:uppercase;}
 .trophees-chiffres{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:12px;margin:14px 0 0;}
 .trophees-chiffre{padding:14px;border:2px solid var(--ink);border-radius:var(--radius-s);background:var(--paper);}
@@ -65,8 +53,6 @@
 .trophees-chiffre span{display:block;margin-top:6px;font-size:.9rem;color:var(--ink-soft);}
 .trophees-gtav-l{margin:14px 0 0;padding-left:1.2em;max-width:var(--measure);}
 .trophees-gtav-l li{margin:6px 0;}
-
-/* ---------- bilan : anneau de progression ---------- */
 .trophees-bilan{display:flex;flex-wrap:wrap;align-items:center;gap:16px 24px;margin:6px 0 18px;padding:16px clamp(14px,3vw,22px);border:2px solid var(--ink);border-radius:var(--radius);
   background:linear-gradient(160deg,var(--night-deep),var(--night) 60%,var(--night-2));color:var(--paper);box-shadow:var(--shadow-hard);}
 .trophees-anneau{position:relative;flex:none;width:112px;height:112px;border-radius:50%;background:rgba(253,251,247,.16);}
@@ -84,8 +70,6 @@
 .trophees-bilan-n span{margin:0 4px;opacity:.7;}
 .trophees-bilan-l{margin:0;font-weight:700;color:var(--amber-2);}
 .trophees-bilan-note{margin:0;font-size:.84rem;opacity:.85;}
-
-/* ---------- filtres (trophees.js) ---------- */
 .trophees-filtres{display:flex;flex-direction:column;gap:10px;margin:0 0 16px;}
 .trophees-filtre{display:flex;flex-wrap:wrap;align-items:center;gap:6px;}
 .trophees-filtre-l{min-width:96px;font:700 .74rem/1.2 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);}
@@ -96,8 +80,6 @@
 .trophees-filtre button:focus-visible{outline:3px solid var(--coral);outline-offset:2px;}
 .trophees-visibles{margin:0;font-size:.88rem;color:var(--ink-soft);}
 .trophees-visibles b{color:var(--ink);font-family:var(--font-mono);}
-
-/* ---------- cartes de trophées ---------- */
 .trophees-cartes{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr));gap:14px;}
 .trophees-carte{position:relative;display:flex;gap:14px;align-items:flex-start;padding:14px 16px;border:2px solid var(--ink);border-radius:var(--radius);background:var(--paper);box-shadow:var(--shadow-soft);isolation:isolate;}
 .trophees-carte[hidden],.trophees-case[hidden],.trophees-filtres[hidden],.trophees-bilan[hidden]{display:none;}
@@ -115,12 +97,10 @@
 .trophees-case-note{font-size:.8rem;color:var(--ink-soft);}
 .trophees-carte.is-obtenu{background:#fff8e8;border-color:var(--ink);}
 .trophees-carte.is-obtenu .trophees-case{background:var(--amber);}
-/* sceau « obtenu » : posé sur le badge, il apparaît quand la case est cochée (opacity et transform) */
 .trophees-sceau{position:absolute;right:-4px;bottom:-4px;display:grid;place-items:center;width:22px;height:22px;border:2px solid var(--ink);border-radius:50%;background:var(--coral);color:var(--paper);
   opacity:0;transform:scale(.4);transition:opacity var(--c-fast) var(--c-ease-control),transform var(--c-standard) var(--c-ease-result);}
 .trophees-sceau svg{width:12px;height:12px;}
 .trophees-carte.is-obtenu .trophees-sceau{opacity:1;transform:none;}
-/* éclat bref au déblocage */
 .trophees-eclat-r{position:absolute;left:40px;top:40px;width:0;height:0;pointer-events:none;z-index:2;}
 .trophees-eclat-r i{position:absolute;left:-3px;top:-14px;width:6px;height:14px;border-radius:3px;background:var(--amber);opacity:0;transform-origin:3px 14px;transform:rotate(var(--r,0deg)) translateY(-18px) scaleY(.4);}
 .trophees-eclat-r i:nth-child(2n){background:var(--coral);}
@@ -130,12 +110,9 @@
 @keyframes trophees-rayon{0%{opacity:0;transform:rotate(var(--r)) translateY(-14px) scaleY(.3)}25%{opacity:1}100%{opacity:0;transform:rotate(var(--r)) translateY(-40px) scaleY(1)}}
 .trophees-eclat .trophees-badge{animation:trophees-badge 620ms var(--c-ease-result) both;}
 @keyframes trophees-badge{0%{transform:scale(1)}30%{transform:scale(.86) rotate(-8deg)}65%{transform:scale(1.14) rotate(4deg)}100%{transform:none}}
-/* arrivée des cartes en cascade */
 .trophees-attend .trophees-carte{opacity:0;transform:translateY(var(--c-rise,10px));}
 .trophees-arrivee .trophees-carte{animation:trophees-arrive var(--c-narrative) var(--c-ease-result) both;animation-delay:calc(var(--i,0) * var(--c-stagger,35ms) * 2);}
 @keyframes trophees-arrive{from{opacity:0;transform:translateY(var(--c-rise,10px)) scale(.985)}to{opacity:1;transform:none}}
-
-/* ---------- guide à venir, fiche, démonstration, sources ---------- */
 .trophees-vide{max-width:var(--measure);padding:16px 18px;border:2px dashed var(--ink-soft);border-radius:var(--radius);background:var(--paper-2);margin:8px 0 18px;}
 .trophees-champs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:10px;margin:14px 0 0;}
 .trophees-champs>div{padding:10px 12px;border:1.5px solid var(--rule);border-radius:var(--radius-s);background:var(--paper);}
@@ -154,7 +131,6 @@
 .trophees-demo{margin:18px 0 0;padding:12px 16px;border:2px dashed var(--coral);border-radius:var(--radius-s);background:#fff2ee;font-weight:700;color:var(--coral-deep);}
 .trophees-fiche-src{--ed-line:var(--rule);--ed-card:var(--paper-2);--ed-soft:var(--ink-soft);--ed-fg:var(--ink);padding-top:8px;}
 .trophees-fiche-src .ed-srcs{margin-top:12px;}
-
 @media (max-width:600px){
   .trophees-statut{grid-template-columns:minmax(0,1fr);}
   .trophees-filtre-l{min-width:100%;}
@@ -163,8 +139,6 @@
   .trophees-anneau-d i{border-radius:0 48px 48px 0;}
   .trophees-anneau-g i{border-radius:48px 0 0 48px;}
 }
-
-/* ---------- mouvement réduit : rien ne bouge, tout reste lisible ---------- */
 @media (prefers-reduced-motion:reduce){
   .trophees-attend .trophees-carte{opacity:1;transform:none;}
   .trophees-arrivee .trophees-carte,.trophees-eclat .trophees-eclat-r i,.trophees-eclat .trophees-badge{animation:none!important;}
@@ -172,17 +146,10 @@
   .trophees-filtre button:hover{transform:none;}
 }
 @media print{.trophees-filtres,.trophees-eclat-r{display:none!important;}.trophees-carte[hidden]{display:flex!important;}.trophees-attend .trophees-carte{opacity:1;transform:none;}}
-
-/* v7.67 (finitions) : pas de carte isolée sur la dernière rangée. 4 cartes : 4, 2 ou 1 par rangée ; 3 cartes : 3 ou 1 ;
-   6 cartes : 3, 2 ou 1 (navigateurs sans :has() : disposition précédente). */
 .trophees-faits:has(>:last-child:nth-child(4)){grid-template-columns:repeat(auto-fit,minmax(clamp(calc((100% - 42px)/4 - 1px),calc((1042px - 100%)*999),clamp(calc((100% - 14px)/2 - 1px),calc((514px - 100%)*999),100%)),1fr));}
 .trophees-chiffres:has(>:last-child:nth-child(4)){grid-template-columns:repeat(auto-fit,minmax(clamp(calc((100% - 42px)/4 - 1px),calc((762px - 100%)*999),clamp(calc((100% - 14px)/2 - 1px),calc((374px - 100%)*999),100%)),1fr));}
 .trophees-champs:has(>:last-child:nth-child(6)){grid-template-columns:repeat(auto-fit,minmax(max(min(100%,230px),calc((100% - 20px)/3 - 1px)),1fr));}
-/* 5 grades : 5 sur une rangée, sinon 3 puis 2 centrés, 1 par rangée sur téléphone */
 @media(min-width:601px) and (max-width:1240px){.trophees-grades-l:not(.lkx-cards):has(>:last-child:nth-child(5)){grid-template-columns:repeat(6,minmax(0,1fr));}.trophees-grades-l:not(.lkx-cards):has(>:last-child:nth-child(5))>li{grid-column:span 2;}.trophees-grades-l:not(.lkx-cards):has(>:last-child:nth-child(5))>li:nth-child(4){grid-column:2/span 2;}}
-
-/* v7.70 : tableau de bord en attente (la liste n'est pas publiée) : anneau à zéro et compteurs par grade sur fond nuit, squelette
-   de la liste en face ; les lignes fantômes scintillent doucement et les badges arrivent un à un (lkx-unlock). */
 .trophees-att{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:18px;align-items:stretch;margin:8px 0 18px;}
 .trophees-att .trophees-bilan{margin:0;flex-direction:column;align-items:flex-start;gap:14px;}
 .trophees-att .trophees-anneau{background:rgba(253,251,247,.12);box-shadow:inset 0 0 0 10px rgba(253,251,247,.08);}

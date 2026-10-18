@@ -1,6 +1,4 @@
-/* Lot C — amélioration progressive de présentation, sans accès à l’état métier.
-   Un RAF commun pour les compteurs, le scan et la scène. WAAPI pour les effets
-   finis ; observer unique pour les apparitions et l’arrêt hors écran. */
+/* Généré depuis outils/sources/calculateurs-motion.js : modifie la source, pas ce fichier. */
 (function(global){
 'use strict';
 const page=document.querySelector('.calculator-page'),main=document.getElementById('main');
@@ -29,7 +27,7 @@ function unwatch(el){observed.delete(el);intersections?.unobserve(el);}
 function play(el,keyframes,duration,delay=0){
  effects.get(el)?.cancel();if(!enabled||!inside(el)||effects.size>=18||typeof el.animate!=='function')return;
  try{const a=el.animate(keyframes,{duration:light?Math.min(duration,220):duration,delay:light?0:delay,easing});effects.set(el,a);watch(el);
- const done=()=>{if(effects.get(el)===a)effects.delete(el);};a.onfinish=done;a.oncancel=done;}catch{/* Le style final reste visible. */}
+ const done=()=>{if(effects.get(el)===a)effects.delete(el);};a.onfinish=done;a.oncancel=done;}catch{}
 }
 function reveal(el,index=0){
  if(el.contains(document.activeElement))return;
@@ -85,7 +83,7 @@ function progress(el){
 function chart(el){
  if(seen.has(el))return;seen.add(el);const figure=el.closest('figure'),key='chart:'+(figure?.dataset.cChart||figure?.closest('[id]')?.id),d=el.getAttribute('d');const old=states.get(key);states.set(key,d);
  if(old===d||!enabled)return;
- try{const length=el.getTotalLength();if(Number.isFinite(length)&&length>0){play(el,[{strokeDasharray:length+' '+length,strokeDashoffset:length},{strokeDasharray:length+' '+length,strokeDashoffset:0}],times.narrative);figure.querySelectorAll('.c-chart-point').forEach((p,i)=>play(p,[{opacity:.4},{opacity:1}],times.standard,Math.min(i,3)*times.stagger));}}catch{/* Données SVG finales déjà présentes. */}
+ try{const length=el.getTotalLength();if(Number.isFinite(length)&&length>0){play(el,[{strokeDasharray:length+' '+length,strokeDashoffset:length},{strokeDasharray:length+' '+length,strokeDashoffset:0}],times.narrative);figure.querySelectorAll('.c-chart-point').forEach((p,i)=>play(p,[{opacity:.4},{opacity:1}],times.standard,Math.min(i,3)*times.stagger));}}catch{}
 }
 function stateEffect(el,key,value){const old=states.get(key);states.set(key,value);if(old!==undefined&&old!==value&&visible(el))play(el,[{opacity:.75},{opacity:1}],times.fast);}
 function scan(){

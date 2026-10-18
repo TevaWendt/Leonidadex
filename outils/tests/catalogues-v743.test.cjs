@@ -153,9 +153,9 @@ test('Progression : deux familles du lot 6 comptées dans la carte « Mes person
   const P=progress();
   for(const fam of LOT6){const line=a.d.querySelector('#carnet-personnalisations [data-family="'+fam+'"]');assert.ok(line,fam);assert.ok(a.d.getElementById(fam),'ancre #'+fam);
     assert.equal(P.LK_PROGRESS_IDS[fam].length,C.counts(fam).suivis);assert.equal(Object.keys(P.LK_PROGRESS_NAMES[fam]).length,C.counts(fam).suivis);
-    assert.match(read('progression.html'),new RegExp('data-family="'+fam+'"><span>[^<]*</span> <strong class="suivi-n">0 / '+C.counts(fam).suivis+'<'));}
-  assert.match(a.d.querySelector('[data-family="perso-armes"] .suivi-n').textContent,new RegExp('^1 / '+C.counts('perso-armes').suivis+'$'));
-  assert.match(a.d.querySelector('[data-family="perso-vehicules"] .suivi-n').textContent,/^1 \//);
+    assert.match(read('progression.html'),new RegExp('data-family="'+fam+'"><span>[^<]*</span> <strong class="suivi-n">0 sur '+C.counts(fam).suivis+'<'));}
+  assert.match(a.d.querySelector('[data-family="perso-armes"] .suivi-n').textContent,new RegExp('^1 sur '+C.counts('perso-armes').suivis+'$'));
+  assert.match(a.d.querySelector('[data-family="perso-vehicules"] .suivi-n').textContent,/^1 sur /);
   assert.ok(a.d.getElementById('carnet-personnalisations').classList.contains('is-target'),'l’ancre #perso-armes met la carte du carnet en évidence');
   assert.equal(a.d.querySelector('#carnet-personnalisations [data-cn-done]').textContent,'2');
   assert.equal(a.d.querySelector('#carnet-proprietes [data-cn-done]').textContent,'1','kit Ganado : contenu documenté');

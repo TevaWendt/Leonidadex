@@ -49,7 +49,7 @@ function place(id, names = {}) {
 /* mini-carte de Leonida avec repères numérotés (fiche plein écran, fiche d’activité…) */
 function miniMap(places, { prefix = '', label = 'Carte de Leonida : lieux repérés', note } = {}) {
   if (!places.length) return '';
-  return '<div class="lkx-mini-map">' + LOC.mapSvg(places, { label, prefix }) + '<ol>' + places.map((p, i) => '<li><a href="' + prefix + 'carte.html#lieu=' + esc(p.id) + '"><span class="lk-loc-num" aria-hidden="true">' + (i + 1) + '</span><span>' + esc(p.name) + (p.where || p.supposed ? '<small>' + esc([p.where, p.supposed ? 'nom supposé' : null].filter(Boolean).join(' · ')) + '</small>' : '') + '</span></a></li>').join('') + '</ol></div>'
+  return '<div class="lkx-mini-map">' + LOC.mapSvg(places, { label, prefix }) + '<ol>' + places.map((p, i) => '<li><a href="' + prefix + 'carte.html#lieu=' + esc(p.id) + '"><span class="lk-loc-num" aria-hidden="true">' + (i + 1) + '</span><span>' + esc(p.name) + (p.where || p.supposed ? '<small>' + esc([p.where, p.supposed ? 'nom supposé' : null].filter(Boolean).join(', ')) + '</small>' : '') + '</span></a></li>').join('') + '</ol></div>'
     + (note ? '<p class="lkx-mini-note">' + esc(note) + '</p>' : '');
 }
 /* bloc « Sur la carte de Leonida » d’une fiche : le localisateur du site (forme « fiche », sans script) */
@@ -65,7 +65,7 @@ function gallery(MED, list, { name, kicker }) {
   return '<section class="shell lore-gallery reveal"><h2 class="sec-h">En images</h2><div class="lore-stack" style="--n:' + n + '"><div class="lore-stage" aria-label="Galerie de ' + n + ' images">'
     + g.map((x, i) => { const m = MED[x.media];
       return '<figure class="lore-slide lore-slide--' + ['z', 'tl', 'br', 'tr', 'bl'][i % 5] + (i === 0 ? ' is-active' : '') + '" data-i="' + i + '"><a href="' + (m.variants[1] || m.variants[0]).src + '" target="_blank" rel="noopener" aria-label="Agrandir : ' + esc(x.alt) + '">'
-        + img(MED, x.media, x.alt, { big: true, sizes: '(max-width:1680px) 90vw, 1508px' }) + '</a><div class="lore-slide-txt" aria-hidden="true"><span class="lst-k">' + esc(x.legende || kicker) + '</span><strong>' + esc(name) + '</strong><em>' + pad(i + 1) + ' / ' + pad(n) + '</em></div></figure>'; }).join('')
+        + img(MED, x.media, x.alt, { big: true, sizes: '(max-width:1680px) 90vw, 1508px' }) + '</a><div class="lore-slide-txt" aria-hidden="true"><span class="lst-k">' + esc(x.legende || kicker) + '</span><strong>' + esc(name) + '</strong><em>' + (i + 1) + ' sur ' + n + '</em></div></figure>'; }).join('')
     + '</div></div></section>';
 }
 /* squelette d’une fiche à venir (guide des codes, trophées, rubriques de GTA Online) : chaque rubrique, ce qu’elle dira, et

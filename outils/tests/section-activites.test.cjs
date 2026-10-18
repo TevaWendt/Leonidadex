@@ -56,7 +56,7 @@ test('pont avec le calculateur : décrit, jamais écrit ; une activité au gain 
   assert.doesNotMatch(read('calculateurs-activites.js'), /activite-/, 'calculateurs-activites.js n’est pas modifié par la section');
   /* la fiche affiche « Pas encore publié » tant que rien n’est publié, la valeur avec son statut sinon */
   const html = G.fichePage(G.context(root), fictive), d = new JSDOM(html).window.document;
-  assert.match(d.querySelector('.activites-chiffres').textContent.replace(/[  ]/g, ' '), /1 500 \$ · Officiel/);
+  assert.match(d.querySelector('.activites-chiffres').textContent.replace(/[  ]/g, ' '), /1 500 \$, Officiel/);
   assert.match(doc('activites/peche.html').querySelector('.activites-chiffres').textContent, /Pas encore publié/);
 });
 
@@ -146,7 +146,7 @@ test('menu, pied de page, recherche et plan du site : « Activités annexes » d
   for (const u of ['/activites.html', ...FICHES.map(f => '/' + f)]) assert.ok(ctx.window.LK_INDEX.some(e => e.u === u), u);
   assert.ok(read('sitemap.xml').includes('<loc>https://www.leonidakit.com/activites.html</loc>'));
   for (const f of FICHES) assert.ok(read('sitemap-fiches.xml').includes('<loc>https://www.leonidakit.com/' + f + '</loc>'), f);
-  assert.match(read('style.css'), /sections? [a-z, ]*\bactivites\b[a-z, ]* : cinq groupes dans « Explorer »/); /* un seul bloc, marqué « section activites » ou « sections …, activites, … » une fois les sections réunies */
+  assert.match(read('outils/sources/style.css'), /sections? [a-z, ]*\bactivites\b[a-z, ]* : cinq groupes dans « Explorer »/); /* un seul bloc, marqué « section activites » ou « sections …, activites, … » une fois les sections réunies */
 });
 
 test('Léo : morceau de questions de la section, fiches des activités, sujets existants reliés aux fiches, réponses honnêtes', () => {

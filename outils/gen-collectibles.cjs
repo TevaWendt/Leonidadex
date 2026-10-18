@@ -167,7 +167,7 @@ function actions(item) {
   return '<div class="col-card-actions" data-col-controls hidden>' + (item.trackable ? '<button type="button" class="col-btn col-btn-primary" data-col-found="' + item.id + '" aria-pressed="false"><span data-col-label>Marquer trouvé</span></button>' : '') + '<button type="button" class="col-btn" data-col-favorite="' + item.id + '" aria-pressed="false"><span data-col-label>Ajouter aux favoris</span></button></div>';
 }
 function renderCard(item, data, prefix = '') {
-  const location = [item.region, item.zone].filter(Boolean).join(' · ');
+  const location = [item.region, item.zone].filter(Boolean).join(', ');
   return '<article class="col-card" data-col-item="' + item.id + '" data-col-category="' + esc(item.category || '') + '" data-col-status="' + item.status + '">' + (item.image ? '<a class="col-card-media" href="' + prefix + 'collectibles/' + item.slug + '.html" tabindex="-1" aria-hidden="true"><img src="' + esc(item.image.src) + '" width="' + item.image.width + '" height="' + item.image.height + '" alt="" loading="lazy" decoding="async"></a>' : '') + '<div class="col-card-body"><div class="col-tags"><span class="col-tag">' + esc(STATUSES[item.status]) + '</span>' + (item.category ? '<span class="col-tag">' + esc(categoryName(item, data)) + '</span>' : '') + '</div><h3><a href="' + prefix + 'collectibles/' + item.slug + '.html">' + esc(item.name) + '</a></h3>' + (item.summary ? '<p class="col-card-summary">' + esc(item.summary) + '</p>' : '') + (location ? '<p class="col-card-location">' + esc(location) + '</p>' : '') + actions(item) + '</div></article>';
 }
 function paragraphs(text) { return text ? text.split(/\n\s*\n/).map(p => '<p>' + esc(p).replace(/\n/g, '<br>') + '</p>').join('\n') : ''; }
@@ -178,7 +178,7 @@ function list(title, items, spoiler = false, sectionId = null) {
   return spoiler ? '<details class="col-panel"' + identifier + ' data-col-spoiler><summary>' + esc(title) + '</summary>' + body + '</details>' : '<section class="col-panel"' + identifier + '><h2>' + esc(title) + '</h2>' + body + '</section>';
 }
 function photo(image, eager = false) {
-  return '<figure class="col-detail-image"><a href="' + esc(image.src) + '" aria-label="Agrandir : ' + esc(image.alt) + '" data-col-zoom-alt="' + esc(image.alt) + '" data-col-zoom-credit="' + esc(image.credit) + '"><img src="' + esc(image.src) + '" width="' + image.width + '" height="' + image.height + '" alt="' + esc(image.alt) + '" loading="' + (eager ? 'eager' : 'lazy') + '" decoding="async"></a><figcaption>' + esc(image.credit) + ' · <a href="' + esc(image.sourceUrl) + '" target="_blank" rel="noopener noreferrer">Source du visuel</a></figcaption></figure>';
+  return '<figure class="col-detail-image"><a href="' + esc(image.src) + '" aria-label="Agrandir : ' + esc(image.alt) + '" data-col-zoom-alt="' + esc(image.alt) + '" data-col-zoom-credit="' + esc(image.credit) + '"><img src="' + esc(image.src) + '" width="' + image.width + '" height="' + image.height + '" alt="' + esc(image.alt) + '" loading="' + (eager ? 'eager' : 'lazy') + '" decoding="async"></a><figcaption>' + esc(image.credit) + ', <a href="' + esc(image.sourceUrl) + '" target="_blank" rel="noopener noreferrer">Source du visuel</a></figcaption></figure>';
 }
 function templates(hub) {
   const header = hub.match(/<a class="skip"[\s\S]*?<\/header>/);
@@ -218,17 +218,17 @@ function renderDetail(item, data, parts, published) {
     ['col-detail-sources', 'Sources', true],
     ['col-detail-related', 'Fiches liées', related.length > 0]
   ].filter(([, , available]) => available);
-  const structured = [{ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Accueil', item: SITE + '/' }, { '@type': 'ListItem', position: 2, name: 'Collectibles', item: SITE + '/collectibles.html' }, { '@type': 'ListItem', position: 3, name: item.name, item: canonical }] }, { '@context': 'https://schema.org', '@type': 'WebPage', name: item.name + ' — Collectibles GTA VI', description, url: canonical, inLanguage: 'fr-FR', dateModified: item.updatedAt, isPartOf: { '@type': 'WebSite', name: 'Leonidakit', url: SITE + '/' }, ...(item.image ? { image: SITE + item.image.src } : {}) }];
+  const structured = [{ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Accueil', item: SITE + '/' }, { '@type': 'ListItem', position: 2, name: 'Collectibles', item: SITE + '/collectibles.html' }, { '@type': 'ListItem', position: 3, name: item.name, item: canonical }] }, { '@context': 'https://schema.org', '@type': 'WebPage', name: item.name + ', collectibles de GTA VI', description, url: canonical, inLanguage: 'fr-FR', dateModified: item.updatedAt, isPartOf: { '@type': 'WebSite', name: 'Leonidakit', url: SITE + '/' }, ...(item.image ? { image: SITE + item.image.src } : {}) }];
   return '<!DOCTYPE html>\n' + MARKER + `
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>${esc(item.name)} — Collectible GTA VI | Leonidakit</title>
+<title>${esc(item.name)}, collectible de GTA VI | Leonidakit</title>
 <meta name="description" content="${esc(description)}">
 <meta name="robots" content="${isIndexable(item) ? 'index' : 'noindex'}, follow">
 <link rel="canonical" href="${canonical}">
-<meta property="og:title" content="${esc(item.name)} — Collectible GTA VI | Leonidakit">
+<meta property="og:title" content="${esc(item.name)}, collectible de GTA VI | Leonidakit">
 <meta property="og:description" content="${esc(description)}">
 <meta property="og:type" content="article">
 <meta property="og:url" content="${canonical}">
@@ -246,7 +246,7 @@ function renderDetail(item, data, parts, published) {
 ${parts.header}
 <main id="main" class="col-page col-detail">
 <section class="page-head shell">
-<nav class="crumbs" aria-label="Fil d’Ariane"><a href="../index.html">Accueil</a> / <a href="../collectibles.html">Collectibles</a> / <span aria-current="page">${esc(item.name)}</span></nav>
+<nav class="crumbs" aria-label="Fil d’Ariane"><a href="../index.html">Accueil</a> <span class="crumbs-sep" aria-hidden="true"></span> <a href="../collectibles.html">Collectibles</a> <span class="crumbs-sep" aria-hidden="true"></span> <span aria-current="page">${esc(item.name)}</span></nav>
 <div class="col-tags"><span class="col-tag">${esc(STATUSES[item.status])}</span>${item.category ? '<span class="col-tag">' + esc(categoryName(item, data)) + '</span>' : ''}</div>
 <h1>${esc(item.name)}</h1>
 ${item.summary ? '<p class="lede">' + esc(item.summary) + '</p>' : ''}
@@ -254,7 +254,7 @@ ${item.status === 'unconfirmed' ? '<p class="col-panel">Cette information reste 
 ${actions(item)}
 <div class="col-card-actions" data-col-controls hidden><button type="button" class="col-btn" data-col-plan="${item.id}" aria-pressed="false"><span data-col-plan-label>Ajouter à ma sortie</span></button><button type="button" class="col-btn" data-col-share="${item.id}">Partager cette fiche</button><label class="col-checkbox" for="col-detail-spoilers"><input type="checkbox" id="col-detail-spoilers" data-col-spoilers-toggle>Afficher les emplacements et récompenses</label></div>
 <div data-col-controls hidden><p data-col-plan-status="${item.id}" role="status" aria-live="polite"></p><p class="col-muted"><a href="../collectibles.html#col-tools">Voir ma sortie dans le carnet</a></p></div>
-<p class="col-muted">Mis à jour le <time datetime="${item.updatedAt}">${item.updatedAt.split('-').reverse().join('/')}</time>${item.verifiedAt ? ' · Vérifié le <time datetime="' + item.verifiedAt + '">' + item.verifiedAt.split('-').reverse().join('/') + '</time>' : ''}.</p>
+<p class="col-muted">Mis à jour le <time datetime="${item.updatedAt}">${item.updatedAt.split('-').reverse().join('/')}</time>${item.verifiedAt ? ', Vérifié le <time datetime="' + item.verifiedAt + '">' + item.verifiedAt.split('-').reverse().join('/') + '</time>' : ''}.</p>
 <nav class="col-detail-jumps" aria-label="Sur cette fiche"><ul>${sections.map(([id, label]) => '<li><a href="#' + id + '">' + esc(label) + '</a></li>').join('')}</ul></nav>
 </section>
 <div class="shell col-detail-layout">
@@ -270,7 +270,7 @@ ${list('Conseils de recherche', item.tips, true, 'col-detail-tips')}
 ${list('Notes et précisions', item.notes, false, 'col-detail-notes')}
 ${item.gallery.length ? '<details class="col-panel" id="col-detail-gallery" data-col-spoiler><summary>Voir les captures détaillées</summary><div class="col-detail-gallery">' + item.gallery.map(img => photo(img)).join('') + '</div></details>' : ''}
 <section class="col-panel" data-col-controls hidden><h2>Ma note personnelle</h2><label for="col-note-${item.id}">Repère ou rappel pour cette fiche</label><textarea id="col-note-${item.id}" data-col-note="${item.id}" maxlength="2000" rows="4" placeholder="Ta note, enregistrée dans ce navigateur."></textarea><p class="col-muted">Sauvegarde locale, sans compte. Tu peux l’exporter depuis <a href="../collectibles.html#suivi">le suivi des collectibles</a>.</p></section>
-<section class="col-panel" id="col-detail-sources"><h2>Sources et vérification</h2><ul>${item.sources.map(s => '<li><a href="' + esc(s.url) + '" target="_blank" rel="noopener noreferrer">' + esc(s.label) + '</a> · ' + ({ official: 'Source officielle', community: 'Source communautaire', press: 'Presse' })[s.kind] + ' · consultée le <time datetime="' + s.checkedAt + '">' + s.checkedAt.split('-').reverse().join('/') + '</time></li>').join('')}</ul><p><a href="../contact.html">Signaler une source ou une correction</a></p></section>
+<section class="col-panel" id="col-detail-sources"><h2>Sources et vérification</h2><ul>${item.sources.map(s => '<li><a href="' + esc(s.url) + '" target="_blank" rel="noopener noreferrer">' + esc(s.label) + '</a>, ' + ({ official: 'Source officielle', community: 'Source communautaire', press: 'Presse' })[s.kind] + ', consultée le <time datetime="' + s.checkedAt + '">' + s.checkedAt.split('-').reverse().join('/') + '</time></li>').join('')}</ul><p><a href="../contact.html">Signaler une source ou une correction</a></p></section>
 ${related.length ? '<section class="col-panel" id="col-detail-related"><h2>Fiches liées</h2><ul>' + related.map(entry => '<li><a href="' + entry.slug + '.html">' + esc(entry.name) + '</a></li>').join('') + '</ul></section>' : ''}
 ${item.category || item.region ? '<nav class="col-detail-browse" aria-label="Continuer dans le catalogue">' + (item.category ? filterLink('category', item.category, 'Voir la catégorie ' + categoryName(item, data)) : '') + (item.region ? filterLink('region', item.region, 'Voir les fiches de ' + item.region) : '') + '</nav>' : ''}
 <nav class="col-detail-nav" aria-label="Autres collectibles">${prev ? '<a class="col-btn" rel="prev" href="' + prev.slug + '.html">Précédent : ' + esc(prev.name) + '</a>' : ''}<a class="col-btn" href="../collectibles.html">Tous les collectibles</a>${next ? '<a class="col-btn" rel="next" href="' + next.slug + '.html">Suivant : ' + esc(next.name) + '</a>' : ''}</nav>
@@ -329,7 +329,7 @@ function renderMethode(data, count) {
   const revue = '<p class="ed-revue">Dernière revue éditoriale : <strong><time id="col-review-date" datetime="' + esc(V.revueAt) + '">' + esc(fr(V.revueAt)) + '</time></strong>. Catalogue : <strong>' + count + ' fiche' + (count > 1 ? 's' : '') + '</strong>.</p><p id="col-review-summary" class="ed-revue-note"></p>';
   const sources = '<h3 class="ed-h3" id="sources">Pages consultées</h3>' + S.sourceList(V.sources);
   const callout = '<div class="ed-callout"><p><strong>Ce qu’on ne fait pas.</strong> Aucune donnée issue des fuites de 2022 ou de 2026, aucun objet, aucune quantité ni aucun emplacement inventés, aucune piste présentée comme confirmée. Seules les fiches confirmées ou fortement établies comptent dans ta progression. Les statuts sont expliqués dans le <a href="tuto.html#sources">Tuto</a>.</p><p><a class="ed-callout-link" href="contact.html">Signaler une source ou une correction</a></p></div>';
-  return '<div class="ed-zone ed-zone--monde ed-zone--collectibles">' + S.section({ id: 'methode-sources', kicker: 'Sources et statuts · ' + V.sources.length + ' pages ouvertes', title: 'Méthode et sources', icon: 'lire', tone: 'night', accent: 'coral', lede: esc(V.lede) },
+  return '<div class="ed-zone ed-zone--monde ed-zone--collectibles">' + S.section({ id: 'methode-sources', kicker: 'Sources et statuts, ' + V.sources.length + ' pages ouvertes', title: 'Méthode et sources', icon: 'lire', tone: 'night', accent: 'coral', lede: esc(V.lede) },
     legend + etat + entree + revue + sources + callout) + '</div>';
 }
 function updateHub(hub, items, data) {

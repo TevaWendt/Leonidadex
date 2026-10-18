@@ -1,14 +1,4 @@
-/* LEONIDAKIT v7.78 — cartes en tête des hubs du monde (monde.css, balisage : outils/monde-cartes.cjs).
-   Chargé dans <head> (petit, bloquant) pour poser html.mo-js avant le premier rendu : les cartes ne s'affichent jamais
-   une fois pour disparaître et réapparaître. Sans ce script, sans IntersectionObserver ou avec « réduire les
-   animations », rien n'est caché : tout est posé. Ce script n'écrit aucun mot, ne garde rien sur l'appareil et
-   n'envoie aucune requête.
-   - Entrées : la carte de Leonida (Lieux) entre d'un bloc ; ailleurs, chaque carte entre à son arrivée à l'écran, en
-     cascade avec celles qui arrivent en même temps (--d) ; une carte déjà dépassée (défilement rapide) est posée telle
-     quelle (mo-still).
-   - Lieux : un trait relie chaque carte à sa région sur la carte (ordinateur) ; pointer une carte ou un repère met la
-     région en lumière.
-   - Personnages : pointer une case (souris ou clavier) allume les cases des personnages liés, les autres s'éteignent. */
+/* Généré depuis outils/sources/monde.js : modifie la source, pas ce fichier. */
 (function () {
   'use strict';
   var root = document.documentElement;
@@ -17,13 +7,10 @@
   if (motion) root.classList.add('mo-js');
   var each = function (list, fn) { Array.prototype.forEach.call(list, fn); };
   var SVGNS = 'http://www.w3.org/2000/svg';
-
   function reveal(mod) {
     if (mod.getAttribute('data-mo') === 'lieux') mod.classList.add('is-in');
     else each(mod.children, function (el) { el.classList.add('is-in'); });
   }
-
-  /* ---------- entrées ---------- */
   function entrances(mods) {
     if (!motion) { each(mods, reveal); return; }
     var io = new IntersectionObserver(function (entries) {
@@ -31,7 +18,6 @@
       batch.sort(function (a, b) { return a.compareDocumentPosition(b) & 4 ? -1 : 1; });
       batch.forEach(function (el, k) {
         if (!el.hasAttribute('data-mo')) el.style.setProperty('--d', Math.min(k, 5) * 100 + 'ms');
-        /* déjà dépassé (défilement rapide) : posé sans animation */
         if (el.getBoundingClientRect().bottom < 0) el.classList.add('mo-still');
         el.classList.add('is-in');
         io.unobserve(el);
@@ -43,9 +29,6 @@
       if (mod.getAttribute('data-mo') === 'lieux') { io.observe(mod); watched.push(mod); }
       else each(mod.children, function (el) { io.observe(el); watched.push(el); });
     });
-    /* v7.82 : filet de sécurité (comme Motion+ dans common.js) : 2,5 s après l'ouverture puis 400 ms après chaque arrêt du
-       défilement, une carte dans l'écran ou déjà dépassée (jusqu'au point le plus bas atteint) qui n'a pas reçu son entrée
-       (appareil très chargé, défilement très rapide) est posée telle quelle ; plus rien ne tourne quand tout est entré. */
     var deepest = 0, timer = 0;
     function sweep() {
       watched = watched.filter(function (el) { return !el.classList.contains('is-in'); });
@@ -59,8 +42,6 @@
     window.setTimeout(sweep, 2500);
     window.addEventListener('scroll', function () { if (!watched.length) return; deepest = Math.max(deepest, (window.scrollY || window.pageYOffset || 0) + (window.innerHeight || 800)); window.clearTimeout(timer); timer = window.setTimeout(sweep, 400); }, { passive: true });
   }
-
-  /* ---------- Lieux : traits et mise en lumière ---------- */
   function atlas(mod) {
     var box = mod.querySelector('.mo-map-box'), lines = mod.querySelector('.mo-lines'), pinsSvg = mod.querySelector('.mo-pins');
     if (!box || !lines || !pinsSvg) return;
@@ -129,8 +110,6 @@
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(queue);
     queue();
   }
-
-  /* ---------- Personnages : qui connaît qui ---------- */
   function cover(mod) {
     var panels = mod.querySelectorAll('.mo-panel'), timer = 0;
     function on(panel) {
@@ -158,7 +137,6 @@
       panel.addEventListener('focusout', function (e) { if (!panel.contains(e.relatedTarget)) off(); });
     });
   }
-
   function init() {
     var mods = document.querySelectorAll('[data-mo]');
     if (!mods.length) return;

@@ -34,3 +34,5 @@ les sitemaps et les métadonnées sociales de toutes les pages.
 | `croise.js`, `similarite.js` | contrôles éditoriaux (alertes lexicales, similarité des textes) |
 | `landmarks-leonidakit.json` | export de référence des lieux, conservé pour la provenance |
 | `tests/` | 56 tests jsdom (voir README racine). Ils vérifient le code et le DOM, pas le rendu visuel. |
+| `sources/`, `minifier.cjs` | v7.94 : les feuilles de style et scripts écrits à la main, avec leurs commentaires ; `sync-site.cjs` écrit à la racine la copie servie, sans commentaire (`require('./minifier.cjs').run()`). Modifier la source, jamais la copie. |
+| `couverture-pages.cjs`, `COUVERTURE-PAGES.md` | v7.94 (« une page par élément ») : l’inventaire de tous les éléments des données du site, famille par famille, leur page quand elle existe, les doublons, les exclusions, le volume à créer et les points à trancher. `--rapport` écrit l’état des lieux ; sans option, code 1 tant qu’un élément n’a ni page ni exclusion ; `--json` pour les générateurs. |

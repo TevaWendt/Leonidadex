@@ -46,7 +46,6 @@
  "Tous": "Todos",
  "Toutes": "Todas",
  "moins de 1 %": "menos de 1%",
- "· gardé tel quel": "· mantido como está",
  "Retirer la saisie": "Remover a entrada",
  "élément": "item",
  "éléments": "itens",
@@ -88,7 +87,6 @@
  "La liste des lieux n’a pas pu être chargée. Recharge la page, ou ouvre la carte.": "Não foi possível carregar a lista de lugares. Recarregue a página ou abra o mapa.",
  "Favori": "Favorito",
  "Noter": "Anotar",
- "· envie": "· desejo",
  "date inconnue": "data desconhecida",
  "Ton arsenal GTA VI sur cet appareil : armes possédées, équipements obtenus, munitions et leur stock. Envies, restants, recherche et calculateur, sans compte.": "Seu arsenal do GTA VI neste aparelho: armas obtidas, equipamentos, munição e estoque. Lista de desejos, restantes, busca e calculadora, sem conta.",
  "Mon arsenal GTA VI : armes, équipements et munitions | Leonidakit": "Meu arsenal do GTA VI: armas, equipamentos e munição | Leonidakit",
@@ -98,8 +96,7 @@
  "Vues du carnet": "Visualizações do caderno",
  "Nom, catégorie…": "Nome, categoria…",
  "Catégories recensées": "Categorias registradas",
- "<1>Accueil</1> / <2>Progression</2> / <3>Mon arsenal</3>": "<1>Início</1> / <2>Progresso</2> / <3>Meu arsenal</3>",
- "Carnet de progression · sur cet appareil": "Caderno de progresso · neste aparelho",
+ "Carnet de progression, sur cet appareil": "Caderno de progresso, neste aparelho",
  "Tes armes, tes équipements et tes munitions au même endroit. Pour les munitions, tu peux noter ton stock : avoir obtenu un type de munitions et savoir combien il t’en reste, ce n’est pas la même chose.": "Suas armas, seus equipamentos e sua munição no mesmo lugar. Para a munição, você pode anotar seu estoque: ter obtido um tipo de munição e saber quanto você ainda tem não é a mesma coisa.",
  "<1>0</1><2>dans ton arsenal sur <3>48</3></2>": "<1>0</1><2>no seu arsenal, de um total de <3>48</3></2>",
  "<1>0</1><2>envies</2>": "<1>0</1><2>desejos</2>",
@@ -149,6 +146,5 @@
  "Une envie compte-t-elle dans ma progression ?": "Um desejo conta no meu progresso?",
  "Non. Une envie est une arme que tu veux : elle ne coche rien. Quand tu l’as, « Je l’ai » la range dans ton arsenal et la retire de tes envies.": "Não. Um desejo é uma arma que você quer: ele não marca nada. Quando você conseguir a arma, “Tenho” a coloca no seu arsenal e a tira da sua lista de desejos.",
  "Mes autres carnets": "Meus outros cadernos",
- "← Retour à ma progression": "← Voltar ao meu progresso",
  "Tes calculs et tes business plans GTA VI enregistrés sur cet appareil : retrouve-les, relis leur résumé et rouvre-les dans le calculateur, sans compte.": "Seus cálculos e planos de negócios do GTA VI salvos neste aparelho: encontre, releia o resumo e reabra na calculadora, sem conta."
 }

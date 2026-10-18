@@ -161,7 +161,7 @@ function sourceList(H, ids) {
   return '<ol class="ed-srcs">' + ids.map(id => { const s = H.sources[id];
     return '<li id="src-' + esc(id) + '">' + S.pip(s.statut, true)
       + '<a class="ed-src-link" href="' + esc(s.url) + '" target="_blank" rel="noopener nofollow"' + (s.lang === 'en' ? ' translate="no"' : '') + '>' + esc(s.title) + '</a>'
-      + '<span class="ed-src-meta">' + (s.publisher ? '<span translate="no">' + esc(s.publisher.split(',')[0]) + '</span>' + (s.publisher.includes(',') ? esc(s.publisher.slice(s.publisher.indexOf(','))) : '') + ' · ' : '') + (s.publishedAt ? 'publié le ' + esc(frDate(s.publishedAt)) + ' · ' : '') + 'consulté le ' + esc(frDate(s.consultedAt)) + '</span>'
+      + '<span class="ed-src-meta">' + (s.publisher ? '<span translate="no">' + esc(s.publisher.split(',')[0]) + '</span>' + (s.publisher.includes(',') ? esc(s.publisher.slice(s.publisher.indexOf(','))) : '') + ', ' : '') + (s.publishedAt ? 'publié le ' + esc(frDate(s.publishedAt)) + ', ' : '') + 'consulté le ' + esc(frDate(s.consultedAt)) + '</span>'
       + '<p>' + esc(s.claim) + '</p></li>'; }).join('') + '</ol>';
 }
 const srcLinks = (ids, pre = '') => ids.length ? '<span class="trophees-src">' + ids.map((id, i) => '<a href="' + pre + '#src-' + esc(id) + '" aria-label="Source ' + (i + 1) + '">' + (i + 1) + '</a>').join('') + '</span>' : '';
@@ -234,7 +234,7 @@ function gradeSheet(GR, x) {
     + '<h4>' + esc(GR.h.repere) + '</h4><p class="trophees-repere"><span class="trophees-v">GTA V</span> ' + esc(F.repere || '') + '</p>'
     + '<h4>' + esc(GR.h.champs) + '</h4>' + LKX.skel(GR.champs, GR.sortie)
     + '<div class="lkx-sheet-cta"><a class="lkx-btn" href="#liste">Ma liste et mon suivi</a><a class="lkx-btn lkx-btn--ghost" href="progression.html#trophees">Ma progression</a></div>';
-  return LKX.sheet({ id: 'grade-' + x.grade, cls: 'trophees-grade-det', summary, icon: '<div class="trophees-podium trophees-podium--un">' + badgeHtml(x.grade) + '</div>', kicker: esc(GR.kicker) + ' · <span>' + esc(GR.kickerFiche) + '</span>', title: x.label, body });
+  return LKX.sheet({ id: 'grade-' + x.grade, cls: 'trophees-grade-det', summary, icon: '<div class="trophees-podium trophees-podium--un">' + badgeHtml(x.grade) + '</div>', kicker: esc(GR.kicker) + ', <span>' + esc(GR.kickerFiche) + '</span>', title: x.label, body });
 }
 /* aperçu d’une fiche trophée : une carte qui ouvre, en plein écran, le squelette de chaque fiche (rien d’inventé : la liste
    n’est pas publiée) */
@@ -249,7 +249,7 @@ function apercu(LI) {
     + '<p class="lkx-sheet-vide">' + esc(LI.vide) + '</p>'
     + '<h4>' + esc(LI.champsTitre) + '</h4>' + LKX.skel(LI.champs, LI.sortie) + '<p class="trophees-note">' + esc(LI.note) + '</p>'
     + '<div class="lkx-sheet-cta"><a class="lkx-btn" href="progression.html#trophees">Ma progression</a><a class="lkx-btn lkx-btn--ghost" href="collectibles.html">Les collectibles</a></div>';
-  return '<div class="lkx-cards lkx-cards--solo lkx-unlock lk-arrive" data-lkx-in>' + LKX.sheet({ id: 'apercu-fiche', cls: 'trophees-apercu', summary, icon: '<div class="trophees-podium">' + badgeHtml('or') + badgeHtml('platine') + badgeHtml('argent') + badgeHtml('bronze') + '</div>', kicker: esc(LI.kicker) + ' · <span>' + esc(LI.apercuK) + '</span>', title: LI.apercuT, body }) + '</div>';
+  return '<div class="lkx-cards lkx-cards--solo lkx-unlock lk-arrive" data-lkx-in>' + LKX.sheet({ id: 'apercu-fiche', cls: 'trophees-apercu', summary, icon: '<div class="trophees-podium">' + badgeHtml('or') + badgeHtml('platine') + badgeHtml('argent') + badgeHtml('bronze') + '</div>', kicker: esc(LI.kicker) + ', <span>' + esc(LI.apercuK) + '</span>', title: LI.apercuT, body }) + '</div>';
 }
 function hubPage(ctx) {
   const { H, T, MED, STATUTS, ROOTC } = ctx, X = H.hub, E = H.etat, G = H.gtav, GR = H.grades, LI = H.liste;
@@ -270,7 +270,7 @@ function hubPage(ctx) {
     + apercu(LI) + '<h3 class="trophees-sous-t">' + esc(LI.champsTitre) + '</h3><dl class="trophees-champs">' + LI.champs.map(x => '<div><dt>' + esc(x.t) + '</dt><dd>' + esc(x.d) + '</dd></div>').join('') + '</dl>'
     + '<p class="trophees-note">' + esc(LI.note) + '</p></section>';
   const body = `<section class="page-head shell lk-glow"><div class="lk-head-grid"><div>
-  <p class="fiche-cat">${esc(X.label)} · GTA VI</p>
+  <p class="fiche-cat">${esc(X.label)}, GTA VI</p>
   <h1>${esc(X.title)}</h1>
   <p class="lede">${esc(X.lede)}</p>
   <p class="d-intro-note">${esc(X.note)} <a href="tuto.html#sources">Comprendre les statuts</a>.</p>
@@ -321,9 +321,9 @@ function fichePage(ctx, t) {
   const ids = [...new Set([...(t.sources || []), ...(m.sources || [])])];
   const liens = (t.liens || []).length ? '<div class="lore-texte reveal"><h2>Pages utiles</h2><ul class="lore-chips">' + t.liens.map(l => '<li><a href="' + p + esc(l.href) + '">' + esc(l.label) + '</a></li>').join('') + '</ul></div>' : '';
   const body = `<section class="page-head shell">
-  <nav class="crumbs" aria-label="Fil d’Ariane"><a href="../index.html">Accueil</a> / <a href="../${HUB}.html">${esc(H.hub.label)}</a> / <span${t.nom.fr ? '' : ' translate="no"'}>${esc(nomTexte(t))}</span></nav>
+  <nav class="crumbs" aria-label="Fil d’Ariane"><a href="../index.html">Accueil</a> <span class="crumbs-sep" aria-hidden="true"></span> <a href="../${HUB}.html">${esc(H.hub.label)}</a> <span class="crumbs-sep" aria-hidden="true"></span> <span${t.nom.fr ? '' : ' translate="no"'}>${esc(nomTexte(t))}</span></nav>
   <div class="lore-copy lore-enter">
-    <p class="fiche-cat">${esc(H.hub.label)} · GTA VI</p>
+    <p class="fiche-cat">${esc(H.hub.label)}, GTA VI</p>
     ${nomHtml(t, 'h1', '')}
   </div>
 </section>
@@ -337,7 +337,7 @@ function fichePage(ctx, t) {
 </section>
 ${ids.length ? '<section class="shell trophees-fiche-src" aria-labelledby="sources-t"><h2 class="sec-h" id="sources-t">Sources</h2>' + sourceList(H, ids) + '</section>' : ''}`;
   const desc = (t.condition.fr || t.condition.en) + ' La méthode pas à pas, et ta case « Obtenu ».';
-  return page(SUBC, { p, title: nomTexte(t) + ' — trophée GTA VI | Leonidakit', desc, canonical: '/' + HUB + '/' + t.id + '.html', body, crumbs: [['Accueil', '/'], [H.hub.label, '/' + HUB + '.html'], [nomTexte(t), '/' + HUB + '/' + t.id + '.html']] });
+  return page(SUBC, { p, title: nomTexte(t) + ', trophée de GTA VI | Leonidakit', desc, canonical: '/' + HUB + '/' + t.id + '.html', body, crumbs: [['Accueil', '/'], [H.hub.label, '/' + HUB + '.html'], [nomTexte(t), '/' + HUB + '/' + t.id + '.html']] });
 }
 
 /* ---------- page de démonstration : la liste, le suivi et une méthode, avec des trophées fictifs ---------- */
@@ -346,9 +346,9 @@ function modelePage(ctx) {
   const ex = MO.trophees.find(t => t.id === MO.methode);
   const body = `<div class="shell"><p class="trophees-demo" role="note">${esc(MO.bandeau)}</p></div>
 <section class="page-head shell">
-  <nav class="crumbs" aria-label="Fil d’Ariane"><a href="../index.html">Accueil</a> / <a href="../${HUB}.html">${esc(H.hub.label)}</a> / <span>${esc(MO.titre)}</span></nav>
+  <nav class="crumbs" aria-label="Fil d’Ariane"><a href="../index.html">Accueil</a> <span class="crumbs-sep" aria-hidden="true"></span> <a href="../${HUB}.html">${esc(H.hub.label)}</a> <span class="crumbs-sep" aria-hidden="true"></span> <span>${esc(MO.titre)}</span></nav>
   <div class="lore-copy lore-enter">
-    <p class="fiche-cat">${esc(H.hub.label)} · GTA VI</p>
+    <p class="fiche-cat">${esc(H.hub.label)}, GTA VI</p>
     <h1>${esc(MO.titre)}</h1>
     <p class="lede">${esc(MO.lede)}</p>
   </div>

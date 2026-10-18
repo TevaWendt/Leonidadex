@@ -123,7 +123,7 @@ test('menu, pied de page, recherche (« cheat » dans chaque langue) et plan du 
     assert.ok(list.length, 'recherche ' + l.code); assert.ok(list.some(e => words[l.code].test(e.s)), 'recherche ' + l.code + ' : « cheat » ou sa variante');
   }
   assert.ok(read('sitemap.xml').includes('<loc>https://www.leonidakit.com/codes-de-triche.html</loc>'));
-  assert.match(read('style.css'), /sections? [a-z, ]*\bcodes\b[a-z, ]* : cinq groupes dans « Explorer »/); /* un seul bloc, marqué « section codes » ou « sections …, codes, … » une fois les sections réunies */
+  assert.match(read('outils/sources/style.css'), /sections? [a-z, ]*\bcodes\b[a-z, ]* : cinq groupes dans « Explorer »/); /* un seul bloc, marqué « section codes » ou « sections …, codes, … » une fois les sections réunies */
 });
 
 test('Léo : morceau de questions de la section, sujet « mods » relié au hub, réponses honnêtes (présence, argent infini, trophées)', () => {

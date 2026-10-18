@@ -54,16 +54,16 @@ test('Tableau de bord Progression : neuf cartes, lignes par famille, anciennes a
   for(const id of ['progress-vehicules','progress-armes','progress-lieux','progress-collectibles','progress-calc','progress-calc-n','suivi-consommables','suivi-perso-armes'])assert.ok(html.includes('id="'+id+'"'),id);
   assert.equal((html.match(/<section\b/g)||[]).length,(html.match(/<\/section>/g)||[]).length,'sections équilibrées (anomalie 11)');
   const C=require(path.join(root,'outils/catalogues.cjs'));
-  assert.match(html,new RegExp('data-family="consommables"><span>[^<]*</span> <strong class="suivi-n">0 / '+C.counts('consommables').suivis+'<'),'consommables : '+C.counts('consommables').suivis+' (anomalie 10)');
-  assert.match(html,/data-family="perso-vehicules"><span>[^<]*<\/span> <strong class="suivi-n">0 \/ 57</);
+  assert.match(html,new RegExp('data-family="consommables"><span>[^<]*</span> <strong class="suivi-n">0 sur '+C.counts('consommables').suivis+'<'),'consommables : '+C.counts('consommables').suivis+' (anomalie 10)');
+  assert.match(html,/data-family="perso-vehicules"><span>[^<]*<\/span> <strong class="suivi-n">0 sur 57</);
   for(const k of M.carnets)assert.ok(html.includes('href="'+k.url.slice(1)+'">'+k.bouton.replace(/’/g,'’')),'bouton « '+k.bouton+' »');
 });
 
 test('Tableau de bord : comptes, envies (jamais comptées), stocks à renseigner, saisies à part, calculs (anomalie 9)',withPage('progression.html',a=>{
   const card=id=>a.d.getElementById('carnet-'+id);
   assert.equal(card('garage').querySelector('[data-cn-done]').textContent,'2');
-  assert.match(card('garage').querySelector('[data-cn-extra]').textContent,/1 envie · 1 saisie à part/);
-  assert.equal(card('arsenal').querySelector('#suivi-munitions .suivi-n').textContent,'1 / 5');assert.match(card('arsenal').querySelector('[data-cn-extra]').textContent,/1 stock à renseigner/);
+  assert.match(card('garage').querySelector('[data-cn-extra]').textContent,/1 envie, 1 saisie à part/);
+  assert.equal(card('arsenal').querySelector('#suivi-munitions .suivi-n').textContent,'1 sur 5');assert.match(card('arsenal').querySelector('[data-cn-extra]').textContent,/1 stock à renseigner/);
   assert.equal(card('garde-robe').querySelector('[data-cn-extra]').textContent,'1 envie');
   assert.equal(a.d.getElementById('progress-calc-n').textContent,'2 calculs');assert.equal(card('calculs').querySelector('[data-cn-plans-n]').textContent,'1 plan');
   assert.equal(card('proprietes').querySelector('[data-cn-done]').textContent,'1');

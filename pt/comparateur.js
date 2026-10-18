@@ -1,3 +1,4 @@
+/* Généré depuis outils/sources/comparateur.js : modifie la source, pas ce fichier. */
 (function(){
   'use strict';
   const params=new URLSearchParams(location.search),type=params.get('type')==='vehicules'?'vehicules':'armes';
@@ -10,29 +11,22 @@
   const name=x=>(x.marque && x.marque!=='Marca desconhecida'?x.marque+' ':'')+x.nom;
   const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const waiting='A confirmar';
-  /* v7.50 (lot 3) : mêmes états vides que les fiches documentaires (modèle commun) : « Prix à venir », « Achat à confirmer »,
-     « Emplacement à venir », coûts d’usage « mécanique non confirmée » ; le terrain est déduit du type et dit comme tel. */
   const terrain=x=>x.cat==='bateau'?'Água (deduzido do tipo)':x.cat==='avion'||x.cat==='helicoptere'?'Ar (deduzido do tipo)':'Estrada (deduzido do tipo)';
   const edition=x=>x.edition==='Pre-Order'?'Bônus de pré-venda':x.edition==='Ultimate Edition'?'Edição Ultimate':x.edition||'Standard';
-  /* v7.69 : critères rangés par thème (identité, achat, jeu) ; ce qui n'est pas encore publié est marqué comme tel */
   const groups=[
     ['O que sabemos',[...(type==='vehicules'?[['Fabricante',x=>x.marque]]:[]),['Categoria',x=>cats[x.cat]],['Status',x=>statuses[x.st]],['Fonte',x=>x.src],['Inspiração real',x=>x.insp||x.fam],...(type==='armes'?[['Onde é levada',x=>x.slot==='longue'?'Arma longa':'Arma curta'],['Alcance estimado',x=>x.portee],['Munição',x=>x.mun],['Edição Ultimate',x=>x.ue?'Sim':'Não informada']]:[['Edição',edition]])]],
     ['A compra',[['Preço',()=>'Preço em breve'],['À venda',()=>'Compra a confirmar'],[type==='armes'?'Onde encontrar':'Onde encontrar',()=>'Localização em breve']]],
     ['No jogo, depois de 19 de novembro de 2026',type==='armes'?[['Custo da munição',()=>'Mecânica não confirmada'],...['Dano','Cadência','Precisão'].map(x=>[x,()=>waiting])]:[['Terreno',terrain],['Custos de uso (combustível, manutenção)',()=>'Mecânica não confirmada'],...['Velocidade máxima','Aceleração','Lugares'].map(x=>[x,()=>waiting])]]
   ];
   const PENDING=new Set(['Preço em breve','Compra a confirmar','Localização em breve','Mecânica não confirmada',waiting]);
-  /* comparaisons toutes prêtes : des familles réelles du catalogue (aucun classement, aucun chiffre) */
   const QUICK=type==='vehicules'?[['Edição Ultimate',['grotti-cheetah-classic','declasse-mamba-gt','schyster-deviant']],['Off-road',['vapid-dominator-buggy','canis-kamacho','vapid-riata-classic']],['Na água',['shitzu-squalo','speedophile-seashark','shitzu-tropic']],['Motos',['dinka-enduro','maibatsu-manchez','maibatsu-sanchez']]]
     :[['Armas curtas nomeadas',['girardi-es9','klose-k17','hawk-little-morgan']],['Fuzis',['carabine','fusil-assaut','fusil-pompe']],['Corpo a corpo',['batte','club-golf','couteau-cran']]];
-  /* v7.61 : le type affiché est un libellé (traduit), distinct de l'identifiant « type » des adresses */
-  document.getElementById('cmp-type-lbl').textContent=type==='armes'?'Comparador · armas':'Comparador · veículos';
+  document.getElementById('cmp-type-lbl').textContent=type==='armes'?'Comparador de armas':'Comparador de veículos';
   document.getElementById('cmp-back').href=type+'.html';
   document.querySelectorAll('[data-cmp-type]').forEach(a=>{if(a.dataset.cmpType===type)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
   const pick=document.getElementById('cmp-pick'),table=document.getElementById('cmp-table'),empty=document.getElementById('cmp-empty'),quick=document.getElementById('cmp-quick');
   const sorted=list.slice().sort((a,b)=>name(a).localeCompare(name(b),'fr'));
   const cardClass=x=>'veh-thumb veh-thumb--'+(type==='armes'?'arm veh-thumb--':'')+x.cat;
-
-  /* illustration d'une fiche : photo officielle ou schéma du site (véhicules), silhouette de l'arme (armes) */
   function art(x,small){
     if(type==='vehicules'){
       const t=x.thumb||'';
@@ -43,8 +37,6 @@
     return (window.LK_ARMES_SCHEMAS||{})[x.id]||'';
   }
   const isPhoto=x=>type==='vehicules'&&x.thumb&&!/\.svg$/.test(x.thumb);
-
-  /* les trois colonnes : construites une fois (le choix garde le focus), remplies à chaque changement */
   const slots=ids.map((id,k)=>{
     const card=document.createElement('article');card.className='cmp-slot';
     card.innerHTML='<div class="cmp-slot-art"><span class="cmp-slot-n" aria-hidden="true">'+(k+1)+'</span><span class="cmp-slot-img"></span></div><div class="cmp-slot-body"><p class="cmp-slot-cat"></p><h3 class="cmp-slot-name"></h3><p class="cmp-slot-st" hidden></p><p class="cmp-slot-hint" hidden></p><div class="cmp-slot-row"></div></div>';
@@ -59,7 +51,6 @@
     pick.appendChild(card);
     return {card,s,x};
   });
-
   function paintSlot(slot,k){
     const x=ids[k]?byId.get(ids[k]):null,card=slot.card,artBox=card.querySelector('.cmp-slot-art'),img=card.querySelector('.cmp-slot-img');
     card.classList.toggle('is-empty',!x);
@@ -76,7 +67,6 @@
     slot.x.hidden=!x;
     if(x)slot.x.setAttribute('aria-label','Remover '+name(x));
   }
-
   function cell(v){return PENDING.has(v)?'<span class="cmp-wait">'+esc(v)+'</span>':esc(v);}
   function render(){
     slots.forEach((slot,k)=>{
@@ -107,13 +97,11 @@
       calculator.hidden = cols.length === 0;
       const calculatorQuery = new URLSearchParams({ tool: 'compare', type, ids: ids.filter(Boolean).join(','), from: 'comparateur' });
       calculatorLink.href = 'calculateurs.html?' + calculatorQuery.toString() + '#atelier';
-      /* v7.54 : le lien « Lequel puis-je acheter ? » de la v7.47 (Mes achats, un achat à la fois) revient à côté de « Quel achat choisir ? ». */
       const purchaseLink = document.getElementById('cmp-purchase-link');
       if (purchaseLink) { const q = new URLSearchParams({ tool: 'purchase', type, ids: ids.filter(Boolean).join(','), from: 'comparateur' }); purchaseLink.href = 'calculateurs.html?' + q.toString() + '#atelier'; }
     }
     const query=new URLSearchParams({type});if(ids.some(Boolean))query.set('ids',ids.filter(Boolean).join(','));history.replaceState(null,'','comparateur.html?'+query.toString());
   }
-
   QUICK.forEach(([label,set])=>{
     const ok=set.filter(id=>byId.has(id));if(ok.length<2)return;
     const b=document.createElement('button');b.type='button';b.textContent=label;b.dataset.ids=ok.join(',');

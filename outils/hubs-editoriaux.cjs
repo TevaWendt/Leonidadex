@@ -77,7 +77,7 @@ function armes(A, counts) {
   figs.push({ n: counts.nCat, label: 'classes' }, { n: 0, label: 'total officiel publié' });
   out.push(S.section({ id: 'chiffres', num: 2, kicker: 'Inventaire', title: 'Les chiffres, sans arrondi', icon: 'chiffres', tone: 'paper2', fam: 'armes' },
     S.figures(figs) + '<p>' + esc(D.chiffres.texte) + '</p>'));
-  const bar = (fam, label, total, href, aria) => '<div class="own-bar own-bar--track rise" data-track-bar="' + fam + '"><span class="own-lbl">' + label + ' :</span> <b>0</b><span class="own-lbl">/ <span class="own-total">' + total + '</span> obtenus</span>'
+  const bar = (fam, label, total, href, aria) => '<div class="own-bar own-bar--track rise" data-track-bar="' + fam + '"><span class="own-lbl">' + label + ' :</span> <b>0</b><span class="own-lbl">sur <span class="own-total">' + total + '</span> obtenus</span>'
     + '<progress aria-label="' + esc(aria) + '" value="0" max="' + total + '"></progress><div class="own-actions"><a class="own-link" href="' + href + '">Voir mon arsenal</a><button type="button" data-raz>Vider</button></div></div>';
   out.push(S.section({ id: 'equipements', num: 3, kicker: D.equipements.items.length + ' objets', title: 'Équipements et gadgets', icon: 'equipements', tone: 'paper', lede: esc(D.equipements.lede), fam: 'equipements' },
     bar('equipements', 'Mon équipement', D.equipements.items.length, 'carnets/arsenal.html#f=equipements', 'Équipements obtenus') + S.kits(D.equipements.items, 'equipements')));

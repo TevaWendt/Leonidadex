@@ -195,7 +195,7 @@
  "GTA VI sera-t-il en réalité virtuelle ?": "¿GTA VI tendrá realidad virtual?",
  "Peut-on aller partout dès le début de GTA VI ?": "¿Se puede ir a todas partes desde el principio de GTA VI?",
  "{name} n’a pas de prix séparé publié ({condition}).": "{name} no tiene un precio aparte publicado ({condition}).",
- "Oui : {name} — {condition}.": "Sí: {name} — {condition}.",
+ "Oui : {name}, {condition}.": "Sí: {name}, {condition}.",
  "{name} : {description} ({condition}).": "{name}: {description} ({condition}).",
  "{name} : {effect}": "{name}: {effect}",
  "Aucun repère de la série n’est relevé pour cette ligne.": "No hay ninguna referencia de la saga para esta línea.",
@@ -223,7 +223,6 @@
  "La fiche de {name} n’indique pas d’inspiration réelle.": "La ficha de {name} no indica ninguna inspiración real.",
  "{name} n’a pas de prix connu : Rockstar n’a publié aucun prix de véhicule. Dans le calculateur, tu peux écrire le prix que tu imagines.": "{name} no tiene precio conocido: Rockstar no ha publicado ningún precio de vehículo. En la calculadora puedes escribir el precio que imaginas.",
  "Le prix publié sur la fiche de {name} est {price} $ ({priceStatus}{priceSource}{priceDate}). Le calculateur le propose comme prix de référence : tu peux en écrire un autre.": "El precio publicado en la ficha de {name} es {price} $ ({priceStatus}{priceSource}{priceDate}). La calculadora lo propone como precio de referencia: puedes escribir otro.",
- "· source : {source}": "· fuente: {source}",
  "Aucune vitesse, accélération ni statistique n’est publiée pour {name} : ces cases restent « pas encore connues » sur sa fiche.": "No se ha publicado ninguna velocidad, aceleración ni estadística de {name}: esas casillas siguen marcadas como “Aún no se conoce” en su ficha.",
  "Non : {name} n’est pas cité dans les contenus de l’Édition Ultimate ni du Pack Vintage recensés sur le site.": "No: {name} no aparece en los contenidos de la edición Ultimate ni del Pack Vintage registrados en el sitio.",
  "Oui : {name} est relié à une édition sur le site ({condition}).": "Sí: {name} está vinculado a una edición en el sitio ({condition}).",
@@ -325,7 +324,6 @@
  "Conversation effacée dans cet onglet.": "Conversación borrada en esta pestaña.",
  "Temps par jour (min)": "Tiempo por día (min)",
  "Prix que j’imagine ($)": "Precio que imagino ($)",
- "Gain net estimé ($ / h)": "Ganancia neta estimada ($ / h)",
  "Session (min)": "Sesión (min)",
  "Réserve à garder ($)": "Dinero que dejo apartado ($)"
 }

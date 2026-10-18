@@ -1,20 +1,9 @@
-/* Leonidakit — lk-showcase.js (v7.44, lot 7)
-   Séquence « effet Rockstar » de la page À propos : chaque carte .lk-show arrive en grand au défilement, son image
-   officielle glisse et se dévoile, son titre se compose mot à mot, le texte suit, le lien arrive en dernier ; la carte
-   se fige lisible, puis la suivante entre. Composant réutilisable : un conteneur [data-showcase] avec des .lk-show.
-   - Lié au défilement (animation-timeline: view() dans style, informations.css) quand le navigateur le sait ; sinon un
-     IntersectionObserver pose et retire is-in (réversible quand on remonte), garde-fou : tout visible après 1,5 s.
-   - Mouvement réduit : rien ne bouge, tout est visible (informations.css + ce fichier ne posent rien).
-   - Clavier : chaque carte est focusable ; le focus la révèle et la centre.
-   Compteurs de la section « Le site en chiffres » (data-count) : montent à l'arrivée à l'écran, chiffres groupés à la
-   française ; en mouvement réduit la valeur finale s'affiche directement.
-   Aucun flou, aucune rotation, aucun transform sur le texte au survol : lisible avant tout. */
+/* Généré depuis outils/sources/lk-showcase.js : modifie la source, pas ce fichier. */
 (function () {
   'use strict';
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const io = 'IntersectionObserver' in window;
   const scrollTimeline = !!(window.CSS && CSS.supports && CSS.supports('animation-timeline: view()'));
-  /* --- titres mot à mot (même principe que common.js, classes propres pour ne pas croiser ses transitions) --- */
   function splitWords(el) {
     if (!el || el.dataset.lkSw) return;
     let i = 0;
@@ -38,7 +27,6 @@
     box.classList.add(scrollTimeline ? 'lk-showcase--timeline' : 'lk-showcase--observer');
     if (!scrollTimeline) {
       if (io) {
-        /* réversible : la carte perd is-in quand elle ressort par le bas (on remonte), la garde quand elle sort par le haut (déjà lue) */
         const obs = new IntersectionObserver(function (entries) {
           entries.forEach(function (en) {
             if (en.isIntersecting) en.target.classList.add('is-in');
@@ -50,13 +38,11 @@
         window.addEventListener('beforeprint', function () { cards.forEach(function (c) { c.classList.add('is-in'); }); });
       } else cards.forEach(function (c) { c.classList.add('is-in'); });
     }
-    /* clavier : le focus révèle la carte et la place au centre de l'écran */
     cards.forEach(function (c) {
       c.addEventListener('focus', function () { c.classList.add('is-in'); c.classList.add('is-focus'); if (c.scrollIntoView) c.scrollIntoView({ block: 'center', behavior: 'smooth' }); });
       c.addEventListener('blur', function () { c.classList.remove('is-focus'); });
     });
   });
-  /* --- compteurs --- */
   const nf = new Intl.NumberFormat('pt-BR');
   const counters = Array.prototype.slice.call(document.querySelectorAll('.fig-n[data-count][data-stat]'));
   if (!counters.length) return;
@@ -75,8 +61,6 @@
     window.requestAnimationFrame(step);
   };
   if (io && !reduced) {
-    /* v7.54 : la valeur écrite dans la page reste lisible tant que le compteur n'est pas à l'écran (plus de « 0 » posé
-       au chargement, ni de minuterie qui lançait tous les compteurs après 4 s) ; le compteur part de zéro à son entrée. */
     const co = new IntersectionObserver(function (entries) { entries.forEach(function (en) { if (!en.isIntersecting) return; run(en.target); co.unobserve(en.target); }); }, { threshold: 0.4 });
     counters.forEach(function (n) { co.observe(n); });
     window.addEventListener('beforeprint', function () { counters.forEach(function (n) { co.unobserve(n); show(n, parseInt(n.dataset.count, 10) || 0); }); });

@@ -26,7 +26,7 @@ function render(o) {
     /* assemblage v7.91 (axe, « label in name ») : le nom accessible est le contenu du bouton (angle, compteur, indication « angle suivant ») */
     `<button type="button" class="ang-view" data-ang-next>` +
     `<span class="ang-screen">${imgs}<span class="ang-scan" aria-hidden="true"></span></span>` +
-    `<span class="ang-tag" aria-live="polite"><b data-ang-label>${esc(vues[0].label)}</b><span data-ang-count>1/${n}</span></span>` +
+    `<span class="ang-tag" aria-live="polite"><b data-ang-label>${esc(vues[0].label)}</b><span data-ang-count>1 sur ${n}</span></span>` +
     `<span class="ang-hint">${esc(o.hint)}</span>` +
     `</button>` +
     `<div class="ang-tabs" role="group" aria-label="${esc(o.group)}">${tabs}</div>` +

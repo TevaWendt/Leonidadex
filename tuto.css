@@ -1,7 +1,6 @@
-/* Leonidakit : page Tuto. Charte du site : encre, corail, ambre, nuit de Vice City. */
+/* Généré depuis outils/sources/tuto.css : modifie la source, pas ce fichier. */
 .tuto-page main{background:var(--paper);color:var(--ink)}
 .t-label{font:800 .78rem var(--font-mono,ui-monospace,monospace);letter-spacing:.14em;text-transform:uppercase;color:var(--coral-text)}
-/* En-tête */
 .t-hero{position:relative;overflow:hidden;background:linear-gradient(100deg,#2B1B4D 0%,#5A2358 60%,#8E2F4C 100%);color:#fff;padding:56px 0 48px;border-bottom:3px solid var(--amber)}
 .t-hero:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,0) 0 3px,rgba(255,255,255,.045) 3px 4px);pointer-events:none}
 .t-hero:after{content:"";position:absolute;left:-10%;right:-10%;bottom:-40%;height:70%;background:radial-gradient(ellipse at 50% 100%,rgba(232,69,44,.55),rgba(90,35,88,.25) 45%,transparent 70%);filter:blur(8px);pointer-events:none}
@@ -15,7 +14,6 @@
 .t-button.secondary{background:#fff}
 .t-hero-link{display:inline-block;margin-top:18px;color:#fff;font-weight:700;text-decoration:underline;text-underline-offset:4px}
 .tuto-page main :is(a,button,input,summary):focus-visible{outline:3px solid var(--amber);outline-offset:3px}
-/* Mise en page : sommaire collant + chapitres */
 .t-layout{display:grid;grid-template-columns:260px minmax(0,1fr);gap:40px;align-items:start;padding-top:36px;padding-bottom:64px}
 .t-aside{position:sticky;top:90px}
 .t-aside details{background:#fff;border:2px solid var(--ink);border-top:6px solid var(--amber);border-radius:14px;box-shadow:4px 4px 0 rgba(26,26,30,.16);padding:12px 14px}
@@ -45,8 +43,6 @@
 .t-steps{margin:10px 0 0;padding:0;list-style:none;counter-reset:t-steps;display:grid;gap:10px}
 .t-steps li{counter-increment:t-steps;position:relative;padding:10px 14px 10px 54px;background:var(--paper);border:2px solid var(--ink);border-radius:12px;font-size:1rem;line-height:1.55;color:var(--ink)}
 .t-steps li:before{content:counter(t-steps);position:absolute;left:10px;top:50%;transform:translateY(-50%);width:32px;height:32px;box-sizing:border-box;display:grid;place-items:center;line-height:1;padding-top:1px;text-align:center;font-variant-numeric:tabular-nums;background:var(--amber);color:var(--ink);border:2px solid var(--ink);border-radius:50%;box-shadow:2px 2px 0 var(--ink);font:900 1rem/1 'Archivo',sans-serif}
-/* v7.38 : pastille centrée verticalement sur l'encadré (une ou plusieurs lignes), chiffre centré optiquement */
-/* Exercice de démarrage */
 .t-start-form{margin:18px 0 6px;padding:18px;background:linear-gradient(165deg,#2B1B4D 0%,#3B1F57 60%,#5A2358 100%);color:#fff;border:2px solid var(--ink);border-radius:14px;box-shadow:6px 6px 0 var(--amber)}
 .t-start-form p{color:#EBDDEE}
 .t-start-fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
@@ -54,7 +50,6 @@
 .t-start-fields input{width:100%;min-height:50px;padding:8px 12px;font:700 1.1rem 'Archivo',sans-serif;font-variant-numeric:tabular-nums;color:var(--ink);background:#fff;border:2px solid var(--ink);border-radius:10px}
 #t-start-message{margin:12px 0 0;padding:10px 14px;background:var(--amber);color:var(--ink);border:2px solid var(--ink);border-radius:10px;font:700 1.02rem 'Archivo',sans-serif}
 .t-start-form .t-button{margin-top:12px}
-/* Figures : captures réelles et zones */
 .t-figure{margin:22px 0 0;padding:0;border:2px solid var(--ink);border-radius:14px;overflow:hidden;background:#fff}
 .t-figure-bar{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;padding:8px 14px;background:var(--ink);color:#fff;font:700 .9rem 'Archivo',sans-serif}
 .t-figure-bar a{color:var(--amber)}
@@ -79,8 +74,6 @@
 .t-table-wrap caption{text-align:left;padding:10px 14px;font:800 .95rem 'Archivo',sans-serif;color:var(--coral-text)}
 .t-table-wrap th,.t-table-wrap td{padding:10px 14px;text-align:left;vertical-align:top;border-top:1px solid var(--line)}
 .t-table-wrap th{color:var(--ink);font-weight:800}
-/* v7.52 : les mots du tableau ne se coupent plus au milieu (« Indica / tion ») ; sur téléphone, chaque ligne se lit en
-   deux temps (le statut, puis ce qu’il permet de comprendre) au lieu de deux colonnes trop étroites. */
 .t-table-wrap th,.t-table-wrap td{overflow-wrap:break-word}
 @media(max-width:560px){.t-table-wrap table,.t-table-wrap tbody,.t-table-wrap tr,.t-table-wrap th,.t-table-wrap td{display:block;width:auto}
  .t-table-wrap caption{display:block}
@@ -97,18 +90,11 @@
  .t-zone{left:var(--zm-x);top:var(--zm-y);width:var(--zm-width);height:var(--zm-height)}
 }
 @media(prefers-reduced-motion:reduce){.t-button,.t-chapter{transition:none}}
-/* v7.53 : ce que le calcul prend en compte (critères lus dans le registre du modèle) */
 .t-counts{margin:18px 0 0;padding:14px 16px;border:1.5px dashed var(--ink);border-radius:12px;background:var(--paper-2,#F4F0E7)}
 .t-counts h3{margin:0 0 6px}
 .t-counts>p{margin:0 0 8px}
 .t-count-list{margin:10px 0 0;padding-left:18px;display:grid;gap:6px;font-size:.92rem;line-height:1.5}
 .t-count-g{display:inline-block;padding:0 7px;border:1px solid var(--rule,#DFD9CC);border-radius:999px;font:700 .68rem/1.6 var(--font-mono,ui-monospace,monospace);text-transform:uppercase;letter-spacing:.04em;color:var(--ink-soft)}
-
-/* ============================================================
-   v7.70 (Téva : « le Tuto, fais-le plus joli ») : en-tête en deux colonnes avec une vraie capture qui se redresse, chiffres du
-   parcours ; sommaire avec barre de progression ; chapitres avec numéro en médaillon, titre souligné d'ambre, étapes à
-   pastilles décalées, exercice en « carte à bord », captures avec ombre portée. Mouvement réduit : tout est immobile.
-   ============================================================ */
 .t-hero{padding:48px 0 44px;}
 .t-hero-in{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:36px;align-items:center;}
 .t-hero-txt{min-width:0;}
@@ -124,7 +110,6 @@
 .t-hero-fig figcaption{position:absolute;left:12px;bottom:10px;padding:5px 10px;border:1.5px solid var(--ink);border-radius:999px;background:rgba(253,251,247,.94);color:var(--ink);font:800 .64rem/1 var(--font-mono,ui-monospace,monospace);letter-spacing:.1em;text-transform:uppercase;}
 .t-hero:hover .t-hero-fig{transform:perspective(1200px) rotateY(-3deg) rotateX(1deg);}
 @media(max-width:900px){.t-hero-in{grid-template-columns:1fr;gap:24px;}.t-hero-fig{justify-self:start;max-width:420px;transform:none;}.t-hero-facts{grid-template-columns:repeat(2,minmax(0,1fr));}}
-/* sommaire */
 .t-aside details{padding:14px 14px 12px;}
 .t-aside summary{position:relative;flex-wrap:wrap;gap:8px 10px;}
 .t-aside-prog{display:block;flex-basis:100%;height:6px;border-radius:999px;background:#EFE9DD;overflow:hidden;}
@@ -135,7 +120,6 @@
 .t-aside li a{position:relative;padding-left:34px;}
 .t-aside li a::before{content:counter(t-toc,decimal-leading-zero);position:absolute;left:8px;top:50%;transform:translateY(-50%);font:800 .64rem/1 var(--font-mono,ui-monospace,monospace);color:var(--ink-soft);}
 .t-aside li a.is-current::before{color:var(--amber);}
-/* chapitres */
 .t-chapter{position:relative;border-top-width:2px;padding:28px 30px 28px;}
 .t-chapter::before{content:'';position:absolute;left:-2px;top:-2px;width:72px;height:6px;border-radius:0 0 6px 0;background:var(--amber);}
 .t-chapter-n{display:inline-flex;align-items:center;gap:10px;margin:0 0 14px;padding:4px 10px 4px 4px;border:1.5px solid var(--ink);border-radius:999px;background:var(--paper);color:var(--ink);}

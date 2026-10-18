@@ -1,9 +1,4 @@
-/* Leonidakit — suivi.js (v7.38 ; familles des lots 5 et 6)
-   Suivi personnel générique par famille : un élément porteur de data-track="famille" data-track-id="id"
-   reçoit un bouton « Je l’ai » ; une barre data-track-bar="famille" affiche le compte et la progression.
-   Les clés sont celles du reste du site (lk_own_<famille>, valeurs 1 / absentes), lues et écrites avec
-   window.LK (common.js) : le garage et l’arsenal restent gérés par fiches.js, ce module ne les réécrit pas.
-   progression-core.js exporte et importe ces clés avec les autres. */
+/* Généré depuis outils/sources/suivi.js : modifie la source, pas ce fichier. */
 (function () {
   'use strict';
   const LK = window.LK; if (!LK) return;
@@ -13,12 +8,10 @@
     equipements: { key: 'lk_own_equipements', label: 'Il mio equipaggiamento',  done: 'ottenuti',   page: 'armes.html#equipements', anchor: 'equipements' },
     munitions:   { key: 'lk_own_munitions',   label: 'Le mie munizioni',   done: 'ottenuti',   page: 'armes.html#munitions',   anchor: 'munitions' },
     lieux:       { key: 'lk_map_found',       label: 'Luoghi scoperti',   done: 'scoperti',   page: 'carte.html',     anchor: 'lieux' },
-    /* v7.42 (lot 5) : familles des catalogues en listes dépliables (outils/catalogues/*.json) ; une clé par famille. */
     consommables:{ key: 'lk_own_consommables',label: 'I miei consumabili',done: 'assaggiati',    page: 'nourriture.html#liste-consommables', anchor: 'consommables' },
     coiffures:   { key: 'lk_own_coiffures',   label: 'Le mie acconciature',   done: 'provate',  page: 'style.html#coiffures', anchor: 'coiffures' },
     tatouages:   { key: 'lk_own_tatouages',   label: 'I miei tatuaggi',   done: 'fatti',     page: 'style.html#tatouages', anchor: 'tatouages' },
     tenues:      { key: 'lk_own_tenues',      label: 'Il mio guardaroba',   done: 'indossati',   page: 'style.html#tenues',    anchor: 'tenues' },
-    /* v7.43 (lot 6) : personnalisations des véhicules et des armes (outils/catalogues/perso-*.json). */
     'perso-vehicules': { key: 'lk_own_perso-vehicules', label: 'Le mie modifiche per veicoli', done: 'installate', page: 'personnalisations.html#perso-vehicules', anchor: 'perso-vehicules' },
     'perso-armes':     { key: 'lk_own_perso-armes',     label: 'Le mie modifiche per armi',      done: 'installate', page: 'personnalisations.html#perso-armes',     anchor: 'perso-armes' }
   };
@@ -26,7 +19,7 @@
   const listeners = new Set();
   const read = f => FAMILIES[f] ? LK.read(FAMILIES[f].key, {}, LK.own) : {};
   const write = (f, o) => FAMILIES[f] ? LK.write(FAMILIES[f].key, o) : false;
-  function emit(f) { listeners.forEach(fn => { try { fn(f); } catch (_) { /* un écouteur cassé n'empêche pas les autres */ } }); }
+  function emit(f) { listeners.forEach(fn => { try { fn(f); } catch (_) {  } }); }
   function has(f, id) { return !!read(f)[id]; }
   function set(f, id, on) {
     if (!FAMILIES[f] || !ID.test(id)) return false;
@@ -37,8 +30,6 @@
   function count(f, ids) { const o = read(f); return (ids || Object.keys(o)).filter(id => o[id]).length; }
   function list(f, ids) { const o = read(f); return (ids || Object.keys(o)).filter(id => o[id]); }
   window.addEventListener('storage', e => { const f = Object.keys(FAMILIES).find(k => FAMILIES[k].key === e.key); if (f) emit(f); });
-
-  /* Liaison au document : boutons sur chaque élément, compteurs sur chaque barre. */
   function bind(root) {
     root = root || document;
     const items = Array.from(root.querySelectorAll('[data-track][data-track-id]'));
@@ -50,7 +41,6 @@
       if (!FAMILIES[f] || !ID.test(id)) return;
       (byFam[f] = byFam[f] || []).push(id);
       if (el.querySelector('.track-bt')) return;
-      /* v7.42 : data-track-name quand l'élément porteur n'est qu'une case (cellule d'un tableau de catalogue). */
       const name = el.dataset.trackName || (el.querySelector('b, h3, strong') || el).textContent.trim();
       const b = document.createElement('button');
       b.type = 'button'; b.className = 'track-bt'; b.dataset.trackFor = id;

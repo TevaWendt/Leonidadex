@@ -8,8 +8,7 @@
  "Résumé de la mission publié à la sortie : qui la confie, où elle se passe et ce qu’il faut faire, en une phrase.": "Resumo da missão divulgado no lançamento: quem passa a missão, onde ela acontece e o que é preciso fazer, em uma frase.",
  "Page de démonstration : tout ce qui suit est fictif.": "Página de demonstração: tudo o que vem a seguir é fictício.",
  "Elle montre comment s’afficheront les fiches de missions à la sortie du jeu, sans aucune donnée de GTA VI.": "Ela mostra como as fichas de missões vão aparecer no lançamento do jogo, sem nenhum dado do GTA VI.",
- "<1>Accueil</1> / <2>Missions</2> / <3>Nom de la mission</3>": "<1>Início</1> / <2>Missões</2> / <3>Nome da missão</3>",
- "Histoire principale · GTA VI": "História principal · GTA VI",
+ "Histoire principale, GTA VI": "História principal, GTA VI",
  "Exemple de fiche, sans donnée du jeu.": "Exemplo de ficha, sem dados do jogo.",
  "J’ai terminé cette mission": "Concluí esta missão",
  "Démonstration : rien n’est enregistré.": "Demonstração: nada é salvo.",
@@ -58,7 +57,7 @@
  "Peut-on changer de personnage en mission ?": "Dá para trocar de personagem numa missão?",
  "L’histoire et les missions": "A história e as missões",
  "Rob Nelson cite aussi les bijouteries et les petites banques, seul ou à deux, et le Trailer 2 montre un braquage de banque masqué.": "Rob Nelson também cita joalherias e bancos pequenos, sozinho ou em dupla, e o Trailer 2 mostra um golpe mascarado em um banco.",
- "Vu dans l’Extended Look · propos de Rob Nelson (Famitsu)": "Visto no Extended Look · falas de Rob Nelson (Famitsu)",
+ "Vu dans l’Extended Look, propos de Rob Nelson (Famitsu)": "Visto no Extended Look, falas de Rob Nelson (Famitsu)",
  "Les braquages montrés (Missions)": "Os golpes mostrados (Missões)",
  "Rockstar n’a pas donné de durée de vie ; seul repère, Rob Nelson dit avoir fini sa partie en environ 80 heures, histoire et une partie des objectifs facultatifs compris.": "A Rockstar não informou a duração do jogo; única referência: Rob Nelson diz ter terminado o jogo em cerca de 80 horas, incluindo a história e parte dos objetivos opcionais.",
  "GTA Online et GTA VI, ce qu’on sait": "GTA Online e GTA VI: o que se sabe",
@@ -147,8 +146,5 @@
  "<1>1er octobre 2026</1><2><3></3><4>Vu dans un média</4></2>": "<1>1º de outubro de 2026</1><2><3></3><4>Visto na mídia</4></2>",
  "Classification": "Classificação",
  "Le site officiel affiche la classification ESRB M, avec des achats en jeu.": "O site oficial mostra a classificação ESRB M, com compras no jogo.",
- "Joueurs et presse cherchent des indices.": "Jogadores e imprensa procuram pistas.",
- "<1>Le multijoueur en 2027</1><2>→</2><3>Le patron de Twitch l’a laissé entendre à Bloomberg ; Rockstar et Take-Two n’ont rien confirmé. <4>source</4></3>": "<1>O multijogador em 2027</1><2>→</2><3>O chefe da Twitch deu a entender isso à Bloomberg; a Rockstar e a Take-Two não confirmaram nada. <4>fonte</4></3>",
- "<1>Pas de jeu en ligne au lancement</1><2>→</2><3>Tech Times le déduit d’une mention absente de la classification ESRB ; ni Rockstar ni l’ESRB ne l’ont dit. <4>source</4></3>": "<1>Sem jogo online no lançamento</1><2>→</2><3>O Tech Times deduz isso de um aviso que falta na classificação ESRB; nem a Rockstar nem a ESRB disseram isso. <4>fonte</4></3>",
- "<1>Un GTA Online vendu à part</1><2>→</2><3>Une hypothèse de TweakTown, sur le modèle du GTA Online actuel, vendu seul sur PS5 et Xbox Series. <4>source</4></3>": "<1>Um GTA Online vendido à parte</1><2>→</2><3>Uma hipótese do TweakTown, no modelo do GTA Online atual, vendido separadamente no PS5 e no Xbox Series. <4>fonte</4></3>"
+ "Joueurs et presse cherchent des indices.": "Jogadores e imprensa procuram pistas."
 }

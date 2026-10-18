@@ -64,7 +64,7 @@ test('LAT-03 : l\'accueil ne charge plus le moteur du calculateur (178 Ko) avec 
 });
 
 test('LAT-04 : l\'Atelier 3D affiche la page avant de créer la scène WebGL (three.js n\'attend plus sur DOMContentLoaded)', () => {
-  const js = read('atelier-3d.js');
+  const js = read('outils/sources/atelier-3d.js'); /* v7.94 : la copie servie n’a plus de commentaires, la source les garde */
   const start = js.slice(js.indexOf('/* ---------- départ ---------- */'));
   assert.match(start, /pick\(first\[0\], first\[1\], true\); \/\* sans scène encore/);
   assert.match(start, /const boot = \(\) => \{ if \(!initGL\(\)\) return; pick\(first\[0\], first\[1\], true\); if \(spinning\) tick\(\); \};/);
@@ -99,7 +99,7 @@ test('ECR-01 : écrans — rangées des médias bornées à la page, vignettes d
   assert.match(read('online.css'), /\.online-hero-in\{position:relative;z-index:2;width:100%;/);
   assert.match(css, /\.lore-gallery\.shell\{max-width:max\(calc\(var\(--shell-max\) \+ 2\*var\(--gutter\)\),min\(1600px,96vw\)\);\}/);
   /* étiquettes les plus petites : au moins .62rem (≈ 10 px) */
-  assert.match(css, /\.tr-st\{[^}]*font-size:(?:max\(11px,)?\.62rem\)?;/); /* assemblage v7.91 : 11 px au moins */
+  assert.match(read('carte-page.css'), /\.tr-st\{[^}]*font-size:(?:max\(11px,)?\.62rem\)?;/); /* assemblage v7.91 : 11 px au moins ; v7.94 : dans la feuille de la carte */
   assert.match(read('acquisitions.css'), /\.cg-media-l\{[^}]*font:800 \.62rem\/1\.2/);
   assert.doesNotMatch(css + read('acquisitions.css'), /font(?:-size)?:(?:800 )?\.5[0-9]rem/);
 });

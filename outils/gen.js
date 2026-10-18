@@ -9,7 +9,7 @@ const medAlt=(v,m)=>(v.imageAlts&&v.imageAlts[m.id])||m.alt||(nomC(v)+', '+m.tit
 const medBig=m=>m.variants[1]||m.variants[0];
 const medSrcset=m=>m.variants[0].src+' '+m.variants[0].w+'w, '+medBig(m).src+' '+medBig(m).w+'w';
 const medAttr=v=>esc(JSON.stringify(medList(v).map(m=>({s:m.variants[0].src,l:medBig(m).src,w:m.variants[0].w,h:m.variants[0].h,lw:medBig(m).w,lh:medBig(m).h,t:m.titre,a:medAlt(v,m)}))));
-const CREDIT_RS='Visuels officiels © Rockstar Games / Take-Two Interactive. <a href="../medias.html">Provenance et crédits</a>.';
+const CREDIT_RS='Visuels officiels © Rockstar Games, Take-Two Interactive. <a href="../medias.html">Provenance et crédits</a>.';
 
 const CATL={berline:'Berlines',sport:'Voitures de sport',supercar:'Supercars',muscle:'Muscle cars',
  suv:'SUV et 4x4',pickup:'Pickups et tout-terrain',van:'Vans et cargos',moto:'Deux-roues et quads',
@@ -233,7 +233,7 @@ function fiche(v,i){
  const img=available.length>0, vues=img?available.join(','):'';
  const prixPub=DP.prixDe(v); /* v7.59 : un prix publié dans outils/v-corrige.json s'affiche avec son statut ; sinon rien n'est inventé */
  const tags=['<span class="chip live">'+st.c+'</span>']
-  .concat(prixPub?['<span class="chip chip-prix" data-prix-statut="'+prixPub.status+'">'+esc('Prix publié : '+DP.fmt(prixPub.value)+' '+prixPub.unit+' · '+prixPub.label)+'</span>']:[])
+  .concat(prixPub?['<span class="chip chip-prix" data-prix-statut="'+prixPub.status+'">'+esc('Prix publié : '+DP.fmt(prixPub.value)+' '+prixPub.unit+', '+prixPub.label)+'</span>']:[])
   .concat(ed?['<span class="chip">'+ed+'</span>']:[])
   .concat((img||meds.length)?['<span class="chip">Images officielles</span>']:[])
   .concat(v.slot?['<span class="chip">'+SLOT[v.slot]+'</span>']:[]).join('\n          ');
@@ -248,9 +248,9 @@ function fiche(v,i){
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>${esc(nom)} — GTA VI | Leonidakit</title>
+<title>${esc(nom)} dans GTA VI | Leonidakit</title>
 <meta name="description" content="${esc(description)}">
-<meta property="og:title" content="${esc(nom)} — GTA VI | Leonidakit">
+<meta property="og:title" content="${esc(nom)} dans GTA VI | Leonidakit">
 <meta property="og:description" content="${esc(description)}">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="fr_FR">${meds.length?`
@@ -287,10 +287,7 @@ ${HEADER}
   <div class="fhero-bg" aria-hidden="true"></div>
   <div class="shell">
     <nav class="crumbs" aria-label="Fil d’Ariane">
-      <a href="../index.html">Accueil</a> <span>/</span>
-      <a href="../vehicules.html">Véhicules</a> <span>/</span>
-      <a href="../vehicules.html#cat=${v.cat}">${esc(cat)}</a> <span>/</span>
-      <span aria-current="page">${esc(v.nom)}</span>
+      <a href="../index.html">Accueil</a> <span class="crumbs-sep" aria-hidden="true"></span> <a href="../vehicules.html">Véhicules</a> <span class="crumbs-sep" aria-hidden="true"></span> <a href="../vehicules.html#cat=${v.cat}">${esc(cat)}</a> <span class="crumbs-sep" aria-hidden="true"></span> <span aria-current="page">${esc(v.nom)}</span>
     </nav>
     <div class="fhero-in">
       <div class="fhero-txt">
@@ -394,7 +391,7 @@ Object.entries(REDIR).forEach(([ancien,cible])=>{
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>${esc(nomC(v))} — GTA VI | Leonidakit</title>
+<title>${esc(nomC(v))} dans GTA VI | Leonidakit</title>
 <link rel="canonical" href="https://www.leonidakit.com${url}">
 <meta name="robots" content="noindex, follow">
 <meta http-equiv="refresh" content="0; url=${url}">

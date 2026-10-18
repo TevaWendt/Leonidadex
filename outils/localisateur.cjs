@@ -52,7 +52,7 @@ function emptyMap(prefix) {
   return '<div class="lk-loc-stage">' + REF.image(prefix) + '<svg class="lk-loc-svg lk-loc-svg--empty" viewBox="0 0 ' + carte.W + ' ' + carte.H + '" role="img" aria-label="Carte de Leonida, aucun lieu lié" focusable="false"></svg></div>';
 }
 function placeList(places, prefix, opts = {}) {
-  return '<ol class="lk-loc-places"' + (opts.data ? ' data-loc-places-list' : '') + '>' + places.map((p, i) => '<li data-place="' + esc(p.id) + '"><a class="lk-loc-place" href="' + prefix + 'carte.html#lieu=' + esc(p.id) + '"><span class="lk-loc-num" aria-hidden="true">' + (i + 1) + '</span><span class="lk-loc-place-t"><b>' + esc(p.name) + '</b>' + (p.where || p.group ? '<small>' + esc([p.group, p.where].filter(Boolean).join(' · ')) + '</small>' : '') + '</span><span class="veh-go">Voir sur la carte</span></a></li>').join('') + '</ol>';
+  return '<ol class="lk-loc-places"' + (opts.data ? ' data-loc-places-list' : '') + '>' + places.map((p, i) => '<li data-place="' + esc(p.id) + '"><a class="lk-loc-place" href="' + prefix + 'carte.html#lieu=' + esc(p.id) + '"><span class="lk-loc-num" aria-hidden="true">' + (i + 1) + '</span><span class="lk-loc-place-t"><b>' + esc(p.name) + '</b>' + (p.where || p.group ? '<small>' + esc([p.group, p.where].filter(Boolean).join(', ')) + '</small>' : '') + '</span><span class="veh-go">Voir sur la carte</span></a></li>').join('') + '</ol>';
 }
 function pinsHref(prefix, ids, title) { return prefix + 'carte.html#pins=' + ids.map(encodeURIComponent).join(',') + '&amp;t=' + encodeURIComponent(title); }
 /* Résumé de l’objet choisi (même texte que celui écrit par localisateur.js). */

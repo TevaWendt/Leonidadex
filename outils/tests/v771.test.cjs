@@ -39,7 +39,7 @@ test('page : lk-ia.js sans crédit ni Stripe, compte à rebours (hh:mm:ss) dans 
     assert.ok(ctl && !ctl.querySelector('[data-lkia-shop]'), 'plus de bouton « Plus de questions »');
     A.learn(200, { ok: true, acces: { type: 'gratuit', gratuit: 15, heures: 12, restant: 14, reset: Date.now() + 2 * 3600e3 } });
     const st = p.d.querySelector('#calc-ask .lkia-st');
-    assert.match(st.textContent, /^IA : 14 questions gratuites sur 15 · de nouveau 15 dans (?:2:00:00|1:59:5\d)\.$/);
+    assert.match(st.textContent, /^IA : 14 questions gratuites sur 15, de nouveau 15 dans (?:2:00:00|1:59:5\d)\.$/);
     const t = st.querySelector('time.lkia-timer'); assert.ok(t && t.getAttribute('role') === 'timer' && t.dateTime);
     assert.match(A.status().plain, /dans (?:2:00:00|1:59:5\d)\.$/);
     A.learn(402, { ok: false, code: 'quota', gratuit: 15, heures: 12, restant: 0, reset: Date.now() + 3600e3 });

@@ -24,11 +24,11 @@
   },
   {
    "name": "Brute",
-   "evoque": "évoque GMC / Chevrolet"
+   "evoque": "évoque GMC ou Chevrolet"
   },
   {
    "name": "Buckingham",
-   "evoque": "évoque Bell / Learjet"
+   "evoque": "évoque Bell ou Learjet"
   },
   {
    "name": "Canis",
@@ -132,7 +132,7 @@
   },
   {
    "name": "Nagasaki",
-   "evoque": "évoque Kawasaki / Yamaha"
+   "evoque": "évoque Kawasaki ou Yamaha"
   },
   {
    "name": "Obey",
@@ -140,11 +140,11 @@
   },
   {
    "name": "Ocelot",
-   "evoque": "évoque Jaguar / Lotus"
+   "evoque": "évoque Jaguar ou Lotus"
   },
   {
    "name": "Pegassi",
-   "evoque": "évoque Lamborghini / Ducati"
+   "evoque": "évoque Lamborghini ou Ducati"
   },
   {
    "name": "Pfister",
@@ -161,7 +161,7 @@
   },
   {
    "name": "Schyster",
-   "evoque": "évoque AMC / Chrysler"
+   "evoque": "évoque AMC ou Chrysler"
   },
   {
    "name": "Shitzu",

@@ -112,7 +112,7 @@ test('la fiche enregistrée suit le parcours sans durée de partie : temps de je
  const p=await page(million());p.w.confirm=()=>true;
  clickSel(p,'[data-b-save="plan"]');
  const summary=JSON.parse(p.w.localStorage.getItem('lk-calculator-notebooks-v3')).entries[0].summary.replace(/[\u00a0\u202f]/g,' ');
- assert.match(summary,/But : avoir 1 000 000 \$ · 4 h de jeu · 2 missions/);
+ assert.match(summary,/But : avoir 1 000 000 \$, 4 h de jeu, 2 missions/);
  clickSel(p,'#saved-plans-list [data-b-sheet]');const sheet=text(p,'calc-sheet-body');
  for(const part of ['FICHE DE BUSINESS PLAN','En bref','Temps de jeu','Il faut 4 h de jeu, étape après étape (sans calendrier).','Au plus bas','Le parcours, dans l’ordre','Mission répétable ×7','pendant le parcours'])assert.match(sheet,new RegExp(part.replace(/[.*+?^${}()|[\]\\]/g,'\\$&').replace(/ /g,'\\s')),part);
  assert.doesNotMatch(sheet,/NaN|Infinity|undefined|\bnull\b|Partie 1|jour \d/);

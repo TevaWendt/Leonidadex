@@ -1,7 +1,7 @@
 {
   "_commentaire": "Textes des carnets de progression (v7.51, lot 4), lus par outils/gen-carnets.cjs. Aucun chiffre n’est écrit ici : {total}, {cats}, {familles} sont posés par le générateur d’après les données. Les listes personnelles ne sont jamais dans la page publiée : elles sont lues dans le navigateur.",
   "commun": {
-    "kicker": "Carnet de progression · sur cet appareil",
+    "kicker": "Carnet de progression, sur cet appareil",
     "local": "Rien ne part sur un serveur : ce carnet est lu dans ce navigateur. Pour le garder ou le transférer, exporte ton suivi depuis la page Progression.",
     "noscript": "Active JavaScript pour lire ce que tu as enregistré dans ce navigateur. Sans JavaScript, la page présente le carnet et mène au catalogue.",
     "orphelins": "Ces identifiants ont été cochés sur cet appareil, mais ils ne sont plus dans la liste (fiche renommée ou retirée). Ils restent enregistrés et ne comptent pas. Tu peux les retirer.",

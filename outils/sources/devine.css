@@ -1,0 +1,390 @@
+/* LEONIDAKIT v7.90 (lot 6) — « Devine le lieu » (devine-le-lieu.html ; balisage : outils/gen-devine.cjs, jeu : devine.js).
+   Charte du site : jetons de style.css et de motion-tokens.css ; teintes des six régions = celles de la carte dépliée de
+   la page Lieux (outils/monde-cartes.cjs, posées en --c sur chaque bouton et chaque repère).
+   Le paquet de cartes reprend le langage des piles d’images (.lk-stack) : la capture du dessus, nette, et le dos des
+   suivantes, en silhouette « teaser ». Mouvement : la carte jouée s’en va, la suivante vient du paquet (devine.js) ; la
+   bonne région s’allume sur la carte, un trait la relie à la réponse donnée ; le verdict monte sur l’image.
+   Au survol, seuls les boutons réagissent ; rien de ce qu’on lit ne bouge. Sans script : un message et les régions.
+   « Réduire les animations » : tout est posé, rien ne bouge. */
+
+/* ---------- en-tête : court, pour que l’image et les réponses tiennent dans le premier écran ---------- */
+.dv-head{padding-bottom:14px;}
+.dv-head .lede{margin-top:12px;}
+.dv-head .d-intro-note{margin-top:8px;}
+@media(min-width:1000px){
+  .dv-head{display:grid;grid-template-columns:minmax(0,auto) minmax(0,1fr);align-items:end;gap:8px clamp(28px,4vw,64px);padding-top:36px;}
+  .dv-head .lede{margin-top:0;font-size:1.04rem;}
+}
+
+/* ---------- le jeu ---------- */
+.dv-game{position:relative;padding-bottom:clamp(32px,5vw,56px);}
+.dv-nojs{border:2px solid var(--ink);border-radius:var(--radius);background:var(--paper-2);padding:16px 18px;max-width:var(--measure,68ch);box-shadow:var(--shadow-soft);}
+.dv-nojs p{margin:0;line-height:1.6;}
+.dv-bar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;margin-bottom:16px;min-height:28px;}
+.dv-mode{margin:0;font-family:var(--font-mono);font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--coral-text);}
+.dv-dots{display:flex;gap:6px;margin:0;padding:0;list-style:none;}
+.dv-dots li{width:24px;height:10px;border:1.5px solid var(--ink);border-radius:999px;background:var(--paper);transition:background var(--c-fast) var(--c-ease-soft);}
+.dv-dots li.is-now{background:var(--amber);}
+.dv-dots li.is-ok{background:var(--ink);}
+.dv-dots li.is-ko{background:repeating-linear-gradient(135deg,var(--coral) 0 3px,var(--paper) 3px 6px);}
+.dv-count,.dv-points{margin:0;font-size:.88rem;font-weight:700;color:var(--ink-soft);}
+.dv-points{margin-left:auto;}
+.dv-back-btn{margin:0;padding:8px 12px;min-height:40px;border:1.5px solid var(--ink);border-radius:999px;background:var(--paper);color:var(--ink);font:inherit;font-size:.86rem;font-weight:800;cursor:pointer;transition:background var(--c-fast),color var(--c-fast);}
+.dv-back-btn:hover{background:var(--ink);color:var(--paper);}
+.dv-back-btn:focus-visible{outline:3px solid var(--coral);outline-offset:2px;}
+
+.dv-grid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(300px,1fr);gap:clamp(20px,3vw,44px);align-items:start;}
+/* écran d’ordinateur bas (1366 × 768) : la colonne du jeu se règle sur la hauteur pour garder les réponses à l’écran */
+@media(min-width:1000px){.dv-play{max-width:max(560px,calc((100vh - 400px) * 1.7778));max-width:max(560px,calc((100svh - 400px) * 1.7778));}}
+@media(max-width:999px){.dv-grid{grid-template-columns:minmax(0,1fr);}.dv-map{max-width:min(100%,480px);margin-inline:auto;width:100%;}}
+
+/* le paquet : la capture du dessus et le dos des cartes qui restent */
+.dv-deck{position:relative;aspect-ratio:16/9;margin:0 18px 16px 0;}
+.dv-back,.dv-card{position:absolute;inset:0;border:2px solid var(--ink);border-radius:var(--radius);}
+.dv-back{background:radial-gradient(circle at 50% 46%,color-mix(in srgb,var(--amber) 22%,transparent) 0 18%,transparent 19%),repeating-linear-gradient(0deg,transparent 0 13px,color-mix(in srgb,var(--paper) 6%,transparent) 13px 14px),linear-gradient(160deg,var(--night) 0%,var(--night-2) 62%,var(--night-3) 100%);box-shadow:var(--shadow-soft);transition:opacity var(--c-standard) var(--c-ease-soft);}
+.dv-back::after{content:'?';position:absolute;inset:0;display:grid;place-items:center;font-family:'Archivo',system-ui,sans-serif;font-weight:900;font-size:clamp(2.6rem,7vw,4.6rem);color:var(--amber);opacity:.85;}
+.dv-back--1{transform:translate(9px,9px) rotate(1.4deg);}
+.dv-back--2{transform:translate(18px,16px) rotate(2.8deg);}
+.dv-deck[data-left="1"] .dv-back--2,.dv-deck[data-left="0"] .dv-back{opacity:0;}
+.dv-card{overflow:hidden;background:var(--night);box-shadow:var(--shadow-hard);}
+.dv-fig{margin:0;width:100%;height:100%;}
+.dv-fig img{display:block;width:100%;height:100%;object-fit:cover;}
+.dv-verdict{position:absolute;left:12px;bottom:12px;max-width:calc(100% - 24px);margin:0;padding:8px 14px;border:2px solid var(--ink);border-radius:999px;background:var(--paper);color:var(--ink);font-weight:900;font-size:clamp(.92rem,1.6vw,1.06rem);line-height:1.2;box-shadow:var(--shadow-hard);animation:dv-up var(--c-standard) var(--c-ease-result) both;}
+.dv-verdict.is-ok{background:var(--amber);}
+.dv-verdict.is-ko{color:var(--coral-text);border-color:var(--coral);}
+@keyframes dv-up{from{opacity:0;transform:translate3d(0,12px,0);}}
+/* carte suivante : la capture jouée s’en va, la suivante monte du paquet */
+.dv-fig.is-out{animation:dv-out 200ms cubic-bezier(.7,0,.84,0) both;}
+.dv-card.is-in{animation:dv-in var(--c-standard) var(--c-ease-result) both;}
+@keyframes dv-out{to{opacity:0;transform:translate3d(-18px,0,0) rotate(-2deg);}}
+@keyframes dv-in{from{opacity:.4;transform:translate3d(10px,10px,0) rotate(1.6deg) scale(.97);}}
+/* entrée du paquet : le dos des cartes se pose derrière la capture (la capture, elle, est là tout de suite) */
+.dv-deck.is-dealt .dv-back--1{animation:dv-deal-1 var(--c-standard) var(--c-ease-result) both;}
+.dv-deck.is-dealt .dv-back--2{animation:dv-deal-2 var(--c-standard) var(--c-ease-result) 60ms both;}
+@keyframes dv-deal-1{from{transform:none;}}
+@keyframes dv-deal-2{from{transform:none;}}
+
+/* la question et les six régions */
+.dv-q{margin:20px 0 12px;font-size:clamp(1.06rem,1.8vw,1.22rem);font-weight:800;line-height:1.3;letter-spacing:-.01em;text-wrap:balance;}
+.dv-opts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;}
+@media(max-width:599px){.dv-opts{grid-template-columns:repeat(2,minmax(0,1fr));}}
+.dv-opt{position:relative;display:flex;align-items:center;gap:10px;min-height:52px;margin:0;padding:10px 12px;border:2px solid var(--ink);border-radius:var(--radius);background:var(--paper);color:var(--ink);font:inherit;font-weight:800;font-size:.95rem;line-height:1.2;text-align:left;cursor:pointer;box-shadow:var(--shadow-soft);transition:transform var(--c-fast) var(--c-ease-control),box-shadow var(--c-fast) var(--c-ease-control),background var(--c-fast) var(--c-ease-soft),color var(--c-fast);}
+.dv-opt-dot{flex:none;width:14px;height:14px;border:2px solid var(--ink);border-radius:50%;background:var(--c,var(--amber));}
+.dv-opt-t{flex:1;min-width:0;overflow-wrap:break-word;}
+.dv-opt-mark{flex:none;font-weight:900;font-size:1.05rem;line-height:1;}
+.dv-opt:not(:disabled):hover{transform:translate(-2px,-2px);box-shadow:var(--shadow-hard);}
+.dv-opt:not(:disabled):active{transform:translate(1px,1px);box-shadow:none;}
+.dv-opt:focus-visible{outline:3px solid var(--coral);outline-offset:3px;}
+.dv-opt:disabled{cursor:default;}
+.dv-opt.is-right{background:var(--amber);box-shadow:var(--shadow-hard);}
+.dv-opt.is-right .dv-opt-mark::before{content:'✓';}
+.dv-opt.is-wrong{background:var(--paper);border-color:var(--coral);color:var(--coral-text);box-shadow:none;}
+.dv-opt.is-wrong .dv-opt-mark::before{content:'✗';}
+.dv-opt.is-off{background:var(--paper-2);border-color:var(--rule);color:var(--ink-soft);box-shadow:none;}
+.dv-opt.is-right .dv-opt-mark,.dv-opt.is-wrong .dv-opt-mark{animation:dv-pop var(--c-fast) var(--c-ease-result) both;}
+@keyframes dv-pop{from{opacity:0;transform:scale(.6);}}
+
+/* la réponse */
+.dv-answer{margin-top:16px;padding:14px 16px;border:2px solid var(--ink);border-left-width:6px;border-radius:var(--radius);background:var(--paper);box-shadow:var(--shadow-soft);}
+.dv-answer:has(.is-ok){border-left-color:var(--amber);}
+.dv-answer:has(.is-ko){border-left-color:var(--coral);}
+.dv-answer-t{margin:0;font-weight:900;font-size:1.08rem;line-height:1.3;}
+.dv-answer-t.is-ko{color:var(--coral-text);}
+.dv-answer-img{margin:6px 0 0;font-size:.9rem;line-height:1.5;color:var(--ink-soft);}
+.dv-answer-leg{font-weight:800;color:var(--ink);}
+.dv-answer-tit{font-family:var(--font-mono);font-size:.82rem;}
+.dv-answer-tit::before{content:', ';}
+.dv-answer-src{color:var(--coral-text);font-weight:700;}
+.dv-answer-src::before{content:', ';color:var(--ink-soft);font-weight:400;}
+.dv-answer-act{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 18px;margin-top:12px;}
+.dv-fiche-link{font-weight:800;color:var(--coral-text);text-decoration:underline;text-underline-offset:3px;}
+.dv-fiche-link:hover{color:var(--ink);}
+.dv-answer .lkx-btn{margin-left:auto;}
+
+/* la carte de Leonida : les six repères (ceux de la carte interactive), cliquables */
+.dv-map{margin:0;}
+.dv-map-k{margin:0 0 8px;font-family:var(--font-mono);font-size:.76rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);}
+.dv-map-box{position:relative;aspect-ratio:5200/6000;border:2px solid var(--ink);border-radius:var(--radius);overflow:hidden;background:var(--paper-2);box-shadow:var(--shadow-hard);}
+.dv-map-img{position:absolute;inset:0;display:block;width:100%;height:100%;}
+.dv-line{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;}
+.dv-line line{stroke:var(--ink);stroke-width:30;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;opacity:0;}
+.dv-line.is-on line{opacity:1;stroke-dashoffset:0;transition:stroke-dashoffset 520ms var(--c-ease-result);}
+.dv-pin{position:absolute;display:grid;place-items:center;width:44px;height:44px;margin:0;padding:0;border:0;background:none;color:var(--ink);transform:translate(-50%,-50%);cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.dv-pin-dot{position:relative;width:18px;height:18px;border:2.5px solid var(--ink);border-radius:50%;background:var(--c,var(--amber));box-shadow:0 0 0 3px var(--paper);transition:transform var(--c-fast) var(--c-ease-control);}
+.dv-pin-t{position:absolute;left:calc(50% + 14px);top:50%;transform:translateY(-50%);padding:3px 9px;border:1.5px solid var(--ink);border-radius:999px;background:var(--paper);font-weight:800;font-size:.76rem;line-height:1.2;white-space:nowrap;box-shadow:2px 2px 0 var(--ink);transition:background var(--c-fast),color var(--c-fast);}
+.dv-pin--g .dv-pin-t{left:auto;right:calc(50% + 14px);}
+.dv-pin--b .dv-pin-t{left:50%;top:calc(50% + 14px);transform:translateX(-50%);}
+.dv-pin:not(:disabled):hover .dv-pin-dot{transform:scale(1.3);}
+.dv-pin:not(:disabled):hover .dv-pin-t{background:var(--ink);color:var(--paper);}
+.dv-pin:disabled{cursor:default;}
+.dv-pin.is-off{opacity:.5;}
+.dv-pin.is-right .dv-pin-t{background:var(--amber);}
+.dv-pin.is-right .dv-pin-t::before{content:'✓ ';}
+.dv-pin.is-right .dv-pin-dot::after{content:'';position:absolute;inset:-9px;border:3px solid var(--ink);border-radius:50%;animation:dv-ring 900ms var(--c-ease-soft) 2 both;}
+.dv-pin.is-wrong .dv-pin-dot{background:var(--paper);}
+.dv-pin.is-wrong .dv-pin-t{color:var(--coral-text);border-color:var(--coral);}
+.dv-pin.is-wrong .dv-pin-t::before{content:'✗ ';}
+@keyframes dv-ring{from{opacity:.9;transform:scale(.6);}to{opacity:0;transform:scale(1.9);}}
+.dv-map-cap{margin:8px 0 0;font-size:.76rem;line-height:1.35;color:var(--ink-soft);}
+
+/* ---------- le résultat ---------- */
+.dv-result{display:grid;gap:20px;padding:clamp(18px,3vw,30px);border:2px solid var(--ink);border-radius:16px;background:var(--paper);box-shadow:var(--shadow-hard);outline:none;}
+.dv-result:focus-visible{outline:3px solid var(--coral);outline-offset:4px;}
+.dv-res-head{display:grid;gap:6px;}
+.dv-res-k{margin:0;font-family:var(--font-mono);font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--coral-text);}
+.dv-res-t{margin:0;font-size:clamp(2rem,5vw,3.1rem);font-weight:900;line-height:1;letter-spacing:-.02em;}
+.dv-res-msg{margin:0;font-size:1.05rem;line-height:1.45;color:var(--ink-soft);}
+.dv-res-list{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin:0;padding:0;list-style:none;}
+.dv-res-i{position:relative;display:grid;grid-template-rows:auto 1fr;border:2px solid var(--ink);border-radius:var(--radius);overflow:hidden;background:var(--paper);box-shadow:var(--shadow-soft);}
+.dv-res-i.is-ko{border-color:var(--coral);}
+.dv-res-img{display:block;aspect-ratio:16/9;background:var(--night);border-bottom:2px solid var(--ink);}
+.dv-res-i.is-ko .dv-res-img{border-bottom-color:var(--coral);}
+.dv-res-img img{display:block;width:100%;height:100%;object-fit:cover;}
+.dv-res-n{position:absolute;left:8px;top:8px;display:grid;place-items:center;min-width:26px;height:26px;padding:0 6px;border:1.5px solid var(--ink);border-radius:999px;background:var(--paper);font-family:var(--font-mono);font-size:.78rem;font-weight:700;}
+.dv-res-mark{position:absolute;right:8px;top:8px;display:grid;place-items:center;width:28px;height:28px;border:2px solid var(--ink);border-radius:50%;background:var(--amber);font-weight:900;font-size:.95rem;line-height:1;}
+.dv-res-i.is-ko .dv-res-mark{background:var(--paper);color:var(--coral-text);border-color:var(--coral);}
+.dv-res-txt{display:grid;align-content:start;gap:3px;padding:10px 12px 12px;min-width:0;}
+.dv-res-txt a{font-weight:900;color:var(--ink);text-decoration:underline;text-decoration-color:var(--rule);text-underline-offset:3px;overflow-wrap:break-word;}
+.dv-res-txt a:hover{text-decoration-color:var(--coral);}
+.dv-res-txt small{font-size:.8rem;line-height:1.35;color:var(--ink-soft);overflow-wrap:break-word;}
+.dv-res-i.is-ko .dv-res-txt small{color:var(--coral-text);}
+@media(max-width:899px){
+  .dv-res-list{grid-template-columns:minmax(0,1fr);gap:8px;}
+  .dv-res-i{grid-template-columns:112px minmax(0,1fr);grid-template-rows:none;}
+  .dv-res-img{aspect-ratio:auto;width:100%;height:100%;min-height:68px;border-bottom:0;border-right:2px solid var(--ink);}
+  .dv-res-i.is-ko .dv-res-img{border-right-color:var(--coral);}
+  .dv-res-txt{align-content:center;padding:8px 44px 8px 12px;}
+  .dv-res-mark{top:50%;transform:translateY(-50%);}
+  .dv-res-n{left:6px;top:6px;}
+}
+.dv-stats{display:flex;flex-wrap:wrap;gap:12px;margin:0;}
+.dv-stat{flex:1 1 220px;padding:12px 16px;border:2px solid var(--ink);border-radius:var(--radius);background:var(--paper-2);}
+.dv-stat dt{font-family:var(--font-mono);font-size:.76rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);}
+.dv-stat dd{margin:0;}
+.dv-stat-n{font-size:1.6rem;font-weight:900;line-height:1.15;letter-spacing:-.01em;}
+.dv-stat-d{font-size:.84rem;line-height:1.4;color:var(--ink-soft);}
+.dv-share{display:grid;gap:10px;}
+.dv-share-txt{margin:0;padding:12px 14px;border:1.5px dashed var(--ink-soft);border-radius:var(--radius-s,8px);background:var(--paper-2);font-family:var(--font-mono);font-size:.9rem;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere;}
+.dv-share-act{display:flex;flex-wrap:wrap;gap:10px;}
+.dv-share-n{margin:0;font-size:.84rem;line-height:1.45;color:var(--ink-soft);}
+.dv-res-foot{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;padding-top:16px;border-top:2px solid var(--rule);}
+.dv-countdown{margin:0 auto 0 0;font-weight:800;}
+.lkx-btn.dv-noarrow::after{content:none;}
+
+/* ---------- les six régions (v7.92 : cartes postales et album, plus bas) ---------- */
+.dv-reg-dot{flex:none;width:12px;height:12px;border:2px solid var(--ink);border-radius:50%;background:var(--c,var(--amber));}
+.dv-reg-a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--rule);text-underline-offset:3px;overflow-wrap:break-word;min-width:0;}
+.dv-reg-a:hover{text-decoration-color:var(--coral);}
+.dv-reg-map{display:inline-flex;align-items:center;gap:6px;margin-top:auto;padding-top:6px;min-height:32px;width:fit-content;font-weight:800;font-size:.84rem;color:var(--coral-text);}
+.dv-reg-map svg{width:16px;height:16px;flex:none;}
+.dv-reg-map:hover span{text-decoration:underline;text-underline-offset:3px;}
+
+/* ---------- d’où viennent les images ---------- */
+.ed-zone--devine .dv-src-p{max-width:var(--measure,68ch);margin:0 0 16px;line-height:1.65;}
+.ed-zone--devine .ed-figs{margin:4px 0 22px;}
+.ed-zone--devine .ed-srcs{margin-bottom:12px;}
+.ed-zone--devine .ed--night .dv-src-p a{color:var(--amber-2);font-weight:700;text-underline-offset:3px;}
+.ed-zone--devine .ed--night .dv-src-p a:hover{color:var(--paper);}
+
+/* ---------- page Lieux : l’encart du jeu (composant de l’encart du calculateur) ---------- */
+.dv-explore{margin-bottom:12px;}
+
+@media(prefers-reduced-motion:reduce){
+  .dv-dots li,.dv-back,.dv-opt,.dv-pin-dot,.dv-pin-t,.dv-back-btn{transition:none;}
+  .dv-verdict,.dv-opt-mark,.dv-pin-dot::after,.dv-deck.is-dealt .dv-back,.dv-fig.is-out,.dv-card.is-in{animation:none!important;}
+  .dv-line.is-on line{transition:none;}
+}
+
+/* =====================================================================================================================
+   v7.92 — la page s’enrichit : ta série pendant la partie, la devise de la région après chaque réponse, un résultat avec
+   tes statistiques (sept derniers jours, scores, régions), les six régions en cartes postales avec ton album (une case
+   par image, le dos d’une carte tant qu’elle n’a pas été jouée), les règles illustrées, le cycle des images.
+   Au survol : la carte de la région s’approche, son repère pulse, les timbres de l’album se soulèvent. Rien de ce qu’on
+   lit ne bouge. « Réduire les animations » : tout est posé (fin de fichier).
+   ===================================================================================================================== */
+
+/* ---------- pendant la partie ---------- */
+.dv-streak{margin:0;display:inline-flex;align-items:center;gap:6px;padding:4px 11px 4px 8px;border:1.5px solid var(--ink);border-radius:999px;background:var(--amber);font-size:.82rem;font-weight:800;line-height:1.2;}
+.dv-streak::before{content:'';width:11px;height:14px;background:var(--coral);border:1.5px solid var(--ink);border-radius:50% 50% 50% 50%/62% 62% 38% 38%;transform:rotate(8deg);}
+.dv-answer-tag{margin:10px 0 0;padding:2px 0 2px 12px;border-left:4px solid var(--c,var(--amber));font-size:.92rem;line-height:1.5;color:var(--ink);}
+.dv-answer-new{display:inline-flex;align-items:center;gap:7px;margin:10px 0 0;padding:4px 12px 4px 6px;border:1.5px solid var(--ink);border-radius:999px;background:var(--paper-2);font-size:.82rem;font-weight:800;line-height:1.2;animation:dv-up var(--c-standard) var(--c-ease-result) 120ms both;}
+.dv-answer-new::before{content:'';width:18px;height:14px;border-radius:2px;background:radial-gradient(circle,var(--amber) 0 3px,transparent 3.5px),var(--night);box-shadow:0 0 0 1.5px var(--ink);}
+.dv-answer-new[hidden]{display:none;}
+
+/* ---------- le résultat ---------- */
+.dv-res-top{display:grid;gap:18px 28px;align-items:start;}
+@media(min-width:960px){.dv-res-top{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);}}
+.dv-res-dots{display:flex;gap:6px;margin:6px 0 2px;padding:0;list-style:none;}
+.dv-res-dots li{width:34px;height:14px;border:2px solid var(--ink);border-radius:999px;background:var(--paper);}
+.dv-res-dots li.is-ok{background:var(--ink);}
+.dv-res-dots li.is-ko{background:repeating-linear-gradient(135deg,var(--coral) 0 3px,var(--paper) 3px 6px);}
+.dv-result .dv-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;}
+@media(max-width:599px){.dv-result .dv-stats{grid-template-columns:repeat(2,minmax(0,1fr));}}
+.dv-result .dv-stat{flex:none;padding:10px 12px;box-shadow:3px 3px 0 var(--ink);}
+.dv-result .dv-stat-n{font-size:1.45rem;}
+.dv-stat--hot{background:var(--amber);}
+.dv-stat--hot dt,.dv-stat--hot .dv-stat-d{color:var(--ink);}
+.dv-res-more{display:grid;gap:14px;}
+@media(min-width:900px){.dv-res-more{grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-areas:'w r' 'd r';}.dv-res-box--week{grid-area:w;}.dv-res-box--dist{grid-area:d;}.dv-res-box--rs{grid-area:r;}}
+.dv-res-box{display:flex;flex-direction:column;gap:10px;min-width:0;padding:14px 16px;border:2px solid var(--ink);border-radius:var(--radius);background:var(--paper-2);}
+.dv-res-box h4{margin:0;font-size:.98rem;font-weight:900;letter-spacing:-.01em;}
+.dv-res-note{margin:auto 0 0;font-size:.8rem;line-height:1.4;color:var(--ink-soft);}
+/* sept derniers jours : une case par jour, plus dorée que le score est haut */
+.dv-week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;margin:0;padding:0;list-style:none;}
+.dv-wk{display:grid;justify-items:center;align-content:center;gap:1px;min-height:74px;padding:6px 2px;border:2px solid var(--ink);border-radius:10px;background:color-mix(in srgb,var(--amber) calc(var(--s,0) * 100%),var(--paper));text-align:center;}
+.dv-wk.is-empty{border-style:dashed;border-color:color-mix(in srgb,var(--ink) 45%,transparent);background:transparent;color:var(--ink-soft);}
+.dv-wk.is-today{outline:3px solid var(--coral);outline-offset:2px;}
+.dv-wk-d{font-size:.68rem;font-weight:800;line-height:1.1;text-transform:capitalize;color:var(--ink-soft);}
+.dv-wk-n{font-size:.72rem;font-weight:700;line-height:1.1;color:var(--ink-soft);}
+.dv-wk-s{font-family:'Archivo',system-ui,sans-serif;font-size:1.3rem;font-weight:900;line-height:1.1;}
+/* scores et régions : des barres */
+.dv-dist,.dv-rs{display:grid;gap:7px;margin:0;padding:0;list-style:none;}
+.dv-dist li{display:grid;grid-template-columns:minmax(4.6em,auto) minmax(0,1fr) 2.2em;align-items:center;gap:10px;font-size:.84rem;}
+.dv-dist-k{font-weight:800;white-space:nowrap;}
+.dv-dist-bar,.dv-rs-bar{position:relative;display:block;height:14px;border:1.5px solid var(--ink);border-radius:999px;background:var(--paper);overflow:hidden;}
+.dv-dist-bar i,.dv-rs-bar i{position:absolute;inset:0 auto 0 0;width:var(--p,0%);background:var(--ink);border-radius:999px;transition:width 600ms var(--c-ease-result);}
+.dv-dist li.is-today .dv-dist-bar i{background:var(--amber);}
+.dv-dist li.is-today .dv-dist-k::after{content:' ◂';color:var(--coral-text);}
+.dv-dist li.is-zero{color:var(--ink-soft);}
+.dv-dist-v{font-weight:900;text-align:right;font-variant-numeric:tabular-nums;}
+.dv-rs li{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(60px,1fr) 3.2em;grid-template-areas:'n b v' 'n c c';align-items:center;column-gap:10px;font-size:.84rem;}
+.dv-rs-n{grid-area:n;display:flex;align-items:center;gap:7px;min-width:0;font-weight:800;line-height:1.2;overflow-wrap:anywhere;}
+.dv-rs-bar{grid-area:b;}
+.dv-rs-bar i{background:var(--c,var(--amber));}
+.dv-rs-v{grid-area:v;font-weight:900;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;}
+.dv-rs-c{grid-area:c;font-size:.74rem;color:var(--ink-soft);text-align:right;}
+.dv-rs li.is-zero .dv-rs-v{color:var(--ink-soft);font-weight:700;}
+.dv-res-album{font-weight:800;color:var(--coral-text);text-decoration:underline;text-underline-offset:3px;}
+.dv-res-album:hover{color:var(--ink);}
+
+/* ---------- les six régions : cartes postales et album ---------- */
+.dv-albumbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;margin:0 0 20px;}
+.dv-albumbar-t{margin:0;font-weight:900;font-size:1.02rem;}
+.dv-albumbar-p{position:relative;flex:1 1 220px;max-width:420px;height:16px;border:2px solid var(--ink);border-radius:999px;background:var(--paper-2);overflow:hidden;}
+.dv-albumbar-p i{position:absolute;inset:0 auto 0 0;width:var(--p,0%);background:repeating-linear-gradient(135deg,var(--amber) 0 8px,color-mix(in srgb,var(--amber) 70%,var(--coral)) 8px 16px);transition:width 800ms var(--c-ease-result);}
+.dv-atlas{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin:0;padding:0;list-style:none;align-items:start;}
+@media(max-width:1099px){.dv-atlas{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media(max-width:699px){.dv-atlas{grid-template-columns:minmax(0,1fr);}.dv-pc-map{aspect-ratio:5/2;}}
+.dv-pc{display:flex;flex-direction:column;min-width:0;border:2px solid var(--ink);border-radius:16px;overflow:hidden;background:var(--paper);box-shadow:var(--shadow-hard);transition:box-shadow var(--c-standard) var(--c-ease-soft);}
+.dv-pc.is-full{box-shadow:6px 6px 0 var(--c,var(--ink));}
+.dv-pc-map{position:relative;aspect-ratio:2/1;border-bottom:2px solid var(--ink);background:#5FA8D3;overflow:hidden;}
+.dv-pc-svg{display:block;width:100%;height:100%;transition:transform 900ms var(--c-ease-result);}
+.dv-pc-svg use{fill:#95CB84;stroke:#5E9A66;stroke-width:14;}
+.dv-pc-halo{fill:var(--c,var(--amber));fill-opacity:.38;transform-box:fill-box;transform-origin:center;}
+.dv-pc-pin{fill:var(--c,var(--amber));stroke:var(--ink);stroke-width:34;}
+.dv-pc-o{stroke:var(--ink);stroke-width:20;opacity:.8;}
+@media(hover:hover) and (prefers-reduced-motion:no-preference){
+  .dv-pc:hover .dv-pc-svg,.dv-pc:focus-within .dv-pc-svg{transform:scale(1.07);}
+  .dv-pc:hover .dv-pc-halo,.dv-pc:focus-within .dv-pc-halo{animation:dv-halo 1.5s var(--c-ease-soft) infinite;}
+}
+@keyframes dv-halo{50%{transform:scale(1.45);fill-opacity:.12;}}
+/* le timbre : dentelé, à la teinte de la région, avec le nombre d’images */
+.dv-pc-stamp{--r:3.5px;--paper-stamp:var(--c,var(--amber));position:absolute;right:12px;top:12px;display:grid;place-items:center;min-width:54px;height:62px;padding:calc(2 * var(--r));font-family:'Archivo',system-ui,sans-serif;font-weight:900;font-size:1.7rem;letter-spacing:-.03em;color:var(--ink);transform:rotate(5deg);filter:drop-shadow(2px 2px 0 rgba(26,26,30,.55));
+  background:radial-gradient(var(--r),#0000 97%,var(--paper-stamp)) round calc(-1.5 * var(--r)) calc(-1.5 * var(--r))/calc(3 * var(--r)) calc(3 * var(--r)),linear-gradient(var(--paper-stamp) 0 0) no-repeat 50%/calc(100% - 3 * var(--r)) calc(100% - 3 * var(--r));}
+.dv-pc-stamp::before{content:'';position:absolute;inset:calc(2 * var(--r) + 2px);border:1.5px solid rgba(26,26,30,.55);border-radius:2px;pointer-events:none;}
+.dv-pc-b{display:flex;flex-direction:column;gap:8px;flex:1;padding:14px 16px 16px;min-width:0;}
+.dv-pc-t{display:flex;align-items:center;gap:9px;margin:0;font-size:1.16rem;line-height:1.2;letter-spacing:-.015em;}
+.dv-pc-t .dv-reg-a{display:inline-block;padding:3px 0;}
+.dv-pc-tag{margin:0;font-size:.92rem;line-height:1.5;color:var(--ink-soft);}
+.dv-pc-k{margin:4px 0 0;font-size:.8rem;font-weight:900;color:var(--ink);}
+.dv-pc-facts{display:grid;gap:6px;margin:0;padding:0;list-style:none;}
+.dv-pc-facts li{position:relative;padding-left:20px;font-size:.86rem;line-height:1.45;}
+.dv-pc-facts li::before{content:'';position:absolute;left:2px;top:.42em;width:10px;height:10px;border:2px solid var(--ink);border-radius:50%;background:var(--c,var(--amber));}
+.dv-pc-album{display:grid;gap:8px;margin-top:6px;padding-top:12px;border-top:2px dashed var(--rule);}
+.dv-pc-n{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 10px;margin:0;font-size:.84rem;font-weight:800;}
+.dv-pc-ok{padding:2px 9px;border:1.5px solid var(--ink);border-radius:999px;background:color-mix(in srgb,var(--c,var(--amber)) 30%,var(--paper));font-size:.78rem;}
+.dv-pc-ok[hidden]{display:none;}
+/* l’album : une case par image, dentelée comme un timbre ; le dos d’une carte tant qu’elle n’a pas été jouée */
+.dv-album{display:grid;grid-template-columns:repeat(auto-fill,minmax(58px,1fr));gap:6px;margin:0;padding:0;list-style:none;}
+.dv-slot{--r:2.5px;position:relative;aspect-ratio:4/3;padding:calc(2 * var(--r));filter:drop-shadow(0 1px 1.2px rgba(26,26,30,.45));transition:transform var(--c-fast) var(--c-ease-control);
+  background:radial-gradient(var(--r),#0000 97%,#fff) round calc(-1.5 * var(--r)) calc(-1.5 * var(--r))/calc(3 * var(--r)) calc(3 * var(--r)),linear-gradient(#fff 0 0) no-repeat 50%/calc(100% - 3 * var(--r)) calc(100% - 3 * var(--r));}
+.dv-slot-q{display:block;width:100%;height:100%;background:radial-gradient(circle at 50% 50%,transparent 0 5px,var(--amber) 5.5px 8px,transparent 8.5px),linear-gradient(160deg,var(--night) 0%,var(--night-2) 62%,var(--night-3) 100%);}
+.dv-slot img{display:block;width:100%;height:100%;object-fit:cover;}
+.dv-slot.is-seen img{animation:dv-slot-in 520ms var(--c-ease-result) both;}
+@keyframes dv-slot-in{from{opacity:0;transform:scale(.86) rotate(-4deg);}}
+.dv-slot.is-new::after{content:'';position:absolute;right:-3px;top:-3px;width:12px;height:12px;border:2px solid var(--ink);border-radius:50%;background:var(--amber);}
+@media(hover:hover) and (prefers-reduced-motion:no-preference){.dv-slot.is-seen:hover{transform:translateY(-3px) rotate(-3deg) scale(1.12);z-index:1;}}
+
+/* ---------- les règles illustrées ---------- */
+.dv-steps .vt-step-ill{height:118px;background:color-mix(in srgb,var(--paper-2) 70%,#fff);}
+.dv-steps .vt-step-ill svg{height:106px;}
+.dv-ill-fan{transform:rotate(var(--a,0deg));transform-box:view-box;transform-origin:0 0;}
+.dv-ill-hand{transform-box:view-box;transform-origin:163px 32px;}
+.dv-ill-check,.dv-ill-line{stroke-dasharray:1;stroke-dashoffset:0;}
+.dv-ill-ring{transform-box:fill-box;transform-origin:center;}
+.dv-ill-on,.dv-ill-day,.dv-ill-ok,.dv-ill-ko,.dv-ill-flame,.dv-ill-tag,.dv-ill-cursor{transform-box:fill-box;transform-origin:center;}
+.js .vt-in.is-in:not(.lk-settled) .dv-ill-fan{animation:dv-ill-fan .8s var(--c-ease-result,cubic-bezier(.16,1,.3,1)) calc(var(--vt-d) + 160ms + var(--k,0) * 40ms) backwards;}
+.js .vt-in.is-in:not(.lk-settled) .dv-ill-hand{animation:dv-ill-hand 1.1s var(--c-ease-result,cubic-bezier(.16,1,.3,1)) calc(var(--vt-d) + 260ms) backwards;}
+.js .vt-in.is-in:not(.lk-settled) .dv-ill-opt{animation:dv-ill-pop .45s var(--ease-spring,cubic-bezier(.34,1.56,.64,1)) calc(var(--vt-d) + 120ms + var(--k,0) * 55ms) backwards;}
+.js .vt-in.is-in:not(.lk-settled) .dv-ill-cursor{animation:dv-ill-cursor .7s var(--c-ease-result,cubic-bezier(.16,1,.3,1)) calc(var(--vt-d) + 520ms) backwards;}
+.js .vt-in.is-in:not(.lk-settled) .dv-ill-check{animation:dv-ill-draw .4s ease-out calc(var(--vt-d) + 900ms) backwards;}
+.js .vt-in.is-in:not(.lk-settled) .dv-ill-ko{animation:dv-ill-pop .45s var(--ease-spring,cubic-bezier(.34,1.56,.64,1)) calc(var(--vt-d) + 200ms) backwards;}
+.js .vt-in.is-in:not(.lk-settled) .dv-ill-line{animation:dv-ill-draw .6s var(--c-ease-result,cubic-bezier(.16,1,.3,1)) calc(var(--vt-d) + 450ms) backwards;}
+.js .vt-in.is-in:not(.lk-settled) .dv-ill-ok{animation:dv-ill-pop .5s var(--ease-spring,cubic-bezier(.34,1.56,.64,1)) calc(var(--vt-d) + 950ms) backwards;}
+.js .vt-in.is-in:not(.lk-settled) .dv-ill-ring{animation:dv-ill-ring 1s ease-out calc(var(--vt-d) + 1100ms) backwards;}
+.js .vt-in.is-in:not(.lk-settled) .dv-ill-tag{animation:dv-ill-pop .45s var(--ease-spring,cubic-bezier(.34,1.56,.64,1)) calc(var(--vt-d) + 1200ms) backwards;}
+.js .vt-in.is-in:not(.lk-settled) .dv-ill-day{animation:dv-ill-pop .4s var(--ease-spring,cubic-bezier(.34,1.56,.64,1)) calc(var(--vt-d) + 160ms + var(--k,0) * 80ms) backwards;}
+.js .vt-in.is-in:not(.lk-settled) .dv-ill-flame{animation:dv-ill-pop .6s var(--ease-spring,cubic-bezier(.34,1.56,.64,1)) calc(var(--vt-d) + 760ms) backwards;}
+@keyframes dv-ill-fan{from{transform:rotate(0deg);}}
+@keyframes dv-ill-hand{from{transform:rotate(-320deg);}}
+@keyframes dv-ill-pop{from{opacity:0;transform:scale(.4);}}
+@keyframes dv-ill-cursor{from{opacity:0;transform:translate(26px,20px);}}
+@keyframes dv-ill-draw{from{stroke-dashoffset:1;}}
+@keyframes dv-ill-ring{from{opacity:0;transform:scale(.5);}60%{opacity:1;}}
+
+/* ---------- le cycle des images (section de nuit) ---------- */
+.dv-cycle{margin:6px 0 26px;padding:18px 20px 16px;border:2px solid rgba(255,255,255,.4);border-radius:var(--radius);background:rgba(255,255,255,.05);box-shadow:4px 4px 0 rgba(0,0,0,.35);}
+.dv-cycle-h{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px;}
+.dv-cycle-t{margin:0;font-size:1.12rem;font-weight:900;letter-spacing:-.01em;color:#fff;}
+.dv-cycle-n{margin:0;padding:4px 12px;border:1.5px solid var(--ink);border-radius:999px;background:var(--amber);color:var(--ink);font-size:.82rem;font-weight:800;}
+.dv-cycle-n[hidden]{display:none;}
+.dv-cycle-d{max-width:var(--measure,68ch);margin:8px 0 16px;font-size:.92rem;line-height:1.6;color:rgba(255,255,255,.82);}
+.dv-cycle-g{display:grid;grid-template-columns:repeat(auto-fit,minmax(30px,1fr));gap:10px;margin:0;padding:0;list-style:none;max-width:640px;}
+.dv-cycle-g li{display:grid;gap:6px;justify-items:center;}
+.dv-cycle-c{display:grid;gap:4px;width:100%;max-width:46px;}
+.dv-cycle-c i{display:block;height:12px;border:1.5px solid rgba(255,255,255,.55);border-radius:3px;}
+.dv-cycle-g b{font-size:.74rem;font-weight:800;color:rgba(255,255,255,.7);}
+.dv-cycle-g li.is-past i{background:rgba(255,255,255,.72);border-color:rgba(255,255,255,.72);}
+.dv-cycle-g li.is-now i{background:var(--amber);border-color:var(--ink);box-shadow:0 0 0 1.5px var(--amber);}
+.dv-cycle-g li.is-now b{color:var(--amber);}
+.ed-zone--devine .dv-figs{margin:4px 0 22px;}
+@media(max-width:699px){.dv-figs .vt-fig--accent{grid-column:1/-1;}}
+
+@media(prefers-reduced-motion:reduce){
+  .dv-answer-new,.dv-slot.is-seen img{animation:none!important;}
+  .dv-pc-svg,.dv-slot,.dv-dist-bar i,.dv-rs-bar i,.dv-albumbar-p i,.dv-pc{transition:none!important;}
+  .dv-ill-fan,.dv-ill-hand,.dv-ill-opt,.dv-ill-cursor,.dv-ill-check,.dv-ill-ko,.dv-ill-line,.dv-ill-ok,.dv-ill-ring,.dv-ill-tag,.dv-ill-day,.dv-ill-flame{animation:none!important;}
+}
+@media print{.dv-pc,.dv-res-box{box-shadow:none;}.dv-slot{filter:none;}}
+
+/* =====================================================================================================================
+   v7.92.1 : alignements et centrage (demande de Téva du 16 octobre). Le titre et ses deux phrases centrés l’un sur l’autre ;
+   la carte du jeu commence à la hauteur de l’image ; dans une rangée de cartes postales, chaque ligne (nom, devise, faits,
+   album, lien « Sur la carte ») tombe à la même hauteur ; le cycle des images en deux colonnes ; « Continuer la visite »
+   sur toute la largeur.
+   ===================================================================================================================== */
+@media(min-width:1000px){.dv-head{align-items:center;}}
+/* la consigne de la carte passe sous la carte, avec la note sur le fond : la carte et l’image partent du même bord haut */
+.dv-map{display:flex;flex-direction:column;}
+.dv-map-k{order:2;margin:10px 0 0;}
+.dv-map-cap{order:3;margin-top:4px;}
+/* cartes postales : une grille partagée (sous-grille) aligne les lignes d’une rangée ; sans elle, les liens restent en bas */
+.dv-atlas{align-items:stretch;}
+@supports (grid-template-rows:subgrid){
+  .dv-atlas{row-gap:0;}
+  .dv-pc{display:grid;grid-row:span 7;grid-template-rows:subgrid;row-gap:0;margin-bottom:20px;}
+  .dv-pc-b{display:grid;grid-row:span 6;grid-template-rows:subgrid;row-gap:8px;}
+  .dv-pc-album{align-self:start;}
+  .dv-reg-map{align-self:end;}
+}
+/* le cycle des images : le texte à gauche, les huit jours à droite */
+@media(min-width:900px){
+  .dv-cycle{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,.85fr);grid-template-areas:"h g" "d g";column-gap:clamp(24px,3.5vw,52px);align-items:center;}
+  .dv-cycle-h{grid-area:h;align-self:end;}
+  .dv-cycle-d{grid-area:d;align-self:start;margin-bottom:0;}
+  .dv-cycle-g{grid-area:g;max-width:none;}
+}
+.dv-explore .lkx-links{grid-template-columns:repeat(3,minmax(0,1fr));}
+@media(max-width:899px){.dv-explore .lkx-links{grid-template-columns:minmax(0,1fr);}}
+/* au téléphone, six cases d’album par rangée (une région de six images tient sur une ligne) */
+@media(max-width:699px){.dv-album{grid-template-columns:repeat(auto-fill,minmax(46px,1fr));}}

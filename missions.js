@@ -1,7 +1,4 @@
-/* Section « Missions et leurs solutions » (section missions) : la case « J’ai terminé cette mission » des fiches.
-   Gardée sur l’appareil seulement, sous une seule clé (lk-missions-terminees-v1 : liste d’identifiants de missions) ;
-   aucun cookie, aucune requête. Sans JavaScript ou sans stockage, la case reste cachée. Sur la page de démonstration
-   (data-missions-demo), la case fonctionne sans rien enregistrer. Ce script n’écrit aucun mot : le texte est dans la page. */
+/* Généré depuis outils/sources/missions.js : modifie la source, pas ce fichier. */
 (function () {
   'use strict';
   var KEY = 'lk-missions-terminees-v1';

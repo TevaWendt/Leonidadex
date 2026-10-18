@@ -571,7 +571,7 @@
       "nom": "Chargeur tambour",
       "categorie": "chargeurs",
       "statut": "serie",
-      "description": "Beaucoup plus de balles, rechargement plus lent ; GTA Online seulement (fusil à pompe lourd 6 → 30, PM 30 → 100).",
+      "description": "Beaucoup plus de balles, rechargement plus lent ; GTA Online seulement (fusil à pompe lourd de 6 à 30, PM de 30 à 100).",
       "effet": {
         "texte": "Capacité très augmentée, rechargement plus lent (GTA Online)",
         "valeur": null,

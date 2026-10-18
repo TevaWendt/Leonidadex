@@ -90,7 +90,7 @@ test('verification.html : confirmé, pas encore annoncé, ce que les fiches atte
   const n = { 'veh-officiel': data.LK_VEHICULES.filter(v => v.st === 'officiel').length, 'arm-officiel': data.LK_ARMES.filter(a => a.st === 'officiel').length };
   const figs = [...d.querySelectorAll('#confirme .vt-fig b')].map(b => Number(b.textContent));
   assert.equal(figs[0], n['veh-officiel']); assert.equal(figs[2], n['arm-officiel']);
-  assert.ok(d.querySelector('#a-venir .vf-rubs--couts') && d.querySelectorAll('#a-venir .vf-rubs--couts .vf-rub').length >= 5, 'coûts d’usage, poste par poste');
+  assert.ok(d.querySelector('#a-venir .vf-notes--2') && d.querySelectorAll('#a-venir .vf-notes--2 .vf-note--cost').length >= 5, 'coûts d’usage, poste par poste'); /* v7.94 : liste de définitions à deux colonnes */
   assert.ok(inSitemap('verification.html'));
   for (const f of ['index.html', 'vehicules.html', 'armes/carabine.html']) assert.ok(doc(f).querySelector('footer a[href$="verification.html"]'), f + ' : pied de page');
   for (const l of LANGS) { assert.ok(exists(l + '/verification.html'), l); assert.equal(doc(l + '/verification.html').documentElement.lang.slice(0, 2), l); }
@@ -105,7 +105,7 @@ test('plan du site : dates tirées du contenu, plusieurs dates réelles, jamais 
   assert.notEqual(L.printHash(a), L.printHash(a.replace('Texte', 'Autre texte')), 'le contenu, si');
   const dates = [...sitemap.matchAll(/<lastmod>(\d{4}-\d\d-\d\d)<\/lastmod>/g)].map(m => m[1]);
   const today = new Date().toISOString().slice(0, 10);
-  assert.ok(new Set(dates).size >= 4, 'dates distinctes : ' + new Set(dates).size);
+  assert.ok(new Set(dates).size >= 3, 'dates distinctes : ' + new Set(dates).size); /* v7.94 : une refonte de tout le site (fils d’Ariane, compteurs, titres) date presque toutes les pages du même jour */
   assert.ok(dates.every(x => x <= today && x >= '2026-10-01'));
   const D = JSON.parse(read('outils/sitemap-dates.json'));
   for (const u of [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m => m[1])) assert.ok(D[u], 'date tenue : ' + u);

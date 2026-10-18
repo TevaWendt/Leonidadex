@@ -188,7 +188,7 @@ function brandWall(brands, opts = {}) {
     return '<' + tag + ' class="ed-brand"' + (b.href ? ' href="' + esc(b.href) + '"' : '') + ' data-letter="' + fold(b.name)[0].toUpperCase() + '" data-n="' + esc(fold(b.name + ' ' + (b.evoque || ''))) + '">'
       + '<span class="ed-brand-mono ed-brand-mono--' + MONO[i % MONO.length] + '" aria-hidden="true">' + esc(initials(b.name)) + '</span>'
       + '<span class="ed-brand-body"><b>' + esc(b.name) + '</b>' + (b.evoque ? '<span class="ed-brand-ev">' + esc(b.evoque) + '</span>' : '<span class="ed-brand-ev brand-ev--none">' + esc(opts.none || 'constructeur fictif, pas de rapprochement retenu') + '</span>')
-      + (typeof b.n === 'number' ? '<span class="ed-brand-n">' + b.n + ' ' + (b.n > 1 ? 'véhicules' : 'véhicule') + (b.href ? ' <i aria-hidden="true">→</i>' : '') + '</span>' : '') + '</span></' + tag + '>';
+      + (typeof b.n === 'number' ? '<span class="ed-brand-n">' + b.n + ' ' + (b.n > 1 ? 'véhicules' : 'véhicule') + (b.href ? ' <svg class="lk-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>' : '') + '</span>' : '') + '</span></' + tag + '>';
   }).join('');
   return bar + '<div class="ed-brands" data-brands>' + tiles + '</div><p class="ed-brandempty" data-brand-empty hidden>Aucune marque ne correspond.</p>';
 }
@@ -275,7 +275,7 @@ function timeline(items, opts = {}) {
 function pairs(items, sources = {}) {
   return '<div class="ed-pairs">' + items.map(x => {
     const s = x.src && sources[x.src];
-    return '<div class="ed-pair"><span class="ed-pair-f">' + esc(x.fiction) + '</span><span class="ed-pair-arrow" aria-hidden="true">→</span>'
+    return '<div class="ed-pair"><span class="ed-pair-f">' + esc(x.fiction) + '</span><span class="ed-pair-arrow" aria-hidden="true"><svg class="lk-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></span>'
       + '<span class="ed-pair-r">' + esc(x.reel) + (s ? ' <a class="ed-pair-src" href="#src-' + esc(x.src) + '" aria-label="Source : ' + esc(s.title) + '">source</a>' : '') + '</span></div>';
   }).join('') + '</div>';
 }
@@ -292,7 +292,7 @@ const frDate = iso => iso ? iso.split('-').reverse().join('/') : null;
 function sourceList(entries) {
   return '<ol class="ed-srcs">' + entries.map(s => '<li id="src-' + esc(s.id) + '">' + pip(s.statut, true)
     + '<a class="ed-src-link" href="' + esc(s.url) + '" target="_blank" rel="noopener nofollow">' + esc(s.title) + '</a>'
-    + '<span class="ed-src-meta">' + (s.publishedAt ? 'publié le ' + esc(frDate(s.publishedAt)) + ' · ' : '') + 'consulté le ' + esc(frDate(s.consultedAt)) + '</span>'
+    + '<span class="ed-src-meta">' + (s.publishedAt ? 'publié le ' + esc(frDate(s.publishedAt)) + ', ' : '') + 'consulté le ' + esc(frDate(s.consultedAt)) + '</span>'
     + (s.claim ? '<p>' + esc(s.claim) + '</p>' : '') + '</li>').join('') + '</ol>';
 }
 

@@ -203,7 +203,7 @@ test('Presse : carte de presse, trois phrases à copier d’un coup, lettre avec
 
 test('« Ce qui est confirmé » : douze points, chacun avec sa source officielle ; relevé du jour en tête ; trois règles', () => {
   const V = JSON.parse(read('outils/informations-editorial.json')).verification;
-  assert.equal(V.checkedAt, '2026-10-16');
+  assert.equal(V.checkedAt, '2026-10-17');
   const d = doc('verification.html');
   const cards = [...d.querySelectorAll('#confirme .vf-card')];
   assert.equal(cards.length, 12); assert.equal(V.confirme.items.length, 12);
@@ -220,7 +220,7 @@ test('« Ce qui est confirmé » : douze points, chacun avec sa source officiell
   /* le relevé du jour : une image (aria-hidden) ; la date est celle de la relecture ; points et questions existent */
   const dos = d.querySelector('.page-head .vf-dos');
   assert.equal(dos.getAttribute('aria-hidden'), 'true');
-  assert.equal(N(dos.querySelector('.vf-dos-k b').textContent), '16 octobre 2026');
+  assert.equal(N(dos.querySelector('.vf-dos-k b').textContent), '17 octobre 2026');
   assert.equal(dos.querySelectorAll('.vf-dos-i--ok').length, V.hero.dossier.ok.length);
   assert.equal(dos.querySelectorAll('.vf-dos-i--wait').length, V.hero.dossier.wait.length);
   assert.ok(dos.querySelector('img[fetchpriority="high"]'));

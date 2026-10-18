@@ -1,13 +1,8 @@
-/* Section « Missions et leurs solutions » (section missions) : hub missions.html, fiches missions/<id>.html et page de
-   démonstration missions/modele.html. Chargée par les pages de la section seulement. Mouvement : apparition du site
-   (.reveal, .rise de common.js) et survol des cartes (transform) ; rien d’autre ne bouge, tout est coupé avec
-   prefers-reduced-motion: reduce. */
+/* Généré depuis outils/sources/missions.css : modifie la source, pas ce fichier. */
 .missions-kicker{font:700 var(--fs-kicker)/1.2 var(--font-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--coral-text);margin:0 0 6px;}
 .missions-lede{color:var(--ink-soft);max-width:var(--measure);margin:6px 0 18px;}
 .missions-note{color:var(--ink-soft);max-width:var(--measure);margin-top:16px;font-size:.94rem;}
 .missions-histoire,.missions-sequences,.missions-edition,.missions-liste{padding-top:clamp(30px,4vw,52px);}
-
-/* ---------- l’histoire ---------- */
 .missions-recit{max-width:var(--measure);margin-top:10px;}
 .missions-recit p{margin:0 0 12px;font-size:1.04rem;}
 .missions-recit-src{display:flex;align-items:center;gap:8px;font-size:.84rem;}
@@ -22,8 +17,6 @@
 .missions-src a{display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 5px;border:1px solid var(--ink-soft);border-radius:999px;font:700 .7rem/1 var(--font-mono);color:var(--ink);}
 .missions-src a:hover,.missions-src a:focus-visible{background:var(--ink);color:var(--paper);}
 .missions-src-txt{font-size:.8rem;color:var(--ink-soft);overflow-wrap:anywhere;}
-
-/* ---------- séquences montrées : huit cartes illustrées (4 × 2), entrée « balayage vidéo » (lk-sections.css) ---------- */
 .missions-seqs{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;}
 @media (max-width:1180px){.missions-seqs{grid-template-columns:repeat(2,minmax(0,1fr));}}
 @media (max-width:620px){.missions-seqs{grid-template-columns:1fr;}}
@@ -55,8 +48,6 @@
 .missions-seq-det[open]>.lkx-sheet-src{grid-template-columns:1fr;border:2px solid var(--ink);border-radius:12px;overflow:hidden;}
 .missions-st{display:inline-flex;flex-wrap:wrap;align-items:center;gap:6px 8px;font-size:.82rem;}
 .lkx-sheet .missions-st{margin-top:4px;}
-
-/* ---------- Édition Ultimate : vedette haut de gamme ---------- */
 .missions-edition{margin-top:clamp(38px,5vw,64px);}
 .missions-ult-band{position:relative;overflow:hidden;color:var(--paper);background:radial-gradient(120% 90% at 85% 0%,rgba(247,182,69,.22),transparent 55%),linear-gradient(160deg,#120b22 0%,var(--night-deep) 45%,var(--night-2) 100%);border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);}
 .missions-ult-bg{position:absolute;inset:0;opacity:.24;}
@@ -88,8 +79,6 @@
 .missions-ult .lkx-btn--ghost{background:transparent;color:var(--lkx-gold-2);border-color:rgba(247,182,69,.7);box-shadow:3px 3px 0 rgba(247,182,69,.35);}
 .missions-ult-note{margin-top:20px;color:rgba(253,251,247,.72);font-size:.92rem;max-width:62ch;}
 .lkx-page .missions-ult-band .missions-src a{background-color:rgba(253,251,247,.08);color:var(--paper);border-color:rgba(247,182,69,.6);}
-
-/* ---------- le guide ---------- */
 .missions-vide{position:relative;display:grid;gap:10px;max-width:880px;margin:10px 0 22px;padding:20px 22px;border:2px solid var(--ink);border-radius:14px;background:linear-gradient(135deg,var(--night) 0%,var(--night-2) 70%,var(--night-3));color:var(--paper);box-shadow:6px 6px 0 var(--amber);overflow:hidden;}
 .missions-vide::before{content:'';position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(247,182,69,.4),transparent 70%);}
 .missions-vide-k{font:800 .74rem/1.2 var(--font-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--amber-2);}
@@ -122,8 +111,6 @@
 .missions-skel-bar{flex:1;height:10px;border-radius:999px;background:linear-gradient(90deg,var(--paper-2) 0%,#efe6d2 40%,#fff6e3 50%,#efe6d2 60%,var(--paper-2) 100%);background-size:220% 100%;animation:missions-skel 1.6s linear infinite;}
 @keyframes missions-skel{from{background-position:120% 0;}to{background-position:-120% 0;}}
 @media (prefers-reduced-motion:reduce){.missions-rec i,.missions-ult-crown,.missions-skel-bar{animation:none;}.missions-seq-media img,.missions-ult-fig img,.missions-type-fig img{transition:none;}}
-
-/* ---------- fiche d’une mission ---------- */
 .missions-bref{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:10px;margin:8px 0 0;}
 .missions-bref>div{padding:10px 12px;border:1.5px solid var(--rule);border-radius:var(--radius-s);background:var(--paper);}
 .missions-bref dt{font:700 .72rem/1.3 var(--font-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:4px;}
@@ -137,21 +124,15 @@
 .missions-etapes h3{margin:0 0 4px;font-size:1rem;}
 .missions-etapes p{margin:0;}
 .missions-vide-fig{aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;color:var(--paper);}
-
-/* case « mission terminée » (missions.js) */
 .missions-fait{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-top:14px;padding:10px 14px;border:2px solid var(--ink);border-radius:var(--radius-s);background:var(--paper-2);}
 .missions-fait input{width:22px;height:22px;accent-color:var(--coral);}
 .missions-fait label{font-weight:800;cursor:pointer;}
 .missions-fait-note{font-size:.82rem;color:var(--ink-soft);}
 .missions-fait.is-done{background:#e6f4ee;border-color:#1f6b4a;}
-
-/* page de démonstration */
 .missions-demo{margin:18px 0 0;padding:12px 16px;border:2px dashed var(--coral);border-radius:var(--radius-s);background:#fff2ee;font-weight:700;color:var(--coral-deep);}
 .missions-fiche-src{--ed-line:var(--rule);--ed-card:var(--paper-2);--ed-soft:var(--ink-soft);--ed-fg:var(--ink);padding-top:8px;}
 .missions-fiche-src .ed-srcs{margin-top:12px;}
-
 @media (prefers-reduced-motion:reduce){.missions-chip{transition:none!important;}.missions-chip:hover{transform:none;}}
-/* puces des fiches de mission (personnages, lieux) */
 .missions-chip{display:inline-flex;align-items:center;padding:3px 10px;border:1.5px solid var(--ink);border-radius:999px;font-size:.82rem;font-weight:700;background:var(--paper-2);transition:transform var(--c-fast) var(--c-ease-control);}
 .missions-chip:hover{transform:translateY(-1px);}
 .missions-chip--carte::before{content:'';width:8px;height:8px;margin-right:6px;border-radius:50%;background:var(--coral);}

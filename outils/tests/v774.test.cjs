@@ -121,7 +121,7 @@ test('« Comparer avec un calcul gardé » marche pour le business plan : garder
   try {
     p.d.querySelector('[data-b-keep-ref="plan"]').dispatchEvent(new p.w.Event('click', { bubbles: true })); p.flush();
     let ex = flat(p.d.getElementById('expert-plan').textContent);
-    assert.match(ex, /Courant \/ référence/); assert.match(ex, /Résultats identiques sur ce critère/);
+    assert.match(ex, /Courant et référence/); assert.match(ex, /Résultats identiques sur ce critère/);
     const cap = p.d.getElementById('plan-capital'); cap.value = '900000'; cap.dispatchEvent(new p.w.Event('input', { bubbles: true })); cap.dispatchEvent(new p.w.Event('change', { bubbles: true })); p.flush();
     ex = flat(p.d.getElementById('expert-plan').textContent);
     assert.match(ex, /Écart absolu/); assert.match(ex, /Le scénario courant est plus favorable sur ce critère/);

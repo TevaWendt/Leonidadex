@@ -25,7 +25,7 @@ test('fiche documentaire : chaque catégorie rend ses rubriques ; « Prix à ven
   assert.equal(row('Prix').querySelector('.doc-v').textContent, 'Prix à venir');
   assert.equal(row('Achetable').querySelector('.doc-v').textContent, 'Achat à confirmer');
   assert.equal(row('Vie rendue').querySelector('.doc-v').textContent, 'Récupération de vie : à confirmer');
-  assert.match(row('Vie rendue').querySelector('.doc-rep').textContent, /Repère de la série : 100 % de vie — Chiffre de GTA V/);
+  assert.match(row('Vie rendue').querySelector('.doc-rep').textContent, /Repère de la série : 100 % de vie\. Chiffre de GTA V/);
   // un bonus d’édition ne « s’achète » pas : ni prix à venir, ni achat à confirmer
   const bonus = C.load().families.tenues.items.find(it => FD.notBought(it));
   assert.ok(bonus, 'au moins une pièce offerte avec une édition');
@@ -181,7 +181,7 @@ test('Consommables en un regard : cartes par besoin, aucune fausse jauge, compar
   const outs = [...table.querySelectorAll('.cg-out')]; assert.ok(outs.every(o => /Écris les deux chiffres/.test(o.textContent)), 'rien de calculé sans tes deux chiffres');
   const [price, heal] = [...table.querySelectorAll('tr.cg-sim')].map(tr => tr.querySelector('input'));
   price.value = '250'; fire(p, price, 'input'); heal.value = '50'; fire(p, heal, 'input');
-  assert.match(outs[0].textContent.replace(/\s/g, ' '), /^5 \$ par point · simulation$/);
+  assert.match(outs[0].textContent.replace(/\s/g, ' '), /^5 \$ par point \(simulation\)$/);
   assert.deepEqual(p.errors, []); p.close();
 });
 

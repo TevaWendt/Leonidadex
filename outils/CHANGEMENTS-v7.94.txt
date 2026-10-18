@@ -1,0 +1,172 @@
+LEONIDAKIT v7.94 : cinq sections revues, plus aucun signe d’écriture automatique, site plus léger, inventaire « une page
+par élément »
+17 octobre 2026
+
+Base : v7.93 réunie (commit 38b7a8325, poussé par Téva). Rien n’est publié ni poussé. CSP inchangée. Aucun fichier à
+supprimer. Aucune donnée inventée sur GTA VI ; GTA V et GTA Online restent « repère de la série ».
+
+1. CINQ SECTIONS REVUES (demande de Téva : animations, visuels, alignement et agencement, surtout au clic dans la section)
+
+- Vidéos officielles (outils/gen-actus.cjs, actus.css) : la page du hub (videos.html) et les quatre pages de vidéo.
+  - Les chiffres (durée, véhicules, armes) : un seul tableau de bord (.ac-bars) au lieu de trois cartes : une ligne par
+    mesure, les quatre vidéos côte à côte, les barres se dessinent à l’entrée dans l’écran.
+  - Les moments d’une vidéo (.ac-moments) : une frise verticale, le temps dans une pastille fixe à gauche, le point et la
+    ligne continue, la carte du moment à droite ; un moment sans temps garde son point ; sur téléphone, une colonne.
+  - « À revoir » (.ac-rev) : une grille régulière de cartes bordées, avec un titre souligné d’un trait ; plus de blocs de
+    tailles différentes.
+  - Les séparateurs des sous-titres et des sources sont des virgules ; la catégorie « Vidéo officielle, <date> ».
+- Ce qui est confirmé (verification.html ; outils/gen-informations.cjs, informations.css) : le tableau de bord devient deux
+  groupes (.vf-groups) : « Confirmé » et « En attente », chacun avec son compte et ses pastilles (icône, texte, coche ou
+  « ? », état lu par les lecteurs d’écran) ; « À venir » : une feuille de contrôle dessinée (SVG, .vf-sheet) et des notes
+  numérotées (.vf-notes), les coûts dans la même forme ; date de relecture 17 octobre 2026.
+- Préchargement (prechargement.html ; outils/gen-recherches.cjs, outils/informations-editorial.json, recherches.css) :
+  - l’état du jour et les trois dates sur un rail horizontal (brique VT.rail : stations avec le compte à rebours, verticale
+    sous 760 px) ;
+  - la marche à suivre sur PS5 et Xbox en étapes illustrées (pictogrammes boutique, coche, repos, bibliothèque) ;
+  - nouvelle section « Combien de temps ? » (#temps) : un calculateur de durée de téléchargement (brique VT.dlCalc : taille
+    du jeu, débit, quatre débits courants, résultat en heures et minutes ; si Rockstar publie la taille PS5, elle est
+    préremplie), et trois repères : Red Dead Redemption 2 à sa sortie (99 Go PS4, 107 Go Xbox One, Game Informer
+    18 octobre 2018, statut « vu dans un média ») et GTA VI « ? Go » tant que rien n’est annoncé ;
+  - la boîte en deux colonnes avec la jaquette officielle (figure inclinée) et ses points ;
+  - la liste des cinq gestes devient une vraie liste à cocher, gardée sur l’appareil (brique VT.checklist, clé lk_check_preload) ;
+  - FAQ : « Combien de temps prend le téléchargement de GTA 6 ? » ; sous-navigation : « Temps de téléchargement ».
+- GTA 6 sur PC (gta-6-pc.html) : les propos de Take-Two en citations (brique VT.clip : qui, quand), les précédents de la
+  série sur un axe daté 2010-2028 (brique VT.dated : une barre par jeu de la sortie console à la sortie PC, GTA VI en
+  pointillé « pas annoncé » ; sur téléphone, des puces), l’encadré arnaques avec ses sources en ligne, les pages à suivre
+  en cartes.
+- GTA 6 et GTA 5 (gta-6-vs-gta-5.html) : le tableau sans quatrième colonne (le lien de la fiche sous le sujet), une
+  légende en liste ; la carte : les citations de Rob Nelson en clips et deux carrés à l’échelle (brique VT.areas :
+  GTA V = 1, GTA VI = 2, « twice the size ») ; les liens « pour aller plus loin » sans séparateurs.
+- Briques ajoutées à outils/vitrine.cjs, vitrine.css, vitrine.js : rail, clip, areas, dated, checklist, dlCalc ; steps en
+  blocs ; les chevrons des liens (.vt-go, .vt-cta-go) sont des SVG masqués, plus des flèches en texte.
+
+2. PLUS AUCUN SIGNE D’ÉCRITURE AUTOMATIQUE (points médians « · », tirets longs « — », flèches « → », barres « / »)
+
+- Dans les générateurs (outils/*.cjs, *.js), les données (outils/*.json, outils/catalogues, outils/langues), les scripts de
+  page (outils/sources/*.js), les feuilles de style et les pages écrites à la main : les séparateurs deviennent des virgules
+  ou des deux-points ; les flèches des liens deviennent un chevron SVG commun (.lk-chev, style.css) ; les flèches « ↑ »
+  et « ↓ » des boutons « Monter », « Descendre » et « Envoyer » (Léo) aussi ; les fils d’Ariane séparent leurs maillons
+  par un chevron (.crumbs-sep) au lieu de « / » ; les compteurs « 3 / 12 » s’écrivent « 3 sur 12 » ; les plages
+  « 10 → 20 min » s’écrivent « de 10 à 20 min » ; les ordres d’achat « A → B → C » s’écrivent « A, puis B, puis C ».
+- Titres pour les moteurs : « Nom dans GTA VI | Leonidakit » (fiches véhicules, armes, lieux, GTA Online, trophées,
+  collectibles) ; les crédits « © Rockstar Games, Take-Two Interactive ».
+- Gardés tels quels : les noms officiels (« The Goodtime State – Vice City Collection », « Chevrolet C/K »), les dates
+  « 12/11/2026 », les tirets des cases vides des calculateurs et du compte à rebours (un chiffre absent), les citations
+  de Rockstar et de la presse, la flèche « ↗ » des liens qui s’ouvrent dans un nouvel onglet.
+- Les mémoires de traduction des cinq langues ont été migrées en même temps (clés et valeurs), puis les textes nouveaux
+  traduits : voir § 5.
+
+3. LATENCE (surtout sur téléphone)
+
+- outils/sources/ : les 95 feuilles de style et scripts écrits à la main y vivent avec leurs commentaires ; sync-site.cjs
+  (outils/minifier.cjs) écrit à la racine la version servie, sans commentaire, préfixée « Généré depuis
+  outils/sources/<f> : modifie la source, pas ce fichier ».
+- style.css : 211 règles mortes retirées ; les règles de la carte (35 Ko) sortent dans carte-page.css, chargée seulement
+  par carte.html : la feuille commune passe de 59 à 33 Ko compressés ; common.js de 19 à 12,7 Ko.
+- Images : les piles de visuels officiels proposent une variante 800 px (480, 800, 1280) : un téléphone ne charge plus
+  l’image 1280 px.
+- Mesures sur la version livrée : § 7.
+
+4. UNE PAGE PAR ÉLÉMENT (prompt du 17 octobre 2026, lot A, étape 1 : l’inventaire ; rien n’est généré avant le « ok »)
+
+- outils/couverture-pages.cjs : lit toutes les sources de données (vehicules-data.js, armes-data.js, editorial.json,
+  editorial-animaux.json, activites, radios, actus, acquisitions.json, medias-officiels.json, monde-dossiers.json,
+  marques.json, les six catalogues et perso-options.json, carnets/lieux-data.js, carte.js, carte-gtadb.js,
+  landmarks-leonidakit.json, missions, trophées, codes, collectibles, online), liste chaque élément, cherche sa page,
+  estime si elle atteindrait le seuil d’indexation, écrit outils/COUVERTURE-PAGES.md ; code de sortie 1 si un élément n’a
+  ni page ni exclusion (option --rapport pour l’état des lieux, --json pour les générateurs).
+- Résultat : 3 603 éléments, 405 avec page (aucune fiche ne manque dans les familles existantes), 3 198 pages à créer en
+  français, 19 188 dans les six langues : 262 Mo en gabarit allégé, 1 208 Mo avec le gabarit actuel des fiches.
+- Limites relevées : Vercel (pas de limite au nombre de fichiers d’un déploiement Git ; 15 000 fichiers et 100 Mo pour la
+  ligne de commande seulement ; 2 048 routes) ; GitHub (dépôt sous 1 Go idéalement, 5 Go au plus ; fichier bloqué à
+  100 Mio).
+- Solution proposée et points à trancher : LISEZ-MOI-v7.94.txt et outils/COUVERTURE-PAGES.md.
+
+5. LANGUES (anglais, espagnol, italien, allemand, portugais)
+- Les mémoires de traduction (outils/langues/<code>/*.json, motifs compris) ont été migrées clé par clé : « · » devient
+  une virgule, « — » un point ou une virgule selon ce qui suit, « Rockstar Games / Take-Two » une virgule, les titres
+  « Nom — GTA VI | Leonidakit » deviennent « Nom dans GTA VI | Leonidakit » (« in », « en », « no » selon la langue) :
+  1 655 clés en anglais, 1 686 en espagnol et en italien, 1 108 en allemand, 1 490 en portugais.
+- Le texte nouveau ou restructuré est dans outils/langues/<code>/v794.json (1 422 entrées en anglais, 1 455 en espagnol,
+  en italien et en portugais, 1 426 en allemand) : les fils d’Ariane à chevrons, les compteurs « sur », les sources datées
+  en toutes lettres, les séparateurs des scripts, et les textes des sections revues (calculateur du temps de
+  téléchargement, repères Red Dead Redemption 2, citations et axe daté de GTA 6 sur PC, carrés de la carte, feuille de
+  contrôle), traduits à la main.
+- Les entrées devenues inutiles par cette version ont été retirées des mémoires ; extraction à {} dans les cinq langues,
+  aucun conflit, aucune entrée cassée.
+
+6. TESTS ET CONTRÔLES
+- Tests adaptés aux nouveaux libellés (compteurs « X sur Y », virgules et parenthèses à la place des « · », « : » ou
+  virgule à la place des « — », « A, puis B » à la place des flèches, « de la version 1 à la version 2 », « Courant et
+  référence », « (simulation) », « (à moi) », « , consulté le », « , vérifié le », « , de nouveau », « Leonidakit, Devine
+  le lieu ») : audit-finition, calculateurs-astra, calculateurs-ergonomie-v35, calculateurs-integration,
+  calculateurs-lot2-pages, calculateurs-lot3, calculateurs-lot5, calculateurs-moteur-lot2, calculateurs-plan-ui-v749,
+  calculateurs-plan-v34, calculateurs-v747, carnets-browser, carnets-v751, catalogues-lot3, catalogues-v742,
+  catalogues-v743, catalogues-v750, collectibles-runtime, donnees-publiees, hubs-monde-v741, hubs-v740 (« 9 véhicules »
+  sans flèche), ia-v769, modele-v748, regression, section-activites, section-missions, section-online, section-trophees,
+  suivi-v738, v770, v771, v774, v780, v789, v790, v791 (« jogador », forme du code), v791-calculateur-pt, v7921 (date de
+  relecture 17 octobre 2026), visuel-lot2.
+- Tests qui lisaient un commentaire dans une feuille ou un script servi : ils lisent désormais la source commentée dans
+  outils/sources/ (section-activites, section-codes, section-missions, section-online, section-radios, section-trophees,
+  v775, v782) ; les règles de la carte passées dans carte-page.css y sont cherchées (v770 « .rl-list--all », v782
+  « .tr-st »).
+- v786 : les coûts d’usage de Ce qui est confirmé sont une liste de définitions à deux colonnes (.vf-notes--2
+  .vf-note--cost) ; le plan du site compte au moins trois dates distinctes (une refonte de tout le site date presque toutes
+  les pages du même jour, ce qui est exact).
+- Premier passage de verifier-tout : langues-pages a relevé deux restes de français dans les copies traduites, corrigés
+  dans les mémoires avant le passage final : « Précédent » et « Suivant » laissés tels quels dans les deux voisins de la
+  fiche Kodiak ou Topkick (es, it, pt) ; « ou » non traduit dans les six « évoque GMC ou Chevrolet », « Bell ou Learjet »,
+  « Kawasaki ou Yamaha », « Jaguar ou Lotus », « Lamborghini ou Ducati », « AMC ou Chrysler » (en « or », es et it « o »,
+  de « oder » ; « ou » est juste en portugais).
+- calculateurs-check-ultime : outils/CALCULATEUR-INVENTAIRE.md regénéré (kickers « 1. MES CALCULS » et
+  « 2. MON BUSINESS PLAN »).
+- Test nouveau : outils/tests/couverture-pages.test.cjs (l’inventaire tourne, les familles en place sont couvertes à
+  100 %, les nouvelles ont une adresse stable sans doublon, le rapport est écrit sans « — » ni « · »).
+- Deux défauts relevés par le contrôle des écrans au premier passage complet (17 octobre, 22 h 06 à 23 h 50, dans la
+  conversation suivante), corrigés dans les sources :
+  - Préchargement : la case à cocher réelle de la liste « Ce que tu peux faire dès maintenant », masquée en 1 px, recevait la
+    règle des champs des pages d’information (.info-page main :is(input, select, textarea) : 100 % de largeur, 46 px de
+    haut) et devenait une case invisible aussi large que l’écran, cliquable et débordant de la page à toutes les largeurs.
+    outils/sources/vitrine.css : sélecteur .vt-check-l input[type="checkbox"], plus précis, qui la ramène à 1 px, et
+    .vt-check-l en position relative.
+  - Carte : en passant les règles de la carte dans carte-page.css, chargée après style.css, sept valeurs que style.css
+    écrasait dans la v7.93 reprenaient le dessus : bouton « déplier » de l’arbre des lieux à 20 px (cible sous 24 px),
+    cases des filtres à 15 px, fond de la lecture des coordonnées, transition des pastilles de regroupement, nom des lieux
+    sur une seule ligne (textes coupés « Mount Kalaga National Park » et « Moore Haven Lock & Dam »), grille des régions en
+    quatre colonnes à partir de 1 280 px (rangée « 4 + 2 » non centrée), pastille qui grossit au survol. Les valeurs finales
+    de la v7.93 sont reprises dans outils/sources/carte-page.css (28 px, 17 px, fond à .96, transition par l’ombre, nom sur
+    deux lignes, trois colonnes puis deux de 821 à 1 000 px, pastille immobile à la souris).
+  - Vérification faite ensuite, déclaration par déclaration (postcss) : style.css et carte-page.css de la v7.94 donnent les
+    mêmes valeurs finales que style.css de la v7.93, à la seule exception voulue de la flèche des piles de visuels ; les
+    175 sélecteurs retirés ne correspondent à aucune classe des pages ni des scripts ; chaque feuille servie a les mêmes
+    déclarations, dans le même ordre, que sa source commentée.
+- Contrôles de la version livrée (outils/livraison/verifier-tout.sh sur l’état livré, 18 octobre, 0 h 06 à 2 h 05, en deux
+  temps après un redémarrage de la machine pendant l’étape écrans, sans changement de fichier entre les deux) : cadre du
+  calculateur 0 erreur (180 vues) ; suite node 1 163 sur 1 163 (les 12 tests qui attendaient encore les anciens libellés,
+  calculateurs-ergonomie-v35, calculateurs-lot2-pages, calculateurs-lot5, calculateurs-plan-v34, carnets-v751,
+  catalogues-lot3, catalogues-v743, collectibles-runtime, section-missions, v791, lisent désormais les nouveaux) ;
+  langues.test.cjs 51 sur 51 ; verifier : 0 erreur, 469 429 références dans 2 833 pages ; preuve de confidentialité tenue ;
+  pages des langues 35 sur 35 ; langues dans le navigateur 2 791 sur 2 791 ; écrans 77 pages × 16 largeurs
+  (1 232 chargements) et 74 pages allemandes × 5 largeurs (370 chargements) : aucun débordement, aucun texte trop petit,
+  aucune cible sous 24 px, et exactement les signaux de la v7.93 sur des pages non touchées (repère de ville de la carte
+  pannable, galeries des fiches, tuiles bento des Activités et des Animaux, outils du Calculateur, galeries des dossiers à
+  2 560 px), vérifiés en rejouant le contrôle sur le commit 38b7a8325 ; audit de clôture (26 pages, 182 chargements) :
+  0 problème, 0 erreur console, 11 933 contrastes vérifiés, 11 852 cibles de 24 à 44 px ; cookies : aucun, stockage local
+  sous des clés lk… seulement. Extraction : 0 texte à traduire en en, es, it, de, pt. Seconde passe de sync-site : aucun
+  fichier changé. Index de Léo à jour (356 315 octets, identique à l’archive de passation, donc évaluation 3 915 sur 3 995
+  inchangée). Images de partage à jour.
+
+7. LATENCE MESURÉE (téléphone 390 px, réseau froid, serveur local ; v7.93 réunie puis v7.94)
+- Feuilles et scripts servis compressés : style.css de 59 à 33 Ko, common.js de 19,8 à 12,7 Ko, actus.css de 15,2 à 11,6 Ko,
+  informations.css de 14,9 à 12 Ko ; carte-page.css 7 Ko chargée par la carte seulement.
+- Octets transférés par page : accueil de 180 à 143 Ko, préchargement de 312 à 274 Ko, fiche véhicule de 181 à 138 Ko,
+  vidéos officielles de 348 à 305 Ko (mêmes requêtes, mêmes images en 800 px au lieu de 1 280 px sur téléphone).
+
+8. FICHIERS
+- Nouveaux : outils/sources/ (95 feuilles et scripts commentés), outils/minifier.cjs, carte-page.css,
+  outils/couverture-pages.cjs, outils/COUVERTURE-PAGES.md, outils/tests/couverture-pages.test.cjs,
+  outils/langues/<code>/v794.json (5), LISEZ-MOI-v7.94.txt, outils/CHANGEMENTS-v7.94.txt.
+- Modifiés : les générateurs et données cités plus haut, outils/templates/vehicules.html, style.css et les feuilles
+  servies (régénérées depuis outils/sources/), les pages produites dans les six langues, les mémoires de traduction,
+  README.md, outils/calculateur-cadre.json (instantané du cadre du calculateur, libellés changés).
+- Rien à supprimer.

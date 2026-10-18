@@ -19,11 +19,11 @@ function scenario(){const s=blank();s.name='Ma voiture';s.plan.goal={...s.plan.g
 
 test('Le document du plan : des points repliés par défaut, l’essentiel dans chaque titre, le contenu calculé à l’ouverture',async()=>{const p=await page('plan',scenario());
  const list=folds(p,'#plan-report');assert.equal(list.length,6,'v7.49 : « Mes variantes du plan » s’ajoute aux cinq points');assert.ok(list.includes('plan-saved:closed'));assert.ok(list.every(x=>x.endsWith(':closed')),list.join(' '));
- const rep=text(p,'plan-report');assert.match(rep,/Appuie sur un point pour l’ouvrir/);assert.match(rep,/Ton programme, dans l’ordre/);assert.match(rep,/En premier : « Courses » ×9 · 5 parties, 2 étapes/,'le titre porte déjà l’essentiel');assert.match(rep,/Plans A, B, C… calculés sur ta situation/);
+ const rep=text(p,'plan-report');assert.match(rep,/Appuie sur un point pour l’ouvrir/);assert.match(rep,/Ton programme, dans l’ordre/);assert.match(rep,/En premier : « Courses » ×9, 5 parties, 2 étapes/,'le titre porte déjà l’essentiel');assert.match(rep,/Plans A, B, C… calculés sur ta situation/);
  assert.equal(p.d.getElementById('fold-plan-program').innerHTML,'','rien n’est calculé ni rendu tant que le point est fermé');assert.doesNotMatch(rep,/Après la partie 1 : achète/);
- clickSel(p,'[data-fold-head="plan-program"]');const f=p.d.querySelector('[data-fold="plan-program"]');assert.ok(f.classList.contains('is-open'));assert.equal(f.querySelector('.b-fold-head').getAttribute('aria-expanded'),'true');assert.equal(p.d.getElementById('fold-plan-program').hidden,false);assert.match(text(p,'plan-report'),/En premier · Partie 1/);assert.match(text(p,'plan-report'),/Après la partie 1 : achète « Garage »/);
+ clickSel(p,'[data-fold-head="plan-program"]');const f=p.d.querySelector('[data-fold="plan-program"]');assert.ok(f.classList.contains('is-open'));assert.equal(f.querySelector('.b-fold-head').getAttribute('aria-expanded'),'true');assert.equal(p.d.getElementById('fold-plan-program').hidden,false);assert.match(text(p,'plan-report'),/En premier, Partie 1/);assert.match(text(p,'plan-report'),/Après la partie 1 : achète « Garage »/);
  assert.ok(p.d.getElementById('fold-plan-program').classList.contains('is-anim'),'l’ouverture s’anime');
- clickSel(p,'[data-fold-head="plan-alternatives"]');assert.match(text(p,'plan-report'),/Plan A · Le meilleur mélange/);
+ clickSel(p,'[data-fold-head="plan-alternatives"]');assert.match(text(p,'plan-report'),/Plan A, Le meilleur mélange/);
  // l’état est gardé sur l’appareil et survit à un recalcul et à un rechargement
  assert.deepEqual(JSON.parse(p.w.localStorage.getItem('lk-calc-folds-v1')).items,{'plan-program':true,'plan-alternatives':true});
  const cap=p.d.getElementById('plan-capital');cap.value='60000';fire(p,cap,'input');assert.deepEqual(folds(p,'#plan-report').slice(0,2),['plan-program:open','plan-alternatives:open']);
@@ -37,8 +37,8 @@ test('Le document du plan : des points repliés par défaut, l’essentiel dans 
 test('Les points suivent le plan : suivi, échéance et détails ont leur titre parlant ; la mise à jour se fait dans un point ouvert',async()=>{const p=await page('plan',scenario());
  clickSel(p,'[data-fold-head="plan-actual"]');const set=(id,v)=>{const n=p.d.getElementById(id);n.value=String(v);fire(p,n,'input');};set('plan-actual',120000);set('plan-actual-minutes',90);clickSel(p,'[data-b-plan-log]');
  assert.equal(stored(p).plan.situation.capital,120000);assert.ok(p.d.querySelector('[data-fold="plan-actual"]').classList.contains('is-open'),'le point reste ouvert après la mise à jour');
- let rep=text(p,'plan-report');assert.match(rep,/1 partie notée · dernière : \+70\s000 \$ \(−92\s000 \$ par rapport au prévu\)/);assert.match(rep,/70\s000 \$ gagnés au lieu de 162\s000 \$ prévus · plans A, B, C…/);assert.ok(p.d.querySelector('[data-fold="plan-alternatives"]').classList.contains('b-fold--alert'));
- const dl=p.d.getElementById('plan-deadline');dl.value='2';fire(p,dl,'input');rep=text(p,'plan-report');assert.match(rep,/Ton échéance : 2 jours/);assert.match(rep,/Pas avec ton rythme · jour \d+ au lieu de 2/);
+ let rep=text(p,'plan-report');assert.match(rep,/1 partie notée, dernière : \+70\s000 \$ \(−92\s000 \$ par rapport au prévu\)/);assert.match(rep,/70\s000 \$ gagnés au lieu de 162\s000 \$ prévus, plans A, B, C…/);assert.ok(p.d.querySelector('[data-fold="plan-alternatives"]').classList.contains('b-fold--alert'));
+ const dl=p.d.getElementById('plan-deadline');dl.value='2';fire(p,dl,'input');rep=text(p,'plan-report');assert.match(rep,/Ton échéance : 2 jours/);assert.match(rep,/Pas avec ton rythme, jour \d+ au lieu de 2/);
  clickSel(p,'[data-mode="advanced"]');const list=folds(p,'#plan-report');assert.ok(list.length>=10,'les détails ajoutent leurs points : '+list.join(' '));assert.ok(list.includes('plan-curve:closed'));const ex=folds(p,'#expert-plan');assert.equal(ex.length,5,ex.join(' '));/* v7.74 : les cinq points des calculs (Et si, hypothèses, comparaison, formule, chiffres) */assert.deepEqual(ex.map(x=>x.split(':')[0]),['plan-sensitivity','plan-hypotheses','plan-reference','plan-formula','plan-x-raw']);assert.ok(ex.some(x=>x.startsWith('plan-sensitivity')),'v7.70 : « Et si » du plan en mode Expert');
  clean(p);});
 test('Les huit calculs aussi : hypothèses, compromis et formules deviennent des points fermés, la réponse et ses chiffres restent seuls visibles',async()=>{const p=await page('goal');
@@ -57,7 +57,7 @@ test('Graphiques : aire dégradée, info-bulle sur chaque point, point réel mod
  const p=await page('plan',s,{storage:{'lk-calc-folds-v1':JSON.stringify({all:true})}});
  const fig=p.d.querySelector('[data-c-chart="c-plan-curve"]');assert.ok(fig);assert.equal(fig.querySelector('.c-area'),null,'v7.49 : plus d’aire lissée sous le prévu');assert.match(fig.querySelector('path.c-series-0').getAttribute('d'),/H[\d.]+ V[\d.]+/,'v7.49 : le prévu se dessine en marches (l’argent arrive d’un coup)');assert.equal(fig.querySelector('path.c-series-1'),null,'v7.49 : les points réels ne sont jamais reliés');
  const pts=[...fig.querySelectorAll('svg[role="img"] .c-chart-point')];assert.ok(pts.length>=3);assert.ok(pts.every(x=>x.getAttribute('data-tip')));
- const real=fig.querySelector('[data-c-edit="log:0"]');assert.ok(real,'le point réel est modifiable');assert.equal(real.getAttribute('role'),'button');assert.match(real.getAttribute('data-tip'),/clique pour corriger/);
+ const real=fig.querySelector('[data-c-edit="log:0"]');assert.ok(real,'le point réel est modifiable');assert.equal(real.getAttribute('role'),'button');assert.match(real.getAttribute('data-tip'),/Clique pour corriger/);
  fire(p,real,'click');const box=p.d.querySelector('.c-edit');assert.ok(box,'fenêtre de correction');assert.equal(box.querySelector('[data-c-edit-capital]').value.replace(/\s/g,''),'250000');
  box.querySelector('[data-c-edit-capital]').value='260 000';box.querySelector('[data-c-edit-minutes]').value='75';clickSel(p,'[data-c-edit-save]');
  assert.equal(stored(p).plan.log[0].capital,260000);assert.equal(stored(p).plan.log[0].minutes,75);assert.equal(p.d.querySelector('.c-edit'),null,'la fenêtre se ferme au rendu suivant');
@@ -70,7 +70,7 @@ test('Graphiques : aire dégradée, info-bulle sur chaque point, point réel mod
  const k=p.d.querySelector('[data-c-chart="c-sensitivity-goal"] [data-c-apply]');k.dispatchEvent(new p.w.KeyboardEvent('keydown',{key:'Enter',bubbles:true,cancelable:true}));assert.equal(stored(p).goal.hourly,before*1.2*0.8);
  clean(p);});
 test('À l’impression tout se déplie, puis tout revient comme avant',async()=>{const p=await page('plan',scenario());
- assert.ok(folds(p,'#plan-report').every(x=>x.endsWith(':closed')));p.w.dispatchEvent(new p.w.Event('beforeprint'));assert.ok(folds(p,'#plan-report').every(x=>x.endsWith(':open')));assert.match(text(p,'plan-report'),/En premier · Partie 1/);
+ assert.ok(folds(p,'#plan-report').every(x=>x.endsWith(':closed')));p.w.dispatchEvent(new p.w.Event('beforeprint'));assert.ok(folds(p,'#plan-report').every(x=>x.endsWith(':open')));assert.match(text(p,'plan-report'),/En premier, Partie 1/);
  p.w.dispatchEvent(new p.w.Event('afterprint'));assert.ok(folds(p,'#plan-report').every(x=>x.endsWith(':closed')));
  clean(p);});
 test('La réponse qui change se signale ; une réponse identique ne bouge pas',async()=>{const p=await page('goal');

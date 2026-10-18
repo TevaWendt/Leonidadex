@@ -420,7 +420,7 @@ test('transfert : la page compagnon ouverte avec le lien montre l’aperçu, imp
   const { w, zone } = await ouvrir('#transfert=' + charge);
   assert.equal(zone.hidden, false);
   const apercu = N(zone.querySelector('[data-tr-apercu]').textContent);
-  assert.match(apercu, /24 cases cochées · 2 calculs · 1 plan · \d+ rubriques en tout/);
+  assert.match(apercu, /24 cases cochées, 2 calculs, 1 plan, \d+ rubriques en tout/);
   assert.equal(zone.querySelector('[data-tr-choix]').hidden, false);
   assert.equal(w.localStorage.getItem('lk_own_vehicules'), null, 'rien d’écrit avant le choix');
   zone.querySelector('[data-tr-fusionner]').click();

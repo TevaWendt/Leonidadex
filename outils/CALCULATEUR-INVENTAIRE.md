@@ -58,7 +58,7 @@ Lecture : **kind** = type de contrôle ; **field** = chemin dans le scénario v6
 | où | kind | id | label | data | aria |
 |---|---|---|---|---|---|
 | atelier | button | calc-save | ☆ Enregistrer ce calcul |  |  |
-| atelier | button | calc-saved-open | Mes calculs 0 — Mes calculs enregistrés : 0 calcul et 0 business plan | savedOpen | controls=calc-drawer haspopup=dialog |
+| atelier | button | calc-saved-open | Mes calculs 0, Mes calculs enregistrés : 0 calcul et 0 business plan | savedOpen | controls=calc-drawer haspopup=dialog |
 | atelier | button | calc-share | Partager ↗ |  |  |
 | onglets | button | tab-goal | Mon objectif | tab=goal | selected=true controls=panel-goal |
 | onglets | button | tab-purchase | Mes achats | tab=purchase | selected=false controls=panel-purchase |
@@ -68,7 +68,7 @@ Lecture : **kind** = type de contrôle ; **field** = chemin dans le scénario v6
 | onglets | button | tab-roi | Ça vaut le coup ? | tab=roi | selected=false controls=panel-roi |
 | onglets | button | tab-activities | Mes activités | tab=activities | selected=false controls=panel-activities |
 | onglets | button | tab-compare | Quel achat choisir ? | tab=compare | selected=false controls=panel-compare |
-| onglets | button | tab-plan | Mon business plan | tab=plan kicker=2 · MON BUSINESS PLAN | selected=false controls=panel-plan |
+| onglets | button | tab-plan | Mon business plan | tab=plan kicker=2. MON BUSINESS PLAN | selected=false controls=panel-plan |
 | modes | button |  | Simple | mode=quick | pressed=true |
 | modes | button |  | Pas à pas | mode=guided | pressed=false |
 | modes | button |  | Expert | mode=advanced | pressed=false |
@@ -78,7 +78,7 @@ Lecture : **kind** = type de contrôle ; **field** = chemin dans le scénario v6
 | atelier | button |  | Voir mes business plans | bSavedView=plans |  |
 | atelier | text | calc-name | Le nom de mon calcul |  |  |
 | atelier | button | calc-save-bottom | ☆ Enregistrer ce calcul | bSaveCurrent |  |
-| atelier | button |  | Mes calculs 0 — Mes calculs enregistrés : 0 calcul et 0 business plan | savedOpen | controls=calc-drawer haspopup=dialog |
+| atelier | button |  | Mes calculs 0, Mes calculs enregistrés : 0 calcul et 0 business plan | savedOpen | controls=calc-drawer haspopup=dialog |
 | atelier | button | calc-print | Imprimer |  |  |
 | atelier | button | calc-undo | Annuler la remise à zéro |  |  |
 | tiroir Mes calculs | button |  | Fermer Mes calculs enregistrés | drawerClose |  |
@@ -179,7 +179,7 @@ Lecture : **kind** = type de contrôle ; **field** = chemin dans le scénario v6
 | button |  |  | 1 h | daily=60 | pressed=true | Simple + Expert | petit à petit, à la fin de chaque mission |
 | button |  |  | 2 h | daily=120 | pressed=false | Simple + Expert | petit à petit, à la fin de chaque mission |
 | button |  |  | 3 h | daily=180 | pressed=false | Simple + Expert | petit à petit, à la fin de chaque mission |
-| button |  |  | Voir ma réponse ↓ | showAnswer |  | Simple + Expert | petit à petit, à la fin de chaque mission |
+| button |  |  | Voir ma réponse | showAnswer |  | Simple + Expert | petit à petit, à la fin de chaque mission |
 | text | f-goal-reserve | goal.reserve | Argent que je garde de côté ($) | field=goal.reserve number min=0 max=1000000000000 | invalid=false | Simple + Expert (E) | petit à petit, à la fin de chaque mission |
 | button |  |  | Rétablir cette valeur | bDefault=goal.reserve bDefaultValue=0 |  | Simple + Expert (E) | petit à petit, à la fin de chaque mission |
 | text | f-goal-plannedSpend | goal.plannedSpend | Achats à payer avant mon objectif ($) | field=goal.plannedSpend number min=0 max=1000000000000 |  | Simple + Expert (E) | petit à petit, à la fin de chaque mission |
@@ -245,7 +245,7 @@ Lecture : **kind** = type de contrôle ; **field** = chemin dans le scénario v6
 | select | f-assets-0-capabilities-terrain | assets.0.capabilities.terrain | Il va (si tu le sais) | field=assets.0.capabilities.terrain |  | Simple + Expert (E) | achat libre |
 | text | purchase-cap-seats | assets.0.capabilities.seats | Places, toi compris (si tu le sais) | field=assets.0.capabilities.seats number integer min=0 max=100 |  | Simple + Expert (E) | achat libre |
 | button |  |  | Rétablir cette valeur | bDefault=assets.0.capabilities.seats bDefaultValue=null |  | Simple + Expert (E) | achat libre |
-| button |  |  | Voir ma réponse ↓ | showAnswer |  | Simple + Expert | achat libre, fiche du catalogue, revenu écrit |
+| button |  |  | Voir ma réponse | showAnswer |  | Simple + Expert | achat libre, fiche du catalogue, revenu écrit |
 | button |  |  | Est-ce que ça vaut le coup ? | bRoiCurrent |  | Simple + Expert | achat libre, fiche du catalogue, revenu écrit |
 | button |  |  | Ajouter à « Quoi acheter d’abord ? » | bOrderCurrent |  | Simple + Expert | achat libre, fiche du catalogue, revenu écrit |
 | button |  |  | Comment est-ce calculé ? | foldHead=purchase-d0 | expanded=false controls=fold-purchase-d0 | Simple + Expert | achat libre |
@@ -379,7 +379,7 @@ Lecture : **kind** = type de contrôle ; **field** = chemin dans le scénario v6
 | text | session-activity-2-players | activities.2.players | Joueurs nécessaires | field=activities.2.players number integer min max=100 |  | Simple + Expert (opt) |  |
 | checkbox |  |  | Je l’ai déjà acheté | owned=2 |  | Simple + Expert (opt) |  |
 | checkbox |  |  | Je prépare une seule fois par partie | bPrepOnce=2 |  | Simple + Expert (opt) |  |
-| button |  |  | Voir ma réponse ↓ | showAnswer |  | Simple + Expert |  |
+| button |  |  | Voir ma réponse | showAnswer |  | Simple + Expert |  |
 | button |  |  | Changer mon argent et ce que je garde de côté ↗ | open=goal |  | Simple + Expert |  |
 | button |  |  | Autres programmes réalisables | foldHead=session-d0 | expanded=false controls=fold-session-d0 | Simple + Expert |  |
 | button |  |  | Noter mon résultat dans le business plan | open=plan |  | Simple + Expert |  |
@@ -421,7 +421,7 @@ Lecture : **kind** = type de contrôle ; **field** = chemin dans le scénario v6
 | text | f-budget-allocations-3 | budget.allocations.3 | Consommables ($) | field=budget.allocations.3 number min=0 max=1000000000000 |  | Simple + Expert (masqué par un réglage) | je répartis moi-même, panier de Quoi acheter d’abord ? |
 | text | f-budget-allocations-4 | budget.allocations.4 | Autres achats ($) | field=budget.allocations.4 number min=0 max=1000000000000 |  | Simple + Expert (masqué par un réglage) | je répartis moi-même, panier de Quoi acheter d’abord ? |
 | text | f-budget-extra | budget.extra | Autres dépenses prévues ($) | field=budget.extra number min=0 max=1000000000000 |  | Simple + Expert | je répartis moi-même, panier de Quoi acheter d’abord ? |
-| button |  |  | Voir ma réponse ↓ | showAnswer |  | Simple + Expert | je répartis moi-même, panier de Quoi acheter d’abord ? |
+| button |  |  | Voir ma réponse | showAnswer |  | Simple + Expert | je répartis moi-même, panier de Quoi acheter d’abord ? |
 | text | budget-sessions | analysis.horizon.sessions | Sur combien de parties veux-tu voir ton argent ? | field=analysis.horizon.sessions number integer min=0 max=10000 |  | Simple + Expert (E) | je répartis moi-même, panier de Quoi acheter d’abord ? |
 | button |  |  | Rétablir cette valeur | bDefault=analysis.horizon.sessions bDefaultValue=null |  | Simple + Expert (E) | je répartis moi-même, panier de Quoi acheter d’abord ? |
 | button |  |  | Voir mes achats | open=order |  | Simple + Expert | je répartis moi-même, panier de Quoi acheter d’abord ? |
@@ -458,7 +458,7 @@ Lecture : **kind** = type de contrôle ; **field** = chemin dans le scénario v6
 | search | order-search |  | Ajoute un achat (cherche dans le site) | bCombo=order | expanded=false controls=order-search-list | Simple + Expert | panier vide, deux achats, éditeur ouvert |
 | button |  |  | Ajouter autre chose, sans fiche | bAddFree |  | Simple + Expert | panier vide, deux achats, éditeur ouvert |
 | select | f-order-objective | order.objective | Je veux | field=order.objective |  | Simple + Expert | panier vide, deux achats, éditeur ouvert |
-| button |  |  | Voir ma réponse ↓ | showAnswer |  | Simple + Expert | panier vide, deux achats, éditeur ouvert |
+| button |  |  | Voir ma réponse | showAnswer |  | Simple + Expert | panier vide, deux achats, éditeur ouvert |
 | button |  |  | Ce qui compte dans ce calcul | foldHead=order-assumptions | expanded=false controls=fold-order-assumptions | Simple + Expert | panier vide, deux achats, éditeur ouvert |
 | button |  |  | Modifier | bFocus=order-capital |  | Simple + Expert | panier vide, deux achats, éditeur ouvert |
 | button |  |  | Modifier | bFocus=order-reserve |  | Simple + Expert | panier vide, deux achats, éditeur ouvert |
@@ -527,7 +527,7 @@ Lecture : **kind** = type de contrôle ; **field** = chemin dans le scénario v6
 | text | f-roi-hours | roi.hours | Je m’en sers pendant (heures de jeu) | field=roi.hours number min=0 max=16666 |  | Simple + Expert | achat plaisir (estimate), estimate + activité pour regagner, nouvelle activité (new), activité améliorée (improve), chiffre par heure (continuous), deuxième achat comparé |
 | text | f-roi-gainPercent | roi.gainPercent | Récompense en plus (%) | field=roi.gainPercent number min=0 max=1000 |  | Simple + Expert (masqué par un réglage) | achat plaisir (estimate), estimate + activité pour regagner, nouvelle activité (new), activité améliorée (improve), chiffre par heure (continuous), deuxième achat comparé |
 | text | f-roi-durationReduction | roi.durationReduction | Mission plus courte de (%) | field=roi.durationReduction number min=0 max=95 |  | Simple + Expert (masqué par un réglage) | achat plaisir (estimate), estimate + activité pour regagner, nouvelle activité (new), activité améliorée (improve), chiffre par heure (continuous), deuxième achat comparé |
-| button |  |  | Voir ma réponse ↓ | showAnswer |  | Simple + Expert | achat plaisir (estimate), estimate + activité pour regagner, nouvelle activité (new), activité améliorée (improve), chiffre par heure (continuous), deuxième achat comparé |
+| button |  |  | Voir ma réponse | showAnswer |  | Simple + Expert | achat plaisir (estimate), estimate + activité pour regagner, nouvelle activité (new), activité améliorée (improve), chiffre par heure (continuous), deuxième achat comparé |
 | search | roi-compare-search |  | Autre achat à comparer (facultatif) | bCombo=roi-compare | expanded=false controls=roi-compare-search-list | Simple + Expert (opt) | achat plaisir (estimate), estimate + activité pour regagner, nouvelle activité (new), activité améliorée (improve), chiffre par heure (continuous), deuxième achat comparé |
 | button |  |  | Comparer avec un achat libre | bRoiAlternative |  | Simple + Expert (opt) | achat plaisir (estimate), estimate + activité pour regagner, nouvelle activité (new), activité améliorée (improve), chiffre par heure (continuous), deuxième achat comparé |
 | text | f-roi-upgrades | assets.0.extras | Améliorations ($) | field=assets.0.extras number min=0 max=1000000000000 |  | Simple + Expert (opt) | achat plaisir (estimate), estimate + activité pour regagner, nouvelle activité (new), activité améliorée (improve), chiffre par heure (continuous), deuxième achat comparé |
@@ -563,9 +563,9 @@ Lecture : **kind** = type de contrôle ; **field** = chemin dans le scénario v6
 | checkbox |  |  | Je l’ai déjà acheté | owned=0 |  | Simple + Expert (opt) | estimate + activité pour regagner, nouvelle activité (new), activité améliorée (improve) |
 | checkbox |  |  | Je prépare une seule fois par partie | bPrepOnce=0 |  | Simple + Expert (opt) | estimate + activité pour regagner, nouvelle activité (new), activité améliorée (improve) |
 | text | roi-players | goal.players | Nous sommes combien de joueurs, moi compris ? | field=goal.players number integer min max=100 | invalid=false | Simple + Expert | nouvelle activité (new), activité améliorée (improve) |
-| checkbox |  |  | Exemple A : missions courtes · c’est moi qui le dis | bRoiActivity=scenario-a |  | Simple + Expert | nouvelle activité (new), activité améliorée (improve) |
-| checkbox |  |  | Exemple B : missions longues · c’est moi qui le dis | bRoiActivity=scenario-b |  | Simple + Expert | nouvelle activité (new), activité améliorée (improve) |
-| checkbox |  |  | Exemple C : avec un achat de départ · c’est moi qui le dis | bRoiActivity=scenario-c |  | Simple + Expert | nouvelle activité (new), activité améliorée (improve) |
+| checkbox |  |  | Exemple A : missions courtes, c’est moi qui le dis | bRoiActivity=scenario-a |  | Simple + Expert | nouvelle activité (new), activité améliorée (improve) |
+| checkbox |  |  | Exemple B : missions longues, c’est moi qui le dis | bRoiActivity=scenario-b |  | Simple + Expert | nouvelle activité (new), activité améliorée (improve) |
+| checkbox |  |  | Exemple C : avec un achat de départ, c’est moi qui le dis | bRoiActivity=scenario-c |  | Simple + Expert | nouvelle activité (new), activité améliorée (improve) |
 | text | roi-activity-0-name | activities.0.name | Nom de mon activité | field=activities.0.name |  | Simple + Expert | nouvelle activité (new), activité améliorée (improve) |
 | text | roi-activity-0-reward | activities.0.reward | Récompense ($) | field=activities.0.reward number min=0 max=1000000000000 |  | Simple + Expert | nouvelle activité (new), activité améliorée (improve) |
 | text | roi-activity-0-duration | activities.0.duration | Durée (min) | field=activities.0.duration number min=0 max=1000000 |  | Simple + Expert | nouvelle activité (new), activité améliorée (improve) |
@@ -620,9 +620,9 @@ Lecture : **kind** = type de contrôle ; **field** = chemin dans le scénario v6
 | kind | id | field | label | data | aria | mode | réglage |
 |---|---|---|---|---|---|---|---|
 | button |  |  | Voir en mode Expert | bMode=advanced |  | Simple + Expert |  |
-| button |  |  | Exemple A · solo | activityExample=scenario-a |  | Simple + Expert |  |
-| button |  |  | Exemple B · solo | activityExample=scenario-b |  | Simple + Expert |  |
-| button |  |  | Exemple C · solo | activityExample=scenario-c |  | Simple + Expert |  |
+| button |  |  | Exemple A, solo | activityExample=scenario-a |  | Simple + Expert |  |
+| button |  |  | Exemple B, solo | activityExample=scenario-b |  | Simple + Expert |  |
+| button |  |  | Exemple C, solo | activityExample=scenario-c |  | Simple + Expert |  |
 | select | f-inverse-selected | inverse.selected | Activité à refaire | field=inverse.selected |  | Simple + Expert |  |
 | text | f-inverse-minutes | inverse.minutes | J’ai combien de temps ? (minutes) | field=inverse.minutes number min=0 max=1000000 |  | Simple + Expert |  |
 | radio |  |  | Je joue seul |  |  | Simple + Expert |  |
@@ -630,7 +630,7 @@ Lecture : **kind** = type de contrôle ; **field** = chemin dans le scénario v6
 | text | activity-players | goal.players | Nombre de joueurs, moi compris | field=goal.players number integer min max=100 | invalid=false | Simple + Expert (masqué par un réglage) |  |
 | text | activity-capital | goal.capital | J’ai déjà ($) | field=goal.capital number min=0 max=1000000000000 | invalid=false | Simple + Expert |  |
 | text | activity-reserve | goal.reserve | Argent que je garde de côté ($) | field=goal.reserve number min=0 max=1000000000000 | invalid=false | Simple + Expert |  |
-| button | activity-answer |  | Voir ma réponse ↓ | showAnswer |  | Simple + Expert |  |
+| button | activity-answer |  | Voir ma réponse | showAnswer |  | Simple + Expert |  |
 | button |  |  | Ce qui compte dans ce calcul | foldHead=activities-assumptions | expanded=false controls=fold-activities-assumptions | Simple + Expert |  |
 | button |  |  | Modifier | bFocus=f-inverse-minutes |  | Simple + Expert |  |
 | button |  |  | Modifier | bFocus=activity-players |  | Simple + Expert |  |
@@ -704,7 +704,7 @@ Lecture : **kind** = type de contrôle ; **field** = chemin dans le scénario v6
 | text | compare-sessions | analysis.horizon.sessions | Je m’en sers pendant (parties) | field=analysis.horizon.sessions number integer min=0 max=10000 |  | Simple + Expert | vide, deux achats libres |
 | text | compare-hours | compare.hours | Je m’en sers pendant (heures de jeu) | field=compare.hours number min=0 max=16666 |  | Simple + Expert (E) | vide, deux achats libres |
 | button |  |  | Rétablir cette valeur | bDefault=compare.hours bDefaultValue=10 |  | Simple + Expert (E) | vide, deux achats libres |
-| button |  |  | Voir ma réponse ↓ | showAnswer |  | Simple + Expert | vide, deux achats libres |
+| button |  |  | Voir ma réponse | showAnswer |  | Simple + Expert | vide, deux achats libres |
 | button |  |  | Et si le chiffre bouge de 20 % ? | foldHead=compare-sensitivity | expanded=false controls=fold-compare-sensitivity | Expert (E) | vide, deux achats libres |
 | button |  |  | Et si autre chose change ? | foldHead=compare-hypotheses | expanded=false controls=fold-compare-hypotheses | Expert (E) | vide, deux achats libres |
 | button |  |  | Comparer avec un calcul gardé | foldHead=compare-reference | expanded=false controls=fold-compare-reference | Expert (E) | vide, deux achats libres |
@@ -768,7 +768,7 @@ Lecture : **kind** = type de contrôle ; **field** = chemin dans le scénario v6
 | text | plan-deadline | plan.deadlineDays | Je veux y arriver en (jours, si tu veux) | field=plan.deadlineDays number integer min max=36500 |  | Simple + Expert | somme, gain par heure, achat, missions, achat d’avant, déblocage |
 | text | plan-max-repeat | plan.maxRepeat | Même mission à la suite, au maximum | field=plan.maxRepeat number integer min max=256 |  | Simple + Expert (E) | somme, gain par heure, achat, missions, achat d’avant, déblocage |
 | button |  |  | Rétablir cette valeur | bDefault=plan.maxRepeat bDefaultValue=100 |  | Simple + Expert (E) | somme, gain par heure, achat, missions, achat d’avant, déblocage |
-| button |  |  | Voir ma réponse ↓ | showAnswer |  | Simple + Expert | somme, gain par heure, achat, missions, achat d’avant, déblocage |
+| button |  |  | Voir ma réponse | showAnswer |  | Simple + Expert | somme, gain par heure, achat, missions, achat d’avant, déblocage |
 | button |  |  | Après avoir joué, écrire ce que j’ai vraiment | bFocus=plan-actual |  | Simple + Expert | somme, gain par heure |
 | checkbox |  |  | Afficher plus de détails (partie par partie, et si, courbe, calendrier) | bPlanDetails |  | Expert | somme, gain par heure |
 | button |  |  | Modifier | bFocus=plan-capital |  | Simple + Expert | somme, gain par heure |

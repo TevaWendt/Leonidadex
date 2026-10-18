@@ -101,19 +101,19 @@ test('P7 mode Expert de Mon objectif avec une référence de carnet calculée so
   const s = base(); s.tab = 'goal'; s.views.goal = 'advanced'; s.mode = 'advanced';
   const p = await page('goal', s, { 'lk-calculator-notebooks-v3': JSON.stringify(notebooks) });
   const xg = text(p, 'expert-goal');
-  assert.match(xg, /version 1 → 2/);
+  assert.match(xg, /de la version 1 à la version 2/);
   // Les mots interdits de v747 sont contrôlés sur le panneau Expert, là où la note nouvelle est rendue : « Horizon : … » est une
   // étiquette de base du bloc « Ce qui compte » de #goal-results (calculateurs-workspace.js, .b-explain-horizon, antérieure au lot 2,
   // texte fixe généré, hors périmètre) que #panel-goal contient dès qu’un résultat est affiché (réconciliation lot 2 ; la spec §5.2
   // visait #panel-goal). La phrase nouvelle elle-même est contrôlée à part.
   assert.doesNotMatch(xg, /\bcapital\b|\bmoteur\b|\bHorizon\b|\bPrérequis\b/);
-  const note = [...p.d.querySelectorAll('#expert-goal .calc-note')].map(n => flat(n.textContent)).find(t => /version 1 → 2/.test(t));
+  const note = [...p.d.querySelectorAll('#expert-goal .calc-note')].map(n => flat(n.textContent)).find(t => /de la version 1 à la version 2/.test(t));
   assert.ok(note, 'note de version dans une .calc-note du panneau Expert');
   assert.doesNotMatch(note, /\bcapital\b|\bmoteur\b|\bHorizon\b|\bPrérequis\b/);
   // sans référence calculée sous l’ancienne version : pas de note
   clean(p);
   const q = await page('goal', s, { 'lk-calculator-notebooks-v3': JSON.stringify({ ...notebooks, entries: [{ ...notebooks.entries[0], config: { ...cfg, modelUpgradedFrom: null } }] }) });
-  assert.doesNotMatch(text(q, 'expert-goal'), /version 1 → 2/);
+  assert.doesNotMatch(text(q, 'expert-goal'), /de la version 1 à la version 2/);
   clean(q);
 });
 
@@ -175,7 +175,7 @@ test('PER2-1 plan, « Ta prochaine partie » : part de l’argent après l’ach
   // = +155 000 → 175 000 $. Avant : « Tu passes de 100 000 $ à 255 000 $. Puis achète : Garage » (un solde qui n’existe à aucun instant du journal).
   const s0 = H.planWithMissions(B, base()); s0.tab = 'plan'; const s = B.validate(s0, initial);
   const p = await page('plan', s); const res = text(p, 'plan-results');
-  assert.match(res, /Ta prochaine partie \(1 h 30\)/); assert.match(res, /Achète d’abord : Garage → il te reste 20 000 \$\. Tu passes de 20 000 \$ à 175 000 \$\./);
+  assert.match(res, /Ta prochaine partie \(1 h 30\)/); assert.match(res, /Achète d’abord : Garage\. Il te reste 20 000 \$\. Tu passes de 20 000 \$ à 175 000 \$\./);
   assert.doesNotMatch(res, /255 000|Puis achète/);
   clean(p);
 });
@@ -212,7 +212,7 @@ test('PER3-2 ouvrir un calcul enregistré sous la version 1 (carnet) : le messag
   const p = await page('goal', live, { 'lk-calculator-notebooks-v3': JSON.stringify(notebooks) });
   p.w.confirm = () => true;
   const b = p.d.querySelector('[data-b-load="e1"]'); assert.ok(b, 'bouton d’ouverture de e1'); fire(p, b, 'click'); p.flush();
-  assert.equal(text(p, 'calc-live').trim(), '« Ancien objectif » est ouvert. Les règles de calcul ont changé depuis cet enregistrement (version 1 → 2) : certains résultats peuvent changer. Tes chiffres sont gardés.');
+  assert.equal(text(p, 'calc-live').trim(), '« Ancien objectif » est ouvert. Les règles de calcul ont changé depuis cet enregistrement (de la version 1 à la version 2) : certains résultats peuvent changer. Tes chiffres sont gardés.');
   assert.match(text(p, 'goal-results'), /6 h 12/); // (800 000 + 20 000 − 200 000) ÷ 100 000 = 6,2 h
   const st = stored(p); assert.equal(st.modelVersion, 2); assert.equal(st.modelUpgradedFrom, null); assert.equal(st.goal.target, 800000);
   const nb = JSON.parse(p.w.localStorage.getItem('lk-calculator-notebooks-v3')); assert.equal(nb.entries[0].config.modelUpgradedFrom, 1, 'l’entrée du carnet garde « calculé sous la version 1 »');
@@ -280,8 +280,8 @@ test('REG6-1 plan, partie à gain négatif : un seul signe (« −2 000 $ », «
   const p = await page('plan', s); const res = text(p, 'plan-results'), rep = text(p, 'plan-report');
   // correctif lot 2 (revue 7) : la partie 1 n’est qu’obtention (60 min) : la prochaine partie le dit (« Commence par obtenir… ») au lieu de « Joue 1 h : environ −2 000 $ » ;
   // les 2 000 $ de coût d’usage restent visibles : 200 000 → 198 000 $, « Par partie −2 000 $ », ligne du tableau « obtenir « Achat P » (1 h) −2 000 $ 198 000 $ »
-  assert.match(res, /Commence par obtenir « Achat P » \(1 h\)\./); assert.match(res, /Tu passes de 200 000 \$ à 198 000 \$/); assert.match(rep, /Par partie ?−2 000 \$/); assert.match(rep, /Partie 1 · jour 1 ?obtenir « Achat P » \(1 h\) ?−2 000 \$ ?198 000 \$/);
-  assert.match(rep, /Partie 2 · jour 2 ?obtenir « Achat P » \(30 min\), Courte ×3 ?\+7 000 \$ ?205 000 \$/); // la partie 2 finit l’obtention (30 min) avant les missions assert.doesNotMatch(res + ' ' + rep, /\+[-−]|[-−]\+/, 'double signe');
+  assert.match(res, /Commence par obtenir « Achat P » \(1 h\)\./); assert.match(res, /Tu passes de 200 000 \$ à 198 000 \$/); assert.match(rep, /Par partie ?−2 000 \$/); assert.match(rep, /Partie 1, jour 1 ?obtenir « Achat P » \(1 h\) ?−2 000 \$ ?198 000 \$/);
+  assert.match(rep, /Partie 2, jour 2 ?obtenir « Achat P » \(30 min\), Courte ×3 ?\+7 000 \$ ?205 000 \$/); // la partie 2 finit l’obtention (30 min) avant les missions assert.doesNotMatch(res + ' ' + rep, /\+[-−]|[-−]\+/, 'double signe');
   clean(p);
   // (a) + (c) 500 000 $, réserve 0, but 1 000 000 $ disponibles, « M » 100 000 $ / 60 min / achat de départ 200 000 $ (ARI5-4) : partie 1 = −200 000 + 100 000 = −100 000 (400 000),
   // puis +100 000 par partie : 400 000 + 6 × 100 000 = 1 000 000 → 7 parties. « Mettre à jour mon plan » avec 410 000 $ après 60 min : prévu −100 000, réel 410 000 − 500 000 = −90 000,
@@ -291,7 +291,7 @@ test('REG6-1 plan, partie à gain négatif : un seul signe (« −2 000 $ », «
   t.views.plan = 'advanced'; t.mode = 'advanced';
   const r2 = B.evaluate('plan', t); assert.equal(r2.valid, true, r2.reason); assert.equal(r2.totalSessions, 7); assert.equal(r2.sessions[0].gain, -100000);
   const q = await page('plan', t); const rep0 = text(q, 'plan-report');
-  assert.match(rep0, /Par partie ?−100 000 \$/); assert.match(rep0, /Partie 1 · jour 1 ?M ×1 ?−100 000 \$ ?400 000 \$/); assert.doesNotMatch(text(q, 'plan-results') + ' ' + rep0, /\+[-−]|[-−]\+/, 'double signe');
+  assert.match(rep0, /Par partie ?−100 000 \$/); assert.match(rep0, /Partie 1, jour 1 ?M ×1 ?−100 000 \$ ?400 000 \$/); assert.doesNotMatch(text(q, 'plan-results') + ' ' + rep0, /\+[-−]|[-−]\+/, 'double signe');
   set(q, 'plan-actual', '410000'); set(q, 'plan-actual-minutes', '60');
   const b = q.d.querySelector('[data-b-plan-log]'); assert.ok(b, 'bouton « Mettre à jour mon plan »'); fire(q, b, 'click'); q.flush();
   const log = stored(q).plan.log; assert.equal(log.length, 1); assert.equal(log[0].plannedGain, -100000); assert.equal(log[0].gain, -90000);
@@ -327,6 +327,6 @@ test('REV7-2 plan, partie entière prise par l’obtention : « Obtiens « Garag
   assert.match(h4[1], /^Joue 1 h : tu gagnes à peu près 100 000 \$ par partie/);
   const res = text(p, 'plan-results'), rep = text(p, 'plan-report');
   assert.match(res, /Commence par obtenir « Garage » \(1 h\)\./); assert.doesNotMatch(res, /Joue 1 h : environ \+0 \$/);
-  assert.match(rep, /Partie 1 · jour 1 ?obtenir « Garage » \(1 h\) ?\+0 \$/);
+  assert.match(rep, /Partie 1, jour 1 ?obtenir « Garage » \(1 h\) ?\+0 \$/);
   clean(p);
 });

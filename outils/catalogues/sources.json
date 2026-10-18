@@ -199,7 +199,7 @@
       "publishedAt": null,
       "consultedAt": "2026-09-27",
       "statut": "serie",
-      "claim": "Cinq gilets chez Ammu-Nation : super léger 20 % (500 $ dans GTA V, 100 $ en ligne), léger 40 % (1 000 $ / 200 $), standard 60 % (1 500 $ / 300 $), lourd 80 % (2 000 $ / 400 $), super lourd 100 % (2 500 $ / 500 $) ; en ligne, débloqués par rang."
+      "claim": "Cinq gilets chez Ammu-Nation : super léger 20 % (500 $ dans GTA V, 100 $ en ligne), léger 40 % (1 000 $, 200 $ en ligne), standard 60 % (1 500 $, 300 $ en ligne), lourd 80 % (2 000 $, 400 $ en ligne), super lourd 100 % (2 500 $, 500 $ en ligne) ; en ligne, débloqués par rang."
     },
     "gtawiki-barbers-v": {
       "url": "https://gta.wiki/w/Barbers_in_GTA_V",
@@ -315,15 +315,15 @@
     },
     "gtawiki-gauntlet": {
       "url": "https://gta.wiki/w/Gauntlet",
-      "title": "GTA Wiki : Bravado Gauntlet, tableau des modifications (GTA V / GTA Online)",
+      "title": "GTA Wiki : Bravado Gauntlet, tableau des modifications (GTA V et GTA Online)",
       "publishedAt": null,
       "consultedAt": "2026-09-27",
       "statut": "serie",
-      "claim": "Prix relevés sur ce modèle : blindage 20 à 100 % de 500 à 5 000 $ (4 500 à 30 000 $ en ligne), freins street / sport / course 2 000, 2 700, 3 500 $, moteur EMS 1 à 4 de 900 à 3 350 $, transmission 2 950 à 4 000 $, turbo 2 500 $ (30 000 $ en ligne), suspension rabaissée / street / sport 500, 1 000, 1 700 $, vitres 200 à 700 $, plaques 50 à 150 $ ; en ligne : traceur 2 000 $, assurance 4 000 $, bombe au contact 5 000 $, bombe à distance 7 500 $."
+      "claim": "Prix relevés sur ce modèle : blindage 20 à 100 % de 500 à 5 000 $ (4 500 à 30 000 $ en ligne), freins street, sport ou course 2 000, 2 700, 3 500 $, moteur EMS 1 à 4 de 900 à 3 350 $, transmission 2 950 à 4 000 $, turbo 2 500 $ (30 000 $ en ligne), suspension rabaissée, street ou sport 500, 1 000, 1 700 $, vitres 200 à 700 $, plaques 50 à 150 $ ; en ligne : traceur 2 000 $, assurance 4 000 $, bombe au contact 5 000 $, bombe à distance 7 500 $."
     },
     "gtawiki-sultan": {
       "url": "https://gta.wiki/w/Sultan",
-      "title": "GTA Wiki : Karin Sultan, tableau des modifications (GTA V / GTA Online)",
+      "title": "GTA Wiki : Karin Sultan, tableau des modifications (GTA V et GTA Online)",
       "publishedAt": null,
       "consultedAt": "2026-09-27",
       "statut": "serie",
@@ -383,11 +383,11 @@
       "publishedAt": null,
       "consultedAt": "2026-09-27",
       "statut": "serie",
-      "claim": "Chargeur étendu (+33 % sur certains pistolets à +300 % sur le fusil à pompe d’assaut), chargeur tambour (GTA Online, rechargement plus lent, fusil à pompe lourd 6 → 30, PM 30 → 100), poignée (précision, moins de secousse), silencieux (tir silencieux, flash réduit, dégâts et portée légèrement réduits), lampe (à la visée), lunettes (holographique, petite, grande, thermique, nocturne), freins de bouche et compensateurs (recul), canon lourd (dégâts à distance 50 % au lieu de 30 %), munitions spéciales Mk II (traçantes, incendiaires, pointe creuse, perforantes, blindées, explosives) avec moins de balles par chargeur. Aucun laser listé."
+      "claim": "Chargeur étendu (+33 % sur certains pistolets à +300 % sur le fusil à pompe d’assaut), chargeur tambour (GTA Online, rechargement plus lent, fusil à pompe lourd de 6 à 30, PM de 30 à 100), poignée (précision, moins de secousse), silencieux (tir silencieux, flash réduit, dégâts et portée légèrement réduits), lampe (à la visée), lunettes (holographique, petite, grande, thermique, nocturne), freins de bouche et compensateurs (recul), canon lourd (dégâts à distance 50 % au lieu de 30 %), munitions spéciales Mk II (traçantes, incendiaires, pointe creuse, perforantes, blindées, explosives) avec moins de balles par chargeur. Aucun laser listé."
     },
     "gtawiki-pistol": {
       "url": "https://gta.wiki/w/Pistol",
-      "title": "GTA Wiki : Pistol (GTA V / GTA Online), accessoires et teintes",
+      "title": "GTA Wiki : Pistol (GTA V et GTA Online), accessoires et teintes",
       "publishedAt": null,
       "consultedAt": "2026-09-27",
       "statut": "serie",
@@ -395,7 +395,7 @@
     },
     "gtawiki-carbine": {
       "url": "https://gta.wiki/w/Carbine_Rifle",
-      "title": "GTA Wiki : Carbine Rifle (GTA V / GTA Online), accessoires et teintes",
+      "title": "GTA Wiki : Carbine Rifle (GTA V et GTA Online), accessoires et teintes",
       "publishedAt": null,
       "consultedAt": "2026-09-27",
       "statut": "serie",

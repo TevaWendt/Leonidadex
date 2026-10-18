@@ -71,7 +71,7 @@ test('CONT-01 : « Méthode et sources » de Collectibles est généré au forma
   assert.ok(sec && sec.classList.contains('ed') && sec.classList.contains('ed--night') && sec.classList.contains('ed--coral'), 'section nuit, accent corail');
   assert.ok(sec.closest('.ed-zone--collectibles'));
   assert.equal(sec.querySelector('.ed-title').textContent, 'Méthode et sources');
-  assert.match(sec.querySelector('.ed-kicker').textContent, /^Sources et statuts · \d+ pages ouvertes$/);
+  assert.match(sec.querySelector('.ed-kicker').textContent, /^Sources et statuts, \d+ pages ouvertes$/);
   const levels = [...sec.querySelectorAll('.ed-levels .ed-level h3')].map(h => h.textContent.trim());
   const ED = JSON.parse(read('outils/editorial-hubs.json'));
   assert.deepEqual(levels, ED.statuts.map(s => s.titre), 'les quatre niveaux du site, dans le même ordre que les hubs du monde');

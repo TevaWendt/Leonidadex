@@ -314,7 +314,7 @@ ${C.scripts}
 function promo(prefix = '', root = ROOT) {
   const X = JSON.parse(fs.readFileSync(path.join(root, DATA_FILE), 'utf8')).liens;
   return '<section class="shell dv-promo" aria-labelledby="dv-promo-t"><div class="lk-entry-card"><div><p class="lk-entry-eyebrow">' + esc(X.kicker) + '</p><h2 id="dv-promo-t">' + esc(X.titre) + '</h2><p>' + esc(X.texte) + '</p></div>'
-    + '<a class="lk-entry-button" href="' + prefix + PAGE + '">' + esc(X.bouton) + ' <span aria-hidden="true">→</span></a></div></section>';
+    + '<a class="lk-entry-button" href="' + prefix + PAGE + '">' + esc(X.bouton) + ' <svg class="lk-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a></div></section>';
 }
 /* fiche d’une région : un lien parmi ceux de l’en-tête (Lire le dossier, Voir sur la carte…) */
 function lienFiche(prefix = '../', root = ROOT) {

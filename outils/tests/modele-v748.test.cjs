@@ -133,7 +133,7 @@ test('prérequis : chaîne récursive, prérequis partagé compté une fois, pos
 
 test('prérequis : dépendance circulaire et référence absente donnent un blocage expliqué, sans boucle', () => {
   const cyc = L.prerequisites({ nodes: { a: { id: 'a', name: 'A', requires: ['b'] }, b: { id: 'b', name: 'B', requires: ['c'] }, c: { id: 'c', name: 'C', requires: ['a'] } }, targets: ['a'] });
-  assert.equal(cyc.ok, false); assert.deepEqual(cyc.cycles[0], ['a', 'b', 'c', 'a']); assert.match(cyc.reason, /Dépendance circulaire\s: A → B → C → A/);
+  assert.equal(cyc.ok, false); assert.deepEqual(cyc.cycles[0], ['a', 'b', 'c', 'a']); assert.match(cyc.reason, /Dépendance circulaire\s: A, puis B, puis C, puis A/);
   const miss = L.prerequisites({ nodes: { a: { id: 'a', name: 'A', requires: ['fantome'] } }, targets: ['a'] });
   assert.equal(miss.ok, false); assert.equal(miss.missingRefs[0].ref, 'fantome'); assert.match(miss.reason, /n’existe pas/);
 });
