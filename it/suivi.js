@@ -7,7 +7,7 @@
     armes:       { key: 'lk_own_armes',       label: 'Il mio arsenale',     done: 'possedute', page: 'armes.html',     anchor: 'arsenal' },
     equipements: { key: 'lk_own_equipements', label: 'Il mio equipaggiamento',  done: 'ottenuti',   page: 'armes.html#equipements', anchor: 'equipements' },
     munitions:   { key: 'lk_own_munitions',   label: 'Le mie munizioni',   done: 'ottenuti',   page: 'armes.html#munitions',   anchor: 'munitions' },
-    lieux:       { key: 'lk_map_found',       label: 'Luoghi scoperti',   done: 'scoperti',   page: 'carte.html',     anchor: 'lieux' },
+    lieux:       { key: 'lk_map_found',       label: 'Luoghi scoperti',   done: 'scoperti',   page: 'carte.html',     anchor: 'lieux', bt: ['Segna come scoperto', 'Scoperto'] } ,
     consommables:{ key: 'lk_own_consommables',label: 'I miei consumabili',done: 'assaggiati',    page: 'nourriture.html#liste-consommables', anchor: 'consommables' },
     coiffures:   { key: 'lk_own_coiffures',   label: 'Le mie acconciature',   done: 'provate',  page: 'style.html#coiffures', anchor: 'coiffures' },
     tatouages:   { key: 'lk_own_tatouages',   label: 'I miei tatuaggi',   done: 'fatti',     page: 'style.html#tatouages', anchor: 'tatouages' },
@@ -15,7 +15,7 @@
     'perso-vehicules': { key: 'lk_own_perso-vehicules', label: 'Le mie modifiche per veicoli', done: 'installate', page: 'personnalisations.html#perso-vehicules', anchor: 'perso-vehicules' },
     'perso-armes':     { key: 'lk_own_perso-armes',     label: 'Le mie modifiche per armi',      done: 'installate', page: 'personnalisations.html#perso-armes',     anchor: 'perso-armes' }
   };
-  const ID = /^[a-z0-9][a-z0-9-]{0,99}$/;
+  const ID = /^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$/;
   const listeners = new Set();
   const read = f => FAMILIES[f] ? LK.read(FAMILIES[f].key, {}, LK.own) : {};
   const write = (f, o) => FAMILIES[f] ? LK.write(FAMILIES[f].key, o) : false;
@@ -44,8 +44,9 @@
       const name = el.dataset.trackName || (el.querySelector('b, h3, strong') || el).textContent.trim();
       const b = document.createElement('button');
       b.type = 'button'; b.className = 'track-bt'; b.dataset.trackFor = id;
-      b.innerHTML = '<span class="ck" aria-hidden="true"></span><span class="track-lbl">Ce l’ho</span>';
-      b.setAttribute('aria-label', 'Ce l’ho: ' + name); b.setAttribute('aria-pressed', 'false');
+      const lbl = FAMILIES[f].bt || ['Ce l’ho', 'Ottenuto'];
+      b.innerHTML = '<span class="ck" aria-hidden="true"></span><span class="track-lbl">' + lbl[0] + '</span>';
+      b.setAttribute('aria-label', lbl[0] + ': ' + name); b.setAttribute('aria-pressed', 'false');
       b.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); toggle(f, id); });
       el.classList.add('has-track'); el.appendChild(b);
     });
@@ -56,7 +57,7 @@
         root.querySelectorAll('[data-track="' + f + '"][data-track-id]').forEach(el => {
           const on = !!o[el.dataset.trackId]; el.classList.toggle('is-own', on);
           const b = el.querySelector('.track-bt');
-          if (b) { b.classList.toggle('on', on); b.setAttribute('aria-pressed', String(on)); b.querySelector('.track-lbl').textContent = on ? 'Ottenuto' : 'Ce l’ho'; }
+          if (b) { const lbl = FAMILIES[f].bt || ['Ce l’ho', 'Ottenuto']; b.classList.toggle('on', on); b.setAttribute('aria-pressed', String(on)); b.querySelector('.track-lbl').textContent = on ? lbl[1] : lbl[0]; }
         });
         const n = ids.length ? ids.filter(id => o[id]).length : count(f);
         root.querySelectorAll('[data-track-bar="' + f + '"]').forEach(bar => {

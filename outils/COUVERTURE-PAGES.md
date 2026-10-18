@@ -1,6 +1,6 @@
-# Couverture des pages : un élément, une page (v7.94)
+# Couverture des pages : un élément, une page (v7.95)
 
-Rapport écrit par `node outils/couverture-pages.cjs` le 2026-10-17. Chaque famille liste tous ses éléments ; une famille est couverte quand chacun a sa page ou une exclusion justifiée. « Indexables » estime, d’après les données, les pages qui atteindraient le seuil d’indexation (nom, catégorie, description propre, deux informations réelles ou un visuel officiel) ; les autres seraient créées en `noindex, follow`.
+Rapport écrit par `node outils/couverture-pages.cjs` le 2026-10-18. Chaque famille liste tous ses éléments ; une famille est couverte quand chacun a sa page ou une exclusion justifiée. « Indexables » estime, d’après les données, les pages qui atteindraient le seuil d’indexation (nom, catégorie, description propre, deux informations réelles ou un visuel officiel) ; les autres seraient créées en `noindex, follow`.
 
 ## Tableau des familles
 
@@ -20,10 +20,10 @@ Rapport écrit par `node outils/couverture-pages.cjs` le 2026-10-17. Chaque fami
 | Stations de radio et album | `outils/radios/radios.json (stations, fiches)` | 7 | 7 | 0 | 0 | 100 % | 7 | 0 |
 | Vidéos officielles | `outils/actus/actus.json (videos.liste)` | 4 | 4 | 0 | 0 | 100 % | 4 | 0 |
 | Éditions du jeu (nouvelle) | `outils/actus/actus.json (editions)` | 4 | 0 | 0 | 4 | 0 % | 4 | 0 |
-| Lieux de la carte (nouvelle) | `carnets/lieux-data.js (carte.js + carte-gtadb.js), outils/landmarks-leonidakit.json` | 2 500 | 0 | 0 | 2 500 | 0 % | 1 672 | 828 |
-| Régions, villes, quartiers et comtés (nouvelle) | `carnets/lieux-data.js (catégories region, ville, quartier, comte), carte-gtadb.js (groupes)` | 47 | 6 | 0 | 41 | 13 % | 44 | 3 |
+| Lieux de la carte (nouvelle) | `carnets/lieux-data.js (carte.js + carte-gtadb.js), outils/landmarks-leonidakit.json` | 2 500 | 2 500 | 0 | 0 | 100 % | 1 672 | 828 |
+| Régions, villes, quartiers et comtés (nouvelle) | `carnets/lieux-data.js (catégories region, ville, quartier, comte), carte-gtadb.js (groupes)` | 47 | 47 | 0 | 0 | 100 % | 44 | 3 |
 | Marques de véhicules (nouvelle) | `outils/marques.json, vehicules-data.js (champ marque)` | 48 | 0 | 0 | 48 | 0 % | 47 | 1 |
-| Consommables (nouvelle) | `outils/catalogues/consommables.json` | 30 | 0 | 0 | 30 | 0 % | 30 | 0 |
+| Consommables (nouvelle) | `outils/catalogues/consommables.json` | 30 | 30 | 0 | 0 | 100 % | 30 | 0 |
 | Coiffures (nouvelle) | `outils/catalogues/coiffures.json` | 55 | 0 | 0 | 55 | 0 % | 55 | 0 |
 | Tatouages (nouvelle) | `outils/catalogues/tatouages.json` | 24 | 0 | 0 | 24 | 0 % | 24 | 0 |
 | Tenues et accessoires (nouvelle) | `outils/catalogues/tenues.json` | 30 | 0 | 0 | 30 | 0 % | 30 | 0 |
@@ -39,19 +39,19 @@ Rapport écrit par `node outils/couverture-pages.cjs` le 2026-10-17. Chaque fami
 | Codes de triche (modèle, données au jour J) | `outils/codes/codes.json` | 0 | 0 | 0 | 0 | : | 0 | 0 |
 | Collectibles (modèle, données au jour J) | `outils/collectibles.json` | 0 | 0 | 0 | 0 | : | 0 | 0 |
 | GTA Online (activités, achats, entreprises) (modèle, données au jour J) | `outils/online/donnees.json` | 0 | 0 | 0 | 0 | : | 0 | 0 |
-| **Total** |  | **3 603** | **405** | **0** | **3 198** | **11 %** | **2 620** | **983** |
+| **Total** |  | **3 603** | **2 976** | **0** | **627** | **83 %** | **2 620** | **983** |
 
 ## Volume à créer
 
-- Pages à créer en français : **3 198** (le site compte aujourd’hui 2 833 pages, toutes langues).
-- Dans les 6 langues : **19 188 pages**.
-- Avec le gabarit actuel des fiches (64 Ko par page en moyenne) : **1208 Mo**.
-- Avec un gabarit allégé (14 Ko par page : CSS et JS partagés, aucun bloc répété) : **262 Mo**.
+- Pages à créer en français : **627** (le site compte aujourd’hui 5 406 pages, toutes langues).
+- Dans les 6 langues : **3 762 pages**.
+- Avec le gabarit actuel des fiches (64 Ko par page en moyenne) : **237 Mo**.
+- Avec un gabarit allégé (21 Ko par page : CSS et JS partagés, aucun bloc répété) : **77 Mo**.
 
 ## Limites d’hébergement (relevées le 17 octobre 2026)
 
 - Vercel (docs.vercel.com/docs/limits) : aucune limite au nombre de fichiers produits par un déploiement Git ; 15 000 fichiers et 100 Mo (Hobby) ou 1 Go (Pro) seulement pour un envoi par la ligne de commande ; 45 minutes de construction au plus ; 2 048 routes (redirections de vercel.json) par déploiement ; 100 déploiements par jour (Hobby). Le site est publié depuis GitHub sans construction : seul le temps de copie compte.
-- GitHub (docs.github.com, « About large files ») : dépôt idéalement sous 1 Go, 5 Go fortement recommandés au plus ; fichier bloqué au-dessus de 100 Mio, avertissement au-dessus de 50 Mio. Le dépôt pèse aujourd’hui 442 Mo (fichiers suivis) et son historique compressé 1265 Mo.
+- GitHub (docs.github.com, « About large files ») : dépôt idéalement sous 1 Go, 5 Go fortement recommandés au plus ; fichier bloqué au-dessus de 100 Mio, avertissement au-dessus de 50 Mio. Le dépôt pèse aujourd’hui 493 Mo (fichiers suivis) et son historique compressé 684 Mo.
 
 ## Doublons (une seule page, l’autre source renvoie vers elle)
 
@@ -76,11 +76,25 @@ Rapport écrit par `node outils/couverture-pages.cjs` le 2026-10-17. Chaque fami
 
 Aucune source du site ne porte d’élément venu d’une fuite : la liste est vide. Si un élément exclu apparaît un jour, il sera listé ici avec sa raison.
 
+## Décisions (18 octobre 2026, Téva : « tranche toi-même mais n’oublie aucun élément du site »)
+
+- **Lieux de la carte** : Les 110 repères gtadb absents de la carte du site restent hors site : 43 n’ont pas de nom, les autres n’ont pas été retenus sur la carte (nom incertain « ? », statut démoli, douteux ou annulé, ou lieu jamais vu sur un support officiel). Ils ne sont pas des éléments du site ; la liste reste en annexe, et un repère ajouté un jour à la carte reçoit sa page à la régénération suivante.
+- **Lieux de la carte** : Seuil d’indexation, choix prudent : indexable quand le nom en jeu est connu, l’existence non douteuse, et qu’il y a une capture ou au moins trois informations ; les autres pages existent en noindex,follow et passent en indexable dès que leur nom en jeu est confirmé.
+- **Lieux de la carte** : Visuel : la capture officielle du lieu déjà montrée sur la carte (photos/<id>,ig.webp, image extraite des supports Rockstar, repérée par gtadb.org, CC BY 4.0) est admise sur la page, créditée ; la photo du lieu réel reste sur la carte seulement. Sans capture : l’aperçu de la carte autour du lieu.
+- **Options de personnalisation** : Une page par valeur d’option (145), en noindex,follow tant qu’elles n’ont qu’une ou deux informations, pour qu’aucun élément ne reste sans page (lot B).
+- **Types de munitions** : Une page par type (6), en noindex,follow, qui renvoie vers armes.html#munitions et les armes qui l’utilisent (lot B).
+- **Marques de véhicules** : LCC, BTN et HVY ont leur page comme les autres marques, construite depuis vehicules-data.js (leurs véhicules), sans rapprochement inventé (lot B).
+- **Grands moments** : Une page par annonce datée de la frise des Actualités (17) ; les 14 moments des dossiers du monde renvoient vers l’annonce qui leur correspond (lot B).
+- **Régions, villes, quartiers et comtés** : Les entrées sans lieu rattaché ont quand même leur page de regroupement (noindex,follow), qui renvoie vers la carte.
+- **Lieux de la carte** : Les 27 noms entre guillemets droits dans les données gtadb (« "Mount Waffles" ») sont des surnoms donnés par la communauté, pas des noms en jeu : la page le dit, les affiche entre guillemets français et reste en noindex,follow.
+
 ## À trancher par Téva
+
+Les points ci-dessous sont ceux relevés par l’inventaire de la v7.94 ; Téva a répondu « tranche toi-même mais n’oublie aucun élément du site » (18 octobre 2026) : chacun est tranché dans la section « Décisions ».
 
 - **Types de munitions** : Une seule information réelle par type (les armes qui l’utilisent) : pages prévues en noindex,follow tant que Rockstar ne publie rien de plus. Garder cette famille ou la renvoyer vers armes.html#munitions ?
 - **Lieux de la carte** : 110 repères gtadb ne sont pas sur la carte du site (43 sans nom, 67 nommés dont 3 avec un « ? ») : les ajouter à la carte (donc une page chacun) ou les laisser hors site ? Liste en annexe.
-- **Lieux de la carte** : Seuil d’indexation : 1672 lieux atteignent le seuil du prompt (nom, catégorie, quartier ou comté, position, équivalent réel ou capture) ; 817 bâtiments sans nom (« Bâtiment L924 ») restent en noindex ; 1053 ne sont connus que par leur nom réel (« (nom réel) ») et 1886 n’ont pas de nom en jeu confirmé. Proposition prudente : indexer les 614 lieux au nom en jeu connu (avec capture ou trois informations), créer les autres en noindex,follow et les faire passer en indexable quand leur nom en jeu est confirmé. Les captures gtadb (photos/, CC BY 4.0, déjà sur la carte) sont-elles admises comme visuel sur ces pages, ou seulement l’aperçu de carte et les silhouettes teaser (le prompt ne parle que de img/officiel) ?
+- **Lieux de la carte** : Seuil d’indexation : 1672 lieux atteignent le seuil du prompt (nom, catégorie, quartier ou comté, position, équivalent réel ou capture) ; 817 bâtiments sans nom (« Bâtiment L924 ») restent en noindex ; 1053 ne sont connus que par leur nom réel (« (nom réel) ») et 1912 n’ont pas de nom en jeu confirmé. Proposition prudente : indexer les 588 lieux au nom en jeu connu (avec capture ou trois informations), créer les autres en noindex,follow et les faire passer en indexable quand leur nom en jeu est confirmé. Les captures gtadb (photos/, CC BY 4.0, déjà sur la carte) sont-elles admises comme visuel sur ces pages, ou seulement l’aperçu de carte et les silhouettes teaser (le prompt ne parle que de img/officiel) ?
 - **Lieux de la carte** : 83 noms portés par plusieurs lieux (« Bridge » × 27, « Airfield »…) : slug complété par le quartier ou le comté, page en noindex,follow quand le lieu n’a ni nom propre ni capture officielle.
 - **Régions, villes, quartiers et comtés** : 3 entrées sans lieu rattaché (régions sans groupe gtadb) : page de regroupement quand même (noindex) ou renvoi vers la carte ?
 - **Marques de véhicules** : Marques présentes dans vehicules-data.js mais absentes de outils/marques.json : LCC, BTN, HVY
@@ -689,11 +703,11 @@ Aucune source du site ne porte d’élément venu d’une fuite : la liste est v
 - Ambrosia Police Department : `lieux-carte/ambrosia-police-department.html` ; batiment, repéré sur un support officiel
 - Ambrosia Raceway Park : `lieux-carte/ambrosia-raceway-park.html` ; lieu, position non confirmée
 - Ambrosia Station : `lieux-carte/ambrosia-station.html` ; transport, position non confirmée
-- Baseball Field (nom supposé) : `lieux-carte/baseball-field-nom-suppose.html` ; lieu, repéré sur un support officiel
+- Baseball Field (nom supposé) : `lieux-carte/baseball-field.html` ; lieu, repéré sur un support officiel
 - Boat Ramp : `lieux-carte/boat-ramp.html` ; transport, position non confirmée
 - Bridge : `lieux-carte/bridge.html` ; transport, position non confirmée
 - Bridge : `lieux-carte/bridge-ambrosia.html` ; transport, repéré sur un support officiel
-- Football Stadium (nom supposé) : `lieux-carte/football-stadium-nom-suppose.html` ; lieu, position non confirmée
+- Football Stadium (nom supposé) : `lieux-carte/football-stadium.html` ; lieu, position non confirmée
 - Guard Booth : `lieux-carte/guard-booth.html` ; batiment, repéré sur un support officiel
 - Office Building : `lieux-carte/office-building.html` ; batiment, repéré sur un support officiel
 - Parking Lot : `lieux-carte/parking-lot.html` ; batiment, repéré sur un support officiel
@@ -717,12 +731,12 @@ Aucune source du site ne porte d’élément venu d’une fuite : la liste est v
 - Waste Transfer Services : `lieux-carte/waste-transfer-services.html` ; batiment, repéré sur un support officiel
 - Water Tower : `lieux-carte/water-tower.html` ; transport, repéré sur un support officiel
 - Xero Gas Station : `lieux-carte/xero-gas-station.html` ; batiment, repéré sur un support officiel
-- 602 E Sugarland Hwy (nom réel) : `lieux-carte/602-e-sugarland-hwy-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- 600 E Sugarland Hwy (nom réel) : `lieux-carte/600-e-sugarland-hwy-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- 543 E Sugarland Hwy (nom réel) : `lieux-carte/543-e-sugarland-hwy-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Clewiston Lake Okeechobee Waterway Lock (nom réel) : `lieux-carte/clewiston-lake-okeechobee-waterway-lock-nom-reel.html` ; transport, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Pump Station S-3 (nom réel) : `lieux-carte/pump-station-s-3-nom-reel.html` ; transport, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- 1500 Sonora Ave (nom réel) : `lieux-carte/1500-sonora-ave-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- 602 E Sugarland Hwy (nom réel) : `lieux-carte/602-e-sugarland-hwy.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- 600 E Sugarland Hwy (nom réel) : `lieux-carte/600-e-sugarland-hwy.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- 543 E Sugarland Hwy (nom réel) : `lieux-carte/543-e-sugarland-hwy.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- Clewiston Lake Okeechobee Waterway Lock (nom réel) : `lieux-carte/clewiston-lake-okeechobee-waterway-lock.html` ; transport, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- Pump Station S-3 (nom réel) : `lieux-carte/pump-station-s-3.html` ; transport, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- 1500 Sonora Ave (nom réel) : `lieux-carte/1500-sonora-ave.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - Bâtiment L924 : `lieux-carte/batiment-l924.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L925 : `lieux-carte/batiment-l925.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L927 : `lieux-carte/batiment-l927.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
@@ -739,12 +753,12 @@ Aucune source du site ne porte d’élément venu d’une fuite : la liste est v
 - Bâtiment L1056 : `lieux-carte/batiment-l1056.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L1057 : `lieux-carte/batiment-l1057.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L1058 : `lieux-carte/batiment-l1058.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Train Crossing (nom réel) : `lieux-carte/train-crossing-nom-reel.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
+- Train Crossing (nom réel) : `lieux-carte/train-crossing.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
 - Bâtiment L1199 : `lieux-carte/batiment-l1199.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L1200 : `lieux-carte/batiment-l1200.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L1334 : `lieux-carte/batiment-l1334.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L1335 : `lieux-carte/batiment-l1335.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Monkey Box (nom réel) : `lieux-carte/monkey-box-nom-reel.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
+- Monkey Box (nom réel) : `lieux-carte/monkey-box.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
 - Bâtiment L1433 : `lieux-carte/batiment-l1433.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L1434 : `lieux-carte/batiment-l1434.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L1435 : `lieux-carte/batiment-l1435.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
@@ -766,8 +780,8 @@ Aucune source du site ne porte d’élément venu d’une fuite : la liste est v
 - Bâtiment L1527 : `lieux-carte/batiment-l1527.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L2243 : `lieux-carte/batiment-l2243.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L2412 : `lieux-carte/batiment-l2412.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Train Station (nom supposé) : `lieux-carte/train-station-nom-suppose.html` ; transport, position non confirmée
-- 1010 US-27 (nom réel) : `lieux-carte/1010-us-27-nom-reel.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
+- Train Station (nom supposé) : `lieux-carte/train-station.html` ; transport, position non confirmée
+- 1010 US-27 (nom réel) : `lieux-carte/1010-us-27.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
 - Bâtiment L2403 : `lieux-carte/batiment-l2403.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L2404 : `lieux-carte/batiment-l2404.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L2405 : `lieux-carte/batiment-l2405.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
@@ -792,8 +806,8 @@ Aucune source du site ne porte d’élément venu d’une fuite : la liste est v
 - Bâtiment L2519 : `lieux-carte/batiment-l2519.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Casino : `lieux-carte/casino.html` ; lieu, repéré sur un support officiel
 - Gas Station : `lieux-carte/gas-station.html` ; batiment, repéré sur un support officiel
-- Miccosukee Airboat Rides (nom réel) : `lieux-carte/miccosukee-airboat-rides-nom-reel.html` ; lieu, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Miccosukee Indian Village (nom réel) : `lieux-carte/miccosukee-indian-village-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- Miccosukee Airboat Rides (nom réel) : `lieux-carte/miccosukee-airboat-rides.html` ; lieu, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- Miccosukee Indian Village (nom réel) : `lieux-carte/miccosukee-indian-village.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - Bâtiment L2369 : `lieux-carte/batiment-l2369.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Breakwater : `lieux-carte/breakwater.html` ; batiment, position non confirmée
 - Bridge : `lieux-carte/bridge-capri.html` ; transport, repéré sur un support officiel
@@ -803,26 +817,26 @@ Aucune source du site ne porte d’élément venu d’une fuite : la liste est v
 - Lake : `lieux-carte/lake.html` ; nature, repéré sur un support officiel
 - Pier : `lieux-carte/pier.html` ; batiment, repéré sur un support officiel
 - Train Bridge : `lieux-carte/train-bridge.html` ; batiment, repéré sur un support officiel
-- Train Station : `lieux-carte/train-station.html` ; transport, position non confirmée
+- Train Station : `lieux-carte/train-station-capri.html` ; transport, position non confirmée
 - Water Tank : `lieux-carte/water-tank.html` ; batiment, repéré sur un support officiel
 - Water Tower : `lieux-carte/water-tower-capri.html` ; transport, repéré sur un support officiel
 - Welcome Sign : `lieux-carte/welcome-sign.html` ; lieu, repéré sur un support officiel
 - Xero Gas Station : `lieux-carte/xero-gas-station-capri.html` ; batiment, repéré sur un support officiel
 - Xero Gas Station : `lieux-carte/xero-gas-station-g-l1619.html` ; batiment, repéré sur un support officiel
-- Lake Mirror Tower Apartments (nom réel) : `lieux-carte/lake-mirror-tower-apartments-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- Lake Mirror Tower Apartments (nom réel) : `lieux-carte/lake-mirror-tower-apartments.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - Bâtiment L939 : `lieux-carte/batiment-l939.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L940 : `lieux-carte/batiment-l940.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L941 : `lieux-carte/batiment-l941.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L942 : `lieux-carte/batiment-l942.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Sebring Circle Park (nom réel) : `lieux-carte/sebring-circle-park-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- Sebring Circle Park (nom réel) : `lieux-carte/sebring-circle-park.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - Bâtiment L1613 : `lieux-carte/batiment-l1613.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- 10404 U.S. Hwy 27 S (nom réel) : `lieux-carte/10404-u-s-hwy-27-s-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- 558 N Ridgewood Dr (nom réel) : `lieux-carte/558-n-ridgewood-dr-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- 544 N Ridgewood Dr (nom réel) : `lieux-carte/544-n-ridgewood-dr-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- 536 N Ridgewood Dr (nom réel) : `lieux-carte/536-n-ridgewood-dr-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- 10404 U.S. Hwy 27 S (nom réel) : `lieux-carte/10404-u-s-hwy-27-s.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- 558 N Ridgewood Dr (nom réel) : `lieux-carte/558-n-ridgewood-dr.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- 544 N Ridgewood Dr (nom réel) : `lieux-carte/544-n-ridgewood-dr.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- 536 N Ridgewood Dr (nom réel) : `lieux-carte/536-n-ridgewood-dr.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - Bâtiment L1620 : `lieux-carte/batiment-l1620.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Terrace Hotel Lakeland (nom réel) : `lieux-carte/terrace-hotel-lakeland-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- FHP7+XJC (nom réel) : `lieux-carte/fhp7-xjc-nom-reel.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
+- Terrace Hotel Lakeland (nom réel) : `lieux-carte/terrace-hotel-lakeland.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- FHP7+XJC (nom réel) : `lieux-carte/fhp7-xjc.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
 - Bâtiment L1731 : `lieux-carte/batiment-l1731.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L1732 : `lieux-carte/batiment-l1732.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L1733 : `lieux-carte/batiment-l1733.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
@@ -831,17 +845,17 @@ Aucune source du site ne porte d’élément venu d’une fuite : la liste est v
 - Bâtiment L1738 : `lieux-carte/batiment-l1738.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L1740 : `lieux-carte/batiment-l1740.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L1741 : `lieux-carte/batiment-l1741.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- 3410 Gulf Shore Blvd N (nom réel) : `lieux-carte/3410-gulf-shore-blvd-n-nom-reel.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
-- Frances Langford Promenade (nom réel) : `lieux-carte/frances-langford-promenade-nom-reel.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
+- 3410 Gulf Shore Blvd N (nom réel) : `lieux-carte/3410-gulf-shore-blvd-n.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
+- Frances Langford Promenade (nom réel) : `lieux-carte/frances-langford-promenade.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
 - Bâtiment L1879 : `lieux-carte/batiment-l1879.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L1880 : `lieux-carte/batiment-l1880.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L1881 : `lieux-carte/batiment-l1881.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- The Peggy Brown Building (nom réel) : `lieux-carte/the-peggy-brown-building-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Horizon House (nom réel) : `lieux-carte/horizon-house-nom-reel.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
+- The Peggy Brown Building (nom réel) : `lieux-carte/the-peggy-brown-building.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- Horizon House (nom réel) : `lieux-carte/horizon-house.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
 - Bâtiment L1884 : `lieux-carte/batiment-l1884.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L1885 : `lieux-carte/batiment-l1885.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- The Loggia (nom réel) : `lieux-carte/the-loggia-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Frances Langford Promenade (nom réel) : `lieux-carte/frances-langford-promenade-nom-reel-capri.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
+- The Loggia (nom réel) : `lieux-carte/the-loggia.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- Frances Langford Promenade (nom réel) : `lieux-carte/frances-langford-promenade-capri.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
 - Bâtiment L1893 : `lieux-carte/batiment-l1893.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L1894 : `lieux-carte/batiment-l1894.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L1895 : `lieux-carte/batiment-l1895.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
@@ -849,114 +863,114 @@ Aucune source du site ne porte d’élément venu d’une fuite : la liste est v
 - Bâtiment L1897 : `lieux-carte/batiment-l1897.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L1898 : `lieux-carte/batiment-l1898.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L1899 : `lieux-carte/batiment-l1899.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Magnolia Building (nom réel) : `lieux-carte/magnolia-building-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- Magnolia Building (nom réel) : `lieux-carte/magnolia-building.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - Bâtiment L1901 : `lieux-carte/batiment-l1901.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L1902 : `lieux-carte/batiment-l1902.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L1903 : `lieux-carte/batiment-l1903.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L2380 : `lieux-carte/batiment-l2380.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L2381 : `lieux-carte/batiment-l2381.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- 123 N Ridgewood Dr (nom réel) : `lieux-carte/123-n-ridgewood-dr-nom-reel.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
+- 123 N Ridgewood Dr (nom réel) : `lieux-carte/123-n-ridgewood-dr.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
 - Bâtiment L2383 : `lieux-carte/batiment-l2383.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Pace Picnic Island (nom réel) : `lieux-carte/pace-picnic-island-nom-reel.html` ; nature, position non confirmée, nom en jeu inconnu (nom réel)
-- Morningside Picnic Islands (nom réel) : `lieux-carte/morningside-picnic-islands-nom-reel.html` ; nature, position non confirmée, nom en jeu inconnu (nom réel)
-- Biscayne Isle (nom réel) : `lieux-carte/biscayne-isle-nom-reel.html` ; nature, position non confirmée, nom en jeu inconnu (nom réel)
+- Pace Picnic Island (nom réel) : `lieux-carte/pace-picnic-island.html` ; nature, position non confirmée, nom en jeu inconnu (nom réel)
+- Morningside Picnic Islands (nom réel) : `lieux-carte/morningside-picnic-islands.html` ; nature, position non confirmée, nom en jeu inconnu (nom réel)
+- Biscayne Isle (nom réel) : `lieux-carte/biscayne-isle.html` ; nature, position non confirmée, nom en jeu inconnu (nom réel)
 - Lighthouse : `lieux-carte/lighthouse.html` ; lieu, repéré sur un support officiel
 - Tennis Stadium : `lieux-carte/tennis-stadium.html` ; lieu, repéré sur un support officiel
-- Bill Baggs Cape Florida State Park (nom réel) : `lieux-carte/bill-baggs-cape-florida-state-park-nom-reel.html` ; nature, position non confirmée, nom en jeu inconnu (nom réel)
-- No Name Harbor (nom réel) : `lieux-carte/no-name-harbor-nom-reel.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
+- Bill Baggs Cape Florida State Park (nom réel) : `lieux-carte/bill-baggs-cape-florida-state-park.html` ; nature, position non confirmée, nom en jeu inconnu (nom réel)
+- No Name Harbor (nom réel) : `lieux-carte/no-name-harbor.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
 - Bâtiment L1360 : `lieux-carte/batiment-l1360.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L1361 : `lieux-carte/batiment-l1361.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Lighthouse Keepers Cottage (nom réel) : `lieux-carte/lighthouse-keepers-cottage-nom-reel.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
+- Lighthouse Keepers Cottage (nom réel) : `lieux-carte/lighthouse-keepers-cottage.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
 - Bâtiment L2024 : `lieux-carte/batiment-l2024.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L2025 : `lieux-carte/batiment-l2025.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- 4400 Rickenbacker Cswy (nom réel) : `lieux-carte/4400-rickenbacker-cswy-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- The Golden Dome (nom réel) : `lieux-carte/the-golden-dome-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- 7300 Crandon Blvd (nom réel) : `lieux-carte/7300-crandon-blvd-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- 4400 Rickenbacker Cswy (nom réel) : `lieux-carte/4400-rickenbacker-cswy.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- The Golden Dome (nom réel) : `lieux-carte/the-golden-dome.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- 7300 Crandon Blvd (nom réel) : `lieux-carte/7300-crandon-blvd.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - Bâtiment L2141 : `lieux-carte/batiment-l2141.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L2142 : `lieux-carte/batiment-l2142.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L2143 : `lieux-carte/batiment-l2143.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Miami Seaquarium (nom réel) : `lieux-carte/miami-seaquarium-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Miami Seaquarium (nom réel) : `lieux-carte/miami-seaquarium-nom-reel-catalan-key.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- PRJM+JPP Miami (nom réel) : `lieux-carte/prjm-jpp-miami-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- 3400 Rickenbacker Cswy (nom réel) : `lieux-carte/3400-rickenbacker-cswy-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Miami Seaquarium (nom réel) : `lieux-carte/miami-seaquarium-nom-reel-g-l2215.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Miami Seaquarium (nom réel) : `lieux-carte/miami-seaquarium-nom-reel-g-l2216.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Miami Seaquarium (nom réel) : `lieux-carte/miami-seaquarium-nom-reel-g-l2217.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- Miami Seaquarium (nom réel) : `lieux-carte/miami-seaquarium.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- Miami Seaquarium (nom réel) : `lieux-carte/miami-seaquarium-catalan-key.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- PRJM+JPP Miami (nom réel) : `lieux-carte/prjm-jpp-miami.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- 3400 Rickenbacker Cswy (nom réel) : `lieux-carte/3400-rickenbacker-cswy.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- Miami Seaquarium (nom réel) : `lieux-carte/miami-seaquarium-g-l2215.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- Miami Seaquarium (nom réel) : `lieux-carte/miami-seaquarium-g-l2216.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- Miami Seaquarium (nom réel) : `lieux-carte/miami-seaquarium-g-l2217.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - Bâtiment L2218 : `lieux-carte/batiment-l2218.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Miami Seaquarium (nom réel) : `lieux-carte/miami-seaquarium-nom-reel-g-l2219.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Miami Seaquarium (nom réel) : `lieux-carte/miami-seaquarium-nom-reel-g-l2220.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Miami Seaquarium (nom réel) : `lieux-carte/miami-seaquarium-nom-reel-g-l2224.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- PRPM+2J3 Miami (nom réel) : `lieux-carte/prpm-2j3-miami-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- Miami Seaquarium (nom réel) : `lieux-carte/miami-seaquarium-g-l2219.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- Miami Seaquarium (nom réel) : `lieux-carte/miami-seaquarium-g-l2220.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- Miami Seaquarium (nom réel) : `lieux-carte/miami-seaquarium-g-l2224.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- PRPM+2J3 Miami (nom réel) : `lieux-carte/prpm-2j3-miami.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - Bâtiment L2526 : `lieux-carte/batiment-l2526.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L2527 : `lieux-carte/batiment-l2527.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L2528 : `lieux-carte/batiment-l2528.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L2529 : `lieux-carte/batiment-l2529.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Palazzo del Sol (nom réel) : `lieux-carte/palazzo-del-sol-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Villa del Mare (nom réel) : `lieux-carte/villa-del-mare-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Bayview Village (nom réel) : `lieux-carte/bayview-village-nom-reel.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
-- QV64+9FV Fisher Island (nom réel) : `lieux-carte/qv64-9fv-fisher-island-nom-reel.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
-- 100 Fisher Island Dr (nom réel) : `lieux-carte/100-fisher-island-dr-nom-reel.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
-- 8061 Fisher Island Dr (nom réel) : `lieux-carte/8061-fisher-island-dr-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Bayside Villas (nom réel) : `lieux-carte/bayside-villas-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- QV74+CVW Fisher Island (nom réel) : `lieux-carte/qv74-cvw-fisher-island-nom-reel.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
-- 4522 Fisher Island Dr (nom réel) : `lieux-carte/4522-fisher-island-dr-nom-reel.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
-- 4523 Fisher Island Dr (nom réel) : `lieux-carte/4523-fisher-island-dr-nom-reel.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
-- 2513 Fisher Island Dr (nom réel) : `lieux-carte/2513-fisher-island-dr-nom-reel.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
-- 7772 Fisher Island Dr (nom réel) : `lieux-carte/7772-fisher-island-dr-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- 7634 Fisher Island Dr (nom réel) : `lieux-carte/7634-fisher-island-dr-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- 7462 Fisher Island Dr (nom réel) : `lieux-carte/7462-fisher-island-dr-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Fisher Island Market (nom réel) : `lieux-carte/fisher-island-market-nom-reel.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
-- Vanderbilt Park (nom réel) : `lieux-carte/vanderbilt-park-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- QV6C+2R2 Miami Beach (nom réel) : `lieux-carte/qv6c-2r2-miami-beach-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- 1 Fisher Island Dr (nom réel) : `lieux-carte/1-fisher-island-dr-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- 6000 Fisher Island Dr (nom réel) : `lieux-carte/6000-fisher-island-dr-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Palazzo Della Luna (nom réel) : `lieux-carte/palazzo-della-luna-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Fisher Island Club (nom réel) : `lieux-carte/fisher-island-club-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Fisher Island Ferry Terminal (nom réel) : `lieux-carte/fisher-island-ferry-terminal-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Aria Luxe Realty (nom réel) : `lieux-carte/aria-luxe-realty-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- 4521 Fisher Island Dr (nom réel) : `lieux-carte/4521-fisher-island-dr-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- Palazzo del Sol (nom réel) : `lieux-carte/palazzo-del-sol.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- Villa del Mare (nom réel) : `lieux-carte/villa-del-mare.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- Bayview Village (nom réel) : `lieux-carte/bayview-village.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
+- QV64+9FV Fisher Island (nom réel) : `lieux-carte/qv64-9fv-fisher-island.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
+- 100 Fisher Island Dr (nom réel) : `lieux-carte/100-fisher-island-dr.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
+- 8061 Fisher Island Dr (nom réel) : `lieux-carte/8061-fisher-island-dr.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- Bayside Villas (nom réel) : `lieux-carte/bayside-villas.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- QV74+CVW Fisher Island (nom réel) : `lieux-carte/qv74-cvw-fisher-island.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
+- 4522 Fisher Island Dr (nom réel) : `lieux-carte/4522-fisher-island-dr.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
+- 4523 Fisher Island Dr (nom réel) : `lieux-carte/4523-fisher-island-dr.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
+- 2513 Fisher Island Dr (nom réel) : `lieux-carte/2513-fisher-island-dr.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
+- 7772 Fisher Island Dr (nom réel) : `lieux-carte/7772-fisher-island-dr.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- 7634 Fisher Island Dr (nom réel) : `lieux-carte/7634-fisher-island-dr.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- 7462 Fisher Island Dr (nom réel) : `lieux-carte/7462-fisher-island-dr.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- Fisher Island Market (nom réel) : `lieux-carte/fisher-island-market.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
+- Vanderbilt Park (nom réel) : `lieux-carte/vanderbilt-park.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- QV6C+2R2 Miami Beach (nom réel) : `lieux-carte/qv6c-2r2-miami-beach.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- 1 Fisher Island Dr (nom réel) : `lieux-carte/1-fisher-island-dr.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- 6000 Fisher Island Dr (nom réel) : `lieux-carte/6000-fisher-island-dr.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- Palazzo Della Luna (nom réel) : `lieux-carte/palazzo-della-luna.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- Fisher Island Club (nom réel) : `lieux-carte/fisher-island-club.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- Fisher Island Ferry Terminal (nom réel) : `lieux-carte/fisher-island-ferry-terminal.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- Aria Luxe Realty (nom réel) : `lieux-carte/aria-luxe-realty.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- 4521 Fisher Island Dr (nom réel) : `lieux-carte/4521-fisher-island-dr.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - Bâtiment L2126 : `lieux-carte/batiment-l2126.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L2127 : `lieux-carte/batiment-l2127.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- QV46+X44 Fisher Island (nom réel) : `lieux-carte/qv46-x44-fisher-island-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- QV46+V54 Fisher Island (nom réel) : `lieux-carte/qv46-v54-fisher-island-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- QV46+P5F Fisher Island (nom réel) : `lieux-carte/qv46-p5f-fisher-island-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- QV46+J48 Fisher Island (nom réel) : `lieux-carte/qv46-j48-fisher-island-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- QV46+J57 Fisher Island (nom réel) : `lieux-carte/qv46-j57-fisher-island-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Fisher Island Beach Club Restaurant (nom réel) : `lieux-carte/fisher-island-beach-club-restaurant-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- QV45+8WR Miami (nom réel) : `lieux-carte/qv45-8wr-miami-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Fisher Island Club Health Center and Spa (nom réel) : `lieux-carte/fisher-island-club-health-center-and-spa-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Fisher Island Club Salon (nom réel) : `lieux-carte/fisher-island-club-salon-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- QV55+4V7 Fisher Island (nom réel) : `lieux-carte/qv55-4v7-fisher-island-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- QV45+XW6 Fisher Island (nom réel) : `lieux-carte/qv45-xw6-fisher-island-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- QV45+CH5 Miami (nom réel) : `lieux-carte/qv45-ch5-miami-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- King Spring (nom réel) : `lieux-carte/king-spring-nom-reel.html` ; nature, position non confirmée, nom en jeu inconnu (nom réel)
+- QV46+X44 Fisher Island (nom réel) : `lieux-carte/qv46-x44-fisher-island.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- QV46+V54 Fisher Island (nom réel) : `lieux-carte/qv46-v54-fisher-island.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- QV46+P5F Fisher Island (nom réel) : `lieux-carte/qv46-p5f-fisher-island.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- QV46+J48 Fisher Island (nom réel) : `lieux-carte/qv46-j48-fisher-island.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- QV46+J57 Fisher Island (nom réel) : `lieux-carte/qv46-j57-fisher-island.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- Fisher Island Beach Club Restaurant (nom réel) : `lieux-carte/fisher-island-beach-club-restaurant.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- QV45+8WR Miami (nom réel) : `lieux-carte/qv45-8wr-miami.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- Fisher Island Club Health Center and Spa (nom réel) : `lieux-carte/fisher-island-club-health-center-and-spa.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- Fisher Island Club Salon (nom réel) : `lieux-carte/fisher-island-club-salon.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- QV55+4V7 Fisher Island (nom réel) : `lieux-carte/qv55-4v7-fisher-island.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- QV45+XW6 Fisher Island (nom réel) : `lieux-carte/qv45-xw6-fisher-island.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- QV45+CH5 Miami (nom réel) : `lieux-carte/qv45-ch5-miami.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- King Spring (nom réel) : `lieux-carte/king-spring.html` ; nature, position non confirmée, nom en jeu inconnu (nom réel)
 - Bâtiment L1778 : `lieux-carte/batiment-l1778.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L1779 : `lieux-carte/batiment-l1779.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- 2034 Fisher Island Dr (nom réel) : `lieux-carte/2034-fisher-island-dr-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Turn (nom supposé) : `lieux-carte/turn-nom-suppose.html` ; batiment, repéré sur un support officiel
-- Turn (nom supposé) : `lieux-carte/turn-nom-suppose-gellhorn-international-raceway.html` ; batiment, repéré sur un support officiel
-- Turn (nom supposé) : `lieux-carte/turn-nom-suppose-g-l1546.html` ; batiment, repéré sur un support officiel
-- Turn (nom supposé) : `lieux-carte/turn-nom-suppose-g-l1547.html` ; batiment, repéré sur un support officiel
-- Turn (nom supposé) : `lieux-carte/turn-nom-suppose-g-l1846.html` ; batiment, repéré sur un support officiel
-- Turn (nom supposé) : `lieux-carte/turn-nom-suppose-g-l1847.html` ; batiment, position non confirmée
-- Turn (nom supposé) : `lieux-carte/turn-nom-suppose-g-l1859.html` ; batiment, repéré sur un support officiel
-- Turn (nom supposé) : `lieux-carte/turn-nom-suppose-g-l1919.html` ; batiment, repéré sur un support officiel
+- 2034 Fisher Island Dr (nom réel) : `lieux-carte/2034-fisher-island-dr.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- Turn (nom supposé) : `lieux-carte/turn.html` ; batiment, repéré sur un support officiel
+- Turn (nom supposé) : `lieux-carte/turn-gellhorn-international-raceway.html` ; batiment, repéré sur un support officiel
+- Turn (nom supposé) : `lieux-carte/turn-g-l1546.html` ; batiment, repéré sur un support officiel
+- Turn (nom supposé) : `lieux-carte/turn-g-l1547.html` ; batiment, repéré sur un support officiel
+- Turn (nom supposé) : `lieux-carte/turn-g-l1846.html` ; batiment, repéré sur un support officiel
+- Turn (nom supposé) : `lieux-carte/turn-g-l1847.html` ; batiment, position non confirmée
+- Turn (nom supposé) : `lieux-carte/turn-g-l1859.html` ; batiment, repéré sur un support officiel
+- Turn (nom supposé) : `lieux-carte/turn-g-l1919.html` ; batiment, repéré sur un support officiel
 - Parking Lot : `lieux-carte/parking-lot-gloriana-key.html` ; batiment, repéré sur un support officiel
 - Public Restrooms : `lieux-carte/public-restrooms.html` ; batiment, repéré sur un support officiel
-- QR2W+Q67 Miami (nom réel) : `lieux-carte/qr2w-q67-miami-nom-reel.html` ; transport, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Central District Wastewater Treatment Plan… (nom réel) : `lieux-carte/central-district-wastewater-treatment-plan-nom-reel.html` ; transport, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Miami Marine Stadium (nom réel) : `lieux-carte/miami-marine-stadium-nom-reel.html` ; lieu, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Miami Rowing Club (nom réel) : `lieux-carte/miami-rowing-club-nom-reel.html` ; lieu, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Historic Virginia Key Beach Park (nom réel) : `lieux-carte/historic-virginia-key-beach-park-nom-reel.html` ; nature, position non confirmée, nom en jeu inconnu (nom réel)
-- PRVW+7PW Miami (nom réel) : `lieux-carte/prvw-7pw-miami-nom-reel.html` ; transport, position non confirmée, nom en jeu inconnu (nom réel)
+- QR2W+Q67 Miami (nom réel) : `lieux-carte/qr2w-q67-miami.html` ; transport, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- Central District Wastewater Treatment Plan… (nom réel) : `lieux-carte/central-district-wastewater-treatment-plan.html` ; transport, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- Miami Marine Stadium (nom réel) : `lieux-carte/miami-marine-stadium.html` ; lieu, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- Miami Rowing Club (nom réel) : `lieux-carte/miami-rowing-club.html` ; lieu, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- Historic Virginia Key Beach Park (nom réel) : `lieux-carte/historic-virginia-key-beach-park.html` ; nature, position non confirmée, nom en jeu inconnu (nom réel)
+- PRVW+7PW Miami (nom réel) : `lieux-carte/prvw-7pw-miami.html` ; transport, position non confirmée, nom en jeu inconnu (nom réel)
 - Bâtiment L1151 : `lieux-carte/batiment-l1151.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Marine Stadium Harbor (nom réel) : `lieux-carte/marine-stadium-harbor-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- PRXW+JW7 Miami (nom réel) : `lieux-carte/prxw-jw7-miami-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Marjory Stoneman Douglas Biscayne Nature C… (nom réel) : `lieux-carte/marjory-stoneman-douglas-biscayne-nature-c-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- 3301 Rickenbacker Cswy (nom réel) : `lieux-carte/3301-rickenbacker-cswy-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- 3301 Rickenbacker Cswy (nom réel) : `lieux-carte/3301-rickenbacker-cswy-nom-reel-gloriana-key.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- 3201 Rickenbacker Cswy (nom réel) : `lieux-carte/3201-rickenbacker-cswy-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- PRWW+8P2 Miami (nom réel) : `lieux-carte/prww-8p2-miami-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- Marine Stadium Harbor (nom réel) : `lieux-carte/marine-stadium-harbor.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- PRXW+JW7 Miami (nom réel) : `lieux-carte/prxw-jw7-miami.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- Marjory Stoneman Douglas Biscayne Nature C… (nom réel) : `lieux-carte/marjory-stoneman-douglas-biscayne-nature-c.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- 3301 Rickenbacker Cswy (nom réel) : `lieux-carte/3301-rickenbacker-cswy.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- 3301 Rickenbacker Cswy (nom réel) : `lieux-carte/3301-rickenbacker-cswy-gloriana-key.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- 3201 Rickenbacker Cswy (nom réel) : `lieux-carte/3201-rickenbacker-cswy.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- PRWW+8P2 Miami (nom réel) : `lieux-carte/prww-8p2-miami.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - Bâtiment L2221 : `lieux-carte/batiment-l2221.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L2222 : `lieux-carte/batiment-l2222.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L2247 : `lieux-carte/batiment-l2247.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
@@ -969,8 +983,8 @@ Aucune source du site ne porte d’élément venu d’une fuite : la liste est v
 - Bâtiment L2254 : `lieux-carte/batiment-l2254.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L2255 : `lieux-carte/batiment-l2255.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L2256 : `lieux-carte/batiment-l2256.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- 3501 Rickenbacker Cswy (nom réel) : `lieux-carte/3501-rickenbacker-cswy-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- PRVG+PWJ Miami (nom réel) : `lieux-carte/prvg-pwj-miami-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- 3501 Rickenbacker Cswy (nom réel) : `lieux-carte/3501-rickenbacker-cswy.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- PRVG+PWJ Miami (nom réel) : `lieux-carte/prvg-pwj-miami.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - Bâtiment L2259 : `lieux-carte/batiment-l2259.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L2260 : `lieux-carte/batiment-l2260.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L2261 : `lieux-carte/batiment-l2261.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
@@ -1006,51 +1020,51 @@ Aucune source du site ne porte d’élément venu d’une fuite : la liste est v
 - Treasured Trash : `lieux-carte/treasured-trash.html` ; batiment, repéré sur un support officiel
 - Vinylism : `lieux-carte/vinylism.html` ; batiment, repéré sur un support officiel
 - Welcome to Hamlet Sign : `lieux-carte/welcome-to-hamlet-sign.html` ; lieu, repéré sur un support officiel
-- 225 SW 2nd Ave Building 1 (nom réel) : `lieux-carte/225-sw-2nd-ave-building-1-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- 1 N Krome Ave (nom réel) : `lieux-carte/1-n-krome-ave-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- 4 N Krome Ave (nom réel) : `lieux-carte/4-n-krome-ave-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Historic Town Hall of Homestead (nom réel) : `lieux-carte/historic-town-hall-of-homestead-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- 47 N Krome Ave (nom réel) : `lieux-carte/47-n-krome-ave-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- 107 N Krome Ave (nom réel) : `lieux-carte/107-n-krome-ave-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- 112 N Krome Ave (nom réel) : `lieux-carte/112-n-krome-ave-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- 115 N Krome Ave (nom réel) : `lieux-carte/115-n-krome-ave-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- 131 N Krome Ave (nom réel) : `lieux-carte/131-n-krome-ave-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- 134 N Krome Ave (nom réel) : `lieux-carte/134-n-krome-ave-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- 140 N Krome Ave (nom réel) : `lieux-carte/140-n-krome-ave-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- 144 N Krome Ave (nom réel) : `lieux-carte/144-n-krome-ave-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- 28 S Krome Ave (nom réel) : `lieux-carte/28-s-krome-ave-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- 33 S Krome Ave (nom réel) : `lieux-carte/33-s-krome-ave-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- 17 E Mowry Dr (nom réel) : `lieux-carte/17-e-mowry-dr-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Losner Park (nom réel) : `lieux-carte/losner-park-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- 107 SW 7th St (nom réel) : `lieux-carte/107-sw-7th-st-nom-reel.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
-- Ernest F. Coe Visitor Center (nom réel) : `lieux-carte/ernest-f-coe-visitor-center-nom-reel.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
-- Dry Tortugas National Park Headquarters (nom réel) : `lieux-carte/dry-tortugas-national-park-headquarters-nom-reel.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
+- 225 SW 2nd Ave Building 1 (nom réel) : `lieux-carte/225-sw-2nd-ave-building-1.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- 1 N Krome Ave (nom réel) : `lieux-carte/1-n-krome-ave.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- 4 N Krome Ave (nom réel) : `lieux-carte/4-n-krome-ave.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- Historic Town Hall of Homestead (nom réel) : `lieux-carte/historic-town-hall-of-homestead.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- 47 N Krome Ave (nom réel) : `lieux-carte/47-n-krome-ave.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- 107 N Krome Ave (nom réel) : `lieux-carte/107-n-krome-ave.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- 112 N Krome Ave (nom réel) : `lieux-carte/112-n-krome-ave.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- 115 N Krome Ave (nom réel) : `lieux-carte/115-n-krome-ave.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- 131 N Krome Ave (nom réel) : `lieux-carte/131-n-krome-ave.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- 134 N Krome Ave (nom réel) : `lieux-carte/134-n-krome-ave.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- 140 N Krome Ave (nom réel) : `lieux-carte/140-n-krome-ave.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- 144 N Krome Ave (nom réel) : `lieux-carte/144-n-krome-ave.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- 28 S Krome Ave (nom réel) : `lieux-carte/28-s-krome-ave.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- 33 S Krome Ave (nom réel) : `lieux-carte/33-s-krome-ave.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- 17 E Mowry Dr (nom réel) : `lieux-carte/17-e-mowry-dr.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- Losner Park (nom réel) : `lieux-carte/losner-park.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- 107 SW 7th St (nom réel) : `lieux-carte/107-sw-7th-st.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
+- Ernest F. Coe Visitor Center (nom réel) : `lieux-carte/ernest-f-coe-visitor-center.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
+- Dry Tortugas National Park Headquarters (nom réel) : `lieux-carte/dry-tortugas-national-park-headquarters.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
 - Bâtiment L970 : `lieux-carte/batiment-l970.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L971 : `lieux-carte/batiment-l971.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L972 : `lieux-carte/batiment-l972.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L1116 : `lieux-carte/batiment-l1116.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L1117 : `lieux-carte/batiment-l1117.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- 675 N Homestead Blvd (nom réel) : `lieux-carte/675-n-homestead-blvd-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- 675 N Homestead Blvd (nom réel) : `lieux-carte/675-n-homestead-blvd.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - Bâtiment L1386 : `lieux-carte/batiment-l1386.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L1387 : `lieux-carte/batiment-l1387.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L1388 : `lieux-carte/batiment-l1388.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- 550 N Homestead Blvd (nom réel) : `lieux-carte/550-n-homestead-blvd-nom-reel.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
+- 550 N Homestead Blvd (nom réel) : `lieux-carte/550-n-homestead-blvd.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
 - Bâtiment L1569 : `lieux-carte/batiment-l1569.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L1572 : `lieux-carte/batiment-l1572.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Homestead Customer Services Administration (nom réel) : `lieux-carte/homestead-customer-services-administration-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Azteca Supermarket (nom réel) : `lieux-carte/azteca-supermarket-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- FGCC+6HG Homestead (nom réel) : `lieux-carte/fgcc-6hg-homestead-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Homestead Soup Kitchen (nom réel) : `lieux-carte/homestead-soup-kitchen-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Supreme Towing (nom réel) : `lieux-carte/supreme-towing-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- 37 NW 1st St (nom réel) : `lieux-carte/37-nw-1st-st-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- 32 NW 1st St (nom réel) : `lieux-carte/32-nw-1st-st-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- Homestead Customer Services Administration (nom réel) : `lieux-carte/homestead-customer-services-administration.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- Azteca Supermarket (nom réel) : `lieux-carte/azteca-supermarket.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- FGCC+6HG Homestead (nom réel) : `lieux-carte/fgcc-6hg-homestead.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- Homestead Soup Kitchen (nom réel) : `lieux-carte/homestead-soup-kitchen.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- Supreme Towing (nom réel) : `lieux-carte/supreme-towing.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- 37 NW 1st St (nom réel) : `lieux-carte/37-nw-1st-st.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- 32 NW 1st St (nom réel) : `lieux-carte/32-nw-1st-st.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - Bâtiment L1581 : `lieux-carte/batiment-l1581.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L1582 : `lieux-carte/batiment-l1582.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L1583 : `lieux-carte/batiment-l1583.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- 1045 NE 2nd Ave (nom réel) : `lieux-carte/1045-ne-2nd-ave-nom-reel.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
+- 1045 NE 2nd Ave (nom réel) : `lieux-carte/1045-ne-2nd-ave.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
 - Bâtiment L1585 : `lieux-carte/batiment-l1585.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- 611 NW 14th Ave (nom réel) : `lieux-carte/611-nw-14th-ave-nom-reel.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- 611 NW 14th Ave (nom réel) : `lieux-carte/611-nw-14th-ave-nom-reel-hamlet.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- 611 NW 14th Ave (nom réel) : `lieux-carte/611-nw-14th-ave.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- 611 NW 14th Ave (nom réel) : `lieux-carte/611-nw-14th-ave-hamlet.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - Bâtiment L1992 : `lieux-carte/batiment-l1992.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L2015 : `lieux-carte/batiment-l2015.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L2016 : `lieux-carte/batiment-l2016.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)

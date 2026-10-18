@@ -66,7 +66,9 @@ test('langues.json : le français est la source, chaque langue publiée a un dos
   const es = cfg.langues.find(l => l.code === 'es');
   if (es && es.etat === 'publiee') {
     const all = frPages().filter(p => { const h = read(p); return p !== '404.html' && /<body[\s>]/.test(h) && !/http-equiv=["']refresh/i.test(h); });
-    assert.deepEqual(all.filter(p => !es.pages.includes(p)).slice(0, 10), [], 'espagnol : toutes les pages du site');
+    /* v7.95 : un dossier entier peut être écarté de la traduction (« exclure » terminé par « / », lot A en français d’abord) */
+    const exclu = rel => (cfg.exclure || []).some(x => x.endsWith('/') ? rel.startsWith(x) : x === rel);
+    assert.deepEqual(all.filter(p => !exclu(p) && !es.pages.includes(p)).slice(0, 10), [], 'espagnol : toutes les pages du site');
   }
 });
 

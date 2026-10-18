@@ -1,0 +1,72 @@
+LEONIDAKIT v7.95 : « une page par élément », lot A (2 500 lieux de la carte, 41 quartiers, villes et comtés, 30 consommables)
+À appliquer sur la v7.94 (commit 00a67ee9a, l’archive livrée le 18 octobre) : décompresse d’abord l’archive v7.94 si ce n’est pas
+fait, puis les parties de l’archive v7.95 à la racine du dépôt, dans n’importe quel ordre, puis pousse depuis GitHub Desktop.
+Rien n’a été publié ni poussé : c’est toi qui pousses. CSP inchangée. Aucun fichier à supprimer. Rien à faire dans Vercel.
+
+CE QUE CONTIENT CETTE VERSION (détail : outils/CHANGEMENTS-v7.95.txt ; grille de qualité : outils/MATRICE-v7.95.md)
+  1. Une page par lieu repéré sur la carte (lieux-carte/, 2 500 pages et un sommaire), par région, ville, quartier ou comté
+     (quartiers/, 41 pages et un sommaire) et par consommable (consommables/, 30 pages), écrites par
+     outils/gen-pages-elements.cjs, dans la chaîne de outils/regenerer.cjs. Gabarit allégé : la coquille des fiches véhicules,
+     rien de répété dans la page (21 Ko par lieu, 3,5 Ko compressés, contre 64 Ko pour une fiche véhicule).
+  2. Chaque page a son texte propre (construit depuis les données : nom, catégorie, groupe, comté, statut, lieu réel, voisins
+     avec leur direction), un tableau Identité, un aperçu de la carte de Leonida recadré autour du lieu avec ses voisins en
+     repères cliquables, la capture officielle quand il y en a une (créditée, CC BY 4.0), six voisins en cartes, précédent et
+     suivant, le bouton « Marquer comme repéré » (même suivi que la carte et le carnet). Titre ≤ 65 signes avec « GTA 6 »,
+     description ≤ 155, un h1, canonical, og, twitter, BreadcrumbList et WebPage (CollectionPage avec ItemList pour les
+     groupes et les sommaires), sitemaps avec lastmod.
+  3. Le moment propre à ces pages : les repères de l’aperçu éclosent l’un après l’autre quand il entre à l’écran (40 ms par
+     repère, 300 ms au plus) et le repère du lieu pulse une fois. Rien d’autre ne bouge ; aucun flou, aucun grossissement de
+     texte ; « réduire les animations » respecté sans script.
+  4. Tout y mène : la fenêtre de chaque marqueur de la carte (« Ouvrir sa page »), le carnet « Mes lieux repérés », la liste
+     des consommables (« sa page »), carte.html et lieux.html, les fils d’Ariane, les pages de groupe, les voisins.
+  5. Les décisions que tu m’as laissées (« tranche toi-même ») sont écrites dans outils/COUVERTURE-PAGES.md, section
+     « Décisions » : les 110 repères gtadb absents de la carte restent hors site ; indexation prudente (588 lieux au nom en
+     jeu connu sont proposés aux moteurs, les 1 912 autres existent en noindex,follow et passeront en indexable quand leur
+     nom sera confirmé) ; la capture officielle déjà sur la carte est admise comme visuel ; les 27 surnoms de la communauté
+     (« Mount Waffles ») sont dits surnoms et restent en noindex ; les groupes sans lieu ont quand même leur page.
+  6. Lot A en français : les trois dossiers sont exclus de la traduction, leur barre de langue mène à l’accueil de chaque
+     langue, et les textes nouveaux des scripts et des listes sont traduits (outils/langues/<code>/v795.json, extraction à {}).
+
+CE QUI RESTE POUR LES LOTS SUIVANTS
+  - Lot B : les autres familles (marques, coiffures, tatouages, tenues, personnalisations, valeurs d’options, achats, visuels
+    officiels, grands moments, éditions, munitions), avec le même générateur.
+  - Lot C : les pages dans les cinq langues, hreflang, sitemaps par famille et par langue, recherche et Léo qui ouvrent la
+    page du lieu plutôt que la carte (aujourd’hui ils ouvrent la carte, dont la fenêtre mène à la page), IndexNow.
+
+MARCHE À SUIVRE
+  1. Décompresse les parties de l’archive à la racine du dépôt (après la v7.94), puis pousse depuis GitHub Desktop. Aucun
+     fichier à supprimer.
+  2. Essai : lieux-carte/index.html, quartiers/index.html, quartiers/lummox-county.html (la liste des lieux par catégorie),
+     lieux-carte/ambrosia-police-department.html (un lieu avec capture) ou n’importe quel lieu depuis la carte (« Ouvrir sa
+     page » dans la fenêtre d’un marqueur), lieux-carte/mount-waffles.html (un surnom), consommables/biere-au-comptoir.html, carnets/lieux.html (le nom d’un lieu coché mène à sa page),
+     nourriture.html (« sa page » sur une ligne de consommable).
+  3. Dis-moi « ok » pour le lot B, ou ce que tu veux changer d’abord sur ces pages.
+
+CE QUE LES CONTRÔLES ONT FAIT CORRIGER (détail : outils/CHANGEMENTS-v7.95.txt § 4)
+  En regardant les pages à 390, 768 et 1 280 px, puis au contrôle complet : les tournures des phrases construites (« cet espace
+  naturel », « du comté de Kelly », une seule parenthèse par voisin, catégorie jamais redite) ; les 27 surnoms de la communauté
+  traités comme des noms non confirmés ; le visuel de l’en-tête limité à 230 px sur téléphone ; l’aperçu de carte des groupes
+  trop grand à 1 280 px (dans l’en-tête, à l’échelle de ses lieux) ; le bouton de suivi qui faisait glisser ses voisins au
+  clic (largeur fixe) ; les repères de carte en cibles de 24 px, jamais sortis de l’aperçu ni superposés ; la liste des lieux
+  d’un groupe en colonnes équilibrées ; les données structurées (WebPage pour les fiches, CollectionPage avec ItemList pour
+  les groupes et sommaires) ; une page vidée par une synchronisation interrompue, que le générateur sait maintenant réécrire.
+
+CONTRÔLES (détail : outils/CHANGEMENTS-v7.95.txt § 6 et 7)
+  Passage complet de outils/livraison/verifier-tout.sh sur l’état livré, 18 octobre 2026 de 7 h 54 à 9 h 51, puis les reprises
+  ciblées après les deux corrections qu’il a demandées, jusqu’à 10 h 45. Zéro erreur à l’arrivée :
+  - cadre du calculateur : 0 erreur (180 vues) ; suite node : 1 168 sur 1 168 ; langues.test.cjs : 51 sur 51 ;
+  - verifier : 0 erreur, 852 528 références dans 5 406 pages ; preuve de confidentialité : toutes les affirmations tenues ;
+  - pages traduites dans Chromium : 35 sur 35 ; langues dans le navigateur : 2 791 sur 2 791 ;
+  - écrans : 85 pages × 16 largeurs (1 360 chargements) et 74 pages allemandes × 5 largeurs (370) : aucun débordement, aucun
+    texte trop petit, aucune cible sous 24 px ; les signaux sont ceux de la v7.94 (galeries des fiches, tuiles bento, outils
+    du Calculateur, repère de ville de la carte pannable, galeries des dossiers à 2 560 px), plus un repère sorti de l’aperçu
+    de carte d’un consommable, corrigé puis rejoué sur les huit pages du lot : aucun signal ;
+  - audit de clôture (29 pages, 203 chargements) : 0 erreur console, 0 requête en échec, 12 725 contrastes vérifiés,
+    13 199 cibles de 24 à 44 px ; deux signaux sur quartiers/ocean-beach.html (repères superposés, liste en grille),
+    corrigés puis rejoués : tous les compteurs à 0 ; cookies : aucun, stockage local sous des clés lk… seulement ;
+  - extraction des traductions : 0 texte à traduire dans les cinq langues ; seconde passe de sync-site : aucun fichier changé ;
+    index de Léo identique à la v7.94 (évaluation inchangée) ; images de partage à jour ; gen-pages-elements --verifier :
+    0 page différente sur 2 573.
+  Latence (téléphone 390 px, 4G lente, processeur ×4) : une page de lieu s’affiche en 730 à 750 ms à froid et 540 à 580 ms à
+  chaud, un groupe en 710 à 780 ms, un consommable en 740 à 780 ms, contre 860 à 920 ms pour une fiche véhicule du même
+  gabarit ; 5,7 à 6,5 Ko transférés à chaud pour la page seule. Détail : outils/CHANGEMENTS-v7.95.txt § 7.

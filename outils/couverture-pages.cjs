@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/* LEONIDAKIT — couverture-pages.cjs (v7.94, « une page par élément »)
+/* LEONIDAKIT — couverture-pages.cjs (v7.94, « une page par élément » ; v7.95 : lot A généré, module, décisions)
    L’inventaire de TOUS les éléments du site, famille par famille, et la preuve que chacun a sa page (ou une exclusion
    justifiée). Lit toutes les sources de données, liste chaque élément, cherche sa page dans le dépôt, estime si la page
    atteint le seuil d’indexation (nom + catégorie + description + deux informations réelles ou un visuel officiel), puis écrit
@@ -8,11 +8,15 @@
    node outils/couverture-pages.cjs             → rapport + code de sortie 1 si un élément n’a ni page ni exclusion
    node outils/couverture-pages.cjs --rapport   → rapport seul (état des lieux), code 0
    node outils/couverture-pages.cjs --json      → l’inventaire complet en JSON sur la sortie standard (pour les générateurs)
+   require('./couverture-pages.cjs')            → le même inventaire en module (FAMILLES, sources, slug) : outils/gen-pages-elements.cjs
+                                                  (v7.95, lot A) s’en sert pour écrire les pages, l’inventaire reste la seule liste.
 
    Règles (prompt « Une page par élément », 17 octobre 2026) :
    - un doublon (même élément dans deux sources) a sa page une seule fois, l’autre source renvoie vers elle ;
    - un élément venu d’une fuite est exclu et listé ; aucune source du site n’en marque : la liste est vide ;
-   - tout ce qui ne peut pas avoir sa page est signalé « à trancher par Téva », jamais décidé ici. */
+   - tout ce qui ne peut pas avoir sa page est signalé « à trancher par Téva », jamais décidé ici.
+   v7.95 (lot A, 18 octobre 2026, Téva : « tranche toi-même mais n’oublie aucun élément du site ») : les sept points sont
+   tranchés (section « Décisions » du rapport) ; une page générée à l’adresse cible compte comme page de l’élément. */
 'use strict';
 const fs = require('node:fs'), path = require('node:path'), vm = require('node:vm');
 const ROOT = path.resolve(__dirname, '..');
@@ -130,13 +134,15 @@ const CARNET_GROUPES = CARNET.groups; // [id, nom] : les 36 groupes gtadb (quart
   f.items = rows.map(r => {
     const [id, nom, cat, groupe, fiche] = r; const g = GTA_BY_ID.get(id); const lm = g ? LM_BY_ID.get(id.replace(/^g-/, '')) : null;
     const generique = /^Bâtiment L\d+$/.test(nom) || /\?$/.test(nom); // nom provisoire posé par le site (bâtiment sans nom) ou nom incertain
-    const nomme = lm ? lm.nomme && !generique : !generique; // point de carte.js : nommé par le site
+    const surnom = /^".+"$/.test(nom); // « "Mount Waffles" » : surnom donné par la communauté (guillemets de gtadb), pas un nom en jeu
+    const nomme = lm ? lm.nomme && !generique && !surnom : !generique && !surnom; // point de carte.js : nommé par le site
     const visuel = !!(g && g.img); const reel = !!(g && g.r); const quartier = g && g.p ? g.p : null;
     let faits = 1; if (quartier) faits++; if (reel) faits++; if (g && g.sv) faits++; if (lm && lm.comte) faits++; if (g && g.src === 'SITE') faits += 2; /* point du site : description éditoriale sourcée, statut */
     const douteux = lm && lm.statuts.some(s => ['existence_douteuse', 'fictif', 'annule'].includes(s));
     const page = cat === 'planque' ? pageDe('planques/' + id + '.html') : fiche ? pageDe('lieux/' + id + '.html') : null;
-    return elem(f.id, { id, nom, cible: page ? null : 'lieux-carte/' + slug(nom) + '.html', suffixe: quartier ? (GTA_BY_ID.get(quartier) || { n: quartier }).n : (lm && lm.comte) || '', page, doublonDe: page ? (cat === 'planque' ? 'planques' : 'regions') : null,
-      indexable: !!(!douteux && !generique && (visuel || faits >= 2)), strict: !!(nomme && !douteux && (visuel || faits >= 3)), faits, visuel, note: [cat, g && g.src === 'SITE' ? 'point du site, ' + g.s : g ? (g.s === 'vu' ? 'repéré sur un support officiel' : 'position non confirmée') : 'point du site', generique ? 'sans nom (bâtiment numéroté)' : lm && !lm.nomme ? 'nom en jeu inconnu (nom réel)' : '', douteux ? 'existence douteuse, fictif ou annulé' : ''].filter(Boolean).join(', ') });
+    const base = nom.replace(/\s*\((?:nom réel|nom supposé)\)$/, ''); /* v7.95 : l’adresse garde le nom, pas la mention entre parenthèses */
+    return elem(f.id, { id, nom, slug: slug(base), cible: page ? null : 'lieux-carte/' + slug(base) + '.html', suffixe: quartier ? (GTA_BY_ID.get(quartier) || { n: quartier }).n : (lm && lm.comte) || '', page, doublonDe: page ? (cat === 'planque' ? 'planques' : 'regions') : null,
+      indexable: !!(!douteux && !generique && (visuel || faits >= 2)), strict: !!(nomme && !douteux && (visuel || faits >= 3)), faits, visuel, note: [cat, g && g.src === 'SITE' ? 'point du site, ' + g.s : g ? (g.s === 'vu' ? 'repéré sur un support officiel' : 'position non confirmée') : 'point du site', generique ? 'sans nom (bâtiment numéroté)' : surnom ? 'surnom donné par la communauté' : lm && !lm.nomme ? 'nom en jeu inconnu (nom réel)' : '', douteux ? 'existence douteuse, fictif ou annulé' : ''].filter(Boolean).join(', ') });
   });
   uniq(f.items);
   f.items.forEach(it => { if (it.cible) it.cible = 'lieux-carte/' + it.slug + '.html'; });
@@ -211,6 +217,22 @@ for (const [id, label, src] of [['missions', 'Missions', 'outils/missions/missio
   f.items = (MODELES[id] || []).map(x => elem(f.id, { id: x.id, nom: x.nom || x.id, cible: f.dossier + '/' + slug(x.id) + '.html', page: pageDe(f.dossier + '/' + slug(x.id) + '.html') }));
 }
 
+/* v7.95 (lot A) : une page écrite à l’adresse cible est la page de l’élément (les générateurs écrivent exactement là) */
+for (const f of FAMILLES) for (const it of f.items) if (!it.page && it.cible && exists(it.cible)) it.page = it.cible;
+
+/* ---------- décisions (18 octobre 2026 : « tranche toi-même mais n’oublie aucun élément du site ») ---------- */
+const DECISIONS = [
+  ['Lieux de la carte', 'Les 110 repères gtadb absents de la carte du site restent hors site : 43 n’ont pas de nom, les autres n’ont pas été retenus sur la carte (nom incertain « ? », statut démoli, douteux ou annulé, ou lieu jamais vu sur un support officiel). Ils ne sont pas des éléments du site ; la liste reste en annexe, et un repère ajouté un jour à la carte reçoit sa page à la régénération suivante.'],
+  ['Lieux de la carte', 'Seuil d’indexation, choix prudent : indexable quand le nom en jeu est connu, l’existence non douteuse, et qu’il y a une capture ou au moins trois informations ; les autres pages existent en noindex,follow et passent en indexable dès que leur nom en jeu est confirmé.'],
+  ['Lieux de la carte', 'Visuel : la capture officielle du lieu déjà montrée sur la carte (photos/<id>,ig.webp, image extraite des supports Rockstar, repérée par gtadb.org, CC BY 4.0) est admise sur la page, créditée ; la photo du lieu réel reste sur la carte seulement. Sans capture : l’aperçu de la carte autour du lieu.'],
+  ['Options de personnalisation', 'Une page par valeur d’option (145), en noindex,follow tant qu’elles n’ont qu’une ou deux informations, pour qu’aucun élément ne reste sans page (lot B).'],
+  ['Types de munitions', 'Une page par type (6), en noindex,follow, qui renvoie vers armes.html#munitions et les armes qui l’utilisent (lot B).'],
+  ['Marques de véhicules', 'LCC, BTN et HVY ont leur page comme les autres marques, construite depuis vehicules-data.js (leurs véhicules), sans rapprochement inventé (lot B).'],
+  ['Grands moments', 'Une page par annonce datée de la frise des Actualités (17) ; les 14 moments des dossiers du monde renvoient vers l’annonce qui leur correspond (lot B).'],
+  ['Régions, villes, quartiers et comtés', 'Les entrées sans lieu rattaché ont quand même leur page de regroupement (noindex,follow), qui renvoie vers la carte.'],
+  ['Lieux de la carte', 'Les 27 noms entre guillemets droits dans les données gtadb (« "Mount Waffles" ») sont des surnoms donnés par la communauté, pas des noms en jeu : la page le dit, les affiche entre guillemets français et reste en noindex,follow.']
+];
+
 /* ---------- bilan ---------- */
 const bilan = f => { const n = f.items.length, page = f.items.filter(i => i.page).length, excl = f.items.filter(i => !i.page && i.exclusion).length, manque = n - page - excl, idx = f.items.filter(i => i.indexable).length; return { n, page, excl, manque, idx, noidx: n - idx }; };
 const TOTAL = FAMILLES.reduce((t, f) => { const b = bilan(f); t.n += b.n; t.page += b.page; t.excl += b.excl; t.manque += b.manque; t.idx += b.idx; return t; }, { n: 0, page: 0, excl: 0, manque: 0, idx: 0 });
@@ -218,7 +240,7 @@ const TOTAL = FAMILLES.reduce((t, f) => { const b = bilan(f); t.n += b.n; t.page
 /* volume : pages à créer (français), puis dans toutes les langues ; poids d’après une fiche véhicule (gabarit actuel) et un gabarit allégé */
 const aCreer = FAMILLES.filter(f => !f.modele).reduce((s, f) => s + f.items.filter(i => !i.page && !i.exclusion).length, 0);
 const poidsFiche = (() => { const d = path.join(ROOT, 'vehicules'); const fs1 = fs.readdirSync(d).filter(x => x.endsWith('.html')).map(x => fs.statSync(path.join(d, x)).size).filter(s => s > 20000); return Math.round(fs1.reduce((a, b) => a + b, 0) / fs1.length); })();
-const POIDS_LEGER = 14 * 1024; /* cible du gabarit allégé : 14 Ko par page (mesurée sur les pilotes du lot A) */
+const POIDS_LEGER = 21 * 1024; /* gabarit allégé : 21 Ko par page en moyenne, mesurés sur les 2 500 lieux du lot A (3,5 Ko compressés) */
 const totalPages = (() => { let n = 0; const walk = d => { for (const x of fs.readdirSync(d, { withFileTypes: true })) { if (x.isDirectory()) { if (!['.git', 'node_modules', 'outils'].includes(x.name)) walk(path.join(d, x.name)); } else if (x.name.endsWith('.html')) n++; } }; walk(ROOT); return n; })();
 const poidsDepot = (() => { let b = 0; const walk = d => { for (const x of fs.readdirSync(d, { withFileTypes: true })) { if (x.isDirectory()) { if (!['.git', 'node_modules'].includes(x.name)) walk(path.join(d, x.name)); } else b += fs.statSync(path.join(d, x.name)).size; } }; walk(ROOT); return b; })();
 const poidsHistorique = (() => { try { const out = require('node:child_process').execSync('git count-objects -v', { cwd: ROOT, stdio: ['ignore', 'pipe', 'ignore'] }).toString(); const m = out.match(/size-pack: (\d+)/); const l = out.match(/^size: (\d+)/m); return ((m ? +m[1] : 0) + (l ? +l[1] : 0)) * 1024; } catch (e) { return 0; } })();
@@ -228,7 +250,7 @@ const VOLUME = { poidsDepot, poidsHistorique, aCreer, langues: LANGUES.length, t
 const Mo = b => (b / 1048576).toFixed(0) + ' Mo';
 const pct = (a, b) => b ? Math.round(100 * a / b) + ' %' : 'sans donnée';
 const lignes = [];
-lignes.push('# Couverture des pages : un élément, une page (v7.94)', '', 'Rapport écrit par `node outils/couverture-pages.cjs` le ' + new Date().toISOString().slice(0, 10) + '. Chaque famille liste tous ses éléments ; une famille est couverte quand chacun a sa page ou une exclusion justifiée. « Indexables » estime, d’après les données, les pages qui atteindraient le seuil d’indexation (nom, catégorie, description propre, deux informations réelles ou un visuel officiel) ; les autres seraient créées en `noindex, follow`.', '');
+lignes.push('# Couverture des pages : un élément, une page (v7.95)', '', 'Rapport écrit par `node outils/couverture-pages.cjs` le ' + new Date().toISOString().slice(0, 10) + '. Chaque famille liste tous ses éléments ; une famille est couverte quand chacun a sa page ou une exclusion justifiée. « Indexables » estime, d’après les données, les pages qui atteindraient le seuil d’indexation (nom, catégorie, description propre, deux informations réelles ou un visuel officiel) ; les autres seraient créées en `noindex, follow`.', '');
 lignes.push('## Tableau des familles', '', '| Famille | Source | Éléments | Avec page | Exclus | Manquants | Couverture | Indexables (estimation) | Non indexables |', '|---|---|---:|---:|---:|---:|---:|---:|---:|');
 for (const f of FAMILLES) { const b = bilan(f); lignes.push('| ' + f.label + (f.modele ? ' (modèle, données au jour J)' : f.nouvelle ? ' (nouvelle)' : '') + ' | `' + f.source + '` | ' + nb(b.n) + ' | ' + nb(b.page) + ' | ' + nb(b.excl) + ' | ' + nb(b.manque) + ' | ' + (b.n ? pct(b.page + b.excl, b.n) : '—') + ' | ' + nb(b.idx) + ' | ' + nb(b.noidx) + ' |'); }
 lignes.push('| **Total** |  | **' + nb(TOTAL.n) + '** | **' + nb(TOTAL.page) + '** | **' + nb(TOTAL.excl) + '** | **' + nb(TOTAL.manque) + '** | **' + pct(TOTAL.page + TOTAL.excl, TOTAL.n) + '** | **' + nb(TOTAL.idx) + '** | **' + nb(TOTAL.n - TOTAL.idx) + '** |', '');
@@ -237,7 +259,9 @@ lignes.push('## Limites d’hébergement (relevées le 17 octobre 2026)', '', '-
 lignes.push('## Doublons (une seule page, l’autre source renvoie vers elle)', '');
 for (const f of FAMILLES) for (const it of f.items) if (it.doublonDe) lignes.push('- ' + f.label + ' : « ' + it.nom + ' » a déjà sa page `' + it.page + '` (famille ' + it.doublonDe + ').');
 lignes.push('', '## Exclusions (fuites)', '', 'Aucune source du site ne porte d’élément venu d’une fuite : la liste est vide. Si un élément exclu apparaît un jour, il sera listé ici avec sa raison.', '');
-lignes.push('## À trancher par Téva', '');
+lignes.push('## Décisions (18 octobre 2026, Téva : « tranche toi-même mais n’oublie aucun élément du site »)', '');
+for (const [fam, d] of DECISIONS) lignes.push('- **' + fam + '** : ' + d);
+lignes.push('', '## À trancher par Téva', '', 'Les points ci-dessous sont ceux relevés par l’inventaire de la v7.94 ; Téva a répondu « tranche toi-même mais n’oublie aucun élément du site » (18 octobre 2026) : chacun est tranché dans la section « Décisions ».', '');
 for (const f of FAMILLES) for (const q of f.aTrancher) lignes.push('- **' + f.label + '** : ' + q);
 lignes.push('', '## Pages existantes hors inventaire', '');
 for (const f of FAMILLES) if (f.pagesHors.length) lignes.push('- ' + f.label + ' : ' + f.pagesHors.length + ' page(s) (' + (f.pagesHorsNote || 'à vérifier') + ') : ' + f.pagesHors.join(', '));
@@ -250,10 +274,13 @@ for (const f of FAMILLES) { if (!f.items.length) continue; lignes.push('### ' + 
 /* le rapport est lu par des humains : les tirets longs ci-dessus séparent les colonnes de la liste, pas du texte du site */
 const rapport = lignes.join('\n').replace(/ — /g, ' : ');
 
+module.exports = { FAMILLES, TOTAL, VOLUME, DECISIONS, bilan, slug, uniq, nb, donnees: { V, A, GTADB, LANDMARKS, CARNET, POINTS_SITE, GTA_BY_ID, LM_BY_ID, CAT, MARQUES, MED, MONDE, ACTUS, ED, OPTIONS } };
+if (require.main === module) {
 if (ARGS.has('--json')) { process.stdout.write(JSON.stringify({ familles: FAMILLES.map(f => ({ id: f.id, label: f.label, source: f.source, dossier: f.dossier, nouvelle: f.nouvelle, modele: f.modele, bilan: bilan(f), items: f.items })), total: TOTAL, volume: VOLUME }, null, 1) + '\n'); } else {
 const SORTIE = process.env.COUVERTURE_SORTIE || path.join(ROOT, 'outils/COUVERTURE-PAGES.md'); /* les tests écrivent ailleurs */
 fs.writeFileSync(SORTIE, rapport);
 console.log('Couverture : ' + nb(TOTAL.n) + ' éléments, ' + nb(TOTAL.page) + ' avec page, ' + nb(TOTAL.excl) + ' exclus, ' + nb(TOTAL.manque) + ' manquants (' + pct(TOTAL.page + TOTAL.excl, TOTAL.n) + ') ; à créer : ' + nb(VOLUME.aCreer) + ' pages en français, ' + nb(VOLUME.toutesLangues) + ' dans les ' + VOLUME.langues + ' langues (' + Mo(VOLUME.poidsLeger) + ' en gabarit allégé, ' + Mo(VOLUME.poidsActuel) + ' avec le gabarit actuel). Rapport : ' + path.relative(ROOT, SORTIE));
 for (const f of FAMILLES) { const b = bilan(f); console.log('  ' + f.label.padEnd(52) + String(b.n).padStart(6) + ' éléments ' + String(b.page).padStart(6) + ' pages ' + String(b.manque).padStart(6) + ' manquants ' + String(b.idx).padStart(6) + ' indexables'); }
 if (TOTAL.manque && !ARGS.has('--rapport')) { console.error('ÉCHEC : ' + nb(TOTAL.manque) + ' élément(s) sans page ni exclusion.'); process.exit(1); }
+}
 }

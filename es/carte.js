@@ -684,6 +684,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
         }
         return h;
       })() +
+      (p.pg ? '<a class="mp-link mp-page" href="' + esc(p.pg) + '">Abrir su página</a>' : '') +
       '<div class="mp-row">' +
         '<button type="button" class="mp-btn' + (isFound ? ' on' : '') + '" id="mp-toggle">' +
           (isFound ? 'Visto' : 'Marcar como descubierto') +

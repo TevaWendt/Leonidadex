@@ -40,12 +40,16 @@ const { insecables } = require('./insecables.cjs');
 const CFG = new Map();
 function frPages(root, cfg) {
   const skip = new Set(['outils', 'api', 'node_modules', 'img', 'photos', 'fonts', 'leo', 'data', ...cfg.langues.map(l => l.dossier).filter(Boolean)]);
+  /* v7.95 (lot A) : une entrée de « exclure » terminée par « / » écarte tout un dossier (familles de pages livrées d’abord en
+     français, traduites au lot C) ; ces pages gardent la barre de langue (vers l’accueil de chaque langue) et n’ont ni hreflang
+     ni place dans les plans du site des autres langues */
+  const exclu = rel => (cfg.exclure || []).some(x => x.endsWith('/') ? rel.startsWith(x) : x === rel);
   const out = [];
   (function rec(dir) {
     for (const e of fs.readdirSync(path.join(root, dir), { withFileTypes: true })) {
       const rel = dir ? dir + '/' + e.name : e.name;
       if (e.isDirectory()) { if (!skip.has(e.name) && !e.name.startsWith('.')) rec(rel); }
-      else if (e.name.endsWith('.html') && !(cfg.exclure || []).includes(rel)) out.push(rel);
+      else if (e.name.endsWith('.html') && !exclu(rel)) out.push(rel);
     }
   })('');
   return out.sort();

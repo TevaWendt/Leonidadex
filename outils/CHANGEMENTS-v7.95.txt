@@ -1,0 +1,194 @@
+LEONIDAKIT v7.95 : « une page par élément », lot A (lieux de la carte, quartiers et comtés, consommables)
+18 octobre 2026
+
+Base : v7.94 (commit 00a67ee9a, l’archive « modifs » livrée le 18 octobre). Rien n’est publié ni poussé. CSP inchangée.
+Aucun fichier à supprimer. Aucune donnée inventée sur GTA VI ; GTA V et GTA Online restent « repère de la série ».
+Téva, 18 octobre : « Ok », puis « Tranche toi-même mais n’oublie aucun élément du site » : les décisions sont dans
+outils/COUVERTURE-PAGES.md (section « Décisions ») et rappelées au § 2. Le document d’exigences de qualité (18 octobre)
+a servi de grille : une ligne par point dans outils/MATRICE-v7.95.md.
+
+1. CE QUI EST GÉNÉRÉ (outils/gen-pages-elements.cjs, nouveau, dans la chaîne de outils/regenerer.cjs)
+
+- 2 500 pages de lieux de la carte dans lieux-carte/ (une par point de carte.js et carte-gtadb.js qui n’a pas déjà sa fiche
+  dans lieux/ ou planques/), adresse stable lieux-carte/<nom>.html (le nom sans la mention « (nom réel) » ou
+  « (nom supposé) », complété par le quartier ou le comté quand deux lieux portent le même nom : 83 noms partagés).
+- 41 pages de regroupement dans quartiers/ (villes, quartiers, comtés, zones) ; les six régions officielles gardent leur
+  dossier dans lieux/. Chaque page liste ses lieux par catégorie et renvoie vers son parent et ses sous-groupes.
+- 30 pages de consommables dans consommables/ (outils/catalogues/consommables.json), avec le visuel officiel de
+  img/officiel/ crédité, les lieux de vente repérés et leur aperçu de carte.
+- Deux sommaires : lieux-carte/index.html (par catégorie, par groupe, les lieux notables) et quartiers/index.html (tous les
+  groupes avec leur nombre de lieux). Hubs reliés : carte.html (paragraphe sous les régions), lieux.html (atlas), la fenêtre
+  de chaque marqueur de la carte (« Ouvrir sa page »), le carnet « Mes lieux repérés » (le nom du lieu mène à sa page), la
+  liste des consommables de nourriture.html (lien « sa page » sur chaque ligne).
+- Gabarit allégé : la coquille des fiches véhicules (en-tête, fil d’Ariane, tableau Identité, cartes liées, précédent et
+  suivant, bloc « Signaler », encart calculateur), rien de répété dans la page : 21 Ko en moyenne par page de lieu (3,5 Ko
+  compressés), 64 Ko pour une fiche véhicule. Feuille propre elements.css (3 Ko, outils/sources/elements.css) chargée après
+  style.css et fiches.css ; calculator-entry.css seulement avec l’encart.
+- Chaque page : titre « GTA 6 : … » (65 signes au plus, suffixe retiré au-delà), description propre (155 au plus), un seul
+  h1, canonical, og et twitter, image de partage (capture ou visuel officiel, sinon la carte sociale du site), BreadcrumbList
+  et WebPage (fiches) ou CollectionPage avec ItemList (groupes et sommaires) en JSON-LD, fil d’Ariane, texte propre construit depuis les données (nom, catégorie, groupe, comté, statut,
+  équivalent réel, voisins avec leur direction vraie), tableau Identité, aperçu de la carte de Leonida recadré autour du
+  lieu (l’image commune img/leonida-carte.svg, mise en cache, déplacée par deux variables CSS ; les repères posés dessus
+  sont des liens vers les pages voisines), six lieux les plus proches en cartes, précédent et suivant, bouton de suivi.
+- Le moment propre à ces pages : quand l’aperçu de carte entre à l’écran, ses repères éclosent l’un après l’autre (40 ms
+  par repère, 300 ms au plus, moteur commun lk-reveal) et le repère du lieu pulse une fois ; sans script ou en mouvement
+  réduit, tout est visible tout de suite. Aucun flou, aucune rotation, aucun grossissement de texte ; les cartes liées
+  reprennent l’état survolé immobile du gabarit.
+- Suivi : le bouton « Marquer comme repéré » (lieux, même clé lk_map_found que la carte et le carnet) et « Je l’ai »
+  (consommables, clé lk_own_consommables) est posé par suivi.js dans l’en-tête ; il change d’état sur place.
+- Index outils/pages-elements-index.json : empreinte de chaque page écrite et adresse de chaque élément ; une page n’est
+  réécrite que si son contenu change ; `node outils/gen-pages-elements.cjs --verifier` compare sans écrire.
+
+2. DÉCISIONS (Téva : « tranche toi-même mais n’oublie aucun élément du site »)
+
+- Les 110 repères gtadb absents de la carte du site restent hors site (43 sans nom, les autres non retenus sur la carte) :
+  ils ne sont pas des éléments du site.
+- Indexation prudente des lieux : indexable (588 pages) quand le nom en jeu est connu, l’existence non douteuse, et qu’il y
+  a une capture ou au moins trois informations ; les 1 912 autres existent en noindex,follow et passent en indexable dès que
+  leur nom en jeu est confirmé (817 bâtiments numérotés, 1 053 connus par leur nom réel, 32 noms supposés, 27 surnoms de
+  la communauté écrits entre guillemets dans les données gtadb, « Mount Waffles », affichés « Mount Waffles » et dits
+  surnoms, jamais noms en jeu).
+- Visuel des lieux : la capture officielle déjà montrée sur la carte (image des supports Rockstar repérée par gtadb.org,
+  CC BY 4.0) est admise, créditée ; la photo du lieu réel reste sur la carte. Sans capture : l’aperçu de la carte du site.
+- Les groupes sans lieu rattaché ont leur page (noindex,follow), qui renvoie vers la carte.
+- Lot B (à venir) : une page par valeur d’option (noindex), une par type de munitions (noindex, renvoi vers
+  armes.html#munitions), LCC, BTN et HVY comme les autres marques (sans rapprochement inventé), une page par annonce datée
+  de la frise des Actualités (17), les moments des dossiers y renvoient.
+- Lot C (à venir) : les cinq langues (pages, hreflang, sitemaps par langue), recherche et Léo qui ouvrent la page plutôt que
+  la carte, IndexNow.
+
+3. CE QUI CHANGE AILLEURS
+
+- outils/sync-site.cjs : les trois dossiers entrent dans la liste des pages traitées (coquille, barre de langue, hachages
+  « ?v= », typographie, sitemaps avec lastmod réel, sitemap-fiches) ; les données de la carte reçoivent l’adresse de la page
+  de chaque lieu et de chaque groupe (champ pg) ; recherche et Léo gardent le lien profond vers la carte (lot C).
+- outils/langues.cjs et outils/langues.json : les dossiers lieux-carte/, quartiers/ et consommables/ sont exclus de la
+  traduction (lot A en français) ; la barre de langue de ces pages mène à l’accueil de chaque langue. Les textes nouveaux
+  des scripts et des listes (« Ouvrir sa page », « sa page », les trois phrases des hubs) sont traduits
+  (outils/langues/<code>/v795.json) ; extraction à {} dans les cinq langues.
+- outils/sources/carte.js et carte-page.css : lien « Ouvrir sa page » dans la fenêtre d’un marqueur (.mp-page) ; carte.html :
+  paragraphe .map-pages sous la grille des régions. outils/monde-cartes.cjs et monde.css : paragraphe .mo-pages sous
+  l’atlas des lieux.
+- outils/carnets-source.cjs, outils/gen-carnets.cjs, outils/sources/carnets.js : le carnet « Mes lieux repérés » mène à la
+  page du lieu (sixième champ des lignes) au lieu de l’ancre de la carte.
+- outils/catalogues.cjs : lien « sa page » (.cat-page) sur chaque ligne de consommable.
+- outils/sources/suivi.js : identifiants à tiret acceptés (g-L1234), libellé « Marquer comme repéré » pour les lieux.
+- outils/couverture-pages.cjs : devient un module (familles, bilan, décisions) utilisé par le générateur ; les pages créées
+  comptent comme pages existantes (couverture 100 % des trois familles) ; section « Décisions » du rapport ; les surnoms
+  entre guillemets ne comptent pas comme noms en jeu. outils/COUVERTURE-PAGES.md regénéré.
+- README.md : les trois dossiers dans le tableau de structure, paragraphe v7.95.
+
+4. CORRECTIONS FAITES EN REGARDANT LES PAGES (390, 768 et 1 280 px, état fermé et ouvert du suivi)
+
+- « Ce espace naturel » : élision (« Cet espace naturel ») ; « du comté Comté de Kelly » et « fait partie de le comté » :
+  « du comté de Kelly », « de la ville de Vice City », « dans Lummox County » (nom anglais du groupe gardé tel quel) ;
+  titres « , comté de Kelly » au lieu de « à Comté de Kelly ».
+- Voisins : une seule parenthèse (« Big Grass Island (nom réel, à l’est) », « Train Tunnel (repère L802, au sud) ») ;
+  deux lieux du même nom dans une liste de groupe (« Lake » × 5 à Lummox County) distingués par leur numéro de repère.
+- Catégorie redite (« Transport (transport) ») : le type relevé par la communauté n’est repris que s’il ajoute quelque chose.
+- Description de groupe : la phrase « Regroupe N bâtiments repérés. » de la carte (compte figé) est retirée, le compte vivant
+  est dans l’en-tête.
+- Consommables : « Personnage lié : Jason » au lieu de « Pour Jason » ; « Effet, d’après Rob Nelson : … », « Effet dans
+  GTA V : … », « Effet : armure à 20 % » au lieu de deux fois deux-points.
+- Les 27 surnoms (voir § 2) : page en noindex, phrase « surnom donné par la communauté », guillemets français.
+- Bouton de l’en-tête « Tout le comté Comté de Kelly » : « Tout le comté de Kelly », « Toute la ville de Vice City », « Toute
+  la zone naturelle de Dalton Island » ; le lien du texte couvre « comté de Kelly » entier.
+- Un lieu rattaché à un autre lieu (Dalton Island, Port Vice City, Prison de Hamlet, Gloriana Key… : 145 lieux) est dit
+  « dans la zone naturelle de Dalton Island », « dans le secteur de Prison de Hamlet », avec le lien, le fil d’Ariane et le
+  bouton ; le lieu parent liste ses lieux par catégorie, comme une page de groupe.
+- Crédit gtadb sous l’aperçu : même phrase accentuée que carte.html (la clé du fichier de données est sans accents).
+- Bouton de suivi : au clic, « Marquer comme repéré » devenait « Repéré » et les boutons voisins glissaient de 100 px ; sa
+  largeur est fixée par le libellé le plus long (elements.css), rien ne bouge autour. Essai dans Chromium : clic, clé
+  lk_map_found, retour sur la page (état gardé), second clic (retiré), carnet « Mes lieux repérés » relu (« Repéré »).
+- Aperçu de carte : le contrôle des écrans a relevé, sur consommables/sprunk.html à 768 px, un repère sorti de la scène
+  (masqué par le recadrage) : l’échelle de chaque aperçu (lieu, groupe, consommable) est désormais réduite pour que tous ses
+  repères tiennent à 110 px du centre, ce qui passe dans la scène la plus étroite (320 px, scène carrée sous 480 px) ; la
+  scène perd son role="img" (il rendait les liens des repères invisibles aux lecteurs d’écran), la légende la décrit.
+  Les deux contrôles de navigateur acceptent une liste de pages (LK_ECRANS_PAGES, LK_AUDIT_PAGES) pour rejouer un contrôle
+  ciblé après une telle correction.
+- Audit de clôture, quartiers/ocean-beach.html : des repères qui se recouvraient (cibles l’une sous l’autre) et la liste des
+  lieux en grille dont la dernière rangée n’était pas centrée. Deux repères qui se recouvriraient : le second n’est pas posé
+  (son lieu reste dans la liste) ; la liste des lieux passe en colonnes qui s’équilibrent (columns), ce n’est pas une grille
+  de cartes.
+- Repères de l’aperçu de carte : des cibles de 18 px ; chaque repère devient une cible de 24 px (28 px pour le lieu) avec sa
+  pastille de 18 px dessinée dedans, pour respecter les 24 px des cibles tactiles.
+- Une page vidée par une synchronisation interrompue (batiment-l1853.html, 0 octet) n’était pas réécrite, l’empreinte de
+  l’index étant à jour : le générateur ne tient une page pour inchangée que si le fichier est entier (il finit par </html>).
+- Voisins et listes : « New World Tower (nom réel, repère L2332) » au lieu de deux parenthèses ; « est repéré comme espace
+  naturel, dans le quartier Key Lento » ; « signalé démoli » sans « par la communauté » redit ; description de consommable
+  en minuscule après les deux-points ; « Statut : repère de la série (vu dans un autre jeu, pas encore dans GTA VI) ».
+- À 390 et 768 px, le visuel de l’en-tête était limité à 230 px par la règle des silhouettes de véhicules de style.css : il
+  prend toute la largeur (elements.css). À 1 280 px, l’aperçu de carte d’un groupe occupait toute la largeur de la page :
+  il passe dans l’en-tête, à une échelle réduite pour que tous ses lieux tiennent (la carte est un SVG).
+
+5. LANGUES
+
+- Lot A en français seulement ; les pages ont la barre de langue (vers l’accueil de chaque langue) et pas de hreflang.
+- Mémoires : outils/langues/en, es, it, de, pt/v795.json (« Ouvrir sa page », « sa page », phrases des hubs et du carnet) ;
+  extraction `node outils/langues.cjs <code> --extraire` : {} dans les cinq langues.
+
+6. TESTS ET CONTRÔLES
+
+- Test nouveau : outils/tests/pages-elements.test.cjs (couverture 100 % des trois familles, `--verifier` à 0, titres et
+  descriptions uniques et bornés, un h1, canonical, robots selon le seuil, pas de hreflang, JSON-LD valide, poids borné,
+  barre de langue, aucun « — », « · », « → », « ↑ », « ↓ » ni « / » de séparation dans le texte, cohérence des adresses
+  entre la carte, le carnet, la liste des consommables, les hubs et les pages, voisins et suivi).
+- outils/tests/couverture-pages.test.cjs : section « Décisions », volume à créer entre 500 et 700 après le lot A.
+- outils/tests/ecrans-browser.cjs et audit-site-browser.cjs : échantillon étendu (un lieu avec capture, un lieu au nom
+  long, un lieu supposé, le quartier le plus fourni, les deux sommaires, deux consommables).
+- Tests adaptés : a-propos-v744 compte les trois dossiers nouveaux dans « pages en ligne » (3 034 pages au lieu de 461) ;
+  langues.test applique la liste « exclure » de langues.json (un dossier écarté de la traduction n’est pas une page
+  manquante en espagnol).
+- Contrôles de la version livrée (outils/livraison/verifier-tout.sh sur l’état livré, 18 octobre 2026, 7 h 54 à 9 h 51,
+  puis les reprises ciblées jusqu’à 10 h 45) :
+  - cadre du calculateur : 0 erreur (180 vues) ;
+  - suite node : premier passage 1 167 sur 1 168 (le compte des pages en ligne de À propos, voir ci-dessus) ; passage
+    complet rejoué après la correction : 1 168 sur 1 168 (10 h 05 à 10 h 32) ;
+  - langues.test.cjs : premier passage 50 sur 51 (la liste « exclure ») ; rejoué : 51 sur 51 ;
+  - verifier : 0 erreur, 852 528 références vérifiées dans 5 406 pages (HTML, srcset, CSS, galeries, données, sitemaps) ;
+  - preuve de confidentialité : toutes les affirmations des Mentions tenues ;
+  - pages traduites dans Chromium : 35 sur 35 ; langues dans le navigateur : 2 791 sur 2 791 ;
+  - écrans : 85 pages × 16 largeurs (1 360 chargements, 1 404 s) : aucun débordement, aucun texte trop petit, aucune cible
+    sous 24 px ; les signaux sont exactement ceux de la v7.94 (galeries des fiches, tuiles bento, outils du Calculateur,
+    repère de ville de la carte pannable, galeries des dossiers à 2 560 px), plus un seul nouveau : un repère sorti de
+    l’aperçu de carte de consommables/sprunk.html (§ 4). Corrigé, puis rejoué sur les huit pages du lot (128 chargements) :
+    aucun signal. Allemand : 74 pages × 5 largeurs (370 chargements), signaux de la v7.94 seulement ;
+  - audit de clôture (29 pages, 203 chargements) : 0 erreur console, 0 requête en échec, 12 725 contrastes vérifiés,
+    13 199 cibles de 24 à 44 px, aucune cible sous 24 px ; deux signaux sur quartiers/ocean-beach.html (repères qui se
+    recouvrent, dernière rangée de la liste non centrée, § 4), corrigés puis rejoués sur les trois pages du lot de
+    l’échantillon (21 chargements) : tous les compteurs à 0, 735 contrastes, 962 cibles ;
+  - cookies : aucun, stockage local sous des clés lk… seulement ;
+  - extraction des traductions : 0 texte à traduire en en, es, it, de, pt ; gen-pages-elements --verifier : 0 page
+    différente sur 2 573 ; index de Léo à jour (356 315 octets, identique à la v7.94, donc évaluation inchangée) ; images de
+    partage à jour ; seconde passe de sync-site : aucun fichier changé (empreintes de tous les fichiers du dépôt comparées
+    avant et après).
+
+7. LATENCE MESURÉE (téléphone 390 px, processeur ralenti ×4, réseau 4G lente simulé, serveur local, médianes de deux tours,
+   outils/tests/latence-browser.cjs, 18 octobre 2026)
+
+- Les pages du lot n’existaient pas avant : la référence est la fiche véhicule du même gabarit (vehicules/karin-sultan.html),
+  mesurée dans le même passage.
+- À froid (contexte neuf, service worker compris) : lieu (lieux-carte/mount-waffles.html, avec capture) premier rendu 728 à
+  752 ms, fin de chargement 1 329 à 1 409 ms ; groupe (quartiers/lummox-county.html, 37 repères) premier rendu 708 à 776 ms,
+  plus grand élément 1 324 à 1 396 ms (l’aperçu de carte) ; consommable (consommables/biere-au-comptoir.html) premier rendu
+  736 à 776 ms ; fiche véhicule premier rendu 856 à 924 ms, fin de chargement 1 236 à 1 374 ms.
+- À chaud (seconde visite, cache et service worker) : lieu 540 à 584 ms, groupe 484 à 556 ms, consommable 384 à 480 ms,
+  fiche véhicule 472 à 504 ms ; 5,7 à 6,5 Ko transférés (la page seule), contre 13,5 Ko pour la fiche véhicule.
+- Poids : page de lieu 21 Ko (5,7 Ko compressés), elements.css 4 Ko ; l’aperçu de carte charge l’image commune
+  img/leonida-carte.svg (215 Ko, 74 Ko compressés, en loading="lazy", gardée sept jours en cache par la règle de vercel.json pour img/, trente de plus en revalidation) : payée
+  une fois pour toutes les pages du lot et la carte.
+
+8. FICHIERS
+
+- Nouveaux : lieux-carte/ (2 501 pages), quartiers/ (42), consommables/ (30), elements.css et outils/sources/elements.css,
+  outils/gen-pages-elements.cjs, outils/pages-elements-index.json, outils/tests/pages-elements.test.cjs,
+  outils/langues/<code>/v795.json (5), outils/MATRICE-v7.95.md, LISEZ-MOI-v7.95.txt, outils/CHANGEMENTS-v7.95.txt.
+- Modifiés : outils/sync-site.cjs, outils/langues.cjs, outils/langues.json, outils/regenerer.cjs, outils/couverture-pages.cjs,
+  outils/COUVERTURE-PAGES.md, outils/carnets-source.cjs, outils/gen-carnets.cjs, outils/catalogues.cjs,
+  outils/monde-cartes.cjs, outils/sources/carte.js, carte-page.css, carnets.js, suivi.js, monde.css (et leurs copies
+  servies), carte.html, lieux.html, nourriture.html, carnets/lieux.html et carnets/lieux-data.js, carte-gtadb.js (champ pg),
+  les copies de ces pages dans les cinq langues, sitemap.xml, sitemap-fiches.xml, outils/sitemap-dates.json,
+  outils/leo-index-manifest.json, les pages qui affichent le nombre de pages du site (a-propos, presse, hubs : le compteur
+  est recalculé par script), README.md, outils/tests/couverture-pages.test.cjs, ecrans-browser.cjs,
+  audit-site-browser.cjs.
+- Rien à supprimer.

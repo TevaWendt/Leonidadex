@@ -92,8 +92,9 @@ function dataOf(k) {
 function lieuxFile(L) {
   const cats = {}, groups = [], gi = new Map();
   for (const [key, c] of Object.entries(L.cats)) cats[key] = [c.nom, c.col];
-  const rows = L.items.map(it => { let g = -1; if (it.p) { if (!gi.has(it.p)) { gi.set(it.p, groups.length); groups.push(it.p); } g = gi.get(it.p); } return [it.id, it.n, it.g, g, it.x === 'fiche' ? 1 : 0]; });
-  return '/* LEONIDAKIT — lieux de la carte pour le carnet « Mes lieux repérés ». Généré par outils/gen-carnets.cjs depuis carte.js et\n   carte-gtadb.js (gtadb.org et ses contributeurs, CC BY 4.0 ; adapté pour Leonidakit) : ne pas modifier à la main.\n   Ligne : [identifiant, nom, catégorie, groupe (-1 sans groupe), 1 si le lieu a une fiche]. */\nwindow.LK_CARNET_LIEUX = ' + jsonScript({ v: 1, cats, groups, rows }) + ';\n';
+  /* v7.95 : sixième case, l’adresse de la page quand elle n’est pas lieux/<id>.html (pages par élément, adresse absolue) */
+  const rows = L.items.map(it => { let g = -1; if (it.p) { if (!gi.has(it.p)) { gi.set(it.p, groups.length); groups.push(it.p); } g = gi.get(it.p); } const r = [it.id, it.n, it.g, g, it.x === 'fiche' ? 1 : 0]; if (it.x === 'fiche' && it.u !== 'lieux/' + it.id + '.html') r.push(it.u); return r; });
+  return '/* LEONIDAKIT — lieux de la carte pour le carnet « Mes lieux repérés ». Généré par outils/gen-carnets.cjs depuis carte.js et\n   carte-gtadb.js (gtadb.org et ses contributeurs, CC BY 4.0 ; adapté pour Leonidakit) : ne pas modifier à la main.\n   Ligne : [identifiant, nom, catégorie, groupe (-1 sans groupe), 1 si le lieu a une fiche, adresse de la page si ce n’est pas lieux/<id>.html (v7.95)]. */\nwindow.LK_CARNET_LIEUX = ' + jsonScript({ v: 1, cats, groups, rows }) + ';\n';
 }
 
 function header(prefix) {

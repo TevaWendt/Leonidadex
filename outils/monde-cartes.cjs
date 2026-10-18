@@ -154,7 +154,10 @@ function create(ctx) {
       + '<p class="mo-map-cap">Fond de carte communautaire, non officiel</p></div></div>'
       + cards
       + '<svg class="mo-lines" aria-hidden="true" focusable="false"></svg>'
-      + '</div></div></section>';
+      + '</div></div>'
+      /* v7.95 (lot A, une page par élément) : les pages de tous les lieux repérés sur la carte, par quartier, ville et comté */
+      + '<p class="mo-pages">Au-delà des six régions, chaque lieu repéré sur la carte a sa page : <a href="lieux-carte/index.html">tous les lieux de la carte</a>, classés par <a href="quartiers/index.html">quartier, ville et comté</a>.</p>'
+      + '</section>';
   }
 
   /* ---------- Personnages : la jaquette ---------- */

@@ -230,6 +230,10 @@ function whereCell(it) {
 }
 const PERSON = { jason: 'Jason', lucia: 'Lucia', 'jason-lucia': 'Jason et Lucia' };
 function rowId(fam, it) { return fam + '-' + it.id; }
+/* v7.95 (lot A, une page par élément) : la page de l’élément quand elle existe (outils/pages-elements-index.json, écrit par
+   gen-pages-elements.cjs : « famille:id » → adresse) ; la ligne de la liste y mène par « sa page » */
+let PAGES = null;
+function pageOf(fam, it) { if (PAGES === null) { const f = path.join(root, 'outils/pages-elements-index.json'); PAGES = fs.existsSync(f) ? JSON.parse(fs.readFileSync(f, 'utf8')).elements || {} : {}; } const p = PAGES[fam + ':' + it.id]; return p && fs.existsSync(path.join(root, p)) ? p : null; }
 /* v7.50 (lot 3) : vignette de la ligne (visuel officiel lié, sinon pictogramme de la catégorie, dit comme tel),
    colonne GTA VI qui distingue « Prix à venir » et « Achat à confirmer », fiche complète dépliable (modèle commun). */
 const FD = require('./fiche-doc.cjs');
@@ -293,7 +297,7 @@ function row(fam, it, cat, sources) {
     + compat.html
     + (it.notes ? '<p class="cat-note">' + esc(it.notes) + '</p>' : '')
     + '</div>'
-    + '<p class="cat-meta">' + srcLinks + (media ? ' <a class="cat-media" href="medias.html#media-' + esc(it.media) + '">visuel officiel</a>' : '') + (it.lien ? ' <a class="cat-link" href="' + esc(it.lien.href) + '">' + esc(it.lien.label) + '</a>' : '') + '</p>'
+    + '<p class="cat-meta">' + srcLinks + (media ? ' <a class="cat-media" href="medias.html#media-' + esc(it.media) + '">visuel officiel</a>' : '') + (it.lien ? ' <a class="cat-link" href="' + esc(it.lien.href) + '">' + esc(it.lien.label) + '</a>' : '') + (pageOf(fam, it) ? ' <a class="cat-page" href="' + esc(pageOf(fam, it)) + '">sa page</a>' : '') + '</p>'
     + '<div class="cat-acts">' + (folded ? '<button type="button" class="cat-more-bt" data-cat-more aria-expanded="false" aria-controls="' + esc(rowId(fam, it)) + '-more"><span class="cat-more-l">Description</span></button>' : '') + ficheBox(fam, it) + '</div></td>'
     + '<td class="cat-c-eff" data-l="Effet">' + esc(it.effet.texte) + (it.effet.valeur !== null ? '<b class="cat-eff-n">' + esc(String(it.effet.valeur)) + (UNITS[it.effet.unite] || ' min') + ' <i>(' + esc(it.effet.jeu) + ')</i></b>' : '') + '</td>'
     + '<td class="cat-c-p6" data-l="GTA VI">' + accessHtml(it) + '</td>'

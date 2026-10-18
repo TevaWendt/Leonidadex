@@ -1,7 +1,7 @@
 'use strict';
 /* v7.94 (« une page par élément », étape 1) : l’inventaire outils/couverture-pages.cjs tourne, écrit son rapport, trouve
-   chaque fiche des familles déjà en place et compte les familles à créer. Le mode bloquant (code 1 tant qu’un élément n’a
-   pas sa page) sera exigé par le test du lot A, une fois les pages générées. */
+   chaque fiche des familles déjà en place et compte les familles à créer. v7.95 (lot A) : les familles du lot ont leurs pages
+   (outils/tests/pages-elements.test.cjs les contrôle) ; le mode bloquant sera exigé quand le lot B aura écrit les autres. */
 const test = require('node:test'), assert = require('node:assert'), { execFileSync } = require('node:child_process'), fs = require('node:fs'), path = require('node:path');
 const ROOT = path.resolve(__dirname, '../..');
 const run = args => JSON.parse(execFileSync(process.execPath, [path.join(ROOT, 'outils/couverture-pages.cjs'), ...args], { cwd: ROOT, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 }));
@@ -32,7 +32,8 @@ test('couverture : le rapport est écrit et le volume calculé', () => {
   const out = path.join(require('node:os').tmpdir(), 'couverture-pages-test.md');
   execFileSync(process.execPath, [path.join(ROOT, 'outils/couverture-pages.cjs'), '--rapport'], { cwd: ROOT, encoding: 'utf8', env: { ...process.env, COUVERTURE_SORTIE: out } });
   const md = fs.readFileSync(out, 'utf8'); fs.unlinkSync(out);
-  assert.match(md, /## Tableau des familles/); assert.match(md, /## Volume à créer/); assert.match(md, /## À trancher par Téva/);
-  assert.ok(inv.volume.aCreer > 3000 && inv.volume.toutesLangues === inv.volume.aCreer * inv.volume.langues);
+  assert.match(md, /## Tableau des familles/); assert.match(md, /## Volume à créer/); assert.match(md, /## Décisions/); assert.match(md, /## À trancher par Téva/);
+  /* v7.95 (lot A) : les lieux de la carte, les groupes et les consommables ont leurs pages ; il reste les familles du lot B */
+  assert.ok(inv.volume.aCreer > 500 && inv.volume.aCreer < 700 && inv.volume.toutesLangues === inv.volume.aCreer * inv.volume.langues, 'à créer : ' + inv.volume.aCreer);
   assert.ok(!/ — | · /.test(md), 'rapport sans séparateurs « — » ni « · »');
 });

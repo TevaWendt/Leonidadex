@@ -1,0 +1,67 @@
+/* LEONIDAKIT — elements.css (v7.95, lot A « une page par élément »)
+   Feuille des pages générées par outils/gen-pages-elements.cjs (lieux de la carte, quartiers et comtés, consommables ; les
+   familles du lot B s'y ajouteront). Tout le gabarit vient de style.css (coquille, fil d'Ariane, en-tête de fiche, tableau
+   Identité, cartes liées, navigation précédent et suivant) et de fiches.css (liens de l'en-tête) : ici seulement ce qui
+   n'existe pas ailleurs, en jetons de la charte. Chargée après les deux autres, jamais de couleur à la main. */
+
+/* ---------- en-tête : teintes par famille (mêmes variables que les fiches véhicules) ---------- */
+.fhero--lieu{--g1:#5B4E8C;--g2:#2F6F8F;}
+.fhero--quartier{--g1:#D96A2C;--g2:#8A6A45;}
+.fhero--conso{--g1:#B5762A;--g2:#4C7A50;}
+/* en-tête avec un visuel ou un aperçu de carte à droite : deux colonnes, comme les fiches à galerie */
+.fhero-in--art{display:grid;grid-template-columns:1fr minmax(300px,440px);gap:28px;align-items:start;}
+/* sous 900 px, style.css ramène .fhero-art à 230 px (silhouettes des véhicules) : ici le visuel prend toute la largeur, comme les galeries */
+@media(max-width:900px){.fhero-in--art{grid-template-columns:1fr;}.fhero-art--el{max-width:none;}}
+.fhero-art--el{padding:0;background:none;border:0;box-shadow:none;}
+.fhero-art--el .lc-map,.fhero-art--el .lc-capture{margin:0;}
+
+/* ---------- capture officielle ou visuel officiel ---------- */
+.lc-capture{margin:0 0 18px;padding:10px 10px 8px;background:#fff;border:2px solid var(--ink);border-radius:14px;box-shadow:var(--shadow-soft);}
+.lc-capture img{display:block;width:100%;height:auto;border-radius:8px;}
+.lc-capture figcaption{margin-top:8px;font-size:.78rem;line-height:1.45;color:var(--ink-soft);}
+
+/* ---------- aperçu de la carte : l'image commune recadrée autour du point, repères posés par-dessus ---------- */
+.lc-map{margin:0 0 18px;padding:10px;background:linear-gradient(180deg,#e9f3f4,#f4f0e7);border:2px solid var(--ink);border-radius:14px;box-shadow:var(--shadow-soft);}
+.lc-map-stage{position:relative;overflow:hidden;aspect-ratio:4/3;border-radius:8px;background:#cfe3ea;}
+/* sous 480 px, la scène est carrée : les repères (110 px du centre au plus) restent visibles même à 320 px */
+@media(max-width:480px){.lc-map-stage{aspect-ratio:1/1;}}
+.lc-map-img{position:absolute;left:calc(50% - var(--mx,0px));top:calc(50% - var(--my,0px));max-width:none;pointer-events:none;}
+/* un repère : une cible de 24 px (28 px pour le lieu), la pastille dessinée dedans (18 px, 24 px pour le lieu) */
+.lc-pin{position:absolute;left:calc(50% + var(--dx,0px));top:calc(50% + var(--dy,0px));width:24px;height:24px;margin:-12px 0 0 -12px;border-radius:50%;transition:transform var(--c-fast,190ms);}
+.lc-pin::after{content:'';position:absolute;inset:3px;border-radius:50%;background:var(--amber);border:2px solid var(--ink);box-shadow:0 0 0 3px rgba(253,251,247,.85);}
+.lc-pin--ici{width:28px;height:28px;margin:-14px 0 0 -14px;z-index:2;}
+.lc-pin--ici::after{inset:2px;background:var(--coral);box-shadow:0 0 0 3px rgba(253,251,247,.85),0 0 0 5px rgba(232,69,44,.5);}
+.lc-pin:hover,.lc-pin:focus-visible{transform:scale(1.25);z-index:3;}
+/* le moment de la page : les repères éclosent en cascade (40 ms par repère, 300 ms au plus) quand l'aperçu entre à l'écran ;
+   le repère du lieu pulse une fois. Sans script ou en mouvement réduit, tout est visible tout de suite. */
+.js .lc-map.lk-reveal .lc-pin{transition:transform .4s cubic-bezier(.34,1.56,.64,1) calc(min(var(--i,0),7)*40ms);}
+.js .lc-map.lk-reveal:not(.is-in) .lc-pin{transform:scale(0);}
+.lc-pin--ici::before{content:'';position:absolute;inset:0;border-radius:50%;background:var(--coral);opacity:0;pointer-events:none;}
+.js .lc-map.lk-reveal.is-in .lc-pin--ici::before{animation:lc-pulse .9s ease-out .35s 1;}
+@keyframes lc-pulse{from{transform:scale(.7);opacity:.7;}to{transform:scale(2.2);opacity:0;}}
+@media(prefers-reduced-motion:reduce){.js .lc-map.lk-reveal .lc-pin{transition:none;transform:none;}.js .lc-map.lk-reveal.is-in .lc-pin--ici::before{animation:none;}}
+.lc-pin:focus-visible{outline:3px solid var(--ink);outline-offset:2px;}
+.lc-map figcaption{margin-top:8px;font-size:.8rem;line-height:1.45;color:var(--ink-soft);}
+.lc-map figcaption a{color:var(--coral-text,#B93220);text-decoration:underline;text-underline-offset:3px;}
+.lc-credit{font-size:.8rem;color:var(--ink-soft);}
+
+
+/* ---------- bouton de suivi posé par suivi.js dans l'en-tête ---------- */
+.lc-track{display:inline-flex;}
+/* largeur fixée par le libellé le plus long (« Marquer comme repéré », « Je l’ai » puis « Obtenu ») : au clic, rien ne bouge autour */
+.lc-track .track-bt{margin:0;min-height:40px;min-width:7.6em;padding:9px 14px;border:2px solid var(--ink);border-radius:9px;background:#fff;color:var(--ink);font:inherit;font-size:.85rem;font-weight:700;display:inline-flex;align-items:center;justify-content:center;}
+.lc-track[data-track="lieux"] .track-bt{min-width:15em;}
+.lc-track .track-bt:hover{border-color:var(--coral-text,#B93220);color:var(--coral-text,#B93220);}
+.lc-track .track-bt.on{background:var(--ink);color:#fff;border-color:var(--ink);}
+
+/* ---------- listes des pages de groupe et du sommaire ---------- */
+/* liste en colonnes qui s’équilibrent (pas une grille de cartes : rien à centrer en fin de rangée) */
+.lc-list{list-style:none;margin:0 0 26px;padding:0;columns:15rem;column-gap:18px;}
+.lc-list li{display:flex;flex-direction:column;gap:1px;padding:8px 0;border-bottom:1px solid var(--rule);min-width:0;break-inside:avoid;}
+.lc-list a{font-weight:700;color:var(--ink);text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere;}
+.lc-list a:hover{color:var(--coral-text,#B93220);}
+.lc-list small{font-size:.78rem;color:var(--ink-soft);}
+.ed-h3{font-size:1.05rem;font-weight:800;margin:18px 0 8px;}
+
+/* ---------- tableau Identité : une ligne de sources sur plusieurs lignes ---------- */
+table.spec td br+a{display:inline-block;margin-top:4px;}

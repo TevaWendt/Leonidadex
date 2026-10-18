@@ -132,10 +132,14 @@ function lieux() {
   const groupName = Object.fromEntries(G.groupes.map(g => [g.id, plainText(g.n)]));
   const fiches = new Set(fs.existsSync(path.join(root, 'lieux')) ? fs.readdirSync(path.join(root, 'lieux')).filter(f => f.endsWith('.html')).map(f => f.slice(0, -5)) : []);
   const P = progress(), wanted = new Set(P.ids.lieux || []), seen = new Set(), out = [];
+  /* v7.95 (lot A, une page par élément) : la page d’un lieu ou d’un groupe (outils/pages-elements-index.json, écrit par
+     gen-pages-elements.cjs) ; adresse absolue, valable depuis le carnet de chaque langue tant que ces pages n’existent qu’en français */
+  const pages = fs.existsSync(path.join(root, 'outils/pages-elements-index.json')) ? JSON.parse(read('outils/pages-elements-index.json')).elements || {} : {};
   for (const p of all) {
     if (!p || !p.id || !wanted.has(p.id) || seen.has(p.id)) continue; seen.add(p.id);
     const fiche = fiches.has(p.id) && !/http-equiv="refresh"/.test(read('lieux/' + p.id + '.html'));
-    out.push({ f: 'lieux', id: p.id, n: plainText(p.n) || p.id, c: (CATS[p.c] && CATS[p.c].nom) || 'Lieux', g: p.c || 'lieu', u: fiche ? 'lieux/' + p.id + '.html' : 'carte.html#lieu=' + encodeURIComponent(p.id), x: fiche ? 'fiche' : 'carte', p: groupName[p.p] || '', col: (CATS[p.c] && CATS[p.c].col) || '#B5762A' });
+    const page = !fiche && pages[p.id] && fs.existsSync(path.join(root, pages[p.id])) ? '/' + pages[p.id] : null;
+    out.push({ f: 'lieux', id: p.id, n: plainText(p.n) || p.id, c: (CATS[p.c] && CATS[p.c].nom) || 'Lieux', g: p.c || 'lieu', u: fiche ? 'lieux/' + p.id + '.html' : page || 'carte.html#lieu=' + encodeURIComponent(p.id), x: fiche || page ? 'fiche' : 'carte', p: groupName[p.p] || '', col: (CATS[p.c] && CATS[p.c].col) || '#B5762A' });
   }
   lieuxCache = { items: out, cats: CATS };
   return lieuxCache;

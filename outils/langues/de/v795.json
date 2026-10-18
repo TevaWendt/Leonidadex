@@ -1,0 +1,14 @@
+{
+ "_note": "v7.95 (lot A, « une page par élément ») : textes nouveaux des scripts et des listes qui relient la carte, le carnet et les catalogues aux pages par élément.",
+ "Ouvrir sa page": "Seine Seite öffnen",
+ "Chaque lieu repéré sur la carte a aussi sa page : <1>tous les lieux de la carte</1>, classés par <2>quartier, ville et comté</2>.": "Jeder auf der Karte erfasste Ort hat auch seine Seite: <1>alle Orte der Karte</1>, geordnet nach <2>Viertel, Stadt und County</2>.",
+ "Depuis un marqueur, « Ouvrir sa page » y mène.": "Von einer Markierung aus führt „Seine Seite öffnen“ dorthin.",
+ "Au-delà des six régions, chaque lieu repéré sur la carte a sa page : <1>tous les lieux de la carte</1>, classés par <2>quartier, ville et comté</2>.": "Über die sechs Regionen hinaus hat jeder auf der Karte erfasste Ort seine Seite: <1>alle Orte der Karte</1>, geordnet nach <2>Viertel, Stadt und County</2>.",
+ "<1>source 1</1> <2>source 2</2> <3>sa page</3>": "<1>Quelle 1</1> <2>Quelle 2</2> <3>seine Seite</3>",
+ "<1>source 1</1> <2>source 2</2> <3>source 3</3> <4>source 4</4> <5>visuel officiel</5> <6>sa page</6>": "<1>Quelle 1</1> <2>Quelle 2</2> <3>Quelle 3</3> <4>Quelle 4</4> <5>offizielles Bild</5> <6>seine Seite</6>",
+ "<1>source</1> <2>visuel officiel</2> <3>sa page</3>": "<1>Quelle</1> <2>offizielles Bild</2> <3>seine Seite</3>",
+ "<1>source 1</1> <2>source 2</2> <3>source 3</3> <4>sa page</4>": "<1>Quelle 1</1> <2>Quelle 2</2> <3>Quelle 3</3> <4>seine Seite</4>",
+ "<1>source 1</1> <2>source 2</2> <3>source 3</3> <4>source 4</4> <5>sa page</5>": "<1>Quelle 1</1> <2>Quelle 2</2> <3>Quelle 3</3> <4>Quelle 4</4> <5>seine Seite</5>",
+ "<1>source 1</1> <2>source 2</2> <3>Suivi dans l’Armurerie</3> <4>sa page</4>": "<1>Quelle 1</1> <2>Quelle 2</2> <3>Tracking in der Waffenkammer</3> <4>seine Seite</4>",
+ "<1>source</1> <2>sa page</2>": "<1>Quelle</1> <2>seine Seite</2>"
+}

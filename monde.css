@@ -150,6 +150,8 @@
   .mo-map-cap{font-size:max(11px,.62rem);}
 }
 .mo-hint{display:flex;align-items:center;gap:8px;margin:0 0 14px;font-size:.86rem;color:var(--mo-soft);}
+.mo-pages{margin:18px 0 0;font-size:.95rem;color:var(--ink-soft);max-width:70ch;}
+.mo-pages a{color:var(--coral-text,#B93220);text-decoration:underline;text-underline-offset:3px;}
 .mo-hint::before{content:"";width:22px;height:4px;border-radius:2px;background:linear-gradient(90deg,var(--mo-amber),var(--mo-coral));transform:skewX(-20deg);}
 @media (hover:none){.mo-hint{display:none;}}
 .mo-cover-grid{--fc:var(--mo-amber);display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-areas:"ja lu ca br" "ja lu ra bo" "dq dq di di";grid-auto-rows:minmax(262px,auto);gap:10px;padding:10px;border-radius:22px;background:var(--mo-ink);box-shadow:8px 8px 0 var(--mo-amber);}

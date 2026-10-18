@@ -43,7 +43,7 @@
   var items = D.items || [];
   if (D.ext === 'lieux') {
     var L = window.LK_CARNET_LIEUX;
-    items = L && Array.isArray(L.rows) ? L.rows.map(function (r) { var c = L.cats[r[2]] || ['Lieux', '#B5762A']; return { f: 'lieux', id: r[0], n: r[1], c: c[0], g: r[2], u: r[4] ? 'lieux/' + r[0] + '.html' : 'carte.html#lieu=' + encodeURIComponent(r[0]), x: r[4] ? 'fiche' : 'carte', col: c[1], k: r[3] >= 0 ? L.groups[r[3]] : '' }; }) : [];
+    items = L && Array.isArray(L.rows) ? L.rows.map(function (r) { var c = L.cats[r[2]] || ['Lieux', '#B5762A']; return { f: 'lieux', id: r[0], n: r[1], c: c[0], g: r[2], u: r[5] ? r[5] : r[4] ? 'lieux/' + r[0] + '.html' : 'carte.html#lieu=' + encodeURIComponent(r[0]), x: r[4] ? 'fiche' : 'carte', col: c[1], k: r[3] >= 0 ? L.groups[r[3]] : '' }; }) : [];
   }
   var styles = D.styles || [];
   var index = {};
@@ -141,7 +141,7 @@
     var body = el('div', 'cn-body');
     body.appendChild(el('p', 'cn-kicker', it.f === 'styles' || !multi || it.c === m.label ? it.c + (it.f === 'lieux' && it.k ? ', ' + it.k : '') : m.label + ', ' + it.c));
     var h = el('h3', 'cn-name');
-    if (it.u) { var a = el('a', null, it.n); a.href = P + it.u; a.setAttribute('aria-label', it.n + ' : ' + linkWord(it)); h.appendChild(a); } else h.textContent = it.n;
+    if (it.u) { var a = el('a', null, it.n); a.href = it.u.charAt(0) === '/' ? it.u : P + it.u;  a.setAttribute('aria-label', it.n + ' : ' + linkWord(it)); h.appendChild(a); } else h.textContent = it.n;
     body.appendChild(h);
     var badges = el('p', 'cn-badges');
     if (own) badges.appendChild(el('span', 'cn-stamp', cap(m.done)));

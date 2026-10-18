@@ -1,0 +1,14 @@
+{
+ "_note": "v7.95 (lot A, « une page par élément ») : textes nouveaux des scripts et des listes qui relient la carte, le carnet et les catalogues aux pages par élément.",
+ "Ouvrir sa page": "Abrir su página",
+ "Chaque lieu repéré sur la carte a aussi sa page : <1>tous les lieux de la carte</1>, classés par <2>quartier, ville et comté</2>.": "Cada lugar localizado en el mapa tiene también su página: <1>todos los lugares del mapa</1>, ordenados por <2>barrio, ciudad y condado</2>.",
+ "Depuis un marqueur, « Ouvrir sa page » y mène.": "Desde un marcador, « Abrir su página » te lleva allí.",
+ "Au-delà des six régions, chaque lieu repéré sur la carte a sa page : <1>tous les lieux de la carte</1>, classés par <2>quartier, ville et comté</2>.": "Más allá de las seis regiones, cada lugar localizado en el mapa tiene su página: <1>todos los lugares del mapa</1>, ordenados por <2>barrio, ciudad y condado</2>.",
+ "<1>source 1</1> <2>source 2</2> <3>sa page</3>": "<1>fuente 1</1> <2>fuente 2</2> <3>su página</3>",
+ "<1>source 1</1> <2>source 2</2> <3>source 3</3> <4>source 4</4> <5>visuel officiel</5> <6>sa page</6>": "<1>fuente 1</1> <2>fuente 2</2> <3>fuente 3</3> <4>fuente 4</4> <5>imagen oficial</5> <6>su página</6>",
+ "<1>source</1> <2>visuel officiel</2> <3>sa page</3>": "<1>fuente</1> <2>imagen oficial</2> <3>su página</3>",
+ "<1>source 1</1> <2>source 2</2> <3>source 3</3> <4>sa page</4>": "<1>fuente 1</1> <2>fuente 2</2> <3>fuente 3</3> <4>su página</4>",
+ "<1>source 1</1> <2>source 2</2> <3>source 3</3> <4>source 4</4> <5>sa page</5>": "<1>fuente 1</1> <2>fuente 2</2> <3>fuente 3</3> <4>fuente 4</4> <5>su página</5>",
+ "<1>source 1</1> <2>source 2</2> <3>Suivi dans l’Armurerie</3> <4>sa page</4>": "<1>fuente 1</1> <2>fuente 2</2> <3>Seguimiento en la Armería</3> <4>su página</4>",
+ "<1>source</1> <2>sa page</2>": "<1>fuente</1> <2>su página</2>"
+}
