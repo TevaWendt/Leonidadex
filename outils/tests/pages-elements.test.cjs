@@ -22,7 +22,7 @@ test('lot A : les pages sont à jour (gen-pages-elements --verifier ne trouve ri
   assert.equal(r.status, 0, r.stdout + r.stderr);
 });
 test('lot A : titre et description uniques et bornés, un seul h1, canonical, robots selon le seuil, pas de hreflang, JSON-LD valide, poids borné', () => {
-  const titres = new Map(), descs = new Map(); const strict = new Map(); for (const f of INV.familles) for (const it of f.items) if (it.page) strict.set(it.page, f.id === 'lieux-carte' ? !!it.strict : !!it.indexable);
+  const titres = new Map(), descs = new Map(); const strict = new Map(); for (const f of INV.familles) for (const it of f.items) if (it.page) strict.set(it.page, !!it.indexable); /* v7.96 : seuil du prompt pour les lieux aussi (deux informations réelles) */
   for (const file of PAGES) {
     const dec = x => x.replace(/&quot;/g, '"').replace(/&#39;/g, '’').replace(/&amp;/g, '&');
     const html = read(file), t = dec(html.match(/<title>([^<]*)<\/title>/)[1]), d = dec(html.match(/<meta name="description" content="([^"]*)"/)[1]);
@@ -42,9 +42,10 @@ test('lot A : titre et description uniques et bornés, un seul h1, canonical, ro
     /* gabarit allégé : une fiche de lieu ou de consommable tient sous 40 Ko ; une page de groupe liste jusqu’à 300 lieux (sous 120 Ko) */
     assert.ok(Buffer.byteLength(html) < (/^quartiers\/|index\.html$/.test(file) ? 120 : 40) * 1024, file + ' : ' + Buffer.byteLength(html) + ' octets');
     assert.ok(html.includes('class="lk-langbar"'), file + ' : barre de langue');
-    const tx = texte(html); assert.ok(!/[—·→↑↓]| \/ /.test(tx), file + ' : signe d’écriture automatique dans le texte visible');
+    /* les citations exactes (« … ») gardent leur ponctuation d’origine ; le reste du texte visible n’a aucun signe d’écriture automatique */
+    const tx = texte(html), hors = tx.replace(/«[^»]*»/g, ' '); assert.ok(!/[—·→↑↓]| \/ /.test(hors), file + ' : signe d’écriture automatique dans le texte visible');
     /* phrases construites : pas d’article mal contracté, pas d’élision oubliée, pas de nom de comté redit, pas de double parenthèse */
-    const faute = tx.match(/\b(?:de|à) (?:le|les) \b|\bCe [aeiouyé]|\bce [aeiouyé]|comté Comté|\) \(|Tout la |\bde de\b/);
+    const faute = tx.match(/(?<!\p{L})(?:de|à) (?:le|les) (?!\p{L}*[’'])|(?<!\p{L})[Cc]e [aeiouyé]|comté Comté|\) \(|Tout la |(?<!\p{L})de de(?!\p{L})/u);
     assert.ok(!faute, file + ' : tournure fautive « ' + (faute && faute[0]) + ' »');
     /* un lieu qui porte des guillemets droits dans les données est un surnom : jamais affiché avec ses guillemets droits */
     assert.ok(!/"[A-Z][^"]{2,40}"/.test(tx), file + ' : nom entre guillemets droits');

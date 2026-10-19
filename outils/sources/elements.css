@@ -5,9 +5,19 @@
    n'existe pas ailleurs, en jetons de la charte. Chargée après les deux autres, jamais de couleur à la main. */
 
 /* ---------- en-tête : teintes par famille (mêmes variables que les fiches véhicules) ---------- */
+/* v7.96 (audit de clôture) : les noms longs des cartes liées (« Costume en lin pastel de Jason (Pack Vintage Vice City) ») tiennent sur trois lignes au lieu de deux (coupe vue à 768 px) */
+.rel-nom{-webkit-line-clamp:3;}
 .fhero--lieu{--g1:#5B4E8C;--g2:#2F6F8F;}
 .fhero--quartier{--g1:#D96A2C;--g2:#8A6A45;}
 .fhero--conso{--g1:#B5762A;--g2:#4C7A50;}
+/* lot B (v7.96) : teintes des autres familles */
+.fhero--style{--g1:#B9456F;--g2:#5B4E8C;}
+.fhero--perso{--g1:#2F6F8F;--g2:#8A6A45;}
+.fhero--marque{--g1:#1E2A3A;--g2:#5B4E8C;}
+.fhero--arme{--g1:#8A2E2E;--g2:#4C4C4C;}
+.fhero--edition{--g1:#3B2A5B;--g2:#D96A2C;}
+.fhero--visuel{--g1:#2F6F8F;--g2:#B5762A;}
+.fhero--moment{--g1:#D96A2C;--g2:#B9456F;}
 /* en-tête avec un visuel ou un aperçu de carte à droite : deux colonnes, comme les fiches à galerie */
 .fhero-in--art{display:grid;grid-template-columns:1fr minmax(300px,440px);gap:28px;align-items:start;}
 /* sous 900 px, style.css ramène .fhero-art à 230 px (silhouettes des véhicules) : ici le visuel prend toute la largeur, comme les galeries */
@@ -65,3 +75,9 @@
 
 /* ---------- tableau Identité : une ligne de sources sur plusieurs lignes ---------- */
 table.spec td br+a{display:inline-block;margin-top:4px;}
+
+/* ---------- lot B : pastille de teinte d’une option, bandeau de silhouettes d’une marque ---------- */
+.lc-swatch{display:inline-block;width:18px;height:18px;border-radius:50%;background:var(--sw,#ccc);border:2px solid var(--ink);vertical-align:-4px;margin-right:4px;}
+.lc-strip{display:flex;flex-wrap:wrap;gap:12px;margin:14px 0 0;}
+.lc-strip img{width:160px;height:80px;object-fit:contain;background:#fff;border:2px solid var(--ink);border-radius:10px;padding:6px;}
+@media(max-width:480px){.lc-strip img{width:calc(50% - 6px);}}

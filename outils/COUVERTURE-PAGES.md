@@ -1,4 +1,4 @@
-# Couverture des pages : un élément, une page (v7.95)
+# Couverture des pages : un élément, une page (v7.96)
 
 Rapport écrit par `node outils/couverture-pages.cjs` le 2026-10-18. Chaque famille liste tous ses éléments ; une famille est couverte quand chacun a sa page ou une exclusion justifiée. « Indexables » estime, d’après les données, les pages qui atteindraient le seuil d’indexation (nom, catégorie, description propre, deux informations réelles ou un visuel officiel) ; les autres seraient créées en `noindex, follow`.
 
@@ -8,7 +8,7 @@ Rapport écrit par `node outils/couverture-pages.cjs` le 2026-10-18. Chaque fami
 |---|---|---:|---:|---:|---:|---:|---:|---:|
 | Véhicules | `vehicules-data.js` | 302 | 302 | 0 | 0 | 100 % | 302 | 0 |
 | Armes | `armes-data.js` | 27 | 27 | 0 | 0 | 100 % | 27 | 0 |
-| Types de munitions (nouvelle) | `armes-data.js (champ mun)` | 6 | 0 | 0 | 6 | 0 % | 0 | 6 |
+| Types de munitions (nouvelle) | `armes-data.js (champ mun)` | 6 | 6 | 0 | 0 | 100 % | 6 | 0 |
 | Régions et lieux principaux | `outils/editorial.json (regions)` | 6 | 6 | 0 | 0 | 100 % | 6 | 0 |
 | Personnages | `outils/editorial.json (characters)` | 8 | 8 | 0 | 0 | 100 % | 8 | 0 |
 | Entreprises | `outils/editorial.json (businesses)` | 8 | 8 | 0 | 0 | 100 % | 8 | 0 |
@@ -19,39 +19,39 @@ Rapport écrit par `node outils/couverture-pages.cjs` le 2026-10-18. Chaque fami
 | Activités | `outils/activites/activites.json` | 7 | 7 | 0 | 0 | 100 % | 7 | 0 |
 | Stations de radio et album | `outils/radios/radios.json (stations, fiches)` | 7 | 7 | 0 | 0 | 100 % | 7 | 0 |
 | Vidéos officielles | `outils/actus/actus.json (videos.liste)` | 4 | 4 | 0 | 0 | 100 % | 4 | 0 |
-| Éditions du jeu (nouvelle) | `outils/actus/actus.json (editions)` | 4 | 0 | 0 | 4 | 0 % | 4 | 0 |
-| Lieux de la carte (nouvelle) | `carnets/lieux-data.js (carte.js + carte-gtadb.js), outils/landmarks-leonidakit.json` | 2 500 | 2 500 | 0 | 0 | 100 % | 1 672 | 828 |
-| Régions, villes, quartiers et comtés (nouvelle) | `carnets/lieux-data.js (catégories region, ville, quartier, comte), carte-gtadb.js (groupes)` | 47 | 47 | 0 | 0 | 100 % | 44 | 3 |
-| Marques de véhicules (nouvelle) | `outils/marques.json, vehicules-data.js (champ marque)` | 48 | 0 | 0 | 48 | 0 % | 47 | 1 |
+| Éditions du jeu (nouvelle) | `outils/actus/actus.json (editions)` | 4 | 4 | 0 | 0 | 100 % | 4 | 0 |
+| Lieux de la carte (nouvelle) | `carnets/lieux-data.js (carte.js + carte-gtadb.js), outils/landmarks-leonidakit.json` | 2 500 | 2 500 | 0 | 0 | 100 % | 2 500 | 0 |
+| Régions, villes, quartiers et comtés (nouvelle) | `carnets/lieux-data.js (catégories region, ville, quartier, comte), carte-gtadb.js (groupes)` | 47 | 47 | 0 | 0 | 100 % | 47 | 0 |
+| Marques de véhicules (nouvelle) | `outils/marques.json, vehicules-data.js (champ marque)` | 51 | 51 | 0 | 0 | 100 % | 51 | 0 |
 | Consommables (nouvelle) | `outils/catalogues/consommables.json` | 30 | 30 | 0 | 0 | 100 % | 30 | 0 |
-| Coiffures (nouvelle) | `outils/catalogues/coiffures.json` | 55 | 0 | 0 | 55 | 0 % | 55 | 0 |
-| Tatouages (nouvelle) | `outils/catalogues/tatouages.json` | 24 | 0 | 0 | 24 | 0 % | 24 | 0 |
-| Tenues et accessoires (nouvelle) | `outils/catalogues/tenues.json` | 30 | 0 | 0 | 30 | 0 % | 30 | 0 |
-| Personnalisation des véhicules (nouvelle) | `outils/catalogues/perso-vehicules.json` | 58 | 0 | 0 | 58 | 0 % | 58 | 0 |
-| Personnalisation des armes (nouvelle) | `outils/catalogues/perso-armes.json` | 40 | 0 | 0 | 40 | 0 % | 40 | 0 |
-| Options de personnalisation (véhicules) (nouvelle) | `outils/catalogues/perso-options.json (perso-vehicules)` | 104 | 0 | 0 | 104 | 0 % | 0 | 104 |
-| Options de personnalisation (armes) (nouvelle) | `outils/catalogues/perso-options.json (perso-armes)` | 41 | 0 | 0 | 41 | 0 % | 0 | 41 |
-| Achats et services (nouvelle) | `outils/acquisitions.json (items, services, weaponVariants)` | 17 | 10 | 0 | 7 | 59 % | 17 | 0 |
-| Visuels officiels (nouvelle) | `outils/medias-officiels.json` | 196 | 0 | 0 | 196 | 0 % | 196 | 0 |
-| Grands moments (nouvelle) | `outils/monde-dossiers.json (evenements), outils/actus/actus.json (evenements)` | 14 | 0 | 0 | 14 | 0 % | 14 | 0 |
+| Coiffures (nouvelle) | `outils/catalogues/coiffures.json` | 55 | 55 | 0 | 0 | 100 % | 55 | 0 |
+| Tatouages (nouvelle) | `outils/catalogues/tatouages.json` | 24 | 24 | 0 | 0 | 100 % | 24 | 0 |
+| Tenues et accessoires (nouvelle) | `outils/catalogues/tenues.json` | 30 | 30 | 0 | 0 | 100 % | 30 | 0 |
+| Personnalisation des véhicules (nouvelle) | `outils/catalogues/perso-vehicules.json` | 58 | 58 | 0 | 0 | 100 % | 58 | 0 |
+| Personnalisation des armes (nouvelle) | `outils/catalogues/perso-armes.json` | 40 | 40 | 0 | 0 | 100 % | 40 | 0 |
+| Options de personnalisation (véhicules) (nouvelle) | `outils/catalogues/perso-options.json (perso-vehicules)` | 104 | 104 | 0 | 0 | 100 % | 104 | 0 |
+| Options de personnalisation (armes) (nouvelle) | `outils/catalogues/perso-options.json (perso-armes)` | 41 | 41 | 0 | 0 | 100 % | 41 | 0 |
+| Achats et services (nouvelle) | `outils/acquisitions.json (items, services, weaponVariants)` | 17 | 17 | 0 | 0 | 100 % | 17 | 0 |
+| Visuels officiels (nouvelle) | `outils/medias-officiels.json` | 196 | 196 | 0 | 0 | 100 % | 196 | 0 |
+| Grands moments (nouvelle) | `outils/monde-dossiers.json (evenements), outils/actus/actus.json (evenements)` | 31 | 31 | 0 | 0 | 100 % | 31 | 0 |
 | Missions (modèle, données au jour J) | `outils/missions/missions.json` | 0 | 0 | 0 | 0 | : | 0 | 0 |
 | Trophées et succès (modèle, données au jour J) | `outils/trophees/trophees.json` | 0 | 0 | 0 | 0 | : | 0 | 0 |
 | Codes de triche (modèle, données au jour J) | `outils/codes/codes.json` | 0 | 0 | 0 | 0 | : | 0 | 0 |
 | Collectibles (modèle, données au jour J) | `outils/collectibles.json` | 0 | 0 | 0 | 0 | : | 0 | 0 |
 | GTA Online (activités, achats, entreprises) (modèle, données au jour J) | `outils/online/donnees.json` | 0 | 0 | 0 | 0 | : | 0 | 0 |
-| **Total** |  | **3 603** | **2 976** | **0** | **627** | **83 %** | **2 620** | **983** |
+| **Total** |  | **3 623** | **3 623** | **0** | **0** | **100 %** | **3 623** | **0** |
 
 ## Volume à créer
 
-- Pages à créer en français : **627** (le site compte aujourd’hui 5 406 pages, toutes langues).
-- Dans les 6 langues : **3 762 pages**.
-- Avec le gabarit actuel des fiches (64 Ko par page en moyenne) : **237 Mo**.
-- Avec un gabarit allégé (21 Ko par page : CSS et JS partagés, aucun bloc répété) : **77 Mo**.
+- Pages à créer en français : **0** (le site compte aujourd’hui 6 057 pages, toutes langues).
+- Dans les 6 langues : **0 pages**.
+- Avec le gabarit actuel des fiches (64 Ko par page en moyenne) : **0 Mo**.
+- Avec un gabarit allégé (21 Ko par page : CSS et JS partagés, aucun bloc répété) : **0 Mo**.
 
 ## Limites d’hébergement (relevées le 17 octobre 2026)
 
 - Vercel (docs.vercel.com/docs/limits) : aucune limite au nombre de fichiers produits par un déploiement Git ; 15 000 fichiers et 100 Mo (Hobby) ou 1 Go (Pro) seulement pour un envoi par la ligne de commande ; 45 minutes de construction au plus ; 2 048 routes (redirections de vercel.json) par déploiement ; 100 déploiements par jour (Hobby). Le site est publié depuis GitHub sans construction : seul le temps de copie compte.
-- GitHub (docs.github.com, « About large files ») : dépôt idéalement sous 1 Go, 5 Go fortement recommandés au plus ; fichier bloqué au-dessus de 100 Mio, avertissement au-dessus de 50 Mio. Le dépôt pèse aujourd’hui 493 Mo (fichiers suivis) et son historique compressé 684 Mo.
+- GitHub (docs.github.com, « About large files ») : dépôt idéalement sous 1 Go, 5 Go fortement recommandés au plus ; fichier bloqué au-dessus de 100 Mio, avertissement au-dessus de 50 Mio. Le dépôt pèse aujourd’hui 506 Mo (fichiers suivis) et son historique compressé 644 Mo.
 
 ## Doublons (une seule page, l’autre source renvoie vers elle)
 
@@ -71,6 +71,13 @@ Rapport écrit par `node outils/couverture-pages.cjs` le 2026-10-18. Chaque fami
 - Achats et services : « girardi-es9 » a déjà sa page `armes/girardi-es9.html` (famille armes).
 - Achats et services : « klose-k17 » a déjà sa page `armes/klose-k17.html` (famille armes).
 - Achats et services : « hawk-little-morgan » a déjà sa page `armes/hawk-little-morgan.html` (famille armes).
+- Grands moments : « Trailer 1 » a déjà sa page `moments/trailer-1.html` (famille moments).
+- Grands moments : « Trailer 2 » a déjà sa page `moments/trailer-2.html` (famille moments).
+- Grands moments : « An Extended Look » a déjà sa page `moments/extended-look.html` (famille moments).
+- Grands moments : « Aperçus de la presse » a déjà sa page `moments/apercus-presse.html` (famille moments).
+- Grands moments : « Entretien de Rob Nelson » a déjà sa page `moments/entretien-famitsu.html` (famille moments).
+- Grands moments : « Les stations de radio » a déjà sa page `moments/stations-radio.html` (famille moments).
+- Grands moments : « Bande-annonce de lancement » a déjà sa page `moments/bande-annonce-lancement.html` (famille moments).
 
 ## Exclusions (fuites)
 
@@ -79,7 +86,8 @@ Aucune source du site ne porte d’élément venu d’une fuite : la liste est v
 ## Décisions (18 octobre 2026, Téva : « tranche toi-même mais n’oublie aucun élément du site »)
 
 - **Lieux de la carte** : Les 110 repères gtadb absents de la carte du site restent hors site : 43 n’ont pas de nom, les autres n’ont pas été retenus sur la carte (nom incertain « ? », statut démoli, douteux ou annulé, ou lieu jamais vu sur un support officiel). Ils ne sont pas des éléments du site ; la liste reste en annexe, et un repère ajouté un jour à la carte reçoit sa page à la régénération suivante.
-- **Lieux de la carte** : Seuil d’indexation, choix prudent : indexable quand le nom en jeu est connu, l’existence non douteuse, et qu’il y a une capture ou au moins trois informations ; les autres pages existent en noindex,follow et passent en indexable dès que leur nom en jeu est confirmé.
+- **Toutes les familles** : Indexation (Téva, 18 octobre, 20 h 09 : « en enlevant toutes les erreurs noindex… faut que ça puisse être complètement indexé par Google, et Bing ») : toute page par élément est proposée aux moteurs de recherche (robots : max-image-preview:large), bâtiments numérotés, valeurs d’options, types de munitions, visuels sans description et quartiers sans lieu compris ; les seuils d’informations ci-dessous restent dans le rapport (colonne « seuil ») mais ne décident plus. Seules restent en noindex les pages modèles aux exemples fictifs (missions, trophées, codes), les redirections, la 404 et la page hors ligne, et deux pages antérieures aux lots (comparateur.html, logements.html).
+- **Lieux de la carte** : Seuil d’indexation (Téva, 18 octobre, 19 h 26 : « un lieu avec son quartier, son comté et sa position a déjà deux informations réelles ») : indexable quand l’existence n’est pas douteuse, que le nom n’est pas provisoire (« Bâtiment L924 », nom avec « ? ») et qu’il y a une capture ou au moins deux informations réelles (position, quartier ou comté, équivalent réel, vu en vidéo) : 1 672 pages ; les 828 autres existent en noindex,follow. La v7.95 avait pris le choix prudent du nom en jeu confirmé (588 pages) : corrigé en v7.96.
 - **Lieux de la carte** : Visuel : la capture officielle du lieu déjà montrée sur la carte (photos/<id>,ig.webp, image extraite des supports Rockstar, repérée par gtadb.org, CC BY 4.0) est admise sur la page, créditée ; la photo du lieu réel reste sur la carte seulement. Sans capture : l’aperçu de la carte autour du lieu.
 - **Options de personnalisation** : Une page par valeur d’option (145), en noindex,follow tant qu’elles n’ont qu’une ou deux informations, pour qu’aucun élément ne reste sans page (lot B).
 - **Types de munitions** : Une page par type (6), en noindex,follow, qui renvoie vers armes.html#munitions et les armes qui l’utilisent (lot B).
@@ -87,6 +95,11 @@ Aucune source du site ne porte d’élément venu d’une fuite : la liste est v
 - **Grands moments** : Une page par annonce datée de la frise des Actualités (17) ; les 14 moments des dossiers du monde renvoient vers l’annonce qui leur correspond (lot B).
 - **Régions, villes, quartiers et comtés** : Les entrées sans lieu rattaché ont quand même leur page de regroupement (noindex,follow), qui renvoie vers la carte.
 - **Lieux de la carte** : Les 27 noms entre guillemets droits dans les données gtadb (« "Mount Waffles" ») sont des surnoms donnés par la communauté, pas des noms en jeu : la page le dit, les affiche entre guillemets français et reste en noindex,follow.
+- **Visuels officiels** : Lot B (v7.96) : une page par visuel ; indexable seulement quand une description de l’image a été rédigée (31 sur 196), les autres existent en noindex,follow avec leur titre de fichier, leur source, leur crédit et les pages du site qui les reprennent.
+- **Grands moments** : Lot B (v7.96) : une page par annonce datée de la frise (17) ; les sept moments des dossiers du monde qui sont la même chose qu’une annonce (trailers, Extended Look, aperçus, entretien, radios, lancement) renvoient vers sa page, les sept autres (pages « Only in Leonida », captures, jaquette, Édition Ultimate, ses captures, Pack Vintage, 29 captures) ont la leur.
+- **Options de personnalisation** : Lot B (v7.96) : chaque valeur a sa page en noindex,follow (repère de la série seulement) ; le sommaire de chaque famille (options-vehicules/index.html, options-armes/index.html) est indexable, et le poste liste ses valeurs.
+- **Types de munitions** : Lot B (v7.96) : six pages en noindex,follow (usage, armes repérées) et un sommaire indexable relié depuis armes.html#munitions ; les fiches d’armes relient leur type.
+- **Marques de véhicules** : Lot B (v7.96) : 51 pages (48 de marques.json, plus LCC, BTN et HVY portées par des véhicules), indexables quand un véhicule porte la marque ; les fiches de véhicules relient leur marque.
 
 ## À trancher par Téva
 
@@ -94,13 +107,13 @@ Les points ci-dessous sont ceux relevés par l’inventaire de la v7.94 ; Téva 
 
 - **Types de munitions** : Une seule information réelle par type (les armes qui l’utilisent) : pages prévues en noindex,follow tant que Rockstar ne publie rien de plus. Garder cette famille ou la renvoyer vers armes.html#munitions ?
 - **Lieux de la carte** : 110 repères gtadb ne sont pas sur la carte du site (43 sans nom, 67 nommés dont 3 avec un « ? ») : les ajouter à la carte (donc une page chacun) ou les laisser hors site ? Liste en annexe.
-- **Lieux de la carte** : Seuil d’indexation : 1672 lieux atteignent le seuil du prompt (nom, catégorie, quartier ou comté, position, équivalent réel ou capture) ; 817 bâtiments sans nom (« Bâtiment L924 ») restent en noindex ; 1053 ne sont connus que par leur nom réel (« (nom réel) ») et 1912 n’ont pas de nom en jeu confirmé. Proposition prudente : indexer les 588 lieux au nom en jeu connu (avec capture ou trois informations), créer les autres en noindex,follow et les faire passer en indexable quand leur nom en jeu est confirmé. Les captures gtadb (photos/, CC BY 4.0, déjà sur la carte) sont-elles admises comme visuel sur ces pages, ou seulement l’aperçu de carte et les silhouettes teaser (le prompt ne parle que de img/officiel) ?
+- **Lieux de la carte** : Seuil d’indexation : 2500 lieux atteignent le seuil du prompt (nom, catégorie, quartier ou comté, position, équivalent réel ou capture) ; 817 bâtiments sans nom (« Bâtiment L924 ») restent en noindex ; 1053 ne sont connus que par leur nom réel (« (nom réel) ») et 1912 n’ont pas de nom en jeu confirmé. Proposition prudente : indexer les 588 lieux au nom en jeu connu (avec capture ou trois informations), créer les autres en noindex,follow et les faire passer en indexable quand leur nom en jeu est confirmé. Les captures gtadb (photos/, CC BY 4.0, déjà sur la carte) sont-elles admises comme visuel sur ces pages, ou seulement l’aperçu de carte et les silhouettes teaser (le prompt ne parle que de img/officiel) ?
 - **Lieux de la carte** : 83 noms portés par plusieurs lieux (« Bridge » × 27, « Airfield »…) : slug complété par le quartier ou le comté, page en noindex,follow quand le lieu n’a ni nom propre ni capture officielle.
-- **Régions, villes, quartiers et comtés** : 3 entrées sans lieu rattaché (régions sans groupe gtadb) : page de regroupement quand même (noindex) ou renvoi vers la carte ?
+- **Régions, villes, quartiers et comtés** : 0 entrées sans lieu rattaché (régions sans groupe gtadb) : page de regroupement quand même (noindex) ou renvoi vers la carte ?
 - **Marques de véhicules** : Marques présentes dans vehicules-data.js mais absentes de outils/marques.json : LCC, BTN, HVY
 - **Options de personnalisation (véhicules)** : 104 valeurs dans 26 familles d’options : une ou deux informations chacune (prix repère de GTA V), aucun visuel : pages prévues en noindex,follow. Les créer quand même (demande du prompt) ou ne faire qu’une page par famille d’options ?
 - **Options de personnalisation (armes)** : 41 valeurs dans 22 familles d’options : une ou deux informations chacune (prix repère de GTA V), aucun visuel : pages prévues en noindex,follow. Les créer quand même (demande du prompt) ou ne faire qu’une page par famille d’options ?
-- **Grands moments** : actus.json décrit 17 annonces datées (frise des Actualités), monde-dossiers.json 14 moments : les deux listes se recoupent (trailers, Extended Look, bande-annonce de lancement…). Proposition : une page par annonce de la frise (17), les moments du monde y renvoient ; à confirmer.
+- **Grands moments** : actus.json décrit 17 annonces datées (frise des Actualités), monde-dossiers.json 31 moments : les deux listes se recoupent (trailers, Extended Look, bande-annonce de lancement…). Proposition : une page par annonce de la frise (17), les moments du monde y renvoient ; à confirmer.
 
 ## Pages existantes hors inventaire
 
@@ -565,12 +578,12 @@ Les points ci-dessous sont ceux relevés par l’inventaire de la v7.94 ; Téva 
 
 ### Types de munitions (6)
 
-- Munitions de pistolet : `munitions/munitions-de-pistolet.html` (noindex) ; 11 arme(s) : Girardi ES9, Klose K17, Nipper .38, Hawk & Little Morgan, Pistolet personnalisé, Pistolet à sélecteur, Mustang .357, PM à motif tropical, PM compact, Pistolet-mitrailleur, PM à crosse rabattable
-- Cartouches : `munitions/cartouches.html` (noindex) ; 2 arme(s) : Fusil à canon double, Fusil à pompe
-- Munitions de fusil : `munitions/munitions-de-fusil.html` (noindex) ; 4 arme(s) : Carabine, Fusil d’assaut, Fusil à verrou, Fusil semi-automatique
-- Munitions lourdes : `munitions/munitions-lourdes.html` (noindex) ; 1 arme(s) : Mitrailleuse de combat
-- Harpons : `munitions/harpons.html` (noindex) ; 1 arme(s) : Fusil-harpon
-- Grenades : `munitions/grenades.html` (noindex) ; 1 arme(s) : Lance-grenades
+- Munitions de pistolet : `munitions/munitions-de-pistolet.html` ; 11 arme(s) : Girardi ES9, Klose K17, Nipper .38, Hawk & Little Morgan, Pistolet personnalisé, Pistolet à sélecteur, Mustang .357, PM à motif tropical, PM compact, Pistolet-mitrailleur, PM à crosse rabattable
+- Cartouches : `munitions/cartouches.html` ; 2 arme(s) : Fusil à canon double, Fusil à pompe
+- Munitions de fusil : `munitions/munitions-de-fusil.html` ; 4 arme(s) : Carabine, Fusil d’assaut, Fusil à verrou, Fusil semi-automatique
+- Munitions lourdes : `munitions/munitions-lourdes.html` ; 1 arme(s) : Mitrailleuse de combat
+- Harpons : `munitions/harpons.html` ; 1 arme(s) : Fusil-harpon
+- Grenades : `munitions/grenades.html` ; 1 arme(s) : Lance-grenades
 
 ### Régions et lieux principaux (6)
 
@@ -686,8 +699,8 @@ Les points ci-dessous sont ceux relevés par l’inventaire de la v7.94 ; Téva 
 - Tours ondulées : `lieux-carte/tours-ondulees.html` ; batiment, repéré sur un support officiel
 - Raffinerie Allied Crystal : `lieux-carte/raffinerie-allied-crystal.html` ; lieu, point du site, officiel
 - Leonida Penitentiary : `lieux-carte/leonida-penitentiary.html` ; lieu, point du site, officiel
-- Tour de télévision : `lieux-carte/tour-de-television.html` (noindex) ; batiment, position non confirmée
-- Grand lac intérieur : `lieux-carte/grand-lac-interieur.html` (noindex) ; nature, position non confirmée
+- Tour de télévision : `lieux-carte/tour-de-television.html` ; batiment, position non confirmée
+- Grand lac intérieur : `lieux-carte/grand-lac-interieur.html` ; nature, position non confirmée
 - Sommet du Kalaga : `lieux-carte/sommet-du-kalaga.html` ; nature, position non confirmée
 - Port Vice City : `lieux-carte/port-vice-city.html` ; transport, position non confirmée
 - Dalton Island : `lieux-carte/dalton-island.html` ; nature, position non confirmée
@@ -737,78 +750,78 @@ Les points ci-dessous sont ceux relevés par l’inventaire de la v7.94 ; Téva 
 - Clewiston Lake Okeechobee Waterway Lock (nom réel) : `lieux-carte/clewiston-lake-okeechobee-waterway-lock.html` ; transport, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - Pump Station S-3 (nom réel) : `lieux-carte/pump-station-s-3.html` ; transport, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - 1500 Sonora Ave (nom réel) : `lieux-carte/1500-sonora-ave.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Bâtiment L924 : `lieux-carte/batiment-l924.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L925 : `lieux-carte/batiment-l925.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L927 : `lieux-carte/batiment-l927.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L928 : `lieux-carte/batiment-l928.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L929 : `lieux-carte/batiment-l929.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L930 : `lieux-carte/batiment-l930.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L931 : `lieux-carte/batiment-l931.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L932 : `lieux-carte/batiment-l932.html` (noindex) ; lieu, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L933 : `lieux-carte/batiment-l933.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1012 : `lieux-carte/batiment-l1012.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1047 : `lieux-carte/batiment-l1047.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1048 : `lieux-carte/batiment-l1048.html` (noindex) ; batiment, position non confirmée, sans nom (bâtiment numéroté), existence douteuse, fictif ou annulé
-- Bâtiment L1055 : `lieux-carte/batiment-l1055.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1056 : `lieux-carte/batiment-l1056.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1057 : `lieux-carte/batiment-l1057.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1058 : `lieux-carte/batiment-l1058.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L924 : `lieux-carte/batiment-l924.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L925 : `lieux-carte/batiment-l925.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L927 : `lieux-carte/batiment-l927.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L928 : `lieux-carte/batiment-l928.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L929 : `lieux-carte/batiment-l929.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L930 : `lieux-carte/batiment-l930.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L931 : `lieux-carte/batiment-l931.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L932 : `lieux-carte/batiment-l932.html` ; lieu, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L933 : `lieux-carte/batiment-l933.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1012 : `lieux-carte/batiment-l1012.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1047 : `lieux-carte/batiment-l1047.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1048 : `lieux-carte/batiment-l1048.html` ; batiment, position non confirmée, sans nom (bâtiment numéroté), existence douteuse, fictif ou annulé
+- Bâtiment L1055 : `lieux-carte/batiment-l1055.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1056 : `lieux-carte/batiment-l1056.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1057 : `lieux-carte/batiment-l1057.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1058 : `lieux-carte/batiment-l1058.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Train Crossing (nom réel) : `lieux-carte/train-crossing.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
-- Bâtiment L1199 : `lieux-carte/batiment-l1199.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1200 : `lieux-carte/batiment-l1200.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1334 : `lieux-carte/batiment-l1334.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1335 : `lieux-carte/batiment-l1335.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1199 : `lieux-carte/batiment-l1199.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1200 : `lieux-carte/batiment-l1200.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1334 : `lieux-carte/batiment-l1334.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1335 : `lieux-carte/batiment-l1335.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Monkey Box (nom réel) : `lieux-carte/monkey-box.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
-- Bâtiment L1433 : `lieux-carte/batiment-l1433.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1434 : `lieux-carte/batiment-l1434.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1435 : `lieux-carte/batiment-l1435.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1440 : `lieux-carte/batiment-l1440.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1441 : `lieux-carte/batiment-l1441.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1443 : `lieux-carte/batiment-l1443.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1444 : `lieux-carte/batiment-l1444.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1445 : `lieux-carte/batiment-l1445.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1446 : `lieux-carte/batiment-l1446.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1447 : `lieux-carte/batiment-l1447.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1448 : `lieux-carte/batiment-l1448.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1449 : `lieux-carte/batiment-l1449.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1450 : `lieux-carte/batiment-l1450.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1451 : `lieux-carte/batiment-l1451.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1487 : `lieux-carte/batiment-l1487.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1521 : `lieux-carte/batiment-l1521.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1524 : `lieux-carte/batiment-l1524.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1525 : `lieux-carte/batiment-l1525.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1527 : `lieux-carte/batiment-l1527.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L2243 : `lieux-carte/batiment-l2243.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L2412 : `lieux-carte/batiment-l2412.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1433 : `lieux-carte/batiment-l1433.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1434 : `lieux-carte/batiment-l1434.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1435 : `lieux-carte/batiment-l1435.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1440 : `lieux-carte/batiment-l1440.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1441 : `lieux-carte/batiment-l1441.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1443 : `lieux-carte/batiment-l1443.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1444 : `lieux-carte/batiment-l1444.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1445 : `lieux-carte/batiment-l1445.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1446 : `lieux-carte/batiment-l1446.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1447 : `lieux-carte/batiment-l1447.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1448 : `lieux-carte/batiment-l1448.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1449 : `lieux-carte/batiment-l1449.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1450 : `lieux-carte/batiment-l1450.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1451 : `lieux-carte/batiment-l1451.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1487 : `lieux-carte/batiment-l1487.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1521 : `lieux-carte/batiment-l1521.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1524 : `lieux-carte/batiment-l1524.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1525 : `lieux-carte/batiment-l1525.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1527 : `lieux-carte/batiment-l1527.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2243 : `lieux-carte/batiment-l2243.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2412 : `lieux-carte/batiment-l2412.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Train Station (nom supposé) : `lieux-carte/train-station.html` ; transport, position non confirmée
 - 1010 US-27 (nom réel) : `lieux-carte/1010-us-27.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
-- Bâtiment L2403 : `lieux-carte/batiment-l2403.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L2404 : `lieux-carte/batiment-l2404.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L2405 : `lieux-carte/batiment-l2405.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2403 : `lieux-carte/batiment-l2403.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2404 : `lieux-carte/batiment-l2404.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2405 : `lieux-carte/batiment-l2405.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Radio Mast : `lieux-carte/radio-mast.html` ; transport, repéré sur un support officiel
-- Bâtiment L1586 : `lieux-carte/batiment-l1586.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L2012 : `lieux-carte/batiment-l2012.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L2017 : `lieux-carte/batiment-l2017.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L2063 : `lieux-carte/batiment-l2063.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L2064 : `lieux-carte/batiment-l2064.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L2065 : `lieux-carte/batiment-l2065.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L2066 : `lieux-carte/batiment-l2066.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L2067 : `lieux-carte/batiment-l2067.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L2103 : `lieux-carte/batiment-l2103.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L2270 : `lieux-carte/batiment-l2270.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L2271 : `lieux-carte/batiment-l2271.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L2272 : `lieux-carte/batiment-l2272.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L2273 : `lieux-carte/batiment-l2273.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L2458 : `lieux-carte/batiment-l2458.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L2459 : `lieux-carte/batiment-l2459.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1586 : `lieux-carte/batiment-l1586.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2012 : `lieux-carte/batiment-l2012.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2017 : `lieux-carte/batiment-l2017.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2063 : `lieux-carte/batiment-l2063.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2064 : `lieux-carte/batiment-l2064.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2065 : `lieux-carte/batiment-l2065.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2066 : `lieux-carte/batiment-l2066.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2067 : `lieux-carte/batiment-l2067.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2103 : `lieux-carte/batiment-l2103.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2270 : `lieux-carte/batiment-l2270.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2271 : `lieux-carte/batiment-l2271.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2272 : `lieux-carte/batiment-l2272.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2273 : `lieux-carte/batiment-l2273.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2458 : `lieux-carte/batiment-l2458.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2459 : `lieux-carte/batiment-l2459.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - R : `lieux-carte/r.html` ; batiment, repéré sur un support officiel
-- Bâtiment L2518 : `lieux-carte/batiment-l2518.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L2519 : `lieux-carte/batiment-l2519.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2518 : `lieux-carte/batiment-l2518.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2519 : `lieux-carte/batiment-l2519.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Casino : `lieux-carte/casino.html` ; lieu, repéré sur un support officiel
 - Gas Station : `lieux-carte/gas-station.html` ; batiment, repéré sur un support officiel
 - Miccosukee Airboat Rides (nom réel) : `lieux-carte/miccosukee-airboat-rides.html` ; lieu, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - Miccosukee Indian Village (nom réel) : `lieux-carte/miccosukee-indian-village.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Bâtiment L2369 : `lieux-carte/batiment-l2369.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2369 : `lieux-carte/batiment-l2369.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Breakwater : `lieux-carte/breakwater.html` ; batiment, position non confirmée
 - Bridge : `lieux-carte/bridge-capri.html` ; transport, repéré sur un support officiel
 - Capri City Jackals Stadium : `lieux-carte/capri-city-jackals-stadium.html` ; lieu, repéré sur un support officiel
@@ -824,53 +837,53 @@ Les points ci-dessous sont ceux relevés par l’inventaire de la v7.94 ; Téva 
 - Xero Gas Station : `lieux-carte/xero-gas-station-capri.html` ; batiment, repéré sur un support officiel
 - Xero Gas Station : `lieux-carte/xero-gas-station-g-l1619.html` ; batiment, repéré sur un support officiel
 - Lake Mirror Tower Apartments (nom réel) : `lieux-carte/lake-mirror-tower-apartments.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Bâtiment L939 : `lieux-carte/batiment-l939.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L940 : `lieux-carte/batiment-l940.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L941 : `lieux-carte/batiment-l941.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L942 : `lieux-carte/batiment-l942.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L939 : `lieux-carte/batiment-l939.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L940 : `lieux-carte/batiment-l940.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L941 : `lieux-carte/batiment-l941.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L942 : `lieux-carte/batiment-l942.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Sebring Circle Park (nom réel) : `lieux-carte/sebring-circle-park.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Bâtiment L1613 : `lieux-carte/batiment-l1613.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1613 : `lieux-carte/batiment-l1613.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - 10404 U.S. Hwy 27 S (nom réel) : `lieux-carte/10404-u-s-hwy-27-s.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - 558 N Ridgewood Dr (nom réel) : `lieux-carte/558-n-ridgewood-dr.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - 544 N Ridgewood Dr (nom réel) : `lieux-carte/544-n-ridgewood-dr.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - 536 N Ridgewood Dr (nom réel) : `lieux-carte/536-n-ridgewood-dr.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Bâtiment L1620 : `lieux-carte/batiment-l1620.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1620 : `lieux-carte/batiment-l1620.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Terrace Hotel Lakeland (nom réel) : `lieux-carte/terrace-hotel-lakeland.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - FHP7+XJC (nom réel) : `lieux-carte/fhp7-xjc.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
-- Bâtiment L1731 : `lieux-carte/batiment-l1731.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1732 : `lieux-carte/batiment-l1732.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1733 : `lieux-carte/batiment-l1733.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1736 : `lieux-carte/batiment-l1736.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1737 : `lieux-carte/batiment-l1737.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1738 : `lieux-carte/batiment-l1738.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1740 : `lieux-carte/batiment-l1740.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1741 : `lieux-carte/batiment-l1741.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1731 : `lieux-carte/batiment-l1731.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1732 : `lieux-carte/batiment-l1732.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1733 : `lieux-carte/batiment-l1733.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1736 : `lieux-carte/batiment-l1736.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1737 : `lieux-carte/batiment-l1737.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1738 : `lieux-carte/batiment-l1738.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1740 : `lieux-carte/batiment-l1740.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1741 : `lieux-carte/batiment-l1741.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - 3410 Gulf Shore Blvd N (nom réel) : `lieux-carte/3410-gulf-shore-blvd-n.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
 - Frances Langford Promenade (nom réel) : `lieux-carte/frances-langford-promenade.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
-- Bâtiment L1879 : `lieux-carte/batiment-l1879.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1880 : `lieux-carte/batiment-l1880.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1881 : `lieux-carte/batiment-l1881.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1879 : `lieux-carte/batiment-l1879.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1880 : `lieux-carte/batiment-l1880.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1881 : `lieux-carte/batiment-l1881.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - The Peggy Brown Building (nom réel) : `lieux-carte/the-peggy-brown-building.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - Horizon House (nom réel) : `lieux-carte/horizon-house.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
-- Bâtiment L1884 : `lieux-carte/batiment-l1884.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1885 : `lieux-carte/batiment-l1885.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1884 : `lieux-carte/batiment-l1884.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1885 : `lieux-carte/batiment-l1885.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - The Loggia (nom réel) : `lieux-carte/the-loggia.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - Frances Langford Promenade (nom réel) : `lieux-carte/frances-langford-promenade-capri.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
-- Bâtiment L1893 : `lieux-carte/batiment-l1893.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1894 : `lieux-carte/batiment-l1894.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1895 : `lieux-carte/batiment-l1895.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1896 : `lieux-carte/batiment-l1896.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1897 : `lieux-carte/batiment-l1897.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1898 : `lieux-carte/batiment-l1898.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1899 : `lieux-carte/batiment-l1899.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1893 : `lieux-carte/batiment-l1893.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1894 : `lieux-carte/batiment-l1894.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1895 : `lieux-carte/batiment-l1895.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1896 : `lieux-carte/batiment-l1896.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1897 : `lieux-carte/batiment-l1897.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1898 : `lieux-carte/batiment-l1898.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1899 : `lieux-carte/batiment-l1899.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Magnolia Building (nom réel) : `lieux-carte/magnolia-building.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Bâtiment L1901 : `lieux-carte/batiment-l1901.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1902 : `lieux-carte/batiment-l1902.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1903 : `lieux-carte/batiment-l1903.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L2380 : `lieux-carte/batiment-l2380.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L2381 : `lieux-carte/batiment-l2381.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1901 : `lieux-carte/batiment-l1901.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1902 : `lieux-carte/batiment-l1902.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1903 : `lieux-carte/batiment-l1903.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2380 : `lieux-carte/batiment-l2380.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2381 : `lieux-carte/batiment-l2381.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - 123 N Ridgewood Dr (nom réel) : `lieux-carte/123-n-ridgewood-dr.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
-- Bâtiment L2383 : `lieux-carte/batiment-l2383.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2383 : `lieux-carte/batiment-l2383.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Pace Picnic Island (nom réel) : `lieux-carte/pace-picnic-island.html` ; nature, position non confirmée, nom en jeu inconnu (nom réel)
 - Morningside Picnic Islands (nom réel) : `lieux-carte/morningside-picnic-islands.html` ; nature, position non confirmée, nom en jeu inconnu (nom réel)
 - Biscayne Isle (nom réel) : `lieux-carte/biscayne-isle.html` ; nature, position non confirmée, nom en jeu inconnu (nom réel)
@@ -878,17 +891,17 @@ Les points ci-dessous sont ceux relevés par l’inventaire de la v7.94 ; Téva 
 - Tennis Stadium : `lieux-carte/tennis-stadium.html` ; lieu, repéré sur un support officiel
 - Bill Baggs Cape Florida State Park (nom réel) : `lieux-carte/bill-baggs-cape-florida-state-park.html` ; nature, position non confirmée, nom en jeu inconnu (nom réel)
 - No Name Harbor (nom réel) : `lieux-carte/no-name-harbor.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
-- Bâtiment L1360 : `lieux-carte/batiment-l1360.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1361 : `lieux-carte/batiment-l1361.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1360 : `lieux-carte/batiment-l1360.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1361 : `lieux-carte/batiment-l1361.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Lighthouse Keepers Cottage (nom réel) : `lieux-carte/lighthouse-keepers-cottage.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
-- Bâtiment L2024 : `lieux-carte/batiment-l2024.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L2025 : `lieux-carte/batiment-l2025.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2024 : `lieux-carte/batiment-l2024.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2025 : `lieux-carte/batiment-l2025.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - 4400 Rickenbacker Cswy (nom réel) : `lieux-carte/4400-rickenbacker-cswy.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - The Golden Dome (nom réel) : `lieux-carte/the-golden-dome.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - 7300 Crandon Blvd (nom réel) : `lieux-carte/7300-crandon-blvd.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Bâtiment L2141 : `lieux-carte/batiment-l2141.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L2142 : `lieux-carte/batiment-l2142.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L2143 : `lieux-carte/batiment-l2143.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2141 : `lieux-carte/batiment-l2141.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2142 : `lieux-carte/batiment-l2142.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2143 : `lieux-carte/batiment-l2143.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Miami Seaquarium (nom réel) : `lieux-carte/miami-seaquarium.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - Miami Seaquarium (nom réel) : `lieux-carte/miami-seaquarium-catalan-key.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - PRJM+JPP Miami (nom réel) : `lieux-carte/prjm-jpp-miami.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
@@ -896,15 +909,15 @@ Les points ci-dessous sont ceux relevés par l’inventaire de la v7.94 ; Téva 
 - Miami Seaquarium (nom réel) : `lieux-carte/miami-seaquarium-g-l2215.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - Miami Seaquarium (nom réel) : `lieux-carte/miami-seaquarium-g-l2216.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - Miami Seaquarium (nom réel) : `lieux-carte/miami-seaquarium-g-l2217.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Bâtiment L2218 : `lieux-carte/batiment-l2218.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2218 : `lieux-carte/batiment-l2218.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Miami Seaquarium (nom réel) : `lieux-carte/miami-seaquarium-g-l2219.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - Miami Seaquarium (nom réel) : `lieux-carte/miami-seaquarium-g-l2220.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - Miami Seaquarium (nom réel) : `lieux-carte/miami-seaquarium-g-l2224.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - PRPM+2J3 Miami (nom réel) : `lieux-carte/prpm-2j3-miami.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Bâtiment L2526 : `lieux-carte/batiment-l2526.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L2527 : `lieux-carte/batiment-l2527.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L2528 : `lieux-carte/batiment-l2528.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L2529 : `lieux-carte/batiment-l2529.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2526 : `lieux-carte/batiment-l2526.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2527 : `lieux-carte/batiment-l2527.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2528 : `lieux-carte/batiment-l2528.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2529 : `lieux-carte/batiment-l2529.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Palazzo del Sol (nom réel) : `lieux-carte/palazzo-del-sol.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - Villa del Mare (nom réel) : `lieux-carte/villa-del-mare.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - Bayview Village (nom réel) : `lieux-carte/bayview-village.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
@@ -929,8 +942,8 @@ Les points ci-dessous sont ceux relevés par l’inventaire de la v7.94 ; Téva 
 - Fisher Island Ferry Terminal (nom réel) : `lieux-carte/fisher-island-ferry-terminal.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - Aria Luxe Realty (nom réel) : `lieux-carte/aria-luxe-realty.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - 4521 Fisher Island Dr (nom réel) : `lieux-carte/4521-fisher-island-dr.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Bâtiment L2126 : `lieux-carte/batiment-l2126.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L2127 : `lieux-carte/batiment-l2127.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2126 : `lieux-carte/batiment-l2126.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2127 : `lieux-carte/batiment-l2127.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - QV46+X44 Fisher Island (nom réel) : `lieux-carte/qv46-x44-fisher-island.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - QV46+V54 Fisher Island (nom réel) : `lieux-carte/qv46-v54-fisher-island.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - QV46+P5F Fisher Island (nom réel) : `lieux-carte/qv46-p5f-fisher-island.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
@@ -944,8 +957,8 @@ Les points ci-dessous sont ceux relevés par l’inventaire de la v7.94 ; Téva 
 - QV45+XW6 Fisher Island (nom réel) : `lieux-carte/qv45-xw6-fisher-island.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - QV45+CH5 Miami (nom réel) : `lieux-carte/qv45-ch5-miami.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - King Spring (nom réel) : `lieux-carte/king-spring.html` ; nature, position non confirmée, nom en jeu inconnu (nom réel)
-- Bâtiment L1778 : `lieux-carte/batiment-l1778.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1779 : `lieux-carte/batiment-l1779.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1778 : `lieux-carte/batiment-l1778.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1779 : `lieux-carte/batiment-l1779.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - 2034 Fisher Island Dr (nom réel) : `lieux-carte/2034-fisher-island-dr.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - Turn (nom supposé) : `lieux-carte/turn.html` ; batiment, repéré sur un support officiel
 - Turn (nom supposé) : `lieux-carte/turn-gellhorn-international-raceway.html` ; batiment, repéré sur un support officiel
@@ -963,7 +976,7 @@ Les points ci-dessous sont ceux relevés par l’inventaire de la v7.94 ; Téva 
 - Miami Rowing Club (nom réel) : `lieux-carte/miami-rowing-club.html` ; lieu, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - Historic Virginia Key Beach Park (nom réel) : `lieux-carte/historic-virginia-key-beach-park.html` ; nature, position non confirmée, nom en jeu inconnu (nom réel)
 - PRVW+7PW Miami (nom réel) : `lieux-carte/prvw-7pw-miami.html` ; transport, position non confirmée, nom en jeu inconnu (nom réel)
-- Bâtiment L1151 : `lieux-carte/batiment-l1151.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1151 : `lieux-carte/batiment-l1151.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Marine Stadium Harbor (nom réel) : `lieux-carte/marine-stadium-harbor.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - PRXW+JW7 Miami (nom réel) : `lieux-carte/prxw-jw7-miami.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - Marjory Stoneman Douglas Biscayne Nature C… (nom réel) : `lieux-carte/marjory-stoneman-douglas-biscayne-nature-c.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
@@ -971,24 +984,24 @@ Les points ci-dessous sont ceux relevés par l’inventaire de la v7.94 ; Téva 
 - 3301 Rickenbacker Cswy (nom réel) : `lieux-carte/3301-rickenbacker-cswy-gloriana-key.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - 3201 Rickenbacker Cswy (nom réel) : `lieux-carte/3201-rickenbacker-cswy.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - PRWW+8P2 Miami (nom réel) : `lieux-carte/prww-8p2-miami.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Bâtiment L2221 : `lieux-carte/batiment-l2221.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L2222 : `lieux-carte/batiment-l2222.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L2247 : `lieux-carte/batiment-l2247.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L2248 : `lieux-carte/batiment-l2248.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L2249 : `lieux-carte/batiment-l2249.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L2250 : `lieux-carte/batiment-l2250.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L2251 : `lieux-carte/batiment-l2251.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L2252 : `lieux-carte/batiment-l2252.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L2253 : `lieux-carte/batiment-l2253.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L2254 : `lieux-carte/batiment-l2254.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L2255 : `lieux-carte/batiment-l2255.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L2256 : `lieux-carte/batiment-l2256.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2221 : `lieux-carte/batiment-l2221.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2222 : `lieux-carte/batiment-l2222.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2247 : `lieux-carte/batiment-l2247.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2248 : `lieux-carte/batiment-l2248.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2249 : `lieux-carte/batiment-l2249.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2250 : `lieux-carte/batiment-l2250.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2251 : `lieux-carte/batiment-l2251.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2252 : `lieux-carte/batiment-l2252.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2253 : `lieux-carte/batiment-l2253.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2254 : `lieux-carte/batiment-l2254.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2255 : `lieux-carte/batiment-l2255.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2256 : `lieux-carte/batiment-l2256.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - 3501 Rickenbacker Cswy (nom réel) : `lieux-carte/3501-rickenbacker-cswy.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - PRVG+PWJ Miami (nom réel) : `lieux-carte/prvg-pwj-miami.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Bâtiment L2259 : `lieux-carte/batiment-l2259.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L2260 : `lieux-carte/batiment-l2260.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L2261 : `lieux-carte/batiment-l2261.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L903 : `lieux-carte/batiment-l903.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2259 : `lieux-carte/batiment-l2259.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2260 : `lieux-carte/batiment-l2260.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2261 : `lieux-carte/batiment-l2261.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L903 : `lieux-carte/batiment-l903.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Beacon : `lieux-carte/beacon.html` ; lieu, repéré sur un support officiel
 - Bite : `lieux-carte/bite.html` ; batiment, repéré sur un support officiel
 - Boone Speedway : `lieux-carte/boone-speedway.html` ; lieu, repéré sur un support officiel
@@ -1039,18 +1052,18 @@ Les points ci-dessous sont ceux relevés par l’inventaire de la v7.94 ; Téva 
 - 107 SW 7th St (nom réel) : `lieux-carte/107-sw-7th-st.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
 - Ernest F. Coe Visitor Center (nom réel) : `lieux-carte/ernest-f-coe-visitor-center.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
 - Dry Tortugas National Park Headquarters (nom réel) : `lieux-carte/dry-tortugas-national-park-headquarters.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
-- Bâtiment L970 : `lieux-carte/batiment-l970.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L971 : `lieux-carte/batiment-l971.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L972 : `lieux-carte/batiment-l972.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1116 : `lieux-carte/batiment-l1116.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1117 : `lieux-carte/batiment-l1117.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L970 : `lieux-carte/batiment-l970.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L971 : `lieux-carte/batiment-l971.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L972 : `lieux-carte/batiment-l972.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1116 : `lieux-carte/batiment-l1116.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1117 : `lieux-carte/batiment-l1117.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - 675 N Homestead Blvd (nom réel) : `lieux-carte/675-n-homestead-blvd.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Bâtiment L1386 : `lieux-carte/batiment-l1386.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1387 : `lieux-carte/batiment-l1387.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1388 : `lieux-carte/batiment-l1388.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1386 : `lieux-carte/batiment-l1386.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1387 : `lieux-carte/batiment-l1387.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1388 : `lieux-carte/batiment-l1388.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - 550 N Homestead Blvd (nom réel) : `lieux-carte/550-n-homestead-blvd.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
-- Bâtiment L1569 : `lieux-carte/batiment-l1569.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1572 : `lieux-carte/batiment-l1572.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1569 : `lieux-carte/batiment-l1569.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1572 : `lieux-carte/batiment-l1572.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Homestead Customer Services Administration (nom réel) : `lieux-carte/homestead-customer-services-administration.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - Azteca Supermarket (nom réel) : `lieux-carte/azteca-supermarket.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - FGCC+6HG Homestead (nom réel) : `lieux-carte/fgcc-6hg-homestead.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
@@ -1058,21 +1071,21 @@ Les points ci-dessous sont ceux relevés par l’inventaire de la v7.94 ; Téva 
 - Supreme Towing (nom réel) : `lieux-carte/supreme-towing.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - 37 NW 1st St (nom réel) : `lieux-carte/37-nw-1st-st.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - 32 NW 1st St (nom réel) : `lieux-carte/32-nw-1st-st.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Bâtiment L1581 : `lieux-carte/batiment-l1581.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1582 : `lieux-carte/batiment-l1582.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1583 : `lieux-carte/batiment-l1583.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1581 : `lieux-carte/batiment-l1581.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1582 : `lieux-carte/batiment-l1582.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1583 : `lieux-carte/batiment-l1583.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - 1045 NE 2nd Ave (nom réel) : `lieux-carte/1045-ne-2nd-ave.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
-- Bâtiment L1585 : `lieux-carte/batiment-l1585.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1585 : `lieux-carte/batiment-l1585.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - 611 NW 14th Ave (nom réel) : `lieux-carte/611-nw-14th-ave.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - 611 NW 14th Ave (nom réel) : `lieux-carte/611-nw-14th-ave-hamlet.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Bâtiment L1992 : `lieux-carte/batiment-l1992.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L2015 : `lieux-carte/batiment-l2015.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L2016 : `lieux-carte/batiment-l2016.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L2068 : `lieux-carte/batiment-l2068.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L2069 : `lieux-carte/batiment-l2069.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L2070 : `lieux-carte/batiment-l2070.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L2071 : `lieux-carte/batiment-l2071.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L2072 : `lieux-carte/batiment-l2072.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L1992 : `lieux-carte/batiment-l1992.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2015 : `lieux-carte/batiment-l2015.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2016 : `lieux-carte/batiment-l2016.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2068 : `lieux-carte/batiment-l2068.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2069 : `lieux-carte/batiment-l2069.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2070 : `lieux-carte/batiment-l2070.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2071 : `lieux-carte/batiment-l2071.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- Bâtiment L2072 : `lieux-carte/batiment-l2072.html` ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 
 ### Régions, villes, quartiers et comtés (47)
 
@@ -1085,10 +1098,10 @@ Les points ci-dessous sont ceux relevés par l’inventaire de la v7.94 ; Téva 
 - Ocean Beach : `quartiers/ocean-beach.html` ; quartier, 285 lieux
 - Little Cuba : `quartiers/little-cuba.html` ; quartier, 51 lieux
 - Vice Beach : `quartiers/vice-beach.html` ; quartier, 92 lieux
-- South Beach : `quartiers/south-beach.html` (noindex) ; quartier, aucun lieu rattaché dans les données
+- South Beach : `quartiers/south-beach.html` ; quartier, aucun lieu rattaché dans les données
 - Downtown : `quartiers/downtown.html` ; quartier, 121 lieux
 - Stockyard : `quartiers/stockyard.html` ; quartier, 36 lieux
-- Marina : `quartiers/marina.html` (noindex) ; quartier, aucun lieu rattaché dans les données
+- Marina : `quartiers/marina.html` ; quartier, aucun lieu rattaché dans les données
 - Waning Sands : `quartiers/waning-sands.html` ; ville, 33 lieux
 - Hamlet : `quartiers/hamlet.html` ; ville, 116 lieux
 - Key Lento : `quartiers/key-lento.html` ; quartier, 155 lieux
@@ -1096,7 +1109,7 @@ Les points ci-dessous sont ceux relevés par l’inventaire de la v7.94 ; Téva 
 - Comté de Leonard : `quartiers/comte-de-leonard.html` ; comte, 27 lieux
 - Comté de Kelly : `quartiers/comte-de-kelly.html` ; comte, 50 lieux
 - Comté de Mariana : `quartiers/comte-de-mariana.html` ; comte, 92 lieux
-- Gloriana : `quartiers/gloriana.html` (noindex) ; region, aucun lieu rattaché dans les données
+- Gloriana : `quartiers/gloriana.html` ; region, aucun lieu rattaché dans les données
 - Lummox County : `quartiers/lummox-county.html` ; comte, 37 lieux
 - Capri : `quartiers/capri.html` ; ville, 62 lieux
 - Watson Bay : `quartiers/watson-bay.html` ; ville, 51 lieux
@@ -1124,7 +1137,7 @@ Les points ci-dessous sont ceux relevés par l’inventaire de la v7.94 ; Téva 
 - Salton : `quartiers/salton.html` ; quartier, 39 lieux
 - La Perle : `quartiers/la-perle.html` ; quartier, 46 lieux
 
-### Marques de véhicules (48)
+### Marques de véhicules (51)
 
 - Airgator : `marques/airgator.html` ; 1 véhicule(s), évoque Diamondback
 - Albany : `marques/albany.html` ; 9 véhicule(s), évoque Cadillac
@@ -1134,7 +1147,7 @@ Les points ci-dessous sont ceux relevés par l’inventaire de la v7.94 ; Téva 
 - Brute : `marques/brute.html` ; 8 véhicule(s), évoque GMC ou Chevrolet
 - Buckingham : `marques/buckingham.html` ; 9 véhicule(s), évoque Bell ou Learjet
 - Canis : `marques/canis.html` ; 4 véhicule(s), évoque Jeep
-- Cheval : `marques/cheval.html` (noindex) ; 0 véhicule(s), évoque Chrysler
+- Cheval : `marques/cheval.html` ; 0 véhicule(s), évoque Chrysler
 - Coil : `marques/coil.html` ; 1 véhicule(s), évoque Tesla
 - Crest : `marques/crest.html` ; 1 véhicule(s), évoque Crescent
 - Declasse : `marques/declasse.html` ; 18 véhicule(s), évoque Chevrolet
@@ -1174,6 +1187,9 @@ Les points ci-dessous sont ceux relevés par l’inventaire de la v7.94 ; Téva 
 - Xero : `marques/xero.html` ; 1 véhicule(s), évoque Goodyear
 - Zirconium : `marques/zirconium.html` ; 3 véhicule(s), évoque Honda
 - Übermacht : `marques/ubermacht.html` ; 6 véhicule(s), évoque BMW
+- LCC : `marques/lcc.html` ; 1 véhicule(s), constructeur fictif, pas de rapprochement retenu
+- BTN : `marques/btn.html` ; 1 véhicule(s), constructeur fictif, pas de rapprochement retenu
+- HVY : `marques/hvy.html` ; 3 véhicule(s), constructeur fictif, pas de rapprochement retenu
 
 ### Consommables (30)
 
@@ -1432,154 +1448,154 @@ Les points ci-dessous sont ceux relevés par l’inventaire de la v7.94 ; Téva 
 
 ### Options de personnalisation (véhicules) (104)
 
-- Classique : `options-vehicules/peinture-principale-classique.html` (noindex) ; peinture-principale, repère GTA V, 400 $
-- Métallisée : `options-vehicules/peinture-principale-metallisee.html` (noindex) ; peinture-principale, repère GTA V, 650 $
-- Métal : `options-vehicules/peinture-principale-metal.html` (noindex) ; peinture-principale, repère GTA V, 900 $
-- Mate : `options-vehicules/peinture-principale-mate.html` (noindex) ; peinture-principale, repère GTA V, 1 000 $
-- Chrome : `options-vehicules/peinture-principale-chrome.html` (noindex) ; peinture-principale, repère GTA V, 1 200 $
-- Classique : `options-vehicules/peinture-secondaire-classique.html` (noindex) ; peinture-secondaire, repère GTA V, 400 $
-- Métallisée : `options-vehicules/peinture-secondaire-metallisee.html` (noindex) ; peinture-secondaire, repère GTA V, 650 $
-- Métal : `options-vehicules/peinture-secondaire-metal.html` (noindex) ; peinture-secondaire, repère GTA V, 900 $
-- Mate : `options-vehicules/peinture-secondaire-mate.html` (noindex) ; peinture-secondaire, repère GTA V, 1 000 $
-- Chrome : `options-vehicules/peinture-secondaire-chrome.html` (noindex) ; peinture-secondaire, repère GTA V, 1 200 $
-- Chromées : `options-vehicules/couleur-jantes-chromees.html` (noindex) ; couleur-jantes, repère GTA V
-- Sport : `options-vehicules/jantes-familles-sport.html` (noindex) ; jantes-familles, repère GTA V
-- Muscle : `options-vehicules/jantes-familles-muscle.html` (noindex) ; jantes-familles, repère GTA V
-- Lowrider : `options-vehicules/jantes-familles-lowrider.html` (noindex) ; jantes-familles, repère GTA V
-- SUV : `options-vehicules/jantes-familles-suv.html` (noindex) ; jantes-familles, repère GTA V
-- Tout-terrain : `options-vehicules/jantes-familles-tout-terrain.html` (noindex) ; jantes-familles, repère GTA V
-- Tuner : `options-vehicules/jantes-familles-tuner.html` (noindex) ; jantes-familles, repère GTA V
-- Haut de gamme : `options-vehicules/jantes-familles-haut-de-gamme.html` (noindex) ; jantes-familles, repère GTA V
-- Moto : `options-vehicules/jantes-familles-moto.html` (noindex) ; jantes-familles, repère GTA V
-- Benny’s : `options-vehicules/jantes-familles-benny-s.html` (noindex) ; jantes-familles, repère GTA V
-- Course : `options-vehicules/jantes-familles-course.html` (noindex) ; jantes-familles, repère GTA V
-- Street : `options-vehicules/jantes-familles-street.html` (noindex) ; jantes-familles, repère GTA V
-- Track : `options-vehicules/jantes-familles-track.html` (noindex) ; jantes-familles, repère GTA V
-- Blanche : `options-vehicules/fumee-pneus-blanche.html` (noindex) ; fumee-pneus, repère GTA V
-- Noire : `options-vehicules/fumee-pneus-noire.html` (noindex) ; fumee-pneus, repère GTA V
-- Bleue : `options-vehicules/fumee-pneus-bleue.html` (noindex) ; fumee-pneus, repère GTA V
-- Jaune : `options-vehicules/fumee-pneus-jaune.html` (noindex) ; fumee-pneus, repère GTA V
-- Violette : `options-vehicules/fumee-pneus-violette.html` (noindex) ; fumee-pneus, repère GTA V
-- Orange : `options-vehicules/fumee-pneus-orange.html` (noindex) ; fumee-pneus, repère GTA V
-- Rouge : `options-vehicules/fumee-pneus-rouge.html` (noindex) ; fumee-pneus, repère GTA V
-- Verte : `options-vehicules/fumee-pneus-verte.html` (noindex) ; fumee-pneus, repère GTA V
-- Rose : `options-vehicules/fumee-pneus-rose.html` (noindex) ; fumee-pneus, repère GTA V
-- Grise : `options-vehicules/fumee-pneus-grise.html` (noindex) ; fumee-pneus, repère GTA V
-- Brun clair : `options-vehicules/fumee-pneus-brun-clair.html` (noindex) ; fumee-pneus, repère GTA V
-- Patriote (rouge, blanc, bleu) : `options-vehicules/fumee-pneus-patriote-rouge-blanc-bleu.html` (noindex) ; fumee-pneus, repère GTA V
-- Blanc : `options-vehicules/neons-couleur-blanc.html` (noindex) ; neons-couleur, repère GTA V
-- Bleu : `options-vehicules/neons-couleur-bleu.html` (noindex) ; neons-couleur, repère GTA V
-- Bleu électrique : `options-vehicules/neons-couleur-bleu-electrique.html` (noindex) ; neons-couleur, repère GTA V
-- Vert menthe : `options-vehicules/neons-couleur-vert-menthe.html` (noindex) ; neons-couleur, repère GTA V
-- Vert citron : `options-vehicules/neons-couleur-vert-citron.html` (noindex) ; neons-couleur, repère GTA V
-- Jaune : `options-vehicules/neons-couleur-jaune.html` (noindex) ; neons-couleur, repère GTA V
-- Doré : `options-vehicules/neons-couleur-dore.html` (noindex) ; neons-couleur, repère GTA V
-- Orange : `options-vehicules/neons-couleur-orange.html` (noindex) ; neons-couleur, repère GTA V
-- Rouge : `options-vehicules/neons-couleur-rouge.html` (noindex) ; neons-couleur, repère GTA V
-- Rose poney : `options-vehicules/neons-couleur-rose-poney.html` (noindex) ; neons-couleur, repère GTA V
-- Rose vif : `options-vehicules/neons-couleur-rose-vif.html` (noindex) ; neons-couleur, repère GTA V
-- Violet : `options-vehicules/neons-couleur-violet.html` (noindex) ; neons-couleur, repère GTA V
-- Lumière noire : `options-vehicules/neons-couleur-lumiere-noire.html` (noindex) ; neons-couleur, repère GTA V
-- Blanc : `options-vehicules/phares-couleur-blanc.html` (noindex) ; phares-couleur, repère GTA Online
-- Bleu : `options-vehicules/phares-couleur-bleu.html` (noindex) ; phares-couleur, repère GTA Online
-- Bleu électrique : `options-vehicules/phares-couleur-bleu-electrique.html` (noindex) ; phares-couleur, repère GTA Online
-- Vert menthe : `options-vehicules/phares-couleur-vert-menthe.html` (noindex) ; phares-couleur, repère GTA Online
-- Vert citron : `options-vehicules/phares-couleur-vert-citron.html` (noindex) ; phares-couleur, repère GTA Online
-- Jaune : `options-vehicules/phares-couleur-jaune.html` (noindex) ; phares-couleur, repère GTA Online
-- Doré : `options-vehicules/phares-couleur-dore.html` (noindex) ; phares-couleur, repère GTA Online
-- Orange : `options-vehicules/phares-couleur-orange.html` (noindex) ; phares-couleur, repère GTA Online
-- Rouge : `options-vehicules/phares-couleur-rouge.html` (noindex) ; phares-couleur, repère GTA Online
-- Rose poney : `options-vehicules/phares-couleur-rose-poney.html` (noindex) ; phares-couleur, repère GTA Online
-- Rose vif : `options-vehicules/phares-couleur-rose-vif.html` (noindex) ; phares-couleur, repère GTA Online
-- Violet : `options-vehicules/phares-couleur-violet.html` (noindex) ; phares-couleur, repère GTA Online
-- Lumière noire : `options-vehicules/phares-couleur-lumiere-noire.html` (noindex) ; phares-couleur, repère GTA Online
-- Avant : `options-vehicules/neons-disposition-avant.html` (noindex) ; neons-disposition, repère GTA V, 1 000 $
-- Arrière : `options-vehicules/neons-disposition-arriere.html` (noindex) ; neons-disposition, repère GTA V, 1 000 $
-- Côtés : `options-vehicules/neons-disposition-cotes.html` (noindex) ; neons-disposition, repère GTA V, 1 250 $
-- Avant et arrière : `options-vehicules/neons-disposition-avant-et-arriere.html` (noindex) ; neons-disposition, repère GTA V
-- Tout le tour : `options-vehicules/neons-disposition-tout-le-tour.html` (noindex) ; neons-disposition, repère GTA V, 3 000 $
-- Fumé léger : `options-vehicules/vitres-teintees-fume-leger.html` (noindex) ; vitres-teintees, repère GTA V, 200 $
-- Fumé foncé : `options-vehicules/vitres-teintees-fume-fonce.html` (noindex) ; vitres-teintees, repère GTA V, 450 $
-- Limousine : `options-vehicules/vitres-teintees-limousine.html` (noindex) ; vitres-teintees, repère GTA V, 700 $
-- Bleu sur blanc : `options-vehicules/plaques-bleu-sur-blanc.html` (noindex) ; plaques, repère GTA V
-- Jaune sur bleu : `options-vehicules/plaques-jaune-sur-bleu.html` (noindex) ; plaques, repère GTA V
-- Jaune sur noir : `options-vehicules/plaques-jaune-sur-noir.html` (noindex) ; plaques, repère GTA V
-- De série : `options-vehicules/klaxons-de-serie.html` (noindex) ; klaxons, repère GTA V, 50 $
-- Camion : `options-vehicules/klaxons-camion.html` (noindex) ; klaxons, repère GTA V, 60 $
-- Police : `options-vehicules/klaxons-police.html` (noindex) ; klaxons, repère GTA V, 75 $
-- Clown : `options-vehicules/klaxons-clown.html` (noindex) ; klaxons, repère GTA V, 150 $
-- Airs musicaux : `options-vehicules/klaxons-airs-musicaux.html` (noindex) ; klaxons, repère GTA V
-- Rabaissée : `options-vehicules/suspension-niveaux-rabaissee.html` (noindex) ; suspension-niveaux, repère GTA V, 500 $
-- Street : `options-vehicules/suspension-niveaux-street.html` (noindex) ; suspension-niveaux, repère GTA V, 1 000 $
-- Sport : `options-vehicules/suspension-niveaux-sport.html` (noindex) ; suspension-niveaux, repère GTA V, 1 700 $
-- Compétition : `options-vehicules/suspension-niveaux-competition.html` (noindex) ; suspension-niveaux, repère GTA V
-- Niveau 1 : `options-vehicules/moteur-ems-niveau-1.html` (noindex) ; moteur-ems, repère GTA V, 900 $
-- Niveau 2 : `options-vehicules/moteur-ems-niveau-2.html` (noindex) ; moteur-ems, repère GTA V, 1 250 $
-- Niveau 3 : `options-vehicules/moteur-ems-niveau-3.html` (noindex) ; moteur-ems, repère GTA V, 1 800 $
-- Niveau 4 : `options-vehicules/moteur-ems-niveau-4.html` (noindex) ; moteur-ems, repère GTA V, 3 350 $
-- Street : `options-vehicules/freins-street.html` (noindex) ; freins, repère GTA V, 2 000 $
-- Sport : `options-vehicules/freins-sport.html` (noindex) ; freins, repère GTA V, 2 700 $
-- Course : `options-vehicules/freins-course.html` (noindex) ; freins, repère GTA V, 3 500 $
-- Street : `options-vehicules/transmission-street.html` (noindex) ; transmission, repère GTA V, 2 950 $
-- Sport : `options-vehicules/transmission-sport.html` (noindex) ; transmission, repère GTA V, 3 250 $
-- Course : `options-vehicules/transmission-course.html` (noindex) ; transmission, repère GTA V, 4 000 $
-- Turbo : `options-vehicules/turbo-turbo.html` (noindex) ; turbo, repère GTA V, 2 500 $
-- 20 % : `options-vehicules/blindage-20.html` (noindex) ; blindage, repère GTA V, 500 $
-- 40 % : `options-vehicules/blindage-40.html` (noindex) ; blindage, repère GTA V, 1 250 $
-- 60 % : `options-vehicules/blindage-60.html` (noindex) ; blindage, repère GTA V, 2 000 $
-- 80 % : `options-vehicules/blindage-80.html` (noindex) ; blindage, repère GTA V, 3 500 $
-- 100 % : `options-vehicules/blindage-100.html` (noindex) ; blindage, repère GTA V, 5 000 $
-- Bas : `options-vehicules/aileron-bas.html` (noindex) ; aileron, repère GTA V
-- Haut : `options-vehicules/aileron-haut.html` (noindex) ; aileron, repère GTA V
-- Aile GT : `options-vehicules/aileron-aile-gt.html` (noindex) ; aileron, repère GTA V
-- Traceur : `options-vehicules/traceur-assurance-traceur.html` (noindex) ; traceur-assurance, repère GTA Online, 2 000 $
-- Assurance : `options-vehicules/traceur-assurance-assurance.html` (noindex) ; traceur-assurance, repère GTA Online, 4 000 $
-- Au démarrage : `options-vehicules/bombes-au-demarrage.html` (noindex) ; bombes, repère GTA Online, 5 000 $
-- À distance : `options-vehicules/bombes-a-distance.html` (noindex) ; bombes, repère GTA Online, 7 500 $
+- Classique : `options-vehicules/peinture-principale-classique.html` ; peinture-principale, repère GTA V, 400 $
+- Métallisée : `options-vehicules/peinture-principale-metallisee.html` ; peinture-principale, repère GTA V, 650 $
+- Métal : `options-vehicules/peinture-principale-metal.html` ; peinture-principale, repère GTA V, 900 $
+- Mate : `options-vehicules/peinture-principale-mate.html` ; peinture-principale, repère GTA V, 1 000 $
+- Chrome : `options-vehicules/peinture-principale-chrome.html` ; peinture-principale, repère GTA V, 1 200 $
+- Classique : `options-vehicules/peinture-secondaire-classique.html` ; peinture-secondaire, repère GTA V, 400 $
+- Métallisée : `options-vehicules/peinture-secondaire-metallisee.html` ; peinture-secondaire, repère GTA V, 650 $
+- Métal : `options-vehicules/peinture-secondaire-metal.html` ; peinture-secondaire, repère GTA V, 900 $
+- Mate : `options-vehicules/peinture-secondaire-mate.html` ; peinture-secondaire, repère GTA V, 1 000 $
+- Chrome : `options-vehicules/peinture-secondaire-chrome.html` ; peinture-secondaire, repère GTA V, 1 200 $
+- Chromées : `options-vehicules/couleur-jantes-chromees.html` ; couleur-jantes, repère GTA V
+- Sport : `options-vehicules/jantes-familles-sport.html` ; jantes-familles, repère GTA V
+- Muscle : `options-vehicules/jantes-familles-muscle.html` ; jantes-familles, repère GTA V
+- Lowrider : `options-vehicules/jantes-familles-lowrider.html` ; jantes-familles, repère GTA V
+- SUV : `options-vehicules/jantes-familles-suv.html` ; jantes-familles, repère GTA V
+- Tout-terrain : `options-vehicules/jantes-familles-tout-terrain.html` ; jantes-familles, repère GTA V
+- Tuner : `options-vehicules/jantes-familles-tuner.html` ; jantes-familles, repère GTA V
+- Haut de gamme : `options-vehicules/jantes-familles-haut-de-gamme.html` ; jantes-familles, repère GTA V
+- Moto : `options-vehicules/jantes-familles-moto.html` ; jantes-familles, repère GTA V
+- Benny’s : `options-vehicules/jantes-familles-benny-s.html` ; jantes-familles, repère GTA V
+- Course : `options-vehicules/jantes-familles-course.html` ; jantes-familles, repère GTA V
+- Street : `options-vehicules/jantes-familles-street.html` ; jantes-familles, repère GTA V
+- Track : `options-vehicules/jantes-familles-track.html` ; jantes-familles, repère GTA V
+- Blanche : `options-vehicules/fumee-pneus-blanche.html` ; fumee-pneus, repère GTA V
+- Noire : `options-vehicules/fumee-pneus-noire.html` ; fumee-pneus, repère GTA V
+- Bleue : `options-vehicules/fumee-pneus-bleue.html` ; fumee-pneus, repère GTA V
+- Jaune : `options-vehicules/fumee-pneus-jaune.html` ; fumee-pneus, repère GTA V
+- Violette : `options-vehicules/fumee-pneus-violette.html` ; fumee-pneus, repère GTA V
+- Orange : `options-vehicules/fumee-pneus-orange.html` ; fumee-pneus, repère GTA V
+- Rouge : `options-vehicules/fumee-pneus-rouge.html` ; fumee-pneus, repère GTA V
+- Verte : `options-vehicules/fumee-pneus-verte.html` ; fumee-pneus, repère GTA V
+- Rose : `options-vehicules/fumee-pneus-rose.html` ; fumee-pneus, repère GTA V
+- Grise : `options-vehicules/fumee-pneus-grise.html` ; fumee-pneus, repère GTA V
+- Brun clair : `options-vehicules/fumee-pneus-brun-clair.html` ; fumee-pneus, repère GTA V
+- Patriote (rouge, blanc, bleu) : `options-vehicules/fumee-pneus-patriote-rouge-blanc-bleu.html` ; fumee-pneus, repère GTA V
+- Blanc : `options-vehicules/neons-couleur-blanc.html` ; neons-couleur, repère GTA V
+- Bleu : `options-vehicules/neons-couleur-bleu.html` ; neons-couleur, repère GTA V
+- Bleu électrique : `options-vehicules/neons-couleur-bleu-electrique.html` ; neons-couleur, repère GTA V
+- Vert menthe : `options-vehicules/neons-couleur-vert-menthe.html` ; neons-couleur, repère GTA V
+- Vert citron : `options-vehicules/neons-couleur-vert-citron.html` ; neons-couleur, repère GTA V
+- Jaune : `options-vehicules/neons-couleur-jaune.html` ; neons-couleur, repère GTA V
+- Doré : `options-vehicules/neons-couleur-dore.html` ; neons-couleur, repère GTA V
+- Orange : `options-vehicules/neons-couleur-orange.html` ; neons-couleur, repère GTA V
+- Rouge : `options-vehicules/neons-couleur-rouge.html` ; neons-couleur, repère GTA V
+- Rose poney : `options-vehicules/neons-couleur-rose-poney.html` ; neons-couleur, repère GTA V
+- Rose vif : `options-vehicules/neons-couleur-rose-vif.html` ; neons-couleur, repère GTA V
+- Violet : `options-vehicules/neons-couleur-violet.html` ; neons-couleur, repère GTA V
+- Lumière noire : `options-vehicules/neons-couleur-lumiere-noire.html` ; neons-couleur, repère GTA V
+- Blanc : `options-vehicules/phares-couleur-blanc.html` ; phares-couleur, repère GTA Online
+- Bleu : `options-vehicules/phares-couleur-bleu.html` ; phares-couleur, repère GTA Online
+- Bleu électrique : `options-vehicules/phares-couleur-bleu-electrique.html` ; phares-couleur, repère GTA Online
+- Vert menthe : `options-vehicules/phares-couleur-vert-menthe.html` ; phares-couleur, repère GTA Online
+- Vert citron : `options-vehicules/phares-couleur-vert-citron.html` ; phares-couleur, repère GTA Online
+- Jaune : `options-vehicules/phares-couleur-jaune.html` ; phares-couleur, repère GTA Online
+- Doré : `options-vehicules/phares-couleur-dore.html` ; phares-couleur, repère GTA Online
+- Orange : `options-vehicules/phares-couleur-orange.html` ; phares-couleur, repère GTA Online
+- Rouge : `options-vehicules/phares-couleur-rouge.html` ; phares-couleur, repère GTA Online
+- Rose poney : `options-vehicules/phares-couleur-rose-poney.html` ; phares-couleur, repère GTA Online
+- Rose vif : `options-vehicules/phares-couleur-rose-vif.html` ; phares-couleur, repère GTA Online
+- Violet : `options-vehicules/phares-couleur-violet.html` ; phares-couleur, repère GTA Online
+- Lumière noire : `options-vehicules/phares-couleur-lumiere-noire.html` ; phares-couleur, repère GTA Online
+- Avant : `options-vehicules/neons-disposition-avant.html` ; neons-disposition, repère GTA V, 1 000 $
+- Arrière : `options-vehicules/neons-disposition-arriere.html` ; neons-disposition, repère GTA V, 1 000 $
+- Côtés : `options-vehicules/neons-disposition-cotes.html` ; neons-disposition, repère GTA V, 1 250 $
+- Avant et arrière : `options-vehicules/neons-disposition-avant-et-arriere.html` ; neons-disposition, repère GTA V
+- Tout le tour : `options-vehicules/neons-disposition-tout-le-tour.html` ; neons-disposition, repère GTA V, 3 000 $
+- Fumé léger : `options-vehicules/vitres-teintees-fume-leger.html` ; vitres-teintees, repère GTA V, 200 $
+- Fumé foncé : `options-vehicules/vitres-teintees-fume-fonce.html` ; vitres-teintees, repère GTA V, 450 $
+- Limousine : `options-vehicules/vitres-teintees-limousine.html` ; vitres-teintees, repère GTA V, 700 $
+- Bleu sur blanc : `options-vehicules/plaques-bleu-sur-blanc.html` ; plaques, repère GTA V
+- Jaune sur bleu : `options-vehicules/plaques-jaune-sur-bleu.html` ; plaques, repère GTA V
+- Jaune sur noir : `options-vehicules/plaques-jaune-sur-noir.html` ; plaques, repère GTA V
+- De série : `options-vehicules/klaxons-de-serie.html` ; klaxons, repère GTA V, 50 $
+- Camion : `options-vehicules/klaxons-camion.html` ; klaxons, repère GTA V, 60 $
+- Police : `options-vehicules/klaxons-police.html` ; klaxons, repère GTA V, 75 $
+- Clown : `options-vehicules/klaxons-clown.html` ; klaxons, repère GTA V, 150 $
+- Airs musicaux : `options-vehicules/klaxons-airs-musicaux.html` ; klaxons, repère GTA V
+- Rabaissée : `options-vehicules/suspension-niveaux-rabaissee.html` ; suspension-niveaux, repère GTA V, 500 $
+- Street : `options-vehicules/suspension-niveaux-street.html` ; suspension-niveaux, repère GTA V, 1 000 $
+- Sport : `options-vehicules/suspension-niveaux-sport.html` ; suspension-niveaux, repère GTA V, 1 700 $
+- Compétition : `options-vehicules/suspension-niveaux-competition.html` ; suspension-niveaux, repère GTA V
+- Niveau 1 : `options-vehicules/moteur-ems-niveau-1.html` ; moteur-ems, repère GTA V, 900 $
+- Niveau 2 : `options-vehicules/moteur-ems-niveau-2.html` ; moteur-ems, repère GTA V, 1 250 $
+- Niveau 3 : `options-vehicules/moteur-ems-niveau-3.html` ; moteur-ems, repère GTA V, 1 800 $
+- Niveau 4 : `options-vehicules/moteur-ems-niveau-4.html` ; moteur-ems, repère GTA V, 3 350 $
+- Street : `options-vehicules/freins-street.html` ; freins, repère GTA V, 2 000 $
+- Sport : `options-vehicules/freins-sport.html` ; freins, repère GTA V, 2 700 $
+- Course : `options-vehicules/freins-course.html` ; freins, repère GTA V, 3 500 $
+- Street : `options-vehicules/transmission-street.html` ; transmission, repère GTA V, 2 950 $
+- Sport : `options-vehicules/transmission-sport.html` ; transmission, repère GTA V, 3 250 $
+- Course : `options-vehicules/transmission-course.html` ; transmission, repère GTA V, 4 000 $
+- Turbo : `options-vehicules/turbo-turbo.html` ; turbo, repère GTA V, 2 500 $
+- 20 % : `options-vehicules/blindage-20.html` ; blindage, repère GTA V, 500 $
+- 40 % : `options-vehicules/blindage-40.html` ; blindage, repère GTA V, 1 250 $
+- 60 % : `options-vehicules/blindage-60.html` ; blindage, repère GTA V, 2 000 $
+- 80 % : `options-vehicules/blindage-80.html` ; blindage, repère GTA V, 3 500 $
+- 100 % : `options-vehicules/blindage-100.html` ; blindage, repère GTA V, 5 000 $
+- Bas : `options-vehicules/aileron-bas.html` ; aileron, repère GTA V
+- Haut : `options-vehicules/aileron-haut.html` ; aileron, repère GTA V
+- Aile GT : `options-vehicules/aileron-aile-gt.html` ; aileron, repère GTA V
+- Traceur : `options-vehicules/traceur-assurance-traceur.html` ; traceur-assurance, repère GTA Online, 2 000 $
+- Assurance : `options-vehicules/traceur-assurance-assurance.html` ; traceur-assurance, repère GTA Online, 4 000 $
+- Au démarrage : `options-vehicules/bombes-au-demarrage.html` ; bombes, repère GTA Online, 5 000 $
+- À distance : `options-vehicules/bombes-a-distance.html` ; bombes, repère GTA Online, 7 500 $
 
 ### Options de personnalisation (armes) (41)
 
-- Armée : `options-armes/teintes-armee.html` (noindex) ; teintes, repère GTA V, 100 $
-- Vert : `options-armes/teintes-vert.html` (noindex) ; teintes, repère GTA V
-- Orange : `options-armes/teintes-orange.html` (noindex) ; teintes, repère GTA V
-- LSPD : `options-armes/teintes-lspd.html` (noindex) ; teintes, repère GTA V
-- Rose : `options-armes/teintes-rose.html` (noindex) ; teintes, repère GTA V
-- Or : `options-armes/teintes-or.html` (noindex) ; teintes, repère GTA V
-- Platine : `options-armes/teintes-platine.html` (noindex) ; teintes, repère GTA V, 1 500 $
-- Classiques : `options-armes/teintes-mk2-classiques.html` (noindex) ; teintes-mk2, repère GTA Online
-- Contraste : `options-armes/teintes-mk2-contraste.html` (noindex) ; teintes-mk2, repère GTA Online, 40 000 $
-- Métaux : `options-armes/teintes-mk2-metaux.html` (noindex) ; teintes-mk2, repère GTA Online
-- Digital : `options-armes/camouflages-mk2-digital.html` (noindex) ; camouflages-mk2, repère GTA Online, 40 000 $
-- Coup de pinceau : `options-armes/camouflages-mk2-coup-de-pinceau.html` (noindex) ; camouflages-mk2, repère GTA Online
-- Forêt : `options-armes/camouflages-mk2-foret.html` (noindex) ; camouflages-mk2, repère GTA Online
-- Crâne : `options-armes/camouflages-mk2-crane.html` (noindex) ; camouflages-mk2, repère GTA Online
-- Léopard : `options-armes/camouflages-mk2-leopard.html` (noindex) ; camouflages-mk2, repère GTA Online
-- Zèbre : `options-armes/camouflages-mk2-zebre.html` (noindex) ; camouflages-mk2, repère GTA Online
-- Géométrique : `options-armes/camouflages-mk2-geometrique.html` (noindex) ; camouflages-mk2, repère GTA Online
-- Perseus : `options-armes/camouflages-mk2-perseus.html` (noindex) ; camouflages-mk2, repère GTA Online
-- Boom : `options-armes/camouflages-mk2-boom.html` (noindex) ; camouflages-mk2, repère GTA Online
-- Patriotique : `options-armes/camouflages-mk2-patriotique.html` (noindex) ; camouflages-mk2, repère GTA Online, 100 000 $
-- Plat : `options-armes/freins-de-bouche-plat.html` (noindex) ; freins-de-bouche, repère GTA Online
-- Tactique : `options-armes/freins-de-bouche-tactique.html` (noindex) ; freins-de-bouche, repère GTA Online
-- Évasé : `options-armes/freins-de-bouche-evase.html` (noindex) ; freins-de-bouche, repère GTA Online
-- Précision : `options-armes/freins-de-bouche-precision.html` (noindex) ; freins-de-bouche, repère GTA Online
-- Renforcé : `options-armes/freins-de-bouche-renforce.html` (noindex) ; freins-de-bouche, repère GTA Online
-- Biseauté : `options-armes/freins-de-bouche-biseaute.html` (noindex) ; freins-de-bouche, repère GTA Online
-- Fendu : `options-armes/freins-de-bouche-fendu.html` (noindex) ; freins-de-bouche, repère GTA Online
-- Carabine : `options-armes/chargeur-etendu-carabine.html` (noindex) ; chargeur-etendu, repère GTA V, 262 $
-- Pistolet : `options-armes/chargeur-etendu-pistolet.html` (noindex) ; chargeur-etendu, repère GTA V, 387 $
-- Pistolet : `options-armes/silencieux-pistolet.html` (noindex) ; silencieux, repère GTA V, 1 822 $
-- Carabine : `options-armes/silencieux-carabine.html` (noindex) ; silencieux, repère GTA V, 2 037 $
-- Carabine : `options-armes/lampe-tactique-carabine.html` (noindex) ; lampe-tactique, repère GTA V, 375 $
-- Pistolet : `options-armes/lampe-tactique-pistolet.html` (noindex) ; lampe-tactique, repère GTA V, 472 $
-- Pistolet : `options-armes/conversion-mk2-pistolet.html` (noindex) ; conversion-mk2, repère GTA Online, 73 750 $
-- Carabine : `options-armes/conversion-mk2-carabine.html` (noindex) ; conversion-mk2, repère GTA Online, 107 500 $
-- Précision lourd : `options-armes/conversion-mk2-precision-lourd.html` (noindex) ; conversion-mk2, repère GTA Online, 165 375 $
-- Pistolet Mk II : `options-armes/munitions-tracantes-pistolet-mk-ii.html` (noindex) ; munitions-tracantes, repère GTA Online, 28 600 $
-- Carabine Mk II : `options-armes/munitions-tracantes-carabine-mk-ii.html` (noindex) ; munitions-tracantes, repère GTA Online, 44 700 $
-- Carabine Mk II : `options-armes/canon-lourd-carabine-mk-ii.html` (noindex) ; canon-lourd, repère GTA Online, 49 000 $
-- Précision lourd Mk II : `options-armes/canon-lourd-precision-lourd-mk-ii.html` (noindex) ; canon-lourd, repère GTA Online, 69 825 $
-- Poignée : `options-armes/poignee-poignee.html` (noindex) ; poignee, repère GTA V, 330 $
+- Armée : `options-armes/teintes-armee.html` ; teintes, repère GTA V, 100 $
+- Vert : `options-armes/teintes-vert.html` ; teintes, repère GTA V
+- Orange : `options-armes/teintes-orange.html` ; teintes, repère GTA V
+- LSPD : `options-armes/teintes-lspd.html` ; teintes, repère GTA V
+- Rose : `options-armes/teintes-rose.html` ; teintes, repère GTA V
+- Or : `options-armes/teintes-or.html` ; teintes, repère GTA V
+- Platine : `options-armes/teintes-platine.html` ; teintes, repère GTA V, 1 500 $
+- Classiques : `options-armes/teintes-mk2-classiques.html` ; teintes-mk2, repère GTA Online
+- Contraste : `options-armes/teintes-mk2-contraste.html` ; teintes-mk2, repère GTA Online, 40 000 $
+- Métaux : `options-armes/teintes-mk2-metaux.html` ; teintes-mk2, repère GTA Online
+- Digital : `options-armes/camouflages-mk2-digital.html` ; camouflages-mk2, repère GTA Online, 40 000 $
+- Coup de pinceau : `options-armes/camouflages-mk2-coup-de-pinceau.html` ; camouflages-mk2, repère GTA Online
+- Forêt : `options-armes/camouflages-mk2-foret.html` ; camouflages-mk2, repère GTA Online
+- Crâne : `options-armes/camouflages-mk2-crane.html` ; camouflages-mk2, repère GTA Online
+- Léopard : `options-armes/camouflages-mk2-leopard.html` ; camouflages-mk2, repère GTA Online
+- Zèbre : `options-armes/camouflages-mk2-zebre.html` ; camouflages-mk2, repère GTA Online
+- Géométrique : `options-armes/camouflages-mk2-geometrique.html` ; camouflages-mk2, repère GTA Online
+- Perseus : `options-armes/camouflages-mk2-perseus.html` ; camouflages-mk2, repère GTA Online
+- Boom : `options-armes/camouflages-mk2-boom.html` ; camouflages-mk2, repère GTA Online
+- Patriotique : `options-armes/camouflages-mk2-patriotique.html` ; camouflages-mk2, repère GTA Online, 100 000 $
+- Plat : `options-armes/freins-de-bouche-plat.html` ; freins-de-bouche, repère GTA Online
+- Tactique : `options-armes/freins-de-bouche-tactique.html` ; freins-de-bouche, repère GTA Online
+- Évasé : `options-armes/freins-de-bouche-evase.html` ; freins-de-bouche, repère GTA Online
+- Précision : `options-armes/freins-de-bouche-precision.html` ; freins-de-bouche, repère GTA Online
+- Renforcé : `options-armes/freins-de-bouche-renforce.html` ; freins-de-bouche, repère GTA Online
+- Biseauté : `options-armes/freins-de-bouche-biseaute.html` ; freins-de-bouche, repère GTA Online
+- Fendu : `options-armes/freins-de-bouche-fendu.html` ; freins-de-bouche, repère GTA Online
+- Carabine : `options-armes/chargeur-etendu-carabine.html` ; chargeur-etendu, repère GTA V, 262 $
+- Pistolet : `options-armes/chargeur-etendu-pistolet.html` ; chargeur-etendu, repère GTA V, 387 $
+- Pistolet : `options-armes/silencieux-pistolet.html` ; silencieux, repère GTA V, 1 822 $
+- Carabine : `options-armes/silencieux-carabine.html` ; silencieux, repère GTA V, 2 037 $
+- Carabine : `options-armes/lampe-tactique-carabine.html` ; lampe-tactique, repère GTA V, 375 $
+- Pistolet : `options-armes/lampe-tactique-pistolet.html` ; lampe-tactique, repère GTA V, 472 $
+- Pistolet : `options-armes/conversion-mk2-pistolet.html` ; conversion-mk2, repère GTA Online, 73 750 $
+- Carabine : `options-armes/conversion-mk2-carabine.html` ; conversion-mk2, repère GTA Online, 107 500 $
+- Précision lourd : `options-armes/conversion-mk2-precision-lourd.html` ; conversion-mk2, repère GTA Online, 165 375 $
+- Pistolet Mk II : `options-armes/munitions-tracantes-pistolet-mk-ii.html` ; munitions-tracantes, repère GTA Online, 28 600 $
+- Carabine Mk II : `options-armes/munitions-tracantes-carabine-mk-ii.html` ; munitions-tracantes, repère GTA Online, 44 700 $
+- Carabine Mk II : `options-armes/canon-lourd-carabine-mk-ii.html` ; canon-lourd, repère GTA Online, 49 000 $
+- Précision lourd Mk II : `options-armes/canon-lourd-precision-lourd-mk-ii.html` ; canon-lourd, repère GTA Online, 69 825 $
+- Poignée : `options-armes/poignee-poignee.html` ; poignee, repère GTA V, 330 $
 
 ### Achats et services (17)
 
@@ -1603,216 +1619,233 @@ Les points ci-dessous sont ceux relevés par l’inventaire de la v7.94 ; Téva 
 
 ### Visuels officiels (196)
 
-- Jason Duval 01 : `visuels/jason-duval-01.html` ; © Rockstar Games, Take-Two Interactive
-- Lucia Caminos 01 : `visuels/lucia-caminos-01.html` ; © Rockstar Games, Take-Two Interactive
-- Cal Hampton 01 : `visuels/cal-hampton-01.html` ; © Rockstar Games, Take-Two Interactive
-- Boobie Ike 01 : `visuels/boobie-ike-01.html` ; © Rockstar Games, Take-Two Interactive
-- Dre’Quan Priest 01 : `visuels/dre-quan-priest-01.html` ; © Rockstar Games, Take-Two Interactive
-- Real Dimez 01 : `visuels/real-dimez-01.html` ; © Rockstar Games, Take-Two Interactive
-- Raul Bautista 01 : `visuels/raul-bautista-01.html` ; © Rockstar Games, Take-Two Interactive
-- Brian Heder 01 : `visuels/brian-heder-01.html` ; © Rockstar Games, Take-Two Interactive
-- Vice City 01 : `visuels/vice-city-01.html` ; © Rockstar Games, Take-Two Interactive
-- Leonida Keys 01 : `visuels/leonida-keys-01.html` ; © Rockstar Games, Take-Two Interactive
-- Port Gellhorn 01 : `visuels/port-gellhorn-01.html` ; © Rockstar Games, Take-Two Interactive
-- Ambrosia 01 : `visuels/ambrosia-01.html` ; © Rockstar Games, Take-Two Interactive
-- Grassrivers 01 : `visuels/grassrivers-01.html` ; © Rockstar Games, Take-Two Interactive
-- Mount Kalaga National Park 01 : `visuels/mount-kalaga-national-park-01.html` ; © Rockstar Games, Take-Two Interactive
-- ’95 Grotti Cheetah 01 : `visuels/95-grotti-cheetah-01.html` ; © Rockstar Games, Take-Two Interactive
-- ’95 Grotti Cheetah 02 : `visuels/95-grotti-cheetah-02.html` ; © Rockstar Games, Take-Two Interactive
-- ’95 Grotti Cheetah 03 : `visuels/95-grotti-cheetah-03.html` ; © Rockstar Games, Take-Two Interactive
-- ’95 Grotti Cheetah 04 : `visuels/95-grotti-cheetah-04.html` ; © Rockstar Games, Take-Two Interactive
-- Hawk & Little Morgan Revolvers 01 : `visuels/hawk-little-morgan-revolvers-01.html` ; © Rockstar Games, Take-Two Interactive
-- Hawk & Little Morgan Revolvers 02 : `visuels/hawk-little-morgan-revolvers-02.html` ; © Rockstar Games, Take-Two Interactive
-- Personalized Weapon Variants : `visuels/personalized-weapon-variants.html` ; © Rockstar Games, Take-Two Interactive
-- Jason’s Safehouse Vehicles : `visuels/jason-s-safehouse-vehicles.html` ; © Rockstar Games, Take-Two Interactive
-- Dinka Enduro Motorcycle : `visuels/dinka-enduro-motorcycle.html` ; © Rockstar Games, Take-Two Interactive
-- Crest Kayak : `visuels/crest-kayak.html` ; © Rockstar Games, Take-Two Interactive
-- Ganado Retro Build : `visuels/ganado-retro-build.html` ; © Rockstar Games, Take-Two Interactive
-- Rideout Customs Mod Shop 01 : `visuels/rideout-customs-mod-shop-01.html` ; © Rockstar Games, Take-Two Interactive
-- Sara’s Unisex Salon 01 : `visuels/sara-s-unisex-salon-01.html` ; © Rockstar Games, Take-Two Interactive
-- Shitzu Squalo 01 : `visuels/shitzu-squalo-01.html` ; © Rockstar Games, Take-Two Interactive
-- Shitzu Squalo 02 : `visuels/shitzu-squalo-02.html` ; © Rockstar Games, Take-Two Interactive
-- Shitzu Squalo 03 : `visuels/shitzu-squalo-03.html` ; © Rockstar Games, Take-Two Interactive
-- Shitzu Squalo 04 : `visuels/shitzu-squalo-04.html` ; © Rockstar Games, Take-Two Interactive
-- Stock 305 Clothing Store 01 : `visuels/stock-305-clothing-store-01.html` ; © Rockstar Games, Take-Two Interactive
-- Stock 305 Clothing Store 02 : `visuels/stock-305-clothing-store-02.html` ; © Rockstar Games, Take-Two Interactive
-- ’67 Vapid Dominator Buggy 01 : `visuels/67-vapid-dominator-buggy-01.html` ; © Rockstar Games, Take-Two Interactive
-- ’67 Vapid Dominator Buggy 02 : `visuels/67-vapid-dominator-buggy-02.html` ; © Rockstar Games, Take-Two Interactive
-- ’67 Vapid Dominator Buggy 03 : `visuels/67-vapid-dominator-buggy-03.html` ; © Rockstar Games, Take-Two Interactive
-- ’67 Vapid Dominator Buggy 04 : `visuels/67-vapid-dominator-buggy-04.html` ; © Rockstar Games, Take-Two Interactive
-- Electric Fang Tattoo 01 : `visuels/electric-fang-tattoo-01.html` ; © Rockstar Games, Take-Two Interactive
-- One-Eyed Willie’s Mod Shop 01 : `visuels/one-eyed-willie-s-mod-shop-01.html` ; © Rockstar Games, Take-Two Interactive
-- PTT YOUNGIN$ Illegal Goods Store : `visuels/ptt-youngin-illegal-goods-store.html` ; © Rockstar Games, Take-Two Interactive
-- Classic Car Collection 01 : `visuels/classic-car-collection-01.html` ; © Rockstar Games, Take-Two Interactive
-- Classic Car Collection 02 : `visuels/classic-car-collection-02.html` ; © Rockstar Games, Take-Two Interactive
-- Classic Car Collection 03 : `visuels/classic-car-collection-03.html` ; © Rockstar Games, Take-Two Interactive
-- Classic Car Collection 04 : `visuels/classic-car-collection-04.html` ; © Rockstar Games, Take-Two Interactive
-- Classic Car Collection 05 : `visuels/classic-car-collection-05.html` ; © Rockstar Games, Take-Two Interactive
-- Classic Car Collection 06 : `visuels/classic-car-collection-06.html` ; © Rockstar Games, Take-Two Interactive
-- ’55 Vapid Stanier 01 : `visuels/55-vapid-stanier-01.html` ; © Rockstar Games, Take-Two Interactive
-- ’55 Vapid Stanier 02 : `visuels/55-vapid-stanier-02.html` ; © Rockstar Games, Take-Two Interactive
-- ’55 Vapid Stanier 03 : `visuels/55-vapid-stanier-03.html` ; © Rockstar Games, Take-Two Interactive
-- ’55 Vapid Stanier 04 : `visuels/55-vapid-stanier-04.html` ; © Rockstar Games, Take-Two Interactive
-- Ambrosia 03 : `visuels/ambrosia-03.html` ; © Rockstar Games, Take-Two Interactive
-- Artwork officiel : `visuels/artwork-jason-lucia-beach.html` ; © Rockstar Games, Take-Two Interactive
-- Cal Hampton 02 : `visuels/cal-hampton-02.html` ; © Rockstar Games, Take-Two Interactive
-- Grassrivers 03 : `visuels/grassrivers-03.html` ; © Rockstar Games, Take-Two Interactive
-- Grassrivers 04 : `visuels/grassrivers-04.html` ; © Rockstar Games, Take-Two Interactive
-- Jason And Lucia 02 : `visuels/jason-and-lucia-02.html` ; © Rockstar Games, Take-Two Interactive
-- Jason And Lucia 09 : `visuels/jason-and-lucia-09.html` ; © Rockstar Games, Take-Two Interactive
-- Jason And Lucia 12 : `visuels/jason-and-lucia-12.html` ; © Rockstar Games, Take-Two Interactive
-- Jason Duval 05 : `visuels/jason-duval-05.html` ; © Rockstar Games, Take-Two Interactive
-- Leonida Keys 02 : `visuels/leonida-keys-02.html` ; © Rockstar Games, Take-Two Interactive
-- Leonida Keys 05 : `visuels/leonida-keys-05.html` ; © Rockstar Games, Take-Two Interactive
-- Lucia Caminos 03 : `visuels/lucia-caminos-03.html` ; © Rockstar Games, Take-Two Interactive
-- Mount Kalaga National Park 02 : `visuels/mount-kalaga-national-park-02.html` ; © Rockstar Games, Take-Two Interactive
-- Mount Kalaga National Park 06 : `visuels/mount-kalaga-national-park-06.html` ; © Rockstar Games, Take-Two Interactive
-- Port Gellhorn 02 : `visuels/port-gellhorn-02.html` ; © Rockstar Games, Take-Two Interactive
-- Raul Bautista 02 : `visuels/raul-bautista-02.html` ; © Rockstar Games, Take-Two Interactive
-- Trailer 2, 0:16 : `visuels/trailer-2-caracara-016.html` ; © Rockstar Games, Take-Two Interactive
-- Trailer 2, 1:58 : `visuels/trailer-2-lucia-grenade-launcher.html` ; © Rockstar Games, Take-Two Interactive
-- Trailer 2, 1:15 : `visuels/trailer-2-lucia-pm.html` ; © Rockstar Games, Take-Two Interactive
-- Trailer 2, 1:43 : `visuels/trailer-2-motorcycle-143.html` ; © Rockstar Games, Take-Two Interactive
-- Édition Ultimate 02 : `visuels/ultimate-edition-02.html` ; © Rockstar Games, Take-Two Interactive
-- One-Eyed Willie 03 : `visuels/ultimate-edition-one-eyed-willie-03.html` ; © Rockstar Games, Take-Two Interactive
-- Édition Ultimate, Rideout Customs 02 : `visuels/ultimate-edition-rideout-customs-02.html` ; © Rockstar Games, Take-Two Interactive
-- Édition Ultimate, Rideout Customs 03 : `visuels/ultimate-edition-rideout-customs-03.html` ; © Rockstar Games, Take-Two Interactive
-- Vice City 06 : `visuels/vice-city-06.html` ; © Rockstar Games, Take-Two Interactive
-- Vice City 09 : `visuels/vice-city-09.html` ; © Rockstar Games, Take-Two Interactive
-- Vice City 12 : `visuels/vice-city-12.html` ; © Rockstar Games, Take-Two Interactive
-- Vintage Vice City Pack Exclusive Looks 03 : `visuels/vintage-vice-city-pack-exclusive-looks-03.html` ; © Rockstar Games, Take-Two Interactive
-- Vintage Vice City Weapon Pattern 01 : `visuels/vintage-vice-city-weapon-pattern-01.html` ; © Rockstar Games, Take-Two Interactive
-- Ambrosia 02 : `visuels/ambrosia-02.html` ; © Rockstar Games, Take-Two Interactive
-- Ambrosia 04 : `visuels/ambrosia-04.html` ; © Rockstar Games, Take-Two Interactive
-- Ambrosia 06 : `visuels/ambrosia-06.html` ; © Rockstar Games, Take-Two Interactive
-- Boobie Ike 02 : `visuels/boobie-ike-02.html` ; © Rockstar Games, Take-Two Interactive
-- Boobie Ike 03 : `visuels/boobie-ike-03.html` ; © Rockstar Games, Take-Two Interactive
-- Brian Heder 02 : `visuels/brian-heder-02.html` ; © Rockstar Games, Take-Two Interactive
-- Brian Heder 03 : `visuels/brian-heder-03.html` ; © Rockstar Games, Take-Two Interactive
-- Brian Heder 04 : `visuels/brian-heder-04.html` ; © Rockstar Games, Take-Two Interactive
-- Cal Hampton 03 : `visuels/cal-hampton-03.html` ; © Rockstar Games, Take-Two Interactive
-- Cal Hampton 04 : `visuels/cal-hampton-04.html` ; © Rockstar Games, Take-Two Interactive
-- Dre’Quan Priest 02 : `visuels/dre-quan-priest-02.html` ; © Rockstar Games, Take-Two Interactive
-- Dre’Quan Priest 03 : `visuels/dre-quan-priest-03.html` ; © Rockstar Games, Take-Two Interactive
-- Dre’Quan Priest 04 : `visuels/dre-quan-priest-04.html` ; © Rockstar Games, Take-Two Interactive
-- Electric Fang Tattoo 02 : `visuels/electric-fang-tattoo-02.html` ; © Rockstar Games, Take-Two Interactive
-- Electric Fang Tattoo 03 : `visuels/electric-fang-tattoo-03.html` ; © Rockstar Games, Take-Two Interactive
-- Electric Fang Tattoo 04 : `visuels/electric-fang-tattoo-04.html` ; © Rockstar Games, Take-Two Interactive
-- Grassrivers 02 : `visuels/grassrivers-02.html` ; © Rockstar Games, Take-Two Interactive
-- Grassrivers 05 : `visuels/grassrivers-05.html` ; © Rockstar Games, Take-Two Interactive
-- Grassrivers 06 : `visuels/grassrivers-06.html` ; © Rockstar Games, Take-Two Interactive
-- Jason Duval 02 : `visuels/jason-duval-02.html` ; © Rockstar Games, Take-Two Interactive
-- Jason Duval 03 : `visuels/jason-duval-03.html` ; © Rockstar Games, Take-Two Interactive
-- Jason Duval 04 : `visuels/jason-duval-04.html` ; © Rockstar Games, Take-Two Interactive
-- Jason Duval 06 : `visuels/jason-duval-06.html` ; © Rockstar Games, Take-Two Interactive
-- Leonida Keys 03 : `visuels/leonida-keys-03.html` ; © Rockstar Games, Take-Two Interactive
-- Leonida Keys 04 : `visuels/leonida-keys-04.html` ; © Rockstar Games, Take-Two Interactive
-- Leonida Keys 06 : `visuels/leonida-keys-06.html` ; © Rockstar Games, Take-Two Interactive
-- Lucia Caminos 02 : `visuels/lucia-caminos-02.html` ; © Rockstar Games, Take-Two Interactive
-- Lucia Caminos 04 : `visuels/lucia-caminos-04.html` ; © Rockstar Games, Take-Two Interactive
-- Lucia Caminos 05 : `visuels/lucia-caminos-05.html` ; © Rockstar Games, Take-Two Interactive
-- Lucia Caminos 06 : `visuels/lucia-caminos-06.html` ; © Rockstar Games, Take-Two Interactive
-- Mount Kalaga National Park 03 : `visuels/mount-kalaga-national-park-03.html` ; © Rockstar Games, Take-Two Interactive
-- Mount Kalaga National Park 04 : `visuels/mount-kalaga-national-park-04.html` ; © Rockstar Games, Take-Two Interactive
-- Mount Kalaga National Park 05 : `visuels/mount-kalaga-national-park-05.html` ; © Rockstar Games, Take-Two Interactive
-- One-Eyed Willie’s Mod Shop 02 : `visuels/one-eyed-willie-s-mod-shop-02.html` ; © Rockstar Games, Take-Two Interactive
-- Port Gellhorn 04 : `visuels/port-gellhorn-04.html` ; © Rockstar Games, Take-Two Interactive
-- Port Gellhorn 05 : `visuels/port-gellhorn-05.html` ; © Rockstar Games, Take-Two Interactive
-- Port Gellhorn 06 : `visuels/port-gellhorn-06.html` ; © Rockstar Games, Take-Two Interactive
-- Raul Bautista 03 : `visuels/raul-bautista-03.html` ; © Rockstar Games, Take-Two Interactive
-- Raul Bautista 04 : `visuels/raul-bautista-04.html` ; © Rockstar Games, Take-Two Interactive
-- Real Dimez 02 : `visuels/real-dimez-02.html` ; © Rockstar Games, Take-Two Interactive
-- Real Dimez 03 : `visuels/real-dimez-03.html` ; © Rockstar Games, Take-Two Interactive
-- Real Dimez 04 : `visuels/real-dimez-04.html` ; © Rockstar Games, Take-Two Interactive
-- Sara’s Unisex Salon 02 : `visuels/sara-s-unisex-salon-02.html` ; © Rockstar Games, Take-Two Interactive
-- Sara’s Unisex Salon 03 : `visuels/sara-s-unisex-salon-03.html` ; © Rockstar Games, Take-Two Interactive
-- Stock 305 Clothing Store 03 : `visuels/stock-305-clothing-store-03.html` ; © Rockstar Games, Take-Two Interactive
-- Stock 305 Clothing Store 04 : `visuels/stock-305-clothing-store-04.html` ; © Rockstar Games, Take-Two Interactive
-- Vice City 03 : `visuels/vice-city-03.html` ; © Rockstar Games, Take-Two Interactive
-- Vice City 05 : `visuels/vice-city-05.html` ; © Rockstar Games, Take-Two Interactive
-- Vice City 08 : `visuels/vice-city-08.html` ; © Rockstar Games, Take-Two Interactive
-- Vice City 10 : `visuels/vice-city-10.html` ; © Rockstar Games, Take-Two Interactive
-- Vice City 11 : `visuels/vice-city-11.html` ; © Rockstar Games, Take-Two Interactive
-- Trailer 1, 0:25 : `visuels/trailer-1-vehicles-025.html` ; © Rockstar Games, Take-Two Interactive
-- Trailer 1, 0:27 : `visuels/trailer-1-vehicles-027.html` ; © Rockstar Games, Take-Two Interactive
-- Trailer 1, 0:28 : `visuels/trailer-1-vehicles-028.html` ; © Rockstar Games, Take-Two Interactive
-- Trailer 1, 0:33 : `visuels/trailer-1-vehicles-033.html` ; © Rockstar Games, Take-Two Interactive
-- Trailer 1, 0:53 : `visuels/trailer-1-vehicles-053.html` ; © Rockstar Games, Take-Two Interactive
-- Extended Look, Coquette D10 : `visuels/extended-look-coquette-d10.html` ; © Rockstar Games, Take-Two Interactive
-- Extended Look, Sentinel Classic : `visuels/extended-look-sentinel-classic-rear.html` ; © Rockstar Games, Take-Two Interactive
-- Extended Look, Sentinel Classic 02 : `visuels/extended-look-sentinel-classic-front.html` ; © Rockstar Games, Take-Two Interactive
-- Extended Look, Stockade : `visuels/extended-look-stockade.html` ; © Rockstar Games, Take-Two Interactive
-- Jaquette officielle, Sea Sparrow : `visuels/cover-art-sea-sparrow.html` ; © Rockstar Games, Take-Two Interactive
-- Trailer 1, 1:04 : `visuels/trailer-1-vehicles-064.html` ; © Rockstar Games, Take-Two Interactive
-- Trailer 1, 1:11 : `visuels/trailer-1-vehicles-071.html` ; © Rockstar Games, Take-Two Interactive
-- Trailer 1, 0:03 : `visuels/trailer-1-phantom-003.html` ; © Rockstar Games, Take-Two Interactive
-- Trailer 1, 0:11 : `visuels/trailer-1-tropic-011.html` ; © Rockstar Games, Take-Two Interactive
-- Trailer 2, 2:21 : `visuels/trailer-2-seashark-141.html` ; © Rockstar Games, Take-Two Interactive
-- Trailer 2, 0:35 : `visuels/trailer-2-rancher-035.html` ; © Rockstar Games, Take-Two Interactive
-- Trailer 2, 0:37 : `visuels/trailer-2-jet-037.html` ; © Rockstar Games, Take-Two Interactive
-- Trailer 2, 1:59 : `visuels/trailer-2-police-riot-119.html` ; © Rockstar Games, Take-Two Interactive
-- Trailer 2, 1:25 : `visuels/trailer-2-brian-boatyard-085.html` ; © Rockstar Games, Take-Two Interactive
-- Goodtime Gear : `visuels/goodtime-gear-01.html` ; © Rockstar Games, Take-Two Interactive
-- Jason Duval 07 : `visuels/jason-duval-07.html` ; © Rockstar Games, Take-Two Interactive
-- Jason Duval 08 : `visuels/jason-duval-08.html` ; © Rockstar Games, Take-Two Interactive
-- Jason Duval 09 : `visuels/jason-duval-09.html` ; © Rockstar Games, Take-Two Interactive
-- Jason Duval 10 : `visuels/jason-duval-10.html` ; © Rockstar Games, Take-Two Interactive
-- Lucia Caminos 07 : `visuels/lucia-caminos-07.html` ; © Rockstar Games, Take-Two Interactive
-- Lucia Caminos 08 : `visuels/lucia-caminos-08.html` ; © Rockstar Games, Take-Two Interactive
-- Lucia Caminos 09 : `visuels/lucia-caminos-09.html` ; © Rockstar Games, Take-Two Interactive
-- Lucia Caminos 10 : `visuels/lucia-caminos-10.html` ; © Rockstar Games, Take-Two Interactive
-- Jason And Lucia 01 : `visuels/jason-and-lucia-01.html` ; © Rockstar Games, Take-Two Interactive
-- Jason And Lucia 03 : `visuels/jason-and-lucia-03.html` ; © Rockstar Games, Take-Two Interactive
-- Jason And Lucia 04 : `visuels/jason-and-lucia-04.html` ; © Rockstar Games, Take-Two Interactive
-- Jason And Lucia 05 : `visuels/jason-and-lucia-05.html` ; © Rockstar Games, Take-Two Interactive
-- Jason And Lucia 06 : `visuels/jason-and-lucia-06.html` ; © Rockstar Games, Take-Two Interactive
-- Jason And Lucia 07 : `visuels/jason-and-lucia-07.html` ; © Rockstar Games, Take-Two Interactive
-- Jason And Lucia 08 : `visuels/jason-and-lucia-08.html` ; © Rockstar Games, Take-Two Interactive
-- Jason And Lucia 10 : `visuels/jason-and-lucia-10.html` ; © Rockstar Games, Take-Two Interactive
-- Jason And Lucia 11 : `visuels/jason-and-lucia-11.html` ; © Rockstar Games, Take-Two Interactive
-- Jason And Lucia 13 : `visuels/jason-and-lucia-13.html` ; © Rockstar Games, Take-Two Interactive
-- Vice City 02 : `visuels/vice-city-02.html` ; © Rockstar Games, Take-Two Interactive
-- Vice City 04 : `visuels/vice-city-04.html` ; © Rockstar Games, Take-Two Interactive
-- Port Gellhorn 03 : `visuels/port-gellhorn-03.html` ; © Rockstar Games, Take-Two Interactive
-- Vintage Vice City Pack 01 : `visuels/vintage-vice-city-pack-01.html` ; © Rockstar Games, Take-Two Interactive
-- Vintage Vice City Pack 02 : `visuels/vintage-vice-city-pack-02.html` ; © Rockstar Games, Take-Two Interactive
-- Jaquette officielle : `visuels/cover-art-officielle.html` ; © Rockstar Games, Take-Two Interactive
-- Carte postale de Vice City : `visuels/carte-postale-vice-city.html` ; © Rockstar Games, Take-Two Interactive
-- Affiche du Trailer 1 : `visuels/affiche-trailer-1.html` ; © Rockstar Games, Take-Two Interactive
-- Affiche du Trailer 2 : `visuels/affiche-trailer-2.html` ; © Rockstar Games, Take-Two Interactive
-- Affiche d’An Extended Look : `visuels/affiche-extended-look.html` ; © Rockstar Games, Take-Two Interactive
-- Affiche de la bande-annonce de lancement : `visuels/affiche-bande-annonce-lancement.html` ; © Rockstar Games, Take-Two Interactive
-- Annonce d’An Extended Look : `visuels/annonce-extended-look.html` ; © Rockstar Games, Take-Two Interactive
-- Collection Grand Theft Auto VI de la boutique Rockstar : `visuels/collection-gta-vi.html` ; © Rockstar Games, Take-Two Interactive
-- Manettes DualSense en édition limitée Grand Theft Auto VI : `visuels/manettes-dualsense-gta-vi.html` ; © Sony Interactive Entertainment, Rockstar Games
-- The Goodtime State – Vice City, illustration officielle : `visuels/coffret-the-goodtime-state.html` ; © Rockstar Games, Take-Two Interactive
-- Coffret collector, boîte fermée : `visuels/coffret-collector-ferme.html` ; © Rockstar Games, Take-Two Interactive
-- Coffret collector, boîte ouverte : `visuels/coffret-collector-ouvert.html` ; © Rockstar Games, Take-Two Interactive
-- Coffret collector, figurine Macca the Gator : `visuels/coffret-figurine-macca.html` ; © Rockstar Games, Take-Two Interactive
-- Coffret collector, lunettes de soleil : `visuels/coffret-lunettes-oakley.html` ; © Rockstar Games, Take-Two Interactive
-- Coffret collector, casquette : `visuels/coffret-casquette-new-era.html` ; © Rockstar Games, Take-Two Interactive
-- Coffret collector, miroir aimanté : `visuels/coffret-miroir-macca.html` ; © Rockstar Games, Take-Two Interactive
-- Coffret collector, cuillère à mélange : `visuels/coffret-cuillere.html` ; © Rockstar Games, Take-Two Interactive
-- Coffret collector, porte-clés : `visuels/coffret-porte-cles.html` ; © Rockstar Games, Take-Two Interactive
-- Coffret collector, sac à bandoulière : `visuels/coffret-sac-bandouliere.html` ; © Rockstar Games, Take-Two Interactive
-- Coffret collector, verre à shot : `visuels/coffret-verre-a-shot.html` ; © Rockstar Games, Take-Two Interactive
-- Coffret collector, lot de pin’s : `visuels/coffret-pins.html` ; © Rockstar Games, Take-Two Interactive
-- Coffret collector, stickers : `visuels/coffret-stickers.html` ; © Rockstar Games, Take-Two Interactive
-- Coffret collector, poster de Leonida : `visuels/coffret-poster.html` ; © Rockstar Games, Take-Two Interactive
+- Jason Duval 01 : `visuels/jason-duval-01.html` ; image, sans description
+- Lucia Caminos 01 : `visuels/lucia-caminos-01.html` ; image, sans description
+- Cal Hampton 01 : `visuels/cal-hampton-01.html` ; image, sans description
+- Boobie Ike 01 : `visuels/boobie-ike-01.html` ; image, sans description
+- Dre’Quan Priest 01 : `visuels/dre-quan-priest-01.html` ; image, sans description
+- Real Dimez 01 : `visuels/real-dimez-01.html` ; image, sans description
+- Raul Bautista 01 : `visuels/raul-bautista-01.html` ; image, sans description
+- Brian Heder 01 : `visuels/brian-heder-01.html` ; image, sans description
+- Vice City 01 : `visuels/vice-city-01.html` ; image, sans description
+- Leonida Keys 01 : `visuels/leonida-keys-01.html` ; image, sans description
+- Port Gellhorn 01 : `visuels/port-gellhorn-01.html` ; image, sans description
+- Ambrosia 01 : `visuels/ambrosia-01.html` ; image, sans description
+- Grassrivers 01 : `visuels/grassrivers-01.html` ; image, sans description
+- Mount Kalaga National Park 01 : `visuels/mount-kalaga-national-park-01.html` ; image, sans description
+- ’95 Grotti Cheetah 01 : `visuels/95-grotti-cheetah-01.html` ; image, sans description
+- ’95 Grotti Cheetah 02 : `visuels/95-grotti-cheetah-02.html` ; image, sans description
+- ’95 Grotti Cheetah 03 : `visuels/95-grotti-cheetah-03.html` ; image, sans description
+- ’95 Grotti Cheetah 04 : `visuels/95-grotti-cheetah-04.html` ; image, sans description
+- Hawk & Little Morgan Revolvers 01 : `visuels/hawk-little-morgan-revolvers-01.html` ; image, sans description
+- Hawk & Little Morgan Revolvers 02 : `visuels/hawk-little-morgan-revolvers-02.html` ; image, sans description
+- Personalized Weapon Variants : `visuels/personalized-weapon-variants.html` ; image, sans description
+- Jason’s Safehouse Vehicles : `visuels/jason-s-safehouse-vehicles.html` ; image, sans description
+- Dinka Enduro Motorcycle : `visuels/dinka-enduro-motorcycle.html` ; image, sans description
+- Crest Kayak : `visuels/crest-kayak.html` ; image, sans description
+- Ganado Retro Build : `visuels/ganado-retro-build.html` ; image, sans description
+- Rideout Customs Mod Shop 01 : `visuels/rideout-customs-mod-shop-01.html` ; image, sans description
+- Sara’s Unisex Salon 01 : `visuels/sara-s-unisex-salon-01.html` ; image, sans description
+- Shitzu Squalo 01 : `visuels/shitzu-squalo-01.html` ; image, sans description
+- Shitzu Squalo 02 : `visuels/shitzu-squalo-02.html` ; image, sans description
+- Shitzu Squalo 03 : `visuels/shitzu-squalo-03.html` ; image, sans description
+- Shitzu Squalo 04 : `visuels/shitzu-squalo-04.html` ; image, sans description
+- Stock 305 Clothing Store 01 : `visuels/stock-305-clothing-store-01.html` ; image, sans description
+- Stock 305 Clothing Store 02 : `visuels/stock-305-clothing-store-02.html` ; official-screenshot, décrite
+- ’67 Vapid Dominator Buggy 01 : `visuels/67-vapid-dominator-buggy-01.html` ; image, sans description
+- ’67 Vapid Dominator Buggy 02 : `visuels/67-vapid-dominator-buggy-02.html` ; image, sans description
+- ’67 Vapid Dominator Buggy 03 : `visuels/67-vapid-dominator-buggy-03.html` ; image, sans description
+- ’67 Vapid Dominator Buggy 04 : `visuels/67-vapid-dominator-buggy-04.html` ; image, sans description
+- Electric Fang Tattoo 01 : `visuels/electric-fang-tattoo-01.html` ; image, sans description
+- One-Eyed Willie’s Mod Shop 01 : `visuels/one-eyed-willie-s-mod-shop-01.html` ; image, sans description
+- PTT YOUNGIN$ Illegal Goods Store : `visuels/ptt-youngin-illegal-goods-store.html` ; image, sans description
+- Classic Car Collection 01 : `visuels/classic-car-collection-01.html` ; image, sans description
+- Classic Car Collection 02 : `visuels/classic-car-collection-02.html` ; image, sans description
+- Classic Car Collection 03 : `visuels/classic-car-collection-03.html` ; image, sans description
+- Classic Car Collection 04 : `visuels/classic-car-collection-04.html` ; image, sans description
+- Classic Car Collection 05 : `visuels/classic-car-collection-05.html` ; image, sans description
+- Classic Car Collection 06 : `visuels/classic-car-collection-06.html` ; image, sans description
+- ’55 Vapid Stanier 01 : `visuels/55-vapid-stanier-01.html` ; image, sans description
+- ’55 Vapid Stanier 02 : `visuels/55-vapid-stanier-02.html` ; image, sans description
+- ’55 Vapid Stanier 03 : `visuels/55-vapid-stanier-03.html` ; image, sans description
+- ’55 Vapid Stanier 04 : `visuels/55-vapid-stanier-04.html` ; image, sans description
+- Ambrosia 03 : `visuels/ambrosia-03.html` ; image, décrite
+- Artwork officiel : `visuels/artwork-jason-lucia-beach.html` ; official-artwork, décrite
+- Cal Hampton 02 : `visuels/cal-hampton-02.html` ; image, décrite
+- Grassrivers 03 : `visuels/grassrivers-03.html` ; image, décrite
+- Grassrivers 04 : `visuels/grassrivers-04.html` ; image, décrite
+- Jason And Lucia 02 : `visuels/jason-and-lucia-02.html` ; image, décrite
+- Jason And Lucia 09 : `visuels/jason-and-lucia-09.html` ; image, décrite
+- Jason And Lucia 12 : `visuels/jason-and-lucia-12.html` ; image, décrite
+- Jason Duval 05 : `visuels/jason-duval-05.html` ; image, décrite
+- Leonida Keys 02 : `visuels/leonida-keys-02.html` ; image, décrite
+- Leonida Keys 05 : `visuels/leonida-keys-05.html` ; image, décrite
+- Lucia Caminos 03 : `visuels/lucia-caminos-03.html` ; image, décrite
+- Mount Kalaga National Park 02 : `visuels/mount-kalaga-national-park-02.html` ; image, décrite
+- Mount Kalaga National Park 06 : `visuels/mount-kalaga-national-park-06.html` ; image, décrite
+- Port Gellhorn 02 : `visuels/port-gellhorn-02.html` ; image, décrite
+- Raul Bautista 02 : `visuels/raul-bautista-02.html` ; image, décrite
+- Trailer 2, 0:16 : `visuels/trailer-2-caracara-016.html` ; official-trailer-frame, décrite
+- Trailer 2, 1:58 : `visuels/trailer-2-lucia-grenade-launcher.html` ; official-video-still, décrite
+- Trailer 2, 1:15 : `visuels/trailer-2-lucia-pm.html` ; official-video-still, décrite
+- Trailer 2, 1:43 : `visuels/trailer-2-motorcycle-143.html` ; official-trailer-frame, décrite
+- Édition Ultimate 02 : `visuels/ultimate-edition-02.html` ; image, décrite
+- One-Eyed Willie 03 : `visuels/ultimate-edition-one-eyed-willie-03.html` ; image, décrite
+- Édition Ultimate, Rideout Customs 02 : `visuels/ultimate-edition-rideout-customs-02.html` ; image, décrite
+- Édition Ultimate, Rideout Customs 03 : `visuels/ultimate-edition-rideout-customs-03.html` ; image, décrite
+- Vice City 06 : `visuels/vice-city-06.html` ; image, décrite
+- Vice City 09 : `visuels/vice-city-09.html` ; image, décrite
+- Vice City 12 : `visuels/vice-city-12.html` ; image, décrite
+- Vintage Vice City Pack Exclusive Looks 03 : `visuels/vintage-vice-city-pack-exclusive-looks-03.html` ; image, décrite
+- Vintage Vice City Weapon Pattern 01 : `visuels/vintage-vice-city-weapon-pattern-01.html` ; image, décrite
+- Ambrosia 02 : `visuels/ambrosia-02.html` ; official-screenshot, sans description
+- Ambrosia 04 : `visuels/ambrosia-04.html` ; official-screenshot, sans description
+- Ambrosia 06 : `visuels/ambrosia-06.html` ; official-screenshot, sans description
+- Boobie Ike 02 : `visuels/boobie-ike-02.html` ; official-screenshot, sans description
+- Boobie Ike 03 : `visuels/boobie-ike-03.html` ; official-screenshot, sans description
+- Brian Heder 02 : `visuels/brian-heder-02.html` ; official-screenshot, sans description
+- Brian Heder 03 : `visuels/brian-heder-03.html` ; official-screenshot, sans description
+- Brian Heder 04 : `visuels/brian-heder-04.html` ; official-screenshot, sans description
+- Cal Hampton 03 : `visuels/cal-hampton-03.html` ; official-screenshot, sans description
+- Cal Hampton 04 : `visuels/cal-hampton-04.html` ; official-screenshot, sans description
+- Dre’Quan Priest 02 : `visuels/dre-quan-priest-02.html` ; official-screenshot, sans description
+- Dre’Quan Priest 03 : `visuels/dre-quan-priest-03.html` ; official-screenshot, sans description
+- Dre’Quan Priest 04 : `visuels/dre-quan-priest-04.html` ; official-screenshot, sans description
+- Electric Fang Tattoo 02 : `visuels/electric-fang-tattoo-02.html` ; official-screenshot, sans description
+- Electric Fang Tattoo 03 : `visuels/electric-fang-tattoo-03.html` ; official-screenshot, sans description
+- Electric Fang Tattoo 04 : `visuels/electric-fang-tattoo-04.html` ; official-screenshot, sans description
+- Grassrivers 02 : `visuels/grassrivers-02.html` ; official-screenshot, sans description
+- Grassrivers 05 : `visuels/grassrivers-05.html` ; official-screenshot, sans description
+- Grassrivers 06 : `visuels/grassrivers-06.html` ; official-screenshot, sans description
+- Jason Duval 02 : `visuels/jason-duval-02.html` ; official-screenshot, sans description
+- Jason Duval 03 : `visuels/jason-duval-03.html` ; official-screenshot, sans description
+- Jason Duval 04 : `visuels/jason-duval-04.html` ; official-screenshot, sans description
+- Jason Duval 06 : `visuels/jason-duval-06.html` ; official-screenshot, sans description
+- Leonida Keys 03 : `visuels/leonida-keys-03.html` ; official-screenshot, sans description
+- Leonida Keys 04 : `visuels/leonida-keys-04.html` ; official-screenshot, sans description
+- Leonida Keys 06 : `visuels/leonida-keys-06.html` ; official-screenshot, sans description
+- Lucia Caminos 02 : `visuels/lucia-caminos-02.html` ; official-screenshot, sans description
+- Lucia Caminos 04 : `visuels/lucia-caminos-04.html` ; official-screenshot, sans description
+- Lucia Caminos 05 : `visuels/lucia-caminos-05.html` ; official-screenshot, sans description
+- Lucia Caminos 06 : `visuels/lucia-caminos-06.html` ; official-screenshot, sans description
+- Mount Kalaga National Park 03 : `visuels/mount-kalaga-national-park-03.html` ; official-screenshot, sans description
+- Mount Kalaga National Park 04 : `visuels/mount-kalaga-national-park-04.html` ; official-screenshot, sans description
+- Mount Kalaga National Park 05 : `visuels/mount-kalaga-national-park-05.html` ; official-screenshot, sans description
+- One-Eyed Willie’s Mod Shop 02 : `visuels/one-eyed-willie-s-mod-shop-02.html` ; official-screenshot, sans description
+- Port Gellhorn 04 : `visuels/port-gellhorn-04.html` ; official-screenshot, sans description
+- Port Gellhorn 05 : `visuels/port-gellhorn-05.html` ; official-screenshot, sans description
+- Port Gellhorn 06 : `visuels/port-gellhorn-06.html` ; official-screenshot, sans description
+- Raul Bautista 03 : `visuels/raul-bautista-03.html` ; official-screenshot, sans description
+- Raul Bautista 04 : `visuels/raul-bautista-04.html` ; official-screenshot, sans description
+- Real Dimez 02 : `visuels/real-dimez-02.html` ; official-screenshot, sans description
+- Real Dimez 03 : `visuels/real-dimez-03.html` ; official-screenshot, sans description
+- Real Dimez 04 : `visuels/real-dimez-04.html` ; official-screenshot, sans description
+- Sara’s Unisex Salon 02 : `visuels/sara-s-unisex-salon-02.html` ; official-screenshot, sans description
+- Sara’s Unisex Salon 03 : `visuels/sara-s-unisex-salon-03.html` ; official-screenshot, sans description
+- Stock 305 Clothing Store 03 : `visuels/stock-305-clothing-store-03.html` ; official-screenshot, sans description
+- Stock 305 Clothing Store 04 : `visuels/stock-305-clothing-store-04.html` ; official-screenshot, sans description
+- Vice City 03 : `visuels/vice-city-03.html` ; official-screenshot, sans description
+- Vice City 05 : `visuels/vice-city-05.html` ; official-screenshot, sans description
+- Vice City 08 : `visuels/vice-city-08.html` ; official-screenshot, sans description
+- Vice City 10 : `visuels/vice-city-10.html` ; official-screenshot, sans description
+- Vice City 11 : `visuels/vice-city-11.html` ; official-screenshot, sans description
+- Trailer 1, 0:25 : `visuels/trailer-1-vehicles-025.html` ; official-trailer-frame, sans description
+- Trailer 1, 0:27 : `visuels/trailer-1-vehicles-027.html` ; official-trailer-frame, sans description
+- Trailer 1, 0:28 : `visuels/trailer-1-vehicles-028.html` ; official-trailer-frame, sans description
+- Trailer 1, 0:33 : `visuels/trailer-1-vehicles-033.html` ; official-trailer-frame, sans description
+- Trailer 1, 0:53 : `visuels/trailer-1-vehicles-053.html` ; official-trailer-frame, sans description
+- Extended Look, Coquette D10 : `visuels/extended-look-coquette-d10.html` ; official-video-frame-mirror, sans description
+- Extended Look, Sentinel Classic : `visuels/extended-look-sentinel-classic-rear.html` ; official-video-frame-mirror, sans description
+- Extended Look, Sentinel Classic 02 : `visuels/extended-look-sentinel-classic-front.html` ; official-video-frame-mirror, sans description
+- Extended Look, Stockade : `visuels/extended-look-stockade.html` ; official-video-frame-mirror, sans description
+- Jaquette officielle, Sea Sparrow : `visuels/cover-art-sea-sparrow.html` ; official-artwork-detail, sans description
+- Trailer 1, 1:04 : `visuels/trailer-1-vehicles-064.html` ; official-trailer-frame, sans description
+- Trailer 1, 1:11 : `visuels/trailer-1-vehicles-071.html` ; official-trailer-frame, sans description
+- Trailer 1, 0:03 : `visuels/trailer-1-phantom-003.html` ; official-trailer-frame, sans description
+- Trailer 1, 0:11 : `visuels/trailer-1-tropic-011.html` ; official-trailer-frame, sans description
+- Trailer 2, 2:21 : `visuels/trailer-2-seashark-141.html` ; official-trailer-frame, sans description
+- Trailer 2, 0:35 : `visuels/trailer-2-rancher-035.html` ; official-trailer-frame, sans description
+- Trailer 2, 0:37 : `visuels/trailer-2-jet-037.html` ; official-trailer-frame, sans description
+- Trailer 2, 1:59 : `visuels/trailer-2-police-riot-119.html` ; official-trailer-frame, sans description
+- Trailer 2, 1:25 : `visuels/trailer-2-brian-boatyard-085.html` ; official-trailer-frame, sans description
+- Goodtime Gear : `visuels/goodtime-gear-01.html` ; official-screenshot, décrite
+- Jason Duval 07 : `visuels/jason-duval-07.html` ; official-screenshot, sans description
+- Jason Duval 08 : `visuels/jason-duval-08.html` ; official-screenshot, sans description
+- Jason Duval 09 : `visuels/jason-duval-09.html` ; official-screenshot, sans description
+- Jason Duval 10 : `visuels/jason-duval-10.html` ; official-screenshot, sans description
+- Lucia Caminos 07 : `visuels/lucia-caminos-07.html` ; official-screenshot, sans description
+- Lucia Caminos 08 : `visuels/lucia-caminos-08.html` ; official-screenshot, sans description
+- Lucia Caminos 09 : `visuels/lucia-caminos-09.html` ; official-screenshot, sans description
+- Lucia Caminos 10 : `visuels/lucia-caminos-10.html` ; official-screenshot, sans description
+- Jason And Lucia 01 : `visuels/jason-and-lucia-01.html` ; official-screenshot, sans description
+- Jason And Lucia 03 : `visuels/jason-and-lucia-03.html` ; official-screenshot, sans description
+- Jason And Lucia 04 : `visuels/jason-and-lucia-04.html` ; official-screenshot, sans description
+- Jason And Lucia 05 : `visuels/jason-and-lucia-05.html` ; official-screenshot, sans description
+- Jason And Lucia 06 : `visuels/jason-and-lucia-06.html` ; official-screenshot, sans description
+- Jason And Lucia 07 : `visuels/jason-and-lucia-07.html` ; official-screenshot, sans description
+- Jason And Lucia 08 : `visuels/jason-and-lucia-08.html` ; official-screenshot, sans description
+- Jason And Lucia 10 : `visuels/jason-and-lucia-10.html` ; official-screenshot, sans description
+- Jason And Lucia 11 : `visuels/jason-and-lucia-11.html` ; official-screenshot, sans description
+- Jason And Lucia 13 : `visuels/jason-and-lucia-13.html` ; official-screenshot, sans description
+- Vice City 02 : `visuels/vice-city-02.html` ; official-screenshot, sans description
+- Vice City 04 : `visuels/vice-city-04.html` ; official-screenshot, sans description
+- Port Gellhorn 03 : `visuels/port-gellhorn-03.html` ; official-screenshot, sans description
+- Vintage Vice City Pack 01 : `visuels/vintage-vice-city-pack-01.html` ; official-screenshot, sans description
+- Vintage Vice City Pack 02 : `visuels/vintage-vice-city-pack-02.html` ; official-screenshot, sans description
+- Jaquette officielle : `visuels/cover-art-officielle.html` ; official-artwork, sans description
+- Carte postale de Vice City : `visuels/carte-postale-vice-city.html` ; official-artwork, sans description
+- Affiche du Trailer 1 : `visuels/affiche-trailer-1.html` ; official-artwork, sans description
+- Affiche du Trailer 2 : `visuels/affiche-trailer-2.html` ; official-artwork, sans description
+- Affiche d’An Extended Look : `visuels/affiche-extended-look.html` ; official-artwork, sans description
+- Affiche de la bande-annonce de lancement : `visuels/affiche-bande-annonce-lancement.html` ; official-artwork, sans description
+- Annonce d’An Extended Look : `visuels/annonce-extended-look.html` ; official-artwork, sans description
+- Collection Grand Theft Auto VI de la boutique Rockstar : `visuels/collection-gta-vi.html` ; official-product-photo, sans description
+- Manettes DualSense en édition limitée Grand Theft Auto VI : `visuels/manettes-dualsense-gta-vi.html` ; official-product-photo, sans description
+- The Goodtime State – Vice City, illustration officielle : `visuels/coffret-the-goodtime-state.html` ; official-artwork, sans description
+- Coffret collector, boîte fermée : `visuels/coffret-collector-ferme.html` ; official-product-photo, sans description
+- Coffret collector, boîte ouverte : `visuels/coffret-collector-ouvert.html` ; official-product-photo, sans description
+- Coffret collector, figurine Macca the Gator : `visuels/coffret-figurine-macca.html` ; official-product-photo, sans description
+- Coffret collector, lunettes de soleil : `visuels/coffret-lunettes-oakley.html` ; official-product-photo, sans description
+- Coffret collector, casquette : `visuels/coffret-casquette-new-era.html` ; official-product-photo, sans description
+- Coffret collector, miroir aimanté : `visuels/coffret-miroir-macca.html` ; official-product-photo, sans description
+- Coffret collector, cuillère à mélange : `visuels/coffret-cuillere.html` ; official-product-photo, sans description
+- Coffret collector, porte-clés : `visuels/coffret-porte-cles.html` ; official-product-photo, sans description
+- Coffret collector, sac à bandoulière : `visuels/coffret-sac-bandouliere.html` ; official-product-photo, sans description
+- Coffret collector, verre à shot : `visuels/coffret-verre-a-shot.html` ; official-product-photo, sans description
+- Coffret collector, lot de pin’s : `visuels/coffret-pins.html` ; official-product-photo, sans description
+- Coffret collector, stickers : `visuels/coffret-stickers.html` ; official-product-photo, sans description
+- Coffret collector, poster de Leonida : `visuels/coffret-poster.html` ; official-product-photo, sans description
 
-### Grands moments (14)
+### Grands moments (31)
 
-- Trailer 1 : `moments/trailer-1.html` ; 4 décembre 2023
-- Trailer 2 : `moments/trailer-2.html` ; 6 mai 2025
-- Pages « Only in Leonida » : `moments/pages-only-in-leonida.html` ; 6 mai 2025
-- Captures officielles : `moments/captures-officielles.html` ; 6 mai 2025
-- Jaquette officielle : `moments/jaquette-officielle.html` ; juin 2026
-- Édition Ultimate : `moments/edition-ultimate.html` ; 24 juin 2026
-- Captures de l’Édition Ultimate : `moments/captures-de-l-edition-ultimate.html` ; 24 juin 2026
-- Pack Vintage Vice City : `moments/pack-vintage-vice-city.html` ; 24 juin 2026
-- An Extended Look : `moments/an-extended-look.html` ; 27 août 2026
-- Aperçus de la presse : `moments/apercus-de-la-presse.html` ; 27 août 2026
-- Entretien de Rob Nelson : `moments/entretien-de-rob-nelson.html` ; 28 août 2026
-- 29 nouvelles captures : `moments/29-nouvelles-captures.html` ; fin août 2026
-- Les stations de radio : `moments/les-stations-de-radio.html` ; 8 octobre 2026
-- Bande-annonce de lancement : `moments/bande-annonce-de-lancement.html` ; 15 octobre 2026
+- La bande-annonce de lancement : `moments/bande-annonce-lancement.html` ; 2026-10-15, annonce video
+- La collection de la boutique Rockstar : `moments/collection-boutique.html` ; 2026-10-08, annonce produit
+- Les six stations de radio : `moments/stations-radio.html` ; 2026-10-08, annonce musique
+- Le dossier de Game Informer : `moments/game-informer.html` ; 2026-09-25, annonce presse
+- Le coffret collector « The Goodtime State » : `moments/coffret-collector.html` ; 2026-09-24, annonce produit
+- L’album officiel : `moments/album.html` ; 2026-09-17, annonce musique
+- Deux manettes aux couleurs de GTA VI : `moments/manettes-dualsense.html` ; 2026-09-03, annonce produit
+- L’entretien de Rob Nelson à Famitsu : `moments/entretien-famitsu.html` ; 2026-08-28, annonce presse
+- An Extended Look : `moments/extended-look.html` ; 2026-08-27, annonce video
+- Les aperçus de la presse : `moments/apercus-presse.html` ; 2026-08-27, annonce presse
+- La version en boîte détaillée : `moments/boite.html` ; 2026-08-18, annonce annonce
+- La date d’An Extended Look : `moments/date-extended-look.html` ; 2026-08-06, annonce annonce
+- Précommandes, Édition Ultimate et Pack Vintage Vice City : `moments/precommandes.html` ; 2026-06-24, annonce annonce
+- La date des précommandes et la jaquette : `moments/precommandes-date.html` ; 2026-06-18, annonce annonce
+- La date du 19 novembre 2026 : `moments/date-sortie.html` ; 2025-11-06, annonce annonce
+- Le Trailer 2, les personnages et les régions : `moments/trailer-2.html` ; 2025-05-06, annonce video
+- Le Trailer 1 : `moments/trailer-1.html` ; 2023-12-04, annonce video
+- Trailer 1 : `moments/trailer-1.html` ; moment des dossiers du monde, même chose que l’annonce trailer-1
+- Trailer 2 : `moments/trailer-2.html` ; moment des dossiers du monde, même chose que l’annonce trailer-2
+- Pages « Only in Leonida » : `moments/pages-only-in-leonida.html` ; moment des dossiers du monde, 6 mai 2025
+- Captures officielles : `moments/captures-officielles.html` ; moment des dossiers du monde, 6 mai 2025
+- Jaquette officielle : `moments/jaquette-officielle.html` ; moment des dossiers du monde, juin 2026
+- Édition Ultimate : `moments/edition-ultimate.html` ; moment des dossiers du monde, 24 juin 2026
+- Captures de l’Édition Ultimate : `moments/captures-de-l-edition-ultimate.html` ; moment des dossiers du monde, 24 juin 2026
+- Pack Vintage Vice City : `moments/pack-vintage-vice-city.html` ; moment des dossiers du monde, 24 juin 2026
+- An Extended Look : `moments/extended-look.html` ; moment des dossiers du monde, même chose que l’annonce extended-look
+- Aperçus de la presse : `moments/apercus-presse.html` ; moment des dossiers du monde, même chose que l’annonce apercus-presse
+- Entretien de Rob Nelson : `moments/entretien-famitsu.html` ; moment des dossiers du monde, même chose que l’annonce entretien-famitsu
+- 29 nouvelles captures : `moments/29-nouvelles-captures.html` ; moment des dossiers du monde, fin août 2026
+- Les stations de radio : `moments/stations-radio.html` ; moment des dossiers du monde, même chose que l’annonce stations-radio
+- Bande-annonce de lancement : `moments/bande-annonce-lancement.html` ; moment des dossiers du monde, même chose que l’annonce bande-annonce-lancement

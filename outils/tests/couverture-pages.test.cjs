@@ -21,7 +21,8 @@ test('couverture : les familles nouvelles sont inventoriées avec une cible d’
     const seen = new Set();
     for (const it of f.items) {
       const cible = it.page || it.cible; assert.ok(cible, f.id + ' : ' + it.id + ' sans adresse');
-      assert.ok(!seen.has(cible), f.id + ' : adresse en double ' + cible); seen.add(cible);
+      /* v7.96 : un doublon déclaré (moment des dossiers du monde jumeau d’une annonce) partage l’adresse de l’élément qu’il désigne */
+      if (!it.doublonDe) { assert.ok(!seen.has(cible), f.id + ' : adresse en double ' + cible); seen.add(cible); }
       if (it.cible) assert.match(it.cible, /^[a-z-]+\/[a-z0-9-]+\.html$/, f.id + ' : slug ' + it.cible);
     }
   }
@@ -33,7 +34,7 @@ test('couverture : le rapport est écrit et le volume calculé', () => {
   execFileSync(process.execPath, [path.join(ROOT, 'outils/couverture-pages.cjs'), '--rapport'], { cwd: ROOT, encoding: 'utf8', env: { ...process.env, COUVERTURE_SORTIE: out } });
   const md = fs.readFileSync(out, 'utf8'); fs.unlinkSync(out);
   assert.match(md, /## Tableau des familles/); assert.match(md, /## Volume à créer/); assert.match(md, /## Décisions/); assert.match(md, /## À trancher par Téva/);
-  /* v7.95 (lot A) : les lieux de la carte, les groupes et les consommables ont leurs pages ; il reste les familles du lot B */
-  assert.ok(inv.volume.aCreer > 500 && inv.volume.aCreer < 700 && inv.volume.toutesLangues === inv.volume.aCreer * inv.volume.langues, 'à créer : ' + inv.volume.aCreer);
+  /* v7.96 (lot B) : toutes les familles ont leurs pages ; plus rien à créer hors familles modèles */
+  assert.equal(inv.volume.aCreer, 0, 'à créer : ' + inv.volume.aCreer); assert.equal(inv.familles.filter(f => !f.modele).reduce((n, f) => n + f.bilan.manque, 0), 0, 'éléments sans page');
   assert.ok(!/ — | · /.test(md), 'rapport sans séparateurs « — » ni « · »');
 });

@@ -11,6 +11,8 @@
 'use strict';
 const fs=require('fs'),path=require('path'),vm=require('vm');
 process.chdir(path.join(__dirname,'..'));
+/* v7.96 (une page par élément) : adresse de la page d'un type de munitions (même slug que outils/couverture-pages.cjs) */
+const root=process.cwd(), slugMun=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/&/g,' et ').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')||'sans-nom';
 const ctx={window:{}};vm.runInNewContext(fs.readFileSync('armes-data.js','utf8'),ctx);
 const A=ctx.window.LK_ARMES,CATL=ctx.window.LK_ARMES_CATS;
 const MED=JSON.parse(fs.readFileSync('outils/medias-officiels.json','utf8'));
@@ -103,7 +105,7 @@ function fiche(a,i){
  const insp=a.insp?esc(a.insp)+' <span class="unknown">— rapprochement communautaire</span>':a.fam?esc(a.fam)+' <span class="unknown">— famille d’objet</span>':'<span class="unknown">Objet du quotidien</span>';
  const rows=[['Nom',esc(a.nom)+(a.perso?' <span class="perso-tag">Arme de '+esc(PERSO_NOM[a.perso]||a.perso)+'</span>':'')],...(a.fr?[['Désignation courante',esc(a.fr)]]:[]),['Statut',st.l],
   ['Catégorie','<a href="../armes.html#'+a.cat+'">'+esc(cat)+'</a>'],['Emplacement',slotOf(a)?SLOTL[a.slot]:SLOT_AUTRE[a.cat]],
-  ...(a.portee?[['Portée estimée',esc(a.portee)]]:[]),['Inspiration réelle',insp],...(a.mun?[['Munitions',esc(a.mun)]]:[]),
+  ...(a.portee?[['Portée estimée',esc(a.portee)]]:[]),['Inspiration réelle',insp],...(a.mun?[['Munitions',fs.existsSync(path.join(root,'munitions',slugMun(a.mun)+'.html'))?'<a href="../munitions/'+slugMun(a.mun)+'.html">'+esc(a.mun)+'</a>':esc(a.mun)]]:[]),/* v7.96 : page du type de munitions */
   ...(a.ue?[['Édition Ultimate','Version exclusive ou mise en avant']]:[]),...(prixPub?[['Prix en jeu',esc(DP.phrasePrix(prixPub))]]:[]),['Source',VIDEO_OF[a.src]?'<a href="../videos/'+VIDEO_OF[a.src]+'.html">'+esc(a.src)+'</a>':esc(a.src)]];
  const ang=angBlock(a);const gal=`<div class="gal${ang?' gal--ang':''}" data-base="../img/armes/${a.id}" data-vues="" data-nom="${esc(a.nom)}"
              data-art="${esc(art(a,150))}" data-vide-txt="${esc(VIDE_TXT)}" aria-label="Schéma : ${esc(a.nom)}" data-vide="1">${ang||'<div class="gal-track"><div class="gal-item"><div class="gal-vide">'+art(a,150)+'<span>'+esc(VIDE_TXT)+'</span></div></div></div>'}</div>`;

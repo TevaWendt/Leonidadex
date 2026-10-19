@@ -1,0 +1,176 @@
+LEONIDAKIT v7.96 : « une page par élément », lot B (toutes les familles restantes, 651 pages)
+18 octobre 2026
+
+Base : v7.95 (commit 5cc9a3061, l’archive « modifs » livrée le 18 octobre à 11 h). Rien n’est publié ni poussé. CSP inchangée.
+Aucun fichier à supprimer. Aucune donnée inventée sur GTA VI ; GTA V et GTA Online restent « repère de la série ». Aucun contenu
+existant n’est modifié : les pages en place reçoivent seulement des liens vers les pages nouvelles.
+Téva, 18 octobre, 11 h 31 : « Fais-en encore plus si jamais c’est possible, n’oublie rien et surtout ne modifie pas le contenu
+de base, puis envoie le lot B avec les mêmes consignes et les lots suivants aussi sans que je te dise le ok. »
+
+1. CE QUI EST GÉNÉRÉ (outils/gen-pages-elements-b.cjs, nouveau, appelé par outils/gen-pages-elements.cjs dans la chaîne)
+
+Même gabarit allégé que le lot A (coquille des fiches, elements.css, rien de répété), même index outils/pages-elements-index.json
+(une page n’est réécrite que si son contenu change), un sommaire par famille (CollectionPage avec ItemList), WebPage avec l’élément
+en « about » sur chaque fiche. Toutes les familles de l’inventaire ont maintenant leur page ; il ne reste que les familles modèles
+sans donnée avant la sortie (missions, trophées, codes, collectibles, GTA Online).
+- Catalogues (207 pages) : coiffures/ (55), tatouages/ (24), tenues/ (30), perso-vehicules/ (58), perso-armes/ (40), depuis
+  outils/catalogues/<famille>.json : description, statut, effet, prix GTA VI (à venir), repère de la série, où le trouver (lieux
+  de la carte avec leur aperçu), options relevées, véhicules ou armes concernés, variantes, personnage, fiche liée, sources ;
+  bouton de suivi (mêmes clés lk_own_<famille> que les listes) ; « Autres <catégorie> » en cartes ; encart calculateur.
+- Valeurs d’options (145 pages, noindex,follow) : options-vehicules/ (104), options-armes/ (41), depuis perso-options.json :
+  poste, prix repère et jeu, déblocage, note, pastille de teinte, les autres valeurs du poste ; deux sommaires indexables.
+- Marques de véhicules (51 pages) : marques/, depuis outils/marques.json et le champ marque de vehicules-data.js (LCC, BTN et
+  HVY compris, sans rapprochement inventé) : constructeur évoqué (observation de la communauté), véhicules par catégorie et
+  statut, silhouettes, cartes vers chaque fiche ; sommaire marques/index.html.
+- Types de munitions (6 pages, noindex,follow) : munitions/, depuis le champ mun de armes-data.js et les libellés de
+  hubs-editoriaux.json : usage, armes repérées, suivi « Mes munitions » ; sommaire indexable.
+- Éditions (4 pages) : editions/standard, ultimate, amelioration, collector, depuis actus.json (editions, prix) : contenu,
+  prix relevé (PlayStation Store), seize contenus de l’Ultimate en cartes, bonus de précommande, boîte, coffret et ses onze
+  objets, sources.
+- Achats et services sans fiche (7 pages) : achats/, depuis acquisitions.json : obtention, condition, statut, prix, source,
+  les autres contenus liés aux éditions.
+- Visuels officiels (196 pages, 31 indexables) : visuels/, depuis medias-officiels.json : type, source, crédit, tailles
+  servies, description quand elle a été rédigée, et les pages du site qui reprennent l’image (lues dans les pages françaises) ;
+  bloc « Droits et usage » ; ImageObject ; sommaire par type.
+- Grands moments (24 pages) : moments/, une par annonce datée de la frise des Actualités (17) et une par moment des dossiers
+  du monde sans annonce jumelle (7) : date, type, statut, vidéo, ce que le moment a montré fiche par fiche (révélations des
+  dossiers), sources, avant et après ; sommaire chronologique. Les sept moments jumeaux d’une annonce renvoient vers sa page.
+
+2. DÉCISIONS (Téva : « tranche toi-même, n’oublie rien, ne modifie pas le contenu de base »), écrites dans COUVERTURE-PAGES.md
+- Visuels : indexable seulement quand une description de l’image a été rédigée (31 sur 196) ; les autres existent en
+  noindex,follow.
+- Grands moments : une page par annonce de la frise ; les moments des dossiers du monde identiques à une annonce (trailers,
+  Extended Look, aperçus, entretien, radios, lancement) renvoient vers elle, les sept autres ont leur page.
+- Options : une page par valeur, en noindex,follow (repère de la série seulement), sommaires indexables.
+- Munitions : six pages en noindex,follow, sommaire indexable ; marques : 51 pages, indexables quand un véhicule porte la marque.
+- Lieux de la carte (lot A, corrigé ici ; Téva, 18 octobre, 19 h 26 : « 1 912 pages de lieux sur 2 501 sont en noindex,
+  alors que ton rapport de couverture en estimait 1 672 indexables : explique-moi pourquoi et corrige le seuil si c’est
+  lui. Un lieu avec son quartier, son comté et sa position a déjà deux informations réelles ») : l’inventaire donnait
+  deux chiffres, 1 672 lieux au seuil du prompt (deux informations réelles) et une proposition prudente de 588 lieux au
+  nom en jeu confirmé (capture ou trois informations) ; la v7.95 avait pris la prudente. Le générateur applique maintenant
+  le seuil du prompt : 1 672 pages indexables (1 034 connues par leur nom réel, 797 avec capture), 828 en noindex,follow
+  (817 bâtiments numérotés « Bâtiment L924 », noms avec « ? », existence douteuse). Décision réécrite dans
+  COUVERTURE-PAGES.md, test pages-elements adapté, sommaire lieux-carte/index.html reformulé, sitemaps à jour (+1 084
+  adresses françaises).
+- Puis, à 20 h 09 (« est-ce que c’est possible de corriger toutes les erreurs noindex ? … faut que ça puisse être
+  complètement indexé par Google, et Bing ») : plus aucune page par élément en noindex. INDEXER_TOUT dans
+  couverture-pages.cjs, appliqué par le gabarit commun (gen-pages-elements.cjs) : les 2 500 lieux (bâtiments numérotés
+  compris), les 145 valeurs d’options, les 6 types de munitions, les 196 visuels, les 47 quartiers et comtés, les 51
+  marques sont proposés aux moteurs (robots : max-image-preview:large). Les seuils d’informations restent calculés dans le
+  rapport (colonne « seuil ») sans décider. Restent en noindex : les trois pages modèles aux exemples fictifs (missions,
+  trophées, codes), les redirections, la 404, hors-ligne.html, et deux pages antérieures aux lots (comparateur.html,
+  logements.html, non touchées). sitemap.xml : 4 349 adresses (3 224 pages par élément en français + 188 × 5 langues +
+  pages de section). Dit à Téva : Google peut laisser de côté les pages les plus minces (« explorée, actuellement non
+  indexée »), sans pénalité.
+- Rien du contenu existant n’est réécrit : les hubs, listes et fiches reçoivent un lien (« sa page », « La page de l’annonce »,
+  « La page de cette édition », « La page de ce moment », constructeur et type de munitions cliquables), toujours dans un
+  élément à part pour que les textes déjà traduits gardent leur traduction.
+
+3. CE QUI CHANGE AILLEURS (liens seulement)
+- outils/catalogues.cjs : « sa page » sur chaque ligne des listes de style.html et personnalisations.html (le mécanisme du
+  lot A, générique) ; outils/gen-acquisitions.cjs : « Sa page » sur les cartes des contenus sans fiche (style, planques,
+  personnalisations) ; outils/hubs-editoriaux.cjs : lien vers marques/index.html sous le mur des marques, vers
+  munitions/index.html sous les types de munitions ; outils/gen.js : le constructeur de chaque fiche véhicule mène à sa
+  marque ; outils/gen-armes.cjs : le type de munitions de chaque fiche d’arme mène à sa page ; outils/lore-gen.js : « sa page »
+  sur chaque ligne des crédits (medias.html), « La page de ce moment » sous chaque sortie des chronologies des dossiers ;
+  outils/gen-actus.cjs : « La page de l’annonce » dans la frise, « La page de cette édition », « La page de l’amélioration »
+  et « La page du coffret collector » sur editions.html. Chaque lien n’est écrit que si la page existe (un dépôt neuf converge
+  en deux passages de la chaîne).
+- outils/sync-site.cjs : les treize dossiers nouveaux entrent dans la liste des pages traitées et dans sitemap-fiches.xml ;
+  outils/langues.json : exclus de la traduction (lot C) ; outils/langues/<code>/v796.json : les libellés des liens nouveaux
+  et, en motifs, les lignes des crédits avec leur lien (les blocs déjà traduits sont repris tels quels) ; extraction à {}.
+- outils/couverture-pages.cjs : marques portées par des véhicules mais absentes de marques.json ; visuels indexables selon la
+  description ; une page par annonce et moments jumeaux ; six décisions de plus ; outils/COUVERTURE-PAGES.md regénéré (plus
+  aucun élément sans page hors familles modèles). outils/sources/elements.css : teintes des familles, pastille de teinte,
+  bandeau de silhouettes ; lk-sections.css : lien du moment dans la chronologie.
+- Tests : outils/tests/pages-elements-b.test.cjs (nouveau : couverture 100 %, un sommaire par famille, tous les liens des
+  hubs, options ↔ postes, marques ↔ véhicules, visuels avec ImageObject, moments datés) ; pages-elements.test.cjs parcourt
+  tout l’index (3 224 pages), tolère la ponctuation d’une citation exacte et ne confond plus « pièce éclairée » avec une
+  élision manquée. Échantillons des contrôles d’écrans et de clôture étendus aux familles du lot B.
+
+4. CORRECTIONS FAITES EN REGARDANT LES PAGES
+- Titres bornés à 65 signes : la catégorie tombe d’abord, puis le nom est coupé sur un mot entier ; descriptions en phrase
+  (« Nom dans GTA VI (catégorie). Description. ») pour garder la casse des noms propres.
+- Accords : « 55 coiffures sont relevées », « 7 vus sans nom communiqué, 2 identifications communautaires », « une autre
+  fiche, listée plus bas » ; « Effet visuel : … » au lieu de deux fois deux-points ; « Type : Vidéo » en capitale dans le
+  tableau ; les phrases de révélation gardent les noms propres en capitale et perdent leur point final entre parenthèses.
+- Lieux de vente notés : « One-Eyed Willie’s (Lake Leonida, pas encore placé sur la carte) », une seule parenthèse (aussi sur
+  les consommables du lot A).
+- « Avant et après » d’un moment : les vrais voisins chronologiques, sans boucler du premier trailer au lancement.
+- Crédit d’un visuel sur une fiche : le titre du visuel mène à sa page, « crédits » aux crédits.
+- langues.test.cjs (contrôle de clôture) : « pas de page introuvable dans le plan du site » cherchait « 404.html</loc> »
+  n’importe où, et prenait lieux-carte/batiment-l1404.html (indexable depuis ce lot) pour la page 404 : le test vise
+  maintenant la page 404 elle-même (/404.html ou /<langue>/404.html).
+- Audit de clôture : un nom long de carte liée (« Costume en lin pastel de Jason (Pack Vintage Vice City) ») coupé à
+  768 px par la limite de deux lignes : trois lignes sur les pages par élément (elements.css), rien ne change ailleurs.
+- Trouvé par le contrôle de clôture (verifier.js : « href absent : ../null » sur editions/ultimate.html et amelioration.html) :
+  le contenu « Goodtime Gear » des éditions n’a pas de fiche dans actus.json ; sa carte mène maintenant à sa page d’achat
+  (achats/articles-du-bonheur.html, retrouvée par la légende du média dans acquisitions.json) ; un contenu sans aucune page
+  n’est plus une carte.
+- Chaîne complète relancée en fin de lot (node outils/regenerer.cjs) : une chaîne partielle avait laissé animaux.html réécrit
+  par lore-gen.js sans le passage de gen-animaux (0 carte) ; toutes les pages sont régénérées dans l’ordre.
+- Trouvé par la suite de tests après la chaîne (gen-pages-elements --verifier : 121 pages de visuels « différentes ») : la
+  ligne « Reprise sur » d’un visuel lit les pages du site, et une page lue au milieu de la chaîne peut être brute (titre
+  « GTA VI … | Leonidakit » avant la réécriture pour les moteurs, pas encore d’image de partage en tête) ou finie, selon
+  l’étape qui l’a réécrite ; la page du visuel changeait donc d’une chaîne à l’autre. Le générateur lit maintenant le titre
+  tel que les moteurs le verront (titleSeo de outils/langues.cjs, idempotent) et ne compte que les images du corps de la page
+  (l’image de partage en tête n’est pas une reprise) : 124 pages de visuels réécrites une fois, puis stables (0 différence
+  après synchronisation).
+
+5. LANGUES
+- Lot B en français ; dossiers exclus de la traduction, barre de langue vers l’accueil de chaque langue, pas de hreflang.
+- Textes nouveaux des hubs traduits (v796.json : liens, motifs des crédits) ; extraction `node outils/langues.cjs <code>
+  --extraire` : {} dans les cinq langues.
+
+6. TESTS ET CONTRÔLES
+- Tests nouveaux ou adaptés : outils/tests/pages-elements-b.test.cjs (couverture 100 % des familles du lot B, un sommaire
+  par famille, liens depuis les listes et les hubs, options reliées à leur poste, marques et leurs véhicules, visuels et
+  leurs reprises, plus aucune page en noindex) ; pages-elements.test.cjs parcourt tout l’index (3 224 pages) et suit la
+  décision d’indexation ; langues.test.cjs (page 404 du plan du site visée exactement).
+- Contrôles de la version livrée (outils/livraison/verifier-tout.sh en deux moitiés sur l’état livré, 18 octobre 2026,
+  20 h 37 à 22 h 53, après la chaîne complète et les corrections du § 4) :
+  - cadre du calculateur : 0 erreur (180 vues) ;
+  - suite node : 1 171 sur 1 171 ;
+  - langues.test.cjs : premier passage 50 sur 51 (la page 404 confondue avec lieux-carte/batiment-l1404.html, § 4) ;
+    rejoué après la correction du test : 51 sur 51 ;
+  - verifier : 0 erreur, 935 126 références vérifiées dans 6 057 pages (HTML, srcset, CSS, galeries, données, sitemaps) ;
+  - preuve de confidentialité : toutes les affirmations des Mentions tenues ;
+  - pages traduites dans Chromium : 35 sur 35 ; langues dans le navigateur : 2 791 sur 2 791 ;
+  - écrans : 99 pages × 16 largeurs (1 584 chargements) : aucun débordement, aucun texte trop petit, aucune cible sous
+    24 px ; aucun signal sur les pages des lots A et B (un élément de chaque famille, les sommaires les plus fournis) ; les
+    autres signaux sont ceux connus depuis la v7.94 (galeries des fiches, tuiles, outils du Calculateur, galeries des
+    dossiers à 2 560 px). Allemand : 74 pages × 5 largeurs (370 chargements), mêmes signaux connus ;
+  - audit de clôture (35 pages, 245 chargements) : 0 erreur console, 0 requête en échec, 13 924 contrastes vérifiés,
+    14 660 cibles de 24 à 44 px, aucune cible sous 24 px, aucun texte coupé (premier passage : un nom de carte liée coupé
+    à 768 px sur tenues/milliers-de-tenues.html, corrigé au § 4) ;
+  - cookies : aucun, stockage local sous des clés lk… seulement ;
+  - extraction des traductions : 0 texte à traduire en en, es, it, de, pt ; gen-pages-elements --verifier : 0 page
+    différente sur 3 224 ; index de Léo à jour (gen-leo --check) ; seconde passe de sync-site : aucun fichier changé (empreintes de tous les fichiers du dépôt comparées
+    avant et après, 13 253 fichiers).
+- Captures regardées à 390 et 1 280 px (pas livrées) : une tenue, un bâtiment numéroté devenu indexable, le sommaire des
+  lieux, une valeur d’option ; aucun chevauchement, tableau Identité lisible au téléphone, cartes liées sur trois lignes.
+
+7. LATENCE MESURÉE
+Méthode de la v7.95 (outils/tests/latence-browser.cjs) : téléphone 390 px, processeur ralenti ×4, réseau 4G lente simulé,
+serveur local, deux tours, 18 octobre 2026 vers 23 h. Les pages du lot n’existaient pas avant : la référence est la fiche
+véhicule du même gabarit (vehicules/karin-sultan.html), mesurée dans le même passage.
+- À froid (contexte neuf, service worker compris), premier rendu : marque (marques/albany.html) 708 à 720 ms, tenue 744 à
+  892 ms, édition (editions/ultimate.html, seize cartes) 764 à 876 ms, visuel 720 à 728 ms, moment 728 à 784 ms, bâtiment
+  numéroté 752 à 768 ms ; fiche véhicule 808 à 828 ms. Fin de chargement 1 229 à 1 367 ms, contre 1 340 à 1 490 ms pour
+  la fiche véhicule.
+- À chaud (seconde visite, cache et service worker) : 420 à 616 ms selon la page, fiche véhicule 380 à 480 ms ; 4,7 à
+  5,9 Ko transférés (la page seule), contre 13,5 Ko pour la fiche véhicule.
+- Poids : 17,7 à 21,7 Ko par page (4,7 à 5,9 Ko compressés), contre 69,7 Ko (13,4 Ko compressés) pour la fiche véhicule ;
+  aucune feuille ni aucun script de plus que le lot A.
+
+8. FICHIERS
+- Nouveaux : coiffures/, tatouages/, tenues/, perso-vehicules/, perso-armes/, options-vehicules/, options-armes/, marques/,
+  munitions/, editions/, achats/, visuels/, moments/ (651 pages dont 11 sommaires), outils/gen-pages-elements-b.cjs,
+  outils/tests/pages-elements-b.test.cjs, outils/langues/<code>/v796.json (5), LISEZ-MOI-v7.96.txt,
+  outils/CHANGEMENTS-v7.96.txt, outils/MATRICE-v7.96.md.
+- Modifiés : outils/gen-pages-elements.cjs, couverture-pages.cjs, COUVERTURE-PAGES.md, pages-elements-index.json, sync-site.cjs,
+  langues.json, catalogues.cjs (inchangé, mécanisme générique), gen-acquisitions.cjs, hubs-editoriaux.cjs, gen.js, gen-armes.cjs,
+  lore-gen.js, gen-actus.cjs, outils/sources/elements.css et lk-sections.css (et copies servies), tests, les pages qui reçoivent
+  un lien (style, personnalisations, planques, vehicules, armes, medias, actus, editions, les fiches de véhicules et d’armes, les
+  dossiers du monde) et leurs copies dans les cinq langues, sitemaps, compteurs de pages, README.md.
+- Rien à supprimer.

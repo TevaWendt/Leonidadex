@@ -592,6 +592,9 @@
 .lkd-st--comm::before{background:#7A5C8F;}
 .lkd-st--conf::before{background:var(--paper);border-style:dashed;}
 .lkd-ev-d{display:block;font-size:.95rem;line-height:1.62;color:var(--ink);max-width:64ch;}
+/* v7.96 : lien vers la page du moment, sous le texte de la sortie */
+.lkd-ev-links{margin:6px 0 0;font-size:.88rem;}
+.lkd-ev-links a{color:var(--coral-text,#B93220);text-decoration:underline;text-underline-offset:3px;font-weight:700;}
 .lkd-serie{margin:38px 0 0;padding:26px 28px 26px;background:var(--night);color:#FDFBF7;border:2px solid var(--ink);border-radius:14px;box-shadow:var(--shadow-amber);}
 .lkd-serie .lkd-h3{margin-bottom:6px;color:#FDFBF7;}
 .lkd-serie .lkd-note{color:rgba(253,251,247,.78);}

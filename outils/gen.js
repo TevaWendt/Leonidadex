@@ -1,5 +1,7 @@
-const fs=require('fs');
-process.chdir(require('path').join(__dirname,'..'));
+const fs=require('fs'),path=require('path');
+process.chdir(path.join(__dirname,'..'));
+/* v7.96 (une page par élément) : adresse de la page d'une marque (même slug que outils/couverture-pages.cjs) */
+const root=process.cwd(), slugMarque=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/&/g,' et ').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')||'sans-nom';
 global.window={}; eval(fs.readFileSync('vehicules-data.js','utf8'));
 const V=window.LK_VEHICULES;
 const MED=JSON.parse(fs.readFileSync('outils/medias-officiels.json','utf8'));
@@ -328,7 +330,7 @@ ${HEADER}
     <table class="spec rise">
       <tbody>
         <tr><th scope="row">Modèle</th><td>${esc(v.nom)}${v.alias?' <span class="unknown">(anciennement '+esc(v.alias)+')</span>':''}</td></tr>
-        <tr><th scope="row">Constructeur</th><td>${esc(v.marque||'Non identifié')}</td></tr>
+        <tr><th scope="row">Constructeur</th><td>${v.marque&&v.marque!=='Marque inconnue'&&fs.existsSync(path.join(root,'marques',slugMarque(v.marque)+'.html'))?'<a href="../marques/'+slugMarque(v.marque)+'.html">'+esc(v.marque)+'</a>':esc(v.marque||'Non identifié')/* v7.96 : page de la marque */}</td></tr>
         <tr><th scope="row">Statut</th><td>${st.l}</td></tr>${prixPub?`
         <tr><th scope="row">Prix en jeu</th><td>${esc(DP.phrasePrix(prixPub))}</td></tr>`:''}
         <tr><th scope="row">Catégorie</th><td><a href="../vehicules.html#cat=${v.cat}">${esc(cat)}</a></td></tr>

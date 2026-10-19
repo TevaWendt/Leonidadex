@@ -36,7 +36,10 @@ const nb = n => new Intl.NumberFormat('fr-FR').format(n);
 /* un élément : { id, nom, slug, page (chemin existant ou null), cible (chemin prévu), exclusion (raison ou null),
    indexable (true si les données atteignent le seuil), faits (nombre d’informations réelles), visuel (true si un visuel officiel),
    note (remarque pour le rapport), doublonDe (élément d’une autre famille qui porte la page) } */
-const elem = (famille, o) => ({ famille, id: String(o.id), nom: o.nom || o.id, slug: o.slug || slug(o.nom || o.id), page: o.page || null, cible: o.cible || null, exclusion: o.exclusion || null, indexable: !!o.indexable, strict: o.strict === undefined ? !!o.indexable : !!o.strict, faits: o.faits || 0, visuel: !!o.visuel, note: o.note || '', doublonDe: o.doublonDe || null, suffixe: o.suffixe || '' });
+/* v7.96 (Téva, 18 octobre, 20 h 09 : « en enlevant toutes les erreurs noindex… faut que ça puisse être complètement indexé par Google, et Bing ») :
+   toute page par élément est proposée aux moteurs ; le seuil d’informations (« seuil ») reste calculé pour le rapport, il ne décide plus. */
+const INDEXER_TOUT = true;
+const elem = (famille, o) => ({ famille, id: String(o.id), nom: o.nom || o.id, slug: o.slug || slug(o.nom || o.id), page: o.page || null, cible: o.cible || null, exclusion: o.exclusion || null, indexable: INDEXER_TOUT ? !o.exclusion : !!o.indexable, seuil: !!o.indexable, strict: o.strict === undefined ? !!o.indexable : !!o.strict, faits: o.faits || 0, visuel: !!o.visuel, note: o.note || '', doublonDe: o.doublonDe || null, suffixe: o.suffixe || '' });
 
 /* ---------- sources ---------- */
 const V = loadWindow('vehicules-data.js').LK_VEHICULES;
@@ -175,6 +178,8 @@ const CARNET_GROUPES = CARNET.groups; // [id, nom] : les 36 groupes gtadb (quart
   const parMarque = new Map(); for (const v of V) if (v.marque) parMarque.set(v.marque, (parMarque.get(v.marque) || 0) + 1);
   f.items = MARQUES.map(m => { const n = parMarque.get(m.name) || 0; return elem(f.id, { id: slug(m.name), nom: m.name, cible: 'marques/' + slug(m.name) + '.html', faits: (n ? 1 : 0) + (m.evoque ? 1 : 0), visuel: n > 0, indexable: n > 0, note: n + ' véhicule(s)' + (m.evoque ? ', ' + m.evoque : '') }); });
   const sansFiche = [...parMarque.keys()].filter(k => k !== 'Marque inconnue' && !MARQUES.some(m => m.name === k));
+  /* v7.96 (décision du 18 octobre) : une marque portée par des véhicules mais absente de marques.json a sa page comme les autres, sans rapprochement inventé */
+  for (const k of sansFiche) { const n = parMarque.get(k); f.items.push(elem(f.id, { id: slug(k), nom: k, cible: 'marques/' + slug(k) + '.html', faits: 1, visuel: n > 0, indexable: n > 0, note: n + ' véhicule(s), constructeur fictif, pas de rapprochement retenu' })); }
   if (sansFiche.length) f.aTrancher.push('Marques présentes dans vehicules-data.js mais absentes de outils/marques.json : ' + sansFiche.join(', '));
 }
 /* 11. Catalogues : consommables, coiffures, tatouages, tenues, personnalisations */
@@ -201,13 +206,17 @@ for (const cle of ['perso-vehicules', 'perso-armes']) {
 /* 14. Visuels officiels */
 {
   const f = famille('visuels', 'Visuels officiels', { source: 'outils/medias-officiels.json', dossier: 'visuels', nouvelle: true });
-  f.items = Object.values(MED).map(m => elem(f.id, { id: m.id, nom: m.titre || m.id, slug: slug(m.id), cible: 'visuels/' + slug(m.id) + '.html', faits: 1 + (m.source ? 1 : 0) + (m.date || m.publie ? 1 : 0), visuel: true, indexable: true, note: (m.credit || '') }));
+  /* v7.96 : indexable quand une description (alt) a été rédigée pour l’image ; les autres pages existent en noindex,follow (titre de fichier seulement) */
+  f.items = Object.values(MED).map(m => elem(f.id, { id: m.id, nom: m.titre || m.id, slug: slug(m.id), cible: 'visuels/' + slug(m.id) + '.html', faits: 1 + (m.source ? 1 : 0) + (m.alt ? 1 : 0), visuel: true, indexable: !!m.alt, note: (m.mediaType || 'image') + (m.alt ? ', décrite' : ', sans description') }));
 }
 /* 15. Grands moments (monde-dossiers.evenements, recoupés avec actus.json evenements) */
 {
   const f = famille('moments', 'Grands moments', { source: 'outils/monde-dossiers.json (evenements), outils/actus/actus.json (evenements)', dossier: 'moments', nouvelle: true });
-  f.items = Object.entries(MONDE.evenements).map(([id, e]) => elem(f.id, { id, nom: e.titre, slug: slug(e.titre), cible: 'moments/' + slug(e.titre) + '.html', faits: 1 + (e.iso ? 1 : 0) + (e.media ? 1 : 0), visuel: !!e.media, indexable: !!e.iso, note: e.date || '' }));
-  uniq(f.items); f.items.forEach(it => { it.cible = 'moments/' + it.slug + '.html'; });
+  /* v7.96 (décision du 18 octobre) : une page par annonce datée de la frise des Actualités ; un moment des dossiers du monde qui est la même
+     chose qu’une annonce (trailers, Extended Look, aperçus, entretien, radios, lancement) renvoie vers sa page, les autres ont la leur */
+  const JUMEAUX = { t1: 'trailer-1', t2: 'trailer-2', el: 'extended-look', presse: 'apercus-presse', famitsu: 'entretien-famitsu', radio: 'stations-radio', lancement: 'bande-annonce-lancement' };
+  f.items = ACTUS.evenements.map(e => elem(f.id, { id: e.id, nom: e.titre, slug: slug(e.id), cible: 'moments/' + slug(e.id) + '.html', faits: 2 + (e.media || e.video ? 1 : 0) + (e.sources && e.sources.length ? 1 : 0), visuel: !!(e.media || e.video), indexable: true, note: e.iso + ', annonce ' + e.type }));
+  for (const [id, e] of Object.entries(MONDE.evenements)) f.items.push(elem(f.id, JUMEAUX[id] ? { id, nom: e.titre, slug: slug(e.titre), page: pageDe('moments/' + slug(JUMEAUX[id]) + '.html'), cible: 'moments/' + slug(JUMEAUX[id]) + '.html', doublonDe: 'moments', indexable: true, faits: 2, note: 'moment des dossiers du monde, même chose que l’annonce ' + JUMEAUX[id] } : { id, nom: e.titre, slug: slug(e.titre), cible: 'moments/' + slug(e.titre) + '.html', faits: 1 + (e.iso ? 1 : 0) + (e.media ? 1 : 0), visuel: !!e.media, indexable: !!e.iso, note: 'moment des dossiers du monde, ' + (e.date || '') }));
   const actusIds = ACTUS.evenements.map(e => e.id);
   f.aTrancher.push('actus.json décrit ' + actusIds.length + ' annonces datées (frise des Actualités), monde-dossiers.json ' + f.items.length + ' moments : les deux listes se recoupent (trailers, Extended Look, bande-annonce de lancement…). Proposition : une page par annonce de la frise (' + actusIds.length + '), les moments du monde y renvoient ; à confirmer.');
 }
@@ -223,14 +232,20 @@ for (const f of FAMILLES) for (const it of f.items) if (!it.page && it.cible && 
 /* ---------- décisions (18 octobre 2026 : « tranche toi-même mais n’oublie aucun élément du site ») ---------- */
 const DECISIONS = [
   ['Lieux de la carte', 'Les 110 repères gtadb absents de la carte du site restent hors site : 43 n’ont pas de nom, les autres n’ont pas été retenus sur la carte (nom incertain « ? », statut démoli, douteux ou annulé, ou lieu jamais vu sur un support officiel). Ils ne sont pas des éléments du site ; la liste reste en annexe, et un repère ajouté un jour à la carte reçoit sa page à la régénération suivante.'],
-  ['Lieux de la carte', 'Seuil d’indexation, choix prudent : indexable quand le nom en jeu est connu, l’existence non douteuse, et qu’il y a une capture ou au moins trois informations ; les autres pages existent en noindex,follow et passent en indexable dès que leur nom en jeu est confirmé.'],
+  ['Toutes les familles', 'Indexation (Téva, 18 octobre, 20 h 09 : « en enlevant toutes les erreurs noindex… faut que ça puisse être complètement indexé par Google, et Bing ») : toute page par élément est proposée aux moteurs de recherche (robots : max-image-preview:large), bâtiments numérotés, valeurs d’options, types de munitions, visuels sans description et quartiers sans lieu compris ; les seuils d’informations ci-dessous restent dans le rapport (colonne « seuil ») mais ne décident plus. Seules restent en noindex les pages modèles aux exemples fictifs (missions, trophées, codes), les redirections, la 404 et la page hors ligne, et deux pages antérieures aux lots (comparateur.html, logements.html).'],
+  ['Lieux de la carte', 'Seuil d’indexation (Téva, 18 octobre, 19 h 26 : « un lieu avec son quartier, son comté et sa position a déjà deux informations réelles ») : indexable quand l’existence n’est pas douteuse, que le nom n’est pas provisoire (« Bâtiment L924 », nom avec « ? ») et qu’il y a une capture ou au moins deux informations réelles (position, quartier ou comté, équivalent réel, vu en vidéo) : 1 672 pages ; les 828 autres existent en noindex,follow. La v7.95 avait pris le choix prudent du nom en jeu confirmé (588 pages) : corrigé en v7.96.'],
   ['Lieux de la carte', 'Visuel : la capture officielle du lieu déjà montrée sur la carte (photos/<id>,ig.webp, image extraite des supports Rockstar, repérée par gtadb.org, CC BY 4.0) est admise sur la page, créditée ; la photo du lieu réel reste sur la carte seulement. Sans capture : l’aperçu de la carte autour du lieu.'],
   ['Options de personnalisation', 'Une page par valeur d’option (145), en noindex,follow tant qu’elles n’ont qu’une ou deux informations, pour qu’aucun élément ne reste sans page (lot B).'],
   ['Types de munitions', 'Une page par type (6), en noindex,follow, qui renvoie vers armes.html#munitions et les armes qui l’utilisent (lot B).'],
   ['Marques de véhicules', 'LCC, BTN et HVY ont leur page comme les autres marques, construite depuis vehicules-data.js (leurs véhicules), sans rapprochement inventé (lot B).'],
   ['Grands moments', 'Une page par annonce datée de la frise des Actualités (17) ; les 14 moments des dossiers du monde renvoient vers l’annonce qui leur correspond (lot B).'],
   ['Régions, villes, quartiers et comtés', 'Les entrées sans lieu rattaché ont quand même leur page de regroupement (noindex,follow), qui renvoie vers la carte.'],
-  ['Lieux de la carte', 'Les 27 noms entre guillemets droits dans les données gtadb (« "Mount Waffles" ») sont des surnoms donnés par la communauté, pas des noms en jeu : la page le dit, les affiche entre guillemets français et reste en noindex,follow.']
+  ['Lieux de la carte', 'Les 27 noms entre guillemets droits dans les données gtadb (« "Mount Waffles" ») sont des surnoms donnés par la communauté, pas des noms en jeu : la page le dit, les affiche entre guillemets français et reste en noindex,follow.'],
+  ['Visuels officiels', 'Lot B (v7.96) : une page par visuel ; indexable seulement quand une description de l’image a été rédigée (31 sur 196), les autres existent en noindex,follow avec leur titre de fichier, leur source, leur crédit et les pages du site qui les reprennent.'],
+  ['Grands moments', 'Lot B (v7.96) : une page par annonce datée de la frise (17) ; les sept moments des dossiers du monde qui sont la même chose qu’une annonce (trailers, Extended Look, aperçus, entretien, radios, lancement) renvoient vers sa page, les sept autres (pages « Only in Leonida », captures, jaquette, Édition Ultimate, ses captures, Pack Vintage, 29 captures) ont la leur.'],
+  ['Options de personnalisation', 'Lot B (v7.96) : chaque valeur a sa page en noindex,follow (repère de la série seulement) ; le sommaire de chaque famille (options-vehicules/index.html, options-armes/index.html) est indexable, et le poste liste ses valeurs.'],
+  ['Types de munitions', 'Lot B (v7.96) : six pages en noindex,follow (usage, armes repérées) et un sommaire indexable relié depuis armes.html#munitions ; les fiches d’armes relient leur type.'],
+  ['Marques de véhicules', 'Lot B (v7.96) : 51 pages (48 de marques.json, plus LCC, BTN et HVY portées par des véhicules), indexables quand un véhicule porte la marque ; les fiches de véhicules relient leur marque.']
 ];
 
 /* ---------- bilan ---------- */
@@ -250,7 +265,7 @@ const VOLUME = { poidsDepot, poidsHistorique, aCreer, langues: LANGUES.length, t
 const Mo = b => (b / 1048576).toFixed(0) + ' Mo';
 const pct = (a, b) => b ? Math.round(100 * a / b) + ' %' : 'sans donnée';
 const lignes = [];
-lignes.push('# Couverture des pages : un élément, une page (v7.95)', '', 'Rapport écrit par `node outils/couverture-pages.cjs` le ' + new Date().toISOString().slice(0, 10) + '. Chaque famille liste tous ses éléments ; une famille est couverte quand chacun a sa page ou une exclusion justifiée. « Indexables » estime, d’après les données, les pages qui atteindraient le seuil d’indexation (nom, catégorie, description propre, deux informations réelles ou un visuel officiel) ; les autres seraient créées en `noindex, follow`.', '');
+lignes.push('# Couverture des pages : un élément, une page (v7.96)', '', 'Rapport écrit par `node outils/couverture-pages.cjs` le ' + new Date().toISOString().slice(0, 10) + '. Chaque famille liste tous ses éléments ; une famille est couverte quand chacun a sa page ou une exclusion justifiée. « Indexables » estime, d’après les données, les pages qui atteindraient le seuil d’indexation (nom, catégorie, description propre, deux informations réelles ou un visuel officiel) ; les autres seraient créées en `noindex, follow`.', '');
 lignes.push('## Tableau des familles', '', '| Famille | Source | Éléments | Avec page | Exclus | Manquants | Couverture | Indexables (estimation) | Non indexables |', '|---|---|---:|---:|---:|---:|---:|---:|---:|');
 for (const f of FAMILLES) { const b = bilan(f); lignes.push('| ' + f.label + (f.modele ? ' (modèle, données au jour J)' : f.nouvelle ? ' (nouvelle)' : '') + ' | `' + f.source + '` | ' + nb(b.n) + ' | ' + nb(b.page) + ' | ' + nb(b.excl) + ' | ' + nb(b.manque) + ' | ' + (b.n ? pct(b.page + b.excl, b.n) : '—') + ' | ' + nb(b.idx) + ' | ' + nb(b.noidx) + ' |'); }
 lignes.push('| **Total** |  | **' + nb(TOTAL.n) + '** | **' + nb(TOTAL.page) + '** | **' + nb(TOTAL.excl) + '** | **' + nb(TOTAL.manque) + '** | **' + pct(TOTAL.page + TOTAL.excl, TOTAL.n) + '** | **' + nb(TOTAL.idx) + '** | **' + nb(TOTAL.n - TOTAL.idx) + '** |', '');
@@ -274,7 +289,7 @@ for (const f of FAMILLES) { if (!f.items.length) continue; lignes.push('### ' + 
 /* le rapport est lu par des humains : les tirets longs ci-dessus séparent les colonnes de la liste, pas du texte du site */
 const rapport = lignes.join('\n').replace(/ — /g, ' : ');
 
-module.exports = { FAMILLES, TOTAL, VOLUME, DECISIONS, bilan, slug, uniq, nb, donnees: { V, A, GTADB, LANDMARKS, CARNET, POINTS_SITE, GTA_BY_ID, LM_BY_ID, CAT, MARQUES, MED, MONDE, ACTUS, ED, OPTIONS } };
+module.exports = { FAMILLES, TOTAL, VOLUME, DECISIONS, INDEXER_TOUT, bilan, slug, uniq, nb, donnees: { V, A, GTADB, LANDMARKS, CARNET, POINTS_SITE, GTA_BY_ID, LM_BY_ID, CAT, MARQUES, MED, MONDE, ACTUS, ED, OPTIONS, ACQ } };
 if (require.main === module) {
 if (ARGS.has('--json')) { process.stdout.write(JSON.stringify({ familles: FAMILLES.map(f => ({ id: f.id, label: f.label, source: f.source, dossier: f.dossier, nouvelle: f.nouvelle, modele: f.modele, bilan: bilan(f), items: f.items })), total: TOTAL, volume: VOLUME }, null, 1) + '\n'); } else {
 const SORTIE = process.env.COUVERTURE_SORTIE || path.join(ROOT, 'outils/COUVERTURE-PAGES.md'); /* les tests écrivent ailleurs */

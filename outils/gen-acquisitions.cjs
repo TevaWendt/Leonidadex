@@ -69,7 +69,7 @@ function card(item){const media=item.images[0];return `<article class="d-card" i
  ${item.trackable?'<p class="d-status">Obtention documentée, prix séparé inconnu</p>':'<p class="d-status">Collection annoncée, détail des pièces à documenter</p>'}
  ${item.nameKind==='official-description'?'<p class="d-label d-label--note">Libellé descriptif fondé sur la présentation officielle.</p>':''}
  ${item.trackable?`<label class="d-check" hidden><input type="checkbox" data-acq-toggle="${item.id}"> J’ai obtenu ${esc(item.name)}</label>`:''}
- <div class="d-actions">${item.ref?`<a href="${item.url}">Ouvrir la fiche existante</a>`:''}${item.calculatorCompatible?`<a href="/calculateurs.html?tool=purchase&amp;type=${item.type}&amp;id=${item.id}&amp;from=fiche#atelier">Simuler un budget personnel</a>`:''}</div>
+ <div class="d-actions">${item.ref?`<a href="${item.url}">Ouvrir la fiche existante</a>`:fs.existsSync(path.join(root,'achats',item.id+'.html'))?`<a href="achats/${esc(item.id)}.html">Sa page</a>`:''/* v7.96 */}${item.calculatorCompatible?`<a href="/calculateurs.html?tool=purchase&amp;type=${item.type}&amp;id=${item.id}&amp;from=fiche#atelier">Simuler un budget personnel</a>`:''}</div>
  ${provenance(item)}${gallery(item.images,item.name)}
  </div></article>`;}
 function serviceCard(item){return `<article class="d-card d-card--adresse" data-d-reveal>${carousel(item.images,item.name)}<div class="d-card-body"><p class="d-label">${esc(item.condition)}</p><h3><a href="${item.url}">${esc(item.name)}</a></h3><p>${esc(item.description)}</p><p class="d-status">Service annoncé, propriété du commerce non confirmée</p>${provenance(item)}</div></article>`;}

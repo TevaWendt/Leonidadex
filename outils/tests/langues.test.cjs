@@ -420,7 +420,7 @@ test('page introuvable : sous /<langue>/…, la page 404 de la langue ; liens de
     for (const O of LANGS.filter(l => l !== LG)) assert.ok(read(dir + '/404.html').includes('href="/' + O.dossier + '/404.html" hreflang="' + O.code + '"'), code + ' : lien absolu vers la 404 ' + O.code);
     assert.match(read(dir + '/404.html'), /<meta name="robots" content="noindex/, code + ' : 404 non indexée');
   }
-  for (const name of ['sitemap.xml', 'sitemap-fiches.xml']) if (fs.existsSync(path.join(root, name))) assert.ok(!/404\.html<\/loc>/.test(read(name)), name + ' : pas de page introuvable');
+  for (const name of ['sitemap.xml', 'sitemap-fiches.xml']) if (fs.existsSync(path.join(root, name))) assert.ok(!/\/(?:[a-z]{2}\/)?404\.html<\/loc>/.test(read(name)), name + ' : pas de page introuvable'); /* v7.96 : la page 404 elle-même, pas « lieux-carte/batiment-l1404.html » */
 });
 
 test('Léo : absent d’une page dans une langue hors de « leo » ; présent en français et dans chaque langue de « leo » (index de la langue)', async () => {

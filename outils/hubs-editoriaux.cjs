@@ -47,7 +47,7 @@ function vehicules(V, counts) {
     S.figures([{ n: counts.N, label: 'véhicules recensés ici' }, { n: counts.nOfficiel, label: 'nommés par Rockstar' }, { n: counts.nVu, label: 'vus sans nom communiqué' }, { n: counts.nComm, label: 'identifications communautaires' }, { n: 0, label: 'total officiel publié' }])
     + '<p>' + esc(D.chiffres.texte) + '</p>'));
   out.push(S.section({ id: 'marques', num: 4, kicker: brands.length + ' constructeurs', title: 'Marques fictives et constructeurs évoqués', icon: 'marques', tone: 'paper', lede: esc(D.marques.lede) },
-    S.brandWall(brands, { none: 'constructeur fictif, pas de rapprochement retenu' }) + (D.marques.lien ? '<div class="ed-links"><a href="' + esc(D.marques.lien.href) + '">' + esc(D.marques.lien.label) + '</a></div>' : '') /* v7.93 : vers la page des vraies voitures */));
+    S.brandWall(brands, { none: 'constructeur fictif, pas de rapprochement retenu' }) + (D.marques.lien ? '<div class="ed-links"><a href="' + esc(D.marques.lien.href) + '">' + esc(D.marques.lien.label) + '</a>' + (fs.existsSync(path.join(root, 'marques/index.html')) ? '<a href="marques/index.html">Chaque marque a sa page : constructeur évoqué, véhicules, statut</a>' : '') + '</div>' : '') /* v7.93 : vers la page des vraies voitures ; v7.96 : vers les pages des marques */));
   out.push(S.section({ id: 'conduite', num: 5, kicker: 'Gameplay', title: 'Conduite et mécaniques montrées à ce jour', icon: 'conduite', tone: 'paper2', accent: 'coral' },
     S.columns(D.conduite.cards) + '<div class="ed-callout"><p>' + esc(D.conduite.note) + '</p></div>'));
   out.push(S.section({ id: 'ultimate', num: 6, kicker: counts.nOfficiel + ' noms officiels', title: 'Véhicules nommés par Rockstar', icon: 'nommes', tone: 'paper', lede: esc(D.nommes.lede) },
@@ -82,7 +82,7 @@ function armes(A, counts) {
   out.push(S.section({ id: 'equipements', num: 3, kicker: D.equipements.items.length + ' objets', title: 'Équipements et gadgets', icon: 'equipements', tone: 'paper', lede: esc(D.equipements.lede), fam: 'equipements' },
     bar('equipements', 'Mon équipement', D.equipements.items.length, 'carnets/arsenal.html#f=equipements', 'Équipements obtenus') + S.kits(D.equipements.items, 'equipements')));
   out.push(S.section({ id: 'munitions', num: 4, kicker: D.munitions.items.length + ' familles', title: 'Types de munitions', icon: 'munitions', tone: 'night', accent: 'coral', fam: 'munitions' },
-    bar('munitions', 'Mes munitions', D.munitions.items.length, 'carnets/arsenal.html#f=munitions', 'Types de munitions obtenus') + S.ammo(D.munitions.items, 'munitions')));
+    bar('munitions', 'Mes munitions', D.munitions.items.length, 'carnets/arsenal.html#f=munitions', 'Types de munitions obtenus') + S.ammo(D.munitions.items, 'munitions') + (fs.existsSync(path.join(root, 'munitions/index.html')) ? '<div class="ed-links"><a href="munitions/index.html">Chaque type de munitions a sa page, avec les armes qui l’utilisent</a></div>' : '') /* v7.96 */));
   /* v7.55 (lot 2, VIS-01) : six cartes homogènes avec visuel officiel, statut, limite et source datée ; la note renvoie aux
      niveaux de preuve de la section « Comment lire cette page » (#fiabilite). */
   out.push(S.section({ id: 'combat', num: 5, kicker: 'Six changements', title: 'Combat : ce qui change', icon: 'combat', tone: 'paper2', accent: 'coral', fam: 'combat', lede: D.combat.lede ? esc(D.combat.lede) : undefined },

@@ -265,7 +265,7 @@ function actusPage(ctx) {
     const dossierMedia = evs.map(ev => ctx.MD.evenements[ev] && ctx.MD.evenements[ev].media).find(Boolean);
     const vid = e.video ? A.videos.liste.find(v => v.id === e.video) : null;
     const media = vid ? vid.affiche : dossierMedia || e.media, alt = vid || dossierMedia ? '' : e.alt || '';
-    const links = [...(vid ? [{ href: 'videos/' + vid.id + '.html', label: 'La page de la vidéo' }] : []), ...(e.liens || [])];
+    const links = [...(vid ? [{ href: 'videos/' + vid.id + '.html', label: 'La page de la vidéo' }] : []), ...(e.liens || []), ...(fs.existsSync(path.join(ROOT, 'moments', e.id + '.html')) ? [{ href: 'moments/' + e.id + '.html', label: 'La page de l’annonce' }] : []) /* v7.96 : une page par annonce */];
     const y = e.iso.slice(0, 4), mark = y !== year ? '<li class="ac-yr" data-vt-sep aria-hidden="true"><span>' + y + '</span></li>' : ''; year = y;
     return mark + '<li class="ac-ev ac-ev--' + esc(e.type) + '" id="ev-' + esc(e.id) + '" data-iso="' + esc(e.iso) + '" data-lk-reveal data-vt-item data-vt-t="' + esc(e.type) + '">'
       + '<div class="ac-ev-when"><time datetime="' + esc(e.iso) + '">' + esc(e.dateTexte || frLong(e.iso)) + '</time><span class="ac-ev-type">' + esc(X.types[e.type]) + '</span></div>'
@@ -519,11 +519,11 @@ function editionsPage(ctx) {
   const edCard = (x, i, ult) => '<article class="ac-edcard' + (ult ? ' ac-edcard--ult' : '') + '" style="--i:' + i + '">'
     + '<figure class="ac-edcard-fig">' + VT.img(x.media, x.alt, { big: true, sizes: '(max-width:899px) 92vw, 660px' }) + (ult ? '<span class="ac-edcard-ribbon vt-stamp">' + esc(x.ruban) + '</span>' : '') + tag(ult ? T.ultimate : T.standard, T.label, 'ac-edcard-tag') + '</figure>'
     + '<div class="ac-edcard-b"><h3>' + esc(x.titre) + '</h3><p>' + esc(x.texte) + '</p><ul class="ac-checks">' + x.points.map(t => '<li>' + esc(t) + '</li>').join('') + '</ul>'
-    + '<p class="ac-edcard-src">' + S.pip('officiel', true) + '<span>' + esc(T.label) + '</span> ' + srcRefs([T.src]) + '</p></div></article>';
+    + '<p class="ac-edcard-src">' + S.pip('officiel', true) + '<span>' + esc(T.label) + '</span> ' + srcRefs([T.src]) + '</p>' + (fs.existsSync(path.join(ROOT, 'editions', (ult ? 'ultimate' : 'standard') + '.html')) ? '<p class="ac-ev-links"><a href="editions/' + (ult ? 'ultimate' : 'standard') + '.html">La page de cette édition</a></p>' : '') /* v7.96 : une page par édition */ + '</div></article>';
   const C = E.comparatif;
   const editions = '<div class="ac-duo vt-in" data-lk-reveal>' + edCard(E.standard, 0, false) + edCard(E.ultimate, 1, true) + '</div>'
     + '<h3 class="ac-h3">' + esc(C.titre) + '</h3><div class="ac-compare' + IN + '>' + VT.compare({ caption: C.caption, first: C.first, cols: C.cols, rows: C.rows, hi: 2 }, { yes: E.oui, no: E.non }) + '</div>'
-    + '<p class="ac-amelio">' + esc(E.amelioration) + ' ' + srcRefs([src]) + '</p>';
+    + '<p class="ac-amelio">' + esc(E.amelioration) + ' ' + srcRefs([src]) + '</p>' + (fs.existsSync(path.join(ROOT, 'editions/amelioration.html')) ? '<p class="ac-ev-links"><a href="editions/amelioration.html">La page de l’amélioration</a>' + (fs.existsSync(path.join(ROOT, 'editions/collector.html')) ? '<a href="editions/collector.html">La page du coffret collector</a>' : '') + '</p>' : '') /* v7.96 : pages de l’amélioration et du coffret */;
   /* v7.92.1 : « Quelle édition choisir ? » : deux questions (boutons radio), la réponse de l’assistance de Rockstar à côté
      (vitrine.js, [data-vt-pick]) ; sans script, les quatre cas se lisent l’un après l’autre */
   const CH = E.choix, rq = (name, q) => '<fieldset class="ed-pick-f"><legend>' + esc(q.q) + '</legend><div class="ed-pick-o">'

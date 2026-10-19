@@ -8,6 +8,9 @@ const fs=require('fs'),path=require('path');
 // la variante 800 px, agrandie et floue sur ordinateur.
 const SLIDE_SIZES='(max-width:1680px) 90vw, 1508px';
 process.chdir(path.join(__dirname,'..'));
+/* v7.96 (une page par élément) : adresses des pages des visuels et des moments, lues dans l'index du générateur quand elles existent */
+const PAGES_EL=(()=>{try{return JSON.parse(fs.readFileSync('outils/pages-elements-index.json','utf8')).elements||{};}catch{return {};}})();
+const pageEl=k=>{const p=PAGES_EL[k];return p&&fs.existsSync(p)?p:null;};
 const visuals=require('./lot-c-visuals.cjs');
 const DP=require('./donnees-publiees.cjs');
 /* v7.41 (lot 4) : zones éditoriales des cinq hubs du monde (outils/editorial-hubs.json → outils/hubs-monde.cjs) et
@@ -166,7 +169,7 @@ function dossierOf(x,key,nVis){
   const count=nVis?'<div class="lkd-dl-vis"><dt>'+esc(U.visuels)+'</dt><dd>'+(nVis>=2?'<a href="#galerie">'+nVis+' sur cette fiche</a>':nVis+' sur cette fiche')+'</dd></div>':'';
   const ident='<div class="lkd-id"><h3 class="lkd-h3">'+esc(U.id)+'</h3><dl class="lkd-dl">'+d.identite.map(([t,v])=>'<div><dt>'+esc(t)+'</dt><dd>'+esc(v)+'</dd></div>').join('')+count+'</dl></div>';
   const chrono='<div class="lkd-chrono"><h3 class="lkd-h3">'+esc(U.chrono)+'</h3><ol class="lkd-tl">'+d.chrono.map(c=>{const e=DOS.evenements[c.ev];if(!e)throw new Error('Dossier '+x.id+' : sortie inconnue '+c.ev);
-    return '<li class="lkd-ev lkd-ev--'+c.statut+(c.media?'':' lkd-ev--nofig')+' rise">'+(c.media?'<div class="lkd-ev-fig">'+thumb(c.media)+'</div>':'')+'<div class="lkd-ev-txt"><p class="lkd-ev-when"><time datetime="'+esc(e.iso)+'">'+esc(e.date)+'</time></p><h4 class="lkd-ev-t">'+esc(e.titre)+'</h4>'+st(c.statut)+'<p class="lkd-ev-d">'+esc(c.texte)+'</p></div></li>';}).join('')+'</ol></div>';
+    return '<li class="lkd-ev lkd-ev--'+c.statut+(c.media?'':' lkd-ev--nofig')+' rise">'+(c.media?'<div class="lkd-ev-fig">'+thumb(c.media)+'</div>':'')+'<div class="lkd-ev-txt"><p class="lkd-ev-when"><time datetime="'+esc(e.iso)+'">'+esc(e.date)+'</time></p><h4 class="lkd-ev-t">'+esc(e.titre)+'</h4>'+st(c.statut)+'<p class="lkd-ev-d">'+esc(c.texte)+'</p>'+(pageEl('moments:'+c.ev)?'<p class="lkd-ev-links"><a class="lkd-ev-page" href="/'+esc(pageEl('moments:'+c.ev))+'">La page de ce moment</a></p>':'')+'</div></li>';}).join('')+'</ol></div>';
   const serie=d.serie.length?'<div class="lkd-serie"><h3 class="lkd-h3">'+esc(U.serie)+'</h3><p class="lkd-note">'+esc(U.serieNote)+'</p><ul class="lkd-sc-list">'+d.serie.map(s=>'<li class="lkd-sc"><p class="lkd-sc-y">'+esc(s.annee)+'</p><h4 class="lkd-sc-t">'+esc(s.titre)+'</h4><p class="lkd-sc-d">'+esc(s.texte)+'</p></li>').join('')+'</ul></div>':'';
   const open=d.questions.length?'<div class="lkd-open"><h3 class="lkd-h3">'+esc(U.questions)+'</h3><ul class="lkd-q">'+d.questions.map(q=>'<li>'+esc(q)+'</li>').join('')+'</ul><p class="lkd-note">'+esc(U.questionsNote)+'</p></div>':'';
   const srcs='<div class="lkd-src"><h3 class="lkd-h3">'+esc(U.sources)+'</h3><ul class="lkd-src-list">'+d.sources.map(id=>{const s=DOS_SRC[id];if(!s)throw new Error('Dossier '+x.id+' : source inconnue '+id);return '<li>'+st(s.statut)+'<p class="lkd-src-t"><a href="'+esc(s.url)+'" target="_blank" rel="noopener nofollow">'+esc(s.title)+'</a></p></li>';}).join('')+'</ul></div>';
@@ -328,7 +331,7 @@ fs.writeFileSync('outils/lore-index.json',JSON.stringify(index));
   for(const [vid,ids] of Object.entries(VMED))for(const id of ids)add(id,VNOM[vid]||vid,'vehicules/'+vid+'.html');
   for(const [aid,ids] of Object.entries(AMED))for(const id of ids)add(id,aid.replace(/-/g,' '),'armes/'+aid+'.html');
   for(const [k,S] of Object.entries(SECTIONS))for(const x of ED[k])for(const id of (x.media||[]))add(id,x.name,S.hub+'/'+x.id+'.html');
-  const rows=Object.values(MED).map(m=>{const a=m.variants[0];return `<li class="media-row lk-arrive" id="media-${esc(m.id)}"><img src="${a.src}" width="${a.w}" height="${a.h}" alt="${esc(m.titre)}" loading="lazy" decoding="async"><div><b>${esc(m.titre)}</b><br><span>${esc(m.credit)}</span>${usage[m.id]?'<br><span>Utilisé sur : '+usage[m.id].join(', ')+'</span>':''}<br><a href="${esc(m.source)}" target="_blank" rel="noopener nofollow">${/^https:\/\/www\.rockstargames\.com\/VI\/media/.test(m.source)?'Galerie officielle':'Source officielle'/* v7.92.1 : photos de produits et affiches publiées ailleurs (boutique, Newswire, PlayStation) */}</a></div></li>`;}).join('\n');
+  const rows=Object.values(MED).map(m=>{const a=m.variants[0];return `<li class="media-row lk-arrive" id="media-${esc(m.id)}"><img src="${a.src}" width="${a.w}" height="${a.h}" alt="${esc(m.titre)}" loading="lazy" decoding="async"><div><b>${esc(m.titre)}</b><br><span>${esc(m.credit)}</span>${usage[m.id]?'<br><span>Utilisé sur : '+usage[m.id].join(', ')+'</span>':''}<br><a href="${esc(m.source)}" target="_blank" rel="noopener nofollow">${/^https:\/\/www\.rockstargames\.com\/VI\/media/.test(m.source)?'Galerie officielle':'Source officielle'/* v7.92.1 : photos de produits et affiches publiées ailleurs (boutique, Newswire, PlayStation) */}</a>${pageEl('visuels:'+m.id)?' <a class="media-page" href="'+esc(pageEl('visuels:'+m.id))+'">sa page</a>':''/* v7.96 */}</div></li>`;}).join('\n');
   const body=`<section class="page-head shell">
   <p class="fiche-cat">Crédits, Visuels officiels</p>
   <h1>Les visuels officiels utilisés</h1>
