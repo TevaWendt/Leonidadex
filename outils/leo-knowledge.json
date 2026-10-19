@@ -3988,7 +3988,7 @@
     "comment fonctionne la carte",
     "la carte fonctionne comment"
    ],
-   "text": "La carte de Leonida place 2 547 lieux référencés (dont 14 nommés par Rockstar) : tu la déplaces, tu zoomes, tu filtres par fiabilité, par source et par type, tu coches ce que tu as trouvé, tu calcules un trajet entre deux points, avec le temps à pied et selon ton véhicule, et tu poses tes propres marqueurs et dessins. Tout reste sur ton appareil.",
+   "text": "La carte de Leonida place 3 291 lieux référencés (dont 14 nommés par Rockstar) : tu la déplaces, tu zoomes, tu filtres par fiabilité, par source et par type, tu coches ce que tu as trouvé, tu calcules un trajet entre deux points, avec le temps à pied et selon ton véhicule, et tu poses tes propres marqueurs et dessins. Tout reste sur ton appareil.",
    "status": "Le site",
    "links": [
     {
@@ -4115,12 +4115,12 @@
     "nombre de lieux",
     "cb de lieux",
     "combien de batiments",
-    "2547 lieux",
+    "3291 lieux",
     "combien d endroits repertories",
     "la carte a combien de lieux",
     "nombre de reperes carte"
    ],
-   "text": "La carte référence 2 547 lieux, dont 14 nommés par Rockstar, répartis en 12 catégories, et six régions officielles. Les emplacements précis ne sont affichés que s’ils sont vérifiés et sourcés.",
+   "text": "La carte référence 3 291 lieux, dont 14 nommés par Rockstar, répartis en 12 catégories, et six régions officielles. Les emplacements précis ne sont affichés que s’ils sont vérifiés et sourcés.",
    "status": "Le site (compté par script)",
    "links": [
     {
@@ -4226,7 +4226,7 @@
     "les endroits du jeu",
     "hub lieux"
    ],
-   "text": "La page Lieux réunit les six régions présentées par Rockstar (Vice City, Leonida Keys, Grassrivers, Port Gellhorn, Ambrosia, Mount Kalaga), une frise datée, des paires fiction et réel sourcées, des questions ouvertes et une FAQ. Les 2 547 lieux précis sont sur la carte.",
+   "text": "La page Lieux réunit les six régions présentées par Rockstar (Vice City, Leonida Keys, Grassrivers, Port Gellhorn, Ambrosia, Mount Kalaga), une frise datée, des paires fiction et réel sourcées, des questions ouvertes et une FAQ. Les 3 291 lieux précis sont sur la carte.",
    "status": "Le site",
    "links": [
     {
@@ -6480,7 +6480,7 @@
     "le site compte combien",
     "cb de fiches"
    ],
-   "text": "La section « Le site en chiffres » de la page À propos donne les nombres recalculés à chaque régénération : pages en ligne, fiches de véhicules (302) et d’armes (27), lieux sur la carte (2 547), lignes des listes dépliables, visuels officiels crédités, sujets dans ma base, tests automatisés. Aucun nombre n’est tapé à la main.",
+   "text": "La section « Le site en chiffres » de la page À propos donne les nombres recalculés à chaque régénération : pages en ligne, fiches de véhicules (302) et d’armes (27), lieux sur la carte (3 291), lignes des listes dépliables, visuels officiels crédités, sujets dans ma base, tests automatisés. Aucun nombre n’est tapé à la main.",
    "status": "Le site (compté par script)",
    "links": [
     {
@@ -7733,7 +7733,7 @@
     "la carte stp",
     "la map"
    ],
-   "text": "Voici la carte de Leonida : 2 547 lieux, filtres, distance et suivi.",
+   "text": "Voici la carte de Leonida : 3 291 lieux, filtres, distance et suivi.",
    "status": "Le site",
    "links": [
     {

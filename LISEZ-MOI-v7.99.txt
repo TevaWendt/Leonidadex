@@ -1,0 +1,39 @@
+LEONIDAKIT v7.99 : la carte complétée depuis la base gtadb (744 lieux de plus, noms, positions et photos à jour), chaque lieu
+avec sa page dans les six langues
+À appliquer sur la v7.98 (commit a19f97e11, l’archive livrée le 19 octobre) : décompresse les parties de l’archive v7.99 à la
+racine du dépôt, dans n’importe quel ordre, puis pousse depuis GitHub Desktop. Rien n’a été publié ni poussé : c’est toi qui
+pousses. CSP inchangée. Aucun fichier à supprimer. Rien à faire dans Vercel (IndexNow préviendra Bing des pages nouvelles).
+
+CE QUE CONTIENT CETTE VERSION (détail : outils/CHANGEMENTS-v7.99.txt ; grille de qualité : outils/MATRICE-v7.99.md)
+  1. La carte passe de 2 474 à 3 218 lieux repérés (3 291 avec les régions, villes et points du site) : les 744 repères que la
+     base communautaire gtadb a ajoutés depuis l’import, avec leur position, leur quartier, leur équivalent réel et leurs
+     photos. Tout vient de gtadb (captures officielles, CC BY 4.0, déjà la source de la carte) : rien n’est deviné.
+  2. Noms : 221 lieux nouveaux ont leur nom en jeu, 14 un nom supposé (marqué « nom supposé »), 218 le nom du lieu réel
+     (marqué « nom réel ») ; 291 n’ont encore aucun nom et restent « Bâtiment L… ». Sur les lieux déjà là, 73 bâtiments sans
+     nom ont reçu leur nom en jeu (Vice City Oceanarium, Burger Shot, Kurt’s Barber Shop…), 16 noms corrigés par la base.
+  3. Positions réelles : 186 équivalents réels ajoutés ou corrigés, 662 lieux replacés là où la base les a corrigés,
+     5 lieux dont la base a retiré la position passent en « position non confirmée ». 152 photos ajoutées aux lieux déjà là.
+  4. Chaque lieu nouveau a sa page (lieux-carte/…) en français, anglais, espagnol, italien, allemand et portugais : 3 244
+     pages de lieux au lieu de 2 500. Une page garde toujours son adresse, même si le nom du lieu a changé.
+  5. Indexation (ta consigne du 18 octobre, 23 h 58) : un lieu nommé (nom en jeu, supposé ou réel) avec son quartier, sa
+     position ou sa capture est indexé (453 des 744 nouveaux) ; un bâtiment encore sans nom reste en noindex jusqu’à ce
+     qu’il en ait un. Les pages en noindex seront livrées à part, à la fin, avec ce qui manque à chacune.
+  6. Le nombre de lieux de la carte est à jour partout où il est écrit (3 291 au lieu de 2 547) : liens vers la carte,
+     pages Lieux, réponses de Léo.
+  Reste hors carte : 88 repères de gtadb sans position dans le jeu (la base ne sait pas où ils sont) et 5 repères qui sont
+  déjà des points du site (Galina Ballet Opera House, Sahara Arena, Tisha-Wocka, Autograph Flight Support, PTT YOUNGIN$).
+
+CE QUI VIENT ENSUITE (sans attendre ton « ok »)
+  En une fois : contrôle complet, audit (latence, téléphone), corrections, puis les archives des pages en noindex dans les
+  six langues, avec ce qui manque à chacune.
+
+MARCHE À SUIVRE
+  1. Décompresse les parties de l’archive à la racine du dépôt (après la v7.98), puis pousse. Aucun fichier à supprimer.
+  2. Essai : en/carte.html (Downtown et Little Cuba, plus denses), une page de lieu nouveau (lieux-carte/vice-city-oceanarium.html
+     et sa version anglaise), la page de Brian (son chantier naval s’appelle maintenant Brian’s Boat Works & Marina, comme dans
+     la base), chercher « Oceanarium » sur en/index.html.
+  3. Rien à me dire : je continue.
+
+VÉRIFICATIONS (détail : outils/CHANGEMENTS-v7.99.txt § 4)
+  Chaîne complète, 0 texte sans traduction dans les cinq langues, 0 lien cassé, pages et Léo à jour, aucune adresse de page
+  changée. Le contrôle complet (navigateur, écrans, latence, téléphone) se fera une fois, à la fin.

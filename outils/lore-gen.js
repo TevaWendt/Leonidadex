@@ -97,7 +97,7 @@ const bc=items=>'<script type="application/ld+json">'+JSON.stringify({"@context"
 
 const EXPLORE=pre=>`<section class="shell reveal lk-explore">
   <h2 class="sec-h">Continuer la visite</h2>
-  <div class="lk-links rise"><a class="lk-link" href="${pre}carte.html"><img src="/img/officiel/leonida-keys-01-480.webp" width="480" height="270" alt="" loading="lazy" decoding="async"><span><b>La carte</b><i>2 547 lieux repérés, à cocher</i></span></a><a class="lk-link" href="${pre}vehicules.html"><img src="/img/officiel/one-eyed-willie-s-mod-shop-01-480.webp" width="480" height="270" alt="" loading="lazy" decoding="async"><span><b>Les 302 véhicules</b><i>Fiches, photos officielles et schémas</i></span></a><a class="lk-link" href="${pre}collectibles.html"><img src="/img/officiel/classic-car-collection-04-480.webp" width="480" height="270" alt="" loading="lazy" decoding="async"><span><b>Collectibles</b><i>La collection de Wyman et le carnet</i></span></a></div>
+  <div class="lk-links rise"><a class="lk-link" href="${pre}carte.html"><img src="/img/officiel/leonida-keys-01-480.webp" width="480" height="270" alt="" loading="lazy" decoding="async"><span><b>La carte</b><i>3 291 lieux repérés, à cocher</i></span></a><a class="lk-link" href="${pre}vehicules.html"><img src="/img/officiel/one-eyed-willie-s-mod-shop-01-480.webp" width="480" height="270" alt="" loading="lazy" decoding="async"><span><b>Les 302 véhicules</b><i>Fiches, photos officielles et schémas</i></span></a><a class="lk-link" href="${pre}collectibles.html"><img src="/img/officiel/classic-car-collection-04-480.webp" width="480" height="270" alt="" loading="lazy" decoding="async"><span><b>Collectibles</b><i>La collection de Wyman et le carnet</i></span></a></div>
 </section>`;
 const recapOf=(x,S)=>{const f=(x&&x.facts||[]).map(t=>String(t).trim().replace(/\s*[.;]$/,''));if(!f.length)return '';
   const intro={regions:'Ce qu’il faut retenir de cette région',characters:'Ce qu’il faut retenir de ce personnage',businesses:'Ce qu’il faut retenir de cette adresse',residences:'Ce qu’il faut retenir de ce lieu',hideouts:'Ce qu’il faut retenir de ce lieu',factions:'Ce qu’il faut retenir de ce groupe',animals:'L’essentiel de cette fiche'/* section animaux */}[S]||'À retenir';
@@ -392,7 +392,7 @@ const tools=`<section class="tools-sec shell" id="outils">
   </div>
   <div class="tools tools--four">
     <a class="tool reveal" href="carte.html">
-      <h3>Carte interactive <span class="chip live">2 547 lieux</span></h3>
+      <h3>Carte interactive <span class="chip live">3 291 lieux</span></h3>
       <p>Filtres, suivi de ce que tu as trouvé, et calcul de trajet : distance et temps à pied ou selon le véhicule.</p>
     </a>
     <a class="tool reveal" href="vehicules.html">

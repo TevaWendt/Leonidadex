@@ -26,7 +26,13 @@ test('couverture : les familles nouvelles sont inventoriées avec une cible d’
       if (it.cible) assert.match(it.cible, /^[a-z-]+\/[a-z0-9-]+\.html$/, f.id + ' : slug ' + it.cible);
     }
   }
-  assert.equal(fam('lieux-carte').bilan.n, 2500); assert.ok(fam('quartiers-comtes').bilan.n >= 40);
+  /* v7.99 : 2 500 lieux jusqu’à la v7.98, 3 244 avec l’import gtadb ; chaque adresse publiée reste celle de son lieu
+     (outils/lieux-adresses.json) */
+  assert.ok(fam('lieux-carte').bilan.n >= 3244, fam('lieux-carte').bilan.n + ' lieux'); assert.ok(fam('quartiers-comtes').bilan.n >= 40);
+  const ADR = JSON.parse(fs.readFileSync(path.join(ROOT, 'outils/lieux-adresses.json'), 'utf8')).lieux, INV = require(path.join(ROOT, 'outils/couverture-pages.cjs'));
+  const lieux = new Map(Object.values(INV.FAMILLES).find(f => f.id === 'lieux-carte').items.map(it => [it.id, it]));
+  assert.ok(Object.keys(ADR).length >= 2500);
+  for (const [id, slug] of Object.entries(ADR)) { const it = lieux.get(id); assert.ok(it, 'lieu publié disparu : ' + id); if (it.cible) assert.equal(it.cible, 'lieux-carte/' + slug + '.html', id); }
   assert.equal(fam('options-perso-vehicules').bilan.n + fam('options-perso-armes').bilan.n, 145);
 });
 test('couverture : le rapport est écrit et le volume calculé', () => {

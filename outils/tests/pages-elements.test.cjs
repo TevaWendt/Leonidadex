@@ -16,8 +16,8 @@ const texte = html => html.replace(/<script[\s\S]*?<\/script>/g, ' ').replace(/<
 
 test('lot A : lieux de la carte, quartiers et comtés, consommables couverts à 100 % (une page par élément, aucun manquant)', () => {
   for (const id of ['lieux-carte', 'quartiers-comtes', 'consommables']) { const f = fam(id); assert.equal(f.bilan.manque, 0, id + ' : éléments sans page'); for (const it of f.items) assert.ok(it.page && fs.existsSync(path.join(ROOT, it.page)), id + ' : ' + it.id + ' a sa page'); }
-  assert.equal(fam('lieux-carte').bilan.n, 2500); assert.equal(fam('consommables').bilan.n, 30);
-  assert.ok(PAGES.length >= 2500 + 41 + 30 + 2, PAGES.length + ' pages dans l’index');
+  assert.ok(fam('lieux-carte').bilan.n >= 3244, fam('lieux-carte').bilan.n + ' lieux'); /* v7.99 : 2 500, puis 3 244 avec l’import gtadb */ assert.equal(fam('consommables').bilan.n, 30);
+  assert.ok(PAGES.length >= 3244 + 41 + 30 + 2, PAGES.length + ' pages dans l’index');
 });
 test('lot A : les pages sont à jour (gen-pages-elements --verifier ne trouve rien à réécrire)', () => {
   const r = spawnSync(process.execPath, [path.join(ROOT, 'outils/gen-pages-elements.cjs'), '--verifier'], { cwd: ROOT, encoding: 'utf8' });
@@ -65,7 +65,7 @@ test('lot A : la carte, le carnet, la liste des consommables et les hubs mènent
   assert.ok(/p\.pg \?/.test(read('outils/sources/carte.js')) && /Ouvrir sa page/.test(read('carte.js')), 'carte.js : lien « Ouvrir sa page »');
   const L = { window: {} }; vm.runInNewContext(read('carnets/lieux-data.js'), L); let n = 0;
   for (const r of L.window.LK_CARNET_LIEUX.rows) if (r[5]) { n++; assert.ok(fs.existsSync(path.join(ROOT, r[5].slice(1))), r[0] + ' : ' + r[5]); }
-  assert.ok(n >= 2500, n + ' lignes du carnet avec leur page');
+  assert.ok(n >= 3244, n + ' lignes du carnet avec leur page');
   const nourriture = read('nourriture.html'); for (const it of fam('consommables').items) assert.ok(nourriture.includes('class="cat-page" href="' + it.page + '"'), 'nourriture.html : lien vers ' + it.page);
   for (const f of ['carte.html', 'lieux.html']) assert.ok(read(f).includes('href="lieux-carte/index.html"') && read(f).includes('href="quartiers/index.html"'), f + ' : liens vers les sommaires');
   assert.ok(/sa page/.test(read('outils/langues/en/v795.json')), 'traductions des textes nouveaux');

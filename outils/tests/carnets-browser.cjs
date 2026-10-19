@@ -117,7 +117,7 @@ const text=(p,sel)=>p.locator(sel).first().innerText();
 
  await group('Lieux, propriétés, collectibles, garde-robe',async()=>{
   await p.goto(base+'/carnets/lieux.html#vue=restants',{waitUntil:'load'});
-  ok(/2\s?547/.test((await text(p,'[data-cn-tabn="rest"]')).replace(/ /g,' ')),'2 547 lieux à repérer');
+  ok(/3\s?291/.test((await text(p,'[data-cn-tabn="rest"]')).replace(/ /g,' ')),'3 291 lieux à repérer');
   ok((await p.locator('.cn-card [data-cn-act="own"]').first().innerText())==='Marquer comme repéré','Vocabulaire : « repéré », jamais « possédé »');
   const id=(await p.locator('.cn-card').first().getAttribute('data-key')).split(':')[1];await p.locator('.cn-card').first().locator('[data-cn-act="own"]').click();await p.waitForTimeout(300);
   ok((await store(p,'lk_map_found'))[id]===true,'Même clé que la carte (lk_map_found, valeur true)');

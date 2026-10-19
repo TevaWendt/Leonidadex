@@ -1,0 +1,68 @@
+LEONIDAKIT v7.99 : la carte complétée depuis la base gtadb mise à jour
+19 octobre 2026
+
+Base : v7.98 (commit a19f97e11). Rien n’est publié ni poussé. CSP inchangée. Aucun fichier à supprimer. Aucune donnée
+inventée : tout vient de la base communautaire gtadb (GTA VI Landmarks Data, gtadb.org et ses contributeurs, CC BY 4.0,
+github.com/rolux/gtadb.org, map/data/6/landmarks.json et map/photos/6), déjà la source des lieux de la carte depuis la v7.37.
+Téva, 18 octobre, 20 h 09 : « reprendre toutes les positions réelles, ce qui est sur la carte, parce qu’il en manque ; nommer
+tous les autres bâtiments ; compléter la carte […] si bien sûr les éléments de la carte sont officiels » ; 21 h 19 : « très
+fiable à 100 % » ; 23 h 58 : une page par élément, noindex pour les pages pauvres.
+
+1. L’IMPORT (outils/import-gtadb.cjs, nouveau ; outils/import-gtadb-photos.py, nouveau)
+- Règles relevées sur les 2 474 lieux en place et vérifiées par --controle : sur les repères que la base n’a pas changés,
+  les règles redonnent exactement les mêmes noms, statuts et positions (0 écart) ; projection des coordonnées gtadb vers la
+  carte du site ajustée sur les coordonnées gardées dans outils/landmarks-leonidakit.json (écart 1 pixel au plus, l’arrondi).
+- Repères nouveaux qui ont une position dans le jeu : 744 lieux ajoutés à outils/data/carte-gtadb-source.json et aux repères
+  (outils/landmarks-leonidakit.json) : position, catégorie, statut (« position non confirmée » quand la base le dit),
+  rattachement (celui des cinq lieux voisins du même quartier), équivalent réel et sa position, description, captures.
+- Noms : le nom en jeu quand la base le donne (221) ; « nom supposé » quand elle le marque d’un « ? » (14) ; sinon le nom du
+  lieu réel suivi de « (nom réel) » (218) ; sinon « Bâtiment L… » (291). Une enseigne lue en partie (« Cash... », « ? Flare »)
+  ne devient pas un nom. Lieux en place : 73 bâtiments sans nom reçoivent leur nom en jeu, 16 noms sont corrigés par la base
+  (dont Brian’s Marina, devenu Brian’s Boat Works & Marina, repris par les pages qui citent ce lieu).
+- Positions : 186 équivalents réels ajoutés ou corrigés ; 662 lieux que la base a déplacés de plus de 3 pixels sont replacés ;
+  5 lieux dont la base a retiré la position passent en « position non confirmée » (ils restent sur la carte et gardent leur
+  page). Une coquille de la base (« FL 33139. USA ») est corrigée en virgule.
+- Laissés hors carte : 88 repères sans position dans le jeu ; 5 repères qui sont déjà des points du site, avec leur capture
+  officielle (Galina Ballet Opera House, Sahara Arena, Tisha-Wocka Flea Market, Autograph Flight Support, PTT YOUNGIN$).
+- Photos : 768 photos converties en WebP (960 pixels au plus, qualité 82, comme les 3 185 déjà là) : 616 pour les lieux
+  nouveaux, 152 pour des lieux en place (la base en a publié depuis). photos/ compte 3 953 photos ; de celles que gtadb publie
+  pour un lieu de la carte, il n’en manque qu’une (le lieu réel de L1094, dont la base a retiré la position), reprise au
+  contrôle final.
+- « Regroupe N bâtiments repérés » dans la fenêtre de 28 groupes : le compte des lieux rattachés.
+
+2. LES PAGES
+- Chaque lieu nouveau a sa page (lieux-carte/…), dans les six langues, avec les mêmes générateurs : 3 244 pages de lieux au lieu
+  de 2 500, 3 968 pages par élément en tout. Une adresse publiée ne change jamais : outils/lieux-adresses.json (nouveau) garde
+  l’adresse des 2 500 pages déjà en ligne, lue par outils/couverture-pages.cjs ; un lieu renommé garde la sienne, un lieu nouveau
+  au même nom qu’un lieu publié reçoit une adresse complétée (quartier ou repère). 0 adresse changée.
+- Indexation (consigne de 23 h 58, seuil du lot A) : 453 des 744 lieux nouveaux sont indexés ; les 291 bâtiments sans nom sont
+  en noindex,follow. En tout, 1 005 pages de lieux sur 3 244 en noindex (1 001 bâtiments sans nom, 4 lieux douteux ou sans
+  information), dans toutes les langues ; elles seront livrées à part, avec ce qui leur manque.
+- La carte (carte-gtadb.js), la recherche du site (search-lieux.js), les carnets (carnets/lieux-data.js), la progression, Léo
+  (leo/lieux.json et ses versions) et les sitemaps reprennent les lieux nouveaux ; les pages qui placent un lieu sur une
+  vignette de carte suivent sa position corrigée.
+- Le nombre de lieux de la carte écrit en dur (« 2 547 lieux repérés ») passe à 3 291 : liens « La carte » des pages Missions,
+  Activités, Radios, Codes, Trophées, GTA Online et des dossiers, sommaires éditoriaux, Léo (outils/leo-knowledge.json).
+
+3. TRADUCTIONS
+- outils/langues/<code>/v799.json (nouveau, 5) : les noms des lieux nouveaux et les adresses réelles gardés tels quels, les
+  combinaisons nouvelles de types et de remarques (« Type : événementiel, loisir. »), le nombre de lieux, les phrases qui citent
+  un lieu renommé. Les listes de voisins se traduisent d’elles-mêmes une fois les noms connus.
+
+4. VÉRIFICATIONS DE CETTE LIVRAISON (le contrôle complet et l’audit viennent à la fin des livraisons)
+- Chaîne de génération complète : 0 texte sans traduction en en, es, it, de, pt (extraction à 0 ×5).
+- gen-pages-elements --verifier : 0 page différente ; gen-leo --check : à jour.
+- verifier.js : 0 lien cassé.
+- Données : 0 écart entre la largeur et la hauteur écrites et celles des photos ; import relancé à l’identique (aucun
+  changement à la seconde passe).
+
+5. FICHIERS
+- Nouveaux : outils/import-gtadb.cjs, outils/import-gtadb-photos.py, outils/lieux-adresses.json,
+  outils/data/gtadb-photos-a-convertir.txt, outils/langues/<code>/v799.json, 768 photos (photos/), 744 pages de lieux et leurs
+  cinq traductions, LISEZ-MOI-v7.99.txt, outils/CHANGEMENTS-v7.99.txt, outils/MATRICE-v7.99.md.
+- Modifiés : outils/data/carte-gtadb-source.json, outils/landmarks-leonidakit.json, outils/couverture-pages.cjs, les
+  générateurs et données qui écrivaient « 2 547 » (gen-missions, gen-activites, gen-radios, gen-codes, gen-trophees,
+  gen-online, lore-gen.js, editorial.json, editorial-hubs.json, hubs-editoriaux.json, leo-knowledge.json), les pages de lieux
+  dont le nom, la position, la photo ou les voisins changent, carte-gtadb.js, search-lieux.js, carnets/lieux-data.js,
+  progression-data.js, leo/, sitemaps, README.md.
+- Rien à supprimer.

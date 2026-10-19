@@ -149,7 +149,11 @@ const CARNET_GROUPES = CARNET.groups; // [id, nom] : les 36 groupes gtadb (quart
     return elem(f.id, { id, nom, slug: slug(base), cible: page ? null : 'lieux-carte/' + slug(base) + '.html', suffixe: quartier ? (GTA_BY_ID.get(quartier) || { n: quartier }).n : (lm && lm.comte) || '', page, doublonDe: page ? (cat === 'planque' ? 'planques' : 'regions') : null,
       indexable: !!(!douteux && !generique && (visuel || faits >= 2)), strict: !!(nomme && !douteux && (visuel || faits >= 3)), faits, visuel, note: [cat, g && g.src === 'SITE' ? 'point du site, ' + g.s : g ? (g.s === 'vu' ? 'repéré sur un support officiel' : 'position non confirmée') : 'point du site', generique ? 'sans nom (bâtiment numéroté)' : surnom ? 'surnom donné par la communauté' : lm && !lm.nomme ? 'nom en jeu inconnu (nom réel)' : '', douteux ? 'existence douteuse, fictif ou annulé' : ''].filter(Boolean).join(', ') });
   });
-  uniq(f.items);
+  /* v7.99 : une adresse publiée ne change jamais (outils/lieux-adresses.json) : un lieu renommé par l’import gtadb la garde, et
+     un lieu nouveau au nom identique reçoit l’adresse complétée (quartier ou identifiant), jamais celle d’un lieu déjà publié */
+  const ADR = fs.existsSync(path.join(ROOT, 'outils/lieux-adresses.json')) ? JSON.parse(read('outils/lieux-adresses.json')).lieux || {} : {};
+  for (const it of f.items) if (ADR[it.id] && it.cible) it.slug = ADR[it.id];
+  uniq([...f.items.filter(it => ADR[it.id] && it.cible), ...f.items.filter(it => !(ADR[it.id] && it.cible))]);
   f.items.forEach(it => { if (it.cible) it.cible = 'lieux-carte/' + it.slug + '.html'; });
   /* repères gtadb absents de la carte du site */
   const surCarte = new Set(GTADB.lieux.map(p => p.id.replace(/^g-/, '')));
