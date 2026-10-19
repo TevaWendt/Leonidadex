@@ -1,0 +1,43 @@
+LEONIDAKIT v7.97 : les 3 224 pages par élément dans les cinq langues, noindex pour les pages pauvres, recherche et Léo qui
+ouvrent la page de l’élément
+À appliquer sur la v7.96 (commit 354fd17cf, l’archive livrée le 18 octobre vers 23 h) : décompresse d’abord les archives v7.94,
+v7.95 et v7.96 si ce n’est pas fait, puis les parties de l’archive v7.97 à la racine du dépôt, dans n’importe quel ordre, puis
+pousse depuis GitHub Desktop. Rien n’a été publié ni poussé : c’est toi qui pousses. CSP inchangée. Aucun fichier à supprimer.
+Rien à faire dans Vercel (IndexNow, en place depuis la v7.86, préviendra Bing des pages nouvelles le lendemain matin).
+
+CE QUE CONTIENT CETTE VERSION (détail : outils/CHANGEMENTS-v7.97.txt ; grille de qualité : outils/MATRICE-v7.97.md)
+  1. Chaque page par élément existe dans les cinq langues (en/, es/, it/, de/, pt/), comme le reste du site : titre, texte,
+     tableau, carte, visuel, cartes liées, barre de langue, canonical et hreflang de chaque langue.
+  2. Noindex selon ta consigne de 23 h 58 : une page sans assez d’informations réelles est en noindex dans toutes les langues
+     (bâtiments numérotés, noms incertains, options et munitions sans donnée de GTA VI, visuels sans description, quartiers sans
+     lieu) ; les autres sont indexées (1 672 lieux, catalogues, éditions, achats, moments, marques…). Les pages en noindex
+     seront livrées à part, avec ce qui leur manque, à la fin des livraisons.
+  3. La recherche du site et Léo ouvrent la page de l’élément dans ta langue ; marques, munitions, éditions et grands moments
+     sont trouvables, et Léo connaît les marques et les grands moments.
+  4. Le reste du site ne bouge pas : les pages par élément ont leur propre moteur de traduction ; aucune phrase traduite des
+     pages existantes ne change (seuls les liens vers les pages par élément, devenues traduites).
+  5. comparateur.html est indexable ; IndexNow envoie toutes les adresses nouvelles, même au-delà de 10 000 d’un coup.
+
+CE QUI VIENT ENSUITE (sans attendre ton « ok »)
+  v7.98 : les quatre sections Ce qui est confirmé, Préchargement, GTA VI sur PC, GTA VI et GTA V revues (esthétique,
+  agencement, visuels, animations, liens vers des pages propres, liens morts et ancres de medias.html, Actualités complétée).
+  v7.99 : la carte complétée depuis la base gtadb mise à jour (727 repères de plus, positions et équivalents réels, noms revus,
+  photos), chaque repère avec sa page dans les six langues. Puis, en une fois : contrôle complet, audit (latence, téléphone),
+  corrections, et les archives des pages en noindex.
+
+MARCHE À SUIVRE
+  1. Décompresse les parties de l’archive à la racine du dépôt (après la v7.96), puis pousse. Aucun fichier à supprimer.
+  2. Essai : en/carte.html puis « all the places on the map », une page de lieu (en/lieux-carte/ambrosia-police-department.html,
+     barre de langue vers le français et retour), de/marques/albany.html, es/editions/ultimate.html, pt/moments/trailer-1.html ;
+     chercher « Ambrosia Police » sur en/index.html (le résultat ouvre la page anglaise).
+  3. Rien à me dire : je continue.
+
+CE QUI A ÉTÉ CORRIGÉ EN CHEMIN (détail : outils/CHANGEMENTS-v7.97.txt § 3)
+  Descriptions trop longues des pages par élément : une phrase entière de repli au lieu d’une coupe au milieu d’un mot ;
+  libellés en capitale, pluriels, « cette planque », titre du coffret ; deux parenthèses de suite sur le sommaire des visuels ;
+  70 textes ajoutés à la mémoire pour que les cinq langues soient complètes.
+
+VÉRIFICATIONS (détail : outils/CHANGEMENTS-v7.97.txt § 4)
+  Chaîne complète, 0 texte sans traduction dans les cinq langues, 0 lien cassé (3,3 millions de références dans 22 177
+  pages), pages et Léo à jour, tests des pages et de Léo passés (évaluation 99 %), seconde synchronisation sans aucun
+  changement. Le contrôle complet (navigateur, écrans, latence, téléphone) se fera une fois, à la fin.

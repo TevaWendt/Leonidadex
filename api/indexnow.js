@@ -11,7 +11,7 @@
 const KEY = '0a923bd2f68183265c5d1b929dd16681';
 const HOST = 'www.leonidakit.com', SITE = 'https://' + HOST;
 const ENDPOINT = 'https://api.indexnow.org/indexnow';
-const MAX_URLS = 10000, LOCK_S = 20 * 3600, TIMEOUT_MS = 15000;
+const MAX_URLS = 10000, MAX_LOTS = 5, LOCK_S = 20 * 3600, TIMEOUT_MS = 15000;
 const K_LAST = 'lk:indexnow:depuis', K_LOCK = 'lk:indexnow:verrou';
 
 function reply(res, status, obj) { res.statusCode = status; res.setHeader('Content-Type', 'application/json; charset=utf-8'); res.setHeader('Cache-Control', 'no-store'); res.setHeader('X-Content-Type-Options', 'nosniff'); res.end(JSON.stringify(obj)); }
@@ -56,13 +56,21 @@ function createHandler(options = {}) {
       if (!sm.ok) return reply(res, 502, { ok: false, code: 'sitemap', status: sm.status });
       const all = parseSitemap(await sm.text());
       /* « depuis » : les pages datées du jour du dernier envoi sont renvoyées (une page peut avoir changé plus tard ce jour-là) */
-      const fresh = all.filter(u => u.lastmod >= since).sort((a, b) => b.lastmod.localeCompare(a.lastmod)).slice(0, MAX_URLS);
+      const fresh = all.filter(u => u.lastmod >= since).sort((a, b) => b.lastmod.localeCompare(a.lastmod) || a.loc.localeCompare(b.loc));
       if (!fresh.length) return reply(res, 200, { ok: true, envoyees: 0, depuis: since });
-      const r = await fetchImpl(ENDPOINT, { method: 'POST', signal: ctl.signal, headers: { 'content-type': 'application/json; charset=utf-8' }, body: JSON.stringify({ host: HOST, key: KEY, keyLocation: SITE + '/' + KEY + '.txt', urlList: fresh.map(u => u.loc) }) });
-      if (r.status !== 200 && r.status !== 202) { console.error('indexnow: envoi refusé (' + r.status + ')'); return reply(res, 502, { ok: false, code: 'indexnow', status: r.status }); }
+      /* v7.97 (lot C, 16 000 pages traduites d'un coup) : un envoi IndexNow accepte 10 000 adresses ; au-delà, les suivantes partent
+         dans des envois à la suite (cinq au plus : un plan du site n'a pas plus de 50 000 adresses). Avant, seules les 10 000
+         premières partaient et les autres, datées du même jour, n'étaient jamais envoyées. */
+      let envoyees = 0, statut = 0;
+      for (let i = 0; i < fresh.length && i < MAX_URLS * MAX_LOTS; i += MAX_URLS) {
+        const lot = fresh.slice(i, i + MAX_URLS);
+        const r = await fetchImpl(ENDPOINT, { method: 'POST', signal: ctl.signal, headers: { 'content-type': 'application/json; charset=utf-8' }, body: JSON.stringify({ host: HOST, key: KEY, keyLocation: SITE + '/' + KEY + '.txt', urlList: lot.map(u => u.loc) }) });
+        if (r.status !== 200 && r.status !== 202) { console.error('indexnow: envoi refusé (' + r.status + ')'); return reply(res, 502, { ok: false, code: 'indexnow', status: r.status, envoyees }); }
+        envoyees += lot.length; statut = r.status;
+      }
       const newest = fresh[0].lastmod;
       if (kv) await kvRun(kv, fetchImpl, [['SET', K_LAST, newest]]).catch(() => console.error('indexnow: date du dernier envoi non notée'));
-      return reply(res, 200, { ok: true, envoyees: fresh.length, depuis: since, jusqua: newest, statut: r.status });
+      return reply(res, 200, { ok: true, envoyees, depuis: since, jusqua: newest, statut });
     } catch (e) {
       return reply(res, 502, { ok: false, code: e && e.name === 'AbortError' ? 'delai' : 'reseau' });
     } finally { clearTimeout(timer); }
